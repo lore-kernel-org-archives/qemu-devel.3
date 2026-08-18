@@ -4,140 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09CABC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 14:06:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5075C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 14:16:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwKSQ-0002eA-M9; Tue, 18 Aug 2026 10:06:26 -0400
+	id 1wwKbE-00045k-UI; Tue, 18 Aug 2026 10:15:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wwKSO-0002e1-Sy
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:06:24 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1wwKbD-00045S-PO; Tue, 18 Aug 2026 10:15:31 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wwKSN-0006Pq-3f
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:06:24 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IE0Vct2564087
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 14:06:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=sRKLnJ+RSVW
- /gicVw9eBheaNQx9/112syQkv0QhN1rI=; b=aOPtnYl1N4j/Msi9eZdW6V530+a
- 5c/oG+xeZLEyWAfYmUsBCxId1wFacJCiFAoap9IVf17LYw1cI4QUQOpQrpv3H0as
- /9fL22C3V01kFq/2gbOOl0qRGpBPYGGWhvdWXwByKYyF7mbJVCpg1FaOhZUV+iFJ
- y4lZg0SHy5YOQHI2j35vQNlbEEDvrh0eGNKXlAxCKFmjMzl7tCuOnxwkGjgCCp7e
- 5MIfQM7Txx4qukeb1JIEgvphOxkB9rrNQ8MO7K/JCujHH8kO3cStN0cONTHzD0yK
- naaU/HIYaA+EtkEKznO2gxYj6Q/sE7PTbH+7PUCB88ZEH4OeNrPedvrCOaQ==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4frmtgnm-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 14:06:18 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2cfe48ca1efso64334085ad.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 07:06:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787061977; x=1787666777; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=sRKLnJ+RSVW/gicVw9eBheaNQx9/112syQkv0QhN1rI=;
- b=Zy8gsMHKpbfjU/rY/fgJ/LYl2Q+yiQS86L8qDyK/HMJo9nRaTXqJfep9BeUIqakui+
- p1Eq28pZKyAaNenEQ/kWHHEPzSuwzriBpuB1xSOWDmCrk4088cF0iwipencJCT9E3D2a
- tg8MuKvCStNuHAwb28tGjvAqIsSAfBD2y70JzYWdEvL1juMWrsjTDtwk4mdRLgByDfTj
- CsC4oYIqlzT+AnRBEyvCBLgFSYgpN92TYVmWlrLuEDALGrDkWDyrcE5fSAqyMlUVlzM2
- WfzYMwLOkwJ70ofj4KOC7CaOspsKvYZmdHwAsemu3lR+jrQQWKe0iVyXJ4F3MCUbO1As
- tyYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787061977; x=1787666777;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=sRKLnJ+RSVW/gicVw9eBheaNQx9/112syQkv0QhN1rI=;
- b=Z33XUVAvPuQ0n2eXt6oVBDO3hhE48WpC3ccA29Wf95feIX9nUDaF2N6GTi+vStOlLi
- q7NJILSvpk5Ymi6hi4xGaEFkzl18UaIXeRas2gtcOqU4D5S8S1ZQM0dPJmXIs8DXSNLI
- 4fxP7wewpryu5e8V1N6SQ/WT8e1IQdPgttA0VylmCy7bxRq953MpfxgsWHbH/chxnZrH
- kISm42dt90TSvl76Qg1uzXgzKTBD9Rj0rsflHCj0rMxV63iMnsApOi68zzfopLniSgm4
- zjUlmH1LULT/ZGF/4niN5g0n5TK/f7OwXePGI/MZS2nzknGkIzCIZ5QxXSmp+3r+Zuzc
- 8atw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpHo98WlHySRKiKORfoNOI/Gxl9KcIwA9gYMTymv6hq3Ctd5lbM9gEZ+xyKJFte/mU7NSpKB0Ih+ERq@nongnu.org
-X-Gm-Message-State: AOJu0YyMTfPFE9Bi816d+saW1pkqJqopWjI50sjKq8f46oglw7kAl25T
- c4aZvGiQavCRkN1xCA2W0+eNq1UzyHtftOFIbwXAvEAlqCckBMOIFIuVW1Lu39Y8T7sxkmgdzcd
- +s/bQF4t4rpvTDwJ92FUG9ybq2CQIfiLeaToIa5grwFH/eY1q7k5Kw0Rc9w==
-X-Gm-Gg: AR+sD115CcfC9/wqpguyGy6qT0Wa8bwn/Bde6Ikmk1JkQWTpxLcec5nFJa8YjSItTLw
- Y/00lkQLCK9iydH1nF/GdkpQ4woWxNLMLH3A1B9fg2MRzly2opxSj0Mcd3yD5i8SbmAkQUo5fsS
- 3teHqW2cwh8jUXMyn+sGVhPDEqDXqXqA3+tUfNLbENZbAiGWVem6kR0pduh/LEaNNEUl8I9fpMz
- sS00dn5y/RiZqHamr4QKKD6lITi93KMcJg6oF5eHwz1YiutsF69jBY63QsfcLTfO8GiqAwQfmPr
- 3unVIeqhC45QRHEukTRjcRcA4N5e6C03RR6A6TDGs3we4oVg9damTTangrVKJbrDLEbPlMF5eiO
- HRmelWFwmZc51aFWcjkAlAsRgwBY1XsA5ZMGrcHBXxBmyiV1mVIJXGkiNK+z6H4I=
-X-Received: by 2002:a17:90b:39b0:b0:38e:659b:f366 with SMTP id
- 98e67ed59e1d1-3933b500d17mr34199379a91.0.1787061977187; 
- Tue, 18 Aug 2026 07:06:17 -0700 (PDT)
-X-Received: by 2002:a17:90b:39b0:b0:38e:659b:f366 with SMTP id
- 98e67ed59e1d1-3933b500d17mr34199206a91.0.1787061976488; 
- Tue, 18 Aug 2026 07:06:16 -0700 (PDT)
-Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3267be8e272sm16633573eec.17.2026.08.18.07.06.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 07:06:16 -0700 (PDT)
-From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-To: philmd@oss.qualcomm.com
-Cc: matheus.bernardino@oss.qualcomm.com, qemu-devel@nongnu.org,
- ktokunaga.mail@gmail.com, brian.cain@oss.qualcomm.com,
- pierrick.bouvier@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
- ale@rev.ng, anjo@rev.ng, alex.bennee@linaro.org
-Subject: Re: [PATCH v3 09/13] target/hexagon: add main arch-specific
- semihosting operations
-Date: Tue, 18 Aug 2026 07:06:14 -0700
-Message-Id: <20260818140614.77952-1-matheus.bernardino@oss.qualcomm.com>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <709f1994-e992-45e8-b33f-1a00b943bc50@oss.qualcomm.com>
-References: <709f1994-e992-45e8-b33f-1a00b943bc50@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1wwKbA-0007oR-SZ; Tue, 18 Aug 2026 10:15:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=mXiW1zXqd2/kQq4I3ksyn+QKzPEbkkWGOWqSoGK74eg=; b=TYEsBUjbtCgtHcRy
+ dNMKK1F/Wm/tcBGFJHOYw8Hs0nkJNHul//eClnKMwrELtN5x0sZIINWLDVy5VvK49SXtMwGZhehSk
+ uuSyzhcFnRNX6xXIxMM77USBiP7BVz4p5j4ZiNs1DO490PbSfILqK/rDHb3Bd8kkIQsIAz8wkd+bk
+ M4cyw/HbzabbaZDWDqP47dmdEz9BPknDq0+/9S3jLJ67W/b52EpvQHTLz9K7WE+NYxU8go/TfkCE8
+ 2UUHHZ486x5uLTdxG+ptcIATfROgRSLUWrmmRxuIEeXQ8IGJinZZxqg4maDOkfvdkwMJ9udQwsxYO
+ LiZ4t9iz67xroyXahw==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1wwKav-00000002t6A-3w5H;
+ Tue, 18 Aug 2026 14:15:13 +0000
+Date: Tue, 18 Aug 2026 14:15:13 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Laurent Vivier <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, qemu-ppc@nongnu.org,
+ qemu-riscv@nongnu.org
+Subject: Re: [PATCH v3 36/49] monitor: tighten monitor_set_cpu()/get_cpu()
+Message-ID: <aoRo8UcTqAUu5lkP@gallifrey>
+References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
+ <20260816-qemu-no-hmp-v3-36-e53fc35bc550@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDEwMyBTYWx0ZWRfX9autLz46vyxh
- qIRBJ2Mlen+Q+wFB/EIsBhgpGVT/2xPpNM2UuKChwyMtwrSbGmQL5ijolX2xk5vUucQc3yQpgdh
- 65sNjKJ50wjBImGXOhLRytcvFp/nHXW+b3BvHNHG9WwhWFRLpEk8V5hh+5udgVC75wsOmJJLnZI
- Jdpn2V8M2ye1sffz6sAg/HxExE8KV1dW7Xsp583g0bCLYgmaSZIRdNBvkO92NnO9LgvnXIB3d+2
- +/sFg4pF7UlD9ArBHWGjdU7vPSs+V+m7jkhZRPv7tbIIR0hmcfrwlCibno+9AEb+MSj1znI6DlU
- Ai3CPMv8KML/opt7L+Ux2T4381q8HUsIHaTCJCH6lldoK5vED8eCGvDDKFsbZeEVx5fo1p3XbqM
- 0CTJOYqY9t+ctmcSiSjO/jeAfxzYlouPsiiY+UvAJEgoVfqh5dqYs6VE02i/yiYbs9OVVbwwMIH
- MgJ0N5e9F3tPbS+PsPA==
-X-Proofpoint-GUID: zI9uSSPpoxnn0imxKPS9LFhFC0uqS4l2
-X-Proofpoint-ORIG-GUID: zI9uSSPpoxnn0imxKPS9LFhFC0uqS4l2
-X-Authority-Analysis: v=2.4 cv=GtlyPE1C c=1 sm=1 tr=0 ts=6a8466da cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=uZvujYp8AAAA:8
- a=vQdOg9i1AAAA:20 a=EUspDBNiAAAA:8 a=mVr0gc_ur1I0NzJS-0UA:9
- a=1OuFwYUASf3TG4hYMiVC:22 a=SLzB8X_8jTLwj6mN0q5r:22 a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDEwMyBTYWx0ZWRfX0vqHf0Vtwzvb
- vCsYzjWW/5YaH1Qtn1FFxzL0ylAeasM66NNXJYr8ZAjWMwg+OPvzE0IUZaoMCibIPPFLGseKcjd
- TF9w7/X+LEyr0PZOJhurfNW4KE0hmiQ=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-18_02,2026-08-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 impostorscore=0 lowpriorityscore=0 phishscore=0
- adultscore=0 bulkscore=0 clxscore=1015 spamscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180103
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=matheus.bernardino@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <20260816-qemu-no-hmp-v3-36-e53fc35bc550@redhat.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.101+deb13-amd64 (x86_64)
+X-Uptime: 14:15:10 up 11 days, 17:52,  2 users,  load average: 0.00, 0.01, 0.00
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,37 +88,491 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 17 Aug 2026 06:29:56 +0200 =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com> wrote:
->
-> On 20/7/26 19:41, Matheus Tavares Bernardino wrote:
-> > 
-> > +        if (rc = 0) {
-> > +            sys_stat.dev   = st_buf.st_dev;
-> > +            sys_stat.ino   = st_buf.st_ino;
-> > +            sys_stat.mode  = st_buf.st_mode;
-> > +            sys_stat.nlink = (uint32_t) st_buf.st_nlink;
-> > +            sys_stat.rdev  = st_buf.st_rdev;
-> > +            sys_stat.size  = (uint32_t) st_buf.st_size;
-> > +#if defined(__linux__)
-> > +            sys_stat.atime = (uint32_t) st_buf.st_atim.tv_sec;
-> > +            sys_stat.mtime = (uint32_t) st_buf.st_mtim.tv_sec;
-> > +            sys_stat.ctime = (uint32_t) st_buf.st_ctim.tv_sec;
-> > +#elif defined(_WIN32)
-> > +            sys_stat.atime = st_buf.st_atime;
-> > +            sys_stat.mtime = st_buf.st_mtime;
-> > +            sys_stat.ctime = st_buf.st_ctime;
-> > +#endif
+* Marc-André Lureau (marcandre.lureau@redhat.com) wrote:
+> These functions access mon_cpu_path, which is a MonitorHMP-specific
+> field. Narrowing their signatures from Monitor* to MonitorHMP* makes the
+> type system enforce what was already true at runtime: every caller is in
+> an HMP context. The expression parser's MONITOR_HMP() casts are safe
+> because it is only reachable from handle_hmp_command(), they will be
+> dropped with later patches.
 > 
-> This #if/elif seems bogus in that various hosts are not covered,
-> in particular *BSD and WASM. We could use #else #error to catch
-> them, or better implement OS-specific [f]stat() helpers (see
-> include/system/os-*.h).
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Good point... Hmm, what if we used st_buf.st_[amc]time for all cases?
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 
-It is mandatory on POSIX 2018[1] and also provided by mingw-w64[2]. Would that
-cover all our use cases? Or maybe not?
-
-[1]: https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/sys_stat.h.html
-[2]: https://github.com/mingw-w64/mingw-w64/blob/master/mingw-w64-headers/crt/_mingw_stat64.h#L38
+> ---
+>  hw/core/machine-hmp-cmds.c |  4 ++--
+>  include/monitor/hmp.h      |  7 +++---
+>  include/monitor/monitor.h  |  1 -
+>  monitor/hmp-cmds.c         | 53 ++++++++++++++++++++++------------------------
+>  monitor/hmp.c              | 18 ++++++++--------
+>  monitor/monitor-internal.h |  2 +-
+>  monitor/qmp-cmds.c         |  2 +-
+>  stats/stats-hmp-cmds.c     |  2 +-
+>  target/i386/cpu-apic.c     |  2 +-
+>  target/i386/cpu.c          |  4 ++--
+>  target/i386/monitor.c      |  4 ++--
+>  target/m68k/monitor.c      |  2 +-
+>  target/ppc/monitor.c       |  2 +-
+>  target/riscv/monitor.c     |  2 +-
+>  target/sh4/monitor.c       |  2 +-
+>  target/sparc/monitor.c     |  2 +-
+>  target/xtensa/monitor.c    |  2 +-
+>  17 files changed, 54 insertions(+), 57 deletions(-)
+> 
+> diff --git a/hw/core/machine-hmp-cmds.c b/hw/core/machine-hmp-cmds.c
+> index 4e2f0c212b0d..702c798ccc56 100644
+> --- a/hw/core/machine-hmp-cmds.c
+> +++ b/hw/core/machine-hmp-cmds.c
+> @@ -36,7 +36,7 @@ void hmp_info_cpus(MonitorHMP *hmp, const QDict *qdict)
+>          g_autofree char *cpu_model = cpu_model_from_type(cpu->value->qom_type);
+>          int active = ' ';
+>  
+> -        if (cpu->value->cpu_index == monitor_get_cpu_index(mon)) {
+> +        if (cpu->value->cpu_index == monitor_hmp_get_cpu_index(hmp)) {
+>              active = '*';
+>          }
+>  
+> @@ -228,7 +228,7 @@ void hmp_memsave(MonitorHMP *hmp, const QDict *qdict)
+>      const char *filename = qdict_get_str(qdict, "filename");
+>      uint64_t addr = qdict_get_int(qdict, "val");
+>      Error *err = NULL;
+> -    int cpu_index = monitor_get_cpu_index(mon);
+> +    int cpu_index = monitor_hmp_get_cpu_index(hmp);
+>  
+>      if (cpu_index < 0) {
+>          monitor_printf(mon, "No CPU available\n");
+> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+> index 6aa562ddbaa2..3fd17048b319 100644
+> --- a/include/monitor/hmp.h
+> +++ b/include/monitor/hmp.h
+> @@ -30,7 +30,7 @@ OBJECT_DECLARE_TYPE(MonitorHMP, MonitorHMPClass, MONITOR_HMP);
+>  struct MonitorDef {
+>      const char *name;
+>      int offset;
+> -    int64_t (*get_value)(Monitor *mon, const MonitorDef *md, int offset);
+> +    int64_t (*get_value)(MonitorHMP *hmp, const MonitorDef *md, int offset);
+>  };
+>  
+>  void monitor_new_hmp(const char *id, const char *chardev_id,
+> @@ -53,8 +53,9 @@ void monitor_register_hmp_info_hrt(const char *name,
+>                                     HumanReadableText *(*handler)(Error **errp));
+>  
+>  
+> -CPUArchState *mon_get_cpu_env(Monitor *mon);
+> -CPUState *mon_get_cpu(Monitor *mon);
+> +CPUArchState *monitor_hmp_get_cpu_env(MonitorHMP *hmp);
+> +CPUState *monitor_hmp_get_cpu(MonitorHMP *hmp);
+> +int monitor_hmp_get_cpu_index(MonitorHMP *hmp);
+>  
+>  bool hmp_handle_error(MonitorHMP *hmp, Error *err);
+>  void hmp_help_cmd(Monitor *mon, const char *name);
+> diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
+> index 72a8f6ea5b4f..2a550aec023f 100644
+> --- a/include/monitor/monitor.h
+> +++ b/include/monitor/monitor.h
+> @@ -39,7 +39,6 @@ int monitor_fd_param(Monitor *mon, const char *fdname, Error **errp);
+>  
+>  int monitor_puts(Monitor *mon, const char *str);
+>  void monitor_flush(Monitor *mon);
+> -int monitor_get_cpu_index(Monitor *mon);
+>  
+>  int monitor_puts_locked(Monitor *mon, const char *str);
+>  void monitor_flush_locked(Monitor *mon);
+> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+> index d1e7e4de6585..89cc19c2431d 100644
+> --- a/monitor/hmp-cmds.c
+> +++ b/monitor/hmp-cmds.c
+> @@ -182,10 +182,10 @@ void hmp_cpu(MonitorHMP *hmp, const QDict *qdict)
+>      Monitor *mon = MONITOR(hmp);
+>      int64_t cpu_index;
+>  
+> -    /* XXX: drop the monitor_set_cpu() usage when all HMP commands that
+> +    /* XXX: drop the monitor_hmp_set_cpu() usage when all HMP commands that
+>              use it are converted to the QAPI */
+>      cpu_index = qdict_get_int(qdict, "index");
+> -    if (monitor_set_cpu(mon, cpu_index) < 0) {
+> +    if (monitor_hmp_set_cpu(hmp, cpu_index) < 0) {
+>          monitor_printf(mon, "invalid CPU index\n");
+>      }
+>  }
+> @@ -512,39 +512,37 @@ void hmp_dumpdtb(MonitorHMP *hmp, const QDict *qdict)
+>  #endif
+>  
+>  /* Set the current CPU defined by the user. Callers must hold BQL. */
+> -int monitor_set_cpu(Monitor *mon, int cpu_index)
+> +int monitor_hmp_set_cpu(MonitorHMP *hmp, int cpu_index)
+>  {
+> -    MonitorHMP *hmp_mon = MONITOR_HMP(mon);
+>      CPUState *cpu;
+>  
+>      cpu = qemu_get_cpu(cpu_index);
+>      if (cpu == NULL) {
+>          return -1;
+>      }
+> -    g_free(hmp_mon->mon_cpu_path);
+> -    hmp_mon->mon_cpu_path = object_get_canonical_path(OBJECT(cpu));
+> +    g_free(hmp->mon_cpu_path);
+> +    hmp->mon_cpu_path = object_get_canonical_path(OBJECT(cpu));
+>      return 0;
+>  }
+>  
+>  /* Callers must hold BQL. */
+> -static CPUState *mon_get_cpu_sync(Monitor *mon, bool synchronize)
+> +static CPUState *monitor_hmp_get_cpu_sync(MonitorHMP *hmp, bool synchronize)
+>  {
+> -    MonitorHMP *hmp_mon = MONITOR_HMP(mon);
+>      CPUState *cpu = NULL;
+>  
+> -    if (hmp_mon->mon_cpu_path) {
+> -        cpu = (CPUState *) object_resolve_path_type(hmp_mon->mon_cpu_path,
+> +    if (hmp->mon_cpu_path) {
+> +        cpu = (CPUState *) object_resolve_path_type(hmp->mon_cpu_path,
+>                                                      TYPE_CPU, NULL);
+>          if (!cpu) {
+> -            g_free(hmp_mon->mon_cpu_path);
+> -            hmp_mon->mon_cpu_path = NULL;
+> +            g_free(hmp->mon_cpu_path);
+> +            hmp->mon_cpu_path = NULL;
+>          }
+>      }
+> -    if (!hmp_mon->mon_cpu_path) {
+> +    if (!hmp->mon_cpu_path) {
+>          if (!first_cpu) {
+>              return NULL;
+>          }
+> -        monitor_set_cpu(mon, first_cpu->cpu_index);
+> +        monitor_hmp_set_cpu(hmp, first_cpu->cpu_index);
+>          cpu = first_cpu;
+>      }
+>      assert(cpu != NULL);
+> @@ -554,21 +552,21 @@ static CPUState *mon_get_cpu_sync(Monitor *mon, bool synchronize)
+>      return cpu;
+>  }
+>  
+> -CPUState *mon_get_cpu(Monitor *mon)
+> +CPUState *monitor_hmp_get_cpu(MonitorHMP *hmp)
+>  {
+> -    return mon_get_cpu_sync(mon, true);
+> +    return monitor_hmp_get_cpu_sync(hmp, true);
+>  }
+>  
+> -CPUArchState *mon_get_cpu_env(Monitor *mon)
+> +CPUArchState *monitor_hmp_get_cpu_env(MonitorHMP *hmp)
+>  {
+> -    CPUState *cs = mon_get_cpu(mon);
+> +    CPUState *cs = monitor_hmp_get_cpu(hmp);
+>  
+>      return cs ? cpu_env(cs) : NULL;
+>  }
+>  
+> -int monitor_get_cpu_index(Monitor *mon)
+> +int monitor_hmp_get_cpu_index(MonitorHMP *hmp)
+>  {
+> -    CPUState *cs = mon_get_cpu_sync(mon, false);
+> +    CPUState *cs = monitor_hmp_get_cpu_sync(hmp, false);
+>  
+>      return cs ? cs->cpu_index : UNASSIGNED_CPU_INDEX;
+>  }
+> @@ -586,7 +584,7 @@ void hmp_info_registers(MonitorHMP *hmp, const QDict *qdict)
+>              cpu_dump_state(cs, NULL, CPU_DUMP_FPU | CPU_DUMP_VPU);
+>          }
+>      } else {
+> -        cs = vcpu >= 0 ? qemu_get_cpu(vcpu) : mon_get_cpu(mon);
+> +        cs = vcpu >= 0 ? qemu_get_cpu(vcpu) : monitor_hmp_get_cpu(hmp);
+>  
+>          if (!cs) {
+>              if (vcpu >= 0) {
+> @@ -602,13 +600,14 @@ void hmp_info_registers(MonitorHMP *hmp, const QDict *qdict)
+>      }
+>  }
+>  
+> -static void memory_dump(Monitor *mon, int count, int format, int wsize,
+> +static void memory_dump(MonitorHMP *hmp, int count, int format, int wsize,
+>                          uint64_t addr, bool is_physical)
+>  {
+> +    Monitor *mon = MONITOR(hmp);
+>      int l, line_size, i, max_digits, len;
+>      uint8_t buf[16];
+>      uint64_t v;
+> -    CPUState *cs = mon_get_cpu(mon);
+> +    CPUState *cs = monitor_hmp_get_cpu(hmp);
+>      const unsigned int addr_width = is_physical ? 8 : (target_long_bits() / 4);
+>      const bool big_endian = target_big_endian();
+>  
+> @@ -712,24 +711,22 @@ static void memory_dump(Monitor *mon, int count, int format, int wsize,
+>  
+>  void hmp_memory_dump(MonitorHMP *hmp, const QDict *qdict)
+>  {
+> -    Monitor *mon = MONITOR(hmp);
+>      int count = qdict_get_int(qdict, "count");
+>      int format = qdict_get_int(qdict, "format");
+>      int size = qdict_get_int(qdict, "size");
+>      vaddr addr = qdict_get_int(qdict, "addr");
+>  
+> -    memory_dump(mon, count, format, size, addr, false);
+> +    memory_dump(hmp, count, format, size, addr, false);
+>  }
+>  
+>  void hmp_physical_memory_dump(MonitorHMP *hmp, const QDict *qdict)
+>  {
+> -    Monitor *mon = MONITOR(hmp);
+>      int count = qdict_get_int(qdict, "count");
+>      int format = qdict_get_int(qdict, "format");
+>      int size = qdict_get_int(qdict, "size");
+>      hwaddr addr = qdict_get_int(qdict, "addr");
+>  
+> -    memory_dump(mon, count, format, size, addr, true);
+> +    memory_dump(hmp, count, format, size, addr, true);
+>  }
+>  
+>  void hmp_gpa2hva(MonitorHMP *hmp, const QDict *qdict)
+> @@ -757,7 +754,7 @@ void hmp_gva2gpa(MonitorHMP *hmp, const QDict *qdict)
+>  {
+>      Monitor *mon = MONITOR(hmp);
+>      vaddr addr = qdict_get_int(qdict, "addr");
+> -    CPUState *cs = mon_get_cpu(mon);
+> +    CPUState *cs = monitor_hmp_get_cpu(hmp);
+>      TranslateForDebugResult tres;
+>  
+>      if (!cs) {
+> diff --git a/monitor/hmp.c b/monitor/hmp.c
+> index 47fb7cef6de2..2484a2310dff 100644
+> --- a/monitor/hmp.c
+> +++ b/monitor/hmp.c
+> @@ -411,10 +411,10 @@ void hmp_help_cmd(Monitor *mon, const char *name)
+>   * Set @pval to the value in the register identified by @name.
+>   * return %true if the register is found, %false otherwise.
+>   */
+> -static bool gdb_get_register(Monitor *mon, int64_t *pval, const char *name)
+> +static bool gdb_get_register(MonitorHMP *hmp, int64_t *pval, const char *name)
+>  {
+>      g_autoptr(GArray) regs = NULL;
+> -    CPUState *cs = mon_get_cpu(mon);
+> +    CPUState *cs = monitor_hmp_get_cpu(hmp);
+>  
+>      if (cs == NULL) {
+>          return false;
+> @@ -452,7 +452,7 @@ static bool gdb_get_register(Monitor *mon, int64_t *pval, const char *name)
+>  static const char *pch;
+>  static sigjmp_buf expr_env;
+>  
+> -static int get_monitor_def(Monitor *mon, int64_t *pval, const char *name);
+> +static int get_monitor_def(MonitorHMP *mon, int64_t *pval, const char *name);
+>  
+>  static G_NORETURN G_GNUC_PRINTF(2, 3)
+>  void expr_error(Monitor *mon, const char *fmt, ...)
+> @@ -535,8 +535,8 @@ static int64_t expr_unary(Monitor *mon)
+>                  pch++;
+>              }
+>              *q = 0;
+> -            if (!gdb_get_register(mon, &reg, buf)
+> -                && get_monitor_def(mon, &reg, buf) < 0) {
+> +            if (!gdb_get_register(MONITOR_HMP(mon), &reg, buf)
+> +                && get_monitor_def(MONITOR_HMP(mon), &reg, buf) < 0) {
+>                  expr_error(mon, "unknown register");
+>              }
+>              n = reg;
+> @@ -1733,9 +1733,9 @@ void monitor_register_hmp_info_hrt(const char *name,
+>   * Set @pval to the value in the register identified by @name.
+>   * return 0 if OK, -1 if not found
+>   */
+> -static int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
+> +static int get_monitor_def(MonitorHMP *hmp, int64_t *pval, const char *name)
+>  {
+> -    CPUState *cs = mon_get_cpu(mon);
+> +    CPUState *cs = monitor_hmp_get_cpu(hmp);
+>      const MonitorDef *md;
+>      void *ptr;
+>  
+> @@ -1750,9 +1750,9 @@ static int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
+>      for (; md->name != NULL; md++) {
+>          if (hmp_compare_cmd(name, md->name)) {
+>              if (md->get_value) {
+> -                *pval = md->get_value(mon, md, md->offset);
+> +                *pval = md->get_value(hmp, md, md->offset);
+>              } else {
+> -                CPUArchState *env = mon_get_cpu_env(mon);
+> +                CPUArchState *env = monitor_hmp_get_cpu_env(hmp);
+>                  ptr = (uint8_t *)env + md->offset;
+>                  *pval = *(int32_t *)ptr;
+>              }
+> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+> index a0fa37c887ed..afdda1386080 100644
+> --- a/monitor/monitor-internal.h
+> +++ b/monitor/monitor-internal.h
+> @@ -215,7 +215,7 @@ int monitor_can_read(void *opaque);
+>  void monitor_cancel_out_watch(Monitor *mon);
+>  void monitor_list_append(Monitor *mon);
+>  void monitor_fdsets_cleanup(void);
+> -int monitor_set_cpu(Monitor *mon, int cpu_index);
+> +int monitor_hmp_set_cpu(MonitorHMP *mon, int cpu_index);
+>  
+>  void qmp_send_response(MonitorQMP *mon, const QDict *rsp);
+>  void monitor_data_destroy_qmp(MonitorQMP *mon);
+> diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
+> index 6cb0b587fbd4..b16119f4858c 100644
+> --- a/monitor/qmp-cmds.c
+> +++ b/monitor/qmp-cmds.c
+> @@ -169,7 +169,7 @@ char *qmp_human_monitor_command(const char *command_line, bool has_cpu_index,
+>      MonitorHMP *hmp = MONITOR_HMP(object_new(TYPE_MONITOR_HMP));
+>  
+>      if (has_cpu_index) {
+> -        int ret = monitor_set_cpu(&hmp->parent_obj, cpu_index);
+> +        int ret = monitor_hmp_set_cpu(hmp, cpu_index);
+>          if (ret < 0) {
+>              error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "cpu-index",
+>                         "a CPU number");
+> diff --git a/stats/stats-hmp-cmds.c b/stats/stats-hmp-cmds.c
+> index f280ad8c4314..cd1f1deb58bc 100644
+> --- a/stats/stats-hmp-cmds.c
+> +++ b/stats/stats-hmp-cmds.c
+> @@ -226,7 +226,7 @@ void hmp_info_stats(MonitorHMP *hmp, const QDict *qdict)
+>          filter = stats_filter(target, names, -1, provider);
+>          break;
+>      case STATS_TARGET_VCPU: {}
+> -        int cpu_index = monitor_get_cpu_index(mon);
+> +        int cpu_index = monitor_hmp_get_cpu_index(hmp);
+>          filter = stats_filter(target, names, cpu_index, provider);
+>          break;
+>      case STATS_TARGET_CRYPTODEV:
+> diff --git a/target/i386/cpu-apic.c b/target/i386/cpu-apic.c
+> index 2cb3147837d1..3ae20f004b64 100644
+> --- a/target/i386/cpu-apic.c
+> +++ b/target/i386/cpu-apic.c
+> @@ -93,7 +93,7 @@ void hmp_info_local_apic(MonitorHMP *hmp, const QDict *qdict)
+>              cpu_synchronize_state(cs);
+>          }
+>      } else {
+> -        cs = mon_get_cpu(mon);
+> +        cs = monitor_hmp_get_cpu(hmp);
+>      }
+>  
+>  
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index e5ffb10d1565..f0687b5c482d 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -10853,10 +10853,10 @@ static const Property x86_cpu_properties[] = {
+>  
+>  #ifndef CONFIG_USER_ONLY
+>  
+> -static int64_t monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
+> +static int64_t monitor_get_pc(MonitorHMP *hmp, const struct MonitorDef *md,
+>                                int offset)
+>  {
+> -    CPUArchState *env = mon_get_cpu_env(mon);
+> +    CPUArchState *env = monitor_hmp_get_cpu_env(hmp);
+>      int64_t ret = env->eip + env->segs[R_CS].base;
+>  
+>      if (!(env->hflags & HF_CS64_MASK)) {
+> diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+> index f68dd38ac225..72bcab131f77 100644
+> --- a/target/i386/monitor.c
+> +++ b/target/i386/monitor.c
+> @@ -215,7 +215,7 @@ void hmp_info_tlb(MonitorHMP *hmp, const QDict *qdict)
+>      CPUArchState *env;
+>      AddressSpace *as;
+>  
+> -    env = mon_get_cpu_env(mon);
+> +    env = monitor_hmp_get_cpu_env(hmp);
+>      if (!env) {
+>          monitor_printf(mon, "No CPU available\n");
+>          return;
+> @@ -542,7 +542,7 @@ void hmp_info_mem(MonitorHMP *hmp, const QDict *qdict)
+>      CPUArchState *env;
+>      AddressSpace *as;
+>  
+> -    env = mon_get_cpu_env(mon);
+> +    env = monitor_hmp_get_cpu_env(hmp);
+>      if (!env) {
+>          monitor_printf(mon, "No CPU available\n");
+>          return;
+> diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
+> index 0414474f2ffb..5645a5d4d4f5 100644
+> --- a/target/m68k/monitor.c
+> +++ b/target/m68k/monitor.c
+> @@ -13,7 +13,7 @@
+>  void hmp_info_tlb(MonitorHMP *hmp, const QDict *qdict)
+>  {
+>      Monitor *mon = MONITOR(hmp);
+> -    CPUArchState *env1 = mon_get_cpu_env(mon);
+> +    CPUArchState *env1 = monitor_hmp_get_cpu_env(hmp);
+>  
+>      if (!env1) {
+>          monitor_printf(mon, "No CPU available\n");
+> diff --git a/target/ppc/monitor.c b/target/ppc/monitor.c
+> index 99eda7351877..5769829bdd7e 100644
+> --- a/target/ppc/monitor.c
+> +++ b/target/ppc/monitor.c
+> @@ -14,7 +14,7 @@
+>  void hmp_info_tlb(MonitorHMP *hmp, const QDict *qdict)
+>  {
+>      Monitor *mon = MONITOR(hmp);
+> -    CPUArchState *env1 = mon_get_cpu_env(mon);
+> +    CPUArchState *env1 = monitor_hmp_get_cpu_env(hmp);
+>  
+>      if (!env1) {
+>          monitor_printf(mon, "No CPU available\n");
+> diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
+> index 496d519c978d..4c9c0c793b36 100644
+> --- a/target/riscv/monitor.c
+> +++ b/target/riscv/monitor.c
+> @@ -220,7 +220,7 @@ void hmp_info_mem(MonitorHMP *hmp, const QDict *qdict)
+>      Monitor *mon = MONITOR(hmp);
+>      CPUArchState *env;
+>  
+> -    env = mon_get_cpu_env(mon);
+> +    env = monitor_hmp_get_cpu_env(hmp);
+>      if (!env) {
+>          monitor_printf(mon, "No CPU available\n");
+>          return;
+> diff --git a/target/sh4/monitor.c b/target/sh4/monitor.c
+> index 50da650b2e04..4e443152bf56 100644
+> --- a/target/sh4/monitor.c
+> +++ b/target/sh4/monitor.c
+> @@ -41,7 +41,7 @@ static void print_tlb(Monitor *mon, int idx, tlb_t *tlb)
+>  void hmp_info_tlb(MonitorHMP *hmp, const QDict *qdict)
+>  {
+>      Monitor *mon = MONITOR(hmp);
+> -    CPUArchState *env = mon_get_cpu_env(mon);
+> +    CPUArchState *env = monitor_hmp_get_cpu_env(hmp);
+>      int i;
+>  
+>      if (!env) {
+> diff --git a/target/sparc/monitor.c b/target/sparc/monitor.c
+> index 09a15b821a1a..e826e584a918 100644
+> --- a/target/sparc/monitor.c
+> +++ b/target/sparc/monitor.c
+> @@ -30,7 +30,7 @@
+>  void hmp_info_tlb(MonitorHMP *hmp, const QDict *qdict)
+>  {
+>      Monitor *mon = MONITOR(hmp);
+> -    CPUArchState *env1 = mon_get_cpu_env(mon);
+> +    CPUArchState *env1 = monitor_hmp_get_cpu_env(hmp);
+>  
+>      if (!env1) {
+>          monitor_printf(mon, "No CPU available\n");
+> diff --git a/target/xtensa/monitor.c b/target/xtensa/monitor.c
+> index a1082c44e11c..b7b7387706f3 100644
+> --- a/target/xtensa/monitor.c
+> +++ b/target/xtensa/monitor.c
+> @@ -29,7 +29,7 @@
+>  void hmp_info_tlb(MonitorHMP *hmp, const QDict *qdict)
+>  {
+>      Monitor *mon = MONITOR(hmp);
+> -    CPUArchState *env1 = mon_get_cpu_env(mon);
+> +    CPUArchState *env1 = monitor_hmp_get_cpu_env(hmp);
+>  
+>      if (!env1) {
+>          monitor_printf(mon, "No CPU available\n");
+> 
+> -- 
+> 2.55.0.543.g5ebe2ebe4ea8
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
