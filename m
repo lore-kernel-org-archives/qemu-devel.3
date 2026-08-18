@@ -4,97 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB49C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:35:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7337C5DF74
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:35:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwJyP-0005xF-DV; Tue, 18 Aug 2026 09:35:25 -0400
+	id 1wwJyQ-0005xk-Cn; Tue, 18 Aug 2026 09:35:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwJyN-0005wu-L7
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:35:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwJyI-0000Z2-D4
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:35:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787060117;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hrL77UiYk/Zget/e8RSL9xHwWkdSA8I3FunFDzEsRdA=;
- b=NGKStUlVtie9GRXK5SvwSwAYGWgA2rmhXwGKXnB3zrHYSMcYrwNJgRSriABnXA52xhIFTR
- WTi+LY2eiGp5mVm+RwpwHENHyPjkJRgEng20A7+VoF3VDmesQZN3HaU24YYmKedxOp721P
- L1zNe4G9Ef+S+p3qOeDj4lfGw+ceOXE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-596-h1bf6oEoP72DhDAubH6PrQ-1; Tue,
- 18 Aug 2026 09:35:09 -0400
-X-MC-Unique: h1bf6oEoP72DhDAubH6PrQ-1
-X-Mimecast-MFC-AGG-ID: h1bf6oEoP72DhDAubH6PrQ_1787060108
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1wwJyN-0005wp-1v; Tue, 18 Aug 2026 09:35:24 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1wwJyK-0000Z0-9T; Tue, 18 Aug 2026 09:35:22 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 141E11955E85; Tue, 18 Aug 2026 13:35:08 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BAF841956042; Tue, 18 Aug 2026 13:35:04 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 18 Aug 2026 17:29:28 +0400
-Subject: [PATCH v3 62/74] qdev: convert system PropertyInfo definitions to
- use qapi_type
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260818-qom-qapi-v3-62-24b8bbbe3d86@redhat.com>
-References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
-In-Reply-To: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 132B284579;
+ Tue, 18 Aug 2026 13:35:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1787060113; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NPHBxzGr8Z4w1DCDZTmWkWmewlKbBhQ1sEyyt/4Zx9k=;
+ b=i6+89oqkxZ0GnDf12wRlH4vtt3yM8ZtZJEo+MMoUxj2WssYx3DkQhZlWxWV5RDKOtRUEkt
+ 7Wvhdn0iu3qPH5hAOoFY9tl0E0b4FX9iQETVXiYgAcw+kYbjb1h07+dgbUEPJWPl+fPAFU
+ FZNMRe/oK4TwoaQnZb8eim6twb+Hc6k=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1787060113;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NPHBxzGr8Z4w1DCDZTmWkWmewlKbBhQ1sEyyt/4Zx9k=;
+ b=7UPDO8/2FLMlbD/R3Pd90DWvWHC1L2SP0DCdvzz03sl87t4gGSXG0tiReuFnuTAQJCMx+C
+ p1g22Z1cm+spG4CA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1787060109; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NPHBxzGr8Z4w1DCDZTmWkWmewlKbBhQ1sEyyt/4Zx9k=;
+ b=EEzedlTNyXjaJtLPGOVYUE0gR7GWLmACsyU4j1tHXnCExAjDHvem+0VVSdOzMevqH9PfTY
+ jF6T6nLz94Y1z2pas6UQW8UaO2zekBNsS9p4UQm9aQS2zgtzRZrcX6rLLmSL+4IJeOcvvt
+ fvr6rzDQqoYtKbrWroFz8s2k4iYnE/Y=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1787060109;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NPHBxzGr8Z4w1DCDZTmWkWmewlKbBhQ1sEyyt/4Zx9k=;
+ b=2dScrU0zh16asqaY+1vk/0EJFveNqgPYC96GYoZuP0KbQvcP61RS0RKuXaM9JiYv8yLLml
+ 8eBtB7puEnKd1wCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A862722BA;
+ Tue, 18 Aug 2026 13:35:08 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id cexMHoxfhGoGTAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 18 Aug 2026 13:35:08 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Michael Roth <michael.roth@amd.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=16434;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=4Bo/cyQSFiYV2QeJZcz34wORXEtPo4YqPhxF9F/nwuo=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhF9zvlJJ82ZfFXTW9vcvo9MbMKz3PrGbQYOGA
- RfMQgarA3qJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoRfcwAKCRDa6OEJdZac
- 5UC8D/0fsmMVVH+NxUx/0nFh+IhAc+wFli9OHNmMuD/Mu8uXBvFzv7bW4W2TmFTPZFiLPq5dOEt
- oB2Jy4nJ9hXMkirMeyMdseCSs49giypGQLykd5L6fn7Yhu8MraNh7G+w7lM607W1w44xvzlnxNg
- jXNoBOT8Wp4SIgt8WnXGEkPV/mlbty7RyApgs7Ztn3OG5T3UrWVCVAhWfdbDSHSkojZ/xI4FbEy
- DBygmiviXb2z1+he9Cq+G5B4IcyioVNQft2p3nJ/VAptZIbL2KpNCT1X39h/iISjTYbDsJ04Buc
- Tl+LTCwaqnTefx8pN5ER+mmllCCv33kUFO5ksO3+iAbQoBtHHzNEci5GBJGAtUtIz+4qv0aNh2d
- ivv1bHm8K8gAy7pk/eDD7ewNWeqAwV/C1cxRU3wGS4EDnsNJls9OC5Rra6ySlxWcBAy7WB2x1Fu
- u4XxUpav80o+ihC5mkkngvtFFmgxYZDTMRs+INslpOZ7qsxqubTkFBzSvktVwjel2QpB15djNBX
- fL1Nb1rRZ3qsAUAq8re6OIrqRmN6fqX5TWxo7M05olTwMTsI6BNEaAwuDpnSfA1uzcScVg7fGNT
- 7DrKTg5cW+5tuCNnWRDRChiX4vq/Vwc8D4FKicmsJT+Q4MQmcfh8eag2kxyvG73u3yrWrGI5l7Z
- MdWEemjRx0a+OPQ==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Cc: qemu-stable@nongnu.org, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] chardev: Don't unregister yank upon async path
+ connection failure
+In-Reply-To: <20260603141137.1108963-1-farosas@suse.de>
+References: <20260603141137.1108963-1-farosas@suse.de>
+Date: Tue, 18 Aug 2026 10:35:06 -0300
+Message-ID: <87bjazmu0l.fsf@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url, suse.de:email, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo, nongnu.org:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,409 +116,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace .type string and .enum_table pointer with .qapi_type in all
-PropertyInfo definitions in qdev-properties-system.c
+Fabiano Rosas <farosas@suse.de> writes:
 
-Update file-private enum accessor functions to use .qapi_type->lookup
-instead of .enum_table.
+> Commit 5c102ac9 ("chardev: Consolidate yank registration") has moved
+> yank registration in the tcp_chr_connect_client_async() path to after
+> the connection is successful. If qio_channel_socket_connect_sync()
+> fails early, there will be no yank registered to be unregistered in
+> the error path, leading to assert.
+>
+> Remove the now-extraneous unregister.
+>
+> Cc: qemu-stable@nongnu.org
+> Fixes: 5c102ac9 ("chardev: Consolidate yank registration")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3528
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  chardev/char-socket.c | 5 -----
+>  1 file changed, 5 deletions(-)
+>
+> diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+> index e064b105c5..99e01a4875 100644
+> --- a/chardev/char-socket.c
+> +++ b/chardev/char-socket.c
+> @@ -1128,11 +1128,6 @@ static void qemu_chr_socket_connected(QIOTask *task, void *opaque)
+>  
+>      if (qio_task_propagate_error(task, &err)) {
+>          tcp_chr_change_state(s, TCP_CHARDEV_STATE_DISCONNECTED);
+> -        if (s->registered_yank) {
+> -            yank_unregister_function(CHARDEV_YANK_INSTANCE(chr->label),
+> -                                     char_socket_yank_iochannel,
+> -                                     QIO_CHANNEL(sioc));
+> -        }
+>          check_report_connect_error(chr, err);
+>          goto cleanup;
+>      }
 
-Note, this should be a faithful conversion, but it would be worth to
-consider better types than just "str" for references (block node names,
-chardev/netdev IDs, MAC addrs, etc)
-
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- hw/core/qdev-prop-internal.h     |  2 +
- hw/core/qdev-properties-system.c | 93 +++++++++++++++++-----------------------
- hw/core/qdev-properties.c        |  2 +-
- 3 files changed, 43 insertions(+), 54 deletions(-)
-
-diff --git a/hw/core/qdev-prop-internal.h b/hw/core/qdev-prop-internal.h
-index d7b77844fe0b..c190b7b88cf4 100644
---- a/hw/core/qdev-prop-internal.h
-+++ b/hw/core/qdev-prop-internal.h
-@@ -8,6 +8,8 @@
- #ifndef HW_CORE_QDEV_PROP_INTERNAL_H
- #define HW_CORE_QDEV_PROP_INTERNAL_H
- 
-+const QEnumLookup *qdev_propinfo_enum_lookup(const PropertyInfo *info);
-+
- void qdev_propinfo_get_enum(Object *obj, Visitor *v, const char *name,
-                             void *opaque, Error **errp);
- void qdev_propinfo_set_enum(Object *obj, Visitor *v, const char *name,
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index 3381de1144d6..8819a9a0b748 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -27,6 +27,7 @@
- #include "qemu/uuid.h"
- #include "qemu/error-report.h"
- #include "qdev-prop-internal.h"
-+#include "qapi/qapi-type-infos.h"
- 
- #include "qemu/audio.h"
- #include "chardev/char-fe.h"
-@@ -238,7 +239,7 @@ static void release_drive(Object *obj, const char *name, void *opaque)
- }
- 
- const PropertyInfo qdev_prop_drive = {
--    .type  = "str",
-+    .qapi_type = &str_type_info,
-     .description = "Node name or ID of a block device to use as a backend",
-     .realized_set_allowed = true,
-     .get   = get_drive,
-@@ -247,7 +248,7 @@ const PropertyInfo qdev_prop_drive = {
- };
- 
- const PropertyInfo qdev_prop_drive_iothread = {
--    .type  = "str",
-+    .qapi_type = &str_type_info,
-     .description = "Node name or ID of a block device to use as a backend",
-     .realized_set_allowed = true,
-     .get   = get_drive,
-@@ -315,7 +316,7 @@ static void release_chr(Object *obj, const char *name, void *opaque)
- }
- 
- const PropertyInfo qdev_prop_chr = {
--    .type  = "str",
-+    .qapi_type = &str_type_info,
-     .description = "ID of a chardev to use as a backend",
-     .get   = get_chr,
-     .set   = set_chr,
-@@ -389,7 +390,7 @@ inval:
- }
- 
- const PropertyInfo qdev_prop_macaddr = {
--    .type  = "str",
-+    .qapi_type = &str_type_info,
-     .description = "Ethernet 6-byte MAC Address, example: 52:54:00:12:34:56",
-     .get   = get_mac,
-     .set   = set_mac,
-@@ -477,7 +478,7 @@ out:
- }
- 
- const PropertyInfo qdev_prop_netdev = {
--    .type  = "str",
-+    .qapi_type = &str_type_info,
-     .description = "ID of a netdev to use as a backend",
-     .get   = get_netdev,
-     .set   = set_netdev,
-@@ -514,7 +515,7 @@ static void set_audiodev(Object *obj, Visitor *v, const char* name,
- }
- 
- const PropertyInfo qdev_prop_audiodev = {
--    .type = "str",
-+    .qapi_type = &str_type_info,
-     .description = "ID of an audiodev to use as a backend",
-     /* release done on shutdown */
-     .get = get_audiodev,
-@@ -584,7 +585,8 @@ static void qdev_propinfo_set_losttickpolicy(Object *obj, Visitor *v,
-     int *ptr = object_field_prop_ptr(obj, prop);
-     int value;
- 
--    if (!visit_type_enum(v, name, &value, prop->info->enum_table, errp)) {
-+    if (!visit_type_enum(v, name, &value,
-+                         qdev_propinfo_enum_lookup(prop->info), errp)) {
-         return;
-     }
- 
-@@ -604,9 +606,8 @@ static void qdev_propinfo_set_losttickpolicy(Object *obj, Visitor *v,
- QEMU_BUILD_BUG_ON(sizeof(LostTickPolicy) != sizeof(int));
- 
- const PropertyInfo qdev_prop_losttickpolicy = {
--    .type  = "LostTickPolicy",
-+    .qapi_type = &LostTickPolicy_type_info,
-     .description = "Policy for handling lost ticks (discard/delay/slew)",
--    .enum_table  = &LostTickPolicy_lookup,
-     .get   = qdev_propinfo_get_enum,
-     .set   = qdev_propinfo_set_losttickpolicy,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-@@ -631,7 +632,7 @@ static void set_blocksize(Object *obj, Visitor *v, const char *name,
- }
- 
- const PropertyInfo qdev_prop_blocksize = {
--    .type  = "size",
-+    .qapi_type = &size_type_info,
-     .description = "A power of two between " MIN_BLOCK_SIZE_STR
-                    " and " MAX_BLOCK_SIZE_STR,
-     .get   = qdev_propinfo_get_size32,
-@@ -644,9 +645,8 @@ const PropertyInfo qdev_prop_blocksize = {
- QEMU_BUILD_BUG_ON(sizeof(BlockdevOnError) != sizeof(int));
- 
- const PropertyInfo qdev_prop_blockdev_on_error = {
--    .type = "BlockdevOnError",
-+    .qapi_type = &BlockdevOnError_type_info,
-     .description = "Error handling policy (report/ignore/enospc/stop/auto)",
--    .enum_table = &BlockdevOnError_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-@@ -657,10 +657,9 @@ const PropertyInfo qdev_prop_blockdev_on_error = {
- QEMU_BUILD_BUG_ON(sizeof(BiosAtaTranslation) != sizeof(int));
- 
- const PropertyInfo qdev_prop_bios_chs_trans = {
--    .type = "BiosAtaTranslation",
-+    .qapi_type = &BiosAtaTranslation_type_info,
-     .description = "Logical CHS translation algorithm "
-                    " (auto/none/lba/large/rechs)",
--    .enum_table = &BiosAtaTranslation_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-@@ -669,9 +668,8 @@ const PropertyInfo qdev_prop_bios_chs_trans = {
- /* --- FDC default drive types */
- 
- const PropertyInfo qdev_prop_fdc_drive_type = {
--    .type = "FloppyDriveType",
-+    .qapi_type = &FloppyDriveType_type_info,
-     .description = "Floppy drive type (144/288/120/none/auto)",
--    .enum_table = &FloppyDriveType_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-@@ -680,10 +678,9 @@ const PropertyInfo qdev_prop_fdc_drive_type = {
- /* --- MultiFDCompression --- */
- 
- const PropertyInfo qdev_prop_multifd_compression = {
--    .type = "MultiFDCompression",
-+    .qapi_type = &MultiFDCompression_type_info,
-     .description = "multifd compression method"
-                    " (none/zlib/zstd/qpl/uadk/qatzip)",
--    .enum_table = &MultiFDCompression_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-@@ -694,9 +691,8 @@ const PropertyInfo qdev_prop_multifd_compression = {
- QEMU_BUILD_BUG_ON(sizeof(MigMode) != sizeof(int));
- 
- const PropertyInfo qdev_prop_mig_mode = {
--    .type = "MigMode",
-+    .qapi_type = &MigMode_type_info,
-     .description = "Migration mode (normal/cpr-reboot)",
--    .enum_table = &MigMode_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-@@ -707,18 +703,16 @@ const PropertyInfo qdev_prop_mig_mode = {
- QEMU_BUILD_BUG_ON(sizeof(GranuleMode) != sizeof(int));
- 
- const PropertyInfo qdev_prop_granule_mode = {
--    .type = "GranuleMode",
-+    .qapi_type = &GranuleMode_type_info,
-     .description = "Granule page size (4k/8k/16k/64k/host)",
--    .enum_table = &GranuleMode_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
- };
- 
- const PropertyInfo qdev_prop_zero_page_detection = {
--    .type = "ZeroPageDetection",
-+    .qapi_type = &ZeroPageDetection_type_info,
-     .description = "Zero page detection (none/legacy/multifd)",
--    .enum_table = &ZeroPageDetection_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-@@ -729,9 +723,8 @@ const PropertyInfo qdev_prop_zero_page_detection = {
- QEMU_BUILD_BUG_ON(sizeof(SsidSizeMode) != sizeof(int));
- 
- const PropertyInfo qdev_prop_ssidsize_mode = {
--    .type = "SsidSizeMode",
-+    .qapi_type = &SsidSizeMode_type_info,
-     .description = "ssidsize mode: auto, 0-20",
--    .enum_table = &SsidSizeMode_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-@@ -742,9 +735,8 @@ const PropertyInfo qdev_prop_ssidsize_mode = {
- QEMU_BUILD_BUG_ON(sizeof(OasMode) != sizeof(int));
- 
- const PropertyInfo qdev_prop_oas_mode = {
--    .type = "OasMode",
-+    .qapi_type = &OasMode_type_info,
-     .description = "oas mode: auto, 32, 36, 40, 42, 44, 48, 52, 56",
--    .enum_table = &OasMode_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-@@ -824,7 +816,7 @@ out:
- }
- 
- const PropertyInfo qdev_prop_reserved_region = {
--    .type  = "str",
-+    .qapi_type = &str_type_info,
-     .description = "Reserved Region, example: 0xFEE00000:0xFEEFFFFF:0",
-     .get   = get_reserved_region,
-     .set   = set_reserved_region,
-@@ -904,8 +896,7 @@ static char *print_pci_devfn(Object *obj, const Property *prop)
- }
- 
- const PropertyInfo qdev_prop_pci_devfn = {
--    /* The formatted string accepted by the setter is a CLI convenience. */
--    .type  = "int32",
-+    .qapi_type = &int32_type_info,
-     .description = "Slot and optional function number, example: 06.0 or 06",
-     .print = print_pci_devfn,
-     .get   = qdev_propinfo_get_int32,
-@@ -1011,7 +1002,7 @@ inval:
- }
- 
- const PropertyInfo qdev_prop_pci_host_devaddr = {
--    .type = "str",
-+    .qapi_type = &str_type_info,
-     .description = "Address (bus:device.function) of "
-                    "the host device, example: 04:10.0",
-     .get = get_pci_host_devaddr,
-@@ -1021,9 +1012,8 @@ const PropertyInfo qdev_prop_pci_host_devaddr = {
- /* --- OffAutoPCIBAR off/auto/bar0/bar1/bar2/bar3/bar4/bar5 --- */
- 
- const PropertyInfo qdev_prop_off_auto_pcibar = {
--    .type = "OffAutoPCIBAR",
-+    .qapi_type = &OffAutoPCIBAR_type_info,
-     .description = "off/auto/bar0/bar1/bar2/bar3/bar4/bar5",
--    .enum_table = &OffAutoPCIBAR_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-@@ -1062,7 +1052,8 @@ static void get_prop_pcielinkspeed(Object *obj, Visitor *v, const char *name,
-         abort();
-     }
- 
--    visit_type_enum(v, name, &speed, prop->info->enum_table, errp);
-+    visit_type_enum(v, name, &speed,
-+                    qdev_propinfo_enum_lookup(prop->info), errp);
- }
- 
- static void set_prop_pcielinkspeed(Object *obj, Visitor *v, const char *name,
-@@ -1072,8 +1063,8 @@ static void set_prop_pcielinkspeed(Object *obj, Visitor *v, const char *name,
-     PCIExpLinkSpeed *p = object_field_prop_ptr(obj, prop);
-     int speed;
- 
--    if (!visit_type_enum(v, name, &speed, prop->info->enum_table,
--                         errp)) {
-+    if (!visit_type_enum(v, name, &speed,
-+        qdev_propinfo_enum_lookup(prop->info), errp)) {
-         return;
-     }
- 
-@@ -1103,9 +1094,8 @@ static void set_prop_pcielinkspeed(Object *obj, Visitor *v, const char *name,
- }
- 
- const PropertyInfo qdev_prop_pcie_link_speed = {
--    .type = "PCIELinkSpeed",
-+    .qapi_type = &PCIELinkSpeed_type_info,
-     .description = "2_5/5/8/16/32/64",
--    .enum_table = &PCIELinkSpeed_lookup,
-     .get = get_prop_pcielinkspeed,
-     .set = set_prop_pcielinkspeed,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-@@ -1147,7 +1137,8 @@ static void get_prop_pcielinkwidth(Object *obj, Visitor *v, const char *name,
-         abort();
-     }
- 
--    visit_type_enum(v, name, &width, prop->info->enum_table, errp);
-+    visit_type_enum(v, name, &width,
-+                    qdev_propinfo_enum_lookup(prop->info), errp);
- }
- 
- static void set_prop_pcielinkwidth(Object *obj, Visitor *v, const char *name,
-@@ -1157,8 +1148,8 @@ static void set_prop_pcielinkwidth(Object *obj, Visitor *v, const char *name,
-     PCIExpLinkWidth *p = object_field_prop_ptr(obj, prop);
-     int width;
- 
--    if (!visit_type_enum(v, name, &width, prop->info->enum_table,
--                         errp)) {
-+    if (!visit_type_enum(v, name, &width,
-+                         qdev_propinfo_enum_lookup(prop->info), errp)) {
-         return;
-     }
- 
-@@ -1191,9 +1182,8 @@ static void set_prop_pcielinkwidth(Object *obj, Visitor *v, const char *name,
- }
- 
- const PropertyInfo qdev_prop_pcie_link_width = {
--    .type = "PCIELinkWidth",
-+    .qapi_type = &PCIELinkWidth_type_info,
-     .description = "1/2/4/8/12/16/32",
--    .enum_table = &PCIELinkWidth_lookup,
-     .get = get_prop_pcielinkwidth,
-     .set = set_prop_pcielinkwidth,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-@@ -1241,7 +1231,7 @@ static void set_default_uuid_auto(ObjectProperty *op, const Property *prop)
- }
- 
- const PropertyInfo qdev_prop_uuid = {
--    .type  = "str",
-+    .qapi_type = &str_type_info,
-     .description = "UUID (aka GUID) or \"" UUID_VALUE_AUTO
-         "\" for random value (default)",
-     .get   = get_uuid,
-@@ -1254,9 +1244,8 @@ const PropertyInfo qdev_prop_uuid = {
- QEMU_BUILD_BUG_ON(sizeof(S390CpuEntitlement) != sizeof(int));
- 
- const PropertyInfo qdev_prop_cpus390entitlement = {
--    .type  = "S390CpuEntitlement",
-+    .qapi_type = &S390CpuEntitlement_type_info,
-     .description = "auto/low/medium/high (default medium)",
--    .enum_table  = &S390CpuEntitlement_lookup,
-     .get   = qdev_propinfo_get_enum,
-     .set   = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-@@ -1299,7 +1288,7 @@ static void release_iothread_vq_mapping_list(Object *obj,
- }
- 
- const PropertyInfo qdev_prop_iothread_vq_mapping_list = {
--    .type = "IOThreadVirtQueueMappingList",
-+    .qapi_type = &IOThreadVirtQueueMappingList_type_info,
-     .description = "IOThread virtqueue mapping list [{\"iothread\":\"<id>\", "
-                    "\"vqs\":[1,2,3,...]},...]",
-     .get = get_iothread_vq_mapping_list,
-@@ -1310,18 +1299,16 @@ const PropertyInfo qdev_prop_iothread_vq_mapping_list = {
- /* --- Endian modes */
- 
- const PropertyInfo qdev_prop_endian_mode = {
--    .type = "EndianMode",
-+    .qapi_type = &EndianMode_type_info,
-     .description = "Endian mode, big/little/unspecified",
--    .enum_table = &EndianMode_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
- };
- 
- const PropertyInfo qdev_prop_vmapple_virtio_blk_variant = {
--    .type  = "VMAppleVirtioBlkVariant",
-+    .qapi_type = &VMAppleVirtioBlkVariant_type_info,
-     .description = "unspecified/root/aux",
--    .enum_table  = &VMAppleVirtioBlkVariant_lookup,
-     .get   = qdev_propinfo_get_enum,
-     .set   = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-@@ -1364,7 +1351,7 @@ static void release_virtio_gpu_output_list(Object *obj,
- }
- 
- const PropertyInfo qdev_prop_virtio_gpu_output_list = {
--    .type = "VirtIOGPUOutputList",
-+    .qapi_type = &VirtIOGPUOutputList_type_info,
-     .description = "VirtIO GPU output list [{\"name\":\"<name>\"},...]",
-     .get = get_virtio_gpu_output_list,
-     .set = set_virtio_gpu_output_list,
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index e924b040687b..c2980c36afa2 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -101,7 +101,7 @@ static ObjectPropertyAccessor *field_prop_setter(const PropertyInfo *info)
-     return info->set ? field_prop_set : NULL;
- }
- 
--static const QEnumLookup *qdev_propinfo_enum_lookup(const PropertyInfo *info)
-+const QEnumLookup *qdev_propinfo_enum_lookup(const PropertyInfo *info)
- {
-     if (info->qapi_type) {
-         assert(info->qapi_type->lookup);
-
--- 
-2.55.0.543.g5ebe2ebe4ea8
-
+ping
 
