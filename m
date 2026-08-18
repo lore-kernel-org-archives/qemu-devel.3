@@ -4,106 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9740AC5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:15:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 757C9C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:16:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwNPO-0007G0-FJ; Tue, 18 Aug 2026 13:15:30 -0400
+	id 1wwNQ1-0007fE-Dx; Tue, 18 Aug 2026 13:16:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wwNPM-0007FY-81
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:15:28 -0400
-Received: from sonic305-20.consmr.mail.gq1.yahoo.com ([98.137.64.83])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wwNPK-00084I-1u
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:15:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aol.com; s=a2048;
- t=1787073321; bh=ww0do9RIpWZpsVbpNSFOhezYk+OgminhDdsrY20XsMg=;
- h=Date:Subject:From:To:Cc:References:In-Reply-To:From:Subject:Reply-To;
- b=GaNh19QUvPFaQzjGq8mnc2VsGg11xf0nVMfhLsjLDYKmOc0h3V91ozijb2eC4o0yn1C8qkGfWw3R86GNTC0AkabW8RUdvBrpSaR5926j0//2ZsMeSTiWoV7KHSX4mdxk7wcD1DQUevi4RngGwzhzj65gjd39zarlbpY7XRP/mn/rhrH1aeQxQE3ZYiXr1dH1i7I3V1OvA+mcaH8XUE0oODYvU6YGa8w1h4mkuPUg9HfkRYSLG77MLR7HsxoT/lFOO5hUV0zCaPmh60YlpiC34BE/0XYMekcN4V+oxnDatdlSb6Fe7fUn46ZPyLZOIU/7ATgzjVe0fwS2gdTv8FbJvg==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1787073321; bh=v+4Qi5BEw41TP/0I2vqdj5LVgeJipweToZ70c0VID5v=;
- h=X-Sonic-MF:Date:Subject:From:To:From:Subject;
- b=H8FrYQlVToUpnFbShzXFwcfffrsuVhtxeJPz4YGDLDxO37eQ2/Od3KHbnHp+QebBdDO/VSyrKBpcGuLJJsT28GD2pKrL6GIYmyagIrmOqlEtVWPCjCkh/VEmexn1FwsVCSJXI2A964Atzk+Z6CtXf/Yd0F6g6lusaDcl+VFMXzN5cnmLRXdFegAP/Drc/tPcv6eSeZ0tc/vjJ9Uudn0px2xLmhAVaz3rRD17kUGsD1LwC87Z6rYeIoV+19hnQk04OATOdaAxTOJVmVciMMx84yMJjan098aCwDb85NGiwacp3ipbd+TjeFYDz2s21cEyxs/Pv1SU5jM/Og7VeK7Sfg==
-X-YMail-OSG: E6ofAT0VM1n9r71xfRntP8iTNGo8uLmyyFcsFXM3pVg29_OofBq.fDJ1ed6s_lG
- CMLyu2VGGiaPkvmlycrT8I2unAV5dSg2v2gqoBBAuQmeAUkAeZBvrT7fuJiv6u7o.ITpdBFFOGMJ
- BFrwrh6L8M9ggcVmez7q_f0kU6KXdtLD3yjYPaOqyTVFrzEDlAvYax9fxdIcBygJz00P57yDk5ff
- RdAyiRcxXIuIq3BAXnPwxOKTliuLGsNazlZV2ZyRAAb5PVB5eScGMXfmfSkoKH_mEVZ0B9qXwpBo
- JDcMplMaRmmpym3jQo8SJdodeZKubLDYxDws00vKQIBkao0Sw8Jjw2a67H7gVd2z09m48ZkC5Ssa
- 4bHW9FoxL.tM4Eg8qfZ1oIL3t03vblVDjbMlir1wWJ0WOpsAtQp3Yb6ndOC3733h4wF4yhEMrykw
- frIQs7zYpXHwrOYhcVKAC4nDawrOiXkmvCiBYbQf5CvJnuKoo9Rm0ntkmoWKc2GPRrTApKMTFGmB
- KiSVku2ItFIggtgPsk7PazlFiA5.DRAUGrRnqvsbivRY4s2DVaqLUuRH1eleGt4RCGYEpbvosX7z
- V4ttapJHEgFOUpgvOpzrC_cPKUnuPHlnm3y3SnnWw3thp45NpA9jwXW.2IgXKQ1wTVLQyc0NAaSM
- 28GZtu6S0sLgPfGuYLLb2XKw8W01yba6BEjr0PjF04n3UdCSxLytjkuURtyC.QhyFS8jecZKAdkg
- P3aGynupAAtqlmooZ0SLE_9TiMkJqYPhCprxL_r7ygxXE1rLIxgOT0ktkGi5WVUbvHrdv9PW_PUS
- ZrySvs9KH2wwlOdAFEqsP6CyipgS6JshkpjWbE9xS1Y.B2qPgihvFdDGD_1Wz6Fku2BTgev06N0w
- .uPyoOv5MXAA3h0ZQhLNnTz5o._BCSTTUh3OBt9AMTyBd037roaQEnIh5D6WadlNHkREFa.6sAi6
- a3UG6rfd0.kjA1tIIgegNGNZWdQogobFVzSNM9H4Qpok2bXdI.J.yiwT1f0SLxL0mABhedn0KxPS
- Alt0Dl34KoXAuvZlCodGFo9uQ3r_0XWxbKOxSAkGaQ3NZWQkjHtTjDnjeybYs8w2CZEtTbgnvLky
- 7MM0Ridv22E9zHQYgTVHzOHQ4UHa7e1fZb48i2xLiw4D2XJ10KR9WNyeoBbSZGmY1QQ_yZ6PcUmp
- 8w4.qboEupKschHuEyPwJzYqLrfgW1hnomHzWRzQ5aw8yCqhOE1j7nPaGSFGuDuWrHf6RaYGLt3K
- zhMF554qAB_UssU_7NAYBZ2y0aRemhFdTgaiPrQNmHWoE_8F2EscFhWmghiMSUXw0FzyWm2YeOQJ
- RU3shSA63BXJk4oin0fPq1UmlXcQPgVsDyekqrqa8PxZijZFEeH9UN5fjR3js8j35783LWg6Mht6
- AReQFRIyJDyEIqEQpPZyjjI.hrV8wAkNL8F8mcboiM9qB1exOTKwANVMZwF8n2w_7dS5x3xrOagw
- iXKwDFHjJWleZfUnz0aI1.SjWuo06PZWiMGIxjcA8r05lMMwW8fPobbY84VF1sNLg6vzhBZAUAAt
- O22QSOw3GipDrZN.wsqPxdI2YFOlS8B1Zqx5Hb9B6.320hGRtWvaT4wLDflAIEXrk6kRIFymMNYD
- gEidBndyjIqLFSPncyuwhTd82S04JF1L48M0q.SKGQdwe9ERIlUCi1LHqpxWyPRUYeDrb2NvLaXM
- xVg.BBGlHGcMyPuEIQEK7R0BfSrwtt_Lid3287KqYy9MEEzNQPcncUVB.qwNbtl7CFD1031LVgq5
- 60pwaFYEm8jOpvRiU5IJjaDoed1WGMtKRMBeGObvXrRZy0u_8ygMgHtGmlMGV5sknK5MkMiPUkLE
- Ma82oJ_H2APgSNCLMqhF.h8jbS64YuYCRo53ILHhAeFSB0v9WisIBaZCig3EDdPn1rUw_8nG5121
- X2orfiUYj5frjATJoJl1E1vYl4VFrqwRPLLQwiqwgoGUZoLNmp_pJ4Qb4anc8x8eUEdbsiqU8vVh
- Wu0Mce8CiqBCxgOOKeSnnmGRl0fqmlkoeUEYFS5_1EPtoL8so2Y1EvTmOWBEUjqmwN4xxJ.xg5Q.
- 4QLD71532U6lLj4n46CDzKXCd7mpw5fZmPNJEJKhgYyDV9EKdz9N.Tr09rDXxFmC0SdiLHvWjoov
- pZXdWBtdggJCzZmIC6s3MpHTp82wa2cx5gJKYFim_cJ4EXM8RaDgRD81jEqfQ2XqNJdo76usFuvf
- qTzdOqzp8PLJjNpeRgfURzVcQTx_SNffSnBfyDL3GOtpEQgY-
-X-Sonic-MF: <brchuckz@aol.com>
-X-Sonic-ID: bfde24b5-fcdf-40ac-8182-a0be452d90a5
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic305.consmr.mail.gq1.yahoo.com with HTTP; Tue, 18 Aug 2026 17:15:21 +0000
-Received: by hermes--production-bf1-54b5569bdc-h5zdx (Yahoo Inc. Hermes SMTP
- Server) with ESMTPA ID 98c40eed43962414fb5e048669f343c4; 
- Tue, 18 Aug 2026 17:15:19 +0000 (UTC)
-Message-ID: <db8fd04d-bbc7-41c7-8473-b821d7f77d5f@aol.com>
-Date: Tue, 18 Aug 2026 13:15:17 -0400
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wwNQ0-0007ed-0M; Tue, 18 Aug 2026 13:16:08 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wwNPy-0008D3-BF; Tue, 18 Aug 2026 13:16:07 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67IE3U2G504941; Tue, 18 Aug 2026 17:16:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=SwO8lThTltkt7sOOy
+ sVutsLK+vl3XccbvKfzhI0UgF8=; b=a7KVX88YzlMXEByP4UbvPlh1Gtk3VuBHa
+ S4fCc2HhGMdWi/knMDR38qrDaNM4tR5RUTApE1dQogeKAIqVsa1T08RJJW9S3Wkm
+ uZr0EneymkCSQR2qDP970CUPqta9nTF/ssv3yArglfMjjRSdUAej9cE8DD0+mSAx
+ MCf0+NVxpHSnRO2ZOIfNw4VyzZ9+NobpPudLoGakKT27si1YhksHxwdHeEJmCl5R
+ p3DujTHGST2h2y+j63VMl7jNbD/u47ewVrDAK7MY1ZD7VhE7zVqH+uxuE+ZJASgW
+ y8iXbv3wv9/TEyMjCRxt88Rxn8fEPmIp5q+qXECvDXdYWsdKHIvxA==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fu4srfj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Aug 2026 17:16:04 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67IHDjMA030494;
+ Tue, 18 Aug 2026 17:16:03 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33xh4d5g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Aug 2026 17:16:02 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67IHFxBK46203168
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 18 Aug 2026 17:15:59 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E33F020040;
+ Tue, 18 Aug 2026 17:15:58 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0DF852004B;
+ Tue, 18 Aug 2026 17:15:56 +0000 (GMT)
+Received: from shivang.com (unknown [9.124.212.164])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 18 Aug 2026 17:15:55 +0000 (GMT)
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Cc: shivangu@linux.ibm.com, adityag@linux.ibm.com, harshpb@linux.ibm.com,
+ hbathini@linux.ibm.com, mahesh@linux.ibm.com, npiggin@gmail.com,
+ rathc@linux.ibm.com, sourabhjain@linux.ibm.com, vaibhav@linux.ibm.com
+Subject: [PATCH v2 2/2] MAINTAINERS: add self as reviewer for PowerPC RAS
+Date: Tue, 18 Aug 2026 22:45:33 +0530
+Message-ID: <20260818171541.903431-3-shivangu@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260818171541.903431-1-shivangu@linux.ibm.com>
+References: <20260818171541.903431-1-shivangu@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
- support
-From: Chuck Zmudzinski <brchuckz@aol.com>
-To: Jan Beulich <jbeulich@suse.com>
-Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
- Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
- xen-devel <xen-devel@lists.xenproject.org>
-References: <20260802050824.10554-1-brchuckz.ref@aol.com>
- <20260802050824.10554-1-brchuckz@aol.com>
- <2110d4b7-ae37-47aa-99be-ab59e16f6167@suse.com>
- <67579eba-e222-41dd-84bf-8440d2eaf2a9@netscape.net>
- <da2200cd-def7-4cce-a6c2-9f9ac9e202ce@suse.com>
- <de56c8bd-f0e8-4fe9-8cf5-f6807698176c@aol.com>
- <02a7dc18-4184-4e86-84cb-121769187f71@suse.com>
- <1858e8e6-73fa-4017-93e2-c733fbf0ec8d@aol.com>
- <d6e603bf-8dc5-4ac7-842f-ff9d1f67b98f@suse.com>
- <fdec0b6b-eddf-4a36-a755-c67963daa9ea@aol.com>
- <6ecf80ef-2f0e-44fb-beab-dbcf065a4431@suse.com>
- <bb44067c-6739-4e83-a0fd-cc7ea797048f@aol.com>
- <4c58bda6-e9ed-438d-b96e-feda74a6c4c7@suse.com>
- <31a5870f-2a4d-4dc0-af9c-f0567e0f6fb3@aol.com>
-Content-Language: en-US
-In-Reply-To: <31a5870f-2a4d-4dc0-af9c-f0567e0f6fb3@aol.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: WebService/1.1.26254
- mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.aol
-Received-SPF: pass client-ip=98.137.64.83; envelope-from=brchuckz@aol.com;
- helo=sonic305-20.consmr.mail.gq1.yahoo.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: RMPGsSFMYNxPKUlHhBc9pcTRltGVQ-tP
+X-Authority-Analysis: v=2.4 cv=NLLlPU6g c=1 sm=1 tr=0 ts=6a849354 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
+ a=WK6P9NOuF5wEigxtcgcA:9 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDEyNSBTYWx0ZWRfX1hEq/t6D+MYZ
+ tl1pIcBJFvPsejixqhzU9HSPleA2RvumJhqQ46y99SWZMgegf/7m/s5WdcDfXfZqakg35t4SrdC
+ 8wDM65zmVK5k6DjwCkwyi3e15P+tV9s=
+X-Proofpoint-ORIG-GUID: W7Jd8Sc52nYl71eaqHVo74ywin1qGzGN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDEyNSBTYWx0ZWRfX4Fe8ZU5EtqPf
+ A5nDesKa6q37p9/zH8djAq+CUb/5o8etOtNUHf1kB6XmPHHSgsZUDvFYSbh5QO4qdE6BhSaH7QC
+ XiAv15OAZhLt5To/OEPr8ogzBuKA0MH129PO4gUEkLS7RZzQ1svBFOMgxqCflHRUqW9rNuI4Lw0
+ O3di0O2hZ3V0fF+6whJxkEQKciFH1pcW5CvDi1nXyDa2jnc7ymibbsOC4PktrnxL7FAv5S05yxZ
+ oRsh2azARRjQdyczlAgkA2jGxjbIqOeB9zUf2jAk9SaiBl+zGkGkq3h/mLxtadUelo+8ZjGPuNH
+ i5ZrT71nGtRuHNLhKDCg2VApCNZvX2D4dxJ9gzzmvnHHRl9awLF5RlVpJbka10XAibH9sydHvVk
+ DnLLdUkCG2W6osenJLJXUdx7N5DQro+wVf4ipoF7KwzlseS9kiS3OcMPMe+lsvJ1t6KA3kWRlaX
+ gttb4yMB2AiPUX2boKQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-18_02,2026-08-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
+ malwarescore=0 suspectscore=0 clxscore=1015 adultscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180125
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,168 +122,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/18/2026 8:29 AM, Chuck Zmudzinski wrote:
-> On 8/18/2026 8:18 AM, Jan Beulich wrote:
->> On 18.08.2026 13:52, Chuck Zmudzinski wrote:
->>> On 8/18/2026 3:17 AM, Jan Beulich wrote:
->>>> On 17.08.2026 18:04, Chuck Zmudzinski wrote:
->>>>> On 8/17/2026 4:42 AM, Jan Beulich wrote:
->>>>>> On 14.08.2026 17:23, Chuck Zmudzinski wrote:
->>>>>>> On 8/14/2026 9:46 AM, Jan Beulich wrote:
->>>>>>>> On 14.08.2026 15:18, Chuck Zmudzinski wrote:
->>>>>>>>> On 8/14/2026 3:35 AM, Jan Beulich wrote:
->>>>>>>>>> On 14.08.2026 02:45, Chuck Zmudzinski wrote:
->>>>>>>>>>> On 8/13/2026 6:35 AM, Jan Beulich wrote:
->>>>>>>>>>>> On 02.08.2026 07:08, Chuck Zmudzinski wrote:
->>>>>>>>>>>>> -- snip --
->>>>>>>>>>>>> +    /*
->>>>>>>>>>>>> +     * Write rvda_host as 2 successive 32-bit values
->>>>>>>>>>>>> +     * to communicate location of the VBT to the device
->>>>>>>>>>>>> +     * model. If rvda_host is not 0, The device model
->>>>>>>>>>>>> +     * unmaps the OpRegion and eventually maps the VBT
->>>>>>>>>>>>> +     * after we also write the guest address where the
->>>>>>>>>>>>> +     * VBT will be mapped.
->>>>>>>>>>>>> +     *
->>>>>>>>>>>>> +     * If we send rvda_host = 0 to the device model, it
->>>>>>>>>>>>> +     * will assume we do not need OpRegion 2 support and
->>>>>>>>>>>>> +     * it will not unmap the OpRegion.
->>>>>>>>>>>>> +     */
->>>>>>>>>>>>> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
->>>>>>>>>>>>> +               (uint32_t)(rvda_host & 0xfffffffful));
->>>>>>>>>>>>> +    unsigned long rvda_host_upper_32 = (uint64_t)rvda_host >> 32;
->>>>>>>>>>>>> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
->>>>>>>>>>>>> +               (uint32_t)rvda_host_upper_32);
->>>>>>>>>>>>
->>>>>>>>>>>> Why would you need to communicate a host property to the DM?
->>>>>>>>>>>
->>>>>>>>>>> The DM cannot access the host rvda value because it is only accessible
->>>>>>>>>>> from the host kernel, and the DM is only a user-space process on the host.
->>>>>>>>>>
->>>>>>>>>> I don't follow this: Anything the guest can access should also be accessible
->>>>>>>>>> by its DM.
->>>>>>>>>
->>>>>>>>> I think the host OpRegion is not currently accessible by the DM.
->>>>>>>>
->>>>>>>> Can you explain to me how the region becomes accessible to the guest?
->>>>>>>> That would then (hopefully) help me understand why the DM would not have
->>>>>>>> access. Fundamentally any MMIO and any I/O ports that are assigned to a
->>>>>>>> guest are also assigned to its DM.
->>>>>>>
->>>>>>> Currently, in the device model (Qemu) we have:
->>>>>>>
->>>>>>>     ret = xc_domain_memory_mapping(xen_xc, xen_domid,
->>>>>>>             (unsigned long)(igd_guest_opregion >> XC_PAGE_SHIFT),
->>>>>>>             (unsigned long)(igd_host_opregion >> XC_PAGE_SHIFT),
->>>>>>>             XEN_PCI_INTEL_OPREGION_PAGES,
->>>>>>>             DPCI_ADD_MAPPING);
->>>>>>>
->>>>>>> That statement is in the igd_write_opregion(...) function in the
->>>>>>> hw/xen/xen_pt_graphics.c file of the upstream Qemu source.
->>>>>>>
->>>>>>> If I understand our current implementation correctly, this statement
->>>>>>> is what gives the guest access to the host OpRegion (3 pages as defined
->>>>>>> by XEN_PCI_INTEL_OPREGION_PAGES, and in agreement with IGD_OPREGION_PAGES
->>>>>>> in hvmloader code).
->>>>>>
->>>>>> No, it introduces mappings of those pages into the guest's P2M.
->>>>>>
->>>>>>> I don't think this statement makes the host OpRegion
->>>>>>> accessible to the device model, though, so I think, if I understand your
->>>>>>> comment in an earlier about my patch resulting in what you called a "layering
->>>>>>> violation" correctly, that our current implementation is also guilty of this
->>>>>>> same kind of "layering violation."
->>>>>>
->>>>>> That code, if it can be successfully executed, indeed doesn't grant any
->>>>>> permissions (to the DM or the guest). Instead it proves that the DM has the
->>>>>> needed permissions to access the pages itself.
->>>>>
->>>>> So, are you saying it should be possible, without any patches to either Xen or
->>>>> the Linux kernel, for Qemu to get a pointer to the OpRegion? If so, how?
->>>>>
->>>>> I think I could implement what you proposed in an earlier message and do
->>>>> all (or most) of this in the DM instead of here in hvmloader:
->>>>>
->>>>>> The more correct thing to do might be for the DM to
->>>>>> put in place a copy before the guest (i.e. hvmloader) even gains control.
->>>>>> (How in turn the DM would learn of the contents of the opregion is a
->>>>>> separate question then.)
->>>>>
->>>>> Actually, when I was developing this patch, I tried first to do it that
->>>>> way, but the problem was, I could not find a way to get a pointer to the
->>>>> host OpRegion in Qemu.
->>>>>
->>>>> So, how can I get a pointer to the host OpRegion in Qemu?
->>>>
->>>> You don't ask me this question, do you?
->>> 
->>> Are you offended I asked this question? If so, I am sorry. You make me
->>> afraid to ask it again so I will not do so unless you permit to do so
->>> again.
->> 
->> "Offended" is the wrong word; "very puzzled" may better get it. I'm not a
->> qemu person, and I never have been. I can't really help much there.
->> 
->>> All I can say is that surely qemu
->>>> has an existing way to map (host) physical memory; see e.g. how
->>>> xen_pt_msix_init() (imo bogusly) maps the physical MSI-X table of a
->>>> device. "Bogusly" there because that's another layering violation. Plus
->>>> (independently) there and here there's the issue of how to accomplish
->>>> things when not running in Dom0, or when running de-privileged in Dom0.
->>> 
->>> Well, that only proves Qemu *might* be able to access the MSI-X table of
->>> a device, that is, if the calls to open /dev/mem and mmap it succeed.
->>> Why is the MSI-X table all of the sudden relevant? Even if Qemu
->>> can access the MSI-X table of some device, that does not prove that
->>> Qemu can access the host OpRegion of an Intel IGD. So I think my point
->>> still stands: I still don't see proof that it is possible for Qemu
->>> to get a pointer to the host OpRegion without any patches to the current
->>> implementations of Xen and the Linux kernel.
->> 
->> The MSI-X table (and it being accessible to qemu) is the best analogy I
->> could come up with, as that's one tiny area of qemu that I know at least
->> a little.
->> 
->> From a Xen perspective, this analogy should be sufficient: All you need
->> from Xen is for it to permit to establish mappings of the underlying page.
->> As I've pointed out when commenting on a code fragment you presented, the
->> DM (domain) looks to have permission. Everything else is a matter of
->> establishing such a mapping. There the MSI-X table code may also guide
->> you. (Sadly it may also misguide you, since (a) I don't know whether it's
->> appropriate to do things this way in qemu, and since (b) it is, as said,
->> imo a layering violation.)
-> 
-> I agree that accessing the host /dev/mem directly is cringy. I would not
-> really want to do it that way for the host OpRegion.
+I have been contributing to Fadump, MPIPL as well as PowerNV for quite
+some time, and my daily work responsibilities includes taking care of
+PowerPC RAS features. I, therefore would like to step up as a reviewer
+to get notified of incoming changes in this area and help reviewing
+them.
 
-I looked at the current mainline Linux kernel code about access to memory using
-/dev/mem and modern distros set CONFIG_STRICT_DEVMEM which forbids access to
-ordinary system RAM but allows access to what the kernel developers call
-non-kernel memory. Here is a quote from a comment in arch/x86/mm/init.c file
-in the Linux source code:
+Acked-by: Aditya Gupta <adityag@linux.ibm.com>
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
->  * On x86, access has to be given to the first megabyte of RAM because that
->  * area traditionally contains BIOS code and data regions used by X, dosemu,
->  * and similar apps. Since they map the entire memory range, the whole range
->  * must be allowed (for mapping), but any areas that would otherwise be
->  * disallowed are flagged as being "zero filled" instead of rejected.
->  * Access has to be given to non-kernel-ram areas as well, these contain the
->  * PCI mmio resources as well as potential bios/acpi data regions.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 99e6585ca0..62a0751577 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1766,6 +1766,7 @@ PowerPC RAS (Reliability, Availability and Serviceability)
+ M: Aditya Gupta <adityag@linux.ibm.com>
+ R: Sourabh Jain <sourabhjain@linux.ibm.com>
+ R: Hari Bathini <hbathini@linux.ibm.com>
++R: Shivang Upadhyay <shivangu@linux.ibm.com>
+ L: qemu-ppc@nongnu.org
+ S: Maintained
+ F: hw/ppc/spapr_events.c
+-- 
+2.54.0
 
-So I think things like the MSI-X table and the OpRegion would qualify for
-/dev/men access even with CONFIG_STRICT_DEVMEM set, so after seeing this
-I expect I could get a pointer to the OpRegion running in Qemu using
-/dev/mem and mmap, as long as it is running in dom0 with root privileges.
-But as I said earlier, I agree that /dev/mem and mmap does not feel like
-the right way to do it.
-
-So I would like to come back to something else you said in an earlier message:
-
-> (How in turn the DM would learn of the contents of the opregion is a separate
->  question then.)
-
-Let me phrase the question like this: How could the DM gain access to the contents
-of the OpRegion, and for that matter, also the contents of the MSI-X table, without
-also committing a layering violation?
-
-Chuck
 
