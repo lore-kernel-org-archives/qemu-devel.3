@@ -4,103 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7337C5DF74
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69177C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:36:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwJyQ-0005xk-Cn; Tue, 18 Aug 2026 09:35:26 -0400
+	id 1wwJz5-00070c-RW; Tue, 18 Aug 2026 09:36:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1wwJyN-0005wp-1v; Tue, 18 Aug 2026 09:35:24 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <0860734llx@gmail.com>)
+ id 1wwJyz-0006sP-HW
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:36:01 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1wwJyK-0000Z0-9T; Tue, 18 Aug 2026 09:35:22 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 132B284579;
- Tue, 18 Aug 2026 13:35:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787060113; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NPHBxzGr8Z4w1DCDZTmWkWmewlKbBhQ1sEyyt/4Zx9k=;
- b=i6+89oqkxZ0GnDf12wRlH4vtt3yM8ZtZJEo+MMoUxj2WssYx3DkQhZlWxWV5RDKOtRUEkt
- 7Wvhdn0iu3qPH5hAOoFY9tl0E0b4FX9iQETVXiYgAcw+kYbjb1h07+dgbUEPJWPl+fPAFU
- FZNMRe/oK4TwoaQnZb8eim6twb+Hc6k=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787060113;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NPHBxzGr8Z4w1DCDZTmWkWmewlKbBhQ1sEyyt/4Zx9k=;
- b=7UPDO8/2FLMlbD/R3Pd90DWvWHC1L2SP0DCdvzz03sl87t4gGSXG0tiReuFnuTAQJCMx+C
- p1g22Z1cm+spG4CA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787060109; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NPHBxzGr8Z4w1DCDZTmWkWmewlKbBhQ1sEyyt/4Zx9k=;
- b=EEzedlTNyXjaJtLPGOVYUE0gR7GWLmACsyU4j1tHXnCExAjDHvem+0VVSdOzMevqH9PfTY
- jF6T6nLz94Y1z2pas6UQW8UaO2zekBNsS9p4UQm9aQS2zgtzRZrcX6rLLmSL+4IJeOcvvt
- fvr6rzDQqoYtKbrWroFz8s2k4iYnE/Y=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787060109;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NPHBxzGr8Z4w1DCDZTmWkWmewlKbBhQ1sEyyt/4Zx9k=;
- b=2dScrU0zh16asqaY+1vk/0EJFveNqgPYC96GYoZuP0KbQvcP61RS0RKuXaM9JiYv8yLLml
- 8eBtB7puEnKd1wCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A862722BA;
- Tue, 18 Aug 2026 13:35:08 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id cexMHoxfhGoGTAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 18 Aug 2026 13:35:08 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] chardev: Don't unregister yank upon async path
- connection failure
-In-Reply-To: <20260603141137.1108963-1-farosas@suse.de>
-References: <20260603141137.1108963-1-farosas@suse.de>
-Date: Tue, 18 Aug 2026 10:35:06 -0300
-Message-ID: <87bjazmu0l.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <0860734llx@gmail.com>)
+ id 1wwJyx-0000eW-NW
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:36:01 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2caed617615so60994375ad.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 06:35:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1787060158; x=1787664958; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=rnpSMHdKxpifgB7rbR0f3HT1pfTaEjaN1jkrKszzRJQ=;
+ b=iu3Fge/3d3kvMsy319h7GTDeACNH9+afGDcc+DsA8mQnNlExoStPBmsdXEQ7/+NC4c
+ x5W3BJ5VijBDC8lpNZ1oCh9vGkXbPtjexDK+Vf2FqC24TUhGErcJoxzgzlVUgMP/aP2R
+ YfnvzGq6+hz5ZCqk/20HmT2CAXBRwzVgfmMRdUTQ9OltMvoUhoRoCwTArSOm0bgT3p0e
+ eCyDqlhUHKh2f8PJTGnWV3avas3Pd3/Sp4GWGObmRdzo41JfsRjUvo3RBCLLCeebSYqU
+ L+4v3NOcdLNmrBcDIvfqOJVx2SGcwxN2yFJRMNcC26mzyBvG/nCVOcQMqQoXAEksBL0H
+ SzSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787060158; x=1787664958;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=rnpSMHdKxpifgB7rbR0f3HT1pfTaEjaN1jkrKszzRJQ=;
+ b=IdZK7R55KliERIRXOytGM/QXf+HsN/QgnAC2LbHp/M3a/fzAN4i5QIxAscqWQ/kmto
+ Byc9k7yQF/1X8A1V26p6Vx7YORV0+dEV7CmLMDZ0C0VOmAsLocP7PYpXJQk62NrjUT/W
+ H4WfzwkFrD3AIsmCUIgCrM0pMeRWUQzyZ7Lxd7WWdMbrQIEIGZJMWlleC9m7izRSgwQi
+ ErEjY2eiV4Je08dmpFFKgQRhHlcxSPdr4TAIB9tPcxSgfMRR4oGsJgtjUiqJqbIpserQ
+ pbdVWpBz4qm5QJ979MSxUePdgFGRUMiX+fvd3QWX/WvpPQP9DzCcdpbU32zJJeY64SNe
+ yfPw==
+X-Gm-Message-State: AOJu0YxwIa9zEJktmsTVt5FMW74xJ3xhTsgaaCtNNjLq9z9vCbucNHN2
+ GXIytmYRYwSJ5eKvDFNEHuV8cee3EDeZqcJjvlx9xdczDw0EDtaZEI1h
+X-Gm-Gg: AR+sD11Tdx0Unt3DmYc5rfTBBUmg0pgIZCsWDa63zjEjqrajPBzctweHfpuahZ7nzgI
+ wBnnVlx3kRh6amLdLtMzPdSKQOykhbPuWFjIyXheoaBllQOHi1ONjUiUFTNjsOKCnJ0xcF7LkGu
+ OcgbmOcgqtwYm7gQWt4oREXzcNmCXRaePFkO7r/9HhpeOVfemPNiFEPTIQUiEyTSNRMIpV8m91c
+ vzoUPcNjDoXA1+kZxHbpEYSoAIG4431bZT+DXjtiA1fUD6YV7Gwld0QPu5FKBnHq0KD2sOamJgN
+ K7LWjcjW5MlrjKDkN/FN1I+NELznjCPLFkEGGJ/NQHfny76W90/+EielJe5+q39ugJQy60kgQid
+ rmYE7GBKFfOGFrnSTuhAG58DXIY4SaAG++GEy892BbfVdBkoarLYsoYOUqcfu5lm4ZJ2iMNAq/S
+ Th1wBCXyMBVDoQMfW5+krQ+AWXbQnPt4fySlj9rvhF1l/+e9HwJzDh8xFdYOAOVMeSaI/BsEr48
+ 4Wz2CsnS+WJvJRvFQ==
+X-Received: by 2002:a17:903:4b50:b0:2c9:a5e9:c26e with SMTP id
+ d9443c01a7336-2d3b0eec2e4mr420338295ad.13.1787060157672; 
+ Tue, 18 Aug 2026 06:35:57 -0700 (PDT)
+Received: from [172.17.0.5] ([42.193.175.155])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2d5d014d965sm8066845ad.35.2026.08.18.06.35.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Aug 2026 06:35:57 -0700 (PDT)
+From: Simon Law <0860734llx@gmail.com>
+Subject: [PATCH v2 0/4] Kendryte K230 CMU register model
+Date: Tue, 18 Aug 2026 21:35:49 +0800
+Message-Id: <20260818-feat-k230-cmu-v2-0-57eadb98f40f@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url, suse.de:email, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo, nongnu.org:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALVfhGoC/3XMQQ6CMBCF4auQWTumDKRSV97DsMB2ChMFTItEQ
+ 3p3K3uX/0vet0HkIBzhXGwQeJUo85SDDgXYoZt6RnG5gRRp1SiDnrsF71QptOMLzU0Ta+eo8hX
+ kzzOwl/fuXdvcg8RlDp+dX8vf+k9aS1TYnAyZhmxda3vpx04eRzuP0KaUvmvntWqqAAAA
+X-Change-ID: 20260809-feat-k230-cmu-9b62e6dd23f3
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, 
+ Chao Liu <chao.liu@processmission.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: b4 0.16.0
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=0860734llx@gmail.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,40 +110,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+The Kendryte K230 machine currently lacks the Clock Management Unit (CMU)
+register interface required by the K230 SDK U-Boot and the Linux K230 clock
+driver. As a result, software probing the PLL and sysclk providers cannot
+observe the expected reset values or register update semantics.
 
-> Commit 5c102ac9 ("chardev: Consolidate yank registration") has moved
-> yank registration in the tcp_chr_connect_client_async() path to after
-> the connection is successful. If qio_channel_socket_connect_sync()
-> fails early, there will be no yank registered to be unregistered in
-> the error path, leading to assert.
->
-> Remove the now-extraneous unregister.
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: 5c102ac9 ("chardev: Consolidate yank registration")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3528
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  chardev/char-socket.c | 5 -----
->  1 file changed, 5 deletions(-)
->
-> diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-> index e064b105c5..99e01a4875 100644
-> --- a/chardev/char-socket.c
-> +++ b/chardev/char-socket.c
-> @@ -1128,11 +1128,6 @@ static void qemu_chr_socket_connected(QIOTask *task, void *opaque)
->  
->      if (qio_task_propagate_error(task, &err)) {
->          tcp_chr_change_state(s, TCP_CHARDEV_STATE_DISCONNECTED);
-> -        if (s->registered_yank) {
-> -            yank_unregister_function(CHARDEV_YANK_INSTANCE(chr->label),
-> -                                     char_socket_yank_iochannel,
-> -                                     QIO_CHANNEL(sioc));
-> -        }
->          check_report_connect_error(chr, err);
->          goto cleanup;
->      }
+This series adds a minimal, deterministic K230 CMU model.
 
-ping
+The model covers:
+
+- four PLL register blocks at 0x91102000..0x9110203f;
+- the defined sysclk registers in the 0x91100000 window;
+- the software-visible SPI2AXI_CLK_DIV register at sysclk offset 0x108;
+- reset values and writable/reserved/read-only masks;
+- PLL control write-enable semantics;
+- write-one-to-trigger update behavior;
+- deterministic PLL lock and initialization status;
+- VMState for stable PLL and sysclk register state;
+- qtest coverage for reset, masks, write-enable, W1T, status, sysclk
+updates, unknown offsets, and system reset;
+- K230 machine wiring and user-facing documentation.
+
+---
+Changes in v2:
+- Drop the extra K230 Machines maintainer entry (Chao Liu).
+- Consume descriptor w1t_mask on MMIO writes so W1T strobes self-clear
+  and are never retained.
+- Align wrapped questions fix (Chao Liu).
+- Link to v1: https://lore.kernel.org/qemu-devel/20260809-feat-k230-cmu-v1-0-8792982c446c@gmail.com
+
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Chao Liu <chao.liu@processmission.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>
+Cc: Weiwei Li <liwei1518@gmail.com>
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: qemu-riscv@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>
+Cc: Laurent Vivier <lvivier@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+
+---
+Simon Law (4):
+      hw/misc: model K230 CMU registers
+      hw/riscv: connect the K230 CMU
+      tests/qtest: add K230 CMU coverage
+      docs/system/riscv: document K230 CMU support
+
+ MAINTAINERS                 |   3 +
+ docs/system/riscv/k230.rst  |  22 ++
+ hw/misc/Kconfig             |   3 +
+ hw/misc/k230_cmu.c          | 903 ++++++++++++++++++++++++++++++++++++++++++++
+ hw/misc/meson.build         |   1 +
+ hw/misc/trace-events        |   9 +
+ hw/riscv/Kconfig            |   1 +
+ hw/riscv/k230.c             |  14 +-
+ include/hw/misc/k230_cmu.h  |  58 +++
+ include/hw/riscv/k230.h     |   2 +
+ tests/qtest/k230-cmu-test.c | 312 +++++++++++++++
+ tests/qtest/meson.build     |   3 +-
+ 12 files changed, 1325 insertions(+), 6 deletions(-)
+---
+base-commit: f893c46c3931b3684d235d221bf8b7844ddbf1d7
+change-id: 20260809-feat-k230-cmu-9b62e6dd23f3
+
+Best regards,
+--  
+Simon Law <0860734llx@gmail.com>
+
 
