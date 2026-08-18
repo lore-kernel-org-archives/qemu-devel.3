@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB0B2C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 19:28:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86894C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 19:28:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwPTn-0004Vc-7L; Tue, 18 Aug 2026 15:28:11 -0400
+	id 1wwPTl-0004Fi-2E; Tue, 18 Aug 2026 15:28:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wwPTe-0003rP-7c
+ id 1wwPTe-0003rU-8A
  for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:28:03 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wwPTc-0007Ru-BZ
+ id 1wwPTc-0007Rw-Ab
  for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:28:01 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IHH4vV3003284
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:27:57 GMT
+ 67IHJG2p735618
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:27:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- gJk15R3owpZTSh2kXMfU0JoX2snQfHEBzK4pw87s/UM=; b=ByKTkxY3uQ5f5h+J
- /n+vt+azD8552jsqfm59QCPd2tfXRilV5IjQshfcKVQSRF4BuZ2fxHITKQ2WBc4b
- kClqHheOJUowOSIf9doOmETf/ng0evqkgKu+m9DLtLBIXTPLhNDg/fnGA+c9nh53
- gy5+wp9m3VxxJFltWOOLeXztMzAkithe1xR/I06yliKbMcgH62pq7FJewiJ0ravL
- aqMtbqtDfH4bBNn4B0Pg8elhtlsb6XKetP7R9sX1cZxVq9DxscSTSzwBN0c2xejC
- fAO4nFpUTThwUTZ0jT3cUS8tvQh3o/3KsIvBjTq5m+YRYkow36Btoapizf1AQLpR
- +1dzsA==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4frmv3y7-1
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=K6SqjwE6Qbc
+ p1IA3clkBgomlMnHmyLB0NSKKiEwbRgM=; b=GWEQpS4NjISMtDOATVV5TftRt/v
+ 1hFYFfxCTCrh7ZociVlh/ajJXTP+DUZD0K1yIGr6tblabPnwkx8Yl0xYSJ2GMhya
+ GR9vncFtHZLi3Bm/dlJaGFZ3Jpmc59zpzcSVYLE8BsaQ9vTveVQEQUDqnSKSAcNZ
+ YBWH2LJ2pqi+t8qLOpvBJ4WKSzfwRreWGjsHFIZMWalFsCVVwuV8sGNu16PALWBT
+ BmisDdnkfuaT7MWf8MV2aZYbOkRawKiu3QiS+/x1ivhMMpirA9IWflDQixIjFFMe
+ UWaFw0b+T7xNDJ0OEvR66IY4eq1Z6hW2gw4ONKQK5AtXXjFDrl471pdKREA==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4reshmab-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:27:57 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-cab048cdb3eso166433a12.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 12:27:57 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:27:56 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-38e7ff7b375so407092a91.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 12:27:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787081277; x=1787686077; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=gJk15R3owpZTSh2kXMfU0JoX2snQfHEBzK4pw87s/UM=;
- b=PvHD0kI0wP80CPZuXSPDm0hQqgPFL5y3nFm9Oq1KbHOeS2r5tjdrvU17khm3Xg0CZs
- 8K0i7fsT0Ig26t4MIjal81XxWnUM1sL/TZpZLiaDWRcLVhUgIb+4ck5EeScIqCWIuyGj
- lElWMpkGdq1OjN0iCIgKWGh/JcfulrYEMWWRrNDa3Xlc9pDc6VGPgaZmQpDU4W+ntGoZ
- 1qaAB2eKAkfscM2GfK7Dkw/R6PJ7nU76YozUpwZRSMDIspDQExLAzXuNSzzwJOyJJi9F
- 68IoaGh5Fy5H26TVC1JOCa8G3RuItRT75N4pjBgUKXfedU/E2Z7YDGujyvYCBVLysubm
- 1u0Q==
+ d=oss.qualcomm.com; s=google; t=1787081276; x=1787686076; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=K6SqjwE6Qbcp1IA3clkBgomlMnHmyLB0NSKKiEwbRgM=;
+ b=McM/lseQ5GNFzrO4VvOM5El3fwjdp5oEn2Nn3nfrMeoop04zffCISiSk6VVN3Omx4V
+ WCF9Nr8bPP/UBtFwX/OKdrn3yuWxQ2B8dFw0Qa9NAAIjP+H38T18RBPhy/KI4mO6Gqu0
+ TBjnkWa3YCbyz0qrePCFpV3BhFin5EIqEeVhSrLz1aNIUsnyKrLFbsoQzAVKx7BbfKL7
+ Oe5vuAu54kybmWP8/1RJw9VVDIEcXvsGK/PTad2ebUF0byfe2cZR2v/ruHaHJWInlQ5H
+ I9waI4V1pOL7aYnlrtw24vE14FObegQXitS9IFpzoS0kUO0pa1i23IsGNixs9B8AZFNN
+ BBHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787081277; x=1787686077;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=gJk15R3owpZTSh2kXMfU0JoX2snQfHEBzK4pw87s/UM=;
- b=KdX3KJ+Az7QA+QIGP2W77bUaUJjy/8JdsYSbHDV4FwUP9AewqLrspdRxEew+eiStzV
- wRNEYiZahQnYEqF+Ho4XqF7gFs0406UFT8prqMsG+tCnyJvCkSGcloge65Cq4eURXSG7
- PbyjDry7BdYAVVVmrxkejLzlsuECCW2EOs3jfh2vkW0M2t5erNfj5VtnC3cAV5lwsaxQ
- dVYklx4+/M/hZ/a6eiyGKutqxDJWNvqcoy7RLIXWGEv7zpg2YdBqHcr0yuJFgy4aLJAG
- p0EioEb2w/yIIxHOqYpbm2XOiKwOIP9Cxi3V3NutgdfAazABhKbSRlLyJapXRtxQfXTp
- M7lA==
-X-Gm-Message-State: AOJu0Yz5/3WxT5y4Wmu5GBaZ6nMflh9jqSJERPf+lMHNMji4n2yHmVbx
- 9sDNNFVJwVzfAVGhxFiCu2iykRkySO6qbrGd/pMiWHME/ZDwenDjxQ5FuciMFuO84245y/1Cza9
- phyQLZb1jkWQUb9GSayhQ/tYaQXg7GFVi7NY7hYU2LcUV0DNOUBaXk02pF8aRbj9GbQ==
-X-Gm-Gg: AR+sD10IOMGL94SDVXJnMwakxw4Mv18EyLMJC/W/3o+uaNF/1jwHAepp26Av2bH2XPg
- IBm7iBh4GcCXY7XIebVCxAQGU++LTDIJmdRnUrqQF6gdZc2BsSgDwlks5/+ImhrnUrcbye296Wl
- il0evfFYWlaUN6TzK+0uss6gfkYD/o7dLJj0DoYw1GWEFrEfdzB5seHsMxBLJLBGF1BKYjuxS3U
- +Bd/e7EbTySDflGtjaU8DL8LurZjWHj4R7yQ3xNmUSSpWJbReYgVpdmh8V+lXgj5ggz+uRqHMck
- iEvpDjSpscvKhbgYURyrpTCbOBUfIheJBXQjUCxrBAfucA3+EeXT0qNduvRCUW0LlrQsyrrO+Gs
- MmUdfR9ITXcr+dBf7G6Frbb0z6fa7sG+UxYXMY6VS4d9OmM8cHmp3DbBiw58=
-X-Received: by 2002:a05:6a20:734d:b0:3c3:a7ab:135a with SMTP id
- adf61e73a8af0-3ccff1115bemr118515637.20.1787081276532; 
- Tue, 18 Aug 2026 12:27:56 -0700 (PDT)
-X-Received: by 2002:a05:6a20:734d:b0:3c3:a7ab:135a with SMTP id
- adf61e73a8af0-3ccff1115bemr118454637.20.1787081276135; 
- Tue, 18 Aug 2026 12:27:56 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787081276; x=1787686076;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=K6SqjwE6Qbcp1IA3clkBgomlMnHmyLB0NSKKiEwbRgM=;
+ b=LMsqgx4Fy0tpNJ6RlTQ8dIf2zZMi9nSfrUfAcYwA4qBHcOrUjznEKZFPBVo7jLgGit
+ inqTHVcyJqT4yaFNrKt8a7QNAbYBBQh9UHUkNETKSMrBs5RiIkckfD2zLBc9wEoK+HU4
+ M4cj9nJN0LbvOsfjzKFd1fUn+qhrCikxJhU5Tnby27lkAWoqtzsw76cEmK5lQb6z8W5k
+ x3apZxz7wz9e2GctEbf5bZap/3ArHvxCk1aY3b+TO6yhvsvvN7kPeezIHf8rdh2QY9CF
+ vNUOEZAgkVzrJ4E8ZCz4/K8fZsyAec4EHi/WH6a4pSrEFZH9u2YUGSpg4od/VqNEHuIY
+ WD9A==
+X-Gm-Message-State: AOJu0Yy+EWBdLvylGkqcOZwNFEoRFeUYbN5QxOxPc0/U1R4wnApUk1CY
+ zcTsu1BHtRoCmOkCdGjaIemTfmQS5g8bBM5h9oiQna/HCMWZzthDA730/eA7FL6pJvNwtA7M2NT
+ OlONrSWolFW9qqTsdBxEDbRpZ2ujqXrzhZPgKa4nliRmjAfJt1q8LLcGvdghVbBK15g==
+X-Gm-Gg: AR+sD13cNETsDxARt3XipwSdc3y75e08UIoM7Smgmk1nd2xuJT3bDCyX/vq9at1pgrC
+ h565wpPwEmb0IOHOmXzpGEKrIjtOLra7SfbcNAvoBfVZjGkfjxg/0U9JW/dg5WnFw+Rs+xLoiN8
+ XcEBc4PO2QANz6uQutAQADho5MUq7JBboUjXtw3flnQJl43gvGgIOQ/HU4fIC7va5IsaUagocGI
+ X/t4PA9NZ9ZFXWvfwS6ra9qu5DDlGYi7OyaNlNDhBB21ZOFTsFMmZERpBS6vfQoAwlcwxlgK9co
+ +WgXBnSB0D3M4wfq+gWSeY/t1fHNwjHf+LWmkgYW3ZFNP+g9gWi7Xua+NxKQZv3MmaNf8UNuEN+
+ myXw4YqeemmtuTbjsawYpgRuDwoNBXslMcI0ahT+haYCV/GqNxtuR2GW3yPI=
+X-Received: by 2002:a17:90b:2d03:b0:381:528a:808c with SMTP id
+ 98e67ed59e1d1-3957b336667mr73405a91.12.1787081275330; 
+ Tue, 18 Aug 2026 12:27:55 -0700 (PDT)
+X-Received: by 2002:a17:90b:2d03:b0:381:528a:808c with SMTP id
+ 98e67ed59e1d1-3957b336667mr73327a91.12.1787081274808; 
+ Tue, 18 Aug 2026 12:27:54 -0700 (PDT)
 Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-326794c0c94sm36782451eec.9.2026.08.18.12.27.55
+ 5a478bee46e88-326794c0c94sm36782451eec.9.2026.08.18.12.27.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 12:27:55 -0700 (PDT)
+ Tue, 18 Aug 2026 12:27:52 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -100,52 +98,49 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PATCH v7 049/104] tests/tcg/hexagon/overflow.c: add missing include
-Date: Tue, 18 Aug 2026 19:22:13 +0000
-Message-ID: <20260818192309.22169-50-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v7 048/104] tests/tcg/arm: system tests
+Date: Tue, 18 Aug 2026 19:22:12 +0000
+Message-ID: <20260818192309.22169-49-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818192309.22169-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260818192309.22169-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfXxeVRsKzfcSAo
- 9sBVXGuC/oHqZl1IKaP6CI84+yBgY7A0yQ75LHy9jlrXGb62ym7t5dK/m9buzc+1PQh+ToDxFzs
- rbmKq8g0Trl1RHKll74Lr6GeaN4JVUGLQFAW8cS/y1qXcIGYJxT0dgYsQshLUjFg03GtA9HqYr3
- KDYtE9PrzybC/b3Cnhpfafz1rq64yoV+IXAtoJ/IPypvW5ugh9Ue2EMpraW0DvwhweJ9Ieou1Fv
- QOMbu+ZXQwmfyc+OMcockHjuNg+OEKVuNAA5lOCJGAKMJY2TuDNjs85juMqLE785VeUB3ec6QOY
- /WiaHMjnD3+ePyUiKAhREXCiOO5zwjZPhzbp2XdgeOWs6xnxoOQS+5JWbSvWQoHjtzTqBNSzbGs
- 6mHdcHehwiPfuGZnWqpqGROot2ey64l0IAwgt6TYkrXxZw0quJsEFnHVeYVPf7u82mOXO9cZazl
- XiN+4C5p2Fhs1F1fGeA==
-X-Proofpoint-GUID: UUriBi-9vtNO6au26xJmDHdbyNTP8U12
-X-Proofpoint-ORIG-GUID: UUriBi-9vtNO6au26xJmDHdbyNTP8U12
-X-Authority-Analysis: v=2.4 cv=GtlyPE1C c=1 sm=1 tr=0 ts=6a84b23d cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=mDV3o1hIAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8
- a=27jwiZK16oKz2i4YsWoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=3WC7DwWrALyhR5TkjVHa:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfX4R3kZtE2wjJD
- lnrcy7ovBjc6XTm4lUDUgJwFm8Z3yKB2RbtlHtjXHQCJDJZpNuAGtoTbA+zLIrLMrx/2UdxXWZD
- iD1VYJXLPOupNnZ19gMFbM9Hn7nve+4=
+X-Authority-Analysis: v=2.4 cv=Ne/WEWD4 c=1 sm=1 tr=0 ts=6a84b23c cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=VnNF1IyMAAAA:8
+ a=EUspDBNiAAAA:8 a=7m_YixJVTNSDrcG_JfQA:9 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-GUID: iE4O31X-pJ5DIkThiWd8c19Tb_9dBon-
+X-Proofpoint-ORIG-GUID: iE4O31X-pJ5DIkThiWd8c19Tb_9dBon-
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfX1xYi1HGosodb
+ 4WaxFf2S9q3zuN5d2Ozy0vuKEzlOEp1y+DoefAgEzJ7qQrGNnsstIOMundlLQ9IPcoev57+PN+J
+ FGWlAjs3yYt0j3MFGY/zrsHZqTtJSnw=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfXyk+map/CWrLN
+ DCnbaAbqeH6Ljz/V6Cqq8fhLbjz24QFyDx89yZpOuuSM35O8V/eJ2EqxLJgNd1s7NrcG/XEMZkC
+ rS1jQLwXl6nMi/1apO2QDx8hBiVc6oBTzG55Jx8q2z4A+wyN9GIeCmVWs1AGNdIgkV96pjyrvda
+ zyyXO4TvMGve+gxg4Yo8QN6dQHeHD/lInUmLGg8+rqB9E8JEuM3FZDqVuLrrUYjMJnKYi00kiky
+ Kpqgqg1USkd3TvXyb8c3/3QDvX5YdYz671vF3CUfZkwLpB8biqnmktdHc7XvLYR1QXs4e3KVCpT
+ 4KqKogBGFWRCJUye7M67gVynqIUgr3to/p/8KcjHFb4jvWhbUGHDP+WQXJBthRPn3HFCYPDKYqx
+ zpo2zZBsvRiJSIT91VSKSe3aGb/YHpK3rfMdlnOSpbqC/cznk95ensdIh1ozsSAvKeHfMywCGjx
+ SiTtskxoZ5TWmYFSCtA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-18_03,2026-08-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 impostorscore=0 lowpriorityscore=0 phishscore=0
- adultscore=0 bulkscore=0 clxscore=1015 spamscore=0 priorityscore=1501
+ adultscore=0 priorityscore=1501 malwarescore=0 suspectscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180142
-Received-SPF: pass client-ip=205.220.168.131;
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -162,29 +157,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-../tests/tcg/hexagon/overflow.c:59:1: error: unknown type name 'bool'
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/hexagon/overflow.c | 1 +
- 1 file changed, 1 insertion(+)
+ tests/tcg/arm/Makefile.softmmu-target | 80 ---------------------------
+ tests/tcg/arm/meson.build             |  2 +
+ tests/tcg/arm/system/meson.build      | 68 +++++++++++++++++++++++
+ 3 files changed, 70 insertions(+), 80 deletions(-)
+ delete mode 100644 tests/tcg/arm/Makefile.softmmu-target
+ create mode 100644 tests/tcg/arm/system/meson.build
 
-diff --git a/tests/tcg/hexagon/overflow.c b/tests/tcg/hexagon/overflow.c
-index 7b5b9ebdde6..9ac2d6eab62 100644
---- a/tests/tcg/hexagon/overflow.c
-+++ b/tests/tcg/hexagon/overflow.c
-@@ -15,6 +15,7 @@
-  *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-  */
+diff --git a/tests/tcg/arm/Makefile.softmmu-target b/tests/tcg/arm/Makefile.softmmu-target
+deleted file mode 100644
+index b66074b0b43..00000000000
+--- a/tests/tcg/arm/Makefile.softmmu-target
++++ /dev/null
+@@ -1,80 +0,0 @@
+-# -*- Mode: makefile -*-
+-#
+-# ARM SoftMMU tests - included from tests/tcg/Makefile
+-#
+-
+-ARM_SRC=$(SRC_PATH)/tests/tcg/arm/system
+-
+-# Set search path for all sources
+-VPATH 		+= $(ARM_SRC)
+-
+-# Specific Test Rules
+-
+-test-armv6m-undef: test-armv6m-undef.S
+-	$(CC) -mcpu=cortex-m0 -mfloat-abi=soft \
+-		-Wl,--build-id=none -x assembler-with-cpp \
+-		$< -o $@ -nostdlib -static \
+-		-T $(ARM_SRC)/$@.ld
+-
+-run-test-armv6m-undef: QEMU_OPTS=-semihosting-config enable=on,target=native,chardev=output -M microbit -kernel
+-
+-ARM_TESTS+=test-armv6m-undef
+-
+-# These objects provide the basic boot code and helper functions for all tests
+-CRT_OBJS=boot.o
+-
+-ARM_TEST_SRCS=$(wildcard $(ARM_SRC)/*.c)
+-ARM_TESTS+=$(patsubst $(ARM_SRC)/%.c, %, $(ARM_TEST_SRCS))
+-
+-CRT_PATH=$(ARM_SRC)
+-LINK_SCRIPT=$(ARM_SRC)/kernel.ld
+-LDFLAGS=-Wl,-T$(LINK_SCRIPT)
+-CFLAGS+=-nostdlib -ggdb -O0 $(MINILIB_INC)
+-LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
+-
+-# building head blobs
+-.PRECIOUS: $(CRT_OBJS)
+-
+-%.o: $(ARM_SRC)/%.S
+-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -x assembler-with-cpp -Wa,--noexecstack -c $< -o $@
+-
+-# Build and link the tests
+-%: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
+-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+-
+-memory: CFLAGS+=-DCHECK_UNALIGNED=0
+-
+-# Running
+-QEMU_BASE_MACHINE=-M virt -cpu max -display none
+-QEMU_OPTS+=$(QEMU_BASE_MACHINE) -semihosting-config enable=on,target=native,chardev=output -kernel
+-
+-# console test is manual only
+-QEMU_SEMIHOST=-serial none -chardev stdio,mux=on,id=stdio0 -semihosting-config enable=on,chardev=stdio0 -mon chardev=stdio0,mode=readline
+-run-semiconsole: QEMU_OPTS=$(QEMU_BASE_MACHINE) $(QEMU_SEMIHOST)  -kernel
+-run-semiconsole: semiconsole
+-	$(call skip-test, $<, "MANUAL ONLY")
+-	$(if $(V),@printf "  %-7s %s %s\n" "TO RUN" $(notdir $(QEMU)) "$(QEMU_OPTS) $<")
+-run-plugin-semiconsole-with-%: semiconsole
+-	$(call skip-test, $<, "MANUAL ONLY")
+-
+-# Simple Record/Replay Test
+-.PHONY: memory-record
+-run-memory-record: memory-record memory
+-	$(call run-test, $<, \
+-	  $(QEMU) -monitor none -display none \
+-		  -chardev file$(COMMA)path=$<.out$(COMMA)id=output \
+-		  -icount shift=5$(COMMA)rr=record$(COMMA)rrfile=record.bin \
+-		  $(QEMU_OPTS) memory)
+-
+-.PHONY: memory-replay
+-run-memory-replay: memory-replay run-memory-record
+-	$(call run-test, $<, \
+-	  $(QEMU) -monitor none -display none \
+-		  -chardev file$(COMMA)path=$<.out$(COMMA)id=output \
+-		  -icount shift=5$(COMMA)rr=replay$(COMMA)rrfile=record.bin \
+-		  $(QEMU_OPTS) memory)
+-
+-EXTRA_RUNS+=run-memory-replay
+-
+-TESTS += $(ARM_TESTS) $(MULTIARCH_TESTS)
+-EXTRA_RUNS+=$(MULTIARCH_RUNS)
+diff --git a/tests/tcg/arm/meson.build b/tests/tcg/arm/meson.build
+index 08a863699fb..1b491cea026 100644
+--- a/tests/tcg/arm/meson.build
++++ b/tests/tcg/arm/meson.build
+@@ -2,6 +2,8 @@ cc = 'arm-linux-gnueabihf-gcc'
+ cc_dockerfile = 'debian-all-test-cross'
+ cc_docker_host_arch = ['aarch64', 'x86_64']
  
-+#include <stdbool.h>
- #include <stdlib.h>
- #include <stdio.h>
- #include <stdint.h>
++subdir('system')
++
+ tests = []
+ 
+ # Multi arch tests
+diff --git a/tests/tcg/arm/system/meson.build b/tests/tcg/arm/system/meson.build
+new file mode 100644
+index 00000000000..e559131edd7
+--- /dev/null
++++ b/tests/tcg/arm/system/meson.build
+@@ -0,0 +1,68 @@
++tests = []
++
++minilib_dir = meson.current_source_dir() / '..' / '..' / 'minilib'
++minilib_printf = files(minilib_dir / 'printf.c')[0]
++link_script = files('kernel.ld')[0]
++boot = files('boot.S')[0]
++cflags = ['-nostdlib',
++          '-ffreestanding',
++          '-Wa,--noexecstack',
++          '-I', minilib_dir, minilib_printf, boot,
++          '-Wl,-T', link_script,
++          '-march=armv7-a+fp',
++          '-lgcc']
++qemu_base_args = ['-display', 'none',
++                  '-semihosting-config', 'enable=on',
++                  '-kernel']
++qemu_def_args = ['-M', 'virt', '-cpu', 'max', qemu_base_args]
++
++# Multi arch tests
++multi_src = []
++foreach t: tcg_tests['multiarch-softmmu']['tests']
++  foreach src, setup: t
++    new_cflags = cflags
++    if fs.stem(src) == 'memory'
++      new_cflags += '-DCHECK_UNALIGNED=0'
++    endif
++    if src not in multi_src
++      setup += {'cflags': [new_cflags]}
++      multi_src += src
++    endif
++    tests += {src: setup + {'qemu_args': qemu_def_args}}
++  endforeach
++endforeach
++
++tests += {
++  'test-armv6m-undef.S': {
++    'cflags': ['-mcpu=cortex-m0', '-mfloat-abi=soft', '-nostdlib',
++               '-T', files('test-armv6m-undef.ld')],
++    'qemu_args': ['-M', 'microbit', qemu_base_args],
++  },
++  'semiconsole.c': {
++    'cflags': cflags,
++    'qemu_args': ['-serial', 'none', '-chardev', 'stdio,mux=on,id=stdio0',
++                  '-semihosting-config', 'enable=on,chardev=stdio0',
++                  '-mon', 'chardev=stdio0,mode=readline',
++                  qemu_def_args],
++    'wrapper': [prog_run_with_input, 'X']
++  },
++  '../../multiarch/system/memory.c': {
++    'test_name': 'memory-record-replay',
++    'qemu_args': qemu_def_args,
++    'wrapper': [prog_record_replay],
++  },
++}
++
++if 'qemu-system-arm' in emulators
++  tcg_tests += {
++    'arm-softmmu': {
++      'cc': cc,
++      'cc_dockerfile': cc_dockerfile,
++      'cc_docker_host_arch': cc_docker_host_arch,
++      'folder': 'arm/system',
++      'gdb_arch': 'arm',
++      'qemu': emulators['qemu-system-arm'],
++      'tests': tests,
++    }
++  }
++endif
 -- 
 2.43.0
 
