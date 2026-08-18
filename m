@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E04CC5DF87
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:08:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BBF2C5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:09:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwNCl-0007VQ-ID; Tue, 18 Aug 2026 13:02:27 -0400
+	id 1wwNCy-0007l3-DP; Tue, 18 Aug 2026 13:02:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCk-0007V5-B0
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:26 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1wwNCw-0007kM-Mv
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:38 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCi-0004o9-T9
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:26 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-ca00f126b7eso10048a12.2
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:24 -0700 (PDT)
+ id 1wwNCv-0004t2-7C
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:38 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-851cbd64814so79016b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787072543; x=1787677343; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787072556; x=1787677356; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=AqfSwhFQ5ZXhK2egjzylQrSHloLAK+d258nL1VsL+MU=;
- b=YxYaf6PwqbpY8L8KXwOJNdg+3dRX5Y4FjN1bNIjAgMOwMlFkiChUzHp5CbxWjWNH9K
- 5B720o+C/6Dv8uH2yJE164h1pfI6m3goyTP57kKrjHSKM0z5PkJHkvsdmsgz9arbw3s5
- 66n+bCfE2WmT+QDNC+ZdlylU7q2ohDvzHwL7ZouCz2T1qoI7RoT+Y6UriEhPbVuNc0+8
- nnQA/34cto/mkQNsYB9zQ5ffknoyi2K/cFeOWDZAKpQumAl/k/Pu1y9plKdoo4c+OkwR
- ADIgfHLn1eg3eULViqpjqUZATZMPzrisBbQemguEBYIB4f11FgJYur/DKhHVWl88zZrH
- H0lQ==
+ bh=cm60cTHKSfIokrOsMkIE12y9wwPsvnpPsXy0HmIZSdM=;
+ b=EtzZtT3qpFGNNRT2fwmhcKMYrtDTJ5uYym6tKZap0oRivpBvIWC4eODH70njlafH3a
+ fqlCABGGJKI9N1Z+4L5+Xn4aH0sTQAcl/en1qB3GFTe1G9NBuBd9Xj1/YMqyDPe0y+jw
+ gyOCEIykV5b6sZn4aW05eZ8R/tQB9ozWqpGgyESJ4IrYAGiE8rDHEfURVs8E8Q4bpZif
+ viSY4GdaWh+u7a4lqHSkvlu6HO5o30vllZFzncLvvLKp4RQXeZEGutub+anatjK9xDAI
+ XSwjrla0i2SBswpf9egVQJYa578zNFOdA2FGaNigMGBOyfQJmQFXFmR5sifRAHRGbD1z
+ U1HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787072543; x=1787677343;
+ d=1e100.net; s=20251104; t=1787072556; x=1787677356;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=AqfSwhFQ5ZXhK2egjzylQrSHloLAK+d258nL1VsL+MU=;
- b=R+yMr7CRzc7zsckB45WRAPmE+grTAqoNH5xuRqc9+kvPH3qnOljdbN2Xb3qAAYTQJz
- KNiAUr0/6Huq0ZO1cR19z5+aNkGLss52+HdYqVuTPIYhtTTxsMK6FTxU4D/3ZiphA/75
- Rd1CEHacF+3BjMBF+X0/Bi56fjVY53ivuvMKoILzBjq7z7iFlBy4owb56woBdO9WR03o
- mznwTuKGYoRUXGk8hQKIbsxJLgTzHQMwuh1WGh49qoM9m9TvXiHFsHZigswPhZHqnK1p
- z5Rr+dyfP/4FomrE6plHk2wAkukV0Y0Qcw8OgtXuEDvdVrKNWvPbvSrMByQ3wCYrQSrf
- sddQ==
-X-Gm-Message-State: AOJu0YxNx3dAm9Aqq23jzyTYFLtJfAF6DXH7kzGPkRpTSVYp40VamoEf
- xgOSSJI903tacS3+GRZ/yqHkZWRjyOaPK34dHnB0+pVDhz7C6ZkSpCAcBPcgALE5ZG+H1YVsGtN
- UN5rAxjw=
-X-Gm-Gg: AR+sD12pBxC7KFlTx/DCRFF+dZRizlkaDzTSs+gemBbKWtL2D00SCTCuIJW2OSDtw7L
- +irh/QFpxQLBaR2LulX84dnXnvqvruGr1GEv4eXUb27F7FXDuAlFO3681tTkO3teJgJJu9tWUxw
- AIES8r2NybL/xmPJfHYo0CXDZodgQF13cwNc60lQRtakegOLbtiJeCvqJ0Bq+kox027GBzU6GIO
- wlbIYO/s7w0fTf2PrORma/HWXE4Q84adWGkuijHACmsURbLH8tUAOmYIVCfl0IIcvd0WiP5X532
- nmPGeoPxw42rMiWwoyYPF3JmwRyqe5CO1ywbTGKdQKbfrvRLjkL2bOZIrpIvacyDvWojCvZkBxC
- 9BzU8lJl7SoeJhcnbMNv4Rc/x/S8oMD8E08wvvoONhr2EVaepWhQNJKpJhpfu8jfKU4Dw2eRZj5
- td1BSbTRCz1h5U+6Asvy8j9iGaQRPDTCmlfh9kaSmhBshw3uPFVSWZJ6KDJBTj258r6Tdo19O9J
- 3OjbkkJurahELsS2/WCOvb7e1P4dRIr2K0=
-X-Received: by 2002:a05:6a00:2383:b0:84e:89a:b8ec with SMTP id
- d2e1a72fcca58-84fde3d4d3emr33939674b3a.11.1787072543252; 
- Tue, 18 Aug 2026 10:02:23 -0700 (PDT)
+ bh=cm60cTHKSfIokrOsMkIE12y9wwPsvnpPsXy0HmIZSdM=;
+ b=JPtqUpFpESpnhANdbnOx/DHPxvy0cgFFPYOdV4RkBOPj0F0di7uVThfUvCk3nZ/ZEX
+ 0wx95Z/mcA60KSDhlgGBUnDEg+XNeMbrIGH/LFmi8z0b6napkwRyqYau8XNCGVj5Igeo
+ EinfubQoiuBU9icYgmELDXlak3YBxxGTH07Wro0rvOpd2pjjTh6/11upwjDpj9HuVW3C
+ auLCDV/lRP/2UAYq6twdD6DdxBlF/9pbsizcmt46oj3EXZfTOK+iLgtQgyiGOkcGd4Bu
+ cGxJA3jfvjylK/cpH9JJd2s7oe9jMulMvPps8DS9QVkKL3FikfYROQT6rF+9EVJiGqim
+ qSYw==
+X-Gm-Message-State: AOJu0Yw+zLEBoCT3VdgfhikQb3KrJLey76C6IARui2TAVAghZvvep0Yb
+ tvi4dlNCBq1KieQ9md7CRO9JRzoEsON9T5Bwo06KL5Pjt1ZGOHza01p238wKICsYhv0U66Euo1U
+ A9JtKdq8=
+X-Gm-Gg: AR+sD12fDEqcb+jSdWTU9I5A5+UBVeN/mZd3X89CSDDVxEKbeUZDb1qIStE+o6J1s2I
+ u2uAMwjQnkFX6hF9olpOXe7MU18cRFwH4hMEFkj0r+4qQK/BKyq+lxe39fQ+zzZSLqRC3sqqZSP
+ cLgWq1arWL3e6xEqgQ4fpSRaYvo3ZyfScuKW6iRvNRwpqHG2cgPlErjZhHpDkHmPqaZhfARHfOu
+ qfThptln3iTZHgZLEaWQgPi8mNVfKfGDyuLn/jZyUSZH19c2/KtLHhDt71ciSQlqYDbaNFvq0Lj
+ Zbov0+arBGH8J4h2DS23WsKgPjfPGjTb0xEn64CyaVl8G50NWRAchCgY2ZVglnYiQgWP+tan/3P
+ nQptPM5hRpl4FZFB35WmpO1VxQpWn+fKdfnpw3VGbppQcHg6q5dSLmRhlOX36F4fPDmbWxVYEpG
+ IpFgEkA3lyfh8lAeUOK2xGV3W9WOTnDLl+GLAu2LuTr3Bd0RcwE3cg76HHtG3KXJpTZxj1y/vbr
+ VtjEKNcr4Hb4kczMssLL5yV/YJGKIgid8+Nkb0lau9ZBBM=
+X-Received: by 2002:a05:6a00:1ca6:b0:846:de21:3da4 with SMTP id
+ d2e1a72fcca58-84fde367c8emr40648396b3a.3.1787072555832; 
+ Tue, 18 Aug 2026 10:02:35 -0700 (PDT)
 Received: from stoup.. (c-73-181-156-132.hsd1.wa.comcast.net. [73.181.156.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.22
+ d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 10:02:22 -0700 (PDT)
+ Tue, 18 Aug 2026 10:02:35 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 21/38] tests/tcg/loongarch64: Tidy test_bit.c
-Date: Tue, 18 Aug 2026 10:01:38 -0700
-Message-ID: <20260818170155.1907006-22-richard.henderson@linaro.org>
+Subject: [PULL 33/38] target/sh4: Enable disassembly via capstone
+Date: Tue, 18 Aug 2026 10:01:50 -0700
+Message-ID: <20260818170155.1907006-34-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818170155.1907006-1-richard.henderson@linaro.org>
 References: <20260818170155.1907006-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,96 +103,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use one macro for all test templates.
-
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tests/tcg/loongarch64/test_bit.c | 69 +++++++-------------------------
- 1 file changed, 15 insertions(+), 54 deletions(-)
+ include/disas/capstone.h |  7 +++++++
+ target/sh4/cpu.c         | 14 ++++++++++++++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/tests/tcg/loongarch64/test_bit.c b/tests/tcg/loongarch64/test_bit.c
-index a6d9904909..69b2eaac78 100644
---- a/tests/tcg/loongarch64/test_bit.c
-+++ b/tests/tcg/loongarch64/test_bit.c
-@@ -2,62 +2,23 @@
- #include <inttypes.h>
+diff --git a/include/disas/capstone.h b/include/disas/capstone.h
+index 5c78824da2..788f90771a 100644
+--- a/include/disas/capstone.h
++++ b/include/disas/capstone.h
+@@ -71,4 +71,11 @@
+ #define CS_MODE_RISCV_VENTANA    0
+ #endif
  
- #define ARRAY_SIZE(X) (sizeof(X) / sizeof(*(X)))
--#define TEST_CLO(N)                                     \
--static uint64_t test_clo_##N(uint64_t rj)               \
--{                                                       \
--    uint64_t rd = 0;                                    \
--                                                        \
--    asm volatile("clo."#N" %0, %1\n\t"                  \
--                 : "=r"(rd)                             \
--                 : "r"(rj)                              \
--                 : );                                   \
--    return rd;                                          \
++#if CS_API_MAJOR < 5
++#define CS_ARCH_SH              -1
++#define CS_MODE_SHFPU            0
++#define CS_MODE_SH4              0
++#define CS_MODE_SH4A             0
++#endif
 +
-+#define TEST(C, I)                                       \
-+static uint64_t test_##C(uint64_t rj)                    \
-+{                                                        \
-+    uint64_t rd;                                         \
-+    asm volatile(I " %0, %1\n\t" : "=r"(rd) : "r"(rj));  \
-+    return rd;                                           \
+ #endif /* QEMU_CAPSTONE_H */
+diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
+index ad2ec28c1b..3bbdee301d 100644
+--- a/target/sh4/cpu.c
++++ b/target/sh4/cpu.c
+@@ -28,6 +28,7 @@
+ #include "fpu/softfloat-helpers.h"
+ #include "accel/tcg/cpu-ops.h"
+ #include "tcg/tcg.h"
++#include "disas/capstone.h"
+ 
+ static void superh_cpu_set_pc(CPUState *cs, vaddr value)
+ {
+@@ -167,10 +168,23 @@ static void superh_cpu_reset_hold(Object *obj, ResetType type)
+ static void superh_cpu_disas_set_info(const CPUState *cpu,
+                                       disassemble_info *info)
+ {
++    const CPUSH4State *env = cpu_env((CPUState *)cpu);
++
+     info->endian = TARGET_BIG_ENDIAN ? BFD_ENDIAN_BIG
+                                      : BFD_ENDIAN_LITTLE;
+     info->mach = bfd_mach_sh4;
+     info->print_insn = print_insn_sh;
++
++    info->cap_arch = CS_ARCH_SH;
++    info->cap_insn_unit = 2;
++    info->cap_insn_split = 2;
++    /*
++     * Possible capstone bug: the isa levels are not additive:
++     * least significant bit wins, so SH4 overrides SH4A.
++     * Work around by setting one or the other but not both.
++     */
++    info->cap_mode = CS_MODE_SHFPU
++        | (env->features & SH_FEATURE_SH4A ? CS_MODE_SH4A : CS_MODE_SH4);
  }
  
--#define TEST_CLZ(N)                                     \
--static uint64_t test_clz_##N(uint64_t rj)               \
--{                                                       \
--    uint64_t rd = 0;                                    \
--                                                        \
--    asm volatile("clz."#N" %0, %1\n\t"                  \
--                 : "=r"(rd)                             \
--                 : "r"(rj)                              \
--                 : );                                   \
--    return rd;                                          \
--}
--
--#define TEST_CTO(N)                                     \
--static uint64_t test_cto_##N(uint64_t rj)               \
--{                                                       \
--    uint64_t rd = 0;                                    \
--                                                        \
--    asm volatile("cto."#N" %0, %1\n\t"                  \
--                 : "=r"(rd)                             \
--                 : "r"(rj)                              \
--                 : );                                   \
--    return rd;                                          \
--}
--
--#define TEST_CTZ(N)                                     \
--static uint64_t test_ctz_##N(uint64_t rj)               \
--{                                                       \
--    uint64_t rd = 0;                                    \
--                                                        \
--    asm volatile("ctz."#N" %0, %1\n\t"                  \
--                 : "=r"(rd)                             \
--                 : "r"(rj)                              \
--                 : );                                   \
--    return rd;                                          \
--}
--
--TEST_CLO(w)
--TEST_CLO(d)
--TEST_CLZ(w)
--TEST_CLZ(d)
--TEST_CTO(w)
--TEST_CTO(d)
--TEST_CTZ(w)
--TEST_CTZ(d)
-+TEST(clo_w, "clo.w")
-+TEST(clo_d, "clo.d")
-+TEST(clz_w, "clz.w")
-+TEST(clz_d, "clz.d")
-+TEST(cto_w, "cto.w")
-+TEST(cto_d, "cto.d")
-+TEST(ctz_w, "ctz.w")
-+TEST(ctz_d, "ctz.d")
- 
- struct vector {
-     uint64_t (*func)(uint64_t);
+ static ObjectClass *superh_cpu_class_by_name(const char *cpu_model)
 -- 
 2.43.0
 
