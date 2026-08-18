@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04D3AC5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48FB0C5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:06:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwNCw-0007kV-WB; Tue, 18 Aug 2026 13:02:39 -0400
+	id 1wwNCX-0007QX-QJ; Tue, 18 Aug 2026 13:02:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCv-0007jn-E2
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:37 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1wwNCV-0007PQ-UH
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:11 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCt-0004sV-KT
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:37 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-cbedf433a99so8360a12.2
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:35 -0700 (PDT)
+ id 1wwNCT-0004gm-ER
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:11 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-84faf87d19dso181897b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787072554; x=1787677354; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787072528; x=1787677328; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=jZJOaKZTusHHUoW9ISiY/6WK3cLRzqtf2hDDRWECaC4=;
- b=NcxRT4mHTMvfwG+iSeyrscrjF3rm6VmyjLHACxuFh00aNq6qhEQeypF8eFzw5OhJvK
- YvVvylia2KyTWGIZaPYabaD4z5TB1WdeO4GdDY9b7Isj2arw4hkdf6iCLRel/hKLEJkK
- ryPGdeiAaGsBJB+1FCFZIqCM3hVNIYoPUFB4yHAhmRGqevkRPcr4D6hisF+CMD/7fOaz
- 96xYicmM0VNRRAr+TG2R+jH/SzXz9QYFgc4YDmfg0gv09VK1pY2rUpu+Y+AORH9d+hVd
- FGEHvIR67fja1vL/5/6UXgJRbid4H11OJiPkv+twF3mR56IM02T2eM9DI/D4yKjYOIjC
- K6Sg==
+ bh=EE1j6rW04O6psozert+WRAhkHT1L5kpmKbk1CXdOhMw=;
+ b=j3DxfHu5BVPFRdVrIty6nZEGcC02v8I3V223PDyYS10gP8SXSmarOAb5TBmyYwFWFt
+ Q7LGejwsLOat8sEIsb5a11XlrWieExYOf0X1vMZ6N0yMDoPwjb2S+KYcOWkqdCQkj0eN
+ KRBZaQiEVClH3yqFncRKZfkV8Ejn9FwQ3gKivnVdnO2FoOmxIhDWoDWaPXXi8ia1C8zW
+ tut9gj17IdYhaozoTaOhYf5Vyq8WP0q/mkP0Yet6cQ5dkCamBwlD8hjJ/EqQBQyGOEF5
+ nUrQ6GhzHvB7jvc6ntzRZMIV7Ava+vNDwX5TybUlXY2qb2r7mMelmwwW4iPMKcUJ5V+T
+ uc1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787072554; x=1787677354;
+ d=1e100.net; s=20251104; t=1787072528; x=1787677328;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=jZJOaKZTusHHUoW9ISiY/6WK3cLRzqtf2hDDRWECaC4=;
- b=ZCYy+Fpl4K/RRrex8kcA7dX43SfWt+VJRnaAtnIyKEmY+Ye+zaBQjgtuSxXFJl0qiE
- CBdMbJADZ4DVoAeo1sEtaf8AwbOdFNbOVhHPTHOOwOAXwCgM0XP4mtX3ggrISpTePwSy
- LG7q2/I5qH6Ix3KbJhxo8J4qz3q6yXex/6kil46cRzceXsiBQi+tW1nHBnV/jecJfmhj
- XxpeFZYvsB3+SDwC6lXXVarqRGiUPfCp1wVZIm52LU3XhtXcInhzac3fgTZt/laxY99j
- HqWO6aciddN5cyvq9IFszvlBu1eB4DlRgsbFaQxNbaJ3hrebD4g5EqGG32eO2/9tHFUU
- Kfkg==
-X-Gm-Message-State: AOJu0YzvWkqPIzFWxb+WKmctB0tEJwiicAKB2lTkocuo3A0ddZDfZhmV
- zt1tOaqNNQRbW9ER7SGyT2n6HBlFfn8P62uFRIL2EKaHjJyJVAd0X4Ajplo4BnZPbl1mHHtn79p
- H27foCuA=
-X-Gm-Gg: AR+sD12GYX9rgMsHAUxb8R2MoaZpsjTZp9yydpyaCKX+nq7+0BnNGnQ/oDHJ/DqdeEe
- SmcvKDZT5tGoEVx6nzImG0IAWjMvBqH2HrYb53i5Vdyr6tOEKr755jGyNuLwZE+N8C6Mko3e94B
- VMIa6cE0lTVPU2XW4I/OOB6N1rZ4x6SGZAhDT6ODCdjE4/yHkhoUCoQ2VK6i+qiI+YVoqSD4mr0
- trjhZljzPEW63caus6wXKrnaIXcuJxLrA6f+xADgl6ml883NZVerPJYqY+rPhPmgJnHUGdoLrjA
- yxG/8yRfZ5U8NYkdPg049t7FVTac5JxDFSwyxMgcKFtpKx8KoCvkSiSbgv1j3/UL6LsVKJG7vtP
- sIxhQlC1ofLiQt4YIi65v7NCplM1lh6E4tt1WoWXEYixgfmWQUnTS9q48edmoAqz3XeVn+cgweC
- 0SIfeaBYYO7aUreeCKMhdXp3fqVyBBrmqS8RwHGGjejM2q279pNaby15+pvLJbAceaAC98MZ95H
- ZgOQx7DvPWRlnznYmhCpOAH/Y5IqyMJK7db9cr7xtMexA==
-X-Received: by 2002:a05:6a00:2392:b0:848:56d4:3288 with SMTP id
- d2e1a72fcca58-84fddf92abamr36908931b3a.4.1787072554185; 
- Tue, 18 Aug 2026 10:02:34 -0700 (PDT)
+ bh=EE1j6rW04O6psozert+WRAhkHT1L5kpmKbk1CXdOhMw=;
+ b=ifwvxMbPj/8797AoUwJYn3yWHvbXiPaPjHdR+x7JZlwDRmVUSHtCe0zqvLyQuLrobP
+ KSNLjeUkoC0kfSnirl50v/hTEf+z7UCMZWVQ74lpFOQcTOF0levg2bNwgkP2GOAOv5/W
+ V8ITyum4L40gr8Ys00PwKqkDMccCYQQMPTXUY5paOWAS2xCU6DNwzSJOII1HSWrVOHdi
+ gN5wn/7RUTb4948vyZ5u6P25BB0KmyRzJZy3JX31DoAguvc0o4henwrZJtTAkPwDIvQd
+ SD/RAhpUUFDlJycKOPP6SGMyUj8+Gi7O0nQN3g6efR9+V45UXEjBribKMt2Fy0+rSuly
+ OJ5w==
+X-Gm-Message-State: AOJu0Yx9+bsmXP3mlqF1rONO5LV1Eqm0znooXppT/AbMG9uhbuNs7Emp
+ thXqpMe0y8cYxlqTRBRQNijSbTgBXMHV/dBFerK9hWwFnHacrOAIe8FnZ7OHsfWxa4Bfc1TlhW/
+ jh2SZaWo=
+X-Gm-Gg: AR+sD10NrB1DrluioibqW1G3k82pZPQYOllHvhMuxAkKXyZVcFWbkdSGudJl7vRIaep
+ 4ptuf6P4EpJhJoZ2w3c5ruwR0SU+2XGro0GKIJ+cu1Af4xNF/y5tKecJzm5j77Wp6s/k8xHj5sj
+ rnL6ugAwzL1+AdG8/QZEuEPRHWrXHu6Xlmai+7DyrDP5AAszGB6oPy1esrAq5IBny8fzLdtlKHY
+ yohHrblQOLmQ3W8OmUfLxBTFeVKeaNnzyOFdLcgwPRrInm1pgSVx7GIwoQII1qVaJEO4hZaUGdN
+ K3WVMyS/Tx8xwd4beeyLmL+W0F24ohArNIKYRXqvT1nC4rYrAqHQ7xbKifXjIAPj9GYXkp4kfOk
+ 1/bxMsjKV/Vk9bscLUJmm3papKncv5TLxnQqqfodEXQ6hNXf59FfMpOcEjAKkopM7RG+coczjFL
+ 3/kpMrfSkRufVrOlgZIbOAG1sta8PBmtEHcUKc3uqPVadgPdsNzlYhcstBrbhgeFiVKwbHc+Rd7
+ 0VVd4R2UgDRSagNzT63g7ohgz/sYTLkghZSK1C1dPsLkg==
+X-Received: by 2002:a05:6a00:6c88:b0:84e:24f:2677 with SMTP id
+ d2e1a72fcca58-84fddfa7f2emr41459482b3a.4.1787072527801; 
+ Tue, 18 Aug 2026 10:02:07 -0700 (PDT)
 Received: from stoup.. (c-73-181-156-132.hsd1.wa.comcast.net. [73.181.156.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.33
+ d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 10:02:33 -0700 (PDT)
+ Tue, 18 Aug 2026 10:02:07 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 32/38] target/riscv: Enable disassembly via capstone
-Date: Tue, 18 Aug 2026 10:01:49 -0700
-Message-ID: <20260818170155.1907006-33-richard.henderson@linaro.org>
+Subject: [PULL 08/38] tcg: Add tcg_gen_revbit{8,32,64}
+Date: Tue, 18 Aug 2026 10:01:25 -0700
+Message-ID: <20260818170155.1907006-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818170155.1907006-1-richard.henderson@linaro.org>
 References: <20260818170155.1907006-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,218 +103,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In capstone v5, riscv support is spare, but v6 is pretty good.
+Add generic expanders for reversing bits within a word.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/disas/capstone.h | 34 +++++++++++++++++
- disas/capstone.c         | 19 ++++++++++
- target/riscv/cpu.c       | 81 +++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 133 insertions(+), 1 deletion(-)
+ include/tcg/tcg-op-common.h |  5 +++
+ include/tcg/tcg-op.h        |  7 ++++
+ tcg/tcg-op.c                | 76 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 88 insertions(+)
 
-diff --git a/include/disas/capstone.h b/include/disas/capstone.h
-index c43033f7f6..5c78824da2 100644
---- a/include/disas/capstone.h
-+++ b/include/disas/capstone.h
-@@ -11,6 +11,8 @@
+diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
+index 1fe342db0d..f7b6aadb50 100644
+--- a/include/tcg/tcg-op-common.h
++++ b/include/tcg/tcg-op-common.h
+@@ -164,6 +164,8 @@ void tcg_gen_smax_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
+ void tcg_gen_umin_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
+ void tcg_gen_umax_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
+ void tcg_gen_abs_i32(TCGv_i32, TCGv_i32);
++void tcg_gen_revbit8_i32(TCGv_i32 ret, TCGv_i32 arg);
++void tcg_gen_revbit32_i32(TCGv_i32 ret, TCGv_i32 arg);
  
- /* Just enough to allow backends to init without ifdefs.  */
+ /* Replicate a value of size @vece from @in to all the lanes in @out */
+ void tcg_gen_dup_i32(unsigned vece, TCGv_i32 out, TCGv_i32 in);
+@@ -275,6 +277,9 @@ void tcg_gen_smax_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
+ void tcg_gen_umin_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
+ void tcg_gen_umax_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
+ void tcg_gen_abs_i64(TCGv_i64, TCGv_i64);
++void tcg_gen_revbit8_i64(TCGv_i64 ret, TCGv_i64 arg);
++void tcg_gen_revbit32_i64(TCGv_i64 ret, TCGv_i64 arg, int flags);
++void tcg_gen_revbit64_i64(TCGv_i64 ret, TCGv_i64 arg);
  
-+#define CS_API_MAJOR     0
-+
- #define CS_ARCH_ARM     -1
- #define CS_ARCH_ARM64   -1
- #define CS_ARCH_MIPS    -1
-@@ -37,4 +39,36 @@
- #define CS_MODE_MIPS64           0
- 
- #endif /* CONFIG_CAPSTONE */
-+
-+#if CS_API_MAJOR < 5
-+#define CS_ARCH_RISCV           -1
-+#define CS_MODE_RISCV32          0
-+#define CS_MODE_RISCV64          0
-+#define CS_MODE_RISCV_C          0
-+#elif CS_API_MAJOR == 5
-+/* The C symbol name changed between v5 and v6 */
-+#define CS_MODE_RISCV_C          CS_MODE_RISCVC
-+#endif
-+#if CS_API_MAJOR < 6
-+#define CS_MODE_RISCV_FD         0
-+#define CS_MODE_RISCV_V          0
-+#define CS_MODE_RISCV_ZFINX      0
-+#define CS_MODE_RISCV_ZCMP_ZCMT_ZCE  0
-+#define CS_MODE_RISCV_ZICFISS    0
-+#define CS_MODE_RISCV_E          0
-+#define CS_MODE_RISCV_A          0
-+#define CS_MODE_RISCV_COREV      0
-+#define CS_MODE_RISCV_THEAD      0
-+#define CS_MODE_RISCV_SIFIVE     0
-+#define CS_MODE_RISCV_BITMANIP   0
-+#define CS_MODE_RISCV_ZBA        0
-+#define CS_MODE_RISCV_ZBB        0
-+#define CS_MODE_RISCV_ZBC        0
-+#define CS_MODE_RISCV_ZBKB       0
-+#define CS_MODE_RISCV_ZBKC       0
-+#define CS_MODE_RISCV_ZBKX       0
-+#define CS_MODE_RISCV_ZBS        0
-+#define CS_MODE_RISCV_VENTANA    0
-+#endif
-+
- #endif /* QEMU_CAPSTONE_H */
-diff --git a/disas/capstone.c b/disas/capstone.c
-index 8fb8d0724c..78062339d0 100644
---- a/disas/capstone.c
-+++ b/disas/capstone.c
-@@ -49,6 +49,20 @@ static const cs_opt_skipdata cap_skipdata_s390x = {
-     .callback = cap_skipdata_s390x_cb
- };
- 
-+/* Similarly for RISCV */
-+static size_t CAPSTONE_API
-+cap_skipdata_riscv_cb(const uint8_t *code, size_t code_size,
-+                      size_t offset, void *user_data)
-+{
-+    /* See insn_len() from target/riscv/internals.h */
-+    return (code[offset] & 3) == 3 ? 4 : 2;
-+}
-+
-+static const cs_opt_skipdata cap_skipdata_riscv = {
-+    .mnemonic = ".byte",
-+    .callback = cap_skipdata_riscv_cb
-+};
-+
- /*
-  * Initialize the Capstone library.
-  *
-@@ -76,6 +90,11 @@ static cs_err cap_disas_start(disassemble_info *info, csh *handle)
-     cs_option(*handle, CS_OPT_SKIPDATA, CS_OPT_ON);
- 
-     switch (info->cap_arch) {
-+    case CS_ARCH_RISCV:
-+        cs_option(*handle, CS_OPT_SKIPDATA_SETUP,
-+                  (uintptr_t)&cap_skipdata_riscv);
-+        break;
-+
-     case CS_ARCH_SYSZ:
-         cs_option(*handle, CS_OPT_SKIPDATA_SETUP,
-                   (uintptr_t)&cap_skipdata_s390x);
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 23b5023dd3..e73ff53159 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -39,6 +39,7 @@
- #include "system/tcg.h"
- #include "kvm/kvm_riscv.h"
- #include "tcg/tcg-cpu.h"
-+#include "disas/capstone.h"
- #if !defined(CONFIG_USER_ONLY)
- #include "target/riscv/tcg/debug.h"
- #endif
-@@ -1099,6 +1100,7 @@ static void riscv_cpu_disas_set_info(const CPUState *s, disassemble_info *info)
- {
-     const RISCVCPU *cpu = RISCV_CPU(s);
-     const CPURISCVState *env = &cpu->env;
-+    int cap_mode;
- 
-     info->target_info = &cpu->cfg;
- 
-@@ -1111,16 +1113,93 @@ static void riscv_cpu_disas_set_info(const CPUState *s, disassemble_info *info)
-     switch (env->xl) {
-     case MXL_RV32:
-         info->print_insn = print_insn_riscv32;
-+        cap_mode = CS_MODE_RISCV32;
-         break;
-     case MXL_RV64:
-         info->print_insn = print_insn_riscv64;
-+        cap_mode = CS_MODE_RISCV64;
-         break;
-     case MXL_RV128:
-         info->print_insn = print_insn_riscv128;
--        break;
-+        /* capstone v6 doesn't support RV128 */
-+        return;
-     default:
-         g_assert_not_reached();
-     }
-+
-+    info->cap_arch = CS_ARCH_RISCV;
-+    info->cap_insn_unit = 4;
-+    info->cap_insn_split = 4;
-+
-+    /*
-+     * Capstone compresses some features together. See RISCV_getFeatureBits,
-+     * which maps LLVM feature bits to capstone bits.
-+     */
-+    if (riscv_has_ext(env, RVC) || cpu->cfg.ext_zca) {
-+        cap_mode |= CS_MODE_RISCV_C;
-+    }
-+    if (riscv_has_ext(env, RVF)) {
-+        cap_mode |= CS_MODE_RISCV_FD;
-+    }
-+    if (riscv_has_ext(env, RVV)) {
-+        cap_mode |= CS_MODE_RISCV_V;
-+    }
-+    if (cpu->cfg.ext_zfinx || cpu->cfg.ext_zdinx || cpu->cfg.ext_zhinx) {
-+        cap_mode |= CS_MODE_RISCV_ZFINX;
-+    }
-+    if (cpu->cfg.ext_zcmp || cpu->cfg.ext_zcmt || cpu->cfg.ext_zce) {
-+        cap_mode |= CS_MODE_RISCV_ZCMP_ZCMT_ZCE;
-+    }
-+    if (cpu->cfg.ext_zicfiss) {
-+        cap_mode |= CS_MODE_RISCV_ZICFISS;
-+    }
-+    if (riscv_has_ext(env, RVE)) {
-+        cap_mode |= CS_MODE_RISCV_E;
-+    }
-+    if (riscv_has_ext(env, RVA)) {
-+        cap_mode |= CS_MODE_RISCV_A;
-+    }
-+    if (cpu->cfg.ext_xlrbr) {
-+        cap_mode |= CS_MODE_RISCV_BITMANIP;
-+    }
-+    if (cpu->cfg.ext_zba) {
-+        cap_mode |= CS_MODE_RISCV_ZBA;
-+    }
-+    if (cpu->cfg.ext_zbb) {
-+        cap_mode |= CS_MODE_RISCV_ZBB;
-+    }
-+    if (cpu->cfg.ext_zbc) {
-+        cap_mode |= CS_MODE_RISCV_ZBC;
-+    }
-+    if (cpu->cfg.ext_zbkb) {
-+        cap_mode |= CS_MODE_RISCV_ZBKB;
-+    }
-+    if (cpu->cfg.ext_zbkc) {
-+        cap_mode |= CS_MODE_RISCV_ZBKC;
-+    }
-+    if (cpu->cfg.ext_zbkx) {
-+        cap_mode |= CS_MODE_RISCV_ZBKX;
-+    }
-+    if (cpu->cfg.ext_zbs) {
-+        cap_mode |= CS_MODE_RISCV_ZBS;
-+    }
-+    if (cpu->cfg.ext_xtheadba ||
-+        cpu->cfg.ext_xtheadbb ||
-+        cpu->cfg.ext_xtheadbs ||
-+        cpu->cfg.ext_xtheadcmo ||
-+        cpu->cfg.ext_xtheadcondmov ||
-+        cpu->cfg.ext_xtheadfmemidx ||
-+        cpu->cfg.ext_xtheadfmv ||
-+        cpu->cfg.ext_xtheadmac ||
-+        cpu->cfg.ext_xtheadmemidx ||
-+        cpu->cfg.ext_xtheadmempair ||
-+        cpu->cfg.ext_xtheadsync) {
-+        cap_mode |= CS_MODE_RISCV_THEAD;
-+    }
-+    if (cpu->cfg.ext_XVentanaCondOps) {
-+        cap_mode |= CS_MODE_RISCV_VENTANA;
-+    }
-+    info->cap_mode = cap_mode;
+ /* Replicate a value of size @vece from @in to all the lanes in @out */
+ void tcg_gen_dup_i64(unsigned vece, TCGv_i64 out, TCGv_i64 in);
+diff --git a/include/tcg/tcg-op.h b/include/tcg/tcg-op.h
+index 96a5af1a29..568b78fe81 100644
+--- a/include/tcg/tcg-op.h
++++ b/include/tcg/tcg-op.h
+@@ -115,6 +115,10 @@ typedef TCGv_i64 TCGv;
+ #define tcg_gen_bswap_tl tcg_gen_bswap64_i64
+ #define tcg_gen_hswap_tl tcg_gen_hswap_i64
+ #define tcg_gen_wswap_tl tcg_gen_wswap_i64
++#define tcg_gen_revbit8_tl tcg_gen_revbit8_i64
++#define tcg_gen_revbit32_tl tcg_gen_revbit32_i64
++#define tcg_gen_revbit64_tl tcg_gen_revbit64_i64
++#define tcg_gen_revbit_tl tcg_gen_revbit64_i64
+ #define tcg_gen_concat_tl_i64 tcg_gen_concat32_i64
+ #define tcg_gen_extr_i64_tl tcg_gen_extr32_i64
+ #define tcg_gen_andc_tl tcg_gen_andc_i64
+@@ -234,6 +238,9 @@ typedef TCGv_i64 TCGv;
+ #define tcg_gen_bswap32_tl(D, S, F) tcg_gen_bswap32_i32(D, S)
+ #define tcg_gen_bswap_tl tcg_gen_bswap32_i32
+ #define tcg_gen_hswap_tl tcg_gen_hswap_i32
++#define tcg_gen_revbit8_tl tcg_gen_revbit8_i32
++#define tcg_gen_revbit32_tl(D, S, F) tcg_gen_revbit32_i32(D, S)
++#define tcg_gen_revbit_tl tcg_gen_revbit32_i32
+ #define tcg_gen_concat_tl_i64 tcg_gen_concat_i32_i64
+ #define tcg_gen_extr_i64_tl tcg_gen_extr_i64_i32
+ #define tcg_gen_andc_tl tcg_gen_andc_i32
+diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
+index bbcb510c76..3d28280785 100644
+--- a/tcg/tcg-op.c
++++ b/tcg/tcg-op.c
+@@ -1160,6 +1160,45 @@ void tcg_gen_ext16u_i32(TCGv_i32 ret, TCGv_i32 arg)
+     tcg_gen_extract_i32(ret, arg, 0, 16);
  }
  
- #ifndef CONFIG_USER_ONLY
++/*
++ * Internal helper for bit and byte reversal.
++ * Given a repeating matched block of 1's and 0's, swap the bits within
++ * those two blocks.  E.g.  mask=00ff00ff, shift the input bits left and
++ * right 8 bits.
++ */
++static void gen_bitswap_i32(TCGv_i32 ret, TCGv_i32 arg, uint32_t mask)
++{
++    TCGv_i32 t0 = tcg_temp_ebb_new_i32();
++    TCGv_i32 t1 = tcg_temp_ebb_new_i32();
++    int sh = cto32(mask);
++
++    tcg_gen_andi_i32(t0, arg, mask);
++    tcg_gen_shri_i32(t1, arg, sh);
++    tcg_gen_shli_i32(t0, t0, sh);
++    tcg_gen_andi_i32(t1, t1, mask);
++    tcg_gen_or_i32(ret, t0, t1);
++
++    tcg_temp_free_i32(t0);
++    tcg_temp_free_i32(t1);
++}
++
++/* Similarly for 64-bit operands. */
++static void gen_bitswap_i64(TCGv_i64 ret, TCGv_i64 arg, uint64_t mask)
++{
++    TCGv_i64 t0 = tcg_temp_ebb_new_i64();
++    TCGv_i64 t1 = tcg_temp_ebb_new_i64();
++    int sh = cto64(mask);
++
++    tcg_gen_andi_i64(t0, arg, mask);
++    tcg_gen_shri_i64(t1, arg, sh);
++    tcg_gen_shli_i64(t0, t0, sh);
++    tcg_gen_andi_i64(t1, t1, mask);
++    tcg_gen_or_i64(ret, t0, t1);
++
++    tcg_temp_free_i64(t0);
++    tcg_temp_free_i64(t1);
++}
++
+ /*
+  * bswap16_i32: 16-bit byte swap on the low bits of a 32-bit value.
+  *
+@@ -1244,6 +1283,19 @@ void tcg_gen_hswap_i32(TCGv_i32 ret, TCGv_i32 arg)
+     tcg_gen_rotli_i32(ret, arg, 16);
+ }
+ 
++void tcg_gen_revbit8_i32(TCGv_i32 ret, TCGv_i32 arg)
++{
++    gen_bitswap_i32(ret, arg, 0x55555555u);
++    gen_bitswap_i32(ret, ret, 0x33333333u);
++    gen_bitswap_i32(ret, ret, 0x0f0f0f0fu);
++}
++
++void tcg_gen_revbit32_i32(TCGv_i32 ret, TCGv_i32 arg)
++{
++    tcg_gen_revbit8_i32(ret, arg);
++    tcg_gen_bswap32_i32(ret, ret);
++}
++
+ void tcg_gen_smin_i32(TCGv_i32 ret, TCGv_i32 a, TCGv_i32 b)
+ {
+     tcg_gen_movcond_i32(TCG_COND_LT, ret, a, b, a, b);
+@@ -1869,6 +1921,30 @@ void tcg_gen_wswap_i64(TCGv_i64 ret, TCGv_i64 arg)
+     tcg_gen_rotli_i64(ret, arg, 32);
+ }
+ 
++void tcg_gen_revbit32_i64(TCGv_i64 ret, TCGv_i64 arg, int flags)
++{
++    /* Only one extension flag may be present. */
++    tcg_debug_assert(!(flags & TCG_BSWAP_OS) || !(flags & TCG_BSWAP_OZ));
++
++    gen_bitswap_i64(ret, arg, 0x55555555ull);
++    gen_bitswap_i64(ret, ret, 0x33333333ull);
++    gen_bitswap_i64(ret, ret, 0x0f0f0f0full);
++    tcg_gen_bswap32_i64(ret, ret, flags | TCG_BSWAP_IZ);
++}
++
++void tcg_gen_revbit8_i64(TCGv_i64 ret, TCGv_i64 arg)
++{
++    gen_bitswap_i64(ret, arg, 0x5555555555555555ull);
++    gen_bitswap_i64(ret, ret, 0x3333333333333333ull);
++    gen_bitswap_i64(ret, ret, 0x0f0f0f0f0f0f0f0full);
++}
++
++void tcg_gen_revbit64_i64(TCGv_i64 ret, TCGv_i64 arg)
++{
++    tcg_gen_revbit8_i64(ret, arg);
++    tcg_gen_bswap64_i64(ret, ret);
++}
++
+ void tcg_gen_not_i64(TCGv_i64 ret, TCGv_i64 arg)
+ {
+     if (tcg_op_supported(INDEX_op_not, TCG_TYPE_I64, 0)) {
 -- 
 2.43.0
 
