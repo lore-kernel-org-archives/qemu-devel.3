@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DAEFC5DF70
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03045C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:26:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwHwy-0007y5-E2; Tue, 18 Aug 2026 07:25:48 -0400
+	id 1wwHx9-0008Dg-5v; Tue, 18 Aug 2026 07:25:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwHww-0007xI-Ih
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:25:46 -0400
+ id 1wwHx7-00085h-3q
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:25:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwHwu-0007u3-8U
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:25:46 -0400
+ id 1wwHx4-0007vH-R6
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:25:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787052343;
+ s=mimecast20190719; t=1787052354;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6RnNIG73GhCm93MI2AvxWTLvo6ga6neONIfVM8F4bkg=;
- b=amNHiaJ7zPS0qT9cn7tLIq/0iQ1KyUoJ/6JoEaqI6wiezpJE9og3kFm9+W7hP8RBk0IFOT
- 9HXjkCelF/GPuJ5y7kUXp/ZQ1KbnMAZi0XlRH60BZUVaKS+asxJz8S0aT++vHGS+20Gusm
- MK+USSEQRdg/N8CcfVOl1MsIAPNWfng=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=qREL4rLqmsKjsuOlLljdIaMwFLp75inzgflxtWc4AuE=;
+ b=LNmBY+L3LEryuhRbRMK4QGSGNX2dUkpM3GcbeV3AyV4HBPVK5HpPJ0BzifVHTU0W5aRIQF
+ A3vXuN7NMh9Fi4HAsWerer4/leueiVoT7b97JAZyEPcRBBSQL2LMwGUT+drvA5QqxNxZlM
+ T+YxS9/iodxgH+30gFAaE59o3eNbVSM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-F3BHRxEQO1i7WMGwo51pVQ-1; Tue,
- 18 Aug 2026 07:25:40 -0400
-X-MC-Unique: F3BHRxEQO1i7WMGwo51pVQ-1
-X-Mimecast-MFC-AGG-ID: F3BHRxEQO1i7WMGwo51pVQ_1787052338
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-6z3cy_ARO26Kezz0pddE0g-1; Tue,
+ 18 Aug 2026 07:25:48 -0400
+X-MC-Unique: 6z3cy_ARO26Kezz0pddE0g-1
+X-Mimecast-MFC-AGG-ID: 6z3cy_ARO26Kezz0pddE0g_1787052346
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1ABFE18005B2; Tue, 18 Aug 2026 11:25:38 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 760B11956046; Tue, 18 Aug 2026 11:25:46 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B54C43000239; Tue, 18 Aug 2026 11:25:23 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EDCAA1956044; Tue, 18 Aug 2026 11:25:43 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 18 Aug 2026 15:11:21 +0400
-Subject: [PATCH v3 54/74] spdm-socket: convert SpdmTransportType to QAPI enum
+Date: Tue, 18 Aug 2026 15:11:22 +0400
+Subject: [PATCH v3 55/74] hw/gpio/pca955x: use QAPI enums for led and pin
+ properties
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260818-qom-qapi-v3-54-24b8bbbe3d86@redhat.com>
+Message-Id: <20260818-qom-qapi-v3-55-24b8bbbe3d86@redhat.com>
 References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
 In-Reply-To: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
 To: qemu-devel@nongnu.org
@@ -65,40 +66,37 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Tao Tang <tangtao1634@phytium.com.cn>, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>, 
- Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=13661;
+ Glenn Miles <milesg@linux.ibm.com>, Eric Blake <eblake@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, qemu-ppc@nongnu.org, qemu-arm@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=14925;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=2t7ZhUyuk17hw1y5P7exFCww1yHYtKSdGomgYFbnNoI=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhD28uf9Qm6njHlp/+a6m7aBR0hIl0PLEw9ENc
- psQ3d5nv9OJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoQ9vAAKCRDa6OEJdZac
- 5VOKD/4rzAcTCOpNSsIFKBgKH5aPdh8HRrB51NG9O/zX3dulxRTw4yEzzF07eKIdZ1h85Jx+O4N
- k6E091WwTKmKBWcOpsIlxRjlUXLPVIstTY4KFdsSqxg0DLQ2LkAI2YrsYhEXd5UMZhjTVbgChqb
- Ic3xSOmGpH0u0TaMxjhMN+a8zsc+GSth1Q72zB9Ij6XrG3jdZMJi6zsrBrX49XS3OMXzT9IWeDv
- zlU1BrAybCtxp/1Z/ePad2J7UaeOBMuCp5vFnMheuo7KvTX3S3IxJQLrxCudyjtabf5msWpOFYa
- tanXDYVsUCoS909AJh+omBoFcPaD4LvyqjA7oBgntVaPDGdPFZBVZT+EtK+w/PrwzHlbZkxU17A
- qQLC7XW+UDASHeH6Bv/CSEK9SsROZhUXSUZo+Cz+YFqIVxAmPlALrrWIBcs72YS9uLVgJ6JVWN2
- qKb3CyIulVjc4QCugrKuy99yf4hlXpe+hsifj2nVpYZMGwWFnevj6/neZWpP3+sLPnvoWkid1s0
- KBurZ0gS5urpZg86X6XYuleeycyuNCX6vnz9erXhWeCBPjF+/+GETE4PUtHhJVWdi2x+8iJfOka
- RXRp+7p7Klh6mqBOrF+jJrkkvd+Gm0zO0M1Mnd1bcxEwxQzx9Xi6lN7a5OsWDFyjNdvRuS8t/ur
- siSNCPRTW6NWlhQ==
+ bh=XlkmyZuB8ML4Dwyx9HhUYqfHoTK+rV9hfdym0B0GJhw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhD28epQmIr7mH6ucmmukF8I7u8rV8FvT80VR/
+ 0RLBOEr+/qJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoQ9vAAKCRDa6OEJdZac
+ 5Sr6D/0Z6H7lF0oo2hbMoznh5zOsWomhxLFsslJuLukvKEsCPH9XydIObGNSxMepK7R/VM/qPNh
+ X5VE0ApEK6aMlz1cfZ3DtzBEhcmdLELX2z/4aLJ+5R6bRuBsm2HVcVjQr7dddGe8Y+9oyYv4q+s
+ gRdAkyM+bGZuf0JnkiA6BieEMea8/Z7abBbo9LZB7fcwgVzsvHfgEnRxx24a/1WszIC+pcujq/P
+ 0ollLZXXVIFbbJmMji1Ph0BS2qTtta3l6TspUmWZgRMZrFetdOWq6ocH/Ht6dSaR1Eb3Q02GXnp
+ Vzx/q2LLg10ZxNhm/AqXIRbeUUKoFCHbPrkQO4sdgCmXt5QGU/lw+Q/5qdsASgIhKH3nSpRrADd
+ ML2fj2mB6pqUbabB1f09jc+ZtQVq8rIE3qesRylXQ9+YwN9jD3xHeejtk0KHoF+2dKb8HL7DyL6
+ m7uFryNtAR0iZAVbBX1sD7oFCRvZSdEc2wYjrKCiEKLdBBqxW4oa9DmAH3dutqfb9/KOZYntnDn
+ RnnH+VHlWmuGppD7R00sXoqJ9CZaqIzbO224LjBYTufBrodkiQwJiQa8eOIWiZE878RLN9Z8bk1
+ z72aJmBbEn8RWnS5NbnulPeLA+kJN91q6XRxjt6skdg4hLYEIr42U4aXhWja2907L0I0eHO5S3g
+ Gt85lIYYDicNx3Q==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,324 +112,419 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the hand-written SpdmTransportType C enum and QEnumLookup
-table with a QAPI schema definition in qapi/sockets.json. Update
-all users in hw/nvme/ctrl.c to use the QAPI-generated enum constants
-(SPDM_TRANSPORT_TYPE_* instead of SPDM_SOCKET_TRANSPORT_TYPE_*).
+Replace hand-rolled string lookup tables with QAPI enums
+Pca9552LedState and Pca955{2,4}PinState for the led%d and pin%d QOM
+properties. This fixes the incorrect property type ("bool" for LEDs,
+"str" for pins) and lets QAPI handle string-to-enum conversion in the
+visitor, removing the manual string matching in the setters.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Add QEMU_BUILD_BUG_ON guards to ensure the QAPI-generated enum values
+stay in sync with the hardware register encoding.
+
+I kept Pca9552PinState & @Pca9554PinState separate types, because I
+don't know if they could diverge. We could eventually merge those.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- backends/spdm-socket.c       | 23 +++++++----------------
- hw/nvme/ctrl.c               | 26 +++++++++++++-------------
- include/system/spdm-socket.h | 28 +++++++++++-----------------
- qapi/sockets.json            | 20 ++++++++++++++++++++
- 4 files changed, 51 insertions(+), 46 deletions(-)
+ hw/gpio/pca9552.c | 82 +++++++++++++++++++++----------------------------------
+ hw/gpio/pca9554.c | 39 ++++++++++----------------
+ qapi/machine.json | 46 +++++++++++++++++++++++++++++++
+ 3 files changed, 92 insertions(+), 75 deletions(-)
 
-diff --git a/backends/spdm-socket.c b/backends/spdm-socket.c
-index b625a65d28f7..826efc276dcd 100644
---- a/backends/spdm-socket.c
-+++ b/backends/spdm-socket.c
-@@ -13,6 +13,7 @@
- #include "qemu/osdep.h"
- #include "system/spdm-socket.h"
+diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
+index 719149b7174b..16741c22dea3 100644
+--- a/hw/gpio/pca9552.c
++++ b/hw/gpio/pca9552.c
+@@ -23,7 +23,8 @@
+ #include "hw/core/irq.h"
+ #include "migration/vmstate.h"
  #include "qapi/error.h"
-+#include "qapi/qapi-types-sockets.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/qdev-properties-system.h"
- #include "hw/core/qdev-prop-internal.h"
-@@ -205,7 +206,7 @@ static bool spdm_socket_command_valid(uint32_t command)
-     }
- }
+-#include "qapi/visitor.h"
++#include "qapi/qapi-types-machine.h"
++#include "qapi/qapi-visit-machine.h"
+ #include "trace.h"
+ #include "qom/object.h"
  
--uint32_t spdm_socket_receive(const int socket, uint32_t transport_type,
-+uint32_t spdm_socket_receive(const int socket, SpdmTransportType transport_type,
-                              void *rsp, uint32_t rsp_len)
- {
-     uint32_t command;
-@@ -223,13 +224,14 @@ uint32_t spdm_socket_receive(const int socket, uint32_t transport_type,
- }
- 
- bool spdm_socket_send(const int socket, uint32_t socket_cmd,
--                      uint32_t transport_type, void *req, uint32_t req_len)
-+                      SpdmTransportType transport_type, void *req,
-+                      uint32_t req_len)
- {
-     return send_platform_data(socket, transport_type, socket_cmd, req,
-                               req_len);
- }
- 
--uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
-+uint32_t spdm_socket_rsp(const int socket, SpdmTransportType transport_type,
-                          void *req, uint32_t req_len,
-                          void *rsp, uint32_t rsp_len)
- {
-@@ -244,27 +246,16 @@ uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
-     return spdm_socket_receive(socket, transport_type, rsp, rsp_len);
- }
- 
--void spdm_socket_close(const int socket, uint32_t transport_type)
-+void spdm_socket_close(const int socket, SpdmTransportType transport_type)
- {
-     send_platform_data(socket, transport_type,
-                        SPDM_SOCKET_COMMAND_SHUTDOWN, NULL, 0);
- }
- 
--const QEnumLookup SpdmTransport_lookup = {
--    .array = (const char *const[]) {
--        [SPDM_SOCKET_TRANSPORT_TYPE_UNSPEC] = "unspecified",
--        [SPDM_SOCKET_TRANSPORT_TYPE_MCTP] = "mctp",
--        [SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE] = "doe",
--        [SPDM_SOCKET_TRANSPORT_TYPE_SCSI] = "scsi",
--        [SPDM_SOCKET_TRANSPORT_TYPE_NVME] = "nvme",
--    },
--    .size = SPDM_SOCKET_TRANSPORT_TYPE_MAX
--};
+@@ -59,16 +60,15 @@ struct PCA955xClass {
+ /*
+  * Note:  The LED_ON and LED_OFF configuration values for the PCA955X
+  *        chips are the reverse of the PCA953X family of chips.
++ *
++ * The QAPI enums must match the hardware register values.
+  */
+-#define PCA9552_LED_ON   0x0
+-#define PCA9552_LED_OFF  0x1
+-#define PCA9552_LED_PWM0 0x2
+-#define PCA9552_LED_PWM1 0x3
+-#define PCA9552_PIN_LOW  0x0
+-#define PCA9552_PIN_HIZ  0x1
 -
- const PropertyInfo qdev_prop_spdm_trans = {
-     .type = "SpdmTransportType",
-     .description = "Spdm Transport, doe/nvme/mctp/scsi/unspecified",
--    .enum_table = &SpdmTransport_lookup,
-+    .enum_table = &SpdmTransportType_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-     .set_default_value = qdev_propinfo_set_default_value_enum,
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index e4549aa9e534..a72189e0a63c 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -7490,14 +7490,14 @@ static uint16_t nvme_sec_prot_spdm_send(NvmeCtrl *n, NvmeRequest *req)
-     }
+-static const char *led_state[] = {"on", "off", "pwm0", "pwm1"};
+-static const char *pin_state[] = {"low", "high"};
++QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_ON != 0x0);
++QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_OFF != 0x1);
++QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_PWM0 != 0x2);
++QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_PWM1 != 0x3);
++QEMU_BUILD_BUG_ON(PCA9552_PIN_STATE_LOW != 0x0);
++QEMU_BUILD_BUG_ON(PCA9552_PIN_STATE_HIGH != 0x1);
  
-     spdm_res = spdm_socket_send(n->spdm_socket, SPDM_SOCKET_STORAGE_CMD_IF_SEND,
--                                SPDM_SOCKET_TRANSPORT_TYPE_NVME, sec_buf,
-+                                SPDM_TRANSPORT_TYPE_NVME, sec_buf,
-                                 transport_transfer_len);
-     if (!spdm_res) {
-         return NVME_DATA_TRAS_ERROR | NVME_DNR;
-     }
+ static uint8_t pca955x_pin_get_config(PCA955xState *s, int pin)
+ {
+@@ -142,24 +142,24 @@ static void pca955x_update_pin_input(PCA955xState *s)
+             uint8_t config = pca955x_pin_get_config(s, i);
  
-     /* The responder shall ack with message status */
--    recvd = spdm_socket_receive(n->spdm_socket, SPDM_SOCKET_TRANSPORT_TYPE_NVME,
-+    recvd = spdm_socket_receive(n->spdm_socket, SPDM_TRANSPORT_TYPE_NVME,
-                                 &nvme_cmd_status,
-                                 SPDM_SOCKET_MAX_MSG_STATUS_LEN);
+             switch (config) {
+-            case PCA9552_LED_ON:
++            case PCA9552_LED_STATE_ON:
+                 /* Pin is set to 0V to turn on LED */
+                 s->regs[input_reg] &= ~bit_mask;
+                 break;
+-            case PCA9552_LED_OFF:
++            case PCA9552_LED_STATE_OFF:
+                 /*
+                  * Pin is set to Hi-Z to turn off LED and
+                  * pullup sets it to a logical 1 unless
+                  * external device drives it low.
+                  */
+-                if (s->ext_state[i] == PCA9552_PIN_LOW) {
++                if (s->ext_state[i] == PCA9552_PIN_STATE_LOW) {
+                     s->regs[input_reg] &= ~bit_mask;
+                 } else {
+                     s->regs[input_reg] |=  bit_mask;
+                 }
+                 break;
+-            case PCA9552_LED_PWM0:
+-            case PCA9552_LED_PWM1:
++            case PCA9552_LED_STATE_PWM0:
++            case PCA9552_LED_STATE_PWM1:
+                 /* TODO */
+             default:
+                 break;
+@@ -176,7 +176,7 @@ static void pca955x_update_pin_input(PCA955xState *s)
+              */
+             if (s->regs[config_reg] & bit_mask) {
+                 /* Input mode - reflect external state */
+-                if (s->ext_state[i] == PCA9552_PIN_LOW) {
++                if (s->ext_state[i] == PCA9552_PIN_STATE_LOW) {
+                     s->regs[input_reg] &= ~bit_mask;
+                 } else {
+                     s->regs[input_reg] |= bit_mask;
+@@ -360,7 +360,7 @@ static void pca955x_get_led(Object *obj, Visitor *v, const char *name,
+     PCA955xClass *k = PCA955X_GET_CLASS(obj);
+     PCA955xState *s = PCA955X(obj);
+     int led, rc, reg;
+-    uint8_t state;
++    Pca9552LedState state;
  
-@@ -7553,14 +7553,14 @@ static uint16_t nvme_sec_prot_spdm_receive(NvmeCtrl *n, NvmeRequest *req)
- 
-     /* Forward if_recv to the SPDM Server with SPSP0 */
-     spdm_res = spdm_socket_send(n->spdm_socket, SPDM_SOCKET_STORAGE_CMD_IF_RECV,
--                                SPDM_SOCKET_TRANSPORT_TYPE_NVME,
-+                                SPDM_TRANSPORT_TYPE_NVME,
-                                 &hdr, sizeof(hdr));
-     if (!spdm_res) {
-         return NVME_DATA_TRAS_ERROR | NVME_DNR;
-     }
- 
-     /* The responder shall ack with message status */
--    recvd = spdm_socket_receive(n->spdm_socket, SPDM_SOCKET_TRANSPORT_TYPE_NVME,
-+    recvd = spdm_socket_receive(n->spdm_socket, SPDM_TRANSPORT_TYPE_NVME,
-                                 &nvme_cmd_status,
-                                 SPDM_SOCKET_MAX_MSG_STATUS_LEN);
-     if (recvd < SPDM_SOCKET_MAX_MSG_STATUS_LEN) {
-@@ -7580,7 +7580,7 @@ static uint16_t nvme_sec_prot_spdm_receive(NvmeCtrl *n, NvmeRequest *req)
-     }
- 
-     recvd = spdm_socket_receive(n->spdm_socket,
--                                SPDM_SOCKET_TRANSPORT_TYPE_NVME,
-+                                SPDM_TRANSPORT_TYPE_NVME,
-                                 rsp_spdm_buf, alloc_len);
-     if (!recvd) {
-         return NVME_DATA_TRAS_ERROR | NVME_DNR;
-@@ -9098,7 +9098,7 @@ static bool pcie_doe_spdm_rsp(DOECap *doe_cap)
-     uint32_t rsp_len = SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE;
- 
-     uint32_t recvd = spdm_socket_rsp(doe_cap->spdm_socket,
--                             SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE,
-+                             SPDM_TRANSPORT_TYPE_DOE,
-                              req, req_len, rsp, rsp_len);
-     doe_cap->read_mbox_len += DIV_ROUND_UP(recvd, 4);
- 
-@@ -9200,7 +9200,7 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
-         uint16_t doe_offset = PCI_CONFIG_SPACE_SIZE;
- 
-         switch  (pci_dev->spdm_trans) {
--        case SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE:
-+        case SPDM_TRANSPORT_TYPE_DOE:
-             if (n->params.sriov_max_vfs) {
-                 doe_offset += PCI_ARI_SIZEOF;
-             }
-@@ -9215,7 +9215,7 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
-                 return false;
-             }
-             break;
--        case SPDM_SOCKET_TRANSPORT_TYPE_NVME:
-+        case SPDM_TRANSPORT_TYPE_NVME:
-             n->spdm_socket = spdm_socket_connect(pci_dev->spdm_port, errp);
-             if (n->spdm_socket < 0) {
-                 return false;
-@@ -9717,10 +9717,10 @@ static void nvme_exit(PCIDevice *pci_dev)
-     assert(!(pci_dev->doe_spdm.spdm_socket > 0 && n->spdm_socket >= 0));
-     if (pci_dev->doe_spdm.spdm_socket > 0) {
-         spdm_socket_close(pci_dev->doe_spdm.spdm_socket,
--                          SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE);
-+                          SPDM_TRANSPORT_TYPE_DOE);
-     } else if (n->spdm_socket >= 0) {
-         spdm_socket_close(pci_dev->doe_spdm.spdm_socket,
--                          SPDM_SOCKET_TRANSPORT_TYPE_NVME);
-+                          SPDM_TRANSPORT_TYPE_NVME);
-     }
- 
-     if (n->pmr.dev) {
-@@ -9779,7 +9779,7 @@ static const Property nvme_props[] = {
-     DEFINE_PROP_UINT16("mqes", NvmeCtrl, params.mqes, 0x7ff),
-     DEFINE_PROP_UINT16("spdm_port", PCIDevice, spdm_port, 0),
-     DEFINE_PROP_SPDM_TRANS("spdm_trans", PCIDevice, spdm_trans,
--                           SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE),
-+                           SPDM_TRANSPORT_TYPE_DOE),
-     DEFINE_PROP_BOOL("ctratt.mem", NvmeCtrl, params.ctratt.mem, false),
-     DEFINE_PROP_BOOL("atomic.dn", NvmeCtrl, params.atomic_dn, 0),
-     DEFINE_PROP_UINT16("atomic.awun", NvmeCtrl, params.atomic_awun, 0),
-@@ -9857,7 +9857,7 @@ static void nvme_pci_write_config(PCIDevice *dev, uint32_t address,
- 
-     /* DOE is only initialised if SPDM over DOE is used */
-     if (pcie_find_capability(dev, PCI_EXT_CAP_ID_DOE) &&
--        dev->spdm_trans == SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE) {
-+        dev->spdm_trans == SPDM_TRANSPORT_TYPE_DOE) {
-         pcie_doe_write_config(&dev->doe_spdm, address, val, len);
-     }
-     pci_default_write_config(dev, address, val, len);
-@@ -9870,7 +9870,7 @@ static uint32_t nvme_pci_read_config(PCIDevice *dev, uint32_t address, int len)
-     uint32_t val;
- 
-     if (dev->spdm_port && pcie_find_capability(dev, PCI_EXT_CAP_ID_DOE) &&
--        (dev->spdm_trans == SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE)) {
-+        (dev->spdm_trans == SPDM_TRANSPORT_TYPE_DOE)) {
-         if (pcie_doe_read_config(&dev->doe_spdm, address, len, &val)) {
-             return val;
-         }
-diff --git a/include/system/spdm-socket.h b/include/system/spdm-socket.h
-index 00cb0e97f36e..b5a68d3d60b6 100644
---- a/include/system/spdm-socket.h
-+++ b/include/system/spdm-socket.h
-@@ -23,6 +23,8 @@
- #ifndef SPDM_REQUESTER_H
- #define SPDM_REQUESTER_H
- 
-+#include "qapi/qapi-types-sockets.h"
-+
- /**
-  * spdm_socket_connect: connect to an external SPDM socket
-  * @port: port to connect to
-@@ -37,7 +39,7 @@ int spdm_socket_connect(uint16_t port, Error **errp);
- /**
-  * spdm_socket_rsp: send and receive a message to a SPDM server
-  * @socket: socket returned from spdm_socket_connect()
-- * @transport_type: SPDM_SOCKET_TRANSPORT_TYPE_* macro
-+ * @transport_type: the SPDM transport type
-  * @req: request buffer
-  * @req_len: request buffer length
-  * @rsp: response buffer
-@@ -46,14 +48,14 @@ int spdm_socket_connect(uint16_t port, Error **errp);
-  * Send platform data to a SPDM server on socket and then receive
-  * a response.
-  */
--uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
-+uint32_t spdm_socket_rsp(const int socket, SpdmTransportType transport_type,
-                          void *req, uint32_t req_len,
-                          void *rsp, uint32_t rsp_len);
- 
- /**
-  * spdm_socket_rsp: Receive a message from an SPDM server
-  * @socket: socket returned from spdm_socket_connect()
-- * @transport_type: SPDM_SOCKET_TRANSPORT_TYPE_* macro
-+ * @transport_type: the SPDM transport type
-  * @rsp: response buffer
-  * @rsp_len: response buffer length
-  *
-@@ -61,14 +63,14 @@ uint32_t spdm_socket_rsp(const int socket, uint32_t transport_type,
-  * received or 0 on failure. This can be used to receive a message from the SPDM
-  * server without sending anything first.
-  */
--uint32_t spdm_socket_receive(const int socket, uint32_t transport_type,
-+uint32_t spdm_socket_receive(const int socket, SpdmTransportType transport_type,
-                              void *rsp, uint32_t rsp_len);
- 
- /**
-  * spdm_socket_rsp: Sends a message to an SPDM server
-  * @socket: socket returned from spdm_socket_connect()
-  * @socket_cmd: socket command type (normal/if_recv/if_send etc...)
-- * @transport_type: SPDM_SOCKET_TRANSPORT_TYPE_* macro
-+ * @transport_type: the SPDM transport type
-  * @req: request buffer
-  * @req_len: request buffer length
-  *
-@@ -77,16 +79,17 @@ uint32_t spdm_socket_receive(const int socket, uint32_t transport_type,
-  * spdm_socket_receive().
-  */
- bool spdm_socket_send(const int socket, uint32_t socket_cmd,
--                      uint32_t transport_type, void *req, uint32_t req_len);
-+                      SpdmTransportType transport_type, void *req,
-+                      uint32_t req_len);
- 
- /**
-  * spdm_socket_close: send a shutdown command to the server
-  * @socket: socket returned from spdm_socket_connect()
-- * @transport_type: SPDM_SOCKET_TRANSPORT_TYPE_* macro
-+ * @transport_type: the SPDM transport type
-  *
-  * This will issue a shutdown command to the server.
-  */
--void spdm_socket_close(const int socket, uint32_t transport_type);
-+void spdm_socket_close(const int socket, SpdmTransportType transport_type);
+     rc = sscanf(name, "led%2d", &led);
+     if (rc != 1) {
+@@ -378,7 +378,7 @@ static void pca955x_get_led(Object *obj, Visitor *v, const char *name,
+      */
+     reg = PCA9552_LS0 + led / 4;
+     state = (pca955x_read(s, reg) >> ((led % 4) * 2)) & 0x3;
+-    visit_type_str(v, name, (char **)&led_state[state], errp);
++    visit_type_Pca9552LedState(v, name, &state, errp);
+ }
  
  /*
-  * Defines the transport encoding for SPDM, this information shall be passed
-@@ -115,15 +118,6 @@ typedef struct {
- #define SPDM_SOCKET_MAX_MESSAGE_BUFFER_SIZE       0x1200
- #define SPDM_SOCKET_MAX_MSG_STATUS_LEN            0x02
+@@ -397,10 +397,9 @@ static void pca955x_set_led(Object *obj, Visitor *v, const char *name,
+     PCA955xClass *k = PCA955X_GET_CLASS(obj);
+     PCA955xState *s = PCA955X(obj);
+     int led, rc, reg, val;
+-    uint8_t state;
+-    g_autofree char *state_str = NULL;
++    Pca9552LedState state;
  
--typedef enum SpdmTransportType {
--    SPDM_SOCKET_TRANSPORT_TYPE_UNSPEC = 0,
--    SPDM_SOCKET_TRANSPORT_TYPE_MCTP,
--    SPDM_SOCKET_TRANSPORT_TYPE_PCI_DOE,
--    SPDM_SOCKET_TRANSPORT_TYPE_SCSI,
--    SPDM_SOCKET_TRANSPORT_TYPE_NVME,
--    SPDM_SOCKET_TRANSPORT_TYPE_MAX
--} SpdmTransportType;
+-    if (!visit_type_str(v, name, &state_str, errp)) {
++    if (!visit_type_Pca9552LedState(v, name, &state, errp)) {
+         return;
+     }
+     rc = sscanf(name, "led%2d", &led);
+@@ -413,16 +412,6 @@ static void pca955x_set_led(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    for (state = 0; state < ARRAY_SIZE(led_state); state++) {
+-        if (!strcmp(state_str, led_state[state])) {
+-            break;
+-        }
+-    }
+-    if (state >= ARRAY_SIZE(led_state)) {
+-        error_setg(errp, "%s invalid led state %s", __func__, state_str);
+-        return;
+-    }
 -
- extern const PropertyInfo qdev_prop_spdm_trans;
+     reg = PCA9552_LS0 + led / 4;
+     val = pca955x_read(s, reg);
+     val = pca955x_ledsel(val, led % 4, state);
+@@ -437,7 +426,8 @@ static void pca955x_get_pin(Object *obj, Visitor *v, const char *name,
+     PCA955xClass *k = PCA955X_GET_CLASS(obj);
+     PCA955xState *s = PCA955X(obj);
+     int pin, rc;
+-    uint8_t input_reg, state;
++    uint8_t input_reg;
++    Pca9552PinState state;
  
- #define DEFINE_PROP_SPDM_TRANS(_name, _state, _field, _default) \
-diff --git a/qapi/sockets.json b/qapi/sockets.json
-index 473be2ac58a2..a9a8006c2274 100644
---- a/qapi/sockets.json
-+++ b/qapi/sockets.json
-@@ -252,3 +252,23 @@
-             'unix': 'UnixSocketAddress',
-             'vsock': 'VsockSocketAddress',
-             'fd': 'FdSocketAddress' } }
-+
+     rc = sscanf(name, "pin%2d", &pin);
+     if (rc != 1) {
+@@ -455,7 +445,7 @@ static void pca955x_get_pin(Object *obj, Visitor *v, const char *name,
+      */
+     input_reg = PCA9535_INPUT0 + (pin / 8);
+     state = (s->regs[input_reg] >> (pin % 8)) & 0x1;
+-    visit_type_str(v, name, (char **)&pin_state[state], errp);
++    visit_type_Pca9552PinState(v, name, &state, errp);
+ }
+ 
+ static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
+@@ -464,10 +454,10 @@ static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
+     PCA955xClass *k = PCA955X_GET_CLASS(obj);
+     PCA955xState *s = PCA955X(obj);
+     int pin, rc;
+-    uint8_t state, config_reg;
+-    g_autofree char *state_str = NULL;
++    Pca9552PinState state;
++    uint8_t config_reg;
+ 
+-    if (!visit_type_str(v, name, &state_str, errp)) {
++    if (!visit_type_Pca9552PinState(v, name, &state, errp)) {
+         return;
+     }
+     rc = sscanf(name, "pin%2d", &pin);
+@@ -480,16 +470,6 @@ static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    for (state = 0; state < ARRAY_SIZE(pin_state); state++) {
+-        if (!strcmp(state_str, pin_state[state])) {
+-            break;
+-        }
+-    }
+-    if (state >= ARRAY_SIZE(pin_state)) {
+-        error_setg(errp, "%s invalid pin state %s", __func__, state_str);
+-        return;
+-    }
+-
+     /* Only input-configured pins can be driven by an external device. */
+     config_reg = PCA9535_CONFIG0 + (pin / 8);
+     if (!((s->regs[config_reg] >> (pin % 8)) & 0x1)) {
+@@ -499,7 +479,7 @@ static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    pca955x_set_ext_state(s, pin, state != PCA9552_PIN_LOW);
++    pca955x_set_ext_state(s, pin, state != PCA9552_PIN_STATE_LOW);
+ }
+ 
+ static const VMStateDescription pca9552_vmstate = {
+@@ -529,7 +509,7 @@ static void pca9552_reset_hold(Object *obj, ResetType type)
+     s->regs[PCA9552_LS2] = 0x55;
+     s->regs[PCA9552_LS3] = 0x55;
+ 
+-    memset(s->ext_state, PCA9552_PIN_HIZ, PCA955X_PIN_COUNT_MAX);
++    memset(s->ext_state, PCA9552_PIN_STATE_HIGH, PCA955X_PIN_COUNT_MAX);
+     pca955x_update_pin_input(s);
+ 
+     s->pointer = 0xFF;
+@@ -549,7 +529,7 @@ static void pca9535_reset_hold(Object *obj, ResetType type)
+     s->regs[PCA9535_CONFIG0] = 0xFF;  /* All pins as inputs */
+     s->regs[PCA9535_CONFIG1] = 0xFF;  /* All pins as inputs */
+ 
+-    memset(s->ext_state, PCA9552_PIN_HIZ, PCA955X_PIN_COUNT_MAX);
++    memset(s->ext_state, PCA9552_PIN_STATE_HIGH, PCA955X_PIN_COUNT_MAX);
+     pca955x_update_pin_input(s);
+ 
+     s->pointer = 0xFF;
+@@ -567,12 +547,12 @@ static void pca955x_initfn(Object *obj)
+         if (k->has_led_support) {
+             /* LED variant: expose the LED selector state as led%d. */
+             name = g_strdup_printf("led%d", ix);
+-            object_property_add(obj, name, "bool",
++            object_property_add(obj, name, "Pca9552LedState",
+                                 pca955x_get_led, pca955x_set_led, NULL, NULL);
+         } else {
+             /* GPIO variant: expose the pin logic level as pin%d. */
+             name = g_strdup_printf("pin%d", ix);
+-            object_property_add(obj, name, "str",
++            object_property_add(obj, name, "Pca9552PinState",
+                                 pca955x_get_pin, pca955x_set_pin, NULL, NULL);
+         }
+         g_free(name);
+diff --git a/hw/gpio/pca9554.c b/hw/gpio/pca9554.c
+index 904698cdce85..e4eddc829ef7 100644
+--- a/hw/gpio/pca9554.c
++++ b/hw/gpio/pca9554.c
+@@ -16,6 +16,8 @@
+ #include "hw/core/irq.h"
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-types-machine.h"
++#include "qapi/qapi-visit-machine.h"
+ #include "qapi/visitor.h"
+ #include "trace.h"
+ #include "qom/object.h"
+@@ -32,10 +34,8 @@ typedef struct PCA9554Class PCA9554Class;
+ DECLARE_CLASS_CHECKERS(PCA9554Class, PCA9554,
+                        TYPE_PCA9554)
+ 
+-#define PCA9554_PIN_LOW  0x0
+-#define PCA9554_PIN_HIZ  0x1
+-
+-static const char *pin_state[] = {"low", "high"};
++QEMU_BUILD_BUG_ON(PCA9554_PIN_STATE_LOW != 0x0);
++QEMU_BUILD_BUG_ON(PCA9554_PIN_STATE_HIGH != 0x1);
+ 
+ static void pca9554_update_pin_input(PCA9554State *s)
+ {
+@@ -54,7 +54,7 @@ static void pca9554_update_pin_input(PCA9554State *s)
+              * Input: the pin is Hi-Z with a pull-up, so it reads high
+              * unless an external device drives it low.
+              */
+-            if (s->ext_state[i] == PCA9554_PIN_LOW) {
++            if (s->ext_state[i] == PCA9554_PIN_STATE_LOW) {
+                 s->regs[PCA9554_INPUT] &= ~bit_mask;
+             } else {
+                 s->regs[PCA9554_INPUT] |= bit_mask;
+@@ -156,7 +156,7 @@ static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
+ {
+     PCA9554State *s = PCA9554(obj);
+     int pin, rc;
+-    uint8_t state;
++    Pca9554PinState state;
+ 
+     rc = sscanf(name, "pin%2d", &pin);
+     if (rc != 1) {
+@@ -175,7 +175,7 @@ static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
+      * holds the wire level regardless of the configured direction.
+      */
+     state = (s->regs[PCA9554_INPUT] >> pin) & 0x1;
+-    visit_type_str(v, name, (char **)&pin_state[state], errp);
++    visit_type_Pca9554PinState(v, name, &state, errp);
+ }
+ 
+ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
+@@ -183,10 +183,10 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
+ {
+     PCA9554State *s = PCA9554(obj);
+     int pin, rc, val;
+-    uint8_t state, mask;
+-    g_autofree char *state_str = NULL;
++    uint8_t mask;
++    Pca9554PinState state;
+ 
+-    if (!visit_type_str(v, name, &state_str, errp)) {
++    if (!visit_type_Pca9554PinState(v, name, &state, errp)) {
+         return;
+     }
+     rc = sscanf(name, "pin%2d", &pin);
+@@ -199,16 +199,6 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    for (state = 0; state < ARRAY_SIZE(pin_state); state++) {
+-        if (!strcmp(state_str, pin_state[state])) {
+-            break;
+-        }
+-    }
+-    if (state >= ARRAY_SIZE(pin_state)) {
+-        error_setg(errp, "%s invalid pin state %s", __func__, state_str);
+-        return;
+-    }
+-
+     if (s->hw_dir) {
+         /* Warn and ignore if the guest has configured this pin as output */
+         if (!((s->regs[PCA9554_CONFIG] >> pin) & 0x1)) {
+@@ -219,13 +209,13 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
+             return;
+         }
+         /* Drive the external input level */
+-        pca9554_set_ext_state(s, pin, state != PCA9554_PIN_LOW);
++        pca9554_set_ext_state(s, pin, state != PCA9554_PIN_STATE_LOW);
+     } else {
+         /* Legacy behavior: force output mode and drive */
+         /* First, modify the output register bit */
+         val = pca9554_read(s, PCA9554_OUTPUT);
+         mask = 0x1 << pin;
+-        if (state == PCA9554_PIN_LOW) {
++        if (state == PCA9554_PIN_STATE_LOW) {
+             val &= ~(mask);
+         } else {
+             val |= mask;
+@@ -264,7 +254,7 @@ static void pca9554_reset(DeviceState *dev)
+     s->regs[PCA9554_POLARITY] = 0x0; /* No pins are inverted */
+     s->regs[PCA9554_CONFIG] = pin_mask; /* All pins are inputs */
+ 
+-    memset(s->ext_state, PCA9554_PIN_HIZ, pc->pin_count);
++    memset(s->ext_state, PCA9554_PIN_STATE_HIGH, pc->pin_count);
+     pca9554_update_pin_input(s);
+ 
+     s->pointer = 0x0;
+@@ -280,7 +270,8 @@ static void pca9554_initfn(Object *obj)
+         char *name;
+ 
+         name = g_strdup_printf("pin%d", pin);
+-        object_property_add(obj, name, "str", pca9554_get_pin, pca9554_set_pin,
++        object_property_add(obj, name, "Pca9554PinState",
++                            pca9554_get_pin, pca9554_set_pin,
+                             NULL, NULL);
+         g_free(name);
+     }
+diff --git a/qapi/machine.json b/qapi/machine.json
+index d418b34a8643..0e0d85d0a76d 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -429,6 +429,52 @@
+ { 'enum': 'LostTickPolicy',
+   'data': ['discard', 'delay', 'slew' ] }
+ 
 +##
-+# @SpdmTransportType:
++# @Pca9552LedState:
 +#
-+# SPDM transport type
++# LED state for PCA9552.
 +#
-+# @unspecified: Unspecified transport
++# @on: LED on
 +#
-+# @mctp: MCTP transport
++# @off: LED off
 +#
-+# @doe: PCI Data Object Exchange (DOE) transport
++# @pwm0: LED controlled by PWM0
 +#
-+# @scsi: SCSI transport
-+#
-+# @nvme: NVMe transport
++# @pwm1: LED controlled by PWM1
 +#
 +# Since: 11.2
 +##
-+{ 'enum': 'SpdmTransportType',
-+  'data': [ 'unspecified', 'mctp', 'doe', 'scsi', 'nvme' ] }
++{ 'enum': 'Pca9552LedState',
++  'data': ['on', 'off', 'pwm0', 'pwm1'] }
++
++##
++# @Pca9552PinState:
++#
++# Pin state for PCA9552.
++#
++# @low: Pin low
++#
++# @high: Pin high
++#
++# Since: 11.2
++##
++{ 'enum': 'Pca9552PinState',
++  'data': ['low', 'high'] }
++
++##
++# @Pca9554PinState:
++#
++# Pin state for PCA9554.
++#
++# @low: Pin low
++#
++# @high: Pin high
++#
++# Since: 11.2
++##
++{ 'enum': 'Pca9554PinState',
++  'data': ['low', 'high'] }
++
+ ##
+ # @inject-nmi:
+ #
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
