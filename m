@@ -4,77 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B825FC5DF7E
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:32:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18868C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:42:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwI3W-0001sE-Bb; Tue, 18 Aug 2026 07:32:34 -0400
+	id 1wwICG-0006ZL-QM; Tue, 18 Aug 2026 07:41:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wwI3T-0001rc-PL; Tue, 18 Aug 2026 07:32:31 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wwICE-0006SL-Mz; Tue, 18 Aug 2026 07:41:34 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wwI3R-0000oJ-O6; Tue, 18 Aug 2026 07:32:31 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 67IBVjKM069137
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 18 Aug 2026 20:31:45 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=HGztCwXSzmO+tRApV6D6qoPijGlMR+1m3KpNzRiLiyg=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1787052706; v=1;
- b=GF1KW2ZAiNcjeYMqOfdLwnas2aCKru8PiNTPhri/o/0c/u9dCSs6q9h9o4HOLdOV
- YosHhUxd1BO10huDkzOKgBuSvBFXFrS1dHWGdBNddUtAQ+++/S2ldfO3mv6/5oud
- 1xYLZ+Os+tlSkxVLr07NSLTqJUZslvKhUnFOZ6kFlvabqg2ixXroptCQGA6Fadx3
- 0SwGXpkn7o2YmpnsrJ7jQ5vln1fpjAphhBEbI+BaUZxkzEdosHS1xGdQzUc6WZaj
- fjVB90U6LLdduvWfmy8DoBucOz+5vl7IOZdcQ1WMr9KGJmbXiqJVIUSl73gcv3qE
- zdCjN4uB2RoM36ICPtn4+A==
-Message-ID: <7838ab96-38a7-48ea-8a4c-3f7784559e1d@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 18 Aug 2026 20:31:45 +0900
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wwICC-0002jp-Ok; Tue, 18 Aug 2026 07:41:34 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67IAVeZR069949; Tue, 18 Aug 2026 11:41:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=kYjp/C
+ usTxIrUNeX6lwe2+Hz1k7eB9RlQUbfBJC9fcg=; b=UUDei0JPaaXLv/WJniyVkx
+ QnWLkkXJIeGg53C+HJV/l3mX8UuaxWgLD0Jcj82M+aCjUIUp2Z5nAVc1Ym2/oQH3
+ B3spVqIf15fmD788ijl5iZAahav/Yxh/N3hUYgw/NhuC25HVnX2d7XSln0vCKL6L
+ zoVEFgCWsqp8s2SeisAjl96kbg76C0tgOl1vF9wTqCbaasyGprLfJImpzjgRrwX1
+ NtFXbERh3UBfHK7wwG2miE+fIwzQ8481ddsxY9+UqXTgRQk28cLK2lO6CIOsSGkT
+ ijF1nNF4GIBh9OLL1XpInpLes0ucPPurzwXQsBxe9I80bDaGNxFLRBsTNfT4xHOw
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2frt7cb8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Aug 2026 11:41:28 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67IBfKs0013729;
+ Tue, 18 Aug 2026 11:41:28 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33ek2ypj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Aug 2026 11:41:28 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67IBfQ3F62849468
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 18 Aug 2026 11:41:27 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 91B6F5805E;
+ Tue, 18 Aug 2026 11:41:26 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CD0BE58051;
+ Tue, 18 Aug 2026 11:41:21 +0000 (GMT)
+Received: from [9.39.18.24] (unknown [9.39.18.24])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 18 Aug 2026 11:41:21 +0000 (GMT)
+Message-ID: <01070c86-0a61-43e5-8f55-7f217a3f96a9@linux.ibm.com>
+Date: Tue, 18 Aug 2026 17:11:19 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 08/13] hw/virtio/vhost-user: send isolation regions
- to device
-To: Connor Kite <connorkite@gmail.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org,
- virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>,
- Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>,
- 20260817233147.2867623-1-connorkite@gmail.com
-References: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
- <20260817-vhost-user-isolated-memory-v2-8-948aae960abb@gmail.com>
+Subject: Re: [PATCH v3] target/ppc: Add lower bound check for watchdogNumber
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, harshpb@linux.ibm.com, aik@ozlabs.ru,
+ amachhiw@linux.ibm.com
+References: <20260818104551.76023-1-rathc@linux.ibm.com>
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260817-vhost-user-isolated-memory-v2-8-948aae960abb@gmail.com>
+From: Chinmay Rath <rathc@linux.ibm.com>
+In-Reply-To: <20260818104551.76023-1-rathc@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=OfaoyBTY c=1 sm=1 tr=0 ts=6a8444e9 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=p0WdMEafAAAA:8
+ a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8 a=zk2K8ISp43fUAqkf_MkA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDA4NSBTYWx0ZWRfX0XJE2CLYOTZN
+ UHsUsjvdIJ6Rcqwy8Mq2PvUjll2t0cC17gq54r5UCN2tRAr6S0WHJyO8WYpn6VKJsLw1SyH6tw5
+ 0qLYTS83JaHk1/exCwx/6Who7qEZvhg=
+X-Proofpoint-GUID: GbsTYsAD8gz9MOC2TDV_BCKefTmc_JIc
+X-Proofpoint-ORIG-GUID: cG38s47JSvS7WYdS1F-uLHDKOfG9HPzh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDA4NSBTYWx0ZWRfXxriVx+Hikcii
+ sd274IpVDzq49g0eRiYeI/SEuu+sCHsFmBOUn6wCiMpDCM6iRDqMgUnKvmCXq2NX5DG8s/sK6kE
+ 4gAFbsVpg1lhkcmmYEKsva705MgSxSzbk+TwtRcVcC0moXjhZZdulI9V3GIlJ1ezvdK1F2UzhEV
+ RPdwCfnZOkHHaT0BcsWZyIKhQTYqPrAfNVHTJvFBRYy1ElqxGyxDIoRg2PUnLp5YJneQn6dsWme
+ u7tPL1k6tJ7AAeY8Nc5U/J97SWbOFnYSeCQP9XLTmf+qt/yboSjXeiDpKdQkb5G9jEhrwKka6bA
+ HmC1S17rc9384jGfVhM/mJWdxD+eSsonHoy5LYF71fnvx/YtD8lDv/sDcvWj+OPsE+QqOrLN79W
+ +J2GJDplm7E+ipe5LjH2671io0oJ/sV4Ag1hwTjDJot5glzia2YcLHwEMe0iFGx4ITxhauA3J6J
+ Xkt7ynIy4xxJjDHkBvA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-18_01,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0
+ malwarescore=0 bulkscore=0 phishscore=0 priorityscore=1501 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180085
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,198 +124,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/18 14:12, Connor Kite wrote:
-> Adds features to fill a vhost_user_set_mem_table message with the
-> addresses of isolation memory regions corresponding to bounce buffers
-> and vrings.
-> 
-> Signed-off-by: Connor Kite <connorkite@gmail.com>
+
+On 8/18/26 16:15, Chinmay Rath wrote:
+> Add missing lower bound check for H_WATCHDOG H_CALL's watchdogNumber parameter
+> as per PAPR documentation ver 12.10.00 section 14.15.5 'H_WATCHDOG'.
+>
+> Closes : https://gitlab.com/qemu-project/qemu/-/work_items/3600
+> Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reported-by: huntr bubble <bubblehuntr@gmail.com>
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 > ---
->   hw/virtio/vhost-user.c | 118 ++++++++++++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 117 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index 7e9233e174..e1e5cba53d 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -1140,7 +1140,77 @@ static void cleanup_isolation_regions(struct vhost_dev *dev)
+>
+> Changes from v2:
+> Renamed watchdogNumber_valid to watchdog_number_valid - Amit
+> Retained Amit's Reviewed-by
+>
+>   hw/watchdog/spapr_watchdog.c | 16 +++++++++++-----
+>   1 file changed, 11 insertions(+), 5 deletions(-)
+>
+> diff --git a/hw/watchdog/spapr_watchdog.c b/hw/watchdog/spapr_watchdog.c
+> index 5b3f50de3a..5a72896066 100644
+> --- a/hw/watchdog/spapr_watchdog.c
+> +++ b/hw/watchdog/spapr_watchdog.c
+> @@ -127,6 +127,12 @@ static void watchdog_expired(void *pw)
 >       }
 >   }
 >   
-> -__attribute__((unused))
-> +typedef struct {
-> +    VhostUserMsg *msg;
-> +    struct vhost_user *u;
-> +    int *fds;
-> +    size_t fds_size;
-> +    uint64_t vring_iova;
-> +    size_t vring_size;
-> +    bool vring_node_visited;
-> +    size_t *idx;
-> +} IOVATreeTraversalArgs;
-> +
-> +static gboolean vhost_user_fill_msg_reg_from_tree(gpointer key,
-> +                                                  gpointer value,
-> +                                                  gpointer data)
+> +static inline bool watchdog_number_valid(target_ulong watchdogNumber,
+> +                                        SpaprMachineState *spapr)
 > +{
-> +    IOVATreeTraversalArgs *args = data;
-> +    struct vhost_user *u;
-> +    VhostUserMsg *msg = args->msg;
-> +    DMAMap *map = key;
-> +    uint64_t offset;
-> +
-> +    assert(args && key && value);
-> +    if (!args->vring_node_visited) {
-> +        args->vring_node_visited = true;
-> +        return false;
-> +    }
-> +
-> +    u = args->u;
-> +    assert(*args->idx < args->fds_size);
-> +
-> +    args->fds[*args->idx] = args->u->iso_mem_ctx.fd;
-> +
-> +    /*
-> +     * If the number of regions is fixed, it would be wasteful to use one for
-> +     * only the vrings. The first vhost_iova_tree element is always
-> +     * reserved for the vrings, so we can simply combine the first and second
-> +     * elements, which are contiguous in IOVA space, when sending regions to
-> +     * the backend.
-> +     */
-> +    if (*args->idx == 0) {
-> +        offset = u->iso_mem_ctx.vring_hva_addr - u->iso_mem_ctx.shared_mem_addr;
-> +        msg->payload.memory.regions[*args->idx].userspace_addr =
-> +            args->vring_iova;
-> +        /*
-> +         * The size from the iova tree is inclusive, so 1 is added to it.
-> +         * args->vring_size is exclusive, so no addition is required.
-> +         */
-> +        msg->payload.memory.regions[*args->idx].memory_size =
-> +            args->vring_size + map->size + 1;
-> +        msg->payload.memory.regions[*args->idx].guest_phys_addr =
-> +            args->vring_iova;
-> +        msg->payload.memory.regions[*args->idx].mmap_offset = offset;
-> +    } else {
-> +        /* Use 128 bit operation in unlikely case of negative iso_iova_offset */
-> +        offset = int128_get64(int128_add(int128_make64(map->iova),
-> +                                        u->iso_mem_ctx.iso_iova_offset)) -
-> +                (uint64_t)u->iso_mem_ctx.shared_mem_addr;
-> +
-> +        msg->payload.memory.regions[*args->idx].userspace_addr = map->iova;
-> +        msg->payload.memory.regions[*args->idx].memory_size = map->size + 1;
-> +        msg->payload.memory.regions[*args->idx].guest_phys_addr = map->iova;
-> +        msg->payload.memory.regions[*args->idx].mmap_offset = offset;
-> +    }
-> +
-> +    assert(offset + msg->payload.memory.regions[*args->idx].memory_size <=
-> +        u->iso_mem_ctx.size);
-> +    (*args->idx)++;
-> +
-> +    return false;
+> +    return watchdogNumber >= 1 && watchdogNumber <= ARRAY_SIZE(spapr->wds);
 > +}
 > +
->   static int init_isolation_regions(struct vhost_dev *dev,
->                                     VhostUserMsg *msg,
->                                     int *fds, size_t *fd_num)
-> @@ -1159,6 +1229,7 @@ static int init_isolation_regions(struct vhost_dev *dev,
->       DMAMap *map;
->       DMAMap vring_map;
->       int r;
-> +    IOVATreeTraversalArgs trav_args;
+>   static target_ulong h_watchdog(PowerPCCPU *cpu,
+>                                  SpaprMachineState *spapr,
+>                                  target_ulong opcode, target_ulong *args)
+> @@ -145,7 +151,7 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
 >   
->       msg->hdr.request = VHOST_USER_SET_MEM_TABLE;
->   
-> @@ -1244,6 +1315,27 @@ static int init_isolation_regions(struct vhost_dev *dev,
+>       switch (operation) {
+>       case PSERIES_WDTF_OP_START:
+> -        if (watchdogNumber > ARRAY_SIZE(spapr->wds)) {
+> +        if (!watchdog_number_valid(watchdogNumber, spapr)) {
+>               return H_P2;
 >           }
->       }
->   
-> +    *fd_num = 0;
-> +    trav_args.idx = fd_num;
-> +    trav_args.fds = fds;
-> +    trav_args.msg = msg;
-> +    trav_args.u = u;
-> +    trav_args.vring_iova = vring_map.iova;
-> +    trav_args.vring_size = total_vring_size;
-> +    trav_args.fds_size = nregions;
-> +    trav_args.vring_node_visited = false;
-> +
-> +    vhost_iova_tree_foreach(u->iso_mem_ctx.tree,
-> +                            vhost_user_fill_msg_reg_from_tree, &trav_args);
-> +
-> +    msg->payload.memory.nregions = *fd_num;
-> +
-> +    assert(*fd_num == nregions);
-> +
-> +    msg->hdr.size = sizeof(msg->payload.memory.nregions);
-> +    msg->hdr.size += sizeof(msg->payload.memory.padding);
-> +    msg->hdr.size += *fd_num * sizeof(VhostUserMemoryRegion);
-> +
->       return 0;
->   }
->   
-> @@ -1251,6 +1343,7 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
->                                       struct vhost_memory *mem)
->   {
->       struct vhost_user *u = dev->opaque;
-> +    bool memory_isolation = u->user->memory_isolation;
->       int fds[VHOST_MEMORY_BASELINE_NREGIONS];
->       size_t fd_num = 0;
->       bool do_postcopy = u->postcopy_listen && u->postcopy_fd.handler;
-> @@ -1262,6 +1355,11 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
->       int ret;
->   
->       if (do_postcopy) {
-> +        /* Postcopy is not supported with memory isolation yet */
-> +        if (memory_isolation) {
-> +            return -1;
-> +        }
-> +
->           /*
->            * Postcopy has enough differences that it's best done in it's own
->            * version
-> @@ -1278,6 +1376,24 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
->           msg.hdr.flags |= VHOST_USER_NEED_REPLY_MASK;
->       }
->   
-> +    if (memory_isolation) {
-> +        ret = init_isolation_regions(dev, &msg, fds, &fd_num);
-> +        if (ret < 0) {
-> +            return ret;
-> +        }
-> +
-> +        ret = vhost_user_write(dev, &msg, fds, fd_num);
-> +        if (ret < 0) {
-> +            return ret;
-> +        }
-> +
-> +        if (reply_supported) {
-> +            return process_message_reply(dev, &msg);
-> +        }
-> +
-> +        return 0;
-> +    }
-> +
-
-This bypasses vhost_user_fill_set_mem_table_msg() below and suppresses 
-the error saying: "Failed initializing vhost-user memory map, consider 
-using -object memory-backend-file share=on"
-
-However, vhost-user doesn't work even with memory isolation in such a 
-case because vhost_user_no_private_memslots() always returns true and 
-that makes vhost_section() filter private memory out. This restriction 
-is unnecessary with memory isolation and can be removed instead of 
-restoring the error.
-
-This also lacks handling of VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS, 
-and will overflow fds and VhostUserMemory::regions when 
-VHOST_USER_GET_MAX_MEM_SLOTS is larger than VHOST_MEMORY_BASELINE_NREGIONS.
-
-Regards,
-Akihiko Odaki
-
->       if (config_mem_slots) {
->           ret = vhost_user_add_remove_regions(dev, &msg, reply_supported, false);
->           if (ret < 0) {
-> 
-
+>           if (timeoutInMs <= WDT_MIN_TIMEOUT) {
+> @@ -170,11 +176,11 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
+>       case PSERIES_WDTF_OP_STOP:
+>           if (watchdogNumber == PSERIES_WDT_STOP_ALL) {
+>               ret = watchdog_stop_all(spapr);
+> -        } else if (watchdogNumber <= ARRAY_SIZE(spapr->wds)) {
+> +        } else if (!watchdog_number_valid(watchdogNumber, spapr)) {
+> +            return H_P2;
+> +        } else {
+>               ret = watchdog_stop(watchdogNumber,
+>                                   &spapr->wds[watchdogNumber - 1]);
+> -        } else {
+> -            return H_P2;
+>           }
+>           break;
+>       case PSERIES_WDTF_OP_QUERY:
+> @@ -184,7 +190,7 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
+>           trace_spapr_watchdog_query(args[0]);
+>           break;
+>       case PSERIES_WDTF_OP_QUERY_LPM:
+> -        if (watchdogNumber > ARRAY_SIZE(spapr->wds)) {
+> +        if (!watchdog_number_valid(watchdogNumber, spapr)) {
+>               return H_P2;
+>           }
+>           args[0] = PSERIES_WDTQL_QUERY_NOT_STOPPED;
 
