@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8EE5C5DF85
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C185EC5DF81
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 20:22:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwQKO-0001gW-Gj; Tue, 18 Aug 2026 16:22:32 -0400
+	id 1wwQKC-0001er-Tl; Tue, 18 Aug 2026 16:22:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwQKM-0001g6-HG
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:22:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wwQKA-0001eT-K0
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:22:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwQKK-0001Zg-Ab
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:22:30 -0400
+ id 1wwQK8-0001Xp-MV
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:22:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787084547;
+ s=mimecast20190719; t=1787084536;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=g2eywgoqKIQsjaTetCZcwjW3/NAJMVp978iHd1m2B6w=;
- b=ZEbz99UB4lgvb2TegGBrqgFWpSfUjaVaGYRFiJQSZ9OxQLWkdahKH2eN0OOGWs8MCA+M4c
- y/72dQhPRTKxp6CjfNiigT8wGU4EamYEr9EVeT2Za3Gi0Maxrfcqfzb0+DSwe5KXZ/fkfw
- Zkp5HCEx9hfBhjLXqNFlCEMkKKhugps=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=FGABP0knMNio4VzmlCxysKTZNYO7d574Ba2utQOCq8U=;
+ b=MRSqBxCQYnb8Pl/gbeOknefUcKa60ZJjt9nHeMoeezb+GvcC0dVr7vxXlC4NlL2QRsC2Is
+ qwPHUuuH8e1mULThOBa6hLZ3QPPs9tKVjjAOH0wddXH8l/74KO4b0QI7grJ4OzuBefz9F6
+ VPGDqUdlAnFv6zrbVZ+7YY5ph8HBJeQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-270-3Z74MnjNMA2QLh3sfBW8OQ-1; Tue,
- 18 Aug 2026 16:22:15 -0400
-X-MC-Unique: 3Z74MnjNMA2QLh3sfBW8OQ-1
-X-Mimecast-MFC-AGG-ID: 3Z74MnjNMA2QLh3sfBW8OQ_1787084534
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-185-EUrjB-NzPYydN_jg2KUneQ-1; Tue,
+ 18 Aug 2026 16:22:11 -0400
+X-MC-Unique: EUrjB-NzPYydN_jg2KUneQ-1
+X-Mimecast-MFC-AGG-ID: EUrjB-NzPYydN_jg2KUneQ_1787084530
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 44CA218004A9; Tue, 18 Aug 2026 20:22:14 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A6A4D19560A7; Tue, 18 Aug 2026 20:22:10 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0189E3000239; Tue, 18 Aug 2026 20:22:12 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9D003423; Tue, 18 Aug 2026 20:22:09 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 32/32] hw/display: mark most display adapters as
- insecure
+Subject: Re: [PATCH v2 24/32] hw/net: mark most non-virtio NICs as insecure
 From: marcandre.lureau@redhat.com
 To: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
@@ -61,39 +60,39 @@ Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
  "Michael S. Tsirkin" <mst@redhat.com>
-In-Reply-To: <20250926140144.1998694-33-berrange@redhat.com>
+In-Reply-To: <20250926140144.1998694-25-berrange@redhat.com>
 References: <20250926140144.1998694-1-berrange@redhat.com>
- <20250926140144.1998694-33-berrange@redhat.com>
+ <20250926140144.1998694-25-berrange@redhat.com>
 Date: Wed, 19 Aug 2026 00:21:49 +0400
-Message-Id: <178708450916.1320462.1427984683087351414.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9454;
+Message-Id: <178708450916.1320462.4504261233231347825.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7259;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=fRu1Z+gGHz4+SkkKISkorbNQS7HqJHRSJLluR/9pkb8=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhL7g37+oMOL4rWd+7ncXKpU+Cb7TOqMmRYOYL
- bKYYK8uZmSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoS+4AAKCRDa6OEJdZac
- 5XKtD/wNslaBt2VGBz/WWM3DuHRvCAdmSAJKVtgrypERQ5I9RLokMVT73PdYMVFuXO8I2A1bBhm
- 7qaz4/fpc4Vyl0LIgTkVD1lq48U6bppPRThLqkukjXlraGHDyJ9eWGnpcYXfCsPIpPXNc062yxh
- FZdDNlQe9YhVVy0Gc+Ti/kWXJAjMXV8TbXrWCW99G0tvz94g8wC4ROnjS9t2DzUZTF8qCYF/gxk
- eSbvOX82rHuCcwPrbAiu/jy6rH6koYnweiy51avBVAqGNPPW12lp1JtSEjbei01nbOYfi8mdneZ
- ItVnwXOTu7wd7kdCkOB16iX3V70XKRDJQImOLUQtSpCJuWst2Ns++Hc1Tn9+vgaxTQnVx3ilJr3
- CX3O4pjzTDxl+nhdCd0y63H1SGevkm5bCx2JgiIiqLMknEJul/FyCOasQqyerEw29+CmGA2YZaT
- 9QrIEOoQYb2OrLbyjQxgp+wns9TL/jolSpdwsepFQcBl+uCW+FVQnBWiJaOfQCkch9Ut6fZ4++G
- PGAZL/RPStiCxnPq/TqRszlyVDZ5FLx+V7r/UoIif2eKhuwfXR9Od24DhNc94PrTey61sojDmMM
- 3HiYrZS2TLEuSw2yJm8PSNafZ8PgSavWx7fvpXrZrxN2zFYiReuBT3w0EiFeg/8qFg/NWVW5arm
- MzzPSFA3NnaeP6Q==
+ bh=v4wX5+pWv8MUKi6Fw+8XFXXu4WFgVaE4Wpq4Mbd3KIU=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhL7gxpTMTD/IboyKa7cl+F7kk5mnnD4Ib+NIB
+ N0bnyrE6hSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoS+4AAKCRDa6OEJdZac
+ 5WnrD/41q4fHL8xJ/bZ+1jUgiSoq0uJCAfUXpLbox+QA0g0QYGJRT+IioEBDGeEJ1MBDvc28cdg
+ fRNkJMw2XTvLaISdwgtvJjsC583WbAoEStiOUaGlNJJAn8SuDsvCKNum2jZUutC4UOmjF5d6VdJ
+ MvZWuTePzDRWYEkGXuZ0mO4/drUEI3D6D7pDd1Xzm89igsLx/Y/5WHWzux35+gNYAOIV8z+tjVD
+ FdMflIbCXrbb4ui0HOmo8PUHE8PCSX34Ri3YYYrPv8NL1u3y2bcFVPIBNpoqzY4wMrMIuyMMawl
+ RdZYD5k0IDn33XHBOmmHkBHh5yxR0+epHwUO+xYUAOpuZqqXz2IuOLLMlfDRx0+RHthVYA1Xt06
+ Jh/pEixjNygn3EGhegjAI9PgIo2m9k/wxCCVY6WlKJIzhUvTwELztueuIXICgNGMNus1OPCFCCA
+ 3fW2QMxm/CiGJzU5rHDjh9BCQqqLV5VMBX6xqOjoZKTSD+Ec6HP+U+0wx4RbW+kNaZDMhD9CQkW
+ 6gJeTD2+2O4M/E10je2qBzgAjUOcw1fgagGXYaE0vg6eoSgwOYhXKDGsRy/IncL2SMj792gj9qu
+ VrYLKQTxSJCBYGZ/+67+DC/75ltK3HJ8vOXH096y3/uSyIw6X1uvU8+cbwAlsD6j4Abdtm2Gbk6
+ CKRHV4u9ZgLFmpQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,254 +108,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Most of thte display adapters are emulating old hardware which is not
-> relevant to virtualization use cases.
+> Historically most NICs are only interesting for non-virtualization
+> use cases and have not been written with malicious guests in mind.
 > 
-> The exceptions that should be considered secure are Cirrus (PCI, not
-> ISA), Bochs, QXL, RAMFB, VGA (PCI, MMIO, not ISA) and VMWare VGA.
+> As a general rule either virtio-net or xen-net should be used in
+> all virtualized guests requiring a security boundary.
 > 
-> The Cirrus PCI decision is borderline. It has been heavily used with
-> virtualization in the past, but these days VGA / RAMFB are strongly
-> recommended instead. Due to its historical usage though, we can
-> consider the code fairly mature, even if no longer hugely relevant
-> to virtualization use cases.
+> There are a handful of exceptions resulting from historical usage
+> in the x86 world, to support virtualized guests lacking virtio
+> support.
+> 
+> Thus the rtl8139, e1000 & e1000e NICs are declared to provide a
+> security boundary.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> Message-ID: <20250926140144.1998694-33-berrange@redhat.com>
+> Message-ID: <20250926140144.1998694-25-berrange@redhat.com>
 >
-> diff --git a/hw/display/artist.c b/hw/display/artist.c
-> index 3c884c92437c..caab4d1d4c52 100644
-> --- a/hw/display/artist.c
-> +++ b/hw/display/artist.c
-> @@ -1504,6 +1504,7 @@ static const TypeInfo artist_info = {
->      .instance_size = sizeof(ARTISTState),
->      .instance_init = artist_initfn,
->      .class_init    = artist_class_init,
-> +    .secure        = false,
+> diff --git a/hw/net/allwinner-sun8i-emac.c b/hw/net/allwinner-sun8i-emac.c
+> index 30a81576b4ce..b03a917aa3ae 100644
+> --- a/hw/net/allwinner-sun8i-emac.c
+> +++ b/hw/net/allwinner-sun8i-emac.c
+> @@ -892,6 +892,7 @@ static const TypeInfo allwinner_sun8i_emac_info = {
+>      .instance_size  = sizeof(AwSun8iEmacState),
+>      .instance_init  = allwinner_sun8i_emac_init,
+>      .class_init     = allwinner_sun8i_emac_class_init,
+> +    .secure         = false,
 >  };
 >  
->  static void artist_register_types(void)
-> diff --git a/hw/display/ati.c b/hw/display/ati.c
-> index f7c0006a879d..6e332e02d2fb 100644
-> --- a/hw/display/ati.c
-> +++ b/hw/display/ati.c
-> @@ -1080,6 +1080,7 @@ static const TypeInfo ati_vga_info = {
->      .instance_size = sizeof(ATIVGAState),
->      .class_init = ati_vga_class_init,
->      .instance_init = ati_vga_init,
-> +    .secure = false,
->      .interfaces = (const InterfaceInfo[]) {
->            { INTERFACE_CONVENTIONAL_PCI_DEVICE },
->            { },
-> diff --git a/hw/display/bcm2835_fb.c b/hw/display/bcm2835_fb.c
-> index 1bb2ee45a015..bb6c986fb86f 100644
-> --- a/hw/display/bcm2835_fb.c
-> +++ b/hw/display/bcm2835_fb.c
-> @@ -459,6 +459,7 @@ static const TypeInfo bcm2835_fb_info = {
->      .instance_size = sizeof(BCM2835FBState),
->      .class_init    = bcm2835_fb_class_init,
->      .instance_init = bcm2835_fb_init,
-> +    .secure        = false,
+>  static void allwinner_sun8i_emac_register_types(void)
+> diff --git a/hw/net/allwinner_emac.c b/hw/net/allwinner_emac.c
+> index 77d089d9887a..836138bba370 100644
+> --- a/hw/net/allwinner_emac.c
+> +++ b/hw/net/allwinner_emac.c
+> @@ -528,8 +528,9 @@ static const TypeInfo aw_emac_info = {
+>      .name           = TYPE_AW_EMAC,
+>      .parent         = TYPE_SYS_BUS_DEVICE,
+>      .instance_size  = sizeof(AwEmacState),
+> -    .instance_init   = aw_emac_init,
+> +    .instance_init  = aw_emac_init,
+>      .class_init     = aw_emac_class_init,
+> +    .secure         = false,
 >  };
 >  
->  static void bcm2835_fb_register_types(void)
-> diff --git a/hw/display/bochs-display.c b/hw/display/bochs-display.c
-> index ad2821c97458..0495d900f6d2 100644
-> --- a/hw/display/bochs-display.c
-> +++ b/hw/display/bochs-display.c
-> @@ -374,6 +374,7 @@ static const TypeInfo bochs_display_type_info = {
->      .instance_size  = sizeof(BochsDisplayState),
->      .instance_init  = bochs_display_init,
->      .class_init     = bochs_display_class_init,
-> +    .secure         = true,
->      .interfaces     = (const InterfaceInfo[]) {
->          { INTERFACE_PCIE_DEVICE },
->          { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-> diff --git a/hw/display/cg3.c b/hw/display/cg3.c
-> index daeef1521745..f437921a7e70 100644
-> --- a/hw/display/cg3.c
-> +++ b/hw/display/cg3.c
-> @@ -384,6 +384,7 @@ static const TypeInfo cg3_info = {
->      .instance_size = sizeof(CG3State),
->      .instance_init = cg3_initfn,
->      .class_init    = cg3_class_init,
-> +    .secure        = false,
+>  static void aw_emac_register_types(void)
+> diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
+> index 44446666deb2..760e0d5e9985 100644
+> --- a/hw/net/cadence_gem.c
+> +++ b/hw/net/cadence_gem.c
+> @@ -1833,6 +1833,7 @@ static const TypeInfo gem_info = {
+>      .instance_size  = sizeof(CadenceGEMState),
+>      .instance_init = gem_init,
+>      .class_init = gem_class_init,
+> +    .secure   = false,
 >  };
 >  
->  static void cg3_register_types(void)
-> diff --git a/hw/display/cirrus_vga.c b/hw/display/cirrus_vga.c
-> index ef08694626d6..d9403ccb57e7 100644
-> --- a/hw/display/cirrus_vga.c
-> +++ b/hw/display/cirrus_vga.c
-> @@ -3013,6 +3013,7 @@ static const TypeInfo cirrus_vga_info = {
->      .parent        = TYPE_PCI_DEVICE,
->      .instance_size = sizeof(PCICirrusVGAState),
->      .class_init    = cirrus_vga_class_init,
-> +    .secure        = true,
+>  static void gem_register_types(void)
+> diff --git a/hw/net/can/can_kvaser_pci.c b/hw/net/can/can_kvaser_pci.c
+> index be16769de29c..7764c29ced6e 100644
+> --- a/hw/net/can/can_kvaser_pci.c
+> +++ b/hw/net/can/can_kvaser_pci.c
+> @@ -305,6 +305,7 @@ static const TypeInfo kvaser_pci_info = {
+>      .instance_size = sizeof(KvaserPCIState),
+>      .class_init    = kvaser_pci_class_init,
+>      .instance_init = kvaser_pci_instance_init,
+> +    .secure        = false,
 >      .interfaces = (const InterfaceInfo[]) {
 >          { INTERFACE_CONVENTIONAL_PCI_DEVICE },
 >          { },
-> diff --git a/hw/display/cirrus_vga_isa.c b/hw/display/cirrus_vga_isa.c
-> index 4b55c48eff85..7b38e6c33a3c 100644
-> --- a/hw/display/cirrus_vga_isa.c
-> +++ b/hw/display/cirrus_vga_isa.c
-> @@ -91,6 +91,7 @@ static const TypeInfo isa_cirrus_vga_info = {
->      .parent        = TYPE_ISA_DEVICE,
->      .instance_size = sizeof(ISACirrusVGAState),
->      .class_init = isa_cirrus_vga_class_init,
+> diff --git a/hw/net/can/can_mioe3680_pci.c b/hw/net/can/can_mioe3680_pci.c
+> index 44f3ba370dc2..3e1c5eda1981 100644
+> --- a/hw/net/can/can_mioe3680_pci.c
+> +++ b/hw/net/can/can_mioe3680_pci.c
+> @@ -248,6 +248,7 @@ static const TypeInfo mioe3680_pci_info = {
+>      .instance_size = sizeof(Mioe3680PCIState),
+>      .class_init    = mioe3680_pci_class_init,
+>      .instance_init = mioe3680_pci_instance_init,
+> +    .secure        = false,
+>      .interfaces = (const InterfaceInfo[]) {
+>          { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+>          { },
+> diff --git a/hw/net/can/can_pcm3680_pci.c b/hw/net/can/can_pcm3680_pci.c
+> index 7296d63be794..964e074a3699 100644
+> --- a/hw/net/can/can_pcm3680_pci.c
+> +++ b/hw/net/can/can_pcm3680_pci.c
+> @@ -249,6 +249,7 @@ static const TypeInfo pcm3680i_pci_info = {
+>      .instance_size = sizeof(Pcm3680iPCIState),
+>      .class_init    = pcm3680i_pci_class_init,
+>      .instance_init = pcm3680i_pci_instance_init,
+> +    .secure        = false,
+>      .interfaces = (const InterfaceInfo[]) {
+>          { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+>          { },
+> diff --git a/hw/net/can/ctucan_pci.c b/hw/net/can/ctucan_pci.c
+> index bed6785433e7..1530959ea8c9 100644
+> --- a/hw/net/can/ctucan_pci.c
+> +++ b/hw/net/can/ctucan_pci.c
+> @@ -262,6 +262,7 @@ static const TypeInfo ctucan_pci_info = {
+>      .instance_size = sizeof(CtuCanPCIState),
+>      .class_init    = ctucan_pci_class_init,
+>      .instance_init = ctucan_pci_instance_init,
+> +    .secure        = false,
+>      .interfaces = (const InterfaceInfo[]) {
+>          { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+>          { },
+> diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canfd.c
+> index 3eb111949f89..0073812e3c21 100644
+> --- a/hw/net/can/xlnx-versal-canfd.c
+> +++ b/hw/net/can/xlnx-versal-canfd.c
+> @@ -2068,6 +2068,7 @@ static const TypeInfo canfd_info = {
+>      .instance_size = sizeof(XlnxVersalCANFDState),
+>      .class_init    = canfd_class_init,
+>      .instance_init = canfd_init,
 > +    .secure        = false,
 >  };
 >  
->  static void cirrus_vga_isa_register_types(void)
-> diff --git a/hw/display/dm163.c b/hw/display/dm163.c
-> index f8340d8275e9..f0437867753e 100644
-> --- a/hw/display/dm163.c
-> +++ b/hw/display/dm163.c
-> @@ -343,6 +343,7 @@ static const TypeInfo dm163_types[] = {
->          .parent = TYPE_DEVICE,
->          .instance_size = sizeof(DM163State),
->          .class_init = dm163_class_init
+>  static void canfd_register_types(void)
+> diff --git a/hw/net/can/xlnx-zynqmp-can.c b/hw/net/can/xlnx-zynqmp-can.c
+> index ca9edd4a5b88..e859e447af2f 100644
+> --- a/hw/net/can/xlnx-zynqmp-can.c
+> +++ b/hw/net/can/xlnx-zynqmp-can.c
+> @@ -1194,6 +1194,7 @@ static const TypeInfo can_info = {
+>      .instance_size = sizeof(XlnxZynqMPCANState),
+>      .class_init    = xlnx_zynqmp_can_class_init,
+>      .instance_init = xlnx_zynqmp_can_init,
+> +    .secure        = false,
+>  };
+>  
+>  static void can_register_types(void)
+> diff --git a/hw/net/dp8393x.c b/hw/net/dp8393x.c
+> index d49032059bb1..b508b6f77979 100644
+> --- a/hw/net/dp8393x.c
+> +++ b/hw/net/dp8393x.c
+> @@ -956,6 +956,7 @@ static const TypeInfo dp8393x_info = {
+>      .instance_size = sizeof(dp8393xState),
+>      .instance_init = dp8393x_instance_init,
+>      .class_init    = dp8393x_class_init,
+> +    .secure        = false,
+>  };
+>  
+>  static void dp8393x_register_types(void)
+> diff --git a/hw/net/e1000.c b/hw/net/e1000.c
+> index a80a7b0cdb40..684350557f20 100644
+> --- a/hw/net/e1000.c
+> +++ b/hw/net/e1000.c
+> @@ -1759,6 +1759,7 @@ static void e1000_register_types(void)
+>          type_info.parent = TYPE_E1000_BASE;
+>          type_info.class_data = info;
+>          type_info.class_init = e1000_class_init;
+> +        type_info.secure = true,
 
-missing trailing coma
+, -> ;
 
-> +        .secure = false,
+>  
+>          type_register_static(&type_info);
 >      }
->  };
->  
-> diff --git a/hw/display/dpcd.c b/hw/display/dpcd.c
-> index a157dc64e761..733f6433759b 100644
-> --- a/hw/display/dpcd.c
-> +++ b/hw/display/dpcd.c
-> @@ -155,6 +155,7 @@ static const TypeInfo dpcd_info = {
->      .instance_size = sizeof(DPCDState),
->      .class_init    = dpcd_class_init,
->      .instance_init = dpcd_init,
-> +    .secure        = false,
->  };
->  
->  static void dpcd_register_types(void)
-> diff --git a/hw/display/exynos4210_fimd.c b/hw/display/exynos4210_fimd.c
-> index c61e0280a7cd..85e32e8700d0 100644
-> --- a/hw/display/exynos4210_fimd.c
-> +++ b/hw/display/exynos4210_fimd.c
-> @@ -1974,6 +1974,7 @@ static const TypeInfo exynos4210_fimd_info = {
->      .instance_size = sizeof(Exynos4210fimdState),
->      .instance_init = exynos4210_fimd_init,
->      .class_init = exynos4210_fimd_class_init,
-> +    .secure = false,
->  };
->  
->  static void exynos4210_fimd_register_types(void)
-> diff --git a/hw/display/g364fb.c b/hw/display/g364fb.c
-> index a6ddc21d3e4a..c23d5846843e 100644
-> --- a/hw/display/g364fb.c
-> +++ b/hw/display/g364fb.c
-> @@ -543,6 +543,7 @@ static const TypeInfo g364fb_sysbus_info = {
->      .parent        = TYPE_SYS_BUS_DEVICE,
->      .instance_size = sizeof(G364SysBusState),
->      .class_init    = g364fb_sysbus_class_init,
-> +    .secure        = false,
->  };
->  
->  static void g364fb_register_types(void)
-> diff --git a/hw/display/i2c-ddc.c b/hw/display/i2c-ddc.c
-> index 2adfc1a1472f..525479aa49a2 100644
-> --- a/hw/display/i2c-ddc.c
-> +++ b/hw/display/i2c-ddc.c
-> @@ -117,7 +117,8 @@ static const TypeInfo i2c_ddc_info = {
->      .parent = TYPE_I2C_SLAVE,
->      .instance_size = sizeof(I2CDDCState),
->      .instance_init = i2c_ddc_init,
-> -    .class_init = i2c_ddc_class_init
-> +    .class_init = i2c_ddc_class_init,
-> +    .secure = false,
->  };
->  
->  static void ddc_register_devices(void)
-> diff --git a/hw/display/jazz_led.c b/hw/display/jazz_led.c
-> index 90e82b58be29..946f78306e2f 100644
-> --- a/hw/display/jazz_led.c
-> +++ b/hw/display/jazz_led.c
-> @@ -310,6 +310,7 @@ static const TypeInfo jazz_led_info = {
->      .instance_size = sizeof(LedState),
->      .instance_init = jazz_led_init,
->      .class_init    = jazz_led_class_init,
-> +    .secure        = false,
->  };
->  
->  static void jazz_led_register(void)
-> diff --git a/hw/display/macfb.c b/hw/display/macfb.c
-> index 574d667173ca..b80ce26d9b90 100644
-> --- a/hw/display/macfb.c
-> +++ b/hw/display/macfb.c
-> @@ -825,6 +825,7 @@ static const TypeInfo macfb_sysbus_info = {
->      .parent        = TYPE_SYS_BUS_DEVICE,
->      .instance_size = sizeof(MacfbSysBusState),
->      .class_init    = macfb_sysbus_class_init,
-> +    .secure        = false,
->  };
->  
->  static const TypeInfo macfb_nubus_info = {
-> @@ -833,6 +834,7 @@ static const TypeInfo macfb_nubus_info = {
->      .instance_size = sizeof(MacfbNubusState),
->      .class_init    = macfb_nubus_class_init,
->      .class_size    = sizeof(MacfbNubusDeviceClass),
-> +    .secure        = false,
->  };
->  
->  static void macfb_register_types(void)
-> diff --git a/hw/display/next-fb.c b/hw/display/next-fb.c
-> index ec81b766a7e4..9ddbd13ba325 100644
-> --- a/hw/display/next-fb.c
-> +++ b/hw/display/next-fb.c
-> @@ -134,6 +134,7 @@ static const TypeInfo nextfb_info = {
->      .parent        = TYPE_SYS_BUS_DEVICE,
->      .instance_size = sizeof(NeXTFbState),
->      .class_init    = nextfb_class_init,
-> +    .secure        = false,
->  };
->  
->  static void nextfb_register_types(void)
-> diff --git a/hw/display/pl110.c b/hw/display/pl110.c
-> index 09c3c59e0ed6..ce33d4c68cca 100644
-> --- a/hw/display/pl110.c
-> +++ b/hw/display/pl110.c
-> @@ -596,18 +596,21 @@ static const TypeInfo pl110_info = {
->      .instance_size = sizeof(PL110State),
->      .instance_init = pl110_init,
->      .class_init    = pl110_class_init,
-> +    .secure        = false,
->  };
->  
->  static const TypeInfo pl110_versatile_info = {
->      .name          = "pl110_versatile",
->      .parent        = TYPE_PL110,
->      .instance_init = pl110_versatile_init,
-> +    .secure        = false,
->  };
->  
->  static const TypeInfo pl111_info = {
->      .name          = "pl111",
->      .parent        = TYPE_PL110,
->      .instance_init = pl111_init,
-> +    .secure        = false,
->  };
->  
->  static void pl110_register_types(void)
-> diff --git a/hw/display/qxl.c b/hw/display/qxl.c
-> index 18f482ca7f7b..8f876c872ad8 100644
-> --- a/hw/display/qxl.c
-> +++ b/hw/display/qxl.c
-> @@ -2516,7 +2516,9 @@ static const TypeInfo qxl_pci_type_info = {
->      .parent = TYPE_PCI_DEVICE,
->      .instance_size = sizeof(PCIQXLDevice),
->      .abstract = true,
+> diff --git a/hw/net/e1000e.c b/hw/net/e1000e.c
+> index 89e6d52ba0f2..83cf3cf643a7 100644
+> --- a/hw/net/e1000e.c
+> +++ b/hw/net/e1000e.c
+> @@ -721,6 +721,7 @@ static const TypeInfo e1000e_info = {
+>      .instance_size = sizeof(E1000EState),
+>      .class_init = e1000e_class_init,
+>      .instance_init = e1000e_instance_init,
 > +    .secure = true,
->      .class_init = qxl_pci_class_init,
-> +    .secure        = true,
+>      .interfaces = (const InterfaceInfo[]) {
+>          { INTERFACE_PCIE_DEVICE },
+>          { }
+> diff --git a/hw/net/eepro100.c b/hw/net/eepro100.c
+> index d47df5a97fd1..3bc232d3c2a6 100644
+> --- a/hw/net/eepro100.c
+> +++ b/hw/net/eepro100.c
+> @@ -2094,6 +2094,7 @@ static void eepro100_register_types(void)
+>          type_info.class_init = eepro100_class_init;
+>          type_info.instance_size = sizeof(EEPRO100State);
+>          type_info.instance_init = eepro100_instance_init;
+> +        type_info.secure   = false,
 
-
-.secure is set twice here
+same
 
 -- 
 Marc-André Lureau <marcandre.lureau@redhat.com>
