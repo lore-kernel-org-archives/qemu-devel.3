@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAE75C5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:06:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04D3AC5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:06:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwNCb-0007S3-UH; Tue, 18 Aug 2026 13:02:17 -0400
+	id 1wwNCw-0007kV-WB; Tue, 18 Aug 2026 13:02:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCa-0007RF-3m
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:16 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1wwNCv-0007jn-E2
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:37 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCY-0004ip-52
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:15 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-84faf87d19dso181952b3a.3
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:13 -0700 (PDT)
+ id 1wwNCt-0004sV-KT
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:37 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-cbedf433a99so8360a12.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787072533; x=1787677333; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=sZpPOKytJxm4lwxbTGWqFKnd4UF37njKhCHk600PrmQ=;
- b=acYOuWdD2tma/CLQzvPM6PVBljqD9OLofTkHVEpgVWdPJk8buZmP1IY16OzKBB8zvg
- GVhQJ9nFiqEvf+RZ50VEbkgATTknf+FRCQJaHdC7XxgueIwzBoGAi87Sr0n6vByp8ZVo
- WLNHQyAkFRp2tTFY07ryGgEJ1SNM9wpPb8nPRnXmWEgFoxtYNqmjK2uyNX745jouw4Gr
- ta7kCz48UesCvLa+XCqOXfLm7FyckZekCOj7wKeO5PfQY5HaHquuWjxXDAA9aVHAgSiT
- u/zZbqQ1iRNd1sbW9/CBz5l1Yo2jgOQBZ7Hgo3ef/0Ejzo+gsM/wDmT0qTDal9IX2J89
- LGyA==
+ d=linaro.org; s=google; t=1787072554; x=1787677354; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=jZJOaKZTusHHUoW9ISiY/6WK3cLRzqtf2hDDRWECaC4=;
+ b=NcxRT4mHTMvfwG+iSeyrscrjF3rm6VmyjLHACxuFh00aNq6qhEQeypF8eFzw5OhJvK
+ YvVvylia2KyTWGIZaPYabaD4z5TB1WdeO4GdDY9b7Isj2arw4hkdf6iCLRel/hKLEJkK
+ ryPGdeiAaGsBJB+1FCFZIqCM3hVNIYoPUFB4yHAhmRGqevkRPcr4D6hisF+CMD/7fOaz
+ 96xYicmM0VNRRAr+TG2R+jH/SzXz9QYFgc4YDmfg0gv09VK1pY2rUpu+Y+AORH9d+hVd
+ FGEHvIR67fja1vL/5/6UXgJRbid4H11OJiPkv+twF3mR56IM02T2eM9DI/D4yKjYOIjC
+ K6Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787072533; x=1787677333;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=sZpPOKytJxm4lwxbTGWqFKnd4UF37njKhCHk600PrmQ=;
- b=Aj8CVFS5wKyilqh2YHakPi4j6VbVlQlcucAK3vR9pKHjoBwLbQ9O23jylSPo91r8m1
- 7tDilSXsqrnkKrjm8UK1d+icfeO/CZgEiWZy+16P3C5pM8cXLECKtkXVFK0urWgn6Ow7
- EMwJEZ4x6P4CaZWAHdUQgNB5ilI+B7v+hd0GYyiFA16jhfnoR3WcCEVrQQqtpGi5tm/E
- sUrMBIF3rQhAKBieGpn0SIu9E9UqxuPPo9mMhBoAyQxdqObgXaK3zYTYprJuTBy2AuPA
- +r/zqW53DUmvYJTlNk1744kO2/QaNAoqygW8KFDfykCEdS1m2F0psQuyXCTAL+UMAYAn
- t6cw==
-X-Gm-Message-State: AOJu0Yyf2d4VroyUdo6oQJUME+caoFx/oY+BA+Loi9k5/+wYCwAl6kLw
- Cyif1m0FGrMAkDG3wjwpg9yESij/ZvZUOX/vYWf254wxBGk/374xKUEW6RTPDsoWe9XCnZZQLdV
- dRhpavwg=
-X-Gm-Gg: AR+sD11q/a55ZZwm8U/PRdV0MeIuAzBZM7EezZLHCyp7lON7we9B5Ia/QfPYnyEi1zS
- C4wypeVxVstW8BGsnJdsNmGJ4vcSKwN04kjfcw9Io8rehkz0sS84KAh9porYxD/UN6csg4i1Yqo
- 1kCEOy1t/zW+4vBFHRHAWoRVo4F6cPSkFgVWDnFuptzSpzLfcb8PYTe+POwp96V+XooiUkMA8Jq
- VWjVOunBAmeSnkUmv77dPaxdLJkI9IBmYoC7IE9pOhT5rrcMW0QWq5knlLpC9NsVcrhHf6JHT5C
- OdfskfShP/swy2z4IP3YJexfmAOK6nFFkU1VuzYMupKUIyz/wGnOrkb2kfq7VGtlHsbpdNmILA0
- bSrQaeOBUbpoD4tL+378MxsXekJZwdX5/Sv1iwGAEg4aXlRsdqF3mdHlq2DMstMA0H73QXAZEEM
- NAuIgGd2aw3alSzFGAmHAKXx02gCkSTshn5ZiVqVG9ExZXXvhWy6ZkRGI69/wdFeTpWQhfv653+
- 7LN0y16NlN89+OKaHx9p5xKSePFOioa+yxo
-X-Received: by 2002:a05:6a00:2e85:b0:842:7296:dba with SMTP id
- d2e1a72fcca58-84fddfa8508mr34565966b3a.7.1787072532481; 
- Tue, 18 Aug 2026 10:02:12 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787072554; x=1787677354;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=jZJOaKZTusHHUoW9ISiY/6WK3cLRzqtf2hDDRWECaC4=;
+ b=ZCYy+Fpl4K/RRrex8kcA7dX43SfWt+VJRnaAtnIyKEmY+Ye+zaBQjgtuSxXFJl0qiE
+ CBdMbJADZ4DVoAeo1sEtaf8AwbOdFNbOVhHPTHOOwOAXwCgM0XP4mtX3ggrISpTePwSy
+ LG7q2/I5qH6Ix3KbJhxo8J4qz3q6yXex/6kil46cRzceXsiBQi+tW1nHBnV/jecJfmhj
+ XxpeFZYvsB3+SDwC6lXXVarqRGiUPfCp1wVZIm52LU3XhtXcInhzac3fgTZt/laxY99j
+ HqWO6aciddN5cyvq9IFszvlBu1eB4DlRgsbFaQxNbaJ3hrebD4g5EqGG32eO2/9tHFUU
+ Kfkg==
+X-Gm-Message-State: AOJu0YzvWkqPIzFWxb+WKmctB0tEJwiicAKB2lTkocuo3A0ddZDfZhmV
+ zt1tOaqNNQRbW9ER7SGyT2n6HBlFfn8P62uFRIL2EKaHjJyJVAd0X4Ajplo4BnZPbl1mHHtn79p
+ H27foCuA=
+X-Gm-Gg: AR+sD12GYX9rgMsHAUxb8R2MoaZpsjTZp9yydpyaCKX+nq7+0BnNGnQ/oDHJ/DqdeEe
+ SmcvKDZT5tGoEVx6nzImG0IAWjMvBqH2HrYb53i5Vdyr6tOEKr755jGyNuLwZE+N8C6Mko3e94B
+ VMIa6cE0lTVPU2XW4I/OOB6N1rZ4x6SGZAhDT6ODCdjE4/yHkhoUCoQ2VK6i+qiI+YVoqSD4mr0
+ trjhZljzPEW63caus6wXKrnaIXcuJxLrA6f+xADgl6ml883NZVerPJYqY+rPhPmgJnHUGdoLrjA
+ yxG/8yRfZ5U8NYkdPg049t7FVTac5JxDFSwyxMgcKFtpKx8KoCvkSiSbgv1j3/UL6LsVKJG7vtP
+ sIxhQlC1ofLiQt4YIi65v7NCplM1lh6E4tt1WoWXEYixgfmWQUnTS9q48edmoAqz3XeVn+cgweC
+ 0SIfeaBYYO7aUreeCKMhdXp3fqVyBBrmqS8RwHGGjejM2q279pNaby15+pvLJbAceaAC98MZ95H
+ ZgOQx7DvPWRlnznYmhCpOAH/Y5IqyMJK7db9cr7xtMexA==
+X-Received: by 2002:a05:6a00:2392:b0:848:56d4:3288 with SMTP id
+ d2e1a72fcca58-84fddf92abamr36908931b3a.4.1787072554185; 
+ Tue, 18 Aug 2026 10:02:34 -0700 (PDT)
 Received: from stoup.. (c-73-181-156-132.hsd1.wa.comcast.net. [73.181.156.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.11
+ d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 10:02:11 -0700 (PDT)
+ Tue, 18 Aug 2026 10:02:33 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>
-Subject: [PULL 12/38] target/mips: Expand octeon reflections inline
-Date: Tue, 18 Aug 2026 10:01:29 -0700
-Message-ID: <20260818170155.1907006-13-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 32/38] target/riscv: Enable disassembly via capstone
+Date: Tue, 18 Aug 2026 10:01:49 -0700
+Message-ID: <20260818170155.1907006-33-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818170155.1907006-1-richard.henderson@linaro.org>
 References: <20260818170155.1907006-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,189 +103,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use tcg_gen_revbit64_i64 instead of out-of-line helpers.
+In capstone v5, riscv support is spare, but v6 is pretty good.
 
-Reviewed-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/mips/helper.h               |  7 -----
- target/mips/tcg/octeon_crypto.c    | 35 ---------------------
- target/mips/tcg/octeon_translate.c | 49 ++++++++++++++++++++++++++----
- 3 files changed, 43 insertions(+), 48 deletions(-)
+ include/disas/capstone.h | 34 +++++++++++++++++
+ disas/capstone.c         | 19 ++++++++++
+ target/riscv/cpu.c       | 81 +++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 133 insertions(+), 1 deletion(-)
 
-diff --git a/target/mips/helper.h b/target/mips/helper.h
-index 786117813a..779b87101d 100644
---- a/target/mips/helper.h
-+++ b/target/mips/helper.h
-@@ -27,10 +27,6 @@ DEF_HELPER_FLAGS_4(rotx, TCG_CALL_NO_RWG_SE, tl, tl, i32, i32, i32)
+diff --git a/include/disas/capstone.h b/include/disas/capstone.h
+index c43033f7f6..5c78824da2 100644
+--- a/include/disas/capstone.h
++++ b/include/disas/capstone.h
+@@ -11,6 +11,8 @@
  
- /* Octeon COP2 selector operation helpers. */
- DEF_HELPER_1(octeon_cp2_mf_crc_iv_reflect, i64, env)
--DEF_HELPER_1(octeon_cp2_mf_gfm_mul_reflect0, i64, env)
--DEF_HELPER_1(octeon_cp2_mf_gfm_mul_reflect1, i64, env)
--DEF_HELPER_1(octeon_cp2_mf_gfm_resinp_reflect0, i64, env)
--DEF_HELPER_1(octeon_cp2_mf_gfm_resinp_reflect1, i64, env)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_iv_reflect, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_polynomial_reflect, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_byte, void, env, i64)
-@@ -43,9 +39,6 @@ DEF_HELPER_2(octeon_cp2_mt_crc_write_dword, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_var, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_dword_reflect, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_crc_write_var_reflect, void, env, i64)
--DEF_HELPER_2(octeon_cp2_mt_gfm_mul_reflect0, void, env, i64)
--DEF_HELPER_2(octeon_cp2_mt_gfm_mul_reflect1, void, env, i64)
--DEF_HELPER_2(octeon_cp2_mt_gfm_xor0_reflect, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_gfm_xormul1_reflect, void, env, i64)
- DEF_HELPER_2(octeon_cp2_mt_gfm_xormul1, void, env, i64)
- DEF_HELPER_1(octeon_cp2_mt_sha3_startop, void, env)
-diff --git a/target/mips/tcg/octeon_crypto.c b/target/mips/tcg/octeon_crypto.c
-index fbf80be2a5..118397e632 100644
---- a/target/mips/tcg/octeon_crypto.c
-+++ b/target/mips/tcg/octeon_crypto.c
-@@ -2127,41 +2127,6 @@ uint64_t helper_octeon_cp2_mf_crc_iv_reflect(CPUMIPSState *env)
-     return octeon_crc_reflect32_by_byte(env->octeon_crypto.crc_iv);
- }
+ /* Just enough to allow backends to init without ifdefs.  */
  
--uint64_t helper_octeon_cp2_mf_gfm_mul_reflect0(CPUMIPSState *env)
--{
--    return revbit64(env->octeon_crypto.gfm_mul[0]);
--}
--
--uint64_t helper_octeon_cp2_mf_gfm_mul_reflect1(CPUMIPSState *env)
--{
--    return revbit64(env->octeon_crypto.gfm_mul[1]);
--}
--
--uint64_t helper_octeon_cp2_mf_gfm_resinp_reflect0(CPUMIPSState *env)
--{
--    return revbit64(env->octeon_crypto.gfm_resinp[0]);
--}
--
--uint64_t helper_octeon_cp2_mf_gfm_resinp_reflect1(CPUMIPSState *env)
--{
--    return revbit64(env->octeon_crypto.gfm_resinp[1]);
--}
--
--void helper_octeon_cp2_mt_gfm_mul_reflect0(CPUMIPSState *env, uint64_t value)
--{
--    env->octeon_crypto.gfm_mul[0] = revbit64(value);
--}
--
--void helper_octeon_cp2_mt_gfm_mul_reflect1(CPUMIPSState *env, uint64_t value)
--{
--    env->octeon_crypto.gfm_mul[1] = revbit64(value);
--}
--
--void helper_octeon_cp2_mt_gfm_xor0_reflect(CPUMIPSState *env, uint64_t value)
--{
--    env->octeon_crypto.gfm_resinp[0] ^= revbit64(value);
--}
--
- static void octeon_gfm_xormul1_common(MIPSOcteonCryptoState *crypto,
-                                       uint64_t value)
- {
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index a0db6630c7..b689adb46b 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -28,6 +28,8 @@
-     TRANS(NAME, trans_octeon_cp2_mf_hsh_pair, \
-           OCTEON_CRYPTO_OFFSET(FIELD[2 * (INDEX)]), \
-           OCTEON_CRYPTO_OFFSET(FIELD[2 * (INDEX) + 1]))
-+#define CP2_MF_REFLECT(NAME, FIELD) \
-+    TRANS(NAME, trans_octeon_cp2_mf_reflect, OCTEON_CRYPTO_OFFSET(FIELD))
- #define CP2_MF_HELPER(NAME, SUFFIX) \
-     TRANS(NAME, trans_octeon_cp2_mf_helper, \
-           gen_helper_octeon_cp2_mf_ ## SUFFIX)
-@@ -44,6 +46,8 @@
-     TRANS(NAME, trans_octeon_cp2_mt_hsh_pair, \
-           OCTEON_CRYPTO_OFFSET(FIELD[2 * (INDEX)]), \
-           OCTEON_CRYPTO_OFFSET(FIELD[2 * (INDEX) + 1]))
-+#define CP2_MT_REFLECT(NAME, FIELD) \
-+    TRANS(NAME, trans_octeon_cp2_mt_reflect, OCTEON_CRYPTO_OFFSET(FIELD))
- #define CP2_MT_HELPER(NAME, SUFFIX) \
-     TRANS(NAME, trans_octeon_cp2_mt_helper, \
-           gen_helper_octeon_cp2_mt_ ## SUFFIX)
-@@ -110,6 +114,17 @@ static bool trans_octeon_cp2_mf_hsh_pair(DisasContext *ctx, arg_cp2 *a,
-     return true;
- }
- 
-+static bool trans_octeon_cp2_mf_reflect(DisasContext *ctx, arg_cp2 *a,
-+                                        int offset)
-+{
-+    TCGv_i64 value = tcg_temp_new_i64();
++#define CS_API_MAJOR     0
 +
-+    tcg_gen_ld_i64(value, tcg_env, offset);
-+    tcg_gen_revbit64_i64(value, value);
-+    gen_store_gpr(value, a->rt);
-+    return true;
+ #define CS_ARCH_ARM     -1
+ #define CS_ARCH_ARM64   -1
+ #define CS_ARCH_MIPS    -1
+@@ -37,4 +39,36 @@
+ #define CS_MODE_MIPS64           0
+ 
+ #endif /* CONFIG_CAPSTONE */
++
++#if CS_API_MAJOR < 5
++#define CS_ARCH_RISCV           -1
++#define CS_MODE_RISCV32          0
++#define CS_MODE_RISCV64          0
++#define CS_MODE_RISCV_C          0
++#elif CS_API_MAJOR == 5
++/* The C symbol name changed between v5 and v6 */
++#define CS_MODE_RISCV_C          CS_MODE_RISCVC
++#endif
++#if CS_API_MAJOR < 6
++#define CS_MODE_RISCV_FD         0
++#define CS_MODE_RISCV_V          0
++#define CS_MODE_RISCV_ZFINX      0
++#define CS_MODE_RISCV_ZCMP_ZCMT_ZCE  0
++#define CS_MODE_RISCV_ZICFISS    0
++#define CS_MODE_RISCV_E          0
++#define CS_MODE_RISCV_A          0
++#define CS_MODE_RISCV_COREV      0
++#define CS_MODE_RISCV_THEAD      0
++#define CS_MODE_RISCV_SIFIVE     0
++#define CS_MODE_RISCV_BITMANIP   0
++#define CS_MODE_RISCV_ZBA        0
++#define CS_MODE_RISCV_ZBB        0
++#define CS_MODE_RISCV_ZBC        0
++#define CS_MODE_RISCV_ZBKB       0
++#define CS_MODE_RISCV_ZBKC       0
++#define CS_MODE_RISCV_ZBKX       0
++#define CS_MODE_RISCV_ZBS        0
++#define CS_MODE_RISCV_VENTANA    0
++#endif
++
+ #endif /* QEMU_CAPSTONE_H */
+diff --git a/disas/capstone.c b/disas/capstone.c
+index 8fb8d0724c..78062339d0 100644
+--- a/disas/capstone.c
++++ b/disas/capstone.c
+@@ -49,6 +49,20 @@ static const cs_opt_skipdata cap_skipdata_s390x = {
+     .callback = cap_skipdata_s390x_cb
+ };
+ 
++/* Similarly for RISCV */
++static size_t CAPSTONE_API
++cap_skipdata_riscv_cb(const uint8_t *code, size_t code_size,
++                      size_t offset, void *user_data)
++{
++    /* See insn_len() from target/riscv/internals.h */
++    return (code[offset] & 3) == 3 ? 4 : 2;
 +}
 +
- static bool trans_octeon_cp2_mf_helper(DisasContext *ctx, arg_cp2 *a,
-                                        void (*gen_helper)(TCGv_i64, TCGv_env))
++static const cs_opt_skipdata cap_skipdata_riscv = {
++    .mnemonic = ".byte",
++    .callback = cap_skipdata_riscv_cb
++};
++
+ /*
+  * Initialize the Capstone library.
+  *
+@@ -76,6 +90,11 @@ static cs_err cap_disas_start(disassemble_info *info, csh *handle)
+     cs_option(*handle, CS_OPT_SKIPDATA, CS_OPT_ON);
+ 
+     switch (info->cap_arch) {
++    case CS_ARCH_RISCV:
++        cs_option(*handle, CS_OPT_SKIPDATA_SETUP,
++                  (uintptr_t)&cap_skipdata_riscv);
++        break;
++
+     case CS_ARCH_SYSZ:
+         cs_option(*handle, CS_OPT_SKIPDATA_SETUP,
+                   (uintptr_t)&cap_skipdata_s390x);
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 23b5023dd3..e73ff53159 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -39,6 +39,7 @@
+ #include "system/tcg.h"
+ #include "kvm/kvm_riscv.h"
+ #include "tcg/tcg-cpu.h"
++#include "disas/capstone.h"
+ #if !defined(CONFIG_USER_ONLY)
+ #include "target/riscv/tcg/debug.h"
+ #endif
+@@ -1099,6 +1100,7 @@ static void riscv_cpu_disas_set_info(const CPUState *s, disassemble_info *info)
  {
-@@ -183,6 +198,17 @@ static bool trans_octeon_cp2_mt_xor_i64(DisasContext *ctx, arg_cp2 *a,
-     return true;
+     const RISCVCPU *cpu = RISCV_CPU(s);
+     const CPURISCVState *env = &cpu->env;
++    int cap_mode;
+ 
+     info->target_info = &cpu->cfg;
+ 
+@@ -1111,16 +1113,93 @@ static void riscv_cpu_disas_set_info(const CPUState *s, disassemble_info *info)
+     switch (env->xl) {
+     case MXL_RV32:
+         info->print_insn = print_insn_riscv32;
++        cap_mode = CS_MODE_RISCV32;
+         break;
+     case MXL_RV64:
+         info->print_insn = print_insn_riscv64;
++        cap_mode = CS_MODE_RISCV64;
+         break;
+     case MXL_RV128:
+         info->print_insn = print_insn_riscv128;
+-        break;
++        /* capstone v6 doesn't support RV128 */
++        return;
+     default:
+         g_assert_not_reached();
+     }
++
++    info->cap_arch = CS_ARCH_RISCV;
++    info->cap_insn_unit = 4;
++    info->cap_insn_split = 4;
++
++    /*
++     * Capstone compresses some features together. See RISCV_getFeatureBits,
++     * which maps LLVM feature bits to capstone bits.
++     */
++    if (riscv_has_ext(env, RVC) || cpu->cfg.ext_zca) {
++        cap_mode |= CS_MODE_RISCV_C;
++    }
++    if (riscv_has_ext(env, RVF)) {
++        cap_mode |= CS_MODE_RISCV_FD;
++    }
++    if (riscv_has_ext(env, RVV)) {
++        cap_mode |= CS_MODE_RISCV_V;
++    }
++    if (cpu->cfg.ext_zfinx || cpu->cfg.ext_zdinx || cpu->cfg.ext_zhinx) {
++        cap_mode |= CS_MODE_RISCV_ZFINX;
++    }
++    if (cpu->cfg.ext_zcmp || cpu->cfg.ext_zcmt || cpu->cfg.ext_zce) {
++        cap_mode |= CS_MODE_RISCV_ZCMP_ZCMT_ZCE;
++    }
++    if (cpu->cfg.ext_zicfiss) {
++        cap_mode |= CS_MODE_RISCV_ZICFISS;
++    }
++    if (riscv_has_ext(env, RVE)) {
++        cap_mode |= CS_MODE_RISCV_E;
++    }
++    if (riscv_has_ext(env, RVA)) {
++        cap_mode |= CS_MODE_RISCV_A;
++    }
++    if (cpu->cfg.ext_xlrbr) {
++        cap_mode |= CS_MODE_RISCV_BITMANIP;
++    }
++    if (cpu->cfg.ext_zba) {
++        cap_mode |= CS_MODE_RISCV_ZBA;
++    }
++    if (cpu->cfg.ext_zbb) {
++        cap_mode |= CS_MODE_RISCV_ZBB;
++    }
++    if (cpu->cfg.ext_zbc) {
++        cap_mode |= CS_MODE_RISCV_ZBC;
++    }
++    if (cpu->cfg.ext_zbkb) {
++        cap_mode |= CS_MODE_RISCV_ZBKB;
++    }
++    if (cpu->cfg.ext_zbkc) {
++        cap_mode |= CS_MODE_RISCV_ZBKC;
++    }
++    if (cpu->cfg.ext_zbkx) {
++        cap_mode |= CS_MODE_RISCV_ZBKX;
++    }
++    if (cpu->cfg.ext_zbs) {
++        cap_mode |= CS_MODE_RISCV_ZBS;
++    }
++    if (cpu->cfg.ext_xtheadba ||
++        cpu->cfg.ext_xtheadbb ||
++        cpu->cfg.ext_xtheadbs ||
++        cpu->cfg.ext_xtheadcmo ||
++        cpu->cfg.ext_xtheadcondmov ||
++        cpu->cfg.ext_xtheadfmemidx ||
++        cpu->cfg.ext_xtheadfmv ||
++        cpu->cfg.ext_xtheadmac ||
++        cpu->cfg.ext_xtheadmemidx ||
++        cpu->cfg.ext_xtheadmempair ||
++        cpu->cfg.ext_xtheadsync) {
++        cap_mode |= CS_MODE_RISCV_THEAD;
++    }
++    if (cpu->cfg.ext_XVentanaCondOps) {
++        cap_mode |= CS_MODE_RISCV_VENTANA;
++    }
++    info->cap_mode = cap_mode;
  }
  
-+static bool trans_octeon_cp2_mt_reflect(DisasContext *ctx, arg_cp2 *a,
-+                                        int offset)
-+{
-+    TCGv_i64 value = tcg_temp_new_i64();
-+
-+    gen_load_gpr(value, a->rt);
-+    tcg_gen_revbit64_i64(value, value);
-+    tcg_gen_st_i64(value, tcg_env, offset);
-+    return true;
-+}
-+
- static bool trans_octeon_cp2_mt_helper(DisasContext *ctx, arg_cp2 *a,
-                                        void (*gen_helper)(TCGv_env, TCGv_i64))
- {
-@@ -200,6 +226,17 @@ static bool trans_octeon_cp2_mt_helper_env(DisasContext *ctx, arg_cp2 *a,
-     return true;
- }
- 
-+static void gen_helper_octeon_cp2_mt_gfm_xor0_reflect(TCGv_env t_env,
-+                                                      TCGv_i64 value)
-+{
-+    TCGv_i64 resinp = tcg_temp_new_i64();
-+
-+    tcg_gen_revbit64_i64(value, value);
-+    tcg_gen_ld_i64(resinp, t_env, OCTEON_CRYPTO_OFFSET(gfm_resinp[0]));
-+    tcg_gen_xor_i64(resinp, resinp, value);
-+    tcg_gen_st_i64(resinp, t_env, OCTEON_CRYPTO_OFFSET(gfm_resinp[0]));
-+}
-+
- CP2_MF_HSH_PAIR(CVM_MF_HSH_DAT0, hsh_dat, 0);
- CP2_MF_HSH_PAIR(CVM_MF_HSH_DAT1, hsh_dat, 1);
- CP2_MF_HSH_PAIR(CVM_MF_HSH_DAT2, hsh_dat, 2);
-@@ -241,10 +278,10 @@ CP2_MF_I64(CVM_MF_LLM_DATA1, llm_data[1]);
- 
- CP2_MF_HELPER(CVM_MF_CRC_IV_REFLECT, crc_iv_reflect);
- CP2_MF_I64(CVM_MF_SHA3_DAT24, sha3_dat24);
--CP2_MF_HELPER(CVM_MF_GFM_MUL_REFLECT0, gfm_mul_reflect0);
--CP2_MF_HELPER(CVM_MF_GFM_MUL_REFLECT1, gfm_mul_reflect1);
--CP2_MF_HELPER(CVM_MF_GFM_RESINP_REFLECT0, gfm_resinp_reflect0);
--CP2_MF_HELPER(CVM_MF_GFM_RESINP_REFLECT1, gfm_resinp_reflect1);
-+CP2_MF_REFLECT(CVM_MF_GFM_MUL_REFLECT0, gfm_mul[0])
-+CP2_MF_REFLECT(CVM_MF_GFM_MUL_REFLECT1, gfm_mul[1])
-+CP2_MF_REFLECT(CVM_MF_GFM_RESINP_REFLECT0, gfm_resinp[0])
-+CP2_MF_REFLECT(CVM_MF_GFM_RESINP_REFLECT1, gfm_resinp[1])
- CP2_MF_I64(CVM_MF_HSH_DATW0, hsh_dat[0]);
- CP2_MF_I64(CVM_MF_HSH_DATW1, hsh_dat[1]);
- CP2_MF_I64(CVM_MF_HSH_DATW2, hsh_dat[2]);
-@@ -281,8 +318,8 @@ CP2_MT_HSH_PAIR(CVM_MT_HSH_IV0, hsh_iv, 0);
- CP2_MT_HSH_PAIR(CVM_MT_HSH_IV1, hsh_iv, 1);
- CP2_MT_HSH_PAIR(CVM_MT_HSH_IV2, hsh_iv, 2);
- CP2_MT_HSH_PAIR(CVM_MT_HSH_IV3, hsh_iv, 3);
--CP2_MT_HELPER(CVM_MT_GFM_MUL_REFLECT0, gfm_mul_reflect0);
--CP2_MT_HELPER(CVM_MT_GFM_MUL_REFLECT1, gfm_mul_reflect1);
-+CP2_MT_REFLECT(CVM_MT_GFM_MUL_REFLECT0, gfm_mul[0]);
-+CP2_MT_REFLECT(CVM_MT_GFM_MUL_REFLECT1, gfm_mul[1]);
- CP2_MT_HELPER(CVM_MT_GFM_XOR0_REFLECT, gfm_xor0_reflect);
- CP2_MT_I64(CVM_MT_3DES_KEY0, des3_key[0]);
- CP2_MT_I64(CVM_MT_3DES_KEY1, des3_key[1]);
+ #ifndef CONFIG_USER_ONLY
 -- 
 2.43.0
 
