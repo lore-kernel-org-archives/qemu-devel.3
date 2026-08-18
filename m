@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3AA8C5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:03:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C18DC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:03:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwNCq-0007fi-6Y; Tue, 18 Aug 2026 13:02:32 -0400
+	id 1wwNCU-0007Og-BL; Tue, 18 Aug 2026 13:02:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCn-0007d0-Vq
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:30 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1wwNCS-0007O2-8K
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:08 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCl-0004pS-HQ
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:29 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-84867f07d63so175625b3a.2
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:27 -0700 (PDT)
+ id 1wwNCQ-0004ey-ON
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:07 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-84eb992a881so148238b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787072546; x=1787677346; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787072525; x=1787677325; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=meRpk4HIgZo/gaZ4CbrgzmeOnyzqJ4mXEzM6ce03Ox8=;
- b=qvX3bnqUZmHsb45Sf51oa8o/hHEEvGhQnVTz/q7PbJjPNuH5wbPwU+l8VEA8MzjdhP
- G9UVb+lwoSuBMoKqIL/HoFlf9gFBPp2v2OhHl2zIAabmku8chkgq12x8SVQmIqt/lQqQ
- G4flbi3j8EdW74+cuX+IyV/xP0ageozhMWAovQycyRS15Ak389ElUbe3NjK2rT7SGX1n
- wzXIrk3cq7O/x/8LdBUz7rUfXwtVlTV86hn+Q9HrX2JBsDPkp0+Gp/Am04nxCw0jH0gm
- 3zWlgAgl3F2FHMun3ALuqHq79ER2SNUe0GD3j04THhZoFczlbz9wLA2L3skAUuzHKUK3
- lOCQ==
+ bh=x66uPrU0bLloSUoveL0+nDgF0rI02ucO41QzxqbHLgk=;
+ b=Hegt/OVIcjmgqIBtlKNuwY58b0gBsUUWwUkhsT1NE6mYbnoHTAB6r7IABjdnmyAQ2p
+ mPLyQjuHAgKNLSlBSoTQ7eLy49jJFHxgVBVV1hSTSmXCvaCGeIJziX/IZwrZ1JDkDGhH
+ EtodIpVu7kZQ566jkDHebBhtEkhnL+4UZUhNuP8M79CSFgncmdDRfddoIYwoGhN4b1qc
+ nU4UmRI+ggoAhIwdXoBImTisSYnrjwQJQW6wjBI0RsTDNnV47VxiVndNoAPVxKHV07bW
+ z7moapxS+0gWgW8c7NVo+y0dG5B6N8V2/1Al6EQInIkM5ElGsIoM8EkwA/rTsz+QbBB6
+ 13xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787072546; x=1787677346;
+ d=1e100.net; s=20251104; t=1787072525; x=1787677325;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=meRpk4HIgZo/gaZ4CbrgzmeOnyzqJ4mXEzM6ce03Ox8=;
- b=aw+Jfa2gDhRRICpKTQ7zqcU1f2jUGrW0m20+8tKPQIgLG7P7R7PR0NH2p2vfsYbXgo
- UPxlFbVhyLMNMJz40YKFP7Bnv2u/z5ud0M6A6Td9uJd8l2smPPwrQ37GtfTjeagyJRZZ
- P3RaRsZsp8qXc1WwWZvPCDrr4xKcGyf5wtTKwl/3Rr7En1bI72J2aBXb1Wo0/A9R3AG5
- bjn55Xk/3BKO+dmBwGtY5E7mSIDQO3SAHCysUrC6embKyu5Hj5eZFIoImlp95qhDB1ps
- XO2R8SyBGtAU6oHpXPrLoBLVLyjfQpHBx826bK3/6seZ8dvgkoCzCaalEJVJLgqU05cs
- p0ww==
-X-Gm-Message-State: AOJu0YyhDpVAwo2g03CnIhFAi4Bpj6cMcp6JTD3f9ZbdxoNxFLcSC4t3
- Vm1UAJ6BNMcjXJOKJYvX3NQtuN07pmK6jtTHCLexhRrpK/zLgJQFBhaNcpRWHchVVJdZb19/PZP
- DYLipz3Q=
-X-Gm-Gg: AR+sD12fWVdXhUcxdUPb2z9en+y/Ofs6HHMJV3/jxI+U9ZUqFa+mFv3/NSi1e3oHpfW
- uYLYuCHfE+gAg7LGHYF/64DWpfUn3OWgfjnNBaY6LPDNKCC5wairWAiqxf1w2JbxY+PpFV5/c4o
- Oa0GAqSrWOigVadqxtyrOrpxpKSU9hxJcrIDOpDZb29y9+YCm3a70Kt1sSpigulM3MGZuQDcxj+
- g6LKgbCFb09zo/JU51Y3kY2pbg5XqRByC24F1UAcD0IJXMwuGZMubS0jmR9qXxq94MGAa0rWYZI
- 0Cbjs3vEq4sqKp5st/Cq3K8jv98CtS9cXawr7HGahgn1jBCRdjJ4SzGG2WG92D3nX5NBNIVrQWy
- 2gjOEzC0mPhMah2PRqnXEW0N7/znUfHsbJ7+QtKGexVKFO15E7cexXl8s6oV7c4h6mD/BqosL7v
- 3ao8gH/NxZg3gRl0CHHQF5VJoZhAW8Fh58ZvslaKc12ZZcYjfo13dPTAn+UhbOzuK3EQboHFh6T
- +xXD3/WtOdr8w5W2m9X3BYHfqdyLvthM+o=
-X-Received: by 2002:a05:6a00:2308:b0:84a:60a4:2651 with SMTP id
- d2e1a72fcca58-84fddfa84f0mr35514157b3a.6.1787072545863; 
- Tue, 18 Aug 2026 10:02:25 -0700 (PDT)
+ bh=x66uPrU0bLloSUoveL0+nDgF0rI02ucO41QzxqbHLgk=;
+ b=ioU/tpehmUu65c3MKeeQvv47G66HO7+YWFxgooEd5MDx7m5SivgA9b9EYCSmv17A2e
+ 4Op//hVAc+hddeaAx/JhovciJDN+ztCPO4Hqg/1IxKWkyCxbNNpKEMJk81MlYfo4xxf4
+ hFMRO0xEFsAcIIi3lS8qKP9FNJ0Zw8aesuX5sHmEFWhRrP14e6CSNY+aPnsUR433ILbs
+ kiI/atGFSZi/BTWcovdDRIyGYOE7toQb+egvvF8FzxrYIwaFt7CY1K2hPmHw6LS2U+dR
+ fJbQ8Pc5aZIUEWdV9vhGlQ9dcYcBpEGAdIuKnDVndAYzVgqTF0eUJ1e+Op96tCIaZcxS
+ XXPA==
+X-Gm-Message-State: AOJu0YxMmbVDWAkXzdNTwCBl9WrpIZ+5l/MKZpToj3Es+3isdwp10g5k
+ 2g2+IWKITKYL3KqgMFFpEZHfthZuU13e/sPy6EvvSs2olLZMAHU80TKKJGkWUFPFOBAX8HLniJe
+ JMvMg044=
+X-Gm-Gg: AR+sD100DuijIh91oasWtZyaIr0gYED+5hOTR7bE13fck8d1Fix4G4hZUjXqSJwKa5Y
+ 4pMfjv39WTvZxEbZi6vW9fS9MP71CSTLUMRVa2lMVcl3KbB0kY6OR22u3f6+0mSpb8V/3dINVFz
+ 250ZMHCUqXwMo4gZt99PuI/rr4gKs0TaQigkmFxMWsnb+zv5gxBu/AC5ogB+WKIJU4Kdta37Ql6
+ No6FGvSe9/t/hbBRQFTEB8uRmQeZoegyZEJEl2GYhce5bvZ5ChI3P1RHLdRIgVI+Apz2xDfVD+f
+ hr04J65pJ2bRxq/wjEZB7QlG4ibH29JatbdgYJ3RugqQr+ConFQ7VYcXctomWM0dt4wEUaDfzTc
+ Ck6uFdvLmd3lGvhOQgJWWDYJa8VqP+e0vZ70IomALtTaO4UVWKy3gi/5cyf+gy3nQs+LR7J5OAd
+ dp/JUlOfgI6Vv4UuLh20z9PwkB1Gbl7PECdf2gzpajftqbnGaFp+wPNhbSXJahqE9y6Cw3x3qDh
+ ncSDIyLYJVre2s9fIt5qTb0N1EnswO7qwY=
+X-Received: by 2002:a05:6a00:3981:b0:848:2eac:bfb2 with SMTP id
+ d2e1a72fcca58-84fde004804mr37468594b3a.13.1787072525027; 
+ Tue, 18 Aug 2026 10:02:05 -0700 (PDT)
 Received: from stoup.. (c-73-181-156-132.hsd1.wa.comcast.net. [73.181.156.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.24
+ d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 10:02:25 -0700 (PDT)
+ Tue, 18 Aug 2026 10:02:04 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 23/38] tcg: Add integer min/max opcodes
-Date: Tue, 18 Aug 2026 10:01:40 -0700
-Message-ID: <20260818170155.1907006-24-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 05/38] tcg: Return success from tcg_region_alloc
+Date: Tue, 18 Aug 2026 10:01:22 -0700
+Message-ID: <20260818170155.1907006-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818170155.1907006-1-richard.henderson@linaro.org>
 References: <20260818170155.1907006-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,407 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We already have these for vectors; replicate for integers.
+Invert the sense of the boolean result from 'error' to 'success'.
 
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/tcg/tcg-opc.h            |  4 +++
- tcg/tcg-op.c                     | 48 ++++++++++++++++++++++++++------
- tcg/tcg.c                        |  8 ++++++
- docs/devel/tcg-ops.rst           | 12 ++++++++
- tcg/aarch64/tcg-target.c.inc     | 16 +++++++++++
- tcg/loongarch64/tcg-target.c.inc | 16 +++++++++++
- tcg/ppc64/tcg-target.c.inc       | 16 +++++++++++
- tcg/riscv64/tcg-target.c.inc     | 16 +++++++++++
- tcg/s390x/tcg-target.c.inc       | 16 +++++++++++
- tcg/sparc64/tcg-target.c.inc     | 16 +++++++++++
- tcg/tci/tcg-target.c.inc         | 16 +++++++++++
- tcg/x86_64/tcg-target.c.inc      | 16 +++++++++++
- 12 files changed, 192 insertions(+), 8 deletions(-)
+ tcg/region.c | 2 +-
+ tcg/tcg.c    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/tcg/tcg-opc.h b/include/tcg/tcg-opc.h
-index 13c7f17f76..f3a81d5d7f 100644
---- a/include/tcg/tcg-opc.h
-+++ b/include/tcg/tcg-opc.h
-@@ -89,11 +89,15 @@ DEF(setcond, 1, 2, 1, TCG_OPF_INT)
- DEF(sextract, 1, 1, 2, TCG_OPF_INT)
- DEF(shl, 1, 2, 0, TCG_OPF_INT)
- DEF(shr, 1, 2, 0, TCG_OPF_INT)
-+DEF(smax, 1, 2, 0, TCG_OPF_INT)
-+DEF(smin, 1, 2, 0, TCG_OPF_INT)
- DEF(st8, 0, 2, 1, TCG_OPF_INT)
- DEF(st16, 0, 2, 1, TCG_OPF_INT)
- DEF(st32, 0, 2, 1, TCG_OPF_INT)
- DEF(st, 0, 2, 1, TCG_OPF_INT)
- DEF(sub, 1, 2, 0, TCG_OPF_INT)
-+DEF(umax, 1, 2, 0, TCG_OPF_INT)
-+DEF(umin, 1, 2, 0, TCG_OPF_INT)
- DEF(xor, 1, 2, 0, TCG_OPF_INT)
- 
- DEF(addco, 1, 2, 0, TCG_OPF_INT | TCG_OPF_CARRY_OUT)
-diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index c302a484cd..e28944cf72 100644
---- a/tcg/tcg-op.c
-+++ b/tcg/tcg-op.c
-@@ -1294,22 +1294,38 @@ void tcg_gen_revbit32_i32(TCGv_i32 ret, TCGv_i32 arg)
- 
- void tcg_gen_smin_i32(TCGv_i32 ret, TCGv_i32 a, TCGv_i32 b)
- {
--    tcg_gen_movcond_i32(TCG_COND_LT, ret, a, b, a, b);
-+    if (tcg_op_supported(INDEX_op_smin, TCG_TYPE_I32, 0)) {
-+        tcg_gen_op3_i32(INDEX_op_smin, ret, a, b);
-+    } else {
-+        tcg_gen_movcond_i32(TCG_COND_LT, ret, a, b, a, b);
-+    }
+diff --git a/tcg/region.c b/tcg/region.c
+index 2161d961d9..8ee8c39c43 100644
+--- a/tcg/region.c
++++ b/tcg/region.c
+@@ -383,7 +383,7 @@ bool tcg_region_alloc(TCGContext *s)
+         region.agg_size_full += size_full - TCG_HIGHWATER;
+     }
+     qemu_mutex_unlock(&region.lock);
+-    return !ok;
++    return ok;
  }
  
- void tcg_gen_umin_i32(TCGv_i32 ret, TCGv_i32 a, TCGv_i32 b)
- {
--    tcg_gen_movcond_i32(TCG_COND_LTU, ret, a, b, a, b);
-+    if (tcg_op_supported(INDEX_op_umin, TCG_TYPE_I32, 0)) {
-+        tcg_gen_op3_i32(INDEX_op_umin, ret, a, b);
-+    } else {
-+        tcg_gen_movcond_i32(TCG_COND_LTU, ret, a, b, a, b);
-+    }
- }
- 
- void tcg_gen_smax_i32(TCGv_i32 ret, TCGv_i32 a, TCGv_i32 b)
- {
--    tcg_gen_movcond_i32(TCG_COND_LT, ret, a, b, b, a);
-+    if (tcg_op_supported(INDEX_op_smax, TCG_TYPE_I32, 0)) {
-+        tcg_gen_op3_i32(INDEX_op_smax, ret, a, b);
-+    } else {
-+        tcg_gen_movcond_i32(TCG_COND_LT, ret, a, b, b, a);
-+    }
- }
- 
- void tcg_gen_umax_i32(TCGv_i32 ret, TCGv_i32 a, TCGv_i32 b)
- {
--    tcg_gen_movcond_i32(TCG_COND_LTU, ret, a, b, b, a);
-+    if (tcg_op_supported(INDEX_op_umax, TCG_TYPE_I32, 0)) {
-+        tcg_gen_op3_i32(INDEX_op_umax, ret, a, b);
-+    } else {
-+        tcg_gen_movcond_i32(TCG_COND_LTU, ret, a, b, b, a);
-+    }
- }
- 
- void tcg_gen_abs_i32(TCGv_i32 ret, TCGv_i32 a)
-@@ -2473,22 +2489,38 @@ void tcg_gen_mulsu2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 arg1, TCGv_i64 arg2)
- 
- void tcg_gen_smin_i64(TCGv_i64 ret, TCGv_i64 a, TCGv_i64 b)
- {
--    tcg_gen_movcond_i64(TCG_COND_LT, ret, a, b, a, b);
-+    if (tcg_op_supported(INDEX_op_smin, TCG_TYPE_I64, 0)) {
-+        tcg_gen_op3_i64(INDEX_op_smin, ret, a, b);
-+    } else {
-+        tcg_gen_movcond_i64(TCG_COND_LT, ret, a, b, a, b);
-+    }
- }
- 
- void tcg_gen_umin_i64(TCGv_i64 ret, TCGv_i64 a, TCGv_i64 b)
- {
--    tcg_gen_movcond_i64(TCG_COND_LTU, ret, a, b, a, b);
-+    if (tcg_op_supported(INDEX_op_umin, TCG_TYPE_I64, 0)) {
-+        tcg_gen_op3_i64(INDEX_op_umin, ret, a, b);
-+    } else {
-+        tcg_gen_movcond_i64(TCG_COND_LTU, ret, a, b, a, b);
-+    }
- }
- 
- void tcg_gen_smax_i64(TCGv_i64 ret, TCGv_i64 a, TCGv_i64 b)
- {
--    tcg_gen_movcond_i64(TCG_COND_LT, ret, a, b, b, a);
-+    if (tcg_op_supported(INDEX_op_smax, TCG_TYPE_I64, 0)) {
-+        tcg_gen_op3_i64(INDEX_op_smax, ret, a, b);
-+    } else {
-+        tcg_gen_movcond_i64(TCG_COND_LT, ret, a, b, b, a);
-+    }
- }
- 
- void tcg_gen_umax_i64(TCGv_i64 ret, TCGv_i64 a, TCGv_i64 b)
- {
--    tcg_gen_movcond_i64(TCG_COND_LTU, ret, a, b, b, a);
-+    if (tcg_op_supported(INDEX_op_umax, TCG_TYPE_I64, 0)) {
-+        tcg_gen_op3_i64(INDEX_op_umax, ret, a, b);
-+    } else {
-+        tcg_gen_movcond_i64(TCG_COND_LTU, ret, a, b, b, a);
-+    }
- }
- 
- void tcg_gen_abs_i64(TCGv_i64 ret, TCGv_i64 a)
+ /*
 diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 8a324ce885..489df0e738 100644
+index 1e77f2365a..af15c3d63e 100644
 --- a/tcg/tcg.c
 +++ b/tcg/tcg.c
-@@ -1211,6 +1211,8 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
-     OUTOP(INDEX_op_sextract, TCGOutOpExtract, outop_sextract),
-     OUTOP(INDEX_op_shl, TCGOutOpBinary, outop_shl),
-     OUTOP(INDEX_op_shr, TCGOutOpBinary, outop_shr),
-+    OUTOP(INDEX_op_smax, TCGOutOpBinary, outop_smax),
-+    OUTOP(INDEX_op_smin, TCGOutOpBinary, outop_smin),
-     OUTOP(INDEX_op_st, TCGOutOpStore, outop_st),
-     OUTOP(INDEX_op_st8, TCGOutOpStore, outop_st8),
-     OUTOP(INDEX_op_st16, TCGOutOpStore, outop_st16),
-@@ -1220,6 +1222,8 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
-     OUTOP(INDEX_op_subbo, TCGOutOpAddSubCarry, outop_subbo),
-     /* subb1o is implemented with set_borrow + subbio */
-     OUTOP(INDEX_op_subb1o, TCGOutOpAddSubCarry, outop_subbio),
-+    OUTOP(INDEX_op_umax, TCGOutOpBinary, outop_umax),
-+    OUTOP(INDEX_op_umin, TCGOutOpBinary, outop_umin),
-     OUTOP(INDEX_op_xor, TCGOutOpBinary, outop_xor),
+@@ -1835,7 +1835,7 @@ TranslationBlock *tcg_tb_alloc(TCGContext *s)
+     next = (void *)ROUND_UP((uintptr_t)(tb + 1), align);
  
-     [INDEX_op_goto_ptr] = &outop_goto_ptr,
-@@ -5518,6 +5522,10 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
-     case INDEX_op_sar:
-     case INDEX_op_shl:
-     case INDEX_op_shr:
-+    case INDEX_op_smax:
-+    case INDEX_op_smin:
-+    case INDEX_op_umax:
-+    case INDEX_op_umin:
-     case INDEX_op_xor:
-         {
-             const TCGOutOpBinary *out =
-diff --git a/docs/devel/tcg-ops.rst b/docs/devel/tcg-ops.rst
-index f2e9255dd9..88d48a1f99 100644
---- a/docs/devel/tcg-ops.rst
-+++ b/docs/devel/tcg-ops.rst
-@@ -317,6 +317,18 @@ Arithmetic
-          pass 0 to *nh* to make a simple zero-extension of *nl*,
-          so overflow should never occur.
- 
-+   * - smax *t0*, *t1*, *t2*
-+
-+       umax *t0*, *t1*, *t2*
-+
-+     - | *t0* = MAX(*t1*, *t2*), for signed and unsigned integers.
-+
-+   * - smin *t0*, *t1*, *t2*
-+
-+       umin *t0*, *t1*, *t2*
-+
-+     - | *t0* = MIN(*t1*, *t2*), for signed and unsigned integers.
-+
- Logical
- -------
- 
-diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
-index 80995403e4..f5c185bbf4 100644
---- a/tcg/aarch64/tcg-target.c.inc
-+++ b/tcg/aarch64/tcg-target.c.inc
-@@ -2592,6 +2592,22 @@ static void tcg_out_set_borrow(TCGContext *s)
-                  TCG_REG_XZR, TCG_REG_XZR, TCG_REG_XZR);
- }
- 
-+static const TCGOutOpBinary outop_smax = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_smin = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_umax = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_umin = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
- static void tgen_xor(TCGContext *s, TCGType type,
-                      TCGReg a0, TCGReg a1, TCGReg a2)
- {
-diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index 7d89e80886..f65496a040 100644
---- a/tcg/loongarch64/tcg-target.c.inc
-+++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -1804,6 +1804,22 @@ static void tcg_out_set_borrow(TCGContext *s)
-     g_assert_not_reached();
- }
- 
-+static const TCGOutOpBinary outop_smax = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_smin = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_umax = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_umin = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
- static void tgen_xor(TCGContext *s, TCGType type,
-                      TCGReg a0, TCGReg a1, TCGReg a2)
- {
-diff --git a/tcg/ppc64/tcg-target.c.inc b/tcg/ppc64/tcg-target.c.inc
-index 07dff67e84..cd1c234367 100644
---- a/tcg/ppc64/tcg-target.c.inc
-+++ b/tcg/ppc64/tcg-target.c.inc
-@@ -3281,6 +3281,22 @@ static void tcg_out_set_borrow(TCGContext *s)
-     tcg_out32(s, ADDIC | TAI(TCG_REG_R0, TCG_REG_R0, 0));
- }
- 
-+static const TCGOutOpBinary outop_smax = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_smin = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_umax = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_umin = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
- static void tgen_xor(TCGContext *s, TCGType type,
-                      TCGReg a0, TCGReg a1, TCGReg a2)
- {
-diff --git a/tcg/riscv64/tcg-target.c.inc b/tcg/riscv64/tcg-target.c.inc
-index 8fd32644fe..723c21b3da 100644
---- a/tcg/riscv64/tcg-target.c.inc
-+++ b/tcg/riscv64/tcg-target.c.inc
-@@ -2404,6 +2404,22 @@ static void tcg_out_set_borrow(TCGContext *s)
-     g_assert_not_reached();
- }
- 
-+static const TCGOutOpBinary outop_smax = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_smin = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_umax = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_umin = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
- static void tgen_xor(TCGContext *s, TCGType type,
-                      TCGReg a0, TCGReg a1, TCGReg a2)
- {
-diff --git a/tcg/s390x/tcg-target.c.inc b/tcg/s390x/tcg-target.c.inc
-index c481745c3f..4d1a779c47 100644
---- a/tcg/s390x/tcg-target.c.inc
-+++ b/tcg/s390x/tcg-target.c.inc
-@@ -2950,6 +2950,22 @@ static void tcg_out_set_borrow(TCGContext *s)
-     tcg_out_insn(s, RR, CLR, TCG_REG_R0, TCG_REG_R0); /* cc = 0 */
- }
- 
-+static const TCGOutOpBinary outop_smax = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_smin = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_umax = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_umin = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
- static void tgen_xor(TCGContext *s, TCGType type,
-                      TCGReg a0, TCGReg a1, TCGReg a2)
- {
-diff --git a/tcg/sparc64/tcg-target.c.inc b/tcg/sparc64/tcg-target.c.inc
-index d6ed9d3362..35cd14a5b6 100644
---- a/tcg/sparc64/tcg-target.c.inc
-+++ b/tcg/sparc64/tcg-target.c.inc
-@@ -1917,6 +1917,22 @@ static void tcg_out_set_borrow(TCGContext *s)
-     tcg_out_set_carry(s);  /* borrow == carry */
- }
- 
-+static const TCGOutOpBinary outop_smax = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_smin = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_umax = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_umin = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
- static void tgen_xor(TCGContext *s, TCGType type,
-                      TCGReg a0, TCGReg a1, TCGReg a2)
- {
-diff --git a/tcg/tci/tcg-target.c.inc b/tcg/tci/tcg-target.c.inc
-index 1b61668517..4cd1c1431c 100644
---- a/tcg/tci/tcg-target.c.inc
-+++ b/tcg/tci/tcg-target.c.inc
-@@ -894,6 +894,22 @@ static void tcg_out_set_borrow(TCGContext *s)
-     tcg_out_op_v(s, INDEX_op_tci_setcarry);  /* borrow == carry */
- }
- 
-+static const TCGOutOpBinary outop_smax = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_smin = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_umax = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_umin = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
- static void tgen_xor(TCGContext *s, TCGType type,
-                      TCGReg a0, TCGReg a1, TCGReg a2)
- {
-diff --git a/tcg/x86_64/tcg-target.c.inc b/tcg/x86_64/tcg-target.c.inc
-index 37acba9045..2c8f1f3e58 100644
---- a/tcg/x86_64/tcg-target.c.inc
-+++ b/tcg/x86_64/tcg-target.c.inc
-@@ -2977,6 +2977,22 @@ static void tcg_out_set_borrow(TCGContext *s)
-     tcg_out8(s, OPC_STC);
- }
- 
-+static const TCGOutOpBinary outop_smax = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_smin = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_umax = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
-+static const TCGOutOpBinary outop_umin = {
-+    .base.static_constraint = C_NotImplemented,
-+};
-+
- static void tgen_xor(TCGContext *s, TCGType type,
-                      TCGReg a0, TCGReg a1, TCGReg a2)
- {
+     if (unlikely(next > s->code_gen_highwater)) {
+-        if (tcg_region_alloc(s)) {
++        if (!tcg_region_alloc(s)) {
+             return NULL;
+         }
+         goto retry;
 -- 
 2.43.0
 
