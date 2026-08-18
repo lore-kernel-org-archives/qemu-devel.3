@@ -4,146 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40B4BC5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 19:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34152C5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 19:51:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwPqE-0006Hk-4m; Tue, 18 Aug 2026 15:51:22 -0400
+	id 1wwPq7-0006CO-C0; Tue, 18 Aug 2026 15:51:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wwPq5-0006CU-KV
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:51:15 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wwPq3-0004nT-8h
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:51:12 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IJZNB11847352
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:51:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- A0xiVNNXIZFuEacXqHhPmD6wJZlaH+xB3ThI+6K6TOM=; b=CCpNGVE0zZ8+j2Me
- qws5dkzvAZ/a71sewLtW+13oWFZ19g2q8CIIJ2jJauj/Lc/M1rPOvAGYGBsBLWCu
- r4eiEDopmUj+3UlU5ruabaYGBpvOhZirKE3HjpcgbJ8R6fhMhiK+avt2Gmwhh4/A
- agPXpeoE8u0IrkYea0pnXv2PHE2ZPdjdEqXvkZaWZgIenM1in2OFAysVMn2+SvbW
- S87AND/vUJ+2iEYyD1XPIMU2CSnUOpdFvbii12psy8OaRh/q2yCblEgcmrX6Dkrk
- Ml23s9f578rvRsYsRl2mfxDmDwI8V9A5gXGtBLD2pOijGwmqdd0ABd5Q5ai2yMzG
- ONTdPQ==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4uj1gsh1-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:51:09 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-52d827597fbso2874771cf.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 12:51:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787082669; x=1787687469; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=A0xiVNNXIZFuEacXqHhPmD6wJZlaH+xB3ThI+6K6TOM=;
- b=Mr7UehllqvS3LuXdOutFrf9ctnDsZtt124BVpyoytp95OteM19LNUdsMyqGhVBRmJP
- Akn/hn/EWjMqW4I6aqJozs0kENnCMMjK3rlQT1JcqrLZWHW+nd9eJEG7Hn8L6uk0QzBz
- HCHZNXZxsTEObcACuKe9Psat/FOxKnEn4tuSWgFF8sMHzCO6poC0LWYOyBfYckdi7WHL
- Y6h3AltYfsQLINB8GJT/4cd1LCleOFz2g1JFJdelSpJoNR6K06/r39IynJGrZL/XbmdW
- N87OlGPjE8j8we3gO4N3AhqAYdWL+wWT1HZqDW2YeIbyGEmdnEm0pUNUXFnjD8mLb8Z2
- gOIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787082669; x=1787687469;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=A0xiVNNXIZFuEacXqHhPmD6wJZlaH+xB3ThI+6K6TOM=;
- b=tSAZ1bTttl5s7wqMHBnruJtSW3YgZw/PPc5OdsRHLdC6BL+A2eR1WG+shGrK89vUmd
- 5JoJjbU1eQM/hfpS84hkZCSAquen6sr5D+d2fRZlwjEoRQQsvchAMuruB185GvEblUIa
- PbQlkAvZ18fL7kN2eAvES7/lfC5NfKVklmnAmker7FdEKbLJkvd8Mya2GNy11whDBkGP
- ZHHx0rj5NbsIkYvDeY3NQ6b1wjS+OWnCheKgi1tzQndkdLnk24mkR/BrDzn2mTdCB9U7
- nrf20WmUJ1/cpg2VlwfF+iwwnealLdBeyecw0HQj37nKQ1+vqCO5MPKVsPjM2t2+g2m1
- baig==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpW5erFWw6qeTfLdK5S/HUm7+1yRQ0KC4nfsm+SqYD+xGqs1mhhxdkMg1E6xQj5VaWZoeSxSD9ieBcj@nongnu.org
-X-Gm-Message-State: AOJu0YzstR0gRoPJ4PonmI8bib+YXnBQOv53/QQpPydPy+YLLpIJgJeM
- I5nspGi8sE4KZsOQROl1+cxewEPOiMkzyTFINIojR4g6vY046b9lHJUh0gQvLlV6LmtFU3KrXfK
- VlYZtvT+oQ2z0mpcaPIdinQh8q0Ixhd6WtvzctfoSD6dlHazvzzzEHXZr/w==
-X-Gm-Gg: AR+sD10Zd20aEXR1+heH/e4CT1nc7JebgfaX6FLDKInZh0AAZ4ceBE5xTe341yCKSXj
- LWs5IA3f4uAb9t+l1Td6u6ihyfu04C/PVrFf4HZWzcA1ioy1IArOjjPpGMQgbOus9z1QWMivEv5
- HObKC9vyFBjQ34e+jy2E3Pxag+RCtY5KKIlf5QEG7GRt8CDbPM8R7ulWXLQCOF2BfBaeO3xJeS5
- gDlTRcp/A2OrT3+7vhIFZQZuPEAiz/NG8PY2S3kicIlR3JnYhps6PO6ctZMEJBfOMbZfuRzFbc7
- 7EMselEcwkBmXShgDnoRUxDJM1gW6nzA6yRxTHEhM0aS+qjuGJ5UaQrRl6uB/4uYAEzDkfO53Ik
- Xk4Ckyvby+9qjWESpp1mTsj26G94Clm/5M2NiCEWwmCpXL8x4R5yrjVuMiIxIzGIV
-X-Received: by 2002:a05:622a:550a:b0:528:3157:7a8e with SMTP id
- d75a77b69052e-52dd308efdemr6711251cf.9.1787082669224; 
- Tue, 18 Aug 2026 12:51:09 -0700 (PDT)
-X-Received: by 2002:a05:622a:550a:b0:528:3157:7a8e with SMTP id
- d75a77b69052e-52dd308efdemr6710601cf.9.1787082668627; 
- Tue, 18 Aug 2026 12:51:08 -0700 (PDT)
-Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-52db625afc2sm47015981cf.26.2026.08.18.12.51.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Aug 2026 12:51:07 -0700 (PDT)
-Message-ID: <5a6e6e71-7c0e-4cdf-a578-efebcd1e1430@oss.qualcomm.com>
-Date: Tue, 18 Aug 2026 14:51:06 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wwPpy-0006B1-2n
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:51:07 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wwPpv-0004mQ-Fo
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:51:05 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 6705A84716;
+ Tue, 18 Aug 2026 19:50:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1787082657; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cGb7lSFRf16JgTQSF0Dk05/B5VDd7+GdLiUxg4Xtim4=;
+ b=Rs2UHnULMOH9VdAt6IxNE8WHMcaG4//pL6NFiXheFB4asMApkInVq0KI86iZDmROSmn3FW
+ SzpRYT3uB6f/smliP+m+HIfiiURh72pO6Mg+alY+H5UDIEoofdgwuzQ+cGjUWxfL0+rPBQ
+ mMOQTRspBa5/2OAC94qX7BjcqwsmYhc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1787082657;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cGb7lSFRf16JgTQSF0Dk05/B5VDd7+GdLiUxg4Xtim4=;
+ b=dhJ4bLBXjScEDTq4l61qgc5NvrOXR0gRgxb6yJRojDEudFYFlCF7JYuNCtahP7nisnr8Ot
+ d4/8ZlHwhai9ntDQ==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=CxnuBAYc;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=NmepGvvi
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1787082653; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cGb7lSFRf16JgTQSF0Dk05/B5VDd7+GdLiUxg4Xtim4=;
+ b=CxnuBAYcc8SH9HiVeOxbcalRdt2bUe/Rtz5pF/i5YttdMFlboeUNq4ebFaIrI3ZsLDxzfe
+ 6wAaplBYUJO2GVRArooA13iO8wDjHMHadi6OdzLzK1ZpoV3WWx37xEj6a5jBoErWFsAjK3
+ 1hqG6r+OSnzh/xTP96u8UXO8MyREIkY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1787082653;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cGb7lSFRf16JgTQSF0Dk05/B5VDd7+GdLiUxg4Xtim4=;
+ b=NmepGvviOYueRlEpeUnKI/Q3PALiwicPBXTrj7CaImtWa95FBiUgN/4zjceWKq21nlBszo
+ NYuqg40xZsU3q2Cw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EC5CA339C;
+ Tue, 18 Aug 2026 19:50:52 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ENsGL5y3hGp9MgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 18 Aug 2026 19:50:52 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Jishnu Warrier <jishnuvw@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, philmd@linaro.org, akihiko.odaki@daynix.com,
+ mst@redhat.com, marcel.apfelbaum@gmail.com, david@gibson.dropbear.id.au,
+ adityag@linux.ibm.com, harshpb@linux.ibm.com, amachhiw@linux.ibm.com
+Subject: Re: [PATCH v6 04/10] tests/qtest: Enable spapr dma with linear
+ iommu map
+In-Reply-To: <20260817185539.376740-5-jishnuvw@linux.ibm.com>
+References: <20260817185539.376740-1-jishnuvw@linux.ibm.com>
+ <20260817185539.376740-5-jishnuvw@linux.ibm.com>
+Date: Tue, 18 Aug 2026 16:50:46 -0300
+Message-ID: <875x17mcmh.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8] target/hexagon: Add sreg_{read,write} helpers
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: matheus.bernardino@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
- ltaylorsimpson@gmail.com, philmd@mailo.org,
- Brian Cain <bcain@quicinc.com>, Sid Manning <sidneym@quicinc.com>
-References: <20260611052857.3911981-1-brian.cain@oss.qualcomm.com>
- <20260611052857.3911981-29-brian.cain@oss.qualcomm.com>
- <96255543-c899-48a7-882f-a436c3df7367@oss.qualcomm.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <96255543-c899-48a7-882f-a436c3df7367@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: GGdBc10l7GOhzm_xiNIwN6I53_u5fw_0
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDE0NSBTYWx0ZWRfX+aoMpcneZQ/2
- gCakC+s2To/gvx4qBOC/O0b3CWwlRFi1u0KAEjRlA8KmZITUwaRDSo0trn2T6TGZ5yZq6zMd5qU
- 3Z/uGyVD9Sn2IHxT6it/UhIYsnkZeus=
-X-Proofpoint-ORIG-GUID: GGdBc10l7GOhzm_xiNIwN6I53_u5fw_0
-X-Authority-Analysis: v=2.4 cv=VNLtWdPX c=1 sm=1 tr=0 ts=6a84b7ad cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=Pia8b_79TwnpVCiaBDIA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE0NSBTYWx0ZWRfXw3Cp64LV9FPx
- 0ypU/bLlCfiS8Am8zZHZi5GSzGWTFq9fk7b41fTW1K/SLq6zgoYeDF0JeekAq29GU/mt7aCpre1
- 8IF8NElY56452mYME0JpbajqNTMdYfD+PQO1Z2I8+4SwgW5jEdy1UFJOrz/gaKidElVZGhoZfQK
- nTQTMN0Z/H91meXm7vdbflAjRWPgDSea4C4EqDZIHTmfQKZ5EYoRIhUxXKl8kcz+xqtQuW1naE0
- Fc96V9zpGFHlLHFA62gmQ+s56qr7td88oGiDyj0U9OEtqM8x9dsbjkexamemKgeD/FP2S3aFjz8
- VH5a4JHQ3kqswKbpg3qT5hxX9IkuGXBIDsX8u9icU3zJ5RMTHM4ya8/0sBEzWOsXTDoZDutfyMp
- qPLV5GOOeTH73Zb78vKJ3eOAjsdkmHZ9m3zNkBxUIBKclou8eQGqXP1chMbWyLNpiHuloapvOBH
- LgSGEp2bi6KqH/hL5nQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-18_04,2026-08-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 suspectscore=0 bulkscore=0 malwarescore=0
- adultscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608180145
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ TAGGED_RCPT(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[gmail.com,linaro.org,daynix.com,redhat.com,gibson.dropbear.id.au,linux.ibm.com];
+ RCPT_COUNT_SEVEN(0.00)[11];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid,suse.de:dkim];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: 6705A84716
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -160,54 +126,293 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Jishnu Warrier <jishnuvw@linux.ibm.com> writes:
 
-On 8/14/2026 12:33 PM, Philippe Mathieu-Daudé wrote:
-> Hi,
+> From: Nicholas Piggin <npiggin@gmail.com>
 >
-> (merged as 9b63a54dd2c0ea9a667c9e9dc662755b9feffa7e)
+> qtests spapr dma was broken because the iommu was not set up.
 >
-> On 11/6/26 07:28, Brian Cain wrote:
->> From: Brian Cain <bcain@quicinc.com>
->>
->> Co-authored-by: Sid Manning <sidneym@quicinc.com>
->> Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
->> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->> ---
->>   target/hexagon/cpu.c        |   1 -
->>   target/hexagon/cpu_helper.c | 354 ++++++++++++++++++++++++++++++++++++
->>   target/hexagon/op_helper.c  |  33 +++-
->>   3 files changed, 384 insertions(+), 4 deletions(-)
->>   create mode 100644 target/hexagon/cpu_helper.c
+> spapr requires hypercalls to set up the iommu (TCE tables), but
+> there is no support for that or a side-channel to the iommu in
+> qtests at the moment, so add a quick workaround in QEMU to have
+> the spapr iommu provide a linear map to memory when running
+> qtests.
 >
+> The buggy msix checks can all be removed since the tests all work
+> now.
 >
->> +static void hexagon_resume_thread(CPUHexagonState *env)
->> +{
->> +    CPUState *cs = env_cpu(env);
->> +    clear_wait_mode(env);
->> +    /*
->> +     * The wait instruction keeps the PC pointing to itself
->> +     * so that it has an opportunity to check for interrupts.
->> +     *
->> +     * When we come out of wait mode, adjust the PC to the
->> +     * next executable instruction.
->> +     */
->> +    env->gpr[HEX_REG_PC] = env->wait_next_pc;
->> +    cs = env_cpu(env);
->> +    ASSERT_DIRECT_TO_GUEST_UNSET(env, cs->exception_index);
->> +    cs->halted = false;
->> +    cs->exception_index = HEX_EVENT_NONE;
->> +    qemu_cpu_kick(cs);
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>  hw/ppc/spapr_iommu.c                 | 10 +++++++++-
+>  tests/qtest/e1000e-test.c            | 21 ---------------------
+>  tests/qtest/igb-test.c               | 21 ---------------------
+>  tests/qtest/libqos/generic-pcihost.c |  1 -
+>  tests/qtest/libqos/pci-pc.c          |  3 ---
+>  tests/qtest/libqos/pci-spapr.c       |  7 ++++---
+>  tests/qtest/libqos/pci.c             | 14 --------------
+>  tests/qtest/libqos/pci.h             |  4 ----
+>  tests/qtest/nvme-test.c              |  4 ----
+>  tests/qtest/vhost-user-blk-test.c    |  6 ------
+>  tests/qtest/virtio-blk-test.c        | 12 ------------
+>  11 files changed, 13 insertions(+), 90 deletions(-)
 >
-> Why not call cpu_resume()?
->
-> If you don't mind I'll send a patch to clean that up.
+> diff --git a/hw/ppc/spapr_iommu.c b/hw/ppc/spapr_iommu.c
+> index e6264b07..5470602e 100644
+> --- a/hw/ppc/spapr_iommu.c
+> +++ b/hw/ppc/spapr_iommu.c
+> @@ -22,6 +22,8 @@
+>  #include "qemu/log.h"
+>  #include "qemu/module.h"
+>  #include "system/kvm.h"
+> +#include "system/qtest.h"
+> +#include "exec/target_page.h"
+>  #include "kvm_ppc.h"
+>  #include "migration/vmstate.h"
+>  #include "system/dma.h"
+> @@ -125,7 +127,13 @@ static IOMMUTLBEntry spapr_tce_translate_iommu(IOMMUMemoryRegion *iommu,
+>          .perm = IOMMU_NONE,
+>      };
+>  
+> -    if ((addr >> tcet->page_shift) < tcet->nb_table) {
+> +    if (qtest_enabled()) {
+> +        /* spapr qtests does not set up the IOMMU, shortcut a linear map */
+> +        ret.iova = addr & TARGET_PAGE_MASK;
+> +        ret.translated_addr = addr & TARGET_PAGE_MASK;
+> +        ret.addr_mask = ~TARGET_PAGE_MASK;
+> +        ret.perm = IOMMU_RW;
+> +    } else if ((addr >> tcet->page_shift) < tcet->nb_table) {
+>          /* Check if we are in bound */
+>          hwaddr page_mask = IOMMU_PAGE_MASK(tcet->page_shift);
+>  
+> diff --git a/tests/qtest/e1000e-test.c b/tests/qtest/e1000e-test.c
+> index de9738fd..8300bf5a 100644
+> --- a/tests/qtest/e1000e-test.c
+> +++ b/tests/qtest/e1000e-test.c
+> @@ -139,13 +139,6 @@ static void test_e1000e_tx(void *obj, void *data, QGuestAllocator * alloc)
+>  {
+>      QE1000E_PCI *e1000e = obj;
+>      QE1000E *d = &e1000e->e1000e;
+> -    QOSGraphObject *e_object = obj;
+> -    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
+> -
+> -    /* FIXME: add spapr support */
+> -    if (qpci_check_buggy_msi(dev)) {
+> -        return;
+> -    }
+>  
+>      e1000e_send_verify(d, data, alloc);
+>  }
+> @@ -154,13 +147,6 @@ static void test_e1000e_rx(void *obj, void *data, QGuestAllocator * alloc)
+>  {
+>      QE1000E_PCI *e1000e = obj;
+>      QE1000E *d = &e1000e->e1000e;
+> -    QOSGraphObject *e_object = obj;
+> -    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
+> -
+> -    /* FIXME: add spapr support */
+> -    if (qpci_check_buggy_msi(dev)) {
+> -        return;
+> -    }
+>  
+>      e1000e_receive_verify(d, data, alloc);
+>  }
+> @@ -173,13 +159,6 @@ static void test_e1000e_multiple_transfers(void *obj, void *data,
+>  
+>      QE1000E_PCI *e1000e = obj;
+>      QE1000E *d = &e1000e->e1000e;
+> -    QOSGraphObject *e_object = obj;
+> -    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
+> -
+> -    /* FIXME: add spapr support */
+> -    if (qpci_check_buggy_msi(dev)) {
+> -        return;
+> -    }
+>  
+>      for (i = 0; i < iterations; i++) {
+>          e1000e_send_verify(d, data, alloc);
+> diff --git a/tests/qtest/igb-test.c b/tests/qtest/igb-test.c
+> index 3d397ea6..1b3b5aa6 100644
+> --- a/tests/qtest/igb-test.c
+> +++ b/tests/qtest/igb-test.c
+> @@ -142,13 +142,6 @@ static void test_igb_tx(void *obj, void *data, QGuestAllocator * alloc)
+>  {
+>      QE1000E_PCI *e1000e = obj;
+>      QE1000E *d = &e1000e->e1000e;
+> -    QOSGraphObject *e_object = obj;
+> -    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
+> -
+> -    /* FIXME: add spapr support */
+> -    if (qpci_check_buggy_msi(dev)) {
+> -        return;
+> -    }
+>  
+>      igb_send_verify(d, data, alloc);
+>  }
+> @@ -157,13 +150,6 @@ static void test_igb_rx(void *obj, void *data, QGuestAllocator * alloc)
+>  {
+>      QE1000E_PCI *e1000e = obj;
+>      QE1000E *d = &e1000e->e1000e;
+> -    QOSGraphObject *e_object = obj;
+> -    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
+> -
+> -    /* FIXME: add spapr support */
+> -    if (qpci_check_buggy_msi(dev)) {
+> -        return;
+> -    }
+>  
+>      igb_receive_verify(d, data, alloc);
+>  }
+> @@ -176,13 +162,6 @@ static void test_igb_multiple_transfers(void *obj, void *data,
+>  
+>      QE1000E_PCI *e1000e = obj;
+>      QE1000E *d = &e1000e->e1000e;
+> -    QOSGraphObject *e_object = obj;
+> -    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
+> -
+> -    /* FIXME: add spapr support */
+> -    if (qpci_check_buggy_msi(dev)) {
+> -        return;
+> -    }
+>  
+>      for (i = 0; i < iterations; i++) {
+>          igb_send_verify(d, data, alloc);
+> diff --git a/tests/qtest/libqos/generic-pcihost.c b/tests/qtest/libqos/generic-pcihost.c
+> index b7761752..93cc3b85 100644
+> --- a/tests/qtest/libqos/generic-pcihost.c
+> +++ b/tests/qtest/libqos/generic-pcihost.c
+> @@ -182,7 +182,6 @@ void qpci_init_generic(QGenericPCIBus *qpci, QTestState *qts,
+>  
+>      qpci->gpex_pio_base = 0x3eff0000;
+>      qpci->bus.not_hotpluggable = !hotpluggable;
+> -    qpci->bus.has_buggy_msi = false;
+>  
+>      qpci->bus.pio_readb = qpci_generic_pio_readb;
+>      qpci->bus.pio_readw = qpci_generic_pio_readw;
+> diff --git a/tests/qtest/libqos/pci-pc.c b/tests/qtest/libqos/pci-pc.c
+> index 147009f4..8b79d858 100644
+> --- a/tests/qtest/libqos/pci-pc.c
+> +++ b/tests/qtest/libqos/pci-pc.c
+> @@ -124,9 +124,6 @@ void qpci_init_pc(QPCIBusPC *qpci, QTestState *qts, QGuestAllocator *alloc)
+>  {
+>      assert(qts);
+>  
+> -    /* tests can use pci-bus */
+> -    qpci->bus.has_buggy_msi = false;
+> -
+>      qpci->bus.pio_readb = qpci_pc_pio_readb;
+>      qpci->bus.pio_readw = qpci_pc_pio_readw;
+>      qpci->bus.pio_readl = qpci_pc_pio_readl;
+> diff --git a/tests/qtest/libqos/pci-spapr.c b/tests/qtest/libqos/pci-spapr.c
+> index 3723cbb3..b58cc1b5 100644
+> --- a/tests/qtest/libqos/pci-spapr.c
+> +++ b/tests/qtest/libqos/pci-spapr.c
+> @@ -20,6 +20,10 @@
+>   * PCI devices are always little-endian
+>   * SPAPR by default is big-endian
+>   * so PCI accessors need to swap data endianness
+> + *
+> + * The spapr iommu model has a qtest_enabled() check that short-cuts
+> + * the TCE table and provides a linear map for DMA, since qtests does
+> + * not have a way to make hcalls to set up the TCE table.
+>   */
+>  
+>  static uint8_t qpci_spapr_pio_readb(QPCIBus *bus, uint32_t addr)
+> @@ -155,9 +159,6 @@ void qpci_init_spapr(QPCIBusSPAPR *qpci, QTestState *qts,
+>  {
+>      assert(qts);
+>  
+> -    /* tests cannot use spapr, needs to be fixed first */
+> -    qpci->bus.has_buggy_msi = true;
+> -
+>      qpci->alloc = alloc;
+>  
+>      qpci->bus.pio_readb = qpci_spapr_pio_readb;
+> diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
+> index 986ce31d..76b13ade 100644
+> --- a/tests/qtest/libqos/pci.c
+> +++ b/tests/qtest/libqos/pci.c
+> @@ -53,20 +53,6 @@ void qpci_device_foreach(QPCIBus *bus, int vendor_id, int device_id,
+>      }
+>  }
+>  
+> -bool qpci_has_buggy_msi(QPCIDevice *dev)
+> -{
+> -    return dev->bus->has_buggy_msi;
+> -}
+> -
+> -bool qpci_check_buggy_msi(QPCIDevice *dev)
+> -{
+> -    if (qpci_has_buggy_msi(dev)) {
+> -        g_test_skip("Skipping due to incomplete support for MSI");
+> -        return true;
+> -    }
+> -    return false;
+> -}
+> -
+>  static void qpci_device_set(QPCIDevice *dev, QPCIBus *bus, int devfn)
+>  {
+>      g_assert(dev);
+> diff --git a/tests/qtest/libqos/pci.h b/tests/qtest/libqos/pci.h
+> index 9f8f154c..ef40a691 100644
+> --- a/tests/qtest/libqos/pci.h
+> +++ b/tests/qtest/libqos/pci.h
+> @@ -51,7 +51,6 @@ struct QPCIBus {
+>      QTestState *qts;
+>      uint64_t pio_alloc_ptr, pio_limit;
+>      uint64_t mmio_alloc_ptr, mmio_limit;
+> -    bool has_buggy_msi; /* TRUE for spapr, FALSE for pci */
+>      bool not_hotpluggable; /* TRUE if devices cannot be hotplugged */
+>  
+>  };
+> @@ -83,9 +82,6 @@ QPCIDevice *qpci_device_find(QPCIBus *bus, int devfn);
+>  void qpci_device_init(QPCIDevice *dev, QPCIBus *bus, QPCIAddress *addr);
+>  int qpci_secondary_buses_init(QPCIBus *bus);
+>  
+> -bool qpci_has_buggy_msi(QPCIDevice *dev);
+> -bool qpci_check_buggy_msi(QPCIDevice *dev);
+> -
+>  void qpci_device_enable(QPCIDevice *dev);
+>  uint8_t qpci_find_capability(QPCIDevice *dev, uint8_t id, uint8_t start_addr);
+>  void qpci_msix_enable(QPCIDevice *dev);
+> diff --git a/tests/qtest/nvme-test.c b/tests/qtest/nvme-test.c
+> index f9395cc2..388011be 100644
+> --- a/tests/qtest/nvme-test.c
+> +++ b/tests/qtest/nvme-test.c
+> @@ -492,10 +492,6 @@ static void test_migrate(void *obj, void *data, QGuestAllocator *alloc)
+>          { 333, false }
+>      };
+>  
+> -    if (qpci_check_buggy_msi(pdev)) {
+> -        return;
+> -    }
+> -
 
-Sure - that seems reasonable.
+The nvme-test now fails with:
 
-Thanks!
+# starting QEMU: exec ./qemu-system-ppc64 -qtest
+  unix:/tmp/qtest-1116322.sock -qtest-log /dev/null -chardev
+  socket,path=/tmp/qtest-1116322.qmp,id=char0 -object
+  monitor-qmp,id=qmp0,chardev=char0 -display none -audio none -run-with
+  exit-with-parent=on -M pseries -drive
+  id=drv0,if=none,file=null-co://,file.read-zeroes=on,format=raw -object
+  memory-backend-ram,id=pmr0,share=on,size=16 -device
+  nvme,addr=04.0,drive=drv0,serial=foo -accel qtest
 
+# nvme_wait_ready: csts 0
+#  q 0x561957dedaa8 db_idx 1 doorbell 0x1004
+# cq 0x561957dedaa8 db_idx 1 cqe 0x100000
+#  q 0x561957deda78 db_idx 0 doorbell 0x1000
+# sq 0x561957deda78 db_idx 0 sqe 0x101000
+# nvme_wait_ready: csts 1
+# sending req cid 123 no_wait 0
+# sq 0x561957deda78 next_sqe 0 sqe 0x101000
+# sq 0x561957deda78 commit sqe tail 0
+**
+ERROR:../tests/qtest/nvme-test.c:281:nvme_wait: assertion failed: (ready)
 
->
->> +}
->
+not ok
+/ppc64/pseries/spapr-pci-host-bridge/pci-bus-spapr/pci-bus/nvme/nvme-tests/migrate
+- ERROR:../tests/qtest/nvme-test.c:281:nvme_wait: assertion failed: (ready)
+
 
