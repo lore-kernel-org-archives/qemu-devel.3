@@ -4,73 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B58EDC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 18:05:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 188EAC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 18:12:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwOBY-0000JK-Hf; Tue, 18 Aug 2026 14:05:16 -0400
+	id 1wwOIO-0002Jy-NT; Tue, 18 Aug 2026 14:12:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wwOBW-0000IU-L4
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 14:05:14 -0400
-Received: from pv-2001j-snip6-11.eps.apple.com ([2a01:b747:3003:200::65]
- helo=outbound.pv.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wwOBU-00066X-JO
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 14:05:14 -0400
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-1a-60-percent-0 (Postfix) with ESMTPS id
- 895E41800DDC; Tue, 18 Aug 2026 18:05:05 +0000 (UTC)
-X-ICL-RepId: 01a0160c-61ae-741e-b16b-7c25a68a1c53
-X-ICL-Out-Info: HUtFAUMHWwJACUgATUQeDx5WFlZNRAJCTQBIHVoORQNGCVYLWhcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0KWFsIWwQPH0wMUQJCBVZeSQ4dBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDjR4PXEodVpxXX06BysaXwBCC1ULXwJeH0F8OwJbBSpzQHxPAi1CBUICXBxaDkMKUBxcVlUfCUtGCUkdDg5CGEYfVCdXAloKWx4=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1787076308; x=1789668308;
- bh=qOG91BjG6K6D5Ej2fzP8pY0XUDv2OtJelh3S9vbZhtA=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=VxGRacoyBs2EwcwY3pDiMHJoFd3jQ5tyOiwhEoJp2njZQvJ8nfYJM6DCGKW2Zjr3u8aFAf3rQ3kazxQcetWEGOYNH5/1gKJb7JuCwfpi0eV4OX0kRHFnp03tmR483FzXoodOL7rMOEady3J3FWdgEC12twEFHduhKUazRZ/44ZcudyRG28BZU5BjScf4mWfjjbhTa8Cwqo38W8ciZxtH3G5aBQAz8J7j4ixd9hWX9U+zOCyDzMItxD2pB5Jwur2sn04mnrDQRMiA1f2HEwsdDpWkj32mom2T2fseQKspkRgYEqfvHz7MCtM+8qbvcJ0Q8091ldtsyWy3ziwvzeIUrQ==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.156.192.29])
- by p00-icloudmta-asmtp-us-west-1a-60-percent-0 (Postfix) with ESMTPSA id
- 1D07D180036C; Tue, 18 Aug 2026 18:05:03 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.11\))
-Subject: Re: [PATCH] target/i386/whpx: handle processor reset
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <LVXPR21MB70093ED095A01CADE104F3A8ADA62@LVXPR21MB7009.namprd21.prod.outlook.com>
-Date: Tue, 18 Aug 2026 20:04:51 +0200
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Pedro d'Aquino Filocre F S Barbuda <pbarbuda@microsoft.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wwOIM-0002Ja-Ul
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 14:12:18 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wwOIK-0007xI-Tn
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 14:12:18 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-47fe377a217so66563f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 11:12:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787076735; x=1787681535; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=2zRzhjOdaPiQQ7x5CoGdktOL52iTjVw+qAke4aNJ/KY=;
+ b=IKw3oYdLf0qK6HAAgnrjUnXlbNgWGsrPZr9GFOWGt5QII6q3PKW/YP/O9YyAk96pEc
+ aj8jJh755ln2wUjBfqH6KCPUq7ifZlgojTo9in5OwTY+Jj3R/NWHgGRCNi0gl9Iv6/i4
+ ClX4tl6AnqC7TqM09HDUm215je2/vtsaBdYQgpwPldaUybbAzeVlAIkKetsaAYFWeOWx
+ dWOipZ+CQRw5XMmHsDbCUqO0xwMO9W6f8IG5OD/sSZ7OktPXSeRvaP5yeGqtK9J4BnfT
+ ubKawHWs7p1BQ4Xj/gdkPklU0XotnMAK5OoBISCawgvi4hN5xFt3hb4c2teduQWXGw/n
+ yeJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787076735; x=1787681535;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=2zRzhjOdaPiQQ7x5CoGdktOL52iTjVw+qAke4aNJ/KY=;
+ b=OsSvW54uda61vvMklvPNFD5Okf7VP3Ech5FZIjWS5Qovdohp4ftBsaGrs480oWW5dN
+ Pq4qU20xAS2aPPeWZj2f85IXgLXQxmPu2QtSq6Sk5KAZhwVWGK/RbjuX3SWHa/b7/OFq
+ rdZ+4147AzYDaszT2RT7A5HRLuJsxnm0DFV/KvPm8QVYnu8+klWo6N1o5+mslJAiDUN8
+ EXY6Qn+SOt2rkkuPZDhKzQe5RQmhdWJUARNgTw0eSImYx48LNeEsf6FbLp9NlZfPqyEH
+ 5XifDstLk6QTHzNau7FN91xF9U6WORWrTE7a6XsXyS7/B8Z90TL5Ijd8bfLUwkSNZUmq
+ sGxw==
+X-Gm-Message-State: AOJu0YwaSkdrw4raaEhmxqzsQ4RauWfok+aGOw5bZeDCh5/f+KEcDSQp
+ hxAvCjvvYby3skrJ6mwVWfi8LedPPJTqEypC+ufrNXSBCCy3WUl9cAjlZwR2mrQeDnY=
+X-Gm-Gg: AR+sD115d4TGyNR5Hlm6HyPjPYdVn825r3SLCdLbiEPTCxpE36tAr7GJBOW1mDBHO2V
+ Fm2KG9jpGOEOf2ZIMDES9PalOtad6vS6TROuoI3yzDtQ12zcfQ+kFv7gAJhTv7Fs/AGwSqsw5cT
+ PyORsnfpHpur+U3/btQs2OAAejWsfKyHpTQRviOk7/ECm0uAlzUOzwvGEJxW74hddM9w+lDEgTC
+ yULOePPZNHJ0yWO9g9uvgyrKwQOVUKh9GictKbsX1dnXR4Taw7LtDMtWh5WghGDRfYLA56PasLB
+ dqw6imY73GCy7YXPJHdYXs5odJqTVOP/yTtZq28M4742ZSxNpKU8cErfpHkJ1X2STnYk2nCTWPi
+ 9M1M/tHqkLiq6Mw3WAfUGT5bF0rX6XUxpf9YeGR4SWqY09xWDNBHETaY8Z6VMD06R5+UBTOe7D4
+ DaYzAjXE+H8aKEBuAOXU7CRtPyHRh4AAFLEppTZpeMWOfZ3nOaIkTUMysRxQAB
+X-Received: by 2002:a05:600c:1d20:b0:493:e365:7630 with SMTP id
+ 5b1f17b1804b1-4999fb98421mr183319085e9.14.1787076735117; 
+ Tue, 18 Aug 2026 11:12:15 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4999d086c6dsm145296985e9.7.2026.08.18.11.12.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Aug 2026 11:12:13 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id F02155F7DF;
+ Tue, 18 Aug 2026 19:12:12 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Matt Turner <mattst88@gmail.com>
+Cc: qemu-devel@nongnu.org,  richard.henderson@linaro.org,
+ pbonzini@redhat.com,  philmd@mailo.com,  zhao1.liu@intel.com,
+ laurent@vivier.eu,  deller@gmx.de,  pierrick.bouvier@oss.qualcomm.com
+Subject: Re: [RFC PATCH 2/8] accel/tcg: enlarge the TB jump cache to 64K
+ entries
+In-Reply-To: <20260817190038.580257-3-mattst88@gmail.com> (Matt Turner's
+ message of "Mon, 17 Aug 2026 15:00:32 -0400")
+References: <20260817190038.580257-1-mattst88@gmail.com>
+ <20260817190038.580257-3-mattst88@gmail.com>
+User-Agent: mu4e 1.14.3; emacs 30.1
+Date: Tue, 18 Aug 2026 19:12:12 +0100
+Message-ID: <87wltnqow3.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <DAEBEB1C-DB4F-4222-8255-1EC162AA0E71@unpredictable.fr>
-References: <LVXPR21MB70093ED095A01CADE104F3A8ADA62@LVXPR21MB7009.namprd21.prod.outlook.com>
-To: "Doug Cook (WINDOWS)" <dcook@microsoft.com>
-X-Mailer: Apple Mail (2.3901.100.1.1.11)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDEzMyBTYWx0ZWRfXzIkM0b58DhrC
- r4cRMtzpCJ6zh1H+rcdE5WSf8QNyTb2Jz6xIZXLI/YKUhRc1yMFYyJxjdEhsr1ILZNjI0vKrutZ
- W4qUCBiTWzOksIXQWo06XePykzNxzK6DOoFLf/lKE3tk1XxgQ/IZ/N0hoWzLjlPtmh/FHRSACyD
- KPQRP5CgA0HobEA1osPXh+yTZABj4FDJDf/TmJI9G9crYQ9MzpfOUvT9JQZWfgBkZ7F9ByHsgBP
- o6pKqPnoh5w4MqTn/DxNV26EgyOTvu1Ms/J3vqws//I5l8aImwmWKK1A5GPfpm9ztSNQTYfcdsg
- MRRhP/bvUcRpIu32VamMdSk3QUR5+Wgen2gbZtHk1cP4SwmD250cjMC3CkJ3xM=
-X-Proofpoint-ORIG-GUID: 6V3mjlQpa6tRfJ6bVDTsKGQdph_TiybT
-X-Proofpoint-GUID: 6V3mjlQpa6tRfJ6bVDTsKGQdph_TiybT
-X-Authority-Info-Out: v=2.4 cv=f+dFxeyM c=1 sm=1 tr=0 ts=6a849ed1
- cx=c_apl:c_pps:t_out a=aW9mcIavGNWWFvFFKOxBSA==:117
- a=aW9mcIavGNWWFvFFKOxBSA==:17 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=p0WdMEafAAAA:8 a=GaQpPoNlAAAA:8 a=yMhMjlubAAAA:8
- a=22ya_mvd5B8fbHfUbRgA:9 a=QEXdDO2ut3YA:10 a=xF5q_uoM5gZT5J3czcBi:22
-X-JNJ: AAAAAAABObGEFCaCtUj840GCsdPKTDxa4AH1eneVjFdGQ3o2zqh8glIZNAhvWOKh5GwUV1awpkraR2cVIMC57DP1DAKLoNiwq1k2DND3MGAnCdNBtRlSCwrlqrqr2J6X74x9pHB4j1YNEcImDp8ehE14J5qyimhQFACt8KozNm3w01dXkh3QgoxDa5s/I28pT8AmnZKenqLlmKc71X695tP+Z+hl1WZ01gUTzBgBHJZmk+c7FwersD/txbC/5nNqlRLM2u83K0LOFNHTj/wu7tMB4brewyTuqPOVCI76BlSh/3dOAx31BqxPDXibkNjGt2hF0iOUp+wJ2b2NFxBsz5dhwoxC/9kv5v2C0lWERBPEBqF5A6z4thHroL2BwOePSjb566VIGv+FctCqOLv7tG7JNIWn64Nr6+Jc6fnBmW2yMZl718XAFYcfZJRGYfwO8pQglrnWnBNq8BzdDVe0HM10NumUtiHp44GrVXTIa8eqJIYNLRFEOHt2P9iZVDe9o5GlUABGGFHeaNIKtSTliGVvVXG8ivr7nFi1lOr2p6VRHDPAZsOTZDPgzbsg52D50SPfSHxAJhbPAOc2KMZQFVncbAt2WoQSrWobX3o3DSC+oSuLwm1FGfnYj01432DTSdRdhCY2m0NJMk4IagN9UxCSDqdRapLQ9NxbrqFmNhSzZi3ztUnWdhQNiXAwoo1ieccWjVTnUGzCx94cCmuUJGQSwwjI332jLbA2ZrbdOcCH2S/QM1iyZluFEu+elQfQ6IgafL426Yyf/Hh1wn9qQdnaFJoRqawX6BgQIDW5yO3BYdINfKfa0r52O9dvMoftjs+9Ysu3GmZdTpXg0tdWZAkEbx3ABao5rJrKH663mNVttvoluUIPO1iaJn+SXaa1lbPOR/vCgxuZWWLwKDaCeSO8ih0fYU4yFNYEHzJCm3i5dNov3spAYI264BUuEFYypcWRwQrVoqVj6eOqS5Pwfr7PuQV4rW8
- O7g22Ud7LuC53ZCua4VCTA10tlEIT/GyKjvF1x6TFFinQ81bewFP7K+ElT0JCYiW5DAIwoRkfuP+COERTkjeTGjOig8E+7Q2y68wTFePPLz4O523qpqRQRzdIjfhduBMEDkqXcYXxMr4kOTOWKoifmGR809siGGvsmpcAQGjEv+EKeGcHh0thgcxEwrQWBX/ORTdgqcBMxorOaUQMNR9k9AixuGWvydjtqViIBGyBt3wM53Y26RiHXLCblTZj9duT4MTASXzO4ZZ+8y9Nf2wDSwra1oOB8v1Is7u7PGlydrbI9eTj/2+njBIwXz+z0erlcUvwjjbqK3SHz7d+bjwOfSwLPB6RcKqwNrlsmYjYwzs5jQpxOJJcSK8Bx7p3K7QkegP2dYCV7Aue08Qprrrp1AsY7g==
-Received-SPF: pass client-ip=2a01:b747:3003:200::65;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,99 +108,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Matt Turner <mattst88@gmail.com> writes:
 
+> The per-CPU TB jump cache has held 4096 entries since it was introduced.
+> That is too small for guests running large programs: an emulated compiler
+> misses often enough that the fallback qht lookup shows up prominently in
+> a profile.
+>
+> Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling
+> the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host. The
+> compile performs 34.2 billion TB executions, of which 8.4 billion take
+> the indirect dispatch path.
+>
+> Sizing curve, on top of the preceding patch, instructions retired and
+> wall clock:
+>
+>     12 bits (  64 KiB): 1,563,829,403,943          133.13s
+>     14 bits ( 256 KiB): 1,493,865,985,972  -4.47%  124.89s  -6.19%
+>     16 bits (   1 MiB): 1,469,729,281,442  -6.02%  120.97s  -9.13%
+>     18 bits (   4 MiB): 1,462,262,363,257  -6.49%  120.16s  -9.74%
 
-> On 18. Aug 2026, at 19:58, Doug Cook (WINDOWS) <dcook@microsoft.com> =
-wrote:
->=20
-> WHPX is not properly handling processor reset:
->=20
-> - Does not reset partition, so several registers (e.g. Hypercall,
->  GuestOsId) carry values forward as "Locked" into the next session.
-> - Does not clear hypervisor-managed TSC deadline (live-lock).
-> - Does not re-arm the wait-for-SIPI trigger, so all CPUs start running
->  immediately after reset.
->=20
-> Some firmware may tolerate this, but OVMF does not. Typical result is
-> that boot hangs or ends in triple-fault, e.g.
->=20
->  qemu-system-x86_64: WHPX: Unexpected VP exit code 4
->=20
-> After this patch, I am able to boot to Windows desktop, reset, and =
-boot
-> back to Windows desktop. Tried many times in sequence with no =
-problems.
-> Used several different reset mechanisms (OS shutdown menu, external
-> "reset", watchdog reset) with no problems.
->=20
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2402
-> Signed-off-by: Doug Cook <dcook@microsoft.com>
+I'd be curious to see the system emulation numbers. You should see very
+different profiles as more stuff gets directly chained in user mode.
 
-Hi,
+> 16 bits is the knee. 18 buys another 0.47% of instructions for four times
+> the memory, and since instructions retired does not account for the data
+> cache pressure of a 4 MiB table, that 0.47% is probably not real: the
+> wall clock difference between 16 and 18 bits is 0.67%, against a
+> run-to-run spread of the same order.
+>
+> In a perf profile the mechanism is visible directly: tb_htable_lookup(),
+> which is where qht_lookup_custom() lands once it is inlined in an LTO
+> build, falls from 5.73% of samples to 1.52%.
+>
+> The cost is memory: the cache grows from 64 KiB to 1 MiB per vCPU. That
+> is easy to justify for a single-vCPU linux-user process and less obvious
+> for system emulation with many vCPUs, so this may want to be sized by
+> target or made tunable rather than raised unconditionally.
 
-Previous version of this concept at: =
-https://patchew.org/QEMU/20260421205749.55060-1-mohamed@unpredictable.fr/ =
-(with it intertwined in a common path for Arm support)
+Practically you wouldn't see many TCG emulations with more the 16 CPUs
+(although it would be interesting to see where the MTTCG gains fade with
+these proposals). With that in mind 1MiB doesn't see too excessive - I
+don't know how it compares to other big allocations QEMU makes over a
+typical run.
 
-Using WHvResetPartition as a workaround for some state not being fully =
-synchronised isn=E2=80=99t
-ideal though...
-
+>
+> Signed-off-by: Matt Turner <mattst88@gmail.com>
 > ---
-> target/i386/whpx/whpx-all.c | 29 +++++++++++++++++++++++++++++
-> 1 file changed, 29 insertions(+)
->=20
-> diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-> index 634d542821..54f9b50536 100644
-> --- a/target/i386/whpx/whpx-all.c
-> +++ b/target/i386/whpx/whpx-all.c
-> @@ -528,6 +528,35 @@ void whpx_set_registers(CPUState *cpu, =
-WHPXStateLevel level)
->=20
->     assert(cpu_is_stopped(cpu) || qemu_cpu_is_self(cpu));
->=20
-> +    /* Assumes that cpu_synchronize_all_post_reset() runs cpu 0 =
-first. */
-> +    if (level =3D=3D WHPX_LEVEL_RESET_STATE && cpu->cpu_index =3D=3D =
-0) {
-> +        hr =3D whp_dispatch.WHvResetPartition(whpx->partition);
-> +        if (FAILED(hr)) {
-> +            error_report("WHPX: Failed to reset partition, hr=3D%08lx",=
- hr);
-> +        }
-> +    }
-> +
-> +    /* Reset hypervisor-owned TSC deadline. */
-> +    if (level =3D=3D WHPX_LEVEL_RESET_STATE) {
-> +        WHV_REGISTER_VALUE tsc_deadline =3D {};
-> +
-> +        whpx_set_reg(cpu, WHvX64RegisterTscDeadline, tsc_deadline);
-> +    }
-> +
-> +    /*
-> +     * Re-arm partition's wait-for-SIPI state.
-> +     * whpx_vcpu_run() ignores cpu->halted, depends on SIPI for this.
-> +     * This must follow WHvResetPartition.
-> +     */
-> +    if (level =3D=3D WHPX_LEVEL_RESET_STATE && =
-whpx_irqchip_in_kernel()) {
-> +        WHV_REGISTER_VALUE activity =3D {};
-> +
-> +        whpx_get_reg(cpu, WHvRegisterInternalActivityState, =
-&activity);
-> +        activity.InternalActivity.StartupSuspend =3D =
-!cpu_is_bsp(x86_cpu);
-> +        activity.InternalActivity.HaltSuspend =3D 0;
-> +        whpx_set_reg(cpu, WHvRegisterInternalActivityState, =
-activity);
-> +    }
-> +
->     /*
->      * Following MSRs have side effects on the guest or are too heavy =
-for
->      * runtime. Limit them to full state update.
-> --=20
-> 2.55.0.vfs.0.3
->=20
+>  accel/tcg/tb-jmp-cache.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git ./accel/tcg/tb-jmp-cache.h ./accel/tcg/tb-jmp-cache.h
+> index c3a505e394..268dacd7ba 100644
+> --- ./accel/tcg/tb-jmp-cache.h
+> +++ ./accel/tcg/tb-jmp-cache.h
+> @@ -12,7 +12,7 @@
+>  #include "qemu/rcu.h"
+>  #include "exec/cpu-common.h"
+>=20=20
+> -#define TB_JMP_CACHE_BITS 12
+> +#define TB_JMP_CACHE_BITS 16
+>  #define TB_JMP_CACHE_SIZE (1 << TB_JMP_CACHE_BITS)
+>=20=20
+>  /*
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
