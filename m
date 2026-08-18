@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C09FC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 20:50:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DA87C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 20:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwQku-0006St-8M; Tue, 18 Aug 2026 16:49:56 -0400
+	id 1wwQnU-0007WU-4n; Tue, 18 Aug 2026 16:52:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wwQkq-0006Sf-Nm
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:49:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wwQnR-0007WD-Gq
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:52:33 -0400
+Received: from mr-2004b-snip6-11.eps.apple.com ([2a01:b747:3000:203::15]
+ helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wwQko-0008AH-5g
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:49:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787086186;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=B0RWM+fbpc/flkF9UUpP6oMhh6+qg1GzzG9/fCj5TXA=;
- b=Esz0MBp1mPWDRnGkfla5aYS/+dxt+MtIYmvIaN9Yhci3ePmFeckRRroriPpGXCVZC0aXhG
- w4crWrxgGFFhY9xazYXRRGiZNtk9AKfkiK7fXOj944aU2nasXzMthGbei1coHNBFrQn26g
- ncSLvhEPav8WjaouyK+eULZ53JUGeJI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-692-Y1qYaVbDOyKgpSa6VyWM5g-1; Tue,
- 18 Aug 2026 16:49:43 -0400
-X-MC-Unique: Y1qYaVbDOyKgpSa6VyWM5g-1
-X-Mimecast-MFC-AGG-ID: Y1qYaVbDOyKgpSa6VyWM5g_1787086182
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4476318004BB; Tue, 18 Aug 2026 20:49:42 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 980791944DCD; Tue, 18 Aug 2026 20:49:41 +0000 (UTC)
-Date: Tue, 18 Aug 2026 16:49:39 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- "'Michael S . Tsirkin'" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- 'Daniel P =?iso-8859-1?Q?=2E_Berrang=E9'?= <berrange@redhat.com>,
- Jason Wang <jasowangio@gmail.com>
-Subject: Re: [PATCH V12 05/15] block/export: track IOThread references
-Message-ID: <20260818204938.GB222512@fedora>
-References: <20260814174830.1691540-1-zhangckid@gmail.com>
- <20260814174830.1691540-6-zhangckid@gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="YSaEYF0D1GDKdivT"
-Content-Disposition: inline
-In-Reply-To: <20260814174830.1691540-6-zhangckid@gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wwQnM-0000No-Vo
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:52:33 -0400
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-1 (Postfix) with ESMTPS id
+ 012AD1800ADC; Tue, 18 Aug 2026 20:52:23 +0000 (UTC)
+X-ICL-RepId: 01a016a5-8dc2-7edd-b590-f3bf697e2dcd
+X-ICL-Out-Info: HUtFAUMHWwJACUgATUQeDx5WFlZNRAJCTQBIHVoORQNGCVYLWhcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0KWFsIWwQPH0wMUQJCBVZeVAodBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDjEMPQRUc1t2XXpJBFoaX3BHfFUKLgIpHzN7SAJYcloDMQg7AC1CBUICXBxaDkMKUBxcVlUfCUtGCUkdDg5CGEYfVCdXAloKWx4=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1787086345; x=1789678345;
+ bh=+xoyfmvZYh3Wjq/5XFwsT2GHM/F0rTXWkXcPgnF5tA4=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=YQdzmsCUZBBBslmXCGDjvsdhOYG31Sa2LODWK7RDAUUV2S0WiZW6s0EYvFQVBz+dbw4PdO6ff2rTd5lWM35gTIECE/Pz6ivx9/yl6xfgNx9X0D2cdioLrsIhvwjVu731lHBnPiocV/5F2WSMCd40Wk0NXVeSKROoaFrEppi9qedmScwX90Xp76KvKrA/P5oyPmnJRSwlkV+/lrPrsowNaSlyIMuS9c42q+FYLM/nlDHqkTscaUzZ8UNUQONke+o/s+41WJghy4nMkh0jbx9O2hdp/oUHnCgv4ZUMumjxIONhd6Y4DfFrCvQpdKSCAwhJ4VgSTniu0h1LNKHZFVRQUA==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.156.200.36])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-1 (Postfix) with ESMTPSA id
+ 1D7401800100; Tue, 18 Aug 2026 20:51:15 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.11\))
+Subject: Re: [PATCH] target/arm/whpx: fix whpx-arm reset hang
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <LVXPR21MB7009095A64089AACFA91DB10ADA62@LVXPR21MB7009.namprd21.prod.outlook.com>
+Date: Tue, 18 Aug 2026 22:50:23 +0200
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Pedro d'Aquino Filocre F S Barbuda <pbarbuda@microsoft.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <A5E79D0D-C177-4B7E-9C5B-CB015E11A1C3@unpredictable.fr>
+References: <LVXPR21MB7009095A64089AACFA91DB10ADA62@LVXPR21MB7009.namprd21.prod.outlook.com>
+To: "Doug Cook (WINDOWS)" <dcook@microsoft.com>
+X-Mailer: Apple Mail (2.3901.100.1.1.11)
+X-Authority-Info-Out: v=2.4 cv=Le4xKzfi c=1 sm=1 tr=0 ts=6a84c608
+ cx=c_apl:c_pps:t_out a=9mRn2PO/+PIrVdEbaIuMPg==:117
+ a=9mRn2PO/+PIrVdEbaIuMPg==:17 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=yMhMjlubAAAA:8 a=wr1TRPdcCIM70eNNwfcA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: DjrHsi6h7ertRZxfbvQI2taF89oR0ES0
+X-Proofpoint-GUID: DjrHsi6h7ertRZxfbvQI2taF89oR0ES0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE1MyBTYWx0ZWRfXwf99jnnYVO3l
+ ev3rr/jv6hGK2Zm4i/M2EV+dBqwW6xWUvMw5ZboF3CgZFPhB3hbA40Y3Jz5Qo08UJzR03sd9zpX
+ wy6C/xsXqHIaF12A7MxkVmJdp71hJnCEWawcDFjkhwWrj2zPJjM/QqRhWFKtfm9GsarwYPhkHcb
+ 7VLQU5ooP5Ac+p6xncSsbKiuX6oV4WcGxlA0/YviWIBIgw3rXgzcKlMffhJP5HEWxG/52kprApl
+ m/ZpxLci2AmdoTVU7QNPpsVH3cMvjrkz4zZcCm8lvp14Vok7/AQI+v7Me2D1lbHL29Ud1eCWL91
+ HfRCx0SI2CFOuLR6fq+bEWp5+F0+rNLkGsrhR8Gn0/Ui5YN8DnPpqMnoXdTdfE=
+X-JNJ: AAAAAAABF7L0cY+eRWAoA9cz4zo/3jm8qw13Hjl21WoPdAcw+/CcG38WHlJT+ImESI9FV+FOnYK0G/ddnS7h3EprSWI3PEopkqQDMzISnmRFpzsvQmsFLVpC/ph3ZZovV+IiJPqTRAwKhWf/r0uWZM+xDDI2DC0+j0GvqhbuTYd7sjseZPfFMufTvhfg150xdPZzGeqJmCoqzgvxuy+zj6uOme9xlFVbnrslTWBJuWUTp0/yS/enYszfWnY7ZaPJVrkVbqfU51WWdaEa0ObnTVvfzK91V01VWvW20hd8pNTMYnxP9h0mWe9Vqkio+kIhx/Wx02K9I8iqB8IpQXAkqaPuDGKrJEgYDcVH7geRbQElezOU0dXAlozpYJYzntqBGdfA983BuqqzcHw+mL/NTK5C3Uw1U0VVaxhrLCN8ylY7mFYdhPAfiIoCvWNC52xEEBxHX8+m9JrcyKVPddv0Ka/H0jy/CCalHfoMzuUkcgBjFXrKBsaFdnAjObramZpx3ALkonFbnCHUJ7RtwDhrFLU/yDsZ9DlOonjBGoJLwVVhweHbHZa+hEUN+VVoq10vt3Mq8qbQkiArgEswQDx7bBc/3WXAeCpVPcP0xT59S56w9OY6mCsQO7fNXXZwurnfqjpqTqoS0zYPr89kAoBkmIGhlLfZ2Q6e7nchc0ROnYzxtIUjTt+3rEK2MfQ4ZxgL539PcJ6lrbTgeRFaLg0sTc6Omzdn3HsXiYL3XtilzatiT7c5LavueCCwyG1H7B+XHF+zhO7zuiwbKP9DlOxXcT9wrFKsuypgFbd1pR0UduzYQfdu01YAP2gwXTCIinDTB8pOjwCqMkF/GXOJE6g7hf4e5F1HQm0rUDAQ9DL/dxVOXXYTCpXFPT2xlaGvLwlRvi7flyJMo3Gx5uxQaF94WmBhp6z6ce2hOGiPRN5ZpJt/1Gto+z5kvVZ6LNO9u27ge3DpcAcl0fZXgVRg+fOvmlkzgeVR2I+
+ 0vYOx+E5XdGn52L4LZ3qlP4sATkKGNBlB+QCbXCjWvF0x6kdlTzjqJ5H/5ay+XNOi9f836S2UG+yIii1liTlzlTUQpJJQkf+5n9YPCw/kzPLl0ci5cQBkx1q8wTKjYprPvfV4CfydU43hEZu8mJM7Lno8YxIc/D3813aXwBq/dymBX7fWyjUDukU37AcjjD6bWWKnS+BSZnZNAO7/1z+38Sebr6RLuLWOCXiyPwwKG08qnFznnfONNpRVgaEFCbiZBMcVVYkcHii8LoGhHJWFi812zkXtuNBUh6CQF1O7nBjfPin3P8Hq6Jizkpe2ZPO2I6PikVDz8XhtQTfWhm42qV6Pu1TxOZ4IaOjq4b81cNVmQ54CVM18PSqScgOEnSbnIhg=
+Received-SPF: pass client-ip=2a01:b747:3000:203::15;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,240 +87,519 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---YSaEYF0D1GDKdivT
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Sat, Aug 15, 2026 at 01:48:19AM +0800, Zhang Chen wrote:
-> Track the IOThreads used by a block export and identify the holder
-> with the unique BlockExportOptions id.
+
+> On 18. Aug 2026, at 20:52, Doug Cook (WINDOWS) <dcook@microsoft.com> =
+wrote:
 >=20
-> Acquire holder-aware references during export creation and release
-> them on error or export deletion.  Support both single- and
-> multi-iothread exports.
+> Under whpx, arm reset results in hangs and crashes.
 >=20
-> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> - Arguments out of order in ENCODE_AA64_CP_REG, so =
+get_arm_cp_reginfo()
+>  fails, whpx_set_registers does nothing for reset, and SCTLR_EL1 =
+retains
+>  guest state with MMU enabled after reset, resulting in fault and =
+hang.
+>  Fix via wrapper macro to retain existing ordering convention.
+> - Fixing the ENCODE_AA64_CP_REG issue results in assertions while =
+trying
+>  to write to ARM_CP_CONST registers. Skip them.
+> - Correct four entries in the breakpoint/watchpoint index 1 block that
+>  named index 0 registers.
+> - CPUs that are idle at time of reset remain in suspend after reset.
+> - CPUs are not in the correct StartupSuspend state after reset.
+>=20
+> After this change, I am able to repeatedly reset an arm64 guest, using
+> shutdown-reset, external reset, and watchdog reset.
+>=20
+> Signed-off-by: Doug Cook <dcook@microsoft.com>
+
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+
+But with comments below:
+
 > ---
->  block/export/export.c  | 79 +++++++++++++++++++++++++++++++++++++-----
->  include/block/export.h |  6 ++++
->  2 files changed, 76 insertions(+), 9 deletions(-)
+> target/arm/whpx/whpx-all.c | 306 +++++++++++++++++++++----------------
+> 1 file changed, 177 insertions(+), 129 deletions(-)
 >=20
-> diff --git a/block/export/export.c b/block/export/export.c
-> index b733f269f3..09136cda34 100644
-> --- a/block/export/export.c
-> +++ b/block/export/export.c
-> @@ -15,7 +15,6 @@
-> =20
->  #include "block/block.h"
->  #include "system/block-backend.h"
-> -#include "system/iothread.h"
->  #include "block/export.h"
->  #include "block/fuse.h"
->  #include "block/nbd.h"
-> @@ -85,6 +84,8 @@ BlockExport *blk_exp_add(BlockExportOptions *export, Er=
-ror **errp)
->      AioContext *ctx;
->      AioContext **multithread_ctxs =3D NULL;
->      size_t multithread_count =3D 0;
-> +    g_autofree IOThread **local_iothreads =3D NULL;
-> +    char *holder_id =3D NULL;
->      uint64_t perm;
->      int ret;
-> =20
-> @@ -139,7 +140,16 @@ BlockExport *blk_exp_add(BlockExportOptions *export,=
- Error **errp)
->              goto fail;
->          }
-> =20
-> -        new_ctx =3D iothread_get_aio_context(iothread);
-> +        holder_id =3D export->id;
-> +        const IOThreadHolder holder =3D {
-> +            .type =3D IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
-> +            .u.block_export.export_id =3D holder_id,
-> +        };
+> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+> index 00a5de8cdc..f3e7caf794 100644
+> --- a/target/arm/whpx/whpx-all.c
+> +++ b/target/arm/whpx/whpx-all.c
+> @@ -134,143 +134,150 @@ struct whpx_sreg_match {
+>     uint32_t cp_idx;
+> };
+>=20
+> +/*
+> + * Adapt conventional order WHPX_SYSREG(crn, crm, op0, op1, op2) to
+> + * ENCODE_AA64_CP_REG(op0, op1, crn, crm, op2).
+> + */
+> +#define WHPX_SYSREG(crn, crm, op0, op1, op2) \
+> +    ENCODE_AA64_CP_REG(op0, op1, crn, crm, op2)
 > +
-> +        new_ctx =3D iothread_ref_and_get_aio_context(iothread, &holder);
-> +        multithread_count =3D 1;
-> +        local_iothreads =3D g_new0(IOThread *, 1);
-> +        local_iothreads[0] =3D iothread;
-> =20
->          /* Ignore errors with fixed-iothread=3Dfalse */
->          set_context_errp =3D fixed_iothread ? errp : NULL;
-> @@ -163,8 +173,15 @@ BlockExport *blk_exp_add(BlockExportOptions *export,=
- Error **errp)
->              return NULL;
->          }
-> =20
-> +        local_iothreads =3D g_new0(IOThread *, multithread_count);
->          multithread_ctxs =3D g_new(AioContext *, multithread_count);
->          i =3D 0;
-> +        holder_id =3D export->id;
-> +        const IOThreadHolder holder =3D {
-> +            .type =3D IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
-> +            .u.block_export.export_id =3D holder_id,
-> +        };
+> static struct whpx_sreg_match whpx_sreg_match[] =3D {
+> -    { WHvArm64RegisterDbgbvr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 4) =
+},
+> -    { WHvArm64RegisterDbgbcr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 5) =
+},
+> -    { WHvArm64RegisterDbgwvr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 6) =
+},
+> -    { WHvArm64RegisterDbgwcr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 7) =
+},
+> -
+> -    { WHvArm64RegisterDbgbvr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 4) =
+},
+> -    { WHvArm64RegisterDbgbcr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 5) =
+},
+> -    { WHvArm64RegisterDbgwvr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 6) =
+},
+> -    { WHvArm64RegisterDbgwcr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 7) =
+},
+> -
+> -    { WHvArm64RegisterDbgbvr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 4) =
+},
+> -    { WHvArm64RegisterDbgbcr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 5) =
+},
+> -    { WHvArm64RegisterDbgwvr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 6) =
+},
+> -    { WHvArm64RegisterDbgwcr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 7) =
+},
+> -
+> -    { WHvArm64RegisterDbgbvr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 4) =
+},
+> -    { WHvArm64RegisterDbgbcr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 5) =
+},
+> -    { WHvArm64RegisterDbgwvr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 6) =
+},
+> -    { WHvArm64RegisterDbgwcr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 7) =
+},
+> -
+> -    { WHvArm64RegisterDbgbvr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 4) =
+},
+> -    { WHvArm64RegisterDbgbcr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 5) =
+},
+> -    { WHvArm64RegisterDbgwvr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 6) =
+},
+> -    { WHvArm64RegisterDbgwcr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 7) =
+},
+> -
+> -    { WHvArm64RegisterDbgbvr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 4) =
+},
+> -    { WHvArm64RegisterDbgbcr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 5) =
+},
+> -    { WHvArm64RegisterDbgwvr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 6) =
+},
+> -    { WHvArm64RegisterDbgwcr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 7) =
+},
+> -
+> -    { WHvArm64RegisterDbgbvr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 4) =
+},
+> -    { WHvArm64RegisterDbgbcr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 5) =
+},
+> -    { WHvArm64RegisterDbgwvr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 6) =
+},
+> -    { WHvArm64RegisterDbgwcr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 7) =
+},
+> -
+> -    { WHvArm64RegisterDbgbvr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 4) =
+},
+> -    { WHvArm64RegisterDbgbcr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 5) =
+},
+> -    { WHvArm64RegisterDbgwvr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 6) =
+},
+> -    { WHvArm64RegisterDbgwcr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 7) =
+},
+> -
+> -    { WHvArm64RegisterDbgbvr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 4) =
+},
+> -    { WHvArm64RegisterDbgbcr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 5) =
+},
+> -    { WHvArm64RegisterDbgwvr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 6) =
+},
+> -    { WHvArm64RegisterDbgwcr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 7) =
+},
+> -
+> -    { WHvArm64RegisterDbgbvr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 4) =
+},
+> -    { WHvArm64RegisterDbgbcr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 5) =
+},
+> -    { WHvArm64RegisterDbgwvr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 6) =
+},
+> -    { WHvArm64RegisterDbgwcr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 7) =
+},
+> -
+> -    { WHvArm64RegisterDbgbvr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 4) =
+},
+> -    { WHvArm64RegisterDbgbcr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 5) =
+},
+> -    { WHvArm64RegisterDbgwvr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 6) =
+},
+> -    { WHvArm64RegisterDbgwcr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 7) =
+},
+> -
+> -    { WHvArm64RegisterDbgbvr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 4) =
+},
+> -    { WHvArm64RegisterDbgbcr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 5) =
+},
+> -    { WHvArm64RegisterDbgwvr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 6) =
+},
+> -    { WHvArm64RegisterDbgwcr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 7) =
+},
+> -
+> -    { WHvArm64RegisterDbgbvr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 4) =
+},
+> -    { WHvArm64RegisterDbgbcr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 5) =
+},
+> -    { WHvArm64RegisterDbgwvr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 6) =
+},
+> -    { WHvArm64RegisterDbgwcr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 7) =
+},
+> -
+> -    { WHvArm64RegisterDbgbvr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 4) =
+},
+> -    { WHvArm64RegisterDbgbcr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 5) =
+},
+> -    { WHvArm64RegisterDbgwvr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 6) =
+},
+> -    { WHvArm64RegisterDbgwcr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 7) =
+},
+> -
+> -    { WHvArm64RegisterDbgbvr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 4) =
+},
+> -    { WHvArm64RegisterDbgbcr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 5) =
+},
+> -    { WHvArm64RegisterDbgwvr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 6) =
+},
+> -    { WHvArm64RegisterDbgwcr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 7) =
+},
+> -
+> -    { WHvArm64RegisterDbgbvr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 4) =
+},
+> -    { WHvArm64RegisterDbgbcr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 5) =
+},
+> -    { WHvArm64RegisterDbgwvr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 6) =
+},
+> -    { WHvArm64RegisterDbgwcr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 7) =
+},
+> +    { WHvArm64RegisterDbgbvr0El1, WHPX_SYSREG(0, 0, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr0El1, WHPX_SYSREG(0, 0, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr0El1, WHPX_SYSREG(0, 0, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr0El1, WHPX_SYSREG(0, 0, 2, 0, 7) },
 > +
->          for (strList *e =3D iothread_list; e; e =3D e->next) {
->              IOThread *iothread =3D iothread_by_id(e->value);
-> =20
-> @@ -172,7 +189,9 @@ BlockExport *blk_exp_add(BlockExportOptions *export, =
-Error **errp)
->                  error_setg(errp, "iothread \"%s\" not found", e->value);
->                  goto fail;
->              }
-> -            multithread_ctxs[i++] =3D iothread_get_aio_context(iothread);
-> +            local_iothreads[i] =3D iothread;
-> +            multithread_ctxs[i++] =3D iothread_ref_and_get_aio_context(i=
-othread,
-> +                                                                     &ho=
-lder);
->          }
->          assert(i =3D=3D multithread_count);
->      }
-> @@ -225,12 +244,15 @@ BlockExport *blk_exp_add(BlockExportOptions *export=
-, Error **errp)
->      assert(drv->instance_size >=3D sizeof(BlockExport));
->      exp =3D g_malloc0(drv->instance_size);
->      *exp =3D (BlockExport) {
-> -        .drv        =3D drv,
-> -        .refcount   =3D 1,
-> -        .user_owned =3D true,
-> -        .id         =3D g_strdup(export->id),
-> -        .ctx        =3D ctx,
-> -        .blk        =3D blk,
-> +        .drv                  =3D drv,
-> +        .refcount             =3D 1,
-> +        .user_owned           =3D true,
-> +        .id                   =3D g_strdup(export->id),
-> +        .ctx                  =3D ctx,
-> +        .blk                  =3D blk,
-> +        .iothreads            =3D g_steal_pointer(&local_iothreads),
-> +        .iothread_count       =3D multithread_count,
-> +        .iothread_holder_id   =3D g_strdup(holder_id),
+> +    { WHvArm64RegisterDbgbvr1El1, WHPX_SYSREG(0, 1, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr1El1, WHPX_SYSREG(0, 1, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr1El1, WHPX_SYSREG(0, 1, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr1El1, WHPX_SYSREG(0, 1, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr2El1, WHPX_SYSREG(0, 2, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr2El1, WHPX_SYSREG(0, 2, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr2El1, WHPX_SYSREG(0, 2, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr2El1, WHPX_SYSREG(0, 2, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr3El1, WHPX_SYSREG(0, 3, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr3El1, WHPX_SYSREG(0, 3, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr3El1, WHPX_SYSREG(0, 3, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr3El1, WHPX_SYSREG(0, 3, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr4El1, WHPX_SYSREG(0, 4, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr4El1, WHPX_SYSREG(0, 4, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr4El1, WHPX_SYSREG(0, 4, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr4El1, WHPX_SYSREG(0, 4, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr5El1, WHPX_SYSREG(0, 5, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr5El1, WHPX_SYSREG(0, 5, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr5El1, WHPX_SYSREG(0, 5, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr5El1, WHPX_SYSREG(0, 5, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr6El1, WHPX_SYSREG(0, 6, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr6El1, WHPX_SYSREG(0, 6, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr6El1, WHPX_SYSREG(0, 6, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr6El1, WHPX_SYSREG(0, 6, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr7El1, WHPX_SYSREG(0, 7, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr7El1, WHPX_SYSREG(0, 7, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr7El1, WHPX_SYSREG(0, 7, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr7El1, WHPX_SYSREG(0, 7, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr8El1, WHPX_SYSREG(0, 8, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr8El1, WHPX_SYSREG(0, 8, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr8El1, WHPX_SYSREG(0, 8, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr8El1, WHPX_SYSREG(0, 8, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr9El1, WHPX_SYSREG(0, 9, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr9El1, WHPX_SYSREG(0, 9, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr9El1, WHPX_SYSREG(0, 9, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr9El1, WHPX_SYSREG(0, 9, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr10El1, WHPX_SYSREG(0, 10, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr10El1, WHPX_SYSREG(0, 10, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr10El1, WHPX_SYSREG(0, 10, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr10El1, WHPX_SYSREG(0, 10, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr11El1, WHPX_SYSREG(0, 11, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr11El1, WHPX_SYSREG(0, 11, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr11El1, WHPX_SYSREG(0, 11, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr11El1, WHPX_SYSREG(0, 11, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr12El1, WHPX_SYSREG(0, 12, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr12El1, WHPX_SYSREG(0, 12, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr12El1, WHPX_SYSREG(0, 12, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr12El1, WHPX_SYSREG(0, 12, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr13El1, WHPX_SYSREG(0, 13, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr13El1, WHPX_SYSREG(0, 13, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr13El1, WHPX_SYSREG(0, 13, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr13El1, WHPX_SYSREG(0, 13, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr14El1, WHPX_SYSREG(0, 14, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr14El1, WHPX_SYSREG(0, 14, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr14El1, WHPX_SYSREG(0, 14, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr14El1, WHPX_SYSREG(0, 14, 2, 0, 7) },
+> +
+> +    { WHvArm64RegisterDbgbvr15El1, WHPX_SYSREG(0, 15, 2, 0, 4) },
+> +    { WHvArm64RegisterDbgbcr15El1, WHPX_SYSREG(0, 15, 2, 0, 5) },
+> +    { WHvArm64RegisterDbgwvr15El1, WHPX_SYSREG(0, 15, 2, 0, 6) },
+> +    { WHvArm64RegisterDbgwcr15El1, WHPX_SYSREG(0, 15, 2, 0, 7) },
+> #ifdef SYNC_NO_RAW_REGS
+>     /*
+>      * The registers below are manually synced on init because they =
+are
+>      * marked as NO_RAW. We still list them to make number space sync =
+easier.
+>      */
+> -    { WHvArm64RegisterMidrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 0, 0) },
+> -    { WHvArm64RegisterMpidrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 0, 5) },
+> -    { WHvArm64RegisterIdPfr0El1, ENCODE_AA64_CP_REG(0, 4, 3, 0, 0) },
+> +    { WHvArm64RegisterMidrEl1, WHPX_SYSREG(0, 0, 3, 0, 0) },
+> +    { WHvArm64RegisterMpidrEl1, WHPX_SYSREG(0, 0, 3, 0, 5) },
+> +    { WHvArm64RegisterIdPfr0El1, WHPX_SYSREG(0, 4, 3, 0, 0) },
+> #endif
+> -    { WHvArm64RegisterIdAa64Pfr1El1, ENCODE_AA64_CP_REG(0, 4, 3, 0, =
+1), true },
+> -    { WHvArm64RegisterIdAa64Dfr0El1, ENCODE_AA64_CP_REG(0, 5, 3, 0, =
+0), true },
+> -    { WHvArm64RegisterIdAa64Dfr1El1, ENCODE_AA64_CP_REG(0, 5, 3, 0, =
+1), true },
+> -    { WHvArm64RegisterIdAa64Isar0El1, ENCODE_AA64_CP_REG(0, 6, 3, 0, =
+0), true },
+> -    { WHvArm64RegisterIdAa64Isar1El1, ENCODE_AA64_CP_REG(0, 6, 3, 0, =
+1), true },
+> +    { WHvArm64RegisterIdAa64Pfr1El1, WHPX_SYSREG(0, 4, 3, 0, 1), true =
+},
+> +    { WHvArm64RegisterIdAa64Dfr0El1, WHPX_SYSREG(0, 5, 3, 0, 0), true =
+},
+> +    { WHvArm64RegisterIdAa64Dfr1El1, WHPX_SYSREG(0, 5, 3, 0, 1), true =
+},
+> +    { WHvArm64RegisterIdAa64Isar0El1, WHPX_SYSREG(0, 6, 3, 0, 0), =
+true },
+> +    { WHvArm64RegisterIdAa64Isar1El1, WHPX_SYSREG(0, 6, 3, 0, 1), =
+true },
+> #ifdef SYNC_NO_MMFR0
+>     /* We keep the hardware MMFR0 around. HW limits are there anyway =
+*/
+> -    { WHvArm64RegisterIdAa64Mmfr0El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, =
+0) },
+> +    { WHvArm64RegisterIdAa64Mmfr0El1, WHPX_SYSREG(0, 7, 3, 0, 0) },
+> #endif
+> -    { WHvArm64RegisterIdAa64Mmfr1El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, =
+1), true },
+> -    { WHvArm64RegisterIdAa64Mmfr2El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, =
+2), true },
+> -    { WHvArm64RegisterIdAa64Mmfr3El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, =
+3), true },
+> -
+> -    { WHvArm64RegisterMdscrEl1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 2) },
+> -    { WHvArm64RegisterSctlrEl1, ENCODE_AA64_CP_REG(1, 0, 3, 0, 0) },
+> -    { WHvArm64RegisterCpacrEl1, ENCODE_AA64_CP_REG(1, 0, 3, 0, 2) },
+> -    { WHvArm64RegisterTtbr0El1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 0) },
+> -    { WHvArm64RegisterTtbr1El1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 1) },
+> -    { WHvArm64RegisterTcrEl1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 2) },
+> -
+> -    { WHvArm64RegisterApiAKeyLoEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 0) =
+},
+> -    { WHvArm64RegisterApiAKeyHiEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 1) =
+},
+> -    { WHvArm64RegisterApiBKeyLoEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 2) =
+},
+> -    { WHvArm64RegisterApiBKeyHiEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 3) =
+},
+> -    { WHvArm64RegisterApdAKeyLoEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 0) =
+},
+> -    { WHvArm64RegisterApdAKeyHiEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 1) =
+},
+> -    { WHvArm64RegisterApdBKeyLoEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 2) =
+},
+> -    { WHvArm64RegisterApdBKeyHiEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 3) =
+},
+> -    { WHvArm64RegisterApgAKeyLoEl1, ENCODE_AA64_CP_REG(2, 3, 3, 0, 0) =
+},
+> -    { WHvArm64RegisterApgAKeyHiEl1, ENCODE_AA64_CP_REG(2, 3, 3, 0, 1) =
+},
+> -
+> -    { WHvArm64RegisterSpsrEl1, ENCODE_AA64_CP_REG(4, 0, 3, 0, 0) },
+> -    { WHvArm64RegisterElrEl1, ENCODE_AA64_CP_REG(4, 0, 3, 0, 1) },
+> -    { WHvArm64RegisterSpEl1, ENCODE_AA64_CP_REG(4, 1, 3, 0, 0) },
+> -    { WHvArm64RegisterEsrEl1, ENCODE_AA64_CP_REG(5, 2, 3, 0, 0) },
+> -    { WHvArm64RegisterFarEl1, ENCODE_AA64_CP_REG(6, 0, 3, 0, 0) },
+> -    { WHvArm64RegisterParEl1, ENCODE_AA64_CP_REG(7, 4, 3, 0, 0) },
+> -    { WHvArm64RegisterMairEl1, ENCODE_AA64_CP_REG(10, 2, 3, 0, 0) },
+> -    { WHvArm64RegisterVbarEl1, ENCODE_AA64_CP_REG(12, 0, 3, 0, 0) },
+> -    { WHvArm64RegisterContextidrEl1, ENCODE_AA64_CP_REG(13, 0, 3, 0, =
+1) },
+> -    { WHvArm64RegisterTpidrEl1, ENCODE_AA64_CP_REG(13, 0, 3, 0, 4) },
+> -    { WHvArm64RegisterCntkctlEl1, ENCODE_AA64_CP_REG(14, 1, 3, 0, 0) =
+},
+> -    { WHvArm64RegisterCsselrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 2, 0) },
+> -    { WHvArm64RegisterTpidrEl0, ENCODE_AA64_CP_REG(13, 0, 3, 3, 2) },
+> -    { WHvArm64RegisterTpidrroEl0, ENCODE_AA64_CP_REG(13, 0, 3, 3, 3) =
+},
+> -    { WHvArm64RegisterCntvCtlEl0, ENCODE_AA64_CP_REG(14, 3, 3, 3, 1) =
+},
+> -    { WHvArm64RegisterCntvCvalEl0, ENCODE_AA64_CP_REG(14, 3, 3, 3, 2) =
+},
+> -    { WHvArm64RegisterSpEl1, ENCODE_AA64_CP_REG(4, 1, 3, 4, 0) },
+> +    { WHvArm64RegisterIdAa64Mmfr1El1, WHPX_SYSREG(0, 7, 3, 0, 1), =
+true },
+> +    { WHvArm64RegisterIdAa64Mmfr2El1, WHPX_SYSREG(0, 7, 3, 0, 2), =
+true },
+> +    { WHvArm64RegisterIdAa64Mmfr3El1, WHPX_SYSREG(0, 7, 3, 0, 3), =
+true },
+> +
+> +    { WHvArm64RegisterMdscrEl1, WHPX_SYSREG(0, 2, 2, 0, 2) },
+> +    { WHvArm64RegisterSctlrEl1, WHPX_SYSREG(1, 0, 3, 0, 0) },
+> +    { WHvArm64RegisterCpacrEl1, WHPX_SYSREG(1, 0, 3, 0, 2) },
+> +    { WHvArm64RegisterTtbr0El1, WHPX_SYSREG(2, 0, 3, 0, 0) },
+> +    { WHvArm64RegisterTtbr1El1, WHPX_SYSREG(2, 0, 3, 0, 1) },
+> +    { WHvArm64RegisterTcrEl1, WHPX_SYSREG(2, 0, 3, 0, 2) },
+> +
+> +    { WHvArm64RegisterApiAKeyLoEl1, WHPX_SYSREG(2, 1, 3, 0, 0) },
+> +    { WHvArm64RegisterApiAKeyHiEl1, WHPX_SYSREG(2, 1, 3, 0, 1) },
+> +    { WHvArm64RegisterApiBKeyLoEl1, WHPX_SYSREG(2, 1, 3, 0, 2) },
+> +    { WHvArm64RegisterApiBKeyHiEl1, WHPX_SYSREG(2, 1, 3, 0, 3) },
+> +    { WHvArm64RegisterApdAKeyLoEl1, WHPX_SYSREG(2, 2, 3, 0, 0) },
+> +    { WHvArm64RegisterApdAKeyHiEl1, WHPX_SYSREG(2, 2, 3, 0, 1) },
+> +    { WHvArm64RegisterApdBKeyLoEl1, WHPX_SYSREG(2, 2, 3, 0, 2) },
+> +    { WHvArm64RegisterApdBKeyHiEl1, WHPX_SYSREG(2, 2, 3, 0, 3) },
+> +    { WHvArm64RegisterApgAKeyLoEl1, WHPX_SYSREG(2, 3, 3, 0, 0) },
+> +    { WHvArm64RegisterApgAKeyHiEl1, WHPX_SYSREG(2, 3, 3, 0, 1) },
+> +
+> +    { WHvArm64RegisterSpsrEl1, WHPX_SYSREG(4, 0, 3, 0, 0) },
+> +    { WHvArm64RegisterElrEl1, WHPX_SYSREG(4, 0, 3, 0, 1) },
+> +    { WHvArm64RegisterSpEl1, WHPX_SYSREG(4, 1, 3, 0, 0) },
+> +    { WHvArm64RegisterEsrEl1, WHPX_SYSREG(5, 2, 3, 0, 0) },
+> +    { WHvArm64RegisterFarEl1, WHPX_SYSREG(6, 0, 3, 0, 0) },
+> +    { WHvArm64RegisterParEl1, WHPX_SYSREG(7, 4, 3, 0, 0) },
+> +    { WHvArm64RegisterMairEl1, WHPX_SYSREG(10, 2, 3, 0, 0) },
+> +    { WHvArm64RegisterVbarEl1, WHPX_SYSREG(12, 0, 3, 0, 0) },
+> +    { WHvArm64RegisterContextidrEl1, WHPX_SYSREG(13, 0, 3, 0, 1) },
+> +    { WHvArm64RegisterTpidrEl1, WHPX_SYSREG(13, 0, 3, 0, 4) },
+> +    { WHvArm64RegisterCntkctlEl1, WHPX_SYSREG(14, 1, 3, 0, 0) },
+> +    { WHvArm64RegisterCsselrEl1, WHPX_SYSREG(0, 0, 3, 2, 0) },
+> +    { WHvArm64RegisterTpidrEl0, WHPX_SYSREG(13, 0, 3, 3, 2) },
+> +    { WHvArm64RegisterTpidrroEl0, WHPX_SYSREG(13, 0, 3, 3, 3) },
+> +    { WHvArm64RegisterCntvCtlEl0, WHPX_SYSREG(14, 3, 3, 3, 1) },
+> +    { WHvArm64RegisterCntvCvalEl0, WHPX_SYSREG(14, 3, 3, 3, 2) },
+> +    { WHvArm64RegisterSpEl1, WHPX_SYSREG(4, 1, 3, 4, 0) },
+> };
 
-Is this field necessary, it always seems to be the same as exp->id?
+Ow, carried this mess in formats from HVF, don=E2=80=99t think we wanna =
+keep this really.
 
->      };
-> =20
->      ret =3D drv->create(exp, export, multithread_ctxs, multithread_count=
-, errp);
-> @@ -250,8 +272,33 @@ fail:
->          blk_unref(blk);
->      }
->      if (exp) {
-> +        if (exp->iothreads) {
-> +            const IOThreadHolder holder =3D {
-> +                .type =3D IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
-> +                .u.block_export.export_id =3D exp->iothread_holder_id,
-> +            };
-> +            for (size_t j =3D 0; j < exp->iothread_count; j++) {
-> +                if (exp->iothreads[j]) {
-> +                    iothread_unref_and_put_aio_context(exp->iothreads[j],
-> +                                                       &holder);
-> +                }
-> +            }
-> +            g_free(exp->iothreads);
-> +        }
-> +        g_free(exp->iothread_holder_id);
->          g_free(exp->id);
->          g_free(exp);
-> +    } else if (local_iothreads) {
-> +        const IOThreadHolder holder =3D {
-> +            .type =3D IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
-> +            .u.block_export.export_id =3D holder_id,
-> +        };
+(switching to the ENCODE_AA64_CP_REG format across the board would be =
+better)
+
+>=20
+> HRESULT whpx_set_exception_exit_bitmap(UINT64 exceptions)
+> @@ -610,6 +617,37 @@ void whpx_set_registers(CPUState *cpu, =
+WHPXStateLevel level)
+>             whpx_set_reg(cpu, whpx_sreg_match[i].reg, val);
+>         }
+>     }
 > +
-> +        for (size_t j =3D 0; j < multithread_count; j++) {
-> +            if (local_iothreads[j]) {
-> +                iothread_unref_and_put_aio_context(local_iothreads[j], &=
-holder);
-> +            }
-> +        }
->      }
->      g_free(multithread_ctxs);
->      return NULL;
-> @@ -273,6 +320,20 @@ static void blk_exp_delete_bh(void *opaque)
->      exp->drv->delete(exp);
->      blk_set_dev_ops(exp->blk, NULL, NULL);
->      blk_unref(exp->blk);
+> +    if (level =3D=3D WHPX_LEVEL_RESET_STATE) {
+> +        /*
+> +         * WHPX keeps the "vCPU is in a low-power wait" state =
+(entered when the
+> +         * guest executes WFI/WFE) in =
+WHvRegisterInternalActivityState, and that
+> +         * state is not affected by writing the architectural =
+registers above.
+> +         * If the guest happened to be idle when the reset was =
+requested, the
+> +         * vCPU would stay suspended forever.
+> +         *
+> +         * StartupSuspend is the bit WHP uses to hold a vCPU that has =
+not been
+> +         * started yet, and it is how secondary vCPUs are parked =
+until PSCI
+> +         * CPU_ON releases them.
+> +         */
+> +        WHV_REGISTER_NAME name =3D WHvRegisterInternalActivityState;
+> +        bool powered_off =3D arm_cpu->power_state =3D=3D PSCI_OFF;
+> +        WHV_REGISTER_VALUE ia;
+> +        HRESULT hr;
 > +
-> +    if (exp->iothreads) {
-> +        const IOThreadHolder holder =3D {
-> +            .type =3D IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
-> +            .u.block_export.export_id =3D exp->iothread_holder_id,
-> +        };
-> +
-> +        for (size_t i =3D 0; i < exp->iothread_count; i++) {
-> +            iothread_unref_and_put_aio_context(exp->iothreads[i], &holde=
-r);
+> +        clean_whv_register_value(&ia);
+> +        hr =3D whp_dispatch.WHvGetVirtualProcessorRegisters(
+> +            whpx_global.partition, cpu->cpu_index, &name, 1, &ia);
+> +        if (SUCCEEDED(hr) &&
+> +            (ia.InternalActivity.IdleSuspend ||
+> +             ia.InternalActivity.HaltSuspend ||
+> +             ia.InternalActivity.StartupSuspend !=3D powered_off)) {
+> +            ia.InternalActivity.IdleSuspend =3D 0;
+> +            ia.InternalActivity.HaltSuspend =3D 0;
+> +            ia.InternalActivity.StartupSuspend =3D powered_off;
+> +            whpx_set_reg(cpu, WHvRegisterInternalActivityState, ia);
 > +        }
-> +        g_free(exp->iothreads);
 > +    }
-> +
-> +    g_free(exp->iothread_holder_id);
->      qapi_event_send_block_export_deleted(exp->id);
->      g_free(exp->id);
->      g_free(exp);
+> }
 
-There is quite a bit of code duplication with the loops that call
-iothread_ref_and_get_aio_context() or
-iothread_unref_and_put_aio_context().
+Looks good :) Although perhaps this is better as a separate commit from =
+the change
+above.
 
-Two helper functions could avoid duplication:
-
-  static void init_iothreads(const char *holder_id,
-                             IOThread **iothreads,
-			     size_t num_iothreads,
-                             AioContext **aio_ctxs);
-
-  static void cleanup_iothreads(const char *holder_id,
-                                IOThread **iothreads,
-				size_t num_iothreads);
-
-> diff --git a/include/block/export.h b/include/block/export.h
-> index ca45da928c..a093dea0b6 100644
-> --- a/include/block/export.h
-> +++ b/include/block/export.h
-> @@ -16,6 +16,7 @@
-> =20
->  #include "qapi/qapi-types-block-export.h"
->  #include "qemu/queue.h"
-> +#include "system/iothread.h"
-> =20
->  typedef struct BlockExport BlockExport;
-> =20
-> @@ -89,6 +90,11 @@ struct BlockExport {
-> =20
->      /* List entry for block_exports */
->      QLIST_ENTRY(BlockExport) next;
-> +
-> +    /* The IOThreads utilized by this specific block export */
-> +    IOThread **iothreads;
-> +    size_t iothread_count;
-> +    char *iothread_holder_id;
->  };
-> =20
->  BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp);
-> --=20
-> 2.54.0
 >=20
+> static uint32_t max_vcpu_index;
+> @@ -789,8 +827,18 @@ int whpx_init_vcpu(CPUState *cpu)
+>         uint32_t key =3D whpx_sreg_match[i].key;
+>=20
+>         ri =3D get_arm_cp_reginfo(arm_cpu->cp_regs, key);
+> -        if (ri) {
+> -            assert(!(ri->type & ARM_CP_NO_RAW));
+> +        /*
+> +         * Only registers with raw backing store in CPUARMState can =
+take part
+> +         * in the cpreg list sync:
+> +         *
+> +         * - ARM_CP_NO_RAW registers have no state to sync at all;
+> +         *   write_cpustate_to_list() and write_list_to_cpustate() =
+skip them.
+> +         *
+> +         * - ARM_CP_CONST registers (the ID registers in the table =
+above)
+> +         *   ignore raw writes and always read back the value the CPU =
+model was
+> +         *   built with.
+> +         */
 
---YSaEYF0D1GDKdivT
-Content-Type: application/pgp-signature; name=signature.asc
+But not this bit, which should be dropped.
 
------BEGIN PGP SIGNATURE-----
+The CPU model gets synced through this bit and registers that error
+out through ARM_CP_NO_RAW should be behind a #ifdef SYNC_NO_RAW_REGS
+block.
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmqExWIACgkQnKSrs4Gr
-c8jEUwf/T3EPLitquBFcIhRGDbshdM4Z3eW7h6ani0ult1VjrMcRjtHtu2xTRSFa
-MRsA731C6KWySSGPWDtjEZNEHWaMMWuNGw9WJUFh/y4J6P49wDRBR/Ka9Kdcjeih
-qpmDnY6UwoJFAqPqtqLFsefu+4YENSAT4/zuL2DGA8wif+ijWh2NLeAiOxV3Bw1O
-sXoSTpM8PLld3hFjXxi4ZT9uC6xEUvPA9cacqMlIwal6k1Q5lYc2xj6A8qXLcL4z
-1jVODDAU74foBmSko0eLlua3rFHo5arHZ0114LdIIcp6tcQOXTr/Uj9O87uVVSnE
-h45yv/f3NbKgxXPbhSUvNKzz6DpkMw==
-=IDpz
------END PGP SIGNATURE-----
+The former characteristic is what allows for example -cpu cortex-a72
+to be used on WHPX instead of only the native machine, while masking off
+the newer feature from feature regs.
 
---YSaEYF0D1GDKdivT--
+> +        if (ri && !(ri->type & (ARM_CP_NO_RAW | ARM_CP_CONST))) {
+>             whpx_sreg_match[i].cp_idx =3D sregs_cnt;
+>             arm_cpu->cpreg_indexes[sregs_cnt++] =3D =
+cpreg_to_kvm_id(key);
+>         } else {
+> --=20
+> 2.55.0.vfs.0.3
+>=20
+>=20
 
 
