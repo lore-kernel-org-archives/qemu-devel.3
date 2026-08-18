@@ -4,103 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D835C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 14:43:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1628FC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 14:44:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwL16-0006O1-BS; Tue, 18 Aug 2026 10:42:16 -0400
+	id 1wwL2q-0006ri-Cd; Tue, 18 Aug 2026 10:44:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wwL14-0006NZ-Th
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:42:14 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wwL13-0006IC-GZ
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:42:14 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-c9e7391839cso4606705a12.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 07:42:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787064132; cv=none;
- d=google.com; s=arc-20260327;
- b=YH8y9xHsMHGLUco5mmDGULvE/6UX1OMSvI/Pbiu6AoV7VzrFrhd0YObNs1yGHqkj0D
- F/e+HkxHtJnfpZuY7PpcK1Izp142cegbznyVOFyclOGlnSgtkNxFMZv79VJUlxAhwyyH
- DH2GllzsSVEdYgQun+1wX3ilW7ANOrrqJZINqoFIt/mCPGpoINfAwjOPsvyTdii78EaI
- FcfmHh5dsIz0EVScBBwn8+wA8dcvl2ZCDlq49tADk0JxEGZ7BUkVf7ejsuNpwGqoUuNx
- 95pU/YiKugqzt6Hq557gPR2ONtkVEQRQCmNZe9l2W72CGifBx+Y6oyVhtQyMOGaqgLju
- IBFA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=nrRLMMA6hvaGiOSknnVa961i2FUpkhXprV3naFXjZQw=;
- fh=B22JtR9ZUsXUrdiOg5Iw9LSBCcKra7oUC9BuSyZP/90=;
- b=qjFyDWRLJjyO5oxKIZ7reC58fXv7x7dPgfY64eAC5qq3Tb/Lwgz+AdAFh8vjGdZFX5
- dUOY5oJRf+2/X7Xuqy8msIkD/+CTwnZSQSu64SXoEjBO9z+6WU5IHaqKjblltPXFn84C
- U15TbHzGGy/EKkWkw2D3dsYnhGvfEW5JWOglYY6tZ82UDvHp8huk7EbH1A9Buzej1/AS
- GijphZorn3+YovzG/2UqvhrjIoxEA22BBDx8EYGbbpSlDa7RhJslG3ePdFHpPdCA/DXi
- TJkFtN6LMPpMnIRVelz9HM0mNQpIz4vZyI4Qqy5UOHDzeV5VhrGboNmi6kmbYm0O/vQG
- pHug==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwL2p-0006rU-Im
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:44:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwL2n-0006ky-V6
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:44:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787064240;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TFo9Y9eNwSpnDVpqfWXBdC22wXK7GMPT08eH5Db7MMY=;
+ b=csPdzDsUmxdtE0rNp76MRzW0knNyStZArrPwR2nklHlOwxDV8ODsLCrl9iYyDXcSIDUYub
+ 6hXxkxIx7D03MAsR5lVxUhUlxpsB4wEpl+fccPeVkNK2Ql/rVFYj1twovBGxCHyiBFx9cj
+ 7zuDt47cq67hb9rsF0MG2qLNs1TGf1g=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-575-oz757NMvNvKt4Bt157cp-g-1; Tue, 18 Aug 2026 10:43:58 -0400
+X-MC-Unique: oz757NMvNvKt4Bt157cp-g-1
+X-Mimecast-MFC-AGG-ID: oz757NMvNvKt4Bt157cp-g_1787064238
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8e934385db1so209456d6.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 07:43:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787064132; x=1787668932; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=nrRLMMA6hvaGiOSknnVa961i2FUpkhXprV3naFXjZQw=;
- b=IQ8b+H8Mh+pXqcjUgqEZ0Z3SrvDkVetIkxzPu6yFPigAAtXasMxO4fMrTNsWYg30V7
- 0nSt6LfMNyWvFAVZCyUlRN/Iq+tAeqEYvJm1jPL1Dh8MQUTqjpV1S4TEabI5g9j8dzR5
- qr3Okj+4PdFH/ooBpo+BMRETkxBtpEhDudr6nESbedtCdFONbk4+IFUxybSfJutxtY1O
- KCG5T9d2URcFXwHeqSDC58zF2byDlpxV+Sd/3Lm6Z0bUuVRkCoprLvxi1Oz/HiGjLb5V
- 9uTSnIHV7JcQzO6x53krABfDLkUJSC7u3IDpv852UT8F5p5A6cPvYu4o8+2QPrdapEt5
- uhzw==
+ d=redhat.com; s=google; t=1787064238; x=1787669038; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=TFo9Y9eNwSpnDVpqfWXBdC22wXK7GMPT08eH5Db7MMY=;
+ b=t/ZVqQuTaQpGx1Ed00nZ7KMLsfzGKp3NzqNFo9hayGGT13SbavzouwTKsFtWrwRseo
+ yFVwhxuv0IhYjF8GonJg+QBJTPOEcIT7KQheqIK7Y7OoN5mmykZD+K3hArkwPS6ZZnEc
+ 69FXOtWpbbUzDD6urDmfRLbCwK1cGuhUizXs1EWYF9WpSERQb0+l1a+3acvAk3gxiOWA
+ w5KnFupFJdoRnGT0iqAR+NPvjuaBjXKRDoGVgkGMrETlUwD6k6aIsJpBPS/25wO8k7uL
+ DIzuBkZMlxfF1i+l/w2A20oZW8ete/aGsJvvYLQujvNsPdiRK+OvG/tnnnSJ3/JBpnVe
+ nreQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787064132; x=1787668932;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=nrRLMMA6hvaGiOSknnVa961i2FUpkhXprV3naFXjZQw=;
- b=eJByd4rJnKk+AOA5rEqCLqb2feK4vOYJEK1/lIfO6q1q7CxQSvnBfBwJFNEfWHf1iH
- SbsT7w35OjTU8ASbjygYmm10+RyC+NJfp+ajv6GV9ucx0FfLKp7Ea7oib2AjgXKwikeF
- jtRJ7v1WDVK6R4HCbO0klzkPedSsUoJFOqCCT2a6YUXiwe/0DpKUmF7ogAID2sDr9MgJ
- LdKoVSEKkWuTZspBcBi9Q/YrctpIHTFPgUkSfo6C0vHzeRA0eT33PTEmM9W4l4LppjW8
- lRJoVh/upoWND9feuCSFW7r/4VDn5Th8NqIq6deyG02chns7ZanRBP8qpQWo0nGgd0f6
- FcJg==
-X-Gm-Message-State: AOJu0Ywk0FOuxZXJrSCo9BN3I5chCLDh++HLFP0Nf8PoxfT2IIeDj+2M
- LMQM4Tv9ggYim+ZRUwmbABjmHLGbuKFXyw+BNkrVgmCXKt0Av5SDrSv/sw4uLu9uAE+cZcYTYTK
- Sb8qBum7nY4Fb42epEJSBInxyghUKTvI=
-X-Gm-Gg: AR+sD12q8hIFerz0TJJV0i7CtZ92aEgNs/4z/itsWhHz92VrT+jLIVns7CpDKJLLk6G
- n2cgevEiMnZajaSVDTwdL2EhkI0nReMwXRQ/lYG8s5OLyRImRWSTf5n8457S1g0s0qTnNL4diTN
- w7OJtwgYOycUQD2+zSeacOFjbSErmwo++FX0asr0NIRxXg9kbQyjxryohGcao51K4xiGG48G2Ym
- /2uJxft1HrcxDrxp4M4ytBUYORLeoGPq3uuchkAjqkwpXDwaNzLXww5irRk/eqgChXIIkC8uLWG
- XVgrhhQNgtbZZSrAlU9siTFUoW59oay/LVNhU4Cevpj7TN9G7+EQLm1IKR5vI7oE+SwsaF/IMKC
- 4
-X-Received: by 2002:a05:6a20:3d82:b0:3c4:3321:4ffd with SMTP id
- adf61e73a8af0-3cc71c61dbbmr38587073637.20.1787064131786; Tue, 18 Aug 2026
- 07:42:11 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787064238; x=1787669038;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=TFo9Y9eNwSpnDVpqfWXBdC22wXK7GMPT08eH5Db7MMY=;
+ b=kJeYJeF6NAGWluXdkU5+vbVvEuA9N5pMw5SHCjIaGJkGNGrUQ0/7ZyJEvUKfq3PQRN
+ 2KSCHPPX1Rr2tVT+eyjm40BOvT1s5bghNrpXqv9/AUgsMD4XEyMGgCilpm3XK3DrbnNM
+ H0jXpzp9AjsPu6b6rIC+vcHz8iSWJ+EgY2/BGxAZVfgkaruafaMvFKKOI2KR73wLGQ70
+ 0xuwUW+iwE6HVJdy0rgjQBUd+qdvOBEcOgrY+JNKGA+1CpZWflbYu+/CvjufZ5VUJOob
+ 6GbcZXX1itUuHy3VAavCW1PGhhcuf/WVeKJ/lBqpX4YGWU4JYxg3Q3jnxdThX/eUa2xY
+ 1kFw==
+X-Gm-Message-State: AOJu0Yy1W4Bz2jsNBb4iYxduvgtnBhbmOdoDyGCXi2fVYG4KY9FtTP0U
+ qhY2KWgDGp28fXc0gqPVX47ieJQkc9NB8ySBa+0iIeuGTAadxs+S2GlzEYzWAxwODsw/88N3Pwf
+ K6fdVKi+iOIlLs6o2ESmrrEDBQ8a04SWeJuQ1hoBLXeemUI1z5INqBVja
+X-Gm-Gg: AR+sD11uOkRboX3cEqn/Y07Fz3vU6K/AxidkELUp+eN5saPgeuUceeCS9VvOAuYMaUi
+ pL8bd0wBLdzMKW+m1or01y6bN3srwCy7b7vILlL17/46fOUan0w1il/AbO1H76kfv7u+f4vd/RQ
+ JgVwI/4d+f8+8+0K8rMsXEMQ5KCpe+u8q9UUbfvaWaux79fIVNt+hJLNG5Ff6Y2R5sqnwmZUBjO
+ gSSG088zPyvQZ9ehghrg1axD5xwCinApsvssYkwKYP7r2YJ5UfOZx1exikkhaBaNYQWq5y6kb04
+ 1+t5od8sbkfxZeSHUg5q1g23qtSwGIDhX/PXFY8XlzRvJBe3esScqEfsdKZRZvqTYd2K
+X-Received: by 2002:ad4:5746:0:b0:908:9c82:695e with SMTP id
+ 6a1803df08f44-90c4b0c4c18mr94723976d6.0.1787064238050; 
+ Tue, 18 Aug 2026 07:43:58 -0700 (PDT)
+X-Received: by 2002:ad4:5746:0:b0:908:9c82:695e with SMTP id
+ 6a1803df08f44-90c4b0c4c18mr94722986d6.0.1787064237418; 
+ Tue, 18 Aug 2026 07:43:57 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-90c5016c3a2sm16400346d6.37.2026.08.18.07.43.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Aug 2026 07:43:56 -0700 (PDT)
+Date: Tue, 18 Aug 2026 10:43:45 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Yanfei Xu <isyanfei.xu@gmail.com>
+Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>,
+ Samuel Zhang <guoqing.zhang@amd.com>,
+ Fabiano Rosas <farosas@suse.de>, Jack Wang <jinpu.wang@ionos.com>,
+ Juraj Marcin <jmarcin@redhat.com>, Yanfei Xu <yanfei.xu@bytedance.com>
+Subject: Re: [PATCH 02/10] migration/rdma: Remove unregister code
+Message-ID: <aoRvobhlj6-YJsqT@x1.local>
+References: <20260817202424.2901438-1-peterx@redhat.com>
+ <20260817202424.2901438-3-peterx@redhat.com>
+ <4d0d08d3-ad6e-4de3-85b8-587b70286b04@gmail.com>
+ <aoRXk0H1muF_gZJP@x1.local>
+ <4a0b20e5-947c-45a4-8fcf-89c77e0a4cfb@gmail.com>
 MIME-Version: 1.0
-References: <20260818142836.1664990-1-pbonzini@redhat.com>
-In-Reply-To: <20260818142836.1664990-1-pbonzini@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 18 Aug 2026 18:41:59 +0400
-X-Gm-Features: AcwNN1WWPWweeJz7LdHjXQndMlRmhT6KL504AsHFTUOgjJTKfNFgcKv4R-49flc
-Message-ID: <CAJ+F1CKuBR9TWnCzTjyFC=6Xn8q9ZDiXRXSoD+6if=cJRDkPMw@mail.gmail.com>
-Subject: Re: [PATCH] serial: clear transmit retry callback on unrealize
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4a0b20e5-947c-45a4-8fcf-89c77e0a4cfb@gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,45 +123,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On Tue, Aug 18, 2026 at 09:57:12PM +0800, Yanfei Xu wrote:
+> 
+> On 2026/8/18 21:01, Peter Xu wrote:
+> > On Tue, Aug 18, 2026 at 07:57:06PM +0800, Yanfei Xu wrote:
+> > > Hi Peter,
+> > Hi, Yanfei,
+> > 
+> > > No objection to removing the dead code — it clearly never worked
+> > > 
+> > > I do have one question about the direction, though. The removed logic
+> > > was the only in-tree attempt at MR unregistration for the non-pin-all
+> > > path. Without it, registered MRs grow monotonically over a migration,
+> > > and with large, widely-spread dirty memory over chunks the accumulated
+> > > MR metadata (user + kernel) can cost more than pin-all and even perform
+> > > worse — which rather defeats the purpose of not pinning everything.
+> > > 
+> > > do we still intend to keep and improve the non-pin-all path going
+> > > forward? If so, some form of dynamic MR unregistration will eventually
+> > > be needed and it might be worth keeping this code，or at least leaving
+> > > a TODO to mark the gap?
+> > Thanks for taking a look.  This is a valid question to ask.
+> > 
+> > Though it was there for 13 years without being "enhanced", it means the
+> > possibility we leverage it in the next couple of years is low.
+> > 
+> > You also discussed the other side of things: I am not a frequent RDMA user,
+> > but my understanding is frequent MR reg operations already slow down
+> > migration quite a bit.  It means dynamic management including unregisters
+> > will be even worse.  AFAICT, it'll be a challenging task if we want to keep
+> > the performance in bar and add a hard throttle to pinned memory.
+> 
+> One advantage of non-pin-all is that it neither sends the all-zero chunk
+> nor registers the corresponding MRs. For guests with a low dirty-page
+> workload and a large number of zero pages, this lets it migrate faster
+> than pin-all and pin less guest memory during the migration.
 
-On Tue, Aug 18, 2026 at 6:29=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
->
-> The GSource is removed when resetting but remains active (and can
-> cause use-after-free) on hot-unplug.  Remove it before the character
-> device is disconnected.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4125
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+I actually don't know why RDMA_CONTROL_COMPRESS is only used in !pin_all,
+do you know?
 
-it fixes a use-after-free, so
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+I can only guess RDMA WRITEs were fast and need no round-robin chats, so
+it's faster than RDMA_CONTROL_COMPRESS, but you seem to say it's not true.
 
-But should we care about flushing pending data?
+Meanwhile, I would expect pin-all=off ultimately should meet the same perf
+over pin-all=on.. so I don't really know how needs pin-all=on...  maybe
+it's useful when one is looking for minimum total migration time when VMs
+are required to be evicted from one host?
 
-> ---
->  hw/char/serial.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/hw/char/serial.c b/hw/char/serial.c
-> index 0729cd2ce9d..4339562ab00 100644
-> --- a/hw/char/serial.c
-> +++ b/hw/char/serial.c
-> @@ -936,6 +936,7 @@ static void serial_unrealize(DeviceState *dev)
->  {
->      SerialState *s =3D SERIAL(dev);
->
-> +    g_clear_handle_id(&s->watch_tag, g_source_remove);
->      qemu_chr_fe_deinit(&s->chr, false);
->
->      timer_free(s->modem_status_poll);
-> --
-> 2.55.0
->
->
+Feel free to share if you have more data points; I'm almost speaking from
+reading the code, so it could be wrong.
 
+Thanks,
 
---=20
-Marc-Andr=C3=A9 Lureau
+-- 
+Peter Xu
+
 
