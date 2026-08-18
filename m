@@ -4,102 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEFD8C5DF7E
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 12:43:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F1B3C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 12:51:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwJ9x-0007Bd-OJ; Tue, 18 Aug 2026 08:43:17 -0400
+	id 1wwItI-0006H0-Bb; Tue, 18 Aug 2026 08:26:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wwJ9v-0007BG-LG
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:43:15 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ (Exim 4.90_1) (envelope-from <hsubrianhsu@gmail.com>)
+ id 1wwItH-0006Gj-7r
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:26:03 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wwJ9u-0008US-20
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:43:15 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-8200b55dc47so62589467b3.3
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 05:43:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787056992; cv=none;
- d=google.com; s=arc-20260327;
- b=Wa7eMqmbtLndpyXbQoiaNL7XVjU0S965rfq8l1pSp2K1xhjpMXK/bFMYrN+reUKbBl
- 4f9ddf9hLJ7LzW06x7fF4eslDzMzOizWYUZXwKiOGzPPSLMsBFaJTRupS+fEIpr10sqr
- IsblvrLJ8iivb0qqyxaQ34bNrUF1MRsFOwtVdUwJ2tbumT+xJ14QoQ+28QAjhcMScXtp
- yqVCEDscmoWTlgE7nBfiUdQpcWaPzO3lUYmAU6ZuDj02uNkv3a7HdVvm2RWLVeJ/kiaw
- t2apa1VmckS/GzdvUmCqgnuEWMOgpYGQqp4dW6RWxQfQ0D1CKPdZqpsCjFOUpOnkQrxP
- ItGw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=tYNWycrRUIkpg9fWKOwkWpdfm1CCknAxBkVCA2SOEHs=;
- fh=9vj37u+eHcwu8xrs9kNN2ajOuXCHKTpGHD0wKu/Rzc8=;
- b=rsT4gtyt5epv58unZ1zOallfUTP0Aip44e8JcRosLQTucmxxVt2uuK4kszQsQ0sP8o
- l6oVciTM/b01qCM/26JGWmHk4e7Tbml9wL8Ds8zfAeR2eeYH0I+34EY+cgV6uEqTWOwh
- LkJFksydcX9xhzMtVMJ+jmmMZNou6ocojcWVMk5JsFGyxs1uJhtRsk1xqe6f+A3gWdcW
- bNzB0fPOhsOqDPOErQBtuyOhSV4vRAfLn1O7FZpexFdeZDGnxfJSsYrmMS2ZenA1bZbk
- TjMHvcfqVL1GXZOnp3rC2LqDmS3s9f+mUoAni3XLDgYzBnaGD0kZskI1bNgwW91gfUd1
- X1dw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <hsubrianhsu@gmail.com>)
+ id 1wwItF-0004XU-Hk
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:26:02 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2cab973140bso68835755ad.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 05:26:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787056992; x=1787661792; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=tYNWycrRUIkpg9fWKOwkWpdfm1CCknAxBkVCA2SOEHs=;
- b=sclclCCXuibU6aOljWXIqoc2VodJcp3kmBi0DBYfkgI99K/EEpHSywawbSUe+wVZNP
- CZPmWbqJW/ITElWPxbwLIosfTRstaZokxO5+SY0HU42CbiRf/aDLc8STQDAq6MWtHRu8
- XD1VRwYTjz4cUVaPScM07J186CPNpfo+OG5RslCqwnxZA4NStqmaY9Ft/xQMkNMNlBnJ
- LDV9tQz8ayypcY+v6frwiA73xdgD8Wke8Og915jVpHuJ7xvbpN/UNcfiSAzK9hcUEEwJ
- U53oZmxPFhA+GpEMwLLx1tw1QXGc2zcTl9t1/KxFKOnQmdvA6Nr8Gq07btTA5/pcSLBS
- Fz9w==
+ d=gmail.com; s=20251104; t=1787055960; x=1787660760; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=xPPzVus9SZEhqmyrbL21mtA0fNEg5Q9cNShGtr+qeYE=;
+ b=BcG1uRLDKitXuhuiXingQNOYOpnlb0b6ZChgoZaL7ihAG1Wwk+AAHfGmbTEywlkFH6
+ leBhNy02PUeSnKsmhZCEYHes9lFh4xDX+tZA/d7mQrh74Ff3IDtUQ4+H02wKzA5q3pwT
+ gWgau7cKLPab+I/+T6ByMJBaHNuWpaoDpZxa49jgFpW+B7NmEPAhiIJqYhm3oRSbBoEp
+ NqcGyuimsUopP2BM0LkLm7HYaesOBPb6MJ6GrNqDRlYoxCvaPKPlyUc+ijBlP5t6/xHB
+ C6trzSqkZEHLtIY7XflNFikR5q1BzPCE1+X4bTXHZXor1tivjDY+Mi/DdVoPDriCOZbQ
+ yl9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787056992; x=1787661792;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=tYNWycrRUIkpg9fWKOwkWpdfm1CCknAxBkVCA2SOEHs=;
- b=QCqatXh2m16WEzBD65j4pk1nKAiX6chJChxwRItIQAixFVEcmZ/eqJcx7oWGms9elI
- BIfnjeZZiNggiMx5Ap0uGlsfbm569Fd4OSea9MrkAW0X1aramEJzpkwTXaNFAYzKvA7O
- fSAiqO+yVY9+9SS6dsZ1GZaOPLW3ylDOrYRu/hOqb9KDXrzVpuxSk9GfWswnk52HEXtC
- 0R7Xw/7AXqHzztSslveHZVHUJJuvbd8H2sqdNQGe9he6XzdNsMT4hgH097CICxZqSW2t
- gHDBK56fK0KJIsrea+XFJdJEUu3JSl9qQf9pGhImxAG35BvrromievVbWKQnFXqm1Fu/
- YLcg==
-X-Gm-Message-State: AOJu0YxGQh/apbNsXMD5XQH6u/IvwysfSMH6hMjzfBRp3oFlSeGK16/S
- ZMgDKu5xOlUs5CZaazSY0lYlFQaq63610CjsVhIOqFeSBLZCmBoyJAf2K3n+3SfR/fR3rPEtcvz
- 3LCrR8VObHKVbA+AxDzQZQ+4wq8wbBc7WZO3w/x9nerdlpN3cdJmn
-X-Gm-Gg: AR+sD12iA7UKDXoWPuyrBsXneXS4awclsmvGi80IP6BxSxXO3J1YB6STNI7mDDMjnPz
- clTKY9/9PdKRFi7esAMdDDHRyPx625+rnmK6sSZd8sT23lRDo1Wzi/FIg3EMWoRAxMTlf6elVWJ
- hZC/d1rD9xNx52ACMFGR8dkVCTXF7BdGKnv2AZdmTEea8jY2vG2kPOd03RC0YQqtvsjaNpUrMGe
- xVMjXl3Jk8ymBSDzwHpE3Th7H2yGDSjy/6LOznecvKn+ABSMw/987I4TA5WAh2ekidHfRN1zqDl
- qc0h81OI5LZaiUXjkFyg2MWxsXkCn1gFp/jX4yIuV+sjlyuYDZTGdwfbd5DrbnPKgUT775xwpfq
- u/IaRB5j7a7MvCvVXfuH//aGDx0jO
-X-Received: by 2002:a05:690c:60c4:b0:830:7633:a1aa with SMTP id
- 00721157ae682-83710a8e008mr119078717b3.21.1787056992076; Tue, 18 Aug 2026
- 05:43:12 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260818115742.2268257-1-peter.maydell@linaro.org>
-In-Reply-To: <20260818115742.2268257-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 18 Aug 2026 13:43:00 +0100
-X-Gm-Features: AcwNN1UQZht5mwFfLWc0fGol8ZvS7-nz_Kdu-qMy9P6R8ARSAyHyMiwSSgCzYyk
-Message-ID: <CAFEAcA_x7JEr8nmS3043NiwenhzM3K6bEGT7T65P4+1rL118Vg@mail.gmail.com>
-Subject: Re: [PATCH] hw/block/pflash_cfi01: Always set romd mode when clearing
- wcycle and cmd
+ d=1e100.net; s=20251104; t=1787055960; x=1787660760;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=xPPzVus9SZEhqmyrbL21mtA0fNEg5Q9cNShGtr+qeYE=;
+ b=I/PSuaqRD02n5JrOaEPvIhftaIA75SzX8GTFqcHnqUltrMMF4KjfSTnOVazEV0VtZg
+ 3ZRzM+L9yM7wk69wuNMYbUaOhTzGypi5OJ+pzhUKx/s0lNaaPx0f0PGmYvroEeOLfy1M
+ Wa8NH2gQrs+8L5a8nc79uO8Ut01aObcaSMA8M+KdQhlKe+GEZAZPpDTuw1dzqW9tQumX
+ gQMIBC+X12HcRfvw47h5bjm4MQ2LIYuTgfUgurOruBdGPPziN4RRy0om0SQ6EnAjvjpS
+ hxaJuVqw+xALnE8H1nJYN9xBDIKVsIpb/XXRpcW6+oP3QbNWqRE+f56/F8bjfC3Bpyk1
+ X4ZQ==
+X-Gm-Message-State: AOJu0Yyfp3DVVynK/k2rbrsWia3wSjnfB/8FLpNm8koWZeCbomVXZuKc
+ UEpL3EH5sKaWUkhAqviVCmpWXLBLh/U9qo8ql5s1tO7mtPdtOOmYJ/PqaIimaEAzR+8=
+X-Gm-Gg: AR+sD13h7QGIcUhUB2LgqAXF/otXpriEifMnY3EvsBqfRHOXl0cedY0pJgBS/hz7Yqv
+ lxdjq4LcuUKTpHb9Bt4ljffFEo0v9BwV20Yy3UpAr+wY37GNJmBRSEVOCjU8XYOmrus882FJuY9
+ WAZzo6RpfbRL9piN0FmA1T/1SyvMYXcxuxENIrdQqUHtSgz9gYkQ35hZc1u5+WeKAnhdSeMLSD/
+ VCkQus/mqr1bnpt3+lZuKSBF/cTtbrt9WPJcskFMAWcgkXIUN4gxHw5hvzYuuzqPcBtPI0YGFha
+ QJF54dx4KfcQOZOx9961YWj61Gg/18EfgNEU0RS0TgteFys3zMxX3pqj7lfuNFs4eRefVVfYk+1
+ zoYLbqAz2RkGSiNGJocJ1vf6+VBoRwRKqF67Mtql6UDcFsKfTvPGG4910pDq/OzvSppDvoBCbic
+ ybc3dAo5o/k6mgHdpPlFVCX+blRWTDF06lGli4FZk4c2bKCu3xwbQvXpUbXEV1D/k6O9daYb+iU
+ JC4P8w1jXDP/A==
+X-Received: by 2002:a17:902:ce05:b0:2cf:82e6:a5 with SMTP id
+ d9443c01a7336-2d3b0c68338mr394414415ad.13.1787055959547; 
+ Tue, 18 Aug 2026 05:25:59 -0700 (PDT)
+Received: from brian-ThinkPad-T15-Gen-2i..
+ ([2402:7500:5e8:72b9:108d:adf4:bbd3:73e6])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2d5c1e93ca0sm14087645ad.63.2026.08.18.05.25.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Aug 2026 05:25:59 -0700 (PDT)
+From: Brian Hsu <hsubrianhsu@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Bin Guo <guobin@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
+Cc: qemu-trivial@nongnu.org,
+	Brian Hsu <hsubrianhsu@gmail.com>
+Subject: [PATCH] po: Add Traditional Chinese (zh_TW) translation
+Date: Tue, 18 Aug 2026 20:25:51 +0800
+Message-ID: <20260818122552.661003-1-hsubrianhsu@gmail.com>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=hsubrianhsu@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -117,95 +100,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Oops, I forgot to cc Bin Guo on this.
+Hi, this is my first contribution to QEMU, and I'm still getting
+familiar with the mailing-list workflow, so corrections are very
+welcome.
 
--- PMM
+I noticed the po/ directory has a Simplified Chinese translation but no
+Traditional Chinese one. Traditional and Simplified Chinese look similar
+but are not the same, and their user bases differ too. In Taiwan, almost
+everyone (close to 100%) uses Traditional Chinese, so I adapted the
+Simplified version into a Traditional one, partly as a contribution and
+partly as practice (however trivial).
 
-On Tue, 18 Aug 2026 at 12:57, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> The pflash_cfi01 code has an invariant that the MemoryRegion is in
-> ROMD mode if and only if wcycle == 0 && cmd == 0.  We rely on this
-> for setting ROMD mode on an inbound migration.
->
-> There is one corner case where the code clears wcycle and cmd without
-> also setting ROMD mode on the MR: in the "should never happen" code
-> path in pflash_read().  As the comment notes, that code really is
-> unreachable (unless an inbound migration feeds us a bogus pfl->cmd
-> value), so this isn't a problem in practice.  But it does make the
-> code a little trickier to analyse.
->
-> Pull out a function which does the "clear wcycle and cmd and set mode
-> to ROMD", and use it in the three places that need to do this.  This
-> makes it clearer that we are preserving our invariant, and tidies up
-> the loose end noted in the commit message of 60d010f66f2ad7
-> ("hw/block/pflash_cfi01: Restore ROMD mode after migration").
->
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->  hw/block/pflash_cfi01.c | 31 +++++++++++++++----------------
->  1 file changed, 15 insertions(+), 16 deletions(-)
->
-> diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
-> index a13b91967e..486fc6350d 100644
-> --- a/hw/block/pflash_cfi01.c
-> +++ b/hw/block/pflash_cfi01.c
-> @@ -243,6 +243,18 @@ static uint32_t pflash_devid_query(PFlashCFI01 *pfl, hwaddr offset)
->      return resp;
->  }
->
-> +static void pflash_set_to_read_array_mode(PFlashCFI01 *pfl)
-> +{
-> +    /*
-> +     * Reset the flash device to its "just read the data" mode.
-> +     * The command 0x00 is not assigned by the CFI open standard,
-> +     * but QEMU historically uses it for the READ_ARRAY command (0xff).
-> +     */
-> +    pfl->wcycle = 0;
-> +    pfl->cmd = 0x00;
-> +    memory_region_rom_device_set_romd(&pfl->mem, true);
-> +}
-> +
->  static uint32_t pflash_data_read(PFlashCFI01 *pfl, hwaddr offset,
->                                   int width, int be)
->  {
-> @@ -270,12 +282,7 @@ static uint32_t pflash_read(PFlashCFI01 *pfl, hwaddr offset,
->      default:
->          /* This should never happen : reset state & treat it as a read */
->          trace_pflash_read_unknown_state(pfl->name, pfl->cmd);
-> -        pfl->wcycle = 0;
-> -        /*
-> -         * The command 0x00 is not assigned by the CFI open standard,
-> -         * but QEMU historically uses it for the READ_ARRAY command (0xff).
-> -         */
-> -        pfl->cmd = 0x00;
-> +        pflash_set_to_read_array_mode(pfl);
->          /* fall through to read code */
->      case 0x00: /* This model reset value for READ_ARRAY (not CFI compliant) */
->          /* Flash area read */
-> @@ -652,9 +659,7 @@ static void pflash_write(PFlashCFI01 *pfl, hwaddr offset,
->
->   mode_read_array:
->      trace_pflash_mode_read_array(pfl->name);
-> -    memory_region_rom_device_set_romd(&pfl->mem, true);
-> -    pfl->wcycle = 0;
-> -    pfl->cmd = 0x00; /* This model reset value for READ_ARRAY (not CFI) */
-> +    pflash_set_to_read_array_mode(pfl);
->  }
->
->
-> @@ -873,13 +878,7 @@ static void pflash_cfi01_system_reset(DeviceState *dev)
->      PFlashCFI01 *pfl = PFLASH_CFI01(dev);
->
->      trace_pflash_reset(pfl->name);
-> -    /*
-> -     * The command 0x00 is not assigned by the CFI open standard,
-> -     * but QEMU historically uses it for the READ_ARRAY command (0xff).
-> -     */
-> -    pfl->cmd = 0x00;
-> -    pfl->wcycle = 0;
-> -    memory_region_rom_device_set_romd(&pfl->mem, true);
-> +    pflash_set_to_read_array_mode(pfl);
->      /*
->       * The WSM ready timer occurs at most 150ns after system reset.
->       * This model deliberately ignores this delay.
+I also changed the Language field in zh_CN.po from "zh" to "zh_CN",
+following the naming used in /etc/locale.gen, and used "zh_TW" for the
+Traditional Chinese file.
+
+Finally, since this addition is quite simple and the po/ directory does
+not appear to have a dedicated maintainer, I've CC'd qemu-trivial.
+
+Signed-off-by: Brian Hsu <hsubrianhsu@gmail.com>
+---
+ po/LINGUAS  |  1 +
+ po/zh_CN.po |  2 +-
+ po/zh_TW.po | 74 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 76 insertions(+), 1 deletion(-)
+ create mode 100644 po/zh_TW.po
+
+diff --git a/po/LINGUAS b/po/LINGUAS
+index 9b33a3659f..08163e8d5f 100644
+--- a/po/LINGUAS
++++ b/po/LINGUAS
+@@ -7,3 +7,4 @@ sv
+ tr
+ uk
+ zh_CN
++zh_TW
+diff --git a/po/zh_CN.po b/po/zh_CN.po
+index 38de6a4f2a..5eb8cee3e3 100644
+--- a/po/zh_CN.po
++++ b/po/zh_CN.po
+@@ -10,7 +10,7 @@ msgstr ""
+ "PO-Revision-Date: 2014-07-31 10:00+0800\n"
+ "Last-Translator: Fam Zheng <famz@redhat.com>\n"
+ "Language-Team: Chinese <zh@li.org>\n"
+-"Language: zh\n"
++"Language: zh_CN\n"
+ "MIME-Version: 1.0\n"
+ "Content-Type: text/plain; charset=UTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
+diff --git a/po/zh_TW.po b/po/zh_TW.po
+new file mode 100644
+index 0000000000..925c952134
+--- /dev/null
++++ b/po/zh_TW.po
+@@ -0,0 +1,74 @@
++# Traditional Chinese translation for QEMU.
++# This file is put in the public domain.
++#
++# Brian Hsu <hsubrianhsu@gmail.com>, 2026
++msgid ""
++msgstr ""
++"Project-Id-Version: QEMU 11.1.50\n"
++"Report-Msgid-Bugs-To: qemu-devel@nongnu.org\n"
++"POT-Creation-Date: 2026-08-18 19:00+0800\n"
++"PO-Revision-Date: 2026-08-18 19:00+0800\n"
++"Last-Translator: Brian Hsu <hsubrianhsu@gmail.com>\n"
++"Language-Team: Traditional Chinese\n"
++"Language: zh_TW\n"
++"MIME-Version: 1.0\n"
++"Content-Type: text/plain; charset=UTF-8\n"
++"Content-Transfer-Encoding: 8bit\n"
++"Plural-Forms: nplurals=2; plural=n != 1;\n"
++
++msgid " - Press Ctrl+Alt+G to release grab"
++msgstr " - 按下 Ctrl+Alt+G 釋放輸入捕捉"
++
++msgid " [Paused]"
++msgstr " [已暫停]"
++
++msgid "_Pause"
++msgstr "暫停(_P)"
++
++msgid "_Reset"
++msgstr "重置(_R)"
++
++msgid "Power _Down"
++msgstr "關閉電源(_D)"
++
++msgid "_Quit"
++msgstr "結束(_Q)"
++
++msgid "_Fullscreen"
++msgstr "全螢幕(_F)"
++
++msgid "_Copy"
++msgstr "複製(_C)"
++
++msgid "Zoom _In"
++msgstr "放大(_I)"
++
++msgid "Zoom _Out"
++msgstr "縮小(_O)"
++
++msgid "Best _Fit"
++msgstr "最適大小(_F)"
++
++msgid "Zoom To _Fit"
++msgstr "縮放至適當大小(_F)"
++
++msgid "Grab On _Hover"
++msgstr "懸停時捕捉(_H)"
++
++msgid "_Grab Input"
++msgstr "捕捉輸入(_G)"
++
++msgid "Show _Tabs"
++msgstr "顯示分頁(_T)"
++
++msgid "Detach Tab"
++msgstr "分離分頁"
++
++msgid "Show Menubar"
++msgstr "選單列"
++
++msgid "_Machine"
++msgstr "虛擬機器(_M)"
++
++msgid "_View"
++msgstr "檢視(_V)"
+-- 
+2.43.0
+
 
