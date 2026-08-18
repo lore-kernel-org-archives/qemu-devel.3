@@ -4,144 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24DB5C5DF67
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 05:16:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F036C5DF67
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 05:31:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwCBL-0002pq-K8; Tue, 18 Aug 2026 01:16:15 -0400
+	id 1wwCPO-000535-Jw; Tue, 18 Aug 2026 01:30:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wwCBJ-0002pJ-IV
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:16:13 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wwCPN-00052f-29
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:30:45 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wwCBH-0004nQ-Om
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:16:13 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1wwCPL-00007n-Bn
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:30:44 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67I342Lx3298981
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 05:16:10 GMT
+ 67I45ltm4187015
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 05:30:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- x6lsE4uchYxMjudcp2iKsrOqtZYJi9mKrd6usR8KqbA=; b=KEcNtzrSngScab4J
- bAkrFjVyDRRhuJbYnuCIXXFz9zJzGaHE2/RYArZ9blzakRV4MPJBTU95izBQh37m
- ftS1CiM4qv1akA0upiDm8nrasjqfx+qynCCdR1YmfsR/Bj79Y+Qf1WyGQMSubtQO
- GsZQY8VTd6S0y+27fsRJ+h9ruXcvmnSD2Xceulpx2W/tn01wO+GgjDEOh2IzwTev
- K5HrgXQNjBokFBN0Vs7GVUDHVlyhVLIgsLyXA1rQttNG8rbL57hUuhrBJRYNTTcu
- oFE21vD2BFxJ2DpiZHsklcgESzdq0Y2YkBBTx/Yjofrb6QHbH7KiHs1UG8lSmZIP
- HafLWg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4f5prftv-1
+ cB+wz7O4ClA9R637DLsyd5ih+xAPxFSqY4i8ecv7WdA=; b=LMVYI+PzJ5Ux2W5B
+ K3PrpSIi0GEgqzoFdnD+sFkZAJMc12xw1Cgw0SoMfo9LBtPxBeOnRfPWbIqEkrE6
+ VN79u9wLcjWUPTjLCuXSLosBSzpfUOGaBWujvH+a6an7JPTW4ektnaRkj3BRHQJW
+ dSlDBp3PUe3IgBKbrCOp1rQYC+pxsiqrgjj7vn/sa0p+OU0ImhgyU0oMLEpGyLXf
+ E9c1T2pc5uLA+0IKY3THjP4J+GpRxvKKFz16QPmGedhpGQVhee5lyeQ9w/9tOkJV
+ 6yQCpIn71VH8ciUbQYzKWt8PB8rAspukZPXQZqyui43K7znIaYBib7RwdMC87lA9
+ jELyrw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4g2p0ar7-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 05:16:09 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-936708f129aso340371685a.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 22:16:09 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 05:30:41 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-92e820609d9so413081585a.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 22:30:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787030169; x=1787634969; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787031040; x=1787635840; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=x6lsE4uchYxMjudcp2iKsrOqtZYJi9mKrd6usR8KqbA=;
- b=Te+Dlr6k+bUMqM25UqoZU/oKQzq1AyUj3EzQQH8XuVDEJQHgiy6a6KohlRw5Wo5Je7
- bhpivNkGLffhMo/tmv8A+krnlp5xU4gef3S38JxTys6EQhRZoQ14VfL5te5QBPD5dO+M
- tRYXlp7gXUlJ3ttbSxEH62BNqLulwJ25KRXiGdBRxTnEfLxe6C6pX8LFARCyO8pnKY+J
- XqnKnvG9z7VHknm97C9PMnIVUgb+wtGTenGu8CmplK3JSL3a5M3s9MIz4r/pKN0MH2RM
- aiGe+gr+ubcUQhlgUb6PA4j9BaZfJQJd+gdyeigGq8FY24GU4SVf6IkGNPalAAoXJN8E
- yy2g==
+ bh=cB+wz7O4ClA9R637DLsyd5ih+xAPxFSqY4i8ecv7WdA=;
+ b=hNGtr8j9cE3XrJ6NT6XqlARFNBl7z8uG+uLyAmx4Ya0KrRmBePaX/Vbv1mCya1ytiI
+ 9lHWbeh9003Dpz1zHTPbJGzn+KupAkTdJIZODD2+bpNI1lfDefqdf3ntrYCK17RM+Bpk
+ Dg+qzYcTTZ2hJvEmvXBRc1C2aMiIxmXVQwskzbHxbI5gjIZ+lvuzD/tRxMR51uEgTq1i
+ 7G+sWtBljro3ndgFQZaW2AA28OYYZdSwtVbwalph0b8BeM1Th1vXufvnDFr5rHFqikRf
+ 1iZ3nDzEYO8FAJ76vq8iC36227ZQLdEDSJ+hzyXrLUZrWSNVQelnvkup1+MunmFIkQEq
+ yBaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787030169; x=1787634969;
+ d=1e100.net; s=20251104; t=1787031040; x=1787635840;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=x6lsE4uchYxMjudcp2iKsrOqtZYJi9mKrd6usR8KqbA=;
- b=PPwWbH5NV8LbzbPAc+pSF15KH0IuNiEbUSNfE+q2cVGeNCVGg59TCqlVnD/xBeTpUc
- ynlbjCtqfmXSPdJymgTllaWvrQ+2VlYwiwXTkw7cShw2WR3HoHI8AFEtC1XS3CHKXcZ5
- wCV8Gvlw4+owF6im75bkzOmYmmS1YwW4Vb16eBPQ70P4uCdcv4LeoKegicA22lr+6BIm
- /f55HmzS0bP9Fuha51OCzaNp2sQCrxVCUZrrpBU2Y3Eyl6MUrQRYL7x3iofLo8kAM4pC
- vk4xfFeFeJ+RtdEhjHR7V1+amh0V7iXYmaoyaOv34gRYdwPJc4wbim3Op1okWWjWoGM7
- T01w==
+ bh=cB+wz7O4ClA9R637DLsyd5ih+xAPxFSqY4i8ecv7WdA=;
+ b=lnFZu2nAoJ7m41ItqbUFiEyPr1cWIsXYZuZ94bn6kDm2zfbSvAjY6iJGRZEkVAI6oX
+ QaLYLevFP9zU+7CbngZS2VKNE1QMWblxGu8f3Oo5FlYodrQL8HjGQM14aax4HdjFruLI
+ G/oom17fkGRpd20ET0HJs1eY/CgtZ8MfiRSJzOIG1i/RwxVWU0wKgIYVDBHggmLVxptc
+ VYSHIMEoqm3uz+Vf558Q18Cn5Wr0madQPAuTzK52wpGWelbz92YPcRsZ/R04Th1BUqjG
+ xog5opxwCHk6Bp01mVgCP+gFi89cUHBIGCtOWm1ZrOxhS9jgmKoBJTBtiCxiR/kCbhi4
+ 1nXw==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rq0s0WJlIj0Xb/NDU7zmnWOeuSnolmAV7SgfZHJj/WpAF0f/ZdwHrxgxXZKKbbKtZFXL6X7vU6TQOOX@nongnu.org
-X-Gm-Message-State: AOJu0Yy/IdcurR28A44PSQoxUib7xdQmgEs6YU2njr03UobdocF/Zwcp
- 88vMVglcgKW6SO4mjZTYux+qEcvJB4YxvyKi2eJIP8jeWJf1xeWIafShGs+WSNfFb0WTFd4wzZp
- QFbEIv7arxaO0oKU9TiBz60zxcEgh3dpBAHkfbpL60l8BxmEWgTItOi6RDA==
-X-Gm-Gg: AR+sD12daphrIW+a4d2FYYDJajb13jbbcRRYGcIQXNydV6hvY006khj/FODLK7iV7/J
- QQu98F2OZ+9oIlYXQdx7Uk4pQth5UrgM6UxJ8aGBFqQIF93vMLRY4NjI1fhdbH0xPluvCZ+4nYb
- 3xstHx6+BlF6sMHcHPQ15V/yJK63uDI1yWpNtigxN3Xlspygi+DPcYYJ6G/DE53LPeLQfLEjpd8
- le6Q4B/R/ZTY+Kd9DF5pgLPkPoesHqIhCAMih3G9blz2sHs/GVl/TfHQmyFTKuC471656nWQSgP
- 7/crDqHQzpGyBtQHlrXFu+IteXkV3fyaCJZASb2M4WfLpBrCDmtqaJY2tDbxilN/ArJnBDorZqm
- HQCW8P9kBllpU0sdfngdIfQxbmW5VuFYkfek=
-X-Received: by 2002:a05:620a:7114:b0:934:9524:2e89 with SMTP id
- af79cd13be357-93704b12e59mr519894085a.13.1787030168938; 
- Mon, 17 Aug 2026 22:16:08 -0700 (PDT)
-X-Received: by 2002:a05:620a:7114:b0:934:9524:2e89 with SMTP id
- af79cd13be357-93704b12e59mr519891585a.13.1787030168505; 
- Mon, 17 Aug 2026 22:16:08 -0700 (PDT)
+ AHgh+RqseqhEJQfRbQxXjetL+k5LQ0bEIQnhCWA7LMQhlhVLIljLTdQrdoGB78C4VIiJC+P6GGpkTeX6JGA2@nongnu.org
+X-Gm-Message-State: AOJu0YzHioBuFmLHSTOHiJfILXg2tHyLlSi7H//10kjshN3GpbuJqWII
+ A68X/UsZlzAjK2/xXH7nu/ZNM00xExcOHiq6uKBxgcedjIcx0OcqtpNxyVvta4mg3z/ShZ1tgJ/
+ cWt4fDbyzUWh5z710NeobgyNS1/jRox+xsQcLiWlamXKduFp7xfiGJnk3eg==
+X-Gm-Gg: AR+sD11ZYoswXgrju9RUJlyax5N7IIgXsSgFSA+dOoQNbeExe8QNHO0odPwCCCzE25N
+ z2rdutnxb0Mxho5cVk4Jys86SWxQI0tXn9oJ5Nhb3EOA2QNg1LNPOd94Zo/KLnHiSNcPyIrJmfZ
+ FyPmbVUlRlY0OA9R1/OrhrfcRQixfZhFvLV+6JK0XhcyXqAn6WTxy92NVjvnsQXCzWR42jU7V55
+ w6BrTKDZ/vu4qbHGRX24WvszFXG0uz5I8PZpON+V89izhCGcg524XgGRLwTzqTu6kYdOYpX3iue
+ 0DGG0ToY8UTeRtQ0+MU28Om9iCy4O4Y564gbMq22xPkm+yl0QLp6HZozDW0mBon2GpFrWdX5UVI
+ 8yk6Sn/EiRmp7VHuwScIFTq7cFh9MvrH0i3s=
+X-Received: by 2002:a05:620a:4047:b0:934:8232:ed2b with SMTP id
+ af79cd13be357-93704bd0fa1mr612708985a.28.1787031040462; 
+ Mon, 17 Aug 2026 22:30:40 -0700 (PDT)
+X-Received: by 2002:a05:620a:4047:b0:934:8232:ed2b with SMTP id
+ af79cd13be357-93704bd0fa1mr612706585a.28.1787031040072; 
+ Mon, 17 Aug 2026 22:30:40 -0700 (PDT)
 Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482a5a3b660sm9036744f8f.15.2026.08.17.22.16.07
+ ffacd0b85a97d-482a5a3b896sm9442550f8f.16.2026.08.17.22.30.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Aug 2026 22:16:07 -0700 (PDT)
-Message-ID: <25744bee-b2da-4430-9c03-e2272cec33d3@oss.qualcomm.com>
-Date: Tue, 18 Aug 2026 07:16:06 +0200
+ Mon, 17 Aug 2026 22:30:39 -0700 (PDT)
+Message-ID: <9b57f2d6-de38-4d5f-a4ea-cf57ba45c725@oss.qualcomm.com>
+Date: Tue, 18 Aug 2026 07:30:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/15] hw/ide: report the default CHS translation in
- IDENTIFY DEVICE
+Subject: Re: [PATCH 01/15] hw/ide: reject an unsupported CHS translation
 Content-Language: en-US
 To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
+ Peter Maydell <peter.maydell@linaro.org>, Zheyu Ma <zheyuma97@gmail.com>
 References: <20260817205242.1199851-1-den@openvz.org>
- <20260817205242.1199851-6-den@openvz.org>
+ <20260817205242.1199851-2-den@openvz.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260817205242.1199851-6-den@openvz.org>
+In-Reply-To: <20260817205242.1199851-2-den@openvz.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=S+/pBosP c=1 sm=1 tr=0 ts=6a83ea99 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-GUID: _sIKS85fskxx5mmD8TlbiT59KVeIkjbi
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDAzOCBTYWx0ZWRfXwneiBWHzJkbx
+ HahPLrcx1hVL6rEbKSlJ9TkX+VyDv1Kf9j5Q13vS/AgKu9KxrAOMJrI2hHK+COP9mNl0Br8rX+Q
+ c5QyH7aEzR+48Mn7z+WveA24EEJUk3g=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDAzOCBTYWx0ZWRfX//Diy5p3dj+0
+ IO4z9EYegHebrq7nsBY+SIsqKy9pbqG7gnw9SqtsKQyGDCP3VsEjmntAmLF0DkyYNwLww/DSxll
+ mATWqMAiYh/RW3r2flDLqdRrr0RROqLAnkIecRMx3ouwMjnfXBFSESzTirBw7uTcJplgwGKuCex
+ YPtzhRCwqWTsF8ofP7NL8wZ6B8w+Rd4qjYZwzFbrz6BNBcoz268iThYclBFJ10SCDTir4+YRX+t
+ FC+/+8GDZm6ilNyQzRCurE9VYI42e4Z1QcOw4reDv76JP3BgD6gGzSuuwtpPWYmlkgBKIrAP0Ip
+ 6t9ebjeQdADpqRhxZMg4wEPpLCSe/sxSZwcH3DQnA2VqOEEX97D9DTc4T2myrIKY1q3xI52ctkO
+ KODyPZYVQWBCGHgY+F9IwVtlCshU9hpzAwfK1mY7hm+u52l9eynBkltQzCUI4Bi1cT3wgPd+74G
+ 9s59D0U2Elgc/4rqDLQ==
+X-Proofpoint-ORIG-GUID: _sIKS85fskxx5mmD8TlbiT59KVeIkjbi
+X-Authority-Analysis: v=2.4 cv=bfRbluPB c=1 sm=1 tr=0 ts=6a83ee01 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=6rqHouBjAAAA:8 a=69wJf7TsAAAA:8 a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8
- a=EUspDBNiAAAA:8 a=zXmn7Lei_6h_rgYG5H4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22 a=Hx1yvPaMooE3kwe23bt7:22 a=Fg1AiH1G6rFz08G2ETeA:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: EgFkyJAh1fTPHSsmLzzse-N5YUDBC1V7
-X-Proofpoint-ORIG-GUID: EgFkyJAh1fTPHSsmLzzse-N5YUDBC1V7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDAzNiBTYWx0ZWRfX3q0IZJfiV07O
- trwnHn/A96u2xpeu4RKu6swz5b19TcXYIlpOYNMQvaoyOT03uYfi8OnzIU6x3uEmDxtQRmP9D/C
- iT3X2htQKKNa94DNkPQXnCCIqLsA8Fb2eRACD/tqFxR0tdfx8/krZpXceShodL5xamclHGM8+Oh
- 1Kd+VPbw4xNw6+w8996Aatz/s9HJGiqUP91WuxwkqvAwcKsKb5YOiOW5N4XuoRcci6NypeKvj1r
- VRDbUNT5h+OtD0tHSAZTAzugPO0CwGlnu5tXYfOqRb5pYh+56nJHxJ2b22PleuMOpM0gb/nT8RM
- fthOTE+nslfK+XvhEMHRnUiB31CKHd07iUme83LuFJhgJd1iYU5hflXv4frr/59xOysRTVbG2Xv
- OWP2OLn8jroNaV/Cja9XUTRHJYs1q1qZdVTsKlGSbwEPZG7jdLllDVP3VPLyqVOJDCC/bWVS08Q
- 61t5bWUi3uxfgKQ37/A==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDAzNiBTYWx0ZWRfX6y6CyjJpd674
- RKFURNE58y7aRj1GubuVBAhgldSBePkfPSl2BnkNLytQXQU+DfAv0XqReg00Qp6TcYrn9+tJ039
- YbodrSNPIUFiMJ8kZTvDqa4C40+o5WU=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=p0WdMEafAAAA:8 a=6rqHouBjAAAA:8 a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8
+ a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=LfsA7Cq2GQzuzbZ-N0YA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+ a=Hx1yvPaMooE3kwe23bt7:22 a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-17_04,2026-08-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0
- clxscore=1015 bulkscore=0 impostorscore=0 adultscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180036
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ clxscore=1015 priorityscore=1501 malwarescore=0 lowpriorityscore=0
+ phishscore=0 impostorscore=0 bulkscore=0 spamscore=0 adultscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608180038
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -161,63 +161,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 17/8/26 22:52, Denis V. Lunev wrote:
 > From: Denis V. Lunev <den@openvz.org>
 > 
-> IDENTIFY DEVICE words 1, 3 and 6 describe the default CHS translation,
-> and ATA-5 8.16.8 requires INITIALIZE DEVICE PARAMETERS to leave them
-> alone; the translation in effect is described by words 54 to 56 instead.
-> Words 3 and 6 were filled from s->heads and s->sectors, which the command
-> replaces, so a guest that selected a translation of its own was told that
-> its choice was what the drive came with, and could no longer find out the
-> default. Word 1 is already right, as no command changes s->cylinders.
+> ide_set_sector() divides by (s->heads * s->sectors) when the drive is
+> addressed in CHS mode. Both come from the guest via INITIALIZE DEVICE
+> PARAMETERS, and cmd_specify() stored them without any check, so a guest
+> asking for zero sectors per logical track killed QEMU with SIGFPE on the
+> completion of the first CHS read or write. s->heads is safe, as the
+> command passes a heads-1 value.
 > 
-> Report s->drive_heads and s->drive_sectors, which ide_init_drive() keeps
-> for exactly this, along with the retired word 4 derived from them. The
-> CompactFlash data labels those words as the default geometry too, and
-> INITIALIZE DEVICE PARAMETERS is accepted for CFA drives, so fix both.
-Cc: qemu-stable@nongnu.org
-
+> The count has an upper bound as well. The legacy sector count register is
+> eight bits wide, but handle_cmd() takes the count from a 16 bit field of
+> the register FIS, so an AHCI guest can ask for up to 65535 sectors per
+> track, and the CHS branch of ide_get_sector() then overflows the int it
+> multiplies cylinder, heads and sectors in.
+> 
+> ATA-5 6.2 numbers CHS sectors from one and ATA-2 D.2.8 limits IDENTIFY
+> DEVICE word 56 to 1 through 255, so neither end is a translation a device
+> may accept. ATA-5 8.16.6 requires an unsupported one to be reported as an
+> aborted command: do that, leave the translation in effect alone, and
+> refuse the value rather than checking it at every use.
+> 
 > Cc: John Snow <jsnow@redhat.com>
 > Cc: Peter Maydell <peter.maydell@linaro.org>
 > Fixes: 176e4961bb33 ("hw/ide/core.c: Implement ATA INITIALIZE_DEVICE_PARAMETERS command")
+> Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2399
 > Signed-off-by: Denis V. Lunev <den@openvz.org>
 > ---
->   hw/ide/core.c | 11 ++++++-----
->   1 file changed, 6 insertions(+), 5 deletions(-)
-> 
-> diff --git a/hw/ide/core.c b/hw/ide/core.c
-> index 747fa71677..befbab9486 100644
-> --- a/hw/ide/core.c
-> +++ b/hw/ide/core.c
-> @@ -138,11 +138,12 @@ static void ide_identify(IDEState *s)
->       memset(p, 0, sizeof(s->identify_data));
->   
->       put_le16(p + 0, 0x0040);
-> +    /* Words 1, 3 and 6 describe the default translation (ATA-5 8.16.8) */
->       put_le16(p + 1, s->cylinders);
-> -    put_le16(p + 3, s->heads);
-> -    put_le16(p + 4, 512 * s->sectors); /* XXX: retired, remove ? */
-> +    put_le16(p + 3, s->drive_heads);
-> +    put_le16(p + 4, 512 * s->drive_sectors); /* XXX: retired, remove ? */
+>   hw/ide/core.c | 17 ++++++++++++-----
+>   1 file changed, 12 insertions(+), 5 deletions(-)
 
-If we are deliberately keeping this, can we update the XXX comment?
-Otherwise LGTM:
+Cc: qemu-stable@nongnu.org
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
->       put_le16(p + 5, 512); /* XXX: retired, remove ? */
-> -    put_le16(p + 6, s->sectors);
-> +    put_le16(p + 6, s->drive_sectors);
->       padstr((char *)(p + 10), s->drive_serial_str, 20); /* serial number */
->       put_le16(p + 20, 3); /* XXX: retired, remove ? */
->       put_le16(p + 21, 512); /* cache size in sectors */
-> @@ -332,8 +333,8 @@ static void ide_cfata_identify(IDEState *s)
->   
->       put_le16(p + 0, 0x848a);                    /* CF Storage Card signature */
->       put_le16(p + 1, s->cylinders);              /* Default cylinders */
-> -    put_le16(p + 3, s->heads);                  /* Default heads */
-> -    put_le16(p + 6, s->sectors);                /* Default sectors per track */
-> +    put_le16(p + 3, s->drive_heads);            /* Default heads */
-> +    put_le16(p + 6, s->drive_sectors);          /* Default sectors per track */
->       /* *(p + 7) := nb_sectors >> 16 -- see ide_cfata_identify_size */
->       /* *(p + 8) := nb_sectors       -- see ide_cfata_identify_size */
->       padstr((char *)(p + 10), s->drive_serial_str, 20); /* serial number */
-
 
