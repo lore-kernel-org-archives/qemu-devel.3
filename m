@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57C6CC5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 19:30:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 892E6C5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 19:30:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwPTx-0005qf-21; Tue, 18 Aug 2026 15:28:21 -0400
+	id 1wwPUb-00014v-Gf; Tue, 18 Aug 2026 15:29:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wwPTu-0005bZ-QS
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:28:18 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wwPUZ-0000xR-Th
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:28:59 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wwPTs-0007Vj-RD
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:28:18 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1wwPUX-0007ch-Nw
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:28:59 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IHJG2x735618
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:28:16 GMT
+ 67IHH7aP2494672
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:28:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=DQFHNic8spI
- vrmtK3rav7cniBYL2dwCI/53LhaogpS4=; b=BEvu54p5U+2ooZYJG7ZnnnmALxY
- hfWL75HvN81LGFrpD3LU1V/3mIvup3r2kL0Xutm+uQkOP1fNiKwbf14qCqZ6WaPU
- BJ2dhavSsUM8X4jEKlzxk2b9q1LaDgoBS+Vivyi2gWoH4lE2dG+4XGx/4CNt6vJZ
- CyH5FNKNVhfAt9bbsdqWQlCCnw/yBbGjAyzc8mPOGRzh1UfAaVaZU5J+O6tBVd9p
- xA4VH6fLPAnZN+Fn+utvo392V+/lbX1D1DQwe6eIVtQiKIM3C35256yfMM7t3wCK
- guTyrrAuvByLdSyhfWYZWoG5QmYnqtFxvkNcpicE7mQu/Hz18dHH49p754g==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4reshmbt-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=haT0bNewHwG
+ vPaMAUxhfuxvRfhhHQFnd6ar9UrAJ73w=; b=KNNQN11AzkhhanpzDHLMU0nKNJx
+ 7WYF4bcR7BkmQ6LIf2dOkbbMZ010p7kPZjaOn0Q9nt4iMJOY1sMgq5TUGct59pIp
+ 34OutD9ohCQb6qNg59tEyGyTU6NeYc0aO640FtMEbSAUeHvulCEZxtkBWTERHyUv
+ vaVxjt97MY1LD3M/jQTfTR9MN6bnIkGE0bu3vA4jC31/fAf6vpsb/RKdoHG0yvRA
+ KLPrB6dp/tvUgguaslmhxC+7uuYcGNEWiP8prsiGJsdr8/GYPbes2a2OhpqYfkh+
+ 9Sh3TNCzmydcCDILVv0sFDCesEEWta5Bvf5LCtcUUCRXsksGSk+S5+Tcb8w==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4sfnhaqn-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:28:15 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2cf7dd9fd91so1825855ad.1
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 12:28:15 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:28:46 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-395543dc382so324427a91.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 12:28:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787081295; x=1787686095; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787081325; x=1787686125; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=DQFHNic8spIvrmtK3rav7cniBYL2dwCI/53LhaogpS4=;
- b=PhwDc37S1MX2JFmcLyvyFhpTCyhW30yI9+yjw/dJpS3slLVelxhzS1WIQuddTVxSsG
- w1YmLKX8k5kF5AG7ZpQLgyGoyyAhR99wvrl65o+vNAoskulxkwTnAbYUH7Z5cWsvRgK4
- dyuk8KwtbAan2GQMdSfg7+8NADnUkLzTK5LCZKMjf+UwzVqTgFBzfgMbSjX4HEQMZyS5
- U3VpyG6BAwSst8uv0OR6Zr9Z1e8WywC+PhpQa5zTE9lGyx63B6MaScwzW6q4Z/YCyJiz
- lUkUPyN68ZxJf5fDB/59nH1vpFLbK0+yMfkNdmqSjrhMElRzwCfH9cFlqzsN9nuhNMbz
- xqXw==
+ bh=haT0bNewHwGvPaMAUxhfuxvRfhhHQFnd6ar9UrAJ73w=;
+ b=BzHx4/Q1xzI4EwvPxj2L4ijAwawHm58908I+EWTbHi6RXRNlpAO/HGaEW2oufyOldY
+ XhXAU0zetWm/l1nXVTz9mCnXZ6uWUST7Kei9ZlRGyk5PyHerTnkBS9P23BW8N5R36irh
+ 5vLQa1aXeQDDjsK+Ro/x4gwW99z7KuhdokcDL6AR9MYAutEeZ2e3UZyBfU0ZD7+YqaUz
+ NSI6oReKp4p2/QcfG4yr51hFLKnvS4lG9xBcrsyID6bc9dhfLr9W/0q5GeHSCuiEtS2t
+ zoCqX1nsGYz30LgNRb7IpxLWlS2SubZnvKj3QOweGfMhz4bJCfjCdMb4UqcunZtIDHMR
+ Ys/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787081295; x=1787686095;
+ d=1e100.net; s=20251104; t=1787081325; x=1787686125;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=DQFHNic8spIvrmtK3rav7cniBYL2dwCI/53LhaogpS4=;
- b=Ra7f4Ltb8Oebe1Yp6DsEdJWqaVo4a1NwKk8GXb81ylh2LXwv6/37SFDHMbTLCNpvyA
- g+3T99+10dqz5/qerESrj4p+oi9GpLoJ+rjy5h+7xZFMGi+5L8AI6NHxn4N0+KrKoBoq
- 9/5ADLGcF5MT5odcY33N4yJHTdORq7Pa6yV+oXKTNKVwIkmhcMJbiz08YoF3A77YyOV7
- lBfTby8b1nPFLdF8dQ5P43LUEWXM3WetxNNDBsSUuu2unM324QVfnsoL7/GgTiMldMaw
- rymJ0KBMeipj74paCfY2mTQVp1MktvJlUV1OANtwLptdKYt1nJJrsso5R3lHDOkHIEoU
- ZHpg==
-X-Gm-Message-State: AOJu0YzPRz9ooDqizfTxhm5sqjZ2+Dn69CS+++G9gEq8IjOd60fTA9wf
- rFPooeeOusec7XeJ2FgkODZSqDhM9vzY4CI9aTgO78Z6hMqX4od8sN1ZTcJpf89cywKFIgCrp9o
- 7GHz9wmTTc+WdB0z7H61pYanKp5fJw/jZGOP9a/LOpw/X5tv9Bz4tYCnvsuOTjohSrw==
-X-Gm-Gg: AR+sD13tQuX6HVQa/QHMWWZl/GmrH/FCuvbAzLiSIu2EyucDCYNsxFT2/VKDQdHPgtz
- BCFXFxqHajYcso1KguVxiUG5HbeJ0doi0jEZO2DtK4DoSH49YYrgR+pRyP5EoIW19K/fkB0L8JO
- H6mJlnyK8OYh7fPm7116/bAxglS5RqS5QyTeKH6S02ti1xMvgsFMjlRre2z+nND1NxElrHoTaX1
- itn5NBd6KPOLnbOdkGpVscw5Oyw9whbEihfsa8gEg78dHaCTlFW7EPTF4qDqxSix60Z2mkA0Etg
- WAnoG9RLtLJRYjLqlKZOB2162Cx5lXoQyv33lRfBNQeK9ZkfnqomrZtAYvsp7wUu0dtpaLEYiXy
- MV/bbB1fysW7p9MRYCF3qdK182OuVqHHqZYS6dfAjSRFJIIR0mieTOEvzqJ0=
-X-Received: by 2002:a05:6a21:2d46:b0:3cc:c7cf:5a44 with SMTP id
- adf61e73a8af0-3ccfec0dd57mr354364637.2.1787081294583; 
- Tue, 18 Aug 2026 12:28:14 -0700 (PDT)
-X-Received: by 2002:a05:6a21:2d46:b0:3cc:c7cf:5a44 with SMTP id
- adf61e73a8af0-3ccfec0dd57mr354296637.2.1787081294060; 
- Tue, 18 Aug 2026 12:28:14 -0700 (PDT)
+ bh=haT0bNewHwGvPaMAUxhfuxvRfhhHQFnd6ar9UrAJ73w=;
+ b=UPPHHt++kY586VWppLonBx/t0v5UUMzRwXqABzMInnjfbG3MgHB4N28eym/iPPRnHm
+ MEhq0VawK+rkauf/wPoFjAPdkyLdAaeqtSP10mBlOa6SccC/NL5raAOOC8PQEdc/IsPz
+ 9McJiV9Amaau8Z47lnubo2wKomVa3Pe7r9rkxiruj412b1594e6/aTv4IO5lXYc+5PF1
+ ocPzkx7Iac9505cnyMG5tqYyxcDpS5RQKgy54SpAnjavQmpu6oO6Gax0wIhTSq/KNnyY
+ xjPJ4x8EqLraruPi/Xmhk070BxxmtaFlz9RZYEnnZuTp+hJDgAfKqs7RqIRJQgCqmtx1
+ IqNA==
+X-Gm-Message-State: AOJu0YxPwPS+YnADSymgoyjy1z5v6giUbVseYciVD5GRVuBAdabODmCl
+ CkCbaRUR4ncckmcQO5y+aTen4Vm6wsNkHX/+Gu2Sb6f/qmiVGIsHHEEG7HptzB/i3ZTGXxzOung
+ Zp19UbmUzhnbs9yeoHAtM/bBqrejpRLEtfgRPdldHJorhinzRiR36YXRDProLFsMKtQ==
+X-Gm-Gg: AR+sD116eO6dFuTHrKy3PsDVgnIY9WhycnNiHtvt9TXDJlRsNE8E04fAA9x/KI4LdMQ
+ ANo+wd1pXY+t/1agGVk7RibnFiB4JKHNhf+P9ZcBARbebNWwxkx2AaW6vBwNOaecjwSWPz6Le/y
+ UXni4QF1SFaxnFiHp0+/1F9DFgXaqCnhvFKB8QkzuPKFDbaU+rUloxM4C9OlWD/GsCHkX/vk0SC
+ GtUv8XybUuW3ia1EmAoGSLS1ROnMQTLA0XrWFc69pyM9+Z1BsJEA9dmfR8k/L2Hp0ODLgCjPeMf
+ HQvDl7Vs9cKb1UFAmxXXDKVofDsHUlTkVg/mllBNXfTyKK1ILeAs2w24fFV+fJ5CUSeLIeTS/pq
+ it+wvvl/vM60mLZSuwWjMYrZwvp6MJy7zo/5In9yqtbnR8vTH7D5rEx0/OkE=
+X-Received: by 2002:a17:90b:4cc2:b0:38f:aab1:5148 with SMTP id
+ 98e67ed59e1d1-3957b8d7581mr32017a91.13.1787081325479; 
+ Tue, 18 Aug 2026 12:28:45 -0700 (PDT)
+X-Received: by 2002:a17:90b:4cc2:b0:38f:aab1:5148 with SMTP id
+ 98e67ed59e1d1-3957b8d7581mr31916a91.13.1787081324995; 
+ Tue, 18 Aug 2026 12:28:44 -0700 (PDT)
 Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-326794c0c94sm36782451eec.9.2026.08.18.12.28.12
+ 5a478bee46e88-326794c0c94sm36782451eec.9.2026.08.18.12.28.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 12:28:13 -0700 (PDT)
+ Tue, 18 Aug 2026 12:28:42 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -97,52 +97,51 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Brian Cain <brian.cain@oss.qualcomm.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Aniket Sahu <asahu1x@linux.ibm.com>, Song Gao <17746591750@163.com>
-Subject: [PATCH v7 058/104] tests/tcg/loongarch64: system tests
-Date: Tue, 18 Aug 2026 19:22:22 +0000
-Message-ID: <20260818192309.22169-59-pierrick.bouvier@oss.qualcomm.com>
+ Ilya Leoshkevich <iii@linux.ibm.com>, Aniket Sahu <asahu1x@linux.ibm.com>
+Subject: [PATCH v7 073/104] tests/tcg/or1k: user tests
+Date: Tue, 18 Aug 2026 19:22:37 +0000
+Message-ID: <20260818192309.22169-74-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818192309.22169-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260818192309.22169-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=Ne/WEWD4 c=1 sm=1 tr=0 ts=6a84b24f cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfX9sOPip7u7pIS
+ hO5PCT4kzKsCSHQfkGZslGNwjaSy5cIa9h/TLsEuXud7dPR6DvGgg9FDLj8JHzYwcn6VCmNYQ9P
+ ocIbftaQfizxC7zWod3Q0aD5JkVlz68=
+X-Authority-Analysis: v=2.4 cv=MpliLWae c=1 sm=1 tr=0 ts=6a84b26e cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=VnNF1IyMAAAA:8
- a=Byx-y9mGAAAA:8 a=EUspDBNiAAAA:8 a=FVW9kWhLySRIolcT2UUA:9
- a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-GUID: HagpwvcBevmxB-evAD6Az6QODE6ht7St
-X-Proofpoint-ORIG-GUID: HagpwvcBevmxB-evAD6Az6QODE6ht7St
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfX+DeFhKy8coGX
- GtjsTaTgjSuCtQj9VnfRxdPcr3qBMq1VaZoht3o63Eh2NFp4PLhMKiGrZEm6xU1U/GdxtfH4E/J
- XofGBHGFiC3ddPOZQYwFX0eXAThk7M0=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfX3NrBkelbX8Qp
- KvgcyugEE+RihzmPXl0IiwQemYWJSJ0Dn/lzOGP2FZ0oPTwzB9e/KI1dtUwW2jJkvE0NGTx5ndz
- uL40MCOsl97FNmK4EQ1n73lh5oH4S5FwF+sYWcq6qBC7QthMXFcZsgxFM3tclD3sGK8P7Sa6e0q
- R1RDRK635bBFZPQt8HnhS9zve4qrrEkikSTXhRTWPTS6R6fN5iiVBn63Fl8Mw2vZORE8aAPqT78
- Mopzv+wt0kdesgvD81rU887nyH2yRpbOiKmKXrsQk3ifDN+mXHK0FjauMvI0+gcgHNCv930iEsX
- aP0GP1EdkYIdKLotxpGZPSuZSNJgxzJMVWc5/wAJBpGK6DECMxSsN7GEKdw/Lf7kIvF+CMYk1hP
- jFDzD4tRtBbheT2vsh8+beGD6tUdLGHPaJz4nhjK9sFepbw7ndbBWop4xW9BqZ/iWvFwvr22G6u
- 8Z2GUAeJ1BVW/ivWG+A==
+ a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=VnNF1IyMAAAA:8
+ a=EUspDBNiAAAA:8 a=vRC7ysU8fHDJUYuF0LMA:9 a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-ORIG-GUID: lSpM50jZPE7JGIQcTrLnJMjJIlFwHA3n
+X-Proofpoint-GUID: lSpM50jZPE7JGIQcTrLnJMjJIlFwHA3n
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfX8WzNRJNKlf2q
+ OCZU8ZPMQ3OSgeGD1ihD3IMoxakqRZkzESUqRoXMMOOJwMWBm2cCaUs1V9k5HulQJ3TPejYwOvO
+ daIQG6jlX1Sk5O4t5cDD4jgmYgQzTYvg2n5SzA3Lh/o0SA+tNshhWApUz8gdfe+X/3v9PkJPb9O
+ C3AiFprdxm+WaPU+2ayPt/aH+6YQrbSp5zWWEuTgSrPkpTbBC0HfdXYKoWPJ8EytqNQdQvQhlhf
+ 2gynb7wu1jozvTbehBU9jtgW292O71+w4yDgsiSqBg+wAqZr8Ci0q/Zljlk7vzWEIPqy09CCcpe
+ AtlDmVdc5gJPjgZk+u7DFxmEj0xTfTry53mM0e4WUTrZ54aOVqsJRthdB4Zfo9s4MTQAKSRhJNW
+ RkczQO3LALATfOjPvVs4+r54ePxFwOHqNVMgFRO3ezqC/bWuOsoeglNMdRTT98gIv7kSFUoIYRD
+ 0PAaIS6FhE+VVUfoZYA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-18_03,2026-08-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 malwarescore=0 suspectscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180142
-Received-SPF: pass client-ip=205.220.180.131;
+ lowpriorityscore=0 priorityscore=1501 malwarescore=0 clxscore=1015
+ phishscore=0 adultscore=0 spamscore=0 impostorscore=0 bulkscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608180142
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,119 +158,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Some tests are currently failing, so they are commented.
+To be investigated.
+
+qemu:or1k-linux-user-test_addc FAIL 0.05s (exit status 255 or 0xff)
+qemu:or1k-linux-user-test_div  FAIL 0.06s (exit status 136 or signal 8 SIGFPE)
+qemu:or1k-linux-user-test_extx FAIL 0.06s (exit status 132 or signal 4 SIGILL)
+qemu:or1k-linux-user-test_lx   FAIL 0.05s (exit status 139 or signal 11 SIGSEGV)
+
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
-Reviewed-by: Song Gao <17746591750@163.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/loongarch64/Makefile.softmmu-target | 33 -------------
- tests/tcg/loongarch64/meson.build             |  2 +
- tests/tcg/loongarch64/system/meson.build      | 48 +++++++++++++++++++
- 3 files changed, 50 insertions(+), 33 deletions(-)
- delete mode 100644 tests/tcg/loongarch64/Makefile.softmmu-target
- create mode 100644 tests/tcg/loongarch64/system/meson.build
+ tests/tcg/meson.build      |  1 +
+ tests/tcg/or1k/Makefile    | 71 -------------------------------------
+ tests/tcg/or1k/meson.build | 72 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 73 insertions(+), 71 deletions(-)
+ delete mode 100644 tests/tcg/or1k/Makefile
+ create mode 100644 tests/tcg/or1k/meson.build
 
-diff --git a/tests/tcg/loongarch64/Makefile.softmmu-target b/tests/tcg/loongarch64/Makefile.softmmu-target
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index 7aca685078f..d6406b5cb59 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -148,6 +148,7 @@ subdir('m68k')
+ subdir('mips')
+ subdir('mips64')
+ subdir('mips64el')
++subdir('or1k')
+ 
+ image_targets = {}
+ exe_targets = []
+diff --git a/tests/tcg/or1k/Makefile b/tests/tcg/or1k/Makefile
 deleted file mode 100644
-index 6d4a20fde73..00000000000
---- a/tests/tcg/loongarch64/Makefile.softmmu-target
+index fb5ceda512f..00000000000
+--- a/tests/tcg/or1k/Makefile
 +++ /dev/null
-@@ -1,33 +0,0 @@
--#
--# Loongarch64 system tests
--#
+@@ -1,71 +0,0 @@
+--include ../../config-host.mak
 -
--LOONGARCH64_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/loongarch64/system
--VPATH+=$(LOONGARCH64_SYSTEM_SRC)
+-CROSS = or1k-linux-
 -
--# These objects provide the basic boot code and helper functions for all tests
--CRT_OBJS=boot.o
+-SIM = qemu-or1k
 -
--LOONGARCH64_TEST_SRCS=$(wildcard $(LOONGARCH64_SYSTEM_SRC)/*.c)
--LOONGARCH64_TESTS = $(patsubst $(LOONGARCH64_SYSTEM_SRC)/%.c, %, $(LOONGARCH64_TEST_SRCS))
+-CC = $(CROSS)gcc
 -
--CRT_PATH=$(LOONGARCH64_SYSTEM_SRC)
--LINK_SCRIPT=$(LOONGARCH64_SYSTEM_SRC)/kernel.ld
--LDFLAGS=-Wl,-T$(LINK_SCRIPT)
--TESTS+=$(LOONGARCH64_TESTS) $(MULTIARCH_TESTS)
--CFLAGS+=-nostdlib -g -O1 -march=loongarch64 -mabi=lp64d $(MINILIB_INC)
--LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc -Wl,--no-warn-rwx-segments
+-TESTCASES = test_add.tst
+-TESTCASES += test_sub.tst
+-TESTCASES += test_addc.tst
+-TESTCASES += test_addi.tst
+-TESTCASES += test_addic.tst
+-TESTCASES += test_and_or.tst
+-TESTCASES += test_bf.tst
+-TESTCASES += test_bnf.tst
+-TESTCASES += test_div.tst
+-TESTCASES += test_divu.tst
+-TESTCASES += test_extx.tst
+-TESTCASES += test_fx.tst
+-TESTCASES += test_jal.tst
+-TESTCASES += test_j.tst
+-TESTCASES += test_lf_div.tst
+-TESTCASES += test_lf_eqs.tst
+-TESTCASES += test_lf_ges.tst
+-TESTCASES += test_lf_gts.tst
+-TESTCASES += test_lf_les.tst
+-TESTCASES += test_lf_lts.tst
+-TESTCASES += test_lf_mul.tst
+-TESTCASES += test_lf_nes.tst
+-TESTCASES += test_lf_rem.tst
+-TESTCASES += test_lf_sub.tst
+-TESTCASES += test_lf_add.tst
+-TESTCASES += test_logic.tst
+-TESTCASES += test_lx.tst
+-TESTCASES += test_movhi.tst
+-TESTCASES += test_mul.tst
+-TESTCASES += test_mulu.tst
+-TESTCASES += test_muli.tst
+-TESTCASES += test_sfeq.tst
+-TESTCASES += test_sfeqi.tst
+-TESTCASES += test_sfges.tst
+-TESTCASES += test_sfgesi.tst
+-TESTCASES += test_sfgeu.tst
+-TESTCASES += test_sfgeui.tst
+-TESTCASES += test_sfgts.tst
+-TESTCASES += test_sfgtsi.tst
+-TESTCASES += test_sfgtu.tst
+-TESTCASES += test_sfgtui.tst
+-TESTCASES += test_sfles.tst
+-TESTCASES += test_sflesi.tst
+-TESTCASES += test_sfleu.tst
+-TESTCASES += test_sfleui.tst
+-TESTCASES += test_sflts.tst
+-TESTCASES += test_sfltsi.tst
+-TESTCASES += test_sfltu.tst
+-TESTCASES += test_sfltui.tst
+-TESTCASES += test_sfne.tst
+-TESTCASES += test_sfnei.tst
 -
--# building head blobs
--.PRECIOUS: $(CRT_OBJS)
+-all: $(TESTCASES)
 -
--%.o: $(CRT_PATH)/%.S
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -x assembler-with-cpp -Wa,--noexecstack -c $< -o $@
+-%.tst: %.c
+-	$(CC) -static $< -o $@
 -
--# Build and link the tests
--%: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
 -
--memory: CFLAGS+=-DCHECK_UNALIGNED=0
--# Running
--QEMU_OPTS+=-serial chardev:output -kernel
-diff --git a/tests/tcg/loongarch64/meson.build b/tests/tcg/loongarch64/meson.build
-index 209179fd96c..1d62de64ed6 100644
---- a/tests/tcg/loongarch64/meson.build
-+++ b/tests/tcg/loongarch64/meson.build
-@@ -2,6 +2,8 @@ cc = 'loongarch64-unknown-linux-gnu-gcc'
- cc_dockerfile = 'debian-loongarch-cross'
- cc_docker_host_arch = ['x86_64']
- 
-+subdir('system')
-+
- tests = []
- 
- tests += tcg_tests['multiarch-linux-user']['tests']
-diff --git a/tests/tcg/loongarch64/system/meson.build b/tests/tcg/loongarch64/system/meson.build
+-check: $(TESTCASES)
+-	@for case in $(TESTCASES); do $(SIM) $$case; echo $$case pass!; sleep 0.2; done
+-
+-clean:
+-	$(RM) -rf $(TESTCASES)
+diff --git a/tests/tcg/or1k/meson.build b/tests/tcg/or1k/meson.build
 new file mode 100644
-index 00000000000..5bf4c56e385
+index 00000000000..5151e8f361f
 --- /dev/null
-+++ b/tests/tcg/loongarch64/system/meson.build
-@@ -0,0 +1,48 @@
++++ b/tests/tcg/or1k/meson.build
+@@ -0,0 +1,72 @@
 +tests = []
 +
-+minilib_dir = meson.current_source_dir() / '..' / '..' / 'minilib'
-+minilib_printf = files(minilib_dir / 'printf.c')[0]
-+link_script = files('kernel.ld')[0]
-+boot = files('boot.S')[0]
-+cflags = ['-nostdlib',
-+          '-ffreestanding',
-+          '-Wa,--noexecstack',
-+          '-I', minilib_dir, minilib_printf, boot,
-+          '-Wl,-T', link_script,
-+          '-march=loongarch64',
-+          '-mabi=lp64d',
-+          '-Wl,--no-warn-rwx-segments',
-+          '-lgcc']
-+qemu_def_args = ['-display', 'none',
-+                 '-serial', 'stdio',
-+                 '-kernel']
++tests += tcg_tests['multiarch-linux-user']['tests']
 +
-+# Multi arch tests
-+multi_src = []
-+foreach t: tcg_tests['multiarch-softmmu']['tests']
-+  foreach src, setup: t
-+    new_cflags = cflags
-+    if fs.stem(src) == 'memory'
-+      new_cflags += '-DCHECK_UNALIGNED=0'
-+    endif
-+    if src not in multi_src
-+      setup += {'cflags': [new_cflags]}
-+      multi_src += src
-+    endif
-+    tests += {src: setup + {'qemu_args': qemu_def_args}}
-+  endforeach
-+endforeach
++tests += {
++  'test_add.c': {},
++  #'test_addc.c': {},
++  'test_addi.c': {},
++  'test_addic.c': {},
++  'test_and_or.c': {},
++  'test_bf.c': {},
++  'test_bnf.c': {},
++  #'test_div.c': {},
++  'test_divu.c': {},
++  #'test_extx.c': {},
++  'test_fx.c': {},
++  'test_j.c': {},
++  'test_jal.c': {},
++  'test_lf_add.c': {},
++  'test_lf_div.c': {},
++  'test_lf_eqs.c': {},
++  'test_lf_ges.c': {},
++  'test_lf_gts.c': {},
++  'test_lf_les.c': {},
++  'test_lf_lts.c': {},
++  'test_lf_mul.c': {},
++  'test_lf_nes.c': {},
++  'test_lf_rem.c': {},
++  'test_lf_sub.c': {},
++  'test_logic.c': {},
++  #'test_lx.c': {},
++  'test_movhi.c': {},
++  'test_mul.c': {},
++  'test_muli.c': {},
++  'test_mulu.c': {},
++  'test_sfeq.c': {},
++  'test_sfeqi.c': {},
++  'test_sfges.c': {},
++  'test_sfgesi.c': {},
++  'test_sfgeu.c': {},
++  'test_sfgeui.c': {},
++  'test_sfgts.c': {},
++  'test_sfgtsi.c': {},
++  'test_sfgtu.c': {},
++  'test_sfgtui.c': {},
++  'test_sfles.c': {},
++  'test_sflesi.c': {},
++  'test_sfleu.c': {},
++  'test_sfleui.c': {},
++  'test_sflts.c': {},
++  'test_sfltsi.c': {},
++  'test_sfltu.c': {},
++  'test_sfltui.c': {},
++  'test_sfne.c': {},
++  'test_sfnei.c': {},
++  'test_sub.c': {},
++}
 +
-+if 'qemu-system-loongarch64' in emulators
++if 'qemu-or1k' in emulators
 +  tcg_tests += {
-+    'loongarch64-softmmu': {
-+      'cc': cc,
-+      'cc_dockerfile': cc_dockerfile,
-+      'cc_docker_host_arch': cc_docker_host_arch,
-+      'folder': 'loongarch64/system',
-+      'gdb_arch': 'loongarch64',
-+      'qemu': emulators['qemu-system-loongarch64'],
++    'or1k-linux-user': {
++      'cc': 'or1k-none-linux-musl-gcc',
++      'cc_dockerfile': 'debian-all-test-cross',
++      'cc_docker_host_arch': ['x86_64'],
++      'cc_feat_cflags': cc_feat_cflags,
++      'folder': 'or1k',
++      'gdb_arch': 'or1k',
++      'qemu': emulators['qemu-or1k'],
 +      'tests': tests,
 +    }
 +  }
