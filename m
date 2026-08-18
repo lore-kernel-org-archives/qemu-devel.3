@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86894C5DF7D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94B25C5DF85
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 19:28:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwPTl-0004Fi-2E; Tue, 18 Aug 2026 15:28:09 -0400
+	id 1wwPTm-0004PJ-Nt; Tue, 18 Aug 2026 15:28:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wwPTe-0003rU-8A
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:28:03 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wwPTg-0003zl-ST
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:28:05 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wwPTc-0007Rw-Ab
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:28:01 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1wwPTc-0007SC-Kt
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:28:04 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IHJG2p735618
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:27:56 GMT
+ 67IJOrtB1724870
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:27:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=K6SqjwE6Qbc
- p1IA3clkBgomlMnHmyLB0NSKKiEwbRgM=; b=GWEQpS4NjISMtDOATVV5TftRt/v
- 1hFYFfxCTCrh7ZociVlh/ajJXTP+DUZD0K1yIGr6tblabPnwkx8Yl0xYSJ2GMhya
- GR9vncFtHZLi3Bm/dlJaGFZ3Jpmc59zpzcSVYLE8BsaQ9vTveVQEQUDqnSKSAcNZ
- YBWH2LJ2pqi+t8qLOpvBJ4WKSzfwRreWGjsHFIZMWalFsCVVwuV8sGNu16PALWBT
- BmisDdnkfuaT7MWf8MV2aZYbOkRawKiu3QiS+/x1ivhMMpirA9IWflDQixIjFFMe
- UWaFw0b+T7xNDJ0OEvR66IY4eq1Z6hW2gw4ONKQK5AtXXjFDrl471pdKREA==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4reshmab-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=jdhnECGmTa+
+ ROuc2LTR2mpsS6iv4nTiKAaGVeIowGs0=; b=PAFR/h1WzigilUtUkctX2F5wtiC
+ IBesJVp1d/foXXald49g8SFs9RW9h84F5wQhJiAc2ALBdI0SNx8y7zrG5cW3wbxf
+ Fksypm9AyIVLq+JDhicl6T6IBPNwJ+d/gz0BDtdJXHVyW6WgN2tGXyMAt9AnAW2n
+ aOgpIQn3i31/ByrD5NTFau69hZ+366bXjPybKjhDoQPhduLDq01Dj0JsCqKRDHgo
+ iy+TqsP/UFDEmqGZf+8xuO1bTx+hYTXz4ScgGBkrSvb7mV9SW0onR9cEp4kOoO5D
+ /sv5p/gIx5a6rp0ddsiU5e+pquftJPo9addWhVXp+LP18H7tztc10nwmrcA==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4qxj1uwn-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:27:56 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-38e7ff7b375so407092a91.1
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 12:27:56 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:27:59 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-388cfc4848dso244618a91.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 12:27:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787081276; x=1787686076; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787081278; x=1787686078; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=K6SqjwE6Qbcp1IA3clkBgomlMnHmyLB0NSKKiEwbRgM=;
- b=McM/lseQ5GNFzrO4VvOM5El3fwjdp5oEn2Nn3nfrMeoop04zffCISiSk6VVN3Omx4V
- WCF9Nr8bPP/UBtFwX/OKdrn3yuWxQ2B8dFw0Qa9NAAIjP+H38T18RBPhy/KI4mO6Gqu0
- TBjnkWa3YCbyz0qrePCFpV3BhFin5EIqEeVhSrLz1aNIUsnyKrLFbsoQzAVKx7BbfKL7
- Oe5vuAu54kybmWP8/1RJw9VVDIEcXvsGK/PTad2ebUF0byfe2cZR2v/ruHaHJWInlQ5H
- I9waI4V1pOL7aYnlrtw24vE14FObegQXitS9IFpzoS0kUO0pa1i23IsGNixs9B8AZFNN
- BBHw==
+ bh=jdhnECGmTa+ROuc2LTR2mpsS6iv4nTiKAaGVeIowGs0=;
+ b=beyOp8EoikgfZ89VPseSTmB4Loltmjdwx56BNyQxMx3b+NPRuzytVUskxgrqhnxPfJ
+ 0ghpe+f3NBoSsYRRZNau4HmwF3ejJv8bE18vwUAwjZH7wQjEqrPJC3PbxKFAYlMuwykm
+ twufrzd/6i6Os4/JAxMMtr46Jyb73veHyeUKDw/L2B9sv8OVXMa0DIQPUnl81PgSZwTV
+ vVp4qkAmpt4BeskF/YL/lqzpYCmPvEn1HtAXx/WcqGr8NwJ42l0Qd9addCLRASpjxKWx
+ Lyd62Mt3URShS+o32zRxEKxe5da91LUBWf5q6gKJNymo/nQddrEkC41/jfVwJKWn0HJD
+ r8Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787081276; x=1787686076;
+ d=1e100.net; s=20251104; t=1787081278; x=1787686078;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=K6SqjwE6Qbcp1IA3clkBgomlMnHmyLB0NSKKiEwbRgM=;
- b=LMsqgx4Fy0tpNJ6RlTQ8dIf2zZMi9nSfrUfAcYwA4qBHcOrUjznEKZFPBVo7jLgGit
- inqTHVcyJqT4yaFNrKt8a7QNAbYBBQh9UHUkNETKSMrBs5RiIkckfD2zLBc9wEoK+HU4
- M4cj9nJN0LbvOsfjzKFd1fUn+qhrCikxJhU5Tnby27lkAWoqtzsw76cEmK5lQb6z8W5k
- x3apZxz7wz9e2GctEbf5bZap/3ArHvxCk1aY3b+TO6yhvsvvN7kPeezIHf8rdh2QY9CF
- vNUOEZAgkVzrJ4E8ZCz4/K8fZsyAec4EHi/WH6a4pSrEFZH9u2YUGSpg4od/VqNEHuIY
- WD9A==
-X-Gm-Message-State: AOJu0Yy+EWBdLvylGkqcOZwNFEoRFeUYbN5QxOxPc0/U1R4wnApUk1CY
- zcTsu1BHtRoCmOkCdGjaIemTfmQS5g8bBM5h9oiQna/HCMWZzthDA730/eA7FL6pJvNwtA7M2NT
- OlONrSWolFW9qqTsdBxEDbRpZ2ujqXrzhZPgKa4nliRmjAfJt1q8LLcGvdghVbBK15g==
-X-Gm-Gg: AR+sD13cNETsDxARt3XipwSdc3y75e08UIoM7Smgmk1nd2xuJT3bDCyX/vq9at1pgrC
- h565wpPwEmb0IOHOmXzpGEKrIjtOLra7SfbcNAvoBfVZjGkfjxg/0U9JW/dg5WnFw+Rs+xLoiN8
- XcEBc4PO2QANz6uQutAQADho5MUq7JBboUjXtw3flnQJl43gvGgIOQ/HU4fIC7va5IsaUagocGI
- X/t4PA9NZ9ZFXWvfwS6ra9qu5DDlGYi7OyaNlNDhBB21ZOFTsFMmZERpBS6vfQoAwlcwxlgK9co
- +WgXBnSB0D3M4wfq+gWSeY/t1fHNwjHf+LWmkgYW3ZFNP+g9gWi7Xua+NxKQZv3MmaNf8UNuEN+
- myXw4YqeemmtuTbjsawYpgRuDwoNBXslMcI0ahT+haYCV/GqNxtuR2GW3yPI=
-X-Received: by 2002:a17:90b:2d03:b0:381:528a:808c with SMTP id
- 98e67ed59e1d1-3957b336667mr73405a91.12.1787081275330; 
- Tue, 18 Aug 2026 12:27:55 -0700 (PDT)
-X-Received: by 2002:a17:90b:2d03:b0:381:528a:808c with SMTP id
- 98e67ed59e1d1-3957b336667mr73327a91.12.1787081274808; 
- Tue, 18 Aug 2026 12:27:54 -0700 (PDT)
+ bh=jdhnECGmTa+ROuc2LTR2mpsS6iv4nTiKAaGVeIowGs0=;
+ b=TPp0PnToyoGjG9WJV0L/1QnLlNy/kUHp0NKfZPPfF68nn8qIhoA5M3YUw5jN3zfHIz
+ 9y46U0ltT7mtPRwFN4Jx7ThWtcVaPZmHfSSi9GL09ui1t2918ckG23ULR0tHtBWUE/Ny
+ cwVLtezntSmUtwJZbxgofqpUiLG4s2E9KUgiBiSDYseNFpQh+voJtdt7KYTAjnAV5QuW
+ G5wVB9JsuY5azINOQpo5P8HWu/2cEC+6yKy4vHjkvFIR3mLA8PmrDBFpvIu72fESPbxd
+ lCvMm3YcA04NoOzbi5nRmRnPrnXqOG2XFzWo7rZxRBV6BW3nOtd3/1leSYgtLMaH6hLG
+ XPiA==
+X-Gm-Message-State: AOJu0YzGW8X5xsDKse2Ckmcc0tGtC3itGQqDsWkfLmTzwcr4ynXisvCA
+ kA4Z45+D2HVxhbor6szmYmmGM2+JAtnOIqQsqWuVQV6S27TK4Sdly6BJDWnuiho9cdDGE6A19UJ
+ Z/i6THAbVL2eSJDNAm0+PhWAW72HfrZy6DWlHCMIifw4enARx6FU9ibbtdABA4xFzBg==
+X-Gm-Gg: AR+sD10mWIhWYaZXLwmdI3vcTuld6bknOGk4EHp1rLrhA8mTpvOEyXchHCOLllioFMD
+ zFE8JtdG+C4jY0ZpRNt4hMhYi5Il73Z/ksc6eMiuSHnNYzvt027tUutM/IDt2rA4sQY09MhhSF/
+ 6FofD9R6R5JZeTOylsDqHNghFNnBFWD+nmBGjCxX2Vf0z04DLonBnAtFjCT00CWZ2s4Wawaw5va
+ sI0XkgplqfiMSOQMODRZx0qK13OmpdC1rRN1yv9FOBEnVLbxGPIKgFndMmefIIDrqJfodj6KAzM
+ fBp0s/YUg2TvCfJPIO3owiItf6zLXK/Yz7zfdmXkHRGymnMuMkSDCYFZVUz/cXejNkxUT3E38G3
+ l7ukh4V0A68hNHPIg9eAfJhtn9g6nNWJfbkJ6VECDB068Dkw8OygO2LNEtrY=
+X-Received: by 2002:a17:90b:5102:b0:393:194d:5366 with SMTP id
+ 98e67ed59e1d1-3957b3d7620mr34782a91.10.1787081278093; 
+ Tue, 18 Aug 2026 12:27:58 -0700 (PDT)
+X-Received: by 2002:a17:90b:5102:b0:393:194d:5366 with SMTP id
+ 98e67ed59e1d1-3957b3d7620mr34716a91.10.1787081277493; 
+ Tue, 18 Aug 2026 12:27:57 -0700 (PDT)
 Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-326794c0c94sm36782451eec.9.2026.08.18.12.27.52
+ 5a478bee46e88-326794c0c94sm36782451eec.9.2026.08.18.12.27.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 12:27:52 -0700 (PDT)
+ Tue, 18 Aug 2026 12:27:57 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -98,49 +98,50 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PATCH v7 048/104] tests/tcg/arm: system tests
-Date: Tue, 18 Aug 2026 19:22:12 +0000
-Message-ID: <20260818192309.22169-49-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v7 050/104] tests/tcg/hexagon: user tests
+Date: Tue, 18 Aug 2026 19:22:14 +0000
+Message-ID: <20260818192309.22169-51-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818192309.22169-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260818192309.22169-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=Ne/WEWD4 c=1 sm=1 tr=0 ts=6a84b23c cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfX9+jDp9RZGn38
+ 2bwos1aSgQioLAguNJAkkgf6wBSEEphumSwdmU63kUbtdLQudoib9JS55vf5N/kzDSqStHXJOOh
+ m0tVPCqjgDGZtvFenyl1ofUDqKCg0Xw=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfX5Z+aoupx+Sa+
+ 95c0wx31UJJenDvzIwEjijbsnRFrtMMvXhvG8Ys/5w+EJ0ORVoW4uvuvRg6a6G+tUzP69orLhn0
+ Sd7Lik1xpONzcRYU+EZoJc1nYGhEw1auupZDSphrdwYPUObyJo5Z/49Yn1UTKwGrUW7prZzh1Zh
+ TkwtQdSkP+azPHb5kPNvQwd0rVjnUZ6WPtx+YawvaqPIuu6NrvWpYp1y53NYekiqm/OfyO3eMTT
+ ZxJgwKknmiyb0jusUfUR/U8pSu34CyZH7kW48tc3cq2nZv4F/EpHiom/RfeFPniUiojrGkYq9ZN
+ zXjFz9L2iAPr/vxIlAMzIaE6v3SZSfxvP+HPdwenBqolAfqstyqqxaMeON89GO9dmtOKKkICzjF
+ cxeaQLmb82JIDK7T40uxaSO8JNyKhHTf3YbM8QMws9XGg65QmGJDHW41uZqHt4sIIpS65362Rxy
+ vhZYeeT3/Z8ps0XJh7g==
+X-Proofpoint-ORIG-GUID: UnyGTcMqEwuBb2SXOQxTLRASV7uU7fYm
+X-Proofpoint-GUID: UnyGTcMqEwuBb2SXOQxTLRASV7uU7fYm
+X-Authority-Analysis: v=2.4 cv=bvB8wkai c=1 sm=1 tr=0 ts=6a84b23f cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=VnNF1IyMAAAA:8
- a=EUspDBNiAAAA:8 a=7m_YixJVTNSDrcG_JfQA:9 a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-GUID: iE4O31X-pJ5DIkThiWd8c19Tb_9dBon-
-X-Proofpoint-ORIG-GUID: iE4O31X-pJ5DIkThiWd8c19Tb_9dBon-
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfX1xYi1HGosodb
- 4WaxFf2S9q3zuN5d2Ozy0vuKEzlOEp1y+DoefAgEzJ7qQrGNnsstIOMundlLQ9IPcoev57+PN+J
- FGWlAjs3yYt0j3MFGY/zrsHZqTtJSnw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfXyk+map/CWrLN
- DCnbaAbqeH6Ljz/V6Cqq8fhLbjz24QFyDx89yZpOuuSM35O8V/eJ2EqxLJgNd1s7NrcG/XEMZkC
- rS1jQLwXl6nMi/1apO2QDx8hBiVc6oBTzG55Jx8q2z4A+wyN9GIeCmVWs1AGNdIgkV96pjyrvda
- zyyXO4TvMGve+gxg4Yo8QN6dQHeHD/lInUmLGg8+rqB9E8JEuM3FZDqVuLrrUYjMJnKYi00kiky
- Kpqgqg1USkd3TvXyb8c3/3QDvX5YdYz671vF3CUfZkwLpB8biqnmktdHc7XvLYR1QXs4e3KVCpT
- 4KqKogBGFWRCJUye7M67gVynqIUgr3to/p/8KcjHFb4jvWhbUGHDP+WQXJBthRPn3HFCYPDKYqx
- zpo2zZBsvRiJSIT91VSKSe3aGb/YHpK3rfMdlnOSpbqC/cznk95ensdIh1ozsSAvKeHfMywCGjx
- SiTtskxoZ5TWmYFSCtA==
+ a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=mDV3o1hIAAAA:8
+ a=EUspDBNiAAAA:8 a=VnNF1IyMAAAA:8 a=_-pcP7RoYdBLuRuhCPgA:9
+ a=uKXjsCUrEbL0IQVhDsJ9:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-18_03,2026-08-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 malwarescore=0 suspectscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0
+ adultscore=0 lowpriorityscore=0 spamscore=0 phishscore=0 malwarescore=0
+ clxscore=1015 impostorscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180142
-Received-SPF: pass client-ip=205.220.180.131;
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,189 +158,322 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/tcg/arm/Makefile.softmmu-target | 80 ---------------------------
- tests/tcg/arm/meson.build             |  2 +
- tests/tcg/arm/system/meson.build      | 68 +++++++++++++++++++++++
- 3 files changed, 70 insertions(+), 80 deletions(-)
- delete mode 100644 tests/tcg/arm/Makefile.softmmu-target
- create mode 100644 tests/tcg/arm/system/meson.build
+ tests/tcg/hexagon/Makefile.target | 163 ------------------------------
+ tests/tcg/hexagon/meson.build     | 118 +++++++++++++++++++++
+ tests/tcg/meson.build             |   1 +
+ 3 files changed, 119 insertions(+), 163 deletions(-)
+ delete mode 100644 tests/tcg/hexagon/Makefile.target
+ create mode 100644 tests/tcg/hexagon/meson.build
 
-diff --git a/tests/tcg/arm/Makefile.softmmu-target b/tests/tcg/arm/Makefile.softmmu-target
+diff --git a/tests/tcg/hexagon/Makefile.target b/tests/tcg/hexagon/Makefile.target
 deleted file mode 100644
-index b66074b0b43..00000000000
---- a/tests/tcg/arm/Makefile.softmmu-target
+index 61adf6356e4..00000000000
+--- a/tests/tcg/hexagon/Makefile.target
 +++ /dev/null
-@@ -1,80 +0,0 @@
--# -*- Mode: makefile -*-
--#
--# ARM SoftMMU tests - included from tests/tcg/Makefile
--#
+@@ -1,163 +0,0 @@
+-##
+-##  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
+-##
+-##  This program is free software; you can redistribute it and/or modify
+-##  it under the terms of the GNU General Public License as published by
+-##  the Free Software Foundation; either version 2 of the License, or
+-##  (at your option) any later version.
+-##
+-##  This program is distributed in the hope that it will be useful,
+-##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-##  GNU General Public License for more details.
+-##
+-##  You should have received a copy of the GNU General Public License
+-##  along with this program; if not, see <http://www.gnu.org/licenses/>.
+-##
 -
--ARM_SRC=$(SRC_PATH)/tests/tcg/arm/system
+-# Hexagon doesn't support gdb, so skip the EXTRA_RUNS
+-EXTRA_RUNS =
 -
--# Set search path for all sources
--VPATH 		+= $(ARM_SRC)
+-CFLAGS += -Wno-incompatible-pointer-types -Wno-undefined-internal
+-CFLAGS += -fno-unroll-loops -fno-stack-protector
 -
--# Specific Test Rules
+-HEX_SRC=$(SRC_PATH)/tests/tcg/hexagon
+-VPATH += $(HEX_SRC)
 -
--test-armv6m-undef: test-armv6m-undef.S
--	$(CC) -mcpu=cortex-m0 -mfloat-abi=soft \
--		-Wl,--build-id=none -x assembler-with-cpp \
--		$< -o $@ -nostdlib -static \
--		-T $(ARM_SRC)/$@.ld
+-%: $(HEX_SRC)/%.S $(HEX_SRC)/crt.S
+-	$(CC) -static -mv67 -nostdlib $^ -o $@
 -
--run-test-armv6m-undef: QEMU_OPTS=-semihosting-config enable=on,target=native,chardev=output -M microbit -kernel
+-HEX_TESTS = first
+-HEX_TESTS += hex_sigsegv
+-HEX_TESTS += misc
+-HEX_TESTS += usr
+-HEX_TESTS += preg_alias
+-HEX_TESTS += dual_stores
+-HEX_TESTS += multi_result
+-HEX_TESTS += mem_noshuf
+-HEX_TESTS += mem_noshuf_exception
+-HEX_TESTS += circ
+-HEX_TESTS += brev
+-HEX_TESTS += load_unpack
+-HEX_TESTS += load_align
+-HEX_TESTS += atomics
+-HEX_TESTS += fpstuff
+-HEX_TESTS += overflow
+-HEX_TESTS += signal_context
+-HEX_TESTS += reg_mut
+-HEX_TESTS += read_write_overlap
+-HEX_TESTS += vector_add_int
+-HEX_TESTS += scatter_gather
+-HEX_TESTS += hvx_misc
+-HEX_TESTS += hvx_histogram
+-HEX_TESTS += fp_hvx
+-HEX_TESTS += fp_hvx_cvt
+-HEX_TESTS += fp_hvx_cmp
+-HEX_TESTS += fp_hvx_disabled
+-HEX_TESTS += invalid-slots
+-HEX_TESTS += valid-slots
+-HEX_TESTS += invalid-encoding
+-HEX_TESTS += multiple-writes
+-HEX_TESTS += unaligned_pc
+-HEX_TESTS += unaligned_data
 -
--ARM_TESTS+=test-armv6m-undef
+-HEX_TESTS += test_abs
+-HEX_TESTS += test_bitcnt
+-HEX_TESTS += test_bitsplit
+-HEX_TESTS += test_call
+-HEX_TESTS += test_clobber
+-HEX_TESTS += test_cmp
+-HEX_TESTS += test_dotnew
+-HEX_TESTS += test_ext
+-HEX_TESTS += test_fibonacci
+-HEX_TESTS += test_hl
+-HEX_TESTS += test_hwloops
+-HEX_TESTS += test_jmp
+-HEX_TESTS += test_lsr
+-HEX_TESTS += test_mpyi
+-HEX_TESTS += test_packet
+-HEX_TESTS += test_reorder
+-HEX_TESTS += test_round
+-HEX_TESTS += test_vavgw
+-HEX_TESTS += test_vcmpb
+-HEX_TESTS += test_vcmpw
+-HEX_TESTS += test_vlsrw
+-HEX_TESTS += test_vmaxh
+-HEX_TESTS += test_vminh
+-HEX_TESTS += test_vpmpyh
+-HEX_TESTS += test_vspliceb
 -
--# These objects provide the basic boot code and helper functions for all tests
--CRT_OBJS=boot.o
+-HEX_TESTS += check_rev_gating
+-HEX_TESTS += test_pnew_jump_loads
 -
--ARM_TEST_SRCS=$(wildcard $(ARM_SRC)/*.c)
--ARM_TESTS+=$(patsubst $(ARM_SRC)/%.c, %, $(ARM_TEST_SRCS))
+-HEX_TESTS += v68_scalar
+-HEX_TESTS += v68_hvx
+-HEX_TESTS += v69_hvx
+-HEX_TESTS += v73_scalar
 -
--CRT_PATH=$(ARM_SRC)
--LINK_SCRIPT=$(ARM_SRC)/kernel.ld
--LDFLAGS=-Wl,-T$(LINK_SCRIPT)
--CFLAGS+=-nostdlib -ggdb -O0 $(MINILIB_INC)
--LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
+-TESTS += $(HEX_TESTS)
 -
--# building head blobs
--.PRECIOUS: $(CRT_OBJS)
+-atomics: atomics.c hex_test.h
+-brev: brev.c hex_test.h
+-circ: circ.c hex_test.h
+-dual_stores: dual_stores.c hex_test.h
+-fpstuff: fpstuff.c hex_test.h
+-hex_sigsegv: hex_sigsegv.c hex_test.h
+-load_align: load_align.c hex_test.h
+-load_unpack: load_unpack.c hex_test.h
+-mem_noshuf_exception: mem_noshuf_exception.c hex_test.h
+-mem_noshuf: mem_noshuf.c hex_test.h
+-misc: misc.c hex_test.h
+-multi_result: multi_result.c hex_test.h
+-overflow: overflow.c hex_test.h
+-preg_alias: preg_alias.c hex_test.h
+-read_write_overlap: read_write_overlap.c hex_test.h
+-reg_mut: reg_mut.c hex_test.h
+-test_pnew_jump_loads: test_pnew_jump_loads.c hex_test.h
+-unaligned_data: unaligned_data.c hex_test.h
+-unaligned_pc: unaligned_pc.c
 -
--%.o: $(ARM_SRC)/%.S
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -x assembler-with-cpp -Wa,--noexecstack -c $< -o $@
+-# Compile for v66 so that the ELF selects a v66 CPU; the test then
+-# exercises revision gating by executing a v68 .word instruction.
+-run-check_rev_gating: QEMU_OPTS += -cpu v66
+-check_rev_gating: check_rev_gating.c
+-	$(CC) $(CFLAGS) -mv66 -O2 $< -o $@ $(LDFLAGS)
 -
--# Build and link the tests
--%: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+-# This test has to be compiled for the -mv67t target
+-usr: usr.c hex_test.h
+-	$(CC) $(CFLAGS) -mv67t -O2 -Wno-inline-asm -Wno-expansion-to-defined $< -o $@ $(LDFLAGS)
 -
--memory: CFLAGS+=-DCHECK_UNALIGNED=0
+-# Build this test with -mv71 to exercise the CABAC instruction
+-misc: misc.c
+-	$(CC) $(CFLAGS) -mv71 -O2 $< -o $@ $(LDFLAGS)
+-scatter_gather: CFLAGS += -mhvx
+-vector_add_int: CFLAGS += -mhvx -fvectorize
+-hvx_misc: hvx_misc.c hvx_misc.h
+-hvx_misc: CFLAGS += -mhvx
+-hvx_histogram: CFLAGS += -mhvx -Wno-gnu-folding-constant
+-v68_hvx: v68_hvx.c hvx_misc.h v6mpy_ref.c.inc
+-v68_hvx: CFLAGS += -mhvx -Wno-unused-function
+-v69_hvx: v69_hvx.c hvx_misc.h
+-v69_hvx: CFLAGS += -mhvx -Wno-unused-function
+-v73_scalar: CFLAGS += -Wno-unused-function
+-fp_hvx: fp_hvx.c hvx_misc.h hex_test.h
+-fp_hvx: CFLAGS += -mhvx -mhvx-ieee-fp
+-fp_hvx_disabled: fp_hvx_disabled.c hvx_misc.h hex_test.h
+-fp_hvx_disabled: CFLAGS += -mhvx -mhvx-ieee-fp
+-fp_hvx_cvt: fp_hvx_cvt.c hvx_misc.h hex_test.h
+-fp_hvx_cvt: CFLAGS += -mhvx -mhvx-ieee-fp
+-fp_hvx_cmp: fp_hvx_cmp.c hvx_misc.h hex_test.h
+-fp_hvx_cmp: CFLAGS += -mhvx -mhvx-ieee-fp
 -
--# Running
--QEMU_BASE_MACHINE=-M virt -cpu max -display none
--QEMU_OPTS+=$(QEMU_BASE_MACHINE) -semihosting-config enable=on,target=native,chardev=output -kernel
+-run-fp_hvx_disabled: QEMU_OPTS += -cpu v73,ieee-fp=false
 -
--# console test is manual only
--QEMU_SEMIHOST=-serial none -chardev stdio,mux=on,id=stdio0 -semihosting-config enable=on,chardev=stdio0 -mon chardev=stdio0,mode=readline
--run-semiconsole: QEMU_OPTS=$(QEMU_BASE_MACHINE) $(QEMU_SEMIHOST)  -kernel
--run-semiconsole: semiconsole
--	$(call skip-test, $<, "MANUAL ONLY")
--	$(if $(V),@printf "  %-7s %s %s\n" "TO RUN" $(notdir $(QEMU)) "$(QEMU_OPTS) $<")
--run-plugin-semiconsole-with-%: semiconsole
--	$(call skip-test, $<, "MANUAL ONLY")
+-hvx_histogram: hvx_histogram.c hvx_histogram_row.S
+-	$(CC) $(CFLAGS) $(CROSS_CC_GUEST_CFLAGS) $^ -o $@ $(LDFLAGS)
 -
--# Simple Record/Replay Test
--.PHONY: memory-record
--run-memory-record: memory-record memory
--	$(call run-test, $<, \
--	  $(QEMU) -monitor none -display none \
--		  -chardev file$(COMMA)path=$<.out$(COMMA)id=output \
--		  -icount shift=5$(COMMA)rr=record$(COMMA)rrfile=record.bin \
--		  $(QEMU_OPTS) memory)
--
--.PHONY: memory-replay
--run-memory-replay: memory-replay run-memory-record
--	$(call run-test, $<, \
--	  $(QEMU) -monitor none -display none \
--		  -chardev file$(COMMA)path=$<.out$(COMMA)id=output \
--		  -icount shift=5$(COMMA)rr=replay$(COMMA)rrfile=record.bin \
--		  $(QEMU_OPTS) memory)
--
--EXTRA_RUNS+=run-memory-replay
--
--TESTS += $(ARM_TESTS) $(MULTIARCH_TESTS)
--EXTRA_RUNS+=$(MULTIARCH_RUNS)
-diff --git a/tests/tcg/arm/meson.build b/tests/tcg/arm/meson.build
-index 08a863699fb..1b491cea026 100644
---- a/tests/tcg/arm/meson.build
-+++ b/tests/tcg/arm/meson.build
-@@ -2,6 +2,8 @@ cc = 'arm-linux-gnueabihf-gcc'
- cc_dockerfile = 'debian-all-test-cross'
- cc_docker_host_arch = ['aarch64', 'x86_64']
- 
-+subdir('system')
-+
- tests = []
- 
- # Multi arch tests
-diff --git a/tests/tcg/arm/system/meson.build b/tests/tcg/arm/system/meson.build
+-ifeq ($(CONFIG_PLUGIN),y)
+-# LLVM is way too aggressive with inlining and dead code elimination even at
+-# -O0, which interferes with the test. What looks like dead code in this test
+-# to the compiler isn't actually dead code, so we need to disable all potential
+-# LLVM optimization passes.
+-test-plugin-set-pc: CFLAGS += -Xclang -disable-llvm-passes
+-endif
+diff --git a/tests/tcg/hexagon/meson.build b/tests/tcg/hexagon/meson.build
 new file mode 100644
-index 00000000000..e559131edd7
+index 00000000000..aef9a53d773
 --- /dev/null
-+++ b/tests/tcg/arm/system/meson.build
-@@ -0,0 +1,68 @@
++++ b/tests/tcg/hexagon/meson.build
+@@ -0,0 +1,118 @@
 +tests = []
 +
-+minilib_dir = meson.current_source_dir() / '..' / '..' / 'minilib'
-+minilib_printf = files(minilib_dir / 'printf.c')[0]
-+link_script = files('kernel.ld')[0]
-+boot = files('boot.S')[0]
-+cflags = ['-nostdlib',
-+          '-ffreestanding',
-+          '-Wa,--noexecstack',
-+          '-I', minilib_dir, minilib_printf, boot,
-+          '-Wl,-T', link_script,
-+          '-march=armv7-a+fp',
-+          '-lgcc']
-+qemu_base_args = ['-display', 'none',
-+                  '-semihosting-config', 'enable=on',
-+                  '-kernel']
-+qemu_def_args = ['-M', 'virt', '-cpu', 'max', qemu_base_args]
++cflags = ['-Wno-incompatible-pointer-types', '-Wno-undefined-internal',
++          '-fno-unroll-loops', '-fno-stack-protector']
++asmflags = [cflags, '-nostdlib', '-mv67', files('crt.S')]
 +
-+# Multi arch tests
 +multi_src = []
-+foreach t: tcg_tests['multiarch-softmmu']['tests']
++foreach t: tcg_tests['multiarch-linux-user']['tests']
 +  foreach src, setup: t
-+    new_cflags = cflags
-+    if fs.stem(src) == 'memory'
-+      new_cflags += '-DCHECK_UNALIGNED=0'
++    if 'gdb_test' in setup
++      # gdb does not support hexagon, ignore test
++      continue
 +    endif
++    new_cflags = []
++    if 'cflags' in setup
++      new_cflags += setup['cflags']
++    endif
++    new_cflags += cflags
 +    if src not in multi_src
 +      setup += {'cflags': [new_cflags]}
 +      multi_src += src
 +    endif
-+    tests += {src: setup + {'qemu_args': qemu_def_args}}
++    tests += {src: setup}
 +  endforeach
 +endforeach
 +
 +tests += {
-+  'test-armv6m-undef.S': {
-+    'cflags': ['-mcpu=cortex-m0', '-mfloat-abi=soft', '-nostdlib',
-+               '-T', files('test-armv6m-undef.ld')],
-+    'qemu_args': ['-M', 'microbit', qemu_base_args],
++  'atomics.c': {'cflags': cflags},
++  'brev.c': {'cflags': cflags},
++  # Compile for v66 so that the ELF selects a v66 CPU; the test then
++  # exercises revision gating by executing a v68 .word instruction.
++  'check_rev_gating.c': {
++    'cflags': [cflags, '-mv66', '-O2'],
++    'qemu_args': ['-cpu', 'v66'],
 +  },
-+  'semiconsole.c': {
-+    'cflags': cflags,
-+    'qemu_args': ['-serial', 'none', '-chardev', 'stdio,mux=on,id=stdio0',
-+                  '-semihosting-config', 'enable=on,chardev=stdio0',
-+                  '-mon', 'chardev=stdio0,mode=readline',
-+                  qemu_def_args],
-+    'wrapper': [prog_run_with_input, 'X']
++  'circ.c': {'cflags': cflags},
++  'first.S': {'cflags': asmflags},
++  'fpstuff.c': {'cflags': cflags},
++  'hex_sigsegv.c': {'cflags': cflags},
++  'fp_hvx.c': {'cflags': [cflags, '-mv73', '-mhvx', '-mhvx-ieee-fp']},
++  'fp_hvx_disabled.c': {'cflags': [cflags, '-mv73', '-mhvx', '-mhvx-ieee-fp'],
++                        'qemu_args': ['-cpu', 'v73,ieee-fp=false']},
++  'fp_hvx_cvt.c': {'cflags': [cflags, '-mv73', '-mhvx', '-mhvx-ieee-fp']},
++  'fp_hvx_cmp.c': {'cflags': [cflags, '-mv73', '-mhvx', '-mhvx-ieee-fp']},
++  'hvx_misc.c': {'cflags': [cflags, '-mhvx', '-mv69']},
++  'hvx_histogram.c': {
++    'cflags': [cflags, '-mhvx', '-Wno-gnu-folding-constant',
++               files('hvx_histogram_row.S')]
 +  },
-+  '../../multiarch/system/memory.c': {
-+    'test_name': 'memory-record-replay',
-+    'qemu_args': qemu_def_args,
-+    'wrapper': [prog_record_replay],
++  'invalid-encoding.c': {'cflags': cflags},
++  'invalid-slots.c': {'cflags': cflags},
++  'load_align.c': {'cflags': cflags},
++  'load_unpack.c': {'cflags': cflags},
++  # Build this test with -mv71 to exercise the CABAC instruction
++  'misc.c': {'cflags': [cflags, '-mv71', '-O2']},
++  'multiple-writes.c': {'cflags': cflags},
++  'overflow.c': {'cflags': cflags, 'exe_name': 'hex-overflow'},
++  'preg_alias.c': {'cflags': cflags},
++  'dual_stores.c': {'cflags': cflags},
++  'multi_result.c': {'cflags': cflags},
++  'mem_noshuf.c': {'cflags': cflags},
++  'mem_noshuf_exception.c': {'cflags': cflags},
++  'read_write_overlap.c': {'cflags': cflags},
++  'reg_mut.c': {'cflags': cflags},
++  'scatter_gather.c': {'cflags': [cflags, '-mhvx']},
++  'signal_context.c': {'cflags': cflags},
++  'test_abs.S': {'cflags': asmflags},
++  'test_bitcnt.S': {'cflags': asmflags},
++  'test_bitsplit.S': {'cflags': asmflags},
++  'test_call.S': {'cflags': asmflags},
++  'test_clobber.S': {'cflags': asmflags},
++  'test_cmp.S': {'cflags': asmflags},
++  'test_dotnew.S': {'cflags': asmflags},
++  'test_ext.S': {'cflags': asmflags},
++  'test_fibonacci.S': {'cflags': asmflags},
++  'test_hl.S': {'cflags': asmflags},
++  'test_hwloops.S': {'cflags': asmflags},
++  'test_jmp.S': {'cflags': asmflags},
++  'test_lsr.S': {'cflags': asmflags},
++  'test_mpyi.S': {'cflags': asmflags},
++  'test_packet.S': {'cflags': asmflags},
++  'test_reorder.S': {'cflags': asmflags},
++  'test_round.S': {'cflags': asmflags},
++  'test_vavgw.S': {'cflags': asmflags},
++  'test_vcmpb.S': {'cflags': asmflags},
++  'test_vcmpw.S': {'cflags': asmflags},
++  'test_vlsrw.S': {'cflags': asmflags},
++  'test_vmaxh.S': {'cflags': asmflags},
++  'test_vminh.S': {'cflags': asmflags},
++  'test_vpmpyh.S': {'cflags': asmflags},
++  'test_vspliceb.S': {'cflags': asmflags},
++  'unaligned_pc.c': {'cflags': cflags},
++  'unaligned_data.c': {'cflags': cflags},
++  'usr.c': {
++    'cflags': [cflags, '-mv67t', '-O2',
++               '-Wno-inline-asm', '-Wno-expansion-to-defined']
 +  },
++  'v68_scalar.c': {'cflags': [cflags, '-mv68']},
++  'v68_hvx.c': {'cflags': [cflags, '-mhvx', '-Wno-unused-function', '-mv68']},
++  'v69_hvx.c': {'cflags': [cflags, '-mhvx', '-Wno-unused-function', '-mv69']},
++  'v73_scalar.c': {'cflags': [cflags, '-Wno-unused-function', '-mv73']},
++  'valid-slots.c': {'cflags': cflags},
++  'vector_add_int.c': {'cflags': [cflags, '-mhvx', '-fvectorize']},
 +}
 +
-+if 'qemu-system-arm' in emulators
++if 'qemu-hexagon' in emulators
 +  tcg_tests += {
-+    'arm-softmmu': {
-+      'cc': cc,
-+      'cc_dockerfile': cc_dockerfile,
-+      'cc_docker_host_arch': cc_docker_host_arch,
-+      'folder': 'arm/system',
-+      'gdb_arch': 'arm',
-+      'qemu': emulators['qemu-system-arm'],
++    'hexagon-linux-user': {
++      'cc': 'hexagon-unknown-linux-musl-clang',
++      'cc_dockerfile': 'debian-hexagon-cross',
++      'cc_docker_host_arch': ['x86_64'],
++      'folder': 'hexagon',
++      'gdb_arch': 'hexagon_is_not_supported_by_gdb',
++      'qemu': emulators['qemu-hexagon'],
 +      'tests': tests,
 +    }
 +  }
 +endif
+diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
+index 17f48bebf98..27d7aedb8b8 100644
+--- a/tests/tcg/meson.build
++++ b/tests/tcg/meson.build
+@@ -140,6 +140,7 @@ subdir('aarch64')
+ subdir('aarch64_be')
+ subdir('alpha')
+ subdir('arm')
++subdir('hexagon')
+ 
+ image_targets = {}
+ exe_targets = []
 -- 
 2.43.0
 
