@@ -4,87 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0C38C5DF82
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 18:26:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94375C5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 18:26:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwOUv-00089r-B5; Tue, 18 Aug 2026 14:25:17 -0400
+	id 1wwOUg-0007y3-OL; Tue, 18 Aug 2026 14:25:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wwOUt-00087r-Mr
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 14:25:15 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wwOUf-0007u2-20
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 14:25:01 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wwOUr-0003D8-VU
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 14:25:15 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wwOUd-0002ym-3Y
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 14:25:00 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 7F004846B9;
- Tue, 18 Aug 2026 18:25:04 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 78A7C3E7D;
+ Tue, 18 Aug 2026 18:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787077508; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SX866xtZPR2zRAuCpGL4s+/Ehk+85xy98jnqPxXOvz0=;
- b=CpN1+FYL5ScQ3VZQB3t623R2rCA68QBM630lLC1XQpS4g91LWkz5XdAscRXuiDb6dyWGgN
- Nb2mg/7mo3amiS7cyiM4tx86t5SGl0uvsVRkjnG+EjtXacaQVGYqmk4UfMi/BM8GwoFiHG
- qWr6U2EeTGxm0R5JL9AtiulmuKl35EA=
+ t=1787077493; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=nnRwQGi/As+VEy2YLWWme6ptcZ5o2YU9MoKEkq3nN+c=;
+ b=YkhVL8TAjWlarAt1d74DDur6oeFPGXMcGWNBzeIqrvkTzLqsRqL9afsVnr/gJIBobA1QV+
+ 9dMgZQpcn/yT4k8RE5jiBFIiPnD94rRB5Ste1H1h19EHQNpqIyXC/BABAmOrkVS94m/Cju
+ cxsmpUDPQSXjhJymn9cqmX25ES5KHj8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787077508;
+ s=susede2_ed25519; t=1787077493;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SX866xtZPR2zRAuCpGL4s+/Ehk+85xy98jnqPxXOvz0=;
- b=GSdL8i0wrVcpE+fRynU+hgbEjA+YdyYU5pGa+QdxyP/uaq87U8W4iNB2pH4UWGPa+cSRQF
- KaMzmlaIKcW2AMCg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Iitygxvd;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=9DZmdN9s
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=nnRwQGi/As+VEy2YLWWme6ptcZ5o2YU9MoKEkq3nN+c=;
+ b=XwEBEWEBwlnGw6OT8l5sW0IhqKCwXmI7aBUK2t0vkTc9QkChBRgfaSers95njeQXwLY2m6
+ 4BFhsiI8leeEJQBg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=JFH6i3Vt;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=4RXWmbtx
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787077504; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SX866xtZPR2zRAuCpGL4s+/Ehk+85xy98jnqPxXOvz0=;
- b=IitygxvdYHeeEC9pu/u6fEAG1ojQqH7JFkL49JSQUn1/rBvGUziwAQU5kNxJAxJrUw0I++
- fCqMi+dX9c7K2x9sy1NSpo0L8HXhQyPFI1HeM1r1yrkfPxQjBDHJ9P9AXFMJgEGYTi194g
- EWsm9oE4v0/o3FZhpKEiDv0EYFPf+QM=
+ t=1787077489; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=nnRwQGi/As+VEy2YLWWme6ptcZ5o2YU9MoKEkq3nN+c=;
+ b=JFH6i3VtmSSpxWF2Q00Kk/4QrSRvPOwn8XbuFk+rsuMR6aHWbMjWjoCJgucFChIyKK5nDg
+ tVYQOVrRcD+SbCnl+TH0NG4rX2eZIZ+AeOeAOUQVQQNyMB5H5xJNisMrwWH8ht5/VjKj4U
+ sCU008GIIKUy9NcEhkuoE8ejZ55jbJs=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787077504;
+ s=susede2_ed25519; t=1787077489;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SX866xtZPR2zRAuCpGL4s+/Ehk+85xy98jnqPxXOvz0=;
- b=9DZmdN9s9pJae8Ww7LZySVnnqfIEOF7Dd0Ntdm8irBvab6BSoKodsvWs0vPeUBOxJImYRM
- VxvDUREpRGNoYxBQ==
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=nnRwQGi/As+VEy2YLWWme6ptcZ5o2YU9MoKEkq3nN+c=;
+ b=4RXWmbtx1+Fm0562l9z3zrOht1rcMiMSbjAQU74hSWcUYSCnS1XwATsxXg8D+H8W/Q2Ywc
+ Opx4kxGyNV0yOlDQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3342A22BA;
- Tue, 18 Aug 2026 18:25:03 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2B8B0339C;
+ Tue, 18 Aug 2026 18:24:47 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id CG+HAX+jhGpYYQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 18 Aug 2026 18:25:03 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id j687O2+jhGpYYQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 18 Aug 2026 18:24:47 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
  "Michael S . Tsirkin" <mst@redhat.com>
-Subject: [PATCH v2 8/8] migration: Harden vmstate_size
-Date: Tue, 18 Aug 2026 15:24:41 -0300
-Message-ID: <20260818182441.404790-9-farosas@suse.de>
+Subject: [PATCH v2 0/8] migration: Remove extra type-checking from vmstate
+ macros
+Date: Tue, 18 Aug 2026 15:24:33 -0300
+Message-ID: <20260818182441.404790-1-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260818182441.404790-1-farosas@suse.de>
-References: <20260818182441.404790-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
@@ -93,7 +84,7 @@ X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
  MX_GOOD(-0.01)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:dkim];
  FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
  SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
  TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
@@ -101,16 +92,17 @@ X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  RCPT_COUNT_FIVE(0.00)[5]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 7F004846B9
+X-Rspamd-Queue-Id: 78A7C3E7D
 X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
 X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,89 +119,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Protect vmstate_size against overflow of the on-stack 64bit integer
-during multiplication. The data at size_indirect.offset comes from the
-migration stream.
+Changes in v2:
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- migration/vmstate.c | 28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+- Removed more unused vmstate macros
+- Fixed the type check macro
+- Renamed the new structure to something more explicit
+- Added a new flag to indicate an empty vmstate
+- Added the overflow and overallocation checks
 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 1d028bfe009..08548ae7a1f 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -113,14 +113,20 @@ static uint64_t vmstate_n_elems(void *opaque, const VMStateField *field)
-     return n_elems;
- }
- 
--static uint64_t vmstate_size(void *opaque, const VMStateField *field)
-+static bool vmstate_size(void *opaque, const VMStateField *field,
-+                         uint64_t *sz, Error **errp)
- {
-     uint64_t size;
- 
-+    *sz = 0;
-+
-     if (field->flags & VMS_VBUFFER) {
-         size = vmstate_read_from_offset(&field->size_indirect, opaque);
--        if (field->flags & VMS_MULTIPLY) {
--            size *= field->size;
-+        if ((field->flags & VMS_MULTIPLY) &&
-+            umul64_overflow(size, field->size, &size)) {
-+            error_setg(errp, "%s: VMState field '%s' multiply overflow",
-+                       __func__, field->name);
-+            return false;
-         }
-     } else if (field->flags & VMS_ARRAY_OF_POINTER) {
-         /*
-@@ -132,7 +138,8 @@ static uint64_t vmstate_size(void *opaque, const VMStateField *field)
-         size = field->size;
-     }
- 
--    return size;
-+    *sz = size;
-+    return true;
- }
- 
- static bool vmstate_handle_alloc(void *ptr, const VMStateField *field,
-@@ -364,7 +371,11 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
-             void *first_elem = opaque + field->offset;
-             int i;
-             uint64_t n_elems = vmstate_n_elems(opaque, field);
--            uint64_t size = vmstate_size(opaque, field);
-+            uint64_t size;
-+
-+            if (!vmstate_size(opaque, field, &size, errp)) {
-+                return false;
-+            }
- 
-             if (!vmstate_handle_alloc(first_elem, field, n_elems, size, errp)) {
-                 return false;
-@@ -682,9 +693,10 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-             void *first_elem = opaque + field->offset;
-             int i;
-             uint64_t n_elems = vmstate_n_elems(opaque, field);
--            uint64_t size = vmstate_size(opaque, field);
-+            uint64_t size;
-             JSONWriter *vmdesc_loop = vmdesc;
-             bool is_prev_null = false;
-+
-             /*
-              * When this is enabled, it means we will always push a ptr
-              * marker first for each element saying if it's populated.
-@@ -692,6 +704,10 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-             bool use_dynamic_array =
-                 field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC;
- 
-+            if (!vmstate_size(opaque, field, &size, errp)) {
-+                return false;
-+            }
-+
-             trace_vmstate_save_state_loop(vmsd->name, field->name, n_elems);
-             if (field->flags & VMS_POINTER) {
-                 first_elem = *(void **)first_elem;
+CI run: https://gitlab.com/farosas/qemu/-/pipelines/2769617319
+Also tested:
+- migration-test --full --thorough
+- x86_64 compat run forward and backwards for previous 3 QEMU releases
+- s390x compat run forward and backwards for previous 2 QEMU releases
+- ppc64 compat run forward and backwards for previous QEMU release
+- migration-test smoke ASAN/UBSAN run
+
+v1:
+https://lore.kernel.org/r/20260729225227.1170574-1-farosas@suse.de
+
+Hi, this is basically what I ranted about in:
+https://lore.kernel.org/r/87jyqeomqz.fsf@suse.de
+
+I'm replacing the per-integer-size type checks with a single "int that
+fits in 32bit" check. This allows several lines of duplicated code to
+be removed.
+
+I haven't changed the macro names in the device code yet. If this
+series gets positive feedback then I'll send per-subsystem patches
+doing that.
+
+CI run: https://gitlab.com/farosas/qemu/-/pipelines/2716814081
+Also tested:
+- migration-test --full --thorough
+- x86_64 compat run forwards and backwards for previous 3 QEMU releases
+- s390x compat run forwards and backwards for previous 2 QEMU releases
+- ppc64 compat run forwards and backwards for previous QEMU release
+- migration-test smoke ASAN/UBSAN run
+
+Fabiano Rosas (8):
+  migration: Remove unused vmstate macros
+  migration: Introduce VMStateStructMember
+  migration: Remove redundant flags
+  migration: Remove duplicate vmstate macros
+  migration: Add VMS_NO_STATE flag
+  migration: Check more vmstate flags
+  migration: Harden vmstate_handle_alloc
+  migration: Harden vmstate_size
+
+ hw/pci/msix.c                      |   6 +-
+ hw/scsi/scsi-bus.c                 |   6 +-
+ include/migration/vmstate.h        | 388 +++++++++++++----------------
+ migration/savevm.c                 |  29 ++-
+ migration/vmstate.c                | 103 +++++---
+ rust/bindings/migration-sys/lib.rs |  17 +-
+ rust/migration/src/vmstate.rs      |  32 ++-
+ rust/tests/tests/vmstate_tests.rs  |  32 +--
+ 8 files changed, 331 insertions(+), 282 deletions(-)
+
 -- 
 2.53.0
 
