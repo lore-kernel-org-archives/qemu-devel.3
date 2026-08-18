@@ -4,83 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1549CC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 14:59:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31E32C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 15:02:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwLH5-0001mq-Oy; Tue, 18 Aug 2026 10:58:47 -0400
+	id 1wwLK6-0002v6-KM; Tue, 18 Aug 2026 11:01:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
- id 1wwLH3-0001mG-LN
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:58:45 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wwLK5-0002ue-7V
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 11:01:53 -0400
+Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
- id 1wwLH2-0001WR-4m
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:58:45 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-5b015b2d792so4420664e87.3
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 07:58:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wwLK2-0002BJ-Rx
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 11:01:52 -0400
+Received: by mail-ot1-x32a.google.com with SMTP id
+ 46e09a7af769-7e9ecd7216cso2523964a34.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 08:01:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787065309; cv=none;
+ d=google.com; s=arc-20260327;
+ b=iJJKQjkcFc7+XtJhDink0HAwoUP0lEBm3HqUFJngD3r4y+bAymLLiIgvA+2WiEt1x9
+ J9EI/2Imemu9ScmjGJXxVwQSiGB0M0MISVTrU0xi1+zYW7k//PohcQ5ypotiN/ppYpDB
+ LLme1s0FS9RY9kVUShWJ+4uyv0ieGsAJMZRelYBuB++/fDzJEeL/qmqM9PRKUenIVQ3r
+ /PAYpimCnHlPPN+NEiwDhgFW6weQ4N5BkQSVBrskC4gtdI00MLPKfQx3Zh/cZR8Qozaa
+ bZQB8ortV3957u3YMvEo4pY1/k/6yg7tvHNbliESTd5kwDFHovrorTVsJxW/3JpMvoi4
+ eF2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=u0iFyLg/f2qfEW1OZuhgpWgS+LX/MQF3ouvkcHht7fI=;
+ fh=UwLFTHUG6OUSVMCnHpQ6jSrjhEzE/9mRt62giHtuJfw=;
+ b=dBmY3H/KbUM9rgnccmYX+6oBtcpa80wZHNNp85AfVKu0wTp/0cYJewKAZB5TpjpRG8
+ cb+sALSKrDHDsddG4XYgBUIjkPIf5o/i2I+BzJ2nQwlTtLD62Bt1Z/R4hY7VgZ512LY4
+ JmbZQy8lBaDlbuwkIbD6HZPo8gUK/oBHxYr3/a69VGRmo/xvzOhS7PuW770n6ObukAyS
+ Mfb/kuMNAehgorhdORG9XVXZkMg8mG1OEPgl/Pd3azNvZLsZxVllf65RyGGwfv0/Mvf1
+ ED0lKyfd/tYNVjyoV+U5ADXu6V2VYbWM1iNlQUm8PiD0QeFQNGVKS8RZVTCOus0R24hL
+ 1jsg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787065121; x=1787669921; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=okyVK+5iTTtti3irT3oD0GGgq2lms6vhAteHDMiQvqU=;
- b=YTjQJm3rRn7Fcyd9KGN7pkhZhbWV0ZB+gxL5s9jXoEHXFfr8XRXYpTaxbPoubVZz5e
- 2aQVp1vChZHAuQNBJcbW8DhcSghMHjg3vL5pHpRjpsS6ocvP/bo8gxRZkdykYPmbitjJ
- 0aoxbTBexRRCH9eLd9e/CbOepVnYxIw9vlu28tgg/a/WoiWTbUNz9pcl8qUu+YTjQYeF
- oLnLaaKaZGWq3r34mTLzOTb6WUyKDZhE6Se7KJoo84B5qPmpSglMCVRCDowpdn3yxEak
- 4hJo3fzavf7XYOv9v1HBR+S98PudSeNv/cPt4MUi0XqVmlOKrmb35spIgb2IRF5/Ckdd
- orIA==
+ d=redhat.com; s=google; t=1787065309; x=1787670109; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=u0iFyLg/f2qfEW1OZuhgpWgS+LX/MQF3ouvkcHht7fI=;
+ b=kk9unu1o4+A8TRkG//RyBBfZcBVeF5EWyUEPFhX7GgQyIyBvjNai14pqz8EgvLNlXK
+ bdhWIpNyJbm2Nw1HqtWIdm9aMVKKalwquFo5jgFFR31WQ6cCxNAooh9NpWUFL0rVIetA
+ WTdpd3PpI50CkLGhnb/S4Izwo8Qnzf+cBFrHAYISWpNVXR4JDMJ9sGj+4Tm5p2PFote5
+ 1ACu/HZALp4uwoliN1lM4errsvX91igfw28cARchfIgrsD9j0QUxNUo4bukdmyUsMfrn
+ I84jZpRzxyRh/hwW6h9cyzXmfdor1eVrOU6+FTHfjOzBybV5cJWsV8+ro6x0WGYaJhK+
+ fvvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787065121; x=1787669921;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=okyVK+5iTTtti3irT3oD0GGgq2lms6vhAteHDMiQvqU=;
- b=WizzsChri0SaH16LMcLy/qjzIosZAhImfxehdkUhkElU1wQP8TYAZ2hQYrtjij1F8o
- u4g8onLbyaBGQmm7TAKGbJVnO+vkdRnQVX0qbYj2DyDyDTUu0uYuxLSFq53JzBdp44L9
- HaHWj3enx8a4qTSpTHV8/h+wWgAJp+Wv3xaIpZt4TmguEQJVrshMhL9t4mbDLDrp+w7Y
- 9VTIG4cDSzLwUG06G5i/zj544qgU64uf8J2zPHhFY6B2+bguOXloh6aziTuC6Dhz6xBk
- D3haw0ArEVrAXZ8sdf6ue+wMUiXOmiXa6VuSAMlGSnKqbqyJDHUjUxu7hBvbf1E6ectU
- MhXQ==
-X-Gm-Message-State: AOJu0Yw9TjMKVv0mwLvZId6ajbod78qYNvftwdx8GGtoDUi2/41THPAq
- BX5YeSmmztUt0lcs5NuN3/9H6fYHxPUFPERWCLG3ZrxMHVbAg/YZbuF0ZmwNGRquat8=
-X-Gm-Gg: AR+sD131JFgIvdo28gf06rYgvQeNj2XZJchH8sGXB+zENlMJaHC5WiWP5s+6MzxirOr
- rCf4aXAsQu3xTj+04XDfjQ/DPhHjEOztc3M892TQ+4a3bNOXrbTGKKvrk5p8D57TDDWnCepelwy
- wnJ/dafmFaIUJD5ujZP6OxAPcn2iOwV+0Q2O6j0tIymADQ3qxCngEKU3bSSYt8JW7GfbkijAZB1
- hgpxOFvVYjgnQtd6Lqltx4opB3Xv7nDzP6YBfCGSVXIjK3h4CR92ecdN5KNVZwdLAAzkifQ/rwG
- iYrgBB9X/dYdRXfnABt3UPXsQu3mPzBT2XuEeDFFyJZxaKWH8xMuWnGVipKyByoKfpzOpSP+HCX
- Qd9GIpy8YcEsQvA1sqb2y5MHYc4dcWuahvmPitUBjCIHU2Jq7h9JtUEGZgGiot8RQtZMTnwcKDF
- GqF2SqxsfUSU1CJvM0h984Ym6jaj/BuAQglTDeamTiPVj36kJL78S1dVhMPVpp8hOGzw==
-X-Received: by 2002:ac2:568e:0:b0:5b0:e6e:8a8c with SMTP id
- 2adb3069b0e04-5b470679582mr2325054e87.19.1787065121012; 
- Tue, 18 Aug 2026 07:58:41 -0700 (PDT)
-Received: from kali ([82.162.57.219]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5b46cf957e2sm1308207e87.3.2026.08.18.07.58.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 07:58:40 -0700 (PDT)
-From: Andrey Polivoda <apolivodaa433@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH] target/i386: Mark MOVNTI as not valid with prefixes 0x66, 0xF2,
- 0xF3
-Date: Wed, 19 Aug 2026 00:58:37 +1000
-Message-ID: <20260818145837.550059-1-apolivodaa433@gmail.com>
-X-Mailer: git-send-email 2.53.0
+ d=1e100.net; s=20251104; t=1787065309; x=1787670109;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=u0iFyLg/f2qfEW1OZuhgpWgS+LX/MQF3ouvkcHht7fI=;
+ b=YugIW6TwpnglMDF2dMSbMw2+eVotZzREM+/A/t2LubRiNkJU9gjTtGRM2+NOry8u3v
+ Wo5O/BrfTMvcyOmgHy6rmeyB5HNWEc5KYPFMDfMqIvC0Mo8IvL+cWOT/EPazN1JwCb5x
+ HKR2E/kJOgiv67lbKlJ+SBMKZFxxW9LfgRhAJOjZI+00zXDPqw0YKR1O+XQGc6FfEVn0
+ bMyo6nHmeoAePJZd3Cnq2PqmuzyD763dKppvEPN1LZclfkCSO5WNorDfIaocFyt9ypWt
+ K1/P4xA7WTTNs559ae2PEgLg7LixM3ftBN/6LBkP6Wcok8cIWzmLECy93vVlgcipzBFe
+ sHPg==
+X-Gm-Message-State: AOJu0YzDYmgRq4WO9JzBMY8Ng7G6Ufwgnq9b3BNqExv5Pcy3z7pHBugE
+ hZ7RR3/ct06R77X8J7HDhYx2/maIn7/aXFiYI8dtUD6s4DBw5BJduyZTv8V6ySgwUlP7p0xQ2tR
+ msAlNTPs8HBhr+1jFJDV5LfamU5Lnwvw=
+X-Gm-Gg: AR+sD11fsEnF8SK6WJEmHBZ6RsXHrdkaUsEEuUH0CeXFyNfcpfgSFQsOKq4Z9CMvSX0
+ eWFzgCrb/jS3kxC3DCm9er2FGe0ACXoEX3LsrWgParZlNeExIW4u4tfggW+mWKkeBv+bUKxR4le
+ 6hJKeSeYSkCfYokrqGPIb8jZZky1Iv6EuaAWVLpJOoXNx6GUV1Ux/xYqbNErQswuDPMyCGfv952
+ CDj3Li8NS9ldBB90tARSreBfj31CKWS7PZtJAS+g+14qrFkcL/2YEIUvjeSc0lswVrgq1WI5wxO
+ uH2zLR9GhbkRMu6REqkxI142aGewZUpfathG4Jw4PeSrMrxAO2oFt83fGTHk2TxRpY8p2osF9uK
+ w
+X-Received: by 2002:a05:6820:188c:b0:6b0:ab1f:ec11 with SMTP id
+ 006d021491bc7-6b0d690ae32mr28831069eaf.29.1787065309218; Tue, 18 Aug 2026
+ 08:01:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=apolivodaa433@gmail.com; helo=mail-lf1-x129.google.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+References: <20260818134543.654949-1-colazcyg@gmail.com>
+ <20260818134543.654949-2-colazcyg@gmail.com>
+In-Reply-To: <20260818134543.654949-2-colazcyg@gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 18 Aug 2026 19:01:34 +0400
+X-Gm-Features: AcwNN1WwiBvGq7ARjOqMePtEukesx7UUciE6dd43c4LyayhORgxsxAkxdNbNodw
+Message-ID: <CAJ+F1C+-EhCgeM2cK9QfZrN9c9OezuRO4E7NGmHiTFN=cHQLKA@mail.gmail.com>
+Subject: Re: [PATCH RFC v3 1/1] ui/dbus: add org.qemu.Display1.UIInfo interface
+To: Chengyang Zhu <colazcyg@gmail.com>, christian@sourceandstack.com
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-ot1-x32a.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -98,48 +119,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to both table A-3 in Volume 2 of Intel 64 and IA-32 Architectures
-Software Developer's Manual and table A-3 in Volume 3 of AMD64 Architecture
-Programmer's Manual, 0F C3 is decoded as MOVNTI only if the instruction is
-not preceded by prefixes 0x66, 0xF2, or 0xF3.
+Hi
 
-Currently, QEMU does not check the presence of these prefixes when decoding 
-0F C3, which leads to QEMU happily executing 0F C3 as MOVNTI instead of raising
-an expected #UD when any of these prefixes are present, which does not match
-the behavior of the real hardware.
+On Tue, Aug 18, 2026 at 5:48=E2=80=AFPM Chengyang Zhu <colazcyg@gmail.com> =
+wrote:
+>
+> Currently, the SetUIInfo method cannot set a refresh rate.
+> Simply adding a refresh_rate argument would break the method signature.
+>
+> This patch adds the UIInfo interface containing
+>   * properties as staged display settings.
+>   * property `Supported` indicating whether console UI info is supported.
+>   * the method `Apply` applying staged settings.
+>   * the method `Reload` reloading settings from the console.
+>
+> Signed-off-by: Chengyang Zhu <colazcyg@gmail.com>
 
-This patch fixes this bug by correcting the decode table for MOVNTI so that
-it requires that none of the 0x66, 0xF2, and 0xF3 prefixes is present.
+That looks good to me. I am aware of concerns about refresh_rate unit
+(https://gitlab.gnome.org/GNOME/libmks/-/merge_requests/53#note_2834466),
+but I guess we will address this in due course
 
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Fixes: 3519b813e1f1 ("target/i386: port extensions of one-byte opcodes to new decoder")
-Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
----
-Note: scripts/checkpatch.pl reports style errors. These are false positives,
-since the patch is not modifying the formatting of the affected part of 
-the decoder table entry.
-The error about the line being too long is also a false positive, because
-the length that exceeds 90 characters seems to be a normal thing in
-the decoder table.
+Christian, does this new interface look right to you?
 
- target/i386/tcg/decode-new.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+thanks
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index ac181308ca..cf8431e3f4 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1364,7 +1364,7 @@ static const X86OpEntry opcodes_0F[256] = {
-     [0xc0] = X86_OP_ENTRY2(XADD,       E,b, G,b,            lock),
-     [0xc1] = X86_OP_ENTRY2(XADD,       E,v, G,v,            lock),
-     [0xc2] = X86_OP_ENTRY4(VCMP,       V,x, H,x, W,x,       vex2_rep3 p_00_66_f3_f2),
--    [0xc3] = X86_OP_ENTRY3(MOV,        EM,y,G,y, None,None, cpuid(SSE2)), /* MOVNTI */
-+    [0xc3] = X86_OP_ENTRY3(MOV,        EM,y,G,y, None,None, cpuid(SSE2) p_00), /* MOVNTI */
-     [0xc4] = X86_OP_ENTRY4(PINSRW,     V,dq,H,dq,E,w,       vex5 mmx p_00_66),
-     [0xc5] = X86_OP_ENTRY3(PEXTRW,     G,d, U,dq,I,b,       vex5 mmx p_00_66),
-     [0xc6] = X86_OP_ENTRY4(VSHUF,      V,x, H,x, W,x,       vex4 p_00_66),
--- 
-2.53.0
-
+> ---
+>  ui/dbus-console.c    | 71 ++++++++++++++++++++++++++++++++++++++
+>  ui/dbus-display1.xml | 81 ++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 152 insertions(+)
+>
+> diff --git a/ui/dbus-console.c b/ui/dbus-console.c
+> index e1ac06814b..2c71272a1c 100644
+> --- a/ui/dbus-console.c
+> +++ b/ui/dbus-console.c
+> @@ -55,6 +55,8 @@ struct _DBusDisplayConsole {
+>      guint last_x;
+>      guint last_y;
+>      Notifier mouse_mode_notifier;
+> +
+> +    QemuDBusDisplay1UIInfo *iface_ui_info;
+>  };
+>
+>  G_DEFINE_TYPE(DBusDisplayConsole,
+> @@ -155,6 +157,7 @@ dbus_display_console_dispose(GObject *object)
+>      qemu_input_led_notifier_remove(&ddc->led_notifier);
+>      qemu_console_unregister_listener(&ddc->dcl);
+>      qemu_remove_mouse_mode_change_notifier(&ddc->mouse_mode_notifier);
+> +    g_clear_object(&ddc->iface_ui_info);
+>      g_clear_object(&ddc->iface_touch);
+>      g_clear_object(&ddc->iface_mouse);
+>      g_clear_object(&ddc->iface_kbd);
+> @@ -528,6 +531,63 @@ dbus_mouse_mode_change(Notifier *notify, void *data)
+>      dbus_mouse_update_is_absolute(ddc);
+>  }
+>
+> +static gboolean
+> +dbus_ui_info_reload(DBusDisplayConsole *ddc,
+> +                    GDBusMethodInvocation *invocation)
+> +{
+> +    if (!qemu_console_ui_info_supported(ddc->dcl.con)) {
+> +        g_dbus_method_invocation_return_error(invocation,
+> +                                              DBUS_DISPLAY_ERROR,
+> +                                              DBUS_DISPLAY_ERROR_UNSUPPO=
+RTED,
+> +                                              "UIInfo is not supported")=
+;
+> +        return DBUS_METHOD_INVOCATION_HANDLED;
+> +    }
+> +
+> +    QemuUIInfo ui_info =3D *qemu_console_get_ui_info(ddc->dcl.con);
+> +
+> +    qemu_dbus_display1_uiinfo_set_width_mm(ddc->iface_ui_info,
+> +                                           ui_info.width_mm);
+> +    qemu_dbus_display1_uiinfo_set_height_mm(ddc->iface_ui_info,
+> +                                            ui_info.height_mm);
+> +    qemu_dbus_display1_uiinfo_set_xoff(ddc->iface_ui_info, ui_info.xoff)=
+;
+> +    qemu_dbus_display1_uiinfo_set_yoff(ddc->iface_ui_info, ui_info.yoff)=
+;
+> +    qemu_dbus_display1_uiinfo_set_width(ddc->iface_ui_info, ui_info.widt=
+h);
+> +    qemu_dbus_display1_uiinfo_set_height(ddc->iface_ui_info, ui_info.hei=
+ght);
+> +    qemu_dbus_display1_uiinfo_set_refresh_rate(ddc->iface_ui_info,
+> +                                               ui_info.refresh_rate);
+> +
+> +    qemu_dbus_display1_uiinfo_complete_reload(ddc->iface_ui_info, invoca=
+tion);
+> +    return DBUS_METHOD_INVOCATION_HANDLED;
+> +}
+> +
+> +static gboolean
+> +dbus_ui_info_apply(DBusDisplayConsole *ddc,
+> +                   GDBusMethodInvocation *invocation)
+> +{
+> +    if (!qemu_console_ui_info_supported(ddc->dcl.con)) {
+> +        g_dbus_method_invocation_return_error(invocation,
+> +                                              DBUS_DISPLAY_ERROR,
+> +                                              DBUS_DISPLAY_ERROR_UNSUPPO=
+RTED,
+> +                                              "UIInfo is not supported")=
+;
+> +        return DBUS_METHOD_INVOCATION_HANDLED;
+> +    }
+> +
+> +    QemuUIInfo ui_info =3D {
+> +        .width_mm =3D qemu_dbus_display1_uiinfo_get_width_mm(ddc->iface_=
+ui_info),
+> +        .height_mm =3D qemu_dbus_display1_uiinfo_get_height_mm(ddc->ifac=
+e_ui_info),
+> +        .xoff =3D qemu_dbus_display1_uiinfo_get_xoff(ddc->iface_ui_info)=
+,
+> +        .yoff =3D qemu_dbus_display1_uiinfo_get_yoff(ddc->iface_ui_info)=
+,
+> +        .width =3D qemu_dbus_display1_uiinfo_get_width(ddc->iface_ui_inf=
+o),
+> +        .height =3D qemu_dbus_display1_uiinfo_get_height(ddc->iface_ui_i=
+nfo),
+> +        .refresh_rate =3D qemu_dbus_display1_uiinfo_get_refresh_rate(ddc=
+->iface_ui_info)
+> +    };
+> +
+> +    qemu_console_set_ui_info(ddc->dcl.con, &ui_info, false);
+> +    qemu_dbus_display1_uiinfo_complete_apply(ddc->iface_ui_info, invocat=
+ion);
+> +
+> +    return DBUS_METHOD_INVOCATION_HANDLED;
+> +}
+> +
+>  int dbus_display_console_get_index(DBusDisplayConsole *ddc)
+>  {
+>      return qemu_console_get_index(ddc->dcl.con);
+> @@ -550,6 +610,7 @@ dbus_display_console_new(DBusDisplay *display, QemuCo=
+nsole *con)
+>          "org.qemu.Display1.Keyboard",
+>          "org.qemu.Display1.Mouse",
+>          "org.qemu.Display1.MultiTouch",
+> +        "org.qemu.Display1.UIInfo",
+>          NULL
+>      };
+>
+> @@ -626,5 +687,15 @@ dbus_display_console_new(DBusDisplay *display, QemuC=
+onsole *con)
+>      qemu_add_mouse_mode_change_notifier(&ddc->mouse_mode_notifier);
+>      dbus_mouse_update_is_absolute(ddc);
+>
+> +    ddc->iface_ui_info =3D qemu_dbus_display1_uiinfo_skeleton_new();
+> +    qemu_dbus_display1_uiinfo_set_supported(ddc->iface_ui_info,
+> +        qemu_console_ui_info_supported(ddc->dcl.con));
+> +    g_object_connect(ddc->iface_ui_info,
+> +        "swapped-signal::handle-reload", dbus_ui_info_reload, ddc,
+> +        "swapped-signal::handle-apply", dbus_ui_info_apply, ddc,
+> +        NULL);
+> +    g_dbus_object_skeleton_add_interface(G_DBUS_OBJECT_SKELETON(ddc),
+> +        G_DBUS_INTERFACE_SKELETON(ddc->iface_ui_info));
+> +
+>      return ddc;
+>  }
+> diff --git a/ui/dbus-display1.xml b/ui/dbus-display1.xml
+> index d96bae2ed6..2a8a8563ee 100644
+> --- a/ui/dbus-display1.xml
+> +++ b/ui/dbus-display1.xml
+> @@ -1159,4 +1159,85 @@
+>      -->
+>      <property name=3D"Encoding" type=3D"s" access=3D"read"/>
+>    </interface>
+> +
+> +  <!--
+> +      org.qemu.Display1.UIInfo:
+> +
+> +      This interface is implemented on
+> +      ``/org/qemu/Display1/Console_$id`` (see
+> +      :dbus:iface:`~org.qemu.Display1.Console`).
+> +  -->
+> +  <interface name=3D"org.qemu.Display1.UIInfo">
+> +    <!--
+> +        Supported:
+> +
+> +        Whether console UI info is supported.
+> +    -->
+> +    <property name=3D"Supported" type=3D"b" access=3D"read"/>
+> +
+> +    <!--
+> +        WidthMm:
+> +
+> +        The physical display width in millimeters.
+> +    -->
+> +    <property name=3D"WidthMm" type=3D"q" access=3D"readwrite"/>
+> +
+> +    <!--
+> +        HeightMm:
+> +
+> +        The physical display height in millimeters.
+> +    -->
+> +    <property name=3D"HeightMm" type=3D"q" access=3D"readwrite"/>
+> +
+> +    <!--
+> +        XOff:
+> +
+> +        The horizontal offset in pixels.
+> +    -->
+> +    <property name=3D"XOff" type=3D"i" access=3D"readwrite"/>
+> +
+> +    <!--
+> +        YOff:
+> +
+> +        The vertical offset in pixels.
+> +    -->
+> +    <property name=3D"YOff" type=3D"i" access=3D"readwrite"/>
+> +
+> +    <!--
+> +        Width:
+> +
+> +        The console width in pixels.
+> +    -->
+> +    <property name=3D"Width" type=3D"u" access=3D"readwrite"/>
+> +
+> +    <!--
+> +        Height:
+> +
+> +        The console height in pixels.
+> +    -->
+> +    <property name=3D"Height" type=3D"u" access=3D"readwrite"/>
+> +
+> +    <!--
+> +        RefreshRate:
+> +
+> +        The display refresh rate in millihertz.
+> +    -->
+> +    <property name=3D"RefreshRate" type=3D"u" access=3D"readwrite"/>
+> +
+> +    <!--
+> +        Reload:
+> +
+> +        Set the staged properties to the state of the console display.
+> +    -->
+> +    <method name=3D"Reload">
+> +    </method>
+> +
+> +    <!--
+> +        Apply:
+> +
+> +        Apply the staged properties to the console display.
+> +    -->
+> +    <method name=3D"Apply">
+> +    </method>
+> +  </interface>
+>  </node>
+> --
+> 2.55.0
+>
+>
 
