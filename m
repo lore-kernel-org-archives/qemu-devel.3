@@ -4,78 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6935C5DF74
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:43:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52680C5DF74
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:43:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwJ33-0002Lq-R1; Tue, 18 Aug 2026 08:36:10 -0400
+	id 1wwJ3I-0002QR-B5; Tue, 18 Aug 2026 08:36:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wwJ31-0002LK-Nx; Tue, 18 Aug 2026 08:36:07 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wwJ3G-0002Q2-7R
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:36:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wwJ2y-0006wR-Pu; Tue, 18 Aug 2026 08:36:07 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 67ICYwMb092544
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 18 Aug 2026 21:34:58 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=LUeb38oMvvESBEacWa+JwwNRjf77ZX6fuQUxFwXE74w=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1787056498; v=1;
- b=r3WyYSTkKKLZVNJZ9ziyNTDdeJ6W7AkVZk4NmAcdQvdNoGs0v1Ww3wrFvq1g+OXw
- lp9I0M+K/L22+958hR5B4b1PenmoJH0XlMt9ErdiGqWWVF18TA+e0y1xeQG8Rf5i
- mpERmlG6IhdSVuuOk7EThxUzCK/WNqxZkYADmAFuFh21q69bTIpIPLMsf0ZXvjmG
- RfsQWxce8YqXjbiN4ir3p4mpeE+PFC24sZbsSgF0DD3kPpxNsOZwS1BHcuK9/yp1
- Zg8en8zfNpbxippYicCFDglQ6N8MXcshEP9e0lBkwcsv0tGi/9Xo4JGZo26bup1u
- za3nLjpDg5DFJHlCK7RqSg==
-Message-ID: <7b4d2e3d-4593-492c-887a-db560d590ac6@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 18 Aug 2026 21:34:58 +0900
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wwJ3E-0006yY-DR
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:36:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787056579;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+U56nlsVf4mgf1W0GndZT5RbL9JsSUbkFD/AB+XKJsA=;
+ b=JgdnW5SJpkIhDftsgVbK10GUMmQ77z8QsIpjJAU+2mEaMBpg48N50SQXoV4cdom7tmC2lY
+ v/SNswX3ysKrtzn5gul4SK9xHMbKL6ImHvB82AJGnciLwn/1ZFi71sh0X2QznU8sYCx0EL
+ nHGuNq3akLA0tB2XGSoiQtMh6xJm8OI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-88-V9bzcMOxNDOj3fu6ZwtZzg-1; Tue,
+ 18 Aug 2026 08:36:13 -0400
+X-MC-Unique: V9bzcMOxNDOj3fu6ZwtZzg-1
+X-Mimecast-MFC-AGG-ID: V9bzcMOxNDOj3fu6ZwtZzg_1787056572
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C4BBD18004BB; Tue, 18 Aug 2026 12:36:11 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DAAB7423; Tue, 18 Aug 2026 12:36:10 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Tue, 18 Aug 2026 16:36:38 +0400
+Subject: [PATCH v3 59/74] qdev: add qapi_type field to PropertyInfo with
+ fallback registration
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 09/13] hw/virtio/vhost-user: add shadow virtqueues
- and eventfd intercepts
-To: Connor Kite <connorkite@gmail.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org,
- virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>,
- Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>,
- 20260817233147.2867623-1-connorkite@gmail.com
-References: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
- <20260817-vhost-user-isolated-memory-v2-9-948aae960abb@gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260817-vhost-user-isolated-memory-v2-9-948aae960abb@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260818-qom-qapi-v3-59-24b8bbbe3d86@redhat.com>
+References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
+In-Reply-To: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7097;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=rVgb3lPZcyuxYB6Idtqpd6v6VbibarNVb6IbHBysRPw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhFGnww5EazEFc5ax6vFOJIIgDUtPcBpua+cGN
+ T+JHb8cqIeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoRRpwAKCRDa6OEJdZac
+ 5QwVD/9wCRNtkIz8Of+lNkz/sv7vveDsRCmHU62tPXRVJKxKwfspKy7t172VhAlOyW0T+LKxv/8
+ xPTQDXV5a12zb92OfagUG0l5edstP3hHP10lvQuH7560+qwSKV7kFIhZxb5O7ns/m1KCphw2rkA
+ qBwhoWF11rJmyAoXtyxtavnyyc6s24dUstkRKuIe87V1ZzHXbHsH3LB/fR9xfrgAU//Mw1rtcyS
+ Jb37exDQTwoqxRbiLCP3YPWePhAkpZpZa+O0RIJPBay8kkK6SIGdaNNHyzLB9EqToyE79I8eewX
+ YD06MLon3vXqRgno/Fjutg1eYy0q02kVJGN3VvZYnSPG2U7QFP0eLerFWsOexoza5rUOmQPlCg1
+ 2KQrH6TeuooPq5z8lDZbzP8OnEOgKOuoCl3BoBP9yuAMczVkVpImo5QbzA5miGb305PXIHfW+hc
+ 5CWgnKGxoVuh4CBzGg95rerdXQ6g2G4XCEDt3FMWFGkqcp89OJ5VF6FfvHa8uZdZdVflwE8m5JL
+ zkVJ4GYcz5lMNAZXO+lElLflIG7MYITCQi+q0XZ7UwIyLQ29YYiDKXDMwq5HaD+DZhGKKHtK//3
+ UjTZM50/Sy6t+M6gWzKrHeKn7ysQvMnSah8f3g2rYaMnT8Jzd9TtA0f3CG9Pls7gFtUz1TuGj+L
+ igLmk0D82HfzIGw==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,297 +109,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/18 14:12, Connor Kite wrote:
-> Adds shadow virtqueues that will eventually be used to transfer data
-> between device and host via bounce buffers when isolation mode is
-> active.  The svqs are initalized, and eventfd assignments are
-> intercepted so that notifications come to svqs first before
-> the guest or backend receive them.
-> 
-> Signed-off-by: Connor Kite <connorkite@gmail.com>
-> ---
->   hw/virtio/vhost-user.c | 136 ++++++++++++++++++++++++++++++++++++++++++-------
->   1 file changed, 119 insertions(+), 17 deletions(-)
-> 
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index e1e5cba53d..ace328f5eb 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -18,6 +18,7 @@
->   #include "hw/virtio/vhost-backend.h"
->   #include "hw/virtio/virtio.h"
->   #include "hw/virtio/virtio-net.h"
-> +#include "hw/virtio/vhost-shadow-virtqueue.h"
->   #include "hw/virtio/vhost-iova-tree.h"
->   #include "chardev/char-fe.h"
->   #include "io/channel-socket.h"
-> @@ -331,6 +332,7 @@ typedef struct {
->       size_t size; /* size of the mapped shared memory */
->       int fd; /* descriptor of anonymous file backing shared iso region */
->       Int128 iso_iova_offset; /* translation from IOVA to hva of iso region */
-> +    GPtrArray *shadow_vqs; /* shadow vqs with vrings in iso region*/
+Add a qapi_type field to PropertyInfo to prepare for the transition
+from string-based type metadata to QAPI type-info.
 
-A whitespace problem remains here.
+Add a qdev_prop_qapi_type() helper that resolves the QAPI type for a
+property from .qapi_type. It will be later extended to cope with array
+types.
 
->   } IsolationModeCtx;
->   
->   struct vhost_user {
-> @@ -1128,15 +1130,38 @@ static int vhost_user_set_mem_table_postcopy(struct vhost_dev *dev,
->       return 0;
->   }
->   
-> -static void cleanup_isolation_regions(struct vhost_dev *dev)
-> +static void vhost_user_svq_cleanup(struct vhost_user *u, bool reset)
-> +{
-> +    VhostShadowVirtqueue *svq;
-> +    for (int i = 0; i < u->iso_mem_ctx.shadow_vqs->len; i++) {
-> +        svq = g_ptr_array_index(u->iso_mem_ctx.shadow_vqs, i);
-> +        vhost_svq_stop(svq);
-> +        event_notifier_cleanup(&svq->hdev_call);
-> +        event_notifier_cleanup(&svq->hdev_kick);
-> +    }
-> +
-> +    if (!reset) {
-> +        g_ptr_array_free(u->iso_mem_ctx.shadow_vqs, true);
-> +    }
-> +}
-> +
-> +static void cleanup_isolation_regions(struct vhost_dev *dev, bool reset)
->   {
->       struct vhost_user *u = dev->opaque;
->       if (u->iso_mem_ctx.shared_mem_addr) {
+Update qdev_property_add_static() and qdev_class_add_property() to
+prefer object_property_add_qapi() when a QAPI type is available, falling
+back to the old object_property_add() for unconverted properties.
 
-If vhost_dev_init() fails after vhost_user_init_svq(), shadow_vqs is 
-present but shared_mem_addr is not because init_isolation_regions() is 
-not called yet. shadow_vqs will be leaked then.
+Update the shared enum accessor functions to prefer .qapi_type->lookup
+over .enum_table via a new qdev_propinfo_enum_lookup() helper.
 
-> +        vhost_user_svq_cleanup(u, reset);
->           vhost_iova_tree_delete(u->iso_mem_ctx.tree);
->           qemu_memfd_free(u->iso_mem_ctx.shared_mem_addr,
->                           u->iso_mem_ctx.size,
->                           u->iso_mem_ctx.fd);
-> +
-> +        GPtrArray *temp = u->iso_mem_ctx.shadow_vqs;
+No PropertyInfo definitions are changed, all .qapi_type fields
+default to NULL, so the fallback paths are always taken. This patch
+is no-op for now.
 
-This is a mixed declaration prohibited in docs/devel/style.rst
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ hw/core/qdev-properties.c         | 67 +++++++++++++++++++++++++++++----------
+ include/hw/core/qdev-properties.h |  1 +
+ 2 files changed, 52 insertions(+), 16 deletions(-)
 
->           memset(&u->iso_mem_ctx, 0, sizeof(IsolationModeCtx));
-> +
-> +        if (!reset) {
+diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+index 34d7b26a7303..b3d5abd5053c 100644
+--- a/hw/core/qdev-properties.c
++++ b/hw/core/qdev-properties.c
+@@ -99,13 +99,22 @@ static ObjectPropertyAccessor *field_prop_setter(const PropertyInfo *info)
+     return info->set ? field_prop_set : NULL;
+ }
+ 
++static const QEnumLookup *qdev_propinfo_enum_lookup(const PropertyInfo *info)
++{
++    if (info->qapi_type) {
++        assert(info->qapi_type->lookup);
++        return info->qapi_type->lookup;
++    }
++    return info->enum_table;
++}
++
+ void qdev_propinfo_get_enum(Object *obj, Visitor *v, const char *name,
+                             void *opaque, Error **errp)
+ {
+     const Property *prop = opaque;
+     int *ptr = object_field_prop_ptr(obj, prop);
+ 
+-    visit_type_enum(v, name, ptr, prop->info->enum_table, errp);
++    visit_type_enum(v, name, ptr, qdev_propinfo_enum_lookup(prop->info), errp);
+ }
+ 
+ void qdev_propinfo_set_enum(Object *obj, Visitor *v, const char *name,
+@@ -114,14 +123,14 @@ void qdev_propinfo_set_enum(Object *obj, Visitor *v, const char *name,
+     const Property *prop = opaque;
+     int *ptr = object_field_prop_ptr(obj, prop);
+ 
+-    visit_type_enum(v, name, ptr, prop->info->enum_table, errp);
++    visit_type_enum(v, name, ptr, qdev_propinfo_enum_lookup(prop->info), errp);
+ }
+ 
+ void qdev_propinfo_set_default_value_enum(ObjectProperty *op,
+                                           const Property *prop)
+ {
+     object_property_set_default_str(op,
+-        qapi_enum_lookup(prop->info->enum_table, prop->defval.i));
++        qapi_enum_lookup(qdev_propinfo_enum_lookup(prop->info), prop->defval.i));
+ }
+ 
+ /* Bit */
+@@ -941,8 +950,8 @@ void qdev_prop_set_enum(DeviceState *dev, const char *name, int value)
+ 
+     prop = qdev_prop_find(dev, name);
+     object_property_set_str(OBJECT(dev), name,
+-                            qapi_enum_lookup(prop->info->enum_table, value),
+-                            &error_abort);
++        qapi_enum_lookup(qdev_propinfo_enum_lookup(prop->info), value),
++        &error_abort);
+ }
+ 
+ void qdev_prop_set_array(DeviceState *dev, const char *name, QList *values)
+@@ -1143,18 +1152,33 @@ const PropertyInfo qdev_prop_link = {
+     .set = set_link,
+ };
+ 
++static const QAPITypeInfo *qdev_prop_qapi_type(const Property *prop)
++{
++    /* this will be later extended to cope with QAPI array properties */
++    return prop->info->qapi_type;
++}
++
+ void qdev_property_add_static(DeviceState *dev, const Property *prop)
+ {
+     Object *obj = OBJECT(dev);
+     ObjectProperty *op;
++    const QAPITypeInfo *qapi_type = qdev_prop_qapi_type(prop);
+ 
+     assert(!prop->info->create);
+ 
+-    op = object_property_add(obj, prop->name, prop->info->type,
+-                             field_prop_getter(prop->info),
+-                             field_prop_setter(prop->info),
+-                             prop->info->release,
+-                             (Property *)prop);
++    if (qapi_type) {
++        op = object_property_add_qapi(obj, prop->name, qapi_type,
++                                      field_prop_getter(prop->info),
++                                      field_prop_setter(prop->info),
++                                      prop->info->release,
++                                      (Property *)prop);
++    } else {
++        op = object_property_add(obj, prop->name, prop->info->type,
++                                 field_prop_getter(prop->info),
++                                 field_prop_setter(prop->info),
++                                 prop->info->release,
++                                 (Property *)prop);
++    }
+ 
+     object_property_set_description(obj, prop->name,
+                                     prop->info->description);
+@@ -1176,12 +1200,23 @@ static void qdev_class_add_property(DeviceClass *klass, const char *name,
+     if (prop->info->create) {
+         op = prop->info->create(oc, name, prop);
+     } else {
+-        op = object_class_property_add(oc,
+-                                       name, prop->info->type,
+-                                       field_prop_getter(prop->info),
+-                                       field_prop_setter(prop->info),
+-                                       prop->info->release,
+-                                       (Property *)prop);
++        const QAPITypeInfo *qapi_type = qdev_prop_qapi_type(prop);
++
++        if (qapi_type) {
++            op = object_class_property_add_qapi(oc,
++                                               name, qapi_type,
++                                               field_prop_getter(prop->info),
++                                               field_prop_setter(prop->info),
++                                               prop->info->release,
++                                               (Property *)prop);
++        } else {
++            op = object_class_property_add(oc,
++                                           name, prop->info->type,
++                                           field_prop_getter(prop->info),
++                                           field_prop_setter(prop->info),
++                                           prop->info->release,
++                                           (Property *)prop);
++        }
+     }
+     if (prop->set_default) {
+         prop->info->set_default_value(op, prop);
+diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev-properties.h
+index eba5436e53b1..1ea2ba66bb37 100644
+--- a/include/hw/core/qdev-properties.h
++++ b/include/hw/core/qdev-properties.h
+@@ -34,6 +34,7 @@ struct PropertyInfo {
+     const char *type;
+     const char *description;
+     const QEnumLookup *enum_table;
++    const QAPITypeInfo *qapi_type;
+     bool realized_set_allowed; /* allow setting property on realized device */
+     char *(*print)(Object *obj, const Property *prop);
+     void (*set_default_value)(ObjectProperty *op, const Property *prop);
 
-This condition is inverted. When reset is true, vhost_user_svq_cleanup() 
-retains the array so the pointer to it should be kept.
-
-> +            u->iso_mem_ctx.shadow_vqs = temp;
-> +        }> +
->       }
->   }
->   
-> @@ -1234,7 +1259,7 @@ static int init_isolation_regions(struct vhost_dev *dev,
->       msg->hdr.request = VHOST_USER_SET_MEM_TABLE;
->   
->       /* In case of reset, clear old regions */
-> -    cleanup_isolation_regions(dev);
-> +    cleanup_isolation_regions(dev, true);
->   
->       /* Gather information for bounce buffers to be mapped */
->       for (u_int32_t i = 0; i < nregions; i++) {
-> @@ -1267,7 +1292,7 @@ static int init_isolation_regions(struct vhost_dev *dev,
->   
->       if (err) {
->           error_report_err(err);
-> -        cleanup_isolation_regions(dev);
-> +        cleanup_isolation_regions(dev, false);
->           return -1;
->       }
->   
-> @@ -1295,7 +1320,7 @@ static int init_isolation_regions(struct vhost_dev *dev,
->                                     (hwaddr)u->iso_mem_ctx.shared_mem_addr);
->   
->       if (r != IOVA_OK) {
-> -        cleanup_isolation_regions(dev);
-> +        cleanup_isolation_regions(dev, false);
->           return r;
->       }
->   
-> @@ -1310,7 +1335,7 @@ static int init_isolation_regions(struct vhost_dev *dev,
->                                             dev->mem->regions[i].guest_phys_addr);
->   
->           if (r != IOVA_OK) {
-> -            cleanup_isolation_regions(dev);
-> +            cleanup_isolation_regions(dev, false);
->               return r;
->           }
->       }
-> @@ -1738,11 +1763,49 @@ static int vhost_set_vring_file(struct vhost_dev *dev,
->       return 0;
->   }
->   
-> +static int vhost_user_get_vq_index(struct vhost_dev *dev, int idx)
-> +{
-> +    assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
-> +
-> +    return idx;
-> +}
-> +
->   static int vhost_user_set_vring_kick(struct vhost_dev *dev,
->                                        struct vhost_vring_file *file)
->   {
-> -    int ret = vhost_set_vring_file(dev, VHOST_USER_SET_VRING_KICK, file);
-> +    struct vhost_user *u = dev->opaque;
-> +    int svq_idx = file->index - dev->vq_index;
-> +    VhostShadowVirtqueue *svq = NULL;
-> +    struct vhost_vring_file vr_file = *file;
-> +    int ret;
-> +
-> +    vhost_user_get_vq_index(dev, file->index); /* bounds checking */
-> +
-> +    if (u->user->memory_isolation) {
-> +        svq = g_ptr_array_index(u->iso_mem_ctx.shadow_vqs, svq_idx);
-> +        vhost_svq_set_svq_kick_fd(svq, file->fd);
-
-The svq->svq_kick EventNotifier is left set in the error paths.
-
-Regards,
-Akihiko Odaki
-
-> +
-> +        if (file->fd != -1) {
-> +            if (!svq->hdev_kick.initialized) {
-> +                ret = event_notifier_init(&svq->hdev_kick, 0);
-> +                if (ret < 0) {
-> +                    event_notifier_cleanup(&svq->hdev_kick);
-> +                    error_report("Failed to create kick event notifier");
-> +                    return ret;
-> +                }
-> +            }
-> +
-> +            vr_file.fd = event_notifier_get_fd(&svq->hdev_kick);
-> +        } else {
-> +            event_notifier_cleanup(&svq->hdev_kick);
-> +        }
-> +    }
-> +
-> +    ret = vhost_set_vring_file(dev, VHOST_USER_SET_VRING_KICK, &vr_file);
->       if (ret < 0) {
-> +        if (svq != NULL) {
-> +            event_notifier_cleanup(&svq->hdev_kick);
-> +        }
->           return ret;
->       }
->   
-> @@ -1750,15 +1813,18 @@ static int vhost_user_set_vring_kick(struct vhost_dev *dev,
->        * Inject a kick in case the back-end only starts vring processing upon
->        * receiving a kick. The spec suggests this to improve compatibility.
->        */
-> -    if (file->fd != -1) {
-> +    if (vr_file.fd != -1) {
->           uint64_t val = 1;
->           ssize_t nwritten;
->   
->           do {
-> -            nwritten = write(file->fd, &val, sizeof(val));
-> +            nwritten = write(vr_file.fd, &val, sizeof(val));
->           } while (nwritten < 0 && errno == EINTR);
->   
->           if (nwritten < 0 && errno != EAGAIN /* back-end can already read */) {
-> +            if (svq != NULL) {
-> +                event_notifier_cleanup(&svq->hdev_kick);
-> +            }
->               return -errno;
->           }
->       }
-> @@ -1769,7 +1835,35 @@ static int vhost_user_set_vring_kick(struct vhost_dev *dev,
->   static int vhost_user_set_vring_call(struct vhost_dev *dev,
->                                        struct vhost_vring_file *file)
->   {
-> -    return vhost_set_vring_file(dev, VHOST_USER_SET_VRING_CALL, file);
-> +    struct vhost_user *u = dev->opaque;
-> +    int svq_idx = file->index - dev->vq_index;
-> +    VhostShadowVirtqueue *svq = NULL;
-> +    struct vhost_vring_file vr_file = *file;
-> +    int ret;
-> +
-> +    vhost_user_get_vq_index(dev, file->index); /* bounds checking */
-> +
-> +    if (u->user->memory_isolation) {
-> +        svq = g_ptr_array_index(u->iso_mem_ctx.shadow_vqs, svq_idx);
-> +        vhost_svq_set_svq_call_fd(svq, file->fd);
-> +
-> +        if (file->fd != -1) {
-> +            if (!svq->hdev_call.initialized) {
-> +                ret = event_notifier_init(&svq->hdev_call, 0);
-> +                if (ret < 0) {
-> +                    event_notifier_cleanup(&svq->hdev_call);
-> +                    error_report("Failed to create call event notifier");
-> +                    return ret;
-> +                }
-> +            }
-> +
-> +            vr_file.fd = event_notifier_get_fd(&svq->hdev_call);
-> +        } else {
-> +            event_notifier_cleanup(&svq->hdev_call);
-> +        }
-> +    }
-> +
-> +    return vhost_set_vring_file(dev, VHOST_USER_SET_VRING_CALL, &vr_file);
-
-Clean up svq->hdev_call when this fails.
-
->   }
->   
->   static int vhost_user_set_vring_err(struct vhost_dev *dev,
-> @@ -2763,6 +2857,17 @@ static int vhost_user_postcopy_notifier(NotifierWithReturn *notifier,
->       return 0;
->   }
->   
-> +static void vhost_user_init_svq(struct vhost_dev *dev, struct vhost_user *u)
-> +{
-> +    /*Modified from vhost-vdpa*/
-> +    u->iso_mem_ctx.shadow_vqs = g_ptr_array_new_full(dev->nvqs, vhost_svq_free);
-> +    for (int i = 0; i < dev->nvqs; i++) {
-> +        VhostShadowVirtqueue *svq;
-> +        svq = vhost_svq_new(NULL, NULL);
-> +        g_ptr_array_add(u->iso_mem_ctx.shadow_vqs, svq);
-> +    }
-> +}
-> +
->   static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
->                                      Error **errp)
->   {
-> @@ -2907,6 +3012,10 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
->       u->postcopy_notifier.notify = vhost_user_postcopy_notifier;
->       postcopy_add_notifier(&u->postcopy_notifier);
->   
-> +    if (vus->memory_isolation) {
-> +        vhost_user_init_svq(dev, u);
-> +    }
-> +
->       return 0;
->   }
->   
-> @@ -2935,20 +3044,13 @@ static int vhost_user_backend_cleanup(struct vhost_dev *dev)
->       g_free(u->region_rb_offset);
->       u->region_rb_offset = NULL;
->       u->region_rb_len = 0;
-> -    cleanup_isolation_regions(dev);
-> +    cleanup_isolation_regions(dev, false);
->       g_free(u);
->       dev->opaque = 0;
->   
->       return 0;
->   }
->   
-> -static int vhost_user_get_vq_index(struct vhost_dev *dev, int idx)
-> -{
-> -    assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
-> -
-> -    return idx;
-> -}
-> -
->   static int vhost_user_memslots_limit(struct vhost_dev *dev)
->   {
->       struct vhost_user *u = dev->opaque;
-> 
+-- 
+2.55.0.543.g5ebe2ebe4ea8
 
 
