@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C41CC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 19:25:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5B3AC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 19:26:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwPPm-0007Fj-Tq; Tue, 18 Aug 2026 15:24:02 -0400
+	id 1wwPPx-0007kW-U8; Tue, 18 Aug 2026 15:24:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wwPPj-00070s-Td
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:23:59 -0400
+ id 1wwPPw-0007eo-S9
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:24:12 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wwPPi-0006gG-4X
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:23:59 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1wwPPv-0006jh-6X
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 15:24:12 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IHGx2h1549021
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:23:57 GMT
+ 67IHJG2W735618
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:24:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- NTjnP6YGK7igY4faPuDs6OCMohdl1EcdIcvjs/2JPd8=; b=WQUlNdfib2JQkRoV
- ClI7B17iW4HS/xbwxs4gSvCk7gfouS4qOtX7nRzOC5pjmrVHvIW0CO76TL8BQWM7
- BKhxxA9lblWbk/oIEqyA4DdlY59TeU0c8e7RpXf39jLjUAHL+p7Dlki73m+1Izl4
- iffKOXwIza7i9YUixpvfDYVsaZYerpyvsYxqdjDlmGi8rvwedOJFQaN4zvOlmkkO
- hB7lt9kJHLsA3/XPRrgDVBDCkUXCk9sPc2LWtQ3uEK/tMchehoAfGAW43VlNw41x
- KpiUXVjE+30eb3vla4KaQLjJcL4V8DVUGJcwK3PekP3kGnFv9LgMZoP56PGlf5Wa
- 92qysw==
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=5UUE4uanT9y
+ xXgmoQDvQv4fzgBZuh/eyAOA5L2GNToo=; b=hBFhRECklDcT2UjNhOllLZE43U3
+ +N9lZt4RxTqj0EbzqGwkQqnkocm/PbmtV8bqtIhMHk6grUvwqwuWjdsOj7I4tuOB
+ 3345Fr8dUZn2iqTUJsNf++iop5wjUFWTXnR7PJmKIAqd5bZs6IJzEUC2QtEZ1zZK
+ fGArOHO5uwPLsCpwbBNfEDzHkDn0cIQWNDlmDXzpfiA8jkgb4C50n9PhWCGvakI3
+ Jcvhq6UyK/fVe4uawjmkoi6n4fP1bN2TkYJ2h/fl5I4FDALRnKUOYUuct2Fqt+Vt
+ 3fMKbXmkN30rt1fbRGIz2E+Wkyen6kv0tf0hjIUmi34zTqD10NO61YsTU4A==
 Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
  [209.85.214.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4uj1gpck-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4reshkv7-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:23:56 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 19:24:09 +0000 (GMT)
 Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2caf4173b1cso2374635ad.3
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 12:23:56 -0700 (PDT)
+ d9443c01a7336-2d54187d8b0so4164985ad.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 12:24:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787081036; x=1787685836; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=NTjnP6YGK7igY4faPuDs6OCMohdl1EcdIcvjs/2JPd8=;
- b=dINvZt9sOgB2x62nAMsjsnO92/S6PUtN22HX32mRTjHWlDwDUeN7AUC5H06zILDGYH
- hIzoTaTpzYYGDajHB4Ik1OGN2EMsMZrWITK8SJ2/7AuGGDLrV7rAj/MaKAHM84S8SVWF
- ufIugawedPCVj+HGkuljpzB0mQKCi8W4dOdLa/8xIMWlVWnscHzFbbAxi3pOKq+Pn1wR
- oKjrumYgH5L34jxF2/2b0ZGtAabXQvWpxH389mkIzy/XGkFrx/MXxJFaypfecUiMGRuP
- Y1nQ+W+to/5A+xh+dv1/Joz+bss3/ebwuLx0O169yuizREYYhia5/BuGeIub+i28kWDD
- 7brg==
+ d=oss.qualcomm.com; s=google; t=1787081048; x=1787685848; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=5UUE4uanT9yxXgmoQDvQv4fzgBZuh/eyAOA5L2GNToo=;
+ b=Ucpx2pRfpZ7O/qxHHWmkyWfoyzvfCQEXenBjlSXjkHsrIRJGmI3nF6QWGDJYEG3AQ+
+ dTjn80VrnilRnLTb95VD+/7IzfcI0Kj40JWRAVX44d9hozFxRHK0vu/cN8pzprhnqIC2
+ OEY0UQXBN0CqliijDiSLaw5A8qaTt8kbkO4YFPq44FoKdtFGS1SkclDYfM9Jnc251wor
+ a6muYJONlrOFP2yCBhIcf6gaIFRhhLIZVin6qav8LyIurDwSPXehdjgqQzjtUNyIoDca
+ QjLR4u8UodKNmm2m8znjMMrCV7M87YbNgHmLOqub/IrauAEVBNbWlGkFMA1qTZhH0ZcF
+ vANw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787081036; x=1787685836;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=NTjnP6YGK7igY4faPuDs6OCMohdl1EcdIcvjs/2JPd8=;
- b=WjQwwoV14vraMfVjCzO3ho1Z5MYpAKQPzIyzABdGkiROPJsx/KQ7FMu6/b2BZium3B
- Rg4ZfJ/3wLp80um48rZogylQCWTmSujQmmxIfcFUVX6floqNvgJFPQgJktDIoL2N04zk
- bhMP9EMzadeEbJ4ahulZioTCUKuBXl0kVsoKey8QEDPN7KzuengknCnb7Ab7BoKaySmM
- uOweEGP51VpTi6VlY6lc5f1VmvBO+KW/4tPThCvk2+y5mjCqnU5vfE+3mqV7HULNykbt
- ayXouAO3uL989e2xJ45GrXbhoo2Jas49cDTMOxpZTBrBmjOJoSvBBrG6Hr7c8Ph0kjZc
- 7J0Q==
-X-Gm-Message-State: AOJu0YyfCm8N0lQvo0Lot7As56bC++Z5zoh/+bj2qkyLiTHDDUsN2PMt
- lVelaiXUf3OCF/MTIGBYDvrDawqd0vUesiQc+GmE7r5OyjTR1WjZA5dW2h/YB961HUJBv7vvQTg
- SvM+DaWmk1Sli2bo0sR5TuOCUdxJqwOGPfhogBcQcvwsx2yzny2/gZnO469xlXRebxQ==
-X-Gm-Gg: AR+sD135Z4i4AYUg8N16ArhD8gdn/n6v6Ke0ycX+Xm/vKfUU/hKok2zFmlwqYBRFPgr
- w0aacWdBpgRMMAhmCa9/Q1ziOuo0uvKeLUawIXpx2H9Jk8BJFjI6SZhVeaOz0i4A7JWUHhVLZSV
- a2B15xMERpKUxLkkv3Xo3A0+oIdOvm/dxvO8e2SXd4SS5K6m72VS3yMFPFQPwNMu0KeUcHyls3F
- tBfSUBqxl4CbXnLBa+PVvDuQsgY3iE9WV6pynI7/i10Ggi/6qjrFj8EFHwUB5wJtOND+VA0zqsq
- To3D+QzJydBmZC/zemNUJhagMEU1YGZ/ZKzWtttlxiHKcx5iQaYzQIz57oMxc46OGMctLfPIo+l
- ASYorugyaMWbEGRBx/I4FUcUlCgpsIYFzAC5j+I5VsATszQIWj9oBHhnHMUE=
-X-Received: by 2002:a17:903:944:b0:2ca:d91d:d3a7 with SMTP id
- d9443c01a7336-2d5f6b21181mr1848935ad.10.1787081035576; 
- Tue, 18 Aug 2026 12:23:55 -0700 (PDT)
-X-Received: by 2002:a17:903:944:b0:2ca:d91d:d3a7 with SMTP id
- d9443c01a7336-2d5f6b21181mr1848015ad.10.1787081035111; 
- Tue, 18 Aug 2026 12:23:55 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787081048; x=1787685848;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=5UUE4uanT9yxXgmoQDvQv4fzgBZuh/eyAOA5L2GNToo=;
+ b=L04zAtaWYuhML5WLtrhkQ0Vdv44Z4O2zoOycoZuCuwyzfMY5w8HvaidoxEwGwwDv5y
+ Xf3cvu94N+Wq4jl0tgUSrmxY++emylbCPl1ioKGaZKNVWWsPhy3uvxMUUKbRoSovA8QP
+ PoYfONIxDn9quZ9hQwAoKiEDfO3ysI6lO2Ec5k3FNV6Vxn6N9KahetDIJhrnf/FlohkC
+ 4epz/GKj3iu6sAYF5DKqlZC4yJJN9SbA1NxA/6zxIEI/o46k2M9EEBbtSDH/oeFwIbnQ
+ oYy3F38v4jQr0E6z87fd00T1JpKHvW3nWVwMbNN9TSNTeBXAcoTPEjhXQ1TdAxsa5mjB
+ tEHg==
+X-Gm-Message-State: AOJu0Yxu82PhDQJumPVm20aPUP+fcyOv3rczxTc8/a3WCNclEvJEsH49
+ nb9BwP9Sh7je3hQW4tmHPGZW4OmqECB0YYHvH80Toh6ke3QDIy+0gwQKQ+1Z41hUy4qi0MAnIR1
+ iXrKdpmdwuFfoGz/XSBeeGmhNlee3JZDd0mCabzpIPOdD7B2D4x8JsZo7vQCLKRZDSg==
+X-Gm-Gg: AR+sD10mbnnzuIDgz15JDpwD/TtQvPAY0/W7rWKqMyhStPYcuSVhNa86YonNz057+9f
+ RqLoFKtwxfjE96enINHCRlERPBGdp4Bq1PqbpGDoX3bWNJBi+Oly+HUZ0jNJIRKtaSSLOoyiBl7
+ MYQkJT1tGSjbDlleeFqSKXY7MHJQ8f1ZHsETZOkvhObSw7FNWX0dlc8ntoZ/wXfvj+7fR+j6Mlh
+ jH1a+3WP8FGK/nOEQIYM/VBfQuQ+RG5fy6z8qTRxNEmcWCRjhvjse4StkMyinjbxONiNPVodvU1
+ LSkjIjMRj3tfINKcgF0IZuliplJGgxokR35pcKvGxT4IBjRB+dlfeAJSDQyy9LAMW+/efLeWPol
+ BYFss2+cOKhel+q6CAOhb2W6NCXgkWHcibljuHf+ACuwyIPHMimxE5ExloAM=
+X-Received: by 2002:a17:903:35c6:b0:2cf:84bb:1ebc with SMTP id
+ d9443c01a7336-2d5f6ba5ad1mr1622725ad.15.1787081048030; 
+ Tue, 18 Aug 2026 12:24:08 -0700 (PDT)
+X-Received: by 2002:a17:903:35c6:b0:2cf:84bb:1ebc with SMTP id
+ d9443c01a7336-2d5f6ba5ad1mr1621855ad.15.1787081047567; 
+ Tue, 18 Aug 2026 12:24:07 -0700 (PDT)
 Received: from debian.qualcomm.com (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3267c897e37sm21879429eec.28.2026.08.18.12.23.53
+ 5a478bee46e88-3267c897e37sm21879429eec.28.2026.08.18.12.24.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 12:23:54 -0700 (PDT)
+ Tue, 18 Aug 2026 12:24:07 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
@@ -100,45 +98,42 @@ Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Aniket Sahu <asahu1x@linux.ibm.com>
-Subject: [PATCH v7 026/104] tests/docker/docker.py: return error code if probe
- fails
-Date: Tue, 18 Aug 2026 19:21:50 +0000
-Message-ID: <20260818192309.22169-27-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v7 035/104] tests/tcg/multiarch/gdbstub/prot-none.py: detect
+ if /proc/self/mem can be used to access PROT_NONE pages
+Date: Tue, 18 Aug 2026 19:21:59 +0000
+Message-ID: <20260818192309.22169-36-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818192309.22169-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260818192309.22169-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: M1doFxikRSAZwmHA9jUpqN4oJTe_hp3S
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfX/AENiJq4Ax9B
- GkGJR4BP6L3w7ZU2MK+ebnhTIAfRnKz4+HX5MNsI2tVUzkMijms+IURvcoG2OCPSpyq7RNXrAaI
- wv+K6uzV8ScukAa3/yR3wha0x2Ql0zg=
-X-Proofpoint-ORIG-GUID: M1doFxikRSAZwmHA9jUpqN4oJTe_hp3S
-X-Authority-Analysis: v=2.4 cv=VNLtWdPX c=1 sm=1 tr=0 ts=6a84b14c cx=c_pps
+X-Authority-Analysis: v=2.4 cv=Ne/WEWD4 c=1 sm=1 tr=0 ts=6a84b159 cx=c_pps
  a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=27jwiZK16oKz2i4YsWoA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfX9H7p3rc93xIB
- JzhvI0FczXrkzfMB5Vr90BDlGKQXVX3j/aYCNMlxD0s0wAc2Qr8G65aXbPfX95Ta/o/VN3TWT0f
- GYkRv1YVEe9YPTBc/6tKj3+ant6KoLLXXns1xVygprdpmcsRd1HBZ+zjA0kxmqfkw9v/KdrFpU5
- sbOuIqATqbbmQyXgvdVqqfqDSK1tl3emGDzdlamafMD6kvhUJrb2dDEY/Yhn6rgtw39BTRpenql
- BJw4oJvqtH0PM3oSSJDswRgpTdQJYCF9Kb1mYu69ZeSIf2zFFea8mCIBNXqZ370VuBVqvdvUXYF
- n9akFK2PgDNcO4e1NkA1p+aI/QLYIXKRbzVmjjNmVxxMUKWbh5CtpQ2Np8gnPnxIJJk6BLyjFMS
- G6hyDmXQtxjkq85EXyrryR7c+20XDN7BFNRsHi5TuplX18ricDZNTspr3DSKt0HyI0AGXLA0zM0
- 4QBwsqiBJSS2IItq4+Q==
+ a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=p0WdMEafAAAA:8
+ a=VnNF1IyMAAAA:8 a=EUspDBNiAAAA:8 a=4nbiZS0JNneqsou3r1kA:9
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-GUID: cS8bJCYBeptSjScnOXDN_pxaiicd_WYN
+X-Proofpoint-ORIG-GUID: cS8bJCYBeptSjScnOXDN_pxaiicd_WYN
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfX7t6gRFBZnAuJ
+ bbMpHT9jmHMqGQFElcOoPiE+GiW8xFrO+NM0VBVXsfA4XrNtjiLSXRPj8ZVwuu8r+eRFC8aTZWp
+ 81vRZpQ13fYAl2OsPNq7LJnAzorx3+M=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE0MiBTYWx0ZWRfX8oThqLqzi4jt
+ 4p4J9z1YC7k2AZ2pipN9rA0pylCaXukoEhOrcbJ8h/M5IQrrA81v18K0gNMdar46uqdAxxV1qxJ
+ qiRDh7kS9u2+c0by5uOvLpyRqZc/ILwA8YkDmP5sNjeflBp9M57p+oiTLq0nOKYiWygibHYvwzk
+ s0G14BX+bZjuJlYY+/+LAcdMBTB10vOKlfzwuWGrZWmv/V9H0utZA049MYGqjYCqZMHWclMvOWq
+ YVHyAzd2IzyJnCnMVUNhjI8Y/EMJw7li2Wxc9l8zUD1i/eiMpChVEsnrKKF0FZVc6qADN0w4sJ0
+ fJUWhPgboHov/BBLpVu5LoraJqqq44mx6OLMtNatOCkGhb1Z73PQXW93Sd0gcZIR0SHXPrhKWC/
+ yRkdijFwo/e6xeSw8McSoDCan26HxCIxH+snyC+NVvAEC7pE+fCCgrZ362lD7ecwad5j2NA1xAG
+ d+osFl3IN+yDDw+g4FQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-18_03,2026-08-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 suspectscore=0 bulkscore=0 malwarescore=0
- adultscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608180142
+ adultscore=0 priorityscore=1501 malwarescore=0 suspectscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 bulkscore=0 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180142
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0b-0031df01.pphosted.com
@@ -164,32 +159,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are not necessarily interested to know which engine is available.
-However, parsing "no" as an answer is not intuitive, compared to
-read an exit code.
+Recently (July 2026), this issue became reproducible on debian stable
+with kernel (7.1.3) from backports. I suspect it's a default hardening
+of kernel related to recent CVEs.
 
-Thus, exit with 1 if no engine is available.
+By tracking error reported, we can see that /proc/self/mem pread from
+cpu_memory_rw_debug in accel/tcg/user-exec.c returns an error
+(Input/Output error).
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Detect this situation directly from our gdb python script, by trying the
+same thing from current process. If this operation fails, we can
+gracefully skip the test.
+
+Fixes: https://gitlab.com/qemu-project/qemu/-/work_items/3329
 Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- tests/docker/docker.py | 1 +
- 1 file changed, 1 insertion(+)
+ tests/tcg/multiarch/gdbstub/prot-none.py | 35 ++++++++++++++++++++++--
+ 1 file changed, 32 insertions(+), 3 deletions(-)
 
-diff --git a/tests/docker/docker.py b/tests/docker/docker.py
-index d2f39b5645b..fea6d0f85af 100755
---- a/tests/docker/docker.py
-+++ b/tests/docker/docker.py
-@@ -604,6 +604,7 @@ def run(self, args, argv):
-             print(" ".join(docker._command))
-         except Exception:
-             print("no")
-+            return 1
+diff --git a/tests/tcg/multiarch/gdbstub/prot-none.py b/tests/tcg/multiarch/gdbstub/prot-none.py
+index e653bc697f6..393626a9798 100644
+--- a/tests/tcg/multiarch/gdbstub/prot-none.py
++++ b/tests/tcg/multiarch/gdbstub/prot-none.py
+@@ -5,6 +5,8 @@
+ SPDX-License-Identifier: GPL-2.0-or-later
+ """
+ import ctypes
++import ctypes.util
++import mmap
+ import os
+ from test_gdbstub import gdb_exit, main, report
  
-         return
+@@ -18,6 +20,34 @@ def probe_proc_self_mem():
+     except OSError:
+         return False
  
++def probe_proc_self_mem_access_prot_none():
++    libc = ctypes.CDLL(ctypes.util.find_library("c"), use_errno=True)
++    libc.mmap.restype = ctypes.c_void_p
++    libc.mmap.argtypes = [ctypes.c_void_p, ctypes.c_size_t, ctypes.c_int,
++                          ctypes.c_int, ctypes.c_int, ctypes.c_long]
++    size = os.sysconf("SC_PAGESIZE")
++    # mmap a PROT_NONE page
++    PROT_NONE = 0
++    addr = libc.mmap(None, size, PROT_NONE,
++                     mmap.MAP_PRIVATE | mmap.MAP_ANONYMOUS, -1, 0)
++    assert addr != ctypes.c_void_p(-1).value
++    fd = os.open("/proc/self/mem", os.O_RDWR)
++    try:
++        # read it through /proc/self/mem
++        data = os.pread(fd, size, addr)
++    except Exception as e:
++        print("/proc/self/mem pread error: " + str(e))
++        return False
++
++    try:
++        # write it through /proc/self/mem
++        os.pwrite(fd, data, addr)
++    except Exception as e:
++        print("/proc/self/mem pwrite error: " + str(e))
++        return False
++
++    return True
++
+ 
+ def run_test():
+     """Run through the tests one by one"""
+@@ -26,10 +56,9 @@ def run_test():
+         print("SKIP: /proc/self/mem is not usable")
+         print("----------------------------------")
+         gdb_exit(77)
+-    if "GITLAB_CI" in os.environ:
++    if not probe_proc_self_mem_access_prot_none():
+         print("----------------------------------")
+-        print("SKIP: fail on gitlab - " +
+-              "https://gitlab.com/qemu-project/qemu/-/issues/3329")
++        print("SKIP: /proc/self/mem can't be used to access PROT_NONE page")
+         print("----------------------------------")
+         gdb_exit(77)
+     gdb.Breakpoint("break_here")
 -- 
 2.43.0
 
