@@ -4,100 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44D06C5DF81
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 00:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85A98C5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 00:02:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwTgc-0001ze-N1; Tue, 18 Aug 2026 19:57:42 -0400
+	id 1wwThP-0002yN-9H; Tue, 18 Aug 2026 19:58:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwTgb-0001zT-St
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:57:41 -0400
-Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwThN-0002o4-NU
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:58:29 -0400
+Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwTga-0005Dm-H9
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:57:41 -0400
-Received: by mail-oi1-x22d.google.com with SMTP id
- 5614622812f47-499f6e0bbabso354428b6e.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 16:57:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwThL-0005Ic-Vj
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:58:29 -0400
+Received: by mail-oa1-x2a.google.com with SMTP id
+ 586e51a60fabf-459281bc13bso333349fac.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 16:58:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1787097459; x=1787702259;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1787097507; x=1787702307;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=uUMY9WHuTdgvyHkA28I65k11CWVDaB0ciMNOALHZxlk=;
- b=Z5kGs7K3mXW+SP0GagBqAQXdIV+v1pv1zBgiKCXMXRLwys5jh4ofoOj7ziuRmc1gGl
- 0ddfcxKM+qrmwFesC2D9WBJAHk8syyneGewvepssz9/dJHP8+FayvLAMw4zY7X20xL2L
- I89NX9d4Oqgq3NVJRAru7Ivsl19guMbAzgGKL1piNw42+zfw9dEAU1xn3XbSQgxi21i2
- gLYnGRfwZ9b+guX/fMwtYLzbHLbYvMnYQ9kCJV0K7NVn7q3HwjLiTNSeu7CxCdFJmlmF
- 9M5BUJvKqaz9bpF96KeDQmRVTe+wDj8YB7/tmIwWbnqGozOM4kFZpTOyDbq/wfRk2xSq
- htNQ==
+ bh=G3SskvS39Q4usUFP0DLZu/MoIFQuAMk/c5gpx9M89oI=;
+ b=nnfIlo2su0rh6OaquWdLDFtYWEup4uE3iYs7VzYcy1zTWAt5IJ1PYwmUjS2ApJGXN7
+ /YPHemlj0rSMp1XMla3UlAxJsLoVmAsSw7VifByjZrgo6/JEzOG8fyYZiv5z1CjUyOhi
+ pelkr369Ku7GPBHU7S2jYqmTrNpFTGAICmVtFhNmljaGpqF0Z+6OGxxnADoKF7EVjWue
+ XCWlG/XZhaawSjLStirnVTDH49mkdtjKdJowNQgRhBHoqxz03jxHWfrZnEW0Hv+5FP+n
+ GyRxVat888cvwES6G192eaaTYV3ky+Lku4qfggGCODydrXB60uRX0G1mHqo4M/OaIbg0
+ 6pyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787097459; x=1787702259;
+ d=1e100.net; s=20251104; t=1787097507; x=1787702307;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=uUMY9WHuTdgvyHkA28I65k11CWVDaB0ciMNOALHZxlk=;
- b=H9lAKNfdV/f28SWfpZgmDeBLlxugMHM2h8vxQkEg1lPCRMMi6aAKi73twB1kPrNJ84
- pcaQim16PY7eVCgm+56XJvN87SSho0iuUG9GHDdBWMNvN2xmmtssOnn24qD8iEB2B6OQ
- RiOjBuwsqfbMy55PH2OcmHlUE5VT0R4m7ZP/40yN8i2TT6S6xMqYIfcl5J8ejF3JbzuR
- eIkRlTC/qvzff8rjuNJiOggAH2O5vPfHvuL3wWolFRA9WKHLkpN6jetyW7RGTM+Nm25Q
- QyXlEeAX0vig/2dk9aRxe/kcgaajm2XhN6d0J3ju/Rb4sBooFfPZNRTQGFEsn0bo4+jd
- jUAA==
-X-Gm-Message-State: AOJu0Yya1NbuWoKeGtFSRfNvzIHRMdnT9GB/mkos7iP8tLcKf9XXeQtv
- qIcGcaIiFMnX1xrWH+iYwNPPYYAMolx1aJ1Ar9yWZ/AkES9tfX3AYO3y4f8MOKDr6HpbNCSQ1MM
- jX5oSXNU=
-X-Gm-Gg: AR+sD106XC+0WwKG7yxE6bfkk8a2CjdbYc7quqjqasB3Ub9ix6g+Bw+fiyvjULx+SXR
- xuMzqBWSIcLNpWUqOHJvMGiu1YhxvHDBDwlZ5x3bn+f9FbALy8IyOjPjmmdSxvSsyiO/cI3hYj3
- tsSN/UNuxzUnDyP1uTR/9Jej2P3aNHgf9nLwxXkOWOuq/BLV28g2fGwSB3oqh4eQpU0ljt6lb4o
- OJ9zbk2qbcbqlNJp2ntnrSbZzA9GGiNxC0MfwPLjkoa+3qQWqOYlb15bxTpsbO4EYT/cfTIWF3Y
- a1jUcJ3czZ2VT/vVFp3Ub5Wdxevfr+WaB2fDR9hn/YlD6PDg9QnNU7A121mwmw8c3SkcOk89Tu6
- kk2Y1gwNduUUq3IwXqQMKcjW3HF8YM+ZU8QJINLxcGu19coZ2yxkk6SrUAqi+Y4+N9a9Vam/coR
- 67rtoXi8h5VK/FLY00TrPoHamopz61kn0PSAGkiKD4+V6j/8JW2bi692OUuw==
+ bh=G3SskvS39Q4usUFP0DLZu/MoIFQuAMk/c5gpx9M89oI=;
+ b=d2XKzsuO8V3tHVfEmFrwNEyou65cSmzzwKZhV9XJVrv4zs/nE2OEjCUin2Q+7hfBg5
+ P0EdsvUAl7xxqq1w0mEykizeHD4O/Wc23ivylDFY+IFYuz55A6sZTVn4+rN+hTJidhw8
+ JX7w2slHsdZr7HKQA2pJy/8gZXzvXVJM78znogu//kh8prbPe7z+jpsxEmHMx+Oh42ak
+ JHjZp6kz2He0u8PdRa96C8Bkr9omLZvdYt1Tv6IetpirXPSYylemby8x4FMMvtCFwwVU
+ X+POPfHGJPXmhgy/IsIMkCP5ANBmPil23cXZQ4XLe/FCsbi2wBHb2Ex8K0HvYPFmfLoJ
+ vbXA==
+X-Gm-Message-State: AOJu0YxnfCBw372QcBGmgzbDqHvuNrQKIV3AathQDKHh/ApoAArzqzLX
+ noBkDjz6PWbjsNd1AO6MpCzn6WoC6nuU25J8UbL5m6X2iG8mbiDjO3qRzFoBY7y1vYU=
+X-Gm-Gg: AR+sD116HkvNqhoyfID7fQ7jBfmH9fXubK7qcs72uJHnBvVgjJjaCh0l4y443GW5pci
+ Fl86zhUe0sH0C2E3G7pcIQLF7hk2KpKyFT4nFFRFUwrcfsluDHElmODroE7mlXFSWDJvXlpaqhx
+ mOI2e/KABgOjF6cKYEAGULxHLZfFli445FL5C8IuJ1EfmdLdm2rDdzO5zhDezbYk0lyzmZExc5P
+ X0KxwXSLTaanFmnlhWdfhmJwSu4hkO6eZyY+/7idbcJnJWjg4FfNr3YHPYUjZiItQnLbcP2QWrH
+ lC8pHIWW8JXVKeg7+QK/DBz3jEtpDDTfH0wE+EoR4KR2tjzTLJ4qtnrvOp/7PZODT8c0mVEWl2g
+ gz2xd/XF3yBiQnn7qVuc4a2oeGDWHeJsHACpL0m3gRoC2aMtBmBBWTCuS7l4/7nJIIPYXmKwjbh
+ kpDIv/0QJEIRtV63j0s9mcUxUwmF18xTqOiVp8g6HPtun4VF1v
 X-Received: by 2002:a05:6808:198d:b0:4b2:8e2a:295 with SMTP id
- 5614622812f47-4b2bc46de25mr460973b6e.0.1787097459393; 
- Tue, 18 Aug 2026 16:57:39 -0700 (PDT)
+ 5614622812f47-4b2bc46de25mr463983b6e.0.1787097506753; 
+ Tue, 18 Aug 2026 16:58:26 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4b2906a3edesm4835341b6e.0.2026.08.18.16.57.36
+ 5614622812f47-4b2906a3edesm4835341b6e.0.2026.08.18.16.58.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 16:57:37 -0700 (PDT)
+ Tue, 18 Aug 2026 16:58:24 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Tue, 18 Aug 2026 17:56:00 -0600
-Subject: [PATCH v4 07/40] bsd-user: Remove mmap defines
+Date: Tue, 18 Aug 2026 17:56:21 -0600
+Subject: [PATCH v4 28/40] bsd-user: Add cpu_copy and make init_task_state
+ non-static
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260818-misc-2026q2-v4-7-09bf5647c98e@bsdimp.com>
+Message-Id: <20260818-misc-2026q2-v4-28-09bf5647c98e@bsdimp.com>
 References: <20260818-misc-2026q2-v4-0-09bf5647c98e@bsdimp.com>
 In-Reply-To: <20260818-misc-2026q2-v4-0-09bf5647c98e@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Warner Losh <imp@bsdimp.com>
+ Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1360; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=KjLnsMmQjxyrIgZ9EdNkxfh5tG3P37D0w8anGK6QIfQ=;
- b=owEBiQJ2/ZANAwAKAWwc0Sh9sBEAAcsmYgBqhPEp0ylwa4efJbOLDt/NUp/rsppaKCgsufC0V
- b0idTrM1taJAk8EAAEKADkWIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaoTxKRsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMiwyLDMACgkQbBzRKH2wEQDx8BAAhW/Efp+OSRi2WV0CM32Wbnq0MDzHmhg
- ZJ/rKIs9PZQ6U5DFxRP9Glk17bGqmUB9TujLicJRfZXRueolAgv2cBmM4O/II3+IjVNtpAokZBr
- bhGX18cz57AsUT3Ser5GU09HAEO6EuCRnGTc5tPWi6pZ7vSr+90+ZNMImgo2Q4DXyr6/FyXUm9r
- VJisBNXzrkF6CeZHHglqXbZD4QRsquaPXtIxtGcweq0urOIdFP8XMxOb5z3ppdChNwNRf69nzxX
- LirBtNd2l0WfIJ93IcZ7vTYrSChGku71tyOwF99p2NQNHvgLUOzj+DqXsB6xs7iR140c4JLKFrA
- 5L5fhbci14ky/Hj0xDS+feOVsv0UDlYsrfFMupgvot3RIFA8Biqw5IKRZstEQgWHBq9XXMU9KTx
- KJSQTah0+bfemAsaUIsCnSJ4vOBvmc6nvwqV5nWwnq23f0uFKgDsnFRyYZlc8PN6L3oGnxu2r39
- GLTKWtR43VRrp8Wji3mZ0/yAUhBVJxSR6ZXl+FlvMOrOmW739w/s0AB3DUKe3j8BcCPZltK7Z/K
- SZ+ShnQ2BoMEaCb4WvclRfxUSzVLJzcchRI1VyRhBP3/oZUufIZOEe4/+NI0SdUkC1QnXPjaHK0
- fFMmkjAudeSkcACLi8tb/bkFzmUMbi+90Ol4SRpNK/eTrViBx0A4=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2935; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=C3PdATJBpYfnoQRiXA8L9JVToAfUaoFluIF7aJeCNe8=;
+ b=owEBiQJ2/ZANAwAKAWwc0Sh9sBEAAcsmYgBqhPFLjLIsvwSWcWoe+DCNgZ2WEFyOkgkt6B1Sv
+ UHApY8+ykqJAk8EAAEKADkWIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaoTxSxsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMiwyLDMACgkQbBzRKH2wEQBAlBAAvr/+j+cwkZBsH/Df4voiZTybgSst4HS
+ m6H0zDcz3sMKzCFcSL585OqyB89ukE69hRiLP6NNzgnxu71jmuc6GziWWpc3So+0JMd53Lfa3X0
+ 24/OZahTNu6UBeUSAp7Tx1Ow0UPPJsxfafYZANTbXc/rz/hRiU1PF+xqyOKXUDYIB57UocVmw7g
+ SXjLFi/7+bYBvPGR6OOZoWE6EcjpT58123s51YZDk7YmKDKEHBD/oWHHS1wB2GSXBSIkL1AK7Ug
+ GEVd0Z/KWTKeN0CSF9CR9GB8soMnHLHbzL4HPFSlZspNruRhtRzRCMuzk+RJEohlWxWf1jJLtKF
+ f1YsAnZ9NVCrEymI8fJ6nwuiRqC/i0D9zgzJVsQ60zFSwneXCS+mjT4sUq5UhN/blhqWys84e4n
+ lwdUSfCDiUJwpviLrpzG4PDhjboEnE6sFc68spBTvWwYFwwAv7ey1a/t+tM9tdra3SuERTkSD8h
+ zAA9bXHxf0Aq26l4oQyKMR/budoAUQwFcL3jnf/A3wfC3ej6kT1n+5yzRh40tlOw3gYYj0Wxjnj
+ qmFjNmEAe4cSiGTFR9oAVhiqgudZagX5zLSMq11VQGU/noSpcsKWQQZj6nB7E7+JYIXiE6TMvAc
+ cn5ice+svdgUwONXUo7k5m/nItwYmjCDOeP8W30EeT7Tu7ulEm3U=
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::22d;
- envelope-from=imp@bsdimp.com; helo=mail-oi1-x22d.google.com
+Received-SPF: none client-ip=2001:4860:4864:20::2a;
+ envelope-from=imp@bsdimp.com; helo=mail-oa1-x2a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -119,40 +120,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These defines are not used, remove them. They aren't in blitz anymore.
-A future commit will cleanup several mmap issues, not least the obvious
-mismatch in the flags here.
+Add cpu_copy() function for thread creation support and make
+init_task_state() non-static so it can be called from os-thread.c.
+Move cpu_type to file scope so cpu_copy() can access it.
 
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Assisted-by: Claude Opus 4.6 (1M context)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/syscall_defs.h | 14 --------------
- 1 file changed, 14 deletions(-)
+ bsd-user/main.c | 32 ++++++++++++++++++++++++++++++--
+ bsd-user/qemu.h |  1 +
+ 2 files changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
-index 7e70d6ad57..7646a52744 100644
---- a/bsd-user/syscall_defs.h
-+++ b/bsd-user/syscall_defs.h
-@@ -121,20 +121,6 @@ struct target_msgbuf {
- /*
-  *  sys/mman.h
-  */
--#define TARGET_MADV_DONTNEED            4       /* dont need these pages */
--
--#define TARGET_FREEBSD_MAP_RESERVED0080 0x0080  /* previously misimplemented */
--                                                /* MAP_INHERIT */
--#define TARGET_FREEBSD_MAP_RESERVED0100 0x0100  /* previously unimplemented */
--                                                /* MAP_NOEXTEND */
--#define TARGET_FREEBSD_MAP_STACK        0x0400  /* region grows down, like a */
--                                                /* stack */
--#define TARGET_FREEBSD_MAP_NOSYNC       0x0800  /* page to but do not sync */
--                                                /* underlying file */
--
--#define TARGET_FREEBSD_MAP_FLAGMASK     0x1ff7
--
--/* XXX */
- #define TARGET_BSD_MAP_FLAGMASK         0x3ff7
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index 694481ae3e..2fbbfc3d86 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -50,6 +50,7 @@
+ #include "qemu/guest-random.h"
+ #include "gdbstub/user.h"
+ #include "exec/page-vary.h"
++#include "exec/watchpoint.h"
  
- /*
+ #include "host-os.h"
+ #include "target_arch_cpu.h"
+@@ -215,7 +216,7 @@ bool qemu_cpu_is_self(CPUState *cpu)
+ }
+ 
+ /* Assumes contents are already zeroed.  */
+-static void init_task_state(TaskState *ts)
++void init_task_state(TaskState *ts)
+ {
+     ts->sigaltstack_used = (struct target_sigaltstack) {
+         .ss_sp = 0,
+@@ -224,6 +225,34 @@ static void init_task_state(TaskState *ts)
+     };
+ }
+ 
++static const char *cpu_type;
++
++CPUArchState *cpu_copy(CPUArchState *env)
++{
++    CPUState *cpu = env_cpu(env);
++    CPUState *new_cpu = cpu_create(cpu_type);
++    CPUArchState *new_env = cpu_env(new_cpu);
++    CPUBreakpoint *bp;
++
++    /* Reset non arch specific state */
++    cpu_reset(new_cpu);
++
++    new_cpu->tcg_cflags = cpu->tcg_cflags;
++    memcpy(new_env, env, sizeof(CPUArchState));
++
++    /*
++     * Clone all break/watchpoints.
++     * Note: Once we support ptrace with hw-debug register access, make sure
++     * BP_CPU break/watchpoints are handled correctly on clone.
++     */
++    QTAILQ_INIT(&new_cpu->breakpoints);
++    QTAILQ_FOREACH(bp, &cpu->breakpoints, entry) {
++        cpu_breakpoint_insert(new_cpu, bp->pc, bp->flags, NULL);
++    }
++
++    return new_env;
++}
++
+ static QemuPluginList plugins = QTAILQ_HEAD_INITIALIZER(plugins);
+ 
+ void gemu_log(const char *fmt, ...)
+@@ -256,7 +285,6 @@ int main(int argc, char **argv)
+ {
+     const char *filename;
+     const char *cpu_model;
+-    const char *cpu_type;
+     const char *log_file = NULL;
+     const char *log_mask = NULL;
+     const char *seed_optarg = NULL;
+diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
+index 069baa7011..d2dd8c2ee8 100644
+--- a/bsd-user/qemu.h
++++ b/bsd-user/qemu.h
+@@ -122,6 +122,7 @@ struct TaskState {
+     struct target_sigaltstack sigaltstack_used;
+ } __attribute__((aligned(16)));
+ 
++void init_task_state(TaskState *ts);
+ void stop_all_tasks(void);
+ extern const char *interp_prefix;
+ extern const char *qemu_uname_release;
 
 -- 
 2.55.0
