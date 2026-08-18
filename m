@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F5D1C5B572
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 00:27:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EC6CC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 00:27:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww7f7-0002Jg-KQ; Mon, 17 Aug 2026 20:26:41 -0400
+	id 1ww7f2-0002H6-W0; Mon, 17 Aug 2026 20:26:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <simonxhy0404@gmail.com>)
- id 1ww7f6-0002JL-Ml
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 20:26:40 -0400
-Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
+ id 1ww7f0-0002GJ-T1
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 20:26:35 -0400
+Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <simonxhy0404@gmail.com>)
- id 1ww7f5-0004IC-6J
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 20:26:40 -0400
-Received: by mail-oi1-x236.google.com with SMTP id
- 5614622812f47-4af7283bf83so1763974b6e.3
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 17:26:38 -0700 (PDT)
+ id 1ww7ez-0004Gl-E3
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 20:26:34 -0400
+Received: by mail-oi1-x234.google.com with SMTP id
+ 5614622812f47-4b21f71613fso2303804b6e.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 17:26:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787012798; x=1787617598; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=Jl6LTei06PFLBixWeheCfjJtohyjel6JsDpqWhRIxJU=;
- b=PYf4nUgTpQ70yC2Q9MzW41vQcqKv6PVKjBLzi83er1Eq5yC7YuEWhJt/6Y+FliaMyP
- QLHemF/9MXy979vSbOqPNDi4icMw7egRM2bxM7SId5FZ1wi8eSNNAzzFoSDeEdgisjNc
- os2Qy6OY8vA13fx3jHmRslrTZvhuhtZ9O1XxkXAFFSbo3CbpFJclF5MvoXhNCmtTXIa2
- jmz4zzoaCLgquR2dSNSnfWiY7B3DpuSRls5lygoS+b5f1WQvNt0uBKwyADVRR6EBGBtk
- Jta3+/hOn2/BlKdEqbhJgtbp28rG0Otdn+xDMhM6FilDI5ZssC7Y4wTRbCoPe7vLbEcs
- FQ5Q==
+ d=gmail.com; s=20251104; t=1787012791; x=1787617591; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=9/yfjQTPEtrC9StG3ocPwJnsJPDokp/jOBq4p+yXhWE=;
+ b=X1vXIy+RcXfnGqf4InClTTDtDC/HZwrRWHkVy1+698wzVB+poA+W+OHrOFzhR18uir
+ ss6C9Su9REkJWjzc49Nciouqqyp81yNrmNV+qPK6GF6KaiHltXTo4xLcpJ2lvUy7lM0Q
+ +QN+0jeiQjSGW4La+F1bay8FyxxnUSG8TExbPeorqP7jOjEPKCdR5xBrif3FkaxVSX3v
+ xCnM/3E0GU7bGuRTGCesnWLotcnCXxT4T366nOPmt7L6xbWSaWmX7NFfPEv0mxXcWtA2
+ hW5Nc3MlhCI+jImFlA3sov7rEe41G7J3z40T/0CboZE31ZBrWtZ/kae+kaX9G+YGroyf
+ /CVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787012798; x=1787617598;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Jl6LTei06PFLBixWeheCfjJtohyjel6JsDpqWhRIxJU=;
- b=R5Qg+luet5H6bCe0j5IMOKNymQbLLBKbgxrSVkjkrogdlzqfC0izSOZ0eBnvMOvklx
- 35UUfIrVR2X4r8a7KW1gikrAQ33fG/Y7fEEial+dGGra+qWaAc3CJRj7yHfz0Dp2KxhW
- 6Qw2d8FCT64tldLkNCJLf3kSAcXY52K2MxnoRc9g8UBxh5YH7TayoiGJk646zjLDeOvF
- zalpqeEcrZgNZW/zUhx3W45jFWsEUsuXY9ZB8z7t7gOisM4/BnxVj7CbcVFNYW0gfsrs
- xz1xC1RCd3J8p8nNES5firhVcviKT86BiWroUB+sSHNoTavK/Jg/8jANRuy9qoYyyUit
- fDhQ==
-X-Gm-Message-State: AOJu0YwNhpSFYgx+ipWn6ftqf98A1751qiBEzleItz1Y3RtK8Oo8hE0P
- dYHNxZpYg2U/6KtzDEQ3xCvJjrofiSftaSjntohHUphTCnHIS05vAfxMf6inbR4K
-X-Gm-Gg: AR+sD10Y4gdUMVQXXpOulj+mgQt0lx8+Y+vbAWyJbLJh7TbWIvK5HdUvnyoK27WqsKh
- DgkEqMJBR6NwjNXgj33Nh3fn0KosGt307cGLUtXdQw5otO2cK5GPfIw9gsytG3Zwf2o15K3upzi
- hvUsVbJFJGpKbHToSHEl3v0V2V2BiJe8a0259ZquANiRqIbcNt7JAfdBvDBMZcAKRLAlcpa6W6y
- k4LExdi3o2QSu/FwjzhoKIYYT4xSTgXz2LTpmEcV+eB+BGJkkVDU5i7CfsRRo16mcfBb2M1KQw+
- 9avCch1G0nCUfgqkdvqbXiPeaDKeNdJJcBKThbc2jkVYdMQzwD21jqeHcKUgdA51hmc+YDfi/xc
- RPOzhSmt8dA1MIaZ5uBBWOGgxMBgaD8mcUxNrRlMZHsJv9RD8sbSiHp3WcsEPqg+hS3N8tBOF45
- ynkdFGZ+30AV6Ahmx73qZZNkOPoCeWy7ahw9sVifVY9BRuBUIK0FNfRvrJL2cARMsec/DevfS99
- tohRxHAqoOpUd0goZnLRQ==
-X-Received: by 2002:a05:6808:23c1:b0:495:e0a9:8c0 with SMTP id
- 5614622812f47-4b241bbf01cmr27545700b6e.11.1787012797975; 
- Mon, 17 Aug 2026 17:26:37 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787012791; x=1787617591;
+ h=content-transfer-encoding:mime-version:content-type:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=9/yfjQTPEtrC9StG3ocPwJnsJPDokp/jOBq4p+yXhWE=;
+ b=dA7vd9pdoFXcwOUA//nZcDzpbuApHljv1wFH8dFqUDKWdEwzMxupx8/L5M7Pf2CqrP
+ bs6x0jiCI9sEeHUTMEDeSfniGWn1x85mnVAG8A77MgKwIB8cOjPqoOwhMgU2QloYT6YN
+ o5p0l/NGC8WXqVJkPys5E9CMuibhBfXt99TLNYX3NFPXOTvrxPjdin6VLdLvxLuHqNIF
+ MO8X+/tldZ5MHB9IMM6pW4QRaKce4R4QaT56zK1xFmxVCP2ncXQDpwbciM1wxwqHKgyY
+ 6U+ww6hInzd3gZtsbCdWJRtT6V7iLyVwr4lFMiBt6vU2mDXkIfhtDOYu4ikICxDZb4D8
+ 2o3g==
+X-Gm-Message-State: AOJu0YyNIQs/X5nixSe0WZHnY9JiyUavmpSwxbQhgNGkLhqjIOaX73yv
+ UNoUeU9ItanhSxixxUgxWs+Y6881BzOW4Et3cZvEeWhbxCD18VSxFYN6f9XfCA==
+X-Gm-Gg: AR+sD12uFzWtam5zkWpKKHaMh9eTTPZIvsVyhkJ67C5SDsrKx9jvOTiFklqoOZWY72V
+ hgNOhC9B+AcZrpHTDAPpI/W0lNUYt5WBYpK7MDrsf/6hrHPt8kaA0lwJQVv24OhwQS7pqd0SV+f
+ MWf2Ee6iLFQb0s6JfvPcdRMPMUdERBQ91cdsPIypxf0YQcz8pW9qB0QqbFlFkzvcSOtGIYeEKV7
+ k1OVq5n3DbFT7DWA+JZCp1FqAnL8oIC1rrd1Gq4egbmJhA6tbZEfG9BkrVRqkzJMgP8pU8v89gh
+ ooRa9N8FoPzXoz/OrrrFqeOAPLT0Y5dme0LQcSJip2jd1aEQNixWcrK7lcXpF/QIviom1fRt+Kj
+ vikEXlNfCfaG8pX2sQKSJV3CjzAu+49ws9E0MaT01SAN8LdMtXuEDxvh9QRp86/SYd/rqMtCZIr
+ reGxK7O2fVZfGLfat6gCly33iV7oWC+Xb61k+k0hxY5GfChvcB9Lv8vdR9mno5sOhHzOe+kqwPl
+ Plfw6BXymY=
+X-Received: by 2002:a05:6808:5142:b0:4a4:a693:9d87 with SMTP id
+ 5614622812f47-4b297517839mr4579257b6e.5.1787012791534; 
+ Mon, 17 Aug 2026 17:26:31 -0700 (PDT)
 Received: from LAPTOP-86EU4LQA.home.local ([23.124.244.239])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4b2960dfc9bsm1715165b6e.14.2026.08.17.17.26.36
+ 5614622812f47-4b2960dfc9bsm1715165b6e.14.2026.08.17.17.26.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 17:26:37 -0700 (PDT)
+ Mon, 17 Aug 2026 17:26:30 -0700 (PDT)
 From: Simon Xu <simonxhy0404@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Simon Xu <simonxhy0404@gmail.com>, Owen Giles <owen.giles@hpe.com>,
- Robert Elliott <elliott@hpe.com>
-Subject: [PATCH v3 5/9] hw/misc/iotkit-secctl.c: add SSE-310 support
-Date: Mon, 17 Aug 2026 19:26:25 -0500
-Message-ID: <20260818002629.172827-6-simonxhy0404@gmail.com>
+ Simon Xu <simonxhy0404@gmail.com>
+Subject: [PATCH v3 0/9] arm: add Cortex-M85, SSE-310, and mps3-an555
+Date: Mon, 17 Aug 2026 19:26:20 -0500
+Message-ID: <20260818002629.172827-1-simonxhy0404@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260818002629.172827-1-simonxhy0404@gmail.com>
-References: <20260818002629.172827-1-simonxhy0404@gmail.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::236;
- envelope-from=simonxhy0404@gmail.com; helo=mail-oi1-x236.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::234;
+ envelope-from=simonxhy0404@gmail.com; helo=mail-oi1-x234.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -88,7 +85,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,60 +101,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add SSE-310 secure and non-secure ID registers.
+This patch series aims to add the Arm Cortex-M85 CPU, SSE-310 Subsystem,
+and mps3-an555 FPGA board.
 
-Reviewed-by: Owen Giles <owen.giles@hpe.com>
-Reviewed-by: Robert Elliott <elliott@hpe.com>
+v2 -> v3
+    Removed ppuintstat variable in iotkit-sysctl
+    Moved add GPIOALT2 register patch before add mps3-an555 patch
+    Add gpioalt2 state field to new vmstate subsection for migration
+    Rebased onto master which includes bug fixes to existing models
+        in armsse.c and mps2-tz.c
+    Patches 1, 3, 8 still needs review
+
 Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-Id: <20260805153005.9989-6-simonxhy0404@gmail.com>
----
- hw/misc/iotkit-secctl.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
 
-diff --git a/hw/misc/iotkit-secctl.c b/hw/misc/iotkit-secctl.c
-index 93753c2ced..9f6fb81088 100644
---- a/hw/misc/iotkit-secctl.c
-+++ b/hw/misc/iotkit-secctl.c
-@@ -109,6 +109,18 @@ static const uint8_t iotkit_secctl_ns_sse300_idregs[] = {
-     0x0d, 0xf0, 0x05, 0xb1,
- };
- 
-+static const uint8_t iotkit_secctl_s_sse310_idregs[] = {
-+    0x04, 0x00, 0x00, 0x00,
-+    0x52, 0xb8, 0x3b, 0x00,
-+    0x0d, 0xf0, 0x05, 0xb1,
-+};
-+
-+static const uint8_t iotkit_secctl_ns_sse310_idregs[] = {
-+    0x04, 0x00, 0x00, 0x00,
-+    0x53, 0xb8, 0x3b, 0x00,
-+    0x0d, 0xf0, 0x05, 0xb1,
-+};
-+
- 
- /* The register sets for the various PPCs (AHB internal, APB internal,
-  * AHB expansion, APB expansion) are all set up so that they are
-@@ -232,6 +244,9 @@ static MemTxResult iotkit_secctl_s_read(void *opaque, hwaddr addr,
-         case ARMSSE_SSE300:
-             r = iotkit_secctl_s_sse300_idregs[(offset - A_PID4) / 4];
-             break;
-+        case ARMSSE_SSE310:
-+            r = iotkit_secctl_s_sse310_idregs[(offset - A_PID4) / 4];
-+            break;
-         default:
-             r = iotkit_secctl_s_idregs[(offset - A_PID4) / 4];
-             break;
-@@ -499,6 +514,9 @@ static MemTxResult iotkit_secctl_ns_read(void *opaque, hwaddr addr,
-         case ARMSSE_SSE300:
-             r = iotkit_secctl_ns_sse300_idregs[(offset - A_PID4) / 4];
-             break;
-+        case ARMSSE_SSE310:
-+            r = iotkit_secctl_ns_sse310_idregs[(offset - A_PID4) / 4];
-+            break;
-         default:
-             r = iotkit_secctl_ns_idregs[(offset - A_PID4) / 4];
-             break;
+Simon Xu (9):
+  target/arm/tcg/cpu-v7m.c: add cortex-m85 model
+  hw/arm/armsse: add Arm Corstone SSE-310
+  hw/misc/iotkit-sysctl.c: add SSE-310 support
+  hw/misc/iotkit-secctl.c: fix AHB secure read
+  hw/misc/iotkit-secctl.c: add SSE-310 support
+  hw/misc/iotkit-secctl.c: use GNU C case ranges
+  hw/misc/iotkit-sysinfo.c: add SSE-310 support
+  hw/misc/mps2-fpgaio.c: add GPIOALT2 register
+  hw/arm/mps2-tz.c add Arm mps3-an555 board
+
+ docs/system/arm/mps2.rst        |   6 +-
+ hw/arm/armsse.c                 | 208 +++++++++++++++++++++++++++++++-
+ hw/arm/mps2-tz.c                | 162 ++++++++++++++++++++++++-
+ hw/misc/iotkit-secctl.c         | 132 ++++++--------------
+ hw/misc/iotkit-sysctl.c         |  88 ++++++++++++--
+ hw/misc/iotkit-sysinfo.c        |  22 +++-
+ hw/misc/mps2-fpgaio.c           |  35 ++++++
+ include/hw/arm/armsse-version.h |   2 +
+ include/hw/arm/armsse.h         |   9 +-
+ include/hw/misc/mps2-fpgaio.h   |   2 +
+ target/arm/tcg/cpu-v7m.c        |  41 +++++++
+ 11 files changed, 587 insertions(+), 120 deletions(-)
+
 -- 
 2.53.0
 
