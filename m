@@ -4,116 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C523C5DF74
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 05:13:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2A68C5DF74
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 05:13:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwC7k-00058N-8f; Tue, 18 Aug 2026 01:12:32 -0400
+	id 1wwC8S-0005g3-P7; Tue, 18 Aug 2026 01:13:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wwC7i-00057u-DP
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:12:30 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wwC7e-0003j4-CT
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:12:29 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-84fa3b14ee1so3080129b3a.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 22:12:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wwC8Q-0005XF-Gz
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:13:14 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wwC8O-0003vU-RS
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:13:14 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67I2YP093761859
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 05:13:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 1OrLRRD5wuUCzFWAZtuM4rtw63ebB47e90Wx0muSfaA=; b=KAIbrMJwAHAGG05S
+ OpaCpnUXGPY8rJ/u7JmaZv33Z7uey/ZT82fYnTqMyg3zNnwDc+yqUfK14ktK98NE
+ 6A7cgJjUULy79uV0bZaMRf57wgURpkSUNSZuJkcZU4huk0iJMaJvvV5MDB8Sa7kc
+ 8LsjnL8bwEZt7Bi4M2DVHlYMdwQkd56qKu5GJQ9ws/vMnKgFgAC2bnxREEsUnMTY
+ PtSTcJzzxKS/8ytvr0aZdx1do06rJSdCHIQOhGDCmYHeICfXtxvCxH0UcOVtoJAL
+ tTccB4f3H1tpIFAF6sTxUiYGLKBEoc0mtdCK+UIMX3Hs8ngCY4ohovCiBLr1KfjE
+ uQFO7w==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4eqtrhyv-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 05:13:10 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51bf321d786so57602391cf.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 22:13:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787029945; x=1787634745; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=GF0FtzLMWaPpijge2pYmINjU8s3/LYKiLpVZpt8RABo=;
- b=hvRFUd2uorLAIEJm9U+DnSe+8jChBs8OdAszu6zkd3Mo4dW4w8RoGOnSBnQn0rqMAY
- o5bQFkvKNwJzeZyIQGTJCWD/JzSg7Rmqpz5xUqIwVMoOuDyHRR3oTv0U2LKueQRyKZjc
- zvQQt8lg8BGXYeoA51GgobtGJVrrTBOugIGNYxPImE1x0ctH9SforNI/14vStlwRPFOH
- Nx3JkA9MWdMCwG35tqBQGDo1iz4O3EdBeirfxt5a8uwtFpCzAWmlNjCB2z2qRO4r+10v
- NElLxCcqDhY02gVq2hshcCbw/JlmkP3xLQD5XfPfm8IvjQHZR96fC8Mbk7bQ0pYRgKhm
- 0IXw==
+ d=oss.qualcomm.com; s=google; t=1787029990; x=1787634790; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=1OrLRRD5wuUCzFWAZtuM4rtw63ebB47e90Wx0muSfaA=;
+ b=JkRJ8xrIpRn5qwJZwamIKWjJ3W3bqhZcO1YiNwBaX9rQCie7p3Vftz6L/xOXdkmXG1
+ DkjNqaRZ1D88s9E6ak+DXXRVrPkOO4/kgutdt5mSc03mF76Pp9santR/EBJ+cNLGhY+p
+ Ji5Re99Ul8O8RYiZeMp2sks79bjYiJ9wC0n4abQiqMGEmyTeVUcJyDcNt2RutskN3Nw/
+ d0+TmE/Y14V6ta06vZZpNTaCalBUcBXZ4Lk3K/k+nwpAcLAcsuiUJr3jT4s/fZuljBAg
+ DlUclYG7WJXJ+yrnES+022wdIrcmvp/5BZfqfy0f0jerJOEL4Lxk6mnmlN2k22xE9Naa
+ 4rxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787029945; x=1787634745;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=GF0FtzLMWaPpijge2pYmINjU8s3/LYKiLpVZpt8RABo=;
- b=hs9dQtHhsGS+3Zudh/SIIm1CHSIq6kvweHOD6B/6fq/Qy3yziTZ/KCXeNhumX93qXp
- uvoM6wtVtJzSRAcTuYsBCdKoLdHbujvOuV26HNOmoEYkEIFDrdpwautxF8Cx1MOzyIiT
- 8kpHUn9e2sU/RD9N44+Aapq94ey0qSEQjiBZyBr59wI+Ed+e/aLWde4PjVyCkuQdjSCa
- zeMfjkG/yWnw0U0BsQ80F1s5wnYJCbOo3aqxVIQ9rvhEten3CEyL9T8kmZCQQZ8C/o5m
- a6ck6R4fHRHxS+sIn4iBMb8F6ktJ/sVpT9Ciu71ih+Zl0QqhJEJXxCnVWqDWpgtzCwyk
- Wsdw==
-X-Gm-Message-State: AOJu0YwMr3VxcbcEt8kSxAKAxaozXcrXodDuz9iACK8k+xAFCVrXjc5E
- UArcpv36mHfwcoQ9zn772M9drEjS44E4/3A3G+sJ9wrB97Mn1sujhtO6
-X-Gm-Gg: AR+sD10KGXv7nEyfJxjNyfO2KkkkgqB1+j53OgmZq6tdhk2153YJgSwZ5WLZxDg4qXW
- 97wCrzYgaRK3Z6bYuN2qo1wiGdZYn7KqN/dF6pUSnuV2db3gZZ3JiHgoFDhb0gPtVFXfjXvYE9+
- K0E3xUKt0DFqLnTETVPM4LUD0RNDOTLXO/QQRd0q5sC/B5HtOkDMfPi5F6QbJf7KxQ3O8V1SH9L
- nY/pHqLgpVTcW562QfWylULNRbaPlefXgE9cNDASsD/fLEA9WabEtg2qJP8OO2aJcdxT600W0B9
- 6ZG7KCN2UbNN0Fov+jw/RXzvITnGcyk7TP2TkIDZ6snke9Qy2bTb+1QuNa6rYZJXvYjeLbjOG9V
- YVnjy93ig2RnuMPVCtfVktrIHkVb2eHsRuKmZZKfVCogf44F4jE2wvv5uyplG7lvbz34AFlgr4K
- mreTA7ikSEyhZsGE0M6jxc8we0Jcl8KH4wHy0rIDKCN0Y7MIFVHyUd8Z2yoY0tpFi+kg==
-X-Received: by 2002:a05:6a00:3763:b0:851:ba04:ca02 with SMTP id
- d2e1a72fcca58-851ba04da9amr4656750b3a.16.1787029944848; 
- Mon, 17 Aug 2026 22:12:24 -0700 (PDT)
-Received: from [127.0.1.1] ([2600:1700:e140:14d0:d043:a40d:25c1:432c])
+ d=1e100.net; s=20251104; t=1787029990; x=1787634790;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=1OrLRRD5wuUCzFWAZtuM4rtw63ebB47e90Wx0muSfaA=;
+ b=jf5QxZvxMRBxE4DRV3Mkyvtv6QZZN26MyCiqoaHpWuOz+2TB/kjYljZiBgIqVi0Chn
+ R070r373y+H+8KbYzZ8G3EyWljaD6Xz3kAWIltn6nZWTM9lv/HtLL90r/kjrLCV5oNzw
+ /m9rRwMaWRz8iLyMlu0kr9jCvvIQQe/5iM2pYPoa3jHiaNB9EyvHkRf27EcbrIEshWU4
+ aS59lJDI/KA/UVkqlwn1VIxeqs00WWiD7EUSE5rPhQ/41o4dnIKFerpOHzC2b3AR3TzG
+ uw0do1eyAUL0vLNL3o2KcO8RgKTMLeJYBQK9yasyOZCvkCntAOreSp7jwRc/jog10iRV
+ blAQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpCXXEF0ak75sbijALVKrLnyJFlKxxKKvRRL5xSDhQhZJY5APcjyKepG6Rvy9MRAUT8ByAuFcu9wbkF@nongnu.org
+X-Gm-Message-State: AOJu0YwVS2XvXMERhfkBNvh/zb+JFezEjKWVy/2tkGt9+0LZ3llpf979
+ tfpQn+CC5vGz7Nj+HRWvGqucfI+1ypPT3gbZ3wvA1GtzZsmzQoOIXseqJbzyNfUL3B2Izn4BRFm
+ BbvzXBVoxFsbGuehkg538ZxQtMvbPXvsDZzHineN4FYCDfAmqW0vJPPWteg==
+X-Gm-Gg: AR+sD12BL2iQ4B1S7hGoo4wdEct39SA5N1Apgkmf/pdOxK4rVYtbSZ6Al/NQLQtKQ5U
+ 2BU9M+9TGVHrpMtj1kUcmp/H3W0T29CLIq4WUvdGMvRd2dNpLP/iCP3pwMKJGguDXlvSumBhRA/
+ +ksVD0qkp7aDLvWutyrDZYg54gCkbTBR309v5l5gf7zq+hAfmbRvEYy0zzggl4K0ETI/xnDTOby
+ gw2YcwTNUc7IS4aPLQR7ON1mHgpekJL0mWqOf6kOy7rkkGnPXh/B0irFWeKnzyLWggUxtzpPOkV
+ P/0E4BdZg1VmdkZilFqagZlpRS+RE77tq/cRG0VGh9ihzGHyRyyxm7Jdyo1G6bO3/W0W1VaMfEV
+ kLIkFAEEY2GoFXE3VsI0z/sj/Z5daGyr3cAM=
+X-Received: by 2002:a05:622a:1304:b0:51c:555:7dea with SMTP id
+ d75a77b69052e-52d8549af33mr318883721cf.30.1787029990271; 
+ Mon, 17 Aug 2026 22:13:10 -0700 (PDT)
+X-Received: by 2002:a05:622a:1304:b0:51c:555:7dea with SMTP id
+ d75a77b69052e-52d8549af33mr318883461cf.30.1787029989811; 
+ Mon, 17 Aug 2026 22:13:09 -0700 (PDT)
+Received: from [192.168.69.229] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851b6fc0e84sm1031160b3a.43.2026.08.17.22.12.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 22:12:24 -0700 (PDT)
-From: Connor Kite <connorkite@gmail.com>
-Date: Mon, 17 Aug 2026 22:12:17 -0700
-Subject: [PATCH RFC v2 02/13] util/iova-tree: g_tree_foreach wrapper
+ ffacd0b85a97d-482a5a3b896sm9347395f8f.16.2026.08.17.22.13.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Aug 2026 22:13:09 -0700 (PDT)
+Message-ID: <d1b31369-2bc0-48c9-b34c-9e6c6b1012f5@oss.qualcomm.com>
+Date: Tue, 18 Aug 2026 07:13:08 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260817-vhost-user-isolated-memory-v2-2-948aae960abb@gmail.com>
-References: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
-In-Reply-To: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
- virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
- zhenwei pi <zhenwei.pi@linux.dev>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>, 
- =?utf-8?q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
- Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>, 
- Connor Kite <connorkite@gmail.com>, 
- 20260817233147.2867623-1-connorkite@gmail.com
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1787029936; l=1906;
- i=connorkite@gmail.com; s=20260723; h=from:subject:message-id;
- bh=o7eLAZfdtjRRWSqHEojyG/bzxtWRaxaRR5MzJJtbNk8=;
- b=Z3tFhfEr1Omnp83Zy3bXpXXEiQIMkob68NNERZBNgm5EjVu9Ykqidco7cjuQ4gnEqs7pgUwhM
- ELFXw7D56GGCzrXpmI7r68dyx5q3Ot2OBTpnrqhYAOCg7lgJmRrB5TA
-X-Developer-Key: i=connorkite@gmail.com; a=ed25519;
- pk=xg/3N8AntFCYogaIgN5NC/KkT7UlZB6ktPIRliJ3hv4=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=connorkite@gmail.com; helo=mail-pf1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 13/15] hw/ide: revert the CHS translation on a hardware
+ reset
+Content-Language: en-US
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20260817205242.1199851-1-den@openvz.org>
+ <20260817205242.1199851-14-den@openvz.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260817205242.1199851-14-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDAzNiBTYWx0ZWRfXzKosqZqA8lPC
+ 9wqE2V0q8jIldjWX3OZfnmiZ1QUO1lEsAQrshg5fqaRmlaKj06ObdM07sWWJO0N3at/gJS4r03c
+ WUx/rqsoRwQJpQPHb+VP2sy1avTb0vQ=
+X-Proofpoint-ORIG-GUID: p7PnR1bZSUBPQusuzCKBDT5W-bdGBv_t
+X-Authority-Analysis: v=2.4 cv=UfFhjqSN c=1 sm=1 tr=0 ts=6a83e9e6 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=6rqHouBjAAAA:8 a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=C0JQNRP7iAIswsPoYdwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=dawVfQjAaf238kedN5IG:22 a=Hx1yvPaMooE3kwe23bt7:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: p7PnR1bZSUBPQusuzCKBDT5W-bdGBv_t
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDAzNiBTYWx0ZWRfX2nhWZ3udx22h
+ 7JeBR343DrsTD+OeB0p0M5bHhCow6/LceJav8mtJINWXeOa/pcB0rMmgl3jauEgEF3026nChvwq
+ PlD8BQHXOanPOWPFxwRb6vzPYV1PyLJpTB0R1C+9mfUShY+FOMZRDBj0EoOTaBust3zWquZBGgz
+ GQHQCrZ87niUn7t34X0kON6CcqOswma9Rvl7u0UIQKl0E5SIx+JZN99nxQIrpv9Ki6Aj/G+ZPzz
+ pfWIf7OtL0a88pS33/f90r3nlpu5tHrlWThP5rmfXvpb7WFuguYxBxAhaIQ+2ZV4iLJx39BYJSl
+ dgPqOKtTsL5T5lpuPssKGmR8EJkxx3oH1NjCXZz+QzBQeD+/eW63QCmv3uvBrteyEY/EdyBrU7n
+ 0fx6IUGcMkdNzJD1tTdY+OUCuHBv81+UJDZ0nVmTILNmL+dFg5TZJuRVHKgevtveTeeKSrai9i8
+ 4iFkIbSodMn+ucU9MJg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-17_04,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0 impostorscore=0 suspectscore=0 adultscore=0
+ spamscore=0 priorityscore=1501 clxscore=1015 phishscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180036
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,61 +157,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a wrapper to iova-tree to call g_tree_foreach.  Provides a means
-to execute some function on each node of the iova-tree.
+Hi Denis,
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Connor Kite <connorkite@gmail.com>
----
- include/qemu/iova-tree.h | 21 +++++++++++++++++++++
- util/iova-tree.c         |  5 +++++
- 2 files changed, 26 insertions(+)
+On 17/8/26 22:52, Denis V. Lunev wrote:
+> From: Denis V. Lunev <den@openvz.org>
+> 
+> A power on or hardware reset returns the device parameters to their
+> power-on defaults (ATA-5 9.1). A software reset keeps them unless the
+> guest asked with SET FEATURES 0xCC for the next reset to revert (ATA-5 9.2
+> and 8.16.6). ide_reset() applied the second rule to every reset, so a
+> translation a guest selected outlived the reset of the machine it selected
+> it on, and the guest that came up next addressed the disk through a
+> geometry it never asked for.
+> 
+> Neither ide_reset() nor, for AHCI, ide_bus_reset() could tell the two
+> apart: a guest clearing SRST in the second host to device FIS of the
+> software reset protocol lands in the same ahci_reset_port() as a COMRESET
+> or a reset of the host adapter. Pass the kind down from the callers, which
+> do know.
+> 
+> ide_drive_pre_load() stays necessary: it restores the same fields, but a
+> vmstate cannot depend on its device having been reset first.
+> 
+> Cc: John Snow <jsnow@redhat.com>
+> Cc: Peter Maydell <peter.maydell@linaro.org>
+> Fixes: 176e4961bb33 ("hw/ide/core.c: Implement ATA INITIALIZE_DEVICE_PARAMETERS command")
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> ---
+>   hw/ide/ahci.c         | 12 ++++++------
+>   hw/ide/cmd646.c       |  2 +-
+>   hw/ide/core.c         | 18 +++++++++---------
+>   hw/ide/ide-internal.h |  7 ++++++-
+>   hw/ide/isa.c          |  2 +-
+>   hw/ide/macio.c        |  2 +-
+>   hw/ide/mmio.c         |  2 +-
+>   hw/ide/piix.c         |  2 +-
+>   hw/ide/sii3112.c      |  6 +++---
+>   hw/ide/via.c          |  2 +-
+>   10 files changed, 30 insertions(+), 25 deletions(-)
 
-diff --git a/include/qemu/iova-tree.h b/include/qemu/iova-tree.h
-index 14e82a22d5..a1938e36a1 100644
---- a/include/qemu/iova-tree.h
-+++ b/include/qemu/iova-tree.h
-@@ -161,4 +161,25 @@ int iova_tree_alloc_map(IOVATree *tree, DMAMap *map, hwaddr iova_begin,
-  */
- void iova_tree_destroy(IOVATree *tree);
- 
-+/**
-+ * iova_tree_foreach:
-+ *
-+ * @tree: the iova tree to traverse
-+ * @func: the function called at every node. A true return value ends traversal.
-+ *        Arguments:
-+ *            gpointer key:   key of current node
-+ *            gpointer value: value of current node
-+ *            gpointer data:  data passed in at g_tree_foreach call
-+ *        Return: gboolean
-+ * @data: an argument passed to func
-+ *
-+ * Wrapper to call g_tree_foreach on the underlying g_tree. g_tree_foreach will
-+ * traverse through every node of the tree, barring an early return. At each
-+ * node, g_tree_foreach calls func with pointers to the node key, node value,
-+ * and a pointer to data passed in by the caller.
-+ *
-+ * Return: None
-+ */
-+void iova_tree_foreach(IOVATree *tree, GTraverseFunc func, gpointer data);
-+
- #endif
-diff --git a/util/iova-tree.c b/util/iova-tree.c
-index 5b0c95ff15..2239bb6ae1 100644
---- a/util/iova-tree.c
-+++ b/util/iova-tree.c
-@@ -303,3 +303,8 @@ int gpa_tree_insert(IOVATree *tree, const DMAMap *map)
- 
-     return IOVA_OK;
- }
-+
-+void iova_tree_foreach(IOVATree *tree, GTraverseFunc func, gpointer data)
-+{
-+    g_tree_foreach(tree->tree, func, data);
-+}
 
--- 
-2.43.0
+> diff --git a/hw/ide/core.c b/hw/ide/core.c
+> index c330508128..bd155f8d3a 100644
+> --- a/hw/ide/core.c
+> +++ b/hw/ide/core.c
+> @@ -1347,7 +1347,7 @@ void ide_ioport_write(void *opaque, uint32_t addr, uint32_t val)
+>       }
+>   }
+>   
+> -static void ide_reset(IDEState *s)
+> +static void ide_reset(IDEState *s, IDEResetKind kind)
+>   {
+>       trace_ide_reset(s);
+>   
+> @@ -1356,7 +1356,7 @@ static void ide_reset(IDEState *s)
+>           s->pio_aiocb = NULL;
+>       }
+>   
+> -    if (s->reset_reverts) {
+> +    if (kind == IDE_RESET_HARDWARE || s->reset_reverts) {
+>           s->reset_reverts = false;
+>           s->heads         = s->drive_heads;
+>           s->sectors       = s->drive_sectors;
+
+The change is good, so:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+
+Still I think it could be logically better to rework ide_reset() and
+use IDEResetKind as a IDEResetLevel instead, having IDE_RESET_HARDWARE
+the higher level. Anyway just thinking about it, feel free to ignore me.
+
+> diff --git a/hw/ide/ide-internal.h b/hw/ide/ide-internal.h
+> index 281d07c9d5..094772209d 100644
+> --- a/hw/ide/ide-internal.h
+> +++ b/hw/ide/ide-internal.h
+> @@ -393,7 +393,12 @@ extern const VMStateDescription vmstate_ide_drive;
+>   #define VMSTATE_IDE_DRIVE(_field, _state) \
+>       VMSTATE_STRUCT(_field, _state, 1, vmstate_ide_drive, IDEState)
+>   
+> -void ide_bus_reset(IDEBus *bus);
+> +typedef enum {
+> +    IDE_RESET_HARDWARE, /* power on, hardware reset or COMRESET, ATA-5 9.1 */
+> +    IDE_RESET_SOFTWARE, /* SRST or DEVICE RESET, ATA-5 9.2 */
+> +} IDEResetKind;
+
 
 
