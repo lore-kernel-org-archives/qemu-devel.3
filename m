@@ -4,92 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67028C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 22:06:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F52C5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 22:28:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwRvx-0007yE-6x; Tue, 18 Aug 2026 18:05:25 -0400
+	id 1wwSHE-0002aV-Fp; Tue, 18 Aug 2026 18:27:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
- id 1wwRvv-0007xP-Nr
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:05:23 -0400
-Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <strahinja.p.jankovic@gmail.com>)
- id 1wwRvs-0001QU-6B
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:05:23 -0400
-Received: by mail-lf1-x132.google.com with SMTP id
- 2adb3069b0e04-5b021916bd3so525228e87.3
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 15:05:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787090718; x=1787695518; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:sender:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=oNnj2fLEMYq5Tz8EcYB6SXjMYDv/P85S0ugsV5A0eZ8=;
- b=nVL2zYt2XWth/4oi5NHEmllq1gsk9PLMb3Qe/HoOZ4OhbkmNLs+PTJfHKYm5lcQchs
- UJgwa19hHpO4YSITPdI0+UpvxPbJR9mVhsJeW6L0MDERROt8ZwqOx27Iy9+wj5HzgPIz
- RhCPM0i6L5zEyElDFhRdiNVho1MIO05NEYauJfuJWykHhYcy3+wcO2vtCL9UGRCIVPEt
- Cr6ldVGFgzEjKmsEGaswzigcjt1LHHTRNTrDcHvqISOTA49/1gLAcl01MkjWsdr2uITF
- QFl2CdPwjteJ6kW5xvQf3C5A3+p8oE3Ncz/7TPQR6OGHqevL8IcVv1RGZ6L476rursOG
- 8CHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787090718; x=1787695518;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:sender:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=oNnj2fLEMYq5Tz8EcYB6SXjMYDv/P85S0ugsV5A0eZ8=;
- b=izt6BodUqdO2P2oegQrS68ZPanl4Lpz+SGdm0o/pX7rlNhPUY2sHb279cj+vta0ntT
- qs2lNPzot65wzh6BbIwQceyTaxXVN0j1X+jL0AKe45SNnBWEH8LqVo74fWKJVvceoKWI
- o+6LAPPzMem7/JVXcZxeUNwVAGphoCAuEsSO5wuszsQ5eZ/6VXB2QL7hCXSwzkholPk+
- bLXq4tbiziWfEIXd0wrWaJGP62gvsipXEXK//HrbDY2JEH1Glwjc95O4utP8LSk1yqBZ
- vHJWqCutV51EXnOnldIvxoW4Cn645BeeKxsvQH4kJwjl22XRJ5xR+0C/VAmvhxBbJEVv
- qnJA==
-X-Gm-Message-State: AOJu0Yy1ioFsHbkDeoGL85qgYhzcvkgiewAz+XgJAMH6fedWKikfF0W/
- p8A6jdDugoTvnX0D8VgqZZS8Pgn0V34QapHpQhTGnl8AnlfgffFWHYn3FOHue2AC
-X-Gm-Gg: AR+sD11NgkH4TS1+pGOzN0YIm4uhX3js1YDNrxKdKLemIY7NXYw3aB7XaHsUE6DrltG
- 0ZmvQeA0W9VZp7SbJgODb52Hzrt9ixJ+KA/5UdcVjGye+NvKAO5AKzpUfWaHa109KLLhMwZTfYi
- Pf/esuObu4sSLFN+uemSp7VeYPbJyd7zPJiH4LvQ11GPKNEkVSPHnsJPdBxBqjJ2l9l/IPHEISe
- 8HdAZbmweKXTflMFMfvOBz7SiKFhu5lEX59cyjAGAqSfnwhfyXYQDP+zFf/RMKWIP1a3Hpek5ym
- DqcBZecVI4/dMmyzbrbjvZ5VUzQFgajiYyg2y15WF02Km97FIXf56dXxcdibiiTh7qrJCCKn71F
- 5fLFOzoJoFsL/VG379ZWzYcd1qnOLUSS7pP2Hw64bV6dVJSh3exHeYBZhTuo46dMCDj7icURe0Q
- dhyLHtI5BlGTaaTXrLMotOG8fAYOiJBYydettoxYRvOxCWaTmOH9WZEJHrvx+Cf00CwByH4NVcW
- GIzLm5mGGpD4YuPLUzXJFi0D2VnVGmKnRQE3gNJFI/1yDXRiycXvE6uy6E=
-X-Received: by 2002:a05:6512:3c92:b0:5b4:57a9:7030 with SMTP id
- 2adb3069b0e04-5b478bce05bmr9159e87.22.1787090718005; 
- Tue, 18 Aug 2026 15:05:18 -0700 (PDT)
-Received: from [192.168.31.141] (213-65-111-204-no600.tbcn.telia.com.
- [213.65.111.204]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5b478853ae5sm21836e87.17.2026.08.18.15.05.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 15:05:16 -0700 (PDT)
-From: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-Date: Wed, 19 Aug 2026 00:04:51 +0200
-Subject: [PATCH 1/3] hw/gpio: Allwinner A10 GPIO emulation
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260819-allwinner-gpio-v1-1-2a64866dff11@gmail.com>
-References: <20260819-allwinner-gpio-v1-0-2a64866dff11@gmail.com>
-In-Reply-To: <20260819-allwinner-gpio-v1-0-2a64866dff11@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=2a00:1450:4864:20::132;
- envelope-from=strahinja.p.jankovic@gmail.com; helo=mail-lf1-x132.google.com
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wwSHC-0002Zh-FN
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:27:22 -0400
+Received: from st-2005f-snip6-11.eps.apple.com ([2a01:b747:3001:202::3d]
+ helo=outbound.st.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wwSHA-00076o-58
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:27:22 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-10-percent-0 (Postfix) with ESMTPS id
+ 81EEA18000AF; Tue, 18 Aug 2026 22:27:16 +0000 (UTC)
+X-ICL-RepId: 01a016fc-6b62-7541-847a-80f07c6a80c8
+X-ICL-Out-Info: HUtFAUMHWwJACUgATUQeDx5WFlZNRAJCTQBIHVoORQNGCVYLWhcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0AWFsIWwQPH0wMUQJCBVZeSgwdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDkAPTARYdlgBXQo5cFsaX3ZFAVULXnNYH0AITwUpB1MKQHxKAy1CBUICXBxaDkMKUBxcVlUfCUtGCUkdDg5CGEYfVCdXAloKWx4=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1787092038; x=1789684038;
+ bh=nmEDMEHXhanDlQRjAfE0+Y1NOxj+UfXwkAZXh5ldDNI=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=stmgm1pgKDEeNEaxmcBTIqTp6D5PyojQZAmmsPTeImAA1/C7sbLD9YHqraQDdEodMrNQZp1TLnsRE+NSAgaQvGcBdySIQ3EbCDx9HokQlDXjqiUzJ73knWBLEyf0S0VViLgBkNSe0nvhe2vB648LREEG6+Dl8DyZhdF2JWKfJazi+NCfpB9suP6kqeKMPaFd8rs83kEpHuT68Pk4y02WgMMUcgN8zrXLB5lk0xQUv9yynDVXff16dzVPyCtB7kfv77mZ+sF+12gj478+a2G3MVulfG3Hpgz9Rsg73ch1LpUJEkO9lfOR5OHpF8bGDA47WMbfXV+mlSkvEUv2l1quQQ==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.156.216.30])
+ by p00-icloudmta-asmtp-us-east-1a-10-percent-0 (Postfix) with ESMTPSA id
+ 85D901800293; Tue, 18 Aug 2026 22:26:59 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.11\))
+Subject: Re: [PATCH 4/8] RFC: tcg: probe the TB jump cache inline instead of
+ calling a helper
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260818174247.649526-5-mattst88@gmail.com>
+Date: Wed, 19 Aug 2026 00:26:35 +0200
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com,
+ philmd@mailo.com, zhao1.liu@intel.com, laurent@vivier.eu, deller@gmx.de,
+ pierrick.bouvier@oss.qualcomm.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <06475A33-3AC6-4D58-83D3-0176D0880E20@unpredictable.fr>
+References: <20260818174247.649526-1-mattst88@gmail.com>
+ <20260818174247.649526-5-mattst88@gmail.com>
+To: Matt Turner <mattst88@gmail.com>
+X-Mailer: Apple Mail (2.3901.100.1.1.11)
+X-Proofpoint-ORIG-GUID: oBnyUoMA3wX0rT_WnHTntA6xnYtUaYH-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE2NSBTYWx0ZWRfX3y4H3/zbgQFP
+ vS3NaAMpAwcFozTbC3nfgPZdbOx908jRjgSVz+h1ms8BllqOmgRXdPH4elzxwQzpJYd+fZ8BS09
+ hvK7JmdvAScdDpzHQLIEKbbUJFc4Ff+VlrWU9HDTMx/kieOyKu7QY1h46hlB+vhgnt5qWxsGFnW
+ 1WE0qiTL5oi1RtC61NAZi8+SZ/jHAQKeyIxtD+hku2eOSo6EjPTl/9GeW/xUU1sAqkYPL6G9BkX
+ sthoF7bEVeWJ/RwZ0cZSTboTYtC098hPXqpOzEEJwI1YdlZkUp4ttrEQizF7YaLzR2L8lwrHafY
+ CW4cc06za6/3WUOd2I9TNk5+aEnL9Dic7e4F4KIYdXWFSkBj1yIk6Fmkc4BEmc=
+X-Proofpoint-GUID: oBnyUoMA3wX0rT_WnHTntA6xnYtUaYH-
+X-Authority-Info-Out: v=2.4 cv=XfOEDY55 c=1 sm=1 tr=0 ts=6a84dc45
+ cx=c_apl:c_pps:t_out a=oyWFxbOnq+dmhQrAPgaJYA==:117
+ a=oyWFxbOnq+dmhQrAPgaJYA==:17 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=kMGlg0-6h2fWJJ9VV7cA:9
+ a=QEXdDO2ut3YA:10
+X-JNJ: AAAAAAABZ2m9XQqWJekkjYiHzCgZvn2nl6Mh6f5BOx0/WWelrT5cQRpbyeh40IFXZVudfWmhS75zt0AA0Ld3E6+e8GCqlZ+TgQJ7WzCXZ9jqw19OUEo9sVoZ3hdEiVsbO4UgOsWK7SiTl9Jw1v42IHkeOYv3Y2ZcZ6KrTMLzdlUt6vjCsqEM8te08zlDvhzifP0rmcyonQSGh6loaESHMSbvbCguzqNBplq7pZ9eK1qUAvRc6kEGtEjOVTQaxU367+xwK+0u5X3Gvljd52FAScCqMbDTij+7iTdB4N7xChQ2VBUvETYfYknEDqAts+RYNFGOPtRGQsZOM/ZxwgFf06AKbVcpIisqn8GzoMX+Uk5Wy4E8WAm0tT9bGs/Rhi1b9j47Pl2pp3QlEUYeu6CyVyEiownyAnQr3zJ+iiJGVSLdR4m6MJUrP+1P8+LHspAkhL9S2Fapzh1pUl40mbBVdb8z7VbzIoYrMhCMjTir+/tI52BklIX3wKopIXiy7EIX0BZacDbv2fqV/hZIyZ1MzdAqh0HLVsfRsHQzkQ8CY1CQlikfq3l961Olym7ag8dTis9xTsqlvT2VpZg5/46fpnihgnIPtdzzkGHAk5/anRc1zOXek35czhpTc8hKQvieihQqNgBJ3m/iIHo1uSgEzHGQTf8UR2MMzghI+8NO06jzWwsSOK/20ZktUm4fO5+22wupvLAYQiVgeQ332QmmtmMgb+KypvUcpmRGMVLokxH5KUaZO5JWpXPUwiNO3e4qo/ryNrLZuB4HQQ0+UG9xsYQ1qo8HkRn25hBt+/73Dxhuj2Y1DSozjXO4RS6GgXO4HrequYtIKtmtzxv686Nbjof7LKc4ws5GJCMcJwUSe6AznZ+W9qqkCpv1j7q90qj+g3BawoRNhwXgQsSZVDEnAzppLcbslI7bWZS6Zx9SxoBvNulsqe+Z+9DmOvnQRxKZb5Odj7FMde9TfOpQ7/IDa1+EkeuBh0M
+ e8h01lCzOQkRrSpXyFxPKO29mcweW7MbPHDbjdATO2Ww0b5uJKbJ5VNlQy57fl0c807WAeb1lZkzkYk8/qilS3lsi1B0RQPDUG93YNaO3ZC24y1wcjtch36GCaZRA5mMJ7rb8TStEOrTSDoNqFUXLzweI7WFIvhB55KmWxWjOKB9muNdPDeWmc9UohA4MHHLrcoHjrBYuok7uUYCMEnVSBW42Jx4L3/mh2uCfnRTB9BTF/c9kagSbUXjTzYSfCC9Z+NLN+T/MYd9rVs6ROcZTfKBXZCZ5M75xtIyQ4a1TpUEaGtT6/L2MIU5G9GmkoLjvhG25pacVKeOPSQV2uyePBffKsH11zcUIdomEH5eeGR9OAqsB5CVdWR56GdziXS8Tj1ZLPUAYiI1SLZLZKocBx5vS7pOX8v4OJHHsaIHC7kcD2/8zoUU5/KMsyfE+igFOXztnokjuxIaJ4v/CMUV4BB9wAoP5tZHhyhhKubLsXXK8b2ncrFjTD4KdqBNAJH7EMGysko6bvrB+ftCTIgQCXkEFQw66PQ==
+Received-SPF: pass client-ip=2a01:b747:3001:202::3d;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,823 +90,266 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch implements Allwinner A10 GPIO peripheral emulation.
 
-The emulation focuses on input/output and interrupt functionality,
-whereas the drive and pull up/down functionality is not emulated.
 
-Signed-off-by: Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
----
- MAINTAINERS                           |   2 +
- hw/gpio/Kconfig                       |   3 +
- hw/gpio/allwinner-gpio.c              | 465 ++++++++++++++++++++++++++++++++++
- hw/gpio/meson.build                   |   1 +
- hw/gpio/trace-events                  |   6 +
- include/hw/gpio/allwinner-gpio-regs.h | 228 +++++++++++++++++
- include/hw/gpio/allwinner-gpio.h      |  41 +++
- 7 files changed, 746 insertions(+)
+> On 18. Aug 2026, at 19:42, Matt Turner <mattst88@gmail.com> wrote:
+>=20
+> Every indirect branch that cannot use goto_tb ends in
+> tcg_gen_lookup_and_goto_ptr(), which calls helper_lookup_tb_ptr(). For =
+an
+> emulated compiler that is 8.4 billion helper calls in a single =
+translation
+> unit: 24.6% of all TB exits take this path, because jsr/ret/jmp have a
+> register destination and because goto_tb is restricted to same-page
+> targets.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b51f5c3e60..6cefdde70b 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -743,6 +743,8 @@ F: include/hw/*/allwinner*
- F: hw/arm/cubieboard.c
- F: docs/system/arm/cubieboard.rst
- F: hw/misc/axp2xx.c
-+F: hw/gpio/allwinner-gpio.c
-+F: include/hw/gpio/allwinner-gpio*
- F: tests/functional/arm/test_cubieboard.py
- 
- Allwinner-h3
-diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
-index fcc7c70bd5..ea0fb72b40 100644
---- a/hw/gpio/Kconfig
-+++ b/hw/gpio/Kconfig
-@@ -33,3 +33,6 @@ config ZAURUS_SCOOP
- 
- config CADENCE_GPIO
-     bool
-+
-+config ALLWINNER_GPIO
-+    bool
-diff --git a/hw/gpio/allwinner-gpio.c b/hw/gpio/allwinner-gpio.c
-new file mode 100644
-index 0000000000..fb0f3f7ca1
---- /dev/null
-+++ b/hw/gpio/allwinner-gpio.c
-@@ -0,0 +1,465 @@
-+/*
-+ *  Allwinner GPIO Emulation
-+ *
-+ *  Copyright (C) 2026 Strahinja Jankovic <strahinja.p.jankovic@gmail.com>
-+ *
-+ *  SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/gpio/allwinner-gpio.h"
-+#include "hw/gpio/allwinner-gpio-regs.h"
-+#include "hw/core/irq.h"
-+#include "hw/core/qdev-properties.h"
-+#include "migration/vmstate.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "trace.h"
-+
-+#define REG_INDEX(offset)         (offset / sizeof(uint32_t))
-+
-+#define AW_GPIO_SET(port) \
-+    static inline void allwinner_gpio_set_##port(void *opaque, \
-+                                                 int line, \
-+                                                 int level) { \
-+        allwinner_gpio_set(opaque, port, line, level); \
-+    }
-+
-+static void allwinner_gpio_set(void *opaque, int port, int line, int level);
-+
-+AW_GPIO_SET(GPIO_PA);
-+AW_GPIO_SET(GPIO_PB);
-+AW_GPIO_SET(GPIO_PC);
-+AW_GPIO_SET(GPIO_PD);
-+AW_GPIO_SET(GPIO_PE);
-+AW_GPIO_SET(GPIO_PF);
-+AW_GPIO_SET(GPIO_PG);
-+AW_GPIO_SET(GPIO_PH);
-+AW_GPIO_SET(GPIO_PI);
-+
-+static void (*AW_GPIO_IN_HANDLER[AW_GPIO_PORTS_NUM]) (void *opaque,
-+                                                      int line,
-+                                                      int level) = {
-+    allwinner_gpio_set_GPIO_PA,
-+    allwinner_gpio_set_GPIO_PB,
-+    allwinner_gpio_set_GPIO_PC,
-+    allwinner_gpio_set_GPIO_PD,
-+    allwinner_gpio_set_GPIO_PE,
-+    allwinner_gpio_set_GPIO_PF,
-+    allwinner_gpio_set_GPIO_PG,
-+    allwinner_gpio_set_GPIO_PH,
-+    allwinner_gpio_set_GPIO_PI,
-+};
-+
-+static char *allwinner_gpio_get_regname(unsigned offset)
-+{
-+    switch (offset) {
-+    case 0 ... GPIO_Pn_PUL1(GPIO_PI):
-+    {
-+        const char *regname = "?";
-+        switch (offset % PORT_STRIDE) {
-+        case CFG0:
-+            regname = "CFG0";
-+            break;
-+        case CFG1:
-+            regname = "CFG1";
-+            break;
-+        case CFG2:
-+            regname = "CFG2";
-+            break;
-+        case CFG3:
-+            regname = "CFG3";
-+            break;
-+        case DAT:
-+            regname = "DAT";
-+            break;
-+        case DRV0:
-+            regname = "DRV0";
-+            break;
-+        case DRV1:
-+            regname = "DRV1";
-+            break;
-+        case PUL0:
-+            regname = "PUL0";
-+            break;
-+        case PUL1:
-+            regname = "PUL1";
-+            break;
-+        }
-+        return g_strdup_printf("%s:%s",
-+                               portname(offset / PORT_STRIDE),
-+                               regname);
-+    }
-+    case GPIO_INT_CFG0:
-+        return g_strdup("INT_CFG0");
-+    case GPIO_INT_CFG1:
-+        return g_strdup("INT_CFG1");
-+    case GPIO_INT_CFG2:
-+        return g_strdup("INT_CFG2");
-+    case GPIO_INT_CFG3:
-+        return g_strdup("INT_CFG3");
-+    case GPIO_INT_CTL:
-+        return g_strdup("INT_CTL");
-+    case GPIO_INT_STA:
-+        return g_strdup("INT_STA");
-+    case GPIO_INT_DEB:
-+        return g_strdup("INT_DEB");
-+    default:
-+        return g_strdup("[?]");
-+    }
-+}
-+
-+static bool gpio_is_input(AWPortMap *port, uint32_t pin);
-+static int int_ctl_cfg(AWGPIOState *s, int irq_line);
-+
-+static inline void allwinner_gpio_update_int(AWGPIOState *s)
-+{
-+    qemu_set_irq(
-+        s->irq,
-+        !!(s->regs[REG_INDEX(GPIO_INT_CTL)] & s->regs[REG_INDEX(GPIO_INT_STA)])
-+    );
-+}
-+
-+static void allwinner_gpio_set_int_line(AWGPIOState *s, int port,
-+                                        int line, AWGPIOLevel level)
-+{
-+    AWPortsOverlay *o = (AWPortsOverlay *)s->regs;
-+    int irq_line = irq_nr(port, line);
-+    bool raise_irq = false;
-+    unsigned input_val;
-+    int int_cfg;
-+
-+    /* Check if pin can actually trigger an interrupt */
-+    if (irq_line == -1) {
-+        return;
-+    }
-+
-+    /* if this signal isn't configured as an input signal, nothing to do */
-+    if (!gpio_is_input(&o->ports[port], line)) {
-+        return;
-+    }
-+
-+    /* Get current input value */
-+    input_val = extract32(o->ports[port].dat, line, 1);
-+    int_cfg = int_ctl_cfg(s, irq_line);
-+
-+    switch (int_cfg) {
-+    case AW_GPIO_IRQ_CFG_RISING_EDGE:
-+        if (!input_val && level) {
-+            raise_irq = true;
-+        }
-+        break;
-+    case AW_GPIO_IRQ_CFG_FALLING_EDGE:
-+        if (input_val && !level) {
-+            raise_irq = true;
-+        }
-+        break;
-+    case AW_GPIO_IRQ_CFG_HIGH_LEVEL:
-+        if (level) {
-+            raise_irq = true;
-+        }
-+        break;
-+    case AW_GPIO_IRQ_CFG_LOW_LEVEL:
-+        if (!level) {
-+            raise_irq = true;
-+        }
-+        break;
-+    case AW_GPIO_IRQ_CFG_BOTH_EDGE:
-+        if (input_val != level) {
-+            raise_irq = true;
-+        }
-+        break;
-+    default:
-+        /* Unexpected */
-+        break;
-+    }
-+
-+    if (raise_irq) {
-+        s->regs[REG_INDEX(GPIO_INT_STA)] |= 1u << irq_line;
-+    }
-+}
-+
-+static void port_set_all_int_lines(AWGPIOState *s, int port)
-+{
-+    AWPortsOverlay *o = (AWPortsOverlay *)s->regs;
-+    int i;
-+
-+    for (i = 0; i < AW_PINS_PER_PORT[port]; i++) {
-+        AWGPIOLevel aw_level = extract32(o->ports[port].dat, i, 1);
-+        allwinner_gpio_set_int_line(s, port, i, aw_level);
-+    }
-+
-+    allwinner_gpio_update_int(s);
-+}
-+
-+static void allwinner_set_all_int_lines(AWGPIOState *s)
-+{
-+    int i;
-+
-+    for (i = 0; i < AW_GPIO_PORTS_NUM; i++) {
-+        port_set_all_int_lines(s, i);
-+    }
-+}
-+
-+static void allwinner_gpio_set(void *opaque, int port, int line, int level)
-+{
-+    AWGPIOState *s = AW_GPIO(opaque);
-+    AWPortsOverlay *o = (AWPortsOverlay *)s->regs;
-+    AWGPIOLevel aw_level = level ? AW_GPIO_LEVEL_HIGH : AW_GPIO_LEVEL_LOW;
-+
-+    if (gpio_is_input(&o->ports[port], line)) {
-+
-+        trace_allwinner_gpio_set(portname(port), line, aw_level);
-+
-+        allwinner_gpio_set_int_line(s, port, line, aw_level);
-+
-+        o->ports[port].dat = (o->ports[port].dat & ~(1u << line)) |
-+                             (aw_level << line);
-+    }
-+    allwinner_gpio_update_int(s);
-+}
-+
-+
-+static inline bool gpio_is_output(AWPortMap *port, uint32_t pin)
-+{
-+    uint32_t cfg_n = pin / CFG_PINS_PER_REG;
-+    uint32_t pin_shift = (pin % CFG_PINS_PER_REG) * CFG_PIN_STRIDE;
-+    return (extract32(port->cfg[cfg_n], pin_shift, CFG_PIN_STRIDE - 1) ==
-+        CFG_OUTPUT_MASK);
-+}
-+
-+static inline bool gpio_is_input(AWPortMap *port, uint32_t pin)
-+{
-+    uint32_t cfg_n = pin / CFG_PINS_PER_REG;
-+    uint32_t pin_shift = (pin % CFG_PINS_PER_REG) * CFG_PIN_STRIDE;
-+    return (extract32(port->cfg[cfg_n], pin_shift, CFG_PIN_STRIDE - 1) ==
-+        CFG_INPUT_MASK);
-+}
-+
-+static inline int int_ctl_cfg(AWGPIOState *s, int irq_line)
-+{
-+    unsigned int_cfg_n = s->regs[REG_INDEX(GPIO_INT_CFG0) + irq_line / 8];
-+    return extract32(int_cfg_n,
-+                     (irq_line % INT_CFG_IRQ_PER_REG) * INT_CFG_IRQ_STRIDE,
-+                     INT_CFG_IRQ_STRIDE - 1);
-+}
-+
-+static inline void port_update_output_lines(AWGPIOState *s, uint32_t port)
-+{
-+    AWPortsOverlay *o = (AWPortsOverlay *)s->regs;
-+    int pin;
-+
-+    for (pin = 0; pin < AW_PINS_PER_PORT[port]; pin++) {
-+        if (gpio_is_output(&o->ports[port], pin)) {
-+            qemu_set_irq(s->output[port][pin],
-+                         !!(o->ports[port].dat & BIT_MASK(pin)));
-+            trace_allwinner_gpio_out_pin(
-+                portname(port), pin,
-+                !!(o->ports[port].dat & BIT_MASK(pin)));
-+         }
-+        else if (gpio_is_input(&o->ports[port], pin)) {
-+            qemu_irq_lower(s->output[port][pin]);
-+        }
-+    }
-+}
-+
-+static inline void allwinner_gpio_update_all_output_lines(AWGPIOState *s)
-+{
-+    for (int port = 0; port < AW_GPIO_PORTS_NUM; port++) {
-+        port_update_output_lines(s, port);
-+    }
-+}
-+
-+
-+static uint64_t allwinner_gpio_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    AWGPIOState *s = AW_GPIO(opaque);
-+    uint32_t reg_value = 0;
-+    g_autofree char *regname = allwinner_gpio_get_regname(offset);
-+
-+    switch (offset) {
-+    case 0 ... GPIO_Pn_PUL1(GPIO_PI):
-+    case GPIO_INT_CFG0:
-+    case GPIO_INT_CFG1:
-+    case GPIO_INT_CFG2:
-+    case GPIO_INT_CFG3:
-+    case GPIO_INT_CTL:
-+    case GPIO_INT_STA:
-+    case GPIO_INT_DEB:
-+        reg_value = s->regs[REG_INDEX(offset)];
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "[%s]%s: Bad register at offset 0x%"
-+                      HWADDR_PRIx "\n", TYPE_AW_GPIO, __func__, offset);
-+        break;
-+    }
-+
-+    trace_allwinner_gpio_read(regname, reg_value);
-+
-+    return reg_value;
-+}
-+
-+/* update output values */
-+/* update interrupts */
-+static void allwinner_port_write(AWGPIOState *s, hwaddr offset, uint64_t value)
-+{
-+    AWPortsOverlay *o = (AWPortsOverlay *)s->regs;
-+    uint32_t port = offset / PORT_STRIDE;
-+    uint32_t reg = offset % PORT_STRIDE;
-+
-+    switch (reg) {
-+    case CFG0:
-+        o->ports[port].cfg[0] =
-+            value & GPIO_CFG0_PINS_MASK(AW_PINS_PER_PORT[port]);
-+        break;
-+    case CFG1:
-+        o->ports[port].cfg[1] =
-+            value & GPIO_CFG1_PINS_MASK(AW_PINS_PER_PORT[port]);
-+        break;
-+    case CFG2:
-+        o->ports[port].cfg[2] =
-+            value & GPIO_CFG2_PINS_MASK(AW_PINS_PER_PORT[port]);
-+        break;
-+    case CFG3:
-+        o->ports[port].cfg[3] =
-+            value & GPIO_CFG3_PINS_MASK(AW_PINS_PER_PORT[port]);
-+        break;
-+    case DAT:
-+        o->ports[port].dat =
-+            value & GPIO_DAT_PINS_MASK(AW_PINS_PER_PORT[port]);
-+        break;
-+    case DRV0:
-+        o->ports[port].drv[0] =
-+            value & GPIO_DRV0_PINS_MASK(AW_PINS_PER_PORT[port]);
-+        break;
-+    case DRV1:
-+        o->ports[port].drv[1] =
-+            value & GPIO_DRV1_PINS_MASK(AW_PINS_PER_PORT[port]);
-+        break;
-+    case PUL0:
-+        o->ports[port].pul[0] =
-+            value & GPIO_PUL0_PINS_MASK(AW_PINS_PER_PORT[port]);
-+        break;
-+    case PUL1:
-+        o->ports[port].pul[1] =
-+            value & GPIO_PUL1_PINS_MASK(AW_PINS_PER_PORT[port]);
-+        break;
-+    }
-+    port_update_output_lines(s, port);
-+    port_set_all_int_lines(s, port);
-+}
-+
-+static void allwinner_gpio_write(void *opaque, hwaddr offset, uint64_t value,
-+                           unsigned size)
-+{
-+    AWGPIOState *s = AW_GPIO(opaque);
-+    g_autofree char *regname = allwinner_gpio_get_regname(offset);
-+
-+    trace_allwinner_gpio_write(regname, value);
-+
-+    switch (offset) {
-+    case 0 ... GPIO_Pn_PUL1(GPIO_PI):
-+        allwinner_port_write(s, offset, value);
-+        break;
-+    case GPIO_INT_CFG0:
-+    case GPIO_INT_CFG1:
-+    case GPIO_INT_CFG2:
-+    case GPIO_INT_CFG3:
-+    case GPIO_INT_CTL:
-+    case GPIO_INT_DEB:
-+        s->regs[REG_INDEX(offset)] = value;
-+        /* update interrupts */
-+        allwinner_set_all_int_lines(s);
-+        break;
-+    case GPIO_INT_STA:
-+        /* W1C */
-+        s->regs[REG_INDEX(offset)] &= ~value;
-+        allwinner_set_all_int_lines(s);
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "[%s]%s: Bad register at offset 0x%"
-+                      HWADDR_PRIx "\n", TYPE_AW_GPIO, __func__, offset);
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps allwinner_gpio_ops = {
-+    .read = allwinner_gpio_read,
-+    .write = allwinner_gpio_write,
-+    .valid.min_access_size = 4,
-+    .valid.max_access_size = 4,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+};
-+
-+static const VMStateDescription vmstate_allwinner_gpio = {
-+    .name = TYPE_AW_GPIO,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32_ARRAY(regs, AWGPIOState, AW_GPIO_REGS_NUM),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void allwinner_gpio_reset(DeviceState *dev)
-+{
-+    AWGPIOState *s = AW_GPIO(dev);
-+    AWPortsOverlay *o = (AWPortsOverlay *)s->regs;
-+    int port = 0;
-+
-+    memset(s->regs, 0, AW_GPIO_IOSIZE);
-+
-+    for (port = 0; port < AW_GPIO_PORTS_NUM; port++) {
-+        o->ports[port].drv[0] = aw_gpio_port_reset[port].drv[0];
-+        o->ports[port].drv[1] = aw_gpio_port_reset[port].drv[1];
-+        o->ports[port].pul[0] = aw_gpio_port_reset[port].pul[0];
-+        o->ports[port].pul[1] = aw_gpio_port_reset[port].pul[1];
-+    }
-+
-+    allwinner_gpio_update_all_output_lines(s);
-+    allwinner_gpio_update_int(s);
-+}
-+
-+static void allwinner_gpio_realize(DeviceState *dev, Error **errp)
-+{
-+    AWGPIOState *s = AW_GPIO(dev);
-+    int port;
-+
-+    memory_region_init_io(&s->iomem, OBJECT(s), &allwinner_gpio_ops, s,
-+                          TYPE_AW_GPIO, AW_GPIO_IOSIZE);
-+
-+    for (port = 0; port < AW_GPIO_PORTS_NUM; port++) {
-+        g_autofree char *in_name = portname_in(port);
-+        g_autofree char *out_name = portname_out(port);
-+        qdev_init_gpio_in_named(dev, AW_GPIO_IN_HANDLER[port],
-+                                in_name, AW_PINS_PER_PORT[port]);
-+        qdev_init_gpio_out_named(dev, s->output[port],
-+                                 out_name, AW_PINS_PER_PORT[port]);
-+    }
-+    sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iomem);
-+}
-+
-+static void allwinner_gpio_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = allwinner_gpio_realize;
-+    device_class_set_legacy_reset(dc, allwinner_gpio_reset);
-+    dc->vmsd = &vmstate_allwinner_gpio;
-+    dc->desc = "Allwinner GPIO controller";
-+}
-+
-+static const TypeInfo allwinner_gpio_info = {
-+    .name = TYPE_AW_GPIO,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(AWGPIOState),
-+    .class_init = allwinner_gpio_class_init,
-+};
-+
-+static void allwinner_gpio_register_types(void)
-+{
-+    type_register_static(&allwinner_gpio_info);
-+}
-+
-+type_init(allwinner_gpio_register_types)
-diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
-index 0555f44b6a..8ede5e88ae 100644
---- a/hw/gpio/meson.build
-+++ b/hw/gpio/meson.build
-@@ -20,3 +20,4 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_sgpio.c'))
- system_ss.add(when: 'CONFIG_SIFIVE_GPIO', if_true: files('sifive_gpio.c'))
- system_ss.add(when: 'CONFIG_PCF8574', if_true: files('pcf8574.c'))
- system_ss.add(when: 'CONFIG_CADENCE_GPIO', if_true: files('cadence_gpio.c'))
-+system_ss.add(when: 'CONFIG_ALLWINNER_GPIO', if_true: files('allwinner-gpio.c'))
-diff --git a/hw/gpio/trace-events b/hw/gpio/trace-events
-index 80ca783a03..5ef3e0b8fd 100644
---- a/hw/gpio/trace-events
-+++ b/hw/gpio/trace-events
-@@ -51,3 +51,9 @@ stm32l4x5_gpio_pins(char *gpio, uint16_t disconnected, uint16_t high) "GPIO%s di
- cdns_gpio_read(const char *path, uint64_t offset, uint32_t value) "%s:reg[0x%04" PRIx64 "] -> 0x%" PRIx32
- cdns_gpio_write(const char *path, uint64_t offset, uint64_t value) "%s:reg[0x%04" PRIx64 "] <- 0x%04" PRIx64
- cdns_gpio_set(const char *path, int line, int level) "%s:[%d] <- %d"
-+
-+# allwinner_gpio.c
-+allwinner_gpio_set(const char *port, int line, int level) "[%s:%d] <- %d"
-+allwinner_gpio_read(const char *reg, uint32_t value) "[%s] -> 0x%" PRIx32
-+allwinner_gpio_write(const char *reg, uint32_t value) "[%s] <- 0x%" PRIx32
-+allwinner_gpio_out_pin(const char *reg, uint32_t pin, uint32_t value) "[%s.%d] <- 0x%" PRIx32
-diff --git a/include/hw/gpio/allwinner-gpio-regs.h b/include/hw/gpio/allwinner-gpio-regs.h
-new file mode 100644
-index 0000000000..52d72c0f25
---- /dev/null
-+++ b/include/hw/gpio/allwinner-gpio-regs.h
-@@ -0,0 +1,228 @@
-+/*
-+ *  Allwinner GPIO registers definition
-+ *
-+ *  Copyright (C) 2026 Strahinja Jankovic. <strahinja.p.jankovic@gmail.com>
-+ *
-+ *  SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef ALLWINNER_GPIO_REGS_H
-+#define ALLWINNER_GPIO_REGS_H
-+
-+/* GPIO ports index (n) */
-+#define GPIO_PA     0
-+#define GPIO_PB     1
-+#define GPIO_PC     2
-+#define GPIO_PD     3
-+#define GPIO_PE     4
-+#define GPIO_PF     5
-+#define GPIO_PG     6
-+#define GPIO_PH     7
-+#define GPIO_PI     8
-+
-+#ifndef AW_GPIO_PORTS_NUM
-+#define AW_GPIO_PORTS_NUM 9
-+#endif
-+
-+#ifndef AW_GPIO_PIN_COUNT
-+#define AW_GPIO_PIN_COUNT 32
-+#endif
-+
-+typedef struct AWPortMap {
-+    uint32_t cfg[4];
-+    uint32_t dat;
-+    uint32_t drv[2];
-+    uint32_t pul[2];
-+} AWPortMap;
-+
-+typedef struct AWPortsOverlay {
-+    AWPortMap ports[AW_GPIO_PORTS_NUM];
-+} AWPortsOverlay;
-+
-+static const uint32_t AW_PINS_PER_PORT[AW_GPIO_PORTS_NUM] = {
-+    18,
-+    24,
-+    25,
-+    28,
-+    12,
-+    6,
-+    12,
-+    28,
-+    22
-+};
-+
-+typedef struct {
-+    uint32_t drv[2];
-+    uint32_t pul[2];
-+} AWPortResetVals;
-+
-+static const AWPortResetVals aw_gpio_port_reset[] = {
-+    [GPIO_PA] = { .drv = { 0x55555555, 0x00000005 } },
-+    [GPIO_PB] = { .drv = { 0x55555555, 0x00005555 } },
-+    [GPIO_PC] = { .drv = { 0x55555555, 0x00015555 },
-+                  .pul = { 0x00005140, 0x00004016 } },
-+    [GPIO_PD] = { .drv = { 0x55555555, 0x00555555 } },
-+    [GPIO_PE] = { .drv = { 0x00555555, 0x0 } },
-+    [GPIO_PF] = { .drv = { 0x00000555, 0x0 } },
-+    [GPIO_PG] = { .drv = { 0x05555555, 0x0 } },
-+    [GPIO_PH] = { .drv = { 0x55555555, 0x00555555 } },
-+    [GPIO_PI] = { .drv = { 0x55555555, 0x00000555 } },
-+};
-+
-+#define DEFAULT_CFG_MASK    0x77777777
-+#define DEFAULT_DRV_MASK    0xffffffff
-+#define DEFAULT_PUL_MASK    0xffffffff
-+
-+#define CFG_INPUT_MASK      0x0
-+#define CFG_OUTPUT_MASK     0x1
-+#define CFG_IO_MASK         0x1
-+#define CFG_PIN_STRIDE      4
-+#define CFG_PINS_PER_REG    (AW_GPIO_PIN_COUNT / CFG_PIN_STRIDE)
-+
-+#define AW_INT_GPIO_COUNT   32
-+#define INT_CFG_IRQ_STRIDE  4
-+#define INT_CFG_IRQ_PER_REG (AW_INT_GPIO_COUNT / INT_CFG_IRQ_STRIDE)
-+
-+/* GPIO masks per number of pins */
-+#define GPIO_CFG0_PINS_MASK(pins) \
-+    ((pins >= CFG_PINS_PER_REG) ? DEFAULT_CFG_MASK : \
-+    ((1 << (pins * CFG_PIN_STRIDE)) - 1) & DEFAULT_CFG_MASK)
-+
-+#define GPIO_CFG1_PINS_MASK(pins) \
-+    ((pins >= 16) ? DEFAULT_CFG_MASK : \
-+    ((pins > 8) ? ((1 << ((pins - 8) * 4)) - 1) & DEFAULT_CFG_MASK : 0))
-+
-+#define GPIO_CFG2_PINS_MASK(pins) \
-+    ((pins >= 24) ? DEFAULT_CFG_MASK : \
-+    ((pins > 16) ? ((1 << ((pins - 16) * 4)) - 1) & DEFAULT_CFG_MASK : 0))
-+
-+#define GPIO_CFG3_PINS_MASK(pins) \
-+    ((pins > 24) ? ((1 << ((pins - 24) * 4)) - 1) & DEFAULT_CFG_MASK : 0)
-+
-+#define GPIO_DAT_PINS_MASK(pins)    ((1 << pins) - 1)
-+
-+#define GPIO_DRV0_PINS_MASK(pins) \
-+    ((pins > 16) ? DEFAULT_DRV_MASK : ((1 << (pins * 2)) - 1))
-+
-+#define GPIO_DRV1_PINS_MASK(pins) \
-+    ((pins > 16) ? ((1 << ((pins - 16) * 2)) - 1) : 0)
-+
-+#define GPIO_PUL0_PINS_MASK(pins) \
-+    ((pins > 16) ? DEFAULT_PUL_MASK : ((1 << (pins * 2)) - 1))
-+
-+#define GPIO_PUL1_PINS_MASK(pins) \
-+    ((pins > 16) ? ((1 << ((pins - 16) * 2)) - 1) : 0)
-+
-+
-+#define PORT_STRIDE     0x24
-+
-+/* Allwinner GPIO memory map */
-+#define CFG0    0x00 /* Configure register 0 */
-+#define CFG1    0x04 /* Configure register 1 */
-+#define CFG2    0x08 /* Configure register 2 */
-+#define CFG3    0x0c /* Configure register 3 */
-+#define DAT     0x10 /* Data register */
-+#define DRV0    0x14 /* Multi-driving register 0 */
-+#define DRV1    0x18 /* Multi-driving register 1 */
-+#define PUL0    0x1c /* Pull register 0 */
-+#define PUL1    0x20 /* Pull register 1 */
-+
-+/* Port n configure register 0 */
-+#define GPIO_Pn_CFG0(n)   (n*PORT_STRIDE + CFG0)
-+/* Port n configure register 1 */
-+#define GPIO_Pn_CFG1(n)   (n*PORT_STRIDE + CFG1)
-+/* Port n configure register 2 */
-+#define GPIO_Pn_CFG2(n)   (n*PORT_STRIDE + CFG2)
-+/* Port n configure register 3 */
-+#define GPIO_Pn_CFG3(n)   (n*PORT_STRIDE + CFG3)
-+/* Port n data register */
-+#define GPIO_Pn_DAT(n)    (n*PORT_STRIDE + DAT)
-+/* Port n Multi-driving register 0 */
-+#define GPIO_Pn_DRV0(n)   (n*PORT_STRIDE + DRV0)
-+/* Port n Multi-driving register 1 */
-+#define GPIO_Pn_DRV1(n)   (n*PORT_STRIDE + DRV1)
-+/* Port n Pull register 0 */
-+#define GPIO_Pn_PUL0(n)   (n*PORT_STRIDE + PUL0)
-+/* Port n Pull register 1 */
-+#define GPIO_Pn_PUL1(n)   (n*PORT_STRIDE + PUL1)
-+/* PIO interrupt configure register 0 */
-+#define GPIO_INT_CFG0       0x200
-+/* PIO interrupt configure register 1 */
-+#define GPIO_INT_CFG1       0x204
-+/* PIO interrupt configure register 2 */
-+#define GPIO_INT_CFG2       0x208
-+/* PIO interrupt configure register 3 */
-+#define GPIO_INT_CFG3       0x20c
-+/* PIO interrupt control register */
-+#define GPIO_INT_CTL        0x210
-+/* PIO interrupt status register */
-+#define GPIO_INT_STA        0x214
-+/* PIO interrupt debounce register */
-+#define GPIO_INT_DEB        0x218
-+/* SDRAM Pad Multi-driving register */
-+#define SDR_PAD_DRV         0x220
-+/* SDRAM Pad Pull register */
-+#define SDR_PAD_PUL         0x224
-+
-+typedef enum AWGPIOLevel {
-+    AW_GPIO_LEVEL_LOW = 0,
-+    AW_GPIO_LEVEL_HIGH = 1,
-+} AWGPIOLevel;
-+
-+typedef enum AWGPIOCfg {
-+    AW_GPIO_CFG_IN = 0,
-+    AW_GPIO_CFG_OUT = 1,
-+    AW_GPIO_CFG_FUN = 2,
-+    /* Use only fun for testing */
-+} AWGPIOCfg;
-+
-+typedef enum AWGPIOIrqCfg {
-+    AW_GPIO_IRQ_CFG_RISING_EDGE = 0,
-+    AW_GPIO_IRQ_CFG_FALLING_EDGE = 1,
-+    AW_GPIO_IRQ_CFG_HIGH_LEVEL = 2,
-+    AW_GPIO_IRQ_CFG_LOW_LEVEL = 3,
-+    AW_GPIO_IRQ_CFG_BOTH_EDGE = 4
-+} AWGPIOIrqCfg;
-+
-+static const char *const port_name_table[] = {
-+    "PA", "PB", "PC", "PD", "PE", "PF", "PG", "PH", "PI"
-+};
-+
-+static const char *portname(unsigned index)
-+{
-+    return index < AW_GPIO_PORTS_NUM ? port_name_table[index] : "?";
-+}
-+
-+static inline char *portname_in(int port)
-+{
-+    return g_strconcat(portname(port), "_IN", NULL);
-+}
-+
-+static inline char *portname_out(int port)
-+{
-+    return g_strconcat(portname(port), "_OUT", NULL);
-+}
-+
-+static int irq_nr(int port, int line)
-+{
-+    int irq = -1;
-+
-+    switch (port) {
-+    case GPIO_PH:
-+        if (line <= 21) {
-+            irq = line;
-+        }
-+        break;
-+    case GPIO_PI:
-+        if ((line >= 10) && (line <= 19)) {
-+            irq = line + 12;
-+        }
-+        break;
-+    default:
-+        break;
-+    }
-+    return irq;
-+}
-+
-+
-+#endif /* ALLWINNER_GPIO_REGS_H */
-diff --git a/include/hw/gpio/allwinner-gpio.h b/include/hw/gpio/allwinner-gpio.h
-new file mode 100644
-index 0000000000..f6778d1893
---- /dev/null
-+++ b/include/hw/gpio/allwinner-gpio.h
-@@ -0,0 +1,41 @@
-+/*
-+ *  Allwinner GPIO registers definition
-+ *
-+ *  Copyright (C) 2026 Strahinja Jankovic. <strahinja.p.jankovic@gmail.com>
-+ *
-+ *  SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef ALLWINNER_GPIO_H
-+#define ALLWINNER_GPIO_H
-+
-+#include "hw/core/sysbus.h"
-+#include "qom/object.h"
-+
-+/** Size of register I/O address space used by GPIO device */
-+#define AW_GPIO_IOSIZE (0x400)
-+
-+/** Total number of known registers */
-+#define AW_GPIO_REGS_NUM    (AW_GPIO_IOSIZE / sizeof(uint32_t))
-+
-+/** Max number of ports */
-+#define AW_GPIO_PORTS_NUM   9
-+/** Max number of pins per ports */
-+#define AW_GPIO_PIN_COUNT 32
-+
-+#define TYPE_AW_GPIO        "allwinner.gpio"
-+OBJECT_DECLARE_SIMPLE_TYPE(AWGPIOState, AW_GPIO)
-+
-+struct AWGPIOState {
-+    /*< private >*/
-+    SysBusDevice parent_obj;
-+
-+    /*< public >*/
-+    MemoryRegion iomem;
-+    qemu_irq irq;
-+    qemu_irq output[AW_GPIO_PORTS_NUM][AW_GPIO_PIN_COUNT];
-+
-+    uint32_t regs[AW_GPIO_REGS_NUM];
-+};
-+
-+#endif /* ALLWINNER_GPIO_H */
+Hi,
 
--- 
-2.55.0
+In your testing set, how many of those indirect branches were returns?
+
+I=E2=80=99ve been (very slowly...) hacking on something adjacent for =
+being able=20
+to leverage hardware return stacks, although it showed an exceedingly =
+large
+amount of issues - especially around the maintaining coherency edge =
+cases...
+
+Your patch gets a lot of the way there on the perf side without a number
+of the issues associated with that.
+
+>=20
+> The helper itself is already tight, but each call pays for a call =
+frame,
+> the can_do_io store, the get_tb_cpu_state() indirect call through
+> TCGCPUOps, curr_cflags(), and a breakpoint check, before it gets to =
+the
+> jump cache probe that almost always hits (95.8% for this workload).
+>=20
+> Emit the probe inline instead. The destination PC is already in a TCG
+> temp, and the flags and cflags the destination must match are =
+constants at
+> translation time, so the fast path is a hash, three guarded loads and =
+a
+> goto_ptr. Only a miss calls the helper, which still owns filling the =
+cache.
+>=20
+> Two details matter for the generated code. The flags and cflags guards =
+are
+> folded into a single aligned 64-bit load and compare, since the fields =
+are
+> adjacent. And each path emits its own goto_ptr rather than branching =
+to a
+> shared one: a temp live across the label is spilled and reloaded on =
+every
+> dispatch, which cost 6.3% on its own.
+>=20
+> Measured with qemu-alpha running an emulated alpha gcc 16.2.0 =
+compiling
+> the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host, =
+LTO
+> build, on top of the preceding three patches:
+>=20
+>    before: 1,402,816,253,499 instructions
+>    after:    890,713,633,237 instructions   -36.51%
+>=20
+>    before: 115.75s wall clock
+>    after:   84.44s wall clock               -27.05%
+>=20
+> The gap between the two is the point at which this stops being a
+> straight-line win: the helper call was highly predictable work that =
+the
+> host pipelined well, so removing it retires far fewer instructions =
+than it
+> saves time. IPC falls from 2.48 to 2.15 across this patch for that =
+reason.
+>=20
+> Despite emitting more code, this also reduces instruction cache =
+pressure,
+> because a dispatch no longer jumps into qemu's .text and evicts =
+translated
+> code:
+>=20
+>    before: 11,476,318,964 L1-icache-load-misses
+>    after:   6,990,186,701 L1-icache-load-misses   -39.1%
+>=20
+> The mechanism is visible directly in a profile: helper_lookup_tb_ptr()
+> falls from 30.97% of samples to 0.42%, and qemu's own .text falls from
+> 38.9% to 5.4%, with the balance moving into generated code.
+>=20
+> Combined with the three preceding patches, against an unmodified LTO
+> build, 1,647,901,588,726 instructions fall to 890,713,633,237, or =
+-45.95%.
+> The emulated compiler produces byte-identical output throughout.
+>=20
+> Open issues, hence RFC:
+>=20
+> - The flags/cflags guards use the *current* TB's values as constants. =
+That
+>  assumes the CPU flags feeding get_tb_cpu_state() cannot change within =
+a
+>  TB, and that curr_cflags() cannot change under a running TB (gdb
+>  attaching to enable single-step would). Both need to be established =
+or
+>  the values need to be loaded at runtime.
+> - tcg/tcg-op.c has no business including accel/tcg/tb-jmp-cache.h or
+>  knowing the CPUJumpCache layout. The probe likely belongs in =
+accel/tcg
+>  with a small emit helper exported from tcg/.
+
+I don=E2=80=99t think that one is a problem.
+> - The jump cache entry is read without qatomic_read(); entries are
+>  invalidated concurrently by setting tb to NULL.
+> - Only wired up for alpha so far, and only for 64-bit guest PCs.
+>=20
+> Signed-off-by: Matt Turner <mattst88@gmail.com>
+> ---
+> include/tcg/tcg-op-common.h |  2 +
+> target/alpha/translate.c    |  4 +-
+> tcg/tcg-op.c                | 79 +++++++++++++++++++++++++++++++++++++
+> 3 files changed, 83 insertions(+), 2 deletions(-)
+>=20
+> diff --git ./include/tcg/tcg-op-common.h ./include/tcg/tcg-op-common.h
+> index 1fe342db0d..65084c38b9 100644
+> --- ./include/tcg/tcg-op-common.h
+> +++ ./include/tcg/tcg-op-common.h
+> @@ -84,6 +84,8 @@ void tcg_gen_goto_tb(unsigned idx);
+>  * this op is equivalent to calling tcg_gen_exit_tb() with 0 as the =
+argument.
+>  */
+> void tcg_gen_lookup_and_goto_ptr(void);
+> +void tcg_gen_lookup_and_goto_ptr_inline(TCGv_i64 pc,
+> +                                        const TranslationBlock *tb);
+>=20
+> void tcg_gen_plugin_cb(unsigned from);
+> void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo);
+> diff --git ./target/alpha/translate.c ./target/alpha/translate.c
+> index c66e3f9c14..939170a28b 100644
+> --- ./target/alpha/translate.c
+> +++ ./target/alpha/translate.c
+> @@ -449,7 +449,7 @@ static void gen_goto_tb(DisasContext *ctx, =
+unsigned tb_slot_idx, int32_t disp)
+>         tcg_gen_exit_tb(ctx->base.tb, tb_slot_idx);
+>     } else {
+>         gen_pc_disp(ctx, cpu_pc, disp);
+> -        tcg_gen_lookup_and_goto_ptr();
+> +        tcg_gen_lookup_and_goto_ptr_inline(cpu_pc, ctx->base.tb);
+>     }
+> }
+>=20
+> @@ -2917,7 +2917,7 @@ static void alpha_tr_tb_stop(DisasContextBase =
+*dcbase, CPUState *cpu)
+>         gen_pc_disp(ctx, cpu_pc, 0);
+>         /* FALLTHRU */
+>     case DISAS_PC_UPDATED:
+> -        tcg_gen_lookup_and_goto_ptr();
+> +        tcg_gen_lookup_and_goto_ptr_inline(cpu_pc, ctx->base.tb);
+>         break;
+>     case DISAS_PC_UPDATED_NOCHAIN:
+>         tcg_gen_exit_tb(NULL, 0);
+> diff --git ./tcg/tcg-op.c ./tcg/tcg-op.c
+> index bbcb510c76..ab8d101871 100644
+> --- ./tcg/tcg-op.c
+> +++ ./tcg/tcg-op.c
+> @@ -28,6 +28,8 @@
+> #include "tcg/tcg-op-common.h"
+> #include "exec/translation-block.h"
+> #include "exec/plugin-gen.h"
+> +#include "hw/core/cpu.h"
+> +#include "../accel/tcg/tb-jmp-cache.h"
+> #include "tcg-internal.h"
+> #include "tcg-has.h"
+>=20
+> @@ -2620,3 +2622,80 @@ void tcg_gen_lookup_and_goto_ptr(void)
+>     tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
+>     tcg_temp_free_ptr(ptr);
+> }
+> +
+> +/*
+> + * As tcg_gen_lookup_and_goto_ptr(), but probe the TB jump cache =
+inline
+> + * instead of calling helper_lookup_tb_ptr() unconditionally.  @pc =
+must
+> + * hold the destination guest PC; @flags and @cflags are the values =
+the
+> + * destination TB must have been translated with.
+> + */
+> +void tcg_gen_lookup_and_goto_ptr_inline(TCGv_i64 pc,
+> +                                        const TranslationBlock *tb)
+> +{
+> +    uint32_t flags =3D tb->flags;
+> +    uint32_t cflags =3D tb->cflags;
+> +    TCGv_ptr jc, ent, tbp, ptr;
+> +    TCGv_i64 h, tmp;
+> +    TCGLabel *slow;
+> +    uint64_t fpair;
+> +
+> +    if (tcg_ctx->gen_tb->cflags & CF_NO_GOTO_PTR) {
+> +        tcg_gen_exit_tb(NULL, 0);
+> +        return;
+> +    }
+> +
+> +    plugin_gen_disable_mem_helpers();
+> +
+> +    QEMU_BUILD_BUG_ON(sizeof(((CPUJumpCache *)0)->array[0]) !=3D 16);
+> +    QEMU_BUILD_BUG_ON(offsetof(TranslationBlock, cflags) !=3D
+> +                      offsetof(TranslationBlock, flags) + 4);
+> +
+> +    jc =3D tcg_temp_ebb_new_ptr();
+> +    ent =3D tcg_temp_ebb_new_ptr();
+> +    tbp =3D tcg_temp_ebb_new_ptr();
+> +    ptr =3D tcg_temp_ebb_new_ptr();
+> +    h =3D tcg_temp_ebb_new_i64();
+> +    tmp =3D tcg_temp_ebb_new_i64();
+> +    slow =3D gen_new_label();
+> +
+> +    /* h =3D tb_jmp_cache_hash_func(pc) * sizeof(array[0]) */
+> +    tcg_gen_shri_i64(h, pc, TB_JMP_CACHE_BITS);
+> +    tcg_gen_xor_i64(h, h, pc);
+> +    tcg_gen_andi_i64(h, h, TB_JMP_CACHE_SIZE - 1);
+> +    tcg_gen_shli_i64(h, h, 4);
+> +
+> +    tcg_gen_ld_ptr(jc, tcg_env,
+> +                   offsetof(CPUState, tb_jmp_cache) - =
+sizeof(CPUState));
+> +    tcg_gen_trunc_i64_ptr(ent, h);
+> +    tcg_gen_add_ptr(ent, jc, ent);
+> +
+> +    tcg_gen_ld_ptr(tbp, ent, offsetof(CPUJumpCache, array[0].tb));
+> +    tcg_gen_brcondi_ptr(TCG_COND_EQ, tbp, 0, slow);
+> +
+> +    tcg_gen_ld_i64(tmp, ent, offsetof(CPUJumpCache, array[0].pc));
+> +    tcg_gen_brcond_i64(TCG_COND_NE, tmp, pc, slow);
+> +
+> +    /*
+> +     * flags and cflags are adjacent uint32_t, so one aligned 64-bit =
+load
+> +     * and compare covers both.
+> +     */
+> +#if HOST_BIG_ENDIAN
+> +    fpair =3D ((uint64_t)flags << 32) | cflags;
+> +#else
+> +    fpair =3D ((uint64_t)cflags << 32) | flags;
+> +#endif
+> +    tcg_gen_ld_i64(tmp, tbp, offsetof(TranslationBlock, flags));
+> +    tcg_gen_brcondi_i64(TCG_COND_NE, tmp, fpair, slow);
+> +
+> +    tcg_gen_ld_ptr(ptr, tbp, offsetof(TranslationBlock, tc.ptr));
+> +    tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
+> +
+> +    /*
+> +     * Emit a second goto_ptr rather than branching to a shared one: =
+a temp
+> +     * live across the label would be spilled and reloaded on every =
+dispatch.
+> +     */
+> +    gen_set_label(slow);
+> +    ptr =3D tcg_temp_ebb_new_ptr();
+> +    gen_helper_lookup_tb_ptr(ptr, tcg_env);
+> +    tcg_gen_op1i(INDEX_op_goto_ptr, TCG_TYPE_PTR, tcgv_ptr_arg(ptr));
+> +}
+> --=20
+> 2.54.0
+>=20
+>=20
 
 
