@@ -4,53 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA68CC5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 21:20:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E92BC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 21:20:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwRDZ-0001YW-Ic; Tue, 18 Aug 2026 17:19:33 -0400
+	id 1wwRDZ-0001YM-AN; Tue, 18 Aug 2026 17:19:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wwRDX-0001Xl-A4
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 17:19:31 -0400
-Received: from smtpout9.mo539.mail-out.ovh.net ([51.210.91.48])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1wwRDW-0001XW-TE; Tue, 18 Aug 2026 17:19:30 -0400
+Received: from smtpout7.mo539.mail-out.ovh.net ([51.210.91.46])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wwRDV-0007xH-Mq
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 17:19:31 -0400
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net [79.137.60.37])
- by mo539.mail-out.ovh.net (Postfix) with ESMTPS id 4hPjJH5HT5z4F5w;
- Tue, 18 Aug 2026 21:19:27 +0000 (UTC)
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net. [127.0.0.1])
- by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue, 18 Aug 2026 21:19:27 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.254.88])
- by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4hPjJH4kM1z1xtS; Tue, 18 Aug 2026 21:19:27 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.6])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>)
+ id 1wwRDU-0007vH-Ko; Tue, 18 Aug 2026 17:19:30 -0400
+Received: from director6.derp.mail-out.ovh.net
+ (director6.derp.mail-out.ovh.net [79.137.60.226])
+ by mo539.mail-out.ovh.net (Postfix) with ESMTPS id 4hPjJ34YfQz4Dwb;
+ Tue, 18 Aug 2026 21:19:15 +0000 (UTC)
+Received: from director6.derp.mail-out.ovh.net
+ (director6.derp.mail-out.ovh.net. [127.0.0.1])
+ by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Tue, 18 Aug 2026 21:19:14 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.58.197])
+ by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4hPjJ26t0kz4CMZ; Tue, 18 Aug 2026 21:19:14 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.5])
  (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 9E022203F42; 
- Tue, 18 Aug 2026 21:19:26 +0000 (UTC)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 6F2D1203F42; 
+ Tue, 18 Aug 2026 21:19:13 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-96R001a57601ca-e9ff-470c-9e1a-0971ce596b28,
+ (GARM-114S008b28ac61c-4ed3-4d66-9af1-b845ca9018f4,
  89C2A8DA583E85FD8389CCC5514D70A45810139E) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 2.10.174.70
-Message-ID: <d40f42e0-4b7f-4540-93b6-e78f2cbee836@kaod.org>
-Date: Tue, 18 Aug 2026 23:19:25 +0200
+Message-ID: <63bb2452-d48d-4216-a9e8-f6525fe54e75@kaod.org>
+Date: Tue, 18 Aug 2026 23:19:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] hw/usb/hcd-ehci: Fix Coverity CID 1685236 and
- check DMA errors
+Subject: Re: [PATCH v2] hw/i2c/aspeed_i2c: Latch received bytes for SMBus
+ block reads
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
- "clg@redhat.com" <clg@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, "open list:All patches CC here" <qemu-devel@nongnu.org>
+ "Mikail.Sadic@ibm.com" <Mikail.Sadic@ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20260817055318.3826428-1-jamin_lin@aspeedtech.com>
+References: <20260814020836.3119613-1-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -95,29 +97,29 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260817055318.3826428-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260814020836.3119613-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 14726489309746146543
+x-ovh-tracer-id: 14722830135542524939
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEsZ9czgN2Sb4JKZWUBXTh9170Js/mDBAAAXNYxEWUznTueDPRSrX/WHSsu4RZ7WvRsDT7v/jJzHDLSDQ7PyynpJAo41fJgThFJu0DMUMUzOKw0Sv2Q8M6OKxfDs4xI9DsT9/jPbAVr56Li+8JhDkWzjYZRLWvdHPGJe9j3cEzxsRq/H4liAmHqC+Q46DFQeP0WTjUr4qq8TX4KO3vIWjYwrAW3fDHl8iKuho52fFDpAAIVhfaSVcWjSKu4dbk3F+E9RHndm8yZpCsUdA2hwZ6/ucTd/ZXK37ebeFtTiNDqb1x0T/yBuw/DCgD7dvc5yYeC311tqDHYdZmUVuki25t1i7jYZUqEVz9vyQJJCpi2lcIcQIDoPVhIt6B5eAGuYRKD0YxIIP++XjE6VIgBhbcq/6zDffJm/I6QOlz1iaB9gulzFvxMf8TJBfeOTSXz/OmBmyRU6qxCJlHwVxEcZu6CZHwxTMIPMe0GQK6cPu7/dVYxmMM0iGTUCqgcHU51RBzMjZLLMt7ylFHTK1W8/H3b8EtY5ccma2xSRl0v9mLUqdNpmAxhiHOawOM4+NnkV5ZVPVCEEKoD5FMvGhQ1FqQKiHiN/VMt8sulbI8gxi1TOtUzbABiRJy63HXI4VK3VSavCKI+rJ9W0JlvAPPQscy8YLELE/cvwPj+RFi4x9attA
-DKIM-Signature: a=rsa-sha256; bh=drJ9gLk1c4MIcpNnogslTuo9K5OzVoqABoJo7ng0O5g=; 
+X-VR-SPAMCAUSE: dmFkZTGrYAfbnQJENrFhcPDzTyQl8JH0Ltc0hPBCWVgi6x94CWv276LK+U0ffN03BfwzKW7XjKYSxVM56ZNpxx9dx0BTpYi0sl9lo0137XMK4b7277mIAGAcBb/3sWE0Y9u1LuiBLE2UPfx9njDRShGmRNQoC23CjzidigETGQ5beyU3wIN76eneComTPcrgKnL8MMIF1Wzprx/Z+4Vhcw9E9OK825lKOuAydMs26tkp1REfRiN6UM10liZFp6FjmF4x/DnMDu5m4KGBj45apJCq8a2BpbtVJuuPTCDtzs9g1X12r1clKKsrXiOgyO8AId2E3FyI3TvLkftGS5YJQKqAMxsZYcLpu+YXPGufnxU4wsq7cQWnHnz6wx6e6IsUS6sTPJWuqIC05tk3K8Gelsw4VHqWXBod/O8wzAES8xraxiaWw6/5FwDOE2oXGpQqEOeGqvn2YurisnigunBnKR7vN6vsFOfDfEYbcmygHzvTZ371lU0p/yOqurxxCMGegFRsWWw7+EuPEP7o72mulDNf14WCixwpfhMz3RF+PL/HxuJLw6dctTPfh1s8CxuM5xXavKNKXfZNUsG1XPpc1RV4mQd2tE8OuWJUDW66Z13OvMPUk7AcyUqF8Bl2iCTixHmDH0paNpSzL2latkLrcqHhsZdIusEyRL1SDMvzeUtsuBTE0Q
+DKIM-Signature: a=rsa-sha256; bh=4s4X+Rm1Lev8duRNz8Vi6zbxGcgluF8oRtU9ZNESCEk=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1787087967; v=1;
- b=oFQsOf8adHm9c3NSFFIJssUauyE3Oj/SbREacuzgPe8Vk1AB5u3PSpbhqPlV9orir9SslySJ
- oqW4sxdtZgRgIdavW7VWQMnJB5gOPIq9AFgCkRMEQaWhQ5dJuv7e8VOtgWqpmXUgR5EkXs1Lv4l
- hg5M6Ib3ezHEMhu38tkP33iOWyUj4pYPmP4S/Ke+KIO98EpcatZ1uZryQAqaB/uxBf+1/GYodfz
- N7Z31mvKI32womCrl4wvpV+dXE//wR6/R/E6zd1BY2SGZ1evqTXRpeiD+iVdww4z13gSsoN2BQB
- iaqFlrRO2Vx3bkMZKBpwKdgBqbJe8rYBKQJvH2Q2BbbPA==
-Received-SPF: pass client-ip=51.210.91.48; envelope-from=clg@kaod.org;
- helo=smtpout9.mo539.mail-out.ovh.net
+ t=1787087956; v=1;
+ b=kqJ8YnJ/FXslo48lmUqLaU/dJnnoEHPXh5bLd9/PFbp4WAfx6DmadhqUCbDxo27rrhiXCLC4
+ k+0qJvzIC1JNUtKcYfzSY+D0MLVG2W2v58mYlJ2qm4ZEy5s2HZ0xWl/b4brx9XXv+MFkJ1qodUS
+ CUmmLrfJp/uJ2vrmGllx0KVHt4cLwpQYrBOREO2gxckEpAOiHwm5kPLOWOXUu5xU/Dyr8tgUDHL
+ 540tytgkCVnPrUiGRlvPwlR49lK3nBQlCq5lfWdU0q/O4aGRWGTr4bgRiyqT4Kg1CAVALxEZkuq
+ YMTpLXs7HBLJmOebJ2psWOpN2KPam7KlYEloAnukD07yw==
+Received-SPF: pass client-ip=51.210.91.46; envelope-from=clg@kaod.org;
+ helo=smtpout7.mo539.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -134,26 +136,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/17/26 07:53, Jamin Lin wrote:
-> v1:
->   1. Fix Fix Coverity CID 1685236
+On 8/14/26 04:08, Jamin Lin wrote:
+> An SMBus block read takes the block length from the first byte of the
+> transfer, and firmware reads that byte back from a register rather than
+> from the transfer buffer. The receive paths never updated those
+> registers, so block reads reported a bogus length.
+> 
+> On AST2600 the driver reads the length from the receive byte buffer,
+> I2CC_MS_TXRX_BYTE_BUF[15:8]. The datasheet documents that field as valid
+> while the DMA buffer is not enabled. The byte mode receive path already
+> updated it, but the pool buffer path did not, and the driver selects
+> buffer mode by default.
+> 
+> On AST2700 the driver reads the length from offset 0x84 instead.
+> 
+> Add I2CC_BYTE_DATA_LOG at 0x84 and latch received bytes into it. The pool
+> buffer, DMA-to-pool and DMA-to-DRAM paths latch their first byte, the byte
+> mode path latches every byte. Each latch also updates the receive byte
+> buffer unless RX_DMA_EN is set, which is the datasheet condition and does
+> not depend on FUNC_CFG_DMA_EN. The byte data log only exists on AST2700
+> and AST1040, so it is gated on a class flag.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Tested-by: Mikail Sadic <mikail.sadic@ibm.com>
+> ---
+>   hw/i2c/aspeed_i2c.c         | 38 +++++++++++++++++++++++++++++++++++--
+>   include/hw/i2c/aspeed_i2c.h |  3 +++
+>   2 files changed, 39 insertions(+), 2 deletions(-)
 >   
-> v2:
->   1. Drops the dead NULL test and checks the actual accesses instead, and makes put_dwords() return void
->      since no caller can act on a failed writeback.
-> 
-> v3:
->   1. Make get_dwords() return bool
-> 
-> Jamin Lin (3):
->    hw/usb/hcd-ehci: Check for DMA errors in get_dwords()/put_dwords()
->    hw/usb/hcd-ehci: Make get_dwords() return bool
->    hw/usb/hcd-ehci: Handle get_dwords() failures in async writeback
-> 
->   hw/usb/hcd-ehci.c | 90 ++++++++++++++++++++++-------------------------
->   1 file changed, 42 insertions(+), 48 deletions(-)
-> 
-
 Applied to
 
      https://github.com/legoater/qemu aspeed-next
