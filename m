@@ -4,108 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3901DC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 14:02:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEF37C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 14:03:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwKO0-0000qq-0k; Tue, 18 Aug 2026 10:01:52 -0400
+	id 1wwKPW-0001WP-AA; Tue, 18 Aug 2026 10:03:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wwKNy-0000qd-73
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:01:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wwKNw-0005Ws-JX
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:01:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787061706;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8P6rlRc0IotFwUiZqkjJ1qTxK983nNc9+cVkAsxmQog=;
- b=WJfKMaecqBd0FRII45kGxzNjlEijXv6H3DVnXohJSD/+zL5e5e+RxiPBBdlTeAZouGcsiy
- 0HvV6eqvcFePC8d/WalSzpwgh7Ip24ZJV8XUTB7NW/S+5SiT+3FIGXW+jFEEKctWRVf7mT
- 9tbjCuki8cUTDvUR7hxONwHvOR8kYEQ=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-465-8ycA2BFRPnK4sej72RKu5Q-1; Tue, 18 Aug 2026 10:01:42 -0400
-X-MC-Unique: 8ycA2BFRPnK4sej72RKu5Q-1
-X-Mimecast-MFC-AGG-ID: 8ycA2BFRPnK4sej72RKu5Q_1787061701
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-47f6db77430so2536331f8f.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 07:01:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wwKPV-0001WG-CZ
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:03:25 -0400
+Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wwKPT-0005iz-Ro
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 10:03:25 -0400
+Received: by mail-yw1-x112a.google.com with SMTP id
+ 00721157ae682-836cd7310f4so68156027b3.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 07:03:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787061802; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ECd/mIXfOPZ1lOuiW7VhEIvwe+arzzyfl7TFhHvG8vmtucZz3oG2cO7IHWhB5HnL3F
+ iaWiwkEESuGt2ZiYSoMocCFjxhjPXxBWV7ZVTFdEi9FxEfjz27sq0u32tfvviHcwnj6J
+ EHoG4sMlLiKPH8oruMiLzz/ogEzeXnUC5CkMKhY991u2hQ91LMpiOMcYkUV2m1eeNvDD
+ 5OUj8d4eNFA4/8ab9LtutpjvvLpQ7Z+zo3cntLVodKgrc1wuGaLd2HAYf4PFxINJrCQU
+ ee+WpTXPnS4te66xFpYS1atI+lRWJuZpm868hxkKQDesbUkWOtE01kgfFX+6F1ki+3+S
+ z1Yw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=xqmSH7rKhXpyvcDkX0xmdOYeOqzlvueBooi8CP/oDWQ=;
+ fh=eMDsoceTh+qEKGXg87odlf9TUI1qcdgjK+uqGVUsplE=;
+ b=jOkS7rXfkDnbrDDFG+aaDtOz0Yz4p64cqzOHP7TPe4JeNN5MOhC/tPvZX4XOsmj9hD
+ bk8TnQ3vjDFhxttzQgNiYfN7WWGzvrjFI66ccU62Wml1ARLR0EtMRF/fWAocwuVvSD47
+ cgvZ2e9KRSS7M8km31mlXk28So+5Zzzl0b60cWBcHpLasjg7LgDYZPWGTM1PR0VWNHPE
+ rQLoy8BgzaQjW+tlYS0tn+VYhFVgrxFHo3BU3Q2v0ic8wI/Yq/zVWGAwhpkHhNQ+16O/
+ cwuyP4/Up51/Ne/Kfn6obI9R8lCkp4/Btvc5WU21loYEAxid4Dzh5z3qh5EoainO8qVf
+ Eixg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787061701; x=1787666501; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ d=linaro.org; s=google; t=1787061802; x=1787666602; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=8P6rlRc0IotFwUiZqkjJ1qTxK983nNc9+cVkAsxmQog=;
- b=TzPi546T4V3Kdwqa+8VQB6AWYa9IPvpGBJsmHBzEMh0qWaWEbu8W8iStOWDKhIJ0LG
- Cj+o8ahXVSe5LsbxcWemoBDq2y8BNKgM/GfW+I8f6zaQMzZCz+L8Gox4ESdfrBNFdrXn
- NE5MsQXz2O67Aac3HoL/C0qIYouJtj6rbOi/wWJkrMlqEHXTCIaezeA/SsKuvhSwjpjY
- IyLWJgJmxLEZCmvZxNPihEGyZFQxmCmSv9oZMakB0CSBnQhLFYOyZu+mxJ9TFgK8LgcT
- vfrt5Bk56+/Ey7LAC8W+GFG2+SBEOkzOpiSASPxbF6Ut/QqdXzvflhxpEn4+rfWTYL15
- a1Xg==
+ bh=xqmSH7rKhXpyvcDkX0xmdOYeOqzlvueBooi8CP/oDWQ=;
+ b=SWabq2eNvFYM1LrYJtQRS7h0CjoxplpoQfomKg6zYg4E+MKrpofH8uJ6EhrPTX1IEf
+ fe2uoNwdz1hbPCMxHxVYwXo5i/QtW+btObVzvkSR8g29qbzaiKoCL49L9eLpHxlz580V
+ zDAtlXpFr9/ZU6Uii+jsnxTW0L+e9gFNx0TeK42GW6NujZQIfH9vsFMRpLhl5EqhJ6rq
+ QmgK0SsJOfahHU/UZS3XlW4+7KH9IsXQMaA8gtMWpsViZ1k+BtSB472rbbKP1Mf3FX+3
+ Zdi/JAy1QYjn0IQgYxkYqyEomZmyLopJCZkDB/hzdqfzojiB486jJEKDIPuvzYozlf0n
+ cn+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787061701; x=1787666501;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
+ d=1e100.net; s=20251104; t=1787061802; x=1787666602;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=8P6rlRc0IotFwUiZqkjJ1qTxK983nNc9+cVkAsxmQog=;
- b=QCiaiiS7zLS+ajGR0Q71DMXocYw2T9gvfWXN5bynF1YJznlrTLZeASXBNUOhREs4So
- DJBAM0IbFRZFhoXA2g40UBGrDUhVCBX4q7kg0RCHXbcnMOIk8Jl2X6ccPwSG7cqrx/7p
- beE2Woqow7BlSgxaofqivmWiU1LWPMhqfTKFsR7EHp60hHuyemN9FcAKy7kfjd+AMIx5
- uYRuh85nnUHZN1/Sf0rhVN97pGGv7g49B+AimKdWk5LvljBNz87K0oXJp0bURy0kDBvU
- Wbeo7mfMRpTliNPIrKq5ba5VD/BEiQ+vTPNlWBMarrQRP2E8iM7Mvy/IRL71rgN2agIv
- tffg==
-X-Gm-Message-State: AOJu0YxAnc9e+MSBNO+7czstNEWMLgEpsm19iJ/DkGA0GXPs5giEq6OY
- z9sQfbScZjHmXa5HEe+D3SpW9CgD0i4UlAdnxFdKHFWDdaiz+cXbSdPAFJAIQbrdpVpjg31vb67
- HzsrbBAyrPigQkfdUBXqRd7AD82T1CwFIP8Y2oAQLQeGumnCFQCJke5aW
-X-Gm-Gg: AR+sD11Iqfb0tsDp9dsGcu69xR1JSAWhiyjSdzRAZxnN8uL/dPnYWD9xLdnluUbtyg4
- opxWiQlaJGQypXUD/lQuXScvJ9b9/xlSM42GbKXepYFJsz9mOCKMVQhpNydJXSQlGpI9zDsZGsC
- 4I+lTsQspOLAryOIZYzk9D8Uf81931vuAubyKVWdZFhG3c8Ni7xpJcyMHcMbmtSmP73WS64/rGc
- 1xnK1kpQmFGyHMABP5zVyvC2HOcvOGZzByVdP59xXl1gpBlEgph65HAf644cEHyl5KEfqviT3bf
- sZmLPKnoLRz82MSsqQrBVotCGhx3S/WNHPAXKMlDJPy79chAzbo0gUMNYfkhyFRlqHR/2NBT4wG
- rhuELH3Kc9jJIOi0LLS4IkS9ODKLkPHti6KxxsaG4uEt59m/gVluU
-X-Received: by 2002:a05:6000:4a01:b0:47f:7b75:9dfe with SMTP id
- ffacd0b85a97d-482a9109c9bmr15558348f8f.8.1787061701397; 
- Tue, 18 Aug 2026 07:01:41 -0700 (PDT)
-X-Received: by 2002:a05:6000:4a01:b0:47f:7b75:9dfe with SMTP id
- ffacd0b85a97d-482a9109c9bmr15558143f8f.8.1787061700773; 
- Tue, 18 Aug 2026 07:01:40 -0700 (PDT)
-Received: from sgarzare-redhat (host-82-53-135-154.retail.telecomitalia.it.
- [82.53.135.154]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482a5a3b51asm12372495f8f.11.2026.08.18.07.01.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 07:01:40 -0700 (PDT)
-Date: Tue, 18 Aug 2026 16:01:28 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Connor Kite <connorkite@gmail.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Hanna Czenczek <hreitz@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: Re: [PATCH v2] hw/virtio/vhost-shadow-virtqueue: range boundary in
- translation
-Message-ID: <aoRk1B1XzjXZQCCJ@sgarzare-redhat>
-References: <20260817233147.2867623-1-connorkite@gmail.com>
+ bh=xqmSH7rKhXpyvcDkX0xmdOYeOqzlvueBooi8CP/oDWQ=;
+ b=LglRoou4aG7vP4Csl/KBJPm40x4NjRWattRI2huvEY3nTenSNEpeXnUzaRj8rdRzoR
+ v0HRifenx73Z+5ZnjGvIG7AZSnTb47Hq2ucFIZXL20zlZeVzmmJslMGOa+gNN0dAt8CI
+ +bst6hoseOaJJ5wJyop56nHxGsNCUFpFYCqCz7ba3jhapWAhwz6B8zvUny5AQI4ucCUk
+ XP7DanE5dGQfs1bbr0g4wyWrM7hY2xvpUW/nV3crQhl+rtP6iUjhDUo0xRzfVGMX3YS5
+ hlJw2iEsjCGfFI+CSaD8Vbrpy+cKT//ehI8hNUc66k+or31wym+N1IhlnesWDFAkdD2c
+ aAKA==
+X-Gm-Message-State: AOJu0YxhB9srwFJELm23YzfCfkXR1bZbbgZNWHuiwSQEz75eQNfBaIzC
+ wGj7Ee8i82WXxQs0gJ/c35Z60RrCurexf2+zbTva/CO7HtzfXO0lW+dqPvxp8V9+ddxlqEBtTN1
+ ep0044YKPRQnRyGRqnXBgaDRpPmAVbEgM1RqbO2Gmbw==
+X-Gm-Gg: AR+sD12Y6XyDhhMyQlHjwvP85DDTWYseP0fim4m2gyPAl7klLD2+G4zeHinpJxWSqxr
+ lZVrzbtDnuqfntJUpaA9cMwwrTcmfVzO41DpPtYS3FJZofqxetQZjdzVFj091E4r+0c5qU6ZJg0
+ wnuZG9Mo72hA5DmOLYu0gIKL/SQI5e7fwVgLwkSGZ/ca4JnoUXAEY5Um4cM+uH6Z6zsDREjB/H+
+ XEPI2RNR4UKSXoKAXrpcPc3P1EpWsvz940TZWI1tW234Pomh3ZwMob37GAsmQwzN8zDQWWyC5mJ
+ oa91URsLS/Rw0trJ3HGgySmanPzxxMAlGCTGKardiFOxCOgLr5wCg4oV74HQurYkADTcQy7iiPI
+ u2/ECKFJsPZIp/FP2i5tUIi623xz9Eg==
+X-Received: by 2002:a05:690c:28f:b0:80b:9f4e:a70 with SMTP id
+ 00721157ae682-84131a3e483mr36809407b3.26.1787061802065; Tue, 18 Aug 2026
+ 07:03:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260817233147.2867623-1-connorkite@gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+References: <20240603160933.1141717-1-peter.maydell@linaro.org>
+ <20240603160933.1141717-4-peter.maydell@linaro.org>
+ <aee65084-b827-4ef2-9c3c-af40c5c5b0cf@oss.qualcomm.com>
+In-Reply-To: <aee65084-b827-4ef2-9c3c-af40c5c5b0cf@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 18 Aug 2026 15:03:10 +0100
+X-Gm-Features: AcwNN1VBzMSC5ET-GwbElloUY5SK3gS6rg9yR-FrgevkgvTpCyA14hQZvt7_P4Q
+Message-ID: <CAFEAcA-Kv+G14+3AVPgP+jGbogC8nARiiE7vsR8L+J+e2CmmgA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] accel/tcg: Make TCGCPUOps::cpu_exec_halt mandatory
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,77 +119,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 17, 2026 at 04:31:47PM -0700, Connor Kite wrote:
->iova-tree expects inclusive range sizing when maps are allocated or searched.
->Currently, svqs use exclusive sizing when searching their
->vhost-iova-tree for a match to the region to be translated.  This could
->lead to errors if the region to be translated is at the edge of an iova
->region.
+On Tue, 18 Aug 2026 at 14:35, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
 >
->Fix this by reducing `needle.size` by 1 in
->vhost_svq_translate_addr to bring it in line with DMAMap and iova-tree
->convention.
->
->The only current user of svq->iova_tree is hw/virtio/vhost-vdpa.c, which
->also treats size as inclusive when using the tree API.  In progress work
->on vhost-user isolation mode in hw/virtio.vhost-vdpa.c also uses
->inclusive sizing when interacting with the tree.
->
->This patch is an updated version of one from the patch series "vhost-user:
->isolated memory".  The patch has been isolated from the series as it
->is not tightly coupled with the rest of the series.
->
->Signed-off-by: Connor Kite <connorkite@gmail.com>
->Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
->---
->V2 Differences:
->- Context added about users of svq->iova_tree and their adoption of
->  inclusive sizing
->
-> hw/virtio/vhost-shadow-virtqueue.c | 10 ++++++++--
-> 1 file changed, 8 insertions(+), 2 deletions(-)
->
->diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
->index bcb7f2ffc7..c8831d52be 100644
->--- a/hw/virtio/vhost-shadow-virtqueue.c
->+++ b/hw/virtio/vhost-shadow-virtqueue.c
->@@ -99,19 +99,25 @@ static bool vhost_svq_translate_addr(const VhostShadowVirtqueue *svq,
->         const DMAMap *map;
->         DMAMap needle;
->
->+        if (unlikely(iovec[i].iov_len == 0)) {
->+            qemu_log_mask(LOG_GUEST_ERROR,
->+                          "Zero-sized buffer made available by guest");
->+            return false;
->+        }
->+
->         /* Check if the descriptor is backed by guest memory  */
->         if (gpas) {
->             /* Search the GPA->IOVA tree */
->             needle = (DMAMap) {
->                 .translated_addr = gpas[i],
->-                .size = iovec[i].iov_len,
->+                .size = iovec[i].iov_len - 1,  /* Inclusive */
-                                                ^
-nit: double spaces here...
+> On 3/6/24 18:09, Peter Maydell wrote:
+> > Now that all targets set TCGCPUOps::cpu_exec_halt, we can make it
+> > mandatory and remove the fallback handling that calls cpu_has_work.
+> >
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
->             };
->             map = vhost_iova_tree_find_gpa(svq->iova_tree, &needle);
->         } else {
->             /* Search the IOVA->HVA tree */
->             needle = (DMAMap) {
->                 .translated_addr = (hwaddr)(uintptr_t)iovec[i].iov_base,
->-                .size = iovec[i].iov_len,
->+                .size = iovec[i].iov_len - 1, /* Inclusive */
-                                                ^
-... single here.
-If you need to respin, maybe we can be consistent and fix it.
+> >        * Return true to indicate that the CPU should now leave halt, fa=
+lse
+> > -     * if it should remain in the halted state.
+> > +     * if it should remain in the halted state. (This should generally
+> > +     * be the same value that cpu_has_work() would return.)
+> >        *
+> > -     * If this method is not provided, the default is to do nothing, a=
+nd
+> > -     * to leave halt if cpu_has_work() returns true.
+> > +     * This method must be provided. If the target does not need to
+> > +     * do anything special for halt, the same function used for its
+> > +     * CPUClass::has_work method can be used here, as they have the
+> > +     * same function signature.
+>
+> With retrospective, has_work() should be idempotent, taking a const
+> CPUState, while cpu_exec_halt() is expected to change CPUState
+> internal fields.
 
-Anyway with Akihiko's comments fixed:
+Mmm; we added the "should be idempotent" comment to the has_work docs
+in include/hw/core/sysemu-cpu-ops.h, but it still takes a plain CPUState*.
+Constifying wouldn't be trivial because e.g. cpu_env() and cpu_test_interru=
+pt()
+and so on take a non-const pointer.
 
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-
-Thanks for the fix!
-Stefano
-
+-- PMM
 
