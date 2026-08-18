@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93B02C5DF74
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:33:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34350C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:33:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwJvq-0003n6-NT; Tue, 18 Aug 2026 09:32:46 -0400
+	id 1wwJvr-0003nU-HA; Tue, 18 Aug 2026 09:32:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wwJvo-0003mM-BE
+ id 1wwJvo-0003mO-DX
  for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:32:44 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wwJvl-00008R-Ls
+ id 1wwJvk-00008h-JZ
  for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:32:44 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4953de5be0aso37214035e9.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 06:32:38 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-499840a2575so35052785e9.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 06:32:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787059958; x=1787664758; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787059959; x=1787664759; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=kgrW8OZDk5QNSaiA2O4xvFjcLjIOIf5np0GuegvjZV0=;
- b=WAeLczO4C/b9hTNHAXTfsUPs9x2ROeULQIIrd7wPj6SDYCQOEY/4qZKNZz4PvDPgN5
- a9dkdlEDXXJut55ygh+wfjQbGCmMYaT45vgsOU11BC45hvL3Sz0K1lFl3SOdOcJa/kWj
- q97OVh/xC/HZVQIsPTv7I5Ao9vEDjfJVgq1/OLG6EBvZ6jLXAqsfGguR0/2XzUIJFU3b
- Uu+riEGJXqAAiVOFnaLAW7P42Njjh69pcQcWCb4FikzPio8hNWYojBseruMezS1zLJit
- GmcE9uU/FttEndavvt4ndFQUcngoWT3QAF/HNWczqRa9yKIXe7plwjmsyeOlhqfu9+Hy
- bPBA==
+ bh=MaRWsfYXrPCYR0C2SN+evr+3/kSgvPxmaScaetm9/p4=;
+ b=UQqzeIpkRTwfUFEgxrCZkKVrDmm+VGkQfED3MentPTAW42/ZXYneoIzZSrQNDOO13B
+ YIsJ89ZZdaNypctS3zdvbKWY5o0XIJvHR90sB54lqtRCDsgQNRftyWEvjD2+d4WhSW/x
+ R4r0uZGxC+ywvmfBD1Ofx5YjjL+GIMFDM/0wN5RyVgOEGhD27tLZSPFs8wHi2lDJktqS
+ dLs6HzlqmnVKjv0nApYihr/azxcLrcl+TE3piVHUnQ446wg0XFvLwt7UxVoGsaWtB43+
+ mkJ95kEN0Thb0JJkrzGapUxTMX9V4K9O0Ucs+joz/ZarKPQ9JU0lT4rvAk69I0Wtz95z
+ gsjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787059958; x=1787664758;
+ d=1e100.net; s=20251104; t=1787059959; x=1787664759;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=kgrW8OZDk5QNSaiA2O4xvFjcLjIOIf5np0GuegvjZV0=;
- b=fYwgtiF9EI6VwTy2Ax4KeMjZX4uLCTbL0yVEglyGHHwCp5XWwui7wlvZ0MR7VSwfCK
- zcjmg8NboC7Wcdd9ZNaA506y6+YiRDUzNf5UgoHNiiTxgCorCeO5Qyyg1Qu84IEdzwyf
- aD4Fh8gZClafRxjw6sFBme0i6rxuS0adV4npkuittw5oOuwOFrsj2mHlOF7DCVXestWQ
- c1IatxbwD78F3hZL/ib3QaqsOGKM2NDuWE5UGFa7nPlc4fFwmPUlpww9Qtx/XqTUJWnj
- 6WVxY8TC86mXQFgSMJ1hfHFMK/QX36I9JcUTjCiCNKpU54gszmNlIpN1BCmOSWAxzJlo
- 7pzQ==
-X-Gm-Message-State: AOJu0YyjpoLuihf/xZuxf6q0yjfX4iX7L7mBrdU3d9+Ve0T+xdZPSIwd
- GthZH+xP2jwHJWIIZq1Fb+Mbv/Xhq5xsKJ/utRwa3hKCrVQPmN0UpTJy3+11W/rgGsfqc/7scRo
- oCtI1y/I=
-X-Gm-Gg: AR+sD13Jh1vYLZskFav8vb7Y4rSzpqjrPNijWxSJi5SH7CQT6sSpvtf+XrhYUtE42j6
- c8/DUARaB/LsbTdazjQEjgX2BzLvwyhGHEYigOfNBhOi9vH6T5UFGSRhYN7LOMTQawhAuxzCzBQ
- IoeTAH/l6B9+kRbqIXySJ+CmOC1bO1E2ygZTUqqLqqeJiolK2d5uCwKTonwndWgQ6uVuxqYCW6Q
- SRvWgR59SImqgxefX1LENt6yJ+Kv0+FB1MZR+dKBC8EtenAFtiAHeio6x6gVmaOqbHTTJMggbAc
- YgH3OC5DRLgJenTWZSmLB9oloxsO7K6vdaSTFFuhgbrqPksNDNSSO0Kcf2tT13defjj6tw7lsX0
- 51EjeOaMq7TyeDXpqZWh1KPMdJjlZ8mbTLhlP+FWVtPmUC8hdl2co2etlotfJE4Nmcdqy9r/mdF
- RcKEP08z7EXL3axkFga3s0GRAo0FfprBsAhO7LWy/x2HlnN0971BV6V2xx32zSj/4pyGy+ZQVFF
- 3E=
-X-Received: by 2002:a05:600c:1c21:b0:499:90f3:13b8 with SMTP id
- 5b1f17b1804b1-49990f315e9mr315450255e9.12.1787059957468; 
- Tue, 18 Aug 2026 06:32:37 -0700 (PDT)
+ bh=MaRWsfYXrPCYR0C2SN+evr+3/kSgvPxmaScaetm9/p4=;
+ b=d6rNGdtCdmQhEael6A1npOnlQMniOE58Ai10T5OdPSEockNiZA3te8JIS9akdCvVwF
+ oqiZBvwDPJgHAtGF5zQZz7KfCQFhNidGRxyniUb28nv7DbG4JguXzKaCumRvpjJCaDe4
+ 3CNJvkJful4mYrumM5S1vpZUqBchZWAI5sj0WEaDoiVSJyhqaF5v9vavNJOJlH8CRNdi
+ DhPtC3fkQgshzMqIpVN9j5KdzZUI+2Sgjf9hSFmxKyVieEMAXlIxZODz/tpb3p4Am1sM
+ lxv3YVlnA04Il3veoWzsK24Ueq/UwkLBWkttcCVNax1ZFoh16BQRxH/Ah9O08yMJqjk/
+ F/nA==
+X-Gm-Message-State: AOJu0YzhMRPwcqhgjFhYUuoWJ81pPKDykD5lpmDOZZj068OXgVqYk2JO
+ xf761h6K45WcSOl7b6xB/v579c5LiHNw7coegeQ2uk6GJljKbm63ZhlbevThuGqn2XUcUg2Y0Ay
+ ikWbO6oE=
+X-Gm-Gg: AR+sD10egPNQPl66MoS/ex1tzBezRLeZr/xZqnwwuGYIe7SbSezzlxezZQi7orfMKZP
+ PLkTna65EE8Xnol4lMCZQBArAtcOHJT/+vEroru3hNF9wWDK5eVmeZNMMx7ZaXGhPAaZdM4ccyJ
+ 5KyNScM+8duR2Jt1aTAv4VaT5kZmut7dsTrMx4HrUjxjZE0m45ffqsUZAJjs7nG2xMNXdTEFZ62
+ 2VT4EWmBFjOE2vEAadh9CSoHG5YNW0Fl7IjuugC9HiLPKMF4ZKYLt9x1713B7lAjPmNdBM2sI2f
+ xpJQIEXy6E10uMBLbgW5pkjHshJcI8QwHA4IvB2V0lCkNpPTq0/w+XCxMajzftgUFJ50GfG/++m
+ cYd6kvPyILZdRgyaik9GQvemYuOSvDpd5QQZRYIxddz0yAsDO2Gs0PpNQal8HlrFJFdjj/a64pb
+ BZtsrkkMNHRvlwkrX4PsTeq0mJTUCSf1yZnZrcFQc0ezDVdKYMWMNTYNhjp5voYd48
+X-Received: by 2002:a05:600c:608a:b0:493:bd2a:93be with SMTP id
+ 5b1f17b1804b1-499a202cb4cmr123021975e9.6.1787059959140; 
+ Tue, 18 Aug 2026 06:32:39 -0700 (PDT)
 Received: from [127.0.1.1] ([2a10:d582:31e:0:c289:2687:e46c:f7e3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49987b203cfsm298360625e9.3.2026.08.18.06.32.36
+ 5b1f17b1804b1-49987b203cfsm298360625e9.3.2026.08.18.06.32.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 06:32:37 -0700 (PDT)
+ Tue, 18 Aug 2026 06:32:38 -0700 (PDT)
 From: Jim MacArthur <jim.macarthur@linaro.org>
-Date: Tue, 18 Aug 2026 14:31:59 +0100
-Subject: [PATCH RFC 1/4] hw/pci: add IDE + TEE capability to PCIe root port
+Date: Tue, 18 Aug 2026 14:32:01 +0100
+Subject: [PATCH RFC 3/4] hw/pci: add DVSEC RMEDA capability to PCIe root port
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260818-jmac-rme-da-prep-v1-1-30fab951bc75@linaro.org>
+Message-Id: <20260818-jmac-rme-da-prep-v1-3-30fab951bc75@linaro.org>
 References: <20260818-jmac-rme-da-prep-v1-0-30fab951bc75@linaro.org>
 In-Reply-To: <20260818-jmac-rme-da-prep-v1-0-30fab951bc75@linaro.org>
 To: qemu-devel@nongnu.org
@@ -81,17 +80,18 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, John Snow <jsnow@redhat.com>,
  "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org, 
  Jim MacArthur <jim.macarthur@linaro.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,105 +110,111 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+
+After this we can see all the capabilities listed for the PCIe bridge:
+
+00:05.0 PCI bridge: Red Hat, Inc. QEMU PCIe Root port (prog-if 00 [Normal decode])
+
+	...
+
+	Capabilities: [54] Express (v2) Root Port (Slot+), IntMsgNum 0
+
+	...
+
+	Capabilities: [48] MSI-X: Enable+ Count=1 Masked-
+		Vector table: BAR=0 offset=00000000
+		PBA: BAR=0 offset=00000800
+	Capabilities: [40] Subsystem: Red Hat, Inc. Device 0000
+	Capabilities: [100 v2] Advanced Error Reporting
+		UESta:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP-
+			ECRC- UnsupReq- ACSViol- UncorrIntErr- BlockedTLP- AtomicOpBlocked- TLPBlockedErr-
+			PoisonTLPBlocked- DMWrReqBlocked- IDECheck- MisIDETLP- PCRC_CHECK- TLPXlatBlocked-
+		UEMsk:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP-
+			ECRC- UnsupReq- ACSViol- UncorrIntErr+ BlockedTLP- AtomicOpBlocked- TLPBlockedErr+
+			PoisonTLPBlocked- DMWrReqBlocked- IDECheck- MisIDETLP- PCRC_CHECK- TLPXlatBlocked-
+		UESvrt:	DLP+ SDES+ TLP- FCP+ CmpltTO- CmpltAbrt- UnxCmplt- RxOF+ MalfTLP+
+			ECRC- UnsupReq- ACSViol- UncorrIntErr+ BlockedTLP- AtomicOpBlocked- TLPBlockedErr-
+			PoisonTLPBlocked- DMWrReqBlocked- IDECheck- MisIDETLP- PCRC_CHECK- TLPXlatBlocked-
+		CESta:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr- CorrIntErr- HeaderOF-
+		CEMsk:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- AdvNonFatalErr+ CorrIntErr+ HeaderOF+
+		AERCap:	First Error Pointer: 00, ECRCGenCap+ ECRCGenEn- ECRCChkCap+ ECRCChkEn-
+			MultHdrRecCap+ MultHdrRecEn- TLPPfxPres- HdrLogCap-
+		HeaderLog: 00000000 00000000 00000000 00000000
+		RootCmd: CERptEn+ NFERptEn+ FERptEn+
+		RootSta: CERcvd- MultCERcvd- UERcvd- MultUERcvd-
+			 FirstFatal- NonFatalMsg- FatalMsg- IntMsgNum 0
+		ErrorSrc: ERR_COR: 0000 ERR_FATAL/NONFATAL: 0000
+	Capabilities: [148 v1] Access Control Services
+		ACSCap:	SrcValid+ TransBlk+ ReqRedir+ CmpltRedir+ UpstreamFwd+ EgressCtrl- DirectTrans+
+		ACSCtl:	SrcValid+ TransBlk- ReqRedir+ CmpltRedir+ UpstreamFwd+ EgressCtrl- DirectTrans-
+	Capabilities: [150 v1] Designated Vendor-Specific: Vendor=13b5 ID=ff01 Rev=0 Len=16 <?>
+	Capabilities: [164 v1] Integrity & Data Encryption
+		IDECap: Lnk=0 Sel=1 FlowThru- PartHdr- Aggr- PCPC- IDE_KM- Alg='AES-GCM-256-96b' TCs=1 TeeLim-
+		IDECtl: FTEn-
+		[170]SelectiveIDE#0 Cap: RID#=0
+		[174]SelectiveIDE#0 Ctl: En- NPR- PR- CPL- PCRC- CFG- HdrEnc=no Alg='AES-GCM-256-96b' TC0 ID0
+		[178]SelectiveIDE#0 Sta: insecure RecvChkFail-
+		[17c]SelectiveIDE#0 RID: Valid- Base=0 Limit=0 SegBase=0
+	Kernel driver in use: pcieport
 ---
- hw/pci-bridge/gen_pcie_root_port.c |  8 ++++++++
- hw/pci/pcie.c                      | 15 +++++++++++++++
- include/hw/pci/pcie.h              |  3 +++
+ hw/pci-bridge/gen_pcie_root_port.c | 30 ++++++++++++++++++++++++++++++
  include/hw/pci/pcie_regs.h         |  4 ++++
- 4 files changed, 30 insertions(+)
+ 2 files changed, 34 insertions(+)
 
 diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
-index 5434d693d9..452ebf69b3 100644
+index 452ebf69b3..035212508d 100644
 --- a/hw/pci-bridge/gen_pcie_root_port.c
 +++ b/hw/pci-bridge/gen_pcie_root_port.c
-@@ -26,6 +26,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(GenPCIERootPort, GEN_PCIE_ROOT_PORT)
- #define GEN_PCIE_ROOT_PORT_AER_OFFSET           0x100
- #define GEN_PCIE_ROOT_PORT_ACS_OFFSET \
-         (GEN_PCIE_ROOT_PORT_AER_OFFSET + PCI_ERR_SIZEOF)
-+#define GEN_PCIE_ROOT_PORT_ACS_END \
-+        (GEN_PCIE_ROOT_PORT_ACS_OFFSET + PCI_ACS_SIZEOF)
- 
- #define GEN_PCIE_ROOT_PORT_MSIX_NR_VECTOR       1
- #define GEN_PCIE_ROOT_DEFAULT_IO_RANGE          4096
-@@ -100,6 +102,12 @@ static void gen_rp_realize(DeviceState *dev, Error **errp)
-         d->wmask[PCI_IO_BASE] = 0;
-         d->wmask[PCI_IO_LIMIT] = 0;
+@@ -104,6 +104,36 @@ static void gen_rp_realize(DeviceState *dev, Error **errp)
      }
-+
-+    uint32_t offset = GEN_PCIE_ROOT_PORT_ACS_END;
-+    pcie_ide_init(d, offset);
-+    offset += PCI_IDE_SIZEOF;
-+
-+    pcie_cap_tee_init(d);
- }
  
- static const VMStateDescription vmstate_rp_dev = {
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index 4622c75e48..b9ead826ed 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -968,6 +968,12 @@ void pcie_cap_flr_write_config(PCIDevice *dev,
-     }
- }
- 
-+void pcie_cap_tee_init(PCIDevice *dev)
-+{
-+    pci_long_test_and_set_mask(dev->config + dev->exp.exp_cap + PCI_EXP_DEVCAP,
-+                               PCI_EXP_DEVCAP_TEE);
-+}
+     uint32_t offset = GEN_PCIE_ROOT_PORT_ACS_END;
++    /*
++     * dvsec rme-da
++     * https://developer.arm.com/documentation/den0129/latest/
++     * Arm RME System Architecture
++     * 0x0000 RMEDA_ECH See B3.2.6.2.1 RME-DA Extended Capability Header
++     * 0x0004 RMEDA_HEAD1 See B3.2.6.2.2 RME-DA DVSEC Header 1
++     * 0x0008 RMEDA_HEAD2 See B3.2.6.2.3 RME-DA DVSEC Header 2
++     * 0x000C RMEDA_CTL1 See B3.2.6.2.4 RME-DA Control register 1
++     * 0x0010 RMEDA_CTL2 See B3.2.6.2.5 RME-DA Control register 2
++     */
++    pcie_add_capability(d, PCI_EXT_CAP_ID_DVSEC, PCI_RMEDA_VER, offset,
++                        PCI_RMEDA_SIZEOF);
++    const uint32_t header1 = 0x010013b5;
++    const uint32_t header2 = 0xFF01;
++    const uint32_t ctl1 = 0x1; /* support tdisp */
++    const uint32_t ctl2 = 0x0; /* unlocked */
++    pci_set_long(d->config + offset + 0x4, header1);
++    pci_set_long(d->config + offset + 0x8, header2);
++    pci_set_long(d->config + offset + 0xC, ctl1);
++    pci_set_long(d->config + offset + 0x10, ctl2);
++    d->wmask[offset + 0xC] = 0xff;
++    d->wmask[offset + 0xC + 1] = 0xff;
++    d->wmask[offset + 0xC + 2] = 0xff;
++    d->wmask[offset + 0xC + 3] = 0xff;
++    d->wmask[offset + 0x10] = 0xff;
++    d->wmask[offset + 0x10 + 1] = 0xff;
++    d->wmask[offset + 0x10 + 2] = 0xff;
++    d->wmask[offset + 0x10 + 3] = 0xff;
++    offset += PCI_RMEDA_SIZEOF;
 +
- /* Alternative Routing-ID Interpretation (ARI)
-  * forwarding support for root and downstream ports
-  */
-@@ -1371,6 +1377,15 @@ uint32_t pcie_pri_get_req_alloc(const PCIDevice *dev)
-     return pci_get_long(dev->config + dev->exp.pri_cap + PCI_PRI_ALLOC_REQ);
- }
+     pcie_ide_init(d, offset);
+     offset += PCI_IDE_SIZEOF;
  
-+/* IDE */
-+void pcie_ide_init(PCIDevice *dev, uint16_t offset)
-+{
-+    pcie_add_capability(dev, PCI_EXT_CAP_ID_IDE, PCI_IDE_VER,
-+                        offset, PCI_IDE_SIZEOF);
-+    uint32_t cap = PCI_IDE_CAP_SELECTIVE;
-+    pci_set_byte(dev->config + offset + PCI_IDE_CAP, cap);
-+}
-+
- bool pcie_pri_enabled(const PCIDevice *dev)
- {
-     if (!pci_is_express(dev) || !dev->exp.pri_cap) {
-diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
-index 71ba94874b..db66678252 100644
---- a/include/hw/pci/pcie.h
-+++ b/include/hw/pci/pcie.h
-@@ -123,6 +123,8 @@ void pcie_cap_flr_init(PCIDevice *dev);
- void pcie_cap_flr_write_config(PCIDevice *dev,
-                            uint32_t addr, uint32_t val, int len);
- 
-+void pcie_cap_tee_init(PCIDevice *dev);
-+
- /* ARI forwarding capability and control */
- void pcie_cap_arifwd_init(PCIDevice *dev);
- void pcie_cap_arifwd_reset(PCIDevice *dev);
-@@ -161,6 +163,7 @@ void pcie_pasid_init(PCIDevice *dev, uint16_t offset, uint8_t pasid_width,
-                      bool exec_perm, bool priv_mod);
- void pcie_pri_init(PCIDevice *dev, uint16_t offset, uint32_t outstanding_pr_cap,
-                    bool prg_response_pasid_req);
-+void pcie_ide_init(PCIDevice *dev, uint16_t offset);
- 
- uint32_t pcie_pri_get_req_alloc(const PCIDevice *dev);
- bool pcie_pri_enabled(const PCIDevice *dev);
 diff --git a/include/hw/pci/pcie_regs.h b/include/hw/pci/pcie_regs.h
-index 33a22229fe..aa21177411 100644
+index aa21177411..233378fd79 100644
 --- a/include/hw/pci/pcie_regs.h
 +++ b/include/hw/pci/pcie_regs.h
-@@ -182,4 +182,8 @@ typedef enum PCIExpLinkWidth {
- #define PCI_DOE_VER                     0x1
- #define PCI_DOE_SIZEOF                  24
+@@ -186,4 +186,8 @@ typedef enum PCIExpLinkWidth {
+ #define PCI_IDE_VER                     0x1
+ #define PCI_IDE_SIZEOF                  12
  
-+/* IDE */
-+#define PCI_IDE_VER                     0x1
-+#define PCI_IDE_SIZEOF                  12
++/* RME-DA */
++#define PCI_RMEDA_VER                   0x1
++#define PCI_RMEDA_SIZEOF                20
 +
  #endif /* QEMU_PCIE_REGS_H */
 
