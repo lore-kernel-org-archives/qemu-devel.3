@@ -4,88 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FFF8C5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:09:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 822A9C5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:14:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwND3-0007nG-HO; Tue, 18 Aug 2026 13:02:45 -0400
+	id 1wwNNs-0006cb-7w; Tue, 18 Aug 2026 13:13:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwND1-0007mK-Es
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:43 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wwNNr-0006cO-Cj
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:13:55 -0400
+Received: from mail-qt1-x836.google.com ([2607:f8b0:4864:20::836])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCz-0004uV-PZ
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:43 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-ca766c1c9ccso23534a12.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wwNNp-0007Yj-1s
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:13:55 -0400
+Received: by mail-qt1-x836.google.com with SMTP id
+ d75a77b69052e-52d7a3defe8so398061cf.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:13:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787073232; cv=none;
+ d=google.com; s=arc-20260327;
+ b=PoTeqjKR5cOlLSJLHTIT9ap0q9FWpBvlb25xBCnJlMjAbk58+qe22QbbJCllhIEXmt
+ r2aaHtJVjNqKqhxMrarcKPU6v4TXirG6hGnWD/1iu1ap0TSqyikpEECrFRiLilfikQCv
+ GqLwQEZvSkVdFBxYn15btYIcMIQfDnreD1BXX7BSpWalDefFvyNWqT4K8Ridu6CijuzD
+ ZVby9xB7ACC/3AA3PR6ieG+bueVRD5ku4yoUqalURpDSo0+3IX8MtCCkM0fLzi6wooBC
+ mN7H4vQrsB/CADpbIJF4R2Ltm11v3R4KQruL5B7hMk2UcsYeD47rsFi+KI6iwpwGFPWa
+ qliA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=6sYePvUQKnpG4zY8DNGNc7jFS9qA+sHrNA2C9LUMszg=;
+ fh=sPnp61a2YNNsKkD0W3RUEF+042aNl9Quj94CbgGh8Xs=;
+ b=G9AnMEsxyaB5CAyWzYlHJw6qNrA39faOx8nUA9rdGALZdwWz8bRKXTxe7guOSf27L0
+ bGENrJbdEpxCuFB9KOoTfFCfynio//cbqS9ORc+QHHZEdWarVRXuS7XB/sCrBz66I/b4
+ ak3R5yunQku50HuJotahWttZTxKbBq7OLafnz2WbL/P2/ia3vpSw4xtsSa3X9AHqBCye
+ TLRv/BJTUqZKSr4j8sRMQevkExEGErY9NB8g7S6KJef0mQJNBUzG09j57frIUuH40lie
+ cCmzhLMeF+wZ67Cv6wBTuqootNDnqDRmD3iBNo+6q6zwyRdUimkCHO/QrmFrNN+ejvuU
+ SLCw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787072560; x=1787677360; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ d=gmail.com; s=20251104; t=1787073232; x=1787678032; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=MIArda1Mmt88XEzYwt/OrbYMMCnRwSt7ese98CCkdYQ=;
- b=jfO7mpRR76x1yPphcQG7ILbq6O3Zf7BBceVZvFsiHGHwIm3IiL8cGTG0XYCMLlpXoB
- HtRsL0xkGinwsWtZ2wcFbCwlgiQvAhCaTt13cliwPM+cAzmQtEQ9lzE9XUMEAiM2NHC7
- wgfk28jNp4a2phc1jCJrmFS2qWBJuhhdbyaBII8nJbKWHnKTs/Q72MzhbMyKpNqsoNce
- mg7paTZcmnLHjdMGGZwT/AHyfZiCWWz37fTAoeFevIfccNflinZS+tMy7aBjqcXD/nwy
- X9YUc6wPrcBuHtcHaeRXqsN3QnM/rjCteg9+sHzdlOenwB3pRZ7JCy0hhJMtZ/Dxep7D
- pNbw==
+ bh=6sYePvUQKnpG4zY8DNGNc7jFS9qA+sHrNA2C9LUMszg=;
+ b=X1RVvuT1gP5Q0214dGLHm9oiP8YYHLhv0xkxFJjSqmlg7eWjSrA/sKzsg03XOazNvR
+ j5sQORxT9Kh3mI9Zr6op7xz11/mI2x2GSMHZdPjv7cXGZEtKBSO1K3XaIjgx/YMgogqb
+ C66mVPedV8SUThViwBLO/MMCjP5sTkMhO7Mq11D3G2sNlJJcVhjUJFUBxoyG5Avb/GGE
+ HKCwxLOG2RRcUSWidz9ur07gMLSEZobaXQwAAhZ6iKTPYj4d6VDC+8tMZB7YgFo+ZCi6
+ Fg+LsxNTCl5FOPqOqcjLD8Z8eNI7iTyLuVhyOab9taoD9fKSkfyw5/KbPy9CN4hS333b
+ dvQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787072560; x=1787677360;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20251104; t=1787073232; x=1787678032;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=MIArda1Mmt88XEzYwt/OrbYMMCnRwSt7ese98CCkdYQ=;
- b=OLWfmpmS12Cm70XB3YBDGbqqXbOZeNwf+Z1af2iRzOAlTdMPuC5VvcMyhG6+OhKctB
- MVbCbmpmU6hB8InRsOExmP/1GaR6x74nlK0+WDkVKqh7j9PdB6/SxgQL4wtQZOjlwbMJ
- jdQ8jclneXZx7h81SL7617yVR8wT/FxgO1XJYN15vulfmruTMcp3FEIyxclWQQDeU41Y
- qcj9lNbZ8SyC0Ym47CSRra8XYhac6LXZRuZ34GDuzFzdXkT+tegTi0333GT+CvZvISjV
- 5kiOOgCV/1HXIPpB4RKK4/52WJo9GHe3cvy4YiVVs5xwuRSTmcWxrri9KcfZbEHKJYg3
- rUzg==
-X-Gm-Message-State: AOJu0YzBetzSQLFdymGNL2QrC4DpvfzmqPvXHB8M+FJKa/szFbBaJ59h
- JiLwv/rKFECWt+3DHAI9esxj8UNfNDf5g0ci3WearW/+RHEVbyWHewGvnnTcSEIuZ1lknIkdPdq
- i6cESlQM=
-X-Gm-Gg: AR+sD13GG9MyjhDwzDVy/jolp38ZxOdW9+iICZ08E2aFOgcHJAVhkQso2kxQEULpfOe
- RTv2MjQQ3LHxox2ZFc3nLyj0FmeqP0gMtW24s3INbMa+e5wtsMiuXE4w6Sz8FwnGlSkvpz35vMy
- OC983jiI1SHO/LWksjL0vPCkKnFN3yktPDK6IhpfwnHWFYt+qJ4urU8BLGp+d2hIeM56mWmdXdM
- P8tTuETjFhFvEIDHioJTvjWt0s/2+Dg5S8e3h7KioB9TUJ1OcP+xqKYQa3oWntmdsgMLGB12g8W
- o8At1BjR412lr0VwbCQHRCamZaLwT33qWkb4Cq4uth+GOMObLBOgzXCMF6BLiIh0AWEmNePpnx7
- Iwbso0Aa+g/q2BbJKcHCZFHUH0+dlSnnwklGmaA2A9smiAj/NsBpaXzjmSW1pSgGlflkSDp1+hg
- PKGBdCzHtu0yTN552dZK8b10MLHEyGK/BU7vQ6qVE0Ea30FM7N5bBK1HK245Z1193hOS+E0rRdS
- aiVwYx8cf8FSB8KTGYwBWcCIH5Gp0qIwgs=
-X-Received: by 2002:a05:6a00:1947:b0:842:2419:6c0b with SMTP id
- d2e1a72fcca58-84fde3cca20mr35550359b3a.10.1787072559829; 
- Tue, 18 Aug 2026 10:02:39 -0700 (PDT)
-Received: from stoup.. (c-73-181-156-132.hsd1.wa.comcast.net. [73.181.156.132])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 10:02:39 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 37/38] target/m68k: Enable disassembly via capstone
-Date: Tue, 18 Aug 2026 10:01:54 -0700
-Message-ID: <20260818170155.1907006-38-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260818170155.1907006-1-richard.henderson@linaro.org>
-References: <20260818170155.1907006-1-richard.henderson@linaro.org>
+ bh=6sYePvUQKnpG4zY8DNGNc7jFS9qA+sHrNA2C9LUMszg=;
+ b=Micqvv6mJUIEi0aOrlzRsiF/EHk/n9LsZfSOPZ0EgVPYOdkZFCTinIqwwrQBkTKlFk
+ m2VrctiMn/Jvq2emiRUhfvx5vPbMkGDEppAdkkHhsMb7psdA2Ow9BJHHS8MC0qF3Un91
+ gVKSiOiJBnSFeI6tGSQ7oFCzaeAEkCcdL/NjuzkzebEQdlvyRJEkSN0ivdxBwgcO8Gcd
+ glGoQMfRN2ehhqwB063CZvXeBEOH6XYw3BcSGGw9+3Rvo4sPjKZrboJKRkEpCxvn0QbO
+ JxyiHXmipjZXS6zAEUewxDe8Fp+iJndVCw7LMTsuDisS92z275qTG1BLu/USfrNL9u0J
+ fdlw==
+X-Gm-Message-State: AOJu0YxE6RRKVcVsqz3Z3xQttmdNuNSsyrCE1ftzM42IYB5MyumVDEur
+ Hod0NnXGzYiGG/OivbaVerf5cLhPHUwZE9xjfBOUudlr4FRCGOpWFuEcjONtuSofdCDDdjiHrsc
+ NxrpJZCQi722sG956DBSkPuMTSvFbZmc=
+X-Gm-Gg: AR+sD10vwlqjiEksbSYMInrDKWu8IO1zv+3hJxIU94HM2NORAv8+qOeUzmfdCiwi03Z
+ 0y5W0W6sTzKQDx4uELdEu/aFuAzXgklxm6EuU2yWqVd51p0OQmY/Nn1+y1EgTjspnrchW4Im7sn
+ zf2qRLqkmAtv9YnfUDHAPqtd4m+pCW9oIOen4j2+Rwa4EesnbAChN+uiR0leiNJ1E9TnbaQnyVm
+ AqAfvMp/rSKMHkiIbGZCRR3CTQ8XpHJ0VcjPpt9PDFe6ECMHPvy0uoLkOjaIfSUGtxG7Y4Z1BeB
+ WvNMncKQ8Q9yOQ08xBsCKenHMDuStBsXAS+NFiknld/t+rRPU1d1H0ufYwCsvgidijbe+Tt2QrB
+ ZKjE=
+X-Received: by 2002:a05:622a:c9:b0:51c:bb79:a52d with SMTP id
+ d75a77b69052e-52d854221b7mr319513651cf.14.1787073231535; Tue, 18 Aug 2026
+ 10:13:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260817190038.580257-1-mattst88@gmail.com>
+ <403cb8e2-5f3d-4c5c-a509-fc13b4cd50f9@oss.qualcomm.com>
+In-Reply-To: <403cb8e2-5f3d-4c5c-a509-fc13b4cd50f9@oss.qualcomm.com>
+From: Matt Turner <mattst88@gmail.com>
+Date: Tue, 18 Aug 2026 13:13:37 -0400
+X-Gm-Features: AcwNN1VBNzWVNP1s3qukGccYzRhmS5mmw44FMDOfJudYSw9b3d8d8jefcItX-eY
+Message-ID: <CAEdQ38HnKhWa-bHabiZRMYgSu=QY4-jH502QudLzOm6J77heRg@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/8] accel/tcg: cut per-block dispatch overhead
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
+ philmd@mailo.com, zhao1.liu@intel.com, laurent@vivier.eu, deller@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::836;
+ envelope-from=mattst88@gmail.com; helo=mail-qt1-x836.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,145 +120,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/disas/capstone.h | 20 +++++++++++++
- target/m68k/cpu.c        | 65 +++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 84 insertions(+), 1 deletion(-)
+On Tue, Aug 18, 2026 at 12:38=E2=80=AFPM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
+>
+> Hi Matt,
+>
+> On 8/17/2026 12:00 PM, Matt Turner wrote:
+> > For guests running large amounts of code, most of what TCG executes is =
+not
+> > translated guest work but the fixed overhead around it. Blocks are shor=
+t and
+> > there are a great many of them, so the constant cost at each end of a b=
+lock
+> > (the interrupt poll and the can_do_io stores on entry, the dispatch on
+> > exit) ends up dominating everything else.
+> >
+> > The workload throughout is qemu-alpha running an emulated alpha gcc 16.=
+2.0
+> > compiling the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64
+> > host, in a --static --enable-lto --target-list=3Dalpha-linux-user build=
+. It
+> > executes 34.2 billion TBs at 6.04 guest instructions each, and 24.6% of=
+ its
+> > TB exits cannot use goto_tb. That is a representative shape for any gue=
+st
+> > whose text is much larger than a page: indirect calls and returns
+> > everywhere, plus direct branches that merely crossed a page boundary.
+> >
+> > The first three patches are ordinary cleanups that stand on their own. =
+The
+> > remaining five are marked RFC individually and are where the interestin=
+g
+> > questions are.
+> >
+> >   1  accel/tcg: cache the result of curr_cflags()
+> >
+> >      Recomputed on every one of the run's 8.4 billion dispatches, from
+> >      state that changes only when gdb enables single-step or a log mask
+> >      moves. Cache it in CPUState and recompute from the four places tha=
+t
+> >      can change an input.                                        -5.10%
+> >
+> >   2  accel/tcg: enlarge the TB jump cache to 64K entries
+> >
+> >      4096 entries is too small for a guest running a large program;
+> >      tb_htable_lookup() is 5.73% of samples. 16 bits is the knee of the
+> >      sizing curve, at 1 MiB per vCPU.                            -6.02%
+> >
+> >   3  accel/tcg: skip the can_do_io stores in user-only builds
+> >
+> >      Two stores per TB that nothing in a user-only build reads: 68 bill=
+ion
+> >      of them over the run.                              -4.55%, -4.32% =
+wall
+> >
+> >   4  RFC: tcg: probe the TB jump cache inline instead of calling a help=
+er
+> >
+> >      95.8% of those 8.4 billion helper_lookup_tb_ptr() calls hit the ju=
+mp
+> >      cache. Emit the probe inline (hash, three guarded loads, goto_ptr)
+> >      and call the helper only on a miss.               -36.51%, -27.05%=
+ wall
+> >
+> >   5  RFC: accel/tcg: allow cross-page goto_tb chaining in user-only bui=
+lds
+> >
+> >      translator_use_goto_tb() refuses to chain across a page. In user-o=
+nly
+> >      builds the invalidation path already covers what that was protecti=
+ng
+> >      against: every mmap/mprotect/munmap reaches page_set_flags(), whic=
+h
+> >      invalidates and unlinks. Lift it there, keep it for system mode.
+> >                                                         -2.42%, -4.68% =
+wall
+> >
+> >   6  RFC: accel/tcg: only poll for interrupts in blocks that can close =
+a
+> >      cycle
+> >
+> >      The icount_decr poll needs to happen once per cycle in the guest C=
+FG,
+> >      not once per block, and any cycle must contain either a backward e=
+dge
+> >      or an indirect one. Record both during translation and emit the ch=
+eck
+> >      only for blocks that have one.                     -6.81%, -3.10% =
+wall
+> >
+> >   7  RFC: accel/tcg: poison the jump cache instead of polling for indir=
+ect
+> >      exits
+> >
+> >      What patch 6 leaves behind is mostly blocks flagged for an indirec=
+t
+> >      exit. Give the inline probe its own jump cache base pointer and po=
+int
+> >      it at zeroes when an exit is requested: every dispatch then misses
+> >      into the helper, which returns the epilogue. The poll becomes a
+> >      pointer swap on the request path.                  -2.79%, -1.94% =
+wall
+> >
+> >   8  RFC: tcg: fold a guest displacement into the host addressing mode
+> >
+> >      tcg_gen_qemu_ld/st cannot express a based access, so a target with=
+ a
+> >      displacement in its encodings materializes the address with an lea
+> >      that the host addressing mode would have done for free. Fold a
+> >      preceding constant add into a new argument on the op, opt-in per
+> >      backend, wired up for x86_64 user-only.            -6.29%, -3.29% =
+wall
+> >
+> > Each percentage is against the patch before it. End to end, measuring a=
+n
+> > unmodified build of the same base against the full series, five runs ea=
+ch,
+> > interleaved in one session so that host clock drift is shared rather th=
+an
+> > attributed (mean, with the run-to-run spread):
+> >
+> >     instructions retired: 1,646,129,294,236 -> 738,003,153,831   -55.17=
+%
+> >                                     (0.16%)           (0.03%)
+> >     wall clock:                    134.934s ->          75.189s   -44.2=
+8%
+> >                                     (0.30%)           (0.99%)
+> >
+> > Both endpoints ran at the same 4.782 GHz effective clock, and the .s fi=
+les
+> > they produced are identical.
+> >
+> > The two figures do not track each other, and that is the interesting pa=
+rt:
+> > what the series removes is cheap, well-predicted, highly pipelined work=
+, so
+> > it retires far more instructions than it saves time. IPC falls from 2.5=
+5 to
+> > 2.05 as the remaining work gets less regular. Patch 4 also cuts
+> > L1-icache load misses by 39.1%, because a dispatch no longer jumps into
+> > qemu's .text and evicts translated code; qemu's own .text falls from 38=
+.9%
+> > to 5.4% of profile samples over the series.
+> >
+> > Every revision was built and measured separately, so the series bisects=
+, and
+> > the emulated compiler produces byte-identical assembly output at every =
+step,
+> > which is the correctness check these patches most need. Two new alpha
+> > tests cover the hazards the series creates: tests/tcg/alpha/test-xpage-=
+chain.c
+> > (patch 5) and test-indirect-irq.c (patch 7). Both fail or hang if the
+> > mechanism they cover is removed, which is what makes them tests of the =
+new
+> > behavior rather than of the old.
+> >
+> > The RFC patches need eyes I cannot supply myself. In rough order of how=
+ much
+> > I would like someone to look at them:
+> >
+> >   - Patch 5 reverses a deliberate decision made in d3a2a1d803 on the
+> >     strength of an argument about the user-only invalidation paths.
+> >
+> >   - Patch 6 moves system-mode interrupt latency from "bounded by block
+> >     count" to "bounded by guest control flow". The bound is one
+> >     straight-line run between cycles, but timer-driven guests want a cl=
+oser
+> >     look than I can give them. Its soundness also assumes every goto_tb
+> >     destination passes through translator_use_goto_tb(); no target in t=
+he
+> >     tree bypasses it today, but nothing enforces that.
+> >
+> >   - Patch 4 treats cpu flags and cflags as translation-time constants i=
+n
+> >     its guards, reads a jump cache entry without qatomic_read(), and pu=
+ts
+> >     knowledge of the CPUJumpCache layout in tcg/tcg-op.c, where it does=
+ not
+> >     belong.
+> >
+> >   - Patch 7's restore in cpu_handle_interrupt() races a concurrent pois=
+on
+> >     from another thread. I believe the existing barrier around
+> >     icount_decr.u16.high covers it, but my testing was single-threaded =
+user
+> >     mode.
+> >
+> >   - Patch 8 only examines the immediately preceding op, refuses any acc=
+ess
+> >     with a slow path (so user-only, and no alignment check), and leaves=
+ the
+> >     i128 pairs alone.
+> >
+> >   - Patch 2's 1 MiB per vCPU is easy to justify for a single-vCPU
+> >     linux-user process and less obvious for system emulation with many
+> >     vCPUs. It may want to be sized per target or made tunable rather th=
+an
+> >     raised unconditionally.
+> >
+> > Patches 4 and 8 are wired up for alpha and x86_64 respectively; everyth=
+ing
+> > else is target-independent, and no other backend changes behavior or ne=
+eds
+> > touching.
+> >
+> > Matt Turner (8):
+> >   accel/tcg: cache the result of curr_cflags()
+> >   accel/tcg: enlarge the TB jump cache to 64K entries
+> >   accel/tcg: skip the can_do_io stores in user-only builds
+> >   RFC: tcg: probe the TB jump cache inline instead of calling a helper
+> >   RFC: accel/tcg: allow cross-page goto_tb chaining in user-only builds
+> >   RFC: accel/tcg: only poll for interrupts in blocks that can close a
+> >     cycle
+> >   RFC: accel/tcg: poison the jump cache instead of polling for indirect
+> >     exits
+> >   RFC: tcg: fold a guest displacement into the host addressing mode
+> >
+> >  accel/tcg/cpu-exec-common.c         |  48 +++++++++++-
+> >  accel/tcg/cpu-exec.c                |  54 ++++++++++++++
+> >  accel/tcg/internal-common.h         |  22 +++++-
+> >  accel/tcg/tb-jmp-cache.h            |   2 +-
+> >  accel/tcg/tcg-accel-ops.c           |   2 +
+> >  accel/tcg/tcg-all.c                 |   1 +
+> >  accel/tcg/translator.c              |  77 ++++++++++++++++++-
+> >  cpu-target.c                        |   3 +
+> >  include/exec/translation-block.h    |   6 ++
+> >  include/exec/translator.h           |   2 +
+> >  include/hw/core/cpu.h               |  23 +++++-
+> >  include/system/tcg.h                |   9 +++
+> >  include/tcg/tcg-op-common.h         |   2 +
+> >  include/tcg/tcg-opc.h               |   9 ++-
+> >  linux-user/main.c                   |   2 +-
+> >  stubs/meson.build                   |   1 +
+> >  stubs/tcg-cflags.c                  |  16 ++++
+> >  target/alpha/cpu.c                  |   2 +-
+> >  target/alpha/translate.c            |   6 +-
+> >  tcg/tcg-op-ldst.c                   |   3 +-
+> >  tcg/tcg-op.c                        |  86 +++++++++++++++++++++
+> >  tcg/tcg.c                           |  86 ++++++++++++++++++++-
+> >  tcg/x86_64/tcg-target.c.inc         |  61 +++++++++++++++
+> >  tcg/x86_64/tcg-target.h             |   3 +
+> >  tests/tcg/alpha/Makefile.target     |   3 +-
+> >  tests/tcg/alpha/test-indirect-irq.c |  53 +++++++++++++
+> >  tests/tcg/alpha/test-xpage-chain.c  | 111 ++++++++++++++++++++++++++++
+> >  util/log.c                          |   4 +
+> >  28 files changed, 676 insertions(+), 21 deletions(-)
+> >  create mode 100644 stubs/tcg-cflags.c
+> >  create mode 100644 tests/tcg/alpha/test-indirect-irq.c
+> >  create mode 100644 tests/tcg/alpha/test-xpage-chain.c
+> >
+>
+> I was curious to give it a try and see if everything works before
+> helping on review, however series does not apply on master currently.
+>
+> Could you please rebase it and send a v2?
 
-diff --git a/include/disas/capstone.h b/include/disas/capstone.h
-index 87f8f6181f..3d6f90d816 100644
---- a/include/disas/capstone.h
-+++ b/include/disas/capstone.h
-@@ -14,6 +14,7 @@
- 
- #define CS_ARCH_ARM     -1
- #define CS_ARCH_ARM64   -1
-+#define CS_ARCH_M68K    -1
- #define CS_ARCH_MIPS    -1
- #define CS_ARCH_X86     -1
- #define CS_ARCH_PPC     -1
-@@ -28,6 +29,12 @@
- #define CS_MODE_THUMB            0
- #define CS_MODE_MCLASS           0
- #define CS_MODE_V8               0
-+#define CS_MODE_M68K_000         0
-+#define CS_MODE_M68K_010         0
-+#define CS_MODE_M68K_020         0
-+#define CS_MODE_M68K_030         0
-+#define CS_MODE_M68K_040         0
-+#define CS_MODE_M68K_060         0
- #define CS_MODE_MICRO            0
- #define CS_MODE_MIPS3            0
- #define CS_MODE_MIPS32R6         0
-@@ -44,6 +51,19 @@
- #define CS_MODE_LOONGARCH64      0
- #endif
- 
-+#if CS_API_MAJOR < 6
-+#define CS_MODE_M68K_CF_ISA_A    0
-+#define CS_MODE_M68K_CF_ISA_A_PLUS 0
-+#define CS_MODE_M68K_CF_ISA_B    0
-+#define CS_MODE_M68K_CF_ISA_C    0
-+#define CS_MODE_M68K_CF_USP      0
-+#define CS_MODE_M68K_CF_DIV      0
-+#define CS_MODE_M68K_CF_MAC      0
-+#define CS_MODE_M68K_CF_EMAC     0
-+#define CS_MODE_M68K_CF_EMAC_B   0
-+#define CS_MODE_M68K_CF_FPU      0
-+#endif
-+
- #if CS_API_MAJOR < 5
- #define CS_ARCH_RISCV           -1
- #define CS_MODE_RISCV32          0
-diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-index ce2707dee5..6012dc3186 100644
---- a/target/m68k/cpu.c
-+++ b/target/m68k/cpu.c
-@@ -22,7 +22,7 @@
- #include "accel/tcg/cpu-ops.h"
- #include "fpu/softfloat.h"
- #include "qapi/error.h"
--
-+#include "disas/capstone.h"
- #ifndef CONFIG_USER_ONLY
- #include "migration/vmstate.h"
- #include "monitor/hmp.h"
-@@ -182,9 +182,72 @@ static void m68k_cpu_reset_hold(Object *obj, ResetType type)
- 
- static void m68k_cpu_disas_set_info(const CPUState *cs, disassemble_info *info)
- {
-+    CPUM68KState *env = cpu_env((CPUState *)cs);
-+    int cap_mode = 0;
-+
-     info->print_insn = print_insn_m68k;
-     info->endian = BFD_ENDIAN_BIG;
-     info->mach = 0;
-+
-+    /* m68k support in capstone prior to v6 is unusably bad */
-+    if (CS_API_MAJOR < 6) {
-+        return;
-+    }
-+
-+    info->cap_arch = CS_ARCH_M68K;
-+    info->cap_insn_unit = 2;
-+
-+    if (m68k_feature(env, M68K_FEATURE_M68K)) {
-+        /*
-+         * m68k insns may have up to 11 words, and 5 words are common.
-+         * Choosing 12 bytes splits after 6 words and disassembly
-+         * uses no more than 2 lines.
-+         */
-+        info->cap_insn_split = 12;
-+        if (m68k_feature(env, M68K_FEATURE_M68060)) {
-+            cap_mode = CS_MODE_M68K_060;
-+        } else if (m68k_feature(env, M68K_FEATURE_M68040)) {
-+            cap_mode = CS_MODE_M68K_040;
-+        } else if (m68k_feature(env, M68K_FEATURE_M68030)) {
-+            cap_mode = CS_MODE_M68K_030;
-+        } else if (m68k_feature(env, M68K_FEATURE_M68020)) {
-+            cap_mode = CS_MODE_M68K_020;
-+        } else if (m68k_feature(env, M68K_FEATURE_M68010)) {
-+            cap_mode = CS_MODE_M68K_010;
-+        } else {
-+            cap_mode = CS_MODE_M68K_000;
-+        }
-+    } else {
-+        /* ColdFire insns may have up to 3 words. */
-+        info->cap_insn_split = 6;
-+        if (m68k_feature(env, M68K_FEATURE_CF_ISA_A)) {
-+            cap_mode |= CS_MODE_M68K_CF_ISA_A;
-+            cap_mode |= CS_MODE_M68K_CF_DIV;
-+        }
-+        if (m68k_feature(env, M68K_FEATURE_CF_ISA_B)) {
-+            cap_mode |= CS_MODE_M68K_CF_ISA_B;
-+        }
-+        if (m68k_feature(env, M68K_FEATURE_CF_ISA_APLUSC)) {
-+            cap_mode |= CS_MODE_M68K_CF_ISA_A_PLUS;
-+            cap_mode |= CS_MODE_M68K_CF_ISA_C;
-+        }
-+        if (m68k_feature(env, M68K_FEATURE_USP)) {
-+            cap_mode |= CS_MODE_M68K_CF_USP;
-+        }
-+        if (m68k_feature(env, M68K_FEATURE_CF_FPU)) {
-+            cap_mode |= CS_MODE_M68K_CF_FPU;
-+        }
-+        if (m68k_feature(env, M68K_FEATURE_CF_MAC)) {
-+            cap_mode |= CS_MODE_M68K_CF_MAC;
-+        }
-+        if (m68k_feature(env, M68K_FEATURE_CF_EMAC)) {
-+            cap_mode |= CS_MODE_M68K_CF_EMAC;
-+        }
-+        if (m68k_feature(env, M68K_FEATURE_CF_EMAC_B)) {
-+            cap_mode |= CS_MODE_M68K_CF_EMAC_B;
-+        }
-+    }
-+    info->cap_mode = cap_mode;
- }
- 
- /* CPU models */
--- 
-2.43.0
-
+Odd, it's based on commit af06b5df26 ("Merge tag 'qom-qdev-20260814'
+of https://gitlab.com/mcayland-ntx/qemu into staging") from just a
+couple of days ago. I'll handle feedback received so far and send a v2
+today.
 
