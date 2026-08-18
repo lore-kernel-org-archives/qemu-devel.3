@@ -4,110 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59BE3C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:27:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA167C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:28:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwNZP-0007Yz-Tw; Tue, 18 Aug 2026 13:25:51 -0400
+	id 1wwNbY-000523-21; Tue, 18 Aug 2026 13:28:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1wwNZO-0007Xp-Us; Tue, 18 Aug 2026 13:25:50 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <lipovyjakub@tillia.cz>)
+ id 1wwMvW-00043i-Ic; Tue, 18 Aug 2026 12:44:38 -0400
+Received: from m1-out-mua-3.websupport.sk ([45.13.137.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
- id 1wwNZN-00039U-46; Tue, 18 Aug 2026 13:25:50 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IE3Z03455087; Tue, 18 Aug 2026 17:25:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=qJpuMbnGQSGDR9PCX
- PHmAzxStEx9+i67O0lVlzxpX94=; b=ZVOJKPds+Ada/AxnlIHwzHtMSG9NYBFxm
- IxBids09c8exJ4tJxFeuLfY/VZK18l+WPZnVpZHdgeX+bkqgluX9L7CAyHdz6MTC
- nRg2xVO1Rbk1JosA9Nk9YVh9HJ60897PS0SrLIuQxOUICZltc0qH0rRlQuNZTYG6
- 4jQAOtN9oJIbIIC2Yyb0+2cKEiecMPlQ8UKm7QHixTIeBBvHbZOgt4XOPZ9j8zCw
- GEEtLwuCyoaFTpwi5opeTIGxjbBYfWLyk8DpEYWy5o5rD92+3sQRbhHlSGQllg8T
- qhbwx9Fi9qx282ZddYZQ1Jkx/5uZH4qQyUxAAuSZ9a8zeV39aNtzg==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fm3srww-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 17:25:45 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67IHDdQN008719;
- Tue, 18 Aug 2026 17:25:44 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g32eq4mac-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 17:25:44 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67IHPhjs29295124
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 18 Aug 2026 17:25:43 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0CF7158058;
- Tue, 18 Aug 2026 17:25:43 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 706715805E;
- Tue, 18 Aug 2026 17:25:42 +0000 (GMT)
-Received: from WIN-DU0DFC9G5VV.ibm.com (unknown [9.61.251.170])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 18 Aug 2026 17:25:42 +0000 (GMT)
-From: Konstantin Shkolnyy <kshk@linux.ibm.com>
-To: mjrosato@linux.ibm.com
-Cc: alifm@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
- iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, Konstantin Shkolnyy <kshk@linux.ibm.com>
-Subject: [PATCH v7 15/15] s390x/pci: Create function to contain fmb_timer start
-Date: Tue, 18 Aug 2026 12:25:21 -0500
-Message-Id: <20260818172521.223460-16-kshk@linux.ibm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260818172521.223460-1-kshk@linux.ibm.com>
-References: <20260818172521.223460-1-kshk@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <lipovyjakub@tillia.cz>)
+ id 1wwMvU-0006zB-QW; Tue, 18 Aug 2026 12:44:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tillia.cz; s=mail;
+ t=1787071474; bh=6RFZys3HrvAaThgRRsfI5XljUc8KOQv8gu7cbeOhN3s=;
+ h=From:To:Cc:Subject:Date:From;
+ b=ck3FZVkZx5JCGOhaWQaqfElgUazbjHFcSMP1BpGkaGKGEHb1HoF9jStvzlPCdIG3U
+ Npl0ffG5nixjin3a9gBRuhDAcrlMy3OPP8OnDv4OALiby2l7JcozR37kcUB8nasjde
+ 6u703diD0DYoiqUlyIGq42AVDGOKM3XGfdbNdpx863AwzCncudVIEIouWMa9OfXEt7
+ tQNTuNYNZS5MSAMObbhP0YZc9b5rlzJh32I4fQGPsGVKchP6ZUqDGYdVwsD2jTMqmI
+ BVrm1T2xZEUu6QeEwgQqo9brj/wpA3mM6olFML4uCX6T7Cm0oM5XmtVUTnlZBBjv/3
+ 47yH/5ifOgJ+w==
+Received: from m1-u9-ing.websupport.sk (unknown [10.30.9.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (No client certificate requested)
+ by m1-out-mua-3.websupport.sk (Postfix) with ESMTPS id 4hPbC61zv5z1Xtb;
+ Tue, 18 Aug 2026 18:44:34 +0200 (CEST)
+X-Authenticated-Sender: lipovyjakub@tillia.cz
+Authentication-Results: m1-u9-ing.websupport.sk;
+ auth=pass smtp.auth=lipovyjakub@tillia.cz smtp.mailfrom=lipovyjakub@tillia.cz
+Received: from 0.netbird.cloud (unknown [84.242.101.250])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: lipovyjakub@tillia.cz)
+ by m1-u9-ing.websupport.sk (Postfix) with ESMTPSA id 4hPbC53tnqz2gl2;
+ Tue, 18 Aug 2026 18:44:33 +0200 (CEST)
+From: =?UTF-8?q?Jakub=20Lipov=C3=BD?= <lipovyjakub@tillia.cz>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org,
+ =?UTF-8?q?Jakub=20Lipov=C3=BD?= <lipovyjakub@tillia.cz>,
+ qemu-stable@nongnu.org
+Subject: [PATCH] target/i386/tcg: raise #GP(0) on null SS load with RPL != CPL
+Date: Tue, 18 Aug 2026 18:39:58 +0200
+Message-ID: <20260818164414.245189-1-lipovyjakub@tillia.cz>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: wuCZZFvhmpOtzhYQQ7Mhrk1x24mkg-rG
-X-Proofpoint-ORIG-GUID: wuCZZFvhmpOtzhYQQ7Mhrk1x24mkg-rG
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDEyNSBTYWx0ZWRfX5VKv+eAkz4lE
- 05obocxYsW8B5OYZrLGhLGX7OFfe7UnJil8TKavcMre5lg+T8DgPcuyYkE2qXnINi0XCoJaQcKB
- IH3M3Eq6kYGfVu02W6Ww3g6PdoO+6dQ=
-X-Authority-Analysis: v=2.4 cv=WtQb99fv c=1 sm=1 tr=0 ts=6a849599 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=Q_XnuvSB35syRjF9fnEA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDEyNSBTYWx0ZWRfX9gsal1F1FO+j
- wxtIAwgSFj3AGltwrEQgNqbmgp9Oi5wLdh8Rt+PysyLvzU0Z8596LOa1rSjw0eiV3q+cT/v0j/u
- OB8jgS/JaYg6s6Jlh11miOfRc4We48Cvft6SVtrRO6p2rf5mQrS1bSN8GxuC7kLTusu1Ec6a742
- qZQ+R7//EujYddO5G1Tw1o8fFYCgKGSxVaQWj/I91pIHNsETuk9p2AMX2uY15CBzUKLGyKJqpUr
- BwKEuxhHdYbRKcF1lubeb3vllsC71RQh8sN48/u6QA5FIZAK/W0C0o3m4Z4n+7vtgLV1N+BzdOw
- 2tAo5pufIoU3SL6LvboHwMEJHRU0Nu0aGoMN8RInq6eS3WJPQMarMuFLixUOnKLOGfzY9YUe9AA
- J3ojavOm3IsHUq0/hPQXo5N+c4z8Bfyi1bsI9HDblS6Q3uUqeAJlO4IMrFjZxwuSn/IsbSKrOuY
- 5hfFEextlbhJrVof5Og==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-18_02,2026-08-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 malwarescore=0 suspectscore=0 phishscore=0
- lowpriorityscore=0 clxscore=1015 adultscore=0 priorityscore=1501
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608180125
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-Rspamd-Action: no action
+X-Out-Spamd-Result: default: False [0.90 / 1000.00]; MID_CONTAINS_FROM(1.00)[];
+ MIME_GOOD(-0.10)[text/plain]; FROM_HAS_DN(0.00)[];
+ ARC_NA(0.00)[];
+ ASN(0.00)[asn:16019, ipnet:84.242.96.0/19, country:CZ];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_ZERO(0.00)[0];
+ HAS_X_AS(0.00)[]; SUBJECT_HAS_EXCLAIM(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FROM_EQ_ENVFROM(0.00)[]; LOCAL_OUTBOUND(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]
+X-Out-Rspamd-Queue-Id: 4hPbC53tnqz2gl2
+X-Out-Rspamd-Server: m1-rspamd-out-6
+X-purgate-type: clean
+X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
+X-purgate: This mail is considered clean (visit https://www.eleven.de for
+ further information)
+X-purgate: clean
+X-purgate-size: 2166
+X-purgate-ID: 155908::1787071474-BAB9B1FA-70ED95A9/0/0
+Received-SPF: none client-ip=45.13.137.12; envelope-from=lipovyjakub@tillia.cz;
+ helo=m1-out-mua-3.websupport.sk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 18 Aug 2026 13:28:02 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -122,87 +98,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-fmb_timer is now started in 3 different places. The new function will
-encapsulate that to make sure mui is added in all cases.
+In 64-bit mode, loading a null selector into SS raises #GP(0) if CPL = 3,
+or if CPL < 3 and CPL != RPL.  helper_load_seg() only implemented the
+first case: the null-selector path never examined the selector's RPL, so
+a null selector with non-zero RPL (such as 0x0003) loaded successfully at
+CPL < 3.
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+This was caught by test_sreg() in kvm-unit-tests x86/emulator64.c, which
+additionally fails its subsequent non-null check because the wrongly
+succeeded load leaves 3 in SS.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4204
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Jakub Lipový <lipovyjakub@tillia.cz>
 ---
- hw/s390x/s390-pci-bus.c         |  5 ++---
- hw/s390x/s390-pci-inst.c        | 14 ++++++++++----
- include/hw/s390x/s390-pci-bus.h |  1 +
- 3 files changed, 13 insertions(+), 7 deletions(-)
+All three SS related checks in x86/emulator64.c's test_sreg() now pass
+under TCG.
 
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index 4ac845328f..2e3b37eb5c 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -1753,9 +1753,8 @@ static int s390_pci_device_post_load(void *opaque, int version_id)
-         assert(pbdev->pci_group);
-         pbdev->fmb_timer = timer_new_ms(QEMU_CLOCK_VIRTUAL,
-                                         fmb_update, pbdev);
--        timer_mod(pbdev->fmb_timer,
--                  qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
--                                    pbdev->pci_group->zpci_group.mui);
-+        s390_pci_schedule_fmb_timer(pbdev,
-+                                    qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL));
-     }
-     return 0;
- }
-diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index 6b0742d143..89e4830dcd 100644
---- a/hw/s390x/s390-pci-inst.c
-+++ b/hw/s390x/s390-pci-inst.c
-@@ -1122,9 +1122,16 @@ static int fmb_do_update(S390PCIBusDevice *pbdev, int offset, uint64_t val,
-     return ret;
- }
+I have not added an in-tree test case to verify this, as this case
+requires CPL manipulations that tests/tcg doesn't seem to be able to
+easily do. The behavior is covered by test_sreg() in kvm-unit-tests.
+Happy to add one if preferred.
+
+ target/i386/tcg/seg_helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index d5c174b7fd..36e3ae3b55 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -1411,11 +1411,12 @@ void helper_load_seg(CPUX86State *env, int seg_reg, int selector)
  
-+void s390_pci_schedule_fmb_timer(S390PCIBusDevice *pbdev, uint64_t start)
-+{
-+    timer_mod(pbdev->fmb_timer, start + pbdev->pci_group->zpci_group.mui);
-+}
-+
- void fmb_update(void *opaque)
- {
-     S390PCIBusDevice *pbdev = opaque;
-+
-+    /* Must be read before updating U bit */
-     int64_t t = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL);
-     int i;
- 
-@@ -1161,7 +1168,7 @@ void fmb_update(void *opaque)
-                       sizeof(pbdev->fmb.last_update))) {
-         return;
-     }
--    timer_mod(pbdev->fmb_timer, t + pbdev->pci_group->zpci_group.mui);
-+    s390_pci_schedule_fmb_timer(pbdev, t);
- }
- 
- static int mpcifc_reg_int_interp(S390PCIBusDevice *pbdev, ZpciFib *fib)
-@@ -1354,9 +1361,8 @@ int mpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
-             timer_del(pbdev->fmb_timer);
-         }
-         pbdev->fmb_addr = fmb_addr;
--        timer_mod(pbdev->fmb_timer,
--                  qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
--                                    pbdev->pci_group->zpci_group.mui);
-+        s390_pci_schedule_fmb_timer(pbdev,
-+                                    qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL));
-         break;
-     }
-     default:
-diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
-index 66c1f04ead..25f69407df 100644
---- a/include/hw/s390x/s390-pci-bus.h
-+++ b/include/hw/s390x/s390-pci-bus.h
-@@ -422,5 +422,6 @@ S390PCIBusDevice *s390_pci_find_next_avail_dev(S390pciState *s,
-                                                S390PCIBusDevice *pbdev);
- void s390_pci_ism_reset(void);
- void fmb_update(void *opaque);
-+void s390_pci_schedule_fmb_timer(S390PCIBusDevice *pbdev, uint64_t start);
- 
+     selector &= 0xffff;
+     cpl = env->hflags & HF_CPL_MASK;
++    rpl = selector & 3;
+     if ((selector & 0xfffc) == 0) {
+         /* null selector case */
+         if (seg_reg == R_SS
+ #ifdef TARGET_X86_64
+-            && (!(env->hflags & HF_CS64_MASK) || cpl == 3)
++            && (!(env->hflags & HF_CS64_MASK) || cpl == 3 || cpl != rpl)
  #endif
+             ) {
+             raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
+@@ -1439,7 +1440,6 @@ void helper_load_seg(CPUX86State *env, int seg_reg, int selector)
+         if (!(e2 & DESC_S_MASK)) {
+             raise_exception_err_ra(env, EXCP0D_GPF, selector & 0xfffc, GETPC());
+         }
+-        rpl = selector & 3;
+         dpl = (e2 >> DESC_DPL_SHIFT) & 3;
+         if (seg_reg == R_SS) {
+             /* must be writable segment */
 -- 
-2.34.1
+2.55.0
 
 
