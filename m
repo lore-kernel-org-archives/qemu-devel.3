@@ -4,154 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78BEDC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:57:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CC8FC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:58:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwKK7-00061x-3E; Tue, 18 Aug 2026 09:57:51 -0400
+	id 1wwKKG-0006Z0-Iz; Tue, 18 Aug 2026 09:58:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lucas.kornicki@nutanix.com>)
- id 1wwKK6-00060u-1x
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:57:50 -0400
+ id 1wwKKF-0006YZ-Cl
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:57:59 -0400
 Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lucas.kornicki@nutanix.com>)
- id 1wwKK3-0004jY-PI
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:57:49 -0400
-Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
+ id 1wwKKD-0004kZ-Ab
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:57:59 -0400
+Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
  by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IDudAr1560575; Tue, 18 Aug 2026 06:57:46 -0700
+ 67IDueJO1379006; Tue, 18 Aug 2026 06:57:56 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=jN9b7QSBtgxq/Ur5M+Os874GBKmC0jiOIgbcEautX
- yM=; b=WmPfyz51gi/v/Cq5zfQTGwxiTVltk5g6nifunTiTzc4oYyko2YigLCSJ2
- McIFUAuqt1fmRcEiDOeeBlyzN4wZ2+dduhHsn5pWwL2MRwNc6oQROvxigWGjcVyK
- gSlC3hQPnM6fJSleXyR5EItDcglrFkcAL1zlVDkNne8m59F6w06bVSSSUNkmERHJ
- ScjDwOlhKugFDgMV+oYA894XFdiUCdJZGPEc9pNbaau12RJbKKxVpN3zOBQO8QCG
- cDQBvbWDCDRobAdB15VlNYMcJQJZgsXVrbFpbGurHu0QMnu7noCIVhzXY47YarMh
- gLnSpzo/TCnRGSS69cD0EP9DW25Dw==
+ proofpoint20171006; bh=SEX8wWQo6HpRc9xAQ15nkFFZsku2DEKUFr/6B30cW
+ X8=; b=ygkDRPMQjlf1rpbyLlnznq4rbYkyJFt9agh52xZNxkgZ66B+eSzaZ1rDO
+ mBRsfheXRR7ylv1IMIgJHD6SAxhRJ4J2hXCZoI3tDiJwyLmeardJTK32aMFMwhzt
+ fcx53RWYS+TmoDlLhZDiYRJBMO6kJ5Jk7bOMoIq3NzXH8/L1oljop+jbfouRqLWt
+ B2Aujby96emCDe6Lqsnn6EUbeJcYTiJWuLrEXbpRk1JD9AWOwLvQLvVtC0s5pHoB
+ ybaVnwsmky9am82fRy7miaf8NLHrWRpcNHiFm8Oo65OvVh4691+SfeiZYZRtz5Kp
+ k1gA2D/TNgslNxmpcD1tdS02wqwsA==
 Received: from ch1pr05cu001.outbound.protection.outlook.com
- (mail-northcentralusazon11020132.outbound.protection.outlook.com
- [52.101.193.132])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4g2q6cxntx-1
+ (mail-northcentralusazon11020075.outbound.protection.outlook.com
+ [52.101.193.75])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4g2meqxt7c-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 06:57:45 -0700 (PDT)
+ Tue, 18 Aug 2026 06:57:55 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wz3vedYAf02nzvOGOCnAxd38Ti/JEAa4YJxwgrJaI8MNRCfw/18bIAffrYFz+hl4na6oln+t10FtkaYAYH5ot+e6tK78qJYnjIjh3KF9tOLlNIgWpbquhT37v8QeLMw9vSreJNMyrvnMCaMz0p/gMegAUdfU6TVNXLX8uj6DYNsfr1u9emZiuJHwTc0Ul3NOLSIOxbEWqDJmNJsjsTK9YGHxg7orIfF4rVnoxnDVRd7Rp8whAvl8PXAfLbKE2ycEl8Hhs5BlhFTsyMWhzdCOdXAC0rA6BytcV5AEzAs/plQRhJbz5Koaa+SxFitQ1SCAS8gdkZWAkHstzJTUooRBwg==
+ b=qqUHUblotreHCf2tSXUos8C1rUQ2tr1q2W4nT39ulSs2tl7oxi4KZvZtboHnxGAk6G836UnDtSHZxzvCrG36gARZPcS1tnYWmuUS5lKZoooINwa+06yivwmE/8cZu8tW5+AjWOus31D5VYKPUa/in7dp1uweH/4cGNJGq+Hx5dRJlk6km16zxhX47ZNwK6HhOUMHW08Qm0Uvno/0YGDtPKFqhnlXecP9gxd/C5XOwBwv3WBYkIFje48kSFI8UqcYHq1Gtps4t+/0vQFmqbDMnksOdTeQuRP+pXmPJbd99kfMKwuGbLWaWxGjnIzSFexr5Z6bGLTLDY6DxgDhJiP2kg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jN9b7QSBtgxq/Ur5M+Os874GBKmC0jiOIgbcEautXyM=;
- b=IWdWt3iUJa55Jrj3jqw1S5Emv3D5oWoaAPz3KvW9J0ZhrZ8NlLOz2+pqmU2S6Fm2kk4BLXT0h6OEVQ554XGwTFGim1Lwz7e2kwu32iq5SUwwWE/vR9QDRqImN9Y8gGT3wNYkGnM0NsaAGb5yzINBiXqcImEcHpK9ABtWp0EWiTWoRdYF4QXRYpjmwMPr5gIaPbPp9PAWjrcXt6xpE4pQX+9pxY9pXWvZxbtrD14k1KQNXc3ocMaIRYg7bQooXRmlgWatRpYbAeFrPMX/X91w7s+NH1co2/6JQhRQHzoDjF292dWy93vxHiH9s0RQkOjjLDHOWXMikKAjCwndqFznWQ==
+ bh=SEX8wWQo6HpRc9xAQ15nkFFZsku2DEKUFr/6B30cWX8=;
+ b=t5gI8QshJbANxKvPudA87GInkpgMAI7q+FyufpQdFld8h1AqBm40904ckR/xp6QOqJHMlbEymjbiWR9OW2ZhCmr/IdGAEdcKngeANbajYqaRT+rzUuwY3YmeC3+PXO31PSM9OklZnwpuAhh7KoVdjsXPc/v/CImUoR6E73RBZVTA4wrj08+kVOA+1IndUQsb4aafM32QkcmFUaqsXEnNSuioryvxD/2FeBeDJQbxcqkb4fiXBf741xiBckQ3uxuTMPnmQBrlFxzeG+qKA2muO/JKv9dHDJ4U16vCAn4bwEJ00pKl2gK6i5cJIKlackgVaS2kARc+Uy4LmRryEhUAPg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jN9b7QSBtgxq/Ur5M+Os874GBKmC0jiOIgbcEautXyM=;
- b=iUEAY/0NaZ38zlIVA7djp1zAMhuufqdMqfjxUoItvDnbWC46QzuJznO5z+T+EoXtr1JaoUQIXCClStO3MH0m4DxP8Y1uvahqMzG1pUj0eNUo/5zON2kS15OUUF6sR1wFi1RANcJ93kPsUOR+Q3i8RlUZac2AOHsDcH2Y/bw5yZNK0GXBneQa8pPh5MUjY5IhQX2t9yUHS3KxSbY57DjYnGeyn6miP9h74niaq4p9rmmm4hP+SSBdWUg1V7ytFsD5PVqlRH7SEjRxOjSrOPN8qOd4tQz64KZa5tvX+4yfbP9ZXuIn8Y2jbRGKrqAuT6UYMD2o2JYRlJcgGBLryGbr8g==
+ bh=SEX8wWQo6HpRc9xAQ15nkFFZsku2DEKUFr/6B30cWX8=;
+ b=YDTCJra1FYCUBs/YF+2mQbi2lGk5yAf+5RAv1hgVtkHarPg7o0kKoYmohjbDBIlgdiN0RHIiavJnoY2gsGQRwnROrgDgPqqkFfa/3wdISU/FSYDHXWZmTbhmFoimM19kWCu+Jxxi7X22XicW3vTqmc0uRhLBiL3EqwWcMT+jdTxNTLmyl2Brcc223tIpMKbeZwPLuKZ1hW02YakkItka5WKbwuOIgTsthagMv0dRQi+vQe+HZjZmVkcWLWu0WtAy0I7kP+xVo1wOym3CweeQfebkm8c+UQpFZiGHzTgDfme2vE5WoBdb69CDGCrJOmAm6QrOwBzSjDyoyK1YBRbziA==
 Received: from BL0PR02MB3827.namprd02.prod.outlook.com (2603:10b6:207:42::26)
  by DS0PR02MB9103.namprd02.prod.outlook.com (2603:10b6:8:131::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Tue, 18 Aug
- 2026 13:57:44 +0000
+ 2026 13:57:54 +0000
 Received: from BL0PR02MB3827.namprd02.prod.outlook.com
  ([fe80::5f5f:bb6:29f7:afd]) by BL0PR02MB3827.namprd02.prod.outlook.com
  ([fe80::5f5f:bb6:29f7:afd%4]) with mapi id 15.21.0339.007; Tue, 18 Aug 2026
- 13:57:44 +0000
+ 13:57:54 +0000
 From: Lukasz Kornicki <lucas.kornicki@nutanix.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 1/4] ui/clipboard: add clipboard peer update notification
-Date: Tue, 18 Aug 2026 15:57:34 +0200
-Message-ID: <20260818135737.2679311-2-lucas.kornicki@nutanix.com>
+Subject: [PATCH v2 4/4] ui/vnc: notify client of clipboard peer status
+Date: Tue, 18 Aug 2026 15:57:37 +0200
+Message-ID: <20260818135737.2679311-5-lucas.kornicki@nutanix.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818135737.2679311-1-lucas.kornicki@nutanix.com>
 References: <20260818135737.2679311-1-lucas.kornicki@nutanix.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: AS4P250CA0009.EURP250.PROD.OUTLOOK.COM
- (2603:10a6:20b:5df::10) To BL0PR02MB3827.namprd02.prod.outlook.com
+X-ClientProxiedBy: AM0PR02CA0196.eurprd02.prod.outlook.com
+ (2603:10a6:20b:28e::33) To BL0PR02MB3827.namprd02.prod.outlook.com
  (2603:10b6:207:42::26)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: BL0PR02MB3827:EE_|DS0PR02MB9103:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9dd8af66-9b1f-49b6-d2e8-08defd30ad18
+X-MS-Office365-Filtering-Correlation-Id: 4c036e13-eb5a-48c2-ef71-08defd30b323
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|376014|366016|1800799024|23010399003|3023799007|18002099003|22082099003|56012099006|10067099003|6133799003;
-X-Microsoft-Antispam-Message-Info: 4iA4PHpIWNQVNEzrWyOaUjI18T/fG84hKBWmg3DiKfyccrUtkLv/GJNUz4aCYJ1SlrleNwK9UMtfG0u4kbOajakunZa4Fz16spAuVpFyVL0ZmuaTR+th8bCk1zz+wAATGtMtjwmgFzGV/B/7hJxjrJF5si4dZOcPvItHBbFMNULEd56Y5GdO51s6dR0Hpm87+JrfMQE+uQgIhuhWuuEG+lfq6wZpf2IatnhhpOJDJYb9MUaXiirqzRryDCmR6x2iETSs2hfYTuh3AHcAxt3aBwlaCpvavr+sS1fuuCzajauQbtdY2ITI5FYwuFgBNSEDb9WoMJKZMIol8mgviMqd1maxEZnp4BoEa80GB0HoBDvHtL5lzXYfzh6Iqqp0ySZ8l8R7B3s2/rYHOMNIAOmA9ur5F3dh9gvAaZm2imfu69PJFHq2rRD2eumg2lBEoxkZUJ7jcNOaG4BItO5Djj8wN7zjSfk6aeBUiCjZ+rPDLKk5RTnodfjnzvCY1mqtYrZ1DwSzqD6Zn/PDUa1SMB1cc5/6fKWAXOkdHWrdH7fwrWrAAjAhJN6y3nUi7L9UZgHOjs+TtPyjwdekcgznBDoG5bNizta8V1UOVi7dBJK8No7WFyoqx2cKBT7uMwfdEWDq7C1+OgGTLxN4GPzoNGCTjbQyEzzO7GW7WMwSGOwshns=
+X-Microsoft-Antispam-Message-Info: FYtnafDVifAvhfykIVl40HLQP/R2O6CCXH8wvpoA4hKhsy5STMXS22T5UA8uUNofj4cUTw2rJZq2I0XNd93Ixwzmjt/dkf5BzRw0TKs0Rh97LqK2+7F79QGKTS7xDDwxbthxC93xv0lFWuV/jY/l5Nlm7TOJHSAexEd22134foj68Eg4JR4Q1oZCHLM9EahawI0o8dTh6KjSvln8hN8k0VRkAhaCJJ1iIBmvuHQFjepOC9OmXvB2j7aAJAGmM7R93/+OwlsTJs8gOfHhnCXUk8n9qiOD1ufyGc7Eff6PJj6qqyNKoK26BxMDNEFN2jg2NjYoIfFzl3ZKeY6uB30K99iYHimljlHfdhrLoOJVANLuPSxCuGaJcNwuSQtK5IvHATNvN2vEbpvwnpm5HzvcnY0b1C+lgDG9+a2RqvKAOSiOtdaag2dpy/EIRhgbEmD3sQhYLLADbqLN0/G0aGXoK/gU80iJgPuly5fOZBqv/3dqS4QoIwjpB0jbZse4D8Jaev22r14TiC8nIBA8AgHm5W7+RPUZ/pFaDT5JnY2Ed3XoxJPEVUNkWevj5m3PCp4gmdFICusxSKl4vBm7/Aycx/hftPPnF9UB4DcbhsYz0EIgdnAw1ye8vl4jQixtfexSwvhHKYVdJhDM9FM6OaTBDhGbUweqiVchbRUHj3DCVbk=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:BL0PR02MB3827.namprd02.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(366016)(1800799024)(23010399003)(3023799007)(18002099003)(22082099003)(56012099006)(10067099003)(6133799003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?b16cCbwegpnou2oaZUeULdErMaB1gVj19E/APQEbD1bV7vYxAVTRPPo1P6SJ?=
- =?us-ascii?Q?eTafpsMcmK8F9CTtBWshugtIopIqBg5H+zRGD4eHU1wghq0a8bfmFgIC2e3N?=
- =?us-ascii?Q?cad/2mM9hB7wTWeWe4h4lzJY+VXc9Foqm0WVGjV1LOaKBrjHsZ77Z8+rjfov?=
- =?us-ascii?Q?vDWK0GBummEEyagnwI7k9wzpaBM7k/IyrqnntlAf/fVM2uycujsnBvjHRgv4?=
- =?us-ascii?Q?R7y12VGbUfOkzmH3mzuHKHWSmVfHPvTPMGKiLc/QWRv/qDV77tnJ6Sy/SKdK?=
- =?us-ascii?Q?EDDL37YfgYhEmCWIXYDSA1D6DqGEX6mbJsOZXllW13CdBtaSUtKYVUtZGB8r?=
- =?us-ascii?Q?EnrPqO7vYmsjvJyv2N24j4WoPOUo4zhJAq0Ymt7665NpGPxF3ECId07AboSV?=
- =?us-ascii?Q?2gcv/G8/O4KQ8z9dOF3Shj2LqbWAjwfIE8SVgXtNc1FVOwZMDcKuGpunbqEY?=
- =?us-ascii?Q?RKJvsU3JALWVJPvZEqpvEGHUgscB3Jo5shvEa4XjEaza3IZLP5iCMtOiHqDd?=
- =?us-ascii?Q?Npyw7Dk3o4u1ZcvOFrvFBuPrwXj//QzTFnbh7qJjrBwM/EbTrCMAU+CIA6IE?=
- =?us-ascii?Q?bUwVXyB93/qY47DDS5nPr0W1WNStA3O8vQJQQNZ7T6/1dy9ycvs2iPfYqIrp?=
- =?us-ascii?Q?qadJzAyFyUH2brsV3J2yJPJOAeMCPMF7+Mk6mMaW+Occh86OmlWvBX2tfSob?=
- =?us-ascii?Q?eldPcqBpZuI4HXK1OwJVh9LM1rDJ2hkD8rCuh55bDmFtANPfQf5ZGYhO7vKG?=
- =?us-ascii?Q?yQvOVs+oEPwAyr73TOp5kXyDt2YuNssNETf4mq0JzkwXbIpeDoPEEs3CsYyl?=
- =?us-ascii?Q?1TZ3TKWB9P0Bp9C6bNgdoOJHXsMITdeMNZ00Y8LhFalIE2Lx5CGueQG9rkIB?=
- =?us-ascii?Q?sI3c0em6AxbJRo5x3cF4x3ltUo6sYxV23BcTep7v1UiwCIK/9OUx4jaxAav3?=
- =?us-ascii?Q?mt1QIuK1mYoLUUMxL8P+U9yPbnHbqb2wnyskeJMxzqywU6h8L7sRkzhG2paj?=
- =?us-ascii?Q?G2EYVTNEKcf5yZQr0rzuJN/CbUrZ9Lfcef6YbSAi4PmvnLXSAFv4AanQOkcb?=
- =?us-ascii?Q?P1hMWFg/iffK8ctygD9LZS5kNfhPT3CRiWvBqs5lnA40cRy/crwkda4FYGvM?=
- =?us-ascii?Q?6ETb3VZ1m94jaJrmauhX6hQRJTzx6F+X8PWjJcmIjBEFIyWJU3pQ63+z3xtw?=
- =?us-ascii?Q?L80QldZ9agzqVfbF19OvIynVygJLFgymOa1/B0TDOCJqbuOiMqIBTbQjp9eX?=
- =?us-ascii?Q?gPT2RUevP5IVg5Vjg9oEJPwm9bg4/hA2oWLO8krqe9S8KfDt0sXaml7ssLRU?=
- =?us-ascii?Q?qgTIskc3DbMTBZ0PwnUuWV57PyyARt+4y30xFsZlY99SOWBP5Gt+e+YzMoMy?=
- =?us-ascii?Q?q/n0pJL2R2UPg1W7Ui8sxdZim4B/4yvM+LkhW8875FxCap3fzi1NcdiNsX2d?=
- =?us-ascii?Q?+o0BIfcaJIR2v08a9n15GcTWJ8en8QuMYVST+3odj61u0BwCtG+DSjQEnTwK?=
- =?us-ascii?Q?7dhTM4QBivie7cHo3OkXPeG+Sm121w6mm/m/vQSYNwcWu8GwNooEPzd/ND4G?=
- =?us-ascii?Q?7aVb0fRH8kkvEvIzEl1HdrOSKarJ/A5oVNxrv1csvU5Nvc3T6eacEQYJqza0?=
- =?us-ascii?Q?JIwUt18pHOfDonChE6gN6Sx6Zpbkt8dOW/88bOMf9G6NLzOBVzbHKnYADIKU?=
- =?us-ascii?Q?vjwmFb/SHD0EZJ466DoWwqCi+c7GS2UkHP2YyP2A0htxPUm9CYVUIAuQSg96?=
- =?us-ascii?Q?E/bNdtJM/Q=3D=3D?=
-X-Exchange-RoutingPolicyChecked: XsCbzIYTsK90WMcXr5P8+1pTG2mSOmcr4Hk3O2k1Xwp4Ko8Yi185deckaLMx0oyLbgnD26n7v9igJHniBNBjrLB0rp85E9sw30erVQtvN1tizB8QdqXXr+RM9pMYKE83rAjd3B7vsa2xZFIaKujHTbP5W4G/VvB2g0IKBiCV+71HOR1Jo0GHt0a5tCDwFEjhLFr3vJWxBYfHgE5Ygj0uLhcLLDoyMsWi+1Xkm7cwRzM8yB+rnuGefz+QxFe/cNk/mfvlK/iVxC5xS05/dcSjqhTYvg84wvzfKQmo0SIep8g1uu28nMFWfUaW7np1fq41L/jDmMi/SRvaQHScaaX7+Q==
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?vEaA+oH+x7jCQ03tlo3ZRBteG4GcEhHqvKiYmxNO+rtBBqY0akpSsl3WLG+T?=
+ =?us-ascii?Q?q+K+42yXhcw1EQ7eMA6/Lwu5GOaClQtW60s0/o7Q7bkvp68WsGTNK9802jyu?=
+ =?us-ascii?Q?hYC2k/oxst6SGiyzVViXJVIt+WL9IJ94k9JYIfWNyZNSfC3sJmGvel68Tx0T?=
+ =?us-ascii?Q?3UVRR93OK4qTLlqQ1ipwwWRhtvH7zBwWsC5zwXo9pXa1Id7HrBTE25BWmrau?=
+ =?us-ascii?Q?euftDrzNbn9crlp05ZMW1kVfXm7/2YginNizC3yXhOsIVW0BrSIL/o+S7FBY?=
+ =?us-ascii?Q?hZhNF8zUBCcmxleSH+PV5l8N/tceKksvt0V2SO+Y0A7Im9fIzKZT/bmDL3I4?=
+ =?us-ascii?Q?5PtuaXsC5GfXQomkHsYeBclb/9IFIv4cC6nI5oLf7GQ9hkTdgYVcCs2Rlz+d?=
+ =?us-ascii?Q?EXZkQujJaA/TQ0XgwDvN2Q2PGW50KhC6Db8xfzjV5gSVIdgTxWchPyaRxMU3?=
+ =?us-ascii?Q?I071+N2RtpxgnX0k2cv4lZUjXqz8Y71LIQJw61m6Who9qppTkzfM93fMQJKu?=
+ =?us-ascii?Q?YbKh+JMDpGmJaEp6WtV2tu2LSpftoQEe0Nd+CaU8LhegAlmrqEpqNwyfJpmk?=
+ =?us-ascii?Q?UH/y44k8A8wC2O4I0GNo5Cm9ZeKl7sXgQIq63sUDnxT9dTqe8Zcp9S6+Foy8?=
+ =?us-ascii?Q?VAsNH0C7fLblagGWmnr9j7Y6NlDkNtOrkXzOvdcQXh2CUnSFFYTQ0mXE237r?=
+ =?us-ascii?Q?3iUNMMvxmUVC7PrylTEMoASJcGbFMFltcGIcOx8vc3naMvZBBLIVQQ9P3kZu?=
+ =?us-ascii?Q?FADIj23DyUJreY/40sVuLI3s95wCVX5a1bF39jsw03CzNtRTej7OuFf3numC?=
+ =?us-ascii?Q?Soru2P5g+UmeUUPS/NQpk4iY695GGvWXte5qGw704kHvbS+KjPf2xstrOIvZ?=
+ =?us-ascii?Q?IlM5H7X/wA1c7e5wsebSJIG7mQhMcYc5o7FE7YnOUfd1a10edTQ3XlQWN98Q?=
+ =?us-ascii?Q?bS87pQnbvHx9sY7aXMok7daAYLATcKiE7lZJh5tirnyqVITbdTD/TZMUeHZH?=
+ =?us-ascii?Q?Q1VAIdrSaJmDpFgvQ4K5E2v2DUPx3JRHdNAHIFq7/BePpwL7BtdJmOmD3p1J?=
+ =?us-ascii?Q?4hIqN63JBdootMJmH8yOGd/XxDzgP0QsokMjKwZBAyLRD/sl6mRBtizf3Pka?=
+ =?us-ascii?Q?cgYOgBEKRRJEUVHs4jl9my9szoGi9zD5UFlc90VeCcvrJ/1QRy8ln6kS6/ST?=
+ =?us-ascii?Q?1yx+GrZZOUGGJnASA0x6j+lLmMQvyF2XLMR31cbdR0FHzOFv+izejzqYmhJ6?=
+ =?us-ascii?Q?SJ0L8594fzsB3ZhaW/mc3jEfi1ZoCSblEKExqq3+exG0VMFeyncO/Ye4I++7?=
+ =?us-ascii?Q?E/qpbK2H0nyG2snkfWYDL172AvIfNV2xYse2MrXogn1oEAGH1NhAtUil+b2C?=
+ =?us-ascii?Q?sdla3b1qBd0C+1icGHFrikUiMKtxxjzb6ZTRNXgfhr64d0f0iE8TiuDxDMWs?=
+ =?us-ascii?Q?vQO0B/eypJE8jWv8H245grwTIZxd9HDaSSSxEkZv8MtCMmfljx7RUPwoBZ3T?=
+ =?us-ascii?Q?mZFX6eHNXnpWE0/SAEohYXlWZnkCeimJXbMRADz/b7BvmfEDnIgIcFYbvv5d?=
+ =?us-ascii?Q?a2jRK14U1PoU0VdrQyrDUCov3iZbb8vCEAZh0N6zlUSVmav91pBI6PtuUCoj?=
+ =?us-ascii?Q?Llh6M0+uQ8dnqWrSd0cDnjzmVpldnQyx2RYMpRFGEe+9+92+7fcVkdMd9RLv?=
+ =?us-ascii?Q?4YtHeS/d03dgr9KfnLfbIACfJfdSB4pLoJnQWOCcbBMQ/DCx8qE6PuGzP9a1?=
+ =?us-ascii?Q?+9DkWXNX7XSrBLkm1jJ34/vxJhaWeyQ=3D?=
+X-Exchange-RoutingPolicyChecked: T8gvGmzd9UkuQqGcSCH96NmZn4+c5NLEdmUEqvcGrmhUv3vX8HHs3R4iCIpORcTUS/AggoKNZmFY6vbsR1/3w+jaWsTfqYgsDIqc+d58bm3IXhgiaIASuDW8mZ49EMeRIsnga1HmZUVmqEjDwASdYbrv5D2XMakFzMbHfw2G7jbgo+X3iH3iU1AwI5Caf6/uXrp3XJQjrdj3kZ5VrMAXsLuetyDwJrBQbvEaKLAMA9bYg0e1V1d/zG3xDMXT0EVxO+og5+58tjAt2isib++MO9YdWShXAgDokHV27SiYYWOKKYI/6ATrHqeXaY9MtHmz/4QnWTKeljjFSAF/KLbIzg==
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9dd8af66-9b1f-49b6-d2e8-08defd30ad18
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4c036e13-eb5a-48c2-ef71-08defd30b323
 X-MS-Exchange-CrossTenant-AuthSource: BL0PR02MB3827.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Aug 2026 13:57:43.9938 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Aug 2026 13:57:54.0252 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: vUs4w9HZ4RTfQvsTOeTdNzmLy0/3fZ71dH1iMvCc/70vNN1F9LtprHC80b+bv0hgtnJRQFhU71mmCNkCvfwS0NdgViwWtfJJbycIWl8dh00=
+X-MS-Exchange-CrossTenant-UserPrincipalName: rqTK5GYuC+KMQNwA3+zXne/rRLjb/+7N2DowsmcnnKM6lnw/FZSf9M9MBfCdd4kZQZHmdPWihbz7E7R1V9hYfslPCqe5Apy4vuOWeOZ95X4=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR02MB9103
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDEwMiBTYWx0ZWRfXxv8rq5TCNFDb
- 4BN+E+A8axjTXgzkSwdT1pMF/c0nfqlkhP8OACjKuFkNswNwg9w93WC1V0IEm9cHYrwUzuOHgoh
- psfkqboU2IGLH8nCQ5b9d7wtf0CnGeiuBGlk+ogM83Wnpp0NmRDQP1pqgcKLvd03uLDd6y3Mnn1
- HC8n8P2Bb8a5SLZBcs2Ph/D2mEfIGnoHYMWXoktHfkqjdNKqWOnTupoMbeE1bOfIgksFO/x+/uX
- wqAYF5O0MFE/vVc016PTH/T4M1vcGH42PHMoGBbwDZwokJuongAU5lczBd4k2EEsBOmcS/RdsGR
- pjJ0NUOAeicytoWTvHcZOgciDuwDkZhOs4fVSgqf1Tlec1ENLt/ZRWDlG8/64uUhdJDfjdtD8fx
- 3gIca0zJED8vfq/3HKYOJnr/+HWrfeQRp4iBUdKp+BPEZBfy/SNRA8istDQhtbGAa1hVZOMmANB
- 0nOJ6RnpeGlBobtMQ2Q==
-X-Proofpoint-ORIG-GUID: Vrdug8VTQYjIo92eqUmG8NdBSZMVIwAN
-X-Proofpoint-GUID: Vrdug8VTQYjIo92eqUmG8NdBSZMVIwAN
-X-Authority-Analysis: v=2.4 cv=X85i7mTe c=1 sm=1 tr=0 ts=6a8464d9 cx=c_pps
- a=wDYKio+nLET07hVCmQyIug==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDEwMiBTYWx0ZWRfX4LjiJdzzEm6W
+ oqVTYk7mCeQiGbD13vq3s5NXUOmVd1KoWg/wCWpKxMm1zZJbzsct4pGtK6lfKOYmojqA+txGDjF
+ NVghN+JdI5bRNRFm0eWUKA6bOzX5MfGOQiQUIk+4fROY91lTHDwd2NEG1F4HC/Q4fXIzDKy5sl7
+ N8Fyqx17gHcKwZ8QjjrKaofpkFHNEG2Xd0KpWkPtGILQ8XfejVqq/UTqAj6/7b2U5EdeUZ7D2wE
+ gEZNFwRqW/eDQMAHgkA4kddnchDwwgaMLT2sMEmfoxk0GQ+ZeoDwsIFLQKED9m0HRgJ1557AhRK
+ +Dqj9kY9oEu8TeY8fU1WsyLn5yt7E/yuBIfNGyq3yv3Yl3qk/ivvuryne9Br7jYU9yGkSwCY86e
+ HdRiFvJiTww/qq5eHC7J5KPIYydiGSSoShQbiPoJPAPmlFf5T0+36LoV1QDlmqvMf1BPYiO781Q
+ vUBGblPQZoNBd99e2kQ==
+X-Proofpoint-ORIG-GUID: tP-l9KzXrfcYzhs6rGoO-uPkhlV-r0rp
+X-Authority-Analysis: v=2.4 cv=Us9T8ewB c=1 sm=1 tr=0 ts=6a8464e3 cx=c_pps
+ a=dTGz0tuhMYfsSU3NwIzouA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=Sv0fKeRqtYgA:10 a=1FjsvbZJLK8A:10 a=0kUYKlekyDsA:10
- a=sWKEhP36mHoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22
- a=y4UcunY2MAxhM4LwGdWI:22 a=64Cc0HZtAAAA:8 a=P8QhtFtuV3VGHf9AuhIA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDEwMiBTYWx0ZWRfXxgYRkxi36zRe
- N4zp7rP1y3PSew8zugHtzWCJyPCe4pG+hkc3H5aAUGTQlMh4nwUq3wcVBxFaw65gxolLaUbkX7n
- ltquc1VNqhJ8yWNk+T/eOIa38hsRMeE=
+ a=xqWC_Br6kY4A:10 a=Sv0fKeRqtYgA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=_-M8LpHI31CeLmyZm6wg:22
+ a=64Cc0HZtAAAA:8 a=-3kcguB0CHop7p9IiFYA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDEwMiBTYWx0ZWRfX8T9Lx+2TQmXN
+ 2wkdl/wiO6K01qCuw9x/MfvQBz55TfuFtaKUJyBZujMOVaY/Ql9uFkYnyPgp9e3A1H4jMQ3IuR1
+ tk/KELy3MW0lK+28vTXcMsaVRbP5Xb4=
+X-Proofpoint-GUID: tP-l9KzXrfcYzhs6rGoO-uPkhlV-r0rp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-18_02,2026-08-18_01,2025-10-01_01
@@ -180,221 +180,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new QEMU_CLIPBOARD_PEER_UPDATE notify type which carries
-a payload with affected peer and whether it just registered or
-unregistered.
+Introduce a new vnc message (VNC_MSG_SERVER_QEMU_CLIPBOARD_STATUS) and
+the corresponding feature/encoding.
 
-All existing notifier handlers are updated to explicitly ignore
-the new event so that the enum switch remains exhaustive.
+When a client requests this feature, the server will inform the client
+whether a guest clipboard peer is present. The server will repeat the
+notification each time availability of a guest clipboard peer changes.
+
+This change enables the VNC client to determine if a guest side
+clipboard peer is available for clipboard exchange and react to
+changes of its availability.
+
+Until now the VNC clipboard peer was only registered when
+VNC_FEATURE_CLIPBOARD_EXT was enabled. With this change the VNC peer
+can be registered just for the purpose of receiving peer status
+updates. This requires introducing a VNC_FEATURE_CLIPBOARD_EXT guard
+before the QEMU_CLIPBOARD_UPDATE_INFO handler which previously only ran
+if VNC_FEATURE_CLIPBOARD_EXT was enabled.
 
 Signed-off-by: Lukasz Kornicki <lucas.kornicki@nutanix.com>
 ---
- include/ui/clipboard.h     | 19 +++++++++++++++++++
- tools/qemu-vnc/clipboard.c |  3 +++
- ui/clipboard.c             | 17 +++++++++++++++++
- ui/cocoa.m                 |  3 +++
- ui/dbus-clipboard.c        |  3 +++
- ui/gtk-clipboard.c         |  3 +++
- ui/trace-events            |  1 +
- ui/vdagent.c               |  3 +++
- ui/vnc-clipboard.c         |  3 +++
- 9 files changed, 55 insertions(+)
+ ui/trace-events    |  1 +
+ ui/vnc-clipboard.c | 31 ++++++++++++++++++++++++++++++-
+ ui/vnc.c           |  6 ++++++
+ ui/vnc.h           |  8 ++++++++
+ 4 files changed, 45 insertions(+), 1 deletion(-)
 
-diff --git a/include/ui/clipboard.h b/include/ui/clipboard.h
-index 62a96ce9ff..6166af5139 100644
---- a/include/ui/clipboard.h
-+++ b/include/ui/clipboard.h
-@@ -25,6 +25,7 @@ typedef enum QemuClipboardNotifyType QemuClipboardNotifyType;
- typedef enum QemuClipboardSelection QemuClipboardSelection;
- typedef struct QemuClipboardPeer QemuClipboardPeer;
- typedef struct QemuClipboardNotify QemuClipboardNotify;
-+typedef struct QemuClipboardPeerUpdate QemuClipboardPeerUpdate;
- typedef struct QemuClipboardInfo QemuClipboardInfo;
- typedef struct QemuClipboardContent QemuClipboardContent;
- 
-@@ -78,12 +79,27 @@ struct QemuClipboardPeer {
-  *
-  * @QEMU_CLIPBOARD_UPDATE_INFO: clipboard info update
-  * @QEMU_CLIPBOARD_RESET_SERIAL: reset clipboard serial
-+ * @QEMU_CLIPBOARD_PEER_UPDATE: peer registered/unregistered
-  *
-  * Clipboard notify type.
-  */
- enum QemuClipboardNotifyType {
-     QEMU_CLIPBOARD_UPDATE_INFO,
-     QEMU_CLIPBOARD_RESET_SERIAL,
-+    QEMU_CLIPBOARD_PEER_UPDATE,
-+};
-+
-+/**
-+ * struct QemuClipboardPeerUpdate
-+ *
-+ * @peer: the peer affected by this event
-+ * @registered: whether @peer registered or unregistered.
-+ *
-+ * Clipboard peer update event data.
-+ */
-+struct QemuClipboardPeerUpdate {
-+    QemuClipboardPeer *peer;
-+    bool registered;
- };
- 
- /**
-@@ -91,6 +107,8 @@ enum QemuClipboardNotifyType {
-  *
-  * @type: the type of event.
-  * @info: a QemuClipboardInfo event.
-+ * @peer_update: a peer register/unregister event
-+ *               (valid for QEMU_CLIPBOARD_PEER_UPDATE).
-  *
-  * Clipboard notify data.
-  */
-@@ -98,6 +116,7 @@ struct QemuClipboardNotify {
-     QemuClipboardNotifyType type;
-     union {
-         QemuClipboardInfo *info;
-+        QemuClipboardPeerUpdate peer_update;
-     };
- };
- 
-diff --git a/tools/qemu-vnc/clipboard.c b/tools/qemu-vnc/clipboard.c
-index f62b2f2949..b85a2d8b55 100644
---- a/tools/qemu-vnc/clipboard.c
-+++ b/tools/qemu-vnc/clipboard.c
-@@ -174,6 +174,9 @@ vnc_dbus_clipboard_notify(Notifier *notifier, void *data)
-                 -1, NULL, NULL, NULL);
-         }
-         return;
-+    case QEMU_CLIPBOARD_PEER_UPDATE:
-+        /* ignore */
-+        return;
-     }
- }
- 
-diff --git a/ui/clipboard.c b/ui/clipboard.c
-index e3d8a31ba9..beecb40e6f 100644
---- a/ui/clipboard.c
-+++ b/ui/clipboard.c
-@@ -59,6 +59,21 @@ static void qemu_clipboard_change_state(void *opaque, bool running, RunState sta
- 
- }
- 
-+static void qemu_clipboard_notify_peer_update(QemuClipboardPeer *peer,
-+                                              bool registered)
-+{
-+    QemuClipboardNotify notify = {
-+        .type = QEMU_CLIPBOARD_PEER_UPDATE,
-+        .peer_update = {
-+            .peer = peer,
-+            .registered = registered,
-+        },
-+    };
-+
-+    trace_clipboard_peer_update(peer->name, registered);
-+    notifier_list_notify(&clipboard_notifiers, &notify);
-+}
-+
- void qemu_clipboard_peer_register(QemuClipboardPeer *peer)
- {
-     if (cb_change_state_entry == NULL) {
-@@ -66,6 +81,7 @@ void qemu_clipboard_peer_register(QemuClipboardPeer *peer)
-     }
- 
-     notifier_list_add(&clipboard_notifiers, &peer->notifier);
-+    qemu_clipboard_notify_peer_update(peer, true);
- }
- 
- void qemu_clipboard_peer_unregister(QemuClipboardPeer *peer)
-@@ -76,6 +92,7 @@ void qemu_clipboard_peer_unregister(QemuClipboardPeer *peer)
-         qemu_clipboard_peer_release(peer, i);
-     }
-     notifier_remove(&peer->notifier);
-+    qemu_clipboard_notify_peer_update(peer, false);
- }
- 
- bool qemu_clipboard_peer_owns(QemuClipboardPeer *peer,
-diff --git a/ui/cocoa.m b/ui/cocoa.m
-index 3751be3792..4587547c98 100644
---- a/ui/cocoa.m
-+++ b/ui/cocoa.m
-@@ -1860,6 +1860,9 @@ static void cocoa_clipboard_notify(Notifier *notifier, void *data)
-     case QEMU_CLIPBOARD_RESET_SERIAL:
-         /* ignore */
-         return;
-+    case QEMU_CLIPBOARD_PEER_UPDATE:
-+        /* ignore */
-+        return;
-     }
- }
- 
-diff --git a/ui/dbus-clipboard.c b/ui/dbus-clipboard.c
-index 90318384ee..6940f719ff 100644
---- a/ui/dbus-clipboard.c
-+++ b/ui/dbus-clipboard.c
-@@ -125,6 +125,9 @@ dbus_clipboard_notify(Notifier *notifier, void *data)
-     case QEMU_CLIPBOARD_RESET_SERIAL:
-         dbus_clipboard_reset_serial(dpy);
-         return;
-+    case QEMU_CLIPBOARD_PEER_UPDATE:
-+        /* ignore */
-+        return;
-     }
- }
- 
-diff --git a/ui/gtk-clipboard.c b/ui/gtk-clipboard.c
-index 476e6b8303..6bb3d7f3fc 100644
---- a/ui/gtk-clipboard.c
-+++ b/ui/gtk-clipboard.c
-@@ -133,6 +133,9 @@ static void gd_clipboard_notify(Notifier *notifier, void *data)
-     case QEMU_CLIPBOARD_RESET_SERIAL:
-         /* ignore */
-         return;
-+    case QEMU_CLIPBOARD_PEER_UPDATE:
-+        /* ignore */
-+        return;
-     }
- }
- 
 diff --git a/ui/trace-events b/ui/trace-events
-index 339a61f341..917d116d90 100644
+index 917d116d90..d2fe153b7d 100644
 --- a/ui/trace-events
 +++ b/ui/trace-events
-@@ -171,6 +171,7 @@ xkeymap_keymap(const char *name) "keymap '%s'"
- # clipboard.c
- clipboard_check_serial(int cur, int recv, bool ok) "cur:%d recv:%d %d"
- clipboard_reset_serial(void) ""
-+clipboard_peer_update(const char *name, bool registered) "peer '%s' registered=%d"
+@@ -48,6 +48,7 @@ vnc_msg_server_ext_desktop_resize(void *state, void *ioc, int width, int height,
+ vnc_msg_client_audio_enable(void *state, void *ioc) "VNC client msg audio enable state=%p ioc=%p"
+ vnc_msg_client_audio_disable(void *state, void *ioc) "VNC client msg audio disable state=%p ioc=%p"
+ vnc_msg_client_audio_format(void *state, void *ioc, int fmt, int channels, int freq) "VNC client msg audio format state=%p ioc=%p fmt=%d channels=%d freq=%d"
++vnc_clipboard_peer_status_send(void *state, bool present) "VNC server clipboard peer status state=%p present=%d"
+ vnc_msg_client_cut_text(void *state, void *ioc, int len) "VNC client msg cut text state=%p ioc=%p len=%u"
+ vnc_msg_client_cut_text_ext(void *state, void *ioc, int len, int flags) "VNC client msg cut text state=%p ioc=%p len=%u flags=%u"
+ vnc_msg_client_ext_key_event(void *state, void *ioc, int down, int sym, int keycode) "VNC client msg ext key event state=%p ioc=%p down=%u sym=%u keycode=%u"
+diff --git a/ui/vnc-clipboard.c b/ui/vnc-clipboard.c
+index 67f710f6ed..4ecc4489e4 100644
+--- a/ui/vnc-clipboard.c
++++ b/ui/vnc-clipboard.c
+@@ -26,6 +26,7 @@
+ #include "qemu/error-report.h"
+ #include "vnc.h"
+ #include "vnc-jobs.h"
++#include "trace.h"
  
- # vdagent.c
- vdagent_fe_open(bool fe_open) "fe_open=%d"
-diff --git a/ui/vdagent.c b/ui/vdagent.c
-index b9784d4d9b..cc32a94fb9 100644
---- a/ui/vdagent.c
-+++ b/ui/vdagent.c
-@@ -477,6 +477,9 @@ static void vdagent_clipboard_notify(Notifier *notifier, void *data)
-     case QEMU_CLIPBOARD_RESET_SERIAL:
-         vdagent_clipboard_reset_serial(vd);
-         return;
-+    case QEMU_CLIPBOARD_PEER_UPDATE:
-+        /* ignore */
-+        return;
+ static uint8_t *inflate_buffer(uint8_t *in, uint32_t in_len, uint32_t *size)
+ {
+@@ -224,6 +225,23 @@ static void vnc_clipboard_update_info(VncState *vs, QemuClipboardInfo *info)
      }
  }
  
-diff --git a/ui/vnc-clipboard.c b/ui/vnc-clipboard.c
-index fa05d86f42..dfe830f819 100644
---- a/ui/vnc-clipboard.c
-+++ b/ui/vnc-clipboard.c
-@@ -236,6 +236,9 @@ static void vnc_clipboard_notify(Notifier *notifier, void *data)
++void vnc_clipboard_peer_status_send(VncState *vs, bool present)
++{
++    if (!vnc_has_feature(vs, VNC_FEATURE_CLIPBOARD_STATUS)) {
++        return;
++    }
++
++    trace_vnc_clipboard_peer_status_send(vs, present);
++
++    vnc_lock_output(vs);
++    vnc_write_u8(vs, VNC_MSG_SERVER_QEMU);
++    vnc_write_u8(vs, VNC_MSG_SERVER_QEMU_CLIPBOARD_STATUS);
++    vnc_write_u16(vs, present ? VNC_CLIPBOARD_PEER_PRESENT
++                              : VNC_CLIPBOARD_PEER_ABSENT);
++    vnc_unlock_output(vs);
++    vnc_flush(vs);
++}
++
+ static void vnc_clipboard_notify(Notifier *notifier, void *data)
+ {
+     VncState *vs = container_of(notifier, VncState, cbpeer.notifier);
+@@ -231,13 +249,24 @@ static void vnc_clipboard_notify(Notifier *notifier, void *data)
+ 
+     switch (notify->type) {
+     case QEMU_CLIPBOARD_UPDATE_INFO:
++        /* ignore the update if client does not want ext messages */
++        if (!vnc_has_feature(vs, VNC_FEATURE_CLIPBOARD_EXT)) {
++            return;
++        }
++
+         vnc_clipboard_update_info(vs, notify->info);
+         return;
      case QEMU_CLIPBOARD_RESET_SERIAL:
          /* ignore */
          return;
-+    case QEMU_CLIPBOARD_PEER_UPDATE:
-+        /* ignore */
-+        return;
+     case QEMU_CLIPBOARD_PEER_UPDATE:
+-        /* ignore */
++        /* only guest side peers affect the status we relay to the client */
++        if (!notify->peer_update.peer->guest) {
++            return;
++        }
++
++        vnc_clipboard_peer_status_send(vs,
++            qemu_clipboard_guest_peer_present());
+         return;
      }
  }
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 656768f9c9..9e44a20311 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -2191,6 +2191,12 @@ static void set_encodings(VncState *vs, int32_t *encodings, size_t n_encodings)
+             vnc_set_feature(vs, VNC_FEATURE_CLIPBOARD_EXT);
+             vnc_server_cut_text_caps(vs);
+             break;
++        case VNC_ENCODING_CLIPBOARD_STATUS:
++            vnc_set_feature(vs, VNC_FEATURE_CLIPBOARD_STATUS);
++            vnc_clipboard_peer_register(vs);
++            vnc_clipboard_peer_status_send(vs,
++                qemu_clipboard_guest_peer_present());
++            break;
+         case VNC_ENCODING_COMPRESSLEVEL0 ... VNC_ENCODING_COMPRESSLEVEL0 + 9:
+             vc->worker.tight.compression = (enc & 0x0F);
+             break;
+diff --git a/ui/vnc.h b/ui/vnc.h
+index d8b0070396..6e8fa66e9c 100644
+--- a/ui/vnc.h
++++ b/ui/vnc.h
+@@ -422,6 +422,7 @@ enum {
+ #define VNC_ENCODING_DESKTOP_RESIZE_EXT   0XFFFFFECC /* -308 */
+ #define VNC_ENCODING_XVP                  0XFFFFFECB /* -309 */
+ #define VNC_ENCODING_ALPHA_CURSOR         0XFFFFFEC6 /* -314 */
++#define VNC_ENCODING_CLIPBOARD_STATUS     0XFFFFFEC5 /* -315 */
+ #define VNC_ENCODING_WMVi                 0x574D5669
+ #define VNC_ENCODING_CLIPBOARD_EXT        0xc0a1e5ce
  
+@@ -466,6 +467,7 @@ enum VncFeatures {
+     VNC_FEATURE_LED_STATE,
+     VNC_FEATURE_XVP,
+     VNC_FEATURE_CLIPBOARD_EXT,
++    VNC_FEATURE_CLIPBOARD_STATUS,
+     VNC_FEATURE_AUDIO,
+ };
+ 
+@@ -507,6 +509,7 @@ enum VncFeatures {
+ 
+ /* QEMU server -> client message IDs */
+ #define VNC_MSG_SERVER_QEMU_AUDIO                 1
++#define VNC_MSG_SERVER_QEMU_CLIPBOARD_STATUS      2
+ 
+ 
+ 
+@@ -541,6 +544,10 @@ enum VncFeatures {
+ #define VNC_CLIPBOARD_NOTIFY   (1 << 27)
+ #define VNC_CLIPBOARD_PROVIDE  (1 << 28)
+ 
++/* guest side clipboard peer status */
++#define VNC_CLIPBOARD_PEER_ABSENT  0
++#define VNC_CLIPBOARD_PEER_PRESENT 1
++
+ VncDisplay *vnc_display_new(const char *id, Error **errp);
+ void vnc_display_free(VncDisplay *vd);
+ 
+@@ -637,6 +644,7 @@ void vnc_zrle_clear(VncWorker *worker);
+ 
+ /* vnc-clipboard.c */
+ void vnc_clipboard_peer_register(VncState *vs);
++void vnc_clipboard_peer_status_send(VncState *vs, bool present);
+ void vnc_server_cut_text_caps(VncState *vs);
+ void vnc_client_cut_text(VncState *vs, size_t len, uint8_t *text);
+ void vnc_client_cut_text_ext(VncState *vs, int32_t len, uint32_t flags, uint8_t *data);
 -- 
 2.43.0
 
