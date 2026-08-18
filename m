@@ -4,55 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E92BC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 21:20:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3266EC5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 21:20:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwRDZ-0001YM-AN; Tue, 18 Aug 2026 17:19:33 -0400
+	id 1wwREK-0001qD-8Z; Tue, 18 Aug 2026 17:20:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wwRDW-0001XW-TE; Tue, 18 Aug 2026 17:19:30 -0400
-Received: from smtpout7.mo539.mail-out.ovh.net ([51.210.91.46])
+ id 1wwRED-0001oH-3h; Tue, 18 Aug 2026 17:20:13 -0400
+Received: from smtpout1.mo528.mail-out.ovh.net ([46.105.34.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wwRDU-0007vH-Ko; Tue, 18 Aug 2026 17:19:30 -0400
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net [79.137.60.226])
- by mo539.mail-out.ovh.net (Postfix) with ESMTPS id 4hPjJ34YfQz4Dwb;
- Tue, 18 Aug 2026 21:19:15 +0000 (UTC)
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net. [127.0.0.1])
- by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue, 18 Aug 2026 21:19:14 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.58.197])
- by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4hPjJ26t0kz4CMZ; Tue, 18 Aug 2026 21:19:14 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.5])
+ id 1wwREB-00087H-7A; Tue, 18 Aug 2026 17:20:12 -0400
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net [79.137.60.225])
+ by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4hPjK30rkFz67jr;
+ Tue, 18 Aug 2026 21:20:06 +0000 (UTC)
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net. [127.0.0.1])
+ by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Tue, 18 Aug 2026 21:20:06 +0000 (UTC)
+Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.249.61])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4hPjK2343Lz6SRH; Tue, 18 Aug 2026 21:20:06 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.4])
  (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 6F2D1203F42; 
- Tue, 18 Aug 2026 21:19:13 +0000 (UTC)
+ by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id DD7AD12E3F45;
+ Tue, 18 Aug 2026 21:20:04 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-114S008b28ac61c-4ed3-4d66-9af1-b845ca9018f4,
+ (GARM-112S0063c8cd60a-aa77-4e91-9bc5-39e59f2d0929,
  89C2A8DA583E85FD8389CCC5514D70A45810139E) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 2.10.174.70
-Message-ID: <63bb2452-d48d-4216-a9e8-f6525fe54e75@kaod.org>
-Date: Tue, 18 Aug 2026 23:19:12 +0200
+Message-ID: <98572f2f-cb08-45c5-aaf6-749db2a2611b@kaod.org>
+Date: Tue, 18 Aug 2026 23:20:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/i2c/aspeed_i2c: Latch received bytes for SMBus
- block reads
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- "Mikail.Sadic@ibm.com" <Mikail.Sadic@ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
+Subject: Re: [PATCH] hw/misc/aspeed_scu: Set both AST2600 protection key
+ registers on reset
+To: Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20260814020836.3119613-1-jamin_lin@aspeedtech.com>
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org
+References: <20260818-dev-ast2600-hw-prot-key-reset-v1-1-5dc3de64c247@codeconstruct.com.au>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -97,30 +93,30 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260814020836.3119613-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260818-dev-ast2600-hw-prot-key-reset-v1-1-5dc3de64c247@codeconstruct.com.au>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 14722830135542524939
+x-ovh-tracer-id: 14737466831206591499
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGrYAfbnQJENrFhcPDzTyQl8JH0Ltc0hPBCWVgi6x94CWv276LK+U0ffN03BfwzKW7XjKYSxVM56ZNpxx9dx0BTpYi0sl9lo0137XMK4b7277mIAGAcBb/3sWE0Y9u1LuiBLE2UPfx9njDRShGmRNQoC23CjzidigETGQ5beyU3wIN76eneComTPcrgKnL8MMIF1Wzprx/Z+4Vhcw9E9OK825lKOuAydMs26tkp1REfRiN6UM10liZFp6FjmF4x/DnMDu5m4KGBj45apJCq8a2BpbtVJuuPTCDtzs9g1X12r1clKKsrXiOgyO8AId2E3FyI3TvLkftGS5YJQKqAMxsZYcLpu+YXPGufnxU4wsq7cQWnHnz6wx6e6IsUS6sTPJWuqIC05tk3K8Gelsw4VHqWXBod/O8wzAES8xraxiaWw6/5FwDOE2oXGpQqEOeGqvn2YurisnigunBnKR7vN6vsFOfDfEYbcmygHzvTZ371lU0p/yOqurxxCMGegFRsWWw7+EuPEP7o72mulDNf14WCixwpfhMz3RF+PL/HxuJLw6dctTPfh1s8CxuM5xXavKNKXfZNUsG1XPpc1RV4mQd2tE8OuWJUDW66Z13OvMPUk7AcyUqF8Bl2iCTixHmDH0paNpSzL2latkLrcqHhsZdIusEyRL1SDMvzeUtsuBTE0Q
-DKIM-Signature: a=rsa-sha256; bh=4s4X+Rm1Lev8duRNz8Vi6zbxGcgluF8oRtU9ZNESCEk=; 
+X-VR-SPAMCAUSE: dmFkZTELJvD+FVxDEMW7Z8CL6uwqhNDmvvHzsliPpPh+5wHTAqCrNealCNUzU9DC0KCgltmnJmDJVfMX7kx+SriEA77PDwU90JoIofKRJ8n2Js8InD7IarpWcJ4nbW99M22m95FOOn6knS4j/CxhIX/ibLm2y7+sXRZhRne6+ncwzul8mcYhYUsnAcDDgGCs2/bbZPsWjuVbcQCLjCCZBJc0AXzqyTjLjpx4GOnNxGfnizUsv87ACQdtOUlrZJ8wBSWy0oWpRU+xJ+i0w5uHZ9UfH+9ux/GsyiNdxGmfEURhmut2nhzfH+MmcIMhkbGqnkoFQD4m32ltVNBvZzqZT6XpBJ3stRp4wg7rd62DsOuZ4xB9ncA4q16cBrJQp3JqEBKtBqHrlSIToT5IRgZP2McS8QJ2sNFl/ZocvrkPNtFxprifNvadLBrdUjZ+gc64VXqY9gYsjq2DtRb0CVmosP4IjT7Mjm8otCf8ybQPqLKrUK8vZCDofN+IPA92CSsGcMfzbldpFmSpnIBkJqLlZXk7L4dgBov9vxppqd2H2TTh+raOgXU8+90V9OPivL8eV0SRg6SHqFHjr8WXaol2q+Vv9PAGwjwaMam2x5i+v23Idfgf2qz0AuMB/a51QTeDJHPaWubKuX+hEy19EhZo7o9akePPiEleSG1/kAkZ2cUdNgBJEw
+DKIM-Signature: a=rsa-sha256; bh=p+L2ajg1xUrdluobNOOq4K7x3rgArvI8DhxUMJed7Ds=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1787087956; v=1;
- b=kqJ8YnJ/FXslo48lmUqLaU/dJnnoEHPXh5bLd9/PFbp4WAfx6DmadhqUCbDxo27rrhiXCLC4
- k+0qJvzIC1JNUtKcYfzSY+D0MLVG2W2v58mYlJ2qm4ZEy5s2HZ0xWl/b4brx9XXv+MFkJ1qodUS
- CUmmLrfJp/uJ2vrmGllx0KVHt4cLwpQYrBOREO2gxckEpAOiHwm5kPLOWOXUu5xU/Dyr8tgUDHL
- 540tytgkCVnPrUiGRlvPwlR49lK3nBQlCq5lfWdU0q/O4aGRWGTr4bgRiyqT4Kg1CAVALxEZkuq
- YMTpLXs7HBLJmOebJ2psWOpN2KPam7KlYEloAnukD07yw==
-Received-SPF: pass client-ip=51.210.91.46; envelope-from=clg@kaod.org;
- helo=smtpout7.mo539.mail-out.ovh.net
+ t=1787088008; v=1;
+ b=bonPdVgEVP8MNMcNLQmUfsqE4dPernZdb6Oh0L8no5PzBU4+UavUtDJ1PxVzOnC72fJy+TPd
+ WcaAIV+OZCI0CQwa/bgnl3emtsIWtbe6INn3aYBPFcQT7V3kKpyt6tUr2Mcmv+/zeDWLOYh6DTF
+ x4dSMSHy+d5zbrURmEnk22WaGnKNDPisZYSIdcbPZgnv9LqlxYg0LacsfQghx6tGhHOANDngCYZ
+ MZoNtxP+uU2npU80OJqb/0PIuKRpPlxvJ6lRS4H9PrTx0xvurgE13cIqpb7YINMM5+a0AOJ7wkB
+ haQ28eKH1AQ3E5dU4i3CFLw4ZYzvvco++4u6K8mTDes0w==
+Received-SPF: pass client-ip=46.105.34.251; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo528.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,34 +132,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/14/26 04:08, Jamin Lin wrote:
-> An SMBus block read takes the block length from the first byte of the
-> transfer, and firmware reads that byte back from a register rather than
-> from the transfer buffer. The receive paths never updated those
-> registers, so block reads reported a bogus length.
+On 8/18/26 03:43, Andrew Jeffery wrote:
+> Currently, booting Linux on the ast2600-evb machine via -kernel results
+> in a lot of warnings about failing to apply pinmux configuration when
+> binding drivers:
 > 
-> On AST2600 the driver reads the length from the receive byte buffer,
-> I2CC_MS_TXRX_BYTE_BUF[15:8]. The datasheet documents that field as valid
-> while the DMA buffer is not enabled. The byte mode receive path already
-> updated it, but the pool buffer path did not, and the driver selects
-> buffer mode by default.
+>      [    7.339307][    T1] Creating 5 MTD partitions on "bmc":
+>      [    7.340402][    T1] 0x000000000000-0x0000000e0000 : "u-boot"
+>      [    7.513755][    T1] 0x0000000e0000-0x000000100000 : "u-boot-env"
+>      [    7.664219][    T1] 0x000000100000-0x000000a00000 : "kernel"
+>      [    7.826974][    T1] 0x000000a00000-0x000002a00000 : "rofs"
+>      [    8.026666][    T1] 0x000002a00000-0x000004000000 : "rwfs"
+>      [    8.201612][    T1] spi-aspeed-smc 1e630000.spi: error -EPERM: Error applying setting, reverse things back
+>      [    8.370835][    T1] spi-aspeed-smc 1e630000.spi: Calibration area too uniform, using low speed
+>      [    8.371131][    T1] spi-aspeed-smc 1e630000.spi: Force to dts configuration 100000kHz.
+>      [    8.371500][    T1] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:4 [0x406c0741]
+>      [    8.766797][    T1] mdio-aspeed 1e650000.mdio: error -EPERM: Error applying setting, reverse things back
+>      [    8.906008][    T1] mdio-aspeed 1e650008.mdio: error -EPERM: Error applying setting, reverse things back
+>      [    9.039240][    T1] mdio-aspeed 1e650010.mdio: error -EPERM: Error applying setting, reverse things back
+>      [    9.147942][    T1] mdio-aspeed 1e650018.mdio: error -EPERM: Error applying setting, reverse things back
 > 
-> On AST2700 the driver reads the length from offset 0x84 instead.
+> The pinmux configuration fails because the SCU is not unlocked.
 > 
-> Add I2CC_BYTE_DATA_LOG at 0x84 and latch received bytes into it. The pool
-> buffer, DMA-to-pool and DMA-to-DRAM paths latch their first byte, the byte
-> mode path latches every byte. Each latch also updates the receive byte
-> buffer unless RX_DMA_EN is set, which is the datasheet condition and does
-> not depend on FUNC_CFG_DMA_EN. The byte data log only exists on AST2700
-> and AST1040, so it is gated on a class flag.
+> Set both SCU protection keys for the AST2600. Further, set them
+> such that they behave accordance with the read value documented
+> by the datasheet. The new arrangement now upholds the comment in
+> hw/arm/aspeed.c regarding passing -kernel on the qemu command-line.
 > 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> Tested-by: Mikail Sadic <mikail.sadic@ibm.com>
+>      [    7.568170][    T1] Creating 5 MTD partitions on "bmc":
+>      [    7.569330][    T1] 0x000000000000-0x0000000e0000 : "u-boot"
+>      [    7.740372][    T1] 0x0000000e0000-0x000000100000 : "u-boot-env"
+>      [    7.883570][    T1] 0x000000100000-0x000000a00000 : "kernel"
+>      [    8.041004][    T1] 0x000000a00000-0x000002a00000 : "rofs"
+>      [    8.196824][    T1] 0x000002a00000-0x000004000000 : "rwfs"
+>      [    8.547037][    T1] spi-aspeed-smc 1e630000.spi: Calibration area too uniform, using low speed
+>      [    8.547320][    T1] spi-aspeed-smc 1e630000.spi: Force to dts configuration 100000kHz.
+>      [    8.547642][    T1] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:4 [0x406c0741]
+>      [    9.494235][    T1] ftgmac100 1e660000.ethernet: Read MAC address 52:54:00:12:34:56 from chip
+>      [    9.531186][    T1] RTL8211E Gigabit Ethernet 1e650000.mdio-1:00: attached PHY driver (mii_bus:phy_addr=1e650000.mdio-1:00,
+> 
+> Fixes: e09cf36321f6 ("hw: aspeed_scu: Add AST2600 support")
+> Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 > ---
->   hw/i2c/aspeed_i2c.c         | 38 +++++++++++++++++++++++++++++++++++--
->   include/hw/i2c/aspeed_i2c.h |  3 +++
->   2 files changed, 39 insertions(+), 2 deletions(-)
+> I ran into this issue while improving test coverage in my patch review
+> process.
+> ---
+>   hw/misc/aspeed_scu.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
+> index ca93c3699d81..1e3db6d03f91 100644
+> --- a/hw/misc/aspeed_scu.c
+> +++ b/hw/misc/aspeed_scu.c
+> @@ -821,7 +821,8 @@ static void aspeed_ast2600_scu_reset_hold(Object *obj, ResetType type)
+>       s->regs[AST2600_SILICON_REV2] = s->silicon_rev;
+>       s->regs[AST2600_HW_STRAP1] = s->hw_strap1;
+>       s->regs[AST2600_HW_STRAP2] = s->hw_strap2;
+> -    s->regs[PROT_KEY] = s->hw_prot_key;
+> +    s->regs[AST2600_PROT_KEY] = s->hw_prot_key == ASPEED_SCU_PROT_KEY;
+> +    s->regs[AST2600_PROT_KEY2] = s->hw_prot_key == ASPEED_SCU_PROT_KEY;
+>   }
 >   
+>   static void aspeed_2600_scu_class_init(ObjectClass *klass, const void *data)
+> 
+> ---
+> base-commit: 9696bf5dc5a5bf0b4a9d05b6cdfe5f13990f97aa
+> change-id: 20260818-dev-ast2600-hw-prot-key-reset-e68eb9f49ee9
+> 
+> Best regards,
+> --
+> Andrew Jeffery <andrew@codeconstruct.com.au>
+> 
+
 Applied to
 
      https://github.com/legoater/qemu aspeed-next
