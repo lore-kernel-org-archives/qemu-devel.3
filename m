@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE8B4C5DF74
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Aug 2026 23:32:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F5D1C5B572
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 00:27:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww6o6-0001WL-Rf; Mon, 17 Aug 2026 19:31:54 -0400
+	id 1ww7f7-0002Jg-KQ; Mon, 17 Aug 2026 20:26:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1ww6o5-0001W8-54
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 19:31:53 -0400
-Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
+ (Exim 4.90_1) (envelope-from <simonxhy0404@gmail.com>)
+ id 1ww7f6-0002JL-Ml
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 20:26:40 -0400
+Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1ww6o3-0003mn-Ib
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 19:31:52 -0400
-Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-7ee4399c423so2721178a34.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 16:31:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <simonxhy0404@gmail.com>)
+ id 1ww7f5-0004IC-6J
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 20:26:40 -0400
+Received: by mail-oi1-x236.google.com with SMTP id
+ 5614622812f47-4af7283bf83so1763974b6e.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 17:26:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787009510; x=1787614310; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=BisHvC69fGe2+msznL33bh/ZmNUCoaqX7TvKF27QcOk=;
- b=mBCYN5dqVuoGXhwY52tmW4ZwYqT2nviPsef/z7SJLx5ZxrDs4oniyHOXFRYbs1lPC+
- lssZpr2GkzP0+B9CNPw0QYnw+E70BuhJDA9raUX58vc3pGGz9TAgl5KHczKsYI9iuHRp
- 8c5Ki3qYRym6v5ns6gDU9L+Q86z/GzAaZFuFvRTChADNkd9DPw5YEnDjJzNB0hG0Gdr3
- PPgSxGYvg8af2HEICj0VfnIrkwADQmBxrJhez1btF8w3pGhhFRW0w8ppH6Hgl1q4uSvV
- 2UT+YnuTTvM7bzp9tL6sVuPJozqgnMQk2VG/isMvx7mXfkQ2yeV/rqSdfOTsm96oDDY3
- 5gLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787009510; x=1787614310;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1787012798; x=1787617598; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=BisHvC69fGe2+msznL33bh/ZmNUCoaqX7TvKF27QcOk=;
- b=HSl81T3qjddAc4+gVj+u36/vRNrR00LNFih1+mJPvDn5ApxY7pHc5AuABgIcah45fR
- JNszFPSva+/276uCI9/m/+DU0mX6vKKVkJzpC/FnaeiUN3aoVfhf1lhvARLagNI93UIH
- UtYQN6eD8OlWtD2zhcf2WQkjem1gmhJemSWdiX72a7wvRKx0uR+BQcBIaoIvggh8TFa7
- B4FO3m6oN1eHHM4JwInOr0kzI4up/DHYfv9NTn5yOTREv1GS0yHAfsKtgXJ+OfWKhfQj
- 6Otx/eCii25KM9N5kFg2cToQ40pzMyAsmEvWSR5hfRKjG8vRMEHvwacizm4XKWa2/PGv
- B7iw==
-X-Gm-Message-State: AOJu0YyFrNfzWgmzkh7fk6LfwjfxkCxFRxm4FVbEVslqx9mpHGJGzZpN
- sx1sKqGuEZjbIixrGD4ewFFEzubOtJnfRFXl21ge82qBaCmcCxNY/0IL+s4m0T3D
-X-Gm-Gg: AR+sD12LpHLkKSr6+4xf0aQcPNIgojp/UM/p9EVfs1ZWRTvj/72Mw838H7TxUSj3YiQ
- 1lbUAECDd1T+96fVjHCuuG78mY8UywUkDksyDQGQs2e7PlhzuUk5eeoSpPnYw4WhmlnK/DuN6y/
- JRas+zFtKU9pm7Axjd3DZ16Uh6RTqKpdPQC+g84C267zKJqvPtWdrEpoxCTzmQiu/YJh3Y+l4FA
- aogOuRahMs2S2tPbC/v5QxJVFcwOiH1ph0jdWr53/mtaB8+TkuCfuaBZAbGOWCE7L3f8Tm0AHjt
- NFeY7Usw6s3EGzsLQywc42Id5yqMbmJexyAQe1eVb/zH0vvmew+CeveAZleQzrdlFieYzjjNghR
- A/QV75wGFjytQgwk/q9aMgDXmWmY0oCBDq+Wh7nZNsKsU1As1WcOxeVJ9h1g/WdciYnUIyE7tnW
- IcZh17sOQA2bVveiHKt44plHBhPmQfsrOVRVnzdR7iZdMmFXNBUPxzgw72yPZb4B30LGa64b0Ql
- 1NR
-X-Received: by 2002:a05:6820:2915:b0:6b0:52b9:cb with SMTP id
- 006d021491bc7-6b0d690c2cdmr26880466eaf.31.1787009510094; 
- Mon, 17 Aug 2026 16:31:50 -0700 (PDT)
-Received: from MacLin.attlocal.net ([2600:1700:e140:14d0:258e:a86c:e3dd:105a])
+ bh=Jl6LTei06PFLBixWeheCfjJtohyjel6JsDpqWhRIxJU=;
+ b=PYf4nUgTpQ70yC2Q9MzW41vQcqKv6PVKjBLzi83er1Eq5yC7YuEWhJt/6Y+FliaMyP
+ QLHemF/9MXy979vSbOqPNDi4icMw7egRM2bxM7SId5FZ1wi8eSNNAzzFoSDeEdgisjNc
+ os2Qy6OY8vA13fx3jHmRslrTZvhuhtZ9O1XxkXAFFSbo3CbpFJclF5MvoXhNCmtTXIa2
+ jmz4zzoaCLgquR2dSNSnfWiY7B3DpuSRls5lygoS+b5f1WQvNt0uBKwyADVRR6EBGBtk
+ Jta3+/hOn2/BlKdEqbhJgtbp28rG0Otdn+xDMhM6FilDI5ZssC7Y4wTRbCoPe7vLbEcs
+ FQ5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787012798; x=1787617598;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Jl6LTei06PFLBixWeheCfjJtohyjel6JsDpqWhRIxJU=;
+ b=R5Qg+luet5H6bCe0j5IMOKNymQbLLBKbgxrSVkjkrogdlzqfC0izSOZ0eBnvMOvklx
+ 35UUfIrVR2X4r8a7KW1gikrAQ33fG/Y7fEEial+dGGra+qWaAc3CJRj7yHfz0Dp2KxhW
+ 6Qw2d8FCT64tldLkNCJLf3kSAcXY52K2MxnoRc9g8UBxh5YH7TayoiGJk646zjLDeOvF
+ zalpqeEcrZgNZW/zUhx3W45jFWsEUsuXY9ZB8z7t7gOisM4/BnxVj7CbcVFNYW0gfsrs
+ xz1xC1RCd3J8p8nNES5firhVcviKT86BiWroUB+sSHNoTavK/Jg/8jANRuy9qoYyyUit
+ fDhQ==
+X-Gm-Message-State: AOJu0YwNhpSFYgx+ipWn6ftqf98A1751qiBEzleItz1Y3RtK8Oo8hE0P
+ dYHNxZpYg2U/6KtzDEQ3xCvJjrofiSftaSjntohHUphTCnHIS05vAfxMf6inbR4K
+X-Gm-Gg: AR+sD10Y4gdUMVQXXpOulj+mgQt0lx8+Y+vbAWyJbLJh7TbWIvK5HdUvnyoK27WqsKh
+ DgkEqMJBR6NwjNXgj33Nh3fn0KosGt307cGLUtXdQw5otO2cK5GPfIw9gsytG3Zwf2o15K3upzi
+ hvUsVbJFJGpKbHToSHEl3v0V2V2BiJe8a0259ZquANiRqIbcNt7JAfdBvDBMZcAKRLAlcpa6W6y
+ k4LExdi3o2QSu/FwjzhoKIYYT4xSTgXz2LTpmEcV+eB+BGJkkVDU5i7CfsRRo16mcfBb2M1KQw+
+ 9avCch1G0nCUfgqkdvqbXiPeaDKeNdJJcBKThbc2jkVYdMQzwD21jqeHcKUgdA51hmc+YDfi/xc
+ RPOzhSmt8dA1MIaZ5uBBWOGgxMBgaD8mcUxNrRlMZHsJv9RD8sbSiHp3WcsEPqg+hS3N8tBOF45
+ ynkdFGZ+30AV6Ahmx73qZZNkOPoCeWy7ahw9sVifVY9BRuBUIK0FNfRvrJL2cARMsec/DevfS99
+ tohRxHAqoOpUd0goZnLRQ==
+X-Received: by 2002:a05:6808:23c1:b0:495:e0a9:8c0 with SMTP id
+ 5614622812f47-4b241bbf01cmr27545700b6e.11.1787012797975; 
+ Mon, 17 Aug 2026 17:26:37 -0700 (PDT)
+Received: from LAPTOP-86EU4LQA.home.local ([23.124.244.239])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6b1165f44d5sm3041547eaf.8.2026.08.17.16.31.48
+ 5614622812f47-4b2960dfc9bsm1715165b6e.14.2026.08.17.17.26.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 16:31:49 -0700 (PDT)
-From: Connor Kite <connorkite@gmail.com>
+ Mon, 17 Aug 2026 17:26:37 -0700 (PDT)
+From: Simon Xu <simonxhy0404@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Hanna Czenczek <hreitz@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Connor Kite <connorkite@gmail.com>
-Subject: [PATCH v2] hw/virtio/vhost-shadow-virtqueue: range boundary in
- translation
-Date: Mon, 17 Aug 2026 16:31:47 -0700
-Message-ID: <20260817233147.2867623-1-connorkite@gmail.com>
-X-Mailer: git-send-email 2.43.0
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Simon Xu <simonxhy0404@gmail.com>, Owen Giles <owen.giles@hpe.com>,
+ Robert Elliott <elliott@hpe.com>
+Subject: [PATCH v3 5/9] hw/misc/iotkit-secctl.c: add SSE-310 support
+Date: Mon, 17 Aug 2026 19:26:25 -0500
+Message-ID: <20260818002629.172827-6-simonxhy0404@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260818002629.172827-1-simonxhy0404@gmail.com>
+References: <20260818002629.172827-1-simonxhy0404@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
- envelope-from=connorkite@gmail.com; helo=mail-ot1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::236;
+ envelope-from=simonxhy0404@gmail.com; helo=mail-oi1-x236.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,68 +104,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-iova-tree expects inclusive range sizing when maps are allocated or searched.
-Currently, svqs use exclusive sizing when searching their
-vhost-iova-tree for a match to the region to be translated.  This could
-lead to errors if the region to be translated is at the edge of an iova
-region.
+Add SSE-310 secure and non-secure ID registers.
 
-Fix this by reducing `needle.size` by 1 in
-vhost_svq_translate_addr to bring it in line with DMAMap and iova-tree
-convention.
-
-The only current user of svq->iova_tree is hw/virtio/vhost-vdpa.c, which
-also treats size as inclusive when using the tree API.  In progress work
-on vhost-user isolation mode in hw/virtio.vhost-vdpa.c also uses
-inclusive sizing when interacting with the tree.
-
-This patch is an updated version of one from the patch series "vhost-user:
-isolated memory".  The patch has been isolated from the series as it
-is not tightly coupled with the rest of the series.
-
-Signed-off-by: Connor Kite <connorkite@gmail.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Owen Giles <owen.giles@hpe.com>
+Reviewed-by: Robert Elliott <elliott@hpe.com>
+Signed-off-by: Simon Xu <simonxhy0404@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-Id: <20260805153005.9989-6-simonxhy0404@gmail.com>
 ---
-V2 Differences:
-- Context added about users of svq->iova_tree and their adoption of
-  inclusive sizing
+ hw/misc/iotkit-secctl.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
- hw/virtio/vhost-shadow-virtqueue.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-index bcb7f2ffc7..c8831d52be 100644
---- a/hw/virtio/vhost-shadow-virtqueue.c
-+++ b/hw/virtio/vhost-shadow-virtqueue.c
-@@ -99,19 +99,25 @@ static bool vhost_svq_translate_addr(const VhostShadowVirtqueue *svq,
-         const DMAMap *map;
-         DMAMap needle;
+diff --git a/hw/misc/iotkit-secctl.c b/hw/misc/iotkit-secctl.c
+index 93753c2ced..9f6fb81088 100644
+--- a/hw/misc/iotkit-secctl.c
++++ b/hw/misc/iotkit-secctl.c
+@@ -109,6 +109,18 @@ static const uint8_t iotkit_secctl_ns_sse300_idregs[] = {
+     0x0d, 0xf0, 0x05, 0xb1,
+ };
  
-+        if (unlikely(iovec[i].iov_len == 0)) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "Zero-sized buffer made available by guest");
-+            return false;
-+        }
++static const uint8_t iotkit_secctl_s_sse310_idregs[] = {
++    0x04, 0x00, 0x00, 0x00,
++    0x52, 0xb8, 0x3b, 0x00,
++    0x0d, 0xf0, 0x05, 0xb1,
++};
 +
-         /* Check if the descriptor is backed by guest memory  */
-         if (gpas) {
-             /* Search the GPA->IOVA tree */
-             needle = (DMAMap) {
-                 .translated_addr = gpas[i],
--                .size = iovec[i].iov_len,
-+                .size = iovec[i].iov_len - 1,  /* Inclusive */
-             };
-             map = vhost_iova_tree_find_gpa(svq->iova_tree, &needle);
-         } else {
-             /* Search the IOVA->HVA tree */
-             needle = (DMAMap) {
-                 .translated_addr = (hwaddr)(uintptr_t)iovec[i].iov_base,
--                .size = iovec[i].iov_len,
-+                .size = iovec[i].iov_len - 1, /* Inclusive */
-             };
-             map = vhost_iova_tree_find_iova(svq->iova_tree, &needle);
-         }
++static const uint8_t iotkit_secctl_ns_sse310_idregs[] = {
++    0x04, 0x00, 0x00, 0x00,
++    0x53, 0xb8, 0x3b, 0x00,
++    0x0d, 0xf0, 0x05, 0xb1,
++};
++
+ 
+ /* The register sets for the various PPCs (AHB internal, APB internal,
+  * AHB expansion, APB expansion) are all set up so that they are
+@@ -232,6 +244,9 @@ static MemTxResult iotkit_secctl_s_read(void *opaque, hwaddr addr,
+         case ARMSSE_SSE300:
+             r = iotkit_secctl_s_sse300_idregs[(offset - A_PID4) / 4];
+             break;
++        case ARMSSE_SSE310:
++            r = iotkit_secctl_s_sse310_idregs[(offset - A_PID4) / 4];
++            break;
+         default:
+             r = iotkit_secctl_s_idregs[(offset - A_PID4) / 4];
+             break;
+@@ -499,6 +514,9 @@ static MemTxResult iotkit_secctl_ns_read(void *opaque, hwaddr addr,
+         case ARMSSE_SSE300:
+             r = iotkit_secctl_ns_sse300_idregs[(offset - A_PID4) / 4];
+             break;
++        case ARMSSE_SSE310:
++            r = iotkit_secctl_ns_sse310_idregs[(offset - A_PID4) / 4];
++            break;
+         default:
+             r = iotkit_secctl_ns_idregs[(offset - A_PID4) / 4];
+             break;
 -- 
-2.43.0
+2.53.0
 
 
