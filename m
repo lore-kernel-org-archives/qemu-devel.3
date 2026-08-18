@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A99F0C5DF86
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 00:00:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7000BC5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 00:00:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwThG-0002Wv-GJ; Tue, 18 Aug 2026 19:58:22 -0400
+	id 1wwTh1-0002At-P9; Tue, 18 Aug 2026 19:58:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwThE-0002SY-Uk
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:58:20 -0400
-Received: from mail-oa1-x30.google.com ([2001:4860:4864:20::30])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwTh0-0002Ak-QW
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:58:06 -0400
+Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwThC-0005Hj-V9
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:58:20 -0400
-Received: by mail-oa1-x30.google.com with SMTP id
- 586e51a60fabf-448b69cfc6dso391768fac.3
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 16:58:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwTgz-0005GL-7P
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:58:06 -0400
+Received: by mail-oi1-x22d.google.com with SMTP id
+ 5614622812f47-4b21f09ec76so340229b6e.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 16:58:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1787097498; x=1787702298;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1787097484; x=1787702284;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=uDG4yCGcdRHP3prcLODrCCoKPU0me91/+MFRsrPpUeU=;
- b=AwM/27s7DSWsIoi1KoUa5pi2lN8iNJ9vuDTP2LiENNuX+KIE26OEYekwhlhh1wQHgq
- N1qsctOSipL+uO7eqbPTzq+9H1SlwSnmv0NhAFsqn0Sbwe9MkDeUasBHtB1mXMpE7Nrz
- L4wS0dBoA/d+eG86mBuZueStJr3H1Rb3lZoc8O+u0E79TfILaDNtp0K21DLTCOiHwUe8
- JbSqj2oiVDW3fAm4ZphOsc0CTwSXerQyKijxvR5OI/RRprI7ufch8nyNZZuTpHikgAwr
- KGrlikrEad7Tc7uvKLt0vmDtY/UO9kkScTP2qB19sviOj/oJmoAVOeLZ9BiFyCBWn2bN
- V4NA==
+ bh=CId43LBbKcBl5RKNJBzxoP27LJvXdGh0uXLlseMjipI=;
+ b=R60h3tiysn8EkyLoVnlJAQWM1/hMjKKoDCHp6UxfiUQlIjD0ULGxJjtL2QJ5hvCYwB
+ 6KmSh4TYPn7rcj+UBcwUgX2QGQkJxfwwqhHCZOdMHknMPWDwiscG5yfy2z/pgEp4FM68
+ 7JHBYfdFQhsnlUdO8rjIfv5L3Qhs1P0u0ctx3DSNHZ+pyMN2oBoG8st/1kNhsnHphKuP
+ 8zOFlo6Tsjo3aElvmadLF4nH4T4zk2PViZL/PzIzqw9jElj8xFKoYZOddj6Hr5y3VOJh
+ bBAqhgingWiFe5MP3soXRLEeDmeFWIWTroddvq3czZSu5vg2QE/sePVtXgzXykVlz2Iz
+ CgSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787097498; x=1787702298;
+ d=1e100.net; s=20251104; t=1787097484; x=1787702284;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=uDG4yCGcdRHP3prcLODrCCoKPU0me91/+MFRsrPpUeU=;
- b=JFJdRJ40naN/pEwan4j7xv9+ZvZs9rA/AoxGyeuAfCjUXu4sw7YpegRA9OVJhthifW
- ng2zZCRmN5TOf8aB/vwGqQN/YpheSppM4cSKPUkvviN4Sc4xEZ875LG/3DLfHQpx3ddj
- 6r2A2mLV5zRzQQ/dyoRVjBFjOa3Ru40OB9ah1y+1am/rv18JdeDpMnKDZ7FG6ktIqOQY
- p2Nm8t3yLGuNeI2dah+k4Xpi11KKSatCEle5aJ0Y59JnmzLUtNVa6GKLPl2Q3NlYE/HV
- XiHlYNDhjchoKcq11fDm00no7OMAxmadk5b54vmNQzSvs/8C6B8f0GoAxK1oLRBWPDsy
- 2H9A==
-X-Gm-Message-State: AOJu0Yw4MTQUGaqx76Jf0hGfjPhQrx6R6MMOYBAleRBTNZJodT9aKRLy
- Ou1i/8m+v30M6wbpnc4NmNTkWOGXC6Q1qh7LhDoqlfIkdnKFbCKoCLK7jIMSRbSTTzw=
-X-Gm-Gg: AR+sD11pVEsAXC2C+dKcuNtbk/dmsA7RUaW3zTC2QbhqjDhbbNXX0f+0bpP7jqAlQfH
- 1U0bOEAM3AzpKA9SLecxlwtepvg7UtNojICWs1411ix3Ycroz+YrTunaOgyXBr+a0lHCPpc2zVT
- WL9TBbIVxAD4vSfuS/hwHQOUPLG1Hbn/96NmBxl3ulH8NlxlR6i5WKzCuPSQ/vzauG1jJLOUKeO
- cqAN09v8PWPJ/JdhogqS+Zu55YXwOPlJMXEaNbUE3X2RKseRpIbG7BEWvhHXSoxHgoMAx62xutk
- D1pv+84zYexToTdnKKdAejefq6X/iQ77y4zC7KWbNFsNOAcnQXm3r9/JyCi30ncxtRqpEPxb8iD
- efHROsmEHLQTmTratf5Tb8N3eldrK7U9vgmsGpfFi90T4HB2IuyKd7TxbTwz8Fv8mO59/JjTt4K
- tGwnsLgoaPJq/xroTSEFXTwngZwkbt9Tn8j+SJ2bsrru4BKds=
-X-Received: by 2002:a05:6808:c1aa:b0:4b2:8d77:6da with SMTP id
- 5614622812f47-4b2bca1ce54mr358800b6e.12.1787097497918; 
- Tue, 18 Aug 2026 16:58:17 -0700 (PDT)
+ bh=CId43LBbKcBl5RKNJBzxoP27LJvXdGh0uXLlseMjipI=;
+ b=Md+68JfR+JBYkk/tItvClFIbrahz7lYFvPxvtsWEoHyUEbujYH1hP4pzg1mFvVoHkt
+ PfoRBEKJiPiKHEE6fXvOK9D3bpl+wr3Ay3e52eugWQXkXOJSYXbrwlyVpujRWmqdyDbe
+ ZFuxnzW0F9jaAPXQVaYDd9uJF9G6AS3oK8yGpHIwBnk/lCBjuePKjgU8n83LKU8Hh5WF
+ JuZRLs/txA/8GfIg3QNRjYtjpUGwYVJC/ldMGu+3NKaSxEF7W5wx8avS1wFnGZCp7yLd
+ 6f8K1NW01XISFZVY4rKTTme9MKZLQrbqa/2DBZQtmhnsutwVMt7D8XxQqQLjAbtvEdq+
+ qDZQ==
+X-Gm-Message-State: AOJu0YwOc9LhuwlLxVE2ORY6ryRn/o4JelSdA5lv1hlFe+GwnTSIDbMC
+ c5CS6rsYt/Vcfyg4fZcN19hel6RpvxHp1rmuCS4q74JiW0R/OvxyaioUEQ0+vB9dwnw=
+X-Gm-Gg: AR+sD133wtu1cZlvlwnvafrIoJygQxruR9IYMS0Hv3W7Ml80qbBlyGbp9XNrOfVq0RW
+ xvy8PPb+dKyrveOUtnMdZLymIHutwopdIQhKB8qrheio/WXbYEs4gTwcAxIiJImf6chHk/Ayp/W
+ MMf3/ml7BjEWyOZ+bEcLy7/4lH8K0lBI/F/UT9KnpJ2cfQhpbQOGhpQMC+d+tIr7Hj1nSb7wK/a
+ hpLP7RmA5aJOIOKHyRKDU0GzQKDqoNSdIcfqu9dKxgVLJfhN6SfdGxxlXQHdSlqBNoGoV2vI4my
+ c5cWKgmRlWLt+pjxc9j2Vl08D7D+gGObbmo3DgwqNiym1Lo7B5mnuqWB78ca+JxSdeP/+RRYYm2
+ ujTIPtVrMgtosbmcnk/Ra9R2yUnq71RnM5c20+gXU1DWbr7C0UbFR4Xf/bjYjuSwGWEhTKlZov/
+ fvi/Ifkcc7GxhIxPgVIlsELEYu/DH/VmspDNmwAK3PIVspmkA=
+X-Received: by 2002:a05:6808:4fe5:b0:495:e997:528d with SMTP id
+ 5614622812f47-4b2bc88425fmr454840b6e.3.1787097484227; 
+ Tue, 18 Aug 2026 16:58:04 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4b2906a3edesm4835341b6e.0.2026.08.18.16.58.15
+ 5614622812f47-4b2906a3edesm4835341b6e.0.2026.08.18.16.58.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 16:58:16 -0700 (PDT)
+ Tue, 18 Aug 2026 16:58:02 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Tue, 18 Aug 2026 17:56:17 -0600
-Subject: [PATCH v4 24/40] bsd-user: Add kqueue and kevent functions to
- os-time.h
+Date: Tue, 18 Aug 2026 17:56:11 -0600
+Subject: [PATCH v4 18/40] bsd-user: Add FreeBSD socket system calls
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260818-misc-2026q2-v4-24-09bf5647c98e@bsdimp.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260818-misc-2026q2-v4-18-09bf5647c98e@bsdimp.com>
 References: <20260818-misc-2026q2-v4-0-09bf5647c98e@bsdimp.com>
 In-Reply-To: <20260818-misc-2026q2-v4-0-09bf5647c98e@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -79,28 +78,26 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
- =?utf-8?q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>, 
- Sean Bruno <sbruno@FreeBSD.org>, Kyle Evans <kevans@FreeBSD.org>, 
  Richard Henderson <richard.henderson@linaro.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8920; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=muZxOBZ3S8D8Kb7WE0PTqk9FRzzKO+A1f6tHfX8PgRU=;
- b=owEBiQJ2/ZANAwAKAWwc0Sh9sBEAAcsmYgBqhPFFdyqCz1Nut/Uia9yb9XcFxsRVJ40tfWYk7
- IoatXzyo9aJAk8EAAEKADkWIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaoTxRRsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMiwyLDMACgkQbBzRKH2wEQCZJBAAr6ZhONxH20t5x8Lk9FqRpUuiqRatwIY
- jEwMZy5L6hKzElz4fkXW+84zIJczqYRj6Ey7hFnITXJGsRTUA0/0n2/lrdBC2IhHFeUzBOstsGr
- 4GvWtWzRJE7IihZcleYWcqSTsKAIOrjwz4rQwICivzO8MJdMJmuS59ZhmkEt4E8Z9HRMU7GbbmF
- LdrNtafT+9fJ7T8I33HVe1+nk97+E0340LG9wFm4PX7TNqCK6zB4NzjoQ/EuD2sKsOT6+eTf5LJ
- qJTDaPbjjL/+D26TaSDghMuuIlBer2krvlDFHhZa5qV2DKE5qawvGF38bF4MgRGr9Dv4+SUIWSv
- uwSOaw5WDInP2/BVu3WH0Bt3/InHlSrPPpIhASAhO3ciMnegttPsiRSjqiB5rDhI8ByTPv6hAHF
- QXXwmqpa5YkZ9Q3PDuqnqA47p3dBHwzmOEnGsRnab3oyGqVtAfWwxbnbN3f7ds2Q58REqxWqoM1
- ypjeuMzbE1R+ibEdFEcDcl5ptGfKlZncbsMjQhKEK3wMmGX+5Ac8Lv/8CIn+T9n2HSLCY5LMJFb
- ZqYBd33f9exXwn3us+KEXCot07pseUEY6lQSQvQcQUlxcQ+vqiuhiO4lxBWG4XortCVBE3fKBky
- fd7Z7zT1PnZFY8JdZQkQZq1CQvRDF2KzaHN6DILwMF3PdBP10fzA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2906; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=9/LodQEazNPxU574lND5yAoPfGvZro3GQ14ZKs590XQ=;
+ b=owEBiQJ2/ZANAwAKAWwc0Sh9sBEAAcsmYgBqhPE7Mn9Bo7oitIpHOCG/ThcPY6yE2raPnJuW+
+ xn6qOgRSsmJAk8EAAEKADkWIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaoTxOxsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMiwyLDMACgkQbBzRKH2wEQCeNw/+Px9aIPHAtfpcCXaTAb9+tpw8dnMHlMI
+ VpBvtBylQcYWkYgqKthmgmdKidvcLOY8RB+9+p4MfZcSBhtuVZ6PNI9yAw/4z9E6a0GYeiZqtHD
+ s1P47i22AHi8WWh6mTFuUyx4iKTtaOczXlAWQbPnj/gimzpLnfT9QmZAei3/mHg3lQDnw2PMZJz
+ YsMoHNi1x9wMAHZ1C+Cwf5P3v1tJDxaRnjReW9BALLY7PstBCFb8jqcV6YbnyVns7tT+zFTN5ML
+ mCzXw/qlIQhcgHKUjoxBMXmcMQO/mPzUvkwvqNaRIjITu/J5TdZfy84JcknCXCXrJ/fc6TV9yE0
+ 1l+kk54VtbS8r4kRn8lB5RcHA6MGMAxtWjHF79CVaddzbCEGHp41sUdP5plVoCsEIAO2AU//T7Q
+ yovMS9IX+rsgAtCXnYq/5jS1fFsSvUqSbeE+GAzx9Hru47QbRypYrXndUsjEvLQpCj7S6GI9BUm
+ FQ/nXkLuoLElLnjyQwncWj/6HkykOHQCWP8jsDgONYJodh+yDStnIcZ/f/s9/6szdM9DLd9IV68
+ OeAgOT5JVxFpsTJQDbisktFFSs4AwLRYwt1AD3614sWf4ei+sMZd+UhUwVky66QDXkBdWEN8Xl3
+ saEfVUphR5iRF8ehi2E9nBObaOjiu7Q+INVHH4thWQ0fZEzndBE8=
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2001:4860:4864:20::30;
- envelope-from=imp@bsdimp.com; helo=mail-oa1-x30.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::22d;
+ envelope-from=imp@bsdimp.com; helo=mail-oi1-x22d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -122,237 +119,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add event notification system call shims: kqueue, freebsd11_kevent
-(legacy 32-bit data field), and kevent (with 64-bit ext fields).
+Complete os-socket.h with setfib, bindat, connectat, and accept4.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Signed-off-by: Mikaël Urankar <mikael.urankar@gmail.com>
-Signed-off-by: Sean Bruno <sbruno@FreeBSD.org>
-Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
 Assisted-by: Claude Opus 4.6 (1M context)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-time.h | 173 +++++++++++++++++++++++++++++++++++++++++++++
- bsd-user/syscall_defs.h    |  22 ++++++
- 2 files changed, 195 insertions(+)
+ bsd-user/freebsd/os-socket.h | 83 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 83 insertions(+)
 
-diff --git a/bsd-user/freebsd/os-time.h b/bsd-user/freebsd/os-time.h
-index 5f537fac40..302872dd8e 100644
---- a/bsd-user/freebsd/os-time.h
-+++ b/bsd-user/freebsd/os-time.h
-@@ -635,5 +635,178 @@ static inline abi_long do_freebsd_ppoll(CPUArchState *env, abi_long arg1,
+diff --git a/bsd-user/freebsd/os-socket.h b/bsd-user/freebsd/os-socket.h
+index 126e49b282..b0f2498ff7 100644
+--- a/bsd-user/freebsd/os-socket.h
++++ b/bsd-user/freebsd/os-socket.h
+@@ -336,5 +336,88 @@ done:
+     return ret;
  }
  
- /* kqueue(2) */
-+static inline abi_long do_freebsd_kqueue(void)
++/* setfib(2) */
++static inline abi_long do_freebsd_setfib(abi_long fib)
 +{
 +
-+    return get_errno(kqueue());
++    return get_errno(setfib(fib));
 +}
 +
-+/* kevent(2) */
-+/* XXX Maybe some day, consolidate these two... */
-+static inline abi_long do_freebsd_freebsd11_kevent(abi_long arg1,
-+    abi_ulong arg2, abi_long arg3, abi_ulong arg4, abi_long arg5, abi_long arg6)
++/* bindat(2) */
++static inline abi_long do_freebsd_bindat(int fd, int sockfd,
++        abi_ulong target_addr, socklen_t addrlen)
 +{
 +    abi_long ret;
-+    struct kevent *changelist = NULL, *eventlist = NULL;
-+    struct target_freebsd11_kevent *target_changelist, *target_eventlist;
-+    struct timespec ts;
-+    int i;
++    void *addr;
 +
-+    if (arg3 != 0) {
-+        target_changelist = lock_user(VERIFY_READ, arg2,
-+                                      sizeof(*target_changelist) * arg3, 1);
-+        if (target_changelist == NULL) {
-+            return -TARGET_EFAULT;
-+        }
-+
-+        changelist = alloca(sizeof(struct kevent) * arg3);
-+        memset(changelist, '\0', sizeof(struct kevent) * arg3);
-+        for (i = 0; i < arg3; i++) {
-+            __get_user(changelist[i].ident, &target_changelist[i].ident);
-+            __get_user(changelist[i].filter, &target_changelist[i].filter);
-+            __get_user(changelist[i].flags, &target_changelist[i].flags);
-+            __get_user(changelist[i].fflags, &target_changelist[i].fflags);
-+            __get_user(changelist[i].data, &target_changelist[i].data);
-+            /* __get_user(changelist[i].udata, &target_changelist[i].udata); */
-+#if TARGET_ABI_BITS == 32
-+            changelist[i].udata = (void *)(uintptr_t)target_changelist[i].udata;
-+            tswap32s((uint32_t *)&changelist[i].udata);
-+#else
-+            changelist[i].udata = (void *)(uintptr_t)target_changelist[i].udata;
-+            tswap64s((uint64_t *)&changelist[i].udata);
-+#endif
-+        }
-+        unlock_user(target_changelist, arg2, 0);
++    if ((int)addrlen < 0) {
++        return -TARGET_EINVAL;
 +    }
 +
-+    if (arg5 != 0) {
-+        eventlist = alloca(sizeof(struct kevent) * arg5);
-+    }
-+    if (arg6 != 0) {
-+        if (t2h_freebsd_timespec(&ts, arg6)) {
-+            return -TARGET_EFAULT;
-+        }
-+    }
-+    ret = get_errno(safe_kevent(arg1, changelist, arg3, eventlist, arg5,
-+                                arg6 != 0 ? &ts : NULL));
-+
-+    if (arg5 == 0) {
++    addr = alloca(addrlen + 1);
++    ret = target_to_host_sockaddr(addr, target_addr, addrlen);
++    if (is_error(ret)) {
 +        return ret;
 +    }
 +
-+    if (!is_error(ret)) {
-+        target_eventlist = lock_user(VERIFY_WRITE, arg4,
-+                                     sizeof(*target_eventlist) * arg5, 0);
-+        if (target_eventlist == NULL) {
-+            return -TARGET_EFAULT;
-+        }
-+        for (i = 0; i < ret; i++) {
-+            __put_user(eventlist[i].ident, &target_eventlist[i].ident);
-+            __put_user(eventlist[i].filter, &target_eventlist[i].filter);
-+            __put_user(eventlist[i].flags, &target_eventlist[i].flags);
-+            __put_user(eventlist[i].fflags, &target_eventlist[i].fflags);
-+            __put_user(eventlist[i].data, &target_eventlist[i].data);
-+            /* __put_user(eventlist[i].udata, &target_eventlist[i].udata);*/
-+#if TARGET_ABI_BITS == 32
-+            tswap32s((uint32_t *)&eventlist[i].udata);
-+            target_eventlist[i].udata = (uintptr_t)eventlist[i].udata;
-+#else
-+            tswap64s((uint64_t *)&eventlist[i].udata);
-+            target_eventlist[i].udata = (uintptr_t)eventlist[i].udata;
-+#endif
-+        }
-+        unlock_user(target_eventlist, arg4,
-+                    sizeof(*target_eventlist) * ret);
-+    }
-+    return ret;
++    return get_errno(bindat(fd, sockfd, addr, addrlen));
 +}
 +
-+/* kevent(2) */
-+static inline abi_long do_freebsd_kevent(abi_long arg1, abi_ulong arg2,
-+        abi_long arg3, abi_ulong arg4, abi_long arg5, abi_long arg6)
++/* connectat(2) */
++static inline abi_long do_freebsd_connectat(int fd, int sockfd,
++        abi_ulong target_addr, socklen_t addrlen)
 +{
 +    abi_long ret;
-+    struct kevent *changelist = NULL, *eventlist = NULL;
-+    struct target_freebsd_kevent *target_changelist, *target_eventlist;
-+    struct timespec ts;
-+    int i;
++    void *addr;
 +
-+    if (arg3 != 0) {
-+        target_changelist = lock_user(VERIFY_READ, arg2,
-+                sizeof(struct target_freebsd_kevent) * arg3, 1);
-+        if (target_changelist == NULL) {
-+            return -TARGET_EFAULT;
-+        }
-+
-+        changelist = alloca(sizeof(struct kevent) * arg3);
-+        for (i = 0; i < arg3; i++) {
-+            __get_user(changelist[i].ident, &target_changelist[i].ident);
-+            __get_user(changelist[i].filter, &target_changelist[i].filter);
-+            __get_user(changelist[i].flags, &target_changelist[i].flags);
-+            __get_user(changelist[i].fflags, &target_changelist[i].fflags);
-+            __get_user(changelist[i].data, &target_changelist[i].data);
-+            /* __get_user(changelist[i].udata, &target_changelist[i].udata); */
-+#if TARGET_ABI_BITS == 32
-+            changelist[i].udata = (void *)(uintptr_t)target_changelist[i].udata;
-+            tswap32s((uint32_t *)&changelist[i].udata);
-+#else
-+            changelist[i].udata = (void *)(uintptr_t)target_changelist[i].udata;
-+            tswap64s((uint64_t *)&changelist[i].udata);
-+#endif
-+            __get_user(changelist[i].ext[0], &target_changelist[i].ext[0]);
-+            __get_user(changelist[i].ext[1], &target_changelist[i].ext[1]);
-+            __get_user(changelist[i].ext[2], &target_changelist[i].ext[2]);
-+            __get_user(changelist[i].ext[3], &target_changelist[i].ext[3]);
-+        }
-+        unlock_user(target_changelist, arg2, 0);
++    if ((int)addrlen < 0) {
++        return -TARGET_EINVAL;
 +    }
++    addr = alloca(addrlen + 1);
 +
-+    if (arg5 != 0) {
-+        eventlist = alloca(sizeof(struct kevent) * arg5);
-+    }
-+    if (arg6 != 0) {
-+        if (t2h_freebsd_timespec(&ts, arg6)) {
-+            return -TARGET_EFAULT;
-+        }
-+    }
-+    ret = get_errno(safe_kevent(arg1, changelist, arg3, eventlist, arg5,
-+                                arg6 != 0 ? &ts : NULL));
++    ret = target_to_host_sockaddr(addr, target_addr, addrlen);
 +
-+    if (arg5 == 0) {
++    if (is_error(ret)) {
 +        return ret;
 +    }
 +
++    return get_errno(connectat(fd, sockfd, addr, addrlen));
++}
++
++/* accept4(2) */
++static inline abi_long do_freebsd_accept4(int fd, abi_ulong target_addr,
++        abi_ulong target_addrlen_addr, int flags)
++{
++    socklen_t addrlen;
++    void *addr;
++    abi_long ret;
++
++    if (target_addr == 0) {
++        return get_errno(accept(fd, NULL, NULL));
++    }
++    /* return EINVAL if addrlen pointer is invalid */
++    if (get_user_u32(addrlen, target_addrlen_addr)) {
++        return -TARGET_EINVAL;
++    }
++    if ((int)addrlen < 0) {
++        return -TARGET_EINVAL;
++    }
++    if (!access_ok(VERIFY_WRITE, target_addr, addrlen)) {
++        return -TARGET_EINVAL;
++    }
++    addr = alloca(addrlen);
++
++    ret = get_errno(accept4(fd, addr, &addrlen, flags));
 +    if (!is_error(ret)) {
-+        target_eventlist = lock_user(VERIFY_WRITE, arg4,
-+            sizeof(struct target_freebsd_kevent) * arg5, 0);
-+        if (target_eventlist == NULL) {
-+            return -TARGET_EFAULT;
++        if (is_error(host_to_target_sockaddr(target_addr, addr, addrlen))) {
++            close(ret);
++            ret = -TARGET_EFAULT;
++        } else if (put_user_u32(addrlen, target_addrlen_addr)) {
++            close(ret);
++            ret = -TARGET_EFAULT;
 +        }
-+        for (i = 0; i < ret; i++) {
-+            __put_user(eventlist[i].ident, &target_eventlist[i].ident);
-+            __put_user(eventlist[i].filter, &target_eventlist[i].filter);
-+            __put_user(eventlist[i].flags, &target_eventlist[i].flags);
-+            __put_user(eventlist[i].fflags, &target_eventlist[i].fflags);
-+            __put_user(eventlist[i].data, &target_eventlist[i].data);
-+            /* __put_user(eventlist[i].udata, &target_eventlist[i].udata);*/
-+#if TARGET_ABI_BITS == 32
-+            tswap32s((uint32_t *)&eventlist[i].udata);
-+            target_eventlist[i].udata = (uintptr_t)eventlist[i].udata;
-+#else
-+            tswap64s((uint64_t *)&eventlist[i].udata);
-+            target_eventlist[i].udata = (uintptr_t)eventlist[i].udata;
-+#endif
-+            __put_user(eventlist[i].ext[0], &target_eventlist[i].ext[0]);
-+            __put_user(eventlist[i].ext[1], &target_eventlist[i].ext[1]);
-+            __put_user(eventlist[i].ext[2], &target_eventlist[i].ext[2]);
-+            __put_user(eventlist[i].ext[3], &target_eventlist[i].ext[3]);
-+        }
-+        unlock_user(target_eventlist, arg4,
-+                sizeof(struct target_freebsd_kevent) * ret);
 +    }
 +    return ret;
 +}
-+
-+/* sigtimedwait(2) */
  
- #endif /* FREEBSD_OS_TIME_H */
-diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
-index 0d7002312f..f4bb687388 100644
---- a/bsd-user/syscall_defs.h
-+++ b/bsd-user/syscall_defs.h
-@@ -155,6 +155,28 @@ struct target_freebsd_timeval {
- #endif
- };
- 
-+/*
-+ * sys/event.h
-+ */
-+struct target_freebsd11_kevent {
-+    abi_ulong  ident;
-+    int16_t    filter;
-+    uint16_t   flags;
-+    uint32_t   fflags;
-+    abi_long   data;
-+    abi_ulong  udata;
-+};
-+
-+struct target_freebsd_kevent {
-+    abi_ulong  ident;
-+    int16_t    filter;
-+    uint16_t   flags;
-+    uint32_t   fflags;
-+    int64_t data;
-+    abi_ulong  udata;
-+    uint64_t  ext[4];
-+};
-+
- /*
-  *  sys/resource.h
-  */
+ #endif /* BSD_USER_FREEBSD_OS_SOCKET_H */
 
 -- 
 2.55.0
