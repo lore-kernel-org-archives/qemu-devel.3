@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 455FBC5DF74
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:37:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B019C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:37:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwJzR-0007QU-QP; Tue, 18 Aug 2026 09:36:30 -0400
+	id 1wwJzc-0007ZR-Oz; Tue, 18 Aug 2026 09:36:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <0860734llx@gmail.com>)
- id 1wwJzC-00077S-9X
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:36:14 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <0860734llx@gmail.com>)
- id 1wwJzA-0000gw-4D
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:36:14 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2cc891373e0so60608555ad.2
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 06:36:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787060171; x=1787664971; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=qGORSvOPdgCEDHlJgPj/9KH5nwJ3ohv3CXDjTRlfB8Y=;
- b=OnFikBhMeAZVJ6a2Yzi7wz+rLAs0kCBHaw1s94R0gsluh6FYhRZa8NofPakB+EK2Wh
- gUeCC/3FMQOaE5IDlc02uYqmtUmfNH37U8nNNw0puycuOgmZtMZFOBQvsGU8YrQdhs8x
- F1To4OUnd6u58BwGv2UO+qph/2/u7H1PuwE2Cx6vhpgjVl3hT6GU48OnzOAMPOWRTsNn
- ymDu3mEdbWfh0jHwac1cbugUdp0yX4nrnLzsDsSJGS/+QmkZoKMYO4SCmXSDVYwbnvDz
- K2beh2d6zWnf3B6yfWvcu1rJqA9bQuqTHWDItjqqjIL3/PvM6nlkvRTBxrCtte8ZTV3i
- Jx3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787060171; x=1787664971;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=qGORSvOPdgCEDHlJgPj/9KH5nwJ3ohv3CXDjTRlfB8Y=;
- b=m+m3rrYotcYnD5jxiZ5MU3GxkHVDBgFwqc/uK0qxXS6FWn+Xcx3/reDcixgRAsxSzW
- heQUGFJI8tIsM3Gxv6p/83HSG/FUrEuVrh5Qhe6UHsna5r39V8Pfc5tlIw1elBcJRcxz
- eHZC8Uk8idzZVx5u8h6I9664cQrteUOmyXf17AsoXCcyYnc/NNgiBPlk4ZhAhRRJxE6t
- nkzUI0gtseLK5fp6UUWyDLsOrpLNlAhvTd8P8hYLj1gpb96/fEnvexBrJNDeCaM8HBL4
- fWAIgWc5yh+aRXiV3WplKhcbs4lacziD0mX27d6BbrCaLsnAE4wRtLFwkcS0dkIJ1i8l
- HtNw==
-X-Gm-Message-State: AOJu0YwQExQCdehxj/JwxK44WANGxGYI3uO7mCPjpAHnkAuI+j6ltIXc
- z+LReR8ZbmEM86HuPAj7XS7NkzM4GeNcz0d0KU+m32kNQbPTw6fjOHGh
-X-Gm-Gg: AR+sD10CI5sBgKZCmRGPnfx0A+Z3JlCQA/An6SRcTy7na0yKoz2M7LFsB6YfMKZ8Crd
- laY/x+1fc1i3bQyToYQmpllIF3wB496bTg74RQEZJFf95OWYrxhQs8GfhUgPu1VjVK/1GzIjTDk
- FVnMeCxRx9bJUk6rSf4WcchTW1vmxTgU9ngac3/IAZybMwtvVANt34LrEJy1cNXV/zoxc+xnVgz
- CpZyx3tr3Ges7RPbjp8OupnApBrh0qPkJFU3/7i2fT5ODk37/qaBSfefwd0Zbv8CnbMTgGANmte
- QPy0zPrldKJaITzeEBEsgefNWBGzo424n2WLD+Ghaguf0T9s6IziPoMilxpty9a0VwwYVw2K67G
- gSK1H7PbXeI1I4PrJy1QeNJZHms7ybE3Z/UZTUhwiuzPngfLTFJwxcwADPbgniaYo8AOW90BzZe
- yc21MfBgoiKbK8adcHIFR/ArMajMSI2NVh8hfr8R/z0ueVOtrnIw6F+RimRJySN1YhZccuVfhvT
- b1yFJATsX91
-X-Received: by 2002:a17:903:3c44:b0:2d0:8b28:517c with SMTP id
- d9443c01a7336-2d3b0d78141mr392119605ad.3.1787060170530; 
- Tue, 18 Aug 2026 06:36:10 -0700 (PDT)
-Received: from [172.17.0.5] ([42.193.175.155])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d5d014d965sm8066845ad.35.2026.08.18.06.36.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 06:36:09 -0700 (PDT)
-From: Simon Law <0860734llx@gmail.com>
-Date: Tue, 18 Aug 2026 21:35:52 +0800
-Subject: [PATCH v2 3/4] tests/qtest: add K230 CMU coverage
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wwJzR-0007Rj-7N
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:36:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wwJzO-0000jO-4Z
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:36:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787060185;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7LpeINFUNTZ5koNm091QNo6sDDf+Ig7OOqg3hQ3pSY8=;
+ b=MWGC/x+KLvaVS+dCboJmnL2qkHm1gr087U/pQovvMD9w0DGnFowyGkxnKK/bS7644sHLPN
+ /1ECYSAqUiQwBlQv2AxQs2Q9jLW9RGMPRgObsvX3/yHu4C8x107Ukx2OfURaSaQo/msOMF
+ qwtsDVpQgeAyjaEnGso6fF8KHIQXZBg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-212-Vb6me6ruP5qP4J9Ah4neLA-1; Tue,
+ 18 Aug 2026 09:36:22 -0400
+X-MC-Unique: Vb6me6ruP5qP4J9Ah4neLA-1
+X-Mimecast-MFC-AGG-ID: Vb6me6ruP5qP4J9Ah4neLA_1787060180
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B3EA61800D88; Tue, 18 Aug 2026 13:36:20 +0000 (UTC)
+Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.116])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B4FCD1953948; Tue, 18 Aug 2026 13:36:07 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Tue, 18 Aug 2026 17:29:33 +0400
+Subject: [PATCH v3 67/74] qdev: introduce typed array PropertyInfos
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260818-feat-k230-cmu-v2-3-57eadb98f40f@gmail.com>
-References: <20260818-feat-k230-cmu-v2-0-57eadb98f40f@gmail.com>
-In-Reply-To: <20260818-feat-k230-cmu-v2-0-57eadb98f40f@gmail.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260818-qom-qapi-v3-67-24b8bbbe3d86@redhat.com>
+References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
+In-Reply-To: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, 
- Chao Liu <chao.liu@processmission.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: b4 0.16.0
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=0860734llx@gmail.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Cc: Markus Armbruster <armbru@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=14553;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=DNY5OZOHcpCb+SjkUHihp/hTEf88oXTox51j/sLmNQc=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhF90B4LfSu4VFnZX03P4wkiaDdQwaMFQli8a0
+ pkKdbYNZ5uJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoRfdAAKCRDa6OEJdZac
+ 5ZwGEACxzYGc3Tjg6aOkTUZAiEbAJjDgT8UEZbs81Wa+fAXK5fYYiG4qfXbhLpQC5YT1qnM0THi
+ tXF96DkagUzeWbrbnqQ8SBLDr++47lqgUar7B5M7fSIeYEtpDBU9B+9uoCjVX8ExF9wRNJ4cw5h
+ zcfXKW6D33EknGH1Pl0naSoRnXpB2y4GwGC+9ERt/zWuALZR3yKECDkNk1/Lu8Thp7LyfG6MA17
+ y6RqlJuzGo83Bh46+y+KsSDXjOrofld4ARFFcGZt7fUbqBKqRn27dLBLOf+YjXZS4qYsl8rVai3
+ DvGxDFd9R7IKDtCIZycsdiAm+DMa23Pkt3mIAf4uDCKQusKIoezUuy3Twv2dhtrA5d/hG8k/A81
+ lrMSpgeWvjzu+uTIbMuwbHa+Vu+bL22hfqeXIRMrE0Lmm1gCQk0xSi3s7KEvo+Sm1glYq72XAuO
+ tNoc/CMk3SNLz5qmWZQAO5N4Y6o351AeLnMnZ+Fm3H1qac1kzew5YFs/q2+JjGo5M/qjzuAJtvq
+ I0h0hk/i8cvJtECUWCNDSg9F78LNIvwlbYOJQaje0qXOfrp3LMxXrylxZb0HbK6v9D/jxLdd/0A
+ LQddHYjnhcLQcF4g6PQ5k4OyX+UFDoCCKjSfn/gdpB97/f5dxnxizF/KNoUfyC6WSxp/n7sq0vi
+ OpJ7TS5fXVEnEWA==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,346 +108,354 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Simon Law <0860734llx@gmail.com>
----
- tests/qtest/k230-cmu-test.c | 312 ++++++++++++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build     |   3 +-
- 2 files changed, 314 insertions(+), 1 deletion(-)
+Add element_info and element_size fields to PropertyInfo, and extend
+qdev_prop_qapi_type() to derive QAPI types for array properties via
+element_info->qapi_type->list.
 
-diff --git a/tests/qtest/k230-cmu-test.c b/tests/qtest/k230-cmu-test.c
-new file mode 100644
-index 0000000000..ce3af909f0
---- /dev/null
-+++ b/tests/qtest/k230-cmu-test.c
-@@ -0,0 +1,312 @@
-+/*
-+ * QTest testcase for Kendryte K230 Clock Management Unit
-+ *
-+ * Copyright (c) 2026 Simon Law <0860734llx@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * K230 Technical Reference Manual V0.3.1 (2024-11-18), CMU chapter.
-+ *
-+ * The reset and mask oracle in this file is intentionally independent from
-+ * hw/misc/k230_cmu.c, so a descriptor-table error cannot mask itself.
-+ */
+Add typed list PropertyInfo definitions that replace the generic
+qdev_prop_array. Each typed list PropertyInfo knows its element type
+at compile time through the element_info and element_size fields,
+which allows the QAPI type to be derived automatically.
+
+Infrastructure changes:
+- Add prop_array_info() and prop_array_elem_size() helpers that
+  prefer the new element_info/element_size fields with fallback to
+  the old arrayinfo/arrayfieldsize fields for compatibility
+- Make get_prop_array, set_prop_array, release_prop_array, and
+  default_prop_array non-static so they can be used by
+  DEFINE_PROP_ARRAY_INFO in other translation units
+- Add DEFINE_PROP_ARRAY_INFO macro in qdev-prop-internal.h
+
+The array of links needs special care for its "full type name" to follow
+the "link<TYPE>List" pattern used by link properties ("link<TYPE>").
+
+The old qdev_prop_array and DEFINE_PROP_ARRAY macro are preserved
+for compatibility; they will be replaced in the next patch.
+
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ hw/core/qdev-prop-internal.h             |  18 ++++++
+ hw/core/qdev-properties-system.c         |   5 ++
+ hw/core/qdev-properties.c                | 103 ++++++++++++++++++++++++-------
+ include/hw/core/qdev-properties-system.h |   2 +
+ include/hw/core/qdev-properties.h        |   8 +++
+ 5 files changed, 115 insertions(+), 21 deletions(-)
+
+diff --git a/hw/core/qdev-prop-internal.h b/hw/core/qdev-prop-internal.h
+index c190b7b88cf4..b9d9812346d1 100644
+--- a/hw/core/qdev-prop-internal.h
++++ b/hw/core/qdev-prop-internal.h
+@@ -27,4 +27,22 @@ void qdev_propinfo_get_int32(Object *obj, Visitor *v, const char *name,
+ void qdev_propinfo_get_size32(Object *obj, Visitor *v, const char *name,
+                               void *opaque, Error **errp);
+ 
++void get_prop_array(Object *obj, Visitor *v, const char *name,
++                    void *opaque, Error **errp);
++void set_prop_array(Object *obj, Visitor *v, const char *name,
++                    void *opaque, Error **errp);
++void release_prop_array(Object *obj, const char *name, void *opaque);
++void default_prop_array(ObjectProperty *op, const Property *prop);
 +
-+#include "qemu/osdep.h"
-+#include "qemu/bitops.h"
-+#include "libqtest.h"
++/* .qapi_type is derived from element_info->qapi_type->list by qdev_prop_qapi_type() */
++#define DEFINE_PROP_ARRAY_INFO(_elem_prop_info, _elem_type) \
++    {                                                       \
++        .element_info = &(_elem_prop_info),                 \
++        .element_size = sizeof(_elem_type),                 \
++        .get = get_prop_array,                              \
++        .set = set_prop_array,                              \
++        .release = release_prop_array,                      \
++        .set_default_value = default_prop_array,            \
++    }
 +
-+#define K230_PLL_BASE       0x91102000
-+#define K230_SYSCLK_BASE    0x91100000
-+#define K230_PLL_COUNT      4
-+#define K230_PLL_STRIDE     0x10
+ #endif
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index 8819a9a0b748..ad4a00f776e6 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -484,6 +484,8 @@ const PropertyInfo qdev_prop_netdev = {
+     .set   = set_netdev,
+ };
+ 
++const PropertyInfo qdev_prop_netdev_list =
++    DEFINE_PROP_ARRAY_INFO(qdev_prop_netdev, NICPeers);
+ 
+ /* --- audiodev --- */
+ static void get_audiodev(Object *obj, Visitor *v, const char* name,
+@@ -822,6 +824,9 @@ const PropertyInfo qdev_prop_reserved_region = {
+     .set   = set_reserved_region,
+ };
+ 
++const PropertyInfo qdev_prop_reserved_region_list =
++    DEFINE_PROP_ARRAY_INFO(qdev_prop_reserved_region, ReservedRegion);
 +
-+#define PLL_CFG0            0x0
-+#define PLL_CFG1            0x4
-+#define PLL_CTL             0x8
-+#define PLL_STAT            0xc
+ /* --- pci address --- */
+ 
+ /*
+diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+index c2980c36afa2..a9ca8e4a03db 100644
+--- a/hw/core/qdev-properties.c
++++ b/hw/core/qdev-properties.c
+@@ -665,6 +665,22 @@ struct ArrayElementList {
+     void *value;
+ };
+ 
++static const PropertyInfo *prop_array_info(const Property *prop)
++{
++    if (prop->info->element_info) {
++        return prop->info->element_info;
++    }
++    return prop->arrayinfo;
++}
 +
-+#define PLL_CFG0_RW_MASK    0x0f3f1fff
-+#define PLL_CFG1_RW_MASK    0x000f0fff
-+#define PLL_CTL_RW_MASK     0x00000ff4
++static int prop_array_elem_size(const Property *prop)
++{
++    if (prop->info->element_size) {
++        return prop->info->element_size;
++    }
++    return prop->arrayfieldsize;
++}
 +
-+typedef struct K230SysclkOracle {
-+    uint32_t offset;
-+    uint32_t reset;
-+    uint32_t rw_mask;
-+    uint32_t w1t_mask;
-+} K230SysclkOracle;
+ /*
+  * Given an array property @parent_prop in @obj, return a Property for a
+  * specific element of the array. Arrays are backed by an uint32_t length field
+@@ -674,7 +690,7 @@ static Property array_elem_prop(Object *obj, const Property *parent_prop,
+                                 const char *name, char *elem)
+ {
+     return (Property) {
+-        .info = parent_prop->arrayinfo,
++        .info = prop_array_info(parent_prop),
+         .name = name,
+         /*
+          * This ugly piece of pointer arithmetic sets up the offset so
+@@ -692,19 +708,21 @@ static Property array_elem_prop(Object *obj, const Property *parent_prop,
+  * underlying element's property release hook for each element and free the
+  * property array.
+  */
+-static void release_prop_array(Object *obj, const char *name, void *opaque)
++void release_prop_array(Object *obj, const char *name, void *opaque)
+ {
+     const Property *prop = opaque;
+     uint32_t *alenptr = object_field_prop_ptr(obj, prop);
+     void **arrayptr = (void *)obj + prop->arrayoffset;
+     char *elem = *arrayptr;
+     int i;
++    const PropertyInfo *elem_info = prop_array_info(prop);
++    int elem_size = prop_array_elem_size(prop);
+ 
+-    if (prop->arrayinfo->release) {
++    if (elem_info->release) {
+         for (i = 0; i < *alenptr; i++) {
+             Property elem_prop = array_elem_prop(obj, prop, name, elem);
+-            prop->arrayinfo->release(obj, NULL, &elem_prop);
+-            elem += prop->arrayfieldsize;
++            elem_info->release(obj, NULL, &elem_prop);
++            elem += elem_size;
+         }
+     }
+ 
+@@ -718,8 +736,8 @@ static void release_prop_array(Object *obj, const char *name, void *opaque)
+  * (a pointer to which is stored in the additional field described by
+  * prop->arrayoffset).
+  */
+-static void set_prop_array(Object *obj, Visitor *v, const char *name,
+-                           void *opaque, Error **errp)
++void set_prop_array(Object *obj, Visitor *v, const char *name,
++                    void *opaque, Error **errp)
+ {
+     ERRP_GUARD();
+     const Property *prop = opaque;
+@@ -727,6 +745,8 @@ static void set_prop_array(Object *obj, Visitor *v, const char *name,
+     void **arrayptr = (void *)obj + prop->arrayoffset;
+     ArrayElementList *list, *elem, *next;
+     const size_t size = sizeof(*list);
++    const PropertyInfo *elem_info = prop_array_info(prop);
++    int elem_size = prop_array_elem_size(prop);
+     char *elemptr;
+     bool ok = true;
+ 
+@@ -745,9 +765,9 @@ static void set_prop_array(Object *obj, Visitor *v, const char *name,
+     while (elem) {
+         Property elem_prop;
+ 
+-        elem->value = g_malloc0(prop->arrayfieldsize);
++        elem->value = g_malloc0(elem_size);
+         elem_prop = array_elem_prop(obj, prop, name, elem->value);
+-        prop->arrayinfo->set(obj, v, NULL, &elem_prop, errp);
++        elem_info->set(obj, v, NULL, &elem_prop, errp);
+         if (*errp) {
+             ok = false;
+             goto out_obj;
+@@ -769,8 +789,8 @@ out_obj:
+         for (elem = list; elem; elem = next) {
+             Property elem_prop = array_elem_prop(obj, prop, name,
+                                                  elem->value);
+-            if (prop->arrayinfo->release) {
+-                prop->arrayinfo->release(obj, NULL, &elem_prop);
++            if (elem_info->release) {
++                elem_info->release(obj, NULL, &elem_prop);
+             }
+             next = elem->next;
+             g_free(elem->value);
+@@ -783,19 +803,19 @@ out_obj:
+      * Now that we know how big the array has to be, move the data over to a
+      * linear array and free the temporary list.
+      */
+-    *arrayptr = g_malloc_n(*alenptr, prop->arrayfieldsize);
++    *arrayptr = g_malloc_n(*alenptr, elem_size);
+     elemptr = *arrayptr;
+     for (elem = list; elem; elem = next) {
+-        memcpy(elemptr, elem->value, prop->arrayfieldsize);
+-        elemptr += prop->arrayfieldsize;
++        memcpy(elemptr, elem->value, elem_size);
++        elemptr += elem_size;
+         next = elem->next;
+         g_free(elem->value);
+         g_free(elem);
+     }
+ }
+ 
+-static void get_prop_array(Object *obj, Visitor *v, const char *name,
+-                           void *opaque, Error **errp)
++void get_prop_array(Object *obj, Visitor *v, const char *name,
++                    void *opaque, Error **errp)
+ {
+     ERRP_GUARD();
+     const Property *prop = opaque;
+@@ -805,6 +825,8 @@ static void get_prop_array(Object *obj, Visitor *v, const char *name,
+     ArrayElementList *list = NULL, *elem;
+     ArrayElementList **tail = &list;
+     const size_t size = sizeof(*list);
++    const PropertyInfo *elem_info = prop_array_info(prop);
++    int elem_size = prop_array_elem_size(prop);
+     int i;
+     bool ok;
+ 
+@@ -812,7 +834,7 @@ static void get_prop_array(Object *obj, Visitor *v, const char *name,
+     for (i = 0; i < *alenptr; i++) {
+         elem = g_new0(ArrayElementList, 1);
+         elem->value = elemptr;
+-        elemptr += prop->arrayfieldsize;
++        elemptr += elem_size;
+ 
+         *tail = elem;
+         tail = &elem->next;
+@@ -825,7 +847,7 @@ static void get_prop_array(Object *obj, Visitor *v, const char *name,
+     elem = list;
+     while (elem) {
+         Property elem_prop = array_elem_prop(obj, prop, name, elem->value);
+-        prop->arrayinfo->get(obj, v, NULL, &elem_prop, errp);
++        elem_info->get(obj, v, NULL, &elem_prop, errp);
+         if (*errp) {
+             goto out_obj;
+         }
+@@ -847,7 +869,7 @@ out_obj:
+     }
+ }
+ 
+-static void default_prop_array(ObjectProperty *op, const Property *prop)
++void default_prop_array(ObjectProperty *op, const Property *prop)
+ {
+     object_property_set_default_list(op);
+ }
+@@ -860,6 +882,38 @@ const PropertyInfo qdev_prop_array = {
+     .set_default_value = default_prop_array,
+ };
+ 
++const PropertyInfo qdev_prop_uint8_list =
++    DEFINE_PROP_ARRAY_INFO(qdev_prop_uint8, uint8_t);
++const PropertyInfo qdev_prop_uint16_list =
++    DEFINE_PROP_ARRAY_INFO(qdev_prop_uint16, uint16_t);
++const PropertyInfo qdev_prop_uint32_list =
++    DEFINE_PROP_ARRAY_INFO(qdev_prop_uint32, uint32_t);
++const PropertyInfo qdev_prop_uint64_list =
++    DEFINE_PROP_ARRAY_INFO(qdev_prop_uint64, uint64_t);
++const PropertyInfo qdev_prop_string_list =
++    DEFINE_PROP_ARRAY_INFO(qdev_prop_string, char *);
 +
-+static const uint32_t pll_reset[K230_PLL_COUNT][4] = {
-+    { 0x0102018f, 0x000200c7, 0x00000034, 0x00000021 },
-+    { 0x00000062, 0x00020031, 0x00000034, 0x00000021 },
-+    { 0x00070378, 0x000201bb, 0x00000034, 0x00000021 },
-+    { 0x0102018f, 0x000200c7, 0x00000074, 0x00000021 },
++static ObjectProperty *create_link_list_property(ObjectClass *oc,
++                                                  const char *name,
++                                                  const Property *prop)
++{
++    g_autofree char *full_type = g_strdup_printf("link<%s>List", prop->link_type);
++
++    return object_class_property_add(oc, name, full_type,
++                                     get_prop_array, set_prop_array,
++                                     release_prop_array, (Property *)prop);
++}
++
++const PropertyInfo qdev_prop_link_list = {
++    .element_info = &qdev_prop_link,
++    .element_size = sizeof(void *),
++    .create = create_link_list_property,
++    .get = get_prop_array,
++    .set = set_prop_array,
++    .release = release_prop_array,
++    .set_default_value = default_prop_array,
 +};
 +
-+static const K230SysclkOracle sysclk_oracle[] = {
-+    { 0x000, 0x0000e65f, 0x0003ffdf, BIT(31) },
-+    { 0x004, 0x0009900d, 0x000f803f, BIT(31) },
-+    { 0x008, 0x0000043d, 0x0000043d, BIT(31) },
-+    { 0x00c, 0x00000c7f, 0x00007fff, BIT(31) },
-+    { 0x010, 0x00000001, 0x00000001, 0 },
-+    { 0x018, 0x7f7fffff, 0x7fffffff, 0 },
-+    { 0x01c, 0x000b9248, 0x000fffff, BIT(31) },
-+    { 0x020, 0x00039048, 0x0007fff8, BIT(31) },
-+    { 0x024, 0xffffffff, 0xffffffff, 0 },
-+    { 0x028, 0x000000ff, 0x000000ff, 0 },
-+    { 0x02c, 0x1b6d9249, 0x3fffffff, BIT(31) },
-+    { 0x030, 0x01dda0c3, 0x7fffffff, BIT(31) },
-+    { 0x034, 0x01b9f424, 0x7fffffff, BIT(31) },
-+    { 0x038, 0x006e7d09, 0x07ffffff, BIT(31) },
-+    { 0x03c, 0x006e7d09, 0x07ffffff, BIT(31) },
-+    { 0x040, 0x0000f424, 0x0001ffff, 0 },
-+    { 0x044, 0x000001b9, 0x0000ffff, BIT(31) },
-+    { 0x050, 0x003ffffe, 0x003ffffe, 0 },
-+    { 0x054, 0x0003ffff, 0x0003ffff, BIT(31) },
-+    { 0x058, 0x1efabef9, 0x7ffffff8, BIT(31) },
-+    { 0x05c, 0x000c7ffd, 0x001c7ffd, BIT(31) },
-+    { 0x060, 0x000043fd, 0x0003ffff, BIT(31) },
-+    { 0x064, 0x000fffff, 0x000fffff, 0 },
-+    { 0x068, 0x00820835, 0x3fffffff, BIT(31) },
-+    { 0x06c, 0x003a74ef, 0x00ffffff, BIT(31) },
-+    { 0x070, 0x000001ff, 0x000003ff, BIT(31) },
-+    { 0x074, 0x00001fff, 0x00001fff, 0 },
-+    { 0x078, 0x0000a83b, 0x00ffffff, BIT(31) },
-+    { 0x080, 0x000002f3, 0x00003fff, BIT(31) },
-+    { 0x100, 0x00000039, 0x0000007f, BIT(31) },
-+    { 0x104, 0x00000009, 0x0000001f, BIT(31) },
-+    /* TRM summary stops at 0x104; SDK/Linux ABI requires SPI2AXI at 0x108. */
-+    { 0x108, 0x00000007, 0x0000000f, BIT(31) },
-+};
-+
-+static QTestState *k230_cmu_start(void)
-+{
-+    return qtest_init("-machine k230");
-+}
-+
-+static uint32_t pll_addr(unsigned index, uint32_t offset)
-+{
-+    g_assert_cmpuint(index, <, K230_PLL_COUNT);
-+    return K230_PLL_BASE + index * K230_PLL_STRIDE + offset;
-+}
-+
-+static uint32_t merge_rw(uint32_t old_value, uint32_t value, uint32_t mask)
-+{
-+    return (old_value & ~mask) | (value & mask);
-+}
-+
-+static void assert_pll_reset(QTestState *qts)
-+{
-+    static const uint32_t offsets[] = { PLL_CFG0, PLL_CFG1, PLL_CTL, PLL_STAT };
-+
-+    for (unsigned pll = 0; pll < K230_PLL_COUNT; pll++) {
-+        for (unsigned reg = 0; reg < G_N_ELEMENTS(offsets); reg++) {
-+            g_assert_cmphex(qtest_readl(qts, pll_addr(pll, offsets[reg])), ==,
-+                            pll_reset[pll][reg]);
-+        }
-+    }
-+}
-+
-+static void assert_sysclk_reset(QTestState *qts)
-+{
-+    for (unsigned i = 0; i < G_N_ELEMENTS(sysclk_oracle); i++) {
-+        const K230SysclkOracle *reg = &sysclk_oracle[i];
-+
-+        g_assert_cmphex(qtest_readl(qts, K230_SYSCLK_BASE + reg->offset), ==,
-+                        reg->reset);
-+    }
-+}
-+
-+static void test_reset_pll(void)
-+{
-+    QTestState *qts = k230_cmu_start();
-+
-+    assert_pll_reset(qts);
-+    qtest_quit(qts);
-+}
-+
-+static void test_reset_sysclk(void)
-+{
-+    QTestState *qts = k230_cmu_start();
-+
-+    assert_sysclk_reset(qts);
-+    qtest_quit(qts);
-+}
-+
-+static void test_pll_cfg_masks(void)
-+{
-+    static const uint32_t offsets[] = { PLL_CFG0, PLL_CFG1 };
-+    static const uint32_t masks[] = { PLL_CFG0_RW_MASK, PLL_CFG1_RW_MASK };
-+    QTestState *qts = k230_cmu_start();
-+
-+    for (unsigned pll = 0; pll < K230_PLL_COUNT; pll++) {
-+        for (unsigned reg = 0; reg < G_N_ELEMENTS(offsets); reg++) {
-+            uint32_t addr = pll_addr(pll, offsets[reg]);
-+            uint32_t reset = pll_reset[pll][reg];
-+
-+            qtest_writel(qts, addr, 0);
-+            g_assert_cmphex(qtest_readl(qts, addr), ==,
-+                            merge_rw(reset, 0, masks[reg]));
-+            qtest_writel(qts, addr, UINT32_MAX);
-+            g_assert_cmphex(qtest_readl(qts, addr), ==,
-+                            merge_rw(merge_rw(reset, 0, masks[reg]),
-+                                     UINT32_MAX, masks[reg]));
-+
-+            qtest_system_reset(qts);
-+            qtest_writel(qts, addr, BIT(ctz32(masks[reg])));
-+            g_assert_cmphex(qtest_readl(qts, addr), ==,
-+                            merge_rw(reset, BIT(ctz32(masks[reg])),
-+                                     masks[reg]));
-+
-+            qtest_system_reset(qts);
-+            qtest_writel(qts, addr, reset | BIT(ctz32(~masks[reg])));
-+            g_assert_cmphex(qtest_readl(qts, addr), ==, reset);
-+        }
-+    }
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_pll_ctl_write_enable(void)
-+{
-+    QTestState *qts = k230_cmu_start();
-+    uint32_t addr = pll_addr(0, PLL_CTL);
-+
-+    qtest_writel(qts, addr, 0);
-+    g_assert_cmphex(qtest_readl(qts, addr), ==, pll_reset[0][2]);
-+
-+    qtest_writel(qts, addr, BIT(16 + 2));
-+    g_assert_cmphex(qtest_readl(qts, addr), ==,
-+                    pll_reset[0][2] & ~BIT(2));
-+
-+    qtest_writel(qts, addr, BIT(2) | BIT(16 + 2) | BIT(16 + 4));
-+    g_assert_cmphex(qtest_readl(qts, addr), ==,
-+                    merge_rw(pll_reset[0][2] & ~BIT(2),
-+                             BIT(2), BIT(2) | BIT(4)));
-+
-+    qtest_writel(qts, addr, UINT32_MAX);
-+    g_assert_cmphex(qtest_readl(qts, addr), ==, PLL_CTL_RW_MASK);
-+    qtest_quit(qts);
-+}
-+
-+static void test_pll_status(void)
-+{
-+    QTestState *qts = k230_cmu_start();
-+    uint32_t ctl = pll_addr(0, PLL_CTL);
-+    uint32_t stat = pll_addr(0, PLL_STAT);
-+
-+    qtest_writel(qts, stat, 0);
-+    g_assert_cmphex(qtest_readl(qts, stat), ==, 0x00000021);
-+
-+    qtest_writel(qts, ctl, BIT(0) | BIT(16));
-+    g_assert_cmphex(qtest_readl(qts, stat), ==, 0);
-+
-+    qtest_writel(qts, ctl, BIT(1) | BIT(17));
-+    g_assert_cmphex(qtest_readl(qts, stat), ==, 0x00000021);
-+
-+    qtest_writel(qts, ctl, BIT(0) | BIT(1) | BIT(16) | BIT(17));
-+    g_assert_cmphex(qtest_readl(qts, stat), ==, 0x00000021);
-+    qtest_quit(qts);
-+}
-+
-+static void test_sysclk_masks(void)
-+{
-+    QTestState *qts = k230_cmu_start();
-+
-+    for (unsigned i = 0; i < G_N_ELEMENTS(sysclk_oracle); i++) {
-+        const K230SysclkOracle *reg = &sysclk_oracle[i];
-+        uint32_t addr = K230_SYSCLK_BASE + reg->offset;
-+        uint32_t after_zero = merge_rw(reg->reset, 0, reg->rw_mask);
-+
-+        qtest_writel(qts, addr, 0);
-+        g_assert_cmphex(qtest_readl(qts, addr), ==, after_zero);
-+        qtest_writel(qts, addr, UINT32_MAX);
-+        g_assert_cmphex(qtest_readl(qts, addr), ==,
-+                        merge_rw(after_zero, UINT32_MAX, reg->rw_mask));
-+    }
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_sysclk_update(void)
-+{
-+    QTestState *qts = k230_cmu_start();
-+
-+    for (unsigned i = 0; i < G_N_ELEMENTS(sysclk_oracle); i++) {
-+        const K230SysclkOracle *reg = &sysclk_oracle[i];
-+        uint32_t addr;
-+        uint32_t flipped;
-+
-+        if (!reg->w1t_mask) {
-+            continue;
-+        }
-+
-+        addr = K230_SYSCLK_BASE + reg->offset;
-+        flipped = merge_rw(reg->reset, ~reg->reset, reg->rw_mask);
-+        qtest_writel(qts, addr, flipped | reg->w1t_mask);
-+        g_assert_cmphex(qtest_readl(qts, addr), ==, flipped);
-+    }
-+
-+    qtest_quit(qts);
-+}
-+
-+static void test_spi2axi(void)
-+{
-+    QTestState *qts = k230_cmu_start();
-+    uint32_t addr = K230_SYSCLK_BASE + 0x108;
-+
-+    g_assert_cmphex(qtest_readl(qts, addr), ==, 0x00000007);
-+    qtest_writel(qts, addr, 0x00000001);
-+    g_assert_cmphex(qtest_readl(qts, addr), ==, 0x00000001);
-+    qtest_writel(qts, addr, 0x8000000f);
-+    g_assert_cmphex(qtest_readl(qts, addr), ==, 0x0000000f);
-+    qtest_quit(qts);
-+}
-+
-+static void test_unknown_offsets(void)
-+{
-+    QTestState *qts = k230_cmu_start();
-+    /* The 0x40 PLL window has no undefined aligned 32-bit word. */
-+    uint32_t addr = K230_SYSCLK_BASE + 0x014;
-+
-+    g_assert_cmphex(qtest_readl(qts, addr), ==, 0);
-+    qtest_writel(qts, addr, UINT32_MAX);
-+    g_assert_cmphex(qtest_readl(qts, addr), ==, 0);
-+    qtest_quit(qts);
-+}
-+
-+static void test_system_reset(void)
-+{
-+    QTestState *qts = k230_cmu_start();
-+
-+    qtest_writel(qts, pll_addr(0, PLL_CFG0), 0);
-+    qtest_writel(qts, pll_addr(1, PLL_CFG1), 0);
-+    qtest_writel(qts, pll_addr(2, PLL_CTL), BIT(16 + 2));
-+    qtest_writel(qts, pll_addr(3, PLL_CTL), BIT(0) | BIT(16));
-+    qtest_writel(qts, K230_SYSCLK_BASE + 0x000, 0);
-+    qtest_writel(qts, K230_SYSCLK_BASE + 0x050, 0);
-+    qtest_writel(qts, K230_SYSCLK_BASE + 0x108, 0);
-+
-+    qtest_system_reset(qts);
-+    assert_pll_reset(qts);
-+    assert_sysclk_reset(qts);
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/k230-cmu/reset/pll", test_reset_pll);
-+    qtest_add_func("/k230-cmu/reset/sysclk", test_reset_sysclk);
-+    qtest_add_func("/k230-cmu/pll/cfg-masks", test_pll_cfg_masks);
-+    qtest_add_func("/k230-cmu/pll/ctl-write-enable", test_pll_ctl_write_enable);
-+    qtest_add_func("/k230-cmu/pll/status", test_pll_status);
-+    qtest_add_func("/k230-cmu/sysclk/masks", test_sysclk_masks);
-+    qtest_add_func("/k230-cmu/sysclk/update", test_sysclk_update);
-+    qtest_add_func("/k230-cmu/sysclk/spi2axi", test_spi2axi);
-+    qtest_add_func("/k230-cmu/unknown-offsets", test_unknown_offsets);
-+    qtest_add_func("/k230-cmu/system-reset", test_system_reset);
-+
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 56ff860e21..9f5c46e0bf 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -297,7 +297,8 @@ qtests_riscv64 = ['riscv-csr-test'] + \
-   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
-    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
-    ['iommu-riscv-test'] : []) + \
--  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
-+  (config_all_devices.has_key('CONFIG_K230') ?
-+   ['k230-cmu-test', 'k230-wdt-test'] : [])
+ /* --- public helpers --- */
  
- qtests_hexagon = ['boot-serial-test']
+ static const Property *qdev_prop_walk(DeviceClass *cls, const char *name)
+@@ -1158,8 +1212,15 @@ const PropertyInfo qdev_prop_link = {
  
+ static const QAPITypeInfo *qdev_prop_qapi_type(const Property *prop)
+ {
+-    /* this will be later extended to cope with QAPI array properties */
+-    return prop->info->qapi_type;
++    if (prop->info->qapi_type) {
++        return prop->info->qapi_type;
++    }
++    if (prop->info->element_info) {
++        assert(prop->info->element_info->qapi_type);
++        assert(prop->info->element_info->qapi_type->list);
++        return prop->info->element_info->qapi_type->list;
++    }
++    return NULL;
+ }
+ 
+ void qdev_property_add_static(DeviceState *dev, const Property *prop)
+diff --git a/include/hw/core/qdev-properties-system.h b/include/hw/core/qdev-properties-system.h
+index 2cbea16d615e..819dce7d5e5d 100644
+--- a/include/hw/core/qdev-properties-system.h
++++ b/include/hw/core/qdev-properties-system.h
+@@ -23,6 +23,8 @@ extern const PropertyInfo qdev_prop_fdc_drive_type;
+ extern const PropertyInfo qdev_prop_drive;
+ extern const PropertyInfo qdev_prop_drive_iothread;
+ extern const PropertyInfo qdev_prop_netdev;
++extern const PropertyInfo qdev_prop_netdev_list;
++extern const PropertyInfo qdev_prop_reserved_region_list;
+ extern const PropertyInfo qdev_prop_pci_devfn;
+ extern const PropertyInfo qdev_prop_blocksize;
+ extern const PropertyInfo qdev_prop_pci_host_devaddr;
+diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev-properties.h
+index 1ea2ba66bb37..0c067170079d 100644
+--- a/include/hw/core/qdev-properties.h
++++ b/include/hw/core/qdev-properties.h
+@@ -35,6 +35,8 @@ struct PropertyInfo {
+     const char *description;
+     const QEnumLookup *enum_table;
+     const QAPITypeInfo *qapi_type;
++    const struct PropertyInfo *element_info;
++    int element_size;
+     bool realized_set_allowed; /* allow setting property on realized device */
+     char *(*print)(Object *obj, const Property *prop);
+     void (*set_default_value)(ObjectProperty *op, const Property *prop);
+@@ -75,7 +77,13 @@ extern const PropertyInfo qdev_prop_string;
+ extern const PropertyInfo qdev_prop_on_off_auto;
+ extern const PropertyInfo qdev_prop_size32;
+ extern const PropertyInfo qdev_prop_array;
++extern const PropertyInfo qdev_prop_uint8_list;
++extern const PropertyInfo qdev_prop_uint16_list;
++extern const PropertyInfo qdev_prop_uint32_list;
++extern const PropertyInfo qdev_prop_uint64_list;
++extern const PropertyInfo qdev_prop_string_list;
+ extern const PropertyInfo qdev_prop_link;
++extern const PropertyInfo qdev_prop_link_list;
+ 
+ #define DEFINE_PROP(_name, _state, _field, _prop, _type, ...) {  \
+         .name      = (_name),                                    \
 
 -- 
-2.43.0
+2.55.0.543.g5ebe2ebe4ea8
 
 
