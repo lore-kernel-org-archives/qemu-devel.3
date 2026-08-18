@@ -4,145 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67445C5DF74
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 02:27:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B593FC5B572
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 02:27:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww9Y6-0001sL-JI; Mon, 17 Aug 2026 22:27:34 -0400
+	id 1ww9YA-0001sp-Pm; Mon, 17 Aug 2026 22:27:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
- id 1ww9Y4-0001rW-UZ
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 22:27:33 -0400
-Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
- id 1ww9Y2-0000Q9-Md
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 22:27:32 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Lm2yxW3pjw3qNmvjO8f80grpAjsHH6vZp/cigRRlF4gy+GNKQeDQIkC+vsRz01QQds9FPpSwmKx4YJIuR00o4qWdamMZtJkBchV8hooEVKzDjN8Rs4HjcbTAMQ0n8w94hQBky2n8Y1DScHDza/uEWktzLKNeh3PSkDNZWnfQi6v++tcrKCvHmeXg+Ub4egShNYLdSBswC+0Dv8fKhWfckx7HKSfnKraUYg4iIRABHfrQfA7KR9xyO6BzO07JKG0G4fK/S7gSGaD2oTPyE7lJliXU8aJTkApe0PyL6Iz4mu38p4aZeh9pOQf6wZl30sgEFROaixsU8ETnb6Uw42kLzA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=b+Axb70i3Bfef/taM3rZOCmK4bHxcFXLUNjTc152p4Y=;
- b=VRqEw91M5UxBPVuYnmWUjEpWLDd+R4Th4fV9TxclaHeEAk40DXCvpVGi8IKmwAyLj6Eh9dscVlpo/9RPBM1ToYr2m8LigUZkPMu9PiKQFNn9TTxZbts0IPcj7BSOJyr/ObR7dtc+nCKbLO3LDXDJp5YSM7Iuk1x00MuhuUTsBpynfbqB77SVDe4VH4Q2OwO9nlHuCgjLIuwRMI5dqFhH6f1G7UgxFWkWeRirjnvVDvodA2kczDzN5WwY/gtpQwDl8UibjPSf4lXG+yTGSc1hsX8jjWi7YAFAoUEOXJsKo7RGk6HYTjiaSRyVcuqZ9hfpC3h2NOYCDfg5RiLwbpkrXw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=b+Axb70i3Bfef/taM3rZOCmK4bHxcFXLUNjTc152p4Y=;
- b=O3y6FsG1LW+3Ce2UG6A3jB/3hN2wLHbC7Vc0I2rcRcIg59i4LBwub83aiyH94HFTAMzdJvh9ZcMHHGj4G/KECRmROVBBcqZ04f6Pv/BxmsfrcQIHZ0tSzN6J1ajuhU2JjXMTd2yqZJtRjEvgAT1+/L9kxnldQ0SNsYw3MQCMIQA=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CY8PR12MB7170.namprd12.prod.outlook.com (2603:10b6:930:5a::18)
- by DS0PR12MB8814.namprd12.prod.outlook.com (2603:10b6:8:14e::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.14; Tue, 18 Aug
- 2026 02:27:23 +0000
-Received: from CY8PR12MB7170.namprd12.prod.outlook.com
- ([fe80::7565:bdd3:383a:de5f]) by CY8PR12MB7170.namprd12.prod.outlook.com
- ([fe80::7565:bdd3:383a:de5f%6]) with mapi id 15.21.0315.016; Tue, 18 Aug 2026
- 02:27:23 +0000
-Message-ID: <0e223bf3-df75-4ebe-966d-44c13e273586@amd.com>
-Date: Tue, 18 Aug 2026 10:27:14 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: About new backend for GPU compute ROCm in qemu
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org,
- virtio-comment@lists.oasis-open.org, dri-devel@lists.freedesktop.org,
- virtualization@lists.linux.dev, Honglei Huang <honglei1.huang@amd.com>,
- Huang Rui <Ray.Huang@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- David Airlie <airlied@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-References: <ba0b1bbf-5ebf-4ac3-9f7b-8740e3bc283b@amd.com>
- <ea899a6b-0a59-4a9c-9e81-3ed70711da59@rsg.ci.i.u-tokyo.ac.jp>
- <78f0583f-93c0-4374-ba37-fd36f6388f0e@amd.com>
- <87pkzgsu2z.fsf@draig.linaro.org>
-Content-Language: en-US
-From: "Huang, Honglei" <honghuan@amd.com>
-In-Reply-To: <87pkzgsu2z.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: TPYP295CA0042.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:7d0:7::20) To CY8PR12MB7170.namprd12.prod.outlook.com
- (2603:10b6:930:5a::18)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ww9Y9-0001sY-K6
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 22:27:38 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1ww9Y7-0000QS-Tx
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 22:27:37 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2d032846c95so59267275ad.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 19:27:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787020053; x=1787624853; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ELNuMkobl3J9Ou3FC69axO7mIx0GREEJA4juCJ8mKE4=;
+ b=BuBEe680uik7WzKCggVUFI7/sbIbItcz/HRHXwbisBXn8aTvaSjcu8rqSTiTQZyyrv
+ Wk6baKEi8FmIeKgsDBnAZUa5+hIC0krCfOqrEQbxysqS4oxRFhdIDSCXid3s8WSBoRAy
+ 3cexfquuqtK/gKwdQgERpq5pOaWQY6bL42m/oPb/+uc8e77kn2OhyPifLWeAQ4mqOaSi
+ ZX26t7f4TAZbiI3K58+/wp0qyEqSWIPYxhC/EWveNh6HQjvitfKGDuZyb+OdByz5SUiy
+ HKj5jX74Poq/0SDEGRW8fpCiqVcxftgmLvRig5mwz14BAsy8Jo1/PbztOO1GRIM6a1Kf
+ nz5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787020053; x=1787624853;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ELNuMkobl3J9Ou3FC69axO7mIx0GREEJA4juCJ8mKE4=;
+ b=fkNRGzr/oTY+K8QoNhrQzOle+5k0lXZkJoAWgrv1/AllJf7YGlfaEMA2oWklceGe98
+ HdrSRJte3EhJ+6Uf4lm9Shia39N+fIXebShuANODA7BRvCaAaOBwvSzPRFzggx6xX5Ee
+ SkMjBPlkag+E0hebiwedC2AO6Y1rjWkmhEffsNyo7zS3P6WX3gmwkMV8Dl7qs/wqffAp
+ I7nkrpgBfaUkelIsAnNxV65W53BgLulhakUoXnjwBtfjREmHfeuVSShwNtGgJ0v5n7rC
+ lsFTtbYcQD3wYa43yiFJZkC0wREmHwELpFMpYx4kKAmXCtRSfx1J8mua6s7JbOEab1Zs
+ E7YA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoP18xqaUvLSjR4KCOjHy8is+ivtPvpLWNxWKjD8l5XjlT4UmBBJfMFSik06f+H5MoaLA4balZvReY1@nongnu.org
+X-Gm-Message-State: AOJu0YzEYu7TIj9ngltVaKcESEniDmFdnPbhLvN/6xgO3PPlY/NRJq3K
+ 1FJpgZDOPDxe0gwJh99GoVa3DXZS39yhe2hvLy7qhqMV7jC7FnGDIEkeHunqZMJ0Hm3cNZmW/pW
+ myto/
+X-Gm-Gg: AR+sD113oppQpAfSU0xVu5FH+MlTva0iw374ccP5I4qQ5Tqn2bxtMKxQ1pUh1RvaP6V
+ mlhjpUWhc4hZ6BaLeXm7/e9GrNo6TN9YtI6wd/OlrsCsKx4+kNSF4rjvUnBAAIrivM+yP8e85Y3
+ p5/ixaBG5orkT6VfyobrZZOooIPwKMAoaETWgutm/POSRHf9KjVWefGo7lLmRNf24UDCqMuifpH
+ U4wLg/y/hH06Nf9ekbNkEhaS9o8pxBAqdOBGcxWzeS2MsttIVM9qA8sJUBIWa0r6XSuIH+aYHgo
+ mBOmbU2KofVcvQxt1PDwgbweMCneLbQl36qXKsA3mJ91FpcvxXAKJb42Fb6XkyYzskg6L/mN7XK
+ 3EV4cO7SESV2FDqR9LBFQ2nW0V/9L7wEKUsZnhOwOHLMHd8xs5zINxzXyffxQ8Yv2Y60qoF6yOb
+ 8NE5E9krwos3zBIuOlubeZCDMn/NAYWxjNAU9yCsa882sHYIhuv9WHCyr4VNc3fEsSXK6V+jtsK
+ 2ol1pI4gnNRWG2TIGzmvmVGIT2pqhhpuNfPrfxQZkx3mJE=
+X-Received: by 2002:a17:902:cf07:b0:2d3:2e86:647a with SMTP id
+ d9443c01a7336-2d5c4f07dd0mr62947335ad.5.1787020052812; 
+ Mon, 17 Aug 2026 19:27:32 -0700 (PDT)
+Received: from [10.213.131.227] (c-73-181-156-132.hsd1.wa.comcast.net.
+ [73.181.156.132]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2d5c1e91348sm8978605ad.58.2026.08.17.19.27.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Aug 2026 19:27:32 -0700 (PDT)
+Message-ID: <49c4ddab-ab0e-4378-a69d-3e74a5216c35@linaro.org>
+Date: Mon, 17 Aug 2026 19:27:29 -0700
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY8PR12MB7170:EE_|DS0PR12MB8814:EE_
-X-MS-Office365-Filtering-Correlation-Id: 68832a43-8f37-4029-88bf-08defcd03c2c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|7416014|376014|366016|1800799024|4143699003|3023799007|10067099003|6133799003|11063799006|5023799004|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: jkaMO/H8+rfuYhRCW3lF6w7zuaqM6CEG/6dWdQE1WvcoKCK5UJqobKj0mVXX/LGkSYZ/YmpEGCRyyT6vWhwNDXDugy+BKcjgNUKWNkLTSg3n3sm5zJ+h4WvP3MXEixhuVgRCPU3n/ss+Mad8lENXe5pP3L9iNoOSRaphNT3BOuVls8AQrfjm6dO5aiDvGKd7TxDMIZY2cRyxDjmCzKiijhcPWL6G2+2qqMUU/BVFQEwQO4CE6jTbBJkhiyPECGXlrAUWpUA+71u9uYwElQstqYpdhD3YXTvKB3xM+qCh6+Q5iLprSurbR/bfk3mhHd6wlMN2+PhX9zVGGFSxBTds2L2Wbt0UwQJkQ6orZSsWXVPsDuGzOHDjXIhzJAytSFQsHAOk8GlUs+c/bhErXu/BHvAWw3EW0W+TWZjFqw3kH5/sGiJ4U0/c3LNBna8sdj0seCc3nsmbzNCuC09hE89ysVF28ug46hiBe8lHnRpbEGC7mOINFx/iSj9MJVd8Te+RquW8MnYjF0PYjoiTE99HI4z3BlDUA2K9VeIZ1XizNXl9apMy2r2FxizghKxqDt3UX2s+Fxstfr6NrtRpnOzsDzPnzC6gtkxVWGtBF1qTjC3AMD4wKFOTOT5/xDvMOlKr
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CY8PR12MB7170.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(7416014)(376014)(366016)(1800799024)(4143699003)(3023799007)(10067099003)(6133799003)(11063799006)(5023799004)(56012099006)(18002099003)(22082099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UGRtallHalZDTkpTWlBDL1ZHTDAxd3hheFlXZ0loTDlybDRGSUdFWktxQ1ZG?=
- =?utf-8?B?Tkk5MzNJMll5bWtvdk1Vc3ZqWTdPMXI5OGJEb1hheU1tZmQ2WUc2MmJMTTZt?=
- =?utf-8?B?NUQ4bUYwK0JGM1Q0TEZsb3JnVldCZEdSMExubmFTczc2QUdLRUgzSzJENzZF?=
- =?utf-8?B?WFFaVmhlNEEwdHVHMTMvdEhFNDdGT3dWNGtLTDUxZU5pZWd2dFlka05CeVcv?=
- =?utf-8?B?SGJIaGtlU0Q4L2hMalpKRGxOQlUyRCtZWFhScTFUUkRyaFI4dy9neTFkdHpm?=
- =?utf-8?B?U3hjQnYxRHVnMkhESCtZeTVvOWxmeVRYOGRUVU9XK3FTN3J1Q1daU2tkeURK?=
- =?utf-8?B?bkUwODBFcEVKeitVUEVNOFFIVlJ6eCtQMVlKWmYyK1QrTXU1QVVkd1AySXg3?=
- =?utf-8?B?NzB2MWlwTXo3RTNLMzh4eXJoRW10eTZOdDh0YUZsdXE2Tng1U2FMSXpCeXNJ?=
- =?utf-8?B?OWd4eURxM1FMNTRHMWc4V2dTWWJOaDI4MklrQVRZZXpEeEFsK3B5WHJPUisz?=
- =?utf-8?B?QzNBYXFNVTk3bE0rR3VMeERsSVBZdURlV1dYY3FHcStCZkdzelQzc2hnVzlW?=
- =?utf-8?B?azcxTU8xSElJcGkxVVc0SlJ1cG5pRkdNVE9vK256Nk93RjV2d1FVT3RHVGlM?=
- =?utf-8?B?RXdaamVJY3FiT25JdEE5M1VsT1hkaVBWMW9YWHF0NTFTN1RSQmZxRGpmTXAr?=
- =?utf-8?B?OWwySzhPUTZQOERMZHdJY0I4NW1iLzBPMUtRdGNtSnpzM01LVS8wTThMZ3JQ?=
- =?utf-8?B?UGkvdnZIUno2OTN1eWwyalJzODBFZno3cUdyVVYvWnhVbWhvajNFcW9BOHl4?=
- =?utf-8?B?N0lZdmYrU1hWckpDQ1E0UXpOcktMMzZIVC9ES2xCenBHTFlyK3hDZGVvb3BJ?=
- =?utf-8?B?NUs0L2sycEhLZ1ZFQ00rTTdFUmFlQmYxcGZCYTlva0tFbU9FMjVPa3NGMURF?=
- =?utf-8?B?b1huVDVEUmlEeVBHTStiK2d3Qkd3R3d0MUhLSDZ1bStyV0U2MGJyaGJoTVpN?=
- =?utf-8?B?Z01zMGlzcDlPS1BVYWxiRzJDMEFKZndGSzRLNGtEMTVBVjlSZmZQM1ZiWlVS?=
- =?utf-8?B?L1VSQVFPOERMR05HNkVxaWdpVGI2RHF2SnZvTEFUV0lERXNyQ1BJVDZoZlhX?=
- =?utf-8?B?a2ltQTY0RnN6UmJ0MytZTHZQVjVtZ1B2ZUNkMnlqWGhwcTVuVSszbTdvUkQz?=
- =?utf-8?B?c3E4MFdkbFpoYllaTU5pVFBFS0UxZGM3WjdPQVd2RFZNbGc3Zm4raUIzNXEy?=
- =?utf-8?B?ampKUUhZRmN2Y2hZOG0xNmJqbXRpM21DTVJxV0JRR2x2bEJsM1RCbmswNWNw?=
- =?utf-8?B?TmV3RGVkSXF0RjBSaGg1dFpxa1N6YU8yOFJyaWFmNHJVdHNKbkVGSUsvNlpn?=
- =?utf-8?B?MklzQjllT3hScU9wQmQ0aTU4WjhGMUJuaGN5aU8vWlp2NGFqSzNEMmQ1UWd2?=
- =?utf-8?B?bm1jVDJyY0dUM0VTODRKU3FYZ2NWSlpPUzhtcmg3RlN4RUIyenRRajJTRmlD?=
- =?utf-8?B?SXYyT05VVU1BcjBzRFhkUEpjOHM5c2RwR3J0NVZBdjVrNDFDQWsxOE9vSTB3?=
- =?utf-8?B?bng5Rittb0xSU0dsV1lGaTRLSWUwS2ZYcFF5dDczZEJrT3FkQ25OeE45MHJS?=
- =?utf-8?B?NHQzTFN4aGNiYVFpRjg3QkRTSHU5RU9mMDRGem9mK1dKZ09hVWV4VHpSMHI0?=
- =?utf-8?B?d2tqN2dJWVZ5K05DbmF2YVBGUDdyQUx6ZnRQcytSd1NQNGNYbTVKS0k4d2Ir?=
- =?utf-8?B?dTZjSWt4T2JaTHF0L1hNWTJhQkFoVmRpUFRWUWZBWm43NnBidmMxdjdCekhx?=
- =?utf-8?B?VktVeWZRZnpyS251VEY4M2hicm1FT3BDclRHS0YrVXovL041WVdqNDI2Q1Fs?=
- =?utf-8?B?emJlcDh0REtibElWWElRT3V2ZStVcXZxYlhpcFVmbWhJQTV1Y2dXQnYxb3ZP?=
- =?utf-8?B?REZHcFZKNVg5MVBFTXp0dzBKa2tnVWo1MmU1Rmx0R3dmNHJKVzV0K0xlYURv?=
- =?utf-8?B?RzV3aFZEWnZmRm5SOWN4bzkyZTljV3hqTkZQa0xwWkxGS29IR01HWHp5VVlm?=
- =?utf-8?B?R2t6ZDFPVGsvLzFjeFNyeTkwRVByYzVOaHBNK3I1L2IrcW5wN05pV0VIK3RY?=
- =?utf-8?B?MVdyRzlacHU3YUlpM1ZhaDU5K0VCYjdOZFFRVG9maTZXVUFTMlBscmlWcXFw?=
- =?utf-8?B?eTdsL2RpamFaMGp2b3gvdFlNOVY0RG90dWl5NHFoNk9XMmlPUkZLbHc0VmJS?=
- =?utf-8?B?eXIxbUVLOHozRDdZTkRJbUcrWE9URXp1dnhSRzFrZ0V3RmhaVGtsUHB0dmcx?=
- =?utf-8?Q?tslHvv8XeZaMa4rtF2?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 68832a43-8f37-4029-88bf-08defcd03c2c
-X-MS-Exchange-CrossTenant-AuthSource: CY8PR12MB7170.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Aug 2026 02:27:22.9103 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: gHibdJzAsVmYZ31aPusH0hstAOSRZ1p+IKXHO/1nHTL7yb3+AsafoFXl3+OcMXO4bAunBvgbQvHzri8yrMl2sA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8814
-Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
- envelope-from=Honglei1.Huang@amd.com;
- helo=CO1PR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/6] block: jobs and dirty-bitmaps
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, den@openvz.org
+References: <20260817192948.1743452-1-vsementsov@yandex-team.ru>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260817192948.1743452-1-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,118 +107,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 8/17/2026 10:24 PM, Alex Bennée wrote:
-> "Huang, Honglei" <honghuan@amd.com> writes:
+On 8/17/26 12:29, Vladimir Sementsov-Ogievskiy wrote:
+> Some fixes and improvements around block-jobs and block dirty-bitmaps.
 > 
->> On 8/17/2026 7:44 PM, Akihiko Odaki wrote:
->>> On 2026/08/17 12:19, Huang, Honglei wrote:
->>>>
->>>> Hi Michael, Alex, Dmitry, Akihiko,
->>> Hi Honglei,
->>>
->>>>
->>>> I'm bringing AMD GPU compute ROCm based on virtio. I posted a ROCm
->>>> over virtio
->>>> implementation to virglrenderer nine months ago (MR !1568 [1]). The
->>>> ROCm side has
->>>> been supportted by ROCm offical.
->>>>
->>>> Current implementation is a virtio gpu context type capset handled inside
->>>> virglrenderer, sharing the display path. That's an awkward fit, many
->>>> compute GPUs have no display engine at all.
-> <snip>
->>>>     - that instance served by a separate ROCm backend library loaded
->>>>       in-process by QEMU.
->>> First, I think we need to establish why ROCm cannot or should not
->>> remain
->>> in virglrenderer. The virglrenderer, Venus, and VCL maintainers are
->>> likely better placed to advise on that boundary. Once the protocol
->>> requirements and performance measurements are clear, we can assess the
->>> appropriate QEMU integration.
->>
->> venus is borned for GFX.
->> virCL not merged.
->>
->> To be clear, I'm not saying virglrenderer can't host a ROCm native
->> context it clearly can. My hesitation is more about fit and direction:
->> virglrenderer has grown up around GL/graphics, and I haven't yet found
->> compute oriented plumbing there to build on, while ROCm moves very
->> fast and I need something I can keep current with low friction.
+> The following changes since commit 9696bf5dc5a5bf0b4a9d05b6cdfe5f13990f97aa:
 > 
-> I'm unsure what the current development status of virglrenderer is but
-> it does see a continuing stream of merges. However the threading model
-> does make things tricky for QEMU when we are sharing lifetime of blobs
-> between QEMU proper and the virglrenderer thread. Perhaps there is a
-> better way to organise things?
-
-Yes, agreed. ROCm has no render thread of its own, it uses user-mode 
-queues So, I think there's a better organisation.
-
+>    Merge tag 'hw-misc-20260816' of https://github.com/philmd/qemu into staging (2026-08-16 08:17:47 -0700)
 > 
-> Could we do the marshalling of VirtIO GPU commands into ROCm directly
-> inside QEMU rather than going through additional plumbing? 
-
-Yes, by "additional plumbing" I take you to mean routing through a
-virglrenderer style renderer ( extra thread and blob coordination).
-Yes, I'd drop that. What I'd keep is only a thin in QEMU backend the 
-9pfs/cryptodev kind of pluggable backend, not a renderer layer which is 
-what lets QEMU own the blob lifetime directly.
-
-
-> Are the sequences we need to handle more or less complex than your general gfx
-> rendering? How might this work with other frameworks?
-
-Simpler, I think. ROCm has no render thread. It uses HSA user-mode 
-queues: the application writes AQL packets into an in memory ring and 
-rings a doorbell an MMIO page from the GPU's mapped straight into user 
-space and the GPU's hardware scheduler picks the work up. Nothing on the 
-host translates or dispatches a command stream the way a GL renderer 
-does. Completion is an signal: either an interrupt backed event wait, or 
-the CPU polling the signal value the GPU writes to memory. So the host 
-side is closer to an ioctl proxy (create/destroy queues, 
-alloc/map/register memory, signals, submit); the hard parts are the 
-memory stuff you raised and the async event/fault channel.
-
-For other frameworks, I think we can keep the device generic, user 
-queues, a shared memory, events with the framework specific marshalling 
-in a small pluggable backend. AMD is unifying queues in DRM, allowing 
-devices to use user queues and event like mechanisms, which will greatly 
-simplify device emulation. It also may affect the NPU. I think that 
-graphics may use the same mechanism in the future to avoid complex 
-synchronization issues.
-
-Regards,
-Honglei
-
+> are available in the Git repository at:
 > 
->>
->> Regards,
->> Honglei
->>
->>
->>> [2]
->>> https://developers.redhat.com/articles/2025/06/05/how-we-improved-
->>> ai-inference-macos-podman-containers
->>> [3] https://www.qualcomm.com/developer/blog/2024/10/vcl-virtio-gpu-
->>> opencl-driver
->>> Regards,
->>> Akihiko Odaki
->>>
->>>>
->>>> That reuses the existing pluggable backend model, a second virtio gpu + a
->>>> backend library. It doesn't add dedicated queues for
->>>> debug/profiling currently.
->>>>
->>>> Waiting for reply and  happy to share more detail. Thanks!
->>>>
->>>> [1] https://gitlab.freedesktop.org/virgl/virglrenderer/-/
->>>> merge_requests/1568
->>>>
->>>> Regards,
->>>> Honglei
->>>
+>    https://gitlab.com/vsementsov/qemu.git tags/pull-block-jobs-2026-08-17
 > 
+> for you to fetch changes up to dc04053687ec7219a78f9b90fe2f71c9336914e1:
+> 
+>    dirty-bitmap: fix integer overflow in serialization coverage (2026-08-17 18:32:44 +0300)
+> 
+> ----------------------------------------------------------------
+> block-jobs and dirty-bitmaps patches
 
+
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.2 as appropriate.
+
+r~
 
