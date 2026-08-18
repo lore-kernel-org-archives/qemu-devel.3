@@ -4,110 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8720C5DF7E
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 15:33:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5652C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 15:33:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwLoU-0004iN-9M; Tue, 18 Aug 2026 11:33:18 -0400
+	id 1wwLoc-0004ld-HJ; Tue, 18 Aug 2026 11:33:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wwLoS-0004hv-DZ
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 11:33:16 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwLoa-0004je-WB
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 11:33:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wwLoQ-0000zs-R9
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 11:33:16 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwLoZ-00012n-Cm
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 11:33:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787067194;
+ s=mimecast20190719; t=1787067202;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Cu81btROC+enlNAFhqB95EUDWsj7/CcXnv/8xnZplsE=;
- b=AIKg19/od0zCp0B/LRASlRkPVHkmY8wOCBzdDvy8wZx9j3nuPhF4dUYAZwvmj6r6rJdDsF
- LDGbTnfaKZw7AQpgdV/D7xTW9wMN7WS+cPLmyNCSTrCicOy3BRZ8ooEjjA5fkam9o6MQjF
- z4UtLXZ+dE3wa0IGijvKccQ24pGobEg=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-412-VKHvghhxN-2f9Z_tAxPN6w-1; Tue, 18 Aug 2026 11:33:12 -0400
-X-MC-Unique: VKHvghhxN-2f9Z_tAxPN6w-1
-X-Mimecast-MFC-AGG-ID: VKHvghhxN-2f9Z_tAxPN6w_1787067191
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-496bbcf7d1eso37023485e9.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 08:33:12 -0700 (PDT)
+ bh=fFd+rvbaUh4z/4STu4erFgdblKnEjLNZlC/MxBiusuQ=;
+ b=RhOk/vnL40xnnoiC1AgD9kRqLKpwfb0Z7JFNiCtf/NcS4zELXkexLNPYJBXme48zOr2GOX
+ MGCT6aSfnCvzgB/7OHAXzIeuiC6AllcX8r5pp1TuHtLy2CHrY58nuaEN64yPE1yHrGNld4
+ vg935xGD3hIlJcuk5JEXa+YVqmGkjoo=
+Received: from mail-yx1-f71.google.com (74.125.224.71 [74.125.224.71]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-141-e8QKDuTWP16TiiAnXIdFDg-1; Tue,
+ 18 Aug 2026 11:31:49 -0400
+X-MC-Unique: e8QKDuTWP16TiiAnXIdFDg-1
+X-Mimecast-MFC-AGG-ID: e8QKDuTWP16TiiAnXIdFDg_1787067109
+Received: by mail-yx1-f71.google.com with SMTP id
+ 956f58d0204a3-66cc65a15dfso139221d50.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 08:31:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787067191; x=1787671991; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Cu81btROC+enlNAFhqB95EUDWsj7/CcXnv/8xnZplsE=;
- b=sNMOZZd1jdtDed8sPdfduIfxgGbp8QDke3GenpsSCUt925xlhupDclVQbqbFQQsso1
- hdSpBwCMGkTqlLTNlsLuUDCrmo9RM/qsb9rbo/UhrASDewsrUqKCQbuaXV+w7I0S5JMy
- HaRRlmshvwjZTlC3fDZXzvaBkjOECuH+aOuInjqZxSYVqJ4Ofx8A6khY5M62PWWk89/c
- RywkyRL6T29U8RJm71aYAN4GqJMkOCZ8zsYGfX2rviRxlEbsBFSsqxTF3UtTGkZ7BK7e
- erk1enGk7h5/VLOc3NbDgmScWNvUgbQiVSUQDyRDsLFgA/TJDS+JwEMiRB4CabPrV0DC
- dlug==
+ d=redhat.com; s=google; t=1787067109; x=1787671909; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=fFd+rvbaUh4z/4STu4erFgdblKnEjLNZlC/MxBiusuQ=;
+ b=ZvSc2+JoRKrcfy64304TKp4fqCapf/KXYxe4+XnE1MDz2JjykV4cFPK6E/kSv9HT2j
+ TLQJ7HgSLZsU13nmQqQlZHl/H8AQhXBJ9JtW5t0NexcYPjudz4eMyGH/bk7iuxSVCBAt
+ 1eoOwNOentxrmXxxSHTAG2qKgsQSjQo52j0Y9YgRNeWNyYIS8Y3N8rvGl7eiQuaF07oc
+ JH4SIYN0DrJSQJ19KGpYLJbas4EGCt9vZLH8DMQGGokARHpffrEXAdQfoLxf1+ZfsI/B
+ HNPgths4eVAuGWggm2b9GA1+1YQdzaKqcL//OmZjvApAgrSqV6NEWP82WCGAI2m9ugDa
+ FBUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787067191; x=1787671991;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Cu81btROC+enlNAFhqB95EUDWsj7/CcXnv/8xnZplsE=;
- b=kW1YtONoPl+9oEdmOpsUVWUqYGpwpTFh6y8i0z+1lWzMGj5WBnzZ0zOfnSZ1NmpLUz
- uGPcZPrVzSXe78aTxFUtTEXfoAvjrMkR+F4B2Yyf7EFUIaLT9l7XJ8F4lXyDHltkai4k
- nGC7FfRbxgjDwjIMftglXTf87l4+IbH3TiZjl17Pi9K7aZAKi8l4bWuROKLtbOR71l0r
- BTK8Eh0fW9nwFGQ1XwUO4SScBQydN5OSfcu/ll9Rg004MjgTQc41N9B5kBprVCQJmjdl
- qU9eYPawN+2oEcCl4VJrzusOJU9ApSgDNrgkdqot8vMmpflbeVOryCe/VELhzoUksCf2
- F9Pw==
-X-Gm-Message-State: AOJu0Yxi3KufEO8joG+WdfVt9OampxevLoowes1RwLenghbfrBfor/4J
- Jv3InAIUJeOVRrL8Vr/ijX6+kE/ERaIHmb6GxMqNj4cb1P+Cnud7DixW2E+SLdhogJ8yCrYF9/p
- KqLxhSbosbTkCbTS7F/z/RKEqA5SiAAOZIsWwGMLGjFEcYWcWDuEAOcz4
-X-Gm-Gg: AR+sD12adcrld2kOLExuTQqsf5HplNyVnF61Lh/0hhCW6h2aQlc0YulLg6NmWoPPkGn
- g8xOXt+4oDn2oPJd6l2kIAirVkYQJ5xFwparu68t1gaGRM3VIoqMnqisivJvIRN7jCredKd1nSN
- 1njkNpRDgolPUc/n9QWZIhEbeA4fBeS8Z5qvl08Ci5q0qtKlABGUNf2zhP2Qk6HSNL6nwRE/dNm
- GwD+qRGU/rUDBxJrU5SfdRJr2HVNa/fVgeWQrWrg2F5gNt89y/Hdk068J5N2rH7ruxarASZ0hB7
- p4N99PvKlpIRvhA8eRwO8uC+Pb6231zsRIKVpUJFAEz8dB98u9yNq8Urhv10fdnI/BidmrtflDT
- tSigAzudxIYCuEi+25E58WT2XGVn4WKyT6mGRMulN9mWAKuDnc5OU
-X-Received: by 2002:a05:600c:8b6b:b0:499:8f9f:e9ee with SMTP id
- 5b1f17b1804b1-4998f9febbdmr485066675e9.7.1787067191128; 
- Tue, 18 Aug 2026 08:33:11 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b6b:b0:499:8f9f:e9ee with SMTP id
- 5b1f17b1804b1-4998f9febbdmr485061085e9.7.1787067189283; 
- Tue, 18 Aug 2026 08:33:09 -0700 (PDT)
-Received: from sgarzare-redhat (host-82-53-135-154.retail.telecomitalia.it.
- [82.53.135.154]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4998777caebsm357455665e9.0.2026.08.18.08.33.08
+ d=1e100.net; s=20251104; t=1787067109; x=1787671909;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=fFd+rvbaUh4z/4STu4erFgdblKnEjLNZlC/MxBiusuQ=;
+ b=VfqRvhQOVwUtsTppThRCSx0f30T10LP9ez+qmh7Ldvl0rRajHGpueaNMeSnxPrGzbf
+ 6KvIeBTpppyc9B8suIcvLv4whsVSeRrb+yYRZd90AKpT9dgBJlCnRvRBew/Who6T4jgl
+ vdLz5wMiuKWDQfnvyCIdbhIimKEPAe1aGKPZs/MF7Gcrq7AhjgC/N7g/6Q9DkIEK4SNw
+ 16PiyOu7BSrvTJwNkMhIi10odzN4PjP6D2GJEgcQb97HKOtWsin8wIvHoCjffjUAsF1e
+ BMW1obNkHVVcsZ7W5w4yfwhmE/gw0zvcPL6H0oCMbt74TZHU5aycjqCaocPLenUJLim5
+ fGdQ==
+X-Gm-Message-State: AOJu0YwOWj5N6ZmOVpW9ZE17K/YRebdkVusWvZZ71DONzwJAKFl3Zbmt
+ w4rFAGfrDADoTPOQ/sKLGi77AoLIfPneMrvwc9+Ol0HuHtjv7rwN0DjfkfqPGNdCK2UbGHUWvwZ
+ +q7ZytYKc9y/XogU8nOhf8uw6b+6B1TCGCF3eFOTNs6Evk4okWSHRjJwu
+X-Gm-Gg: AR+sD13NKs9Lb9fB4ZaOHso75oO/nAdYsHePEQCE+VigthMB31iYbdTQ14pqM5YrG/9
+ GpP5TdvUXBOvNT7brjQZB5g6j+Vztzy/0mb0FRlmWWz5lC1pjwsWq25IsvAx0g3Bxp6HEAi9SMk
+ 63e7jiZW8g83iX67PB45EryKdhPyYm/f7kCzHH0ZVwbVikvD4ykJU1Mpkb3VRuFuDlxw7+e/BOv
+ IxYYWdLEXwTjRLSknyENAYC3PXXugjeAZ/7XsiYys2haChJDwdADnK9BGYm32ZSKqCWCrJD7zu+
+ ywrNxWqG5DCISqX8fXypOQ4x7MDgIMIUgLZQbvjByYh96ItaTK2GTJnXKZd/c1jAr/IS
+X-Received: by 2002:a05:690e:4852:20b0:668:94a6:7543 with SMTP id
+ 956f58d0204a3-66cb9cb45bcmr2560510d50.13.1787067108903; 
+ Tue, 18 Aug 2026 08:31:48 -0700 (PDT)
+X-Received: by 2002:a05:690e:4852:20b0:668:94a6:7543 with SMTP id
+ 956f58d0204a3-66cb9cb45bcmr2560444d50.13.1787067107650; 
+ Tue, 18 Aug 2026 08:31:47 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ 956f58d0204a3-66cb4233606sm2477046d50.9.2026.08.18.08.31.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 08:33:08 -0700 (PDT)
-Date: Tue, 18 Aug 2026 17:33:03 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, farosas@suse.de, 
- peterx@redhat.com, dongli.zhang@oracle.com, bchaney@akamai.com, 
- mark.kanda@oracle.com, den@openvz.org, mail@maciej.szmigiero.name
-Subject: Re: [PATCH v3 0/7] migration/cpr: support vhost-vsock devices
-Message-ID: <aoR62LTt0K7oWNb7@sgarzare-redhat>
-References: <20260626164643.2526-1-andrey.drobyshev@virtuozzo.com>
- <ee6fc8e2-dffd-4a93-8501-7894c593b760@maciej.szmigiero.name>
- <f335aadd-1157-4a57-bd8c-18bd6b76582c@virtuozzo.com>
- <dadd79c2-89c7-405a-b2c9-7973c3fe62d1@virtuozzo.com>
+ Tue, 18 Aug 2026 08:31:47 -0700 (PDT)
+Date: Tue, 18 Aug 2026 11:31:35 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH] system: Define ram_addr_t to be always uint64_t
+Message-ID: <aoR619dUn8051pj8@x1.local>
+References: <20260814134035.2733355-1-peterx@redhat.com>
+ <ae8c473b-770b-4aad-8fe9-8951a856c555@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <dadd79c2-89c7-405a-b2c9-7973c3fe62d1@virtuozzo.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ae8c473b-770b-4aad-8fe9-8951a856c555@oss.qualcomm.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,64 +119,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 18, 2026 at 02:02:10PM +0300, Andrey Drobyshev wrote:
->On 8/11/26 5:12 PM, Andrey Drobyshev wrote:
->> On 6/30/26 9:35 PM, Maciej S. Szmigiero wrote:
->>> On 26.06.2026 18:46, Andrey Drobyshev wrote:
->>>> v2 -> v3:
->>>>
->>>> Re-design device ownership hand-off (suggested by Dongli).  Do not rely
->>>> on SETUP migration notifiers, as this approach forces us to reorder
->>>> generic migration code (see v2 discussion).  Instead:
->>>>
->>>>    * .pre_save() releases ownership on the source (RESET_OWNER) once VM
->>>>      is stopped;
->>>>    * .realize() is adjusted to defer device ownership acquisition for an
->>>>      incoming CPR;
->>>>    * .post_load() actually claims the device (VHOST_SET_OWNER);
->>>>    * FAILED migration event callback re-aquires the ownership on the
->>>>      source after re_save released it.
->>>>
->>>> v2: https://lore.kernel.org/qemu-devel/57c9c9b3-d758-489b-95b8-d16c258b9b0c@virtuozzo.com
->>>>
->>>> Andrey Drobyshev (7):
->>>>    vhost: add vhost_reset_owner op
->>>>    vhost-vsock: don't reset connections during CPR
->>>>    vhost-vsock: fix FD leak in realize()
->>>>    vhost-vsock: preserve vhost FD during CPR
->>>>    vhost: factor out vhost_dev_init_backend()
->>>>    vhost: add vhost_dev_set_owner() / vhost_dev_reset_owner() helpers
->>>>    vhost-vsock: hand off device ownership across CPR
->>>>
->>> These patches look okay CPR-wise, so:
->>> Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com> # for CPR
->>>
->>> But the vsock parts still need review by their maintainers/reviewers.
->>>
->>> Thanks,
->>> Maciej
->>>
->>
->> FYI the kernel counterpart series adding VHOST_RESET_OWNER ioctl to
->> vsock ended up in Michael's vhost tree ([1], commits
->> 6236e765f16d^..c7bfb8815d83).
->>
->> Therefore - friendly ping for this series.
->>
->> [1] https://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
->>
->> Andrey
->
->Another friendly ping
->
+On Fri, Aug 14, 2026 at 04:26:39PM +0200, Philippe Mathieu-Daudé wrote:
+> On 2026-08-14 15:40, Peter Xu wrote:
+> > QEMU's 32bit host support was deprecated since 10.0 and removed in 11.0, at
+> > least the system emulation part
+> 
+>   (see commit 372ec46b9f "meson: Reject 32-bit hosts")
 
-Sorry for the long time on my side, and thanks for pings :-)
+The "at least the system emulation part" was almost for cf634dfcd8f that we
+re-enabled tools for 32bits.
 
-I left some comments, but overall LGTM.
-I'm not a CPR/migration expert, so my comments are more related to 
-vhost/vsock.
+I'll reference both commit IDs when repost.
 
-Thanks,
-Stefano
+> > .  Now it's safe to move ram_addr_t
+> > completely over to uint64_t.
+> > 
+> > It should be almost the same as uintptr_t as before for !Xen, except that
+> > on some systems (like MacOS) uintptr_t and uint64_t can be typed slightly
+> > differently, causing unnecessary compiler warnings when use them in a
+> > mixture way.
+> > 
+> > Hopefully, this change also makes it clear that ram_addr_t is never used as
+> > a host pointer in any form, but only an internal QEMU integer based address
+> > space for allocating ramblocks.
+> > 
+> > [1] https://lore.kernel.org/r/d7b2fbf6-f9fa-4b39-8f40-95b7d5d0d8fb@oss.qualcomm.com
+> 
+> With the commit sha no need to link to that thread IMO.
+
+I wish to keep this to provide a reference to the MacOS issue I mentioned.
+
+> 
+> > 
+> > Cc: Paolo Bonzini <pbonzini@redhat.com>
+> > Cc: Philippe Mathieu-Daudé <philmd@mailo.com>
+> > Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >   include/system/ram_addr.h | 6 ------
+> >   1 file changed, 6 deletions(-)
+> > 
+> > diff --git a/include/system/ram_addr.h b/include/system/ram_addr.h
+> > index 129f6b8757..06caca1506 100644
+> > --- a/include/system/ram_addr.h
+> > +++ b/include/system/ram_addr.h
+> > @@ -15,15 +15,9 @@
+> >   #define RAM_ADDR_H
+> >   /* address in the RAM (different from a physical address) */
+> 
+> While here we could describe a bit more:
+> 
+> /*
+>  * ram_addr_t - Offset in QEMU's internal RAM address space (not a guest
+> physical address).
+>  */
+
+Sure!
+
+-- 
+Peter Xu
 
 
