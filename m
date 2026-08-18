@@ -4,144 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82D3CC5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 16:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A79F9C5DF86
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:02:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwN3i-0005gU-02; Tue, 18 Aug 2026 12:53:06 -0400
+	id 1wwNCP-0007MV-MS; Tue, 18 Aug 2026 13:02:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wwN3g-0005g7-JE
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 12:53:04 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wwN3e-00028U-SN
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 12:53:04 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67IE0inv1018155
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 16:53:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 15oSG5RydbZ9Kuh5v9jbMYmWTpnO2a1WqtLbHoqNBq8=; b=Z+r1Vv61tvr3ONcI
- fOlx6/9cfO03rHJw4lsoefcu8rywLbYNRUx0bUVJV/85tS3FIXRnDcJgYLodxBE8
- h6HCThIYnuzYNwdqmVRXL1vpomdie0fD+yv+mJxIyZJqapnQzO1XiBeYN+hZTX9g
- DMKLs7PwHKKcRVhXV/8+4WvdkmcvxiKUcduRMgl7btTtLb1cHBVd6XaNhtxA0Qsw
- df4c2qaC7MkxogcIVjvtI6eDWfdFyjPP3hTrzd2INqcvhKpEXKyMF7XW2S4be8Cu
- sVZaQpseT+9+1qu1kVl5CcC+3TJ4fjoFRAJuoGyEiTTxfhSylnRANAnOPDZitKKv
- FeyPtw==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4qxj16md-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 16:53:00 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-38e22137fb3so205236a91.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 09:53:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wwNCO-0007Lf-L3
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:04 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wwNCM-0004cx-Qg
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:04 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-84f3ab8750cso163344b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787071979; x=1787676779; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=15oSG5RydbZ9Kuh5v9jbMYmWTpnO2a1WqtLbHoqNBq8=;
- b=PA2tZmxlYsT3VTkq2Rtp1h9Hn2AhxbW7v0x/RgRXdSe8ivD9ThoKNQTzNhw+xW7eW3
- UfhHOJqsvnuZvVmhaEH7kzzjGiQ534ecPVWomHMFLLPvGaY0xqq7d+sItFBAlS3jcQUN
- 4UTeFx9kZoyCS3XmnprMV7ZGlv73+wiP0VLieRUPOhXcuO60lmkvG0ggTlFzbYkG5Skw
- 512mbqs1VlEs3wLnFeX0hqHUxVqEtk50r3n7h6MHkab1O3IApb2XbUFgZT0Zlo3Ws/aL
- 9fqdSVMGUIM0I0F/pwgz5L482Gst4tYEcdt53Sxye6Se3oiP2Jacoj0DMxZLnzOlA84W
- 6PSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787071979; x=1787676779;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1787072521; x=1787677321; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=15oSG5RydbZ9Kuh5v9jbMYmWTpnO2a1WqtLbHoqNBq8=;
- b=N9iBbZIi2gsRKlMiKTx3VjbmdLxAF06Pm2wUK2ZoX5uAb7Fh5l0I6KPMWaytf24H+R
- TVIp8XbKy7wda+ZhUtpHY0WaODCG6IPYfQaiLYAHaasXsi4aS1OTWgZBNpxHyK8Pgh9J
- fPsNuOqrvT2LiDlEETcQrAef7y/QUA8gtek+lGjyfA/UUnP4OaIVGRcDNy8xMdBJPZ3U
- 5WI+XabZgGnbqIqzvFZQZScp+MXxgocidkBI5jgMOox2vmncTHOlOQFGnTYTajmbtA22
- CIww3bBRd80oKfI7UiIab1jQJtXxoECFdMIWig0nquGUXezpD1U7UqPxNiY5DJDxOqnd
- BGqA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoNCsOCl/1B8GMAQIZ7AdHzLTgNyqoirVONk7sYzqQBbTc4firJGkqe9/FW33h8kNmU+D1m+MIwNVsi@nongnu.org
-X-Gm-Message-State: AOJu0Yz1SzD7zfNxGJCkL/DLpc2kTRxdzvJpyCn9ucO/YIITnc7XyGbt
- kbfo6g9G/urlLOvplw9Mnop/K44IvjvNfd7wS1fR/cxO2pVGI4rS1NtXe2s1YQemWqc0S8DY6PH
- wARauCx4fS1mm6oTdeHNcza2ESzHqRtlJUgcfIMDxjxtvqhJlO4Go8cnC8w==
-X-Gm-Gg: AR+sD11Y2nxVSx1ry/zhxt7wsfcDn8ceaL0llR51off7WMz/L2KHdX0aRFBnfH6bRv9
- iRBG6BuaRNG2AJuYrprV7qGrwcngV3xNVaeHVHMiWJ++bBdAuOAVx0mTg/R8J9xvBnw9Du7N2+w
- hDiofYsMdTn0TJX/KmFZaIJzsg9Z0Ly3oCgbEhX/Io27+a6aFTNUlR2S08zwelm82Q4smTSBq/N
- kD3SFwVd19pzCaFEzisET+PDmBBjXZJ2kDrJAqQGmo1dtOCK7CyU+JCx6VNS04bxuqgEsneJ7Ag
- ZRZUDZUtrnkgfQsaBDCBTGF2EfrOVPO5+kX+85Q+l7hLWQBk6ortF8xEdrLEydpwB+hyGe3/5Fd
- zAr6LanTiBnRM1j0zQgDVgHLikcppH+DR+GMwWvpxHDP87LL1RZ40+MK7BHYW1GZT1vAG
-X-Received: by 2002:a17:90b:554d:b0:381:152b:d596 with SMTP id
- 98e67ed59e1d1-3955a7b15e0mr13074572a91.11.1787071979273; 
- Tue, 18 Aug 2026 09:52:59 -0700 (PDT)
-X-Received: by 2002:a17:90b:554d:b0:381:152b:d596 with SMTP id
- 98e67ed59e1d1-3955a7b15e0mr13074490a91.11.1787071978685; 
- Tue, 18 Aug 2026 09:52:58 -0700 (PDT)
-Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3267c389363sm18862621eec.23.2026.08.18.09.52.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Aug 2026 09:52:57 -0700 (PDT)
-Message-ID: <e3aac1e2-6caf-4f18-9201-f3ba320c692a@oss.qualcomm.com>
-Date: Tue, 18 Aug 2026 09:52:57 -0700
+ bh=st89BtH1YIdinVd7rJQ55m7ueiw+97q7juqxabY6zvQ=;
+ b=BufL7TBsBoJs7raAdJdNAHukBPXY7CbtO3vkhEYL3z+ezjWb+DF08tPQNzV9Ge0kTX
+ Z8w2K86WkhL/Iyr3zewT2yCtNusAz22EleZvK/HT9glbaoVMrVrR9T7bTjd+gKI0JKu2
+ OjciKpWwOtwrhKVPymeXd/wovboTgqb3EHHiTPqRyOKUXDY6HjQJulaGrTUJogFWpdaJ
+ vDv01K34RHUN7re+sknkyzCo8+7H+KOLawb/vfAyb4XGkrMGkuKI1bd5Fd/GyJ2+e8lP
+ nUk56bqhlDUeFGnmoMXhcEZsVFviEj+wN4ahY8grgCvXFY6CsIavuT1ljQ9Mj7qEO+Tc
+ i7Zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787072521; x=1787677321;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=st89BtH1YIdinVd7rJQ55m7ueiw+97q7juqxabY6zvQ=;
+ b=Le2pRpxO4Ai0pEUlHWQ3YFcYgecRTjNUnj/Jnc9S7yMz74mWqyppr/WelEuESD0UNs
+ hxdhr1sN63wqliHnATB+/qkT1X7TGPeiUZ2gj5kdIfX+G+Kt6tZqL2YpAzRZmlAM5Ght
+ cF1qsPdCcNH4lxMTsBQPO5MggWJ87OlGZ1gFnJzNtyfh8lzbyPcVsh/jsI9onpZN9ELT
+ 78KdxXPFLbDtstyKw3HsU5q/X0qnN2vl+20x3Fk19TFnp4ewKnq5Oqw3DFrO19G1MQV5
+ GBA4x9GdwwuvQeW6pTwnjcDZ4UkWne4cmxg5Xy6upBgibkqGnKIc42GDbP6uw5a55PSD
+ gN/A==
+X-Gm-Message-State: AOJu0Yy2+fPqrtre9f10vXWlpN+yEL71HZNLRM7j/ERV8zdf2mEml2Cu
+ dkftoubHbc5Ni4crvMqTV/+IZ0vs4ZsmTCReDNBbN1hWvi3uwy2KeaBiPElqb8HJMrkaOHqIj7d
+ zz54KvbY=
+X-Gm-Gg: AR+sD11jYk71XZAs6Th7FJE3pr1Zk2b7gqNEZYkLBIjNl2oK1GYwp+swoPE/U3aGd5X
+ ah302I/Fij4shFW11ThLpjguGkn/9N9H0s+4V8ymVpt8/IMJ4kc/TGaFZcA6iD2gM7xzVH50Aa0
+ SMF09LMBHb948jJBy/0JX6K1/Xe1VnGiCotBDmJHZcKcE9+6P2W1KKIH0eJi0wVNe7UP78dKj7o
+ RQeuzTlT623oQPJHTELuIglq8wXFW8O6Sso3gN2eeyylz2b3pC9IWncldIGVP/9uoS5n2HrzAVc
+ 1+GSPlbzBe1UngwvXVLrgvKRqDKRda0om6Mynem7++2qps3pn3BDSa6Kf04L3pdhEMA860ZsGlB
+ uxT5RYkW6e0om39lCtZO9Ft+8TyoqweKJPljmj/VhfY/UBD9PWVZHRRays9hniExbtRjKSlQFzb
+ IjJyCv20IQTTUL+iGD3jWybzDvz2SEOuo/nvk7wyD4gAMHwUg10efTLc1dXHaPneOQxRCMBZ+4O
+ zN5Q3sycPiYOmkAZ1dIYSOVja3nzGjv7JuZEUjT
+X-Received: by 2002:a05:6a00:ccf:b0:848:3fe2:c88b with SMTP id
+ d2e1a72fcca58-851b87a361cmr13194342b3a.6.1787072521012; 
+ Tue, 18 Aug 2026 10:02:01 -0700 (PDT)
+Received: from stoup.. (c-73-181-156-132.hsd1.wa.comcast.net. [73.181.156.132])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Aug 2026 10:02:00 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+	Jacob Young <jacobly@ziglang.org>
+Subject: [PULL 02/38] tcg/optimize: Fix s_mask computation for shifts
+Date: Tue, 18 Aug 2026 10:01:19 -0700
+Message-ID: <20260818170155.1907006-3-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260818170155.1907006-1-richard.henderson@linaro.org>
+References: <20260818170155.1907006-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 0/4] RME-DA preparatory work
-To: Jim MacArthur <jim.macarthur@linaro.org>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, John Snow <jsnow@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
- Viresh Kumar <viresh.kumar@linaro.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>
-References: <20260818-jmac-rme-da-prep-v1-0-30fab951bc75@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260818-jmac-rme-da-prep-v1-0-30fab951bc75@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDEyNCBTYWx0ZWRfX4C3yAI8MHRVX
- tr2zuF3EHKPIeLoVCBzMpkZRSCI1UeCYPRwyREEi8g1yP23zs3/3V08v9PLLe4ibKqYenL4R3dK
- 9Pk4486Q+qvCRkB+97+qdQeH6yjtVMU=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDEyNCBTYWx0ZWRfX4+3XXFTVct9Q
- 1DVUT8Proe+LRm/7iwreBn0KarsMpnVjV0cBnwUGdL0hwvlI/T11gaTV+qoQiyofGcxBboRmuFz
- qGO5FjhqeSLiIv3bSbzYBcpyqZXwwRh0ORBvglx8ER1YqhuAetRM2uuKYtd711OelsuIMb+xnlx
- ka+WehxQ07wbMYqhMCvpdSCxsmktBPOVsgWJv5x6xyBoPyoCF0eh1SLYujkpckmE4gyhHQzRzEb
- kSeW8oZSF6ZZxQNyBeOpu9m34v3y8rJLeWwItMTB1tn1Cllt2WyLLFA9zNK9B1PgmCRVfY0uZz6
- 0607zBqmZyh8HanmHqT3Z05VvPQmWEerWir8L2D1q+kurY8q8BY7xyTvr4GLaCFpLZQbiGgJiaY
- +r3YeOf2xeB6KyEuvw/U19FxpOgHITyWP2XinH4S4aFNmdyKoOAHtvx3p09ki7+P3zdNjX0MxRN
- QOoIAg2ruegKWFloiNQ==
-X-Proofpoint-ORIG-GUID: rdqtaQ4FhclSXN2H9sn8GU13TKz4TpKn
-X-Proofpoint-GUID: rdqtaQ4FhclSXN2H9sn8GU13TKz4TpKn
-X-Authority-Analysis: v=2.4 cv=bvB8wkai c=1 sm=1 tr=0 ts=6a848dec cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=KKAkSRfTAAAA:8 a=it0rTjz8NAFePQSC40YA:9 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-18_02,2026-08-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 lowpriorityscore=0 spamscore=0 phishscore=0 malwarescore=0
- clxscore=1015 impostorscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180124
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,68 +102,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jim,
+Skip s_mask computation for logical right shift.
 
-On 8/18/2026 6:31 AM, Jim MacArthur wrote:
-> This is a subset of patches from Gustavo Romero's SMMU DA branch work,
-> featuring patches from Pierrick Bouvier and Viresh Kumar. These add
-> capabilities to the PCIe root port and ICH9 SATA driver, and also refactor
-> some code in hw/pci/msi.c for future use.
-> 
-> The goal here is to upstream work which is independent of Tao Tang's SMMU-V3
-> patches, while those are being reviewed. If/when Tao Tang's patches are
-> accepted, we can proceed with the remainder of the SMMU DA work.
-> 
-> I have spent some time understanding these patches and believe them to be
-> sensible, but some parts of them may be outside my understanding, hence the
-> RFC tag. In particular, we may be incorrectly advertising features here which
-> are not actually implemented; although this doesn't cause any problems I can
-> see with Linux or our test suites, I can quite easily set the feature flags to
-> zero and keep the code structure if that's a problem.
-> 
-> Jim
-> 
-> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
-> ---
-> Pierrick Bouvier (4):
->       hw/pci: add IDE + TEE capability to PCIe root port
->       sata: add SPDM + IDE + TEE pci support
->       hw/pci: add DVSEC RMEDA capability to PCIe root port
->       hw/pci/msi: extract msi_message_address_register
-> 
->  hw/ide/ich.c                       | 72 +++++++++++++++++++++++++++++++++++++-
->  hw/pci-bridge/gen_pcie_root_port.c | 38 ++++++++++++++++++++
->  hw/pci/msi.c                       | 19 ++++++----
->  hw/pci/pcie.c                      | 15 ++++++++
->  include/hw/pci/msi.h               |  1 +
->  include/hw/pci/pcie.h              |  3 ++
->  include/hw/pci/pcie_regs.h         |  8 +++++
->  7 files changed, 149 insertions(+), 7 deletions(-)
-> ---
-> base-commit: fa19879df1658f96ac07365fca8835b7decd6995
-> change-id: 20260818-jmac-rme-da-prep-8096fc816eee
-> 
-> Best regards,
+Cc: qemu-stable@nongnu.org
+Fixes: 93a967fbb57 ("tcg/optimize: Propagate sign info for shifting")
+Reported-by: Jacob Young <jacobly@ziglang.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/optimize.c                     | 11 ++++++++++-
+ tests/tcg/i386/test-i386-opt-shr.c | 21 +++++++++++++++++++++
+ 2 files changed, 31 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/i386/test-i386-opt-shr.c
 
-thanks for posting this work.
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index ed2ff32ed2..d12babad88 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2656,8 +2656,17 @@ static bool fold_shift(OptContext *ctx, TCGOp *op)
+ 
+         z_mask = do_constant_folding(op->opc, ctx->type, z_mask, sh);
+         o_mask = do_constant_folding(op->opc, ctx->type, o_mask, sh);
+-        s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
+ 
++        if (op->opc == INDEX_op_shr) {
++            /*
++             * Logical right shift will force the sign bit zero.
++             * Don't bother computing s_mask and let fold_masks
++             * recompute from z_mask.
++             */
++            return fold_masks_zo(ctx, op, z_mask, o_mask);
++        }
++
++        s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
+         return fold_masks_zos(ctx, op, z_mask, o_mask, s_mask);
+     }
+ 
+diff --git a/tests/tcg/i386/test-i386-opt-shr.c b/tests/tcg/i386/test-i386-opt-shr.c
+new file mode 100644
+index 0000000000..9fb8d42022
+--- /dev/null
++++ b/tests/tcg/i386/test-i386-opt-shr.c
+@@ -0,0 +1,21 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* Regression test for tcg optimize vs sign bit repetition counting. */
++
++#include <assert.h>
++
++int main()
++{
++#ifndef __x86_64__
++    char test;
++
++    asm("movw $0x4000, %%ax\n\t"
++        "addw %%ax, %%ax\n\t"
++        "cwtl\n\t"
++        "shrl %%eax\n\t"
++        "cmpw $-0x3fff, %%ax\n\t"
++        "setnl %%al"
++        : "=a"(test));
++    assert(!test);
++#endif
++    return 0;
++}
+-- 
+2.43.0
 
-I didn't send them at the time because there was unfortunately no way
-for our community to test them, and see how they are used. We're still
-in the same situation.
-
-Implementation is strongly coupled to the work we did with Mathieu
-Poirier for support RME DA with QEMU, which is coupled to current Arm
-RME DA implementation. This one is still a wip and not yet upstream
-(across kernel and firmwares). Mathieu has better information than me
-since he kept on following this.
-
-In particular, our choice to add capabilities to a SATA device is just a
-consequence of following what Arm did with FVP. nvme drives have other
-limitations with RME DA at the moment, and it's uncharted territory.
-
-That said, it should not hurt, since it just adds capabilities to
-existing devices, and if maintainers are ok, can make its way upstream.
-
-Thanks,
-Pierrick
 
