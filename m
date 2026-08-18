@@ -4,21 +4,21 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 630DEC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E01CC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:25:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwHvZ-0004DP-KD; Tue, 18 Aug 2026 07:24:21 -0400
+	id 1wwHva-0004Dm-PF; Tue, 18 Aug 2026 07:24:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwHvY-0004Cv-Eq
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:24:20 -0400
+ id 1wwHvZ-0004D9-4M
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:24:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwHvW-0007GP-Ot
+ id 1wwHvX-0007GU-H8
  for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:24:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1787052258;
@@ -26,36 +26,36 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bjQUeWzB+URGNhy51pTY8kngaMPVjWJKxA5gkx975Fc=;
- b=Jxf76+JGQo4Qb0+8HKz424+nJyc67T2jCFBaRDVxBj5ORGointcPr0+wSmWz4ljtKevYzh
- stW7u2veuU1AOkZgqYZGeYFNVlsmEbjbLUkj7g/0EFsy7tVaiGjO8cy3bxVsiGhNh/1RVV
- 4qZ9PB6/z+dKOmdd37rBTcYtZ/PzWl0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=oIiDAG2jKPc8trfxeDzWrsYVGy/FtqWuSjPzxQy4+IM=;
+ b=dZ32JPMcaqWHwkDnSmHIYn0Dm41ETdC274/9VUUpLYY+Yt3NH6GEpUl6XC5V09xuN6KIEU
+ TvUyms+qY1Y6GNUTqAuFwyNP9aSOCw08sEbeMTKFx5HIGZrD1GUlW8I2BKYxSZik5oFAe7
+ amlJLSE9F/Ncw3pzrXLFX9UW4aNrDH8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-646-N1daW5HWNVOjkVnoRXQwtw-1; Tue,
- 18 Aug 2026 07:24:06 -0400
-X-MC-Unique: N1daW5HWNVOjkVnoRXQwtw-1
-X-Mimecast-MFC-AGG-ID: N1daW5HWNVOjkVnoRXQwtw_1787052245
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-5Ml62bQSO3u-tRqpTeh9Kg-1; Tue,
+ 18 Aug 2026 07:24:15 -0400
+X-MC-Unique: 5Ml62bQSO3u-tRqpTeh9Kg-1
+X-Mimecast-MFC-AGG-ID: 5Ml62bQSO3u-tRqpTeh9Kg_1787052254
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 472CB195608B; Tue, 18 Aug 2026 11:24:05 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 65D6F1956047; Tue, 18 Aug 2026 11:24:14 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 37FBE3000239; Tue, 18 Aug 2026 11:23:58 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 299511800347; Tue, 18 Aug 2026 11:24:12 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 18 Aug 2026 15:11:14 +0400
-Subject: [PATCH v3 47/74] accel/hvf: convert OnOffSplit property to
+Date: Tue, 18 Aug 2026 15:11:15 +0400
+Subject: [PATCH v3 48/74] i386/x86: convert SgxEPCList property to
  QAPI-aware registration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260818-qom-qapi-v3-47-24b8bbbe3d86@redhat.com>
+Message-Id: <20260818-qom-qapi-v3-48-24b8bbbe3d86@redhat.com>
 References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
 In-Reply-To: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
 To: qemu-devel@nongnu.org
@@ -66,26 +66,26 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- Roman Bolshakov <rbolshakov@ddn.com>, 
- Phil Dennis-Jordan <phil@philjordan.eu>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2469;
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1068;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=oWCHQCOKOr/KE6g1VOAN6Z+R3g0iOTOZVDDieDqKREY=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhD27DC8PogTLZ7Zc1KXnwkiMMjdQC1+ZsyfD6
- Ywzp0RI37iJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoQ9uwAKCRDa6OEJdZac
- 5fhRD/9G+E5r5X6fVAD76RpukOc8Mqqd5hfUwJcWdCdlNqYnGZVNy+PuBvNtIBvsadTjtNGhOIL
- 15aYL2FE1qJwT4VXklCB5jDNuSTuCHj/4l2DyO8bhdhqFFWHew2hASqZicV5kSSWc3YHi0rz+AZ
- nJUZ0HFz/nGoyItnjq+gwgR5lahIJU7Zhlm7jF4NdoS2BelbPXNaK3PTVClmdATnjrRBjMvHL+1
- rywFQRp2qwM/EXW0BDr0DPwNuc1/chJxRdcP1Ka9mGGF/vGEwrGFhb3+GDMB8Q/zbTbOdakyShe
- q1wH+X9kUBolz/fDB/W9CXUIHwGpVLSSAGA2ORYNemuBXyiRePb/UfK08eyN27Ni70qXj2SXe3U
- bvNHl4HvIyieyn0SMtvP+WNAvqcv4KQXWy0CNM+JXaObPB0Brn60VzR6VaQQzhQaU6h/stZc6yL
- GHANJDNNDbsxPe8jqCkh3sGIjwb8lpfweC+OKBAwKf0XL/yBmTiYTS6GYvahL4USzimYP8PHBJM
- y67SNXPYXfLNVnr76x2r0c+RgIcD76u2dG6jEZ8b8Y2Nmhj0uM8H8AuXBMSAcNTVhns2QUFpCVN
- uU3UWITPwXruGY/7nl6sIGbJ3dCclIiQ5BLVkE7mwwsg+bpnDFAb1c6SPZg3iqZYCFrYpFp3unR
- SoPd9idj/Uvf60Q==
+ bh=cnTGm8gLgIdGgYxLJNoo6ULUUXiyoyqTdIIMx4XVumw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhD27i5h6WdjbgKQJFbRnX7zbgFQfLjcM96c1Z
+ ud+a0WrkuaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoQ9uwAKCRDa6OEJdZac
+ 5ZHbD/9SMXkD6jEZ1nvLQMhr2h14XUnX1XL7EAC/Qkitl90HAkH8B5p+GnfHDzHTOWzUIK/ADBa
+ BJvjkK8p48GCjIBCC/d8zw9vh6LmRQL4qEKYQmu97R6DvfypV5bqNd1cMY/dRN5P3fNqiSG7Ya/
+ 8OU7znsWTO3L5m+MzUNRWnXzEU8GxKBSTli34cQY5MNKlf70qAAFZGauEA6v8rerRNrQhbwlohk
+ yAIFHkdWXXjzU63YquRT+LvLq6LyfCOvLJ3PN+XGcGVAZybOTEMRy5DY+cRDY1ijuVYZdSgxIYv
+ bptHGcvTqscI7LiuPHPdaQ/lTONdZQLy2AMzoCSBzHayKY4YGLDFjnTMk/X5NYv+eFUf4GZSp4q
+ IQNf1qrqemAKtewLrprB0DPMiMWNG3wr5UUWUibmV4qSo5bn7oj2N3TBK6SkeCcHvf4eq3KjyPo
+ QihNCdpbvkpgUr7Hl5MxjcecvIKM3whbNBL6JF79snV5Q2lHC7bZIopFV5bUzA9u5B17d0+ea0y
+ hX2aqIIoS4r817azZJ/s34v5qv64a3zlM7fdi/SHQ4xg7ok1+JuRG1KEsrRs8YCcjd1m7X1SLxT
+ 8N4WMA/FbD4iAS12rjIFA9a78i7SYMtXo6P+TOFI3YWC3Zyqs4+lEHOkZM0ELVcKHewNTjuIHYU
+ oiPs9oUGvj490Pg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -112,79 +112,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the OnOffSplit property from manual visitor-based
-callbacks to property_add_qapi_enum().
-
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- accel/hvf/hvf-all.c | 29 +++++++++++------------------
- 1 file changed, 11 insertions(+), 18 deletions(-)
+ hw/i386/x86.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
-index 8bd9154a50b6..2fd594ad156f 100644
---- a/accel/hvf/hvf-all.c
-+++ b/accel/hvf/hvf-all.c
-@@ -11,6 +11,7 @@
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
+diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+index d0c782ec8544..ed38760d798d 100644
+--- a/hw/i386/x86.c
++++ b/hw/i386/x86.c
+@@ -25,6 +25,7 @@
+ #include "qemu/units.h"
  #include "qapi/error.h"
-+#include "qapi/qapi-type-infos-common.h"
- #include "qapi/qapi-visit-common.h"
- #include "accel/accel-ops.h"
- #include "exec/cpu-common.h"
-@@ -230,18 +231,12 @@ static int hvf_accel_init(AccelState *as, MachineState *ms)
-     return hvf_arch_init();
- }
+ #include "qapi/qapi-type-infos-common.h"
++#include "qapi/qapi-type-infos-machine.h"
+ #include "qapi/qapi-visit-machine.h"
+ #include "qapi/visitor.h"
+ #include "system/qtest.h"
+@@ -426,7 +427,7 @@ static void x86_machine_class_init(ObjectClass *oc, const void *data)
+     object_class_property_set_description(oc, X86_MACHINE_BUS_LOCK_RATELIMIT,
+             "Set the ratelimit for the bus locks acquired in VMs");
  
--static void hvf_set_kernel_irqchip(Object *obj, Visitor *v,
--                                   const char *name, void *opaque,
-+static void hvf_set_kernel_irqchip(Object *obj, int value,
-                                    Error **errp)
- {
--    OnOffSplit mode;
--
-     hvf_kernel_irqchip_override = true;
--    if (!visit_type_OnOffSplit(v, name, &mode, errp)) {
--        return;
--    }
- 
--    switch (mode) {
-+    switch (value) {
-     case ON_OFF_SPLIT_ON:
- #ifdef HOST_X86_64
-         /* macOS 12 onwards exposes an HVF virtual APIC. */
-@@ -261,11 +256,7 @@ static void hvf_set_kernel_irqchip(Object *obj, Visitor *v,
-         break;
- 
-     default:
--        /*
--         * The value was checked in visit_type_OnOffSplit() above. If
--         * we get here, then something is wrong in QEMU.
--         */
--        abort();
-+        g_assert_not_reached();
-     }
- }
- 
-@@ -277,11 +268,13 @@ static void hvf_accel_class_init(ObjectClass *oc, const void *data)
-     ac->allowed = &hvf_allowed;
-     hvf_kernel_irqchip_override = false;
-     hvf_kernel_irqchip = false;
--    object_class_property_add(oc, "kernel-irqchip", "on|off|split",
--        NULL, hvf_set_kernel_irqchip,
--        NULL, NULL);
--    object_class_property_set_description(oc, "kernel-irqchip",
--        "Configure HVF irqchip");
-+
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "kernel-irqchip",
-+        .qapi_type = &OnOffSplit_type_info,
-+        .set = hvf_set_kernel_irqchip,
-+        .description = "Configure HVF irqchip",
-+    ));
- }
- 
- static const TypeInfo hvf_accel_type = {
+-    object_class_property_add(oc, "sgx-epc", "SgxEPC",
++    object_class_property_add_qapi(oc, "sgx-epc", &SgxEPCList_type_info,
+         machine_get_sgx_epc, machine_set_sgx_epc,
+         NULL, NULL);
+     object_class_property_set_description(oc, "sgx-epc",
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
