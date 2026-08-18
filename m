@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A82F7C5DF87
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:02:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F69CC5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 17:02:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwNCO-0007Le-Iw; Tue, 18 Aug 2026 13:02:04 -0400
+	id 1wwNCS-0007OC-SL; Tue, 18 Aug 2026 13:02:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCN-0007L6-A6
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:03 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1wwNCR-0007NK-1P
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:07 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwNCL-0004cN-G9
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:03 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-84a2c90e383so1056634b3a.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:01 -0700 (PDT)
+ id 1wwNCP-0004eU-BF
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 13:02:06 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-cbb8b54fcf8so21848a12.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 10:02:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787072520; x=1787677320; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787072524; x=1787677324; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=UIM0s5lWODAxHFxh/yWxa09GnkzpjD0dC8DHL+7U4bw=;
- b=tD9fPbqoPfLue/avhRcXliLMYUc7AOysWTI5a8xs+8XGDKoACUzUtrVkNYKo3TPBsD
- xOZMoXhPUXZKQCTq2bLZ/T42AVSQAzlcPOeXFz64XZssmCDMGC+wB7dc9zB35QQDaaiu
- qPj4Bm8KvUE/FfIYz4gshu1dJ8AraZT2vAFJKD8EI8cagsTkv7arRHJt6Q681SOvk8TR
- CAGCImsObmx5qWfk1DAF3tZl5P5JVvIm1YJvQGJpCqtXXfZehsohgNDgZs15ZsutMEBW
- iFPXpPvQH2OKsXGlM46Jume4ZYedJ5TSM96hhfI344ARa2HVcOynFEy39R+S64ogNQVb
- 3Vaw==
+ bh=HF2JgYSJpxkYVVHW/A3tvsecVR7wZcA0ZMW7syqYu74=;
+ b=FbF0bo6oAhjV9KYxyS81/MSevat7pzzIf3gv0ALyP5PbjTzOEnRa9pSFDuDkA/TdF6
+ XAmMG6hZsVBdhJ8fqpaO6dT09jCQ2HXxYDRzcFBLbGrslJxp0aMzkJp5e/VDqI1cDsAo
+ HVxtHtm7PYbO5T/Bub/0wkH+xpS8ObCGK+y9bY+mysDbDrSBUYyiesWChKIx25VCpfD4
+ q2vJFij487ZmEG89tNbw9FCxKqAvlh+Y5S1H4voz9Phn2FUPt+zFrxzr14o8gUjSnK0E
+ z7CmmIqRNq4Ls9eMqJjlOtWZlbqLb1SFjRq/cyZxjfyPvNBkpFRAHSUkB1xQoRsLhMLj
+ 30cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787072520; x=1787677320;
+ d=1e100.net; s=20251104; t=1787072524; x=1787677324;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=UIM0s5lWODAxHFxh/yWxa09GnkzpjD0dC8DHL+7U4bw=;
- b=lKWaup8ig3M1NriePsZl62nw8ARaaD4K2pDaiUjo+mtzrnIEXYlOp4VIa6/zkwKiRl
- N0ReXERB+8QMILd+XcRBDbUF9nNgSr04IO+pYsls6nbNBbw1LyT4UShPMiJecx5z/1Ki
- /2Mw9JBNIVZ7azw0z5FNvQNd2qfzZb6X5vboMg8qsf+BnRsnm1YC1K3G/LCs/fnxbQMc
- NKz0QJSBuZ7eM3VGFiqXwgeVPUgAZNdzmjIsTp7h7DwAKIJPg4i2AEjj3Sa+7++rrPPE
- JSW1dzBigZ7D07i+b9E2CIyfw50iXpxBNUZYCn7PMOv/acC5RQ6W6epAqCBkJi6e55Dd
- Yn1A==
-X-Gm-Message-State: AOJu0Yz06FYoIFGwPkVbshwNheKq4RZksx4+PM3WztNbOp5uD7QWBg4A
- JzW0tEufQmue8h2h7YltdbftRSf9QDMw/CqdjmIH5AP9CvdIzWpfFOMB2AkMaN+P0K1sEO7TWxZ
- 6cKiZH0A=
-X-Gm-Gg: AR+sD125zGpkhjFInfSr7rJihqKvKQvcXCu/gYHht+YLgD2riaVv3zLBTCImS6si38i
- z/WKl6oSd7Z4YmS8xP4EMPQrhUZcKoATk35ZgFIsJ+A6hQw56I2iEj1tVt6Dzjexm/teHPgAmtU
- dHqlk+eQT8Ah+XXdjmTnJS6SPbMJqi4C0Qylor4fhD3CD0VuZngYyOH3arDJ2P06y48fWaQjiFZ
- dgyrq5boM+DG7o1rC1Z5SSJpoL3dVoWG/Xgnq0teKXPnKJbEBPsFeDPT0VM92syLfwfTsrHAxs+
- dry0eHWkVS2YTJt2443fr86BPrPHWFTaMR2EohBvYUK9VVMKpgntr+ZHU+14oPpX0cHY8PEcBB6
- Ng6pqqAVNwZJK852NdTnamd5eEISZxS6FuooN9o/BSljtxqhFryWRRL9+R3Q82mEKn3cNvu9aiF
- cB5uAwxDOF2m7PNByUyYBwPXApW2GQ6NMfmMrgE/r1treZA7ux8254QwBqfNrLUm8Lv27bbxLdv
- nc9idW7aH5F/cWOBokCY9XXXV0xH9TlcWo=
-X-Received: by 2002:a05:6a00:b93:b0:848:4c3a:a359 with SMTP id
- d2e1a72fcca58-851bc426186mr6962710b3a.19.1787072519950; 
- Tue, 18 Aug 2026 10:01:59 -0700 (PDT)
+ bh=HF2JgYSJpxkYVVHW/A3tvsecVR7wZcA0ZMW7syqYu74=;
+ b=pAFknlhmDhw9cnFlnjpD/oTHHkhshg41NXWDmTYyWJPp8FFOI1seIhYkb16CZpoXUv
+ 2u3w+GIdGkV01R6WQxMv1UQzXsW3Td7/uiTvJnwwsf6+JwpmY78IkwK2RkZJLpAfXbe5
+ LVxtQAIfhYkbmStvnQnU1cvCNGKVGyx7i/XKpl3W/5DwPMGpNrHVfRQyofVE55dIpeBi
+ Gx3Rx3obY+GDCfmdtsKQdj1P/vTw/FFS0NlmrRTVkMayxf97v9rGB9fp9ZAHY7Kuv1NW
+ 1tfEjB7m88uQ0rmqoL6IYhU4EgSbY7WcVLM2bqBcUtWYMZ1789hZHA6H+TDImraEsNlA
+ wnug==
+X-Gm-Message-State: AOJu0Yx4E/WEVGIhJzSKTL/7NnTMlzGoPoweywdBG/y0o9n4fM5t3wq1
+ 3Ng/HiRaFoaefhyFufdmf6ZpuqNNmZLU9T/tFBd6bHMvMlZUchSwmVak3wIo8+Z6DvG2atl7sXf
+ ue3oWRg4=
+X-Gm-Gg: AR+sD13udNnYpmnM2smpP4eqeXGyjjDYrAsh2ValVO1zasRkqIxo6nhzzEbH+j7beGU
+ RAC8+dDQ/+QbyRNfpkyDL5yR+ocj8LTg1diTbnUz3r+LyLf2EHtlxxUL8Ydr4k9bhn+45KgYUy+
+ ubAAJA4kupyKhmLnQdS6UHEw2vucnHA0rr9oJR6iUwBUGIfdkQF6WJlpD2t4Yp4i2bKAJ0f78Yu
+ zdvKVdVmJFvmKLKKuzfdwpy6xtMsH9RthkVJZIzaOrVN8fD9rEE9ex4H3AxOZ1LcMpncYXWT1MK
+ sw9VoqPQKn67fkeZ0rN5YRqwrG4yvaQBt2Jbwk+ewjHIh8pvKBP544zVMDw6YMszXQUA5otTASa
+ 3ahqG2pWUqmp2NNMwWlIgrg4WiO9U7MBVO61pKCeC+rhSHoTg+OcemI0nad+KqlNb6vTfY+S/++
+ /F+M9virVwStj/BCa98OX5A627iZtV6V0Hs/0z0f92cpcdkaYixVM4rK9mmM7r2meNtXcQC5Z+O
+ 7gMifb4nfSVWY4IDngvyexCSFL8RqcoWJ0=
+X-Received: by 2002:a05:6a00:338d:b0:848:6c1c:17c0 with SMTP id
+ d2e1a72fcca58-851b88c8425mr14729415b3a.19.1787072523830; 
+ Tue, 18 Aug 2026 10:02:03 -0700 (PDT)
 Received: from stoup.. (c-73-181-156-132.hsd1.wa.comcast.net. [73.181.156.132])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.01.59
+ d2e1a72fcca58-851b401e10bsm2108314b3a.12.2026.08.18.10.02.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 10:01:59 -0700 (PDT)
+ Tue, 18 Aug 2026 10:02:03 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 01/38] tcg/optimize: INDEX_op_mul is commutative
-Date: Tue, 18 Aug 2026 10:01:18 -0700
-Message-ID: <20260818170155.1907006-2-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL 04/38] tcg: Return success from tcg_region_alloc__locked
+Date: Tue, 18 Aug 2026 10:01:21 -0700
+Message-ID: <20260818170155.1907006-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260818170155.1907006-1-richard.henderson@linaro.org>
 References: <20260818170155.1907006-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,27 +103,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc: qemu-stable@nongnu.org
-Fixes: 7a2f7084525 ("tcg/optimize: Sink commutative operand swapping into fold functions")
+Invert the sense of the boolean result from 'error' to 'success'.
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/optimize.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tcg/region.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index fcdef25bee..ed2ff32ed2 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -2152,7 +2152,7 @@ static bool fold_movcond(OptContext *ctx, TCGOp *op)
- 
- static bool fold_mul(OptContext *ctx, TCGOp *op)
+diff --git a/tcg/region.c b/tcg/region.c
+index 5d4be1453b..2161d961d9 100644
+--- a/tcg/region.c
++++ b/tcg/region.c
+@@ -360,11 +360,11 @@ static void tcg_region_assign(TCGContext *s, size_t curr_region)
+ static bool tcg_region_alloc__locked(TCGContext *s)
  {
--    if (fold_const2(ctx, op) ||
-+    if (fold_const2_commutative(ctx, op) ||
-         fold_xi_to_i(ctx, op, 0) ||
-         fold_xi_to_x(ctx, op, 1)) {
-         return true;
+     if (region.current == region.n) {
+-        return true;
++        return false;
+     }
+     tcg_region_assign(s, region.current);
+     region.current++;
+-    return false;
++    return true;
+ }
+ 
+ /*
+@@ -373,17 +373,17 @@ static bool tcg_region_alloc__locked(TCGContext *s)
+  */
+ bool tcg_region_alloc(TCGContext *s)
+ {
+-    bool err;
++    bool ok;
+     /* read the region size now; alloc__locked will overwrite it on success */
+     size_t size_full = s->code_gen_buffer_size;
+ 
+     qemu_mutex_lock(&region.lock);
+-    err = tcg_region_alloc__locked(s);
+-    if (!err) {
++    ok = tcg_region_alloc__locked(s);
++    if (ok) {
+         region.agg_size_full += size_full - TCG_HIGHWATER;
+     }
+     qemu_mutex_unlock(&region.lock);
+-    return err;
++    return !ok;
+ }
+ 
+ /*
+@@ -392,8 +392,8 @@ bool tcg_region_alloc(TCGContext *s)
+  */
+ static void tcg_region_initial_alloc__locked(TCGContext *s)
+ {
+-    bool err = tcg_region_alloc__locked(s);
+-    g_assert(!err);
++    bool ok = tcg_region_alloc__locked(s);
++    g_assert(ok);
+ }
+ 
+ void tcg_region_initial_alloc(TCGContext *s)
 -- 
 2.43.0
 
