@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EA6EC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:17:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B85BCC5DF80
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:17:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwHoY-0007o2-4e; Tue, 18 Aug 2026 07:17:06 -0400
+	id 1wwHpF-0000Rc-7p; Tue, 18 Aug 2026 07:17:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwHoX-0007nZ-5i
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:17:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wwHpB-0000Eo-LI
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:17:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwHoU-0005Zy-M3
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:17:04 -0400
+ id 1wwHp9-0005ie-LG
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:17:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787051822;
+ s=mimecast20190719; t=1787051862;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4cZ9k2zlRVPI/Q6eV5gYzrkbNceMJYmuC0St6Zr3WMc=;
- b=TX+ChfaCW7TO/wRO9vy9OAMCvJHLuzIK/PxtRHCBuHKdw8nbMjx3q7T7FTZMLWTfDYmdW6
- Cl+gwn4yGbT8MHpw6FMpIhYUjTgGx9rrHq/pn86PBWGguM1+0VrzTexab7Ixrnf+Erttbr
- LhDEA0zfEYK1ZQKOORzmdfNIxOAMD98=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=VscR/iIW0mIAkyA8JHrPI5JG+q0xz3TzuUhYEBv6Obk=;
+ b=XWcJWlDss3cxDaHIw8EatbXnLKjjMRFLZXmcmS5YtQLjSmaENUaYXxFuMxPfVUBM975Tex
+ x+rajYKNDlAFFoCXyze0NrNUqU/vhUzhoRenwXhnfG3R9gAZG2RwsyTkyhjpqSnab2qq1O
+ +u9DQeDlwp8e4d4laLCkYHoWtZFC6DY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-381-DRLVw6ODOo6ihC76v5Hkaw-1; Tue,
- 18 Aug 2026 07:16:58 -0400
-X-MC-Unique: DRLVw6ODOo6ihC76v5Hkaw-1
-X-Mimecast-MFC-AGG-ID: DRLVw6ODOo6ihC76v5Hkaw_1787051817
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-468-JWRvrGG-Naax3gnfxT95Sw-1; Tue,
+ 18 Aug 2026 07:17:38 -0400
+X-MC-Unique: JWRvrGG-Naax3gnfxT95Sw-1
+X-Mimecast-MFC-AGG-ID: JWRvrGG-Naax3gnfxT95Sw_1787051857
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E8A68180028A; Tue, 18 Aug 2026 11:16:56 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 031AD1955DEA; Tue, 18 Aug 2026 11:17:37 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1EB4C180049F; Tue, 18 Aug 2026 11:16:51 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9158430002E9; Tue, 18 Aug 2026 11:17:34 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 18 Aug 2026 15:10:41 +0400
-Subject: [PATCH v3 14/74] qom: convert enum properties to QAPI-aware
+Date: Tue, 18 Aug 2026 15:10:44 +0400
+Subject: [PATCH v3 17/74] x86: convert OnOffAuto properties to QAPI-aware
  registration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260818-qom-qapi-v3-14-24b8bbbe3d86@redhat.com>
+Message-Id: <20260818-qom-qapi-v3-17-24b8bbbe3d86@redhat.com>
 References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
 In-Reply-To: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
 To: qemu-devel@nongnu.org
@@ -66,40 +66,37 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- David Hildenbrand <david@kernel.org>, Igor Mammedov <imammedo@redhat.com>, 
  Richard Henderson <richard.henderson@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Jason Wang <jasowangio@gmail.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
- kvm@vger.kernel.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=19408;
+ "Michael S. Tsirkin" <mst@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6518;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=h2pcHj9oFV8Njk3sExkn4qFLcuQDW0GdsVpOdDGzDpI=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhD2353BQDuJlpjVNxRM8XiMll48+R69kWBq3R
- rrsqYwxs9WJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoQ9twAKCRDa6OEJdZac
- 5f5tD/4o3q6pQY+uFzmNiVxdfmfV1WfyhsB+p8Re34rmBzeBA+1nCtN4tFYeEtp/0AD+CKuUgQS
- j/AgDSGfolRdh9IpymAnmvuKxgfBVeRxNNXY1v3km6kzUI8bF0+xVO/xwdb9Q7xR6VTR5xzuFZZ
- wwYNRRgq+jVa1+GNvnB57/stJvHVfYmBJ5vUhUZ64cvPA5uXNWALdkUxz07KYQ5jVu+CFsSscFs
- /wOPilThG375Sb3/gkoH5tgJr96+k6B+sD1XvNclpTSCRboyX7ukeqO3D56+b9KxGi6Z4+HwFyZ
- d3lH4chmIBZ44Y1klSAaabZKwFSWOdnuApowRKO5lqaMEFxGROVwdqyuHmV98YZsP38NtL31HhW
- J4b1rT/1km/iDMIcEp4G0VDL5eI3KEImQ6cU7YV1/ZAIZJRgS6k2FrpjHHuVBxBIw60DWfS4pPg
- tVQMfl+ZETPwyvWJmJhP+LCr4I7TdCCiyCgXS0+DY83lasu8is19jVogGVEgfrJrCu0E3COvnFM
- 2wKrR/ut2LKjiBDLozUjXQoDIwOIPSA9RZQnH7RycxquB7zGIJzp0fIlZ+OnwrMAIK6PHmXB898
- 5lhdfIe+GceQnuQrqchPnJ1yyyhE3mP7Mxlw77gDAIzoFANLTlNWGzgT7iwnyTiiEf//0sM507U
- OIfN4Y0gzPdOQXA==
+ bh=SgZyvSyb89GMp5FbVLfodHDTHOL+fqH6tT2LZO1GJws=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhD24WWzVM6qFkskaUHqxWUevhNu6Nfv9IjUnw
+ Z75J9He1PyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoQ9uAAKCRDa6OEJdZac
+ 5YTMD/4+OIeuy9cG1MwBjbIRBqgCt8XZRAYwF6YFrUNllb3Af//TfpYLfTXS85JMYOABw1YIKUk
+ ytBT3RXdzx4R43wbtOzuOPZEqFOEvELRPhr8K6gbAUWpuVaqfXtvCzAZdCVC/BN4/90ieBsryBs
+ K+STZx8PZQrI5HMVSwaeRlo4EhFJpLXxGjgYvHUvFUhY41ByOr2AX3L3tF4pMx5K7Pd2x4re2mx
+ mR8nwmdbgfN5/+d++9kgPid1QAjeXxmN9oHPKwrKYwSXkFM/GGRI8lUIagU+7Kd/nCvKrFxzxT/
+ W2AfVByUzdENZniZOi2hbF/z8XJF1EC5Q3gxyW9b0wxwLQldW+sLxXot5++7PTj5qm+/lGrD3jL
+ YpHSsEwz3oRmGOguJ2vxybpZfCW+b1pzvURDAi3tSlcU+lPITTaHjMiFA/HzF2PxdHO868uWA0M
+ pXSHM+pwp8OfL6jhuz1UagvLHOy64W9GS3T9J8DkTedZLkxwVd7FcrFMvnySQyEmLSJjoOjIitL
+ IlNB23Wmjz7GzfqVym+CQHxXvkJOuNZ/lVZOPM++4aZK22YDAUfIZ0uGB6xkvz0fW7Am3n6ZO6k
+ a7z1iYS4yI3yAi0veCFJ2At6rJd9pU2JV3wxuiF8hfYfj/Tib1iBo67PhMEX7OXQZXVSAaExeko
+ ZiS93wi57WfHSfA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,455 +112,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert all callers of object_class_property_add_enum() to use the new
-object_class_property_add_qapi_enum() with the QAPI_ENUM_PROP()
-macro, which provides type information via QAPITypeInfo instead of
-raw lookup tables and string type names.
-
-This enables QMP introspection to report accurate QAPI type names
-for enum properties. Where a separate set_description call was used,
-the description is now embedded in the QAPI_ENUM_PROP initializer.
+Convert the smm, acpi, pit, and pic OnOffAuto properties from
+manual visitor-based callbacks to property_add_qapi_enum().
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- authz/list.c                             | 12 +++++++-----
- backends/hostmem.c                       | 14 ++++++++------
- crypto/secret_common.c                   | 12 +++++++-----
- crypto/tlscreds.c                        | 12 +++++++-----
- hw/i386/pc_piix.c                        | 18 ++++++++++++------
- hw/microblaze/petalogix_s3adsp1800_mmu.c | 19 +++++++++++--------
- include/chardev/char.h                   |  8 --------
- monitor/qmp.c                            | 12 +++++++-----
- net/filter.c                             | 10 +++++++---
- target/i386/kvm/kvm.c                    | 30 +++++++++++++++++-------------
- ui/console-vc.c                          |  8 +++++++-
- ui/dbus.c                                | 18 ++++++++++++++----
- ui/input-linux.c                         | 11 +++++++----
- 13 files changed, 111 insertions(+), 73 deletions(-)
+ hw/i386/x86.c | 104 +++++++++++++++++++++++++---------------------------------
+ 1 file changed, 45 insertions(+), 59 deletions(-)
 
-diff --git a/authz/list.c b/authz/list.c
-index 17aa0efd80e8..363b2ee12c98 100644
---- a/authz/list.c
-+++ b/authz/list.c
-@@ -22,6 +22,7 @@
- #include "authz/list.h"
- #include "trace.h"
- #include "qom/object_interfaces.h"
-+#include "qapi/qapi-type-infos-authz.h"
- #include "qapi/qapi-visit-authz.h"
- #include "qemu/module.h"
- 
-@@ -120,11 +121,12 @@ qauthz_list_class_init(ObjectClass *oc, const void *data)
- {
-     QAuthZClass *authz = QAUTHZ_CLASS(oc);
- 
--    object_class_property_add_enum(oc, "policy",
--                                   "QAuthZListPolicy",
--                                   &QAuthZListPolicy_lookup,
--                                   qauthz_list_prop_get_policy,
--                                   qauthz_list_prop_set_policy);
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "policy",
-+        .qapi_type = &QAuthZListPolicy_type_info,
-+        .get = qauthz_list_prop_get_policy,
-+        .set = qauthz_list_prop_set_policy,
-+    ));
- 
-     object_class_property_add(oc, "rules", "QAuthZListRule",
-                               qauthz_list_prop_get_rules,
-diff --git a/backends/hostmem.c b/backends/hostmem.c
-index 5dd5fb155c47..ce82958050e2 100644
---- a/backends/hostmem.c
-+++ b/backends/hostmem.c
-@@ -16,6 +16,7 @@
- #include "hw/core/boards.h"
- #include "qapi/error.h"
- #include "qapi/qapi-builtin-visit.h"
-+#include "qapi/qapi-type-infos-common.h"
- #include "qapi/visitor.h"
- #include "qemu/config-file.h"
- #include "qom/compat-properties.h"
-@@ -551,12 +552,13 @@ host_memory_backend_class_init(ObjectClass *oc, const void *data)
-         NULL, NULL);
-     object_class_property_set_description(oc, "host-nodes",
-         "Binds memory to the list of NUMA host nodes");
--    object_class_property_add_enum(oc, "policy", "HostMemPolicy",
--        &HostMemPolicy_lookup,
--        host_memory_backend_get_policy,
--        host_memory_backend_set_policy);
--    object_class_property_set_description(oc, "policy",
--        "Set the NUMA policy");
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "policy",
-+        .description = "Set the NUMA policy",
-+        .qapi_type = &HostMemPolicy_type_info,
-+        .get = host_memory_backend_get_policy,
-+        .set = host_memory_backend_set_policy,
-+    ));
-     object_class_property_add_bool(oc, "share",
-         host_memory_backend_get_share, host_memory_backend_set_share);
-     object_class_property_set_description(oc, "share",
-diff --git a/crypto/secret_common.c b/crypto/secret_common.c
-index a5ecb876aeba..381d23ecc8e0 100644
---- a/crypto/secret_common.c
-+++ b/crypto/secret_common.c
-@@ -22,6 +22,7 @@
- #include "crypto/secret_common.h"
- #include "crypto/cipher.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-type-infos-crypto.h"
- #include "qom/object_interfaces.h"
- #include "qemu/base64.h"
- #include "qemu/module.h"
-@@ -269,11 +270,12 @@ qcrypto_secret_class_init(ObjectClass *oc, const void *data)
- 
-     ucc->complete = qcrypto_secret_complete;
- 
--    object_class_property_add_enum(oc, "format",
--                                   "QCryptoSecretFormat",
--                                   &QCryptoSecretFormat_lookup,
--                                   qcrypto_secret_prop_get_format,
--                                   qcrypto_secret_prop_set_format);
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "format",
-+        .qapi_type = &QCryptoSecretFormat_type_info,
-+        .get = qcrypto_secret_prop_get_format,
-+        .set = qcrypto_secret_prop_set_format,
-+    ));
-     object_class_property_add_str(oc, "keyid",
-                                   qcrypto_secret_prop_get_keyid,
-                                   qcrypto_secret_prop_set_keyid);
-diff --git a/crypto/tlscreds.c b/crypto/tlscreds.c
-index fb09e295a65c..54859720bf74 100644
---- a/crypto/tlscreds.c
-+++ b/crypto/tlscreds.c
-@@ -20,6 +20,7 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-type-infos-crypto.h"
- #include "qapi-types-crypto.h"
- #include "qemu/module.h"
+diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+index f8ba3244e221..63f297a10532 100644
+--- a/hw/i386/x86.c
++++ b/hw/i386/x86.c
+@@ -24,7 +24,7 @@
  #include "qemu/error-report.h"
-@@ -221,11 +222,12 @@ qcrypto_tls_creds_class_init(ObjectClass *oc, const void *data)
-     object_class_property_add_str(oc, "dir",
-                                   qcrypto_tls_creds_prop_get_dir,
-                                   qcrypto_tls_creds_prop_set_dir);
--    object_class_property_add_enum(oc, "endpoint",
--                                   "QCryptoTLSCredsEndpoint",
--                                   &QCryptoTLSCredsEndpoint_lookup,
--                                   qcrypto_tls_creds_prop_get_endpoint,
--                                   qcrypto_tls_creds_prop_set_endpoint);
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "endpoint",
-+        .qapi_type = &QCryptoTLSCredsEndpoint_type_info,
-+        .get = qcrypto_tls_creds_prop_get_endpoint,
-+        .set = qcrypto_tls_creds_prop_set_endpoint,
-+    ));
-     object_class_property_add_str(oc, "priority",
-                                   qcrypto_tls_creds_prop_get_priority,
-                                   qcrypto_tls_creds_prop_set_priority);
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index a929cc4decd6..dac2bee88a2e 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -336,6 +336,11 @@ static const QEnumLookup PCSouthBridgeOption_lookup = {
-     .size = PC_SOUTH_BRIDGE_OPTION_MAX
- };
- 
-+static const QAPITypeInfo PCSouthBridgeOption_type_info = {
-+    .name = "PCSouthBridgeOption",
-+    .lookup = &PCSouthBridgeOption_lookup,
-+};
-+
- static int pc_get_south_bridge(Object *obj, Error **errp)
- {
-     PCMachineState *pcms = PC_MACHINE(obj);
-@@ -418,12 +423,13 @@ static void pc_i440fx_machine_options(MachineClass *m)
-     machine_class_allow_dynamic_sysbus_dev(m, TYPE_VMBUS_BRIDGE);
-     machine_class_allow_dynamic_sysbus_dev(m, TYPE_UEFI_VARS_X64);
- 
--    object_class_property_add_enum(oc, "x-south-bridge", "PCSouthBridgeOption",
--                                   &PCSouthBridgeOption_lookup,
--                                   pc_get_south_bridge,
--                                   pc_set_south_bridge);
--    object_class_property_set_description(oc, "x-south-bridge",
--                                     "Use a different south bridge than PIIX3");
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "x-south-bridge",
-+        .description = "Use a different south bridge than PIIX3",
-+        .qapi_type = &PCSouthBridgeOption_type_info,
-+        .get = pc_get_south_bridge,
-+        .set = pc_set_south_bridge,
-+    ));
-     compat_props_add(m->compat_props,
-                      pc_piix_compat_defaults, pc_piix_compat_defaults_len);
- }
-diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-index c5f64319009b..9a8fcc667812 100644
---- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
-+++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-@@ -27,6 +27,7 @@
- #include "qemu/target-info.h"
  #include "qemu/units.h"
  #include "qapi/error.h"
+-#include "qapi/qapi-visit-common.h"
 +#include "qapi/qapi-type-infos-common.h"
- #include "target/microblaze/cpu.h"
- #include "hw/core/sysbus.h"
- #include "net/net.h"
-@@ -174,14 +175,16 @@ static void petalogix_s3adsp1800_machine_class_init(ObjectClass *oc,
-     mc->init = petalogix_s3adsp1800_init;
-     mc->is_default = true;
- 
--    prop = object_class_property_add_enum(oc, "endianness", "EndianMode",
--                                          &EndianMode_lookup,
--                                          machine_get_endianness,
--                                          machine_set_endianness);
--    object_property_set_default_str(prop, target_big_endian() ? "big"
--                                                              : "little");
--    object_class_property_set_description(oc, "endianness",
--            "Defines whether the machine runs in big or little endian mode");
-+    prop = object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "endianness",
-+        .description =
-+            "Defines whether the machine runs in big or little endian mode",
-+        .qapi_type = &EndianMode_type_info,
-+        .get = machine_get_endianness,
-+        .set = machine_set_endianness,
-+    ));
-+    object_property_set_default_enum(prop,
-+        target_big_endian() ? ENDIAN_MODE_BIG : ENDIAN_MODE_LITTLE);
- }
- 
- static const TypeInfo petalogix_s3adsp1800_machine_types[] = {
-diff --git a/include/chardev/char.h b/include/chardev/char.h
-index 7377d8e60a08..f5e53b3867a3 100644
---- a/include/chardev/char.h
-+++ b/include/chardev/char.h
-@@ -343,12 +343,4 @@ static void set_encoding(Object *obj, int value, Error **errp)  \
-     cast_func(obj)->encoding = value;                           \
- }
- 
--static inline void chardev_vc_add_encoding_prop(ObjectClass *oc,
--    int (*get)(Object *, Error **),
--    void (*set)(Object *, int, Error **))
--{
--    object_class_property_add_enum(oc, "encoding", "ChardevVCEncoding",
--                                   &ChardevVCEncoding_lookup, get, set);
--}
--
- #endif
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index aec03157750c..728a58bfd5e9 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -30,6 +30,7 @@
- #include "qapi/error.h"
- #include "qapi/qapi-commands-control.h"
- #include "qapi/qapi-commands-char.h"
-+#include "qapi/qapi-type-infos-qom.h"
- #include "qobject/qdict.h"
- #include "qobject/qjson.h"
- #include "qobject/qlist.h"
-@@ -133,11 +134,12 @@ static void monitor_qmp_class_init(ObjectClass *cls, const void *data)
-     object_class_property_add_bool(cls, "pretty",
-                                    monitor_qmp_get_pretty,
-                                    monitor_qmp_set_pretty);
--    object_class_property_add_enum(cls, "close-action",
--                                   "MonitorQMPCloseAction",
--                                   &MonitorQMPCloseAction_lookup,
--                                   monitor_qmp_get_close_action,
--                                   monitor_qmp_set_close_action);
-+    object_class_property_add_qapi_enum(cls, QAPI_ENUM_PROP(
-+        .name = "close-action",
-+        .qapi_type = &MonitorQMPCloseAction_type_info,
-+        .get = monitor_qmp_get_close_action,
-+        .set = monitor_qmp_set_close_action,
-+    ));
- 
-     moncls->emit_event = monitor_qmp_emit_event;
-     moncls->requires_iothread = monitor_qmp_requires_iothread;
-diff --git a/net/filter.c b/net/filter.c
-index 389f3b0bfefb..79883af22a54 100644
---- a/net/filter.c
-+++ b/net/filter.c
-@@ -8,6 +8,7 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-type-infos-common.h"
- #include "qapi/qmp/qerror.h"
- #include "qemu/error-report.h"
- 
-@@ -342,9 +343,12 @@ static void netfilter_class_init(ObjectClass *oc, const void *data)
- 
-     object_class_property_add_str(oc, "netdev",
-                                   netfilter_get_netdev_id, netfilter_set_netdev_id);
--    object_class_property_add_enum(oc, "queue", "NetFilterDirection",
--                                   &NetFilterDirection_lookup,
--                                   netfilter_get_direction, netfilter_set_direction);
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "queue",
-+        .qapi_type = &NetFilterDirection_type_info,
-+        .get = netfilter_get_direction,
-+        .set = netfilter_set_direction,
-+    ));
-     object_class_property_add_str(oc, "status",
-                                   netfilter_get_status, netfilter_set_status);
-     object_class_property_add_str(oc, "position",
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 644c45fb0a02..601b78df5363 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -14,6 +14,8 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/qapi-events-run-state.h"
-+#include "qapi/qapi-type-infos-common.h"
-+#include "qapi/qapi-type-infos-run-state.h"
- #include "qapi/error.h"
+ #include "qapi/qapi-visit-machine.h"
  #include "qapi/visitor.h"
- #include <math.h>
-@@ -7089,12 +7091,13 @@ static void kvm_arch_set_honor_guest_pat(Object *obj, int value, Error **errp)
+ #include "system/qtest.h"
+@@ -188,21 +188,16 @@ bool x86_machine_is_smm_enabled(const X86MachineState *x86ms)
+     return false;
+ }
  
- void kvm_arch_accel_class_init(ObjectClass *oc)
+-static void x86_machine_get_smm(Object *obj, Visitor *v, const char *name,
+-                               void *opaque, Error **errp)
++static int x86_machine_get_smm(Object *obj, Error **errp)
  {
--    object_class_property_add_enum(oc, "notify-vmexit", "NotifyVMexitOption",
--                                   &NotifyVmexitOption_lookup,
--                                   kvm_arch_get_notify_vmexit,
--                                   kvm_arch_set_notify_vmexit);
--    object_class_property_set_description(oc, "notify-vmexit",
--                                          "Enable notify VM exit");
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "notify-vmexit",
-+        .description = "Enable notify VM exit",
-+        .qapi_type = &NotifyVmexitOption_type_info,
-+        .get = kvm_arch_get_notify_vmexit,
-+        .set = kvm_arch_set_notify_vmexit,
-+    ));
+     X86MachineState *x86ms = X86_MACHINE(obj);
+-    OnOffAuto smm = x86ms->smm;
+-
+-    visit_type_OnOffAuto(v, name, &smm, errp);
++    return x86ms->smm;
+ }
  
-     object_class_property_add(oc, "notify-window", "uint32",
-                               kvm_arch_get_notify_window,
-@@ -7127,13 +7130,14 @@ void kvm_arch_accel_class_init(ObjectClass *oc)
-     object_class_property_set_description(oc, "xen-evtchn-max-pirq",
-                                           "Maximum number of Xen PIRQs");
+-static void x86_machine_set_smm(Object *obj, Visitor *v, const char *name,
+-                               void *opaque, Error **errp)
++static void x86_machine_set_smm(Object *obj, int value, Error **errp)
+ {
+     X86MachineState *x86ms = X86_MACHINE(obj);
+-
+-    visit_type_OnOffAuto(v, name, &x86ms->smm, errp);
++    x86ms->smm = value;
+ }
  
--    object_class_property_add_enum(oc, "honor-guest-pat", "OnOffAuto",
--                                   &OnOffAuto_lookup,
--                                   kvm_arch_get_honor_guest_pat,
--                                   kvm_arch_set_honor_guest_pat);
--    object_class_property_set_description(oc, "honor-guest-pat",
--                                          "Disable KVM quirk that ignores guest PAT "
--                                          "memory type settings (default: auto)");
+ bool x86_machine_is_acpi_enabled(const X86MachineState *x86ms)
+@@ -213,55 +208,40 @@ bool x86_machine_is_acpi_enabled(const X86MachineState *x86ms)
+     return true;
+ }
+ 
+-static void x86_machine_get_acpi(Object *obj, Visitor *v, const char *name,
+-                                 void *opaque, Error **errp)
++static int x86_machine_get_acpi(Object *obj, Error **errp)
+ {
+     X86MachineState *x86ms = X86_MACHINE(obj);
+-    OnOffAuto acpi = x86ms->acpi;
+-
+-    visit_type_OnOffAuto(v, name, &acpi, errp);
++    return x86ms->acpi;
+ }
+ 
+-static void x86_machine_set_acpi(Object *obj, Visitor *v, const char *name,
+-                                 void *opaque, Error **errp)
++static void x86_machine_set_acpi(Object *obj, int value, Error **errp)
+ {
+     X86MachineState *x86ms = X86_MACHINE(obj);
+-
+-    visit_type_OnOffAuto(v, name, &x86ms->acpi, errp);
++    x86ms->acpi = value;
+ }
+ 
+-static void x86_machine_get_pit(Object *obj, Visitor *v, const char *name,
+-                                    void *opaque, Error **errp)
++static int x86_machine_get_pit(Object *obj, Error **errp)
+ {
+     X86MachineState *x86ms = X86_MACHINE(obj);
+-    OnOffAuto pit = x86ms->pit;
+-
+-    visit_type_OnOffAuto(v, name, &pit, errp);
++    return x86ms->pit;
+ }
+ 
+-static void x86_machine_set_pit(Object *obj, Visitor *v, const char *name,
+-                                    void *opaque, Error **errp)
++static void x86_machine_set_pit(Object *obj, int value, Error **errp)
+ {
+     X86MachineState *x86ms = X86_MACHINE(obj);
+-
+-    visit_type_OnOffAuto(v, name, &x86ms->pit, errp);
++    x86ms->pit = value;
+ }
+ 
+-static void x86_machine_get_pic(Object *obj, Visitor *v, const char *name,
+-                                void *opaque, Error **errp)
++static int x86_machine_get_pic(Object *obj, Error **errp)
+ {
+     X86MachineState *x86ms = X86_MACHINE(obj);
+-    OnOffAuto pic = x86ms->pic;
+-
+-    visit_type_OnOffAuto(v, name, &pic, errp);
++    return x86ms->pic;
+ }
+ 
+-static void x86_machine_set_pic(Object *obj, Visitor *v, const char *name,
+-                                void *opaque, Error **errp)
++static void x86_machine_set_pic(Object *obj, int value, Error **errp)
+ {
+     X86MachineState *x86ms = X86_MACHINE(obj);
+-
+-    visit_type_OnOffAuto(v, name, &x86ms->pic, errp);
++    x86ms->pic = value;
+ }
+ 
+ static char *x86_machine_get_oem_id(Object *obj, Error **errp)
+@@ -391,31 +371,37 @@ static void x86_machine_class_init(ObjectClass *oc, const void *data)
+     mc->kvm_type = x86_kvm_type;
+     nc->raise_nmi = x86_nmi;
+ 
+-    object_class_property_add(oc, X86_MACHINE_SMM, "OnOffAuto",
+-        x86_machine_get_smm, x86_machine_set_smm,
+-        NULL, NULL);
+-    object_class_property_set_description(oc, X86_MACHINE_SMM,
+-        "Enable SMM");
 +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "honor-guest-pat",
-+        .description = "Disable KVM quirk that ignores guest PAT "
-+                       "memory type settings (default: auto)",
++        .name = X86_MACHINE_SMM,
++        .description = "Enable SMM",
 +        .qapi_type = &OnOffAuto_type_info,
-+        .get = kvm_arch_get_honor_guest_pat,
-+        .set = kvm_arch_set_honor_guest_pat,
++        .get = x86_machine_get_smm,
++        .set = x86_machine_set_smm,
 +    ));
- }
  
- void kvm_set_max_apic_id(uint32_t max_apic_id)
-diff --git a/ui/console-vc.c b/ui/console-vc.c
-index 53d9e9d39b36..1e46eceeded2 100644
---- a/ui/console-vc.c
-+++ b/ui/console-vc.c
-@@ -6,6 +6,7 @@
- 
- #include "chardev/char.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-type-infos-char.h"
- #include "qemu/option.h"
- #include "qemu/queue.h"
- #include "qom/compat-properties.h"
-@@ -318,7 +319,12 @@ static void char_vc_class_init(ObjectClass *oc, const void *data)
-     cc->supports_size_opts = true;
-     cc->supports_encoding_opts = true;
- 
--    chardev_vc_add_encoding_prop(oc, get_encoding, set_encoding);
+-    object_class_property_add(oc, X86_MACHINE_ACPI, "OnOffAuto",
+-        x86_machine_get_acpi, x86_machine_set_acpi,
+-        NULL, NULL);
+-    object_class_property_set_description(oc, X86_MACHINE_ACPI,
+-        "Enable ACPI");
 +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "encoding",
-+        .qapi_type = &ChardevVCEncoding_type_info,
-+        .get = get_encoding,
-+        .set = set_encoding,
++        .name = X86_MACHINE_ACPI,
++        .description = "Enable ACPI",
++        .qapi_type = &OnOffAuto_type_info,
++        .get = x86_machine_get_acpi,
++        .set = x86_machine_set_acpi,
 +    ));
- }
  
- static void char_vc_init(Object *obj)
-diff --git a/ui/dbus.c b/ui/dbus.c
-index 7be0f8e26119..afc321514c68 100644
---- a/ui/dbus.c
-+++ b/ui/dbus.c
-@@ -38,6 +38,8 @@
- #include "qemu/audio.h"
- #include "audio/audio_int.h" /* FIXME: use QOM dynamic cast instead of drv->name */
- #include "qapi/error.h"
-+#include "qapi/qapi-type-infos-char.h"
-+#include "qapi/qapi-type-infos-ui.h"
- #include "trace.h"
- 
- #include "dbus.h"
-@@ -508,9 +510,12 @@ dbus_display_class_init(ObjectClass *oc, const void *data)
-     object_class_property_add_bool(oc, "p2p", get_dbus_p2p, set_dbus_p2p);
-     object_class_property_add_str(oc, "addr", get_dbus_addr, set_dbus_addr);
-     object_class_property_add_str(oc, "audiodev", get_audiodev, set_audiodev);
--    object_class_property_add_enum(oc, "gl-mode",
--                                   "DisplayGLMode", &DisplayGLMode_lookup,
--                                   get_gl_mode, set_gl_mode);
+-    object_class_property_add(oc, X86_MACHINE_PIT, "OnOffAuto",
+-                              x86_machine_get_pit,
+-                              x86_machine_set_pit,
+-                              NULL, NULL);
+-    object_class_property_set_description(oc, X86_MACHINE_PIT,
+-        "Enable i8254 PIT");
 +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "gl-mode",
-+        .qapi_type = &DisplayGLMode_type_info,
-+        .get = get_gl_mode,
-+        .set = set_gl_mode,
++        .name = X86_MACHINE_PIT,
++        .description = "Enable i8254 PIT",
++        .qapi_type = &OnOffAuto_type_info,
++        .get = x86_machine_get_pit,
++        .set = x86_machine_set_pit,
 +    ));
- }
  
- #define TYPE_CHARDEV_VC "chardev-vc"
-@@ -602,7 +607,12 @@ dbus_vc_class_init(ObjectClass *oc, const void *data)
-     cc->chr_open = dbus_vc_open;
-     cc->supports_encoding_opts = true;
- 
--    chardev_vc_add_encoding_prop(oc, get_encoding, set_encoding);
+-    object_class_property_add(oc, X86_MACHINE_PIC, "OnOffAuto",
+-                              x86_machine_get_pic,
+-                              x86_machine_set_pic,
+-                              NULL, NULL);
+-    object_class_property_set_description(oc, X86_MACHINE_PIC,
+-        "Enable i8259 PIC");
 +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "encoding",
-+        .qapi_type = &ChardevVCEncoding_type_info,
-+        .get = get_encoding,
-+        .set = set_encoding,
++        .name = X86_MACHINE_PIC,
++        .description = "Enable i8259 PIC",
++        .qapi_type = &OnOffAuto_type_info,
++        .get = x86_machine_get_pic,
++        .set = x86_machine_set_pic,
 +    ));
- }
  
- static void
-diff --git a/ui/input-linux.c b/ui/input-linux.c
-index f4eee1ffd7ec..715d1f589297 100644
---- a/ui/input-linux.c
-+++ b/ui/input-linux.c
-@@ -6,6 +6,7 @@
- 
- #include "qemu/osdep.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-type-infos-common.h"
- #include "qemu/config-file.h"
- #include "qemu/main-loop.h"
- #include "qemu/module.h"
-@@ -506,10 +507,12 @@ static void input_linux_class_init(ObjectClass *oc, const void *data)
-     object_class_property_add_bool(oc, "repeat",
-                                    input_linux_get_repeat,
-                                    input_linux_set_repeat);
--    object_class_property_add_enum(oc, "grab-toggle", "GrabToggleKeys",
--                                   &GrabToggleKeys_lookup,
--                                   input_linux_get_grab_toggle,
--                                   input_linux_set_grab_toggle);
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "grab-toggle",
-+        .qapi_type = &GrabToggleKeys_type_info,
-+        .get = input_linux_get_grab_toggle,
-+        .set = input_linux_set_grab_toggle,
-+    ));
- }
- 
- static const TypeInfo input_linux_info = {
+     object_class_property_add_str(oc, X86_MACHINE_OEM_ID,
+                                   x86_machine_get_oem_id,
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
