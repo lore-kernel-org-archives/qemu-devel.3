@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D283CC5DF86
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 23:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4290AC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 23:58:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwTgU-0001u2-K9; Tue, 18 Aug 2026 19:57:34 -0400
+	id 1wwTgR-0001oi-EY; Tue, 18 Aug 2026 19:57:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwTgS-0001qS-OK
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:57:32 -0400
-Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwTgP-0001oD-S3
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:57:29 -0400
+Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwTgQ-0005CR-K7
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:57:32 -0400
-Received: by mail-oi1-x235.google.com with SMTP id
- 5614622812f47-4a4cb36ae00so357674b6e.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 16:57:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wwTgM-0005C0-Qz
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 19:57:29 -0400
+Received: by mail-oi1-x232.google.com with SMTP id
+ 5614622812f47-4b28db06775so314718b6e.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 16:57:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1787097449; x=1787702249;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1787097446; x=1787702246;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=isMuBHhI/dNebvc66IvHXOnjmMr0h/+Y4YeEnzJOcGs=;
- b=F5F05655aZM0igo9T3GGH7g7CuFg2Lgd8yWeNgwDwY3RMEYa6KC66VbB0ufqKEsyCG
- 0eVouh2pGK7mljEyQyOzWa/qwLy2HcAjKZEWH4EWtgVCsBDecGPTKA4wbl0GUMofqD3g
- tJyat1R0CKCq5yLze1vRf/PobXY2UUOq1ZTh/uDbj0mBHVJkkVmuv4jwD43DewPlS29v
- Ac4DKrDX5U+HS3H8cPqNM3O7g/P7KkmAH+IIS+R/c9HRLH4YpwOemDQdjP129SHvp+YT
- MKZxBegvuw+Sx/W2bei5eiMZHUenTDPghYUbSNW8aheqZxnvK1LzIovdac5GnqMqNOxI
- 6ZtQ==
+ bh=YfOh8OoaQYgpTQSmCrfdR2/AwfLWimXK2o/Oo7feBGg=;
+ b=pk0YpdWUB4n5J826uPuThdxOaT/ccm1OSYSeQbRUJw1At98EOlSeaCQxemNL/LO2xG
+ RWGfoFQOkvdVSRgZHm3hS1ZJ/xE+fkNq3fRzcvJy8lTpjSQT7OlFktqj15wYOOtHhjdj
+ GcxRo/VsZ6KlrcjjNxDVKPnTlYb5ERiqr+cten4or4j5Ps1y5dnVyDZYrIbF1Osee5sI
+ jDSBirROhHzPDB6tUzJt5A/7H5PL6hVCp6RzfHQXjA8knIAaewHjBqwW9RslH/STa488
+ gyU2m/ZggX3UyKXhUYyFMmBa+GJH9/udUrKWHwMJ53bmhk1ChPW9GwH1Ay0teXye5Y87
+ lu6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787097449; x=1787702249;
+ d=1e100.net; s=20251104; t=1787097446; x=1787702246;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=isMuBHhI/dNebvc66IvHXOnjmMr0h/+Y4YeEnzJOcGs=;
- b=HebtlpmwVo4UyEIlhrKJW5WVsxQU1XNryNkjlq24UvTpe6T5uDA0Q8rkPAz+83M0Qn
- +cgwewqY3l85Imo27YeD8Fw497MyHnD4cPGOQA1jiT0sGhOqC3w6TDsbU62Fi8N2K1wh
- pqQjvEFkhJ+VYYVRZF1hMo0ucZaUPeml/HSth+UejjWNpNsaMBRAo4T+v2P/oS86hVlA
- ujSQ1TGRLB2BcwwzOcQRk0AOkmMcxvBBswSgJS0nfyVPPdmQplVovmjqS+sWRKRB+v7H
- RKafDQ2RhMHDgykx5YaJ8VZkbG8tUJjhv5eDlaZKbiQSfyrXt6WjDXb1AJJ1/BDQnqGo
- 8aKA==
-X-Gm-Message-State: AOJu0Yw70NaSSp4z0fAh1vVs4z8oE+jJzofGZZDVk8Lq5nUBhjzcaR0e
- 6K7OUpUp3ffl8uWH1tOXVY8Kk6HzFsgbC5/nw5MJFT06TIPHjf4dvjwTAMZruRiyBLc=
-X-Gm-Gg: AR+sD120Hzjhx63hm5dLR0mccxUX+3EA15SpH7SRMGtkd3hWtjsarF0JziGmJC6csxn
- R9HdVU0YfUNMaGd8PIBYPrSEnrxoy9e+XKBLfv4+lx7equHDqNC/Cnk/Hv/uZHjf8ZS3kJctQNz
- vILnHJf9Gw2c72e1CzDzFvc0qZNtL5lBqc46Ce7fsI97IOB+4Ps+fGocCYAZ5HgNs3N/2G5turm
- LTQ03z7wjVwB+++eyFyCQaFT4IujzXpGMGLcg0N/ixYzgI8vW6WXGsjceIcHJx1kCSOjahoee4P
- /zckqnIZvOFEWUqZ97HWzlB9cJCxIh9P62CLT2u5h06DY1+tGBskQ1elbnTTQmLsGx2OG/IcCJj
- 1t5L2zGFq8eLcX4SlSamhRiW+pgsR1SbBB+tNsAkEDu60ZoRtLYWQuh3184LAWYCRTpKBkvGuzB
- BfTvCLi+l0jihjzdlxRI7dpzwjFTB/Dwv4jNQU11Mvf4sbu5uenA9e26FChA==
-X-Received: by 2002:a05:6808:148b:b0:4b2:8e1c:2b36 with SMTP id
- 5614622812f47-4b2bcb68105mr314089b6e.20.1787097449405; 
- Tue, 18 Aug 2026 16:57:29 -0700 (PDT)
+ bh=YfOh8OoaQYgpTQSmCrfdR2/AwfLWimXK2o/Oo7feBGg=;
+ b=kUSohu+Th8PUG9BdW1C9yp5aAKJQRITdbF9nZ5gwKxlOE+P/TO7MvPTefnjJQzQxa4
+ YZxOANXAdoB3dwiHyscwY1II3bicYpyIsIr7OrqaEa+tguWs1UXDr/3Yh5nQQGj3x8TI
+ E2oEm6YdBnMc9Kazl3EFjsVf/gpJ2OAo+6o8KE2HajT+bVF9owGhjDGXpga3JMEytb/H
+ b6I9vAUOxrLpNiMLLwIJgJiSdN5pitcPXxv3CN9cv1BrNaYetcFjgEs/zvWgWKEVZELz
+ lTzNEcjdHKnvRzKeEF5jUGDAqugL6GHJbyrVGo5mcm+VVcy6bnPhQnWpKHAbf3J0dKE9
+ pW0A==
+X-Gm-Message-State: AOJu0Yw6IsHuTLPReiLcsSrC8g87T23zNbV6edBGveLv9rR18ufKlSaI
+ FgmfdEOqRYG9ExTj4FQeghQHXrlew9s0Gg/yHk2Wty3cHmo4TVIJfukZc2cHl5u5nPs=
+X-Gm-Gg: AR+sD10ZLnUbvxstafY9eC4lWlujOCPmI3peN+3xckTH1x4RkErXfXM+W7cLzpAyxXW
+ J3xvYrkMg/HsRtI+NKlvhU3i54glwZXmpka3Nq6w1+x+zROzSFfLNw6hIRCGIegpuNzMsELXz+C
+ oodcOUHQzJ9uxKxeS7Z7qf9949Krwyjpd/BgGEIfSM9MYxeT6/SQWaNATnEGVWGoa5fKtUzgn9l
+ DaiGRCl6ToxrrF6NxHvQrisByNQ6LifCY6RlGd8Pl+2VYFV4g4BJ3u6hF4UkFe7SCE7k+jEwF9n
+ azHR56WNluvGF0RbdF9c1Ou/6FIdxped1xK1srd+Zuy3U+AX7t64WiD4+20uEMbwB94z7MMc3nC
+ 1ofTyiu7URrbyopuS9AkFuQNz15I/zZ7sqNy3s7EA4OS5XoVLSLHV3rdIpKUNc2RoKJtnzePkdG
+ gC6wfnZFv9Bs6dFrGxm47MMn9HA1DjfpY1iPian/4bSlKO+no=
+X-Received: by 2002:a05:6808:238d:b0:4b2:8e24:799 with SMTP id
+ 5614622812f47-4b2bcb4e333mr298202b6e.17.1787097445438; 
+ Tue, 18 Aug 2026 16:57:25 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-4b2906a3edesm4835341b6e.0.2026.08.18.16.57.27
+ 5614622812f47-4b2906a3edesm4835341b6e.0.2026.08.18.16.57.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 16:57:28 -0700 (PDT)
+ Tue, 18 Aug 2026 16:57:23 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Tue, 18 Aug 2026 17:55:56 -0600
-Subject: [PATCH v4 03/40] bsd-user: Add bsd-signal.h with sigaction through
- sigreturn
+Date: Tue, 18 Aug 2026 17:55:54 -0600
+Subject: [PATCH v4 01/40] bsd-user: Rename cpu_env to env throughout bsd-user
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260818-misc-2026q2-v4-3-09bf5647c98e@bsdimp.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260818-misc-2026q2-v4-1-09bf5647c98e@bsdimp.com>
 References: <20260818-misc-2026q2-v4-0-09bf5647c98e@bsdimp.com>
 In-Reply-To: <20260818-misc-2026q2-v4-0-09bf5647c98e@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -79,28 +78,26 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
- Kyle Evans <kevans@FreeBSD.org>, Jessica Clarke <jrtc27@jrtc27.com>, 
- =?utf-8?q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>, 
  Richard Henderson <richard.henderson@linaro.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9650; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=oUO6qnw8M2WT+brJJsIeDGb0dGGZiOpvDTnPwmkDNy8=;
- b=owEBiQJ2/ZANAwAKAWwc0Sh9sBEAAcsmYgBqhPEiw3kNNkWYZEm/tnKhr6wtoGcaXxDLl4L+F
- E2p21dlRgqJAk8EAAEKADkWIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaoTxIhsUgAAAAAAEAA5t
- YW51MiwyLjUrMS4xMiwyLDMACgkQbBzRKH2wEQDb4Q/+NeoCRdhNaVqcmMxZ16AnQvbtW4z6jF0
- fb3F/3S4tkUretXJSYe9aCiUPzKcBRK+tWtEKUUlOG/AB+yu/wTTUi9gpp7obAelOtFPXaBysUu
- 0787xcXyo2qUPGffAM+59jmd66eZkKaHXQD/Ya9MeyP81U5K8IANrtCrxC75N5kGuw2b9qrCx1b
- M2R4g++k1eu9olH16+ss+ocjuv4D052va1zb8Z0aGmsm7sGS69qGbSgcSaJ2YVFHP9VcjYXKXUd
- /0kXwTR9KV2X9oCkhjiYSlyG3GAJuXMNXwxy5VkmhNxEcSmOjnl/eoP1PbDSZWEhofr2VttY7/y
- 6trct7JhvcMEcuezMcqsbUMBnQ//sO8RY7LegbKW5lCjtCwbBZ0gNgwfvCEqwvK/U3Dkd8vxkFy
- F6xlUOY/XrhhxexWUIEO59jrh9+6/NEH65Ua62ewGySgGOotXSdOBVTOdDgMXdIaEemmLUZkalx
- bamDkNjRStGSwQgL8Y3I45im5NoIG3PHsj5gIv/JdqilQ7wJBRezdiIa0Rx+++85Vu9nUlU/2NX
- /klxXEd0Vx6mMGJ0VXlTo+CPXAl85sVo9P8J+PfGpX5+zHo5w+Cs4e2NR4I+k3dq6p+M8E0IQ9h
- Ob/CMLH3Ttb5MQKV8hLmowQjB2vEVe8VYWlYgeWjxj2R5lHAF0eM=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=23722; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=E6Pqw9RKHOUbzH508FXwoeSGSiLNeRFD9I4NltDh4L4=;
+ b=owEBiQJ2/ZANAwAKAWwc0Sh9sBEAAcsmYgBqhPEf84pusYvFP5bqwilbs05K9j1qYmSKO0KC4
+ vABus7q2/iJAk8EAAEKADkWIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCaoTxHxsUgAAAAAAEAA5t
+ YW51MiwyLjUrMS4xMiwyLDMACgkQbBzRKH2wEQDZIw//TcnRfAP/8gQfVp9SKWPycVc/BrUUQsw
+ mUDtz5M+TCjMWhssfVNWJp2khuisLqg8XP6NLd6QVPEAifetEPSpb212VoHNQJMJCfnpqdS2+L3
+ 8s30sxUK3chSiD1ah2yvHiKpFLzgifGKesXiTW3W30mHFz4Kxb260lmxPi0FzIuKAn/FvOkCfye
+ p0T0jnrROH3zm1hPLwk6BzJHuAxsvCIGNIso3YjQ8BNO1apQGqY7IWk2DlQalpupLReXtyZ8yj2
+ ffj1RY8k7mtRmfDLah9Ahp9RMcO5Cg9ueDcgfY+n/AOAfZOo6xwlpyDAwkLq4GIu9t9Hdvb0zDt
+ RCi74i55Rx5EGCeClsh0s73lgLWow0/uvTzfVjVQnu98QSPTpr0kG0lA2Fum9wRZCFu0pCIuxNX
+ 813rSr/WHw+kI26ak0OVejjtyYjDLoZRsNxvO1WPYfvQICmG0ITnWiCsHRqKmXlVj9ttvAn2wxE
+ xoBbaAfVyWBc7Rx5YwQDDlFsflbniMJQ9MXmOq20LBXsJNIcCCfkUy/114KEm6+vFx8DMsIihc9
+ srjCPoagbBOEwfh8n63in/P61Am9UE91DfS4UJGykdwCraqWu0q09ZDj5r3F+lFNqXO/Js4/DXY
+ /je9n4Bn3H56kkdGUHokUZ7tPYACCBt7NSBKLWKm0xzrga7lRQJM=
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::235;
- envelope-from=imp@bsdimp.com; helo=mail-oi1-x235.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::232;
+ envelope-from=imp@bsdimp.com; helo=mail-oi1-x232.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -122,303 +119,620 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the first set of signal-related system call shims: sigaction,
-sigprocmask, sigpending, sigsuspend, and sigreturn. Also add the
-do_sigprocmask and target_to_host_sigevent helper functions to signal.c
-and their declarations to signal-common.h.
+Replace 'void *cpu_env' parameters with 'CPUArchState *env' across all
+bsd-user source files. This improves type safety and aligns with the
+convention used in the rest of the codebase.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
-Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
-Signed-off-by: Mikaël Urankar <mikael.urankar@gmail.com>
 Assisted-by: Claude Opus 4.6 (1M context)
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/bsd-signal.h         | 151 ++++++++++++++++++++++++++++++++++++++++++
- bsd-user/freebsd/os-syscall.c |   1 +
- bsd-user/signal-common.h      |   4 ++
- bsd-user/signal.c             |  67 +++++++++++++++++++
- 4 files changed, 223 insertions(+)
+ bsd-user/aarch64/target.h     |  2 +-
+ bsd-user/arm/target.h         |  2 +-
+ bsd-user/bsd-file.h           | 28 +++++++++++++--------------
+ bsd-user/bsd-mem.h            |  4 ++--
+ bsd-user/bsd-proc.h           |  8 ++++----
+ bsd-user/freebsd/os-proc.c    |  4 ++--
+ bsd-user/freebsd/os-proc.h    | 26 ++++++++++++-------------
+ bsd-user/freebsd/os-sys.c     |  4 ++--
+ bsd-user/freebsd/os-syscall.c | 44 +++++++++++++++++++++----------------------
+ bsd-user/i386/target.h        |  2 +-
+ bsd-user/qemu.h               |  6 +++---
+ bsd-user/riscv/target.h       |  2 +-
+ bsd-user/x86_64/target.h      |  2 +-
+ 13 files changed, 67 insertions(+), 67 deletions(-)
 
-diff --git a/bsd-user/bsd-signal.h b/bsd-user/bsd-signal.h
-new file mode 100644
-index 0000000000..49e58d7436
---- /dev/null
-+++ b/bsd-user/bsd-signal.h
-@@ -0,0 +1,151 @@
-+/*
-+ * signal related system call shims
-+ *
-+ * Copyright (c) 2013 Stacey D. Son
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef BSD_SIGNAL_H
-+#define BSD_SIGNAL_H
-+
-+#include <signal.h>
-+
-+/* sigaction(2) */
-+static inline abi_long do_bsd_sigaction(abi_long arg1, abi_long arg2,
-+                                        abi_long arg3)
-+{
-+    abi_long ret;
-+    struct target_sigaction *old_act, act, oact, *pact;
-+
-+    if (arg2) {
-+        if (!lock_user_struct(VERIFY_READ, old_act, arg2, 1)) {
-+            return -TARGET_EFAULT;
-+        }
-+        act._sa_handler = old_act->_sa_handler;
-+        act.sa_flags = old_act->sa_flags;
-+        memcpy(&act.sa_mask, &old_act->sa_mask, sizeof(target_sigset_t));
-+        unlock_user_struct(old_act, arg2, 0);
-+        pact = &act;
-+    } else {
-+        pact = NULL;
-+    }
-+    ret = get_errno(do_sigaction(arg1, pact, &oact));
-+    if (!is_error(ret) && arg3) {
-+        if (!lock_user_struct(VERIFY_WRITE, old_act, arg3, 0)) {
-+            return -TARGET_EFAULT;
-+        }
-+        old_act->_sa_handler = oact._sa_handler;
-+        old_act->sa_flags = oact.sa_flags;
-+        memcpy(&old_act->sa_mask, &oact.sa_mask, sizeof(target_sigset_t));
-+        unlock_user_struct(old_act, arg3, 1);
-+    }
-+    return ret;
-+}
-+
-+
-+/* sigprocmask(2) */
-+static inline abi_long do_bsd_sigprocmask(abi_long arg1, abi_ulong arg2,
-+                                          abi_ulong arg3)
-+{
-+    abi_long ret;
-+    void *p;
-+    sigset_t set, oldset, *set_ptr;
-+    int how;
-+
-+    ret = 0;
-+    if (arg2) {
-+        p = lock_user(VERIFY_READ, arg2, sizeof(target_sigset_t), 1);
-+        if (p == NULL) {
-+            return -TARGET_EFAULT;
-+        }
-+        target_to_host_sigset(&set, p);
-+        unlock_user(p, arg2, 0);
-+        set_ptr = &set;
-+        switch (arg1) {
-+        case TARGET_SIG_BLOCK:
-+            how = SIG_BLOCK;
-+            break;
-+        case TARGET_SIG_UNBLOCK:
-+            how = SIG_UNBLOCK;
-+            break;
-+        case TARGET_SIG_SETMASK:
-+            how = SIG_SETMASK;
-+            break;
-+        default:
-+            return -TARGET_EINVAL;
-+        }
-+    } else {
-+        how = 0;
-+        set_ptr = NULL;
-+    }
-+    ret = do_sigprocmask(how, set_ptr, &oldset);
-+    if (!is_error(ret) && arg3) {
-+        p = lock_user(VERIFY_WRITE, arg3, sizeof(target_sigset_t), 0);
-+        if (p == NULL) {
-+            return -TARGET_EFAULT;
-+        }
-+        host_to_target_sigset(p, &oldset);
-+        unlock_user(p, arg3, sizeof(target_sigset_t));
-+    }
-+    return ret;
-+}
-+
-+/* sigpending(2) */
-+static inline abi_long do_bsd_sigpending(abi_long arg1)
-+{
-+    abi_long ret;
-+    void *p;
-+    sigset_t set;
-+
-+    ret = get_errno(sigpending(&set));
-+    if (!is_error(ret)) {
-+        p = lock_user(VERIFY_WRITE, arg1, sizeof(target_sigset_t), 0);
-+        if (p == NULL) {
-+            return -TARGET_EFAULT;
-+        }
-+        host_to_target_sigset(p, &set);
-+        unlock_user(p, arg1, sizeof(target_sigset_t));
-+    }
-+    return ret;
-+}
-+
-+/* sigsuspend(2) */
-+static inline abi_long do_bsd_sigsuspend(CPUArchState *env, abi_long arg1,
-+                                         abi_long arg2)
-+{
-+    CPUState *cpu = env_cpu(env);
-+    TaskState *ts = cpu->opaque;
-+    void *p;
-+    abi_long ret;
-+
-+    p = lock_user(VERIFY_READ, arg1, sizeof(target_sigset_t), 1);
-+    if (p == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    target_to_host_sigset(&ts->sigsuspend_mask, p);
-+    unlock_user(p, arg1, 0);
-+
-+    ret = get_errno(sigsuspend(&ts->sigsuspend_mask));
-+    /* XXX Trivially true until safe_syscall */
-+    if (ret != -TARGET_ERESTART) {
-+        ts->in_sigsuspend = true;
-+    }
-+
-+    return ret;
-+}
-+
-+/* sigreturn(2) */
-+static inline abi_long do_bsd_sigreturn(CPUArchState *env, abi_long arg1)
-+{
-+    if (block_signals()) {
-+        return -TARGET_ERESTART;
-+    }
-+    return do_sigreturn(env, arg1);
-+}
-+
-+/* sigvec(2) - not defined */
-+/* sigblock(2) - not defined */
-+/* sigsetmask(2) - not defined */
-+/* sigstack(2) - not defined */
-+
-+#endif /* BSD_SIGNAL_H */
+diff --git a/bsd-user/aarch64/target.h b/bsd-user/aarch64/target.h
+index 702aeb7fc5..37b9817fe1 100644
+--- a/bsd-user/aarch64/target.h
++++ b/bsd-user/aarch64/target.h
+@@ -12,7 +12,7 @@
+ /*
+  * aaarch64 ABI does not 'lump' the registers for 64-bit args.
+  */
+-static inline bool regpairs_aligned(void *cpu_env)
++static inline bool regpairs_aligned(CPUArchState *env)
+ {
+     return false;
+ }
+diff --git a/bsd-user/arm/target.h b/bsd-user/arm/target.h
+index 7c423ec575..cf131f29fb 100644
+--- a/bsd-user/arm/target.h
++++ b/bsd-user/arm/target.h
+@@ -12,7 +12,7 @@
+ /*
+  * arm EABI 'lumps' the registers for 64-bit args.
+  */
+-static inline bool regpairs_aligned(void *cpu_env)
++static inline bool regpairs_aligned(CPUArchState *env)
+ {
+     return true;
+ }
+diff --git a/bsd-user/bsd-file.h b/bsd-user/bsd-file.h
+index dca1518cb1..dec59bd80b 100644
+--- a/bsd-user/bsd-file.h
++++ b/bsd-user/bsd-file.h
+@@ -72,7 +72,7 @@ static abi_long do_bsd_read(abi_long arg1, abi_long arg2, abi_long arg3)
+ }
+ 
+ /* pread(2) */
+-static abi_long do_bsd_pread(void *cpu_env, abi_long arg1,
++static abi_long do_bsd_pread(CPUArchState *env, abi_long arg1,
+     abi_long arg2, abi_long arg3, abi_long arg4, abi_long arg5, abi_long arg6)
+ {
+     abi_long ret;
+@@ -82,7 +82,7 @@ static abi_long do_bsd_pread(void *cpu_env, abi_long arg1,
+     if (p == NULL) {
+         return -TARGET_EFAULT;
+     }
+-    if (regpairs_aligned(cpu_env) != 0) {
++    if (regpairs_aligned(env) != 0) {
+         arg4 = arg5;
+         arg5 = arg6;
+     }
+@@ -109,14 +109,14 @@ static abi_long do_bsd_readv(abi_long arg1, abi_long arg2, abi_long arg3)
+ }
+ 
+ /* preadv(2) */
+-static abi_long do_bsd_preadv(void *cpu_env, abi_long arg1,
++static abi_long do_bsd_preadv(CPUArchState *env, abi_long arg1,
+     abi_long arg2, abi_long arg3, abi_long arg4, abi_long arg5, abi_long arg6)
+ {
+     abi_long ret;
+     struct iovec *vec = lock_iovec(VERIFY_WRITE, arg2, arg3, 1);
+ 
+     if (vec != NULL) {
+-        if (regpairs_aligned(cpu_env) != 0) {
++        if (regpairs_aligned(env) != 0) {
+             arg4 = arg5;
+             arg5 = arg6;
+         }
+@@ -151,7 +151,7 @@ static abi_long do_bsd_write(abi_long arg1, abi_long arg2, abi_long arg3)
+ }
+ 
+ /* pwrite(2) */
+-static abi_long do_bsd_pwrite(void *cpu_env, abi_long arg1,
++static abi_long do_bsd_pwrite(CPUArchState *env, abi_long arg1,
+     abi_long arg2, abi_long arg3, abi_long arg4, abi_long arg5, abi_long arg6)
+ {
+     abi_long ret;
+@@ -161,7 +161,7 @@ static abi_long do_bsd_pwrite(void *cpu_env, abi_long arg1,
+     if (p == NULL) {
+         return -TARGET_EFAULT;
+     }
+-    if (regpairs_aligned(cpu_env) != 0) {
++    if (regpairs_aligned(env) != 0) {
+         arg4 = arg5;
+         arg5 = arg6;
+     }
+@@ -188,14 +188,14 @@ static abi_long do_bsd_writev(abi_long arg1, abi_long arg2, abi_long arg3)
+ }
+ 
+ /* pwritev(2) */
+-static abi_long do_bsd_pwritev(void *cpu_env, abi_long arg1,
++static abi_long do_bsd_pwritev(CPUArchState *env, abi_long arg1,
+     abi_long arg2, abi_long arg3, abi_long arg4, abi_long arg5, abi_long arg6)
+ {
+     abi_long ret;
+     struct iovec *vec = lock_iovec(VERIFY_READ, arg2, arg3, 1);
+ 
+     if (vec != NULL) {
+-        if (regpairs_aligned(cpu_env) != 0) {
++        if (regpairs_aligned(env) != 0) {
+             arg4 = arg5;
+             arg5 = arg6;
+         }
+@@ -484,14 +484,14 @@ static abi_long do_bsd_dup2(abi_long arg1, abi_long arg2)
+ }
+ 
+ /* truncate(2) */
+-static abi_long do_bsd_truncate(void *cpu_env, abi_long arg1,
++static abi_long do_bsd_truncate(CPUArchState *env, abi_long arg1,
+         abi_long arg2, abi_long arg3, abi_long arg4)
+ {
+     abi_long ret;
+     void *p;
+ 
+     LOCK_PATH(p, arg1);
+-    if (regpairs_aligned(cpu_env) != 0) {
++    if (regpairs_aligned(env) != 0) {
+         arg2 = arg3;
+         arg3 = arg4;
+     }
+@@ -502,10 +502,10 @@ static abi_long do_bsd_truncate(void *cpu_env, abi_long arg1,
+ }
+ 
+ /* ftruncate(2) */
+-static abi_long do_bsd_ftruncate(void *cpu_env, abi_long arg1,
++static abi_long do_bsd_ftruncate(CPUArchState *env, abi_long arg1,
+         abi_long arg2, abi_long arg3, abi_long arg4)
+ {
+-    if (regpairs_aligned(cpu_env) != 0) {
++    if (regpairs_aligned(env) != 0) {
+         arg2 = arg3;
+         arg3 = arg4;
+     }
+@@ -735,7 +735,7 @@ static abi_long do_bsd_freebsd11_mknodat(abi_long arg1, abi_long arg2,
+ }
+ 
+ /* post-ino64 mknodat(2) */
+-static abi_long do_bsd_mknodat(void *cpu_env, abi_long arg1,
++static abi_long do_bsd_mknodat(CPUArchState *env, abi_long arg1,
+         abi_long arg2, abi_long arg3, abi_long arg4, abi_long arg5,
+         abi_long arg6)
+ {
+@@ -744,7 +744,7 @@ static abi_long do_bsd_mknodat(void *cpu_env, abi_long arg1,
+ 
+     LOCK_PATH(p, arg2);
+        /* 32-bit arch's use two 32 registers for 64 bit return value */
+-    if (regpairs_aligned(cpu_env) != 0) {
++    if (regpairs_aligned(env) != 0) {
+         ret = get_errno(mknodat(arg1, p, arg3, target_arg64(arg5, arg6)));
+     } else {
+         ret = get_errno(mknodat(arg1, p, arg3, target_arg64(arg4, arg5)));
+diff --git a/bsd-user/bsd-mem.h b/bsd-user/bsd-mem.h
+index 9d7b60d3c3..3086143d40 100644
+--- a/bsd-user/bsd-mem.h
++++ b/bsd-user/bsd-mem.h
+@@ -51,11 +51,11 @@ extern abi_ulong target_brk;
+ extern abi_ulong initial_target_brk;
+ 
+ /* mmap(2) */
+-static inline abi_long do_bsd_mmap(void *cpu_env, abi_long arg1, abi_long arg2,
++static inline abi_long do_bsd_mmap(CPUArchState *env, abi_long arg1, abi_long arg2,
+     abi_long arg3, abi_long arg4, abi_long arg5, abi_long arg6, abi_long arg7,
+     abi_long arg8)
+ {
+-    if (regpairs_aligned(cpu_env) != 0) {
++    if (regpairs_aligned(env) != 0) {
+         arg6 = arg7;
+         arg7 = arg8;
+     }
+diff --git a/bsd-user/bsd-proc.h b/bsd-user/bsd-proc.h
+index b1d4446ff1..7efc5b4c92 100644
+--- a/bsd-user/bsd-proc.h
++++ b/bsd-user/bsd-proc.h
+@@ -6,8 +6,8 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+-#ifndef BSD_PROC_H_
+-#define BSD_PROC_H_
++#ifndef BSD_PROC_H
++#define BSD_PROC_H
+ 
+ #include <sys/resource.h>
+ 
+@@ -19,7 +19,7 @@ extern int _getlogin(char*, int);
+ int bsd_get_ncpu(void);
+ 
+ /* exit(2) */
+-static inline abi_long do_bsd_exit(void *cpu_env, abi_long arg1)
++static inline abi_long do_bsd_exit(CPUArchState *env, abi_long arg1)
+ {
+     gdb_exit(arg1);
+     qemu_plugin_user_exit();
+@@ -400,4 +400,4 @@ static inline abi_long do_bsd_setpriority(abi_long which, abi_long who,
+     return get_errno(setpriority(which, who, prio));
+ }
+ 
+-#endif /* !BSD_PROC_H_ */
++#endif /* !BSD_PROC_H */
+diff --git a/bsd-user/freebsd/os-proc.c b/bsd-user/freebsd/os-proc.c
+index 0309036178..0a0cea5bb2 100644
+--- a/bsd-user/freebsd/os-proc.c
++++ b/bsd-user/freebsd/os-proc.c
+@@ -238,7 +238,7 @@ h2t_procctl_reaper_pidinfo(struct procctl_reaper_pidinfo *host_pi,
+ }
+ 
+ abi_long
+-do_freebsd_procctl(void *cpu_env, int idtype, abi_ulong arg2, abi_ulong arg3,
++do_freebsd_procctl(CPUArchState *env, int idtype, abi_ulong arg2, abi_ulong arg3,
+        abi_ulong arg4, abi_ulong arg5, abi_ulong arg6)
+ {
+     abi_long error = 0, target_rp_pids;
+@@ -257,7 +257,7 @@ do_freebsd_procctl(void *cpu_env, int idtype, abi_ulong arg2, abi_ulong arg3,
+ 
+ #if TARGET_ABI_BITS == 32
+     /* See if we need to align the register pairs. */
+-    if (regpairs_aligned(cpu_env)) {
++    if (regpairs_aligned(env)) {
+         id = (id_t)target_arg64(arg3, arg4);
+         target_cmd = (int)arg5;
+         target_arg = arg6;
+diff --git a/bsd-user/freebsd/os-proc.h b/bsd-user/freebsd/os-proc.h
+index 1cf3c43de3..7a035f5481 100644
+--- a/bsd-user/freebsd/os-proc.h
++++ b/bsd-user/freebsd/os-proc.h
+@@ -68,7 +68,7 @@ static inline abi_long do_freebsd_wait4(abi_long arg1, abi_ulong target_status,
+ }
+ 
+ /* wait6(2) */
+-static inline abi_long do_freebsd_wait6(void *cpu_env, abi_long idtype,
++static inline abi_long do_freebsd_wait6(CPUArchState *env, abi_long idtype,
+     abi_long id1, abi_long id2,
+     abi_ulong target_status, abi_long options, abi_ulong target_wrusage,
+     abi_ulong target_infop, abi_ulong pad1)
+@@ -79,7 +79,7 @@ static inline abi_long do_freebsd_wait6(void *cpu_env, abi_long idtype,
+     siginfo_t info;
+     void *p;
+ 
+-    if (regpairs_aligned(cpu_env) != 0) {
++    if (regpairs_aligned(env) != 0) {
+         /* printf("shifting args\n"); */
+         /* 64-bit id is aligned, so shift all the arguments over by one */
+         id1 = id2;
+@@ -173,7 +173,7 @@ static inline abi_long do_freebsd___setugid(abi_long arg1)
+ }
+ 
+ /* fork(2) */
+-static inline abi_long do_freebsd_fork(void *cpu_env)
++static inline abi_long do_freebsd_fork(CPUArchState *env)
+ {
+     abi_long ret;
+     abi_ulong child_flag;
+@@ -183,7 +183,7 @@ static inline abi_long do_freebsd_fork(void *cpu_env)
+     if (ret == 0) {
+         /* child */
+         child_flag = 1;
+-        target_cpu_clone_regs(cpu_env, 0);
++        target_cpu_clone_regs(env, 0);
+     } else {
+         /* parent */
+         child_flag = 0;
+@@ -193,7 +193,7 @@ static inline abi_long do_freebsd_fork(void *cpu_env)
+      * The fork system call sets a child flag in the second return
+      * value: 0 for parent process, 1 for child process.
+      */
+-    set_second_rval(cpu_env, child_flag);
++    set_second_rval(env, child_flag);
+ 
+     fork_end(ret);
+ 
+@@ -201,13 +201,13 @@ static inline abi_long do_freebsd_fork(void *cpu_env)
+ }
+ 
+ /* vfork(2) */
+-static inline abi_long do_freebsd_vfork(void *cpu_env)
++static inline abi_long do_freebsd_vfork(CPUArchState *env)
+ {
+-    return do_freebsd_fork(cpu_env);
++    return do_freebsd_fork(env);
+ }
+ 
+ /* rfork(2) */
+-static inline abi_long do_freebsd_rfork(void *cpu_env, abi_long flags)
++static inline abi_long do_freebsd_rfork(CPUArchState *env, abi_long flags)
+ {
+     abi_long ret;
+     abi_ulong child_flag;
+@@ -228,7 +228,7 @@ static inline abi_long do_freebsd_rfork(void *cpu_env, abi_long flags)
+     if (ret == 0) {
+         /* child */
+         child_flag = 1;
+-        target_cpu_clone_regs(cpu_env, 0);
++        target_cpu_clone_regs(env, 0);
+     } else {
+         /* parent */
+         child_flag = 0;
+@@ -238,7 +238,7 @@ static inline abi_long do_freebsd_rfork(void *cpu_env, abi_long flags)
+      * The fork system call sets a child flag in the second return
+      * value: 0 for parent process, 1 for child process.
+      */
+-    set_second_rval(cpu_env, child_flag);
++    set_second_rval(env, child_flag);
+     fork_end(ret);
+ 
+     return ret;
+@@ -246,7 +246,7 @@ static inline abi_long do_freebsd_rfork(void *cpu_env, abi_long flags)
+ }
+ 
+ /* pdfork(2) */
+-static inline abi_long do_freebsd_pdfork(void *cpu_env, abi_ulong target_fdp,
++static inline abi_long do_freebsd_pdfork(CPUArchState *env, abi_ulong target_fdp,
+         abi_long flags)
+ {
+     abi_long ret;
+@@ -258,7 +258,7 @@ static inline abi_long do_freebsd_pdfork(void *cpu_env, abi_ulong target_fdp,
+     if (ret == 0) {
+         /* child */
+         child_flag = 1;
+-        target_cpu_clone_regs(cpu_env, 0);
++        target_cpu_clone_regs(env, 0);
+     } else {
+         /* parent */
+         child_flag = 0;
+@@ -271,7 +271,7 @@ static inline abi_long do_freebsd_pdfork(void *cpu_env, abi_ulong target_fdp,
+      * The fork system call sets a child flag in the second return
+      * value: 0 for parent process, 1 for child process.
+      */
+-    set_second_rval(cpu_env, child_flag);
++    set_second_rval(env, child_flag);
+     fork_end(ret);
+ 
+     return ret;
+diff --git a/bsd-user/freebsd/os-sys.c b/bsd-user/freebsd/os-sys.c
+index df31706558..d6f7c92420 100644
+--- a/bsd-user/freebsd/os-sys.c
++++ b/bsd-user/freebsd/os-sys.c
+@@ -593,7 +593,7 @@ out:
+ }
+ 
+ /* sysarch() is architecture dependent. */
+-abi_long do_freebsd_sysarch(void *cpu_env, abi_long arg1, abi_long arg2)
++abi_long do_freebsd_sysarch(CPUArchState *env, abi_long arg1, abi_long arg2)
+ {
+-    return do_freebsd_arch_sysarch(cpu_env, arg1, arg2);
++    return do_freebsd_arch_sysarch(env, arg1, arg2);
+ }
 diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index d402c64726..7fefdb569f 100644
+index 90ef1bd916..d402c64726 100644
 --- a/bsd-user/freebsd/os-syscall.c
 +++ b/bsd-user/freebsd/os-syscall.c
-@@ -38,6 +38,7 @@
- #include "bsd-mem.h"
- #include "bsd-proc.h"
- #include "bsd-misc.h"
-+#include "bsd-signal.h"
- 
- /* BSD dependent syscall shims */
- #include "os-stat.h"
-diff --git a/bsd-user/signal-common.h b/bsd-user/signal-common.h
-index 4e634e04a3..9071757873 100644
---- a/bsd-user/signal-common.h
-+++ b/bsd-user/signal-common.h
-@@ -32,6 +32,7 @@ int block_signals(void); /* Returns non zero if signal pending */
- long do_rt_sigreturn(CPUArchState *env);
- int do_sigaction(int sig, const struct target_sigaction *act,
-                 struct target_sigaction *oact);
-+int do_sigprocmask(int how, const sigset_t *set, sigset_t *oldset);
- abi_long do_sigaltstack(abi_ulong uss_addr, abi_ulong uoss_addr, abi_ulong sp);
- long do_sigreturn(CPUArchState *env, abi_ulong addr);
- void force_sig_fault(int sig, int code, abi_ulong addr);
-@@ -42,6 +43,9 @@ void process_pending_signals(CPUArchState *env);
- void queue_signal(CPUArchState *env, int sig, int si_type,
-                   target_siginfo_t *info);
- void signal_init(void);
-+abi_long target_to_host_sigevent(struct sigevent *host_sevp,
-+                                 abi_ulong target_addr);
-+int target_to_host_signal(int sig);
- void target_to_host_sigset(sigset_t *d, const target_sigset_t *s);
- 
+@@ -215,7 +215,7 @@ void unlock_iovec(struct iovec *vec, abi_ulong target_addr,
  /*
-diff --git a/bsd-user/signal.c b/bsd-user/signal.c
-index 3e5e41e1b1..da7cf1d60b 100644
---- a/bsd-user/signal.c
-+++ b/bsd-user/signal.c
-@@ -346,6 +346,33 @@ int block_signals(void)
-     return qatomic_xchg(&ts->signal_pending, 1);
- }
+  * All errnos that freebsd_syscall() returns must be -TARGET_<errcode>.
+  */
+-static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
++static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+                                 abi_long arg2, abi_long arg3, abi_long arg4,
+                                 abi_long arg5, abi_long arg6, abi_long arg7,
+                                 abi_long arg8)
+@@ -227,19 +227,19 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+          * process system calls
+          */
+     case TARGET_FREEBSD_NR_fork: /* fork(2) */
+-        ret = do_freebsd_fork(cpu_env);
++        ret = do_freebsd_fork(env);
+         break;
  
-+abi_long target_to_host_sigevent(struct sigevent *host_sevp,
-+                                               abi_ulong target_addr)
-+{
-+    struct target_sigevent *target_sevp;
-+
-+    if (!lock_user_struct(VERIFY_READ, target_sevp, target_addr, 1)) {
-+        return -TARGET_EFAULT;
-+    }
-+
-+    /*
-+     * This union is awkward on 64 bit systems because it has a 32 bit
-+     * integer and a pointer in it; we follow the conversion approach
-+     * used for handling sigval types in signal.c so the guest should get
-+     * the correct value back even if we did a 64 bit byteswap and it's
-+     * using the 32 bit integer.
-+     */
-+    host_sevp->sigev_value.sival_ptr =
-+        (void *)(uintptr_t)tswapal(target_sevp->sigev_value.sival_ptr);
-+    host_sevp->sigev_signo =
-+        target_to_host_signal(tswap32(target_sevp->sigev_signo));
-+    host_sevp->sigev_notify = tswap32(target_sevp->sigev_notify);
-+    host_sevp->_sigev_un._threadid = tswap32(target_sevp->_sigev_un._threadid);
-+
-+    unlock_user_struct(target_sevp, target_addr, 0);
-+    return 0;
-+}
-+
- /* Returns 1 if given signal should dump core if not handled. */
- static int core_dump_signal(int sig)
- {
-@@ -725,6 +752,46 @@ int do_sigaction(int sig, const struct target_sigaction *act,
-     return ret;
- }
+     case TARGET_FREEBSD_NR_vfork: /* vfork(2) */
+-        ret = do_freebsd_vfork(cpu_env);
++        ret = do_freebsd_vfork(env);
+         break;
  
-+int do_sigprocmask(int how, const sigset_t *set, sigset_t *oldset)
-+{
-+    TaskState *ts = get_task_state(thread_cpu);
-+
-+    if (oldset) {
-+        *oldset = ts->signal_mask;
-+    }
-+
-+    if (set) {
-+        int i;
-+
-+        if (block_signals()) {
-+            return -TARGET_ERESTART;
-+        }
-+
-+        switch (how) {
-+        case SIG_BLOCK:
-+            sigorset(&ts->signal_mask, &ts->signal_mask, set);
-+            break;
-+        case SIG_UNBLOCK:
-+            for (i = 1; i <= NSIG; ++i) {
-+                if (sigismember(set, i)) {
-+                    sigdelset(&ts->signal_mask, i);
-+                }
-+            }
-+            break;
-+        case SIG_SETMASK:
-+            ts->signal_mask = *set;
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+
-+        /* Silently ignore attempts to change blocking status of KILL or STOP */
-+        sigdelset(&ts->signal_mask, SIGKILL);
-+        sigdelset(&ts->signal_mask, SIGSTOP);
-+    }
-+    return 0;
-+}
-+
- static inline abi_ulong get_sigframe(struct target_sigaction *ka,
-         CPUArchState *env, size_t frame_size)
+     case TARGET_FREEBSD_NR_rfork: /* rfork(2) */
+-        ret = do_freebsd_rfork(cpu_env, arg1);
++        ret = do_freebsd_rfork(env, arg1);
+         break;
+ 
+     case TARGET_FREEBSD_NR_pdfork: /* pdfork(2) */
+-        ret = do_freebsd_pdfork(cpu_env, arg1, arg2);
++        ret = do_freebsd_pdfork(env, arg1, arg2);
+         break;
+ 
+     case TARGET_FREEBSD_NR_execve: /* execve(2) */
+@@ -255,12 +255,12 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+         break;
+ 
+     case TARGET_FREEBSD_NR_wait6: /* wait6(2) */
+-        ret = do_freebsd_wait6(cpu_env, arg1, arg2, arg3,
++        ret = do_freebsd_wait6(env, arg1, arg2, arg3,
+                                arg4, arg5, arg6, arg7, arg8);
+         break;
+ 
+     case TARGET_FREEBSD_NR_exit: /* exit(2) */
+-        ret = do_bsd_exit(cpu_env, arg1);
++        ret = do_bsd_exit(env, arg1);
+         break;
+ 
+     case TARGET_FREEBSD_NR_getgroups: /* getgroups(2) */
+@@ -424,7 +424,7 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+         break;
+ 
+     case TARGET_FREEBSD_NR_procctl: /* procctl(2) */
+-        ret = do_freebsd_procctl(cpu_env, arg1, arg2, arg3, arg4, arg5, arg6);
++        ret = do_freebsd_procctl(env, arg1, arg2, arg3, arg4, arg5, arg6);
+         break;
+ 
+         /*
+@@ -435,7 +435,7 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+         break;
+ 
+     case TARGET_FREEBSD_NR_pread: /* pread(2) */
+-        ret = do_bsd_pread(cpu_env, arg1, arg2, arg3, arg4, arg5, arg6);
++        ret = do_bsd_pread(env, arg1, arg2, arg3, arg4, arg5, arg6);
+         break;
+ 
+     case TARGET_FREEBSD_NR_readv: /* readv(2) */
+@@ -443,7 +443,7 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+         break;
+ 
+     case TARGET_FREEBSD_NR_preadv: /* preadv(2) */
+-        ret = do_bsd_preadv(cpu_env, arg1, arg2, arg3, arg4, arg5, arg6);
++        ret = do_bsd_preadv(env, arg1, arg2, arg3, arg4, arg5, arg6);
+         break;
+ 
+     case TARGET_FREEBSD_NR_write: /* write(2) */
+@@ -451,7 +451,7 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+         break;
+ 
+     case TARGET_FREEBSD_NR_pwrite: /* pwrite(2) */
+-        ret = do_bsd_pwrite(cpu_env, arg1, arg2, arg3, arg4, arg5, arg6);
++        ret = do_bsd_pwrite(env, arg1, arg2, arg3, arg4, arg5, arg6);
+         break;
+ 
+     case TARGET_FREEBSD_NR_writev: /* writev(2) */
+@@ -459,7 +459,7 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+         break;
+ 
+     case TARGET_FREEBSD_NR_pwritev: /* pwritev(2) */
+-        ret = do_bsd_pwritev(cpu_env, arg1, arg2, arg3, arg4, arg5, arg6);
++        ret = do_bsd_pwritev(env, arg1, arg2, arg3, arg4, arg5, arg6);
+         break;
+ 
+     case TARGET_FREEBSD_NR_open: /* open(2) */
+@@ -559,11 +559,11 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+         break;
+ 
+     case TARGET_FREEBSD_NR_truncate: /* truncate(2) */
+-        ret = do_bsd_truncate(cpu_env, arg1, arg2, arg3, arg4);
++        ret = do_bsd_truncate(env, arg1, arg2, arg3, arg4);
+         break;
+ 
+     case TARGET_FREEBSD_NR_ftruncate: /* ftruncate(2) */
+-        ret = do_bsd_ftruncate(cpu_env, arg1, arg2, arg3, arg4);
++        ret = do_bsd_ftruncate(env, arg1, arg2, arg3, arg4);
+         break;
+ 
+     case TARGET_FREEBSD_NR_acct: /* acct(2) */
+@@ -595,7 +595,7 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+         break;
+ 
+     case TARGET_FREEBSD_NR_readlink: /* readlink(2) */
+-        ret = do_bsd_readlink(cpu_env, arg1, arg2, arg3);
++        ret = do_bsd_readlink(env, arg1, arg2, arg3);
+         break;
+ 
+     case TARGET_FREEBSD_NR_readlinkat: /* readlinkat(2) */
+@@ -627,7 +627,7 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+         break;
+ 
+     case TARGET_FREEBSD_NR_mknodat: /* mknodat(2) */
+-        ret = do_bsd_mknodat(cpu_env, arg1, arg2, arg3, arg4, arg5, arg6);
++        ret = do_bsd_mknodat(env, arg1, arg2, arg3, arg4, arg5, arg6);
+         break;
+ 
+     case TARGET_FREEBSD_NR_chown: /* chown(2) */
+@@ -807,7 +807,7 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+          * Memory management system calls.
+          */
+     case TARGET_FREEBSD_NR_mmap: /* mmap(2) */
+-        ret = do_bsd_mmap(cpu_env, arg1, arg2, arg3, arg4, arg5, arg6, arg7,
++        ret = do_bsd_mmap(env, arg1, arg2, arg3, arg4, arg5, arg6, arg7,
+                           arg8);
+         break;
+ 
+@@ -953,15 +953,15 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+          * sys{ctl, arch, call}
+          */
+     case TARGET_FREEBSD_NR___sysctl: /* sysctl(3) */
+-        ret = do_freebsd_sysctl(cpu_env, arg1, arg2, arg3, arg4, arg5, arg6);
++        ret = do_freebsd_sysctl(env, arg1, arg2, arg3, arg4, arg5, arg6);
+         break;
+ 
+     case TARGET_FREEBSD_NR___sysctlbyname: /* sysctlbyname(2) */
+-        ret = do_freebsd_sysctlbyname(cpu_env, arg1, arg2, arg3, arg4, arg5, arg6);
++        ret = do_freebsd_sysctlbyname(env, arg1, arg2, arg3, arg4, arg5, arg6);
+         break;
+ 
+     case TARGET_FREEBSD_NR_sysarch: /* sysarch(2) */
+-        ret = do_freebsd_sysarch(cpu_env, arg1, arg2);
++        ret = do_freebsd_sysarch(env, arg1, arg2);
+         break;
+ 
+     default:
+@@ -979,7 +979,7 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+  * as a wrapper around freebsd_syscall() so that actually happens. Since
+  * that is a singleton, modern compilers will inline it anyway...
+  */
+-abi_long do_freebsd_syscall(void *cpu_env, int num, abi_long arg1,
++abi_long do_freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+                             abi_long arg2, abi_long arg3, abi_long arg4,
+                             abi_long arg5, abi_long arg6, abi_long arg7,
+                             abi_long arg8)
+@@ -990,7 +990,7 @@ abi_long do_freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+         print_freebsd_syscall(num, arg1, arg2, arg3, arg4, arg5, arg6);
+     }
+ 
+-    ret = freebsd_syscall(cpu_env, num, arg1, arg2, arg3, arg4, arg5, arg6,
++    ret = freebsd_syscall(env, num, arg1, arg2, arg3, arg4, arg5, arg6,
+                           arg7, arg8);
+     if (do_strace) {
+         print_freebsd_syscall_ret(num, ret);
+diff --git a/bsd-user/i386/target.h b/bsd-user/i386/target.h
+index ddd3b8ec08..9cd158fc11 100644
+--- a/bsd-user/i386/target.h
++++ b/bsd-user/i386/target.h
+@@ -12,7 +12,7 @@
+ /*
+  * i386 doesn't 'lump' the registers for 64-bit args.
+  */
+-static inline bool regpairs_aligned(void *cpu_env)
++static inline bool regpairs_aligned(CPUArchState *env)
  {
+     return false;
+ }
+diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
+index b0b2c249fb..60d1adf560 100644
+--- a/bsd-user/qemu.h
++++ b/bsd-user/qemu.h
+@@ -176,7 +176,7 @@ abi_long memcpy_to_target(abi_ulong dest, const void *src,
+ void target_set_brk(abi_ulong new_brk);
+ abi_long do_brk(abi_ulong new_brk);
+ void syscall_init(void);
+-abi_long do_freebsd_syscall(void *cpu_env, int num, abi_long arg1,
++abi_long do_freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+                             abi_long arg2, abi_long arg3, abi_long arg4,
+                             abi_long arg5, abi_long arg6, abi_long arg7,
+                             abi_long arg8);
+@@ -238,7 +238,7 @@ int host_to_target_errno(int err);
+ /* os-proc.c */
+ abi_long freebsd_exec_common(abi_ulong path_or_fd, abi_ulong guest_argp,
+         abi_ulong guest_envp, int do_fexec);
+-abi_long do_freebsd_procctl(void *cpu_env, int idtype, abi_ulong arg2,
++abi_long do_freebsd_procctl(CPUArchState *env, int idtype, abi_ulong arg2,
+         abi_ulong arg3, abi_ulong arg4, abi_ulong arg5, abi_ulong arg6);
+ 
+ /* os-sys.c */
+@@ -247,7 +247,7 @@ abi_long do_freebsd_sysctl(CPUArchState *env, abi_ulong namep, int32_t namelen,
+ abi_long do_freebsd_sysctlbyname(CPUArchState *env, abi_ulong namep,
+         int32_t namelen, abi_ulong oldp, abi_ulong oldlenp, abi_ulong newp,
+         abi_ulong newlen);
+-abi_long do_freebsd_sysarch(void *cpu_env, abi_long arg1, abi_long arg2);
++abi_long do_freebsd_sysarch(CPUArchState *env, abi_long arg1, abi_long arg2);
+ 
+ /* user access */
+ 
+diff --git a/bsd-user/riscv/target.h b/bsd-user/riscv/target.h
+index 036ddd185e..dc3e0be795 100644
+--- a/bsd-user/riscv/target.h
++++ b/bsd-user/riscv/target.h
+@@ -12,7 +12,7 @@
+ /*
+  * riscv64 ABI does not 'lump' the registers for 64-bit args.
+  */
+-static inline bool regpairs_aligned(void *cpu_env)
++static inline bool regpairs_aligned(CPUArchState *env)
+ {
+     return false;
+ }
+diff --git a/bsd-user/x86_64/target.h b/bsd-user/x86_64/target.h
+index 0cf0e2a14a..fccfc593bd 100644
+--- a/bsd-user/x86_64/target.h
++++ b/bsd-user/x86_64/target.h
+@@ -12,7 +12,7 @@
+ /*
+  * x86 doesn't 'lump' the registers for 64-bit args, all args are 64 bits.
+  */
+-static inline bool regpairs_aligned(void *cpu_env)
++static inline bool regpairs_aligned(CPUArchState *env)
+ {
+     return false;
+ }
 
 -- 
 2.55.0
