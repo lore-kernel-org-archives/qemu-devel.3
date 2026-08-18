@@ -4,112 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B503C5DF67
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 06:19:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84925C5DF67
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 06:44:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwD9m-0007Yj-2s; Tue, 18 Aug 2026 02:18:43 -0400
+	id 1wwDXW-0001vi-81; Tue, 18 Aug 2026 02:43:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gra@linux.ibm.com>)
- id 1wwD9c-0007Vt-Fi; Tue, 18 Aug 2026 02:18:33 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wwDXU-0001vG-Ko; Tue, 18 Aug 2026 02:43:12 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gra@linux.ibm.com>)
- id 1wwD9Z-0002Jq-EC; Tue, 18 Aug 2026 02:18:31 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67HM1lh12526557; Tue, 18 Aug 2026 06:18:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=0X1xQn76+Squ8CGeUTYE67uFdY9UHS
- tPu2MMM+8BQZA=; b=dHoqbWRvy3NbrRNdvbuTLkI4jBtxo4PT6FDCm7BNPodD9R
- 0Lbv/x7VrwftxyO8HvdU1fD2/5I1crCAwgj0Dwa1dsInvxsxDJl76tKUBGVsTuff
- URu5PO9o9SgV+6C2Ob7eqr73nBJzakk8XcOYAG6RkArymJHyYbFTXAkRq7LCt9A3
- /TroBtCX5ZgEp5LKxKuF/a14QRYtCM+jE3dJ8xIKQ6kWLq89/HDxeyb6UENOfF1k
- u/oomt/olRvRTBMnkkfbyCHh3GbY3TbhcWbc12sPxX6Gtv5sBNm9Cju+hip+zQaJ
- on7OENh+o52zXHqPDBMIeiCOJ09fD31dkaP+ulgA==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2dhkxapp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 06:18:25 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67I6BKhq012554;
- Tue, 18 Aug 2026 06:18:25 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g32eq1vmj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Aug 2026 06:18:24 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67I6IKBE45941092
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 18 Aug 2026 06:18:20 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0619A20043;
- Tue, 18 Aug 2026 06:18:20 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DAB1E20040;
- Tue, 18 Aug 2026 06:18:19 +0000 (GMT)
-Received: from localhost (unknown [9.111.9.197])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 18 Aug 2026 06:18:19 +0000 (GMT)
-Date: Tue, 18 Aug 2026 08:18:19 +0200
-From: Andreas Grapentin <gra@linux.ibm.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, philmd@linaro.org,
- qemu-ppc@nongnu.org, Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Steffen Eiden <seiden@linux.ibm.com>
-Subject: Re: [PATCH v5 8/8] hw/vfio: all vfio files can now be common files
-Message-ID: <aoPw6-MGBcTOfxwp@li-d8547bcc-2d90-11b2-a85c-a70f2a37009a.ibm.com>
-References: <20260318174733.1717643-1-pierrick.bouvier@linaro.org>
- <20260318174733.1717643-9-pierrick.bouvier@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wwDXS-0006bU-BQ; Tue, 18 Aug 2026 02:43:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1787035362; bh=8kLx2+xWNM81yOOGZZfGmx/Oxdb7T3IP8Mpc2W+eB5Q=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=DBYdRvI8HWKUq8wym6KXmnlqTBEPsQ2DV5eF4+E3eI65z3q0OSiD82keOMAABCOng
+ eSHRH4E+TTfHb4bgl1Ex5QgsU5ekrgYvFQLjDEdZh4ck+qA/7VgxT9XuEjFrPte2mn
+ utB/oAQX9y6Hu1whr141i2LKf7SrG5pdb3ulc/xP+5uYS9WVGQb/DLkuCSZOlEuxS7
+ gEDKZJc1Cr//yhE/BMzfuhK71js0uNeRedemO1p76awTb07kgn7OH7G0aQAYIy9zFS
+ +/MPqE4tTKh6NtQfV1G4wta7sO7X0fraqjh5rRB3PHjHvmUPG9j1JAV34P2YoQDt/C
+ fgDzMAoNkvB4A==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id BF9FE1CC06F;
+ Tue, 18 Aug 2026 09:42:42 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6031240D976;
+ Tue, 18 Aug 2026 09:43:05 +0300 (MSK)
+Message-ID: <e617c1d0-b028-449d-b8b1-bb96a47e64c6@tls.msk.ru>
+Date: Tue, 18 Aug 2026 09:42:38 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260318174733.1717643-9-pierrick.bouvier@linaro.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDA0MyBTYWx0ZWRfX+AE4CXtGPxqf
- 2x6GAyW3CI0SNl/jR07pitWAWEf9V/Edw8zrXL4lKLysSdMEQeG4NNyPiKveWy0N+TOPvM/yzDG
- DTwCUJC2S5flTQZDHhe9ozZUTkNahVAw9CF0RI6TeQQlX3EKoeD2SlwpxI67Hm4QFh0JlXN4Hs9
- Du3K1usxkYYHk+KRGaSGX+IipofIBsSWSQVCpT3TnlJLFaFzjrYDQVQDzu6oNl2VpkyywQhc9LH
- CfuoiqUqlJTBTRR5vyfiUsMuflVO/ovY/u39W8iOeEvGlziznDwsgoUAwvUB2qyOhfeJrg6aSC3
- sfRicrv0DMhboIqbCwZmEMn4GpujnxKhU5r8ImUfR8K5eut/GXBNUOhFqCT7xDY/nipX8nrC3aa
- 3ATSC0LMv9B7cjgzBcYQBp6odnBwm1vFlPaKgxQxYmw1K6/Bi/THjYFR4hs7CThrLZV3fEUUM+0
- AGTTTMfmeoUaOHoVjCw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDA0MyBTYWx0ZWRfX5LVOxoMq74v6
- 6xljC0MsuNV1E45+ot0Tmb2WNrUJCm43dqeD3AaU8ntpZMynNOyTzJXLTIP0Vxz3Zu4QHjzFr5N
- MjWdpk7mHOa2n4N4YMR58VZcnFTd+Uo=
-X-Authority-Analysis: v=2.4 cv=JKkLdcKb c=1 sm=1 tr=0 ts=6a83f931 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=FPm3a6HYH6nu5nH1MeQA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: L9HUFNX6zKzc6yGnN2XO42qQK35okWQU
-X-Proofpoint-GUID: L9HUFNX6zKzc6yGnN2XO42qQK35okWQU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-17_04,2026-08-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1011 adultscore=0 impostorscore=0 spamscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608180043
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=gra@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/6] block: jobs and dirty-bitmaps
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, den@openvz.org, QEMU Stable <qemu-stable@nongnu.org>
+References: <20260817192948.1743452-1-vsementsov@yandex-team.ru>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260817192948.1743452-1-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,30 +113,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mar 18 26, Pierrick Bouvier wrote:
-> -specific_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
-> +system_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
+On 8/17/26 22:29, Vladimir Sementsov-Ogievskiy wrote:
 
-Apologies for digging out this old thread, but parts of the vfio code
-need linux/kvm.h, which includes asm/kvm.h. Consequently it can only be
-fully architecture agnostic based on the assumption that KVM will only
-ever be able to support one guest architecture which must be the same as
-the host architecture.
+> block-jobs and dirty-bitmaps patches
+> 
+> Denis V. Lunev (6):
+>        job: keep job paused across overlapping pause requests
+>        tests/unit/test-blockjob: cover keeping a job paused while a pause is pending
+>        block/monitor: reject persistent bitmap add on a read-only node
+>        migration/block-dirty-bitmap: reject bitmap load onto ro node
+>        block/monitor: allow dropping a bitmap never stored on disk
+>        dirty-bitmap: fix integer overflow in serialization coverage
 
-On s390x, we are currently working on a KVM change that breaks this
-assumption:
-https://lore.kernel.org/all/20260812153631.3376090-1-seiden@linux.ibm.com/
-
-We are in the process of working out what changes this would require on
-the qemu side, and will send a patch series soon for discussion, but
-we've noticed that this patch series in particular was a breaking change
-for us when moving to v11.1.
-
-Fortunately, this series also extracted the architecture dependent code
-in VFIO into the kvm-helpers.c file, so for us the most obvious solution
-would be to keep kvm-helpers.c in specific_ss, while the rest of vfio
-can go to system_ss. Would that be acceptable?
+This seems to be another pull request which should be picked up for
+active qemu stable series.  Is it not?
 
 Thanks,
-Andreas
+
+/mjt
 
