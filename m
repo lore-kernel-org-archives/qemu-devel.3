@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C5FC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:33:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54AFCC5DF74
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:33:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwJvp-0003mq-0L; Tue, 18 Aug 2026 09:32:45 -0400
+	id 1wwJvp-0003n2-9g; Tue, 18 Aug 2026 09:32:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wwJvm-0003le-Ob
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:32:42 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1wwJvo-0003m8-3z
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:32:44 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wwJvk-00008H-IM
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:32:42 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-49556f97a9dso32900105e9.1
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 06:32:37 -0700 (PDT)
+ id 1wwJvl-00008r-7m
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:32:43 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4955aa106b1so42313995e9.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 06:32:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787059957; x=1787664757; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=ct6g+Jg3FI+pu5C4RgA2VJIlWHc62WS2z/12FLNbEnc=;
- b=X+L0qwPK+vV77BLwk3egRA68eaGSTTZz4DtU4z2Ntgxd+Pe1wTZX2jQMiOhBuA5VD1
- Fk5+yNLSQZHzja+c0PEl7DN1IDZncIfJ43dN3SN8DqdRunozVxJUTT3ZPBrTudqMfKD2
- 41TD6RNZy4lY9T06aovG1VRy1FGio31tKU2VbbWWE2asJRBOJYwZ9+tCFFG/vOf78juz
- xdIhfxBBPfrsGd11MkgMUbmDuv6m0hoDqQmx0DKSgq6ySolQcVPtCW4HhAMVPhu/fiZ9
- F6stqXusEDwKtOb4+CsU23I98dh7fluooSNSTjP0VAHc8UefOU6En2yplW5nGB4cGcSX
- om1Q==
+ d=linaro.org; s=google; t=1787059960; x=1787664760; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=0bkQ7XcsLrO7GnW6QWyxFWLeTXrsnESl6attSVhp0hY=;
+ b=Zwgj1UyqHyCo8yOfidSMB1geDe5gb3BPtv880s0BQH81TgpFWpp7zh81D8WevR0rvv
+ gAoCVU4lJEqqW2NtQQTswtWvfF1nQXzAUfybmJe8IQcmbg3axMzVhjBt0ngfYdBoYhkV
+ 1vzxWs6m2lIckMAC4O17hq3m2LI63K39eLFFF3eUDlUIX2SP5MM2daMcFYHTgfuZZItp
+ mOj57jj/poCijicKW4cN2B8svkaDLxsbz0yco3XzoYcHoHDSOFOwEDrN5hxQYbyw1ODW
+ DjVKxtVqqNRx709M9XzrOFVIcqZyxb2MaD94MD/kaKQ4x0L5eGOfvMDN8PLSkRyxHlYY
+ l7Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787059957; x=1787664757;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=ct6g+Jg3FI+pu5C4RgA2VJIlWHc62WS2z/12FLNbEnc=;
- b=JyRuqbJTibD2d3dWPl3eRcoy3xGieoq/A1Y/6snhu0A84V3I8NpUDeBNJCma+yD1Wo
- dyKGfm7GaLkye3wDvv3syYhh4lWw6wLN/ZyPczQ55ElLcytrvGS78Mc67Y3M/tOCRd7w
- Yo4y1pNBr2ahlM/WKDaXi8hjqU7H89oF2E8Q5K1kPgKxOdRyr2R/wxuK/dFf1INt5jKl
- SknluleX3zqxSFacwlZCmSGs0J/DOLqvJtCT9WCheuHOzRmZ317zzSK1gD3vULpzlBuW
- zhJdqdNGKtLIfM8yeo5DgfGcDJVY6wzUEwUazJiAKPXxtaMfrvTMuYsGyF3JZ0SPw27z
- 7yWA==
-X-Gm-Message-State: AOJu0YzWc8MDkABwN0aZIoLh4+uU0Kv70Ter4OS0H93pxQmNsZaNGzMi
- bXgXyUvM3tjEMIKl7a0dfDBBwqj68Ci3DM9UGf61MK237k23eYuuBcvzVPYYaHFWiS+aYmKCdhP
- SDSxI2v4=
-X-Gm-Gg: AR+sD11f1hm7LN6Wrst5Nmb9lgre2P9oKuok9zHCk+QxqBdPTFNGPRxEmO6ySMhVuEm
- 1d5pqrWOA9FcIUAPI/BtSbKWpvJjDjrKO4/0XoFM+qM+NEqDhqQw2ySYWgnSOUo6CXQNaZrHGSt
- nfhkuNctxOMxTqTLtgBfFO8Y6E3PYX3xZIeX3WkP9YNZlHn0Yfa/LF19WejlD8hqpNYk/NrX/Bv
- MNGEUh5bLbRkX17U2QHyXJ7YA6RqQGgzBo815ocQxKMCcMCetx6JVwKgx+pdkmvSAAyP7loHWfj
- +O0mZL6RT6h7r6pg/hrfMkduK+RcVHYBZR8MKQpEUusCAI2Hoyq6ev0leCZM4FH+ucOrYigqIc+
- cp3FsD1Z8OGtakhff1Zxc6QbNcCyRNvYMzX9u18icXRGpQuSSAYYiGkpwhR13SsIJbLNX0qEZYS
- JMldbzHGtD4hkup2EVVjKV5NPJbnf80XbNP75Zn1EM11nPC0mQDX/Pj+VKYWzQ8KzM
-X-Received: by 2002:a05:600c:3f10:b0:495:6e68:5df2 with SMTP id
- 5b1f17b1804b1-4999fb3c2d6mr160706905e9.12.1787059956731; 
- Tue, 18 Aug 2026 06:32:36 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787059960; x=1787664760;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=0bkQ7XcsLrO7GnW6QWyxFWLeTXrsnESl6attSVhp0hY=;
+ b=SQQGGLuG45nWyL2bKCzetn1JDarjozznYTR6KGo/OxIb7ozpXvuUIyl783cwWMX84P
+ xl19VTeD1F8EKE4SkKLNOHyC6rv9AQ/XduZjV6UBL+KQh0OkBHxnQNOhEdr+Lu2f82n0
+ GNSG44ZzTH4N5O30YGU+/pCJZRkp7JJCDzDjXRI7fnlLXO8k/VcQnk/rFrzIhTpfFlHX
+ XIIV6Ag6exjHfXwMm3tnTtMyr+E829mU6mbedS0RYbDudFdqU7ni7G6tms8HgskcALgi
+ jRafytDVQEOPKPRwMnOU73OowaIytggJrlvbv8EOHAlSY240tpleqVv4UZtS0Bn0w3zG
+ qerg==
+X-Gm-Message-State: AOJu0Yx2/tXlK3nf1fjDXHjnnt80Fmv40aFAfXrq6R7YHeBQRmP1JJ4J
+ wVtcfJb14j7FFCXPfUYesnXBJyLNuTX9+7XLeY2Sd+W4N6hRN98OtgvrqE+JH4qCFsLrTa21+Ai
+ CaC8Bg2I=
+X-Gm-Gg: AR+sD116R6Olrsl5UcIx0r2v9IvPxHWE/imYeM0+dOZeQqE9YV7lABmYSVWFoyI8/IJ
+ 25t1gMX1E+2yBJzn7EDAf7wks5ZswXQUWbIVGd3P+0PtFI6CTnO2YKBBO909IaJ5NXsKsM23eYl
+ P8iWURefRUYKt7V1IJ5cfPNFA/FOS/CLqlXTZkqPhWIskyTYuM00rTDIknZp23+nFTsnrD3dgXV
+ 1vKc0LjBxZIl7ptajw/kBhomNGVffVIUaNF0vBkapraN+QicSL8WZ6c4XNFgAgLbIsjNXMPEsrs
+ W41FAGg+JS8y5tIAsie9TE1KZcOF1slMSF7FS5HwPCq11MyqMZFdfDCbvHDTwlPJcJEt7Pt922E
+ vCMw1+6c1Q9G+EmVgFGVQktumwTlWwRvuXzynVv28tNJg84GiTUwErMLJ4pT7TXa+Yp3+OjXp6j
+ oBG2EuDTfNVPl3B3vFYzgAYBg4rYCmnusPz5jAnImUlTCMOyytPRyXqsGgJYwRdXn0
+X-Received: by 2002:a05:600c:6b72:b0:499:7a19:408b with SMTP id
+ 5b1f17b1804b1-4998795f96bmr430405615e9.11.1787059959875; 
+ Tue, 18 Aug 2026 06:32:39 -0700 (PDT)
 Received: from [127.0.1.1] ([2a10:d582:31e:0:c289:2687:e46c:f7e3])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49987b203cfsm298360625e9.3.2026.08.18.06.32.35
+ 5b1f17b1804b1-49987b203cfsm298360625e9.3.2026.08.18.06.32.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 06:32:36 -0700 (PDT)
+ Tue, 18 Aug 2026 06:32:39 -0700 (PDT)
 From: Jim MacArthur <jim.macarthur@linaro.org>
-Subject: [PATCH RFC 0/4] RME-DA preparatory work
-Date: Tue, 18 Aug 2026 14:31:58 +0100
-Message-Id: <20260818-jmac-rme-da-prep-v1-0-30fab951bc75@linaro.org>
+Date: Tue, 18 Aug 2026 14:32:02 +0100
+Subject: [PATCH RFC 4/4] hw/pci/msi: extract msi_message_address_register
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAM5ehGoC/x2MQQqAIBQFryJ/3QdtIdZVooXYs35QiUIE4d2Tl
- jMw81JBFhQa1UsZtxS5zgamUxQ2f65gWRpTr3urnXG8Hz5wPsCL55SR2OnBxuCMBUAtazLK8y+
- nudYPa97CeWIAAAA=
+Message-Id: <20260818-jmac-rme-da-prep-v1-4-30fab951bc75@linaro.org>
+References: <20260818-jmac-rme-da-prep-v1-0-30fab951bc75@linaro.org>
+In-Reply-To: <20260818-jmac-rme-da-prep-v1-0-30fab951bc75@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, John Snow <jsnow@redhat.com>, 
  "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org, 
  Jim MacArthur <jim.macarthur@linaro.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Viresh Kumar <viresh.kumar@linaro.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,46 +106,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a subset of patches from Gustavo Romero's SMMU DA branch work,
-featuring patches from Pierrick Bouvier and Viresh Kumar. These add
-capabilities to the PCIe root port and ICH9 SATA driver, and also refactor
-some code in hw/pci/msi.c for future use.
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-The goal here is to upstream work which is independent of Tao Tang's SMMU-V3
-patches, while those are being reviewed. If/when Tao Tang's patches are
-accepted, we can proceed with the remainder of the SMMU DA work.
+We need to access this address from smmu, to know if we are translating
+an MSI.
 
-I have spent some time understanding these patches and believe them to be
-sensible, but some parts of them may be outside my understanding, hence the
-RFC tag. In particular, we may be incorrectly advertising features here which
-are not actually implemented; although this doesn't cause any problems I can
-see with Linux or our test suites, I can quite easily set the feature flags to
-zero and keep the code structure if that's a problem.
-
-Jim
-
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
 ---
-Pierrick Bouvier (4):
-      hw/pci: add IDE + TEE capability to PCIe root port
-      sata: add SPDM + IDE + TEE pci support
-      hw/pci: add DVSEC RMEDA capability to PCIe root port
-      hw/pci/msi: extract msi_message_address_register
+ hw/pci/msi.c         | 19 +++++++++++++------
+ include/hw/pci/msi.h |  1 +
+ 2 files changed, 14 insertions(+), 6 deletions(-)
 
- hw/ide/ich.c                       | 72 +++++++++++++++++++++++++++++++++++++-
- hw/pci-bridge/gen_pcie_root_port.c | 38 ++++++++++++++++++++
- hw/pci/msi.c                       | 19 ++++++----
- hw/pci/pcie.c                      | 15 ++++++++
- include/hw/pci/msi.h               |  1 +
- include/hw/pci/pcie.h              |  3 ++
- include/hw/pci/pcie_regs.h         |  8 +++++
- 7 files changed, 149 insertions(+), 7 deletions(-)
----
-base-commit: fa19879df1658f96ac07365fca8835b7decd6995
-change-id: 20260818-jmac-rme-da-prep-8096fc816eee
+diff --git a/hw/pci/msi.c b/hw/pci/msi.c
+index b9f5b45920..7361776ace 100644
+--- a/hw/pci/msi.c
++++ b/hw/pci/msi.c
+@@ -137,6 +137,18 @@ void msi_set_message(PCIDevice *dev, MSIMessage msg)
+     pci_set_word(dev->config + msi_data_off(dev, msi64bit), msg.data);
+ }
+ 
++uint64_t msi_message_address_register(PCIDevice *dev)
++{
++    uint16_t flags = pci_get_word(dev->config + msi_flags_off(dev));
++    bool msi64bit = flags & PCI_MSI_FLAGS_64BIT;
++
++    if (msi64bit) {
++        return pci_get_quad(dev->config + msi_address_lo_off(dev));
++    } else {
++        return pci_get_long(dev->config + msi_address_lo_off(dev));
++    }
++}
++
+ static MSIMessage msi_prepare_message(PCIDevice *dev, unsigned int vector)
+ {
+     uint16_t flags = pci_get_word(dev->config + msi_flags_off(dev));
+@@ -146,12 +158,7 @@ static MSIMessage msi_prepare_message(PCIDevice *dev, unsigned int vector)
+ 
+     assert(vector < nr_vectors);
+ 
+-    if (msi64bit) {
+-        msg.address = pci_get_quad(dev->config + msi_address_lo_off(dev));
+-    } else {
+-        msg.address = pci_get_long(dev->config + msi_address_lo_off(dev));
+-    }
+-
++    msg.address = msi_message_address_register(dev);
+     /* upper bit 31:16 is zero */
+     msg.data = pci_get_word(dev->config + msi_data_off(dev, msi64bit));
+     if (nr_vectors > 1) {
+diff --git a/include/hw/pci/msi.h b/include/hw/pci/msi.h
+index abcfd13925..6f0e02c0fb 100644
+--- a/include/hw/pci/msi.h
++++ b/include/hw/pci/msi.h
+@@ -32,6 +32,7 @@ extern bool msi_nonbroken;
+ 
+ void msi_set_message(PCIDevice *dev, MSIMessage msg);
+ MSIMessage msi_get_message(PCIDevice *dev, unsigned int vector);
++uint64_t msi_message_address_register(PCIDevice *dev);
+ bool msi_enabled(const PCIDevice *dev);
+ void msi_set_enabled(PCIDevice *dev);
+ int msi_init(struct PCIDevice *dev, uint8_t offset,
 
-Best regards,
 -- 
-Jim MacArthur <jim.macarthur@linaro.org>
+2.43.0
 
 
