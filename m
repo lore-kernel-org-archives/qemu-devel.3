@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12A3DC5DF74
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 05:14:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76D94C5DF7E
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 05:14:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwC7v-0005DG-3I; Tue, 18 Aug 2026 01:12:43 -0400
+	id 1wwC7y-0005EK-75; Tue, 18 Aug 2026 01:12:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wwC7t-0005CQ-H9
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:12:41 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1wwC7w-0005DY-4D
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:12:44 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wwC7r-0003mY-In
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:12:41 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-84e3007a2b7so3523185b3a.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 22:12:39 -0700 (PDT)
+ id 1wwC7u-0003nN-BP
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:12:43 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-84a2dcede83so5727344b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 22:12:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787029958; x=1787634758; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787029961; x=1787634761; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=8wuYe3aPv+YJ4aJ8Ua2kMF85cw3TlH8w6CZl7jDCufE=;
- b=MPTbaOyz7Ro1op+PYtuiY/Qie17UT86ym+AFqn5i+bnd7VjrCN0blojku81y5ySpxR
- XE43ndOW1lBN0kRwS/kBlGuYBtqbW5EzYmHTIrdYiRfHCZrUT2cpMQ0TRU8n6ZsC4SD4
- VD8/Hn0ZuKc9OePeV7kXHtDPIDJLII81ufNYdbnBVo3sMrkdFVY7Xlw1MXolZSa4YsuJ
- lF0TbWWOO5HwC/9NMAirpKGnpJB0+N84o1h9fTdY2bUsDhE0DpFQdB1K+v9kZwS88lAi
- ej3tPTcvIUjQ/ndvA+9gv/AmNQpzXOHNNAqSn0jwpWOrStbsjbOLtMgmA5bNwuzTPt9n
- 7xJQ==
+ bh=IHrCv6J+A3qCWiBl5PFq1mBDnBGg+HWYNp3CHH4h1QI=;
+ b=KyBzCnhXhP0vaA230LVV//JOL05KXDfek8kSK/oNNQSFQaZLeP40vgAvoq98BuVMVp
+ av7cVklpnBV+yhK6ZhPn1OXdhEu37e9Z5ET3sIdMDB2pYSt+lzn9xHqXPmEtyBW0PpLR
+ hfrGsjJrLMacAfRccUHXaizikYhZG7cxy7xdQqHqsw+KX2uzTqqaSQ+YNLgKPnQpDN99
+ DBQukNmFvRMN4uLQCqUmqxH9bm6cRa0t1WB7X7Wg5Z3HXEV9wTh0OdjyE7s/D5G5aD2v
+ F31TEpxiMNuwEMJtGnqlXntD4gYIhOvWIPVOF6i7CzuiGAP2K4yY/Kiic9SrM3qqlpls
+ V7gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787029958; x=1787634758;
+ d=1e100.net; s=20251104; t=1787029961; x=1787634761;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=8wuYe3aPv+YJ4aJ8Ua2kMF85cw3TlH8w6CZl7jDCufE=;
- b=KVrRWz9pUstlyiFBkJYOTB44FchXtRBAvvWAgVUx2sc0B3FM8I/Zm1FVmD7/TH0w0O
- 8uYMNhPldcTkhs3+dd5HH8LH93cnZn+HB53xAeG2CE9iWA2nqP6I7iACU3Z+jCNAS6YC
- DVIe5GkIIHWzZtI+pdCYXNKkvT34h4wMZ3yiBvGZnQzoXZJSMydEmmil7rQ+gQ0Ud8nQ
- QMPcONepSMvpdmeZkHOdcDR+o9hzeaYx+C6GrFWbpNvHbcBysxu1VHFAA6k4xYpb3ZG0
- Rd9R1fHg/63pt+drzKCG9drxt+RTsPXMBD2rDf6umCP0260hoAf5ADx9ranYyvvXB92S
- 8xGQ==
-X-Gm-Message-State: AOJu0YwEJ15Bm5ukIsTw6rQndNsk0TFH0epg91cqkSvweGMDx1yVhBGS
- rwZRcwTQKjc5+hls6cgoy7s1ITBneDQvarUQjEZj1Dd35Vz/dTBKwOT1
-X-Gm-Gg: AR+sD12UhVDl7+f+W7n0NpPYAeK0TUopUB4hT1hx4JGI8eS8HGxgwNE2ePvHKeQWVdE
- Jwqkd9v6X5YI6qdMWMHlTWlL2FoFCIlXxgfy9ymxoKzVWVifT4hev+X9AbjAHpvZCCdvGObjuFn
- 17BgKhMS3cNhWtyKCAtkWIk/VQ3Undgz5H0HD07Ix0jif6lbY/T3VeE19oBsGzS71KtlHdRVJX/
- ci8sgclmGoIgouZEM4PdPg0fSvGjJr53l7uCztOCLRonz9HjSZbmXnFpkhenM0Rz97Bgv60jRfA
- fr00l8+S89QBko00jGqSsufeeiP5gassIY5r/ctEFn2CGSKOg8SPtA8sdbVrw9DitRN1IB0oWd+
- sUmUtQJ/cJJxvDm41iGLYx6GKoY+AzVISaWUMEreFK/+GJv+3Z730KUJo8GiSjNIZcXC9lwEk6I
- X4EnqGwWXUhb7+XdcrOR3q88lOf8zZf+UnTUEHgpj7mHD4S7qiIWx46zW1zMiDPffwEA==
-X-Received: by 2002:a05:6a00:4193:b0:845:e9e8:645c with SMTP id
- d2e1a72fcca58-84fde11e46amr33116869b3a.6.1787029958217; 
- Mon, 17 Aug 2026 22:12:38 -0700 (PDT)
+ bh=IHrCv6J+A3qCWiBl5PFq1mBDnBGg+HWYNp3CHH4h1QI=;
+ b=LO6XQH3TY5jZu3gZ0T3aWh07Rr6KokfPgctc2FYmGrJDf2iuwORhMXz8T0LJ8r3UZW
+ j7uJ02FhCGN7ADhmCiMVHtpfj1bC/uL8WlKpsXbMh/R0dsgSMy77ZwNJlmzHC2cPiA4f
+ oEajLaG7P6tIuChv11MTQPhiAhOZLPJgqIg+iT/z7kWGOgjQLyK5lAyMi0QYxrw4xusk
+ 5Ido/EgrBrMlK3xpzuraVBXXhCLOgxyjsovlauaVMJ1rSK4fOCsu/QSktosq5phVoa3B
+ E5V4FMSdWvPFUne3oeTBwtSGdl+bYa8WJyvClFQN/VJM81IfyjqRGdfPqX92Fdz3bVUX
+ Vc7w==
+X-Gm-Message-State: AOJu0YwGtVuJil4dB4EWJ2MXv3jZoihUR5xqlYHaIvk5NLPQxnMj2yNE
+ KF5gHGpZvAv3mJomDo7TLFu5XP06jBAaVAmnxK/sb7tiZF6oqpR9TFbc
+X-Gm-Gg: AR+sD10cTXuYPgJ2QyOac0UMdeF2Xu/GTVvUcLcEDVO7NB8WnNKVHnbsV35PvEEu5D2
+ qLDREjFDuSu2jKXyRGJLDSHiRscpgtBH3UZeera9xyJONK9irTkTyVLAr6fV7fo7XMvZaf6nnCP
+ Q8zDYSnnPDoC7FW4IUz9BFZr3Rze374zeb5BiN6nWqx8ojNgdWOYV5MF6rUrFpBPjbdLTny+ATl
+ 8Dgc6+DNr1RP+cs9OnUuKY2oVpIxqzUX7Kc7z+3DOIhf61g4CD4ecLWSKb4bt8b4Q1SoPJtMta8
+ NCE5HlUMEXic8upGAU1Z08L6w61WknZ8Ia5snmfpYro1H3BxKG5g1uXdRkJuj9h221GLdeY2ZTY
+ X3lfnjdn8jj5lDlR1K/aYsi4txRfRspS1OwL32Xk9CTOKOjWK7+owqFHNXBZs9QLFGNrpncbHmg
+ 4bhhCUbZcBhmVoC91j9EEU9DWANgC0qF1jGtW7u79mizCCyAHzz0KzJWROmqG4wwdY1A==
+X-Received: by 2002:a05:6a00:3016:b0:848:5540:2377 with SMTP id
+ d2e1a72fcca58-84fde13600amr30938208b3a.17.1787029960971; 
+ Mon, 17 Aug 2026 22:12:40 -0700 (PDT)
 Received: from [127.0.1.1] ([2600:1700:e140:14d0:d043:a40d:25c1:432c])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851b6fc0e84sm1031160b3a.43.2026.08.17.22.12.35
+ d2e1a72fcca58-851b6fc0e84sm1031160b3a.43.2026.08.17.22.12.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 22:12:37 -0700 (PDT)
+ Mon, 17 Aug 2026 22:12:40 -0700 (PDT)
 From: Connor Kite <connorkite@gmail.com>
-Date: Mon, 17 Aug 2026 22:12:22 -0700
-Subject: [PATCH RFC v2 07/13] hw/virtio/vhost-user: create isolation region
+Date: Mon, 17 Aug 2026 22:12:23 -0700
+Subject: [PATCH RFC v2 08/13] hw/virtio/vhost-user: send isolation regions
+ to device
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260817-vhost-user-isolated-memory-v2-7-948aae960abb@gmail.com>
+Message-Id: <20260817-vhost-user-isolated-memory-v2-8-948aae960abb@gmail.com>
 References: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
 In-Reply-To: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
 To: qemu-devel@nongnu.org
@@ -98,15 +99,15 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Connor Kite <connorkite@gmail.com>, 
  20260817233147.2867623-1-connorkite@gmail.com
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1787029936; l=7145;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1787029936; l=6051;
  i=connorkite@gmail.com; s=20260723; h=from:subject:message-id;
- bh=Y8FMqK8tl2z1lXfprKV5PVmmovyeXR0vRWxv7yRJE+M=;
- b=DaG7i69Lze5UQiIRdjFrHrvlHhMlGExbU4HaxptGfmc+ci4x+2veNzCD3oqlLHpolAAoJQUd6
- zh60ilHkTbrAZHEawyGYCD8tg5ozrk3Hu0VChDUafW8BKSBtXlO+1F0
+ bh=isjwTQ10NMEWzyrtg5QOC8oSS6P/XZ9Z7iPYIanOq+I=;
+ b=FNRuemiXMG2dTKu828vACrnegRFejgIQS9WFd9Yooo1U9kbAgnOpgFkvJOc+vSQs5v6xxBexJ
+ LzmC+iqgmKdBj2XM/hPHzFU/R9ir4emBc58pmw0V2fRnezwj1Iw1iA8
 X-Developer-Key: i=connorkite@gmail.com; a=ed25519;
  pk=xg/3N8AntFCYogaIgN5NC/KkT7UlZB6ktPIRliJ3hv4=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=connorkite@gmail.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=connorkite@gmail.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,202 +130,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If memory isolation mode is active for the vhost-user device adds
-features to:
-- Gather the size required for bounce buffers and vrings in shared
-  isolation region
-- Allocate the required space in an anonymous file
-- Create a vhost-iova-tree with space to map entire isolation region
-- Map guest memory regions and shared vrings into the tree
-- Release these resources upon backend cleanup
+Adds features to fill a vhost_user_set_mem_table message with the
+addresses of isolation memory regions corresponding to bounce buffers
+and vrings.
 
 Signed-off-by: Connor Kite <connorkite@gmail.com>
 ---
- hw/virtio/vhost-user.c | 136 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 136 insertions(+)
+ hw/virtio/vhost-user.c | 118 ++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 117 insertions(+), 1 deletion(-)
 
 diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 1c003e4d9d..7e9233e174 100644
+index 7e9233e174..e1e5cba53d 100644
 --- a/hw/virtio/vhost-user.c
 +++ b/hw/virtio/vhost-user.c
-@@ -18,6 +18,7 @@
- #include "hw/virtio/vhost-backend.h"
- #include "hw/virtio/virtio.h"
- #include "hw/virtio/virtio-net.h"
-+#include "hw/virtio/vhost-iova-tree.h"
- #include "chardev/char-fe.h"
- #include "io/channel-socket.h"
- #include "system/kvm.h"
-@@ -25,6 +26,7 @@
- #include "qemu/main-loop.h"
- #include "qemu/uuid.h"
- #include "qemu/sockets.h"
-+#include "qemu/memfd.h"
- #include "system/runstate.h"
- #include "system/cryptodev.h"
- #include "migration/postcopy-ram.h"
-@@ -320,6 +322,17 @@ static VhostUserMsg m __attribute__ ((unused));
- /* The version of the protocol we support */
- #define VHOST_USER_VERSION    (0x1)
+@@ -1140,7 +1140,77 @@ static void cleanup_isolation_regions(struct vhost_dev *dev)
+     }
+ }
  
-+/* Memory region shared with back-end when memory-isolation is active */
+-__attribute__((unused))
 +typedef struct {
-+    void *shared_mem_addr; /* mapped shared memory */
-+    VhostIOVATree *tree; /* controls mapping of regions into IOVA space */
-+    void *vring_hva_addr; /* beginning of vring region in shared memory */
-+    size_t vring_region_size; /* amount of shared memory reserved for vrings */
-+    size_t size; /* size of the mapped shared memory */
-+    int fd; /* descriptor of anonymous file backing shared iso region */
-+    Int128 iso_iova_offset; /* translation from IOVA to hva of iso region */
-+} IsolationModeCtx;
++    VhostUserMsg *msg;
++    struct vhost_user *u;
++    int *fds;
++    size_t fds_size;
++    uint64_t vring_iova;
++    size_t vring_size;
++    bool vring_node_visited;
++    size_t *idx;
++} IOVATreeTraversalArgs;
 +
- struct vhost_user {
-     struct vhost_dev *dev;
-     /* Shared between vhost devs of the same virtio device */
-@@ -353,6 +366,9 @@ struct vhost_user {
-      * by the backend (see @features).
-      */
-     uint64_t protocol_features;
++static gboolean vhost_user_fill_msg_reg_from_tree(gpointer key,
++                                                  gpointer value,
++                                                  gpointer data)
++{
++    IOVATreeTraversalArgs *args = data;
++    struct vhost_user *u;
++    VhostUserMsg *msg = args->msg;
++    DMAMap *map = key;
++    uint64_t offset;
 +
-+    /* Data specfic to isolated memory mode */
-+    IsolationModeCtx iso_mem_ctx;
- };
++    assert(args && key && value);
++    if (!args->vring_node_visited) {
++        args->vring_node_visited = true;
++        return false;
++    }
++
++    u = args->u;
++    assert(*args->idx < args->fds_size);
++
++    args->fds[*args->idx] = args->u->iso_mem_ctx.fd;
++
++    /*
++     * If the number of regions is fixed, it would be wasteful to use one for
++     * only the vrings. The first vhost_iova_tree element is always
++     * reserved for the vrings, so we can simply combine the first and second
++     * elements, which are contiguous in IOVA space, when sending regions to
++     * the backend.
++     */
++    if (*args->idx == 0) {
++        offset = u->iso_mem_ctx.vring_hva_addr - u->iso_mem_ctx.shared_mem_addr;
++        msg->payload.memory.regions[*args->idx].userspace_addr =
++            args->vring_iova;
++        /*
++         * The size from the iova tree is inclusive, so 1 is added to it.
++         * args->vring_size is exclusive, so no addition is required.
++         */
++        msg->payload.memory.regions[*args->idx].memory_size =
++            args->vring_size + map->size + 1;
++        msg->payload.memory.regions[*args->idx].guest_phys_addr =
++            args->vring_iova;
++        msg->payload.memory.regions[*args->idx].mmap_offset = offset;
++    } else {
++        /* Use 128 bit operation in unlikely case of negative iso_iova_offset */
++        offset = int128_get64(int128_add(int128_make64(map->iova),
++                                        u->iso_mem_ctx.iso_iova_offset)) -
++                (uint64_t)u->iso_mem_ctx.shared_mem_addr;
++
++        msg->payload.memory.regions[*args->idx].userspace_addr = map->iova;
++        msg->payload.memory.regions[*args->idx].memory_size = map->size + 1;
++        msg->payload.memory.regions[*args->idx].guest_phys_addr = map->iova;
++        msg->payload.memory.regions[*args->idx].mmap_offset = offset;
++    }
++
++    assert(offset + msg->payload.memory.regions[*args->idx].memory_size <=
++        u->iso_mem_ctx.size);
++    (*args->idx)++;
++
++    return false;
++}
++
+ static int init_isolation_regions(struct vhost_dev *dev,
+                                   VhostUserMsg *msg,
+                                   int *fds, size_t *fd_num)
+@@ -1159,6 +1229,7 @@ static int init_isolation_regions(struct vhost_dev *dev,
+     DMAMap *map;
+     DMAMap vring_map;
+     int r;
++    IOVATreeTraversalArgs trav_args;
  
- struct scrub_regions {
-@@ -1112,6 +1128,125 @@ static int vhost_user_set_mem_table_postcopy(struct vhost_dev *dev,
+     msg->hdr.request = VHOST_USER_SET_MEM_TABLE;
+ 
+@@ -1244,6 +1315,27 @@ static int init_isolation_regions(struct vhost_dev *dev,
+         }
+     }
+ 
++    *fd_num = 0;
++    trav_args.idx = fd_num;
++    trav_args.fds = fds;
++    trav_args.msg = msg;
++    trav_args.u = u;
++    trav_args.vring_iova = vring_map.iova;
++    trav_args.vring_size = total_vring_size;
++    trav_args.fds_size = nregions;
++    trav_args.vring_node_visited = false;
++
++    vhost_iova_tree_foreach(u->iso_mem_ctx.tree,
++                            vhost_user_fill_msg_reg_from_tree, &trav_args);
++
++    msg->payload.memory.nregions = *fd_num;
++
++    assert(*fd_num == nregions);
++
++    msg->hdr.size = sizeof(msg->payload.memory.nregions);
++    msg->hdr.size += sizeof(msg->payload.memory.padding);
++    msg->hdr.size += *fd_num * sizeof(VhostUserMemoryRegion);
++
      return 0;
  }
  
-+static void cleanup_isolation_regions(struct vhost_dev *dev)
-+{
-+    struct vhost_user *u = dev->opaque;
-+    if (u->iso_mem_ctx.shared_mem_addr) {
-+        vhost_iova_tree_delete(u->iso_mem_ctx.tree);
-+        qemu_memfd_free(u->iso_mem_ctx.shared_mem_addr,
-+                        u->iso_mem_ctx.size,
-+                        u->iso_mem_ctx.fd);
-+        memset(&u->iso_mem_ctx, 0, sizeof(IsolationModeCtx));
-+    }
-+}
-+
-+__attribute__((unused))
-+static int init_isolation_regions(struct vhost_dev *dev,
-+                                  VhostUserMsg *msg,
-+                                  int *fds, size_t *fd_num)
-+{
-+    Error *err = NULL;
-+    struct vhost_user *u = dev->opaque;
-+    uint32_t nregions = dev->mem->nregions;
-+
-+    g_autofree DMAMap *buffer_regions = g_new0(DMAMap, nregions);
-+    size_t buffer_reg_size = 0;
-+    size_t total_vring_size = 0;
-+    size_t total_mmap_size;
-+    char *reg_name;
-+    uint64_t first_IOVA_addr;
-+    uint64_t last_IOVA_addr;
-+    DMAMap *map;
-+    DMAMap vring_map;
-+    int r;
-+
-+    msg->hdr.request = VHOST_USER_SET_MEM_TABLE;
-+
-+    /* In case of reset, clear old regions */
-+    cleanup_isolation_regions(dev);
-+
-+    /* Gather information for bounce buffers to be mapped */
-+    for (u_int32_t i = 0; i < nregions; i++) {
-+        hwaddr size = ROUND_UP(dev->mem->regions[i].memory_size,
-+                      qemu_real_host_page_size());
-+        buffer_regions[i].size = size - 1;
-+        buffer_regions[i].perm = IOMMU_RW;
-+
-+        buffer_reg_size += size;
-+    }
-+
-+    /* Get space required for all vrings */
-+    for (int i = 0; i < dev->nvqs; i++) {
-+        VirtQueue *vq = virtio_get_queue(dev->vdev, dev->vq_index + i);
-+        total_vring_size += vhost_svq_vring_total_size(dev->vdev, vq);
-+    }
-+
-+    total_mmap_size = buffer_reg_size + total_vring_size;
-+    u->iso_mem_ctx.size = total_mmap_size;
-+
-+    /* Allocate and map an anonymous file to hold the isolation region */
-+    reg_name = g_strconcat("iso_mem_", dev->vdev->name, NULL);
-+    u->iso_mem_ctx.shared_mem_addr = qemu_memfd_alloc(reg_name,
-+                                     total_mmap_size,
-+                                     F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL,
-+                                     &u->iso_mem_ctx.fd, &err);
-+
-+    assert(u->iso_mem_ctx.fd >= 0);
-+    g_free(reg_name);
-+
-+    if (err) {
-+        error_report_err(err);
-+        cleanup_isolation_regions(dev);
-+        return -1;
-+    }
-+
-+    /* vhost-iova-tree enforces non-zero lower address */
-+    first_IOVA_addr = qemu_real_host_page_size();
-+    last_IOVA_addr = first_IOVA_addr + total_mmap_size - 1;
-+    assert(last_IOVA_addr > first_IOVA_addr);
-+
-+    /* Use 128-bit operation in case of large negative offset */
-+    u->iso_mem_ctx.iso_iova_offset =
-+        int128_sub(int128_make64((uint64_t)u->iso_mem_ctx.shared_mem_addr),
-+        int128_make64(first_IOVA_addr));
-+
-+    /*
-+     * Instantiates iova tree sized to map bounce buffers and vrings to the
-+     * isolation region in host va.
-+     */
-+    u->iso_mem_ctx.tree =
-+        vhost_iova_tree_new(first_IOVA_addr, last_IOVA_addr);
-+
-+    /* Map vrings into IOVA tree */
-+    vring_map.perm = IOMMU_RW;
-+    vring_map.size = total_vring_size - 1;
-+    r = vhost_iova_tree_map_alloc(u->iso_mem_ctx.tree, &vring_map,
-+                                  (hwaddr)u->iso_mem_ctx.shared_mem_addr);
-+
-+    if (r != IOVA_OK) {
-+        cleanup_isolation_regions(dev);
-+        return r;
-+    }
-+
-+    u->iso_mem_ctx.vring_hva_addr = (void *)int128_get64(
-+                                    int128_add(int128_make64(vring_map.iova),
-+                                               u->iso_mem_ctx.iso_iova_offset));
-+    u->iso_mem_ctx.vring_region_size = total_vring_size;
-+
-+    for (int i = 0; i < nregions; i++) {
-+        map = &buffer_regions[i];
-+        r = vhost_iova_tree_map_alloc_gpa(u->iso_mem_ctx.tree, map,
-+                                          dev->mem->regions[i].guest_phys_addr);
-+
-+        if (r != IOVA_OK) {
-+            cleanup_isolation_regions(dev);
-+            return r;
-+        }
-+    }
-+
-+    return 0;
-+}
-+
- static int vhost_user_set_mem_table(struct vhost_dev *dev,
+@@ -1251,6 +1343,7 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
                                      struct vhost_memory *mem)
  {
-@@ -2684,6 +2819,7 @@ static int vhost_user_backend_cleanup(struct vhost_dev *dev)
-     g_free(u->region_rb_offset);
-     u->region_rb_offset = NULL;
-     u->region_rb_len = 0;
-+    cleanup_isolation_regions(dev);
-     g_free(u);
-     dev->opaque = 0;
+     struct vhost_user *u = dev->opaque;
++    bool memory_isolation = u->user->memory_isolation;
+     int fds[VHOST_MEMORY_BASELINE_NREGIONS];
+     size_t fd_num = 0;
+     bool do_postcopy = u->postcopy_listen && u->postcopy_fd.handler;
+@@ -1262,6 +1355,11 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
+     int ret;
  
+     if (do_postcopy) {
++        /* Postcopy is not supported with memory isolation yet */
++        if (memory_isolation) {
++            return -1;
++        }
++
+         /*
+          * Postcopy has enough differences that it's best done in it's own
+          * version
+@@ -1278,6 +1376,24 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
+         msg.hdr.flags |= VHOST_USER_NEED_REPLY_MASK;
+     }
+ 
++    if (memory_isolation) {
++        ret = init_isolation_regions(dev, &msg, fds, &fd_num);
++        if (ret < 0) {
++            return ret;
++        }
++
++        ret = vhost_user_write(dev, &msg, fds, fd_num);
++        if (ret < 0) {
++            return ret;
++        }
++
++        if (reply_supported) {
++            return process_message_reply(dev, &msg);
++        }
++
++        return 0;
++    }
++
+     if (config_mem_slots) {
+         ret = vhost_user_add_remove_regions(dev, &msg, reply_supported, false);
+         if (ret < 0) {
 
 -- 
 2.43.0
