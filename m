@@ -4,100 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 604D4C5DF74
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:57:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5962EC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 13:57:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwJ36-0002Nq-7r; Tue, 18 Aug 2026 08:36:12 -0400
+	id 1wwKJg-0004ct-TC; Tue, 18 Aug 2026 09:57:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwJ34-0002Mx-Tg
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:36:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwJ31-0006wq-UX
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 08:36:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787056566;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oPypAJmHalIuZO8Qh6uXAHLk6oL+F+SAlk4t9kCAeHs=;
- b=jEI5oXJTWITlerXRow6mdiS2tfqfSQZz0sk9BM2bvYiNfsxAOa4xstvvmtytwggU6EB0ja
- Uxeafn47In9PXg3pkxSdOQEHjdnmwp0ilFg1eWDkP8SYaHzsUHd+WvLnnVKVK8lJpKVpNQ
- r+KAyRzbzp/ilRSwUOOcwy2jk0qxncY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-Y_ijdr2nNtC_CScHp-b_tA-1; Tue,
- 18 Aug 2026 08:36:02 -0400
-X-MC-Unique: Y_ijdr2nNtC_CScHp-b_tA-1
-X-Mimecast-MFC-AGG-ID: Y_ijdr2nNtC_CScHp-b_tA_1787056561
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3FBBA1800614; Tue, 18 Aug 2026 12:35:58 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9C2F91800348; Tue, 18 Aug 2026 12:35:56 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 18 Aug 2026 16:36:35 +0400
-Subject: [PATCH v3 56/74] include: add QEMU_REPEAT helper macro
+ (Exim 4.90_1) (envelope-from <isyanfei.xu@gmail.com>)
+ id 1wwKJc-0004X7-Dl
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:57:20 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <isyanfei.xu@gmail.com>)
+ id 1wwKJa-0004aB-Ve
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 09:57:20 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-ca88130e09aso2885430a12.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 06:57:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1787061437; x=1787666237; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=6M8/qmFtcWp5GcVEIBQIyg423xO2KTmgapaXy3+63Y0=;
+ b=E3B18GNSKLkjORbFk8xM3mYSxv3E0JmkdRcq4oGlIsCoIX1Nqq8DQrjrQ6Wt/08csA
+ aGjCi3S/pjqV7GDZF2FYg+uxKw/pVf3v1l7ou6IM0h9e3c7sV+6lnKBRWuFranBacQBN
+ nlkDUvFaw/uEw2bWyhFmxsLgUfWd26EiPAchmNMTUrH8t3ZToLE/Htf/praMWAa7Qjer
+ yMKeALOrdblx01704sXaBVYW+zGodev1gMAelJHZEX+p6jaMZnh14Mz2MIuUhMFr55ac
+ +B9zQa7dltQRPVlm8Aa1uHUfV8zpTEmr/uHXEBZQX5a4gM8RrK5wlfNj/nQ5vUs7wE5l
+ v9PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787061437; x=1787666237;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=6M8/qmFtcWp5GcVEIBQIyg423xO2KTmgapaXy3+63Y0=;
+ b=lotOmfU7eAC3+mguaThY+HQKDB5oB1SkpTFnimr7nSmItCpsSRtB2ARft+USs3eBBh
+ OO3YvEVFgYZAJDYR0YYjKt771/+tGVMRPrIPnecgPwsBpnhtlLeWYkyRz4HuM8UXzUHF
+ imo8p4ZxH1L4Eb1GKMWMIhBhp2rZXoGU6HbgeMkHFj9CiVGM04kZqGDvmxcYulmMmY6D
+ +MSYylnFO8ducO1Wj03G1XBHuDeEh6/fYzSEPCDUd+bobK+Jet9wa8hI5qK91tGiv2fI
+ Up+SFSWA/oNZ+Nhag6vyQYP6sb0/JNvMyKtw0uVn7RjlGZjaG9uPV2IkVOVU11GUzDjK
+ 3dcA==
+X-Gm-Message-State: AOJu0YxPNVE4n8e8lIdUqILl4KhACYxRt8pvCzqGKmRr3VJdnT6YZBdT
+ ViJbpVtAcxfIkgx6Ql1Ez7zYGUJahcYbH0cHhrRuS2Gy4FTTw0H9o4rD
+X-Gm-Gg: AR+sD10u4GCmWv+whrHJ1MKiKz8D6wjT6xuqn3aliaJ68VDcBoHYDRjz+AzGiWeM9Jg
+ FnATrzXsL417IrMAlvmRch+ibVg8E535FyrhBIQUV8ILTKP5cPym6QE0Xic0R6n4v9wztxENsnC
+ aK3G/WMKMxDVEIlYVknKj7kUsG2ANKSyVTZN1QKL0NonGSGwRl0zWRUgINprSPMBwJFZPXz5Rnm
+ gle71qsDukHQZBG0Xi5uIx3UFKD23e8R99LkMLKCifCmkWAAgx8NgVhL1JZFOmjtF5K14uMysi/
+ v4XOdHk4DZqMzaeGMCC9ccDSx38eSW+MQGLzolNOgdn3WqUm/3gEzyrOOsAWYlpfuhXyn7AOsuU
+ 0zUFGhvLrhV8zxFK2bH9ipYzJ7ROfLMuRfTbErTfWpg8TAL0VvLnA8XK6F+L785CJQPM8/UalKl
+ Y/+Xs8AESkob1tkhTjV8qDnxkMwbbVGX2gpLkT7aCn/xRF68QHmIcoAcnDuAEW71JCVHBqHiX4i
+ f4=
+X-Received: by 2002:a05:6300:6697:b0:3c3:c080:71ca with SMTP id
+ adf61e73a8af0-3ccd9fef1b4mr14538584637.0.1787061437477; 
+ Tue, 18 Aug 2026 06:57:17 -0700 (PDT)
+Received: from [10.3.188.167] ([61.213.176.8])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-cc13c03320esm2152832a12.25.2026.08.18.06.57.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Aug 2026 06:57:16 -0700 (PDT)
+Message-ID: <4a0b20e5-947c-45a4-8fcf-89c77e0a4cfb@gmail.com>
+Date: Tue, 18 Aug 2026 21:57:12 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/10] migration/rdma: Remove unregister code
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>,
+ Samuel Zhang <guoqing.zhang@amd.com>, Fabiano Rosas <farosas@suse.de>,
+ Jack Wang <jinpu.wang@ionos.com>, Juraj Marcin <jmarcin@redhat.com>,
+ Yanfei Xu <yanfei.xu@bytedance.com>
+References: <20260817202424.2901438-1-peterx@redhat.com>
+ <20260817202424.2901438-3-peterx@redhat.com>
+ <4d0d08d3-ad6e-4de3-85b8-587b70286b04@gmail.com> <aoRXk0H1muF_gZJP@x1.local>
+From: Yanfei Xu <isyanfei.xu@gmail.com>
+In-Reply-To: <aoRXk0H1muF_gZJP@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260818-qom-qapi-v3-56-24b8bbbe3d86@redhat.com>
-References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
-In-Reply-To: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Michael Roth <michael.roth@amd.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Elena Ufimtseva <elena.ufimtseva@oracle.com>, 
- Jagannathan Raman <jag.raman@oracle.com>, 
- Jonathan Cameron <jic23@kernel.org>, qemu-arm@nongnu.org, 
- linux-cxl@vger.kernel.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5015;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=EAQeZe1XEuAWHJARuU6IDW2Xx2TnIuJB2OqRLsbMlaA=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhFGnIFCFCjBNBLIxXO88uv5+j5DzvPiijQDit
- xHxgw2SJouJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoRRpwAKCRDa6OEJdZac
- 5TG7EACuj1vgznisdZxviv8gWC681BPf8BdVNMsXxXxIqHqInI7KHkNkZZiD4GTaK97CkHkPJqN
- xrgrwTIN3sVKh9tccIWgYXwwkWYZVUccnmzjqpeVMhRfZ305EeK8WGECendXg+sqBirQAYHbBNy
- rtpTJQDKqSR3z0XVe7WCSqmmQyBRc5a2TM70VA7WZrYQxKlH3ry4BY+7siXXHZmPxELek5gGDlI
- FR1BNsCG4KPMdaxKgufqb0wUTat0NoX+OL7/jtlDL542Z1LN6EGPohqtKrW+pXCO46a+13/XbJr
- SqZC0IUZr8ujWzEpfHVRRZ8q4mi9Alqxo2AgRo+abvmA/JRYKgbK+vVHoEz+lUdlj72SuwbHjHf
- b1eQy4UhGYUjR+b4QKOpTtFCckpFTfOaNQxotlSXyr/RcfuNCJeOB6/SaUGGy3X3p1K+VJaXIL3
- S/mg5CRG5d9SI8MO+66sffHPkZexnfQTsZdWQGusdnkfgX6h87X3Q7aQMse0XSE3fWuq5BHY2QZ
- 6hPc7yNkt3tVvFDjaxU/lRzirQRgC/f/lxT4HA5FfA8Of3vnBu5U4Dx4qoaMBXIZUIFyklcc7FU
- 3O4HWq18W3viUixS8SbzWD1Zu3rkqooMbk2eT67ruS0oHhFGe4DOHNMunQMwz6MnFxZ9LtZLHYB
- GhwzPiluITXlIzg==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=isyanfei.xu@gmail.com; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,142 +107,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a macro used in following commit, and convert a few existing
-candidates. Inspired by a similar macro in Linux kernel/trace/bpf_trace.c
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- hw/misc/tz-ppc.c               | 19 ++-----------------
- hw/remote/vfio-user-obj.c      | 17 +++--------------
- include/hw/cxl/cxl_component.h |  5 +----
- include/qemu/osdep.h           | 33 +++++++++++++++++++++++++++++++++
- 4 files changed, 39 insertions(+), 35 deletions(-)
+On 2026/8/18 21:01, Peter Xu wrote:
+> On Tue, Aug 18, 2026 at 07:57:06PM +0800, Yanfei Xu wrote:
+>> Hi Peter,
+> Hi, Yanfei,
+>
+>> No objection to removing the dead code — it clearly never worked
+>>
+>> I do have one question about the direction, though. The removed logic
+>> was the only in-tree attempt at MR unregistration for the non-pin-all
+>> path. Without it, registered MRs grow monotonically over a migration,
+>> and with large, widely-spread dirty memory over chunks the accumulated
+>> MR metadata (user + kernel) can cost more than pin-all and even perform
+>> worse — which rather defeats the purpose of not pinning everything.
+>>
+>> do we still intend to keep and improve the non-pin-all path going
+>> forward? If so, some form of dynamic MR unregistration will eventually
+>> be needed and it might be worth keeping this code，or at least leaving
+>> a TODO to mark the gap?
+> Thanks for taking a look.  This is a valid question to ask.
+>
+> Though it was there for 13 years without being "enhanced", it means the
+> possibility we leverage it in the next couple of years is low.
+>
+> You also discussed the other side of things: I am not a frequent RDMA user,
+> but my understanding is frequent MR reg operations already slow down
+> migration quite a bit.  It means dynamic management including unregisters
+> will be even worse.  AFAICT, it'll be a challenging task if we want to keep
+> the performance in bar and add a hard throttle to pinned memory.
 
-diff --git a/hw/misc/tz-ppc.c b/hw/misc/tz-ppc.c
-index 6f820430eed8..5f09ce164c19 100644
---- a/hw/misc/tz-ppc.c
-+++ b/hw/misc/tz-ppc.c
-@@ -303,26 +303,11 @@ static const VMStateDescription tz_ppc_vmstate = {
- 
- #define DEFINE_PORT(N)                                          \
-     DEFINE_PROP_LINK("port[" #N "]", TZPPC, port[N].downstream, \
--                     TYPE_MEMORY_REGION, MemoryRegion *)
-+                     TYPE_MEMORY_REGION, MemoryRegion *),
- 
- static const Property tz_ppc_properties[] = {
-     DEFINE_PROP_UINT32("NONSEC_MASK", TZPPC, nonsec_mask, 0),
--    DEFINE_PORT(0),
--    DEFINE_PORT(1),
--    DEFINE_PORT(2),
--    DEFINE_PORT(3),
--    DEFINE_PORT(4),
--    DEFINE_PORT(5),
--    DEFINE_PORT(6),
--    DEFINE_PORT(7),
--    DEFINE_PORT(8),
--    DEFINE_PORT(9),
--    DEFINE_PORT(10),
--    DEFINE_PORT(11),
--    DEFINE_PORT(12),
--    DEFINE_PORT(13),
--    DEFINE_PORT(14),
--    DEFINE_PORT(15),
-+    QEMU_REPEAT(TZ_NUM_PORTS, DEFINE_PORT)
- };
- 
- static void tz_ppc_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
-index 7e6819f670b5..84c3ff05cfb8 100644
---- a/hw/remote/vfio-user-obj.c
-+++ b/hw/remote/vfio-user-obj.c
-@@ -496,22 +496,11 @@ static size_t vfu_object_bar_rw(PCIDevice *pci_dev, int pci_bar,
-                                  buf, count, is_write);                        \
-     }                                                                          \
- 
--VFU_OBJECT_BAR_HANDLER(0)
--VFU_OBJECT_BAR_HANDLER(1)
--VFU_OBJECT_BAR_HANDLER(2)
--VFU_OBJECT_BAR_HANDLER(3)
--VFU_OBJECT_BAR_HANDLER(4)
--VFU_OBJECT_BAR_HANDLER(5)
--VFU_OBJECT_BAR_HANDLER(6)
-+QEMU_REPEAT(PCI_NUM_REGIONS, VFU_OBJECT_BAR_HANDLER)
- 
-+#define VFU_OBJECT_BAR_HANDLER_PTR(BAR_NO) vfu_object_bar##BAR_NO##_handler,
- static vfu_region_access_cb_t *vfu_object_bar_handlers[PCI_NUM_REGIONS] = {
--    &vfu_object_bar0_handler,
--    &vfu_object_bar1_handler,
--    &vfu_object_bar2_handler,
--    &vfu_object_bar3_handler,
--    &vfu_object_bar4_handler,
--    &vfu_object_bar5_handler,
--    &vfu_object_bar6_handler,
-+    QEMU_REPEAT(PCI_NUM_REGIONS, VFU_OBJECT_BAR_HANDLER_PTR)
- };
- 
- /**
-diff --git a/include/hw/cxl/cxl_component.h b/include/hw/cxl/cxl_component.h
-index ffc82202206c..fca8b7055ccd 100644
---- a/include/hw/cxl/cxl_component.h
-+++ b/include/hw/cxl/cxl_component.h
-@@ -186,10 +186,7 @@ REG32(CXL_HDM_DECODER_GLOBAL_CONTROL, CXL_HDM_REGISTERS_OFFSET + 4)
- /* Support 4 decoders at all levels of topology */
- #define CXL_HDM_DECODER_COUNT 4
- 
--HDM_DECODER_INIT(0);
--HDM_DECODER_INIT(1);
--HDM_DECODER_INIT(2);
--HDM_DECODER_INIT(3);
-+QEMU_REPEAT(CXL_HDM_DECODER_COUNT, HDM_DECODER_INIT)
- 
- /*
-  * CXL r3.1 Section 8.2.4.21: CXL Extended Security Capability Structure
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index 1ec5b42230be..a5e7ff99cb89 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -191,6 +191,39 @@ extern "C" {
- 
- #include "qemu/typedefs.h"
- 
-+/*
-+ * QEMU_REPEAT(n, m) - invoke m(0) m(1) ... m(n-1)
-+ *
-+ * Expands to n invocations of m, each with a literal integer argument.
-+ * n must be a compile-time constant in 0..16.
-+ *
-+ * Example - generate 4 per-index function definitions:
-+ *
-+ *   #define DEFINE_GETTER(i) \
-+ *   static int get_##i(void) { return values[i]; }
-+ *
-+ *   QEMU_REPEAT(4, DEFINE_GETTER)
-+ */
-+#define QEMU_REPEAT_0(m)
-+#define QEMU_REPEAT_1(m)   QEMU_REPEAT_0(m)   m(0)
-+#define QEMU_REPEAT_2(m)   QEMU_REPEAT_1(m)   m(1)
-+#define QEMU_REPEAT_3(m)   QEMU_REPEAT_2(m)   m(2)
-+#define QEMU_REPEAT_4(m)   QEMU_REPEAT_3(m)   m(3)
-+#define QEMU_REPEAT_5(m)   QEMU_REPEAT_4(m)   m(4)
-+#define QEMU_REPEAT_6(m)   QEMU_REPEAT_5(m)   m(5)
-+#define QEMU_REPEAT_7(m)   QEMU_REPEAT_6(m)   m(6)
-+#define QEMU_REPEAT_8(m)   QEMU_REPEAT_7(m)   m(7)
-+#define QEMU_REPEAT_9(m)   QEMU_REPEAT_8(m)   m(8)
-+#define QEMU_REPEAT_10(m)  QEMU_REPEAT_9(m)   m(9)
-+#define QEMU_REPEAT_11(m)  QEMU_REPEAT_10(m)  m(10)
-+#define QEMU_REPEAT_12(m)  QEMU_REPEAT_11(m)  m(11)
-+#define QEMU_REPEAT_13(m)  QEMU_REPEAT_12(m)  m(12)
-+#define QEMU_REPEAT_14(m)  QEMU_REPEAT_13(m)  m(13)
-+#define QEMU_REPEAT_15(m)  QEMU_REPEAT_14(m)  m(14)
-+#define QEMU_REPEAT_16(m)  QEMU_REPEAT_15(m)  m(15)
-+#define QEMU_REPEAT_(n, m) QEMU_REPEAT_##n(m)
-+#define QEMU_REPEAT(n, m)  QEMU_REPEAT_(n, m)
-+
- /**
-  * Mark a function that executes in coroutine context
-  *
+One advantage of non-pin-all is that it neither sends the all-zero chunk
+nor registers the corresponding MRs. For guests with a low dirty-page
+workload and a large number of zero pages, this lets it migrate faster
+than pin-all and pin less guest memory during the migration.
 
--- 
-2.55.0.543.g5ebe2ebe4ea8
+>
+> Obviously, RDMA migration users care a bunch on performance.
+>
+> So I see no good reason to not drop it.  Even if someone will work out that
+> problem, it's still not much code to add, and it'll likely be easier we
+> design it from scratch with the demand, and without worry of breaking
+> anyone.
 
+Got it, thanks for the explanation.
+
+Regards,
+Yanfei
+
+>
+> When that happens (if it ever will..), someone should also send an update
+> to MAINTAINER file on RDMA migration to change it out of Odd Fixes stage..
+>
+> Thanks,
+>
 
