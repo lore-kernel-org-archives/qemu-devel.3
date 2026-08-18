@@ -4,99 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03045C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:26:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FC32C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:31:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwHx9-0008Dg-5v; Tue, 18 Aug 2026 07:25:59 -0400
+	id 1wwI1l-0000xD-DR; Tue, 18 Aug 2026 07:30:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwHx7-00085h-3q
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:25:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wwI1i-0000wy-0D
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:30:42 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwHx4-0007vH-R6
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:25:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787052354;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qREL4rLqmsKjsuOlLljdIaMwFLp75inzgflxtWc4AuE=;
- b=LNmBY+L3LEryuhRbRMK4QGSGNX2dUkpM3GcbeV3AyV4HBPVK5HpPJ0BzifVHTU0W5aRIQF
- A3vXuN7NMh9Fi4HAsWerer4/leueiVoT7b97JAZyEPcRBBSQL2LMwGUT+drvA5QqxNxZlM
- T+YxS9/iodxgH+30gFAaE59o3eNbVSM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-6z3cy_ARO26Kezz0pddE0g-1; Tue,
- 18 Aug 2026 07:25:48 -0400
-X-MC-Unique: 6z3cy_ARO26Kezz0pddE0g-1
-X-Mimecast-MFC-AGG-ID: 6z3cy_ARO26Kezz0pddE0g_1787052346
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 760B11956046; Tue, 18 Aug 2026 11:25:46 +0000 (UTC)
-Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EDCAA1956044; Tue, 18 Aug 2026 11:25:43 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 18 Aug 2026 15:11:22 +0400
-Subject: [PATCH v3 55/74] hw/gpio/pca955x: use QAPI enums for led and pin
- properties
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wwI1c-0000VH-VF
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:30:41 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 67IBRSTN067484
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 18 Aug 2026 20:27:28 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=q95WvPXLXNhOl9xlfZCshQzh8vklbW/CSR5+Vmjgi6c=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1787052449; v=1;
+ b=ZiCDtcrhpHj4HRauBqFfVw/AAxY3js9nE7352ljh0IgaZSs8Tp1VeZRlqfILIFt+
+ hfl26hmkomi3SWqW40Vw1U3YZeSMDeHQqvikv5ThDieAscZvkoEJvUJMrQXvDZxT
+ ot/7L4Qclq32yRrT1qBs8p8Py3i2qsWbsN4nP44l8+g46mhKD37vHVvwph7EVGZ/
+ F2i//0Y4H5eINU6edKwi2dcuHgb5+ydioBe4/dZwwDTMFgB91tvuPaELOj92zUpT
+ ZnAYhV3Lf9V/Fk6HDhZf5qWEVjHumeujWW+cZYiHDXmKfH2dSZiHVX6yqFX5WyEI
+ 7in/UQjAHR8OsWYYda1hRQ==
+Message-ID: <14c4d7ac-607f-4372-8d1f-ca836f36498b@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 18 Aug 2026 20:27:27 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: About new backend for GPU compute ROCm in qemu
+To: "Huang, Honglei" <honghuan@amd.com>
+Cc: qemu-devel@nongnu.org, virtio-comment@lists.oasis-open.org,
+ dri-devel@lists.freedesktop.org, virtualization@lists.linux.dev,
+ Honglei Huang <honglei1.huang@amd.com>, Huang Rui <Ray.Huang@amd.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, David Airlie <airlied@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <ba0b1bbf-5ebf-4ac3-9f7b-8740e3bc283b@amd.com>
+ <ea899a6b-0a59-4a9c-9e81-3ed70711da59@rsg.ci.i.u-tokyo.ac.jp>
+ <78f0583f-93c0-4374-ba37-fd36f6388f0e@amd.com>
+ <c79bbd91-0057-4e9a-bc56-28ca4c4ccae2@rsg.ci.i.u-tokyo.ac.jp>
+ <3c3eb833-8026-44ad-8e33-dea346752db2@amd.com>
+ <33bf6649-c1b9-43f6-94dd-09167d8e5db6@rsg.ci.i.u-tokyo.ac.jp>
+ <63d485c3-a418-493d-aad0-26b3c115f5b8@amd.com>
+ <7fa93963-880b-47fd-a51b-880a651be963@rsg.ci.i.u-tokyo.ac.jp>
+ <ef751787-8688-4e30-8bc4-f1740ef162fc@amd.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <ef751787-8688-4e30-8bc4-f1740ef162fc@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260818-qom-qapi-v3-55-24b8bbbe3d86@redhat.com>
-References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
-In-Reply-To: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Michael Roth <michael.roth@amd.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- Glenn Miles <milesg@linux.ibm.com>, Eric Blake <eblake@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, qemu-ppc@nongnu.org, qemu-arm@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=14925;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=XlkmyZuB8ML4Dwyx9HhUYqfHoTK+rV9hfdym0B0GJhw=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhD28epQmIr7mH6ucmmukF8I7u8rV8FvT80VR/
- 0RLBOEr+/qJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoQ9vAAKCRDa6OEJdZac
- 5Sr6D/0Z6H7lF0oo2hbMoznh5zOsWomhxLFsslJuLukvKEsCPH9XydIObGNSxMepK7R/VM/qPNh
- X5VE0ApEK6aMlz1cfZ3DtzBEhcmdLELX2z/4aLJ+5R6bRuBsm2HVcVjQr7dddGe8Y+9oyYv4q+s
- gRdAkyM+bGZuf0JnkiA6BieEMea8/Z7abBbo9LZB7fcwgVzsvHfgEnRxx24a/1WszIC+pcujq/P
- 0ollLZXXVIFbbJmMji1Ph0BS2qTtta3l6TspUmWZgRMZrFetdOWq6ocH/Ht6dSaR1Eb3Q02GXnp
- Vzx/q2LLg10ZxNhm/AqXIRbeUUKoFCHbPrkQO4sdgCmXt5QGU/lw+Q/5qdsASgIhKH3nSpRrADd
- ML2fj2mB6pqUbabB1f09jc+ZtQVq8rIE3qesRylXQ9+YwN9jD3xHeejtk0KHoF+2dKb8HL7DyL6
- m7uFryNtAR0iZAVbBX1sD7oFCRvZSdEc2wYjrKCiEKLdBBqxW4oa9DmAH3dutqfb9/KOZYntnDn
- RnnH+VHlWmuGppD7R00sXoqJ9CZaqIzbO224LjBYTufBrodkiQwJiQa8eOIWiZE878RLN9Z8bk1
- z72aJmBbEn8RWnS5NbnulPeLA+kJN91q6XRxjt6skdg4hLYEIr42U4aXhWja2907L0I0eHO5S3g
- Gt85lIYYDicNx3Q==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,421 +88,443 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace hand-rolled string lookup tables with QAPI enums
-Pca9552LedState and Pca955{2,4}PinState for the led%d and pin%d QOM
-properties. This fixes the incorrect property type ("bool" for LEDs,
-"str" for pins) and lets QAPI handle string-to-enum conversion in the
-visitor, removing the manual string matching in the setters.
+On 2026/08/18 17:53, Huang, Honglei wrote:
+> 
+> 
+> On 8/18/2026 3:50 PM, Akihiko Odaki wrote:
+>> On 2026/08/18 13:26, Huang, Honglei wrote:
+>>>
+>>>
+>>> On 8/18/2026 12:05 PM, Akihiko Odaki wrote:
+>>>> On 2026/08/18 11:50, Huang, Honglei wrote:
+>>>>>
+>>>>>
+>>>>> On 8/18/2026 12:29 AM, Akihiko Odaki wrote:
+>>>>>> On 2026/08/17 22:44, Huang, Honglei wrote:
+>>>>>>>
+>>>>>>>
+>>>>>>> On 8/17/2026 7:44 PM, Akihiko Odaki wrote:
+>>>>>>>> On 2026/08/17 12:19, Huang, Honglei wrote:
+>>>>>>>>>
+>>>>>>>>> Hi Michael, Alex, Dmitry, Akihiko,
+>>>>>>>>
+>>>>>>>> Hi Honglei,
+>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> I'm bringing AMD GPU compute ROCm based on virtio. I posted a 
+>>>>>>>>> ROCm over virtio
+>>>>>>>>> implementation to virglrenderer nine months ago (MR !1568 [1]). 
+>>>>>>>>> The ROCm side has
+>>>>>>>>> been supportted by ROCm offical.
+>>>>>>>>>
+>>>>>>>>> Current implementation is a virtio gpu context type capset 
+>>>>>>>>> handled inside
+>>>>>>>>> virglrenderer, sharing the display path. That's an awkward fit, 
+>>>>>>>>> many
+>>>>>>>>> compute GPUs have no display engine at all.
+>>>>>>>>
+>>>>>>>> I think "sharing the display path" conflates several layers and 
+>>>>>>>> makes the problem difficult to assess. It would help to identify 
+>>>>>>>> the concrete constraint behind "awkward fit."
+>>>>>>>>
+>>>>>>>> End-to-end, there are four relevant layers:
+>>>>>>>>
+>>>>>>>> 1. Host GPU stack: hardware, host kernel, and host userspace
+>>>>>>>> 2. Paravirtualization stack: virglrenderer and QEMU
+>>>>>>>
+>>>>>>> Yes we are asking can we add a new file like virtio-gpu specific 
+>>>>>>> for compute, but maybe we can only add a new backend like 
+>>>>>>> virglrenderer specific for compute.
+>>>>>>>
+>>>>>>>> 3. Host/guest interface: virtio and the capset-specific command 
+>>>>>>>> stream
+>>>>>>>
+>>>>>>> In this plan we may need just add a capset id.
+>>>>>>>
+>>>>>>>> 4. Guest GPU stack: guest kernel and guest userspace
+>>>>>>>
+>>>>>>> Won't modify the guest kernel in this plan, this email list.
+>>>>>>>
+>>>>>>>>
+>>>>>>>> Orthogonally, acceleration is separate from display and scanout. A
+>>>>>>>> physical device may provide both, but acceleration does not 
+>>>>>>>> require a
+>>>>>>>> display engine. Linux likewise exposes render and compute 
+>>>>>>>> interfaces
+>>>>>>>> separately from modesetting. The userspace interface 
+>>>>>>>> virglrenderer uses is messy; there is Vulkan, EGL, OpenGL, and 
+>>>>>>>> now you are adding ROCm. But there is one thing I must note is 
+>>>>>>>> that acceleration and display is decoupled, and acceleration 
+>>>>>>>> does not require display.
+>>>>>>>
+>>>>>>> Yes totally agreed.
+>>>>>>>
+>>>>>>>>
+>>>>>>>> At the protocol layer, context command buffers are carried by 
+>>>>>>>> VIRTIO_GPU_CMD_SUBMIT_3D. Scanout uses separate core virtio-gpu 
+>>>>>>>> commands, and VIRTIO_GPU_CMD_GET_DISPLAY_INFO may report no 
+>>>>>>>> enabled displays. At the implementation layer, QEMU handles 
+>>>>>>>> scanout presentation. virgl_cmd_set_scanout() obtains resource 
+>>>>>>>> information through virgl_renderer_resource_get_info() or 
+>>>>>>>> virgl_renderer_resource_get_info_ext(). That does not make 
+>>>>>>>> scanout a virglrenderer-owned display path.
+>>>>>>>
+>>>>>>> Yes, agreed.
+>>>>>>>
+>>>>>>>>
+>>>>>>>> Therefore, if "sharing the display path" means sharing the same 
+>>>>>>>> device, control queue, and QEMU execution context, that 
+>>>>>>>> identifies a possible source of contention. If it means that 
+>>>>>>>> capsets or virglrenderer are inherently tied to display, I do 
+>>>>>>>> not think that is accurate. Vulkan compute is already used 
+>>>>>>>> through Venus with libkrun [2], and VCL proposes OpenCL support 
+>>>>>>>> through virglrenderer [3].
+>>>>>>>
+>>>>>>> Yes，but the vulkan is for GFX originally, and for some formal AI 
+>>>>>>> frame work like pytorch, it's support is limited, and it 
+>>>>>>> performance is lower than ROCm, and vulkan also lacks many AI 
+>>>>>>> infrastructure, like composable kernel.
+>>>>>>> And for virCL, actually it is came from same project with ROCm 
+>>>>>>> native context, but the original author didn't continue to 
+>>>>>>> support it, they handed it over to someone else to take over. And 
+>>>>>>> in the first version of
+>>>>>>> virCL, it didn't pass the test of actual projects.
+>>>>>>>
+>>>>>>> And it seems like virCL didn't upstream into virglrenderer also, 
+>>>>>>> correct me if I am wrong.
+>>>>>>
+>>>>>> I cited Venus and VCL only as examples showing that virtio-gpu and
+>>>>>> virglrenderer are not intrinsically tied to display. I did not 
+>>>>>> suggest
+>>>>>> either as a substitute for ROCm.
+>>>>>>
+>>>>>>>
+>>>>>>>>> Beyond that, sharing the display path is increasingly painful:
+>>>>>>>>>
+>>>>>>>>>    - Compute hammers the queues more than graphics, so sharing
+>>>>>>>>>      virtio gpu's single control queue with display/virgl 
+>>>>>>>>> causes contention
+>>>>>>>>>      and display stutter.
+>>>>>>>>
+>>>>>>>> All non-cursor commands do share one control queue, but a fence 
+>>>>>>>> avoids serialization.
+>>>>>>>
+>>>>>>> yes, agreed.
+>>>>>>>
+>>>>>>>>
+>>>>>>>> There may still be implementation-level contention, and it is not
+>>>>>>>> necessarily specific to compute. A sufficiently busy graphics 
+>>>>>>>> workload
+>>>>>>>> could expose the same bottlenecks. Possible contributors in 
+>>>>>>>> current QEMU
+>>>>>>>> include:
+>>>>>>>>
+>>>>>>>> a) qemu_console_hw_gl_block() blocks the entire queue when QEMU 
+>>>>>>>> only
+>>>>>>>>     needs to fence scanout commands.
+>>>>>>>
+>>>>>>> Yes, agreed.
+>>>>>>>
+>>>>>>>>
+>>>>>>>> b) virtio_gpu_virgl_unmap_resource_blob() may also block the entire
+>>>>>>>>     queue just to delay one command.
+>>>>>>>
+>>>>>>> Yes, but it is seems like it is must, someone else in AMD tried 
+>>>>>>> to use async method to relase blob, but it failed to consistency 
+>>>>>>> issue, then
+>>>>>>> reverted to sync version.
+>>>>>>
+>>>>>> Queue-wide suspension is not inherently required. Commit 
+>>>>>> 4eb0aace85f5 ("virtio-gpu: Support mapping hostmem blobs with 
+>>>>>> map_fixed") added a path that avoids per-blob MemoryRegion 
+>>>>>> teardown when virgl_renderer_resource_map_fixed() succeeds. The 
+>>>>>> remaining path is also being improved with:
+>>>>>>
+>>>>>> https://lore.kernel.org/qemu-devel/20260424-force_rcu-v4-0- 
+>>>>>> feccfaca0568@rsg.ci.i.u-tokyo.ac.jp/
+>>>>>> ("[PATCH v4 0/6] virtio-gpu: Force RCU when unmapping blob")
+>>>>>
+>>>>> Thanks. force_rcu is a clean fix for the RCU-reclamation part, but 
+>>>>> it still keeps the unmap synchronous and serial.
+>>>>>
+>>>>>>
+>>>>>>>
+>>>>>>>>
+>>>>>>>> c) QEMU dispatches the control queue and calls into 
+>>>>>>>> virglrenderer from
+>>>>>>>>     its main-loop thread along with display work and many other 
+>>>>>>>> things.
+>>>>>>>>     Venus's render server can offload renderer work, but 
+>>>>>>>> control- queue
+>>>>>>>>     dispatch remains in QEMU's main loop.
+>>>>>>>
+>>>>>>> Yes, we did some async optimization in ROCm context, but its 
+>>>>>>> effectiveness is limited, see bellow.
+>>>>>>>
+>>>>>>>>
+>>>>>>>> In any case, I think you need to do some experiments to track 
+>>>>>>>> down the real cause. a) is easy to check: just comment out all 
+>>>>>>>> qemu_console_hw_gl_block() calls; it may corrupt display but 
+>>>>>>>> removes the blocking. b) can also be tested by leaking the 
+>>>>>>>> mappings instead of blocking the whole queue. Using a different 
+>>>>>>>> display device like qxl tells whether c) is causing contention.
+>>>>>>>
+>>>>>>> Yes, totally agreed. following is my findings. In short words:
+>>>>>>>
+>>>>>>> Optimization can reduce queue pressure, but it can't withstand 
+>>>>>>> absolute overload because each command has some overhead. Making 
+>>>>>>> all commands asynchronous would lead to a debugging hell about 
+>>>>>>> asynchronous issues.
+>>>>>>> And we have high load applications rocmprofiler  that 
+>>>>>>> continuously catch information need virtio queue to handle. But 
+>>>>>>> create a new backend can not solve it simply, we are trying to 
+>>>>>>> find a way. like shmem between guest and host, then use cpu 
+>>>>>>> polling, bypass the virtqueue.
+>>>>>>
+>>>>>> Most commands are fast on the CPU side, while heavy processing
+>>>>>> happens asynchronously on the GPU. Cases (a) and (b) are exceptions.
+>>>>>>
+>>>>>>>
+>>>>>>> The load is mostly memory management. Running an AI model 
+>>>>>>> allocates and frees a large number of blobs. We already did some 
+>>>>>>> optimization release them asynchronously, but the host processing 
+>>>>>>> is a single queue one
+>>>>>>> process_cmdq, this is where the main bottleneck in my debugging 
+>>>>>>> work / my understanding so far. I'm not certain it's the whole 
+>>>>>>> picture, so please correct if I am wrong.
+>>>>>>>
+>>>>>>> A model load or unload frees a large batch of BOs and allocates 
+>>>>>>> another. Some of those commands are async in the virtio-gpu guest 
+>>>>>>> driver, but QEMU still has to work through them on the one queue, 
+>>>>>>> which takes time; so even though any single command is quick, 
+>>>>>>> there are simply too many of them, the single queue backs up, and 
+>>>>>>> everything behind it, gets delayed.
+>>>>>>>
+>>>>>>> real work load (a few downstream customisations): loading one 16 
+>>>>>>> GB model (gemm4 e4b), drives ~1200 blob creates, a burst of
+>>>>>>> ~1400 resource frees at teardown, ~3700 submits and ~6000 
+>>>>>>> virtqueue notifies, caused a 22 s guest soft lockup. And the 
+>>>>>>> behavior of memory operations are controlled by upper layer like 
+>>>>>>> pytorch / HIP / runtime,
+>>>>>>> we can not control it.
+>>>>>>>
+>>>>>>> To be honest, a separate backend won't fix this. But the real 
+>>>>>>> solution maybe is compute specific. That logic is only useful to 
+>>>>>>> the compute path, and folding it into the shared display device / 
+>>>>>>> renderer would mean churning code that is mature and stable for 
+>>>>>>> graphics, with regression risk. Keeping compute on its own 
+>>>>>>> instance and backend lets us iterate on these compute only 
+>>>>>>> optimisations.
+>>>>>>
+>>>>>> A 22-second lockup is too long for those command counts.
+>>>>>>
+>>>>>> The most probable explanation I have is that the ROCm integration 
+>>>>>> blocks QEMU's main loop thread while synchronously waiting for GPU 
+>>>>>> execution. Creating separate devices won't resolve this because 
+>>>>>> the main loop thread is shared, and synchronously waiting on the 
+>>>>>> GPU should be avoided in the first place.
+>>>>>
+>>>>> No synchronously waiting in ROCm backend, we are using user queue, 
+>>>>> and event waiting, no sync operation in CMD wait. all the resource 
+>>>>> release in ROCm are all async now.
+>>>>> Only the sync thing is memory thing mapping/unmapping in qemu, as 
+>>>>> long as it remains synchronous, it will be overwhelmed by the 
+>>>>> massive number of requests.
+>>>>
+>>>> Mapping and unmapping should not block QEMU's main-loop thread for that
+>>>> long. The command counts you reported are relatively small. That is why
+>>>> I suspect something else went wrong, such as the main-loop thread being
+>>>> inadvertently blocked while waiting for the GPU.
+>>>
+>>> Will investigate it.
+>>>
+>>>>
+>>>>>
+>>>>>>
+>>>>>> In any case, profiling is necessary before touching the 
+>>>>>> implementation.
+>>>>>>
+>>>>>>>
+>>>>>>>>
+>>>>>>>>>    - Compute contexts need far more blob / shared memory than a 
+>>>>>>>>> display one.
+>>>>>>>>
+>>>>>>>> It is not a problem by itself. Frequent mapping and unmapping 
+>>>>>>>> might amplify the second issue above, but that needs to be 
+>>>>>>>> measured.
+>>>>>>>
+>>>>>>> Yes, agreed. I can give more detailed information.
+>>>>>>>
+>>>>>>>>
+>>>>>>>>>    - Maybe needs a wider ROCm / compute stack, cause the render 
+>>>>>>>>> model fits poorly:
+>>>>>>>>>      rocprofiler (PC sampling, SQTT/SPM, counters, high 
+>>>>>>>>> bandwidth streams)
+>>>>>>>>>      and ROCgdb (wave control, address watch, async exceptions an
+>>>>>>>>>      out of band channel that must not block display).
+>>>>>>>>
+>>>>>>>> virglrenderer does not impose a particular render model. That's 
+>>>>>>>> why Vulkan Compute just works with Venus.
+>>>>>>>
+>>>>>>> Yes but vulkan is used for GFX initally. And can not support many 
+>>>>>>> AI application.>
+>>>>>>>>>    - Events, faults and GPU reset/SMI are async and don't map 
+>>>>>>>>> onto fences.>    - All of this is hard to extend cleanly inside 
+>>>>>>>>> a display capset.
+>>>>>>>> Capset is not about display but determines the protocol of the 
+>>>>>>>> VIRTIO_GPU_CMD_SUBMIT_3D command stream. You have described 
+>>>>>>>> events, faults and GPU reset/SMI are async don't map onto fences 
+>>>>>>>> that may be associated with VIRTIO_GPU_CMD_SUBMIT_3D which is 
+>>>>>>>> dictated by capset. An additional feature may be necessary, and 
+>>>>>>>> it may or may not be dictated by capset. The other things are 
+>>>>>>>> irrelevant with the protocol capset represents; they are either 
+>>>>>>>> behavioral or about different commands.
+>>>>>>>
+>>>>>>> A fence is the one shot, but event is stateful and repeatable.
+>>>>>>> That may or may not be tied to capset. Agreed.
+>>>>>>>
+>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> On the QEMU/host side, would something like this be OK? One 
+>>>>>>>>> step, two parts:
+>>>>>>>>>
+>>>>>>>>>    - a dedicated headless virtio gpu instance for compute.
+>>>>>>>>
+>>>>>>>> A second device would isolate its virtqueues and device-wide
+>>>>>>>> renderer_blocked state. That may be useful if measurements show 
+>>>>>>>> that
+>>>>>>>> these are the bottlenecks, but it is not yet clear that they are 
+>>>>>>>> or that
+>>>>>>>> a second device is the appropriate solution.
+>>>>>>>>
+>>>>>>>>>    - that instance served by a separate ROCm backend library 
+>>>>>>>>> loaded
+>>>>>>>>>      in-process by QEMU.
+>>>>>>>>
+>>>>>>>> First, I think we need to establish why ROCm cannot or should 
+>>>>>>>> not remain
+>>>>>>>> in virglrenderer. The virglrenderer, Venus, and VCL maintainers are
+>>>>>>>> likely better placed to advise on that boundary. Once the protocol
+>>>>>>>> requirements and performance measurements are clear, we can 
+>>>>>>>> assess the
+>>>>>>>> appropriate QEMU integration.
+>>>>>>>
+>>>>>>> venus is borned for GFX.
+>>>>>>> virCL not merged.
+>>>>>>>
+>>>>>>> To be clear, I'm not saying virglrenderer can't host a ROCm 
+>>>>>>> native context it clearly can. My hesitation is more about fit 
+>>>>>>> and direction: virglrenderer has grown up around GL/graphics, and 
+>>>>>>> I haven't yet found compute oriented plumbing there to build on, 
+>>>>>>> while ROCm moves very fast and I need something I can keep 
+>>>>>>> current with low friction.
+>>>>>>
+>>>>>> Whether keeping ROCm in virglrenderer would create extra friction 
+>>>>>> is primarily a question for the virglrenderer maintainers. Its 
+>>>>>> graphics origins do not by themselves motivate adding a separate 
+>>>>>> backend interface to QEMU.
+>>>>>
+>>>>> Fair. The first draft version in virglrenderer was in May 2024, and 
+>>>>> ROCm has gone 5.7 → 7.14 in that window.
+>>>>
+>>>> One point to note is that virtio-gpu development in QEMU is somewhat
+>>>> less active. crosvm is the most active user of virglrenderer, and QEMU
+>>>> sometimes lags behind it. If you are considering moving the ROCm 
+>>>> integration from virglrenderer to QEMU solely because ROCm evolves 
+>>>> rapidly, I do not think that would be a good idea. A rapidly 
+>>>> evolving component is better kept in virglrenderer unless there is 
+>>>> another reason to place it in QEMU.
+>>>
+>>> Actually didn't see something new about compute merged in to 
+>>> virglrenderer this recently 2 years.
+>>
+>> Neither QEMU nor virglrenderer has seen new compute-related additions 
+>> in the past two years.
+> 
+> Maybe that is the reason we need a compute specific path? But I think 
+> the VFIO or vDPA are all can be used for compute, they are really 
+> active. We only need a small file for compute, providing the basic 
+> mechanisms, this code will also benefit other computing devices, such as 
+> NPU, I believe there will be more and more computing devices in the future.
 
-Add QEMU_BUILD_BUG_ON guards to ensure the QAPI-generated enum values
-stay in sync with the hardware register encoding.
+I think this highlights that you are pioneering device-specific 
+paravirtualization here. Venus demonstrates a vendor-neutral approach, 
+but it didn't get compute-specific plumbing simply because Venus didn't 
+need one. Pushing improvements through virglrenderer will help both 
+graphics and compute accelerators.
 
-I kept Pca9552PinState & @Pca9554PinState separate types, because I
-don't know if they could diverge. We could eventually merge those.
+> 
+> 
+>>
+>> While you have regularly updated the merge request, initiating 
+>> discussions around it is necessary to move review forward. Open-source 
+>> projects like QEMU and virglrenderer need proactive driving to 
+>> complete reviews. Simply shifting the ROCm integration to QEMU will 
+>> not resolve this bottleneck.
+> 
+> Yes I have actively promoted it, but I haven't received substantial 
+> reviews regarding virtio gpu userptr and virglrenderer. Hard to make MR 
+> move forward without a substantial review. So I am finding a another way.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- hw/gpio/pca9552.c | 82 +++++++++++++++++++++----------------------------------
- hw/gpio/pca9554.c | 39 ++++++++++----------------
- qapi/machine.json | 46 +++++++++++++++++++++++++++++++
- 3 files changed, 92 insertions(+), 75 deletions(-)
+I don't see recent engagement on the MR. Reaching out publicly on the MR 
+would be a good way to show that you are actively driving it forward.
 
-diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
-index 719149b7174b..16741c22dea3 100644
---- a/hw/gpio/pca9552.c
-+++ b/hw/gpio/pca9552.c
-@@ -23,7 +23,8 @@
- #include "hw/core/irq.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
--#include "qapi/visitor.h"
-+#include "qapi/qapi-types-machine.h"
-+#include "qapi/qapi-visit-machine.h"
- #include "trace.h"
- #include "qom/object.h"
- 
-@@ -59,16 +60,15 @@ struct PCA955xClass {
- /*
-  * Note:  The LED_ON and LED_OFF configuration values for the PCA955X
-  *        chips are the reverse of the PCA953X family of chips.
-+ *
-+ * The QAPI enums must match the hardware register values.
-  */
--#define PCA9552_LED_ON   0x0
--#define PCA9552_LED_OFF  0x1
--#define PCA9552_LED_PWM0 0x2
--#define PCA9552_LED_PWM1 0x3
--#define PCA9552_PIN_LOW  0x0
--#define PCA9552_PIN_HIZ  0x1
--
--static const char *led_state[] = {"on", "off", "pwm0", "pwm1"};
--static const char *pin_state[] = {"low", "high"};
-+QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_ON != 0x0);
-+QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_OFF != 0x1);
-+QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_PWM0 != 0x2);
-+QEMU_BUILD_BUG_ON(PCA9552_LED_STATE_PWM1 != 0x3);
-+QEMU_BUILD_BUG_ON(PCA9552_PIN_STATE_LOW != 0x0);
-+QEMU_BUILD_BUG_ON(PCA9552_PIN_STATE_HIGH != 0x1);
- 
- static uint8_t pca955x_pin_get_config(PCA955xState *s, int pin)
- {
-@@ -142,24 +142,24 @@ static void pca955x_update_pin_input(PCA955xState *s)
-             uint8_t config = pca955x_pin_get_config(s, i);
- 
-             switch (config) {
--            case PCA9552_LED_ON:
-+            case PCA9552_LED_STATE_ON:
-                 /* Pin is set to 0V to turn on LED */
-                 s->regs[input_reg] &= ~bit_mask;
-                 break;
--            case PCA9552_LED_OFF:
-+            case PCA9552_LED_STATE_OFF:
-                 /*
-                  * Pin is set to Hi-Z to turn off LED and
-                  * pullup sets it to a logical 1 unless
-                  * external device drives it low.
-                  */
--                if (s->ext_state[i] == PCA9552_PIN_LOW) {
-+                if (s->ext_state[i] == PCA9552_PIN_STATE_LOW) {
-                     s->regs[input_reg] &= ~bit_mask;
-                 } else {
-                     s->regs[input_reg] |=  bit_mask;
-                 }
-                 break;
--            case PCA9552_LED_PWM0:
--            case PCA9552_LED_PWM1:
-+            case PCA9552_LED_STATE_PWM0:
-+            case PCA9552_LED_STATE_PWM1:
-                 /* TODO */
-             default:
-                 break;
-@@ -176,7 +176,7 @@ static void pca955x_update_pin_input(PCA955xState *s)
-              */
-             if (s->regs[config_reg] & bit_mask) {
-                 /* Input mode - reflect external state */
--                if (s->ext_state[i] == PCA9552_PIN_LOW) {
-+                if (s->ext_state[i] == PCA9552_PIN_STATE_LOW) {
-                     s->regs[input_reg] &= ~bit_mask;
-                 } else {
-                     s->regs[input_reg] |= bit_mask;
-@@ -360,7 +360,7 @@ static void pca955x_get_led(Object *obj, Visitor *v, const char *name,
-     PCA955xClass *k = PCA955X_GET_CLASS(obj);
-     PCA955xState *s = PCA955X(obj);
-     int led, rc, reg;
--    uint8_t state;
-+    Pca9552LedState state;
- 
-     rc = sscanf(name, "led%2d", &led);
-     if (rc != 1) {
-@@ -378,7 +378,7 @@ static void pca955x_get_led(Object *obj, Visitor *v, const char *name,
-      */
-     reg = PCA9552_LS0 + led / 4;
-     state = (pca955x_read(s, reg) >> ((led % 4) * 2)) & 0x3;
--    visit_type_str(v, name, (char **)&led_state[state], errp);
-+    visit_type_Pca9552LedState(v, name, &state, errp);
- }
- 
- /*
-@@ -397,10 +397,9 @@ static void pca955x_set_led(Object *obj, Visitor *v, const char *name,
-     PCA955xClass *k = PCA955X_GET_CLASS(obj);
-     PCA955xState *s = PCA955X(obj);
-     int led, rc, reg, val;
--    uint8_t state;
--    g_autofree char *state_str = NULL;
-+    Pca9552LedState state;
- 
--    if (!visit_type_str(v, name, &state_str, errp)) {
-+    if (!visit_type_Pca9552LedState(v, name, &state, errp)) {
-         return;
-     }
-     rc = sscanf(name, "led%2d", &led);
-@@ -413,16 +412,6 @@ static void pca955x_set_led(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    for (state = 0; state < ARRAY_SIZE(led_state); state++) {
--        if (!strcmp(state_str, led_state[state])) {
--            break;
--        }
--    }
--    if (state >= ARRAY_SIZE(led_state)) {
--        error_setg(errp, "%s invalid led state %s", __func__, state_str);
--        return;
--    }
--
-     reg = PCA9552_LS0 + led / 4;
-     val = pca955x_read(s, reg);
-     val = pca955x_ledsel(val, led % 4, state);
-@@ -437,7 +426,8 @@ static void pca955x_get_pin(Object *obj, Visitor *v, const char *name,
-     PCA955xClass *k = PCA955X_GET_CLASS(obj);
-     PCA955xState *s = PCA955X(obj);
-     int pin, rc;
--    uint8_t input_reg, state;
-+    uint8_t input_reg;
-+    Pca9552PinState state;
- 
-     rc = sscanf(name, "pin%2d", &pin);
-     if (rc != 1) {
-@@ -455,7 +445,7 @@ static void pca955x_get_pin(Object *obj, Visitor *v, const char *name,
-      */
-     input_reg = PCA9535_INPUT0 + (pin / 8);
-     state = (s->regs[input_reg] >> (pin % 8)) & 0x1;
--    visit_type_str(v, name, (char **)&pin_state[state], errp);
-+    visit_type_Pca9552PinState(v, name, &state, errp);
- }
- 
- static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
-@@ -464,10 +454,10 @@ static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
-     PCA955xClass *k = PCA955X_GET_CLASS(obj);
-     PCA955xState *s = PCA955X(obj);
-     int pin, rc;
--    uint8_t state, config_reg;
--    g_autofree char *state_str = NULL;
-+    Pca9552PinState state;
-+    uint8_t config_reg;
- 
--    if (!visit_type_str(v, name, &state_str, errp)) {
-+    if (!visit_type_Pca9552PinState(v, name, &state, errp)) {
-         return;
-     }
-     rc = sscanf(name, "pin%2d", &pin);
-@@ -480,16 +470,6 @@ static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    for (state = 0; state < ARRAY_SIZE(pin_state); state++) {
--        if (!strcmp(state_str, pin_state[state])) {
--            break;
--        }
--    }
--    if (state >= ARRAY_SIZE(pin_state)) {
--        error_setg(errp, "%s invalid pin state %s", __func__, state_str);
--        return;
--    }
--
-     /* Only input-configured pins can be driven by an external device. */
-     config_reg = PCA9535_CONFIG0 + (pin / 8);
-     if (!((s->regs[config_reg] >> (pin % 8)) & 0x1)) {
-@@ -499,7 +479,7 @@ static void pca955x_set_pin(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    pca955x_set_ext_state(s, pin, state != PCA9552_PIN_LOW);
-+    pca955x_set_ext_state(s, pin, state != PCA9552_PIN_STATE_LOW);
- }
- 
- static const VMStateDescription pca9552_vmstate = {
-@@ -529,7 +509,7 @@ static void pca9552_reset_hold(Object *obj, ResetType type)
-     s->regs[PCA9552_LS2] = 0x55;
-     s->regs[PCA9552_LS3] = 0x55;
- 
--    memset(s->ext_state, PCA9552_PIN_HIZ, PCA955X_PIN_COUNT_MAX);
-+    memset(s->ext_state, PCA9552_PIN_STATE_HIGH, PCA955X_PIN_COUNT_MAX);
-     pca955x_update_pin_input(s);
- 
-     s->pointer = 0xFF;
-@@ -549,7 +529,7 @@ static void pca9535_reset_hold(Object *obj, ResetType type)
-     s->regs[PCA9535_CONFIG0] = 0xFF;  /* All pins as inputs */
-     s->regs[PCA9535_CONFIG1] = 0xFF;  /* All pins as inputs */
- 
--    memset(s->ext_state, PCA9552_PIN_HIZ, PCA955X_PIN_COUNT_MAX);
-+    memset(s->ext_state, PCA9552_PIN_STATE_HIGH, PCA955X_PIN_COUNT_MAX);
-     pca955x_update_pin_input(s);
- 
-     s->pointer = 0xFF;
-@@ -567,12 +547,12 @@ static void pca955x_initfn(Object *obj)
-         if (k->has_led_support) {
-             /* LED variant: expose the LED selector state as led%d. */
-             name = g_strdup_printf("led%d", ix);
--            object_property_add(obj, name, "bool",
-+            object_property_add(obj, name, "Pca9552LedState",
-                                 pca955x_get_led, pca955x_set_led, NULL, NULL);
-         } else {
-             /* GPIO variant: expose the pin logic level as pin%d. */
-             name = g_strdup_printf("pin%d", ix);
--            object_property_add(obj, name, "str",
-+            object_property_add(obj, name, "Pca9552PinState",
-                                 pca955x_get_pin, pca955x_set_pin, NULL, NULL);
-         }
-         g_free(name);
-diff --git a/hw/gpio/pca9554.c b/hw/gpio/pca9554.c
-index 904698cdce85..e4eddc829ef7 100644
---- a/hw/gpio/pca9554.c
-+++ b/hw/gpio/pca9554.c
-@@ -16,6 +16,8 @@
- #include "hw/core/irq.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-types-machine.h"
-+#include "qapi/qapi-visit-machine.h"
- #include "qapi/visitor.h"
- #include "trace.h"
- #include "qom/object.h"
-@@ -32,10 +34,8 @@ typedef struct PCA9554Class PCA9554Class;
- DECLARE_CLASS_CHECKERS(PCA9554Class, PCA9554,
-                        TYPE_PCA9554)
- 
--#define PCA9554_PIN_LOW  0x0
--#define PCA9554_PIN_HIZ  0x1
--
--static const char *pin_state[] = {"low", "high"};
-+QEMU_BUILD_BUG_ON(PCA9554_PIN_STATE_LOW != 0x0);
-+QEMU_BUILD_BUG_ON(PCA9554_PIN_STATE_HIGH != 0x1);
- 
- static void pca9554_update_pin_input(PCA9554State *s)
- {
-@@ -54,7 +54,7 @@ static void pca9554_update_pin_input(PCA9554State *s)
-              * Input: the pin is Hi-Z with a pull-up, so it reads high
-              * unless an external device drives it low.
-              */
--            if (s->ext_state[i] == PCA9554_PIN_LOW) {
-+            if (s->ext_state[i] == PCA9554_PIN_STATE_LOW) {
-                 s->regs[PCA9554_INPUT] &= ~bit_mask;
-             } else {
-                 s->regs[PCA9554_INPUT] |= bit_mask;
-@@ -156,7 +156,7 @@ static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
- {
-     PCA9554State *s = PCA9554(obj);
-     int pin, rc;
--    uint8_t state;
-+    Pca9554PinState state;
- 
-     rc = sscanf(name, "pin%2d", &pin);
-     if (rc != 1) {
-@@ -175,7 +175,7 @@ static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
-      * holds the wire level regardless of the configured direction.
-      */
-     state = (s->regs[PCA9554_INPUT] >> pin) & 0x1;
--    visit_type_str(v, name, (char **)&pin_state[state], errp);
-+    visit_type_Pca9554PinState(v, name, &state, errp);
- }
- 
- static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
-@@ -183,10 +183,10 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
- {
-     PCA9554State *s = PCA9554(obj);
-     int pin, rc, val;
--    uint8_t state, mask;
--    g_autofree char *state_str = NULL;
-+    uint8_t mask;
-+    Pca9554PinState state;
- 
--    if (!visit_type_str(v, name, &state_str, errp)) {
-+    if (!visit_type_Pca9554PinState(v, name, &state, errp)) {
-         return;
-     }
-     rc = sscanf(name, "pin%2d", &pin);
-@@ -199,16 +199,6 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    for (state = 0; state < ARRAY_SIZE(pin_state); state++) {
--        if (!strcmp(state_str, pin_state[state])) {
--            break;
--        }
--    }
--    if (state >= ARRAY_SIZE(pin_state)) {
--        error_setg(errp, "%s invalid pin state %s", __func__, state_str);
--        return;
--    }
--
-     if (s->hw_dir) {
-         /* Warn and ignore if the guest has configured this pin as output */
-         if (!((s->regs[PCA9554_CONFIG] >> pin) & 0x1)) {
-@@ -219,13 +209,13 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
-             return;
-         }
-         /* Drive the external input level */
--        pca9554_set_ext_state(s, pin, state != PCA9554_PIN_LOW);
-+        pca9554_set_ext_state(s, pin, state != PCA9554_PIN_STATE_LOW);
-     } else {
-         /* Legacy behavior: force output mode and drive */
-         /* First, modify the output register bit */
-         val = pca9554_read(s, PCA9554_OUTPUT);
-         mask = 0x1 << pin;
--        if (state == PCA9554_PIN_LOW) {
-+        if (state == PCA9554_PIN_STATE_LOW) {
-             val &= ~(mask);
-         } else {
-             val |= mask;
-@@ -264,7 +254,7 @@ static void pca9554_reset(DeviceState *dev)
-     s->regs[PCA9554_POLARITY] = 0x0; /* No pins are inverted */
-     s->regs[PCA9554_CONFIG] = pin_mask; /* All pins are inputs */
- 
--    memset(s->ext_state, PCA9554_PIN_HIZ, pc->pin_count);
-+    memset(s->ext_state, PCA9554_PIN_STATE_HIGH, pc->pin_count);
-     pca9554_update_pin_input(s);
- 
-     s->pointer = 0x0;
-@@ -280,7 +270,8 @@ static void pca9554_initfn(Object *obj)
-         char *name;
- 
-         name = g_strdup_printf("pin%d", pin);
--        object_property_add(obj, name, "str", pca9554_get_pin, pca9554_set_pin,
-+        object_property_add(obj, name, "Pca9554PinState",
-+                            pca9554_get_pin, pca9554_set_pin,
-                             NULL, NULL);
-         g_free(name);
-     }
-diff --git a/qapi/machine.json b/qapi/machine.json
-index d418b34a8643..0e0d85d0a76d 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -429,6 +429,52 @@
- { 'enum': 'LostTickPolicy',
-   'data': ['discard', 'delay', 'slew' ] }
- 
-+##
-+# @Pca9552LedState:
-+#
-+# LED state for PCA9552.
-+#
-+# @on: LED on
-+#
-+# @off: LED off
-+#
-+# @pwm0: LED controlled by PWM0
-+#
-+# @pwm1: LED controlled by PWM1
-+#
-+# Since: 11.2
-+##
-+{ 'enum': 'Pca9552LedState',
-+  'data': ['on', 'off', 'pwm0', 'pwm1'] }
-+
-+##
-+# @Pca9552PinState:
-+#
-+# Pin state for PCA9552.
-+#
-+# @low: Pin low
-+#
-+# @high: Pin high
-+#
-+# Since: 11.2
-+##
-+{ 'enum': 'Pca9552PinState',
-+  'data': ['low', 'high'] }
-+
-+##
-+# @Pca9554PinState:
-+#
-+# Pin state for PCA9554.
-+#
-+# @low: Pin low
-+#
-+# @high: Pin high
-+#
-+# Since: 11.2
-+##
-+{ 'enum': 'Pca9554PinState',
-+  'data': ['low', 'high'] }
-+
- ##
- # @inject-nmi:
- #
+> 
+>>
+>> Besides, looking at the "Architecture Components" in the description, 
+>> most of them haven't been merged yet. The virglrenderer code cannot be 
+>> merged in its current state, so focusing on those dependencies first 
+>> is essential.
+> 
+> Yes, I must admit that most of them not merged.
+> But actually for para virtualization those components are need merged 
+> together because they are closely connected.
+> 
+>>
+>> However, taking a naive approach can lead to a chicken-and-egg 
+>> problem: component maintainers want the virglrenderer side stabilized 
+>> first, while virglrenderer maintainers want the component side 
+>> stabilized. To break this deadlock, I suggest seeking consensus on the 
+>> interfaces before completing the implementation. Once an interface 
+>> agreement is reached, changes to each component can land independently:
+> 
+> I've seen amdgpu native context (for GFX) and msm native context merged 
+> quickly. And actually ROCm native context is using the same method. 
+> That's why I think this is a problem of direction.
 
--- 
-2.55.0.543.g5ebe2ebe4ea8
+It is understandable that those merged more quickly given the state of 
+the "Architecture Components" mentioned earlier. For both the amdgpu and 
+msm native contexts, the UAPI was already in place, allowing those 
+changes to be reviewed and merged in isolation.
 
+> 
+>>
+>> - virtio interface: I raised a concern regarding the interface [1][2]
+>>    that needs to be addressed.
+> 
+> I'm open to any feedback from the virtio maintainer, but since it's 
+> really just you and me discussing this, I can immediately modify your 
+> proposal if the maintainer agrees.
+
+A pattern sometimes I observe is that maintainers often skip patches 
+with unaddressed discussion items. Updating the code to resolve known 
+feedback often serves as a good trigger to draw in new reviewers.
+
+> 
+>> - amdkfd patches: There are interface-level concerns [3] that still need
+>>    resolution.
+> 
+> We have a another solution to solve it, it is already done in virglrender.
+> 
+>> - ROCm runtime: The description lists this as "90% complete," but the
+>>    linked pull requests were closed due to inactivity. They need to be
+>>    reopened and seek for a consensus on its interface.
+> 
+> It was completed using another PR, so it was closed.
+
+These are great news. I suggest updating the MR description then so that 
+potential reviewers can see the progress.
+
+Regards,
+Akihiko Odaki
 
