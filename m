@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF1B3C5DF80
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:19:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4DEAC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 11:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwHqK-0003Ec-45; Tue, 18 Aug 2026 07:18:56 -0400
+	id 1wwHqT-0003PC-4z; Tue, 18 Aug 2026 07:19:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwHqI-0003AQ-GW
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:18:54 -0400
+ id 1wwHqR-0003Ob-Bg
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:19:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwHqG-000661-UN
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:18:54 -0400
+ id 1wwHqP-00066q-Sx
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 07:19:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787051932;
+ s=mimecast20190719; t=1787051941;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BsmdlaFnrsY3I+1UFAW3E5SehDcZ9lldQlqYb3G66HE=;
- b=S2Wn0O1/7RIstf7Qzi3rCZM6sYNkCorNH4frJ/duhJqgOnOl/w9fwPC2OPqaPZ/x9EXg47
- mnvG1Uni5WfaBEj4QcXHL4fmK7a/l+z3ITYN0L5AcjTU8bI8MNb3NJeqNCZ2Zc31qhohBI
- aEj2tqZgQ6Hh97aUnobkEDXxYnlzocI=
+ bh=7J5rDG5/EYHfs0elw1VWOZICe1bhAnDOgdsBA4H/iS4=;
+ b=C3E8qJnP8flBn530D4yf5mAFc3cYLgsPgl2eduJkXNBe6X1Gy42kpxWa6jT+Q3MSmEMaN2
+ JGNFQH18FowoN8Gd+qM274tQbCBqo5e0tJhfM9UO4T6Gt5LafPQUQ2ZLajrRyIHZ0Ldzae
+ YBYWcb6oujCXSGH2sJmICstNw6xZpmQ=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-142-g4lL4Jx5PtWwzWiWBlHIBg-1; Tue,
- 18 Aug 2026 07:18:50 -0400
-X-MC-Unique: g4lL4Jx5PtWwzWiWBlHIBg-1
-X-Mimecast-MFC-AGG-ID: g4lL4Jx5PtWwzWiWBlHIBg_1787051929
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-252-LfwU2R4YO-eyPqoH7JQ8-Q-1; Tue,
+ 18 Aug 2026 07:18:59 -0400
+X-MC-Unique: LfwU2R4YO-eyPqoH7JQ8-Q-1
+X-Mimecast-MFC-AGG-ID: LfwU2R4YO-eyPqoH7JQ8-Q_1787051938
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 920E61955F3D; Tue, 18 Aug 2026 11:18:49 +0000 (UTC)
+ id 2AA561955F29; Tue, 18 Aug 2026 11:18:58 +0000 (UTC)
 Received: from localhost (headnet05.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.117])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 98A44180049F; Tue, 18 Aug 2026 11:18:48 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7E3143000239; Tue, 18 Aug 2026 11:18:54 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 18 Aug 2026 15:10:51 +0400
-Subject: [PATCH v3 24/74] sev: convert OnOffAuto legacy-vm-type property to
+Date: Tue, 18 Aug 2026 15:10:52 +0400
+Subject: [PATCH v3 25/74] whpx: convert OnOffAuto hyperv property to
  QAPI-aware registration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260818-qom-qapi-v3-24-24b8bbbe3d86@redhat.com>
+Message-Id: <20260818-qom-qapi-v3-25-24b8bbbe3d86@redhat.com>
 References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
 In-Reply-To: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
 To: qemu-devel@nongnu.org
@@ -66,26 +66,26 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
- kvm@vger.kernel.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2878;
+ Pedro Barbuda <pbarbuda@microsoft.com>, 
+ Mohamed Mediouni <mohamed@unpredictable.fr>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2570;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=nkdSCroCL4rc/fXglavopKUEFdlDWMM9nOCJlhTw/EI=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhD24pvx3ql+ZkehN6RSLvFPXUC4lRQL0xUxPC
- Wn6w7rAZMaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoQ9uAAKCRDa6OEJdZac
- 5Uu3EACZbJeifRZ/wBI4hxZp9Pmq1hD/nshXm+OLnCOjvOmtwgiluUSPXlR7CwzA3qIGiYC7kuE
- GXEZ+9kJ8wZJ+uz53SoLyYRpXz2nYo6t7yux8jSF4W/YP8J1gisT2qhd2OAOpnwldg89SAv+48k
- ecUim5oFdTsK+PeVHOoWelPilMT8KOuStGcnUYvSVlyK674pekPbWouyDg/Vw9XQRk0+skjaC4c
- lkZKLX259HbG1EQ+c0o3bRmbEC6Cu4M7Lrs1LHVqH6MqjOSkMPXhbhd5bKiKr+aV1QdjUV2nZ0f
- B4JdfqVtEMFguc37IzrFTHrzvHp5TwM+aAXcrqS3pauB5Tp4F2zXz+DQxMvs5EagKwqZwYZTPkp
- E67vg0vakMYvcRZIp9UOUAEJyYm2mrGw+ymRFwGApcqF//VrD7ITpZ7bmiD5U23mRA0gIMHWL7d
- whkMdZZWYz+eYsEERiGTpS4MMt0QQCvEiiKCICwOUjWgV0+D43ZJvgH+8tKmoAA7N1ur+2QWmMK
- HdE3NVteRTqgJ7Y4hSaoD+A/PKDVZFMQPue/ajwcn1D/vpHAkcfloD7XRkLL8qUYONKuuzF2ZVe
- i4YhNibDRiDrTGxq0Ihv1DvzpO1vI5bQaK0LddS+pSOlcXgIPGXF0QJQe2kz1zTjjvwRItYoRLs
- ytHCUr7G4yLNzIQ==
+ bh=Mn+NBGd5O+Kz+F0i6rOpINobPupnBt+Vn6TD6qzoVJo=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhD25/XIwTzrnexCY/7PRcLCO8GpGWV9ylHeZ8
+ FYCKmkFnG6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoQ9uQAKCRDa6OEJdZac
+ 5XWrD/9IzPJ3KtiGMwGUjmI7kRXLMJ1fBSRHr5cyWkE6zId68MozjBL2VbraZoaEqmahkjr66c5
+ lpa5SBq9kzXOLRNeG5JbSdAI4ALqhCHeO4J/yEVPIzqLWYbFDWEW+76PErxchuZfj2D1mbU38zf
+ 4yn5lMIjwtL8C7f9+fBkHy7FYlSFBAXuG1IzZ5r1Hln8mpkVtsxCgMRmd+cYCIGVBcMzVHSJHxD
+ zJlHH2pnm/Q0hCT/DatEsQnlgKfcxED7e0P2xkdqWV0Sy5e5iThAtrnuVdap0lKwJFxvKu+y/Sv
+ u4KCLQZKT2+g9M+bxfXjjKEu6nqFLDn0/Y5qQ7Nzk8DVT+BE7vtLrsJ6F6KUwGodT8Gaa7/jCDk
+ h86huSuDQurcHdhbi+IRmeD602fflJYrcb4VI/fV6L0US+UBty0WkvT19caDqjbK2EnRhsLwVjX
+ 37gYRwEom8SKv+Tyj6bSdWI8NVA20h6ntnaj2T+cTvuVtwEDcKLukycX2Bk1wF2ZTkWE5IwgH/I
+ mPbfhOHggZjOTFVv3QYx2JSRsW4RTdeKZfolnoCOxrwGyB1lE3Kq75VwNLrxnsnm+5G3ivqS9sD
+ RcBqWGEXjf6ALNjgKh77D4ZfUFX7W7TnWNVBWetRXPFyN2kHUG9Z1nnS8wZNwTmvO4BKRRiwdD7
+ nodVP1nG5qLAEkQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -112,74 +112,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the legacy-vm-type OnOffAuto property from manual
-visitor-based callbacks to property_add_qapi_enum().
+Convert the hyperv OnOffAuto property from manual visitor-based
+callbacks to property_add_qapi_enum().
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/i386/sev.c | 29 +++++++++++++----------------
- 1 file changed, 13 insertions(+), 16 deletions(-)
+ accel/whpx/whpx-common.c | 29 ++++++++++-------------------
+ 1 file changed, 10 insertions(+), 19 deletions(-)
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index d7dcefc8ecf5..335a504af4db 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -20,6 +20,7 @@
- #include <sys/ioctl.h>
- 
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+index 247e12db8128..187938c02b51 100644
+--- a/accel/whpx/whpx-common.c
++++ b/accel/whpx/whpx-common.c
+@@ -22,6 +22,7 @@
+ #include "qemu/error-report.h"
  #include "qapi/error.h"
+ #include "qapi/qapi-types-common.h"
 +#include "qapi/qapi-type-infos-common.h"
- #include "qom/object_interfaces.h"
- #include "qemu/base64.h"
- #include "qemu/module.h"
-@@ -2880,23 +2881,16 @@ sev_guest_set_session_file(Object *obj, const char *value, Error **errp)
-     SEV_GUEST(obj)->session_file = g_strdup(value);
+ #include "qapi/qapi-visit-common.h"
+ #include "migration/blocker.h"
+ #include "accel/accel-cpu-target.h"
+@@ -470,18 +471,11 @@ static void whpx_set_kernel_irqchip(Object *obj, Visitor *v,
+     }
  }
  
--static void sev_guest_get_legacy_vm_type(Object *obj, Visitor *v,
--                                         const char *name, void *opaque,
--                                         Error **errp)
-+static int sev_guest_get_legacy_vm_type(Object *obj, Error **errp)
+-static void whpx_set_hyperv(Object *obj, Visitor *v,
+-                                   const char *name, void *opaque,
+-                                   Error **errp)
++static void whpx_set_hyperv(Object *obj, int value, Error **errp)
  {
-     SevGuestState *sev_guest = SEV_GUEST(obj);
--    OnOffAuto legacy_vm_type = sev_guest->legacy_vm_type;
+     struct whpx_state *whpx = &whpx_global;
+-    OnOffAuto mode;
+ 
+-    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
+-        return;
+-    }
 -
--    visit_type_OnOffAuto(v, name, &legacy_vm_type, errp);
-+    return sev_guest->legacy_vm_type;
+-    switch (mode) {
++    switch (value) {
+     case ON_OFF_AUTO_ON:
+         whpx->hyperv_enlightenments_allowed = true;
+         whpx->hyperv_enlightenments_required = true;
+@@ -497,11 +491,7 @@ static void whpx_set_hyperv(Object *obj, Visitor *v,
+         whpx->hyperv_enlightenments_required = false;
+         break;
+     default:
+-        /*
+-         * The value was checked in visit_type_OnOffAuto() above. If
+-         * we get here, then something is wrong in QEMU.
+-         */
+-        abort();
++        g_assert_not_reached();
+     }
  }
  
--static void sev_guest_set_legacy_vm_type(Object *obj, Visitor *v,
--                                         const char *name, void *opaque,
--                                         Error **errp)
-+static void sev_guest_set_legacy_vm_type(Object *obj, int value, Error **errp)
- {
-     SevGuestState *sev_guest = SEV_GUEST(obj);
--
--    visit_type_OnOffAuto(v, name, &sev_guest->legacy_vm_type, errp);
-+    sev_guest->legacy_vm_type = value;
- }
- 
- static void
-@@ -2922,11 +2916,14 @@ sev_guest_class_init(ObjectClass *oc, const void *data)
-                                   sev_guest_set_session_file);
-     object_class_property_set_description(oc, "session-file",
-             "guest owners session parameters (encoded with base64)");
--    object_class_property_add(oc, "legacy-vm-type", "OnOffAuto",
--                              sev_guest_get_legacy_vm_type,
--                              sev_guest_set_legacy_vm_type, NULL, NULL);
--    object_class_property_set_description(oc, "legacy-vm-type",
--            "use legacy VM type to maintain measurement compatibility with older QEMU or kernel versions.");
+@@ -533,11 +523,12 @@ static void whpx_accel_class_init(ObjectClass *oc, const void *data)
+         NULL, NULL);
+     object_class_property_set_description(oc, "kernel-irqchip",
+         "Configure WHPX in-kernel irqchip");
+-    object_class_property_add(oc, "hyperv", "OnOffAuto",
+-        NULL, whpx_set_hyperv,
+-        NULL, NULL);
+-    object_class_property_set_description(oc, "hyperv",
+-        "Configure Hyper-V enlightenments");
 +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "legacy-vm-type",
-+        .description = "use legacy VM type to maintain measurement "
-+                       "compatibility with older QEMU or kernel versions.",
++        .name = "hyperv",
++        .description = "Configure Hyper-V enlightenments",
 +        .qapi_type = &OnOffAuto_type_info,
-+        .get = sev_guest_get_legacy_vm_type,
-+        .set = sev_guest_set_legacy_vm_type,
++        .set = whpx_set_hyperv,
 +    ));
- }
  
- static void
+     whpx_arch_accel_class_init(oc);
+ }
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
