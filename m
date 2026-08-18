@@ -4,120 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BBF9C5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 21:56:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17001C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 22:00:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwRma-0008Tt-2q; Tue, 18 Aug 2026 17:55:44 -0400
+	id 1wwRqk-0003s2-Qn; Tue, 18 Aug 2026 18:00:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave.hansen@intel.com>)
- id 1wwRmW-0008TZ-UB
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 17:55:41 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wwRqi-0003rD-Dh
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:00:00 -0400
+Received: from st-2004g-snip6-3.eps.apple.com ([2a01:b747:3001:201::49]
+ helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave.hansen@intel.com>)
- id 1wwRmU-00084g-Qw
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 17:55:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1787090139; x=1818626139;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=Yu/Hpiz/fB/8t0hZMzjSePTy1JsydsF87wjqDzYw3js=;
- b=GVGhxTdKdo5P0fJpZlpIyiUWlniFazh3AarzXcgpFwU6uuIAE0dhuUUh
- XMemf49tMt1J87WCOwlnzmpkNFiYEEFv9ltGiR+UFrG5b3mm7lDby5pPT
- BFA5YD7aiSx+iPrQ+PLzeqfPtqmT1zdA/QflD+wTwH75rEU47bNDoasjL
- inIoA7zvGFFfnDqRl5t5Jw1etl6en/l9VN210x0eKrXPN99r0XiYXQwBg
- F+e6CN7urJwGH1RDwFl8uvNbS2+jcVrLFcPXgpPr4HrCCSg5hOWfRhXQg
- w1dU8MLmI2r/tslKE+6AnmuDDmGx87SM0SBW8HqcHMd0IXaebAN2XU7fb g==;
-X-CSE-ConnectionGUID: EmY46gyKSEqYFqums45aKg==
-X-CSE-MsgGUID: OYaTQTxOQA+wvs3Tt7P9mg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11879"; a="91405641"
-X-IronPort-AV: E=Sophos;i="6.25,230,1779174000"; d="scan'208";a="91405641"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Aug 2026 14:55:35 -0700
-X-CSE-ConnectionGUID: q8bsK/3FSG27OBXQa5SNHw==
-X-CSE-MsgGUID: n+BNlfg/Q3SPYrOWbvTKGw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,230,1779174000"; d="scan'208";a="262710694"
-Received: from unknown (HELO [10.24.81.183]) ([10.24.81.183])
- by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Aug 2026 14:55:34 -0700
-Message-ID: <b360f0c6-b4fb-4e32-ad75-1b50a8c8a0ad@intel.com>
-Date: Tue, 18 Aug 2026 14:55:32 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 6/6] kvm: Implement SIGSEGV sentinel for Pkey recovery
-To: Jacky Li <jackyli@google.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Peter Xu <peterx@redhat.com>, kvm@vger.kernel.org,
- James Houghton <jthoughton@google.com>, Mingwei Zhang <mizhang@google.com>,
- Dave Hansen <dave.hansen@linux.intel.com>,
- Brendan Jackman <jackmanb@google.com>, Reiji Watanabe <reijiw@google.com>
-References: <20260818-feature-pkey-dev-v1-0-8c0ef96a4da9@google.com>
- <20260818-feature-pkey-dev-v1-6-8c0ef96a4da9@google.com>
-From: Dave Hansen <dave.hansen@intel.com>
-Content-Language: en-US
-Autocrypt: addr=dave.hansen@intel.com; keydata=
- xsFNBE6HMP0BEADIMA3XYkQfF3dwHlj58Yjsc4E5y5G67cfbt8dvaUq2fx1lR0K9h1bOI6fC
- oAiUXvGAOxPDsB/P6UEOISPpLl5IuYsSwAeZGkdQ5g6m1xq7AlDJQZddhr/1DC/nMVa/2BoY
- 2UnKuZuSBu7lgOE193+7Uks3416N2hTkyKUSNkduyoZ9F5twiBhxPJwPtn/wnch6n5RsoXsb
- ygOEDxLEsSk/7eyFycjE+btUtAWZtx+HseyaGfqkZK0Z9bT1lsaHecmB203xShwCPT49Blxz
- VOab8668QpaEOdLGhtvrVYVK7x4skyT3nGWcgDCl5/Vp3TWA4K+IofwvXzX2ON/Mj7aQwf5W
- iC+3nWC7q0uxKwwsddJ0Nu+dpA/UORQWa1NiAftEoSpk5+nUUi0WE+5DRm0H+TXKBWMGNCFn
- c6+EKg5zQaa8KqymHcOrSXNPmzJuXvDQ8uj2J8XuzCZfK4uy1+YdIr0yyEMI7mdh4KX50LO1
- pmowEqDh7dLShTOif/7UtQYrzYq9cPnjU2ZW4qd5Qz2joSGTG9eCXLz5PRe5SqHxv6ljk8mb
- ApNuY7bOXO/A7T2j5RwXIlcmssqIjBcxsRRoIbpCwWWGjkYjzYCjgsNFL6rt4OL11OUF37wL
- QcTl7fbCGv53KfKPdYD5hcbguLKi/aCccJK18ZwNjFhqr4MliQARAQABzUVEYXZpZCBDaHJp
- c3RvcGhlciBIYW5zZW4gKEludGVsIFdvcmsgQWRkcmVzcykgPGRhdmUuaGFuc2VuQGludGVs
- LmNvbT7CwXgEEwECACIFAlQ+9J0CGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEGg1
- lTBwyZKwLZUP/0dnbhDc229u2u6WtK1s1cSd9WsflGXGagkR6liJ4um3XCfYWDHvIdkHYC1t
- MNcVHFBwmQkawxsYvgO8kXT3SaFZe4ISfB4K4CL2qp4JO+nJdlFUbZI7cz/Td9z8nHjMcWYF
- IQuTsWOLs/LBMTs+ANumibtw6UkiGVD3dfHJAOPNApjVr+M0P/lVmTeP8w0uVcd2syiaU5jB
- aht9CYATn+ytFGWZnBEEQFnqcibIaOrmoBLu2b3fKJEd8Jp7NHDSIdrvrMjYynmc6sZKUqH2
- I1qOevaa8jUg7wlLJAWGfIqnu85kkqrVOkbNbk4TPub7VOqA6qG5GCNEIv6ZY7HLYd/vAkVY
- E8Plzq/NwLAuOWxvGrOl7OPuwVeR4hBDfcrNb990MFPpjGgACzAZyjdmYoMu8j3/MAEW4P0z
- F5+EYJAOZ+z212y1pchNNauehORXgjrNKsZwxwKpPY9qb84E3O9KYpwfATsqOoQ6tTgr+1BR
- CCwP712H+E9U5HJ0iibN/CDZFVPL1bRerHziuwuQuvE0qWg0+0SChFe9oq0KAwEkVs6ZDMB2
- P16MieEEQ6StQRlvy2YBv80L1TMl3T90Bo1UUn6ARXEpcbFE0/aORH/jEXcRteb+vuik5UGY
- 5TsyLYdPur3TXm7XDBdmmyQVJjnJKYK9AQxj95KlXLVO38lczsFNBFRjzmoBEACyAxbvUEhd
- GDGNg0JhDdezyTdN8C9BFsdxyTLnSH31NRiyp1QtuxvcqGZjb2trDVuCbIzRrgMZLVgo3upr
- MIOx1CXEgmn23Zhh0EpdVHM8IKx9Z7V0r+rrpRWFE8/wQZngKYVi49PGoZj50ZEifEJ5qn/H
- Nsp2+Y+bTUjDdgWMATg9DiFMyv8fvoqgNsNyrrZTnSgoLzdxr89FGHZCoSoAK8gfgFHuO54B
- lI8QOfPDG9WDPJ66HCodjTlBEr/Cwq6GruxS5i2Y33YVqxvFvDa1tUtl+iJ2SWKS9kCai2DR
- 3BwVONJEYSDQaven/EHMlY1q8Vln3lGPsS11vSUK3QcNJjmrgYxH5KsVsf6PNRj9mp8Z1kIG
- qjRx08+nnyStWC0gZH6NrYyS9rpqH3j+hA2WcI7De51L4Rv9pFwzp161mvtc6eC/GxaiUGuH
- BNAVP0PY0fqvIC68p3rLIAW3f97uv4ce2RSQ7LbsPsimOeCo/5vgS6YQsj83E+AipPr09Caj
- 0hloj+hFoqiticNpmsxdWKoOsV0PftcQvBCCYuhKbZV9s5hjt9qn8CE86A5g5KqDf83Fxqm/
- vXKgHNFHE5zgXGZnrmaf6resQzbvJHO0Fb0CcIohzrpPaL3YepcLDoCCgElGMGQjdCcSQ+Ci
- FCRl0Bvyj1YZUql+ZkptgGjikQARAQABwsFfBBgBAgAJBQJUY85qAhsMAAoJEGg1lTBwyZKw
- l4IQAIKHs/9po4spZDFyfDjunimEhVHqlUt7ggR1Hsl/tkvTSze8pI1P6dGp2XW6AnH1iayn
- yRcoyT0ZJ+Zmm4xAH1zqKjWplzqdb/dO28qk0bPso8+1oPO8oDhLm1+tY+cOvufXkBTm+whm
- +AyNTjaCRt6aSMnA/QHVGSJ8grrTJCoACVNhnXg/R0g90g8iV8Q+IBZyDkG0tBThaDdw1B2l
- asInUTeb9EiVfL/Zjdg5VWiF9LL7iS+9hTeVdR09vThQ/DhVbCNxVk+DtyBHsjOKifrVsYep
- WpRGBIAu3bK8eXtyvrw1igWTNs2wazJ71+0z2jMzbclKAyRHKU9JdN6Hkkgr2nPb561yjcB8
- sIq1pFXKyO+nKy6SZYxOvHxCcjk2fkw6UmPU6/j/nQlj2lfOAgNVKuDLothIxzi8pndB8Jju
- KktE5HJqUUMXePkAYIxEQ0mMc8Po7tuXdejgPMwgP7x65xtfEqI0RuzbUioFltsp1jUaRwQZ
- MTsCeQDdjpgHsj+P2ZDeEKCbma4m6Ez/YWs4+zDm1X8uZDkZcfQlD9NldbKDJEXLIjYWo1PH
- hYepSffIWPyvBMBTW2W5FRjJ4vLRrJSUoEfJuPQ3vW9Y73foyo/qFoURHO48AinGPZ7PC7TF
- vUaNOTjKedrqHkaOcqB185ahG2had0xnFsDPlx5y
-In-Reply-To: <20260818-feature-pkey-dev-v1-6-8c0ef96a4da9@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.12;
- envelope-from=dave.hansen@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wwRqg-0000Bc-Bj
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 18:00:00 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-7 (Postfix) with ESMTPS id
+ AED2B18000B7; Tue, 18 Aug 2026 21:59:55 +0000 (UTC)
+X-ICL-RepId: 01a016e3-616b-7ffd-9a57-52d52f7e3b8e
+X-ICL-Out-Info: HUtFAUMHWwJACUgATUQeDx5WFlZNRAJCTQBIHVoORQNGCVYLWhcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0KWFsIWwQPH0wMUQJCBVZeSgwdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDjILPHdfAFMEXXpBAF0aXwpFD1UKWXZbHzZ7TnEpclNzQwE6Bi1CBUICXBxaDkMKUBxcVlUfCUtGCUkdDg5CGEYfVCdXAloKWx4=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1787090396; x=1789682396;
+ bh=nMx2BSqsGX24vNsd4eHJvvBZwQG+W4oR8kCT2HTUCJc=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=e+MIrrMtZ4Q80uDKsT0Tltx9c15Z5D36f9XDXWdqGS8fRfogtS4sHJYFRpHt1LmQp1JzHym/YlxoKtB4qCzjRKFks+TrkdIBBg8eEX3uOXJ25qlp8czFxVwUE+IRfA5W9Zc7qpjOoTkM7ahg+NZNK/mIKzFIBKgwXjMP7R08ERkR6WwT1KwIBS/1T/TLG+9HTJqPCzh3k6hc+RbZ6NSwhNIMNpUA9xyiPlwZCsmEWTq7pjrhEWlzyrsMETnsn8B3ZneADg+73dAdSFpWlZIiL4M2eoGt0z7rsuDVdG8LNoLEjHhYqkeb5z2FL2Nue3pIApmLIIywIQ8+9jyeomRjkg==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.156.216.30])
+ by p00-icloudmta-asmtp-us-east-1a-100-percent-7 (Postfix) with ESMTPSA id
+ 4562E18000BD; Tue, 18 Aug 2026 21:59:47 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.11\))
+Subject: Re: [EXTERNAL] [PATCH] target/arm/whpx: fix whpx-arm reset hang
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <LVXPR21MB7009AFFB5732AC523B0BAD36ADA62@LVXPR21MB7009.namprd21.prod.outlook.com>
+Date: Tue, 18 Aug 2026 23:59:16 +0200
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Pedro d'Aquino Filocre F S Barbuda <pbarbuda@microsoft.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B2DD2786-C930-4856-94A0-FB6BDE8A38B5@unpredictable.fr>
+References: <LVXPR21MB7009095A64089AACFA91DB10ADA62@LVXPR21MB7009.namprd21.prod.outlook.com>
+ <A5E79D0D-C177-4B7E-9C5B-CB015E11A1C3@unpredictable.fr>
+ <LVXPR21MB7009AFFB5732AC523B0BAD36ADA62@LVXPR21MB7009.namprd21.prod.outlook.com>
+To: "Doug Cook (WINDOWS)" <dcook@microsoft.com>
+X-Mailer: Apple Mail (2.3901.100.1.1.11)
+X-Proofpoint-GUID: RB7dZ6FI5yMTjyg4OA23cVaSqtwKazC7
+X-Proofpoint-ORIG-GUID: RB7dZ6FI5yMTjyg4OA23cVaSqtwKazC7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE2MiBTYWx0ZWRfXxhJH4NCSwbcM
+ 2/HyyJumNzhFj1P+fIk0Xav3StVNq4pI7eLMkb6t/JgIUKatYcsf+6A6lEXgT3CDhP31/6N2DEv
+ N6nHaAF6aH+uCrLyumS3iEwESPgDd8WDYdBvH/pyXrpL2xmXbbdNHJX2+7NP3UVoMQgo6iXl4EP
+ 9UR2m3dYsfOMKRIpwuGIzm/qcr9XIPQ6FVX5evFuMnBV3QI0o12DBER9k3YJ9UgSgDZu2awAuBr
+ pk9rBNRJyqy1ZMDDnRCotXidYsmqXWGjQqq3lVW2PBpgmgK2IgSJbbZ46EOKMZ0hAPDSIz40yIG
+ HV3Kk5HRG80Sn3c7vA7GXjRqicSzcIgLvNMKwDF9GSMhFAIGSn8aU5lOwNeLaU=
+X-Authority-Info-Out: v=2.4 cv=P7g3RyAu c=1 sm=1 tr=0 ts=6a84d5db
+ cx=c_apl:c_pps:t_out a=oyWFxbOnq+dmhQrAPgaJYA==:117
+ a=oyWFxbOnq+dmhQrAPgaJYA==:17 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=yMhMjlubAAAA:8 a=x3JJ1RZFXz7dmXPYApoA:9
+ a=QEXdDO2ut3YA:10
+X-JNJ: AAAAAAAB5uqQTYGZtiEDb/gpZBbV3h/PfjTj+WvdpuU8uuLGinY0ftcwhrynR384v8bvtgtJ75AzA3BPmwdOd+fj+CPTGqbjoe4qwNuXiNWvVMclycL0GvoaSNPOIVp19CsOe6brHNJD/O4hzJczIQy+wDvEmyjjEi2tbt4s4oaPlFKqwoCeYd9UtQiYCHovCE/hmbrSvwQmhLCpw+q9v6LWbuLGOTSm8jQVuSOGlh404kT0vo98woT/SDEb8lOUBT0EFf4pzg/sa/MPuvARw2iqRmZ2ZfRuAsW9yrP3Wqsgd0U8Hb3mC4zRYS0i7I8ShnLaw9nHaGo6dIJOf07YfXNcm9FQNaX0gxSVWyOsspSbcZDwqeMd++6Z9qbS2CchShAD0/UoVrY8yebU/vATUk9h2z1ogF6Gfk8gOcutXXrMJWqwEBVVBPo/s/c/8KnuOPgMxuRXpNEivspGN+mwGFtg6iSLwAvZme95BXVs44siR59TnSh26j5Ld0SW8gRDELzTBjWex92ba3berRUgAo/DNfq7ca/3RiVOIEJ+79P84/VNtyuh6DhXlQ5yvk5oASBR04r0hULD3ydrp2bGnZ1n/F27xTwbb1LEK1RdUVjfgpBTurfkMrsWpe5jM/x72u2IdRcYOwt24B3zh9sZ18ig6xc0M1P9NPsnCfKAk2c/IFsliiCx1+JR5CI+s+KZUr7Qk4AcyipO3cHvRg9zS/otfcvA8y564+EpUMGPKAWHYg2mlVzcQFBlgI6/cDI6Dk8lD85m+6qg8xpfWso3x2RL5ZfulAabRzvFelp8l56PN3RW/YMu8nRWc6mZu+2WDpdD095JMeWg6f3P9q/B8kLlyw/bMYmf+4f4+FjsdrpHcEikTqj2Q8SyCVxtPKzikYFLUUDm7jN5gJyqvYVDB9ksFRoKed5+vUNFgFFDakoCNneZ62D4dPKjG1OUgf1TeocXzp/3UsAnjmmYVgPlb2aFBffIYEl
+ LI6xd/FxG1AIKsXGcgGva/94UJ2VBff3i2nesqYwjr/wJVX7e5l2iQisdM3yF0H7EV2km0yMTyb+FB3kDvIof+R+910DlVekVX86SPK27sqX4nBkSW1zXjHHZzX2NWaRpPbUt8J2Zcs3BetOImVl4vFGJYXYq0wzFGE0/M0XpC1UioCOVOJNdJ1k7wU82UGNRHaRMWLFjprZaOqGeBri3XC+Mk9P8s5mHccsb+H6Yz+WsER77UH0wJRK0XlDqVVR3Izq4jB1eBXiXLP8xOnvV1hCZpaQSj1HU70eBDEEz8/2FQ9WXvw4YWCV+WZKnX4kxMdWBkbRaNNGHJYP9UA+PNlYYvRL5Qe9ocpBiOJLqSVQ+RL7NRSXJ0uflcVpjXKj4cDCc49bgzdw=
+Received-SPF: pass client-ip=2a01:b747:3001:201::49;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,23 +89,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/18/26 13:44, Jacky Li wrote:
-> +    if ((fpstate_64->sw_reserved.xstate_bv & XSTATE_PKRU) == 0) {
-> +        return false;
-> +    }
-Cool stuff!
-
-A few little nits on the XSAVE handling.
-
-It's subtle, but this wouldn't quite work for pkru when in its init
-state. I guess the argument is that pkru=0 wouldn't cause a SIGSEGV in
-the first place so this code wouldn't ever get run. But, if it were me,
-I'd probably warn or _something_ if I ended up with
-(xstate_bv&XSTATE_PKRU)==0.
-
-I'd probably also at least _check_ for the compacted format. Basically
-make sure that XCOMP_BV==0, too. This isn't strictly necessary. But it
-would help me win a bet with a colleague, so would be much appreciated! ;)
 
 
+> On 18. Aug 2026, at 23:05, Doug Cook (WINDOWS) <dcook@microsoft.com> =
+wrote:
+>=20
+>>> +    { WHvArm64RegisterCntvCvalEl0, WHPX_SYSREG(14, 3, 3, 3, 2) },
+>>> +    { WHvArm64RegisterSpEl1, WHPX_SYSREG(4, 1, 3, 4, 0) },
+>>> };
+>>=20
+>> Ow, carried this mess in formats from HVF, don=E2=80=99t think we =
+wanna keep this
+>> really.
+>>=20
+>> (switching to the ENCODE_AA64_CP_REG format across the board would be
+>> better)
+>=20
+> I'm happy to do that.
+>=20
+>>> +
+>>> +    if (level =3D=3D WHPX_LEVEL_RESET_STATE) {
+>>> +        /*
+>>> +         * WHPX keeps the "vCPU is in a low-power wait" state =
+(entered when
+>> the
+>>> +         * guest executes WFI/WFE) in =
+WHvRegisterInternalActivityState, and
+>> that
+>>> +         * state is not affected by writing the architectural =
+registers above.
+>>> +         * If the guest happened to be idle when the reset was =
+requested, the
+>>> +         * vCPU would stay suspended forever.
+>>> +         *
+>>> +         * StartupSuspend is the bit WHP uses to hold a vCPU that =
+has not been
+>>> +         * started yet, and it is how secondary vCPUs are parked =
+until PSCI
+>>> +         * CPU_ON releases them.
+>>> +         */
+>>> +        WHV_REGISTER_NAME name =3D =
+WHvRegisterInternalActivityState;
+>>> +        bool powered_off =3D arm_cpu->power_state =3D=3D PSCI_OFF;
+>>> +        WHV_REGISTER_VALUE ia;
+>>> +        HRESULT hr;
+>>> +
+>>> +        clean_whv_register_value(&ia);
+>>> +        hr =3D whp_dispatch.WHvGetVirtualProcessorRegisters(
+>>> +            whpx_global.partition, cpu->cpu_index, &name, 1, &ia);
+>>> +        if (SUCCEEDED(hr) &&
+>>> +            (ia.InternalActivity.IdleSuspend ||
+>>> +             ia.InternalActivity.HaltSuspend ||
+>>> +             ia.InternalActivity.StartupSuspend !=3D powered_off)) =
+{
+>>> +            ia.InternalActivity.IdleSuspend =3D 0;
+>>> +            ia.InternalActivity.HaltSuspend =3D 0;
+>>> +            ia.InternalActivity.StartupSuspend =3D powered_off;
+>>> +            whpx_set_reg(cpu, WHvRegisterInternalActivityState, =
+ia);
+>>> +        }
+>>> +    }
+>>> }
+>>=20
+>> Looks good :) Although perhaps this is better as a separate commit =
+from the
+>> change above.
+>=20
+> Happy to do that too.
+>=20
+>> But not this bit, which should be dropped.
+>>=20
+>> The CPU model gets synced through this bit and registers that error =
+out
+>> through ARM_CP_NO_RAW should be behind a #ifdef SYNC_NO_RAW_REGS
+>> block.
+>>=20
+>> The former characteristic is what allows for example -cpu cortex-a72 =
+to be
+>> used on WHPX instead of only the native machine, while masking off =
+the
+>> newer feature from feature regs.
+>>=20
+>>> +        if (ri && !(ri->type & (ARM_CP_NO_RAW | ARM_CP_CONST))) {
+>>>            whpx_sreg_match[i].cp_idx =3D sregs_cnt;
+>>>            arm_cpu->cpreg_indexes[sregs_cnt++] =3D =
+cpreg_to_kvm_id(key);
+>>>        } else {
+>=20
+> I'll need a bit of advice in this case. Without this change, we start =
+getting
+> assertion failures after fixing ENCODE_AA64_CP_REG parameter ordering, =
+due to
+> register read-back not matching after write. Do you have a =
+recommendation on
+> how to approach this?
+>=20
+
+For HVF, the way sync is handled when read back that wasn=E2=80=99t the =
+same* was to put the affected
+registers outside of the sysreg sync array and do it manually for those.
+
+Given that we don=E2=80=99t have full save/restore support yet (the GIC =
+state sync is missing for now)
+it=E2=80=99s ok to comment the affected sysregs from now and return to =
+this later
+
+* notably, on some HVs, the timer registers can be ones of the oddballs =
+around that front, as they can keep counting when the specific vCPU is =
+not running=
 
