@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62DDEC5DF74
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 02:23:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8D51C5B572
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 02:24:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ww9TQ-0007Bx-Hd; Mon, 17 Aug 2026 22:22:44 -0400
+	id 1ww9Tz-0007VR-VB; Mon, 17 Aug 2026 22:23:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1ww9TO-0007At-HA
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 22:22:42 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1ww9Ty-0007UU-0v
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 22:23:18 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1ww9TM-0008IF-Si
- for qemu-devel@nongnu.org; Mon, 17 Aug 2026 22:22:42 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-cbedf318752so2820693a12.0
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 19:22:40 -0700 (PDT)
+ id 1ww9Ts-0008Ka-1J
+ for qemu-devel@nongnu.org; Mon, 17 Aug 2026 22:23:14 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-cc1469c1b83so217682a12.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 19:23:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787019759; x=1787624559; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=0cX5rASESAh7WiDgjwmE7cChbypZGLRPxPYngvELopw=;
- b=GgH0bqDeqI/tgrejMdu90pC1cc739Rzny+HDBxBzC7hJxraSwXybAzZY/S7B9K/mFR
- gpOdlT6ySE/Rmp+aQv1iCptIzhq5uG5eacFyR1j+kvJJOsYIMbiDe5HjA1/lysVXIElU
- YtGHjze2D2rDMHjynKhUOo0SSqYTIaZGW4sDtGkg8/mLLj1kMAlEAv3c3VeCyeDCNWxU
- W4iu6pqZRJP+wLEuB+nJAXfLKQ30bAv6fpvv/XrEFAfiRlzeRvXWfzLf9XP9N3AsCaW9
- EjV6dZj4D9iuy5MPYMqMHVbQZyDR7YMWDlBBMp2rrQ8BWhfSDIhQyJpiUuskvt1daxqR
- 3Q+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787019759; x=1787624559;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1787019791; x=1787624591; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=0cX5rASESAh7WiDgjwmE7cChbypZGLRPxPYngvELopw=;
- b=YHYsJteIe5x0R57ozkJfVl+FTqkor/n0nMmTPGgThUWTWdtWrIWaRMGLIl2jcWJ7iD
- A0i2k1aGGtvG44XyQJboISDOX1AVZ90seMkO2gFW+Zl0I9IGFfB3AJSj4zh1C+te2eIf
- RU9eTLFEjP5sHpaVzb8wbz3iKwCSTSp+tfltyDeceGW4QIYyykrbVzK255RLFMMrWOnO
- 25l7FaDBEMdjjaxaKnIpkLajYWgKs1HwQtNgWLiGpNHkOR7iEtR6GuEtOg+114ixX5yJ
- /phYCBBo0K5dNiviOPcbOnmAqqFZqpI/373qUsUsatJFKQXscTRoQBELl8ykd+8vu7fn
- w/cg==
-X-Gm-Message-State: AOJu0Yy1FgPPyKYnwLKoQwOPCk4MAXKj7FbjELt530vGDulakR7sjaDU
- DRMdqlctMUh47PUZNFqXNi9dQUoU108Qr2XUZfQnRVO5A7bqimzYs0ksjA9LLQ==
-X-Gm-Gg: AR+sD132MqgQppST/1+marfPn0Jd+gUYbltDEzv8Om4tlY+vyCtseze/hKD+bTP36FC
- ch1/Zhoin5U+4XEs+r5sguLknGwwUiCtSffvpM1HWpzxawNMDN8LJgTFq8wu5lA9L/E5o5sTrai
- gA2FGh61BcxhY6w3ssGDwjd0X/UDSkrQEvJddPVHgFHpBPagIFp8XMor3oD6cwBQ4xkoHspQSkb
- 0oFgAcdm4o4b8MBq99dTevhPQHfPrOsL5CwSTr2Jmc/GoH5TMzPpiZnuI6Nql1IezbwocpqVALl
- x+XfPYh2iswH8HJyfsfJGsy8Ewk1ywdx7NWDxOTT0fJRSY8lcQDbTfCWMvPyql8sZXXc68kAZqR
- 6C5a387DBkzIxc0qGKjkPKihoOzdD84RIUKtcmn0sdWZHXtRj2o1Y2Fd1o/LFXw0Q4AFcGx+U6g
- Gv6X5mOqsKL91h/B0fSuSSEcxWv/WpYSE7ldDnIBA2lTIGnZz6CXceaDyaNiWewZy+04SjmG3u/
- xSv
-X-Received: by 2002:a05:6a20:7f88:b0:3c3:b57b:645e with SMTP id
- adf61e73a8af0-3cc719fe40fmr31489786637.5.1787019758578; 
- Mon, 17 Aug 2026 19:22:38 -0700 (PDT)
+ bh=Pj2T67/7p/2P+wnOytOC2N0z0hs811CESlM1zZEhJ7c=;
+ b=Ji9PHXPON74hyfq6KhKCFePitw3oyjeG5TMe2gCZzDH+ljJ6LzN4lHERcMlODFbfQq
+ KowZImJYqUEhl1f7NtLlTZEDVBcVxtGV9x71Jl+Z95ROczwMcT2/3C6HGDvnmaFqJw16
+ +JOjN+wiTthMWlAdd04C8xeKIj/wr+escOC4zhjD5n8JqnYWipeLzWm+BfN1EFRUkVnF
+ IUHZzroD418uuULSah8KezV8vNECSPPnfWLCnV9AOC0ZEjG5CApxnl2hHqVL/al8lWQ8
+ MeyD8CYBTUfqb/XpAgR60b0h+1suQozxuicBtRmH0FOnoK/xYrzZ4nIfvZswLVRBUd0X
+ wd/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787019791; x=1787624591;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Pj2T67/7p/2P+wnOytOC2N0z0hs811CESlM1zZEhJ7c=;
+ b=Vb7Pdn2NvIpQg8nIfKMbjMpOPEmEJN9y/z32nxEk/YnF2y4wFGl4cFKpNp2eF/5iEE
+ p0ElOnmSEM21VuN/TzRmlIpBlVDWvSAm8z2/ai9val8z8hT8KhlxYq3/bblRbUPdeABX
+ 4Rk7TdR11wqdRxp1WkG+oEVkjGkOwIf9D+FhrudBSMphirc5WHfIfT5he7joaSh2c5MD
+ Y/ltyZWU6MyR0g9XA5E1P8BqfFqwETSgoCf1mohnP7GCcj1fYto8r4b5ibOxOnFjMCCh
+ xnT87EQfQigo5AahTm0SIgtbosgn8tgh95NmL+Bu19It5iOziVJ9MBAA5oDv+3iRLy1v
+ iWqA==
+X-Gm-Message-State: AOJu0Yx1AfzykFsyxKvaBRgfx/C/o8nr1S6ES7UPo+ASBhkf1pVtOWOC
+ 3rM1f7ZC010k+0nPKbnrckOEvLsp5qh+a9IDgDg4oryj5NPdgjcBRGLxr56gNg==
+X-Gm-Gg: AR+sD124jaim3fgGi5OVt62eDqZ1syIPgnRxnC1w3rsN1Rr7hrLJD1KvMvzN+UV0CbW
+ XMns+HpmhTPQoTBA9AvUaw8AcLc+RhgAJkZ2v0snE4zWJaNVofXtHiMgv97AcqsEKJz7QbciIlj
+ /bhzZYycVjCLxDZGmEmM9GfcZhci5TALV6PU8ChRe8rZ+nROijE6r2UGTZVq0CzGyMdoolNA87O
+ +4RkVoqmDc2JV0ofLcl/7RTy8DyVIwFjYYbPx80Y/gUkY96z1g2lSKv7D0XghE22CXgSJuRIA9k
+ 6pLTJ9DNv2Bd6EAXYcSpk8Z3OEDNGlrovaz2ncnoRQ4wTraAw0irPd1OPhdaKtHK+j/FUXyCoMc
+ ATxXrU2tJQvEkUhjE3XP8DVyH5HYuvXvZ/2VHn+czGfwPhOpqwF8llNeIFYTfFMcfXbB+fK1XJg
+ N/yBkg0scB6pk015uQRC9diKQ+Qu+MmsAmsPP1Rmap3jLaZ0KrfbFro4qxthE6LWJFvMvCTcKHy
+ mQe4Vr1InY/4jA=
+X-Received: by 2002:a05:6a21:3382:b0:3bf:a638:4371 with SMTP id
+ adf61e73a8af0-3ccda782278mr4683042637.10.1787019790653; 
+ Mon, 17 Aug 2026 19:23:10 -0700 (PDT)
 Received: from newsled.lan ([76.133.142.170]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3267c389363sm10897816eec.23.2026.08.17.19.22.38
+ 5a478bee46e88-3267c389363sm10897816eec.23.2026.08.17.19.23.10
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 17 Aug 2026 19:22:38 -0700 (PDT)
+ Mon, 17 Aug 2026 19:23:10 -0700 (PDT)
 From: 54weasels <54weasels@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: laurent@vivier.eu,
 	54weasels <54weasels@gmail.com>
-Subject: [PATCH v4 0/6] Implement missing functionality and hooks in mk68k to
- support upcoming sun3 impl
-Date: Mon, 17 Aug 2026 19:22:16 -0700
-Message-ID: <20260818022225.31801-1-54weasels@gmail.com>
+Subject: [PATCH v4 3/6] target/m68k: Fix NMI pending for Level 7 interrupts
+Date: Mon, 17 Aug 2026 19:22:19 -0700
+Message-ID: <20260818022225.31801-4-54weasels@gmail.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260818022225.31801-1-54weasels@gmail.com>
+References: <20260818022225.31801-1-54weasels@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=54weasels@gmail.com; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=54weasels@gmail.com; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,24 +100,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extends the 68020 implementation to support the requirements of a sun3 machine.
-This patch was originally submitted as part of the monolithic Sun-3 Machine Emulation series (https://patchew.org/QEMU/20260503015756.99176-1-54weasels@gmail.com/) and has been split into smaller parts.
+High level description:
+Level 7 interrupts are Non-Maskable Interrupts (NMI) on the M68k architecture. The hardware asserts an NMI only on the rising edge of the level 7 signal. The current QEMU implementation treats level 7 like a standard level interrupt. This patch ensures proper NMI edge-triggered semantics for level 7, which is strictly required by the Sun-3 keyboard/mouse NMI routing logic.
 
-54weasels (6):
-  target/m68k: Add dummy CAAR register
-  target/m68k: Fix fsave/frestore for 68881 FPU
-  target/m68k: Fix NMI pending for Level 7 interrupts
-  target/m68k: Extract Function Codes during TLB fills
-  target/m68k: Implement custom MMU intercept hook
-  target/m68k: Implement Physical Bus Error and Stack
+Impact on existing functionality:
+Corrects NMI edge-triggering for all M68k boards, adhering closely to the Motorola specifications. Existing boards will now correctly require an edge transition to trigger consecutive NMIs.
 
- target/m68k/cpu.c       |   4 +-
- target/m68k/cpu.h       |  18 ++++-
- target/m68k/helper.c    | 130 ++++++++++++++++++++++++++++-
- target/m68k/op_helper.c | 175 ++++++++++++++++++++++++++--------------
- target/m68k/translate.c |  30 +++++--
- 5 files changed, 280 insertions(+), 77 deletions(-)
+Context: This patch was originally submitted as part of the monolithic Sun-3 Machine Emulation series (https://patchew.org/QEMU/20260503015756.99176-1-54weasels@gmail.com/) and has been split into atomic components.
+---
+ target/m68k/cpu.h       |  1 +
+ target/m68k/helper.c    |  6 ++++++
+ target/m68k/op_helper.c | 14 ++++++--------
+ 3 files changed, 13 insertions(+), 8 deletions(-)
 
+diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+index 7cf3791108..058777b891 100644
+--- a/target/m68k/cpu.h
++++ b/target/m68k/cpu.h
+@@ -148,6 +148,7 @@ typedef struct CPUArchState {
+ 
+     int pending_vector;
+     int pending_level;
++    bool nmi_pending;
+ 
+     /* Fields up to this point are cleared by a CPU reset */
+     struct {} end_reset_fields;
+diff --git a/target/m68k/helper.c b/target/m68k/helper.c
+index 68f523ea84..93739ccda7 100644
+--- a/target/m68k/helper.c
++++ b/target/m68k/helper.c
+@@ -949,6 +949,12 @@ void m68k_set_irq_level(M68kCPU *cpu, int level, uint8_t vector)
+     CPUState *cs = CPU(cpu);
+     CPUM68KState *env = &cpu->env;
+ 
++    if (level == 7 && env->pending_level != 7) {
++        env->nmi_pending = true;
++    } else if (level != 7) {
++        env->nmi_pending = false;
++    }
++
+     env->pending_level = level;
+     env->pending_vector = vector;
+     if (level) {
+diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
+index 38f7a68981..30af4a2631 100644
+--- a/target/m68k/op_helper.c
++++ b/target/m68k/op_helper.c
+@@ -522,14 +522,12 @@ bool m68k_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+ {
+     CPUM68KState *env = cpu_env(cs);
+ 
+-    if (interrupt_request & CPU_INTERRUPT_HARD
+-        && ((env->sr & SR_I) >> SR_I_SHIFT) < env->pending_level) {
+-        /*
+-         * Real hardware gets the interrupt vector via an IACK cycle
+-         * at this point.  Current emulated hardware doesn't rely on
+-         * this, so we provide/save the vector when the interrupt is
+-         * first signalled.
+-         */
++    if (env->nmi_pending) {
++        env->nmi_pending = false;
++        cs->exception_index = env->pending_vector;
++        do_interrupt_m68k_hardirq(env);
++        return true;
++    } else if (((env->sr & SR_I) >> SR_I_SHIFT) < env->pending_level) {
+         cs->exception_index = env->pending_vector;
+         do_interrupt_m68k_hardirq(env);
+         return true;
 -- 
 2.50.1 (Apple Git-155)
 
