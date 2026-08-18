@@ -4,102 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1C3FC5DF70
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 09:09:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24232C5DF80
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 09:11:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwFou-0006Q3-89; Tue, 18 Aug 2026 05:09:20 -0400
+	id 1wwFq9-0007me-H9; Tue, 18 Aug 2026 05:10:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wwFos-0006Ip-B1
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 05:09:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wwFq7-0007lz-P3; Tue, 18 Aug 2026 05:10:35 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wwFoq-0007yy-VW
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 05:09:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787044156;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=rtR8jkeiSp/UP6IO/666zkBTv+Kr+v6jVALl4FiEUK8=;
- b=PgEa5m7d6jR0fAOthJ9fPvIefaJsBCvpEq3udZ9XDTLY5TYBAw1Ux1diJY/G6vVIsak9GO
- 0jn8kF5Er0R2a+NKc0bZ2t4E1hL/JrY2ybqEiBA/Sj/IXF45FTRNKiaKKQbM99mBNKNqHu
- 2xEilM2qeTS0x7CNSsQGzWZe5tUIVVo=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-533-qNao7ZBCOkyzij3piiW4HA-1; Tue, 18 Aug 2026 05:09:14 -0400
-X-MC-Unique: qNao7ZBCOkyzij3piiW4HA-1
-X-Mimecast-MFC-AGG-ID: qNao7ZBCOkyzij3piiW4HA_1787044153
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-38e11baa66eso5219293a91.2
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 02:09:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787044153; x=1787648953; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=rtR8jkeiSp/UP6IO/666zkBTv+Kr+v6jVALl4FiEUK8=;
- b=XkHHsHwNsE2WL1m9B4aCtjXQN/3JtpnqzVk1GGk8yrPAmTPu5NFh7qW/qE7agB9aV/
- /GQxZDIyLEwAtqFzB13BKQbhtnXuWRoznNsb6FISgxPRz4xgRQ7oddWFo4k+V0DqQ63n
- C23xMFSfmIQXs46atU30xyMgIk6wz5ZijkXswmsU3Lkpr8HuM3RKpTKSUsGeXTgrXLNt
- UNoIBx1hy87R8414LFPs1kzW1ql+raUILIcFau8kqejlVQfd4KkgjaJDXM1FWRidyLj1
- 0HPdS6hpevPuskmAih5lje64nidQ0cbORdpD5PF6dEJqfN20wKKFPX24elibHyrDlDnZ
- 8ULQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787044153; x=1787648953;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=rtR8jkeiSp/UP6IO/666zkBTv+Kr+v6jVALl4FiEUK8=;
- b=hmtMfCkIl9wUhs/W0DDVnhBfb1g7fzVFXd5pNCjKFF6CtDgYymDiJhYdMSgBLrPJ/x
- aXmIw291H/h2XmRrnSj+HjPyzu95OgkqpKZWbouRr8A+T32Rlsa9X9kSAPaLdqmZreB9
- 1ASWZzxeqg8u/ZPnJVF2pWQrOW0aXfQLP5r9feNlsKOiXyIlRYRt0yclsjondBE7ZzfW
- fKYtnmvk/njYcBgCqt4TZ/3NdZLhXuHAwTK60Bee1du8SsQoyuBnqBnpC/vhYV1E0avX
- Fb0eTNnsSpL9MkAQNgNcjMGHNKHzlcpXh8sVCJb2x8C6FgEuIjMHXqfRY9a2LPEjZlyn
- FtWQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoiCpJbNZRNNDbGbSsx8IOGiW/CNd5kXroLXV0YyonuouXHYKbeHw8Q4uiUtU9n+UFr8zMpP9+wM7bW@nongnu.org
-X-Gm-Message-State: AOJu0YyODW1Ke2R4pQfIWx4Z8llpHRuF1MfsYUnv/agrPd2emuIp2V0+
- ZUMkeRiGGmCmZ4HA3JgA2VsjyhGLyzrRsJVgAiELnn3VU95rHJ7S7HyQmyouwo2Z6LKRitSJAhI
- txRwYlVb0ZX8bdvyHHaEq/9BGdkmbO2YQ0AMB9FZTvWqHEGmvn9KsX4vk
-X-Gm-Gg: AR+sD10UbMMu+vUPgdqY4Trp6Evw+8x8+mA7sYDKNoXd0KTS3erTGMHcaq2qgno2/O6
- aWvtSMcNhDGKd5mPhk2BOP6agryWv4TDQwtazQl5Jq1C9ZKfofKwCny3h/F6mA9BGuEX8Qh8bBL
- LMSM9mrgZ1UwMdP4rucONcIo92bAK0eVAl/pCNXyvgRhl1NxCH0PQB4bTaVd3JlfuIa9ViAxZdu
- jCAry+l1n+IojGS78z4BE3qnHQ0MXP6MhwWmXEXiN9fFG7pbAHPDQRgFgaxQvHzFCH9V05D633b
- o+mVoqZORdkTKQSkhwJTTlzahjPXlHy9gMYtNtW2LxMzcqL6KSOJhDx1wPcLrNC+p/OFGi824vw
- EY7v3FnThtx5eX0KTc7YMLO2lorfh53Juug==
-X-Received: by 2002:a17:90b:264c:b0:38d:ddc2:7ccb with SMTP id
- 98e67ed59e1d1-3933b714f34mr34139120a91.1.1787044153448; 
- Tue, 18 Aug 2026 02:09:13 -0700 (PDT)
-X-Received: by 2002:a17:90b:264c:b0:38d:ddc2:7ccb with SMTP id
- 98e67ed59e1d1-3933b714f34mr34139026a91.1.1787044152986; 
- Tue, 18 Aug 2026 02:09:12 -0700 (PDT)
-Received: from rhel9-box.lan ([106.219.133.98])
- by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-39531fbb41esm7870063a91.10.2026.08.18.02.09.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Aug 2026 02:09:12 -0700 (PDT)
-From: Ani Sinha <anisinha@redhat.com>
-To: 
-Cc: kraxel@redhat.com, Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org
-Subject: [PATCH v2] MAINTAINERS: elevating myself to be a maintainer for igvm
-Date: Tue, 18 Aug 2026 14:39:05 +0530
-Message-ID: <20260818090905.87090-1-anisinha@redhat.com>
-X-Mailer: git-send-email 2.42.0
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wwFq5-0008Kc-Eb; Tue, 18 Aug 2026 05:10:35 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67HM1ioO759187; Tue, 18 Aug 2026 09:10:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=qMTZ9DUSzhvHGl6fglwoEvW9q1sLDiiYJ02rnS0fb
+ Os=; b=fwIEQBgwKvaS02qc4F/dDMHLNHFzAelGAqnGgFPCU0/rCZpCkaRteHiJj
+ p8w2+tvb3dv9A/Sn/aUxpwgBE2vgxN/iu0hGH8W5F1u5epHeDYDwQ5aF7Gp2algh
+ EIZgINK7iNYH9kduz0+gmM5xWontLjzKbeAfSuYwr18CQxtPXdarDNa5BEkUBQs6
+ P7hsvvSbNTmWDIQ/ye0iFmCHXqQDc0RnJTq8H34tueE3eYu0/q5YPzy4KAPTSRf3
+ LSNtlTRHD46N8lD8/keekguFhi3/Vybja5IsEM33rv0R2EKJkAJenyJoDwXObwmU
+ xhHXG1EGTppzhJhPBNwdYnBRJq3Yg==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fsqq67u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Aug 2026 09:10:30 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67I8uLfT015175;
+ Tue, 18 Aug 2026 09:10:29 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g32tw2g9s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Aug 2026 09:10:29 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67I9ANfh41943452
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 18 Aug 2026 09:10:24 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8B2CE2006A;
+ Tue, 18 Aug 2026 09:10:23 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EA0D32004D;
+ Tue, 18 Aug 2026 09:10:21 +0000 (GMT)
+Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.bl1-in.ibm.com (unknown
+ [9.123.8.229]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 18 Aug 2026 09:10:21 +0000 (GMT)
+From: Chinmay Rath <rathc@linux.ibm.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, harshpb@linux.ibm.com, aik@ozlabs.ru,
+ amachhiw@linux.ibm.com, Chinmay Rath <rathc@linux.ibm.com>
+Subject: [PATCH v2] target/ppc: Add lower bound check for watchdogNumber
+Date: Tue, 18 Aug 2026 14:40:19 +0530
+Message-ID: <20260818091019.51350-1-rathc@linux.ibm.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDA2NiBTYWx0ZWRfX/hMJ5z7IEb3E
+ 7wcLAYb1/XEkD9ad/wuEIHEQx1Rc4ReGv1pZ6lIDqgrtx685SsqivxPEIVcfWSnwof0xmCPJl8h
+ +vz5uDowctkHOt1YL2sT2x8lIknnpjI3qJgHni1paLMfFQMPFfZDXLk3KC6xhfzjcK8q4OZcnqb
+ s0NkjxTy6aMrs7duKvqmODyXWN/qnviT2lOXDFiI+y31rFosaOJ6DbnJhZ2mQ9tw8tZbjJ2+lDX
+ pM/xhcRPGhvQMMi3pU5f/0BVH7m3IAkB+I9d06ps7d+eUpsIGW9epyTrkIQ9qfllkjfvcxRFlkp
+ dZGESPorMsgb5YO+hqmkVcQ/2/fiIl6uWy1V+OtXLOlpu74GD8gyaFQgjWKXRG7Bb8mgx4icG16
+ Kw1sCBCfUCBNV9/tBmb43qL9QkFmV2SG2FGAvePDsZUvvk4KNWCfIZxTPw0mnobWRX/7vEDbPna
+ A162QLDsdr2RZ/KGkAA==
+X-Proofpoint-ORIG-GUID: kqYaB1ZCusK1zop-x0aBLgGTjLu6QDjl
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDA2NiBTYWx0ZWRfX2h5uIe/9dlzr
+ NGEI6EIfI+RhRZOdDJ5bTEMhGGHXUH2QcjDHS7UNiTAHq6EuKY9pEkGG9XRa59ijNdej4kJdGK2
+ hITy6LJ1oh5zdKcOieAEx51CFiFwPyE=
+X-Authority-Analysis: v=2.4 cv=DJe/JSNb c=1 sm=1 tr=0 ts=6a842187 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=j_FQD6ciWsqbTIv_aGcA:9
+X-Proofpoint-GUID: 3vTMbme2kCT4MQfGsqDd-9ISgsGZ_EbX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-17_04,2026-08-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 spamscore=0 clxscore=1015 bulkscore=0
+ suspectscore=0 malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180066
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,31 +119,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I have worked enough on the igvm to be confident to elevate myself to a
-maintainer role.
+Add missing lower bound check for H_WATCHDOG H_CALL's watchdogNumber parameter
+as per PAPR documentation ver 12.10.00 section 14.15.5 'H_WATCHDOG'.
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
+Closes : https://gitlab.com/qemu-project/qemu/-/work_items/3600
+Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 ---
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-changelog:
-v2: fix typo
+Changes from v1 : Incorporated changes suggested by Amit.
+v1 : https://lore.kernel.org/qemu-devel/20260817105854.437724-1-rathc@linux.ibm.com/
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b51f5c3e60..9e0a2a656f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4118,7 +4118,7 @@ F: tests/uefi-test-tools/
- IGVM Firmware
- M: Gerd Hoffmann <kraxel@redhat.com>
- M: Stefano Garzarella <sgarzare@redhat.com>
--R: Ani Sinha <anisinha@redhat.com>
-+M: Ani Sinha <anisinha@redhat.com>
- S: Maintained
- F: backends/igvm*.c
- F: docs/system/igvm.rst
+ hw/watchdog/spapr_watchdog.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+
+diff --git a/hw/watchdog/spapr_watchdog.c b/hw/watchdog/spapr_watchdog.c
+index 5b3f50de3a..460b4457a6 100644
+--- a/hw/watchdog/spapr_watchdog.c
++++ b/hw/watchdog/spapr_watchdog.c
+@@ -127,6 +127,12 @@ static void watchdog_expired(void *pw)
+     }
+ }
+ 
++static inline bool watchdogNumber_valid(target_ulong watchdogNumber,
++                                        SpaprMachineState *spapr)
++{
++    return watchdogNumber >= 1 && watchdogNumber <= ARRAY_SIZE(spapr->wds);
++}
++
+ static target_ulong h_watchdog(PowerPCCPU *cpu,
+                                SpaprMachineState *spapr,
+                                target_ulong opcode, target_ulong *args)
+@@ -145,7 +151,7 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
+ 
+     switch (operation) {
+     case PSERIES_WDTF_OP_START:
+-        if (watchdogNumber > ARRAY_SIZE(spapr->wds)) {
++        if (!watchdogNumber_valid(watchdogNumber, spapr)) {
+             return H_P2;
+         }
+         if (timeoutInMs <= WDT_MIN_TIMEOUT) {
+@@ -170,11 +176,11 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
+     case PSERIES_WDTF_OP_STOP:
+         if (watchdogNumber == PSERIES_WDT_STOP_ALL) {
+             ret = watchdog_stop_all(spapr);
+-        } else if (watchdogNumber <= ARRAY_SIZE(spapr->wds)) {
++        } else if (!watchdogNumber_valid(watchdogNumber, spapr)) {
++            return H_P2;
++        } else {
+             ret = watchdog_stop(watchdogNumber,
+                                 &spapr->wds[watchdogNumber - 1]);
+-        } else {
+-            return H_P2;
+         }
+         break;
+     case PSERIES_WDTF_OP_QUERY:
+@@ -184,7 +190,7 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
+         trace_spapr_watchdog_query(args[0]);
+         break;
+     case PSERIES_WDTF_OP_QUERY_LPM:
+-        if (watchdogNumber > ARRAY_SIZE(spapr->wds)) {
++        if (!watchdogNumber_valid(watchdogNumber, spapr)) {
+             return H_P2;
+         }
+         args[0] = PSERIES_WDTQL_QUERY_NOT_STOPPED;
 -- 
-2.42.0
+2.55.0
 
 
