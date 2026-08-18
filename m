@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42C4FC5DF7E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17695C5DF67
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 05:14:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwC7h-00057S-OM; Tue, 18 Aug 2026 01:12:30 -0400
+	id 1wwC84-0005Gr-31; Tue, 18 Aug 2026 01:12:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wwC7e-00056q-JR
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:12:27 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1wwC82-0005G5-9u
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:12:50 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wwC7c-0003iZ-CM
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:12:26 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-84faf87d19dso4480567b3a.3
- for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 22:12:23 -0700 (PDT)
+ id 1wwC80-0003oi-0J
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 01:12:50 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-84eb992a881so3169053b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Aug 2026 22:12:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787029942; x=1787634742; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787029967; x=1787634767; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=AkZeRoc3E17YBp5XADn9w+7xUKDSvBeBFuBZM8xExpk=;
- b=oG+ChK66vdw67IeirP8USzKrvpf9KzV82kuY7aPUJvjoKeix1mnPYXfJ/7647hj158
- tQp7sAs28ma++R7BsbSSonvLfCAn04WGgmbfY2whq1jNGukrGOJQhKiYBd7lnUC4lAN0
- HbcOEhGkgzZ604y+9M/eXcrL3BWN9c03ABCb+0JxhDrJmNKLfj/PKZg1U8fBenLul4oq
- lHhTvX3rTllE7cu5ptRPLBv2TN4AU6Nshi2PdO0M7EOQcuX/uYNmWRgSaPpeRjvoxFIq
- 8HcUXzK1m9oSO1eGhX0H6yzXDbDyKhBxWKkKg0OKYQFpsNFuNrvAZE4LOpdntIvzdD5I
- EMRw==
+ bh=Q4geQjhEDcsmapDV/ZLiGXecFcqlx1SUv1jdKP/WSd8=;
+ b=KoNoM6PIElgr8rIYOOJg834aLMG2jao+DUHwZdm5QkRF5ptk3VtnoR161hGAw6rA1z
+ IaIZdcXkFp/DvkiZs6G34NlliiG9u3wwbXMsakVz7u2eFpwwJQhoY8gg8Td7qLCmm8n6
+ hHT4XLAbiFgptTn0TpJgJdxmpdw5qG7sanOFE72oueCmUIL1kHrSwZr69d1UojPhmfne
+ FG0yDfqc6OL4WcoozQbxzSDSw2oJ40Lg9iVYNdBZEjHQ1iB5psNz0TfWz16QzdP7LQnO
+ 6xmdh0lJxx9DEbY2pYkeklr08EpeWPrRjhojVFY9fFJBZRAP3C76+I/I5Y2FFSj/CfOS
+ ve5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787029942; x=1787634742;
+ d=1e100.net; s=20251104; t=1787029967; x=1787634767;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=AkZeRoc3E17YBp5XADn9w+7xUKDSvBeBFuBZM8xExpk=;
- b=CyOVShd3Pj60489JWXIovmPAxJCepjHFwVOfl+R4c2V1cP9gM2ZKrd7WUv1zM4CPZP
- YFFAX6eUbhUMnAO0QepmXjaKxj5WUv23Z9JKww9GWsHOLRhnEUurMyOHc0UonsUaiFbl
- h1rTSEswf128uaG8T6nQC3NAlAtOKfSGc+6zQ0wMY0acx9VdJXfK1/tuB1CohR9DOUwh
- xrR6var2AWXKeMpEirwYcMmcGRnAQGL1Wz3NPYpBpVSwjBq9r/Wgb3QEVdv7WpMAgpwW
- zWOScP/pwXQQDpJYSzGPintKwn3U6eEPCZkMe51mNxrh3j99atYqdGe7iqV0bb7isJ8u
- gu8w==
-X-Gm-Message-State: AOJu0YwgkggPwAu3e63xj7gyj3fuM6ie2iKIiRGV2kOkp6RpwZY/bKp3
- jPKgOt9ttk0C1LlGaFtgjgFRSikQ61GEK2DBpYFiMTQae6BfnlVspYBS
-X-Gm-Gg: AR+sD12++WlQX4ntHoRDxrGYAa4HgctcGmjZMz6ve9moRUFzIaHFIsz0dK1HkQqC0mw
- tG4gAo7flTcaa5lhx5E7sWqjo6g6QVCxNhlc+pL/2tCipYJFQXsA9Mb93GwUCOWGLjEaLsYXYZ6
- 55TTklW9ABNp6//MH7r8ARrOTysXk0jLZRqwlItHZFhXHAPEKAHG2v+RsizLEU0tt7GjgbnVU/C
- 2J6CoqrTvOvikld+6m/ZMEEJhxHNaiSt3KviYI7zZr2wouOTPD+JNTeiZlgII1z0HkYAfBd/bLv
- fv1Z/Ou1o2aPRWL98WxvB8MS9tx41WWIHodeB43s/P5K/fqDfWRs9ROavOBEWYW9G4J0lWaYV64
- 6SOLe3nA6MFcPBxem1T7A6paG5w2Z3WAqeLTEZTnSNTIAmUUA2gof97U6zsKBmG4U9o354MnbqB
- 980xRVvQxwspxiZxxHbCUlDJZoyCP7w9WjFX4UOjaNLiAHj5WRkL9jgpsVEtS5gVcptUZcgTc=
-X-Received: by 2002:a05:6a00:3d96:b0:851:8012:c38b with SMTP id
- d2e1a72fcca58-8518012c611mr22777756b3a.10.1787029942322; 
- Mon, 17 Aug 2026 22:12:22 -0700 (PDT)
+ bh=Q4geQjhEDcsmapDV/ZLiGXecFcqlx1SUv1jdKP/WSd8=;
+ b=WI0+/xXdCOHd6xn/T4EZdPefzDL9I8S5RP3Pz9LljWvG9CCWMxdHwDHOGT/PYOtebM
+ YH7VIm5Vyc0Ra0dVS0vqjDkBYccZIudRKt+ZEqMlrdaX0NcF2rfphi49B3EafY0eJ6AK
+ wvyCU0mO04K+7bKsQW6ArQ1god66IzhnqOvgv8rLehPiluxRiT3VBT6hFFRrv2+zPxVB
+ sPg6qxJNUiylDoJ8KUlcEaRWVhu65LXI0oXPOhljhAjE+3IzgHsr1g5/prwtbUxC2eYm
+ tqBRPtjGriIadKd+oudF6JJwHwlBsDZ3H5XE2l440bCPS8KuX5SWi2ykipXmyxUgSgKD
+ 7/tQ==
+X-Gm-Message-State: AOJu0YyEWL3xuwPDXBuo7emfmrG3RfzA6Cw6M6kxtIDRqB+qExIAMB3f
+ UAjtJi3lBQQgXmXLu0KxQ1Jn/pHidTLx47HkSMFg5iqzvKNp52Xb6V+z
+X-Gm-Gg: AR+sD127q5cIqfa6s6fWzpVzVM4U+m2Wd9b413dtA3UsHTXQ3LVTTt9gh9wyXtuDbwO
+ GnqXI/+Kgt036bh7lgc1YdmmawDF1AuYZIuKejIihfzYpk5bFNGRv8DMFzTgXffjVXapZFwlyQ8
+ 0WT2ehF5jES/TJO2w7udhGMorKpNjAW3tvmbbNyImIEGcbwo41mMFEezfKrsLkdygD/eUT9+I9p
+ nvqFETO9kYj+xByXeEULisGWPi5UgMuI4AA9itmxvIMBI1eYB3+ROwkCElwmyLIuKwpIshTfdbG
+ wXBONjhDTD9jo+LFZipM+GZCO60DgozdQV4D4819T6UXK+hEBashHnpWHGr7iKBgQkyRjm8CFIc
+ nwiLb14+Ze1o3nerwjavvow/OGgF1HZ3piSHOO6ksLVYouePUGc5/pWx2LuLpr9ga4s6js3xa+U
+ qa/aWblnWnwfDBym4CR5pg/Ow+Pyp3PdarYyN42R7plRyLYENEoJpdRgyTF31S3THQbA==
+X-Received: by 2002:a05:6a00:1256:b0:845:e04b:565f with SMTP id
+ d2e1a72fcca58-84fde122876mr28993614b3a.14.1787029966608; 
+ Mon, 17 Aug 2026 22:12:46 -0700 (PDT)
 Received: from [127.0.1.1] ([2600:1700:e140:14d0:d043:a40d:25c1:432c])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851b6fc0e84sm1031160b3a.43.2026.08.17.22.12.19
+ d2e1a72fcca58-851b6fc0e84sm1031160b3a.43.2026.08.17.22.12.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Aug 2026 22:12:21 -0700 (PDT)
+ Mon, 17 Aug 2026 22:12:46 -0700 (PDT)
 From: Connor Kite <connorkite@gmail.com>
-Date: Mon, 17 Aug 2026 22:12:16 -0700
-Subject: [PATCH RFC v2 01/13] vhost-user: Consolidate chardev property
- definitions
+Date: Mon, 17 Aug 2026 22:12:25 -0700
+Subject: [PATCH RFC v2 10/13] hw/virtio/vhost-user: handle data movement
+ with shadow vqs
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260817-vhost-user-isolated-memory-v2-1-948aae960abb@gmail.com>
+Message-Id: <20260817-vhost-user-isolated-memory-v2-10-948aae960abb@gmail.com>
 References: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
 In-Reply-To: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
 To: qemu-devel@nongnu.org
@@ -99,22 +99,22 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Connor Kite <connorkite@gmail.com>, 
  20260817233147.2867623-1-connorkite@gmail.com
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1787029936; l=8233;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1787029936; l=14307;
  i=connorkite@gmail.com; s=20260723; h=from:subject:message-id;
- bh=y46aEYYWs6g66G1yduLOZWbS9jprmJN0wGotjR+n/g4=;
- b=/WflkskraN4ES9D2WSPAizCPRVsCc0v4+MbDwiiAO/iCI3qYDfgVUf8zepKSO8EByiytIW9ZK
- odU/jff+RptAg8X1jFangGqsKMl7gc1tv/1bMwgVFCGIgm/Z36CQucb
+ bh=bMPw0FwBRsEunQYzzG6BOXyVL5rIEfi5TeDivlNmsxo=;
+ b=l+69CvZv18/AgSDA22GB8a6pNf2J8er2Y8bngQir+ldlLYyWyDZABBr7A+7tpX8JE+L3eSUAL
+ kmnpQ+dTI9/DssO6GBTKNuQcJZwVTjSAiT/L4vaKujaE7mwosTy1fcb
 X-Developer-Key: i=connorkite@gmail.com; a=ed25519;
  pk=xg/3N8AntFCYogaIgN5NC/KkT7UlZB6ktPIRliJ3hv4=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=connorkite@gmail.com; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=connorkite@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,214 +130,399 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move chardev qdev property definitions from children into
-VHostUserBase. This reduces code duplication and allows children
-to simply inherit the property during initialization.
+- Add start logic for shadow virtqueues, which sets vring addresses.
+- Update logic for sending vring addresses to backend to point
+  to the shadow vrings when isolation mode is active.
+- Implement handlers for intercepted avail and used descriptors. These
+  handlers copy buffer contents between bounce buffers in the isolation
+  region and the buffers made available by the guest
+- Implement logic to stop svqs
 
 Signed-off-by: Connor Kite <connorkite@gmail.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/virtio/vhost-user-base.c        | 9 +++++++++
- hw/virtio/vhost-user-gpio.c        | 4 ----
- hw/virtio/vhost-user-i2c.c         | 5 -----
- hw/virtio/vhost-user-input.c       | 5 -----
- hw/virtio/vhost-user-rng.c         | 5 -----
- hw/virtio/vhost-user-rtc.c         | 4 ----
- hw/virtio/vhost-user-snd.c         | 1 -
- hw/virtio/vhost-user-spi.c         | 5 -----
- hw/virtio/vhost-user-test-device.c | 1 -
- 9 files changed, 9 insertions(+), 30 deletions(-)
+ hw/virtio/vhost-shadow-virtqueue.c |   2 +-
+ hw/virtio/vhost-shadow-virtqueue.h |   1 +
+ hw/virtio/vhost-user.c             | 292 ++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 286 insertions(+), 9 deletions(-)
 
-diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
-index 478ec68f09..90bd2903db 100644
---- a/hw/virtio/vhost-user-base.c
-+++ b/hw/virtio/vhost-user-base.c
-@@ -407,9 +407,16 @@ static void vub_device_unrealize(DeviceState *dev)
-     do_vhost_user_cleanup(vdev, vub);
+diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
+index f54a61439a..80b0828d7c 100644
+--- a/hw/virtio/vhost-shadow-virtqueue.c
++++ b/hw/virtio/vhost-shadow-virtqueue.c
+@@ -350,7 +350,7 @@ int vhost_svq_add(VhostShadowVirtqueue *svq, const struct iovec *out_sg,
  }
  
-+/*Define common qdev properties.  Inherited by all children*/
-+static const Property vub_properties[] = {
-+    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev)
+ /* Convenience wrapper to add a guest's element to SVQ */
+-static int vhost_svq_add_element(VhostShadowVirtqueue *svq,
++int vhost_svq_add_element(VhostShadowVirtqueue *svq,
+                                  VirtQueueElement *elem)
+ {
+     return vhost_svq_add(svq, elem->out_sg, elem->out_num, elem->out_addr,
+diff --git a/hw/virtio/vhost-shadow-virtqueue.h b/hw/virtio/vhost-shadow-virtqueue.h
+index 1e0cc9e5e4..10a8db6c39 100644
+--- a/hw/virtio/vhost-shadow-virtqueue.h
++++ b/hw/virtio/vhost-shadow-virtqueue.h
+@@ -183,6 +183,7 @@ VhostShadowVirtqueue *vhost_svq_new(const VhostShadowVirtqueueOps *ops,
+ 
+ void vhost_svq_free(gpointer vq);
+ void vhost_svq_set_base_addr(VhostShadowVirtqueue *svq, void *addr);
++int vhost_svq_add_element(VhostShadowVirtqueue *svq, VirtQueueElement *elem);
+ 
+ G_DEFINE_AUTOPTR_CLEANUP_FUNC(VhostShadowVirtqueue, vhost_svq_free);
+ 
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index ace328f5eb..ca3aaf7a07 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -1364,6 +1364,231 @@ static int init_isolation_regions(struct vhost_dev *dev,
+     return 0;
+ }
+ 
++static inline int vhost_user_get_reg_idx(struct vhost_dev *dev, hwaddr gpa)
++{
++    int i;
++    struct vhost_memory_region *reg;
++
++    for (i = 0; i < dev->mem->nregions; i++) {
++        reg = dev->mem->regions + i;
++
++        if (gpa >= reg->guest_phys_addr &&
++            reg->guest_phys_addr + reg->memory_size > gpa) {
++            return i;
++        }
++    }
++
++    return -1;
++}
++
++static int vhost_user_svq_handle_used(VhostShadowVirtqueue *svq,
++                                      VirtQueueElement *elem,
++                                      void *opaque)
++{
++    uint64_t offset;
++    void *dst;
++    void *src;
++    size_t len, rem;
++    void *reg_last_addr;
++    void *reg_first_addr;
++    struct vhost_dev *dev = opaque;
++    struct vhost_user *u = dev->opaque;
++    void *shmem_addr = u->iso_mem_ctx.shared_mem_addr;
++    size_t shmem_size = u->iso_mem_ctx.size;
++    const DMAMap *map;
++    DMAMap needle;
++    int reg_idx;
++
++    for (int i = 0; i < elem->in_num; i++) {
++        needle.translated_addr = elem->in_addr[i];
++        needle.size = elem->in_sg[i].iov_len - 1;
++        map = vhost_iova_tree_find_gpa(svq->iova_tree, &needle);
++
++        if (!map) {
++            return -EFAULT;
++        }
++
++        offset = needle.translated_addr - map->translated_addr;
++        src = (void *)int128_get64(int128_add(int128_make64(map->iova +
++                       offset), u->iso_mem_ctx.iso_iova_offset));
++        dst = elem->in_sg[i].iov_base;
++        len = elem->in_sg[i].iov_len;
++
++        /* Confirm that buffer range is fully within iso region */
++        if ((uint64_t)src + len - 1 > (uint64_t)shmem_addr + shmem_size - 1 ||
++            (uint64_t)src + len <= (uint64_t)src ||
++            (uint64_t)src < (uint64_t)shmem_addr) {
++
++            return -EFAULT;
++        }
++
++        reg_idx = vhost_user_get_reg_idx(dev, needle.translated_addr);
++        if (reg_idx < 0) {
++            return -EFAULT;
++        }
++
++        reg_first_addr = (void *)dev->mem->regions[reg_idx].userspace_addr;
++        reg_last_addr = (void *)(dev->mem->regions[reg_idx].userspace_addr +
++                        dev->mem->regions[reg_idx].memory_size - 1);
++
++        /* Confirm that hva from elem matches expected vhost memory region */
++        if (dst < reg_first_addr || dst > reg_last_addr) {
++            return -EFAULT;
++        }
++
++        /*
++         * copy buffer contents from shared memory into guest memory. If
++         * the buffer extends across region boundaries, it must be split and
++         * copied to the correct regions.
++         */
++        while ((uint64_t)reg_last_addr - (uint64_t)dst + 1 < len) {
++            rem = ((uint64_t)dst + len - 1) - (uint64_t)reg_last_addr;
++            len -= rem;
++            memcpy(dst, src, len);
++
++            reg_idx++;
++            if (reg_idx >= dev->mem->nregions) {
++                return -EFAULT;
++            }
++
++            src = (void *)((uint64_t)src + len);
++            dst = (void *)dev->mem->regions[reg_idx].userspace_addr;
++            len = rem;
++            reg_first_addr = (void *)dev->mem->regions[reg_idx].userspace_addr;
++            reg_last_addr = (void *)(dev->mem->regions[reg_idx].userspace_addr +
++                            dev->mem->regions[reg_idx].memory_size - 1);
++        }
++
++        memcpy(dst, src, len);
++    }
++
++    return 0;
++}
++
++static int vhost_user_svq_handle_avail(VhostShadowVirtqueue *svq,
++                                       VirtQueueElement *elem,
++                                       void *opaque)
++{
++    hwaddr offset;
++    const DMAMap *map;
++    DMAMap needle;
++    void *dst;
++    void *src;
++    void *reg_first_addr;
++    void *reg_last_addr;
++    size_t len, rem;
++    struct vhost_dev *dev = opaque;
++    struct vhost_user *u = dev->opaque;
++    void *shmem_addr = u->iso_mem_ctx.shared_mem_addr;
++    size_t shmem_size = u->iso_mem_ctx.size;
++    int reg_idx;
++
++    for (int i = 0; i < elem->out_num; i++) {
++        needle.translated_addr = elem->out_addr[i];
++        needle.size = elem->out_sg[i].iov_len - 1;
++        map = vhost_iova_tree_find_gpa(svq->iova_tree, &needle);
++
++        if (!map) {
++            return -EFAULT;
++        }
++
++        offset = needle.translated_addr - map->translated_addr;
++        dst = (void *)int128_get64(int128_add(int128_make64(map->iova +
++                       offset), u->iso_mem_ctx.iso_iova_offset));
++        src = elem->out_sg[i].iov_base;
++        len = elem->out_sg[i].iov_len;
++
++        /* Confirm that buffer range is fully within iso region */
++        if ((uint64_t)dst + len - 1 > (uint64_t)shmem_addr + shmem_size - 1 ||
++            (uint64_t)dst + len <= (uint64_t)dst ||
++            (uint64_t)dst < (uint64_t)shmem_addr) {
++
++            return -EFAULT;
++        }
++
++        reg_idx = vhost_user_get_reg_idx(dev, needle.translated_addr);
++        if (reg_idx < 0) {
++            return -EFAULT;
++        }
++
++        reg_first_addr = (void *)dev->mem->regions[reg_idx].userspace_addr;
++        reg_last_addr = (void *)(dev->mem->regions[reg_idx].userspace_addr +
++                        dev->mem->regions[reg_idx].memory_size - 1);
++
++        /* Confirm that hva from elem matches expected vhost memory region */
++        if (src < reg_first_addr || src > reg_last_addr) {
++            return -EFAULT;
++        }
++
++        /*
++         * copy buffer contents from guest memory into shared memory. If
++         * the buffer extends across region boundaries, it must be split and
++         * copied from the correct regions.
++         */
++        while ((uint64_t)reg_last_addr - (uint64_t)src + 1 < len) {
++            rem = ((uint64_t)src + len - 1) - (uint64_t)reg_last_addr;
++            len -= rem;
++            memcpy(dst, src, len);
++
++            reg_idx++;
++            if (reg_idx >= dev->mem->nregions) {
++                return -EFAULT;
++            }
++
++            dst = (void *)((uint64_t)dst + len);
++            src = (void *)dev->mem->regions[reg_idx].userspace_addr;
++            len = rem;
++
++            reg_first_addr = (void *)dev->mem->regions[reg_idx].userspace_addr;
++            reg_last_addr = (void *)(dev->mem->regions[reg_idx].userspace_addr +
++                            dev->mem->regions[reg_idx].memory_size - 1);
++        }
++
++        memcpy(dst, src, len);
++    }
++
++    vhost_svq_add_element(svq, elem);
++
++    return 0;
++}
++
++static int vhost_user_get_vq_index(struct vhost_dev *dev, int idx)
++{
++    assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
++
++    return idx;
++}
++
++static int vhost_user_svqs_vring_map(struct vhost_dev *dev)
++{
++    int ret;
++    struct vhost_user *u = dev->opaque;
++    void *vring_base = u->iso_mem_ctx.vring_hva_addr;
++    uint64_t vring_last = (uint64_t)vring_base +
++                          u->iso_mem_ctx.vring_region_size - 1;
++
++    for (int i = 0; i < u->iso_mem_ctx.shadow_vqs->len; i++) {
++        vhost_user_get_vq_index(dev, dev->vq_index + i); /* bounds checking */
++
++        VirtQueue *vq = virtio_get_queue(dev->vdev, dev->vq_index + i);
++        VhostShadowVirtqueue *svq =
++            g_ptr_array_index(u->iso_mem_ctx.shadow_vqs, i);
++
++        assert((uint64_t)vring_base +
++               vhost_svq_vring_total_size(dev->vdev, vq) - 1 <= vring_last);
++
++        vhost_svq_set_base_addr(svq, vring_base);
++        ret = vhost_svq_start(svq, dev->vdev, vq, u->iso_mem_ctx.tree);
++        if (ret < 0) {
++            return ret;
++        }
++        vring_base = (void *)((uint64_t)vring_base +
++                     vhost_svq_vring_total_size(dev->vdev, vq));
++    }
++
++    return 0;
++}
++
+ static int vhost_user_set_mem_table(struct vhost_dev *dev,
+                                     struct vhost_memory *mem)
+ {
+@@ -1407,6 +1632,11 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
+             return ret;
+         }
+ 
++        ret = vhost_user_svqs_vring_map(dev);
++        if (ret < 0) {
++            return ret;
++        }
++
+         ret = vhost_user_write(dev, &msg, fds, fd_num);
+         if (ret < 0) {
+             return ret;
+@@ -1763,13 +1993,6 @@ static int vhost_set_vring_file(struct vhost_dev *dev,
+     return 0;
+ }
+ 
+-static int vhost_user_get_vq_index(struct vhost_dev *dev, int idx)
+-{
+-    assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
+-
+-    return idx;
+-}
+-
+ static int vhost_user_set_vring_kick(struct vhost_dev *dev,
+                                      struct vhost_vring_file *file)
+ {
+@@ -1875,6 +2098,8 @@ static int vhost_user_set_vring_err(struct vhost_dev *dev,
+ static int vhost_user_set_vring_addr(struct vhost_dev *dev,
+                                      struct vhost_vring_addr *addr)
+ {
++    struct vhost_user *u = dev->opaque;
++    ptrdiff_t offset = u->iso_mem_ctx.iso_iova_offset;
+     VhostUserMsg msg = {
+         .hdr.request = VHOST_USER_SET_VRING_ADDR,
+         .hdr.flags = VHOST_USER_VERSION,
+@@ -1882,6 +2107,25 @@ static int vhost_user_set_vring_addr(struct vhost_dev *dev,
+         .hdr.size = sizeof(msg.payload.addr),
+     };
+ 
++    if (u->user->memory_isolation) {
++        int svq_idx;
++        VhostShadowVirtqueue *svq;
++        struct vhost_vring_addr svq_addr;
++
++        vhost_user_get_vq_index(dev, addr->index); /* bounds checking */
++        svq_idx = addr->index - dev->vq_index;
++        svq = g_ptr_array_index(u->iso_mem_ctx.shadow_vqs,
++                                                      svq_idx);
++
++        svq_addr.avail_user_addr = (uint64_t)(uintptr_t)svq->vring.avail -
++                                   offset;
++        svq_addr.desc_user_addr = (uint64_t)(uintptr_t)svq->vring.desc - offset;
++        svq_addr.used_user_addr = (uint64_t)(uintptr_t)svq->vring.used - offset;
++        svq_addr.index = addr->index;
++
++        msg.payload.addr = svq_addr;
++    }
++
+     /*
+      * wait for a reply if logging is enabled to make sure
+      * backend is actually logging changes
+@@ -2857,13 +3101,18 @@ static int vhost_user_postcopy_notifier(NotifierWithReturn *notifier,
+     return 0;
+ }
+ 
++static const VhostShadowVirtqueueOps vhost_user_svq_ops = {
++    .avail_handler = vhost_user_svq_handle_avail,
++    .used_callback = vhost_user_svq_handle_used
 +};
 +
-+
- static void vub_class_init(ObjectClass *klass, const void *data)
+ static void vhost_user_init_svq(struct vhost_dev *dev, struct vhost_user *u)
  {
-     VirtioDeviceClass *vdc = VIRTIO_DEVICE_CLASS(klass);
-+    DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     vdc->realize = vub_device_realize;
-     vdc->unrealize = vub_device_unrealize;
-@@ -417,6 +424,8 @@ static void vub_class_init(ObjectClass *klass, const void *data)
-     vdc->get_config = vub_get_config;
-     vdc->set_config = vub_set_config;
-     vdc->set_status = vub_set_status;
-+
-+    device_class_set_props(dc, vub_properties);
+     /*Modified from vhost-vdpa*/
+     u->iso_mem_ctx.shadow_vqs = g_ptr_array_new_full(dev->nvqs, vhost_svq_free);
+     for (int i = 0; i < dev->nvqs; i++) {
+         VhostShadowVirtqueue *svq;
+-        svq = vhost_svq_new(NULL, NULL);
++        svq = vhost_svq_new(&vhost_user_svq_ops, dev);
+         g_ptr_array_add(u->iso_mem_ctx.shadow_vqs, svq);
+     }
+ }
+@@ -3562,8 +3811,35 @@ void vhost_user_async_close(DeviceState *d,
+     }
  }
  
- static const TypeInfo vub_types[] = {
-diff --git a/hw/virtio/vhost-user-gpio.c b/hw/virtio/vhost-user-gpio.c
-index d473f87077..33b8752282 100644
---- a/hw/virtio/vhost-user-gpio.c
-+++ b/hw/virtio/vhost-user-gpio.c
-@@ -14,9 +14,6 @@
- #include "standard-headers/linux/virtio_ids.h"
- #include "standard-headers/linux/virtio_gpio.h"
- 
--static const Property vgpio_properties[] = {
--    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
--};
- 
- static void vgpio_realize(DeviceState *dev, Error **errp)
++static void vhost_user_svqs_stop(struct vhost_dev *dev)
++{
++    struct vhost_user *u = dev->opaque;
++    for (int i = 0; i < u->iso_mem_ctx.shadow_vqs->len; i++) {
++        vhost_svq_stop(g_ptr_array_index(u->iso_mem_ctx.shadow_vqs, i));
++    }
++}
++
+ static int vhost_user_dev_start(struct vhost_dev *dev, bool started)
  {
-@@ -42,7 +39,6 @@ static void vu_gpio_class_init(ObjectClass *klass, const void *data)
-     VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
- 
-     dc->vmsd = &vu_gpio_vmstate;
--    device_class_set_props(dc, vgpio_properties);
-     device_class_set_parent_realize(dc, vgpio_realize,
-                                     &vubc->parent_realize);
-     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
-diff --git a/hw/virtio/vhost-user-i2c.c b/hw/virtio/vhost-user-i2c.c
-index 152b1f6740..3f5427b5b2 100644
---- a/hw/virtio/vhost-user-i2c.c
-+++ b/hw/virtio/vhost-user-i2c.c
-@@ -14,10 +14,6 @@
- #include "qemu/error-report.h"
- #include "standard-headers/linux/virtio_ids.h"
- 
--static const Property vi2c_properties[] = {
--    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
--};
--
- static void vi2c_realize(DeviceState *dev, Error **errp)
- {
-     VHostUserBase *vub = VHOST_USER_BASE(dev);
-@@ -42,7 +38,6 @@ static void vu_i2c_class_init(ObjectClass *klass, const void *data)
-     VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
- 
-     dc->vmsd = &vu_i2c_vmstate;
--    device_class_set_props(dc, vi2c_properties);
-     device_class_set_parent_realize(dc, vi2c_realize,
-                                     &vubc->parent_realize);
-     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
-diff --git a/hw/virtio/vhost-user-input.c b/hw/virtio/vhost-user-input.c
-index 5cfc5bbb56..8fe6349ffc 100644
---- a/hw/virtio/vhost-user-input.c
-+++ b/hw/virtio/vhost-user-input.c
-@@ -7,10 +7,6 @@
- #include "qemu/osdep.h"
- #include "hw/virtio/virtio-input.h"
- 
--static const Property vinput_properties[] = {
--    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
--};
--
- static void vinput_realize(DeviceState *dev, Error **errp)
- {
-     VHostUserBase *vub = VHOST_USER_BASE(dev);
-@@ -36,7 +32,6 @@ static void vhost_input_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     dc->vmsd = &vmstate_vhost_input;
--    device_class_set_props(dc, vinput_properties);
-     device_class_set_parent_realize(dc, vinput_realize,
-                                     &vubc->parent_realize);
-     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
-diff --git a/hw/virtio/vhost-user-rng.c b/hw/virtio/vhost-user-rng.c
-index 106c8f211a..664aee403d 100644
---- a/hw/virtio/vhost-user-rng.c
-+++ b/hw/virtio/vhost-user-rng.c
-@@ -20,10 +20,6 @@ static const VMStateDescription vu_rng_vmstate = {
-     .unmigratable = 1,
- };
- 
--static const Property vrng_properties[] = {
--    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
--};
--
- static void vu_rng_base_realize(DeviceState *dev, Error **errp)
- {
-     VHostUserBase *vub = VHOST_USER_BASE(dev);
-@@ -43,7 +39,6 @@ static void vu_rng_class_init(ObjectClass *klass, const void *data)
-     VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
- 
-     dc->vmsd = &vu_rng_vmstate;
--    device_class_set_props(dc, vrng_properties);
-     device_class_set_parent_realize(dc, vu_rng_base_realize,
-                                     &vubc->parent_realize);
- 
-diff --git a/hw/virtio/vhost-user-rtc.c b/hw/virtio/vhost-user-rtc.c
-index 88b0c70b90..6d80cb6263 100644
---- a/hw/virtio/vhost-user-rtc.c
-+++ b/hw/virtio/vhost-user-rtc.c
-@@ -19,9 +19,6 @@ static const VMStateDescription vu_rtc_vmstate = {
-     .unmigratable = 1,
- };
- 
--static const Property vrtc_properties[] = {
--    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
--};
- 
- static void vu_rtc_base_realize(DeviceState *dev, Error **errp)
- {
-@@ -42,7 +39,6 @@ static void vu_rtc_class_init(ObjectClass *klass, const void *data)
-     VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
- 
-     dc->vmsd = &vu_rtc_vmstate;
--    device_class_set_props(dc, vrtc_properties);
-     device_class_set_parent_realize(dc, vu_rtc_base_realize,
-                                     &vubc->parent_realize);
- 
-diff --git a/hw/virtio/vhost-user-snd.c b/hw/virtio/vhost-user-snd.c
-index 7129b77d9c..3663450aed 100644
---- a/hw/virtio/vhost-user-snd.c
-+++ b/hw/virtio/vhost-user-snd.c
-@@ -34,7 +34,6 @@ static const VMStateDescription vu_snd_vmstate = {
- };
- 
- static const Property vsnd_properties[] = {
--    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
-     DEFINE_PROP_BIT64("controls", VHostUserBase,
-                       parent_obj.host_features, VIRTIO_SND_F_CTLS, false),
- };
-diff --git a/hw/virtio/vhost-user-spi.c b/hw/virtio/vhost-user-spi.c
-index 707f96c250..fb6168d391 100644
---- a/hw/virtio/vhost-user-spi.c
-+++ b/hw/virtio/vhost-user-spi.c
-@@ -15,10 +15,6 @@
- #include "standard-headers/linux/virtio_ids.h"
- #include "standard-headers/linux/virtio_spi.h"
- 
--static const Property vspi_properties[] = {
--    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
--};
--
- static void vspi_realize(DeviceState *dev, Error **errp)
- {
-     VHostUserBase *vub = VHOST_USER_BASE(dev);
-@@ -44,7 +40,6 @@ static void vu_spi_class_init(ObjectClass *klass, const void *data)
-     VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
- 
-     dc->vmsd = &vu_spi_vmstate;
--    device_class_set_props(dc, vspi_properties);
-     device_class_set_parent_realize(dc, vspi_realize,
-                                     &vubc->parent_realize);
-     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
-diff --git a/hw/virtio/vhost-user-test-device.c b/hw/virtio/vhost-user-test-device.c
-index a2f963fdf6..91e23bf07a 100644
---- a/hw/virtio/vhost-user-test-device.c
-+++ b/hw/virtio/vhost-user-test-device.c
-@@ -30,7 +30,6 @@ static const VMStateDescription vud_vmstate = {
- };
- 
- static const Property vud_properties[] = {
--    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
-     DEFINE_PROP_UINT16("virtio-id", VHostUserBase, virtio_id, 0),
-     DEFINE_PROP_UINT32("vq_size", VHostUserBase, vq_size, 64),
-     DEFINE_PROP_UINT32("num_vqs", VHostUserBase, num_vqs, 1),
++    struct vhost_user *u = dev->opaque;
++    if (u->user->memory_isolation) {
++        if (vhost_dev_has_iommu(dev)) {
++            error_report("Memory isolation is not supported with IOMMU enabled."
++                         "Please disable one and try again");
++            return -1;
++        }
++
++        if (virtio_vdev_has_feature(dev->vdev, VIRTIO_F_RING_PACKED)) {
++            error_report("Memory isolation is not supported with packed"
++                         "vrings.  Please use split vrings");
++            return -1;
++        }
++
++        if (!started) {
++            vhost_user_svqs_stop(dev);
++        }
++    }
++
+     if (!vhost_user_has_protocol_feature(dev, VHOST_USER_PROTOCOL_F_STATUS)) {
+         return 0;
+     }
 
 -- 
 2.43.0
