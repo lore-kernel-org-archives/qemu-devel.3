@@ -4,73 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DA87C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 20:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3FE5C5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Aug 2026 20:54:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwQnU-0007WU-4n; Tue, 18 Aug 2026 16:52:36 -0400
+	id 1wwQok-0007yJ-4F; Tue, 18 Aug 2026 16:53:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wwQnR-0007WD-Gq
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:52:33 -0400
-Received: from mr-2004b-snip6-11.eps.apple.com ([2a01:b747:3000:203::15]
- helo=outbound.mr.icloud.com)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wwQoa-0007v4-Ai; Tue, 18 Aug 2026 16:53:45 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wwQnM-0000No-Vo
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 16:52:33 -0400
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-1 (Postfix) with ESMTPS id
- 012AD1800ADC; Tue, 18 Aug 2026 20:52:23 +0000 (UTC)
-X-ICL-RepId: 01a016a5-8dc2-7edd-b590-f3bf697e2dcd
-X-ICL-Out-Info: HUtFAUMHWwJACUgATUQeDx5WFlZNRAJCTQBIHVoORQNGCVYLWhcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0KWFsIWwQPH0wMUQJCBVZeVAodBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDjEMPQRUc1t2XXpJBFoaX3BHfFUKLgIpHzN7SAJYcloDMQg7AC1CBUICXBxaDkMKUBxcVlUfCUtGCUkdDg5CGEYfVCdXAloKWx4=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1787086345; x=1789678345;
- bh=+xoyfmvZYh3Wjq/5XFwsT2GHM/F0rTXWkXcPgnF5tA4=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=YQdzmsCUZBBBslmXCGDjvsdhOYG31Sa2LODWK7RDAUUV2S0WiZW6s0EYvFQVBz+dbw4PdO6ff2rTd5lWM35gTIECE/Pz6ivx9/yl6xfgNx9X0D2cdioLrsIhvwjVu731lHBnPiocV/5F2WSMCd40Wk0NXVeSKROoaFrEppi9qedmScwX90Xp76KvKrA/P5oyPmnJRSwlkV+/lrPrsowNaSlyIMuS9c42q+FYLM/nlDHqkTscaUzZ8UNUQONke+o/s+41WJghy4nMkh0jbx9O2hdp/oUHnCgv4ZUMumjxIONhd6Y4DfFrCvQpdKSCAwhJ4VgSTniu0h1LNKHZFVRQUA==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.156.200.36])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-1 (Postfix) with ESMTPSA id
- 1D7401800100; Tue, 18 Aug 2026 20:51:15 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.11\))
-Subject: Re: [PATCH] target/arm/whpx: fix whpx-arm reset hang
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <LVXPR21MB7009095A64089AACFA91DB10ADA62@LVXPR21MB7009.namprd21.prod.outlook.com>
-Date: Tue, 18 Aug 2026 22:50:23 +0200
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Pedro d'Aquino Filocre F S Barbuda <pbarbuda@microsoft.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <A5E79D0D-C177-4B7E-9C5B-CB015E11A1C3@unpredictable.fr>
-References: <LVXPR21MB7009095A64089AACFA91DB10ADA62@LVXPR21MB7009.namprd21.prod.outlook.com>
-To: "Doug Cook (WINDOWS)" <dcook@microsoft.com>
-X-Mailer: Apple Mail (2.3901.100.1.1.11)
-X-Authority-Info-Out: v=2.4 cv=Le4xKzfi c=1 sm=1 tr=0 ts=6a84c608
- cx=c_apl:c_pps:t_out a=9mRn2PO/+PIrVdEbaIuMPg==:117
- a=9mRn2PO/+PIrVdEbaIuMPg==:17 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=yMhMjlubAAAA:8 a=wr1TRPdcCIM70eNNwfcA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: DjrHsi6h7ertRZxfbvQI2taF89oR0ES0
-X-Proofpoint-GUID: DjrHsi6h7ertRZxfbvQI2taF89oR0ES0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE1MyBTYWx0ZWRfXwf99jnnYVO3l
- ev3rr/jv6hGK2Zm4i/M2EV+dBqwW6xWUvMw5ZboF3CgZFPhB3hbA40Y3Jz5Qo08UJzR03sd9zpX
- wy6C/xsXqHIaF12A7MxkVmJdp71hJnCEWawcDFjkhwWrj2zPJjM/QqRhWFKtfm9GsarwYPhkHcb
- 7VLQU5ooP5Ac+p6xncSsbKiuX6oV4WcGxlA0/YviWIBIgw3rXgzcKlMffhJP5HEWxG/52kprApl
- m/ZpxLci2AmdoTVU7QNPpsVH3cMvjrkz4zZcCm8lvp14Vok7/AQI+v7Me2D1lbHL29Ud1eCWL91
- HfRCx0SI2CFOuLR6fq+bEWp5+F0+rNLkGsrhR8Gn0/Ui5YN8DnPpqMnoXdTdfE=
-X-JNJ: AAAAAAABF7L0cY+eRWAoA9cz4zo/3jm8qw13Hjl21WoPdAcw+/CcG38WHlJT+ImESI9FV+FOnYK0G/ddnS7h3EprSWI3PEopkqQDMzISnmRFpzsvQmsFLVpC/ph3ZZovV+IiJPqTRAwKhWf/r0uWZM+xDDI2DC0+j0GvqhbuTYd7sjseZPfFMufTvhfg150xdPZzGeqJmCoqzgvxuy+zj6uOme9xlFVbnrslTWBJuWUTp0/yS/enYszfWnY7ZaPJVrkVbqfU51WWdaEa0ObnTVvfzK91V01VWvW20hd8pNTMYnxP9h0mWe9Vqkio+kIhx/Wx02K9I8iqB8IpQXAkqaPuDGKrJEgYDcVH7geRbQElezOU0dXAlozpYJYzntqBGdfA983BuqqzcHw+mL/NTK5C3Uw1U0VVaxhrLCN8ylY7mFYdhPAfiIoCvWNC52xEEBxHX8+m9JrcyKVPddv0Ka/H0jy/CCalHfoMzuUkcgBjFXrKBsaFdnAjObramZpx3ALkonFbnCHUJ7RtwDhrFLU/yDsZ9DlOonjBGoJLwVVhweHbHZa+hEUN+VVoq10vt3Mq8qbQkiArgEswQDx7bBc/3WXAeCpVPcP0xT59S56w9OY6mCsQO7fNXXZwurnfqjpqTqoS0zYPr89kAoBkmIGhlLfZ2Q6e7nchc0ROnYzxtIUjTt+3rEK2MfQ4ZxgL539PcJ6lrbTgeRFaLg0sTc6Omzdn3HsXiYL3XtilzatiT7c5LavueCCwyG1H7B+XHF+zhO7zuiwbKP9DlOxXcT9wrFKsuypgFbd1pR0UduzYQfdu01YAP2gwXTCIinDTB8pOjwCqMkF/GXOJE6g7hf4e5F1HQm0rUDAQ9DL/dxVOXXYTCpXFPT2xlaGvLwlRvi7flyJMo3Gx5uxQaF94WmBhp6z6ce2hOGiPRN5ZpJt/1Gto+z5kvVZ6LNO9u27ge3DpcAcl0fZXgVRg+fOvmlkzgeVR2I+
- 0vYOx+E5XdGn52L4LZ3qlP4sATkKGNBlB+QCbXCjWvF0x6kdlTzjqJ5H/5ay+XNOi9f836S2UG+yIii1liTlzlTUQpJJQkf+5n9YPCw/kzPLl0ci5cQBkx1q8wTKjYprPvfV4CfydU43hEZu8mJM7Lno8YxIc/D3813aXwBq/dymBX7fWyjUDukU37AcjjD6bWWKnS+BSZnZNAO7/1z+38Sebr6RLuLWOCXiyPwwKG08qnFznnfONNpRVgaEFCbiZBMcVVYkcHii8LoGhHJWFi812zkXtuNBUh6CQF1O7nBjfPin3P8Hq6Jizkpe2ZPO2I6PikVDz8XhtQTfWhm42qV6Pu1TxOZ4IaOjq4b81cNVmQ54CVM18PSqScgOEnSbnIhg=
-Received-SPF: pass client-ip=2a01:b747:3000:203::15;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wwQoY-0000je-5O; Tue, 18 Aug 2026 16:53:43 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67IJVsOp3584832; Tue, 18 Aug 2026 20:53:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=ceRnNxcq7t124Yzzu
+ 80ZDnrF7nMivIqDjsutHQ3GGvc=; b=K/HZiH86Ekg2z/SWiEnjOZ0qSHPK/CHv8
+ JMdxO7wKHZ8sQItDGWJDnniry25kp48vXSh+IN95EmpRcIFloXFdVyH89HtrdtL2
+ NFH7qAQl6DE1TDVbxVjjq1/c3Qse8twiSfgS3us8aoKvDg+h4W/S4P/3LlhQ0xDz
+ 5zUUPnJh1SW8EpuDKUBHOPmStMx+T2Nx6YRdlrD7uiIPEhy7OD3Wt7fKjPjAt/Fc
+ 7Bp0zxj2ThlEpK5veBoOAUsaMquqt4tvRD4MsN70SW5nKw3CKGb+d6gyd4E60Lgs
+ gQM9f78UXiBWf7YwHJrHVXmJnmHQ7zf7qVuTxi3Bi/8Fbb3QKnWlg==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g2fsqtu56-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Aug 2026 20:53:39 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67IKfRv5014379;
+ Tue, 18 Aug 2026 20:53:38 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g32tw5htm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Aug 2026 20:53:38 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67IKra2l22610626
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 18 Aug 2026 20:53:37 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DB22F58052;
+ Tue, 18 Aug 2026 20:53:36 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5E2B558045;
+ Tue, 18 Aug 2026 20:53:35 +0000 (GMT)
+Received: from fedora-workstation.ibmuc.com (unknown [9.61.136.182])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 18 Aug 2026 20:53:35 +0000 (GMT)
+From: Zhuoying Cai <zycai@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: mst@redhat.com, jrossi@linux.ibm.com, zycai@linux.ibm.com,
+ borntraeger@linux.ibm.com, jjherne@linux.ibm.com, cohuck@redhat.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, pasic@linux.ibm.com,
+ farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com
+Subject: [PATCH v1 4/7] pc-bios/s390-ccw: Add support for virtio-net-pci IPL
+Date: Tue, 18 Aug 2026 16:53:21 -0400
+Message-ID: <20260818205324.580199-5-zycai@linux.ibm.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260818205324.580199-1-zycai@linux.ibm.com>
+References: <20260818205324.580199-1-zycai@linux.ibm.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE1MCBTYWx0ZWRfX2mqIyKD/l2R1
+ QR6X4R2L03fP9z9IfjWXjwjdaQWvGxUZ+dGuUVAB6HMb2Xd3msKfH94vkqFM0BeqFJzt1vEHnWE
+ Lu0peSzGm61R3yCrxjybUwnTl5IG9q6avCwLvYNAY/jraf9XURMDtsgr+k6KXhcVecLZSo56WnQ
+ mq5fvKlJ42qJSTJrotJzn9/DQyJl9sh1/IXuigjmesRgpkoAteEXdy/FSN3yk9ZVRFnCY5B0ctq
+ brggICwwivCN8dK88LC28PM/LLRZjLuO64wqc1tIj2iF6aJTNQHVbrgW0LH3a7gWxmsz/l3HzOZ
+ Hlef9q/rSK7vNaTLJ++xXNsxLYerMeaNMKXdej5vrY3Yz8VtBeb8lOE59sjTSRaYezaEcMux2P/
+ maCaOVD4PZDHWmk6ocimdCQey794yngwSSMXK1UO6YU231cCjF6ptsEhLMd3d1owHXAyR7W5Vlh
+ yta/NRI45jCWcsPJzrw==
+X-Proofpoint-ORIG-GUID: PmDhFsBvG4nOjCeUSoxbGp9SCwcLhzlW
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDE1MCBTYWx0ZWRfX/EPOxHbIVP3+
+ P9Q4XvHWZdgDNHg4NAxKHt1/CvSUpNFe5mVbuQ9HSudOLDE0amoGMP1zaFMpFMkrq8Qowl815Wm
+ e08RdElpt6awrni91H2yO50ep/dSzps=
+X-Authority-Analysis: v=2.4 cv=DJe/JSNb c=1 sm=1 tr=0 ts=6a84c653 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=ctsVLiZ_AAAA:8
+ a=Im3OWcnwkaNWJq0cCQkA:9 a=3VCIHQLkQthbvTRuo98s:22
+X-Proofpoint-GUID: PmDhFsBvG4nOjCeUSoxbGp9SCwcLhzlW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-18_04,2026-08-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 spamscore=0 clxscore=1015 bulkscore=0
+ suspectscore=0 malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180150
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,519 +122,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Enable network booting via virtio-net-pci by implementing PCI transport
+support for virtio-net.
 
+This patch also adds endianness handling for virtio PCI ring operations in
+little-endian to ensure correct behavior on s390x.
 
-> On 18. Aug 2026, at 20:52, Doug Cook (WINDOWS) <dcook@microsoft.com> =
-wrote:
->=20
-> Under whpx, arm reset results in hangs and crashes.
->=20
-> - Arguments out of order in ENCODE_AA64_CP_REG, so =
-get_arm_cp_reginfo()
->  fails, whpx_set_registers does nothing for reset, and SCTLR_EL1 =
-retains
->  guest state with MMU enabled after reset, resulting in fault and =
-hang.
->  Fix via wrapper macro to retain existing ordering convention.
-> - Fixing the ENCODE_AA64_CP_REG issue results in assertions while =
-trying
->  to write to ARM_CP_CONST registers. Skip them.
-> - Correct four entries in the breakpoint/watchpoint index 1 block that
->  named index 0 registers.
-> - CPUs that are idle at time of reset remain in suspend after reset.
-> - CPUs are not in the correct StartupSuspend state after reset.
->=20
-> After this change, I am able to repeatedly reset an arm64 guest, using
-> shutdown-reset, external reset, and watchdog reset.
->=20
-> Signed-off-by: Doug Cook <dcook@microsoft.com>
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+---
+ pc-bios/s390-ccw/main.c       |  1 +
+ pc-bios/s390-ccw/virtio-net.c | 37 +++++++++++++++++++++++-------
+ pc-bios/s390-ccw/virtio-pci.c | 43 +++++++++++++++++++++++++++++++++++
+ pc-bios/s390-ccw/virtio-pci.h |  2 ++
+ 4 files changed, 75 insertions(+), 8 deletions(-)
 
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-
-But with comments below:
-
-> ---
-> target/arm/whpx/whpx-all.c | 306 +++++++++++++++++++++----------------
-> 1 file changed, 177 insertions(+), 129 deletions(-)
->=20
-> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-> index 00a5de8cdc..f3e7caf794 100644
-> --- a/target/arm/whpx/whpx-all.c
-> +++ b/target/arm/whpx/whpx-all.c
-> @@ -134,143 +134,150 @@ struct whpx_sreg_match {
->     uint32_t cp_idx;
-> };
->=20
-> +/*
-> + * Adapt conventional order WHPX_SYSREG(crn, crm, op0, op1, op2) to
-> + * ENCODE_AA64_CP_REG(op0, op1, crn, crm, op2).
-> + */
-> +#define WHPX_SYSREG(crn, crm, op0, op1, op2) \
-> +    ENCODE_AA64_CP_REG(op0, op1, crn, crm, op2)
-> +
-> static struct whpx_sreg_match whpx_sreg_match[] =3D {
-> -    { WHvArm64RegisterDbgbvr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 4) =
-},
-> -    { WHvArm64RegisterDbgbcr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 5) =
-},
-> -    { WHvArm64RegisterDbgwvr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 6) =
-},
-> -    { WHvArm64RegisterDbgwcr0El1, ENCODE_AA64_CP_REG(0, 0, 2, 0, 7) =
-},
-> -
-> -    { WHvArm64RegisterDbgbvr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 4) =
-},
-> -    { WHvArm64RegisterDbgbcr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 5) =
-},
-> -    { WHvArm64RegisterDbgwvr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 6) =
-},
-> -    { WHvArm64RegisterDbgwcr0El1, ENCODE_AA64_CP_REG(0, 1, 2, 0, 7) =
-},
-> -
-> -    { WHvArm64RegisterDbgbvr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 4) =
-},
-> -    { WHvArm64RegisterDbgbcr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 5) =
-},
-> -    { WHvArm64RegisterDbgwvr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 6) =
-},
-> -    { WHvArm64RegisterDbgwcr2El1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 7) =
-},
-> -
-> -    { WHvArm64RegisterDbgbvr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 4) =
-},
-> -    { WHvArm64RegisterDbgbcr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 5) =
-},
-> -    { WHvArm64RegisterDbgwvr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 6) =
-},
-> -    { WHvArm64RegisterDbgwcr3El1, ENCODE_AA64_CP_REG(0, 3, 2, 0, 7) =
-},
-> -
-> -    { WHvArm64RegisterDbgbvr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 4) =
-},
-> -    { WHvArm64RegisterDbgbcr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 5) =
-},
-> -    { WHvArm64RegisterDbgwvr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 6) =
-},
-> -    { WHvArm64RegisterDbgwcr4El1, ENCODE_AA64_CP_REG(0, 4, 2, 0, 7) =
-},
-> -
-> -    { WHvArm64RegisterDbgbvr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 4) =
-},
-> -    { WHvArm64RegisterDbgbcr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 5) =
-},
-> -    { WHvArm64RegisterDbgwvr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 6) =
-},
-> -    { WHvArm64RegisterDbgwcr5El1, ENCODE_AA64_CP_REG(0, 5, 2, 0, 7) =
-},
-> -
-> -    { WHvArm64RegisterDbgbvr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 4) =
-},
-> -    { WHvArm64RegisterDbgbcr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 5) =
-},
-> -    { WHvArm64RegisterDbgwvr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 6) =
-},
-> -    { WHvArm64RegisterDbgwcr6El1, ENCODE_AA64_CP_REG(0, 6, 2, 0, 7) =
-},
-> -
-> -    { WHvArm64RegisterDbgbvr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 4) =
-},
-> -    { WHvArm64RegisterDbgbcr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 5) =
-},
-> -    { WHvArm64RegisterDbgwvr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 6) =
-},
-> -    { WHvArm64RegisterDbgwcr7El1, ENCODE_AA64_CP_REG(0, 7, 2, 0, 7) =
-},
-> -
-> -    { WHvArm64RegisterDbgbvr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 4) =
-},
-> -    { WHvArm64RegisterDbgbcr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 5) =
-},
-> -    { WHvArm64RegisterDbgwvr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 6) =
-},
-> -    { WHvArm64RegisterDbgwcr8El1, ENCODE_AA64_CP_REG(0, 8, 2, 0, 7) =
-},
-> -
-> -    { WHvArm64RegisterDbgbvr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 4) =
-},
-> -    { WHvArm64RegisterDbgbcr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 5) =
-},
-> -    { WHvArm64RegisterDbgwvr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 6) =
-},
-> -    { WHvArm64RegisterDbgwcr9El1, ENCODE_AA64_CP_REG(0, 9, 2, 0, 7) =
-},
-> -
-> -    { WHvArm64RegisterDbgbvr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 4) =
-},
-> -    { WHvArm64RegisterDbgbcr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 5) =
-},
-> -    { WHvArm64RegisterDbgwvr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 6) =
-},
-> -    { WHvArm64RegisterDbgwcr10El1, ENCODE_AA64_CP_REG(0, 10, 2, 0, 7) =
-},
-> -
-> -    { WHvArm64RegisterDbgbvr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 4) =
-},
-> -    { WHvArm64RegisterDbgbcr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 5) =
-},
-> -    { WHvArm64RegisterDbgwvr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 6) =
-},
-> -    { WHvArm64RegisterDbgwcr11El1, ENCODE_AA64_CP_REG(0, 11, 2, 0, 7) =
-},
-> -
-> -    { WHvArm64RegisterDbgbvr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 4) =
-},
-> -    { WHvArm64RegisterDbgbcr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 5) =
-},
-> -    { WHvArm64RegisterDbgwvr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 6) =
-},
-> -    { WHvArm64RegisterDbgwcr12El1, ENCODE_AA64_CP_REG(0, 12, 2, 0, 7) =
-},
-> -
-> -    { WHvArm64RegisterDbgbvr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 4) =
-},
-> -    { WHvArm64RegisterDbgbcr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 5) =
-},
-> -    { WHvArm64RegisterDbgwvr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 6) =
-},
-> -    { WHvArm64RegisterDbgwcr13El1, ENCODE_AA64_CP_REG(0, 13, 2, 0, 7) =
-},
-> -
-> -    { WHvArm64RegisterDbgbvr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 4) =
-},
-> -    { WHvArm64RegisterDbgbcr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 5) =
-},
-> -    { WHvArm64RegisterDbgwvr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 6) =
-},
-> -    { WHvArm64RegisterDbgwcr14El1, ENCODE_AA64_CP_REG(0, 14, 2, 0, 7) =
-},
-> -
-> -    { WHvArm64RegisterDbgbvr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 4) =
-},
-> -    { WHvArm64RegisterDbgbcr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 5) =
-},
-> -    { WHvArm64RegisterDbgwvr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 6) =
-},
-> -    { WHvArm64RegisterDbgwcr15El1, ENCODE_AA64_CP_REG(0, 15, 2, 0, 7) =
-},
-> +    { WHvArm64RegisterDbgbvr0El1, WHPX_SYSREG(0, 0, 2, 0, 4) },
-> +    { WHvArm64RegisterDbgbcr0El1, WHPX_SYSREG(0, 0, 2, 0, 5) },
-> +    { WHvArm64RegisterDbgwvr0El1, WHPX_SYSREG(0, 0, 2, 0, 6) },
-> +    { WHvArm64RegisterDbgwcr0El1, WHPX_SYSREG(0, 0, 2, 0, 7) },
-> +
-> +    { WHvArm64RegisterDbgbvr1El1, WHPX_SYSREG(0, 1, 2, 0, 4) },
-> +    { WHvArm64RegisterDbgbcr1El1, WHPX_SYSREG(0, 1, 2, 0, 5) },
-> +    { WHvArm64RegisterDbgwvr1El1, WHPX_SYSREG(0, 1, 2, 0, 6) },
-> +    { WHvArm64RegisterDbgwcr1El1, WHPX_SYSREG(0, 1, 2, 0, 7) },
-> +
-> +    { WHvArm64RegisterDbgbvr2El1, WHPX_SYSREG(0, 2, 2, 0, 4) },
-> +    { WHvArm64RegisterDbgbcr2El1, WHPX_SYSREG(0, 2, 2, 0, 5) },
-> +    { WHvArm64RegisterDbgwvr2El1, WHPX_SYSREG(0, 2, 2, 0, 6) },
-> +    { WHvArm64RegisterDbgwcr2El1, WHPX_SYSREG(0, 2, 2, 0, 7) },
-> +
-> +    { WHvArm64RegisterDbgbvr3El1, WHPX_SYSREG(0, 3, 2, 0, 4) },
-> +    { WHvArm64RegisterDbgbcr3El1, WHPX_SYSREG(0, 3, 2, 0, 5) },
-> +    { WHvArm64RegisterDbgwvr3El1, WHPX_SYSREG(0, 3, 2, 0, 6) },
-> +    { WHvArm64RegisterDbgwcr3El1, WHPX_SYSREG(0, 3, 2, 0, 7) },
-> +
-> +    { WHvArm64RegisterDbgbvr4El1, WHPX_SYSREG(0, 4, 2, 0, 4) },
-> +    { WHvArm64RegisterDbgbcr4El1, WHPX_SYSREG(0, 4, 2, 0, 5) },
-> +    { WHvArm64RegisterDbgwvr4El1, WHPX_SYSREG(0, 4, 2, 0, 6) },
-> +    { WHvArm64RegisterDbgwcr4El1, WHPX_SYSREG(0, 4, 2, 0, 7) },
-> +
-> +    { WHvArm64RegisterDbgbvr5El1, WHPX_SYSREG(0, 5, 2, 0, 4) },
-> +    { WHvArm64RegisterDbgbcr5El1, WHPX_SYSREG(0, 5, 2, 0, 5) },
-> +    { WHvArm64RegisterDbgwvr5El1, WHPX_SYSREG(0, 5, 2, 0, 6) },
-> +    { WHvArm64RegisterDbgwcr5El1, WHPX_SYSREG(0, 5, 2, 0, 7) },
-> +
-> +    { WHvArm64RegisterDbgbvr6El1, WHPX_SYSREG(0, 6, 2, 0, 4) },
-> +    { WHvArm64RegisterDbgbcr6El1, WHPX_SYSREG(0, 6, 2, 0, 5) },
-> +    { WHvArm64RegisterDbgwvr6El1, WHPX_SYSREG(0, 6, 2, 0, 6) },
-> +    { WHvArm64RegisterDbgwcr6El1, WHPX_SYSREG(0, 6, 2, 0, 7) },
-> +
-> +    { WHvArm64RegisterDbgbvr7El1, WHPX_SYSREG(0, 7, 2, 0, 4) },
-> +    { WHvArm64RegisterDbgbcr7El1, WHPX_SYSREG(0, 7, 2, 0, 5) },
-> +    { WHvArm64RegisterDbgwvr7El1, WHPX_SYSREG(0, 7, 2, 0, 6) },
-> +    { WHvArm64RegisterDbgwcr7El1, WHPX_SYSREG(0, 7, 2, 0, 7) },
-> +
-> +    { WHvArm64RegisterDbgbvr8El1, WHPX_SYSREG(0, 8, 2, 0, 4) },
-> +    { WHvArm64RegisterDbgbcr8El1, WHPX_SYSREG(0, 8, 2, 0, 5) },
-> +    { WHvArm64RegisterDbgwvr8El1, WHPX_SYSREG(0, 8, 2, 0, 6) },
-> +    { WHvArm64RegisterDbgwcr8El1, WHPX_SYSREG(0, 8, 2, 0, 7) },
-> +
-> +    { WHvArm64RegisterDbgbvr9El1, WHPX_SYSREG(0, 9, 2, 0, 4) },
-> +    { WHvArm64RegisterDbgbcr9El1, WHPX_SYSREG(0, 9, 2, 0, 5) },
-> +    { WHvArm64RegisterDbgwvr9El1, WHPX_SYSREG(0, 9, 2, 0, 6) },
-> +    { WHvArm64RegisterDbgwcr9El1, WHPX_SYSREG(0, 9, 2, 0, 7) },
-> +
-> +    { WHvArm64RegisterDbgbvr10El1, WHPX_SYSREG(0, 10, 2, 0, 4) },
-> +    { WHvArm64RegisterDbgbcr10El1, WHPX_SYSREG(0, 10, 2, 0, 5) },
-> +    { WHvArm64RegisterDbgwvr10El1, WHPX_SYSREG(0, 10, 2, 0, 6) },
-> +    { WHvArm64RegisterDbgwcr10El1, WHPX_SYSREG(0, 10, 2, 0, 7) },
-> +
-> +    { WHvArm64RegisterDbgbvr11El1, WHPX_SYSREG(0, 11, 2, 0, 4) },
-> +    { WHvArm64RegisterDbgbcr11El1, WHPX_SYSREG(0, 11, 2, 0, 5) },
-> +    { WHvArm64RegisterDbgwvr11El1, WHPX_SYSREG(0, 11, 2, 0, 6) },
-> +    { WHvArm64RegisterDbgwcr11El1, WHPX_SYSREG(0, 11, 2, 0, 7) },
-> +
-> +    { WHvArm64RegisterDbgbvr12El1, WHPX_SYSREG(0, 12, 2, 0, 4) },
-> +    { WHvArm64RegisterDbgbcr12El1, WHPX_SYSREG(0, 12, 2, 0, 5) },
-> +    { WHvArm64RegisterDbgwvr12El1, WHPX_SYSREG(0, 12, 2, 0, 6) },
-> +    { WHvArm64RegisterDbgwcr12El1, WHPX_SYSREG(0, 12, 2, 0, 7) },
-> +
-> +    { WHvArm64RegisterDbgbvr13El1, WHPX_SYSREG(0, 13, 2, 0, 4) },
-> +    { WHvArm64RegisterDbgbcr13El1, WHPX_SYSREG(0, 13, 2, 0, 5) },
-> +    { WHvArm64RegisterDbgwvr13El1, WHPX_SYSREG(0, 13, 2, 0, 6) },
-> +    { WHvArm64RegisterDbgwcr13El1, WHPX_SYSREG(0, 13, 2, 0, 7) },
-> +
-> +    { WHvArm64RegisterDbgbvr14El1, WHPX_SYSREG(0, 14, 2, 0, 4) },
-> +    { WHvArm64RegisterDbgbcr14El1, WHPX_SYSREG(0, 14, 2, 0, 5) },
-> +    { WHvArm64RegisterDbgwvr14El1, WHPX_SYSREG(0, 14, 2, 0, 6) },
-> +    { WHvArm64RegisterDbgwcr14El1, WHPX_SYSREG(0, 14, 2, 0, 7) },
-> +
-> +    { WHvArm64RegisterDbgbvr15El1, WHPX_SYSREG(0, 15, 2, 0, 4) },
-> +    { WHvArm64RegisterDbgbcr15El1, WHPX_SYSREG(0, 15, 2, 0, 5) },
-> +    { WHvArm64RegisterDbgwvr15El1, WHPX_SYSREG(0, 15, 2, 0, 6) },
-> +    { WHvArm64RegisterDbgwcr15El1, WHPX_SYSREG(0, 15, 2, 0, 7) },
-> #ifdef SYNC_NO_RAW_REGS
->     /*
->      * The registers below are manually synced on init because they =
-are
->      * marked as NO_RAW. We still list them to make number space sync =
-easier.
->      */
-> -    { WHvArm64RegisterMidrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 0, 0) },
-> -    { WHvArm64RegisterMpidrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 0, 5) },
-> -    { WHvArm64RegisterIdPfr0El1, ENCODE_AA64_CP_REG(0, 4, 3, 0, 0) },
-> +    { WHvArm64RegisterMidrEl1, WHPX_SYSREG(0, 0, 3, 0, 0) },
-> +    { WHvArm64RegisterMpidrEl1, WHPX_SYSREG(0, 0, 3, 0, 5) },
-> +    { WHvArm64RegisterIdPfr0El1, WHPX_SYSREG(0, 4, 3, 0, 0) },
-> #endif
-> -    { WHvArm64RegisterIdAa64Pfr1El1, ENCODE_AA64_CP_REG(0, 4, 3, 0, =
-1), true },
-> -    { WHvArm64RegisterIdAa64Dfr0El1, ENCODE_AA64_CP_REG(0, 5, 3, 0, =
-0), true },
-> -    { WHvArm64RegisterIdAa64Dfr1El1, ENCODE_AA64_CP_REG(0, 5, 3, 0, =
-1), true },
-> -    { WHvArm64RegisterIdAa64Isar0El1, ENCODE_AA64_CP_REG(0, 6, 3, 0, =
-0), true },
-> -    { WHvArm64RegisterIdAa64Isar1El1, ENCODE_AA64_CP_REG(0, 6, 3, 0, =
-1), true },
-> +    { WHvArm64RegisterIdAa64Pfr1El1, WHPX_SYSREG(0, 4, 3, 0, 1), true =
-},
-> +    { WHvArm64RegisterIdAa64Dfr0El1, WHPX_SYSREG(0, 5, 3, 0, 0), true =
-},
-> +    { WHvArm64RegisterIdAa64Dfr1El1, WHPX_SYSREG(0, 5, 3, 0, 1), true =
-},
-> +    { WHvArm64RegisterIdAa64Isar0El1, WHPX_SYSREG(0, 6, 3, 0, 0), =
-true },
-> +    { WHvArm64RegisterIdAa64Isar1El1, WHPX_SYSREG(0, 6, 3, 0, 1), =
-true },
-> #ifdef SYNC_NO_MMFR0
->     /* We keep the hardware MMFR0 around. HW limits are there anyway =
-*/
-> -    { WHvArm64RegisterIdAa64Mmfr0El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, =
-0) },
-> +    { WHvArm64RegisterIdAa64Mmfr0El1, WHPX_SYSREG(0, 7, 3, 0, 0) },
-> #endif
-> -    { WHvArm64RegisterIdAa64Mmfr1El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, =
-1), true },
-> -    { WHvArm64RegisterIdAa64Mmfr2El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, =
-2), true },
-> -    { WHvArm64RegisterIdAa64Mmfr3El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, =
-3), true },
-> -
-> -    { WHvArm64RegisterMdscrEl1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 2) },
-> -    { WHvArm64RegisterSctlrEl1, ENCODE_AA64_CP_REG(1, 0, 3, 0, 0) },
-> -    { WHvArm64RegisterCpacrEl1, ENCODE_AA64_CP_REG(1, 0, 3, 0, 2) },
-> -    { WHvArm64RegisterTtbr0El1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 0) },
-> -    { WHvArm64RegisterTtbr1El1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 1) },
-> -    { WHvArm64RegisterTcrEl1, ENCODE_AA64_CP_REG(2, 0, 3, 0, 2) },
-> -
-> -    { WHvArm64RegisterApiAKeyLoEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 0) =
-},
-> -    { WHvArm64RegisterApiAKeyHiEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 1) =
-},
-> -    { WHvArm64RegisterApiBKeyLoEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 2) =
-},
-> -    { WHvArm64RegisterApiBKeyHiEl1, ENCODE_AA64_CP_REG(2, 1, 3, 0, 3) =
-},
-> -    { WHvArm64RegisterApdAKeyLoEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 0) =
-},
-> -    { WHvArm64RegisterApdAKeyHiEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 1) =
-},
-> -    { WHvArm64RegisterApdBKeyLoEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 2) =
-},
-> -    { WHvArm64RegisterApdBKeyHiEl1, ENCODE_AA64_CP_REG(2, 2, 3, 0, 3) =
-},
-> -    { WHvArm64RegisterApgAKeyLoEl1, ENCODE_AA64_CP_REG(2, 3, 3, 0, 0) =
-},
-> -    { WHvArm64RegisterApgAKeyHiEl1, ENCODE_AA64_CP_REG(2, 3, 3, 0, 1) =
-},
-> -
-> -    { WHvArm64RegisterSpsrEl1, ENCODE_AA64_CP_REG(4, 0, 3, 0, 0) },
-> -    { WHvArm64RegisterElrEl1, ENCODE_AA64_CP_REG(4, 0, 3, 0, 1) },
-> -    { WHvArm64RegisterSpEl1, ENCODE_AA64_CP_REG(4, 1, 3, 0, 0) },
-> -    { WHvArm64RegisterEsrEl1, ENCODE_AA64_CP_REG(5, 2, 3, 0, 0) },
-> -    { WHvArm64RegisterFarEl1, ENCODE_AA64_CP_REG(6, 0, 3, 0, 0) },
-> -    { WHvArm64RegisterParEl1, ENCODE_AA64_CP_REG(7, 4, 3, 0, 0) },
-> -    { WHvArm64RegisterMairEl1, ENCODE_AA64_CP_REG(10, 2, 3, 0, 0) },
-> -    { WHvArm64RegisterVbarEl1, ENCODE_AA64_CP_REG(12, 0, 3, 0, 0) },
-> -    { WHvArm64RegisterContextidrEl1, ENCODE_AA64_CP_REG(13, 0, 3, 0, =
-1) },
-> -    { WHvArm64RegisterTpidrEl1, ENCODE_AA64_CP_REG(13, 0, 3, 0, 4) },
-> -    { WHvArm64RegisterCntkctlEl1, ENCODE_AA64_CP_REG(14, 1, 3, 0, 0) =
-},
-> -    { WHvArm64RegisterCsselrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 2, 0) },
-> -    { WHvArm64RegisterTpidrEl0, ENCODE_AA64_CP_REG(13, 0, 3, 3, 2) },
-> -    { WHvArm64RegisterTpidrroEl0, ENCODE_AA64_CP_REG(13, 0, 3, 3, 3) =
-},
-> -    { WHvArm64RegisterCntvCtlEl0, ENCODE_AA64_CP_REG(14, 3, 3, 3, 1) =
-},
-> -    { WHvArm64RegisterCntvCvalEl0, ENCODE_AA64_CP_REG(14, 3, 3, 3, 2) =
-},
-> -    { WHvArm64RegisterSpEl1, ENCODE_AA64_CP_REG(4, 1, 3, 4, 0) },
-> +    { WHvArm64RegisterIdAa64Mmfr1El1, WHPX_SYSREG(0, 7, 3, 0, 1), =
-true },
-> +    { WHvArm64RegisterIdAa64Mmfr2El1, WHPX_SYSREG(0, 7, 3, 0, 2), =
-true },
-> +    { WHvArm64RegisterIdAa64Mmfr3El1, WHPX_SYSREG(0, 7, 3, 0, 3), =
-true },
-> +
-> +    { WHvArm64RegisterMdscrEl1, WHPX_SYSREG(0, 2, 2, 0, 2) },
-> +    { WHvArm64RegisterSctlrEl1, WHPX_SYSREG(1, 0, 3, 0, 0) },
-> +    { WHvArm64RegisterCpacrEl1, WHPX_SYSREG(1, 0, 3, 0, 2) },
-> +    { WHvArm64RegisterTtbr0El1, WHPX_SYSREG(2, 0, 3, 0, 0) },
-> +    { WHvArm64RegisterTtbr1El1, WHPX_SYSREG(2, 0, 3, 0, 1) },
-> +    { WHvArm64RegisterTcrEl1, WHPX_SYSREG(2, 0, 3, 0, 2) },
-> +
-> +    { WHvArm64RegisterApiAKeyLoEl1, WHPX_SYSREG(2, 1, 3, 0, 0) },
-> +    { WHvArm64RegisterApiAKeyHiEl1, WHPX_SYSREG(2, 1, 3, 0, 1) },
-> +    { WHvArm64RegisterApiBKeyLoEl1, WHPX_SYSREG(2, 1, 3, 0, 2) },
-> +    { WHvArm64RegisterApiBKeyHiEl1, WHPX_SYSREG(2, 1, 3, 0, 3) },
-> +    { WHvArm64RegisterApdAKeyLoEl1, WHPX_SYSREG(2, 2, 3, 0, 0) },
-> +    { WHvArm64RegisterApdAKeyHiEl1, WHPX_SYSREG(2, 2, 3, 0, 1) },
-> +    { WHvArm64RegisterApdBKeyLoEl1, WHPX_SYSREG(2, 2, 3, 0, 2) },
-> +    { WHvArm64RegisterApdBKeyHiEl1, WHPX_SYSREG(2, 2, 3, 0, 3) },
-> +    { WHvArm64RegisterApgAKeyLoEl1, WHPX_SYSREG(2, 3, 3, 0, 0) },
-> +    { WHvArm64RegisterApgAKeyHiEl1, WHPX_SYSREG(2, 3, 3, 0, 1) },
-> +
-> +    { WHvArm64RegisterSpsrEl1, WHPX_SYSREG(4, 0, 3, 0, 0) },
-> +    { WHvArm64RegisterElrEl1, WHPX_SYSREG(4, 0, 3, 0, 1) },
-> +    { WHvArm64RegisterSpEl1, WHPX_SYSREG(4, 1, 3, 0, 0) },
-> +    { WHvArm64RegisterEsrEl1, WHPX_SYSREG(5, 2, 3, 0, 0) },
-> +    { WHvArm64RegisterFarEl1, WHPX_SYSREG(6, 0, 3, 0, 0) },
-> +    { WHvArm64RegisterParEl1, WHPX_SYSREG(7, 4, 3, 0, 0) },
-> +    { WHvArm64RegisterMairEl1, WHPX_SYSREG(10, 2, 3, 0, 0) },
-> +    { WHvArm64RegisterVbarEl1, WHPX_SYSREG(12, 0, 3, 0, 0) },
-> +    { WHvArm64RegisterContextidrEl1, WHPX_SYSREG(13, 0, 3, 0, 1) },
-> +    { WHvArm64RegisterTpidrEl1, WHPX_SYSREG(13, 0, 3, 0, 4) },
-> +    { WHvArm64RegisterCntkctlEl1, WHPX_SYSREG(14, 1, 3, 0, 0) },
-> +    { WHvArm64RegisterCsselrEl1, WHPX_SYSREG(0, 0, 3, 2, 0) },
-> +    { WHvArm64RegisterTpidrEl0, WHPX_SYSREG(13, 0, 3, 3, 2) },
-> +    { WHvArm64RegisterTpidrroEl0, WHPX_SYSREG(13, 0, 3, 3, 3) },
-> +    { WHvArm64RegisterCntvCtlEl0, WHPX_SYSREG(14, 3, 3, 3, 1) },
-> +    { WHvArm64RegisterCntvCvalEl0, WHPX_SYSREG(14, 3, 3, 3, 2) },
-> +    { WHvArm64RegisterSpEl1, WHPX_SYSREG(4, 1, 3, 4, 0) },
-> };
-
-Ow, carried this mess in formats from HVF, don=E2=80=99t think we wanna =
-keep this really.
-
-(switching to the ENCODE_AA64_CP_REG format across the board would be =
-better)
-
->=20
-> HRESULT whpx_set_exception_exit_bitmap(UINT64 exceptions)
-> @@ -610,6 +617,37 @@ void whpx_set_registers(CPUState *cpu, =
-WHPXStateLevel level)
->             whpx_set_reg(cpu, whpx_sreg_match[i].reg, val);
->         }
->     }
-> +
-> +    if (level =3D=3D WHPX_LEVEL_RESET_STATE) {
-> +        /*
-> +         * WHPX keeps the "vCPU is in a low-power wait" state =
-(entered when the
-> +         * guest executes WFI/WFE) in =
-WHvRegisterInternalActivityState, and that
-> +         * state is not affected by writing the architectural =
-registers above.
-> +         * If the guest happened to be idle when the reset was =
-requested, the
-> +         * vCPU would stay suspended forever.
-> +         *
-> +         * StartupSuspend is the bit WHP uses to hold a vCPU that has =
-not been
-> +         * started yet, and it is how secondary vCPUs are parked =
-until PSCI
-> +         * CPU_ON releases them.
-> +         */
-> +        WHV_REGISTER_NAME name =3D WHvRegisterInternalActivityState;
-> +        bool powered_off =3D arm_cpu->power_state =3D=3D PSCI_OFF;
-> +        WHV_REGISTER_VALUE ia;
-> +        HRESULT hr;
-> +
-> +        clean_whv_register_value(&ia);
-> +        hr =3D whp_dispatch.WHvGetVirtualProcessorRegisters(
-> +            whpx_global.partition, cpu->cpu_index, &name, 1, &ia);
-> +        if (SUCCEEDED(hr) &&
-> +            (ia.InternalActivity.IdleSuspend ||
-> +             ia.InternalActivity.HaltSuspend ||
-> +             ia.InternalActivity.StartupSuspend !=3D powered_off)) {
-> +            ia.InternalActivity.IdleSuspend =3D 0;
-> +            ia.InternalActivity.HaltSuspend =3D 0;
-> +            ia.InternalActivity.StartupSuspend =3D powered_off;
-> +            whpx_set_reg(cpu, WHvRegisterInternalActivityState, ia);
-> +        }
-> +    }
-> }
-
-Looks good :) Although perhaps this is better as a separate commit from =
-the change
-above.
-
->=20
-> static uint32_t max_vcpu_index;
-> @@ -789,8 +827,18 @@ int whpx_init_vcpu(CPUState *cpu)
->         uint32_t key =3D whpx_sreg_match[i].key;
->=20
->         ri =3D get_arm_cp_reginfo(arm_cpu->cp_regs, key);
-> -        if (ri) {
-> -            assert(!(ri->type & ARM_CP_NO_RAW));
-> +        /*
-> +         * Only registers with raw backing store in CPUARMState can =
-take part
-> +         * in the cpreg list sync:
-> +         *
-> +         * - ARM_CP_NO_RAW registers have no state to sync at all;
-> +         *   write_cpustate_to_list() and write_list_to_cpustate() =
-skip them.
-> +         *
-> +         * - ARM_CP_CONST registers (the ID registers in the table =
-above)
-> +         *   ignore raw writes and always read back the value the CPU =
-model was
-> +         *   built with.
-> +         */
-
-But not this bit, which should be dropped.
-
-The CPU model gets synced through this bit and registers that error
-out through ARM_CP_NO_RAW should be behind a #ifdef SYNC_NO_RAW_REGS
-block.
-
-The former characteristic is what allows for example -cpu cortex-a72
-to be used on WHPX instead of only the native machine, while masking off
-the newer feature from feature regs.
-
-> +        if (ri && !(ri->type & (ARM_CP_NO_RAW | ARM_CP_CONST))) {
->             whpx_sreg_match[i].cp_idx =3D sregs_cnt;
->             arm_cpu->cpreg_indexes[sregs_cnt++] =3D =
-cpreg_to_kvm_id(key);
->         } else {
-> --=20
-> 2.55.0.vfs.0.3
->=20
->=20
+diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+index 8bc6e8eaa3..0eeb53a2bf 100644
+--- a/pc-bios/s390-ccw/main.c
++++ b/pc-bios/s390-ccw/main.c
+@@ -328,6 +328,7 @@ static void ipl_pci_device(void)
+     }
+ 
+     switch (vdev->dev_type) {
++    case VIRTIO_ID_NET:
+     case VIRTIO_ID_BLOCK:
+         if (virtio_setup() == 0) {
+             zipl_load(); /* only return on error */
+diff --git a/pc-bios/s390-ccw/virtio-net.c b/pc-bios/s390-ccw/virtio-net.c
+index 3a9ae789cf..209f98a0e3 100644
+--- a/pc-bios/s390-ccw/virtio-net.c
++++ b/pc-bios/s390-ccw/virtio-net.c
+@@ -62,7 +62,16 @@ int virtio_net_init(void *mac_addr)
+     rx_last_idx = 0;
+ 
+     vdev->guest_features[0] = VIRTIO_NET_F_MAC_BIT;
+-    virtio_ccw_setup(vdev);
++    switch (virtio_get_device()->ipl_type) {
++    case S390_IPL_TYPE_CCW:
++        virtio_ccw_setup(vdev);
++        break;
++    case S390_IPL_TYPE_PCI:
++        virtio_pci_setup(vdev);
++        break;
++    default:
++        return -1;
++    }
+ 
+     if (!(vdev->guest_features[0] & VIRTIO_NET_F_MAC_BIT)) {
+         puts("virtio-net device does not support the MAC address feature");
+@@ -115,22 +124,30 @@ int recv(int fd, void *buf, int maxlen, int flags)
+     VRing *rxvq = &vdev->vrings[VQ_RX];
+     int len, id;
+     uint8_t *pkt;
++    uint16_t rx_used_idx, rx_avail_idx;
++    uint32_t rx_used_len, rx_used_id;
++    uint64_t rx_desc_addr;
+ 
+-    if (rx_last_idx == rxvq->used->idx) {
++    rx_used_idx = virtio_tswap16(rxvq->used->idx);
++    if (rx_last_idx == rx_used_idx) {
+         return 0;
+     }
+ 
+-    len = rxvq->used->ring[rx_last_idx % rxvq->num].len - virtio_net_hdr_size;
++    rx_used_len = virtio_tswap32(rxvq->used->ring[rx_last_idx % rxvq->num].len);
++    rx_used_id = virtio_tswap32(rxvq->used->ring[rx_last_idx % rxvq->num].id);
++
++    len = rx_used_len - virtio_net_hdr_size;
+     if (len > maxlen) {
+         puts("virtio-net: Receive buffer too small");
+         len = maxlen;
+     }
+-    id = rxvq->used->ring[rx_last_idx % rxvq->num].id % rxvq->num;
+-    pkt = (uint8_t *)(rxvq->desc[id].addr + virtio_net_hdr_size);
++    id = rx_used_id % rxvq->num;
++    rx_desc_addr = virtio_tswap64(rxvq->desc[id].addr);
++    pkt = (uint8_t *)(rx_desc_addr + virtio_net_hdr_size);
+ 
+ #if DEBUG_VIRTIO_NET   /* Dump packet */
+     int i;
+-    printf("\nbuf %p: len=%i\n", (void *)rxvq->desc[id].addr, len);
++    printf("\nbuf %p: len=%i\n", (void *)rx_desc_addr, len);
+     for (i = 0; i < 64; i++) {
+         printf(" %02x", pkt[i]);
+         if ((i % 16) == 15) {
+@@ -144,8 +161,10 @@ int recv(int fd, void *buf, int maxlen, int flags)
+     memcpy(buf, pkt, len);
+ 
+     /* Mark buffer as available to the host again */
+-    rxvq->avail->ring[rxvq->avail->idx % rxvq->num] = id;
+-    rxvq->avail->idx = rxvq->avail->idx + 1;
++    rx_avail_idx = virtio_tswap16(rxvq->avail->idx);
++    rxvq->avail->ring[rx_avail_idx % rxvq->num] = virtio_tswap16(id);
++    rx_avail_idx++;
++    rxvq->avail->idx = virtio_tswap16(rx_avail_idx);
+     vring_notify(rxvq);
+ 
+     /* Move index to next entry */
+@@ -164,6 +183,8 @@ bool virtio_net_setup(void)
+     switch (virtio_get_device()->ipl_type) {
+     case S390_IPL_TYPE_CCW:
+         return virtio_ccw_net_setup();
++    case S390_IPL_TYPE_PCI:
++        return virtio_pci_net_setup();
+     default:
+         return false;
+     }
+diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
+index f501252c81..c7d62766b8 100644
+--- a/pc-bios/s390-ccw/virtio-pci.c
++++ b/pc-bios/s390-ccw/virtio-pci.c
+@@ -52,6 +52,10 @@ void virtio_pci_id2type(VDev *vdev, uint16_t device_id)
+     case 0x1001:
+         vdev->dev_type = VIRTIO_ID_BLOCK;
+         break;
++    case 0x1041:
++    case 0x1000:
++        vdev->dev_type = VIRTIO_ID_NET;
++        break;
+     default:
+         vdev->dev_type = 0;
+     }
+@@ -199,6 +203,14 @@ static int virtio_pci_get_blk_config(void)
+     return rc;
+ }
+ 
++static int virtio_pci_get_net_config(void)
++{
++    VirtioNetConfig *cfg = &virtio_get_device()->config.net;
++    int rc = vpci_read_flex(d_cap.off, d_cap.bar, cfg, sizeof(VirtioNetConfig));
++
++    return rc;
++}
++
+ static int virtio_pci_negotiate(void)
+ {
+     int i, rc;
+@@ -330,6 +342,7 @@ bool virtio_pci_is_supported(VDev *vdev)
+     if (vdev->vendor_id == PCI_VENDOR_VIRTIO) {
+         switch (vdev->dev_type) {
+         case VIRTIO_ID_BLOCK:
++        case VIRTIO_ID_NET:
+             return true;
+         default:
+             return false;
+@@ -384,6 +397,11 @@ int virtio_pci_setup(VDev *vdev)
+         vdev->cmd_vr_idx = 0;
+         virtio_pci_get_blk_config();
+         break;
++    case VIRTIO_ID_NET:
++        vdev->nr_vqs = 2;
++        vdev->cmd_vr_idx = 0;
++        virtio_pci_get_net_config();
++        break;
+     default:
+         puts("Unsupported virtio device");
+         return -ENODEV;
+@@ -458,3 +476,28 @@ int virtio_pci_setup_device(void)
+ 
+     return 0;
+ }
++
++static bool find_pci_net_dev(void)
++{
++    if (!virtio_is_supported(virtio_get_device())) {
++        return false;
++    }
++
++    if (virtio_get_device_type() != VIRTIO_ID_NET) {
++        return false;
++    }
++
++    return true;
++}
++
++bool virtio_pci_net_setup(void)
++{
++    bool found = false;
++
++    if (have_iplb || store_iplb(&iplb)) {
++        IPL_assert(iplb.pbt == S390_IPL_TYPE_PCI, "IPL_TYPE_PCI expected");
++        found = find_pci_net_dev();
++    }
++
++    return found;
++}
+diff --git a/pc-bios/s390-ccw/virtio-pci.h b/pc-bios/s390-ccw/virtio-pci.h
+index 33b683bd92..2c3136fd05 100644
+--- a/pc-bios/s390-ccw/virtio-pci.h
++++ b/pc-bios/s390-ccw/virtio-pci.h
+@@ -70,6 +70,8 @@ long virtio_pci_notify(VRing *vr);
+ bool virtio_pci_is_supported(VDev *vdev);
+ int virtio_pci_setup(VDev *vdev);
+ int virtio_pci_setup_device(void);
++bool virtio_pci_is_supported(VDev *vdev);
++bool virtio_pci_net_setup(void);
+ 
+ int vpci_read_flex(uint64_t offset, uint8_t pcias, void *buf, int len);
+ int vpci_read_bswap64(uint64_t offset, uint8_t pcias, uint64_t *buf);
+-- 
+2.55.0
 
 
