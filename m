@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC525C5DF6D
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 07:12:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E96ECC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 07:13:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwaSi-0002N4-D0; Wed, 19 Aug 2026 03:11:48 -0400
+	id 1wwaTl-0002i4-Mq; Wed, 19 Aug 2026 03:12:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wwaSg-0002Mi-0I
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 03:11:46 -0400
-Received: from smtpout8.mo539.mail-out.ovh.net ([51.210.91.47])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wwaTk-0002gx-4o
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 03:12:52 -0400
+Received: from smtpout8.mo537.mail-out.ovh.net ([51.210.91.27])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wwaSc-0004ca-VJ
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 03:11:45 -0400
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net [79.137.60.37])
- by mo539.mail-out.ovh.net (Postfix) with ESMTPS id 4hPyRZ6c1Rz4Drm;
- Wed, 19 Aug 2026 07:11:38 +0000 (UTC)
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net. [127.0.0.1])
- by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <peter.maydell@linaro.org>; Wed, 19 Aug 2026 07:11:38 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.231.233])
- by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4hPyRZ5Ttcz1xtS; Wed, 19 Aug 2026 07:11:38 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.5])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wwaTi-0004l5-KZ
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 03:12:51 -0400
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net [79.137.60.225])
+ by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4hPySw43LMz48pW;
+ Wed, 19 Aug 2026 07:12:48 +0000 (UTC)
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net. [127.0.0.1])
+ by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <npiggin@gmail.com>; Wed, 19 Aug 2026 07:12:48 +0000 (UTC)
+Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.54.94])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4hPySw3GRnz6SRH;
+ Wed, 19 Aug 2026 07:12:48 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.1])
  (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id F3A89203F4E; 
- Wed, 19 Aug 2026 07:11:37 +0000 (UTC)
+ by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id A138B12E3F50;
+ Wed, 19 Aug 2026 07:12:47 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-102R00450458bad-a19e-445f-8001-af968acc8a5a,
+ (GARM-95G00157f501f9-163f-4e50-9736-d2e6024e0b8c,
  C24CD8B75EED539221ACEA448CE881038350F7ED) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 2.10.174.70
-Message-ID: <ba05f872-5eff-44bb-814d-c2dca6532a9d@kaod.org>
-Date: Wed, 19 Aug 2026 09:11:34 +0200
+Message-ID: <4731356a-532f-4ecf-9f0b-ae7a6ac5f77e@kaod.org>
+Date: Wed, 19 Aug 2026 09:12:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/9] arm/aspeed: Drop ASPEED_RAM_SIZE
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>
-References: <20260818172012.3052821-1-peterx@redhat.com>
- <20260818172012.3052821-8-peterx@redhat.com>
+Subject: Re: [PATCH] MAINTAINERS: Add myself as a reviewer for PPC KVM and
+ sPAPR
+To: Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>
+References: <20260819050545.21232-1-amachhiw@linux.ibm.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -93,23 +92,23 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260818172012.3052821-8-peterx@redhat.com>
+In-Reply-To: <20260819050545.21232-1-amachhiw@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 6280832633484455111
+x-ovh-tracer-id: 6300535881001708641
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFFQfOflHL5pL7h1lCIN2tY1QVsauSJe0O7J+HDb/gLpcLr5TbnbhBY760AMer0V6b5+2xh5hVyR1hx47WZFtdcIU7d/rZWll5oPbbIlLjWcVJQvjo3m+Cq6I2z2JwsRMEx0qnb/InHqgB4Mt5rhwdUZ18CrDHEcGAHLYIlG5+iZMrUbtT4TUjK4yl+0Mgr8y4Reyt9CNf98lmM+57J94lQ3IVElheEC8eAYuQwWDiEPd55elGMmFyslE1H7T4kZmFeATFMZZl/H7tJoYAOTAjJHPHSctcXp14xrzwwDtnnUMchJ4gmERNej++NreqHS9Ec4IUFNW7iYLxwnfYf0P8EnifNE9kwB5CeuW8fjK8rG3sgEsESRA/VnDYWzvbGR1ndaKZn2uQBVjIt733Gv6KTys40QmYXB+ScYqY95uZAhqEGvG4m9yQvqQK1x0ybXqJZM1MoGUJ48+UfBWtFnpx4rNDJKk1G6ZDZB9xQxaB2ZU4+Mm1d+1CHr3/2ZONO9y8dtAKy6zekXOP2+bM1CMuxDYttaU4uQX1vH4AniHWcC/aHxCUlhQUzgigRb79q462ESWceKQLHt7sPHssVfh6qIKPLmWz2T+R4LDc/r3x/lBQDkN3c0UfXU2uz+5QApO8T2NHa43uFhypAoSZl5qTdhItinFsNryTf8N9+OvCNIw
-DKIM-Signature: a=rsa-sha256; bh=62l7mEuqW83dX2W9eUPz3iv5mgEdNUfO5WeL2hsucEY=; 
+X-VR-SPAMCAUSE: dmFkZTFh7o15b17Lj4HYE7CewJrIIRywqLGDsiR5FHYwfwjnasy3IvLrhktK+5JqNaFFM4KudkO6LgXQzcpkGhjiHdatSuST99gZbHBPzUBjcK7W/vf+XAi+sTQt67SzYKdREfcElvJy3FfrhoE1ubGNCrwi64WiSAN3LZSrwoFDDOuN4z3S+wgNw8eUjrMjPZchwc+pybtgbQ3URu4vU+mH+tBh4118Gn78hDU1RBL9wOgyXAH+hu8b3CtPP9efY3HNnXLfG1k/Gpax1hHCMSZuWvqJbNzyd8pSoZRH4eAgE/D6y63RTq7R4S2pHVnBzJVmKjeqbwID9/ZwVds+PiIJiYjuOzj6sxZy0w9gANbvnu9UCbOtY61CZnncQH9h4W3SIGi2CkYQDxCT4VIC2oSlpY4yOVV6v5v01nLNrQuNeGl5wg5Cz8vEHjsoiW2wrXjPqgbIHGjDJy7aDoCJbUq83hwcZkx/0DpRD3LvkQ0JPN4CJZwWHL4TzTMgMdPtUVFfwMNFfT8LasajvN5S9p0XLCIL4SLAkKKUDx1PZfxAx5wJGLvEo2MMhasYYk4uMT4WuZmYMJfVHm9QGf+zeXm3oKJ3hcB5W/69qDzTHmSbcoGkPk3HM3xtJx+EIljs6gNsFE3+MyWb9BO/kyzI18ei/cESR8e34/3uCmt3tsOr9JaIyw
+DKIM-Signature: a=rsa-sha256; bh=LSlsoz84kWmNfwTsZTuCwZUNYuh+7ms3+MBO/iRnNN4=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1787123499; v=1;
- b=I7P63LlhxedL+xy4AgvFCFOjbJtkQ0LAo7PUWpK7+FjEPxZsyHoISGShwQXuzJaN9R7xdxwb
- kDRVXzT03GsZWI5NBh2Ycxb+sUs3SG0IwZCwW5s20N/HzZ0/SKWub7fvQjmDrvNHui5tn19mk+L
- 01BfCDrTOtsiBNlOCYHeLKvfd67YfnpKybTOlfidVtDsKqRAOe+QUc8PEvELz3GPmm4tyryqxVj
- NNMEkA9q6hFZky74WUc/ZxOiqCaEWG5LZfVxzXKNq/W147uTE8cBe2mguh9zSdQsIoc1Pz1xCyk
- erCmo/uare5mIKK8owCqbndWIUxblK48L6S/TkNZgI92w==
-Received-SPF: pass client-ip=51.210.91.47; envelope-from=clg@kaod.org;
- helo=smtpout8.mo539.mail-out.ovh.net
+ t=1787123568; v=1;
+ b=RW1DF2UbZYV5GmJvj4PqAcPn6xJ8krpe21shv2i612C9kQoq9mOHkHeRwDglKwlqc28GiQao
+ fXnvFTQq9kC9eo2s/QT4+JSzKTd63XXiCBFkZ1BQy9hbyWTaqOC4USM8OuUPskaRjd66yqkmtW6
+ ZDfWlmMe7smoqN5u+090tkpF2tYM65SCADNJoIMPKhSxS3+CoqxrHKxSpMvU9loIxL06Lcey3vt
+ xWbn4bwkC3B1F682V009WEL50QfJWHwh6FUUfJV2zLZ6crEmPUcdxtpJWDoxuCCGavi9ccu5Rsq
+ gUJpVGNy3BC3JNAVZEo2mDHlsibbYu0GXJHgdaZqxbPSA==
+Received-SPF: pass client-ip=51.210.91.27; envelope-from=clg@kaod.org;
+ helo=smtpout8.mo537.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -132,122 +131,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/18/26 19:20, Peter Xu wrote:
-> QEMU has switched to 64bit-only hosts for all system/user emulations.  It's
-> not needed anymore.
+On 8/19/26 07:05, Amit Machhiwal wrote:
+> I have been contributing to PPC KVM and sPAPR (pseries) for some time now and
+> would like to get notified of incoming changes to help with code reviews.
 > 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 > ---
->   include/hw/arm/aspeed.h           | 7 -------
->   hw/arm/aspeed_ast2600_anacapa.c   | 2 +-
->   hw/arm/aspeed_ast2600_bletchley.c | 2 +-
->   hw/arm/aspeed_ast2600_catalina.c  | 2 +-
->   hw/arm/aspeed_ast2600_fby35.c     | 2 +-
->   hw/arm/aspeed_ast2600_fuji.c      | 2 +-
->   hw/arm/aspeed_ast2600_gb200nvl.c  | 2 +-
->   7 files changed, 6 insertions(+), 13 deletions(-)
+>   MAINTAINERS | 2 ++
+>   1 file changed, 2 insertions(+)
 > 
-> diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
-> index a00238ed74..7a012d87de 100644
-> --- a/include/hw/arm/aspeed.h
-> +++ b/include/hw/arm/aspeed.h
-> @@ -25,13 +25,6 @@ DECLARE_OBJ_CHECKERS(AspeedMachineState, AspeedMachineClass,
->   #define ASPEED_MAC2_ON   (1 << 2)
->   #define ASPEED_MAC3_ON   (1 << 3)
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index b51f5c3e6022..1a1c77285d3d 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -497,6 +497,7 @@ F: tests/functional/aarch64/test_kvm.py
+>   PPC KVM CPUs
+>   M: Nicholas Piggin <npiggin@gmail.com>
+>   R: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> +R: Amit Machhiwal <amachhiw@linux.ibm.com>
+>   S: Odd Fixes
+>   F: target/ppc/kvm.c
 >   
-> -/* On 32-bit hosts, lower RAM to 1G because of the 2047 MB limit */
-> -#if HOST_LONG_BITS == 32
-> -#define ASPEED_RAM_SIZE(sz) MIN((sz), 1 * GiB)
-> -#else
-> -#define ASPEED_RAM_SIZE(sz) (sz)
-> -#endif
-> -
->   struct AspeedMachineState {
->       MachineState parent_obj;
->   
-> diff --git a/hw/arm/aspeed_ast2600_anacapa.c b/hw/arm/aspeed_ast2600_anacapa.c
-> index 65d6b0faa2..45f7a25efd 100644
-> --- a/hw/arm/aspeed_ast2600_anacapa.c
-> +++ b/hw/arm/aspeed_ast2600_anacapa.c
-> @@ -18,7 +18,7 @@
->   
->   #define ANACAPA_BMC_HW_STRAP1 0x00002002
->   #define ANACAPA_BMC_HW_STRAP2 0x00000000
-> -#define ANACAPA_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
-> +#define ANACAPA_BMC_RAM_SIZE (2 * GiB)
->   
->   /*
->    * "Anacapa HPM (MB)" FRU data. Generated with frugen.
-> diff --git a/hw/arm/aspeed_ast2600_bletchley.c b/hw/arm/aspeed_ast2600_bletchley.c
-> index b7e84db143..8f9061c472 100644
-> --- a/hw/arm/aspeed_ast2600_bletchley.c
-> +++ b/hw/arm/aspeed_ast2600_bletchley.c
-> @@ -18,7 +18,7 @@
->   /* Bletchley hardware value */
->   #define BLETCHLEY_BMC_HW_STRAP1 0x00002000
->   #define BLETCHLEY_BMC_HW_STRAP2 0x00000801
-> -#define BLETCHLEY_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
-> +#define BLETCHLEY_BMC_RAM_SIZE (2 * GiB)
->   
->   static void bletchley_bmc_i2c_init(AspeedMachineState *bmc)
->   {
-> diff --git a/hw/arm/aspeed_ast2600_catalina.c b/hw/arm/aspeed_ast2600_catalina.c
-> index f714c9d1b3..c328997668 100644
-> --- a/hw/arm/aspeed_ast2600_catalina.c
-> +++ b/hw/arm/aspeed_ast2600_catalina.c
-> @@ -20,7 +20,7 @@
->   /* Catalina hardware value */
->   #define CATALINA_BMC_HW_STRAP1 0x00002002
->   #define CATALINA_BMC_HW_STRAP2 0x00000800
-> -#define CATALINA_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
-> +#define CATALINA_BMC_RAM_SIZE (2 * GiB)
->   
->   #define TYPE_TMP75 TYPE_TMP105
->   #define TYPE_TMP421 "tmp421"
-> diff --git a/hw/arm/aspeed_ast2600_fby35.c b/hw/arm/aspeed_ast2600_fby35.c
-> index f624427070..1d546b1f0a 100644
-> --- a/hw/arm/aspeed_ast2600_fby35.c
-> +++ b/hw/arm/aspeed_ast2600_fby35.c
-> @@ -17,7 +17,7 @@
->   
->   #define TYPE_LM75 TYPE_TMP105
->   #define TYPE_TMP421 "tmp421"
-> -#define FBY35_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
-> +#define FBY35_BMC_RAM_SIZE (2 * GiB)
->   
->   static const uint8_t fby35_nic_fruid[] = {
->       0x01, 0x00, 0x00, 0x01, 0x0f, 0x20, 0x00, 0xcf, 0x01, 0x0e, 0x19, 0xd7,
-> diff --git a/hw/arm/aspeed_ast2600_fuji.c b/hw/arm/aspeed_ast2600_fuji.c
-> index 37db252e27..cb987e2eff 100644
-> --- a/hw/arm/aspeed_ast2600_fuji.c
-> +++ b/hw/arm/aspeed_ast2600_fuji.c
-> @@ -22,7 +22,7 @@
->   /* Fuji hardware value */
->   #define FUJI_BMC_HW_STRAP1    0x00000000
->   #define FUJI_BMC_HW_STRAP2    0x00000000
-> -#define FUJI_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
-> +#define FUJI_BMC_RAM_SIZE (2 * GiB)
->   
->   static void get_pca9548_channels(I2CBus *bus, uint8_t mux_addr,
->                                    I2CBus **channels)
-> diff --git a/hw/arm/aspeed_ast2600_gb200nvl.c b/hw/arm/aspeed_ast2600_gb200nvl.c
-> index ad9a10110b..7abd934624 100644
-> --- a/hw/arm/aspeed_ast2600_gb200nvl.c
-> +++ b/hw/arm/aspeed_ast2600_gb200nvl.c
-> @@ -16,7 +16,7 @@
->   /* GB200NVL hardware value */
->   #define GB200NVL_BMC_HW_STRAP1 0x000000C0
->   #define GB200NVL_BMC_HW_STRAP2 0x00000003
-> -#define GB200NVL_BMC_RAM_SIZE ASPEED_RAM_SIZE(1 * GiB)
-> +#define GB200NVL_BMC_RAM_SIZE (1 * GiB)
->   
->   static const uint8_t gb200nvl_bmc_fruid[] = {
->       0x01, 0x00, 0x00, 0x01, 0x0b, 0x00, 0x00, 0xf3, 0x01, 0x0a, 0x19, 0x1f,
+> @@ -1661,6 +1662,7 @@ F: tests/functional/ppc/test_40p.py
+>   sPAPR (pseries)
+>   M: Nicholas Piggin <npiggin@gmail.com>
+>   M: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> +R: Amit Machhiwal <amachhiw@linux.ibm.com>
+>   L: qemu-ppc@nongnu.org
+>   S: Odd Fixes
+>   F: hw/*/spapr*
+> 
+> base-commit: fa19879df1658f96ac07365fca8835b7decd6995
 
+
+I would consider removing Nick since he has moved to other activities.
+  
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
 Thanks,
 
 C.
-
 
