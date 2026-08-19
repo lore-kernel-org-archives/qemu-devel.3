@@ -4,49 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD647C5DF86
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 12:44:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75DDDC5DF86
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 12:44:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwfdp-00080q-FE; Wed, 19 Aug 2026 08:43:37 -0400
+	id 1wwfdn-00080g-92; Wed, 19 Aug 2026 08:43:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel@makrotopia.org>)
- id 1wwZzh-0005TN-Ko
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 02:41:49 -0400
-Received: from pidgin.makrotopia.org ([2a07:2ec0:3002::65])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel@makrotopia.org>)
- id 1wwZzf-0000Oq-No
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 02:41:49 -0400
-Received: from local
- by pidgin.makrotopia.org with esmtpsa (TLS1.3:TLS_AES_256_GCM_SHA384:256)
- (Exim 4.99) (envelope-from <daniel@makrotopia.org>)
- id 1wwZzb-000000002Rb-0NKK; Wed, 19 Aug 2026 06:41:43 +0000
-Date: Wed, 19 Aug 2026 07:41:40 +0100
-From: Daniel Golle <daniel@makrotopia.org>
-To: Daniel Golle <daniel@makrotopia.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Alexander Graf <agraf@csgraf.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Kane-Chen-AS <kane_chen@aspeedtech.com>,
- jack wang <163wangjack@gmail.com>, qemu-devel@nongnu.org
-Subject: [PATCH 3/4] hw/misc/applesmc: Emulate the SMC shutdown watchdog
-Message-ID: <1a25c5a68854462891d8830847b28687fa5fe432.1787114994.git.daniel@makrotopia.org>
-References: <cover.1787114994.git.daniel@makrotopia.org>
+ (Exim 4.90_1) (envelope-from <opensource@fvhovell.nl>)
+ id 1wwfOG-0004cK-Ab; Wed, 19 Aug 2026 08:27:32 -0400
+Received: from outbound.soverin.net ([185.233.34.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <opensource@fvhovell.nl>)
+ id 1wwfOE-0003Ai-9W; Wed, 19 Aug 2026 08:27:32 -0400
+Received: from smtp.freedom.nl (unknown [10.10.4.107])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by outbound.soverin.net (Postfix) with ESMTPS id 4hQ5S03FCGz1Plr;
+ Wed, 19 Aug 2026 12:27:28 +0000 (UTC)
+Received: from smtp.freedom.nl (smtp.freedom.nl [10.10.4.107]) by freedom.nl
+ (Postfix) with ESMTPSA id 4hQ5Rz1r9vzQQ; 
+ Wed, 19 Aug 2026 12:27:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=fvhovell.nl;
+ s=soverin; t=1787142448;
+ bh=Zt7X8g+BYQeA6Fi9nt+gvcWUPGKEFYNiUind+mA1MXE=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=qI6M9HRyXbPO3JfurIO6FjaeEfwY2Za1tAPXbYbT3NqygN9lav2ox3Lt9RTzvJ8UV
+ NqDDnUT7YM55URXpNQKrjFHFDvdgu7D+6VePrCLhRvLY7bL4G2PoDNrGXHD6DVdQXx
+ 2TK+EITtHIT7y8dr6gDJ/4v0Nd3zg9UKU0VLvdTNCTafxAE6wx89v9XQ2TX8CwqDsF
+ uJAXizKf+JiqYh1/nAqB5BWMIN/5KuoXDCnBMJsX/lUatZ0KPVX6Z3qbe1aMYrp4jk
+ SNSGb8KY3W0ju5Ry2k/KrBYV4J71CLhAEy5ZK17JWWgsySPYM6N7iV1cXHt/Gk/NjU
+ T6Abh7apMlLWA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fvhovell.nl; s=soverin1;
+ t=1787142448;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pyMUscUJzQccMg0Dy0oDzVQzZKQaEVKGa0eTI94X+pI=;
+ b=c1V6UABa+0F5j+z6cw7BFSxMRvmowrYTryc06Zi2C3+6oSnVwD+9+FkEhcz2wLiugcztoY
+ EeVtF6Dp2AW3MuoVO5rdzuyKRJWyk+knTvazgYp30yZfLHSDV1dVumolslaFCleXYBqh0l
+ VhoqmqllFARTBS4xmVg14SFchbTdCnjhSZPYv/7ogBu3YWEqMxUD0cAE2Q86fTFWWv9/J8
+ 3s3M4/jmSELlsIk2HJhvziZb7Je7Nmj4zm+XVx1meuDIp/1uE5dLq6HiqOn42/K/DaL367
+ 1xxd9mT/IP78/0zz5+JFnEbA6cMXLbys266cQR1OispxDAQmVjV3/pOLw0SyHA==
+X-CM-Envelope: MS4xfM9TyRmFwhdpQV/GijNsnd4ecDiIrM5ZeyZXZDNd65cPLys/Foo3Cmg4XLf7rgwku2BN+XH8tjSjvrBhPdJsagJ+zdu56ri6NUCEWTa30RxArp60DaEg
+ XNCEJuMXhAtmt91iBdXSx1lY4Yq3A0+0b7XRW2uFa4sGU1upMwvgguJ5ixQlJb00f7nKxX9CRnLQsNDu47oOZhfRKTHa2deAYj5EE6D31afa2h30/5jxzJbS
+ hmInZDzXEvb9iq7he+Lu2emvlu2oWXfl157bozC4yRK5SciITwQo3oPnVw89BWgc4BZJpKyTpsuhrauf2SC0G9ptetXEgqXJm1mCRRUAOjxJ1SxYwrR6kr1T
+ mBPHKkyoF+jCbY0io0h3n3Ym2evRCk2qvLrgsdj5DlZ67pvLcTw=
+X-Soverin-Id: 01a019fd-a380-7816-a0da-d0ce7b19ea72
+From: opensource@fvhovell.nl
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, "Peter Maydell" <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>,
+ =?UTF-8?q?Frederik=20van=20H=C3=B6vell?= <frederik@fvhovell.nl>
+Subject: [PATCH 3/4] hw/arm/raspi: implement booting firmware at 0x0 using
+ -bios on boards 3ap, 3b and 4b
+Date: Wed, 19 Aug 2026 14:27:01 +0200
+Message-ID: <20260819122702.54173-4-opensource@fvhovell.nl>
+In-Reply-To: <20260819122702.54173-1-opensource@fvhovell.nl>
+References: <20260819122702.54173-1-opensource@fvhovell.nl>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1787114994.git.daniel@makrotopia.org>
-Received-SPF: pass client-ip=2a07:2ec0:3002::65;
- envelope-from=daniel@makrotopia.org; helo=pidgin.makrotopia.org
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spampanel-Class: ham
+Received-SPF: pass client-ip=185.233.34.18;
+ envelope-from=opensource@fvhovell.nl; helo=outbound.soverin.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Wed, 19 Aug 2026 08:43:31 -0400
@@ -64,184 +94,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"NATi", "NATJ" and "OSWD" are the SMC shutdown watchdog keys. On real
-Intel Macs the OS arms this watchdog so that, if the machine wedges, the
-SMC forces it off or reset. "NATi" and "OSWD" hold a countdown in seconds
-and "NATJ" a job code (1 shut down, 2 restart); a non-zero countdown arms
-or refreshes the watchdog and zero disarms it.
+From: Frederik van Hövell <frederik@fvhovell.nl>
 
-The previous patch already lets writes to these keys succeed, but treats
-them like any other write. Model them as the watchdog they are instead of
-silently accepting them: back them with a QEMUTimer that a write arms,
-refreshes or disarms, and whose expiry requests a guest shutdown or reset
-through the main loop with no guest cooperation, matching the hardware
-backstop. Add "NATi" and "OSWD" so the guest can read them back.
-
-A traced macOS guest writes "OSWD" with a zero countdown to disarm the
-watchdog during shutdown, which this handles; the arm-and-expiry path is
-the documented behaviour for a guest that arms it.
-
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Signed-off-by: Frederik van Hövell <frederik@fvhovell.nl>
 ---
- hw/misc/applesmc.c   | 74 ++++++++++++++++++++++++++++++++++++++++++++
- hw/misc/trace-events |  3 ++
- 2 files changed, 77 insertions(+)
+ docs/system/arm/raspi.rst               | 12 ++++++++++++
+ hw/arm/raspi.c                          | 17 +++++++++++------
+ tests/functional/aarch64/test_raspi3.py | 12 ++++++++++++
+ 3 files changed, 35 insertions(+), 6 deletions(-)
 
-diff --git a/hw/misc/applesmc.c b/hw/misc/applesmc.c
-index bc44b0f1d8..8d5bf74373 100644
---- a/hw/misc/applesmc.c
-+++ b/hw/misc/applesmc.c
-@@ -39,6 +39,7 @@
- #include "qemu/timer.h"
- #include "qom/object.h"
- #include "hw/acpi/acpi_aml_interface.h"
-+#include "system/runstate.h"
- #include "trace.h"
+diff --git a/docs/system/arm/raspi.rst b/docs/system/arm/raspi.rst
+index 44eec3f1c33..fb912da129b 100644
+--- a/docs/system/arm/raspi.rst
++++ b/docs/system/arm/raspi.rst
+@@ -43,3 +43,15 @@ Missing devices
+  * Pulse Width Modulation (PWM)
+  * PCIE Root Port (raspi4b)
+  * GENET Ethernet Controller (raspi4b)
++
++Boot options
++------------
++
++The Raspberry Pi models support booting via either a Linux kernel (``-kernel``)
++or UEFI/EDK2 firmware images (``-bios rpi_efi.fd``).
++
++When booting Raspberry Pi 3 (``raspi3b``, ``raspi3ap``) and Raspberry Pi 4 (``raspi4b``)
++boards with EDK2 firmware via ``-bios``, the firmware image is loaded at physical
++memory address ``0x0``, matching the platform expectations. Older 32-bit models
++(``raspi0``, ``raspi1ap``, ``raspi2b``) load firmware at their respective legacy addresses
++(``0x8000``).
+diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
+index 3f99e87428c..c0b177f8cb1 100644
+--- a/hw/arm/raspi.c
++++ b/hw/arm/raspi.c
+@@ -33,8 +33,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(RaspiMachineState, RASPI_MACHINE)
+ #define SMPBOOT_ADDR    0x300 /* this should leave enough space for ATAGS */
+ #define MVBAR_ADDR      0x400 /* secure vectors */
+ #define BOARDSETUP_ADDR (MVBAR_ADDR + 0x20) /* board setup code */
+-#define FIRMWARE_ADDR_2 0x8000 /* Pi 2 loads kernel.img here by default */
+-#define FIRMWARE_ADDR_3 0x80000 /* Pi 3 loads kernel.img here by default */
++#define KERNEL_ADDR_PI2 0x8000 /* Pi 2 loads kernel.img here by default */
+ #define SPINTABLE_ADDR  0xd8 /* Pi 3 bootloader spintable */
  
- /* #define DEBUG_SMC */
-@@ -80,6 +81,17 @@ enum {
-     APPLESMC_ST_1E_BAD_INDEX         = 0xb8,
- };
- 
-+/*
-+ * Job codes written to the "NATJ" key, and implied by "OSWD": the action the
-+ * SMC watchdog takes when its countdown (seeded from "NATi"/"OSWD") elapses
-+ * because the guest failed to power down in time.
-+ */
-+enum {
-+    APPLESMC_WDT_DISABLE             = 0,
-+    APPLESMC_WDT_SHUTDOWN            = 1,
-+    APPLESMC_WDT_RESTART             = 2,
-+};
-+
- #ifdef DEBUG_SMC
- #define smc_debug(...) fprintf(stderr, "AppleSMC: " __VA_ARGS__)
- #else
-@@ -116,6 +128,10 @@ struct AppleSMCState {
-     uint8_t data[255];
-     char *osk;
-     QLIST_HEAD(, AppleSMCData) data_def;
-+
-+    QEMUTimer *wdt_timer;   /* shutdown watchdog, armed via NATi/NATJ/OSWD */
-+    uint16_t wdt_timeout;   /* countdown in seconds */
-+    uint8_t wdt_job;        /* action on expiry (APPLESMC_WDT_*) */
- };
- 
- static void applesmc_io_cmd_write(void *opaque, hwaddr addr, uint64_t val,
-@@ -162,6 +178,48 @@ static const struct AppleSMCData *applesmc_find_key(AppleSMCState *s)
-     return NULL;
- }
- 
-+static void applesmc_wdt_expired(void *opaque)
-+{
-+    AppleSMCState *s = opaque;
-+
-+    trace_applesmc_wdt_expired(s->wdt_job);
-+    warn_report("applesmc: watchdog expired, forcing the guest down");
-+    if (s->wdt_job == APPLESMC_WDT_SHUTDOWN) {
-+        qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
-+    } else {
-+        qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-+    }
-+}
-+
-+static void applesmc_wdt_set(AppleSMCState *s, uint8_t job, uint16_t seconds)
-+{
-+    s->wdt_job = job;
-+    if (job == APPLESMC_WDT_DISABLE || seconds == 0) {
-+        timer_del(s->wdt_timer);
-+        trace_applesmc_wdt_disarm();
-+        return;
-+    }
-+    timer_mod(s->wdt_timer, qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
-+              (int64_t)seconds * NANOSECONDS_PER_SECOND);
-+    trace_applesmc_wdt_arm(seconds, job);
-+}
-+
-+/* Act on a guest write once its full payload has been received. */
-+static void applesmc_write_key(AppleSMCState *s)
-+{
-+    if (!memcmp(s->key, "NATi", 4) && s->data_len >= 2) {
-+        /* Big-endian seconds; stored only, the "NATJ" write arms the timer. */
-+        s->wdt_timeout = (s->data[0] << 8) | s->data[1];
-+    } else if (!memcmp(s->key, "NATJ", 4) && s->data_len >= 1) {
-+        applesmc_wdt_set(s, s->data[0], s->wdt_timeout);
-+    } else if (!memcmp(s->key, "OSWD", 4) && s->data_len >= 2) {
-+        uint16_t seconds = (s->data[0] << 8) | s->data[1];
-+        uint8_t job = seconds ? APPLESMC_WDT_RESTART : APPLESMC_WDT_DISABLE;
-+
-+        applesmc_wdt_set(s, job, seconds);
-+    }
-+}
-+
- static void applesmc_io_data_write(void *opaque, hwaddr addr, uint64_t val,
-                                    unsigned size)
+ struct RaspiMachineState {
+@@ -193,7 +192,7 @@ static void setup_boot(MachineState *machine, ARMCPU *cpu,
+                        RaspiProcessorId processor_id, size_t ram_size)
  {
-@@ -218,6 +276,7 @@ static void applesmc_io_data_write(void *opaque, hwaddr addr, uint64_t val,
-             trace_applesmc_write_len(s->key[0], s->key[1], s->key[2],
-                                      s->key[3], s->data_len);
-             if (s->data_len == 0) {
-+                applesmc_write_key(s);
-                 s->status = APPLESMC_ST_CMD_DONE;
-                 s->status_1e = APPLESMC_ST_CMD_DONE;
-             }
-@@ -229,6 +288,7 @@ static void applesmc_io_data_write(void *opaque, hwaddr addr, uint64_t val,
-                 s->data_pos++;
-             }
-             if (s->data_pos >= s->data_len) {
-+                applesmc_write_key(s);
-                 trace_applesmc_write_complete(s->key[0], s->key[1],
-                                               s->key[2], s->key[3],
-                                               s->data_len);
-@@ -325,6 +385,12 @@ static void qdev_applesmc_isa_reset(DeviceState *dev)
-     s->status = 0x00;
-     s->status_1e = 0x00;
-     s->last_ret = 0x00;
+     RaspiBaseMachineState *s = RASPI_BASE_MACHINE(machine);
+-    int r;
++    ssize_t r;
+ 
+     s->binfo.ram_size = ram_size;
+ 
+@@ -226,9 +225,15 @@ static void setup_boot(MachineState *machine, ARMCPU *cpu,
+      * the normal Linux boot process
+      */
+     if (machine->firmware) {
+-        hwaddr firmware_addr = processor_id <= PROCESSOR_ID_BCM2836
+-                             ? FIRMWARE_ADDR_2 : FIRMWARE_ADDR_3;
+-        /* load the firmware image (typically kernel.img) */
++        hwaddr firmware_addr;
++        if (processor_id <= PROCESSOR_ID_BCM2836) {
++            // For RPi 0/1/2 (arm, 32 bit mode) support kernel.img loading at default address
++            firmware_addr = KERNEL_ADDR_PI2;
++        } else {
++            // For RPi 3 or newer boards (aarch64), support edk2 firmware
++            firmware_addr = 0x0;
++        }
++        /* Load the firmware image (typically kernel.img or edk2 firmware) */
+         r = load_image_targphys(machine->firmware, firmware_addr,
+                                 ram_size - firmware_addr, NULL);
+         if (r < 0) {
+diff --git a/tests/functional/aarch64/test_raspi3.py b/tests/functional/aarch64/test_raspi3.py
+index ae9eed3589f..709c7221fa4 100755
+--- a/tests/functional/aarch64/test_raspi3.py
++++ b/tests/functional/aarch64/test_raspi3.py
+@@ -29,6 +29,18 @@ def test_aarch64_raspi3_atf(self):
+         self.vm.launch()
+         self.wait_for_console_pattern('version UEFI Firmware v1.15')
+ 
++    def test_aarch64_raspi3_bios(self):
++        efi_name = 'RPI_EFI.fd'
++        efi_fd = self.archive_extract(self.ASSET_RPI3_UEFI, member=efi_name)
 +
-+    if (s->wdt_timer) {
-+        timer_del(s->wdt_timer);
-+    }
-+    s->wdt_job = APPLESMC_WDT_DISABLE;
-+    s->wdt_timeout = 0;
- }
- 
- static const MemoryRegionOps applesmc_data_io_ops = {
-@@ -388,6 +454,10 @@ static void applesmc_isa_realize(DeviceState *dev, Error **errp)
-     applesmc_add_key(s, "NATJ", 1, "\x00");
-     applesmc_add_key(s, "MSSP", 1, "\x00");
-     applesmc_add_key(s, "MSSD", 1, "\x03");
-+    applesmc_add_key(s, "NATi", 2, "\x00\x00");
-+    applesmc_add_key(s, "OSWD", 2, "\x00\x00");
++        self.set_machine('raspi3b')
++        self.vm.set_console(console_index=1)
++        self.vm.add_args('-cpu', 'cortex-a53',
++                         '-nodefaults',
++                         '-bios', efi_fd)
++        self.vm.launch()
++        self.wait_for_console_pattern('version UEFI Firmware v1.15')
 +
-+    s->wdt_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, applesmc_wdt_expired, s);
- }
  
- static void applesmc_unrealize(DeviceState *dev)
-@@ -395,6 +465,10 @@ static void applesmc_unrealize(DeviceState *dev)
-     AppleSMCState *s = APPLE_SMC(dev);
-     struct AppleSMCData *d, *next;
- 
-+    if (s->wdt_timer) {
-+        timer_free(s->wdt_timer);
-+    }
-+
-     /* Remove existing entries */
-     QLIST_FOREACH_SAFE(d, &s->data_def, node, next) {
-         QLIST_REMOVE(d, node);
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index fc01cc9b7d..d94a5fba8a 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -48,6 +48,9 @@ applesmc_data_read(uint8_t c0, uint8_t c1, uint8_t c2, uint8_t c3, uint8_t pos,
- applesmc_write_len(uint8_t c0, uint8_t c1, uint8_t c2, uint8_t c3, uint8_t len) "write key %c%c%c%c len %u"
- applesmc_write_data(uint8_t c0, uint8_t c1, uint8_t c2, uint8_t c3, uint8_t pos, uint8_t val) "write key %c%c%c%c [%u] 0x%02x"
- applesmc_write_complete(uint8_t c0, uint8_t c1, uint8_t c2, uint8_t c3, uint8_t len) "write key %c%c%c%c complete (%u bytes)"
-+applesmc_wdt_arm(uint16_t seconds, uint8_t job) "watchdog armed %u s, job %u"
-+applesmc_wdt_disarm(void) "watchdog disarmed"
-+applesmc_wdt_expired(uint8_t job) "watchdog expired, job %u"
- 
- # avr_power.c
- avr_power_read(uint8_t value) "power_reduc read value:%u"
+ if __name__ == '__main__':
+     LinuxKernelTest.main()
 -- 
 2.55.0
+
 
