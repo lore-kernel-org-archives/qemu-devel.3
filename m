@@ -4,112 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD4FFC5DF85
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 17:14:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18288C5DF85
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 17:18:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwjrO-0006Wf-8n; Wed, 19 Aug 2026 13:13:54 -0400
+	id 1wwjvl-0007xk-A0; Wed, 19 Aug 2026 13:18:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wwjrM-0006WW-OR
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:13:52 -0400
-Received: from sonic308-55.consmr.mail.gq1.yahoo.com ([98.137.68.31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wwjrK-0005xU-T8
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:13:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aol.com; s=a2048;
- t=1787159627; bh=BanAkv7rgc8Cm9c0aFLe97SGo72w3NkF9rLVAthNeQQ=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From:Subject:Reply-To;
- b=HsM/Au0jM8VK870ek+t9k8ep3KXLMNzFohuKoFKvsmRYQiJCqd1ffRRWrncFnhlOUf4c1RwYb2itcnEfvQHv1CWn2zDOaLSjRwGVwjMD650PUwRM/PLvU2lXkIjraM3e6eVXzA32KODVDHmNNU1cXxA9ERatgzFppxkk1xiiaYkNivp1omXHQmXNByZVOGHsPkU6B85xUZ9STMWZkhwV2uU7X+zkIyjXimAuH546EMWctkyWDXcYgn2DqiBIV/LLkn/af/yXz+y3NEaEcZWdvd1c9m3B5FKiklo/HpdygN3zN0c1y/B6O9S3rx/LcRqcf0jz7j8X6bKAfLC5+FZmWw==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1787159627; bh=bOQF6M36pSZCahM7VdwAAR/NtnEHpJ7B+U55I/q8XeI=;
- h=X-Sonic-MF:Date:Subject:To:From:From:Subject;
- b=NEM5pY58Myc/T9ZHXKD+bCoPyy+KANjAW+dTokG6rrm6rtPUEXBpYYD8km+jBfrwht5DW09Gc8enknCssXJ0klmLJt83U/47lmmqgWw3v0J6nLGMOd0mphRFzHHBpancTKnpYnl/SBrontXqSpHBYiYkcTuM42vsYPkUvd7B1f4wlGTrwlX5fMQFGLxdmBpZvtTUmOoqW24U1bwa567c2V6wvipTUosMzENxvTI/kfAA68Xv6Cj3uSNqYNRs4ZLbXQlqkDwvzSsv+pFAM3hOoacYctadeZHZcKOvO+tJb824qF7dZp4GxOrZsar/gWQMDmCEgTxUcvzMZS2ZRFcPnQ==
-X-YMail-OSG: I47cM1cVM1kgh0nrQvai66kGGwf.OQnEcPY_KKa6ubPsjpmNb1m.cAe9xxsraL9
- lR.agm7gh9T5pVLcVdi.lvsQfGO89Sj0Do5FjgW18spVhO4AZkw_qV4aUjyal._JJi4NiBCO9qbl
- NmKwURDqoGtPYDqEK5JmBnVDJmzlzH73pp2OHo0Xycef9Wg8GY4.M2TiH4342VfyvUyzZBiajTON
- cPRiRYqSfEtRju3UeoKKnue3vbcV4Uf5wMHivUN18JzHP.sfew3QKbhNgUKxT8OL2y.NiUPFNLM0
- C59Y2KGmBoaPtHJHd84kAAdskmsFFjOvMfXsb3NS1D5iNaVG4MoMUgW4SjT_VxBbM6PyrRcf5N79
- FgriVgpZk60SGw.GTw63IzlLLAQQras.bLwowZDY83dIW0q5bo4DGb2qY3DroeQK8XPZ7zAidWqM
- fwzfav1pMmlbdo_TPccMRXnBiCVxolelSMd6g94VL8RR618u1ehTstEa4bTBwZ0.JheWxplDGFov
- qmMBjtP0mBEeX.w5rR9PjATdL2KPR5VfVhYc23MwET2LdhS_uCS9ckViTfINclegtLugH6mJJcrm
- GCksJD4sfekYro7WglZkfcN35G4TXPY6gpOFk1_yd2oluAay4Y3jdzfACKLjvCIwNry6GBo4W0B_
- 43SK.EYE5cnP6I_Sv8u.1m3gietWkqml5GPE6u5UxhGG24swj3zZ4oOsQzJcCAKr0Ujcjne8qqaK
- AOH3NDEcsxE.7XyV33mB.dWk8HOyYJ7Kn4UtvqrcLU46h2rhN9kVQ1poHKMh.hQH4DciqrURDmY5
- AW7gpddl2ebUkqXxk05UP3AA0wPqzcFFyazNwGUY6YMnEh8nOn9..dMWI9BL0vlbik0wd276e7M1
- 7ceWZfrD9Mln_36kmG7ewXcqEjRBUXmy8xz3NLmvj0mnCJ0jIllSpSrh9s.jXMQ0t.ZRogXZNIr9
- pA0hN67nFSOaBBdPOoRABGzgQO0dYSaDPZhz8QsK7wdywYD6oFRquo0a2SZ2exu_67EncDq0Qe9P
- UnFjgvPKtckTz0Yx8RPxJH6oozQ_jdbFzJ9zoChY05hSOla_.ZQgnEMrIqIi1HWWwexfQxdbIMIe
- aLcEM5fiomtJXrKYVx2Q3Fpkg0nKwjFoPg.XaJvCYZP67yt8YHMmf3heBqyrvPLwyWRi0GMbGBkr
- IWaJi9lCtjvhJ.B5WNsIPW_8znlYAfbuCicRXtAxRAXs2PTGGBrDEaM_vH1YbK0DTnFdOIm4hWSU
- P6Q7mlZ_kbTn0hYnniF39NFU02S8EOHpR670ZBDOmMH8ZhH.IU49AAz4zJIujHjkWf_UbT5ILNaN
- tuWP4I9KbdJJrL6yzUkFu.77VC0bslbi7c25zT2WyyWLNKDm_uTtEC6I02kQU.fYzGtqUFXyrjOL
- S1Spa3MY2TeKmz28Pk9YQZvSzQw8XgV_gx4gPaCxdzE0P1NPgosg_VrP4zpl3WJwGz8BZMU6.hc5
- YQs8YfLctMkUEmT0k9_v0p5G20yBNKbdz9Vq6kUh.a3YcaCmj9Xh8qzi6nYhlYfNYjYB2MIGAHwT
- .jldyJB02PtyFDT.4WJ7RyiqEevt84XK3ufUCOTGkc5CCI.iEWRjpuRhFSG6ZkZnHX8m9J5WFJGi
- GbFRFZiXl8f0wQUmR3_q3jP7TVPRNIu8AnhZRXyrF_T7r4uXnSktYNXPj7e5vKa90ZikIHzaCemW
- uB7yic_0CI0.8xLe48RJC29qxsiiANI9h6_mTObTjLYLNbJqO8l_ZIbDuEq.0bb_4WOHvMK1JhyT
- ndRDqYdlr5Bjs74WnBV50YGg92hxQHnpnA9wtEXgFZLk.SYixbOUKmdcsjMSttTnhscWU4hICMOU
- zZ2.GrxVBJvdmY9uXGfhSF4jSL9RJjvasM5PAf7Zfm2G2WilzsifsDDHTGwMrA7rfWfQfj6FUkCA
- wOHE.Ivmpy5BykTKexO_h7JcM3ypWNJAA5e5YvK.vZXwYpwQwonGGjIJR.BtMvh7S3SbOmu40oqG
- dkeMJ.0Oq5L_.UW5_uMxCB6HXyycf5XZ6kVpRbdyARZ5btFtpw4mLe32RSn63zDQJr5ainQ.lIyF
- AHKHQaAI4bbMh3lmkNvzBY7xUzcWPPcfHijHpwbs2y28SPxCqG0yK8FVsg40HfBMdA7.HYsy9ria
- p7Rtqp17YdFWQWcub5KsJfi_ycoiCh2p4iIyk3YKhU_6GVVwMYNm5MK5MQHiyHd3Qh56PuWaKNox
- PVK7znSjMBroqX79WmjeeW7bsBiVslHKN2yAhR6ZlQtix
-X-Sonic-MF: <brchuckz@aol.com>
-X-Sonic-ID: 7905f90b-7e4e-497a-aa21-e5becffaebf2
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic308.consmr.mail.gq1.yahoo.com with HTTP; Wed, 19 Aug 2026 17:13:47 +0000
-Received: by hermes--production-bf1-54b5569bdc-t2h4f (Yahoo Inc. Hermes SMTP
- Server) with ESMTPA ID 742b15b49534c807090a38b8b6396e9e; 
- Wed, 19 Aug 2026 17:13:45 +0000 (UTC)
-Message-ID: <b14969c8-9676-404e-b7cc-ce13a6d7ff94@aol.com>
-Date: Wed, 19 Aug 2026 13:13:43 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwjvj-0007xW-RK
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:18:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwjvh-0006c0-7E
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:18:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787159900;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DmaBr9aFjJS5PQEJTqgq7VvB6EhExuOYpluKGSGAx8A=;
+ b=bKaxOPLjeVYSiGZrgMJ4dgZFUydIm4lWhzXxSP2zCHKt8eEcZ3XnoK8GKMvy/Yjcwcqd8B
+ cZ7aEfctRHwpUgrFGkSqrmfKjuh051KATClKo+1juDXsGbQqE5AKB3/nwrknuINOFX5Im3
+ 1V80pJqCRTWTA2pJz2w3KmaUh/NZsd0=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-632-S_vp_ZyJO8O1mgEeLLajjw-1; Wed, 19 Aug 2026 13:18:18 -0400
+X-MC-Unique: S_vp_ZyJO8O1mgEeLLajjw-1
+X-Mimecast-MFC-AGG-ID: S_vp_ZyJO8O1mgEeLLajjw_1787159898
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-934963b2bc0so138021785a.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 10:18:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1787159898; x=1787764698; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=DmaBr9aFjJS5PQEJTqgq7VvB6EhExuOYpluKGSGAx8A=;
+ b=nVGuIvllrl57Uq8Y5J30WeH+P0hb9Iu4EIZa2OLx8qk7pHm+4cQRUnRlLpLpGRFDby
+ ZSm2wGVMily9Ejwlg1Zvio30pumv4kW7rT7coU7CG4XVX1qX5GHVuvN/xjSINtT1MOxf
+ OGpEzm/VmjqOceaYnr+EQgl634znS/flSFYHVi07QmzW53TQEfHbTfXiu45ii/9iBmC+
+ lV2nGr9wxGOHhrT7P2ZW/1pgG0JyeiEiVLUl0c/balozODYsuQ+UeLsykEkQITFSm4VV
+ 6XvCCVXEtkVvIdhhnwgR0kHQtR0jhMsJ8EKsEuSta8r5HHggRQhScDj/4dgCZCJRQwN3
+ bphw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787159898; x=1787764698;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=DmaBr9aFjJS5PQEJTqgq7VvB6EhExuOYpluKGSGAx8A=;
+ b=XI4pfj4f74c4qdNdSH/RnYRip6+0s7N5YAzCSY+6sNwcZ1gZHvKFRTSCfmALdgKzXe
+ ehrZu4Ag+5k9oO3SL9ZyId5r5Kqk4jLLp9s1CvU/i0S1206vl0vhb+MWkK1TByMCzYJb
+ vF4CGtKpsn+pNdyiqBcxKers7tPKneImZfcVPcenaTRvizHaCoFVwxKKKWBCloBr3RzJ
+ oeFvneKwvXNjrDbDPnKpXNkoK0glLezOwqRrDdniTUlb5zAB1XJvkdjgCmuEIOCtNGNG
+ zW/vSxE/9gwLJdNBju9IFi2rv9yrpCDpZFTBx7ApJpvAD9+7OOGg615CS8sgsLBckaCA
+ QqLw==
+X-Gm-Message-State: AOJu0YxfdY6uAMARmRH+jwsoBn8KAQ+BFj9jCvyFzHswlv9U10idiXbJ
+ SlJH37LIbEz1I8elryELCRfpEimSZK+82XHmY/vQksI82F/A6K9Oes+gq9+Fmnk2cUCvg71vS8r
+ /G+wOX7Jr9IIEm3hx7qGL412oCFDjbFIDGrFh20DmsGy9ym71ZTcpOTqy
+X-Gm-Gg: AR+sD10VkD+L0uCV2ErJpgKu2ebVBMntpLNHJCiFZ3J90XxAXaZgnSWEexTkfOfX0jS
+ nxcZiWEsW7FAdQjkEXC9oNzl8XXFN9k/gzTqmP/nt/uNtAYYjdnknIKKIciEuqvLOZrgCC4P/aw
+ JPQvdBCeKfoOHAECebYMJzOUF8G/Vg2zX8hGv/e8EI29KxRyFLDwua1DuKCan/5AMn5Q5u3XKRi
+ UR+ZiFAN4GCNy59wxBmAX/8O85UysGbWhg2kpgNlztISx3htM5B2ZZsfDYbuDjrjRunbknFFqd0
+ YaXBDtwGoX5K4DY7JJnA81rwmIoZcJBGcoytKGnkjmKtJXob8Upe9LDSn4VdTCBMJgB7
+X-Received: by 2002:a05:620a:44d3:b0:932:df51:5172 with SMTP id
+ af79cd13be357-9371e677565mr562122085a.42.1787159897880; 
+ Wed, 19 Aug 2026 10:18:17 -0700 (PDT)
+X-Received: by 2002:a05:620a:44d3:b0:932:df51:5172 with SMTP id
+ af79cd13be357-9371e677565mr562116785a.42.1787159897239; 
+ Wed, 19 Aug 2026 10:18:17 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-937205815d8sm176457585a.35.2026.08.19.10.18.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Aug 2026 10:18:16 -0700 (PDT)
+Date: Wed, 19 Aug 2026 13:18:05 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: Re: [PATCH v2 8/9] hw/arm/raspi4b: Drop board_rev for 32bit hosts
+Message-ID: <aoXlTZQQ-ywdCIAJ@x1.local>
+References: <20260818172012.3052821-1-peterx@redhat.com>
+ <20260818172012.3052821-9-peterx@redhat.com>
+ <c5e8b837-5921-41a5-8314-d61a629c7057@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
- support
-To: Jan Beulich <jbeulich@suse.com>
-Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
- Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
- xen-devel <xen-devel@lists.xenproject.org>
-References: <20260802050824.10554-1-brchuckz.ref@aol.com>
- <20260802050824.10554-1-brchuckz@aol.com>
- <2110d4b7-ae37-47aa-99be-ab59e16f6167@suse.com>
- <67579eba-e222-41dd-84bf-8440d2eaf2a9@netscape.net>
- <da2200cd-def7-4cce-a6c2-9f9ac9e202ce@suse.com>
- <de56c8bd-f0e8-4fe9-8cf5-f6807698176c@aol.com>
- <02a7dc18-4184-4e86-84cb-121769187f71@suse.com>
- <1858e8e6-73fa-4017-93e2-c733fbf0ec8d@aol.com>
- <d6e603bf-8dc5-4ac7-842f-ff9d1f67b98f@suse.com>
- <fdec0b6b-eddf-4a36-a755-c67963daa9ea@aol.com>
- <6ecf80ef-2f0e-44fb-beab-dbcf065a4431@suse.com>
- <bb44067c-6739-4e83-a0fd-cc7ea797048f@aol.com>
- <4c58bda6-e9ed-438d-b96e-feda74a6c4c7@suse.com>
- <31a5870f-2a4d-4dc0-af9c-f0567e0f6fb3@aol.com>
- <db8fd04d-bbc7-41c7-8473-b821d7f77d5f@aol.com>
- <302ed12f-40ca-405c-80ca-ac4f2785d754@suse.com>
- <cdae1785-4d9a-4aab-929e-de55c26b7b94@aol.com>
- <10cd9f6b-678b-407b-a51e-70e9ed7a35fd@aol.com>
- <131b1252-b108-4b4c-8457-673ff0d20d5e@suse.com>
-Content-Language: en-US
-From: Chuck Zmudzinski <brchuckz@aol.com>
-In-Reply-To: <131b1252-b108-4b4c-8457-673ff0d20d5e@suse.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: WebService/1.1.26254
- mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.aol
-Received-SPF: pass client-ip=98.137.68.31; envelope-from=brchuckz@aol.com;
- helo=sonic308-55.consmr.mail.gq1.yahoo.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c5e8b837-5921-41a5-8314-d61a629c7057@oss.qualcomm.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,51 +121,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/19/2026 9:51 AM, Jan Beulich wrote:
-> On 19.08.2026 14:36, Chuck Zmudzinski wrote:
->> On 8/19/2026 8:16 AM, Chuck Zmudzinski wrote:
->>> Yes, I agree that v3 of the patch to hvmloader should presume that the DM can get
->>> a copy of the OpRegion and read its contents so most of this can be done in the
->>> DM instead of in hvmloader. So from hvmloader's perspective, the patch will be more
->>> about avoiding the layering violation than anything else.
->> 
->> However, there is one advantage, from the viewpoint of the Xen virtualization platform
->> as a whole, to do the patching of the OpRegion in hvmloader instead of in the DM.
->> 
->> If we patch the OpRegion in hvmloader as v2 of this patch does, we provide a common
->> solution for extended VBT support for Intel IGD devices that would be compatible with
->> all DM implementations, not just with Qemu. So why not do the patching of the OpRegion
->> in hvmloader?
-> 
-> As indicated before: If the OpRegion holds data that is needed to drive the
-> device, and if the OpRegion is exposed writable to guests, then guest can
-> screw up that data such that subsequent guests won't work anymore. Hence
-> exposing to guests (which includes hvmloader) needs to be stopped, or at
-> least be limited to r/o. That, in fact, includes exposing to any privilege-
-> restricted DM as well.
-> 
-> Exposing r/o may be entirely okay (i.e. may not be a layering violation),
-> depending how exactly an OpRegion surfaces for a device (on the host). Aiui
-> it's not addressed by any of the BARs, yet it looks like it needs similar
-> treatment.
+On Wed, Aug 19, 2026 at 02:54:23AM +0200, Philippe Mathieu-Daudé wrote:
+> On 18/8/26 19:20, Peter Xu wrote:
+> > QEMU has switched to 64bit-only hosts for all system/user emulations.
+> > 
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >   hw/arm/raspi4b.c | 4 ----
+> >   1 file changed, 4 deletions(-)
+> > 
+> > diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
+> > index e1595a875f..5f7abbb4c4 100644
+> > --- a/hw/arm/raspi4b.c
+> > +++ b/hw/arm/raspi4b.c
+> > @@ -111,11 +111,7 @@ static void raspi4b_machine_class_init(ObjectClass *oc, const void *data)
+> >       MachineClass *mc = MACHINE_CLASS(oc);
+> >       RaspiBaseMachineClass *rmc = RASPI_BASE_MACHINE_CLASS(oc);
+> > -#if HOST_LONG_BITS == 32
+> > -    rmc->board_rev = 0xa03111; /* Revision 1.1, 1 Gb RAM */
+> > -#else
+> >       rmc->board_rev = 0xb03115; /* Revision 1.5, 2 Gb RAM */
+> > -#endif
+> >       raspi_machine_class_common_init(mc, rmc->board_rev);
+> Here I'd rather keep the machine. IIRC someone already suggested
+> to adapt the board_rev with the CLI provided memory size.
+> An improvement for tomorrow, meanwhile:
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-Yes, the OpRegion is not one of the BARs as specified by the PCI specs, but
-it functions more or less like a BAR region with the devices's ASLS register
-at offset 0xfc in the PCI device config space of the device acting like the
-BAR for that region.
+Sure, I can also drop this one for now.  Thanks,
 
-Actually, in hvmloader code, this value of 0xfc for the OpRegion ASLS register
-is added to the header file where all the other registers defined by the
-PCI spec live: tools/firmware/hvmloader/pci_regs.h, but in that file it is
-defined by the PCI_INTEL_OPREGION macro.
+-- 
+Peter Xu
 
-So this is another cleanup of this I could do along with this patch: Remove
-the define of PCI_INTEL_OPREGION from pci_regs.h (after all, it is not part
-of the PCI spec anyways) and pci.c (or the new intel-opregion.c file if some
-version of it survives until later versions of this patch) can get the value
-for the ASLS register from a header where specs for the IGD OpRegion are
-located instead, or it can just be added to config.h where the other IGD related
-definitions currently are in hvmloader code.
-
-Chuck
 
