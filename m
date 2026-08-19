@@ -4,111 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59913C5DF87
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 12:38:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CE9AC5DF6D
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 12:43:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwfXY-0006hO-C3; Wed, 19 Aug 2026 08:37:08 -0400
+	id 1wwfds-0008EF-M3; Wed, 19 Aug 2026 08:43:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wwfXV-0006gx-U7
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 08:37:05 -0400
-Received: from sonic301-21.consmr.mail.gq1.yahoo.com ([98.137.64.147])
+ (Exim 4.90_1) (envelope-from <opensource@fvhovell.nl>)
+ id 1wwfOH-0004cs-Pf; Wed, 19 Aug 2026 08:27:33 -0400
+Received: from outbound.soverin.net ([2a10:de80:1:4092:b9e9:2292:0:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wwfXT-0005PW-IJ
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 08:37:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aol.com; s=a2048;
- t=1787143020; bh=aQMJaWrBE/UDIgSTKcnwI0kKyEcWtqyD5o/eXF4SQZY=;
- h=Date:Subject:From:To:Cc:References:In-Reply-To:From:Subject:Reply-To;
- b=S/KUGWlwLxiuTsJv9Xawxm1uFPyHtstQYTAuhiZ7kINHfcZ0/idfIcBoNKP31gJKiV1f40lyNaclhr68gIAMVwXusqcapQhtAbSuToP2yyNzxmlYYESHHbalyGt+oJ7oauFRINDrZhLRxiJFDh93bjyo3T1k+Wy9Fn+hQXbjzLlYY0oRDEc4Z9aHNFW7pKbMWLy0u9cGP67gV6UHBShiBXe+fiqjdkgEXZLpQx9OOzDjrbdRMCFqWnQoskVBrwt7VI/vXqmbphJ1h0uazL7/27GBrAA+hMqxyHUzzQjdGI+ne+KmuXIl4R45veMOo9USRU6AgRy67/zZp2fUITz4Zg==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1787143020; bh=3rUIrosknPXJgf2KIJ7zgMrdZ5x2aqxv9+baVEKKqH1=;
- h=X-Sonic-MF:Date:Subject:From:To:From:Subject;
- b=g2YCPbHX6vzEG5t05jOyO6OEWs2UUfJ4dqHUAmPU+W9m8W34dvEPXJmMKrgqlhAGQamcpw8+zmMaqw8+/W7MMEkDph0Uc/QYxv7tSJumCQO5zdqOmcrR5V+slrT8dBD9hordzvYpbs914xm+8hUdKhEwQSKlRhGGWC0M8nqHJaiwV0KZ1LuOP7VsqWhVJ4dODE01pu0d4TbtV/sNsh9M8/Hs5dzsuZm/99kvzmOMSrxmOZdby1V4lOZX6Ljeu5yz+Q9VBdvcigAz2eaUDNXlyE/cPatmB+SfCyo3T0i040XU7wscgdKryIUFHgZrNe58DjAjP0lQgk/R5cg1Sfw4WQ==
-X-YMail-OSG: xPWzEPwVM1mtGePVdgn3cg1Z.kjN7ZFGIXPv1byaQ9chaO2V2rRZdSybUH9R_MA
- yEIakh8jX6Yz0.ylc12zIhoY0YIAFStonCSCCv3yup7t7_jp_64ocrWcpVIZrWiyWpKAKc5BwBJg
- G5OyE_sEW9MinqB9rXdGeupgZMpSK5t_Nru.0Yig2K4KV8sig9jRi66zswPNzt7RgEtDM8DZftA_
- cBNmgz3DwsmSoa6OXfdYSFbo3cSWexY1HfeUICIodDSwcfum9xvj0CExcUUjU93rkuWqY0UxtP1m
- NPLN66imAdNb9WabKnXnZLVjJr.tuHTzbIe9SFtdGaRfp3SoE7uOFawmmpydTpsfftGpBKNUlWrS
- qV6ywFoi4J49ByMyD6fqfuusE2oeQk6CQkAH3Gzr1j6ZOVck2qePyfOwzW9IbaswGjB5E85qFDVS
- KYYB3pr4ME8.CWEsP5xHU7ZS0dyLtk.CS71OxmE3NMjQYE4FETrj47i0IlKkweZvaJzLKJL7beUM
- HBbco.8xKBIJvJHYTXCY2uO5X9Mp31kPUR7k6ELS1tCgwc.uR2dj6O8gAwdlQ6atpJpPuhkSIyFt
- z_IKTpVOk4vwnEZVm2B4doIq9f.pvTRn_1z_geo6Z3hDBKmoAT9ppu_KjyEwOw6vq.X_MM0n8pWM
- EvnoShVLS55iwxhog18VMNH9BuhdTxqIs3hSHVghNRn1d1X8zHABY2fzoz5R6HmF57eXoliWOw5Y
- EmakxoPJdheEM6BLWpX_UK1IbS9ifJGJ_.JNZYs2rN7w8sk3mxJBZIc1_tf3_dURUCz_xmSe3iEx
- LKv9fzCfAQQqBOu8i2kEZ_akzBrtn_Cj7mO7xaOtaEu3eGN6LK5l7NSRuyw7IFA6a_u2DTxb97PY
- EtfFGu9nh7wa7hddpRyXboTFvmlSdufPM0oftBhOZbsBkUhXbfsCpu1etX.YaLzF1mm9dFfu7HpV
- GUyWfzySQcS3quJV_UhpFipcf_HMeJfzFjFVLIl.DifRX.qo_GySJgsRlfuatnqGdd5o8lz2vVls
- 0CSQ0x_DuZFeVLBqTprltBq4Ys.x3H7IE5C826RkIYbR74ZcdBWCtUrzuFn4yv4SzHJZCdd970yt
- 92riYm3XRyw10L8qFXMaK3sdCeGatrQjNlW7V_DvIHOdbaeys9j7EG8RyxlEZUhHz3w2WQn_EvcT
- ihvPZ0Hheh0Ts.SypD6zRr.mtRobu3kSlCsYKG3O.6hrReCx8SfsUDI1wFhCNwUc.SadOgk5pMCA
- bpD3cKprFNy9xpdbuzNKDnn6ShYFQit_aW00D2Qs1PS4GdgF1NMrxXHCxbRoRSjdzvqE8faBnkfq
- ZiUFt9Rq03W2EiEgvTKjUQJnNHMkNpm3rSMbYSgmtLDgHoCjoJXEiw3CPymxbj3CfjH7Gaq4_FoW
- b_6QPgBrZkC76jSdrDZ6cpG1tSJfhWjlLs75IteWnUTTL9HyfSIyU4zmmKq0kmUsq3NwMu4APJc3
- nkF6hm6CxTAfwyQ3LTrVs4fr2noJfdKYBhQj_sWr9kfKTwvo33ZBeYxtym86pBJR33GqfDWfBRDB
- 2SSXH9YQkNMsBwcDpTSs6CJ3AuS4gH48mtdphsWrgzXoKESZGNtuYCmFOIsc.o1k00V2hNhZ8XL7
- 6szzk3.HknOA4dmOBvGwQDDQb9eFXpo.emJ_hwId44pUTjanShlk3jM8GBfUEySRpG9nm_iJA2pm
- L5XnxufqHBSbqPjG1Wl1AAhMl8PozDoWI2oH_..uBOlJMBfEBGtPExpA548YSr3BY0MjRwJm8fFL
- AK4BEogjOZn0H8C1BxHpzmLPbKSP03.jj1QswqIfLPC4dwWi_lKpGwaYMMyLVD1ztABcoNGmPH1N
- caH7jpRlliK_qGPM19SA6AI_z.jyYUDs948htYAM3A1II2Wld.agTD1zD05qWgju4S2HzCi53reU
- ItzdHfUkmuK_9CdY1V0r98hF5sGC4GKsIfbvGfy52twrkgJzhQJNenOcOI2aMHpzeFzFqSroilsP
- q5wUyxufcEQDQOz2ouEAE_APkSPtrlgAibyiLyZqeYVWn7OsDfsojGztHH95BZuhvoy7aJ6ee9DJ
- CEY3Crv_w2gPXbGcWVdkm03dnU7N6ojjkGvWricDREpaaanr4OlNZ9o8SfGl.ZoJqBaqXlhfdysL
- wwB2nHFuKcJD4JVgFthwknX3ToA9UovoF08q_aUV3T5ZCzKTub2.0kiCwMa6I_9WgtCwyN1.eMuY
- elMl4fi_dBma9Vzolqgc5VCKrMjdn8r1mSyCs.QtKlWRcWshjmQ--
-X-Sonic-MF: <brchuckz@aol.com>
-X-Sonic-ID: 61385cdc-0033-4694-b92a-75ff42d11af2
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic301.consmr.mail.gq1.yahoo.com with HTTP; Wed, 19 Aug 2026 12:37:00 +0000
-Received: by hermes--production-ne1-6dbcb84f44-dmnws (Yahoo Inc. Hermes SMTP
- Server) with ESMTPA ID 50442b8dd76f8214298a192fce311db5; 
- Wed, 19 Aug 2026 12:36:58 +0000 (UTC)
-Message-ID: <10cd9f6b-678b-407b-a51e-70e9ed7a35fd@aol.com>
-Date: Wed, 19 Aug 2026 08:36:59 -0400
+ (Exim 4.90_1) (envelope-from <opensource@fvhovell.nl>)
+ id 1wwfOF-0003Ay-1i; Wed, 19 Aug 2026 08:27:33 -0400
+Received: from smtp.freedom.nl (unknown [10.10.4.107])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by outbound.soverin.net (Postfix) with ESMTPS id 4hQ5S14mHqz1ygm;
+ Wed, 19 Aug 2026 12:27:29 +0000 (UTC)
+Received: from smtp.freedom.nl (smtp.freedom.nl [10.10.4.107]) by freedom.nl
+ (Postfix) with ESMTPSA id 4hQ5S03HSNz40; 
+ Wed, 19 Aug 2026 12:27:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=fvhovell.nl;
+ s=soverin; t=1787142449;
+ bh=+UNopd3rEpoOE4vhf7HjnT3fdOZb12RXY49c0YWAI1Y=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=cZD5r3s8AS6KopDgw/Gbqxc1D+ucrgCQbgqRqUmrslTxItfaLCQq9fU+U0KciAp2o
+ siCWSrdEwGA0ceU8cPUBiNa5J60uUd/DGg/3EyEp02/tcghbDsyCyR86C94qYm5LMW
+ 84SrXdmhHSUB9F8glz7WODR+JdGEjNmcbCbh2H1JEoHKRUopCfilVJZ5k5Z3/EHU21
+ AzNLRlDA0foAbvbLdxxdDRjS7m7pIIrt9gG6g0cppTg2mSeAuboGb09p1Vuw3R72e4
+ BoTIaGOb7+fkpvcAeurGxcd3uu7HoqH/+FEtOV8+OXuPnFUavB8IJ71opzmH4k8YSh
+ pnkXPoghnzEhA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fvhovell.nl; s=soverin1;
+ t=1787142449;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=84PrhzbeQahLUde2Vy+bAnQx9PYAr4wkmcY+KvX6SBY=;
+ b=b7JLbtG96XXgOyLkSDVGg4Cag4hXQu1Z5CXLE87XWQYAggVqITYb+1wBJGvlGJqQ7hkYCt
+ qu7uBCBH9ntVhwLTAXlbcehaHs/q/k/XVuWG8pQT9i85MiO0fUqeMKsLQL7wBW9WFy74GN
+ 2lErwwqAwnSVH4Zi3m8xT6PyOWgEXhQLo5i4YoJZarXO6QjCL3n338Nzk0gPnBqLjDP6X2
+ RWoKfe0DzdIKAJIWPa44kg2v5byowkza7uJOetZudgBYS4K7LB7t/NsMWPZBo/jyWzgD0W
+ Le72nfE6qrU7TyHKtkRLYgEhvCMWYS5D14D+rjjns+58B7J5pWbVmTzowi5xDw==
+X-CM-Envelope: MS4xfKnf/a1B+YrJV4mjQ7BtiwshbKr7ED2zFcnQwbo7DRzOZ0kV804VpDK0i3AlLyofBCOeclsNb8brXGViID94JQ9CPJ6zEqpp2hfkh+y+1duQ0q+HcEG2
+ pULPJPU0+rHZDJQz4UedVZopMIRHqjFQwAMPfes/i7uKEVcJgJU96WKr0zl4zB+hjgXChPC1eI03FMo/WJm2F3L6fBd8o8Q5c6CeYv7GKi0ERfvtnOArnRsb
+ xW6u78lOrAZQRIrfZ/rb/fAV3jKgS6KrtxxEclllwOTr4wA4Ynq8UbAn82eeRHH76tjSzxY3Y6OS5Cq3qEw+hxxPaCqDc2s+Y0ztcDT40dOlumypKfEADioA
+ InR4Ef3bFz8wSFhAj/yZhfJ1qPQt1h5Meww06sPx+0NnmbD9fBM=
+X-Soverin-Id: 01a019fd-a768-793f-9339-1ff1f212d531
+From: opensource@fvhovell.nl
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, "Peter Maydell" <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>,
+ =?UTF-8?q?Frederik=20van=20H=C3=B6vell?= <frederik@fvhovell.nl>
+Subject: [PATCH 4/4] tests/functional/aarch64/test_raspi3: update firmware to
+ v1.52
+Date: Wed, 19 Aug 2026 14:27:02 +0200
+Message-ID: <20260819122702.54173-5-opensource@fvhovell.nl>
+In-Reply-To: <20260819122702.54173-1-opensource@fvhovell.nl>
+References: <20260819122702.54173-1-opensource@fvhovell.nl>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
- support
-From: Chuck Zmudzinski <brchuckz@aol.com>
-To: Jan Beulich <jbeulich@suse.com>
-Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
- Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
- xen-devel <xen-devel@lists.xenproject.org>
-References: <20260802050824.10554-1-brchuckz.ref@aol.com>
- <20260802050824.10554-1-brchuckz@aol.com>
- <2110d4b7-ae37-47aa-99be-ab59e16f6167@suse.com>
- <67579eba-e222-41dd-84bf-8440d2eaf2a9@netscape.net>
- <da2200cd-def7-4cce-a6c2-9f9ac9e202ce@suse.com>
- <de56c8bd-f0e8-4fe9-8cf5-f6807698176c@aol.com>
- <02a7dc18-4184-4e86-84cb-121769187f71@suse.com>
- <1858e8e6-73fa-4017-93e2-c733fbf0ec8d@aol.com>
- <d6e603bf-8dc5-4ac7-842f-ff9d1f67b98f@suse.com>
- <fdec0b6b-eddf-4a36-a755-c67963daa9ea@aol.com>
- <6ecf80ef-2f0e-44fb-beab-dbcf065a4431@suse.com>
- <bb44067c-6739-4e83-a0fd-cc7ea797048f@aol.com>
- <4c58bda6-e9ed-438d-b96e-feda74a6c4c7@suse.com>
- <31a5870f-2a4d-4dc0-af9c-f0567e0f6fb3@aol.com>
- <db8fd04d-bbc7-41c7-8473-b821d7f77d5f@aol.com>
- <302ed12f-40ca-405c-80ca-ac4f2785d754@suse.com>
- <cdae1785-4d9a-4aab-929e-de55c26b7b94@aol.com>
-Content-Language: en-US
-In-Reply-To: <cdae1785-4d9a-4aab-929e-de55c26b7b94@aol.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: WebService/1.1.26254
- mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.aol
-Received-SPF: pass client-ip=98.137.64.147; envelope-from=brchuckz@aol.com;
- helo=sonic301-21.consmr.mail.gq1.yahoo.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Spampanel-Class: ham
+Received-SPF: pass client-ip=2a10:de80:1:4092:b9e9:2292:0:1;
+ envelope-from=opensource@fvhovell.nl; helo=outbound.soverin.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 19 Aug 2026 08:43:31 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -123,189 +94,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/19/2026 8:16 AM, Chuck Zmudzinski wrote:
-> On 8/19/2026 3:30 AM, Jan Beulich wrote:
->> On 18.08.2026 19:15, Chuck Zmudzinski wrote:
->>> On 8/18/2026 8:29 AM, Chuck Zmudzinski wrote:
->>>> On 8/18/2026 8:18 AM, Jan Beulich wrote:
->>>>> On 18.08.2026 13:52, Chuck Zmudzinski wrote:
->>>>>> On 8/18/2026 3:17 AM, Jan Beulich wrote:
->>>>>>> On 17.08.2026 18:04, Chuck Zmudzinski wrote:
->>>>>>>> On 8/17/2026 4:42 AM, Jan Beulich wrote:
->>>>>>>>> On 14.08.2026 17:23, Chuck Zmudzinski wrote:
->>>>>>>>>> On 8/14/2026 9:46 AM, Jan Beulich wrote:
->>>>>>>>>>> On 14.08.2026 15:18, Chuck Zmudzinski wrote:
->>>>>>>>>>>> On 8/14/2026 3:35 AM, Jan Beulich wrote:
->>>>>>>>>>>>> On 14.08.2026 02:45, Chuck Zmudzinski wrote:
->>>>>>>>>>>>>> On 8/13/2026 6:35 AM, Jan Beulich wrote:
->>>>>>>>>>>>>>> On 02.08.2026 07:08, Chuck Zmudzinski wrote:
->>>>>>>>>>>>>>>> -- snip --
->>>>>>>>>>>>>>>> +    /*
->>>>>>>>>>>>>>>> +     * Write rvda_host as 2 successive 32-bit values
->>>>>>>>>>>>>>>> +     * to communicate location of the VBT to the device
->>>>>>>>>>>>>>>> +     * model. If rvda_host is not 0, The device model
->>>>>>>>>>>>>>>> +     * unmaps the OpRegion and eventually maps the VBT
->>>>>>>>>>>>>>>> +     * after we also write the guest address where the
->>>>>>>>>>>>>>>> +     * VBT will be mapped.
->>>>>>>>>>>>>>>> +     *
->>>>>>>>>>>>>>>> +     * If we send rvda_host = 0 to the device model, it
->>>>>>>>>>>>>>>> +     * will assume we do not need OpRegion 2 support and
->>>>>>>>>>>>>>>> +     * it will not unmap the OpRegion.
->>>>>>>>>>>>>>>> +     */
->>>>>>>>>>>>>>>> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
->>>>>>>>>>>>>>>> +               (uint32_t)(rvda_host & 0xfffffffful));
->>>>>>>>>>>>>>>> +    unsigned long rvda_host_upper_32 = (uint64_t)rvda_host >> 32;
->>>>>>>>>>>>>>>> +    pci_writel(vga_devfn, PCI_INTEL_OPREGION,
->>>>>>>>>>>>>>>> +               (uint32_t)rvda_host_upper_32);
->>>>>>>>>>>>>>>
->>>>>>>>>>>>>>> Why would you need to communicate a host property to the DM?
->>>>>>>>>>>>>>
->>>>>>>>>>>>>> The DM cannot access the host rvda value because it is only accessible
->>>>>>>>>>>>>> from the host kernel, and the DM is only a user-space process on the host.
->>>>>>>>>>>>>
->>>>>>>>>>>>> I don't follow this: Anything the guest can access should also be accessible
->>>>>>>>>>>>> by its DM.
->>>>>>>>>>>>
->>>>>>>>>>>> I think the host OpRegion is not currently accessible by the DM.
->>>>>>>>>>>
->>>>>>>>>>> Can you explain to me how the region becomes accessible to the guest?
->>>>>>>>>>> That would then (hopefully) help me understand why the DM would not have
->>>>>>>>>>> access. Fundamentally any MMIO and any I/O ports that are assigned to a
->>>>>>>>>>> guest are also assigned to its DM.
->>>>>>>>>>
->>>>>>>>>> Currently, in the device model (Qemu) we have:
->>>>>>>>>>
->>>>>>>>>>     ret = xc_domain_memory_mapping(xen_xc, xen_domid,
->>>>>>>>>>             (unsigned long)(igd_guest_opregion >> XC_PAGE_SHIFT),
->>>>>>>>>>             (unsigned long)(igd_host_opregion >> XC_PAGE_SHIFT),
->>>>>>>>>>             XEN_PCI_INTEL_OPREGION_PAGES,
->>>>>>>>>>             DPCI_ADD_MAPPING);
->>>>>>>>>>
->>>>>>>>>> That statement is in the igd_write_opregion(...) function in the
->>>>>>>>>> hw/xen/xen_pt_graphics.c file of the upstream Qemu source.
->>>>>>>>>>
->>>>>>>>>> If I understand our current implementation correctly, this statement
->>>>>>>>>> is what gives the guest access to the host OpRegion (3 pages as defined
->>>>>>>>>> by XEN_PCI_INTEL_OPREGION_PAGES, and in agreement with IGD_OPREGION_PAGES
->>>>>>>>>> in hvmloader code).
->>>>>>>>>
->>>>>>>>> No, it introduces mappings of those pages into the guest's P2M.
->>>>>>>>>
->>>>>>>>>> I don't think this statement makes the host OpRegion
->>>>>>>>>> accessible to the device model, though, so I think, if I understand your
->>>>>>>>>> comment in an earlier about my patch resulting in what you called a "layering
->>>>>>>>>> violation" correctly, that our current implementation is also guilty of this
->>>>>>>>>> same kind of "layering violation."
->>>>>>>>>
->>>>>>>>> That code, if it can be successfully executed, indeed doesn't grant any
->>>>>>>>> permissions (to the DM or the guest). Instead it proves that the DM has the
->>>>>>>>> needed permissions to access the pages itself.
->>>>>>>>
->>>>>>>> So, are you saying it should be possible, without any patches to either Xen or
->>>>>>>> the Linux kernel, for Qemu to get a pointer to the OpRegion? If so, how?
->>>>>>>>
->>>>>>>> I think I could implement what you proposed in an earlier message and do
->>>>>>>> all (or most) of this in the DM instead of here in hvmloader:
->>>>>>>>
->>>>>>>>> The more correct thing to do might be for the DM to
->>>>>>>>> put in place a copy before the guest (i.e. hvmloader) even gains control.
->>>>>>>>> (How in turn the DM would learn of the contents of the opregion is a
->>>>>>>>> separate question then.)
->>>>>>>>
->>>>>>>> Actually, when I was developing this patch, I tried first to do it that
->>>>>>>> way, but the problem was, I could not find a way to get a pointer to the
->>>>>>>> host OpRegion in Qemu.
->>>>>>>>
->>>>>>>> So, how can I get a pointer to the host OpRegion in Qemu?
->>>>>>>
->>>>>>> You don't ask me this question, do you?
->>>>>>
->>>>>> Are you offended I asked this question? If so, I am sorry. You make me
->>>>>> afraid to ask it again so I will not do so unless you permit to do so
->>>>>> again.
->>>>>
->>>>> "Offended" is the wrong word; "very puzzled" may better get it. I'm not a
->>>>> qemu person, and I never have been. I can't really help much there.
->>>>>
->>>>>> All I can say is that surely qemu
->>>>>>> has an existing way to map (host) physical memory; see e.g. how
->>>>>>> xen_pt_msix_init() (imo bogusly) maps the physical MSI-X table of a
->>>>>>> device. "Bogusly" there because that's another layering violation. Plus
->>>>>>> (independently) there and here there's the issue of how to accomplish
->>>>>>> things when not running in Dom0, or when running de-privileged in Dom0.
->>>>>>
->>>>>> Well, that only proves Qemu *might* be able to access the MSI-X table of
->>>>>> a device, that is, if the calls to open /dev/mem and mmap it succeed.
->>>>>> Why is the MSI-X table all of the sudden relevant? Even if Qemu
->>>>>> can access the MSI-X table of some device, that does not prove that
->>>>>> Qemu can access the host OpRegion of an Intel IGD. So I think my point
->>>>>> still stands: I still don't see proof that it is possible for Qemu
->>>>>> to get a pointer to the host OpRegion without any patches to the current
->>>>>> implementations of Xen and the Linux kernel.
->>>>>
->>>>> The MSI-X table (and it being accessible to qemu) is the best analogy I
->>>>> could come up with, as that's one tiny area of qemu that I know at least
->>>>> a little.
->>>>>
->>>>> From a Xen perspective, this analogy should be sufficient: All you need
->>>>> from Xen is for it to permit to establish mappings of the underlying page.
->>>>> As I've pointed out when commenting on a code fragment you presented, the
->>>>> DM (domain) looks to have permission. Everything else is a matter of
->>>>> establishing such a mapping. There the MSI-X table code may also guide
->>>>> you. (Sadly it may also misguide you, since (a) I don't know whether it's
->>>>> appropriate to do things this way in qemu, and since (b) it is, as said,
->>>>> imo a layering violation.)
->>>>
->>>> I agree that accessing the host /dev/mem directly is cringy. I would not
->>>> really want to do it that way for the host OpRegion.
->>> 
->>> I looked at the current mainline Linux kernel code about access to memory using
->>> /dev/mem and modern distros set CONFIG_STRICT_DEVMEM which forbids access to
->>> ordinary system RAM but allows access to what the kernel developers call
->>> non-kernel memory. Here is a quote from a comment in arch/x86/mm/init.c file
->>> in the Linux source code:
->>> 
->>>>  * On x86, access has to be given to the first megabyte of RAM because that
->>>>  * area traditionally contains BIOS code and data regions used by X, dosemu,
->>>>  * and similar apps. Since they map the entire memory range, the whole range
->>>>  * must be allowed (for mapping), but any areas that would otherwise be
->>>>  * disallowed are flagged as being "zero filled" instead of rejected.
->>>>  * Access has to be given to non-kernel-ram areas as well, these contain the
->>>>  * PCI mmio resources as well as potential bios/acpi data regions.
->>> 
->>> So I think things like the MSI-X table and the OpRegion would qualify for
->>> /dev/men access even with CONFIG_STRICT_DEVMEM set, so after seeing this
->>> I expect I could get a pointer to the OpRegion running in Qemu using
->>> /dev/mem and mmap, as long as it is running in dom0 with root privileges.
->>> But as I said earlier, I agree that /dev/mem and mmap does not feel like
->>> the right way to do it.
->>> 
->>> So I would like to come back to something else you said in an earlier message:
->>> 
->>>> (How in turn the DM would learn of the contents of the opregion is a separate
->>>>  question then.)
->>> 
->>> Let me phrase the question like this: How could the DM gain access to the contents
->>> of the OpRegion, and for that matter, also the contents of the MSI-X table, without
->>> also committing a layering violation?
->> 
->> As said previously, I'm not a qemu person at all. Yet it's entirely a qemu
->> question you raise. From Xen's perspective, as also said previously, the
->> one prereq is there - the DM domain is permitted to access the page(s) in
->> question.
-> 
-> Yes, I agree that v3 of the patch to hvmloader should presume that the DM can get
-> a copy of the OpRegion and read its contents so most of this can be done in the
-> DM instead of in hvmloader. So from hvmloader's perspective, the patch will be more
-> about avoiding the layering violation than anything else.
+From: Frederik van Hövell <frederik@fvhovell.nl>
 
-However, there is one advantage, from the viewpoint of the Xen virtualization platform
-as a whole, to do the patching of the OpRegion in hvmloader instead of in the DM.
+Signed-off-by: Frederik van Hövell <frederik@fvhovell.nl>
+---
+ tests/functional/aarch64/test_raspi3.py | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-If we patch the OpRegion in hvmloader as v2 of this patch does, we provide a common
-solution for extended VBT support for Intel IGD devices that would be compatible with
-all DM implementations, not just with Qemu. So why not do the patching of the OpRegion
-in hvmloader?
+diff --git a/tests/functional/aarch64/test_raspi3.py b/tests/functional/aarch64/test_raspi3.py
+index 709c7221fa4..ffc6f2517fd 100755
+--- a/tests/functional/aarch64/test_raspi3.py
++++ b/tests/functional/aarch64/test_raspi3.py
+@@ -14,8 +14,8 @@ class Aarch64Raspi3Machine(LinuxKernelTest):
+ 
+     ASSET_RPI3_UEFI = Asset(
+         ('https://github.com/pbatard/RPi3/releases/download/'
+-         'v1.15/RPi3_UEFI_Firmware_v1.15.zip'),
+-        '8cff2e979560048b4c84921f41a91893240b9fb71a88f0b5c5d6c8edd994bd5b')
++         'v1.52/RPi3_UEFI_Firmware_v1.52.zip'),
++        '20b894d15cdb42e055872a7ee6a850aa9373aedcfefd27f19767d975ce4f7371')
+ 
+     def test_aarch64_raspi3_atf(self):
+         efi_name = 'RPI_EFI.fd'
+@@ -27,7 +27,7 @@ def test_aarch64_raspi3_atf(self):
+                          '-nodefaults',
+                          '-device', f'loader,file={efi_fd},force-raw=true')
+         self.vm.launch()
+-        self.wait_for_console_pattern('version UEFI Firmware v1.15')
++        self.wait_for_console_pattern('version UEFI Firmware v1.52')
+ 
+     def test_aarch64_raspi3_bios(self):
+         efi_name = 'RPI_EFI.fd'
+@@ -39,7 +39,7 @@ def test_aarch64_raspi3_bios(self):
+                          '-nodefaults',
+                          '-bios', efi_fd)
+         self.vm.launch()
+-        self.wait_for_console_pattern('version UEFI Firmware v1.15')
++        self.wait_for_console_pattern('version UEFI Firmware v1.52')
+ 
+ 
+ if __name__ == '__main__':
+-- 
+2.55.0
 
-Chuck
 
