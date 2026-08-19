@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6DB3C5DF88
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 15:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84965C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 15:25:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwiA4-00060x-7h; Wed, 19 Aug 2026 11:25:04 -0400
+	id 1wwiA5-00062Q-O8; Wed, 19 Aug 2026 11:25:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1wwi9y-0005wD-6k; Wed, 19 Aug 2026 11:24:59 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ id 1wwiA4-00060z-7U; Wed, 19 Aug 2026 11:25:04 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1wwi9v-0005nK-QJ; Wed, 19 Aug 2026 11:24:57 -0400
+ id 1wwiA2-0005oU-KR; Wed, 19 Aug 2026 11:25:03 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id DB0C443876;
- Wed, 19 Aug 2026 15:24:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C051F000E9;
- Wed, 19 Aug 2026 15:24:51 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id F09EE61126;
+ Wed, 19 Aug 2026 15:25:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2A21F000E9;
+ Wed, 19 Aug 2026 15:24:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1787153093;
- bh=HM693KI6NDehBscoX7RDjmC7+M+rGxWmkVW9+Tj4ayI=;
+ s=k20260515; t=1787153100;
+ bh=/8JZe4QUxylfRYcVX3vsTlHWrrEwATnl6VKsOCHBNJw=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc;
- b=cNGM3piFuR0umJjlp42AzVGZ6TXeVpsEc/GMoSpF/zTfLd42F2znZ1epKuhYSZEQS
- kWYADTMsbVY8BJJCSpzVouEdX6hTVuNhmgeFmWcUJ4K6CVL0AgbQxl22VDTW4sRRYH
- GhLZxOF5Fei27fWeciiy6hjqJRFrW/MFLcdEJlKbuGpzXP2W7Vn3evhf7rly+ksWv8
- eDjeooAQzv01UY/uRFwQJXHD+QeLPVducMRpq/XdJvZZMRxZtP+4Xgn5x6wdHYxjPl
- uakYufIMAKZdUoX4XBy1kGf+A6MHls3hdhrjS8fTapHXQBIM9LWFVFMGs5cUZGSYCg
- VqlMBGpHnklag==
+ b=VGFZQTwA11ayTUPKVl6JGzpECKp66A5g/uWs5h8XjJAINi8Y6I7EspQCUHgJIAjuQ
+ pae+l9R7GXNqdrYfN2jmSrSw75+/e53gNBdHKIFOGMmlt3RGF8dLdOkUpWaW3uMJUH
+ a14eAEcvCFKMtKSBUp/7kpJkMgAuLLIX0sL8vsLOqZi9O56EqCqcMNE6H+tUqMqC8d
+ gWiiHRZaaFbd+q/YMj5gFDeIPNrMGCrn73w1kwuYoLxgEmv56QQfav3xngDGZJtZSI
+ vYlb1bqg+b9foM6+5bQgRMwKuVpouZ03AN4nnQg5PCu35y5PpWetQqekbzMqzlmCgw
+ BBquylsmCXL5g==
 From: Daniel Gomez <da.gomez@kernel.org>
-Date: Wed, 19 Aug 2026 17:24:07 +0200
-Subject: [PATCH v2 5/7] hw/nvme: clamp mdts and zasl shifts
+Date: Wed, 19 Aug 2026 17:24:09 +0200
+Subject: [PATCH v2 7/7] hw/nvme: cap mdts for CMB/PMR-only
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260819-align-nvme-mdts-with-linux-v2-5-351ac2dfed64@samsung.com>
+Message-Id: <20260819-align-nvme-mdts-with-linux-v2-7-351ac2dfed64@samsung.com>
 References: <20260819-align-nvme-mdts-with-linux-v2-0-351ac2dfed64@samsung.com>
 In-Reply-To: <20260819-align-nvme-mdts-with-linux-v2-0-351ac2dfed64@samsung.com>
 To: qemu-devel@nongnu.org
@@ -50,15 +50,15 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  qemu-block@nongnu.org, Daniel Gomez <da.gomez@kernel.org>, 
  Daniel Gomez <da.gomez@samsung.com>, GOST <gost.dev@samsung.com>
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1787153075; l=1822;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1787153076; l=1413;
  i=da.gomez@samsung.com; s=20240621; h=from:subject:message-id;
- bh=V8UXJ/HAjuXyOpqBOxXDYTuhV7TkWdT24ek2q3pDRAk=;
- b=UawG5kWO63oWGJZfmSwlzDyyQ/T7VDMJamBmKHT5QR2u+40y/qS4wLSSlYdlUaNjvUcTYhjEd
- FXIoIZ4NJvaBy9rNxBpduu+aKYSUz4VxuOVdAZvGkpEx03PcjTX6dyl
+ bh=GbtsNLf3gaz/U4mHrWr6MfrBe4wgKrtKkyfeOVMbI0E=;
+ b=4q1YzkQxCyTWHTefQjqobRiuWkfeQRB3gPlPSw33nBwAJ12bKA240LRFdy+S3M8LKv4qmgOfW
+ VBHP02Fg8inCJbI816pYCPWC+DTvebgLOCoGIJCT9AJovQV2yrLmRhL
 X-Developer-Key: i=da.gomez@samsung.com; a=ed25519;
  pk=BqYk31UHkmv0WZShES6pIZcdmPPGay5LbzifAdZ2Ia4=
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=da.gomez@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=da.gomez@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -82,54 +82,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Gomez <da.gomez@samsung.com>
 
-Once dma_blk_cb() chunks at IOV_MAX, a later patch drops the current
-mdts 2 MiB cap, allowing mdts (and zasl, which may be as large as mdts)
-to essentially be 32 or more. Ensure shifting doesn't go out of range
-by adding a static inline helper that clamps to UINT64_MAX when mdts or
-zasl shift operations exceed uint64_t width.
+Commit 53493c1f83 ("hw/nvme: cap MDTS value for internal limitation")
+capped MDTS so the worst-case PRP count would fit in IOV_MAX, leaving
+transfers limited to 2 MiB.
 
-Fixes error with ubsan enabled and large mdts:
-../hw/nvme/ctrl.c:1685:36: runtime error: shift exponent 32 is too large
-for 32-bit type 'unsigned int'
+Now that dma_blk_cb() can batch IOs up to IOV_MAX instead of limiting
+to IOV_MAX, remove it, except for CMB/PMR-only where the limit still
+applies.
 
+In addition, fix UB when mdts >= 31 by dropping the shift and making the
+cap explicit. Fixes error with ubsan:
+    ../hw/nvme/ctrl.c:8638:33: runtime error: shift exponent 32 is too
+    large for 32-bit type 'int'
+
+Suggested-by: Klaus Jensen <k.jensen@samsung.com>
 Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
 ---
- hw/nvme/ctrl.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ hw/nvme/ctrl.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 4893cf7e741..a24a674a4c5 100644
+index 7861d8f2521..ff7e4a055b8 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -1713,11 +1713,18 @@ static void nvme_clear_events(NvmeCtrl *n, uint8_t event_type)
+@@ -8802,8 +8802,10 @@ static bool nvme_check_params(NvmeCtrl *n, Error **errp)
+         host_memory_backend_set_mapped(n->pmr.dev, true);
      }
- }
  
-+static inline uint64_t nvme_max_data_transfer_size(NvmeCtrl *n, uint8_t exp)
-+{
-+    unsigned shift = n->page_bits + exp;
-+
-+    return shift >= 64 ? UINT64_MAX : 1ULL << shift;
-+}
-+
- static inline uint16_t nvme_check_mdts(NvmeCtrl *n, size_t len)
- {
-     uint8_t mdts = n->params.mdts;
- 
--    if (mdts && len > n->page_size << mdts) {
-+    if (mdts && len > nvme_max_data_transfer_size(n, mdts)) {
-         trace_pci_nvme_err_mdts(len);
-         return NVME_INVALID_FIELD | NVME_DNR;
+-    if (!n->params.mdts || ((1 << n->params.mdts) + 1) > IOV_MAX) {
+-        error_setg(errp, "mdts exceeds IOV_MAX");
++    /* 2^mdts + 1 must fit IOV_MAX */
++    if ((n->params.cmb_size_mb || n->pmr.dev) &&
++        (!n->params.mdts || (params->mdts > 9))) {
++        error_setg(errp, "mdts=%u is incompatible with CMB/PMR", params->mdts);
+         return false;
      }
-@@ -3809,7 +3816,7 @@ static uint16_t nvme_do_write(NvmeCtrl *n, NvmeRequest *req, bool append,
-             }
  
-             if (n->params.zasl &&
--                data_size > (uint64_t)n->page_size << n->params.zasl) {
-+                data_size > nvme_max_data_transfer_size(n, n->params.zasl)) {
-                 trace_pci_nvme_err_zasl(data_size);
-                 return NVME_INVALID_FIELD | NVME_DNR;
-             }
 
 -- 
 2.55.0
