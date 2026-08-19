@@ -4,133 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30138C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 13:52:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7DE5C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 13:57:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwghU-0000Ha-V2; Wed, 19 Aug 2026 09:51:29 -0400
+	id 1wwgmb-00018D-AX; Wed, 19 Aug 2026 09:56:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wwghS-0000HP-1U
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 09:51:26 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <0xjnml@gmail.com>) id 1wwgHR-0001B6-Sd
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 09:24:33 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wwghQ-0003Ij-AQ
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 09:51:25 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-499a4d1d7f1so9043855e9.3
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 06:51:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <0xjnml@gmail.com>) id 1wwgHQ-0006dz-99
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 09:24:33 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-495590dde14so12539255e9.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 06:24:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1787147481; x=1787752281; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=aJUEMSryna+3PimjSfXAj6OIY7VHsqco4QHCn+u97Cc=;
- b=c2SYTiEmlbm8PhahQwaFkgdsM9rwJFt310tz2y27lwKIYxibG1Fs5h4cUG4j3Xk6iN
- Onvnm78xdnOAsc27i5rM+DynmTAHyPfvQSvqEh25iJYkBEc2hUQYyxOnyk6wM/RX3q3G
- wKratXg5drLPu0X4lJXma1QtKcNTRjkhIp8ylU7LTPR5/u9AX/YhQcV3atEuWdy7hsdP
- IKCmMSGNizc3hu4z9aBI/69iYZm0FAZDpVtCwL8xoHcKSxytMmnqLiNjNxQWAWYe4mys
- isivmL2gMGnCsRBuvGsizdaEF7H4zgeX04fuU2cjvRr3KLFMK56LDeTvxHU8/yyZENfr
- nfow==
+ d=gmail.com; s=20251104; t=1787145870; x=1787750670; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=r0yqxzYzQ0zmWd95bT86DD4zanMt2XBYkGq36xeoR8M=;
+ b=sO2BdwCbhDvroG7SGgcYMCYPg5o2jEx9kX5guTbUV0f+LYDtRwTcm0UdSHhrGjV97+
+ YY5CtBxtOA0QLfwfog2n+VsC9WQVnM6xggnb9Ui5G/riNZ974vlzWTtUBVBMvSCUWAcd
+ OzOXVjDm6kGCahCZcIsmyfi7N8yZ7762ZiAmIMLDH+1mq1oG8mRUbzdf+ekQtj9M60XQ
+ c9UWAsh9hsFaPQaTAHxzvU1Gd8V9TIBU/wugUMn7C0Rm2LWdX8mfk+vfAfgz+bsUC88j
+ 4KzeF5SWmvgzHf51zfF2VnzCk2FdHw8upMzKK2Atombpkq4HPYLAxUmZnE8tz3RVMm6S
+ 98hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787147481; x=1787752281;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1787145870; x=1787750670;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=aJUEMSryna+3PimjSfXAj6OIY7VHsqco4QHCn+u97Cc=;
- b=WSbaWkp1PsS1yXffodr5/KQ1O19CzuIz/KWDqrD0MBafggnHlTKiz5TENDFksO1jaI
- 3KT10kYhk/STUk5lAhXbIgU2un278NZF2gCunhQxSzTDHZ83krafQpxmDDrtZLourgAB
- tOpBev6hEQKUTMXFGiQoa1XMvcgiVVoHjjPNAvtK665Oxv+9CH8/AhQBD289TdAkVI92
- 1fu2UIg+Dbdc/cdlvkfz5GlhnWfGDOkpbtdVLfVfEAZiFucD1uZCwPX03IxaNMN1Umsw
- 7KacZ+x7Z55zfzUSS4z8R0qCLsRVGXah2zpHJZlCWLN5SJpytlE+7Ar5GRsi7MTQhgP0
- FkQA==
-X-Gm-Message-State: AOJu0Yze7wVPtbyk51JEBJaSorQ1uF1w8pXUc6vz0CzfRbMhZkB4z3nm
- Jcx8vZUVR8gnRf2zdiqFQua8SgfEBKnjZNi1/8OUG+0ZeGySYkxkDfH3vSr+i+i/Qg==
-X-Gm-Gg: AR+sD13QXiNvB/HzvfGwWUthditHrRqBuaUNCOgCt7G4VW2sraFuUWAUSOF1+j52iMy
- O3YN1SXBuooyYFiDRRuLwVxrADx7mQk7qV8usozwWkfmePsIbcLsdx0u0l2/QUUVrDLH/PKBUjR
- EZdX7fqMVm/dPEEQZPw5dzxreMxh7ShHV5cJ7feWp7lfePsu/h5QBVtRzpu9BYYUGNWceedy2da
- WPNMZnNZF1eEPr5KFMQFbbTMEBCggaxpny72Pyaf7LbAg59bMztyqg1kSCKsOEAiwb97Yz+cGM7
- PTQ8rN6STDc0fP4ZZoj2cQCj0ifXki6spLLx5rQUMWxVr3iywSP73n4DKhEAlTB0Tf1QV0ps67I
- VICfuAqsSbRSjS5hPsZyXwXBC6fA9qPHKBHLU/jmjMLsTZtZJ1tNViSIBWJhmPouC0W7//5PHQO
- SWxcl9vjJhgP1l7B/+RnLm86BjijGm3NBl3gWMgfHkJOvFO7Hc3xWzj7Fmhm900eyCtp/nc4OzO
- B3ECpkL1hSJckggeC15Q9vzE1+BQmYPhYO2LPI3M9JDWzdylpsP
-X-Received: by 2002:a05:600c:3593:b0:499:841c:2016 with SMTP id
- 5b1f17b1804b1-499aa0ff5a0mr106238875e9.0.1787147481535; 
- Wed, 19 Aug 2026 06:51:21 -0700 (PDT)
-Received: from [10.156.60.236] (ip-037-024-206-209.um08.pools.vodafone-ip.de.
- [37.24.206.209]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499a9aa1594sm57495895e9.0.2026.08.19.06.51.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Aug 2026 06:51:21 -0700 (PDT)
-Message-ID: <131b1252-b108-4b4c-8457-673ff0d20d5e@suse.com>
-Date: Wed, 19 Aug 2026 15:51:20 +0200
+ bh=r0yqxzYzQ0zmWd95bT86DD4zanMt2XBYkGq36xeoR8M=;
+ b=pPNfTCm7O1KEJVashh9q6zmUfgLEWdAhLxRyt4BffvaAco5yKXgCIfBXfFAWwL10s5
+ CyweRQFHHMs8fGWYXpTybB0X6lNCcQuZSmGevrG4zxG6aRCZStrzJ9aDJa/fWJUyrA+6
+ NcaX07ig32Q0MBu1LjhuCzwoFP9M8F2rkFE3fopGGAW1qfa1q0RUwOgQ4x6UvRjNpv0w
+ r+h18Xor9q1hLNZcKtDHAhbGXHz9VDvtohk+hDoBUY9/WBCqvakqpCVisKcyPdTg4LIm
+ EPwbqh/C0udOz6ky/XH7S4f8VlH3PiOFMIlZvlNWzfAI8oMsYOdgoywWr64UgXgEtlMX
+ /Yfg==
+X-Gm-Message-State: AOJu0Yzmx8LmPO4WFbaW48F1I2HxaRdgRAiHsOI8tcZ/bhilPcopaSjx
+ LYDtUTwA96AcR4TH6f+2j0+57srXz53VBoWRuZJR5djuWKLxF8B9RCAR75EJNw==
+X-Gm-Gg: AR+sD11oO8tT5faJNfmjoGV6K43IFeN3t9xaXKfR0wFphT4NNHJwrR3ny3oJw/Crn/a
+ rKHTkQ6qivDM+/f99LAjy3iXKv6h9qsvKOPdvcfdouovRwGxj9aOa4uZgyBbKsbwT+K2gS2urL1
+ xvE2f7Ow63fDudbnIICUo+yPW3tSFSf63KnpTixYQPeBBuy6a+t3ONANrsz2qtcWlrn8xSxsICg
+ oetXKL/T/849vJkpcVMjONrBoFcgawfs/cdzSu8xtGI2FKgm+AGgITufeFhl0a2LpMr9XxzleYP
+ e1rSpMQ+vdDQW/uJQkbY6KwaxKkhUjsWLCZsJYusWzUCqztWBt7D77etHedl0EsuJxL4zGkbKr+
+ FKrliiR06SncxVdxWXfPbfDDqC5coGCa+S8UQpfVh3R9kHZo+suI60xsmzESnd5E2Gjhb1H/WN3
+ 2m4tiFbWDQx3m+JI5a/2tAMHoplRYmdmaw1i6mPKRk/xXuA42KDIhOsXnIx0zLtsNLPCQd24yG5
+ AUM2eHyuetKLhTJRcR8pzwGdeFvQLU+xK5tRHHTpGpnlmXF8fdObGL9rl4R5nrt9U/5dq9fcl6L
+ 74P6mDluzYDhN8Wjz4Vw2w1Q/vRyj5Nf/Gim5o40wpE/XJLPiM0BkVexRYuC+Y5hmrYmQ5UjOTn
+ qO9RZ8H077Uoo7fM2Gd0=
+X-Received: by 2002:a05:600c:3487:b0:499:53c4:1daa with SMTP id
+ 5b1f17b1804b1-499aa1c2764mr95666135e9.15.1787145869419; 
+ Wed, 19 Aug 2026 06:24:29 -0700 (PDT)
+Received: from 3900x.local (dslb-188-102-122-219.188.102.pools.vodafone-ip.de.
+ [188.102.122.219]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482b14d055dsm5669642f8f.34.2026.08.19.06.24.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Aug 2026 06:24:28 -0700 (PDT)
+From: Jan Mercl <0xjnml@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>,
+ Xianglai Li <lixianglai@loongson.cn>, Jan Mercl <0xjnml@gmail.com>,
+ qemu-stable@nongnu.org
+Subject: [PATCH] target/loongarch: check FPE before reading fcc in bceqz/bcnez
+Date: Wed, 19 Aug 2026 15:24:22 +0200
+Message-ID: <20260819132422.5164-1-0xjnml@gmail.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
- support
-To: Chuck Zmudzinski <brchuckz@aol.com>
-Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
- Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
- xen-devel <xen-devel@lists.xenproject.org>
-References: <20260802050824.10554-1-brchuckz.ref@aol.com>
- <20260802050824.10554-1-brchuckz@aol.com>
- <2110d4b7-ae37-47aa-99be-ab59e16f6167@suse.com>
- <67579eba-e222-41dd-84bf-8440d2eaf2a9@netscape.net>
- <da2200cd-def7-4cce-a6c2-9f9ac9e202ce@suse.com>
- <de56c8bd-f0e8-4fe9-8cf5-f6807698176c@aol.com>
- <02a7dc18-4184-4e86-84cb-121769187f71@suse.com>
- <1858e8e6-73fa-4017-93e2-c733fbf0ec8d@aol.com>
- <d6e603bf-8dc5-4ac7-842f-ff9d1f67b98f@suse.com>
- <fdec0b6b-eddf-4a36-a755-c67963daa9ea@aol.com>
- <6ecf80ef-2f0e-44fb-beab-dbcf065a4431@suse.com>
- <bb44067c-6739-4e83-a0fd-cc7ea797048f@aol.com>
- <4c58bda6-e9ed-438d-b96e-feda74a6c4c7@suse.com>
- <31a5870f-2a4d-4dc0-af9c-f0567e0f6fb3@aol.com>
- <db8fd04d-bbc7-41c7-8473-b821d7f77d5f@aol.com>
- <302ed12f-40ca-405c-80ca-ac4f2785d754@suse.com>
- <cdae1785-4d9a-4aab-929e-de55c26b7b94@aol.com>
- <10cd9f6b-678b-407b-a51e-70e9ed7a35fd@aol.com>
-Content-Language: en-US
-From: Jan Beulich <jbeulich@suse.com>
-Autocrypt: addr=jbeulich@suse.com; keydata=
- xsDiBFk3nEQRBADAEaSw6zC/EJkiwGPXbWtPxl2xCdSoeepS07jW8UgcHNurfHvUzogEq5xk
- hu507c3BarVjyWCJOylMNR98Yd8VqD9UfmX0Hb8/BrA+Hl6/DB/eqGptrf4BSRwcZQM32aZK
- 7Pj2XbGWIUrZrd70x1eAP9QE3P79Y2oLrsCgbZJfEwCgvz9JjGmQqQkRiTVzlZVCJYcyGGsD
- /0tbFCzD2h20ahe8rC1gbb3K3qk+LpBtvjBu1RY9drYk0NymiGbJWZgab6t1jM7sk2vuf0Py
- O9Hf9XBmK0uE9IgMaiCpc32XV9oASz6UJebwkX+zF2jG5I1BfnO9g7KlotcA/v5ClMjgo6Gl
- MDY4HxoSRu3i1cqqSDtVlt+AOVBJBACrZcnHAUSuCXBPy0jOlBhxPqRWv6ND4c9PH1xjQ3NP
- nxJuMBS8rnNg22uyfAgmBKNLpLgAGVRMZGaGoJObGf72s6TeIqKJo/LtggAS9qAUiuKVnygo
- 3wjfkS9A3DRO+SpU7JqWdsveeIQyeyEJ/8PTowmSQLakF+3fote9ybzd880fSmFuIEJldWxp
- Y2ggPGpiZXVsaWNoQHN1c2UuY29tPsJgBBMRAgAgBQJZN5xEAhsDBgsJCAcDAgQVAggDBBYC
- AwECHgECF4AACgkQoDSui/t3IH4J+wCfQ5jHdEjCRHj23O/5ttg9r9OIruwAn3103WUITZee
- e7Sbg12UgcQ5lv7SzsFNBFk3nEQQCACCuTjCjFOUdi5Nm244F+78kLghRcin/awv+IrTcIWF
- hUpSs1Y91iQQ7KItirz5uwCPlwejSJDQJLIS+QtJHaXDXeV6NI0Uef1hP20+y8qydDiVkv6l
- IreXjTb7DvksRgJNvCkWtYnlS3mYvQ9NzS9PhyALWbXnH6sIJd2O9lKS1Mrfq+y0IXCP10eS
- FFGg+Av3IQeFatkJAyju0PPthyTqxSI4lZYuJVPknzgaeuJv/2NccrPvmeDg6Coe7ZIeQ8Yj
- t0ARxu2xytAkkLCel1Lz1WLmwLstV30g80nkgZf/wr+/BXJW/oIvRlonUkxv+IbBM3dX2OV8
- AmRv1ySWPTP7AAMFB/9PQK/VtlNUJvg8GXj9ootzrteGfVZVVT4XBJkfwBcpC/XcPzldjv+3
- HYudvpdNK3lLujXeA5fLOH+Z/G9WBc5pFVSMocI71I8bT8lIAzreg0WvkWg5V2WZsUMlnDL9
- mpwIGFhlbM3gfDMs7MPMu8YQRFVdUvtSpaAs8OFfGQ0ia3LGZcjA6Ik2+xcqscEJzNH+qh8V
- m5jjp28yZgaqTaRbg3M/+MTbMpicpZuqF4rnB0AQD12/3BNWDR6bmh+EkYSMcEIpQmBM51qM
- EKYTQGybRCjpnKHGOxG0rfFY1085mBDZCH5Kx0cl0HVJuQKC+dV2ZY5AqjcKwAxpE75MLFkr
- wkkEGBECAAkFAlk3nEQCGwwACgkQoDSui/t3IH7nnwCfcJWUDUFKdCsBH/E5d+0ZnMQi+G0A
- nAuWpQkjM1ASeQwSHEeAWPgskBQL
-In-Reply-To: <10cd9f6b-678b-407b-a51e-70e9ed7a35fd@aol.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=jbeulich@suse.com; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=0xjnml@gmail.com; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HK_RANDOM_ENVFROM=0.711, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 19 Aug 2026 09:56:43 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -145,36 +100,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.08.2026 14:36, Chuck Zmudzinski wrote:
-> On 8/19/2026 8:16 AM, Chuck Zmudzinski wrote:
->> Yes, I agree that v3 of the patch to hvmloader should presume that the DM can get
->> a copy of the OpRegion and read its contents so most of this can be done in the
->> DM instead of in hvmloader. So from hvmloader's perspective, the patch will be more
->> about avoiding the layering violation than anything else.
-> 
-> However, there is one advantage, from the viewpoint of the Xen virtualization platform
-> as a whole, to do the patching of the OpRegion in hvmloader instead of in the DM.
-> 
-> If we patch the OpRegion in hvmloader as v2 of this patch does, we provide a common
-> solution for extended VBT support for Intel IGD devices that would be compatible with
-> all DM implementations, not just with Qemu. So why not do the patching of the OpRegion
-> in hvmloader?
+gen_cz_bc() loads env->cf[cj] without CHECK_FPE, unlike every other
+translator that touches an fcc register (trans_fcmp.c.inc and
+trans_fmov.c.inc, for movcf2gr/movgr2cf/movcf2fr/movfr2cf/fsel).
 
-As indicated before: If the OpRegion holds data that is needed to drive the
-device, and if the OpRegion is exposed writable to guests, then guest can
-screw up that data such that subsequent guests won't work anymore. Hence
-exposing to guests (which includes hvmloader) needs to be stopped, or at
-least be limited to r/o. That, in fact, includes exposing to any privilege-
-restricted DM as well.
+A guest that manages the FPU lazily -- Linux clears CSR.EUEN.FPE in
+lose_fpu() on every context switch -- relies on the next fcc access
+raising a Floating-Point-Disabled exception so the kernel can restore
+that task's fcc.  Because bceqz and bcnez never raise it, they branch on
+the condition flag left behind by whichever task last owned the FPU.
 
-Exposing r/o may be entirely okay (i.e. may not be a layering violation),
-depending how exactly an OpRegion surfaces for a device (on the host). Aiui
-it's not addressed by any of the BARs, yet it looks like it needs similar
-treatment. Earlier on we also talked about the region not necessarily being
-page-aligned. That poses, even with r/o exposure, the question of other
-data on the same (leading / trailing) pages. This may imply that the
-copying needs to be done strictly in Dom0, for both DM and guest to only
-ever act on copies (which may then as well be r/w).
+Real Loongson hardware does raise the exception, so this is TCG-only.
+It surfaces as Go binaries dying at startup in runtime.check() with
+"fatal error: float64nan1" -- roughly one process start in a thousand
+once the guest has more runnable tasks than vCPUs -- and in general as a
+conditional branch silently taking the wrong path.
 
-Jan
+With four tasks each executing 5M bcnez on a 2-vCPU guest, master
+mispredicts 89 of 20000000.  With this patch, 0 of 100000000 over five
+runs; a Loongson-3C5000 is likewise 0 of 600000000.
+
+CHECK_FPE is defined in trans_farith.c.inc, which translate.c includes
+before trans_branch.c.inc, so it is already in scope.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4209
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Jan Mercl <0xjnml@gmail.com>
+---
+ target/loongarch/tcg/insn_trans/trans_branch.c.inc | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/target/loongarch/tcg/insn_trans/trans_branch.c.inc b/target/loongarch/tcg/insn_trans/trans_branch.c.inc
+index f94c1f3..da07778 100644
+--- a/target/loongarch/tcg/insn_trans/trans_branch.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_branch.c.inc
+@@ -66,6 +66,8 @@ static bool gen_cz_bc(DisasContext *ctx, arg_c_offs *a, TCGCond cond)
+     TCGv src1 = tcg_temp_new();
+     TCGv src2 = tcg_constant_tl(0);
+ 
++    CHECK_FPE;
++
+     tcg_gen_ld8u_tl(src1, tcg_env,
+                     offsetof(CPULoongArchState, cf[a->cj]));
+     gen_bc(ctx, src1, src2, a->offs, cond);
+-- 
+2.47.3
+
 
