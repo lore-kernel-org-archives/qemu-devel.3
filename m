@@ -4,99 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 736D1C5DF6D
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 07:57:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B3D2C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 08:05:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwbAO-0001Wo-Pd; Wed, 19 Aug 2026 03:56:56 -0400
+	id 1wwbI5-0002Q9-GK; Wed, 19 Aug 2026 04:04:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wwbAN-0001Wg-CT
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 03:56:55 -0400
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wwbI4-0002Pj-0M
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 04:04:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wwbAL-00040G-Ud
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 03:56:55 -0400
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wwbI2-0004tm-Gi
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 04:04:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787126211;
+ s=mimecast20190719; t=1787126688;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+nmUItYjxHrKSDwMYx9A/typy/hWxTGWH+8O5qMU8nI=;
- b=gAm/bKnxwjaS+8QQzPioZ11VqRs0rhFM6hBKV5fsFcb9uWCqc8N41Jf+Uw4PeWv/2S60Z7
- 5hX4fbjpUrwFg+siGIfgbhMOZ8q9Q5mm+TXEss+zIldHorNW0dKARHRQebhp4YzS0N7n8y
- FGOcZI5TU3WST0YY9C8N6z3CVoENvjU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=aUJQYjbpA3tCxEeU6wrxemt4je+T5qjYdApJWVjO/Ek=;
+ b=aGLGGiS/sB01rMqQGCed7iWiDgTfbkzv2eF2ypSgq9XVWXYBjHCuT/dNjmFs4Lg1e5RJ/q
+ n9KTKkw0Kx2gzuEHZOFGHDQm23o9so/7+0jQJV78MM+XiVgBkBE9LfRCuhEujvfV5t7Z3N
+ 0PBRYkMFDOddUndkyQLU4qFg+2q5HJE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-223-rwUZML8fNpqZstCl0wycjQ-1; Wed, 19 Aug 2026 03:56:50 -0400
-X-MC-Unique: rwUZML8fNpqZstCl0wycjQ-1
-X-Mimecast-MFC-AGG-ID: rwUZML8fNpqZstCl0wycjQ_1787126209
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4994cf6cdb9so4604375e9.3
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 00:56:49 -0700 (PDT)
+ us-mta-689-hGFUE732NPKGm8MOEOMGKQ-1; Wed, 19 Aug 2026 04:04:47 -0400
+X-MC-Unique: hGFUE732NPKGm8MOEOMGKQ-1
+X-Mimecast-MFC-AGG-ID: hGFUE732NPKGm8MOEOMGKQ_1787126686
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49953abe51fso5036735e9.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 01:04:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787126209; x=1787731009; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=+nmUItYjxHrKSDwMYx9A/typy/hWxTGWH+8O5qMU8nI=;
- b=qd7QhPUiehPJTLigNUGH/+VF7dpb4ACuy36xHFsbr+PIcwdgrmcCPdSgeeMIPR88jB
- q3Q2j7eljktoSup50AlRGVbxF/3SK4vTZ/osT8H4wOdOTmw0PW4ScO3XWKslrFNDAQHB
- P+b92OwY5gloPk+O43xagi4s8u0d6i41W662c3LyPDRE3+W8p3freGnzj7xICJgNFyXp
- 3UURi40eqa4wi7RzsOLiUeZyvNFIp5b95S5JTVuVlTanKX8sSZP4J4yD3MStTFWAkF3F
- jmb0LBAGQrlDW/WuQPfs1NiBcXNZ6RCh6MAtNJ5yxUI0iT7vzyzvwGKxhtibAi5+41e/
- GrrQ==
+ d=redhat.com; s=google; t=1787126686; x=1787731486; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=aUJQYjbpA3tCxEeU6wrxemt4je+T5qjYdApJWVjO/Ek=;
+ b=VRye9b7fT71KvxiaP90Jif1j7hgFwEPKL8ZxEsfcBjY4tpeHCLGpkPyFz3GnFgYSZd
+ 0cnTpIdVCZ0svBqVaCRCqKl2DDaL+hDONnKfAkzDLD1sUvFQPUzjRdPcVyJLmGIOpjX5
+ zWp05y2qEUJhTxSX9kMmy+G+0FivN91n9h0bd3hIpnaZC28IMoEqFQDDoUvIUTQcy7RD
+ V09L7DcDUb0Zc7qKz1WKuwDzgLzySLjqqQpE1/fAKknqH2/J5qmvOy/4pPsAdW5+RN5P
+ vtE0BFIFCC9/Oi53c/5zljlkU+H2kph+po6/u/08sZj7G/p8Y24Fp80h2tQUbvtdTyF9
+ a75w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787126209; x=1787731009;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=+nmUItYjxHrKSDwMYx9A/typy/hWxTGWH+8O5qMU8nI=;
- b=jTCcCg5YrXh/bT3RX4yPezLR9EAFmYvt3RD04m4YuJ6yjWC23VP8hPpvETanxfL5P5
- KrGapBP3UYWyRciV4fL0W7c5oj+I3Q/fxXfpLHffHyRbyXT5m8PCIiPaQAfse/wkt1JV
- 2AsF9K5lw37ENevfbupAQqDAFpZjo0xTF7TwIaQO1yE7Una9EmkabQJ0p6n2UjrBLR4w
- EoEadt6htIgiBCRPdfrtmSUxd7SHr78OlgnoHCtksxi52BU6pKh1m1M2FtIlziAkGgBS
- JtShpZkw0XV8OSKNpEOPctaq9udRlu7RcnBW3npwDrQXhUp5g3yU/xdT4qhGjU4NdnCn
- Ok8g==
-X-Gm-Message-State: AOJu0YxaK8wNWitJC/2T/rcTRXq7szo0tS84yosR/eDsnvIptXUa9UWr
- 4wJE3oH/iu0Hgz/BF9lJEVxZUyv5tAxk5XoFtTeCZaprlMEnLBqxsKMXgjt2GxcC7YrLxf8mABc
- K1caic4aPu5H2FZjjvIDRyuZHtqa5IGvWBmjN+4AnOKG5QgZiwPUJJfov
-X-Gm-Gg: AR+sD12M1CEifQ9oCWu2Ao/dbsuTBZbdrvoP6CicblH8bglZPl8eROpx/MqPHlyewpw
- nJkNaAbntol3BSUyr9jbzgiMasRngal0fOag6aNM92w+fB0QvIgsD/+GEC83l4JDGkERwgv/Wjg
- 5ksySxfrpV4lWL+Kd9aHDPnyLbCXpufUJGHDICHr3q3tCqZylUfmqGT9iqjX9iWBZCJMe8RE3I8
- GSgjGZ9jtHp+k2LS/NB7jQc+bLWcHZLkezpMpLYRAcb4lrnlqIjrH0Yn/2aOWSmgyWmC1r0r0Tx
- Z8TJywZd96vXw32+B/Q6llOIL46jDMD5pMkRFr5uA9bWEn39zqyjm2M/0lSa3gDa9UXK3ban/N4
- pYMOI0yscZf4XEWlokSaXQp6R0c3s/f5ZWnjgD7Gq6D783K0W8I93
-X-Received: by 2002:a05:600c:5294:b0:492:4e09:9fc1 with SMTP id
- 5b1f17b1804b1-499aa1f5413mr47873945e9.15.1787126208796; 
- Wed, 19 Aug 2026 00:56:48 -0700 (PDT)
-X-Received: by 2002:a05:600c:5294:b0:492:4e09:9fc1 with SMTP id
- 5b1f17b1804b1-499aa1f5413mr47873415e9.15.1787126208402; 
- Wed, 19 Aug 2026 00:56:48 -0700 (PDT)
-Received: from sgarzare-redhat (host-82-53-135-154.retail.telecomitalia.it.
- [82.53.135.154]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499ab2a8b34sm45080405e9.8.2026.08.19.00.56.47
+ d=1e100.net; s=20251104; t=1787126686; x=1787731486;
+ h=cc:to:message-id:content-transfer-encoding:content-type
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=aUJQYjbpA3tCxEeU6wrxemt4je+T5qjYdApJWVjO/Ek=;
+ b=riTIzbuwyh0yC645eIlY7u0c0A/huAdTn+Ip1mY98JH0vvhnvYmtv8poP+HhPHsmbG
+ Ahp/ZWrVqD6O3Vl0WDHdN8iWkkXaJCI6GcSsJ+aVfFPp+s5bRGre2lNA2qNuHVpVOgrD
+ Uzz/ByAPLMXpOBn4QLLsXo93ioRzA85ahlZJWarLktlzuFOz/wtujo9+yHpCJtJp+6xg
+ JAl02h6pWpca2II5Uafl7fe/tSwkIqi36TLtowbYWERdZ9fuW093LJk0FT9Qyd9H7Bwh
+ DsJnHVPBgagDpRWcQ1oArzxLgjAHsAHtotrp6p2ip9qoxxCgQpfyPQM4qyb+bGFZc5J/
+ vX2g==
+X-Gm-Message-State: AOJu0Yyswvr8UQtSWqvvo38pbY2VXblnJPWPgyyqiKwZd9byq0VeGxF9
+ 0r+tyILsqx9r7pf14Sojr0wLzwfA7c7GzfRRBqkpGTmE3NQ5G9pMD4CE1Veikgqe5JeJAAWxA6s
+ 5LO+sN86M1SXlN/R2Hr8QFSiwXNDtLGvGA6SHnWaGIeAve5lgCh+vW29x
+X-Gm-Gg: AR+sD10+1DIK6jnYhLaj8jhTDENfeybGy4g0WOtZGnxkNGUSyj5ZKNOF7YKO6CG/lHd
+ 7H3qCqQZdEIoLGlhRvlyxpY6L8KP/Y+4+sYWO5WUlGsjqDT453hlGg2JNEmRaIFKKaTHvCl37vk
+ q2M35m8g9VTyWVQwLJjT2GPsx+2pvxmbknr0wsmTmVlBz4P28TA24buXb9wibUg7ryzMuucOE7A
+ P7OhwAnPAxOxHO4+ZiBsKRecCuymjWJY+M/buramyaL55ECWGJKQIUXZxQlaU9nAb30pcHNJOi2
+ 4Kwjh6zKX0qHxRFj5vBtuWOrHWXI0qSEDm+dL31eLkIYDmRFdqw0OkoJmkIdnReUK7CDJw9WpFE
+ OeFpDofE4Mi19mLCcTmgClZvAApBoA9THQ5lV9tEaoyi3tmxxU+y1V8SCBBnWWpWsBp+MXVwCHu
+ BC2Y+ZXzTb3NMZ5mqFiF+rZCjKl6VjirF2rT3JSoRV4uu6
+X-Received: by 2002:a05:600c:37c6:b0:499:87f3:a2a3 with SMTP id
+ 5b1f17b1804b1-499aa1c7bafmr49499595e9.15.1787126685711; 
+ Wed, 19 Aug 2026 01:04:45 -0700 (PDT)
+X-Received: by 2002:a05:600c:37c6:b0:499:87f3:a2a3 with SMTP id
+ 5b1f17b1804b1-499aa1c7bafmr49498845e9.15.1787126685274; 
+ Wed, 19 Aug 2026 01:04:45 -0700 (PDT)
+Received: from lleonard-thinkpadx1carbongen13.rmtit.csb
+ (host-95-233-147-132.retail.telecomitalia.it. [95.233.147.132])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-499aa0dd620sm38560945e9.13.2026.08.19.01.04.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 00:56:47 -0700 (PDT)
-Date: Wed, 19 Aug 2026 09:56:43 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Feifan Qian <bea1e@proton.me>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v3] vhost-user: Reject SHMEM_MAP when no KVM memory slot
- is left
-Message-ID: <aoVhrSPHfdtnqyRs@sgarzare-redhat>
-References: <HXrBMZ9Gx9L-VxdMEr26ORPUYQn99p4rgEYVkeMHA4-5M49Ax3_mx1euIWe7uj33nl5mZ19sZeUDyksqxKT7H1WPxWhYtxdomofcVTyMTjo=@proton.me>
+ Wed, 19 Aug 2026 01:04:44 -0700 (PDT)
+From: Luigi Leonardi <leonardi@redhat.com>
+Date: Wed, 19 Aug 2026 10:04:42 +0200
+Subject: [PATCH] hw/nvme: fix firmware boot path when nvme-ns has a bootindex
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <HXrBMZ9Gx9L-VxdMEr26ORPUYQn99p4rgEYVkeMHA4-5M49Ax3_mx1euIWe7uj33nl5mZ19sZeUDyksqxKT7H1WPxWhYtxdomofcVTyMTjo=@proton.me>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260819-fix_nvme-v1-1-6d3d5e6909c1@redhat.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDC0ML3bTMivi8stxU3RSL5LTERGNjM4tkSyWg8oKiVKAc2Kjo2NpaANh
+ nYgVaAAAA
+X-Change-ID: 20260818-fix_nvme-d8cfaa3368c9
+To: qemu-devel@nongnu.org
+Cc: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org, 
+ Gerd Hoffmann <kraxel@redhat.com>, Luigi Leonardi <leonardi@redhat.com>
+X-Mailer: b4 0.14.3
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -104,7 +108,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,30 +124,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Aug 15, 2026 at 04:13:37AM +0000, Feifan Qian wrote:
->Each SHMEM_MAP request creates a separate RAM MemoryRegion that
->consumes a KVM memory slot. Once all KVM slots are in use, processing
->another SHMEM_MAP request would make the KVM memory listener fail while
->registering the new region.
->
->Shared memory mappings are filtered out of the vhost memory table
->(vhost_section() skips TYPE_VIRTIO_SHARED_MEMORY_MAPPING regions), so
->they never count against the negotiated vhost-user slot limit; only
->the KVM slot budget applies. Reject the request with ENOSPC before
->changing the memory topology when KVM has no free slot left.
->
->Also validate each vhost memory table against the slot limit negotiated
->with the backend before sending regions via SET_MEM_TABLE or
->ADD_MEM_REG.
->
->Fixes: b52e1896e764 ("vhost-user: Add VirtIO Shared Memory map request")
->Signed-off-by: Feifan Qian <bea1e@proton.me>
->---
->Based-on: <20260717134920.265128-1-dbassey@redhat.com>
->("vhost-user-gpu: Add blob resource and shared memory support" v4,
->which filters TYPE_VIRTIO_SHARED_MEMORY_MAPPING regions out of
->vhost_section())
+The correct way to register an NVMe namespace in fw_boot_order is to use
+the NVMe controller as the device pointer with the namespace ID appended
+as a suffix, producing:
 
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+  /pci@i0cf8/pci1b36,0010@4/namespace@1,0
+
+This is how the controller-level bootindex works.
+Explicit nvme-ns devices instead register the nvme-ns device itself,
+which is wrong: realize() reparents the namespace onto the NVMe subsystem
+bus, disconnecting it from the controller in the bus hierarchy.
+qdev_get_fw_dev_path() therefore produces a path without the controller's
+address:
+
+  /nvme-ns/namespace@1,0
+
+Fix by re-registering in realize(), once the controller and final nsid
+are known, using the controller as the device pointer with the namespace
+suffix. The old entry (registered against the nvme-ns device) must be
+removed first since add_boot_device_path() only removes entries matching
+the same device pointer, and leaving both would cause a
+duplicate-bootindex error.
+
+device_add_bootindex_property() cannot be called in realize() because
+QEMU parses command-line properties before realize() runs, so the
+bootindex property must exist by instance_init() time. The final nsid is
+not yet known then either as it's assigned in realize().
+
+The fix is restricted to non-shared namespaces: for shared namespaces
+there is no single controller to register the boot path against.
+
+Also add the symmetric unrealize() cleanup so that hot-unplugging a
+non-shared nvme-ns with a bootindex removes the fw_boot_order entry that
+was registered against the controller in realize().
+
+Reported-by: Gerd Hoffmann <kraxel@redhat.com>
+Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+---
+ hw/nvme/ns.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
+
+diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
+index 7f0f9ac766..83786b4401 100644
+--- a/hw/nvme/ns.c
++++ b/hw/nvme/ns.c
+@@ -727,6 +727,10 @@ static void nvme_ns_unrealize(DeviceState *dev)
+     nvme_ns_shutdown(ns);
+     nvme_ns_cleanup(ns);
+ 
++    if (!ns->params.shared && ns->bootindex >= 0) {
++        del_boot_device_path(DEVICE(ns->ctrl), ns->bootindex_suffix);
++    }
++
+     /* Symmetric with nvme_ns_realize() which sets subsys->namespaces[nsid]. */
+     if (subsys && nsid && subsys->namespaces[nsid] == ns) {
+         subsys->namespaces[nsid] = NULL;
+@@ -891,6 +895,19 @@ static void nvme_ns_realize(DeviceState *dev, Error **errp)
+ 
+     if (!ns->params.shared) {
+         ns->ctrl = n;
++
++        /*
++         * Register the boot device path using the NVMe controller
++         * so the OFW path includes the controller's PCI address:
++         *   /pci@i0cf8/pci1b36,0010@<slot>,0/namespace@<nsid>,0
++         */
++        if (ns->bootindex >= 0) {
++            del_boot_device_path(dev, NULL);
++            snprintf(ns->bootindex_suffix, sizeof(ns->bootindex_suffix),
++                     "/namespace@%" PRIu32 ",0", nsid);
++            add_boot_device_path(ns->bootindex, DEVICE(n),
++                                 ns->bootindex_suffix);
++        }
+     }
+ }
+ 
+@@ -1117,10 +1134,8 @@ static void nvme_ns_instance_init(Object *obj)
+ {
+     NvmeNamespace *ns = NVME_NS(obj);
+ 
+-    sprintf(ns->bootindex_suffix, "/namespace@%" PRIu32 ",0", ns->params.nsid);
+-
+     device_add_bootindex_property(obj, &ns->bootindex, "bootindex",
+-                                  ns->bootindex_suffix, DEVICE(obj));
++                                  NULL, DEVICE(obj));
+ }
+ 
+ static const TypeInfo nvme_ns_info = {
+
+---
+base-commit: 9696bf5dc5a5bf0b4a9d05b6cdfe5f13990f97aa
+change-id: 20260818-fix_nvme-d8cfaa3368c9
+
+Best regards,
+-- 
+Luigi Leonardi <leonardi@redhat.com>
 
 
