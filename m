@@ -4,120 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60A4BC5DF6D
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 08:37:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA9CEC5DF85
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 08:51:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwbnA-0000ap-85; Wed, 19 Aug 2026 04:37:00 -0400
+	id 1wwc0F-0001ur-Mo; Wed, 19 Aug 2026 04:50:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wwbn8-0000aF-Tn; Wed, 19 Aug 2026 04:36:58 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wwbn7-0001mB-Ek; Wed, 19 Aug 2026 04:36:58 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67J6WOpe2622749; Wed, 19 Aug 2026 08:36:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=6Fw0sS
- ntxJe1+XkKINW8zj5uF0nr2xScdmA7iZ7aZAQ=; b=cBvB+ML/ijubw/iKBMWzoo
- z9R+CPkDbIJOInqFuPGKgqLaUnyfGiaJu8LbGnZ7cpaBeAPORe8mJzwE6gSmTqTB
- 1pgsPRbf25H8jlQ1I4FQSPE5sREwrWIVewC2ohiI3bO126EkwXQdvBTa+RMES4mD
- GQd7v9FJ5D8qomEUjk4TAE5qp65QyugSZ4KjQ7Fx5uGwynN74bjf21gmob+uQAP/
- GHY2ETdYpA56gvF+bXm37ErBx2Bu7MkWx8+v7Kt0sFAqpZqk5XDSSAeQNU+4zTkO
- eXfTS3jbNS5VL6PCYUCqtxgw60w12/e+PVEkbYDbXVSnnsPM72w7M3hw2MpKKeMQ
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu1ajhv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 19 Aug 2026 08:36:45 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67J8UDD3015232;
- Wed, 19 Aug 2026 08:36:44 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g354yfqb2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 19 Aug 2026 08:36:44 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67J8ae5t46006590
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 19 Aug 2026 08:36:41 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E2E2C2004B;
- Wed, 19 Aug 2026 08:36:40 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3FAE020040;
- Wed, 19 Aug 2026 08:36:39 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 19 Aug 2026 08:36:39 +0000 (GMT)
-Date: Wed, 19 Aug 2026 14:06:20 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Nicholas Piggin <npiggin@gmail.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
-Cc: Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Gautam Menghani <gautam@linux.ibm.com>
-Subject: Re: [PATCH] MAINTAINERS: Add myself as a reviewer for PPC KVM and
- sPAPR
-Message-ID: <20260819140310.464f376c-a5-amachhiw@linux.ibm.com>
-Mail-Followup-To: Nicholas Piggin <npiggin@gmail.com>, 
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Gautam Menghani <gautam@linux.ibm.com>
-References: <20260819050545.21232-1-amachhiw@linux.ibm.com>
- <4731356a-532f-4ecf-9f0b-ae7a6ac5f77e@kaod.org>
+ (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
+ id 1wwc0D-0001so-GN
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 04:50:29 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
+ id 1wwc0C-0003tK-36
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 04:50:29 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-c214e625259so105548266b.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 01:50:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1787129426; x=1787734226; darn=nongnu.org;
+ h=user-agent:in-reply-to:content-disposition:content-type
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=CFIYqyOyqTxLK80KrKxLckpEud5kZlxrCRWwQPEImUk=;
+ b=LvXbSKIB0R/sSJyyNOjKu27l0I/MyolnRIt8kNwg4x0kK8MfZc3U4doVliy+PLTZtx
+ 6lYJtz/o4xpFs6h++ZA8alOk9jqugdsLgvJDslUEa6jmsx48p+Ih4oGkuZUdE5qZM81i
+ hVnmba3lYZn/U/mb8qkkDP6yrZ7LeTTvo7Cj72l4zUaEuG69XINt35jetB2t5s3uIUqe
+ YH/SKq6TO29OuJ1dNle8GKWTTJ4FZNmLaxElc+mbH1SefgQ9Uf6SwhIJKYbhhmEHMBcB
+ W8/pr+j7y2LCvNoOFerDTkFRUXQwSDBuv+WNsEz8Hf1nIdC8iHyrwJA70iFFcZC6L+fD
+ EtSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787129426; x=1787734226;
+ h=user-agent:in-reply-to:content-disposition:content-type
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=CFIYqyOyqTxLK80KrKxLckpEud5kZlxrCRWwQPEImUk=;
+ b=GKutGy0noYgOzxEguHGANu69rjZ2nkhO8tYMIv2rPWvCpCP5OCyEDktRCoOQ8ZaaeJ
+ hLemeRuuhqOaJLy9LEHvbftfLj4wKz+fYc6kmyJNMHKcpRXOfZI53jstlO0TfK2Mczn8
+ A24HABakZDf43D6S9VW/fTlslaiN5Xum4Xkk6nPUWutqHvvdRcZRn+Ig/rPt0fe7qoY8
+ HjnEcEFtkbJtKkGUhHq68iyEnMvhIkW0XYmiD93aGuZxVPkfF+GgGyThTiLniJ8GyhmA
+ Q926qBrJJ2FrhhmS3hLw7x/uLFSk4/bEQk3IfOdrjJ+78JtK7orrHJ6y33jkF1skeUDO
+ UtEw==
+X-Gm-Message-State: AOJu0YyQLG31G5r7gPwpXaS7fxwpCotrHVbCrzbogSirv6riOGSfrv1K
+ m54dtSJWHjAz3dQoMpubxtatQS89Yj0DibxouU0pUlI3MefaAXmNGW2oBVEI3XX0
+X-Gm-Gg: AR+sD13u1C9a/uk/l1OZMYx3CQ4cjYddjKOg0eEEDngVHmZM9cIiocZzPgyVCuQZR9Y
+ paNWHo1t5pPW07j9sPTCGgqn2XwxBPPash7VJ+VH/3OLqNn4zJFwlzGPHhnpWicMlfF8jZE4GyP
+ W7jHoiAyYFcFP76GobOGVUE4IK47gDwyALV/9htzfwbdb73TKXhoX/aPg810GNV0cXjeYFeF1DL
+ 0ft7xvgz490qrlVO+MKnN4U60R/mnurZ0pFxEPCmw0AcByun8A+T70wKBQXkNKftmghWY/G+67t
+ GAWVAH1o8Bu/QUXKE3Xy4OM5LR4WzehoGlz6zlv242YoS0qpJWc/CrKoh91cIXMvhglnoIvvPqI
+ sMgZMpRcvHWAVpo99CEfQLBx+L0MNVCPd81dxrcXabgQ2Ew3hz2/Av7xPS52FLmfLLolyUxNuT6
+ paoOjB2L/PCrYI4VEIHWCRPaaBjsS54hlvh5OUDLREea4+aF7WPWttx1DU3J0LYbLrTCRUp1x7O
+ okO28h28GneEAnsSjSno7+/qqjBp0lVfjK0rg0iLUrthIFkELQelojlaxOQmbEcAfYobQy6
+X-Received: by 2002:a17:907:d26:b0:c21:960c:ec23 with SMTP id
+ a640c23a62f3a-c2420debab9mr159864666b.1.1787129425798; 
+ Wed, 19 Aug 2026 01:50:25 -0700 (PDT)
+Received: from tulp
+ (2001-1c02-1a15-3000-ee82-4536-a8f2-9e22.cable.dynamic.v6.ziggo.nl.
+ [2001:1c02:1a15:3000:ee82:4536:a8f2:9e22])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c243c3b4ca1sm45049266b.37.2026.08.19.01.50.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Aug 2026 01:50:25 -0700 (PDT)
+Date: Wed, 19 Aug 2026 10:49:49 +0200
+From: Roman Bogorodskiy <bogorodskiy@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Michael Roth <michael.roth@amd.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH] qga: implement 'guest-get-diskstats' for FreeBSD
+Message-ID: <aoVuLYwdP9KHPxf5@tulp>
+References: <20260719160329.73695-1-bogorodskiy@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4731356a-532f-4ecf-9f0b-ae7a6ac5f77e@kaod.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=LsCiDHdc c=1 sm=1 tr=0 ts=6a856b1d cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=8nJEP1OIZ-IA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8 a=aow-egSQAAAA:8 a=omJ5bIHz1CpVJDpERRIA:9
- a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10 a=Fg1AiH1G6rFz08G2ETeA:22
- a=gFNbaldVC-z-bsjSTzMo:22
-X-Proofpoint-GUID: aaMZJ2KzNA4_KDVZyIoe52jDN6lsvvWa
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDA2MyBTYWx0ZWRfX378MGvcwirA4
- ygZAd9OgLP63RLKDfWyEry2NTpYVF0SXjEFy74yZ/SSgaJQ6czP5VLzjklGH5aJD7+d0AGYhl1V
- 1g0vpnt0gtEc+0VQrmfUWloypmknb70=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDA2MyBTYWx0ZWRfX4RF2Qv1M6ovA
- EdYn8wd7gl5FR3g0HX/XVQ4fqUgnqXzUCiEmG7Gn89zMpVk1CYFpNGn0N/AbtTe/YiTFWQsFv9X
- BnRq5hnoKXNjiKjbVxml43WD+emlh8P6ZweNhCDUwINKV/b5G+hwNu16+kbd+J02GpzVwYzxF/D
- b/NSeC4qONOo8mr80sq6h1moTnB/Lp7m8fGyifvgssg1Sq22LYl9TAG9P/g08JfEnBUUBb4S4LG
- hLYKcoTQ/gyG5GyPjJ+ouTh1DmSWNsoJ6f18pjkf2RRwn4AaXHQpdg75RaGpLQ7jOr73ZLeo0rp
- K6JgWQbcv4X9oGWZuP4mBznRBY8uUHB1HpRs1J9Rd9iKLjes3hD7c+CmSKqsjVTHb6wI8aLWQuX
- 0wq8Aq1dXKNAEFHCyrlGj6QMSxpD1VGpjRPO3hc8UkctxhbAyGXBmSM8xVUa7hsuvxIc8Bgc/Zh
- T5aD99SG02AOze+x2Tg==
-X-Proofpoint-ORIG-GUID: q2fQGNsl8tDZhdCnJvvcyIAUsEJqG-X4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-19_02,2026-08-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
- adultscore=0 suspectscore=0 impostorscore=0 clxscore=1011 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608190063
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+In-Reply-To: <20260719160329.73695-1-bogorodskiy@gmail.com>
+User-Agent: Mutt/2.2.16 (2025-11-22)
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=bogorodskiy@gmail.com; helo=mail-ej1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -134,49 +106,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/19 09:12 AM, Cédric Le Goater wrote:
-> On 8/19/26 07:05, Amit Machhiwal wrote:
-> > I have been contributing to PPC KVM and sPAPR (pseries) for some time now and
-> > would like to get notified of incoming changes to help with code reviews.
-> > 
-> > Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-> > ---
-> >   MAINTAINERS | 2 ++
-> >   1 file changed, 2 insertions(+)
-> > 
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index b51f5c3e6022..1a1c77285d3d 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -497,6 +497,7 @@ F: tests/functional/aarch64/test_kvm.py
-> >   PPC KVM CPUs
-> >   M: Nicholas Piggin <npiggin@gmail.com>
-> >   R: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> > +R: Amit Machhiwal <amachhiw@linux.ibm.com>
-> >   S: Odd Fixes
-> >   F: target/ppc/kvm.c
-> > @@ -1661,6 +1662,7 @@ F: tests/functional/ppc/test_40p.py
-> >   sPAPR (pseries)
-> >   M: Nicholas Piggin <npiggin@gmail.com>
-> >   M: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> > +R: Amit Machhiwal <amachhiw@linux.ibm.com>
-> >   L: qemu-ppc@nongnu.org
-> >   S: Odd Fixes
-> >   F: hw/*/spapr*
-> > 
-> > base-commit: fa19879df1658f96ac07365fca8835b7decd6995
+  Roman Bogorodskiy wrote:
+
+> Implement the 'guest-get-diskstats' for FreeBSD.
+> This implementation uses the devstat(3) library which is a part
+> of the FreeBSD base system.
 > 
+> The build system is updated to link qga with `-ldevstat`.
 > 
-> I would consider removing Nick since he has moved to other activities.
-> Reviewed-by: Cédric Le Goater <clg@kaod.org>
+> Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
+> ---
+>  qga/commands-bsd.c   | 127 +++++++++++++++++++++++++++++++++++++++++++
+>  qga/meson.build      |   3 +
+>  qga/qapi-schema.json |   6 +-
+>  3 files changed, 133 insertions(+), 3 deletions(-)
 
-Thanks for the ack, Cédric! 
-
-Hi Nick,
-
-Do you plan to be active on PPC in near future? Or do you think it would
-be a right idea to remove you from the M list?
-
-Thanks,
-Amit
+ping
 
