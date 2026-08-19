@@ -4,44 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD0E5C5DF86
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9AE3C5DF81
 	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 15:25:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwiA0-0005wF-0m; Wed, 19 Aug 2026 11:25:00 -0400
+	id 1wwi9r-0005td-G5; Wed, 19 Aug 2026 11:24:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1wwi9r-0005tk-Iz; Wed, 19 Aug 2026 11:24:51 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1wwi9q-0005t0-69; Wed, 19 Aug 2026 11:24:50 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1wwi9o-0005lg-1r; Wed, 19 Aug 2026 11:24:50 -0400
+ id 1wwi9n-0005kv-Mm; Wed, 19 Aug 2026 11:24:49 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 08CD960A92;
- Wed, 19 Aug 2026 15:24:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495FC1F000E9;
- Wed, 19 Aug 2026 15:24:42 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id ECFD341253;
+ Wed, 19 Aug 2026 15:24:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6010D1F000E9;
+ Wed, 19 Aug 2026 15:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1787153084;
- bh=mzD3z/pk9Zs6BYJt8B/2je9gOLBN9kfdU7oHdLKxVBU=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc;
- b=iu35lgsthINtwTrVbGZYww4a0X+zwxovQdMgY3mzQnZ6dri8X48hoM/crQlo/XNYn
- MdI7/Jj48kpp9vJnWUfR79XjjpdMvuNHyy+ZKULCcXXJSTdUZcdj89nrXfKfNpTDpz
- wxDerlF8X6lcoIoYx4aSXDtMe7se1+mets5j/XVS1uLHc1Mr8wzQld/6MxUICtL+uN
- 1Kf7io8Q0tLaAhQphpF/BbSYC8jpWWYdbWcUAM1x/sjCc2DruT1/fDaKZ1nsejacXA
- +FSgXnUtiO8O7Z0sljPnzxXADprBYd/Ln1e3Tvq5ptfdFisWMnSt5fSFkPC+66Wj0W
- lm8MWb1sqECXQ==
+ s=k20260515; t=1787153078;
+ bh=TMLbcdDavsTP+oUGkwK4FxiWsKl3CBvVXOxUHoZbCIY=;
+ h=From:Subject:Date:To:Cc;
+ b=NHApEWEZHJ3tZlbopfVlfbXTL4NT1BFHxHWl1FsfvTrxwsMyWOgNhiLnR0TJyllGY
+ jD3kLNnOkw/N/kjbmldbr9VqKabFBSKGrm1go6I+2CZHKdO/V+aqJ0hBE7hiDP5MJi
+ xticwPfyEGJJqt8HoMD39mBi68GcGcK0ChqSEJHq0UdkGQSExJDG67WKLpyeT5r8OO
+ bJDTlRtXduE33ZFvlBKxH6zdOZPQ7AEaZsI/s8bNKdFxSAsC+kx1bHxWQFDaiJLpjt
+ 9XRCQmZzqAJpxiQJKctS5tbHyEe2FffUH52K8UdkOUpA2468fcnaaK2mJQx2wkZVXk
+ aniuRkROC3+UA==
 From: Daniel Gomez <da.gomez@kernel.org>
-Date: Wed, 19 Aug 2026 17:24:04 +0200
-Subject: [PATCH v2 2/7] dma-helpers: ensure IOV_MAX chunks end aligned
+Subject: [PATCH v2 0/7] hw/nvme: lift IOV_MAX limit in DMA path
+Date: Wed, 19 Aug 2026 17:24:02 +0200
+Message-Id: <20260819-align-nvme-mdts-with-linux-v2-0-351ac2dfed64@samsung.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260819-align-nvme-mdts-with-linux-v2-2-351ac2dfed64@samsung.com>
-References: <20260819-align-nvme-mdts-with-linux-v2-0-351ac2dfed64@samsung.com>
-In-Reply-To: <20260819-align-nvme-mdts-with-linux-v2-0-351ac2dfed64@samsung.com>
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/33NQQ6CMBCF4auQWTumLVjQlfcwLAotMAktpoWKI
+ dzdSuLW5f8W39sgGE8mwC3bwJtIgSaXQpwyaAfleoOkU4NgQrKLqFCN1Dt00Rq0eg74onnAkdy
+ yoiy15FUny5w1kICnNx2tB/6oUw8U5sm/j6/Iv+uPvf5jI0eGQnBdaMFVU+T3oGxYXH9uJwv1v
+ u8fBoSK4sYAAAA=
+X-Change-ID: 20260528-align-nvme-mdts-with-linux-67d618f6730b
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
@@ -50,15 +53,15 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  qemu-block@nongnu.org, Daniel Gomez <da.gomez@kernel.org>, 
  Daniel Gomez <da.gomez@samsung.com>, GOST <gost.dev@samsung.com>
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1787153075; l=1682;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1787153075; l=3347;
  i=da.gomez@samsung.com; s=20240621; h=from:subject:message-id;
- bh=0ojqGEoe2usyhxOfOLEvmAi0XG8/nb35wK6rygUtG5I=;
- b=uWuw5nDw5p5kLE0/qRepyT2yp6XAbq/W4R+G1H8dV9d83bLduEO+9TYK+z3z7EX9YX+dR8lJn
- YNQVhlfeKRRDiP9eoU92Lh2vbkuf7DbPISjhBGfs9c7sUSB3baSQ+1e
+ bh=rxvqR3RBdvBpTNj+iPebSuXyoZA9b5a2tK0dISHPWu8=;
+ b=uM8CC1ax/n9/RLw6TPwra1ndIiv/YATKkARHT1oaRv6QLLtaJnLw+dPrc331N+nm8z5n3lGhq
+ dY9o7uTXVVKCcRjlKITl2+6PHhDZ0L2MIME4QYUYjsStOohhvAmULpN
 X-Developer-Key: i=da.gomez@samsung.com; a=ed25519;
  pk=BqYk31UHkmv0WZShES6pIZcdmPPGay5LbzifAdZ2Ia4=
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=da.gomez@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=da.gomez@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -80,51 +83,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Gomez <da.gomez@samsung.com>
+Raise the QEMU NVMe controller's MDTS beyond the 2 MiB cap.
 
-When submitting large IO beyond IOV_MAX, ensure the last dma mapped
-chunk ends on an aligned boundary and unmap the remainder so the next
-chunk submission takes it. Otherwise the discard path at the end of
-dma_blk_cb() drops the unaligned tail and those bytes are lost.
+Commit 53493c1f83 ("hw/nvme: cap MDTS value for internal limitation")
+needed the 2 MiB cap because dma_blk_io() submitted the full sglist
+in one preadv()/pwritev() call, which the host kernel rejects when the
+iovec count exceeds IOV_MAX. This series moves the IOV_MAX bound down to
+dma_blk_cb(), where we batch in IOV_MAX chunks when necessary.
 
-Reproducer: Write 8 MiB through unaligned path and read it back using
-the aligned path:
+dma_blk_cb() now breaks its accumulation at IOV_MAX and submits the
+next chunk via the existing re-entry path. With that the DMA-path
+nvme_map_addr() guard and the MDTS cap are removed. The cap stays only
+for CMB/PMR, whose transfers go through a different path and are still
+bounded by IOV_MAX.
 
-fio --name=demo --filename=/dev/nvme0n1 --rw=write --bs=8M --size=8M \
-    --direct=1 --iomem_align=4 --verify=crc32c
+This series builds cleanly under ubsan with large mdts and passes the
+following fio tests on a 4k LBA QEMU NVMe device:
 
-fio --name=demo --filename=/dev/nvme0n1 --rw=write --bs=8M --size=8M \
-    --direct=1 --verify=crc32c --verify_only
+fio \
+    --name=mdts-stress \
+    --filename=/mnt/mdts/stress.fio \
+    --rw=randwrite \
+    --bs=8M \
+    --ioengine=psync \
+    --direct=0 \
+    --numjobs=8 \
+    --time_based \
+    --runtime=600 \
+    --fsync=8 \
+    --end_fsync=1 \
+    --group_reporting \
+    --refill_buffers \
+    --norandommap \
+    --offset_align=32k
 
-Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
+fio --name=demo --filename=/dev/nvme0n1 \
+    --rw=write --bs=8M --size=8M --direct=1 \
+    --iomem_align=4 --verify=crc32c --do_verify=0
+
+fio --name=demo --filename=/dev/nvme0n1 \
+    --rw=write --bs=8M --size=8M --direct=1 \
+    --verify=crc32c --verify_only
+
 ---
- system/dma-helpers.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+Changes in v2:
+- Update cover letter.
+- Rebase on top of nvme.next branch, tree:
+https://gitlab.com/birkelund/qemu
+- Keep the 2 MiB mdts cap for CMB/PMR configurations (Klaus)
+- Fix the `mem` leak reported by Keith
+- Drop NVME_MDTS_MAX, ie. unlimited mdts as long as Linux host supports
+it.
+Allowing larger mdts, also meant we needed to:
+- Clamp the mdts and zasl shifts to stay within uint64_t
+- Cap qemu_iovec_init() to IOV_MAX when the sg list is large
+- Keep IO chunks aligned when chunking at IOV_MAX
+- Fix the wrong bytes being discarded in the discard path
+- Link to v1: https://lore.kernel.org/qemu-devel/20260529-align-nvme-mdts-with-linux-v1-0-221d4d21ab43@samsung.com
 
-diff --git a/system/dma-helpers.c b/system/dma-helpers.c
-index 8ee83ce9e75..9004ad50ae3 100644
---- a/system/dma-helpers.c
-+++ b/system/dma-helpers.c
-@@ -158,6 +158,17 @@ static void dma_blk_cb(void *opaque, int ret)
-         }
-         if (!mem)
-             break;
-+
-+        /* Ensure the last slot in the chunk ends on an aligned boundary */
-+        if (dbs->iov.niov == IOV_MAX - 1) {
-+            dma_addr_t aligned = QEMU_ALIGN_DOWN(dbs->iov.size + cur_len,
-+                                                 dbs->align);
-+            if (aligned <= dbs->iov.size) {
-+                dma_memory_unmap(dbs->sg->as, mem, cur_len, dbs->dir, 0);
-+                break;
-+          }
-+          cur_len = aligned - dbs->iov.size;
-+        }
-         qemu_iovec_add(&dbs->iov, mem, cur_len);
-         dbs->sg_cur_byte += cur_len;
-         if (dbs->sg_cur_byte == dbs->sg->sg[dbs->sg_cur_index].len) {
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Philippe Mathieu-Daudé <philmd@mailo.com>
+Cc: Keith Busch <kbusch@kernel.org>
+Cc: Klaus Jensen <its@irrelevant.dk>
+Cc: Klaus Jensen <k.jensen@samsung.com>
+Cc: Jesper Devantier <foss@defmacro.it>
+Cc: qemu-block@nongnu.org
+Cc: Daniel Gomez <da.gomez@kernel.org>
+Cc: Daniel Gomez <da.gomez@samsung.com>
+Cc: GOST <gost.dev@samsung.com>
+Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
 
--- 
-2.55.0
+---
+Daniel Gomez (7):
+      dma-helpers: fix unaligned discard_back
+      dma-helpers: ensure IOV_MAX chunks end aligned
+      dma-helpers: cap iovec allocation at IOV_MAX
+      dma-helpers: chunk dma_blk_cb at IOV_MAX
+      hw/nvme: clamp mdts and zasl shifts
+      hw/nvme: drop DMA-path IOV_MAX guard
+      hw/nvme: cap mdts for CMB/PMR-only
+
+ hw/nvme/ctrl.c       | 21 +++++++++++++--------
+ system/dma-helpers.c | 19 ++++++++++++++++---
+ 2 files changed, 29 insertions(+), 11 deletions(-)
+---
+base-commit: 7a34f7b8794b29cd1bd4dfa45f7d8e8daba7cff5
+change-id: 20260528-align-nvme-mdts-with-linux-67d618f6730b
+
+Best regards,
+--  
+Daniel Gomez <da.gomez@samsung.com>
 
 
