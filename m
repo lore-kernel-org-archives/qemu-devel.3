@@ -4,104 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07D43C5DF6D
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 13:13:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF7EAC5DF6D
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 13:20:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwg68-0004CM-Kx; Wed, 19 Aug 2026 09:12:52 -0400
+	id 1wwgCH-0005A5-TH; Wed, 19 Aug 2026 09:19:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wwg67-0004CD-F5
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 09:12:51 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <rao232328@gmail.com>)
+ id 1wwgCG-00059q-Bd
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 09:19:12 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wwg65-0003nj-N2
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 09:12:51 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 97EBC84B3A;
- Wed, 19 Aug 2026 13:12:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787145163; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ri0Rh3WhDPgW7ABwgfGjUXneayUteg6CVLpeP3t73wI=;
- b=Czl7JpkKPtQwT05oMLTqxIj9GHDvWHhNQmPiyqQqGW9naNe76NyFV/e2czNLjnioH0XJor
- 3nVKtlQ9zyOpR8U4loLls+P8rN+ZrdXHt7vjXuzMcTNuShVI1Xi4mwHry8ClMv9OHG2lgr
- YIj1jnxEh5AZ2PXPhCV3dXRx2pQmBOM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787145163;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ri0Rh3WhDPgW7ABwgfGjUXneayUteg6CVLpeP3t73wI=;
- b=Xg2aVf3LasusGF5uksKO8pImgWZLtfRfXeNVt/puIwQRozBBGI2mrs1mZsIO9tjkAA0u3u
- eGfoxjZvQR8NFpBw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787145159; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ri0Rh3WhDPgW7ABwgfGjUXneayUteg6CVLpeP3t73wI=;
- b=zEtp86SRhZ7eyEL0gJaWGnjw6r/mLLbZiCrzh/hVOhgXTsTTAJ9awchA4+BhCQSE/H+nGV
- HddH2DH4yqcue4W+0jKqSbLD43jRPmBp7hNSItmxiOoLfopW8jLyEAPjG0as0ahx+LfG6q
- eSkqvqK5E+Y18w+dF7gfBgzchwFvY0g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787145159;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ri0Rh3WhDPgW7ABwgfGjUXneayUteg6CVLpeP3t73wI=;
- b=psS1RMoTJTFYf5iFOfJhHQeulbP/UcxEZ6irkFfZAEa171sUGSpHt5slcFXFsRFsTzZlLf
- IgmQXB3jtaspOlAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 37288362E;
- Wed, 19 Aug 2026 13:12:39 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id dOmoAserhWrKOgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 19 Aug 2026 13:12:39 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Rohitashv Kumar <rohit.kuma1313@gmail.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Rohitashv Kumar <roohiit@amazon.de>
-Subject: Re: [PATCH 0/3] tests/qtest: make PCI tests resilient to a
- compiled-out i440fx/pc machine
-In-Reply-To: <20260717081845.2439849-1-rohit.kuma1313@gmail.com>
-References: <20260717081845.2439849-1-rohit.kuma1313@gmail.com>
-Date: Wed, 19 Aug 2026 10:12:32 -0300
-Message-ID: <8733wameyn.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <rao232328@gmail.com>)
+ id 1wwgCE-0004qB-L1
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 09:19:12 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-38125cebfdaso1666050a91.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 06:19:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1787145549; x=1787750349; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=iBbYixPr0Ux51WeoZy3YIxt8QwFzfvPD/E0ngL0ab2k=;
+ b=I92paEaeFC+oBYShgV37Xj5isLFUtE3ODiiZbkUShWq6XQMaPHVzRJ4srIN9O3mrHF
+ nZcd35Xy+ltLgw4JH0oxiyFilT6LEnCR7SS8sEE8ZV4ZykoZ3fGbiO4zcYqcLewLiEsU
+ gjRIgfDxJpA8XsC2D5dDSt8t/JxT2JpsdtNS0fdUXu1HruKEA2E0Au1LR474adjjTcWj
+ Wcx6fRWxGpoXGOoKrQy1f2Fb5QalkcsYelOcKM2JTVkmknW91ClRriLQP77N4Al9vEKF
+ 7xxAxXd0npoxXG6aQYCK/OZ56eS7HrpfR3Hn+IKOrDJeNRjwYEfBDnIr21PaoAhR1NJ8
+ UUqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787145549; x=1787750349;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=iBbYixPr0Ux51WeoZy3YIxt8QwFzfvPD/E0ngL0ab2k=;
+ b=avHOEvCoCqOpHluphWdjn90Q+TDJDLiQQNAN6gc0/Eq0f4XeErYO7q6o2josNuiYjG
+ b00P0Mycrpq5FDUWzCCw/NsVUmz3W5uL62FBJe+wgLly0NtnIuBdJ8pedpme2OJLO7cr
+ ylbo0ftgYn5mn/wEIvxgg0BX8jS+BGnB0AvTQjtpNsdUIM73p+d26HU/b5ToiD93Ct70
+ jtJbumCHtcUiLskC+qyX9WjoFwxeUIwbiDtDU8QeuzPqa3ziE78xdJvVGoNxv7FWXUZp
+ SdZNG7LB9YNK4h3zPN0Q0k5EYLVOF0FROfIDwgh/5GNscTxtjVQwwVWRwTRVjtJ+DjXw
+ I9Jg==
+X-Gm-Message-State: AFuF++nHSfyoRmZo5nX0JRvTRH5xJIOLtDEHQKo8DEXl5s+v8vPWTi/Q
+ K0kZUT2fmdgo+l4ZGItPKg7OVDwHpaoDJo1H9g3litBVXX359AFhTz5CSsMGVXiacsxVXA==
+X-Gm-Gg: AR+sD10rr6DGj3vLYSv7EoVYR08dWflKOwk96SKHxPlVm0onUld9ZjNUH6iBtw4xhAx
+ Z3SzDOGCp+J7cB66Y1MdylPJQUpJjj4j3jwO1GfDH/HOnyK1IuKkV9xnw9Tbq96IKrUMVDZHztp
+ /oi772xwZ9JYyc6PLt3u6bRiX1QCdc985rcA5HGegWWXgTaFWhljYZjx6D5x0lgMzwpZt+dH/YE
+ G7Zy7aarEAjtTs+ClGgAxpBy2OPGo0Mvu9nUeFStloX1BpgFUCd9DocktQpze45hkAhDnnirVh5
+ ooWq/mT8VzBKFOSw7C4ug/KTls+kLgjbYnmjW5UlaereWbj5Frx7utObpd27E6mqrCRSUwSXghf
+ pdRg2tdV/1J6JkUZJ7ddeR6sWESuLtX85CfKNkFXAj2Iy1habl1ShXPKXZM7kOWNH2uEWMSu/y8
+ ujSpqjQ6PdwSBR49lfs/018IIrfn266Z9lrtHS5O0bTsfI/GYlqcPzS8vyNoctJSxBjQehqg==
+X-Received: by 2002:a17:90b:5684:b0:395:5eec:b932 with SMTP id
+ 98e67ed59e1d1-39580f6b704mr9272133a91.11.1787145548898; 
+ Wed, 19 Aug 2026 06:19:08 -0700 (PDT)
+Received: from DESKTOP-DFGP8OG.lan ([156.226.169.41])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3957fb12145sm2734387a91.4.2026.08.19.06.19.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Aug 2026 06:19:08 -0700 (PDT)
+From: raoyi <rao232328@gmail.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Chao Liu <chao.liu@processmission.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ caojunze424 <caojunze424@gmail.com>,
+ Bin Meng <bin.meng@processmission.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ raoyi <rao232328@gmail.com>
+Subject: [PATCH v5 0/3] hw/timer: add K230 DW APB timer support
+Date: Wed, 19 Aug 2026 21:18:56 +0800
+Message-ID: <20260819131859.9583-1-rao232328@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- TAGGED_RCPT(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
- MISSING_XM_UA(0.00)[]; ARC_NA(0.00)[];
- FREEMAIL_TO(0.00)[gmail.com,nongnu.org];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCPT_COUNT_FIVE(0.00)[5];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, amazon.de:email,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=rao232328@gmail.com; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,44 +107,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rohitashv Kumar <rohit.kuma1313@gmail.com> writes:
+Add a DesignWare APB timer model to QEMU, wire it to the K230 board,
+and provide qtest coverage for the timer behavior.
 
-> From: Rohitashv Kumar <roohiit@amazon.de>
->
-> QEMU can be built with the i440fx/pc machine type compiled out (for
-> example via a custom --with-devices-<arch> configuration that only keeps
-> the q35 machine). In that configuration a few qtests fail because they
-> hard-code "-machine pc" instead of checking whether the machine is
-> available.
->
-> This series makes the affected tests skip the pc-specific paths when the
-> "pc" machine is not compiled in, using the existing qtest_has_machine()
-> helper. There is intentionally NO behaviour change for a normal build
-> that includes i440fx/pc: the guards only take effect when "pc" is absent,
-> so existing CI coverage is unchanged.
->
-> For device-plug-test and drive_del-test the guard is placed inside the
-> x86-only branch that adds "-machine pc", so coverage on other
-> architectures (which use the default machine) is preserved, and x86
-> coverage is still provided by the existing q35 variants. For pxe-test the
-> per-row check mirrors the existing per-row qtest_has_device() guard, so
-> q35 rows keep running when pc is gone.
->
-> Tested by building QEMU with and without the i440fx/pc machine: with it
-> present all affected tests run as before; with CONFIG_I440FX=n the pc
-> cases skip instead of failing.
->
-> Rohitashv Kumar (3):
->   tests/qtest/device-plug-test: skip pc tests when 'pc' machine is
->     unavailable
->   tests/qtest/drive_del-test: skip pc tests when 'pc' machine is
->     unavailable
->   tests/qtest/pxe-test: skip per-row cases whose machine is unavailable
->
->  tests/qtest/device-plug-test.c |  8 ++++++++
->  tests/qtest/drive_del-test.c   | 16 ++++++++++++++++
->  tests/qtest/pxe-test.c         |  4 ++++
->  3 files changed, 28 insertions(+)
+Changes in v5:
+- Rename DW_APB_TIMER_CONTROL_INT to
+  DW_APB_TIMER_CONTROL_INT_MASK.
+- Fix the K230 timer clock frequency from 6.25 MHz to 50 MHz.
+- Wrap the qtest commit message at about 70 characters per line.
+- Register both K230 qtests directly under CONFIG_K230.
 
-Queued, thanks!
+Testing:
+- QEMU build passed in the Debian container.
+- tests/qtest/k230-dwapb-timer-test: 8/8 passed.
+- Mainline Linux 7.2.0-rc3 booted successfully.
+- DW APB timer registered at 50 MHz; PLIC timer interrupt counts increased.
+
+raoyi (3):
+  hw/timer: add DesignWare APB timer model
+  hw/riscv: add DesignWare APB timer to K230 board
+  tests/qtest: add k230 dwapb timer test
+
+ MAINTAINERS                         |   3 +
+ hw/riscv/Kconfig                    |   1 +
+ hw/riscv/k230.c                     |  33 ++-
+ hw/timer/Kconfig                    |   4 +
+ hw/timer/dw-apb-timer.c             | 376 ++++++++++++++++++++++++++++
+ hw/timer/meson.build                |   1 +
+ hw/timer/trace-events               |   8 +
+ include/hw/riscv/k230.h             |   8 +
+ include/hw/timer/dw-apb-timer.h     |  40 +++
+ tests/qtest/k230-dwapb-timer-test.c | 274 ++++++++++++++++++++
+ tests/qtest/meson.build             |   3 +-
+ 11 files changed, 747 insertions(+), 4 deletions(-)
+ create mode 100644 hw/timer/dw-apb-timer.c
+ create mode 100644 include/hw/timer/dw-apb-timer.h
+ create mode 100644 tests/qtest/k230-dwapb-timer-test.c
+
+
+base-commit: f893c46c3931b3684d235d221bf8b7844ddbf1d7
+-- 
+2.53.0
 
