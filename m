@@ -4,139 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42FFEC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 20:26:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7F5BC5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 21:41:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwmrJ-0003fN-KI; Wed, 19 Aug 2026 16:26:01 -0400
+	id 1wwo1V-00036B-K0; Wed, 19 Aug 2026 17:40:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wwmrG-0003f8-Kt
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 16:25:58 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wwmrE-0008CY-O5
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 16:25:58 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67JHqaNM1011830
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:25:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=MzMifqExjqo
- dkPnZsPuBA2asdyG92Uw+9ZmL2sYuyc8=; b=LlGf8KzuFOQtdaoRFa1rvBEOxVw
- 3ecZjzjaLb28ve9uqQf3fKNGdysB5Eb7dcQrLnbDUqQdQQXAxWtISM1VNRk5bJV/
- FmDLZtg1v8vZk7t1fEWKVl+ofZ2mo/kXDYgPmN6VsF0c5KJ7s9QQE65f8F/D0XQI
- glDAkfHU/uleuGTz3xUY+iC+7vnvB4nouoyzKk+EBzE1FkF8Q5fL4fXbFnQ1ob1J
- 1NQSVP5kCoq8Yis53YZ2I/ZxYhdNup5N5OQVtHxvKf70JRAqLADe82dDpzVjthqH
- nN08m0cKoZQH0F0i9tmUSfZk8JKsRwRnkV7eDnBbsIm4asLtmYpF2+kvF1w==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g5daa1y9p-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:25:52 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-38e475f83a2so2763769a91.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 13:25:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wwo1T-00035o-TU
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 17:40:35 -0400
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wwo1S-0006NP-7G
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 17:40:35 -0400
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-836cde02992so20986197b3.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 14:40:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787175633; cv=none;
+ d=google.com; s=arc-20260327;
+ b=TwqOm/cnPDUTIiVxSWlssff5nG5QAoIOQtGIAnKkjktjaElv1J4i0qZSvdz2FMDnax
+ AgDVeJNsBPn4+gdcbs6ZN63CUOzq2GIWmGef+/YzdiB6noZSXZBcUpWKnE/51CovdZo4
+ HAFDYzO3CG9u6urIy/Zkg2J54nTkLtxHsT3QAtb3GD3TSI+YvjC5aGR45fJXa/oX0xiI
+ k/8Tgy3i9Ll7DQ1W2w3pJm2pRXSzssJjgyNaHXP+Z/OeVnrt2BwagtxQZIb66lH0xoYk
+ +jHz0MDKUFgJAJakzUYNCObR8ssuKkYmd+YaunGuApcGtD0ZkZ7dWQYwLYr4tLH9+e3r
+ wgjQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=NVZGIHVHY9chGR1zqG2Nxdcreppw/R5t6obXfGi4NcM=;
+ fh=RynG/mh6ztmyNhHf+Vf0XiFWhmNfp0mSdDXdPqU/75o=;
+ b=AdJCb1XDj9cex+l1Q3NRr33ET62FNDVKAuA+fLTiBtdeVj97drxqMTVv+AR8EMNtVm
+ oeDQkDK1+bLMge9cQhcBMO4DHqEXGjfSCskg43Lyi3olJBMFsCbCjLtL23cW9sRrtr6Q
+ R4d2nyTPih6GGbutmgMCuXUrXetRem4REDkZLUvB+om9itCgMt6A+LHAnOuZlJ6E2YH5
+ IqXi5oMYGiSwm5YCmTao4LHwcl2Q/VMwbZ/ncN+hdEWKjisSlQNSM+2m4vamePBJ1pmJ
+ mIKcKUf9V7r6D6Ke9BJX6nx8JFDaCdagvQ0v7DvIAVCO8kHbAii/8+DeViyLV2+BBirX
+ tHSA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787171152; x=1787775952; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=MzMifqExjqodkPnZsPuBA2asdyG92Uw+9ZmL2sYuyc8=;
- b=ZenVD/YTyFOdwCkEeG1eogGE+xoIZaOiZtgRm5yqDzKZygcOkP/H8DTEk1cpcZ10FQ
- meqFa/mUOBhaB8ElAp7RexIhSlvBBsktPW0rU/sYCkAr/65xB5+KSu/sl/msltw3H1I7
- BvWnPv6tTVewHUgxg3CgWGCy8uVISEbx6LWlTDINwAXzdQYgwGq0HDNoXzgvEsLnAkTe
- z9gsl06YB97t/5SDuzXBseI/UhoDk3dFTdRDJkiMwEizqsuQX/4kl1ntnnNdXxbvNRzc
- j+WYweWAN9eKcjfXpzzhZk+Qy+JpBWXlQ0YAgp7ufxxUuCh7lxgamo3Q44cOLEXiq1bF
- v51Q==
+ d=linaro.org; s=google; t=1787175633; x=1787780433; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=NVZGIHVHY9chGR1zqG2Nxdcreppw/R5t6obXfGi4NcM=;
+ b=FsarPCYBQ1SrtXAk0TUkjWRaid/InLh3yy931Bix9jai4CgeuGv+xqys7GGZ4SC9OJ
+ 4pcxt8fVppGIurVP96hLY4h2DKzhVfluEDhVgAP1v9LuLlJnyWlXJy4KHHBY1zWg9nAw
+ IDBl6bXd4BwaBudF/WPTL/6NBFlHbpDGUkkHe4jcqY5qjNsZUVDsYXHw2/TA1acQqwtV
+ zaGmmYqqVPwJj8f4ovxVTpR/ViuzHpTSPFJeFJeLU91qVjPwkNNuGe6wF1zb0SdZhamR
+ IiDqaMEePRDOyW5y1j82t+oLyIaqfa4j9whD0nRrltG1qYY6MdBH52+WJLPwCR1c7QC7
+ ieNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787171152; x=1787775952;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=MzMifqExjqodkPnZsPuBA2asdyG92Uw+9ZmL2sYuyc8=;
- b=mrejF1qC7y2WOiEc1a/LxvBL7StLbHHGYibTl9h7QWDRZiCX++Av9q+I3/1LFOp3cc
- 0Xdonj14r1nGpwTMJ5CfM7AauqhSCYrYzoqOjAPTPwMr2DQTczsvnV0ficnQfsy131ha
- l82XDU9MdFY7KKkqlh4JqXtyplCO17NjyrsIKdpdgo9JMl/BKtsemVEXKE4C899Csb1U
- hnTPeHwFskET/2Zb7U4n7wbjt+5SI23OmRUhd4gMp98ECr0uit0W585ZCu2yejS/jQvU
- UI1OVELKNgyk+Ing7WmtEAU18JM2f/frloL6QzRsjCJTydEqPIJii5juDQegBviNZGFo
- Syfg==
+ d=1e100.net; s=20251104; t=1787175633; x=1787780433;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=NVZGIHVHY9chGR1zqG2Nxdcreppw/R5t6obXfGi4NcM=;
+ b=NDVkWLeyezApQiuPYvXmbuMXfpkjm5bnvZEUCujPvHygx3HEaj4R8ED/ogaQM22tzQ
+ s3qhaPquSgtp1m0c5d92Z7HZYUVOQGplS7CC+zwvbug87Lshv3mMcBZKU/1ffX5bSTiU
+ /J6gJHbgKOwEx20FWlk5nDDZl7MNgzswr2IzXD/FVdHtw6jkhCUgdGW9WYKE/co2qbyb
+ ImnIDoO9td0nQZxdwbeBY3JcZkfpAChdcHCLu+FcljEKC1leVlS8SXZZBNgpJLAwaU5g
+ l7DgDukr61fmfLWvgRBLXKKCop3IQg95ZJCj/XBdbWOQwbZRNywdwadZgxLL83T+OY3+
+ m9cg==
 X-Forwarded-Encrypted: i=1;
- AHgh+RqlI2h6ASzuL0ULf9S5hH/cJLcIBGCJxymZDZHM5rr4MHvR0R9pSNzPVu0hx3Dv40WJipUuMbi2iR52@nongnu.org
-X-Gm-Message-State: AFuF++nFDWUPWokFyuwU3YO97PjDI2XQKwpZlmjEZc3/SZpY1+zotpbL
- dQqSJI0SaxUXw503VnBXCrfY8o0YwKXdTTXuZdKH50Y/1fketRZrvVEQ1PUfLhoClsaR9fl2yhm
- ScCw7Ci09NvM37FaL5a2cBdrwm5iW+Hq18nzO/k45wkNpQTqokulg71Uw5g==
-X-Gm-Gg: AR+sD12upBCGyHNnXKdnW/OGYRqnzJgOSWjzGOotK8zBDVx+nuBF62IlbVKFeZEuOFf
- 6zkUgUKPOn09lx60miXKCE7ErBrBfS2OejmWIqIRLrikJT+6P7Qpk6DPO/dK2g4eIDkW3FI3ARm
- osYCY/jFDcdfMROdK0psDSHWSC9ll+RO4FlGxm4woHvQOR+g0LfJ9gv+1qPFltj6gRd8kwuQ4cP
- PUhWkZ7fzgOSc5t3ML+wPbY8vFfbSk1Kx8c90wQzYwT8WoyOUJu347RlLxOLO981N7Hln4PBuXy
- xgy/V2goRnepgC6VOhmNxba3fjL1/f3WU5QaT4OQ7vgy8gfTZ2Zj5oPBgDDYRcdw4JazsC291BJ
- DqZW07VTvNag006xB7AObzzwaJW+TOd+26u2qC0FzAI1Wvo65OjBFRxYNMG39uBs=
-X-Received: by 2002:a17:90a:d005:b0:38e:6aa7:68ad with SMTP id
- 98e67ed59e1d1-39580aa33d9mr13739759a91.5.1787171152226; 
- Wed, 19 Aug 2026 13:25:52 -0700 (PDT)
-X-Received: by 2002:a17:90a:d005:b0:38e:6aa7:68ad with SMTP id
- 98e67ed59e1d1-39580aa33d9mr13739666a91.5.1787171151725; 
- Wed, 19 Aug 2026 13:25:51 -0700 (PDT)
-Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ae89189sm9729066c88.14.2026.08.19.13.25.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 13:25:51 -0700 (PDT)
-From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-To: philmd@oss.qualcomm.com
-Cc: matheus.bernardino@oss.qualcomm.com, qemu-devel@nongnu.org,
- brian.cain@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
- marco.liebel@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng
-Subject: Re: [PATCH v3 13/13] tests/functional: Add hexagon semihosting
- systests
-Date: Wed, 19 Aug 2026 13:25:48 -0700
-Message-Id: <20260819202548.2090722-1-matheus.bernardino@oss.qualcomm.com>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <815d60b5-3bc1-4c4d-baaa-90df17a75f58@oss.qualcomm.com>
-References: <815d60b5-3bc1-4c4d-baaa-90df17a75f58@oss.qualcomm.com>
+ AHgh+RpUUIatvdRh7ifqgImlUAb5/Di5LdTFWFs0OMv8Z49A++77KtYiq6SZaMcCxW6z2LQVNe8MQ2qwyIEa@nongnu.org
+X-Gm-Message-State: AFuF++nt0heLyNsdeHwCWhYgoPRaD5oh8JkA0202jOiNRGyTMBy2+LAE
+ ToyVyNycJ58twsU+Inv5F8IZdsBmzOhKsJQQjR/hEvgzpZR6v6WHKTs8X6pG0y5f0SOiY371S9S
+ KnCNiV9FEqho3zcokg4KGmEpSAU+AE81z0Kl5V6z0OA==
+X-Gm-Gg: AR+sD11ljLnqHt9jEWSAySfncxn7I/6r7YvJGFb0oUZ6PZbPq88WxnqHv/IxRQas1EX
+ uYLBz8B6eNfndWXihrIOJxNqWOJhNZxq1yFHOTMO+fbL5ESEaz4B6t+9nxBzw7Zkq/TXynQf3z+
+ wl5jsnyHhl0duOVFhGKwFKXajTEi8vBfc+cLYdsplpSd7Dm8MqcYuGccGXFMdz4xZut1v9xC9iN
+ 649dZ+voNl2cG4YRbMFnxQ8k8INEIVsLLOiuoKIgT8IXbvkPKsD3BPI9c0g9Bj1tiEU2X3PcgM2
+ HROFUvov7sRmSK8mt2B8Zmhw7MvpV+v3WDG0ZaK2w/XKPXBKX7GV2RD0GwhmlE3p72h4gz2dtih
+ s+GJX3tjSxWOS8Nnm4XtRFDQrsI9y82iHg4SFtqk=
+X-Received: by 2002:a05:690c:4b82:b0:820:1251:d2c2 with SMTP id
+ 00721157ae682-844e250fe23mr30942807b3.28.1787175632764; Wed, 19 Aug 2026
+ 14:40:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=fv3sol4f c=1 sm=1 tr=0 ts=6a861150 cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
- a=dnJ9b09rcGLkOmvZeYoA:9 a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-GUID: xXnrOJbwfVAZeJ4zqGt2gM6S9amDOB97
-X-Proofpoint-ORIG-GUID: xXnrOJbwfVAZeJ4zqGt2gM6S9amDOB97
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDE1NyBTYWx0ZWRfX641KSBSLkP3I
- mE3heX4CLjYdpOw+eiPZ+523NFduowTIeQ1Pwd8Tzp30lUBCo5dh1Vw4fsUPNmDc7BpRSDrl8UD
- 6S1kt583E/lKL5UCizGKi+mjGyumkzE=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDE1NyBTYWx0ZWRfX95v74yqbKVr2
- z448CHFidZPr5NYnlKSvY1ZsXwWjw9pL4Krr7kbnNeRxFPK0tnOMCjnAqy5hK/TAlNeduoL033r
- 8ojcOzKObWKXlZ2Vj/SZl6Clz4GzZ/PI0KkINEfFP7eGsGAmklWiICzft4e0vRoklV9Aj8LL84D
- jvM05yP262uXeDt7mcgrLfittQvTyvQb4lAvytzzwbzHBI3/3UL+mDT1ysisR8noWeUc8Fb1n1u
- fN4rPMRNLwBzOUxC6yzpkK8vhnS0SDKpE0nxpXttu8IeZ3iUkHZuoftfr1Mk5PvA4/kgtqyzs0w
- MVle4rxhgQp9dO8fmKggFke8AumujftZos4IwYzRLCIeXEmt0fL9ps5qDENRwFnE4UiAQXyFyPs
- LoKrrIdmEEnpwzww/5Lgpq0FupKrRn1Wv/E6elhlhgGq/ZtMsWP9s2XVCwJlh3ibuGgD4N4Ur78
- 0uxQWWpJjpcAoNWo9Bw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-19_05,2026-08-19_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 spamscore=0 adultscore=0 suspectscore=0
- impostorscore=0 lowpriorityscore=0 malwarescore=0 priorityscore=1501
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608190157
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=matheus.bernardino@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260819145649.23439-1-philmd@oss.qualcomm.com>
+ <20260819145649.23439-7-philmd@oss.qualcomm.com>
+ <44833559-f73d-4b8c-acec-a3e86b98c393@linaro.org>
+In-Reply-To: <44833559-f73d-4b8c-acec-a3e86b98c393@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 19 Aug 2026 22:40:21 +0100
+X-Gm-Features: AcwNN1VZzrghe4g4FF9eAZkIAC11VMYm1kyn-5715IuzotZNaZMavujrtS9KpK8
+Message-ID: <CAFEAcA8xk8y1W0UvttpVhKYuoMBSQqZoF_15of0Rrq4wKkWDuw@mail.gmail.com>
+Subject: Re: [PATCH 06/11] target/arm: Extract halt-to-exec transition out of
+ arm_cpu_exec_halt()
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,33 +125,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 17 Aug 2026 06:47:55 +0200 =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com> wrote:
+On Wed, 19 Aug 2026 at 21:14, Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> Hi Matheus,
-> 
-> On 20/7/26 19:41, Matheus Tavares Bernardino wrote:
-> > 
-> > +    def run_console_pattern(self, binary_name, pattern, *extra_args,
-> > +                            machine="V66G_1024"):
-> > +        """Launch *binary_name* and wait for *pattern* on the semihosting console.
+> On 8/19/26 07:56, Philippe Mathieu-Daud=C3=A9 wrote:
+> > Refactor the target-specific halt-to-execution transition
+> > logic (disable WFE/WFI timers, clear the halt_reason flag)
+> > into a separate arm_cpu_transition_halt_to_exec() function.
+> >
+> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> > ---
+> >   target/arm/cpu.c | 22 +++++++++++++++-------
+> >   1 file changed, 15 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> > index 77aa78f00e2..8e9b584559d 100644
+> > --- a/target/arm/cpu.c
+> > +++ b/target/arm/cpu.c
+> > @@ -870,18 +870,26 @@ static bool arm_cpu_internal_is_big_endian(CPUSta=
+te *cs)
+> >   }
+> >
+> >   #ifdef CONFIG_TCG
+> > +static void arm_cpu_transition_halt_to_exec(CPUState *cs)
+> > +{
+> > +    ARMCPU *cpu =3D ARM_CPU(cs);
 > > +
-> > +        :param binary_name: name of the binary inside bin dir.
-> > +        :param pattern: string pattern to wait for via wait_for_console_pattern.
-> > +        :param extra_args: optional pairs of (flag, value) strings passed
-> > +            to set_vm_arg(), e.g. ('-append', 'myarg').
-> 
-> Sorry, this is not useful, just noise making the review more painful.
+> > +    assert(cpu_has_work(cs));
+>
+> In reply to patch 11 you suggest removing this.
+> I wonder why you added it in the first place.
 
-Sorry about that. I took this from the downstream file we have and hadn't
-given much attention to the function comments. You are right, I'll drop it.
+Does the accel loop enforce that we hold the BQL when
+arm_cpu_exec_halt() is called? If not then the assertion
+is racy, because something might get in and e.g. lower
+an IRQ line so that cpu_has_work() is no longer true
+(which would be fine -- it just means we made the decision
+to wake up and that won vs the incoming interrupt).
 
-[...]
-> > +if __name__ = "__main__":
-> > +    QemuSystemTest.main()
-> 
-> Did you run this test on a big-endian host? I'm suspicious about some
-> guest to host conversions.
+On the one hand, if we don't have the BQL in has_work and
+exec_halt then we should be a lot more careful about how
+we code them (e.g. use of the right kind of atomics, and
+there's no way the call to do_interrupt_all() in the x86
+exec_halt can be safe without the BQL, surely).
 
-I hadn't no. But I did it now and indeed there are issues here (and elsewhere
-in hexagon emulation) that makes big-endian fail. I'll fix those for v4.
+On the other hand, if we do have the BQL in exec_halt
+then why is the x86 implementation explicitly taking
+the BQL when it calls apic_poll_irq()?
+
+-- PMM
 
