@@ -4,85 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 037E8C5DF85
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 09:33:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40761C5DF6D
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 09:34:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwcfU-0005eL-Th; Wed, 19 Aug 2026 05:33:08 -0400
+	id 1wwcgf-0006FL-Ud; Wed, 19 Aug 2026 05:34:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wwcfT-0005dq-20
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:33:07 -0400
-Received: from st-2004f-snip6-1.eps.apple.com ([2a01:b747:3001:201::36]
- helo=outbound.st.icloud.com)
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1wwcgd-0006Eb-VW; Wed, 19 Aug 2026 05:34:19 -0400
+Received: from mail-norwayeastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c20f::7] helo=OSPPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wwcfR-0003Og-6g
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:33:06 -0400
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-10-percent-2 (Postfix) with ESMTPS id
- 40BD118002FA; Wed, 19 Aug 2026 09:33:01 +0000 (UTC)
-X-ICL-RepId: 01a0195d-ed27-7611-8de3-9cdf81caa56b
-X-ICL-Out-Info: HUtFAUMHWwJACUgATUQeDx5WFlZNRAJCTQBIHVoORQNGCVYLWhcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0IQRMFUgddTVYNRw9YHlwUFwtHQ14IXh9MHB0OWAYSAE0KDjYGWQVeCVYDQwU2EhRdRUYDRxlXFFAbRwxVB1deXwoTAF4PD0x7SQNYBVl0QhQ5AikERgYxfEweLw8vd10ASgdfA1MFRgBJBF53HlwASx1XBFQfUxJVHR0LRVUSBEAIVlBUHkEEVhVsCVgGUxlX
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1787131983; x=1789723983;
- bh=mVDNReVc35x1eqbv6+N14m72Bc6G+qbTRasBFHOj06A=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=uwqyhUYY2TXJRMAbnOddGtUexGmSyxUUIg+QUT0unl3Bk95GWDkA8IVbQ1VOZS8mvW0FSk1PdXXkvNQVvqXYJ/48t6luaSQABmeL8klfXdtO5kFhfWMu8aeVya2A1pNj/ZPtMsPZwB9ceOV0nI6fUzagiH60NjxVUA5oHoqCdnZbieUAPaKfg16GJoJSt0QSB5s3NPGQfoGiKhpv578znviSIJwfz3YfInkCyPBLViWGwc6zH7KwV+HP8ToX+ehIuD5zHUfaHNVZIGN3D95fCz6PonLQGMjT4OSF3s9LMPCVrU4Urid9ZnLSzx+0KigIu7OZGaF0GuMjK7cY6OhaHQ==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.156.216.30])
- by p00-icloudmta-asmtp-us-east-1a-10-percent-2 (Postfix) with ESMTPSA id
- CF3BF18002F0; Wed, 19 Aug 2026 09:32:57 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.11\))
-Subject: Re: [PATCH 6/6] docs: deprecate virtio-crypto
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260819-fixes-for-11-2-v1-6-b7981c2cc371@linaro.org>
-Date: Wed, 19 Aug 2026 11:32:44 +0200
-Cc: qemu-devel@nongnu.org,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, devel@lists.libvirt.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B10522F2-A1D3-4AE4-B8DE-924248769173@unpredictable.fr>
-References: <20260819-fixes-for-11-2-v1-0-b7981c2cc371@linaro.org>
- <20260819-fixes-for-11-2-v1-6-b7981c2cc371@linaro.org>
-To: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-X-Mailer: Apple Mail (2.3901.100.1.1.11)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDA3MiBTYWx0ZWRfX2ZOLTGm8fjPT
- zrOpoJbF30Uq7Trl/DNRylgWjjj7L/XNxWuYvXyYWyHg2siQQotoiwKx9xZUQGi29Kz9TyVqjvx
- BcfjXvLZ0EAJFBJKuwH3jFt+qWS/eKe7kd58+O/Gk8L+o/VXV8OvWnGFQQ+65Ip+OZGMZ0Da25m
- uk8+P3zP94Jzsqi9CqX5dk/AecliQJ3qWxPX1kmnr03hhl05eFFX85uZye3PwCCTblgJZv57CNJ
- EFpDB3rLKG+qC/3UfineUUav2l2O9njZx0DFbeS8N9mI4gkmJg32hus/241WTS0VTTwePlKp2I8
- baNJYazsh0kRZ/eTIMU7WoMi208FjoDinaYsyaB6qMrsKXr1V7gWrCe0OPpJJk=
-X-Authority-Info-Out: v=2.4 cv=dfeNHHXe c=1 sm=1 tr=0 ts=6a85784e
- cx=c_apl:c_pps:t_out a=oyWFxbOnq+dmhQrAPgaJYA==:117
- a=oyWFxbOnq+dmhQrAPgaJYA==:17 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=p0WdMEafAAAA:8 a=KKAkSRfTAAAA:8 a=i0EeH86SAAAA:8
- a=6BZSfjg5s5QjvaG9htEA:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: 41mi7VTA_DLJFsyrRlc7FfoN3iCxlHv_
-X-Proofpoint-GUID: 41mi7VTA_DLJFsyrRlc7FfoN3iCxlHv_
-X-JNJ: AAAAAAABPWPGskN1e1H8sC1ZoNCHk+muZCCaS4lAJSSYmDh8Br7SUktCAV3DytOwRkKZWDUBELvRbyvNDYFZHsvIHQgQsPNEVBWUua0NviT6kO13u2dWGGn0n9OKGWWgzTxbqJCyHgDI3AADJCYeEmPImqRBc0pzzOtstvUmEG5umjcFzh/NZ3NgpnLTQJ7h6kqW3iQMAC+gjgIUEolJ/NDtmyH7lEHGKtiOtsJz2cOI+LzoPXu2Y09nweHWdID0l3iNHP9dMABwmGaXlbiJUK7DP5fbqBG5W5A0XA8lKwdNYyG7RRznWo30te7mEGQ+j3uXa7Izu4LvL5bsC/KjXvyvgykJTt6+n4LYexjko0YbvJBRsIOBEHFvt3jCWoPFhMWWh2mqi6px5YOBonct3Qc9bByEC7R1KCMM6tN27A+PJZt1+SInXtT3iAxWSif8ur+2qnWcmdNU8M6fM43dG+mWfxfPNbP3nPHLWO5SEmhmuim7ZxQOHRrT7s2kL8jrbxJYPlkJXV/+hAN+BzUG8fBUlf01Gsr/p/56AtGFI1T44fkOxaaP5OHY28Wrvg1IoLcu8gyff2lC47Qpxo3ABSg1qTRea+EZcFKbL+Ld7hbB4NA84oPGrGBAQllCgUrCE0qyDqjfkWjohhT9r5jhYq+3LMzXr/WsUGOcmy7rOL4QUq6ezqxOzqmKp3bO6kNOoZ59T5JFfSH/RKL8sYaIzCBM3fbsOOVCySjzuPYwtGLv1r9OVu9tuErdx1UnjXYe5K5CgfS0xbeeeMcdtVLFo/f/s/RjxHlj2g/eAnybczAhJ99lFmq5G46azMKrPhgCOk0Md4RGyjI5joES6IJVUzdtjJxy0JtXd8ChG9qJSmPHBupfv8RfFK8HkiC54IxHH6C8gSMXfO5HqK5YoTclCJqVXe8i4SrUyv360Ej5I7DR8mfaQPd/sMvmPm12AIi/DRIq2K6ALk7zn4hJ/UniGY3v8ViYzcJ
- 7o1b++obotJRfve5r5XcI8Vzzubwgojy1orM1UYx3i2UyamNqRj3xm+QQWNHXr11LGh0li1ajDhdNK0P0KwvWmn0mIx7W/vGtMOOzBCaDgDGjiDDzIpJATxD2livVdTFuJ49sZkuwouh2uF2e7qAXCverv9RRB7zAogMFNOhidG5eZZVNoN8/AzFPW6lOJmG0edcrDeDBcFkmlxniqyaM9aTa9WC5/IXVdIwGBH8aTqS5qB5rlE0FKGaUNbToIbb0JFToi+sExarkMtA7+geGOzLpXNRTTJuYdyVQ9lcqGPh59krv+pGjLM8JW3/2Tk3ShM5c7ZENKf+tMpiEE7QKC/H0Y2YG78DA7SxDIgTPPJY3VkFt7gjOOpVIV0RtHDfiE/sNKBYxUXwY8bvAEYHL3ZABS9ZHBZ+Cz6fDGO32Xew7QcNxeuoFwrCNKSs1mrb+i2oDCLgFzD5lMj9G8O3YFme7BxZjJG2SIpJ4fQ2MKyKtibNtu39i/qW0zfdheBDt10WoyRCx/hg7ti+Ny/pOcdM+8wj7eR4fSHmMvwDHZsUVZVlldZqZhSJHqS5NPf6b/PqB8ePXHLRPrxSEJZBfvnY4T9WOuchzDIVW+EbX++uWnS8ypCLoal5nl9DqJJ4=
-Received-SPF: pass client-ip=2a01:b747:3001:201::36;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1wwcgc-0003Up-9i; Wed, 19 Aug 2026 05:34:19 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rsvcOTtR1rDrrboJsPDwGdq3us8GRq8seRt1VYWW/NPf0I9UTMt1yswaYba9l3wiWmK6l0D5MjTPCMgA6sgfaa25Q0D4Zdc7KO0pUuWQwiGtzm9W5i65LcW05LHCgdrDghyJmuBLECGrzL4l7xJuJd0VXhS4rBsp6QF1+jfPfxKUf4H5J5jbmWd0n7SzJIZ13kddkE7foS+v/NU5zlA1Xa3JW+XO2SzEgdaeZIxxwPOwZHB58KhhRGOsM+z3Co7kzK7ZfAWVvjvLrYvL38i22VrH3kDWeiAnEiuXaxJPtJhOZY3ix5Mmpmsfe00el2hRqcFDtvWUZS0T9DxVafWTkQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=v7M3j86QUvzx+AvFA4mxcGaHMUWYDLclNeJDFxYd8qo=;
+ b=ecx8lvIuc5n4A5QJQBjD8xY08Wn76UmJIZQpaZ98VbMXxzeeYuqAJ7MwTab7rd4Gn/CYIbwpUiF2+qTWiBH/IZWpC5hYxer0qVa+kxovnlOOzq3b/tTF/t+UXGArc3eXg1mLLdOy/lUp1ezi+PFiZvq9/NgroQtJxhFCGvezVwp/6ZE/zX+mf8WTwvMp6Oj7PxCYx6Z9s6MpdwI2GSl5IblnM74JLFOarIp1h9o9CuzzxXSmMyclDeTbe7BTE17UBuPfQS6GSnOtpN3to8i0VkNJZu2pgMWu49vNFrzwnzeUJ3e9dwtF/a/5Vp3G65Wf8wBfPNT9QI3CaudhsMBY/g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=v7M3j86QUvzx+AvFA4mxcGaHMUWYDLclNeJDFxYd8qo=;
+ b=UeGQQ0kebzNj3mUv00T6u9b41IYF7s9bVxmf/zANjhKeE0ThZW2haLIl5gPfu7PCQ6yvf0HTyEwo2RVkxexp6ra5urCj9VMQxtN+UTHqrh+4jYFx/Tp0niInFQX/B+9KB9A0YUrJi8XyTrElwigmc/LjkOvNhCyd/heNNGgNk7dOFOpkebgMcFLjR/PZRTT7PSfgbANpvzU8/gZ6A5W1bFbi5weiwFBSqlIEdP1HDGCbfqQbbw6pypvWB/9JxJgzR/VNibZuJ6Vcv8STRpUcfDWgdZb3qEYeA0Vr/7/Sy3i5AbiXOyjb7WLnCuf/V+x6tDie7ILDXuqmkQlFJcomZw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by PAVPR08MB8823.eurprd08.prod.outlook.com (2603:10a6:102:2fe::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.8; Wed, 19 Aug
+ 2026 09:34:12 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0339.007; Wed, 19 Aug 2026
+ 09:34:12 +0000
+Message-ID: <401f4865-6493-476f-a352-2ded88e908cb@virtuozzo.com>
+Date: Wed, 19 Aug 2026 11:34:11 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] block/nbd: fix a race in reply processing
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+References: <20260812102906.894063-1-den@openvz.org>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <20260812102906.894063-1-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: VE1PR08CA0025.eurprd08.prod.outlook.com
+ (2603:10a6:803:104::38) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|PAVPR08MB8823:EE_
+X-MS-Office365-Filtering-Correlation-Id: 36924912-9c22-4454-1129-08defdd5075a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|366016|1800799024|10070799003|376014|18002099003|22082099003|6133799003|3023799007|10067099003|56012099006;
+X-Microsoft-Antispam-Message-Info: gzFbyH1dFLb6HTjIVnOuZxhTlqGITN+gafIIp4ofl7QXD12Wro3fGeN5eBeqxZ2tFwtwHnbXGJSkuDOTbiv7CBtkmNb0H9OKSJYRNqPHmsbUcrK+mVbhwZeB44Ym0UDZfAFtaqlLQV4T4hxSMH+P4H+E2NNrdllsVh5xpItlsQtXr3q/C5D+FZnUURqhdP60n82H2Ngxn3X2TNWBW7y8ib/6yfI3CsOty91+2tKRtwqC9XPlRqLggCjIeOI9TLDaWMEZQfzxBlnJNXBPjxbPO2TKgLWKWYnqHyShkghKLeNPZrWd2egwA2AYknzLKhcRN7wqWA20PxaVOHxjQB11BQYZG4Cdom8VGZEl261Yvjl7kyzue0MVNPqS28SVp2S6y+SZdKACV/0OnYAtdtzRxmH6X+EwwzlYmdq8d+7fDTCm9z5FCD2GZk6VlWAcpuXYw5xbhEUQ47lTq3gnBfHDT6Lhy3F5rgQyHaPq5kZG208OPjLebXApSxWWeseuu1e2UVceACZW8k+P18jpmNpSjFCtIT6Snd5qcPORUyVrwcBZ+JEd4Z+5uPC1WVXOPLIV4Ch158FsV+GNcS95m9HROQ4g1z0rbmQUE8Uto4dRbjOhSGppNu1geMco8RuP1sCW+G8g/ecZelOEVXMJjfLO7rBqpFMUjIsYYEw+qQetZzk=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(366016)(1800799024)(10070799003)(376014)(18002099003)(22082099003)(6133799003)(3023799007)(10067099003)(56012099006);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YXB5aVEzTlA5dERXRithTjVyZjRsUjVpOHRxU0xXaTFsZjhhbzUwWVBJckxh?=
+ =?utf-8?B?NkZYK1gwRklsRUJFbjNJN21qZHFKQlU5b3RiSG9wWDB3QzRnZUFDMzlNU2xY?=
+ =?utf-8?B?S3JwZTdMdGtScTZwd1lXbTJTTDRBbkl4Z2xsd2xnS0pjT01iN1pnV2R1RVdw?=
+ =?utf-8?B?QzJDZVVWWE1GY3l4cWx1NjVrS0RVV1NRdEtnZzk2UHlBZXZGcHFQbUtkMStn?=
+ =?utf-8?B?b2I2cW9kckdjczR2QjFOTjB0dzY3Zm5Da0FUNkd0anVVWnNiVVFTN0FiVnNJ?=
+ =?utf-8?B?Q0R3aUpIcitvNFJqYkJKeVN5KzFXdzJlR2ZYeDFPOVlEQ3VmaVVYUWR6K3VZ?=
+ =?utf-8?B?akpCMmhMKzBiWk82b2dsT1JCWnBNemFySnc0VVRFVTRsanVxZ0dPRGtTTXBL?=
+ =?utf-8?B?dW5nVmJ5dEVxMzhQZ3FoSUVHY2ZTUUlrRDJaYXdxaXd5UXMzakJhMGpZQ0lw?=
+ =?utf-8?B?VmN3QTc2MWVEckYwUVhCdE54Z3VUZUx1TXFMS2VIUXAxVDdNbENxZFc5ZHl5?=
+ =?utf-8?B?ZXl1OFhZUGR5TTZDRnR4SW9EQ0swSUxUaC96WHE0ZU5YM0Y5NXIxdWVFRVds?=
+ =?utf-8?B?cWFUTStOWndKTHl5bERFd1gwZ21ydENCRmFnVnRrd014bSs2dVdTTytwY2k3?=
+ =?utf-8?B?NERKRXIrSEtGcGRNZWFLVVhQdHRjL2ZXa2kzSE5RZHYrQWdMT3lJbDg5TU9Z?=
+ =?utf-8?B?VU9saXp2aFQ2UUtGUVZrQzJ3OGxLTCsxV0tzUTJwTXI4QkpDcDRyTVg3VnJJ?=
+ =?utf-8?B?b2M5SC80SlVRcW5kQmNhTEhScE1RODJaRUhJSXVGeE1oVDFNR0lRbkdENUxP?=
+ =?utf-8?B?MytWYUZ1Uy9FMHRxQkVTV1JmNUgvRFdUeWJibEk4NldyOFprU1lEbnJ5bUpN?=
+ =?utf-8?B?czN5Y3VmV21Tb1JHOXcxdG5MSFJvNGlwYWxieGtNclZqbkZFekFxRE1CSmRy?=
+ =?utf-8?B?elVQLzd5YWlwQW1YeXoxNFpRZ241STZ6ZExPOGVUdlVPS05HZkJjdktXMmR3?=
+ =?utf-8?B?UWFIazlyRXkzWEI5VG9LUUNZbVJ6K3VjS0Nndk5DUk9IYUtFQ0pNZzdlcnYz?=
+ =?utf-8?B?QXEzZ1pNVlFlVG9KVGt0K0E5c3V0V1VVWVBTYmRLZitzQXcvdmxuMFc0QW1G?=
+ =?utf-8?B?S1FHOE91WEZyMjZ3SXZ3MUxpM0d5MkVVT2VaMUxMQnpHQVhSYVZQNXVyZngw?=
+ =?utf-8?B?R0VYU1FoZC9xaXdLMjQzazAzZzc3aUlxemVtZTlSbFg4ZisvdEpUcXlFZkZB?=
+ =?utf-8?B?SXgrK0llMWNyQ3ZuSjBVVFRoUXE1VzVrcEdlamliZ0RZM1Znem9MSFQ2MzBo?=
+ =?utf-8?B?bTd0NkRWaVBMY09mWW5LVXVKcDJkR0Vnc0o1RkpqK0hiSFoxa2RWYWhXd3FG?=
+ =?utf-8?B?Y1ZFcjBmVFpTYTFHdXBIMWFTdENCLzViU1U5NjltY20vaEQ4a3Y1ZHl2MG9n?=
+ =?utf-8?B?blBKUHhwbnowRjlpaTF5SWhnRmcwcU5mUHpqSElQSnd5eXB5WjhsOW5RdnFN?=
+ =?utf-8?B?OWNOOWNOTFhwN1JuTkJ6dU14aXZPQ1ROekRLODJsbmg1cGppbWJxcU1la3kz?=
+ =?utf-8?B?bDZRTkJ3U2p3bFpGQnJmL1AvcE9YaFI5K3UrbkVkYjNXdWR3Q0hkUDFLa2Jm?=
+ =?utf-8?B?dy9lQXFudnluMXVjdzJaTHIzQ3FrbzlRNTdDd1dSNnl6a0tZa0MrTUtwaXFj?=
+ =?utf-8?B?RnpkRTZUcTY3Y2h2dnRtZHFZT3JTSHpVMUR6R3BzanlEOURVanZBQzNPODJa?=
+ =?utf-8?B?RlR0dytvaGFmT3llVHNMVVZkV0h3dnhsQTBrY3lYR2hzQWJTK2ZKVERieEhN?=
+ =?utf-8?B?bWpmVzhMWXMyWGFqU05wWEFmNFl2TkdHRVdYNVBjcEl3L1IrdFMyaXBSaDJh?=
+ =?utf-8?B?YVBJQ1FSWFdvTHQxbjJFaEdmYWQ5T3VwWTZja0NmM05IVEhVRTdYaW5wSXNo?=
+ =?utf-8?B?K0tncFpQOXA2dVJHS2JCWFFEYnBYODZlODZQV2J6WmRiRXVEVEpDRUhmcmxT?=
+ =?utf-8?B?TExVL3k0dmVQQWw3UklyejZaZWpqRWRUNCtodWliYnpRV05KWnZDQWd2QzRD?=
+ =?utf-8?B?NlZKcXlzMVZBaU5sdzQwMjcyR2tJMzJTQm5uK0dVVFJPRUVkYXdVZXVKa0Yx?=
+ =?utf-8?B?TjdJWkVvRkZPcDdCZWhCL0ZCTGZHUXdlYk9zTjZob0k2bE10WDBRT3h0dlps?=
+ =?utf-8?B?aDE4akpPTkRFMlJYNEF5UkRvWnl1dHBiYlZGb0ZIVGlYNWRRNDFhaHBLby9x?=
+ =?utf-8?B?LzF0aUR0dWo3dDZPYTlOM3lUMG5pZll4d1k1c29Da2Jyd29oaVg4ZE1RMDc5?=
+ =?utf-8?B?OExZakQ5cDZCZkZwd3VVNVM3ZTRvd3k1aWRXeVlhWGVmQXhJQ2JKY0JtN2RT?=
+ =?utf-8?Q?Pkm0sXQpTKzyrO7UG9Qsj76QEDPr6P9IXdn2zZEHaVHNP?=
+X-MS-Exchange-AntiSpam-MessageData-1: K49xHCCDS22vVQ==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 36924912-9c22-4454-1129-08defdd5075a
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Aug 2026 09:34:12.7748 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 7ktzfHjgc/7vwfzIzUbp3f+vcq+VQ5NV7kXVJtAB6VElaUju8E/d0Scf/ij1zQKnJxYkxtHfkgyEoUXapvHHrA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAVPR08MB8823
+Received-SPF: pass client-ip=2a01:111:f403:c20f::7;
+ envelope-from=den@virtuozzo.com;
+ helo=OSPPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,74 +151,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-> On 19. Aug 2026, at 11:22, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
-wrote:
->=20
-> We have outstanding guest exploitable bugs in the code which is fairly
-> complex and needs some serious love to clean it up. As off-CPU
-> cryptography acceleration seems to be waning in popularity lets just
-> deprecate the sub-system with a view to removing it in a couple of
-> cycles.
-
-Hi,
-
-Still quite powerful compared to on-core acceleration, the kernel=20
-isn=E2=80=99t a great example on how to use them well unfortunately.
-
-Far better experience in production with DPDK and directly passing
-through the crypto accelerator to the process that uses it directly.
-
-virtio-crypto with its overhead makes things even worse on that front =
-so=E2=80=A6
-
-In practice, the vmexits did cost so much that it was quicker to do it
-in software...
-
->=20
->=20
-> Link: https://gitlab.com/qemu-project/qemu/-/work_items/3625
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Cc: Gonglei <arei.gonglei@huawei.com>
-
-Unfortunate but it wasn=E2=80=99t useful as is, so,
-
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
-> docs/about/deprecated.rst | 14 ++++++++++++++
-> 1 file changed, 14 insertions(+)
->=20
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 0c656a968fc..3c22981fc8a 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -276,6 +276,20 @@ future release. Where no 'dh-params.pem' file is =
-provided, the DH
-> parameters will be automatically negotiated in accordance with
-> RFC7919.
->=20
-> +Devices
-> +-------
-> +
-> +``virtio-crypto`` (since 11.2)
-> +''''''''''''''''''''''''''''''
-> +
-> +The ``virtio-crypto`` device emulation is quite complex code with a
-> +number of known flaws. It has never been migratable so is unlikely to
-> +be used in any serious virtualization setting. With most modern
-> +systems supporting on-CPU cryptography acceleration via their
-> +ISAs sets the need for off-CPU acceleration is also reduced. Add to
-> +that the kernel has recently removed the ability to use off-CPU
-> +acceleration suggests the time for this sort of off-load has passed.
-> +
-> Device options
-> --------------
->=20
->=20
-> --=20
-> 2.47.3
->=20
->=20
-
+On 8/12/26 12:29, Denis V. Lunev wrote:
+> This email originated from an IP that might not be authorized by the domain it was sent from.
+> Do not click links or open attachments unless it is an email you expected to receive.
+> s->reply is documented as protected by s->receive_mutex, but the cookie
+> which owns it is cleared without that mutex. A request waiting for its
+> own reply reads the very same field under the mutex, and reads it twice
+> in a row, so the owner can clear it in between. The second read returns
+> 0, COOKIE_TO_INDEX() turns that into an index of -1, and s->requests[]
+> is accessed in front of the array:
+>
+>   Assertion `!s->requests[ind2].receiving' failed.
+>
+>   (gdb) p cookie
+>   $1 = 8
+>   (gdb) p s->reply.cookie
+>   $2 = 0
+>   (gdb) p &((NBDClientRequest *)s->requests)[-1].receiving
+>   $3 = (_Bool *) 0x5555558416c0
+>   (gdb) p &s->in_flight
+>   $4 = (unsigned int *) 0x5555558416c0
+>
+> requests[-1].receiving lands on in_flight, which is non-zero while
+> requests are outstanding, so the read comes back true and the assertion
+> fires. Without the assertion it is a plain out of bounds read.
+>
+> This was hit in the field, on a virtio-blk disk whose backing chain ends
+> in an NBD node, with the virtqueues of that disk spread over three
+> iothreads. Two coroutines of one NBD node then run in different threads,
+> which is what the race needs: there is no yield point between the two
+> reads for the owner to squeeze into, so a single AioContext cannot
+> produce it.
+>
+> Patch 3 is the fix, patches 1 and 2 are what I ran into on the way to
+> it. The order is dictated by patch 2: it routes every cookie to index
+> conversion through a helper which asserts the range, and for the cookie
+> of the reply in flight that assertion only holds once patch 1 stops the
+> error paths from leaving a value chosen by the server behind.
+>
+> Reproduced with a scratch harness which drives one NBD client node from
+> two AioContexts against a real qemu-nbd. At -O2 gcc merges all three
+> reads of s->reply.cookie in nbd_receive_replies() into a single load, so
+> the race is not observable at all in such a build; the gdb output above
+> comes from an -O1 build of this branch with the two scratch commits on
+> top. The report itself came from a build with coverage instrumentation,
+> which is the kind of build that keeps the reads apart.
+>
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> Cc: Eric Blake <eblake@redhat.com>
+> Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>
+> Denis V. Lunev (3):
+>   block/nbd: clear reply.cookie when the reply is rejected
+>   block/nbd: never index requests[] with an unchecked cookie
+>   block/nbd: clear reply.cookie under receive_mutex
+>
+>  block/nbd.c | 53 +++++++++++++++++++++++++++++++++++------------------
+>  1 file changed, 35 insertions(+), 18 deletions(-)
+>
+>
+> base-commit: e1705a25aff35635c360bbaba4c2731d019a422a
+ping
 
