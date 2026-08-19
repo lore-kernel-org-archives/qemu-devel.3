@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0398C5DF6D
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 09:23:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BB0FC5DF85
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 09:23:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwcV6-0007nt-QE; Wed, 19 Aug 2026 05:22:24 -0400
+	id 1wwcV8-0007pr-D8; Wed, 19 Aug 2026 05:22:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wwcV2-0007jN-Tp
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:22:20 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1wwcV6-0007ns-HG
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:22:24 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wwcV0-0001vQ-LM
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:22:20 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-47de008b020so414691f8f.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 02:22:18 -0700 (PDT)
+ id 1wwcV4-0001xJ-Ob
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:22:24 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-49554ebb87dso7810305e9.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 02:22:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787131337; x=1787736137; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787131341; x=1787736141; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=hI/4kRcuHe18/qYKP2hOGxNnKh8pw1N2QjNp4C1E0DY=;
- b=FQSgU+cDLAKAcGNPMHLGaFESsgjpW4+TcamG5+OvErnb3xZEeaTSZWQcMiktv8+X1L
- aiI5fgoyrSzUUytxnBF1Xjfrv8o54wxov69/L0tbl8YfDsmg/63Cn4wwHF0Ndfiq5dza
- bPultDunMMqGoxYHH6mNzDGKcPIRpRV7lOiWyIjHHO/EGOh8jFnlI7L7h/0gBvwhi9R3
- 1YVq7Nqj7HZhFxysQtly0EPlwi0gXWnmdlFxcxqLFhVGI4vDQQtorMg+RbmKbHjSEOMo
- bs8flewC0jHb7/Nr8okrTA2UrydwLJw3NWgX96RubAHx7LSATMFVaKFn05E7tR+H8ipi
- 9cyg==
+ bh=4fCOt0OznbhBOvDSho9fI+DXpHx6dkj8m4gGLZPFe7g=;
+ b=ar3Kc+vKHwcIJgmSs/pT/0rmrOfWyzaHrqsuQU6W+y6mecpBFcG1LakxneefacyV4W
+ C50pF6eLJjUYu4/934zn0woZc8xgCsFEHbh5LbZKhnPX1h5/aRxM9hacinPdNL2u3uAf
+ 08KlD8luj1PXGybYOogM7D3qgbEk84PFlG3sw4mqJu++TpEH+6yWv+gzbydIHqTjAWst
+ nhVQleMVf4pfGxOPDiL4wvFuYqA6b1sFUnnCcdMcNvEPa19pyyVAFUZgU0B7JESJy5yj
+ 1hp7x8u3rVuUvAzghGFBHgRzcrmFM3JcPlRJRKVOxW1cB2FNgcVH/SKJDv2qG2c9mfzd
+ bLGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787131337; x=1787736137;
+ d=1e100.net; s=20251104; t=1787131341; x=1787736141;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=hI/4kRcuHe18/qYKP2hOGxNnKh8pw1N2QjNp4C1E0DY=;
- b=IAsktH2vHGEHE1IWGDCi4S4kOtInhlV4aXaeKNiOkNNGwDeKwHBhVBbANwB1VKMVwK
- XqKhy+mO5coXGbdDOVa9oeSqHA/k0LQt0wOALYa4H4KyMq4gETrkBnIi35nIJhPrsxkg
- tgGjtwmBvaNUE3IZo8aMhdcUv5l7mopm8StW01lYUNQDdwFvNUDVksgytbjvpVlGvzyS
- 063FAQAjYc6AUPYqR1Ei4r4U/nR/esQw2WmEIaW8Qm7NQMij6WTrbZlat4exHckyq0n3
- uTTY+htL2jlTiJGcvr2xg0N8XKImBrZl8WexhDOOXLctDvbnXCXwVSml+u7LsrbsxqS6
- Brzg==
-X-Gm-Message-State: AOJu0YzhCmIP2i4RQnITWjeBt8NwpvWQ3WXC1TtffLVr/scBmNKPml6Q
- OryKdNL7AvhB6JB0yBPb5e6ZYjcrmQmxyX/CjYy2Bi0hXwbRy2oHWYpIhK6zRjf8CUQ=
-X-Gm-Gg: AR+sD112vnu5d3KefFd0thH9pyqWoFsU/Fg2pQikkyGOh2wd4WYcNuZ+SVHKXeQE5nw
- Ge/sbqQKvzl5FwEAuGEYztgYBM+bGVvtBtxq61IGOf+kzM0/UbOTXrD4o9IrIf4KELX1CdNrG1b
- SeoyUTYiRRDfY+jpZQaWWdu4LA+R+XMnItuVbr5fiL4MvAa3I9Vn9aFTMCLY7mwSX7o/IW/2HSr
- JEudOA5oXQI0DWpAdR/1coiykXa46BBIh9LVgPec85ochNL5V8TynH/K5zDXAszOu3zhGby6lKV
- OOqCIUIAWtyoGH9pIkk4lgdPzVZcM78TA+D2d/X5L0X2Twji29CgT50p2S2cykAlYTsQStB+Se1
- k/ZzsQOAlc5kJ7hmbKL2nM/LEI21W7wAPvHcCOJMS7kC/evh5UJvPY0TzqtAqoYY/kZtQWr3PbA
- Zb9nUX6yO9Mff0c7VNTIJi6qsrnbPGvJax6RCGKDBtzaSIvZUqxyf6hgCbR5it/DSUQ327XI7/
-X-Received: by 2002:a05:6000:4285:b0:481:314b:b041 with SMTP id
- ffacd0b85a97d-482b1066a6fmr5516939f8f.7.1787131336957; 
- Wed, 19 Aug 2026 02:22:16 -0700 (PDT)
+ bh=4fCOt0OznbhBOvDSho9fI+DXpHx6dkj8m4gGLZPFe7g=;
+ b=fk0ueh3iu9b/8zLlsULJn0yN2SrDVqAyxSSQ3tIwSSp2tZ1IjjSuEYHuTL+RayLN73
+ AeLIBpzDd3a92gXDCcMrkk/8xlhIfdxcs3zT0OVkGcT1Kf69sAeBrgrF2KYvls9qxhdS
+ fwIm1+6OAa1CwTxy0Q12at3EWBYV7A836j3RLuST8Yd5CtzF5u3JNg3xWdjBe8i3rWvW
+ s4QJq11gB+hRfmuf/BfwJ2YK0vMukRDUN2b1O2h2KKDOBS9OpglzaP7FegH/O3HdU2BG
+ UqO8WSEOUJjIHFyvtCVl7wMd2vHLcJhwpS3Z6WGCtYRJDvxCmzoYQnXZNmQswATO3k9U
+ CMdw==
+X-Gm-Message-State: AOJu0Yzk0MWuqaUxeJNbnRM4rvuButju7XiAo8HojW9OJ41QCRU/WD9J
+ YGXWoStnfoxxzuA2pED5tjw/dcY6+Gm4POaqdil0aaaUzt9XE+XaQWa7lbQWXqe8dc0=
+X-Gm-Gg: AR+sD12HEu7XMuA3ADpnn4dnkcenfUP3oHApTSnVIR8RFhwpk2BDoCaQWj+rtQcPRz0
+ 3VYuPf1RbK45YfXL2Es6MoMo9sDAHNvZlHux+5FzyAZMHMv7MnAI4/jdKbiRD5oyvP9n2oWU1pE
+ aXJ6kroFV27GdKcG0t5EbDJRN/t5aEkBvdFe6TxOeC0KYylZ08obD0aUegW5Z6Bkw2nBIUkVweN
+ uSBFNtzr7p5T0fXqubR3lAbeLwYgxNLegCdYglUCRff3jved00xJbtMp0KJ78fTSsyyEJC26izl
+ lMYn2h4H9Oelm6o2jBNU/I7MvnuWCyDqf/CVtwI1JMVygkCtDMRNSxW+eaeOy85R2OX7oP5H4U1
+ gjMBfBbFom7hrWPK0QsBaBF0P9QgJvUOLDg8zDmtzlSLWGDo/FwmSySh8FdQbgXkvFvysUJqW0C
+ qQQE04km+WKuACOm+WOYkcZdnXSZBd5hVOxMZ1GxbKJpWgnyOgBxqqPnEw/Vm/
+X-Received: by 2002:a05:600c:3f0b:b0:495:4491:b8c2 with SMTP id
+ 5b1f17b1804b1-499aa14b191mr63229715e9.3.1787131341079; 
+ Wed, 19 Aug 2026 02:22:21 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b145d31bsm4447265f8f.16.2026.08.19.02.22.15
+ 5b1f17b1804b1-499aa1111a7sm48838695e9.6.2026.08.19.02.22.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 02:22:15 -0700 (PDT)
+ Wed, 19 Aug 2026 02:22:20 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 61A7E5F82D;
+ by draig.lan (Postfix) with ESMTP id 6AC3F5F951;
  Wed, 19 Aug 2026 10:22:14 +0100 (BST)
 From: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Date: Wed, 19 Aug 2026 10:22:01 +0100
-Subject: [PATCH 1/6] gitlab: use .base_meson_job_template for macOS jobs
+Date: Wed, 19 Aug 2026 10:22:05 +0100
+Subject: [PATCH 5/6] hw/block: validate the fdc sector position fits within
+ bounds
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260819-fixes-for-11-2-v1-1-b7981c2cc371@linaro.org>
+Message-Id: <20260819-fixes-for-11-2-v1-5-b7981c2cc371@linaro.org>
 References: <20260819-fixes-for-11-2-v1-0-b7981c2cc371@linaro.org>
 In-Reply-To: <20260819-fixes-for-11-2-v1-0-b7981c2cc371@linaro.org>
 To: qemu-devel@nongnu.org
@@ -90,20 +91,20 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  qemu-block@nongnu.org, devel@lists.libvirt.org, 
  =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=700; i=alex.bennee@linaro.org; 
- h=from:subject:message-id;
- bh=oLQW1QjvvZodHpTsPvGLeM5B3yePRIAQ/JBnkvtdcNQ=; 
- b=owEBbQGS/pANAwAKAfvQ2wlanipEAcsmYgBqhXXFqP6RI8y5GJAeGX56erSFzv9sCgzfILmz0
- jmFwC2A+iWJATMEAAEKAB0WIQRmha6Z51FnvK/I3zX70NsJWp4qRAUCaoV1xQAKCRD70NsJWp4q
- RD3YB/4rMr73ZG79e/v4epC1W29loewTMHg5hEvwFFt17neUi6k9Ul5yZXMsGKtOP8MLpd4kneA
- zA7zyxvdnIwtO7VE58tRhZxL9EmSv0/98az/980b2qJjbi/7cDDK6s4aE353G/4M/iOGGf7wO7h
- KBqE19f3cWZ9iM73xW3e7ZEFHIeNfrNuXFCA0WrgAQ5BSjYq2bN4sNtB1NoYF+BUOHDjARjmXa+
- SbadvOXXb9CBHS4TmaTEYUW2W0W8k5JTqNjUPXvg6kcLj/mSSR5Hu0swDxpHWnGBbossZ9Oxs5i
- 0zcfR+NuiUAApd4XCmY/HsZ5TSrNYoLaC62dfMXFxyJyQ1mh
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3740;
+ i=alex.bennee@linaro.org; h=from:subject:message-id;
+ bh=OEX2z9GvvKbNe5gsvOGBjrtH21eDSoBa+jvNaK6zjWc=;
+ b=owEBbQGS/pANAwAKAfvQ2wlanipEAcsmYgBqhXXGNAi9uavy3WXrBtrOwQIiWOo6yYdUrRrxr
+ QU1tJkP13SJATMEAAEKAB0WIQRmha6Z51FnvK/I3zX70NsJWp4qRAUCaoV1xgAKCRD70NsJWp4q
+ REzDB/4pLaXN3OGb2+yQgYXx7wM53dI6ydkRkDkAQEdFHU5Zv6CWLVjU/pBWTbwvW3GO84qrqnh
+ +9tNUGxXqvUiYHEfU6Fb5e+OWFLsJlFZQuODLpKN6IlwrltUh1MMVnJ7LHwchbegwVae4kW5ycQ
+ w1xm1vzivm3xLGZ28QjV7XfJJVzrQo7HFxNSBItbB7w+S1+1fFnICFBHwEiA2qKGT2j7nLcmgUf
+ oVYuICmEwwSHCdMuMMx1TMyVIAXX1/bCVI6B/XYicmTHRbZyqWag/D3DYIwftpcWEzMEayRM0UD
+ uIgZ4L0hPlBynxF+Xt+ITJ0yE/bxT9Kx2XQ5DAM0CwPlQjng
 X-Developer-Key: i=alex.bennee@linaro.org; a=openpgp;
  fpr=6685AE99E75167BCAFC8DF35FBD0DB095A9E2A44
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -126,27 +127,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This way we'll get more environmental information which will help with
-debugging.
+Previously the guest controlled the value of last_sec and wasn't
+particularly careful to check it didn't exceed the media size. We
+can't re-use drv->last_sec as that changes as we do operations so we
+set media_last_sect when the geometry is probed.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260723200904.224413-2-alex.bennee@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3800
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- .gitlab-ci.d/macos.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
-index 641a48b3832..bdb3eae18f0 100644
---- a/.gitlab-ci.d/macos.yml
-+++ b/.gitlab-ci.d/macos.yml
-@@ -1,5 +1,5 @@
- .macos_job_template:
--  extends: .base_job_template
-+  extends: .base_meson_job_template
-   stage: build
-   tags:
-     - saas-macos-large-m2pro
+---
+v2
+  - checkpatch
+---
+ hw/block/fdc-internal.h |  1 +
+ hw/block/fdc.c          | 28 ++++++++++++++++++++++------
+ 2 files changed, 23 insertions(+), 6 deletions(-)
+
+diff --git a/hw/block/fdc-internal.h b/hw/block/fdc-internal.h
+index e219623dc7a..3a39ac903c7 100644
+--- a/hw/block/fdc-internal.h
++++ b/hw/block/fdc-internal.h
+@@ -83,6 +83,7 @@ typedef struct FDrive {
+     uint8_t max_track;        /* Nb of tracks           */
+     uint16_t bps;             /* Bytes per sector       */
+     uint8_t ro;               /* Is read-only           */
++    uint8_t media_last_sect;  /* Probed sector per track*/
+     uint8_t media_changed;    /* Is media changed       */
+     uint8_t media_rate;       /* Data rate of medium    */
+ 
+diff --git a/hw/block/fdc.c b/hw/block/fdc.c
+index 1178b959a64..18a61f5ce87 100644
+--- a/hw/block/fdc.c
++++ b/hw/block/fdc.c
+@@ -192,6 +192,7 @@ static void fd_init(FDrive *drv)
+     drv->max_track = 0;
+     drv->ro = true;
+     drv->media_changed = 1;
++    drv->media_last_sect = 0;
+ }
+ 
+ #define NUM_SIDES(drv) ((drv)->flags & FDISK_DBL_SIDES ? 2 : 1)
+@@ -373,6 +374,7 @@ static int pick_geometry(FDrive *drv)
+     }
+     drv->max_track = parse->max_track;
+     drv->last_sect = parse->last_sect;
++    drv->media_last_sect = parse->last_sect;
+     drv->disk = parse->drive;
+     drv->media_rate = parse->rate;
+     return 0;
+@@ -1905,6 +1907,17 @@ static void fdctrl_handle_partid(FDCtrl *fdctrl, int direction)
+     fdctrl_to_result_phase(fdctrl, 1);
+ }
+ 
++static bool fd_validate_last_sect(FDrive *drv, uint8_t new_last_sect_val)
++{
++    if (drv->media_validated && new_last_sect_val > drv->media_last_sect) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "FDC: Guest attempted to set last_sect to %u, exceeding valid media max of %u\n",
++                      new_last_sect_val, drv->media_last_sect);
++        return false;
++    }
++    return true;
++}
++
+ static void fdctrl_handle_restore(FDCtrl *fdctrl, int direction)
+ {
+     FDrive *cur_drv = get_cur_drv(fdctrl);
+@@ -1919,6 +1932,10 @@ static void fdctrl_handle_restore(FDCtrl *fdctrl, int direction)
+     /* timers */
+     fdctrl->timer0 = fdctrl->fifo[7];
+     fdctrl->timer1 = fdctrl->fifo[8];
++    if (!fd_validate_last_sect(cur_drv, fdctrl->fifo[9])) {
++        fdctrl_stop_transfer(fdctrl, FD_SR0_ABNTERM, FD_SR1_EC, 0x00);
++        return;
++    }
+     cur_drv->last_sect = fdctrl->fifo[9];
+     fdctrl->lock = fdctrl->fifo[10] >> 7;
+     cur_drv->perpendicular = (fdctrl->fifo[10] >> 2) & 0xF;
+@@ -1983,13 +2000,12 @@ static void fdctrl_handle_format_track(FDCtrl *fdctrl, int direction)
+         fdctrl->data_state &= ~FD_STATE_MULTI;
+     cur_drv->bps =
+         fdctrl->fifo[2] > 7 ? 16384 : 128 << fdctrl->fifo[2];
+-#if 0
+-    cur_drv->last_sect =
+-        cur_drv->flags & FDISK_DBL_SIDES ? fdctrl->fifo[3] :
+-        fdctrl->fifo[3] / 2;
+-#else
++
++    if (!fd_validate_last_sect(cur_drv, fdctrl->fifo[3])) {
++        fdctrl_stop_transfer(fdctrl, FD_SR0_ABNTERM, FD_SR1_EC, 0x00);
++        return;
++    }
+     cur_drv->last_sect = fdctrl->fifo[3];
+-#endif
+     /* TODO: implement format using DMA expected by the Bochs BIOS
+      * and Linux fdformat (read 3 bytes per sector via DMA and fill
+      * the sector with the specified fill byte
 
 -- 
 2.47.3
