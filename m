@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B1E9C5DF85
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 19:36:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2EF3C5DF85
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 19:37:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwm4u-0001gl-Pd; Wed, 19 Aug 2026 15:36:00 -0400
+	id 1wwm5W-0002Uy-8n; Wed, 19 Aug 2026 15:36:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwm4u-0001gQ-5G
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:36:00 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1wwm5U-0002UA-TO
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:36:36 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwm4s-00072X-Lg
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:35:59 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2cc891373e0so17678745ad.2
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 12:35:58 -0700 (PDT)
+ id 1wwm5T-000761-9X
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:36:36 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-cc1469c1b83so1480577a12.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 12:36:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787168157; x=1787772957; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787168194; x=1787772994; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ju9OtINuyKhVVoSExlRZKWeBEouYo6XGLhMHp2hhEIw=;
- b=Miy+2y48CiCnw48gEFzQkuIHjNn4lpHZ0w82wXM0C+ri0BU8LjX0oqiYnYxFQ0fV/J
- AE2Kk/vAxlvOe3yr+HR0VbgldKYK55/RbAN3P6JomNQyX7sE8kQ4qYHb8amTc3AbzHvj
- p/IdB+c34vVHK0hbdlh+iSNMdx7ESGgqHWNnPhXf4yRyM8KN+rbQ6J19Wyaq8jkgUVx4
- eGtjijKRq6LOM8rl7UT5eQKH286uZCebaUbtwY2cLE5u83KYSK/u/OsQoX3H8HB5netV
- rZO5+JxMy2ywA5aNnWYdjd0IypBjFl9+z2bMAgyBpRXMxh1VhyzxZco5Hx++QRbFPbMt
- qEZg==
+ bh=ikki4ntnx7mNKtxu6ibtFKiiQazweu7zpK9uFaBr2GE=;
+ b=TrpTIUOH1ZIi5Xyvo1To18HHLPXV8294MrnGPxhx79BBD80tvm8MMPe9KYOKZYdB+1
+ GX/PFKrMC242ZgzpLBhDjlRFnCetb/ekl3vSuGDJHjafqJHs+T6OGC/Xan/3eCTd31eB
+ J6GHRKiuzOq2UIcnF+JO4v51OBUkUTQyUy68G4mgJPaxa4kLwalIfjbXSp7qRhKVJbOo
+ 58AAW8wlnR0LmoxixV4fmSV3NGMlzZAbHXb0G4hxflIrOyFaIr2SQfCCIudg9ojAxJbw
+ AuCao5wJs9EIj9ox3RJp7R2j+TC0dgdb0RciEq2g9jOCzjVIh7NfFD2u9Sp7hsm0IHTh
+ jX4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787168157; x=1787772957;
+ d=1e100.net; s=20251104; t=1787168194; x=1787772994;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ju9OtINuyKhVVoSExlRZKWeBEouYo6XGLhMHp2hhEIw=;
- b=XnSEHGoJoh43aa1C0uh88Mk5Py0LaSeO/JRX7SqZQp7R2mYXjYFA56OAOpg7HwD/4I
- RFSEIdkb3Fzqgyi2lxbbx2YHo/laswYEPZD829a/FAgHroDqZjTzFtFw9Vm9AJtjA2qj
- Uy5AwDD9hmEW9YQdmkZ8G5UPzYjO7aTRAV3fX3g54Kwfk3xUCpLtRLhJ/rq4qNaDFtgD
- 6IfLHgpq4xar7rgTbV7LTrXmLwJ1l+AFkKfaefw1B7BOpURo09EgCsLfKA8zDvJPdFk8
- V12W86Z4kqwk8YG1f30zPgOkFjqGL+B4M1tOTZXTZY0LC08iF0k8bvyvqqA2GN7sCdxt
- MgnQ==
+ bh=ikki4ntnx7mNKtxu6ibtFKiiQazweu7zpK9uFaBr2GE=;
+ b=p5uMAW1TmV20Cj9UHH2Xw5puowlH3pEQ0PMqnDwUJ4MzUHhlUCEJC689o59rwViCV5
+ +MGT3LlhbyjhUUnTE+fnIVDyWvsWenAjSlrD27GnOjeFBEa9kD0saTOejsLTiNutzcuP
+ vTOHkK3eYMIHtqtsc+8Q5wACgJ40tN6AtsJ9u8ZI246j9PX9NOVIsMfOkdXMd3pgip/l
+ 5Xb/B3gCw69ImIWK0sNFT3S1vTWCkThHVIyGTh1hPe3/B1m+mmpanyB/ya7Esu9ekEW1
+ J6Xej9WCO1fncXnBcRlr7xUAUyGmrF1LMc53+UzDW09PMMpTJ65V65eGq5rzBJIpPOED
+ tgjg==
 X-Forwarded-Encrypted: i=1;
- AHgh+RruLL9qCacMcj3SepCE5MRtoNNo1JWAnkzoEY43b+60DHe7ESVRmqXVnVJlXCkIRFCN46pdZruu7B7B@nongnu.org
-X-Gm-Message-State: AOJu0YywiAVX1HKC9CFQpiNs9FRKytb0oNp4nhyVMX8ffd6hPosrqSVK
- Joy8WM1Ua7fKiofv4S5heMCz1+8U6eZoEVciEMbOrd7qPV9dgmc284gzgm/6fi48iXMUeFQaEer
- 2spYTHlA=
-X-Gm-Gg: AR+sD10wG1w2O8a4JoshydmfIhfDfy6Rk+2tDFyPGjVpH0vXG0TV5uDCrw1rEpfn8IZ
- 8CzdSLvkdNzOGa120SsxLwsiZt4FzonIa8xapcHIuzSZDMBcwpyTTyXzFa+wKoD3L5Qhs8WxgGF
- ODU9bMll/hv2sXbA3qOorAKbJsHpF0zSuftDyCs7VMcJLuF7Jma55cUHYZ+TBA04LS/hPQORnkw
- liHlgqtOmORCoD9Xkd8Bo8WmpR6hqyKBG8Ggt8kjk1cZMcVbYRyhB0RHlOnDMqUUNMcjLXW/bLo
- Bi/gF00bMM1ieLODcJtIFpi/m9w/aSsPU7inSGu1kq5e0McBArnx4ne9anqxYivwwgejmOIADV+
- pDXS4LEwWgZGvZjBOe+aRQO4+p9bsg9Uz7Hml0rQKTcwpfVtjlVMFgOjZ7pf98Fe8aEYh54LNrf
- 3k59aKD2Takj4UqQoLd7H7k16RobwtlvQXzOoa4kr+adq6/rrMjmQsBOYWKk4KXIKPk8rU6ywwT
- j2ABIJP
-X-Received: by 2002:a05:6a00:14d0:b0:842:2419:6bfe with SMTP id
- d2e1a72fcca58-851d384706dmr12205176b3a.7.1787168157170; 
- Wed, 19 Aug 2026 12:35:57 -0700 (PDT)
+ AHgh+RrR6ar7dRDFn8YV7hERjlqAhkEoP+53bWLykODKkg0ADqtlMzJlXhGFV+1MIJ5+POAqLGjbB9cibftQ@nongnu.org
+X-Gm-Message-State: AOJu0Yx6OuWOisuBLYZMEScvktsmQUah5+M7+WgIDzER1ldttHrbeEFP
+ MVu3kxmFX3m0vl//nYJO70LM4cyyhL6e5oKG2sy93F959612BMg1hgU2KA0Um4whWlY=
+X-Gm-Gg: AR+sD12sulUEi7WAB1fLdd85DhSDgICXf5ZoUqK6zt7DK3xcWlHCAguWLQuRlaGPX1p
+ p2217HqpJjI+yrFaxIWMlXidRMJx4mOAxQMf3rLObEm7EdoQlt5RBYb3MFayY0mzzDRpZt8+1J4
+ /bZ3WutV4h1bBdcyj6DQyL9IoL+9D9GC/IRGia+d/ytEinFCJ/+VM3WZCr5RGA8CnDpKME0uAqJ
+ S0KsKTelfdhCpbyg4e/of3SEs8432L1bdyyK42X4LPxwYswzFlNykgQjTy1lRz7tqu3bUiBhhkn
+ OzXk6Z3LSescZ2a7yBCv4F4ZRnTvW1HAQpQHIUtqJaThKZgPukk6XrqMZdud81vpIARuCevFTFK
+ XYzlSDjDNVD+q6vEC7g42QJk+38WjJrevPFTl7fG1ibmK7kIJQDsRytD3l0dc7xBiY8q1gS67tW
+ X16qdJXwwlvWy3EpFiFBDaB+XnVqeTy95mzxsyoRFPsBCWhePWzhQeFJkteS58rNN3CuLNj5wW7
+ 9T9SkC128S8JUdlAEg=
+X-Received: by 2002:a05:6a00:3a23:b0:847:8449:2ba6 with SMTP id
+ d2e1a72fcca58-851d386377amr10789629b3a.8.1787168193658; 
+ Wed, 19 Aug 2026 12:36:33 -0700 (PDT)
 Received: from [192.168.122.51] ([173.164.107.233])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851d36185c8sm998036b3a.38.2026.08.19.12.35.55
+ d2e1a72fcca58-851d3640a4bsm994138b3a.42.2026.08.19.12.36.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Aug 2026 12:35:56 -0700 (PDT)
-Message-ID: <b184e75c-3950-449d-9e0f-6c4171dc89a2@linaro.org>
-Date: Wed, 19 Aug 2026 12:35:53 -0700
+ Wed, 19 Aug 2026 12:36:33 -0700 (PDT)
+Message-ID: <dfea4a63-033f-4bfa-bf78-dc57c40a9314@linaro.org>
+Date: Wed, 19 Aug 2026 12:36:30 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] hw: Remove Marvell 88W8618 devices
+Subject: Re: [PATCH 5/5] hw/audio: Remove wm8750 I2C audio device
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Jan Kiszka <jan.kiszka@web.de>
 References: <20260819185430.3467629-1-peter.maydell@linaro.org>
- <20260819185430.3467629-5-peter.maydell@linaro.org>
+ <20260819185430.3467629-6-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260819185430.3467629-5-peter.maydell@linaro.org>
+In-Reply-To: <20260819185430.3467629-6-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,21 +110,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/19/26 11:54, Peter Maydell wrote:
-> The mv88w8618 ethernet and audio devices were used only by the
-> now-removed musicpal machine, so can also be deleted.
+> The wm8750 audio I2C device was used only by the audio device on the
+> SoC used in the now-removed musicpal machine.  Since it has no users,
+> we can delete it entirely.
 > 
+> Although the wm8750 is an I2C device that could technically have been
+> created on the command line, it isn't possible to do this usefully
+> because the device only works when C code calls functions like
+> wm8750_data_req_set() and wm8750_dac_buffer().
+> 
+> This resolves the problem noted in issue #4135 that there's a buffer
+> overflow in the interaction between the marvell_88w8618 audio device
+> and the wm8750, by removing the offending code entirely.
+> 
+> Resolves:https://gitlab.com/qemu-project/qemu/-/work_items/4135
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   hw/arm/Kconfig                 |   3 -
->   hw/audio/marvell_88w8618.c     | 315 --------------------------
->   hw/audio/meson.build           |   1 -
->   hw/net/meson.build             |   1 -
->   hw/net/mv88w8618_eth.c         | 403 ---------------------------------
->   include/hw/net/mv88w8618_eth.h |  13 --
->   6 files changed, 736 deletions(-)
->   delete mode 100644 hw/audio/marvell_88w8618.c
->   delete mode 100644 hw/net/mv88w8618_eth.c
->   delete mode 100644 include/hw/net/mv88w8618_eth.h
+>   hw/audio/Kconfig          |   4 -
+>   hw/audio/meson.build      |   1 -
+>   hw/audio/wm8750.c         | 738 --------------------------------------
+>   include/hw/audio/wm8750.h |  30 --
+>   4 files changed, 773 deletions(-)
+>   delete mode 100644 hw/audio/wm8750.c
+>   delete mode 100644 include/hw/audio/wm8750.h
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
