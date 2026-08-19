@@ -4,111 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7F5BC5DF81
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 21:41:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01226C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 21:56:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwo1V-00036B-K0; Wed, 19 Aug 2026 17:40:37 -0400
+	id 1wwoGh-0004Lj-UG; Wed, 19 Aug 2026 17:56:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wwo1T-00035o-TU
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 17:40:35 -0400
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wwo1S-0006NP-7G
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 17:40:35 -0400
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-836cde02992so20986197b3.2
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 14:40:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787175633; cv=none;
- d=google.com; s=arc-20260327;
- b=TwqOm/cnPDUTIiVxSWlssff5nG5QAoIOQtGIAnKkjktjaElv1J4i0qZSvdz2FMDnax
- AgDVeJNsBPn4+gdcbs6ZN63CUOzq2GIWmGef+/YzdiB6noZSXZBcUpWKnE/51CovdZo4
- HAFDYzO3CG9u6urIy/Zkg2J54nTkLtxHsT3QAtb3GD3TSI+YvjC5aGR45fJXa/oX0xiI
- k/8Tgy3i9Ll7DQ1W2w3pJm2pRXSzssJjgyNaHXP+Z/OeVnrt2BwagtxQZIb66lH0xoYk
- +jHz0MDKUFgJAJakzUYNCObR8ssuKkYmd+YaunGuApcGtD0ZkZ7dWQYwLYr4tLH9+e3r
- wgjQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=NVZGIHVHY9chGR1zqG2Nxdcreppw/R5t6obXfGi4NcM=;
- fh=RynG/mh6ztmyNhHf+Vf0XiFWhmNfp0mSdDXdPqU/75o=;
- b=AdJCb1XDj9cex+l1Q3NRr33ET62FNDVKAuA+fLTiBtdeVj97drxqMTVv+AR8EMNtVm
- oeDQkDK1+bLMge9cQhcBMO4DHqEXGjfSCskg43Lyi3olJBMFsCbCjLtL23cW9sRrtr6Q
- R4d2nyTPih6GGbutmgMCuXUrXetRem4REDkZLUvB+om9itCgMt6A+LHAnOuZlJ6E2YH5
- IqXi5oMYGiSwm5YCmTao4LHwcl2Q/VMwbZ/ncN+hdEWKjisSlQNSM+2m4vamePBJ1pmJ
- mIKcKUf9V7r6D6Ke9BJX6nx8JFDaCdagvQ0v7DvIAVCO8kHbAii/8+DeViyLV2+BBirX
- tHSA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wwoGc-0004LG-Vk
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 17:56:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wwoGb-0000iG-GE
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 17:56:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787176572;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PJrEwhFvu1Z3MGdbdQ72Iu2us62lBAYeaGxgtziJLos=;
+ b=G5GxaxaS4+R83a5P9O5o7rCxjeJXokO1YwJj31Cp470mXROrffjiA5oAh9f5pIeA0Uzwxo
+ PAWeYj81LUpaxDxutFfNorztL2Xn1Hae4zsu3AuHBaMp6h8vXJ09z0DoGJHtKzPl7l/SoD
+ SvKPD8oLmFDah/d/myT6f4IWQHSMiMI=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-363-tm6TiL2HPSKYroO1Y_0hsQ-1; Wed, 19 Aug 2026 17:56:10 -0400
+X-MC-Unique: tm6TiL2HPSKYroO1Y_0hsQ-1
+X-Mimecast-MFC-AGG-ID: tm6TiL2HPSKYroO1Y_0hsQ_1787176569
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-495569acf8dso9680295e9.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 14:56:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787175633; x=1787780433; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=NVZGIHVHY9chGR1zqG2Nxdcreppw/R5t6obXfGi4NcM=;
- b=FsarPCYBQ1SrtXAk0TUkjWRaid/InLh3yy931Bix9jai4CgeuGv+xqys7GGZ4SC9OJ
- 4pcxt8fVppGIurVP96hLY4h2DKzhVfluEDhVgAP1v9LuLlJnyWlXJy4KHHBY1zWg9nAw
- IDBl6bXd4BwaBudF/WPTL/6NBFlHbpDGUkkHe4jcqY5qjNsZUVDsYXHw2/TA1acQqwtV
- zaGmmYqqVPwJj8f4ovxVTpR/ViuzHpTSPFJeFJeLU91qVjPwkNNuGe6wF1zb0SdZhamR
- IiDqaMEePRDOyW5y1j82t+oLyIaqfa4j9whD0nRrltG1qYY6MdBH52+WJLPwCR1c7QC7
- ieNQ==
+ d=redhat.com; s=google; t=1787176569; x=1787781369; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=PJrEwhFvu1Z3MGdbdQ72Iu2us62lBAYeaGxgtziJLos=;
+ b=dUvhDmO/rSX+D2t/gcdOoUZOwcYqwHIfPYp0182ZJUnIBJimBybXUebaFTXa3WWe/x
+ hMAaDDUBU1aMC8BqxwC3BAzKJP4ULw5UDhYehEcenNbBbTjDApxMyROcqsevRAUijjir
+ wWimTUNc1q3ntFF1+lG/p0gFTXQTEYpwtj9K76v8l0fUtT0J30BGXqBs8wbiX/OMZTS/
+ vHIIcT4vd7nZ8j+uJ1RRPJ+BW704133WVXvdVhCNYKaun0nw/9lczUf0e7tkJeZ1T8IV
+ vKePQlwXg5I+asiPApQSwJH9HNbi8CQt0d7Vkn91nJqP3j347G0R6dfHtbcEknnsFAoN
+ lsHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787175633; x=1787780433;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=NVZGIHVHY9chGR1zqG2Nxdcreppw/R5t6obXfGi4NcM=;
- b=NDVkWLeyezApQiuPYvXmbuMXfpkjm5bnvZEUCujPvHygx3HEaj4R8ED/ogaQM22tzQ
- s3qhaPquSgtp1m0c5d92Z7HZYUVOQGplS7CC+zwvbug87Lshv3mMcBZKU/1ffX5bSTiU
- /J6gJHbgKOwEx20FWlk5nDDZl7MNgzswr2IzXD/FVdHtw6jkhCUgdGW9WYKE/co2qbyb
- ImnIDoO9td0nQZxdwbeBY3JcZkfpAChdcHCLu+FcljEKC1leVlS8SXZZBNgpJLAwaU5g
- l7DgDukr61fmfLWvgRBLXKKCop3IQg95ZJCj/XBdbWOQwbZRNywdwadZgxLL83T+OY3+
- m9cg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpUUIatvdRh7ifqgImlUAb5/Di5LdTFWFs0OMv8Z49A++77KtYiq6SZaMcCxW6z2LQVNe8MQ2qwyIEa@nongnu.org
-X-Gm-Message-State: AFuF++nt0heLyNsdeHwCWhYgoPRaD5oh8JkA0202jOiNRGyTMBy2+LAE
- ToyVyNycJ58twsU+Inv5F8IZdsBmzOhKsJQQjR/hEvgzpZR6v6WHKTs8X6pG0y5f0SOiY371S9S
- KnCNiV9FEqho3zcokg4KGmEpSAU+AE81z0Kl5V6z0OA==
-X-Gm-Gg: AR+sD11ljLnqHt9jEWSAySfncxn7I/6r7YvJGFb0oUZ6PZbPq88WxnqHv/IxRQas1EX
- uYLBz8B6eNfndWXihrIOJxNqWOJhNZxq1yFHOTMO+fbL5ESEaz4B6t+9nxBzw7Zkq/TXynQf3z+
- wl5jsnyHhl0duOVFhGKwFKXajTEi8vBfc+cLYdsplpSd7Dm8MqcYuGccGXFMdz4xZut1v9xC9iN
- 649dZ+voNl2cG4YRbMFnxQ8k8INEIVsLLOiuoKIgT8IXbvkPKsD3BPI9c0g9Bj1tiEU2X3PcgM2
- HROFUvov7sRmSK8mt2B8Zmhw7MvpV+v3WDG0ZaK2w/XKPXBKX7GV2RD0GwhmlE3p72h4gz2dtih
- s+GJX3tjSxWOS8Nnm4XtRFDQrsI9y82iHg4SFtqk=
-X-Received: by 2002:a05:690c:4b82:b0:820:1251:d2c2 with SMTP id
- 00721157ae682-844e250fe23mr30942807b3.28.1787175632764; Wed, 19 Aug 2026
- 14:40:32 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787176569; x=1787781369;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=PJrEwhFvu1Z3MGdbdQ72Iu2us62lBAYeaGxgtziJLos=;
+ b=Df5CDr8TWshpZsROObmRkEEsI3qpfd2UitKSL5ULOj1eIm2ZLwZERHz4PFnmKfEk3F
+ x1YK9HjdTVs6Y3s9T2MHLpYR4159r4WhgcXdcfErGeS/TekgBC0aN9x3h3WOxIg/mITx
+ qkAbI4f1LJTTvLXlFmNeibIKgCdR/hvXFzjO0RpTOeuEXwoeRL8wwYIug/DI9JnD6b+M
+ tWIuUnu6rfeShsFexXnR/Up8bWO7JoaqZzCNgRd/lcHSnPOnRuq8fp1zfM2zcp+8eJuV
+ yPFxoWxkIcer1YR53VAeF2dAE6tTBPr7BlgB7RCV0WarOMKCadGC79S4sdjCRg6WE+fx
+ Qzog==
+X-Gm-Message-State: AOJu0YzV6nXbGM/VhPrHCW6kdmsbBQdIZw42RFEp7lO1vWsvbp1n9IMN
+ cGsUt3NhB3xm2XicXa0KJ8cePO5Y+t6lFrnaixQKgaQemxG7cjEXuzJEAKPA5hCHEmOrIswFpE2
+ UHPP+9yF9Ur3m7n8BJ61ilit6IwXCrN/WPwkKJ1MLxfSl5fCCPPi3FjwN
+X-Gm-Gg: AR+sD13Mjiaz9bfHTGiuQFCOWImcV1l7Ru1zaYCojV6zouhB/cKmtvcPTM39MX7+wrd
+ omRxLdRaASZW6UAom6dpAdICaEzriGuPbNgAlJ4t4RG+NluHnH43DwCIKoFl5Y99lGHzjfB0gNV
+ kDSrTMgpeBhG1TEL5wIo2gRh6V+MKQM45kkHyICaPyJTb+gIvSWwK4h5uPCBcWOmCLuGD0tfq70
+ TBGWkIsTNuFg5nHTxSXg1upNXdEkCfEPxEy7iltZ5spORVSqlvAVh4WZBgrYcJ9kEN9BbkBtmD6
+ vZ7WNgf4GPCuM5ByH+byAvgJk6fsGTcd84K8zoQM7gpqs/ll/lRo63VjcFd9wxiTu0EmYQCxMuK
+ 3PP8dfVebazt918icVq/oymeOBTU7tE4=
+X-Received: by 2002:a05:600c:c490:b0:499:a5c8:c6f3 with SMTP id
+ 5b1f17b1804b1-499aa143b7cmr134690545e9.3.1787176569362; 
+ Wed, 19 Aug 2026 14:56:09 -0700 (PDT)
+X-Received: by 2002:a05:600c:c490:b0:499:a5c8:c6f3 with SMTP id
+ 5b1f17b1804b1-499aa143b7cmr134690175e9.3.1787176568941; 
+ Wed, 19 Aug 2026 14:56:08 -0700 (PDT)
+Received: from redhat.com (bzq-79-177-155-173.red.bezeqint.net.
+ [79.177.155.173]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-499aa0d6721sm118925905e9.11.2026.08.19.14.56.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Aug 2026 14:56:07 -0700 (PDT)
+Date: Wed, 19 Aug 2026 17:56:04 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, devel@lists.libvirt.org
+Subject: Re: [PATCH 6/6] docs: deprecate virtio-crypto
+Message-ID: <20260819175408-mutt-send-email-mst@kernel.org>
+References: <20260819-fixes-for-11-2-v1-0-b7981c2cc371@linaro.org>
+ <20260819-fixes-for-11-2-v1-6-b7981c2cc371@linaro.org>
 MIME-Version: 1.0
-References: <20260819145649.23439-1-philmd@oss.qualcomm.com>
- <20260819145649.23439-7-philmd@oss.qualcomm.com>
- <44833559-f73d-4b8c-acec-a3e86b98c393@linaro.org>
-In-Reply-To: <44833559-f73d-4b8c-acec-a3e86b98c393@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 19 Aug 2026 22:40:21 +0100
-X-Gm-Features: AcwNN1VZzrghe4g4FF9eAZkIAC11VMYm1kyn-5715IuzotZNaZMavujrtS9KpK8
-Message-ID: <CAFEAcA8xk8y1W0UvttpVhKYuoMBSQqZoF_15of0Rrq4wKkWDuw@mail.gmail.com>
-Subject: Re: [PATCH 06/11] target/arm: Extract halt-to-exec transition out of
- arm_cpu_exec_halt()
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260819-fixes-for-11-2-v1-6-b7981c2cc371@linaro.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,53 +130,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 19 Aug 2026 at 21:14, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 8/19/26 07:56, Philippe Mathieu-Daud=C3=A9 wrote:
-> > Refactor the target-specific halt-to-execution transition
-> > logic (disable WFE/WFI timers, clear the halt_reason flag)
-> > into a separate arm_cpu_transition_halt_to_exec() function.
-> >
-> > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> > ---
-> >   target/arm/cpu.c | 22 +++++++++++++++-------
-> >   1 file changed, 15 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> > index 77aa78f00e2..8e9b584559d 100644
-> > --- a/target/arm/cpu.c
-> > +++ b/target/arm/cpu.c
-> > @@ -870,18 +870,26 @@ static bool arm_cpu_internal_is_big_endian(CPUSta=
-te *cs)
-> >   }
-> >
-> >   #ifdef CONFIG_TCG
-> > +static void arm_cpu_transition_halt_to_exec(CPUState *cs)
-> > +{
-> > +    ARMCPU *cpu =3D ARM_CPU(cs);
-> > +
-> > +    assert(cpu_has_work(cs));
->
-> In reply to patch 11 you suggest removing this.
-> I wonder why you added it in the first place.
+On Wed, Aug 19, 2026 at 10:22:06AM +0100, Alex Bennée wrote:
+> We have outstanding guest exploitable bugs in the code which is fairly
+> complex and needs some serious love to clean it up. As off-CPU
+> cryptography acceleration seems to be waning in popularity lets just
+> deprecate the sub-system with a view to removing it in a couple of
+> cycles.
+> 
+> Link: https://gitlab.com/qemu-project/qemu/-/work_items/3625
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Cc: Gonglei <arei.gonglei@huawei.com>
 
-Does the accel loop enforce that we hold the BQL when
-arm_cpu_exec_halt() is called? If not then the assertion
-is racy, because something might get in and e.g. lower
-an IRQ line so that cpu_has_work() is no longer true
-(which would be fine -- it just means we made the decision
-to wake up and that won vs the incoming interrupt).
+Let's see what Gonglei thinks.
 
-On the one hand, if we don't have the BQL in has_work and
-exec_halt then we should be a lot more careful about how
-we code them (e.g. use of the right kind of atomics, and
-there's no way the call to do_interrupt_all() in the x86
-exec_halt can be safe without the BQL, surely).
+> ---
+>  docs/about/deprecated.rst | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+> 
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 0c656a968fc..3c22981fc8a 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -276,6 +276,20 @@ future release. Where no 'dh-params.pem' file is provided, the DH
+>  parameters will be automatically negotiated in accordance with
+>  RFC7919.
+>  
+> +Devices
+> +-------
+> +
+> +``virtio-crypto`` (since 11.2)
+> +''''''''''''''''''''''''''''''
+> +
+> +The ``virtio-crypto`` device emulation is quite complex code with a
+> +number of known flaws. It has never been migratable so is unlikely to
+> +be used in any serious virtualization setting. With most modern
+> +systems supporting on-CPU cryptography acceleration via their
+> +ISAs sets
 
-On the other hand, if we do have the BQL in exec_halt
-then why is the x86 implementation explicitly taking
-the BQL when it calls apic_poll_irq()?
+ISA sets?
 
--- PMM
+> the need for off-CPU acceleration is also reduced. Add to
+> +that the kernel has recently removed the ability to use off-CPU
+> +acceleration
+
+did it really? I thought it's just for af_alg?
+
+and putting "recently" into cde will not age well.
+
+> suggests the time for this sort of off-load has passed.
+> +
+>  Device options
+>  --------------
+>  
+> 
+> -- 
+> 2.47.3
+
 
