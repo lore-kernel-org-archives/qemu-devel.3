@@ -4,91 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 005A0C5DF81
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 17:03:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3700EC5DF85
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 17:13:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwjgH-0005DU-4t; Wed, 19 Aug 2026 13:02:25 -0400
+	id 1wwjqu-0006Ua-5n; Wed, 19 Aug 2026 13:13:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwjgF-0005D8-EA
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:02:23 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwjgD-0003oN-Mm
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:02:23 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-84faf87d19dso1373117b3a.3
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 10:02:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwjqq-0006UK-DM
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:13:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwjqn-0005qp-SP
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:13:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787159593;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=o4BO5irhIyZDWEJJVtO4/Rddtp5PXrP35HKpdvlx/5U=;
+ b=BXYbIBD698mc592Op6KjK1eIz9za7e93l3hIrsFhz/766l50ynclBb0xFbw0L6GTqvViAK
+ 12v1vOfMBrGdcgFmhTHjDvfwLbggqHdNK0y9592L2uMAgSZRPTFYOAmsDmkzab/+JRwsY6
+ KfNhkZjV3tPNWCxGG6BxrOg3a6xm+Go=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-271-pOm5hGlWP1qCRGFAVvqRRw-1; Wed, 19 Aug 2026 13:13:12 -0400
+X-MC-Unique: pOm5hGlWP1qCRGFAVvqRRw-1
+X-Mimecast-MFC-AGG-ID: pOm5hGlWP1qCRGFAVvqRRw_1787159591
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47fd4ee0ac0so1073510f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 10:13:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787158934; x=1787763734; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=HgUUAFwAgpfyCeW14taFa3bM+P7nWCuBRhZOVTGc8bE=;
- b=A76K296JPvEyPwfRs+iX/WsiQxGjH9jNveGaC9RJ6xrALb+NJhHLdAvqm363ZQdZKZ
- fUV5rST4swPBX7+pvbz53EsaS117eS3OiIANH31P6Kjp7iXlRJIzx0UZnJG0o3rj9PsY
- cY17nm5Jc8NZnAfc4Khed200YCOd/BCkGe+x9hvc2ozf3Nc5ZVYJ07MmE2UDbI51A+HJ
- dEJt7Jr+WpfwIF/GS9fdQBwjiek9pn5J/8i3RskCSNwk4i4ifG7RltvRl+9BwJYXn5Lo
- fZ0cF0rqriT7VhTfiBrh43NNJzJfBjVAP9++871W9K1TBjMKW88rq9w0evQw1dBT4kHt
- wj4Q==
+ d=redhat.com; s=google; t=1787159591; x=1787764391; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=o4BO5irhIyZDWEJJVtO4/Rddtp5PXrP35HKpdvlx/5U=;
+ b=SOFPRZcqSSGwVZX01nw+2EIpxOwvAxxhJT8u32M0XWdIiH93bKfOp3M3uGPMUvrAZT
+ oDyLeHG/3qsUsDcaJowDgMws23FXtn9vJMsPI8X7H0cyYkXPDrMomXiPTdsudGmi3jxh
+ KrBoJcMyVEku8YUTcnmV8bPC01t8z86NPYAx7YlRv012Zbk14961idnruplg21cDrWpF
+ 9nYm2FeFUXZt1E6Q33QzrhNh20hEEohkQoeFMoQM8mdJp9N2gLkdTNS7K4ISTh0KVePo
+ iLNsAnfb2yphOhoyDnBU8Rw49vDwoC6xo84+kg19+b+EAtOCEthdWs77f3JPLA8Wkd+S
+ PfXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787158934; x=1787763734;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=HgUUAFwAgpfyCeW14taFa3bM+P7nWCuBRhZOVTGc8bE=;
- b=Y3TOvrH1kODVPdzSiaYLMJryuF60JwQasV1tSC8RWSYlSThxGsGuCzsQs4JuZchVbl
- HGg9w1zT8O1ch+v5Hy8qx7JaLzl9npoWwQmlKmiMgoFVfbtJ3Oi94DsaejYFMxF/s474
- R7rkE6SL2/yXl8kNUdZEnoYU7Gi/buSjmparfbdD7/lWsf0Tcv1ccqi/nPOJguM8Be1H
- 6vR25r7zfZlwSfxNJnbdbyDHQSAiaVKu9TPaP0VeMowXJX8tndZKPyPLjoNLi2krqvTa
- qAGAKiYmN0HJ0bMITscjjSVM9vAAOPmNuPHipJF/uNgudcoDcMl0ObPgQYpzkpQiKb9R
- /ekA==
+ d=1e100.net; s=20251104; t=1787159591; x=1787764391;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=o4BO5irhIyZDWEJJVtO4/Rddtp5PXrP35HKpdvlx/5U=;
+ b=jNNME9x81ADvAc042HLvS+p547j1ZWv20hB3OlpIN6vvnJSvPRm/4E3X9lD0ZzHm1r
+ g/AyvPUnLjs8O46XqIanNGDNFarxTC1CRpmZ1eK/DqfVHeTGI2I6xEC3yv6H9zhTjdcB
+ Zp+ggzIRSw3nXQHUJUW6QVgS9o8I9Zb2p73136i4+kqssbLL7vws1d2w3LsCORyv1olX
+ O36kiIdTwYeYoRvBAgkTOqf4OVlyga58j+YKfDZkqHeqIgHtARqLjKczbIA9RLP95UES
+ LfU4PeChdI5wlT7w+c/WsxeknbVWgyEr3PnbSz0Ah2mlPd+4qGCT/lE9ySmiLQK1K2T2
+ A4qw==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoGKpLnfS8r9jcs+WHKZ79yhBYBRrwPV4Ekv987WuKxsHcBLvf/Mnt6hMXiYF3G+MdsFvPJUeIIoCTh@nongnu.org
-X-Gm-Message-State: AOJu0YwA0MDnealGRsNgeCpC1QS6jO1E03ST1mYJECYgE1TDz1sdBsF/
- ar4Wi7Dpe953AVb7gtkyg0jtYg1KhNzilVo0amep9xOm26qH9IR27iM9G74X21lGUoQ=
-X-Gm-Gg: AR+sD13RRSsxGv30dewCpqkPb9Pug2V+/UP8zz7Wg1+ThC0PhBTTNxcbX1SVWPUkpAE
- 5n7U/f+divoIrpHDOEY5ZFXOZCcHFL9qw1MAGg4FzrExHQJyfFWwlfkwY0mjw/tugAtE+0btcc/
- 9HRvywU9G2ieluRWp75gl2ICl8fXNtBDoAQ/8IOFImR5WbRbEsLNeYRaw3YZHomRXyp1nOnyLKG
- Hd6bEkdUUBo3diNnBfY6751Pvqi45M/rIlJGcDckKuFqhuV9FM+TcTyY65RveFhXz3IGuZe6HrP
- mFe2/x4VkXhxbfFqy4PhWZHJPA97/CQn4q+cTE5BUlv9rkldXtGi5dJgvI1TopXJX5CmvA2FP/o
- jSgo6Oy8/PHTqglKgXXamViEokWbXgjebqx6VTURRVvcKgI4BGHJGgUR3zm9ErKa3FD6rYfob9o
- HMngfMiQLOsSgi08qZhVL7kDwUcUWwnMxU+Slpf4sbJ6BwxS+iBypWsMFh9cslZL3uDHqBFOJEm
- 0rlLIr9
-X-Received: by 2002:a05:6a00:2e16:b0:846:4d4c:23f8 with SMTP id
- d2e1a72fcca58-851d3809eb0mr9036969b3a.1.1787158933355; 
- Wed, 19 Aug 2026 10:02:13 -0700 (PDT)
-Received: from [192.168.122.51] ([173.164.107.233])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851d336291esm898335b3a.12.2026.08.19.10.02.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Aug 2026 10:02:12 -0700 (PDT)
-Message-ID: <e97abd17-5462-40d1-aaa0-895c4203366b@linaro.org>
-Date: Wed, 19 Aug 2026 10:02:09 -0700
+ AHgh+RosP19nWMX2skVJ9pH3Zqw2ucJnv1cz4gBxreCCpp6yZIz2EUxnDU+fUs8o1VxM5zeaYb0mr/ZM2hCh@nongnu.org
+X-Gm-Message-State: AFuF++l34f0Ff8AkSvmAjaZ9TIVRX5Xb7PZAdhwOZaoHMVoQXCsou8uT
+ PUMViOCpYSXX0A+H6DjepgfhqZ55nRn+38KHTaBHs0APQOsx7UZ5sCTbQsSR55ADGmDHRaCTXbG
+ sL0nW2Hl28jffITfORntoy2/itkDUl/3ErRjrcBFOkUZkk0RhAyAK55PA
+X-Gm-Gg: AR+sD13K5aE4Cxa5pGM61XtF2b+SrlAIWZ1ktdCQiat3k8wLZwEiGKiWTXr/Q7zUgg4
+ sPTORh4sb4c2uYM7L1RilTEspGRaUjN3FU+jx78Jkzk4+c56p9XOyTsS3aEntcEf75Mq8EeCWLK
+ Lti2LaMCb9TfiIWFkpFFnZfh2BCd8ZZGfP5Wme5y87Bo+A3wiDebzRplRMdgmMNIXUEofVp2ugl
+ s/7iXEETpxsg6qUGP81x36+vtNekkj9tGnCULWUanDAtP1tdTDwux2vMTOhsASkbSxA8rHTw5vH
+ J3e8BF3cRSAnf+b4PXeC/cqOjsHCehRXWZ8UpmjvpvdM2qoEvGtVCoIarfFTOr1LUjr5
+X-Received: by 2002:a05:6000:4b0a:b0:481:5f3c:39d4 with SMTP id
+ ffacd0b85a97d-482b1e84439mr12610224f8f.1.1787159590902; 
+ Wed, 19 Aug 2026 10:13:10 -0700 (PDT)
+X-Received: by 2002:a05:6000:4b0a:b0:481:5f3c:39d4 with SMTP id
+ ffacd0b85a97d-482b1e84439mr12610103f8f.1.1787159590505; 
+ Wed, 19 Aug 2026 10:13:10 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482b14c45f1sm6793024f8f.31.2026.08.19.10.13.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Aug 2026 10:13:09 -0700 (PDT)
+Date: Wed, 19 Aug 2026 13:12:56 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: jasowang@redhat.com, mst@redhat.com, armbru@redhat.com, farosas@suse.de,
+ raphael.s.norwitz@gmail.com, bchaney@akamai.com,
+ qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
+ yc-core@yandex-team.ru, mark.caveayland@nutanix.com
+Subject: Re: [PATCH v20 10/15] migration/channel: check that transfer is UNIX
+ socket when "local" set
+Message-ID: <aoXkGOijYjxMzfhy@x1.local>
+References: <20260729091334.1863155-1-vsementsov@yandex-team.ru>
+ <20260729091334.1863155-11-vsementsov@yandex-team.ru>
+ <amoJoAyhymPgvyTR@x1.local>
+ <b9957dda-c0ee-4081-8938-ecc5a50aae3c@yandex-team.ru>
+ <aoNXx0cjLgIP7RBg@x1.local>
+ <9fc39a84-15ca-4157-afca-f4cd22bfbdad@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Correct reset value of SCTLR for arm926
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260818115814.2268429-1-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260818115814.2268429-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <9fc39a84-15ca-4157-afca-f4cd22bfbdad@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,46 +125,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/18/26 04:58, Peter Maydell wrote:
-> For the arm926 CPU we reset the SCTLR to 0x00090078.  This is not the
-> value specified in the ARM926EJ-S TRM (ARM DDI 0198E), which states
-> that bits 16 and 18 are SBO, bit 17 is SBZ, and bits [31:19] are SBZ.
-> It's also not the value seen on real hardware.
+On Wed, Aug 19, 2026 at 05:57:20PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 17.08.26 21:49, Peter Xu wrote:
+> > On Mon, Aug 17, 2026 at 09:15:17PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > > We only need to touch migration_capabilities_and_transport_compatible()?
+> > > > It should work for both, and fail QMP commands directly might also be
+> > > > slightly better.
+> > > 
+> > > 
+> > > Hm. Actually, migration_capabilities_and_transport_compatible() only sees
+> > > the parsed MigrationAddress, before any QIOChannel is created. At that
+> > > point we can't call qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_FD_PASS),
+> > > because there is no ioc yet..
+> > > 
+> > > So, at least, we can't check, is passed from user fd is a UNIX socket
+> > > for SOCKET_ADDRESS_TYPE_FD case.
+> > 
+> > Maybe have one extra step for FD with socket_sockaddr_to_address()?
+> > 
 > 
-> This has been wrong in QEMU since 2007 when we first started actively
-> resetting the SCTLR to some fixed value rather than zero.
+> For this we need an fd itself, but we don't have it at the moment, we
+> get it from monitof_fd_param() later (and we can't call it twice, as
+> it removes the fd from the list).
 > 
-> This wrong value didn't affect any of QEMU's behaviour, because we
-> don't implement any handling of the old pre-v6 meanings of these bits
-> (which were IMPDEF), and their v8 reuse is guarded by appropriate
-> version checks.
+> Now I think, correct place to check FD case is migration_fd_valid()
+> function, which also called both for outgoing and incoming paths.
 > 
-> Correct the reset value to 0x00050078 (i.e set bit 18 and not 19).
+> So, check that we use either UNIX socket or FD in
+> migration_capabilities_and_transport_compatible(), and later check
+> for fd to be UNIX socket in migration_fd_valid().
 > 
-> (We use the same reset value for the arm1020; this might also be
-> wrong, but as the ARM1020 TRM doesn't seem to be available we can't
-> check, so leave it as-is.)
+> Will do in v21, if no better ideas.
 
-Found ARM DDI 0244C, ARM1026EJ-S r0p2:
+Sounds good.  When at it, we could comment in
+migration_capabilities_and_transport_compatible() too mentioning that fd
+type will be checked later (after fetching the fd handle).
 
-https://www.datasheetarchive.com/datasheet/ARM1026EJ-S/ARM?term=ARM1026EJ-S%25E2%2584%25A2&version=1
+-- 
+Peter Xu
 
-which appears to be what arm1026_initfn is modeling.
-
-It also has [23:19] SBZ, [18] SBO, 17 [SBZ], 16 [SBO].
-
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 610c3c8afd99f4f11 ("Reset ARM cp15.c1_sys to default values. Fix XScale cp15 accesses.")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4202
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/arm/tcg/cpu32.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-
-Anyway, for this one,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-r~
 
