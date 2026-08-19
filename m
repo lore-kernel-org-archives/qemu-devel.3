@@ -4,113 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 569D2C5DF6D
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 10:01:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA421C5DF6D
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 10:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwd6N-0003Vx-30; Wed, 19 Aug 2026 06:00:55 -0400
+	id 1wwd9c-000465-NK; Wed, 19 Aug 2026 06:04:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wwd6B-0003Ru-Mo; Wed, 19 Aug 2026 06:00:46 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wwd9b-00045d-5F; Wed, 19 Aug 2026 06:04:15 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wwd6A-0000PB-6x; Wed, 19 Aug 2026 06:00:43 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ id 1wwd9Z-0000y8-9s; Wed, 19 Aug 2026 06:04:14 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67J6W5hd1544784; Wed, 19 Aug 2026 10:00:40 GMT
+ 67J6VrCh798121; Wed, 19 Aug 2026 10:04:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=MLAkW5
- LkKDPhKqfLPLLB5kZEUTlqos/WZjGaSdkIobc=; b=NnE4wZpD40UUGUN4Dr0yjb
- VztEVhJ2yLLmNXpzn4bQZeAyEwMAzlxLa+iGuYS3V0Of6eJVxgnRXfWs3Y7D07mX
- PzGltPy1cr260SSXXi7P943mYt7ADehwu0e9vIgsqemShoId6D0enPXtzFkud2Xf
- 68MSIzVUGBWckZ5eV/u5EH4/oNpPetsXgrUUO0vnbAXzs05ZB9Az02RhTHsbi1zu
- aOFWivVERWiUBYWNErgVexvq9qxxtyftsyp9ZB+uusz2vPC+wGzoGQGIh5nfwV0g
- EsjqWcp/1IFJeiqTYanRD0Z/+2wi+gllwwBpikuwXWc70FqwEaCsr/MMXuNzI9kQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=3G4OIz
+ 2l7WJjq2ksQqe3w+JcHc9VOsJn3A186FNeEJ0=; b=b2WCCSreZROcQK+sQ4+TBu
+ qtLSPyGa+VWhd6gLsauY0dnbHMrv0IaUrFI+uGyF54J+iA0bzmtl4pBHQBl+EEfI
+ 7Sjfi/MPkbA/fyI6UnhS7ui3tRSrkqkWYC0NE4px/H8yDMpRWVUP6Vnh7L6qE7R3
+ kamzxFAyT3Qk64eNDGvY6h7JTyYRgPKnD2OK8Q8l7D0gJYKjUIEXYdVxGRTn/hZM
+ yuK6DkIGoBU/o+hOsVoTPogVjhxZJOITk5cANHT1SyfOIKFyxctkm59+glzuEfmC
+ E2h/qERmKKlDYSxxQEsJ6Qe+thNDJKTOBw4bokwXbU0C+Mb1sUCz0oYa+kszq6tA
  ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu22vpx-1
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu02xt9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 19 Aug 2026 10:00:39 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67J9uRiq024309;
- Wed, 19 Aug 2026 10:00:39 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g354yg19a-1
+ Wed, 19 Aug 2026 10:04:10 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67J9uJHL023302;
+ Wed, 19 Aug 2026 10:04:09 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g34ngg3r0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 19 Aug 2026 10:00:39 +0000 (GMT)
+ Wed, 19 Aug 2026 10:04:09 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
  [10.39.53.229])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67JA0bdp64749956
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67JA48qp29819504
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 19 Aug 2026 10:00:37 GMT
+ Wed, 19 Aug 2026 10:04:08 GMT
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5C6E65805E;
- Wed, 19 Aug 2026 10:00:37 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7780D58060;
+ Wed, 19 Aug 2026 10:04:08 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B8F645805D;
- Wed, 19 Aug 2026 10:00:33 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id BE6215805D;
+ Wed, 19 Aug 2026 10:04:06 +0000 (GMT)
 Received: from [9.39.17.179] (unknown [9.39.17.179])
  by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 19 Aug 2026 10:00:33 +0000 (GMT)
-Message-ID: <b46ce266-848d-453e-b84b-2cc2c5a3f53d@linux.ibm.com>
-Date: Wed, 19 Aug 2026 15:30:31 +0530
+ Wed, 19 Aug 2026 10:04:06 +0000 (GMT)
+Message-ID: <1a184add-d994-4635-a9ca-f1a74aefd27d@linux.ibm.com>
+Date: Wed, 19 Aug 2026 15:34:04 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Add myself as a reviewer for PPC KVM and
- sPAPR
-To: Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>, Gautam Menghani <gautam@linux.ibm.com>
-References: <20260819050545.21232-1-amachhiw@linux.ibm.com>
-Content-Language: en-US
+Subject: Re: [PATCH v3] target/ppc: Add lower bound check for watchdogNumber
 From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <20260819050545.21232-1-amachhiw@linux.ibm.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: harshpb@linux.ibm.com
+References: <20260818104551.76023-1-rathc@linux.ibm.com>
+ <01070c86-0a61-43e5-8f55-7f217a3f96a9@linux.ibm.com>
+Content-Language: en-US
+In-Reply-To: <01070c86-0a61-43e5-8f55-7f217a3f96a9@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=AdqB2XXG c=1 sm=1 tr=0 ts=6a857ec8 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Proofpoint-ORIG-GUID: 2aDaDj4L7NXA9gHj3iW8q8CRL2UEHKEx
+X-Proofpoint-GUID: 2aDaDj4L7NXA9gHj3iW8q8CRL2UEHKEx
+X-Authority-Analysis: v=2.4 cv=RoX16imK c=1 sm=1 tr=0 ts=6a857f9a cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8 a=kcJ0IuGOz4MQWM4fTz8A:9 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: fvOTjmisdjhfeWeegdU1hiI3ZAH6znPf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDA3MiBTYWx0ZWRfX/5cKhA3+/fp5
- FKhUxJezbvPQr0zPV4ickIpWbofRkKByhSe3k777hhz2DNg1LC6lw5LdC6ag79vTam5VlBUsvhU
- Qhrfynk0VPi24tOrvbUw62wDV4rsW8IGhHC5n6dzB9c65xhmb74y8JATWLFO8OMH5JD1zmTEs5W
- TVc/tSzoUayewbWktGDgpXYdqR3FDxFhcEQ31KH13dRLEeo/nj23Q5JGCqisDYPEVtO9kDff0GU
- PMregBCwa+UCtgI20ljTTGPtghfjadK9RNyzojBbMKTJkIqQmOU6SCOkQ+KuqWDMJvXF9GK3oGr
- XJJposb+WNwZXcJgwPwOoTUwYiiR47Mph4GDTfjwOWU9Fr9K1/sKvwchUff5HIE/CecPACgipEg
- +7BBIa2ekXnWb1ov6yqmO3IXaHVcgjQ62dUz4ikR4H9o4wHpi88jQJ8n9IbewLEPqyhz4zSmV+y
- t5B9DnamzEa9TeCpirA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDA3MiBTYWx0ZWRfX6fffwltS2ljJ
- e0+MBi0jXS7NZHubmjguGmzYOI+UZkHzap52Z3Ur/2UN4Ho+4AOb2Znel5G11ewjDvoPHue/gbw
- 0shBjrFxbcTgbDErKg+M7PDtOwMVLt4=
-X-Proofpoint-ORIG-GUID: 0oGiKLgWS0tV5I4C53TZ0KGYZ1rtBlu5
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=p0WdMEafAAAA:8
+ a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8 a=ox8g-gRuRHoHs4K2XM8A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDA3NiBTYWx0ZWRfXzinHsh31fT4w
+ a6FI/ILQr8s6DUL4MFWpx7e5QtNmjhjJ7nLIUTxzbEZ+R4CVt+9Bn6wpnYsKzhy9nirevZtJq3d
+ wXwq8ySWjGKXzYu83l1g025h7Q+Zt2Y=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDA3NiBTYWx0ZWRfX96Xol8x+xEqh
+ siB4ZYLOKgdX7GMn2cAiWS/XUcMFYpuBB4etSRpEusWAqa745Q68W2jNKuRm4qQgoLLZDoslVsa
+ dXEtsAQOjl5LL1l2lw7rp0ssdj6fSLqtx1odvfGE/0dMdxPW9tVqS4QSr71QtJnWSh7BJmRyXKM
+ U3tG9s2HSbAL3hBtGSKK/hM5lnBaSpJRhuOYDPhj4mh+BJ12u0xv1rMFs1Td8AdA03Ovqf4oZXX
+ TVyeAdrt9A566XW+z9IqF/V2rJVjZgZbGUszRBkrIvhJjx+Wg6WfggkkOTmQYfZo3TbjB/n7krx
+ 95oANq/MkeCGxG7ESl1IXVqa0p7FIfb4p7TQA5BZ/PALM/u58bWeRy7s4apv1eg8MKj6O1CA/Mr
+ oyX6s/tltoMRymiDeW00dQQ1y8PYZbZOttFkHj3rnSNIQPiAieaDrLBmR+SI5ReVWdOoEJKEanH
+ 9zr6hIV1ku/5kjDXzIw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-19_02,2026-08-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 suspectscore=0 malwarescore=0
- impostorscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608190072
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ priorityscore=1501 impostorscore=0 suspectscore=0 malwarescore=0 adultscore=0
+ clxscore=1015 phishscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608190076
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,38 +125,84 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 8/19/26 10:35, Amit Machhiwal wrote:
-> I have been contributing to PPC KVM and sPAPR (pseries) for some time now and
-> would like to get notified of incoming changes to help with code reviews.
+On 8/18/26 17:11, Chinmay Rath wrote:
 >
-> Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-> ---
->   MAINTAINERS | 2 ++
->   1 file changed, 2 insertions(+)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index b51f5c3e6022..1a1c77285d3d 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -497,6 +497,7 @@ F: tests/functional/aarch64/test_kvm.py
->   PPC KVM CPUs
->   M: Nicholas Piggin <npiggin@gmail.com>
->   R: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> +R: Amit Machhiwal <amachhiw@linux.ibm.com>
->   S: Odd Fixes
->   F: target/ppc/kvm.c
->   
-> @@ -1661,6 +1662,7 @@ F: tests/functional/ppc/test_40p.py
->   sPAPR (pseries)
->   M: Nicholas Piggin <npiggin@gmail.com>
->   M: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> +R: Amit Machhiwal <amachhiw@linux.ibm.com>
->   L: qemu-ppc@nongnu.org
->   S: Odd Fixes
->   F: hw/*/spapr*
->
-> base-commit: fa19879df1658f96ac07365fca8835b7decd6995
-Thanks for taking this up !
+> On 8/18/26 16:15, Chinmay Rath wrote:
+>> Add missing lower bound check for H_WATCHDOG H_CALL's watchdogNumber 
+>> parameter
+>> as per PAPR documentation ver 12.10.00 section 14.15.5 'H_WATCHDOG'.
+>>
+>> Closes : https://gitlab.com/qemu-project/qemu/-/work_items/3600
+>> Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+> Reported-by: huntr bubble <bubblehuntr@gmail.com>
+Hi Harsh,
+I missed adding the correct commit message header here. Should have use 
+hw/watchdog instead of target/ppc.
+If possible please correct this while you pull in the patch along with 
+the extra Reported-by tag.
+Lemme know if that works.
 
-Acked-by: Chinmay Rath <rathc@linux.ibm.com>
+TIA,
+Chinmay
+>> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+>> ---
+>>
+>> Changes from v2:
+>> Renamed watchdogNumber_valid to watchdog_number_valid - Amit
+>> Retained Amit's Reviewed-by
+>>
+>>   hw/watchdog/spapr_watchdog.c | 16 +++++++++++-----
+>>   1 file changed, 11 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/hw/watchdog/spapr_watchdog.c b/hw/watchdog/spapr_watchdog.c
+>> index 5b3f50de3a..5a72896066 100644
+>> --- a/hw/watchdog/spapr_watchdog.c
+>> +++ b/hw/watchdog/spapr_watchdog.c
+>> @@ -127,6 +127,12 @@ static void watchdog_expired(void *pw)
+>>       }
+>>   }
+>>   +static inline bool watchdog_number_valid(target_ulong watchdogNumber,
+>> +                                        SpaprMachineState *spapr)
+>> +{
+>> +    return watchdogNumber >= 1 && watchdogNumber <= 
+>> ARRAY_SIZE(spapr->wds);
+>> +}
+>> +
+>>   static target_ulong h_watchdog(PowerPCCPU *cpu,
+>>                                  SpaprMachineState *spapr,
+>>                                  target_ulong opcode, target_ulong 
+>> *args)
+>> @@ -145,7 +151,7 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
+>>         switch (operation) {
+>>       case PSERIES_WDTF_OP_START:
+>> -        if (watchdogNumber > ARRAY_SIZE(spapr->wds)) {
+>> +        if (!watchdog_number_valid(watchdogNumber, spapr)) {
+>>               return H_P2;
+>>           }
+>>           if (timeoutInMs <= WDT_MIN_TIMEOUT) {
+>> @@ -170,11 +176,11 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
+>>       case PSERIES_WDTF_OP_STOP:
+>>           if (watchdogNumber == PSERIES_WDT_STOP_ALL) {
+>>               ret = watchdog_stop_all(spapr);
+>> -        } else if (watchdogNumber <= ARRAY_SIZE(spapr->wds)) {
+>> +        } else if (!watchdog_number_valid(watchdogNumber, spapr)) {
+>> +            return H_P2;
+>> +        } else {
+>>               ret = watchdog_stop(watchdogNumber,
+>> &spapr->wds[watchdogNumber - 1]);
+>> -        } else {
+>> -            return H_P2;
+>>           }
+>>           break;
+>>       case PSERIES_WDTF_OP_QUERY:
+>> @@ -184,7 +190,7 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
+>>           trace_spapr_watchdog_query(args[0]);
+>>           break;
+>>       case PSERIES_WDTF_OP_QUERY_LPM:
+>> -        if (watchdogNumber > ARRAY_SIZE(spapr->wds)) {
+>> +        if (!watchdog_number_valid(watchdogNumber, spapr)) {
+>>               return H_P2;
+>>           }
+>>           args[0] = PSERIES_WDTQL_QUERY_NOT_STOPPED;
+>
 
