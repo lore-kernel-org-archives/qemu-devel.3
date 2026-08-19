@@ -4,133 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C70BC5DF81
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 00:47:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1935DC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 00:49:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwUSe-0006db-Oz; Tue, 18 Aug 2026 20:47:20 -0400
+	id 1wwUV5-00073C-Dn; Tue, 18 Aug 2026 20:49:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wwUSd-0006dS-4u
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 20:47:19 -0400
+ id 1wwUV3-00072q-IW
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 20:49:49 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wwUSb-0003RZ-JM
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 20:47:18 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1wwUV2-0003Xv-0A
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 20:49:49 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67INkYVN2345575
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 00:47:15 GMT
+ 67INkVJT3834615
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 00:49:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- SFRUYpuF+46L75ZXavF8gCuKQLp25Qyc0t4gnuxebcs=; b=i4ILILS5TUejLa73
- a/XLlNOZbtLPONunLFQFaTSPf2cIbuAVgzNvtwund8muvU/4aLXMlHzHgakOAYlx
- dAqz63UBvX4Rg5u6LGfoIP+Zf27a9NrqwIOhj/U+8aga6dJxbVOBtuRrz9ftCK2x
- XFXv8Ztr8qTFDPDckdGYZ4FQTZUy17Y7f9JqBUh1aZhxV7A5txhg4rRceclL6nkg
- XY0EiFzVUVdWEKVpjqLFlvdSDk9jzTCAJk7tQCiBXRMCao2L4eZaGYJGYzrQ62Z2
- 7ztkvkWWAxTnZgogiDFZcK6RyAIjdJxcsCNIG572nlQVjWY212zhtXcvS9MKOKI1
- YIzm0A==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4yfm8k1e-1
+ OSNvWQnGP4vdifu1Zgm05xX36ztGnaHqMdxoxHB2sTk=; b=eV8cYyfBQm5Vk3WB
+ gv3C7LYgvY6RSKWM9uOnOPdNXgrB33h64nYO+200zHsdZai8hNIIHvqVSyoxtZsT
+ Cx3x6GBuaBLkPxMU8J8QESr5eHae88VmtM5hykkFwG5xE+C4YT9Qc3g3RBNh7IYV
+ CShBnRyLdO+oYB57I0GNsy2WAfVFX2lMv4sHwgyurVEZYKuuUUksdykzYm7bf+F4
+ gjxeDoNK39IQ+LNrhSx51EIjo73X/UyqDfUuuqKsuofWr8RC4OOKWcd8exZbfi25
+ n/4nQtj13a1uYUUwKVzeYJZ4pa6NRceSV05uIsnc8EHW1W4k1VYXO5ZAZXqkB3lC
+ TCsu7A==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4yfm0kf8-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 00:47:15 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-936aa34873bso46115785a.3
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 17:47:15 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 00:49:46 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-934963b2bc0so54881785a.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 17:49:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787100434; x=1787705234; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787100585; x=1787705385; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=SFRUYpuF+46L75ZXavF8gCuKQLp25Qyc0t4gnuxebcs=;
- b=ZaROlRpkUEw0EFKMrAJ8BfzEk/qALUXGm2cP1L7vrOyIUjs43H7XXmbWNRp9QKJxr3
- TJjkXpnqw554UXa1e78eE1a4Soylq2imby/aBwwJQMhMjNtcejz+7gb7OmKh4VwR8cNo
- HMq0cBsLpfz1meV8yzN/xmoFPiAV1qL8pz5c41uW5ECfBkgHYW4FttcLZ5/BcI7WsEw4
- 1DCvr0Ws5jyvTZtnh5jiw1I74hwdEHQnMztoDLyCCsWMeAMhmqXEKXoIvH2on61MFHBg
- 1LnLQFdKAJ/nHDu2nUjf/uyoVjjuxBBXoIWppRv3AJJhEZObf/v+rp2PqL03+jj+7CBt
- AVIg==
+ bh=OSNvWQnGP4vdifu1Zgm05xX36ztGnaHqMdxoxHB2sTk=;
+ b=OQ+hjWa1sia+uWmTekdi7c8lCX7sfF4i4pNOYXiva0kxVCWOu1dQ49CYs5oXVNIRON
+ V/8nlvBZVG715XpCXYolXPfdNmGA+UdqoZBsA8/KIyOuBjGsD+cUz96IpmWg3vkzy1HX
+ g79E2J6I7a7A3vtq9pR7UKCS1mDPua8G5xjzuU87tOVaTRj79mRmhpDp5t/BfeC6JemP
+ Lp9fwz4dvKViHquGTLWMh0pMsoBn6dEm+dntlEIzKrY2IIzj1hZ/xqY2jdcRE7wXfDTS
+ CCMdlGrkWUd8mJ6FGL76xPW6/EmqT2R5PpZdqtXKltpOAAqZlGrxIifiEi4dQWk6NVCG
+ WNyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787100434; x=1787705234;
+ d=1e100.net; s=20251104; t=1787100585; x=1787705385;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=SFRUYpuF+46L75ZXavF8gCuKQLp25Qyc0t4gnuxebcs=;
- b=XyBLqxcTC7+/vpjpOprWyKVLHMS/xy+WJq0Ole5s9E1Oyme7H27Uiw7Af/b5OXnU50
- 1/M/bubrdjmzZl51YY9idGF2qlNK74MACURu8YMTs7kpRXQNiJ3aTNNfjDw259Rfkd+q
- 8B9YxzK/PcsErlSgaZWAM251oCx1fLm2yAgVT6NfyneU41nHUCKf7g7h4fFWrckQbJXX
- RwfaGjIo4ttpuCGjDSR3/XdyJZdPV8MOlNAl9w0Ngo4FhTLLwjCTZVqMrAVzjKnVgWdo
- JYyvcA45/oQY2wLBtreac3M6C8c5NdFL4wqU36UJ+J8wXeuFAPzaeUOLM26KWi+x6nMz
- akhg==
+ bh=OSNvWQnGP4vdifu1Zgm05xX36ztGnaHqMdxoxHB2sTk=;
+ b=pJamcK7R1gS4U0enJdqRBkgz6ClpZQBaGbYjO2dIY5fOWcmEVywzK4H1c2MiZtEu+1
+ jB+kpnIe2obMonG33Ac6dhXI6yEkViX9lxiQ0dITGt4LiI0OOTlJUrpIr3tYXL9m8sA5
+ XVgy9JYRL+PdDMWO9TJ0bqGvuRtYCZwpOkvUJTSsy8N+YE6LwxOgA3bI4qUNR2nYwSCe
+ zAzz0aPe8eZeC0Wgrrf+j2GFUZ4Soa+5TOj3mOO8xkQI1A8qzDN9ks2WsXEc9A95Ilv4
+ bCUdnfjkRXnJUoGeAxQd9pIdUZkWyy5MmMlhHBcM21e1E5AcKnnlZGK6jUZjg8j8clJp
+ z4rA==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rq2jVdVzxrKfs8kKGt+aWLPabuUHME364XYQKoaFLGQ5vtWFK2oFjxAGABNpQEaQeM7jdsRpqiI+ZUg@nongnu.org
-X-Gm-Message-State: AOJu0Yz7u5YovjfrNjVK8RJXBF+0AZmLPaKnom/Sg4f/LX9HM5QIBw16
- UgRs8HncAGcLbZ2DxTJzLu1+GGGzPgQ9C4H3LXNV8ispzwqzDVhV9ENRDsrIMTqXo3+FnpzMpm+
- v9HFzdJqiQo3bm4rsQSCr/prZDcMdTUKyk5R4WV3XiPyBPYy+voT1T83oKA==
-X-Gm-Gg: AR+sD12PI9VdXenmPj1mqqRRSFgKQOtEKdp24wIeXrhliE2gjPKF2XD3qx2N8dz4f51
- /yMhIyJHH7P2xrzL3AxmZqCCJtTfOwcVwVjEdbeCWIXtXE36MmXuLda0CCcQN1tQVoo5wo77KlD
- cUAo0tjC/WRmSrSPARbi1RcuxmAsDdDndi/Gqt3gNVTxLYD7BWs4kyA+ltP9ULIRYFgRFXA07ip
- 0gHIgcIXYZErXLk2UqxPmBIy2HlwaLX1peR6l/3c2loHH2XKzjF1ghlZjgvwjW9mvSHAJVvcEcH
- YgTjQaucEiNwnzVUy0G2m2v8Zcyg8Y4kqjxj7rlHzYxkkAObreSCrnTHCCCMcayj9X9UOpiv7kT
- D5mKloXg9Wz49wKWvlxuUbE+Q1icnTwUpZJQ=
-X-Received: by 2002:a05:620a:2a12:b0:936:e4d1:fa2b with SMTP id
- af79cd13be357-9371e6b762fmr122222285a.44.1787100434190; 
- Tue, 18 Aug 2026 17:47:14 -0700 (PDT)
-X-Received: by 2002:a05:620a:2a12:b0:936:e4d1:fa2b with SMTP id
- af79cd13be357-9371e6b762fmr122220985a.44.1787100433794; 
- Tue, 18 Aug 2026 17:47:13 -0700 (PDT)
+ AHgh+RoAR4PUwNvBuavSFSm2bOpdQaRN+X6O1bBN+nrkYfHh1mLGU9fUgqZcaHnmVymJ+aVV5a905dsoneln@nongnu.org
+X-Gm-Message-State: AOJu0YyKGFcxfKxekFCcJDFawLl+MbfEgq8C0KOXib9whw+PzXMDZw+0
+ Xpg2WG5BEX4J/PrIYcHbnUNAeBj/30YkBaKf7ldLIWJ8Ik9zgorHh/6yJQhSRyoGpak+O2GEaur
+ FVqyLIiFHIrhCf/55ldJGSBdkjxjav3mG2pJ3oYC5PUieaxTFAFT+q5b0cw==
+X-Gm-Gg: AR+sD11U3Q2YpeXfFPRK1tn1z5vGcVm3341FKyi2dlBkLgg3F+dkhkr1HPahf9tBaqW
+ lKw63CFX+nghxKF3P7wYtrpfyX6Daij6WA5jPgkRim8bythVtveENR4t9427Te4b+wdDyFjGomD
+ 45e/Czevsh/m8riZHW4NRXUl2+WjPTXIrMOyS/kyl/HbNhf/9D/dzW1X4GVJPDsrc7ySabuKMO+
+ cyv9RezZ6iyQaj4dpDgpOebaSSY3+gP1T0YxkIXtuJNg4xZ3I+HMOY9YTwSAuKwV7iKGqzkMmwq
+ 43k/rWa8ZAQCaf/0CQlQ/C5R7HQ5fA45GStMTsUseM9tAgFEbHu+Uo3/5zw6TYlA+jVqk+sM05U
+ scemx2cW1jJVqPDYAIdOIesVmRT8Dm0zQSaY=
+X-Received: by 2002:a05:620a:2586:b0:92e:7733:e3ac with SMTP id
+ af79cd13be357-9371e24d69fmr122742085a.20.1787100585015; 
+ Tue, 18 Aug 2026 17:49:45 -0700 (PDT)
+X-Received: by 2002:a05:620a:2586:b0:92e:7733:e3ac with SMTP id
+ af79cd13be357-9371e24d69fmr122739285a.20.1787100584522; 
+ Tue, 18 Aug 2026 17:49:44 -0700 (PDT)
 Received: from [192.168.69.231] (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b1441725sm1177389f8f.3.2026.08.18.17.47.12
+ ffacd0b85a97d-482b145153fsm1338767f8f.12.2026.08.18.17.49.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Aug 2026 17:47:13 -0700 (PDT)
-Message-ID: <831a8f18-4bbb-43fd-ad7c-3698bb3ce7f2@oss.qualcomm.com>
-Date: Wed, 19 Aug 2026 02:47:11 +0200
+ Tue, 18 Aug 2026 17:49:43 -0700 (PDT)
+Message-ID: <b1cb5c81-cd9b-464b-837d-df8a2bdc6cef@oss.qualcomm.com>
+Date: Wed, 19 Aug 2026 02:49:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/9] arm/aspeed: Drop ASPEED_RAM_SIZE
+Subject: Re: [PATCH v2 2/9] hw/vexpress.c: Remove forced cast to u64
 Content-Language: en-US
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
  <peter.maydell@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+ <philmd@mailo.com>
 References: <20260818172012.3052821-1-peterx@redhat.com>
- <20260818172012.3052821-8-peterx@redhat.com>
+ <20260818172012.3052821-3-peterx@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260818172012.3052821-8-peterx@redhat.com>
+In-Reply-To: <20260818172012.3052821-3-peterx@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDAwMyBTYWx0ZWRfX8Xougn7MKOne
- 7HclQn1eiuUFNdFqa7CUVcFXU6QgIiR7iXlkBpdHPFVTz0MX5bZKyuA2cbahPbM1dKwO/9dz2dU
- 8DMQe6Y2bjEfyx42ejWM+9+JUYxgV2sPu/xuLpSxQkMRTMw6eFROSqAQRePjWrBwF1Dp07xJHCp
- Zmvx9n7bAdGpg2/BzQSA4SBBe1Pw27U6D3hHUkcN7pFVlfo7NAUVkQQRgDQyNSUNatbGyYHroUz
- O/115O4a1YUOUj3K8X4MOMsCW556LCgGXC3k8V+3b9ZGvkWcXUActaTiQfRkNzne2swtmPKr+PU
- ZT74nfeeUkVq8pFHxvClMMG4Yg+sLrGtn8gL2elVj6jKb85YRM4aoCUF+CKrwLQyJPXjLs4mZt0
- TDpUO7oYh9226Ls7HjImxDAXhc0Z5ojxHbq7FysKHWnTYeGnAwoge2gHeIW8r/UOLeXk9I8e5lf
- f0uUDZKhhY39q1+LZdw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDAwMyBTYWx0ZWRfX2X8iEonrXTcu
- v0Zjwf4gl4ATjqrSlyzU1JhZkS3iNGwhv2CbwoiolvdSWknQ2tEKxjX9CwC0nmeEAR8Or5cQ1dI
- qL8FJ4jvXxvUwaCkJI0nZRdR02TUIOY=
-X-Proofpoint-GUID: Bp2_66pHwrE0oN2o0vBIxPUcvAWY2_jp
-X-Proofpoint-ORIG-GUID: Bp2_66pHwrE0oN2o0vBIxPUcvAWY2_jp
-X-Authority-Analysis: v=2.4 cv=J+SaKgnS c=1 sm=1 tr=0 ts=6a84fd13 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDAwMyBTYWx0ZWRfX/vNMerrE/V5o
+ jyNBVjFelRFI2otIkCidPxqz8TUHN9ZCFftQkVm6NwROPjObg8OpzYwZFsUA87E+vW3YLDojS92
+ h/cOQMAbkDDV03Khr1StE/SM7x3ienU=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDAwMyBTYWx0ZWRfX8wT7kjVfgL1w
+ O5f1205F2yAawxqsZXYrhME5NYRiWMpgFPv5oE8XJ2tMh7bOS5V6CS1Fh3QNfINbT4fkaqf/chD
+ kktI0GgcchaSmeiaL8Vtygfe0WopJW1u6Brhid5+CRympyhWh3RygAuKn7sJT/60hWnceSkCiHG
+ npVC0VRl4QIbAucZXsiReP8K8f4L2K+dcGJpShqWa+iZgDPZ6kCiJuRMVNFMCoUuZkD6+/CvAwx
+ hym8UMlZ/xYjGGa7wr4vjQFeYXXL4km0MbHGsfPNnpqnKdXRxYuLNx+P5TlXOQUT88smmg5V7DU
+ 1grAMf6TpfOzhGMNYaJqjML45WHaZ93X9QYKTgrLFWFJ6xoBajci4d1f2xnfPSGKbrKKE19NTcQ
+ q7lLV9/VsCSws14AQ9oH5n5d/8Y1iF+PUQkmDocRqJryCUad9sBe+1Swuqah5+ZT8gdNCcPc7o7
+ tnwnXROYWiLPXP0ah/w==
+X-Proofpoint-ORIG-GUID: CoKj8iPQHjXPWm7WZF-tf29-DdhRNszo
+X-Authority-Analysis: v=2.4 cv=bN0m5v+Z c=1 sm=1 tr=0 ts=6a84fdaa cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=1AjSj14cB3F92Kw2XrgA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=Nci63-FIB90mRSizHUoA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: CoKj8iPQHjXPWm7WZF-tf29-DdhRNszo
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-18_05,2026-08-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 adultscore=0 clxscore=1015 priorityscore=1501
- spamscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0 suspectscore=0
+ bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 adultscore=0
+ impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608190003
 Received-SPF: pass client-ip=205.220.168.131;
@@ -158,37 +159,44 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 18/8/26 19:20, Peter Xu wrote:
-> QEMU has switched to 64bit-only hosts for all system/user emulations.  It's
-> not needed anymore.
+> Now since ram_addr_t has switched to u64, remove the forced cast as not
+> needed.
 > 
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->   include/hw/arm/aspeed.h           | 7 -------
->   hw/arm/aspeed_ast2600_anacapa.c   | 2 +-
->   hw/arm/aspeed_ast2600_bletchley.c | 2 +-
->   hw/arm/aspeed_ast2600_catalina.c  | 2 +-
->   hw/arm/aspeed_ast2600_fby35.c     | 2 +-
->   hw/arm/aspeed_ast2600_fuji.c      | 2 +-
->   hw/arm/aspeed_ast2600_gb200nvl.c  | 2 +-
->   7 files changed, 6 insertions(+), 13 deletions(-)
+>   hw/arm/vexpress.c | 13 +++----------
+>   1 file changed, 3 insertions(+), 10 deletions(-)
 > 
-> diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
-> index a00238ed74..7a012d87de 100644
-> --- a/include/hw/arm/aspeed.h
-> +++ b/include/hw/arm/aspeed.h
-> @@ -25,13 +25,6 @@ DECLARE_OBJ_CHECKERS(AspeedMachineState, AspeedMachineClass,
->   #define ASPEED_MAC2_ON   (1 << 2)
->   #define ASPEED_MAC3_ON   (1 << 3)
+> diff --git a/hw/arm/vexpress.c b/hw/arm/vexpress.c
+> index f26d8c6f8d..a6ce426356 100644
+> --- a/hw/arm/vexpress.c
+> +++ b/hw/arm/vexpress.c
+> @@ -363,16 +363,9 @@ static void a15_daughterboard_init(VexpressMachineState *vms,
+>       MachineState *machine = MACHINE(vms);
+>       MemoryRegion *sysmem = get_system_memory();
 >   
-> -/* On 32-bit hosts, lower RAM to 1G because of the 2047 MB limit */
-> -#if HOST_LONG_BITS == 32
-> -#define ASPEED_RAM_SIZE(sz) MIN((sz), 1 * GiB)
+> -    {
+> -        /* We have to use a separate 64 bit variable here to avoid the gcc
+> -         * "comparison is always false due to limited range of data type"
+> -         * warning if we are on a host where ram_addr_t is 32 bits.
+> -         */
+> -        uint64_t rsz = ram_size;
+> -        if (rsz > (30ULL * 1024 * 1024 * 1024)) {
+> -            error_report("vexpress-a15: cannot model more than 30GB RAM");
+> -            exit(1);
+> -        }
+> +    if (ram_size > (30ULL * 1024 * 1024 * 1024)) {
 
-Indeed now dead code.
+Note we have a more readable GiB definition in "qemu/units.h":
 
+   #define GiB     (INT64_C(1) << 30)
+
+Regardless:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-> -#else
-> -#define ASPEED_RAM_SIZE(sz) (sz)
-> -#endif
+> +        error_report("vexpress-a15: cannot model more than 30GB RAM");
+> +        exit(1);
+>       }
+
 
