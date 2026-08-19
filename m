@@ -4,114 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F4E7C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 06:57:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC525C5DF6D
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 07:12:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwaDg-0007Lw-Gw; Wed, 19 Aug 2026 02:56:16 -0400
+	id 1wwaSi-0002N4-D0; Wed, 19 Aug 2026 03:11:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1wwaDf-0007IE-1R; Wed, 19 Aug 2026 02:56:15 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wwaSg-0002Mi-0I
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 03:11:46 -0400
+Received: from smtpout8.mo539.mail-out.ovh.net ([51.210.91.47])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uverma@linux.ibm.com>)
- id 1wwaDc-0002jv-KB; Wed, 19 Aug 2026 02:56:14 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67J6WIDV1545005; Wed, 19 Aug 2026 06:55:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=SygJin
- cI7Te2NspxEM1MJ/ee0HphpGOoJwBTgoUBaoY=; b=GjCPUHP8BTPAVuNkbmnmmD
- 1bTBnhDIX04L2bzJe+8snt2mrrjMEi5odZvg+FttW9P0lttIfP9Y2x8GvAoaNV71
- dub5TEym9WepNGJjQ7qifpZvwD5mVRJbkxXTxKihzgDTpqJknnYnzBbjRWEXIw91
- NEf1tQ1GyfX1gLWEhYYfvSlATqSVMLgf15ygxDirb383xB0Khwqwr0AIi/s8suxG
- 9dzAoi/AZPNjdx6ct5vKouiTPgaYCCBP6j2KQXtcbY5goV4DW22AgEuEjT1wdGAl
- ChAkUO3yEF0/3D8yjsImdqyw6DS2BQd9d37dGwH7opDONnUhFfpHc0FI1Hq/XG5g
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu221sw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 19 Aug 2026 06:55:57 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67J6ffLp029643;
- Wed, 19 Aug 2026 06:55:56 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33ek7jtu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 19 Aug 2026 06:55:56 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67J6ttlV29360874
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 19 Aug 2026 06:55:55 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DDB8A58067;
- Wed, 19 Aug 2026 06:55:54 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7349E58055;
- Wed, 19 Aug 2026 06:55:43 +0000 (GMT)
-Received: from [9.43.127.81] (unknown [9.43.127.81])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 19 Aug 2026 06:55:42 +0000 (GMT)
-Message-ID: <e23ae0e2-935d-49fb-99e8-dbcaca5fb997@linux.ibm.com>
-Date: Wed, 19 Aug 2026 12:25:40 +0530
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wwaSc-0004ca-VJ
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 03:11:45 -0400
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net [79.137.60.37])
+ by mo539.mail-out.ovh.net (Postfix) with ESMTPS id 4hPyRZ6c1Rz4Drm;
+ Wed, 19 Aug 2026 07:11:38 +0000 (UTC)
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net. [127.0.0.1])
+ by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <peter.maydell@linaro.org>; Wed, 19 Aug 2026 07:11:38 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.231.233])
+ by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4hPyRZ5Ttcz1xtS; Wed, 19 Aug 2026 07:11:38 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.5])
+ (Authenticated sender: clg@kaod.org)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id F3A89203F4E; 
+ Wed, 19 Aug 2026 07:11:37 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-102R00450458bad-a19e-445f-8001-af968acc8a5a,
+ C24CD8B75EED539221ACEA448CE881038350F7ED) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 2.10.174.70
+Message-ID: <ba05f872-5eff-44bb-814d-c2dca6532a9d@kaod.org>
+Date: Wed, 19 Aug 2026 09:11:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/8] ppc/spapr: VOF disk image (qcow2) boot support
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, aik@ozlabs.ru, aik@amd.com
-Cc: pbonzini@redhat.com, th.huth@posteo.eu, nnmlinux@linux.ibm.com,
- sbhat@linux.ibm.com, harshpb@linux.ibm.com, amachhiw@linux.ibm.com,
- rathc@linux.ibm.com, balaton@eik.bme.hu, philmd@oss.qualcomm.com,
- npiggin@gmail.com, marcandre.lureau@redhat.com, fam@euphon.net
-References: <20260817102733.605346-1-uverma@linux.ibm.com>
-Content-Language: en-US, en-ZM
-From: Utkarsh Verma <uverma@linux.ibm.com>
-In-Reply-To: <20260817102733.605346-1-uverma@linux.ibm.com>
+Subject: Re: [PATCH v2 7/9] arm/aspeed: Drop ASPEED_RAM_SIZE
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>
+References: <20260818172012.3052821-1-peterx@redhat.com>
+ <20260818172012.3052821-8-peterx@redhat.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260818172012.3052821-8-peterx@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=AdqB2XXG c=1 sm=1 tr=0 ts=6a85537d cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
- a=EGYj-OwPAAAA:8 a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=KGBFmflJReHv3GOqU-AA:9
- a=QEXdDO2ut3YA:10 a=xQyHFheebwQZ3wMG2Lhb:22
-X-Proofpoint-GUID: nFqOa1wv8mpMnTDhJ3w1F7WczlzUx_Qd
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDA0NyBTYWx0ZWRfX/xuzcTqEROFL
- Gt7TGSsJx55yvJNaPJDxTUrEBLm9u88Z8AiA2yaQoyugpac1cOM8RrQMsrFx5BwdeTnP3KXN4IB
- s+WG17uU64+YmYWiROqnLHiA4dSM9AgSghzECdA1nWBZPuTdB9GKeqWP5yM8SugNmlJvh9JYKzz
- nGEeOU0UUKrRmDpH+H6NC2JH9h7w7YLmNUzoNau03786RM1wr8LX5rW9QSEtPEWwebppTEheVLf
- +4hmP85p4lkdR3xwQqcytUrg/AGpNtZ0k4uCF1yzpqBUdrLy5N9H8RLdWiSxW7Qyb4btj7wMKIx
- XVgc/YsA1EoUOv6Yqp2QC9LvMmG2NrAHHTYeKyppymDOHBJdbw4v8yMLPuvvCLNcEVPlLKOGb/v
- MAhkJV40+DYEIIbERnZ5EpHBv8QxJh1TYFXET8689nn0jmN2Eo9ou/WQ3LMxGOOMLBk9ffpo9T6
- nNaUTto/GX5LX6Os57A==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDA0NyBTYWx0ZWRfX1M9+KBGJnbYD
- NA2kjpmQubum+luKrruMwTf9ogYsmMcOx2GH5yNtcKaH34AqTgXByOKiA8xSmNWaAQbkze3MhMv
- rp3miogsBjKGhryylUNaka+CiMUBT4Q=
-X-Proofpoint-ORIG-GUID: aQxZvtPTZMaWlL5WGzp3MjBh_-4Tw4RF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-19_02,2026-08-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 priorityscore=1501 suspectscore=0 malwarescore=0
- impostorscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608190047
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=uverma@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 6280832633484455111
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFFQfOflHL5pL7h1lCIN2tY1QVsauSJe0O7J+HDb/gLpcLr5TbnbhBY760AMer0V6b5+2xh5hVyR1hx47WZFtdcIU7d/rZWll5oPbbIlLjWcVJQvjo3m+Cq6I2z2JwsRMEx0qnb/InHqgB4Mt5rhwdUZ18CrDHEcGAHLYIlG5+iZMrUbtT4TUjK4yl+0Mgr8y4Reyt9CNf98lmM+57J94lQ3IVElheEC8eAYuQwWDiEPd55elGMmFyslE1H7T4kZmFeATFMZZl/H7tJoYAOTAjJHPHSctcXp14xrzwwDtnnUMchJ4gmERNej++NreqHS9Ec4IUFNW7iYLxwnfYf0P8EnifNE9kwB5CeuW8fjK8rG3sgEsESRA/VnDYWzvbGR1ndaKZn2uQBVjIt733Gv6KTys40QmYXB+ScYqY95uZAhqEGvG4m9yQvqQK1x0ybXqJZM1MoGUJ48+UfBWtFnpx4rNDJKk1G6ZDZB9xQxaB2ZU4+Mm1d+1CHr3/2ZONO9y8dtAKy6zekXOP2+bM1CMuxDYttaU4uQX1vH4AniHWcC/aHxCUlhQUzgigRb79q462ESWceKQLHt7sPHssVfh6qIKPLmWz2T+R4LDc/r3x/lBQDkN3c0UfXU2uz+5QApO8T2NHa43uFhypAoSZl5qTdhItinFsNryTf8N9+OvCNIw
+DKIM-Signature: a=rsa-sha256; bh=62l7mEuqW83dX2W9eUPz3iv5mgEdNUfO5WeL2hsucEY=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1787123499; v=1;
+ b=I7P63LlhxedL+xy4AgvFCFOjbJtkQ0LAo7PUWpK7+FjEPxZsyHoISGShwQXuzJaN9R7xdxwb
+ kDRVXzT03GsZWI5NBh2Ycxb+sUs3SG0IwZCwW5s20N/HzZ0/SKWub7fvQjmDrvNHui5tn19mk+L
+ 01BfCDrTOtsiBNlOCYHeLKvfd67YfnpKybTOlfidVtDsKqRAOe+QUc8PEvELz3GPmm4tyryqxVj
+ NNMEkA9q6hFZky74WUc/ZxOiqCaEWG5LZfVxzXKNq/W147uTE8cBe2mguh9zSdQsIoc1Pz1xCyk
+ erCmo/uare5mIKK8owCqbndWIUxblK48L6S/TkNZgI92w==
+Received-SPF: pass client-ip=51.210.91.47; envelope-from=clg@kaod.org;
+ helo=smtpout8.mo539.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,166 +132,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+ Alexey (AMD)
+On 8/18/26 19:20, Peter Xu wrote:
+> QEMU has switched to 64bit-only hosts for all system/user emulations.  It's
+> not needed anymore.
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>   include/hw/arm/aspeed.h           | 7 -------
+>   hw/arm/aspeed_ast2600_anacapa.c   | 2 +-
+>   hw/arm/aspeed_ast2600_bletchley.c | 2 +-
+>   hw/arm/aspeed_ast2600_catalina.c  | 2 +-
+>   hw/arm/aspeed_ast2600_fby35.c     | 2 +-
+>   hw/arm/aspeed_ast2600_fuji.c      | 2 +-
+>   hw/arm/aspeed_ast2600_gb200nvl.c  | 2 +-
+>   7 files changed, 6 insertions(+), 13 deletions(-)
+> 
+> diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
+> index a00238ed74..7a012d87de 100644
+> --- a/include/hw/arm/aspeed.h
+> +++ b/include/hw/arm/aspeed.h
+> @@ -25,13 +25,6 @@ DECLARE_OBJ_CHECKERS(AspeedMachineState, AspeedMachineClass,
+>   #define ASPEED_MAC2_ON   (1 << 2)
+>   #define ASPEED_MAC3_ON   (1 << 3)
+>   
+> -/* On 32-bit hosts, lower RAM to 1G because of the 2047 MB limit */
+> -#if HOST_LONG_BITS == 32
+> -#define ASPEED_RAM_SIZE(sz) MIN((sz), 1 * GiB)
+> -#else
+> -#define ASPEED_RAM_SIZE(sz) (sz)
+> -#endif
+> -
+>   struct AspeedMachineState {
+>       MachineState parent_obj;
+>   
+> diff --git a/hw/arm/aspeed_ast2600_anacapa.c b/hw/arm/aspeed_ast2600_anacapa.c
+> index 65d6b0faa2..45f7a25efd 100644
+> --- a/hw/arm/aspeed_ast2600_anacapa.c
+> +++ b/hw/arm/aspeed_ast2600_anacapa.c
+> @@ -18,7 +18,7 @@
+>   
+>   #define ANACAPA_BMC_HW_STRAP1 0x00002002
+>   #define ANACAPA_BMC_HW_STRAP2 0x00000000
+> -#define ANACAPA_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
+> +#define ANACAPA_BMC_RAM_SIZE (2 * GiB)
+>   
+>   /*
+>    * "Anacapa HPM (MB)" FRU data. Generated with frugen.
+> diff --git a/hw/arm/aspeed_ast2600_bletchley.c b/hw/arm/aspeed_ast2600_bletchley.c
+> index b7e84db143..8f9061c472 100644
+> --- a/hw/arm/aspeed_ast2600_bletchley.c
+> +++ b/hw/arm/aspeed_ast2600_bletchley.c
+> @@ -18,7 +18,7 @@
+>   /* Bletchley hardware value */
+>   #define BLETCHLEY_BMC_HW_STRAP1 0x00002000
+>   #define BLETCHLEY_BMC_HW_STRAP2 0x00000801
+> -#define BLETCHLEY_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
+> +#define BLETCHLEY_BMC_RAM_SIZE (2 * GiB)
+>   
+>   static void bletchley_bmc_i2c_init(AspeedMachineState *bmc)
+>   {
+> diff --git a/hw/arm/aspeed_ast2600_catalina.c b/hw/arm/aspeed_ast2600_catalina.c
+> index f714c9d1b3..c328997668 100644
+> --- a/hw/arm/aspeed_ast2600_catalina.c
+> +++ b/hw/arm/aspeed_ast2600_catalina.c
+> @@ -20,7 +20,7 @@
+>   /* Catalina hardware value */
+>   #define CATALINA_BMC_HW_STRAP1 0x00002002
+>   #define CATALINA_BMC_HW_STRAP2 0x00000800
+> -#define CATALINA_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
+> +#define CATALINA_BMC_RAM_SIZE (2 * GiB)
+>   
+>   #define TYPE_TMP75 TYPE_TMP105
+>   #define TYPE_TMP421 "tmp421"
+> diff --git a/hw/arm/aspeed_ast2600_fby35.c b/hw/arm/aspeed_ast2600_fby35.c
+> index f624427070..1d546b1f0a 100644
+> --- a/hw/arm/aspeed_ast2600_fby35.c
+> +++ b/hw/arm/aspeed_ast2600_fby35.c
+> @@ -17,7 +17,7 @@
+>   
+>   #define TYPE_LM75 TYPE_TMP105
+>   #define TYPE_TMP421 "tmp421"
+> -#define FBY35_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
+> +#define FBY35_BMC_RAM_SIZE (2 * GiB)
+>   
+>   static const uint8_t fby35_nic_fruid[] = {
+>       0x01, 0x00, 0x00, 0x01, 0x0f, 0x20, 0x00, 0xcf, 0x01, 0x0e, 0x19, 0xd7,
+> diff --git a/hw/arm/aspeed_ast2600_fuji.c b/hw/arm/aspeed_ast2600_fuji.c
+> index 37db252e27..cb987e2eff 100644
+> --- a/hw/arm/aspeed_ast2600_fuji.c
+> +++ b/hw/arm/aspeed_ast2600_fuji.c
+> @@ -22,7 +22,7 @@
+>   /* Fuji hardware value */
+>   #define FUJI_BMC_HW_STRAP1    0x00000000
+>   #define FUJI_BMC_HW_STRAP2    0x00000000
+> -#define FUJI_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
+> +#define FUJI_BMC_RAM_SIZE (2 * GiB)
+>   
+>   static void get_pca9548_channels(I2CBus *bus, uint8_t mux_addr,
+>                                    I2CBus **channels)
+> diff --git a/hw/arm/aspeed_ast2600_gb200nvl.c b/hw/arm/aspeed_ast2600_gb200nvl.c
+> index ad9a10110b..7abd934624 100644
+> --- a/hw/arm/aspeed_ast2600_gb200nvl.c
+> +++ b/hw/arm/aspeed_ast2600_gb200nvl.c
+> @@ -16,7 +16,7 @@
+>   /* GB200NVL hardware value */
+>   #define GB200NVL_BMC_HW_STRAP1 0x000000C0
+>   #define GB200NVL_BMC_HW_STRAP2 0x00000003
+> -#define GB200NVL_BMC_RAM_SIZE ASPEED_RAM_SIZE(1 * GiB)
+> +#define GB200NVL_BMC_RAM_SIZE (1 * GiB)
+>   
+>   static const uint8_t gb200nvl_bmc_fruid[] = {
+>       0x01, 0x00, 0x00, 0x01, 0x0b, 0x00, 0x00, 0xf3, 0x01, 0x0a, 0x19, 0x1f,
 
-Hi Alexey,
-Will you continue to maintain VOF in QEMU?
-Could you please share your feedback on this patch series?
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
-Regards,
-Utkarsh
+Thanks,
 
-On 8/17/26 3:57 PM, uverma@linux.ibm.com wrote:
-> From: Utkarsh Verma <uverma@linux.ibm.com>
-> 
-> This series adds support for booting from a disk image under the Virtual Open
-> Firmware (VOF) path for sPAPR/pseries machines in QEMU.
-> 
-> The most common use case for pseries VMs is booting from a distro qcow2 disk
-> image. These images carry a PReP boot partition containing GRUB2, which in turn
-> loads the kernel and initrd via IEEE 1275 client interface calls.
-> VOF currently only supports direct -kernel/-initrd boot; there is no
-> firmware-mediated path to hand off to a bootloader on disk. This series
-> implements that missing path, making VOF capable of handling the standard
-> distro qcow2 boot flow without requiring SLOF.
-> 
-> This series takes reference from an earlier implementation by Alexey
-> Kardashevskiy [1] which explored the same concept but was not carried forward at
-> the time.
-> 
-> The existing load_elf function works on a file, whereas in the VOF the PReP
-> partition (GRUB) is read from the disk image and loaded in the memory, also
-> on loading the PReP partition in the guest memory the /memory@0/available FDT
-> needs to be properly updated for each PT_LOAD segment of the core.elf file
-> of the GRUB (PReP partition).
-> 
-> Implemented a new public elf loader API load_elf_ram_sym_buf() to resolve both
-> these issues. load_elf_ram_sym_buf() accepts a caller-supplied memory buffer
-> instead of a filename. Internally it writes the buffer to an anonymous memfd
-> and delegates to the existing load_elf32/load_elf64 paths, so all existing
-> behaviour is preserved. Also, added optional segment_fn_t callback in
-> load_elf_ram_sym_buf() through the internal elf_ops.h.inc template; it is
-> invoked once per PT_LOAD segment after the load address is resolved, allowing
-> callers to perform per-segment work such as VOF memory claims.
-> 
-> When no -kernel is given, spapr_vof_reset() calls a newly implemented function
-> spapr_vof_try_prep_boot() which iterates attached block backends, scans
-> partitions for a PReP boot partition, reads the partition contents into a
-> host buffer, calls load_elf_ram_sym_buf() to load the GRUB in the guest memory,
-> and on success stores the ELF entry point in spapr->kernel_addr.
-> spapr_vof_client_dt_finalize() then writes the entry point into
-> /chosen/qemu,boot-kernel so VOF then transfers control to GRUB.
-> 
-> - Partition scanner (spapr_vof_partition.c): scans MBR and GPT partition tables
->    on a BlockBackend to locate the PReP boot partition.
-> 
-> - Core loader extension (hw/core/loader.c): new load_elf_ram_sym_buf() API loads
->    a 32/64-bit ELF binary from a caller-supplied memory buffer, reusing the
->    existing load_elf32/load_elf64 paths via a memfd. A new segment_fn_t callback
->    in elf_ops.h.inc lets callers act on each PT_LOAD segment as it is resolved.
-> 
-> - read, seek OF services: two previously unimplemented IEEE 1275 client
->    services, covering block device I/O needed by GRUB.
-> 
-> - vscsi-report-luns method: walks the SCSIBus and builds the LUN report table
->    in guest memory in the format expected by GRUB's ofdisk driver, matching
->    SLOF's dev-generate-srplun encoding.
-> 
-> - VTY write/read routing: routes console I/O through the VTY chardev backend;
->    promotes vty_getchars to external linkage.
-> 
-> - FDT disk@<lun> child nodes (spapr_vscsi.c): emits a child FDT node per
->    attached SCSI disk in VOF mode, giving GRUB a fully-qualified OF path to open.
->    Gated on spapr->vof so SLOF boots are unaffected.
-> 
-> We used AI to build prototype with manual changes incorporated as identified
-> during debugging multiple issues faced while making it work, hence using below
-> tag as suggested in [2].
-> AI-used-for: Code
-> 
-> Testing:
-> 
-> The series has been tested end-to-end by booting a RHEL9.7 qcow2 image on a
-> pseries machine with VOF enabled (no SLOF).
-> 
-> build$ ./qemu-system-ppc64 -M pseries,x-vof=on -cpu power9 -m 2G \
-> -hda ../../rhel-guest-image-9.7-20251021.0.ppc64le.qcow2 -nographic
-> qemu-system-ppc64: warning: TCG doesn't support requested feature, cap-cfpc=workaround
-> qemu-system-ppc64: warning: TCG doesn't support requested feature, cap-ibs=workaround
-> qemu-system-ppc64: warning: TCG doesn't support requested feature, cap-ccf-assist=on
-> Welcome to GRUB!
-> <snip>
->                                 GRUB version 2.06
-> 
->   +----------------------------------------------------------------------------+
->   |*Red Hat Enterprise Linux (5.14.0-611.5.1.el9_7.ppc64le) 9.7 (Plow)         |
->   |                                                                            |
->   |                                                                            |
->   |                                                                            |
->   |                                                                            |
->   |                                                                            |
->   |                                                                            |
->   |                                                                            |
->   |                                                                            |
->   |                                                                            |
->   |                                                                            |
->   |                                                                            |
->   +----------------------------------------------------------------------------+
-> 
->        Use the ^ and v keys to select which entry is highlighted.
->        Press enter to boot the selected OS, `e' to edit the commands
->        before booting or `c' for a command-line.
-> 
-> <snip>
-> 
-> Red Hat Enterprise Linux 9.7 (Plow)
-> Kernel 5.14.0-611.5.1.el9_7.ppc64le on an ppc64le
-> 
-> Activate the web console with: systemctl enable --now cockpit.socket
-> 
-> localhost login: root
-> Password:
-> Last login: Fri Jul 10 01:45:44 on hvc0
-> [root@localhost ~]#
-> [root@localhost ~]# ls /
-> afs  boot  etc	 lib	media  opt   root  sbin  sys  usr
-> bin  dev   home  lib64	mnt    proc  run   srv	 tmp  var
-> [root@localhost ~]#
-> [root@localhost ~]# echo "Hello, World!" > hello.txt
-> [root@localhost ~]# cat hello.txt
-> Hello, World!
-> [root@localhost ~]#
-> 
-> [1] https://lore.kernel.org/qemu-devel/20200203032943.121178-1-aik@ozlabs.ru/#t
-> [2] https://lore.kernel.org/qemu-devel/20260529094619.1034458-1-pbonzini@redhat.com/
-> 
-> Utkarsh Verma (8):
->    ppc/spapr: add PReP boot partition detection
->    hw/loader: add load_elf_ram_sym_buf() for in-memory ELF loading
->    ppc/spapr: add baseline VOF disk boot support
->    ppc/spapr: add VTY backend support to OF read/write/open services
->    ppc/spapr: add block device backend to VOF open/read/write/seek
->      services
->    spapr_vscsi: add VOF disk nodes to the device tree
->    ppc/spapr: strip OF path argument suffix in path_offset
->    ppc/spapr: implement vscsi-report-luns call-method for PAPR vSCSI
-> 
->   hw/char/spapr_vty.c          |   2 +-
->   hw/core/loader.c             |  77 ++++++-
->   hw/ppc/meson.build           |   5 +-
->   hw/ppc/spapr_vof.c           | 144 +++++++++++-
->   hw/ppc/spapr_vof_partition.c | 176 ++++++++++++++
->   hw/ppc/trace-events          |   4 +
->   hw/ppc/vof.c                 | 429 +++++++++++++++++++++++++++++++++++
->   hw/scsi/spapr_vscsi.c        |  40 ++++
->   include/hw/core/loader.h     |  30 +++
->   include/hw/elf_ops.h.inc     |  12 +-
->   include/hw/ppc/spapr_vio.h   |   1 +
->   include/hw/ppc/spapr_vof.h   |  14 ++
->   include/hw/ppc/vof.h         |   2 +
->   13 files changed, 923 insertions(+), 13 deletions(-)
->   create mode 100644 hw/ppc/spapr_vof_partition.c
->   create mode 100644 include/hw/ppc/spapr_vof.h
-> 
+C.
 
 
