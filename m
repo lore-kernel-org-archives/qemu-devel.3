@@ -4,105 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE5FDC5DF81
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 14:50:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72EE0C5DF86
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 14:50:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwhck-0006C5-HH; Wed, 19 Aug 2026 10:50:39 -0400
+	id 1wwhcr-0006DM-Dr; Wed, 19 Aug 2026 10:50:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwhcP-00064K-Vd
+ (Exim 4.90_1) (envelope-from <christian@sourceandstack.com>)
+ id 1wwhcP-00064L-Vj
  for qemu-devel@nongnu.org; Wed, 19 Aug 2026 10:50:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from sourceandstack.com ([159.223.220.208])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwhcN-0007ZW-W0
+ (Exim 4.90_1) (envelope-from <christian@sourceandstack.com>)
+ id 1wwhcN-0007Zu-4c
  for qemu-devel@nongnu.org; Wed, 19 Aug 2026 10:50:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787151012;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LFoaQxqM9R1B9ARb/MoD0TEeUjL4HFJwz/pCOypZ4F8=;
- b=CY4v7UnrAqwynN7Rxj/RtMsevRMTayOaJh4Z9LXPqlIy6gBkBnOSnWN0GF5uD09W5GUjYH
- Ccxzx3Wd5Dp0sHVxZqhQe+alFzJRdXFbKPYyHRwsLRTAXTbRx0WsX1yHXgENSF3NKSda9B
- 2ek0HsJKBKIGKu1PPXWom9Vbjn+dEbU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637-s5gFIgJKNdC4I85CV3_IJA-1; Wed, 19 Aug 2026 10:50:09 -0400
-X-MC-Unique: s5gFIgJKNdC4I85CV3_IJA-1
-X-Mimecast-MFC-AGG-ID: s5gFIgJKNdC4I85CV3_IJA_1787151009
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-49808ea1b64so11134445e9.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 07:50:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787151008; x=1787755808; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=LFoaQxqM9R1B9ARb/MoD0TEeUjL4HFJwz/pCOypZ4F8=;
- b=RhvNQ/jG9kQBpHqtEFYm+veYlX6Y8Ua167ec2za/h4furWFjSNlNpIAECsuj16Mg1V
- /gkXTZm9c4g9hxgp42P1gOMA76AvAI2yMY4iRmXzO+f6t0t9UNTf37dvji5E4ANJJ3qC
- LRCqN29cQbAWcU6c8F74XlCtQsgp3A9FTJpzxP21+Zeq+j/8aNDe7ktryRUupwullvDE
- 12UCsaaETrBD8jZWfHMM/zszdkD+pLqq9plrTR7SIR8ILeg3cKGkeX2bFZMhAdzfx0pV
- g5W1zlzHX/e492uGlYy3D3cnsVEW862521yU+MAy/EKRcPFhT7AXRUuV2Z+4m0FpeD8p
- 6BmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787151008; x=1787755808;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=LFoaQxqM9R1B9ARb/MoD0TEeUjL4HFJwz/pCOypZ4F8=;
- b=Rtp2b7EmLurP8CS88D0hyhtxesuw0pevKiCv9JwYjQJomIq4eVHPHmuiNIfFndyOz+
- acsZfL/uZk70ccq1StHrzpP9Z12dBxge652kuJZPBb3BCIy8NOx+Jm8QqJOAeEuFj+XF
- WPjA5cPHCHLX710L4lz37R7Azbm96fetwfgGyuA6h6a5fPPYT44RCb5CHf6cmUGbHjdd
- qB1qzgyFx1kr4dbE90gyzXiY1zu7L/yCQ6tivJHGqnNsdMzCeVWfJ/kK/rnAXJpJKJEx
- 1dTypZT8M0BlUamwqNxNGYdwdmIlBuI9pj6aIezOmrPsOVw9Umzrvx5cZnpcaVT/VCYK
- sIGQ==
-X-Gm-Message-State: AOJu0Yzm2pqZv/yUSj0g3pk2DUG/6rwBiKRxZN79Aoq2/+d9w8ChoMZY
- LaHL2YJAYeKgDxpegCyr7E6Gc1HG5QhLvf1d40oUgLi1tHIblfOI8CCRDUnizV4TlB3dcF4aty3
- VyYQIaNmDPjdzhIJiXPaH66jIWN/qAYilLf1kZMneniuJVeIKGVijBDjq
-X-Gm-Gg: AR+sD10yFYWP3jyzNYBKVAc/9GXLNyVqZjLE4o0Vm4+xVtnQxsRbKUVNt9lietg2OQm
- SG+43lnu7UFLotJKlCNpjrXW+8+6bVcdbpVPDuMjjY1sKNmXLs+Vq1zLLkRPIH2yRyig2HUJu0f
- HXRMHfte1A8TODi8mmenCbMjpBvMEDC+pt87zyse+caRBTo36o9daD9bAF49JMINSBDoI5nWzJF
- N50ckwluSVU/CiEQyXhQk9xJx+D6LAOCKD3KtSnH5mhYxDaATA/oXd7hmRsst00eEMavHfJofwk
- HG7EjiZn7rmKTgoLamtyF3VhbZ8+mdID/nemeH2ZZdT4AglEC/wPw5pPSDSLVFIySIZE
-X-Received: by 2002:a05:600c:3b2a:b0:499:90d0:4906 with SMTP id
- 5b1f17b1804b1-499aa0f27b8mr76683015e9.5.1787151008718; 
- Wed, 19 Aug 2026 07:50:08 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b2a:b0:499:90d0:4906 with SMTP id
- 5b1f17b1804b1-499aa0f27b8mr76682075e9.5.1787151008246; 
- Wed, 19 Aug 2026 07:50:08 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499a9dff4c1sm46404185e9.3.2026.08.19.07.50.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 07:50:07 -0700 (PDT)
-Date: Wed, 19 Aug 2026 10:49:54 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Jinpu Wang <jinpu.wang@cloud.ionos.com>
-Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>,
- Samuel Zhang <guoqing.zhang@amd.com>,
- Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>,
- Yanfei Xu <yanfei.xu@bytedance.com>
-Subject: Re: [PATCH 04/10] migration/rdma: Drop RDMALocalBlock.is_ram_block
-Message-ID: <aoXCkpNA0w8i-Hmj@x1.local>
-References: <20260817202424.2901438-1-peterx@redhat.com>
- <20260817202424.2901438-5-peterx@redhat.com>
- <CAMGffE=uzpHKCo+s36jmW3GVU3ELnprB2nSNOTrsBN742r9VsQ@mail.gmail.com>
+Received: from [192.168.1.59] (82-225-132-210.subs.proxad.net [82.225.132.210])
+ by sourceandstack.com (Postfix) with ESMTPSA id 1EF434803FA2;
+ Wed, 19 Aug 2026 14:50:11 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 sourceandstack.com 1EF434803FA2
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sourceandstack.com;
+ s=mail; t=1787151011;
+ bh=kPmN4hGywGp/AtJygT3oyAHPdLrFh7/77Gy9JFGhhs4=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=Z0YrDnItL5E6jAXDdlF0F1pWZhQmadcYf9DjZJmi6n8e8yEp4zIPpOtg6Gv0YCQpx
+ K7iMQgcDRw74s42UAnESwWfjiPPDnR4YuOknlUcXqQ74VDZbmjiU/cWGa8ebdDTyrv
+ lnSLU0oyERnVmh6Pi0Zn+77hb+WefaYQsn8KOSTk=
+Message-ID: <b9e15e18-a92c-4835-8d8b-b27722e14003@sourceandstack.com>
+Date: Wed, 19 Aug 2026 16:50:10 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAMGffE=uzpHKCo+s36jmW3GVU3ELnprB2nSNOTrsBN742r9VsQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v3 1/1] ui/dbus: add org.qemu.Display1.UIInfo interface
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: Chengyang Zhu <colazcyg@gmail.com>, qemu-devel@nongnu.org
+References: <20260818134543.654949-1-colazcyg@gmail.com>
+ <20260818134543.654949-2-colazcyg@gmail.com>
+ <CAJ+F1C+-EhCgeM2cK9QfZrN9c9OezuRO4E7NGmHiTFN=cHQLKA@mail.gmail.com>
+ <e32a2d8b-e701-492e-b09b-f83eeb44da1e@sourceandstack.com>
+ <CAJ+F1CL8kFYjgU-yU67kX2oX9PEapzz301RmW0=dPtnkffN-0Q@mail.gmail.com>
+Content-Language: en-US
+From: Christian Hergert <christian@sourceandstack.com>
+In-Reply-To: <CAJ+F1CL8kFYjgU-yU67kX2oX9PEapzz301RmW0=dPtnkffN-0Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 1EF434803FA2
+X-Spamd-Result: default: False [-0.10 / 15.00]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_COUNT_ZERO(0.00)[0]; MID_RHS_MATCH_FROM(0.00)[];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ ASN(0.00)[asn:12322, ipnet:82.225.128.0/19, country:FR];
+ TO_DN_SOME(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ LOCAL_OUTBOUND(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ FREEMAIL_CC(0.00)[gmail.com,nongnu.org];
+ RCPT_COUNT_THREE(0.00)[3]
+X-Rspamd-Action: no action
+X-Rspamd-Server: sourceandstack.com
+Received-SPF: pass client-ip=159.223.220.208;
+ envelope-from=christian@sourceandstack.com; helo=sourceandstack.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,17 +83,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 19, 2026 at 02:43:47PM +0200, Jinpu Wang wrote:
-> > @@ -585,8 +582,6 @@ static void rdma_add_block(RDMAContext *rdma, const char *block_name,
-> >      bitmap_clear(block->unregister_bitmap, 0, block->nb_chunks);
-> >      block->remote_keys = g_new0(uint32_t, block->nb_chunks);
-> >
-> > -    block->is_ram_block = local->init ? false : true;
-> this local->init is only used here, can be removed too.
 
-Yes, will do.
 
--- 
-Peter Xu
+On 8/19/26 4:43 PM, Marc-André Lureau wrote:
+> That was his v1. But then we would need to have a way to introspect
+> the known keys, and this is not really binding/tools friendly.
+
+I would think that getting the current values is essentially the answer 
+to what keys are supported? If you use a `mv` with a nullable you can 
+export all the known keys and their values.
+
+But ...
+
+> Maybe we can have a lock on the interface? that would be per
+> connection, but it could be enough?
+
+I'm okay with the idea of exporting properties for all the things. I'm 
+also okay with them being read/write. I just think they should apply 
+immediately if using that API.
+
+And if you want to set all of them "atomically", use either an extended 
+SetUIInfo variant (either more parameters or a vardict).
+
+Anyway, just my 2 cents.
+
+-- Christian
 
 
