@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0CE3C5DF85
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 09:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D8A0C5DF6D
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 09:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwcV8-0007qB-Ka; Wed, 19 Aug 2026 05:22:26 -0400
+	id 1wwcVA-0007tT-53; Wed, 19 Aug 2026 05:22:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wwcV6-0007oR-UL
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:22:24 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1wwcV4-0007kz-El
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:22:22 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wwcV5-0001xg-6C
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:22:24 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4957eefd361so5906825e9.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 02:22:22 -0700 (PDT)
+ id 1wwcV1-0001vg-F9
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:22:22 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-499ae1c6471so1280245e9.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 02:22:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787131342; x=1787736142; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787131338; x=1787736138; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=iaAT8nwz/f/r3I4xJQrnagwmY7s7BG9goh2VAnx+Bdo=;
- b=d4laKpEAO2BWNMlUJ3pdI6yKyFJkFIls3cypWF5LbbonWuYKLZtRMHeEYmjR4Asto9
- zsZP01cyh0yQNA5ofMkvovxe9ejlZ4A5yOjHd7ZaZUiDBy0lmG5tQJq11aPRkEk22jkF
- kSw7RFZNWi92xfzVQiDJgsJG20H1A77PTf7FKuj7+EOUeG77mg+xqCii0gZLXO9JzL9U
- qr84hT3papF/uscgLlbPZ2uAqDlU9PY81gPD7GaQBuI+tkAYa+Ko4oXkrySPb3TZvcZe
- aTw/repSOYaxczE83/rbRJ/wziZ7rvX6I27lajZWeKFLJC0pASwK3gHsNd4Sx+MktoUU
- lWew==
+ bh=WJwqaddlExuj8k565K3Q7CEWlxwfLdXIcKUzKJqIN0Y=;
+ b=VnpmqvK6Rl5A0y3rzKCNGPhImM/jykJROmPZaUmMxDKM+Tpc1aMSjsbkCyNR8FA19C
+ XvDaczi9mtbpM8CxJYFqBEyIll8wnvylvv3k0vBrQhdu4z4DPQddvKWpw6DdrxoHZ/px
+ 18G0JiwLePdbbFqjpWAURMtjrxQ/avwISvB9HPsYFqKMrM1kms7kxksQt4AszS8CtEAW
+ ollq9hqGNFvJ/v5LkLHtjs++ftGcMO/oG3mRqqNvCyHCGxtHV7un5aHwCmYLeZiS12UA
+ WvTJqoGoQz+zNMyv2bEFoGrQAhA7HncH9WbfMIJhjc8va+ySt8rRYmVgJeQjFuSUBbj1
+ LYxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787131342; x=1787736142;
+ d=1e100.net; s=20251104; t=1787131338; x=1787736138;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=iaAT8nwz/f/r3I4xJQrnagwmY7s7BG9goh2VAnx+Bdo=;
- b=BDqQw6ssLYNK+A5B57Pl7Mk069bbp9+GokKk4/64DruNW1b02eSiIbFz9T+9h3X62O
- fhcFBGxfnnu/fBCAXMNWSrD7RPWhRpycehmzagHmuUy9z7DxEksqxUpErD8N9yLNBjHX
- 2wb7Qs1WY9CWc7v9xK71v+Lx22JMHGl3aJ8yVop/l12ammCMpacVJHK+QPkywMZPPc+T
- whEBXvxdERcscylytoPVYBSZiVtNWP1DtIpbvrveVcVi9+SLcpkn3pBGFiTh3L3wL6Gx
- G0eGQRlY/HkpagLXsTHFHQyKTcTGWIFeLNPMEHgZ5QxoWFmAZB7Duh0IIAVpnHtzAhXE
- 7pjg==
-X-Gm-Message-State: AOJu0YyA6xXF4J1ewxoOLbVXrAD/eQPsVzlLoPy3Dli3qSpHLHWVjNm6
- 5KMGCXn6VE227q/dHddtKQGA+9RYHZq0BP6C8CG58e8I8PScVihaegFcxOyRoQr2VqQ=
-X-Gm-Gg: AR+sD10Bz14VfOUpnTmPXPUCF+x/Mm+odTUy1zJzZ+ymvgcdOTSIxFarC1LSMptXDUS
- mONfZPtuh1O/6m/mzJEdUlX2PmcvalGSFnJQ+uDsIKqoRhUBkgaRNwcONvXN4QxgdobGQYG05Um
- XLEDbih1poyap58l/yEQEhG397+/os5EZaWBj9Wc5TF9MMuSnXR6p1HESqsNNfdia/t2t/iWEBR
- Rd37aKnbCgnVZ2p3amZv7K2vak9rWTO5NLHeJQnTzQydIv7XZO9VIgyHgLVjygjTfhUjPTbRBJs
- Pc+lACdhi25GGNz8cJwfpPoLP2x147FIaiFiNPK6Srly7pfiQ68+4KAzJmEUDy9qyFxfyuA0Vhf
- 4jHo9ohsyXCs+C/eo0VAtvr9dixJIqrVyC+q0r6m4gHngiy3U3xcGHBYkl9V4glsT4672Jj5Cze
- easZDWAKgwrV93U0NHEPbgOXS/I79K1zhJNidYtyuHzCGi3EwA+InxVNU0dv8+
-X-Received: by 2002:a05:600c:3484:b0:499:7a5e:4c3f with SMTP id
- 5b1f17b1804b1-499aa14e6abmr69404585e9.1.1787131341756; 
- Wed, 19 Aug 2026 02:22:21 -0700 (PDT)
+ bh=WJwqaddlExuj8k565K3Q7CEWlxwfLdXIcKUzKJqIN0Y=;
+ b=oXLRtkgHOUViNmEhk3uHEJQ9l4MgUO8oQCRXX5S4IyZM3EhEuL57IPxcFHzdd+Eg1q
+ tmpgfhSIf9sqXnYscMSYtcY6yLzyKp8NTyYO9fd92pPPI0VFa4xy4Sdi5LyMsKEykMdf
+ jhvy8GxoQCX26+rWTDCTHaHzHCOyGaU35KB7S4rhzj7i/xWSu3wJoCiA/gbvyv9dZNH2
+ IKramdYIgt8pGDaj2V3mehdthdL8dM+YtWTb90oRVplfnXJOrmzkdvhuqHjRjK5emJcV
+ t55IfPXR8ZJnzlDizl02p8954u40+6EjYXy7ZLDKUkjyFb+6LDQsDXmUOViC7xTvvDcG
+ lbSA==
+X-Gm-Message-State: AOJu0YyNkepeNaWd6dYIdL+MksYAJFKbtcIO0MuFvVm7TGl0E6yhQpw8
+ JTAA7DQ+Y13DDfmKEAFcAmXO0nd682OAKjgo55iPm81qavIe5qdKzFTW5SFYKAJwmnA=
+X-Gm-Gg: AR+sD12Lr5nWgIVPKK+oZYp/X/6dT58xFaGeZknBQHgYChy5Awfs9aEN1BUHLRYfFYt
+ rgSwBnnC+4cRWIj0V4icdfUL1Kxw7pLPwedHhHmLLKaOIIJ2DuelUKKLdeVXtJ+r8EiLR90vA8Z
+ 52SIkutSlEJFV+eUV63tJ0w5L7oIH4tzXTwNyNSy+p8r/nlt7SMB9gR1fBTHY1o808bLzifm6in
+ MqoQA5AfpRtndbtPVMsKU6KjwrUD2uWk7t0RQ43RtHTX1HGfDB8AVqi3aY0rcDJLiopNwLilRBE
+ M0uR2qPe7VMc/SdfhTnNPoOlnWk6iUYFZRzoNULwgtnEH6gfY+jXrF8illsYWB+6AFok5V3tVai
+ jeaeQr6jdRuLrEp5mHgTbjOxFwGawta+a2j/Cgz07oXMljRqD8O59n7xeku5sUSw4q2ZfgFcDdT
+ obDniA4fvLMXqCXkVh6VSx9lJ+MC9r1ACdAt0E3p+cdvd08F5dyAFU8FiaVCSrtR5mgV36LzM=
+X-Received: by 2002:a05:600c:3e0f:b0:499:a79a:694d with SMTP id
+ 5b1f17b1804b1-499aa155e7dmr61077895e9.4.1787131337958; 
+ Wed, 19 Aug 2026 02:22:17 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499aa0fd7a9sm61725355e9.2.2026.08.19.02.22.16
+ 5b1f17b1804b1-499aa1111b2sm63713805e9.5.2026.08.19.02.22.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 02:22:20 -0700 (PDT)
+ Wed, 19 Aug 2026 02:22:15 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6D1C45F9CB;
+ by draig.lan (Postfix) with ESMTP id 688D55F94A;
  Wed, 19 Aug 2026 10:22:14 +0100 (BST)
 From: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Date: Wed, 19 Aug 2026 10:22:06 +0100
-Subject: [PATCH 6/6] docs: deprecate virtio-crypto
+Date: Wed, 19 Aug 2026 10:22:04 +0100
+Subject: [PATCH 4/6] char-fe: implement qemu_chr_fe_backend_name
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260819-fixes-for-11-2-v1-6-b7981c2cc371@linaro.org>
+Message-Id: <20260819-fixes-for-11-2-v1-4-b7981c2cc371@linaro.org>
 References: <20260819-fixes-for-11-2-v1-0-b7981c2cc371@linaro.org>
 In-Reply-To: <20260819-fixes-for-11-2-v1-0-b7981c2cc371@linaro.org>
 To: qemu-devel@nongnu.org
@@ -90,27 +90,27 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  qemu-block@nongnu.org, devel@lists.libvirt.org, 
  =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1496;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4652;
  i=alex.bennee@linaro.org; h=from:subject:message-id;
- bh=LnZGeVc7wYy+BtyAMr/N70wRi+tYZ8yVbPE+MJ6dnI4=;
- b=owEBbQGS/pANAwAKAfvQ2wlanipEAcsmYgBqhXXGyf98LQqrkd9pc7pVXUICntv+8Iywp3UUS
- g0TmqcLkg2JATMEAAEKAB0WIQRmha6Z51FnvK/I3zX70NsJWp4qRAUCaoV1xgAKCRD70NsJWp4q
- RHiEB/0W+vnulxUs8yFacc39tyLzM9s/PsBBm6Kjr9XpgoNK4xDG28hOcguVfYZBwtsIBdamK1o
- VaLY1YOvLEKIIGjE2P6aAh9mYnLroFmOgbAP1ZbXkf6deFV5dFO96PoTX2nFbvtU4NmXsvqq7TQ
- FslhgdqNoIwsG8OSMCrbZIxA2ZucoQvGiLd/8UKA1XHEzw/kAoSElZHF+hQwficY1V/16QW0ZM4
- zxrDyOvNRsADb4t3pJEQpUb0j5nrVYDHp46idFVvmCdkm2XC41Mk3WM97wWPv8MH313qSS09nQD
- MhiGT5YgfeaifTw3miIu1k5D/VJaY3ujGgvBPKC5LeYpx3Hc
+ bh=16o9aOALfN4xkFpmwmkWkdn+kTLD6/M+CAi326lKzSg=;
+ b=owEBbQGS/pANAwAKAfvQ2wlanipEAcsmYgBqhXXGvUdFInmClYy9aj06x8dzM9oZUdQQYHyOe
+ pWOViXcoSmJATMEAAEKAB0WIQRmha6Z51FnvK/I3zX70NsJWp4qRAUCaoV1xgAKCRD70NsJWp4q
+ RBkIB/9d0x7H9ilApVtTUBg2lCgecTkU/tdYtW5ma4ks4mrdMKsQetAmaO2VdVwT3Iull02ZaHJ
+ rutM/W0cVyTZZioT43i33OM1ts1VlzFR526ZlqnPx4To5hHL5hVvrAm8YgDLbtS7g3qD9n94GGd
+ YU6PVJD1iVA2XvxAPxXnkpDf28ezPhBq8ciHx1nuCJvPGdcwOC3LhU3mleEGCgHGmrgaNHqEpdm
+ HfFEa2AUr2mpL+Pousp7qn8Uuvr02dN8lWd7IGtR1s6k7v8T8Y8w9c5HZ8itxgtYc79hoxzSysX
+ Qj6VoLc5tjeqy2W0OB9zOZPqyy0//l2e+oxAmW9FxoIxq1eZ
 X-Developer-Key: i=alex.bennee@linaro.org; a=openpgp;
  fpr=6685AE99E75167BCAFC8DF35FBD0DB095A9E2A44
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,44 +126,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have outstanding guest exploitable bugs in the code which is fairly
-complex and needs some serious love to clean it up. As off-CPU
-cryptography acceleration seems to be waning in popularity lets just
-deprecate the sub-system with a view to removing it in a couple of
-cycles.
+A number of chardev users where calling qemu_chr_fe_get_driver() which
+is discouraged as it blocks backend hotswap. As the pattern is common
+and need for the string is transitory add a helper and keep
+qemu_chr_fe_get_driver() for those that really need the funkiness of
+poking around the backend setup.
 
-Link: https://gitlab.com/qemu-project/qemu/-/work_items/3625
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260810153503.2652324-1-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: Gonglei <arei.gonglei@huawei.com>
----
- docs/about/deprecated.rst | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 0c656a968fc..3c22981fc8a 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -276,6 +276,20 @@ future release. Where no 'dh-params.pem' file is provided, the DH
- parameters will be automatically negotiated in accordance with
- RFC7919.
+---
+v2
+  - checkpatch fixes
+  - r-b
+---
+ include/chardev/char-fe.h       | 13 ++++++++++++-
+ backends/cryptodev-vhost-user.c |  8 +-------
+ backends/rng-egd.c              |  8 +-------
+ backends/vhost-user.c           |  8 +-------
+ hw/char/imx_serial.c            |  4 ++--
+ 5 files changed, 17 insertions(+), 24 deletions(-)
+
+diff --git a/include/chardev/char-fe.h b/include/chardev/char-fe.h
+index 5f8a6df17dc..a82894e1d51 100644
+--- a/include/chardev/char-fe.h
++++ b/include/chardev/char-fe.h
+@@ -52,7 +52,8 @@ void qemu_chr_fe_deinit(CharFrontend *c, bool del);
+  * associated Chardev.
+  * Note: avoid this function as the driver should never be accessed directly,
+  *       especially by the frontends that support chardevice hotswap.
+- *       Consider qemu_chr_fe_backend_connected() to check for driver existence
++ *       Consider qemu_chr_fe_backend_connected() to check for driver
++ *       existence or qemu_chr_fe_backend_name() if you need the name.
+  */
+ Chardev *qemu_chr_fe_get_driver(CharFrontend *c);
  
-+Devices
-+-------
-+
-+``virtio-crypto`` (since 11.2)
-+''''''''''''''''''''''''''''''
-+
-+The ``virtio-crypto`` device emulation is quite complex code with a
-+number of known flaws. It has never been migratable so is unlikely to
-+be used in any serious virtualization setting. With most modern
-+systems supporting on-CPU cryptography acceleration via their
-+ISAs sets the need for off-CPU acceleration is also reduced. Add to
-+that the kernel has recently removed the ability to use off-CPU
-+acceleration suggests the time for this sort of off-load has passed.
-+
- Device options
- --------------
+@@ -70,6 +71,16 @@ bool qemu_chr_fe_backend_connected(CharFrontend *c);
+  */
+ bool qemu_chr_fe_backend_open(CharFrontend *c);
  
++/**
++ * qemu_chr_fe_backend_name:
++ *
++ * Returns: caller freeable string or NULL
++ */
++static inline char *qemu_chr_fe_backend_name(CharFrontend *c)
++{
++    return (c->chr && c->chr->label) ? g_strdup(c->chr->label) : NULL;
++}
++
+ /**
+  * qemu_chr_fe_set_handlers_full:
+  * @c: a CharFrontend
+diff --git a/backends/cryptodev-vhost-user.c b/backends/cryptodev-vhost-user.c
+index cc478d9902d..3334e280a27 100644
+--- a/backends/cryptodev-vhost-user.c
++++ b/backends/cryptodev-vhost-user.c
+@@ -373,13 +373,7 @@ cryptodev_vhost_user_get_chardev(Object *obj, Error **errp)
+ {
+     CryptoDevBackendVhostUser *s =
+                       CRYPTODEV_BACKEND_VHOST_USER(obj);
+-    Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
+-
+-    if (chr && chr->label) {
+-        return g_strdup(chr->label);
+-    }
+-
+-    return NULL;
++    return qemu_chr_fe_backend_name(&s->chr);
+ }
+ 
+ static void cryptodev_vhost_user_finalize(Object *obj)
+diff --git a/backends/rng-egd.c b/backends/rng-egd.c
+index 1d92bd71cf7..c2207f40c5c 100644
+--- a/backends/rng-egd.c
++++ b/backends/rng-egd.c
+@@ -126,13 +126,7 @@ static void rng_egd_set_chardev(Object *obj, const char *value, Error **errp)
+ static char *rng_egd_get_chardev(Object *obj, Error **errp)
+ {
+     RngEgd *s = RNG_EGD(obj);
+-    Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
+-
+-    if (chr && chr->label) {
+-        return g_strdup(chr->label);
+-    }
+-
+-    return NULL;
++    return qemu_chr_fe_backend_name(&s->chr);
+ }
+ 
+ static void rng_egd_finalize(Object *obj)
+diff --git a/backends/vhost-user.c b/backends/vhost-user.c
+index 380d8250233..46dadb74800 100644
+--- a/backends/vhost-user.c
++++ b/backends/vhost-user.c
+@@ -152,13 +152,7 @@ static void set_chardev(Object *obj, const char *value, Error **errp)
+ static char *get_chardev(Object *obj, Error **errp)
+ {
+     VhostUserBackend *b = VHOST_USER_BACKEND(obj);
+-    Chardev *chr = qemu_chr_fe_get_driver(&b->chr);
+-
+-    if (chr && chr->label) {
+-        return g_strdup(chr->label);
+-    }
+-
+-    return NULL;
++    return qemu_chr_fe_backend_name(&b->chr);
+ }
+ 
+ static void vhost_user_backend_class_init(ObjectClass *oc, const void *data)
+diff --git a/hw/char/imx_serial.c b/hw/char/imx_serial.c
+index fb41ee2ac50..8ac4efbb5e9 100644
+--- a/hw/char/imx_serial.c
++++ b/hw/char/imx_serial.c
+@@ -278,10 +278,10 @@ static void imx_serial_write(void *opaque, hwaddr offset,
+                              uint64_t value, unsigned size)
+ {
+     IMXSerialState *s = (IMXSerialState *)opaque;
+-    Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
++    g_autofree char *label = qemu_chr_fe_backend_name(&s->chr);
+     unsigned char ch;
+ 
+-    trace_imx_serial_write(chr ? chr->label : "NODEV", offset, value);
++    trace_imx_serial_write(label ? label : "NODEV", offset, value);
+ 
+     switch (offset >> 2) {
+     case 0x10: /* UTXD */
 
 -- 
 2.47.3
