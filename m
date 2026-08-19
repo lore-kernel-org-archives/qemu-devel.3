@@ -4,94 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23E4DC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 15:20:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4573EC5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 15:21:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwi5O-0003ly-5N; Wed, 19 Aug 2026 11:20:14 -0400
+	id 1wwi6R-0004NF-H3; Wed, 19 Aug 2026 11:21:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwi5M-0003lm-BN
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 11:20:12 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwi5J-0004hf-RJ
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 11:20:12 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-84e507b079dso728325b3a.0
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 08:20:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwi6Q-0004Mz-1x
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 11:21:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwi6O-0004z5-59
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 11:21:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787152875;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Y67dJL0IjWzcIcrOB+919ZUBBrhKLAIGZ1eLYD4bUHg=;
+ b=cCmXDDVQn/HhjKHnm+UN32J8kVkoNhgK9jEM1gbuZQ7KJV7XSWYENxzximmgUaZcQPTVBw
+ Pmvv4S3CHHlwW+ZbJ9jm9Mob4IVt1AjcSwcpEIjIk6D7XP//YVqo4L8QhwyYPRAdGC5F15
+ 7aYPu3KbWwQVNj5APNuqKKNPCU8Lk/k=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-312-FJJqbu01ONOtlxx_yQhY4w-1; Wed, 19 Aug 2026 11:21:08 -0400
+X-MC-Unique: FJJqbu01ONOtlxx_yQhY4w-1
+X-Mimecast-MFC-AGG-ID: FJJqbu01ONOtlxx_yQhY4w_1787152867
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-5174a236220so14539831cf.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 08:21:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787152808; x=1787757608; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=JZnB3Dxuypq1DfYlzbRvpa+QT/STF1iSVE4GHNfBWw8=;
- b=IxGIQvRMEjV5zHLPwMfFrf0KLPHI9cQArdewhCqs1NHMTfONHAVE9tRwomnljqtMt2
- OsHhMtGViYTm/bmV43T8ga8grIbTpbdzzSAfJigxwLgdtTL4T+tlqUga067ONGu8jyF+
- xcwdB5/eQiXc4ljLDlZy9L9t0HEOuVtmarnT3v+pEbKHklQz72BGJwPerGo2hC1qSdPj
- CBQmenQy6t3HV3pKvVFUh36wrlQ3smckx7PQRs+0Ifyox5msYbdDw+UmOPreKVGRaPSR
- PQda1IdvcBxyahi7/HC+cqbvxot7acTI/hmWRDo7fYMpCTFzBhEF0tbQ0MIyldX98Tpf
- Rjdw==
+ d=redhat.com; s=google; t=1787152867; x=1787757667; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Y67dJL0IjWzcIcrOB+919ZUBBrhKLAIGZ1eLYD4bUHg=;
+ b=e+c42e9ch4nuD2Hn+bJOrttYrGxyKMcD37oxphrkY94HrET8Sjae6gdQt/9EsKD0Cn
+ WPYHc3/r5ZN9QRLIWhktZoYCwcbCMZbuymIaYcTn1unH66VAfViN4xBaDpv4HquBI4nF
+ +YPVctIGhHoPyPCUeI4ajUTz3DSqbPwiodu+uHjMV7THGBH8C6pnBnzR3Q/tvxiXKGWu
+ uPcdUhsBnkj0KubEsBQOlr8YXxWhkR82RYBDIULK5fWRQOsAW5w3hJcHythS1cDuD3Gb
+ f6C11iAt8d4csAOUwzASkxKXxYM+nsAP+C45u5EA8jVhSZ/U+tMTSW3KUL1GMKa1TcvB
+ QYwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787152808; x=1787757608;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20251104; t=1787152867; x=1787757667;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=JZnB3Dxuypq1DfYlzbRvpa+QT/STF1iSVE4GHNfBWw8=;
- b=fNOlgItVnQ2DF1m9gLAMzNPeo/Jls3RzF/xSV1HBn1MI36MkLZn9bbud+BOWhirsqc
- wVkCV3BL9b+7aNymqtV9ml5tECpaLFDWjlPdJXK8ipkDr2rsxeAqGY/6QoMglA3MyLbl
- Ig2QpCTMykaQJE4LBmYb/flKNiz3PVns1twWYz93D9YK4GzTERm69QvEigajVqLcZHW2
- bW/r5u4dJanqs/8HT5Mnz1f54rtS5ybsIwuwY2Bo2u113PaDsZmakE+NIzY/u7Yc3D43
- 23C1csD/CMfaygljnVQzwcrM/5qizTPjiCjxqSOWLxUkY9zW2y481iH/QqZ+njk6bocZ
- oSsw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpO0JywwW+eR95PNQ6VFPEfVvqkVwNhKuJykXZfI+wT2BteMXzrG/JRIjk+hurU74MfGBYhSDp+51VK@nongnu.org
-X-Gm-Message-State: AOJu0YzTQT5B7i0/SXeL552hLb+/gRoLq2ztqIdGp5k+ux6i8+TepDMn
- EpqtbjEEN+JKa1iuzBt+pkJ2iD4AiGaZN4/xmWdBlHK1Igl/yPv//4Fx7uDdJQy0hdg=
-X-Gm-Gg: AR+sD10IdRmbLkuOTXK4ksp1WolCZM1DxxEZ/UMaIXNvv38ZCdOjUDQ3naWhaE/0mxv
- z0PIMlemutMwTL3gVREXxjRlwQKiCb+a0QJG9XKtYHTOARUXtE9mcz+xE9WaK7iqXhMxYL61DWy
- IOQJs+bY05hs3ZufVAIjxhXIik2gaG9uji/SRng/NbEvKXYJ3Jg94AiARPXVEQ79sc30rIOj4kM
- 3OZGaFvQ6umCZkzhnd4UtU/kUfRwCxasZYKP9tnzZO3AJMu1Q1K8VPdjPu3PXku+ols8U9nza8g
- PafiTcO57aPwBmKOH2a7dVBLUrYuaRzZFrdbCKpzGdwupkDFfuo7+p9N+QL8ep8jbs7b43stlWc
- uRH9IjsTNrClDSM2ikvLuSp8coS6kcPSbnVGrMQMWbu1+6dIXynrrZ4FKJfGmtjQ4CeVnlUiq44
- zeFUaWx5J3Ct+Uq/O6yOB1FifCooNgq3rc10dT6UlHLTQoblQBMxvBnLsWVIuahxEZuZA+n1mrR
- BQZJqqr
-X-Received: by 2002:a05:6a00:3407:b0:845:e8b5:8c49 with SMTP id
- d2e1a72fcca58-851d3942af9mr8946037b3a.10.1787152808025; 
- Wed, 19 Aug 2026 08:20:08 -0700 (PDT)
-Received: from [192.168.122.51] ([173.164.107.233])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851d366dc9fsm802985b3a.51.2026.08.19.08.20.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Aug 2026 08:20:07 -0700 (PDT)
-Message-ID: <9372f8a2-c54e-4e54-83c6-e0454a308c33@linaro.org>
-Date: Wed, 19 Aug 2026 08:20:05 -0700
+ bh=Y67dJL0IjWzcIcrOB+919ZUBBrhKLAIGZ1eLYD4bUHg=;
+ b=jf7dKkDpZMXwCctTCYqbEoK9DBEsyKOdSpBdbCmcfQFHJBoHz1EA53zzG/E6R0ilEz
+ KM9NLuotG+x/+RfRV/L6l45q6oiTFWd87xuhS4i7RqxAsV9vU+RyPFljsJuZPMANdZPY
+ gHS56ieauG2KrpGHQ6Jjr/leT6tGbYvYY3Py99T2FPiMvGd0uaXXa/V8XJGEzNK+TKkP
+ dWpzlK6g4zTN2tnlX5XeKNmFUQifDBCfYRAwhOrFiJIUuJIyVuEUdSmzUSoyBGu1vZSN
+ TMBLoCvG1IIMn2iYgK3XcGYcq83iZUgV0vaThv7rR0GYqIhiEhp9iOYqApKNmbHv8+45
+ fYDA==
+X-Gm-Message-State: AOJu0Yz5OWjyhLK3+z56SnTn9UHZa/9WRz3RiwQpsxOr90BWQyLAMomd
+ 7IpT0JBGvg8LMz+JbY3rjI1M/patBuPPlN2iSqpZ67DzzFSXnKiNVHk38p4APAEJtlFOUAytz2G
+ OKzThXEu7dxGxSUeIUO7OTZ0bvhjG+bR1OiYn6nHOkeUGCvUjQxbfb4MY
+X-Gm-Gg: AR+sD12Kztucg7BJbxg0mIRpvEfSyInzEfA36gvbF/5Gqg+uyMsWBfw4SSG5AqiJqDx
+ mG5xe8teDmdbV8r7Zs4xtxAAlTv+wbkHBxW7Tu8csvP6wsDa8ydTygGyJbYuhIGH/8Gq8FHbSBZ
+ crLxLkpsBy53vHTtL8oGPi1ZwBzGFTpKrkHf6zagZNT9OsxWZhNoWkqZlKO7FOdOtp8DusJeXR7
+ Rhhcw46lYkYXwldiR/cR6ME3mugPtASSVLNbCXgc8aOB2Nr9FmsHyUIcm4ITT44qea6Od1/u/VK
+ EFsTKIDr1iH6/Zk+UBBVXgXfRIDL2jR78QZ49oZOA0Pl7BGmhVJWRfrSqdrDH/AOysST
+X-Received: by 2002:a05:622a:1b8d:b0:51c:1c2c:a8bf with SMTP id
+ d75a77b69052e-52dd5f3920cmr50594701cf.43.1787152867080; 
+ Wed, 19 Aug 2026 08:21:07 -0700 (PDT)
+X-Received: by 2002:a05:622a:1b8d:b0:51c:1c2c:a8bf with SMTP id
+ d75a77b69052e-52dd5f3920cmr50582551cf.43.1787152860399; 
+ Wed, 19 Aug 2026 08:21:00 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-90c5f2911a5sm16365556d6.30.2026.08.19.08.20.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Aug 2026 08:20:58 -0700 (PDT)
+Date: Wed, 19 Aug 2026 11:20:54 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Jinpu Wang <jinpu.wang@cloud.ionos.com>
+Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>,
+ Samuel Zhang <guoqing.zhang@amd.com>,
+ Fabiano Rosas <farosas@suse.de>, Juraj Marcin <jmarcin@redhat.com>,
+ Yanfei Xu <yanfei.xu@bytedance.com>
+Subject: Re: [PATCH 08/10] migration/rdma: Sanity check
+ RDMA_CONTROL_REGISTER_REQUEST chunks
+Message-ID: <aoXJ1k8N_bzfXs5u@x1.local>
+References: <20260817202424.2901438-1-peterx@redhat.com>
+ <20260817202424.2901438-9-peterx@redhat.com>
+ <CAMGffEkzdOna79f561r6bMF3wgZw4h5LwHXhC3KBx_FqLNz+wQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 8/8] target/arm: Pull Neon dregs checks out into a
- function
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260817123838.1578060-1-peter.maydell@linaro.org>
- <20260817123838.1578060-9-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260817123838.1578060-9-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMGffEkzdOna79f561r6bMF3wgZw4h5LwHXhC3KBx_FqLNz+wQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,20 +122,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/17/26 05:38, Peter Maydell wrote:
-> Abstract out the register check for Neon insns into a new function,
-> similarly to what we have for VFP.  We don't have any extra checks
-> that we need to add here, but having a neon_dregs_ok() is cleaner and
-> means the Neon decode isn't oddly different to the VFP decode.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   target/arm/tcg/translate-neon.c | 118 ++++++++++++++------------------
->   target/arm/tcg/translate.c      |   1 +
->   target/arm/tcg/translate.h      |   1 +
->   3 files changed, 53 insertions(+), 67 deletions(-)
+On Wed, Aug 19, 2026 at 03:00:51PM +0200, Jinpu Wang wrote:
+> On Mon, Aug 17, 2026 at 10:24 PM Peter Xu <peterx@redhat.com> wrote:
+> >
+> > The value received on wire for head.chunks when registering new RDMA
+> > regions is not correctly checked.  Logically the value can still make
+> > ram_chunk_start() (of ram_chunk_end()) to overflow, having a result pointer
+> > very small, smaller than RDMALocalBlock.local_host_addr.
+> >
+> > Add the sanity check.
+> >
+> > Reported-by: Tristan (@TristanInSec)
+> > Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4011
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  migration/rdma.c | 7 +++++++
+> >  1 file changed, 7 insertions(+)
+> >
+> > diff --git a/migration/rdma.c b/migration/rdma.c
+> > index 5ce8b06818..bbbc40ea3b 100644
+> > --- a/migration/rdma.c
+> > +++ b/migration/rdma.c
+> > @@ -3401,6 +3401,13 @@ int rdma_registration_handle(QEMUFile *f)
+> >                  chunk = ram_chunk_index(block->local_host_addr,
+> >                                          (uint8_t *) host_addr);
+> >                  chunk_start = ram_chunk_start(block, chunk);
+> > +                if (chunk + reg->chunks > block->nb_chunks) {
+> > +                    error_report("%s: head.chunks contains illegal value"
+> > +                                 " (chunk=%"PRIu64", chunks=%"PRIu64", "
+> > +                                 "nb_chunks=%d)", __func__, chunk,
+> > +                                 reg->chunks, block->nb_chunks);
+> > +                    goto err;
+> > +                }
+> safer to do this instead, as reg->chunks is from wire:
+> uint64_t chunk_sum;
+> if (uadd64_overflow(chunk, reg->chunks, &chunk_sum) ||
+>     chunk_sum > block->nb_chunks) {
+>     error_report(...);
+>     goto err;
+> }
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+I thought I covered that, I even mentioned the overflow in the commit log,
+but I didn't really do anything..
 
-r~
+When looking at this again, I found reg->chunks is defined in a weird way,
+instead of "number of chunks", it's off-by-one...
+
+qemu_rdma_write_one():
+    chunks = length / chunk_size;
+    if (chunks && ((length % chunk_size) == 0)) {
+        chunks--;
+    }
+
+So I think I should check it with "chunk_sum >= block->nb_chunks" to be
+accurate.  Diff attached to be squashed when repost, please help double
+check:
+
+diff --git a/migration/rdma.c b/migration/rdma.c
+index 6384306ead..e976739fad 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -3393,7 +3393,7 @@ int rdma_registration_handle(QEMUFile *f)
+             }
+
+             for (int count = 0; count < head.repeat; count++) {
+-                uint64_t chunk;
++                uint64_t chunk, chunk_sum;
+                 uint8_t *chunk_start, *chunk_end;
+
+                 reg = &registers[count];
+@@ -3424,7 +3424,8 @@ int rdma_registration_handle(QEMUFile *f)
+                 chunk = ram_chunk_index(block->local_host_addr,
+                                         (uint8_t *) host_addr);
+                 chunk_start = ram_chunk_start(block, chunk);
+-                if (chunk + reg->chunks > block->nb_chunks) {
++                if (uadd64_overflow(chunk, reg->chunks, &chunk_sum) ||
++                    chunk_sum >= block->nb_chunks) {
+                     error_report("%s: head.chunks contains illegal value"
+                                  " (chunk=%"PRIu64", chunks=%"PRIu64", "
+                                  "nb_chunks=%d)", __func__, chunk,
+
+Thanks for the careful review,
+
+-- 
+Peter Xu
+
 
