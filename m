@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD7FDC5DF6D
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 09:23:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0398C5DF6D
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 09:23:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwcV7-0007pR-DQ; Wed, 19 Aug 2026 05:22:25 -0400
+	id 1wwcV6-0007nt-QE; Wed, 19 Aug 2026 05:22:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wwcV5-0007mx-Fr
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:22:23 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1wwcV2-0007jN-Tp
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:22:20 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wwcV2-0001vx-C4
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:22:23 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4955aa106b1so8126025e9.0
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 02:22:19 -0700 (PDT)
+ id 1wwcV0-0001vQ-LM
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:22:20 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-47de008b020so414691f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 02:22:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787131339; x=1787736139; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787131337; x=1787736137; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=pc/GOaaPlMM8Rx6IwwNSVab3AJ0ESXz+I20bcOy9tBo=;
- b=BnRxpsQEZGtN2beXW2mAk4CD+m/ofZbsbMb4kf0tYhZ4RMdsusc0Rn84+XgDyOLQ1I
- Y9cY9nK8Rlkf9KtkpD+y+J+og0ioxQbw50xrcjTohg+h6VX3/NqW3r/vDgj3yg7jXhUP
- W7TJPmq6arfUz71//R81A0xTanVMYCfCtY6Cm6ntefrT7hl0bEu3vNtxwdtaUt1sg/ei
- kcR/2VdflItt/3GFNx3ZAtVVEMAHpJt78+yEy7Ej3Bgy6F0ELtL0ZRHqF8pef8eAzFgb
- tDdUWZca8uPJyM1EdYD8u6JoANYSHbcfR8wnYXjAKNEUl4jZjFT44L+xDBnL7YgUXjT7
- 9oAg==
+ bh=hI/4kRcuHe18/qYKP2hOGxNnKh8pw1N2QjNp4C1E0DY=;
+ b=FQSgU+cDLAKAcGNPMHLGaFESsgjpW4+TcamG5+OvErnb3xZEeaTSZWQcMiktv8+X1L
+ aiI5fgoyrSzUUytxnBF1Xjfrv8o54wxov69/L0tbl8YfDsmg/63Cn4wwHF0Ndfiq5dza
+ bPultDunMMqGoxYHH6mNzDGKcPIRpRV7lOiWyIjHHO/EGOh8jFnlI7L7h/0gBvwhi9R3
+ 1YVq7Nqj7HZhFxysQtly0EPlwi0gXWnmdlFxcxqLFhVGI4vDQQtorMg+RbmKbHjSEOMo
+ bs8flewC0jHb7/Nr8okrTA2UrydwLJw3NWgX96RubAHx7LSATMFVaKFn05E7tR+H8ipi
+ 9cyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787131339; x=1787736139;
+ d=1e100.net; s=20251104; t=1787131337; x=1787736137;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=pc/GOaaPlMM8Rx6IwwNSVab3AJ0ESXz+I20bcOy9tBo=;
- b=sco9rqYW0LXQO/d11Awn4438wQzL2QTCGER6nKEIg+gBQNdKmKSBKmqnV6wri6RHNK
- iKTOEsTA5He82LEYWz0JiOaxv+WJAIEXhDfD/SfRPfp1aLY0tDJw8jtuQtq+vvkavDfc
- PepSvvGlx+gW7jA2KVPVpHe7eRnEqsXeQGGYlDF6upP3DK7m/U4DQbzUbH8yZixVmoe0
- h73zEB6Hp7iNie8rLfLSmkEXZ3jLMgjzLjN8UClJTW2Iwv7RQyHolCh2b/HfMv2YuOU8
- rpZ5TbPxhCWKfA99MQKxzZiAYXOzchtneYLVwCGpoJLfcpP9o43mS0eBSRcpkRRLbsvU
- bxMw==
-X-Gm-Message-State: AOJu0YwvGYUCzTsTaPVCTbj7GF6MTwYtVYprt4NBsbBPXq9TFy7JDEWH
- We/JvnX4nmkN8Uz+q/sHc8P/Nghu3g8MJuAwUphpdkwCrEvdLWOXr35PjyR8iEFoA2g=
-X-Gm-Gg: AR+sD11MVQ3f2uFB3JSRmy4X7GFjBaXrsJbNLkvCO2m568pYjg4sinOtEPcZoh2H0eP
- dbu6Icyxaz2Vl2G8jlnWEktkyVbOnocExQtI5WoXgD39O/qoRjfVhk2qJDuGG2imAvP9raTbFTH
- WtpN4e80HAwM9cLMw+U6EZysfCgAhl2qTs/x7/8IbizDA6597UDkXCJtKB+k3VQYJdZALz1mwZ1
- +VdKgQlZIhTmhszPyfON874/D9KnvvIlg1REK5E38UjRq/Itf3EpebiuzPKE9sTUW9utMpvRmRk
- kE19jXp3BRiti2J0zqGKm1YRe5VALMemevn6RH8pkm+EAERQmmXMH9c1hbDgKWMBGYOfP1HrCHR
- rRk8LWfuhhTop7Olx09CEuFxJu1wIzHIQ0oYI9OO+Q0hLpv7AU/7wj3SUW91SQWxAjihPfc945N
- 5FwI8VPbz7PZOOXp4QrKaydbf7EQnnv6+mQUK73YkBkcd3iD6S6SD2XhO21M62
-X-Received: by 2002:a05:600d:8446:10b0:499:9eb8:a1d7 with SMTP id
- 5b1f17b1804b1-499aa1d0a9fmr40563525e9.9.1787131338788; 
- Wed, 19 Aug 2026 02:22:18 -0700 (PDT)
+ bh=hI/4kRcuHe18/qYKP2hOGxNnKh8pw1N2QjNp4C1E0DY=;
+ b=IAsktH2vHGEHE1IWGDCi4S4kOtInhlV4aXaeKNiOkNNGwDeKwHBhVBbANwB1VKMVwK
+ XqKhy+mO5coXGbdDOVa9oeSqHA/k0LQt0wOALYa4H4KyMq4gETrkBnIi35nIJhPrsxkg
+ tgGjtwmBvaNUE3IZo8aMhdcUv5l7mopm8StW01lYUNQDdwFvNUDVksgytbjvpVlGvzyS
+ 063FAQAjYc6AUPYqR1Ei4r4U/nR/esQw2WmEIaW8Qm7NQMij6WTrbZlat4exHckyq0n3
+ uTTY+htL2jlTiJGcvr2xg0N8XKImBrZl8WexhDOOXLctDvbnXCXwVSml+u7LsrbsxqS6
+ Brzg==
+X-Gm-Message-State: AOJu0YzhCmIP2i4RQnITWjeBt8NwpvWQ3WXC1TtffLVr/scBmNKPml6Q
+ OryKdNL7AvhB6JB0yBPb5e6ZYjcrmQmxyX/CjYy2Bi0hXwbRy2oHWYpIhK6zRjf8CUQ=
+X-Gm-Gg: AR+sD112vnu5d3KefFd0thH9pyqWoFsU/Fg2pQikkyGOh2wd4WYcNuZ+SVHKXeQE5nw
+ Ge/sbqQKvzl5FwEAuGEYztgYBM+bGVvtBtxq61IGOf+kzM0/UbOTXrD4o9IrIf4KELX1CdNrG1b
+ SeoyUTYiRRDfY+jpZQaWWdu4LA+R+XMnItuVbr5fiL4MvAa3I9Vn9aFTMCLY7mwSX7o/IW/2HSr
+ JEudOA5oXQI0DWpAdR/1coiykXa46BBIh9LVgPec85ochNL5V8TynH/K5zDXAszOu3zhGby6lKV
+ OOqCIUIAWtyoGH9pIkk4lgdPzVZcM78TA+D2d/X5L0X2Twji29CgT50p2S2cykAlYTsQStB+Se1
+ k/ZzsQOAlc5kJ7hmbKL2nM/LEI21W7wAPvHcCOJMS7kC/evh5UJvPY0TzqtAqoYY/kZtQWr3PbA
+ Zb9nUX6yO9Mff0c7VNTIJi6qsrnbPGvJax6RCGKDBtzaSIvZUqxyf6hgCbR5it/DSUQ327XI7/
+X-Received: by 2002:a05:6000:4285:b0:481:314b:b041 with SMTP id
+ ffacd0b85a97d-482b1066a6fmr5516939f8f.7.1787131336957; 
+ Wed, 19 Aug 2026 02:22:16 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499a9dffa59sm66006495e9.3.2026.08.19.02.22.15
+ ffacd0b85a97d-482b145d31bsm4447265f8f.16.2026.08.19.02.22.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 19 Aug 2026 02:22:15 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 640865F878;
+ by draig.lan (Postfix) with ESMTP id 61A7E5F82D;
  Wed, 19 Aug 2026 10:22:14 +0100 (BST)
 From: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Date: Wed, 19 Aug 2026 10:22:02 +0100
-Subject: [PATCH 2/6] tests/arm: add explicit CFLAGS for system build
+Date: Wed, 19 Aug 2026 10:22:01 +0100
+Subject: [PATCH 1/6] gitlab: use .base_meson_job_template for macOS jobs
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260819-fixes-for-11-2-v1-2-b7981c2cc371@linaro.org>
+Message-Id: <20260819-fixes-for-11-2-v1-1-b7981c2cc371@linaro.org>
 References: <20260819-fixes-for-11-2-v1-0-b7981c2cc371@linaro.org>
 In-Reply-To: <20260819-fixes-for-11-2-v1-0-b7981c2cc371@linaro.org>
 To: qemu-devel@nongnu.org
@@ -90,27 +90,27 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  qemu-block@nongnu.org, devel@lists.libvirt.org, 
  =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1369;
- i=alex.bennee@linaro.org; h=from:subject:message-id;
- bh=MJWvive3XIw267cYiTNdmu4ac2myJrVPkfmdAGEdR0E=;
- b=owEBbQGS/pANAwAKAfvQ2wlanipEAcsmYgBqhXXFQdbqk4aNMoF8Fqsqd+U0IJwWLn9FjAcLG
- nvn4891lYiJATMEAAEKAB0WIQRmha6Z51FnvK/I3zX70NsJWp4qRAUCaoV1xQAKCRD70NsJWp4q
- RIMFB/4skduvdp2/XpuM6BCYc4XFHaKQCdl97vaqJUBVZgQs3hWJmU9r9u16zm93Zw0Wqyv+rZk
- fAPA2L9ZNDzrFaw0Wv2fAF4GcnHYPd3FOIb3a4IvdWrSbxFlO2Uio188ujTBhIWLmCiZDkboEBv
- X5SDsLWn4NjZsnSmGrv80jmOMuqMZAP2sYW/fDVwIKnN93XUtKXqFOY2SIaQJsRiyXbLlU2tNDX
- M2zlszD4TZpoLCtOrmXUaEUuLHrdZVNz96H9ufJhXTFMzq+kIcZamIlREzeyUIXhaidRyu9Vemp
- EEu6Z2sJPXfw+sAt8w9TlTd1yA/kyQ4ZoWbpp46idbigBmoa
+X-Developer-Signature: v=1; a=openpgp-sha256; l=700; i=alex.bennee@linaro.org; 
+ h=from:subject:message-id;
+ bh=oLQW1QjvvZodHpTsPvGLeM5B3yePRIAQ/JBnkvtdcNQ=; 
+ b=owEBbQGS/pANAwAKAfvQ2wlanipEAcsmYgBqhXXFqP6RI8y5GJAeGX56erSFzv9sCgzfILmz0
+ jmFwC2A+iWJATMEAAEKAB0WIQRmha6Z51FnvK/I3zX70NsJWp4qRAUCaoV1xQAKCRD70NsJWp4q
+ RD3YB/4rMr73ZG79e/v4epC1W29loewTMHg5hEvwFFt17neUi6k9Ul5yZXMsGKtOP8MLpd4kneA
+ zA7zyxvdnIwtO7VE58tRhZxL9EmSv0/98az/980b2qJjbi/7cDDK6s4aE353G/4M/iOGGf7wO7h
+ KBqE19f3cWZ9iM73xW3e7ZEFHIeNfrNuXFCA0WrgAQ5BSjYq2bN4sNtB1NoYF+BUOHDjARjmXa+
+ SbadvOXXb9CBHS4TmaTEYUW2W0W8k5JTqNjUPXvg6kcLj/mSSR5Hu0swDxpHWnGBbossZ9Oxs5i
+ 0zcfR+NuiUAApd4XCmY/HsZ5TSrNYoLaC62dfMXFxyJyQ1mh
 X-Developer-Key: i=alex.bennee@linaro.org; a=openpgp;
  fpr=6685AE99E75167BCAFC8DF35FBD0DB095A9E2A44
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,36 +126,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The brew toolchain on macOS (arm-none-eabi-gcc) is a little different
-from the default on Debian (arm-linux-gnueabihf-gcc) as a result it
-defaults to an older architectural baseline (without isb's), assumes
-softfloat and will get confused by including stdint.h without being
-told it is compiling freestanding code.
-
-Make these all explicit so we can build arm-softmmu tests on macOS.
-The test-armv6m-undef is unaffected as it has it's very own build
-stanza.
+This way we'll get more environmental information which will help with
+debugging.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260723200904.224413-3-alex.bennee@linaro.org>
+Message-ID: <20260723200904.224413-2-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/tcg/arm/Makefile.softmmu-target | 2 +-
+ .gitlab-ci.d/macos.yml | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/tcg/arm/Makefile.softmmu-target b/tests/tcg/arm/Makefile.softmmu-target
-index b66074b0b43..3e8a9b4073e 100644
---- a/tests/tcg/arm/Makefile.softmmu-target
-+++ b/tests/tcg/arm/Makefile.softmmu-target
-@@ -29,7 +29,7 @@ ARM_TESTS+=$(patsubst $(ARM_SRC)/%.c, %, $(ARM_TEST_SRCS))
- CRT_PATH=$(ARM_SRC)
- LINK_SCRIPT=$(ARM_SRC)/kernel.ld
- LDFLAGS=-Wl,-T$(LINK_SCRIPT)
--CFLAGS+=-nostdlib -ggdb -O0 $(MINILIB_INC)
-+CFLAGS+=-march=armv7-a+fp -ffreestanding -nostdlib -ggdb -O0 $(MINILIB_INC)
- LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
- 
- # building head blobs
+diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
+index 641a48b3832..bdb3eae18f0 100644
+--- a/.gitlab-ci.d/macos.yml
++++ b/.gitlab-ci.d/macos.yml
+@@ -1,5 +1,5 @@
+ .macos_job_template:
+-  extends: .base_job_template
++  extends: .base_meson_job_template
+   stage: build
+   tags:
+     - saas-macos-large-m2pro
 
 -- 
 2.47.3
