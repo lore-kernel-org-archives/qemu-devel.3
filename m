@@ -4,98 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3263C5DF85
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 17:55:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B7A3C5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 18:03:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwkTp-0007fX-UK; Wed, 19 Aug 2026 13:53:38 -0400
+	id 1wwkcT-0004GG-MX; Wed, 19 Aug 2026 14:02:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwkTl-0007ez-5B
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:53:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wwkcS-0004Fl-S2
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 14:02:32 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wwkTj-0005Tu-B0
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:53:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787162010;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9MMottLM5FK8FLjVSc8zReA4ppJq69uKJJktmiNI1hc=;
- b=HRhv4jdj0/3hb4uCr8I113qpNkwCkPRD7SdBMtBOUvTEekoLxdsnXZ1Qfb531kstKoLxY9
- Rrj73bE7Mxa87WvDFsBhye6BMI7oQCjvJazsclCTo3OZQkCa5O69NIKlmAlZRVBgy3zRqc
- d3jbikM0oyeIOV4ZTYviNrDp2NRwRuk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-271-2kHZ6sF7Oc2Epgqm715E9Q-1; Wed,
- 19 Aug 2026 13:53:29 -0400
-X-MC-Unique: 2kHZ6sF7Oc2Epgqm715E9Q-1
-X-Mimecast-MFC-AGG-ID: 2kHZ6sF7Oc2Epgqm715E9Q_1787162008
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E011D180049D; Wed, 19 Aug 2026 17:53:27 +0000 (UTC)
-Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5BEEE26C; Wed, 19 Aug 2026 17:53:25 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wwkcR-0007Nn-3v
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 14:02:32 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
+ by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id BCAC8C08B3;
+ Wed, 19 Aug 2026 21:02:29 +0300 (MSK)
+Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:c60::1:5])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id M2bUThDaVKo0-TT7soOrS; Wed, 19 Aug 2026 21:02:29 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1787162549;
+ bh=gFmS/DTgG7tyPtgCYFw5DCDtqJUxh70iPyjnvtCIY7k=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=yXGy7Vm0S3vt2S1QmNIuY8xlBpS71kKl8i6qdbrzWe2bC/gvsdA1fPqXADNA1lFF8
+ qnNHkAmoUJyWfdAJ04A5Oy12mKPT5UQDeOyQ/LKpLQrzaDecliJxoV20cj07WAszSQ
+ PUq4Zb7O2fCgTrBPlaACvEYuZaedN/QAyhZxlAUE=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: jasowang@redhat.com,
+	mst@redhat.com
+Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
+ raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
+ qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
+ yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
+ Jason Wang <jasowangio@gmail.com>
+Subject: [PATCH v21 05/16] net/tap: move vhost initialization to
+ tap_setup_vhost()
+Date: Wed, 19 Aug 2026 21:01:48 +0300
+Message-ID: <20260819180201.1970193-6-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260819180201.1970193-1-vsementsov@yandex-team.ru>
+References: <20260819180201.1970193-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 12/15] hw/acpi/pcihp.c: convert
- ACPI_PCIHP_IO_BASE_PROP and ACPI_PCIHP_IO_BASE_PROP to class props
-From: marcandre.lureau@redhat.com
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com, 
- philmd@mailo.com, aurelien@aurel32.net, peter.maydell@linaro.org, 
- pbonzini@redhat.com, richard.henderson@linaro.org, berrange@redhat.com, 
- marcandre.lureau@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-In-Reply-To: <20260819133816.3497033-13-mark.caveayland@nutanix.com>
-References: <20260819133816.3497033-1-mark.caveayland@nutanix.com>
- <20260819133816.3497033-13-mark.caveayland@nutanix.com>
-Date: Wed, 19 Aug 2026 21:52:43 +0400
-Message-Id: <178716196334.2018258.8967303423780227738.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=480;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=w3+cAzy98bnLUN4mZCx8X3MMi5Daa5+ikKYZS8SmSFc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqhe1+/solv9t/nNxPmD6L+PkfctYiVcVTZZ2J9
- XT3OkS05eGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaoXtfgAKCRDa6OEJdZac
- 5XoCD/4qKWqBDNS8kz/J3kz4xTOIjAm9Kj++2HElCUlB0ahVn2v4b82MI87okU84iiF1eJo4DOM
- MZH2WuAf+vd6VfO386m6xh1xpVp7yKXyPYUohhodmP4sklLjwGwoE2doBnXpzJsYm/Hf9s+ImRi
- 4+EpmuLs2VOdSir/5YuQlshm9/Dih1KXVe5GVjVdszTUkc7IXge1ZGVwSGy+lwOyCHxmYBqHtLL
- OmSMI2jsLTTutLuyZ2IVRRrXY757aBFXDUCBkSRLvJP9Ab46fXtyCfwhEtDFxvGYJkpMP+DV//e
- TB1Z1C5mZEtKg63ZulzG0k69MjPJTU4zjZYiw2YeUYqY+kpmnIG7Mkp3v94aOkvsb5p32PB/a89
- q1DOhr+gSAr4RwHmRq/3QacOq99NPNWFpIGdPKIIUJ192wnDZcDkfbUirCyVMv5y8yLX9OGeTYK
- Pme6YgJUIcRHtlf1FEH0W7Y8zJQ4NOiqIKalBGM1ceVlBpsJJTnhU6W3EXL1PAH8ENEe3MNJ4yq
- MQwCNeFp6ueVdrnI+y8ngIaHW9D3wzmkW+Qu/lltb9DZNCmh74HopeyF1omvuM4Dm8iYuA5KVZh
- uT37lLrVGF1dlDQFxT5zg1c6PudIE/ipZpO/KqjggsG6DdsA1hM6QbVc9tvgwm6HtNsZ/pW1Ck5
- 5RJ0m6zD9P0LAtg==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -107,15 +78,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 19 Aug 2026 14:35:51 +0100, Mark Cave-Ayland <mark.caveayland@nutanix.com> wrote:
-> Since the objects referenced by acpi_pcihp_init() do not inherit from a common
-> class, add ACPI_PCIHP_IO_BASE_PROP and ACPI_PCIHP_IO_BASE_PROP class properties
-> to each referenced object and remove the object properties manually added in
-> acpi_pcihp_init().
+Make a new helper function in a way it can be reused later for
+TAP fd-migration feature: we'll need to initialize vhost in a later
+point when we doesn't have access to QAPI parameters.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Ben Chaney <bchaney@akamai.com>
+---
+ net/tap.c | 62 ++++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 38 insertions(+), 24 deletions(-)
 
+diff --git a/net/tap.c b/net/tap.c
+index bec2cd48fd3..f2b571dd116 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -71,6 +71,8 @@ static const int kernel_feature_bits[] = {
+ typedef struct TAPState {
+     NetClientState nc;
+     int fd;
++    int vhostfd;
++    uint32_t vhost_busyloop_timeout;
+     char down_script[1024];
+     char down_script_arg[128];
+     uint8_t buf[NET_BUFSIZE];
+@@ -722,6 +724,38 @@ static int net_tap_init(const NetdevTapOptions *tap, int *vnet_hdr,
+     return fd;
+ }
+ 
++static bool tap_setup_vhost(TAPState *s, Error **errp)
++{
++    VhostNetOptions options;
++
++    if (s->vhostfd == -1) {
++        return true;
++    }
++
++    options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
++    options.net_backend = &s->nc;
++    options.busyloop_timeout = s->vhost_busyloop_timeout;
++    options.opaque = (void *)(uintptr_t)s->vhostfd;
++    options.nvqs = 2;
++    options.feature_bits = kernel_feature_bits;
++    options.get_acked_features = NULL;
++    options.save_acked_features = NULL;
++    options.max_tx_queue_size = 0;
++    options.is_vhost_user = false;
++
++    s->vhost_net = vhost_net_init(&options);
++    if (!s->vhost_net) {
++        error_setg(errp,
++                   "vhost-net requested but could not be initialized");
++        return false;
++    }
++
++    /* vhostfd ownership is passed to s->vhost_net */
++    s->vhostfd = -1;
++
++    return true;
++}
++
+ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+                              const char *name,
+                              const char *ifname, const char *script,
+@@ -756,30 +790,10 @@ static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
+         }
+     }
+ 
+-    if (vhostfd != -1) {
+-        VhostNetOptions options;
+-
+-        options.backend_type = VHOST_BACKEND_TYPE_KERNEL;
+-        options.net_backend = &s->nc;
+-        if (tap->has_poll_us) {
+-            options.busyloop_timeout = tap->poll_us;
+-        } else {
+-            options.busyloop_timeout = 0;
+-        }
+-        options.opaque = (void *)(uintptr_t)vhostfd;
+-        options.nvqs = 2;
+-        options.feature_bits = kernel_feature_bits;
+-        options.get_acked_features = NULL;
+-        options.save_acked_features = NULL;
+-        options.max_tx_queue_size = 0;
+-        options.is_vhost_user = false;
+-
+-        s->vhost_net = vhost_net_init(&options);
+-        if (!s->vhost_net) {
+-            error_setg(errp,
+-                       "vhost-net requested but could not be initialized");
+-            goto failed;
+-        }
++    s->vhostfd = vhostfd;
++    s->vhost_busyloop_timeout = tap->has_poll_us ? tap->poll_us : 0;
++    if (!tap_setup_vhost(s, errp)) {
++        return false;
+     }
+ 
+     return true;
 -- 
-Marc-André Lureau <marcandre.lureau@redhat.com>
+2.43.0
 
 
