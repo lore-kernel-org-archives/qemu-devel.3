@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D431AC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 20:20:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 169B8C5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 20:20:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwmlO-0001WJ-Fg; Wed, 19 Aug 2026 16:19:54 -0400
+	id 1wwmmI-0002LT-Bv; Wed, 19 Aug 2026 16:20:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwmlN-0001WB-7d
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 16:19:53 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1wwmmG-0002L6-5j
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 16:20:48 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwmlL-0006dD-Pa
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 16:19:52 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-84e84a6c4bfso252051b3a.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 13:19:51 -0700 (PDT)
+ id 1wwmmE-00071j-LK
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 16:20:47 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-ca97d139d5fso1115231a12.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 13:20:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787170790; x=1787775590; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787170845; x=1787775645; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Sfdb1dzdnoBwIpbZ45e8jxs15t/r3s/rCiyhXY3QLm0=;
- b=gad1BcefUSQXOPHFwqbM2pdCacaObv7ujPBYmauuy3qjtJBlMg40dmF6VApSn6f4/T
- k5woPKYJxwc03EYjv69iyFwqiUswy59J1TPD2hW+T2Z8To3Gy+CMeLrmqpHRQccqXiIg
- u8taPJaDA9YE68qVAb0wmGtiC6SznxEI8YN9ntT1ZJu+TGz4uM3403FrLnOe/B+5EnqR
- kS5hdQ/BZDBaMa7U8/Fd+3v1RD8C7Eqaf+hUfkdPM6gi5/z3qdKAklykoi10lt7ejOtd
- VuwfbbkM93qVZwaBEtsXrZ4K1cBxoJANxIrMoq6wKd3pw/nXUhj5/k11ojqu1lSfABfF
- +fHw==
+ bh=P4MpX5czXRSCuBZ6y7s/sbgyOkF952n3pQ6dKhyHeq4=;
+ b=Gh3aOCsVjMafqP97P26f8dyGbC8VzEs3SsXrGrQpPaJJJ2pGq1zbC2Tjfkn0k1TxU1
+ mNOKTka0bFH4N5qmLMh6JTyR6yx2Vk+xoCgHbnrNqBVsorvXDgymzeGxxeSHZVanONmL
+ x0hqRMgzWZyBAWGvC1thZCI8Qmbox1Lj3gBAheMQYQb6FkySvYGCHJM6IcylMr32fr1U
+ Z/+UxNZav8VyNF8ivhagsBBvdVG8d/2dUpnqn8lN79XpH1NaJhv6OISrQZeLKMoFykYL
+ KEXLu2Jj6FmzY6kJDuqJDYQXyQ5Y0Hg08CaFN1enC7j9vwoV0Qic6G4iLaOJBEXzxhrY
+ PLEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787170790; x=1787775590;
+ d=1e100.net; s=20251104; t=1787170845; x=1787775645;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Sfdb1dzdnoBwIpbZ45e8jxs15t/r3s/rCiyhXY3QLm0=;
- b=KQgAbmh14YIQZlL8/tu/dTmI06SSvCaXs4GmfScmplQR2SHorixPgUx672RHkMXtyv
- FEfWqX5OxxwTKcXTH0ZM6yWh8XnYitOJPFv0oLDtllyGPwxnmerZxppNcXvg3+V3jmuc
- TUg84FJSsXfI4nYqiCsHyaZtSeec0nAdTJN5n3Ws+ag+Ir6mq4JDO1L5lHqnZpsQaR7K
- 7isTp75s0/iNtgNHJP4nuoIpU90INgZ5QuVxBvdn79W0VvApEhivMIIV8Xr4pavHskB0
- Z9K9EFtsDtvLTzwgd+tOn5EiY4Ay1kPVd4NoesvRXBqDOzn3TGIdOFvSHpgfn8U+U2Px
- G2Gg==
+ bh=P4MpX5czXRSCuBZ6y7s/sbgyOkF952n3pQ6dKhyHeq4=;
+ b=ab6eciQxT8q/9ce9kk0gD8Hx9AaSXPOZMczJY/vxNJw+yLYjCvYhQAU4DWj8b5bu3H
+ jyh5Zd1lebuVgwuZ4/kzBWI2EOsasQ9mGXFrVb1MiqkV5+ncHu+T9pw5hvE4cHKlAT9R
+ mnq0cBIR3rHQcVfCAnAc44EUiQvdif7wsk2hy8BUaQbvgTTeOQvHOjQkA1DL9qn5kV2p
+ 4U21tId7QHY/e/F4rUxnkNjW16SOXODZUwJf2m+dP2D8wPVVGyp1EIliX9Et/mgETFVt
+ HOH1e8/ukxkPIpoQ6lGFo6qccckpUUCWdk7A5rjE28iFij0yw5JLpDUC8NfnlGkn2RCW
+ FOMQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpFRYLNGf3yO2n6zSA0zbXnAbjRdV805iqnzP9vONlWNPxhTVGA1uT4Jbq7l25bcV3gc9HE5bGLdorF@nongnu.org
-X-Gm-Message-State: AOJu0YyCpX1e6CauUS+46gCKpKeQpQxK0bDbfE7KhBvBRqivH88a05n/
- /cCHLzOK6b+ds6ouyXVbhWwnCwI9O3GNr5oZHJsoFMuuNQcnpDSGwSs2UowyDyC59e8=
-X-Gm-Gg: AR+sD13GnC2E61p3MB5djhRd1G8mz9FeiclqTHKQqwZleU7K0N3gK7y1kLrDUQ8cAPO
- nrAarqTg3GqVy3C2Ho7Fa7/YmgkXPsu1gx3dmWbUIobEg73idUmJUXNSA/3k8UNC8HJ2vbnbLdd
- 9kOCohBtwvVCq+Li7oopRiwlfibtmlMbxkRpvTjxE0P/rAHaIDle/JwhnC/8Q9y8T6oPZh+b7/7
- nCIRHFjhUTSobcpBfHFR/RhsrkGmwbS9iC+2y4wk6GxiLjZuU/9cg6FNJZJXVpGe8Lj0oPaJ9SV
- sZ5xn37rjq1D6bh12vG6z+Rs7x7cEGCVLIlAW+RNfR4IaQpuYuAAVHWe4CCfXh6F1upxhIE05Jx
- /6j9VOQDoYZ+A0dS6rXqC7Msl3lONQ+hXCPxqQt/0nzZSafrW1cC+8wsh6EamwyOyNdHpLGzwHU
- FF6mr1KIoXXGuYI3piT721mHI/5xdWX0N0+cPHYePC7LgAAnnpUciey2t9HU4Tq7LSLjX3MBctm
- kWS3NzE
-X-Received: by 2002:a05:6a00:7603:b0:842:446a:4cb5 with SMTP id
- d2e1a72fcca58-851df6bca8fmr1607797b3a.0.1787170790257; 
- Wed, 19 Aug 2026 13:19:50 -0700 (PDT)
+ AHgh+RqTG7ZCDysUGS3yRNiCwyUi8uaTzbVhBYU7SqJN8xZyfuu1arTUv99NeBxqWbnaElKmHiw9bjujIxA0@nongnu.org
+X-Gm-Message-State: AOJu0YytkUR9HVcNWzXf6vv1UZrouZiNHIzUXN55zjXU9odkoTZkjZUb
+ H/AujGdJBCNbhQdDW3wciLqnwVNxz2W5DV0MLM7TZ+GeGmeLkv5qIdNNh1IqtdQ5n+M=
+X-Gm-Gg: AR+sD13UuMimyDd+AQrBKlTpt4p3wLXx9j51w8IUvKH9EYAQ7c9fyxK3mAFUSLyZaMa
+ hODxWviaL8gchja7y9RjNmtEGf7izb1xN/76jT1ya5q1Qi0lz3CafMB/FVEoxRGSy+TmKDp9Fxv
+ yqM7MB6hbntVDDpydS5Kgjcp+/C1DzcNRhZokjbj+LnXGtBBxvwKX+x5X/xDGxsyRl4nDBN3qrY
+ zU789w7oUpxLSzKz8tFW0VDny/WCXSYZ0KKKn+r/BTJDF1EjGODOg3MaWtWsd/W5W6ot4afgI+7
+ xZuk6hADOA5ivTNKYHxqWk9r9TknwrcaeD/kxXmCD/4U3kUnI0i4PmgA6pN1j8ZY3jIcYEpvflV
+ /CcoxpiLew2rnS0r3GB1wf+wBvpFqpZHAzyOHqCdZlOWE5VUi4siFPVfr5NyzVuwusLv91HgjEX
+ UNXYBUF2pssky1TBSEIoJ7K06BtYNC9yLtJMatl76wAKkb42wXcqoxRbGhED8wtgyH3XewKErpt
+ PLIkPkWpPGYn254YYB+avHW9tLt60c=
+X-Received: by 2002:a05:6a20:72a6:b0:3bf:ba48:ca88 with SMTP id
+ adf61e73a8af0-3cd01247b48mr12292441637.15.1787170845196; 
+ Wed, 19 Aug 2026 13:20:45 -0700 (PDT)
 Received: from [192.168.122.51] ([173.164.107.233])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851d3389fcfsm997527b3a.18.2026.08.19.13.19.49
+ 41be03b00d2f7-cc15568c722sm1052733a12.24.2026.08.19.13.20.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Aug 2026 13:19:49 -0700 (PDT)
-Message-ID: <49aa8e41-c097-4bd3-a432-0fbb80f7f33b@linaro.org>
-Date: Wed, 19 Aug 2026 13:18:15 -0700
+ Wed, 19 Aug 2026 13:20:44 -0700 (PDT)
+Message-ID: <378d7f90-a180-4205-9ca5-e9a4947ef592@linaro.org>
+Date: Wed, 19 Aug 2026 13:20:42 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/11] target/i386: Convert cpu_exec_halt() to
- transition_halt_to_exec()
+Subject: Re: [PATCH 11/11] accel/tcg: Remove the now redundant cpu_exec_halt()
+ hook
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -81,14 +81,14 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 References: <20260819145649.23439-1-philmd@oss.qualcomm.com>
- <20260819145649.23439-11-philmd@oss.qualcomm.com>
+ <20260819145649.23439-12-philmd@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260819145649.23439-11-philmd@oss.qualcomm.com>
+In-Reply-To: <20260819145649.23439-12-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,20 +112,36 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/19/26 07:56, Philippe Mathieu-Daudé wrote:
-> x86_cpu_exec_halt() now merely checks cpu_has_work() and
-> conditionally call x86_cpu_transition_halt_to_exec(), which is now
-> the generic flow in cpu_has_work_after_processing_async_events().
+> Every target setting the cpu_exec_halt callback alias it to
+> their cpu_has_work() function, making the callback redundant.
 > 
-> Register both process_async_events and transition_halt_to_exec
-> handlers to use the generic target-agnostic flow, and remove the
-> x86_cpu_exec_halt() wrapper.
+> Call cpu_has_work() directly in accel/tcg/cpu-exec.c
+> cpu_has_work_after_processing_async_events() and remove the
+> boilerplate cpu_exec_halt hook registration. No functional
+> impact expected.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
 > ---
->   target/i386/tcg/helper-tcg.h        |  1 -
->   target/i386/tcg/system/seg_helper.c | 11 -----------
->   target/i386/tcg/tcg-cpu.c           |  3 ++-
->   3 files changed, 2 insertions(+), 13 deletions(-)
+>   include/accel/tcg/cpu-ops.h    | 17 -----------------
+>   accel/tcg/cpu-exec.c           | 23 ++++++++---------------
+>   target/alpha/cpu.c             |  1 -
+>   target/avr/cpu.c               |  1 -
+>   target/hexagon/cpu.c           |  1 -
+>   target/hppa/cpu.c              |  1 -
+>   target/loongarch/tcg/tcg_cpu.c |  1 -
+>   target/m68k/cpu.c              |  1 -
+>   target/microblaze/cpu.c        |  1 -
+>   target/mips/cpu.c              |  1 -
+>   target/or1k/cpu.c              |  1 -
+>   target/ppc/cpu_init.c          |  1 -
+>   target/riscv/tcg/tcg-cpu.c     |  1 -
+>   target/rx/cpu.c                |  1 -
+>   target/s390x/cpu.c             |  1 -
+>   target/sh4/cpu.c               |  1 -
+>   target/sparc/cpu.c             |  1 -
+>   target/tricore/cpu.c           |  1 -
+>   target/xtensa/cpu.c            |  1 -
+>   19 files changed, 8 insertions(+), 49 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
