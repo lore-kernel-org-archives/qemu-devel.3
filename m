@@ -4,113 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB4F7C5DF85
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 09:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 037E8C5DF85
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 09:33:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwcVA-0007tU-5A; Wed, 19 Aug 2026 05:22:28 -0400
+	id 1wwcfU-0005eL-Th; Wed, 19 Aug 2026 05:33:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wwcV5-0007nC-Kk
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:22:23 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wwcV3-0001wh-Jp
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:22:23 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-49558ce01afso6539405e9.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 02:22:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787131340; x=1787736140; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=zEBSWmDHcpbyAT5+oxLyqv+4C5kL0TnHpRS3uvgoVbI=;
- b=XgWwhs70SAN8p+NmpeqpROpBSGqqskGycG0x1WYA9zkIdljZL0IaEJt5tCF9IfLgSe
- af5RAnRgsJB01+yznDf0hJirmLiGXZOcvtrB01VBS2XjqZFP3bOaNhW1YRDKaql4qQ/6
- cNvKp69mtARml8AwmrHk0KWgxl+f8G40h66gg229vWoWSnvvwfRaV6D0Qn9YQNDfn+4I
- XMG8IIu/RDBWwdRVazJN4TyDSGVq4wyE7yKZ9RyFqEY6pEJGdLOxOBk1vfsGGPXmQe3w
- ft3uHQv5DrRVkdNe25SzCCRJp4v1Q1quI07PxzUqXlngRLdch6sFRPXJtDMBAcMoAxtu
- yS3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787131340; x=1787736140;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=zEBSWmDHcpbyAT5+oxLyqv+4C5kL0TnHpRS3uvgoVbI=;
- b=CPwbM7udHQRe2MAsqXFV9RHH6Cnk9voXgWFFi8/CZ/r2S80e+sNvdSuH1MgTnmjS8B
- E6vPqZ34Trd56urrDNseS923tUQdsbSuSE7Am8m4xFOEL2XmmN2LNKLgkaewKad2HZ+w
- LQEmLf8C0SAlW0Npi9sDbAo6o2UdfdlHIu0GHKUQyw2i7HXyUZ99Br2+85U67ReGmjn0
- MlkV5H3id0O5SKgYMexUAEGp/H8bleth8GZa5cqBMW14QC3kk/kCHCj1fTXqZ23rZF15
- JcRJg73uKeABzLAyfTPpab69rocrsOo5iI8i68nyRmhr3gQpRRrA4TtivrGKW/WdnvGR
- sLkA==
-X-Gm-Message-State: AOJu0Yyb8IvTe4ZVXF5TwfT82hSR2T4YmiC+GqD6jr/B+o9M2oig8+tN
- J/0opoEXGTIoLOFzZ2EWdaq1meSiO02xllCGxN44Jg39uj3RUR23w8c9maD59PGvtJ0=
-X-Gm-Gg: AR+sD13BooZ56vMpMDsGq1/DFtPSxTKRRc1mQ0mMOxM7AOJwaBDMSrQIo7I2Aa2xHn1
- /AcKvNrweNJxev/L3U5ETA1vRFORXFGdfMaI92Bpuqrj1SRJLfkZ4iVgfVxHphYux+5YzMyvkWb
- s7srvx7n9+xGOicGlNUamy3AfWzY0PJns/qKrRrxEYYduJiJISCXW3f9wRFgBIMK75Y2Y8rtlA9
- P8TFA96rg98jBPpxtf61yxCLorMUskkvemaF82zGIVl98A4A3XWgzz1n9iwN/pUC1bhMzCe7bIT
- nTD5AncWEuIc3fF2V4zT3i80renZlZGTNLUXp2KXAqdd6nRt/17G3Ewd2lGfmjbx/BZ1xupFwcT
- Uhl8yd4qRRP6wsejOQq4jCcylvfZ1HeqSGyyQJPJpr4GrTNxqRxRQ5vc9P3Xedljwc+p8mFLKmw
- z3AAUPmAgJKYlygBuhwr7+h1+k60vXPCmhumiIFpemTYLIRec0qp98TAyj1ueS
-X-Received: by 2002:a05:600c:190c:b0:499:5282:f8d1 with SMTP id
- 5b1f17b1804b1-499aa1ac47cmr54101095e9.12.1787131340217; 
- Wed, 19 Aug 2026 02:22:20 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b1450e61sm4408686f8f.13.2026.08.19.02.22.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 02:22:16 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 663D25F898;
- Wed, 19 Aug 2026 10:22:14 +0100 (BST)
-From: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Date: Wed, 19 Aug 2026 10:22:03 +0100
-Subject: [PATCH 3/6] gitlab: add arm-softmmu tests to the macOS build
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260819-fixes-for-11-2-v1-3-b7981c2cc371@linaro.org>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wwcfT-0005dq-20
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:33:07 -0400
+Received: from st-2004f-snip6-1.eps.apple.com ([2a01:b747:3001:201::36]
+ helo=outbound.st.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wwcfR-0003Og-6g
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 05:33:06 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-10-percent-2 (Postfix) with ESMTPS id
+ 40BD118002FA; Wed, 19 Aug 2026 09:33:01 +0000 (UTC)
+X-ICL-RepId: 01a0195d-ed27-7611-8de3-9cdf81caa56b
+X-ICL-Out-Info: HUtFAUMHWwJACUgATUQeDx5WFlZNRAJCTQBIHVoORQNGCVYLWhcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0IQRMFUgddTVYNRw9YHlwUFwtHQ14IXh9MHB0OWAYSAE0KDjYGWQVeCVYDQwU2EhRdRUYDRxlXFFAbRwxVB1deXwoTAF4PD0x7SQNYBVl0QhQ5AikERgYxfEweLw8vd10ASgdfA1MFRgBJBF53HlwASx1XBFQfUxJVHR0LRVUSBEAIVlBUHkEEVhVsCVgGUxlX
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1787131983; x=1789723983;
+ bh=mVDNReVc35x1eqbv6+N14m72Bc6G+qbTRasBFHOj06A=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=uwqyhUYY2TXJRMAbnOddGtUexGmSyxUUIg+QUT0unl3Bk95GWDkA8IVbQ1VOZS8mvW0FSk1PdXXkvNQVvqXYJ/48t6luaSQABmeL8klfXdtO5kFhfWMu8aeVya2A1pNj/ZPtMsPZwB9ceOV0nI6fUzagiH60NjxVUA5oHoqCdnZbieUAPaKfg16GJoJSt0QSB5s3NPGQfoGiKhpv578znviSIJwfz3YfInkCyPBLViWGwc6zH7KwV+HP8ToX+ehIuD5zHUfaHNVZIGN3D95fCz6PonLQGMjT4OSF3s9LMPCVrU4Urid9ZnLSzx+0KigIu7OZGaF0GuMjK7cY6OhaHQ==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.156.216.30])
+ by p00-icloudmta-asmtp-us-east-1a-10-percent-2 (Postfix) with ESMTPSA id
+ CF3BF18002F0; Wed, 19 Aug 2026 09:32:57 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.11\))
+Subject: Re: [PATCH 6/6] docs: deprecate virtio-crypto
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260819-fixes-for-11-2-v1-6-b7981c2cc371@linaro.org>
+Date: Wed, 19 Aug 2026 11:32:44 +0200
+Cc: qemu-devel@nongnu.org,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, devel@lists.libvirt.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B10522F2-A1D3-4AE4-B8DE-924248769173@unpredictable.fr>
 References: <20260819-fixes-for-11-2-v1-0-b7981c2cc371@linaro.org>
-In-Reply-To: <20260819-fixes-for-11-2-v1-0-b7981c2cc371@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
- zhenwei pi <zhenwei.pi@linux.dev>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- qemu-block@nongnu.org, devel@lists.libvirt.org, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1596;
- i=alex.bennee@linaro.org; h=from:subject:message-id;
- bh=B9ZSx+meoWvdNqJq36oJBwbjPxCumeybg4Iya8CkY5Q=;
- b=owEBbQGS/pANAwAKAfvQ2wlanipEAcsmYgBqhXXGWquFVetm/TQPeCRaIqpMdvkNgXP2Pe5Gv
- MiUAU1Rn2OJATMEAAEKAB0WIQRmha6Z51FnvK/I3zX70NsJWp4qRAUCaoV1xgAKCRD70NsJWp4q
- RNgJB/wIygNvGYLCcR6OOBZpVYQYPNJ9YUZ2FoQlAWuEHigXvwnQZXykBG9s0tTMvtOdfp3ecz6
- H226V/XnMRF43ZAzsQMI80N5HOhF3ZBu/9j/ztxr31FSReMszHh3rj9Jb4xkj2bFEBpmZJMvF6T
- eY+c7ZIEMLKvlutTKUYzTDYjEY71AZ3/mwixyyARMS6c5+KgrUR3cvYd+d9beyeF0duFUO11dZN
- hK2vKKtuVWz3N4WvR8RJTTfdoPurDwxpZ4K1USsIVt330YxOMOz5f7bLKXVQsH7/u3bdTsBXmz1
- Ml5NEOMS+g6T7s9CIa6cHrH+Jayjq6DxjdE1muhorCJu6Kbu
-X-Developer-Key: i=alex.bennee@linaro.org; a=openpgp;
- fpr=6685AE99E75167BCAFC8DF35FBD0DB095A9E2A44
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
+ <20260819-fixes-for-11-2-v1-6-b7981c2cc371@linaro.org>
+To: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+X-Mailer: Apple Mail (2.3901.100.1.1.11)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDA3MiBTYWx0ZWRfX2ZOLTGm8fjPT
+ zrOpoJbF30Uq7Trl/DNRylgWjjj7L/XNxWuYvXyYWyHg2siQQotoiwKx9xZUQGi29Kz9TyVqjvx
+ BcfjXvLZ0EAJFBJKuwH3jFt+qWS/eKe7kd58+O/Gk8L+o/VXV8OvWnGFQQ+65Ip+OZGMZ0Da25m
+ uk8+P3zP94Jzsqi9CqX5dk/AecliQJ3qWxPX1kmnr03hhl05eFFX85uZye3PwCCTblgJZv57CNJ
+ EFpDB3rLKG+qC/3UfineUUav2l2O9njZx0DFbeS8N9mI4gkmJg32hus/241WTS0VTTwePlKp2I8
+ baNJYazsh0kRZ/eTIMU7WoMi208FjoDinaYsyaB6qMrsKXr1V7gWrCe0OPpJJk=
+X-Authority-Info-Out: v=2.4 cv=dfeNHHXe c=1 sm=1 tr=0 ts=6a85784e
+ cx=c_apl:c_pps:t_out a=oyWFxbOnq+dmhQrAPgaJYA==:117
+ a=oyWFxbOnq+dmhQrAPgaJYA==:17 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=p0WdMEafAAAA:8 a=KKAkSRfTAAAA:8 a=i0EeH86SAAAA:8
+ a=6BZSfjg5s5QjvaG9htEA:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: 41mi7VTA_DLJFsyrRlc7FfoN3iCxlHv_
+X-Proofpoint-GUID: 41mi7VTA_DLJFsyrRlc7FfoN3iCxlHv_
+X-JNJ: AAAAAAABPWPGskN1e1H8sC1ZoNCHk+muZCCaS4lAJSSYmDh8Br7SUktCAV3DytOwRkKZWDUBELvRbyvNDYFZHsvIHQgQsPNEVBWUua0NviT6kO13u2dWGGn0n9OKGWWgzTxbqJCyHgDI3AADJCYeEmPImqRBc0pzzOtstvUmEG5umjcFzh/NZ3NgpnLTQJ7h6kqW3iQMAC+gjgIUEolJ/NDtmyH7lEHGKtiOtsJz2cOI+LzoPXu2Y09nweHWdID0l3iNHP9dMABwmGaXlbiJUK7DP5fbqBG5W5A0XA8lKwdNYyG7RRznWo30te7mEGQ+j3uXa7Izu4LvL5bsC/KjXvyvgykJTt6+n4LYexjko0YbvJBRsIOBEHFvt3jCWoPFhMWWh2mqi6px5YOBonct3Qc9bByEC7R1KCMM6tN27A+PJZt1+SInXtT3iAxWSif8ur+2qnWcmdNU8M6fM43dG+mWfxfPNbP3nPHLWO5SEmhmuim7ZxQOHRrT7s2kL8jrbxJYPlkJXV/+hAN+BzUG8fBUlf01Gsr/p/56AtGFI1T44fkOxaaP5OHY28Wrvg1IoLcu8gyff2lC47Qpxo3ABSg1qTRea+EZcFKbL+Ld7hbB4NA84oPGrGBAQllCgUrCE0qyDqjfkWjohhT9r5jhYq+3LMzXr/WsUGOcmy7rOL4QUq6ezqxOzqmKp3bO6kNOoZ59T5JFfSH/RKL8sYaIzCBM3fbsOOVCySjzuPYwtGLv1r9OVu9tuErdx1UnjXYe5K5CgfS0xbeeeMcdtVLFo/f/s/RjxHlj2g/eAnybczAhJ99lFmq5G46azMKrPhgCOk0Md4RGyjI5joES6IJVUzdtjJxy0JtXd8ChG9qJSmPHBupfv8RfFK8HkiC54IxHH6C8gSMXfO5HqK5YoTclCJqVXe8i4SrUyv360Ej5I7DR8mfaQPd/sMvmPm12AIi/DRIq2K6ALk7zn4hJ/UniGY3v8ViYzcJ
+ 7o1b++obotJRfve5r5XcI8Vzzubwgojy1orM1UYx3i2UyamNqRj3xm+QQWNHXr11LGh0li1ajDhdNK0P0KwvWmn0mIx7W/vGtMOOzBCaDgDGjiDDzIpJATxD2livVdTFuJ49sZkuwouh2uF2e7qAXCverv9RRB7zAogMFNOhidG5eZZVNoN8/AzFPW6lOJmG0edcrDeDBcFkmlxniqyaM9aTa9WC5/IXVdIwGBH8aTqS5qB5rlE0FKGaUNbToIbb0JFToi+sExarkMtA7+geGOzLpXNRTTJuYdyVQ9lcqGPh59krv+pGjLM8JW3/2Tk3ShM5c7ZENKf+tMpiEE7QKC/H0Y2YG78DA7SxDIgTPPJY3VkFt7gjOOpVIV0RtHDfiE/sNKBYxUXwY8bvAEYHL3ZABS9ZHBZ+Cz6fDGO32Xew7QcNxeuoFwrCNKSs1mrb+i2oDCLgFzD5lMj9G8O3YFme7BxZjJG2SIpJ4fQ2MKyKtibNtu39i/qW0zfdheBDt10WoyRCx/hg7ti+Ny/pOcdM+8wj7eR4fSHmMvwDHZsUVZVlldZqZhSJHqS5NPf6b/PqB8ePXHLRPrxSEJZBfvnY4T9WOuchzDIVW+EbX++uWnS8ypCLoal5nl9DqJJ4=
+Received-SPF: pass client-ip=2a01:b747:3001:201::36;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,41 +98,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now we have fixed the compiler issues lets have at it.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260723200904.224413-4-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- .gitlab-ci.d/macos.yml | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
-index bdb3eae18f0..40b9b637b3b 100644
---- a/.gitlab-ci.d/macos.yml
-+++ b/.gitlab-ci.d/macos.yml
-@@ -22,7 +22,7 @@
-     - export PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
-     - brew update
-     - brew install $PKGS
--    - brew install aarch64-elf-gcc i686-elf-gcc x86_64-elf-gcc
-+    - brew install arm-none-eabi-gcc aarch64-elf-gcc i686-elf-gcc x86_64-elf-gcc
-     - if test -n "$PYPI_PKGS" ; then PYLIB=$($PYTHON -c 'import sysconfig; print(sysconfig.get_path("stdlib"))'); rm -f $PYLIB/EXTERNALLY-MANAGED; $PIP3 install --break-system-packages $PYPI_PKGS ; fi
-   script:
-     - mkdir build
-@@ -40,8 +40,9 @@ aarch64-macos-15-build:
-     PATH_EXTRA: /opt/homebrew/gettext/bin
-     PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
-     CONFIGURE_ARGS:
--        --target-list=aarch64-softmmu,i386-softmmu,x86_64-softmmu
-+        --target-list=aarch64-softmmu,arm-softmmu,i386-softmmu,x86_64-softmmu
-         --cross-prefix-aarch64=aarch64-elf-
-+        --cross-prefix-arm=arm-none-eabi-
-         --cross-prefix-i386=i686-elf-
-         --cross-prefix-x86_64=x86_64-elf-
-         --disable-plugins
+> On 19. Aug 2026, at 11:22, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
+wrote:
+>=20
+> We have outstanding guest exploitable bugs in the code which is fairly
+> complex and needs some serious love to clean it up. As off-CPU
+> cryptography acceleration seems to be waning in popularity lets just
+> deprecate the sub-system with a view to removing it in a couple of
+> cycles.
 
--- 
-2.47.3
+Hi,
+
+Still quite powerful compared to on-core acceleration, the kernel=20
+isn=E2=80=99t a great example on how to use them well unfortunately.
+
+Far better experience in production with DPDK and directly passing
+through the crypto accelerator to the process that uses it directly.
+
+virtio-crypto with its overhead makes things even worse on that front =
+so=E2=80=A6
+
+In practice, the vmexits did cost so much that it was quicker to do it
+in software...
+
+>=20
+>=20
+> Link: https://gitlab.com/qemu-project/qemu/-/work_items/3625
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Cc: Gonglei <arei.gonglei@huawei.com>
+
+Unfortunate but it wasn=E2=80=99t useful as is, so,
+
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+> docs/about/deprecated.rst | 14 ++++++++++++++
+> 1 file changed, 14 insertions(+)
+>=20
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index 0c656a968fc..3c22981fc8a 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -276,6 +276,20 @@ future release. Where no 'dh-params.pem' file is =
+provided, the DH
+> parameters will be automatically negotiated in accordance with
+> RFC7919.
+>=20
+> +Devices
+> +-------
+> +
+> +``virtio-crypto`` (since 11.2)
+> +''''''''''''''''''''''''''''''
+> +
+> +The ``virtio-crypto`` device emulation is quite complex code with a
+> +number of known flaws. It has never been migratable so is unlikely to
+> +be used in any serious virtualization setting. With most modern
+> +systems supporting on-CPU cryptography acceleration via their
+> +ISAs sets the need for off-CPU acceleration is also reduced. Add to
+> +that the kernel has recently removed the ability to use off-CPU
+> +acceleration suggests the time for this sort of off-load has passed.
+> +
+> Device options
+> --------------
+>=20
+>=20
+> --=20
+> 2.47.3
+>=20
+>=20
 
 
