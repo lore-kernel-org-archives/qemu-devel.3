@@ -4,146 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E0CC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 00:06:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6214EC5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 00:12:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwTp9-0000CQ-9d; Tue, 18 Aug 2026 20:06:31 -0400
+	id 1wwTtu-0001Yf-9f; Tue, 18 Aug 2026 20:11:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wwTp7-0000C1-Sn
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 20:06:29 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wwTp6-0006GF-8G
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 20:06:29 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67INlaAu3119177
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 00:06:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- I87KWitpbM0qff4HsDIQwGLB0Ohy3nvtNNU0aaLa2Ek=; b=kncXrhymjrbT8358
- iT9tRYR1YsPV2Ib/44k7B0MwLL5r1AAgRFzrBNjEXnHnqGyiR4bIyWvTPTzjyLC7
- i9mifeTrxUsJq0n4sWe38coqHWFyjim/qTyTvpAJZnT5ARg4bglB8ZT1o1lxtN3H
- cVamAKUDKSJo0qkijcNjCy4bmNghNsuvE26zkKZFmbMbxHwLmbzjT0CVnio1juQk
- toaQWeTDh3UBIvkuVywGj1bE3DVn6j3r64Ccl+PM3idls2LU7WZAeLGwlyK229sr
- DGBXWaAFVdd+2gcVlzOkvCixqGoP+CMt9cg3v5eJMI1plq5Wzv9VWb2YIAs+MXJI
- DAojpw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4yfm8f8w-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 00:06:24 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-92e4f946461so54385885a.2
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 17:06:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wwTts-0001YH-O4
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 20:11:24 -0400
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
+ id 1wwTtq-00074Q-RL
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 20:11:24 -0400
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-5b45f1cd80eso483431e87.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 17:11:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787098269; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ZQP8aFqpWGU0QnPPj9gkjJ5uxdWzPNJ7GqWJjqJLnnWMgnrxOf+YmTwrBJss6YbcSs
+ wqnBTDunkceKYoMJCT9q0aKgCwt3I0aVJUxvccYsYHJtOOtFx8iG1ltbhkPQnuhhgO8x
+ 744wupyXq8htH8HI/3bHQ9C0m4zSH7/MsimUkIe+Ibl6tTNPcs7x/hxdw+YvrkdKJnyi
+ NefsACpUEaBr1ef0PoGn3cb3pKWt/VsQskQ7wxU7XL9TzgqtQ8EZHkv6xKrSAapq9Mvd
+ 3hAhGnK0R35v9XIFfuYlQhI4xz79ys612PpE7HPJ1i1dFlIeAyplOaJJYQ/XTgoFhhm0
+ w4/Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Ytrxr6B4JnhFaOKLKqOgiBfz6miQWhjD87khaglm1As=;
+ fh=sPnp61a2YNNsKkD0W3RUEF+042aNl9Quj94CbgGh8Xs=;
+ b=c9qbfuMxd9FdRCaUMCzo36g9AMp2gf68uv58C0/cOp4rM7LjSUYVKtA6sefSKB/CES
+ HZBnK+V/JuJvLmC8hqlJprAGdDMtyX1Tr+uySdHaiQ45Of1djUEERABwhxtHEZyBio0d
+ BFCFrnxzNA+XGgR9kDtHjyASyhsFSKtmPzNaw7jY8nFVBArvHkN99lr61i07kSM5Q6gy
+ N/2M/zZ91Bzjj88q5QIcDEPlB+Hv5GQqBkar2ACvEGxMljCQiP3NpUnALouB8BzMF1kD
+ Gpl7K5h3qFJcV9Sf1oa9vTbP6e5lfpwZysLg0jBsrGFoFcSTecUmmYkXMkAvBjdfwzaK
+ 0Grw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787097984; x=1787702784; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=I87KWitpbM0qff4HsDIQwGLB0Ohy3nvtNNU0aaLa2Ek=;
- b=TJsr8kI+2OxEeq0QTGdsTW5XTddWJBhmSJpIvvmn672HNs47qZiC7hzQIkMj8cib5B
- s0p285CwMtgDlI+zNEYHJwOf8SI7obqulP1Gak8aO40Qvtv20zh6CfmdM3iuum9OB0qV
- VNlbJ+fWEp/UkwvW6hMVvBeVbsbEuwXW1584n7dy0YvCQKUurKl3kNjwJPYBPUnbY/yT
- aYOyVpBECmMJRmrOEwqoDkfEAPrdwp0GOiHZlS0PAdzFAlbotdYyu+D8Y0w/9bh88XOd
- 3zp/Sl98G1iTf5je41xLSZlO/Yqh6fCIuvpIsko79VLe1tDlop3vbCTXEYiX/wG3T4Vg
- 9EoQ==
+ d=gmail.com; s=20251104; t=1787098269; x=1787703069; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=Ytrxr6B4JnhFaOKLKqOgiBfz6miQWhjD87khaglm1As=;
+ b=Eo1aueG34hvMphCv36rGYSDhMSw/2xBbR3JOufuMkOZOlo+s+gSEiYsZkzKChwrJWU
+ xEG2Sha6Z4ZD1khT72kzS76ptiNThMA8DG6xY0xFR877Y+Z3hhR1d9tdIaJRZcJNr32+
+ kriivT2Vb8qSBJcMuZQl/zCi5cplWINgxDgSeyiOBTdsgwae+8B0JOwo0314JgZJi3FG
+ B2BVi0eGG6zkD0OgWBi5rWCFkWxz8tRKyQDk5+MmEJUkIR9jfg6/n0Bc4IbMAKyrXHZx
+ UF7YRxJzrDA95/eq2PFBn+WJ/J3erVkZo+XRzWMnRMawkP34i/Bu/5NtxCOf65jUiThB
+ /5Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787097984; x=1787702784;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=I87KWitpbM0qff4HsDIQwGLB0Ohy3nvtNNU0aaLa2Ek=;
- b=euVAy7Sb4GVSQr1ZPT6FuyKwBrcOsFNdeiEuciGKiPjGhhAT7ZHa9BZ1XhTigkomXZ
- p8o82YRqnvKxwGL0aWn4SXLz12YnZVmfl26Uhj1PyRlegn7WUk9cbtc6xavUOUtXW5bs
- 9d6zSx4KtiqSZCsIPwi4GTXMjqmc/zN1sb1u/U3HMyNVXj947HCJ9kyO2OaqbAinU5M6
- r8Wk7eKvZd1KOIbByFUY448d+lHlaNjPusguyTheZJ4X3Im8c0DQeBMICzLZKq2AIk8O
- uACNTPRSuDOhrPnxZ65+PhAa6kupdHlDQB/RtDwV7kH3q1E26xoQgOWQ5GqjwkKYO1FR
- l8ww==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rpf43KpqFX0IiulnncnkfULzC5UBchAzEBN0MVgICXKwiyJ40Pjv8Sd0vG7hBChwT3TOynN468MHD0u@nongnu.org
-X-Gm-Message-State: AOJu0Yw4M+24cYXgyR7fQIrYN4eC+Yj2v30Yg6w6UMpOpXuxw15Lpz5O
- U0+6MGxitXDaG+l7uR4GJgUDTiuewASQyCqZjF2sj/65VmIsvnBwSUncCT/o6P6E7tV3nchRmn1
- 5ajiRugvBBlHY7/UIEpbimvvOgl3ngNF1cVwZY8+ws+5J0HReep28JnxygVSufnG8DGfU
-X-Gm-Gg: AR+sD1100FkEEV+V75YPP1SCgYZ0utUj6L98bAqvNP0lPsGtI0lRFon8FP5NiJqZVg8
- TPltTzSeLyRjIoTTOxIlMZvtQ4OfP5ekJCs7ig+GAmuWBiYH+iNhOqYFM+LJY5wFh5qS8Aqncot
- duOcjXWLblv+Ao0KSa2yIGmriOrSjcV/B+OUQv3q/ijViXlWSq9kFbOZ10B10VmDfoqhIVF7Fla
- c4DEJKS2+l7Y0/vXshWUO5VWcOoVE/RfLASjhzmHZ+T/0xV6JsRaWdkOf9CNMupTwk6ay9XaKc1
- 4IY105ipXPkXFHyywq8bSqtG4v032xMqPzT1g+LP7owEgvucgczvhHnezaknK5Z1O5JkLNomUAy
- X4q/OcR+ea6hSoBnQuxuc8zxVLOACwtsZ7FU=
-X-Received: by 2002:a05:620a:1994:b0:930:9585:e08e with SMTP id
- af79cd13be357-9371e205015mr106384785a.10.1787097983741; 
- Tue, 18 Aug 2026 17:06:23 -0700 (PDT)
-X-Received: by 2002:a05:620a:1994:b0:930:9585:e08e with SMTP id
- af79cd13be357-9371e205015mr106380085a.10.1787097983240; 
- Tue, 18 Aug 2026 17:06:23 -0700 (PDT)
-Received: from [192.168.69.231] (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499a9e78496sm14285555e9.2.2026.08.18.17.06.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Aug 2026 17:06:21 -0700 (PDT)
-Message-ID: <53ae0209-0fd9-4f62-ac4b-f70b4f92c235@oss.qualcomm.com>
-Date: Wed, 19 Aug 2026 02:06:21 +0200
+ d=1e100.net; s=20251104; t=1787098269; x=1787703069;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=Ytrxr6B4JnhFaOKLKqOgiBfz6miQWhjD87khaglm1As=;
+ b=cYWbpKv71Olr6zGx6r6x7sm1+6+vAxzDPD/B6xi1GhYITFHDgf9vnSY+dt8Yi4D/AR
+ U3aAgf2mXg8rvv1NRrrPQVg1A6gaGlePxlfgPmvY1Naa1XSt0SxvzA7SCp+2UKfS4tv2
+ xvhhG9ExHJWo57aX9bX4eY4Vz0JmVlgtz7vdGKVwUqioXbA/NYEAx1VCAKaF28TIxQT1
+ 4D99OvQW0KmftMEs9IODu3LquPcf33sAHK1429+dpdwzdRh05juiOD3SWOD8pljynC20
+ qN7pFzcmPJeEGdDw8q88aQQGjZAVWGECGOqpdIhq8JU64pCHWD8Oq3cqfAKtdauPvGnO
+ mSZg==
+X-Gm-Message-State: AOJu0YyC5WV+WzgAm7jJRpNar/hRL1E0vjZe0FntAuitGJX7Ikc2zn70
+ 02/2ONIgVIXqmE+v2wLmZnya0gd5VV1jZ8lChzE+Mbkq+EWb5ptOy3WPhmteLrzhz3aMRiu2t9O
+ /LJYQq6DJA7snvRhp57RxZcHM4UkIwwo=
+X-Gm-Gg: AR+sD11L0ra5CzKRpxOSpc461O5epAN5gt2/5Gse4isSc95UWQjxuicaVID6UDAUX1g
+ hY6E5i6CtNj3pA6PLu2Z9b3x3DK+55jlxgw/FuOpni8A82kneHHt+g5RlaAGqiylktpfPEBYkWy
+ HfWwV34kfrZtsMUfUZpRSfwWM8Lvtx0dLOl2AKk2PPW8U+Sef0OB+RD2IcgGU+PlCkZYEykGZOQ
+ cezxanHCih3g+7N9RDoOXb3iJj4Fcj67OpFYYsuJxWwSczblN46x8J4/971JQ+Xnjtp8jNzpTvi
+ kKFuxnq69TyhuRqJ5bxW7xkSVyIz95YkHs69qMHHlhWbY70Nsc3316ZvCTxA93dn1ntmqEOutKc
+ jDPU=
+X-Received: by 2002:a05:6512:2308:b0:5b0:eda:de1f with SMTP id
+ 2adb3069b0e04-5b478b5158cmr143016e87.6.1787098269093; Tue, 18 Aug 2026
+ 17:11:09 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/misc/aspeed_scu: Set both AST2600 protection key
- registers on reset
-Content-Language: en-US
-To: Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Kane Chen <kane_chen@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
- qemu-arm@nongnu.org
-References: <20260818-dev-ast2600-hw-prot-key-reset-v1-1-5dc3de64c247@codeconstruct.com.au>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260818-dev-ast2600-hw-prot-key-reset-v1-1-5dc3de64c247@codeconstruct.com.au>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: T52_a3ozowIbbhFSGdL3J9bfVpQ0FzD4
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDE3NyBTYWx0ZWRfX+fErNWpBGHlK
- bBOtm+uxLUJ6Es0JNaMFwmIjuTJLlO1X9eFdgfLOkRG5El//Apju7nEs9gWHsnK6/gVy5VsQDDp
- 19zH+5Ge6DffAnCN6JF3cGbZ56rAsRw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE3NyBTYWx0ZWRfX+rXC4t0Xf17L
- 7dG+ec6R7jVoEHTwx2P9yDhvLu14qUl1LoSYKJLQ1BVky2u94hcuzR1wpPwtJmRHNA2oNecnXnJ
- /hrqfX0NKKzoxj9stCCB572oLer8P9yaf+3ELIVPZXX5QJ+1n3JLhhq5Jz6dsDIxis7KY8l4qlH
- j0R0FdN7eY6vqWsOrXVIgjp9189jCLiZ1TYcX+NnUhAIKaVxFX/82bfZVRiJgE72HE8xz/lHk8g
- jmxPfD9yNjXgc3325qB06IFQ9sGmzCHSJ7Ed4lM634lBGiq2EHA+N7I0Hq6DX1SQCnNluxnHkJa
- C2fgu+5V7gUi0jiFvZ8XFRh9cMUIdmPD2CDGOvYFmOp0/+VvnBSvwyKvGwD3BGU4MxnGhquOSJY
- JNorE1DYV8CukdScNeTf9tFTgGRChmmv73o+ICBv/dz8umHRHWvzh2+Ry1YYBpuA849jLWK2t8M
- eGedqerGLzctG1+BRaQ==
-X-Authority-Analysis: v=2.4 cv=aNrAb79m c=1 sm=1 tr=0 ts=6a84f380 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=7KBfExy5AAAA:8 a=69wJf7TsAAAA:8 a=EUspDBNiAAAA:8 a=n9CPKyDd1ScNi2Ms_7YA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
- a=eL7OMsOqQ-6kYQPn45L1:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: T52_a3ozowIbbhFSGdL3J9bfVpQ0FzD4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-18_05,2026-08-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0
- malwarescore=0 suspectscore=0 priorityscore=1501 phishscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608180177
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260818174247.649526-1-mattst88@gmail.com>
+ <20260818174247.649526-5-mattst88@gmail.com>
+ <23eaea1b-e3bf-4845-8942-0e6ffcf056ca@oss.qualcomm.com>
+In-Reply-To: <23eaea1b-e3bf-4845-8942-0e6ffcf056ca@oss.qualcomm.com>
+From: Matt Turner <mattst88@gmail.com>
+Date: Tue, 18 Aug 2026 20:10:56 -0400
+X-Gm-Features: AcwNN1W5ijnt9tnRKKAoNXvyFcvXkqW8020AGWguZ5pBBCLOWoOlnJUmGRUHz6c
+Message-ID: <CAEdQ38EwBQJp4hsWfvmCiZNOkghEESzZ7yU3LaQeQ1AzMSnj5w@mail.gmail.com>
+Subject: Re: [PATCH 4/8] RFC: tcg: probe the TB jump cache inline instead of
+ calling a helper
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
+ philmd@mailo.com, zhao1.liu@intel.com, laurent@vivier.eu, deller@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=mattst88@gmail.com; helo=mail-lf1-x130.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -160,55 +122,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/8/26 03:43, Andrew Jeffery wrote:
-> Currently, booting Linux on the ast2600-evb machine via -kernel results
-> in a lot of warnings about failing to apply pinmux configuration when
-> binding drivers:
-> 
->      [    7.339307][    T1] Creating 5 MTD partitions on "bmc":
->      [    7.340402][    T1] 0x000000000000-0x0000000e0000 : "u-boot"
->      [    7.513755][    T1] 0x0000000e0000-0x000000100000 : "u-boot-env"
->      [    7.664219][    T1] 0x000000100000-0x000000a00000 : "kernel"
->      [    7.826974][    T1] 0x000000a00000-0x000002a00000 : "rofs"
->      [    8.026666][    T1] 0x000002a00000-0x000004000000 : "rwfs"
->      [    8.201612][    T1] spi-aspeed-smc 1e630000.spi: error -EPERM: Error applying setting, reverse things back
->      [    8.370835][    T1] spi-aspeed-smc 1e630000.spi: Calibration area too uniform, using low speed
->      [    8.371131][    T1] spi-aspeed-smc 1e630000.spi: Force to dts configuration 100000kHz.
->      [    8.371500][    T1] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:4 [0x406c0741]
->      [    8.766797][    T1] mdio-aspeed 1e650000.mdio: error -EPERM: Error applying setting, reverse things back
->      [    8.906008][    T1] mdio-aspeed 1e650008.mdio: error -EPERM: Error applying setting, reverse things back
->      [    9.039240][    T1] mdio-aspeed 1e650010.mdio: error -EPERM: Error applying setting, reverse things back
->      [    9.147942][    T1] mdio-aspeed 1e650018.mdio: error -EPERM: Error applying setting, reverse things back
-> 
-> The pinmux configuration fails because the SCU is not unlocked.
-> 
-> Set both SCU protection keys for the AST2600. Further, set them
-> such that they behave accordance with the read value documented
-> by the datasheet. The new arrangement now upholds the comment in
-> hw/arm/aspeed.c regarding passing -kernel on the qemu command-line.
-> 
->      [    7.568170][    T1] Creating 5 MTD partitions on "bmc":
->      [    7.569330][    T1] 0x000000000000-0x0000000e0000 : "u-boot"
->      [    7.740372][    T1] 0x0000000e0000-0x000000100000 : "u-boot-env"
->      [    7.883570][    T1] 0x000000100000-0x000000a00000 : "kernel"
->      [    8.041004][    T1] 0x000000a00000-0x000002a00000 : "rofs"
->      [    8.196824][    T1] 0x000002a00000-0x000004000000 : "rwfs"
->      [    8.547037][    T1] spi-aspeed-smc 1e630000.spi: Calibration area too uniform, using low speed
->      [    8.547320][    T1] spi-aspeed-smc 1e630000.spi: Force to dts configuration 100000kHz.
->      [    8.547642][    T1] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:4 [0x406c0741]
->      [    9.494235][    T1] ftgmac100 1e660000.ethernet: Read MAC address 52:54:00:12:34:56 from chip
->      [    9.531186][    T1] RTL8211E Gigabit Ethernet 1e650000.mdio-1:00: attached PHY driver (mii_bus:phy_addr=1e650000.mdio-1:00,
-> 
-> Fixes: e09cf36321f6 ("hw: aspeed_scu: Add AST2600 support")
-> Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-> ---
-> I ran into this issue while improving test coverage in my patch review
-> process.
-> ---
->   hw/misc/aspeed_scu.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+On Tue, Aug 18, 2026 at 5:51=E2=80=AFPM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
+>
+> On 8/18/2026 10:42 AM, Matt Turner wrote:
+> > Every indirect branch that cannot use goto_tb ends in
+> > tcg_gen_lookup_and_goto_ptr(), which calls helper_lookup_tb_ptr(). For =
+an
+> > emulated compiler that is 8.4 billion helper calls in a single translat=
+ion
+> > unit: 24.6% of all TB exits take this path, because jsr/ret/jmp have a
+> > register destination and because goto_tb is restricted to same-page
+> > targets.
+> >
+> > The helper itself is already tight, but each call pays for a call frame=
+,
+> > the can_do_io store, the get_tb_cpu_state() indirect call through
+> > TCGCPUOps, curr_cflags(), and a breakpoint check, before it gets to the
+> > jump cache probe that almost always hits (95.8% for this workload).
+> >
+> > Emit the probe inline instead. The destination PC is already in a TCG
+> > temp, and the flags and cflags the destination must match are constants=
+ at
+> > translation time, so the fast path is a hash, three guarded loads and a
+> > goto_ptr. Only a miss calls the helper, which still owns filling the ca=
+che.
+> >
+> > Two details matter for the generated code. The flags and cflags guards =
+are
+> > folded into a single aligned 64-bit load and compare, since the fields =
+are
+> > adjacent. And each path emits its own goto_ptr rather than branching to=
+ a
+> > shared one: a temp live across the label is spilled and reloaded on eve=
+ry
+> > dispatch, which cost 6.3% on its own.
+> >
+> > Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling
+> > the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host, LTO
+> > build, on top of the preceding three patches:
+> >
+> >     before: 1,402,816,253,499 instructions
+> >     after:    890,713,633,237 instructions   -36.51%
+> >
+> >     before: 115.75s wall clock
+> >     after:   84.44s wall clock               -27.05%
+> >
+> > The gap between the two is the point at which this stops being a
+> > straight-line win: the helper call was highly predictable work that the
+> > host pipelined well, so removing it retires far fewer instructions than=
+ it
+> > saves time. IPC falls from 2.48 to 2.15 across this patch for that reas=
+on.
+> >
+> > Despite emitting more code, this also reduces instruction cache pressur=
+e,
+> > because a dispatch no longer jumps into qemu's .text and evicts transla=
+ted
+> > code:
+> >
+> >     before: 11,476,318,964 L1-icache-load-misses
+> >     after:   6,990,186,701 L1-icache-load-misses   -39.1%
+> >
+> > The mechanism is visible directly in a profile: helper_lookup_tb_ptr()
+> > falls from 30.97% of samples to 0.42%, and qemu's own .text falls from
+> > 38.9% to 5.4%, with the balance moving into generated code.
+> >
+> > Combined with the three preceding patches, against an unmodified LTO
+> > build, 1,647,901,588,726 instructions fall to 890,713,633,237, or -45.9=
+5%.
+> > The emulated compiler produces byte-identical output throughout.
+> >
+> > Open issues, hence RFC:
+> >
+> > - The flags/cflags guards use the *current* TB's values as constants. T=
+hat
+> >   assumes the CPU flags feeding get_tb_cpu_state() cannot change within=
+ a
+> >   TB, and that curr_cflags() cannot change under a running TB (gdb
+> >   attaching to enable single-step would). Both need to be established o=
+r
+> >   the values need to be loaded at runtime.
+> > - tcg/tcg-op.c has no business including accel/tcg/tb-jmp-cache.h or
+> >   knowing the CPUJumpCache layout. The probe likely belongs in accel/tc=
+g
+> >   with a small emit helper exported from tcg/.
+> > - The jump cache entry is read without qatomic_read(); entries are
+> >   invalidated concurrently by setting tb to NULL.
+> > - Only wired up for alpha so far, and only for 64-bit guest PCs.
+> >
+> > Signed-off-by: Matt Turner <mattst88@gmail.com>
+> > ---
+> >  include/tcg/tcg-op-common.h |  2 +
+> >  target/alpha/translate.c    |  4 +-
+> >  tcg/tcg-op.c                | 79 +++++++++++++++++++++++++++++++++++++
+> >  3 files changed, 83 insertions(+), 2 deletions(-)
+> >
+>
+> This change breaks following tcg test:
+> alpha-linux-user/gdbstub-follow-fork-mode-child
+>
+> Reproduce with:
+> ninja -C build &&
+> make -C build/tests/tcg/alpha-linux-user/ &&
+> make -C build/tests/tcg/alpha-linux-user/ run-gdbstub-follow-fork-mode-ch=
+ild
+>
+> Need gdb-multiarch and gcc-alpha-linux-gnu installed on your machine.
 
-Cc: qemu-stable@nongnu.org
-Fixes: e09cf36321f ("hw: aspeed_scu: Add AST2600 support")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Thanks! I had gdb available, I apparently just needed to configure
+with `--cross-prefix-alpha=3Dalpha-unknown-linux-gnu-` to get this test
+to run.
+
+Fixed locally.
 
