@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F493C5DF81
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 15:25:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33F17C5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 15:25:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwiA1-0005yD-FY; Wed, 19 Aug 2026 11:25:01 -0400
+	id 1wwiA2-0005yr-Vc; Wed, 19 Aug 2026 11:25:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1wwiA0-0005xM-Hk; Wed, 19 Aug 2026 11:25:00 -0400
+ id 1wwi9w-0005v8-A0; Wed, 19 Aug 2026 11:24:57 -0400
 Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1wwi9y-0005np-8f; Wed, 19 Aug 2026 11:25:00 -0400
+ id 1wwi9s-0005mb-35; Wed, 19 Aug 2026 11:24:54 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 31F4060AAA;
- Wed, 19 Aug 2026 15:24:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3CF1F000E9;
- Wed, 19 Aug 2026 15:24:54 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 0305E60DC0;
+ Wed, 19 Aug 2026 15:24:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A171F000E9;
+ Wed, 19 Aug 2026 15:24:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1787153096;
- bh=M0g8prnLZTF2UJq7FAuexAvTsNGXlcwIKLz2CKU78aI=;
+ s=k20260515; t=1787153090;
+ bh=GAblJtoF1ite2nCaZlx6g3pEY9g6y0mrLZhXuRuNLnA=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc;
- b=Mj9vJsW9tihBT7qT6SlhvPESbH0JkVbRmwWuREt3j47tIX/HeH8CH9FqpmhQBN8ry
- M37v7b1L//gPMiUfm0+1PxUP4uw9xZxEZQtdCc1GciyfRW2mXtKaIaRnp6b+3dyB19
- PU9j0/29xlreEzEUMSnqXEaNzhXodIj7QGlZlP9wP45tteczpvtH8Bzh5QAxkVXSEs
- 5Vr5T2c2iK8IYb0rOINwJuDHWpv18oqpW+nDfgsb4WF6fkDLFLPbUW11oNOIv9zNT1
- wn8GlNwDc8PWVdPnQfqU0/X+gaeAqBE1alviAZz5oEtJEdjcsGv00gV1iWjwbL4gWz
- IdRs/aSTpE7AA==
+ b=cCUtwdV+iF4zexxzawMydBF/OdtWEPkwuC5O+zMOsij5sn6LcON20ghGPZHxa3eTU
+ 9XVc/v4mw10WC8e1nP7SlzrQSfpE9Czi5befPlNBNCmg4j48hFzGdaIOtLapICC08H
+ sAgHZWfO2wTSauC3ImrYOv57cMCyC+XJsGlY/2CgAdHQRA9d2G+b1xKl5/YW0quD0g
+ yMyhiJOM/6z2rRugOXtC62Fl5a37ECIYwPozbu8kdwnRVrrxSAz+Gr4JgsUAZfRNjY
+ yG5r4+Vr2l1dU7WtVNYpFSKb/U3IDGX+BR1DIAnnwT2EkX5tdeVyx7kplmLuTv8Xw+
+ 3ae5/1gXgd6bA==
 From: Daniel Gomez <da.gomez@kernel.org>
-Date: Wed, 19 Aug 2026 17:24:08 +0200
-Subject: [PATCH v2 6/7] hw/nvme: drop DMA-path IOV_MAX guard
+Date: Wed, 19 Aug 2026 17:24:06 +0200
+Subject: [PATCH v2 4/7] dma-helpers: chunk dma_blk_cb at IOV_MAX
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260819-align-nvme-mdts-with-linux-v2-6-351ac2dfed64@samsung.com>
+Message-Id: <20260819-align-nvme-mdts-with-linux-v2-4-351ac2dfed64@samsung.com>
 References: <20260819-align-nvme-mdts-with-linux-v2-0-351ac2dfed64@samsung.com>
 In-Reply-To: <20260819-align-nvme-mdts-with-linux-v2-0-351ac2dfed64@samsung.com>
 To: qemu-devel@nongnu.org
@@ -50,11 +50,11 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  qemu-block@nongnu.org, Daniel Gomez <da.gomez@kernel.org>, 
  Daniel Gomez <da.gomez@samsung.com>, GOST <gost.dev@samsung.com>
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1787153076; l=757;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1787153075; l=969;
  i=da.gomez@samsung.com; s=20240621; h=from:subject:message-id;
- bh=TerySl42tlCdTV7qZGn08VqgwSosK3aNu3nk1Pmru7o=;
- b=C8GPd1K9SHmzLDwFlU+ALqh2UCZpAn/YsnhxdbvMWMWNWprc08QsgIcNyy+PIBabBoh0or4ZO
- sGcoT/7d+jGC3mg30pYaHRiLvLWATiroagTfCXik3XY4Gx3RbrJ2xFb
+ bh=PlgFs9C/2C5N/Yk2iUBNUFtNgCYAxRiq7T7jRH6XWbg=;
+ b=A59Ufv+0QaSmycUHol4UBil+QOn+nexDIQr3jY7NN8mny9aQ2/grsRjRxcdZQQ5s+WBnFXHio
+ ef+gsJkmqNjAGHyCyGEHiqJCEEepF8adoVc2t5nlbFgsIBpn4nVXLxP
 X-Developer-Key: i=da.gomez@samsung.com; a=ed25519;
  pk=BqYk31UHkmv0WZShES6pIZcdmPPGay5LbzifAdZ2Ia4=
 Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
@@ -82,30 +82,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Gomez <da.gomez@samsung.com>
 
-dma_blk_cb() now chunks at IOV_MAX, so the per-mapping cap on sg->qsg
-in nvme_map_addr() is redundant. Drop it.
+dma_blk_cb() submits dbs->iov to io_func() in one shot, so callers
+must keep dbs->iov.niov below IOV_MAX or the host preadv()/pwritev()
+rejects the call.
+
+Break the accumulation loop when niov reaches IOV_MAX. The existing
+re-entry path resumes mapping and submits a follow-up chunk under
+the same AIOCB, so callers no longer carry that constraint.
 
 Suggested-by: Klaus Jensen <k.jensen@samsung.com>
 Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
 ---
- hw/nvme/ctrl.c | 4 ----
- 1 file changed, 4 deletions(-)
+ system/dma-helpers.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index a24a674a4c5..7861d8f2521 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -872,10 +872,6 @@ static uint16_t nvme_map_addr(NvmeCtrl *n, NvmeSg *sg, hwaddr addr, size_t len)
-         return NVME_INVALID_USE_OF_CMB | NVME_DNR;
+diff --git a/system/dma-helpers.c b/system/dma-helpers.c
+index d4fd33a3d4c..613fa548669 100644
+--- a/system/dma-helpers.c
++++ b/system/dma-helpers.c
+@@ -175,6 +175,9 @@ static void dma_blk_cb(void *opaque, int ret)
+             dbs->sg_cur_byte = 0;
+             ++dbs->sg_cur_index;
+         }
++        if (dbs->iov.niov >= IOV_MAX) {
++            break;
++        }
      }
  
--    if (sg->qsg.nsg + 1 > IOV_MAX) {
--        goto max_mappings_exceeded;
--    }
--
-     qemu_sglist_add(&sg->qsg, addr, len);
- 
-     return NVME_SUCCESS;
+     if (dbs->iov.size == 0) {
 
 -- 
 2.55.0
