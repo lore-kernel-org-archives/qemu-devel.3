@@ -4,50 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E96ECC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 07:13:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85358C5DF6D
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 07:17:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwaTl-0002i4-Mq; Wed, 19 Aug 2026 03:12:53 -0400
+	id 1wwaXw-0004Qr-5y; Wed, 19 Aug 2026 03:17:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wwaTk-0002gx-4o
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 03:12:52 -0400
-Received: from smtpout8.mo537.mail-out.ovh.net ([51.210.91.27])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wwaXv-0004QK-7o
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 03:17:11 -0400
+Received: from smtpout7.mo538.mail-out.ovh.net ([51.210.91.36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wwaTi-0004l5-KZ
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 03:12:51 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [79.137.60.225])
- by mo537.mail-out.ovh.net (Postfix) with ESMTPS id 4hPySw43LMz48pW;
- Wed, 19 Aug 2026 07:12:48 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <npiggin@gmail.com>; Wed, 19 Aug 2026 07:12:48 +0000 (UTC)
-Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.54.94])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4hPySw3GRnz6SRH;
- Wed, 19 Aug 2026 07:12:48 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.1])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wwaXt-0005PR-IL
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 03:17:10 -0400
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net [79.137.60.37])
+ by mo538.mail-out.ovh.net (Postfix) with ESMTPS id 4hPyYs40q3z6GmC;
+ Wed, 19 Aug 2026 07:17:04 +0000 (UTC)
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net. [127.0.0.1])
+ by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Wed, 19 Aug 2026 07:17:04 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.231.13])
+ by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4hPyYr64tdz1xq9; Wed, 19 Aug 2026 07:17:04 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.3])
  (Authenticated sender: clg@kaod.org)
- by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id A138B12E3F50;
- Wed, 19 Aug 2026 07:12:47 +0000 (UTC)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 890C8203F4E; 
+ Wed, 19 Aug 2026 07:17:03 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-95G00157f501f9-163f-4e50-9736-d2e6024e0b8c,
+ (GARM-97G0020163bc6f-cb74-4ebd-ab05-b03f02693812,
  C24CD8B75EED539221ACEA448CE881038350F7ED) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 2.10.174.70
-Message-ID: <4731356a-532f-4ecf-9f0b-ae7a6ac5f77e@kaod.org>
-Date: Wed, 19 Aug 2026 09:12:46 +0200
+Message-ID: <0be07514-48df-4168-8acf-8b082b3bebf5@kaod.org>
+Date: Wed, 19 Aug 2026 09:17:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Add myself as a reviewer for PPC KVM and
- sPAPR
-To: Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Gautam Menghani <gautam@linux.ibm.com>
-References: <20260819050545.21232-1-amachhiw@linux.ibm.com>
+Subject: Re: [PATCH] hw/misc/aspeed_scu: Set both AST2600 protection key
+ registers on reset
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org
+References: <20260818-dev-ast2600-hw-prot-key-reset-v1-1-5dc3de64c247@codeconstruct.com.au>
+ <53ae0209-0fd9-4f62-ac4b-f70b4f92c235@oss.qualcomm.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -92,29 +95,28 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260819050545.21232-1-amachhiw@linux.ibm.com>
+In-Reply-To: <53ae0209-0fd9-4f62-ac4b-f70b4f92c235@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 6300535881001708641
+x-ovh-tracer-id: 6372593474428709948
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTFh7o15b17Lj4HYE7CewJrIIRywqLGDsiR5FHYwfwjnasy3IvLrhktK+5JqNaFFM4KudkO6LgXQzcpkGhjiHdatSuST99gZbHBPzUBjcK7W/vf+XAi+sTQt67SzYKdREfcElvJy3FfrhoE1ubGNCrwi64WiSAN3LZSrwoFDDOuN4z3S+wgNw8eUjrMjPZchwc+pybtgbQ3URu4vU+mH+tBh4118Gn78hDU1RBL9wOgyXAH+hu8b3CtPP9efY3HNnXLfG1k/Gpax1hHCMSZuWvqJbNzyd8pSoZRH4eAgE/D6y63RTq7R4S2pHVnBzJVmKjeqbwID9/ZwVds+PiIJiYjuOzj6sxZy0w9gANbvnu9UCbOtY61CZnncQH9h4W3SIGi2CkYQDxCT4VIC2oSlpY4yOVV6v5v01nLNrQuNeGl5wg5Cz8vEHjsoiW2wrXjPqgbIHGjDJy7aDoCJbUq83hwcZkx/0DpRD3LvkQ0JPN4CJZwWHL4TzTMgMdPtUVFfwMNFfT8LasajvN5S9p0XLCIL4SLAkKKUDx1PZfxAx5wJGLvEo2MMhasYYk4uMT4WuZmYMJfVHm9QGf+zeXm3oKJ3hcB5W/69qDzTHmSbcoGkPk3HM3xtJx+EIljs6gNsFE3+MyWb9BO/kyzI18ei/cESR8e34/3uCmt3tsOr9JaIyw
-DKIM-Signature: a=rsa-sha256; bh=LSlsoz84kWmNfwTsZTuCwZUNYuh+7ms3+MBO/iRnNN4=; 
+X-VR-SPAMCAUSE: dmFkZTFLMEFic37NKTPNoSX4CEehzjG4JJ1JAXkq3RAonRMJPQKoIfzVAi6v/Nqx8/zftyX4ARqXps+M3hK1duJxIiJmuV8E4GFYmgwzef0P1DcEy/yfDknXAyRFr5qTt2lG9zqWZvAHCNk5slQv6pjwXtEvICiaOiRVAeLFmx3NDYVsi/irEdOSVuy1INBl73QTMrULSXR6EGrsSPHwOBrlqxMflp0AiHYPRhEVnUFPhoaowynnPPd1dF1CxZ2BEmx8ukYWOg8Rqh4BcoCbeZLxJz5DiBJaOcoYMUwvMRzqAAubq4r8Mxq7Fhq/hmEiuhqVPfGV9ijC3o8Re9vLsGDx+ybkUaMR6RrHQBEAKcCPpuR9IUaIJJpCYgAv10uvbO4TgxNuVPCMa2NWidiSpGX9djQIEPwsSNFJ5fdlL4VoJiAB/5RCB2HJnypRzOBK7lQffR9SomY1lYCm2bn6ZIDOTHy0vBA0RXvPbu/1aTRbEg+ltZDOZ0gOUrnFNr4f++uIGGjPJwgxwkMA6TYIn/VVZSpHPXYpIFmBXQ2qUttaD2ORRg0dWdwLaPSEn+pwv3Uwse5unpqSM4hRa2+t6htgW9MVt3bHcP6ovOCgFLRMIOT4/3+t8MQMWpxzx/ZNut/KmD5VciijGteO5/+FcpF2A3ssE0T1ocr1x5lz1dWWXZFJAg
+DKIM-Signature: a=rsa-sha256; bh=VKYtOjsGmVINr7YaKfgmaZ+oiza2MPThdQUN37+BLYc=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1787123568; v=1;
- b=RW1DF2UbZYV5GmJvj4PqAcPn6xJ8krpe21shv2i612C9kQoq9mOHkHeRwDglKwlqc28GiQao
- fXnvFTQq9kC9eo2s/QT4+JSzKTd63XXiCBFkZ1BQy9hbyWTaqOC4USM8OuUPskaRjd66yqkmtW6
- ZDfWlmMe7smoqN5u+090tkpF2tYM65SCADNJoIMPKhSxS3+CoqxrHKxSpMvU9loIxL06Lcey3vt
- xWbn4bwkC3B1F682V009WEL50QfJWHwh6FUUfJV2zLZ6crEmPUcdxtpJWDoxuCCGavi9ccu5Rsq
- gUJpVGNy3BC3JNAVZEo2mDHlsibbYu0GXJHgdaZqxbPSA==
-Received-SPF: pass client-ip=51.210.91.27; envelope-from=clg@kaod.org;
- helo=smtpout8.mo537.mail-out.ovh.net
+ t=1787123826; v=1;
+ b=bDs/vceWLRfjGu9hQ3GzjYcRbLXiDatC7crc/8Duxi6ZuW6IBXKufUqz5freJpazPlHhuNra
+ pPhPtc5x6rbCYfnl/kdr/Ma40coyiy+Te648r3E4wW4imo0NLHkgetZPIf/XigZndMgPj9DWPmn
+ wiPzz0a021X/NwCmpqGGDA2GSw26/lKllQmLAn8Yxv1M2VThY2NKI//yFLha+Moo4Hypl0XlyQm
+ 5T19Ib+7Tr946GohKxmmpYQc0e3JaYQ81FStOBfJSK7fTXd512p7jVh7ZgrunlhhaAvhh+AX5/V
+ YX4TaUf+uOQFsqTNBmksFJu16vuMo4aP6H4Smai474/2Q==
+Received-SPF: pass client-ip=51.210.91.36; envelope-from=clg@kaod.org;
+ helo=smtpout7.mo538.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,44 +133,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/19/26 07:05, Amit Machhiwal wrote:
-> I have been contributing to PPC KVM and sPAPR (pseries) for some time now and
-> would like to get notified of incoming changes to help with code reviews.
+On 8/19/26 02:06, Philippe Mathieu-Daudé wrote:
+> On 18/8/26 03:43, Andrew Jeffery wrote:
+>> Currently, booting Linux on the ast2600-evb machine via -kernel results
+>> in a lot of warnings about failing to apply pinmux configuration when
+>> binding drivers:
+>>
+>>      [    7.339307][    T1] Creating 5 MTD partitions on "bmc":
+>>      [    7.340402][    T1] 0x000000000000-0x0000000e0000 : "u-boot"
+>>      [    7.513755][    T1] 0x0000000e0000-0x000000100000 : "u-boot-env"
+>>      [    7.664219][    T1] 0x000000100000-0x000000a00000 : "kernel"
+>>      [    7.826974][    T1] 0x000000a00000-0x000002a00000 : "rofs"
+>>      [    8.026666][    T1] 0x000002a00000-0x000004000000 : "rwfs"
+>>      [    8.201612][    T1] spi-aspeed-smc 1e630000.spi: error -EPERM: Error applying setting, reverse things back
+>>      [    8.370835][    T1] spi-aspeed-smc 1e630000.spi: Calibration area too uniform, using low speed
+>>      [    8.371131][    T1] spi-aspeed-smc 1e630000.spi: Force to dts configuration 100000kHz.
+>>      [    8.371500][    T1] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:4 [0x406c0741]
+>>      [    8.766797][    T1] mdio-aspeed 1e650000.mdio: error -EPERM: Error applying setting, reverse things back
+>>      [    8.906008][    T1] mdio-aspeed 1e650008.mdio: error -EPERM: Error applying setting, reverse things back
+>>      [    9.039240][    T1] mdio-aspeed 1e650010.mdio: error -EPERM: Error applying setting, reverse things back
+>>      [    9.147942][    T1] mdio-aspeed 1e650018.mdio: error -EPERM: Error applying setting, reverse things back
+>>
+>> The pinmux configuration fails because the SCU is not unlocked.
+>>
+>> Set both SCU protection keys for the AST2600. Further, set them
+>> such that they behave accordance with the read value documented
+>> by the datasheet. The new arrangement now upholds the comment in
+>> hw/arm/aspeed.c regarding passing -kernel on the qemu command-line.
+>>
+>>      [    7.568170][    T1] Creating 5 MTD partitions on "bmc":
+>>      [    7.569330][    T1] 0x000000000000-0x0000000e0000 : "u-boot"
+>>      [    7.740372][    T1] 0x0000000e0000-0x000000100000 : "u-boot-env"
+>>      [    7.883570][    T1] 0x000000100000-0x000000a00000 : "kernel"
+>>      [    8.041004][    T1] 0x000000a00000-0x000002a00000 : "rofs"
+>>      [    8.196824][    T1] 0x000002a00000-0x000004000000 : "rwfs"
+>>      [    8.547037][    T1] spi-aspeed-smc 1e630000.spi: Calibration area too uniform, using low speed
+>>      [    8.547320][    T1] spi-aspeed-smc 1e630000.spi: Force to dts configuration 100000kHz.
+>>      [    8.547642][    T1] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:4 [0x406c0741]
+>>      [    9.494235][    T1] ftgmac100 1e660000.ethernet: Read MAC address 52:54:00:12:34:56 from chip
+>>      [    9.531186][    T1] RTL8211E Gigabit Ethernet 1e650000.mdio-1:00: attached PHY driver (mii_bus:phy_addr=1e650000.mdio-1:00,
+>>
+>> Fixes: e09cf36321f6 ("hw: aspeed_scu: Add AST2600 support")
+>> Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+>> ---
+>> I ran into this issue while improving test coverage in my patch review
+>> process.
+>> ---
+>>   hw/misc/aspeed_scu.c | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-> ---
->   MAINTAINERS | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index b51f5c3e6022..1a1c77285d3d 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -497,6 +497,7 @@ F: tests/functional/aarch64/test_kvm.py
->   PPC KVM CPUs
->   M: Nicholas Piggin <npiggin@gmail.com>
->   R: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> +R: Amit Machhiwal <amachhiw@linux.ibm.com>
->   S: Odd Fixes
->   F: target/ppc/kvm.c
->   
-> @@ -1661,6 +1662,7 @@ F: tests/functional/ppc/test_40p.py
->   sPAPR (pseries)
->   M: Nicholas Piggin <npiggin@gmail.com>
->   M: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> +R: Amit Machhiwal <amachhiw@linux.ibm.com>
->   L: qemu-ppc@nongnu.org
->   S: Odd Fixes
->   F: hw/*/spapr*
-> 
-> base-commit: fa19879df1658f96ac07365fca8835b7decd6995
+> Cc: qemu-stable@nongnu.org
+> Fixes: e09cf36321f ("hw: aspeed_scu: Add AST2600 support")
 
-
-I would consider removing Nick since he has moved to other activities.
-  
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
+something is wrong with the above hash ?
 
 Thanks,
 
 C.
+
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+
 
