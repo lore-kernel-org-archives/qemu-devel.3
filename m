@@ -4,109 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95A2FC5DF85
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 17:30:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4020FC5DF85
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 17:34:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwk6p-00037X-4B; Wed, 19 Aug 2026 13:29:51 -0400
+	id 1wwkBF-0003vh-0G; Wed, 19 Aug 2026 13:34:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
- id 1wwk6o-00037P-4g
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:29:50 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
- id 1wwk6m-0008Ob-4c
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:29:49 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-c15df0c154dso17440166b.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 10:29:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787160586; cv=none;
- d=google.com; s=arc-20260327;
- b=Lq8VubNnoVchHSSEHXsxx0kmQG5UxQYZracTYTdIScN2VfC9EzU+PB5sDh2lhcSK8Y
- uy9gHEmfuz2vU/vcM7T6rrDfgU25d1YTCBkXqJ4OzsoE65onF9VE/+G0Vfba3ncw/8Y+
- aRt5O04K0Kn/GHtKxQ3FzJYu4e1AVkTfVDPmd5FbvKxPT3foZf7gzP0UjFmcxyjxynAy
- c9xADY+jD3IBPtFlRSavqiHKgp8EbCpEHkq8UFHr5Zej9xPrYnExuv3yCfOUzr9mPUjd
- NgLfAmeJDPnbxGavPSNabjF9V/s08BXkx9qxNOW8x5GZQQUSU1WZyk7nJdUVXEao3yXu
- mswQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=jQYWwBRYlv1mQNc/UJxEEsINb7/o3fw4nFM8bBK1n+w=;
- fh=QWNbaIaVQQou6IzIMV0ib5reMaT/Wr3DV7egi1JIcps=;
- b=jrN1N9mGMWVMaOYfA10tnUpmul7wMNtiDX+iCrzQiT5ZM5SZojuIWrcMxvfo3vT+BA
- RoLrqfYQWwdA54xQ7QP/8Q0OiLMu0zLlV8zUp5V2vWbBNGZjANWuKhMREZxNenrfedO3
- 8TAMKIbmNqQmsCz2kfidlUJ5gAc9BpT7axv9Mx4X+UeLmcyjBIlyh7seqX3ufSIA02jT
- ykPkv9fAj616fjpOQer6GHspRRzBBDlWt+eF+POH9T4ioUF9idb+VPdGgJw7Tc03Jfnu
- TyVdc4QaMk/6RAOTS/ZfVWhvVbpGrwd39GGsMcP02MQvSxiw4WxTR4PaqzN0kZShj3RY
- bLXQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cloud.ionos.com; s=google; t=1787160586; x=1787765386; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=jQYWwBRYlv1mQNc/UJxEEsINb7/o3fw4nFM8bBK1n+w=;
- b=iuHNcV11P+FfzwGKRxFUcYMpAIJyTH/LYvmzVXrabFK0FxzdRXF6PglRCSfJRPi7x6
- M92vx05jffhwM3CHb5UBvOrzuPh057bv8i/n/SuB7hhR5iiat4gbYs64nTx3GV9eJlpx
- 9bZtyr+4PhssLsmk28oiCYpijN3V7doSMu2bxpfmwolgRxJFZdajV4JeE9h5xBRlttbG
- DmgMb1IBvNeUi3IUIDoUx2cpBilMN4CmjLyfizDI2yJrERZxGCxFWXOR+RC4FPiJUlYR
- 29+fX2HubqmiSOE7xiIpy/9zjXb1AaNqGoms7Ov6IGKkvDHNRh3Se/qsOKLKCUiBbDsd
- Qehg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787160586; x=1787765386;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=jQYWwBRYlv1mQNc/UJxEEsINb7/o3fw4nFM8bBK1n+w=;
- b=Gm3Lc1ennUYg59uh6ly/gaSV520DoS6rkKnTlrRgGjuZe7NBOERJ5jA+ixiRlu3puf
- dJv57f8qLAE3tz9rBZn0M1fXoOcstNkuK4QveliN7yBAstrJXHXhuqZpmWfURn7twD6P
- EZh8x0oFwQfpS9g68CWHlcBc794wL1box1l+jaILqlcE9El6H0tvDiF5gr+rYc2VU8pM
- btzbB8eVlTl+NND25i8PGnSMYornZb05wL/V0pgXIWzSV32Uq12yWYpGP7oYME0NwNub
- WY59BTpr0tFMKMTz7CuwtzDZ7ZM8SDK1jWw+TMpM1Bd8I4ZkAJrUUSWZ70YyBVZ9JCLj
- Hfrg==
-X-Gm-Message-State: AOJu0YzREGctr8xyIgUfEb0hTJ7DYSgD9XZ9MkTfJct/RrRCzKBbkqnp
- 39/tRyJkd3478R70DaX6iS3nFplr1bLm7zh56IVHjFQOm/W8d5unD/8gVd8f7pE5T3EsS0Vba0X
- mxK9CyE8fh33YYt06iwsmwbPv2iADPIlaTQLbxOZaOw==
-X-Gm-Gg: AR+sD108So9/i6Loq1V883bHa4l/k5zJeYBQi26qE0oh+ORxcKke6q//9z1IXN7gGIA
- N2mV+MGwzsw1Ip2PvKTpzRcBmkdQrzura3DY/dCvf1Q3dcA2/sjuKqBK7+D4ntPkZwlzBc3p7YW
- P5T9J+qdIOtxsbMN1O1/S3HpBzHHcHraVcOu/H6doVqaUheOxWRq2Vu8FpIv+V1DJuvb/X2SLUp
- /ZzK2desr9gk02nn2KJ/wcXrMg4lye8e3Blvm8TOtP/TDKJAwtAwXsqEkgbhNFZydY5f9vrRXDk
- m427FabMgYQn4pNlCfiS1SYcDpdt24cQlQMyPbWenZHcbl4B+pskJ6/Vqjh85Y4kgD3DOlpKs/c
- eXg==
-X-Received: by 2002:a17:907:3e9a:b0:c15:c651:f28f with SMTP id
- a640c23a62f3a-c242e23c7a1mr233283866b.3.1787160585906; Wed, 19 Aug 2026
- 10:29:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <daniel@makrotopia.org>)
+ id 1wwkBC-0003vW-MR
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:34:22 -0400
+Received: from pidgin.makrotopia.org ([2a07:2ec0:3002::65])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel@makrotopia.org>)
+ id 1wwkBA-0000yg-UO
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:34:22 -0400
+Received: from local
+ by pidgin.makrotopia.org with esmtpsa (TLS1.3:TLS_AES_256_GCM_SHA384:256)
+ (Exim 4.99) (envelope-from <daniel@makrotopia.org>)
+ id 1wwkAw-000000005jz-0Mrn; Wed, 19 Aug 2026 17:34:06 +0000
+Date: Wed, 19 Aug 2026 18:34:01 +0100
+From: Daniel Golle <daniel@makrotopia.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Matthew Jackson <matthew@pq.io>, Alexander Graf <agraf@csgraf.de>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Kane-Chen-AS <kane_chen@aspeedtech.com>,
+ jack wang <163wangjack@gmail.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 0/4] hw/misc/applesmc: Implement writes, the shutdown
+ watchdog and get-key-type
+Message-ID: <20260819144000.a1b2c3@makrotopia.org>
+References: <cover.1787114994.git.daniel@makrotopia.org>
+ <CAFEAcA-kkKrduX6r85vLTFixRZ8pgvXpZDjR_-DTSz0h_+kDOg@mail.gmail.com>
 MIME-Version: 1.0
-References: <20260817202424.2901438-1-peterx@redhat.com>
- <20260817202424.2901438-9-peterx@redhat.com>
- <CAMGffEkzdOna79f561r6bMF3wgZw4h5LwHXhC3KBx_FqLNz+wQ@mail.gmail.com>
- <aoXJ1k8N_bzfXs5u@x1.local>
-In-Reply-To: <aoXJ1k8N_bzfXs5u@x1.local>
-From: Jinpu Wang <jinpu.wang@cloud.ionos.com>
-Date: Wed, 19 Aug 2026 19:29:34 +0200
-X-Gm-Features: AcwNN1UXolVCvYVr6JKHvVeTi6majltnLvdttCoTAL5TmPHCdwrElC1z3C3QR8A
-Message-ID: <CAMGffE=nd=R98vKQEnxWJUGpvXZYz0gx4bXe1sM84piQUYzuRw@mail.gmail.com>
-Subject: Re: [PATCH 08/10] migration/rdma: Sanity check
- RDMA_CONTROL_REGISTER_REQUEST chunks
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>, 
- Samuel Zhang <guoqing.zhang@amd.com>, Fabiano Rosas <farosas@suse.de>, 
- Juraj Marcin <jmarcin@redhat.com>, Yanfei Xu <yanfei.xu@bytedance.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: permerror client-ip=2a00:1450:4864:20::629;
- envelope-from=jinpu.wang@ionos.com; helo=mail-ej1-x629.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA-kkKrduX6r85vLTFixRZ8pgvXpZDjR_-DTSz0h_+kDOg@mail.gmail.com>
+Received-SPF: pass client-ip=2a07:2ec0:3002::65;
+ envelope-from=daniel@makrotopia.org; helo=pidgin.makrotopia.org
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,103 +65,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 19, 2026 at 5:21=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
->
-> On Wed, Aug 19, 2026 at 03:00:51PM +0200, Jinpu Wang wrote:
-> > On Mon, Aug 17, 2026 at 10:24=E2=80=AFPM Peter Xu <peterx@redhat.com> w=
-rote:
-> > >
-> > > The value received on wire for head.chunks when registering new RDMA
-> > > regions is not correctly checked.  Logically the value can still make
-> > > ram_chunk_start() (of ram_chunk_end()) to overflow, having a result p=
-ointer
-> > > very small, smaller than RDMALocalBlock.local_host_addr.
-> > >
-> > > Add the sanity check.
-> > >
-> > > Reported-by: Tristan (@TristanInSec)
-> > > Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4011
-> > > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > > ---
-> > >  migration/rdma.c | 7 +++++++
-> > >  1 file changed, 7 insertions(+)
-> > >
-> > > diff --git a/migration/rdma.c b/migration/rdma.c
-> > > index 5ce8b06818..bbbc40ea3b 100644
-> > > --- a/migration/rdma.c
-> > > +++ b/migration/rdma.c
-> > > @@ -3401,6 +3401,13 @@ int rdma_registration_handle(QEMUFile *f)
-> > >                  chunk =3D ram_chunk_index(block->local_host_addr,
-> > >                                          (uint8_t *) host_addr);
-> > >                  chunk_start =3D ram_chunk_start(block, chunk);
-> > > +                if (chunk + reg->chunks > block->nb_chunks) {
-> > > +                    error_report("%s: head.chunks contains illegal v=
-alue"
-> > > +                                 " (chunk=3D%"PRIu64", chunks=3D%"PR=
-Iu64", "
-> > > +                                 "nb_chunks=3D%d)", __func__, chunk,
-> > > +                                 reg->chunks, block->nb_chunks);
-> > > +                    goto err;
-> > > +                }
-> > safer to do this instead, as reg->chunks is from wire:
-> > uint64_t chunk_sum;
-> > if (uadd64_overflow(chunk, reg->chunks, &chunk_sum) ||
-> >     chunk_sum > block->nb_chunks) {
-> >     error_report(...);
-> >     goto err;
-> > }
->
-> I thought I covered that, I even mentioned the overflow in the commit log=
-,
-> but I didn't really do anything..
->
-> When looking at this again, I found reg->chunks is defined in a weird way=
-,
-> instead of "number of chunks", it's off-by-one...
->
-> qemu_rdma_write_one():
->     chunks =3D length / chunk_size;
->     if (chunks && ((length % chunk_size) =3D=3D 0)) {
->         chunks--;
->     }
->
-> So I think I should check it with "chunk_sum >=3D block->nb_chunks" to be
-> accurate.  Diff attached to be squashed when repost, please help double
-> check:
-Yes, looks indeed.
->
-> diff --git a/migration/rdma.c b/migration/rdma.c
-> index 6384306ead..e976739fad 100644
-> --- a/migration/rdma.c
-> +++ b/migration/rdma.c
-> @@ -3393,7 +3393,7 @@ int rdma_registration_handle(QEMUFile *f)
->              }
->
->              for (int count =3D 0; count < head.repeat; count++) {
-> -                uint64_t chunk;
-> +                uint64_t chunk, chunk_sum;
->                  uint8_t *chunk_start, *chunk_end;
->
->                  reg =3D &registers[count];
-> @@ -3424,7 +3424,8 @@ int rdma_registration_handle(QEMUFile *f)
->                  chunk =3D ram_chunk_index(block->local_host_addr,
->                                          (uint8_t *) host_addr);
->                  chunk_start =3D ram_chunk_start(block, chunk);
-> -                if (chunk + reg->chunks > block->nb_chunks) {
-> +                if (uadd64_overflow(chunk, reg->chunks, &chunk_sum) ||
-> +                    chunk_sum >=3D block->nb_chunks) {
->                      error_report("%s: head.chunks contains illegal value=
-"
->                                   " (chunk=3D%"PRIu64", chunks=3D%"PRIu64=
-", "
->                                   "nb_chunks=3D%d)", __func__, chunk,
->
-lgtm.
-Reviewed-by: Jack Wang <jinpu.wang@cloud.ionos.com>
-> Thanks for the careful review,
-Thank you for taking care.
->
-> --
-> Peter Xu
->
+On Wed, 19 Aug 2026 at 14:29, Peter Maydell <peter.maydell@linaro.org> wrote:
+> How does this series fit in with Matthew Jackson's set of patches
+> https://patchew.org/QEMU/20260720164930.68383-1-matthew@pq.io/
+
+They do overlap, and Matthew's is the more complete of the two, so I
+am dropping the overlapping parts of mine in favour of his.
+
+We independently implemented the same two missing SMC commands (write
+and get-key-type). On top of that Matthew's v4 also implements
+get-key-by-index and populates a full key table, whereas my series
+left get-key-by-index out (the macOS 26 guest I traced doesn't seem to
+emitted them). So his series supersedes patches 2 and 4 of mine.
+
+The only parts of my series not covered by his are the SMC shutdown
+watchdog and the trace events. I have rebased those two patches on top
+of his v4 and will send them as a short follow-up ("[PATCH 0/2]
+hw/misc/ applesmc: SMC shutdown watchdog and trace events").
+Reviewed-by/Tested-by for his series are in my replies to it.
+
+
+Cheers and thanks for connecting the two threads
+
+
+Daniel
 
