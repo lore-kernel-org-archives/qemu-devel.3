@@ -4,98 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D613C5DF85
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 19:37:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA7D5C5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 19:38:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwm6V-0003GD-Ti; Wed, 19 Aug 2026 15:37:40 -0400
+	id 1wwm79-0004Aq-HZ; Wed, 19 Aug 2026 15:38:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwm6Q-0003E5-35
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:37:37 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwm6O-0007DD-6g
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:37:33 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-84e507b079dso889380b3a.0
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 12:37:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787168251; x=1787773051; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=7ZaeDkl60OlUq+jVOlZ9u8gBz7HA5EqSjefpFI1DsSI=;
- b=S0z1WWcz0yieacbfhHa8hPlHKaDrVMlIe+/soWUy3KCqMsQrWxsbaXnLqrLwtbyfNa
- PN4fZ3rf49F+iBqHevxCj4k0QWkA10Qr8oSGJrNlodK/oBAvfPxBcTy8cv+EQR8nJi8m
- n8qwX4QX213s7xjaJb2naRH2HoBKGiJ51WWw/QjCKyNJ6fdgCKABgfrhhO2MQo365HFu
- VORgmY0XkhLIXVBjDy0WOdVkttSGlZNcBKuPwpQRPConkZi5jcQqa75JpuayQfcXZ/ZH
- UyXDethwlga2KJz3GA/P8wezrk4XI1glW8rQ2/oZH+rMHZKSDnIIvjIxwF98oWqgmVf4
- Yfhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787168251; x=1787773051;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=7ZaeDkl60OlUq+jVOlZ9u8gBz7HA5EqSjefpFI1DsSI=;
- b=CrQiY6C7mNxmVtMKgltWJPNg0Q4Ny1maI/keVnkgfipzWs4L2L7qLYcCCFLI0b3LRg
- zZCHcGCTSaFZ6SRxPPEL3uV08Og4PFy7/k2nua/dDqG+bB2A6RHdNDEB6RvWConGbWtH
- CFoBdl+gPEtRUumF+rJaaqGMdcSp3WmBlXaHzIhZymge2MLGtEigr6nLdoS0tc15u43j
- 8FC09bmrbi9J73RcDPC9fIegJus4+/Ta3ksv7y4WGbm6M8fjbi/AKAZQKE/DuzezvBhX
- NsokozBbIZNKpy5RBpYLcuRtFcrjIL72KlkqSTXYJdOnIfKLwSIPcDxj5cF4CWdHU0N4
- 7rZg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqjlgZCuYy7BIUs2mMM/LkN2gWcjVpXko/bcMz0t99dTryqQ5LwgUz0SCMtdUX9FKlCTSkY3ALHyv63@nongnu.org
-X-Gm-Message-State: AOJu0Yyb8kCFV7TlkNKYN9DrRDO5FIloAzBi2sDe80xviHnDyGaANnSs
- dTe+YafQoZBg0+mi8RJOdRD9/++0AorSsc/RahVJDW9y4Mg7W+l9VR7WaYUVcT4qHYLx15SIJOm
- w6hWKbJw=
-X-Gm-Gg: AR+sD10nbvYOu+SL2V5jLPTuSAxihQm9mxzSAtsZqrpxfeblexcabdE+bDEsGFI0LJH
- sNkAZ9Xd0h1CuZvkk9TLRIKtxcAYbxLzNjG9+yeF9iFWA8JduNnSg+CX6lL90erI7xM3SNkJ8XQ
- CbPhlFIvyfDnmDNShSgScGrHGjSOgTakEnvEZzY3KYWVWw1jS/qLYxG83bNXdjAdRG9glLZkBC2
- i0Jt/aYGU4PBIwC2nBNJTHXG9yU5hZQWlEStHR794KPPzVNidUbtjb3+UWAeoZ4h4FdmzuKQ6Ov
- qyN+9hpAo7C/739dHCi40duuks0xEEj0ZwmtR3U99CFtWKiT9KHxxJGYA693Z0qDL7369vieqfp
- IGcSfJ0tNtnzXB/l9S7CE0Y1Pv7IdzWMeCbXIO80ftgWyWbiiE/91T4hztGeLXG8xYK5pR7X8+P
- vwh6AvVZzPDfQdgNELifYy/6hHYndTDERFSAUWW8rZBbkxfiqf8cx/Dj3JX21Fw1Jw54uSjmmtH
- pIcg3ZudjVUuJSKkgQ=
-X-Received: by 2002:a05:6a00:2451:b0:847:99bb:b6d0 with SMTP id
- d2e1a72fcca58-851d3a6e664mr11162444b3a.15.1787168250733; 
- Wed, 19 Aug 2026 12:37:30 -0700 (PDT)
-Received: from [192.168.122.51] ([173.164.107.233])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-851d33629besm1000952b3a.1.2026.08.19.12.37.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Aug 2026 12:37:30 -0700 (PDT)
-Message-ID: <279ba699-b51b-4cf8-a0b2-faf51302c0a5@linaro.org>
-Date: Wed, 19 Aug 2026 12:37:27 -0700
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wwm75-00046e-T4; Wed, 19 Aug 2026 15:38:17 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wwm72-0007Gu-RM; Wed, 19 Aug 2026 15:38:15 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67JI1fMj048173; Wed, 19 Aug 2026 19:38:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=4K3ATQ
+ Rb43urYsQZTizce4+AYh+ajHYt5M67BY5Sj/c=; b=cNK1dEn4V7iaHFjbIoYLJK
+ Il5hSQe0ZenJGk8SRRhu1OzGucvHsRM3hwAOCErn01pAfJuraOoMR61k6Lvc2TlI
+ 7S+Eb6cyE9RaO/KWO1RQ1opi6Hf1JtE0niZrVn39KqlHdp/aQo+Hg80x0g/tklkW
+ jcIn0MoGDx3H8INfyVplx3sqX0GEm+oQGqdv3wIIAQHgy38qWQhtgFxelHFs6nRM
+ TFGBox4+YhTw9WHxFsqkjxIVO8dcNWQmokPHQZPumK+rlsZfUt+GbLH/2rRdK9AC
+ tzqeKcZQQXExB6rJCtw8sWKBhVWhazgFQBOo1g0FrEIJytB4z2GbR4sCaSyNnO3Q
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu45q4q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 19 Aug 2026 19:38:10 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67JJQLk4004033;
+ Wed, 19 Aug 2026 19:38:10 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g32twaq7h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 19 Aug 2026 19:38:10 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67JJc63B39846310
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 19 Aug 2026 19:38:06 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ED08420043;
+ Wed, 19 Aug 2026 19:38:05 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 38B2820040;
+ Wed, 19 Aug 2026 19:38:03 +0000 (GMT)
+Received: from shivang.com (unknown [9.39.17.34])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 19 Aug 2026 19:38:02 +0000 (GMT)
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Cc: shivangu@linux.ibm.com, adityag@linux.ibm.com, harshpb@linux.ibm.com,
+ hbathini@linux.ibm.com, mahesh@linux.ibm.com, npiggin@gmail.com,
+ rathc@linux.ibm.com, sourabhjain@linux.ibm.com, vaibhav@linux.ibm.com
+Subject: [PATCH v3 1/2] MAINTAINERS: add dedicated PowerPC RAS section
+Date: Thu, 20 Aug 2026 01:07:54 +0530
+Message-ID: <20260819193757.1072909-2-shivangu@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260819193757.1072909-1-shivangu@linux.ibm.com>
+References: <20260819193757.1072909-1-shivangu@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] hw/arm: Remove spurious WM8750 dependency from
- Realview Kconfig
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Jan Kiszka <jan.kiszka@web.de>
-References: <20260819185430.3467629-1-peter.maydell@linaro.org>
- <20260819185430.3467629-3-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260819185430.3467629-3-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=CpuPtH4D c=1 sm=1 tr=0 ts=6a860623 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=S56xvJB5AAAA:8 a=s2Fq2CiAU11NuBAKINYA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=cvBusfyB2V15izCimMoJ:22 a=MH9Ivq0PDQRhlrFuIVvX:22
+X-Proofpoint-ORIG-GUID: CTohgbzqd4qnto_BnFZaRXSPCxJ3h2aW
+X-Proofpoint-GUID: ohO42BZKCWcDe2QCS2BNWyK0gK-Jl92E
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDE1MSBTYWx0ZWRfX8RjpTrXIZXid
+ z2smwbtosFYiFE5mLwqnmG108xc/fVrdfXwpbZ3jn1rsxJBI+8qMewZXmnAkz/eX3uqwIZKqqqM
+ wUhlG2xENd9u7swgHttosy9Layt9zao=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDE1MSBTYWx0ZWRfX7n0BSHiQjGvb
+ VpCaD/qFqwZX4jHeGWigRUXXaTPo+hL/0mUO3cDbImAlPOtgKjw/LSVwEIajgfJxjBwqulUQaPr
+ 5EZhVxuaJNtofX/Taeg6co2lam4+D+Pjvdao9MYsCFsmbgQc0VajuLIpeEaJ/caXYy93PqUj6SV
+ J40UvjO+imNZ0MGGaB2DiZsnBjTW3ApABr3NzGw0fdA2buJq/wbYe3QkLJR4E/xeEeDU1nHmgvL
+ T7vlkCSMiG4UTTYCi9hNHGGzUpsAewQqSExRFtMHG2l/mjqKu6yfXlNhQE/zVY4VaIvuTxWbtrd
+ ckzwS9Ynt8qAXZPE4NcDEBcBIIYbOe90hVlbKEXogcelt/QRCVUllT2KArH8cc4T7+MicPT7W8n
+ H6EAhR+QhLPmN6iH5ZrwZQeN3psJ2jMZD7m+fMrLlgOglFItW/A/B3EkeHlpLSkL75iSXIgmu1I
+ k47HjjYjrcHpSeYekjQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-19_05,2026-08-19_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
+ lowpriorityscore=0 spamscore=0 clxscore=1015 priorityscore=1501
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608190151
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,18 +127,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/19/26 11:54, Peter Maydell wrote:
-> The REALVIEW Kconfig stanza has a "select WM8750"; however the board
-> itself doesn't actually use this i2c audio device: its audio is
-> provided by the pl041 (which connects to an LM4549). Remove the
-> spurious dependency.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   hw/arm/Kconfig | 1 -
->   1 file changed, 1 deletion(-)
+Introduce a new "PowerPC RAS (Reliability, Availability and
+Serviceability)" entry in the PowerPC Machines block, replacing the
+existing Fadump/MPIPL sections. Retaining the maintainer and
+reviewer entries from Fadump/MPIPL sections for this broader umbrella.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Currently most of RAS related code sits in spapr_rtas.c, So Adding
+it to PowerPC RAS section. Additionally adding spapr_events.c, as it
+implements RTAS error logging infrastructure and spapr_pci_vfio.c, since
+its all EEH related code.
 
-r~
+Acked-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Acked-by: Aditya Gupta <adityag@linux.ibm.com>
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+---
+ MAINTAINERS | 32 +++++++++++++++-----------------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b51f5c3e60..a2a80c789c 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1762,6 +1762,21 @@ F: include/hw/ppc/vof*
+ F: pc-bios/vof/*
+ F: pc-bios/vof*
+ 
++PowerPC RAS (Reliability, Availability and Serviceability)
++M: Aditya Gupta <adityag@linux.ibm.com>
++R: Sourabh Jain <sourabhjain@linux.ibm.com>
++R: Hari Bathini <hbathini@linux.ibm.com>
++L: qemu-ppc@nongnu.org
++S: Maintained
++F: hw/ppc/spapr_events.c
++F: hw/ppc/spapr_fadump.c
++F: hw/ppc/spapr_pci_vfio.c
++F: hw/ppc/spapr_rtas.c
++F: hw/ppc/pnv_mpipl.c
++F: include/hw/ppc/spapr_fadump.h
++F: include/hw/ppc/pnv_mpipl.h
++F: tests/functional/ppc64/test_fadump.py
++
+ RISC-V Machines
+ ---------------
+ OpenTitan
+@@ -3386,23 +3401,6 @@ F: scripts/coccinelle/remove_local_err.cocci
+ F: scripts/coccinelle/use-error_fatal.cocci
+ F: scripts/coccinelle/errp-guard.cocci
+ 
+-Firmware Assisted Dump (fadump) for sPAPR (pseries)
+-M: Aditya Gupta <adityag@linux.ibm.com>
+-R: Sourabh Jain <sourabhjain@linux.ibm.com>
+-S: Maintained
+-F: include/hw/ppc/spapr_fadump.h
+-F: hw/ppc/spapr_fadump.c
+-F: tests/functional/ppc64/test_fadump.py
+-
+-Memory-Preserving Initial Program Load (MPIPL) for PowerNV
+-M: Aditya Gupta <adityag@linux.ibm.com>
+-R: Hari Bathini <hbathini@linux.ibm.com>
+-R: Sourabh <sourabhjain@linux.ibm.com>
+-S: Maintained
+-F: include/hw/ppc/pnv_mpipl.h
+-F: hw/ppc/pnv_mpipl.c
+-F: tests/functional/ppc64/test_fadump.py
+-
+ GDB stub
+ M: Alex Bennée <alex.bennee@linaro.org>
+ R: Philippe Mathieu-Daudé <philmd@mailo.com>
+-- 
+2.54.0
+
 
