@@ -4,111 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B3D2C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 08:05:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60A4BC5DF6D
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 08:37:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwbI5-0002Q9-GK; Wed, 19 Aug 2026 04:04:53 -0400
+	id 1wwbnA-0000ap-85; Wed, 19 Aug 2026 04:37:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wwbI4-0002Pj-0M
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 04:04:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wwbn8-0000aF-Tn; Wed, 19 Aug 2026 04:36:58 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1wwbI2-0004tm-Gi
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 04:04:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787126688;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=aUJQYjbpA3tCxEeU6wrxemt4je+T5qjYdApJWVjO/Ek=;
- b=aGLGGiS/sB01rMqQGCed7iWiDgTfbkzv2eF2ypSgq9XVWXYBjHCuT/dNjmFs4Lg1e5RJ/q
- n9KTKkw0Kx2gzuEHZOFGHDQm23o9so/7+0jQJV78MM+XiVgBkBE9LfRCuhEujvfV5t7Z3N
- 0PBRYkMFDOddUndkyQLU4qFg+2q5HJE=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-689-hGFUE732NPKGm8MOEOMGKQ-1; Wed, 19 Aug 2026 04:04:47 -0400
-X-MC-Unique: hGFUE732NPKGm8MOEOMGKQ-1
-X-Mimecast-MFC-AGG-ID: hGFUE732NPKGm8MOEOMGKQ_1787126686
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49953abe51fso5036735e9.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 01:04:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787126686; x=1787731486; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:content-type
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=aUJQYjbpA3tCxEeU6wrxemt4je+T5qjYdApJWVjO/Ek=;
- b=VRye9b7fT71KvxiaP90Jif1j7hgFwEPKL8ZxEsfcBjY4tpeHCLGpkPyFz3GnFgYSZd
- 0cnTpIdVCZ0svBqVaCRCqKl2DDaL+hDONnKfAkzDLD1sUvFQPUzjRdPcVyJLmGIOpjX5
- zWp05y2qEUJhTxSX9kMmy+G+0FivN91n9h0bd3hIpnaZC28IMoEqFQDDoUvIUTQcy7RD
- V09L7DcDUb0Zc7qKz1WKuwDzgLzySLjqqQpE1/fAKknqH2/J5qmvOy/4pPsAdW5+RN5P
- vtE0BFIFCC9/Oi53c/5zljlkU+H2kph+po6/u/08sZj7G/p8Y24Fp80h2tQUbvtdTyF9
- a75w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787126686; x=1787731486;
- h=cc:to:message-id:content-transfer-encoding:content-type
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=aUJQYjbpA3tCxEeU6wrxemt4je+T5qjYdApJWVjO/Ek=;
- b=riTIzbuwyh0yC645eIlY7u0c0A/huAdTn+Ip1mY98JH0vvhnvYmtv8poP+HhPHsmbG
- Ahp/ZWrVqD6O3Vl0WDHdN8iWkkXaJCI6GcSsJ+aVfFPp+s5bRGre2lNA2qNuHVpVOgrD
- Uzz/ByAPLMXpOBn4QLLsXo93ioRzA85ahlZJWarLktlzuFOz/wtujo9+yHpCJtJp+6xg
- JAl02h6pWpca2II5Uafl7fe/tSwkIqi36TLtowbYWERdZ9fuW093LJk0FT9Qyd9H7Bwh
- DsJnHVPBgagDpRWcQ1oArzxLgjAHsAHtotrp6p2ip9qoxxCgQpfyPQM4qyb+bGFZc5J/
- vX2g==
-X-Gm-Message-State: AOJu0Yyswvr8UQtSWqvvo38pbY2VXblnJPWPgyyqiKwZd9byq0VeGxF9
- 0r+tyILsqx9r7pf14Sojr0wLzwfA7c7GzfRRBqkpGTmE3NQ5G9pMD4CE1Veikgqe5JeJAAWxA6s
- 5LO+sN86M1SXlN/R2Hr8QFSiwXNDtLGvGA6SHnWaGIeAve5lgCh+vW29x
-X-Gm-Gg: AR+sD10+1DIK6jnYhLaj8jhTDENfeybGy4g0WOtZGnxkNGUSyj5ZKNOF7YKO6CG/lHd
- 7H3qCqQZdEIoLGlhRvlyxpY6L8KP/Y+4+sYWO5WUlGsjqDT453hlGg2JNEmRaIFKKaTHvCl37vk
- q2M35m8g9VTyWVQwLJjT2GPsx+2pvxmbknr0wsmTmVlBz4P28TA24buXb9wibUg7ryzMuucOE7A
- P7OhwAnPAxOxHO4+ZiBsKRecCuymjWJY+M/buramyaL55ECWGJKQIUXZxQlaU9nAb30pcHNJOi2
- 4Kwjh6zKX0qHxRFj5vBtuWOrHWXI0qSEDm+dL31eLkIYDmRFdqw0OkoJmkIdnReUK7CDJw9WpFE
- OeFpDofE4Mi19mLCcTmgClZvAApBoA9THQ5lV9tEaoyi3tmxxU+y1V8SCBBnWWpWsBp+MXVwCHu
- BC2Y+ZXzTb3NMZ5mqFiF+rZCjKl6VjirF2rT3JSoRV4uu6
-X-Received: by 2002:a05:600c:37c6:b0:499:87f3:a2a3 with SMTP id
- 5b1f17b1804b1-499aa1c7bafmr49499595e9.15.1787126685711; 
- Wed, 19 Aug 2026 01:04:45 -0700 (PDT)
-X-Received: by 2002:a05:600c:37c6:b0:499:87f3:a2a3 with SMTP id
- 5b1f17b1804b1-499aa1c7bafmr49498845e9.15.1787126685274; 
- Wed, 19 Aug 2026 01:04:45 -0700 (PDT)
-Received: from lleonard-thinkpadx1carbongen13.rmtit.csb
- (host-95-233-147-132.retail.telecomitalia.it. [95.233.147.132])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499aa0dd620sm38560945e9.13.2026.08.19.01.04.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 01:04:44 -0700 (PDT)
-From: Luigi Leonardi <leonardi@redhat.com>
-Date: Wed, 19 Aug 2026 10:04:42 +0200
-Subject: [PATCH] hw/nvme: fix firmware boot path when nvme-ns has a bootindex
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wwbn7-0001mB-Ek; Wed, 19 Aug 2026 04:36:58 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67J6WOpe2622749; Wed, 19 Aug 2026 08:36:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=6Fw0sS
+ ntxJe1+XkKINW8zj5uF0nr2xScdmA7iZ7aZAQ=; b=cBvB+ML/ijubw/iKBMWzoo
+ z9R+CPkDbIJOInqFuPGKgqLaUnyfGiaJu8LbGnZ7cpaBeAPORe8mJzwE6gSmTqTB
+ 1pgsPRbf25H8jlQ1I4FQSPE5sREwrWIVewC2ohiI3bO126EkwXQdvBTa+RMES4mD
+ GQd7v9FJ5D8qomEUjk4TAE5qp65QyugSZ4KjQ7Fx5uGwynN74bjf21gmob+uQAP/
+ GHY2ETdYpA56gvF+bXm37ErBx2Bu7MkWx8+v7Kt0sFAqpZqk5XDSSAeQNU+4zTkO
+ eXfTS3jbNS5VL6PCYUCqtxgw60w12/e+PVEkbYDbXVSnnsPM72w7M3hw2MpKKeMQ
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu1ajhv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 19 Aug 2026 08:36:45 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67J8UDD3015232;
+ Wed, 19 Aug 2026 08:36:44 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g354yfqb2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 19 Aug 2026 08:36:44 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67J8ae5t46006590
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 19 Aug 2026 08:36:41 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E2E2C2004B;
+ Wed, 19 Aug 2026 08:36:40 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3FAE020040;
+ Wed, 19 Aug 2026 08:36:39 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 19 Aug 2026 08:36:39 +0000 (GMT)
+Date: Wed, 19 Aug 2026 14:06:20 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Nicholas Piggin <npiggin@gmail.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
+Cc: Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Gautam Menghani <gautam@linux.ibm.com>
+Subject: Re: [PATCH] MAINTAINERS: Add myself as a reviewer for PPC KVM and
+ sPAPR
+Message-ID: <20260819140310.464f376c-a5-amachhiw@linux.ibm.com>
+Mail-Followup-To: Nicholas Piggin <npiggin@gmail.com>, 
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>
+References: <20260819050545.21232-1-amachhiw@linux.ibm.com>
+ <4731356a-532f-4ecf-9f0b-ae7a6ac5f77e@kaod.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260819-fix_nvme-v1-1-6d3d5e6909c1@redhat.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDC0ML3bTMivi8stxU3RSL5LTERGNjM4tkSyWg8oKiVKAc2Kjo2NpaANh
- nYgVaAAAA
-X-Change-ID: 20260818-fix_nvme-d8cfaa3368c9
-To: qemu-devel@nongnu.org
-Cc: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org, 
- Gerd Hoffmann <kraxel@redhat.com>, Luigi Leonardi <leonardi@redhat.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4731356a-532f-4ecf-9f0b-ae7a6ac5f77e@kaod.org>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=LsCiDHdc c=1 sm=1 tr=0 ts=6a856b1d cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=8nJEP1OIZ-IA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8 a=aow-egSQAAAA:8 a=omJ5bIHz1CpVJDpERRIA:9
+ a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=gFNbaldVC-z-bsjSTzMo:22
+X-Proofpoint-GUID: aaMZJ2KzNA4_KDVZyIoe52jDN6lsvvWa
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDA2MyBTYWx0ZWRfX378MGvcwirA4
+ ygZAd9OgLP63RLKDfWyEry2NTpYVF0SXjEFy74yZ/SSgaJQ6czP5VLzjklGH5aJD7+d0AGYhl1V
+ 1g0vpnt0gtEc+0VQrmfUWloypmknb70=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDA2MyBTYWx0ZWRfX4RF2Qv1M6ovA
+ EdYn8wd7gl5FR3g0HX/XVQ4fqUgnqXzUCiEmG7Gn89zMpVk1CYFpNGn0N/AbtTe/YiTFWQsFv9X
+ BnRq5hnoKXNjiKjbVxml43WD+emlh8P6ZweNhCDUwINKV/b5G+hwNu16+kbd+J02GpzVwYzxF/D
+ b/NSeC4qONOo8mr80sq6h1moTnB/Lp7m8fGyifvgssg1Sq22LYl9TAG9P/g08JfEnBUUBb4S4LG
+ hLYKcoTQ/gyG5GyPjJ+ouTh1DmSWNsoJ6f18pjkf2RRwn4AaXHQpdg75RaGpLQ7jOr73ZLeo0rp
+ K6JgWQbcv4X9oGWZuP4mBznRBY8uUHB1HpRs1J9Rd9iKLjes3hD7c+CmSKqsjVTHb6wI8aLWQuX
+ 0wq8Aq1dXKNAEFHCyrlGj6QMSxpD1VGpjRPO3hc8UkctxhbAyGXBmSM8xVUa7hsuvxIc8Bgc/Zh
+ T5aD99SG02AOze+x2Tg==
+X-Proofpoint-ORIG-GUID: q2fQGNsl8tDZhdCnJvvcyIAUsEJqG-X4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-19_02,2026-08-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ adultscore=0 suspectscore=0 impostorscore=0 clxscore=1011 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608190063
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,100 +134,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The correct way to register an NVMe namespace in fw_boot_order is to use
-the NVMe controller as the device pointer with the namespace ID appended
-as a suffix, producing:
+On 2026/08/19 09:12 AM, Cédric Le Goater wrote:
+> On 8/19/26 07:05, Amit Machhiwal wrote:
+> > I have been contributing to PPC KVM and sPAPR (pseries) for some time now and
+> > would like to get notified of incoming changes to help with code reviews.
+> > 
+> > Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+> > ---
+> >   MAINTAINERS | 2 ++
+> >   1 file changed, 2 insertions(+)
+> > 
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index b51f5c3e6022..1a1c77285d3d 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -497,6 +497,7 @@ F: tests/functional/aarch64/test_kvm.py
+> >   PPC KVM CPUs
+> >   M: Nicholas Piggin <npiggin@gmail.com>
+> >   R: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> > +R: Amit Machhiwal <amachhiw@linux.ibm.com>
+> >   S: Odd Fixes
+> >   F: target/ppc/kvm.c
+> > @@ -1661,6 +1662,7 @@ F: tests/functional/ppc/test_40p.py
+> >   sPAPR (pseries)
+> >   M: Nicholas Piggin <npiggin@gmail.com>
+> >   M: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> > +R: Amit Machhiwal <amachhiw@linux.ibm.com>
+> >   L: qemu-ppc@nongnu.org
+> >   S: Odd Fixes
+> >   F: hw/*/spapr*
+> > 
+> > base-commit: fa19879df1658f96ac07365fca8835b7decd6995
+> 
+> 
+> I would consider removing Nick since he has moved to other activities.
+> Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
-  /pci@i0cf8/pci1b36,0010@4/namespace@1,0
+Thanks for the ack, Cédric! 
 
-This is how the controller-level bootindex works.
-Explicit nvme-ns devices instead register the nvme-ns device itself,
-which is wrong: realize() reparents the namespace onto the NVMe subsystem
-bus, disconnecting it from the controller in the bus hierarchy.
-qdev_get_fw_dev_path() therefore produces a path without the controller's
-address:
+Hi Nick,
 
-  /nvme-ns/namespace@1,0
+Do you plan to be active on PPC in near future? Or do you think it would
+be a right idea to remove you from the M list?
 
-Fix by re-registering in realize(), once the controller and final nsid
-are known, using the controller as the device pointer with the namespace
-suffix. The old entry (registered against the nvme-ns device) must be
-removed first since add_boot_device_path() only removes entries matching
-the same device pointer, and leaving both would cause a
-duplicate-bootindex error.
-
-device_add_bootindex_property() cannot be called in realize() because
-QEMU parses command-line properties before realize() runs, so the
-bootindex property must exist by instance_init() time. The final nsid is
-not yet known then either as it's assigned in realize().
-
-The fix is restricted to non-shared namespaces: for shared namespaces
-there is no single controller to register the boot path against.
-
-Also add the symmetric unrealize() cleanup so that hot-unplugging a
-non-shared nvme-ns with a bootindex removes the fw_boot_order entry that
-was registered against the controller in realize().
-
-Reported-by: Gerd Hoffmann <kraxel@redhat.com>
-Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
----
- hw/nvme/ns.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
-
-diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
-index 7f0f9ac766..83786b4401 100644
---- a/hw/nvme/ns.c
-+++ b/hw/nvme/ns.c
-@@ -727,6 +727,10 @@ static void nvme_ns_unrealize(DeviceState *dev)
-     nvme_ns_shutdown(ns);
-     nvme_ns_cleanup(ns);
- 
-+    if (!ns->params.shared && ns->bootindex >= 0) {
-+        del_boot_device_path(DEVICE(ns->ctrl), ns->bootindex_suffix);
-+    }
-+
-     /* Symmetric with nvme_ns_realize() which sets subsys->namespaces[nsid]. */
-     if (subsys && nsid && subsys->namespaces[nsid] == ns) {
-         subsys->namespaces[nsid] = NULL;
-@@ -891,6 +895,19 @@ static void nvme_ns_realize(DeviceState *dev, Error **errp)
- 
-     if (!ns->params.shared) {
-         ns->ctrl = n;
-+
-+        /*
-+         * Register the boot device path using the NVMe controller
-+         * so the OFW path includes the controller's PCI address:
-+         *   /pci@i0cf8/pci1b36,0010@<slot>,0/namespace@<nsid>,0
-+         */
-+        if (ns->bootindex >= 0) {
-+            del_boot_device_path(dev, NULL);
-+            snprintf(ns->bootindex_suffix, sizeof(ns->bootindex_suffix),
-+                     "/namespace@%" PRIu32 ",0", nsid);
-+            add_boot_device_path(ns->bootindex, DEVICE(n),
-+                                 ns->bootindex_suffix);
-+        }
-     }
- }
- 
-@@ -1117,10 +1134,8 @@ static void nvme_ns_instance_init(Object *obj)
- {
-     NvmeNamespace *ns = NVME_NS(obj);
- 
--    sprintf(ns->bootindex_suffix, "/namespace@%" PRIu32 ",0", ns->params.nsid);
--
-     device_add_bootindex_property(obj, &ns->bootindex, "bootindex",
--                                  ns->bootindex_suffix, DEVICE(obj));
-+                                  NULL, DEVICE(obj));
- }
- 
- static const TypeInfo nvme_ns_info = {
-
----
-base-commit: 9696bf5dc5a5bf0b4a9d05b6cdfe5f13990f97aa
-change-id: 20260818-fix_nvme-d8cfaa3368c9
-
-Best regards,
--- 
-Luigi Leonardi <leonardi@redhat.com>
-
+Thanks,
+Amit
 
