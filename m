@@ -4,60 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97D1CC5DF86
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 11:52:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EB21C5DF6D
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 12:07:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwepd-0001yE-LW; Wed, 19 Aug 2026 07:51:45 -0400
+	id 1wwf3p-00048k-51; Wed, 19 Aug 2026 08:06:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wwepa-0001wq-Vn; Wed, 19 Aug 2026 07:51:42 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wwepZ-0003q1-0T; Wed, 19 Aug 2026 07:51:42 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id F26FEC021A;
- Wed, 19 Aug 2026 14:51:33 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:c60::1:5] (unknown [2a02:6bf:8080:c60::1:5])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id XpU53GDWVOs0-kcHo7wfd; Wed, 19 Aug 2026 14:51:33 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1787140293;
- bh=taqTt5GWppXgoJFKPZLmwOtzax+GhBimuUBZ39gIFpc=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=HoE2CkVy+ILmd9g0X5CA9R8RcmVts/ur+vM6bWMZNwRPT6GADk1Kv//C1CBbRiYfr
- 5mJGPoyJW3Xpkb6OI5d5hWNJWfkmhUcIyjrrw/fva5uj9ABqQfintYDRg61+XOHjpN
- X0rKX122wyehRm6JY+7l3PzYfQ94lHdAoLQhF7hE=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <9c486f0c-3389-4e83-bf5b-1c3507a334d0@yandex-team.ru>
-Date: Wed, 19 Aug 2026 14:51:33 +0300
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwf3j-00046T-66
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 08:06:20 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwf3d-0007qm-5e
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 08:06:16 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4980dc26022so9898545e9.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 05:06:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=openvz.org; s=google; t=1787141167; x=1787745967; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=HWuPTwu7BBNInsioIn++QUXErXu52JLqTBsasESnDi8=;
+ b=uEMcH0aGv2VClF+LtdOiw6spWavtOzA7vG1xbxcEKfDPyyiRganjZERrGJZfTmxXml
+ O+XNVlaZ8Du/JeisjJ2GACubPObseX2woeZCsbFn9dexybRjKORvEn40mOynEewUQPbB
+ Al/tZOQANGLVM9zpBKK9D99u9kbq8i5gOuLy389WZbiYriu916ldB1KL/8QEwVoX0av7
+ d4sgIhjsIHtpRtzF8ScMAGEoPZPi6urVUoWlNEFwgyu2IgY80wLSAQ7s4Wiu6vngPa1D
+ AANEXUMmAS4wBAsLYzqe6lgWZsCTbgdUjPhxVa43sn2y1da9NfDhLJTdFg4wtw7yhNMa
+ 7UXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787141167; x=1787745967;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=HWuPTwu7BBNInsioIn++QUXErXu52JLqTBsasESnDi8=;
+ b=ZiJBqKKUjbBYb5bdYyJk8Njfex4Al+EGZasu9XSJaxvmgTZ8iU12/XMaw/0RjHMg8d
+ 73AUwkvIKPVY/NJiiakSYW5Rfe8PpJCyXh2hP9+qaMv7eemJilM4sIFra/Cs183H30JI
+ DJVjuiZsob2WWKJ4G1I1UdCvDl/w7YctCHSLsXg5VVLPMMn5QP0EHe6y7MJaD3qcOv2J
+ Xy2w0HvvE0/XzMOYr44PlHXMbB/FbF2FD5muIwuVwfD6tzbD5HinljLCl2MCvsp3jJHv
+ I8n4gwyEBdFC2t/u7wO6gGipYgJRi/3CdICH8VfFYvSNfdxjFzvbgC5mEgbmsysj6j6L
+ 6JXg==
+X-Gm-Message-State: AOJu0YxZwuOH9uXlAhH3p6st43eXT5hPd9d/GcrXUghqjpznIV7ot5AH
+ 1iJ89e6DBshjM0lygbJWrBU+R9LXUCRlcgFMXY6ADc9hC5Z4wHPjg/fpY2fgDjlFTQ4oQdlAF6A
+ hzWH0
+X-Gm-Gg: AR+sD11wm1fF/Q1CdR9j1vdi3SyTrteFeK+6X6soGZD3g2UePn7yGLrLjs2ckepFYw4
+ oIJzlyGpPY22UxZ/XV+uoOZ42ih2CY2bzyHWWmAZAl3cde09MXeTR5mqaL85Ij5GaTN0LPJXa9V
+ hvnFeAVlBX6vWG7QSTQj1pYCZTaQDkoHIDubHA9aQsSoGn1G/WexCnvrbBU4TIlP0nT7cspIrLj
+ 5AMfXH+JSsrhY0gjZMWZqAbRkIJrR4c64o1DR4CTe0e9UeGJzWoBklXO+sbZ1ShakYxBn41FAW4
+ K6BNLVkkFBzOCJ9Kd4K+Dh/iomRElara7rjpbfGv7744lD6ruKXpt+L8KPSJsPHChFRBCxD5Ylf
+ r/v2WSxR7S0980oVQy6Kg/FvEW+7wedyHAyM8I8QvLmroniqf8ExByD1Hw5HkjpzKQCp1TT/co/
+ HpvKbo4nm280fLmun92c7pnkX9qV93GLJPVX5Ns27jorbTSyYuBERxVgBQOg==
+X-Received: by 2002:a05:600c:6091:b0:499:8aff:59b6 with SMTP id
+ 5b1f17b1804b1-499aa1ead50mr93721075e9.14.1787141166863; 
+ Wed, 19 Aug 2026 05:06:06 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:258d:1706:7089:f765])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-499aa1111a7sm59244785e9.6.2026.08.19.05.06.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Aug 2026 05:06:06 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v3 4/5] block: remember the flags a reopen starts from
+Date: Wed, 19 Aug 2026 14:05:57 +0200
+Message-ID: <20260819120558.3870413-5-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260819120558.3870413-1-den@openvz.org>
+References: <20260819120558.3870413-1-den@openvz.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] block/nbd: clear reply.cookie when the reply is
- rejected
-To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>
-References: <20260812102906.894063-1-den@openvz.org>
- <20260812102906.894063-2-den@openvz.org>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20260812102906.894063-2-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=den@openvz.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,44 +100,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.08.26 13:29, Denis V. Lunev wrote:
-> nbd_receive_replies() reads a reply header into s->reply and, when the
-> header turns out to be unusable, reports a channel error and returns
-> without touching it. The cookie stays there until the request which
-> owns the reply clears it, and until then the waiters are explicitly
-> allowed to look at a cookie which is not theirs:
-> 
->      if (s->reply.cookie != 0) {
->          ind2 = COOKIE_TO_INDEX(s->reply.cookie);
->          assert(!s->requests[ind2].receiving);
-> 
-> Two of the error paths leave a value chosen by the server behind: one
-> returns before the cookie is validated at all, the other returns
-> because that validation has failed. A waiter which picks such a cookie
-> up turns it into an index which is not in requests[] and accesses the
-> array out of bounds, at an offset the server controls.
-> 
-> The reply is of no use to anybody at this point, so clear the cookie
-> before the mutex is released and keep the invariant that a non-zero
-> s->reply.cookie is always an index of a live request.
-> 
-> Observing the stale cookie takes a second thread, which a multiqueue
-> configuration provides. Within one AioContext there is no yield point
-> between the failed read and the clearing done by the owner in
-> nbd_co_receive_one_chunk(), so nothing else of this node runs in
-> between. The parked waiters cannot see it either, as they are woken
-> only after the cookie has been cleared. What can get in is a request
-> entering nbd_receive_replies() afresh, one just sent or one back for
-> its next reply chunk, because that path takes the mutex without
-> looking at the state.
-> 
-> Signed-off-by: Denis V. Lunev<den@openvz.org>
-> Cc: Eric Blake<eblake@redhat.com>
-> Cc: Vladimir Sementsov-Ogievskiy<vsementsov@yandex-team.ru>
+From: Denis V. Lunev <den@openvz.org>
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+bdrv_reopen_commit() updates bs->open_flags, so by the time
+.bdrv_reopen_commit_post() runs a driver can no longer tell whether
+the node has just become writable or was writable all along. Only the
+transition is worth reacting to.
 
+Record the flags while the queue is built, next to the other pre-reopen
+state BDRVReopenState already keeps, and let a driver ask about them the
+way it asks about the node itself. The predicate which
+bdrv_is_writable_after_reopen() spells out gets a name for that, and
+stays private to block.c.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+---
+ block.c                          | 17 ++++++++++++++---
+ include/block/block-common.h     |  1 +
+ include/block/block_int-common.h |  2 ++
+ 3 files changed, 17 insertions(+), 3 deletions(-)
+
+diff --git a/block.c b/block.c
+index b29202c8d5..6280a13610 100644
+--- a/block.c
++++ b/block.c
+@@ -2193,14 +2193,18 @@ static int bdrv_reopen_get_flags(BlockReopenQueue *q, BlockDriverState *bs)
+     return bs->open_flags;
+ }
+ 
++/* An inactive node may not be written to, even though it is not read-only */
++static bool bdrv_flags_writable(int flags)
++{
++    return (flags & (BDRV_O_RDWR | BDRV_O_INACTIVE)) == BDRV_O_RDWR;
++}
++
+ /* Returns whether the image file can be written to after the reopen queue @q
+  * has been successfully applied, or right now if @q is NULL. */
+ static bool bdrv_is_writable_after_reopen(BlockDriverState *bs,
+                                           BlockReopenQueue *q)
+ {
+-    int flags = bdrv_reopen_get_flags(q, bs);
+-
+-    return (flags & (BDRV_O_RDWR | BDRV_O_INACTIVE)) == BDRV_O_RDWR;
++    return bdrv_flags_writable(bdrv_reopen_get_flags(q, bs));
+ }
+ 
+ /*
+@@ -2214,6 +2218,12 @@ bool bdrv_is_writable(BlockDriverState *bs)
+     return bdrv_is_writable_after_reopen(bs, NULL);
+ }
+ 
++bool bdrv_reopen_was_writable(const BDRVReopenState *state)
++{
++    GLOBAL_STATE_CODE();
++    return bdrv_flags_writable(state->old_flags);
++}
++
+ static char *bdrv_child_user_desc(BdrvChild *c)
+ {
+     GLOBAL_STATE_CODE();
+@@ -4473,6 +4483,7 @@ bdrv_reopen_queue_child(BlockReopenQueue *bs_queue, BlockDriverState *bs,
+     bs_entry->state.options = options;
+     bs_entry->state.explicit_options = explicit_options;
+     bs_entry->state.flags = flags;
++    bs_entry->state.old_flags = bs->open_flags;
+ 
+     /*
+      * If keep_old_opts is false then it means that unspecified
+diff --git a/include/block/block-common.h b/include/block/block-common.h
+index 895ea17541..eb2dd8aff1 100644
+--- a/include/block/block-common.h
++++ b/include/block/block-common.h
+@@ -358,6 +358,7 @@ typedef QTAILQ_HEAD(BlockReopenQueue, BlockReopenQueueEntry) BlockReopenQueue;
+ typedef struct BDRVReopenState {
+     BlockDriverState *bs;
+     int flags;
++    int old_flags; /* bs->open_flags is updated on commit */
+     BlockdevDetectZeroesOptions detect_zeroes;
+     bool backing_missing;
+     BlockDriverState *old_backing_bs; /* keep pointer for permissions update */
+diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
+index 035e54d434..4ea1a78494 100644
+--- a/include/block/block_int-common.h
++++ b/include/block/block_int-common.h
+@@ -1346,6 +1346,8 @@ char *create_tmp_file(Error **errp);
+ void bdrv_parse_filename_strip_prefix(const char *filename, const char *prefix,
+                                       QDict *options);
+ 
++bool bdrv_reopen_was_writable(const BDRVReopenState *state);
++
+ 
+ int bdrv_check_qiov_request(int64_t offset, int64_t bytes,
+                             QEMUIOVector *qiov, size_t qiov_offset,
 -- 
-Best regards,
-Vladimir
+2.53.0
+
 
