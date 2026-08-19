@@ -4,69 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F2B8C5DF86
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 12:45:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDB1FC5DF86
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 12:47:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwfdr-00087k-Ib; Wed, 19 Aug 2026 08:43:39 -0400
+	id 1wwfhd-0005yg-T8; Wed, 19 Aug 2026 08:47:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <2319317080@qq.com>) id 1wweUd-0004xC-T2
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 07:30:03 -0400
-Received: from out203-205-221-242.mail.qq.com ([203.205.221.242])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wwfhb-0005y1-KX; Wed, 19 Aug 2026 08:47:31 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <2319317080@qq.com>) id 1wweUb-0006J3-Il
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 07:30:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1787138993; bh=OtzBvSYVhAgFr5IyNJf2uKh3cJwzQOkntG30sP2/gfo=;
- h=From:To:Cc:Subject:Date;
- b=WbnbIDEo2C81NqwxKLGMuSxb9FBfdKrVoviTNGHTtHtrSGLdUZOtVGi51E61mK1H5
- TsbRKZPUU1f8SPoxxupWbgMl06+EPATWRzf49QhJU1UxMrRzGHZZg0Q8QeM0K5vkMt
- 1qZR0U9D4koPorlY7ZB8gqiLUETBGy1ITWin1mTA=
-Received: from LAPTOP-IGSEAVHO.localdomain ([120.230.140.136])
- by newxmesmtplogicsvrsza73-0.qq.com (NewEsmtp) with SMTP
- id 72A26C13; Wed, 19 Aug 2026 19:28:42 +0800
-X-QQ-mid: xmsmtpt1787138922tyu70yifc
-Message-ID: <tencent_693FBF28366A6CFA191E6B69C200324A3608@qq.com>
-X-QQ-XMAILINFO: NT7uTz3cNku2maQVV27RqWbAaFoAb0VACqPqnA4OKMNIUaVpsoBlV7jwupRPXh
- NxBlb8bMIauT4n8z48t+lkFRIG5tuae7GKag6YojmqPCs439+aALQMVrtMP8S0+v1g7o52/VhKSu
- RS2s3E42XBHOx10PT+4J9BFLUapATqyVhn3ZGwCKSy+f5NQwhB+Ug45KAbPOGf6/0opkEkzBRVWP
- p/izcwCPqnkSMVWcu+FapzAzNZWR0X5/D/Iq2Igk3XIgyydBi4rtg1xfoQ5uaW8df/iJm3v3pOf5
- cydq66sKqaS9OTFkSBzxE8O+vzydo25+POqhvHDPHyiJhwVOxOFXWrC10EGvVjmiO92K3+wahSJ6
- SAlx3stahxQMU0XvBcP/ouSsABZ0/zqiLCKtl1b6NG86+1R2EYvV1TwBsAAGNutQyO8miFP0PvCZ
- RfXRIBKfF8tAHwksZESB9PkHrinbjm8L4K3n8bbeaXJT0lo0Vfh7LpCjHPyiuPh3HnS2D/nyNwLC
- X9eAGO25rKZWuNymwlQMkNWBE2aYmaqV9znVpDutcXOcrENY1FKxNmUKtKDC4RzBls9ExqE7ASnC
- X3OaH1hMlB4F2hoywU7zwgTahtD2BjlxEv06W9WcdusX6OJqY38wdjh4pzwJ3a5wuWTQxuSJzikl
- mMofFPMUF7E5dT7dACzVBSEmc5UYprGEKbnA2DNFaFRZMdUwLX3KsyTXnsrjSn0U1D+FWexJktFS
- XFHT3pw/P1tWybCT6SukOn8p5B8aUyr2TLZwerZIo2+vf6wjmVkcSTaOYlqZ7Z51zcBolmRKpLF5
- LaZmi7t52j1zDLxkg3wuc0Y0/QmaCZ1vMyLCkBmJ5x2zjsuguqwzL9RWP/dUhrTmjviWN5J43Uy4
- QsoVVTG9MnHBHFABAIY3N8O6VzlHThXX5OfmAoxJWNixubgRaEGRRcnFgO40vIYq/kS33rJNVveC
- tILEFLUifgxwxA7GR4GuHUWJ1API8tNG42Ael7KVoSx/BitR4l2yfmTVdYomdSta7mZfvpqoiZO3
- R6ZDrfr/YOYCJxJU9YkZJH7D3jll1YigwIvTTiBAMdh8wUDNjCRjMaQbI7pIfNs9cq9BYVpw==
-X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
-From: CMoments <2319317080@qq.com>
-To: qemu-devel@nongnu.org
-Cc: caojunze424@gmail.com,
-	CMoments <2319317080@qq.com>
-Subject: [PATCH] util/log: Fix rust_fwrite() to return bytes written
-Date: Wed, 19 Aug 2026 19:28:40 +0800
-X-OQ-MSGID: <20260819112840.8270-1-2319317080@qq.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wwfhZ-0006oR-Kg; Wed, 19 Aug 2026 08:47:31 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id ED377C015C;
+ Wed, 19 Aug 2026 15:47:24 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:c60::1:5] (unknown [2a02:6bf:8080:c60::1:5])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id OlVhXODWR4Y0-adMHKH4c; Wed, 19 Aug 2026 15:47:24 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1787143644;
+ bh=mvicUxd39TqrIAxnBjCD5MSvP7pkYDclxJqMyt4jWW4=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=R/ql843Y5RFrLjXeB9mXelNALrFkL4Y0E39as2yzdUgNVaFrlM0emjFitvgZNJOL6
+ P/YBttxb/x3LsMdVZCPZirehK/MAvXGhsd8R5SyDpsmLdgvK3nwzM/xu4KQtFMUcmi
+ uJIXvWp78/TOQMMM78RBqVyoPWBZeATLWW7Gsdhs=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <e122fce0-d6fa-4ffb-acf7-5ec24cebeaf7@yandex-team.ru>
+Date: Wed, 19 Aug 2026 15:47:23 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/6] block: jobs and dirty-bitmaps
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, den@openvz.org, QEMU Stable <qemu-stable@nongnu.org>
+References: <20260817192948.1743452-1-vsementsov@yandex-team.ru>
+ <e617c1d0-b028-449d-b8b1-bb96a47e64c6@tls.msk.ru>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <e617c1d0-b028-449d-b8b1-bb96a47e64c6@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=203.205.221.242; envelope-from=2319317080@qq.com;
- helo=out203-205-221-242.mail.qq.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FREEMAIL_REPLY=1,
- HELO_STATIC_HOST=-0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 19 Aug 2026 08:43:31 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,25 +75,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
----
- util/log.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 18.08.26 09:42, Michael Tokarev wrote:
+> On 8/17/26 22:29, Vladimir Sementsov-Ogievskiy wrote:
+> 
+>> block-jobs and dirty-bitmaps patches
+>>
+>> Denis V. Lunev (6):
+>>        job: keep job paused across overlapping pause requests
+>>        tests/unit/test-blockjob: cover keeping a job paused while a pause is pending
+>>        block/monitor: reject persistent bitmap add on a read-only node
+>>        migration/block-dirty-bitmap: reject bitmap load onto ro node
+>>        block/monitor: allow dropping a bitmap never stored on disk
+>>        dirty-bitmap: fix integer overflow in serialization coverage
+> 
+> This seems to be another pull request which should be picked up for
+> active qemu stable series.  Is it not?
+> 
+> Thanks,
+> 
+I'm not sure. All these bugs are not degradations, we live with them for a very long time.
+And most of the changes are a bit risky, so IMHO, they are better to go through
+more careful testing at vendor level (like when moving to a new QEMU version, not to
+next stable subversion).
 
-diff --git a/util/log.c b/util/log.c
-index 7cffbc1bf89..0a8800f8d2c 100644
---- a/util/log.c
-+++ b/util/log.c
-@@ -593,6 +593,6 @@ ssize_t rust_fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream)
-      * portable access to errno. :(
-      */
-     int ret = fwrite(ptr, size, nmemb, stream);
--    return ret < 0 ? -errno : 0;
-+    return ret < 0 ? -errno : (ssize_t)(ret * size);
- }
- #endif
+01,02 - bug fix in core job engine, which was not touched for a long time, may have
+unexpected effects.
+
+03-05 - not actually a bug fix, but prohibiting the user from doing strange things,
+which lead to problems in future. Small risk to break some (considered incorrect)
+user experience.
+
+06 - simple bug fix, obviously safe
+
+So, my suggestion is to take only 06 into stable branch (and even that not necessary, as
+not a degradation and triggers in a very specific scenario).
+
 -- 
-Signed-off-by: CMoments <2319317080@qq.com>
-Cc: caojunze424@gmail.com
-2.34.1
-
+Best regards,
+Vladimir
 
