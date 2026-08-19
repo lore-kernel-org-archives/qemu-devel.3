@@ -4,98 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC3D3C5DF81
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 14:04:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28DB0C5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 14:06:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwgt0-0003Dv-VJ; Wed, 19 Aug 2026 10:03:23 -0400
+	id 1wwgw8-0003qQ-Lr; Wed, 19 Aug 2026 10:06:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wwgsy-0003Dh-ES
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 10:03:20 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1wwgvy-0003py-K2; Wed, 19 Aug 2026 10:06:28 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wwgsw-0005X9-Vq
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 10:03:20 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4921eed3fa2so10227635e9.0
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 07:03:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787148197; x=1787752997; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=v1uLQJKaDEO9rPQhNbhsqBghhQaM7OjpGXeVPjrZzrI=;
- b=T9Mmbq13QZL0eaODnuHlTRNt8JobJ2tpMF2xHBN6Q6SWvVuIPr6DDvrEW3/4T7uVc5
- /iCDFVwhj6sc5OZtA78SE+JuC0joyWBXQr+mre3JDD1SzzeDXbdsaY+3keOywKb9KlyF
- yIL/QQC2NEX6Inno0PYX2aVmRWmYEyf3Wtv/HoesZUjNRlloYAcf5zAF9Hhf1aWv84t2
- Hxc2g1bx13gl5SDKu3l2EOT4FitW1XCfIqF+5f/fC3nWsMLZTN7xs5VsGTkMsaWTCrzH
- U+OM/XMPV613TSjMHoLPSr7N/4um1zQdSXgVP6aE+ko3V01Ec/Z/YKSEOViIOzgeyd8P
- fZXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787148197; x=1787752997;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=v1uLQJKaDEO9rPQhNbhsqBghhQaM7OjpGXeVPjrZzrI=;
- b=QJpaQdEnzHLAc+vPw8N/XIMlHPOI4+GDhA5Byux4yylR+G25s9Y9fByfgjh8FpJimW
- F3ncoUzSkF77JOQjPlEccvY3K/BzCWpkm9Yu33a9ge2tvym5z95PeqAtrfKz4gTX3gQn
- bF75oqGcuQLY7vdvk6Njg2BqeW2hx52jXZ885g+L19M34FaTUNhl9AnaOOAQ7FFh/Eej
- Pre3IifXLmfMgJJYnosN+cTnkxINyYEPOju6D2z2dhpizomVvJzT1/3wxB0XoSxVpYyh
- 7q66NcFVY1wdPRDv2+nDzVeqQAWibE2biAvvWmMq3zhUrX0kJlUEL1hOTR62sMTUwrEJ
- dT0Q==
-X-Gm-Message-State: AOJu0YyvXXzrPMH6GzhOCLjhwFdmFqat3/S6/82kRO4Ymw0BWaOqoP3l
- wCH7pka4DCSOb2unNy9dhAgfk0rNoqZBzIZohpTJDdZUnDUVYYZez3x6EaG4Jf5opX8=
-X-Gm-Gg: AR+sD13567YeqlYJK3OSM+9jtwEHsNUmrKlTI6kR5HNChrnTBkJSzjn0mjfbpZIMvP9
- sYLc3vg5r5lHlo4z+f8WunXK9UHMXWIdQ8xAO9mTf1LrFPuXJHRNpns5deQ0KaoQxiQSd5Ls6V2
- KTGRjqwLCbYfc7sL+3BPKvmqvVvKEDO0GIdR+pjQGr2NAg04oKn2q8SL2m+3Ik2X9dq/Q95j/lQ
- vv3jGI4sTOQ1WtkgFGk58USRoqt9E+mG/uMrDOkDcdlZ8GaDcjCLsGCJx5DRg+GVYlcZqp7N4gN
- m3HW3yIxhK71FohSL+zlhT+WyaoII9ikYbHNmm/EvdidSc4ISi/yJHFIyN1nB5hEY45NcdBPCNA
- e3vZNDf4qCSTIyhLI05Lym74wBo4t/LdzeV/g+lMQ/8NLb3kh5WJ86ayYIUthvqPQOw64O5dLyi
- YD1Xli2QoxRvBnrW2hz4wm589mz8dk30Tt3KwRT2diN4oCFxq7cLFgvEaAl/oH
-X-Received: by 2002:a05:600c:4ec9:b0:495:6e68:5df2 with SMTP id
- 5b1f17b1804b1-499aa1e33femr75547005e9.12.1787148197060; 
- Wed, 19 Aug 2026 07:03:17 -0700 (PDT)
-Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499aa0dd5fcsm70182795e9.14.2026.08.19.07.03.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 07:03:16 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 21F805F805;
- Wed, 19 Aug 2026 15:03:15 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Laurent Vivier
- <laurent@vivier.eu>,  Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Helge
- Deller <deller@gmx.de>,  Paolo Bonzini <pbonzini@redhat.com>,  Brian Cain
- <brian.cain@oss.qualcomm.com>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Peter Maydell
- <peter.maydell@linaro.org>,  Ilya Leoshkevich <iii@linux.ibm.com>,  Aniket
- Sahu <asahu1x@linux.ibm.com>
-Subject: Re: [PATCH v7 004/104] meson: bump minimal version to 1.6.0
-In-Reply-To: <20260818192309.22169-5-pierrick.bouvier@oss.qualcomm.com>
- (Pierrick Bouvier's message of "Tue, 18 Aug 2026 19:21:28 +0000")
-References: <20260818192309.22169-1-pierrick.bouvier@oss.qualcomm.com>
- <20260818192309.22169-5-pierrick.bouvier@oss.qualcomm.com>
-User-Agent: mu4e 1.14.3; emacs 30.1
-Date: Wed, 19 Aug 2026 15:03:15 +0100
-Message-ID: <87a4qiqkbg.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1wwgvx-00066S-0a; Wed, 19 Aug 2026 10:06:26 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id C707484B87;
+ Wed, 19 Aug 2026 14:06:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1787148377; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=r46tzNMKqVrw2CsgVDC0FPkrfr3v61Yt/ErkI07wI8M=;
+ b=mFYHvgBrXC97t9mRRHD1HEW7sE4Fx0Gkgazc1l0KReqk7KJLRctHbcyYBZEYSG8QbAp4nv
+ oR6nQVNMI/9j/baAw5Bb01MTMWwFrwIRmw1viE6NlR7lF6mWijwCyQF0jUKVNRreAVgeIK
+ qwZNRjU6PEe/XrjRVI5S3uvDIvdF9as=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1787148377;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=r46tzNMKqVrw2CsgVDC0FPkrfr3v61Yt/ErkI07wI8M=;
+ b=3UlWoSIMoGSDjfwtKwwSIa3tgCVXllGftAPK41gwpt3rgHZWrx6bKObYK/zzgvIPohmxWn
+ 7OYGxdf97rj1+7AQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1787148373; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=r46tzNMKqVrw2CsgVDC0FPkrfr3v61Yt/ErkI07wI8M=;
+ b=tWF9AZr25J3BMG4glLHjTTYTYWjyabJr2QT/UFcaWnB5sayE2owJFiFqbw9BDtSuFV+NMd
+ J4f4DH1vM7X9uyu6WGEjBBWTHj6DFwPbOn3euZvCRvnmcvUbMICJyt5tyPA7KFTr8GbC6S
+ g9fzt6EwE8ZQQZhdbX036KYdsIVxDSw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1787148373;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=r46tzNMKqVrw2CsgVDC0FPkrfr3v61Yt/ErkI07wI8M=;
+ b=Gn8Y8YT3yaJEUO27TcuXiHIwDXy7e9yugEWoNaNHGZxnBSlNMokVwlLl+wygCTxH4+ymzy
+ OASW7N0a2Kw/6xBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 668872F81;
+ Wed, 19 Aug 2026 14:06:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 31YoDlW4hWqBbwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 19 Aug 2026 14:06:13 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Tao Tang <tangtao1634@phytium.com.cn>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Peter Maydell
+ <peter.maydell@linaro.org>, Chen Baozi <chenbaozi@phytium.com.cn>, Chao
+ Liu <chao.liu@processmission.com>, Jim MacArthur
+ <jim.macarthur@linaro.org>, Tao Tang <tangtao1634@phytium.com.cn>
+Subject: Re: [RFC v5 3/5] tests/qtest: Add raw command response helper
+In-Reply-To: <20260814035628.3924513-4-tangtao1634@phytium.com.cn>
+References: <20260814035628.3924513-1-tangtao1634@phytium.com.cn>
+ <20260814035628.3924513-4-tangtao1634@phytium.com.cn>
+Date: Wed, 19 Aug 2026 11:06:11 -0300
+Message-ID: <87wltmkxws.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[10]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid,phytium.com.cn:email];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
+ phytium.com.cn:email, suse.de:email, suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,22 +120,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+Tao Tang <tangtao1634@phytium.com.cn> writes:
 
-> Without it, we'll get the following warning:
-> WARNING: Project specifies a minimum meson_version '>=3D1.5.0' but uses f=
-eatures which were added in newer versions:
->  * 1.6.0: {'test with external_program in args'}
+> Split raw qtest response tokenization and qtest_raw_cmd() from the
+> memory attributes helpers so this protocol support can be reviewed
+> independently.
 >
-> Which we require because of how we build iteratively our test command
-> line.
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> ---
+>  tests/qtest/libqtest.c | 27 +++++++++++++++++++++++++--
+>  tests/qtest/libqtest.h | 13 +++++++++++++
+>  2 files changed, 38 insertions(+), 2 deletions(-)
 >
-> Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+> index 453d0dddd09..37aa69e1297 100644
+> --- a/tests/qtest/libqtest.c
+> +++ b/tests/qtest/libqtest.c
+> @@ -746,11 +746,10 @@ static GString *qtest_client_socket_recv_line(QTestState *s)
+>      return line;
+>  }
+>  
+> -static gchar **qtest_rsp_args(QTestState *s, int expected_args)
+> +static gchar **qtest_rsp_words(QTestState *s)
+>  {
+>      GString *line;
+>      gchar **words;
+> -    int i;
+>  
+>  redo:
+>      line = s->ops.recv_line(s);
+> @@ -780,6 +779,15 @@ redo:
+>      }
+>  
+>      g_assert(words[0] != NULL);
+> +
+> +    return words;
+> +}
+> +
+> +static gchar **qtest_rsp_args(QTestState *s, int expected_args)
+> +{
+> +    gchar **words = qtest_rsp_words(s);
+> +    int i;
+> +
+>      g_assert_cmpstr(words[0], ==, "OK");
+>  
+>      for (i = 0; i < expected_args; i++) {
+> @@ -789,6 +797,21 @@ redo:
+>      return words;
+>  }
+>  
+> +gchar **qtest_raw_cmd(QTestState *s, const char *fmt, ...)
+> +{
+> +    va_list ap;
+> +    gchar *str;
+> +
+> +    va_start(ap, fmt);
+> +    str = g_strdup_vprintf(fmt, ap);
+> +    va_end(ap);
+> +
+> +    s->ops.send(s, str);
+> +    g_free(str);
+> +
+> +    return qtest_rsp_words(s);
+> +}
+> +
+>  static void qtest_rsp(QTestState *s)
+>  {
+>      gchar **words = qtest_rsp_args(s, 0);
+> diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
+> index 7c0b239e5b5..715c363de30 100644
+> --- a/tests/qtest/libqtest.h
+> +++ b/tests/qtest/libqtest.h
+> @@ -239,6 +239,19 @@ void qtest_qmp_send(QTestState *s, const char *fmt, ...)
+>  void qtest_qmp_send_raw(QTestState *s, const char *fmt, ...)
+>      G_GNUC_PRINTF(2, 3);
+>  
+> +/**
+> + * qtest_raw_cmd:
+> + * @s: #QTestState instance to operate on.
+> + * @fmt: raw qtest protocol text to send, formatted like sprintf().
+> + *
+> + * Sends a raw qtest command and returns the response split on spaces.
+> + * The response is not required to start with ``OK``; callers can inspect
+> + * ``args[0]`` for ``OK``, ``ERR``, or ``FAIL`` and must free the returned
+> + * vector with g_strfreev().
+> + */
+> +gchar **qtest_raw_cmd(QTestState *s, const char *fmt, ...)
+> +    G_GNUC_PRINTF(2, 3);
+> +
+>  /**
+>   * qtest_socket_server:
+>   * @socket_path: the UNIX domain socket path
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
