@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3FF2C5DF86
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 12:48:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD15EC5DF86
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 12:52:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwfim-0006fI-J1; Wed, 19 Aug 2026 08:48:45 -0400
+	id 1wwfmI-0007eu-BQ; Wed, 19 Aug 2026 08:52:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
- id 1wwfiX-0006XM-JZ
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 08:48:30 -0400
+ id 1wwfmH-0007el-Bf
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 08:52:21 -0400
 Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
- id 1wwfiU-0006u6-Qh
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 08:48:29 -0400
+ id 1wwfmF-0007fg-IB
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 08:52:21 -0400
 Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-c082647cd0dso11746666b.0
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 05:48:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787143704; cv=none;
+ a640c23a62f3a-c15df0c154dso11961666b.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 05:52:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787143937; cv=none;
  d=google.com; s=arc-20260327;
- b=hCb9ipuxAIpKlBlI9XSuA4VVz04rfbVlJ0JRq9jTo7qlIfstm60JpUSwlxZ8/4I5R+
- D524i0d4vopvLIMB2KjWJVlJBhWF9Pkt7S8UQV1J6A/NfG/EYrdaz9Vx2ho82VyV7Ij3
- fJFTjDLnqQAUeEDzHxyeE4KpP1a1XGTyoW5XL3kSxkOtpHhlqzWfvWWoMknTTiwIN0Lb
- 4ZMKzP7i1VN/faarakz7AXDOk5gzkzvEoe9nxh8jPOkYQ/WIvp14wfrxxyXVMzwABpBh
- Qny4zz9MaIgaPG0b3UUhrXbZpFjMwP5JvAaXv8oVZHWNKmrk1aiZ7f0RaaXHsDQyFvwT
- jXcg==
+ b=KCYIh6tj4Szm8KjCdPkUnSFMmzhrPsfCxByFJWVSTUAR0VOoh7Ljg/Z7QhbFpzPLJy
+ z6/WpPNIbUgSVE1nD+k1FO2pWADfLEsugD5WNirrzcbv7pd+bushFuavqwY4mH8T64Ix
+ vlqcD8EL9DpQQZuYehimVxLZztnhZ7lPuWAcBvB2/Tz8y4TfKynDXYnY9Lx1Xr2XtNCJ
+ VffgHOukq7gzYKe7q4QbJ/RReCznr1magE3b4M1zL/6WdT6lfM4+01J38Q+57sWGnQsN
+ lGi3YCQWfxCVjP1rTN4ogpisKBqfBdjSv4yZ1O0pY+6gZJqw54AWnNLfasZf97q6xwKb
+ Iz6w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=1fEquTl80bteh0ZQ1FXpM1aOxlvF0foisn6zSN6B4pY=;
+ bh=NIQ46bU+FO7WbUZVAkb+lj4rDcDyPofb6GioRSokQj0=;
  fh=QWNbaIaVQQou6IzIMV0ib5reMaT/Wr3DV7egi1JIcps=;
- b=Knz+lH098+6XZmduRY6w4wJYaRH5xk0Pyj0L5C5pjWS73QC/+J7Az53CZX9SKQkjG6
- os3fZ+PmO/nibXXXoGB9jDz8dcgRQ+77XpYvz36IR7MlvqlBrhqSo1U9SG9SZauaRead
- meu6SL9JePfLiaJ38qylv5W/rxAgQbuwtsoGRBzXwWkqsrbzCCEttF3nWv1n3MkTrmFa
- N47px63oOgsuKnAfN4i8/kTpyoNKdsN70rflCxMxUnPQza4EvRWbvLZpovc9f5nEV1rH
- AMrJmYV6jYTCKu3nfB8YQ9FtvZf7s5WGlyFEwFS+1+LbJ9g9nz1yN03UsQhRtm6LcdNV
- hpAw==; darn=nongnu.org
+ b=HzKyznlmDecIYtO7PoH8JmCpq7oUeNjEVKlvjfnGbfWpRCsyJEy7m7Rd7jyMfrg1yx
+ 70Apb4KHF80fk/tHHFAxDxqXcZi1wEeJCIabbjRd9buZ5KtRZkkSJoe6FAh15o9UMfg+
+ N6TGZi2WvNkynFqqWkzp/3Vw0buCLYcP7H40yxQFthvkd2rNZPtu8t5fdC+HtMXluLpp
+ fgU07fc0VIkO5En018iBUvGLIBO6Zg3zLjMqHU09XBrKB4SnRcqPjbBF3DQWyzKUzjoW
+ Lv8rzvtwetsy7FQinpfVbrZRODeTSL7vj2+JV6FRWauUkoEOQrlt8p9FPyEkPuvHKlq9
+ sXng==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cloud.ionos.com; s=google; t=1787143704; x=1787748504; darn=nongnu.org;
+ d=cloud.ionos.com; s=google; t=1787143937; x=1787748737; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=1fEquTl80bteh0ZQ1FXpM1aOxlvF0foisn6zSN6B4pY=;
- b=KcASC3Woleey2dhoiK/18j2HM621NRFjVMYMM4L2/o2V5kIg+CLUcUF3q7Bx5c7IvN
- ugbLam2u3mmTu2EnM19Zl72aWzbpBZmHZ8nYlhj+nJwURg+NXz3cip7AAWYsV93SEgOx
- EmEr7a11iKpEjKdmwx+AlfpzDMdJYb2KEfN273PAEUt8fxjj/AUYS/T56M8DQ3AAued0
- Er1Pud1vrSvtSEiNQuFvNJKQAAVvLbIcFrqSX1onGtyNmReA3OZY40iHH980Ao5oEOFG
- a30NpVxcpzv9FFKubnua+LKdFO8ofJhahSZRa4ePFAxFs9jItYoYyy9lwIoa/WkSIWX6
- j7Pg==
+ bh=NIQ46bU+FO7WbUZVAkb+lj4rDcDyPofb6GioRSokQj0=;
+ b=DaXaU89m3UM/0MFY5Rzg4xCPgOyYUM44csbnCe3YANn6ymOQb3aUCdLntnj1XbNyHM
+ fB8lfmhKiK9SmGPy+ssrvoO1g+p7pAianF6ptFoSTx56F3sffLeoqNe+EZvHgtNeFfkh
+ uGoArcOvyrPX+gAZhPTuc+3M4C5PUtQGhQ7O9lRt35TIITxPO0fJJhkqWZsw82KLRga1
+ Pdnqij+NplSg5JZNA6zjHDz+FyoWUD68BUVnuld8yzz1BeU6731tvqRis11smJFXcsCc
+ LExCQXAPRBzYISkHdUP9++ytZAiwuSl1fDuV6O199qasUGNVCJfdEMskc6TIHH23ue+W
+ BE2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787143704; x=1787748504;
+ d=1e100.net; s=20251104; t=1787143937; x=1787748737;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=1fEquTl80bteh0ZQ1FXpM1aOxlvF0foisn6zSN6B4pY=;
- b=gSNXX2MaRAM3uNs285SAOSaMHISMwbBlSvO94OX9lYTFe3ZXCnvdpaxVRS/3PqTKS8
- Rqq4MP58ku8g58z9u2ngntT13gV51OdWBymSRJ25BLzFDPNYlrmLZHxcClOAMlocFCol
- crQSTUoqTboRxF/oWANeFZti/gSp3CsBtWWsbSSJ4PRyiWc29sc9eWnbyeaAJX4xBict
- AbswcqxCUNZgfpamXD6wsheIwljaF+K0JLz56QKRnJM+NAbd9v1RCiUMcBhPRzenGAwo
- RzMa0IIK9IXbq54OCXs0EZ+zmwjBZOMrXMyBWGXC7iqp+7iB1ZpPocUDRCtI3dfMaCQP
- q/1w==
-X-Gm-Message-State: AOJu0YyDOg3KnpHDekuPDISsQBaOyQaeKlIjA33YWZ0LlV6Jerq2ecUB
- +nCLyKF/00Md/c+SuYO4tgHpD3KaCCcPIlgOGwgCMTj+uOmQ/8MIwQOiihdWIGU98NLS1Lk6bFL
- DF8/q1313NCbSGnUPozKSuP0YNofNErimL3A3Ri/xUg==
-X-Gm-Gg: AR+sD12WW+JpBaRBrP4xkE5X/fO39zls48ztWXzrOV7HNpFnHLcX+sHhE1TVFX8DxQN
- mw8xnc11nUHl1fDQtv5MV76X5I20qRJSaVg+iPBEjz2Cm4GPSRqC1wWfYORDwUS5Wy66OmEKdYC
- ONvc395T2KEGj9saYXtWynGPZvHdx+SvAAaKDg8LwgrbkwH+yLm0f5Z15K5k7oxtW1PjJ3HYaCL
- mSMF0LDGPq7c8eyd+JRQOdesp030PlAAEMnstvXtNtNOp7f6XSmQBOTwFIDJ2fgNDN6NM3cPxWY
- zSuM/2Nfu2sNRhYYduRu1Uzmgt9nSlFmp39HbdrxPB8q
-X-Received: by 2002:a17:907:3e9a:b0:c15:c651:f28f with SMTP id
- a640c23a62f3a-c242e23c7a1mr152596166b.3.1787143703690; Wed, 19 Aug 2026
- 05:48:23 -0700 (PDT)
+ bh=NIQ46bU+FO7WbUZVAkb+lj4rDcDyPofb6GioRSokQj0=;
+ b=juje5/ePkr7NcglwZFCRjvScNqeibEK411YrPUsYH+1gTY99EzWs/F+xwDHJIA+IXk
+ +3781k3BtDRKKX2s3Uiks3w6Um7Qos8nae8Kp+k/IovNLCcVneQqmZVDLKDpcYqo7Ru5
+ iCw3GHqge3l50hBUp533o6l+bx6gjxDaKoqgGUePHvz7Rd65b2Qc0R7gPfjXWAmTR8bi
+ J+WJ2UN1CnruQ8gWmGRcUWieMWGYCYH3dIE8zPvSZw4o12oU9c0EeScBo6yxdRdlo4Ah
+ q/1JMxIEP/X8+bypM2mVpYBdShxWYQiG8e6sFzY0ddllP+TS7YXHYfuzRleN7El1xUTw
+ 7ycQ==
+X-Gm-Message-State: AOJu0YyusEjukOp+2Byp+sbcM5LPtNSCo1O5olmssvgHb/QgsRRisFvw
+ C70ywFriAC0qys/DIF6m3u7TRcrbgWwN2kN5le5UyFL6ebQ5efA+1czYCQBmp5jx6PuDVdPSQEq
+ KAFaCnSWIKruYavdrY+zZnIbmVzcIt4L+X93dOtsqoQ==
+X-Gm-Gg: AR+sD12P6TDHuDKKzEq2z6qXHRf4hI2UL5IeBgF+rOP1LZhdsVYbb3f0ZXobisYaxce
+ FnF2lGm619jq0cSIoyhzGR4U3+2Dg6kRSMkwmspNw5gvBn5Axkhkxg9wW649iXeahAvy/ed0Qdg
+ QrWWb6jSRBdAfRuBAENbjIgotjNY/s4lUploa4HlL1LSSo/L08kV6vvmytKbi9ixV1I35s2LiY4
+ 9+tmEVI8zlSNBnFHq55iVhdkKSwz/1CjTiSdT/j1u4fwp1ysrSMtSSABoBCsNng+FcX7oNEzwW8
+ SMPSj0Zb2UGF1+Xj5Y0htoWr/YeJ80iKJAWjekHeYaR1
+X-Received: by 2002:a17:907:d21:b0:c15:9f0c:8d31 with SMTP id
+ a640c23a62f3a-c242e206169mr154679166b.2.1787143936916; Wed, 19 Aug 2026
+ 05:52:16 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260817202424.2901438-1-peterx@redhat.com>
- <20260817202424.2901438-7-peterx@redhat.com>
-In-Reply-To: <20260817202424.2901438-7-peterx@redhat.com>
+ <20260817202424.2901438-8-peterx@redhat.com>
+In-Reply-To: <20260817202424.2901438-8-peterx@redhat.com>
 From: Jinpu Wang <jinpu.wang@cloud.ionos.com>
-Date: Wed, 19 Aug 2026 14:48:12 +0200
-X-Gm-Features: AcwNN1VV3_X0u-f8HO61TJ2Q79cRvJ1gQ-KJmVbS_XabQxXi_I923qJ4kyXySgs
-Message-ID: <CAMGffE=tiog=Qo2f+_bvN5iqY2BJ=ZEZGZ8Q9da6LmhSCtf+yA@mail.gmail.com>
-Subject: Re: [PATCH 06/10] migration/rdma: Drop RDMARegister.key.chunk
+Date: Wed, 19 Aug 2026 14:52:05 +0200
+X-Gm-Features: AcwNN1VF4IqRXm6TjX988pjJvmYJg3L0yfmXf4mDAxBrqFRqCfL__WInSZULp1g
+Message-ID: <CAMGffEnmk75De_9Ji3MuTT08RgxETcFZ-AwzVyz8fPRGTgZVDg@mail.gmail.com>
+Subject: Re: [PATCH 07/10] migration/rdma: Sanity check
+ RDMA_CONTROL_REGISTER_REQUEST on buflen
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>, 
  Samuel Zhang <guoqing.zhang@amd.com>, Fabiano Rosas <farosas@suse.de>, 
@@ -121,99 +122,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Mon, Aug 17, 2026 at 10:24=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote=
 :
 >
-> Not used anymore.
+> RDMA header supports head.repeat on RDMA_CONTROL_REGISTER_REQUEST, which
+> can include >1 memory registrations.  The current code did check over
+> head.repeat to guard against RDMA_CONTROL_MAX_COMMANDS_PER_MESSAGE, howev=
+er
+> it didn't further check the buffer size (head.len) to make sure the
+> received data is large enough to include the repeated entries.  Check it.
 >
+> This is almost only to harden this piece of code, in reality on source si=
+de
+> QEMU never uses repeat>1..  However since it's a protocol, still keep it.
+> Check the buffer size instead.
+>
+> In case it's not obvious to new RDMA readers: head.len should be the size
+> RDMA has last received, as qemu_rdma_exchange_get_response() checked on i=
+t
+> against byte_len (which was further fetched from ibv_wc.byte_len in
+> qemu_rdma_poll()).
+>
+> Reported-by: Tristan (@TristanInSec)
+> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4028
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Jack Wang <jinpu.wang@cloud.ionos.com>
 > ---
->  migration/rdma.c | 23 ++++++++++-------------
->  1 file changed, 10 insertions(+), 13 deletions(-)
+>  migration/rdma.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 >
 > diff --git a/migration/rdma.c b/migration/rdma.c
-> index c06395a51a..f64bcee418 100644
+> index f64bcee418..5ce8b06818 100644
 > --- a/migration/rdma.c
 > +++ b/migration/rdma.c
-> @@ -415,10 +415,7 @@ static void network_to_control(RDMAControlHeader *co=
-ntrol)
->   * the actual RDMA operation.
->   */
->  typedef struct QEMU_PACKED {
-> -    union QEMU_PACKED {
-> -        uint64_t current_addr;  /* offset into the ram_addr_t space */
-> -        uint64_t chunk;         /* chunk to lookup if unregistering */
-> -    } key;
-> +    uint64_t current_addr;  /* offset into the ram_addr_t space */
->      uint32_t current_index; /* which ramblock the chunk belongs to */
->      uint32_t padding;
->      uint64_t chunks;            /* how many sequential chunks to registe=
-r */
-> @@ -443,16 +440,16 @@ static void register_to_network(RDMAContext *rdma, =
-RDMARegister *reg)
->       * current_addr as passed in is an address in the local ram_addr_t
->       * space, we need to translate this for the destination
->       */
-> -    reg->key.current_addr -=3D local_block->offset;
-> -    reg->key.current_addr +=3D rdma->dest_blocks[reg->current_index].off=
-set;
-> -    reg->key.current_addr =3D htonll(reg->key.current_addr);
-> +    reg->current_addr -=3D local_block->offset;
-> +    reg->current_addr +=3D rdma->dest_blocks[reg->current_index].offset;
-> +    reg->current_addr =3D htonll(reg->current_addr);
->      reg->current_index =3D htonl(reg->current_index);
->      reg->chunks =3D htonll(reg->chunks);
->  }
+> @@ -3362,6 +3362,14 @@ int rdma_registration_handle(QEMUFile *f)
+>              reg_resp.repeat =3D head.repeat;
+>              registers =3D (RDMARegister *) rdma->wr_data[idx].control_cu=
+rr;
 >
->  static void network_to_register(RDMARegister *reg)
->  {
-> -    reg->key.current_addr =3D ntohll(reg->key.current_addr);
-> +    reg->current_addr =3D ntohll(reg->current_addr);
->      reg->current_index =3D ntohl(reg->current_index);
->      reg->chunks =3D ntohll(reg->chunks);
->  }
-> @@ -1833,7 +1830,7 @@ retry:
->               * Otherwise, tell other side to register.
->               */
->              reg.current_index =3D current_index;
-> -            reg.key.current_addr =3D current_addr;
-> +            reg.current_addr =3D current_addr;
->              reg.chunks =3D chunks;
->
->              trace_rdma_write_one_sendreg(chunk, sge.length, current_inde=
-x,
-> @@ -3375,7 +3372,7 @@ int rdma_registration_handle(QEMUFile *f)
->                  reg_result =3D &results[count];
->
->                  trace_rdma_registration_handle_register_loop(count,
-> -                         reg->current_index, reg->key.current_addr, reg-=
->chunks);
-> +                         reg->current_index, reg->current_addr, reg->chu=
-nks);
->
->                  if (reg->current_index >=3D rdma->local_ram_blocks.nb_bl=
-ocks) {
->                      error_report("rdma: 'register' bad block index %u (v=
-s %d)",
-> @@ -3384,15 +3381,15 @@ int rdma_registration_handle(QEMUFile *f)
->                      goto err;
->                  }
->                  block =3D &(rdma->local_ram_blocks.block[reg->current_in=
-dex]);
-> -                if (block->offset > reg->key.current_addr) {
-> +                if (block->offset > reg->current_addr) {
->                      error_report("rdma: bad register address for block %=
-s"
->                          " offset: %" PRIx64 " current_addr: %" PRIx64,
->                          block->block_name, block->offset,
-> -                        reg->key.current_addr);
-> +                        reg->current_addr);
->                      goto err;
->                  }
->                  host_addr =3D (block->local_host_addr +
-> -                            (reg->key.current_addr - block->offset));
-> +                            (reg->current_addr - block->offset));
->                  chunk =3D ram_chunk_index(block->local_host_addr,
->                                          (uint8_t *) host_addr);
->                  chunk_start =3D ram_chunk_start(block, chunk);
+> +            /* Making sure the register buffers to read are valid */
+> +            if (head.len !=3D head.repeat * sizeof(RDMARegister)) {
+> +                error_report("%s: Invalid RDMA_CONTROL_REGISTER_REQUEST =
+"
+> +                             "(head.repeat=3D%"PRIu32", head.len=3D%"PRI=
+u32")",
+> +                             __func__, head.repeat, head.len);
+> +                goto err;
+> +            }
+> +
+>              for (int count =3D 0; count < head.repeat; count++) {
+>                  uint64_t chunk;
+>                  uint8_t *chunk_start, *chunk_end;
 > --
 > 2.54.0
 >
