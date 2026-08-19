@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F9D2C5DF85
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 17:36:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40053C5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 17:37:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwkDa-000590-B8; Wed, 19 Aug 2026 13:36:50 -0400
+	id 1wwkDi-0005CN-Ra; Wed, 19 Aug 2026 13:36:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel@makrotopia.org>)
- id 1wwkDX-00058g-Rs
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:36:48 -0400
+ id 1wwkDh-0005CC-EX
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:36:57 -0400
 Received: from pidgin.makrotopia.org ([2a07:2ec0:3002::65])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel@makrotopia.org>)
- id 1wwkDW-0001UM-8I
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:36:47 -0400
+ id 1wwkDe-0001Ug-R1
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 13:36:57 -0400
 Received: from local
  by pidgin.makrotopia.org with esmtpsa (TLS1.3:TLS_AES_256_GCM_SHA384:256)
  (Exim 4.99) (envelope-from <daniel@makrotopia.org>)
- id 1wwkDR-000000005lM-1mWt; Wed, 19 Aug 2026 17:36:41 +0000
-Date: Wed, 19 Aug 2026 18:36:38 +0100
+ id 1wwkDY-000000005lZ-3ZS9; Wed, 19 Aug 2026 17:36:48 +0000
+Date: Wed, 19 Aug 2026 18:36:46 +0100
 From: Daniel Golle <daniel@makrotopia.org>
 To: Matthew Jackson <matthew@pq.io>, Alexander Graf <agraf@csgraf.de>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@oss.qualcomm.com>,
@@ -34,13 +34,14 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Kane-Chen-AS <kane_chen@aspeedtech.com>,
  jack wang <163wangjack@gmail.com>, qemu-devel@nongnu.org
-Subject: [PATCH 0/2] hw/misc/applesmc: SMC shutdown watchdog and trace events
-Message-ID: <cover.1787150842.git.daniel@makrotopia.org>
+Subject: [PATCH 1/2] hw/misc/applesmc: Add trace events
+Message-ID: <ad4aef2117b475e474833fb76b4c95d5bc1259c5.1787150842.git.daniel@makrotopia.org>
 References: <20260720164930.68383-1-matthew@pq.io>
+ <cover.1787150842.git.daniel@makrotopia.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260720164930.68383-1-matthew@pq.io>
+In-Reply-To: <cover.1787150842.git.daniel@makrotopia.org>
 Received-SPF: pass client-ip=2a07:2ec0:3002::65;
  envelope-from=daniel@makrotopia.org; helo=pidgin.makrotopia.org
 X-Spam_score_int: -18
@@ -63,48 +64,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These two patches are the part of my earlier AppleSMC series [1] that is not
-already covered by Matthew Jackson's Apple SMC v4 series [2], rebased on top
-of it.
+Add trace events for the command dispatch and for the read, write,
+get-key-type and get-key-by-index handlers, so the sequence of commands
+and keys a guest issues can be observed with
 
-Matthew's series is the more complete of the two -- besides the write and
-get-key-type commands (which we implemented independently) it also handles
-get-key-by-index and populates a full key table -- so I have dropped the
-overlapping patches from mine and kept only the two bits it does not cover:
+  -trace 'applesmc*'
 
-  1/2  trace events for the command dispatch and each handler, so the
-       SMC command/key conversation can be watched with -trace 'applesmc*'.
-       This is how the exact set of commands and keys a macOS guest relies
-       on was found in the first place.
+This is how the exact set of commands and keys a macOS guest relies on
+was determined, and it stays useful for debugging future guests and key
+probes.
 
-  2/2  the SMC shutdown watchdog: the "NATi"/"NATJ"/"OSWD" keys that patch
-       1/2 of Matthew's series accepts and discards are the watchdog macOS
-       arms to force the machine down. Model them as a QEMUTimer that a
-       write arms, refreshes or disarms.
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+---
+ hw/misc/applesmc.c   | 14 ++++++++++++++
+ hw/misc/trace-events | 10 ++++++++++
+ 2 files changed, 24 insertions(+)
 
-Both apply on top of Matthew's v4 [2]; they touch only hw/misc/applesmc.c
-and hw/misc/trace-events and do not conflict with it.
-
-Tested by booting a macOS 26 (Tahoe) guest on Matthew's v4 plus these two
-patches. It boots and shuts down cleanly; every SMC command the guest issues
-is accepted (0 rejected out of 77 in one boot+shutdown), the boot-time key
-writes (NTOK, MSDW, QENA, HE0N) succeed, get-key-type is answered for the 60+
-keys the guest probes, and on shutdown the guest's "OSWD" write is handled as
-a watchdog disarm (trace_applesmc_wdt_disarm). The guest arms the watchdog
-only to disarm it on the way down; the arm-and-expiry path is the documented
-behaviour for a guest that does arm it.
-
-[1] https://patchew.org/QEMU/cover.1787114994.git.daniel@makrotopia.org/
-[2] https://patchew.org/QEMU/20260720164930.68383-1-matthew@pq.io/
-
-Daniel Golle (2):
-  hw/misc/applesmc: Add trace events
-  hw/misc/applesmc: Emulate the SMC shutdown watchdog
-
- hw/misc/applesmc.c   | 80 ++++++++++++++++++++++++++++++++++++++++++++
- hw/misc/trace-events | 13 +++++++
- 2 files changed, 93 insertions(+)
-
+diff --git a/hw/misc/applesmc.c b/hw/misc/applesmc.c
+index d2f292f10e..4a82a36a2a 100644
+--- a/hw/misc/applesmc.c
++++ b/hw/misc/applesmc.c
+@@ -40,6 +40,7 @@
+ #include "qemu/timer.h"
+ #include "qom/object.h"
+ #include "hw/acpi/acpi_aml_interface.h"
++#include "trace.h"
+ 
+ /* #define DEBUG_SMC */
+ 
+@@ -138,6 +139,7 @@ static void applesmc_io_cmd_write(void *opaque, hwaddr addr, uint64_t val,
+         if (status == APPLESMC_ST_CMD_DONE || status == APPLESMC_ST_NEW_CMD) {
+             s->cmd = val;
+             s->status = APPLESMC_ST_NEW_CMD | APPLESMC_ST_ACK;
++            trace_applesmc_cmd(val);
+         } else {
+             smc_debug("ERROR: previous command interrupted!\n");
+             s->status = APPLESMC_ST_NEW_CMD;
+@@ -147,6 +149,7 @@ static void applesmc_io_cmd_write(void *opaque, hwaddr addr, uint64_t val,
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "applesmc: unexpected CMD 0x%02x\n", (uint8_t)val);
++        trace_applesmc_cmd_bad(val);
+         s->status = APPLESMC_ST_NEW_CMD;
+         s->status_1e = APPLESMC_ST_1E_BAD_CMD;
+     }
+@@ -189,6 +192,8 @@ static void applesmc_io_data_write(void *opaque, hwaddr addr, uint64_t val,
+                 s->data_pos = 0;
+                 s->status = APPLESMC_ST_ACK | APPLESMC_ST_DATA_READY;
+                 s->status_1e = APPLESMC_ST_CMD_DONE;
++                trace_applesmc_read(s->key[0], s->key[1], s->key[2], s->key[3],
++                                    d->len);
+             } else {
+                 /*
+                  * Return zeros for unknown keys instead of NOEXIST. Early
+@@ -200,6 +205,8 @@ static void applesmc_io_data_write(void *opaque, hwaddr addr, uint64_t val,
+                               "applesmc: READ unknown key '%c%c%c%c' len=%d\n",
+                               s->key[0], s->key[1], s->key[2], s->key[3],
+                               (uint8_t)val);
++                trace_applesmc_read_unknown(s->key[0], s->key[1],
++                                            s->key[2], s->key[3]);
+                 memset(s->data, 0, APPLESMC_MAX_DATA_LENGTH);
+                 s->data_len = (uint8_t)val;
+                 s->data_pos = 0;
+@@ -234,6 +241,8 @@ static void applesmc_io_data_write(void *opaque, hwaddr addr, uint64_t val,
+                                   "applesmc: WRITE key '%c%c%c%c' len=%d\n",
+                                   s->key[0], s->key[1], s->key[2], s->key[3],
+                                   s->data_len);
++                    trace_applesmc_write(s->key[0], s->key[1], s->key[2],
++                                         s->key[3], s->data_len);
+                     s->status = APPLESMC_ST_CMD_DONE;
+                     s->status_1e = APPLESMC_ST_CMD_DONE;
+                 } else {
+@@ -298,6 +307,8 @@ static void applesmc_io_data_write(void *opaque, hwaddr addr, uint64_t val,
+             s->data_pos = 0;
+             s->status = APPLESMC_ST_ACK | APPLESMC_ST_DATA_READY;
+             s->status_1e = APPLESMC_ST_CMD_DONE;
++            trace_applesmc_key_type(s->key[0], s->key[1], s->key[2],
++                                    s->key[3], s->data[4]);
+         }
+         s->read_pos++;
+         break;
+@@ -341,9 +352,12 @@ static void applesmc_io_data_write(void *opaque, hwaddr addr, uint64_t val,
+                 s->data_len = 0;
+                 s->status_1e = APPLESMC_ST_1E_BAD_INDEX;
+                 s->status = APPLESMC_ST_CMD_DONE;
++                trace_applesmc_key_by_index_end(idx);
+                 s->read_pos++;
+                 break;
+             }
++            trace_applesmc_key_by_index(idx, def->key[0], def->key[1],
++                                        def->key[2], def->key[3]);
+             s->status = APPLESMC_ST_ACK | APPLESMC_ST_DATA_READY;
+             s->status_1e = APPLESMC_ST_CMD_DONE;
+         }
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index c9a868b3ef..5b823182c9 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -37,6 +37,16 @@ allwinner_sid_write(uint64_t offset, uint64_t data, unsigned size) "offset 0x%"
+ allwinner_sramc_read(uint64_t offset, uint64_t data) "offset 0x%" PRIx64 " data 0x%" PRIx64
+ allwinner_sramc_write(uint64_t offset, uint64_t data) "offset 0x%" PRIx64 " data 0x%" PRIx64
+ 
++# applesmc.c
++applesmc_cmd(uint8_t cmd) "cmd 0x%02x"
++applesmc_cmd_bad(uint8_t cmd) "unsupported cmd 0x%02x"
++applesmc_read(char k0, char k1, char k2, char k3, uint8_t len) "READ '%c%c%c%c' len %u"
++applesmc_read_unknown(char k0, char k1, char k2, char k3) "READ unknown key '%c%c%c%c'"
++applesmc_write(char k0, char k1, char k2, char k3, uint8_t len) "WRITE '%c%c%c%c' len %u"
++applesmc_key_type(char k0, char k1, char k2, char k3, uint8_t len) "GET_KEY_TYPE '%c%c%c%c' size %u"
++applesmc_key_by_index(uint32_t idx, char k0, char k1, char k2, char k3) "GET_KEY_BY_INDEX %u -> '%c%c%c%c'"
++applesmc_key_by_index_end(uint32_t idx) "GET_KEY_BY_INDEX %u past end"
++
+ # avr_power.c
+ avr_power_read(uint8_t value) "power_reduc read value:%u"
+ avr_power_write(uint8_t value) "power_reduc write value:%u"
 -- 
 2.55.0
 
