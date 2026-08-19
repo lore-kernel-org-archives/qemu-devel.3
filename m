@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EBFEC5DF81
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 20:16:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEFBBC5DF85
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 20:16:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwmhj-0008K9-78; Wed, 19 Aug 2026 16:16:07 -0400
+	id 1wwmiP-0000FT-TB; Wed, 19 Aug 2026 16:16:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwmhh-0008Jx-B5
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 16:16:05 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ id 1wwmiN-0000F5-L2
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 16:16:47 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwmhf-00062n-Np
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 16:16:05 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-cc11a30a259so1253351a12.3
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 13:16:03 -0700 (PDT)
+ id 1wwmiM-000685-5D
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 16:16:47 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-38f620399a0so1275336a91.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 13:16:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787170562; x=1787775362; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787170604; x=1787775404; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=pLA/00YsntMw3WAlL/k9SGTzIgdjgSB2zvM/mvMYoRg=;
- b=b76C5R7EGia8XZ+aoQMtAVxPmJJZ9rzctRZIBdNCqkK7wL8w2jB/46mXdNKy1p7/6c
- E8XWAoGNlRi3txBhTYNVkV+oIdp5tBUXrKJ8YJ1/nTzKOAA47E15iFUUTosDpJ0b9zO2
- wG6uhpgcSsrBdJJnDcu6VYo5nH5/1wMLMneEP5O8RDW+CJxyihcv9L4OtJFs7x+TQX56
- E5hCQ3e6crx4qoV/zlx8LO+hKc9bVfWda4diQ4/Y9lPYucXq+iqijOGUz3cuTFixBH8g
- zZ4bH02M8pTqLD7i+EORkMphlkCfKLgYij3Vzr24Rf/ZP/DMs9+xtTwo8FD5I3pe0IWT
- goxA==
+ bh=uciunG2uk4wn2zee2+yO10Jf8IpULjB1MXFqUIoeNLA=;
+ b=nc65D4plBHGXdVoK6Xv+QVh+OrhXHqsVlaFgROCX9wwUyne5KVCi3n27VdHq9olTvz
+ A6xH9mYYkb9J5uH2n+nQsUdsZPKuMiI6SFv/86MbPxI2mrhg1Tcoh8Hkaeq/zrbPzmSz
+ GaiPHiW3i1Gb+s7lONK+2jZXQp5rpZ4gZosoxrC25qYEAc5m0yc08HXfYhPshx9mK87R
+ FBKhCrzr3czNML6n20bePfGw3WOItglIvVbFgGrI3hpLrzVBf2ycRNCDkFY2Im5JYc+M
+ OxY6OS9ISLnb7eq/52os3Lu5Cwvh2r99i1G+QjDOE+jjFBBpdUSkdqmWnnABVkZd9vtm
+ 15HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787170562; x=1787775362;
+ d=1e100.net; s=20251104; t=1787170604; x=1787775404;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=pLA/00YsntMw3WAlL/k9SGTzIgdjgSB2zvM/mvMYoRg=;
- b=Z4nnie0fOmNhZJVhdZat7vzfAimZAYBBCVkbNpxUN3QgJntK/YJ79vqbToMIUBqgJX
- Z+J+dN0pfw6evA29P3p18y3jPZnZcrXpBcxmivhxl4kJia16A4kpAnAGsPLbOqnf4+hm
- lre6ZU97kaZnZjGV/tK290hQOqS/hF7JfwRlbCY2dc2f6vQ1ZthdTt35WuY03AhIaJTa
- 2q98i9550TzlH5YpFd1sbpHzvks9oVbzNp7Wvy9g1Lm8aiqnjk8CkCVscOd8rBD7uhE4
- pd4UilNzHCkUtP+RgmISH7YJf7Yce0X5ipXEZEKUCaERJ44uph/WU+s20xJKf31ABEu2
- 93bA==
+ bh=uciunG2uk4wn2zee2+yO10Jf8IpULjB1MXFqUIoeNLA=;
+ b=PWniYelvS5d0megCak4cwgOG3wn4rj+81Y3PaI8SvVPa5LiTnV0FKg8AGxxOTtXytf
+ uDZ9To9/8GWSlScbU/kNWNbFTgyTk2Z1ZgG/egVCD4EQ9tvKHrlsYidkpytqdb7ZqbCY
+ t2siMpR3u2HzTpMn8vAPYHLWMgZTFJik2I/4u4qH2wnzVwrdezVkG6IL8my65ZRHB81Q
+ uwVY8PjxUW1Yaoqc9woKC7gpboGMAAZaRECbnfNfrJeE7LVlSwIgGQASZSIb746SVW/L
+ Ig7Cju/5IK5hJXKk515GaQh117x0Vq7GLfai6mlW7FvITGR9/wIjpLDDAQvbB+yXW0nP
+ Os6A==
 X-Forwarded-Encrypted: i=1;
- AHgh+Ro+Tyf3w42s5Ado7WU95DdooHIFUpudTgi37C+7pjO3n8+Na0Jf0KQa1uaa254WpCbe2u9x0zAJPVvW@nongnu.org
-X-Gm-Message-State: AOJu0Yw6Qg71ZytNsIz6uKRdzORS3ID4axe5iEzdKd7V6DL32bFaTik/
- GiUw3EnOEAz3CumvgWKOpzgQW1FdLYLIsy64ruy0UdeRuMlrpFTMeMFnPIxBbuUAZeI=
-X-Gm-Gg: AR+sD10L89fZPZQHQNIhu4pkBnQqewXkHz9etqKOHo3yHLLZ/ZlUy09Oy0ZDe6d7cXs
- M/XNbte40+M3Z9slxYVosqGdHH63SgwVz5+RkYypsm0BcMi14yPJACoJKNUGiY/6csqO5P9LKfH
- 0gbQ0WReu87XlsCxhaRUAOtP+k5KXCnvPy4juPojbBhUOeHBDaoYWJwiQaPwiFLKeOoh33s9R01
- OtmJP3652XMGv8zhKfyAIHmZ2qCk2MgQ7wniisz+FyE8l2y4Vn6ktbvqeDGK2xZTYHrK8tX5mxc
- kxuSUCMzw2nFuAbcTtT+9RNi1kJ/xFlRrnl+2gbnDm/rpP4Adln3g0aGZhXPnS/EWuCkhTednEV
- HYxLXkvq+c7zADyKCMhslliTxfLe+8zuqWjBhGbAd/sJ0r710vtbYM/pW5cyEziTXANhJyvKl/0
- bEt1AOJTZKl1QAr5nbckUKiFYJgh7qPw6vR7K5JBRsBo6bg9bQ0ax1YirzL0q611JdeQJU9LeEL
- Ip9QHEt
-X-Received: by 2002:a05:6a21:1583:b0:3c3:a140:9392 with SMTP id
- adf61e73a8af0-3cd00aa4483mr15516706637.0.1787170561937; 
- Wed, 19 Aug 2026 13:16:01 -0700 (PDT)
+ AHgh+RrsNH4GJ/CPnNHK28jjQZxK1jVPiJkRdlZTNjJIpq0fRhF272pYw2ViX+LaJ4u6wvN4NAFdc/G5qr5n@nongnu.org
+X-Gm-Message-State: AFuF++nPCBFhXvZuDY1Oe42r2AOwXVUdUz6y9OEKBGlvspIfzwOv8uRt
+ +KKRuQZy8ixcfDuQLhBiUMV7YFF3qGfSwVUd7spTt2cRheh+5M2v0f5iRY75Rfss4yQ=
+X-Gm-Gg: AR+sD12Wbp349e3kvhbNyOVJ1IZIVVXm+MNHVAogtekzyHKLkK8EX+TstERB1g6JSH2
+ CmeCusdcPEUwsig9yHb91IeOgRs37uSzW8DhozlX1UuAhv9jfQbF9ZxAIY5srrrNSIE2j9i2oOk
+ EIkXqZ0Qd/WdCCTUa884cnpySw6mik2dExdFq/wgEa9xaVH0KJYXrL3BYtw8q6VlcN6y5fl/vya
+ XStgUdrJVU+e7RNoJ9d5MveTph4PqjnLJWj8yiPuDeVeD0XOsPmyBNH6t7/I3lbH4If9MgQwXJq
+ +QOhJXY8+uTw8Ltbm8fhJh/6D6hzWTj94iQaxVirdmT+Cg0d6LQHQD+QX+1j+htNHNJ7pdaI6VK
+ EtbaGYyeLqjU3/sW0E2KrC1V+W9e9mNHE/q8F7W9CxixOk+s9TiA4INWM0x3Mms2MNeaocne0P7
+ +Xqr02xOGexcC4wZstsXE2iE/64r2owR++fnjuuIBfBjNw6UloBImsDSE0NeQLVz838ER5xjvyH
+ 9H/cFKg
+X-Received: by 2002:a17:90a:da90:b0:37c:6910:5758 with SMTP id
+ 98e67ed59e1d1-39580a91ae0mr14280234a91.1.1787170604223; 
+ Wed, 19 Aug 2026 13:16:44 -0700 (PDT)
 Received: from [192.168.122.51] ([173.164.107.233])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc1556753c2sm962186a12.21.2026.08.19.13.16.00
+ 98e67ed59e1d1-3957f9ab4b4sm3735705a91.8.2026.08.19.13.16.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Aug 2026 13:16:01 -0700 (PDT)
-Message-ID: <a7c21fef-6ee4-46c0-8014-f85f4d6f27bf@linaro.org>
-Date: Wed, 19 Aug 2026 13:15:59 -0700
+ Wed, 19 Aug 2026 13:16:43 -0700 (PDT)
+Message-ID: <bcd6a816-2038-49ea-bd92-59f285fb3852@linaro.org>
+Date: Wed, 19 Aug 2026 13:16:40 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/11] target/arm: Convert cpu_exec_halt() to
- transition_halt_to_exec()
+Subject: Re: [PATCH 08/11] target/i386: Extract async event processing out of
+ x86_cpu_exec_halt()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -81,14 +81,14 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 References: <20260819145649.23439-1-philmd@oss.qualcomm.com>
- <20260819145649.23439-8-philmd@oss.qualcomm.com>
+ <20260819145649.23439-9-philmd@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260819145649.23439-8-philmd@oss.qualcomm.com>
+In-Reply-To: <20260819145649.23439-9-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,19 +112,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/19/26 07:56, Philippe Mathieu-Daudé wrote:
-> arm_cpu_exec_halt() now merely checks cpu_has_work() and
-> conditionally call arm_cpu_transition_halt_to_exec(), which is now
-> the generic flow in cpu_has_work_after_processing_async_events().
-> 
-> Register the transition_halt_to_exec handler to use the generic
-> target-agnostic flow and remove the arm_cpu_exec_halt() wrapper.
+> Refactor the target-specific async event processing logic (APIC
+> polling) into a separate x86_cpu_process_async_events() function.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
 > ---
->   target/arm/internals.h   |  3 ---
->   target/arm/cpu.c         | 12 +-----------
->   target/arm/tcg/cpu-v7m.c |  1 -
->   3 files changed, 1 insertion(+), 15 deletions(-)
+>   target/i386/tcg/helper-tcg.h        |  1 +
+>   target/i386/tcg/system/seg_helper.c | 11 +++++++++--
+>   2 files changed, 10 insertions(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
