@@ -4,181 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06AEFC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 15:09:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74322C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 15:12:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwhue-0000dm-Ch; Wed, 19 Aug 2026 11:09:08 -0400
+	id 1wwhxE-0001Sv-1Y; Wed, 19 Aug 2026 11:11:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wwhuc-0000dH-Ow; Wed, 19 Aug 2026 11:09:06 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wwhxB-0001SM-My
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 11:11:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wwhub-0002bZ-1G; Wed, 19 Aug 2026 11:09:06 -0400
-Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67JEhffd573547; Wed, 19 Aug 2026 08:08:47 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=t22+scPtb/Bt94uBwc6Td15ExJw+zInh5aHoyvez5
- HM=; b=eW9YA0uc414q5j6bYiBUnqaxslGCCpwzpH5b6YZmHj2aAStSmJF19krGO
- wLy4K+XwQEMiT1xQJ8lsEQqpgUE/o4lhezcKccF3l1B4X5HS627tT0U6rtMpKUED
- LXnpSciQ5mfHbv8vL7nWKVt+ZUcyZpi0v+iG9MnPQiU8IIhReKHzTc/lKHvVai36
- Vqt/sv4xP6I9CsRuvbAxfNpEuKcEzMm1XdIQHnAZgfXVi57Texb8/fIkEiKgE69n
- v8u+sXe5hJr2ftop4r5PHMPsXfUEPjycZkMKKoNCV/hdmbWjCAYQ6fwHtXRxRs6B
- scrYmj+DpIzFK2sH3IDAKQmwpzo5g==
-Received: from cy7pr03cu001.outbound.protection.outlook.com
- (mail-westcentralusazon11020111.outbound.protection.outlook.com
- [40.93.198.111])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4g54kf1nnu-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Wed, 19 Aug 2026 08:08:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uKaAUXSxg/LO0mhF8OwcrA/BZRhnnobLYh0Ckhqj2X1quEBNHS/aVTG9ajhAAsRF72SPBarXnPwr2AE2ysEyV8CCABlyNnztqRtGeddy6iRi0q2lanekEtt9EhKK4H7+OC13/Mfdx4xBedTy3euz5B51irIEZiEbbs/xQy46NXNv68gQ0nPgFM6vZmCzlVnPLqRtq51WMJhig5M9PY38wP7XCha0Ohi3iisjJCFeiPttX693laCMeXaYOjft/CpHXfgCvTZqbI5jgoRaXxKmW1DOmus7qyt5riQGvLpWUyqUqPli6TeAY6O6g1nSY7srYCwuQo/xRsFY9pYUEr0qKQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=t22+scPtb/Bt94uBwc6Td15ExJw+zInh5aHoyvez5HM=;
- b=yhDt6zIo82zIPLXjVPHa2jUBwY7Zrkkkfqom2yrhMETrpy9TB2UWyFfcME6uoZNDzmWOJ0mZd/jcmqgIGE7KNSdYy7yYxs8XJMCCFbcWGujcytAiKoecyrj6LzbGtLcxr/ebEYQWns4Xys7zw+7mn3cktcW3BpCOEDPcjCZyHnP38/07ws8rKHEQQ8XNcHwx+2yL7QMedMDnhk/qSx9sNoBFcNGeR20/OfhGjUdk0sNyvdSWbUsNiO39zrFAeT9TBJXf+1qsskHBtbvE5FDoKoR4glq9ho+uQyR6cRdk3e12ZzTcx9mkM6B0Qp1nDLtmyV3gSTYaQx7RdJObpQiWcg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=t22+scPtb/Bt94uBwc6Td15ExJw+zInh5aHoyvez5HM=;
- b=gWaC2Sp9GmxUn7vSkaotMIb42DvTqTrJHGOPOfb18LjBhKRfBwgjePGLAAsOwlWrTfarkE07btDZVzSEWLGvKPDl1BfRGVo4fEwHItVgqfGqeYvCcoWYm+I4dQ1gPgfTJNBAQHIdfhDsM5JmxJYhhTwCYv5R9sh7npMo9Z2aMtYv4Oe4kzudM/pVf1kGMGvXRNPQiHHgMiXxorJy5eGjd5mqMJdel2x7cZ3WsI3JHX1XdVbQWuCqJcqBoIkk+VkwHWnJWRpfVJSt/Md4anU1LYnuSmjHds+yEQ37w7mtvN3zx/fvhTS9lPcsrIsrG6JMOfQAOLeZoVXKiHovHbpsFw==
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by DS6PR02MB764449.namprd02.prod.outlook.com (2603:10b6:8:4a4::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.315.17; Wed, 19 Aug
- 2026 15:08:45 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0339.007; Wed, 19 Aug 2026
- 15:08:45 +0000
-Message-ID: <217e6706-c289-4488-aae8-08227f2633f2@nutanix.com>
-Date: Wed, 19 Aug 2026 16:08:40 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/15] hw/isa/lpc_ich9.c: convert ich9_lpc_initfn()
- object props to class props
-To: marcandre.lureau@redhat.com
-Cc: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com, philmd@mailo.com,
- aurelien@aurel32.net, peter.maydell@linaro.org, pbonzini@redhat.com,
- richard.henderson@linaro.org, berrange@redhat.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20260819133816.3497033-1-mark.caveayland@nutanix.com>
- <20260819133816.3497033-6-mark.caveayland@nutanix.com>
- <178715015699.1965216.5908963098435249264.b4-review@b4>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-In-Reply-To: <178715015699.1965216.5908963098435249264.b4-review@b4>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SN7PR04CA0158.namprd04.prod.outlook.com
- (2603:10b6:806:125::13) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wwhx9-00033x-PP
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 11:11:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787152301;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AQ4CVT/kSomTudkQ9V6/HoQoeU1RaSdLgLninz4795w=;
+ b=VzkdoQNIsVXEa+P5Ju9A0PczQOuv26f3UwCf+fwUAjfKkcdxAwxPRKibMJd+VZpAUgvvCo
+ mwFbmFTXDNCi5CuDg7rScUpMMdqK6ieDP8jOwOywo84FxMRLqU7sOTXbeSuomzHd+Ljgu+
+ ssKPjyeGEkgaeLRqP3+72jLOCVbbl3s=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-567-NQ6xaJXmO5GbAxrV1GoUmA-1; Wed, 19 Aug 2026 11:11:40 -0400
+X-MC-Unique: NQ6xaJXmO5GbAxrV1GoUmA-1
+X-Mimecast-MFC-AGG-ID: NQ6xaJXmO5GbAxrV1GoUmA_1787152299
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-47f835ac1aeso744430f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 08:11:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1787152299; x=1787757099; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=AQ4CVT/kSomTudkQ9V6/HoQoeU1RaSdLgLninz4795w=;
+ b=DksfVckMbo+eZkJyVmgFfVygL/lwP+OKZteICoXw5RO9ZUXh6P3fJl1XFZvE62UaP5
+ jFNKafRudSm/oGwfOscSy3YnBfkYHrMZE8kElEjbfC87eFIkniTUFRciUCHG+6zln22e
+ Rz4jxsA54GAxWmx24DpKx5Z0fq4We5Qku37kWKtC5MBNwd28X5Erdijr23tetNa3T54Q
+ 5/Vi+oHnAmYPpcdDjr+rOloOSN0D7ZO7kJD0aWt4zwtuD9/1KAI74DS6BYPdVMrMRNP6
+ /erOgUHQkljzdZnM+Z4/w692zibt4TXIMzv6dE+bY9AkvwgsjD4J75QCeoSIFY8QQGEW
+ YuJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787152299; x=1787757099;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=AQ4CVT/kSomTudkQ9V6/HoQoeU1RaSdLgLninz4795w=;
+ b=IcpQVGsmVABMca82mXSItcd4MTx+GrOHKBC6bmDnAwbVpZiLyYojUUcfnYnb44MhVr
+ BYxIgUXTixpjHZ/47NZtcAyRdDc3kq64kT3BPWQPcS13Ab/tfQSpxgw3rB8zgBadrDsN
+ +wXUGRJaEDAsXvZA66F4GqF/X3yv3dBXhoFGfeBexzOB3JVk4veTET8o1afMplBVES/T
+ p7Dy6IfIY65IneHLGbRr6lR2b5jcvdkx6YscGJXCwwOwSCfSN2vC3aUnSCuahj7d2ctv
+ d/Yn6HsruIRV53uvoQI5pgV+bxhXj8XYJB8RRBThIian4O8YXssU28koixAoFa9qmP3K
+ AsIQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoRPqq4MfNj3Rerz88jNQedr6om5F+B6doAt5hl0TKddjtKZ19c4MbXjIUDLjLFYUIfO8HBMCAJedMY@nongnu.org
+X-Gm-Message-State: AFuF++lAUsuWs4n8WkdrBYn9kJHefkAdz47P4ahrShTGYXbCm15S46AV
+ 3Op2xBiDe+Vbfabw1IAlnKesA8KCYIqghF9YhuneG+SNDjmPkNGIvpsbtd/rsIvdEa1q+P64jQ1
+ 4s49tOwqN7yUzzFJXD6Yg+OEDgro0Em2YMnUNA6dKjh1uIZB1wCGCQNC9
+X-Gm-Gg: AR+sD12WGFxBC55yIx4sssdvksNXq6DnMPeAgyOGRGjO2/lNiaCcOtP4UinV7K92IWx
+ CG5GX4NMF0vB15L5BQSHtE5ucEwZO+avnT9K/9fKl3W4Bs3x9cG9Z06dkwb7L36hI5m5R/2yrpw
+ I4eck11M7//TfyXQ5qEHfdY1J229ffGLhFF9QkJf6puFjUkgMBfhdCexZH6HBVM7fEYtMsTwb7f
+ rOGEd7m6zZcs7Ezgu0mi3CplQwVQSLKKLMvKHXPFEhYy2bAefpPBDjwiiavgwBvvyvCDu7hxJvl
+ BbJLy2zOjWuLCORtKap5dRaVN1darZ/svmrNhOLbpJLMJenaL7M7zWqwf7t67aa4OHeUibnXbkA
+ c1LZy+meJJN6ycfTCuwy64iyV
+X-Received: by 2002:a05:6000:4b0e:b0:47f:86af:8fdd with SMTP id
+ ffacd0b85a97d-482b1e86146mr10542740f8f.3.1787152299030; 
+ Wed, 19 Aug 2026 08:11:39 -0700 (PDT)
+X-Received: by 2002:a05:6000:4b0e:b0:47f:86af:8fdd with SMTP id
+ ffacd0b85a97d-482b1e86146mr10542588f8f.3.1787152298458; 
+ Wed, 19 Aug 2026 08:11:38 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-47-107.inter.net.il. [80.230.47.107])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482b14c46f2sm7482364f8f.29.2026.08.19.08.11.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Aug 2026 08:11:37 -0700 (PDT)
+Date: Wed, 19 Aug 2026 11:11:34 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org,
+ farosas@suse.de, peterx@redhat.com, dongli.zhang@oracle.com,
+ maciej.szmigiero@oracle.com, bchaney@akamai.com,
+ mark.kanda@oracle.com, den@openvz.org
+Subject: Re: [PATCH v3 4/7] vhost-vsock: preserve vhost FD during CPR
+Message-ID: <20260819111110-mutt-send-email-mst@kernel.org>
+References: <20260626164643.2526-1-andrey.drobyshev@virtuozzo.com>
+ <20260626164643.2526-5-andrey.drobyshev@virtuozzo.com>
+ <aoRyAqduT4FRj9NV@sgarzare-redhat>
+ <bc812e7c-a30b-43f4-9803-26259bb3a65b@virtuozzo.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|DS6PR02MB764449:EE_
-X-MS-Office365-Filtering-Correlation-Id: 45660885-1b51-4c5a-5d35-08defe03c3a0
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|23010399003|376014|7416014|6133799003|10067099003|4143699003|22082099003|18002099003|56012099006;
-X-Microsoft-Antispam-Message-Info: N3x8vLoVbFGSi62QeOlT1/GsyHxWzS5CIREIElGFcg2H/Rehj01W3CLZAUp+BbPOl1BLBNQPUfFDxUlZPxTykUGCVqMgggiw8UA5CRT2dBil+7YXLmrrPCa+T2AJXKdaAx/WpFcvRgBWkLHrA1XaJLawBPT/TmMAx55SHNTETYQwSn9Tf8B/PvMmK7FIjJ6lZv5QOHDpZOtP2xot2yFf6IshJkhOVbZaCkYB+HbkmFf3ZygCnLLq/Qdk39uidOFbO6gjtXU5gPZJ2nPR/mfV4JtF/OQ6x3kmbEmkqoAOSlqLp2ZqSZrIcSV/hbO98z+MzNVHFxmy72ySja2FR+ZAFY9rOKttciwj0Z4y2KX6Bek8w8l7MrVuvHP2jCHA/T6KNhVuI5TQE0ZE/0QIPPDKpS4Sn57MhiYF1AqoQTm4gUR0neD+t+oT83fQ5qb8RczNE1sYgbdsPz9/pDNZvo7UyISGTh2mWvuXC5hEWqRprtBT/goSwVZ34YTNqviz2aNIoMaCMjtvDzlqNFUJTJD6lG4yDysSL5ZZghmf9K1GKEHj/K5S7IFeLxPzzRAjk9FWn/LSm7vjreGNjLfqGFpyVw/F/anhKfNX+AhJ23KpipCKLhpMgcPlsfw8zO8zyKf/qaIzirGX1/5xUbNjOl3meiuZ7fywGgMv7TQNszV8rFM=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(23010399003)(376014)(7416014)(6133799003)(10067099003)(4143699003)(22082099003)(18002099003)(56012099006);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?b1E0R3VSZndQMjYwZ2RQTjdoSUhvQ0ZxcXFHTERLcDM0RXByUFdZWnRIQTdJ?=
- =?utf-8?B?ZkRKUWw2ZmRNTzI5NXcxdm5nVWhTc0pvNVdnRUlOSlBvV3p3L2NoVDlYenlw?=
- =?utf-8?B?MVhlejg1UzhuOFN0TVlhU0V1YmVwaEZLY3prMXcwclNGdkZCZFQ4TnlZSU5l?=
- =?utf-8?B?YzlJck1zcm42Z1NQYWR3SC9mY2QrQUNhZVY1c2xJRlM0RVFLZnBhZVNSOU1H?=
- =?utf-8?B?eTdOTlY5enRVa254NkJTdHJubzVhVWJ4by9PQzRWbENEVytPMWRoN3pTaDIr?=
- =?utf-8?B?SDdHRUNnZWkzeSt1d2I0UjZScCs4eU5nWGY4ZFJxYUNteTFZQnAzeGRCZ3Aw?=
- =?utf-8?B?VUwwQ2dMaDcyL3JMa2VUWk12QTdmRnRYaEVOaDNNSm54TU56N3Zqdk9QV3FB?=
- =?utf-8?B?TkUyUGR2cjNDaUgxYnkzUHpvTGdaN1VPWVF6NmhDUW5odmE3WFhXbk9ud01I?=
- =?utf-8?B?eFc1bHBGbFBwcnBzWjJOc1R2aTIxYTJRNVBEWG1FdFF1a3Y0UW9tNnZOV2lC?=
- =?utf-8?B?a3A0Q1k2Rk51S2MxOUdwdi82RkZydXpPbkEyeEtYZ0FGMGJ5K3ZlYUpRUnN6?=
- =?utf-8?B?YVRtd3pBMmF4REdRd1dBTjQ3NnBWMWE0TE93UU1kSngxOU02d09wSjhMWmth?=
- =?utf-8?B?cWZUcUdXcGRPSjN2bjVpY0QreHJDcW4xNVZ1akF4WnlUVW1FNVU3NURvajcv?=
- =?utf-8?B?aDlkYTRNKzdiaWJ3MVBEVjBFdUl0ZHYrc0RGNnhnS2hHbTRJWDhCa3AwaWha?=
- =?utf-8?B?NDcvMEhzcURmeXhyNS9rWlB1VlRFTW5MM2VpejM4NU9tR0lDaTN2czE3VHlE?=
- =?utf-8?B?MXVYNFZEMkZIWnhHRDl1RFpVMVFNczJOS2FoS1VPQzFCaURjNUhwN2pvc2dH?=
- =?utf-8?B?aXkwWXRsQW10ejhVWm1GeUtHWDhpaWFCdGUrQ3lmWGZTaWwrNEkxK0g2dFF1?=
- =?utf-8?B?YW8rVm9Jbnl2MitoaTBodXpic3BqSFlhZzRyMkY0dDlIcVE0bFZaQkpuY3pK?=
- =?utf-8?B?bHJrdU1xOWxBdFJ4S2FsYTdkZ0lRM2Vjck9nTGtsRnZSeFgxQVh2OUFiUGI0?=
- =?utf-8?B?WjcyNlRvMlI1UW5NM2xvWXEyOTI5OGZ2SE9UNU4yQjFzRUk5ZjBOcGNFb1FT?=
- =?utf-8?B?YnJ6Q3d4ZWR3Y3VINzhSSkt0UTB3S2cxT1YwNVJKV0hVWjdNem0rVkJXRm52?=
- =?utf-8?B?bE1lUmdGekY4bjdjYlNzcUtNSFVKaXlwdHo4Tlg4MTZWSW9FUEhtT0svbit1?=
- =?utf-8?B?czNPejk0WHdNV1BWTzgxUVZzbUZpMkxyZlFCaGgwSmlQTjh3Y2hBQUJnN25B?=
- =?utf-8?B?c2FndkozOU03Mmhtb3ZuYVJHWVNwL25CT2F2R0tZZmRRdUR6TERWM2laMENv?=
- =?utf-8?B?Wkt5eWMvWTVpSEhLVU9OY3lXMzdpSlhVdzJ6K1dQenlUKy9oaWxra2t5NjVi?=
- =?utf-8?B?VEJ1aVBNTVU5NFJPb3A3Mi9wZ1EyNWRabUN6WFRvVkRQeG1GSFU5VDhVbDQ1?=
- =?utf-8?B?aFBiajlLbmpTeXphNHhaTlBTTTlFR2hucnQ1bjY0K1RWK1RETWpiTnJUcGI1?=
- =?utf-8?B?YWN6dUhJRnF4RmxPOC9JSTRXZnRlVzBQSjJES2pPMDJzeXg3MUV5eGFOd0NY?=
- =?utf-8?B?WnloNEFFeUp6Nm82NC9DcU9IMEdtbExYQkErdVZPelJ6SStaWDE3d3hVeVRa?=
- =?utf-8?B?UnU2amFMTTFvWmhvckxZTCtZSG96Qlk5bURvWHZZQ0JLZTREZzhSdFZpd3hB?=
- =?utf-8?B?Yk5wVE9mc29UcUNPVHV5NENTMEczL2I2bTVzaXhHaFlHMmhVUFdETlV2Si9o?=
- =?utf-8?B?TEVTQ241UUc3d0g3MkRRR1VETzNhNEY2TEgwRDVMVXJhSjFWU3E0RWZOQlJr?=
- =?utf-8?B?SHFJRjFuYVlQTTF2b2prQ0R2cE9rN0VRdHNNN1NYVUxFMm81VjVrRlpWMkJh?=
- =?utf-8?B?NllzNnVrWG5BTTBVcTFTUlBWSUxiZXFKTFhSSDhSWHk4Sjl5ZytjL3pZVHNV?=
- =?utf-8?B?Z0lDTzBwaG1pRTZCU24waE1ydjZSeTY0RFhxQ1A0UEJKSnpUMW9vemthRWJM?=
- =?utf-8?B?K1dlTmhtMDhuWGNMclAxb1doSjZZQ2NXVGwveG45SHFSMDVUeFl6ZUtmbUVn?=
- =?utf-8?B?aXBrcFFQU2tLQ2lDcTcxR2RWRS9vOUd0WVQvbXZsRXQ1MFAwd2FDaXAyOElS?=
- =?utf-8?B?VnhycGpQRG1ZOFBveXRwV3FnOGoraG1FeDhUUVJSNjlrVHg1cEFoOTgybW9Y?=
- =?utf-8?B?cEJtTHRCWEMvZnY0TXBRdDlWWXpYWTBBeGlYSktOdjBvd3NubjJ4ZlRBSjBJ?=
- =?utf-8?B?eVVTbWtITmVIanFod2lGTCtUb2hDWUtUQmVjanJsUHR5aWJFbkVndjJaN092?=
- =?utf-8?Q?m3H1sPAG1WdTnabE=3D?=
-X-Exchange-RoutingPolicyChecked: TXZ6mi0x6uMYVMx9cLEg3rTRSZKsjUwse5dRuuOrOlNLwzKAKsx9aNv4fLOhrDKnRGpFy0G1qMJhh9pmc5ag5fjXePY0wdGreWit0Wdhs0duAFN3CLNgQ+PKrnQqclvoYGmq/T3SZSNeSV6VH5Dr+j9awEb5feJR+HaxZlQNzw0GmrFRlCFU4BdzFu9hwPvfDOXmyeDf0syFhG1b8tvh+S0f1EkiDGWvuw/T6GM6I1VxzGaLdiJC3SzoHYJNybie44h4RW0YzsPqHB7ncgzIjeJtqyK000b0gYbAAnWwORINMt/bG1IXnV6Bha7UaRwO6kd4Sljf6lsWiAbJjDyF9w==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 45660885-1b51-4c5a-5d35-08defe03c3a0
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Aug 2026 15:08:45.5055 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Q64aelYMR2aCvDzG7XUGtvGzpGwk3HCCEAgJcku9MmLlR330/NxGJom22FYAXGS+/RYVwpKuBVLJx62fjXzeuzq7jC+kAc65MyFFhIO5cSM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS6PR02MB764449
-X-Proofpoint-GUID: xCvFeYO289VgZLrCNdgU49R4scYvb_GF
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDExOCBTYWx0ZWRfX3zfEPZy1h+PY
- MDy5R+L3P3lK/QV92ekZBNjP7gO4crVVpD8m93OE2zP/pp8kCSYeOTaTIxUU2+XIHIf1QI2GsdG
- EDrPzahQ0fvqap8VR3T+DiR/Dbo4nK0=
-X-Proofpoint-ORIG-GUID: xCvFeYO289VgZLrCNdgU49R4scYvb_GF
-X-Authority-Analysis: v=2.4 cv=AfSB2XXG c=1 sm=1 tr=0 ts=6a85c6ff cx=c_pps
- a=Lghs/6261MT82QrUgbBUQA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=y4UcunY2MAxhM4LwGdWI:22
- a=20KFwNOVAAAA:8 a=QuxfxsMmV9refsBu_F0A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDExOCBTYWx0ZWRfX3JJBb10/BNz0
- MlRwv7uPgvTJsr/6/DFkw/OqiVb4a/R+cCT//0UkcmBzfglFyIgsmg0lWq+cUVqolW32LwO9mvn
- GiakDlJgX+HnI/bApUGS0bBqhZppSCK341fDY+aSGv1WoKowvxQkIHoSYfx5ZiBWnRE8sXRtmZn
- vohTKw2OCPA8PQx354xpR1JrRkpY8KLPPztP9X5reFQS82jCYb64KbQnvqOMnC0EBaDJV4horqt
- sNyaFuAmF37UcZQpKBmQLx+FAhj/21MyHgLeUwtZwRYQeOD8kA1hfPwnKVjTeXMHAyCGFEBgAB+
- pKiQno2Shq+djyxCYNvVSD8M9AvMX+EWQwtlNTwWvR/8SjclOav0TFaw/IcGEccsQigSK1bwGYx
- lyWdpswggLQ9iBBGr/imguc8rbHlo+YTaetqIHlEuHqCRLCYSu4ffVPLkTEu5OVc7FRtqWp34Vm
- HCjYLi80kYhyCMUm7Xg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-19_04,2026-08-19_02,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bc812e7c-a30b-43f4-9803-26259bb3a65b@virtuozzo.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -195,20 +124,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/08/2026 15:35, marcandre.lureau@redhat.com wrote:
-
->> ICH9_LPC_SMI_NEGOTIATED_FEAT_PROP can be promoted to a Property since it uses
->> standard uint64 getter and setter functions.
+On Wed, Aug 19, 2026 at 05:38:46PM +0300, Andrey Drobyshev wrote:
+> On 8/18/26 6:29 PM, Stefano Garzarella wrote:
+> > On Fri, Jun 26, 2026 at 07:46:40PM +0300, Andrey Drobyshev wrote:
+> >> During CPR (checkpoint-restore) migration the guest keeps running on the
+> >> same host, so instead of reopening /dev/vhost-vsock on the destination,
+> >> we should reuse the FD from the source.  The FD is saved in the CPR
+> >> namespace (hash table) with cpr_save_fd() and then reclaimed on the
+> >> target via cpr_find_fd().
+> >>
+> >> Since the key in CPR hash table is device ID, CPR needs a unique ID.
+> >> Rather than make it mandatory for every vhost-vsock device, we add CPR
+> >> migration blocker which only fires once we attempt CPR with ID-less
+> >> vhost-vsock.
+> >>
+> >> vhost_dev_init() (and thus VHOST_SET_OWNER) still runs in realize() here.
+> >> Deferring the ownership handoff to pre_save/post_load is done in a
+> >> following patch.
+> > 
+> > So will this patch be bisectabale?
+> > 
+> > Thanks,
+> > Stefano
+> > 
 > 
-> But it was read-only before
-> otherwise, lgtm
+> The issue is that cpr-exec already is broken on the current master
+> branch (i.e. before the series is applied).  The only difference is
+> which exact error we fail with: -EBUSY or -EADDRINUSE.
+> 
+> In this case I don't think it's feasible to make each and every commit
+> bisectable - it only becomes fully working after the last one applied.
 
-Ooops indeed. I'll revert the Property promotion in v4 so that existing 
-behaviour is maintained.
+Surely just bypassing cpr things until the last commit
+is feasible?
 
-
-ATB,
-
-Mark.
+> If you want, I can prepend the series with a migration blocker which
+> would fail early and gracefully instead of crashing, and lift it after
+> it's working.
+> 
+> Andrey
+> 
+> >>
+> >> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> >> ---
+> >> hw/virtio/vhost-vsock.c         | 50 ++++++++++++++++++++++++++++++---
+> >> include/hw/virtio/vhost-vsock.h |  1 +
+> >> 2 files changed, 47 insertions(+), 4 deletions(-)
+> >>
+> >> diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
+> >> index fd7ffa88990..7eacb608d07 100644
+> >> --- a/hw/virtio/vhost-vsock.c
+> >> +++ b/hw/virtio/vhost-vsock.c
+> >> @@ -21,6 +21,8 @@
+> >> #include "hw/virtio/vhost-vsock.h"
+> >> #include "monitor/monitor.h"
+> >> #include "migration/cpr.h"
+> >> +#include "migration/blocker.h"
+> >> +#include "migration/misc.h"
+> >>
+> >> static void vhost_vsock_get_config(VirtIODevice *vdev, uint8_t *config)
+> >> {
+> >> @@ -141,6 +143,7 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+> >>     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
+> >>     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+> >>     VHostVSock *vsock = VHOST_VSOCK(dev);
+> >> +    DeviceState *proxy = qdev_get_parent_bus(DEVICE(vsock))->parent;
+> >>     int vhostfd;
+> >>     int ret;
+> >>
+> >> @@ -155,23 +158,49 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+> >>         return;
+> >>     }
+> >>
+> >> -    if (vsock->conf.vhostfd) {
+> >> +    /*
+> >> +     * Having a unique ID is mandatory for FD preservation during CPR
+> >> +     * migration, thus we add migration blockers for CPR modes.
+> >> +     */
+> >> +    if (!proxy->id) {
+> >> +        error_setg(&vsock->migration_blocker,
+> >> +                   "vhost-vsock: device ID is required for CPR migration");
+> >> +        if (migrate_add_blocker_modes(&vsock->migration_blocker,
+> >> +                                      BIT(MIG_MODE_CPR_TRANSFER) |
+> >> +                                      BIT(MIG_MODE_CPR_EXEC), errp) < 0) {
+> >> +            return;
+> >> +        }
+> >> +    }
+> >> +
+> >> +    if (cpr_is_incoming()) {
+> >> +        /* Reuse the fd handed over from the source QEMU. */
+> >> +        if (!proxy->id) {
+> >> +            error_setg(errp, "vhost-vsock: device ID is required for "
+> >> +                       "CPR migration");
+> >> +            goto err_blocker;
+> >> +        }
+> >> +        vhostfd = cpr_find_fd(proxy->id, 0);
+> >> +        if (vhostfd < 0) {
+> >> +            error_setg(errp, "vhost-vsock: could not find restored vhost FD");
+> >> +            goto err_blocker;
+> >> +        }
+> >> +    } else if (vsock->conf.vhostfd) {
+> >>         vhostfd = monitor_fd_param(monitor_cur(), vsock->conf.vhostfd, errp);
+> >>         if (vhostfd == -1) {
+> >>             error_prepend(errp, "vhost-vsock: unable to parse vhostfd: ");
+> >> -            return;
+> >> +            goto err_blocker;
+> >>         }
+> >>     } else {
+> >>         vhostfd = open("/dev/vhost-vsock", O_RDWR);
+> >>         if (vhostfd < 0) {
+> >>             error_setg_file_open(errp, errno, "/dev/vhost-vsock");
+> >> -            return;
+> >> +            goto err_blocker;
+> >>         }
+> >>     }
+> >>
+> >>     if (!qemu_set_blocking(vhostfd, false, errp)) {
+> >>         close(vhostfd);
+> >> -        return;
+> >> +        goto err_blocker;
+> >>     }
+> >>
+> >>     vhost_vsock_common_realize(vdev);
+> >> @@ -192,6 +221,11 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+> >>         goto err_vhost_dev;
+> >>     }
+> >>
+> >> +    /* Register the fd for a future CPR after a fully successful realize */
+> >> +    if (proxy->id) {
+> >> +        cpr_save_fd(proxy->id, 0, vhostfd);
+> >> +    }
+> >> +
+> >>     return;
+> >>
+> >> err_vhost_dev:
+> >> @@ -199,16 +233,24 @@ err_vhost_dev:
+> >>     vhost_dev_cleanup(&vvc->vhost_dev);
+> >> err_virtio:
+> >>     vhost_vsock_common_unrealize(vdev);
+> >> +err_blocker:
+> >> +    migrate_del_blocker(&vsock->migration_blocker);
+> >> }
+> >>
+> >> static void vhost_vsock_device_unrealize(DeviceState *dev)
+> >> {
+> >>     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
+> >>     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+> >> +    VHostVSock *vsock = VHOST_VSOCK(dev);
+> >> +    DeviceState *proxy = qdev_get_parent_bus(dev)->parent;
+> >>
+> >>     /* This will stop vhost backend if appropriate. */
+> >>     vhost_vsock_set_status(vdev, 0);
+> >>
+> >> +    if (proxy->id) {
+> >> +        cpr_delete_fd(proxy->id, 0);
+> >> +    }
+> >> +    migrate_del_blocker(&vsock->migration_blocker);
+> >>     vhost_dev_cleanup(&vvc->vhost_dev);
+> >>     vhost_vsock_common_unrealize(vdev);
+> >> }
+> >> diff --git a/include/hw/virtio/vhost-vsock.h b/include/hw/virtio/vhost-vsock.h
+> >> index 84f4e727c70..5ebc63afc5a 100644
+> >> --- a/include/hw/virtio/vhost-vsock.h
+> >> +++ b/include/hw/virtio/vhost-vsock.h
+> >> @@ -29,6 +29,7 @@ struct VHostVSock {
+> >>     /*< private >*/
+> >>     VHostVSockCommon parent;
+> >>     VHostVSockConf conf;
+> >> +    Error *migration_blocker;   /* set when the device has no ID */
+> >>
+> >>     /*< public >*/
+> >> };
+> >> -- 
+> >> 2.47.1
+> >>
+> > 
 
 
