@@ -4,108 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6214EC5DF81
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 00:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A4A6C5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 00:13:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwTtu-0001Yf-9f; Tue, 18 Aug 2026 20:11:26 -0400
+	id 1wwTve-0001yU-Io; Tue, 18 Aug 2026 20:13:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wwTts-0001YH-O4
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 20:11:24 -0400
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wwTtq-00074Q-RL
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 20:11:24 -0400
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-5b45f1cd80eso483431e87.2
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 17:11:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787098269; cv=none;
- d=google.com; s=arc-20260327;
- b=ZQP8aFqpWGU0QnPPj9gkjJ5uxdWzPNJ7GqWJjqJLnnWMgnrxOf+YmTwrBJss6YbcSs
- wqnBTDunkceKYoMJCT9q0aKgCwt3I0aVJUxvccYsYHJtOOtFx8iG1ltbhkPQnuhhgO8x
- 744wupyXq8htH8HI/3bHQ9C0m4zSH7/MsimUkIe+Ibl6tTNPcs7x/hxdw+YvrkdKJnyi
- NefsACpUEaBr1ef0PoGn3cb3pKWt/VsQskQ7wxU7XL9TzgqtQ8EZHkv6xKrSAapq9Mvd
- 3hAhGnK0R35v9XIFfuYlQhI4xz79ys612PpE7HPJ1i1dFlIeAyplOaJJYQ/XTgoFhhm0
- w4/Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Ytrxr6B4JnhFaOKLKqOgiBfz6miQWhjD87khaglm1As=;
- fh=sPnp61a2YNNsKkD0W3RUEF+042aNl9Quj94CbgGh8Xs=;
- b=c9qbfuMxd9FdRCaUMCzo36g9AMp2gf68uv58C0/cOp4rM7LjSUYVKtA6sefSKB/CES
- HZBnK+V/JuJvLmC8hqlJprAGdDMtyX1Tr+uySdHaiQ45Of1djUEERABwhxtHEZyBio0d
- BFCFrnxzNA+XGgR9kDtHjyASyhsFSKtmPzNaw7jY8nFVBArvHkN99lr61i07kSM5Q6gy
- N/2M/zZ91Bzjj88q5QIcDEPlB+Hv5GQqBkar2ACvEGxMljCQiP3NpUnALouB8BzMF1kD
- Gpl7K5h3qFJcV9Sf1oa9vTbP6e5lfpwZysLg0jBsrGFoFcSTecUmmYkXMkAvBjdfwzaK
- 0Grw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wwTvd-0001y4-9N
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 20:13:13 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wwTvb-0007FX-IT
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 20:13:13 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67INkWHH2775489
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 00:13:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ NlymEI+yGyt3qY+BQvqBBdxm8DNNC4O+rcbm1SGwfto=; b=WFfRjcF7AImOTw4K
+ hlwGfJnmne9I5fxtLqQifV1mmhiQewptwoe+kJObwVVjeJTAHgLo/Aq9TJ3U3kq5
+ ACUeUrrpcqOd1lGOrxsl5iTGUzkkxeScH/r2/HOwiLwn8ugVFeKch3bwz7fQM41T
+ b7BSH6SI/V5N9OXfWSsodl0nQJ9HzXNuP5S9MqNPevOlZajsX/9Gx+gswgX2OT9B
+ IjAo+M+KLEJamBNe9JaEalAEVP6som5knHihGMpKDQM8oiBGSUhZZ5dvCZv0Pu0N
+ 1o4v8S3Cq5OcT59iSCLycppuhpsIhXe4/fsFkxeOB2FMbRM8kSTponU6veynp1ak
+ JotyiQ==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4yftrg8j-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 00:13:09 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-92e538afe65so77447385a.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 17:13:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787098269; x=1787703069; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Ytrxr6B4JnhFaOKLKqOgiBfz6miQWhjD87khaglm1As=;
- b=Eo1aueG34hvMphCv36rGYSDhMSw/2xBbR3JOufuMkOZOlo+s+gSEiYsZkzKChwrJWU
- xEG2Sha6Z4ZD1khT72kzS76ptiNThMA8DG6xY0xFR877Y+Z3hhR1d9tdIaJRZcJNr32+
- kriivT2Vb8qSBJcMuZQl/zCi5cplWINgxDgSeyiOBTdsgwae+8B0JOwo0314JgZJi3FG
- B2BVi0eGG6zkD0OgWBi5rWCFkWxz8tRKyQDk5+MmEJUkIR9jfg6/n0Bc4IbMAKyrXHZx
- UF7YRxJzrDA95/eq2PFBn+WJ/J3erVkZo+XRzWMnRMawkP34i/Bu/5NtxCOf65jUiThB
- /5Ug==
+ d=oss.qualcomm.com; s=google; t=1787098388; x=1787703188; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=NlymEI+yGyt3qY+BQvqBBdxm8DNNC4O+rcbm1SGwfto=;
+ b=Lk98R2N2l9URnrnR7tllc3xAfa4EnyM3inqroVKeAZttqF8PqykfOM6pdEb0DT6q3A
+ am91mF8SgpuTrP1RLNNiD/R+Qp1RqqQcb1s5glNuRDO8OKx4Y8yva/xEOaJwRmrKNbKA
+ iPTK9aqKNVTqJ3uC/mzIuSId8DT/fK6rwrirogUiyGLL5o58nDFbQLT6DKmP+3AIDlmH
+ KC20rRVGtwYmk7r95k8iMskRxB4uSuiINt7KHxvfadCEo/kevxw1YFNQiuc2xAsswckr
+ a649W8UKQg8Wwlx49Czu18VLNAWGQtapDJ7R62lSLwi8+jHmqsPQDzb6mgdtCJoj3NKm
+ 3EvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787098269; x=1787703069;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Ytrxr6B4JnhFaOKLKqOgiBfz6miQWhjD87khaglm1As=;
- b=cYWbpKv71Olr6zGx6r6x7sm1+6+vAxzDPD/B6xi1GhYITFHDgf9vnSY+dt8Yi4D/AR
- U3aAgf2mXg8rvv1NRrrPQVg1A6gaGlePxlfgPmvY1Naa1XSt0SxvzA7SCp+2UKfS4tv2
- xvhhG9ExHJWo57aX9bX4eY4Vz0JmVlgtz7vdGKVwUqioXbA/NYEAx1VCAKaF28TIxQT1
- 4D99OvQW0KmftMEs9IODu3LquPcf33sAHK1429+dpdwzdRh05juiOD3SWOD8pljynC20
- qN7pFzcmPJeEGdDw8q88aQQGjZAVWGECGOqpdIhq8JU64pCHWD8Oq3cqfAKtdauPvGnO
- mSZg==
-X-Gm-Message-State: AOJu0YyC5WV+WzgAm7jJRpNar/hRL1E0vjZe0FntAuitGJX7Ikc2zn70
- 02/2ONIgVIXqmE+v2wLmZnya0gd5VV1jZ8lChzE+Mbkq+EWb5ptOy3WPhmteLrzhz3aMRiu2t9O
- /LJYQq6DJA7snvRhp57RxZcHM4UkIwwo=
-X-Gm-Gg: AR+sD11L0ra5CzKRpxOSpc461O5epAN5gt2/5Gse4isSc95UWQjxuicaVID6UDAUX1g
- hY6E5i6CtNj3pA6PLu2Z9b3x3DK+55jlxgw/FuOpni8A82kneHHt+g5RlaAGqiylktpfPEBYkWy
- HfWwV34kfrZtsMUfUZpRSfwWM8Lvtx0dLOl2AKk2PPW8U+Sef0OB+RD2IcgGU+PlCkZYEykGZOQ
- cezxanHCih3g+7N9RDoOXb3iJj4Fcj67OpFYYsuJxWwSczblN46x8J4/971JQ+Xnjtp8jNzpTvi
- kKFuxnq69TyhuRqJ5bxW7xkSVyIz95YkHs69qMHHlhWbY70Nsc3316ZvCTxA93dn1ntmqEOutKc
- jDPU=
-X-Received: by 2002:a05:6512:2308:b0:5b0:eda:de1f with SMTP id
- 2adb3069b0e04-5b478b5158cmr143016e87.6.1787098269093; Tue, 18 Aug 2026
- 17:11:09 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787098388; x=1787703188;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=NlymEI+yGyt3qY+BQvqBBdxm8DNNC4O+rcbm1SGwfto=;
+ b=sqR2Zu8377e63rDB1Y2pnu9htLrAiWrYH/J2xjrRWGAGcYtd2hz57qlpDktw+KmJOy
+ 58Z38wL8TweAXkBR/5x3lXx2I35rlG4nXu7Zzv8mhKdMsjsA1EfUH9qgD/gJGY+Yei+1
+ E/VzYc5oEXoK+v4Nqfkn/ZsUMSYfVXgtbZIUg1aN6LCzKLYaRMzFkgwiv6z4PZ8nRjpz
+ 16sOs8HQ+qod3KC3mPJ08TTWGl0YG9TObXs+vrxL8u1JWmF+w4abHGC1v3+ZrBJnqA3O
+ vRG3pM9AUT0EQG0gylMtKsJMUqZo0n58TsKQ5A6X7zQxJUiSAH/OXY4UmndGfupXMxG/
+ c2Pw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpqmnlXHNaADB6eTnhYb/Qta5rieb9X8haYchrg2FI7rRaSoo/i6g4f92nZt7z3g0aS3KKaKgW+gVlP@nongnu.org
+X-Gm-Message-State: AOJu0Yxh9W3AIz8D6Ik1647cTr2YVT1f7Xreqh0vqsw+R8i1KVzD7sx7
+ c3HATEKPgKOryTcDlSPLBlISasHbGG5821xOBHe/n2QDlOFpSLR206icqo5xbrvv/yrENkKM07m
+ KaQTwtkwhj5IjBUvsPEb3DlegN/d2LmW5dhROZUp+Juojkcrrbi6TI6Z4sQ==
+X-Gm-Gg: AR+sD13kOdQAmUanil3zEMJkN/sKtN28p5esoGWO7mMWyboo2wiqeq58qy1znnPZgj2
+ +FsgddNLKlwPrlgcXneX7y0r5qzDYlg7roifQs++alCpe/GI6WS6oZxWDGwO5R8zXKdMJmtMGtG
+ PORkvfBjsQ+1/nFpDx7HfEu/Y+GCjKev2e7KTjNw+aHhPoI9x8vGYucvzH+SPzJsywUwpxmccMf
+ hNztGBVECls5eSYT905MYoz8npZKImppmEq2Exvz1Sl62j2jjrFPeWT+rJYI4oybGYjmjZZawTQ
+ uxsWz0fkcZOa+GnpelF23rdYfky478D573iH4na0GtKF08FZn3xdNowVBz8AsYou8cesaAy1wQm
+ IDAt24ZVq7nxOoaZJt0vKzjPoE4tCQBdpDBI=
+X-Received: by 2002:a05:620a:4148:b0:937:123a:3b11 with SMTP id
+ af79cd13be357-9371e309730mr109458585a.28.1787098388089; 
+ Tue, 18 Aug 2026 17:13:08 -0700 (PDT)
+X-Received: by 2002:a05:620a:4148:b0:937:123a:3b11 with SMTP id
+ af79cd13be357-9371e309730mr109454985a.28.1787098387649; 
+ Tue, 18 Aug 2026 17:13:07 -0700 (PDT)
+Received: from [192.168.69.231] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482b14b7d23sm1038657f8f.22.2026.08.18.17.13.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Aug 2026 17:13:07 -0700 (PDT)
+Message-ID: <a21cf4e9-7e42-4118-94bf-778c03e16048@oss.qualcomm.com>
+Date: Wed, 19 Aug 2026 02:13:06 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/8] accel/tcg: skip the can_do_io stores in user-only
+ builds
+Content-Language: en-US
+To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@mailo.com,
+ zhao1.liu@intel.com, laurent@vivier.eu, deller@gmx.de,
+ pierrick.bouvier@oss.qualcomm.com
 References: <20260818174247.649526-1-mattst88@gmail.com>
- <20260818174247.649526-5-mattst88@gmail.com>
- <23eaea1b-e3bf-4845-8942-0e6ffcf056ca@oss.qualcomm.com>
-In-Reply-To: <23eaea1b-e3bf-4845-8942-0e6ffcf056ca@oss.qualcomm.com>
-From: Matt Turner <mattst88@gmail.com>
-Date: Tue, 18 Aug 2026 20:10:56 -0400
-X-Gm-Features: AcwNN1W5ijnt9tnRKKAoNXvyFcvXkqW8020AGWguZ5pBBCLOWoOlnJUmGRUHz6c
-Message-ID: <CAEdQ38EwBQJp4hsWfvmCiZNOkghEESzZ7yU3LaQeQ1AzMSnj5w@mail.gmail.com>
-Subject: Re: [PATCH 4/8] RFC: tcg: probe the TB jump cache inline instead of
- calling a helper
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
- philmd@mailo.com, zhao1.liu@intel.com, laurent@vivier.eu, deller@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=mattst88@gmail.com; helo=mail-lf1-x130.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ <20260818174247.649526-4-mattst88@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260818174247.649526-4-mattst88@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=FIorAeos c=1 sm=1 tr=0 ts=6a84f515 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=RRnN5sfBe9EQPApPXHgA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE4MDE3OCBTYWx0ZWRfXyHk8au8Rpfli
+ Zt/IXzV0HXiRYf4L6u1ywlSJZ0PoSCD4kTGDOLEocujGYwfRhgLjUBV7pn8skEqvKj02l7IgYah
+ 0Js4jUtOZNXFsQV/8BQjoegNXga4nEk=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE4MDE3OCBTYWx0ZWRfXwZoBixmcFjIc
+ eTs6QwbYdL0fFKIwxBfJJe00erHwdvhKTI4v+N50OVGwl+OQ9kaOVIIGiOUs+RzwDcBG8Yp4CT1
+ Aax5CBEAa8ZnYy1iBKl5q1zwBp6bDzfFuv8RM5QBA1x7fJTe2h5CbzLj3KLXo0y3OnPyZLFFysz
+ g9nUkxqCN+pH+KQEW2b7i0/NdzROeFvzHgUD8JxSIbu7/qjOBh8I8eztOGYAb8/J34tlj1XyDO1
+ bqgh7z/VW6psnTihC2yWfRO2gguPoWZvr/bZ/xyT7v1e6oxG5gdvYR+nqdcshcqgg3W6GR8wnDP
+ ST/pODXSStq7PNyDzU9vPYRvTRYfVmxRuUhqu+oYRK7x5i9Mj+gM3Smh0J9n3/Rsfqc8MC2o4zM
+ rEqf8OpBz6AdoaTMOGZoZqopErPohuieeIwvgsOKtBAsPF5fl5U1mq2aXRxvaU9wX62Ohin2V9z
+ fJjZoJRI2x0BuYqwh2g==
+X-Proofpoint-GUID: 4gdUiVbe8LRFKDKA6eufFthEQe1Uu_qU
+X-Proofpoint-ORIG-GUID: 4gdUiVbe8LRFKDKA6eufFthEQe1Uu_qU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-18_05,2026-08-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0 adultscore=0 clxscore=1015 bulkscore=0
+ lowpriorityscore=0 phishscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608180178
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,117 +158,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 18, 2026 at 5:51=E2=80=AFPM Pierrick Bouvier
-<pierrick.bouvier@oss.qualcomm.com> wrote:
->
-> On 8/18/2026 10:42 AM, Matt Turner wrote:
-> > Every indirect branch that cannot use goto_tb ends in
-> > tcg_gen_lookup_and_goto_ptr(), which calls helper_lookup_tb_ptr(). For =
-an
-> > emulated compiler that is 8.4 billion helper calls in a single translat=
-ion
-> > unit: 24.6% of all TB exits take this path, because jsr/ret/jmp have a
-> > register destination and because goto_tb is restricted to same-page
-> > targets.
-> >
-> > The helper itself is already tight, but each call pays for a call frame=
-,
-> > the can_do_io store, the get_tb_cpu_state() indirect call through
-> > TCGCPUOps, curr_cflags(), and a breakpoint check, before it gets to the
-> > jump cache probe that almost always hits (95.8% for this workload).
-> >
-> > Emit the probe inline instead. The destination PC is already in a TCG
-> > temp, and the flags and cflags the destination must match are constants=
- at
-> > translation time, so the fast path is a hash, three guarded loads and a
-> > goto_ptr. Only a miss calls the helper, which still owns filling the ca=
-che.
-> >
-> > Two details matter for the generated code. The flags and cflags guards =
-are
-> > folded into a single aligned 64-bit load and compare, since the fields =
-are
-> > adjacent. And each path emits its own goto_ptr rather than branching to=
- a
-> > shared one: a temp live across the label is spilled and reloaded on eve=
-ry
-> > dispatch, which cost 6.3% on its own.
-> >
-> > Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling
-> > the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host, LTO
-> > build, on top of the preceding three patches:
-> >
-> >     before: 1,402,816,253,499 instructions
-> >     after:    890,713,633,237 instructions   -36.51%
-> >
-> >     before: 115.75s wall clock
-> >     after:   84.44s wall clock               -27.05%
-> >
-> > The gap between the two is the point at which this stops being a
-> > straight-line win: the helper call was highly predictable work that the
-> > host pipelined well, so removing it retires far fewer instructions than=
- it
-> > saves time. IPC falls from 2.48 to 2.15 across this patch for that reas=
-on.
-> >
-> > Despite emitting more code, this also reduces instruction cache pressur=
-e,
-> > because a dispatch no longer jumps into qemu's .text and evicts transla=
-ted
-> > code:
-> >
-> >     before: 11,476,318,964 L1-icache-load-misses
-> >     after:   6,990,186,701 L1-icache-load-misses   -39.1%
-> >
-> > The mechanism is visible directly in a profile: helper_lookup_tb_ptr()
-> > falls from 30.97% of samples to 0.42%, and qemu's own .text falls from
-> > 38.9% to 5.4%, with the balance moving into generated code.
-> >
-> > Combined with the three preceding patches, against an unmodified LTO
-> > build, 1,647,901,588,726 instructions fall to 890,713,633,237, or -45.9=
-5%.
-> > The emulated compiler produces byte-identical output throughout.
-> >
-> > Open issues, hence RFC:
-> >
-> > - The flags/cflags guards use the *current* TB's values as constants. T=
-hat
-> >   assumes the CPU flags feeding get_tb_cpu_state() cannot change within=
- a
-> >   TB, and that curr_cflags() cannot change under a running TB (gdb
-> >   attaching to enable single-step would). Both need to be established o=
-r
-> >   the values need to be loaded at runtime.
-> > - tcg/tcg-op.c has no business including accel/tcg/tb-jmp-cache.h or
-> >   knowing the CPUJumpCache layout. The probe likely belongs in accel/tc=
-g
-> >   with a small emit helper exported from tcg/.
-> > - The jump cache entry is read without qatomic_read(); entries are
-> >   invalidated concurrently by setting tb to NULL.
-> > - Only wired up for alpha so far, and only for 64-bit guest PCs.
-> >
-> > Signed-off-by: Matt Turner <mattst88@gmail.com>
-> > ---
-> >  include/tcg/tcg-op-common.h |  2 +
-> >  target/alpha/translate.c    |  4 +-
-> >  tcg/tcg-op.c                | 79 +++++++++++++++++++++++++++++++++++++
-> >  3 files changed, 83 insertions(+), 2 deletions(-)
-> >
->
-> This change breaks following tcg test:
-> alpha-linux-user/gdbstub-follow-fork-mode-child
->
-> Reproduce with:
-> ninja -C build &&
-> make -C build/tests/tcg/alpha-linux-user/ &&
-> make -C build/tests/tcg/alpha-linux-user/ run-gdbstub-follow-fork-mode-ch=
-ild
->
-> Need gdb-multiarch and gcc-alpha-linux-gnu installed on your machine.
+I presume this is v2 of
+https://lore.kernel.org/qemu-devel/20260817190038.580257-1-mattst88@gmail.com/
 
-Thanks! I had gdb available, I apparently just needed to configure
-with `--cross-prefix-alpha=3Dalpha-unknown-linux-gnu-` to get this test
-to run.
+On 18/8/26 19:42, Matt Turner wrote:
+> Every translation block stores to cpu->neg.can_do_io twice: false before
+> the first instruction, true before the last one. Nothing reads it in a
+> user-only build. There is no memory-mapped I/O in linux-user, and every
+> reader is in system_ss: cputlb.c, watchpoint.c, icount-common.c and
+> tcg-accel-ops-icount.c.
+> 
+> Two stores per TB is not much on its own, but TBs are short. An emulated
+> alpha gcc 16.2.0 compiling the SQLite 3.45.1 amalgamation (255k lines,
+> -O2) executes 34.2 billion TBs at 6.04 guest instructions each, so this is
+> 68 billion stores for nothing.
+> 
+> Measured on an x86-64 host, LTO build, on top of the preceding two
+> patches:
+> 
+>      before: 1,469,729,281,442 instructions
+>      after:  1,402,816,253,499 instructions   -4.55%
+> 
+>      before: 120.97s wall clock
+>      after:  115.75s wall clock              -4.32%
+> 
+> The emulated compiler produces byte-identical output.
+> 
+> Signed-off-by: Matt Turner <mattst88@gmail.com>
+> ---
+>   accel/tcg/translator.c | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git ./accel/tcg/translator.c ./accel/tcg/translator.c
+> index cd7d079fe0..85bb21e911 100644
+> --- ./accel/tcg/translator.c
+> +++ ./accel/tcg/translator.c
+> @@ -23,6 +23,9 @@
+>   
+>   static void set_can_do_io(DisasContextBase *db, bool val)
+>   {
+> +    if (IS_ENABLED(CONFIG_USER_ONLY)) {
 
-Fixed locally.
+Excellent use of IS_ENABLED()!
+
+> +        return;
+> +    }
+>       QEMU_BUILD_BUG_ON(sizeof_field(CPUState, neg.can_do_io) != 1);
+>       tcg_gen_st8_i32(tcg_constant_i32(val), tcg_env,
+>                       offsetof(CPUState, neg.can_do_io) - sizeof(CPUState));
+> @@ -210,6 +213,10 @@ void translator_loop(CPUState *cpu, TranslationBlock *tb, int *max_insns,
+>       /*
+>        * Manage can_do_io for the translation block: set to false before
+>        * the first insn and set to true before the last insn.
+> +     *
+> +     * Nothing reads can_do_io in user-only builds.  There is no MMIO
+> +     * there, and every reader (cputlb.c, watchpoint.c, icount) is in
+> +     * system_ss, so skip the two stores per TB entirely.
+>        */
+>       if (db->num_insns == 1) {
+>           tcg_debug_assert(first_insn_start == db->insn_start);
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+
 
