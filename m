@@ -4,67 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B896BC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 15:26:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C1A6C5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 15:44:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwiA1-0005yG-O7; Wed, 19 Aug 2026 11:25:01 -0400
+	id 1wwiS0-0005Os-61; Wed, 19 Aug 2026 11:43:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1wwi9u-0005uh-6N; Wed, 19 Aug 2026 11:24:54 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwiRy-0005Ok-7o
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 11:43:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1wwi9r-0005lK-By; Wed, 19 Aug 2026 11:24:52 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id E7F6D434A1;
- Wed, 19 Aug 2026 15:24:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B611F000E9;
- Wed, 19 Aug 2026 15:24:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1787153081;
- bh=IREy8EB96C1MiD0mEG/d5BXVokkM1ryvcxBbR+GIu9o=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc;
- b=Eg0quPQh4YGGkMrExTswW6zAFvK0XnaOo6zb6DbP0X3FcwQfMvgQNl/PA5W7SaFy4
- QEJRKoHVcMvT87KrtYAYVTW4MvCAPoOjG4B20WlGqsCMQF6z/pFJ0g0069YAE7maU8
- 65QQ0yvdNumv2o3NbKdqPnc6bH8IVGfJ0FhywTfJt7Rjzsaj4HdKWS7fjEU3z7vGvP
- TfE23y9pIIxxYTgEoy0p6VT7JGplMhogccAOvcsNu9tr2MmPyKAlQnzbFNN2NQJJBR
- freVDSgbQT4Woq3XeyjeZH2aFFg8fGbm7YXmMnL+xEwd2NaLsI35b9lKgy1+rTFd7E
- me4gNX0JgBtKA==
-From: Daniel Gomez <da.gomez@kernel.org>
-Date: Wed, 19 Aug 2026 17:24:03 +0200
-Subject: [PATCH v2 1/7] dma-helpers: fix unaligned discard_back
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwiRo-000227-VA
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 11:43:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787154203;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eIZYh2HMKRjQS/uRnCLAvmQgv6BELsX2A0tA7NXCglI=;
+ b=TmLKpeBJ7kXLKo9bu1ENDz9yePgLJCy4yKLEbbMEGnpKWKZbqHhSN/kF/aiRC4doAlEC0B
+ YBGNar5t2JmO7KvyLxEIMI9bxAwTm9CL8pb/725sJPrGTTaSETiHHzSLujQKoIDTxY+joE
+ CBXZjqEHL0MpkJh6sO03P5pHP29qGWU=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-481-OMGXd9TbMbeQXypWXSkVtw-1; Wed, 19 Aug 2026 11:43:12 -0400
+X-MC-Unique: OMGXd9TbMbeQXypWXSkVtw-1
+X-Mimecast-MFC-AGG-ID: OMGXd9TbMbeQXypWXSkVtw_1787154192
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-930b571432fso3397885a.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 08:43:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1787154192; x=1787758992; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=eIZYh2HMKRjQS/uRnCLAvmQgv6BELsX2A0tA7NXCglI=;
+ b=B4uzpP4f0l4U/7fQnuAIx07dYTsb4ZWkBcbRvJfSa7od1NceNq1YBOPKv02X0+EdeA
+ abPTvC8o6gr5XP7SYik6qv7PLvjGgPaUIHN3MeHi5hulvpKappMblomP9if0BOEGHUMD
+ vDdhpVzCZDZTDi8gYEN6Mbu98CIEmjM0nlsWQMWkUXa17qekKLo3UyJL7L4896jJKEkA
+ OkWT5big2mf9i/olwSfJ6lG9GMdn4sfzMfOFF1FKId66NO95lHe3zkvruBqS1Om/c+kS
+ cGBieLlJ63nwZHA5Pxx6NNRSL80wBKfZR0l9la3NYIiWrFiTJHNvNy1XosgOG65VMf2n
+ 2ZkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787154192; x=1787758992;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=eIZYh2HMKRjQS/uRnCLAvmQgv6BELsX2A0tA7NXCglI=;
+ b=Jf0+BB9oGESZ1HyZUGCUeHPFO5L1LwRIA/cNMH09Ga75dQeXPBo98hczorML1fUj8+
+ 3XgNLj/SUs5yv1sp7pXbip6z/etrXx1OFbObjHGfh+hIwXgRopxb6FJn2ga0JWY7l0vT
+ L1Jk2eqNBw8WXuDpiLcHKbJE/Ex1pYQPBVQLVrby9NeTG/NroK8vJq47e0340lHt/eQN
+ 2bkj9galSPsCvjq5Q71/EsGNcbnzh+HVIsbOnIqV/bWdufFrMCduZkrTNqznz1vJnV/G
+ GH/Ty3INukrvqIqpF1BBMl+QgCZJlyIx8SHGzPkyZQXsdydyBMhzUzr7TFGyZt09OTIB
+ tkdw==
+X-Gm-Message-State: AOJu0Yw65GW7B++/8UHEFaZtOTOGcudn9eQkz3CJxc9vbVLRSk8jtfMD
+ 5LVqLTzWQk3wvQm5fFDfTbqWJbOxg7PU+KpqMG+FV4NlQ9gqtMa1jJhaaw0yT+XR4IZ2jZ62gmB
+ e/afS2yHXScRkpwP8pdJAn3FBjVVNNreNjqboh4PiR4VmTfC8PjzMEqLC
+X-Gm-Gg: AR+sD12IYX6vurtSW8Ia9GreUwTQ/hPza5CqdUZSa2VWqgQD3dJPgpOJjXno/chBP4V
+ RSpgCCG1D0RFFVizx2o6kU/AlunEWYyAkQvpVqlOkxWPthT2anaEg13qeeUeCCK3KE0mZweo5g3
+ HjgyA7vrKnFY/StXnWgrnAhNBb7GLJ3SBkqDV91MsA6b0jQs0W3HBDsDVztCp6jQRW+YnJIfiF7
+ +2m72VyWv4v2CALFJeEAzqZaXZGbG5LxHuVfXSqn0UpRHCHCKM93IBRwOCe0+EXkGGBUFEPlHmJ
+ IZeOr/pNYFO9EvecGpEz50BdP1kmVXz7k5bq+TFlWeP9K+T7Qi3N6FgDMyr/l8gT3Nw5
+X-Received: by 2002:a05:620a:3941:b0:932:db03:4da3 with SMTP id
+ af79cd13be357-9372854c587mr1481785a.19.1787154191669; 
+ Wed, 19 Aug 2026 08:43:11 -0700 (PDT)
+X-Received: by 2002:a05:620a:3941:b0:932:db03:4da3 with SMTP id
+ af79cd13be357-9372854c587mr1473785a.19.1787154191073; 
+ Wed, 19 Aug 2026 08:43:11 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-9372056b71dsm157990485a.31.2026.08.19.08.43.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Aug 2026 08:43:09 -0700 (PDT)
+Date: Wed, 19 Aug 2026 11:42:56 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Aadeshveer Singh <aadeshveer07@gmail.com>, Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, pbonzini@redhat.com,
+ philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com,
+ pierrick.bouvier@oss.qualcomm.com
+Subject: Re: [PATCH v5 00/11] migration: fast snapshot load
+Message-ID: <aoXPAFDYLKxbTbWZ@x1.local>
+References: <20260816174631.1547811-1-aadeshveer07@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260819-align-nvme-mdts-with-linux-v2-1-351ac2dfed64@samsung.com>
-References: <20260819-align-nvme-mdts-with-linux-v2-0-351ac2dfed64@samsung.com>
-In-Reply-To: <20260819-align-nvme-mdts-with-linux-v2-0-351ac2dfed64@samsung.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
- Klaus Jensen <k.jensen@samsung.com>, Jesper Devantier <foss@defmacro.it>, 
- qemu-block@nongnu.org, Daniel Gomez <da.gomez@kernel.org>, 
- Daniel Gomez <da.gomez@samsung.com>, GOST <gost.dev@samsung.com>
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1787153075; l=1921;
- i=da.gomez@samsung.com; s=20240621; h=from:subject:message-id;
- bh=/MZTHLfOR6cSdrgu2MY61TXisIENUG7f98Jkjp3D4Yc=;
- b=8kQ6hcBxhkTrVCm0N0ipJoGzkIZ2FonDhBEOQZXjh5wN0cpHxaqiMooAIA3ERWO7OMdN7yBlm
- DRsRYPp4IfbCfn1vEJ7fbSdjXT3Bv/Z9FhYNngQPWvkkt4dSJr16Xuj
-X-Developer-Key: i=da.gomez@samsung.com; a=ed25519;
- pk=BqYk31UHkmv0WZShES6pIZcdmPPGay5LbzifAdZ2Ia4=
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=da.gomez@kernel.org;
- helo=sea.source.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260816174631.1547811-1-aadeshveer07@gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,52 +116,281 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Gomez <da.gomez@samsung.com>
+On Sun, Aug 16, 2026 at 11:16:20PM +0530, Aadeshveer Singh wrote:
+> This series implements a "fast snapshot load" mechanism to
+> significantly reduce the perceived resume time of a VM from a snapshot
+> file.
 
-Commit 99868af3d0 ("dma-helpers: explicitly pass alignment into DMA
-helpers") replaced the sub-sector remainder with the aligned size as the
-amount passed to qemu_iovec_discard_back(), effectively discarding the
-wrong chunk. Go back to discarding the tail bytes of unaligned IO.
+This series breaks Windows builds... we'll need three fixups into three
+patches to fix it.  Attached at the end.
 
-It was found while chunking dma_blk_cb() at IOV_MAX to batch large IO:
-a chunk boundary that is not a multiple of the alignment lands here and
-dma_blk_cb() submits the wrong bytes.
+For Aadeshveer: in the future you can check Windows build of your own
+patches locally by running this:
 
-Reproducer (with dma_blk_cb() chunked at IOV_MAX and mdts >= 10):
-fio --name=demo --filename=/dev/nvme0n1 --rw=write --bs=8M --direct=1 \
-    --iomem_align=4 --size=64M --verify=crc32c --do_verify=1
+  $ make docker-test-build@fedora-win64-cross
 
-Logs:
-demo: (g=0): rw=write, bs=(R) 8192KiB-8192KiB, (W) 8192KiB-8192KiB, (T) 8192KiB-8192KiB, ioengine=psync, iodepth=1
-fio-3.41
-Starting 1 process
-crc32c: verify failed at file /dev/nvme0n1 offset 0, length 8388608 (requested block: offset=0, length=8388608, flags=88)
-       Expected CRC: db932ec1
-       Received CRC: d3b6f2dc
-fio: pid=2755, err=84/file:io_u.c:2280, func=io_u_sync_complete, error=Invalid or incomplete multibyte or wide character
+I do hit Rust build failures nowadays with Windows, though, so you may need
+this if you have enabled rust builds instead (I also normally use J=N for
+concurrency):
 
-Fixes: 99868af3d0 ("dma-helpers: explicitly pass alignment into DMA helpers")
-Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
+  $ J=8 EXTRA_CONFIGURE_OPTS=--disable-rust make docker-test-build@fedora-win64-cross
+
+For Fabiano: if you want, you can also directly pick up the relevant
+patches I queued in my -next branch, or squash the fixups attached, or pick
+your own fix. I'll leave that to you to decide.
+
+  https://gitlab.com/peterx/qemu/-/tree/next
+
+Thanks,
+
+===8<===
+
+
+
+From 572b0f8b611e430e5ed8651d99851975878624c7 Mon Sep 17 00:00:00 2001
+From: Peter Xu <peterx@redhat.com>
+Date: Tue, 18 Aug 2026 16:38:08 -0400
+Subject: [PATCH 1/3] fixup! migration: Propagate error in postcopy setup
+ functions
+
+Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- system/dma-helpers.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ migration/postcopy-ram.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/system/dma-helpers.c b/system/dma-helpers.c
-index 0d592f64680..8ee83ce9e75 100644
---- a/system/dma-helpers.c
-+++ b/system/dma-helpers.c
-@@ -174,8 +174,7 @@ static void dma_blk_cb(void *opaque, int ret)
-     }
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index 81d06917fe..3c85fa1b19 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -1906,7 +1906,7 @@ int postcopy_request_shared_page(struct PostCopyFD *pcfd, RAMBlock *rb,
+     g_assert_not_reached();
+ }
  
-     if (!QEMU_IS_ALIGNED(dbs->iov.size, dbs->align)) {
--        qemu_iovec_discard_back(&dbs->iov,
--                                QEMU_ALIGN_DOWN(dbs->iov.size, dbs->align));
-+        qemu_iovec_discard_back(&dbs->iov, dbs->iov.size % dbs->align);
-     }
+-int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
++int postcopy_ram_incoming_setup(MigrationIncomingState *mis, Error **errp)
+ {
+     g_assert_not_reached();
+ }
+-- 
+2.54.0
+
+
+
+
+From 4273cc6ed223de1781513af9a62c1672c3f5591b Mon Sep 17 00:00:00 2001
+From: Peter Xu <peterx@redhat.com>
+Date: Wed, 19 Aug 2026 10:30:35 -0400
+Subject: [PATCH 2/3] fixup! migration: Extract blocktime marking helper
+
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/postcopy-ram.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index 3c85fa1b19..fdc65c3545 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -1934,6 +1934,14 @@ void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
+                                    RAMBlock *rb)
+ {
+ }
++
++bool try_mark_postcopy_blocktime_begin(MigrationIncomingState *mis,
++                                       RAMBlock *rb, ram_addr_t start,
++                                       uint64_t haddr, uint32_t tid)
++{
++    g_assert_not_reached();
++    return false;
++}
+ #endif
  
-     dbs->acb = dbs->io_func(dbs->offset, &dbs->iov,
+ /* ------------------------------------------------------------------------- */
+-- 
+2.54.0
+
+
+
+From d2d397de73fe39b424b2871fe4ba0df7937cc680 Mon Sep 17 00:00:00 2001
+From: Peter Xu <peterx@redhat.com>
+Date: Tue, 18 Aug 2026 16:43:29 -0400
+Subject: [PATCH 3/3] fixup! migration: add eager load thread and setup for
+ fast snapshot load
+
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/postcopy-ram.c | 135 ++++++++++++++++++++-------------------
+ 1 file changed, 71 insertions(+), 64 deletions(-)
+
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index fdc65c3545..885ab58fca 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -39,6 +39,8 @@
+ #include "qemu/mmap-alloc.h"
+ #include "options.h"
+ 
++static void postcopy_incoming_complete_bh(void *opaque);
++
+ /* Arbitrary limit on size of each discard command,
+  * keeps them around ~200 bytes
+  */
+@@ -1872,6 +1874,70 @@ int postcopy_place_page_zero(MigrationIncomingState *mis, void *host,
+     }
+ }
+ 
++/*
++ * Called by postcopy_ram_eager_load_thread over all blocks to load in all the
++ * pending pages of given ram block
++ */
++static int ram_block_load_eager(RAMBlock *rb, void *opaque)
++{
++    MigrationIncomingState *mis = migration_incoming_get_current();
++    MigrationState *s = migrate_get_current();
++    Error *errp = NULL;
++    void *host = qemu_ram_get_host_addr(rb);
++    void *target;
++
++    for (ram_addr_t page_loc = 0; page_loc < rb->used_length;
++         page_loc += qemu_ram_pagesize(rb)) {
++        target = (uint8_t *)host + page_loc;
++        if (!postcopy_mapped_ram_load_page(mis, rb, page_loc, (uint64_t)target,
++                                           RAM_CHANNEL_PRECOPY, &errp)) {
++            migrate_error_propagate(s, errp);
++            return -1;
++        }
++    }
++    return 0;
++}
++
++/*
++ * Used by fast snapshot load to eagerly load in all pages of RAM and schedule
++ * cleanup after entire RAM is loaded
++ */
++static void *postcopy_ram_eager_load_thread(void *opaque)
++{
++    MigrationIncomingState *mis = opaque;
++    MigrationStatus next_state;
++
++    trace_postcopy_ram_eager_load_thread_entry();
++    rcu_register_thread();
++    qemu_event_set(&mis->thread_sync_event);
++
++    if (foreach_not_ignored_block(ram_block_load_eager, NULL)) {
++        next_state = MIGRATION_STATUS_FAILED;
++    } else {
++        next_state = MIGRATION_STATUS_COMPLETED;
++    }
++    migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
++                      next_state);
++
++    postcopy_state_set(POSTCOPY_INCOMING_END);
++    migration_bh_schedule(postcopy_incoming_complete_bh, mis);
++
++    rcu_unregister_thread();
++    trace_postcopy_ram_eager_load_thread_exit();
++    return NULL;
++}
++
++/*
++ * Create thread for eager loading in fast snapshot load case
++ */
++void postcopy_ram_eager_load_setup(MigrationIncomingState *mis)
++{
++    postcopy_thread_create(
++        mis, &mis->eager_load_thread, MIGRATION_THREAD_DST_SNAPSHOT_LOAD,
++        postcopy_ram_eager_load_thread, QEMU_THREAD_JOINABLE);
++    mis->have_eager_load_thread = true;
++}
++
+ #else
+ /* No target OS support, stubs just fail */
+ void fill_destination_postcopy_migration_info(MigrationInfo *info)
+@@ -1942,6 +2008,11 @@ bool try_mark_postcopy_blocktime_begin(MigrationIncomingState *mis,
+     g_assert_not_reached();
+     return false;
+ }
++
++void postcopy_ram_eager_load_setup(MigrationIncomingState *mis)
++{
++    g_assert_not_reached();
++}
+ #endif
+ 
+ /* ------------------------------------------------------------------------- */
+@@ -2426,67 +2497,3 @@ int postcopy_incoming_cleanup(MigrationIncomingState *mis)
+ 
+     return rc;
+ }
+-
+-/*
+- * Called by postcopy_ram_eager_load_thread over all blocks to load in all the
+- * pending pages of given ram block
+- */
+-static int ram_block_load_eager(RAMBlock *rb, void *opaque)
+-{
+-    MigrationIncomingState *mis = migration_incoming_get_current();
+-    MigrationState *s = migrate_get_current();
+-    Error *errp = NULL;
+-    void *host = qemu_ram_get_host_addr(rb);
+-    void *target;
+-
+-    for (ram_addr_t page_loc = 0; page_loc < rb->used_length;
+-         page_loc += qemu_ram_pagesize(rb)) {
+-        target = (uint8_t *)host + page_loc;
+-        if (!postcopy_mapped_ram_load_page(mis, rb, page_loc, (uint64_t)target,
+-                                           RAM_CHANNEL_PRECOPY, &errp)) {
+-            migrate_error_propagate(s, errp);
+-            return -1;
+-        }
+-    }
+-    return 0;
+-}
+-
+-/*
+- * Used by fast snapshot load to eagerly load in all pages of RAM and schedule
+- * cleanup after entire RAM is loaded
+- */
+-static void *postcopy_ram_eager_load_thread(void *opaque)
+-{
+-    MigrationIncomingState *mis = opaque;
+-    MigrationStatus next_state;
+-
+-    trace_postcopy_ram_eager_load_thread_entry();
+-    rcu_register_thread();
+-    qemu_event_set(&mis->thread_sync_event);
+-
+-    if (foreach_not_ignored_block(ram_block_load_eager, NULL)) {
+-        next_state = MIGRATION_STATUS_FAILED;
+-    } else {
+-        next_state = MIGRATION_STATUS_COMPLETED;
+-    }
+-    migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
+-                      next_state);
+-
+-    postcopy_state_set(POSTCOPY_INCOMING_END);
+-    migration_bh_schedule(postcopy_incoming_complete_bh, mis);
+-
+-    rcu_unregister_thread();
+-    trace_postcopy_ram_eager_load_thread_exit();
+-    return NULL;
+-}
+-
+-/*
+- * Create thread for eager loading in fast snapshot load case
+- */
+-void postcopy_ram_eager_load_setup(MigrationIncomingState *mis)
+-{
+-    postcopy_thread_create(
+-        mis, &mis->eager_load_thread, MIGRATION_THREAD_DST_SNAPSHOT_LOAD,
+-        postcopy_ram_eager_load_thread, QEMU_THREAD_JOINABLE);
+-    mis->have_eager_load_thread = true;
+-}
+-- 
+2.54.0
+
 
 -- 
-2.55.0
+Peter Xu
 
 
