@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FB2BC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 14:30:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FDACC5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 14:30:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwhIK-0001dm-M5; Wed, 19 Aug 2026 10:29:32 -0400
+	id 1wwhJC-0001vz-1v; Wed, 19 Aug 2026 10:30:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wwhII-0001da-TJ
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 10:29:30 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1wwhJA-0001vl-Bx
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 10:30:24 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wwhIH-0002Ej-AA
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 10:29:30 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-47ddf7b09e5so1098395f8f.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 07:29:28 -0700 (PDT)
+ id 1wwhJ8-0002Up-T2
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 10:30:24 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-49554ebb87dso11422375e9.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 07:30:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787149767; x=1787754567; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787149821; x=1787754621; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:message-id:date
  :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=Jz2urDQupLP2gHwhwqjqXjL4ynoQvK67hQOGc7wyPIY=;
- b=T6BHaxBAHw/CL1b2rR/SZny59F0FlrjTnLr4g5wwVQUAjrXgkbuC7G28n0I9rU/zIJ
- axSE8bhLWSzxzrDl0zNfmzSgQLeH0PuRff7ticYMHijqGOGsknUABkJS0ANB6qqUpNVS
- XC75YyZ2CS2jYfzRQdS1I8plYNlUy/AA0h5xDyz+mS/svyIHJdUJB/coCP7+xKHn59te
- JotJjzQdZZlVrtQbMJvsmCySQDQK9VHzecUfPqmtlPAe+tKaTwZ+lMsssXGlYWVXaAgQ
- KbfjtD9u9yT2EhLMi8q29nhmUcr+rv+mr4qJtRDgaDL/5vZ4I7rtAchK3LmopTWX3NBW
- cT6w==
+ bh=A2lAn/Ur/m2PgoqeGRBz1w5lv5jbAWXANXVgyPtwuY4=;
+ b=q+nzBiXeoPHMXwkyFyQ1tEg5oBJl/ptREjD7AgLo4NUJ/xHjdYTtChJLz5Nm1URA82
+ ps09fb9UgSKYEfkoKD21Ryt4jJAGZTEnmitggj9kvclc/w32RSbaBEoUHj+WvP9uyBfc
+ wAiC60Uyper+PmB4awuofxvf9+Hkh9/UzuG5RHRTW/3QzsRGC+ITNTcxPU8dkDa/9I8z
+ 8/cJODg++MTfZrY2AcpfbkIRftwlwmYtuEDH7U+SkqsV+6f7UEP0tZfpupjiHnVTnok9
+ jqlcbfhEOsEp/4ofVuPIZUGL9hZ7CWHO2Te0BpQNsV2khPuC0zC9TTCjeQ5dXN1gRoME
+ 0Y3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787149767; x=1787754567;
+ d=1e100.net; s=20251104; t=1787149821; x=1787754621;
  h=content-transfer-encoding:content-type:mime-version:message-id:date
  :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=Jz2urDQupLP2gHwhwqjqXjL4ynoQvK67hQOGc7wyPIY=;
- b=i/Cm0Ta6utwH7d+ufvyxqrGKJP5sXi2OoWsraUEz5OZ8YhlN23cU0sWomYEBWOPpHg
- 2HN8vdisvVzP6WfaQ7XXLWmHIaXbR4TrH3JW8cH9BTZ5WAQ9PrT9SWhhfFXMMCW5KGf+
- F/8OrtV6DQiTQyrm7M6GQYbmq5dxdY3X12vcPpYLNeB2Wu0aq3u3aWedh/joSVnChCEI
- NKHHWPTaZZ7qA3vERHup8oKStgz1jX9XqOcJWN8Wl/HEfWBNrXNsl0cNqKWFHqERo7pW
- vJjKlG8oLlfCC6sRxR0NT16beR4N72qvMaU8jo+uB8bAcEMY+4gNRJ5tB/fEA6pTgvFc
- jE9Q==
-X-Gm-Message-State: AOJu0YwpK1pcILgx9mL8VKMHtUej5tGGCAfcnss5WVNv+Fj9VCIgeTxI
- Sm9zMXP0Kl7gFeVW9Wq4ZtS0HIJ6RfBNfI8SxNAH7dmMo4i8cE9bCAMXyBYd/RYaXQ0=
-X-Gm-Gg: AR+sD12N1u5VIm/e1Zuy8Ux8c7prKetWTJ0XRKb3JZvlS1d2bWSJzVDYtKx46KDdBbR
- WnouYfio/4etBCQrS2PIZeSBXIwUNvcqP7tA137NAs5/B/Ey3DiEJM5TGc8Y87znIIljzJuW2QD
- bgNc221fz5kiG+3DPfOBrk/K7QKOO5PS0zE4PKElr9R6cVDqSBZR1sZCCs/58CKfvE7WA7lEBTr
- S8tjJYKiG1USxuSgRr5LjJ/X88jioWHeggcET3YNlqmXfTdzPRsL08eVzjW2O0/h57lq1n3EknH
- 7llEwT6lG1ddYWeFsdSPC37SvclJJDs3/fKA7xQ68RGvLJ56gLu2/YOWfmpUu6i2N8p1IiK0Ow+
- uWBtwLfzGEQonoPo5BGVNUY8piCHoOdjGp+nSyDz69MdKdDxjrzqEHf2glN4uTf3vfTAdPYPz9G
- dnX5OL8VgUUm6HiZKP2pfCUZ98vFIUg3DHT53Esi9wWz0B6ne2/b0liEvQrtRg
-X-Received: by 2002:a05:600c:19c7:b0:495:7a04:b006 with SMTP id
- 5b1f17b1804b1-499aa192422mr76486855e9.8.1787149767233; 
- Wed, 19 Aug 2026 07:29:27 -0700 (PDT)
+ bh=A2lAn/Ur/m2PgoqeGRBz1w5lv5jbAWXANXVgyPtwuY4=;
+ b=k1Qpr9zstXk7y8d0godBB0E30vCNziIjmUuT7msiiydX/qRwwUc5EPDFhuezN9ApEE
+ 78/O0ElXYuYjsW6wfP1AoO0MY/T3htjTCbo3tAUo3fI9rrAkNsMNelelzpoZJgr1//Hi
+ O6QVo0/bCt7lVvCtxf4+CvE9X684JB0VEBQ5fqkcKZ8BNpHyOGainxN0S2NKDDFd2aEP
+ Cs81hgq0WXjVDfRE7baA+L1MVo68P117rSLZ6Z+8h/JG/ut/oB4dOsPC0RiKiNUDMOpU
+ d1OSEsWp1NUS+qo8Gg+ucgQBUZvRoHTTwmdy6+YETFDTNoIA3WnUjMkZE9+vPgBQSkct
+ oeYw==
+X-Gm-Message-State: AOJu0YwJIoLGixKl1IEGuCgPjGytuyp3nfO0K653wyupxD1KWgAniaMz
+ /lBWfVCV2EoPvsB+zvacEOKMRV2M95RFKAHfHVrn3qMfv41ITvlMAc9rU62axeU+9zM=
+X-Gm-Gg: AR+sD10wp+Ny8XbWuNBmxv3IeXdvUpF7uPWReKVZSuD9ISYlS4Zxnm7gevqkMmBuKUy
+ mAAYheax5jHJuzalr7MgW+m2U895ApHP9LC+yww3OkzBKZn9JGzjWfvbSUvvh/8Mtg+H8KS3j1A
+ B2OU661+BVSSrM5uff0nbW4+rYRaSdf0NVExQZM2Kt7gS/HQL9La7xGWEC40HcWf82i/OKXrzS/
+ nJqCN60+7AUQebHCD1OcANc1muoQ8b0whpRZ84b1XcmBQtl+32/o/iN+eigcyfNHsRoyegjdjQa
+ SZGptJGniXzCQUeOWJp4r1J8pOHZuddm9+1YAHenrx+XO1W+qdin9dsoiVu2kqHmkB73RvRBWIS
+ /Hh8y+GtgqjlWCTVgXRosxlayZ3jxwbrpCJbnDVfjIHDP1CJwm8TiluuUuaouGisMT61WdmRSKc
+ wqYNCszb8NvGoFKw/oDXIa77rI+9uDAUzBSFK8ur9kCTUzxAIZlPGCqJjXYxIr
+X-Received: by 2002:a05:600c:8b06:b0:495:4572:21af with SMTP id
+ 5b1f17b1804b1-499aa1a93f0mr105925825e9.9.1787149821147; 
+ Wed, 19 Aug 2026 07:30:21 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499aa0fd7a9sm80746405e9.2.2026.08.19.07.29.24
+ 5b1f17b1804b1-499a9e09e87sm40288815e9.4.2026.08.19.07.30.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 07:29:25 -0700 (PDT)
+ Wed, 19 Aug 2026 07:30:19 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 231385F805;
- Wed, 19 Aug 2026 15:29:24 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id BB1845F805;
+ Wed, 19 Aug 2026 15:30:17 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Laurent Vivier
@@ -75,21 +75,22 @@ Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Laurent Vivier
  Deller <deller@gmx.de>,  Paolo Bonzini <pbonzini@redhat.com>,  Brian Cain
  <brian.cain@oss.qualcomm.com>,  Manos Pitsidianakis
  <manos.pitsidianakis@linaro.org>,  Peter Maydell
- <peter.maydell@linaro.org>,  Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: Re: [PATCH v7 031/104] tests/tcg/meson.build: use full path for
- QEMU binary
-In-Reply-To: <20260818192309.22169-32-pierrick.bouvier@oss.qualcomm.com>
- (Pierrick Bouvier's message of "Tue, 18 Aug 2026 19:21:55 +0000")
+ <peter.maydell@linaro.org>,  Ilya Leoshkevich <iii@linux.ibm.com>,  Aniket
+ Sahu <asahu1x@linux.ibm.com>
+Subject: Re: [PATCH v7 033/104] tests/tcg/Makefile: skip user/system tests
+ if target Makefile is not present
+In-Reply-To: <20260818192309.22169-34-pierrick.bouvier@oss.qualcomm.com>
+ (Pierrick Bouvier's message of "Tue, 18 Aug 2026 19:21:57 +0000")
 References: <20260818192309.22169-1-pierrick.bouvier@oss.qualcomm.com>
- <20260818192309.22169-32-pierrick.bouvier@oss.qualcomm.com>
+ <20260818192309.22169-34-pierrick.bouvier@oss.qualcomm.com>
 User-Agent: mu4e 1.14.3; emacs 30.1
-Date: Wed, 19 Aug 2026 15:29:24 +0100
-Message-ID: <874igqqj3v.fsf@draig.linaro.org>
+Date: Wed, 19 Aug 2026 15:30:17 +0100
+Message-ID: <87y0e2p4hy.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,43 +115,14 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-> On MacOS, meson does not find qemu binary. Use full path to fix it.
-> Also, add qemu binary as dependency for the test, to ensure it's built
-> automatically.
+> In the next commits, we'll port each architecture from Makefile to
+> meson, and it's easier to review those changes if we remove Makefiles
+> step by step.
 >
+> Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->  tests/tcg/meson.build | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-> index ea17a947628..fe382638297 100644
-> --- a/tests/tcg/meson.build
-> +++ b/tests/tcg/meson.build
-> @@ -323,12 +323,13 @@ foreach target, plan: tcg_tests
->        endif
->=20=20
->        exe =3D built_tests[exe_name]
-> -      cmd =3D [qemu, qemu_args, exe]
-> +      test_depends +=3D qemu
-> +      cmd =3D [qemu.full_path(), qemu_args, exe]
->=20=20
->        if 'gdb_test' in setup
->          cmd =3D [prog_gdb_test,
->                 '--gdb', gdb,
-> -               '--qemu', qemu,
-> +               '--qemu', qemu.full_path(),
->                 '--qargs', ' '.join(qemu_args),
->                 '--bin', exe,
->                 setup['gdb_test'],
 
-I think I've mentioned this before but the setting of cmd and then
-resetting it reads weirdly. Especially as later we do have cases of
-prefacing cmd with more stuff.
-
-Anyway:
-
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 --=20
 Alex Benn=C3=A9e
