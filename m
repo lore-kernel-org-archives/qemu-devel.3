@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 242CDC5DF85
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE236C5DF81
 	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 18:04:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwkcd-0004MG-9l; Wed, 19 Aug 2026 14:02:43 -0400
+	id 1wwkcW-0004Ii-E5; Wed, 19 Aug 2026 14:02:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wwkca-0004KX-Gk
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 14:02:40 -0400
+ id 1wwkcU-0004Ge-5Y
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 14:02:34 -0400
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wwkcY-0007RF-Dy
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 14:02:40 -0400
+ id 1wwkcS-0007OL-4l
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 14:02:33 -0400
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id 37662C0D2F;
- Wed, 19 Aug 2026 21:02:37 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id B3825C08B7;
+ Wed, 19 Aug 2026 21:02:30 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:c60::1:5])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id M2bUThDaVKo0-y4SgSE5D; Wed, 19 Aug 2026 21:02:36 +0300
+ id M2bUThDaVKo0-1Sgq8Dhf; Wed, 19 Aug 2026 21:02:30 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1787162556;
- bh=7RK20YNslrCWlxEAgyqrLGnjVNKJFiRRALhiNSDp1eA=;
+ s=default; t=1787162550;
+ bh=rqXLRKVB9rUlP5qhRTvWTc1Jy5XuBInjTD1aruBDXbM=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=EqW4BwtDs59WKbRkJNeyf8F378BN79Gv88qN9cKP5pfvLKBK1UHqv71LtyXy16rf8
- NR7An8VlQSKlsudxhtmdGKVyr7TmiqOpCDhfTYNXAPKmZia9YlJuzRMdKThT41og+V
- QkiQbUvJfMCTohng+DVYDbIouiT/ut7KN6ANUzxc=
+ b=P4eDqpO5MgVpANTzIZea+1WqKhewSNWvpilh4j/5HcCqFgIs2VrQQnFOrrxmtLXkd
+ KTb0KN5WCYuhCgMrzsaPXknYCTRJQNYZemrS/XRLppeN0+I9W/hJFlpaYymCcuvIoO
+ RKLsG1BaREvud9zKyePd8W8PvepPQ4XuL/ct42qI=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -48,9 +48,9 @@ Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
  yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
  Jason Wang <jasowangio@gmail.com>
-Subject: [PATCH v21 13/16] virtio-net: support local migration of backend
-Date: Wed, 19 Aug 2026 21:01:56 +0300
-Message-ID: <20260819180201.1970193-14-vsementsov@yandex-team.ru>
+Subject: [PATCH v21 06/16] net/tap: use container_of instead of DO_UPCAST
+Date: Wed, 19 Aug 2026 21:01:49 +0300
+Message-ID: <20260819180201.1970193-7-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260819180201.1970193-1-vsementsov@yandex-team.ru>
 References: <20260819180201.1970193-1-vsementsov@yandex-team.ru>
@@ -79,225 +79,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Next commit will introduce live-migration (with fd-passing) for
-TAP net backend. So, now we prepare virtio-net for it
-Add virtio-net option local-migration, which is true by default,
-but false for older machine types, which doesn't support the feature.
-
-We introduce interface for live-migrating backends:
-
-1. ->is_wait_incoming() handler, so that virtio-net knows, that
-   backend is not fully intialized, as it waits for incoming migration
-   stream.
-
-2. MIG_PRI_BACKEND priority: backends should migrate with higher
-   priority than virtio-net, so that we can do final preparations
-   here in post-load handlers and be sure, that backends are already
-   prepared.
+We are going to QOMify tap backend, which includes deriving TAPState
+from Object. So "NetClientState nc" will not be a first member.
+Let's parepare for this change, and use container_of(), which will
+work regardless position of "nc" field.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Ben Chaney <bchaney@akamai.com>
 ---
- hw/net/virtio-net.c            | 89 +++++++++++++++++++++++++++++++++-
- include/hw/virtio/virtio-net.h |  1 +
- include/migration/vmstate.h    |  2 +
- include/net/net.h              |  2 +
- 4 files changed, 93 insertions(+), 1 deletion(-)
+ net/tap.c | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 814b99a43d2..274fbcb0d60 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -40,6 +40,7 @@
- #include "migration/misc.h"
- #include "standard-headers/linux/ethtool.h"
- #include "system/system.h"
-+#include "system/runstate.h"
- #include "system/replay.h"
- #include "trace.h"
- #include "monitor/qdev.h"
-@@ -3079,7 +3080,17 @@ static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue)
-     n->multiqueue = multiqueue;
-     virtio_net_change_num_queues(n, max * 2 + 1);
- 
--    virtio_net_set_queue_pairs(n);
-+    /*
-+     * virtio_net_set_multiqueue() called from set_features(0) on early
-+     * reset, when peer may wait for incoming (and is not initialized
-+     * yet).
-+     * Don't worry about it: virtio_net_set_queue_pairs() will be called
-+     * later from virtio_net_post_load_device(), and anyway will be
-+     * no-op for local incoming migration with live backend passing.
-+     */
-+    if (!n->peers_wait_incoming) {
-+        virtio_net_set_queue_pairs(n);
-+    }
- }
- 
- static int virtio_net_pre_load_queues(VirtIODevice *vdev, uint32_t n)
-@@ -3108,6 +3119,17 @@ static void virtio_net_get_features(VirtIODevice *vdev, uint64_t *features,
- 
-     virtio_add_feature_ex(features, VIRTIO_NET_F_MAC);
- 
-+    if (n->peers_wait_incoming) {
-+        /*
-+         * Excessive feature set is OK for early initialization when
-+         * we wait for local incoming migration: actual guest-negotiated
-+         * features will come with migration stream anyway. And we are sure
-+         * that we support same host-features as source, because the backend
-+         * is the same (the same TAP device, for example).
-+         */
-+        return;
-+    }
-+
-     if (!peer_has_vnet_hdr(n)) {
-         virtio_clear_feature_ex(features, VIRTIO_NET_F_CSUM);
-         virtio_clear_feature_ex(features, VIRTIO_NET_F_HOST_TSO4);
-@@ -3204,6 +3226,7 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
-     VirtIODevice *vdev = VIRTIO_DEVICE(n);
-     int i, link_down;
-     bool has_tunnel_hdr = virtio_has_tunnel_hdr(vdev->guest_features_ex);
-+    Error *local_err = NULL;
- 
-     trace_virtio_net_post_load_device();
-     virtio_net_set_mrg_rx_bufs(n, n->mergeable_rx_bufs,
-@@ -3261,6 +3284,20 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
-     }
- 
-     virtio_net_commit_rss_config(n);
-+
-+    /*
-+     * If live-migration is enabled for some backend, than backend
-+     * has already been migrated at higher priority (MIG_PRI_BACKEND)
-+     * and virtio_net_vnet_post_load() has already called
-+     * peer_test_vnet_hdr().  Recompute host_features so that virtio-net
-+     * reflects the capabilities of the restored backend.
-+     */
-+    virtio_net_get_features(vdev, &vdev->host_features, &local_err);
-+    if (local_err) {
-+        error_report_err(local_err);
-+        return -EINVAL;
-+    }
-+
-     return 0;
- }
- 
-@@ -3411,6 +3448,14 @@ static int virtio_net_vnet_post_load(void *opaque, int version_id)
+diff --git a/net/tap.c b/net/tap.c
+index f2b571dd116..bfed74717e4 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -175,7 +175,7 @@ static ssize_t tap_write_packet(TAPState *s, const struct iovec *iov, int iovcnt
+ static ssize_t tap_receive_iov(NetClientState *nc, const struct iovec *iov,
+                                int iovcnt)
  {
-     struct VirtIONetMigTmp *tmp = opaque;
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     const struct iovec *iovp = iov;
+     g_autofree struct iovec *iov_copy = NULL;
+     struct virtio_net_hdr hdr = { };
+@@ -211,7 +211,7 @@ ssize_t tap_read_packet(int tapfd, uint8_t *buf, int maxlen)
  
-+    /*
-+     * If live-migration is enabled for some backend, than backend
-+     * has already been migrated at higher priority (MIG_PRI_BACKEND),
-+     * so n->has_vnet_hdr can be refreshed from the live backend right
-+     * here.
-+     */
-+    peer_test_vnet_hdr(tmp->parent);
-+
-     if (tmp->has_vnet_hdr && !peer_has_vnet_hdr(tmp->parent)) {
-         error_report("virtio-net: saved image requires vnet_hdr=on");
-         return -EINVAL;
-@@ -3890,6 +3935,42 @@ static bool failover_hide_primary_device(DeviceListener *listener,
-     return qatomic_read(&n->failover_primary_hidden);
+ static void tap_send_completed(NetClientState *nc, ssize_t len)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     tap_read_poll(s, true);
  }
  
-+static bool virtio_net_check_peers_wait_incoming(VirtIONet *n, bool *waiting,
-+                                                 Error **errp)
-+{
-+    bool has_waiting = false;
-+    bool has_not_waiting = false;
-+
-+    for (int i = 0; i < n->max_queue_pairs; i++) {
-+        NetClientState *peer = n->nic->ncs[i].peer;
-+        if (!peer) {
-+            continue;
-+        }
-+
-+        if (peer->info->is_wait_incoming &&
-+            peer->info->is_wait_incoming(peer)) {
-+            has_waiting = true;
-+        } else {
-+            has_not_waiting = true;
-+        }
-+
-+        if (has_waiting && has_not_waiting) {
-+            error_setg(errp, "Mixed peer states: some peers wait for incoming "
-+                       "migration while others don't");
-+            return false;
-+        }
-+    }
-+
-+    if (has_waiting && !runstate_check(RUN_STATE_INMIGRATE)) {
-+        error_setg(errp, "Peers wait for incoming, but it's not an incoming "
-+                   "migration.");
-+        return false;
-+    }
-+
-+    *waiting = has_waiting;
-+    return true;
-+}
-+
- static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+@@ -271,7 +271,7 @@ static void tap_send(void *opaque)
+ 
+ static bool tap_has_ufo(NetClientState *nc)
  {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-@@ -4027,6 +4108,12 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-         n->nic->ncs[i].do_not_pad = true;
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+ 
+@@ -280,7 +280,7 @@ static bool tap_has_ufo(NetClientState *nc)
+ 
+ static bool tap_has_uso(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+ 
+@@ -289,7 +289,7 @@ static bool tap_has_uso(NetClientState *nc)
+ 
+ static bool tap_has_tunnel(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+     return s->has_tunnel;
+@@ -297,7 +297,7 @@ static bool tap_has_tunnel(NetClientState *nc)
+ 
+ static bool tap_has_vnet_hdr(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+ 
+@@ -311,7 +311,7 @@ static bool tap_has_vnet_hdr_len(NetClientState *nc, int len)
+ 
+ static void tap_set_vnet_hdr_len(NetClientState *nc, int len)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+ 
+@@ -322,21 +322,21 @@ static void tap_set_vnet_hdr_len(NetClientState *nc, int len)
+ 
+ static int tap_set_vnet_le(NetClientState *nc, bool is_le)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     return tap_fd_set_vnet_le(s->fd, is_le);
+ }
+ 
+ static int tap_set_vnet_be(NetClientState *nc, bool is_be)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+ 
+     return tap_fd_set_vnet_be(s->fd, is_be);
+ }
+ 
+ static void tap_set_offload(NetClientState *nc, const NetOffloads *ol)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     if (s->fd < 0) {
+         return;
      }
+@@ -357,7 +357,7 @@ static void tap_exit_notify(Notifier *notifier, void *data)
  
-+    if (!virtio_net_check_peers_wait_incoming(n, &n->peers_wait_incoming,
-+                                              errp)) {
-+        virtio_cleanup(vdev);
-+        return;
-+    }
-+
-     peer_test_vnet_hdr(n);
-     if (peer_has_vnet_hdr(n)) {
-         n->host_hdr_len = sizeof(struct virtio_net_hdr);
-diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index 371e3764282..8c967760c2a 100644
---- a/include/hw/virtio/virtio-net.h
-+++ b/include/hw/virtio/virtio-net.h
-@@ -230,6 +230,7 @@ struct VirtIONet {
-     struct EBPFRSSContext ebpf_rss;
-     uint32_t nr_ebpf_rss_fds;
-     char **ebpf_rss_fds;
-+    bool peers_wait_incoming;
- };
+ static void tap_cleanup(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
  
- size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 1b7f295417e..bbc569adc52 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -178,6 +178,8 @@ typedef enum {
+     if (s->vhost_net) {
+         vhost_net_cleanup(s->vhost_net);
+@@ -381,14 +381,14 @@ static void tap_cleanup(NetClientState *nc)
  
-     MIG_PRI_LOW,                /* Must happen after default */
-     MIG_PRI_DEFAULT,
-+    MIG_PRI_BACKEND,            /* Must happen before emulated devices, */
-+                                /* e.g. virtio-net */
-     MIG_PRI_IOMMU,              /* Must happen before PCI devices */
-     MIG_PRI_PCI_BUS,            /* Must happen before IOMMU */
-     MIG_PRI_VIRTIO_MEM,         /* Must happen before IOMMU */
-diff --git a/include/net/net.h b/include/net/net.h
-index 05d1db71eb8..a606d06e46a 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -81,6 +81,7 @@ typedef void (SocketReadStateFinalize)(SocketReadState *rs);
- typedef void (NetAnnounce)(NetClientState *);
- typedef bool (SetSteeringEBPF)(NetClientState *, int);
- typedef bool (NetCheckPeerType)(NetClientState *, ObjectClass *, Error **);
-+typedef bool (IsWaitIncoming)(NetClientState *);
- typedef struct vhost_net *(GetVHostNet)(NetClientState *nc);
+ static void tap_poll(NetClientState *nc, bool enable)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     tap_read_poll(s, enable);
+     tap_write_poll(s, enable);
+ }
  
- typedef struct NetClientInfo {
-@@ -109,6 +110,7 @@ typedef struct NetClientInfo {
-     NetAnnounce *announce;
-     SetSteeringEBPF *set_steering_ebpf;
-     NetCheckPeerType *check_peer_type;
-+    IsWaitIncoming *is_wait_incoming;
-     GetVHostNet *get_vhost_net;
- } NetClientInfo;
+ static bool tap_set_steering_ebpf(NetClientState *nc, int prog_fd)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
  
+     return tap_fd_set_steering_ebpf(s->fd, prog_fd) == 0;
+@@ -396,7 +396,7 @@ static bool tap_set_steering_ebpf(NetClientState *nc, int prog_fd)
+ 
+ int tap_get_fd(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+     return s->fd;
+ }
+@@ -408,7 +408,7 @@ int tap_get_fd(NetClientState *nc)
+  */
+ static VHostNetState *tap_get_vhost_net(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+     return s->vhost_net;
+ }
+@@ -447,7 +447,7 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+ 
+     nc = qemu_new_net_client(&net_tap_info, peer, model, name);
+ 
+-    s = DO_UPCAST(TAPState, nc, nc);
++    s = container_of(nc, TAPState, nc);
+ 
+     s->fd = fd;
+     s->host_vnet_hdr_len = vnet_hdr ? sizeof(struct virtio_net_hdr) : 0;
+@@ -1016,7 +1016,7 @@ fail:
+ 
+ int tap_enable(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     int ret;
+ 
+     if (s->enabled) {
+@@ -1033,7 +1033,7 @@ int tap_enable(NetClientState *nc)
+ 
+ int tap_disable(NetClientState *nc)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    TAPState *s = container_of(nc, TAPState, nc);
+     int ret;
+ 
+     if (s->enabled == 0) {
 -- 
 2.43.0
 
