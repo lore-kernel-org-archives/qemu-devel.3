@@ -4,102 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43797C5DF81
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 19:19:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D709C5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 19:26:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwlp2-000112-53; Wed, 19 Aug 2026 15:19:36 -0400
+	id 1wwlun-0003QE-HS; Wed, 19 Aug 2026 15:25:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwlp0-00010o-NT
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:19:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwloz-0003Tc-8L
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:19:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787167172;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Eb74DaZdtuRgyTn6aQ9yEGgldigdTcve98YP8+b8+3I=;
- b=XlmuL6bFkdyCb/8TH+4qt/XBTbRB3nZsq5D+nJ0CQALuPsar0DMiuBFWl6burgViR0W2zN
- AA2jCWO4ac76XLxU9Mhr3Pgr85G51exxNVYOOyv3gvx7Ct5VpVMt7+FNRo79QBYDI+gKXX
- T45cLG5RqCrpSv7+A0pn5yukZELfC5g=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-523-bKMta55cOUOB6QpgSn8qzQ-1; Wed, 19 Aug 2026 15:19:20 -0400
-X-MC-Unique: bKMta55cOUOB6QpgSn8qzQ-1
-X-Mimecast-MFC-AGG-ID: bKMta55cOUOB6QpgSn8qzQ_1787167160
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c26012cd0so15091851cf.0
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 12:19:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wwlul-0003O6-M1
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:25:31 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wwluj-0004su-Ur
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:25:31 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-38125cebfdaso2267104a91.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 12:25:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787167160; x=1787771960; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Eb74DaZdtuRgyTn6aQ9yEGgldigdTcve98YP8+b8+3I=;
- b=mvr4LoruEhBj1EeKMa3boIrYGQFS2ftpX6UjdK6sIZDbLDVvgyawRD85yrMEqQA+i9
- NGN+BjPFW3Gz4OJzyO8S5VNk5LHySKxRRvFQGcARD5oARFrfc/oc18VGk3pwnVyBUZF0
- TTLKY7rII7KODPSPIHAdUsPp1PSqBwSTPEt3ufT6bUHMGzTz/EvTk5DrrCELXAdYmn8a
- PBiJXo0M0OPCC7f/tQWeakcuORHiaCmAyDWY5ncjCJcrsQRJuK/g3EnBg3tUR7OgH3Bm
- F7X7347bkcyFl3UYVxtbdebazpgXVGRKmyf+W+rUCgiedBgSXAA9D76UkgiQZiqOULv1
- MlGA==
+ d=linaro.org; s=google; t=1787167528; x=1787772328; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=6y2BF2KjsqIeeaZzuGQ3k6Zl8/RsVL4sVPR7ZY8U3SY=;
+ b=GmFRLBWTBWDH/V9dOCDYozDZHC9KZD6T3P55Uuh/LBBmsAc//rs9LtZQW1+5IqkKT2
+ 420ivZTYKSzqcAG/Tns3K3NlbqnEK0O9jLJStu834tfjXEiPVLGDHNR4B+SPslE+I80a
+ p4S0qixSLjxrD/yri36+Ll1JOeHy2GWh+mVCSx8MX9pVv8CT93XrzHxd4/ACo04cOnBi
+ 2F/LDNSKDIbwsPGzdGmP0J6m+zljWaLkQx9tb1U29fxACApaXHCuYHR2iEeGNr6cx+2D
+ Lr59VSOiSgrYVCR8WXe9BJgI3ktjDMyX7HPNAKJwDgYVEG2GUf4qClx9GezdK8yLTdWI
+ fJ7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787167160; x=1787771960;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Eb74DaZdtuRgyTn6aQ9yEGgldigdTcve98YP8+b8+3I=;
- b=r1WPK2cuWYray5c0ClH6eVsAxye+cB/8MfWqPi1gee0vip1IBG+k+N90fltzLwwDeB
- i5/A96ku2fi/rGTwsKVEBTwJMc0VnOHB/Pg3Z+UZcnYAHO7W08IJgPddstUewoFnIPjk
- tPDHkaohEUGrYpEPhOxsRzMFR0oZokGA2UwDHoIvb61vPciKgC5EEjd5zO7FbL4UBtAG
- 7B50n1yJ3l6xBnUd76F4xYTlzmUNB5xfLLxtIG4C7svw316SrDH1I1LTp1hhXtkZu9Pr
- ppflT1CxO/xJHlvSS49CYXCbJpUgPG77LZCo/pwHGJ0pnSR7sgISX275QesB2QIuS7Ql
- 8TKQ==
-X-Gm-Message-State: AOJu0YwVk3uapAJH/6cXETk8nG4+83ej01ifHPsrpAl7ncAatM1Me0XU
- n/eUmIlv1skswTo6Kn8p1PlvoGSoUe8C37w06ADNZWkxGT62CyP4Hv6J75vpWivDEGpaI9bqlR0
- Pq/O0hbCGCNtvOJpou7cduJ37r5z/2CA7CnExXlc6CCfyWpwLzBW3/0yT
-X-Gm-Gg: AR+sD137k+AeQF4RyXhBqneSd3Ft/xIsmU+GN0hk+9LNaf2ZyVLPYAQR9hk+Oj2+u+v
- xeswvuUwLoZTy8LPjtDstTg/QQ1HMZ6EVMeVy5sFq2DUUBMF9Efz+qvCxkQDUxIa7PWbGs3KKoZ
- 8bXTBHgNd185uyxBVgvRLlMyls9WkBml1if7Gs9TR0g0P27xmn2FO8oddDxs8JAmaNHTHHRe4W9
- 5bI4FlqvwEyoGATO9HhhpsuteTdOVgWaaOO9JtNe/ZuojpoB+SxbRKYJBNWBGQMr3xZEqMolPo4
- xDOGrblscMJtXrqgrmEHOa1Ne1MOJUg4V8Fx27helPozkiSEM+e53nVRii7lvdePhIxf
-X-Received: by 2002:ac8:5984:0:b0:519:efea:cf41 with SMTP id
- d75a77b69052e-52dd5a35101mr63226711cf.28.1787167160195; 
- Wed, 19 Aug 2026 12:19:20 -0700 (PDT)
-X-Received: by 2002:ac8:5984:0:b0:519:efea:cf41 with SMTP id
- d75a77b69052e-52dd5a35101mr63226211cf.28.1787167159652; 
- Wed, 19 Aug 2026 12:19:19 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-52dd85991b1sm16835141cf.10.2026.08.19.12.19.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 12:19:19 -0700 (PDT)
-Date: Wed, 19 Aug 2026 15:19:16 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Yanfei Xu <yanfei.xu@bytedance.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, lizhijian@fujitsu.com
-Subject: Re: [PATCH 1/3] migration/rdma: Fix write-side shutdown
-Message-ID: <aoYBtFI-eJpLm35D@x1.local>
-References: <20260817105117.3072040-1-yanfei.xu@bytedance.com>
- <20260817105117.3072040-2-yanfei.xu@bytedance.com>
+ d=1e100.net; s=20251104; t=1787167528; x=1787772328;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=6y2BF2KjsqIeeaZzuGQ3k6Zl8/RsVL4sVPR7ZY8U3SY=;
+ b=heZlp77IrZBdZrx51Rts8vMPxqxbAyA6RLTezal7TOFBKxH0f0fGQtx53Hubmq7uBd
+ lWNv9cJTdLOW6OFbXQCFPxOj1HIQ2W1CdmXY6IMFaoK8SeN6A/vTssE1m1To0fQP+TM6
+ 2uiBS2x73TIBu4Z4W0A7gWfOF2QD7YrMklfoVrcIEbxv48BqDpi/SXehiYLLiQFtGBoQ
+ pBrIYTCth/3hs7LwXrwNFjeK+pbAsscpMQzBRVldY62EwT8pgLRb3LGT1pxQFrxzB18Q
+ KWpJPyoVj6tFKKqkGO4t6p1IY4uXU4b+44cikkotJnTOiz+X4GZDjT42eCeiv5NwpuJN
+ 3XJA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoLTgeQVzFXntLXDgUt6v5WGTC+sOUtwFAzv0itm46F9KLSBsJm23zI+wlGPy2t5W9522HZOfs3FaA+@nongnu.org
+X-Gm-Message-State: AFuF++nqRkjl/rUJ0/CVt8aBSDGepcP6XRlOEkVHbd7OgitKM3VUhBcY
+ NHsZ5Lo/5/vdYeu3il2yRfvNChC4B8uHHfovz5diDZna5QZhPEtEyVGiMkk1N+cExXs=
+X-Gm-Gg: AR+sD12hlqhiQIG0AYCreSna5zsSplDmTlN01ZCwQDCjp7sTaAsUZiXP45LPouS5aVK
+ IC/SrZuEcKI0XCSoVL8ANxdxKN5/xo3XTDdcWPh42wRIisLgzxpi67/EvgBhf/5m3PB6khqyqSO
+ CsCbzPRtFhMWdvnXcGkizGuxPMcI1MzD0KtetusdA7x0hhKfGQi9Rs13ZrDqB0Ug2S3jQpPKOZM
+ w9S0zixOCLXbxo5iG6/xu0zSXXPDqSVj/ufyewC/IuOeEwB4ojkLFWxffyXXJdqv569Dkeg+9xj
+ ocNND3JBletC9JP/U6UPAx9HZ9t7KImKSDufCVn8Yec69KIW9yn2Tz0VjRY/HDWBvmaWDBiaXtQ
+ lrNtfhWwQt1ATKi7t1M+jtHiTXVPGyBa/ZLmc6ayAr9khn95bcqMDsT0aM9mKesOkszLhM3Hl5z
+ n82Xk7z5Lbg+b7sa8qxMFUUAFh+VJ3ZoKxmOJ9aD1KDjihwzwlco2LXUlgbiHBLmEM5KE5A4G7t
+ 5QrlQEQ
+X-Received: by 2002:a17:90b:2e42:b0:380:fead:448d with SMTP id
+ 98e67ed59e1d1-3958109a525mr13699024a91.13.1787167528082; 
+ Wed, 19 Aug 2026 12:25:28 -0700 (PDT)
+Received: from [192.168.122.51] ([173.164.107.233])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3957fb51271sm3985198a91.7.2026.08.19.12.25.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 19 Aug 2026 12:25:27 -0700 (PDT)
+Message-ID: <4dd5ec08-76b3-4478-b5ab-baed1364f360@linaro.org>
+Date: Wed, 19 Aug 2026 12:25:24 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260817105117.3072040-2-yanfei.xu@bytedance.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/loongarch: check FPE before reading fcc in
+ bceqz/bcnez
+To: Jan Mercl <0xjnml@gmail.com>, qemu-devel@nongnu.org
+Cc: Song Gao <17746591750@163.com>, Bibo Mao <maobibo@loongson.cn>,
+ Xianglai Li <lixianglai@loongson.cn>, qemu-stable@nongnu.org
+References: <20260819132422.5164-1-0xjnml@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260819132422.5164-1-0xjnml@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,43 +107,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 17, 2026 at 06:51:15PM +0800, Yanfei Xu wrote:
-> qio_channel_rdma_shutdown() reads rdmain for both the input and
-> output contexts.  As a result, a write-side shutdown marks the input
-> context as errored while leaving the output context active.  A shutdown
-> of both directions also fails to stop the output context.
+On 8/19/26 06:24, Jan Mercl wrote:
+> gen_cz_bc() loads env->cf[cj] without CHECK_FPE, unlike every other
+> translator that touches an fcc register (trans_fcmp.c.inc and
+> trans_fmov.c.inc, for movcf2gr/movgr2cf/movcf2fr/movfr2cf/fsel).
 > 
-> Read rdmaout from the output context so each shutdown direction marks
-> the corresponding RDMA context as errored.
+> A guest that manages the FPU lazily -- Linux clears CSR.EUEN.FPE in
+> lose_fpu() on every context switch -- relies on the next fcc access
+> raising a Floating-Point-Disabled exception so the kernel can restore
+> that task's fcc.  Because bceqz and bcnez never raise it, they branch on
+> the condition flag left behind by whichever task last owned the FPU.
 > 
-> Fixes: 54db882f073a ("migration: implement the shutdown for RDMA QIOChannel")
-> Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+> Real Loongson hardware does raise the exception, so this is TCG-only.
+> It surfaces as Go binaries dying at startup in runtime.check() with
+> "fatal error: float64nan1" -- roughly one process start in a thousand
+> once the guest has more runnable tasks than vCPUs -- and in general as a
+> conditional branch silently taking the wrong path.
+> 
+> With four tasks each executing 5M bcnez on a 2-vCPU guest, master
+> mispredicts 89 of 20000000.  With this patch, 0 of 100000000 over five
+> runs; a Loongson-3C5000 is likewise 0 of 600000000.
+> 
+> CHECK_FPE is defined in trans_farith.c.inc, which translate.c includes
+> before trans_branch.c.inc, so it is already in scope.
+> 
+> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/4209
+> Cc:qemu-stable@nongnu.org
+> Signed-off-by: Jan Mercl<0xjnml@gmail.com>
 > ---
->  migration/rdma.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/migration/rdma.c b/migration/rdma.c
-> index 438419d189..e17ace62b0 100644
-> --- a/migration/rdma.c
-> +++ b/migration/rdma.c
-> @@ -2982,7 +2982,7 @@ qio_channel_rdma_shutdown(QIOChannel *ioc,
->      RCU_READ_LOCK_GUARD();
->  
->      rdmain = qatomic_rcu_read(&rioc->rdmain);
-> -    rdmaout = qatomic_rcu_read(&rioc->rdmain);
-> +    rdmaout = qatomic_rcu_read(&rioc->rdmaout);
->  
->      switch (how) {
->      case QIO_CHANNEL_SHUTDOWN_READ:
-> -- 
-> 2.20.1
-> 
+>   target/loongarch/tcg/insn_trans/trans_branch.c.inc | 2 ++
+>   1 file changed, 2 insertions(+)
 
-I recall there was a patch like this somewhere, looks like we missed that..
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
--- 
-Peter Xu
-
+r~
 
