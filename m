@@ -4,100 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9E38C5DF6D
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 13:10:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2692FC5DF86
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 13:11:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwg3D-0002yB-Mg; Wed, 19 Aug 2026 09:09:51 -0400
+	id 1wwg45-0003Si-Py; Wed, 19 Aug 2026 09:10:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
- id 1wwg3B-0002y3-EO
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 09:09:49 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1wwg44-0003SX-5N
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 09:10:44 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
- id 1wwg39-00031s-Nl
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 09:09:49 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-6a18b91fb1fso176791a12.0
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 06:09:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787144986; cv=none;
+ id 1wwg42-0003JE-DB
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 09:10:43 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-69848c9462aso153436a12.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 06:10:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787145041; cv=none;
  d=google.com; s=arc-20260327;
- b=f7Xg7tE9uVVwOx9Ob5G95O/nPkagLQ9SOjFQxdg3vcemH31htXoNuCtKiCR3pWiFGe
- 2mgK78CF21zZBspo6ABaQAXV17r/IXpcJ7Nc/cHOHcGrmBD7ScN9e7j9V3JiZUrClVFd
- +PLrlQWtXm4u+Kr19pE5BeRrNMjoSJ1WSjY44aL6Sv7DQaZHq9/wfx2bw+mEnjO9z3ij
- RkOxw5JaVEqdxnQHJPh049GLES2jofk3Ut1G32XjDPiwQ/fd+5hKzFa6i6PSnwjfQqXs
- vfqIAiaHTR8jb7T75WCWAnrgZ2qG31wHtDDwK17R7RNL500/HKNjuGiLppIVuyRWr5MU
- d5wg==
+ b=h6Hs2OD/HJ6p8AXFSZROKSpk74nZvgII22fpBp7UuwzZvrt+ewEGZrYUzwFRIivLJs
+ 9EzUxBFxw0aDyJMPJNBB5KwcYfAq7U9zfr3ISdbVc2a3HFA872myI3LzdiV+bvNklQN/
+ VMYGd419I7GunLJhzx9tIOW6CuWChnOGKyrbcRhBOpr3YorjV101bvVYrNMj5HvZ593x
+ hDRayKVulcsXGcg0riR6B+vECGQeOAEbP/4RrJRoZL59QXickShp3uVVOCC+ELk67+cU
+ v+8JdB9g3x7Yh6EuPgDK/8r6PO4WWz10bYyuc1ruplPmW5cYmO5Qm9mA/NQKbbOMMVJZ
+ wQtw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=vbAO8aXyzqnjyKlY/gqPooPIkbs4rldS2kRToFkBanY=;
+ bh=U1xNtKKCI4lB/Ad5ZAGFZmlgqR84V8M39eKN+2qq08s=;
  fh=QWNbaIaVQQou6IzIMV0ib5reMaT/Wr3DV7egi1JIcps=;
- b=pQHHm3h4s+GdGxT7fqbnB8ErMuDb4GQtngwnYOkOjSAd22seFYVELpbLOt7dg47Ckp
- frgt8ZyClwFhVm475wtUumAAvCw0HNvTawqhS/CbEPmHxtH++wVQLFBHClsKOFR8eKHy
- LUGFHDR7RDd3WH2XyEyvKidrisUSU3qaEiooWlYnpk4FlLozuzqX1e/Jd2M7WG8yMbXw
- DXbx4/HuVsCykJ0iv4sB+Ln4iyKWhk6Zy5GTqnH8EqyYEkw5Gn4scRNcRRB/hmg2bVN4
- LWUlOGTHsscE18r3ts59ZPy6WZH5zyPPaYz7GwwREzQI8HEnN9sM/u+akd8HMiLke0k6
- Fd+Q==; darn=nongnu.org
+ b=nrd8nB4J4X5OIfO3WH7VXkqByXdLl0B9JVC74iZk2fVLFCA3ipdriZabg0edWU7+0Q
+ FM06Ohenzeb7UfjdR2WxCkemPrlibIOwvVdZWj8Q7W+HFAZvLwvqxGP5fp89GVpPC8tl
+ xUzXL15yz9IRTY59L4f4GUWiWm8buiDu57AQdmSaqICo6SO1bvkuVQFrnlDbIByyq+qV
+ set666zbXsVKFis+Qep7gYf6vOf39Egn08rq62wpf1Ezyt53iGqkCpi2y29yK1czW8M0
+ QMZNGGenZa7v0cFa3NdfrJlPLjxujalPXCN34whsuSs1V167qEyibH7Va7DsxVCT9dVZ
+ HqCw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cloud.ionos.com; s=google; t=1787144986; x=1787749786; darn=nongnu.org;
+ d=cloud.ionos.com; s=google; t=1787145041; x=1787749841; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=vbAO8aXyzqnjyKlY/gqPooPIkbs4rldS2kRToFkBanY=;
- b=KLCtg7c7Jnl71Si31W/RC2HthzeLB6tKDup8257XLiZzwY3EWjE5caGtQbYoNGGrH3
- Xt907JNflC3h8fdWsMSL65ULYjJWKIXa92JLndH5CSBMLH+bgsgIEaKThJfsFNlriS7s
- LZmILRcvLB8e2Kh65zInvIxmeY0htfv1si5RABqEGsLc+Yo8ScKuvzJoVPsip/eOZKMj
- VUOnJReTm/Jb1OASRTnwMdtX0BtPYK4RXSIKVtXpCQ9rlIPmI66PI7Oh7Fzmrw5ueDi4
- 1TfppLwVqIh/xAC9KX9p35jaonZE6RZos06E80gsVC2cifAAZKSRmXWCBrL65WSaFs4i
- 8uXA==
+ bh=U1xNtKKCI4lB/Ad5ZAGFZmlgqR84V8M39eKN+2qq08s=;
+ b=Ef8IVpiyaxiNxs8dCfurCUPQdp/eeUWjKz5JLLyC+9wlVQuwiyY/ikLgrrSS0RYy/N
+ q/xOA2tqcdZ8/6s2l04SQh9SK9hCDSLn7LP5Rao+6WukrgYyULHRuo3PUWd+BN1Hm22V
+ yU+bqxtX0ld8iSavXYqZN/VyVyXlGMOxMqAPuzYMKokMCYsC/8iz/14m0CGSg+5bb3FR
+ NmHHWsNA4L5hGL6zkPyo2NjHhhAwtOM0MVN9Cyrh8tD2bA3OYft150yGLUn96+3J/0Hy
+ gpYAesMHVhF9f17vrJPxZkAdLDtIFEkZ3m2XG8YiZEJRZS3r4QRmqJ3poo1pL9pwV09p
+ EX/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787144986; x=1787749786;
+ d=1e100.net; s=20251104; t=1787145041; x=1787749841;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=vbAO8aXyzqnjyKlY/gqPooPIkbs4rldS2kRToFkBanY=;
- b=JhDrKg3qcT2SK72yBzPvM9XN7RCSuhS2/XiNfu1uiHPLP5TN/kY7/UHQKivpwAvfBe
- 5Sl7JNExiSy40k7H/pon3XreERBE3OlCrS16YrXehva7L3lUPDJFFmNWfPlNkpWQPLRS
- YTDL/klCBvH49vIrjFKm4cfSy8yihRoriJTYs7Q4wwHo+B5G7oI9UNtsbL6mdUJDr1/n
- JAa9ugr9VKtH9pwZL2tj8yB2Zw25OuFTZeJb2IPouUeZFXvGhvWoowTqtHjOfE4levqd
- NE5k9RroOqJY35BANoVPtk5xYGsXbZq3tVv1fvJd4zwhYeZbWg9CbF2IAFdFSJi3Y5TA
- 2CNw==
-X-Gm-Message-State: AOJu0Yzo7vtVweRIL1z5AXV0pZeWQqv3pKXaxFo3OMO7L4UGcbom4vdK
- MXp9VEPKJveM+qBqGzIWdLuKlp6kjUGwjh0Wae0EETsVenCtGTyMszd7tNrWB1V4MNhmtWd7rHv
- baXAmZufrPlXtkhIZ9OhqJpuSCbHFkaVhYqfO4PkMkA==
-X-Gm-Gg: AR+sD11JpQqYSXvZKHveY1BKL7gHL6IEDe28I2WSx842AmZen+0zp3ecExce5+SASID
- 0fXrXme+QjCdj409sdnVZM5R+rOr+Dejb3qqrHMxa2P6sJSyYnRUgLdsahnBhmiQ+nK/t+NSS+0
- oPQ1Tt/oKw50wx1jX6dqP5HU6U+J97o7qDSDUx+mixM2I3Se5T/kor2XzsLSGt01/0V61HzD6R+
- /+uZhDNl1EFzjw+RJcy5fjPedQ48L/vM59UhY0YGNKyG6ePiHbs2B8eN4ZTRSabCH7KkDpBCMoD
- koUXoG1u5PMEGSAX4RifYTfghHS02SP8WdLxb6dYdBSx
-X-Received: by 2002:a17:907:960b:b0:c20:c5f4:e19f with SMTP id
- a640c23a62f3a-c242e36cb2dmr157779266b.4.1787144985622; Wed, 19 Aug 2026
- 06:09:45 -0700 (PDT)
+ bh=U1xNtKKCI4lB/Ad5ZAGFZmlgqR84V8M39eKN+2qq08s=;
+ b=QJaO3FFdm+6Zqwd//QrpyITGKZG47tmW2vtnhJt2ftIJ6lZXkmZtDR7R9coV/eWtPk
+ p9L+MLQcuL/HTNYQLTYlBpCRcMG0mjr+PxulCOl6xHE3TZXJ3LUvmrf54DZfHOUllK0S
+ xkcjkQiSRO6QL1kMP4Y9F9gmIXPT3BLzOw478Jq4qt50k5GlWQQjq/d5L/VlJFzfmkf5
+ 7x4RaSou27tS9EqqxlAO7RIFS4W7fBomClaSaKmN9bg2hcaLJBHPgslavov6y3iZbf8b
+ EsTpJSZEUe/QWPXc6DVxhF0eqRrHiHVmRGuiS0iFyHnVQyVUMVPoqs/O0mvgcnM4xaeB
+ iRTA==
+X-Gm-Message-State: AOJu0YwCRHQ7iXp3ZhxuIiq9H4nkk/kXfoL069fUp2jVj/LjvAYOmEO8
+ Vn08zBzUcme3xwF9HAhg1UknlFriG/UoneJAewMIYNJh2scc3jA6S0invdd4yGfw7+wCO+KwaIB
+ ksE8JMZUNQclGP14KkWoIVSqYrYZ6CxPScF2oj+m2hw==
+X-Gm-Gg: AR+sD10FNisFyDf1oUaSLhdOhyKFu8RyIhMfUIqnQgQ22Oq6Ea3t3V1XlGY9KVdS2Vh
+ wZiNpOm3srNzYG/ZX0+z3iGXImZzxgXGmONdXt2jF00K7ghhyNirWCQpAAhGgq0PidsW/IF+m9I
+ z4zT/iBn75texVxM90d8pnsqKYL0cIcsiVU/lxAaZtog0ZYasany4XgQpOIyLPDT8dxZz/yjqX9
+ RP90qSQEARuwO8n2e2yc84jvkfZSDdNiEjXFrE0OgbMTyykWTFsUcpuOIJgZvAJOuZOkReM9TwD
+ 3z0MgyEtVX+NsH8wBp/7LYmw48OTx1MG559cUzplF6GkLopWmG6I40iG
+X-Received: by 2002:a17:907:6d21:b0:c21:7bf1:2c88 with SMTP id
+ a640c23a62f3a-c242e204bddmr161818466b.2.1787145040510; Wed, 19 Aug 2026
+ 06:10:40 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260817202424.2901438-1-peterx@redhat.com>
- <20260817202424.2901438-10-peterx@redhat.com>
-In-Reply-To: <20260817202424.2901438-10-peterx@redhat.com>
+ <20260817202424.2901438-11-peterx@redhat.com>
+In-Reply-To: <20260817202424.2901438-11-peterx@redhat.com>
 From: Jinpu Wang <jinpu.wang@cloud.ionos.com>
-Date: Wed, 19 Aug 2026 15:09:34 +0200
-X-Gm-Features: AcwNN1VqE_ueYWrb3IuLPBAcUf0hqH4vS0VYLrCV6B0aOL_XYulsAKB4I-pGSr0
-Message-ID: <CAMGffEm0xuvZXfws6sLFxg4C+mg9LbgxFEPHn0nCjT8KEyLD0A@mail.gmail.com>
-Subject: Re: [PATCH 09/10] migration/rdma: Sanity check upper bound of
- register MR address
+Date: Wed, 19 Aug 2026 15:10:29 +0200
+X-Gm-Features: AcwNN1V1ZY90DZ0RdkWfpGqPuObSsOBWl6nJJ2sk5MxFrKZGKI-petUh0TNGwOM
+Message-ID: <CAMGffE=w67685o4JXYkJqXbQQnJ+YOguKX0=LeJ2L+5rn5W2Xg@mail.gmail.com>
+Subject: Re: [PATCH 10/10] migration/rdma: Sanity check compress request ranges
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>, 
  Samuel Zhang <guoqing.zhang@amd.com>, Fabiano Rosas <farosas@suse.de>, 
  Juraj Marcin <jmarcin@redhat.com>, Yanfei Xu <yanfei.xu@bytedance.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: permerror client-ip=2a00:1450:4864:20::532;
- envelope-from=jinpu.wang@ionos.com; helo=mail-ed1-x532.google.com
+Received-SPF: permerror client-ip=2a00:1450:4864:20::533;
+ envelope-from=jinpu.wang@ionos.com; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -122,37 +121,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Mon, Aug 17, 2026 at 10:24=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote=
 :
 >
-> Before registration of RDMA ranges, QEMU destination checks for validity =
-of
-> current_addr no less than the target ramblock's start address.  But it
-> didn't check for the upper bound to make sure the address is within the
-> size of the ramblock.  Add it.
+> The offset/length ranges are not sanity checked in RDMA requests, add the
+> checks.
 >
 > Reported-by: Tristan (@TristanInSec)
-> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4007
+> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4005
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Jack Wang <jinpu.wang@cloud.ionos.com>
 > ---
->  migration/rdma.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  migration/rdma.c | 26 +++++++++++++++++++++++++-
+>  1 file changed, 25 insertions(+), 1 deletion(-)
 >
 > diff --git a/migration/rdma.c b/migration/rdma.c
-> index bbbc40ea3b..13dd60c11b 100644
+> index 13dd60c11b..699aaa9903 100644
 > --- a/migration/rdma.c
 > +++ b/migration/rdma.c
-> @@ -3389,7 +3389,8 @@ int rdma_registration_handle(QEMUFile *f)
->                      goto err;
->                  }
->                  block =3D &(rdma->local_ram_blocks.block[reg->current_in=
-dex]);
-> -                if (block->offset > reg->current_addr) {
-> +                if (block->offset > reg->current_addr ||
-> +                    block->offset + block->length <=3D reg->current_addr=
-) {
->                      error_report("rdma: bad register address for block %=
-s"
->                          " offset: %" PRIx64 " current_addr: %" PRIx64,
->                          block->block_name, block->offset,
+> @@ -3200,6 +3200,28 @@ static int dest_ram_sort_func(const void *a, const=
+ void *b)
+>      return (a_index < b_index) ? -1 : (a_index !=3D b_index);
+>  }
+>
+> +static bool rdma_compress_range_check(RDMALocalBlock *block,
+> +                                      RDMACompress *comp)
+> +{
+> +    uint64_t block_end =3D block->offset + block->length;
+> +    uint64_t comp_end;
+> +
+> +    if (uadd64_overflow(comp->offset, comp->length, &comp_end)) {
+> +        goto fail;
+> +    }
+> +
+> +    if (comp->offset < block->offset || comp_end > block_end) {
+> +        goto fail;
+> +    }
+> +
+> +    return true;
+> +fail:
+> +    error_report("%s: compress request range outside range"
+> +                 " (block=3D%s, offset=3D%"PRIu64", length=3D%"PRIu64")"=
+,
+> +                 __func__, block->block_name, comp->offset, comp->length=
+);
+> +    return false;
+> +}
+> +
+>  /*
+>   * During each iteration of the migration, we listen for instructions
+>   * by the source VM to perform dynamic page registrations before they
+> @@ -3279,7 +3301,9 @@ int rdma_registration_handle(QEMUFile *f)
+>                  goto err;
+>              }
+>              block =3D &(rdma->local_ram_blocks.block[comp->block_idx]);
+> -
+> +            if (!rdma_compress_range_check(block, comp)) {
+> +                goto err;
+> +            }
+>              host_addr =3D block->local_host_addr +
+>                              (comp->offset - block->offset);
+>              if (comp->value) {
 > --
 > 2.54.0
 >
