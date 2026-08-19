@@ -4,95 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 381E5C5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 03:56:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11F49C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 04:12:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwXP3-0002S5-73; Tue, 18 Aug 2026 23:55:49 -0400
+	id 1wwXeF-0004Tb-14; Wed, 19 Aug 2026 00:11:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <isyanfei.xu@gmail.com>)
- id 1wwXP1-0002Ri-Nn
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 23:55:47 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <isyanfei.xu@gmail.com>)
- id 1wwXP0-0004W8-Be
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 23:55:47 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-381b831d535so970471a91.0
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 20:55:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wwXeD-0004TF-CK
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 00:11:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wwXeB-00070D-FX
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 00:11:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787112685;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=DiIwod5/S8mOjjS5uw8SZA/QvQKKRd1GWS+1TkqWjm4=;
+ b=Qlms9jSoqmfwVKkFmtvtAeY4zBrHk79QdlGndszwuTesWCWkEs0vlXeIVTuggWQ2DAmV+u
+ 24NrkcOoAnuDtvP/SIZ2SMUborDj/WpyBfu6uH0lsE1a7pFL0m7UeKomV3CkFVhj0Bc2GH
+ iJ4pjo1KnNz8Udlc5a8xI/P93x0R1PE=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-220-BxoAGUNSMzKHPHjZ0BFDXg-1; Wed, 19 Aug 2026 00:11:22 -0400
+X-MC-Unique: BxoAGUNSMzKHPHjZ0BFDXg-1
+X-Mimecast-MFC-AGG-ID: BxoAGUNSMzKHPHjZ0BFDXg_1787112682
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-38e8e864ef0so1191205a91.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 21:11:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787111745; x=1787716545; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=547OL5zxw5EEr4v8p7v+XJcyV8jxCqtALXnwjNtKIf8=;
- b=D7Uz61qnC1p9jE3jGSZY8hx2wlFtqDzwlwrqxPkJsEotspCGxRcnRJ6nNJcGoHrxyT
- QhjGDLWCn7iMK7FCXj9qovne7L3lQG8hvs98zaL7aK1W/k/R857pp2c7x7az7SuKjTiB
- oYzEmkboCLFCWB8g2smGQAXo5TH82OEKKr7j1F0cfw7QJ3t1JElJqWwHD5MJVkhx4T2A
- y2sBVkhV/DLTG6Nbp2tm1ydzNdlj2Z1E4/Ln1RePU1b1jhrtstbxu6t0nepVxENIBj/q
- 5xXA2FpKNoAScxuD3FI38Lb8RIpuXFdz6BoGRzAq855dQhR7B5ks7BNJDC5vWnIv/Too
- 2jJg==
+ d=redhat.com; s=google; t=1787112681; x=1787717481; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=DiIwod5/S8mOjjS5uw8SZA/QvQKKRd1GWS+1TkqWjm4=;
+ b=migTcTgvgFaIkGTly47OOs9DP+mmrUvMz76oPntmyzrFpllDtGvKUbFdobI3qMD1Lz
+ BaOYKztXVIXLFQzffojcK749TQKRnEGhpsQy2LMysTyeG0RzmkWyIrd3LmDG6S33yC13
+ RFZaoVxd1U7ZvTTGVXz5qijERV/RrdWZMN8htmhU30NM2Hp8izRAQ68CoVnZ5GdeFsZ1
+ T6ef24ybhIxFjePTJ4KcAXVz3emGuVoAuums2tHCCLNGWGgkkO0pajY2G1JakyfOrZuf
+ LwCk/CA8lmswmR3qbifUYT8h5AndKCOGLDOBOSk2aVfkb4T1ay13VXPsHoBtxpPKApME
+ edXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787111745; x=1787716545;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=547OL5zxw5EEr4v8p7v+XJcyV8jxCqtALXnwjNtKIf8=;
- b=YgMYDgmZaB5U+QWAne4X5FyuXcyODlLMR0TsGPHp84RoReSnmrpFXpBmoP4t31YVI+
- F5jZfvQlgAxnITG/zJOnLTreQYj/7ueSBdF2n8aoM7FtjyuZjWbWxjVZdtQVlYSAxaok
- zgMjHwJPO34XrYvw2Nz2qHyAwLsCFBx228sf8TgKoKCP66hq7aEtE0l6F3xEfOznpFJI
- Gx89iTNlrD9vzU/7ofPubhcpkcKkueSlhFi6RHsg/Kn7toy+2vFjYrPysGunaM5zEo/l
- kylcKVFWYhfWjegnemkq61M6l+D124oa6jZJXQHewn8uB+9yZKElPq85lmz2h5FPhSVt
- OBCA==
-X-Gm-Message-State: AOJu0Yx39KXDvwAG/KGMV9H84P4E+rvwtw6m18OecsKnr//fgg7FAtW/
- 2giERVkswkdct/anYsDKF3aIGrDJaowT4dkSWsWgDUMMA+EWR1dUMduu
-X-Gm-Gg: AR+sD11iu9aqdzzBo4U6xsT9hB1OSDP0/7GA3Lpz450+tSwukK30mw10p0021/piMWU
- n/3BmpMipkmR0/Lo3oJKhGZJo0783FH8cECFRuiAi6Mp3m3YIFiQjkYyMs9pyD/acAFtDN12yWm
- OYPTnChkPWfUtKwR9zQpwLM7e00AjOXCWYNxLdDYoJX32syhmX2en2TS26ZSsP4lRsyKRVmqshc
- PXR0gLdTPsgQUESLhzogr7igW1MfpE9+Zq/Yhi2GGzmreWzZrBqc1bD2f1Jnn13pbhd16MUlifn
- Z5w8v1Deyk36z9kCSoPevPVEUF1xGClJ5ewvE2ui0G6w3eQhzIQV7z6CIMxgjiNgm1KwVsM1INC
- j5vMKEQPkERXUnJIunEP8cy4bPbEh2juhHjhY2sSbpIiQQVe99Th/FvT7jFwieMG44ETkr+WlHc
- n0f0jskMHvioA8Txlk+ksjbx7LFIqFdfBy5HEfo/wnMnIcV8XMDR8yvN4Up/PSTJw1iIAt8gGjG
- MzkzLZ5HkEWYg==
-X-Received: by 2002:a17:90b:3c07:b0:395:543a:cf3b with SMTP id
- 98e67ed59e1d1-39580a533bfmr3339147a91.2.1787111744613; 
- Tue, 18 Aug 2026 20:55:44 -0700 (PDT)
-Received: from [10.3.188.167] ([61.213.176.12])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3957fb17f48sm1079870a91.2.2026.08.18.20.55.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Aug 2026 20:55:43 -0700 (PDT)
-Message-ID: <c1695bbf-3ce1-45c3-a73a-047ba0fdc433@gmail.com>
-Date: Wed, 19 Aug 2026 11:55:40 +0800
+ d=1e100.net; s=20251104; t=1787112681; x=1787717481;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=DiIwod5/S8mOjjS5uw8SZA/QvQKKRd1GWS+1TkqWjm4=;
+ b=S0xMVCvy3IA+f/+6sFGNG5YtyLfeFixeNKk2w8GsenyH1bf0P2n4Z2uyzrNfKA35Vw
+ IXMl8ItrEfa3BOF24Se1x5zYY4U9PhwWXnEnYg78eZPvtguE75HU9Jgi/VikTtAHQHew
+ o1c6UGSADtGZkemDX1spBQyDfeSe3AMIFTndpxNW5LHAawg7ATwU37RMR8VWcPQ9ItJT
+ 7ylqs+jhJs3Tg0LGvFiZ2MQ44byobKeDbCXgtNQ5m4sWKGM0l43cUt5awTSkC1L5sLRL
+ 7aSq31/8V6I8byDKXxAXUwTaNsFeT1X6Ihxy24olFZpJZcra1TLvF4/4g3nHos7+KuYY
+ QpLg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqOnSSt7d+EQOnSHuiVCRxSZWTIwWSbOpakzHzHBDY5ZBgg41dIEx3t3p9ARO2tBpkK8j+GswIRjYAE@nongnu.org
+X-Gm-Message-State: AOJu0YwgHkx7LmpPSQ4tc/+s1PIt/S+dYbmSHZPyX7qe+FooOAZ75lqM
+ X5OcBGq/s0KvNknbdCbhZdOqBKYw6gOQUJtOfF3iekNOkHSxUsjCUsc4Z23Bp8X+P8Ggma5VKKK
+ tOeZhdk8mk8o8H9ueOiWVxmUVy24fo0/tcP1QzNnrfoDA6oXfvvObu6UV
+X-Gm-Gg: AR+sD10cNELImt4jrK+s16qEqL9Ot3dRU2oEnt2IlZ4UJSwKeF+dKIlDE20WoezWVxa
+ JDBs71Su0sxKPaTnmQsmLus9QdXI+eEGbhMNEYPVgTc4JkC9Aq0N4J6YXUv+TkpIsdnXXxmbJTj
+ oKFzCVSkv7oJypeo9LtUIC3l8qslELuPvcKPxL0hldE+DMcrR+2eY3G9JxSGoXGMP/oPj6Tl9O6
+ MGxSN5XAx7wg51oVQ8MSiSl7BuoPAz+FyM+w53O/DncCcTW/eYsDqGaqNWKSWbhsY4DeMyMx2mu
+ ehRiCXM9tPi1QAC5iqLqueYNDjBAS76J65zYTpZb8WybU2n3KZk+c3k+c8XJ5J0IXRlLOKNWCNW
+ pTHywHvJ42qPuLP375XIJOY77kM38W9k0Dg==
+X-Received: by 2002:a17:90b:1f82:b0:38e:9e9d:9209 with SMTP id
+ 98e67ed59e1d1-3958110fe3emr3337345a91.17.1787112681504; 
+ Tue, 18 Aug 2026 21:11:21 -0700 (PDT)
+X-Received: by 2002:a17:90b:1f82:b0:38e:9e9d:9209 with SMTP id
+ 98e67ed59e1d1-3958110fe3emr3337277a91.17.1787112680968; 
+ Tue, 18 Aug 2026 21:11:20 -0700 (PDT)
+Received: from rhel9-box.lan ([106.219.133.98])
+ by smtp.googlemail.com with ESMTPSA id
+ a92af1059eb24-1416ad53874sm3126245c88.4.2026.08.18.21.11.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Aug 2026 21:11:20 -0700 (PDT)
+From: Ani Sinha <anisinha@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>, Gerd Hoffman <kraxel@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: agraf@csgraf.de,
+	graf@amazon.com,
+	qemu-devel@nongnu.org
+Subject: [PATCH v7] hw/misc/vmlaunchupdate: add api header
+Date: Wed, 19 Aug 2026 09:41:05 +0530
+Message-ID: <20260819041105.110625-1-anisinha@redhat.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/10] migration/rdma: Remove unregister code
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>,
- Samuel Zhang <guoqing.zhang@amd.com>, Fabiano Rosas <farosas@suse.de>,
- Jack Wang <jinpu.wang@ionos.com>, Juraj Marcin <jmarcin@redhat.com>,
- Yanfei Xu <yanfei.xu@bytedance.com>
-References: <20260817202424.2901438-1-peterx@redhat.com>
- <20260817202424.2901438-3-peterx@redhat.com>
- <4d0d08d3-ad6e-4de3-85b8-587b70286b04@gmail.com> <aoRXk0H1muF_gZJP@x1.local>
- <4a0b20e5-947c-45a4-8fcf-89c77e0a4cfb@gmail.com> <aoRvobhlj6-YJsqT@x1.local>
-From: Yanfei Xu <isyanfei.xu@gmail.com>
-In-Reply-To: <aoRvobhlj6-YJsqT@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=isyanfei.xu@gmail.com; helo=mail-pj1-x102d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.343,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,30 +120,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add a separate header file for guest usable api definitions.
 
-On 2026/8/18 22:43, Peter Xu wrote:
-> I actually don't know why RDMA_CONTROL_COMPRESS is only used in !pin_all,
-> do you know?
-my understanding is that with RDMA_CONTROL_COMPRESS, the corresponding MR
-isn't registered, so the memset(0) in destination side can be guaranteed to
-complete before the next RDMA write to the same chunk. Or it needs an
-extra ack from destionation for the memset(0) complation.
->
-> I can only guess RDMA WRITEs were fast and need no round-robin chats, so
-> it's faster than RDMA_CONTROL_COMPRESS, but you seem to say it's not true.
-if most of guest's pages are not being allocated yet or are zero page,
-RDMA_CONTROL_COMPRESS works more efficient.
->
-> Meanwhile, I would expect pin-all=off ultimately should meet the same perf
-> over pin-all=on.. so I don't really know how needs pin-all=on...  maybe
-> it's useful when one is looking for minimum total migration time when VMs
-> are required to be evicted from one host?
->
-> Feel free to share if you have more data points; I'm almost speaking from
-> reading the code, so it could be wrong.
+CC: Alex Graf <graf@amazon.com>
+CC: Gerd Hoffman <kraxel@redhat.com>
+Reviewed-by: Alexander Graf <graf@amazon.com>
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+---
+ .../standard-headers/misc/vmlaunchupdate.h    | 102 ++++++++++++++++++
+ 1 file changed, 102 insertions(+)
+ create mode 100644 include/standard-headers/misc/vmlaunchupdate.h
 
-Hah, I am new to RDMA live migration, glad to discuss ^_^
+changelog:
+v7: add specific values to enum as suggested by Gerd here
+https://lists.gnu.org/archive/html/qemu-devel/2026-08/msg03621.html
 
-Yanfei
+diff --git a/include/standard-headers/misc/vmlaunchupdate.h b/include/standard-headers/misc/vmlaunchupdate.h
+new file mode 100644
+index 0000000000..7f8382a765
+--- /dev/null
++++ b/include/standard-headers/misc/vmlaunchupdate.h
+@@ -0,0 +1,102 @@
++/*
++ * Guest driven VM launch state update device via IGVM.
++ * The definitions in this header defines the API for the hypervisor interface.
++ * For details and specification, please look at docs/specs/vmlaunchupdate.rst.
++ *
++ * Copyright (C) 2026 Red Hat, Inc.
++ *
++ * Authors: Ani Sinha <anisinha@redhat.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ */
++#ifndef VMLAUNCHUPDATE_API_H
++#define VMLAUNCHUPDATE_API_H
++
++/* fw-cfg file definition */
++#define FILE_VMLAUNCHUPDATE "etc/vmlaunchupdate"
++
++/* version */
++#define VM_LAUNCHUPDATE_VERSION 0x01
++
++/* format bits, used by both 'capabilities' and 'control'  */
++
++/* igvm */
++#define VM_LAUNCHUPDATE_FORMAT_IGVM           (1ULL << 32)
++
++/* 'control' field bits  */
++
++/* disable vmlaunchupdate interface */
++#define VM_LAUNCHUPDATE_CTL_DISABLE            (1 << 0)
++/* revert to the original host provided igvm */
++#define VM_LAUNCHUPDATE_CTL_HOST_IGVM          (1 << 1)
++
++/* The combination of the above two ctl interfaces work as
++ * follows:
++ *
++ * A) CTL_HOST_IGVM=off CTL_DISABLE=off
++ *
++ * Supplied IGVM file replaces the firmware permanently.  Updating the
++ * firmware again is possible.
++ *
++ * B) CTL_HOST_IGVM=off CTL_DISABLE=on
++ *
++ * Supplied IGVM file replaces the firmware permanently.  Updating the
++ * firmware again is not possible.
++ *
++ * C) CTL_HOST_IGVM=on CTL_DISABLE=off
++ *
++ * Supplied IGVM file replaces the firmware for one reset.  Resetting
++ * again will switch back to the original firmware.  Updating the
++ * firmware again is possible.
++ *
++ * D) CTL_HOST_IGVM=on CTL_DISABLE=on
++ *
++ * Supplied IGVM file replaces the firmware for one reset.  Resetting
++ * again will switch back to the original firmware.  Updating the
++ * firmware again is NOT possible.
++ *
++ */
++
++/* status code */
++enum VMLaunchUpdateStatus {
++    VM_LAUNCHUPDATE_SUCCESS = 0,
++    VM_LAUNCHUPDATE_LOAD_FAIL = 1,
++    VM_LAUNCHUPDATE_NOT_IGVM_INIT = 2,
++};
++
++typedef struct QEMU_PACKED {
++    /* api version */
++    uint16_t version;
++
++    /*
++     * The guest can read this in order to determine if loading new IGVM
++     * succeeded.
++     */
++    uint16_t status;
++
++    uint32_t _padding;
++
++    /* VMM capabilities, read-only. */
++    uint64_t capabilities;
++    /* control bits, see VMFWUPDATE_CTL_* */
++    uint64_t control;
++
++    /*
++     * address and size of the IGVM image.  Will be cleared when
++     * the write completes successfully and IGVM file is correctly parsed.
++     */
++    uint64_t fw_image_addr;
++    uint64_t fw_image_size;
++
++    /*
++     * address + size of opaque blob.  The guest can use this to pass on
++     * information, for example which memory region the linux kernel has been
++     * loaded to.  writable, will be kept intact on firmware update.
++     */
++    uint64_t opaque_addr;
++    uint64_t opaque_size;
++
++} VMLaunchUpdate;
++
++#endif
+-- 
+2.42.0
 
 
