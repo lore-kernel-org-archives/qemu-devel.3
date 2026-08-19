@@ -4,94 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 530BBC5DF81
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 14:32:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB109C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 14:32:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwhKv-0003hz-AE; Wed, 19 Aug 2026 10:32:13 -0400
+	id 1wwhKw-0003im-HI; Wed, 19 Aug 2026 10:32:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wwhKo-0003gI-S5
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wwhKq-0003gX-54
  for qemu-devel@nongnu.org; Wed, 19 Aug 2026 10:32:08 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wwhKn-0003GQ-8Z
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 10:32:06 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 6B2523EC1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 14:31:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787149919; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=OOegS3IQwrob4LlA+WorPmsdE0GuPzKgu0vcFaZ1vQY=;
- b=WOe7qGbIBkHBV23YQ1JeBicPzGgJSq5pyhy/YjyuBQ/6Ct8ApN9ZrXCaeb91zwxnZ0Q7g6
- RdaSr1BgQ+5ApFlpLk312gRbOx81EkrARmjcWq0r2dV3OEYTd0COXYkVHDOXuAjylI4m4v
- KTqGT4Li/cUcFA1PdkRbXJnhTwB7xXc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787149919;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=OOegS3IQwrob4LlA+WorPmsdE0GuPzKgu0vcFaZ1vQY=;
- b=xWEhsyvbsXHgYUfS0PXWAYaIE037FOYj+oWTMLjDM/02SHKv7jrwLhD1yeWYcuZO5LOTS6
- 1N6EsK28dAHDk9Bw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787149915; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=OOegS3IQwrob4LlA+WorPmsdE0GuPzKgu0vcFaZ1vQY=;
- b=dNuceXcVm1xJMVTtLyPE/CBc93/yj1wxQ3GTdzMQnCcVu0eCGICJeJm7m8Kh1G62y47Cko
- fpnk8Enpim3dugZuLt8W1M+I0ySsO8n8FeEuWMzHX1OlKmzRYKm9ckB+ii5mRsrJ6Yz5jf
- DsnINyoCdq979JCWY84qgUwr6qok4qY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787149915;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=OOegS3IQwrob4LlA+WorPmsdE0GuPzKgu0vcFaZ1vQY=;
- b=tYEt3i6rsWRo1IBvsoKbpEBIWq6r6mg6g8WPkuqeEDqZNteuAn9Gq9EH89VjmekxuJ5nGx
- tGc6lJU1w4cBlvAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D39042F81
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 14:31:54 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id fAGpKFq+hWqxCwAAD6G6ig
- (envelope-from <farosas@suse.de>)
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 14:31:54 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Subject: [PULL 0/4] Qtest patches for 2026-08-19
-Date: Wed, 19 Aug 2026 11:31:48 -0300
-Message-ID: <20260819143152.1541266-1-farosas@suse.de>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wwhKn-0003Gc-GN
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 10:32:07 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4998590d392so10324425e9.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 07:32:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787149924; x=1787754724; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=vP12b1JUnjE5mle3gGAYQ66wrN1+b9sfD5fxFTIW9Do=;
+ b=y7TMEWfWdUIVMe5hy1wdV1KdBKw4FObLriQaqRBuT5YJIcJzuUXiJzSVAuDCYmMWyk
+ 5EqtYv3j5TA245QxIUABDUao1ddI/F1CGmX1Q/QWeC+G3BrBYHgKhQBZHbrnU9o6fpV0
+ IAwIbNHQAbeP8Pax+OnBAqP0GqhrTsHiHJJRhBRmtAyMje6M2FIKQoM0dSXCS8zwgrfH
+ zJLoqMrq2dLoNMOazVL86yGzxy5CCHqo6zaZjhBGGqy3WzgG8DuWTaFemBIA4fp0V5MR
+ gYwYrhl+TfFDlaJLpjTkATlB/oiUSkaiZp8zD2Df1n3/51gnUqg18b3z9asKwm1LCkyN
+ bwow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787149924; x=1787754724;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=vP12b1JUnjE5mle3gGAYQ66wrN1+b9sfD5fxFTIW9Do=;
+ b=DcnQP5UcynzPu8vUx+NCs/EcWSuIoVt9eyWsaJgOCnvBPRS8FeDpQwYKYolx2mMWSy
+ 8q9rJ84JZZsxy/p/VPCNzBksR8Cs4vm64fRdnjbAaRquFd52r5Vozjv8royTbfZVhuQx
+ pvu47pKFyqEjnNTdGt3vSBpdzEKu2Nxq0S0VS1jIslkqVomsCdakuYVHjKNVGQHdsKZi
+ 1GHvVXLaUoA0r0IariDFMkvQMs2CkFQh3eZNEPDIf+8/x5cEUnlMwwNxp+jUIfG9v+Rw
+ zuUKBOrJdFr5BScekLXaorkTFZ2qzqZuPWVdP08wbg+iu4BygwQ1p/D2rJkIegA2SO6t
+ 7jXA==
+X-Gm-Message-State: AOJu0Yx0bONt/ULKkXMC9bAMVT81uleaerXsCrPiU0qRggr/G/IKHy/Q
+ oenbDy6R/SOp4kayQ46Baya3+HOeTg4keQlW65xIk3Ikbqb8q4kd0zqR79+YeAykQsA=
+X-Gm-Gg: AR+sD13wHKIQntUpLzLEjSXi2UxTZn0GTDhY4ZpEXnhjHy4KFXcFXWWViWICP8AFgAR
+ OYhcNBQ7FKVB2GC2sk8gOtTiaT89YyadIrRUj6Du195j9Tw8Z3Hv2K4SeA8Su9FiL0H/qsGu3wx
+ mBRrhjaCG0531Pd4gOG8Nq/bD/zlspIj8tBeUztsdRWYrhnb0FMT5GWEkDZDh4PbktC8+UK/HRI
+ meB0KHlaq0jPRBoyAggzhuP2FC2+Va5lZUaMjpc8q3tlSEgdQc0Zw0hkJNCVQy+Yt45unyInd6f
+ ajL28hV6lRDcsrQ/sM08jG2BS3hL1t7ASZexDVnrnIq3czdD2rc1g4p6RlOm58yEjPG7sJgqSeu
+ W3sFufUlNhx2VUcckPBK3sZVc/rx9kKZ6t1HgOtR0vb2EpMQpockIUJND8djXkRoemyqABqa7LW
+ zBEWH2isohvKtC3mwhjWVJvmrEGquY4L0GYbinwQ/l7SDnACkRq2KN+5L6ggry
+X-Received: by 2002:a05:600c:8b6e:b0:493:f140:c3fb with SMTP id
+ 5b1f17b1804b1-499aa1a8bbcmr103182975e9.7.1787149923911; 
+ Wed, 19 Aug 2026 07:32:03 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-499aa1111b2sm87948755e9.5.2026.08.19.07.32.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Aug 2026 07:32:02 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 9AAC55F805;
+ Wed, 19 Aug 2026 15:32:01 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Laurent Vivier
+ <laurent@vivier.eu>,  Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Helge
+ Deller <deller@gmx.de>,  Paolo Bonzini <pbonzini@redhat.com>,  Brian Cain
+ <brian.cain@oss.qualcomm.com>,  Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Ilya Leoshkevich <iii@linux.ibm.com>,  Aniket
+ Sahu <asahu1x@linux.ibm.com>
+Subject: Re: [PATCH v7 034/104] tests/tcg/multiarch/gdbstub/prot-none.py:
+ deactivate on gitlab CI
+In-Reply-To: <20260818192309.22169-35-pierrick.bouvier@oss.qualcomm.com>
+ (Pierrick Bouvier's message of "Tue, 18 Aug 2026 19:21:58 +0000")
+References: <20260818192309.22169-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260818192309.22169-35-pierrick.bouvier@oss.qualcomm.com>
+User-Agent: mu4e 1.14.3; emacs 30.1
+Date: Wed, 19 Aug 2026 15:32:01 +0100
+Message-ID: <87se4ap4f2.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; ARC_NA(0.00)[];
- RCPT_COUNT_ONE(0.00)[1]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MIME_TRACE(0.00)[0:+];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- PREVIOUSLY_DELIVERED(0.00)[qemu-devel@nongnu.org];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- TO_DN_NONE(0.00)[]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,43 +113,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit fa19879df1658f96ac07365fca8835b7decd6995:
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-  Merge tag 'pull-block-jobs-2026-08-17' of https://gitlab.com/vsementsov/qemu into staging (2026-08-17 15:37:53 -0700)
+> This test was disabled on Gitlab CI.
+> Tracked in https://gitlab.com/qemu-project/qemu/-/issues/3329.
+>
+> Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-are available in the Git repository at:
+Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-  https://gitlab.com/farosas/qemu.git tags/qtest-20260819-pull-request
-
-for you to fetch changes up to bb98963d6df300fe6fc6d2074198e220571cd0cd:
-
-  tests/qtest/pxe-test: skip per-row cases whose machine is unavailable (2026-08-19 11:27:58 -0300)
-
-----------------------------------------------------------------
-QTest pull request
-
-- Use GLib wrappers during QTEST_LOG parsing
-- Skip tests when 'pc' machine is not built in
-
-----------------------------------------------------------------
-
-Amit Machhiwal (1):
-  tests/qtest/libqtest: Use GLib functions for proper const correctness
-
-Rohitashv Kumar (3):
-  tests/qtest/device-plug-test: skip pc tests when 'pc' machine is
-    unavailable
-  tests/qtest/drive_del-test: skip pc tests when 'pc' machine is
-    unavailable
-  tests/qtest/pxe-test: skip per-row cases whose machine is unavailable
-
- tests/qtest/device-plug-test.c |  8 ++++++++
- tests/qtest/drive_del-test.c   | 16 ++++++++++++++++
- tests/qtest/libqtest.c         |  9 ++++-----
- tests/qtest/pxe-test.c         |  4 ++++
- 4 files changed, 32 insertions(+), 5 deletions(-)
-
--- 
-2.53.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
