@@ -4,103 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20A60C5DF81
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 19:17:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 959FAC5DF85
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 19:18:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwlmh-00083k-B3; Wed, 19 Aug 2026 15:17:11 -0400
+	id 1wwloE-0000Z3-Uu; Wed, 19 Aug 2026 15:18:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwlmf-00083M-P6
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:17:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwloD-0000Yp-7B
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:18:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwlme-00037Y-AA
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:17:09 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wwlo6-0003MK-L9
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:18:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787167027;
+ s=mimecast20190719; t=1787167117;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=v3joE9MERIl0rQf5B4NyuJ6OjcchvFje4XbrLZIaWtY=;
- b=gnUsRIj7LfPJbq7aQgLGibUC1SQ5ajJhroMj8r9oy05f7Hk9ucvcoyU0sUEUz5fj5ZJrQZ
- u4K3bBpo7mW/uXJHduFXa6tFo6LAFs4H+vhQJ36bVv5n9fJfHvQREhjjoSvbJ+UjLF4jU9
- 5VF0sFiABfLiGPSWWM3vaVHOLIaPzAQ=
+ bh=5sPcTbZ65WkG/dqMr1Ux8ILlrr7IYoWE94/qNhTfkuU=;
+ b=STWVoPC5dJybCQeYqJxgk1lmr2YYluGCr87ZUD3PwKgpQCuhjE8y7w57GF2E/Q3SiPHAOO
+ GgfouHv5eSN1t3gEsmrXAo4ops8E2njjxdrfmjsRBvk6Wj+OMM1HFsTAANSfG1D8UyDCA1
+ fKVkaYNmBpOwBCwrcFB0HLVd6f3Y75A=
 Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
  [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-50-WvFImLbHN-uoUvZu2Uf01w-1; Wed, 19 Aug 2026 15:17:00 -0400
-X-MC-Unique: WvFImLbHN-uoUvZu2Uf01w-1
-X-Mimecast-MFC-AGG-ID: WvFImLbHN-uoUvZu2Uf01w_1787167019
+ us-mta-453-XWNCxDL8Pnq5fgRN8Z8RjQ-1; Wed, 19 Aug 2026 15:18:36 -0400
+X-MC-Unique: XWNCxDL8Pnq5fgRN8Z8RjQ-1
+X-Mimecast-MFC-AGG-ID: XWNCxDL8Pnq5fgRN8Z8RjQ_1787167116
 Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-92e8004d60eso262014585a.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 12:16:59 -0700 (PDT)
+ af79cd13be357-936e393061dso135547185a.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 12:18:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787167019; x=1787771819; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787167116; x=1787771916; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=v3joE9MERIl0rQf5B4NyuJ6OjcchvFje4XbrLZIaWtY=;
- b=pojjXiZNoEUyxn6KRvZDDxnBpvGHVgKcA4dZO6fjZ/3tWADQKvauRZoYJpb0TAwpMp
- b8M070dr0WtPP2IXigBh324mUmOOKhvF0yF/GSg7SdIKeQqDlb/TQQpfvHP2VZqsb5Pw
- QliuqP2JdMLLwgGmSO70UENeEF5PP2kcO4LMyRtDFzw+eiZxhNPBEVeJOel/k2QoAUM4
- sQCyHHwOrG4pvpEnrKjjtCWvMgvQ/99y66zwmO3EFEWgSOvTnQMu3SgDV704i3E3hLd8
- SfBmJaKsW4p85P+fjrqmXM9nnfqF2FBLZdUYio1yZe/+chP3wV1bxCLFTfQgqIKCxvAx
- dX3g==
+ bh=5sPcTbZ65WkG/dqMr1Ux8ILlrr7IYoWE94/qNhTfkuU=;
+ b=prmkHONo9iKIsts+zibZAupSPwsMigPLqkyTM25muXfFZ6+mAJcNVCe7en0fKhUA6M
+ npSSHMIXVl+I99ujvXksAb2u2P/tVX3gByxiqGHEhjoHIwQYZtyY2Y4cpFVFPQZnC4cd
+ LYJE6rvWx0jqoo+84Ve1wb6Sj7idX+zOOKrAaskKojl1eu38LLb6f4w2obTTIP8XCTkH
+ Vcoon84VhI/R1JjoG9rZIdsw2KaOkN/8rX6rH4WIK0g+GjlvN1IZph7MH5IIO9FVAENW
+ qkU8pMvF+jAp3RA3ebUgGtFoWQPAntzpzNCCQp5WvEvFwJQHcXg2NP5s1m6PXXJJ7Xki
+ UDjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787167019; x=1787771819;
+ d=1e100.net; s=20251104; t=1787167116; x=1787771916;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=v3joE9MERIl0rQf5B4NyuJ6OjcchvFje4XbrLZIaWtY=;
- b=QLJ9546qihzA40/j4FOC+iBsu7cYjDtpQFSEg0dmLqdEUwKKBArDC9woX2LBsoe8Nr
- zjP4tWQBmgH7llkMdF0k+hNh3R98Sf/FsHEWdcCVd/yV3TKpnt9ta991Mc84VN/H01wc
- Y7bLROF8f+RKciwPtuigZIl9mSAFvKkQ+wkza3h0xrjeNB93T+ym5Z55n2aSGm0zOrMJ
- bcVzYFiTbaTdsh2IoabvEYEJ48ZkXWpMJ9x14fAC2kDYyYtDUwefNMYbvGgzzRDdNn8K
- /y/Ugh+ShTGtfHEu1e0vxqVvfaQF6xQbwv5UpRH//6l8uoegR3hUpDmKFwl9e2rXqajQ
- +ljg==
-X-Gm-Message-State: AOJu0YxN2gUrE80PvN2y+wZ9VNBO0MtSghNw6F5otv6/ZvBBfW6VoxTr
- KoYL1dHuqrWuY6HoMiGgOfg+U9K+eIrvTGXP6g+/uTPdlwrv0E0+LxVaYUrTsV6XSRbIkBObL+k
- ay/VyfFYNAD0Wd+CQz97HLkHbRQr4gg3JSDbhGwTT0qsPFJmIYf+/eN/s
-X-Gm-Gg: AR+sD10S50Hs+00Zd2Da7nJ4KSZ0oPtHaVF1aypFdnfZvtlnUb+aXmzpkXfm/tMa0+W
- 8uGc+SmL55IuuET3wev4FdcZ7bW8BYWuJ7x2jSrZSUIVtjqlmVg+PwdBnz5Iv2/dp1XEKONBiJ8
- 9BtmhecYxSDR7utNUwb+ksts3vU/WFRliHYjeHSfD/mBXsJqO/BN0iLmzUEaq0VnxmzSkQAouOW
- PQ5R35/oCrhhC+2axVGa6Vp7F7m24OlAHp11YnAkUZVXDKSRCIZn1agfADuQcyZV+4cA1TwFzmR
- CklhRXkBxZJhtdoROGFOLnTlVZq4Vw5EtLfbB3tdEtvFBf9XkvcyqaxHHnyyxdGk8N8B
-X-Received: by 2002:a05:620a:2616:b0:912:1206:ddd1 with SMTP id
- af79cd13be357-9371e31e4fcmr761460685a.1.1787167019247; 
- Wed, 19 Aug 2026 12:16:59 -0700 (PDT)
-X-Received: by 2002:a05:620a:2616:b0:912:1206:ddd1 with SMTP id
- af79cd13be357-9371e31e4fcmr761451785a.1.1787167018456; 
- Wed, 19 Aug 2026 12:16:58 -0700 (PDT)
+ bh=5sPcTbZ65WkG/dqMr1Ux8ILlrr7IYoWE94/qNhTfkuU=;
+ b=TuAGdfqUB4c8Iv0xaH/oKulU8bR9CtPCsPVsapUurnEzxCxbIZOU6uTRwBH+qI/iJA
+ DoW3Fyn6ac5QEmDJccNtUQ8T4g8f3ZTppw95vhujBmKOg3COPjImZSUwRKMtZFCwxjkY
+ JRiQe5yqFdnLla7NQ/2VaUuOYxAOmTSaM3A/YNsmz3kByZUtwAePTl8U+LAHa1tb7kks
+ YTpXKAF7cNJn5y540zfywd8pIkH4whSxnpxZBPwYFrKlta7qOkRluq7NLYIQOm69tryS
+ GckD2jhPTh1lSnRUd6IKmG1Wy3dwY8Gre0TGmnaisDHn1/mA77f6EMJOPJjtBieqmWN2
+ mDDQ==
+X-Gm-Message-State: AOJu0YxCcX4KGmJPKAiyL7cEytjMBCmgLLaAiDGYGDR2sK5AAtiCYvPP
+ RKprFGEQ80Nw/Ktg3SsXvuxAMt2Po/ZW1SQsxip767FrFGthGRr10r/PSqTnwUHet8aqk0GEqdf
+ KQBjNfVSGo9RVbALXmAvDbD/19uqqhCXE8xtzhoBK0qHJoulPRP/mNKAk
+X-Gm-Gg: AR+sD130YPsDP+LI+FFEYtAxssT/Dl9CL3WAOl8hJXlA/vCoA+TGO7KLj2SGkUfle8+
+ +4hnzJM2JeVE4S8sVEBl04bOLgWy8zj69q2MGt3AZP+2ggkV56x0dLUwx+Yo178jsRZUHFCNxvk
+ Zeex4LhY1Ma3j6RZ8Q/kdeGDBaTtL1Z1ReukhXq48nyS3Or/eoBHN2WGIep+2eUTnHZyjZv2zUZ
+ sh6Jn/hKfaAfcZQaJiJmEMOqCdhmA9PUPReoBcbqFus0nfgdWu2XJaqyMAMRK0drxbbVJTL87VD
+ F04Kob/V7rDdM9gzlRNICwkZBvrV79dFYRaeyRj/PGMiuQC5oZBQ02ob3jQp5tkLnMoz
+X-Received: by 2002:a05:620a:600a:b0:930:b4f9:f327 with SMTP id
+ af79cd13be357-9371e316b8bmr704995985a.33.1787167115588; 
+ Wed, 19 Aug 2026 12:18:35 -0700 (PDT)
+X-Received: by 2002:a05:620a:600a:b0:930:b4f9:f327 with SMTP id
+ af79cd13be357-9371e316b8bmr704989585a.33.1787167114915; 
+ Wed, 19 Aug 2026 12:18:34 -0700 (PDT)
 Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9372405c33bsm124607085a.29.2026.08.19.12.16.57
+ af79cd13be357-93720493f1dsm200528885a.7.2026.08.19.12.18.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 12:16:57 -0700 (PDT)
-Date: Wed, 19 Aug 2026 15:16:49 -0400
+ Wed, 19 Aug 2026 12:18:33 -0700 (PDT)
+Date: Wed, 19 Aug 2026 15:18:31 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Yanfei Xu <yanfei.xu@bytedance.com>
 Cc: qemu-devel@nongnu.org, farosas@suse.de, lizhijian@fujitsu.com,
  Jinpu Wang <jinpu.wang@cloud.ionos.com>
-Subject: Re: [PATCH 2/3] migration/rdma: Post initial receive before accepting
-Message-ID: <aoYBIaisgpP6lklk@x1.local>
+Subject: Re: [PATCH 3/3] migration/rdma: Retry control sends on full queue
+Message-ID: <aoYBhxpSL5w5gQcX@x1.local>
 References: <20260817105117.3072040-1-yanfei.xu@bytedance.com>
- <20260817105117.3072040-3-yanfei.xu@bytedance.com>
+ <20260817105117.3072040-4-yanfei.xu@bytedance.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260817105117.3072040-3-yanfei.xu@bytedance.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20260817105117.3072040-4-yanfei.xu@bytedance.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,57 +116,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 17, 2026 at 06:51:16PM +0800, Yanfei Xu wrote:
-> The source return-path thread can send READY before the destination has
-> posted its initial receive.  Since RNR retries default to zero, the send
-> can fail and abort migration.
+On Mon, Aug 17, 2026 at 06:51:17PM +0800, Yanfei Xu wrote:
+> RAM writes and control messages share the send queue.  If
+> outstanding writes fill it, RDMA writes drain a completion and retry,
+> but control sends fail the migration.
 > 
-> Post the initial receive before rdma_accept() to close this window.
+> Drain one outstanding write and retry the control send on ENOMEM.
 > 
-> Fixes: 55cc1b5937a8 ("migration: create a dedicated connection for rdma return path")
 > Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
-
-This one looks correct to me,
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
-Do you have way to reproduce it, or is this theory (or can be reproduced by
-adding delays)?
-
 > ---
->  migration/rdma.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
+>  migration/rdma.c | 12 +++++++++++-
+>  1 file changed, 11 insertions(+), 1 deletion(-)
 > 
 > diff --git a/migration/rdma.c b/migration/rdma.c
-> index e17ace62b0..6e8436ccc1 100644
+> index 6e8436ccc1..d1f44a5f55 100644
 > --- a/migration/rdma.c
 > +++ b/migration/rdma.c
-> @@ -3263,6 +3263,12 @@ static int qemu_rdma_accept(RDMAContext *rdma)
->          }
+> @@ -1572,9 +1572,19 @@ static int qemu_rdma_post_send_control(RDMAContext *rdma, uint8_t *buf,
+>          memcpy(wr->control + sizeof(RDMAControlHeader), buf, head->len);
 >      }
 >  
-> +    ret = qemu_rdma_post_recv_control(rdma, RDMA_WRID_READY, &err);
-> +    if (ret < 0) {
-> +        error_report_err(err);
-> +        goto err_rdma_dest_wait;
-> +    }
-> +
->      /* Accept the second connection request for return path */
->      if ((migrate_postcopy() || migrate_return_path())
->          && !rdma->is_return_path) {
-> @@ -3295,12 +3301,6 @@ static int qemu_rdma_accept(RDMAContext *rdma)
->      rdma_ack_cm_event(cm_event);
->      rdma->connected = true;
->  
-> -    ret = qemu_rdma_post_recv_control(rdma, RDMA_WRID_READY, &err);
-> -    if (ret < 0) {
-> -        error_report_err(err);
-> -        goto err_rdma_dest_wait;
-> -    }
 > -
->      qemu_rdma_dump_gid("dest_connect", rdma->cm_id);
+> +retry:
+>      ret = ibv_post_send(rdma->qp, &send_wr, &bad_wr);
 >  
->      return 0;
+> +    if (ret == ENOMEM && rdma->nb_sent) {
+> +        ret = qemu_rdma_block_for_wrid(rdma, RDMA_WRID_RDMA_WRITE, NULL);
+> +        if (ret < 0) {
+> +            error_setg(errp, "rdma migration: failed to make room for "
+> +                       "control send");
+> +            return -1;
+> +        }
+> +        goto retry;
+> +    }
+
+Looks also correct, but two questions:
+
+- Should we provide a helper instead of duplicating the WRITE op handling?
+  I believe only WRITE wrids can be on the fly.
+
+- Could ENOMEM be returned when nb_sent==0?  If that check applies to WRITE
+  path too?
+
+Thanks,
+
+> +
+>      if (ret > 0) {
+>          error_setg(errp, "Failed to use post IB SEND for control");
+>          return -1;
 > -- 
 > 2.20.1
 > 
