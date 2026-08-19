@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE236C5DF81
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 18:04:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D76A0C5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 18:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwkcW-0004Ii-E5; Wed, 19 Aug 2026 14:02:36 -0400
+	id 1wwkca-0004Ke-Ox; Wed, 19 Aug 2026 14:02:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wwkcU-0004Ge-5Y
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 14:02:34 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
+ id 1wwkcX-0004JC-8C
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 14:02:37 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wwkcS-0007OL-4l
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 14:02:33 -0400
+ id 1wwkcV-0007QE-Pd
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 14:02:37 -0400
 Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
  [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id B3825C08B7;
- Wed, 19 Aug 2026 21:02:30 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id 7A24CC050A;
+ Wed, 19 Aug 2026 21:02:34 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:c60::1:5])
  by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id M2bUThDaVKo0-1Sgq8Dhf; Wed, 19 Aug 2026 21:02:30 +0300
+ id M2bUThDaVKo0-tfXZjHVQ; Wed, 19 Aug 2026 21:02:33 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1787162550;
- bh=rqXLRKVB9rUlP5qhRTvWTc1Jy5XuBInjTD1aruBDXbM=;
+ s=default; t=1787162553;
+ bh=jVMiYPt2Frnu4BfObGrRKjiatzSEShHfArUODPajWoM=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=P4eDqpO5MgVpANTzIZea+1WqKhewSNWvpilh4j/5HcCqFgIs2VrQQnFOrrxmtLXkd
- KTb0KN5WCYuhCgMrzsaPXknYCTRJQNYZemrS/XRLppeN0+I9W/hJFlpaYymCcuvIoO
- RKLsG1BaREvud9zKyePd8W8PvepPQ4XuL/ct42qI=
+ b=l9qvmZzIJIN7fJWzqtHU2egqSo7ShbOZ+uHfM44Adhw7jD6M2oPUGJ5TRQQHJeo8j
+ bbKL9bk0ZisX7krbpcZimI6jLcoFC+S0nC5cSMvAmKOcPDIcL/55a1MhzePf2hDYGk
+ DYI5+7p2jizeapvG/rEhlcDN+lTNmQoEMBKZDT1M=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -46,24 +45,23 @@ To: jasowang@redhat.com,
 Cc: armbru@redhat.com, peterx@redhat.com, farosas@suse.de,
  raphael.s.norwitz@gmail.com, bchaney@akamai.com, vsementsov@yandex-team.ru,
  qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
- yc-core@yandex-team.ru, mark.caveayland@nutanix.com,
- Jason Wang <jasowangio@gmail.com>
-Subject: [PATCH v21 06/16] net/tap: use container_of instead of DO_UPCAST
-Date: Wed, 19 Aug 2026 21:01:49 +0300
-Message-ID: <20260819180201.1970193-7-vsementsov@yandex-team.ru>
+ yc-core@yandex-team.ru, mark.caveayland@nutanix.com
+Subject: [PATCH v21 10/16] migration/fd: fix fd leak when fd is not valid for
+ migration
+Date: Wed, 19 Aug 2026 21:01:53 +0300
+Message-ID: <20260819180201.1970193-11-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260819180201.1970193-1-vsementsov@yandex-team.ru>
 References: <20260819180201.1970193-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.72;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,180 +77,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are going to QOMify tap backend, which includes deriving TAPState
-from Object. So "NetClientState nc" will not be a first member.
-Let's parepare for this change, and use container_of(), which will
-work regardless position of "nc" field.
+Both fd_connect_outgoing() and fd_connect_incoming() own the file
+descriptor after resolving it from the monitor, but forget to close
+it when migration_fd_valid() check fails.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Ben Chaney <bchaney@akamai.com>
 ---
- net/tap.c | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ migration/fd.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/tap.c b/net/tap.c
-index f2b571dd116..bfed74717e4 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -175,7 +175,7 @@ static ssize_t tap_write_packet(TAPState *s, const struct iovec *iov, int iovcnt
- static ssize_t tap_receive_iov(NetClientState *nc, const struct iovec *iov,
-                                int iovcnt)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    TAPState *s = container_of(nc, TAPState, nc);
-     const struct iovec *iovp = iov;
-     g_autofree struct iovec *iov_copy = NULL;
-     struct virtio_net_hdr hdr = { };
-@@ -211,7 +211,7 @@ ssize_t tap_read_packet(int tapfd, uint8_t *buf, int maxlen)
+diff --git a/migration/fd.c b/migration/fd.c
+index f05f95992f8..02b39b150eb 100644
+--- a/migration/fd.c
++++ b/migration/fd.c
+@@ -62,6 +62,7 @@ QIOChannel *fd_connect_outgoing(MigrationState *s, const char *fdname,
+     if (!migration_fd_valid(fd)) {
+         error_setg(errp, "fd: migration to a file is not supported."
+                    " Use file: instead.");
++        close(fd);
+         goto out;
+     }
  
- static void tap_send_completed(NetClientState *nc, ssize_t len)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    TAPState *s = container_of(nc, TAPState, nc);
-     tap_read_poll(s, true);
- }
- 
-@@ -271,7 +271,7 @@ static void tap_send(void *opaque)
- 
- static bool tap_has_ufo(NetClientState *nc)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    TAPState *s = container_of(nc, TAPState, nc);
- 
-     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
- 
-@@ -280,7 +280,7 @@ static bool tap_has_ufo(NetClientState *nc)
- 
- static bool tap_has_uso(NetClientState *nc)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    TAPState *s = container_of(nc, TAPState, nc);
- 
-     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
- 
-@@ -289,7 +289,7 @@ static bool tap_has_uso(NetClientState *nc)
- 
- static bool tap_has_tunnel(NetClientState *nc)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    TAPState *s = container_of(nc, TAPState, nc);
- 
-     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
-     return s->has_tunnel;
-@@ -297,7 +297,7 @@ static bool tap_has_tunnel(NetClientState *nc)
- 
- static bool tap_has_vnet_hdr(NetClientState *nc)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    TAPState *s = container_of(nc, TAPState, nc);
- 
-     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
- 
-@@ -311,7 +311,7 @@ static bool tap_has_vnet_hdr_len(NetClientState *nc, int len)
- 
- static void tap_set_vnet_hdr_len(NetClientState *nc, int len)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    TAPState *s = container_of(nc, TAPState, nc);
- 
-     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
- 
-@@ -322,21 +322,21 @@ static void tap_set_vnet_hdr_len(NetClientState *nc, int len)
- 
- static int tap_set_vnet_le(NetClientState *nc, bool is_le)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    TAPState *s = container_of(nc, TAPState, nc);
- 
-     return tap_fd_set_vnet_le(s->fd, is_le);
- }
- 
- static int tap_set_vnet_be(NetClientState *nc, bool is_be)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    TAPState *s = container_of(nc, TAPState, nc);
- 
-     return tap_fd_set_vnet_be(s->fd, is_be);
- }
- 
- static void tap_set_offload(NetClientState *nc, const NetOffloads *ol)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    TAPState *s = container_of(nc, TAPState, nc);
-     if (s->fd < 0) {
+@@ -97,6 +98,7 @@ void fd_connect_incoming(const char *fdname, Error **errp)
+     if (!migration_fd_valid(fd)) {
+         error_setg(errp, "fd: migration to a file is not supported."
+                    " Use file: instead.");
++        close(fd);
          return;
      }
-@@ -357,7 +357,7 @@ static void tap_exit_notify(Notifier *notifier, void *data)
  
- static void tap_cleanup(NetClientState *nc)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    TAPState *s = container_of(nc, TAPState, nc);
- 
-     if (s->vhost_net) {
-         vhost_net_cleanup(s->vhost_net);
-@@ -381,14 +381,14 @@ static void tap_cleanup(NetClientState *nc)
- 
- static void tap_poll(NetClientState *nc, bool enable)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    TAPState *s = container_of(nc, TAPState, nc);
-     tap_read_poll(s, enable);
-     tap_write_poll(s, enable);
- }
- 
- static bool tap_set_steering_ebpf(NetClientState *nc, int prog_fd)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    TAPState *s = container_of(nc, TAPState, nc);
-     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
- 
-     return tap_fd_set_steering_ebpf(s->fd, prog_fd) == 0;
-@@ -396,7 +396,7 @@ static bool tap_set_steering_ebpf(NetClientState *nc, int prog_fd)
- 
- int tap_get_fd(NetClientState *nc)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    TAPState *s = container_of(nc, TAPState, nc);
-     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
-     return s->fd;
- }
-@@ -408,7 +408,7 @@ int tap_get_fd(NetClientState *nc)
-  */
- static VHostNetState *tap_get_vhost_net(NetClientState *nc)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    TAPState *s = container_of(nc, TAPState, nc);
-     assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
-     return s->vhost_net;
- }
-@@ -447,7 +447,7 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
- 
-     nc = qemu_new_net_client(&net_tap_info, peer, model, name);
- 
--    s = DO_UPCAST(TAPState, nc, nc);
-+    s = container_of(nc, TAPState, nc);
- 
-     s->fd = fd;
-     s->host_vnet_hdr_len = vnet_hdr ? sizeof(struct virtio_net_hdr) : 0;
-@@ -1016,7 +1016,7 @@ fail:
- 
- int tap_enable(NetClientState *nc)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    TAPState *s = container_of(nc, TAPState, nc);
-     int ret;
- 
-     if (s->enabled) {
-@@ -1033,7 +1033,7 @@ int tap_enable(NetClientState *nc)
- 
- int tap_disable(NetClientState *nc)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    TAPState *s = container_of(nc, TAPState, nc);
-     int ret;
- 
-     if (s->enabled == 0) {
 -- 
 2.43.0
 
