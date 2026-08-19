@@ -4,106 +4,167 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35162C5DF81
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 13:33:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F27DCC5DF6D
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 13:39:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwgPg-0008S3-HX; Wed, 19 Aug 2026 09:33:04 -0400
+	id 1wwgVF-0000pA-0d; Wed, 19 Aug 2026 09:38:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1wwgPb-0008Rj-U0; Wed, 19 Aug 2026 09:33:02 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1wwgPZ-0008E7-2H; Wed, 19 Aug 2026 09:32:59 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id D041D84B4D;
- Wed, 19 Aug 2026 13:32:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787146371; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XDUh75UIazBn09BrAloTyrmIgQ/zzZr288biDqIEBcU=;
- b=zPz2YeaWkrLSyMzN0dltp9yAaFHswzo/zCRwXOkdK+H0xgtxv6gDmnYAIs9beA5kDOgOEj
- MJa13iv/6DeEiRzUWTs4bTQTD3NsSddLdAiFS5OqLB5qs2qimRjsA5A5GPyjNc0sDTR6B3
- kixZD4hT0eEN/Xpuw2wvYhYPc3zipXg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787146371;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XDUh75UIazBn09BrAloTyrmIgQ/zzZr288biDqIEBcU=;
- b=RxStJDk0o8AnMENT8d13hbL745Fs156GxkDcmdy0VksQle4WdjoqbubJ8p0G26ZYQeBRLI
- D4DQmuON/2nspECA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787146366; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XDUh75UIazBn09BrAloTyrmIgQ/zzZr288biDqIEBcU=;
- b=Icys4J9qC/8FwVXwvz5bxnj2dVPA43LP46nsS50H1NZLK3quqNPf3YG/ETgzGDgxLPph5g
- 2Pw6UwUJa3uT6sMM+eOSnXTIB0z+ioiu8/Mkdz6F1Kp9QsjbjwYtnfpEAv6ft3Dkw93imA
- SKW+rPAudtX+tlOqep0BpfLlRi83n/c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787146366;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XDUh75UIazBn09BrAloTyrmIgQ/zzZr288biDqIEBcU=;
- b=vElOALp8alrXHtj/3wGzbV3ESr6oxmdH9dQ5gxF75TsbTRiqHmA+6WLebNm6gHT1aeeVr8
- 48G72njl7E7AtgAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7105D2F81;
- Wed, 19 Aug 2026 13:32:46 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id SHS7EH6whWrzTgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 19 Aug 2026 13:32:46 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Tao Tang <tangtao1634@phytium.com.cn>, Laurent Vivier
- <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Peter Maydell
- <peter.maydell@linaro.org>, Chen Baozi <chenbaozi@phytium.com.cn>, Chao
- Liu <chao.liu@processmission.com>, Jim MacArthur
- <jim.macarthur@linaro.org>, Tao Tang <tangtao1634@phytium.com.cn>
-Subject: Re: [RFC v5 1/5] tests/qtest: Add attrs support to qtest server
- memory commands
-In-Reply-To: <20260814035628.3924513-2-tangtao1634@phytium.com.cn>
-References: <20260814035628.3924513-1-tangtao1634@phytium.com.cn>
- <20260814035628.3924513-2-tangtao1634@phytium.com.cn>
-Date: Wed, 19 Aug 2026 10:32:44 -0300
-Message-ID: <87zeyikzgj.fsf@suse.de>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1wwgVB-0000md-Eh; Wed, 19 Aug 2026 09:38:45 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1wwgV9-0000hP-DP; Wed, 19 Aug 2026 09:38:45 -0400
+Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67JCorvo329150; Wed, 19 Aug 2026 06:38:28 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=/xASCT7YX8mTW1hlJVXD4EmKhA6tAeAQHdXdc7vxE
+ OE=; b=JminNIFPjgWNmTY7PQr/26vdNOO6tITN/k+lrcWpkci+u0DudP1uqVrOo
+ fLAm490eIudE1KQJHK57Q3PWQjNnsWVxvjjVdMEjDiHwvVM9J3QvMopIyIvgnHT1
+ Ie6o3b0QTI0eF9cKHw0dFe7WdeqFuHAiT8cxutH0/u2pIS3JnstfOB3iiCpFRl8F
+ Zpz23Y3Y9xXJYkUlhHVzF1CmxksAJU7JS4jbA+10/UAxjyS5n9rP7pyAHjvcgdGa
+ IwkGi6rcyhxi7O0AhIL1CrmiLKJHDlY2sabY339EKeGQgVDyb25qJK5WbyXPZIEh
+ cW5gnT36I9j5IdunSg/CbG/n5c9rA==
+Received: from dm5pr21cu001.outbound.protection.outlook.com
+ (mail-centralusazon11021073.outbound.protection.outlook.com [52.101.62.73])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4g54kf1dx1-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 19 Aug 2026 06:38:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gdDqV+Y0Ps6Ht0dv2J5Ag5Et3bXcGOxRmxmU1pE0kDvl2l86FRajAlu+Nyq9+8EfNv+48n1ZrYG3+aqcP92Z4tOlMmDU88RUiUlYYHU3hkyUmtiW+vncoKOny1Gr+MCwO8gStONBdscSy25L0J8PWEymieRqBMqdngBSfu6Ajtah7ZUwR1aDPjG5yRIb2kr7DTEfdvuPhShPVSV/d7zC4O/aEnQU58MTkdeWkPZsPpeJD8ko3WFaE72Zh57IWF6wu15rRiAe/LNemqKz5gJ+HqYBg1XvC0qnTn1IyXMv3+Km1CP0sCfJ0YjOfwDT6oi1TyYjgjaccTlyo66/vl5EVA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/xASCT7YX8mTW1hlJVXD4EmKhA6tAeAQHdXdc7vxEOE=;
+ b=JduHEgrXfynqlxd5EoUS5eas7pcaApnOp5kMGAFFloz8lUvBPfqsZOkS+ptQKIZy/PkTXbuunLyFqFj/Zk3S2BEwBSOYJUmhbIhulOYciHO83MeTaNzgDhgs/aH1wLuMSVtYIdAcIRJZukxVN5SpOZ72q2wbpjOsWE/GPeNqRgdAghp7woD9YG63GjQ2b73NZZJ2B4yEkkXOMVIT3yXvzb8FpPHgXzKHp8Wc++5UtsR5exgZcE5r0p96Lsz7l+lP5IfK1Pnua+/viZg5SF4evI89DLrLrzkFLuw7CiQ4Shw5EuHcMWPHSe8U5qTkN6yC5Mq5sxVVJOs91tHimBL2pg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/xASCT7YX8mTW1hlJVXD4EmKhA6tAeAQHdXdc7vxEOE=;
+ b=Dxb0a3YN7xV5iaXxiOhP10yyWm/xLEZNto4t6B0HieCmBjt0FPlI2coiz19KFY7lPAwu6I8ldBvrXnCWLZxX3WpLncnbgRCnfC/UfUr9g6NP/Kxx3upvRO4pZK+3T+uPyPf0wjSBFcJLF2jh3Wuaj9JlzfuWZLzvz/1GAv4OrTMTRHyfrZ8DRt/UjZ8Hj0S74s6u5qYLoUfbmJKwtwODssg9yY2QhYkPvDSSzJvoD9GBxrmTbx+hW0yITmjeOOGJpxXl1rMzNKFwxKiK8iylq/vj1S5W1LTlsnsSvfykOXlBvb7wx8GdOqQ+f/763G4a295HMB+F1jZsQJajvXkH0Q==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by PH0PR02MB7336.namprd02.prod.outlook.com (2603:10b6:510:d::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.8; Wed, 19 Aug
+ 2026 13:38:26 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0339.007; Wed, 19 Aug 2026
+ 13:38:26 +0000
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+To: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com, philmd@mailo.com,
+ aurelien@aurel32.net, peter.maydell@linaro.org, pbonzini@redhat.com,
+ richard.henderson@linaro.org, berrange@redhat.com,
+ marcandre.lureau@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Subject: [PATCH v3 02/15] qom/object.c: introduce
+ OBJECT_CLASS_PROPERTY_SCALAR_SETTER(type) macro
+Date: Wed, 19 Aug 2026 14:35:41 +0100
+Message-ID: <20260819133816.3497033-3-mark.caveayland@nutanix.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260819133816.3497033-1-mark.caveayland@nutanix.com>
+References: <20260819133816.3497033-1-mark.caveayland@nutanix.com>
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- RCPT_COUNT_SEVEN(0.00)[10]; MID_RHS_MATCH_FROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[phytium.com.cn:email,
- imap1.dmz-prg2.suse.org:helo, suse.de:email, suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
+X-ClientProxiedBy: SA9PR13CA0007.namprd13.prod.outlook.com
+ (2603:10b6:806:21::12) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|PH0PR02MB7336:EE_
+X-MS-Office365-Filtering-Correlation-Id: c25c55e2-6214-4bfa-1192-08defdf725bb
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|366016|7416014|23010399003|921020|56012099006|10067099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: UCDc64k/OE5yaUq41nQN47MCnSmw7rZ2IfOk2qf7CMuiPVK69mbSnRI2ghDRsARVHQ5onsotjiDfKWzH0HRD8Vmk8DMeF0VQnltAZnPdIEAXqOyEZVLCRX26deJ3LWc1AYn/HFJEbPY87s6a5ENeDioF48NqlvWONp+IB6szZVQLYDQWIz8oKY/dthfj3RVkIqppiOfSIx9fk6LwBvc3lofAv98xoyZ8dYAenSvItPIvfB0pZ3Gf6ri54suKadAIjLeRW9wm+hiIUCK5PANnlrq1iZwQigL0baTlUkmuOP4cs9tTsI5jyLyzVlCO0ZHqeOM6BPEntrMugCOoKYO1Uk3rjFYwKHl+xzfGpn3c4fMEvEkm8IA/Vxo8ckZ5svwa2T4PnjtgTRfdqc+gykegPmTtKEjoDkUIvTNX2DjKd/0r6H5wJSTcs5k/dnAMLQXkoQSY9oNEYEYb0dV+3tFKl9kJTxBZNi79YtcAX0tM5GloD7HvqubXb4oKngno1l88dUkefglaeS0oV+hIdh0zHwz4gDtOaAMBbEMQi8BwnewsbPpfF6oWGGIRIZjrZ717ycFT89/kIGUGTfl5Nc+x6nWX3hcj8Zli9qtTS+8OX2ouwVax2Vk7SiNWCnZfem0y8LMpIvXKrOj3ch5clMQRokSJYw373+3N4TJ9Im5eP6aT/fISvJweXlW7E4gHIIbCJuC72I4OJyAVV1x2gDxHYw==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(7416014)(23010399003)(921020)(56012099006)(10067099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?QnxmNIRCtNRULj7v6tMVP80fYOCAlZqZk3pGAgbZ/oODxq4F2lcHA9kWrZ+U?=
+ =?us-ascii?Q?KwqPnvxy3qp9SIriTswphuTQul70ZoLMY52RIyAw72zkvLDbfWlC62oVr/L2?=
+ =?us-ascii?Q?vwy9uyUwIH2yitGyxOOKk58TpqEO2ULcK/5/7GBo9p1YOrpR/6FDBFEf0Lcn?=
+ =?us-ascii?Q?xNR4OW7mW869zvs7v5noTtvsLbPkZmPVidrpqDFHH6M7Ii6hf0NQcA+jWJHZ?=
+ =?us-ascii?Q?DSzQmpUxHOodspu+qJx842RtYCR/2HiYVVjf5K+F24w4kAA0me+ISr4279Mh?=
+ =?us-ascii?Q?VgTf+tyuSSNoQkzU3TX8OjZC359KY29DLOGx9cOGBW+vD+U6PZmOKDxjt+WZ?=
+ =?us-ascii?Q?vQ/HYk+ZhGZkfaWv0/4WZeNVdmsEltNY2AjYpCdv2qXj1oxh3O8MIboYLWtO?=
+ =?us-ascii?Q?aNqArh2R+OynI5Ed+2BSjpwxhWGdRcdEBsZo3IYIsxVtQWnVNONaLdCNRSKp?=
+ =?us-ascii?Q?p82TODKCxfNp3a8Rg3DqfWaYi4cTgUQJ9wpOpC5dOi4W4toxVHWbXV2ogAC1?=
+ =?us-ascii?Q?73bagQ2OpXU+81GiH5x6Kc4dJuu+dByUmLTA5EqAIDp4FB9dsF93E8WwpJPQ?=
+ =?us-ascii?Q?OLghTTBxIieKMUcIvvjmoIf7qpvtMTs5CFggLhoSS/mFRmosW4JgVkOn4H1E?=
+ =?us-ascii?Q?hbsJX4ZisdqdHBO2DyF0LH5yiu/pcbAS6bUO0x6/43HDg+KGDQeSG56atEzh?=
+ =?us-ascii?Q?RAJAxh87uu2jO3OxIp/uDuMIH89ZVyPIZppK6r+EvAG0saRIGx1o4oyyIiTj?=
+ =?us-ascii?Q?2oC2czDXCvZznDC27kQ+OZ/Q648EP1V17sc7jNSrMfgbz0jX8by5jAcbDa0c?=
+ =?us-ascii?Q?/uY7XxUMd9Sp9ISl6KLTIPlEsN8ZPEj1ximESIjdcB5xJ1Kz+YUK+JdK6hHx?=
+ =?us-ascii?Q?k8AWmWH6hl4nsrWLPzsIKQtk7eSKe+kQUaX8W3HxTrfLuswa98BkViF0r/rc?=
+ =?us-ascii?Q?7qbY+YA8Y0k0z6vjkBo0Nzb4nNfAw6U5yGrOdVbGW+60UHD5IwE567JaHAB1?=
+ =?us-ascii?Q?UXY8Z8vyNs7c4wtNa4qclfD3CC9hJeG6rGb8Go0+fNlYMLBvYLG5JHr18zJw?=
+ =?us-ascii?Q?sFR7OwT4VmdwXtOI1bJdjeOoQDd2jCbhFoxDswNjdlpFaXRE5xAZ3k1DOesY?=
+ =?us-ascii?Q?O2QgEmUrZ9vCtFKzYd6uU8UMpjZgjGYISSEJK/zYKbQAMZRYQY6X82n3kQg/?=
+ =?us-ascii?Q?2QNfW53Y5VUiEp9XE3BeUNZua5EpfxWLCDOmz4gaFacENaCHTrdWbspPoTVo?=
+ =?us-ascii?Q?RK2HAvB9msPfJZVsF5dkYhQO6oF601GbUhQXsM1BQDa73VsyKQ2enfx1uqxH?=
+ =?us-ascii?Q?BbgcFpkclmT4peEUYMzmZrFLq3AHRNJEwzE5eobbDmUdoEd43y7KHDZvQsSr?=
+ =?us-ascii?Q?STVBMfyjYTQuR3Q4ZyMCLhQV2N9efBenhDz3+AM8AE58i7eLlbICfXnhw+ar?=
+ =?us-ascii?Q?27Tes1QMjHnxq45C3/lE91+uDwUv0qKSPPsRNzlXOuMGe/nbWi+MbloHRqkG?=
+ =?us-ascii?Q?UMwffhuOub0kNLzgssrXNNC8Au6L0MeOEM4NGiPMGzkgGyKTEm7hwwkJTe7M?=
+ =?us-ascii?Q?KXgfgrWGJKq7jQJAnrndKf3ixq+XpVYKolTlimA7fdO3iGzW4Zi4E93zeuYR?=
+ =?us-ascii?Q?1Sl/yv2nt6Ng4m/a9esYS475CCmhA2b0jd7j8F8RgEJNPyf43oYNbxbp+QF7?=
+ =?us-ascii?Q?mwb4qZ4g0FJ4RErox2BmWz4YxslKjr/n7dhOAXJx+krowjbFeaf1Jj7ttc8D?=
+ =?us-ascii?Q?eqIFe7hSW/LYmsFf0wDGWcdPVBQN2WU=3D?=
+X-Exchange-RoutingPolicyChecked: sfAqfqqPNBaLrvqVUjsl77YkqXfbil9opM4A3iKQy99HQ86YliG22BJl0pcLD3KIjPaq/wTqYy2I8QOZw9TyZtxe8O7kZgKyiGUqeqVoWPfB4mWwksFeec+wTJ1ErbakgdkS0tHOpvQZWLPeV/6spDiBN/RYyxXlesQtbwW6q1nUwAaQq/+vTFT1SW4luB053TrnBDcS00FV743QjBBS1aJUP21abpRNii1k8wAuWG8Pf2QaD6qI5zbdzuXkMHmf1OyXg89h0xFxz/uSthUtKyOemrznhtvglnzCRONu8fufSccw6AZUGxvAanrmfE2e4JhPGs5f07KmM4ts2nU1AA==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c25c55e2-6214-4bfa-1192-08defdf725bb
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Aug 2026 13:38:26.5534 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: LG3TreOA1g0Z3Y25iTZAPRQXnFEP0q/40PIOhJnxvN5Q2qBmiX7e0rfSWwg1WgLlXPzvhtuN0O8Mdq6QxEQrNdItaX1jw38iXxqGRqysAxY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR02MB7336
+X-Proofpoint-GUID: nF3KCKXuiFRnUH1YZizNJSrANzDdvWfN
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDEwNiBTYWx0ZWRfX/t0lXLRLb7z9
+ R4a9ab2IpJSGKKDv/PuYrLATaNdbyK08OhtmPdPiF+FQKesldN/C7ZNEJfxkV2z8L+rDBL5VIy9
+ t+wtkQJANhEicWhcVUDrzfs2tEJarr8=
+X-Proofpoint-ORIG-GUID: nF3KCKXuiFRnUH1YZizNJSrANzDdvWfN
+X-Authority-Analysis: v=2.4 cv=AfSB2XXG c=1 sm=1 tr=0 ts=6a85b1d4 cx=c_pps
+ a=A7BUKRKBnQHIc+bwMO6jVA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=Sv0fKeRqtYgA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=y4UcunY2MAxhM4LwGdWI:22
+ a=64Cc0HZtAAAA:8 a=kmmi_7CStG9fL9SE3QMA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDEwNiBTYWx0ZWRfX3nh0yDQImnt/
+ SCrpHLTvVSOqcq73aWrUg69bcqoqPpug4C4QNc6Wb0oHAoBIsXeiRP2hIYMldhkayF2t7ZbG1s4
+ /8bWqd7eewZhgr2Lhyo9knpDOFa2pzCPDy/BRl8b2V3VpW7LaFoF1BX4fy5tQdaqoVTf87ZktlR
+ p6wZMSmQAbfK/1jmz7KlgfxXQBaE7k2KsP9D45ak/M2gS8VF5eFkmrqKW2L0LZO0mgTfLaciziv
+ F4kHaYd4riwOq9jfA0wLtI1/SdrVFuBO+VB6dzOgYeerlODZhr1GAFIWeVRL3aGtzlUyWZDCv1+
+ kleHXcoc1IrUpEU+qOI3TOdO2gndlXcUi7epbkK2TZooF/j8dK5HawpGUQMD0qmxpfMBPzBaqqC
+ A49GT3yFtEOMfzJTIePoJWr9jon/114VcXECqcaMx0mP7cCh/or9MWDTPwbXNSh8Ss3o0w0Tw6d
+ tBrQ/flsDKwC37JV9Bg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-19_03,2026-08-19_01,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,537 +180,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tao Tang <tangtao1634@phytium.com.cn> writes:
+This macro will be used to generate the boilerplate property_class_set_type_ptr()
+QOM set function for the specified scalar type.
 
-> Extend qtest memory access commands to accept an optional attrs argument.
->
-> Supported attrs:
-> - secure (x86/Arm)
-> - space=non-secure|secure|root|realm (Arm-only)
->
-> For memory commands, parse attrs, select the corresponding AddressSpace
-> with cpu_asidx_from_attrs(), and issue accesses with the matching
-> MemTxAttrs.
->
-> Cover scalar and bulk memory commands, including:
-> - read{b,w,l,q} / write{b,w,l,q}
-> - read / write
-> - b64read / b64write
-> - memset
->
-> Also reject invalid attrs and excessive arguments, and document the new
-> command forms in qtest.c, and use qtest_send_memtx_error() to return
-> ERR for memory access failures.
->
-> Preserve legacy no-attrs semantics for compatibility: those commands
-> continue to ignore MemTxResult and return OK.
->
-> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-> ---
->  system/qtest.c | 349 +++++++++++++++++++++++++++++++++++++++++--------
->  1 file changed, 293 insertions(+), 56 deletions(-)
->
-> diff --git a/system/qtest.c b/system/qtest.c
-> index cf301239177..ac863779bdf 100644
-> --- a/system/qtest.c
-> +++ b/system/qtest.c
-> @@ -22,6 +22,7 @@
->  #include "hw/core/qdev.h"
->  #include "hw/core/irq.h"
->  #include "hw/core/cpu.h"
-> +#include "hw/arm/arm-security.h"
->  #include "qemu/accel.h"
->  #include "system/cpu-timers.h"
->  #include "qemu/config-file.h"
-> @@ -115,6 +116,14 @@ static void *qtest_server_send_opaque;
->   * PIO and memory access:
->   * """"""""""""""""""""""
->   *
-> + * Memory access commands allow specifying memory transaction attributes,
-> + * which is useful for testing devices that behave differently based on
-> + * security state (e.g., Arm TrustZone/CCA or System Management Mode in x86).
-> + *
-> + * Only the following attributes are supported by the qtest server:
-> + * ``secure`` sets MemTxAttrs.secure=1 (x86/Arm).
-> + * ``space=...`` is Arm-specific and accepts: non-secure, secure, root, realm.
-> + *
->   * .. code-block:: none
->   *
->   *  > outb ADDR VALUE
-> @@ -210,6 +219,36 @@ static void *qtest_server_send_opaque;
->   *  > memset ADDR SIZE VALUE
->   *  < OK
->   *
-> + * Memory commands accept an optional ATTRS argument after their existing
-> + * operands:
-> + *
-> + * .. code-block:: none
-> + *
-> + *  > read{b,w,l,q} ADDR [ATTRS]
-> + *  > write{b,w,l,q} ADDR VALUE [ATTRS]
-> + *  > read ADDR SIZE [ATTRS]
-> + *  > write ADDR SIZE DATA [ATTRS]
-> + *  > b64read ADDR SIZE [ATTRS]
-> + *  > b64write ADDR SIZE B64_DATA [ATTRS]
-> + *  > memset ADDR SIZE VALUE [ATTRS]
-> + *
-> + * Representative examples:
-> + *
-> + * .. code-block:: none
-> + *
-> + *  > readl ADDR secure
-> + *  < OK VALUE
-> + *
-> + * .. code-block:: none
-> + *
-> + *  > b64read ADDR SIZE space=root
-> + *  < OK B64_DATA
-> + *
-> + * .. code-block:: none
-> + *
-> + *  > writeq ADDR VALUE space=realm
-> + *  < OK
-> + *
->   * ADDR, SIZE, VALUE are all integers parsed with strtoul() with a base of 0.
->   * For 'memset' a zero size is permitted and does nothing.
->   *
-> @@ -352,6 +391,141 @@ static void qtest_install_gpio_out_intercept(DeviceState *dev, const char *name,
->      *disconnected = qdev_intercept_gpio_out(dev, icpt, name, n);
->  }
->  
-> +static bool qtest_parse_mem_attrs(CharFrontend *chr, const char *arg,
-> +                                  MemTxAttrs *attrs)
-> +{
-> +    if (!arg) {
-> +        *attrs = MEMTXATTRS_UNSPECIFIED;
-> +        return true;
-> +    }
-> +
-> +    if (strcmp(arg, "secure") == 0) {
-> +        *attrs = (MemTxAttrs){ .secure = 1 };
-> +        return true;
-> +    }
-> +
-> +    if (strncmp(arg, "space=", 6) == 0) {
-> +        const char *space = arg + 6;
-> +        ARMSecuritySpace sec_space;
-> +
-> +        if (!target_arm() && !target_aarch64()) {
-> +            qtest_send(chr, "ERR space=<...> is Arm-specific\n");
-> +            return false;
-> +        }
-> +
-> +        if (strcmp(space, "non-secure") == 0) {
-> +            sec_space = ARMSS_NonSecure;
-> +        } else if (strcmp(space, "secure") == 0) {
-> +            sec_space = ARMSS_Secure;
-> +        } else if (strcmp(space, "root") == 0) {
-> +            sec_space = ARMSS_Root;
-> +        } else if (strcmp(space, "realm") == 0) {
-> +            sec_space = ARMSS_Realm;
-> +        } else {
-> +            qtest_send(chr, "ERR invalid space value. Valid space: "
-> +                            "secure/non-secure/root/realm\n");
-> +            return false;
-> +        }
-> +
-> +        *attrs = (MemTxAttrs){
-> +            .space = sec_space,
-> +            .secure = arm_space_is_secure(sec_space),
-> +        };
-> +        return true;
-> +    }
-> +
-> +    qtest_send(chr, "ERR invalid attrs argument\n");
-> +    return false;
-> +}
-> +
-> +static bool qtest_get_mem_as(CharFrontend *chr, MemTxAttrs attrs,
-> +                             AddressSpace **as)
-> +{
-> +    int asidx;
-> +
-> +    /*
-> +     * cpu_asidx_from_attrs mainly uses attrs to call ->asidx_from_attrs. We use
-> +     * first_cpu as it's readily available.
-> +     */
-> +
-> +    asidx = cpu_asidx_from_attrs(first_cpu, attrs);
-> +    *as = cpu_get_address_space(first_cpu, asidx);
-> +    if (!*as) {
-> +        qtest_send(chr, "ERR address space unavailable for attrs\n");
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
-> +static void qtest_send_memtx_error(CharFrontend *chr, MemTxResult result)
-> +{
-> +    qtest_sendf(chr, "ERR memory access failed 0x%x\n", result);
-> +}
-> +
-> +static MemTxResult qtest_write_sized(AddressSpace *as, uint64_t addr,
-> +                                     MemTxAttrs attrs, uint64_t value,
-> +                                     char size)
-> +{
-> +    switch (size) {
-> +    case 'b': {
-> +        uint8_t data = value;
-> +        return address_space_write(as, addr, attrs, &data, 1);
-> +    }
-> +    case 'w': {
-> +        uint16_t data = value;
-> +        tswap16s(&data);
-> +        return address_space_write(as, addr, attrs, &data, 2);
-> +    }
-> +    case 'l': {
-> +        uint32_t data = value;
-> +        tswap32s(&data);
-> +        return address_space_write(as, addr, attrs, &data, 4);
-> +    }
-> +    case 'q': {
-> +        uint64_t data = value;
-> +        tswap64s(&data);
-> +        return address_space_write(as, addr, attrs, &data, 8);
-> +    }
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +}
-> +
-> +static MemTxResult qtest_read_sized(AddressSpace *as, uint64_t addr,
-> +                                    MemTxAttrs attrs, char size,
-> +                                    uint64_t *value)
-> +{
-> +    switch (size) {
-> +    case 'b': {
-> +        uint8_t data = 0;
-> +        MemTxResult result = address_space_read(as, addr, attrs, &data, 1);
-> +        *value = data;
-> +        return result;
-> +    }
-> +    case 'w': {
-> +        uint16_t data = 0;
-> +        MemTxResult result = address_space_read(as, addr, attrs, &data, 2);
-> +        *value = tswap16(data);
-> +        return result;
-> +    }
-> +    case 'l': {
-> +        uint32_t data = 0;
-> +        MemTxResult result = address_space_read(as, addr, attrs, &data, 4);
-> +        *value = tswap32(data);
-> +        return result;
-> +    }
-> +    case 'q': {
-> +        uint64_t data = 0;
-> +        MemTxResult result = address_space_read(as, addr, attrs, &data, 8);
-> +        *value = tswap64(data);
-> +        return result;
-> +    }
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +}
-> +
->  static void qtest_process_command(CharFrontend *chr, gchar **words)
->  {
->      const gchar *command;
-> @@ -509,33 +683,29 @@ static void qtest_process_command(CharFrontend *chr, gchar **words)
->                 strcmp(words[0], "writeq") == 0) {
->          uint64_t addr;
->          uint64_t value;
-> +        MemTxResult result;
-> +        MemTxAttrs attrs;
-> +        AddressSpace *as;
->          int ret;
->  
->          g_assert(words[1] && words[2]);
-> +        if (words[3] && words[4]) {
-> +            qtest_send(chr, "ERR too many arguments\n");
-> +            return;
-> +        }
->          ret = qemu_strtou64(words[1], NULL, 0, &addr);
->          g_assert(ret == 0);
->          ret = qemu_strtou64(words[2], NULL, 0, &value);
->          g_assert(ret == 0);
-> +        if (!qtest_parse_mem_attrs(chr, words[3], &attrs) ||
-> +            !qtest_get_mem_as(chr, attrs, &as)) {
-> +            return;
-> +        }
->  
-> -        if (words[0][5] == 'b') {
-> -            uint8_t data = value;
-> -            address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
-> -                                &data, 1);
-> -        } else if (words[0][5] == 'w') {
-> -            uint16_t data = value;
-> -            tswap16s(&data);
-> -            address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
-> -                                &data, 2);
-> -        } else if (words[0][5] == 'l') {
-> -            uint32_t data = value;
-> -            tswap32s(&data);
-> -            address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
-> -                                &data, 4);
-> -        } else if (words[0][5] == 'q') {
-> -            uint64_t data = value;
-> -            tswap64s(&data);
-> -            address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
-> -                                &data, 8);
-> +        result = qtest_write_sized(as, addr, attrs, value, words[0][5]);
-> +        if (words[3] && result != MEMTX_OK) {
-> +            qtest_send_memtx_error(chr, result);
-> +            return;
->          }
->          qtest_send(chr, "OK\n");
->      } else if (strcmp(words[0], "readb") == 0 ||
-> @@ -543,51 +713,62 @@ static void qtest_process_command(CharFrontend *chr, gchar **words)
->                 strcmp(words[0], "readl") == 0 ||
->                 strcmp(words[0], "readq") == 0) {
->          uint64_t addr;
-> -        uint64_t value = UINT64_C(-1);
-> +        uint64_t value = 0;
-> +        MemTxResult result;
-> +        MemTxAttrs attrs;
-> +        AddressSpace *as;
->          int ret;
->  
->          g_assert(words[1]);
-> +        if (words[2] && words[3]) {
-> +            qtest_send(chr, "ERR too many arguments\n");
-> +            return;
-> +        }
->          ret = qemu_strtou64(words[1], NULL, 0, &addr);
->          g_assert(ret == 0);
-> +        if (!qtest_parse_mem_attrs(chr, words[2], &attrs) ||
-> +            !qtest_get_mem_as(chr, attrs, &as)) {
-> +            return;
-> +        }
->  
-> -        if (words[0][4] == 'b') {
-> -            uint8_t data;
-> -            address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
-> -                               &data, 1);
-> -            value = data;
-> -        } else if (words[0][4] == 'w') {
-> -            uint16_t data;
-> -            address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
-> -                               &data, 2);
-> -            value = tswap16(data);
-> -        } else if (words[0][4] == 'l') {
-> -            uint32_t data;
-> -            address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
-> -                               &data, 4);
-> -            value = tswap32(data);
-> -        } else if (words[0][4] == 'q') {
-> -            address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
-> -                               &value, 8);
-> -            tswap64s(&value);
-> +        result = qtest_read_sized(as, addr, attrs, words[0][4], &value);
-> +        if (words[2] && result != MEMTX_OK) {
-> +            qtest_send_memtx_error(chr, result);
-> +            return;
->          }
->          qtest_sendf(chr, "OK 0x%016" PRIx64 "\n", value);
->      } else if (strcmp(words[0], "read") == 0) {
->          g_autoptr(GString) enc = NULL;
->          uint64_t addr, len;
->          uint8_t *data;
-> +        MemTxResult result;
-> +        MemTxAttrs attrs;
-> +        AddressSpace *as;
->          int ret;
->  
->          g_assert(words[1] && words[2]);
-> +        if (words[3] && words[4]) {
-> +            qtest_send(chr, "ERR too many arguments\n");
-> +            return;
-> +        }
->          ret = qemu_strtou64(words[1], NULL, 0, &addr);
->          g_assert(ret == 0);
->          ret = qemu_strtou64(words[2], NULL, 0, &len);
->          g_assert(ret == 0);
->          /* We'd send garbage to libqtest if len is 0 */
->          g_assert(len);
-> +        if (!qtest_parse_mem_attrs(chr, words[3], &attrs) ||
-> +            !qtest_get_mem_as(chr, attrs, &as)) {
-> +            return;
-> +        }
->  
-> -        data = g_malloc(len);
-> -        address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED, data,
-> -                           len);
-> +        data = g_malloc0(len);
-> +        result = address_space_read(as, addr, attrs, data, len);
-> +        if (words[3] && result != MEMTX_OK) {
-> +            g_free(data);
-> +            qtest_send_memtx_error(chr, result);
-> +            return;
-> +        }
->  
->          enc = qemu_hexdump_line(NULL, data, len, 0, 0);
->  
-> @@ -598,17 +779,32 @@ static void qtest_process_command(CharFrontend *chr, gchar **words)
->          uint64_t addr, len;
->          uint8_t *data;
->          gchar *b64_data;
-> +        MemTxResult result;
-> +        MemTxAttrs attrs;
-> +        AddressSpace *as;
->          int ret;
->  
->          g_assert(words[1] && words[2]);
-> +        if (words[3] && words[4]) {
-> +            qtest_send(chr, "ERR too many arguments\n");
-> +            return;
-> +        }
->          ret = qemu_strtou64(words[1], NULL, 0, &addr);
->          g_assert(ret == 0);
->          ret = qemu_strtou64(words[2], NULL, 0, &len);
->          g_assert(ret == 0);
-> +        if (!qtest_parse_mem_attrs(chr, words[3], &attrs) ||
-> +            !qtest_get_mem_as(chr, attrs, &as)) {
-> +            return;
-> +        }
->  
-> -        data = g_malloc(len);
-> -        address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED, data,
-> -                           len);
-> +        data = g_malloc0(len);
-> +        result = address_space_read(as, addr, attrs, data, len);
-> +        if (words[3] && result != MEMTX_OK) {
-> +            g_free(data);
-> +            qtest_send_memtx_error(chr, result);
-> +            return;
-> +        }
->          b64_data = g_base64_encode(data, len);
->          qtest_sendf(chr, "OK %s\n", b64_data);
->  
-> @@ -618,14 +814,20 @@ static void qtest_process_command(CharFrontend *chr, gchar **words)
->          uint64_t addr, len, i;
->          uint8_t *data;
->          size_t data_len;
-> +        MemTxResult result;
-> +        MemTxAttrs attrs;
-> +        AddressSpace *as;
->          int ret;
->  
->          g_assert(words[1] && words[2] && words[3]);
-> +        if (words[4] && words[5]) {
-> +            qtest_send(chr, "ERR too many arguments\n");
-> +            return;
-> +        }
->          ret = qemu_strtou64(words[1], NULL, 0, &addr);
->          g_assert(ret == 0);
->          ret = qemu_strtou64(words[2], NULL, 0, &len);
->          g_assert(ret == 0);
-> -
->          data_len = strlen(words[3]);
->          if (data_len < 3) {
->              qtest_send(chr, "ERR invalid argument size\n");
-> @@ -641,47 +843,75 @@ static void qtest_process_command(CharFrontend *chr, gchar **words)
->                  data[i] = 0;
->              }
->          }
-> -        address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED, data,
-> -                            len);
-> +        if (!qtest_parse_mem_attrs(chr, words[4], &attrs) ||
-> +            !qtest_get_mem_as(chr, attrs, &as)) {
-> +            g_free(data);
-> +            return;
-> +        }
-> +        result = address_space_write(as, addr, attrs, data, len);
->          g_free(data);
-> +        if (words[4] && result != MEMTX_OK) {
-> +            qtest_send_memtx_error(chr, result);
-> +            return;
-> +        }
->  
->          qtest_send(chr, "OK\n");
->      } else if (strcmp(words[0], "memset") == 0) {
->          uint64_t addr, len;
-> -        uint8_t *data;
->          unsigned long pattern;
-> +        MemTxResult result;
-> +        MemTxAttrs attrs;
-> +        AddressSpace *as;
->          int ret;
->  
->          g_assert(words[1] && words[2] && words[3]);
-> +        if (words[4] && words[5]) {
-> +            qtest_send(chr, "ERR too many arguments\n");
-> +            return;
-> +        }
->          ret = qemu_strtou64(words[1], NULL, 0, &addr);
->          g_assert(ret == 0);
->          ret = qemu_strtou64(words[2], NULL, 0, &len);
->          g_assert(ret == 0);
->          ret = qemu_strtoul(words[3], NULL, 0, &pattern);
->          g_assert(ret == 0);
-> +        if (!qtest_parse_mem_attrs(chr, words[4], &attrs) ||
-> +            !qtest_get_mem_as(chr, attrs, &as)) {
-> +            return;
-> +        }
->  
->          if (len) {
-> -            data = g_malloc(len);
-> +            uint8_t *data = g_malloc(len);
-> +
->              memset(data, pattern, len);
-> -            address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
-> -                                data, len);
-> +            result = address_space_write(as, addr, attrs, data, len);
->              g_free(data);
-> +            if (words[4] && result != MEMTX_OK) {
-> +                qtest_send_memtx_error(chr, result);
-> +                return;
-> +            }
->          }
->  
->          qtest_send(chr, "OK\n");
-> -    }  else if (strcmp(words[0], "b64write") == 0) {
-> +    } else if (strcmp(words[0], "b64write") == 0) {
->          uint64_t addr, len;
->          uint8_t *data;
->          size_t data_len;
->          gsize out_len;
-> +        MemTxResult result;
-> +        MemTxAttrs attrs;
-> +        AddressSpace *as;
->          int ret;
->  
->          g_assert(words[1] && words[2] && words[3]);
-> +        if (words[4] && words[5]) {
-> +            qtest_send(chr, "ERR too many arguments\n");
-> +            return;
-> +        }
->          ret = qemu_strtou64(words[1], NULL, 0, &addr);
->          g_assert(ret == 0);
->          ret = qemu_strtou64(words[2], NULL, 0, &len);
->          g_assert(ret == 0);
-> -
->          data_len = strlen(words[3]);
->          if (data_len < 3) {
->              qtest_send(chr, "ERR invalid argument size\n");
-> @@ -696,8 +926,15 @@ static void qtest_process_command(CharFrontend *chr, gchar **words)
->              out_len = MIN(out_len, len);
->          }
->  
-> -        address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED, data,
-> -                            out_len);
-> +        if (!qtest_parse_mem_attrs(chr, words[4], &attrs) ||
-> +            !qtest_get_mem_as(chr, attrs, &as)) {
-> +            return;
-> +        }
-> +        result = address_space_write(as, addr, attrs, data, out_len);
-> +        if (words[4] && result != MEMTX_OK) {
-> +            qtest_send_memtx_error(chr, result);
-> +            return;
-> +        }
->  
->          qtest_send(chr, "OK\n");
->      } else if (strcmp(words[0], "endianness") == 0) {
+Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+---
+ qom/object.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+diff --git a/qom/object.c b/qom/object.c
+index e32ae30bd5..fe4e552928 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -2722,7 +2722,24 @@ static void *object_class_prop_ptr(Object *obj, ptrdiff_t offset)
+         visit_type_##type(v, name, &value, errp); \
+     }
+ 
++#define OBJECT_CLASS_PROPERTY_SCALAR_SETTER(type) \
++    static void property_class_set_##type##_ptr(Object *obj, Visitor *v, \
++                                                const char *name, \
++                                                void *opaque, Error **errp) \
++    { \
++        type##_t *field = (type##_t *)object_class_prop_ptr(obj, \
++                                                        (ptrdiff_t)opaque); \
++        type##_t value; \
++        \
++        if (!visit_type_##type(v, name, &value, errp)) { \
++            return; \
++        } \
++        \
++        *field = value; \
++    }
++
+ #undef OBJECT_CLASS_PROPERTY_SCALAR_GETTER
++#undef OBJECT_CLASS_PROPERTY_SCALAR_SETTER
+ 
+ 
+ ObjectProperty *
+-- 
+2.43.0
+
 
