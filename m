@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F4ECC5DF85
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 18:55:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 871CCC5DF85
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 18:56:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwlQx-0005WN-8H; Wed, 19 Aug 2026 14:54:43 -0400
+	id 1wwlR0-0005YE-EQ; Wed, 19 Aug 2026 14:54:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wwlQv-0005Vv-Tu
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 14:54:41 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1wwlQz-0005XE-2S
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 14:54:45 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wwlQs-0007OP-Kn
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 14:54:41 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-47f633e6058so1106427f8f.0
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 11:54:38 -0700 (PDT)
+ id 1wwlQt-0007P5-Kj
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 14:54:44 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-47fecbb7000so745995f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 11:54:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787165677; x=1787770477; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787165678; x=1787770478; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=nShee/GFbyI/dru/UKtIfcWXyAXKPIKvCG8tIe7n+sE=;
- b=gNlcPNu/i0DHSovybdpu8CV15Y4Fu/yQ5eNbhd/oDiJTekK4yDDBla4OwM5U4QKs2H
- YinC1g6Zpjf7yojGC/bWeotn9knxBE1uC7ha6j4S81tG9tXSGZNR9U+uaLVKSjq7cu8e
- KTxPm7nixQe9mvDX8a9OZ4pX2TKym06mD/kgMqk43eO4uqYWIdxgxgwR7vIepD8/Zt36
- 6ycfnn3n9ZgXi9xdrtiENn1mVSJ72qOPR0O1QKEJKCZaJpSEnh6i3J6ZC7f69CnXffaf
- +XWEGC9WCk3aMfVDNFdfUrCQDOx4F1ze3aaJg4QyofB8fo+1cxHpx1NgG0shgMr6tDpY
- dzEA==
+ bh=mA2wcSEXhUkc3GYoxmkPuW9aFHH1LOLuuUwN+rY+npc=;
+ b=ThZZRXggIggTxeHTm2L/GrqeSL6aYI5cZ3TPU/f1yH8EE0ADH9SAzpSlwzBKIhj8K/
+ Ahevmrl1Er0KpEueW71FSOUzd7+w3OA7E6X3yRWMUA02wTstKxv8XBvZ3ohZnSpfMLYC
+ 8sojr497Zx3pKo4fzUJAAaodDhEzOi8E5pgY0J7y9HNwEZOy03L5TixWPkKA1DB4jPqB
+ ntcaCgHmRO7bfcZNqCo0TmvoyIsMGmrYVkrAlsqB+PagS5ChK9Gdn7PkxN2IGFj85p2a
+ bmaNaLNUUPomp3gZCR8yeMbTSuH+cwy0EKMWLPuQZTmD2n56NHYvMpbKf0+JQpToxHmt
+ 0Zww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787165677; x=1787770477;
+ d=1e100.net; s=20251104; t=1787165678; x=1787770478;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=nShee/GFbyI/dru/UKtIfcWXyAXKPIKvCG8tIe7n+sE=;
- b=gofeQKvIO4kRgSOsL+Ju9J9NWufsmSdTSPZzGXOk74eoO6hkRF/2Q+yB5YQYXmGFlH
- TbhpM/G5VD6djG6QURW5NcXIfn6tpZUobxd5K8yL29HeLovYcX677KUIkG8Imex4Ld8z
- uoXzzSL3ljCEsZmyNRfQxoE68NBAs7I3znzZEQrlyVSX9rTtLcsCG+0Bv2oMP/X3Ofqg
- vk7opwWTzVhGyQh2jg3fKm0lyWFX49GHkU/+yoYb8NbyfTpujuqJPZkJpUAhLCvWIJiu
- hQ2E6Bez2zNKwdWvb755wVZbb4sXf/qqKZkcY2TNVT4oqqie8g6Za4fNhOietKwwMn4j
- ZUgg==
+ bh=mA2wcSEXhUkc3GYoxmkPuW9aFHH1LOLuuUwN+rY+npc=;
+ b=WcXZTU/tbykVyfV6RATyfmljW+cKL/A+ZKPYP/CjsrwaHMTidjkHfNWzcvXuYWtC2V
+ a4daHh6kAvtp0PBhpn9zwoZIKN068ffYWiAOdozbnY6VOwcSBmhsUfpvo93XETm5DIHl
+ ujwWGhQxsYfBBkhi7NQqlJZwy/RXQI4QEfuiuEdm63jmWaDgpnCCb+6+s5P0w3XDfFEI
+ ieECprRWifC9SpmlV3ayhJwE+VN2Fb/QfkmzPvvpab/v8qKoKZoUwysE6zeK96SJUW3o
+ 2b0uX8rvzhHvR5zBuLkgSXe2iI25Dx5iLKqXAYvtvbXhb1aK/dUkd70cRbsqD8NBpPwq
+ EFSg==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrF0xULMgSCeo2XOs6MOHM1ZSHoyRwDS+qWlqgBzXeYloKD4I3rmAOwEuabW2ZHVy3bf8HlcBocCxCa@nongnu.org
-X-Gm-Message-State: AFuF++lnUgpgkEEKT9ANM3stahN9pJ0E9WVFk2tuXwFrqcFd4M0rF7cx
- +Z+Ujiyy6zUWDxgHgRC3agmY/fyPI/LGlExKlcW44AOtZgqJiUVZIoknVjerwPy2E0c=
-X-Gm-Gg: AR+sD13ReEVnXpgVfaUnop9t8pRLtZs8Smvka0AWs2xusUVVH1DXTiYnXVeL1KUdbyT
- VR2jz5czVMwQGUZEy+/Tf4uk5HmB6J04FSuLOXLtWJgDfcO/Tr/PhDKpkU/8CFZ2kVEICbnlP55
- 56FcfKbF76twvtyStUzlz6Yju4iwYQ4Yuzq2qn5DM1z1945YPqHZ0xiyCu5AtWEKhh6RWAlDnCF
- TSYDKCvo9XCTZMHGMzUWwHBMHPOMuXGAu6h7sge+tr0JAN//qn0glF7kbdX2PwJtJ55mzJ/n/VJ
- V0ATNLGCOVHtQsdNG1I03DRWGiZVq3Gf8Ax3wOEILbIu2JQIoM554MC5dFcTMzLqctekV/WTkeg
- 1mfoFqeO+T5itxvZLo+9r+ahZ8AAGYgwkdKfPSIK2vglHWlNgnAvIjFTZ/iTHCmRTYnhPS5aIsr
- kVq8PPuk4g+k4/9SoyIrfxf1eTxOnh7CO8ScgyICQUgu1z5QiZ2NYmeq0eFBWsZW12fvH2PH+6C
- mnZjQDOnEAs027l5Pi6jjMJOiF22mKJP4Iu2AnTRe9B/8mY7WPnmUsvQkAnkd6CIowUiGQiViA=
-X-Received: by 2002:a05:6000:40cc:b0:482:af8a:4359 with SMTP id
- ffacd0b85a97d-482b1fd3a7amr11092980f8f.12.1787165676962; 
- Wed, 19 Aug 2026 11:54:36 -0700 (PDT)
+ AHgh+RoE79W1eq+OumBeeJa0fm/sHPrgN7x0MsBGvB5RxUOUrS6N+I7AOeHNV4iCNsSb7z9ncQcnnxWkikis@nongnu.org
+X-Gm-Message-State: AFuF++nnvUYIV097PXoP94SaFeURa9PS9NWJQWIZTruMFV+2ZJUfWhmG
+ 5xjxIB6kecRMCssuKcvVAZCB7htLNBjSPzcrx3EVNN9Ml7Iy88qz4bsEhjLwkFJtn3iu+ZyA9Q8
+ K3Coy
+X-Gm-Gg: AR+sD12F62cDOr1SxyqeaRvsof5jTRlrv3Zjhb+iIEvJwFAjcfmbYfhsu6Z11xz3AyP
+ CLSoiJRZIimvJhJkwhUSqDOn1HzZAaap0/Exhx2bbFYuxmIuXqYP06teGQEMPXvIxzV/rBJ9yMH
+ RPvRuy3mo9ECS42zakzHYu1FwNqgpep/bCyCGHizwKdW3/ZTZPKmRLenwIM/SeNCQBTgMDpWJvx
+ 39gJOUMeEbnRx1BW5M16Z2EmOOl4Yxi8REmLb//pDuu2dPUIP1kFc2tHTkd7CdUY6sg0JuWHwea
+ g/J0dybl809ahUxPx9GthcBtiU5Hgh40Z31Wwxprg8uDe0zTe8d/yoE+8xCrnfp40pnXd7IfYS8
+ 0h27u2L4lw58X3LWWWiWMB9I62KUtKyJj/+d9fGqv7HoaK0+X2G1DEyPCcS3Kn3wjPy0QjmO8k7
+ I5XO+kBzywQCPfDCQPwhGVkgFej7DXKAX/ZK0/lQqZZDnZrhc3DUkDRIfQFSIdHMvwROXH5BBzN
+ NPBc/ijXLfHRuzQp9m745kTwVB3nddPuwPrzWs9vJg7h6oaiSzOUwBaxhQsgogrDdDkNA==
+X-Received: by 2002:adf:e19e:0:b0:481:3124:c71f with SMTP id
+ ffacd0b85a97d-482b1fe1a07mr14169367f8f.17.1787165677969; 
+ Wed, 19 Aug 2026 11:54:37 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b145c9d7sm7995048f8f.15.2026.08.19.11.54.36
+ ffacd0b85a97d-482b145c9d7sm7995048f8f.15.2026.08.19.11.54.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 11:54:36 -0700 (PDT)
+ Wed, 19 Aug 2026 11:54:37 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Jan Kiszka <jan.kiszka@web.de>
-Subject: [PATCH 4/5] hw: Remove Marvell 88W8618 devices
-Date: Wed, 19 Aug 2026 19:54:29 +0100
-Message-ID: <20260819185430.3467629-5-peter.maydell@linaro.org>
+Subject: [PATCH 5/5] hw/audio: Remove wm8750 I2C audio device
+Date: Wed, 19 Aug 2026 19:54:30 +0100
+Message-ID: <20260819185430.3467629-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260819185430.3467629-1-peter.maydell@linaro.org>
 References: <20260819185430.3467629-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,807 +106,834 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The mv88w8618 ethernet and audio devices were used only by the
-now-removed musicpal machine, so can also be deleted.
+The wm8750 audio I2C device was used only by the audio device on the
+SoC used in the now-removed musicpal machine.  Since it has no users,
+we can delete it entirely.
 
+Although the wm8750 is an I2C device that could technically have been
+created on the command line, it isn't possible to do this usefully
+because the device only works when C code calls functions like
+wm8750_data_req_set() and wm8750_dac_buffer().
+
+This resolves the problem noted in issue #4135 that there's a buffer
+overflow in the interaction between the marvell_88w8618 audio device
+and the wm8750, by removing the offending code entirely.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4135
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/Kconfig                 |   3 -
- hw/audio/marvell_88w8618.c     | 315 --------------------------
- hw/audio/meson.build           |   1 -
- hw/net/meson.build             |   1 -
- hw/net/mv88w8618_eth.c         | 403 ---------------------------------
- include/hw/net/mv88w8618_eth.h |  13 --
- 6 files changed, 736 deletions(-)
- delete mode 100644 hw/audio/marvell_88w8618.c
- delete mode 100644 hw/net/mv88w8618_eth.c
- delete mode 100644 include/hw/net/mv88w8618_eth.h
+ hw/audio/Kconfig          |   4 -
+ hw/audio/meson.build      |   1 -
+ hw/audio/wm8750.c         | 738 --------------------------------------
+ include/hw/audio/wm8750.h |  30 --
+ 4 files changed, 773 deletions(-)
+ delete mode 100644 hw/audio/wm8750.c
+ delete mode 100644 include/hw/audio/wm8750.h
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 57db2a2fdf..5db7ce057f 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -100,9 +100,6 @@ config MUSCA
-     select SPLIT_IRQ
-     select UNIMP
- 
--config MARVELL_88W8618
--    bool
--
- config NETDUINO2
-     bool
+diff --git a/hw/audio/Kconfig b/hw/audio/Kconfig
+index daf060e1be..ed93fa2698 100644
+--- a/hw/audio/Kconfig
++++ b/hw/audio/Kconfig
+@@ -38,10 +38,6 @@ config PCSPK
      default y
-diff --git a/hw/audio/marvell_88w8618.c b/hw/audio/marvell_88w8618.c
-deleted file mode 100644
-index 061d076dad..0000000000
---- a/hw/audio/marvell_88w8618.c
-+++ /dev/null
-@@ -1,315 +0,0 @@
--/*
-- * Marvell 88w8618 audio emulation extracted from
-- * Marvell MV88w8618 / Freecom MusicPal emulation.
-- *
-- * Copyright (c) 2008 Jan Kiszka
-- *
-- * This code is licensed under the GNU GPL v2.
-- *
-- * Contributions after 2012-01-13 are licensed under the terms of the
-- * GNU GPL, version 2 or (at your option) any later version.
-- */
+     depends on I8254
+ 
+-config WM8750
+-    bool
+-    depends on I2C
 -
--#include "qemu/osdep.h"
--#include "hw/core/sysbus.h"
--#include "exec/cpu-common.h"
--#include "migration/vmstate.h"
--#include "hw/core/irq.h"
--#include "hw/core/qdev-properties.h"
--#include "hw/audio/wm8750.h"
--#include "qemu/audio.h"
--#include "qapi/error.h"
--#include "qemu/module.h"
--#include "qom/object.h"
--#include "system/physmem.h"
--
--#define MP_AUDIO_SIZE           0x00001000
--
--/* Audio register offsets */
--#define MP_AUDIO_PLAYBACK_MODE  0x00
--#define MP_AUDIO_CLOCK_DIV      0x18
--#define MP_AUDIO_IRQ_STATUS     0x20
--#define MP_AUDIO_IRQ_ENABLE     0x24
--#define MP_AUDIO_TX_START_LO    0x28
--#define MP_AUDIO_TX_THRESHOLD   0x2C
--#define MP_AUDIO_TX_STATUS      0x38
--#define MP_AUDIO_TX_START_HI    0x40
--
--/* Status register and IRQ enable bits */
--#define MP_AUDIO_TX_HALF        (1 << 6)
--#define MP_AUDIO_TX_FULL        (1 << 7)
--
--/* Playback mode bits */
--#define MP_AUDIO_16BIT_SAMPLE   (1 << 0)
--#define MP_AUDIO_PLAYBACK_EN    (1 << 7)
--#define MP_AUDIO_CLOCK_24MHZ    (1 << 9)
--#define MP_AUDIO_MONO           (1 << 14)
--
--OBJECT_DECLARE_SIMPLE_TYPE(mv88w8618_audio_state, MV88W8618_AUDIO)
--
--struct mv88w8618_audio_state {
--    SysBusDevice parent_obj;
--
--    MemoryRegion iomem;
--    qemu_irq irq;
--    uint32_t playback_mode;
--    uint32_t status;
--    uint32_t irq_enable;
--    uint32_t phys_buf;
--    uint32_t target_buffer;
--    uint32_t threshold;
--    uint32_t play_pos;
--    uint32_t last_free;
--    uint32_t clock_div;
--    void *wm;
--};
--
--static void mv88w8618_audio_callback(void *opaque, int free_out, int free_in)
--{
--    mv88w8618_audio_state *s = opaque;
--    int16_t *codec_buffer;
--    QEMU_UNINITIALIZED int8_t buf[4096];
--    int8_t *mem_buffer;
--    int pos, block_size;
--
--    if (!(s->playback_mode & MP_AUDIO_PLAYBACK_EN)) {
--        return;
--    }
--    if (s->playback_mode & MP_AUDIO_16BIT_SAMPLE) {
--        free_out <<= 1;
--    }
--    if (!(s->playback_mode & MP_AUDIO_MONO)) {
--        free_out <<= 1;
--    }
--    block_size = s->threshold / 2;
--    if (free_out - s->last_free < block_size) {
--        return;
--    }
--    if (block_size > 4096) {
--        return;
--    }
--    physical_memory_read(s->target_buffer + s->play_pos, buf, block_size);
--    mem_buffer = buf;
--    if (s->playback_mode & MP_AUDIO_16BIT_SAMPLE) {
--        if (s->playback_mode & MP_AUDIO_MONO) {
--            codec_buffer = wm8750_dac_buffer(s->wm, block_size >> 1);
--            for (pos = 0; pos < block_size; pos += 2) {
--                *codec_buffer++ = *(int16_t *)mem_buffer;
--                *codec_buffer++ = *(int16_t *)mem_buffer;
--                mem_buffer += 2;
--            }
--        } else {
--            memcpy(wm8750_dac_buffer(s->wm, block_size >> 2),
--                   (uint32_t *)mem_buffer, block_size);
--        }
--    } else {
--        if (s->playback_mode & MP_AUDIO_MONO) {
--            codec_buffer = wm8750_dac_buffer(s->wm, block_size);
--            for (pos = 0; pos < block_size; pos++) {
--                *codec_buffer++ = cpu_to_le16(256 * *mem_buffer);
--                *codec_buffer++ = cpu_to_le16(256 * *mem_buffer++);
--            }
--        } else {
--            codec_buffer = wm8750_dac_buffer(s->wm, block_size >> 1);
--            for (pos = 0; pos < block_size; pos += 2) {
--                *codec_buffer++ = cpu_to_le16(256 * *mem_buffer++);
--                *codec_buffer++ = cpu_to_le16(256 * *mem_buffer++);
--            }
--        }
--    }
--    wm8750_dac_commit(s->wm);
--
--    s->last_free = free_out - block_size;
--
--    if (s->play_pos == 0) {
--        s->status |= MP_AUDIO_TX_HALF;
--        s->play_pos = block_size;
--    } else {
--        s->status |= MP_AUDIO_TX_FULL;
--        s->play_pos = 0;
--    }
--
--    if (s->status & s->irq_enable) {
--        qemu_irq_raise(s->irq);
--    }
--}
--
--static void mv88w8618_audio_clock_update(mv88w8618_audio_state *s)
--{
--    int rate;
--
--    if (s->playback_mode & MP_AUDIO_CLOCK_24MHZ) {
--        rate = 24576000 / 64; /* 24.576MHz */
--    } else {
--        rate = 11289600 / 64; /* 11.2896MHz */
--    }
--    rate /= ((s->clock_div >> 8) & 0xff) + 1;
--
--    wm8750_set_bclk_in(s->wm, rate);
--}
--
--static uint64_t mv88w8618_audio_read(void *opaque, hwaddr offset,
--                                    unsigned size)
--{
--    mv88w8618_audio_state *s = opaque;
--
--    switch (offset) {
--    case MP_AUDIO_PLAYBACK_MODE:
--        return s->playback_mode;
--
--    case MP_AUDIO_CLOCK_DIV:
--        return s->clock_div;
--
--    case MP_AUDIO_IRQ_STATUS:
--        return s->status;
--
--    case MP_AUDIO_IRQ_ENABLE:
--        return s->irq_enable;
--
--    case MP_AUDIO_TX_STATUS:
--        return s->play_pos >> 2;
--
--    default:
--        return 0;
--    }
--}
--
--static void mv88w8618_audio_write(void *opaque, hwaddr offset,
--                                  uint64_t value, unsigned size)
--{
--    mv88w8618_audio_state *s = opaque;
--
--    switch (offset) {
--    case MP_AUDIO_PLAYBACK_MODE:
--        if (value & MP_AUDIO_PLAYBACK_EN &&
--            !(s->playback_mode & MP_AUDIO_PLAYBACK_EN)) {
--            s->status = 0;
--            s->last_free = 0;
--            s->play_pos = 0;
--        }
--        s->playback_mode = value;
--        mv88w8618_audio_clock_update(s);
--        break;
--
--    case MP_AUDIO_CLOCK_DIV:
--        s->clock_div = value;
--        s->last_free = 0;
--        s->play_pos = 0;
--        mv88w8618_audio_clock_update(s);
--        break;
--
--    case MP_AUDIO_IRQ_STATUS:
--        s->status &= ~value;
--        break;
--
--    case MP_AUDIO_IRQ_ENABLE:
--        s->irq_enable = value;
--        if (s->status & s->irq_enable) {
--            qemu_irq_raise(s->irq);
--        }
--        break;
--
--    case MP_AUDIO_TX_START_LO:
--        s->phys_buf = (s->phys_buf & 0xFFFF0000) | (value & 0xFFFF);
--        s->target_buffer = s->phys_buf;
--        s->play_pos = 0;
--        s->last_free = 0;
--        break;
--
--    case MP_AUDIO_TX_THRESHOLD:
--        s->threshold = (value + 1) * 4;
--        break;
--
--    case MP_AUDIO_TX_START_HI:
--        s->phys_buf = (s->phys_buf & 0xFFFF) | (value << 16);
--        s->target_buffer = s->phys_buf;
--        s->play_pos = 0;
--        s->last_free = 0;
--        break;
--    }
--}
--
--static void mv88w8618_audio_reset(DeviceState *d)
--{
--    mv88w8618_audio_state *s = MV88W8618_AUDIO(d);
--
--    s->playback_mode = 0;
--    s->status = 0;
--    s->irq_enable = 0;
--    s->clock_div = 0;
--    s->threshold = 0;
--    s->phys_buf = 0;
--}
--
--static const MemoryRegionOps mv88w8618_audio_ops = {
--    .read = mv88w8618_audio_read,
--    .write = mv88w8618_audio_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
--};
--
--static void mv88w8618_audio_init(Object *obj)
--{
--    SysBusDevice *dev = SYS_BUS_DEVICE(obj);
--    mv88w8618_audio_state *s = MV88W8618_AUDIO(dev);
--
--    sysbus_init_irq(dev, &s->irq);
--
--    memory_region_init_io(&s->iomem, obj, &mv88w8618_audio_ops, s,
--                          "audio", MP_AUDIO_SIZE);
--    sysbus_init_mmio(dev, &s->iomem);
--
--    object_property_add_link(OBJECT(dev), "wm8750", TYPE_WM8750,
--                             (Object **) &s->wm,
--                             qdev_prop_allow_set_link_before_realize,
--                             0);
--}
--
--static void mv88w8618_audio_realize(DeviceState *dev, Error **errp)
--{
--    mv88w8618_audio_state *s = MV88W8618_AUDIO(dev);
--
--    wm8750_data_req_set(s->wm, mv88w8618_audio_callback, s);
--}
--
--static const VMStateDescription mv88w8618_audio_vmsd = {
--    .name = "mv88w8618_audio",
--    .version_id = 1,
--    .minimum_version_id = 1,
--    .fields = (const VMStateField[]) {
--        VMSTATE_UINT32(playback_mode, mv88w8618_audio_state),
--        VMSTATE_UINT32(status, mv88w8618_audio_state),
--        VMSTATE_UINT32(irq_enable, mv88w8618_audio_state),
--        VMSTATE_UINT32(phys_buf, mv88w8618_audio_state),
--        VMSTATE_UINT32(target_buffer, mv88w8618_audio_state),
--        VMSTATE_UINT32(threshold, mv88w8618_audio_state),
--        VMSTATE_UINT32(play_pos, mv88w8618_audio_state),
--        VMSTATE_UINT32(last_free, mv88w8618_audio_state),
--        VMSTATE_UINT32(clock_div, mv88w8618_audio_state),
--        VMSTATE_END_OF_LIST()
--    }
--};
--
--static void mv88w8618_audio_class_init(ObjectClass *klass, const void *data)
--{
--    DeviceClass *dc = DEVICE_CLASS(klass);
--
--    dc->realize = mv88w8618_audio_realize;
--    device_class_set_legacy_reset(dc, mv88w8618_audio_reset);
--    dc->vmsd = &mv88w8618_audio_vmsd;
--    dc->user_creatable = false;
--}
--
--static const TypeInfo mv88w8618_audio_info = {
--    .name          = TYPE_MV88W8618_AUDIO,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(mv88w8618_audio_state),
--    .instance_init = mv88w8618_audio_init,
--    .class_init    = mv88w8618_audio_class_init,
--};
--
--static void mv88w8618_register_types(void)
--{
--    type_register_static(&mv88w8618_audio_info);
--}
--
--type_init(mv88w8618_register_types)
+ config PL041
+     bool
+ 
 diff --git a/hw/audio/meson.build b/hw/audio/meson.build
-index 2154cbdb57..c977679e23 100644
+index c977679e23..3312bcec10 100644
 --- a/hw/audio/meson.build
 +++ b/hw/audio/meson.build
-@@ -7,7 +7,6 @@ system_ss.add(when: 'CONFIG_CS4231A', if_true: files('cs4231a.c'))
- system_ss.add(when: 'CONFIG_ES1370', if_true: files('es1370.c'))
- system_ss.add(when: 'CONFIG_GUS', if_true: files('gus.c', 'gusemu_hal.c', 'gusemu_mixer.c'))
- system_ss.add(when: 'CONFIG_HDA', if_true: files('intel-hda.c', 'hda-codec.c'))
--system_ss.add(when: 'CONFIG_MARVELL_88W8618', if_true: files('marvell_88w8618.c'))
- system_ss.add(when: 'CONFIG_PCSPK', if_true: files('pcspk.c'))
+@@ -11,6 +11,5 @@ system_ss.add(when: 'CONFIG_PCSPK', if_true: files('pcspk.c'))
  system_ss.add(when: 'CONFIG_PL041', if_true: files('pl041.c', 'lm4549.c'))
  system_ss.add(when: 'CONFIG_SB16', if_true: files('sb16.c'))
-diff --git a/hw/net/meson.build b/hw/net/meson.build
-index 84f142df22..b4c95b58fa 100644
---- a/hw/net/meson.build
-+++ b/hw/net/meson.build
-@@ -27,7 +27,6 @@ system_ss.add(when: 'CONFIG_ALLWINNER_EMAC', if_true: files('allwinner_emac.c'))
- system_ss.add(when: 'CONFIG_ALLWINNER_SUN8I_EMAC', if_true: files('allwinner-sun8i-emac.c'))
- system_ss.add(when: 'CONFIG_IMX_FEC', if_true: files('imx_fec.c'))
- system_ss.add(when: 'CONFIG_MSF2', if_true: files('msf2-emac.c'))
--system_ss.add(when: 'CONFIG_MARVELL_88W8618', if_true: files('mv88w8618_eth.c'))
- 
- system_ss.add(when: 'CONFIG_CADENCE', if_true: files('cadence_gem.c'))
- system_ss.add(when: 'CONFIG_STELLARIS_ENET', if_true: files('stellaris_enet.c'))
-diff --git a/hw/net/mv88w8618_eth.c b/hw/net/mv88w8618_eth.c
+ system_ss.add(when: 'CONFIG_VT82C686', if_true: files('via-ac97.c'))
+-system_ss.add(when: 'CONFIG_WM8750', if_true: files('wm8750.c'))
+ system_ss.add(when: ['CONFIG_VIRTIO_SND', 'CONFIG_VIRTIO'], if_true: files('virtio-snd.c'))
+ system_ss.add(when: ['CONFIG_VIRTIO_SND', 'CONFIG_VIRTIO', 'CONFIG_VIRTIO_PCI'], if_true: files('virtio-snd-pci.c'))
+diff --git a/hw/audio/wm8750.c b/hw/audio/wm8750.c
 deleted file mode 100644
-index 1fcfbe912e..0000000000
---- a/hw/net/mv88w8618_eth.c
+index e2507b0269..0000000000
+--- a/hw/audio/wm8750.c
 +++ /dev/null
-@@ -1,403 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0-or-later */
+@@ -1,738 +0,0 @@
 -/*
-- * Marvell MV88W8618 / Freecom MusicPal emulation.
+- * WM8750 audio CODEC.
 - *
-- * Copyright (c) 2008 Jan Kiszka
+- * Copyright (c) 2006 Openedhand Ltd.
+- * Written by Andrzej Zaborowski <balrog@zabor.org>
+- *
+- * This file is licensed under GNU GPL.
 - */
 -
 -#include "qemu/osdep.h"
--#include "qapi/error.h"
--#include "hw/core/qdev-properties.h"
--#include "hw/core/sysbus.h"
--#include "hw/core/irq.h"
--#include "hw/net/mv88w8618_eth.h"
+-#include "hw/i2c/i2c.h"
 -#include "migration/vmstate.h"
--#include "system/dma.h"
--#include "net/net.h"
+-#include "qemu/module.h"
+-#include "hw/audio/wm8750.h"
+-#include "qemu/audio.h"
+-#include "qom/object.h"
 -
--#define MP_ETH_SIZE             0x00001000
+-#define IN_PORT_N	3
+-#define OUT_PORT_N	3
 -
--/* Ethernet register offsets */
--#define MP_ETH_SMIR             0x010
--#define MP_ETH_PCXR             0x408
--#define MP_ETH_SDCMR            0x448
--#define MP_ETH_ICR              0x450
--#define MP_ETH_IMR              0x458
--#define MP_ETH_FRDP0            0x480
--#define MP_ETH_FRDP1            0x484
--#define MP_ETH_FRDP2            0x488
--#define MP_ETH_FRDP3            0x48C
--#define MP_ETH_CRDP0            0x4A0
--#define MP_ETH_CRDP1            0x4A4
--#define MP_ETH_CRDP2            0x4A8
--#define MP_ETH_CRDP3            0x4AC
--#define MP_ETH_CTDP0            0x4E0
--#define MP_ETH_CTDP1            0x4E4
+-#define CODEC		"wm8750"
 -
--/* MII PHY access */
--#define MP_ETH_SMIR_DATA        0x0000FFFF
--#define MP_ETH_SMIR_ADDR        0x03FF0000
--#define MP_ETH_SMIR_OPCODE      (1 << 26) /* Read value */
--#define MP_ETH_SMIR_RDVALID     (1 << 27)
+-typedef struct {
+-    int adc;
+-    int adc_hz;
+-    int dac;
+-    int dac_hz;
+-} WMRate;
 -
--/* PHY registers */
--#define MP_ETH_PHY1_BMSR        0x00210000
--#define MP_ETH_PHY1_PHYSID1     0x00410000
--#define MP_ETH_PHY1_PHYSID2     0x00610000
+-OBJECT_DECLARE_SIMPLE_TYPE(WM8750State, WM8750)
 -
--#define MP_PHY_BMSR_LINK        0x0004
--#define MP_PHY_BMSR_AUTONEG     0x0008
+-struct WM8750State {
+-    I2CSlave parent_obj;
 -
--#define MP_PHY_88E3015          0x01410E20
+-    uint8_t i2c_data[2];
+-    int i2c_len;
+-    AudioBackend *audio_be;
+-    SWVoiceIn *adc_voice[IN_PORT_N];
+-    SWVoiceOut *dac_voice[OUT_PORT_N];
+-    int enable;
+-    void (*data_req)(void *, int, int);
+-    void *opaque;
+-    uint8_t data_in[4096];
+-    uint8_t data_out[4096];
+-    int idx_in, req_in;
+-    int idx_out, req_out;
 -
--/* TX descriptor status */
--#define MP_ETH_TX_OWN           (1U << 31)
+-    SWVoiceOut **out[2];
+-    uint8_t outvol[7], outmute[2];
+-    SWVoiceIn **in[2];
+-    uint8_t invol[4], inmute[2];
 -
--/* RX descriptor status */
--#define MP_ETH_RX_OWN           (1U << 31)
--
--/* Interrupt cause/mask bits */
--#define MP_ETH_IRQ_RX_BIT       0
--#define MP_ETH_IRQ_RX           (1 << MP_ETH_IRQ_RX_BIT)
--#define MP_ETH_IRQ_TXHI_BIT     2
--#define MP_ETH_IRQ_TXLO_BIT     3
--
--/* Port config bits */
--#define MP_ETH_PCXR_2BSM_BIT    28 /* 2-byte incoming suffix */
--
--/* SDMA command bits */
--#define MP_ETH_CMD_TXHI         (1 << 23)
--#define MP_ETH_CMD_TXLO         (1 << 22)
--
--typedef struct mv88w8618_tx_desc {
--    uint32_t cmdstat;
--    uint16_t res;
--    uint16_t bytes;
--    uint32_t buffer;
--    uint32_t next;
--} mv88w8618_tx_desc;
--
--typedef struct mv88w8618_rx_desc {
--    uint32_t cmdstat;
--    uint16_t bytes;
--    uint16_t buffer_size;
--    uint32_t buffer;
--    uint32_t next;
--} mv88w8618_rx_desc;
--
--OBJECT_DECLARE_SIMPLE_TYPE(mv88w8618_eth_state, MV88W8618_ETH)
--
--struct mv88w8618_eth_state {
--    /*< private >*/
--    SysBusDevice parent_obj;
--    /*< public >*/
--
--    MemoryRegion iomem;
--    qemu_irq irq;
--    MemoryRegion *dma_mr;
--    AddressSpace dma_as;
--    uint32_t smir;
--    uint32_t icr;
--    uint32_t imr;
--    int mmio_index;
--    uint32_t vlan_header;
--    uint32_t tx_queue[2];
--    uint32_t rx_queue[4];
--    uint32_t frx_queue[4];
--    uint32_t cur_rx[4];
--    NICState *nic;
--    NICConf conf;
+-    uint8_t diff[2], pol, ds, monomix[2], alc, mute;
+-    uint8_t path[4], mpath[2], power, format;
+-    const WMRate *rate;
+-    uint8_t rate_vmstate;
+-    int adc_hz, dac_hz, ext_adc_hz, ext_dac_hz, master;
 -};
 -
--static void eth_rx_desc_put(AddressSpace *dma_as, uint32_t addr,
--                            mv88w8618_rx_desc *desc)
--{
--    cpu_to_le32s(&desc->cmdstat);
--    cpu_to_le16s(&desc->bytes);
--    cpu_to_le16s(&desc->buffer_size);
--    cpu_to_le32s(&desc->buffer);
--    cpu_to_le32s(&desc->next);
--    dma_memory_write(dma_as, addr, desc, sizeof(*desc), MEMTXATTRS_UNSPECIFIED);
--}
--
--static void eth_rx_desc_get(AddressSpace *dma_as, uint32_t addr,
--                            mv88w8618_rx_desc *desc)
--{
--    dma_memory_read(dma_as, addr, desc, sizeof(*desc), MEMTXATTRS_UNSPECIFIED);
--    le32_to_cpus(&desc->cmdstat);
--    le16_to_cpus(&desc->bytes);
--    le16_to_cpus(&desc->buffer_size);
--    le32_to_cpus(&desc->buffer);
--    le32_to_cpus(&desc->next);
--}
--
--static ssize_t eth_receive(NetClientState *nc, const uint8_t *buf, size_t size)
--{
--    mv88w8618_eth_state *s = qemu_get_nic_opaque(nc);
--    uint32_t desc_addr;
--    mv88w8618_rx_desc desc;
--    int i;
--
--    for (i = 0; i < 4; i++) {
--        desc_addr = s->cur_rx[i];
--        if (!desc_addr) {
--            continue;
--        }
--        do {
--            eth_rx_desc_get(&s->dma_as, desc_addr, &desc);
--            if ((desc.cmdstat & MP_ETH_RX_OWN) && desc.buffer_size >= size) {
--                dma_memory_write(&s->dma_as, desc.buffer + s->vlan_header,
--                                 buf, size, MEMTXATTRS_UNSPECIFIED);
--                desc.bytes = size + s->vlan_header;
--                desc.cmdstat &= ~MP_ETH_RX_OWN;
--                s->cur_rx[i] = desc.next;
--
--                s->icr |= MP_ETH_IRQ_RX;
--                if (s->icr & s->imr) {
--                    qemu_irq_raise(s->irq);
--                }
--                eth_rx_desc_put(&s->dma_as, desc_addr, &desc);
--                return size;
--            }
--            desc_addr = desc.next;
--        } while (desc_addr != s->rx_queue[i]);
--    }
--    return size;
--}
--
--static void eth_tx_desc_put(AddressSpace *dma_as, uint32_t addr,
--                            mv88w8618_tx_desc *desc)
--{
--    cpu_to_le32s(&desc->cmdstat);
--    cpu_to_le16s(&desc->res);
--    cpu_to_le16s(&desc->bytes);
--    cpu_to_le32s(&desc->buffer);
--    cpu_to_le32s(&desc->next);
--    dma_memory_write(dma_as, addr, desc, sizeof(*desc), MEMTXATTRS_UNSPECIFIED);
--}
--
--static void eth_tx_desc_get(AddressSpace *dma_as, uint32_t addr,
--                            mv88w8618_tx_desc *desc)
--{
--    dma_memory_read(dma_as, addr, desc, sizeof(*desc), MEMTXATTRS_UNSPECIFIED);
--    le32_to_cpus(&desc->cmdstat);
--    le16_to_cpus(&desc->res);
--    le16_to_cpus(&desc->bytes);
--    le32_to_cpus(&desc->buffer);
--    le32_to_cpus(&desc->next);
--}
--
--static void eth_send(mv88w8618_eth_state *s, int queue_index)
--{
--    uint32_t desc_addr = s->tx_queue[queue_index];
--    mv88w8618_tx_desc desc;
--    uint32_t next_desc;
--    uint8_t buf[2048];
--    int len;
--
--    do {
--        eth_tx_desc_get(&s->dma_as, desc_addr, &desc);
--        next_desc = desc.next;
--        if (desc.cmdstat & MP_ETH_TX_OWN) {
--            len = desc.bytes;
--            if (len < 2048) {
--                dma_memory_read(&s->dma_as, desc.buffer, buf, len,
--                                MEMTXATTRS_UNSPECIFIED);
--                qemu_send_packet(qemu_get_queue(s->nic), buf, len);
--            }
--            desc.cmdstat &= ~MP_ETH_TX_OWN;
--            s->icr |= 1 << (MP_ETH_IRQ_TXLO_BIT - queue_index);
--            eth_tx_desc_put(&s->dma_as, desc_addr, &desc);
--        }
--        desc_addr = next_desc;
--    } while (desc_addr != s->tx_queue[queue_index]);
--}
--
--static uint64_t mv88w8618_eth_read(void *opaque, hwaddr offset,
--                                   unsigned size)
--{
--    mv88w8618_eth_state *s = opaque;
--
--    switch (offset) {
--    case MP_ETH_SMIR:
--        if (s->smir & MP_ETH_SMIR_OPCODE) {
--            switch (s->smir & MP_ETH_SMIR_ADDR) {
--            case MP_ETH_PHY1_BMSR:
--                return MP_PHY_BMSR_LINK | MP_PHY_BMSR_AUTONEG |
--                       MP_ETH_SMIR_RDVALID;
--            case MP_ETH_PHY1_PHYSID1:
--                return (MP_PHY_88E3015 >> 16) | MP_ETH_SMIR_RDVALID;
--            case MP_ETH_PHY1_PHYSID2:
--                return (MP_PHY_88E3015 & 0xFFFF) | MP_ETH_SMIR_RDVALID;
--            default:
--                return MP_ETH_SMIR_RDVALID;
--            }
--        }
--        return 0;
--
--    case MP_ETH_ICR:
--        return s->icr;
--
--    case MP_ETH_IMR:
--        return s->imr;
--
--    case MP_ETH_FRDP0 ... MP_ETH_FRDP3:
--        return s->frx_queue[(offset - MP_ETH_FRDP0) / 4];
--
--    case MP_ETH_CRDP0 ... MP_ETH_CRDP3:
--        return s->rx_queue[(offset - MP_ETH_CRDP0) / 4];
--
--    case MP_ETH_CTDP0 ... MP_ETH_CTDP1:
--        return s->tx_queue[(offset - MP_ETH_CTDP0) / 4];
--
--    default:
--        return 0;
--    }
--}
--
--static void mv88w8618_eth_write(void *opaque, hwaddr offset,
--                                uint64_t value, unsigned size)
--{
--    mv88w8618_eth_state *s = opaque;
--
--    switch (offset) {
--    case MP_ETH_SMIR:
--        s->smir = value;
--        break;
--
--    case MP_ETH_PCXR:
--        s->vlan_header = ((value >> MP_ETH_PCXR_2BSM_BIT) & 1) * 2;
--        break;
--
--    case MP_ETH_SDCMR:
--        if (value & MP_ETH_CMD_TXHI) {
--            eth_send(s, 1);
--        }
--        if (value & MP_ETH_CMD_TXLO) {
--            eth_send(s, 0);
--        }
--        if (value & (MP_ETH_CMD_TXHI | MP_ETH_CMD_TXLO) && s->icr & s->imr) {
--            qemu_irq_raise(s->irq);
--        }
--        break;
--
--    case MP_ETH_ICR:
--        s->icr &= value;
--        break;
--
--    case MP_ETH_IMR:
--        s->imr = value;
--        if (s->icr & s->imr) {
--            qemu_irq_raise(s->irq);
--        }
--        break;
--
--    case MP_ETH_FRDP0 ... MP_ETH_FRDP3:
--        s->frx_queue[(offset - MP_ETH_FRDP0) / 4] = value;
--        break;
--
--    case MP_ETH_CRDP0 ... MP_ETH_CRDP3:
--        s->rx_queue[(offset - MP_ETH_CRDP0) / 4] =
--            s->cur_rx[(offset - MP_ETH_CRDP0) / 4] = value;
--        break;
--
--    case MP_ETH_CTDP0 ... MP_ETH_CTDP1:
--        s->tx_queue[(offset - MP_ETH_CTDP0) / 4] = value;
--        break;
--    }
--}
--
--static const MemoryRegionOps mv88w8618_eth_ops = {
--    .read = mv88w8618_eth_read,
--    .write = mv88w8618_eth_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
+-/* pow(10.0, -i / 20.0) * 255, i = 0..42 */
+-static const uint8_t wm8750_vol_db_table[] = {
+-    255, 227, 203, 181, 161, 143, 128, 114, 102, 90, 81, 72, 64, 57, 51, 45,
+-    40, 36, 32, 29, 26, 23, 20, 18, 16, 14, 13, 11, 10, 9, 8, 7, 6, 6, 5, 5,
+-    4, 4, 3, 3, 3, 2, 2
 -};
 -
--static void eth_cleanup(NetClientState *nc)
+-#define WM8750_OUTVOL_TRANSFORM(x)	wm8750_vol_db_table[(0x7f - x) / 3]
+-#define WM8750_INVOL_TRANSFORM(x)	(x << 2)
+-
+-static inline void wm8750_in_load(WM8750State *s)
 -{
--    mv88w8618_eth_state *s = qemu_get_nic_opaque(nc);
--
--    s->nic = NULL;
--}
--
--static NetClientInfo net_mv88w8618_info = {
--    .type = NET_CLIENT_DRIVER_NIC,
--    .size = sizeof(NICState),
--    .receive = eth_receive,
--    .cleanup = eth_cleanup,
--};
--
--static void mv88w8618_eth_init(Object *obj)
--{
--    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
--    DeviceState *dev = DEVICE(sbd);
--    mv88w8618_eth_state *s = MV88W8618_ETH(dev);
--
--    sysbus_init_irq(sbd, &s->irq);
--    memory_region_init_io(&s->iomem, obj, &mv88w8618_eth_ops, s,
--                          "mv88w8618-eth", MP_ETH_SIZE);
--    sysbus_init_mmio(sbd, &s->iomem);
--}
--
--static void mv88w8618_eth_realize(DeviceState *dev, Error **errp)
--{
--    mv88w8618_eth_state *s = MV88W8618_ETH(dev);
--
--    if (!s->dma_mr) {
--        error_setg(errp, TYPE_MV88W8618_ETH " 'dma-memory' link not set");
+-    if (s->idx_in + s->req_in <= sizeof(s->data_in))
 -        return;
--    }
--
--    address_space_init(&s->dma_as, s->dma_mr, "emac-dma");
--    s->nic = qemu_new_nic(&net_mv88w8618_info, &s->conf,
--                          object_get_typename(OBJECT(dev)), dev->id,
--                          &dev->mem_reentrancy_guard, s);
+-    s->idx_in = MAX(0, (int) sizeof(s->data_in) - s->req_in);
+-    audio_be_read(s->audio_be, *s->in[0], s->data_in + s->idx_in,
+-             sizeof(s->data_in) - s->idx_in);
 -}
 -
--static const VMStateDescription mv88w8618_eth_vmsd = {
--    .name = "mv88w8618_eth",
--    .version_id = 1,
--    .minimum_version_id = 1,
+-static inline void wm8750_out_flush(WM8750State *s)
+-{
+-    int sent = 0;
+-    while (sent < s->idx_out)
+-        sent += audio_be_write(s->audio_be, *s->out[0],
+-                               s->data_out + sent, s->idx_out - sent)
+-                ?: s->idx_out;
+-    s->idx_out = 0;
+-}
+-
+-static void wm8750_audio_in_cb(void *opaque, int avail_b)
+-{
+-    WM8750State *s = (WM8750State *) opaque;
+-    s->req_in = avail_b;
+-    s->data_req(s->opaque, s->req_out >> 2, avail_b >> 2);
+-}
+-
+-static void wm8750_audio_out_cb(void *opaque, int free_b)
+-{
+-    WM8750State *s = (WM8750State *) opaque;
+-
+-    if (s->idx_out >= free_b) {
+-        s->idx_out = free_b;
+-        s->req_out = 0;
+-        wm8750_out_flush(s);
+-    } else
+-        s->req_out = free_b - s->idx_out;
+-
+-    s->data_req(s->opaque, s->req_out >> 2, s->req_in >> 2);
+-}
+-
+-static const WMRate wm_rate_table[] = {
+-    {  256, 48000,  256, 48000 },	/* SR: 00000 */
+-    {  384, 48000,  384, 48000 },	/* SR: 00001 */
+-    {  256, 48000, 1536,  8000 },	/* SR: 00010 */
+-    {  384, 48000, 2304,  8000 },	/* SR: 00011 */
+-    { 1536,  8000,  256, 48000 },	/* SR: 00100 */
+-    { 2304,  8000,  384, 48000 },	/* SR: 00101 */
+-    { 1536,  8000, 1536,  8000 },	/* SR: 00110 */
+-    { 2304,  8000, 2304,  8000 },	/* SR: 00111 */
+-    { 1024, 12000, 1024, 12000 },	/* SR: 01000 */
+-    { 1526, 12000, 1536, 12000 },	/* SR: 01001 */
+-    {  768, 16000,  768, 16000 },	/* SR: 01010 */
+-    { 1152, 16000, 1152, 16000 },	/* SR: 01011 */
+-    {  384, 32000,  384, 32000 },	/* SR: 01100 */
+-    {  576, 32000,  576, 32000 },	/* SR: 01101 */
+-    {  128, 96000,  128, 96000 },	/* SR: 01110 */
+-    {  192, 96000,  192, 96000 },	/* SR: 01111 */
+-    {  256, 44100,  256, 44100 },	/* SR: 10000 */
+-    {  384, 44100,  384, 44100 },	/* SR: 10001 */
+-    {  256, 44100, 1408,  8018 },	/* SR: 10010 */
+-    {  384, 44100, 2112,  8018 },	/* SR: 10011 */
+-    { 1408,  8018,  256, 44100 },	/* SR: 10100 */
+-    { 2112,  8018,  384, 44100 },	/* SR: 10101 */
+-    { 1408,  8018, 1408,  8018 },	/* SR: 10110 */
+-    { 2112,  8018, 2112,  8018 },	/* SR: 10111 */
+-    { 1024, 11025, 1024, 11025 },	/* SR: 11000 */
+-    { 1536, 11025, 1536, 11025 },	/* SR: 11001 */
+-    {  512, 22050,  512, 22050 },	/* SR: 11010 */
+-    {  768, 22050,  768, 22050 },	/* SR: 11011 */
+-    {  512, 24000,  512, 24000 },	/* SR: 11100 */
+-    {  768, 24000,  768, 24000 },	/* SR: 11101 */
+-    {  128, 88200,  128, 88200 },	/* SR: 11110 */
+-    {  192, 88200,  192, 88200 },	/* SR: 11111 */
+-};
+-
+-static void wm8750_vol_update(WM8750State *s)
+-{
+-    /* FIXME: multiply all volumes by s->invol[2], s->invol[3] */
+-
+-    audio_be_set_volume_in_lr(s->audio_be, s->adc_voice[0], s->mute,
+-                    s->inmute[0] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[0]),
+-                    s->inmute[1] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[1]));
+-    audio_be_set_volume_in_lr(s->audio_be, s->adc_voice[1], s->mute,
+-                    s->inmute[0] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[0]),
+-                    s->inmute[1] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[1]));
+-    audio_be_set_volume_in_lr(s->audio_be, s->adc_voice[2], s->mute,
+-                    s->inmute[0] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[0]),
+-                    s->inmute[1] ? 0 : WM8750_INVOL_TRANSFORM(s->invol[1]));
+-
+-    /* FIXME: multiply all volumes by s->outvol[0], s->outvol[1] */
+-
+-    /* Speaker: LOUT2VOL ROUT2VOL */
+-    audio_be_set_volume_out_lr(s->audio_be, s->dac_voice[0], s->mute,
+-                    s->outmute[0] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[4]),
+-                    s->outmute[1] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[5]));
+-
+-    /* Headphone: LOUT1VOL ROUT1VOL */
+-    audio_be_set_volume_out_lr(s->audio_be, s->dac_voice[1], s->mute,
+-                    s->outmute[0] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[2]),
+-                    s->outmute[1] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[3]));
+-
+-    /* MONOOUT: MONOVOL MONOVOL */
+-    audio_be_set_volume_out_lr(s->audio_be, s->dac_voice[2], s->mute,
+-                    s->outmute[0] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[6]),
+-                    s->outmute[1] ? 0 : WM8750_OUTVOL_TRANSFORM(s->outvol[6]));
+-}
+-
+-static void wm8750_set_format(WM8750State *s)
+-{
+-    int i;
+-    struct audsettings in_fmt;
+-    struct audsettings out_fmt;
+-
+-    wm8750_out_flush(s);
+-
+-    if (s->in[0] && *s->in[0])
+-        audio_be_set_active_in(s->audio_be, *s->in[0], 0);
+-    if (s->out[0] && *s->out[0])
+-        audio_be_set_active_out(s->audio_be, *s->out[0], 0);
+-
+-    for (i = 0; i < IN_PORT_N; i ++)
+-        if (s->adc_voice[i]) {
+-            audio_be_close_in(s->audio_be, s->adc_voice[i]);
+-            s->adc_voice[i] = NULL;
+-        }
+-    for (i = 0; i < OUT_PORT_N; i ++)
+-        if (s->dac_voice[i]) {
+-            audio_be_close_out(s->audio_be, s->dac_voice[i]);
+-            s->dac_voice[i] = NULL;
+-        }
+-
+-    if (!s->enable)
+-        return;
+-
+-    /* Setup input */
+-    in_fmt.big_endian = false;
+-    in_fmt.nchannels = 2;
+-    in_fmt.freq = s->adc_hz;
+-    in_fmt.fmt = AUDIO_FORMAT_S16;
+-
+-    s->adc_voice[0] = audio_be_open_in(s->audio_be, s->adc_voice[0],
+-                    CODEC ".input1", s, wm8750_audio_in_cb, &in_fmt);
+-    s->adc_voice[1] = audio_be_open_in(s->audio_be, s->adc_voice[1],
+-                    CODEC ".input2", s, wm8750_audio_in_cb, &in_fmt);
+-    s->adc_voice[2] = audio_be_open_in(s->audio_be, s->adc_voice[2],
+-                    CODEC ".input3", s, wm8750_audio_in_cb, &in_fmt);
+-
+-    /* Setup output */
+-    out_fmt.big_endian = false;
+-    out_fmt.nchannels = 2;
+-    out_fmt.freq = s->dac_hz;
+-    out_fmt.fmt = AUDIO_FORMAT_S16;
+-
+-    s->dac_voice[0] = audio_be_open_out(s->audio_be, s->dac_voice[0],
+-                    CODEC ".speaker", s, wm8750_audio_out_cb, &out_fmt);
+-    s->dac_voice[1] = audio_be_open_out(s->audio_be, s->dac_voice[1],
+-                    CODEC ".headphone", s, wm8750_audio_out_cb, &out_fmt);
+-    /* MONOMIX is also in stereo for simplicity */
+-    s->dac_voice[2] = audio_be_open_out(s->audio_be, s->dac_voice[2],
+-                    CODEC ".monomix", s, wm8750_audio_out_cb, &out_fmt);
+-    /* no sense emulating OUT3 which is a mix of other outputs */
+-
+-    wm8750_vol_update(s);
+-
+-    /* We should connect the left and right channels to their
+-     * respective inputs/outputs but we have completely no need
+-     * for mixing or combining paths to different ports, so we
+-     * connect both channels to where the left channel is routed.  */
+-    if (s->in[0] && *s->in[0])
+-        audio_be_set_active_in(s->audio_be, *s->in[0], 1);
+-    if (s->out[0] && *s->out[0])
+-        audio_be_set_active_out(s->audio_be, *s->out[0], 1);
+-}
+-
+-static void wm8750_clk_update(WM8750State *s, int ext)
+-{
+-    if (s->master || !s->ext_dac_hz)
+-        s->dac_hz = s->rate->dac_hz;
+-    else
+-        s->dac_hz = s->ext_dac_hz;
+-
+-    if (s->master || !s->ext_adc_hz)
+-        s->adc_hz = s->rate->adc_hz;
+-    else
+-        s->adc_hz = s->ext_adc_hz;
+-
+-    if (s->master || (!s->ext_dac_hz && !s->ext_adc_hz)) {
+-        if (!ext)
+-            wm8750_set_format(s);
+-    } else {
+-        if (ext)
+-            wm8750_set_format(s);
+-    }
+-}
+-
+-static void wm8750_reset(I2CSlave *i2c)
+-{
+-    WM8750State *s = WM8750(i2c);
+-
+-    s->rate = &wm_rate_table[0];
+-    s->enable = 0;
+-    wm8750_clk_update(s, 1);
+-    s->diff[0] = 0;
+-    s->diff[1] = 0;
+-    s->ds = 0;
+-    s->alc = 0;
+-    s->in[0] = &s->adc_voice[0];
+-    s->invol[0] = 0x17;
+-    s->invol[1] = 0x17;
+-    s->invol[2] = 0xc3;
+-    s->invol[3] = 0xc3;
+-    s->out[0] = &s->dac_voice[0];
+-    s->outvol[0] = 0xff;
+-    s->outvol[1] = 0xff;
+-    s->outvol[2] = 0x79;
+-    s->outvol[3] = 0x79;
+-    s->outvol[4] = 0x79;
+-    s->outvol[5] = 0x79;
+-    s->outvol[6] = 0x79;
+-    s->inmute[0] = 0;
+-    s->inmute[1] = 0;
+-    s->outmute[0] = 0;
+-    s->outmute[1] = 0;
+-    s->mute = 1;
+-    s->path[0] = 0;
+-    s->path[1] = 0;
+-    s->path[2] = 0;
+-    s->path[3] = 0;
+-    s->mpath[0] = 0;
+-    s->mpath[1] = 0;
+-    s->format = 0x0a;
+-    s->idx_in = sizeof(s->data_in);
+-    s->req_in = 0;
+-    s->idx_out = 0;
+-    s->req_out = 0;
+-    wm8750_vol_update(s);
+-    s->i2c_len = 0;
+-}
+-
+-static int wm8750_event(I2CSlave *i2c, enum i2c_event event)
+-{
+-    WM8750State *s = WM8750(i2c);
+-
+-    switch (event) {
+-    case I2C_START_SEND:
+-        s->i2c_len = 0;
+-        break;
+-    case I2C_FINISH:
+-#ifdef VERBOSE
+-        if (s->i2c_len < 2)
+-            printf("%s: message too short (%i bytes)\n",
+-                            __func__, s->i2c_len);
+-#endif
+-        break;
+-    default:
+-        break;
+-    }
+-
+-    return 0;
+-}
+-
+-#define WM8750_LINVOL	0x00
+-#define WM8750_RINVOL	0x01
+-#define WM8750_LOUT1V	0x02
+-#define WM8750_ROUT1V	0x03
+-#define WM8750_ADCDAC	0x05
+-#define WM8750_IFACE	0x07
+-#define WM8750_SRATE	0x08
+-#define WM8750_LDAC	0x0a
+-#define WM8750_RDAC	0x0b
+-#define WM8750_BASS	0x0c
+-#define WM8750_TREBLE	0x0d
+-#define WM8750_RESET	0x0f
+-#define WM8750_3D	0x10
+-#define WM8750_ALC1	0x11
+-#define WM8750_ALC2	0x12
+-#define WM8750_ALC3	0x13
+-#define WM8750_NGATE	0x14
+-#define WM8750_LADC	0x15
+-#define WM8750_RADC	0x16
+-#define WM8750_ADCTL1	0x17
+-#define WM8750_ADCTL2	0x18
+-#define WM8750_PWR1	0x19
+-#define WM8750_PWR2	0x1a
+-#define WM8750_ADCTL3	0x1b
+-#define WM8750_ADCIN	0x1f
+-#define WM8750_LADCIN	0x20
+-#define WM8750_RADCIN	0x21
+-#define WM8750_LOUTM1	0x22
+-#define WM8750_LOUTM2	0x23
+-#define WM8750_ROUTM1	0x24
+-#define WM8750_ROUTM2	0x25
+-#define WM8750_MOUTM1	0x26
+-#define WM8750_MOUTM2	0x27
+-#define WM8750_LOUT2V	0x28
+-#define WM8750_ROUT2V	0x29
+-#define WM8750_MOUTV	0x2a
+-
+-static int wm8750_tx(I2CSlave *i2c, uint8_t data)
+-{
+-    WM8750State *s = WM8750(i2c);
+-    uint8_t cmd;
+-    uint16_t value;
+-
+-    if (s->i2c_len >= 2) {
+-#ifdef VERBOSE
+-        printf("%s: long message (%i bytes)\n", __func__, s->i2c_len);
+-#endif
+-        return 1;
+-    }
+-    s->i2c_data[s->i2c_len ++] = data;
+-    if (s->i2c_len != 2)
+-        return 0;
+-
+-    cmd = s->i2c_data[0] >> 1;
+-    value = ((s->i2c_data[0] << 8) | s->i2c_data[1]) & 0x1ff;
+-
+-    switch (cmd) {
+-    case WM8750_LADCIN:	/* ADC Signal Path Control (Left) */
+-        s->diff[0] = (((value >> 6) & 3) == 3);	/* LINSEL */
+-        if (s->diff[0])
+-            s->in[0] = &s->adc_voice[0 + s->ds * 1];
+-        else
+-            s->in[0] = &s->adc_voice[((value >> 6) & 3) * 1 + 0];
+-        break;
+-
+-    case WM8750_RADCIN:	/* ADC Signal Path Control (Right) */
+-        s->diff[1] = (((value >> 6) & 3) == 3);	/* RINSEL */
+-        if (s->diff[1])
+-            s->in[1] = &s->adc_voice[0 + s->ds * 1];
+-        else
+-            s->in[1] = &s->adc_voice[((value >> 6) & 3) * 1 + 0];
+-        break;
+-
+-    case WM8750_ADCIN:	/* ADC Input Mode */
+-        s->ds = (value >> 8) & 1;	/* DS */
+-        if (s->diff[0])
+-            s->in[0] = &s->adc_voice[0 + s->ds * 1];
+-        if (s->diff[1])
+-            s->in[1] = &s->adc_voice[0 + s->ds * 1];
+-        s->monomix[0] = (value >> 6) & 3;	/* MONOMIX */
+-        break;
+-
+-    case WM8750_ADCTL1:	/* Additional Control (1) */
+-        s->monomix[1] = (value >> 1) & 1;	/* DMONOMIX */
+-        break;
+-
+-    case WM8750_PWR1:	/* Power Management (1) */
+-        s->enable = ((value >> 6) & 7) == 3;	/* VMIDSEL, VREF */
+-        wm8750_set_format(s);
+-        break;
+-
+-    case WM8750_LINVOL:	/* Left Channel PGA */
+-        s->invol[0] = value & 0x3f;		/* LINVOL */
+-        s->inmute[0] = (value >> 7) & 1;	/* LINMUTE */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_RINVOL:	/* Right Channel PGA */
+-        s->invol[1] = value & 0x3f;		/* RINVOL */
+-        s->inmute[1] = (value >> 7) & 1;	/* RINMUTE */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_ADCDAC:	/* ADC and DAC Control */
+-        s->pol = (value >> 5) & 3;		/* ADCPOL */
+-        s->mute = (value >> 3) & 1;		/* DACMU */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_ADCTL3:	/* Additional Control (3) */
+-        break;
+-
+-    case WM8750_LADC:	/* Left ADC Digital Volume */
+-        s->invol[2] = value & 0xff;		/* LADCVOL */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_RADC:	/* Right ADC Digital Volume */
+-        s->invol[3] = value & 0xff;		/* RADCVOL */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_ALC1:	/* ALC Control (1) */
+-        s->alc = (value >> 7) & 3;		/* ALCSEL */
+-        break;
+-
+-    case WM8750_NGATE:	/* Noise Gate Control */
+-    case WM8750_3D:	/* 3D enhance */
+-        break;
+-
+-    case WM8750_LDAC:	/* Left Channel Digital Volume */
+-        s->outvol[0] = value & 0xff;		/* LDACVOL */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_RDAC:	/* Right Channel Digital Volume */
+-        s->outvol[1] = value & 0xff;		/* RDACVOL */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_BASS:	/* Bass Control */
+-        break;
+-
+-    case WM8750_LOUTM1:	/* Left Mixer Control (1) */
+-        s->path[0] = (value >> 8) & 1;		/* LD2LO */
+-        /* TODO: mute/unmute respective paths */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_LOUTM2:	/* Left Mixer Control (2) */
+-        s->path[1] = (value >> 8) & 1;		/* RD2LO */
+-        /* TODO: mute/unmute respective paths */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_ROUTM1:	/* Right Mixer Control (1) */
+-        s->path[2] = (value >> 8) & 1;		/* LD2RO */
+-        /* TODO: mute/unmute respective paths */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_ROUTM2:	/* Right Mixer Control (2) */
+-        s->path[3] = (value >> 8) & 1;		/* RD2RO */
+-        /* TODO: mute/unmute respective paths */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_MOUTM1:	/* Mono Mixer Control (1) */
+-        s->mpath[0] = (value >> 8) & 1;		/* LD2MO */
+-        /* TODO: mute/unmute respective paths */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_MOUTM2:	/* Mono Mixer Control (2) */
+-        s->mpath[1] = (value >> 8) & 1;		/* RD2MO */
+-        /* TODO: mute/unmute respective paths */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_LOUT1V:	/* LOUT1 Volume */
+-        s->outvol[2] = value & 0x7f;		/* LOUT1VOL */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_LOUT2V:	/* LOUT2 Volume */
+-        s->outvol[4] = value & 0x7f;		/* LOUT2VOL */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_ROUT1V:	/* ROUT1 Volume */
+-        s->outvol[3] = value & 0x7f;		/* ROUT1VOL */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_ROUT2V:	/* ROUT2 Volume */
+-        s->outvol[5] = value & 0x7f;		/* ROUT2VOL */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_MOUTV:	/* MONOOUT Volume */
+-        s->outvol[6] = value & 0x7f;		/* MONOOUTVOL */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_ADCTL2:	/* Additional Control (2) */
+-        break;
+-
+-    case WM8750_PWR2:	/* Power Management (2) */
+-        s->power = value & 0x7e;
+-        /* TODO: mute/unmute respective paths */
+-        wm8750_vol_update(s);
+-        break;
+-
+-    case WM8750_IFACE:	/* Digital Audio Interface Format */
+-        s->format = value;
+-        s->master = (value >> 6) & 1;			/* MS */
+-        wm8750_clk_update(s, s->master);
+-        break;
+-
+-    case WM8750_SRATE:	/* Clocking and Sample Rate Control */
+-        s->rate = &wm_rate_table[(value >> 1) & 0x1f];
+-        wm8750_clk_update(s, 0);
+-        break;
+-
+-    case WM8750_RESET:	/* Reset */
+-        wm8750_reset(I2C_SLAVE(s));
+-        break;
+-
+-#ifdef VERBOSE
+-    default:
+-        printf("%s: unknown register %02x\n", __func__, cmd);
+-#endif
+-    }
+-
+-    return 0;
+-}
+-
+-static uint8_t wm8750_rx(I2CSlave *i2c)
+-{
+-    return 0x00;
+-}
+-
+-static int wm8750_pre_save(void *opaque)
+-{
+-    WM8750State *s = opaque;
+-
+-    s->rate_vmstate = s->rate - wm_rate_table;
+-
+-    return 0;
+-}
+-
+-static int wm8750_post_load(void *opaque, int version_id)
+-{
+-    WM8750State *s = opaque;
+-
+-    s->rate = &wm_rate_table[s->rate_vmstate & 0x1f];
+-    return 0;
+-}
+-
+-static const VMStateDescription vmstate_wm8750 = {
+-    .name = CODEC,
+-    .version_id = 0,
+-    .minimum_version_id = 0,
+-    .pre_save = wm8750_pre_save,
+-    .post_load = wm8750_post_load,
 -    .fields = (const VMStateField[]) {
--        VMSTATE_UINT32(smir, mv88w8618_eth_state),
--        VMSTATE_UINT32(icr, mv88w8618_eth_state),
--        VMSTATE_UINT32(imr, mv88w8618_eth_state),
--        VMSTATE_UINT32(vlan_header, mv88w8618_eth_state),
--        VMSTATE_UINT32_ARRAY(tx_queue, mv88w8618_eth_state, 2),
--        VMSTATE_UINT32_ARRAY(rx_queue, mv88w8618_eth_state, 4),
--        VMSTATE_UINT32_ARRAY(frx_queue, mv88w8618_eth_state, 4),
--        VMSTATE_UINT32_ARRAY(cur_rx, mv88w8618_eth_state, 4),
+-        VMSTATE_UINT8_ARRAY(i2c_data, WM8750State, 2),
+-        VMSTATE_INT32(i2c_len, WM8750State),
+-        VMSTATE_INT32(enable, WM8750State),
+-        VMSTATE_INT32(idx_in, WM8750State),
+-        VMSTATE_INT32(req_in, WM8750State),
+-        VMSTATE_INT32(idx_out, WM8750State),
+-        VMSTATE_INT32(req_out, WM8750State),
+-        VMSTATE_UINT8_ARRAY(outvol, WM8750State, 7),
+-        VMSTATE_UINT8_ARRAY(outmute, WM8750State, 2),
+-        VMSTATE_UINT8_ARRAY(invol, WM8750State, 4),
+-        VMSTATE_UINT8_ARRAY(inmute, WM8750State, 2),
+-        VMSTATE_UINT8_ARRAY(diff, WM8750State, 2),
+-        VMSTATE_UINT8(pol, WM8750State),
+-        VMSTATE_UINT8(ds, WM8750State),
+-        VMSTATE_UINT8_ARRAY(monomix, WM8750State, 2),
+-        VMSTATE_UINT8(alc, WM8750State),
+-        VMSTATE_UINT8(mute, WM8750State),
+-        VMSTATE_UINT8_ARRAY(path, WM8750State, 4),
+-        VMSTATE_UINT8_ARRAY(mpath, WM8750State, 2),
+-        VMSTATE_UINT8(format, WM8750State),
+-        VMSTATE_UINT8(power, WM8750State),
+-        VMSTATE_UINT8(rate_vmstate, WM8750State),
+-        VMSTATE_I2C_SLAVE(parent_obj, WM8750State),
 -        VMSTATE_END_OF_LIST()
 -    }
 -};
 -
--static const Property mv88w8618_eth_properties[] = {
--    DEFINE_NIC_PROPERTIES(mv88w8618_eth_state, conf),
--    DEFINE_PROP_LINK("dma-memory", mv88w8618_eth_state, dma_mr,
--                     TYPE_MEMORY_REGION, MemoryRegion *),
+-static void wm8750_realize(DeviceState *dev, Error **errp)
+-{
+-    WM8750State *s = WM8750(dev);
+-
+-    if (!audio_be_check(&s->audio_be, errp)) {
+-        return;
+-    }
+-
+-    wm8750_reset(I2C_SLAVE(s));
+-}
+-
+-#if 0
+-static void wm8750_fini(I2CSlave *i2c)
+-{
+-    WM8750State *s = WM8750(i2c);
+-
+-    wm8750_reset(I2C_SLAVE(s));
+-    g_free(s);
+-}
+-#endif
+-
+-void wm8750_data_req_set(DeviceState *dev, data_req_cb *data_req, void *opaque)
+-{
+-    WM8750State *s = WM8750(dev);
+-
+-    s->data_req = data_req;
+-    s->opaque = opaque;
+-}
+-
+-void wm8750_dac_dat(void *opaque, uint32_t sample)
+-{
+-    WM8750State *s = (WM8750State *) opaque;
+-
+-    *(uint32_t *) &s->data_out[s->idx_out] = sample;
+-    s->req_out -= 4;
+-    s->idx_out += 4;
+-    if (s->idx_out >= sizeof(s->data_out) || s->req_out <= 0)
+-        wm8750_out_flush(s);
+-}
+-
+-void *wm8750_dac_buffer(void *opaque, int samples)
+-{
+-    WM8750State *s = (WM8750State *) opaque;
+-    /* XXX: Should check if there are <i>samples</i> free samples available */
+-    void *ret = s->data_out + s->idx_out;
+-
+-    s->idx_out += samples << 2;
+-    s->req_out -= samples << 2;
+-    return ret;
+-}
+-
+-void wm8750_dac_commit(void *opaque)
+-{
+-    WM8750State *s = (WM8750State *) opaque;
+-
+-    wm8750_out_flush(s);
+-}
+-
+-uint32_t wm8750_adc_dat(void *opaque)
+-{
+-    WM8750State *s = (WM8750State *) opaque;
+-    uint32_t *data;
+-
+-    if (s->idx_in >= sizeof(s->data_in)) {
+-        wm8750_in_load(s);
+-        if (s->idx_in >= sizeof(s->data_in)) {
+-            return 0x80008000; /* silence in AUDIO_FORMAT_S16 sample format */
+-        }
+-    }
+-
+-    data = (uint32_t *) &s->data_in[s->idx_in];
+-    s->req_in -= 4;
+-    s->idx_in += 4;
+-    return *data;
+-}
+-
+-void wm8750_set_bclk_in(void *opaque, int new_hz)
+-{
+-    WM8750State *s = (WM8750State *) opaque;
+-
+-    s->ext_adc_hz = new_hz;
+-    s->ext_dac_hz = new_hz;
+-    wm8750_clk_update(s, 1);
+-}
+-
+-static const Property wm8750_properties[] = {
+-    DEFINE_AUDIO_PROPERTIES(WM8750State, audio_be),
 -};
 -
--static void mv88w8618_eth_class_init(ObjectClass *klass, const void *data)
+-static void wm8750_class_init(ObjectClass *klass, const void *data)
 -{
 -    DeviceClass *dc = DEVICE_CLASS(klass);
+-    I2CSlaveClass *sc = I2C_SLAVE_CLASS(klass);
 -
--    dc->vmsd = &mv88w8618_eth_vmsd;
--    device_class_set_props(dc, mv88w8618_eth_properties);
--    dc->realize = mv88w8618_eth_realize;
+-    dc->realize = wm8750_realize;
+-    sc->event = wm8750_event;
+-    sc->recv = wm8750_rx;
+-    sc->send = wm8750_tx;
+-    dc->vmsd = &vmstate_wm8750;
+-    device_class_set_props(dc, wm8750_properties);
 -}
 -
--static const TypeInfo mv88w8618_eth_info = {
--    .name          = TYPE_MV88W8618_ETH,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(mv88w8618_eth_state),
--    .instance_init = mv88w8618_eth_init,
--    .class_init    = mv88w8618_eth_class_init,
+-static const TypeInfo wm8750_info = {
+-    .name          = TYPE_WM8750,
+-    .parent        = TYPE_I2C_SLAVE,
+-    .instance_size = sizeof(WM8750State),
+-    .class_init    = wm8750_class_init,
 -};
 -
--static void musicpal_register_types(void)
+-static void wm8750_register_types(void)
 -{
--    type_register_static(&mv88w8618_eth_info);
+-    type_register_static(&wm8750_info);
 -}
 -
--type_init(musicpal_register_types)
--
-diff --git a/include/hw/net/mv88w8618_eth.h b/include/hw/net/mv88w8618_eth.h
+-type_init(wm8750_register_types)
+diff --git a/include/hw/audio/wm8750.h b/include/hw/audio/wm8750.h
 deleted file mode 100644
-index 41074940ec..0000000000
---- a/include/hw/net/mv88w8618_eth.h
+index f7bafd5e38..0000000000
+--- a/include/hw/audio/wm8750.h
 +++ /dev/null
-@@ -1,13 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0-or-later */
+@@ -1,30 +0,0 @@
 -/*
-- * Marvell MV88W8618 / Freecom MusicPal emulation.
+- * This program is free software; you can redistribute it and/or modify it
+- * under the terms and conditions of the GNU General Public License,
+- * version 2 or later, as published by the Free Software Foundation.
 - *
-- * Copyright (c) 2008-2021 QEMU contributors
+- * This program is distributed in the hope it will be useful, but WITHOUT
+- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+- * more details.
+- *
+- * You should have received a copy of the GNU General Public License along with
+- * this program.  If not, see <http://www.gnu.org/licenses/>.
 - */
+-#ifndef HW_DAC_WM8750_H
+-#define HW_DAC_WM8750_H
 -
--#ifndef HW_NET_MV88W8618_ETH_H
--#define HW_NET_MV88W8618_ETH_H
 -
--#define TYPE_MV88W8618_ETH "mv88w8618_eth"
+-#define TYPE_WM8750 "wm8750"
+-#define TYPE_MV88W8618_AUDIO "mv88w8618_audio"
+-
+-typedef void data_req_cb(void *opaque, int free_out, int free_in);
+-
+-void wm8750_data_req_set(DeviceState *dev, data_req_cb *data_req, void *opaque);
+-void wm8750_dac_dat(void *opaque, uint32_t sample);
+-uint32_t wm8750_adc_dat(void *opaque);
+-void *wm8750_dac_buffer(void *opaque, int samples);
+-void wm8750_dac_commit(void *opaque);
+-void wm8750_set_bclk_in(void *opaque, int new_hz);
 -
 -#endif
 -- 
