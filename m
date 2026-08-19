@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BABE4C5DF85
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 19:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C21A9C5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 19:48:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwmGf-0001GQ-QV; Wed, 19 Aug 2026 15:48:09 -0400
+	id 1wwmGh-0001HY-Kd; Wed, 19 Aug 2026 15:48:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwmGe-0001FK-5g
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:48:08 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1wwmGg-0001H2-J3
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:48:10 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwmGc-0000FX-OD
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:48:07 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-381c51fde6bso1798766a91.2
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 12:48:06 -0700 (PDT)
+ id 1wwmGf-0000Fp-4B
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 15:48:10 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-38e69bdb0fcso1319074a91.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 12:48:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787168885; x=1787773685; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787168887; x=1787773687; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=i3/w2MX/IqT/kDvDyQRAdTncv3Vcxp0L+ecIvqIc1QI=;
- b=RKHac7kTJOpqePLWOYwWsD9uHOcSAyERZR+0FErf3g57MV2rvFVKFKgNXEYPpnPpPd
- JliMnGpGlvDSKH/ygO1DodoGeb+d216Rr2J/ezc8NM+nopPoVz2ILg7BxLNdfx5VfxOQ
- egeRbYg01M8LLK6tMp/yM5DPtwlWRtsufk3KvTDAog7n85G/IvwHHh7lxmPDU84drMCJ
- A1vknXLascH0umBonvIK/dkdxqhT6VkRu8cV33Owu3h1QK4+ovLm11gQGtx+tpBDm0li
- Npwm2oRKgG6caXkvrjcFfWF74Xq+YVE7zZqosIZxy8ad1DPslYKhiN+qo1A/mw6KIbsu
- /egw==
+ bh=Mj7aRthqObDz/pmLSm6BnLAGS2A/rxYvyTRmD0ALh1M=;
+ b=CNoseFUBnnNRMlrWYdUfp3cc2ngn6cskeNucjSQ0v3h1rNgH4zdaAwleK4xjfNvP5N
+ cRPICx/6dxaO/qoqIAgGET8wZwGGZJGztkiq9HX8cyZtTE2nIyzwqlEIA3YexTznqls9
+ es4T/1x2GL+UBKr6/rulTmmxG/xYy7xv6Sfp7qbjwg/FST0ZLlIqWYJuWhOp6ZV/UNpJ
+ 20cHWcNulB/+RFuM5kITehQpVK2VOYvkrjNc82uqxi7jFjEp0UJ7WPAAGh51cb/2hkw4
+ 0wcCPQckxLUtJXmmZ/IvjGbq57vbrQqLTp/IS7GevQ1AJpaSOsgblRxxqwiWKNqpn+6w
+ qaZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787168885; x=1787773685;
+ d=1e100.net; s=20251104; t=1787168887; x=1787773687;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=i3/w2MX/IqT/kDvDyQRAdTncv3Vcxp0L+ecIvqIc1QI=;
- b=K35jVZYHz+MS71ZnvHpyPegM6MwimbLyP91i8HpKLM407TLA7MVrouXLCIwJ0vWu1p
- MgGwoJJ67/mbB7gmo5iF3fa7Kmgun9InDIewEtRjWH/vdbcPq9OhXI55HEQQCDmZfd/5
- HmKqTeodBZK+UYaGXS+mxf/++AM+vdfNsx6KlwSH5gSUzTIRMefYCoU/1KBnIYc5DudT
- GJMSqLLp8GgTf4QELijj7lfJlaYd5PKz4d0yOcrJLUF2TTvmUCaRtSrl1yrCgFI86K63
- Q63bS14XcMeqDN+yTprA50spJJZDlgdD5wmm7Fg5/6Tsc1Jj1TI3XycmvA437O9LxnZA
- oEKQ==
+ bh=Mj7aRthqObDz/pmLSm6BnLAGS2A/rxYvyTRmD0ALh1M=;
+ b=fY6K4DqHIWAyvdWl1i/8HnXODxb71VUxHBVqT2zycJ6eQni2/qwpq16RAJfYqasMaa
+ EASEi4hDJ61dIlaTeh7V6x8K1EQHTaEniqO6DISDSHCP3xv2ZNVtYEGm0FX+iQK1u18G
+ Py4pF8BPOL734UtPiKkKkBdAEG5ZoLF1mxoVA0lGtKX0/Z5rS6jES602uMflzAXvRXDd
+ rvH8u1AlgwDM9CPZtQMmKA5DGcI/+M4pFfiFKowTO9nXpYNRETrymGKqeMnkY0tfboaK
+ QeJDmcOAmEHDZW5QYQBNy5J4EoXzwBT87tTVGFfCspr0D9/n7H+IR0afQ0nzEiZhLmju
+ rZdQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rqk621w45/P6OZcWrMwEj5qZ+NMlDyQOWPZ9JkwoCCmtgL/GPWCZbrlwNGKA2CHYrIrbwYdUZnf5AlJ@nongnu.org
-X-Gm-Message-State: AFuF++nI5nMIFwCQN7e1WfS5yahjhradWYF4wo+J/ojRCOvuW5aUebE+
- b3GhCKaPWazvuv2dZ5K/03gSV+LeYnuWRUPfKSMNYAUajen/66CQ02pyx+fVu6oMgZI=
-X-Gm-Gg: AR+sD12pzL7nQyqoS0Vwg14OKRq4bDgyB259NxLBQJEKd1EW8YdZUYmKSSqoMHtaIB5
- CYzX00rfgZEXfrYSBPJmJWcxQnCrPceTOn6vzNPSLvyIjH8eSIertk+Tr4nbAgBn7WjFuNXqEtX
- mJP5Lz3DJVlVDL95FXtkDGdtHxuMK4N8ciWqAucTGjOs3Yc8+dsuP3bQuiz0HxJyH9TeG3RQp7T
- 5bLeUy0pwOVPe1QZUW3k0W/aUddbnvndWkF0mAI2Ueolxi/HIMZR+o9Bjj1M3fVIbtLxAwritPs
- elTnReB1H0bsYSRWbMZBn7BVoctc24/aSBzy/oD7zsIceXAaUF5kz43U9OegvYbh/Wid2+vGA9Q
- Gu6mhghIxz28m8hwByJ+Dmog/TDEq7UDSeV04LuvEP1cQZdcutcTD4CzDs0JNZXcw+EcY3is1XZ
- hz27wPuM6QYZH+wwwIZHtaovlvof7/Dib7Bpzbk6hEOErp6hCa3lqIta4yMqqVjRfr0e2XFRntJ
- hwmb0Vmn/2ibxlBCTo=
-X-Received: by 2002:a17:90b:268b:b0:36b:bec8:94c5 with SMTP id
- 98e67ed59e1d1-395810b3250mr12987118a91.10.1787168885326; 
- Wed, 19 Aug 2026 12:48:05 -0700 (PDT)
+ AHgh+Rod4yYEZL9I3FWOQ/WM/XeUg7kMNtpr1Nr6ze+VAYfQLEDqGkkQZYVoNXCukXYE9H9XGtnPUv4f4t/a@nongnu.org
+X-Gm-Message-State: AFuF++kPApIF1n2fjHVWkkOOfB1wJrgIW3zVVEpUVjtyTxCE8kqoNJMW
+ K1j9sWHLGSjuOyAInHr4ZsThEa+P3AjQWQHH6N1uz4bbxTKLNaOd9OXPO0soWm7iMto=
+X-Gm-Gg: AR+sD11b4FFUVENKxBYnAUjnhG9axludjKidQbGsMNPd7I+8W0YtX3InIoj7wMTxi56
+ b/Nf3FMVZjVHLkJsveoJAn1q2NiQzRhGV/tdE82+rQbpEBykBSDxiZ9H7nMWJ79WnUkW8s3ICD/
+ /D9SWGH3+m7ug2NbUy59aS4zne4Wa/SM+PXn5qWeHK1FgNDTJY7k6THNwPw7/G4/OLFpwGvte9E
+ a1wHnI6biIIHcWaeZauDP/j1WP1C+SgzBD2RbNPOipoGSxzZ/Hmuu4L7ayCocgr7uHViyEPml8E
+ a4Kv3x7kCG1GVJmy+cFMiKv4s2C7H9Y9DEvqHXC3GyinpW414qLzD3o+PWAIWLoKD9mtU3nAACR
+ QPX/o0Xi3Dubq70hs7G4N8h91ss9ennJwzV4n8E249Zbvo9ST1bGEhWBiTmBswlzj61wqfOnQ71
+ 9s32cUOXyPNlA/O3asu9vkhibNqTWepn1EgSeNYnxoMIJbfsC1V/YyiCH5aDvL10uYjMBRo3Y+6
+ JLk7p+t
+X-Received: by 2002:a17:90b:4a4b:b0:37c:607b:2cd9 with SMTP id
+ 98e67ed59e1d1-3958054b82bmr11905914a91.0.1787168887433; 
+ Wed, 19 Aug 2026 12:48:07 -0700 (PDT)
 Received: from [192.168.122.51] ([173.164.107.233])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3957fb51271sm4055310a91.7.2026.08.19.12.48.04
+ 98e67ed59e1d1-3957fb51271sm4055310a91.7.2026.08.19.12.48.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Aug 2026 12:48:04 -0700 (PDT)
-Message-ID: <50d978ae-485b-4790-a2b0-fc78051de565@linaro.org>
-Date: Wed, 19 Aug 2026 12:44:44 -0700
+ Wed, 19 Aug 2026 12:48:06 -0700 (PDT)
+Message-ID: <c7373f94-8ea1-428a-84ab-0fa76e529692@linaro.org>
+Date: Wed, 19 Aug 2026 12:44:54 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/9] bsd-user: Remove 32bit host support in
+Subject: Re: [PATCH v2 6/9] linux-user: Remove 32bit host support in
  thunk_convert|print()
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
 References: <20260818172012.3052821-1-peterx@redhat.com>
- <20260818172012.3052821-6-peterx@redhat.com>
+ <20260818172012.3052821-7-peterx@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260818172012.3052821-6-peterx@redhat.com>
+In-Reply-To: <20260818172012.3052821-7-peterx@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,7 +114,7 @@ On 8/18/26 10:20, Peter Xu wrote:
 > 
 > Signed-off-by: Peter Xu<peterx@redhat.com>
 > ---
->   bsd-user/thunk.c | 47 +++--------------------------------------------
+>   linux-user/thunk.c | 47 +++-------------------------------------------
 >   1 file changed, 3 insertions(+), 44 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
