@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 390ECC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 20:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EDEAC5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 20:20:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwmjk-00013b-68; Wed, 19 Aug 2026 16:18:12 -0400
+	id 1wwmlS-0001XE-T1; Wed, 19 Aug 2026 16:19:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwmjj-00013T-Aw
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 16:18:11 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1wwmlQ-0001Wo-TM
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 16:19:56 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wwmjh-0006P7-RN
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 16:18:11 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-381b831d535so2297323a91.0
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 13:18:09 -0700 (PDT)
+ id 1wwmlP-0006dn-Hb
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 16:19:56 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-cbe827e3cb4so1448275a12.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 13:19:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787170688; x=1787775488; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787170794; x=1787775594; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=MzOu+Ox55+TvKwDfULgkWDr0GLGQ+Pk1YhCbiT82vmM=;
- b=lmSxGwcN35Bm6mhaja38H+OghmLRdPfYtOOFhn/U/GUiI6qFbrWGLp63gryFGjUpti
- K0KyY+m2BsajCiVBxXp0WACb0DazXEOPmHjwEMFWE0ewUgZNVo9FWSSenNRM9uEnmB+t
- oINKmikGIBzkGn/Oas0M/DAbf5J65on0OSn9E7fI25QJyGE/vSC5oqPHlXG9coacgclT
- MNiQo69R/sMgwZKXITO5xKZwIKB3B/PtyHk0O7pp5qAvSZfkOeZOVyQ+yfFSThpIXyj2
- NPV/bap4qfOaVz0pep5m8HYwre/8ZSbeV2Yb2X4Y/RBF5Y1s7ycawaksEfx+8sQlCgcs
- kZAg==
+ bh=Sfdb1dzdnoBwIpbZ45e8jxs15t/r3s/rCiyhXY3QLm0=;
+ b=W8zuDRcZXFDmtQn+IKg4vEk97b22zx8litnKs6WPStGgabGIJCZMkT55kK9q78R5Ae
+ UBsRh2Y1/dB1ZxdFSnw4u4ke47VLZGEuMqoBAcHXZQ/rVoJFhDv8Xjo/RSEQE7/AIksa
+ JnuDZ/8rMtsy3JXoZtKOhhswP1AOL4a4ggnkFMpWpD2TwvOHlcj2gdSUpvKDnaVtAhgK
+ 4XL5RKpaRp5U+CKO5bALgTVswCJNN1ZMBkmfiENILfXWEQxT8w6amZ+ilHFKKEUWjlMb
+ sS0iEhZy6BOQCk/UIvtVbB3IH2Ap3+EXbrdfoauMDkMWhG/Hsz171PwP07UP62RoVP1G
+ TZaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787170688; x=1787775488;
+ d=1e100.net; s=20251104; t=1787170794; x=1787775594;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=MzOu+Ox55+TvKwDfULgkWDr0GLGQ+Pk1YhCbiT82vmM=;
- b=IjiPRJtkCA0B96XkC1iQ/XvTgE9otwpeRUO44POfJBmAW6RTHHE/rAGHS7HaEKC+j5
- eCuXpkB4yI75ug+1fWGj3XTRoRjw6jnSlDkqfrQWwWm0ONEDTnh2L9QQNGkjg9aYZgmI
- f26J2YPmSPaHtO/K0OlRTIAvndY959G5621LgrWKNWcwDQoT0P1hrVjNeawtr38t5kdK
- PlZ1zhfPUdd+XpMtE9k6GsNqe8PwXMUbQXJWYeAZ+UY8y68uaV4KW5xRZN2whNoReJgf
- o8fUDe7bomUwXkLu3tQhTn+s5uAeK2xqvCySjuK3WRO83BfH6ixJyCuPCnCkyPticxmm
- CsMQ==
+ bh=Sfdb1dzdnoBwIpbZ45e8jxs15t/r3s/rCiyhXY3QLm0=;
+ b=n2MZnqhcibYFV8GOpb3LD1Zc/6jIJXqGzHg8gP7O8u3YoBMQ9lqgsb0Afgwrq88YGs
+ VqoDohhau1ZojY/AhrcjsfEk7qoibtzqmT77jGcUMdMD5mNb8r8zSOc37R+/sMfYOe9Q
+ AxAeQtxHNp4ybC+c5WFu6ArhwBCKQ5gnUaxWGWyYI1v6/6mHgTCrpYN+Jo2kGmIGIl8W
+ FA3ZEIICwqAiXS4eeVCf44hN5f1SVd/OiX69AzVNskbBBbxDEBuR9DLliXE/Y9W71q80
+ qFe6ZBL+KtsBakcJnrahWbyhYge3y80K3I4fOYoTYy/NTcYPoJ5zdb7En4QItaBaAAMY
+ reyw==
 X-Forwarded-Encrypted: i=1;
- AHgh+Ro6fZ+Vg5Rie1L9MX69VassomFfPbvW5hunX3rqYPw8YUMnoVT+qeG85VjeMCoo2hUGDy6dj7VnpXkl@nongnu.org
-X-Gm-Message-State: AFuF++ny1EiKjc1xpwqXJ3CDZyaoX+3kpAzsQxKW5AFSZcbyNpUdasK6
- s09wFlUUE0w0hGM3JA+4DZbUd4QURqhV+dhde8WdjoujCG2vfdY6ffgK3LNjv4wMkuo=
-X-Gm-Gg: AR+sD10nnR+LsG6BhwkhQurRoQK0lgjM/ZTeb3E8FrvZqlLOlSXaIpF5RKCmO9LNOIf
- mvAbwx39Od0d1IlqCLQrkFTscwJ0dQvPA3eWbzfLSMWUWQmaYizYznPkBVJVbDceCyPicq1+rCb
- AmgZAVn9Nk4vdDg8kKPw5Nxwg6iOlYZne1PmKCQq6bwKRoGGZpp5PyvL0Xf4LSUf/dwW6hCSPnW
- ysgyXFgNLj8lOaI8t8YU6TD0Dgm7B9BTkVBc0lENUUkp81kqF6ea6MsP7xIPIl0PGU2CXjaeRHZ
- ZjPci6rC3eNKDYviWdAM2nUtEn5+i59bxuxB37Ez1rx9LmQgjz8V3j5MjwV4q+lV+nQgqSJPgvV
- DR0a+18KkFyyqfHvmS/peaKXJtIoFC+cCF1Zy7wTE1TQkSpRnWe+hblIg/d/3Qid2f5osJbeM+7
- Umo+6RBPYEgOQ+muFRCZipk//JihjBMAfvGqQfarnVTOks0VUuXGFc3f3g3x8qcJ+qHeqy/FcRD
- STgB5+G
-X-Received: by 2002:a17:90b:394b:b0:38f:5801:cd76 with SMTP id
- 98e67ed59e1d1-39580a53e78mr14078475a91.3.1787170687856; 
- Wed, 19 Aug 2026 13:18:07 -0700 (PDT)
+ AHgh+RqbhEvj1yJamEaJ0dVZKkJY//wn/kdCIkqZoc02JdjNu5y5fFrvcJHhOq6RgEpvyYSwX1EnzaMBN41/@nongnu.org
+X-Gm-Message-State: AOJu0YzZE8a+BmPf9pimNuz29EK3lB1/nkB4LRQMwdNvWFVUi3Cjer2S
+ tv3IahDkgico5lzgSZhSydhb+/0SnUrrzwMOmur7JLXIBV2VWIqqaCuaNSBN/zgdV80=
+X-Gm-Gg: AR+sD12JuUCKVbHkBEeW9TVm9ZCx4sfn86pY1fREqGLRwBLdcDDp/Ww2mjgFyvzAqDF
+ Uy5SGFBK+zNwJFlPay+k/1kFeLwCmso6F0l7jkNdwDWD9yFlRTwLjx90LLtUz4GWsjxEfoTmz0L
+ 8xb0I/2g385fYnknsWkGl2/dFIJvt2KAoFZux15b7ljVu7xjuTiiUxLRzYWLuI3ninBNQinAOvx
+ c/jBVBMp4OkrzVQRunZbRu3Og+FDVTLgzUCZZR/rX/L9bqWJ8ON0MATvJO0Rvu/ACW7tSF7emYL
+ CK5ilKQsW4pQZJJsJskthczRnS+wogbtIDqIBV778dD/zNJC2m5XiJYtDNsz6cQB7s6eBPxtjxf
+ ubB9ZPbZ6NAH+094xgzfblrgxTRKVeDCWr5VOCKIBs05XoCg3dWJUseM5LTtT1aTdBQticOWloH
+ 79dSlhofK+1cAbvzihaprV5uehCZ5Vg3jRfkibIj2EoiReD8Iq0wu+CeMKD7ralaKTG08gTi4Km
+ sLTfDHr
+X-Received: by 2002:a05:6a00:9093:b0:84f:a82e:d32f with SMTP id
+ d2e1a72fcca58-851d38399e8mr13099795b3a.3.1787170794046; 
+ Wed, 19 Aug 2026 13:19:54 -0700 (PDT)
 Received: from [192.168.122.51] ([173.164.107.233])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3957faf726dsm3790044a91.12.2026.08.19.13.18.02
+ d2e1a72fcca58-851d3389fcfsm997527b3a.18.2026.08.19.13.19.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Aug 2026 13:18:07 -0700 (PDT)
-Message-ID: <fe476bc7-052b-48a8-ba51-6c257b386d5b@linaro.org>
-Date: Wed, 19 Aug 2026 13:17:49 -0700
+ Wed, 19 Aug 2026 13:19:53 -0700 (PDT)
+Message-ID: <7f100121-e4d0-47e1-a1c3-ad6c5be6862f@linaro.org>
+Date: Wed, 19 Aug 2026 13:19:42 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/11] target/i386: Extract halt-to-exec transition out of
- x86_cpu_exec_halt()
+Subject: Re: [PATCH 10/11] target/i386: Convert cpu_exec_halt() to
+ transition_halt_to_exec()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -81,14 +81,14 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 References: <20260819145649.23439-1-philmd@oss.qualcomm.com>
- <20260819145649.23439-10-philmd@oss.qualcomm.com>
+ <20260819145649.23439-11-philmd@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260819145649.23439-10-philmd@oss.qualcomm.com>
+In-Reply-To: <20260819145649.23439-11-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,56 +112,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/19/26 07:56, Philippe Mathieu-Daudé wrote:
-> Refactor the halt-to-execution target-specific transition logic
-> (setting trap flag in debug register and injecting debug exceptions)
-> into a separate x86_cpu_transition_halt_to_exec() function.
+> x86_cpu_exec_halt() now merely checks cpu_has_work() and
+> conditionally call x86_cpu_transition_halt_to_exec(), which is now
+> the generic flow in cpu_has_work_after_processing_async_events().
+> 
+> Register both process_async_events and transition_halt_to_exec
+> handlers to use the generic target-agnostic flow, and remove the
+> x86_cpu_exec_halt() wrapper.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
 > ---
->   target/i386/tcg/helper-tcg.h        |  1 +
->   target/i386/tcg/system/seg_helper.c | 20 +++++++++++++-------
->   2 files changed, 14 insertions(+), 7 deletions(-)
-> 
-> diff --git a/target/i386/tcg/helper-tcg.h b/target/i386/tcg/helper-tcg.h
-> index cab197368b9..65819670493 100644
-> --- a/target/i386/tcg/helper-tcg.h
-> +++ b/target/i386/tcg/helper-tcg.h
-> @@ -39,6 +39,7 @@ void x86_cpu_do_interrupt(CPUState *cpu);
->   #ifndef CONFIG_USER_ONLY
->   void x86_cpu_process_async_events(CPUState *cpu);
->   bool x86_cpu_exec_halt(CPUState *cpu);
-> +void x86_cpu_transition_halt_to_exec(CPUState *cpu);
->   bool x86_need_replay_interrupt(int interrupt_request);
->   bool x86_cpu_exec_interrupt(CPUState *cpu, int int_req);
->   #endif
-> diff --git a/target/i386/tcg/system/seg_helper.c b/target/i386/tcg/system/seg_helper.c
-> index 4856a6b3bab..9b2adcca76c 100644
-> --- a/target/i386/tcg/system/seg_helper.c
-> +++ b/target/i386/tcg/system/seg_helper.c
-> @@ -140,22 +140,28 @@ void x86_cpu_process_async_events(CPUState *cpu)
->       }
->   }
->   
-> -bool x86_cpu_exec_halt(CPUState *cpu)
-> +void x86_cpu_transition_halt_to_exec(CPUState *cpu)
->   {
->       X86CPU *x86_cpu = X86_CPU(cpu);
-> -    CPUX86State *env = &x86_cpu->env;
-> +    CPUX86State *env = cpu_env(cpu);
->   
-> -    x86_cpu_process_async_events(cpu);
-> -
-> -    if (!cpu_has_work(cpu)) {
-> -        return false;
-> -    }
-> +    assert(cpu_has_work(cpu));
->   
+>   target/i386/tcg/helper-tcg.h        |  1 -
+>   target/i386/tcg/system/seg_helper.c | 11 -----------
+>   target/i386/tcg/tcg-cpu.c           |  3 ++-
+>   3 files changed, 2 insertions(+), 13 deletions(-)
 
-Likewise, why did you add this?
-
-Anyway,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
