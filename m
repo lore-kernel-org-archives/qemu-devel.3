@@ -4,108 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE2DC5B572
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 04:59:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BCE1C5B572
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 05:07:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwYOu-0004GA-Kr; Wed, 19 Aug 2026 00:59:44 -0400
+	id 1wwYV7-0005qu-Ui; Wed, 19 Aug 2026 01:06:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wwYOt-0004Fx-P4
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 00:59:43 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wwYV6-0005qL-0G; Wed, 19 Aug 2026 01:06:08 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wwYOr-0005Ud-9Z
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 00:59:43 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1wwYV2-0006Vi-Oc; Wed, 19 Aug 2026 01:06:07 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67J31T0n2174981; Wed, 19 Aug 2026 04:59:37 GMT
+ 67J31tD82111589; Wed, 19 Aug 2026 05:05:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=iUmV/PM7Ld9PwfsfRcvm3fEvssMVhV6s8ClnLD1Gz
- 0U=; b=RNcMApCuaUPxKbL5/bFa8bSgTD94smjsV9iAVToOKnmHTofH/LHGJdNMd
- eDk7/4vWYEnycuIQoSS91CP44bX5kyEtfSmvCGrmAvq0CCTXJavKbSE+Y0xWOcMc
- /xaFzInLxo2N3CTOzOsxC8EBAQxl6sjuHHfCzqh1s46NxWASx01letySUWCBStAN
- yGQ4Ks1yutAtRDRnyuVIonlOG7/kozQjYWit6zXjtmIK22sL2MfS85Hy0aMzOsAa
- hykIAC5OM7cKfhsEbpeig/79wFw8crENt1QNPk1KpOVwZJQhmatMcH9x/H9ZLKT3
- jM7D3LoQrRiWaROm45o2vC+4mZFtg==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu19kx8-1
+ :subject:to; s=pp1; bh=cdh+MICQoZRV4oiKKqmLNiq/AhNAzwPh5MOUH0x98
+ nM=; b=fQgUbfvrm3d8QjZNonVSR2HHPvrFukD7YZrDdzxQBdh3NLD1BTVT8xTnv
+ Cc/MzQJ8QIPqgm2MlIYpFx3yqponvT1LMdwWaZRGX6JmFZe0YUNDjcWhUk+obSuo
+ C/NHzsaA/tH+dyy9qDVIUuwCLyaMi0BVvGD+UrKZUMiL1lr4GXZt+F5xVjYROSVk
+ gFCfFQom4SRTEF4KJQ6JfxyJanzakzUC2yTlv7oog3bEeZkL8C7fqXPLyJtkWZ/E
+ J6lP+c+maeCIuuqjpFV7yuELYtJ+AZNN2IJHzYgIOqtaePSiMDd9qVDykW+FmYeO
+ DlA4AMJwvkcz40gD6sH+9X4wMS0Ig==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu41ka6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 19 Aug 2026 04:59:37 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67J4uZ1W007445;
- Wed, 19 Aug 2026 04:59:36 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g32tw7996-1
+ Wed, 19 Aug 2026 05:05:55 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67J4uTgp006988;
+ Wed, 19 Aug 2026 05:05:54 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g354yex3n-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 19 Aug 2026 04:59:36 +0000 (GMT)
+ Wed, 19 Aug 2026 05:05:54 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
  [10.20.54.101])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67J4xUjv45613374
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67J55pSh34406700
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 19 Aug 2026 04:59:30 GMT
+ Wed, 19 Aug 2026 05:05:51 GMT
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 25B032004B;
- Wed, 19 Aug 2026 04:59:30 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0360A2004F;
+ Wed, 19 Aug 2026 05:05:51 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3988620040;
- Wed, 19 Aug 2026 04:59:28 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 263D220040;
+ Wed, 19 Aug 2026 05:05:49 +0000 (GMT)
 Received: from localhost.localdomain (unknown [9.39.17.134])
  by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 19 Aug 2026 04:59:27 +0000 (GMT)
+ Wed, 19 Aug 2026 05:05:48 +0000 (GMT)
 From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
 Cc: Amit Machhiwal <amachhiw@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH] linux-headers: Update to include KVM_CAP_PPC_COMPAT_CAPS
-Date: Wed, 19 Aug 2026 10:29:24 +0530
-Message-ID: <20260819045924.11732-1-amachhiw@linux.ibm.com>
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>
+Subject: [PATCH] MAINTAINERS: Add myself as a reviewer for PPC KVM and sPAPR
+Date: Wed, 19 Aug 2026 10:35:45 +0530
+Message-ID: <20260819050545.21232-1-amachhiw@linux.ibm.com>
 X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=LsCiDHdc c=1 sm=1 tr=0 ts=6a853839 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDAzNSBTYWx0ZWRfX7t7DnU4mf+v2
+ SFlco/eBvSq/xQ8iKDTI4gppT3R6UOX+5DH3YbtoAtRVZ4oszodkOMDUZiRJXZbrFFG03x35kMu
+ fJUDABQCSyyw2j/MuIfLF7U+zZaIuZw=
+X-Proofpoint-GUID: n06bGkXb4-jgoU9E87d0yHlyTtoItiqa
+X-Proofpoint-ORIG-GUID: i2Wty4jK6WxBQlM9MhhmLgX2sETtC_Ft
+X-Authority-Analysis: v=2.4 cv=RPmD2Yi+ c=1 sm=1 tr=0 ts=6a8539b4 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=FAdeBzD3L_d8WbVtQBUA:9
-X-Proofpoint-GUID: mjM-StOYGVeV43p_KmjF2LAfImHgw8DD
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDAzMSBTYWx0ZWRfXwkKWxlnFSZ5y
- nRbxYVEmX4g0i1WsfitF1IpwMYPnTAbQOTbcbkqvyfkavIttu3NPN47pAxBbRp1wO80CB1fk90Y
- jtHE8ms7hmXpgNri6c3PppaLCuxUQrA=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDAzMSBTYWx0ZWRfX7jTOgaseD+Yl
- vqtoNdGnewpwlwh76xNkQjuwzUQqO55egmzw+wOSel0TuSP+QrAiQELS1JtXg+jyVSM+kHXwA/L
- SkBe2R85KakrLeKetaMBnbUN8vyd0NqDV4GogFws02x1TIIPmhbc5Z/zDPRyUINzQ+XxNxu8Cza
- q4pcQJ2rRpIm/Ux320+nI9xoQ4yPhZwDhHOIe2WrrSXhpikebrlZKIoqPhndMe6nJ+YOe3cNZQG
- x4l5n08dfqdjKdVu1mHhCbynwLjhq27NFVpAQ7XtjhtiMCz52GljvihscJijO5VvVVWHX3oZdpd
- RReImO5Bj7gJaREUzBqbQPmwPospCzYAn3S2duyV0Ay0kMc97K+ppHGVGVsiVWkDs5Tp8MKM62i
- QJWpFpGVdTSrICDSmEqiJUgJNnC0DNCgg96xyBgbtBDoDh27ELc6j9BQTkG2k91dOF75mlHiSnE
- b35w9qZ+qqlQqDSWaRQ==
-X-Proofpoint-ORIG-GUID: mjM-StOYGVeV43p_KmjF2LAfImHgw8DD
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8
+ a=W9qbZ-6vY_ul-PSnLb8A:9 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDAzNSBTYWx0ZWRfX6JittJ2OuA3E
+ f8sVfgxlABLn4pcz8ZCizl77D1C2i3nyf2nkGMJ9uejwqBiGaVY1nFcAxxdghFGtA9KuC9VBftK
+ KaZ1pVaxB9BJA6q99mvJJz/DbBaIs2l6szK1bTJ+RbmEq+2HcOxPl7vPE9B1I9eoBIjXZCP6aFo
+ owKdMVNmotsiaSC9tXYg5VDIcjAqD+tLcVNv8gb2yPbC+B03RXFW6kTLl5C5Bt2txjq2mvrSS6z
+ BShp61++7qYyaxatiqZnyJLrMdYioPtaTshzV2qdw+xRd+3UqtxzJfClWrQfrtQijgyBA5T1FkK
+ VzHcGrsO9GJ/C3nJhX7P2Omse+iwNUvq7cTLxgeJEeIs+rjIzJQtmojZ15LKK79xsb++6mja9Ad
+ ofMrbRk99gdvqY70J9vOKBOnFrhoFaMPw0/J3j+LUP1TN/REJf1Q0AhMaPMSxLuyGx22XEfnS0o
+ qgTrcmgDd4YZw9CBj/w==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-19_01,2026-08-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
- adultscore=0 suspectscore=0 impostorscore=0 clxscore=1011 phishscore=0
+ clxscore=1015 phishscore=0 adultscore=0 spamscore=0 priorityscore=1501
+ bulkscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608190031
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608190035
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,307 +121,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sync linux headers from Linux kernel commit 1200d84f4c0a
-("Merge tag 'powerpc-7.3-1' of git://git.kernel.org/pub/scm/linux/kernel/git/powerpc/linux").
-
-This picks up the new KVM_CAP_PPC_COMPAT_CAPS capability for powerpc,
-which introduces:
-- struct kvm_ppc_compat_caps: reports processor compatibility modes
-  supported by the host (POWER9, POWER10, POWER11)
-- KVM_PPC_GET_COMPAT_CAPS ioctl (KVMIO 0xb8)
-- KVM_CAP_PPC_COMPAT_CAPS (cap #250) in linux/kvm.h
-
-The sync is needed to get the corresponding Qemu series[1] merged.
-
-[1]: https://lore.kernel.org/all/20260812170854.58709-1-amachhiw@linux.ibm.com/
+I have been contributing to PPC KVM and sPAPR (pseries) for some time now and
+would like to get notified of incoming changes to help with code reviews.
 
 Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 ---
- include/standard-headers/linux/const.h  |  4 ++--
- linux-headers/asm-arm64/unistd_64.h     |  1 +
- linux-headers/asm-generic/unistd.h      |  6 +++++-
- linux-headers/asm-loongarch/unistd_64.h |  1 +
- linux-headers/asm-mips/unistd_n32.h     |  1 +
- linux-headers/asm-mips/unistd_n64.h     |  1 +
- linux-headers/asm-mips/unistd_o32.h     |  1 +
- linux-headers/asm-powerpc/kvm.h         | 18 ++++++++++++++++++
- linux-headers/asm-powerpc/unistd_32.h   |  1 +
- linux-headers/asm-powerpc/unistd_64.h   |  1 +
- linux-headers/asm-riscv/unistd_32.h     |  1 +
- linux-headers/asm-riscv/unistd_64.h     |  1 +
- linux-headers/asm-s390/unistd_64.h      |  1 +
- linux-headers/asm-x86/unistd_32.h       |  1 +
- linux-headers/asm-x86/unistd_64.h       |  1 +
- linux-headers/asm-x86/unistd_x32.h      |  1 +
- linux-headers/linux/const.h             |  4 ++--
- linux-headers/linux/kvm.h               |  3 +++
- 18 files changed, 43 insertions(+), 5 deletions(-)
+ MAINTAINERS | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/standard-headers/linux/const.h b/include/standard-headers/linux/const.h
-index c6a9d0c9835c..92635cec4aed 100644
---- a/include/standard-headers/linux/const.h
-+++ b/include/standard-headers/linux/const.h
-@@ -13,7 +13,7 @@
-  * leave it unchanged in asm.
-  */
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b51f5c3e6022..1a1c77285d3d 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -497,6 +497,7 @@ F: tests/functional/aarch64/test_kvm.py
+ PPC KVM CPUs
+ M: Nicholas Piggin <npiggin@gmail.com>
+ R: Harsh Prateek Bora <harshpb@linux.ibm.com>
++R: Amit Machhiwal <amachhiw@linux.ibm.com>
+ S: Odd Fixes
+ F: target/ppc/kvm.c
  
--#ifdef __ASSEMBLY__
-+#ifdef __ASSEMBLER__
- #define _AC(X,Y)	X
- #define _AT(T,X)	X
- #else
-@@ -28,7 +28,7 @@
- #define _BITUL(x)	(_UL(1) << (x))
- #define _BITULL(x)	(_ULL(1) << (x))
- 
--#if !defined(__ASSEMBLY__)
-+#if !defined(__ASSEMBLER__)
- /*
-  * Missing __asm__ support
-  *
-diff --git a/linux-headers/asm-arm64/unistd_64.h b/linux-headers/asm-arm64/unistd_64.h
-index 70b3754a4247..4329a2ad54c2 100644
---- a/linux-headers/asm-arm64/unistd_64.h
-+++ b/linux-headers/asm-arm64/unistd_64.h
-@@ -328,6 +328,7 @@
- #define __NR_file_setattr 469
- #define __NR_listns 470
- #define __NR_rseq_slice_yield 471
-+#define __NR_fchroot 472
- 
- 
- #endif /* _ASM_UNISTD_64_H */
-diff --git a/linux-headers/asm-generic/unistd.h b/linux-headers/asm-generic/unistd.h
-index a627acc8fb5f..5b7e77a7c736 100644
---- a/linux-headers/asm-generic/unistd.h
-+++ b/linux-headers/asm-generic/unistd.h
-@@ -863,8 +863,12 @@ __SYSCALL(__NR_listns, sys_listns)
- #define __NR_rseq_slice_yield 471
- __SYSCALL(__NR_rseq_slice_yield, sys_rseq_slice_yield)
- 
-+/* fs/open.c */
-+#define __NR_fchroot 472
-+__SYSCALL(__NR_fchroot, sys_fchroot)
-+
- #undef __NR_syscalls
--#define __NR_syscalls 472
-+#define __NR_syscalls 473
- 
- /*
-  * 32 bit systems traditionally used different
-diff --git a/linux-headers/asm-loongarch/unistd_64.h b/linux-headers/asm-loongarch/unistd_64.h
-index 3a29d86e1dee..b525f2d7b881 100644
---- a/linux-headers/asm-loongarch/unistd_64.h
-+++ b/linux-headers/asm-loongarch/unistd_64.h
-@@ -325,6 +325,7 @@
- #define __NR_file_setattr 469
- #define __NR_listns 470
- #define __NR_rseq_slice_yield 471
-+#define __NR_fchroot 472
- 
- 
- #endif /* _ASM_UNISTD_64_H */
-diff --git a/linux-headers/asm-mips/unistd_n32.h b/linux-headers/asm-mips/unistd_n32.h
-index 5fa1ee0cb465..f883da76c999 100644
---- a/linux-headers/asm-mips/unistd_n32.h
-+++ b/linux-headers/asm-mips/unistd_n32.h
-@@ -400,5 +400,6 @@
- #define __NR_file_setattr (__NR_Linux + 469)
- #define __NR_listns (__NR_Linux + 470)
- #define __NR_rseq_slice_yield (__NR_Linux + 471)
-+#define __NR_fchroot (__NR_Linux + 472)
- 
- #endif /* _ASM_UNISTD_N32_H */
-diff --git a/linux-headers/asm-mips/unistd_n64.h b/linux-headers/asm-mips/unistd_n64.h
-index e1f873d83a5d..59837eb86628 100644
---- a/linux-headers/asm-mips/unistd_n64.h
-+++ b/linux-headers/asm-mips/unistd_n64.h
-@@ -376,5 +376,6 @@
- #define __NR_file_setattr (__NR_Linux + 469)
- #define __NR_listns (__NR_Linux + 470)
- #define __NR_rseq_slice_yield (__NR_Linux + 471)
-+#define __NR_fchroot (__NR_Linux + 472)
- 
- #endif /* _ASM_UNISTD_N64_H */
-diff --git a/linux-headers/asm-mips/unistd_o32.h b/linux-headers/asm-mips/unistd_o32.h
-index 8207e9ca4f67..485872076e92 100644
---- a/linux-headers/asm-mips/unistd_o32.h
-+++ b/linux-headers/asm-mips/unistd_o32.h
-@@ -446,5 +446,6 @@
- #define __NR_file_setattr (__NR_Linux + 469)
- #define __NR_listns (__NR_Linux + 470)
- #define __NR_rseq_slice_yield (__NR_Linux + 471)
-+#define __NR_fchroot (__NR_Linux + 472)
- 
- #endif /* _ASM_UNISTD_O32_H */
-diff --git a/linux-headers/asm-powerpc/kvm.h b/linux-headers/asm-powerpc/kvm.h
-index 077c5437f521..913a64b901a3 100644
---- a/linux-headers/asm-powerpc/kvm.h
-+++ b/linux-headers/asm-powerpc/kvm.h
-@@ -437,6 +437,24 @@ struct kvm_ppc_cpu_char {
- 	__u64	behaviour_mask;		/* valid bits in behaviour */
- };
- 
-+/* For KVM_PPC_GET_COMPAT_CAPS */
-+struct kvm_ppc_compat_caps {
-+	__u64	size;			/* Size of this structure */
-+	__u64	flags;			/* Reserved for future use */
-+	__u64	compat_capabilities;	/* Capabilities supported by the host */
-+};
-+#define KVM_PPC_COMPAT_CAPS_SIZE_VER0	24 /* sizeof first published struct */
-+
-+/*
-+ * Capability bits for compat_capabilities field in kvm_ppc_compat_caps.
-+ * These bits indicate which processor compatibility modes are supported.
-+ */
-+#define KVM_PPC_COMPAT_CAP_POWER9	(1ULL << 62)
-+#define KVM_PPC_COMPAT_CAP_POWER10	(1ULL << 61)
-+#define KVM_PPC_COMPAT_CAP_POWER11	(1ULL << 60)
-+#define KVM_PPC_COMPAT_BITMASK		(KVM_PPC_COMPAT_CAP_POWER9 | \
-+					 KVM_PPC_COMPAT_CAP_POWER10 | \
-+					 KVM_PPC_COMPAT_CAP_POWER11)
- /*
-  * Values for character and character_mask.
-  * These are identical to the values used by H_GET_CPU_CHARACTERISTICS.
-diff --git a/linux-headers/asm-powerpc/unistd_32.h b/linux-headers/asm-powerpc/unistd_32.h
-index 1f633601201b..2677c54903a4 100644
---- a/linux-headers/asm-powerpc/unistd_32.h
-+++ b/linux-headers/asm-powerpc/unistd_32.h
-@@ -453,6 +453,7 @@
- #define __NR_file_setattr 469
- #define __NR_listns 470
- #define __NR_rseq_slice_yield 471
-+#define __NR_fchroot 472
- 
- 
- #endif /* _ASM_UNISTD_32_H */
-diff --git a/linux-headers/asm-powerpc/unistd_64.h b/linux-headers/asm-powerpc/unistd_64.h
-index 87439c53c121..6fc19ccccdb9 100644
---- a/linux-headers/asm-powerpc/unistd_64.h
-+++ b/linux-headers/asm-powerpc/unistd_64.h
-@@ -425,6 +425,7 @@
- #define __NR_file_setattr 469
- #define __NR_listns 470
- #define __NR_rseq_slice_yield 471
-+#define __NR_fchroot 472
- 
- 
- #endif /* _ASM_UNISTD_64_H */
-diff --git a/linux-headers/asm-riscv/unistd_32.h b/linux-headers/asm-riscv/unistd_32.h
-index 828f3c2b9de1..1039bdc6cf5b 100644
---- a/linux-headers/asm-riscv/unistd_32.h
-+++ b/linux-headers/asm-riscv/unistd_32.h
-@@ -319,6 +319,7 @@
- #define __NR_file_setattr 469
- #define __NR_listns 470
- #define __NR_rseq_slice_yield 471
-+#define __NR_fchroot 472
- 
- 
- #endif /* _ASM_UNISTD_32_H */
-diff --git a/linux-headers/asm-riscv/unistd_64.h b/linux-headers/asm-riscv/unistd_64.h
-index 8fa59835a333..72040a54987a 100644
---- a/linux-headers/asm-riscv/unistd_64.h
-+++ b/linux-headers/asm-riscv/unistd_64.h
-@@ -329,6 +329,7 @@
- #define __NR_file_setattr 469
- #define __NR_listns 470
- #define __NR_rseq_slice_yield 471
-+#define __NR_fchroot 472
- 
- 
- #endif /* _ASM_UNISTD_64_H */
-diff --git a/linux-headers/asm-s390/unistd_64.h b/linux-headers/asm-s390/unistd_64.h
-index 01f674c1bcb7..3d3747e3ca1f 100644
---- a/linux-headers/asm-s390/unistd_64.h
-+++ b/linux-headers/asm-s390/unistd_64.h
-@@ -391,6 +391,7 @@
- #define __NR_file_setattr 469
- #define __NR_listns 470
- #define __NR_rseq_slice_yield 471
-+#define __NR_fchroot 472
- 
- 
- #endif /* _ASM_UNISTD_64_H */
-diff --git a/linux-headers/asm-x86/unistd_32.h b/linux-headers/asm-x86/unistd_32.h
-index e94546882962..7f298247f805 100644
---- a/linux-headers/asm-x86/unistd_32.h
-+++ b/linux-headers/asm-x86/unistd_32.h
-@@ -462,6 +462,7 @@
- #define __NR_file_setattr 469
- #define __NR_listns 470
- #define __NR_rseq_slice_yield 471
-+#define __NR_fchroot 472
- 
- 
- #endif /* _ASM_UNISTD_32_H */
-diff --git a/linux-headers/asm-x86/unistd_64.h b/linux-headers/asm-x86/unistd_64.h
-index 3c49b00ed13c..fbddeb4bc381 100644
---- a/linux-headers/asm-x86/unistd_64.h
-+++ b/linux-headers/asm-x86/unistd_64.h
-@@ -386,6 +386,7 @@
- #define __NR_file_setattr 469
- #define __NR_listns 470
- #define __NR_rseq_slice_yield 471
-+#define __NR_fchroot 472
- 
- 
- #endif /* _ASM_UNISTD_64_H */
-diff --git a/linux-headers/asm-x86/unistd_x32.h b/linux-headers/asm-x86/unistd_x32.h
-index bd2af9ad088d..629770ed4baa 100644
---- a/linux-headers/asm-x86/unistd_x32.h
-+++ b/linux-headers/asm-x86/unistd_x32.h
-@@ -339,6 +339,7 @@
- #define __NR_file_setattr (__X32_SYSCALL_BIT + 469)
- #define __NR_listns (__X32_SYSCALL_BIT + 470)
- #define __NR_rseq_slice_yield (__X32_SYSCALL_BIT + 471)
-+#define __NR_fchroot (__X32_SYSCALL_BIT + 472)
- #define __NR_rt_sigaction (__X32_SYSCALL_BIT + 512)
- #define __NR_rt_sigreturn (__X32_SYSCALL_BIT + 513)
- #define __NR_ioctl (__X32_SYSCALL_BIT + 514)
-diff --git a/linux-headers/linux/const.h b/linux-headers/linux/const.h
-index c6a9d0c9835c..92635cec4aed 100644
---- a/linux-headers/linux/const.h
-+++ b/linux-headers/linux/const.h
-@@ -13,7 +13,7 @@
-  * leave it unchanged in asm.
-  */
- 
--#ifdef __ASSEMBLY__
-+#ifdef __ASSEMBLER__
- #define _AC(X,Y)	X
- #define _AT(T,X)	X
- #else
-@@ -28,7 +28,7 @@
- #define _BITUL(x)	(_UL(1) << (x))
- #define _BITULL(x)	(_ULL(1) << (x))
- 
--#if !defined(__ASSEMBLY__)
-+#if !defined(__ASSEMBLER__)
- /*
-  * Missing __asm__ support
-  *
-diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
-index dd52e2a65bfd..aea4ab5c6953 100644
---- a/linux-headers/linux/kvm.h
-+++ b/linux-headers/linux/kvm.h
-@@ -986,6 +986,7 @@ struct kvm_enable_cap {
- #define KVM_CAP_S390_KEYOP 247
- #define KVM_CAP_S390_VSIE_ESAMODE 248
- #define KVM_CAP_S390_HPAGE_2G 249
-+#define KVM_CAP_PPC_COMPAT_CAPS 250
- 
- struct kvm_irq_routing_irqchip {
- 	__u32 irqchip;
-@@ -1330,6 +1331,8 @@ struct kvm_s390_keyop {
- /* Available with KVM_CAP_COUNTER_OFFSET */
- #define KVM_ARM_SET_COUNTER_OFFSET _IOW(KVMIO,  0xb5, struct kvm_arm_counter_offset)
- #define KVM_ARM_GET_REG_WRITABLE_MASKS _IOR(KVMIO,  0xb6, struct reg_mask_range)
-+/* Available with KVM_CAP_PPC_COMPAT_CAPS */
-+#define KVM_PPC_GET_COMPAT_CAPS	_IO(KVMIO,  0xb8)
- 
- /* ioctl for vm fd */
- #define KVM_CREATE_DEVICE	  _IOWR(KVMIO,  0xe0, struct kvm_create_device)
+@@ -1661,6 +1662,7 @@ F: tests/functional/ppc/test_40p.py
+ sPAPR (pseries)
+ M: Nicholas Piggin <npiggin@gmail.com>
+ M: Harsh Prateek Bora <harshpb@linux.ibm.com>
++R: Amit Machhiwal <amachhiw@linux.ibm.com>
+ L: qemu-ppc@nongnu.org
+ S: Odd Fixes
+ F: hw/*/spapr*
 
 base-commit: fa19879df1658f96ac07365fca8835b7decd6995
 -- 
