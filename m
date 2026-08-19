@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33F17C5DF81
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE89CC5B572
 	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 15:25:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwiA2-0005yr-Vc; Wed, 19 Aug 2026 11:25:03 -0400
+	id 1wwiA0-0005wq-7r; Wed, 19 Aug 2026 11:25:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1wwi9w-0005v8-A0; Wed, 19 Aug 2026 11:24:57 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1wwi9r-0005tc-EB; Wed, 19 Aug 2026 11:24:51 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <da.gomez@kernel.org>)
- id 1wwi9s-0005mb-35; Wed, 19 Aug 2026 11:24:54 -0400
+ id 1wwi9o-0005m2-W3; Wed, 19 Aug 2026 11:24:50 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 0305E60DC0;
- Wed, 19 Aug 2026 15:24:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A171F000E9;
+ by tor.source.kernel.org (Postfix) with ESMTP id F11C860DB5;
  Wed, 19 Aug 2026 15:24:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30FBE1F000E9;
+ Wed, 19 Aug 2026 15:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1787153090;
- bh=GAblJtoF1ite2nCaZlx6g3pEY9g6y0mrLZhXuRuNLnA=;
+ s=k20260515; t=1787153087;
+ bh=gjCb8zTFkhIu6c15SE0OJTQGeNM1apl9N+TyJKrY+9w=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc;
- b=cCUtwdV+iF4zexxzawMydBF/OdtWEPkwuC5O+zMOsij5sn6LcON20ghGPZHxa3eTU
- 9XVc/v4mw10WC8e1nP7SlzrQSfpE9Czi5befPlNBNCmg4j48hFzGdaIOtLapICC08H
- sAgHZWfO2wTSauC3ImrYOv57cMCyC+XJsGlY/2CgAdHQRA9d2G+b1xKl5/YW0quD0g
- yMyhiJOM/6z2rRugOXtC62Fl5a37ECIYwPozbu8kdwnRVrrxSAz+Gr4JgsUAZfRNjY
- yG5r4+Vr2l1dU7WtVNYpFSKb/U3IDGX+BR1DIAnnwT2EkX5tdeVyx7kplmLuTv8Xw+
- 3ae5/1gXgd6bA==
+ b=fXtbiFf13eqOuFNyvA+HeGs2wFv4KHDTYqFmdLiFGrVzuPVepiV1G/RFAjvNMD852
+ 9RCz7OodhOIcYg6YkVUVj7Hj9FWaDMMU3o2BnOsQF+iBWIsed/Q1wup4hz88+RpDu1
+ AxopWCCkywXHCf1MO38+byEUSq8Anf9UvkgqDSsqkBkY97Mqtud3v6tM61p7cIJfhi
+ 0bGrXmDkBMnOdHIW0vPrHwmUE85xEc3VBX1WB+kZFMiC8KFPeAQGOOF2lGlsgbMak4
+ l2CVvL3wzSwUdmFJnB3IpiVl37DXUuaL3MFuiaP1i8K2BXDhQfujUadG+72oQ1T62j
+ yDQBQEeS56PdA==
 From: Daniel Gomez <da.gomez@kernel.org>
-Date: Wed, 19 Aug 2026 17:24:06 +0200
-Subject: [PATCH v2 4/7] dma-helpers: chunk dma_blk_cb at IOV_MAX
+Date: Wed, 19 Aug 2026 17:24:05 +0200
+Subject: [PATCH v2 3/7] dma-helpers: cap iovec allocation at IOV_MAX
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260819-align-nvme-mdts-with-linux-v2-4-351ac2dfed64@samsung.com>
+Message-Id: <20260819-align-nvme-mdts-with-linux-v2-3-351ac2dfed64@samsung.com>
 References: <20260819-align-nvme-mdts-with-linux-v2-0-351ac2dfed64@samsung.com>
 In-Reply-To: <20260819-align-nvme-mdts-with-linux-v2-0-351ac2dfed64@samsung.com>
 To: qemu-devel@nongnu.org
@@ -50,15 +50,15 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  qemu-block@nongnu.org, Daniel Gomez <da.gomez@kernel.org>, 
  Daniel Gomez <da.gomez@samsung.com>, GOST <gost.dev@samsung.com>
 X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1787153075; l=969;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1787153075; l=924;
  i=da.gomez@samsung.com; s=20240621; h=from:subject:message-id;
- bh=PlgFs9C/2C5N/Yk2iUBNUFtNgCYAxRiq7T7jRH6XWbg=;
- b=A59Ufv+0QaSmycUHol4UBil+QOn+nexDIQr3jY7NN8mny9aQ2/grsRjRxcdZQQ5s+WBnFXHio
- ef+gsJkmqNjAGHyCyGEHiqJCEEepF8adoVc2t5nlbFgsIBpn4nVXLxP
+ bh=6EBj0zw+9t8L+7Z+Vce461Ptz5kZuOS6B1xv2C7EEVs=;
+ b=iI2BriUPyJpS4nE/9tyOBPqjxv8oHNz6KowT8B9dl9BZP2qRMzHNS/I74wv+/1EjSuMl9o58z
+ XTTInSiGCTxCrakI4JRgsK8SHtBa8Rv4nrJTUV3jGVBiJMYyGPHzR0J
 X-Developer-Key: i=da.gomez@samsung.com; a=ed25519;
  pk=BqYk31UHkmv0WZShES6pIZcdmPPGay5LbzifAdZ2Ia4=
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=da.gomez@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=da.gomez@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -82,34 +82,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Gomez <da.gomez@samsung.com>
 
-dma_blk_cb() submits dbs->iov to io_func() in one shot, so callers
-must keep dbs->iov.niov below IOV_MAX or the host preadv()/pwritev()
-rejects the call.
+Cap the initial iovec allocation at IOV_MAX instead of sizing it for the
+whole sg list, which over-allocates for large IO where the number of sg
+entries exceeds IOV_MAX.
 
-Break the accumulation loop when niov reaches IOV_MAX. The existing
-re-entry path resumes mapping and submits a follow-up chunk under
-the same AIOCB, so callers no longer carry that constraint.
+This is preparatory work for chunking dma_blk_cb() at IOV_MAX to batch
+large IO: once chunked, dbs->iov never holds more than IOV_MAX iovecs.
 
-Suggested-by: Klaus Jensen <k.jensen@samsung.com>
 Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
 ---
- system/dma-helpers.c | 3 +++
- 1 file changed, 3 insertions(+)
+ system/dma-helpers.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/system/dma-helpers.c b/system/dma-helpers.c
-index d4fd33a3d4c..613fa548669 100644
+index 9004ad50ae3..d4fd33a3d4c 100644
 --- a/system/dma-helpers.c
 +++ b/system/dma-helpers.c
-@@ -175,6 +175,9 @@ static void dma_blk_cb(void *opaque, int ret)
-             dbs->sg_cur_byte = 0;
-             ++dbs->sg_cur_index;
-         }
-+        if (dbs->iov.niov >= IOV_MAX) {
-+            break;
-+        }
-     }
- 
-     if (dbs->iov.size == 0) {
+@@ -242,7 +242,7 @@ BlockAIOCB *dma_blk_io(
+     dbs->io_func = io_func;
+     dbs->io_func_opaque = io_func_opaque;
+     dbs->bh = NULL;
+-    qemu_iovec_init(&dbs->iov, sg->nsg);
++    qemu_iovec_init(&dbs->iov, MIN(sg->nsg, IOV_MAX));
+     dma_blk_cb(dbs, 0);
+     return &dbs->common;
+ }
 
 -- 
 2.55.0
