@@ -4,133 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A330AC5DF6D
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 13:02:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C6ECC5DF6D
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 13:03:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwfvo-0000hB-Rb; Wed, 19 Aug 2026 09:02:14 -0400
+	id 1wwfwc-0001P6-Ga; Wed, 19 Aug 2026 09:03:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wwfvl-0000gx-3O
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 09:02:09 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wwfwa-0001Oo-Pe
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 09:03:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wwfvi-0001ZJ-Kj
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 09:02:08 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67JD0EjP693386
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 13:02:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=zlP7EkHcWTHqkw1EMJy6AY
- NxGBeaLX/goTg/6PGgEEQ=; b=IMbdb/TeuDWSSYSFvMDciptMggKTbWnwY79KRh
- /klmc6HFLsZ8QB9REqNUDu7B2RWcaUiVhTn5FDkwoMRifRkmeH6vhdGERQdBXUNu
- pp1A9ZmW4qcFRGzQJhBr6kxRMwsLhTXL2fwdRW0dDXgp0tO9EPRi6NBZIVEa2ULR
- 1gdHo/fa7fkTPhFpR8IMJa2zVgYv5K2GTazJEKvDlIaSxRabgl31dhxg0B7BQep5
- +/JHpCLvFvkESxd3brojh6ufM6TuH/3fnBFRv+YZ9uUKk33z1VNTnp0QluH8RdJb
- FEqa5YBaD84Jhl4U8CqYqd5Cin3LgFpNHprnO0y6bxerjyfQ==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4yfmb90f-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 13:02:04 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-38e22137fb3so1858849a91.0
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 06:02:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787144524; x=1787749324; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=zlP7EkHcWTHqkw1EMJy6AYNxGBeaLX/goTg/6PGgEEQ=;
- b=OomYjW98gVE761UlnA6QCezUanJOplklyqY5fgctrEhXhn4s+NG5GLYrVv3IsHYbMM
- 0Yo8UEeRhFX5aHEekiZDjRNkaN2ay+KWLtt+wbQUyjGx2+CulRA5xlV+GbpxTxWdkM9P
- l4MAr8bZgOLTCKQ3pG684VYl/jm3P5FKyx6Tf+rUe3oipykLfCHOydpAVga4/GsHAAZz
- +v0NhKlW8nK5zMUvVzwWC9uaY073ZyADDoCuVGSwMZGrI2FZbQx7QQdUGZ09qASfwUbk
- cobc7YTNUWHJbdK2Hyrzrp05lt8yEQ4P7KT8ukbBJJk+zF6qvlA4QKd19l4kxbVKBGdX
- EIig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787144524; x=1787749324;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=zlP7EkHcWTHqkw1EMJy6AYNxGBeaLX/goTg/6PGgEEQ=;
- b=ofbtk/yWpXKRqINYmyYvbxgNSD25RAEbSRHJdq7D+hVfGSCjOVtTY17ThM0HQyO/fA
- JltwQxLrNtRihv6S2C43Mtac+fKSVK7z0T08o/7YyUN6OtwhM0r30RteFluM9bIQtwQR
- k+IDpV0IwHowD10nKxco3tRwiRiGtZxoThuomHsR0LeNOap8e1qEf19S4+F2tPvg0yV3
- Y2RtaecSD9pY6+yiYk3WqdG4vw97yeHSTJpbVh3IWwVBvF+/HceqTwALQKFkifzODwus
- M4owEZAH5AzKOCWR9abPnwYlkexUIPUZPT84l1pe/UYX758SdESt/P3EhKYqDIPGSz5E
- rFSw==
-X-Gm-Message-State: AFuF++m8uM/CyQdCsbHXiIA15QaPOx+yaJSi+ERzTIJlW7SyLAiy//Zr
- VIrwHwyJj3JKXK+G+EvPs4xlkMe2pA+b5RYlDo62CBGP21YgwakO8XNQvQZXJV2WiadmXP45HFf
- 6TrQ/sJqhQjv+XMd8jWtFGicOAUoXqRkpj1hZqMG2iosOoqfW+KNxcnz2MD7VYz7W7w==
-X-Gm-Gg: AR+sD13HFPZf9A1jEoCUgNuX6FpOHDudcJuT6V5t7TnrNZHv90dJxwBg7rrHoIDHqSo
- PACtHwTM/K4retS/8R0TVrkz1+SmRieUZ1bW9OVc5ziDqIRRu10Od3Tq7paB1Cn3BvOx86GXZSz
- B8fZo4y7KriZFkqXJP6cHLa+kDH47rGgigBnaSwqG+Z2AS3EHLToBdj7tIFZBPu+vHN1IsYMcvj
- mA2Gq0BnC6sAcxfBVNmkIMpIET5E6V3VZ30WvKV64r54VKcO9aifEBKmf12wp1f5TpUFy48A1E0
- 5YVlmxG4YSAAn4inf3+sfB4ckrnYKRR3ShQzMFDVrBawTzhu6P6w9VPLlfqdbT4yB8fpdxVvDRD
- 0HcwlBoSpMbsUmVtjKgU3yW/Kn8MKykJTuBDyi1t/vlyRk7DH
-X-Received: by 2002:a17:90b:3b41:b0:38e:4114:d8c7 with SMTP id
- 98e67ed59e1d1-3958049908amr8542379a91.0.1787144523897; 
- Wed, 19 Aug 2026 06:02:03 -0700 (PDT)
-X-Received: by 2002:a17:90b:3b41:b0:38e:4114:d8c7 with SMTP id
- 98e67ed59e1d1-3958049908amr8542233a91.0.1787144523312; 
- Wed, 19 Aug 2026 06:02:03 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d5c1ee476bsm23377015ad.75.2026.08.19.06.02.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 06:02:02 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>
-Subject: [PATCH] hw/hexagon: decode an empty TLB size field as 4KB
-Date: Wed, 19 Aug 2026 06:02:01 -0700
-Message-Id: <20260819130201.4067696-1-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wwfwV-0001fr-Ld
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 09:02:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787144574;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=i9+0IFLBWxGj9Sd5nF/8JOZKM8gUz/+gGD0zkzKterY=;
+ b=F67AGJL7B2m6yfrdusUhzNc10nMVrewfu7Gk1GJPjqD8Rsrv4tMESQw5VQSXbqsjtgjJva
+ LDcny94PKdvj2rKW8dVNkg8vehIB9UwlxLTER2fLYwj7O8/vU0vr1v9a1LfjkVVBN2Nkz9
+ 8rxTpNDJ1YPl/ldw9xHfI3zDQrQALHk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-629-ubxxC0rROFu_3f4PeyVAPw-1; Wed,
+ 19 Aug 2026 09:02:50 -0400
+X-MC-Unique: ubxxC0rROFu_3f4PeyVAPw-1
+X-Mimecast-MFC-AGG-ID: ubxxC0rROFu_3f4PeyVAPw_1787144569
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9F0F31800643; Wed, 19 Aug 2026 13:02:48 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.12])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 155451800346; Wed, 19 Aug 2026 13:02:48 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9A21F21E6920; Wed, 19 Aug 2026 15:02:45 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  =?utf-8?Q?Marc-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  qemu-devel@nongnu.org,  Thomas Huth
+ <thuth@redhat.com>,  qemu-s390x@nongnu.org,  qemu-ppc@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,  Corey Minyard
+ <minyard@acm.org>,  Paolo Bonzini <pbonzini@redhat.com>,  Richard
+ Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 4/4] hw/nmi: Remove @cpu_index argument from nmi_trigger()
+In-Reply-To: <d0ad382b-9fe1-4ba2-a7f5-0bbb05daabe5@oss.qualcomm.com>
+ ("Philippe =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Tue, 11 Aug 2026
+ 12:17:19 +0200")
+References: <20240220150833.13674-1-philmd@linaro.org>
+ <20240220150833.13674-5-philmd@linaro.org>
+ <CAFEAcA-yALySmCJLbitCmYpiZKUXJNOavGJG9RYeo8fKqz7gcw@mail.gmail.com>
+ <d0ad382b-9fe1-4ba2-a7f5-0bbb05daabe5@oss.qualcomm.com>
+Date: Wed, 19 Aug 2026 15:02:45 +0200
+Message-ID: <87tsoq5klm.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-ORIG-GUID: g2KAQ2VmvPKvZk7GdvhHQcVub0QnU0kq
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDEwMCBTYWx0ZWRfX2QWaXIPT4RnV
- C7+xt8TvCMHCz2i/tI9IH5hG4rCJ51Hh+yoop02trm/TlEgi2XL2xU/c2tHEHZX90RZPu6tlgLQ
- nsLdU0fqFGTnoN9yNltszdY8Mvmdk2o=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDEwMCBTYWx0ZWRfX6PZ+/kot6BeW
- AuF+xUxiXXpxsLYMo6HIAsLCSi5zbO97yyHanS9SaSXOLZIy/TEuZ2J/28FcAQ+fO/g+6rfk86Y
- 0PzSNy1asNHfSM+SwcmDSD7SBECDGJyJ5vfxSS2Q7rZg5f43BLHVQ6+UCKO9Xgp/1P2+zxqnmip
- olVtZ9/eJdNr0efsHpdhh351N22ZFycUdLHXqwayF8nG/qXBH6Fq9/woyDFvnZ2ox038L9Gg8oH
- Jy+WLgJpClsjpgKcqNUcUWpn4lq4idxl1BHrhU1Q3KoJel0FTTaR+RnNybdy7wRTRTMiFy1okHn
- IKSxXrxX8PNHWglMmu9GgZa96MDLW1kielltJUL/MFJBVzFvrPJYRcSKqPxDnyzynVKPuvh2VHs
- YgTJgyhyBSbaGryleOAsZFXukXr3omG/muC9m2iofWI/+6M/rPY230OF1OXMg98yU+63UpK/tQh
- a3KtBIVjiBUMA54gcMw==
-X-Authority-Analysis: v=2.4 cv=aNrAb79m c=1 sm=1 tr=0 ts=6a85a94c cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=41wnHuTSjj-I1xIrTVIA:9 a=QEXdDO2ut3YA:10
- a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-GUID: g2KAQ2VmvPKvZk7GdvhHQcVub0QnU0kq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-19_03,2026-08-19_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0
- malwarescore=0 suspectscore=0 priorityscore=1501 phishscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608190100
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,40 +94,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-aGV4X3RsYl9wZ3NpemVfdHlwZSgpIGRlY29kZWQgYSBUTEIgZW50cnkncyBwYWdlIHNpemUgYnkg
-c2Nhbm5pbmcgZm9yCnRoZSBsb3dlc3Qgc2V0IGJpdCBhY3Jvc3MgdGhlIGVudHJ5IHdpdGggY3R6
-LgoKQSBndWVzdCBUTEIgd3JpdGUgd2l0aCBhbiBlbXB0eSBQUERbOTowXSBzaXplIGZpZWxkIGJ1
-dCBhbnkgb3RoZXIgYml0CnNldCBjYXVzZWQgYW4gYXNzZXJ0aW9uLgoKU2lnbmVkLW9mZi1ieTog
-QnJpYW4gQ2FpbiA8YnJpYW4uY2FpbkBvc3MucXVhbGNvbW0uY29tPgotLS0KIGh3L2hleGFnb24v
-aGV4YWdvbl90bGIuYyB8IDI0ICsrKysrKysrKysrKysrLS0tLS0tLS0tLQogMSBmaWxlIGNoYW5n
-ZWQsIDE0IGluc2VydGlvbnMoKyksIDEwIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2h3L2hl
-eGFnb24vaGV4YWdvbl90bGIuYyBiL2h3L2hleGFnb24vaGV4YWdvbl90bGIuYwppbmRleCBiNmQ0
-YWZmMzg5ZS4uYWFhMGI5NGZjY2QgMTAwNjQ0Ci0tLSBhL2h3L2hleGFnb24vaGV4YWdvbl90bGIu
-YworKysgYi9ody9oZXhhZ29uL2hleGFnb25fdGxiLmMKQEAgLTY5LDggKzY5LDYgQEAgc3RhdGlj
-IGNvbnN0IGNoYXIgKnBnc2l6ZV9zdHJbTlVNX1BHU0laRV9UWVBFU10gPSB7CiAgICAgIjFHIiwK
-IH07CiAKLSNkZWZpbmUgSU5WQUxJRF9NQVNLIDB4ZmZmZmZmZmZMTAotCiBzdGF0aWMgY29uc3Qg
-dWludDY0X3QgZW5jbWFza18yX21hc2tbXSA9IHsKICAgICAweDBmZmZMTCwgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAvKiA0aywgICAwMDAwICovCiAgICAgMHgzZmZmTEwsICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgLyogMTZrLCAgMDAwMSAqLwpAQCAtODIsMTkgKzgwLDI1IEBAIHN0YXRp
-YyBjb25zdCB1aW50NjRfdCBlbmNtYXNrXzJfbWFza1tdID0gewogICAgIDB4M2ZmZmZmZkxMLCAg
-ICAgICAgICAgICAgICAgICAgICAgIC8qIDY0bSwgIDAxMTEgKi8KICAgICAweGZmZmZmZmZMTCwg
-ICAgICAgICAgICAgICAgICAgICAgICAvKiAyNTZtLCAxMDAwICovCiAgICAgMHgzZmZmZmZmZkxM
-LCAgICAgICAgICAgICAgICAgICAgICAgLyogMWcsICAgMTAwMSAqLwotICAgIElOVkFMSURfTUFT
-SywgICAgICAgICAgICAgICAgICAgICAgIC8qIFJTVkQsIDEwMTAgKi8KIH07CiAKKy8qCisgKiBU
-aGUgcGFnZSBzaXplIGlzIGVuY29kZWQgYXMgdGhlIHBvc2l0aW9uIG9mIHRoZSBsb3dlc3Qgc2V0
-IGJpdCBvZgorICogUFBEWzk6MF0uICBCaXRzIG91dHNpZGUgdGhhdCBmaWVsZCBiZWxvbmcgdG8g
-dGhlIGNhY2hlYWJpbGl0eSBhbmQKKyAqIHBlcm1pc3Npb24gZmllbGRzIGFuZCBtdXN0IG5vdCB0
-YWtlIHBhcnQgaW4gdGhlIGRlY29kZS4gIEFuIGFsbC16ZXJvCisgKiBmaWVsZCBkZW5vdGVzIHRo
-ZSBzbWFsbGVzdCBwYWdlLCBtYXRjaGluZyBnZXRfcGdzaXplKCkgaW4gdGhlIHJlZmVyZW5jZQor
-ICogc2ltdWxhdG9yLgorICovCisjZGVmaW5lIFBHU0laRV9GSUVMRF9NQVNLICgoMSA8PCBOVU1f
-UEdTSVpFX1RZUEVTKSAtIDEpCisKIHN0YXRpYyBpbmxpbmUgdGxiX3Bnc2l6ZV90IGhleF90bGJf
-cGdzaXplX3R5cGUodWludDY0X3QgZW50cnkpCiB7Ci0gICAgaWYgKGVudHJ5ID09IDApIHsKLSAg
-ICAgICAgcWVtdV9sb2dfbWFzayhDUFVfTE9HX01NVSwgIiVzOiBTdXBwbGllZCBUTEIgZW50cnkg
-d2FzIDAhXG4iLAotICAgICAgICAgICAgICAgICAgICAgIF9fZnVuY19fKTsKLSAgICAgICAgcmV0
-dXJuIDA7CisgICAgdWludDMyX3QgZmllbGQgPSBHRVRfUFRFX1BQRChlbnRyeSkgJiBQR1NJWkVf
-RklFTERfTUFTSzsKKworICAgIGlmIChmaWVsZCA9PSAwKSB7CisgICAgICAgIHJldHVybiBQR1NJ
-WkVfNEs7CiAgICAgfQotICAgIHRsYl9wZ3NpemVfdCBzaXplID0gY3R6NjQoZW50cnkpOwotICAg
-IGdfYXNzZXJ0KHNpemUgPCBOVU1fUEdTSVpFX1RZUEVTKTsKLSAgICByZXR1cm4gc2l6ZTsKKyAg
-ICByZXR1cm4gY3R6MzIoZmllbGQpOwogfQogCiBzdGF0aWMgaW5saW5lIHVpbnQ2NF90IGhleF90
-bGJfcGFnZV9zaXplX2J5dGVzKHVpbnQ2NF90IGVudHJ5KQotLSAKMi4zNC4xCgo=
+Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> writes:
+
+> On 20/3/24 14:34, Peter Maydell wrote:
+>> On Tue, 20 Feb 2024 at 15:09, Philippe Mathieu-Daud=3DC3=3DA9 <philmd@li=
+naro.=3D
+> org> wrote:
+>>>
+>>> nmi_monitor_handle() is not related to the monitor,
+>>> rename it as nmi_trigger(). Return boolean value
+>>> indicating success / failure. The 'cpu_index' argument
+>>> is not used, remove it.
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daud=3DC3=3DA9 <philmd@linaro.org>
+
+[...]
+
+>>> diff --git a/include/hw/nmi.h b/include/hw/nmi.h
+>>> index c70db941c9..32b27067f2 100644
+>>> --- a/include/hw/nmi.h
+>>> +++ b/include/hw/nmi.h
+>>> @@ -49,6 +49,17 @@ struct NMIClass {
+>>>       bool (*nmi_handler)(NMIState *n, Error **errp);
+>>>   };
+>>>
+>>> -void nmi_monitor_handle(int cpu_index, Error **errp);
+>>> +/**
+>>> + * nmi_trigger: Trigger a NMI.
+>>> + *
+>>> + * @errp: pointer to error object
+>>> + *
+>>> + * Iterate over all objects implementing the TYPE_NMI interface
+>>> + * and deliver NMI to them.
+
+[...]
+
+>>> + *
+>>> + * On success, return %true.
+>>> + * On failure, store an error through @errp and return %false.
+>>> + */
+>>> +bool nmi_trigger(Error **errp);
+>>
+>> Why return a bool here? None of the callsites looks at the
+>> return value.
+>
+> Indeed, but again this is the style *recommended* by the Error API
+> since commit e3fe3988d7 ("error: Document Error API usage rules").
+
+Correct:
+
+ * - Whenever practical, also return a value that indicates success /
+ *   failure.  This can make the error checking more concise, and can
+ *   avoid useless error object creation and destruction.  Note that
+ *   we still have many functions returning void.  We recommend
+ *   =E2=80=A2 bool-valued functions return true on success / false on fail=
+ure,
+ *   =E2=80=A2 pointer-valued functions return non-null / null pointer, and
+ *   =E2=80=A2 integer-valued functions return non-negative / negative.
+>
+> Callers providing a non-NULL errp should check the return value,
+> but the QMP handlers generated by gen_command_decl() like
+> qmp_inject_nmi() here don't return anything.
+
+qmp_inject_nmi() passes the error to its caller.  That's fine.
+
+ipmi_do_hw_op() and watchdog_perform_action() ignore the error.  Also
+fine.
+
+> Markus, what would be your preference?
+
+I prefer sticking to the rule whenever practical.
+
+Example for a defensible exception: a callback that's implemented many
+more times than it's called.  There the effort of returning something
+can exceed the benefit of making the calls more concise.
+
+In a case like nmi_trigger(), what could possibly be gained by deviating
+from the rule is dwarved many times over by having to consider the
+tradeoffs and justifying them in review.  And if a caller shows up that
+could use a return value, we'll waste some more time.  Not worth it.
+
 
