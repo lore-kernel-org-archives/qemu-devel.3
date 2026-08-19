@@ -4,109 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0424C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 01:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0C09C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 01:32:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwUiA-0002lp-67; Tue, 18 Aug 2026 21:03:22 -0400
+	id 1wwV9m-0008IJ-Ta; Tue, 18 Aug 2026 21:31:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wwUi9-0002lH-2t
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 21:03:21 -0400
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wwUi7-0004qO-6X
- for qemu-devel@nongnu.org; Tue, 18 Aug 2026 21:03:20 -0400
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-5b00d083818so1595120e87.1
- for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 18:03:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787101397; cv=none;
- d=google.com; s=arc-20260327;
- b=UomLoXClVCGZohRQX9FTVwrqfX24mINEKLkWy8mTcgMhbLXpYG09QdeoC3p5CEkMRt
- e9+gKnaTlp2L4p3o9DdWESBv4R5Gwa25TYbNu52OMACYUR/qNd85256YIADWDxTcRJ81
- s9APK0s111JUD+rZFtX/S+hyB0jDLqEV8wx9YputCZ7bYQL6yBYQn+d4cYHrdmngRqtL
- vegK34ZQ+GY84XYfRZ7f64enXiz7JPK9ePDenpZvDwN6gMh7GRQ8y6e4KePAJ1dD6VVB
- 8VJR1l9A+SVPdC0X8oUbvbexSuaQKfBEChlRvcDGcLw145zxww2t0BVkZjlwwu5s7/Uk
- MLKQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=tcyXj3slw+9LNaA+Q+y/YGlDuPCA73toAqaQW+276AU=;
- fh=8UOH4AHvZC4rFsZAQeMwwmDe4armg/T3iUxfBxUk76o=;
- b=sZ0GeGxoBQm/7RKvP+2LxnYopn28TOOBzFbrfQ7iENoLXRL0hWxAz0+KYqaWyxIeo5
- xp0UcSAk3YAb/LNaPrxDVneGbz88RVlv724mVkc9o1O3DTkPmG6Fkcs029Vz2EoHkxdy
- MJEv4zccUrKOliK67RKg5pzpkOU/F9ijZAopKUyhyPTBTqAfv/GMW3pr0b1SAiPCgvTN
- gsLTGpvB0jd9rTSQ8lYrGm4tHgtTSOkttF4uHfz9oWf79XCoNGikjRtT+aqC0NT4r206
- F3mcHlw2mYyOplNXmuc7rEGBB44d9xlTBIB5mHd1OAp2Ik5CiL9Ed9bbI2n/M5F8hj2q
- 6jiA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wwV9l-0008Hv-68
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 21:31:53 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wwV9j-0008Bx-GM
+ for qemu-devel@nongnu.org; Tue, 18 Aug 2026 21:31:52 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67INkhn43326187
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 01:31:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=KeSI/zwFC3K382axD8qAUD
+ l5JKULXNvIWdPTu1y41Cs=; b=QcM9PExefHxAGagPk0e5robAUo3xgHriNr84gl
+ kpYFZy1JrCB+p3WEeGE3zA5FdX6P8PNrmCtXAgAz4ZnNBxho3QFMLnrGaEqrCvxb
+ 0z1lcrASqo2Lu6l9JyGSdWWLsdczVNXRd/hEpWB1WS85mNWWfMjBcOmm5LqaNmvy
+ 41dkqt1+tCR42aLpPwbFj+ilijBtXggEaJLk6twWm5QAbqagDupyaO/kNs9R7zvu
+ IK+Wdb7+b37DKWec+C+0peq0MpOJeE6HVJxic/w0b8HhZHN5hHGHVEdeTSxpiBK1
+ wAE2QddEoYMZ1qnarrCxNNaAZ8908b4IiU8CGbfKdPFw+Vtg==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4yfprq89-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 01:31:48 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-38e6d253330so463680a91.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Aug 2026 18:31:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787101397; x=1787706197; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=tcyXj3slw+9LNaA+Q+y/YGlDuPCA73toAqaQW+276AU=;
- b=fyLU1cSGRnXYS8vPs6z2ihR7Wd1EAHDIuCCRRp0DQWLfxMGsXdCFrshigsud7zs/Nc
- YcyV96DBUFe4H5EA86VGKvZL6yztD0rRTuixY9/L4VY92L8AA3kmnKw0RP78W7AOREvx
- Xm8j2lWmE5ZFsE400sEO2zfptsJU7g76Nv9QaYyfJuRS0pLYjbHlyuIXnbI8LtwZUIC7
- NFKLXrkFGd5sOMPst8txzVc233RAGNOjUrsJFQbSlfHP0Xw5wskVZlczX6UChOmM7cd5
- YiLQfpHTwQapX+jZw8O1lSQTHHBJfVjPpq+CGFJWlm8fTdn9If2bKVq5SESbsLFrgr9b
- 0LIw==
+ d=oss.qualcomm.com; s=google; t=1787103107; x=1787707907; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=KeSI/zwFC3K382axD8qAUDl5JKULXNvIWdPTu1y41Cs=;
+ b=KCoYpUt37Cb45vHxjW3L42nv11LO3qnrXhdv4ocnyMJMEE0DsDJPJQzCw4WawtRjDw
+ q0yjiSmAjogLPrZU1YHx70+rgon6UHiqbe7yGVWAamvq7hBdASJbnvvloORSvag1yUot
+ p4WdFPHLLi5UftIBbszVRU0t1QHD+7TxQMpwLjDnvjnK+0u2DbvKbNIqDJLRjForZe+B
+ AC9fOmkYHQbqaehMxCbKFwcKADXmRS+t38M4UwLlm+2+axFcuj7rZXlybLp4rzbo7Yip
+ 3UuMfC7AUvFFSvA8ZugpWJvxhFVZMJAC+jktqYQf34Ge5/jGqxsBkA+4733g3zMwM3qd
+ +pqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787101397; x=1787706197;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=tcyXj3slw+9LNaA+Q+y/YGlDuPCA73toAqaQW+276AU=;
- b=GRIPbBcZjFbrTVENA3a9kS4b6AF6ztSB/0XQjfP02Ew1GTTodeie7D9Q7H9C1JWIVH
- niDcYQbPFHlWbAqmntfD71GNoI1M1GISQ16ss5yAEQLGyXmN9NKUND0mb3ZjU28A+vAq
- Ct33bIXs7MslEMkJHt3yTETNUch1VhWa5s3WjWw4CsqiKUScCsPoeHKfIU4fskrwcC8s
- WOtzYaT6Rfawd8yygh0e7px1LSgaN+NhcExGZ7MVpwYUWxa/xdzd9WsIR1iaHgl7Ad3s
- Q+Ijfy0GTTNXWSrbpA/JU3uTFol8vUuPJQ7eNRWtO9bqxJwEZ0e1eTSpMLW+as477ZaZ
- Ltfg==
-X-Gm-Message-State: AOJu0Yyjig/J5MMnr1O0F7JjlenRN/Lg4sL9sHLnG3XyspFJM1mxnLzo
- 4Y/ZPnaQqDHRY7ONdc8f+7nlL3/emYUMlBDLIWx1JAtn+oHqfrcluZLaQMeEdI+rdBigy/ErPio
- zcNCDuUxOJyY980mzWXNB5Lh+olTu7Sk=
-X-Gm-Gg: AR+sD128cWZxF9bSCOFM39EZfG+EXFquLCrH/vmXdHf0vBfaPix6gwwbrDBrYgHZ+J+
- BUVqwSVWXEmcxq12TJdB2XNrCqC9S7beMDkOGm6iVu6TWkLynaYmG5ioE5F+5uM6yFzanxrdab/
- DRQuO7GiQNUdYvfB8UWQCOXm1HpmAysWuw7//3wNHc0wr8QaI3SAaIK0JPNzmtM1jTPcSF+iUk4
- ygIzIiBU17I9eOb7+bsTf2QSDKEwzDkoBj5CjwvfA58gkOvbXXlOp+L1yIoEGs4oE/iRFwF2KmD
- ZLvRU4W0JiMcGXwhvKp9UiO4/YKFlhjp2HqMEaVLXACvBPeLiWO5oDWO8F7IlkR4Wmjb30dxIEU
- g3lg=
-X-Received: by 2002:a05:6512:3d25:b0:5ae:d72d:1000 with SMTP id
- 2adb3069b0e04-5b478654fbbmr242523e87.1.1787101396766; Tue, 18 Aug 2026
- 18:03:16 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787103107; x=1787707907;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=KeSI/zwFC3K382axD8qAUDl5JKULXNvIWdPTu1y41Cs=;
+ b=X+W1hv+rCGRxnq3zlcCjbFFqTVbGGXFJErcoaCtjOfZs3xSYItHPYdqlGS7lAwaz3k
+ S5dtnwH5hWSBZrV67Y4hbi3AC6woOOU9o9uTF4l1i2tDUDB5USVEVLNAb4Lg9BGPTKzn
+ YSSLPIFT+vDekNyCtvdaY1mvMZB+ump2cHIPoNFy2Blzoillt1+S17e/FoDFSJ1Lj9cD
+ vVS2cgV7m0Zz6RqeRcb9Fx4dx/ybMt3I9IFbCYstXTDGnmYfxQAfQhMLVqxS9Ltas419
+ 73dvFUINn+ttz26e9iBN1p1HwAQtUEXCL+7dVU+FFHrR8kDYAK1j/L8/tj4V6yJB2Ux0
+ e0iQ==
+X-Gm-Message-State: AOJu0Yz0Ob5P26pVyMzzL80jjUI6yMJYXklgvLZ4BKVriJW2rRcSk6CM
+ HmoDDj5x5qC+68KYKaG3/VQD1g9KOiMbc7eowfK7uz5Kc7kzQvXuOAROimw0SymR7J50LgcS3qF
+ EQQYAFdLoP0I36eq99DDcG9Ek1FvYAloav1+laT9gL+Dg016Ea4FA2mR0cKYV6saXzg==
+X-Gm-Gg: AR+sD12RQwjr+9xDFFTuphTUgKSynTulbCiL/78QouHQQhJ5bYvbAgFPKOWvuUJPphj
+ 8XfnZsYXTZJZlau+aVPT0cvQ8+rX80IjoxHEmD6ygTKgVuo66kVZUgol/CWVNCVwegJURU28rF8
+ 7N38RthgJKIkDwGMqXuw4HTkwtWjjtS5mgchtAkHLZLQ6DUJ3N9RcHFUD1I6c05dLtKOIj7xglr
+ yu82u53rk7dT1w5KGimXfNIbixbvZR0uVW7Pold1HnGMCeicm716f8YItuxbnCPAdVX+iupmE0n
+ bJn9HFVmOlY+UvbMXam5dufMdygrSvej1AkIQzegzKnuJKopc96wxZZQNauj1jfb+usSDw/Oegw
+ vKf4/4yc/3e7XLM0ITRTOSekt7xZ5RVQDlnIYgmj9uxcj3rW+
+X-Received: by 2002:a17:90a:d408:b0:38e:a52e:a3c9 with SMTP id
+ 98e67ed59e1d1-3957f8b2a07mr1864660a91.8.1787103107196; 
+ Tue, 18 Aug 2026 18:31:47 -0700 (PDT)
+X-Received: by 2002:a17:90a:d408:b0:38e:a52e:a3c9 with SMTP id
+ 98e67ed59e1d1-3957f8b2a07mr1864570a91.8.1787103106640; 
+ Tue, 18 Aug 2026 18:31:46 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-327befa4b94sm1157539eec.13.2026.08.18.18.31.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Aug 2026 18:31:45 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH 00/11] Hexagon: exception, interrupt, system reg fixes
+Date: Tue, 18 Aug 2026 18:31:33 -0700
+Message-Id: <20260819013144.3264096-1-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20260818174247.649526-1-mattst88@gmail.com>
- <20260818174247.649526-5-mattst88@gmail.com>
- <06475A33-3AC6-4D58-83D3-0176D0880E20@unpredictable.fr>
-In-Reply-To: <06475A33-3AC6-4D58-83D3-0176D0880E20@unpredictable.fr>
-From: Matt Turner <mattst88@gmail.com>
-Date: Tue, 18 Aug 2026 21:03:03 -0400
-X-Gm-Features: AcwNN1UOG3mSxjykVw7c1QTsR0jCDI7wnPEDVvgL1x2NlP2OQF-28N2J9mUgE7k
-Message-ID: <CAEdQ38HOp5ze-6dU9NpVePk=F2w6vK4pNoabnpwHO778HY3BDQ@mail.gmail.com>
-Subject: Re: [PATCH 4/8] RFC: tcg: probe the TB jump cache inline instead of
- calling a helper
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
- philmd@mailo.com, zhao1.liu@intel.com, laurent@vivier.eu, deller@gmx.de, 
- pierrick.bouvier@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=mattst88@gmail.com; helo=mail-lf1-x130.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+X-Proofpoint-GUID: dxPVF15dLOVYNWvdnzPuANcdx7-47H0U
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDAwOSBTYWx0ZWRfX+YBV4eJj1VSj
+ 7iI2b/BIzclf16Ei2Lhq+oeuCAhKs9wdSWrf2F0ex9oYX78BfifHo1piRXzdWVvzoFPM/0Y85Bf
+ LVT7E3X0LdKFoKCHqDtU2bNGVPNWn3dskjECLWf6jgeyKfD6JeuPZaJs0zE19XWRN+2Y22xMr1o
+ tLifqMOBe1/HzM1AhWKXF7MSce5iqRc67pcia6MyKWwbeU2EycqI2dea+Klqb0W9YZ/1LleFfvG
+ KwYZozg6SMaolVDOq5CwmgedDST/kZaYwSUSy6vMtzR47SvgiafVpqhxmKuOlzxHIlUuw8T7lAo
+ eaaKokQuNSTXw39rFvKckTMkyLtmytJ/dGp4qPXmAtkEnMztggHYBMgUutEQU3ShULUsumPUjSy
+ IDwNzH4WfI9znEezi4utSWSPi377AgbEf6CK+oOrlDab+oG6hZVjb1zGAAOkl5kOrJvhhmmtAJM
+ P3AsZ2L/WbBqxU0tfYQ==
+X-Authority-Analysis: v=2.4 cv=aMrAb79m c=1 sm=1 tr=0 ts=6a850784 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=-t2gi_CsGC9hvwCbGDEA:9 a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-ORIG-GUID: dxPVF15dLOVYNWvdnzPuANcdx7-47H0U
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDAwOSBTYWx0ZWRfX/zzGnbMswAq5
+ hUk6wKIe+r6jBPl7vKEV3zrkLBE8u+Iy2DbZbracYliAeDj5M0x1uKYx+hxvXyLsoehIUEjfxWl
+ T/t9IlT9gEUjtMnVrt88na0SubsJpiY=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-18_05,2026-08-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 spamscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608190009
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,131 +146,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 18, 2026 at 6:27=E2=80=AFPM Mohamed Mediouni
-<mohamed@unpredictable.fr> wrote:
->
->
->
-> > On 18. Aug 2026, at 19:42, Matt Turner <mattst88@gmail.com> wrote:
-> >
-> > Every indirect branch that cannot use goto_tb ends in
-> > tcg_gen_lookup_and_goto_ptr(), which calls helper_lookup_tb_ptr(). For =
-an
-> > emulated compiler that is 8.4 billion helper calls in a single translat=
-ion
-> > unit: 24.6% of all TB exits take this path, because jsr/ret/jmp have a
-> > register destination and because goto_tb is restricted to same-page
-> > targets.
->
-> Hi,
->
-> In your testing set, how many of those indirect branches were returns?
-
-Instrumenting things, here is the breakdown:
-
-                      count   of jsr-family  of all indirect dispatches
-RET               3408529228    46.7%          40.5%
-JSR               3377155399    46.3%          40.1%
-JMP                514369861     7.1%           6.1%
-JSR_COROUTINE              0       0%             0%
-jsr-family total  7300054488                   86.7%
-
-Total indirect dispatches were 8422264155 (8.4 billion). The other
-13.3% are non-jsr `DISAS_PC_UPDATED` exits.
-
-So returns are just under half, and calls and returns together are 93%
-of the indirect branches. The workload is almost entirely call/return
-pairs, which supports the return-stack idea rather than against it.
-But at the series tip the inline probe hit rate is 99.60% (8388942817
-fast / 33321338 slow), so a return-stack would be competing with an
-already-cheap path.
-
-> I=E2=80=99ve been (very slowly...) hacking on something adjacent for bein=
-g able
-> to leverage hardware return stacks, although it showed an exceedingly lar=
-ge
-> amount of issues - especially around the maintaining coherency edge cases=
-...
-
-Hah, I started by going down the hardware return stacks route initially as =
-well!
-
-> Your patch gets a lot of the way there on the perf side without a number
-> of the issues associated with that.
->
-> >
-> > The helper itself is already tight, but each call pays for a call frame=
-,
-> > the can_do_io store, the get_tb_cpu_state() indirect call through
-> > TCGCPUOps, curr_cflags(), and a breakpoint check, before it gets to the
-> > jump cache probe that almost always hits (95.8% for this workload).
-> >
-> > Emit the probe inline instead. The destination PC is already in a TCG
-> > temp, and the flags and cflags the destination must match are constants=
- at
-> > translation time, so the fast path is a hash, three guarded loads and a
-> > goto_ptr. Only a miss calls the helper, which still owns filling the ca=
-che.
-> >
-> > Two details matter for the generated code. The flags and cflags guards =
-are
-> > folded into a single aligned 64-bit load and compare, since the fields =
-are
-> > adjacent. And each path emits its own goto_ptr rather than branching to=
- a
-> > shared one: a temp live across the label is spilled and reloaded on eve=
-ry
-> > dispatch, which cost 6.3% on its own.
-> >
-> > Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling
-> > the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host, LTO
-> > build, on top of the preceding three patches:
-> >
-> >    before: 1,402,816,253,499 instructions
-> >    after:    890,713,633,237 instructions   -36.51%
-> >
-> >    before: 115.75s wall clock
-> >    after:   84.44s wall clock               -27.05%
-> >
-> > The gap between the two is the point at which this stops being a
-> > straight-line win: the helper call was highly predictable work that the
-> > host pipelined well, so removing it retires far fewer instructions than=
- it
-> > saves time. IPC falls from 2.48 to 2.15 across this patch for that reas=
-on.
-> >
-> > Despite emitting more code, this also reduces instruction cache pressur=
-e,
-> > because a dispatch no longer jumps into qemu's .text and evicts transla=
-ted
-> > code:
-> >
-> >    before: 11,476,318,964 L1-icache-load-misses
-> >    after:   6,990,186,701 L1-icache-load-misses   -39.1%
-> >
-> > The mechanism is visible directly in a profile: helper_lookup_tb_ptr()
-> > falls from 30.97% of samples to 0.42%, and qemu's own .text falls from
-> > 38.9% to 5.4%, with the balance moving into generated code.
-> >
-> > Combined with the three preceding patches, against an unmodified LTO
-> > build, 1,647,901,588,726 instructions fall to 890,713,633,237, or -45.9=
-5%.
-> > The emulated compiler produces byte-identical output throughout.
-> >
-> > Open issues, hence RFC:
-> >
-> > - The flags/cflags guards use the *current* TB's values as constants. T=
-hat
-> >  assumes the CPU flags feeding get_tb_cpu_state() cannot change within =
-a
-> >  TB, and that curr_cflags() cannot change under a running TB (gdb
-> >  attaching to enable single-step would). Both need to be established or
-> >  the values need to be loaded at runtime.
-> > - tcg/tcg-op.c has no business including accel/tcg/tb-jmp-cache.h or
-> >  knowing the CPUJumpCache layout. The probe likely belongs in accel/tcg
-> >  with a small emit helper exported from tcg/.
->
-> I don=E2=80=99t think that one is a problem.
-
-I think you're right. I've updated the commit message.
+Q2hhbmdlcyB0byBhZGRyZXNzIHNvbWUgdGVzdCBjYXNlczoKLSB1c2VyL3N5c3RlbSBtb2RlIGV4
+Y2VwdGlvbiBjb25zb2xpZGF0aW9uCi0gRGlyZWN0LXRvLUd1ZXN0IGludGVycnVwdCBkZWxpdmVy
+eQotIGludGVycnVwdCBtYXNrIHdyaXRlcywgdGxiIHByb2JlIGV4Y2VwdGlvbgotIGwydmljIGVk
+Z2UtdHJpZ2dlciBjbGVhciBvbiBkZWFzc2VydAotIG1hcCBhcmNoaXRlY3R1cmFsIHRpbWVyIHJl
+Z3MgdG8gY2xvY2sKCkJyaWFuIENhaW4gKDEwKToKICB0YXJnZXQvaGV4YWdvbjogYWxpZ24gZXhj
+ZXB0aW9ucyBmb3IgdXNlci9zeXNlbXUKICB0ZXN0cy90Y2cvaGV4YWdvbjogY2hlY2sgcHJpdiBp
+bnN0cnVjdGlvbnMgcmFpc2UgU0lHSUxMCiAgdGFyZ2V0L2hleGFnb246IGd1YXJkIHdyaXRlcyB0
+byB1bmltcGxlbWVudGVkIGd1ZXN0IHJlZ2lzdGVycwogIHRhcmdldC9oZXhhZ29uOiB0YWtlIEJR
+TCB3aGVuIHJlYWRpbmcgdGhlIHN5c3RlbSBwY3ljbGUgY291bnQKICB0YXJnZXQvaGV4YWdvbjog
+Z2F0ZSBHUENZQ0xFIGd1ZXN0IHJlZ2lzdGVyIHJlYWRzIG9uIFNTUjpDRQogIHRhcmdldC9oZXhh
+Z29uOiByZWFkIFVUSU1FUkxPL1VUSU1FUkhJIGZyb20gdGhlIGdsb2JhbCB0aW1lcgogIHRhcmdl
+dC9oZXhhZ29uOiByYWlzZSBpbXByZWNpc2UgZXhjZXB0aW9uIG9uIG11bHRpLVRMQiBtYXRjaAog
+IHRhcmdldC9oZXhhZ29uOiBpbXBsZW1lbnQgZGlyZWN0LXRvLWd1ZXN0IGludGVycnVwdCBkZWxp
+dmVyeQogIHRhcmdldC9oZXhhZ29uOiBmaXggaWFzc2lnbntyLHd9IHRvIGNvdmVyIGFsbCB0aHJl
+YWRzCiAgdGVzdHMvZnVuY3Rpb25hbC9oZXhhZ29uOiB1cGRhdGUgdG8gdjAuMi4xMiwKICAgICt0
+ZXN0X3tpbnRlcnJ1cHRzLHN5c19yZWdzfQoKU2lkIE1hbm5pbmcgKDEpOgogIGh3L2ludGM6IGNs
+ZWFyIHBlbmRpbmcgYml0IG9uIGwydmljIGRlLWFzc2VydGlvbgoKIGluY2x1ZGUvaHcvaGV4YWdv
+bi9oZXhhZ29uX3RsYi5oICAgICAgICAgICAgfCAgMyArLQogdGFyZ2V0L2hleGFnb24vY3B1Lmgg
+ICAgICAgICAgICAgICAgICAgICAgICB8ICAxICsKIHRhcmdldC9oZXhhZ29uL2hlbHBlci5oICAg
+ICAgICAgICAgICAgICAgICAgfCAgNCArCiB0YXJnZXQvaGV4YWdvbi90cmFuc2xhdGUuaCAgICAg
+ICAgICAgICAgICAgIHwgIDkgKystCiB0YXJnZXQvaGV4YWdvbi9yZWdfZmllbGRzX2RlZi5oLmlu
+YyAgICAgICAgIHwgIDcgKysKIGh3L2hleGFnb24vaGV4YWdvbl90bGIuYyAgICAgICAgICAgICAg
+ICAgICAgfCAgNSArLQogaHcvaW50Yy9oZXgtbDJ2aWMuYyAgICAgICAgICAgICAgICAgICAgICAg
+ICB8ICAyICsKIGxpbnV4LXVzZXIvaGV4YWdvbi9jcHVfbG9vcC5jICAgICAgICAgICAgICAgfCAz
+MCArKystLS0tCiB0YXJnZXQvaGV4YWdvbi9jcHUuYyAgICAgICAgICAgICAgICAgICAgICAgIHwg
+MTUgKysrLQogdGFyZ2V0L2hleGFnb24vY3B1X2hlbHBlci5jICAgICAgICAgICAgICAgICB8IDEy
+ICsrLQogdGFyZ2V0L2hleGFnb24vZ2VucHRyLmMgICAgICAgICAgICAgICAgICAgICB8IDI5ICsr
+KysrKysKIHRhcmdldC9oZXhhZ29uL2hleF9pbnRlcnJ1cHRzLmMgICAgICAgICAgICAgfCA4NyAr
+KysrKysrKysrKysrKysrKysrLS0KIHRhcmdldC9oZXhhZ29uL2hleF9tbXUuYyAgICAgICAgICAg
+ICAgICAgICAgfCAgNSArLQogdGFyZ2V0L2hleGFnb24vaGV4c3dpLmMgICAgICAgICAgICAgICAg
+ICAgICB8IDM3ICsrKysrKysrLQogdGFyZ2V0L2hleGFnb24vbWFjaGluZS5jICAgICAgICAgICAg
+ICAgICAgICB8ICA1ICstCiB0YXJnZXQvaGV4YWdvbi9vcF9oZWxwZXIuYyAgICAgICAgICAgICAg
+ICAgIHwgNzIgKysrKysrKystLS0tLS0tLS0KIHRhcmdldC9oZXhhZ29uL3RyYW5zbGF0ZS5jICAg
+ICAgICAgICAgICAgICAgfCA1NiArKysrKysrKy0tLS0tCiB0ZXN0cy90Y2cvaGV4YWdvbi9wcml2
+aWxlZ2VkLWluc24uYyAgICAgICAgIHwgNzkgKysrKysrKysrKysrKysrKysrKwogdGVzdHMvdGNn
+L2hleGFnb24vcmVnX211dC5jICAgICAgICAgICAgICAgICB8IDExICsrLQogdGFyZ2V0L2hleGFn
+b24vaGV4X2NvbW1vbi5weSAgICAgICAgICAgICAgICB8IDE4ICsrKystCiB0ZXN0cy9mdW5jdGlv
+bmFsL2hleGFnb24vdGVzdF9hcmNoX3Rlc3RzLnB5IHwgMTIgKystCiB0ZXN0cy90Y2cvaGV4YWdv
+bi9NYWtlZmlsZS50YXJnZXQgICAgICAgICAgIHwgIDEgKwogMjIgZmlsZXMgY2hhbmdlZCwgMzky
+IGluc2VydGlvbnMoKyksIDEwOCBkZWxldGlvbnMoLSkKIGNyZWF0ZSBtb2RlIDEwMDY0NCB0ZXN0
+cy90Y2cvaGV4YWdvbi9wcml2aWxlZ2VkLWluc24uYwoKLS0gCjIuMzQuMQoK
 
