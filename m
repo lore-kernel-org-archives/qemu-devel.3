@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31105C5DF81
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 14:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FF0AC5DF81
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Aug 2026 14:58:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwhj7-0007oF-25; Wed, 19 Aug 2026 10:57:14 -0400
+	id 1wwhkS-0000Yd-Kd; Wed, 19 Aug 2026 10:58:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wwhix-0007lj-VQ
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 10:57:04 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wwhjr-0008RM-N4
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 10:58:00 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wwhiv-0000Sa-6u
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 10:57:03 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1wwhjq-0000bc-4z
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 10:57:59 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67JEbv4U483824
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 14:57:00 GMT
+ 67JEbvYT135640
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 14:57:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- LN/PuTlUMhyncpHtTbGbDh8uFDhQHI1t9gAGtQTvIiM=; b=pCLu2JV8v7PljXfG
- P5GPzu+UXUuQIeXb9eztAUfMelcuCDCU3WSg+Tu6wyK4MkZiKlMtTHeL1h9ZLMDc
- CrRs/11QJmi2eQHT560QFRulK2OfGuhTm7vEF8ujpZVWS+LYySCA44XNi0q//SN9
- 5hPKaIbe8qaCbODJw5hMGEFMhmMSCNwm9waqtFruUNHZd0sUNOp9kO3RRGzo97L/
- A363C1tPNgZiSRfM0aQ8j9FBNq4PWJlLBfi5Z6VAKNyKZ2JROvkEC8OG63xs+SVU
- 8c2mab2xxcC18lWYGLFuq5UKdmGmh8AQoJnuO4WZdtfE5+KSLGBLhkWbLOkJazKa
- 5BP9Dg==
+ 5eZLFQazAYOlyhiQQKdSZi0/McKosAMWnrZPE0PQkkY=; b=EnvpZgT8SwdsK2w9
+ B5WW7HHmuX5O86swJSxUr/7yVuq2ldtaqYdOX1T71txEZ091ITd+yNZ4JoVEkzKb
+ LCdQ1kf3QsxM0avrrClDjAMDTDTdHpTzdqLv52hvJdBhJdbrqYxZq3mGE82xBUe9
+ Icp84DDLcrjcTC+mHjgBgVEWue2x37jSGkWuoe/vh8XOT84spUkVtA3+V80jvfFy
+ zoLXk7z7kC7fN8/GNA1GHO4SDTSHvOWWmaggJmNaifFb5RvFL2sFg4DbGCJ9Dfhf
+ jH0RdTkRjryVjcT4SKJOjx7nABxNPBLyv8PpLrC5IE8ewSFlJTIOnxWK7koV46AV
+ txVkGg==
 Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
  [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4yfnbsq6-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g4yfmbt2k-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 14:57:00 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 14:57:56 +0000 (GMT)
 Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-936d067836eso142076085a.0
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 07:57:00 -0700 (PDT)
+ af79cd13be357-933023a5980so182854385a.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 07:57:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787151419; x=1787756219; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787151476; x=1787756276; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=LN/PuTlUMhyncpHtTbGbDh8uFDhQHI1t9gAGtQTvIiM=;
- b=heJk36rRGUgYi04ue1sQKC5WM3uA6cbsirbOHl3in2CQEpe2ylLW1ye9Acmy30Detn
- wUXvZWvk4LnNo7vaH46wE0tz1G/tEQSNOKoJVAr0qKkl4xfWsAHPBq59+m8hqfb2ycoW
- dvC3q5EQkEGAG5QkIQUZ+QGag8TuP/g+lxkQJVWPTvUcHpdaH18Zw5WG2mi2RJKeiCDs
- o/FEKnffEEIqBR0d2NIOUKfBYSAPosqxkXBprMx1bV2nk9hheHkxJvyy2zEIk4KWxl+c
- tRagMVFVjmpEpcVIflWKVS58C5EWISEbHYVKtg2nM5qZHYmODzkqwhv5VRc2lr2mMxxu
- GXjQ==
+ bh=5eZLFQazAYOlyhiQQKdSZi0/McKosAMWnrZPE0PQkkY=;
+ b=C3tOJUhJy7WYR7Ex2KEsg2fgFIhZAVPTAIMfXn49y51RM7ph+gALWc6niGENoSpCdk
+ +ZDq2ILYGwOyAnKGjNidNQ2SZWH68oOmUxrHyaHAugPOS9CVsIxJn4dsxShQO6cNpzXr
+ XztwEgNaJbFLaFImIxKTPYdJGt8PURxOlJsSHf8XfsUFeTCC1t/0Va2Use9rPzs8EMnL
+ Eoe5sN+zeRiw5z0V8w5qbrmz+mxK0RaOcBqjBRfKmpG+Ld3cG7dq+TWHR3ZNOkEhSxqx
+ Jz1Vr0qGOFjh8tbAmK+mWk8WmwanRcGWGuaxRctMNruUXLbNStM9J46IDJ7UW+CM5xPY
+ 8W4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787151419; x=1787756219;
+ d=1e100.net; s=20251104; t=1787151476; x=1787756276;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=LN/PuTlUMhyncpHtTbGbDh8uFDhQHI1t9gAGtQTvIiM=;
- b=GvvxgFZhB3gkVzvSG3wnrnb5Rl0mL8ThvaOn4RWGfqNpoeR5V6e3Px2FxK8wMF93fz
- B+CzjZlmNyxp9eCGpj5f1sj75b6+2OSlVvuR9J4hdmxA1dtodA1DDM1tTZZJEsjHqk1X
- PUNQXVjAS86rz7N87Ck6VK+wtMdmQ7gKvzoYY2NRPVf6PoprRFv2flAmbIR7UQm/4yf3
- s9zdnme/TSa2cRO/H0g3nYvmEkWdhmxGRAxPW1efYO9a0fb1N/QpDhEkoL56AB1JoEwx
- sXNRUkJOheRP8YmCfUAGntdHDjwTQsLSHqT59keV+ZeqM42nXsl3djThMhF12z0E5dIl
- O07g==
-X-Gm-Message-State: AOJu0Yy7cNg48K/PbvpPUdPS+lFhCriNr1a5axtBrwaLhzvzL+iozCh0
- qLJ27pchxdpsrhJorUv+5orRwNb1J4K7zAYMYu5MvHfrLroST5hIQi0R5k9wdUZc5IsPlRkjDo2
- UMFEJ/mbF+2M+gpRwCFnQ36rHLFJqPYdl9UH8aH8ftqvH88d//M5s9MifMZ9oFWVZ4qYY
-X-Gm-Gg: AR+sD11REwNHWbweQcBBgyOLvJu6vIQJnbcV4iXMtN+zS4Mihsr2xe52O8NysDFbGsA
- Tc6YxTdBxu5G/924PXIM50o+70dcyii2C8sE+88/t45fDOxHUe42W2HfOnaavSEtCOQSP80taB4
- HcQSJcD04Ph1OlmB5V1XTFurtCjg3tZvooJIlY+kRGNTmOEAFncdnAXykaSLQEG9psOhTMTbjyR
- 0mt2JO6HPZuVGq0lxOBqdfyeWqUayVe9aSRJX5dbsv83rCGSsoh3fQUBRniQmxMNd/FcvYP9y/1
- K0TzXcw2mZCRIp0i9Jk/EHjdtZtot7GUVF5EK9OrmNNDZQFbfcsBx4c+dylr10ncsJ/EqHHiB9e
- Rf5XSnLaCSZvNPVbGs7pntjDq/dyVTgfJFwBSLDPRVw==
-X-Received: by 2002:a05:620a:2a12:b0:936:e4d1:fa2b with SMTP id
- af79cd13be357-9371e6b762fmr471976485a.44.1787151419398; 
- Wed, 19 Aug 2026 07:56:59 -0700 (PDT)
-X-Received: by 2002:a05:620a:2a12:b0:936:e4d1:fa2b with SMTP id
- af79cd13be357-9371e6b762fmr471970585a.44.1787151418892; 
- Wed, 19 Aug 2026 07:56:58 -0700 (PDT)
+ bh=5eZLFQazAYOlyhiQQKdSZi0/McKosAMWnrZPE0PQkkY=;
+ b=jD0LqD09hXrHMInW+irNvdF76I7dR4FZRta635q2KFgyIFyiH+tytGBJyS7ZJq69F5
+ 04qCQu+cvuVcjnvOYcpVIMp5+cNRbRUNwu9nNiNxd61/uOl0xiIfSpXDb5H/Sk74JROW
+ 72DwRNclW01hE113rHNqqSbgt0iRPRlDYpQeHjMk1a6NPvWBPcPNiUPXqGaYqaIi376X
+ GyWZOjjdabA29gUf0jUeZs0HBfJbxkJm1mcrUg+z98Ba7oF6PqC8IiT+ZvaX/Jp5gUvi
+ 8ComQnyWWrv6K7l7mOkp+6jRHsBH2gwjx/ncAguFIAOg9MWTNiHcYeTgb5bL2wD8alR+
+ kpNg==
+X-Gm-Message-State: AOJu0YzBAPALHtjfANDJ2KMDnqoutomjSh3OnJWbirjdcpWE1m6en8Mc
+ JlfYUNvz6P9657XFlrfWzT2ZB/c+KMmI+ZVmrS1IhMcK1pxwneDOGsPMrQYbO6ElS7zil23+wbf
+ 5gHqHMT7fernGOLDuXYF1RMGDsCmOMUMw0/7vDEYEl2ccf/BqnJIm1Mt+cu9ToELGbU6i
+X-Gm-Gg: AR+sD127LwoasEYAvb6ucX5RwDLJaGtDoZBJ0J5Z9P/WAl951WgQ0eHHssRZFWO/7A1
+ 2je0J38CaT/8RwFBgvBEi5diy07JWBfkwRfbEAuWWXSq220XtYJDfxIW0AzrEJS2DO2vqRejQBw
+ s8dyZlpAsSioepOvVJBh7P5ofD3SrAx9GceEiN7uWMSLDwTRdVB9g6i+7fO4pZ01FUFeQnUOmtx
+ 47hbJa06zaj+Jb9P2Lf8hVosP1PsWCt2K5uFpwDXa/f5ob3K10JK/48reYp4LPEY2TQTd/czzUd
+ HcJMwwGx6kAvfTAiFC0uwdqU84B1cjQqVWHdu+2eKJuT+Ews4kx+cNfqk/zs6Ek4aWTDyE9QVH3
+ 1zNdz4+/syf+0BW7KTP9ULariFhS3K3s51+S33hCQdA==
+X-Received: by 2002:a05:620a:710b:b0:92e:45e4:c6e with SMTP id
+ af79cd13be357-9371e2cee33mr485530285a.22.1787151475619; 
+ Wed, 19 Aug 2026 07:57:55 -0700 (PDT)
+X-Received: by 2002:a05:620a:710b:b0:92e:45e4:c6e with SMTP id
+ af79cd13be357-9371e2cee33mr485526585a.22.1787151475174; 
+ Wed, 19 Aug 2026 07:57:55 -0700 (PDT)
 Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b1441753sm6877488f8f.5.2026.08.19.07.56.57
+ 5b1f17b1804b1-499aa175d0fsm66958315e9.9.2026.08.19.07.57.54
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 19 Aug 2026 07:56:58 -0700 (PDT)
+ Wed, 19 Aug 2026 07:57:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -94,45 +94,45 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 01/11] accel/tcg: Rename for exception codes named @ret as
- @excp
-Date: Wed, 19 Aug 2026 16:56:39 +0200
-Message-ID: <20260819145649.23439-2-philmd@oss.qualcomm.com>
+Subject: [PATCH 09/11] target/i386: Extract halt-to-exec transition out of
+ x86_cpu_exec_halt()
+Date: Wed, 19 Aug 2026 16:56:47 +0200
+Message-ID: <20260819145649.23439-10-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260819145649.23439-1-philmd@oss.qualcomm.com>
 References: <20260819145649.23439-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=QedWeMbv c=1 sm=1 tr=0 ts=6a85c43c cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDExNiBTYWx0ZWRfX9tE9oSwgKi6U
+ RyqbGL2oKod0k6d6R4cz5cQmcPElDPdCOR7d2/tf+cAX1ClCp7bFEPjj3jzCKqotA1M/9ZIrxZa
+ vaLdmzmMDNtSvFyZmUeVz5QENV4LE0HP5Bf73js5XnF2CsYeXvS1F8vJLV/KhfXocHlTQWLEzY0
+ KjnIXj6QX8MCvo+wZBOa4r5r1NsruAPZfSAky9hg+ek+ZAA4qwkX8X/s6PIBeMkAfdiMUicbr/I
+ u0UpNbJb//aO4pWlDP0hdU8OwBepCYTCC+cDT8C3SrszmlVNYGYwhD/k3T8yNu4i/2joxdO2HCJ
+ yUP0oEwAob9AntwvdbSvEzuCHnQaXsJSGvwv4kVVeNDyTZGJe+RaCWkkTO6tode8egvrq0S2GdO
+ HiBkFweaILdtAofTJI2g32yNu4jm/zFs+IMmBL5O8xF92M/Nzd7k0Q2zB74Ro6dkjMKAmh81DSL
+ Xi1c6jPR8jNz5bQeEyg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDExNiBTYWx0ZWRfXy2f0kt6HZZdh
+ Yf27kSirZLWZnUKJE5ANNlTzrTdXghY83mws27VGPX9GD9QHwdvqVvUwoygFWC3TS5rf7OJiHZ6
+ Je64k/ji4b+dB8u0e2K9w+o8cX963ws=
+X-Proofpoint-GUID: 0H1NzIhRotdJz30rfxmXxv-5qztFUQJs
+X-Proofpoint-ORIG-GUID: 0H1NzIhRotdJz30rfxmXxv-5qztFUQJs
+X-Authority-Analysis: v=2.4 cv=J+SaKgnS c=1 sm=1 tr=0 ts=6a85c474 cx=c_pps
  a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=_j5oqwj-hJjEN08MGkoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=EUspDBNiAAAA:8 a=D_czkL0mjgd1dNvRY3MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
  a=O8hF6Hzn-FEA:10 a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-ORIG-GUID: KtYXTf-pqkFAAUxLUNEFEhxDCUPo5a2i
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODE5MDExNiBTYWx0ZWRfX4b4+hv6SpCzf
- tbFFYya6B66fP+dWn0seHBVAwUC8iFfr23toWvyXyaWN/HXOuigAG85e7LCu66Gm9G00ggUZEe8
- 3DntxlS6o2mDTxne45o2K8gUoa/ysVU=
-X-Proofpoint-GUID: KtYXTf-pqkFAAUxLUNEFEhxDCUPo5a2i
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODE5MDExNiBTYWx0ZWRfX7oHX+HluUjGk
- Bq46rsVZV35G918OMhX0BetsepCF9SfjXKKOeJwS0mq6d4Isr1nTBHXrLsWOwxH5FAlmTCh/qjK
- T6CVYW22NWWmHcpNGuB8JTVHLhKOM7mKFWKwj9Lo5FmC6eFyjsT6JdfAB2F2UPcLES3syXGko+8
- K3uUH49IjDRClThNoQcsovjj0LNknXpj1XQ8g/o5tTjC4weExyK2N/rqxFljkHC5DNKZCGH5dEh
- cEO8odgbXBExjFfl2LCaaQT1hKcTi1UQF0do8VK4iA0UR3YBlJnpdk20HFydcBXsNrEDUq1AgNL
- Pt6EjQQ5ODYjfochYWFKfEvff8EvQlO8o9PB4E2BjTjfQ2Ta5KuKGLnXuteOtN0Y0LpcMHRkt7+
- XfRXFRIUfGFCLKzUs53hDUW7d+ibG2Tyq5XGqp1l+WeIAerI0aJ/VIY2BTOLQjgzBts0ucm45PG
- 22/USjLHYvYgZTDaVVA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-19_04,2026-08-19_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0
- adultscore=0 malwarescore=0 impostorscore=0 priorityscore=1501 spamscore=0
+ malwarescore=0 impostorscore=0 adultscore=0 clxscore=1015 priorityscore=1501
+ spamscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608190116
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -155,184 +155,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename meaningless @ret or @r variables as @excp to
-directly denote the value is an exception. No logical
-changes, purely cosmetic/clarity improvement.
+Refactor the halt-to-execution target-specific transition logic
+(setting trap flag in debug register and injecting debug exceptions)
+into a separate x86_cpu_transition_halt_to_exec() function.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- accel/tcg/cpu-exec.c            | 24 ++++++++++++------------
- accel/tcg/tcg-accel-ops-mttcg.c |  7 ++++---
- accel/tcg/tcg-accel-ops-rr.c    |  8 ++++----
- accel/tcg/tcg-accel-ops.c       |  7 ++++---
- 4 files changed, 24 insertions(+), 22 deletions(-)
+ target/i386/tcg/helper-tcg.h        |  1 +
+ target/i386/tcg/system/seg_helper.c | 20 +++++++++++++-------
+ 2 files changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 257211235db..53d90c400d5 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -687,7 +687,7 @@ static inline void cpu_handle_debug_exception(CPUState *cpu)
-     }
- }
- 
--static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
-+static inline bool cpu_handle_exception(CPUState *cpu, int *excp)
- {
-     if (cpu->exception_index < 0) {
+diff --git a/target/i386/tcg/helper-tcg.h b/target/i386/tcg/helper-tcg.h
+index cab197368b9..65819670493 100644
+--- a/target/i386/tcg/helper-tcg.h
++++ b/target/i386/tcg/helper-tcg.h
+@@ -39,6 +39,7 @@ void x86_cpu_do_interrupt(CPUState *cpu);
  #ifndef CONFIG_USER_ONLY
-@@ -703,8 +703,8 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
- 
-     if (cpu->exception_index >= EXCP_INTERRUPT) {
-         /* exit request from the cpu execution loop */
--        *ret = cpu->exception_index;
--        if (*ret == EXCP_DEBUG) {
-+        *excp = cpu->exception_index;
-+        if (*excp == EXCP_DEBUG) {
-             cpu_handle_debug_exception(cpu);
-         }
-         cpu->exception_index = -1;
-@@ -720,7 +720,7 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
-     if (tcg_ops->fake_user_interrupt) {
-         tcg_ops->fake_user_interrupt(cpu);
-     }
--    *ret = cpu->exception_index;
-+    *excp = cpu->exception_index;
-     cpu->exception_index = -1;
-     return true;
- #else
-@@ -738,13 +738,13 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
-              * raised when single-stepping so that GDB doesn't miss the
-              * next instruction.
-              */
--            *ret = EXCP_DEBUG;
-+            *excp = EXCP_DEBUG;
-             cpu_handle_debug_exception(cpu);
-             return true;
-         }
-     } else if (!replay_has_interrupt()) {
-         /* give a chance to iothread in replay mode */
--        *ret = EXCP_INTERRUPT;
-+        *excp = EXCP_INTERRUPT;
-         return true;
-     }
+ void x86_cpu_process_async_events(CPUState *cpu);
+ bool x86_cpu_exec_halt(CPUState *cpu);
++void x86_cpu_transition_halt_to_exec(CPUState *cpu);
+ bool x86_need_replay_interrupt(int interrupt_request);
+ bool x86_cpu_exec_interrupt(CPUState *cpu, int int_req);
  #endif
-@@ -935,10 +935,10 @@ static inline void cpu_loop_exec_tb(CPUState *cpu, TranslationBlock *tb,
- static int __attribute__((noinline))
- cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
- {
--    int ret;
-+    int excp;
- 
-     /* if an exception is pending, we execute it here */
--    while (!cpu_handle_exception(cpu, &ret)) {
-+    while (!cpu_handle_exception(cpu, &excp)) {
-         TranslationBlock *last_tb = NULL;
-         int tb_exit = 0;
- 
-@@ -1006,7 +1006,7 @@ cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
-             align_clocks(sc, cpu);
-         }
+diff --git a/target/i386/tcg/system/seg_helper.c b/target/i386/tcg/system/seg_helper.c
+index 4856a6b3bab..9b2adcca76c 100644
+--- a/target/i386/tcg/system/seg_helper.c
++++ b/target/i386/tcg/system/seg_helper.c
+@@ -140,22 +140,28 @@ void x86_cpu_process_async_events(CPUState *cpu)
      }
--    return ret;
-+    return excp;
  }
  
- static int cpu_exec_setjmp(CPUState *cpu, SyncClocks *sc)
-@@ -1021,7 +1021,7 @@ static int cpu_exec_setjmp(CPUState *cpu, SyncClocks *sc)
- 
- int cpu_exec(CPUState *cpu)
+-bool x86_cpu_exec_halt(CPUState *cpu)
++void x86_cpu_transition_halt_to_exec(CPUState *cpu)
  {
--    int ret;
-+    int excp;
-     SyncClocks sc = { 0 };
+     X86CPU *x86_cpu = X86_CPU(cpu);
+-    CPUX86State *env = &x86_cpu->env;
++    CPUX86State *env = cpu_env(cpu);
  
-     /* replay_interrupt may need current_cpu */
-@@ -1042,10 +1042,10 @@ int cpu_exec(CPUState *cpu)
-      */
-     init_delay_params(&sc, cpu);
+-    x86_cpu_process_async_events(cpu);
+-
+-    if (!cpu_has_work(cpu)) {
+-        return false;
+-    }
++    assert(cpu_has_work(cpu));
  
--    ret = cpu_exec_setjmp(cpu, &sc);
-+    excp = cpu_exec_setjmp(cpu, &sc);
- 
-     cpu_exec_exit(cpu);
--    return ret;
-+    return excp;
+     /* Complete HLT instruction.  */
+     if (env->eflags & TF_MASK) {
+         env->dr[6] |= DR6_BS;
+         do_interrupt_all(x86_cpu, EXCP01_DB, 0, 0, env->eip, 0);
+     }
++}
++
++bool x86_cpu_exec_halt(CPUState *cpu)
++{
++    if (!cpu_has_work(cpu)) {
++        return false;
++    }
++
++    x86_cpu_transition_halt_to_exec(cpu);
++
+     return true;
  }
  
- bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
-diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
-index 69560fdb9d8..e7edd1945f2 100644
---- a/accel/tcg/tcg-accel-ops-mttcg.c
-+++ b/accel/tcg/tcg-accel-ops-mttcg.c
-@@ -90,11 +90,12 @@ static void *mttcg_cpu_thread_fn(void *arg)
-         qemu_process_cpu_events(cpu);
- 
-         if (cpu_can_run(cpu)) {
--            int r;
-+            int excp;
-+
-             bql_unlock();
--            r = tcg_cpu_exec(cpu);
-+            excp = tcg_cpu_exec(cpu);
-             bql_lock();
--            switch (r) {
-+            switch (excp) {
-             case EXCP_DEBUG:
-                 cpu_handle_guest_debug(cpu);
-                 break;
-diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
-index cdaa3e11808..d6c2fc019c9 100644
---- a/accel/tcg/tcg-accel-ops-rr.c
-+++ b/accel/tcg/tcg-accel-ops-rr.c
-@@ -277,22 +277,22 @@ static void *rr_cpu_thread_fn(void *arg)
-                               (cpu->singlestep_flags & SSTEP_NOTIMER) == 0);
- 
-             if (cpu_can_run(cpu)) {
--                int r;
-+                int excp;
- 
-                 bql_unlock();
-                 if (icount_enabled()) {
-                     icount_prepare_for_run(cpu, cpu_budget);
-                 }
--                r = tcg_cpu_exec(cpu);
-+                excp = tcg_cpu_exec(cpu);
-                 if (icount_enabled()) {
-                     icount_process_data(cpu);
-                 }
-                 bql_lock();
- 
--                if (r == EXCP_DEBUG) {
-+                if (excp == EXCP_DEBUG) {
-                     cpu_handle_guest_debug(cpu);
-                     break;
--                } else if (r == EXCP_ATOMIC) {
-+                } else if (excp == EXCP_ATOMIC) {
-                     bql_unlock();
-                     cpu_exec_step_atomic(cpu);
-                     bql_lock();
-diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-index 560fe2554ba..9c3d2214162 100644
---- a/accel/tcg/tcg-accel-ops.c
-+++ b/accel/tcg/tcg-accel-ops.c
-@@ -77,13 +77,14 @@ void tcg_cpu_destroy(CPUState *cpu)
- 
- int tcg_cpu_exec(CPUState *cpu)
- {
--    int ret;
-+    int excp;
-+
-     assert(tcg_enabled());
-     cpu_exec_start(cpu);
--    ret = cpu_exec(cpu);
-+    excp = cpu_exec(cpu);
-     cpu_exec_end(cpu);
- 
--    return ret;
-+    return excp;
- }
- 
- static void tcg_cpu_reset_hold(CPUState *cpu)
 -- 
 2.53.0
 
