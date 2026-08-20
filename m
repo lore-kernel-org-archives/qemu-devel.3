@@ -4,148 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA618C5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 20:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87C48C5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 20:39:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx9An-0006zx-3d; Thu, 20 Aug 2026 16:15:37 -0400
+	id 1wx9XS-00021z-MH; Thu, 20 Aug 2026 16:39:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wx9Al-0006vn-BG
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 16:15:35 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wx9Ah-0002hk-OE
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 16:15:35 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67KK7q0l3941379
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 20:15:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- LWQwdDV2fkgFjhmKLwyo93xfsCf8ZqnI4jIB05mjxx8=; b=QrFNjvV7I+dnZhZv
- RmFAmX0DwQdNmBnjYk89UzgbUIhSr0AKChxNrYs+qw/wHOM/7/Qi07lZzelwLuBu
- GW4olpPXV/M9txB8mmIb97Uw4LsgCduNYk/Mfosll6Fig4wny5ZZtqSE47X+r9pS
- sjrz3TOR2MIFJjKr47AWO5FjLFyQPnhYjmmRHaRjN5AkXDMAEDqkU1rNHcr1I1Ie
- HpD7ztS9gN4On3nxndNyBCHiIo/9D1XOMqToaEbgMBzrhWOINKPQS+XwFTIqWc81
- kWLna5qVQOw2/VIFEDfC8bHKLfgF+sPSuzE4zbbNUj4PUVEkcAA3pbo40JOanEg6
- voIz5Q==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g5vh7ujmr-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 20:15:20 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-52cd0374265so3862891cf.1
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 13:15:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wx9XR-00021V-7L
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 16:39:01 -0400
+Received: from mail-qt1-x836.google.com ([2607:f8b0:4864:20::836])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wx9XP-0006Se-Ct
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 16:39:00 -0400
+Received: by mail-qt1-x836.google.com with SMTP id
+ d75a77b69052e-51bfad59921so1770961cf.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 13:38:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787258338; cv=none;
+ d=google.com; s=arc-20260327;
+ b=GTrx0RLJBdFVx9MdDXSD/aJ3m+88topdupF0cBCfarv9ktMViMmAxc7MiTkuhNOqrk
+ nJMnVNwVi+3Njo3vMZ7wxa/p9Nnm1LUn0FVVY8nF2VGAz1+lPAxZSshrQhmvWoxSQ43q
+ ADV6AUpk1yjLha3bRi4C6wP1RbHKW5fwBBIXUH2m3u3B9FcFmVynIe7kt0XjuM0A5Gp2
+ umhBLHJQHhNQaXeNPoyZml33EeN1qXkpBCQmaoOUMOQykHm4SITCEKB31guyy8CZJzVp
+ 5NGtgi/RtET9ndIJVxMXaLGLoyCo8enG2nZmxTpDJO8+n7PpkFADgLQC7k7ZjiKC2Ugt
+ aHkA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=yw/70XDHxmOe5vI6aQ6n4t71n8LG9vKd/gcLCxbLG5Y=;
+ fh=zAf9Wul48xkTrIs6bAeEfpaQhknOU2iSq1CvwgfZtyM=;
+ b=UUgfC8cGJvwoWRmjtcI/hFiDfb5X/pqp52ckVsuIMqPwWr1NvxTymaOX4zJ2m2+J6/
+ SztdL33Nfd3mD04QnFTeqIiGZqbM6cWYwWVjYZ+yFCWFhC0nZZsSV7aeeq9FvOmhrlpt
+ KugYWU3u42ZHnj8alkrf4TuWmE5s9EqZBCgvJwOjtaHVrNUvuq+gICeBNhi1Oe0mboxQ
+ b8RQw2kkWnmapg43HmUEmsw6MNPYRD6hIK9X0evGSU7jNQhTK3rJz7IduoJJaCJATRpU
+ VLCoKMiSpoJJBv+mYzOkQNmGBdUmpaV70JKM6jkLzr42g74NS2gqD90vpSjrUwR3HtAe
+ bFtQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787256919; x=1787861719; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ d=gmail.com; s=20251104; t=1787258338; x=1787863138; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=LWQwdDV2fkgFjhmKLwyo93xfsCf8ZqnI4jIB05mjxx8=;
- b=cVpC5psV9K8l7uWbJxJnGaLmwfrsfBef8zCq++TkGzPM4ciRNIF/tiaIg3p5tm3s0T
- i2EbLO1+nUDWOLm1edaCJKdnKC6WcGgqTN2q9ZvAJBr4YNThzEjmxhc/lfIgNBoanhTH
- WyqLkxlXu/3yv54/f/gztobngAFBmwysqi7x+amhi4s4x9mKJZfSqqtucdfLqQ+85T0d
- 1/+Titw4yrxCDpo5dDrcx3IpHL9xO/4BfmfQWFRoppnIkolotdpRZNTmsK/GIBe6aNcB
- 9VpZaezvFLvjmeXqQIvZwYD6CXPMM08gkBcfV5kNYopFj7A5IyMFqzBsL2EzphKjYyT3
- CCoA==
+ bh=yw/70XDHxmOe5vI6aQ6n4t71n8LG9vKd/gcLCxbLG5Y=;
+ b=Eb0NmmDsiOXkvM0j+eOGQpBcXhjrKsuq43BBNQe/urZiBJXqf7nblL0AIfprrFVRxP
+ VuNJzOMUW8x6zTe6t5D2shyTRE3FWvsIWH5dPd/ZfAPkF6rduZbUzn+jfTzuXXEXrQWU
+ PglEOpLb/xAbs1/4ctps1irS13uY35R8D3+WrOQkhjg6xQ4w3/ZRMhCT9a+FBtWnFWUL
+ 3gG7GGssXm8pGTwiU4/b43k+6JvkFWRep4/x0+ZyCfT9q8vkrKRvRMgMspC9tDrrqaWc
+ R1HcWQTeU65qmDau/i3uNkU/3qOdBzjMscGPeI7W2dfDTfJauwiX4bcppnk2YuB7BMTD
+ KkgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787256919; x=1787861719;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20251104; t=1787258338; x=1787863138;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=LWQwdDV2fkgFjhmKLwyo93xfsCf8ZqnI4jIB05mjxx8=;
- b=I5HoiQbyEDiGvl9tylVhnD62/r6lLZUAry0EEsVGfBoH8DG6cubBvNQaQF+0bUa54Y
- Wq8CnStVpifHIES6ice8Zkki5m73nuE+dOdQx0ap7kEHFRkolsu0E4z4nO+gmmgCHRSK
- buWUkKU78EfgC4HEwM7gsH3XgaITvcDZarcyPds6IB4sYMpqv+YokS7rRPAkfd8A8CAy
- +XWzLdMjt9FUIF7+pKwwso/hOM0QpPo8Wz1ObnWeTwJ6kzmdMZ9bDNYcn3mEwKCgsnZ2
- 1NvY0pXzJ8IfTo8LQrFYWAQki02NmPLQldbxaHRcIRwTHoMHFULSQFyFWHrjKBZIpgQu
- Xkvg==
-X-Gm-Message-State: AOJu0YzJD84HP42slg0ozIo2YwqtLThDXg6HdEWSSPv7HqHSLDnYbQcx
- LHWn0EmoKCJ9lCBbJKssVc77VVC0CADVWeX7S+juHqNjaIDm73TNcAXylPWphdwcK2vslXFH8aZ
- pRUYSElIKjQKtFcMIjFUOeUstCzo1AgbM+bZHBGXmswkWXxFp0PBl8MdOSXMr1zUaBCS0
-X-Gm-Gg: AR+sD13UOBIuIAc5iFSp2DSW45izBUuhtxRDBDvKJBZM46SqS4XdxGoYZaeWuwxXaW0
- qpR4g59oLCNAwkNQbDbx1/9FQUHLxEIPKVbAboHzvvD0ju5Lz3XXB3gRY8Hh+Hk0E2u0lVW3AE/
- Ylka4fc4u+rFqfjtnSyGPtslLrWsgUUnPobjRUSSoIRBBHT9OAC4zpEd9Ec9Q2wwDZr8uQ5q/y/
- mKDdijQVJo8P9IFP/XlVoNy2QfDV/U+dvfUkS8o/QyepVnhg6kqD2z5vvq5lfBfSwkLqU0WcLBY
- B8QLAytPrjlwai9Z6Ej/mjfC/8gIpLyDxdBIw4w1t2T/E4Ota0VikPoJpymE8AUN85Fu+mWU2Gx
- 16G+l6Ze70H+yzrvKcpgUdBUMDjsF++gQm7l8n8EBDw==
-X-Received: by 2002:a05:622a:144c:b0:517:a7ff:935f with SMTP id
- d75a77b69052e-52df565f835mr9789151cf.9.1787256918973; 
- Thu, 20 Aug 2026 13:15:18 -0700 (PDT)
-X-Received: by 2002:a05:622a:144c:b0:517:a7ff:935f with SMTP id
- d75a77b69052e-52df565f835mr9788371cf.9.1787256918246; 
- Thu, 20 Aug 2026 13:15:18 -0700 (PDT)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b14b8022sm12321331f8f.18.2026.08.20.13.15.16
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 20 Aug 2026 13:15:17 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>
-Subject: [PATCH v2 10/15] target/riscv: Constify CPURISCVState for various
- cpu_*() getters
-Date: Thu, 20 Aug 2026 22:13:50 +0200
-Message-ID: <20260820201356.29775-11-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260820201356.29775-1-philmd@oss.qualcomm.com>
-References: <20260820201356.29775-1-philmd@oss.qualcomm.com>
+ bh=yw/70XDHxmOe5vI6aQ6n4t71n8LG9vKd/gcLCxbLG5Y=;
+ b=JY0w5XFC/0y0U9XLOjWSpSuh+9n/pyeCHvTCeOwuFrcvsxZtjAdGRnmglRiQuqFSG4
+ G9yjWa16ENq588V6cGoCHhTTdVXPmAnGPLjzfmMJQZKKpw2Ib8fAVYHfHerfVKi5SAHV
+ BaEWL1kEn4IY33HR0Y555KhMDoLz6ogJRPOnmMbPe/l8/DTT4G9Xr5RIJuXP/XxWCfEu
+ bLsYzXQbToMccPIziuHbUbEXvFq9CvO3gs83EE51Y9GDWlHCE1N7d2CyBYogRTx9khU7
+ P/c4/lF/26tnrkKyDhIjQKfGbr9U8fVb9gkNMZHollygpjI39faLlI8ZHE62lG4MUufm
+ U30w==
+X-Gm-Message-State: AOJu0YzN5AoavwELWFGfa2ltJfygQjnh/a0y3putJr3NUxCYzGmxDlYr
+ usuLj1A+aB5luUti/KSservHlBhbk5cRF7y7uIOVLj9DTAAmstz/waxb5Rlo54CgiNfd8RBQLHV
+ XGnxQ0gLrILjMRtKgwD8FG9Xgl+Kh3gM=
+X-Gm-Gg: AR+sD12wQzf0DN4m71RK3VpSVTYjbc0B51vNYC7bqwlTwyOmD7+lZj1ycPh0XI5lfSd
+ TvY68bpqUH4GF/1yZpdvl2jTTeTWeCdDVjNhvVSMgHXX8ZRC/J6mRPfWMJxJZfp9z2EtPa86YPn
+ 1v+NBCJ/kwpgCT1Fr9A4UIWu0VZ225RB1F9dGFIYp5pPcC1ofGIui68y/5C3fgxK9YUm4u8yJR3
+ cYtrbAhSC8Dz3YJMU/9OtavQ1BZdCvFpA8mT7JFuYZ/XOANiu5ZNa3R5k4frJ8zPJcftKJjm4bQ
+ z2IX4zBt8nYOZuf9+Nzd/Z+p9T1ECd8wQx99q8wZJPHailrnS3T/Ss44Ef2fY16VoBurQpW2Zt5
+ g8jM=
+X-Received: by 2002:a05:622a:1b28:b0:51b:ecca:f2e0 with SMTP id
+ d75a77b69052e-52df56f7dfamr12524441cf.5.1787258338304; Thu, 20 Aug 2026
+ 13:38:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDE1MiBTYWx0ZWRfX7VfzT2/kl7Mv
- JsuVyXz92XqJqOS9fgy8KjXqIKLz1HE2d/R7Td4MboRtVVKEPaTqdF7Ot0aypaBqmNP3h2vQgqQ
- pjGgejAmO3V/HRfypfSaIRzN6C8LFNSiZyeAWSafE6j/qVxYUmajLckWbnentHM8EJL8JEOMOML
- UChBqVuKr4I/7AhofPnsdhDtynlb8Tv3t0CO+8MxF5xCLj/BsapaIhsk5+bEfZNeUyYkhj0sKvY
- R+nZJXh4DDbgK5f7440WphkqS0lf4xljz7Pb3HezrEebjgwaECM4t2uvg6/O3BdbLU36aawa0NC
- 21MbEMNGDdtlh0hJtr2pw6jEM+5lHtvf06T8fRai9yujZkhNgjD5KxRvcvLirS+YQbgvA2LJ07N
- 8VZw0bcjICCTL0dbrPVF/bAlj05ay6d8xaJjCnfByzo2EP7jAjRDdXTXzURUBELQEQWiUmkdH0C
- 8UZMkglr2QN0C8zmFEw==
-X-Proofpoint-ORIG-GUID: AlN0pHgt2KoRrvns_Dii1LLdpFFokvrq
-X-Authority-Analysis: v=2.4 cv=Y7fIdBeN c=1 sm=1 tr=0 ts=6a876058 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=T9gU_B0lrst8XM-M1voA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDE1MiBTYWx0ZWRfXxYpM9cnK64jt
- ZekOiIFZcZXZlNq58pjv+o9uHRn24OFqFp8hxloiXIntwEvPR3dXEqDVysdtT1IrZlPCKQylPfK
- /oOiGoyDRsKD+j/MscofwkBjUroBtlo=
-X-Proofpoint-GUID: AlN0pHgt2KoRrvns_Dii1LLdpFFokvrq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-20_02,2026-08-20_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 clxscore=1015 malwarescore=0 impostorscore=0
- lowpriorityscore=0 spamscore=0 adultscore=0 phishscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200152
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
+ <20260817-vhost-user-isolated-memory-v2-9-948aae960abb@gmail.com>
+ <7b4d2e3d-4593-492c-887a-db560d590ac6@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <7b4d2e3d-4593-492c-887a-db560d590ac6@rsg.ci.i.u-tokyo.ac.jp>
+From: Connor Kite <connorkite@gmail.com>
+Date: Thu, 20 Aug 2026 13:38:47 -0700
+X-Gm-Features: AcwNN1VXrXAFLHLrkZHM8t6w7717j2YQmN1Mi7V8JgTbf-cGaUWANLEc02NuWF8
+Message-ID: <CA+spn3qzO_d5n9AOLyhRRu1Tz-ANyh5OfQJgCJP4Dn1+wDptug@mail.gmail.com>
+Subject: Re: [PATCH RFC v2 09/13] hw/virtio/vhost-user: add shadow virtqueues
+ and eventfd intercepts
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Raphael Norwitz <rnorwitz@nvidia.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
+ virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
+ zhenwei pi <zhenwei.pi@linux.dev>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
+ Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::836;
+ envelope-from=connorkite@gmail.com; helo=mail-qt1-x836.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -162,168 +138,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the const qualifier to CPURISCVState when the
-argument is accessed without modification.
-Simplify directly using cpu_env() in riscv_cpu_has_work().
+On Tue, Aug 18, 2026 at 5:35=E2=80=AFAM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+>
+> A whitespace problem remains here.
+>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- target/riscv/cpu.h | 27 ++++++++++++++-------------
- target/riscv/cpu.c | 13 ++++++-------
- 2 files changed, 20 insertions(+), 20 deletions(-)
+Got it!  This is fixed now
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index bb4c8563554..c51e0d5f919 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -636,11 +636,11 @@ int riscv_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
- int riscv_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
- int riscv_cpu_hviprio_index2irq(int index, int *out_irq, int *out_rdzero);
- uint8_t riscv_cpu_default_priority(int irq);
--uint64_t riscv_cpu_all_pending(CPURISCVState *env);
--int riscv_cpu_mirq_pending(CPURISCVState *env);
--int riscv_cpu_sirq_pending(CPURISCVState *env);
--int riscv_cpu_vsirq_pending(CPURISCVState *env);
--int riscv_cpu_pending_to_irq(CPURISCVState *env,
-+uint64_t riscv_cpu_all_pending(const CPURISCVState *env);
-+int riscv_cpu_mirq_pending(const CPURISCVState *env);
-+int riscv_cpu_sirq_pending(const CPURISCVState *env);
-+int riscv_cpu_vsirq_pending(const CPURISCVState *env);
-+int riscv_cpu_pending_to_irq(const CPURISCVState *env,
-                              int extirq, unsigned int extirq_def_prio,
-                              uint64_t pending, const uint8_t *iprio);
- 
-@@ -746,20 +746,20 @@ FIELD(EXT_TB_FLAGS, BIG_ENDIAN, 33, 1)
- #ifdef TARGET_RISCV32
- #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
- #else
--static inline RISCVMXL riscv_cpu_mxl(CPURISCVState *env)
-+static inline RISCVMXL riscv_cpu_mxl(const CPURISCVState *env)
- {
-     return env->misa_mxl;
- }
- #endif
- #define riscv_cpu_mxl_bits(env) (1UL << (4 + riscv_cpu_mxl(env)))
- 
--static inline const RISCVCPUConfig *riscv_cpu_cfg(CPURISCVState *env)
-+static inline const RISCVCPUConfig *riscv_cpu_cfg(const CPURISCVState *env)
- {
-     return &env_archcpu(env)->cfg;
- }
- 
- #if !defined(CONFIG_USER_ONLY)
--static inline privilege_mode_t cpu_address_mode(CPURISCVState *env)
-+static inline privilege_mode_t cpu_address_mode(const CPURISCVState *env)
- {
-     privilege_mode_t mode = env->priv;
- 
-@@ -769,7 +769,8 @@ static inline privilege_mode_t cpu_address_mode(CPURISCVState *env)
-     return mode;
- }
- 
--static inline RISCVMXL cpu_get_xl(CPURISCVState *env, privilege_mode_t mode)
-+static inline RISCVMXL cpu_get_xl(const CPURISCVState *env,
-+                                  privilege_mode_t mode)
- {
-     RISCVMXL xl = env->misa_mxl;
-     /*
-@@ -797,7 +798,7 @@ static inline RISCVMXL cpu_get_xl(CPURISCVState *env, privilege_mode_t mode)
- #if defined(TARGET_RISCV32)
- #define cpu_recompute_xl(env)  ((void)(env), MXL_RV32)
- #else
--static inline RISCVMXL cpu_recompute_xl(CPURISCVState *env)
-+static inline RISCVMXL cpu_recompute_xl(const CPURISCVState *env)
- {
- #if !defined(CONFIG_USER_ONLY)
-     return cpu_get_xl(env, env->priv);
-@@ -810,7 +811,7 @@ static inline RISCVMXL cpu_recompute_xl(CPURISCVState *env)
- #if defined(TARGET_RISCV32)
- #define cpu_address_xl(env)  ((void)(env), MXL_RV32)
- #else
--static inline RISCVMXL cpu_address_xl(CPURISCVState *env)
-+static inline RISCVMXL cpu_address_xl(const CPURISCVState *env)
- {
- #ifdef CONFIG_USER_ONLY
-     return env->xl;
-@@ -822,7 +823,7 @@ static inline RISCVMXL cpu_address_xl(CPURISCVState *env)
- }
- #endif
- 
--static inline uint16_t riscv_cpu_xlen(CPURISCVState *env)
-+static inline uint16_t riscv_cpu_xlen(const CPURISCVState *env)
- {
-     return 16 << env->xl;
- }
-@@ -830,7 +831,7 @@ static inline uint16_t riscv_cpu_xlen(CPURISCVState *env)
- #ifdef TARGET_RISCV32
- #define riscv_cpu_sxl(env)  ((void)(env), MXL_RV32)
- #else
--static inline RISCVMXL riscv_cpu_sxl(CPURISCVState *env)
-+static inline RISCVMXL riscv_cpu_sxl(const CPURISCVState *env)
- {
- #ifdef CONFIG_USER_ONLY
-     return env->misa_mxl;
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 858fbf865fd..4abf20d057a 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -864,7 +864,7 @@ uint8_t riscv_cpu_default_priority(int irq)
-     return default_iprio[irq] ? default_iprio[irq] : IPRIO_MMAXIPRIO;
- };
- 
--int riscv_cpu_pending_to_irq(CPURISCVState *env,
-+int riscv_cpu_pending_to_irq(const CPURISCVState *env,
-                              int extirq, unsigned int extirq_def_prio,
-                              uint64_t pending, const uint8_t *iprio)
- {
-@@ -908,7 +908,7 @@ int riscv_cpu_pending_to_irq(CPURISCVState *env,
-  * using hvip bits 13:63 from HS-mode. Those are returned in
-  * riscv_cpu_sirq_pending() and riscv_cpu_vsirq_pending().
-  */
--uint64_t riscv_cpu_all_pending(CPURISCVState *env)
-+uint64_t riscv_cpu_all_pending(const CPURISCVState *env)
- {
-     uint32_t gein = get_field(env->hstatus, HSTATUS_VGEIN);
-     uint64_t vsgein = (env->hgeip & (1ULL << gein)) ? MIP_VSEIP : 0;
-@@ -917,7 +917,7 @@ uint64_t riscv_cpu_all_pending(CPURISCVState *env)
-     return (env->mip | vsgein | vstip) & env->mie;
- }
- 
--int riscv_cpu_mirq_pending(CPURISCVState *env)
-+int riscv_cpu_mirq_pending(const CPURISCVState *env)
- {
-     uint64_t irqs = riscv_cpu_all_pending(env) & ~env->mideleg &
-                     ~(MIP_SGEIP | MIP_VSSIP | MIP_VSTIP | MIP_VSEIP);
-@@ -926,7 +926,7 @@ int riscv_cpu_mirq_pending(CPURISCVState *env)
-                                     irqs, env->miprio);
- }
- 
--int riscv_cpu_sirq_pending(CPURISCVState *env)
-+int riscv_cpu_sirq_pending(const CPURISCVState *env)
- {
-     uint64_t irqs = riscv_cpu_all_pending(env) & env->mideleg & ~env->hideleg;
-     uint64_t irqs_f = env->mvip & env->mvien & ~env->mideleg & env->sie;
-@@ -935,7 +935,7 @@ int riscv_cpu_sirq_pending(CPURISCVState *env)
-                                     irqs | irqs_f, env->siprio);
- }
- 
--int riscv_cpu_vsirq_pending(CPURISCVState *env)
-+int riscv_cpu_vsirq_pending(const CPURISCVState *env)
- {
-     uint64_t irqs = riscv_cpu_all_pending(env) & env->mideleg & env->hideleg;
-     uint64_t irqs_f_vs = env->hvip & env->hvien & ~env->hideleg & env->vsie;
-@@ -952,8 +952,7 @@ int riscv_cpu_vsirq_pending(CPURISCVState *env)
- 
- static bool riscv_cpu_has_work(CPUState *cs)
- {
--    RISCVCPU *cpu = RISCV_CPU(cs);
--    CPURISCVState *env = &cpu->env;
-+    CPURISCVState *env = cpu_env(cs);
-     /*
-      * Definition of the WFI instruction requires it to ignore the privilege
-      * mode and delegation registers, but respect individual enables
--- 
-2.53.0
+> >   } IsolationModeCtx;
+> >
+> >   struct vhost_user {
+> > @@ -1128,15 +1130,38 @@ static int vhost_user_set_mem_table_postcopy(st=
+ruct vhost_dev *dev,
+> >       return 0;
+> >   }
+> >
+> > -static void cleanup_isolation_regions(struct vhost_dev *dev)
+> > +static void vhost_user_svq_cleanup(struct vhost_user *u, bool reset)
+> > +{
+> > +    VhostShadowVirtqueue *svq;
+> > +    for (int i =3D 0; i < u->iso_mem_ctx.shadow_vqs->len; i++) {
+> > +        svq =3D g_ptr_array_index(u->iso_mem_ctx.shadow_vqs, i);
+> > +        vhost_svq_stop(svq);
+> > +        event_notifier_cleanup(&svq->hdev_call);
+> > +        event_notifier_cleanup(&svq->hdev_kick);
+> > +    }
+> > +
+> > +    if (!reset) {
+> > +        g_ptr_array_free(u->iso_mem_ctx.shadow_vqs, true);
+> > +    }
+> > +}
+> > +
+> > +static void cleanup_isolation_regions(struct vhost_dev *dev, bool rese=
+t)
+> >   {
+> >       struct vhost_user *u =3D dev->opaque;
+> >       if (u->iso_mem_ctx.shared_mem_addr) {
+>
+> If vhost_dev_init() fails after vhost_user_init_svq(), shadow_vqs is
+> present but shared_mem_addr is not because init_isolation_regions() is
+> not called yet. shadow_vqs will be leaked then.
+>
 
+Good catch!  The call to vhost_user_svq_cleanup will be moved out of
+the conditional statement so it always runs during cleanup.  I also
+realized that it is possible for an error to occur after the call to
+qemu_memfd_alloc but before the iova tree is allocated, so I am adding
+a check before calling vhost_iova_tree_delete.
+
+> > +        vhost_user_svq_cleanup(u, reset);
+> >           vhost_iova_tree_delete(u->iso_mem_ctx.tree);
+> >           qemu_memfd_free(u->iso_mem_ctx.shared_mem_addr,
+> >                           u->iso_mem_ctx.size,
+> >                           u->iso_mem_ctx.fd);
+> > +
+> > +        GPtrArray *temp =3D u->iso_mem_ctx.shadow_vqs;
+>
+> This is a mixed declaration prohibited in docs/devel/style.rst
+
+Got it!  I will fix this.
+
+>
+> >           memset(&u->iso_mem_ctx, 0, sizeof(IsolationModeCtx));
+> > +
+> > +        if (!reset) {
+>
+> This condition is inverted. When reset is true, vhost_user_svq_cleanup()
+> retains the array so the pointer to it should be kept.
+>
+
+You are right!  This is now fixed
+
+...
+
+> >   static int vhost_user_set_vring_kick(struct vhost_dev *dev,
+> >                                        struct vhost_vring_file *file)
+> >   {
+> > -    int ret =3D vhost_set_vring_file(dev, VHOST_USER_SET_VRING_KICK, f=
+ile);
+> > +    struct vhost_user *u =3D dev->opaque;
+> > +    int svq_idx =3D file->index - dev->vq_index;
+> > +    VhostShadowVirtqueue *svq =3D NULL;
+> > +    struct vhost_vring_file vr_file =3D *file;
+> > +    int ret;
+> > +
+> > +    vhost_user_get_vq_index(dev, file->index); /* bounds checking */
+> > +
+> > +    if (u->user->memory_isolation) {
+> > +        svq =3D g_ptr_array_index(u->iso_mem_ctx.shadow_vqs, svq_idx);
+> > +        vhost_svq_set_svq_kick_fd(svq, file->fd);
+>
+> The svq->svq_kick EventNotifier is left set in the error paths.
+>
+
+I did not want to close the svq_kick notifier, since it shares its fd
+with the host notifier in the underlying vq, and closing that from
+here might be unexpected.  However, a safer alternative is probably to
+call vhost_svq_set_svq_kck_fd with -1 to simply unbind the notifier,
+which I suspect is what you are actually recommending here.
+
+> Regards,
+> Akihiko Odaki
+>
+...
+
+> > @@ -1769,7 +1835,35 @@ static int vhost_user_set_vring_kick(struct vhos=
+t_dev *dev,
+> >   static int vhost_user_set_vring_call(struct vhost_dev *dev,
+> >                                        struct vhost_vring_file *file)
+> >   {
+> > -    return vhost_set_vring_file(dev, VHOST_USER_SET_VRING_CALL, file);
+> > +    struct vhost_user *u =3D dev->opaque;
+> > +    int svq_idx =3D file->index - dev->vq_index;
+> > +    VhostShadowVirtqueue *svq =3D NULL;
+> > +    struct vhost_vring_file vr_file =3D *file;
+> > +    int ret;
+> > +
+> > +    vhost_user_get_vq_index(dev, file->index); /* bounds checking */
+> > +
+> > +    if (u->user->memory_isolation) {
+> > +        svq =3D g_ptr_array_index(u->iso_mem_ctx.shadow_vqs, svq_idx);
+> > +        vhost_svq_set_svq_call_fd(svq, file->fd);
+> > +
+> > +        if (file->fd !=3D -1) {
+> > +            if (!svq->hdev_call.initialized) {
+> > +                ret =3D event_notifier_init(&svq->hdev_call, 0);
+> > +                if (ret < 0) {
+> > +                    event_notifier_cleanup(&svq->hdev_call);
+> > +                    error_report("Failed to create call event notifier=
+");
+> > +                    return ret;
+> > +                }
+> > +            }
+> > +
+> > +            vr_file.fd =3D event_notifier_get_fd(&svq->hdev_call);
+> > +        } else {
+> > +            event_notifier_cleanup(&svq->hdev_call);
+> > +        }
+> > +    }
+> > +
+> > +    return vhost_set_vring_file(dev, VHOST_USER_SET_VRING_CALL, &vr_fi=
+le);
+>
+> Clean up svq->hdev_call when this fails.
+>
+
+Did you mean cleanup svq->svq_call, similar to your feedback on
+svq->svq_kick?  I believe svq->hdev_call already gets cleaned up on
+failure.  I'll go ahead and add a call to vhost_svq_set_svq_call_fd
+with fd=3D-1 here as well.
+
+Thank you!
+Connor
 
