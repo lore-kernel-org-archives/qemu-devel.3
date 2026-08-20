@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DB62C5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:59:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE79EC5DF85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:59:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwtkv-0005OE-6R; Wed, 19 Aug 2026 23:47:53 -0400
+	id 1wwtlr-0007FT-46; Wed, 19 Aug 2026 23:48:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtkr-0005GL-Ud
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:47:50 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ id 1wwtlo-0007EM-1N
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:48:49 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtkp-0004EQ-HN
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:47:49 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-cc11a30a259so1502322a12.3
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:47:47 -0700 (PDT)
+ id 1wwtlm-0004RW-Bm
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:48:47 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-cbedda4c154so820518a12.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:48:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787197666; x=1787802466; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787197725; x=1787802525; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=GPJ/EM8CC6R9rZqKxgsloXc62/KmmIxRWgCKFfWrSo8=;
- b=CP7uP3GY1qmOOzKtyvkjqNugyY2LCecW85qvzAGHk0kHFIfnsFDpNaoW6JKw8AskXR
- aQ9GRmuQVFJcHX6apBYnZoMWHZO8qLYQVcuwS7Ho2ihD6jPWbFgHrtGZY3k8ptVsDYLb
- C2Y6j564PNGh0bTyZfvEyMMYxHGZJfsJvKLpxzsLYk4VI/fOlgTXO5Xl3MCyyTzTgu4h
- sPNILM4oOONlD3y0HjPZg7tdlwHoqyzu7t2e8aoDw9+u2Lw20p5V2A7ebtyyugc9nI2Y
- VzOrUoobZIagGYHE1LyOz03+TQuKag0x6GJupxRB/lGrZ23MXkGjRg3m0prThg1AUSHy
- 93WA==
+ bh=82rer5v+mUlWOAXCYhpssgxoxfjq1dcBWXCAHZ6HX8I=;
+ b=S0OkqLl+dorr3DX+IpDQ96y3kqvEOeLPZa+9n7gJRodtQ8eDwMmiZ9q29nigNDm+s6
+ 7W6wCqEyqIM5je3xm4w9COPTLJqWfoddv25GzHI0qRy0L0FUUR78vExgOZMFNz8f/rd6
+ 7laaXiHYyAJA29qax16FYbOwzptG8e9BQi8sWeL7rMq3f/McgUVzSxMOgV5I1h8uX9ZS
+ TWPYQ3NyFCsvo26gLg1lU0aFiBGXFKjt74b7uW3I5Aa7e6BQaRsNJbfvp/iQdVJ8DZbM
+ D4/ZvxL4zaIlFIZiR+5hj7oFP1OoWJch/BNnjTBZsMdL3o+zdEW4rV282/TPC/TLcOzK
+ tAdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787197666; x=1787802466;
+ d=1e100.net; s=20251104; t=1787197725; x=1787802525;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=GPJ/EM8CC6R9rZqKxgsloXc62/KmmIxRWgCKFfWrSo8=;
- b=Df6JCIwVyd8SlIElEflmBfWDNAyk13ElimnEbQpA2/gM/dpVMNLQ62VuMeAVEz4bZX
- HTNPpkNW/8EmSOujmaE7KTfGZKsKYm7+OvO7DBbPUsyc2DlRcI4GQQCAUioMu9soDDzF
- taY0gUmqywALay6uBb6VQMJjxjnXVouPv8WDED9sV8JOEXJPTvgiQZWik4Vhvbs+ienP
- L1tLXmdhTJmobsqhtdN5bTvgeBxyMB8EmhGsJNyZRQSC/61WpLZ/7IVUfycuXZ0Fno85
- +tp7RoliV8fmhDOWn6P1KC6vQp48GU14kPKs4qW6/LN5Ik0AXD1dTNZK2xpBXYAGIaox
- wWKg==
-X-Gm-Message-State: AFuF++m7EQkmVsaKTTJqTAUTKlWOlpqGfIXtzM1zGHUZHu/3/UEANNte
- UZ7v0UT+wM5x67rhIgFdkhkjzh+Z6japZXNbx8okgCprPpd1lNBdJwSxkLjKCw==
-X-Gm-Gg: AR+sD12FvsdjEsA81erclIZvlbTd9orVMww56y4NNYILDKMaWZS4s6HfTTKgjxqm3hZ
- qgdZdWjl5tUmO89pUbXta9bpHk4Q+vIScGo068rOTq+1cqgeEstctLZK+Ji1ZlYnMbAoozcjqt7
- uMOZjt7z2mWFQTag8jpnqrSMxjHsfjn2MnBbpnYeDylIVjusWcdhfurjj307a6NZz3cgR65ftW1
- eIZg6irPr2GUin//7rjmCor220HQVd37XviZEaCaDukw4/Qb37tBLaAK89b2rysOGSuLiXAOeHw
- YMHPh5Q7XatYNcym/RziqlbOS1Idwi8/hRqkTp1wyaMgscMVuFz0Rp+OYlFETXXoX8jpwIP9f3F
- sV7rttgr3fmJt3i+h8EgSM8AVNbfteK3Lf8FdUWf+BN5seDXRZ0EFE7gTK9uj9ZFV/y1tp8Ph/U
- vYgLyvKF1Z+eMj6bml8WY3D2vABCITU8x/CqEJK5zUItum8nLvn6TwTBBuGofaDATr9wkFMBR1v
- BNzFi84rFyC/+yn
-X-Received: by 2002:a17:90b:280a:b0:38d:dfd1:7a8 with SMTP id
- 98e67ed59e1d1-39580a81304mr18416546a91.2.1787197665810; 
- Wed, 19 Aug 2026 20:47:45 -0700 (PDT)
+ bh=82rer5v+mUlWOAXCYhpssgxoxfjq1dcBWXCAHZ6HX8I=;
+ b=nNty/m7Emkq25Qx2i1KWe/cNFJ0nxmppbjpN0U6MeVfI48V2+BcV5ClAyLFItIb97d
+ EoeMa0KU4S1pB/j0x4eQ7wUQV20wMt7LDOldGNUWaXuIWfWGvTP0bJmQuZEqZeZ1RCPL
+ rO1Q3EpEKa2FWflPZymn7aNCqI/r/mDyfWNx+wrIIjIdxG3ilmB+gnL9kaZ1XUCzyLJ2
+ JlWz1uq2r4Zr9b7ZQtM/RMky+FapkIyCcdlU9KI2iU4R8/06zOM7psjy4Eqk4nq8Zycu
+ OkwlSWw+M3S2SsWSU3QhbuYXIb9+HM7YdqJttm1tdocYxlwCj1/jTjBMtT/E/T/phfL1
+ Y02w==
+X-Gm-Message-State: AOJu0YwDcdX+rBSlBgHH7DqkCx9WecSwa9Uv66l0Y/gGVwndHnzMH5Xd
+ snA6NMmHS8Vt5mlw0Gtn21W8AjfAA/RuX1D9ybikkT8ztSjXacsqyTCVh6bvEg==
+X-Gm-Gg: AR+sD10uH4cFA3UxYB2KawZOppW9b0EhdT0e3BgonfztptiUQQ7yIMDbrSsW9pwhts7
+ DCiW5iEyR+5ZqSbQ9wEjOrMQ+z5cERU4KI4YDbUNpvFYkke/6i7KqByuyikrzjduf8wey6xLort
+ ySD/32J5PDCveyqLrxRuqGsP1Yt06xBnkaQSf5FvSHGbIplbM0p8JHC4/tZV22ZXOuIlXVMMkQZ
+ cMCc3WXXLrUAUs2oVV1ke6uvadkQtRp2Gi2TJBl36uhzl+lRkwcAzUlxFqnyj/SBk9PdeUaX91v
+ INb6Ctd9cXy2PY4klf7B1MybEE8eLxcB11+Tqw1qVkDn90lO+GgC8K0KlChVl137Yhahk/wTt8E
+ g5eWPTeOVZ4l7+Njgt+rrMZwcRdO/RZAOscaRpZ6q0J6A569dwiTX6iwPfnhZPVV6jc8N4FFEsO
+ f8Lurlx+BX+XVDHVRN6Phgf+TvEJqEe9h2ZxkaUNYufu8ZKGVyNtwifNQpz5dOLcOSVqPdxpBma
+ 13AiiTxfnVgZOvn
+X-Received: by 2002:a05:6a20:3ca1:b0:3c3:66c5:68d6 with SMTP id
+ adf61e73a8af0-3cd00f77410mr17385415637.9.1787197724920; 
+ Wed, 19 Aug 2026 20:48:44 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.47.43
+ a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.48.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 20:47:45 -0700 (PDT)
+ Wed, 19 Aug 2026 20:48:44 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 63/93] disas/riscv: Handle decompression via
- decode_inst_lift_pseudo
-Date: Thu, 20 Aug 2026 13:44:00 +1000
-Message-ID: <20260820034430.1186695-64-alistair.francis@wdc.com>
+Subject: [PULL 84/93] disas/riscv: Merge all c.mop.n to one pattern
+Date: Thu, 20 Aug 2026 13:44:21 +1000
+Message-ID: <20260820034430.1186695-85-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260820034430.1186695-1-alistair.francis@wdc.com>
 References: <20260820034430.1186695-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x52c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,190 +105,95 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Introduce a DECOMP macro that expands an rv_comp_data
-that always succeeds.
+Avoid performing arithmetic on rv_op_c_mop_1.
+Treat the 'n' as an immediate.
+Create a codec and format to match.
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260812223142.349142-28-richard.henderson@linaro.org>
+Message-ID: <20260812223142.349142-49-richard.henderson@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- disas/riscv.h |   1 -
- disas/riscv.c | 113 +++++++++++++++++++++++---------------------------
- 2 files changed, 51 insertions(+), 63 deletions(-)
+ disas/riscv.h        |  2 ++
+ disas/riscv.c        | 10 +++++++++-
+ disas/riscv-op.c.inc |  9 +--------
+ 3 files changed, 12 insertions(+), 9 deletions(-)
 
 diff --git a/disas/riscv.h b/disas/riscv.h
-index 3bbcbf10fb..ea7141d3b5 100644
+index 47647f750f..b0269bb709 100644
 --- a/disas/riscv.h
 +++ b/disas/riscv.h
-@@ -174,7 +174,6 @@ typedef struct {
-     rv_codec codec;
-     const char *format;
-     const rv_comp_data *pseudo;
--    rv_opcode decomp;
- } rv_opcode_data;
+@@ -159,6 +159,7 @@ typedef enum {
+     rv_codec_r2_imm2_imm5,
+     rv_codec_fli,
+     rv_codec_lp,
++    rv_codec_cmop,
+     rv_codec_cmop_ss,
+     rv_codec_mop_r,
+     rv_codec_mop_rr,
+@@ -286,6 +287,7 @@ typedef struct {
+ #define rv_fmt_rd_rs1_immh_imml_addr  "O\t0,(1),i,j"
+ #define rv_fmt_rd2_imm                "O\t0,2,(1),i"
+ #define rv_fmt_fli                    "O\t3,h"
++#define rv_fmt_cmop                   "O.i"
+ #define rv_fmt_mop_r                  "O.i\t0,1"
+ #define rv_fmt_mop_rr                 "O.i\t0,1,2"
  
- typedef struct {
 diff --git a/disas/riscv.c b/disas/riscv.c
-index b8e5b124a5..a359badab5 100644
+index 22104638e1..39235e5bc7 100644
 --- a/disas/riscv.c
 +++ b/disas/riscv.c
-@@ -1065,6 +1065,7 @@ static const rvc_constraint rvcc_ret[] = { rvc_rd_eq_x0, rvc_rs1_eq_ra,
-                                            rvc_end };
- static const rvc_constraint rvcc_jr[] = { rvc_rd_eq_x0, rvc_imm_eq_zero,
-                                           rvc_end };
-+static const rvc_constraint rvcc_true[] = { rvc_end };
+@@ -643,6 +643,11 @@ static uint32_t operand_lpl(rv_inst inst)
+     return extract32(inst, 12, 20);
+ }
  
- /* pseudo-instruction metadata */
- 
-@@ -1190,6 +1191,9 @@ static const rv_comp_data rvcp_fsgnjx_q[] = {
-     { rv_op_illegal, NULL }
- };
- 
-+/* Convert compressed insns into normal insns via pseudo expansion. */
-+#define DECOMP(X)  &(const rv_comp_data){ X, rvcc_true }
++static uint32_t operand_cmop_imm(rv_inst inst)
++{
++    return extract32(inst, 8, 3) * 2 + 1;
++}
 +
- /* operand extractors */
- 
- static uint32_t operand_rd(rv_inst inst)
-@@ -1815,52 +1819,52 @@ static const rv_opcode_data rvi_opcode_data[] = {
-     { "fcvt.q.lu", rv_codec_r_m, rv_fmt_rm_frd_rs1 },
-     { "fmv.x.q", rv_codec_r, rv_fmt_rd_frs1 },
-     { "fmv.q.x", rv_codec_r, rv_fmt_frd_rs1 },
--    { "c.addi4spn", rv_codec_ciw_4spn, rv_fmt_rd_rs1_imm, NULL, rv_op_addi },
--    { "c.fld", rv_codec_cl_ld, rv_fmt_frd_offset_rs1, NULL, rv_op_fld },
--    { "c.lw", rv_codec_cl_lw, rv_fmt_rd_offset_rs1, NULL, rv_op_lw },
--    { "c.flw", rv_codec_cl_lw, rv_fmt_frd_offset_rs1, NULL, rv_op_flw },
--    { "c.fsd", rv_codec_cs_sd, rv_fmt_frs2_offset_rs1, NULL, rv_op_fsd },
--    { "c.sw", rv_codec_cs_sw, rv_fmt_rs2_offset_rs1, NULL, rv_op_sw },
--    { "c.fsw", rv_codec_cs_sw, rv_fmt_frs2_offset_rs1, NULL, rv_op_fsw },
-+    { "c.addi4spn", rv_codec_ciw_4spn, rv_fmt_rd_rs1_imm, DECOMP(rv_op_addi) },
-+    { "c.fld", rv_codec_cl_ld, rv_fmt_frd_offset_rs1, DECOMP(rv_op_fld) },
-+    { "c.lw", rv_codec_cl_lw, rv_fmt_rd_offset_rs1, DECOMP(rv_op_lw) },
-+    { "c.flw", rv_codec_cl_lw, rv_fmt_frd_offset_rs1, DECOMP(rv_op_flw) },
-+    { "c.fsd", rv_codec_cs_sd, rv_fmt_frs2_offset_rs1, DECOMP(rv_op_fsd) },
-+    { "c.sw", rv_codec_cs_sw, rv_fmt_rs2_offset_rs1, DECOMP(rv_op_sw) },
-+    { "c.fsw", rv_codec_cs_sw, rv_fmt_frs2_offset_rs1, DECOMP(rv_op_fsw) },
-     { },
--    { "c.addi", rv_codec_ci, rv_fmt_rd_rs1_imm, NULL, rv_op_addi },
--    { "c.jal", rv_codec_cj_jal, rv_fmt_rd_offset, NULL, rv_op_jal },
--    { "c.li", rv_codec_ci_li, rv_fmt_rd_rs1_imm, NULL, rv_op_addi },
--    { "c.addi16sp", rv_codec_ci_16sp, rv_fmt_rd_rs1_imm, NULL, rv_op_addi },
--    { "c.lui", rv_codec_ci_lui, rv_fmt_rd_uimm, NULL, rv_op_lui },
--    { "c.srli", rv_codec_cb_sh6, rv_fmt_rd_rs1_imm, NULL, rv_op_srli },
--    { "c.srai", rv_codec_cb_sh6, rv_fmt_rd_rs1_imm, NULL, rv_op_srai },
--    { "c.andi", rv_codec_cb_imm, rv_fmt_rd_rs1_imm, NULL, rv_op_andi },
--    { "c.sub", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_op_sub },
--    { "c.xor", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_op_xor },
--    { "c.or", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_op_or },
--    { "c.and", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_op_and },
--    { "c.subw", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_op_subw },
--    { "c.addw", rv_codec_cs, rv_fmt_rd_rs1_rs2, NULL, rv_op_addw },
--    { "c.j", rv_codec_cj, rv_fmt_rd_offset, NULL, rv_op_jal },
--    { "c.beqz", rv_codec_cb, rv_fmt_rs1_rs2_offset, NULL, rv_op_beq },
--    { "c.bnez", rv_codec_cb, rv_fmt_rs1_rs2_offset, NULL, rv_op_bne },
--    { "c.slli", rv_codec_ci_sh6, rv_fmt_rd_rs1_imm, NULL, rv_op_slli },
--    { "c.fldsp", rv_codec_ci_ldsp, rv_fmt_frd_offset_rs1, NULL, rv_op_fld },
--    { "c.lwsp", rv_codec_ci_lwsp, rv_fmt_rd_offset_rs1, NULL, rv_op_lw },
--    { "c.flwsp", rv_codec_ci_lwsp, rv_fmt_frd_offset_rs1, NULL, rv_op_flw },
--    { "c.jr", rv_codec_cr_jr, rv_fmt_rd_rs1_offset, NULL, rv_op_jalr },
--    { "c.mv", rv_codec_cr_mv, rv_fmt_rd_rs1_rs2, NULL, rv_op_addi },
--    { "c.ebreak", rv_codec_ci_none, rv_fmt_none, NULL, rv_op_ebreak },
--    { "c.jalr", rv_codec_cr_jalr, rv_fmt_rd_rs1_offset, NULL, rv_op_jalr },
--    { "c.add", rv_codec_cr, rv_fmt_rd_rs1_rs2, NULL, rv_op_add },
--    { "c.fsdsp", rv_codec_css_sdsp, rv_fmt_frs2_offset_rs1, NULL, rv_op_fsd },
--    { "c.swsp", rv_codec_css_swsp, rv_fmt_rs2_offset_rs1, NULL, rv_op_sw },
--    { "c.fswsp", rv_codec_css_swsp, rv_fmt_frs2_offset_rs1, NULL, rv_op_fsw },
--    { "c.ld", rv_codec_cl_ld, rv_fmt_rd_offset_rs1, NULL, rv_op_ld },
--    { "c.sd", rv_codec_cs_sd, rv_fmt_rs2_offset_rs1, NULL,  rv_op_sd },
--    { "c.addiw", rv_codec_ci, rv_fmt_rd_rs1_imm, NULL, rv_op_addiw },
--    { "c.ldsp", rv_codec_ci_ldsp, rv_fmt_rd_offset_rs1, NULL, rv_op_ld },
--    { "c.sdsp", rv_codec_css_sdsp, rv_fmt_rs2_offset_rs1, NULL, rv_op_sd },
--    { "c.lq", rv_codec_cl_lq, rv_fmt_rd_offset_rs1, NULL, rv_op_lq },
--    { "c.sq", rv_codec_cs_sq, rv_fmt_rs2_offset_rs1, NULL, rv_op_sq },
--    { "c.lqsp", rv_codec_ci_lqsp, rv_fmt_rd_offset_rs1, NULL, rv_op_lq },
--    { "c.sqsp", rv_codec_css_sqsp, rv_fmt_rs2_offset_rs1, NULL, rv_op_sq },
-+    { "c.addi", rv_codec_ci, rv_fmt_rd_rs1_imm, DECOMP(rv_op_addi) },
-+    { "c.jal", rv_codec_cj_jal, rv_fmt_rd_offset, DECOMP(rv_op_jal) },
-+    { "c.li", rv_codec_ci_li, rv_fmt_rd_rs1_imm, DECOMP(rv_op_addi) },
-+    { "c.addi16sp", rv_codec_ci_16sp, rv_fmt_rd_rs1_imm, DECOMP(rv_op_addi) },
-+    { "c.lui", rv_codec_ci_lui, rv_fmt_rd_uimm, DECOMP(rv_op_lui) },
-+    { "c.srli", rv_codec_cb_sh6, rv_fmt_rd_rs1_imm, DECOMP(rv_op_srli) },
-+    { "c.srai", rv_codec_cb_sh6, rv_fmt_rd_rs1_imm, DECOMP(rv_op_srai) },
-+    { "c.andi", rv_codec_cb_imm, rv_fmt_rd_rs1_imm, DECOMP(rv_op_andi) },
-+    { "c.sub", rv_codec_cs, rv_fmt_rd_rs1_rs2, DECOMP(rv_op_sub) },
-+    { "c.xor", rv_codec_cs, rv_fmt_rd_rs1_rs2, DECOMP(rv_op_xor) },
-+    { "c.or", rv_codec_cs, rv_fmt_rd_rs1_rs2, DECOMP(rv_op_or) },
-+    { "c.and", rv_codec_cs, rv_fmt_rd_rs1_rs2, DECOMP(rv_op_and) },
-+    { "c.subw", rv_codec_cs, rv_fmt_rd_rs1_rs2, DECOMP(rv_op_subw) },
-+    { "c.addw", rv_codec_cs, rv_fmt_rd_rs1_rs2, DECOMP(rv_op_addw) },
-+    { "c.j", rv_codec_cj, rv_fmt_rd_offset, DECOMP(rv_op_jal) },
-+    { "c.beqz", rv_codec_cb, rv_fmt_rs1_rs2_offset, DECOMP(rv_op_beq) },
-+    { "c.bnez", rv_codec_cb, rv_fmt_rs1_rs2_offset, DECOMP(rv_op_bne) },
-+    { "c.slli", rv_codec_ci_sh6, rv_fmt_rd_rs1_imm, DECOMP(rv_op_slli) },
-+    { "c.fldsp", rv_codec_ci_ldsp, rv_fmt_frd_offset_rs1, DECOMP(rv_op_fld) },
-+    { "c.lwsp", rv_codec_ci_lwsp, rv_fmt_rd_offset_rs1, DECOMP(rv_op_lw) },
-+    { "c.flwsp", rv_codec_ci_lwsp, rv_fmt_frd_offset_rs1, DECOMP(rv_op_flw) },
-+    { "c.jr", rv_codec_cr_jr, rv_fmt_rd_rs1_offset, DECOMP(rv_op_jalr) },
-+    { "c.mv", rv_codec_cr_mv, rv_fmt_rd_rs1_rs2, DECOMP(rv_op_addi) },
-+    { "c.ebreak", rv_codec_ci_none, rv_fmt_none, DECOMP(rv_op_ebreak) },
-+    { "c.jalr", rv_codec_cr_jalr, rv_fmt_rd_rs1_offset, DECOMP(rv_op_jalr) },
-+    { "c.add", rv_codec_cr, rv_fmt_rd_rs1_rs2, DECOMP(rv_op_add) },
-+    { "c.fsdsp", rv_codec_css_sdsp, rv_fmt_frs2_offset_rs1, DECOMP(rv_op_fsd) },
-+    { "c.swsp", rv_codec_css_swsp, rv_fmt_rs2_offset_rs1, DECOMP(rv_op_sw) },
-+    { "c.fswsp", rv_codec_css_swsp, rv_fmt_frs2_offset_rs1, DECOMP(rv_op_fsw) },
-+    { "c.ld", rv_codec_cl_ld, rv_fmt_rd_offset_rs1, DECOMP(rv_op_ld) },
-+    { "c.sd", rv_codec_cs_sd, rv_fmt_rs2_offset_rs1, DECOMP(rv_op_sd) },
-+    { "c.addiw", rv_codec_ci, rv_fmt_rd_rs1_imm, DECOMP(rv_op_addiw) },
-+    { "c.ldsp", rv_codec_ci_ldsp, rv_fmt_rd_offset_rs1, DECOMP(rv_op_ld) },
-+    { "c.sdsp", rv_codec_css_sdsp, rv_fmt_rs2_offset_rs1, DECOMP(rv_op_sd) },
-+    { "c.lq", rv_codec_cl_lq, rv_fmt_rd_offset_rs1, DECOMP(rv_op_lq) },
-+    { "c.sq", rv_codec_cs_sq, rv_fmt_rs2_offset_rs1, DECOMP(rv_op_sq) },
-+    { "c.lqsp", rv_codec_ci_lqsp, rv_fmt_rd_offset_rs1, DECOMP(rv_op_lq) },
-+    { "c.sqsp", rv_codec_css_sqsp, rv_fmt_rs2_offset_rs1, DECOMP(rv_op_sq) },
-     { "nop", rv_codec_i, rv_fmt_none },
-     { "mv", rv_codec_i, rv_fmt_rd_rs1 },
-     { "not", rv_codec_i, rv_fmt_rd_rs1 },
-@@ -2542,8 +2546,8 @@ static const rv_opcode_data rvi_opcode_data[] = {
-     { "ssrdp", rv_codec_r, rv_fmt_rd },
-     { "ssamoswap.w", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1 },
-     { "ssamoswap.d", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1 },
--    { "c.sspush", rv_codec_cmop_ss, rv_fmt_rs2, NULL, rv_op_sspush },
--    { "c.sspopchk", rv_codec_cmop_ss, rv_fmt_rs1, NULL, rv_op_sspopchk },
-+    { "c.sspush", rv_codec_cmop_ss, rv_fmt_rs2, DECOMP(rv_op_sspush) },
-+    { "c.sspopchk", rv_codec_cmop_ss, rv_fmt_rs1, DECOMP(rv_op_sspopchk) },
-    { "cbo.inval", rv_codec_r, rv_fmt_rs1 },
-    { "cbo.clean", rv_codec_r, rv_fmt_rs1 },
-    { "cbo.flush", rv_codec_r, rv_fmt_rs1 },
-@@ -5269,20 +5273,6 @@ static const rv_opcode_data *decode_inst_lift_pseudo(rv_decode *dec,
-     return op;
- }
- 
--/* decompress instruction */
--
--static const rv_opcode_data *decode_inst_decompress(rv_decode *dec,
--                                                    const rv_opcode_data *op)
--{
--    int decomp_op = op->decomp;
--
--    if (decomp_op != rv_op_illegal) {
--        dec->op = decomp_op;
--        op = &dec->opcode_data[decomp_op];
--    }
--    return op;
--}
--
- /* disassemble instruction */
- 
- static GString *disasm_inst(rv_isa isa, uint64_t pc, rv_inst inst,
-@@ -5333,7 +5323,6 @@ static GString *disasm_inst(rv_isa isa, uint64_t pc, rv_inst inst,
- 
-     op = &dec.opcode_data[dec.op];
-     decode_inst_operands(&dec, isa, op);
--    op = decode_inst_decompress(&dec, op);
-     op = decode_inst_lift_pseudo(&dec, op);
-     return format_inst(24, &dec, op);
- }
+ static uint32_t operand_mop_r_imm(rv_inst inst)
+ {
+     return (extract32(inst, 30, 1) << 4) |
+@@ -1027,7 +1032,7 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
+                     (((inst >> 11) & 0b11) == 0b0)) {
+                     unsigned int cmop_code = 0;
+                     cmop_code = ((inst >> 8) & 0b111);
+-                    op = rv_op_c_mop_1 + cmop_code;
++                    op = rv_op_c_mop;
+                     if (dec->cfg->ext_zicfiss) {
+                         op = (cmop_code == 0) ? rv_op_c_sspush : op;
+                         op = (cmop_code == 2) ? rv_op_c_sspopchk : op;
+@@ -3056,6 +3061,9 @@ static void decode_inst_operands(rv_decode *dec, rv_isa isa,
+     case rv_codec_lp:
+         dec->imm = operand_lpl(inst);
+         break;
++    case rv_codec_cmop:
++        dec->imm = operand_cmop_imm(inst);
++        break;
+     case rv_codec_cmop_ss:
+         dec->rd = rv_ireg_zero;
+         dec->rs1 = dec->rs2 = operand_crs1(inst);
+diff --git a/disas/riscv-op.c.inc b/disas/riscv-op.c.inc
+index 2100e54475..802a521bca 100644
+--- a/disas/riscv-op.c.inc
++++ b/disas/riscv-op.c.inc
+@@ -875,14 +875,7 @@ OP(amocas_d, "amocas.d", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1)
+ OP(amocas_q, "amocas.q", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1)
+ OP(mop_r, "mop.r", rv_codec_mop_r, rv_fmt_mop_r)
+ OP(mop_rr, "mop.rr", rv_codec_mop_rr, rv_fmt_mop_rr)
+-OP(c_mop_1, "c.mop.1", rv_codec_ci_none, rv_fmt_none)
+-OP(c_mop_3, "c.mop.3", rv_codec_ci_none, rv_fmt_none)
+-OP(c_mop_5, "c.mop.5", rv_codec_ci_none, rv_fmt_none)
+-OP(c_mop_7, "c.mop.7", rv_codec_ci_none, rv_fmt_none)
+-OP(c_mop_9, "c.mop.9", rv_codec_ci_none, rv_fmt_none)
+-OP(c_mop_11, "c.mop.11", rv_codec_ci_none, rv_fmt_none)
+-OP(c_mop_13, "c.mop.13", rv_codec_ci_none, rv_fmt_none)
+-OP(c_mop_15, "c.mop.15", rv_codec_ci_none, rv_fmt_none)
++OP(c_mop, "c.mop", rv_codec_cmop, rv_fmt_cmop)
+ OP(amoswap_b, "amoswap.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1)
+ OP(amoadd_b, "amoadd.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1)
+ OP(amoxor_b, "amoxor.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1)
 -- 
 2.54.0
 
