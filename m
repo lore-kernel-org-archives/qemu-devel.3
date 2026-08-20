@@ -4,93 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EFBEC5DF87
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 23:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF5D6C5DF87
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 23:42:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxCNE-0004yJ-HH; Thu, 20 Aug 2026 19:40:40 -0400
+	id 1wxCP1-0006Qw-4t; Thu, 20 Aug 2026 19:42:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wxCNC-0004y5-Tv
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 19:40:38 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wxCOy-0006Q5-MC
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 19:42:28 -0400
+Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wxCNB-0002ou-As
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 19:40:38 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-3811f512167so441456a91.3
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 16:40:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
+ id 1wxCOx-00035N-4c
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 19:42:28 -0400
+Received: by mail-qk1-x72c.google.com with SMTP id
+ af79cd13be357-9371bcf1f8fso19309585a.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 16:42:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787269346; cv=none;
+ d=google.com; s=arc-20260327;
+ b=GL9E/RaSm7yF6y/8tWTWzmrKlJuRtiMqMZ5ackByjIppqx95l+58eCsT1h4pXv/MSE
+ qoH83OGi2UhvhVfcCuHbpuYjT1b1j+bp+2zA7dh6kudmdRhGLiS3MzvPuWSTW3g9zYAg
+ hJkyqOxttlmhqqLRVG7dAW2oiagp77h2I89jlrjpIyAMUdcCz6i3e6Et8Ae0q6rC4xJY
+ YXzTu9GjnZIu7e7g99ZZKt69Mrlj6UKSx2SW22XYCd/7zvkuSARGkRWa0fuUiC99Pyfp
+ A81t3rxQ3jM/frJTYpoMFTjQQLlfugWAzvg9DkjsiLzMzNrlFOibpb7hxHbXRiCbZ1br
+ bOmQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=hF8HEpAhh9KuOZv/WIlDvc/Bwcys5cjfJE8nSa9pxU4=;
+ fh=zAf9Wul48xkTrIs6bAeEfpaQhknOU2iSq1CvwgfZtyM=;
+ b=r2z5AvnzW5tITJIrxqIyPaDRXjSpozEQNwkGysbF0+CtNnwoFXJosEvTyo2+kl4lCM
+ M0lXtfayUTU1kTTQIx1To8T596jfyuxMfDI7rDbVBPyOgWQqnxoXD7CZ0PcKwsVugb4s
+ ccNP/REElllC2G6BLAZ/c6QLmRLQMAUEqPFPCvPREjweXpC7X282PlJMazAWCCkfeFLp
+ 93ae5wja8F98s8s6C4ad+yN/q1X5sOUXecTq2GqoH5bGkgkplYK9JS4c3muXLFTYaG4q
+ /CtA5rPVN6it39Ki7DQqqKEG7SvDik1hsFl5lx9bTOOJpSgUR4p/dNimpRqDcAP0QBAK
+ yIgQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787269235; x=1787874035; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=Bcqaz9snVJ78VBL2ZoUqruuCSyEI+hDYLUhmYtAdKHc=;
- b=aEuQztHtpjDi92Oc6uWn5x3rBXj5mO1V4XjuuUHA38aBxLX5JIAsCQNNypT6GmQDi8
- ajrfCTDgWOwlkXdSp7waBuVUF3xLHREX2rKC76SjjLKmStixWi+HVcP4XS+z7Ifsy7Dy
- S7CBcZCkLcHtl4dPox/UWbZMP0mai7KfS1M4Wdc+3ll/m7SLMKz8tZEsgT/+DIuVJ+PB
- 01ZlNMeBBuGvGo5Y1haRUb7+F2qX3U2nbb8Ewxw+dyf0KLeSewdrM3Nb9QopHmp1KY5C
- WOfPMPb6UXeSFN1WSWNLDFCeI6aZ3W+Ik1WBLYpmv6XPil3cJ15MpK6da6zgHeKvAnmV
- PxZg==
+ d=gmail.com; s=20251104; t=1787269346; x=1787874146; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=hF8HEpAhh9KuOZv/WIlDvc/Bwcys5cjfJE8nSa9pxU4=;
+ b=qpAyEGPRZ1T3VtjFsWw1S4QmbYTEBeeGA92O/iDP34/9HSOXL9d1MU9xMulquNSDWk
+ GR3fO/WyJHIpFGRAPGX+N/kl7amqaXVK7jcLIgMlTCRmrJaYcm09RYtx29N+fiP+FDW4
+ RwbVEY+y4ks61X3QX68DGLVZM7mNeaJKvdZsmkLHD+LKblMPF+bctNIhqYb8DOcm5kfY
+ h9syUaCEygPXFo+DARLam+7tYLrpFOnNqlaVeB8kX4rdPXHUpPJOBRkKBV0uqpFItBZW
+ eOHHNQ9SBfGxgULrZOQh0YZMGnf/h2dU4++tCsNZk7eLPssH3VgA5V67sRiSgPWrn3qu
+ XyjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787269235; x=1787874035;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=Bcqaz9snVJ78VBL2ZoUqruuCSyEI+hDYLUhmYtAdKHc=;
- b=K0PWoF+n1v/y8LHv91/xPBpwnhOf3E5Ee5kTK24wMOGju2QvCFXOKoylwJpK/sjGap
- vWk3h0qQM2bJoJroQGJJ7CnjbUYRM3iEmOVIlCc48TBypCpS5E8J5+LzgM1GAbvPZQBx
- eNErVDYLGS8mDU3WULuE/hxGmpiFgA7032f/arc7+yXit7dsp5JZy0Cu4kX02YOHgnkm
- sTsCwVnemF/UtshXCz+kI0GH+4ntYUxb8egVc+KRc2W3vawXPVY3Y5cRniM6hFsWywpF
- xd59J0tC59gM1nqOl/LKT/ag0xc1+oz5y+BPIqIl0JPf6t+yVtrQP/zeUmnnW/Huyss+
- 9kjA==
-X-Gm-Message-State: AFuF++kJnReSOND+a8q+0+gB9KxUKqllBmmf0y55DrgeuwGDwShC9l7U
- AFBPiMKRRHe+ZhhmX3A/KytU9bvgxIj2ZdAu1tT+b6uRkhrQaHin9zuVo7ixer/uRyMGFvySZAT
- DrO2o
-X-Gm-Gg: AR+sD125qwUkR0+Jm0nA7oA8AZ14nZGGg5aL+O5EFf6WZyr5e2pkFQUV5MGkEic1cXK
- oQmooKPl8RtJrU0KpdpPuOr4pq/Z9kAFl9oome3uY1lsNZfQ2Zpx4Ymk+GzY3iR0L8pPJ+HeaIq
- cIIqTappFE4Rt99otDpevlRehpNkdi8YO2fK8BW7cdAS5AGKPna5VMvLgpSUGberC72Ch3Qt+th
- zSY4kKC4i6yBTIaAfxejwCMuGc74ADX+86iw7GXl9q/Uity+be3YaeEa/rOinnk0hYWHKWKEcEa
- XU39+a15pvvb838EXfYtdXwZH9bTh6j+YqN1utgcgDC1iovizg9KcNAnh0BqEX4kjbz50Lrl5IV
- GQxmvTZm0aLu5gNa4Xtu6aWKJEJbzUknF70TpgsfVNV/SifpervfEmqEd+DopoHxlS2rY6sg9Ng
- ajhjn64vxPTIvUlhonhAfqF0v08QaDkc5QdwqMbR/6DxHWCx/QOXXiiwBUqdp1Mn5iPFYPjpGKc
- 1Yy/d+jL80wpXs=
-X-Received: by 2002:a17:90b:1b41:b0:383:5a16:bd70 with SMTP id
- 98e67ed59e1d1-395c39f97e8mr2809295a91.16.1787269235282; 
- Thu, 20 Aug 2026 16:40:35 -0700 (PDT)
-Received: from [172.20.6.151] ([108.174.179.84])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c45530absm691710a91.4.2026.08.20.16.40.34
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Aug 2026 16:40:34 -0700 (PDT)
-Message-ID: <52f421c4-89fa-4af4-92da-1ebd101636dc@linaro.org>
-Date: Thu, 20 Aug 2026 16:40:32 -0700
+ d=1e100.net; s=20251104; t=1787269346; x=1787874146;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=hF8HEpAhh9KuOZv/WIlDvc/Bwcys5cjfJE8nSa9pxU4=;
+ b=DOCte6vZoKb9uAD45h0ZiZaA5UXDrJqjLFZJlfu0T/tfjxT3KEdtpIfzJtkCv/JToh
+ /fGB5M8jeKfWdP8BGF3ja9Ku6v6OOsM6fclZleAXnenb2NzWq09TT+qD9pV+D+oQaLA1
+ fDgmWBI9+6mUH1SGqIhBQzBhxZO3OAQPKqYhX+JQ5fKWryzhwF43ubnN9Ci/+ymQXE2T
+ RqNsNf0egsWR7Uu1rX7t2Z93QsmbPrABRS7tzE03ynJY0y9H7aTfQjeN7+NwEkyjH6l2
+ +7BwuHw4rjFZ4Jl/Lar6pr8P3bBNKsGLNx3hAj90cCfqBEz9krrQdfe91A9BnbwmqpCV
+ OITA==
+X-Gm-Message-State: AOJu0YzBOYdvTZpjO1gtlYK2VIy8YAbxDKSxamZUMXaLd97/ymjyAbPe
+ CEyk/VnhjYa9CdqqbBChw1Wz8hwgZ2JHpJEBMaZqa9lwof4Zfp9CEzvP+mQoriFXGoQg5jAEJc8
+ 3yC+wZ7OYPpmWj7+OS9hU91qyFk6YIvE=
+X-Gm-Gg: AR+sD112st1pFNkUqrfGOn8vk60HTRMDLZzJVDeVPLntbe89arfMJcivjobIyWhAjmP
+ c9BR/MDAK+ZE7HYuHAwAiPvzPiaEqvt6MvgRm8X5IapjX1godL1eMa+2C/4PONp365td/RmpaZX
+ 8HSZJ65iBR013TPxa8wrVdT69FuadzRR0OT2CzyfhJibvoPKerHcaGpmXh2IddqUgcXVYv0WOzI
+ /jQqCRAuxI0FLknhTypGa7HAhoWqRerNCfYI+matjx2QfUIVHI/Jc+NOdNtnItQ2hR2XuJVoE2Q
+ ysx0Gd7P+bvqHRe6jWtkRo52dBur+rjwvbFZn2TWc+MOsvsTOD8201xHuUFDHUccqac/BxW1g8X
+ gvls=
+X-Received: by 2002:a05:620a:a80a:b0:936:cddf:3df1 with SMTP id
+ af79cd13be357-937395bf953mr174780185a.44.1787269346054; Thu, 20 Aug 2026
+ 16:42:26 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/hexagon: invalidate translated code for user
- icinva
-To: qemu-devel@nongnu.org
-References: <20260819045339.3661773-1-brian.cain@oss.qualcomm.com>
- <20260819045339.3661773-2-brian.cain@oss.qualcomm.com>
- <39d5f3bf-4f04-4e90-8c32-8132ced0b4cb@oss.qualcomm.com>
- <00d99c24-0cda-47e1-adb0-e3a836509ba0@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <00d99c24-0cda-47e1-adb0-e3a836509ba0@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+References: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
+ <20260817-vhost-user-isolated-memory-v2-4-948aae960abb@gmail.com>
+ <b6f79ec9-7842-47ff-b210-855036712547@rsg.ci.i.u-tokyo.ac.jp>
+ <CA+spn3rouMQ=yG1m2fS=vm40c-zWWMZPK+yk0K_ip5iXzLZWow@mail.gmail.com>
+ <5d8e3d91-de60-4747-88d1-e135e3c6e7c1@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <5d8e3d91-de60-4747-88d1-e135e3c6e7c1@rsg.ci.i.u-tokyo.ac.jp>
+From: Connor Kite <connorkite@gmail.com>
+Date: Thu, 20 Aug 2026 16:42:14 -0700
+X-Gm-Features: AcwNN1U2GZyCGCclv-n-yhFlH9oRms5bYiv7MVJbaEJR9547b1OyH-XBjKMUqlo
+Message-ID: <CA+spn3o18uuZqfyGE+R2QGZ6KRoTJ9hmK7HyEQ6cg4wxN9QPsw@mail.gmail.com>
+Subject: Re: [PATCH RFC v2 04/13] hw/virtio/vhost-shadow-virtqueue: used
+ callback
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Raphael Norwitz <rnorwitz@nvidia.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
+ virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
+ zhenwei pi <zhenwei.pi@linux.dev>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
+ Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
+ envelope-from=connorkite@gmail.com; helo=mail-qk1-x72c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,27 +140,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/20/26 12:00, Brian Cain wrote:
-> 
-> On 8/20/2026 1:37 PM, Pierrick Bouvier wrote:
->> On 8/18/2026 9:53 PM, Brian Cain wrote:
->>> Route linux-user icinva through a helper that invalidates the addressed
->>> icache line under mmap_lock
->>>
->>> For system mode icinva has nothing left to do, so it stays a nop.
->>>
->> Why does system mode icinva is a nop?
->> Shouldn't we invalidate translated code also?
-> 
-> The normal behavior of instruction translation in QEMU is conservative relative to the ISA 
-> constraint.  QEMU will invalidate translated blocks that become dirty/stale from a store 
-> instruction, so icinva can't flush anything: it's already flushed.
+On Wed, Aug 19, 2026 at 10:15=E2=80=AFPM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+>
+> Skipping event_notifier_set() only suppresses this guest interrupt, and
+> disabling SVQ notifications only suppresses backend call notifications;
+> it does not stop backend ring processing. The error should be propagated
+> with virtio_error().
+>
+> I looked into the virtqueue_fill() and virtqueue_flush() calls in the
+> existing error path. The virtqueue_fill() call detaches the element and
+> publishes it to the guest. Detaching the element is necessary and should
+> be done in the new error path too. On the other hand, publishing the
+> failed element is wrong and should not be done.
+>
+> virtqueue_flush(vq, i) is still required to publish and account for the
+> preceding successfully filled elements.
+>
+> Regards,
+> Akihiko Odaki
 
-We do the same in user mode, trapping the stores via read-only pages.  See 
-handle_sigsegv_accerr_write and page_unprotect.
+Thank you for the explanation!  I was not aware of virtio_error.  This
+error path will now follow the following order:
 
-So why do you believe that you need to invalidate pages manually here?
+    if (r < 0) {
+        virtio_error(svq->vdev, "Vhost shadow virtqueue error while
+handling used element.\n");
+        virtqueue_detach_element(vq, elem, 0);
+        g_free(elem);
+        virtqueue_flush(vq, i);
+        return;
+    }
 
+One thing still seems a little strange here about how vq->inuse is
+modified by these operations.  The count provided to virtqueue_flush
+in the svq code is the number of elements that have been added.
+However, depending on which type of flush occurs, the value of
+vq->inuse is decreased by either this count (virtqueue_split_flush) or
+the number of descriptors in the flushed elements
+(virtqueue_packed_flush, virtqueue_ordered_flush).  Also, the
+virtqueue_detach_element always decrements vq->inuse by the number of
+descriptors.
 
-r~
+I'm possibly just misunderstanding something, but this seems like
+vq->inuse could potentially end up in an incorrect state.  Maybe that
+doesn't matter in this case once virtio_error gets called...
 
