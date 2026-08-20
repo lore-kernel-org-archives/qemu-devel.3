@@ -4,83 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A9FFC5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 15:48:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE2B1C5DF85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 15:56:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx509-0004mL-TF; Thu, 20 Aug 2026 11:48:22 -0400
+	id 1wx57c-0006B8-5Z; Thu, 20 Aug 2026 11:56:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wx4zy-0004l4-VS
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 11:48:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wx4zv-0007n2-MI
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 11:48:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787240886;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RSeCfh2zDDLbiQ8Ztk+KI0+3AX+TX93uuQQqtDTeSIQ=;
- b=PUI5+Dg0e2z2YFaLl46TtK45YyDPNLPfpUs0liAFOmlNQovsCTPUjUtiy830GqGKpksFqg
- NvYc6i2BcItp4aOdYFqxi4HPa5hq0YzFjqK2CU1VVzLb2haIGeuR3cisZR+y08uQAePBF0
- EqaV96yj2NZL+gvR5pwLV9XSQIrFRCM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-538-g3bLzP04NdOOAnw7UQVRRw-1; Thu,
- 20 Aug 2026 11:47:55 -0400
-X-MC-Unique: g3bLzP04NdOOAnw7UQVRRw-1
-X-Mimecast-MFC-AGG-ID: g3bLzP04NdOOAnw7UQVRRw_1787240872
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 81CD2195608E; Thu, 20 Aug 2026 15:47:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.48.137])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C6273180034C; Thu, 20 Aug 2026 15:47:45 +0000 (UTC)
-Date: Thu, 20 Aug 2026 17:47:43 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- devel@lists.libvirt.org
-Subject: Re: [PATCH 5/6] hw/block: validate the fdc sector position fits
- within bounds
-Message-ID: <aochnwGTcIXwRDQu@redhat.com>
-References: <20260819-fixes-for-11-2-v1-0-b7981c2cc371@linaro.org>
- <20260819-fixes-for-11-2-v1-5-b7981c2cc371@linaro.org>
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1wx57a-0006Ao-SZ
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 11:56:02 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
+ id 1wx57Z-0000fV-AE
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 11:56:02 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-6688a2dceb8so1966228d50.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 08:56:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787241360; cv=none;
+ d=google.com; s=arc-20260327;
+ b=TmoRaTb2J/kPjNavgppoW4MXEiGWJEbSaxwxCLZk9R1h3uj7Ev+5oCuVJ2GenIA4rN
+ A77l0JL8uA3EZOoTcfXZwtnzGVEJmt+QqNPwZQy2fp5dCnbSSoUSl7vTn9sMeXYJOYCq
+ F2ThW8IKOrhWAFz2BFvlZdcxA/rwlSvRc7C/dkGb4iXClj2Tg38PPiZoEj9idvi2Sh1s
+ OTtL1GBuzKI2pnXMGTLpTjeWFgYIfkobYGBa1ynUU0HaZT5+N44gJX50YFwYFiLDV/+c
+ lTUJD7/7aZhkvDiPXHtCA7tHR6EO5UXX5lsX9XYLsArhsYnG9tkWK0ywO8l6IVNGHh61
+ yJDA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=zjccIQ52DjE53i8Y+JL1C8qI+OsOp4cqAVqA+eU84tQ=;
+ fh=KE3wEp9BzDHz6wDa2zPlp0X2UcazmsfwKriOK7opl3U=;
+ b=qxQoVxRScDSTJrkSFJNFRnbe/eTwFKJb/kjOcg0uIX0cTmFpCuwSskB06dX1h2ETLQ
+ DPtkdHHlVmNZ3rZc+N3dUw7DdWHT93IgqEV+bPDOBc8y0ImIhGfhioX3WCfKMA11Wuqm
+ JajZBeYsoPv3LUX6vNbXalMaZn/NkwmmrrfbSFCYQ3NSw2ggxITReaODQxz3HrLJ7HPq
+ Dg1a+NVqSEVoqfcI0PzVqXCiXDghWwvC2xYBCUA0PWm9SEEZ5Hx10wZgMA5b3B3YJHCg
+ 9+kA+arlQH5rAhFqIZW5+7GRYEqDvtoS0Lx1GB7XVPzCBZLPQJ6Y7vPjPoo4cOXz251O
+ bDNA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1787241360; x=1787846160; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=zjccIQ52DjE53i8Y+JL1C8qI+OsOp4cqAVqA+eU84tQ=;
+ b=gwrybfp0BK05IVB9jjV4NeropiQlrwAi0nlcJ3FDg0I/7ak3JDUIRa7V42Pj+lXPhP
+ UFsTUFkixZn3wU/mSLia6RiR+Vo6VB2B2Qf/ewKQsoOeyBlABmOaOcn/1zF++su1drcE
+ HNWMaE8Amo0gAO6ZocUoOR4nikRDcaTwvodE4G0mDa3YK7vMarWu+Zam20BkH/3pg5N3
+ B0BjEM60H0GlxFirP3y7vKaFl1YC97aefxL+9FiIxaDKf+yUtV2aSjYfNMzTr+40lLeZ
+ e91CTWN4Tu8Er7ikovpsWU92MDNmQoLl3U9xUqIXarcw6PfB1EVtOLfZ3BhGO0WGfOJC
+ /6Hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787241360; x=1787846160;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=zjccIQ52DjE53i8Y+JL1C8qI+OsOp4cqAVqA+eU84tQ=;
+ b=VgCXdWWX7hbkql2OsexdhsLf624MrfOR/SQYib7mS1m4XXh9mTVUw3TjpTLo9vbKKh
+ M+6SIJgA5ocyLpW/gxm9Y4pxgoXkuseGbJ/OObcakTR0prDatpy/rUrcSggy6xgTuJVm
+ rEbryRM29XJJo/M7/cK3UlATolH+OWDtWgX5Gcn+2mZ2Ngq/aXIASVmMpckM3Fee5K6O
+ YggDKGnv8i4ugQs7dHaZuyvuYdTiJeU/mgejajugZLH+fmvwIRSINuHSECf7jmjlgrAe
+ yL6r+hkm7+La5yIJg1M9hJ+rzhJNXKa6t/rcdqmVBhEsiY815aKqkdMdvFlyWs5BVLp6
+ a94Q==
+X-Gm-Message-State: AFuF++nIysGf95E/U2zijaVPlThgfLOeF29lzDSM0e9VXoX5ALyQEYtD
+ YJdgXC0eSx8dxrwlz23XTIlKvaj/M30NWHdXooL8U0nKR15HUaQ84fqc7bT/oHVa0EoLpe/zyjc
+ 8BuO3ee04DC5u+n5xYivQkgEJvwQ8XFQ=
+X-Gm-Gg: AR+sD11JHaFMM01rApvhZ27U36emBoHqCHDuSSe4oueL+KKgExavBFJRf0wXUsOiczQ
+ hwTLmTmlWhRQYsf9T0wzDInvEVOJP8Y5kpDd4DnhXyyAVNMAbjHOdn0Gv4fK7VmxoViF5on6DMw
+ Rvr9SjgABtN2Z0Jm0fbi2g1NTgzArVfF0z19vXjODne+O8b+0y1lmQ0GKP104oFdHoZTlGg0a/p
+ OH5DRA/I+2c2eYDzDRHzpLJGjg6eX8V4kEjlqAsXQc+af22WnRRJhvLY1iulgeOCSjJNGTEl29/
+ pWYmG5kZo/mSHz5hE7lwDVQDkc29TPq+I8vU8/uAnGr3
+X-Received: by 2002:a53:dccc:0:b0:667:a12c:4402 with SMTP id
+ 956f58d0204a3-66ccb56049cmr3607259d50.11.1787241359896; Thu, 20 Aug 2026
+ 08:55:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260819-fixes-for-11-2-v1-5-b7981c2cc371@linaro.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.346,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260804081459.8007-1-wafgo01@gmail.com>
+ <CAEUhbmVOkPeMzZGpgJ6WMk07xmf9oGL25jp7uw3uQtPt4LE93g@mail.gmail.com>
+ <20260805080540.323431-1-wafgo01@gmail.com>
+ <CAEUhbmVE4j_+havPFTLgHs26FiqWPyRmeU1bjrVpPD0ZQ-Rtaw@mail.gmail.com>
+ <20260810124519.34501-1-wafgo01@gmail.com>
+ <CAEUhbmX=azsPMmxipdeChe8imyFBwKvS4KRy5Qu-phaUBodOeg@mail.gmail.com>
+ <20260813123529.30457-1-wafgo01@gmail.com>
+In-Reply-To: <20260813123529.30457-1-wafgo01@gmail.com>
+From: Bin Meng <bmeng.cn@gmail.com>
+Date: Thu, 20 Aug 2026 23:55:48 +0800
+X-Gm-Features: AcwNN1VIpET882paivyYSaHOWhF73in6BDGj0KJj6THyNjmmYZmdXjSfA7Co-XA
+Message-ID: <CAEUhbmUvUvccVrz85_-eVDARqEKVsrjL=EAs0FFSVqjD1WHXiw@mail.gmail.com>
+Subject: Re: [PATCH] hw/sd/sdhci: complete non-interrupt ADMA descriptor
+ chains in one pass
+To: Wadim Mueller <wafgo01@gmail.com>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, qemu-block@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,20 +123,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 19.08.2026 um 11:22 hat Alex Bennée geschrieben:
-> Previously the guest controlled the value of last_sec and wasn't
-> particularly careful to check it didn't exceed the media size. We
-> can't re-use drv->last_sec as that changes as we do operations so we
-> set media_last_sect when the geometry is probed.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3800
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+HI Wadim,
 
-If it's not too hard, I would appreciate a qtest case that reproduces
-the problem in the pre-patch state and shows that the behaviour
-afterwards is right, including after media change to a floppy of a
-different size.
+On Thu, Aug 13, 2026 at 8:35=E2=80=AFPM Wadim Mueller <wafgo01@gmail.com> w=
+rote:
+>
+> Hi Bin,
+>
+> Thanks! I used the Icicle Kit as you suggested and posted the qtest as a
+> separate patch:
+>
+>   [PATCH] tests/qtest: add Cadence SDHCI ADMA pacing/MMIO reproducer
+>   <https://lore.kernel.org/qemu-devel/20260813123210.28987-1-wafgo01@gmai=
+l.com/>
+>
+> It drives the generic SDHCI model through the Cadence wrapper (SRS window
+> at 0x20008200) directly over MMIO under -accel qtest, and exercises two
+> facets against QEMU_CLOCK_VIRTUAL:
+>
+>   - pacing: reports how many SDHC_TRANSFER_DELAY steps a non-interrupt
+>     ADMA2 chain takes to reach Transfer Complete;
+>   - MMIO coupling: after a chain that yields on a DMA-boundary interrupt
+>     descriptor, a bare interrupt-status read must not resume the pending
+>     transfer.
+>
+> One caveat: the mmio-coupling case is written for the fixed behaviour --
+> it passes with your "Run ADMA independently of MMIO" (series 515264,
+> patch 12) applied and fails without it, so it is meant to land alongside
+> that change rather than on its own.
+>
+> Happy to respin it or fold it into your series, whatever suits you best.
+>
 
-Kevin
+Thank you for the qtests patch! I will include your patch in my Icicle
+Kit v2 patch.
 
+Regards,
+Bin
 
