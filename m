@@ -4,75 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC72AC5DF82
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 08:18:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D940BC5DF82
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 09:01:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwxyD-0004iF-DB; Thu, 20 Aug 2026 04:17:53 -0400
+	id 1wwyda-0002hu-7U; Thu, 20 Aug 2026 05:00:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wwxyB-0004hM-O7
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 04:17:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wwydY-0002eF-R6
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 05:00:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wwxy9-0003Jh-O4
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 04:17:51 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wwydX-0004cv-Ap
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 05:00:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787213867;
+ s=mimecast20190719; t=1787216433;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=GZkCWkJjYtaXDgztuqt6I73F66TW18sXpLStFtvAJjo=;
- b=ZZKjoqAoBhctmnHrzlkr7KrkgRD1YMcXetrQwnrgZtRKxClfrNLU+ycv7SDv4xdpRLg/5d
- otCxUmW0X9uGCe/N+5/M+bnyOkcfBYkWZKNJdj+KC2troRj7NFLQt1I4mNcabo559ZYI+U
- WYaori51v9sXRMEkYl7nKm2gER/6pok=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=nzMGwljsMZ4U6CxcMqMO9az3lZ1eStsTxI29qdoslA4=;
+ b=do0AiQWS4HMhD/W+kKLX7fgW0DH6w3NuAqj/PbHCWJ1lQCZQTXAFmJuf956I8P8YzszvN3
+ QSXVSOjsSVqZVIX8D76xp1dPNN856BCFJxS28yCrbsfwMAI3c0l5aYxpkhrRIqXOrC5Yui
+ Sg2nwOMzZqNWv2iHOAAb+KLF9jLWuCY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-82tYoyvVNf-JMEY_bBcSHg-1; Thu,
- 20 Aug 2026 04:17:43 -0400
-X-MC-Unique: 82tYoyvVNf-JMEY_bBcSHg-1
-X-Mimecast-MFC-AGG-ID: 82tYoyvVNf-JMEY_bBcSHg_1787213863
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-iEy-tMaVPwyFGNo48zaQsQ-1; Thu,
+ 20 Aug 2026 05:00:29 -0400
+X-MC-Unique: iEy-tMaVPwyFGNo48zaQsQ-1
+X-Mimecast-MFC-AGG-ID: iEy-tMaVPwyFGNo48zaQsQ_1787216426
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D903B19560AA; Thu, 20 Aug 2026 08:17:42 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 467AD1800651; Thu, 20 Aug 2026 09:00:25 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.12])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6013219560AB; Thu, 20 Aug 2026 08:17:42 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C38D21955F03; Thu, 20 Aug 2026 09:00:23 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E852121E6920; Thu, 20 Aug 2026 10:17:39 +0200 (CEST)
+ id 226D921E6920; Thu, 20 Aug 2026 11:00:21 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  Eric Blake <eblake@redhat.com>,
- "'Michael S . Tsirkin'" <mst@redhat.com>,  Stefan Hajnoczi
- <stefanha@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  'Daniel P .
- =?utf-8?Q?Berrang=C3=A9'?= <berrange@redhat.com>,  Jason Wang
- <jasowangio@gmail.com>
-Subject: Re: [PATCH V12 13/15] monitor/hmp: display IOThread holders
-In-Reply-To: <20260814174830.1691540-14-zhangckid@gmail.com> (Zhang Chen's
- message of "Sat, 15 Aug 2026 01:48:27 +0800")
-References: <20260814174830.1691540-1-zhangckid@gmail.com>
- <20260814174830.1691540-14-zhangckid@gmail.com>
-Date: Thu, 20 Aug 2026 10:17:39 +0200
-Message-ID: <87y0e12okc.fsf@pond.sub.org>
+To: Connor Kite <connorkite@gmail.com>
+Cc: qemu-devel@nongnu.org,  "Michael S. Tsirkin" <mst@redhat.com>,  Stefano
+ Garzarella <sgarzare@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  Mathieu Poirier <mathieu.poirier@linaro.org>,  Manos
+ Pitsidianakis <manos.pitsidianakis@linaro.org>,  Raphael Norwitz
+ <rnorwitz@nvidia.com>,  Kevin Wolf <kwolf@redhat.com>,  Hanna Reitz
+ <hreitz@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Fam Zheng <fam@euphon.net>,  Stefan
+ Hajnoczi <stefanha@redhat.com>,  Milan Zamazal <mzamazal@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>,  qemu-block@nongnu.org,
+ virtio-fs@lists.linux.dev,  "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Eric Blake <eblake@redhat.com>,  Jason Wang
+ <jasowangio@gmail.com>,  Peter Xu <peterx@redhat.com>,  Eugenio
+ =?utf-8?Q?P=C3=A9rez?=
+ <eperezma@redhat.com>,  Alyssa Ross <hi@alyssa.is>,  Demi Marie Obenour
+ <demiobenour@gmail.com>,  20260817233147.2867623-1-connorkite@gmail.com
+Subject: Re: [PATCH RFC v2 12/13] backends/cryptodev-vhost-user: add memory
+ isolation bool
+In-Reply-To: <20260817-vhost-user-isolated-memory-v2-12-948aae960abb@gmail.com>
+ (Connor Kite's message of "Mon, 17 Aug 2026 22:12:27 -0700")
+References: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
+ <20260817-vhost-user-isolated-memory-v2-12-948aae960abb@gmail.com>
+Date: Thu, 20 Aug 2026 11:00:21 +0200
+Message-ID: <87pkzd2ml6.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,96 +104,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhang Chen <zhangckid@gmail.com> writes:
+Connor Kite <connorkite@gmail.com> writes:
 
-> Display holder information in info iothreads to aid manual debugging.
-> Omit the holders line when an IOThread has no holders.
+> Add a memory_isolation property to CryptoDevBackendVhostUser and
+> add add it as an optional member of CryptodevVhostUserProperties
+> in qapi.
 >
-> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> ---
->  monitor/hmp-cmds.c | 21 +++++++++++++++++++++
->  1 file changed, 21 insertions(+)
+> This is needed to be able to specify memory isolation for
+> cryptodev-vhost-user objects, and the bool will eventually be
+> passed to vhost_user_init() in a future patch.
 >
-> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-> index e9fb8d827a..41a813e79f 100644
-> --- a/monitor/hmp-cmds.c
-> +++ b/monitor/hmp-cmds.c
-> @@ -240,11 +240,32 @@ void hmp_info_iothreads(Monitor *mon, const QDict *qdict)
->      IOThreadInfoList *info_list = qmp_query_iothreads(NULL);
->      IOThreadInfoList *info;
->      IOThreadInfo *value;
-> +    IOThreadHolderList *h;
+> Signed-off-by: Connor Kite <connorkite@gmail.com>
+
+[...]
+
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index c55776af7d..1024027195 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -350,11 +350,17 @@
+>  # @chardev: the name of a Unix domain socket character device that
+>  #     connects to the vhost-user server
+>  #
+> +# @memory-isolation: disable direct access from vhost-user back-end
+> +#     to guest memory.  The back-end will instead access data via
+> +#     bounce buffers residing in the QEMU virtual address space.
+> +#     (default: false) (Since 11.2)
+
+We spell it "backend" elsewhere in doc comments.
+
+Any guidance on when to enable it?
+
+> +#
+>  # Since: 2.12
+>  ##
+>  { 'struct': 'CryptodevVhostUserProperties',
+>    'base': 'CryptodevBackendProperties',
+> -  'data': { 'chardev': 'str' },
+> +  'data': { 'chardev': 'str',
+> +            '*memory-isolation': 'bool' },
+>    'if': 'CONFIG_VHOST_CRYPTO' }
 >  
->      for (info = info_list; info; info = info->next) {
->          value = info->value;
->          monitor_printf(mon, "%s:\n", value->id);
->          monitor_printf(mon, "  thread_id=%" PRId64 "\n", value->thread_id);
-> +        monitor_printf(mon, "  holders=");
-> +        for (h = value->holders; h; h = h->next) {
-> +            IOThreadHolder *holder = h->value;
-> +
-> +            switch (holder->type) {
-> +            case IO_THREAD_HOLDER_KIND_BLOCK_EXPORT:
-> +                monitor_printf(mon, "[block-export: %s]",
-> +                               holder->u.block_export.export_id);
-> +                break;
-> +            case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
-> +                monitor_printf(mon, "[qom-path: %s]",
-> +                               holder->u.qom_object.qom_path);
-> +                break;
-> +            default:
-> +                monitor_printf(mon, "[unknown]");
-> +                break;
-
-This is unreachable.  Please use
-
-               default:
-                   g_assert_not_reached();
-
-to make it obvious.
-
-> +            }
-> +        }
-> +        monitor_printf(mon, "\n");
-> +
->          monitor_printf(mon, "  poll-max-ns=%" PRId64 "\n", value->poll_max_ns);
->          monitor_printf(mon, "  poll-grow=%" PRId64 "\n", value->poll_grow);
->          monitor_printf(mon, "  poll-shrink=%" PRId64 "\n", value->poll_shrink);
-
-Quick test:
-
-    $ qemu-system-x86_64 -S -nodefaults -display none -chardev socket,id=chr-qmp,path=test-qmp,server=on,wait=off -object monitor-qmp,id=qmp,chardev=chr-qmp -monitor stdio
-    QEMU 11.1.50 monitor - type 'help' for more information
-    (qemu) info iothreads 
-    (qemu) q
-
-Hmm, no output?  The QMP monitor should be holding the monitor I/O
-thread.  To confirm that, I made monitor_complete() print things (patch
-appended), and got
-
-    ### monitor qmp holding iothread mon_iothread
-    ### monitor compat_monitor0 without iothread
-
-What's going on here?
-
-
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 26e7ef4d35..57672dbe0e 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -751,8 +751,13 @@ static void monitor_complete(UserCreatable *uc, Error **errp)
-         };
- 
-         mon->ctx = iothread_ref_and_get_aio_context(mon_iothread, &io_holder);
-+        printf("### monitor %s holding iothread %s\n",
-+               object_get_canonical_path_component(OBJECT(mon)),
-+               iothread_get_id(mon_iothread));
-     } else {
-         mon->ctx = qemu_get_aio_context();
-+        printf("### monitor %s without iothread\n",
-+               object_get_canonical_path_component(OBJECT(mon)));
-     }
-     mon->accept_input_bh = aio_bh_new(mon->ctx, monitor_accept_input, mon);
- }
+>  ##
 
 
