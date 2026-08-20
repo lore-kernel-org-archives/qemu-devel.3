@@ -4,134 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEB09C5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 14:22:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF59CC5DF85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 14:28:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx3ev-0006Xa-PL; Thu, 20 Aug 2026 10:22:21 -0400
+	id 1wx3kV-00032B-KK; Thu, 20 Aug 2026 10:28:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wx3eu-0006Ww-Ct
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 10:22:20 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wx3k8-0002W2-IG; Thu, 20 Aug 2026 10:27:46 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wx3es-0001Mv-JY
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 10:22:20 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67KE8ITw3147070
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 14:22:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=GV8dpwIczy05Xf13OcxLw/
- HUV3OJt16gzvfs8yBZmvE=; b=pEBgUb2zAz0X/YMqkD+FaLuZoVL9Mt+zgNih93
- lMRmxIwJAFxci1mtCiTmK31ktuSOslKtKRh12PSrObivMf/VVO0H5qZf4N1gN0Pj
- /JuedBnwupu23MEU+YQQ4+7uUfRH+9m7msnlWPg/Onlq2pniksTLsM59crAObQer
- ZC60pgEYm2cetjMaic1kIS03VFcdA2eJWTLaAaz3H6PehbjQRBC6GY33aOXSSotB
- 71tbVAtT1w4XNPT0pgoANHwiAIdnqvL0OOfxhHsg9PVDTeDjoyTNz8tAR/3+0wG7
- /zbJ/k1928/jdtxrvlryAVwy4IXkLfxpB16ehCXdlsZgpyAw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g5vh7srw3-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 14:22:16 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-92e5fc4c7e9so302935185a.3
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 07:22:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787235735; x=1787840535; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=GV8dpwIczy05Xf13OcxLw/HUV3OJt16gzvfs8yBZmvE=;
- b=O6HYGlItYP9GDZafvtxrwkuKZr0xG8MXCQREkFcEWkC08FA4qrNC9HV+9wYD3ERkJ+
- vdQxIgQ8PJOpSpDWutNAkOS//DHC0a+MKlfaCHhGTPM2oitno4OLBylL6T7JC6ybUrwS
- y9EaoyieyROjEURaHg6Ccc4i2JEc6mQqN2ifgD8RwCpIAjZb7ppIllMJhnA4PcP+xuWR
- MLgYDdJO6vsC0pEVs6SGmnvbFQiCXoiZGfT+fijTgd9IrII92Yi/8Pcge+9ZJyirH8vI
- esDvwuqq09rEjdcYc8zk5qCFhFPHQaPhGKcsNscXP3ubnQvU1XVywuv6xYfB7MX1GSmj
- ekjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787235735; x=1787840535;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=GV8dpwIczy05Xf13OcxLw/HUV3OJt16gzvfs8yBZmvE=;
- b=ERKih2xm6xiZmeJQE8UoSEeWFZ2ssGx5XpggH4WgED+IdyxjXEJqsNYHYvkxIfFTbE
- ENKk2SVhKmjNS/AwfoEKtHnRLr6Ae+hpzEEHKooxPiCIhna3crcBO6BttMMgmGFER0bR
- x9XsdVlaG7Fa8AriRa8zAl67pHbi58HTiyW2wcEPe76jYXvOkfWcZUvhU+96PrGQaM56
- 1RybhFGMxSKr/n8ZYKrtMx6t9A+vfPDkF23IOjB/QyQrcFYvDu5RLtXO+6zZyt0HtuTg
- iw6mriOa/DMD8SwP736ktvfifoDcPOEvXLuYpp4gYAzJPiryyghDsVPrGkmz8J3BiQHs
- fwRA==
-X-Gm-Message-State: AOJu0Yx+xR71VX2zgrhw6g0kY/YxWKK3g9anDSuHXrQE7A5157jsbfeT
- UmSc9RXUJEHJr8KlHoC2WzYXg8eyWFx7UXnZvjyRlNsdG4KmqcjRWnGtobEz6M06M2i9Ei0v7Wr
- +k8TXF8QANhxDdrk9y2CjGFq8kY3dbTKQw/mdJ4Pcf59q0+6ptqFd5BO+QA==
-X-Gm-Gg: AR+sD11sdt0F+QAKzq9ZTklzB1reHyUQjJhB7CaUO0AmFCnXJeS8+kR87Tx1MhAKQEW
- eCSCoIhdfHI5xUiqz/3FDp/gv0OO9nMFVZ1F9iyhLaK8j4GeNcCjkavryxB+rdfrhkygwQrGzR1
- YT+vrI9dKC8/pFQpr9UYiBvrJydgkOziF46CNR741XgBvk6rKmWTwAPSDzecUtrWE2BsPqEdtON
- Pai7Sd4uz40IWwFsUOr60vwBrVsQDG2c8RoWHSMWC7NiGTbhNnT5HSsRjwlEDGCZBBfwjA+cdXb
- x/WnASZchvd2zB1o1xUqODlnJNxt4n/+ZN/vn5ea/8NeiCjlNTVlz5+nOc1cth5fbaV/zR7+ZA=
- =
-X-Received: by 2002:a05:620a:4886:b0:92e:76a1:96d3 with SMTP id
- af79cd13be357-9371e6ee8b7mr1110351485a.34.1787235734960; 
- Thu, 20 Aug 2026 07:22:14 -0700 (PDT)
-X-Received: by 2002:a05:620a:4886:b0:92e:76a1:96d3 with SMTP id
- af79cd13be357-9371e6ee8b7mr1110343485a.34.1787235734317; 
- Thu, 20 Aug 2026 07:22:14 -0700 (PDT)
-Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499aa17f202sm138321775e9.13.2026.08.20.07.22.13
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 20 Aug 2026 07:22:13 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Stephen Checkoway <stephen.checkoway@oberlin.edu>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH] MAINTAINERS: Cover pflash QTest in pflash section
-Date: Thu, 20 Aug 2026 16:22:12 +0200
-Message-ID: <20260820142212.27537-1-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wx3k3-0002CX-DA; Thu, 20 Aug 2026 10:27:42 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67K99NPk3543925; Thu, 20 Aug 2026 14:27:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=ONfPp7sgxXk5TVEGKmGxXcFalP++Ski53AW4QOJ+3
+ MQ=; b=HVSaJRUgA4KLF/gmICbEDpT8jCmh0i9+FsRPeEcfWTDxRUqi6JpSLkdh8
+ w5vKAxEaLVCg5y6E54Fb5E5nz/k90G5b1jUup8LDKXUYxiWlveZAbq03vVphziAU
+ 6MC4ylR3wLoXNRgp8Mequk1+YO4Ktpt2qN72V0Edf74097gyQBgpvzgyeA13aGrv
+ mTzbHhkdxj47GyHC6kHNe/wguDbESai1/NDxfYWK2n3xPArbNTLhyCywDtqlhbwL
+ x/FX3O2BQKxm4RQ1RFhTySPhtqiIr9qbA3CVBC0xiafrPyrTKKak6x026QSjIToA
+ aok/BpBTbgfq869jNX9YCK2EPs+7A==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu2as0x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 20 Aug 2026 14:27:36 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67KEQYEO020983;
+ Thu, 20 Aug 2026 14:27:36 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g34ngpth3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 20 Aug 2026 14:27:35 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67KERWP046530858
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 20 Aug 2026 14:27:32 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 136D52004B;
+ Thu, 20 Aug 2026 14:27:32 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1F14720049;
+ Thu, 20 Aug 2026 14:27:29 +0000 (GMT)
+Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
+ [9.39.17.115]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 20 Aug 2026 14:27:28 +0000 (GMT)
+From: Chinmay Rath <rathc@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com
+Cc: npiggin@gmail.com, milesg@linux.ibm.com, Chinmay Rath <rathc@linux.ibm.com>
+Subject: [PATCH v2 0/7] target/ppc: PPC ISA 2.07 flag cleanup and updates
+Date: Thu, 20 Aug 2026 19:56:57 +0530
+Message-ID: <20260820142717.337686-1-rathc@linux.ibm.com>
+X-Mailer: git-send-email 2.55.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDEwOCBTYWx0ZWRfXzcZ7W/TBO/FC
- YyG9/fMVMSo5BCN83z/TbBHveELDjJgEasckJWKEmfgvjIhc4K908LnDu73RMnjoKEtxcfDOGHw
- 5g9LKeLciwWZ2mhSth42NJi8lah+b5qAmcHZWnAOsUIEATHADCPjRaiZuQ8LHE++nsHCJpOv3Om
- lMst/QdXoDpRWhHYKkX0RKzlsuU7H4SA8mIkYAz6yKiyy24vmXI2I7/fW8l4Fxn9P1ALyUKcBYR
- H70aUWXnidjjmcKdxr/WFUEliQOSsbcl0t7KoL9L6vakjIwHbBea8Kd44i3B15LqXHUj1vl6A2B
- iLrRM5zQHdtmbIIEwZth6BaxCVh6v8NL+B63EJIDdfEwYGCLIO5nSCfGiKX1THFb351JvwXEha4
- DfdaVnioOcmjPbhdSds365tjBrqX4g2+8hVOcn2qKgO2Z2k4qhSxokri1v2KD5Fj3N/UXcNyAvJ
- bmzgA6/edYACkdP5/dQ==
-X-Proofpoint-ORIG-GUID: zbrPbgnnRK1um7kCi_n_6BG94ymVR_JM
-X-Authority-Analysis: v=2.4 cv=Y7fIdBeN c=1 sm=1 tr=0 ts=6a870d98 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=S56xvJB5AAAA:8 a=20KFwNOVAAAA:8 a=tqVpZ52y12xuJfn1US0A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
- a=MH9Ivq0PDQRhlrFuIVvX:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDEwOCBTYWx0ZWRfXzy6BI5e99lCp
- 5CAKUWODFk60M1fllm2dWVCRrHRzgcvudYq7d07L69jFxYPfW+GDmMn5BPdSjpp5K2oFAgUH/UR
- pnvZLzY0cuAT1NGkNp4v0t//480ZXAw=
-X-Proofpoint-GUID: zbrPbgnnRK1um7kCi_n_6BG94ymVR_JM
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=AdqB2XXG c=1 sm=1 tr=0 ts=6a870ed9 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=p0WdMEafAAAA:8
+ a=gQ7FEG4IobcTiEelWAQA:9
+X-Proofpoint-GUID: Kkhd-WkbT8CLuI_VafVsPR085hMhidRf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDEwNSBTYWx0ZWRfXwi+nJjvS/DJ1
+ ITB/8eaNqWzwew3hyDfdxP8jAXeMf1zP0jENvIbR1750EDqVW3hyxMMl3nCyBxkUAEYQJAqHqIW
+ SXOyrt9rKTxJ7VLvxVTZYMoOIYTxCil27/Tp5Stc3bG9H+h6kb/8eFBSUqHSQlu3WBO9laYBzrB
+ h1IWAe+AWUqeGfyQ8IZ3+Vd2YghoT2622Z/oHsK+EiKvFQ1et97mh/NznVunOQ7tSzRz1NVOwZg
+ bhOoG7i4ZFYfoJAxgvgLwznVY4iBgu+NwOVCQVdtGy9BvD7224iZDRNHS9sjwjS5WZ/S0UFRR/c
+ 7MT9l5teZuwNlEj+RqP+PL/UxPj7LG/AE6PDMxvpdGEDAHGJtw8SRAg5tVQdmdI9TKGE7sSgVdM
+ 7yqcwkXJDs90amh+72n41ZdVeYcb8BNBndTQB88x5oqeyD6AnaO+asvXpQF/FzAwQLzHn3FBpzp
+ Ebmo7hErCAM+B0QG/xQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDEwNSBTYWx0ZWRfXwMx3MkA00G2W
+ 2Tj0/9P7MVA4erzcDqLJ1jhHlkRyhpDEBJ6yBneaVnDh3us44kUVMVBIjRjLnObdmRscTSqP2U/
+ fTNZokijgUrP7zsZQwQdObzVDzoWk1A=
+X-Proofpoint-ORIG-GUID: ll4nJ0zzrXd7LsjIQSuXMV3KYhOghX_t
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-19_06,2026-08-20_01,2025-10-01_01
+ definitions=2026-08-19_06,2026-08-19_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 clxscore=1015 malwarescore=0 impostorscore=0
- lowpriorityscore=0 spamscore=0 adultscore=0 phishscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200108
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ clxscore=1015 priorityscore=1501 suspectscore=0 malwarescore=0
+ impostorscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608200105
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -148,27 +119,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Include the pflash-cfi02-test.c test in the "Parallel NOR
-Flash devices" to be notified when patches modify it.
+While working with some PPC instructions from a ISA 2.07 POV, I observed
+the following :
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+1. Unlike ISA versions 2.05, 3.0 and 3.1 which have one specific flag
+for usage in the insns_flags2 field in the CPUPPCState struct, ISA 2.07
+and 2.06 have multiple flags. Upon further investigation, I see that
+during CPU intialization (POWER 8+), all those variations of the ISA 2.07
+flags are only ever used all together. There is no instance in the code
+where a CPU is initialzed in a more granular level, using only a subset
+of the ISA 2.07 flag variations.
+This patch series hence consolidates the different 2.07 flags, and frees
+up bits in the insns_flags2 field for future use. I intend to do the
+same analysis for the ISA 2.06 flags as well.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b51f5c3e602..0361909b72f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2354,6 +2354,7 @@ M: Philippe Mathieu-Daudé <philmd@mailo.com>
- S: Maintained
- F: hw/block/pflash_cfi*.c
- F: include/hw/block/flash.h
-+F: tests/qtest/pflash-cfi02-test.c
- 
- SCSI
- M: Paolo Bonzini <pbonzini@redhat.com>
+2. The "Summary of changes in Power ISA 2.07B" section in the ISA
+version 2.07B mentions : "The icbt instruction has been moved from
+the Embedded category to the Base category."
+This change has not been incorporated in the QEMU code resulting in
+illegal instruction exception upon encountering ICBT instruction in
+Power VMs where it should be recognized. Hence adding the necessary
+flag to the instruction. Also correcting the invalid mask for the
+decoding as per the ISA.
+
+This series is based on top of the patches from another series that I
+had posted :
+[A] : https://lore.kernel.org/qemu-devel/20260820140114.327023-1-rathc@linux.ibm.com/
+
+Link to Gitlab CI with patches :
+https://gitlab.com/rathc/qemu/-/pipelines/2776338293
+
+Changes in v2 :
+-Retained all 'Reviewed-by's and 'Tested-by's received.
+
+-In patch 2: Change instruction flag in BCTAR instruction.
+The above series [A] now incorpates the following review comment
+received on its respective RFC series :
+https://lore.kernel.org/qemu-devel/46867b5b-bb66-4378-8722-d918fd720037@linux.ibm.com/
+Due to this. Doing the necessary change in patch 2.
+
+
+Chinmay Rath (7):
+  target/ppc: Replace PPC2_VSX207 flag with PPC2_ISA207
+  target/ppc: Use PPC2_ISA207 instead of PPC2_BCTAR_ISA207
+  target/ppc: Use PPC2_ISA207 instead of PPC2_LSQ_ISA207
+  target/ppc: Use PPC2_ISA207 instead of PPC2_ALTIVEC_207
+  target/ppc: Use PPC2_ISA207 instead of PPC2_ISA207S
+  target/ppc: Reorder PPC2 flags
+  target/ppc: Add ICBT support for ISA version 2.07
+
+ hw/ppc/spapr_caps.c                           |   2 +-
+ linux-user/ppc/elfload.c                      |   6 +-
+ target/ppc/cpu.h                              |  38 +++----
+ target/ppc/cpu_init.c                         |   6 +-
+ target/ppc/cpu_init.h                         |   7 +-
+ target/ppc/tcg-excp_helper.c                  |   8 +-
+ target/ppc/translate.c                        |  10 +-
+ target/ppc/translate/bhrb-impl.c.inc          |   4 +-
+ target/ppc/translate/branch-impl.c.inc        |   4 +-
+ target/ppc/translate/fixedpoint-impl.c.inc    |   4 +-
+ target/ppc/translate/fp-impl.c.inc            |   4 +-
+ .../ppc/translate/processor-ctrl-impl.c.inc   |   8 +-
+ target/ppc/translate/vmx-impl.c.inc           | 102 +++++++++---------
+ target/ppc/translate/vmx-ops.c.inc            |  18 ++--
+ target/ppc/translate/vsx-impl.c.inc           |  56 +++++-----
+ target/ppc/translate/vsx-ops.c.inc            |  24 ++---
+ 16 files changed, 143 insertions(+), 158 deletions(-)
+
 -- 
-2.53.0
+2.55.0
 
 
