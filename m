@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25E97C5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 02:49:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2DEEC5B572
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 02:50:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwsq9-0001uq-De; Wed, 19 Aug 2026 22:49:13 -0400
+	id 1wwsqB-0001w4-Dy; Wed, 19 Aug 2026 22:49:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kylefoxaustin.github@gmail.com>)
- id 1wwspp-0001q3-1B
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:48:53 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ id 1wwspr-0001qQ-7n
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:48:56 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <kylefoxaustin.github@gmail.com>)
- id 1wwspn-0000N1-89
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:48:52 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-66c70f05859so2997924d50.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 19:48:50 -0700 (PDT)
+ id 1wwspp-0000Oj-O5
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:48:54 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-836c4474028so22774267b3.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 19:48:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787194130; x=1787798930; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787194132; x=1787798932; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=eTvDxTUytdELgFkhMw1eLbOOivxcRj8qqSrmYJFQkO0=;
- b=mx9UkjK+gwEw7hB5sO4Ha/hKr9O3GGzjYWIXk8q/L25Hv6xuH8jgrWjK50emshd2oQ
- /AN01gzNHaHHJwB0w/S3UcpBnsx8GFmuv+yNuDR3MhtPtqNQ3NMUP2Lon1LUZXmrOpDD
- B4beKsO2uq4tAyDjFLv7zwefDeVi+HOxzeGSSGvO+9soRPUsZnjQ/4CQrh4DQVgmvSGA
- /gAYum6MxJxM5SX5PlnVLmL4JGnEh0TfKT/vLDoVr4IjaE/SC9OxVnHfLf0oqLKizyCc
- kii4sq/VZMXf1hZKh++Z36BK2cXj9EEyd2fCemN7lY3Zb6/nKcIca279EvgOsHXetsEL
- pg7A==
+ bh=IrPGfl+huHTZPIohbx6Ak3r7i9HaCjXef11B7n7gDFo=;
+ b=NBO8jxrgFfm3YlkRkV3qXXYAS47JEb9hV0wI6849ftwY6JyfmQCKDIwCTWNmy5UpfL
+ fRTijTB+j/NaqWmcpEdmLgsl19r/3hjilzvZ6gEPRRn990gb4tuHXFFJRO3A7GnME826
+ piTmAU1c+srlsgpW6l2YJXdFoHqFHGje66Cue2xrUVuicmuIRyvhFh/CQ+oXdWO4yUHh
+ 7CbnYY12bokQSdaAWDbQjHxNpu9wGb41F50KfUyuDL0R401kQq06M6oNPsrcLYPIxIiY
+ kUW7j+KMNnkXruKgb1rHWbvXpwQq3xWzfdwCZNs93sQ0MhZFOUJy1Bmn9E4xYO3X0oUG
+ 7Rbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787194130; x=1787798930;
+ d=1e100.net; s=20251104; t=1787194132; x=1787798932;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=eTvDxTUytdELgFkhMw1eLbOOivxcRj8qqSrmYJFQkO0=;
- b=ITHCYVo08rzy3Q2Vg2DkLEqSdIT/dZoaD7pf73qqNou0UdCGxWwkdZ71/1DNkiCMzZ
- U6YWcxyRokQEdKi3SGVKwBCYkcba4wQlY5ezHG2V9SOR/FAVYHGY/gn7VqDoEawFKE8h
- xJ5WgCepzpbHocxaJbwgYsy+6rprqXGc3oYeHpdwhS4CzmdnJiHVpA3b/9yvOSgpvuVi
- 39hnt8/nJvxSLanLCCJpjEootgOLeMT/T8Sd5ym1NZi/rowvmEChgCpQDSbo/mhew2X8
- T3k0eNb/leqKkiKYYyVcckoB/leGVvamUalPvhaHyo70SQmd7j8ay4TsRRbd6TaBG6ko
- FLXg==
-X-Gm-Message-State: AFuF++neomZbvnseQ37ov0teNjCna8nj0+xihooOjzcZRk7qwAXa2gIz
- IdF93cCFG/xPGhsQxjTf7Ih4nRTFVZ7yVHz3dJWPlH0Hw/VA1hTSD7QrWJeMDA==
-X-Gm-Gg: AR+sD13qS2+yFO/ea4T9Dl3z9SvM5+FpsHwRRd7Q8Wn1o854kR5jC2LXTvrNNv6TeaG
- fULY22kGwXprf5bFV+ls8qB+ej4qrMbrKTfZJv8MH4K02YIqqgMw0I0FkanAMA/1Tlvv0/1Fgza
- KHbGbdC1N4aak3CVtqTBZP2B1+WCsS1cP0tWEO0pe9nFL56AbnqQr+pIVw048Ms6r79jHJ9Eypp
- dy8hUEXFSO/3xKPJb0PpWbi4jv0y7knywNl7nriQjbLNeTXv6Q0hlt8eF9z0EqnDcmeDiyoaXy+
- qtFtkVGiBXMPnJEqAQP0YHe/T8Xx7AdlFbsVEuc39A7QT5QMaFa/xbnR/2ALKKm7ryKN5REPA2N
- Gg1Io+rDasacjzOY9XdP/7aNgQTG1Wjg1K9pwUPYcVYXbg6p27qGMvSnGJXdyLKZBM4JArKLp+Z
- wtI/owPwj8yOAiHJHU3A7S2p4oe8aB8ZT5dkzoYzcqgEpvXaYUJ/SH/EN1fiPpUF2MA5IloK907
- 1S0mtdYazYlAO0fcQeFAReCgSaUj/lpEgDtpm14/bee8zfXk5nkwQ==
-X-Received: by 2002:a05:690e:c4e:b0:667:a025:89a4 with SMTP id
- 956f58d0204a3-66ccb618589mr3103247d50.18.1787194129879; 
- Wed, 19 Aug 2026 19:48:49 -0700 (PDT)
+ bh=IrPGfl+huHTZPIohbx6Ak3r7i9HaCjXef11B7n7gDFo=;
+ b=rxXMh7PxmrexPG67dszMNxHN8Sv/4D4E2c8yF28QjNIIOMjLsz6Y7a9lAA0vKt8Sn6
+ Ij6kx5+SYGBpRfY+GC6yojnDna8rUDkkr1SKZudgZSyUADYoooaO1NJa9N5lz4QUwlqr
+ U1cIBHX3sMHZ0lmeXOdNj+YNTB0s32dnH+uqPFEpPnMThew4pBeCseq/glK0vYpYcMIi
+ Qy4sMr9C+IN93Toxq3hira7c2SPXZF0Va/69Y1V9oMosTBymFnzSLm2J1plEIZ2E4kge
+ QbsON0KF8ek02XjuEyA84AoWQN7o2YRo1wXiNlqYP8B07DyDooKKvQ2qCGaOwTo45cTC
+ POVA==
+X-Gm-Message-State: AFuF++kxgKyrKqIN89X9scjOzwgDgp2pKtjCd0MEbqtUIZcTV8gZq28B
+ oepGlz/Hj86WfbbcqtKnLRs+y7fdhp+8xoJF6lj3A+fUqCOnz1E3LD1A4rLNOw==
+X-Gm-Gg: AR+sD11EbGw+IyWHl/omFxtnJP76f3sXyINviWiWvC8dCQRNr7Ndf4IJnHEVYmotKXT
+ rU5wJeUuPhu4HnJdrKZG9pz1Z5bBc+uPGG3+Ze3RlO26XeYWiRPNwKkGp8ouaibkwYyO++ygdHu
+ DuEGV74vZT0dHfwhz5atJSLqby1TlCBbE9hXasLGrejsKmyIzsubyS7CjM2+HABZCkm7E1GFCz1
+ 1uG/Ce5JMHkaka98NRYu77FpSlEp2HInASR09eJ73RAhDf6OtQMvkA80l59qxqdAHJBSibEHq7K
+ q1PFdRdnb8xv1mIP3NPn19pi4BKDKJ3HB+bQuqKycAYHs1e5ZVtpHUuAjGWIMdIBw+ju+ao8Yok
+ 01oR9RCZpuV5HYjka4bOvoa6hPOhkUoj9nEUrD9eROrcLbOTPZ1Q6b4QLZWN81WbehtuDhSAkSm
+ ZenD2KvPvEnepz7YPmlkGQJnYi7TDkFPaczl1rybVRHtA35HLxNralzmXr4Q2FAQ5ej4+SOZobf
+ NWVbZ75vj1MmozZBmH+uXh9DnLKjliTrIKy+ISSwGfuBMVCeWa3V8bPu5E=
+X-Received: by 2002:a05:690e:4891:10b0:668:8dc0:bcc3 with SMTP id
+ 956f58d0204a3-66ccb3a5042mr2453152d50.0.1787194131862; 
+ Wed, 19 Aug 2026 19:48:51 -0700 (PDT)
 Received: from skippy.localdomain (99-61-67-1.lightspeed.austtx.sbcglobal.net.
  [99.61.67.1]) by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-66ccafd03basm1986454d50.1.2026.08.19.19.48.48
+ 956f58d0204a3-66ccafd03basm1986454d50.1.2026.08.19.19.48.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 19:48:49 -0700 (PDT)
+ Wed, 19 Aug 2026 19:48:51 -0700 (PDT)
 From: Kyle Fox <kylefoxaustin.github@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Fox <kylefoxaustin.github@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [PATCH 03/16] target/arm: opt-in align-down for a misaligned PMSAv7
- MPU RBAR
-Date: Wed, 19 Aug 2026 21:48:21 -0500
-Message-Id: <20260820024834.3286721-4-kylefoxaustin.github@gmail.com>
+Subject: [PATCH 04/16] hw/arm/armv7m: forward pmsav7-rbar-align-down to the CPU
+Date: Wed, 19 Aug 2026 21:48:22 -0500
+Message-Id: <20260820024834.3286721-5-kylefoxaustin.github@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260820024834.3286721-1-kylefoxaustin.github@gmail.com>
 References: <20260820024834.3286721-1-kylefoxaustin.github@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=kylefoxaustin.github@gmail.com; helo=mail-yx1-xb133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=kylefoxaustin.github@gmail.com; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,118 +102,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A PMSAv7 MPU region base that is not aligned to its region size is
-UNPREDICTABLE per the architecture, and QEMU disables such a region.
-Some PMSAv7 implementations instead ignore the sub-size low bits of
-RBAR.ADDR and match against the aligned-down base. The NXP i.MX 95 RT
-core (Cortex-M7) SDK firmware relies on this for a peripheral region
-(DRBAR 0x4c800000 programmed with a 512MB size, intended as 0x40000000).
-
-Add an opt-in "pmsav7-rbar-align-down" property that aligns such a base
-down instead of dropping the region. It defaults to false, so existing
-behaviour is unchanged, and is only registered on PMSAv7 CPUs (v7-M and
-v7-R, i.e. v7 without v8), where get_phys_addr_pmsav7() runs.
+Forward the opt-in "pmsav7-rbar-align-down" property to the CPU object,
+following the existing init-svtor / vfp / dsp forwarding pattern, so an
+SoC integrating a PMSAv7 core whose firmware relies on the align-down
+behaviour can enable it.
 
 Signed-off-by: Kyle Fox <kylefoxaustin.github@gmail.com>
 ---
- target/arm/cpu.c | 19 +++++++++++++++++++
- target/arm/cpu.h |  6 ++++++
- target/arm/ptw.c | 28 +++++++++++++++++++++++-----
- 3 files changed, 48 insertions(+), 5 deletions(-)
+ hw/arm/armv7m.c         | 8 ++++++++
+ include/hw/arm/armv7m.h | 4 ++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 77aa78f00e2..22e84c1ced2 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1349,6 +1349,16 @@ static const Property arm_cpu_pmsav7_dregion_property =
-             DEFINE_PROP_UNSIGNED_NODEFAULT("pmsav7-dregion", ARMCPU,
-                                            pmsav7_dregion,
-                                            qdev_prop_uint32, uint32_t);
-+
-+/*
-+ * Opt-in: treat a PMSAv7 MPU region base that is not aligned to its region
-+ * size as aligned-down instead of UNPREDICTABLE (see get_phys_addr_pmsav7()).
-+ * Only registered on PMSAv7 (v7-M / v7-R) CPUs, and only enabled by an
-+ * integrator whose firmware relies on it (e.g. the i.MX 95 Cortex-M7).
-+ */
-+static const Property arm_cpu_pmsav7_rbar_align_down_property =
-+            DEFINE_PROP_BOOL("pmsav7-rbar-align-down", ARMCPU,
-+                             pmsav7_rbar_align_down, false);
- #endif
- 
- static bool arm_get_pmu(Object *obj, Error **errp)
-@@ -1659,6 +1669,15 @@ static void arm_cpu_post_init(Object *obj)
-         if (arm_feature(&cpu->env, ARM_FEATURE_V7)) {
-             qdev_property_add_static(DEVICE(obj),
-                                      &arm_cpu_pmsav7_dregion_property);
-+            /*
-+             * get_phys_addr_pmsav7() only runs on PMSAv7 CPUs, i.e. v7
-+             * without v8 (a v8 M/R core uses the PMSAv8 MPU, which has no
-+             * such alignment rule), so only offer the property there.
-+             */
-+            if (!arm_feature(&cpu->env, ARM_FEATURE_V8)) {
-+                qdev_property_add_static(DEVICE(obj),
-+                        &arm_cpu_pmsav7_rbar_align_down_property);
-+            }
+diff --git a/hw/arm/armv7m.c b/hw/arm/armv7m.c
+index 68a1cbd6316..bb0f95d423d 100644
+--- a/hw/arm/armv7m.c
++++ b/hw/arm/armv7m.c
+@@ -332,6 +332,12 @@ static void armv7m_realize(DeviceState *dev, Error **errp)
+             return;
          }
      }
++    if (object_property_find(OBJECT(s->cpu), "pmsav7-rbar-align-down")) {
++        if (!object_property_set_bool(OBJECT(s->cpu), "pmsav7-rbar-align-down",
++                                      s->pmsav7_rbar_align_down, errp)) {
++            return;
++        }
++    }
+     object_property_set_bool(OBJECT(s->cpu), "start-powered-off",
+                              s->start_powered_off, &error_abort);
  
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index c0492c8dfbc..03ead3cda15 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1145,6 +1145,12 @@ struct ArchCPU {
-      * architecture version.
-      */
-     bool cfgend;
-+    /*
-+     * If set, a PMSAv7 MPU region base that is not aligned to its region
-+     * size is treated as aligned-down (matching Cortex-M silicon such as the
-+     * i.MX 95 M-cores) instead of the architectural UNPREDICTABLE drop.
-+     */
+@@ -562,6 +568,8 @@ static const Property armv7m_properties[] = {
+                      false),
+     DEFINE_PROP_BOOL("vfp", ARMv7MState, vfp, true),
+     DEFINE_PROP_BOOL("dsp", ARMv7MState, dsp, true),
++    DEFINE_PROP_BOOL("pmsav7-rbar-align-down", ARMv7MState,
++                     pmsav7_rbar_align_down, false),
+     DEFINE_PROP_UINT32("mpu-ns-regions", ARMv7MState, mpu_ns_regions, UINT_MAX),
+     DEFINE_PROP_UINT32("mpu-s-regions", ARMv7MState, mpu_s_regions, UINT_MAX),
+ };
+diff --git a/include/hw/arm/armv7m.h b/include/hw/arm/armv7m.h
+index 70555962bb9..23cfed222c1 100644
+--- a/include/hw/arm/armv7m.h
++++ b/include/hw/arm/armv7m.h
+@@ -52,6 +52,9 @@ OBJECT_DECLARE_SIMPLE_TYPE(ARMv7MState, ARMV7M)
+  * + Property "init-nsvtor": non-secure VTOR reset value (forwarded to CPU object)
+  * + Property "vfp": enable VFP (forwarded to CPU object)
+  * + Property "dsp": enable DSP (forwarded to CPU object)
++ * + Property "pmsav7-rbar-align-down": align down a misaligned PMSAv7 MPU
++ *   region base rather than treating it as UNPREDICTABLE (forwarded to the
++ *   CPU object, which only offers it on PMSAv7 cores)
+  * + Property "enable-bitband": expose bitbanded IO
+  * + Property "mpu-ns-regions": number of Non-Secure MPU regions (forwarded
+  *   to CPU object pmsav7-dregion property; default is whatever the default
+@@ -108,6 +111,7 @@ struct ARMv7MState {
+     bool start_powered_off;
+     bool vfp;
+     bool dsp;
 +    bool pmsav7_rbar_align_down;
+ };
  
-     QLIST_HEAD(, ARMELChangeHook) pre_el_change_hooks;
-     QLIST_HEAD(, ARMELChangeHook) el_change_hooks;
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index a29de0385f4..51805c05226 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -2757,11 +2757,29 @@ static bool get_phys_addr_pmsav7(CPUARMState *env,
-             rmask = (1ull << rsize) - 1;
- 
-             if (base & rmask) {
--                qemu_log_mask(LOG_GUEST_ERROR,
--                              "DRBAR[%d]: 0x%" PRIx32 " misaligned "
--                              "to DRSR region size, mask = 0x%" PRIx32 "\n",
--                              n, base, rmask);
--                continue;
-+                if (cpu->pmsav7_rbar_align_down) {
-+                    /*
-+                     * Opt-in behaviour for Cortex-M silicon such as the
-+                     * i.MX 95 M-cores: a region base not aligned to its size
-+                     * is treated as aligned-down (RBAR.ADDR is only
-+                     * [31:log2(size)]), matching that hardware, whose SM/RT
-+                     * firmware programs e.g. DRBAR 0x4c800000 with a 512MB
-+                     * size intended as 0x40000000. Off by default because the
-+                     * architecture calls a misaligned base UNPREDICTABLE.
-+                     */
-+                    qemu_log_mask(LOG_GUEST_ERROR,
-+                                  "DRBAR[%d]: 0x%" PRIx32 " not aligned to "
-+                                  "DRSR region size (mask 0x%" PRIx32 "); "
-+                                  "aligning down to 0x%" PRIx32 "\n",
-+                                  n, base, rmask, base & ~rmask);
-+                    base &= ~rmask;
-+                } else {
-+                    qemu_log_mask(LOG_GUEST_ERROR,
-+                                  "DRBAR[%d]: 0x%" PRIx32 " misaligned "
-+                                  "to DRSR region size, mask = 0x%" PRIx32 "\n",
-+                                  n, base, rmask);
-+                    continue;
-+                }
-             }
- 
-             if (address < base || address > base + rmask) {
+ #endif
 -- 
 2.34.1
 
