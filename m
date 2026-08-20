@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28063C5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 20:05:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5284C5DF8E
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 20:05:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx8zg-0000PK-IH; Thu, 20 Aug 2026 16:04:08 -0400
+	id 1wx8zi-0000Qt-FZ; Thu, 20 Aug 2026 16:04:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wx8zf-0000OG-EH
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 16:04:07 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wx8zh-0000Ps-CV
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 16:04:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wx8zc-0005Pj-UD
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 16:04:06 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wx8zf-0005Rl-Oq
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 16:04:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787256244;
+ s=mimecast20190719; t=1787256247;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SEo2eVbCTpmPKnzPC7tEz19MQRMXHP5CDmZv/G66jaY=;
- b=aICI2fEqxoBi7q37s+oDd60GC9UIA2WdmHML+dXhwimXKLzg5ZkUyWIdTFO6TEa3gh/7og
- BGQ3+uTb+zGivd3dtErTXAB8TMQlVbdEOSISCE7zELyPM0xOr6FtaWHDaa8dZUwxq17e+m
- 459Nf2WgduW7YecpotO5nEXTaLsTIbg=
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
- [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PSVoCxz+TV8QgWwOuZmmqsA5tQRksceNAyieKAVfFUk=;
+ b=B5QRTfEcA3WTz8O50d/JrTHhdeF/aGMgJ7WPnPLqgGZrAql4WX6IlDkmqhTFbBdsVUL2Km
+ PXOsBbTRYOIkvTXNM1e9yFuWrad0ToZ7z4MtMDAWxrBb3Mq074QNVUPDDuJ5IAEGlNNF46
+ cRz5bJpA2H9Ii1zHQRddpd0DhCiJeZQ=
+Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com
+ [209.85.160.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-131-RhX88dfhO1aVrbniXVKWiw-1; Thu, 20 Aug 2026 16:04:02 -0400
-X-MC-Unique: RhX88dfhO1aVrbniXVKWiw-1
-X-Mimecast-MFC-AGG-ID: RhX88dfhO1aVrbniXVKWiw_1787256242
-Received: by mail-oo1-f70.google.com with SMTP id
- 006d021491bc7-6a17baa4d18so460617eaf.1
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 13:04:02 -0700 (PDT)
+ us-mta-259-KZ_2vdJLPh2zZnvJxu7Bxw-1; Thu, 20 Aug 2026 16:03:55 -0400
+X-MC-Unique: KZ_2vdJLPh2zZnvJxu7Bxw-1
+X-Mimecast-MFC-AGG-ID: KZ_2vdJLPh2zZnvJxu7Bxw_1787256235
+Received: by mail-oa1-f71.google.com with SMTP id
+ 586e51a60fabf-455ad408573so330848fac.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 13:03:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787256242; x=1787861042; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787256235; x=1787861035; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=SEo2eVbCTpmPKnzPC7tEz19MQRMXHP5CDmZv/G66jaY=;
- b=qVPywGriuaqaTY5Ex0tgfBRgwEjjR+ck121gJEGHZGwQgPe9l8EiBbVcBME8aglCuu
- YEcrYe6fSKxWc0D4QoBafiQzialc4ddz9zb/kFyivnW7AN3TQ5+15lsPRqOR7m8RiQ8f
- Ije0fyKiq45qyDF/wbxMTJFbKKuVIdDbe7TlMG1YnVuj/+GIivabovYAi2XmNMUKIoRu
- vX+U2yg9u1RWqgFm5oHDcrUbzzAMhFEk5nvNb2n9wTem6nDTTVGWwqLZjHkklo2gyVwl
- fmkouU7fBZWjkhX3qX2hlHXEwBMseNv7LjjT2FxMrsBnxOzCgMCmuPie55rBJAKopXkr
- fC+Q==
+ bh=PSVoCxz+TV8QgWwOuZmmqsA5tQRksceNAyieKAVfFUk=;
+ b=ZYZycg2wQuVt+eo4+KZeOBWZbuVl0qlp7n8uR9AYJjrq8mmOJ4Q0rmb+1iA6MuihVk
+ gj3VcIxImMDGAZ0Htvgc/A3dzP15vWwuHL2J2x6DfzzY2o6wlj3H0GTCdwV1PomA+P6c
+ lv4UDMkEGpW4Td3R21S0yqmqTyL6CJS0EGjNrpbA6IzE1PkL7Ccdbha+yMEjrDyRtH3J
+ t/1N0IohgpFP1EoGsqsJ1fsjCRi8H2CMS6JbzkPNc0RaCp2Q4pQhAuN6RxB6afuUb8U2
+ 2i1I+xVi74kxH1Ba66fC9abXJ4VuNyx4oTdAqmiBZjD9GWtcKgyWI6v4wepF/COiHBNp
+ 2UDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787256242; x=1787861042;
+ d=1e100.net; s=20251104; t=1787256235; x=1787861035;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=SEo2eVbCTpmPKnzPC7tEz19MQRMXHP5CDmZv/G66jaY=;
- b=A5aRdMfL7Hv5bnen4PgUoCKrB50CI4OevSdOUl0DyXt1T6VGcTCqLCyzyWgRkC20cI
- OTCGGIg4GZqa4e7z9pLEHBnKJQvWDJ+DyrgkkQC5KuhIKKwl1dXaAkfr4dAWyPKzR/mj
- /vtJgfI74O2EzYhvS714NgKmgSeYr2+eQARKwAIP9jAkkjwXtIb1iIOd+3lba3nMSaqQ
- YdE0OzwarC/hhDZNlZy/PAEybf7LhgLZweAvXQoYKpReF1I8oe5SMILRZOIXG5WwRHU3
- X7DWWE/sVbcv1ohQ8c7hEz+wtsGZFfNflzJwrPxg6GW4/Prdp0edofLr+fBy3bEDs0Nm
- 5x0A==
-X-Gm-Message-State: AOJu0YzgkBjqYWuPYLrkYBTI6fp+cMG0cnJ/qVgVMWdx4TlI+ylaxwsr
- L31tiAUBAHN0mbKfnF1dedPPMCssAP0u24yUewnnNiHmF2aHxhcEY6P8FRq3PqagtzgXJL7ZYCM
- WDrmcapA9MRbIuz18xeos8/4FUf9O6w/gmkVVVaMHuRSo48F6o0qLkXqmCuiYjKMMGYhncnQObg
- v4MIEl5zYcW23JwTW0NPudP2OSDECyb5uSzk9s/Q==
-X-Gm-Gg: AR+sD11Pqi9XD45uxelX1MrI8OVpRCePwtDvhvwOa6cbzfm8uZtyVSINj+t3WNeEQjB
- 92PEFPLhlTB1IA/9iyZd6Z2IugAvv3HGxRX0MhIFmKFAIv0klXUBHv/3KWLps4IuV55devtfP/Q
- t2AITELvRLbd7FG8UFxvIszyZElqO+xQ1zO10dXXyEdFKPXl8JiRO4sJqEePT9nEfN69ZxnyeJG
- Odd7oprJ/tUXNafiTWLyK/UmcnzELXnRK3BvwKAbG+1+DiGp22onkKu3F/3EKQFyJdIMd6nYdhd
- RMWNYWFo81Q/Y7VSJMeic3804ll4z7v0PjZqn6gYCCbzqoRyuUC3hRjnohBb8EqhJuvI5wLYmzn
- XakOQPZgEuHLAKmxwdpslEug9Gqz7J60BdjJsnAtJZmzwu99YQn0Bl7VyOHk=
-X-Received: by 2002:a05:6820:709b:10b0:6aa:d97f:453b with SMTP id
- 006d021491bc7-6b1593f3ecdmr1104822eaf.28.1787256241990; 
- Thu, 20 Aug 2026 13:04:01 -0700 (PDT)
-X-Received: by 2002:a05:6820:709b:10b0:6aa:d97f:453b with SMTP id
- 006d021491bc7-6b1593f3ecdmr1104751eaf.28.1787256241555; 
- Thu, 20 Aug 2026 13:04:01 -0700 (PDT)
+ bh=PSVoCxz+TV8QgWwOuZmmqsA5tQRksceNAyieKAVfFUk=;
+ b=ng+AzaF+L6FlsHf0NSGwqynEXOyt8E/1cju+qbbk63m9in5kiqj/Mx9AgJlFN5JG7g
+ rX5kXcBGJl2BdEEqZ83ens893W9oXiIp5X8u9NTbPpk+lB4yikqe3HoBZSXR0gx1Wa07
+ WxSuKKgYKnawL00/47df1mS6NqIz4/V4qcT0Zb+0AMWWf8GcRc8TBn8pItycnqUi25sp
+ 5cqmwoAlZq1xlzkrLNdxLtabqpM77jYx8ur9p+BFjV0iCMbngxtTYIIFRCvdngvTliNs
+ zsPTffcY8oOiDRrg4K8ieLU6xcChr/jIVV4ayDBMxP9hEFW8SaP4c/zpvP6D/64jWQMM
+ p/Xw==
+X-Gm-Message-State: AOJu0YzUZh46wITstiDYdBaOy8U6tHorObGWT0prV+Cgi+TG82HlaEgw
+ TE2YtufopNS+SehBB1gsb6R5KK+Gjs+ZLzpCfuCfnXI0294izJ7ysdGWPpH0T2gJTPuXGgxZJU/
+ QGzhL31bl+LVO6MCSE2B7Sh/e6unMftxCZQGct3RPx6caeXjVEe5Aam8RBiur2WO7ZGmzqi63xO
+ PI5hWMvTB/hLhXkTmX3y8huVqlaLYmcNFnrnhXdA==
+X-Gm-Gg: AR+sD13+GcBvFtKo4uw7JxPDAiW8pJjKYYtLY03NS/vV8OfE6eT8+jhdFN0dhto+bAI
+ ZXNHLH89Wc3xfgCgzB69Kne654RGBgv0U4bWOF4PW2oqLLkty62AB8ZrN26dKBe2MwoK8WtbHK7
+ gBtXLLC10NV3GTNADTMPrYEfvJ8gGPU528sn+vvzjnnzB7PvynleXTS397GCPIF5UBLR+uWr/PI
+ uVKeA2wb6lPoIduX71XM7MEXdaFxht/TTllfsXkmpTXhwxfJKbSED1rr+LiZMFbZG1kB/NvDBXk
+ oO1CR5LYYsFpcaVrdDLd4luDcJXx5AsLCMVcpWvO2rOuqpsyUX1g3X15jUMCT+BDlp77pLjOldb
+ f+IW9S6lfNST2Mt6ZE0+zhnJgKE6CwnJl4DpqO0wk8PRwzLvVXcvp5dmgJdo=
+X-Received: by 2002:a05:6820:1793:b0:6b1:59e8:6e63 with SMTP id
+ 006d021491bc7-6b159e87650mr1060008eaf.22.1787256234704; 
+ Thu, 20 Aug 2026 13:03:54 -0700 (PDT)
+X-Received: by 2002:a05:6820:1793:b0:6b1:59e8:6e63 with SMTP id
+ 006d021491bc7-6b159e87650mr1059433eaf.22.1787256231209; 
+ Thu, 20 Aug 2026 13:03:51 -0700 (PDT)
 Received: from x1.local
  (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6b13cebeb2esm6181314eaf.10.2026.08.20.13.03.59
+ 006d021491bc7-6b13cebeb2esm6181314eaf.10.2026.08.20.13.03.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 13:04:00 -0700 (PDT)
+ Thu, 20 Aug 2026 13:03:49 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Jack Wang <jinpu.wang@ionos.com>, Peter Xu <peterx@redhat.com>,
@@ -90,10 +90,9 @@ Cc: Jack Wang <jinpu.wang@ionos.com>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Samuel Zhang <guoqing.zhang@amd.com>,
  Yanfei Xu <yanfei.xu@bytedance.com>,
  Jinpu Wang <jinpu.wang@cloud.ionos.com>
-Subject: [PATCH v2 09/10] migration/rdma: Sanity check upper bound of register
- MR address
-Date: Thu, 20 Aug 2026 16:03:21 -0400
-Message-ID: <20260820200322.3321036-10-peterx@redhat.com>
+Subject: [PATCH v2 06/10] migration/rdma: Drop RDMARegister.key.chunk
+Date: Thu, 20 Aug 2026 16:03:18 -0400
+Message-ID: <20260820200322.3321036-7-peterx@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260820200322.3321036-1-peterx@redhat.com>
 References: <20260820200322.3321036-1-peterx@redhat.com>
@@ -123,33 +122,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before registration of RDMA ranges, QEMU destination checks for validity of
-current_addr no less than the target ramblock's start address.  But it
-didn't check for the upper bound to make sure the address is within the
-size of the ramblock.  Add it.
+Not used anymore.
 
-Reported-by: Tristan (@TristanInSec)
-Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4007
 Reviewed-by: Jinpu Wang <jinpu.wang@cloud.ionos.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/rdma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ migration/rdma.c | 23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
 diff --git a/migration/rdma.c b/migration/rdma.c
-index cf6688a4bc..d8953363fe 100644
+index f9f3940256..683c24ba4d 100644
 --- a/migration/rdma.c
 +++ b/migration/rdma.c
-@@ -3387,7 +3387,8 @@ int rdma_registration_handle(QEMUFile *f)
+@@ -414,10 +414,7 @@ static void network_to_control(RDMAControlHeader *control)
+  * the actual RDMA operation.
+  */
+ typedef struct QEMU_PACKED {
+-    union QEMU_PACKED {
+-        uint64_t current_addr;  /* offset into the ram_addr_t space */
+-        uint64_t chunk;         /* chunk to lookup if unregistering */
+-    } key;
++    uint64_t current_addr;  /* offset into the ram_addr_t space */
+     uint32_t current_index; /* which ramblock the chunk belongs to */
+     uint32_t padding;
+     uint64_t chunks;            /* how many sequential chunks to register */
+@@ -442,16 +439,16 @@ static void register_to_network(RDMAContext *rdma, RDMARegister *reg)
+      * current_addr as passed in is an address in the local ram_addr_t
+      * space, we need to translate this for the destination
+      */
+-    reg->key.current_addr -= local_block->offset;
+-    reg->key.current_addr += rdma->dest_blocks[reg->current_index].offset;
+-    reg->key.current_addr = htonll(reg->key.current_addr);
++    reg->current_addr -= local_block->offset;
++    reg->current_addr += rdma->dest_blocks[reg->current_index].offset;
++    reg->current_addr = htonll(reg->current_addr);
+     reg->current_index = htonl(reg->current_index);
+     reg->chunks = htonll(reg->chunks);
+ }
+ 
+ static void network_to_register(RDMARegister *reg)
+ {
+-    reg->key.current_addr = ntohll(reg->key.current_addr);
++    reg->current_addr = ntohll(reg->current_addr);
+     reg->current_index = ntohl(reg->current_index);
+     reg->chunks = ntohll(reg->chunks);
+ }
+@@ -1831,7 +1828,7 @@ retry:
+              * Otherwise, tell other side to register.
+              */
+             reg.current_index = current_index;
+-            reg.key.current_addr = current_addr;
++            reg.current_addr = current_addr;
+             reg.chunks = chunks;
+ 
+             trace_rdma_write_one_sendreg(chunk, sge.length, current_index,
+@@ -3373,7 +3370,7 @@ int rdma_registration_handle(QEMUFile *f)
+                 reg_result = &results[count];
+ 
+                 trace_rdma_registration_handle_register_loop(count,
+-                         reg->current_index, reg->key.current_addr, reg->chunks);
++                         reg->current_index, reg->current_addr, reg->chunks);
+ 
+                 if (reg->current_index >= rdma->local_ram_blocks.nb_blocks) {
+                     error_report("rdma: 'register' bad block index %u (vs %d)",
+@@ -3382,15 +3379,15 @@ int rdma_registration_handle(QEMUFile *f)
                      goto err;
                  }
                  block = &(rdma->local_ram_blocks.block[reg->current_index]);
--                if (block->offset > reg->current_addr) {
-+                if (block->offset > reg->current_addr ||
-+                    block->offset + block->length <= reg->current_addr) {
+-                if (block->offset > reg->key.current_addr) {
++                if (block->offset > reg->current_addr) {
                      error_report("rdma: bad register address for block %s"
                          " offset: %" PRIx64 " current_addr: %" PRIx64,
                          block->block_name, block->offset,
+-                        reg->key.current_addr);
++                        reg->current_addr);
+                     goto err;
+                 }
+                 host_addr = (block->local_host_addr +
+-                            (reg->key.current_addr - block->offset));
++                            (reg->current_addr - block->offset));
+                 chunk = ram_chunk_index(block->local_host_addr,
+                                         (uint8_t *) host_addr);
+                 chunk_start = ram_chunk_start(block, chunk);
 -- 
 2.54.0
 
