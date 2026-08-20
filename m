@@ -4,83 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 748F6C5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:47:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C8DBC5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:47:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwtjE-0000nS-21; Wed, 19 Aug 2026 23:46:08 -0400
+	id 1wwtjQ-0000yu-26; Wed, 19 Aug 2026 23:46:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtjC-0000lD-5K
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:06 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1wwtjN-0000wh-Rq
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:17 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtj9-00041R-Ss
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:05 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-c9d1fff21edso1145533a12.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:46:03 -0700 (PDT)
+ id 1wwtjL-00042k-U0
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:17 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-38125cebfdaso2755108a91.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:46:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787197562; x=1787802362; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=U9hvvtE/mLZxSo9keqAsE4vQdBL311za+hiZdp6fz9g=;
- b=nO4l4tZ3tU/0mjTWr8WOe/ZixDQlOxxOZIyXHiewE32/kh+40uJCsIXnbIWsLjligQ
- fLGVoYZsvsFuYvLrpWWPsFB8MdRD5/Pi1RBQmZ0vO8rRhJMGxTQS7DdpaWtPFn+g0L9D
- UlZYulHJfUWqS9z6OYTtomFI4QrxFJsSCAUsWhZEtq1jNZZeASz8voKa8LkP8mT936k9
- i0iy0DkY49WhTa+rLPwh6JwZMz5NhWIUqH7aBPZgDkpmfTYvL/5Z2ViEYusNL2cOX5H1
- CknLq+wRz1YYtlJSAmjH8fEkfJn5G+AM0E28U6xVgBZo8iIU7s8A6vj3WfWbZ8sPIvUs
- Ubpw==
+ d=gmail.com; s=20251104; t=1787197574; x=1787802374; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=pvkNgzPBnkClRwc9O5eyz1kkZLDtZhEMJDHTwwC8vGY=;
+ b=o500PZZQsMbtAX+JO8MdDd26EvRQ0d3DkmmvAY/H2tBZ43fqxDBE6gER4zQqcWbRCE
+ JI36s+Q31J1SvAodqlTljoQXNMjgAjQIzU0gZFnxu/VExJDEdzbQwNEWox54Y3vaeUV4
+ hBYufy89tvo/al6U+3MwqbgSZC18yvtR3OaDTQUMK83+Kou4qgbs/P/gT0SSs1AgHZN0
+ BGjXhA/XiitrkS2DP+XlyU/bKQPgb6hKPN0cHzHwkM9SrQfhPNgaXiHebrppcP0M9xEG
+ h5jdx5SQiI1an3VIlmSl0jP0ODmvPhhLKXuUr9zszvjNGXdd7oG7xWlmTynq5MmJnUa1
+ FqDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787197562; x=1787802362;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=U9hvvtE/mLZxSo9keqAsE4vQdBL311za+hiZdp6fz9g=;
- b=KO31CIDNLp8R89YurMKWwkb4XImX7GKHTXYGThYxwo5aHKZ7jMQ6zgK3DOhr3qFvTX
- H321ZwDSahtDKTjtj/SAmngTSNHFcmoJbTKCWpfoiCAXIzsO2VIR0xodIB/xjTgDTcDv
- YHhuMpllLna5B+LaDcHm9QS4l81qrsULcgaMDyxditJ5JT8JTMSb2KCUMYHlFHyCZ2i6
- 5yF3QVo6khm6V3IL0/W/VH+EvCllTm74Ymx2EXgz+xcMo0HSYAAg+F05Sj0ywhVlNkfj
- VmMAs4mDGgbJmFIcfq58Z9mH7lSUQz0Zf2Aa6wev6nHn9fWcKNfivKRdg1WNkenOquBx
- svcg==
-X-Gm-Message-State: AOJu0YwSo0ZMnV49Id0BwpdDtWMimT6kElYXN8qjkVFRKlu3fM94x7ix
- tBRHa/eXyEohfMU1r9wsbrNxb8OVQ5SJ2DoklIn0zQm4GYz+tT4j+JU4vUUnyQ==
-X-Gm-Gg: AR+sD11zFZmGkejn1xsS+pyaNcoBvcx7md8fPmxTBv/W25Hb9rfKJRuczZaZG6Dy9jc
- NVn/ZJpsOPdsjORxePxvvgKByZkbB/MP/Dp/Zus6XF/f1B2yHNvLKmBUAufAfzHuoWLxIl87GyD
- KILHTnz33+9QGmq3F8wL9fMOu4LLIX1O131Q5bTi0eFctqzxzfck/ni821FWRsPr5mH6BFs1QI1
- HWWl6gehv1cwyJ3B5CH14Lh/aq7hMcYecnVkgrxx5yKTWqo0/sKOckB5rsk4o7ufagnA6fPBygw
- rh1WBUOQHuzRTmfPCnn7P6N4TXVSlwWgT9TlF1N/dTFksbtIyRa05Nkrv4re735/VqaCrgGtuZr
- p7y4CXXDS09cgwKsb0lOZ2tULEB6hkesPFQWwy9RbSyMgKNr219aIhfwv85WlZyM4hVUQbavj6J
- AO07dzWh/GmDS+wOQM1/L5QXuOBofMjwJCZStwGtwFEvo6Sf+gxB4SMcle4XlKGNQI9zURMfOBs
- HtWaw==
-X-Received: by 2002:a05:6a20:258f:b0:3c3:6b6e:8ba0 with SMTP id
- adf61e73a8af0-3cd011d7d63mr16413159637.11.1787197562217; 
- Wed, 19 Aug 2026 20:46:02 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787197574; x=1787802374;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=pvkNgzPBnkClRwc9O5eyz1kkZLDtZhEMJDHTwwC8vGY=;
+ b=TzGG631ue5kxe5DG+1wCFTGS301L2FwF8ZfKQZ97JOzauvw/gqMknYWyz1x6/i6kC5
+ RykE+HCuIeUyNa6MkgNDTF3OOD1qhLibbXm56+2MzdiSba9Fp+KfRXrZ8eFv7i54o1Ak
+ Ad/ZdX3sw+lkkWCIplge2zORNTsfvQoMTNqTvyNu0Ilfm6NcSpJLY+YZ95mN4iDmIVJ2
+ Ay4/1kaeFESaS4Yqb7WHPI3X1mblUHrvvI2MgZIFTmPP1JYuOIBxAUH9ecTxh+ojplLR
+ BVcCSW0Q8YqGJdysT86EtbxFT9wBz3/9YtVpw8dPjNBq3mRr3MFtOyg0a0I2noDIn5xX
+ atDA==
+X-Gm-Message-State: AFuF++nL1k9pVi4G1DbTR4YH5TqaJ7q1lseyrRz304J6fLh4PRsygpvp
+ /scfdq8I9ByjWJFSjQ7+ohb832It6YpXArB4JugMONXGedDg6Jad1QvgbOFzhg==
+X-Gm-Gg: AR+sD10VWS11YlVMea52HcmV2oo/O/eAmykhK4ShHROcA6EF5qHsE0cnLV4HGKru23l
+ KHkPXNXc3ntaQu3CFS+CaJaakUGnMk7ZthYI43KE639cGjdtM83S4yX6+ww5dEc6D78eHfrmYpn
+ ai7+8wfAaHKmwtv8Wp8UZHg+BAYkoSWvV0TqM9UAkCv3ela6LXVdC8NjpvjbC1S10gdCTa5qIlv
+ aNZHWp+PXpLEgcREx6ct5fA89ZY9KWIv9lTmYh/PnpqE3XsVlPFFRrbhzOCxKPrVs8dyj8B+Hyw
+ OkypZ1eWFKc9Dudxk1R0+SYzjhuCAX8eUBXvbUmO4dXBtXuAk/rY7zILNBY+tHc4S02btTl6iWK
+ Wq6L5Z4PN5it2GEqaw3WnSlVGbcCsuhM/on3x/CZBLi7F3NPW8pyOHudWIehoC6tKLnx/FwjWQT
+ RfGcmiah8QFS7RDmuHu8w31bD4WpJHG1SyQLZ7+7R39d1MQEOUFhe+01+wJxbpFVi4EpxniscZG
+ sXXXA==
+X-Received: by 2002:a17:90a:fc45:b0:38a:c3f:3b87 with SMTP id
+ 98e67ed59e1d1-39580f6d136mr18847912a91.12.1787197574502; 
+ Wed, 19 Aug 2026 20:46:14 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.45.59
+ a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.46.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 20:46:01 -0700 (PDT)
+ Wed, 19 Aug 2026 20:46:13 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Zephyr Li <fritchleybohrer@gmail.com>,
+Cc: TANG Tiancheng <lyndra@linux.alibaba.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 26/93] target/riscv: do not count ECALL in minstret
-Date: Thu, 20 Aug 2026 13:43:23 +1000
-Message-ID: <20260820034430.1186695-27-alistair.francis@wdc.com>
+Subject: [PULL 30/93] disas/riscv: Fix 6-bit immediate extraction
+Date: Thu, 20 Aug 2026 13:43:27 +1000
+Message-ID: <20260820034430.1186695-31-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260820034430.1186695-1-alistair.francis@wdc.com>
 References: <20260820034430.1186695-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,219 +108,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zephyr Li <fritchleybohrer@gmail.com>
+From: TANG Tiancheng <lyndra@linux.alibaba.com>
 
-With icount enabled, helper_raise_exception() leaves ECALL in
-icount_get_raw() because it exits without restoring the current TB
-state. This makes minstret count an instruction that does not retire.
+rv_codec_r2_imm6 is used for XThead instructions whose 6-bit
+immediate field is encoded in bits 25:20. The old expression
+left-shifted by 38 and then right-shifted by 60, so it kept only
+bits 25:22.
 
-Adjust only the fixed minstret baseline so that mcycle accounting
-remains unchanged.
+Use extract32() to decode bits 25:20 directly. This fixes the
+immediate printed for th.srri and th.tst.
 
-Add an RV64 softmmu regression test for the issue.
-
-Fixes: 4fe8ae09062d ("target/riscv: Combine mhpmcounter and mhpmcounterh")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4087
-Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
+Fixes: 318df7238b9f ("disas/riscv: Add support for XThead* instructions")
+Suggested-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260730032122.2564190-1-fritchleybohrer@gmail.com>
+Message-ID: <20260703-b4-disas-xthead-fix-riscv-next-v4-2-84c566330bc7@linux.alibaba.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/pmu.h                    |  1 +
- target/riscv/tcg/op_helper.c              |  6 +++
- target/riscv/tcg/pmu.c                    | 44 +++++++++++++-----
- tests/tcg/riscv64/Makefile.softmmu-target |  4 ++
- tests/tcg/riscv64/test-minstret-ecall.S   | 55 +++++++++++++++++++++++
- 5 files changed, 98 insertions(+), 12 deletions(-)
- create mode 100644 tests/tcg/riscv64/test-minstret-ecall.S
+ disas/riscv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/riscv/tcg/pmu.h b/target/riscv/tcg/pmu.h
-index b4f1e469a2..2429c01b77 100644
---- a/target/riscv/tcg/pmu.h
-+++ b/target/riscv/tcg/pmu.h
-@@ -36,6 +36,7 @@ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
-                           uint32_t ctr_idx);
- void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, privilege_mode_t newpriv,
-                                  bool new_virt);
-+void riscv_pmu_decr_instret(CPURISCVState *env);
- RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
-                                   bool upper_half, uint32_t ctr_idx);
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 7f1b262773..fdf75a12ef 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -4546,7 +4546,7 @@ static uint32_t operand_zcmp_rlist(rv_inst inst)
  
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index ba3c7da375..acdccd1a97 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -21,6 +21,9 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "target/riscv/tcg/csr.h"
-+#ifndef CONFIG_USER_ONLY
-+#include "pmu.h"
-+#endif
- #include "internals.h"
- #include "exec/cputlb.h"
- #include "accel/tcg/cpu-ldst.h"
-@@ -47,6 +50,9 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
- 
- void helper_raise_exception(CPURISCVState *env, uint32_t exception)
+ static uint32_t operand_imm6(rv_inst inst)
  {
-+#ifndef CONFIG_USER_ONLY
-+    riscv_pmu_decr_instret(env);
-+#endif
-     riscv_raise_exception(env, exception, 0);
+-    return (inst << 38) >> 60;
++    return extract32(inst, 20, 6);
  }
  
-diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
-index 38ad2737e1..1a4658319b 100644
---- a/target/riscv/tcg/pmu.c
-+++ b/target/riscv/tcg/pmu.c
-@@ -49,6 +49,21 @@ static bool riscv_pmu_counter_enabled(RISCVCPU *cpu, uint32_t ctr_idx)
-     }
- }
- 
-+static bool riscv_pmu_counter_filtered(CPURISCVState *env, uint64_t cfg)
-+{
-+    bool virt_on = env->virt_enabled;
-+
-+    return (env->priv == PRV_M && (cfg & MHPMEVENT_BIT_MINH)) ||
-+           (env->priv == PRV_S && virt_on &&
-+            (cfg & MHPMEVENT_BIT_VSINH)) ||
-+           (env->priv == PRV_U && virt_on &&
-+            (cfg & MHPMEVENT_BIT_VUINH)) ||
-+           (env->priv == PRV_S && !virt_on &&
-+            (cfg & MHPMEVENT_BIT_SINH)) ||
-+           (env->priv == PRV_U && !virt_on &&
-+            (cfg & MHPMEVENT_BIT_UINH));
-+}
-+
- /*
-  * Information needed to update counters:
-  *  new_priv, new_virt: To correctly save starting snapshot for the newly
-@@ -147,12 +162,27 @@ void riscv_pmu_update_fixed_ctrs(CPURISCVState *env,
-     riscv_pmu_icount_update_priv(env, newpriv, new_virt);
- }
- 
-+void riscv_pmu_decr_instret(CPURISCVState *env)
-+{
-+    if (!icount_enabled() ||
-+        (env->mcountinhibit & COUNTEREN_IR) ||
-+        riscv_pmu_counter_filtered(env, env->minstretcfg)) {
-+        return;
-+    }
-+
-+    /*
-+     * minstret is derived from icount, which includes the current
-+     * instruction.  Move the baseline forward to exclude an instruction
-+     * that raises an exception and therefore does not retire.
-+     */
-+    env->pmu_ctrs[2].mhpmcounter_prev++;
-+}
-+
- int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
- {
-     uint32_t ctr_idx;
-     CPURISCVState *env = &cpu->env;
-     uint64_t max_val = UINT64_MAX;
--    bool virt_on = env->virt_enabled;
-     PMUCTRState *counter;
-     gpointer value;
- 
-@@ -170,17 +200,7 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
-         return -1;
-     }
- 
--    /* Privilege mode filtering */
--    if ((env->priv == PRV_M &&
--        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_MINH)) ||
--        (env->priv == PRV_S && virt_on &&
--        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_VSINH)) ||
--        (env->priv == PRV_U && virt_on &&
--        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_VUINH)) ||
--        (env->priv == PRV_S && !virt_on &&
--        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_SINH)) ||
--        (env->priv == PRV_U && !virt_on &&
--        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_UINH))) {
-+    if (riscv_pmu_counter_filtered(env, env->mhpmevent_val[ctr_idx])) {
-         return 0;
-     }
- 
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index 908fd008e4..fac0474746 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -24,6 +24,10 @@ EXTRA_RUNS += run-test-mepc-masking
- run-test-mepc-masking: test-mepc-masking
- 	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
- 
-+EXTRA_RUNS += run-test-minstret-ecall
-+run-test-minstret-ecall: test-minstret-ecall
-+	$(call run-test, $<, $(QEMU) -icount shift=1 $(QEMU_OPTS)$<)
-+
- EXTRA_RUNS += run-plugin-doubletrap
- run-plugin-doubletrap: doubletrap
- 	$(call run-test, $<, \
-diff --git a/tests/tcg/riscv64/test-minstret-ecall.S b/tests/tcg/riscv64/test-minstret-ecall.S
-new file mode 100644
-index 0000000000..ab268f7f22
---- /dev/null
-+++ b/tests/tcg/riscv64/test-minstret-ecall.S
-@@ -0,0 +1,55 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+	.option	norvc
-+
-+	.text
-+	.global	_start
-+_start:
-+	lla	t0, trap
-+	csrw	mtvec, t0
-+
-+	/*
-+	 * The first CSR read retires after obtaining s0.  The ecall does not
-+	 * retire, so the trap handler must observe a difference of one.
-+	 */
-+	csrr	s0, minstret
-+	ecall
-+	sub	t0, s1, s0
-+	li	t1, 1
-+	bne	t0, t1, fail
-+
-+	li	a0, 0
-+	j	_exit
-+
-+trap:
-+	csrr	s1, minstret
-+	csrr	t0, mcause
-+	li	t1, 11		/* Environment call from M-mode */
-+	bne	t0, t1, fail
-+
-+	csrr	t0, mepc
-+	addi	t0, t0, 4
-+	csrw	mepc, t0
-+	mret
-+
-+fail:
-+	li	a0, 1
-+
-+_exit:
-+	lla	a1, semiargs
-+	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
-+
-+	/* Semihosting call sequence */
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+	.data
-+	.balign	16
-+semiargs:
-+	.space	16
+ static uint32_t operand_imm2(rv_inst inst)
 -- 
 2.54.0
 
