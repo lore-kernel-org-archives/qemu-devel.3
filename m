@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90794C5DF85
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE49AC5DF89
 	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 14:08:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx3QB-0000FZ-EO; Thu, 20 Aug 2026 10:07:07 -0400
+	id 1wx3Qr-0001Vt-9U; Thu, 20 Aug 2026 10:07:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wx3Q8-0008V4-Du; Thu, 20 Aug 2026 10:07:04 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wx3Qn-0001QK-G4; Thu, 20 Aug 2026 10:07:45 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wx3Q6-0006of-A5; Thu, 20 Aug 2026 10:07:04 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1wx3Ql-00070u-5M; Thu, 20 Aug 2026 10:07:45 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67K8mFBd362217; Thu, 20 Aug 2026 14:06:59 GMT
+ 67K8s0HR471650; Thu, 20 Aug 2026 14:07:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=AUwjLK+SIjFWI5Uk2
- QC0TmelZwHkY3SrmTz7cA/YlCQ=; b=BlTZz5JMwtcF/rxrY81bbt9MBoIShPJsZ
- 5rVbMFm4J8Lzf1hTBvsmmezvcB7YdIg+dSQ5B2b1jZcPkwmJTJ2oN3T8WSglQ6g1
- Gcnv3Q40YgeDr+E8wLDNg5B1v+fdArV/gAZeIQqc4BZ8AHvpabJo51R3RjkcOJp9
- GpoLfLaKTus5OP1tizmzkx5ap9Ji7x8zNJvgWR6LMspNXO/B+S46BtQYcTguEbbl
- ijtiY4m0xZDVe4iewFTjZz6eRsyukR/fS4c6qTNiZCe6Rj2De4F8zZgc2hi9FW6n
- Kszf/ZoxIRtgxDxLs2a2ehTDUTIwNmfCWmHMhu64T59iY6ssLp4DA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu4anqw-1
+ :mime-version:references:subject:to; s=pp1; bh=Vz/D/DXDsVn2XV7BE
+ bIFRCc59R/eARWLxmvMGsgmNoI=; b=MTdhvg4Xg9nDAjJtbgNwQIykoLNNZ7Zia
+ QS0qxuUlHY6SQQDUhmODCECsIVsGO86nRLO42F6Blmp1cqat6lxqWetlvZkknwnE
+ 4zRoIwDnBJymAWRCJ+x7bOOGEqFYYqqoUYly1HA3z1475uVMaBLBay4rQRKhFlEH
+ hfNcR3beEhmpy5NllshERGq32AQjPi9WN/QyknXygzfVGRUA8Rytyk/lXPwwCaUr
+ b6YrbUm9Y5AQLENV6bdOX4JE1apKI3rprH21RubZhPk3RpvVbP3xgDNXf9OwyOBn
+ raYxE3h6H0uvi5H381gAmKiWIBObvvS6n+FWmO2IZU9U632Qdmkfg==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu0jufs-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Aug 2026 14:06:59 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67KDuMv8021666;
- Thu, 20 Aug 2026 14:06:58 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g33xhewwt-1
+ Thu, 20 Aug 2026 14:07:39 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67KDuXQF027635;
+ Thu, 20 Aug 2026 14:07:38 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g32eqf460-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Aug 2026 14:06:58 +0000 (GMT)
+ Thu, 20 Aug 2026 14:07:38 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
  [10.20.54.106])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67KE6qVP43385172
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67KE7U7D28836566
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 20 Aug 2026 14:06:52 GMT
+ Thu, 20 Aug 2026 14:07:31 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B35A420043;
- Thu, 20 Aug 2026 14:06:52 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D48E520043;
+ Thu, 20 Aug 2026 14:07:30 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DABFE20040;
- Thu, 20 Aug 2026 14:06:41 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 87C4D20040;
+ Thu, 20 Aug 2026 14:07:22 +0000 (GMT)
 Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
  [9.39.17.115]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 20 Aug 2026 14:06:41 +0000 (GMT)
+ Thu, 20 Aug 2026 14:07:22 +0000 (GMT)
 From: Chinmay Rath <rathc@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
  milesg@linux.ibm.com
@@ -64,11 +64,11 @@ Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
  tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com,
  aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, sv@linux.ibm.com,
  shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
- nikhilks@linux.ibm.com, Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH 25/29] target/ppc: Move rlwimi,
- rlwinm instructions to decodetree
-Date: Thu, 20 Aug 2026 19:30:54 +0530
-Message-ID: <20260820140114.327023-26-rathc@linux.ibm.com>
+ nikhilks@linux.ibm.com, Vishal Chourasia <Vishal.Chourasia2@ibm.com>
+Subject: [PATCH 29/29] target/ppc: Move system call and rfi instructions to
+ decodetree
+Date: Thu, 20 Aug 2026 19:30:58 +0530
+Message-ID: <20260820140114.327023-30-rathc@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820140114.327023-1-rathc@linux.ibm.com>
 References: <20260820140114.327023-1-rathc@linux.ibm.com>
@@ -76,39 +76,39 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDEwNSBTYWx0ZWRfX9HTnVTToq080
- lilcfOEL9UZ6p5gg7wilZRcZpffxPlKhLUtp4MZJwtSPQP+odjfnnBgz7jNGJ+t1inPfCwhMqcc
- P7U4E3IFqKDKOHRT4Vql1tgPTUcZv/Y=
-X-Proofpoint-GUID: YofOMRDTIPrqH3l--iCv1Va9KcAvdVZe
-X-Proofpoint-ORIG-GUID: YL_bKup4HxzlnWXMQxulH2posM9QmF6I
-X-Authority-Analysis: v=2.4 cv=RPmD2Yi+ c=1 sm=1 tr=0 ts=6a870a03 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Authority-Analysis: v=2.4 cv=MthiLWae c=1 sm=1 tr=0 ts=6a870a2c cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=0rCImzozmzrCB6NAvZYA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDEwNSBTYWx0ZWRfX1xSusJWe9lz/
- wdfDJbjldy7Fjymb4C5hBYobHSZTEcWTL3f8/wKYDi4BuzVjEQ+GZ36I6zUWfII7moJTYG4i2KA
- VWrESZXycSl/456ih/P0/W73/dLYjinBly8wWebJ32KpZ4znBGp9PMzoBFGDdO3Lu9LLndAu2yB
- rGx6QuGj/ABEazNsnaQ7eKHPUSTtkaJYQi7Vfd4pq8zbBstzrKvLs9rE0OovzBaMV7DIN9tkKTL
- UgptsDPh/KGnq/6O/rV4WnQXIukte5JZjPxMz7tWXiJBtcm30ROy/QlHjAs04VzSfDttLevJLXZ
- C7iTGBoOe0ccYMBeHwSOoM5pQcPkc7DlFnuLee4dImTSa8QNmRxFew7sylAXmpF8UTexnWgKlAX
- I2NCY9g4nQm77b/+O2tJFUrz2gERkCAzVUmw8jV1TlxPEaS0+iSxT044IYrDbSTdpGgHS42cR+9
- PSsI7YJKVxj0kuJWWRw==
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=f6oIfxX2Cbx1L6vh3XkA:9
+X-Proofpoint-ORIG-GUID: vbhPNMRvP-ZiPd1CZG4wVkN5jnv858VH
+X-Proofpoint-GUID: CN7Z7GCfZE53IvFdf9rFTLwKI313TYZo
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDEwNSBTYWx0ZWRfX5qCsSkGpi6Qx
+ m37601IVr6TaZ1zp2qNlyRjqcQq3E8+HVZOh4kM/9Fi6cj6aToaDZhWVqgrCYBXFUfcj5zcvIBE
+ SBGzV66GpjLCdjWmapJNCm0oU7pT/PQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDEwNSBTYWx0ZWRfXwgQVn6KVJr4o
+ 8qioi/afzQNBAN3x4an9FKPPmzVDFNaIVY2uWLk0B5aVhWhgUJnklLXZ7uEl4Z+oRqTxt0FGJzM
+ ntVL/X/T75SFsOARzSTReOIge8+i+yAcHe/A33jkR+oEx+0PVc+V/L7dvug8TVVkL+k63pxTUU2
+ fvoI7jfx2DhmclxZVpvm6BlF4qAmUDijJZkr/PEayPuqjSDctHadHkbo4kiVPCAC6oAI/UM26ce
+ uBcY7+MiOufpsgVfl0d6EdNGEmZH9xHQ0TGxA6sMlA/5Wsf+VQUMGv1iRYGc9XH28J55eUwYxkp
+ vLVdgppiIkkbOCfIa3SjTYQ/0Mi8tDFjnwKlUkPp6n+5Y7JwlmDuvsWU6YBpy9NFloJ8rWerZHM
+ OlIa580CisZc5NsiA9kDsk7vmTA3bZRA8WBr72FXIvObXCckZLp2JlMkUpQ3+EMg58Po//Stgif
+ rwlUW+PljYSCbzLfciQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-19_06,2026-08-19_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 adultscore=0 spamscore=0 priorityscore=1501
- bulkscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 impostorscore=0 bulkscore=0 phishscore=0 clxscore=1015
+ spamscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200105
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,287 +125,387 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tanushree Shah <tshah@linux.ibm.com>
+From: Vishal Chourasia <Vishal.Chourasia2@ibm.com>
 
--Moving the following instructions to decodetree specification:
-            rlwimi                           : M-form
-            rlwimi.                          : M-form
-            rlwinm                           : M-form
-            rlwinm.                          : M-form
- The changes were verified by validating that the tcg ops generated by
- those instructions remain the same, which were captured with the
- "-d in_asm,op" flag.
+Moving the following instructions to decodetree specification:
+    sc, scv                         : SC-form
+    rfi, rfid, rfscv, hrfid         : XL-form
 
- Additionally, validated using small assembly tests confirming the
- destination register is correctly updated based on rotated and masked
- source values and confirmed that the value was same before and after
- the change
+This builds upon the previous work that moved mfmsr and mtmsr[d]
+instructions to decodetree.
 
-Signed-off-by: Tanushree Shah <tshah@linux.ibm.com>
-Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+The changes were verified by validating that the tcg ops generated by
+those instructions remain the same, which were captured with the
+`-d in_asm,op` flag, and also by booting a pseries qemu guest.
+
+This also includes improvements from review feedback:
+- Rename helpers to uppercase (RFI/RFID/RFSCV/HRFID) to match ISA mnemonics
+- Add TRANS64_FLAGS() macro variants
+- Add REQUIRE_INSNS_FLAGS_NOT() check for flag exclusion
+- Specify lev field as uint8_t in SC instruction format
+- Remove redundant masking in SCV since lev is already 7-bit
+- Replace TARGET_PPC64 ifdefs with REQUIRE_64BIT() macro
+- Gate SC, SCV, RFI, RFID, RFSCV, and HRFID with appropriate flags
+- Consolidate CONFIG_USER_ONLY guards into single block
+
+Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
 ---
- target/ppc/insn32.decode                   |   6 ++
- target/ppc/translate.c                     | 106 ---------------------
- target/ppc/translate/fixedpoint-impl.c.inc |  98 +++++++++++++++++++
- 3 files changed, 104 insertions(+), 106 deletions(-)
+ target/ppc/helper.h                  |   8 +-
+ target/ppc/insn32.decode             |  11 +++
+ target/ppc/tcg-excp_helper.c         |   8 +-
+ target/ppc/translate.c               | 126 ++-------------------------
+ target/ppc/translate/misc-impl.c.inc | 100 +++++++++++++++++++++
+ 5 files changed, 126 insertions(+), 127 deletions(-)
 
+diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+index 3659408c46..f24a34cfa3 100644
+--- a/target/ppc/helper.h
++++ b/target/ppc/helper.h
+@@ -11,7 +11,7 @@ DEF_HELPER_4(HASHCHKP, void, env, tl, tl, tl)
+ #if !defined(CONFIG_USER_ONLY)
+ DEF_HELPER_2(store_msr, void, env, tl)
+ DEF_HELPER_1(ppc_maybe_interrupt, void, env)
+-DEF_HELPER_1(rfi, void, env)
++DEF_HELPER_1(RFI, void, env)
+ DEF_HELPER_1(40x_rfci, void, env)
+ DEF_HELPER_1(rfci, void, env)
+ DEF_HELPER_1(rfdi, void, env)
+@@ -19,9 +19,9 @@ DEF_HELPER_1(rfmci, void, env)
+ #if defined(TARGET_PPC64)
+ DEF_HELPER_2(scv, noreturn, env, i32)
+ DEF_HELPER_2(PMINSN, void, env, i32)
+-DEF_HELPER_1(rfid, void, env)
+-DEF_HELPER_1(rfscv, void, env)
+-DEF_HELPER_1(hrfid, void, env)
++DEF_HELPER_1(RFID, void, env)
++DEF_HELPER_1(RFSCV, void, env)
++DEF_HELPER_1(HRFID, void, env)
+ DEF_HELPER_2(rfebb, void, env, tl)
+ DEF_HELPER_2(store_lpcr, void, env, tl)
+ DEF_HELPER_2(store_pcr, void, env, tl)
 diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index eed963bd71..8f027e7ff5 100644
+index 7614655f72..9d6c4b550d 100644
 --- a/target/ppc/insn32.decode
 +++ b/target/ppc/insn32.decode
-@@ -312,6 +312,9 @@
+@@ -199,6 +199,9 @@
+ &X_rs_l         rs l:bool
+ @X_rs_l         ...... rs:5 .... l:1 ..... .......... .         &X_rs_l
  
- @Z23_te_tbp     ...... ....0 te:5 ....0 rmc:2 ........ rc:1     &Z23_te_tb frt=%z23_frtp frb=%z23_frbp
- 
-+&M              ra rs sh mb me rc:bool
-+@M              ...... rs:5 ra:5 sh:5 mb:5 me:5 rc:1 &M
++&SC             lev:uint8_t
++@SC             ...... ..... ..... .... lev:7 ... . .           &SC
 +
- ### Fixed-Point Load Instructions
+ &X_uim5         xt uim:uint8_t
+ @X_uim5         ...... ..... ..... uim:5 .......... .           &X_uim5 xt=%x_xt
  
- LBZ             100010 ..... ..... ................     @D
-@@ -561,6 +564,9 @@ SRADI           011111 ..... ..... ..... 110011101 . .  @XS
+@@ -320,6 +323,14 @@ MFMSR           011111 ..... ----- ----- 0001010011 -   @X_t
+ MTMSR           011111 ..... ---- . ----- 0010010010 -  @X_rs_l
+ MTMSRD          011111 ..... ---- . ----- 0010110010 -  @X_rs_l
  
- EXTSWSLI        011111 ..... ..... ..... 110111101 . .  @XS
- 
-+RLWIMI          010100 ..... ..... ..... ..... ......   @M
-+RLWINM          010101 ..... ..... ..... ..... ......   @M
++### System Call and Return from Interrupt
++SC              010001 ----- ----- ---- ....... --- 1 -         @SC
++SCV             010001 ----- ----- ---- ....... --- 0 1         @SC
++RFI             010011 ----- ----- ----- 0000110010 -
++RFID            010011 ----- ----- ----- 0000010010 -
++RFSCV           010011 ----- ----- ----- 0001010010 -
++HRFID           010011 ----- ----- ----- 0100010010 -
 +
- ## BCD Assist
- 
- ADDG6S          011111 ..... ..... ..... - 001001010 -  @X
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 712990cf2d..d2c51b4d59 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -2012,110 +2012,6 @@ static void gen_pause(DisasContext *ctx)
- 
- /***                             Integer rotate                            ***/
- 
--/* rlwimi & rlwimi. */
--static void gen_rlwimi(DisasContext *ctx)
--{
--    TCGv t_ra = cpu_gpr[rA(ctx->opcode)];
--    TCGv t_rs = cpu_gpr[rS(ctx->opcode)];
--    uint32_t sh = SH(ctx->opcode);
--    uint32_t mb = MB(ctx->opcode);
--    uint32_t me = ME(ctx->opcode);
--
--    if (sh == (31 - me) && mb <= me) {
--        tcg_gen_deposit_tl(t_ra, t_ra, t_rs, sh, me - mb + 1);
--    } else {
--        target_ulong mask;
--        bool mask_in_32b = true;
--        TCGv t1;
--
--#if defined(TARGET_PPC64)
--        mb += 32;
--        me += 32;
--#endif
--        mask = MASK(mb, me);
--
--#if defined(TARGET_PPC64)
--        if (mask > 0xffffffffu) {
--            mask_in_32b = false;
--        }
--#endif
--        t1 = tcg_temp_new();
--        if (mask_in_32b) {
--            TCGv_i32 t0 = tcg_temp_new_i32();
--            tcg_gen_trunc_tl_i32(t0, t_rs);
--            tcg_gen_rotli_i32(t0, t0, sh);
--            tcg_gen_extu_i32_tl(t1, t0);
--        } else {
--#if defined(TARGET_PPC64)
--            tcg_gen_deposit_i64(t1, t_rs, t_rs, 32, 32);
--            tcg_gen_rotli_i64(t1, t1, sh);
--#else
--            g_assert_not_reached();
--#endif
--        }
--
--        tcg_gen_andi_tl(t1, t1, mask);
--        tcg_gen_andi_tl(t_ra, t_ra, ~mask);
--        tcg_gen_or_tl(t_ra, t_ra, t1);
--    }
--    if (unlikely(Rc(ctx->opcode) != 0)) {
--        gen_set_Rc0(ctx, t_ra);
--    }
--}
--
--/* rlwinm & rlwinm. */
--static void gen_rlwinm(DisasContext *ctx)
--{
--    TCGv t_ra = cpu_gpr[rA(ctx->opcode)];
--    TCGv t_rs = cpu_gpr[rS(ctx->opcode)];
--    int sh = SH(ctx->opcode);
--    int mb = MB(ctx->opcode);
--    int me = ME(ctx->opcode);
--    int len = me - mb + 1;
--    int rsh = (32 - sh) & 31;
--
--    if (sh != 0 && len > 0 && me == (31 - sh)) {
--        tcg_gen_deposit_z_tl(t_ra, t_rs, sh, len);
--    } else if (me == 31 && rsh + len <= 32) {
--        tcg_gen_extract_tl(t_ra, t_rs, rsh, len);
--    } else {
--        target_ulong mask;
--        bool mask_in_32b = true;
--#if defined(TARGET_PPC64)
--        mb += 32;
--        me += 32;
--#endif
--        mask = MASK(mb, me);
--#if defined(TARGET_PPC64)
--        if (mask > 0xffffffffu) {
--            mask_in_32b = false;
--        }
--#endif
--        if (mask_in_32b) {
--            if (sh == 0) {
--                tcg_gen_andi_tl(t_ra, t_rs, mask);
--            } else {
--                TCGv_i32 t0 = tcg_temp_new_i32();
--                tcg_gen_trunc_tl_i32(t0, t_rs);
--                tcg_gen_rotli_i32(t0, t0, sh);
--                tcg_gen_andi_i32(t0, t0, mask);
--                tcg_gen_extu_i32_tl(t_ra, t0);
--            }
--        } else {
--#if defined(TARGET_PPC64)
--            tcg_gen_deposit_i64(t_ra, t_rs, t_rs, 32, 32);
--            tcg_gen_rotli_i64(t_ra, t_ra, sh);
--            tcg_gen_andi_i64(t_ra, t_ra, mask);
--#else
--            g_assert_not_reached();
--#endif
--        }
--    }
--    if (unlikely(Rc(ctx->opcode) != 0)) {
--        gen_set_Rc0(ctx, t_ra);
--    }
--}
--
- /* rlwnm & rlwnm. */
- static void gen_rlwnm(DisasContext *ctx)
- {
-@@ -4807,8 +4703,6 @@ GEN_HANDLER(invalid, 0x00, 0x00, 0x00, 0xFFFFFFFF, PPC_NONE),
- GEN_HANDLER_E(copy, 0x1F, 0x06, 0x18, 0x03C00001, PPC_NONE, PPC2_ISA300),
- GEN_HANDLER_E(cp_abort, 0x1F, 0x06, 0x1A, 0x03FFF801, PPC_NONE, PPC2_ISA300),
- GEN_HANDLER_E(paste, 0x1F, 0x06, 0x1C, 0x03C00000, PPC_NONE, PPC2_ISA300),
--GEN_HANDLER(rlwimi, 0x14, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
--GEN_HANDLER(rlwinm, 0x15, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
- GEN_HANDLER(rlwnm, 0x17, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
- /* handles lfdp, lxsd, lxssp */
- GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
-diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-index 82fb645279..8fcee7a89d 100644
---- a/target/ppc/translate/fixedpoint-impl.c.inc
-+++ b/target/ppc/translate/fixedpoint-impl.c.inc
-@@ -1874,6 +1874,104 @@ static bool trans_SRAWI(DisasContext *ctx, arg_SRAWI *a)
-     return true;
+ ### Fixed-Point Byte-Reverse Instructions
+ BRW             011111 ..... ..... ----- 0010011011 -   @X_sa
+ BRD             011111 ..... ..... ----- 0010111011 -   @X_sa
+diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
+index c4ffa2dfbb..d06d3f8642 100644
+--- a/target/ppc/tcg-excp_helper.c
++++ b/target/ppc/tcg-excp_helper.c
+@@ -528,13 +528,13 @@ static void do_rfi(CPUPPCState *env, target_ulong nip, target_ulong msr)
+     check_tlb_flush(env, false);
  }
  
-+static bool trans_RLWIMI(DisasContext *ctx, arg_RLWIMI *a)
+-void helper_rfi(CPUPPCState *env)
++void helper_RFI(CPUPPCState *env)
+ {
+     do_rfi(env, env->spr[SPR_SRR0], env->spr[SPR_SRR1] & 0xfffffffful);
+ }
+ 
+ #ifdef TARGET_PPC64
+-void helper_rfid(CPUPPCState *env)
++void helper_RFID(CPUPPCState *env)
+ {
+     /*
+      * The architecture defines a number of rules for which bits can
+@@ -545,12 +545,12 @@ void helper_rfid(CPUPPCState *env)
+     do_rfi(env, env->spr[SPR_SRR0], env->spr[SPR_SRR1]);
+ }
+ 
+-void helper_rfscv(CPUPPCState *env)
++void helper_RFSCV(CPUPPCState *env)
+ {
+     do_rfi(env, env->lr, env->ctr);
+ }
+ 
+-void helper_hrfid(CPUPPCState *env)
++void helper_HRFID(CPUPPCState *env)
+ {
+     do_rfi(env, env->spr[SPR_HSRR0], env->spr[SPR_HSRR1]);
+ }
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 8950476be7..c6c87d3e33 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -2679,110 +2679,6 @@ static inline void gen_setlr(DisasContext *ctx, target_ulong nip)
+     tcg_gen_movi_tl(cpu_lr, nip);
+ }
+ 
+-/***                           System linkage                              ***/
+-
+-/* rfi (supervisor only) */
+-static void gen_rfi(DisasContext *ctx)
+-{
+-#if defined(CONFIG_USER_ONLY)
+-    GEN_PRIV(ctx);
+-#else
+-    /*
+-     * This instruction doesn't exist anymore on 64-bit server
+-     * processors compliant with arch 2.x
+-     */
+-    if (is_book3s_arch2x(ctx)) {
+-        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+-        return;
+-    }
+-    /* Restore CPU state */
+-    CHK_SV(ctx);
+-    translator_io_start(&ctx->base);
+-    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
+-    gen_helper_rfi(tcg_env);
+-    ctx->base.is_jmp = DISAS_EXIT;
+-#endif
+-}
+-
+-#if defined(TARGET_PPC64)
+-static void gen_rfid(DisasContext *ctx)
+-{
+-#if defined(CONFIG_USER_ONLY)
+-    GEN_PRIV(ctx);
+-#else
+-    /* Restore CPU state */
+-    CHK_SV(ctx);
+-    translator_io_start(&ctx->base);
+-    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
+-    gen_helper_rfid(tcg_env);
+-    ctx->base.is_jmp = DISAS_EXIT;
+-#endif
+-}
+-
+-#if !defined(CONFIG_USER_ONLY)
+-static void gen_rfscv(DisasContext *ctx)
+-{
+-#if defined(CONFIG_USER_ONLY)
+-    GEN_PRIV(ctx);
+-#else
+-    /* Restore CPU state */
+-    CHK_SV(ctx);
+-    translator_io_start(&ctx->base);
+-    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
+-    gen_helper_rfscv(tcg_env);
+-    ctx->base.is_jmp = DISAS_EXIT;
+-#endif
+-}
+-#endif
+-
+-static void gen_hrfid(DisasContext *ctx)
+-{
+-#if defined(CONFIG_USER_ONLY)
+-    GEN_PRIV(ctx);
+-#else
+-    /* Restore CPU state */
+-    CHK_HV(ctx);
+-    translator_io_start(&ctx->base);
+-    gen_helper_hrfid(tcg_env);
+-    ctx->base.is_jmp = DISAS_EXIT;
+-#endif
+-}
+-#endif
+-
+-/* sc */
+-#if defined(CONFIG_USER_ONLY)
+-#define POWERPC_SYSCALL POWERPC_EXCP_SYSCALL_USER
+-#else
+-#define POWERPC_SYSCALL POWERPC_EXCP_SYSCALL
+-#endif
+-static void gen_sc(DisasContext *ctx)
+-{
+-    uint32_t lev;
+-
+-    /*
+-     * LEV is a 7-bit field, but the top 6 bits are treated as a reserved
+-     * field (i.e., ignored). ISA v3.1 changes that to 5 bits, but that is
+-     * for Ultravisor which TCG does not support, so just ignore the top 6.
+-     */
+-    lev = (ctx->opcode >> 5) & 0x1;
+-    gen_exception_err(ctx, POWERPC_SYSCALL, lev);
+-}
+-
+-#if defined(TARGET_PPC64)
+-#if !defined(CONFIG_USER_ONLY)
+-static void gen_scv(DisasContext *ctx)
+-{
+-    uint32_t lev = (ctx->opcode >> 5) & 0x7F;
+-
+-    /* Set the PC back to the faulting instruction. */
+-    gen_update_nip(ctx, ctx->cia);
+-    gen_helper_scv(tcg_env, tcg_constant_i32(lev));
+-
+-    ctx->base.is_jmp = DISAS_NORETURN;
+-}
+-#endif
+-#endif
+-
+ /***                                Trap                                   ***/
+ 
+ /* Check for unconditional traps (always or never) */
+@@ -4125,6 +4021,13 @@ static int64_t dw_compose_ea(DisasContext *ctx, int x)
+ #define TRANS64(NAME, FUNC, ...) \
+     static bool trans_##NAME(DisasContext *ctx, arg_##NAME *a) \
+     { REQUIRE_64BIT(ctx); return FUNC(ctx, a, ##__VA_ARGS__); }
++#define TRANS64_FLAGS(FLAGS, NAME, FUNC, ...) \
++    static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++    {                                                           \
++        REQUIRE_64BIT(ctx);                                     \
++        REQUIRE_INSNS_FLAGS(ctx, FLAGS);                        \
++        return FUNC(ctx, a, ##__VA_ARGS__);                     \
++    }
+ #define TRANS64_FLAGS2(FLAGS2, NAME, FUNC, ...) \
+     static bool trans_##NAME(DisasContext *ctx, arg_##NAME *a) \
+     {                                                          \
+@@ -4542,21 +4445,6 @@ GEN_HANDLER(rlwnm, 0x17, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+ GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
+ /* handles stfdp, stxsd, stxssp */
+ GEN_HANDLER_E(dform3D, 0x3D, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
+-/* ISA v3.0 changed the extended opcode from 62 to 30 */
+-GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
+-#if defined(TARGET_PPC64)
+-GEN_HANDLER(rfid, 0x13, 0x12, 0x00, 0x03FF8001, PPC_64B),
+-#if !defined(CONFIG_USER_ONLY)
+-/* Top bit of opc2 corresponds with low bit of LEV, so use two handlers */
+-GEN_HANDLER_E(scv, 0x11, 0x10, 0xFF, 0x03FFF01E, PPC_NONE, PPC2_ISA300),
+-GEN_HANDLER_E(scv, 0x11, 0x00, 0xFF, 0x03FFF01E, PPC_NONE, PPC2_ISA300),
+-GEN_HANDLER_E(rfscv, 0x13, 0x12, 0x02, 0x03FF8001, PPC_NONE, PPC2_ISA300),
+-#endif
+-GEN_HANDLER(hrfid, 0x13, 0x12, 0x08, 0x03FF8001, PPC_64H),
+-#endif
+-/* Top bit of opc2 corresponds with low bit of LEV, so use two handlers */
+-GEN_HANDLER(sc, 0x11, 0x11, 0xFF, 0x03FFF01D, PPC_FLOW),
+-GEN_HANDLER(sc, 0x11, 0x01, 0xFF, 0x03FFF01D, PPC_FLOW),
+ GEN_HANDLER(mcrxr, 0x1F, 0x00, 0x10, 0x007FF801, PPC_MISC),
+ GEN_HANDLER(mfspr, 0x1F, 0x13, 0x0A, 0x00000001, PPC_MISC),
+ GEN_HANDLER(mftb, 0x1F, 0x13, 0x0B, 0x00000001, PPC_MFTB),
+diff --git a/target/ppc/translate/misc-impl.c.inc b/target/ppc/translate/misc-impl.c.inc
+index 54712f9b73..05757e8190 100644
+--- a/target/ppc/translate/misc-impl.c.inc
++++ b/target/ppc/translate/misc-impl.c.inc
+@@ -225,3 +225,103 @@ static bool do_mtmsr(DisasContext *ctx, arg_X_rs_l *a, bool is_mtmsrd)
+ 
+ TRANS_FLAGS(MISC, MTMSR, do_mtmsr, false)
+ TRANS64(MTMSRD, do_mtmsr, true)
++
++/*
++ * System Call and Return from Interrupt Instructions
++ */
++
++static bool do_SC(DisasContext *ctx, arg_SC * a, uint32_t excp)
 +{
-+    TCGv t_ra = cpu_gpr[a->ra];
-+    TCGv t_rs = cpu_gpr[a->rs];
++    uint32_t lev;
 +
-+    if (a->sh == (31 - a->me) && a->mb <= a->me) {
-+        tcg_gen_deposit_tl(t_ra, t_ra, t_rs, a->sh, a->me - a->mb + 1);
-+    } else {
-+        target_ulong mask;
-+        bool mask_in_32b = true;
-+        TCGv t1;
-+
-+#if defined(TARGET_PPC64)
-+        a->mb += 32;
-+        a->me += 32;
-+#endif
-+        mask = MASK((uint32_t)a->mb, (uint32_t)a->me);
-+
-+#if defined(TARGET_PPC64)
-+        if (mask > 0xffffffffu) {
-+            mask_in_32b = false;
-+        }
-+#endif
-+        t1 = tcg_temp_new();
-+        if (mask_in_32b) {
-+            TCGv_i32 t0 = tcg_temp_new_i32();
-+            tcg_gen_trunc_tl_i32(t0, t_rs);
-+            tcg_gen_rotli_i32(t0, t0, a->sh);
-+            tcg_gen_extu_i32_tl(t1, t0);
-+        } else {
-+#if defined(TARGET_PPC64)
-+            tcg_gen_deposit_i64(t1, t_rs, t_rs, 32, 32);
-+            tcg_gen_rotli_i64(t1, t1, a->sh);
-+#else
-+            g_assert_not_reached();
-+#endif
-+        }
-+
-+        tcg_gen_andi_tl(t1, t1, mask);
-+        tcg_gen_andi_tl(t_ra, t_ra, ~mask);
-+        tcg_gen_or_tl(t_ra, t_ra, t1);
-+    }
-+    if (unlikely(a->rc)) {
-+        gen_set_Rc0(ctx, t_ra);
-+    }
++    /*
++     * LEV is a 7-bit field, but the top 6 bits are treated as a reserved
++     * field (i.e., ignored). ISA v3.1 changes that to 5 bits, but that is
++     * for Ultravisor which TCG does not support, so just ignore the top 6.
++     */
++    lev = a->lev & 0x1;
++    gen_exception_err(ctx, excp, lev);
 +    return true;
 +}
 +
-+static bool trans_RLWINM(DisasContext *ctx, arg_RLWINM *a)
++static bool do_SCV(DisasContext *ctx, arg_SC *a)
 +{
-+    TCGv t_ra = cpu_gpr[a->ra];
-+    TCGv t_rs = cpu_gpr[a->rs];
-+    int len = a->me - a->mb + 1;
-+    int rsh = (32 - a->sh) & 31;
++#if defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY)
++    /* Set the PC back to the faulting instruction. */
++    gen_update_nip(ctx, ctx->cia);
++    gen_helper_scv(tcg_env, tcg_constant_i32(a->lev));
 +
-+    if (a->sh != 0 && len > 0 && a->me == (31 - a->sh)) {
-+        tcg_gen_deposit_z_tl(t_ra, t_rs, a->sh, len);
-+    } else if (a->me == 31 && rsh + len <= 32) {
-+        tcg_gen_extract_tl(t_ra, t_rs, rsh, len);
-+    } else {
-+        target_ulong mask;
-+        bool mask_in_32b = true;
-+#if defined(TARGET_PPC64)
-+        a->mb += 32;
-+        a->me += 32;
-+#endif
-+        mask = MASK(a->mb, a->me);
-+#if defined(TARGET_PPC64)
-+        if (mask > 0xffffffffu) {
-+            mask_in_32b = false;
-+        }
-+#endif
-+        if (mask_in_32b) {
-+            if (a->sh == 0) {
-+                tcg_gen_andi_tl(t_ra, t_rs, mask);
-+            } else {
-+                TCGv_i32 t0 = tcg_temp_new_i32();
-+                tcg_gen_trunc_tl_i32(t0, t_rs);
-+                tcg_gen_rotli_i32(t0, t0, a->sh);
-+                tcg_gen_andi_i32(t0, t0, mask);
-+                tcg_gen_extu_i32_tl(t_ra, t0);
-+            }
-+        } else {
-+#if defined(TARGET_PPC64)
-+            tcg_gen_deposit_i64(t_ra, t_rs, t_rs, 32, 32);
-+            tcg_gen_rotli_i64(t_ra, t_ra, a->sh);
-+            tcg_gen_andi_i64(t_ra, t_ra, mask);
-+#else
-+            g_assert_not_reached();
-+#endif
-+        }
-+    }
-+    if (unlikely(a->rc)) {
-+        gen_set_Rc0(ctx, t_ra);
-+    }
++    ctx->base.is_jmp = DISAS_NORETURN;
 +    return true;
++#else
++    gen_invalid(ctx);
++    return true;
++#endif
 +}
 +
- static void do_fetch_inc_conditional(DisasContext *ctx, MemOp memop,
-                                      TCGv EA, int rt,
-                                      TCGCond cond, int addend)
++/*
++ * Common helper for return-from-interrupt instructions
++ */
++enum {
++    RFI = 0,
++    RFID = 1,
++    HRFID = 2,
++    RFSCV = 3,
++};
++
++static bool do_rfi(DisasContext *ctx, arg_RFID *a, int kind)
++{
++#if defined(CONFIG_USER_ONLY)
++    gen_priv_opc(ctx);
++    return true;
++#else
++    void (*helper)(TCGv_ptr);
++
++    switch (kind) {
++    case RFI:
++        if (is_book3s_arch2x(ctx)) {
++            gen_invalid(ctx);
++            return true;
++        }
++        REQUIRE_SV(ctx);
++        helper = gen_helper_RFI;
++        break;
++#if defined(TARGET_PPC64)
++    case HRFID:
++        REQUIRE_HV(ctx);
++        helper = gen_helper_HRFID;
++        break;
++    case RFID:
++        REQUIRE_SV(ctx);
++        helper = gen_helper_RFID;
++        break;
++    case RFSCV:
++        REQUIRE_SV(ctx);
++        helper = gen_helper_RFSCV;
++        break;
++#endif
++    default:
++        gen_invalid(ctx);
++        return true;
++    }
++
++    translator_io_start(&ctx->base);
++    gen_update_branch_history(ctx, ctx->cia, NULL, BHRB_TYPE_NORECORD);
++    helper(tcg_env);
++    ctx->base.is_jmp = DISAS_EXIT;
++    return true;
++#endif
++}
++
++#if defined(CONFIG_USER_ONLY)
++TRANS_FLAGS(FLOW, SC, do_SC, POWERPC_EXCP_SYSCALL_USER)
++#else
++TRANS_FLAGS(FLOW, SC, do_SC, POWERPC_EXCP_SYSCALL)
++#endif
++
++TRANS64_FLAGS2(ISA300, SCV, do_SCV)
++
++TRANS_FLAGS(FLOW, RFI, do_rfi, RFI)
++TRANS64(RFID, do_rfi, RFID)
++TRANS64_FLAGS(64H, HRFID, do_rfi, HRFID)
++TRANS64_FLAGS2(ISA300, RFSCV, do_rfi, RFSCV)
 -- 
 2.55.0
 
