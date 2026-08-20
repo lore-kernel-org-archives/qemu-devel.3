@@ -4,116 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 542B2C5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 15:16:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C407C5DF85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 15:18:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx4UW-00058B-44; Thu, 20 Aug 2026 11:15:40 -0400
+	id 1wx4WY-0005xq-1r; Thu, 20 Aug 2026 11:17:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wx4UU-00057o-AU; Thu, 20 Aug 2026 11:15:38 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wx4UR-0001YP-Vr; Thu, 20 Aug 2026 11:15:38 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67KEVcuB872847; Thu, 20 Aug 2026 15:15:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=Khb7LBZTbyFdCyu9OBEEy1qUAuaErRxTbV+mcRPswmQ=; b=SLod8TynYHZ+
- +3r3vz8v5yj+3n0TeQ26EuLk8q19CULXPxpF9R+PmjtHrDnAdh9LvjyeoOAQTYj1
- +UjFlSCGLJ4ILg47/J/XuJHyR/4PblMgrgA/EBpLl4G1GQVLESZDkam8ZdKGlc4S
- gc/6lBzu4veKoCmS9QbLFquCvRh6Y/yuBzupLk3Dw3yYtMUxOQEKNPYRv8t3yylZ
- s8jYgVv9Ehhi43TzwCFHoBarKGJnUNc+k4kNkcBFKwCXpLffC/jua6H7RNmAfBWk
- 4pEK6hMa8Nrk+ENlX3POXzKdvjnAXiX9GcxbKZGbWkPfyn2XtjjQzpA3/2GY5YMT
- k3rwI7I6qg==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu0b63a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Aug 2026 15:15:31 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67KFBOhh016032;
- Thu, 20 Aug 2026 15:15:30 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g354ypyp9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Aug 2026 15:15:30 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67KFFRgD60752324
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 20 Aug 2026 15:15:27 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8CAAF58059;
- Thu, 20 Aug 2026 15:15:27 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BA87058043;
- Thu, 20 Aug 2026 15:15:26 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 20 Aug 2026 15:15:26 +0000 (GMT)
-Message-ID: <3fea696f5ee62656ecca7aa72118da1d458a6018.camel@linux.ibm.com>
-Subject: Re: [PATCH 19/29] target/ppc: Refactor sleep and its variants to
- use a common helper
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, harshpb@linux.ibm.com
-Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
- tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com,
- aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, sv@linux.ibm.com,
- shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
- nikhilks@linux.ibm.com
-Date: Thu, 20 Aug 2026 10:15:26 -0500
-In-Reply-To: <20260820140114.327023-20-rathc@linux.ibm.com>
-References: <20260820140114.327023-1-rathc@linux.ibm.com>
- <20260820140114.327023-20-rathc@linux.ibm.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
+ (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wx4WW-0005xP-Fd
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 11:17:44 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wx4WU-00027i-Ki
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 11:17:44 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-480033bdcf4so6612f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 08:17:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=suse.com; s=google; t=1787239060; x=1787843860; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=Rl5QcO73K5cmGbV3jP4c1s1CL404p5yxt0emdniJZis=;
+ b=LAww2ITww9Ex2eaM5cL209VeK4oa+9+aqsqh+KVs68bRqlqacX5ryvxZSCkMldiRFF
+ ebXXaVtnoPZPMeCV8aXlAfj4OCcHzm+SmoCn6kSiBttQ8htAZnVPrJ+i26koGal5M4WL
+ mm7RBxGrqXNdGrcRWHG8eW2rabNJ5+GoCIwe8D98VxehOdLUyHH7pfJXB6VJKTU8zUvn
+ WKy53+/il4bPvyZPPe6KeUoX8QdvO2WbwmDKubISBr2k2M056lu84MuOQBPOmwPUEF6M
+ Ceq0+FrVHDeqIrXx/CNoVqsq8S/aQy85kyGE24ego4vNeNFdL4faQUz3y7hFScdd10It
+ G39w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787239060; x=1787843860;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Rl5QcO73K5cmGbV3jP4c1s1CL404p5yxt0emdniJZis=;
+ b=bjuBN4eynQoRHI+qhGm45SxWnwRFRp2xWlK0ukDhMyBNkrT4Up7CVrB+gJyMNECx5d
+ xPIWg7OHFDBM1FWL9Yzoma3PAA+dET4I9D5qII8OBbmj1XLPJW1edqptF/sU4IVhgcRm
+ YWi0d6PU7PEwkDr5QPYqML4c/yESezcKL5EOkOgS9xqvDZsIpmyCCurIAKzW2afvGKgw
+ PK19ujM58hxdt4xMCGkBCyV0xbj4S7WiYBuCV4pgC9n/VotufA5QFk3mdiLpIt5hMjky
+ +8UeZLeGOJyJIMGEtrDvePzlXceEwPKctFoLJYf8kixh6i33MOMMAlc6Rb6igNDhoUJP
+ aPEw==
+X-Gm-Message-State: AOJu0YzQ16ZnwpEYpZ+kkcLumrmc7nA6ZZx40r9fSSNIyiVJe91yRHab
+ 7BKQJayxS/0BOgejG/v9To21w3BVULy/v2sgVR4i8+aQFCNnQUdJ+lkL+1nZR6PQDg==
+X-Gm-Gg: AR+sD10lG5mrxnHTpDkX8DAu52WkEGLvv1EGvsHSuKJBhrI8th7tsIk3oGOXrdo0QIH
+ moARLUZh04EalMATDyZ5aSCusdmnLhG58iFEM6sZJXbLKCiqhTR9kxOZzesFyZs7BOryZ6LaoGL
+ GsdJugMeGRghEecLdMu8wQZ9gS6QR8ZKpjj/32YDcIknmdNIojq3hDkG+iulEWyngOWURocTfCa
+ h9hIjmv2I2etoDzhi7lxA44ms7AIldchF6KlAABYtEFlnWSQm03sq7ZvwjXu2ywE2hjTDWr2qVF
+ z7gWN+BGpJWEFKeSnjQsG0j/ppQlvyeZUKX9MzeZeNwdHUI+0rw038wHRCsX1G3K9ClqO2+BUmZ
+ ibI+Qo8wanbp8cH3i5+/jV1YPFy3n11fp4E65czIF78LLwU+3c+jqFUFBbWhVXm/X6Ur5VDaaPe
+ NldK9EjxA5NxhQQYMxOQYJJI6yFjKI6o47h9fVaZaWFZvXMu54+Hb4NiLkwO3uejOuKvJxImvu+
+ dzKumgR6e5A/IGIfGm2nWZ/qdWM/mr+kK59YkiAAoy3R/AfCQQF
+X-Received: by 2002:a05:600c:1908:b0:499:5210:c537 with SMTP id
+ 5b1f17b1804b1-499aa17d6d8mr215467635e9.1.1787239060097; 
+ Thu, 20 Aug 2026 08:17:40 -0700 (PDT)
+Received: from [10.156.60.236] (ip-037-024-206-209.um08.pools.vodafone-ip.de.
+ [37.24.206.209]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-499aa1755b2sm150805015e9.11.2026.08.20.08.17.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Aug 2026 08:17:39 -0700 (PDT)
+Message-ID: <42521391-885c-4b96-96e9-5da2e4b5efa1@suse.com>
+Date: Thu, 20 Aug 2026 17:17:38 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
+ support
+To: Chuck Zmudzinski <brchuckz@aol.com>
+Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
+ Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
+ xen-devel <xen-devel@lists.xenproject.org>
+References: <20260802050824.10554-1-brchuckz.ref@aol.com>
+ <67579eba-e222-41dd-84bf-8440d2eaf2a9@netscape.net>
+ <da2200cd-def7-4cce-a6c2-9f9ac9e202ce@suse.com>
+ <de56c8bd-f0e8-4fe9-8cf5-f6807698176c@aol.com>
+ <02a7dc18-4184-4e86-84cb-121769187f71@suse.com>
+ <1858e8e6-73fa-4017-93e2-c733fbf0ec8d@aol.com>
+ <d6e603bf-8dc5-4ac7-842f-ff9d1f67b98f@suse.com>
+ <fdec0b6b-eddf-4a36-a755-c67963daa9ea@aol.com>
+ <6ecf80ef-2f0e-44fb-beab-dbcf065a4431@suse.com>
+ <bb44067c-6739-4e83-a0fd-cc7ea797048f@aol.com>
+ <4c58bda6-e9ed-438d-b96e-feda74a6c4c7@suse.com>
+ <31a5870f-2a4d-4dc0-af9c-f0567e0f6fb3@aol.com>
+ <db8fd04d-bbc7-41c7-8473-b821d7f77d5f@aol.com>
+ <302ed12f-40ca-405c-80ca-ac4f2785d754@suse.com>
+ <cdae1785-4d9a-4aab-929e-de55c26b7b94@aol.com>
+ <10cd9f6b-678b-407b-a51e-70e9ed7a35fd@aol.com>
+ <131b1252-b108-4b4c-8457-673ff0d20d5e@suse.com>
+ <b14969c8-9676-404e-b7cc-ce13a6d7ff94@aol.com>
+ <92022f85-9a53-4db8-b489-fc91c86b413c@suse.com>
+ <fa497825-c8f0-4caf-94f5-b37108e31952@aol.com>
+Content-Language: en-US
+From: Jan Beulich <jbeulich@suse.com>
+Autocrypt: addr=jbeulich@suse.com; keydata=
+ xsDiBFk3nEQRBADAEaSw6zC/EJkiwGPXbWtPxl2xCdSoeepS07jW8UgcHNurfHvUzogEq5xk
+ hu507c3BarVjyWCJOylMNR98Yd8VqD9UfmX0Hb8/BrA+Hl6/DB/eqGptrf4BSRwcZQM32aZK
+ 7Pj2XbGWIUrZrd70x1eAP9QE3P79Y2oLrsCgbZJfEwCgvz9JjGmQqQkRiTVzlZVCJYcyGGsD
+ /0tbFCzD2h20ahe8rC1gbb3K3qk+LpBtvjBu1RY9drYk0NymiGbJWZgab6t1jM7sk2vuf0Py
+ O9Hf9XBmK0uE9IgMaiCpc32XV9oASz6UJebwkX+zF2jG5I1BfnO9g7KlotcA/v5ClMjgo6Gl
+ MDY4HxoSRu3i1cqqSDtVlt+AOVBJBACrZcnHAUSuCXBPy0jOlBhxPqRWv6ND4c9PH1xjQ3NP
+ nxJuMBS8rnNg22uyfAgmBKNLpLgAGVRMZGaGoJObGf72s6TeIqKJo/LtggAS9qAUiuKVnygo
+ 3wjfkS9A3DRO+SpU7JqWdsveeIQyeyEJ/8PTowmSQLakF+3fote9ybzd880fSmFuIEJldWxp
+ Y2ggPGpiZXVsaWNoQHN1c2UuY29tPsJgBBMRAgAgBQJZN5xEAhsDBgsJCAcDAgQVAggDBBYC
+ AwECHgECF4AACgkQoDSui/t3IH4J+wCfQ5jHdEjCRHj23O/5ttg9r9OIruwAn3103WUITZee
+ e7Sbg12UgcQ5lv7SzsFNBFk3nEQQCACCuTjCjFOUdi5Nm244F+78kLghRcin/awv+IrTcIWF
+ hUpSs1Y91iQQ7KItirz5uwCPlwejSJDQJLIS+QtJHaXDXeV6NI0Uef1hP20+y8qydDiVkv6l
+ IreXjTb7DvksRgJNvCkWtYnlS3mYvQ9NzS9PhyALWbXnH6sIJd2O9lKS1Mrfq+y0IXCP10eS
+ FFGg+Av3IQeFatkJAyju0PPthyTqxSI4lZYuJVPknzgaeuJv/2NccrPvmeDg6Coe7ZIeQ8Yj
+ t0ARxu2xytAkkLCel1Lz1WLmwLstV30g80nkgZf/wr+/BXJW/oIvRlonUkxv+IbBM3dX2OV8
+ AmRv1ySWPTP7AAMFB/9PQK/VtlNUJvg8GXj9ootzrteGfVZVVT4XBJkfwBcpC/XcPzldjv+3
+ HYudvpdNK3lLujXeA5fLOH+Z/G9WBc5pFVSMocI71I8bT8lIAzreg0WvkWg5V2WZsUMlnDL9
+ mpwIGFhlbM3gfDMs7MPMu8YQRFVdUvtSpaAs8OFfGQ0ia3LGZcjA6Ik2+xcqscEJzNH+qh8V
+ m5jjp28yZgaqTaRbg3M/+MTbMpicpZuqF4rnB0AQD12/3BNWDR6bmh+EkYSMcEIpQmBM51qM
+ EKYTQGybRCjpnKHGOxG0rfFY1085mBDZCH5Kx0cl0HVJuQKC+dV2ZY5AqjcKwAxpE75MLFkr
+ wkkEGBECAAkFAlk3nEQCGwwACgkQoDSui/t3IH7nnwCfcJWUDUFKdCsBH/E5d+0ZnMQi+G0A
+ nAuWpQkjM1ASeQwSHEeAWPgskBQL
+In-Reply-To: <fa497825-c8f0-4caf-94f5-b37108e31952@aol.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: hDwpIgEuz9eyq92ASyGTyk3QoJ5L8894
-X-Proofpoint-GUID: 22FPQrIgsj9H0w1KLwN-OfAlid_-WbBV
-X-Authority-Analysis: v=2.4 cv=RoX16imK c=1 sm=1 tr=0 ts=6a871a13 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=dLj45EQrh4wMIXV6K7IA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDExMyBTYWx0ZWRfX5m2Y+xPrI2dz
- 8QAx51ekc5+BpBmINpZ/ynktf9ReFeOzMh0dBBrzSyrSddftQehXq/O964y1P6+uuly9UQ7MZvn
- f6fE+5M8wLkvrevM+ryJNU+7pHMVKNo=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDExMyBTYWx0ZWRfX0XCQNg9PEvBV
- UK3OQte+2kVszbjOJjXA8OpBubGSgUfsJzfQJAMYD556D0W3IsNP2VlY62LcX+OIYB2xxqhmQy6
- 2PiHXW8cyA4SOSNDUtSEFix5nUcKRljSGrGpvgeZ/pF0hKaoupl1fIlECjXQgUPfnqK0y1f5EBS
- Z7dQ0u/BM/Ujq4+0WXaqVr0cSmBcr7GiSCIbSGskaJOuN76OH6jFeNer6bDFCN/kzKwhXmkmFa3
- jIE9dsycsEi230vbMKN0f3QlwPDEsFzcVJRw12XGcu14f48J0mpaP2Db2elKYlj9qm/SNHeswu4
- MZ6By+jxaPPL8VJN/lDFCpRQJwqmYAK/AC3/HqQ2OkW4/DXo+VqWy+18F4G8iO0cwwAF/Vj+QLV
- AdsWj4Ab/u1uV92Ws+ElE1eVP+vWb9qw1iwH42A3lwDBRjtOQauvZxE9IjwE5a0Dn1DtH/es71L
- FjLaK/6L0WgyewaQe1A==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-19_06,2026-08-20_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 suspectscore=0 malwarescore=0 adultscore=0
- clxscore=1015 phishscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200113
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=jbeulich@suse.com; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,184 +144,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Chinmay,
-
-This commit seems out of the scope of moving instructions to
-decodetree.  Was this change necessary in order to move the
-instructions to decodetree?  If so, it would be helpful to add that to
-the commit message.  Otherwise, I would submit this separately from the
-decodetree commits.
-
-Thanks,
-
-Glenn
-
-On Thu, 2026-08-20 at 19:30 +0530, Chinmay Rath wrote:
-> From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+On 20.08.2026 13:47, Chuck Zmudzinski wrote:
+> On 8/20/2026 3:51 AM, Jan Beulich wrote:
+>> On 19.08.2026 19:13, Chuck Zmudzinski wrote:
+>>> On 8/19/2026 9:51 AM, Jan Beulich wrote:
+>>>> On 19.08.2026 14:36, Chuck Zmudzinski wrote:
+>>>>> On 8/19/2026 8:16 AM, Chuck Zmudzinski wrote:
+>>>>>> Yes, I agree that v3 of the patch to hvmloader should presume that the DM can get
+>>>>>> a copy of the OpRegion and read its contents so most of this can be done in the
+>>>>>> DM instead of in hvmloader. So from hvmloader's perspective, the patch will be more
+>>>>>> about avoiding the layering violation than anything else.
+>>>>>
+>>>>> However, there is one advantage, from the viewpoint of the Xen virtualization platform
+>>>>> as a whole, to do the patching of the OpRegion in hvmloader instead of in the DM.
+>>>>>
+>>>>> If we patch the OpRegion in hvmloader as v2 of this patch does, we provide a common
+>>>>> solution for extended VBT support for Intel IGD devices that would be compatible with
+>>>>> all DM implementations, not just with Qemu. So why not do the patching of the OpRegion
+>>>>> in hvmloader?
+>>>>
+>>>> As indicated before: If the OpRegion holds data that is needed to drive the
+>>>> device, and if the OpRegion is exposed writable to guests, then guest can
+>>>> screw up that data such that subsequent guests won't work anymore. Hence
+>>>> exposing to guests (which includes hvmloader) needs to be stopped, or at
+>>>> least be limited to r/o. That, in fact, includes exposing to any privilege-
+>>>> restricted DM as well.
+>>>>
+>>>> Exposing r/o may be entirely okay (i.e. may not be a layering violation),
+>>>> depending how exactly an OpRegion surfaces for a device (on the host). Aiui
+>>>> it's not addressed by any of the BARs, yet it looks like it needs similar
+>>>> treatment.
+>>>
+>>> Yes, the OpRegion is not one of the BARs as specified by the PCI specs, but
+>>> it functions more or less like a BAR region with the devices's ASLS register
+>>> at offset 0xfc in the PCI device config space of the device acting like the
+>>> BAR for that region.
+>>
+>> That is, on real hardware a write to that register moves the OpRegion? That
+>> would need following by the DM then, i.e. the DM would need to indicate the
+>> original position in the register, and the guest (incl hvmloader) would
+>> then be free to relocate it.
 > 
-> Refactor sleep, doze, nap, rvwinkle and stop to use a common helper
-> since they share majority of the code. Also refactor gen_hlper_pminsn()
-> to gen_helper_PMINSN()
-> 
-> Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->  target/ppc/helper.h                           |  2 +-
->  target/ppc/tcg-excp_helper.c                  |  2 +-
->  .../ppc/translate/processor-ctrl-impl.c.inc   | 99 +++----------------
->  3 files changed, 16 insertions(+), 87 deletions(-)
-> 
-> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-> index cd2a0948a3..7e15676122 100644
-> --- a/target/ppc/helper.h
-> +++ b/target/ppc/helper.h
-> @@ -18,7 +18,7 @@ DEF_HELPER_1(rfdi, void, env)
->  DEF_HELPER_1(rfmci, void, env)
->  #if defined(TARGET_PPC64)
->  DEF_HELPER_2(scv, noreturn, env, i32)
-> -DEF_HELPER_2(pminsn, void, env, i32)
-> +DEF_HELPER_2(PMINSN, void, env, i32)
->  DEF_HELPER_1(rfid, void, env)
->  DEF_HELPER_1(rfscv, void, env)
->  DEF_HELPER_1(hrfid, void, env)
-> diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-> index b04f07a637..c4ffa2dfbb 100644
-> --- a/target/ppc/tcg-excp_helper.c
-> +++ b/target/ppc/tcg-excp_helper.c
-> @@ -459,7 +459,7 @@ void helper_scv(CPUPPCState *env, uint32_t lev)
->      }
->  }
->  
-> -void helper_pminsn(CPUPPCState *env, uint32_t insn)
-> +void helper_PMINSN(CPUPPCState *env, uint32_t insn)
->  {
->      CPUState *cs = env_cpu(env);
->  
-> diff --git a/target/ppc/translate/processor-ctrl-impl.c.inc b/target/ppc/translate/processor-ctrl-impl.c.inc
-> index bdbc195294..3b3ed3019a 100644
-> --- a/target/ppc/translate/processor-ctrl-impl.c.inc
-> +++ b/target/ppc/translate/processor-ctrl-impl.c.inc
-> @@ -104,103 +104,32 @@ static bool trans_MSGSYNC(DisasContext *ctx, arg_MSGSYNC *a)
->      return true;
->  }
->  
-> -static bool do_doze(DisasContext *ctx, arg_DOZE *a)
-> -{
-> -    REQUIRE_64BIT(ctx);
-> -
-> -#if defined(CONFIG_USER_ONLY)
-> -    gen_priv_opc(ctx);
-> -#else
-> -    TCGv_i32 t;
-> -
-> -    REQUIRE_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_DOZE);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -
-> -    return true;
-> -}
-> -TRANS_FLAGS2(PM_ISA206, DOZE, do_doze);
-> -
-> -static bool do_nap(DisasContext *ctx, arg_NAP *a)
-> -{
-> -    REQUIRE_64BIT(ctx);
-> -
-> -#if defined(CONFIG_USER_ONLY)
-> -    gen_priv_opc(ctx);
-> -#else
-> -    TCGv_i32 t;
-> -
-> -    REQUIRE_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_NAP);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -    return true;
-> -}
-> -TRANS_FLAGS2(PM_ISA206, NAP, do_nap);
-> -
-> -static bool do_sleep(DisasContext *ctx, arg_SLEEP *a)
-> -{
-> -    REQUIRE_64BIT(ctx);
-> -
-> -#if defined(CONFIG_USER_ONLY)
-> -    gen_priv_opc(ctx);
-> -#else
-> -    TCGv_i32 t;
-> -
-> -    REQUIRE_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_SLEEP);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -    return true;
-> -}
-> -TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep);
-> -
-> -static bool do_rvwinkle(DisasContext *ctx, arg_RVWINKLE *a)
-> +/*
-> + * Helper to handle DOZE, NAP, SLEEP, RVWINKLE & STOP. Since none of them use
-> + * any arguments just use a placeholder arg_SLEEP.
-> + */
-> +static bool do_sleep(DisasContext *ctx, arg_SLEEP *a, powerpc_pm_insn_t type)
->  {
->      REQUIRE_64BIT(ctx);
->  
->  #if defined(CONFIG_USER_ONLY)
->      gen_priv_opc(ctx);
-> -#else
-> +#elif defined(TARGET_PPC64)
->      TCGv_i32 t;
->  
->      REQUIRE_HV(ctx);
->      translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_RVWINKLE);
-> -    gen_helper_pminsn(tcg_env, t);
-> +    t = tcg_constant_i32(type);
-> +    gen_helper_PMINSN(tcg_env, t);
->      /* Stop translation, as the CPU is supposed to sleep from now */
->      gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -    return true;
-> -}
-> -TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_rvwinkle);
-> -
-> -static bool do_stop(DisasContext *ctx, arg_STOP *a)
-> -{
-> -    REQUIRE_64BIT(ctx);
-> -
-> -#if defined(CONFIG_USER_ONLY)
-> -    gen_priv_opc(ctx);
->  #else
-> -    TCGv_i32 t;
-> -
-> -    REQUIRE_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_STOP);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> +    qemu_build_not_reached();
->  #endif
->      return true;
->  }
-> -TRANS_FLAGS2(ISA300, STOP, do_stop);
-> +TRANS_FLAGS2(PM_ISA206, DOZE, do_sleep, PPC_PM_DOZE);
-> +TRANS_FLAGS2(PM_ISA206, NAP, do_sleep, PPC_PM_NAP);
-> +TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep, PPC_PM_SLEEP);
-> +TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_sleep, PPC_PM_RVWINKLE);
-> +TRANS_FLAGS2(ISA300, STOP, do_sleep, PPC_PM_STOP);
+> Why would that "need following by the DM" when the register in the guest is
+> fully emulated, [1] which means that when the guest (incl hvmloader) writes to the
+> register, the register on the real hardware is not touched, nor is the OpRegion
+> in the host address space moved?
 
+You said it's BAR-like. If the guest writes to a BAR, the referenced MMIO
+region moves accordingly.
+
+> Here is how I understand how this works in the current implementation and how
+> this should be done:
+
+I'm sorry, but this is getting out of hand, at least as far as I'm concerned.
+I've been trying to help, but even just reading your replies has already been
+taking way more time than I would have wanted to spend here.
+
+Jan
 
