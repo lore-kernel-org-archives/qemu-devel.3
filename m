@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9496DC5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE16BC5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:57:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwtmD-0007lA-Q6; Wed, 19 Aug 2026 23:49:13 -0400
+	id 1wwtlS-0006nz-6u; Wed, 19 Aug 2026 23:48:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtm5-0007Zb-RZ
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:49:06 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1wwtlQ-0006kK-JC
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:48:24 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtm4-0004TI-6a
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:49:05 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-38ea87caafeso1504415a91.3
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:49:03 -0700 (PDT)
+ id 1wwtlP-0004Op-7E
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:48:24 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-38f620399a0so1519963a91.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:48:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787197743; x=1787802543; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787197702; x=1787802502; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=v1HHSGb013dDgNPZxkNVb6ZLlCJeWWRoZwdE2wte10s=;
- b=OdaH7noCcHyFaGp1i0FyyAkvaRrMx8+ChhAnDDbI1lH56EYmRm6nb96CglvdChnkws
- yllpRiPV4uiCIhM8iBhgusBmOAXed9dTBDk5WwAtr7r9mI2Odqvl8crhyZ2JJ1eD8OWC
- kG0oWyEvzFak2oMJvAeNpXZt3dAM3/CGrolWPZ7RQWJl7C71pmnO6Y1xPr68Ht6ty9jf
- f+hR5EnAu2J6mnzA+xYV70nb2s7Zh/W/t8GM7BQ0ZRz1xKKOcrD07CxxOsMBg9gDmofo
- GPbT1M7SPCpqtuRkcfnjG/mdnFyZXBZLQfe2H5a8EuDEETQBNkcbaptxMJW5M6XRyukT
- TadA==
+ bh=oZV9gDbx+A65MEMcmH9Ce0cuAUaddw6IKp5G5U1reZI=;
+ b=aEzMW5rJylZtcGkz9i/vjl8jsiFO9MMoWhtiVKrX8i/drtpk9qtGh3aKxq1v/twHVr
+ HCgsd403U0QON072VGqvFZ7FqqfNb7Nf2zHrc2vMdplSgEIVw/dN8xvaL9Rblso6Pw4n
+ TrpOTtyJcsxVUhFdSe+LwNZL8/bTmGtsKUH/BdIRELBMarx18a9siVxSofTAL+Lkuvg4
+ dD239440tNG+tvj0xG/H8gHhtME2JGPMEk4aY6xmYyWWhwMhJClqsOIK0ovooMU/hIiy
+ Z8FGCED/CG+6iX4XlubaKW8yDU/TesrFC2FnBRx2QOmyf9NOw9EfYS3K0Ol3AVM19Ib9
+ JAgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787197743; x=1787802543;
+ d=1e100.net; s=20251104; t=1787197702; x=1787802502;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=v1HHSGb013dDgNPZxkNVb6ZLlCJeWWRoZwdE2wte10s=;
- b=X1bTAQCxGdQ1Mb0OJtYpbYmiKh7XHeNCnm0qYEKc26BiK4Lcy11DZFMB2MZI2IUet7
- LSIPZtHj0gFJJO7/6mhtxlyDsPRMYkgcSAllYbrx+dWQ+fu1uWMgalweLXS4Q4NtZ7sq
- FrmjOteptaofaIspLASthZXniTmAyvL/mYM+lHUhFFYC3fSpIKhwiRwEtcldDyY/qEGO
- a7nl+swcL8LZB41MIaUgj3kBsS5joMtqFDc4nlTxjGVxYXD2bhxW4XlSobD5gZa5LKUO
- xYa+knOgLbQ7MhBk7rNW+ZJgTJtiC3nKPbtaH7m3YCD8elAeX7VQB03T8WO5C+rLI8H8
- XZ4A==
-X-Gm-Message-State: AFuF++n6m5drFtGmXOSAOXFks7yizSqRqucPL5+waoDmEHxv339quDnI
- A7tWtTbYu48VBiO8zGq0gDbvohu3Co3Z3oRMD9dlDB8jzQBKnOmnTy+u1X9TYA==
-X-Gm-Gg: AR+sD10pMEqEy9Jayf18/FT2lxZBLWpInK2xP+cNS9wdKE1/xqQtgiPTfwfDQG4+s+H
- nnf31288yoKeFekVJKQtJM73WEneq/572cbfdFvLy8/CbXnJ6b18R/Y6StzuzVX68pz3Wqm1Y2a
- Aliyh4iUUpx+vHTNiU/yIe8LjzvRxa9QJUmv2UrWRKaEgmpR6uzuJydH/ein3GGmxMoksbS3dtP
- cCE5Ei5yattmDCM2AIzfyb00aewBMRxuO/Pu66iRqT23EMyFFgVqwzvItPEiSFTPyf4ms+hir+q
- bARPKXYAFQZ/59x2WMvIb5HRyt/K3k3PYkQodXd9ggzkUjm6NEEbivAnI3g4BFl1g+4cg98tFCT
- iqBgrFNftEVLZKaVZ7upLkFC9yR/7ZgvYNOJiIpfTcNejlZffiLbPgdVWdR6EP3tmCQ9fPApJ71
- XPMKkWCBPyA49hTAP2qZMoLvh5v7hQvFrotsYY0OLbf/WKE4gSUx6hDUmnSrxCL0KR1yW6rC7gu
- N1wJA==
-X-Received: by 2002:a17:90b:4fd0:b0:38e:5b59:c2ff with SMTP id
- 98e67ed59e1d1-39580a4d031mr18112202a91.3.1787197742705; 
- Wed, 19 Aug 2026 20:49:02 -0700 (PDT)
+ bh=oZV9gDbx+A65MEMcmH9Ce0cuAUaddw6IKp5G5U1reZI=;
+ b=Y2eCQhJetlHG1hNjr5N+aeGHzKK88//NKRlTzTeq37FeK58vFGfhyomuRk0rKay9r+
+ GOjDSEvqYHQqnfTlPuN4qQIbXgDQJPXU7JTdn8dKVBNwGFQUIket7JYPYQDkBRkW6Klo
+ S5tXVQDaxPii8GCzJS1aXb4C+ag1pT+r/IkDIMAAG4yKZswVlJ5+xb6IEqgGnEeqYUTv
+ 9pUjlmWmqrlire4W4Et4cyRCs2vtfuFAfi4s2NHeKsdXK1wIxquKKf9fQPaZKoHM5+9e
+ IJ9qrf/mU1gZtUPIXlDq+69VQPnKR32ZehIj554wIqAjxKLqsXFMGNTtGm1L+cYiETz5
+ VY8A==
+X-Gm-Message-State: AFuF++lMJWz8KPwPeVKkj1ne9MYsx33yXFngh/9Gu1n+FFOttu21hUdM
+ HwqiPGqoRqYgjdNvC9UEK7+c1j92pHUKOE78egZo0IiE3tkioTCzIxXXL4wLPw==
+X-Gm-Gg: AR+sD10JOujtQwG/JOI8f+MKJE4FFwrkO2g6IcVBGctLsuWAwZ408Jat+8/dpNHKwAB
+ wOi+FLEJXNmFsd9L1u7dYYT9sfbOducYmX8DuYXMEYsNfVJsLU57iz8t+aglyOiIY49CwF/DL2I
+ 1pqs2zM8iBfqKQfM2mrkXfw5O/GUekN2JJJbc6s55eeS60U1gQ9NrlmA8ay4sTdEuQsPqFcGSnO
+ N+dLG5aeKWMD5AzrR3igh8YMmNG5HsJrnchqvJ8MAWYqQ+p7U9YwlRwGbZ70EUJcfuUq8iTH4qk
+ mOKjrK/QNYbx/FpeSs3s0jd9INdwRgGeMhLf0gN0/IQJ7cIvp2vfIDoR10HQU6H253PjO+X95wf
+ rDUW+ExZYovsJF/SUQLhWgBDhi1vyS4kYgLpsCN4Jd6BkjKjr4Tm2uhlv/43ReQeuE/lcTVcMZa
+ Zp/mqeXV8Nhg+7NSROY6J8Ta2jU8JYMc/H3XsMJKTvLuJc6r9b6RE7EeQUCHQJLRbiFUJo7uBU3
+ KjRTA==
+X-Received: by 2002:a17:90b:3910:b0:38e:4cb:51f with SMTP id
+ 98e67ed59e1d1-39581088755mr18035634a91.11.1787197701844; 
+ Wed, 19 Aug 2026 20:48:21 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.49.00
+ a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.48.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 20:49:02 -0700 (PDT)
+ Wed, 19 Aug 2026 20:48:21 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: wangyang <wangyang25@otcaix.iscas.ac.cn>,
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-stable@nongnu.org,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 90/93] target/riscv: reject FMV.X.W/FMV.W.X under Zfinx
-Date: Thu, 20 Aug 2026 13:44:27 +1000
-Message-ID: <20260820034430.1186695-91-alistair.francis@wdc.com>
+Subject: [PULL 76/93] disas/riscv: Fix typo in th.lbib format
+Date: Thu, 20 Aug 2026 13:44:13 +1000
+Message-ID: <20260820034430.1186695-77-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260820034430.1186695-1-alistair.francis@wdc.com>
 References: <20260820034430.1186695-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,46 +103,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: wangyang <wangyang25@otcaix.iscas.ac.cn>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Zfinx explicitly excludes the FMV transfer instructions, but
-trans_fmv_x_w/trans_fmv_w_x used REQUIRE_ZFINX_OR_F so a Zfinx-only
-CPU accepted them.  Require RVF instead so the transfers trap with
-an illegal instruction when only Zfinx is present.
+th.lbib should format the same as th.lbia, and the other
+increment insns, with the address register in parenthesis.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4108
+Cc: qemu-stable@nongnu.org
+Fixes: 318df7238b9 ("disas/riscv: Add support for XThead* instructions")
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
-Message-ID: <36c7cfebd27b4b6e8bcdd00e09e9dda0@wangyang25.otcaix.iscas.ac.cn>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260812223142.349142-41-richard.henderson@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/insn_trans/trans_rvf.c.inc | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ disas/riscv-xthead.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/riscv/tcg/insn_trans/trans_rvf.c.inc b/target/riscv/tcg/insn_trans/trans_rvf.c.inc
-index 481f7282da..636dec1664 100644
---- a/target/riscv/tcg/insn_trans/trans_rvf.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvf.c.inc
-@@ -434,7 +434,8 @@ static bool trans_fmv_x_w(DisasContext *ctx, arg_fmv_x_w *a)
- {
-     /* NOTE: This was FMV.X.S in an earlier version of the ISA spec! */
-     REQUIRE_FPU;
--    REQUIRE_ZFINX_OR_F(ctx);
-+    /* Zfinx explicitly excludes the FMV transfer instructions. */
-+    REQUIRE_EXT(ctx, RVF);
- 
-     TCGv dest = dest_gpr(ctx, a->rd);
-     TCGv_i64 src1 = get_fpr_hs(ctx, a->rs1);
-@@ -537,7 +538,8 @@ static bool trans_fmv_w_x(DisasContext *ctx, arg_fmv_w_x *a)
- {
-     /* NOTE: This was FMV.S.X in an earlier version of the ISA spec! */
-     REQUIRE_FPU;
--    REQUIRE_ZFINX_OR_F(ctx);
-+    /* Zfinx explicitly excludes the FMV transfer instructions. */
-+    REQUIRE_EXT(ctx, RVF);
- 
-     TCGv_i64 dest = dest_fpr(ctx, a->rd);
-     TCGv src = get_gpr(ctx, a->rs1, EXT_ZERO);
+diff --git a/disas/riscv-xthead.c b/disas/riscv-xthead.c
+index 428a6380e9..fbc96631fd 100644
+--- a/disas/riscv-xthead.c
++++ b/disas/riscv-xthead.c
+@@ -189,7 +189,7 @@ static const rv_opcode_data xthead_opcode_data[] = {
+     { "th.mulsh", rv_codec_r, rv_fmt_rd_rs1_rs2 },
+     /* XTheadMemIdx */
+     { "th.lbia", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml_addr },
+-    { "th.lbib", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml },
++    { "th.lbib", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml_addr },
+     { "th.lbuia", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml_addr },
+     { "th.lbuib", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml_addr },
+     { "th.lhia", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml_addr },
 -- 
 2.54.0
 
