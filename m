@@ -4,50 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DF0EC5DF82
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 11:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 537D0C5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 11:40:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx0zV-0003N4-Vs; Thu, 20 Aug 2026 07:31:26 -0400
+	id 1wx181-00015z-3J; Thu, 20 Aug 2026 07:40:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wx0zU-0003KA-6E
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 07:31:24 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wx0zR-0000WG-JB
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 07:31:23 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxS_CD5YZqnBgDAA--.9322S3;
- Thu, 20 Aug 2026 19:31:15 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCxvM5_5YZq_N4LAA--.10909S3;
- Thu, 20 Aug 2026 19:31:14 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1wx180-00015i-3H
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 07:40:12 -0400
+Received: from mail-westeuropeazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::3] helo=AS8PR04CU009.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1wx17y-0002GQ-BC
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 07:40:11 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CJfBDR8tQyfm8Fcr0Cbt2fAAJ9OH1dqX8ARh7PE2owbIAEUSPxmbdc1NAkqrwhWbtifQYe7enVR9i+dj9orSAWudfE6nnMJatAFUfvwiEh+Nk1v9Bm+Ca4I+XjbEsprQhkRkJszdSvnqVbkT3hmvtjicR7btyr7SpG+9KHAcZcL68roi0vJqjpXr3fKBqXcYshifZfLXEuRersAVIsd1KWQjSBwlFLEyp9yXVAiFOsIBikQTnPr7ekWapiCYa0RN8wzES32qE6mEE/LEWONCycFweEV363Nit1s4Wgj/3nxMaXzqneJhZLg6kRXuvV8AjROeFIDSE557v458mCfZGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=bRQp4SJ1CFZGQ8N8POMcsM93ey3nagvDuHLCAtHM6nM=;
+ b=auo4ty0UFHlwT/qImsdk6pj2P41sauVdn4F9jeSEUFdX/+d9dpzlBu002PNZsTYsuUoYysE9NEaLnF6UQ7ru8ur993KFjTgw8N89S7GK6/RVtoRm6ofBVHDXRTTZY2+bGHSIwM4HxtFxZwp8PvtUZgy/xjSoeJVeNkqYN3nZQcbC9oUr6ULsDM1qorc+ECNfvsMogUHoKAVi0tt9SGuJjG+rgmdy61wvSagZPmdyYi54nr+fIG16wVRNxGutiKQJex+XCRMQT1KAjnLmsE98o4UK9XvjRIQHkN19PzF9Gl8aC2HfVaASJJv7tI/7JHM7XbnEaY8oPTXy/c85w7IV1Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bRQp4SJ1CFZGQ8N8POMcsM93ey3nagvDuHLCAtHM6nM=;
+ b=bHA+m+mV95LSB7Y50Emh2Z83PPBJLjwdSf8U10PUhUdASz4liDz1qPNxJFCWyYVwqKjJRdhoRRUPjRIURUnZ5/HT9x9BKOeB5szIFNCflPfRYwgGIUeRSWIdFEUp3lycNSNtnOV8V4qPVgazwvLrEwzvrUM17Ym34J4vx+MFrFqlSl8UyTblGJQOVSlfxRz3SKNd45pp1/kt/LXrKcI7mKvLGBumLDkeXzMfopYShYhfp67Yh3n5pdfQ7BGUKr5g7ngcPUc1HhG/s7/qN1unAkuCnvT4nIDQCkXcogHEPO12uGaUwXuOjfqezqU1ENOXyKk0s1yqcmqcagHBQb9CIQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by MI9PR08MB975321.eurprd08.prod.outlook.com
+ (2603:10a6:290:c1::15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.8; Thu, 20 Aug
+ 2026 11:40:05 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0339.007; Thu, 20 Aug 2026
+ 11:40:05 +0000
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
-	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 1/4] target/loongarch: Add kvm support dintc
-Date: Thu, 20 Aug 2026 19:11:06 +0800
-Message-Id: <20260820111109.786405-2-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20260820111109.786405-1-gaosong@loongson.cn>
-References: <20260820111109.786405-1-gaosong@loongson.cn>
-MIME-Version: 1.0
+Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de, peterx@redhat.com,
+ dongli.zhang@oracle.com, maciej.szmigiero@oracle.com, bchaney@akamai.com,
+ mark.kanda@oracle.com, den@openvz.org, andrey.drobyshev@virtuozzo.com
+Subject: [PATCH v4 04/10] vhost-vsock: fix FD leak in realize()
+Date: Thu, 20 Aug 2026 14:39:49 +0300
+Message-ID: <20260820113955.509478-5-andrey.drobyshev@virtuozzo.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20260820113955.509478-1-andrey.drobyshev@virtuozzo.com>
+References: <20260820113955.509478-1-andrey.drobyshev@virtuozzo.com>
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxvM5_5YZq_N4LAA--.10909S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-ClientProxiedBy: VI1PR06CA0102.eurprd06.prod.outlook.com
+ (2603:10a6:803:8c::31) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|MI9PR08MB975321:EE_
+X-MS-Office365-Filtering-Correlation-Id: 69b9d791-4ffc-4594-df59-08defeafc794
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|52116014|23010399003|376014|7416014|1800799024|366016|38350700014|10067099003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: W0SY++ej5tDXOXlPL4bTQt9DXN9njBRWHcV9X0B7Nda7bnwuMXTWaMNEvd3LyKdAM09XLPzllDXbVm3+VejOFoK8CA9/+Dcnk5nMSwa0NI4ydAJ9jIRToPJDOBq/BM7u47/lQ9zvTGhK51icU0yB8iAzP5qsyuLsbIN8zACXtONQ5qJbP8LGr11LjEXJ72guZZAxMPQygDQIdtj4EUgCHeyeU+hhe8Q3tFRuFKkSQWuGDLTj4hzHmTihCeb+iP/LEkgA5PQFCcnyxfBu0wYnRAbjF+2Tvkd0PyYswgeT3QJfRjsuwXlDY6mC6x6o4mBzBACRi0DZtNSpmmuaM8fIwHNHof+EINrzovGryA0uj+t4V8wsJkjkJCpx17sAD9WWPcP/FzAcsbgTUsGPq9vn9YykmcWtUJKCPvmx6jtjLE+ES7/Y83BOxBtTAX0qefNwP8OGkICAp/po105JhvRaTd1bXuGB6xU5eLA+HevTK4/+1ys1CucYHa5PMI729fxMX1gwdJ9bXtaCVV6uW939U1aSN++sMHjwjcrUYRFwgxev211PP5Yq77UVx47If2SFQFMD8Klv7I8CKa+lHR04Z4VpP7jK80l88Dz44r/aN3rrkAES6CKdOdXlLz8EFI5LcV/ou5JBbM1HHSv7zq9zdMTH/9ftyMI2Uu0pptd2ZPbw0/lOWKjEka6JvbxMAQhMWrdZDQl1FPX+/G7X/6o+quEBgXLFim+34rejS/CgtFQ=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(52116014)(23010399003)(376014)(7416014)(1800799024)(366016)(38350700014)(10067099003)(56012099006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?2wBYvh9TH0loy8oyafPTG3AexdDTgq//NZ/r1mgvlCsztqguTrdKtumoJzmR?=
+ =?us-ascii?Q?yIm6uEmebRE0PGNA04Gnwo3fZyha9l5xnmQEfjWzLeNytP0FAqlhUO/82quA?=
+ =?us-ascii?Q?Al8/H1j6Ieh6Sd0I8mOOJQ6gaD3l0BkKd0faHkDbY9slg73aXAFbDcnAYV/m?=
+ =?us-ascii?Q?RkuDF2Ub91ZnVNRr/G4+KYTlxzrBddNqrael1z2Zvdoz/BhEIqMFSHn3Aitp?=
+ =?us-ascii?Q?MJRqf6nUdYZoqtCx6ieHNLewjkRcmU+lQfxXoY7CVa7a9+rdj67xRCiLm4NL?=
+ =?us-ascii?Q?6Au1U101vgxr8VGrxugVnu9LRMePejnWGQT/h6BBLYwxVXt89YZMZ58aw73D?=
+ =?us-ascii?Q?TBFKw6fyLczuVVvoyjGI5RISlHZIPHXarxFtoMxkhzISqN4dW35cSQPDJZ1V?=
+ =?us-ascii?Q?nS8F3OYtGn6onblWVDdmcS70BMWabIQgGUfzHbQ5Z85yKrym0tq7Pjcpkt0Q?=
+ =?us-ascii?Q?fHgwzNMo13/0S60FsK5sKOdXEZcwOEhLx28h46M9YXFEFVusH5C4NTDuhLYt?=
+ =?us-ascii?Q?OoQWsc/Mwyc/96VfNnSHIU+BUEtTv5EKN0qCW9POReTnHWzZDb77PfNZQWTm?=
+ =?us-ascii?Q?mEBv8NdFQCGOcUkt4gS45pQGiid9yuBlZCZR4c8WKRUTdHHtxoEyxDXFPQKU?=
+ =?us-ascii?Q?KULiJ2YsyWcUboW3P4EFm7aWAToPxXavM5qmCNGID5a5UOn9DF6Fy2EtwC1U?=
+ =?us-ascii?Q?T4VhjPUAUTfcCD1olf4SJeMg630ApQEweJEF14PEDTFRz6XM/XuuYwRo9JlH?=
+ =?us-ascii?Q?Y7HZgexnm4jdg1WmDszfyzvEvb6RfmZ3ky0+hdQ+M8vQLLQRMiSQ53xgBeIf?=
+ =?us-ascii?Q?qqgXbmLm8SmrbatgWFueziBTRHG+qN9EAc1L0OIYjWPp7D9StnDiG1f0XQKe?=
+ =?us-ascii?Q?W/hl/Tiuxns58QV1bCuXPO9dcC8m5w+30kNCg2V+yq1jCY7YUVFOv5dphEiq?=
+ =?us-ascii?Q?X+TcL85D+5YCC43B4A1kBKXhlk+CfeQA2aT4/m0Vu8hmphkvolf++8ayRP9+?=
+ =?us-ascii?Q?jdwcrMQoh27qkGFUKmvVuQaMW66UeqfFy6W+XoGnfr2AZiC0rWo9g1TNbh2o?=
+ =?us-ascii?Q?/02gOacXvrqwev2oxqGPwztB0UdoBG7A8Jr9FD7pzSgOxTH4EAgDVwXXcJU2?=
+ =?us-ascii?Q?jYMnk1pI9OcnTlLE0JPuKpVpbDSXrGNgdH9iq8QLolaCoH4F1V1PacvmOoes?=
+ =?us-ascii?Q?sDJcXjAgY2UOVM8pTsLjjTAAnUv+lkcYLoQTGd9rRBwYN+tQxCwuXFOzHEf7?=
+ =?us-ascii?Q?pClwQWvOGXb1BRNTFkOdQM3H5KswMIbwN4UF9yUh7VD78nkztY3hKkNvDhtp?=
+ =?us-ascii?Q?gURexSDgehT+kBOZZxXLMhHNCfuI7/lm1em+47ObAzfpfm/z7JkcxjFHyjt5?=
+ =?us-ascii?Q?Y3A0JfaJO0VsfgchHZRBb38F3d2dpu8YGZk/cNgpWPO+gE0uO0uNBgUzX6cF?=
+ =?us-ascii?Q?iAQ73AyRHxTq1XBODVy2HAeTibmiVVW0I5kKlBZyj1gc7nSC8r+UrSIyl4V9?=
+ =?us-ascii?Q?DCZuPMNkspwJaZYuuIgM0wgBQ0HWPN3ZwHzfbAb183Cc8zqQYw1Rwmynsk0F?=
+ =?us-ascii?Q?f74HSx8IC/Wp6wXfLS3oJsr8MNrlqiSumginx9EwL57Ar92BY6jwxnoutU3+?=
+ =?us-ascii?Q?ndpa5D/ZQqbdSJBKiUfA1h86LZCvLtQ4rRuXTSSU38pFY/+Ld/Az7XrSIUYy?=
+ =?us-ascii?Q?omVbBvoEwMrUXBENQVCWl1RuWRJOugSlAx5WMmBJ3+llb1TfsE3c/DibHjoG?=
+ =?us-ascii?Q?RuYQAjyIAjc2O59PQaTx9Yp2JMYiLD0=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 69b9d791-4ffc-4594-df59-08defeafc794
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Aug 2026 11:40:05.5513 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: LLqn7NqZKEgMMn6sMOIhEKjFFBF00vQG6PfNgeAzCqWPTHybcn0MaqOmUeYigIA1+XAv2DlkMiaQtSSpORTZcnaamj+Gze2xCNvcNJm6Eio=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MI9PR08MB975321
+Received-SPF: pass client-ip=2a01:111:f403:c201::3;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=AS8PR04CU009.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -64,173 +142,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds Kvm put/get msgint CSRs and check msgint feature.
+In vhost_vsock_device_realize(), after unsuccessful call to
+qemu_set_blocking(vhostfd, false), vhostfd gets leaked.  Let's close it
+explicitly in this case.  CPR-saved FDs don't get automatically closed,
+thus it is safe both for vhostfd obtained from cpr_find_fd() and from
+open(/dev/vhost-vsock).
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <20260813111000.446232-2-gaosong@loongson.cn>
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- target/loongarch/cpu.c     |  5 ++-
- target/loongarch/cpu.h     |  1 +
- target/loongarch/kvm/kvm.c | 74 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 77 insertions(+), 3 deletions(-)
+ hw/virtio/vhost-vsock.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 8cd5bc18a3..48e1ad83c9 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -451,9 +451,6 @@ static void loongarch_max_initfn(Object *obj)
- 
-     cpu->ptw = ON_OFF_AUTO_AUTO;
-     if (tcg_enabled()) {
--        cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
--        cpu->msgint = ON_OFF_AUTO_AUTO;
+diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
+index c582ac9fcc8..3ec20d87606 100644
+--- a/hw/virtio/vhost-vsock.c
++++ b/hw/virtio/vhost-vsock.c
+@@ -176,20 +176,17 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+             error_prepend(errp, "vhost-vsock: unable to parse vhostfd: ");
+             goto err_blocker;
+         }
 -
-         uint32_t data = cpu->env.cpucfg[2];
-         data = FIELD_DP32(data, CPUCFG2, HPTW, 1);
-         /* Enable LA v1.1 instructions */
-@@ -468,6 +465,8 @@ static void loongarch_max_initfn(Object *obj)
-         data = FIELD_DP32(data, CPUCFG3, DBAR_HINTS, 1);
-         cpu->env.cpucfg[3] = data;
-     }
-+    cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
-+    cpu->msgint = ON_OFF_AUTO_AUTO;
- }
- 
- #if defined(CONFIG_KVM)
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index ad30c73167..97db3b453f 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -301,6 +301,7 @@ enum loongarch_features {
-     LOONGARCH_FEATURE_PV_IPI,
-     LOONGARCH_FEATURE_STEALTIME,
-     LOONGARCH_FEATURE_PTW,
-+    LOONGARCH_FEATURE_MSGINT,
- };
- 
- typedef struct  LoongArchBT {
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 4d0cad5732..15082a01f8 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -36,6 +36,13 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
-     KVM_CAP_LAST_INFO
- };
- 
-+static bool kvm_cpu_has_msgint(CPUState *cs)
-+{
-+    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+
-+    return FIELD_EX64(cpu->env.cpucfg[1], CPUCFG1, MSG_INT);
-+}
-+
- static int kvm_get_stealtime(CPUState *cs)
- {
-     CPULoongArchState *env = cpu_env(cs);
-@@ -362,6 +369,25 @@ static int kvm_loongarch_get_csr(CPUState *cs)
- 
-     ret |= kvm_loongarch_get_pmu(cs);
- 
-+    /*
-+     * CSR register MSGIS getting must be put after CSR register CSR_ESTAT,
-+     * Since register CSR_ESTAT will sync software pending MSGINT status to
-+     * hardware register and modify HW CSR MSGIS registers.
-+     */
-+    if (kvm_cpu_has_msgint(cs)) {
-+        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
-+                               &sys->CSR_MSGIS[0]);
-+
-+        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
-+                               &sys->CSR_MSGIS[1]);
-+
-+        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
-+                               &sys->CSR_MSGIS[2]);
-+
-+        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
-+                               &sys->CSR_MSGIS[3]);
+-        if (!qemu_set_blocking(vhostfd, false, errp)) {
+-            goto err_blocker;
+-        }
+     } else {
+         vhostfd = open("/dev/vhost-vsock", O_RDWR);
+         if (vhostfd < 0) {
+             error_setg_file_open(errp, errno, "/dev/vhost-vsock");
+             goto err_blocker;
+         }
 +    }
-+
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TVAL),
-                            &sys->CSR_TVAL);
  
-@@ -538,6 +564,20 @@ static int kvm_loongarch_put_csr(CPUState *cs, KvmPutState level)
- 
-     ret |= kvm_loongarch_put_pmu(cs);
- 
-+    if (kvm_cpu_has_msgint(cs)) {
-+        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
-+                               &sys->CSR_MSGIS[0]);
-+
-+        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
-+                               &sys->CSR_MSGIS[1]);
-+
-+        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
-+                               &sys->CSR_MSGIS[2]);
-+
-+        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
-+                               &sys->CSR_MSGIS[3]);
-+    }
-+
-     /*
-      * timer cfg must be put at last since it is used to enable
-      * guest timer
-@@ -993,6 +1033,12 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
-         ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-         return (ret == 0);
- 
-+    case LOONGARCH_FEATURE_MSGINT:
-+        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
-+        attr.attr = KVM_LOONGARCH_VM_FEAT_MSGINT;
-+        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-+        return (ret == 0);
-+
-     default:
-         return false;
-     }
-@@ -1166,6 +1212,28 @@ static int kvm_cpu_check_pv_features(CPUState *cs, Error **errp)
-     return 0;
- }
- 
-+static int kvm_cpu_check_msgint(CPUState *cs, Error **errp)
-+{
-+    CPULoongArchState *env = cpu_env(cs);
-+    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+    bool kvm_supported;
-+
-+    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_MSGINT);
-+    env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 0);
-+    if (cpu->msgint == ON_OFF_AUTO_ON) {
-+        if (kvm_supported) {
-+            env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 1);
-+        } else {
-+            error_setg(errp, "'msgint' feature not supported by KVM on this host");
-+            return -ENOTSUP;
-+        }
-+    } else if ((cpu->msgint == ON_OFF_AUTO_AUTO) && kvm_supported) {
-+        env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 1);
-+    }
-+
-+    return 0;
-+}
-+
- int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
- {
-     return 0;
-@@ -1221,6 +1289,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         return ret;
+-        if (!qemu_set_blocking(vhostfd, false, errp)) {
+-            goto err_blocker;
+-        }
++    if (!qemu_set_blocking(vhostfd, false, errp)) {
++        close(vhostfd);
++        goto err_blocker;
      }
  
-+    ret = kvm_cpu_check_msgint(cs, &local_err);
-+    if (ret < 0) {
-+        error_report_err(local_err);
-+        return ret;
-+    }
-+
-     return 0;
- }
- 
+     vhost_vsock_common_realize(vdev);
 -- 
-2.55.0
+2.47.1
 
 
