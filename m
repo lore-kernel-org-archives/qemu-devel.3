@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25F4CC5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1E8FC5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:58:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwti6-0006t9-Ob; Wed, 19 Aug 2026 23:44:58 -0400
+	id 1wwtk6-0002wu-IU; Wed, 19 Aug 2026 23:47:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwti4-0006sf-J5
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:44:56 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1wwtk4-0002dy-8t
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:47:00 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwti2-0003c9-NE
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:44:56 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2ccf2360620so13002955ad.3
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:44:54 -0700 (PDT)
+ id 1wwtk2-00047w-3f
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:47:00 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-38e07ebd263so1182859a91.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:46:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787197493; x=1787802293; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=KUPc+7xlIMFvbQpIIY3o0TpfZjkwNXRng4YhTZLGtEc=;
- b=PtwUFpkNUkNTSoo0FA97OilU93WDeL2bMbtxsJZhqVpzLhTBhCg27RUw7VY55NbFcM
- E89CPCllKtbDKPPkouci8hYdrGsTEbYQGxR3eTscQQjoodECG1ZqsibAc41OxWAk0XE9
- gQbzJUWAI6ZApcZORP56q/THXiZJUnZLBfuxg5sJxc1ICqrdbnl2GYW7/lmu47qSGkPt
- 2fs1ralpLQNyvJ5W5wWHuKlv8hW3hdmBsyb7zR/aVO1dhkzscGICXEnGiQrEF+Nk4T3C
- VXMjB03YG3A5tGKK9kwJcs28+X9SvW9qboKCm9qNHOLSzco+JC+b71aNuQCVPm4WcA2o
- CvSA==
+ d=gmail.com; s=20251104; t=1787197617; x=1787802417; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=V3fM4y2C472xM9X4uqOcufwfeVn3Wu1NX6yZjjnlfQ0=;
+ b=OTN0e6XFVmwTWTGZqjwLGhaVlxWl7a2ZHu4HWairBxQGX7a+D3hpY190+7gOHbR1jO
+ fMFvUw3hXA8Vk6eS2c9isw5vbnBMwFumK0/h91edxHf2SMiHbTAl0Dnw+BneiGk1B1NK
+ /N4oXXC96OwRRIZOG/nOefaISRqRTX9YsRp5tClFkMEnGLVVW7cbCoVdvWFeYpzndqRb
+ O9EAz+7P9LD5L73A969A676SkBYoaBrC0JOW1dy6/fqOO8P56JW3UUolS8xdq0jhPpGw
+ zCSAg8pvnFtmdAe+yvBvdBIaoUbd+Ft7ODTrF2kvIS9fpPQ/Xq3jGsuj5z877mqSZv1I
+ A8eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787197493; x=1787802293;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=KUPc+7xlIMFvbQpIIY3o0TpfZjkwNXRng4YhTZLGtEc=;
- b=J5l0JGyn5aWU8X9AE7BMKAMRnET39016gZjZcy2HobklK0Pss3O40KTPOjySntkVd5
- WEA2vxpyUzxgijPqIsF7vCJWhxlSk0EPGiu8ye2NO/FcGAh1Kz7hBXx1vMp6yxasTRJ/
- fMZssCxYVHIGv2MXDqGWs6QdTiTUSn4zEd8S+58mZjxp4Cjt0XxwddjQx8qkIHl0pMNd
- 0ggEfZBTDbrm4mbMspX+mIdyjTebAtzYBQHBs7wwqB6drz/cMVFlezXnbIBKbRkJLocV
- 63/kFhnO8gd7OXf7PImFIco0UKVlZakPJYEpYFSYZtxSYMBSuUJCswQKjH2h+MLwp6jh
- WaUQ==
-X-Gm-Message-State: AFuF++nLWtDdmhOlPdknUCBR3qvgkdotBO63iT6gIYzzyCYo8ziktbSo
- oweGK0NMs28yyWzANyCwPHfv+ehLPW2ZVHVo3LiOEKtJL8llWbXYbU9AsWJuAg==
-X-Gm-Gg: AR+sD10BVRc42pOdEAherbxLnmrAcxDQO8B+OpJ37QSzP90BBg4d7tPEPjNZOmTykCT
- iwfp7PYQ+6YBnpahlbVuFpI3DqOzSxDgV6Kno0/Ei33z0TQoLNN9NxYGPGsUoLVE9R5kS4+UvXe
- bvk2YHDIY1FTqczifxRchXexNGvZUk/Hjc0uAhL7Nwy2edTbdF6xBWBP7Ks/A7YH8LT9I4518mH
- PB8J1HwUYOhUoEY2NdeaOEwbrswa8LJqHfznI70ntLMExRTW4lm+0nqfpKohqcM12hwJhjfgodB
- O8HzSiBoCfuqt1n4QiTplZZpOd00VKid7L8H9YGq21Zd7048AQi2K6oHNEx+EL+j9d3CsVQczlq
- IIKQmke1fqH0K8gozaZA+5cd5DqqgnsIDr79h+wu3uSrc4t9mARY8t2h8nhLBHvrBU0rRtq0IIz
- A7ZEoleVT1vaR0ZZztZn6iOPcgVgBpssKFLsAj4xb11+a9/ziWzwu2EAM/FClWMn3xWxDftXgMu
- 6mxSg==
-X-Received: by 2002:a17:90b:4488:b0:38e:250b:122f with SMTP id
- 98e67ed59e1d1-395810f21dbmr16496045a91.16.1787197493202; 
- Wed, 19 Aug 2026 20:44:53 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787197617; x=1787802417;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=V3fM4y2C472xM9X4uqOcufwfeVn3Wu1NX6yZjjnlfQ0=;
+ b=diwGM/TEoOeuL7EcDpNR+AixXjYVNXeppM7BCLBPSTwmalHdNYV2jghWFw6Zs1Bjjl
+ 0SNrJi0f23aPm6tbW8CQYM68b5JAZRBMplFNCzfrudFkLEm3/QJrA8IRWn8Rc2C4vuh8
+ +KbMGcaAX6HebruOKMpcIvHlVL09u11mAVXTE6rX1a1bwheJDeTYK9W8aKz0FDvMfkkM
+ LNdusscvObH7xHpbhbNTdoOKKjrj+XzbN767aN/ZpeduUeof2Evbu7wEGo8AfhqWcC+u
+ hMdxYokGrSHIz0M4do0cX62HrlknWeXMz0Z7Z+sYbGwU3Wu9SM0CsxHX8UNymNrRVbEv
+ 0i/Q==
+X-Gm-Message-State: AFuF++nhZNN/tcdil089ZA9Hc1kspjbs9uSe5azoz4aR7Z7Kf39uRxk9
+ cbFRmtf9YgKls3Pp/bBZS8gmflPrSw8UUt4UAWHen+oddlP3TOVsM7d/brnL8Q==
+X-Gm-Gg: AR+sD10ylM9XQ9d2i1irD19N4Pp1bmcrbjlEwM8vq70WMBOnJmHXPN/my/6mOpdI2Um
+ EuiLbJMD2Bn/pzNYz/dwePj+uy+8M/iHyodojAQ9LePGMznRRi4E2auhpdJKshBNq/G+Lc/m81u
+ gU/h+DH9hLAaEjV74gCRMxbxqKV2wT7/Rz+FaWqJY+nNrBa13ej/nR/n/IIWN4d4noMpoN6GeuT
+ bORmr+v9TT5Z1IfXPSUsdNUvDG+tQY7c4SioXY5nasKKL8C3hQy6XbSARaSRV06yG2HozgzKEgJ
+ K0+CRQmjP7C2DydPmBoNHgMnUEv0so58Bq3uj5+HHpbOQJiHoj2zdMsaiJ+P9jD14BQ36zL/YpF
+ lJYVmtJQdy/FdNj1b9nGKREvrJ6z8eVFGopsQR9FkgyY98E8xwfzalJpaklBnZgr+VHOdrnjRgp
+ pqXcUSpxos2NpkhyztnnHFlyCsC2B0rlBTbz4kpN+IFGHnuiyD2w9Kl3Dak+iZCRgz+XbOgjp0C
+ l3Q7g==
+X-Received: by 2002:a17:90b:2dce:b0:38e:524:8797 with SMTP id
+ 98e67ed59e1d1-395810e91c8mr19152576a91.13.1787197616746; 
+ Wed, 19 Aug 2026 20:46:56 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.44.50
+ a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.46.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 20:44:52 -0700 (PDT)
+ Wed, 19 Aug 2026 20:46:56 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Yanfeng Liu <yfliu2008@qq.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 04/93] riscv/virt: Add optional UART1
-Date: Thu, 20 Aug 2026 13:43:01 +1000
-Message-ID: <20260820034430.1186695-5-alistair.francis@wdc.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 45/93] disas/riscv: Set dec->opcode_data in decode function
+Date: Thu, 20 Aug 2026 13:43:42 +1000
+Message-ID: <20260820034430.1186695-46-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260820034430.1186695-1-alistair.francis@wdc.com>
 References: <20260820034430.1186695-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,209 +103,281 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yanfeng Liu <yfliu2008@qq.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-This adds optional UART1 to RiscV virt board if required at
-runtime to simplify multicore development.
+This allows each opcode table to be private to the decode file.
 
-Note that UART0 remains default serial_hd(0) and it is:
-
-- the lowest address UART
-- first serial in DTB
-- behind /aliases/serial0 in DTB
-- the /chosen/stdout-path in DTB
-
-Note that UART1 is placed at different page from UART0 to
-support page level isolation.
-
-Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-ID: <tencent_4EEBFC805F3E59863BEDC38094EF5A109206@qq.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260812223142.349142-10-richard.henderson@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- docs/system/riscv/virt.rst |  5 ++++-
- include/hw/riscv/virt.h    |  3 +++
- hw/riscv/virt-acpi-build.c | 12 ++++++++----
- hw/riscv/virt.c            | 40 ++++++++++++++++++++++++++++----------
- 4 files changed, 45 insertions(+), 15 deletions(-)
+ disas/riscv-xlrbr.h    |  2 --
+ disas/riscv-xthead.h   |  2 --
+ disas/riscv-xventana.h |  2 --
+ disas/riscv-xlrbr.c    |  4 +++-
+ disas/riscv-xthead.c   | 13 ++++++++++++-
+ disas/riscv-xventana.c |  3 ++-
+ disas/riscv.c          | 34 +++++++++++++++++-----------------
+ 7 files changed, 34 insertions(+), 26 deletions(-)
 
-diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
-index 60850970ce..3c87246891 100644
---- a/docs/system/riscv/virt.rst
-+++ b/docs/system/riscv/virt.rst
-@@ -16,7 +16,7 @@ The ``virt`` machine supports the following devices:
- * Core Local Interruptor (CLINT)
- * Platform-Level Interrupt Controller (PLIC)
- * CFI parallel NOR flash memory
--* 1 NS16550 compatible UART
-+* Either 1 or 2 NS16550 compatible UARTs
- * 1 Google Goldfish RTC
- * 1 SiFive Test device
- * 8 virtio-mmio transport devices
-@@ -27,6 +27,9 @@ The hypervisor extension has been enabled for the default CPU, so virtual
- machines with hypervisor extension can simply be used without explicitly
- declaring.
+diff --git a/disas/riscv-xlrbr.h b/disas/riscv-xlrbr.h
+index 939a69ea6d..ebf3d4c133 100644
+--- a/disas/riscv-xlrbr.h
++++ b/disas/riscv-xlrbr.h
+@@ -12,8 +12,6 @@
  
-+The second UART only exists if a backend is configured explicitly (e.g.
-+with a second ``-serial`` command line option).
+ #include "disas/riscv.h"
+ 
+-extern const rv_opcode_data rv_xlrbr_opcode_data[];
+-
+ void decode_xlrbr(rv_decode *, rv_isa);
+ 
+ #endif /* DISAS_RISCV_XLRBR_H */
+diff --git a/disas/riscv-xthead.h b/disas/riscv-xthead.h
+index fcd42746e7..0c65c8e0af 100644
+--- a/disas/riscv-xthead.h
++++ b/disas/riscv-xthead.h
+@@ -11,8 +11,6 @@
+ 
+ #include "disas/riscv.h"
+ 
+-extern const rv_opcode_data xthead_opcode_data[];
+-
+ void decode_xtheadba(rv_decode *, rv_isa);
+ void decode_xtheadbb(rv_decode *, rv_isa);
+ void decode_xtheadbs(rv_decode *, rv_isa);
+diff --git a/disas/riscv-xventana.h b/disas/riscv-xventana.h
+index 72be9ffa16..1006c3be00 100644
+--- a/disas/riscv-xventana.h
++++ b/disas/riscv-xventana.h
+@@ -11,8 +11,6 @@
+ 
+ #include "disas/riscv.h"
+ 
+-extern const rv_opcode_data ventana_opcode_data[];
+-
+ void decode_xventanacondops(rv_decode*, rv_isa);
+ 
+ #endif /* DISAS_RISCV_XVENTANA_H */
+diff --git a/disas/riscv-xlrbr.c b/disas/riscv-xlrbr.c
+index 57cb434523..f61028fce9 100644
+--- a/disas/riscv-xlrbr.c
++++ b/disas/riscv-xlrbr.c
+@@ -24,7 +24,7 @@ typedef enum {
+     rv_op_crc32c_d = 8,
+ } rv_xlrbr_op;
+ 
+-const rv_opcode_data rv_xlrbr_opcode_data[] = {
++static const rv_opcode_data xlrbr_opcode_data[] = {
+     { "illegal", rv_codec_illegal, rv_fmt_none, NULL, 0, 0, 0 },
+     { "crc32.b", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
+     { "crc32.h", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
+@@ -75,5 +75,7 @@ void decode_xlrbr(rv_decode *dec, rv_isa isa)
+         }
+         break;
+     }
 +
- Hardware configuration information
- ----------------------------------
++    dec->opcode_data = xlrbr_opcode_data;
+     dec->op = op;
+ }
+diff --git a/disas/riscv-xthead.c b/disas/riscv-xthead.c
+index 2f2ddb8dd9..96f80bc8e5 100644
+--- a/disas/riscv-xthead.c
++++ b/disas/riscv-xthead.c
+@@ -127,7 +127,7 @@ typedef enum {
+     rv_op_th_sync_s,
+ } rv_xthead_op;
  
-diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-index 36a2def410..7c862b0da2 100644
---- a/include/hw/riscv/virt.h
-+++ b/include/hw/riscv/virt.h
-@@ -59,6 +59,7 @@ struct RISCVVirtState {
-     int aia_guests;
-     char *oem_id;
-     char *oem_table_id;
-+    bool uart1_present;
-     OnOffAuto acpi;
-     const MemMapEntry *memmap;
-     struct GPEXHost *gpex_host;
-@@ -79,6 +80,7 @@ enum {
-     VIRT_APLIC_S,
-     VIRT_UART0,
-     VIRT_VIRTIO,
-+    VIRT_UART1,
-     VIRT_FW_CFG,
-     VIRT_IMSIC_M,
-     VIRT_IMSIC_S,
-@@ -94,6 +96,7 @@ enum {
- enum {
-     UART0_IRQ = 10,
-     RTC_IRQ = 11,
-+    UART1_IRQ = 12,
-     VIRTIO_IRQ = 1, /* 1 to 8 */
-     VIRTIO_COUNT = 8,
-     PCIE_IRQ = 0x20, /* 32 to 35 */
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 59c454f4f9..8e516ec114 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -177,11 +177,11 @@ static void acpi_dsdt_add_plic_aplic(Aml *scope, uint8_t socket_count,
+-const rv_opcode_data xthead_opcode_data[] = {
++static const rv_opcode_data xthead_opcode_data[] = {
+     { "th.illegal", rv_codec_illegal, rv_fmt_none, NULL, 0, 0, 0 },
+     /* XTheadBa */
+     { "th.addsl", rv_codec_r_imm2, rv_fmt_rd_rs1_rs2_imm, NULL, 0, 0, 0 },
+@@ -272,6 +272,7 @@ void decode_xtheadba(rv_decode *dec, rv_isa isa)
+         break;
+     }
  
- static void
- acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
--                    uint32_t uart_irq)
-+                    uint32_t uart_irq, int uartidx)
++    dec->opcode_data = xthead_opcode_data;
+     dec->op = op;
+ }
+ 
+@@ -330,6 +331,7 @@ void decode_xtheadbb(rv_decode *dec, rv_isa isa)
+         break;
+     }
+ 
++    dec->opcode_data = xthead_opcode_data;
+     dec->op = op;
+ }
+ 
+@@ -356,6 +358,7 @@ void decode_xtheadbs(rv_decode *dec, rv_isa isa)
+         break;
+     }
+ 
++    dec->opcode_data = xthead_opcode_data;
+     dec->op = op;
+ }
+ 
+@@ -434,6 +437,7 @@ void decode_xtheadcmo(rv_decode *dec, rv_isa isa)
+         break;
+     }
+ 
++    dec->opcode_data = xthead_opcode_data;
+     dec->op = op;
+ }
+ 
+@@ -461,6 +465,7 @@ void decode_xtheadcondmov(rv_decode *dec, rv_isa isa)
+         break;
+     }
+ 
++    dec->opcode_data = xthead_opcode_data;
+     dec->op = op;
+ }
+ 
+@@ -498,6 +503,7 @@ void decode_xtheadfmemidx(rv_decode *dec, rv_isa isa)
+         break;
+     }
+ 
++    dec->opcode_data = xthead_opcode_data;
+     dec->op = op;
+ }
+ 
+@@ -533,6 +539,7 @@ void decode_xtheadfmv(rv_decode *dec, rv_isa isa)
+         break;
+     }
+ 
++    dec->opcode_data = xthead_opcode_data;
+     dec->op = op;
+ }
+ 
+@@ -564,6 +571,7 @@ void decode_xtheadmac(rv_decode *dec, rv_isa isa)
+         break;
+     }
+ 
++    dec->opcode_data = xthead_opcode_data;
+     dec->op = op;
+ }
+ 
+@@ -638,6 +646,7 @@ void decode_xtheadmemidx(rv_decode *dec, rv_isa isa)
+         break;
+     }
+ 
++    dec->opcode_data = xthead_opcode_data;
+     dec->op = op;
+ }
+ 
+@@ -672,6 +681,7 @@ void decode_xtheadmempair(rv_decode *dec, rv_isa isa)
+         break;
+     }
+ 
++    dec->opcode_data = xthead_opcode_data;
+     dec->op = op;
+ }
+ 
+@@ -706,5 +716,6 @@ void decode_xtheadsync(rv_decode *dec, rv_isa isa)
+         break;
+     }
+ 
++    dec->opcode_data = xthead_opcode_data;
+     dec->op = op;
+ }
+diff --git a/disas/riscv-xventana.c b/disas/riscv-xventana.c
+index cd694f15f3..4539173d95 100644
+--- a/disas/riscv-xventana.c
++++ b/disas/riscv-xventana.c
+@@ -14,7 +14,7 @@ typedef enum {
+     ventana_op_vt_maskcn = 2,
+ } rv_ventana_op;
+ 
+-const rv_opcode_data ventana_opcode_data[] = {
++static const rv_opcode_data ventana_opcode_data[] = {
+     { "vt.illegal", rv_codec_illegal, rv_fmt_none, NULL, 0, 0, 0 },
+     { "vt.maskc", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+     { "vt.maskcn", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+@@ -38,5 +38,6 @@ void decode_xventanacondops(rv_decode *dec, rv_isa isa)
+         break;
+     }
+ 
++    dec->opcode_data = ventana_opcode_data;
+     dec->op = op;
+ }
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 9880b8de20..eb6d132a2c 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -1656,7 +1656,7 @@ static uint32_t operand_lpl(rv_inst inst)
+ 
+ /* instruction metadata */
+ 
+-const rv_opcode_data rvi_opcode_data[] = {
++static const rv_opcode_data rvi_opcode_data[] = {
+     { "illegal", rv_codec_illegal, rv_fmt_none, NULL, 0, 0, 0 },
+     { "lui", rv_codec_u, rv_fmt_rd_uimm, NULL, 0, 0, 0 },
+     { "auipc", rv_codec_u, rv_fmt_rd_uoffset, NULL, 0, 0, 0 },
+@@ -2948,6 +2948,7 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
  {
--    Aml *dev = aml_device("COM0");
-+    Aml *dev = aml_device("COM%d", uartidx);
-     aml_append(dev, aml_name_decl("_HID", aml_string("RSCV0003")));
--    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
-+    aml_append(dev, aml_name_decl("_UID", aml_int(uartidx)));
- 
-     Aml *crs = aml_resource_template();
-     aml_append(crs, aml_memory32_fixed(uart_memmap->base,
-@@ -490,7 +490,11 @@ static void build_dsdt(GArray *table_data,
-                                  memmap[VIRT_APLIC_S].size, "RSCV0002");
-     }
- 
--    acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
-+    acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ, 0);
-+    if (s->uart1_present) {
-+        acpi_dsdt_add_uart(scope, &memmap[VIRT_UART1], UART1_IRQ, 1);
-+    }
+     rv_inst inst = dec->inst;
+     rv_opcode op = rv_op_illegal;
 +
-     if (virt_is_iommu_sys_enabled(s)) {
-         acpi_dsdt_add_iommu_sys(scope, &memmap[VIRT_IOMMU_SYS], IOMMU_SYS_IRQ);
+     switch ((inst >> 0) & 0b11) {
+     case 0:
+         switch ((inst >> 13) & 0b111) {
+@@ -4590,6 +4591,8 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+         }
+         break;
      }
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 51bac47a91..d58656f70d 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -97,6 +97,8 @@ static const MemMapEntry virt_memmap[] = {
-     [VIRT_APLIC_S] =      {  0xd000000, APLIC_SIZE(VIRT_CPUS_MAX) },
-     [VIRT_UART0] =        { 0x10000000,         0x100 },
-     [VIRT_VIRTIO] =       { 0x10001000,        0x1000 },
-+    /* UART1 supports page isolation from UART0 */
-+    [VIRT_UART1] =        { 0x1000a000,         0x100 },
-     [VIRT_FW_CFG] =       { 0x10100000,          0x18 },
-     [VIRT_FLASH] =        { 0x20000000,     0x4000000 },
-     [VIRT_IMSIC_M] =      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
-@@ -187,7 +189,8 @@ static void create_pcie_irq_map(RISCVVirtState *s, void *fdt, char *nodename,
-                           FDT_MAX_INT_MAP_WIDTH] = {};
-     uint32_t *irq_map = full_irq_map;
- 
--    /* This code creates a standard swizzle of interrupts such that
-+    /*
-+     * This code creates a standard swizzle of interrupts such that
-      * each device's first interrupt is based on it's PCI_SLOT number.
-      * (See pci_swizzle_map_irq_fn())
-      *
-@@ -805,28 +808,38 @@ static void create_fdt_reset(RISCVVirtState *s, uint32_t *phandle)
++
++    dec->opcode_data = rvi_opcode_data;
+     dec->op = op;
  }
  
- static void create_fdt_uart(RISCVVirtState *s,
--                            uint32_t irq_mmio_phandle)
-+                            uint32_t irq_mmio_phandle, int memId, int irqNo)
- {
-     g_autofree char *name = NULL;
-     MachineState *ms = MACHINE(s);
+@@ -5421,33 +5424,30 @@ static GString *disasm_inst(rv_isa isa, uint64_t pc, rv_inst inst,
+     };
+     const rv_opcode_data *op;
  
-     name = g_strdup_printf("/soc/serial@%"HWADDR_PRIx,
--                           s->memmap[VIRT_UART0].base);
-+                           s->memmap[memId].base);
-     qemu_fdt_add_subnode(ms->fdt, name);
-     qemu_fdt_setprop_string(ms->fdt, name, "compatible", "ns16550a");
-     qemu_fdt_setprop_sized_cells(ms->fdt, name, "reg",
--                                 2, s->memmap[VIRT_UART0].base,
--                                 2, s->memmap[VIRT_UART0].size);
-+                                 2, s->memmap[memId].base,
-+                                 2, s->memmap[memId].size);
-     qemu_fdt_setprop_cell(ms->fdt, name, "clock-frequency", 3686400);
-     qemu_fdt_setprop_cell(ms->fdt, name, "interrupt-parent", irq_mmio_phandle);
-     if (s->aia_type == VIRT_AIA_TYPE_NONE) {
--        qemu_fdt_setprop_cell(ms->fdt, name, "interrupts", UART0_IRQ);
-+        qemu_fdt_setprop_cell(ms->fdt, name, "interrupts", irqNo);
-     } else {
--        qemu_fdt_setprop_cells(ms->fdt, name, "interrupts", UART0_IRQ, 0x4);
-+        qemu_fdt_setprop_cells(ms->fdt, name, "interrupts", irqNo, 0x4);
-+    }
-+
-+    if (VIRT_UART0 == memId) {
-+        qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", name);
-+        qemu_fdt_setprop_string(ms->fdt, "/aliases", "serial0", name);
-     }
-+}
+-    dec.opcode_data = rvi_opcode_data;
+     decode_inst_opcode(&dec, isa);
  
--    qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", name);
--    qemu_fdt_setprop_string(ms->fdt, "/aliases", "serial0", name);
-+static void create_fdt_uarts(RISCVVirtState *s, uint32_t irq_mmio_phandle)
-+{
-+    if (s->uart1_present) {
-+        create_fdt_uart(s, irq_mmio_phandle, VIRT_UART1, UART1_IRQ);
-+    }
-+    create_fdt_uart(s, irq_mmio_phandle, VIRT_UART0, UART0_IRQ);
- }
+     if (dec.op == rv_op_illegal && cfg) {
+         static const struct {
+             bool (*guard_func)(const RISCVCPUConfig *);
+-            const rv_opcode_data *opcode_data;
+             void (*decode_func)(rv_decode *, rv_isa);
+         } decoders[] = {
+-            { has_xtheadba_p, xthead_opcode_data, decode_xtheadba },
+-            { has_xtheadbb_p, xthead_opcode_data, decode_xtheadbb },
+-            { has_xtheadbs_p, xthead_opcode_data, decode_xtheadbs },
+-            { has_xtheadcmo_p, xthead_opcode_data, decode_xtheadcmo },
+-            { has_xtheadcondmov_p, xthead_opcode_data, decode_xtheadcondmov },
+-            { has_xtheadfmemidx_p, xthead_opcode_data, decode_xtheadfmemidx },
+-            { has_xtheadfmv_p, xthead_opcode_data, decode_xtheadfmv },
+-            { has_xtheadmac_p, xthead_opcode_data, decode_xtheadmac },
+-            { has_xtheadmemidx_p, xthead_opcode_data, decode_xtheadmemidx },
+-            { has_xtheadmempair_p, xthead_opcode_data, decode_xtheadmempair },
+-            { has_xtheadsync_p, xthead_opcode_data, decode_xtheadsync },
+-            { has_XVentanaCondOps_p, ventana_opcode_data, decode_xventanacondops },
+-            { has_xlrbr_p, rv_xlrbr_opcode_data, decode_xlrbr },
++            { has_xtheadba_p, decode_xtheadba },
++            { has_xtheadbb_p, decode_xtheadbb },
++            { has_xtheadbs_p, decode_xtheadbs },
++            { has_xtheadcmo_p, decode_xtheadcmo },
++            { has_xtheadcondmov_p, decode_xtheadcondmov },
++            { has_xtheadfmemidx_p, decode_xtheadfmemidx },
++            { has_xtheadfmv_p, decode_xtheadfmv },
++            { has_xtheadmac_p, decode_xtheadmac },
++            { has_xtheadmemidx_p, decode_xtheadmemidx },
++            { has_xtheadmempair_p, decode_xtheadmempair },
++            { has_xtheadsync_p, decode_xtheadsync },
++            { has_XVentanaCondOps_p, decode_xventanacondops },
++            { has_xlrbr_p, decode_xlrbr },
+         };
  
- static void create_fdt_rtc(RISCVVirtState *s,
-@@ -996,7 +1009,7 @@ static void finalize_fdt(RISCVVirtState *s)
- 
-     create_fdt_reset(s, &phandle);
- 
--    create_fdt_uart(s, irq_mmio_phandle);
-+    create_fdt_uarts(s, irq_mmio_phandle);
- 
-     create_fdt_rtc(s, irq_mmio_phandle);
- }
-@@ -1486,6 +1499,13 @@ static void virt_machine_init(MachineState *machine)
-         0, qdev_get_gpio_in(mmio_irqchip, UART0_IRQ), 399193,
-         serial_hd(0), DEVICE_LITTLE_ENDIAN);
- 
-+    if (serial_hd(1)) {
-+        serial_mm_init(system_memory, s->memmap[VIRT_UART1].base,
-+            0, qdev_get_gpio_in(mmio_irqchip, UART1_IRQ), 399193,
-+            serial_hd(1), DEVICE_LITTLE_ENDIAN);
-+        s->uart1_present = true;
-+    }
-+
-     sysbus_create_simple("goldfish_rtc", s->memmap[VIRT_RTC].base,
-         qdev_get_gpio_in(mmio_irqchip, RTC_IRQ));
- 
+         for (size_t i = 0; i < ARRAY_SIZE(decoders); i++) {
+             if (decoders[i].guard_func(cfg)) {
+-                dec.opcode_data = decoders[i].opcode_data;
+                 decoders[i].decode_func(&dec, isa);
+                 if (dec.op != rv_op_illegal) {
+                     break;
 -- 
 2.54.0
 
