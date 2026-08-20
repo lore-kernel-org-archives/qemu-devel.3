@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 532DCC5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:51:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEB3FC5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwtjR-00010u-HP; Wed, 19 Aug 2026 23:46:21 -0400
+	id 1wwtiP-00074i-ON; Wed, 19 Aug 2026 23:45:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtjQ-0000zZ-7p
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:20 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1wwtiO-00074Y-2A
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:45:16 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtjO-000432-Qh
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:19 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-cbedf6a6fe8so1138953a12.3
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:46:18 -0700 (PDT)
+ id 1wwtiM-0003oc-I2
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:45:15 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-381b831d535so2764515a91.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:45:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787197577; x=1787802377; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787197513; x=1787802313; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=uqnXWGuDLvEfhlq4w5r6kD4ZoGnJTkkdca1i+GCVCbs=;
- b=N+HBZkDCc/IIypWljbciy2syz01oRFG48AOa9tofRVZ/2WTaOlawgFjhhgkzBXVJeS
- htKzZ3sY7T3euUxJGuYTboyWLDmbYmY57yUnFvvM54yWdnMHmC8adIb22uU1fTzVWwfO
- Wb6locE36Yn1H6pXGP1CYQg7G8tVpATu4ouecunhII2mAUt2cqJgh7gFPDWfoNYPFO4D
- SVARalsIGGz+CkHo61mqSGOWQhg/ys40vXgU5pEmk9H013ch26grLZ22O6/VpclOZRFI
- mEpXqWCRbG9WgDd0Yzia74f9oaO3aJtFDyBBilBc04DutrmU8mXRZTHdNrABuK69tJ/T
- HYUQ==
+ bh=lfg+S33mxYhTkp+vJzcce1d3QWdWhesMvM16KE705Pg=;
+ b=GEKWLICNHxlAnq6SPDc7lbRKFYUJDJ6PrVPg+tr7KxvEOCUTDKfN7fCdmcKS+d5XI2
+ iAa6WxHAIXj9jumqlDgH6vsiUDY/DVhUvepI1ScdWtseaYO7I+NLMwUWhxWxi1OIV8tX
+ Rv6JA8zg3C8Ek/LIGWLe9IDAzMOfe1S/UQMaX0D8jzBgKnHdTRiKJBKeV4BDv9jzRIOO
+ Waz/xqrCdZq4fw6ekmLfJHA6cqdFPb7o5wAn0WlHdo92EfEjt0mDhpx5QC8605LHx6+o
+ zWNcnfCbZcqAl+aof8aj5oiyXu5PFxPreCjtaz1BDG6hxSSBa0Qill17i/4TkqR34KeA
+ s9mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787197577; x=1787802377;
+ d=1e100.net; s=20251104; t=1787197513; x=1787802313;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=uqnXWGuDLvEfhlq4w5r6kD4ZoGnJTkkdca1i+GCVCbs=;
- b=oDaMddzwwyDp3lTk/QPZjktL4ouLeG7NJSfOzz7Gn0pHHAMcZ9ixX2AXHAADzjzQ2+
- zWQdXs2vwBRmS8AE70aNWmcfV2FmMvydPMYbpMfq5B2xzPvp9QRjDDDeaxL3hZhucoUH
- vGZhCCMWLngSAO5QuHQiOX2uQ+XzbKzoC6LcUTEMPRrh/lq9EvYPuNEdNBSWWwe949pd
- iMjpyovc7YOHnVT7PQu+rPQgPHDQHxX3/1lq+VRnss8Pd9NPLMATjJbRZSwc4s3izNBf
- dhW3FgCioW6NqcryTJKz4BsGem2rGHuUAhhRHRlahkhcNMO1Tklp4EA1+z1hnqg8Lq7+
- +q8Q==
-X-Gm-Message-State: AOJu0YzbCiBbUARltNO8KnOGcylsQYGOu93Hmw3TfclpWZrcF1zMAAnR
- KgLihgXegGQzz1f3T/HfDQig4PtdDdgEVQpAAtQKsPg/EUetfhZCqUcuJ5fLCg==
-X-Gm-Gg: AR+sD12U+p4PCt2KuZ+WBJYZF40hnlEKzf4B5XAPxXeepiZLRsuuklZad8xmnKZK/IZ
- 3EMUyJYuPatI1XgoG0ke/l4d7p7HSocaZ2QYluDHBBGC9Izyw+vu4w6TuLy1sHl/lJ5PrdtnrEC
- 9aPIhdm47Jl+sJ3L6NcaApXt4Hsa52MR8UHHrJKF40utoaO2OFCw95NYo9GqfD+lSeBq/P+U+o3
- HnJuU6D8b8ElJeTAbeCz+uNFIaLCdrmNukkNmkrqgM354g/6Y9Mjzu70LkajlF3Ct3BUMVdhAHz
- zIsZET1DoTlSaf5gWETKnHZVA5E6Gt3IBp1mt7XlMJNJakYlj7V9ZIKFa4gdr2XUFW8258bb/Tu
- 85uWbIzmH88o43aEkqK/Dr+tThDzoHB69VgcHkLt0rBJhJQYFNHcbMSSe+k9QqFm/3Tq650UckD
- 8ps7FgYMY3B4ftySH6KajHT4/6awT8/1nFf8iBzY9iNb/FlF/Db7z4u3wuOvMIy8C4W1AmTfyX9
- QLjBnJJkfb7OD0A
-X-Received: by 2002:a05:6a20:3ca5:b0:3bf:6222:2e7e with SMTP id
- adf61e73a8af0-3cd014a9a32mr18446831637.4.1787197577358; 
- Wed, 19 Aug 2026 20:46:17 -0700 (PDT)
+ bh=lfg+S33mxYhTkp+vJzcce1d3QWdWhesMvM16KE705Pg=;
+ b=ITjlCvEE8cxMB6DlIJjDUfTYXBS3tA8ylfe4RWBnu/h5ybX/RMsWXZiXubov8albAs
+ 9xLKvIeTNrh3qZCquBLbtQN4l4OYHrp0B3FUwQq1ZK8saiqB61WA7jMN81HS9iymRXrh
+ Vttyv6BBPfWNqmk4bW8lSl5icZaIwsVynw53nHjx9HaB7G3WjIxvYzW80llkNY0OxdBc
+ Z9eRs36WvS1mXo/9XOOmTtfOmQwXcc9e4oD2r8/k9CGhoZKXevdNHalaasFoirb/yBQ0
+ Qwjiw0v5QktC5ju8EguEaA6j2JGKN5lmdj1lFEQjfNi7lgPQriJBABV/WTznfg8wxzGA
+ B7kg==
+X-Gm-Message-State: AFuF++m74le/aStXSeETsBPU1i3wvP6EEmcnGEVS1+3w3uHiv25b1sI4
+ Cai4xL/EE2RO9ieeUufB3ofuTkxuNIMoZMntnW/4PKvNumKNCaGY1QOOFlaRgw==
+X-Gm-Gg: AR+sD112RbvyTIKPCRv5EfiLfyA9nPWiYTgoOl3t7BT1JW3uHQI/hW0hqGrkuUgt/mZ
+ K/a3Kal8ggVpvFUlUorimiT3npqLcYDDr+I8sTIxtSIJ790Ww4cVP4frWvnzhT6jjBASUS1/8jR
+ rz1G3J2WQnVWD8ttk68b/t1XtMFywv1uMnhI35v4J1DrZfqeznngiBrSogBvlbcBos+qpgSTXVV
+ eFpw7/NFmJrTKJiFP1BXg6114nkrLR/zKgijnv9OWfAzCLXSa7SNyvwz/PghctFR21XcReQSecE
+ MZWE5mh7jqMTfqIDo5a6dIRSgNNvfbj90x+8MXhM3as8rrRkEGg43MsWHH6kWyVMn6lBxWAa9ck
+ vRnK99sKFln62G1YPjEnvzEKJy9Vc+dgumEywqqzYycf3SNWCmEEunvEj0PgQMXlXKhJU+vGyoR
+ 2Ae8x99Tb3213gyy6qOLvxSbDuqxsxEfaPasHEJSlrBqTVNFdzEu+GR2lEt9DwMabzluX6UyZbV
+ oyVzyoNdZlc9eNuhrQ0dXshauBc
+X-Received: by 2002:a17:90a:e7cb:b0:38e:6f90:eabd with SMTP id
+ 98e67ed59e1d1-39580aa5106mr17743204a91.5.1787197513245; 
+ Wed, 19 Aug 2026 20:45:13 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.46.14
+ a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.45.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 20:46:16 -0700 (PDT)
+ Wed, 19 Aug 2026 20:45:12 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: TANG Tiancheng <lyndra@linux.alibaba.com>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+Cc: Tao Ding <dingtao0430@163.com>, Junze Cao <caojunze424@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 31/93] disas/riscv: Use signed type for vector immediates
-Date: Thu, 20 Aug 2026 13:43:28 +1000
-Message-ID: <20260820034430.1186695-32-alistair.francis@wdc.com>
+Subject: [PULL 10/93] hw/riscv: k230: add a noc stub region in K230 board
+Date: Thu, 20 Aug 2026 13:43:07 +1000
+Message-ID: <20260820034430.1186695-11-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260820034430.1186695-1-alistair.francis@wdc.com>
 References: <20260820034430.1186695-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,36 +104,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: TANG Tiancheng <lyndra@linux.alibaba.com>
+From: Tao Ding <dingtao0430@163.com>
 
-operand_vimm() sign-extends the 5-bit vector immediate field in bits
-19:15, but returns uint32_t. This sends negative immediates through an
-unsigned type before they are assigned to rv_decode.imm.
+The NOC address was accessed in the k230_unzip driver, but it is currently not in k230.
+This commit uses create_unimplemented_device to preset the region.
 
-Return int32_t to match the signed value extracted by the helper.
-
-Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260703-b4-disas-xthead-fix-riscv-next-v4-3-84c566330bc7@linux.alibaba.com>
+Signed-off-by: Tao Ding <dingtao0430@163.com>
+Reviewed-by: Junze Cao <caojunze424@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260808062227.66961-8-dingtao0430@163.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- disas/riscv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/riscv/k230.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index fdf75a12ef..967739bdbb 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -4487,7 +4487,7 @@ static uint32_t operand_cimmq(rv_inst inst)
-         ((inst << 57) >> 62) << 6;
- }
+diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
+index 5163eaa7ef..558f30b97e 100644
+--- a/hw/riscv/k230.c
++++ b/hw/riscv/k230.c
+@@ -250,6 +250,9 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
+                               qdev_get_gpio_in(DEVICE(&s->decomp_gzip), i));
+     }
  
--static uint32_t operand_vimm(rv_inst inst)
-+static int32_t operand_vimm(rv_inst inst)
- {
-     return (int64_t)(inst << 44) >> 59;
- }
++    /* Noc stub, the k230 decomp_gzip driver in uboot will access this region */
++    create_unimplemented_device("noc-stub", 0x91302000, 0x1000);
++
+     /* unimplemented devices */
+     create_unimplemented_device("kpu.l2-cache",
+                                 memmap[K230_DEV_KPU_L2_CACHE].base,
 -- 
 2.54.0
 
