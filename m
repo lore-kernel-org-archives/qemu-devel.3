@@ -4,95 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ECABC5DF87
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 12:41:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34567C5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 12:41:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx250-00016P-Is; Thu, 20 Aug 2026 08:41:10 -0400
+	id 1wx255-00018l-1I; Thu, 20 Aug 2026 08:41:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bernard.ladenthin@gmail.com>)
- id 1wx1rS-0003Ni-7w
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:27:10 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1wx1rN-0003MU-BT
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:27:05 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <bernard.ladenthin@gmail.com>)
- id 1wx1rP-0003IQ-2e
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:27:09 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-4799b3f7c83so1512604f8f.2
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 05:27:06 -0700 (PDT)
+ id 1wx1rL-0003H1-JX
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:27:05 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4995b0343c1so20976275e9.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 05:27:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787228825; x=1787833625; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=7O1SDwJPhyM/cxU16CBQbBz7mUsV9rM5wrJOKeWl8xI=;
- b=iWPlVjB9929+0rpelW6kzlkaKatfrj6SCLo1wxfVW5Bf/vLOT2UpTL81dRIHiGP6eM
- I4gLEIDqzHVRNkv6V9OCaaAP0XQgseDoJL9J0zjb4Hk8784P8wWBK8O45wQpEn9vcyNe
- bvkTrPXplY1xc63HkPVqAw9EXSjMFxKc2BWALTke7MFyJyRFCas3fsXNiMFDfrRvXQlU
- OCc/22qXPQ197yvLTdK/Z2CvZqhU3hEnwVHh4cyx0NhuNLhL/PGHgzGnCpMrJCwGeHT+
- 4zFTvoaI34fhkn8NfKHIw118r8jeMDoQjKDwJ8r79l11s72BMk3CgBCDQxYdwLUOCQvL
- YvAQ==
+ d=gmail.com; s=20251104; t=1787228822; x=1787833622; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=uvkTa9HSmLbrSKlwI2txI/oZG1ylV/9AWP+TfHOeDKM=;
+ b=h7HiMBp7hISfU0LdS+VDHgRcp/ihQUkLsMn7AzyVnyv6bF4ts1aJJgRdUFZXQxr/13
+ LKUwiZKr6M5z2Wstw9iiFy5PIYG8ViPubBIrRq6LEKiDfTzfkW2qRcpeWZvcC5I2TlE2
+ f+Auk5AsAplpiTpp4bXauoCn+HYyhXG+mtkCPhXsAgRIl6bNHgWUyoDHzt5POWedojCA
+ qVfqSgtXo0fBGyZ7MCUw49RRGz0KLx/525r4kp7lLLE53BnWK//ePF/ncvLz1Inxnp1+
+ cyqzOHpdpkYQj1iJq5+vDlrOX12SJJ5Q14nNAX05DymCjiMRls3BnZ1e0fmaqUwTHQAD
+ +qeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787228825; x=1787833625;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=7O1SDwJPhyM/cxU16CBQbBz7mUsV9rM5wrJOKeWl8xI=;
- b=Xv9InypqkI+NurFFh7DR4JsECfWuYnx3d2CWqayBQZDmt92VonXSGKRkGNOmoulSiO
- aj/b5KTCqaWah1Vs8QcnKL1RRmjaZojNl/NtpBzaHmMSZNjyRvVKqagQrdhfR6IAzkC2
- xYZKD3sy3uNN2Xjjf7v3uo8BT7xVpj1tBTZDlGh/Yw3oSAReqy4NUUAJreoTqcJzsc+z
- fsJRGRgMmJIj4jExaWOaUYnNuDbzuLZaGRari/Da36FPDJaTaPfWIvEuSZA6+1iyBMIw
- wJxUQA1Z0jQcAP/ZnU3GVrIlOdwXSJwl/3WAH5wjsnBROIRgoXfHqi+gxTaUpPnRdspX
- SABQ==
-X-Gm-Message-State: AFuF++kBupAMeF+nM9EJlPQDQoTFGUYk1FV0lETfAGoiq7aaqliC4KPB
- vsb60gSHQbDnpYxWTLLNI6hOThLAarHTgIGPpmlz/s0knyx+p3a3Z4W9w1ZQT56p
-X-Gm-Gg: AR+sD10m7G5ZrQEj7Ih2/Pp/f+rXH/hYebPznY4V2nDU2c1mUwMtjwZVHx9FbJUPuJs
- sc8Oc6v7Xat+H1y+x5udZEEPFe5wX3p0DgBcLnfd/KDExJdojLVe3/y9QiOifLmFkcBqmTCh8bu
- ahhCkqtVBrh46FeC8vwmI2jBv9LOdKJjxZLb4I8cyN3Zpk5IjpYSTJmOc0zchu2fL4aYJVewF3i
- EzibqKeITiaiah8XEGpvVzXj7yknfBynIgoyWJC6WaDzor1+ZYdKam4RoP1Locv+L+mB0Yo4RC3
- vYC0Kloh6hthYgEhaNXsnZEaMwOWJMGybK+MtdqmKHQXrd7L2SxCamcVSg7NrCuF0WRCmwQb5X5
- XMUWWdbGOPO6jkfrVwxhnmVO+hYl4J5nQFHu5ulX4IItccNhvungzncIIcWjZ+BMuxsA3uyTtzU
- 1SklniV1oRaQKu/w40+TMucOA3b/LjrS3sH27Vu9bbTx0h9kaiXFfjpoSII/DWuaTf/9XDJb2n5
- 1MwvTwPRGN3j3NnOIAUlqwj/Z60awEQZDTucIYHVqdrrXnDM+xNPC9qAoJTbB5IR0FDTUErOG5m
- XI90UcQER1leQHh4I2oqWIQ0jSdLZj7K+a9zB39Z1jV0cxxpALm+TJBZg7Il2LrRjTJeaZ8lOi1
- LNIo=
-X-Received: by 2002:a05:6000:41f6:b0:47d:eedb:ee62 with SMTP id
- ffacd0b85a97d-482b1fd3b69mr24471727f8f.14.1787228825204; 
- Thu, 20 Aug 2026 05:27:05 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787228822; x=1787833622;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=uvkTa9HSmLbrSKlwI2txI/oZG1ylV/9AWP+TfHOeDKM=;
+ b=gn3f9KxjqI8xCpHT26TFdL0l48fO8CHGb+dJM8CTIw5GGfheZtHjAKqJzQlIufVB+G
+ Hwm+ixHEAAnr/ET5cUA6vcIqRHGAPuB8tVnmWz7seosong929qJAECmDibqMP/901ATr
+ ZgAOzt69J4RGdPL4EDUE//tXi1lztj5Ci71jU9F7Y8HEHa8t0Dx8scfPAQuSxAPROcS0
+ a05+hAcRbqZsu+IU6TWG1lCOFRB1weeE1eWSvb1+eY7S0d4QKivc+vH/6HGezmM0z4am
+ JuzkZXD16bB4zX+SwD8jDd1/gd7nEmhMQ6KXbrSBlu9NmjzrUGZaG4sK38qU0zCt6cjb
+ 8OuQ==
+X-Gm-Message-State: AOJu0Yw2ESvTD/smalHuL8V/O49r0bIBW5HrspD5eZBMrAK/HVvUaYOG
+ r2v+3UIEGXBjPD8ijx2ebzEWOlR21H30Xp61+y7If6QnK0T4vgEUlp1voci/Najv
+X-Gm-Gg: AR+sD11ZeB0xGJi+qq7bj+1BEHUatjlJua9BdDOqy1b5vL3Q+3qzNjQyjyRfiyodM77
+ MbDYPAG1JX4Gwuk0fqSAPOsxE7Hch1In2AZbwBmTWz5rIrIHQHeBdgaTN6UE6cI+Yjg1Mr1dAyR
+ 1dRDUFj1D5LtJP7Wfyh7A3ZdnpR5uBGtNp23iUCu1TWa373/Ue4nz7Gem6YGbJvv5rDdil6To5h
+ tGBFTJOMs1dnGahN9qM5U3/GKkr94vApqUv+ClcI7tR2hiKaKXCmnyo1FVoW+fkz2txnhxJYya4
+ qU9cUqETkXTVuEnfp42xahJ5F4I0NKDDKep0+IVKYB7qUmP3DLQBRH5Efauhvi33I5NVVo9qRHS
+ xz5ncdfEuh9k8+TvZjQRxC6ugNpjNnRTGAsvebF/wUvDw5TvgmgDB7tXaRiu0WebJ8fTwJT0eu4
+ mjm6HzuAldVx6gIj5+n9hzeyS8/YlKLps7b2ss/hNEoavSp9cGyjCig6TKdK9NW7jaO6/IXxCSB
+ fNJBO+atQlv6hYDbX6NA0B8QDbLi7i4SQxiaA7VusNqGA8PghMfa5z1pH+g4vW+Ut9b5LDfzCUV
+ MWafk6qNkMNgOwiO/HCZU+0opOoBoONDspOh1GugnqmhbGDArnihzoCBYYEbmqptMphk
+X-Received: by 2002:a05:600c:a012:b0:499:52dd:c1f0 with SMTP id
+ 5b1f17b1804b1-499aa180132mr242174765e9.1.1787228821103; 
+ Thu, 20 Aug 2026 05:27:01 -0700 (PDT)
 Received: from localhost.localdomain
  (p2003010827046e07f1219fbed82e562c.dip0.t-ipconnect.de.
  [2003:108:2704:6e07:f121:9fbe:d82e:562c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b14b8022sm10536183f8f.18.2026.08.20.05.27.04
+ ffacd0b85a97d-482b14b8022sm10536183f8f.18.2026.08.20.05.26.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 05:27:04 -0700 (PDT)
+ Thu, 20 Aug 2026 05:27:00 -0700 (PDT)
 From: Bernard Ladenthin <bernard.ladenthin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: npiggin@gmail.com, harshpb@linux.ibm.com, qemu-ppc@nongnu.org,
- Bernard Ladenthin <bernard.ladenthin@gmail.com>, qemu-stable@nongnu.org
-Subject: [PATCH 1/2] spapr_vscsi: fix data corruption on transfers above 128
- KiB
-Date: Thu, 20 Aug 2026 14:26:43 +0200
-Message-ID: <20260820122644.19691-2-bernard.ladenthin@gmail.com>
+ Bernard Ladenthin <bernard.ladenthin@gmail.com>
+Subject: [PATCH 0/2] spapr_vscsi: fix silent data corruption above 128 KiB
+Date: Thu, 20 Aug 2026 14:26:42 +0200
+Message-ID: <20260820122644.19691-1-bernard.ladenthin@gmail.com>
 X-Mailer: git-send-email 2.49.0.windows.1
-In-Reply-To: <20260820122644.19691-1-bernard.ladenthin@gmail.com>
-References: <20260820122644.19691-1-bernard.ladenthin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=bernard.ladenthin@gmail.com; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=bernard.ladenthin@gmail.com; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 20 Aug 2026 08:41:08 -0400
+X-Mailman-Approved-At: Thu, 20 Aug 2026 08:41:07 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,70 +102,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-scsi-disk hands the HBA at most SCSI_DMA_BUF_SIZE (128 KiB) per
-vscsi_transfer_data() callback, so a single SCSI command carrying more
-than that arrives in several chunks.  vscsi_srp_direct_data() remembers
-how far into the descriptor it already is in req->cur_desc_offset -- but
-that field is uint16_t, so the very first 128 KiB chunk does
+struct vscsi_req::cur_desc_offset is uint16_t. scsi-disk delivers a command
+in SCSI_DMA_BUF_SIZE (128 KiB) chunks, so vscsi_srp_direct_data() adds
+0x20000 to it on the first chunk and it wraps back to zero. Every following
+chunk of the same command is then DMA'd over the start of the guest buffer:
+the tail of the transfer overwrites the head, and the rest is never written
+at all. The command completes with status 0 and no sense data, so the guest
+has no way to notice.
 
-    req->cur_desc_offset += 0x20000;      /* 0x20000 & 0xFFFF == 0 */
+Linux never hits it. Its ibmvscsi initiator uses INDIRECT descriptors for
+anything multi-page, and that path resets cur_desc_offset at every
+descriptor boundary, so the counter never reaches 65536. A guest that
+describes the whole transfer with one DIRECT descriptor and issues 256 KiB
+commands hits it on the first command. The field has been uint16_t since it
+was introduced in 2013.
 
-and wraps straight back to zero.  Every following chunk of the same
-command is then fetched with buf_offset 0 and DMA'd over the START of
-the guest buffer: the tail of the transfer overwrites the head, and the
-rest of the buffer is never written at all.  The command still completes
-with status 0 and no sense data, so the guest cannot notice.
-
-Linux never hits this.  Its ibmvscsi initiator uses INDIRECT descriptors
-for anything multi-page, and the indirect path resets cur_desc_offset to
-0 at every descriptor boundary, so the counter never reaches 65536.  A
-guest that describes the whole transfer with a single DIRECT descriptor
-and issues 256 KiB commands does hit it on the first command.
-
-Measured with a READ_10 of 2098 sectors, traced with
-spapr_vscsi_transfer_data and spapr_vscsi_fetch_desc_done:
-
-    queue_cmd      tag 0x2 CMD 0x28=READ_10 LUN 0 ret: 262144
-    transfer_data  tag=0x2 len=0x20000
-    fetch_desc     cur=0 offs=0x0 ret { va=0x84d28 len=0x40000 }
-    transfer_data  tag=0x2 len=0x20000
-    fetch_desc     cur=0 offs=0x0 ret { va=0x84d28 len=0x40000 }
-    cmd_complete   tag=0x2 status=0x0
-
-Same tag, same request, same target address twice.  The guest buffer
-ends up holding the second half of the transfer at offset 0 and zeroes
-above it.
-
-struct srp_direct_buf.len is already uint32_t and vscsi_fetch_desc()
-already takes buf_offset as unsigned, so widening the field is all that
-is required.  The VMSTATE entries for cur_desc_num/cur_desc_offset are
+Patch 1 widens it. struct srp_direct_buf.len is already uint32_t and
+vscsi_fetch_desc() already takes buf_offset as unsigned, so that is the
+whole change. The VMSTATE entries for cur_desc_num/cur_desc_offset are
 commented out upstream, so the migration format is unaffected.
 
-Fixes: 8ca8a17c9a16 ("pseries: rework PAPR virtual SCSI")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Bernard Ladenthin <bernard.ladenthin@gmail.com>
----
-This is my first QEMU submission. Corrections on anything I got wrong in
-the process are welcome.
+Patch 2 adds the reproducer. It is a bare-metal PowerPC payload booted with
+-kernel on -M pseries that speaks CRQ and SRP directly, with no guest
+operating system involved, so a failure is attributable to one function in
+QEMU rather than to something a kernel did on the way there. The fix comes
+first, so the tree is never left with a failing test, but the test applies
+on its own if a reviewer wants to put it first and watch it fail.
 
-diff --git a/hw/scsi/spapr_vscsi.c b/hw/scsi/spapr_vscsi.c
-index 978eb856d7..1f0c2a3b64 100644
---- a/hw/scsi/spapr_vscsi.c
-+++ b/hw/scsi/spapr_vscsi.c
-@@ -86,7 +86,14 @@ typedef struct vscsi_req {
-     uint16_t                total_desc;
-     uint16_t                cdb_offset;
-     uint16_t                cur_desc_num;
--    uint16_t                cur_desc_offset;
-+    /*
-+     * Byte offset reached inside the current descriptor.  Must be at
-+     * least 32 bit: scsi-disk delivers a command in SCSI_DMA_BUF_SIZE
-+     * (128 KiB) chunks, so a DIRECT descriptor larger than 64 KiB would
-+     * wrap a uint16_t back to zero and make every chunk after the first
-+     * overwrite the head of the guest buffer.
-+     */
-+    uint32_t                cur_desc_offset;
- } vscsi_req;
- 
- #define TYPE_VIO_SPAPR_VSCSI_DEVICE "spapr-vscsi"
+Testing. Against unpatched master the test reports 2 passed, 2 failed: the
+two controls hold -- the CRQ registers and the 256 KiB READ_10 completes
+with SRP status 0 -- and exactly the two assertions about where the data
+landed fail. With patch 1 it reports 4 passed, 0 failed. Both runs use the
+same payload and the same script; only qemu-system-ppc64 differs. Each
+patch was also confirmed to apply and compile on its own against master.
+
+The committed ELF is 920 bytes and its source rebuilds to it byte for byte;
+"make check-reproducible" is there so the .S and the .elf cannot drift apart
+unnoticed. tests/multiboot is the precedent for committing a built payload
+and running it from a standalone script rather than a meson target.
+
+The bug was found while trying to boot AIX 5.3 on -M pseries, where liblvm
+reads a volume group descriptor area in one 256 KiB command and gets the
+second half of it at offset 0. That is not needed to see the problem and is
+not part of this series; the reproducer needs no guest at all.
+
+Bernard Ladenthin (2):
+  spapr_vscsi: fix data corruption on transfers above 128 KiB
+  tests/spapr: add bare-metal reproducers for pseries machine behaviour
+
+ MAINTAINERS              |   1 +
+ hw/scsi/spapr_vscsi.c    |   9 +-
+ tests/spapr/Makefile     |  62 ++++++++++
+ tests/spapr/link.ld      |   3 +
+ tests/spapr/run_test.sh  | 108 ++++++++++++++++
+ tests/spapr/vscsibig.S   | 285 +++++++++++++++++++++++++++++++++++++++++++
+ tests/spapr/vscsibig.elf | Bin 0 -> 920 bytes
+ 7 files changed, 467 insertions(+), 1 deletion(-)
+ create mode 100644 tests/spapr/Makefile
+ create mode 100644 tests/spapr/link.ld
+ create mode 100755 tests/spapr/run_test.sh
+ create mode 100644 tests/spapr/vscsibig.S
+ create mode 100644 tests/spapr/vscsibig.elf
+
+--
+2.47.3
 
