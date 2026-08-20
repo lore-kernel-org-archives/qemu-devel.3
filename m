@@ -4,67 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E825AC5DF88
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 10:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93638C5DF82
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 10:10:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwzZR-0005hd-Kt; Thu, 20 Aug 2026 06:00:25 -0400
+	id 1wwziI-00071b-3I; Thu, 20 Aug 2026 06:09:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1wwzZP-0005hG-E1; Thu, 20 Aug 2026 06:00:23 -0400
-Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
- id 1wwzZK-0006Zk-Or; Thu, 20 Aug 2026 06:00:23 -0400
-Received: from [10.213.18.251] (unknown [36.110.52.2])
- by APP-01 (Coremail) with SMTP id qwCowABXKu4m0IZqLK8hBg--.35485S3;
- Thu, 20 Aug 2026 18:00:06 +0800 (CST)
-Content-Type: multipart/alternative;
- boundary="------------VxBiBoWHxAm8TY48GO7wZgjL"
-Message-ID: <b6d54543-bf3a-4ee3-aad5-a9edbd7a8240@iscas.ac.cn>
-Date: Thu, 20 Aug 2026 18:00:06 +0800
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhv-0006ux-Lr
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:12 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzht-0008PN-Hz
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:11 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-47f6609c657so971338f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 03:09:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=openvz.org; s=google; t=1787220548; x=1787825348; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=nkj2k6nchMuIJVjh47utAhxnpSusPJpE2MYttsvWBKI=;
+ b=qra7BUBruBUQ1qoJNAzV+ejEkB5K+5xmm6nbyl6LAhUjQvNUiUgUb0Rrf6OnMvRXsZ
+ ll5D1lFqNiWvoVDqstQusmL1f0DC/0Vykia9A9b7dRWppxsQI/vnOPo6BzbVvuuHVK0G
+ bqUDEHzEs4MMmK5TZ56s1lMQSwm3ujnaMY0s+ndcRSuTBVe8Wwt1bJh1rUb1uDszoXQw
+ tP97bYG7Fbd03LudWY/wOE4WxhRyJ9CBQQQCpL5huCK0QEPYpy6IaadlYqUs71DfXhxJ
+ lXU9WNd/IQ0KSRpjXgYCeKTwTyebyoXZZebIky9HhKDE1qbszfnpP80AQFPP95cs732+
+ D+5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787220548; x=1787825348;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=nkj2k6nchMuIJVjh47utAhxnpSusPJpE2MYttsvWBKI=;
+ b=O9aGsKwBSG3lPPBHNRC7YGnqsfA7rduJ+hmNbdlGkrzjoEoQsAZD3Qx/ZN7qlt0jTP
+ DidIzNNwqAULu3jKVDHn8aZA+iMHNocP8AcBdR/8B15Cpj7hRAga3pbdpbrBPbYXO6eV
+ lGFIwFGznuAub+0KWMhGSN8SbwFsAGHYyaI7pxRBJ7yV8xWhBM/OfBjHdo9EcEfQg/bu
+ 4CkB0gGuTbM9K4eDOhHZAlQYNmqk5FORj8Qz/2FCm2a9OpCiglvv/zUGuxEaIgrkJLDP
+ ShmkZDMBlu+iqJ+F5Em21x9E37U6HcjXgxeGkQJc/QmrdXk1cOqQYZcvOqw0H2bBLjaY
+ RHhA==
+X-Gm-Message-State: AFuF++kvo8lwjWND9fW0+jDvEgk/ATmPoYdFkB+aSVAaiMGZAVCAMOZ1
+ tYw1KX8fGyTpweP1Ej4BR4lQnCzuFTHgjn2RJiA1Ei/mQpY62D0L0mTp1Kt6K+lexSJFK1XRp3q
+ pHSQp
+X-Gm-Gg: AR+sD1042hFY4qRbstZfw42PqxsrUruCN8ok9oU+aOG6NjEcmTG3JO6rNJEMODFnaUH
+ kIM0pBYhFz4STsBmTv8uxs/unXDMcR9c0atxMGyI37oAcTWbFwBbA68vMlRg3N0C+E79B0uLWOv
+ Y4qYIjgFJOhmfawYRegtJqAsqA/dw5PPNF/1VlrSCNAs3tK5Z/RFF9NC/tjRyfBq6fkOzYdE9LW
+ T8yefRxT1QbouCS3Q/k+6t1Mvt4rB9ij8woJ4FZ64QCox1SIsJu6S35aPo7FemUSBGYgB03+0ln
+ XeOZK/d3wF4Gi7OfNCApllxjPKX8/TTBC0j9oGx5aWmHy9vJ3cGinBXeGtx5KcfBIPBe7IdAC6m
+ q3nj90oFG3SstpJHv2Ui/DVXaJtL4g4LQCWm0jgMVVnIGJWKie4hFkFktAaXT0mL8kqFxyFru2/
+ 1X/vOJ/4w50Yy/6+R6y21gTB2W9aGWMAEomvvPVGtUQlHXOuycwug8pE1cug==
+X-Received: by 2002:a05:6000:4619:b0:47f:5b52:5579 with SMTP id
+ ffacd0b85a97d-482b1fe8a4bmr21190909f8f.18.1787220548147; 
+ Thu, 20 Aug 2026 03:09:08 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:a123:7b43:afd8:8b47])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482b1441b0fsm11678929f8f.4.2026.08.20.03.09.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Aug 2026 03:09:07 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v2 13/17] tests/qtest/ide-test: cover a rejected CHS
+ translation in the stream
+Date: Thu, 20 Aug 2026 12:08:40 +0200
+Message-ID: <20260820100844.411717-14-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260820100844.411717-1-den@openvz.org>
+References: <20260820100844.411717-1-den@openvz.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/18] target/riscv: Add packed SIMD shift instructions
-To: Max Chou <max.chou@sifive.com>
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com, Chao Liu <chao.liu@processmission.com>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-References: <cover.1784280142.git.xiaoou@iscas.ac.cn>
- <193352ab49c6febc51250ececb4c431ffa165be6.1784280142.git.xiaoou@iscas.ac.cn>
- <aoXO5KIBKDQZSdd4@sifive.com>
-From: MOLLY CHEN <xiaoou@iscas.ac.cn>
-In-Reply-To: <aoXO5KIBKDQZSdd4@sifive.com>
-X-CM-TRANSID: qwCowABXKu4m0IZqLK8hBg--.35485S3
-X-Coremail-Antispam: 1UD129KBjvJXoWxGFWfGFWUJF4UJw1fJw1DZFb_yoW5AFWfpw
- s3Kw13t397tFWfW3yfKF4UAa15Gr4rK3WYqwn7X34rZ398Xrs3ur1aqw4akF1UGFy8Jr1a
- ga12yr45uFWxZaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUvab7Iv0xC_KF4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
- 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
- A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xII
- jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
- A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAv7VC0I7IYx2IY
- 67AKxVWUtVWrXwAv7VC2z280aVAFwI0_Gr1j6F4UJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7
- xvr2IY64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1l7480Y4vEI4kI2Ix0rVAqx4xJMxkF
- 7I0En4kS14v26r1q6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI
- 8I3I0E5I8CrVAFwI0_JrI_JrWlx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AK
- xVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI
- 8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280
- aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyT
- uYvjxUz4SoDUUUU
-X-Originating-IP: [36.110.52.2]
-X-CM-SenderInfo: 50ld003x6l2u1dvotugofq/
-Received-SPF: pass client-ip=159.226.251.21; envelope-from=xiaoou@iscas.ac.cn;
- helo=cstnet.cn
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=den@openvz.org; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, HK_RANDOM_ENVFROM=0.711,
- HK_RANDOM_FROM=0.999, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,218 +103,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------VxBiBoWHxAm8TY48GO7wZgjL
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Denis V. Lunev <den@openvz.org>
 
-on 2026/8/20 0:10, Max Chou wrote:
+ide_drive_post_load() refuses a logical CHS translation that no command
+could have selected, as the fields are a divisor in ide_set_sector() and a
+factor in ide_get_sector(). Nothing exercised that, a fixed QEMU having no
+way to produce such a stream.
 
-> On 2026-07-17 10:06, Molly Chen wrote:
->> Signed-off-by: Molly Chen<xiaoou@iscas.ac.cn>
->> ---
->>   target/riscv/helper.h                       |  43 ++++++
->>   target/riscv/insn32.decode                  |  57 ++++++++
->>   target/riscv/tcg/insn_trans/trans_rvp.c.inc |  43 ++++++
->>   target/riscv/tcg/psimd_helper.c             | 149 ++++++++++++++++++++
->>   4 files changed, 292 insertions(+)
-> ...
->> diff --git a/target/riscv/tcg/psimd_helper.c b/target/riscv/tcg/psimd_helper.c
->> index 034afe5a054..8b106a336f5 100644
->> --- a/target/riscv/tcg/psimd_helper.c
->> +++ b/target/riscv/tcg/psimd_helper.c
->> @@ -1903,3 +1903,152 @@ GEN_PSIMD_BINOP(mslt, uint32_t, int32_t, uint32_t,
->>   GEN_PSIMD_BINOP(msltu, uint32_t, uint32_t, uint32_t,
->>                   EXTRACT32, INSERT32, ELEMS_W, PSIMD_DO_LT_MASK)
->>   
->> +/* Shift operations (immediate and register) */
->> +
->> +GEN_PSIMD_SHIFTOP(pslli_b, target_ulong, uint8_t, uint8_t,
->> +                  EXTRACT8, INSERT8, ELEMS_B, 0x07, PSIMD_DO_SLL)
->> +GEN_PSIMD_SHIFTOP(psll_bs, target_ulong, uint8_t, uint8_t,
->> +                  EXTRACT8, INSERT8, ELEMS_B, 0x07, PSIMD_DO_SLL)
-> The spec instead specifies a uniform 5-bit mask (shamt = X[rs2][4:0]),
-> regardless of element width.
-> So the SHMASK should be 0x1f for PSLL/PSRL/PSRA.[BS|HS] instructions.
->
-> ...
+Migrate a guest that selected a translation to a file, replace the number
+of sectors per logical track in the subsection with a zero, and let a
+destination read the result back. The load has to fail rather than take
+the value, so the destination is asked not to exit on a failed incoming
+migration and its migration status is what the test looks at.
 
-|You are right. The byte and halfword shift forms should both use the 
-low 5 bits of rs2. I will change their SHMASK arguments to 0x1f in the 
-next revision.|
-
->> +
->> +/**
->> + * SSHAR - 32-bit scalar variable shift with rounding and saturation
->> + */
->> +uint32_t HELPER(sshar)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
->> +{
->> +    int32_t a = (int32_t)rs1;
->> +    int8_t shamt = (int8_t)(rs2 & 0xFF);
->> +    int sat = 0;
->> +    int32_t res;
->> +
->> +    if (shamt >= 0) {
->> +        int64_t shifted = (int64_t)a << shamt;
->> +        res = signed_saturate_w(shifted, &sat);
->> +    } else {
->> +        int right = -shamt;
->> +        if (right >= 32) {
->> +            res = (a < 0) ? -1 : 0;
-> According to the p ext isa spec, SSHAR here extracts a sign-filled
-> 33-bit value and then applies RNU rounding. The result here should be
-> 0 for both positive and negative inputs.
-
-Yes, I will fix it.
-
->
->> +        } else {
->> +            int64_t rounded = ((a >> (right - 1)) + 1) >> 1;
-> Here may has undefined behavior for negative sources at in-range
-> amounts.
-
-|Right-shifting a negative signed integer is implementation-defined, 
-rather than undefined. QEMU already relies on the supported compilers 
-performing an arithmetic right shift in this case. However, the 
-expression does contain a real undefined-behavior case for a positive 
-source: when e1 is INT32_MAX and right is 1, the addition of one 
-overflows before the result is assigned to WTYPE. I will cast e1 to 
-WTYPE before the first shift so that the shift and rounding addition are 
-both evaluated in the wider type.|
-
->
-> I think that we could extract the SSHAR implementation from
-> GEN_PSIMD_VAR_SSHAR and share it between here and
-> GEN_PSIMD_VAR_SSHAR.
-
-|Good suggestion. I will extract the common SSHAR operation into a 
-shared helper and use it for both implementations in the next revision.|
-||
-|Thanks for the review.|
-Molly
-
---------------VxBiBoWHxAm8TY48GO7wZgjL
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <pre dir="ltr">
-on 2026/8/20 0:10, Max Chou wrote:</pre>
-    <blockquote type="cite" cite="mid:aoXO5KIBKDQZSdd4@sifive.com">
-      <pre wrap="" class="moz-quote-pre">On 2026-07-17 10:06, Molly Chen wrote:
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">Signed-off-by: Molly Chen <a class="moz-txt-link-rfc2396E" href="mailto:xiaoou@iscas.ac.cn">&lt;xiaoou@iscas.ac.cn&gt;</a>
+Cc: John Snow <jsnow@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- target/riscv/helper.h                       |  43 ++++++
- target/riscv/insn32.decode                  |  57 ++++++++
- target/riscv/tcg/insn_trans/trans_rvp.c.inc |  43 ++++++
- target/riscv/tcg/psimd_helper.c             | 149 ++++++++++++++++++++
- 4 files changed, 292 insertions(+)
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">...
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">diff --git a/target/riscv/tcg/psimd_helper.c b/target/riscv/tcg/psimd_helper.c
-index 034afe5a054..8b106a336f5 100644
---- a/target/riscv/tcg/psimd_helper.c
-+++ b/target/riscv/tcg/psimd_helper.c
-@@ -1903,3 +1903,152 @@ GEN_PSIMD_BINOP(mslt, uint32_t, int32_t, uint32_t,
- GEN_PSIMD_BINOP(msltu, uint32_t, uint32_t, uint32_t,
-                 EXTRACT32, INSERT32, ELEMS_W, PSIMD_DO_LT_MASK)
+ tests/qtest/ide-test.c | 81 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 81 insertions(+)
+
+diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
+index 19e9734d3c..4fa58ac525 100644
+--- a/tests/qtest/ide-test.c
++++ b/tests/qtest/ide-test.c
+@@ -1483,6 +1483,86 @@ static void test_migrate_chs_snapshot(void)
+     unlink(img);
+ }
  
-+/* Shift operations (immediate and register) */
-+
-+GEN_PSIMD_SHIFTOP(pslli_b, target_ulong, uint8_t, uint8_t,
-+                  EXTRACT8, INSERT8, ELEMS_B, 0x07, PSIMD_DO_SLL)
-+GEN_PSIMD_SHIFTOP(psll_bs, target_ulong, uint8_t, uint8_t,
-+                  EXTRACT8, INSERT8, ELEMS_B, 0x07, PSIMD_DO_SLL)
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-The spec instead specifies a uniform 5-bit mask (shamt = X[rs2][4:0]),
-regardless of element width.
-So the SHMASK should be 0x1f for PSLL/PSRL/PSRA.[BS|HS] instructions.
-
-...
-</pre>
-    </blockquote>
-    <pre dir="ltr"><code>You are right.  The byte and halfword shift forms should
-both use the low 5 bits of rs2.  I will change their SHMASK arguments to
-0x1f in the next revision.</code></pre>
-    <blockquote type="cite" cite="mid:aoXO5KIBKDQZSdd4@sifive.com">
-      <pre wrap="" class="moz-quote-pre">
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">+
-+/**
-+ * SSHAR - 32-bit scalar variable shift with rounding and saturation
-+ */
-+uint32_t HELPER(sshar)(CPURISCVState *env, uint32_t rs1, uint32_t rs2)
++/* A migration stream holds NUL bytes, so this cannot be a string search */
++static char *ide_stream_find(char *stream, gsize len, const char *name)
 +{
-+    int32_t a = (int32_t)rs1;
-+    int8_t shamt = (int8_t)(rs2 &amp; 0xFF);
-+    int sat = 0;
-+    int32_t res;
++    gsize name_len = strlen(name);
++    gsize i;
 +
-+    if (shamt &gt;= 0) {
-+        int64_t shifted = (int64_t)a &lt;&lt; shamt;
-+        res = signed_saturate_w(shifted, &amp;sat);
-+    } else {
-+        int right = -shamt;
-+        if (right &gt;= 32) {
-+            res = (a &lt; 0) ? -1 : 0;
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-According to the p ext isa spec, SSHAR here extracts a sign-filled
-33-bit value and then applies RNU rounding. The result here should be
-0 for both positive and negative inputs.</pre>
-    </blockquote>
-    <pre>Yes, I will fix it.</pre>
-    <blockquote type="cite" cite="mid:aoXO5KIBKDQZSdd4@sifive.com">
-      <pre wrap="" class="moz-quote-pre">
-
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">+        } else {
-+            int64_t rounded = ((a &gt;&gt; (right - 1)) + 1) &gt;&gt; 1;
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-Here may has undefined behavior for negative sources at in-range
-amounts.</pre>
-    </blockquote>
-    <pre dir="ltr"><code>Right-shifting a negative signed integer is implementation-defined,
-rather than undefined.  QEMU already relies on the supported compilers
-performing an arithmetic right shift in this case.
-
-However, the expression does contain a real undefined-behavior case for
-a positive source: when e1 is INT32_MAX and right is 1, the addition of
-one overflows before the result is assigned to WTYPE.  I will cast e1 to
-WTYPE before the first shift so that the shift and rounding addition are
-both evaluated in the wider type.</code></pre>
-    <blockquote type="cite" cite="mid:aoXO5KIBKDQZSdd4@sifive.com">
-      <pre wrap="" class="moz-quote-pre">
-
-I think that we could extract the SSHAR implementation from
-GEN_PSIMD_VAR_SSHAR and share it between here and
-GEN_PSIMD_VAR_SSHAR.</pre>
-    </blockquote>
-    <pre><code>Good suggestion.  I will extract the common SSHAR operation into a
-shared helper and use it for both implementations in the next revision.</code>
-<code></code>
-<code>Thanks for the review.</code>
-Molly</pre>
-  </body>
-</html>
-
---------------VxBiBoWHxAm8TY48GO7wZgjL--
++    if (len < name_len) {
++        return NULL;
++    }
++    for (i = 0; i <= len - name_len; i++) {
++        if (memcmp(stream + i, name, name_len) == 0) {
++            return stream + i;
++        }
++    }
++
++    return NULL;
++}
++
++/* A translation no command could have selected has to be refused on load */
++static void test_migrate_chs_rejected(void)
++{
++    const char *name = "ide_drive/chs_translation";
++    QTestState *src, *dst;
++    QPCIDevice *dev;
++    QPCIBar bmdma_bar, ide_bar;
++    g_autofree char *path = NULL;
++    g_autofree char *uri = NULL;
++    g_autofree char *dst_args = NULL;
++    g_autofree char *stream = NULL;
++    char *subsection;
++    gsize len;
++    int fd;
++
++    fd = g_file_open_tmp("qtest-ide-stream.XXXXXX", &path, NULL);
++    g_assert(fd >= 0);
++    close(fd);
++    uri = g_strdup_printf("file:%s", path);
++
++    src = ide_test_start(
++        "-blockdev driver=file,node-name=hda,filename=%s "
++        "-device ide-hd,drive=hda,bus=ide.0,unit=0 ",
++        tmp_path[0]);
++    dev = get_pci_device(src, &bmdma_bar, &ide_bar);
++
++    ide_set_translation(dev, ide_bar, 8, 32);
++    qtest_qmp_assert_success(src, "{ 'execute': 'migrate',"
++                             " 'arguments': { 'uri': %s } }", uri);
++    qtest_qmp_eventwait(src, "STOP");
++    ide_migration_wait(src, "completed");
++    free_pci_device(dev);
++    ide_test_quit(src);
++
++    /*
++     * Behind the name come version, heads and sectors, each big endian 32 bit.
++     * The name recurs in the description at the end of the stream, so the
++     * first match is the one carrying data.
++     */
++    g_assert(g_file_get_contents(path, &stream, &len, NULL));
++    subsection = ide_stream_find(stream, len, name);
++    g_assert(subsection);
++    g_assert_cmpint(subsection - stream + strlen(name) + 12, <=, len);
++    memset(subsection + strlen(name) + 8, 0, 4);
++    g_assert(g_file_set_contents(path, stream, len, NULL));
++
++    dst_args = g_strdup_printf(
++        "-machine pc "
++        "-blockdev driver=file,node-name=hda,filename=%s "
++        "-device ide-hd,drive=hda,bus=ide.0,unit=0 -incoming defer",
++        tmp_path[0]);
++    dst = qtest_init(dst_args);
++
++    qtest_qmp_assert_success(dst, "{ 'execute': 'migrate-incoming',"
++                             " 'arguments': { 'uri': %s,"
++                             " 'exit-on-error': false } }", uri);
++    ide_migration_wait(dst, "failed");
++
++    qtest_quit(dst);
++    unlink(path);
++}
++
+ static void test_cdrom_pio(void)
+ {
+     cdrom_read_impl(1, CDROM_PIO);
+@@ -1558,6 +1638,7 @@ int main(int argc, char **argv)
+     qtest_add_func("/ide/migration/chs_translation",
+                    test_migrate_chs_translation);
+     qtest_add_func("/ide/migration/chs_snapshot", test_migrate_chs_snapshot);
++    qtest_add_func("/ide/migration/chs_rejected", test_migrate_chs_rejected);
+ 
+     qtest_add_func("/ide/identify", test_identify);
+ 
+-- 
+2.53.0
 
 
