@@ -4,77 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95BC4C5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 02:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AF15C5DF85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 02:49:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwspp-0001pq-OV; Wed, 19 Aug 2026 22:48:55 -0400
+	id 1wwsq6-0001sf-2h; Wed, 19 Aug 2026 22:49:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kylefoxaustin.github@gmail.com>)
- id 1wwspi-0001pA-QL
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:48:47 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ id 1wwspm-0001pa-CE
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:48:51 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <kylefoxaustin.github@gmail.com>)
- id 1wwspg-0000IL-KE
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:48:46 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-66bee06ff74so2624794d50.0
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 19:48:42 -0700 (PDT)
+ id 1wwspk-0000Km-9C
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:48:49 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-66c70e2904dso2291916d50.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 19:48:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787194122; x=1787798922; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=XcvZD0VAihWuOrA7ZB8scy6ZZcyX8R0a7z6aaXLjTOM=;
- b=XKu4HtBVMR0h93PSmtPoPa9/nLjliNllXjdmmI/NrVdhxnE0OmKvNmTQWCziwsUU+I
- zfC5ROUInM8OjPIjtbVDUr2jT20efstxQRMSP9hoUKRI1CHxx8l2XvMz6amgc4QQM2bE
- Hj9p/jI7V+/I+4/rv8fiCPb6Sdz/nE+V4DXh0bbCPYc7eTZ1YQOJ4tQkrfCGqsheqSWz
- PXmfMOqHN7KGLM9rS08KuyZ+sx9PAWSIhDlqwKvsmdZaXAHF5p9CcTaCAPiCCFaYqgAA
- w/VsJg6d4tbC/dn5zPWl6spYmgKdwRQ4ZgyJmqStakI73wCfNwuDq+YeYp675DvYmSaC
- XKyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787194122; x=1787798922;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1787194127; x=1787798927; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=XcvZD0VAihWuOrA7ZB8scy6ZZcyX8R0a7z6aaXLjTOM=;
- b=b5GvkGKQ8R34SDajB/PEi8ZwvJpwVBrMlmIvqyhFWXOY7Arm43oGf9yjEDfXIsI1eb
- wJPoen4+RF+pPQPyiT3eLlE2uRJbbLm+j12CgDxLb0o8Nb6D3oRJEbOnSTMBt84cLpGE
- BVVLSIOB9vDtwXKlT0yXaRSYFAN0j9uObDvrBevm6c2IXna56k1c4FizYuqEonSZT4WV
- o7whdKSyvBuA6L55ntb4HPoLzUzXY71BuRqMVelBxN3l14CkQ8+oImiVgdnNVkHcKQHP
- UyqUB3O/6lvZb3gEJVJ83uZFfYZETVgvVFtrKgJfTK8C2TIO3azwccKGo5BFPib61FPs
- AwrQ==
-X-Gm-Message-State: AFuF++msx2G4GvbOTnYKybPN2TX1cPa7Oaxa52Ldu9b3EEJ6nJCfNF0g
- eETderCCA0JwglsVbWWRDVObUVXtBHwm/4WgqkrwTSB6RvVtR06YSAr/Rot6QQ==
-X-Gm-Gg: AR+sD107oigDX8XoeQQEt5DTWwAZz7pvtScWAUT//LpkgU94z9TAu810mVzomVu9cV3
- BVCeF6B4PezQAUEY6zWLYbZUBXIsyNVUYKEIeNPiy8NQejYQLIxB/QsYUKcPHRneDLbLrMHV14j
- O2uIFlknjZYtn4v9Puy66LkSaLMUrmB40/vBcoWKQO7+VaLBs2moO6hC/niO4aP5KZpmCxt486p
- XvpyP1tz8HV3DqvP9ZEc+g8t8VOTeX2g2LXN3+jYRYHckBT5Xbt2JTjHXBZnwwzTp/wqCpHS5ex
- cvG5Kl2+IDY1MyQqoE8Ydp2NNAzYoyHHW34V/iNIvvB464WqMLFfJ5JCAw98IoFkVN5lJDuNFve
- NrwRYcvWvIIcjqeBdWb3YmkpK90lCyhnmNcsuG5ew4jqz0ysCENoXy6b0UZWYRtNGXTMuWHDVBu
- CiRXhNqWz7XwE1UOv33sEPOATKMEFJBnAFj4WTzcQigbVJ6F6/ETPryrdWl4yAwb/8L+e3w0dCB
- OTnxC9w3TuanO2eGZyNa+Qx4eEBGKjlSDig9JdbE2FPw7J12ifqFcYpF/11aZ8WVwkecg==
-X-Received: by 2002:a05:690e:4505:10b0:667:aa5c:d2d1 with SMTP id
- 956f58d0204a3-66ccb65a09bmr2434884d50.38.1787194121790; 
- Wed, 19 Aug 2026 19:48:41 -0700 (PDT)
+ bh=weR0SmSkyvTsHI8HzTlXiZC1s5xIKhEaofwIx1H+ZMg=;
+ b=NOjf4FkF5ovMH+oHkGVscS73fSBiABbnr8tEkcSQVJIFc5EiGgI+XbvgUoZhVCjtGB
+ 3Kf1I9WJYKxk9CdGN9Q3MTkJsSja3SeEQZSQYr5S1U7nLUCFN3P1r5pa84fYV5CMcTxX
+ +/rtT86F2CH1ftAzuVnuMaQpkOa/pxVnaUWgh/h0IvpwT5Dz4/6a6mPOoFW0ZFR5fT+0
+ h2E6cIegG8NXj3W2qdsqME0VaQzjWr7FediiX5njWJWvAs4kihTihICKqdNtdQO3k4jn
+ QngtJSdkQOXXorS/cIiObtDsZgudXEHCBpcWu1AwZuyN0+RFlsgRRUSc7aDKeWUunxos
+ Di7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787194127; x=1787798927;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=weR0SmSkyvTsHI8HzTlXiZC1s5xIKhEaofwIx1H+ZMg=;
+ b=cpEYeTDmH+Ac65GoYCUQL+9pH1VNvsYhvRT+JTOnd0SaXji2J05tHtX8tgibEsCypW
+ 3aENBEzwOTvhARcEf4QYj9rB6u5JUm+c4VwNZx7LBIXLdM40NTZnUwzuVnK7BZE5JZIv
+ oHd3dpqO5vWA+zVzPRpj52iWS2t3FPS//9RQtOAA12eCauIQ7bNNQjVqgGEXbUhiBmw4
+ ZiclWK8T+Coh9f3/UH0/lGimsARhXbPfG2Mp+9tixHFmneSqkXxJUdvQjdoJzb2vwRg3
+ 7qsy//5JWBQsOQKVJRNsAKDXqw80V8fHQR9J7IJlekZ6eAL6A1DLCl08EIQ+1CVdMSCq
+ VwxQ==
+X-Gm-Message-State: AFuF++m9+YC6bmmt86yKEtXmSICmb+fo7PreAPQRoeqrnFjDJm2Vc9Ep
+ /QP9JpkpcxWitOuIo7qzzHCqnFITLv3ac/h9vIuRHg+VgRNRtA7Igmxa6tQLWw==
+X-Gm-Gg: AR+sD12t19wtjcm26XSQKBDJhH+HnlJaJVGIgASXE5LuI9/cGdUQE2gTQH4lVfiPal+
+ S2vO6T0hKmw51+SQHZiL1X4kNpaYkB7dnYD4dDG2U5qOeG5Uu0Uyn6B9mhHFm3LT2JJd2Zi5180
+ GsLXPJwKFOEOGF5LfTk7fnDp7xFFQkjj7+nPYYRjys4h6rF7BCZc4If80kD76uJJRiLQBsfbejf
+ 7cQpUYcZBLlIxIbysYC594Q4OIvAuGlaI4IybyN8Tv5Qn+C9l6KB4sxwuUbo98tBoHodFSsx4pt
+ yj9FtoGmeBwK4iUObhKIT9dCGHqY4B0FM4XvDNnr2f2vmsHXLw+nLmoDE5EAqnRkPUqmi5ZnjuS
+ q8GDVUNyhACVqlRoWWWxMJgjygVmVi3gzmftQE7ifAvAQ3AG8hdhTuBRk6Zz7Rg723sEzARSVQO
+ phoH4kgvpNhunklXCwhgYihBl/1GKU/noDw++rTbeWa3gkJxMs11/+dsu1fyC6wtJ74uGt149Ls
+ ete9kTAu+oVl8f2PzWjA4NrbzX+vXp9dQy0utzokj5n3adpbkhq0A==
+X-Received: by 2002:a53:add1:0:b0:66b:31bf:d36a with SMTP id
+ 956f58d0204a3-66ccb597d77mr2623978d50.21.1787194127088; 
+ Wed, 19 Aug 2026 19:48:47 -0700 (PDT)
 Received: from skippy.localdomain (99-61-67-1.lightspeed.austtx.sbcglobal.net.
  [99.61.67.1]) by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-66ccafd03basm1986454d50.1.2026.08.19.19.48.40
+ 956f58d0204a3-66ccafd03basm1986454d50.1.2026.08.19.19.48.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 19:48:40 -0700 (PDT)
+ Wed, 19 Aug 2026 19:48:45 -0700 (PDT)
 From: Kyle Fox <kylefoxaustin.github@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Kyle Fox <kylefoxaustin.github@gmail.com>
-Subject: [PATCH 00/16] hw/arm: add the NXP i.MX 95 EVK machine
-Date: Wed, 19 Aug 2026 21:48:18 -0500
-Message-Id: <20260820024834.3286721-1-kylefoxaustin.github@gmail.com>
+Cc: Kyle Fox <kylefoxaustin.github@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Bin Meng <bmeng.cn@gmail.com>,
+ qemu-block@nongnu.org (open list:SD (Secure Card))
+Subject: [PATCH 01/16] hw/sd/sdhci: add i.MX uSDHC SDCLK_AUTO_GATE and
+ NO_SDMA_BOUNDARY quirks
+Date: Wed, 19 Aug 2026 21:48:19 -0500
+Message-Id: <20260820024834.3286721-2-kylefoxaustin.github@gmail.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260820024834.3286721-1-kylefoxaustin.github@gmail.com>
+References: <20260820024834.3286721-1-kylefoxaustin.github@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=kylefoxaustin.github@gmail.com; helo=mail-yx1-xb12e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=kylefoxaustin.github@gmail.com; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,210 +104,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds a QEMU machine for the NXP i.MX 95 19x19 LPDDR5 EVK
-(machine name "imx95-19x19-evk"). The i.MX 95 is a heterogeneous SoC;
-the machine models a fixed topology of 6 Cortex-A55 application cores,
-one Cortex-M33 that runs NXP's System Manager (SM) firmware, and one
-Cortex-M7 real-time core that the SM boots and manages.
+The i.MX uSDHC issues commands with SDCLK auto-gated (its driver never
+sets SDCLK_EN), and its SDMA does not honour the 512 KiB ADMA buffer
+boundary the generic core assumes. Add two opt-in quirk bits for this:
 
-What it does
-============
+  - SDCLK_AUTO_GATE: treat the clock as running once the internal clock
+    is enabled and stable, instead of also requiring SDCLK_EN.
+  - NO_SDMA_BOUNDARY: skip the buffer-boundary break in multi-block SDMA.
 
-It boots an arm64 Linux kernel to a userspace shell on the A55 cluster
-(both a mainline arm64-defconfig kernel and the NXP BSP kernel work).
+Both default off and are a no-op when the bit is clear, so no existing
+user of the SDHCI models changes behaviour; a machine opts in by setting
+the bits on its own uSDHC instances (the i.MX 95 SoC does so).
 
-The defining property of this SoC -- and the reason the machine is
-shaped the way it is -- is that the System Manager firmware, running on
-the M33, is the *only* SCMI provider. Linux's clock, power,
-performance-domain, sensor and reset operations are all served by the SM
-over a shared mailbox (MU2); there is no SCMI implementation inside QEMU.
-The machine models the mailbox cross-connect and the SM's bring-up
-peripherals (LPUART, MU, System Counter, ANATOP/SRC/GPC, ELE, LPI2C +
-PMIC, uSDHC, ...) faithfully enough that the *real, unmodified* SM
-firmware runs on the emulated M33 and answers Linux's SCMI traffic.
+Signed-off-by: Kyle Fox <kylefoxaustin.github@gmail.com>
+---
+ hw/sd/sdhci.c         | 67 +++++++++++++++++++++++++++++++++++++++----
+ include/hw/sd/sdhci.h | 21 ++++++++++++++
+ 2 files changed, 82 insertions(+), 6 deletions(-)
 
-A consequence worth stating plainly up front: booting Linux on this
-machine requires the SM firmware image as an input, loaded onto the M33
-with "-device loader,file=m33_image.elf,cpu-num=6". Without it the M33
-stays halted, nothing answers SCMI, and Linux hangs at arm-scmi probe.
-The SM is open source (https://github.com/nxp-imx/imx-sm) and builds
-with an arm-none-eabi toolchain; docs/system/arm/imx95-evk.rst walks
-through obtaining every required artifact.
-
-Scope (headless v1)
-===================
-
-This is a deliberately minimal first machine: it boots to a serial
-console. It is headless -- the DPU (display controller) is a
-probe-completing stub, and the GPU (Mali-G310), VPU (Amphion) and NPU
-(Neutron) are MMIO stubs that Linux enumerates but that perform no
-rendering, codec or inference. Real display + Wayland output, the NETC
-networking complex, and the multimedia blocks are intended as follow-on
-series on top of this base.
-
-The blocks that are modelled are exactly those on the Linux+SM bring-up
-critical path; everything else that the stock EVK device tree probes is
-a logging stub so that enabling those nodes degrades gracefully rather
-than faulting on the first access.
-
-How to test
-===========
-
-  $ qemu-system-aarch64 -M imx95-19x19-evk -m 2G -display none \
-      -kernel Image -dtb imx95-19x19-evk.dtb -initrd initramfs.cpio.gz \
-      -device loader,file=m33_image.elf,cpu-num=6 \
-      -append "earlycon=lpuart32,mmio32,0x44380010 console=ttyLP0,115200 \
-               cpuidle.off=1" -serial mon:stdio
-
-A functional test is included (tests/functional/aarch64/test_imx95_evk.py).
-Because the SM firmware and a matching kernel/dtb are external inputs
-that are not redistributable, the test is gated on QEMU_TEST_IMX95_*
-environment variables and skips cleanly when they are unset -- so it
-will SKIP in upstream CI as posted. I would appreciate guidance on the
-preferred convention here: I am happy to host a redistributable
-kernel+dtb (and exercise the SM path separately) as an Asset() so CI
-actually runs the machine, if that is wanted.
-
-Prerequisites (patches 01-04)
-=============================
-
-The first four patches are generic, non-i.MX95 changes that the machine
-depends on. They are separate commits so they can be reviewed (and
-taken) on their own merits:
-
-  01  hw/sd/sdhci: two opt-in uSDHC quirk bits (SDCLK_AUTO_GATE,
-      NO_SDMA_BOUNDARY). The i.MX (u)SDHC issues commands with SDCLK
-      auto-gated and its SDMA does not honour the 512 KiB ADMA boundary
-      the generic core assumes.
-  02  hw/arm/boot: let a board preset info->initrd_start, so a board
-      with a reserved-memory carveout can keep the initrd clear of it.
-  03  target/arm: an opt-in "pmsav7-rbar-align-down" CPU property that
-      aligns down a PMSAv7 MPU region base not aligned to its size,
-      instead of the architectural UNPREDICTABLE drop. An earlier version
-      of this fix changed that behaviour unconditionally and was rightly
-      not taken; this reworks it as a property that defaults to false (so
-      no existing behaviour changes) and is only registered on PMSAv7
-      (v7-M / v7-R) CPUs. The NXP i.MX 95 Cortex-M7 SDK firmware relies on
-      the align-down for one of its MPU regions.
-  04  hw/arm/armv7m: forward that property to the CPU object, following
-      the existing init-svtor / vfp / dsp forwarding, so an SoC can enable
-      it on an affected core. (The i.MX 95 SoC enables it on the M7 only;
-      the M33 is a v8-M / PMSAv8 core and needs no such quirk.)
-
-Series layout
-=============
-
-  01-04  generic prerequisites (above)
-  05     hw/char: i.MX LPUART
-  06     hw/i2c:  i.MX LPI2C
-  07     hw/misc: i.MX Messaging Unit (MU v2)
-  08     hw/misc: NXP EdgeLock Enclave (ELE) responder
-  09     hw/timer: i.MX 95 system counter
-  10     hw/misc: i.MX 95 watchdog
-  11     hw/misc: ANATOP/AONMIX/GPC/SRC power & clock blocks
-  12     hw/misc: PMIC (PF09/PF53/PCAL6408A) + xcache
-  13     hw/misc: DPU command-sequencer stub (headless)
-  14     hw/arm:  i.MX 95 SoC container (fsl-imx95)
-  15     hw/arm:  i.MX 95 19x19 EVK board
-  16     docs, MAINTAINERS, tests/functional
-
-Every patch builds on its own (the series is bisectable), device state
-carries migration vmsd + reset, and checkpatch is clean.
-
-  46 files changed, 6529 insertions(+), 13 deletions(-)
-
-Thanks for reviewing.
-
-Kyle Fox (16):
-  hw/sd/sdhci: add i.MX uSDHC SDCLK_AUTO_GATE and NO_SDMA_BOUNDARY
-    quirks
-  hw/arm/boot: let a board preset initrd_start
-  target/arm: opt-in align-down for a misaligned PMSAv7 MPU RBAR
-  hw/arm/armv7m: forward pmsav7-rbar-align-down to the CPU
-  hw/char: add i.MX LPUART
-  hw/i2c: add i.MX LPI2C
-  hw/misc: add i.MX Messaging Unit (MU v2)
-  hw/misc: add NXP EdgeLock Enclave (ELE) responder
-  hw/timer: add i.MX 95 system counter
-  hw/misc: add i.MX 95 watchdog
-  hw/misc: add i.MX 95 ANATOP/AONMIX/GPC/SRC power and clock blocks
-  hw/misc: add i.MX 95 PMIC (PF09/PF53/PCAL6408A) and xcache controllers
-  hw/misc: add i.MX 95 DPU command-sequencer stub (headless)
-  hw/arm: add i.MX 95 SoC container (fsl-imx95)
-  hw/arm: add i.MX 95 19x19 EVK board
-  docs, MAINTAINERS, tests/functional: add i.MX 95 EVK
-
- MAINTAINERS                                |   18 +
- docs/system/arm/imx95-evk.rst              |  242 +++
- docs/system/target-arm.rst                 |    1 +
- hw/arm/Kconfig                             |   26 +
- hw/arm/armv7m.c                            |    8 +
- hw/arm/boot.c                              |   12 +-
- hw/arm/fsl-imx95.c                         | 1646 ++++++++++++++++++++
- hw/arm/imx95-evk.c                         |  136 ++
- hw/arm/meson.build                         |    2 +
- hw/char/Kconfig                            |    3 +
- hw/char/imx_lpuart.c                       |  382 +++++
- hw/char/meson.build                        |    1 +
- hw/char/trace-events                       |    3 +
- hw/i2c/Kconfig                             |    4 +
- hw/i2c/imx_lpi2c.c                         |  296 ++++
- hw/i2c/meson.build                         |    1 +
- hw/i2c/trace-events                        |    4 +
- hw/misc/Kconfig                            |   32 +
- hw/misc/imx95_anatop.c                     |  201 +++
- hw/misc/imx95_aonmix.c                     |  160 ++
- hw/misc/imx95_dpu.c                        |  117 ++
- hw/misc/imx95_ele_server.c                 |  284 ++++
- hw/misc/imx95_gpc.c                        |  160 ++
- hw/misc/imx95_pmic.c                       |  357 +++++
- hw/misc/imx95_src.c                        |  228 +++
- hw/misc/imx95_wdog.c                       |  198 +++
- hw/misc/imx95_xcache.c                     |  185 +++
- hw/misc/imx_mu.c                           |  454 ++++++
- hw/misc/meson.build                        |   10 +
- hw/misc/trace-events                       |   25 +
- hw/sd/sdhci.c                              |   67 +-
- hw/timer/Kconfig                           |    3 +
- hw/timer/imx95_sysctr.c                    |  241 +++
- hw/timer/meson.build                       |    1 +
- hw/timer/trace-events                      |    2 +
- include/hw/arm/armv7m.h                    |    4 +
- include/hw/arm/fsl-imx95.h                 |  481 ++++++
- include/hw/char/imx_lpuart.h               |  123 ++
- include/hw/misc/imx95_ele_server.h         |   47 +
- include/hw/misc/imx_mu.h                   |  144 ++
- include/hw/sd/sdhci.h                      |   21 +
- target/arm/cpu.c                           |   19 +
- target/arm/cpu.h                           |    6 +
- target/arm/ptw.c                           |   28 +-
- tests/functional/aarch64/meson.build       |    2 +
- tests/functional/aarch64/test_imx95_evk.py |  157 ++
- 46 files changed, 6529 insertions(+), 13 deletions(-)
- create mode 100644 docs/system/arm/imx95-evk.rst
- create mode 100644 hw/arm/fsl-imx95.c
- create mode 100644 hw/arm/imx95-evk.c
- create mode 100644 hw/char/imx_lpuart.c
- create mode 100644 hw/i2c/imx_lpi2c.c
- create mode 100644 hw/misc/imx95_anatop.c
- create mode 100644 hw/misc/imx95_aonmix.c
- create mode 100644 hw/misc/imx95_dpu.c
- create mode 100644 hw/misc/imx95_ele_server.c
- create mode 100644 hw/misc/imx95_gpc.c
- create mode 100644 hw/misc/imx95_pmic.c
- create mode 100644 hw/misc/imx95_src.c
- create mode 100644 hw/misc/imx95_wdog.c
- create mode 100644 hw/misc/imx95_xcache.c
- create mode 100644 hw/misc/imx_mu.c
- create mode 100644 hw/timer/imx95_sysctr.c
- create mode 100644 include/hw/arm/fsl-imx95.h
- create mode 100644 include/hw/char/imx_lpuart.h
- create mode 100644 include/hw/misc/imx95_ele_server.h
- create mode 100644 include/hw/misc/imx_mu.h
- create mode 100644 tests/functional/aarch64/test_imx95_evk.py
-
-
-base-commit: ae4f3443209ab154b48b706a146e5f557ab147cb
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index e58a6103970..327e9a7cb74 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -611,12 +611,27 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+     }
+ 
+     /*
+-     * XXX: Some sd/mmc drivers (for example, u-boot-slp) do not account for
+-     * possible stop at page boundary if initial address is not page aligned,
+-     * allow them to work properly
++     * The i.MX/FSL uSDHC silicon does not implement the SDHCI "Host SDMA
++     * Buffer Boundary" mechanism; it transfers all blocks back-to-back
++     * regardless of buffer-boundary address alignment. The blksize-quirk
++     * in esdhc_write() forces bits 14:12 to 0b111 (= 512 KiB) so Linux's
++     * "zero this field out" pattern doesn't trip a 4 KiB boundary break,
++     * but the real hardware never pauses for the boundary at all, so
++     * neither should we. Skipping the page-aligned path makes the SDMA
++     * transfer run to completion (blkcnt -> 0) and fire transfer-complete,
++     * which is what the FSL U-Boot SPL driver expects (it doesn't ack
++     * SDMA-boundary IRQs by re-writing SYSAD). Controllers with this
++     * behaviour set SDHCI_QUIRK_NO_SDMA_BOUNDARY.
+      */
+-    if ((s->sdmasysad % boundary_chk) == 0) {
+-        page_aligned = true;
++    if (!(s->quirks & SDHCI_QUIRK_NO_SDMA_BOUNDARY)) {
++        /*
++         * XXX: Some sd/mmc drivers (for example, u-boot-slp) do not
++         * account for possible stop at page boundary if initial address
++         * is not page aligned, allow them to work properly
++         */
++        if ((s->sdmasysad % boundary_chk) == 0) {
++            page_aligned = true;
++        }
+     }
+ 
+     s->prnsts |= SDHC_DATA_INHIBIT | SDHC_DAT_LINE_ACTIVE;
+@@ -992,9 +1007,26 @@ static void sdhci_data_transfer(void *opaque)
+     }
+ }
+ 
++static bool sdhci_clock_is_on(SDHCIState *s)
++{
++    /*
++     * The i.MX (u)SDHC has no software SD-clock-enable bit (the card clock
++     * is auto-gated by hardware), so its driver never sets
++     * SDHC_CLOCK_SDCLK_EN. For such a controller, treat the clock as
++     * running once the internal clock is enabled and stable; otherwise
++     * every command would be silently dropped (no completion/timeout IRQ),
++     * stalling the guest on 10s host-side timeouts.
++     */
++    if (s->quirks & SDHCI_QUIRK_SDCLK_AUTO_GATE) {
++        return (s->clkcon & (SDHC_CLOCK_INT_EN | SDHC_CLOCK_INT_STABLE)) ==
++               (SDHC_CLOCK_INT_EN | SDHC_CLOCK_INT_STABLE);
++    }
++    return SDHC_CLOCK_IS_ON(s->clkcon);
++}
++
+ static bool sdhci_can_issue_command(SDHCIState *s)
+ {
+-    if (!SDHC_CLOCK_IS_ON(s->clkcon) ||
++    if (!sdhci_clock_is_on(s) ||
+         (((s->prnsts & SDHC_DATA_INHIBIT) || s->stopped_state) &&
+         ((s->cmdreg & SDHC_CMD_DATA_PRESENT) ||
+         ((s->cmdreg & SDHC_CMD_RESPONSE) == SDHC_CMD_RSP_WITH_BUSY &&
+@@ -1613,6 +1645,9 @@ static void sdhci_bus_class_init(ObjectClass *klass, const void *data)
+ 
+ #define ESDHC_VENDOR_SPEC               0xc0
+ #define ESDHC_FRC_SDCLK_ON              (1 << 8)
++#define ESDHC_VENDORSPEC_IPGEN          (1 << 11)
++#define ESDHC_VENDORSPEC_HCKEN          (1 << 12)
++#define ESDHC_VENDORSPEC_CKEN           (1 << 14)
+ 
+ #define ESDHC_DLL_CTRL                  0x60
+ 
+@@ -1707,6 +1742,26 @@ esdhc_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+         } else {
+             s->prnsts |= ESDHC_PRNSTS_CLOCK_GATE_OFF;
+         }
++        /*
++         * An SDCLK_AUTO_GATE i.MX uSDHC drives the SD clock through
++         * VENDORSPEC, not through the SDHCI CLKCON. For those instances
++         * mirror the VENDORSPEC clock-enable bits into clkcon so the
++         * standard SDHCI paths (PRNSTS.SDSTB derived from CLOCK_INT_STABLE;
++         * sdhci_can_issue_command gating on CLOCK_IS_ON) see the clock as
++         * enabled; otherwise the U-Boot fsl_esdhc_imx driver waits forever
++         * for SDSTB. Consumers without the quirk keep the upstream behaviour
++         * (a VENDORSPEC write touches only vendor_spec/prnsts).
++         */
++        if (s->quirks & SDHCI_QUIRK_SDCLK_AUTO_GATE) {
++            if (value & (ESDHC_VENDORSPEC_HCKEN | ESDHC_VENDORSPEC_IPGEN)) {
++                s->clkcon |= SDHC_CLOCK_INT_EN | SDHC_CLOCK_INT_STABLE;
++            }
++            if (value & ESDHC_VENDORSPEC_CKEN) {
++                s->clkcon |= SDHC_CLOCK_SDCLK_EN;
++            } else {
++                s->clkcon &= ~SDHC_CLOCK_SDCLK_EN;
++            }
++        }
+         break;
+ 
+     case SDHC_HOSTCTL:
+diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
+index a9da6203fcb..e6940b62562 100644
+--- a/include/hw/sd/sdhci.h
++++ b/include/hw/sd/sdhci.h
+@@ -115,6 +115,27 @@ typedef struct SDHCIState SDHCIState;
+  */
+ #define SDHCI_QUIRK_NO_BUSY_IRQ    BIT(14)
+ 
++/*
++ * The i.MX (u)SDHC gates the SD card clock automatically and has no
++ * software-visible "SD Clock Enable" bit: its driver programs only the
++ * divider and the internal-clock enable, never SDHC_CLOCK_SDCLK_EN. With
++ * this quirk the controller is considered ready to issue commands once the
++ * internal clock is enabled and stable, instead of also requiring
++ * SDHC_CLOCK_SDCLK_EN (which such a driver never sets). QEMU-internal bit,
++ * taken from the top of the word to avoid the Linux quirk numbering.
++ */
++#define SDHCI_QUIRK_SDCLK_AUTO_GATE    BIT(31)
++
++/*
++ * The i.MX uSDHC silicon does not implement the SDHCI "Host SDMA Buffer
++ * Boundary" mechanism; it streams all blocks back-to-back regardless of the
++ * buffer-boundary alignment, never pausing at the boundary. With this quirk
++ * the SDMA engine skips the page-aligned boundary-break path so the transfer
++ * runs to completion. QEMU-internal bit, taken from the top of the word to
++ * avoid the Linux quirk numbering.
++ */
++#define SDHCI_QUIRK_NO_SDMA_BOUNDARY    BIT(30)
++
+ #define TYPE_PCI_SDHCI "sdhci-pci"
+ DECLARE_INSTANCE_CHECKER(SDHCIState, PCI_SDHCI,
+                          TYPE_PCI_SDHCI)
 -- 
 2.34.1
 
