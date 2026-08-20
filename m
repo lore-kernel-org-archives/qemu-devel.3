@@ -4,109 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59C33C5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:55:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69E26C5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:55:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx5zt-0001K8-TL; Thu, 20 Aug 2026 12:52:12 -0400
+	id 1wx5y0-0003fW-V0; Thu, 20 Aug 2026 12:50:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5zq-00011T-0l
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:52:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wx5xy-0003eT-Is
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:50:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5zo-0005mk-C0
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:52:05 -0400
+ id 1wx5xw-0005KR-FU
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:50:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787244723;
+ s=mimecast20190719; t=1787244607;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=f2pZ3TNdmbGWedDLlhzGSJjXY8HLIJb58UA/0+I2Zf0=;
- b=jTCqa+uBFjgOnIg853D2tZ7thPWI9k3OgSsi3X/yumoump2pgIBpDq/VQUKhUv46deMT2N
- r2/7ClqgHc5/k72li3yRf4jpa636WWYj6i74mUCSBEDXeH0OMuZqD8mlEWaiIk7R4rzT9B
- xq2t2l/G8i4267ycXj2sBKfhaKvHju4=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6S7x7mnliwyjD2cUQSXzS+dP8lkV219BxBtpL7Cvczc=;
+ b=crhHCG9w0vqkACpWWSJ/5MtSkX4Nll58SbZyonsva4+xQrfwij256IbwPJYrFOTzTrIJjV
+ OzzGbZLvuDKfI/O+/fcbvD7OuJ8IJthoGt92QfDDdksPBEpvuSirWVL6+yGC2Xe6v9rCAS
+ 6E0LC0zPpWq2qOMRU6g9NkSNQmXO8+w=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-632-7Xzvb9NxNJ6ka9Umcrhs5g-1; Thu, 20 Aug 2026 12:52:01 -0400
-X-MC-Unique: 7Xzvb9NxNJ6ka9Umcrhs5g-1
-X-Mimecast-MFC-AGG-ID: 7Xzvb9NxNJ6ka9Umcrhs5g_1787244721
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-47f835ac1aeso67226f8f.3
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:52:01 -0700 (PDT)
+ us-mta-215-2zrV4qa9N5mllL9uygEbZQ-1; Thu, 20 Aug 2026 12:50:04 -0400
+X-MC-Unique: 2zrV4qa9N5mllL9uygEbZQ-1
+X-Mimecast-MFC-AGG-ID: 2zrV4qa9N5mllL9uygEbZQ_1787244604
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-47f4601af62so50344f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:50:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787244720; x=1787849520; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=f2pZ3TNdmbGWedDLlhzGSJjXY8HLIJb58UA/0+I2Zf0=;
- b=mmDFd6ofulLsSV6nAZ3AHFCs9dMJvbhwpgEI2BxwZdHrMqm/sXrF/QL56szWppRi7Y
- NFvn7XAaCF11Avx7H/+7TySgl9QAknWy6ZM+xTxwUm5JK7RuBAJeRFtpKs23kQ1x1jw2
- JOo7G4dQYgSWiBCy2rhZ09FJYe1elhnwBI038wi1FrVsPjJYFgTKMJE6Zv80BSxEa5N3
- VxcF3ynZSqjnBEk39GF/OQdswhz/N3jojxI3OKkEhg4Uc4chh0o5V43PWuOHpUX8GzuZ
- bUbedtoqIo3xPaIqms3iXNWz4K0kacUb20+L+Vo9ZTOb4YGR+utrls94XZFRjpyFVAVG
- 2YAQ==
+ d=redhat.com; s=google; t=1787244603; x=1787849403; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=6S7x7mnliwyjD2cUQSXzS+dP8lkV219BxBtpL7Cvczc=;
+ b=M5T6eTRHQOVrXM7dUV3FSEPkVx+c3iK2FeaOWzjIyGTMQIpplyj1ySvdOVbDpdqiNt
+ spWnoyLpdkZyyY/Q8beSBOQ6v4bF6lLzV4/uYW9ROpTFG7E7tGKIgETPgvvuvhw3Ji5X
+ oI6jZyW/+FnigByh2/o5HK8Cfrw3IhBQKtu2uZQQd2MHf1NJGt3knCaIdfJjGeFj0HOO
+ iNQZF0Zpu/3DUMHIxMayxD/iMt/Tss7XYlPB2mM/6pzZO+OzUWiZJCt4eCxfObq+/4/K
+ wHPXAXuHTWcykx0FIf1v2NqPePtcPwb3WF8tDhNsgDpAP1jdCT/L4ZI6YzMG4EJzi9oI
+ 0Q0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787244720; x=1787849520;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=f2pZ3TNdmbGWedDLlhzGSJjXY8HLIJb58UA/0+I2Zf0=;
- b=Qf3cZtVEZRGqyjWiZMujk9Ohy5IPkbUKcNl5NTUvLkbglm06ey5MXhCxctHaM+CLpj
- sgi3CTFvOHl9xHOjbKL98OLQjphBc1aTlumGgomvo5PgvNXOvizXZCXI4rje4XWZHlkF
- ToHljM8tGEXj2YO4Hn+pysgA6cbEYLrxDDt/v42kl8Ca6JbyD1M/g16NddXEOOaMTjgN
- BcP1RP4tXAH+bW0Tckp5Nu8gjUWQG5+EjmER+kzz+NtiLZYzEzUdZOuoBsxhb1ib5KdZ
- dRzi8X/le5MkTqs3eGyJLpH/4iO3INU9f6DAAn4uqiiZe7Z6D6pDMLTAGF3xTwNy1JQE
- pLYQ==
-X-Gm-Message-State: AFuF++mmTkQYxiYyAEgFYMbi51vs25LyF1GcN3LlNwpMCwzqUCBulHMR
- 2vVqCqSs++872/KSUZIu98nY32A7E5WgnOxZW7DF59l1bJZ/KMx3DjoWJrwf+opdbQ2tzm8VIzd
- imRNggTYOKR6JfPuHxkn6CtWT+o0FsTL/QqLF0fFT8E+pJThenad16+LN8qvf7TXM3EFIx/v9KF
- 8tCUQPP7xyaOEOkhH+Eu9xN45+B/lLQWpgTIQVCcvO
-X-Gm-Gg: AR+sD138lje5YYQStltyLGkyfkXGct9KBCtrty1yzW89hEM4kzavpReOHTpsBzJ5xI7
- /s898tUhXshBFWjoO75aC+vBlGEYZy/nDkQnDDrGqfcCxDf66IQKMjNCKZnGitMvBmP+Ms7pmWG
- ua3dTLu7ILR2RQ0zjDflqO2JOASgsF3ohdt5myaeEeLPbi1alUXce/3TaehTWVxdz12F0xJczdG
- jW1SuXJmAg7Fp/w6HjSQbsmCiVWte04ebYFumCrdFrBuPxLreXjMH16sjdl8IizXaJy5VCieeL0
- fgGuX07ne+ZemQV5rizY01DbOtD5EUzKaFaDJyU1iBg8Dn7h83fWMGKMfJH7dJJCJRzPv+es8Ui
- 3wcj9SdnuTPLG7Tb5sSVTojmHsiI/enNSvihC5y16hgTrw/ZTb0j/3vx/yIJsb9sFds/HQSVg/i
- oHfho=
-X-Received: by 2002:adf:e184:0:b0:482:a9c4:bfd6 with SMTP id
- ffacd0b85a97d-482c0b67a8cmr6399f8f.7.1787244720646; 
- Thu, 20 Aug 2026 09:52:00 -0700 (PDT)
-X-Received: by 2002:adf:e184:0:b0:482:a9c4:bfd6 with SMTP id
- ffacd0b85a97d-482c0b67a8cmr6318f8f.7.1787244720288; 
- Thu, 20 Aug 2026 09:52:00 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787244603; x=1787849403;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=6S7x7mnliwyjD2cUQSXzS+dP8lkV219BxBtpL7Cvczc=;
+ b=SaCQVt8NT7MUUWsOD03LwS9ZIOAHwOKjdHChjZ0WpebRch0xmxu7HRKP8hF5EkrDTo
+ 0g3I8HW6VL5dmj1vpDdMfWsHtz0VnoS4iDNUU9NNtZx4mGhLKrvEhYXxiEHQPitGYugc
+ qm2+I+tbtyfH1mIi7bdsiXf8iYaCkBh3Ukqi0mQryMLSfjufn3olmXMh5KPbb+tyUS0O
+ gS3YYdk/K7oUrt6Ua9+5TlHEjx6amm4CbgW4j99WMbBUcN/kXqFwLaxeGmJZO35xq3lV
+ Nygs6KsQjy0wrAsBW/SdKyqVsBDYazOfQ9xf1+Y2+amBxKMuVxFrH92L7fBmJMR2ElMJ
+ 4+lw==
+X-Gm-Message-State: AFuF++k85mnRaGvhSK9HFL6nxu2HBG/g3rbhI7BVupuv2Nu/MglbrxHU
+ CfrkMvy3HrAvxxF833uQtdDdqYcAjrURtQRywS0t1nDOjicvZLwEfCT2EjKtcAYFTWkQqdNLHSY
+ t3kjTLcgBHKgerPDVOfkU7vBQVVxLC1ZyJF++JYRPGh3SoNAQ/FbjXBAc3mQQohr9dZ4Tis20tv
+ gGDI6hBZG3Sk9qXxyyX0TTsEAKuEcU1pymSk/6DTNL
+X-Gm-Gg: AR+sD103JHuWG8hOBIQVAhek++XY8rxcKc9ZKn4xZ3NaQ13bE4vrA8gcGy31AwMrl/t
+ t189rNKaNz3vUe9X1CeeGZuHKuA7SGYRTqjmz28VYvfVOtuQUxKjCQIw/SdESY1Avf1INLutciD
+ vQMLKWFEKFnAqzN9ISYaB79WjfxGOh1FeDKj+HRApIz0Ex31hm6aQabkdhzMYCif/fJD6BXS1SK
+ PdLntEG/u+vIDm3DWgfmqCBA6BZfaLTGEikyGl0U17vqF0oOOwaKXN/0Pn5oerMBwXHDK+d1AUC
+ 7TwYyDYGGULmczN8ftkhsIqZMf6q/BGkZj7VNDinfjNQ9D2YvIptOswAzA0v5JoICQxQfZk0H12
+ k7r9eNn2i6Vfq7xJx0QQzW24PdqpjNIQFM96N/R723wVviFGga7mQ0vbHfazMz5q6havxP0FuC9
+ gjyu4=
+X-Received: by 2002:a05:6000:1449:b0:47f:8183:e9b8 with SMTP id
+ ffacd0b85a97d-482b1feeb3dmr23105698f8f.22.1787244603515; 
+ Thu, 20 Aug 2026 09:50:03 -0700 (PDT)
+X-Received: by 2002:a05:6000:1449:b0:47f:8183:e9b8 with SMTP id
+ ffacd0b85a97d-482b1feeb3dmr23105619f8f.22.1787244603057; 
+ Thu, 20 Aug 2026 09:50:03 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b1441c78sm13886905f8f.2.2026.08.20.09.51.58
+ ffacd0b85a97d-482b1441c78sm13877367f8f.2.2026.08.20.09.50.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 09:51:58 -0700 (PDT)
+ Thu, 20 Aug 2026 09:50:01 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 44/53] rust: update Cargo.lock
-Date: Thu, 20 Aug 2026 18:49:47 +0200
-Message-ID: <20260820164957.1895963-45-pbonzini@redhat.com>
+Cc: Simon Scherer <scherer.simon89@gmail.com>,
+	qemu-stable@nongnu.org
+Subject: [PULL 01/53] target/i386: Clear OF, SF, and AF for fcomi/fucomi
+Date: Thu, 20 Aug 2026 18:49:04 +0200
+Message-ID: <20260820164957.1895963-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820164957.1895963-1-pbonzini@redhat.com>
 References: <20260820164957.1895963-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.346,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,35 +121,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Apply change corresponding to bff64138882 ("rust: fix incorrect dependency
-in Cargo.toml", 2026-06-17).
+From: Simon Scherer <scherer.simon89@gmail.com>
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+helper_fcomi_ST0_FT0() and helper_fucomi_ST0_FT0() only cleared
+CC_Z, CC_P, and CC_C before merging in the comparison result,
+leaving CC_O, CC_S, and CC_A untouched from whatever they were
+set to beforehand.
+
+The Intel SDM documents FCOMI/FCOMIP/FUCOMI/FUCOMIP as setting OF,
+SF, and AF to 0 unconditionally. The AMD manual doesn't mention them
+at all. However, testing on multiple real Intel and AMD systems confirms
+all three are unconditionally cleared regardless of the comparison
+result or their prior value.
+
+Since fcomi_ccval[] only ever contains CC_C, CC_Z, 0, or CC_Z|CC_P|CC_C,
+and CC_O|CC_S|CC_Z|CC_A|CC_P|CC_C already covers every flag bit, CC_SRC
+can be assigned from fcomi_ccval[ret + 1] directly instead of ORing it
+into a masked cpu_cc_compute_all() result.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4133
+Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+Link: https://lore.kernel.org/r/20260807062831.19618-1-scherer.simon89@gmail.com
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/Cargo.lock | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/i386/tcg/fpu_helper.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/rust/Cargo.lock b/rust/Cargo.lock
-index cbb3ca15f77..c94c2386d94 100644
---- a/rust/Cargo.lock
-+++ b/rust/Cargo.lock
-@@ -184,7 +184,6 @@ dependencies = [
-  "glib-sys",
-  "migration-sys",
-  "qom-sys",
-- "system-sys",
-  "util-sys",
- ]
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index 978eb1411b4..b812125efa1 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -550,12 +550,11 @@ static const int fcomi_ccval[4] = {CC_C, CC_Z, 0, CC_Z | CC_P | CC_C};
+ void helper_fcomi_ST0_FT0(CPUX86State *env)
+ {
+     int old_flags = save_exception_flags(env);
+-    int eflags;
+     FloatRelation ret;
  
-@@ -431,6 +430,7 @@ version = "0.1.0"
- dependencies = [
-  "common",
-  "glib-sys",
-+ "hwcore-sys",
-  "migration-sys",
-  "qom-sys",
-  "util-sys",
+     ret = floatx80_compare(ST0, FT0, &env->fp_status);
+-    eflags = cpu_cc_compute_all(env) & ~(CC_Z | CC_P | CC_C);
+-    CC_SRC = eflags | fcomi_ccval[ret + 1];
++    /* OF, SF, and AF are unconditionally cleared to 0 */
++    CC_SRC = fcomi_ccval[ret + 1];
+     CC_OP = CC_OP_EFLAGS;
+     merge_exception_flags(env, old_flags);
+ }
+@@ -563,12 +562,11 @@ void helper_fcomi_ST0_FT0(CPUX86State *env)
+ void helper_fucomi_ST0_FT0(CPUX86State *env)
+ {
+     int old_flags = save_exception_flags(env);
+-    int eflags;
+     FloatRelation ret;
+ 
+     ret = floatx80_compare_quiet(ST0, FT0, &env->fp_status);
+-    eflags = cpu_cc_compute_all(env) & ~(CC_Z | CC_P | CC_C);
+-    CC_SRC = eflags | fcomi_ccval[ret + 1];
++    /* OF, SF, and AF are unconditionally cleared to 0 */
++    CC_SRC = fcomi_ccval[ret + 1];
+     CC_OP = CC_OP_EFLAGS;
+     merge_exception_flags(env, old_flags);
+ }
 -- 
 2.55.0
 
