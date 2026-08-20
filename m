@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91592C5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 10:10:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA130C5DF82
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 10:10:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwziM-00074p-Fx; Thu, 20 Aug 2026 06:09:42 -0400
+	id 1wwzi6-0006xn-QF; Thu, 20 Aug 2026 06:09:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhq-0006sF-Dh
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:06 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhn-0006pz-3z
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:03 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhn-0008Mo-OK
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:05 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-47f703a9d05so1312693f8f.0
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 03:09:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhl-0008Lx-9V
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:02 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-480001972b8so742129f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 03:09:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1787220542; x=1787825342; darn=nongnu.org;
+ d=openvz.org; s=google; t=1787220539; x=1787825339; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=fbFPcumdwqQtTm/8eCl+Gz40GixriWu5Kdq29TJDuH0=;
- b=hIoHHd8UWxWZuuZYpz2DiW3XEXXPIF6SW45m2LZwic6mUFj/5+VZeiBoxscBXUCmuw
- zZZyglNom57iKieQfxbbgykfXtY1S1jtRp5WWCK0cpPqHEDAe39hoXn7GKKI/fweS84M
- v+YB8U/fTH+lJxZQA5MaxK5NFyV6GjjTzxMdXbv+a5kUM/3Im0tGqsiP04zuc02RQalN
- DViOosDwQWwIhYCDAeFbpEMA/8+VFTdtCdzCyEENDy2sR4hE4u8PI/bM5faxbrAkEezi
- FIiYbYv9D6FhjXSEGJmw8xI9hEX0RegcjpIZ9IpxOqQXLYMIZRt7BnMgMFIzQm4Araa9
- 39+g==
+ bh=PGxOxbJCTHpjzoR3+U5OxJn0dZ4GKFvitmqy32ujxR0=;
+ b=eoY5GgFtL85JNpX1SGZaYBeWKn0JVUjnUu6P3GRhud/UUIQPervRRKslkfivK0na+f
+ wNp0uAXXq1rPtiVWrNcFAp1CWv3Lqt6/VG7nPAlhxAXspdSGGlEoMkbwrTzfewzHtsUA
+ bpdh6wSjWMLWBs2ZAGlqqO43olm1el9HD9VN6wGSKy2wWKIsTRIs1MnLyGhd3LHLunJa
+ 6gxzUH+gid3QbVZhBmAzxp+jJ1LfoTBoiMrshYrvK57zjZRvrlH6ItYzPTZbPD/YxL86
+ 4x6FGBqf+9RlEqoZSB7Y3M4yCAn6wFbDK1NTcTWwBkfz86qkHxTq6t3g6IAtyY60CWKf
+ 0L/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787220542; x=1787825342;
+ d=1e100.net; s=20251104; t=1787220539; x=1787825339;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=fbFPcumdwqQtTm/8eCl+Gz40GixriWu5Kdq29TJDuH0=;
- b=GuVmNyCrlPcLONwN7XF8NQvEIvBhshI5QsdHieA/I12QE3ByqbjwAxZgwIPmO88GH5
- V61VPcrz0QHoQSdOuuRBjUHIQAfZ8gGKms59e+fNBtwRsxHvY7zG8ejfMsMIlE6sia5i
- 4gHCAjgdfWIMeSJSpd70qx0Bo1bwWs1m8S4LsBqKSPKJGFiJgYF95FuSOtLMAH0GAMMG
- hzpPaREZgAjkWYa4KLiHDU8zLk0UyBViyVSqgNwNFFwunniLv0WXeFI2OYpx++ttPipC
- bklbYwdCrNAxmDjr9iLMZOEBLCWAlakwC4Wc1NKLY0UDWqQVZkU8t1rbjEI/498Qqiy9
- tZZQ==
-X-Gm-Message-State: AFuF++nG6BqtfvU3FTlJDfUARXgwJXbLDhnv7UR+2gCHmF5Q+Dn8fN0e
- OOkM+cU3nnWeHIUGQyScyWpQNTYWAs6oTPIpy3teyOdXGiseSR5XJwccVS3HkyPM3Q+Aq5gCIgi
- DYqmj
-X-Gm-Gg: AR+sD13sog88fN2EOh6Vcj1daevpq+fGGZyo9QtaSiWjGwTzl0X7BaMU8aWQk6Pyh9z
- cAYjm/HLr54kNzSsOIRsGldc/A9yZSywUAP6cuqQmAmeE3qReUjWiU5Utbo3fGvPPhYnsqV60tu
- gFOXt7J1Wb2Lph11JgYQ6PTIb47FvvWpFDDaW9h7gZrqfydfzh5mKhaJszs+9DkM3eeSEU+PanP
- FGqARpqMlSEqvw8uS5lETMd6qu0SQ2OwSuitCHkwydMCklcRl+IsE8KhsFb4Lu7ijkse7N1RjI2
- E0g/aev2J55eGegGRgc/T0AtQoyIsxRQlQGp8lsVr4MKs3MxczXrLrGx6FeA2se4fiAzuBlfU5G
- +WSvMvmgiq0XjrapbHM+x5WsxfG5lmKFFegycCdSnw1mMvLLCWEYT5RtkLM/gfbVE6WQ9rfRjSp
- 0sKqPxbpuZAVNuwzUv91P4GeEQKZ17knq4BGHkw/MNyhfnhBGxLT0MyhdR8A==
-X-Received: by 2002:a05:6000:613:b0:47f:f31d:27a4 with SMTP id
- ffacd0b85a97d-482b1fd9bf6mr18659863f8f.13.1787220542266; 
- Thu, 20 Aug 2026 03:09:02 -0700 (PDT)
+ bh=PGxOxbJCTHpjzoR3+U5OxJn0dZ4GKFvitmqy32ujxR0=;
+ b=Wgm6kaF7F4nSK3UT6WRhw4FAmpnwa9STKVwa1zgU6PsOXr4+YODemmim58eeZuHiUC
+ vWgWlUf9VxZWM150vzTVDa+BBoQtrwoEDZAigMJogruteS2S8LSNyZnk4Gf7Mtxb0VaQ
+ bN9CDCzokVF/oDLGzzBGKdf2nm7c+tnMgiFz3LHa2kzbIZZeYVb6yyxM/fd+cgDuRt/U
+ 9GUs9ZXmjicVopu4AATagnkRgz9IYKp7HyEQ7ZCqW0utR4sBTF0afedeKdl3m/4NnBTq
+ clVwcx8zKOrXDJTDehWOo7golrH3LuvvwRGVeCo1m4KI2KMzVvIKKU/FqLU5asFSC+OH
+ tNjw==
+X-Gm-Message-State: AFuF++kfPb8S1Ze49fgD4M6epmujNp8QUe1UCZJtoIoynSU52+se+tQ9
+ 5cFTs77PXY5MdBZqsMlfQDdoL9bL5jWFqesNF/y6rD1nPosQPdGAv8AcrjxlEP8qhW6jl/RlXIu
+ bijni
+X-Gm-Gg: AR+sD13VVDE2PUhMnwSDVUOJsU0zatvs0wGiRqorEpP9uiQvYJD+8gPuxpFbY+Or6TA
+ okxwr3FSgSmfnC3pLFHJitevWXK8EPfjchXnYujNjFhffkgkoEjFi55zEz09zG702ZmNTdm0BOz
+ a6UYRE7jdgSczA7ZRN0mkcLgEsSgJ46+jbsFMSUxM7aDhN2Sl+qSL8KA+QGw7UsI5qvRpTozd7F
+ p3eu8ctoW4lLQ2cUX+I4hdhQ4L13Kke5zYT3YnbtuiPsaIS/N8gAcTopsDrbo8nvnqwkvLM7vzO
+ ZI00MZP0tJ5DcQWW9ONS3vLGhHRt6ndHUI2F2ZH3K0cqDJOV//KMoW3f9B8PjE9aY7sltqAMvOu
+ 8ACPz8vyqTTIE0fDOfx/OhJVPV8k/f+7MRodVQlQAVoG8Y4nqblvv+i5urpL6MLVqHJuQ+hzR2w
+ xoef/2w4gbR4KPcAy83xhBU5yY+dFZl0aGYJ71xuVP5hM/6CPcVZd9l+Lv3g==
+X-Received: by 2002:a5d:5f95:0:b0:481:4dcd:aefa with SMTP id
+ ffacd0b85a97d-482b1e95522mr16472987f8f.6.1787220539574; 
+ Thu, 20 Aug 2026 03:08:59 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:a123:7b43:afd8:8b47])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b1441b0fsm11678929f8f.4.2026.08.20.03.09.01
+ ffacd0b85a97d-482b1441b0fsm11678929f8f.4.2026.08.20.03.08.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 03:09:01 -0700 (PDT)
+ Thu, 20 Aug 2026 03:08:58 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 08/17] hw/ide: keep the IDENTIFY DEVICE current geometry in
- sync
-Date: Thu, 20 Aug 2026 12:08:35 +0200
-Message-ID: <20260820100844.411717-9-den@openvz.org>
+Subject: [PATCH v2 06/17] hw/ide: name the retired IDENTIFY DEVICE words the
+ device fills in
+Date: Thu, 20 Aug 2026 12:08:33 +0200
+Message-ID: <20260820100844.411717-7-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260820100844.411717-1-den@openvz.org>
 References: <20260820100844.411717-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=den@openvz.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=den@openvz.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,58 +105,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-Bit 0 of IDENTIFY DEVICE word 53 says that words 54 to 58 describe the CHS
-translation in effect, and ATA-5 8.16.8 has INITIALIZE DEVICE PARAMETERS
-set words 55 and 56 to the heads and sectors per track it was given. The
-data is built once and then cached, so those words kept describing
-whatever was in effect when a guest first asked for IDENTIFY DEVICE: the
-device reported one geometry while addressing the medium with another, and
-nothing reported an error. The revert SET FEATURES 0xCC asks for on the
-next reset left the same disagreement.
+Words 4, 5 and 20 have carried an "XXX: retired, remove ?" since the
+device was written, and word 21 is labelled a cache size when it is a
+buffer size. ATA-4 8.12.13 retired words 4 and 5, 8.12.17 retired words
+20 and 21, and ATA-5 keeps all four that way.
 
-Do not drop the cached data on a change, as parts of it are guest state
-rather than a description of the drive: SET FEATURES records the write
-cache setting in word 85, which ide_drive_post_load() reads back after
-migration. Refresh the affected words in place instead, the way
-ide_identify_size() does for the capacity words.
+Retired is not a reason to drop them. ATA-5 3.2.3.6 says a retired word
+that is still used shall have "the meaning or functionality as described
+in previous standards", and that is what these carry: ATA-1 9.9.3, 9.9.4
+and 9.9.7 define the unformatted bytes per track and per sector and the
+buffer type, and the ATA-1 IDENTIFY table gives word 21 as the buffer
+size in 512 byte increments. Software old enough to read them gets what
+it expects, so answer the question rather than leave it open.
 
-An ATAPI device has no translation but does take SET FEATURES 0xCC, so
-leave its IDENTIFY PACKET DEVICE data alone, where those words differ.
+Word 22 is obsolete rather than retired (ATA-4 8.12.18) and already
+carries its ATA-1 9.9.8 name, so leave it alone.
 
 Cc: John Snow <jsnow@redhat.com>
 Cc: Peter Maydell <peter.maydell@linaro.org>
 Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Fixes: 176e4961bb33 ("hw/ide/core.c: Implement ATA INITIALIZE_DEVICE_PARAMETERS command")
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- hw/ide/core.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/ide/core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/hw/ide/core.c b/hw/ide/core.c
-index e5fd570575..048655b2d0 100644
+index befbab9486..292908fb1c 100644
 --- a/hw/ide/core.c
 +++ b/hw/ide/core.c
-@@ -1360,6 +1360,10 @@ static void ide_reset(IDEState *s)
-         s->reset_reverts = false;
-         s->heads         = s->drive_heads;
-         s->sectors       = s->drive_sectors;
-+        /* An ATAPI device takes SET FEATURES 0xCC but has no translation */
-+        if (s->identify_set && s->drive_kind != IDE_CD) {
-+            ide_identify_chs(s);
-+        }
-     }
-     if (s->drive_kind == IDE_CFATA)
-         s->mult_sectors = 0;
-@@ -1668,6 +1672,9 @@ static bool cmd_specify(IDEState *s, uint8_t cmd)
- 
-     s->heads = (s->select & (ATA_DEV_HS)) + 1;
-     s->sectors = s->nsector;
-+    if (s->identify_set) {
-+        ide_identify_chs(s);
-+    }
-     ide_bus_set_irq(s->bus);
- 
-     return true;
+@@ -141,12 +141,12 @@ static void ide_identify(IDEState *s)
+     /* Words 1, 3 and 6 describe the default translation (ATA-5 8.16.8) */
+     put_le16(p + 1, s->cylinders);
+     put_le16(p + 3, s->drive_heads);
+-    put_le16(p + 4, 512 * s->drive_sectors); /* XXX: retired, remove ? */
+-    put_le16(p + 5, 512); /* XXX: retired, remove ? */
++    put_le16(p + 4, 512 * s->drive_sectors); /* ATA-1 unformatted bytes/trk */
++    put_le16(p + 5, 512); /* ATA-1 unformatted bytes per sector */
+     put_le16(p + 6, s->drive_sectors);
+     padstr((char *)(p + 10), s->drive_serial_str, 20); /* serial number */
+-    put_le16(p + 20, 3); /* XXX: retired, remove ? */
+-    put_le16(p + 21, 512); /* cache size in sectors */
++    put_le16(p + 20, 3); /* ATA-1 buffer type: dual ported, read caching */
++    put_le16(p + 21, 512); /* ATA-1 buffer size in 512 byte increments */
+     put_le16(p + 22, 4); /* ecc bytes */
+     padstr((char *)(p + 23), s->version, 8); /* firmware version */
+     padstr((char *)(p + 27), s->drive_model_str, 40); /* model */
 -- 
 2.53.0
 
