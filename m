@@ -4,88 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90544C5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 00:23:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FEDFC5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 00:31:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwqYb-0008Ur-LB; Wed, 19 Aug 2026 20:22:57 -0400
+	id 1wwqgd-0001Nm-UX; Wed, 19 Aug 2026 20:31:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wwqYa-0008UI-8o
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 20:22:56 -0400
-Received: from pv-2004j-snip6-11.eps.apple.com ([2a01:b747:3003:206::5b]
- helo=outbound.pv.icloud.com)
+ (Exim 4.90_1) (envelope-from <dcook@microsoft.com>)
+ id 1wwqgY-0001N9-07
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 20:31:10 -0400
+Received: from mail-southcentralusazlp170130001.outbound.protection.outlook.com
+ ([2a01:111:f403:c10c::1] helo=SA9PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wwqYY-00062g-1N
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 20:22:56 -0400
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-1a-60-percent-7 (Postfix) with ESMTPS id
- D8475180015F; Thu, 20 Aug 2026 00:22:47 +0000 (UTC)
-X-ICL-RepId: 01a01c8c-8a2c-7d17-8493-62be02cabdda
-X-ICL-Out-Info: HUtFAUMHWwJACUgATUQeDx5WFlZNRAJCTQBIHVoORQNGCVYLWhcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0IQRMFUgddTVYNRw9YHlwUFwhFQ14IXh9MHB0OWAYSAE0KDjYGWQVeCVYDQwU2EhRdRUYDRxlXFFAbRwxVB1deXwoTAF4PD0wLQQIvBFsDNhRJBS8PRgZDf0weVQUqAF0IPABfAFxxNn9OAVp3HlwASx1XBFQfUxJVHR0LRVUSBEAIVlBUHkEEVhVsCVgGUxlX
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1787185369; x=1789777369;
- bh=nRsiVASnIE6axGpYU1WFnv/6RF4jHUrs3h5+oecRwqI=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=Q6b+3v0CyRGpSU2JEEhwSw+vE7+hp/V1gtmEa9uKsPEbBrs3MyF+jMROXjPC2bFt58J7i2R2kR5Kn5j3kCEQ8M9MbYxNasJb7Z6BvEuHEfJb+W4xwYAGateA+27Hc7yGa51aPtKLeeI5whjAiclIh2Th8XLq8M4kmS/adNkfnmKba7VwMb+6ik3TDNKaJPtMTRY/4RGaIT1dTY2DXvhNnLZEiQycc3Bfkq+QyFqkJ+q+T9+GrZp3RS/pu6sgj3iojIwTq/FC60+2cgj6gFcfDxT8jIvY2CEqLPaZhPLyWhkJKoKOk3zIVFCgVS3uv7NhLBJpAX0vLRXhf0wz4meuQQ==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.156.192.29])
- by p00-icloudmta-asmtp-us-west-1a-60-percent-7 (Postfix) with ESMTPSA id
- 197111800118; Thu, 20 Aug 2026 00:22:43 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.11\))
-Subject: Re: [PATCH 6/6] docs: deprecate virtio-crypto
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260819175408-mutt-send-email-mst@kernel.org>
-Date: Thu, 20 Aug 2026 02:22:31 +0200
-Cc: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, devel@lists.libvirt.org
+ (Exim 4.90_1) (envelope-from <dcook@microsoft.com>)
+ id 1wwqgW-0000HM-ED
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 20:31:09 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ut8aADJTnUWlUAHQzZAdgF3O1rNokSeu0g/EorGxLMowTIP3hdvsaZJ2qMKouenjDhTs77BB50Ez41lqHU9ZuQwVws8jmwWAOhdbFXmpIb74vVXKMpstawQIaqvA7j97kbv1iZ+DQjRGOuc6FfuJZ0vKMINohywN0lCRnzcyHgEcb18In12wkqOqfOqNzd1ZutpWcrFtQ4qlP+kSRI9bip6tsgDwo97oDhHVHApjROhGxPR9LU9m3UFodqJjaPEPQmwnzJeMhYg8wxBDmykvUjwpPkkHWuf5To41QRts2NqN38JBSEJcLuWbcbmSH5PUOAHdg346H/UjXF8roRNgLA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pEwbrZ3XE8rTuG5fMJ6tBwDfY2sdiS19K3axfcoGhRM=;
+ b=QjDMn4VKgEcOCWnCExIAsm7nCCFSk9QL2JTels68knDjWuCKIXEoF5/4CmomqtFpM4kjPvFaW3VIxkrh6Dal8UgkBJVi8CS05qSjIyY39EHCT7XomJtgcuJ4TmICnBd8Pzsa/weNbYyKVKuAh9sBPoN6jWvPwNYTxsONH1p92HAOCev1ekzLEh0EtcHlFXYq9ZruPk5fglfyfPHvzyEoFFR2xzGOQtqAh4aZXiOwcx+iXdjGlmqWeEXLGe3SkSc1lE0zIFEaZcBDiXsOc98RIbm9VouLW5N+3emRqBihiQWWsigTnzyYcCCMZeEV/gMMa9CfiSb2TybnQnyUbDpnRQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pEwbrZ3XE8rTuG5fMJ6tBwDfY2sdiS19K3axfcoGhRM=;
+ b=FTuHVw+bgUgnb58+TLEPAec4Hf3875Hme7AqFN9q1gnAN/gut5abQY1EIPItiMqsyPB24nl18YZGpudetsILLOdmQc8mAbc21qTkV/XsMVki5koSa2zPlGDBr2lY/FldKFfGubCsMRg3zWmROYZAnNHOGf2eDoKBb+789webDJ0=
+Received: from LVXPR21MB7009.namprd21.prod.outlook.com (2603:10b6:408:37f::24)
+ by LV5PR21MB4995.namprd21.prod.outlook.com (2603:10b6:408:2fb::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.0; Thu, 20 Aug
+ 2026 00:30:29 +0000
+Received: from LVXPR21MB7009.namprd21.prod.outlook.com
+ ([fe80::31c0:bc96:2ac3:64dc]) by LVXPR21MB7009.namprd21.prod.outlook.com
+ ([fe80::31c0:bc96:2ac3:64dc%4]) with mapi id 15.21.0315.008; Thu, 20 Aug 2026
+ 00:30:29 +0000
+From: "Doug Cook (WINDOWS)" <dcook@microsoft.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: Pedro d'Aquino Filocre F S Barbuda <pbarbuda@microsoft.com>,
+ "mohamed@unpredictable.fr" <mohamed@unpredictable.fr>
+Subject: [PATCH v2 1/3] target/arm/whpx: Don't try to sync ARM_CP_CONST
+ registers
+Thread-Topic: [PATCH v2 1/3] target/arm/whpx: Don't try to sync ARM_CP_CONST
+ registers
+Thread-Index: Ad0wOvX2qf7SkON1Qpqx4e66jheGCA==
+Date: Thu, 20 Aug 2026 00:30:29 +0000
+Message-ID: <LVXPR21MB7009C0007D22503C38FE053EADA42@LVXPR21MB7009.namprd21.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=4c87db36-8898-4d5c-bfa6-b88494ebbafb;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2026-08-20T00:29:28Z;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Tag=10, 3, 0, 1;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=microsoft.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: LVXPR21MB7009:EE_|LV5PR21MB4995:EE_
+x-ms-office365-filtering-correlation-id: aad5b25c-fb7d-4841-4b4e-08defe523d11
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|23010399003|38070700021|10067099003|7146999003|56012099006|11063799006|18002099003;
+x-microsoft-antispam-message-info: gToJ87myTt4g2+3mUbBb39se5Bu0ttmFNmv8xQRvz9qrFCe9Tj9lzJmZLJEk7y/N4xwgWOU+ziwsfIoITQ+Equ0sH/R4ZhFzS8vRI6YVIkq/XrizR8ezV68ZIkVFwadPxHaVDqRoYgLmUbbL9ZPoxiUemUo6h7t+m6SgR5109ZeVOKnJLpe06qm42+tHZmv7DYVy6Ol6MNEdVvvKu12/ZEYxtHKyashsR4MIuY/qIVLG5cNr0hBbUl6tb5Gul9Vlmv+PEAGcQAJBMlykbTqO/IKDPpEFJFYPrzWnAic+7FbkilE/2vxRH1y/RiVoqGYQr99a/CxO9QJGb9+Ax2gjku/ZZdvMkeqlJR3cewRafMHveD4134jrq91Vcw8L/uSgworkj5kt0MXDLM+7w0+lu0lieg39ulU85WKqyqIUrhhgT+4dbPhHjTSC+CeB5TbrqcTA+jsuUh3TpLRV81hpfx73ZCymh9OpkWfO2zyxNY2Sv8m8/ruMRykG7HxyDlcUIJ29WGwtHluABrFNehGu44Olx0lLdNWG5rxVWg2QynwXxcq0RmFex43ai3+LL+LeXqWDzplvEb2K7gUhuI9cZU61y6/ceJe9wZ1x1HCvZ57Rwpjy/C5ON5xyRrt1keqNiR/wK7rQZn4jh+QubrVorGsbl0eTFE0V3a8q6mTZWthiEjVvVZw95TJo9jmA1AO0M5dshW8mrBHir0cdY9rzdmczRiISF4hVjD2B7Fvl53U=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:LVXPR21MB7009.namprd21.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(38070700021)(10067099003)(7146999003)(56012099006)(11063799006)(18002099003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?HFwnazT+hxv+fOp+lHSyqoFyF58N6MnDo9GjZPfNckUjyq5yjR4KhlrnHz7b?=
+ =?us-ascii?Q?e7Ai1AyXhlm9k5vsA9+AFgscImtP0kOJxt6NzObGdbCJjrs1NxFminQFIo+T?=
+ =?us-ascii?Q?b6ohtH2YbLUkGA88pINtmqNjpL5VJDNr0EfpEj8yIPL/Wg17wH2EQXoEXqoa?=
+ =?us-ascii?Q?7rSqZTFGaR0KjjtMj0xINi+xulF+Bw71JsqRQ1mceJNQEdJFOT511MaEUB6v?=
+ =?us-ascii?Q?PArJ3pM7IMwjTk6+San8y+72KwxprbBAb5TUSN8hkGCM+LY1FQq1VN4SHLDu?=
+ =?us-ascii?Q?PrfiI3bcMMeqYFC40LNn/Exg00/Nse1PChTXltFzOeeEwPO8H/cTzp/94veq?=
+ =?us-ascii?Q?ujyOkc1rTEV2ulcMsuOKMHUFX58ePoUNnjFIm44If2RdX1vb3PMFykfLxVAg?=
+ =?us-ascii?Q?hO+BZ0JNAQqVf7TdPvuyhEk/H4AZJ0JGeCbMjfS/SrtF71xXM4tTfo/l7Yhv?=
+ =?us-ascii?Q?BNAuzbUqIvGdJgiRF6ISlBVP8mA+8v5qpd8QGyEhLuPl6a0nRjqk4T+fSQ4W?=
+ =?us-ascii?Q?Ripob0VLua3zL4KGgIKtujm3IeoMOh3Kxq22dvx4BhdBdjWgSRVFiDBu/5oX?=
+ =?us-ascii?Q?8W7uPgGPDQXKyLKmVw8226m4Kxc6ZnwsZHlyopGsEihW/sMPSuXjmbJJGI56?=
+ =?us-ascii?Q?6XcgXmIDuwhBbTPYWAce3xV1TQvBTar4ayaZFQzixTngBzyDlJdpXA/2Slj3?=
+ =?us-ascii?Q?SuX6doAWEDl8WmUactalSBzzN4G6GI/rZKRaUSt6CqNtyt+R3y3c+CLYwYzs?=
+ =?us-ascii?Q?QTHWcuQAgMAczDGaHWuAuLFPGB/o4Hz9AqtlM8K3k9Ddvb83ixz7hCsd76gH?=
+ =?us-ascii?Q?ju0hKGdO4dCNZdvvl3cCgwp5LdurleEyb22EVtLVVLx+E6bTsW7bU4jXKEZ4?=
+ =?us-ascii?Q?tG4FzS1kI80jPRKvHzT2+FhrYFY0E1mJF3k7PDwIfzsaiprTx2P6zBu+AwnA?=
+ =?us-ascii?Q?AM2fjrzO7MXkcBUAoxiQ/tYkC7xPteZCSiUnuBf/WEJK2hldnuTfUtAhOq0W?=
+ =?us-ascii?Q?XteMc7MQFz43G4wwy/EzxJIZE0lR4SNiRX71T+YfPiWxoXGSe9CkgSkltW7i?=
+ =?us-ascii?Q?soHAk2XRppvG+VkQbcBzje8KfwvB3mSTZr12PQx8woGky06ZVvd5lG/kL+wW?=
+ =?us-ascii?Q?TIsJsMYRRHGk/5+uk+vJUbkCGkDM6lFtS3YHQVz54WYy47g0X+zvup3FAeuL?=
+ =?us-ascii?Q?ZZFvGglv4vkmKBCGtqDftQiHKAoRM73PDojaYZzYBHmPIoghyipPo7uO6uP3?=
+ =?us-ascii?Q?0iL5U58f02LfGOnv5pC3PYKbnsDLdPWOUNYnjo8KoysIcK07roW81c4w5UJo?=
+ =?us-ascii?Q?A6uLc5OSHGNdP9pruLeZ1OK5UljkHSts1Z/1Eg/iu2Is43oIakxDpeiWMZe3?=
+ =?us-ascii?Q?85Df7AMirniE9L7BEjw1IyEsnEAJcYd/GEo07bv4v4IklXnSznJ+JFPaPIVg?=
+ =?us-ascii?Q?u9jRkBB+a1EKJcGy6KvFW9lYWiVQQdTP/CwZRgOho60ydXbC//VMGM1536cN?=
+ =?us-ascii?Q?zD6y8W+LEuYosybJ+DFLqhIthYbY+4sz0sh7Kw+hxn32N8QsYLJo0Jq5h3sT?=
+ =?us-ascii?Q?K/KG3xFZ+5GYKAFajwwuK9eQc5APxAss8Tgq5dlFDN8ltReYave+0hbdVw0U?=
+ =?us-ascii?Q?2bdwW54sYxE3dCsKOf8GmAfSnlst+6/ZYHuL07X3/Qo177Mquriv10Jq/5YT?=
+ =?us-ascii?Q?AJ3xQphvvR+6jf9AR4xrw87XaTnz4TKrnsFPou2lSDk3Ge+M?=
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <291B301F-16B8-43F4-82A2-1D3277CFF627@unpredictable.fr>
-References: <20260819-fixes-for-11-2-v1-0-b7981c2cc371@linaro.org>
- <20260819-fixes-for-11-2-v1-6-b7981c2cc371@linaro.org>
- <20260819175408-mutt-send-email-mst@kernel.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-Mailer: Apple Mail (2.3901.100.1.1.11)
-X-Proofpoint-GUID: -hbTtXPsdRGRs6fsKcRQzMXMO6AafeHu
-X-Authority-Info-Out: v=2.4 cv=B5O0EetM c=1 sm=1 tr=0 ts=6a8648d8
- cx=c_apl:c_pps:t_out a=aW9mcIavGNWWFvFFKOxBSA==:117
- a=aW9mcIavGNWWFvFFKOxBSA==:17 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8
- a=i0EeH86SAAAA:8 a=xjJexcDer7hkonfWDUsA:9 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDAwMSBTYWx0ZWRfXyyZ48aOQKh2F
- KvtagmC0zLs0gc8QbDmWctFhlrzIq6IJkiMpCSjPygRbR80sgmfbRUVBQEolNf9eU7soE9HgxaZ
- RjajXHh+tYHaI1dhG5LrqecvP8nRiMYtRsuPqVxdtixYoRhYU5la1Q2Bka+lnmjUuGbM94w2qqa
- JAaWo4Z8NLJScdAiK5hG9vwgmZFus+1D8te4z73jimGjyqakMBUOSpQEFGrAHh13C9eYqYb/tZR
- MrdV84cQkIgNIB8hDZ/A1LEEJMJUyAXMJ2l++R/BwCIFWh1nzo4ohy06of6ATDML2iI6/O48eYL
- WHu2AfAL2f1zvo/aP9wWcLCBlOrPMXSwWTRGWPdqv0KBVXak+V5RPEK1gZvJV4=
-X-Proofpoint-ORIG-GUID: -hbTtXPsdRGRs6fsKcRQzMXMO6AafeHu
-X-JNJ: AAAAAAABqG9LusaMwZhZVPwJ3u+kAF0UucgQiCq/2T0cB4G20JdRBPvdR9PiVSxE1eyvdcIFJadz9/ZsuT1UwGQLbHKu0uHDFzYpy7cBaUCqAn9351iIuowIyYwYSkVRv4dILh7YX+dndCjfVmgWdaI62ftaYE+Kz1ohXY/+XSnuOUn/LR1/7vY+H4Mf9er/cTRtkEijdajj6/WImk75bFzBtdt7DQ0aCAr213Zqc6rdGri8lznnW7z9f3SEAfrKEmb1D7eMy+eAgaHE8heXU1DlC8fhxGp5TyrSSos+i1vclryMDTkl2gHBKANp9wgyC1eKSE1h4Osidl2RmPBCple+DcWLxGjCuOYKqatQ2Kz463euKybMNBYtq9hm2YQ7t1EhfGFc6YDgcoy5NaC7VZ0XyoEsBhGk+cLJRjHyyLO99ZYPooWaOiT99NLx2ajBrqG/Ajy4+nAHk8PqJ3y21i3cG0fcRXNXcFkkThHEZ0F4fcLmg9yO8zl+LXUQwDb9rlQ5tD83NVNU2zxcdeuLqlPPjWA743meYweq2k2S13I5gZF/BFrtxoGnRtT7c7i+NVEPC4Apjecyrh093Oq7LADAChDdnMQmJPi8ttEpwRxCnB1OKzVhZhlGxdvy7+WMaGt4QfIhz/9JG6PKh5W1k7cmd4qNfEziweF3APdUYzOS9Pmib5TC7aMC0A32Ogm3uqn4ioZTgBwS82/b3yagRBwbyz+ChyXjzxU2G9WDhLt8lbrF3Md0Lvp8btxXmxYb0JlTgHz701knre78E1iTN4aP/gE/QGFL9P355M7fhQDKZAXf+1G0uaDRHdRLH6+8DWEZd0NCTI4GmZkFXMM8vG2sfte5oKK2wy4/6UBoyEpvRGaxpy6ErrdXwesgedCp8PWBKY2gojpArcArIVLjpSxSL6aElrmuK2JmxM1rsMAqPZX/7AG3cQRT9x+YvySkmxBlKuGiI8+mUDPhFBH88vGxBNvTFFx
- F9zrM2FYc3L4zSrOrRHYtIS8Vvr8ZV/bB9i1vLyR8vVzsqGG20vKn7ePxatQGpDqWMsPqFuDEhCoTuEH5G+KjSUELT32qBbntXk270dUtZ6kTcLvwYiCUaNpRlekgdC08kK3bdMgoVN0Vi1g2sQKEvybc/MRVLlBnkzAMU0siZkoQdjqZBqKs/OcpJQ0sQ3KR8jeIAc3J/LcU6OWrFdrG8LPfh0kjB/nUHYFYHrLF7kXANP9ePfr10/8ZqNMaAbaFYXMxrGBeGDKFTl5VkzzsAhEQRIeDV+1rnAsdFSEYzmc3Ge9NHR2quRwSmU+duaIakJdBiYeD5QdMD89uV0LLzAHN5wdNiUqT32uT/qsypITBkBNu3BQBkJCG6Sxy/5qKWKyupoluXHE80B3MdugX2VSirderN4OiK/wvRnUGX6HTm+XoZgEskSDkDJKX1tW2FmraOt0YjON8H16HaMKUOAc84HWc2PxJqJqNVdek2Hcpfqdksj9zFrn3lpD0x6oITFLgvbvl/S3B9ZxD7F9T85C2NpeJwB7HagZVjji7sKbbRQyvKY8PzWVB2W8JzVuKGiJJ39SDwVSUSU7qotFplTs7exffuVqzA1aTqVeje65z3aC0Xp++hd/gHWuLA/Pd/gpJgsjeq5WvFQ==
-Received-SPF: pass client-ip=2a01:b747:3003:206::5b;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+MIME-Version: 1.0
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: LVXPR21MB7009.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: aad5b25c-fb7d-4841-4b4e-08defe523d11
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Aug 2026 00:30:29.8298 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Hl/XX6Pt/aUeMCg19Ix+AZUYk8oRZN2XeXa3MueMjnuvfnYPQBX4IHNry9IRO6ujA/v5DjDOMTUt1b8hl0SWZw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV5PR21MB4995
+Received-SPF: pass client-ip=2a01:111:f403:c10c::1;
+ envelope-from=dcook@microsoft.com;
+ helo=SA9PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,84 +150,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+ARM_CP_CONST registers ignore writes, so readback assertion fails.
 
+Not asserting now because all entries in the whpx_sreg_match table are
+invalid. Needs to be fixed now so that we can fix the table entries.
 
-> On 19. Aug 2026, at 23:56, Michael S. Tsirkin <mst@redhat.com> wrote:
->=20
-> On Wed, Aug 19, 2026 at 10:22:06AM +0100, Alex Benn=C3=A9e wrote:
->> We have outstanding guest exploitable bugs in the code which is =
-fairly
->> complex and needs some serious love to clean it up. As off-CPU
->> cryptography acceleration seems to be waning in popularity lets just
->> deprecate the sub-system with a view to removing it in a couple of
->> cycles.
->>=20
->> Link: https://gitlab.com/qemu-project/qemu/-/work_items/3625
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> Cc: Gonglei <arei.gonglei@huawei.com>
->=20
-> Let's see what Gonglei thinks.
->=20
->> ---
->> docs/about/deprecated.rst | 14 ++++++++++++++
->> 1 file changed, 14 insertions(+)
->>=20
->> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
->> index 0c656a968fc..3c22981fc8a 100644
->> --- a/docs/about/deprecated.rst
->> +++ b/docs/about/deprecated.rst
->> @@ -276,6 +276,20 @@ future release. Where no 'dh-params.pem' file is =
-provided, the DH
->> parameters will be automatically negotiated in accordance with
->> RFC7919.
->>=20
->> +Devices
->> +-------
->> +
->> +``virtio-crypto`` (since 11.2)
->> +''''''''''''''''''''''''''''''
->> +
->> +The ``virtio-crypto`` device emulation is quite complex code with a
->> +number of known flaws. It has never been migratable so is unlikely =
-to
->> +be used in any serious virtualization setting. With most modern
->> +systems supporting on-CPU cryptography acceleration via their
->> +ISAs sets
->=20
-> ISA sets?
+Signed-off-by: Doug Cook <dcook@microsoft.com>
+---
+ target/arm/whpx/whpx-all.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-Architecturally exposed instead of via PCIe/platform devices
-
->=20
->> the need for off-CPU acceleration is also reduced. Add to
->> +that the kernel has recently removed the ability to use off-CPU
->> +acceleration
->=20
-> did it really? I thought it's just for af_alg?
-
-The kernel=E2=80=99s own use cases - for disk encryption and co - =
-aren=E2=80=99t
-supported anymore using offloading - and AF_ALG is deprecated.
-
-Drivers exposing a channel directly between hardware and the driver
-(ConnectX NICs, Intel QAT for ex) remain, and userspace can
-continue to use hardware crypto offloads through these or kTLS offload
-which also remains.
-
-For the former case though this means using a vendor-specific
-library in userspace (qatlib for intel)
->=20
-> and putting "recently" into cde will not age well.
->=20
->> suggests the time for this sort of off-load has passed.
->> +
->> Device options
->> --------------
->>=20
->>=20
->> --=20
->> 2.47.3
->=20
->=20
-
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 00a5de8cdc..9a5a575b5e 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -223,6 +223,8 @@ static struct whpx_sreg_match whpx_sreg_match[] =3D {
+     { WHvArm64RegisterMpidrEl1, ENCODE_AA64_CP_REG(0, 0, 3, 0, 5) },
+     { WHvArm64RegisterIdPfr0El1, ENCODE_AA64_CP_REG(0, 4, 3, 0, 0) },
+ #endif
++#ifdef SYNC_CONST_ID_REGS
++    /* ID registers are ARM_CP_CONST (writes ignored).  */
+     { WHvArm64RegisterIdAa64Pfr1El1, ENCODE_AA64_CP_REG(0, 4, 3, 0, 1), tr=
+ue },
+     { WHvArm64RegisterIdAa64Dfr0El1, ENCODE_AA64_CP_REG(0, 5, 3, 0, 0), tr=
+ue },
+     { WHvArm64RegisterIdAa64Dfr1El1, ENCODE_AA64_CP_REG(0, 5, 3, 0, 1), tr=
+ue },
+@@ -235,6 +237,7 @@ static struct whpx_sreg_match whpx_sreg_match[] =3D {
+     { WHvArm64RegisterIdAa64Mmfr1El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 1), t=
+rue },
+     { WHvArm64RegisterIdAa64Mmfr2El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 2), t=
+rue },
+     { WHvArm64RegisterIdAa64Mmfr3El1, ENCODE_AA64_CP_REG(0, 7, 3, 0, 3), t=
+rue },
++#endif
+=20
+     { WHvArm64RegisterMdscrEl1, ENCODE_AA64_CP_REG(0, 2, 2, 0, 2) },
+     { WHvArm64RegisterSctlrEl1, ENCODE_AA64_CP_REG(1, 0, 3, 0, 0) },
+@@ -790,7 +793,7 @@ int whpx_init_vcpu(CPUState *cpu)
+=20
+         ri =3D get_arm_cp_reginfo(arm_cpu->cp_regs, key);
+         if (ri) {
+-            assert(!(ri->type & ARM_CP_NO_RAW));
++            assert(!(ri->type & (ARM_CP_NO_RAW | ARM_CP_CONST)));
+             whpx_sreg_match[i].cp_idx =3D sregs_cnt;
+             arm_cpu->cpreg_indexes[sregs_cnt++] =3D cpreg_to_kvm_id(key);
+         } else {
+--=20
+2.55.0.vfs.0.3
 
