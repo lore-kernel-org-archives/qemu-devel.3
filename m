@@ -4,108 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24780C5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:54:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75B9EC5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:54:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx5yP-0003z8-Op; Thu, 20 Aug 2026 12:50:37 -0400
+	id 1wx5z0-0004ys-M1; Thu, 20 Aug 2026 12:51:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5yL-0003uY-Iz
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:50:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wx5yy-0004md-91
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5yJ-0005QP-Dr
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:50:33 -0400
+ id 1wx5yv-0005cR-4P
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787244630;
+ s=mimecast20190719; t=1787244668;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/+3VB50P9IeYwtauM/g5NERrE6CRpOAQgHkmrcSXNw8=;
- b=jM0HNcmCPrGrmTR0mx6H6UjPt6d1PCscNNKb2f3Nxol6gQ973kubr2BsbdlAudCslVEeZ2
- YQt5SsKRefcfCbri/jsXCUsXT/TlwJ/30+6B7a0y/4M2EOdD8TR09ItOXLEgvT/iRBc2yz
- sYL2RG7BOL/7uwFKbAj1c01V5NLsCqY=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iDeGx4lsnD3gIC+ysZwu/5kmuhaNZCo/ri7XQJW4wwg=;
+ b=J+bmFUOQW9jloBBLiyCnjHdhcqBxF8U9HbCMm9WTTe9iKXbltaAF+S8lsEQGcqqmSyWNkC
+ 8wJOeZ9Gzk08ldHZuIcQ67l0NsVDDA27qoTsNvPk3imGUNvN2MI6svyqC+AtB03slAMS9B
+ LfPMoVYlFi1MHALYZTH5rxljozyuGK8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-241-06j2AidNP5ur2B_JRIC1Fw-1; Thu, 20 Aug 2026 12:50:25 -0400
-X-MC-Unique: 06j2AidNP5ur2B_JRIC1Fw-1
-X-Mimecast-MFC-AGG-ID: 06j2AidNP5ur2B_JRIC1Fw_1787244624
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-495569acf8dso171185e9.1
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:50:24 -0700 (PDT)
+ us-mta-140-cu1uWwVaPsCWWXcW6APkog-1; Thu, 20 Aug 2026 12:51:00 -0400
+X-MC-Unique: cu1uWwVaPsCWWXcW6APkog-1
+X-Mimecast-MFC-AGG-ID: cu1uWwVaPsCWWXcW6APkog_1787244660
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-47f83416551so82680f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:51:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787244623; x=1787849423; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787244659; x=1787849459; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=/+3VB50P9IeYwtauM/g5NERrE6CRpOAQgHkmrcSXNw8=;
- b=cvBIx06BwvJPrYzhV8psylRK4BzPHDFgp/IOEhEEZlAVZVDkucvLAgmezGMKo1stS3
- fDmBWCsRuBGFrfYVL60sBaFsdoCixfSMD8pQmoWKEafxBJMYJodBStpqQKovZF5dD34B
- pssrErlm3rpMZOWcjNrW7AOoI8x19Zu6tlQTfXc5DXxsNhBspBJKlLe3c1v8vqJH+Q03
- 9H1Taboar5G9T2EMqODh+5cYcE11XizTNLB5ta0DMtkU5Kkv2axlM47h3+Y3pn9f901a
- 7IA8Y40pu14J6It38/S1NvNUsjFc2hi7/DxDSnXMmXzNmOOUj7BJCqPXzxVkl+VbOzpc
- 0PPA==
+ bh=iDeGx4lsnD3gIC+ysZwu/5kmuhaNZCo/ri7XQJW4wwg=;
+ b=ckHj/LDn2xAe6BEhAAvIrtPNQ62V1qg/bN67dRo8xexP+JrpgdNG35qfVTa8wTH/gt
+ oUnv+8lBN7Zjz57pHOf3FlpVkemXVTHZ2e0eOSixBiDv3bPe8mAGhAWfRUEl7rAAsU29
+ Z3i8qu3d7FF8cbWnXjIZLawuhLHGi2+8TglwF0nXzdu6McrlSpbEOFxZhkEKusKChJgx
+ dQ0qpMau82eU6Kh+WvCZyJV9w7vXuqYBCgl4Dl3ENJHq5SXs5CiWy/KWoP/vTuZPQWdO
+ AwA8mgsoGFBzwjpC7YXwUSUSgtwo8X1rinzmBl0rh5GXMNn1PM3q5bwg+U6OqCCbg6L3
+ ApeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787244623; x=1787849423;
+ d=1e100.net; s=20251104; t=1787244659; x=1787849459;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=/+3VB50P9IeYwtauM/g5NERrE6CRpOAQgHkmrcSXNw8=;
- b=VfnODmBxHfQ27Ds3oil8Ck4v/hNuxBTh7CwYF8uSoDtTlUDOgnYaAa8tjhFsheZ7vb
- MjCDqjsFhutkESlQWc8K0uOQPK4KDxw1vw+7r4ehbG8CtwLOF1tStvDjWCRTBO/Yov+i
- xcDOzNpGAHNquTp1xsaWIyV66YiXReYJk3WZbkJ6LHDwzkgTWFZqPFRKJHB+yGkYUpdf
- +T7z1GwcpGwbxB0RkEDriKetd+22Z9Fv2wZLLk3zJpNk2yuaLLPoMlY0YzvwVdDHUpCn
- 7T8to2CX/+6fs2AtqkLrOTGqKIA1/j8kQjyHm9Inkn+Kdp7at2owMT8ebNDEwuI/iJ1p
- 0/Cg==
-X-Gm-Message-State: AOJu0YxkPJJwJtc1oHniawbmCrm3kDulJPviQomuSEXR7yKGYJzwMVEP
- CIHOQ2cpAg7Bm45Y8rvghoLqkq7wmrQYWrvwSWShgM0VVN+sNMCFGhSZ0EXj246XordlBrOCQga
- eysvGsIkYa90ifCjNIMlmhHDVqQIUUlHOi2HMqpLI/z+RU94ewD+M4iyvaXQYoGPDEIQNmJ1jJJ
- zsK/B/9zpHqTBCF1wDBPRdAVr5F8zptktluBEWTISH
-X-Gm-Gg: AR+sD10/2t3gIt3dXO7H7ci2UlFU6BW7a8WNqOV02xS1Y49bzJw8JSxzOtCozEvAw2X
- NyCfpPa6nbiA5+5+eSmK8ZM9xfN0XM1Zh7jZeLl4+uPv9EJvDUg0kO0ooihXMXVwyf03Eh4NZhu
- 5e0tkxXxKtoH3cvgm/TcVTLHSSNX23WZQpnygHv2TYxvqSyBYoq4AjJcVXE7ygjmCydDvgmdK+A
- JlDxcCt7qm/XhCXyjdo7BN7LYmtoVAQE8e8GEBqVT0OBl3kYSBB70P/tlFmklDxnB5wseeXe04n
- Qxic9hThPpeANjl7TIT8qwp0xg2O+X6kKlWWq0/PF0otwl2R8lBg+7AwLdxjPZ8Hj4w6xisjBF0
- wBIWAxfa5Tnva7sxDINb/MrPzLcGtdiI1eP8MLClZHFGWxWOCl9gFmEKSyiGKIEXBJLESDjQisn
- Wi9a4=
-X-Received: by 2002:a05:600c:8b25:b0:499:8807:345f with SMTP id
- 5b1f17b1804b1-499b84617bdmr3969685e9.13.1787244623569; 
- Thu, 20 Aug 2026 09:50:23 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b25:b0:499:8807:345f with SMTP id
- 5b1f17b1804b1-499b84617bdmr3968425e9.13.1787244623079; 
- Thu, 20 Aug 2026 09:50:23 -0700 (PDT)
+ bh=iDeGx4lsnD3gIC+ysZwu/5kmuhaNZCo/ri7XQJW4wwg=;
+ b=BE50WNhh3StqQWfg4sdEy4XHlWvb5COgGrwGiSqS7sBM/l8daoGS8KeAhtLb5I5rZs
+ BRT36DA/MXbgdrdHL2qenF7RstPktMMVv86YckT/9kUwUCfjyS3u0t1ERG0cxMVd2g7o
+ EQUqlWdgBvgYmvQNo+AQwJSQnpo5gdNhqn2ajxv+iRF6uMH+LRyEm26H76ZVlMJAV8lU
+ lOtUHdHbrzaiVKvckJr5HlA8pqfU/AVRcEKW7vMnVVdOOoi7n80zGh1Vk4cdkLav2GdY
+ Edcd6QgPDvg5Qzcc1rBbMhn8I5loqEhwMG1aHBYIonwrfaTxngKXO/o50EQooUOHaEuj
+ k/rg==
+X-Gm-Message-State: AOJu0YyVhvjE1DtwJIUWd8+8eMR1UhKEbZ+JqhRTw+NTVZYUmOfc3PFH
+ H/atQ+xfNo/+Ode/0M0P5Rw5uhbjOvH+Alkf3VAVOvIQ/b5mIiaAFkM63ZhTvX1rNa3YC3YOs4c
+ WBxSNVkgX2uTCBX5c+z31Q+aeVhRzMa3SFP+z8MLNqFbIS9kcBsX04pEc/9VXt/oZa3QDbmBkxA
+ oCpQAeUkibf4s3Y2WrICh85v/u2G+ww45M62WUNCej
+X-Gm-Gg: AR+sD10TUFN8DXLyBLBR6ZiDGrLmo1XXIQrnu8DE/l/lvYXkIoHOXAjmCd1/yTZFkIH
+ sMGLCYfWd/RZvtdpvXfafP32gzZDCfgaaPATjSeOgd9hfA6ovX3RaHFWXF7JsGC0oojI1HzYmJ+
+ AgUN7Z/8oiin4YvmrAfJBkE2IDlpG6EAE8gJjDNNLaOMJ0YOatNjjuiKMR1LqdF1eyNnWStyuv8
+ SSZc0dPYeua74uZUWR6BJMfItgxyBihdifuqvYtPX3gfB8fM+ZSMSh5vSz38M6sv33FTzNkBW60
+ vHKDTlHH/Z/9E2RspAwrtuejI/cQ4BV12idkHC0p9jdIPGKJo537Fi+AkpLi2B6YQ3cElB8TWXt
+ jWLEOcEJenTAui5Jx99y3BgS/D9IHu3ie0hMdqZlv2zW0j8zyxxWrIGyaVzbXItXVN6Vu1t2o9Y
+ yjNjA=
+X-Received: by 2002:a05:600c:3556:b0:495:48d7:f178 with SMTP id
+ 5b1f17b1804b1-499b8454819mr2870245e9.11.1787244659560; 
+ Thu, 20 Aug 2026 09:50:59 -0700 (PDT)
+X-Received: by 2002:a05:600c:3556:b0:495:48d7:f178 with SMTP id
+ 5b1f17b1804b1-499b8454819mr2869265e9.11.1787244659055; 
+ Thu, 20 Aug 2026 09:50:59 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b29e19f2sm49098615e9.4.2026.08.20.09.50.20
+ 5b1f17b1804b1-499affa25acsm94802585e9.4.2026.08.20.09.50.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 09:50:20 -0700 (PDT)
+ Thu, 20 Aug 2026 09:50:55 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Andrey Polivoda <apolivodaa433@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 07/53] target/i386: decode opcode extensions group 3 /1 as TEST
-Date: Thu, 20 Aug 2026 18:49:10 +0200
-Message-ID: <20260820164957.1895963-8-pbonzini@redhat.com>
+Cc: "Naveen N Rao (AMD)" <naveen@kernel.org>,
+ Tom Lendacky <thomas.lendacky@amd.com>
+Subject: [PULL 20/53] target/i386: SEV: Generalize handling of
+ SVM_SEV_FEAT_SNP_ACTIVE
+Date: Thu, 20 Aug 2026 18:49:23 +0200
+Message-ID: <20260820164957.1895963-21-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820164957.1895963-1-pbonzini@redhat.com>
 References: <20260820164957.1895963-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.346,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,58 +122,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Polivoda <apolivodaa433@gmail.com>
+From: "Naveen N Rao (AMD)" <naveen@kernel.org>
 
-According to Table A-6 in Volume 3 of AMD64 Architecture Programmer's Manual,
-opcodes F6 and F7 (opcode extensions group 3) with ModRM's reg field values
-of 0 and 1 can be used to encode a TEST instruction.
+Align with IGVM files providing SEV features with
+SVM_SEV_FEAT_SNP_ACTIVE set by setting the same when creating a
+sev-snp-guest object.
 
-Although Intel 64 and IA-32 Architectures Software Developer's Manual leaves
-the cell 1 of opcode extensions group 3 blank in the opcode table
-(Table A-6, Volume 2D), the instruction in a group 3 with reg field of ModRM
-byte set to 1 actually behaves like TEST instruction on Intel CPUs.
+Since KVM sets this feature itself, SVM_SEV_FEAT_SNP_ACTIVE is unset
+before KVM_SEV_INIT2 ioctl is invoked. Move that out of IGVM-specific
+section to common code.
 
-Currently, QEMU decodes group 3 instruction as TEST only if reg field of ModRM
-byte is 0. When the reg field is 1, QEMU raises a #UD exception.
-This behavior does not match real Intel and AMD hardware.
+While at it, convert the existing SVM_SEV_FEAT_SNP_ACTIVE definition to
+use the BIT() macro for consistency with upcoming feature flags.
 
-This patch fixes this issue by duplicating the existing [0x00] and [0x08]
-X86_OP_ENTRYrr(AND, ...) entries into slots [0x01] and [0x09] in the
-opcodes_grp3 table.
-
-Fixes: d7c41a60d0c5 ("target/i386: move C0-FF opcodes to new decoder (except for x87)")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3580
-Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
-Cc: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20260621032524.1138213-1-apolivodaa433@gmail.com
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
+Link: https://lore.kernel.org/r/031de849edf2ae4eaa6e00df83b053605a3ecfea.1779281646.git.naveen@kernel.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.c.inc | 2 ++
- 1 file changed, 2 insertions(+)
+ target/i386/sev.h |  2 +-
+ target/i386/sev.c | 24 +++++++++++++++++-------
+ 2 files changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index faf74b00bbd..9c429e113de 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1624,6 +1624,7 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
-     static const X86OpEntry opcodes_grp3[16] = {
-         /* 0xf6 */
-         [0x00] = X86_OP_ENTRYrr(AND, E,b, I,b),
-+        [0x01] = X86_OP_ENTRYrr(AND, E,b, I,b),
-         [0x02] = X86_OP_ENTRY1(NOT,  E,b,      lock),
-         [0x03] = X86_OP_ENTRY1(NEG,  E,b,      lock),
-         [0x04] = X86_OP_ENTRYrr(MUL, E,b, 0,b, zextT0),
-@@ -1633,6 +1634,7 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+diff --git a/target/i386/sev.h b/target/i386/sev.h
+index 4358df40e48..b84ca3ce0b6 100644
+--- a/target/i386/sev.h
++++ b/target/i386/sev.h
+@@ -46,7 +46,7 @@ bool sev_snp_enabled(void);
+ #define SEV_SNP_POLICY_SMT      0x10000
+ #define SEV_SNP_POLICY_DBG      0x80000
  
-         /* 0xf7 */
-         [0x08] = X86_OP_ENTRYrr(AND, E,v, I,z),
-+        [0x09] = X86_OP_ENTRYrr(AND, E,v, I,z),
-         [0x0a] = X86_OP_ENTRY1(NOT,  E,v,      lock),
-         [0x0b] = X86_OP_ENTRY1(NEG,  E,v,      lock),
-         [0x0c] = X86_OP_ENTRYrr(MUL, E,v, 0,v, zextT0),
+-#define SVM_SEV_FEAT_SNP_ACTIVE 1
++#define SVM_SEV_FEAT_SNP_ACTIVE     BIT(0)
+ 
+ typedef struct SevKernelLoaderContext {
+     char *setup_data;
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index d7dcefc8ecf..7b03f534b10 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -324,6 +324,15 @@ sev_set_guest_state(SevCommonState *sev_common, SevState new_state)
+     sev_common->state = new_state;
+ }
+ 
++static void sev_set_feature(SevCommonState *sev_common, uint64_t feature, bool set)
++{
++    if (set) {
++        sev_common->sev_features |= feature;
++    } else {
++        sev_common->sev_features &= ~feature;
++    }
++}
++
+ static void
+ sev_ram_block_added(RAMBlockNotifier *n, void *host, size_t size,
+                     size_t max_size)
+@@ -1899,15 +1908,15 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+                     ->process(x86machine->igvm, machine, true, errp) == -1) {
+                 return -1;
+             }
+-            /*
+-             * KVM maintains a bitmask of allowed sev_features. This does not
+-             * include SVM_SEV_FEAT_SNP_ACTIVE which is set accordingly by KVM
+-             * itself. Therefore we need to clear this flag.
+-             */
+-            args.vmsa_features = sev_common->sev_features &
+-                                 ~SVM_SEV_FEAT_SNP_ACTIVE;
+         }
+ 
++        /*
++         * KVM maintains a bitmask of allowed sev_features. This does not
++         * include SVM_SEV_FEAT_SNP_ACTIVE which is set accordingly by KVM
++         * itself. Therefore we need to clear this flag.
++         */
++        args.vmsa_features = sev_common->sev_features & ~SVM_SEV_FEAT_SNP_ACTIVE;
++
+         ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_INIT2, &args, &fw_error);
+         break;
+     }
+@@ -3211,6 +3220,7 @@ sev_snp_guest_instance_init(Object *obj)
+ 
+     /* default init/start/finish params for kvm */
+     sev_snp_guest->kvm_start_conf.policy = DEFAULT_SEV_SNP_POLICY;
++    sev_set_feature(SEV_COMMON(sev_snp_guest), SVM_SEV_FEAT_SNP_ACTIVE, true);
+ }
+ 
+ static void
 -- 
 2.55.0
 
