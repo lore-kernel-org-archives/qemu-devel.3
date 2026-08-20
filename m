@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2C42C5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:58:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AC03C5DF87
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:59:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwtjv-0002Db-8l; Wed, 19 Aug 2026 23:46:51 -0400
+	id 1wwtlP-0006k5-AM; Wed, 19 Aug 2026 23:48:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtjt-00027F-UO
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:49 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1wwtlN-0006j1-Ng
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:48:21 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtjr-00046W-U8
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:49 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-84e04df8c46so1709148b3a.2
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:46:47 -0700 (PDT)
+ id 1wwtlM-0004OO-95
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:48:21 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-38dcbade417so1939436a91.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:48:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787197606; x=1787802406; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787197699; x=1787802499; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=cjyHLAWuHJgJ/+lIjyXwN6xYrYB6otvsADCyVj8AJtU=;
- b=ZVeatdPqflWZzDjScIfs+X5cQfemFnFL5YHF+Ase7KbLCCYnz64sj3Guo+JQMgZB6D
- j9URtZx5zYaXMKW3+89kurparuhbWPAoSfUpRf4SomAG7CqBFXUmXDD4FKBJHcSoqmHK
- SdNV3MmonGUP0OZ/CF4tuOQCiYBktNekEkQK6pHTcU2GVwlj3cg19Ny2eBo6iDqfE6TZ
- zB2TaTV5X5xad8gqLVSdLnB5DJGLVdakLOzi7gRErMKRS4LgGwhKVN+uUSAzeLxoU3dN
- dejjVEIJ/4WQhH+59zJm1N7b4GddPgqj5hRVU2MfztyA9CfB0IUQjV2crm9rEqHM2nqx
- v8Bg==
+ bh=HaltHBrD2Aw1tYNfzSMF6Xxi4/NnMEbI9K3tbX0694Y=;
+ b=IVWLmagdZ2IKOnUld3UTPSnZ7ByQfeTer1ZdSGJKx/k5J7sDJFerWlGAsr4ht9Q+qq
+ ND5jrPGYzn+lGfr9rqujttUh32MZtAC+1CM7LH0pY5dCjff9RB3AK1KRrDM2LWusc0uP
+ BOVz3225rlDKl4YIwf3G4KW4xKhGoT7Vwk0cRBJYDWgg4PAaVnewrxAZ4gs0PH/OBOnP
+ iClCIdXVk3EPcC//X5L0uM8/0elH0j1/JBZ8FdlwP7x9SaY51MF2mUTShiofiMl8Q4g8
+ HKC56ptyQXx13Q6miEDIGlJS5X0gEvtV1uSmi8kWKS2AhB3tQ0ubiKyGuWTzLiSiR2Yv
+ 0ljg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787197606; x=1787802406;
+ d=1e100.net; s=20251104; t=1787197699; x=1787802499;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=cjyHLAWuHJgJ/+lIjyXwN6xYrYB6otvsADCyVj8AJtU=;
- b=IRooPZL+xoAe5MeWmwxxnHSsGr3EbL/WepMEQ2AKULKoJCs1UE1c1SDiiilkht5cYV
- n99heSa+A9NK/s/XxgaxIrCrCvugY8a8Jb2Q4zGoZLZSjq3h8joYDGUkTw80QtWbgH9k
- dvJcvwn0ejxtv1hw4whbn/CwdP49/QuTKU0RvgHdpK3cNXLILlE92VtrT7ZIVDDUvANi
- yrZ6O2uwfoa3v9vrNaXcLQ/Ynz5OJl5J4mgfsBl9vjUHncI1+7r5gTtlX7MUVsaR20Ey
- Yc6RwZsvQOeZe3vlwGd855WU2kdMgxfrD+TPeSeh5+mbU01y+ozaRFXiZPdUGxQSvdkN
- Hr5g==
-X-Gm-Message-State: AOJu0YzYTWS7Js3BKT4kmwiYJGGa2fIFLsefB+cl2/SGC9uZNdYN2B/1
- +gVasQPDcZdYZbHvJoma7GuUzwyNWCFYPNc+3e/tSdbJMN4HpRI58xzYWINCYw==
-X-Gm-Gg: AR+sD13YTV0fIIcWDfC+bcxP3j6ymt2CYFbj8uUNiMMynSFFkBhLt2+KFrCnnn1CzF9
- 4BEvpKli5LYOlaaKmFy8TqJQY3mmN0+poErRu+hV1f/hToD3sX/E6FiSVF7VVc7RCCi39j8Ykd4
- CzHR0mz3fVq27xycHMYUQF+X6cJSTaiyBOleBh0IVmuPwQW0Nb//NeBVUdSqZo+GNrl35D7hTUW
- +yf+xDSMb7xczpCAZvbWfHOQGRCBP/UT8PM7xYRiv6lEFlTnq8MeWQY9+ebTiKhTgaXF/dc13gc
- xeP1pjAE2cEPAUcEFt7EakzqoVgQ+BAcFucM6rteRWgBSwuE5ne0FdJFcTSaDLtClFW8wDRh7le
- ryxT6l3D7pJYXBhm3mSE/XAUrtqD5UTPk6AgpkV52SzJxzS+u29rF+mORqf++sNBwuA8Tt1js9w
- LE8qlVShnTN/1hYr+RvgSPFuPx6d5dyZxT+a7ETs6i/pl5WxMK0RVfxwLaH8zbjLTV6ROWy4b8k
- a0hog==
-X-Received: by 2002:a05:6a21:748e:b0:3c4:1493:6822 with SMTP id
- adf61e73a8af0-3cd0127962amr20225420637.18.1787197606396; 
- Wed, 19 Aug 2026 20:46:46 -0700 (PDT)
+ bh=HaltHBrD2Aw1tYNfzSMF6Xxi4/NnMEbI9K3tbX0694Y=;
+ b=nNSXFaEIBVI6Juh57ncjBiEtZrIQg29onnnjcH7EBCvgsY8ThddAI7Jm9WuOgL6JZY
+ dZ0xMHHd1U589buzo5Zh4xQdcgPGvSefstKCYUw6rCeFC1xkvDn/0V9JY37OxbYXe45R
+ BAEB2WWda/hDo345wuxT6yGGHxIePsZd9EUGMx7+dZhjMFji+ZgYS38KRS0eRmRRUMJl
+ RRjbwdQ4ukTYWaHd0Q+wUu23SHNqEMTdrOKJs638GF18JNxsQz66+rghxV7hL20ORF4d
+ gfYBU85PraiwPelXFQGlpky4L7iSlh0rwWOqmlCVMkZOnYBj8DYIyL4abXfaUyV3lUK9
+ ATWg==
+X-Gm-Message-State: AFuF++mUo9qILAmApJ4PoQ3iGvUFI/i/qrF41wwj4+8y4bY9pHLNX+RE
+ HmX8oCrjttl50acY82/tyzyUUzrQtbWaceZdldyR6HY+y19l4QvzeLs9PXeJdw==
+X-Gm-Gg: AR+sD11BzB3bqHb8CrECcY9S4wh+D6Wz28oyJICiz8T4gzQwiMag1NWZVUjlsieZXyr
+ MkZ8eW+iE/3KTsKK2jGPtVmjeBGi2B4eBNmTZM7rfE78ARStiYQ/vhbPrgOtcMP5r9ElmIwP39y
+ WjOEujsBB+6C0Lls2V0gInl5afvS5gfjlWaaegtM+deaDO/ulRHBB/RXMJMJCit2xgn8Mm4DMoV
+ xMmoHMB6AXee+ujEryeFW6wx9LL/iazOdnSOEIb9kKHtFvJzZ1/Fd0BTMG/gvLEP71HoSgexQLc
+ MKHxVv0eJrGrd5ZovdVOxEUyJe+SDIkVeRJInzB8qDfPJuoldHWMXglWBRVXNWJzJLsadQS/YLO
+ BIrshQRkdl5zjTfn3X8s+Orn7VBrw3jBsytva8eS5jnMzsNuZ+Hy6hyg/T9oEGIX1LpErrZWO5z
+ ChCvDwdvfJqnt96v3x702tDMPmcJwgYuJT2IlLglAu2jzr9MT6r3Tv1VSmjRdsu1h3GQlUzzNHA
+ W1Bjg==
+X-Received: by 2002:a17:90b:5102:b0:392:b509:b1a5 with SMTP id
+ 98e67ed59e1d1-395810caaf4mr5432259a91.14.1787197698856; 
+ Wed, 19 Aug 2026 20:48:18 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.46.44
+ a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.48.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 20:46:45 -0700 (PDT)
+ Wed, 19 Aug 2026 20:48:18 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-stable@nongnu.org,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 41/93] disas/riscv: Pass rv_opcode_data pointer to/from
- decode_inst_decompress
-Date: Thu, 20 Aug 2026 13:43:38 +1000
-Message-ID: <20260820034430.1186695-42-alistair.francis@wdc.com>
+Subject: [PULL 75/93] disas/riscv: Fix isa decoding of rev8
+Date: Thu, 20 Aug 2026 13:44:12 +1000
+Message-ID: <20260820034430.1186695-76-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260820034430.1186695-1-alistair.francis@wdc.com>
 References: <20260820034430.1186695-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,114 +105,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Unify 4 functions, sharing code.
+The encoding of rev8 is different for rv32 and rv64.
 
+Cc: qemu-stable@nongnu.org
+Fixes: 02c1b569a15 ("disas/riscv: Add Zb[abcs] instructions")
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260812223142.349142-6-richard.henderson@linaro.org>
+Message-ID: <20260812223142.349142-40-richard.henderson@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- disas/riscv.c | 70 ++++++++++++++++-----------------------------------
- 1 file changed, 21 insertions(+), 49 deletions(-)
+ disas/riscv.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/disas/riscv.c b/disas/riscv.c
-index af43940732..47fae7316c 100644
+index 5624e7f60a..787340e811 100644
 --- a/disas/riscv.c
 +++ b/disas/riscv.c
-@@ -5377,64 +5377,36 @@ static void decode_inst_lift_pseudo(rv_decode *dec)
- 
- /* decompress instruction */
- 
--static void decode_inst_decompress_rv32(rv_decode *dec)
-+static const rv_opcode_data *decode_inst_decompress(rv_decode *dec, rv_isa isa,
-+                                                    const rv_opcode_data *op)
- {
--    const rv_opcode_data *opcode_data = dec->opcode_data;
--    int decomp_op = opcode_data[dec->op].decomp_rv32;
--    if (decomp_op != rv_op_illegal) {
--        if ((opcode_data[dec->op].decomp_data & rvcd_imm_nz)
--            && dec->imm == 0) {
--            dec->op = rv_op_illegal;
--        } else {
--            dec->op = decomp_op;
--            dec->codec = opcode_data[decomp_op].codec;
--        }
--    }
--}
--
--static void decode_inst_decompress_rv64(rv_decode *dec)
--{
--    const rv_opcode_data *opcode_data = dec->opcode_data;
--    int decomp_op = opcode_data[dec->op].decomp_rv64;
--    if (decomp_op != rv_op_illegal) {
--        if ((opcode_data[dec->op].decomp_data & rvcd_imm_nz)
--            && dec->imm == 0) {
--            dec->op = rv_op_illegal;
--        } else {
--            dec->op = decomp_op;
--            dec->codec = opcode_data[decomp_op].codec;
--        }
--    }
--}
-+    int decomp_op;
- 
--static void decode_inst_decompress_rv128(rv_decode *dec)
--{
--    const rv_opcode_data *opcode_data = dec->opcode_data;
--    int decomp_op = opcode_data[dec->op].decomp_rv128;
--    if (decomp_op != rv_op_illegal) {
--        if ((opcode_data[dec->op].decomp_data & rvcd_imm_nz)
--            && dec->imm == 0) {
--            dec->op = rv_op_illegal;
--        } else {
--            dec->op = decomp_op;
--            dec->codec = opcode_data[decomp_op].codec;
--        }
--    }
--}
--
--static void decode_inst_decompress(rv_decode *dec, rv_isa isa)
--{
-     switch (isa) {
-     case rv32:
--        decode_inst_decompress_rv32(dec);
-+        decomp_op = op->decomp_rv32;
-         break;
-     case rv64:
--        decode_inst_decompress_rv64(dec);
-+        decomp_op = op->decomp_rv64;
-         break;
-     case rv128:
--        decode_inst_decompress_rv128(dec);
-+        decomp_op = op->decomp_rv128;
-         break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    if (decomp_op != rv_op_illegal) {
-+        if ((op->decomp_data & rvcd_imm_nz) && dec->imm == 0) {
-+            dec->opcode_data = rvi_opcode_data;
-+            dec->op = rv_op_illegal;
-+        } else {
-+            dec->op = decomp_op;
-+        }
-+        op = &dec->opcode_data[decomp_op];
-+        dec->codec = op->codec;
-     }
-+    return op;
- }
- 
- /* disassemble instruction */
-@@ -5491,7 +5463,7 @@ static GString *disasm_inst(rv_isa isa, uint64_t pc, rv_inst inst,
- 
-     op = &dec.opcode_data[dec.op];
-     decode_inst_operands(&dec, isa, op);
--    decode_inst_decompress(&dec, isa);
-+    op = decode_inst_decompress(&dec, isa, op);
-     decode_inst_lift_pseudo(&dec);
-     return format_inst(24, &dec);
- }
+@@ -3292,8 +3292,16 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
+                 case 0b01100: op = rv_op_rori; break;
+                 case 0b01101:
+                     switch ((inst >> 20) & 0b1111111) {
+-                    case 0b0011000: op = rv_op_rev8; break;
+-                    case 0b0111000: op = rv_op_rev8; break;
++                    case 0b0011000:
++                        if (isa == rv32) {
++                            op = rv_op_rev8;
++                        }
++                        break;
++                    case 0b0111000:
++                        if (isa == rv64) {
++                            op = rv_op_rev8;
++                        }
++                        break;
+                     case 0b0000111: op = rv_op_brev8; break;
+                     }
+                     break;
 -- 
 2.54.0
 
