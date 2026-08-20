@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D601DC5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 04:00:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F281C5DF85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 04:00:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwtkr-0005Dp-OH; Wed, 19 Aug 2026 23:47:49 -0400
+	id 1wwtmL-00088x-Ge; Wed, 19 Aug 2026 23:49:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtkb-0004A6-Jh
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:47:33 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1wwtmD-0007ni-Vn
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:49:14 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtkZ-0004Bh-Th
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:47:33 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2d032846c95so22147605ad.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:47:31 -0700 (PDT)
+ id 1wwtmC-0004UV-ID
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:49:13 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-38e3efab7e0so400189a91.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:49:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787197650; x=1787802450; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=7JzAABpt44ci1D0IHFkbgQn/cNbaYvxZwjC8pfV0xrY=;
- b=WSnVVDMqNR2QGVwMeeIf5k0gHG90cP0d3pRRJPw6SFowbac30OYAqoPVSnWCbIzOMX
- j5jELgBhEnZXdJ8grSJfMaPXrbyqb4dVqKvlxAWtjty9HF1zYrFmVJl5NfsiEJGLcPwb
- GlJXOf22dahneEQ1GjeCyoklPbJRfKyrI2Hbvi+oTEW0N0tkU8/WCmmXAj1tDbNuXXjX
- mbFACATPUyupfAbbOH1S1J0Q9qKHLVQt1mn3/vZu/leOwaVu1JBcHH7tmapL/SwQt8cT
- WqL0aZE/L4ScXvZXuBhEbNNtxH05z9GWq6ShfO4LOVtyVCjYuQiSIkiQXaacZSoIlhpY
- iTWA==
+ d=gmail.com; s=20251104; t=1787197751; x=1787802551; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Xa78VJXkRTr/R10IbacHsImvODmXgVktvTMEhHcpiSY=;
+ b=bE33lFj9IhPUwkEEoXmsq1ZPSmFXqER0BlnjxqRn9lV5MnA3HskVPL78GRs3rqWgIt
+ JoVS0emB+qP7wzNGEpoiaZKHPU+Z5uXNtrVQwpikUy+1y846BXQM0gEFTWny7zjxEa0g
+ iMQw1swKdUa+M9a1RT3s2n/nvowngRQ0Qt8WzFs1upiAChhfURRmfGUO95XlorauEzVw
+ pvynLWgx464m5jgKOqMN9IL5W+a0urYunA39FDBhVdm2IUjDIaUugBnxyTRRShs05JFa
+ 0OLhrzXxK5iBm22B12TQm2p3TosPoeRboVYsG0u89BrcWM39XWqJ4H5dbcXU+JdU9qSj
+ a1bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787197650; x=1787802450;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=7JzAABpt44ci1D0IHFkbgQn/cNbaYvxZwjC8pfV0xrY=;
- b=fbjN0dFTlWvqfZqL8CB3GoQBYbQ3WVvc0aheNoA32wimvj++vN3W9GiUgrekGB3tA1
- yuxX/aq+ZlgcKy4EtoCZdXhSiMvdeV10uCaJh6mMHI6Ma0h2dF77yz/fqbVmzGQ1k6br
- 9OdAJ4En8GceZiLoDPZDxqskAfwazrQi++O6CRCphnUl2hLIEddlYGKWRGsFsohz3PZI
- M0sF3FPUuHL3TqsTFNI/iiTSLyDBNfzHFhBAfsYPovs6aquNk2R7goHhagQHjUb0uXtW
- SOnwuW6R9/2iJ7cIcSdkCXngpguHaTY/rHPm50E9ZdgBiJ3b7XJJ0Kwh1GtOMDZx368A
- GCSg==
-X-Gm-Message-State: AFuF++llk6dcQ8GE50X2C9iipRxDmjBdT9TX95UeNxpqXTG+ph76Puam
- Mm0VdbQsB6/0OQdeXg60goAsap0SDvfTV8rPaS3fPjawMOJmd4eJqLXbevOqGg==
-X-Gm-Gg: AR+sD112wIbkC8fctJd5SPdLbyvCIOuKakKiUqTAxBN2dqGIZrC9p/l2PGTl13leCJI
- Bao7l7hKSP2umKtX4xnQAzTFD/kCKdfiipVZb+/1T44fwo6yEwecUt2QykL/hTtKSlnFVH/SKIR
- n4kD0fOUjnn468RL/+qOUVpNa6ae4NBUGsUTGf5Ai5NdxCKzKI7Anee4+12kJLf09ZXc+ukpaF5
- 1DwGdoyXwTzPsyvXHRF3jbxFods3o9bnj6PlRUaJmnzji16KqlgUr91U8s7kC/D7dJGNacXbLJs
- 411eGhKY/ceOvCyy/2PdiHN7sh2XTDKyEeCJLzIVGYrPXGFWz5qbwPtb3SJSd2Vmc/DJJFqpAMn
- ukHyVPPcCTY55HgKE/lrMWRFn2Qi+k5ofmIrwMZSxzRhEAE+5TkHn9boe6UwLoSU0wG2yvgpSIh
- qrxuo/KPmghc6m4jTqv7e5Cd/cDDcqxVgpH6jmjpWbm+/IUDLle9CeADHjaW5oHGk9GDatyYbBR
- th5hA==
-X-Received: by 2002:a17:90b:4e8f:b0:392:ca3b:370a with SMTP id
- 98e67ed59e1d1-39580a50d67mr19152386a91.2.1787197650223; 
- Wed, 19 Aug 2026 20:47:30 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787197751; x=1787802551;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Xa78VJXkRTr/R10IbacHsImvODmXgVktvTMEhHcpiSY=;
+ b=DsJ1slwUT3SsPgY/Ls7upcXmkEQg8O21vAkONDZ7RTDxMeRjqZerlchrTYZ7VSdhkk
+ uzpTW9TsGFjsuTrSA5RqRdujeN3hx7YaJuEnUQ4bP9JlXudB4yXJFxDZWKiugTQqE85P
+ HEw+2iCOtOn9GOUSAxpy4aT0NmQGxAzEuM0mM5oEC95gSl5+TctlL/qfep8KHw41vsLg
+ C3AdhI6XbJIT+QffA1cXQVsJaDw2MYH3M5scA0+h//XNobgxSvxc72UwBvTWSQOuF20H
+ D50INIdpw4quZcmrwXLex8mTft7XIhDpd5446qxrjn8PLsbzoa/sux6Y7CMUfku583HU
+ NIyw==
+X-Gm-Message-State: AFuF++mZ0RCN7hxYTyIPVvJjEY3B8dSx0VFd6wBGNuaf1FXNzRMfC/kx
+ LKtX6REZ4n6fM8Tv+AsiBaYYYhhxySXrYJIAmFFvzSiRmMM6cmep1z2N9GgbCQ==
+X-Gm-Gg: AR+sD13Y0hg+/9bixhcQpScqY1r1Y1M/VKXA3jixOtDMGfLgdb7bvWfDuage1PiKNtS
+ t3j7LD7b/8YE4t1VqEB2N5YI1NW0Uge5AyRbXMU/9CiUxUaCZjtaoy2JSaJ/J52U7b8q87g3MeP
+ n0xZHjwkeT7ls0rMes0nMI5wc1bbsFY+/JzN69bGivRoc0rzPT8gKK6R+hHR5VXwP00hsgHnlLb
+ K5gEzNMTLROhOqc//UDXdees0FS30cGed9kbXrKFt3VKXDqROgES+xZxy685Rrd8kn4dwLwqO+f
+ Um8GLr/8OOkWgWz6eLXMh4Zo81Z51LG8yBVENVg+JYTH0ANhGxObiJH7wClbv+1CQYpRkQbcpsA
+ uUNcvIu1CSP3UrIFt5NMQw4TS0pW7M6sWX0MvPeMaLEX3D0eK9XxJURzgFPMmktULqpgRKocDhY
+ AVPIhOFhX260heXDxL93sieNHYsXX3DG14/5b6S0u+N0HccaSGKnAQgSOFWRH7DDSr2UsD3pZOl
+ 11VfQ==
+X-Received: by 2002:a17:90a:d40e:b0:38f:a81:15b1 with SMTP id
+ 98e67ed59e1d1-395a071b857mr4477453a91.19.1787197751368; 
+ Wed, 19 Aug 2026 20:49:11 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.47.27
+ a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.49.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 20:47:29 -0700 (PDT)
+ Wed, 19 Aug 2026 20:49:10 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 57/93] disas/riscv: Drop always true branch pseudos
-Date: Thu, 20 Aug 2026 13:43:54 +1000
-Message-ID: <20260820034430.1186695-58-alistair.francis@wdc.com>
+Cc: Joel Stanley <joel@jms.id.au>, Anton Johansson <anjo@rev.ng>,
+ Max Chou <max.chou@sifive.com>, Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 93/93] target/riscv: Restore register dump zero padding
+Date: Thu, 20 Aug 2026 13:44:30 +1000
+Message-ID: <20260820034430.1186695-94-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260820034430.1186695-1-alistair.francis@wdc.com>
 References: <20260820034430.1186695-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,98 +103,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Joel Stanley <joel@jms.id.au>
 
-The real insns are blt, bge, bltu, bgeu.  Do not include
-pseudos that unconditionally swap operands.  That's fine
-for an assembler but not a disassembler.
+The register values lost their leading zeroes when the underlying type
+was changed, resulting in mismatched padding and harder to read output.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260812223142.349142-22-richard.henderson@linaro.org>
+Print with a runtime field width based on MXL, so values are 16 hex
+digits on rv64 and 8 on rv32, matching the csr and fp dump. This avoids
+adding target_ulong back into the dump.
+
+Fixes: c4e6bc63853c ("target/riscv: Fix size of gpr and gprh")
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Max Chou <max.chou@sifive.com>
+Message-ID: <20260813032421.54438-1-joel@jms.id.au>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- disas/riscv.c | 32 ++++++--------------------------
- 1 file changed, 6 insertions(+), 26 deletions(-)
+ target/riscv/cpu.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 2e891f509e..bde1cc6e62 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -326,10 +326,6 @@ typedef enum {
-     rv_op_bgez = 295,
-     rv_op_bltz = 296,
-     rv_op_bgtz = 297,
--    rv_op_ble = 298,
--    rv_op_bleu = 299,
--    rv_op_bgt = 300,
--    rv_op_bgtu = 301,
-     rv_op_j = 302,
-     rv_op_ret = 303,
-     rv_op_jr = 304,
-@@ -1062,10 +1058,6 @@ static const rvc_constraint rvcc_blez[] = { rvc_rs1_eq_x0, rvc_end };
- static const rvc_constraint rvcc_bgez[] = { rvc_rs2_eq_x0, rvc_end };
- static const rvc_constraint rvcc_bltz[] = { rvc_rs2_eq_x0, rvc_end };
- static const rvc_constraint rvcc_bgtz[] = { rvc_rs1_eq_x0, rvc_end };
--static const rvc_constraint rvcc_ble[] = { rvc_end };
--static const rvc_constraint rvcc_bleu[] = { rvc_end };
--static const rvc_constraint rvcc_bgt[] = { rvc_end };
--static const rvc_constraint rvcc_bgtu[] = { rvc_end };
- static const rvc_constraint rvcc_j[] = { rvc_rd_eq_x0, rvc_end };
- static const rvc_constraint rvcc_ret[] = { rvc_rd_eq_x0, rvc_rs1_eq_ra,
-                                            rvc_end };
-@@ -1123,24 +1115,12 @@ static const rv_comp_data rvcp_bne[] = {
- static const rv_comp_data rvcp_blt[] = {
-     { rv_op_bltz, rvcc_bltz },
-     { rv_op_bgtz, rvcc_bgtz },
--    { rv_op_bgt, rvcc_bgt },
-     { rv_op_illegal, NULL }
- };
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 79ddde419a..a13177b7b7 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -651,6 +651,9 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+ {
+     RISCVCPU *cpu = RISCV_CPU(cs);
+     CPURISCVState *env = &cpu->env;
++    bool rv32 = riscv_cpu_is_32bit(cpu);
++    int width = rv32 ? 8 : 16;
++    uint64_t mask = rv32 ? UINT32_MAX : UINT64_MAX;
+     int i, j;
+     uint8_t *p;
  
- static const rv_comp_data rvcp_bge[] = {
-     { rv_op_blez, rvcc_blez },
-     { rv_op_bgez, rvcc_bgez },
--    { rv_op_ble, rvcc_ble },
--    { rv_op_illegal, NULL }
--};
--
--static const rv_comp_data rvcp_bltu[] = {
--    { rv_op_bgtu, rvcc_bgtu },
--    { rv_op_illegal, NULL }
--};
--
--static const rv_comp_data rvcp_bgeu[] = {
--    { rv_op_bleu, rvcc_bleu },
-     { rv_op_illegal, NULL }
- };
+@@ -665,7 +668,7 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+         qemu_fprintf(f, " %-13s %d\n", "elp", env->elp);
+     }
+ #endif
+-    qemu_fprintf(f, " %-13s %" PRIx64 "\n", "pc", env->pc);
++    qemu_fprintf(f, " %-13s %0*" PRIx64 "\n", "pc", width, env->pc & mask);
+ #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+     for (i = 0; i < ARRAY_SIZE(csr_ops); i++) {
+         int csrno = i;
+@@ -692,8 +695,8 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+ #endif
  
-@@ -1665,8 +1645,8 @@ static const rv_opcode_data rvi_opcode_data[] = {
-     { "bne", rv_codec_sb, rv_fmt_rs1_rs2_offset, rvcp_bne },
-     { "blt", rv_codec_sb, rv_fmt_rs1_rs2_offset, rvcp_blt },
-     { "bge", rv_codec_sb, rv_fmt_rs1_rs2_offset, rvcp_bge },
--    { "bltu", rv_codec_sb, rv_fmt_rs1_rs2_offset, rvcp_bltu },
--    { "bgeu", rv_codec_sb, rv_fmt_rs1_rs2_offset, rvcp_bgeu },
-+    { "bltu", rv_codec_sb, rv_fmt_rs1_rs2_offset },
-+    { "bgeu", rv_codec_sb, rv_fmt_rs1_rs2_offset },
-     { "lb", rv_codec_i, rv_fmt_rd_offset_rs1 },
-     { "lh", rv_codec_i, rv_fmt_rd_offset_rs1 },
-     { "lw", rv_codec_i, rv_fmt_rd_offset_rs1 },
-@@ -1954,10 +1934,10 @@ static const rv_opcode_data rvi_opcode_data[] = {
-     { "bgez", rv_codec_sb, rv_fmt_rs1_offset },
-     { "bltz", rv_codec_sb, rv_fmt_rs1_offset },
-     { "bgtz", rv_codec_sb, rv_fmt_rs2_offset },
--    { "ble", rv_codec_sb, rv_fmt_rs2_rs1_offset },
--    { "bleu", rv_codec_sb, rv_fmt_rs2_rs1_offset },
--    { "bgt", rv_codec_sb, rv_fmt_rs2_rs1_offset },
--    { "bgtu", rv_codec_sb, rv_fmt_rs2_rs1_offset },
-+    { },
-+    { },
-+    { },
-+    { },
-     { "j", rv_codec_uj, rv_fmt_offset },
-     { "ret", rv_codec_i, rv_fmt_none },
-     { "jr", rv_codec_i, rv_fmt_rs1 },
+     for (i = 0; i < 32; i++) {
+-        qemu_fprintf(f, " %-8s %" PRIx64,
+-                     riscv_int_regnames[i], env->gpr[i]);
++        qemu_fprintf(f, " %-8s %0*" PRIx64,
++                     riscv_int_regnames[i], width, env->gpr[i] & mask);
+         if ((i & 3) == 3) {
+             qemu_fprintf(f, "\n");
+         }
 -- 
 2.54.0
 
