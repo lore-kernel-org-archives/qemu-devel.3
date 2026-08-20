@@ -4,144 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E101C5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 22:00:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72C6AC5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 22:17:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxAnV-0000Kn-Tx; Thu, 20 Aug 2026 17:59:41 -0400
+	id 1wxB4I-0005l9-6d; Thu, 20 Aug 2026 18:17:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wxAnU-0000KH-F4
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 17:59:40 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wxB49-0005kW-Gh
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 18:16:55 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wxAnS-0008OR-3U
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 17:59:40 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wxB47-0007rS-Hg
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 18:16:53 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67KK87j7067150
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 21:59:36 GMT
+ 67KK7ZGg250333
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 22:16:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- fZ1Sej6+39RUs0pxX1cn9T4P/Pny7nJ64hDtFMqYbjY=; b=VSvsjwm1r7hNk+AA
- S4lmvNs4Xeo9POKz7v+CsSAsZoNKNHZfLDGxcQFMj4H1/mqvbEGht7BhC+4BXiiJ
- X+BsNX+u/LriqBSuth6cOw7LBhq6qxBLwfLFJb5hjMcerb784Gboc74rKSZk43IH
- D2QqbzFbzl+jDHxBYR4BXEeIaiGW+9jAvaHil4NLdVMyG6uN41LuQfE5fn4LyL7z
- QorF6XwBcixgYRN/AXpIwKk0l4D1Ye62vhuCyn8jBVwJsrFIPTVl37wYBeak1RvU
- M4i2gJQUVf/6Y7PsvNp27deTDC1kt9J7hkewsMzgd6rSMB/Inhn0ukMhVQIjN1c1
- QIThPg==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g5yg0k35g-1
+ 2MPXZ7D/e9PSjB3nPi1GNR2NWNs0UUc/omjZdZZ+H+g=; b=dSCKNBwAcJL0Ez3z
+ 1voo0IbEN5qRuHQP0Y0cHn8+DmrJIso1Lt9DyiMB9crcZ2XD9niS6rooHI4Qpnxz
+ 3LS5PlwA5xFYNY+uFrCVDtBQSQyG07QJRpllMlwRdb3EzOoiF9SuciN/6gzaFeIW
+ XdtjUDe9fa5r1qdtGizQi2aIWhmpWuC97PFrGudo6XU17nFIPm4CP070YMnCGvPK
+ e3sp1Lg8XHVG0GMDAsRiTNK2Fucf1N2wdkXIIDNjEe+EF0XJiXZSJtaWUErHpZ1R
+ CB5Ucs1d/II50e6W/okFMrg2oTJykvMaZ+rNlvn0AlMQigXTWRzYkYjxM78tFyiY
+ v4eyAQ==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g5w49btug-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 21:59:36 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8ea75996387so6939776d6.1
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 14:59:36 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 22:16:49 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-38dc085b0a7so521727a91.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 15:16:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787263176; x=1787867976; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=fZ1Sej6+39RUs0pxX1cn9T4P/Pny7nJ64hDtFMqYbjY=;
- b=UQX3oNRtGu17KcVXwB3k5BFsAgf+kSFWL6s0OFZ4SIBiFwVo8N3iZsH3ELryBurMep
- FEKiZ7SKzb8QcjtuHqO98rIpns/B2UEgvzCs1o033dNBJYVIwCd9OFs0ltK+/K9sHe9k
- Aw3PM90IXiFWtdkUTEIkRzIyQlC1a2s0Am5QFoxd4ataT6CKH8h/dOH5tfnh3HmPURQW
- 0e9jRdiVN+eEOwTpVdz1BMqvyGiTLc77KYNrEZkZEUhdDaJstE3wVmzQclB0cf0UAPI6
- mXxfN6LXKp0pdonFlnQa1Z6gbDfmYDGTQj2fqUx6CWy6a1vDUgCOnSieFqBkWS4Wrd95
- bCxA==
+ d=oss.qualcomm.com; s=google; t=1787264208; x=1787869008; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=2MPXZ7D/e9PSjB3nPi1GNR2NWNs0UUc/omjZdZZ+H+g=;
+ b=j3kK61arGsaU18QmXUmnvOOtK7Pkeua0/q8YqcB7uax69yH4YP61XeLA4/hFYfG/vB
+ eObqF8sq1HPQGTyYV+UjxGh7NQ+TQ0BzYIfWlD0dnB62Df8qMHB3R3exoIMKk4xjuXrD
+ XA3eJmhCps9b4KIgihxMe/P9ehqrTxdueDlXiDaTkL4GvdUHqC+Zx6ZZcBrn+RDVu2yq
+ YzZUUIs1SFpZHPzMFQ4LUIlzI3Fh50QHELY2feqTbhuQ0KfbD3N5N2VAmVTEtArInFUq
+ GO5XlV3HHIyhDSJz2x2oZottuj2IVcPYnopDVGu60o7LMsZcb77tS64/05junpOIpvq/
+ /UFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787263176; x=1787867976;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1787264208; x=1787869008;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=fZ1Sej6+39RUs0pxX1cn9T4P/Pny7nJ64hDtFMqYbjY=;
- b=oV8gQsx2282mgW9goV0Ys/N4YbQuM9FFyH+BFss2rd0gmzHdvJS7V5neGYAwwI1i6a
- AOUSB3uU8SSIhcrrsLioKBRwJfBz5yN7Qs1Hk3fC7GOIWh/C8tw56vNbU2FPjxItmFTI
- p+kbY5t2ckW0vQKiEuIIirFdiYoi0ezdhrXChNseeLBMU38jCvyk2693y3KEme+HQQZv
- 8bnRD2j5eUYrUzENG9FwZkDu/T17FYjqItw0ZPFG/Qj4HNZk/t/2rcm1g/HraAxB3hmq
- GuBlpbs2T/hxbvfT50y2yU3b1hLScSaXyOsgEXITSrTerPfmYNpjXXXZFXUc8cCWSZui
- nHzg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqQCf1pF9ECDsvoFHU7R3uYIFezwSCp76qr7oGzSvEpYdRfaApJ7NU3V00ZVNVC6oGUi8hyjo3wYHUT@nongnu.org
-X-Gm-Message-State: AFuF++lJdCU8/Dh2UrgS/b+AseqzGY8FYsikUOQ2kkd/TULF0lEdamfZ
- yL+yLkqFJ2YFaMJn8I0NpxFHu1JwIcOK02W9BaAMWtQs2oPpTmkoey0MNxQJV4jzW4js7UqFfuu
- sh7pyoU7MLbJkb396dw9DPYRIlg6CgagkVXwFwywa7WQHTlhzPSMw9T933Q==
-X-Gm-Gg: AR+sD13rSCK7DYK7+PQEWqSDESsIR0Isyvv0q0y74OowUXETD8hqMSKejbp7AGwFpOH
- N3QjrHEZK1F0AiZbLGzXi+YDoAmoIRsgFvFof93lIEMjPcLajssdidKZBDC0C93DkLzi75el6m4
- ppvXYT7hdNV9N6LgfXkRgb/YrQ6jbIdoRSkd7QyfqNAmgkdvA9P2ng88rSdL1ZXO6nrQW1K+gHa
- J4fOpxwCsKoSC3yFS2kzn0xKpmGqe50D6pyV2s43jf8Rd5Pf0b3MI92vek3KnK5RygXJcORFCNK
- xEfsAKWGlZAsEUAJ6ijtS38e4rDJQOzLGJaGCgoTQS5KZKZnBxooHtDhas4rEKczQQt9kKItm5x
- 8xR8EbfALbl7U+YbxUvJQ1euLWwZty5l8d5YeZUOPyHolAa4W82ogfECYQwa0wmk9IWHEsDrCoG
- 5RMTQ+
-X-Received: by 2002:a05:6214:3198:b0:8ee:fbc5:8110 with SMTP id
- 6a1803df08f44-90c80fa74c3mr15979306d6.32.1787263175659; 
- Thu, 20 Aug 2026 14:59:35 -0700 (PDT)
-X-Received: by 2002:a05:6214:3198:b0:8ee:fbc5:8110 with SMTP id
- 6a1803df08f44-90c80fa74c3mr15978926d6.32.1787263175268; 
- Thu, 20 Aug 2026 14:59:35 -0700 (PDT)
-Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
- [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90c5edb3c03sm47627946d6.3.2026.08.20.14.59.33
+ bh=2MPXZ7D/e9PSjB3nPi1GNR2NWNs0UUc/omjZdZZ+H+g=;
+ b=RfBqlSmFWte5HJn3DRrhXCQOqJlTMbyCC1+m+RS5KkewTVDmqDDiw9lK/FKsu+qTs3
+ CNbW5SRdt5HJYvv5J/5Y9OEaH4TWa850IQ2RzghVFUOrQh13n29qcf5aXsYySubBB47Z
+ 6UExDqeir0uBlwtoknaPx0GVrumc99zYGfqewk44i3n440gKi/1VeZ44PjtdruOUQjGA
+ zrffLbN6Sv28uEtpvmBQAKJTq1w9fQm2eLmi/AhrzMhqy3ZQfsjgvIRII4YT6R4PfRhs
+ hEqAJIWenKUFqGOO8ZX4mWEKMskO5Ipp+NR+Hh9xswi1JYywy9l6mF9L0lUIRNVhC3UP
+ mUMQ==
+X-Gm-Message-State: AFuF++kInmdT081V7Itvwisr4w81oh/Tqp4Q15U2U2QpyHHmQI8waKOM
+ gGfPUFxNI8HrJErWvg/0X6mGBFjw2PlI6JsSH00p+45FGfyIoLbRTaMpHDD2gKfBbzZae9zmIas
+ UBAvqiYSXRzYkCh7NY7ZxuC3zlj+OgQ3P/QpRGjWGTuAchEB+kil9/i3VvQ==
+X-Gm-Gg: AR+sD10Hm+hewKRwNFr3o+stx0W/52qqb6uDnnhADWMQrU199ZeIIaADnNUy656eSac
+ on4eKxEAwEByvaNK9XVezD0xZ1qrgk0EYlv5qkhQ3/z31YMaW7gL2ZudLOZoseRSnNYF4YIQ17s
+ dIsg3V/ndCy2yMR3XjbmO1adiIB2FCwiiob2t5cIQ2/bLwbd1LVouYEA8cK0KAXh5ReqEyJLyiJ
+ TOUl8pnf2ZX6hfViil9tP7oYyp1Degc1rTMHfm0cnsN3Cyvpe/lN75/OlL0U56EGWr+RaTTH9WI
+ 2itingca8nrkl/OWLCXodIZAkSju/EpPbyovPEun3gXPjqjTYrXttwBtfmJLaTM45kqhkftxQbC
+ IDpeqk/6UN5phD9JAjDYabQPbvC2XruTSEa8aNheFPE0PHQdGgd7eofLZlo62kR9sgDIS
+X-Received: by 2002:a17:90b:3d85:b0:395:4de0:b78f with SMTP id
+ 98e67ed59e1d1-395c33ef91bmr3208102a91.1.1787264207252; 
+ Thu, 20 Aug 2026 15:16:47 -0700 (PDT)
+X-Received: by 2002:a17:90b:3d85:b0:395:4de0:b78f with SMTP id
+ 98e67ed59e1d1-395c33ef91bmr3207926a91.1.1787264206226; 
+ Thu, 20 Aug 2026 15:16:46 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1416ae14162sm18727395c88.9.2026.08.20.15.16.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Aug 2026 14:59:34 -0700 (PDT)
-Message-ID: <aad0607b-d78d-4cd5-822b-9c29bdfc2c6a@oss.qualcomm.com>
-Date: Thu, 20 Aug 2026 16:59:33 -0500
+ Thu, 20 Aug 2026 15:16:45 -0700 (PDT)
+Message-ID: <0a4c3e34-574a-484c-8617-3af587f080fa@oss.qualcomm.com>
+Date: Thu, 20 Aug 2026 15:16:45 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/11] target/hexagon: implement direct-to-guest interrupt
- delivery
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>
-References: <20260819013144.3264096-1-brian.cain@oss.qualcomm.com>
- <20260819013144.3264096-10-brian.cain@oss.qualcomm.com>
- <cfef4655-01ac-4cc2-b2d4-a45cd7294622@oss.qualcomm.com>
+Subject: Re: [RFC v5 00/28] hw/arm/smmuv3: Support Secure state for SMMUv3
+To: Tao Tang <tangtao1634@phytium.com.cn>, Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Mostafa Saleh <smostafa@google.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Jim MacArthur <jim.macarthur@linaro.org>
+References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <cfef4655-01ac-4cc2-b2d4-a45cd7294622@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: hN9bK8Ux7CjYDVQaSCGrpEQYL3AofvLK
-X-Proofpoint-ORIG-GUID: hN9bK8Ux7CjYDVQaSCGrpEQYL3AofvLK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDE2MyBTYWx0ZWRfX2YazOyZPzSmX
- VXiwfxrcy8VripJGzVGEFQRLQU0oFSr8A1sUzk7F/51JiGjcH0pnhPcSH0aPayti50Yl5X0DrSV
- bdGW21QRd9IOkZko8zMc1kuK8/fSzU++UUSiVlDEPC0nxpU3LyRyc2NZCAERSDIk+XuHaMGpeqi
- Cf533dP4jLWuqnhKJWloqhOmJzTyHd2MDVF4cuBTES5vJrhiQ4gxauelYwW4Bh8TupnYjZ99Lfb
- 0baidhVEuPay1YtRwF2KCx1UR1tJvUPKeYjvvf5epOWcZxGDGqTsrKiJjTKL92qtyMegeJqaDah
- /zWDINJB+X+AoJn7IiwfZADj6o05bnrwB68mEyw6EoqwUOm2Kz7YW7i3l/awpbkWifSkhJrJO2j
- fUd2xgptXYmZXy8EVFEQHZCsuBkXYsZ/TGtYYx2xctsP3BQuITCFDyf+/QgotCaGdDAGF465Zeb
- A4foZtk9TMLgnLQx6Gw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDE2MyBTYWx0ZWRfX83Di3phZfXac
- Tx32efu7mpDITVRjHPTqRX42X3FE4aYlayV93Zq7Vyq36jOaxfSKO+NOAaVF9dLGtdUbKZpXX6f
- wemXyJicH6tVsZB6N9MTuAnx7w1Kuao=
-X-Authority-Analysis: v=2.4 cv=JoXBas4C c=1 sm=1 tr=0 ts=6a8778c8 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
+In-Reply-To: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDE2NiBTYWx0ZWRfXxezsLeWEjoZm
+ 0cVhOpPKBpgEMzKg/lTmXV4F/JmLXw+1RLGRUxNE139Y75CvOgtui4ZHYruuTeEZ4+Bzhwjulo9
+ vokqn+LQ8HpYGD08uOxj2tmKpuAvpc0=
+X-Authority-Analysis: v=2.4 cv=YP+vDxGx c=1 sm=1 tr=0 ts=6a877cd1 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=sVik-Gj8kpLVY5oBZ9AA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=VwQbUJbxAAAA:8 a=fgrLqfBXAAAA:8 a=KKAkSRfTAAAA:8 a=ZYi_vuD_AAAA:8
+ a=ehYRL7wMAAAA:20 a=EUspDBNiAAAA:8 a=uVuSfXj6EEEykST30esA:9
+ a=qcg49hLlgF0N60+LroqrWnV/Vu4=:19 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
+ a=_Ge82aPy-h_wFa7gWU4u:22 a=cvBusfyB2V15izCimMoJ:22 a=BPQQxL4JNPAPRa8Tzepp:22
+ a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-ORIG-GUID: J-YN_QbCGjIzLWQErbdcYcyaTCGnMCqA
+X-Proofpoint-GUID: J-YN_QbCGjIzLWQErbdcYcyaTCGnMCqA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDE2NiBTYWx0ZWRfXwJrWeWpDGQSq
+ eFDDYeHLBb6yAMHCuIdQRW1ZIapySGAoabSeDlkLIvsfNMdxIPRtp3yT9wXdO9L0o2hltJmwj5J
+ uGF/Pzb0LD5fR5AnHoAZRV5lkzbG4Wym4d3Ne5yTWUHRkC4ns9g7i7MsFUTnKhPL9SqOk1Ev5Tv
+ KpbYhyULvzUmuuLbvoYERhQWKwfpzsg7ipwXxP2Hf6VJrkReCN0rZEOB0cthGqZ4LND1fuYOdhD
+ zUisJ4H4TWKbCBUBcdQb2HXpg+zcIHQHSQt0yrO0zrgmUEsDN7F2LpJMjj4sbD7ea/sZBCKyWp5
+ FPa89NDAcmDDorIS7qspp2Lur9UtJkT5zKkL6cGOCreW8oD31gqhmvCjR2t0zkvL5lYdssHW2TX
+ 9HlJ3XvD9irQlAh/XeFksK4ilpJjKS8qX3W5S7hq0hxMWane+mgpcsF8W5xQUt8CIS3NdMxvb1Y
+ uTX0o1+SIaPH5IuBeCQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-20_02,2026-08-20_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
- malwarescore=0 phishscore=0 adultscore=0 impostorscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200163
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ spamscore=0 suspectscore=0 bulkscore=0 adultscore=0 impostorscore=0
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 clxscore=1015
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608200166
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,189 +164,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 8/20/2026 1:57 PM, Pierrick Bouvier wrote:
-> On 8/18/2026 6:31 PM, Brian Cain wrote:
->> Interrupts 3 through 5 are routed to guest mode when CCR:GIE and the
->> matching CCR:VV bit are set.  Enter through GEVB rather than EVB,
->> record the pre-entry state in GSR and the return address in GELR, and
->> read the vector ID from the l2vic.
->>
->> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->> ---
->>   target/hexagon/reg_fields_def.h.inc |  7 +++
->>   target/hexagon/cpu.c                |  5 ++
->>   target/hexagon/hex_interrupts.c     | 87 ++++++++++++++++++++++++++---
->>   3 files changed, 92 insertions(+), 7 deletions(-)
->>
->> diff --git a/target/hexagon/reg_fields_def.h.inc b/target/hexagon/reg_fields_def.h.inc
->> index d2c706d56b5..29497fbcc4d 100644
->> --- a/target/hexagon/reg_fields_def.h.inc
->> +++ b/target/hexagon/reg_fields_def.h.inc
->> @@ -136,6 +136,13 @@ DEF_REG_FIELD(CCR_VV1, 29, 1)
->>   DEF_REG_FIELD(CCR_VV2, 30, 1)
->>   DEF_REG_FIELD(CCR_VV3, 31, 1)
->>   
->> +/* GSR fields */
->> +DEF_REG_FIELD(GSR_CAUSE, 0, 16)
->> +DEF_REG_FIELD(GSR_CFI, 28, 1)
->> +DEF_REG_FIELD(GSR_SS, 29, 1)
->> +DEF_REG_FIELD(GSR_IE, 30, 1)
->> +DEF_REG_FIELD(GSR_UM, 31, 1)
->> +
->>   /* ISDB ST fields */
->>   DEF_REG_FIELD(ISDBST_WAITRUN, 24, 8)
->>   DEF_REG_FIELD(ISDBST_ONOFF, 16, 8)
->> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
->> index 0a677840bcb..efaf569c6f8 100644
->> --- a/target/hexagon/cpu.c
->> +++ b/target/hexagon/cpu.c
->> @@ -475,6 +475,11 @@ static void hexagon_cpu_realize(DeviceState *dev, Error **errp)
->>           error_setg(errp, "hexagon cpu requires 'tlb' link property to be set");
->>           return;
->>       }
->> +    if (!HEXAGON_CPU(dev)->l2vic) {
->> +        error_setg(errp,
->> +                   "hexagon cpu requires 'l2vic' link property to be set");
->> +        return;
->> +    }
->>   #endif
->>   
->>       qemu_init_vcpu(cs);
->> diff --git a/target/hexagon/hex_interrupts.c b/target/hexagon/hex_interrupts.c
->> index 3534481da24..ea1ba0903dd 100644
->> --- a/target/hexagon/hex_interrupts.c
->> +++ b/target/hexagon/hex_interrupts.c
->> @@ -11,6 +11,7 @@
->>   #include "cpu_helper.h"
->>   #include "exec/cpu-interrupt.h"
->>   #include "hex_interrupts.h"
->> +#include "hw/intc/hex-l2vic.h"
->>   #include "macros.h"
->>   #include "sys_macros.h"
->>   #include "system/cpus.h"
->> @@ -215,19 +216,75 @@ static void restore_state(CPUHexagonState *env, bool int_accepted)
->>       }
->>   }
->>   
->> +static bool int_should_dtg(CPUHexagonState *env, int int_num)
->> +{
-> What does dtg means?
-
-"dtg" is "direct-to-guest" interrupts.  This is an architectural feature 
-to raise interrupts directly in the guest instead of the monitor/VMM, 
-saving the latency of having to manually propagate interrupts to the guest.
-
-Maybe this is a good case for a clarifying comment on `int_should_dtg()`?
-
+On 8/13/2026 9:15 AM, Tao Tang wrote:
+> Hi all,
+> 
+> This is v5 of the Secure SMMUv3 series.
+> 
+> Many thanks to everyone who reviewed the earlier versions. This version contains
+> 28 commits in total. Only one patch touches hw/pci (patch #23); the remaining
+> patches are confined to the Arm SMMUv3 model. Also some patches in v4 have been
+> merged into the mainline QEMU tree, so the v5 series is now smaller than v4.
+> 
+> Secure Stage 2 is not implemented. Secure STEs which enable Stage 2 are
+> rejected with C_BAD_STE. Realm and Root programming interfaces are outside the
+> scope of this series.
+> 
+> Commits layout:
+> ---------------
+> The commits are roughly grouped as follows:
+> 1. (#23, hw/pci only) Add a PCIDevice "sec-sid" property so boards can mark a
+>   device's SEC_SID (system integration knob).
+> 2. (#1-2, #24-27) Core data-structure and plumbing refactors.
+> 3. (#3-8) Introduce SEC_SID through caches, notifiers, and helpers.
+> 4. (#9-12) Page table walk related updates (e.g. NSCFG/PTE helpers).
+> 5. (#13-15) EVTQ/CMDQ handling and invalidation paths.
+> 6. (#16-22) MMIO/register access checks and architectural corner cases.
+> 7. (#28) A temporary [NOT-MERGE] commit used with Hafnium to exercise
+>   secure-bank register access.
+> 
+> 
+> Main updates:
+> -------------
+> - (#23, hw/pci only) Add a "sec-sid" property to PCIDevice and consume it from
+>   the SMMU in #24 to select the security context and validate capabilities.
+> 
+>   @Michael: could you please review the hw/pci change
+>   ("hw/pci: Add sec-sid property to PCIDevice") and confirm this kind of
+>   system-integration property is acceptable for the PCI subtree?
+> 
+>   For context, I previously posted this as a standalone patch [1]:
+>   [1] https://lore.kernel.org/qemu-devel/20251211102729.227376-1-tangtao1634@phytium.com.cn/
+> 
+>   The commit in this v5 series is an updated version based on Pierrick's
+>   feedback (notably switching sec-sid to a string property). We also discussed
+>   the need for this knob as a prerequisite for accurately modelling SMMU secure
+>   state here [2]:
+> 
+>   [2] https://lore.kernel.org/qemu-devel/4870b7df-4cb3-457e-9a18-87f3558adf09@linaro.org/
+> 
+>   We do need a stable way for boards to statically mark devices that may issue
+>   Secure transactions.
+> 
+> other updates:
+> - Drop the CR0 and CFGI_CD fixes which are already upstream.
+> - Select MemTxAttrs and AddressSpace on demand from SEC_SID and keep the
+>   programming-interface namespace in the configuration and IOTLB keys.
+> - Route CMDQ, EventQ, IRQ and GERROR handling through the originating
+>   programming-interface bank.
+> - Tighten MMIO RAZ/WI, writability and reserved-bit handling.
+> - Reject unsupported non-NS IOMMU notifier registration.
+> - Make secure-impl an on/off/auto property, resolve auto from the Secure
+>   AddressSpace, and require Stage 1 support when enabled.
+> 
+> 
+> Testing notes:
+> --------------
+> - Testing MMIO accesses
+>   The branch currently contains one commit explicitly marked [NOT-MERGE]. It is
+>   only used to cooperate with Hafnium to exercise and validate secure-bank
+>   register read/write paths in a small, reproducible setup as described in [3]:
+>   [3] https://hnusdr.github.io/2025/08/09/Test-Secure-SMMU-with-Hafnium-ENG/
+> 
+>   This commit is not intended for upstream and will be dropped before posting
+>   the final mergeable series.
+> 
+>   For reference, the Hafnium test logs show the SMMU being initialized
+>   successfully:
+> 
+>   INFO: Loading VM id 0x8001: op-tee.
+>   INFO: Loaded with 4 vCPUs, entry at 0xe300000.
+>   INFO: Hafnium initialisation completed
 >
->> +    uint32_t ccr = env->t_sreg[HEX_SREG_CCR];
->> +
->> +    switch (int_num) {
->> +    case 3:
->> +        if (!GET_FIELD(CCR_VV1, ccr)) {
->> +            return false;
->> +        }
->> +        break;
->> +    case 4:
->> +        if (!GET_FIELD(CCR_VV2, ccr)) {
->> +            return false;
->> +        }
->> +        break;
->> +    case 5:
->> +        if (!GET_FIELD(CCR_VV3, ccr)) {
->> +            return false;
->> +        }
->> +        break;
->> +    default:
->> +        return false;
->> +    }
->> +
->> +    return GET_FIELD(CCR_GIE, ccr);
->> +}
->> +
->> +static void guest_interrupt_entry(CPUHexagonState *env, uint32_t cause,
->> +                                  uint32_t event_pc)
->> +{
->> +    uint32_t old_ssr = env->t_sreg[HEX_SREG_SSR];
->> +    uint32_t new_ssr = old_ssr;
->> +    uint32_t ccr = env->t_sreg[HEX_SREG_CCR];
->> +    uint32_t gsr = 0;
->> +
->> +    gsr = deposit32(gsr, reg_field_info[GSR_CAUSE].offset,
->> +                    reg_field_info[GSR_CAUSE].width, cause);
->> +    gsr = deposit32(gsr, reg_field_info[GSR_SS].offset,
->> +                    reg_field_info[GSR_SS].width,
->> +                    GET_SSR_FIELD(SSR_SS, old_ssr));
->> +    gsr = deposit32(gsr, reg_field_info[GSR_UM].offset,
->> +                    reg_field_info[GSR_UM].width,
->> +                    !GET_SSR_FIELD(SSR_GM, old_ssr));
->> +    gsr = deposit32(gsr, reg_field_info[GSR_IE].offset,
->> +                    reg_field_info[GSR_IE].width,
->> +                    GET_FIELD(CCR_GIE, ccr));
->> +    env->greg[HEX_GREG_GSR] = gsr;
->> +
->> +    fSET_FIELD(new_ssr, SSR_SS, 0);
->> +    fSET_FIELD(new_ssr, SSR_GM, 1);
->> +    env->t_sreg[HEX_SREG_SSR] = new_ssr;
->> +    hexagon_modify_ssr(env, new_ssr, old_ssr);
->> +
->> +    SET_SYSTEM_FIELD(env, HEX_SREG_CCR, CCR_GIE, 0);
->> +    env->greg[HEX_GREG_GELR] = event_pc;
->> +    env->gpr[HEX_REG_PC] = env->t_sreg[HEX_SREG_GEVB] |
->> +                           (HEX_EVENT_INT0 << 2);
->> +}
->> +
->>   static void hex_accept_int(CPUHexagonState *env, int int_num)
->>   {
->>       CPUState *cs = env_cpu(env);
->>       HexagonCPU *cpu = env_archcpu(env);
->> -    uint32_t evb =
->> -        hexagon_globalreg_read(cpu->globalregs, HEX_SREG_EVB,
->> -                               env->threadId);
->>       const int exe_mode = get_exe_mode(env);
->>       const bool in_wait_mode = exe_mode == HEX_EXE_MODE_WAIT;
->> +    uint32_t elr;
->>   
->>       set_ipend_bit(env, int_num, 0);
->>       set_iad_bit(env, int_num, 1);
->> -    set_ssr_ex_cause(env, 1, HEX_CAUSE_INT0 | int_num);
->>       cs->exception_index = HEX_EVENT_INT0 + int_num;
->>       env->cause_code = HEX_EVENT_INT0 + int_num;
->>       clear_pending_locks(env);
->> @@ -235,15 +292,31 @@ static void hex_accept_int(CPUHexagonState *env, int int_num)
->>           qemu_log_mask(CPU_LOG_INT,
->>               "%s: thread " TARGET_FMT_ld " resuming, exiting WAIT mode\n",
->>               __func__, env->threadId);
->> -        set_elr(env, env->wait_next_pc);
->> +        elr = env->wait_next_pc;
->>           clear_wait_mode(env);
->>           cs->halted = false;
->>       } else if (env->k0_lock_state == HEX_LOCK_WAITING) {
->>           g_assert_not_reached();
->>       } else {
->> -        set_elr(env, env->gpr[HEX_REG_PC]);
->> +        elr = env->gpr[HEX_REG_PC];
->> +    }
->> +
->> +    if (int_should_dtg(env, int_num)) {
->> +        int vic_group = int_num - 2;
->> +        uint32_t vid_packed = l2vic_read_vid(cpu->l2vic, vic_group / 2);
->> +        uint32_t vid = extract32(vid_packed,
->> +                                 (vic_group & 1) ? 16 : 0, 16);
->> +
->> +        guest_interrupt_entry(env, vid, elr);
->> +    } else {
->> +        uint32_t evb =
->> +            hexagon_globalreg_read(cpu->globalregs, HEX_SREG_EVB,
->> +                                   env->threadId);
->> +
->> +        set_ssr_ex_cause(env, 1, HEX_CAUSE_INT0 | int_num);
->> +        set_elr(env, elr);
->> +        env->gpr[HEX_REG_PC] = evb | (cs->exception_index << 2);
->>       }
->> -    env->gpr[HEX_REG_PC] = evb | (cs->exception_index << 2);
->>       if (get_ipend(env) == 0) {
->>           restore_state(env, true);
->>       }
+
+If anyone wants to reproduce it, you can file a precompiled archive
+(with optee + hafnium):
+
+$ wget
+https://github.com/p-b-o/qemu-linux-stack/releases/download/build/optee-secure-smmu-10674a1.tar.xz
+$ tar xvf optee-secure-smmu*
+$ ./run.sh ./build/qemu-system-aarch64
+ With current master branch:
+INFO: Initializing Hafnium (SPMC)
+...
+ERROR: SMMUv3 does not implement secure state
+ERROR: SMMUv3: Failed to initialize driver
+Panic: Could not initialize IOMMUs.
+
+With this series applied:
+INFO: Initializing Hafnium (SPMC)
+...
+INFO: Arm SMMUv3 initialized
+...
+INFO: Loading VM id 0x8001: op-tee.
+INFO: Loaded with 4 vCPUs, entry at 0xe300000.
+INFO: Hafnium initialisation completed
+
+Tested-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+
+Regards,
+Pierrick
 
