@@ -4,125 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87C48C5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 20:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35F92C5DF86
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 21:10:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx9XS-00021z-MH; Thu, 20 Aug 2026 16:39:02 -0400
+	id 1wxA1U-0007k3-CS; Thu, 20 Aug 2026 17:10:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wx9XR-00021V-7L
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 16:39:01 -0400
-Received: from mail-qt1-x836.google.com ([2607:f8b0:4864:20::836])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wx9XP-0006Se-Ct
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 16:39:00 -0400
-Received: by mail-qt1-x836.google.com with SMTP id
- d75a77b69052e-51bfad59921so1770961cf.0
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 13:38:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787258338; cv=none;
- d=google.com; s=arc-20260327;
- b=GTrx0RLJBdFVx9MdDXSD/aJ3m+88topdupF0cBCfarv9ktMViMmAxc7MiTkuhNOqrk
- nJMnVNwVi+3Njo3vMZ7wxa/p9Nnm1LUn0FVVY8nF2VGAz1+lPAxZSshrQhmvWoxSQ43q
- ADV6AUpk1yjLha3bRi4C6wP1RbHKW5fwBBIXUH2m3u3B9FcFmVynIe7kt0XjuM0A5Gp2
- umhBLHJQHhNQaXeNPoyZml33EeN1qXkpBCQmaoOUMOQykHm4SITCEKB31guyy8CZJzVp
- 5NGtgi/RtET9ndIJVxMXaLGLoyCo8enG2nZmxTpDJO8+n7PpkFADgLQC7k7ZjiKC2Ugt
- aHkA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=yw/70XDHxmOe5vI6aQ6n4t71n8LG9vKd/gcLCxbLG5Y=;
- fh=zAf9Wul48xkTrIs6bAeEfpaQhknOU2iSq1CvwgfZtyM=;
- b=UUgfC8cGJvwoWRmjtcI/hFiDfb5X/pqp52ckVsuIMqPwWr1NvxTymaOX4zJ2m2+J6/
- SztdL33Nfd3mD04QnFTeqIiGZqbM6cWYwWVjYZ+yFCWFhC0nZZsSV7aeeq9FvOmhrlpt
- KugYWU3u42ZHnj8alkrf4TuWmE5s9EqZBCgvJwOjtaHVrNUvuq+gICeBNhi1Oe0mboxQ
- b8RQw2kkWnmapg43HmUEmsw6MNPYRD6hIK9X0evGSU7jNQhTK3rJz7IduoJJaCJATRpU
- VLCoKMiSpoJJBv+mYzOkQNmGBdUmpaV70JKM6jkLzr42g74NS2gqD90vpSjrUwR3HtAe
- bFtQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wxA1S-0007jM-Lh
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 17:10:02 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wxA1Q-0001Nk-Vw
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 17:10:02 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67KK7acD587678
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 21:09:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ IRFa8PBGHnBGeWrxOBlD/fGonGDEG+aUh2svbB/9l9s=; b=JaZEREp3MT58vjBS
+ nRqVGxM+lqA4abr6XaM5eV4Yz1vISi+0/5U9Y5O7+aI2P7ug747+z2Bu4dNjy0hA
+ B78Aml8Ou8FWF4Duc/NNXl9WRKWh8r95B6bCmc8z+lfV9BpAYRJfR0cPtwN8MrPM
+ XkphDTamq8Vt/UIfAk+vWM8BeB9bWuM9pa0xWcz7f3dyyV01313KkW58k6CVrZjl
+ EGIOCV2XjxFwxJUyCoeAc/yc66EaB/crRJlMG8ZyvT81KQpOIGZqZtpSMDxe5Q8j
+ FIhPuXUWwd2BkfZmW2bHqTkqzcy5dSY4RthjMS1q3Z2gBQPMfpjRcMo9FcZQQMQO
+ 29BA5w==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g5yg8ay0e-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 21:09:58 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-51a8b0a08d2so2571141cf.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 14:09:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787258338; x=1787863138; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=yw/70XDHxmOe5vI6aQ6n4t71n8LG9vKd/gcLCxbLG5Y=;
- b=Eb0NmmDsiOXkvM0j+eOGQpBcXhjrKsuq43BBNQe/urZiBJXqf7nblL0AIfprrFVRxP
- VuNJzOMUW8x6zTe6t5D2shyTRE3FWvsIWH5dPd/ZfAPkF6rduZbUzn+jfTzuXXEXrQWU
- PglEOpLb/xAbs1/4ctps1irS13uY35R8D3+WrOQkhjg6xQ4w3/ZRMhCT9a+FBtWnFWUL
- 3gG7GGssXm8pGTwiU4/b43k+6JvkFWRep4/x0+ZyCfT9q8vkrKRvRMgMspC9tDrrqaWc
- R1HcWQTeU65qmDau/i3uNkU/3qOdBzjMscGPeI7W2dfDTfJauwiX4bcppnk2YuB7BMTD
- KkgA==
+ d=oss.qualcomm.com; s=google; t=1787260198; x=1787864998; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=IRFa8PBGHnBGeWrxOBlD/fGonGDEG+aUh2svbB/9l9s=;
+ b=YbezhwIWkSyW2dCSF13Ve/h7MMf0rrB7juYZIWPusVdYREwa9hsO/NVvyYKGE1WaWQ
+ RdYS0IC2ubzCVva1CiTrAHEWSlo1BPtbCjWjnpUS/iSc94DLy1Ddtb4/AZs07jDIw+Yg
+ 9ZN3XGrSvTn3AXfCD4qAqEr7OFoMRbE+VlZeO9GBvqXaM1SzzZeMo7gWNuH0BtwX71Zc
+ /bEsNYzdhJZlXkkwk9yMRx5XLbBbNmitUgK4l8nRUlZ1KHf0hFZtF8dkqFB1kGkewwVo
+ APQEfqFNM5mSbwT/4aDmkKJLZPp9twStW98GaSoxboU/rrDP8EqwmYoIo88gYE7d1ltH
+ Bc9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787258338; x=1787863138;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=yw/70XDHxmOe5vI6aQ6n4t71n8LG9vKd/gcLCxbLG5Y=;
- b=JY0w5XFC/0y0U9XLOjWSpSuh+9n/pyeCHvTCeOwuFrcvsxZtjAdGRnmglRiQuqFSG4
- G9yjWa16ENq588V6cGoCHhTTdVXPmAnGPLjzfmMJQZKKpw2Ib8fAVYHfHerfVKi5SAHV
- BaEWL1kEn4IY33HR0Y555KhMDoLz6ogJRPOnmMbPe/l8/DTT4G9Xr5RIJuXP/XxWCfEu
- bLsYzXQbToMccPIziuHbUbEXvFq9CvO3gs83EE51Y9GDWlHCE1N7d2CyBYogRTx9khU7
- P/c4/lF/26tnrkKyDhIjQKfGbr9U8fVb9gkNMZHollygpjI39faLlI8ZHE62lG4MUufm
- U30w==
-X-Gm-Message-State: AOJu0YzN5AoavwELWFGfa2ltJfygQjnh/a0y3putJr3NUxCYzGmxDlYr
- usuLj1A+aB5luUti/KSservHlBhbk5cRF7y7uIOVLj9DTAAmstz/waxb5Rlo54CgiNfd8RBQLHV
- XGnxQ0gLrILjMRtKgwD8FG9Xgl+Kh3gM=
-X-Gm-Gg: AR+sD12wQzf0DN4m71RK3VpSVTYjbc0B51vNYC7bqwlTwyOmD7+lZj1ycPh0XI5lfSd
- TvY68bpqUH4GF/1yZpdvl2jTTeTWeCdDVjNhvVSMgHXX8ZRC/J6mRPfWMJxJZfp9z2EtPa86YPn
- 1v+NBCJ/kwpgCT1Fr9A4UIWu0VZ225RB1F9dGFIYp5pPcC1ofGIui68y/5C3fgxK9YUm4u8yJR3
- cYtrbAhSC8Dz3YJMU/9OtavQ1BZdCvFpA8mT7JFuYZ/XOANiu5ZNa3R5k4frJ8zPJcftKJjm4bQ
- z2IX4zBt8nYOZuf9+Nzd/Z+p9T1ECd8wQx99q8wZJPHailrnS3T/Ss44Ef2fY16VoBurQpW2Zt5
- g8jM=
-X-Received: by 2002:a05:622a:1b28:b0:51b:ecca:f2e0 with SMTP id
- d75a77b69052e-52df56f7dfamr12524441cf.5.1787258338304; Thu, 20 Aug 2026
- 13:38:58 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787260198; x=1787864998;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=IRFa8PBGHnBGeWrxOBlD/fGonGDEG+aUh2svbB/9l9s=;
+ b=fnjsoIlINwMV8cfeUp1ri3q2Kp++xJfpa/48RLpcTdRSwrr27jtAH5afeG6hR8K/HT
+ uoevn5OhUza/8Prz3BNuCprkHOAb3rJS4meo+vxbq0z+ED39Q41A7J+8NhBXBo1wPWZs
+ CxVr6My5PcyWi0XbChAYMZhdEti0nCcKblkZczHsZKn20aQ0Ai5ceM3CjgUSf8L4y47A
+ TDOrJSWdAdF1iUzpx0FUMygyOK2QP6OudyvRCmXwxHyz2r4aKSzEvmFcVPk54iG6iSA3
+ +nF3Ev2cmGl1p5fsakds9iJWXRS6dIFdUNz/TjLo7CF6rsRYVuZHVy0MmYEkl9oA2MRe
+ dTUQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpF2yWaB6uDLlQpQ3uHYaXKRCmB86e/NOsz74pwQS7r8P/TIMncJtrWEYMSWAZpz/6vAH17h9Gl+AWD@nongnu.org
+X-Gm-Message-State: AOJu0YymHFGa3QdmdFhkLF/RfoDlbN1uyTtg8ZfDAqxY7CFj+7nhjOn+
+ 4f8n5H64w2lq0SBd+VAhqGPXbZIdMfvwtA4QlVmKDILgnfvbQtUsKpiA/LTNQ1gHNMs0TonngQL
+ 5Q9RMFQ8iHsN/bX7ASXVn7z6dpIxMBPw2kAZiFOl4TbK41t3xfKr/kLBMRw==
+X-Gm-Gg: AR+sD10ymjOWoNXNswYD2vibyzdxBUKEz3Qi5cqr3eWxGO7MD0zRSVO4ZCDD22WFQD1
+ qLSBO5Cs5TnEA7P8W/J5FPhGmtlcoGDLREBgRbC6SitIEPOVRptxyd4nzPYEF1W5NlHEu+u1rC1
+ Az14AxgbT4cDkxpdRVU0bxArj0wI1RNv5y9LsR+QPm7TzmGX58I3tzSiZrDqOeKXfvcGxolRFBf
+ oBPewpWslmq12OXPFV800LltAmZigHXGYrUnDYnEFfSNkJmljK1m9tvCdd79d+pjzgj473J6yis
+ OsNbM7Dkmh9weWjky3TVz83ER0Q9/yloOta5yiqbS65ZBCAh7QGyQXxQgHEwNBsCwXI9O7Q3wUr
+ gz4hpte5WMqUmLwda83GHt1IlIATIwWm+4zU=
+X-Received: by 2002:a05:622a:2592:b0:51c:92a0:b2cb with SMTP id
+ d75a77b69052e-52df59ebf4fmr13995731cf.26.1787260197944; 
+ Thu, 20 Aug 2026 14:09:57 -0700 (PDT)
+X-Received: by 2002:a05:622a:2592:b0:51c:92a0:b2cb with SMTP id
+ d75a77b69052e-52df59ebf4fmr13995161cf.26.1787260197487; 
+ Thu, 20 Aug 2026 14:09:57 -0700 (PDT)
+Received: from [192.168.69.231] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482b1441c85sm17144936f8f.1.2026.08.20.14.09.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Aug 2026 14:09:56 -0700 (PDT)
+Message-ID: <c502e858-4e15-45e8-a195-cd2f9a7ac686@oss.qualcomm.com>
+Date: Thu, 20 Aug 2026 23:09:56 +0200
 MIME-Version: 1.0
-References: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
- <20260817-vhost-user-isolated-memory-v2-9-948aae960abb@gmail.com>
- <7b4d2e3d-4593-492c-887a-db560d590ac6@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <7b4d2e3d-4593-492c-887a-db560d590ac6@rsg.ci.i.u-tokyo.ac.jp>
-From: Connor Kite <connorkite@gmail.com>
-Date: Thu, 20 Aug 2026 13:38:47 -0700
-X-Gm-Features: AcwNN1VXrXAFLHLrkZHM8t6w7717j2YQmN1Mi7V8JgTbf-cGaUWANLEc02NuWF8
-Message-ID: <CA+spn3qzO_d5n9AOLyhRRu1Tz-ANyh5OfQJgCJP4Dn1+wDptug@mail.gmail.com>
-Subject: Re: [PATCH RFC v2 09/13] hw/virtio/vhost-user: add shadow virtqueues
- and eventfd intercepts
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Raphael Norwitz <rnorwitz@nvidia.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
- virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
- zhenwei pi <zhenwei.pi@linux.dev>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
- Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::836;
- envelope-from=connorkite@gmail.com; helo=mail-qt1-x836.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/hexagon: assign a distinct htid to each DSP machine CPU
+Content-Language: en-US
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260819130341.4076146-1-brian.cain@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260819130341.4076146-1-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDE1OCBTYWx0ZWRfX2COTniVOPhqb
+ wyWtV4y026rOp1kA6in6UGcRLpVOr+tnJO8yYMyDSW9alXTV1azHM+C4m9ty7KQkZM42o5wIeCX
+ IVb1eqorjETjoFIOYBzO3DFU9RhgZhc=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDE1OCBTYWx0ZWRfX/JYSUAUr1VHH
+ yWuUjsQ9s2r8yoekAAywxDzI3tjFwqJ5RvtiVMSoolljQnFTHIK+2znqxK8SAezT+cax4gxLQX5
+ obZZhPDHKN85+sda7inwEOiizxxKnsbk/gABC+Dqtql67V7tefGePtfTt+kNhvq56+DidwDNQeR
+ gGpN/3wM1sAVuf50wHh8Yvtgr09OL36RLpOgRWKI7Ya/9wYMougstuVtWdOmMO72hrPw82c43KJ
+ ASIUfc+yqJxDE9UsfYnwt8jDaduUqM1YfL8KEEN9j4/pSfo2JfeRYxeMS+dK6hKAcl4B5v19B6k
+ 7o4iv2YiNgVrTSAR9+VIBcb11CfExddTIz4+Gp94uZf9boX1onnCYF82/1ssw4B0ANQWKOhVdOB
+ /vT4MDU4bLigHpWIOJ+l/l6gGp9mcfrh7G1CS5rhVzXZZyXKDVJ4t2Prqmoej3c7CunAMVpdG/h
+ 1WVhWRkgYAb+42YrMWA==
+X-Authority-Analysis: v=2.4 cv=Y7/IdBeN c=1 sm=1 tr=0 ts=6a876d26 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-GUID: YX-cgsJb-EYGC0f7wkRGcQi8imEwO4pE
+X-Proofpoint-ORIG-GUID: YX-cgsJb-EYGC0f7wkRGcQi8imEwO4pE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-20_02,2026-08-20_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 priorityscore=1501 malwarescore=0 adultscore=0
+ clxscore=1015 phishscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200158
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,158 +153,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 18, 2026 at 5:35=E2=80=AFAM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
->
-> A whitespace problem remains here.
->
+On 19/8/26 15:03, Brian Cain wrote:
+> The htid property defaults to 0 and hexagon_dsp.c never set it, so every
+> CPU on the DSP machines came up as hardware thread 0.
+> 
+> This bug was causing h2 test failures.
+> 
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>   hw/hexagon/hexagon_dsp.c | 2 ++
+>   1 file changed, 2 insertions(+)
 
-Got it!  This is fixed now
-
-> >   } IsolationModeCtx;
-> >
-> >   struct vhost_user {
-> > @@ -1128,15 +1130,38 @@ static int vhost_user_set_mem_table_postcopy(st=
-ruct vhost_dev *dev,
-> >       return 0;
-> >   }
-> >
-> > -static void cleanup_isolation_regions(struct vhost_dev *dev)
-> > +static void vhost_user_svq_cleanup(struct vhost_user *u, bool reset)
-> > +{
-> > +    VhostShadowVirtqueue *svq;
-> > +    for (int i =3D 0; i < u->iso_mem_ctx.shadow_vqs->len; i++) {
-> > +        svq =3D g_ptr_array_index(u->iso_mem_ctx.shadow_vqs, i);
-> > +        vhost_svq_stop(svq);
-> > +        event_notifier_cleanup(&svq->hdev_call);
-> > +        event_notifier_cleanup(&svq->hdev_kick);
-> > +    }
-> > +
-> > +    if (!reset) {
-> > +        g_ptr_array_free(u->iso_mem_ctx.shadow_vqs, true);
-> > +    }
-> > +}
-> > +
-> > +static void cleanup_isolation_regions(struct vhost_dev *dev, bool rese=
-t)
-> >   {
-> >       struct vhost_user *u =3D dev->opaque;
-> >       if (u->iso_mem_ctx.shared_mem_addr) {
->
-> If vhost_dev_init() fails after vhost_user_init_svq(), shadow_vqs is
-> present but shared_mem_addr is not because init_isolation_regions() is
-> not called yet. shadow_vqs will be leaked then.
->
-
-Good catch!  The call to vhost_user_svq_cleanup will be moved out of
-the conditional statement so it always runs during cleanup.  I also
-realized that it is possible for an error to occur after the call to
-qemu_memfd_alloc but before the iova tree is allocated, so I am adding
-a check before calling vhost_iova_tree_delete.
-
-> > +        vhost_user_svq_cleanup(u, reset);
-> >           vhost_iova_tree_delete(u->iso_mem_ctx.tree);
-> >           qemu_memfd_free(u->iso_mem_ctx.shared_mem_addr,
-> >                           u->iso_mem_ctx.size,
-> >                           u->iso_mem_ctx.fd);
-> > +
-> > +        GPtrArray *temp =3D u->iso_mem_ctx.shadow_vqs;
->
-> This is a mixed declaration prohibited in docs/devel/style.rst
-
-Got it!  I will fix this.
-
->
-> >           memset(&u->iso_mem_ctx, 0, sizeof(IsolationModeCtx));
-> > +
-> > +        if (!reset) {
->
-> This condition is inverted. When reset is true, vhost_user_svq_cleanup()
-> retains the array so the pointer to it should be kept.
->
-
-You are right!  This is now fixed
-
-...
-
-> >   static int vhost_user_set_vring_kick(struct vhost_dev *dev,
-> >                                        struct vhost_vring_file *file)
-> >   {
-> > -    int ret =3D vhost_set_vring_file(dev, VHOST_USER_SET_VRING_KICK, f=
-ile);
-> > +    struct vhost_user *u =3D dev->opaque;
-> > +    int svq_idx =3D file->index - dev->vq_index;
-> > +    VhostShadowVirtqueue *svq =3D NULL;
-> > +    struct vhost_vring_file vr_file =3D *file;
-> > +    int ret;
-> > +
-> > +    vhost_user_get_vq_index(dev, file->index); /* bounds checking */
-> > +
-> > +    if (u->user->memory_isolation) {
-> > +        svq =3D g_ptr_array_index(u->iso_mem_ctx.shadow_vqs, svq_idx);
-> > +        vhost_svq_set_svq_kick_fd(svq, file->fd);
->
-> The svq->svq_kick EventNotifier is left set in the error paths.
->
-
-I did not want to close the svq_kick notifier, since it shares its fd
-with the host notifier in the underlying vq, and closing that from
-here might be unexpected.  However, a safer alternative is probably to
-call vhost_svq_set_svq_kck_fd with -1 to simply unbind the notifier,
-which I suspect is what you are actually recommending here.
-
-> Regards,
-> Akihiko Odaki
->
-...
-
-> > @@ -1769,7 +1835,35 @@ static int vhost_user_set_vring_kick(struct vhos=
-t_dev *dev,
-> >   static int vhost_user_set_vring_call(struct vhost_dev *dev,
-> >                                        struct vhost_vring_file *file)
-> >   {
-> > -    return vhost_set_vring_file(dev, VHOST_USER_SET_VRING_CALL, file);
-> > +    struct vhost_user *u =3D dev->opaque;
-> > +    int svq_idx =3D file->index - dev->vq_index;
-> > +    VhostShadowVirtqueue *svq =3D NULL;
-> > +    struct vhost_vring_file vr_file =3D *file;
-> > +    int ret;
-> > +
-> > +    vhost_user_get_vq_index(dev, file->index); /* bounds checking */
-> > +
-> > +    if (u->user->memory_isolation) {
-> > +        svq =3D g_ptr_array_index(u->iso_mem_ctx.shadow_vqs, svq_idx);
-> > +        vhost_svq_set_svq_call_fd(svq, file->fd);
-> > +
-> > +        if (file->fd !=3D -1) {
-> > +            if (!svq->hdev_call.initialized) {
-> > +                ret =3D event_notifier_init(&svq->hdev_call, 0);
-> > +                if (ret < 0) {
-> > +                    event_notifier_cleanup(&svq->hdev_call);
-> > +                    error_report("Failed to create call event notifier=
-");
-> > +                    return ret;
-> > +                }
-> > +            }
-> > +
-> > +            vr_file.fd =3D event_notifier_get_fd(&svq->hdev_call);
-> > +        } else {
-> > +            event_notifier_cleanup(&svq->hdev_call);
-> > +        }
-> > +    }
-> > +
-> > +    return vhost_set_vring_file(dev, VHOST_USER_SET_VRING_CALL, &vr_fi=
-le);
->
-> Clean up svq->hdev_call when this fails.
->
-
-Did you mean cleanup svq->svq_call, similar to your feedback on
-svq->svq_kick?  I believe svq->hdev_call already gets cleaned up on
-failure.  I'll go ahead and add a call to vhost_svq_set_svq_call_fd
-with fd=3D-1 here as well.
-
-Thank you!
-Connor
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
