@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3DECC5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 14:07:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD61AC5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 14:07:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx3QS-0000pd-UL; Thu, 20 Aug 2026 10:07:24 -0400
+	id 1wx3QL-0000g8-6F; Thu, 20 Aug 2026 10:07:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wx3QR-0000mN-3v; Thu, 20 Aug 2026 10:07:23 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wx3QJ-0000Tu-1X; Thu, 20 Aug 2026 10:07:15 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wx3QP-0006xF-2y; Thu, 20 Aug 2026 10:07:22 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1wx3QF-0006sH-Tp; Thu, 20 Aug 2026 10:07:14 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67K8tbaU362185; Thu, 20 Aug 2026 14:07:19 GMT
+ 67K8ZNju424247; Thu, 20 Aug 2026 14:07:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=KSW1G1nXC0+V1NUJe
- HhBvISafVzElPIhKh1HnJRoPUk=; b=pFD3VPI9bfKZrtORS6hrKWDU5BqfmFjcW
- EEREWG1uSOnnAZacmT4OfAGdCAWvSsKu2v/O5HSObL21r99IvGTObuSxdMgy0KkK
- DEOd2/fa6LSmo8Dmii5g9U3bn/nBB1Bw8Tph8ZwMCa9Jgg+EX5iQCbMa/MtOWDAf
- Rk0prmbg9RiIWjtYcAOCdt8EI2haBsySuynRn4ympWPg1VBXaCMmIUGDTnL+IvLV
- gZxUlEN9mWeOiH9fiIRGaE9NYSnppYRaXMQElOqwBJfEgaa4E9cJvv0aZFp/dxvC
- jrppvRr+nlv/rZWgCnMsMYEEIGIsLT9AWu1zIvzZTRI+s5t9wOQWQ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu4ansy-1
+ :mime-version:references:subject:to; s=pp1; bh=sVqTY5K1dL5NkX0O5
+ IDAKoJPhDEALAifnlANutLs5ms=; b=aM1RRBqhrdDLiEwCvF2SW1m3m96wL0olU
+ jmcQZtUm5rLR6Mmj+MboXGvDqdY2Kiv8TQsgjloktLQF+ZbNKte3otAK/gVY0xJe
+ YJ2QvawAN1VyKwEGTnK/xDHsde4jH43RdXU42OsTnTG/ZF/iOHeE2F41LMPCJvXC
+ xE3UKOPZcSq4kD9W7XS9UAk4L+bLvfEU5SffvDz4M7ZmgYUsH3IQ8c6hfk1ojZwM
+ aA50ye8agw4Emj+bbCfLUoxi9eltHZK8J9AmyHP6arTHbZ5Z+i06fS9LOlFV6jmb
+ Qosak6aRKmNiMWgfFKvV/QoGgCCYvbhgjAMq+oou3Ad4/+XRT9MSg==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu1jrum-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Aug 2026 14:07:18 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67KDuHF6014751;
- Thu, 20 Aug 2026 14:07:17 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g34ngpqt1-1
+ Thu, 20 Aug 2026 14:07:08 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67KDuPCo014671;
+ Thu, 20 Aug 2026 14:07:07 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g354ypnr7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Aug 2026 14:07:17 +0000 (GMT)
+ Thu, 20 Aug 2026 14:07:07 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
  [10.20.54.106])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67KE7Cel36241684
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67KE728o10551786
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 20 Aug 2026 14:07:12 GMT
+ Thu, 20 Aug 2026 14:07:02 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3A2CC20043;
- Thu, 20 Aug 2026 14:07:12 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 29ADD2004B;
+ Thu, 20 Aug 2026 14:07:02 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 537D320040;
- Thu, 20 Aug 2026 14:07:03 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4E65420040;
+ Thu, 20 Aug 2026 14:06:53 +0000 (GMT)
 Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
  [9.39.17.115]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 20 Aug 2026 14:07:02 +0000 (GMT)
+ Thu, 20 Aug 2026 14:06:53 +0000 (GMT)
 From: Chinmay Rath <rathc@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
  milesg@linux.ibm.com
@@ -65,10 +65,9 @@ Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
  aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, sv@linux.ibm.com,
  shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
  nikhilks@linux.ibm.com, Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH 27/29] target/ppc: Move mfmsr,
- mtmsr[d] instructions to decodetree
-Date: Thu, 20 Aug 2026 19:30:56 +0530
-Message-ID: <20260820140114.327023-28-rathc@linux.ibm.com>
+Subject: [PATCH 26/29] target/ppc: Move lmw, stmw instructions to decodetree
+Date: Thu, 20 Aug 2026 19:30:55 +0530
+Message-ID: <20260820140114.327023-27-rathc@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820140114.327023-1-rathc@linux.ibm.com>
 References: <20260820140114.327023-1-rathc@linux.ibm.com>
@@ -76,39 +75,39 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDEwNSBTYWx0ZWRfX3zdYd/V/RNE7
- bE4eFtm39btHuW6SWXhOLTvUN+3BiyR0RDa5J+fYtlC9gIqnVCGfoPK5ZaSSKeo1L4aBVb8I6tJ
- hkmJPf8ldKxoyGcNNUlnq6GPdd3BAcc=
-X-Proofpoint-GUID: fxDQd6tQIHAfi8dwY4RMS55R2OMt8yWK
-X-Proofpoint-ORIG-GUID: F10r35HbryGS_-uzs0RtIsvWXt0kdZmC
-X-Authority-Analysis: v=2.4 cv=RPmD2Yi+ c=1 sm=1 tr=0 ts=6a870a16 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Authority-Analysis: v=2.4 cv=LsCiDHdc c=1 sm=1 tr=0 ts=6a870a0d cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=fRY7pOLSFYBF0tKEtWUA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDEwNSBTYWx0ZWRfX1YZtkAJIOTX9
- ZfJFI/JCw3aDwACmWTDoA5sIqvg2zKeGCBOZd6w3Llu89TvTWea7ekQleb+IdWNkAGCnbuZVbVd
- nInF9hoI9nrFlB7kWe8czmln9ooILZRC3SHCFciEyqYwcS9DDSJ6wFetJrWQXd5q0ScelewKUnK
- IoyNtLwHtByCk72gy0GkcCUXt5FOO8WBVH2uDn5awzGKz1iXwOlA8alszqhNA0ZHkq0CdVSNKnH
- 8MmlV/iTTtL3BabYEP7g9cZf+KTHTjZXFoa1y+gmTNiSnPShU11wgkBL94PHYfV9HAhV5PGoNgl
- bpI/Y5p6iOKI4rLMjf+LgHYbi/vKsDatPUijZNGg0elF3jEhJrX91evhdtgVh6b/vJ/fwkc54Hf
- vMWTgN2cMIGhBk10fejYjpsIvZtAM003ZpPVFkDJmxOZXVYXWEVSasIoUyZqbL8uTVuokxa/Jh5
- NP25epZIm0hndIt+pWw==
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=EKBDPzd3v7EvMxvHOJ8A:9
+X-Proofpoint-GUID: KTcqjb1ILG9xJ8ds4FdXX9i45wMMCGPJ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDEwNSBTYWx0ZWRfX7X1Gzp9hwjZL
+ ovX1gqEefiq5hKaEGbap2JjvSCVu02LMWfPx6gPc/v4085PNUzy0Niyfo4pZdv0AjRs+URu1TG7
+ PwFbk475HE7KrQ+J7bgrSHPXs/ck6JQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDEwNSBTYWx0ZWRfX0hgxqb10KwIp
+ EqcaCWAIijOo31irUOmRDcdsKAD49m9u6l3yN/vLC5uPHL0TOan0tPJtYOWpNUmlHXiT3wfoR45
+ kZuL74PcjLQlsf7oA42pgrRMyJ2OGowSWYhVpJKLXCVzFgEqK4m6z2JeqgEOcPffJJ/MWT9yz+W
+ U2JSfsbx4gsosDYNzLkG/NpeUzALUoUtey22Fv86PfeVLislQ2IeN59rWWKjV8e8xJF/xXupeZO
+ vxnJ8m2FmFOFD3SPOLuHjWLKjU6IvGcfeXK1gKGH9+jdpWcGOb4YOR6oMM3BoPlQEW/L32T8Jqs
+ dZY76xqlwglGGDC6atqjOiSDCOT8GKOsv6p5jnEfgBFi61spfrDe0lEoXCfAvSaVD6+xZEcVtbL
+ 45YHb7+jygGWptHDmMdeyQT5sTgJDatH1eaK+OaLFxE71XAy4PiHK9arrF2sPWdw8McI5p7Tf52
+ tr4V5/tDnO5SQ/n2ZDg==
+X-Proofpoint-ORIG-GUID: SkY18QnH38D8KP2XmXmZ28Hz05FuUieF
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-19_06,2026-08-19_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 adultscore=0 spamscore=0 priorityscore=1501
- bulkscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ adultscore=0 suspectscore=0 impostorscore=0 clxscore=1015 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200105
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,244 +124,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vishal Chourasia <vishalc@linux.ibm.com>
+From: Tanushree Shah <tshah@linux.ibm.com>
 
 Moving the following instructions to decodetree specification:
-            mfmsr                           : X-form
-            mtmsr[d]                        : X-form
+ lmw  : D-form
+ stmw : D-form
 
 The changes were verified by validating that the tcg ops generated by
 those instructions remain the same, which were captured with the
-`-d in_asm,op` flag.
+"-d in_asm,op" flag.
 
-This also includes improvements from review feedback:
-- Gate MFMSR/MTMSR on PPC_MISC via TRANS_FLAGS()
-- Use UINT32_MAX instead of 0xFFFFFFFF for clarity
+Additionally, validated using small assembly tests confirming the
+the correct register store/load behavior. Also, confirmed the
+register values are same before and after the change.
 
-Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
+Signed-off-by: Tanushree Shah <tshah@linux.ibm.com>
 Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 ---
- target/ppc/insn32.decode             |  5 ++
- target/ppc/translate.c               | 97 ----------------------------
- target/ppc/translate/misc-impl.c.inc | 64 ++++++++++++++++++
- 3 files changed, 69 insertions(+), 97 deletions(-)
+ target/ppc/helper.h                        |  4 +--
+ target/ppc/insn32.decode                   |  3 ++
+ target/ppc/mem_helper.c                    |  4 +--
+ target/ppc/translate.c                     | 39 ----------------------
+ target/ppc/translate/fixedpoint-impl.c.inc | 32 ++++++++++++++++++
+ 5 files changed, 39 insertions(+), 43 deletions(-)
 
+diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+index 8425eceeb3..3659408c46 100644
+--- a/target/ppc/helper.h
++++ b/target/ppc/helper.h
+@@ -43,8 +43,8 @@ DEF_HELPER_1(check_tlb_flush_local, void, env)
+ DEF_HELPER_1(check_tlb_flush_global, void, env)
+ #endif
+ 
+-DEF_HELPER_3(lmw, void, env, tl, i32)
+-DEF_HELPER_FLAGS_3(stmw, TCG_CALL_NO_WG, void, env, tl, i32)
++DEF_HELPER_3(LMW, void, env, tl, i32)
++DEF_HELPER_FLAGS_3(STMW, TCG_CALL_NO_WG, void, env, tl, i32)
+ DEF_HELPER_4(LSW, void, env, tl, i32, i32)
+ DEF_HELPER_5(LSWX, void, env, tl, i32, i32, i32)
+ DEF_HELPER_FLAGS_4(STSW, TCG_CALL_NO_WG, void, env, tl, i32, i32)
 diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index b0fa85b93e..f7ab08704f 100644
+index 8f027e7ff5..b0fa85b93e 100644
 --- a/target/ppc/insn32.decode
 +++ b/target/ppc/insn32.decode
-@@ -315,6 +315,11 @@
- &M              ra rs sh mb me rc:bool
- @M              ...... rs:5 ra:5 sh:5 mb:5 me:5 rc:1 &M
+@@ -354,6 +354,7 @@ LVDX            011111 ..... ..... ..... 0000010001 -   @X
+ LSKU            111010 ..... ..... ............. 0 11   @DD
+ LCXU            111010 ..... ..... ............. 1 11   @DD
  
-+### MSR
-+MFMSR           011111 ..... ----- ----- 0001010011 -   @X_t
-+MTMSR           011111 ..... ---- . ----- 0010010010 -  @X_rs_l
-+MTMSRD          011111 ..... ---- . ----- 0010110010 -  @X_rs_l
++LMW             101110 ..... ..... ................     @D
+ 
+ ### Fixed-Point Atomic Load/Store Instructions
+ 
+@@ -399,6 +400,8 @@ STBCIX          011111 ..... ..... ..... 1111010101 -   @X
+ STHBRX          011111 ..... ..... ..... 1110010110 -   @X
+ STWBRX          011111 ..... ..... ..... 1010010110 -   @X
+ 
++STMW            101111 ..... ..... ................     @D
 +
- ### Fixed-Point Load Instructions
+ ### Fixed-Point Compare Instructions
  
- LBZ             100010 ..... ..... ................     @D
+ CMP             011111 ... - . ..... ..... 0000000000 - @X_bfl
+diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
+index 582180cf88..7517b3954b 100644
+--- a/target/ppc/mem_helper.c
++++ b/target/ppc/mem_helper.c
+@@ -73,7 +73,7 @@ static void *probe_contiguous(CPUPPCState *env, target_ulong addr, uint32_t nb,
+     return NULL;
+ }
+ 
+-void helper_lmw(CPUPPCState *env, target_ulong addr, uint32_t reg)
++void helper_LMW(CPUPPCState *env, target_ulong addr, uint32_t reg)
+ {
+     uintptr_t raddr = GETPC();
+     int mmu_idx = ppc_env_mmu_index(env, false);
+@@ -98,7 +98,7 @@ void helper_lmw(CPUPPCState *env, target_ulong addr, uint32_t reg)
+     }
+ }
+ 
+-void helper_stmw(CPUPPCState *env, target_ulong addr, uint32_t reg)
++void helper_STMW(CPUPPCState *env, target_ulong addr, uint32_t reg)
+ {
+     uintptr_t raddr = GETPC();
+     int mmu_idx = ppc_env_mmu_index(env, false);
 diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 9db9d1e070..9d29134fa1 100644
+index d2c51b4d59..9db9d1e070 100644
 --- a/target/ppc/translate.c
 +++ b/target/ppc/translate.c
-@@ -2843,13 +2843,6 @@ static void gen_mcrxrx(DisasContext *ctx)
- }
- #endif
+@@ -2455,43 +2455,6 @@ GEN_LDX(lwbr, ld32ur, 0x16, 0x10, PPC_INTEGER);
+ GEN_LDX_E(ldbr, ld64ur_i64, 0x14, 0x10, PPC_NONE, PPC2_DBRX, CHK_NONE);
+ #endif  /* TARGET_PPC64 */
  
--/* mfmsr */
--static void gen_mfmsr(DisasContext *ctx)
--{
--    CHK_SV(ctx);
--    tcg_gen_mov_tl(cpu_gpr[rD(ctx->opcode)], cpu_msr);
--}
+-/***                    Integer load and store multiple                    ***/
 -
- /* mfspr */
- static inline void gen_op_mfspr(DisasContext *ctx)
- {
-@@ -2923,93 +2916,6 @@ static void gen_mftb(DisasContext *ctx)
-     gen_op_mfspr(ctx);
- }
- 
--/* mtmsr */
--#if defined(TARGET_PPC64)
--static void gen_mtmsrd(DisasContext *ctx)
+-/* lmw */
+-static void gen_lmw(DisasContext *ctx)
 -{
--    if (unlikely(!is_book3s_arch2x(ctx))) {
--        gen_invalid(ctx);
+-    TCGv t0;
+-    TCGv_i32 t1;
+-
+-    if (ctx->le_mode) {
+-        gen_align_no_le(ctx);
 -        return;
 -    }
--
--    CHK_SV(ctx);
--
--#if !defined(CONFIG_USER_ONLY)
--    TCGv t0, t1;
--    target_ulong mask;
--
+-    gen_set_access_type(ctx, ACCESS_INT);
 -    t0 = tcg_temp_new();
--    t1 = tcg_temp_new();
--
--    translator_io_start(&ctx->base);
--
--    if (ctx->opcode & 0x00010000) {
--        /* L=1 form only updates EE and RI */
--        mask = (1ULL << MSR_RI) | (1ULL << MSR_EE);
--    } else {
--        /* mtmsrd does not alter HV, S, ME, or LE */
--        mask = ~((1ULL << MSR_LE) | (1ULL << MSR_ME) | (1ULL << MSR_S) |
--                 (1ULL << MSR_HV));
--        /*
--         * XXX: we need to update nip before the store if we enter
--         *      power saving mode, we will exit the loop directly from
--         *      ppc_store_msr
--         */
--        gen_update_nip(ctx, ctx->base.pc_next);
--    }
--
--    tcg_gen_andi_tl(t0, cpu_gpr[rS(ctx->opcode)], mask);
--    tcg_gen_andi_tl(t1, cpu_msr, ~mask);
--    tcg_gen_or_tl(t0, t0, t1);
--
--    gen_helper_store_msr(tcg_env, t0);
--
--    /* Must stop the translation as machine state (may have) changed */
--    ctx->base.is_jmp = DISAS_EXIT_UPDATE;
--#endif /* !defined(CONFIG_USER_ONLY) */
+-    t1 = tcg_constant_i32(rD(ctx->opcode));
+-    gen_addr_imm_index(ctx, t0, 0);
+-    gen_helper_lmw(tcg_env, t0, t1);
 -}
--#endif /* defined(TARGET_PPC64) */
 -
--static void gen_mtmsr(DisasContext *ctx)
+-/* stmw */
+-static void gen_stmw(DisasContext *ctx)
 -{
--    CHK_SV(ctx);
+-    TCGv t0;
+-    TCGv_i32 t1;
 -
--#if !defined(CONFIG_USER_ONLY)
--    TCGv t0, t1;
--    target_ulong mask = 0xFFFFFFFF;
--
--    t0 = tcg_temp_new();
--    t1 = tcg_temp_new();
--
--    translator_io_start(&ctx->base);
--    if (ctx->opcode & 0x00010000) {
--        /* L=1 form only updates EE and RI */
--        mask &= (1ULL << MSR_RI) | (1ULL << MSR_EE);
--    } else {
--        if (likely(!(ctx->insns_flags2 & PPC2_PPE42))) {
--            /* mtmsr does not alter S, ME, or LE */
--            mask &= ~((1ULL << MSR_LE) | (1ULL << MSR_ME) | (1ULL << MSR_S));
--        }
--
--        /*
--         * XXX: we need to update nip before the store if we enter
--         *      power saving mode, we will exit the loop directly from
--         *      ppc_store_msr
--         */
--        gen_update_nip(ctx, ctx->base.pc_next);
+-    if (ctx->le_mode) {
+-        gen_align_no_le(ctx);
+-        return;
 -    }
--
--    tcg_gen_andi_tl(t0, cpu_gpr[rS(ctx->opcode)], mask);
--    tcg_gen_andi_tl(t1, cpu_msr, ~mask);
--    tcg_gen_or_tl(t0, t0, t1);
--
--    gen_helper_store_msr(tcg_env, t0);
--
--    /* Must stop the translation as machine state (may have) changed */
--    ctx->base.is_jmp = DISAS_EXIT_UPDATE;
--#endif
+-    gen_set_access_type(ctx, ACCESS_INT);
+-    t0 = tcg_temp_new();
+-    t1 = tcg_constant_i32(rS(ctx->opcode));
+-    gen_addr_imm_index(ctx, t0, 0);
+-    gen_helper_stmw(tcg_env, t0, t1);
 -}
 -
- /* mtspr */
- static void gen_mtspr(DisasContext *ctx)
+-
+ #if !defined(CONFIG_USER_ONLY)
+ static inline void gen_check_tlb_flush(DisasContext *ctx, bool global)
  {
-@@ -4687,15 +4593,12 @@ GEN_HANDLER(hrfid, 0x13, 0x12, 0x08, 0x03FF8001, PPC_64H),
- GEN_HANDLER(sc, 0x11, 0x11, 0xFF, 0x03FFF01D, PPC_FLOW),
- GEN_HANDLER(sc, 0x11, 0x01, 0xFF, 0x03FFF01D, PPC_FLOW),
- GEN_HANDLER(mcrxr, 0x1F, 0x00, 0x10, 0x007FF801, PPC_MISC),
--GEN_HANDLER(mfmsr, 0x1F, 0x13, 0x02, 0x001FF801, PPC_MISC),
- GEN_HANDLER(mfspr, 0x1F, 0x13, 0x0A, 0x00000001, PPC_MISC),
- GEN_HANDLER(mftb, 0x1F, 0x13, 0x0B, 0x00000001, PPC_MFTB),
+@@ -4708,8 +4671,6 @@ GEN_HANDLER(rlwnm, 0x17, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+ GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
+ /* handles stfdp, stxsd, stxssp */
+ GEN_HANDLER_E(dform3D, 0x3D, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
+-GEN_HANDLER(lmw, 0x2E, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+-GEN_HANDLER(stmw, 0x2F, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+ /* ISA v3.0 changed the extended opcode from 62 to 30 */
+ GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
  #if defined(TARGET_PPC64)
--GEN_HANDLER(mtmsrd, 0x1F, 0x12, 0x05, 0x001EF801, PPC_64B),
- GEN_HANDLER_E(setb, 0x1F, 0x00, 0x04, 0x0003F801, PPC_NONE, PPC2_ISA300),
- GEN_HANDLER_E(mcrxrx, 0x1F, 0x00, 0x12, 0x007FF801, PPC_NONE, PPC2_ISA300),
- #endif
--GEN_HANDLER(mtmsr, 0x1F, 0x12, 0x04, 0x001EF801, PPC_MISC),
- GEN_HANDLER(mtspr, 0x1F, 0x13, 0x0E, 0x00000000, PPC_MISC),
- GEN_HANDLER(mfsr, 0x1F, 0x13, 0x12, 0x0010F801, PPC_SEGMENT),
- GEN_HANDLER(mfsrin, 0x1F, 0x13, 0x14, 0x001F0001, PPC_SEGMENT),
-diff --git a/target/ppc/translate/misc-impl.c.inc b/target/ppc/translate/misc-impl.c.inc
-index 890fbb209e..54712f9b73 100644
---- a/target/ppc/translate/misc-impl.c.inc
-+++ b/target/ppc/translate/misc-impl.c.inc
-@@ -161,3 +161,67 @@ static bool trans_MCRF(DisasContext *ctx, arg_MCRF *a)
-     tcg_gen_mov_i32(cpu_crf[a->bf], cpu_crf[a->bfa]);
+diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
+index 8fcee7a89d..a75279022c 100644
+--- a/target/ppc/translate/fixedpoint-impl.c.inc
++++ b/target/ppc/translate/fixedpoint-impl.c.inc
+@@ -288,6 +288,38 @@ static bool trans_STQCX(DisasContext *ctx, arg_STQCX *a)
      return true;
  }
-+
-+static bool do_mfmsr(DisasContext *ctx, arg_X_t *a)
+ 
++/* Load/Store Multiple Word */
++static bool do_ldst_multiple(DisasContext *ctx, arg_D *a, bool store)
 +{
-+    REQUIRE_SV(ctx);
-+    tcg_gen_mov_tl(cpu_gpr[a->rt], cpu_msr);
-+    return true;
-+}
-+TRANS_FLAGS(MISC, MFMSR, do_mfmsr)
++    TCGv ea;
++    TCGv_i32 reg;
 +
-+static bool do_mtmsr(DisasContext *ctx, arg_X_rs_l *a, bool is_mtmsrd)
-+{
-+    REQUIRE_SV(ctx);
-+#if !defined(CONFIG_USER_ONLY)
-+    TCGv t0, t1;
-+    target_ulong mask;
++    REQUIRE_INSNS_FLAGS(ctx, INTEGER);
 +
-+    if (is_mtmsrd) {
-+        if (unlikely(!is_book3s_arch2x(ctx))) {
-+            gen_invalid(ctx);
-+            return true;
-+        }
-+        mask = ~(target_ulong)0;
-+    } else {
-+        mask = UINT32_MAX;
++    /* Little-endian mode is not supported for multiple word operations */
++    if (ctx->le_mode) {
++        gen_align_no_le(ctx);
++        return true;
 +    }
 +
-+    t0 = tcg_temp_new();
-+    t1 = tcg_temp_new();
-+    translator_io_start(&ctx->base);
++    gen_set_access_type(ctx, ACCESS_INT);
 +
-+    if (a->l) {
-+        /* L=1 form only updates EE and RI */
-+        mask &= (1ULL << MSR_RI) | (1ULL << MSR_EE);
++    reg = tcg_constant_i32(a->rt);
++    ea = do_ea_calc(ctx, a->ra, tcg_constant_tl(a->si));
++
++    /* Call the appropriate helper function */
++    if (store) {
++        gen_helper_STMW(tcg_env, ea, reg);
 +    } else {
-+        if (is_mtmsrd) {
-+            /* mtmsrd does not alter HV, S, ME, or LE */
-+            mask &= ~((1ULL << MSR_LE) | (1ULL << MSR_ME) |
-+                      (1ULL << MSR_S)  | (1ULL << MSR_HV));
-+        } else if (likely(!(ctx->insns_flags2 & PPC2_PPE42))) {
-+            /* mtmsr does not alter S, ME, or LE */
-+            mask &= ~((1ULL << MSR_LE) | (1ULL << MSR_ME) | (1ULL << MSR_S));
-+        }
-+        /*
-+         * XXX: we need to update nip before the store if we enter
-+         *      power saving mode, we will exit the loop directly from
-+         *      ppc_store_msr
-+         */
-+        gen_update_nip(ctx, ctx->base.pc_next);
++        gen_helper_LMW(tcg_env, ea, reg);
 +    }
 +
-+    tcg_gen_andi_tl(t0, cpu_gpr[a->rs], mask);
-+    tcg_gen_andi_tl(t1, cpu_msr, ~mask);
-+    tcg_gen_or_tl(t0, t0, t1);
-+
-+    gen_helper_store_msr(tcg_env, t0);
-+
-+    /* Must stop the translation as machine state (may have) changed */
-+    ctx->base.is_jmp = DISAS_EXIT_UPDATE;
-+#endif /* !CONFIG_USER_ONLY */
 +    return true;
 +}
 +
-+TRANS_FLAGS(MISC, MTMSR, do_mtmsr, false)
-+TRANS64(MTMSRD, do_mtmsr, true)
++TRANS(LMW, do_ldst_multiple, false)
++TRANS(STMW, do_ldst_multiple, true)
++
+ /*
+  * Fixed-Point Compare Instructions
+  */
 -- 
 2.55.0
 
