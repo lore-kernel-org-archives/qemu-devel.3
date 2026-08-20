@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9D56C5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 12:50:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DC20C5DF87
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 12:50:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx2CR-00051m-GR; Thu, 20 Aug 2026 08:48:51 -0400
+	id 1wx2CS-00055p-Qr; Thu, 20 Aug 2026 08:48:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wx2CP-0004za-79
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:48:49 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wx2CR-00051Y-5D
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:48:51 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wx2CJ-0001b1-ME
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:48:48 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-6a386a34603so2667260a12.1
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 05:48:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wx2CL-0001cB-Sv
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:48:50 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-69fab5a852cso3681741a12.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 05:48:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787230122; x=1787834922; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=yQjk8/J3I7o9BNKQFxb6fZSHJDkrfokHftBqfxIlUGM=;
- b=Lziw5GuuolzQaoiC4m6LUeRHqd3N8C5Gb9w6uRxKQnJ0UWeYVblR5RWZSPD80x3lZb
- FWfAh7dg7D3tEvLCZHF1kh7wyr/dw3vN+XQbIk5+xY+qlTrDi8FkqgGcWSr+Az8C3mWb
- grFFu/ydfoi8lLTml30xoqW0jFYzkIKhfjue7W2Ol9nmcqs+Y9w8yKPZ4zdYVpJ5lMEN
- IH5h4sS3G8r2Jy5RFdxeqoGs1YMTo6oq1JAQ0r6Cc2BJc5uNNYZEc97SbaQxLae5FE/U
- TwKhbt8cw+8dYH75ZD9CR5cQfPTqxxGjDXq8g1QhM4fVRCr617X43sf89McB31t4jx2+
- CcrA==
+ d=gmail.com; s=20251104; t=1787230124; x=1787834924; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=gL9ZUS6BT6A6Gof5/PiP8kJ7NAMV2LPWE40Df0h3U48=;
+ b=CnpZM3r4FLLvTIUQ6xOHu/sDnNFVrV8LmG9Id8XUVHL1YZg+qEXTdXeyagADTvOxb7
+ ccMfMA7iMJD9PJ3mYL7UW5NH9IbgBnMoKZWKp4PZurGhqnBxZjE1OrtkYQCz0/SL1oRm
+ OpOFak1pw4bmz7IYtFpJ5zA43ooLsHVZx5FzwArDDEKMT4oBsSLEV/21mVfAVvH9RQvi
+ /PptLpIlB5uFxxu3MkW/TCHcB6EiZWX2i4rBTKID21UBcllrtt2CpTwQWJEERR6pJDKZ
+ 5HTYpqCEPsGDqenh2up+iGaYtsw7NnzUqn+JvmgdX02gF4l6laCGO/oAtlcD5arwhT+V
+ PDAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787230122; x=1787834922;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=yQjk8/J3I7o9BNKQFxb6fZSHJDkrfokHftBqfxIlUGM=;
- b=Dh05OYO519KA1BOpuciiIvMj0Yhuli0wghGDD/L/rM5j1LMvQg2YSFXUd6d0riIT4/
- APHDEDPTFjgqZ3RrIftFA+BDHwkVtkiW3yNE7Dxd9lQ3xacew77cYcNEz1NLaLjuvmju
- LutB4yNvDQCYZXVRjmvYcyRDV6OIDmn6xZ6F8uKfHKxzAi7zujdfIcwAlhUc0cWBVHgn
- fECQfsWoC5HlkS8+j/Rx8lv9nfylzpNtxCXHhDMFEqx4BAU88gwMdCoVzhTYxdUTXam0
- PTuIPAy/qCI64pJg5csyKF6iWm64gLxvWjHmCELCSBX2JGu2fD8mRk7ILWnkOqNa6/ES
- ZtUA==
-X-Gm-Message-State: AFuF++lZDZYwAhv79iv+L0mWE/9PDIXWqpgdoqKG92wJAYmIIZytgRa/
- jgg4T8LrxT7pRXVJYyPRdNX3sNZFuTSRiwtuPMgBtOqMoxYEhMmr1deeW1GPu07h
-X-Gm-Gg: AR+sD11581dE3UCrx43tdRGsvDJhTdiQune+DkIcb0ESxcGCIGYffiH53Tz15FqRV8n
- q8TBI0a1uxTVUL7zZdsxk5/0vR1kFAx5z6DdAzj34/I8DRQ6evprlJWUDJSm41g2/HOtACaKlwH
- HAvbtutkuK0NysK4o1S+mwlphSIZtjCj7ylseG6eZlvrao2oHMl3YOhPgWrqoZuyQcVcPh1wnQl
- KXVB5vcrTRX+Ile3uBZTPa3SInqsU+/4sv3VGaFzEzVuEgtHn/eP7Wy0F94KuX6LfIvEACEPeZA
- CBRZP2k6enR9qu2VsKodIIkI+00IIjUCMwJ4drcztrK16TBByqApnHtGPdXKfYvLQWwAPdGipfe
- FF3qk5T3PFDlwFW/EngH/0LJ4ii6cnj2/shBUxK5Z4o0bQVIJxJTARL3XVydb7pQGP9jDM6+RUH
- ebLsGv9nRVlA1oqYv9A9sP/aU6tLVPd/ZEjTv9wRyhLpjSVO296k5AswiTVHt2TAzYqy6d7Jbme
- aKiinROujc=
-X-Received: by 2002:a05:6402:208a:b0:6a0:a46b:ad3c with SMTP id
- 4fb4d7f45d1cf-6a4112442cemr3766726a12.1.1787230121358; 
- Thu, 20 Aug 2026 05:48:41 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787230124; x=1787834924;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=gL9ZUS6BT6A6Gof5/PiP8kJ7NAMV2LPWE40Df0h3U48=;
+ b=dzVWsrPcT/m+ulxHrIn3oc1yqUe1QojxJKXNn0oIDCAvANPod85hl9+nEZefc4oXN1
+ 1DUnJ+Ccz88T1naaH8r+5DBPQSu9kd0uCcfqeNJA40Pmw9tS8pgDqhET62re0sd7MckO
+ NdCrLdLXNEKofEkWLWqH022n2lDEN6q0dpx0KGCw2pYHlEhQKX0QiyL39cTkR1TS4hBB
+ beDe7AxGXFtsf9ZFsMxffG5A1IfJ1FgUdPuwLMd/HX2uJH4NNU6AElhyR5hRrrpuNt8D
+ xiXihlRaYPPhlm18jHsJ3HqGaC6EXxUwLhL3qW3RuUE3FC284gm30/Yhtcjv84gBsVkB
+ 8u9Q==
+X-Gm-Message-State: AFuF++nO+r2nljmzn8RhhtWTD3QsAKYAcYpXiKAWRKM+oNryjKQ+xtHC
+ D7G2g25pCRlqf2tWRW7iGFyHf7glhhPtOY59Q/Ryap8sxCj0KsR2q2kehdsh6WOO
+X-Gm-Gg: AR+sD13V7LsRpYRzIUAKF2f16xoyA0Uj1EDGXsF9hbwyMPi+2a67enFmWURfNoS/qyk
+ oxuukNgd86Xkz1tF+1yBBd4HveKl9cTf1sqKixbHFrBZ3i63p9xexq89ECa86bXG0WgBbN5QDJZ
+ 2c8Cbwb390ITPiTHLWMzRqSUegLPk26cizQNfEG2hQwX0sQtGuZ96uhfWPaWsJwgft+kZRPjigK
+ tZn46rmdkMHHC67+h9foA4cL46WaPansDF4esoZo9Sk6Mes9fogQH+J0lTqxbSnBEF2wuFrN03j
+ tCV8JvUkZVcCABDxJ1VsPdu1qRc5wkYTmZA9Mmg1i3+MSWr7px83e6w1hOGxCJQZdAzlJO4azOw
+ XZidOz61EucNTi5DL2YtJCwNrn3bLvcUmNdVc65be5BmSUZ0NW6PmaNBI1K/7zt4DjSXZLHNfOL
+ 5bs0baNsl9ndC9ry3I0liNGV57YOcaFTpHQ2OW0sjgthxvnFtm6y3bSwHAMckVAljrfZwe/oFfa
+ 5peEQtiAz9n
+X-Received: by 2002:a05:6402:241c:b0:69e:2d56:690a with SMTP id
+ 4fb4d7f45d1cf-6a4032b5d70mr9966061a12.8.1787230123846; 
+ Thu, 20 Aug 2026 05:48:43 -0700 (PDT)
 Received: from DE-PF5B95TD.embedded.cmblu.dev ([87.129.199.250])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a3ff1563c5sm2270449a12.14.2026.08.20.05.48.40
+ 4fb4d7f45d1cf-6a3ff1563c5sm2270449a12.14.2026.08.20.05.48.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 05:48:40 -0700 (PDT)
+ Thu, 20 Aug 2026 05:48:43 -0700 (PDT)
 From: Wadim Mueller <wafgo01@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Bin Meng <bmeng.cn@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Wadim Mueller <wafgo01@gmail.com>
-Subject: [RFC PATCH v2 10/14] hw/misc: add TI DMSC (TI-SCI system controller)
- model
-Date: Thu, 20 Aug 2026 14:48:10 +0200
-Message-ID: <20260820124824.618671-11-wafgo01@gmail.com>
+Subject: [RFC PATCH v2 13/14] hw/arm: add the am64-virt machine
+Date: Thu, 20 Aug 2026 14:48:13 +0200
+Message-ID: <20260820124824.618671-14-wafgo01@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260820124824.618671-1-wafgo01@gmail.com>
 References: <20260820124824.618671-1-wafgo01@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=wafgo01@gmail.com; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=wafgo01@gmail.com; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,74 +104,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On real K3 silicon the device management and security controller runs the
-TI system firmware (SYSFW) and answers TI-SCI requests from all other
-cores. Rather than executing the vendor firmware blob, model the DMSC as a
-TI-SCI endpoint on top of the secure proxy.
+Add a board around the AM64x SoC model. Besides the SoC it wires up a
+PL011 pair, a PL031 RTC, PL061 GPIO, CFI flash, a GPEX PCIe host bridge
+and an SD card, so that it is usable both for direct kernel boot and for
+running the full TI boot chain from a .wic image via -bios.
 
-Implemented message classes:
-
- - version and firmware capability queries
- - device state, device reset and clock management (set/get state,
-   get/set frequency, query frequency, clock parents)
- - processor boot control: request/release, set config, set control,
-   boot vector capture, wait_proc_boot_status and handover, which is what
-   actually starts the A53 and M4F cores
- - firewall configuration and SA2UL/secure-revision queries needed by
-   TF-A and OP-TEE
- - system reset
-
-Unknown messages are NAKed and traced, which keeps guests that probe for
-optional features working.
+A generated device tree matching the machine is added under pc-bios/dtb
+for convenience, together with documentation and a MAINTAINERS entry.
 
 Signed-off-by: Wadim Mueller <wafgo01@gmail.com>
 ---
- hw/misc/Kconfig           |    3 +
- hw/misc/meson.build       |    1 +
- hw/misc/ti-dmsc.c         | 1725 +++++++++++++++++++++++++++++++++++++
- hw/misc/trace-events      |   32 +
- include/hw/misc/ti-dmsc.h |  661 ++++++++++++++
- 5 files changed, 2422 insertions(+)
- create mode 100644 hw/misc/ti-dmsc.c
- create mode 100644 include/hw/misc/ti-dmsc.h
+ MAINTAINERS                |  22 +++
+ docs/system/arm/am64.rst   |  74 ++++++++
+ docs/system/target-arm.rst |   1 +
+ hw/arm/Kconfig             |   9 +
+ hw/arm/am64-virt.c         | 347 +++++++++++++++++++++++++++++++++++++
+ hw/arm/meson.build         |   1 +
+ pc-bios/dtb/am64-virt.dtb  | Bin 0 -> 6116 bytes
+ pc-bios/dtb/am64-virt.dts  | 292 +++++++++++++++++++++++++++++++
+ 8 files changed, 746 insertions(+)
+ create mode 100644 docs/system/arm/am64.rst
+ create mode 100644 hw/arm/am64-virt.c
+ create mode 100644 pc-bios/dtb/am64-virt.dtb
+ create mode 100644 pc-bios/dtb/am64-virt.dts
 
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index bea8e9341f..ebdbda1962 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -143,6 +143,9 @@ config MPS2_SCC
-     bool
-     select LED
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b51f5c3e60..dd0a3ee66a 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1266,6 +1266,28 @@ F: hw/arm/msf2-som.c
+ F: docs/system/arm/emcraft-sf2.rst
+ F: tests/functional/arm/test_emcraft_sf2.py
  
-+config TI_DMSC
-+    bool
++TI AM64x / K3
++M: Wadim Mueller <wafgo01@gmail.com>
++L: qemu-arm@nongnu.org
++S: Maintained
++F: hw/arm/am64-virt.c
++F: hw/arm/ti-am64x.c
++F: hw/arm/k3-bootrom*.c
++F: hw/char/ti-am64-uart.c
++F: hw/misc/ti-*.c
++F: hw/timer/ti-k3-dmtimer.c
++F: include/hw/arm/ti-am64x.h
++F: include/hw/arm/k3-bootrom.h
++F: include/hw/char/ti-am64-uart.h
++F: include/hw/misc/ti-*.h
++F: include/hw/timer/ti-k3-dmtimer.h
++F: pc-bios/dtb/am64-virt.dt[sb]
++F: tests/functional/aarch64/test_am64_bootrom.py
++F: tests/qtest/am64-*.c
++F: tests/qtest/ti-am64-i2c-test.c
++F: tests/unit/test-k3-bootrom.c
++F: docs/system/arm/am64.rst
 +
- config TI_RAT
-     bool
- 
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index a8a40ea2a7..124d55502d 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -123,6 +123,7 @@ system_ss.add(when: 'CONFIG_STM32L4X5_RCC', if_true: files('stm32l4x5_rcc.c'))
- system_ss.add(when: 'CONFIG_MPS2_FPGAIO', if_true: files('mps2-fpgaio.c'))
- system_ss.add(when: 'CONFIG_MPS2_SCC', if_true: files('mps2-scc.c'))
- 
-+system_ss.add(when: 'CONFIG_TI_DMSC', if_true: files('ti-dmsc.c'))
- system_ss.add(when: 'CONFIG_TI_RAT', if_true: files('ti-rat.c'))
- system_ss.add(when: 'CONFIG_TI_K3_CTRLMMR', if_true: files('ti-k3-ctrlmmr.c'))
- system_ss.add(when: 'CONFIG_TI_K3_GTC', if_true: files('ti-k3-gtc.c'))
-diff --git a/hw/misc/ti-dmsc.c b/hw/misc/ti-dmsc.c
+ ASPEED BMCs
+ M: Cédric Le Goater <clg@kaod.org>
+ M: Peter Maydell <peter.maydell@linaro.org>
+diff --git a/docs/system/arm/am64.rst b/docs/system/arm/am64.rst
 new file mode 100644
-index 0000000000..3b5b32830e
+index 0000000000..cc2483b839
 --- /dev/null
-+++ b/hw/misc/ti-dmsc.c
-@@ -0,0 +1,1725 @@
++++ b/docs/system/arm/am64.rst
+@@ -0,0 +1,74 @@
++.. SPDX-License-Identifier: GPL-2.0-or-later
++.. Copyright (c) 2026 CMBLU Energy AG
++
++Texas Instruments AM64x (``am64-virt``)
++======================================
++
++The ``am64-virt`` machine models a board built around the Texas Instruments
++AM64x (AM6442) Sitara SoC. The AM64x is a heterogeneous multi-core device;
++the model implements enough of it to run the stock TI boot chain
++(ROM boot -> R5 SPL -> TF-A/OP-TEE -> U-Boot -> Linux).
++
++Implemented CPU cores
++---------------------
++
++* Cortex-A53 cluster (2 cores, GICv3)
++* Cortex-R5F ``MCU_R5FSS0_CORE0`` boot core
++* Cortex-M4F ``MCU_M4FSS0_CORE0``
++
++Only one R5F core is modelled today; ``max_cpus`` reserves room for the
++remaining R5F cores of both clusters.
++
++Implemented devices
++-------------------
++
++* GICv3 (GIC-500) at the real AM64x addresses
++* MCU and MAIN domain UARTs (8250-compatible)
++* TI mailbox (IPC) blocks
++* TI secure proxy and the DMSC (TI-SCI system controller firmware) model
++* RAT (region address translation) for the R5F/M4F views of the memory map
++* CTRL_MMR (including the DEVSTAT boot pins), GTC, DDRSS, SDHCI PHY and TRNG
++* K3 DMTimer
++* SDHCI controllers (MMC1/eMMC and MMC2/SD)
++* OMAP-style MAIN I2C0 (no slaves; attach them with -device)
++* OCSRAM, DDR and a small set of virtio/PCIe/PL011/PL031/PL061 conveniences
++
++Boot modes
++----------
++
++Direct kernel boot::
++
++  qemu-system-aarch64 -M am64-virt -nographic \
++      -kernel Image -append "console=ttyAMA0" \
++      -dtb pc-bios/dtb/am64-virt.dtb
++
++ROM boot from a TI combined boot image (``tiboot3.bin``). The image is parsed
++the way the on-chip boot ROM does (X.509 certificate with the TI boot
++extension, followed by the individual components), the SYSFW component is
++handed to the DMSC model and the R5 SPL is started at the certified entry
++point::
++
++  qemu-system-aarch64 -M am64-virt -nographic \
++      -bios tiboot3.bin \
++      -drive if=sd,format=raw,file=core-image.wic
++
++Boot only the M4F core::
++
++  qemu-system-aarch64 -M am64-virt -M m4boot-cpu=0 -kernel m4-firmware.elf
++
++Machine options
++---------------
++
++``m4boot-cpu``
++  Set to ``0`` to hold the A53 and R5F cores in reset and boot only the M4F
++  core. Mutually exclusive with ``-bios``.
++
++Caveats
++-------
++
++Migration is not supported: the new device models have no VMState yet.
++
++Because the SoC realizes M4F and R5F vCPUs in addition to the A53s, every
++core needs a TCG context slot inside ``smp.max_cpus``. The machine therefore
++defaults to the full vCPU budget; if you pass ``-smp`` explicitly you must
++size ``maxcpus`` accordingly, for example ``-smp cpus=2,maxcpus=7``.
+diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
+index e34492402f..2fd41111e4 100644
+--- a/docs/system/target-arm.rst
++++ b/docs/system/target-arm.rst
+@@ -71,6 +71,7 @@ Board-specific documentation
+ .. toctree::
+    :maxdepth: 1
+ 
++   arm/am64
+    arm/max78000
+    arm/integratorcp
+    arm/mps2
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 2172fc803b..3802170287 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -38,6 +38,15 @@ config ARM_VIRT
+     select ACPI_HMAT
+     select WDT_SBSA
+ 
++config AM64_VIRT
++    bool
++    default y
++    depends on TCG && ARM
++    select AT24C  # I2C EEPROMs can be attached with -device
++    select TI_AM64X
++    select TI_DMSC
++    select TI_SEC_PROXY
++
+ config CUBIEBOARD
+     bool
+     default y
+diff --git a/hw/arm/am64-virt.c b/hw/arm/am64-virt.c
+new file mode 100644
+index 0000000000..e78c73a347
+--- /dev/null
++++ b/hw/arm/am64-virt.c
+@@ -0,0 +1,347 @@
 +/*
-+ * TI DMSC emulator (minimal TISCI service) as QOM device
-+ *
-+ * This is used together with a TI SEC_PROXY model. The SEC_PROXY stays the
-+ * transport/queue/data-window part, this device handles SYSFW/TISCI logic.
++ * AM64 virt machine model
 + *
 + * Copyright (c) 2026 CMBLU Energy AG
 + * Author: Wadim Mueller <wafgo01@gmail.com>
@@ -178,2429 +288,709 @@ index 0000000000..3b5b32830e
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
++
 +#include "qemu/osdep.h"
-+#include "qemu/log.h"
 +#include "qapi/error.h"
++#include "hw/core/boards.h"
++#include "hw/core/sysbus.h"
++#include "hw/arm/boot.h"
++#include "hw/arm/machines-qom.h"
++#include "hw/char/pl011.h"
++#include "hw/block/flash.h"
++#include "hw/rtc/pl031.h"
 +#include "hw/core/qdev-properties.h"
-+#include "hw/core/qdev.h"
-+#include "hw/core/resettable.h"
-+#include "system/reset.h"
-+#include "system/runstate.h"
-+#include "target/arm/arm-powerctl.h"
-+#include "qemu/main-loop.h"
-+#include "hw/misc/ti-dmsc.h"
-+#include "trace.h"
++#include "hw/pci-host/gpex.h"
++#include "hw/pci/pci.h"
++#include "hw/arm/ti-am64x.h"
++#include "hw/arm/k3-bootrom.h"
++#include "hw/core/qdev-clock.h"
++#include "hw/sd/sd.h"
++#include "system/address-spaces.h"
++#include "system/system.h"
++#include "system/blockdev.h"
++#include "qemu/error-report.h"
++#include "chardev/char.h"
++#include "qemu/units.h"
++#include "qemu/datadir.h"
++#include "qapi/visitor.h"
 +
-+/*
-+ * Responses, which go through sec-proxy, have one word less payload than the
-+ * slot size: word 0 is reserved by ti_sec_proxy_push_msg().
-+ * TI_DMSC_MAX_WORDS is the TISCI request limit, not transport capacity.
-+ */
-+#define TI_DMSC_SEC_PROXY_PAYLOAD_MAX \
-+    ((SEC_PROXY_MSG_MAX_WORDS - 1) * sizeof(uint32_t))
++#define AM64_VIRT_DRAM_BASE 0x80000000ULL
++#define AM64_VIRT_UART0_BASE 0x09000000ULL
++#define AM64_VIRT_UART1_BASE 0x09040000ULL
++#define AM64_VIRT_UART0_IRQ 1
++#define AM64_VIRT_UART1_IRQ 8
++#define AM64_VIRT_RTC_BASE 0x09010000ULL
++#define AM64_VIRT_RTC_IRQ 2
++#define AM64_VIRT_GPIO_BASE 0x09030000ULL
++#define AM64_VIRT_GPIO_IRQ 7
++#define AM64_VIRT_FLASH_BASE 0x050000000ULL
++#define AM64_VIRT_FLASH_SIZE 0x08000000ULL
++#define AM64_VIRT_FLASH_SECTOR_SIZE (256 * KiB)
++#define AM64_VIRT_PCIE_MMIO_BASE 0x68000000ULL
++#define AM64_VIRT_PCIE_MMIO_SIZE 0x08000000ULL
++#define AM64_VIRT_PCIE_PIO_BASE 0x3EFF0000ULL
++#define AM64_VIRT_PCIE_PIO_SIZE 0x00010000ULL
++#define AM64_VIRT_PCIE_ECAM_BASE 0x0D000000ULL
++#define AM64_VIRT_PCIE_ECAM_SIZE 0x02000000ULL
++#define AM64_VIRT_PCIE_IRQ_BASE 3
 +
-+static const char *ti_dmsc_proc_name_from_id(uint32_t proc_id)
++#define SYSCLK_FRQ 168000000ULL
++
++typedef struct AM64VirtMachineState {
++    MachineState parent_obj;
++    TIAM64xState *soc;
++    struct arm_boot_info bootinfo;
++    int32_t m4boot_cpu;
++} AM64VirtMachineState;
++
++#define TYPE_AM64_VIRT_MACHINE MACHINE_TYPE_NAME("am64-virt")
++OBJECT_DECLARE_SIMPLE_TYPE(AM64VirtMachineState, AM64_VIRT_MACHINE)
++
++static void am64_virt_get_m4boot_cpu(Object *obj, Visitor *v,
++                                     const char *name, void *opaque,
++                                     Error **errp)
 +{
-+    switch (proc_id) {
-+    case SCICLIENT_PROCID_A53_CL0_C0:
-+        return "A53_CL0_C0";
-+    case SCICLIENT_PROCID_A53_CL0_C1:
-+        return "A53_CL0_C1";
++    AM64VirtMachineState *ams = AM64_VIRT_MACHINE(obj);
++    int32_t value = ams->m4boot_cpu;
 +
-+    case SCICLIENT_PROCID_R5_CL0_C0:
-+        return "R5_CL0_C0";
-+    case SCICLIENT_PROCID_R5_CL0_C1:
-+        return "R5_CL0_C1";
-+    case SCICLIENT_PROCID_R5_CL1_C0:
-+        return "R5_CL1_C0";
-+    case SCICLIENT_PROCID_R5_CL1_C1:
-+        return "R5_CL1_C1";
-+
-+    case SCICLIENT_PROCID_MCU_M4FSS0_C0:
-+        return "MCU_M4FSS0_C0";
-+
-+    default:
-+        return "UNKNOWN_PROC";
-+    }
++    visit_type_int32(v, name, &value, errp);
 +}
 +
-+static const char *ti_dmsc_host_name_from_id(uint32_t host_id)
++static void am64_virt_set_m4boot_cpu(Object *obj, Visitor *v,
++                                     const char *name, void *opaque,
++                                     Error **errp)
 +{
-+    switch (host_id) {
-+    case TISCI_HOST_ID_DMSC:
-+        return "DMSC";
++    AM64VirtMachineState *ams = AM64_VIRT_MACHINE(obj);
++    int32_t value;
 +
-+    case TISCI_HOST_ID_MAIN_0_R5_0:
-+        return "MAIN_0_R5_0";
-+    case TISCI_HOST_ID_MAIN_0_R5_1:
-+        return "MAIN_0_R5_1";
-+    case TISCI_HOST_ID_MAIN_0_R5_2:
-+        return "MAIN_0_R5_2";
-+    case TISCI_HOST_ID_MAIN_0_R5_3:
-+        return "MAIN_0_R5_3";
-+
-+    case TISCI_HOST_ID_A53_0:
-+        return "A53_0";
-+    case TISCI_HOST_ID_A53_1:
-+        return "A53_1";
-+    case TISCI_HOST_ID_A53_2:
-+        return "A53_2";
-+    case TISCI_HOST_ID_A53_3:
-+        return "A53_3";
-+    case TISCI_HOST_ID_A53_4:
-+        return "A53_4";
-+
-+    case TISCI_HOST_ID_M4_0:
-+        return "M4_0";
-+
-+    case TISCI_HOST_ID_MAIN_1_R5_0:
-+        return "MAIN_1_R5_0";
-+    case TISCI_HOST_ID_MAIN_1_R5_1:
-+        return "MAIN_1_R5_1";
-+    case TISCI_HOST_ID_MAIN_1_R5_2:
-+        return "MAIN_1_R5_2";
-+    case TISCI_HOST_ID_MAIN_1_R5_3:
-+        return "MAIN_1_R5_3";
-+
-+    case TISCI_HOST_ID_ICSSG_0:
-+        return "ICSSG_0";
-+    case TISCI_HOST_ID_ICSSG_1:
-+        return "ICSSG_1";
-+
-+    default:
-+        return "UNKNOWN_HOST";
++    if (!visit_type_int32(v, name, &value, errp)) {
++        return;
 +    }
++    if (value != -1 && value != 0) {
++        error_setg(errp, "am64-virt: m4boot_cpu must be -1 or 0");
++        return;
++    }
++    ams->m4boot_cpu = value;
 +}
 +
-+static const char *ti_dmsc_device_state_to_str(uint8_t state)
++static void am64_virt_machine_instance_init(Object *obj)
 +{
-+    switch (state) {
-+    case TISCI_MSG_VALUE_DEVICE_SW_STATE_AUTO_OFF:
-+        return "AUTO";
-+    case TISCI_MSG_VALUE_DEVICE_SW_STATE_RETENTION:
-+        return "RETENTION";
-+    case TISCI_MSG_VALUE_DEVICE_SW_STATE_ON:
-+        return "ON";
-+    default:
-+        return "UNKNOWN_STATE";
-+    }
++    AM64VirtMachineState *ams = AM64_VIRT_MACHINE(obj);
++
++    ams->m4boot_cpu = -1;
++    object_property_add_alias(obj, "m4boot_cpu", obj, "m4boot-cpu");
 +}
 +
-+static const char *ti_dmsc_device_name_from_id(uint32_t dev_id)
++static void am64_virt_create_uart(hwaddr base, int irq, Chardev *chr,
++                                  DeviceState *gic)
 +{
-+    switch (dev_id) {
-+    case TISCI_DEV_ADC0:
-+        return "ADC0";
-+    case TISCI_DEV_CMP_EVENT_INTROUTER0:
-+        return "CMP_EVENT_INTROUTER0";
-+    case TISCI_DEV_DBGSUSPENDROUTER0:
-+        return "DBGSUSPENDROUTER0";
-+    case TISCI_DEV_MAIN_GPIOMUX_INTROUTER0:
-+        return "MAIN_GPIOMUX_INTROUTER0";
-+    case TISCI_DEV_MCU_MCU_GPIOMUX_INTROUTER0:
-+        return "MCU_MCU_GPIOMUX_INTROUTER0";
-+    case TISCI_DEV_TIMESYNC_EVENT_INTROUTER0:
-+        return "TIMESYNC_EVENT_INTROUTER0";
-+    case TISCI_DEV_MCU_M4FSS0:
-+        return "MCU_M4FSS0";
-+    case TISCI_DEV_MCU_M4FSS0_CBASS_0:
-+        return "MCU_M4FSS0_CBASS_0";
-+    case TISCI_DEV_MCU_M4FSS0_CORE0:
-+        return "MCU_M4FSS0_CORE0";
-+    case TISCI_DEV_CPSW0:
-+        return "CPSW0";
-+    case TISCI_DEV_CPT2_AGGR0:
-+        return "CPT2_AGGR0";
-+    case TISCI_DEV_STM0:
-+        return "STM0";
-+    case TISCI_DEV_DCC0:
-+        return "DCC0";
-+    case TISCI_DEV_DCC1:
-+        return "DCC1";
-+    case TISCI_DEV_DCC2:
-+        return "DCC2";
-+    case TISCI_DEV_DCC3:
-+        return "DCC3";
-+    case TISCI_DEV_DCC4:
-+        return "DCC4";
-+    case TISCI_DEV_DCC5:
-+        return "DCC5";
-+    case TISCI_DEV_DMSC0:
-+        return "DMSC0";
-+    case TISCI_DEV_MCU_DCC0:
-+        return "MCU_DCC0";
-+    case TISCI_DEV_DEBUGSS_WRAP0:
-+        return "DEBUGSS_WRAP0";
-+    case TISCI_DEV_DMASS0:
-+        return "DMASS0";
-+    case TISCI_DEV_DMASS0_BCDMA_0:
-+        return "DMASS0_BCDMA_0";
-+    case TISCI_DEV_DMASS0_CBASS_0:
-+        return "DMASS0_CBASS_0";
-+    case TISCI_DEV_DMASS0_INTAGGR_0:
-+        return "DMASS0_INTAGGR_0";
-+    case TISCI_DEV_DMASS0_IPCSS_0:
-+        return "DMASS0_IPCSS_0";
-+    case TISCI_DEV_DMASS0_PKTDMA_0:
-+        return "DMASS0_PKTDMA_0";
-+    case TISCI_DEV_DMASS0_RINGACC_0:
-+        return "DMASS0_RINGACC_0";
-+    case TISCI_DEV_MCU_TIMER0:
-+        return "MCU_TIMER0";
-+    case TISCI_DEV_TIMER0:
-+        return "TIMER0";
-+    case TISCI_DEV_TIMER1:
-+        return "TIMER1";
-+    case TISCI_DEV_TIMER2:
-+        return "TIMER2";
-+    case TISCI_DEV_TIMER3:
-+        return "TIMER3";
-+    case TISCI_DEV_TIMER4:
-+        return "TIMER4";
-+    case TISCI_DEV_TIMER5:
-+        return "TIMER5";
-+    case TISCI_DEV_TIMER6:
-+        return "TIMER6";
-+    case TISCI_DEV_TIMER7:
-+        return "TIMER7";
-+    case TISCI_DEV_TIMER8:
-+        return "TIMER8";
-+    case TISCI_DEV_TIMER9:
-+        return "TIMER9";
-+    case TISCI_DEV_TIMER10:
-+        return "TIMER10";
-+    case TISCI_DEV_TIMER11:
-+        return "TIMER11";
-+    case TISCI_DEV_MCU_TIMER1:
-+        return "MCU_TIMER1";
-+    case TISCI_DEV_MCU_TIMER2:
-+        return "MCU_TIMER2";
-+    case TISCI_DEV_MCU_TIMER3:
-+        return "MCU_TIMER3";
-+    case TISCI_DEV_ECAP0:
-+        return "ECAP0";
-+    case TISCI_DEV_ECAP1:
-+        return "ECAP1";
-+    case TISCI_DEV_ECAP2:
-+        return "ECAP2";
-+    case TISCI_DEV_ELM0:
-+        return "ELM0";
-+    case TISCI_DEV_EMIF_DATA_0_VD:
-+        return "EMIF_DATA_0_VD";
-+    case TISCI_DEV_MMCSD0:
-+        return "MMCSD0";
-+    case TISCI_DEV_MMCSD1:
-+        return "MMCSD1";
-+    case TISCI_DEV_EQEP0:
-+        return "EQEP0";
-+    case TISCI_DEV_EQEP1:
-+        return "EQEP1";
-+    case TISCI_DEV_GTC0:
-+        return "GTC0";
-+    case TISCI_DEV_EQEP2:
-+        return "EQEP2";
-+    case TISCI_DEV_ESM0:
-+        return "ESM0";
-+    case TISCI_DEV_MCU_ESM0:
-+        return "MCU_ESM0";
-+    case TISCI_DEV_FSIRX0:
-+        return "FSIRX0";
-+    case TISCI_DEV_FSIRX1:
-+        return "FSIRX1";
-+    case TISCI_DEV_FSIRX2:
-+        return "FSIRX2";
-+    case TISCI_DEV_FSIRX3:
-+        return "FSIRX3";
-+    case TISCI_DEV_FSIRX4:
-+        return "FSIRX4";
-+    case TISCI_DEV_FSIRX5:
-+        return "FSIRX5";
-+    case TISCI_DEV_FSITX0:
-+        return "FSITX0";
-+    case TISCI_DEV_FSITX1:
-+        return "FSITX1";
-+    case TISCI_DEV_FSS0:
-+        return "FSS0";
-+    case TISCI_DEV_FSS0_FSAS_0:
-+        return "FSS0_FSAS_0";
-+    case TISCI_DEV_FSS0_OSPI_0:
-+        return "FSS0_OSPI_0";
-+    case TISCI_DEV_GICSS0:
-+        return "GICSS0";
-+    case TISCI_DEV_GPIO0:
-+        return "GPIO0";
-+    case TISCI_DEV_GPIO1:
-+        return "GPIO1";
-+    case TISCI_DEV_MCU_GPIO0:
-+        return "MCU_GPIO0";
-+    case TISCI_DEV_GPMC0:
-+        return "GPMC0";
-+    case TISCI_DEV_PRU_ICSSG0:
-+        return "PRU_ICSSG0";
-+    case TISCI_DEV_PRU_ICSSG1:
-+        return "PRU_ICSSG1";
-+    case TISCI_DEV_LED0:
-+        return "LED0";
-+    case TISCI_DEV_CPTS0:
-+        return "CPTS0";
-+    case TISCI_DEV_DDPA0:
-+        return "DDPA0";
-+    case TISCI_DEV_EPWM0:
-+        return "EPWM0";
-+    case TISCI_DEV_EPWM1:
-+        return "EPWM1";
-+    case TISCI_DEV_EPWM2:
-+        return "EPWM2";
-+    case TISCI_DEV_EPWM3:
-+        return "EPWM3";
-+    case TISCI_DEV_EPWM4:
-+        return "EPWM4";
-+    case TISCI_DEV_EPWM5:
-+        return "EPWM5";
-+    case TISCI_DEV_EPWM6:
-+        return "EPWM6";
-+    case TISCI_DEV_EPWM7:
-+        return "EPWM7";
-+    case TISCI_DEV_EPWM8:
-+        return "EPWM8";
-+    case TISCI_DEV_VTM0:
-+        return "VTM0";
-+    case TISCI_DEV_MAILBOX0:
-+        return "MAILBOX0";
-+    case TISCI_DEV_MAIN2MCU_VD:
-+        return "MAIN2MCU_VD";
-+    case TISCI_DEV_MCAN0:
-+        return "MCAN0";
-+    case TISCI_DEV_MCAN1:
-+        return "MCAN1";
-+    case TISCI_DEV_MCU_MCRC64_0:
-+        return "MCU_MCRC64_0";
-+    case TISCI_DEV_MCU2MAIN_VD:
-+        return "MCU2MAIN_VD";
-+    case TISCI_DEV_I2C0:
-+        return "I2C0";
-+    case TISCI_DEV_I2C1:
-+        return "I2C1";
-+    case TISCI_DEV_I2C2:
-+        return "I2C2";
-+    case TISCI_DEV_I2C3:
-+        return "I2C3";
-+    case TISCI_DEV_MCU_I2C0:
-+        return "MCU_I2C0";
-+    case TISCI_DEV_MCU_I2C1:
-+        return "MCU_I2C1";
-+    case TISCI_DEV_PCIE0:
-+        return "PCIE0";
-+    case TISCI_DEV_R5FSS0:
-+        return "R5FSS0";
-+    case TISCI_DEV_R5FSS1:
-+        return "R5FSS1";
-+    case TISCI_DEV_R5FSS0_CORE0:
-+        return "R5FSS0_CORE0";
-+    case TISCI_DEV_R5FSS0_CORE1:
-+        return "R5FSS0_CORE1";
-+    case TISCI_DEV_R5FSS1_CORE0:
-+        return "R5FSS1_CORE0";
-+    case TISCI_DEV_R5FSS1_CORE1:
-+        return "R5FSS1_CORE1";
-+    case TISCI_DEV_RTI0:
-+        return "RTI0";
-+    case TISCI_DEV_RTI1:
-+        return "RTI1";
-+    case TISCI_DEV_RTI8:
-+        return "RTI8";
-+    case TISCI_DEV_RTI9:
-+        return "RTI9";
-+    case TISCI_DEV_RTI10:
-+        return "RTI10";
-+    case TISCI_DEV_RTI11:
-+        return "RTI11";
-+    case TISCI_DEV_MCU_RTI0:
-+        return "MCU_RTI0";
-+    case TISCI_DEV_SA2_UL0:
-+        return "SA2_UL0";
-+    case TISCI_DEV_COMPUTE_CLUSTER0:
-+        return "COMPUTE_CLUSTER0";
-+    case TISCI_DEV_A53SS0_CORE_0:
-+        return "A53SS0_CORE_0";
-+    case TISCI_DEV_A53SS0_CORE_1:
-+        return "A53SS0_CORE_1";
-+    case TISCI_DEV_A53SS0:
-+        return "A53SS0";
-+    case TISCI_DEV_DDR16SS0:
-+        return "DDR16SS0";
-+    case TISCI_DEV_PSC0:
-+        return "PSC0";
-+    case TISCI_DEV_MCU_PSC0:
-+        return "MCU_PSC0";
-+    case TISCI_DEV_MCSPI0:
-+        return "MCSPI0";
-+    case TISCI_DEV_MCSPI1:
-+        return "MCSPI1";
-+    case TISCI_DEV_MCSPI2:
-+        return "MCSPI2";
-+    case TISCI_DEV_MCSPI3:
-+        return "MCSPI3";
-+    case TISCI_DEV_MCSPI4:
-+        return "MCSPI4";
-+    case TISCI_DEV_UART0:
-+        return "UART0";
-+    case TISCI_DEV_MCU_MCSPI0:
-+        return "MCU_MCSPI0";
-+    case TISCI_DEV_MCU_MCSPI1:
-+        return "MCU_MCSPI1";
-+    case TISCI_DEV_MCU_UART0:
-+        return "MCU_UART0";
-+    case TISCI_DEV_SPINLOCK0:
-+        return "SPINLOCK0";
-+    case TISCI_DEV_TIMERMGR0:
-+        return "TIMERMGR0";
-+    case TISCI_DEV_UART1:
-+        return "UART1";
-+    case TISCI_DEV_UART2:
-+        return "UART2";
-+    case TISCI_DEV_UART3:
-+        return "UART3";
-+    case TISCI_DEV_UART4:
-+        return "UART4";
-+    case TISCI_DEV_UART5:
-+        return "UART5";
-+    case TISCI_DEV_BOARD0:
-+        return "BOARD0";
-+    case TISCI_DEV_UART6:
-+        return "UART6";
-+    case TISCI_DEV_MCU_UART1:
-+        return "MCU_UART1";
-+    case TISCI_DEV_USB0:
-+        return "USB0";
-+    case TISCI_DEV_SERDES_10G0:
-+        return "SERDES_10G0";
-+    case TISCI_DEV_PBIST0:
-+        return "PBIST0";
-+    case TISCI_DEV_PBIST1:
-+        return "PBIST1";
-+    case TISCI_DEV_PBIST2:
-+        return "PBIST2";
-+    case TISCI_DEV_PBIST3:
-+        return "PBIST3";
-+    case TISCI_DEV_COMPUTE_CLUSTER0_PBIST_0:
-+        return "COMPUTE_CLUSTER0_PBIST_0";
-+    default:
-+        return "UNKNOWN";
-+    }
++    DeviceState *dev = qdev_new(TYPE_PL011);
++    SysBusDevice *s = SYS_BUS_DEVICE(dev);
++    MemoryRegion *sysmem = get_system_memory();
++
++    qdev_prop_set_chr(dev, "chardev", chr);
++    sysbus_realize_and_unref(s, &error_fatal);
++    memory_region_add_subregion(sysmem, base, sysbus_mmio_get_region(s, 0));
++    sysbus_connect_irq(s, 0, qdev_get_gpio_in(gic, irq));
 +}
 +
-+static void ti_dmsc_init_device_states(TIDmscState *s)
++static void am64_virt_create_pcie(const AM64VirtMachineState *ams,
++                                  DeviceState *gic)
 +{
-+    for (size_t i = 0; i < TISCI_DEV_ID_MAX; i++) {
-+        s->dev_hw_state[i] = TISCI_MSG_VALUE_DEVICE_HW_STATE_ON;
-+        s->dev_prog_state[i] = TISCI_MSG_VALUE_DEVICE_HW_STATE_ON;
++    DeviceState *dev = qdev_new(TYPE_GPEX_HOST);
++    PCIHostState *pci;
++    MemoryRegion *mmio_alias;
++    MemoryRegion *ecam_alias;
++    MemoryRegion *mmio_reg;
++    MemoryRegion *ecam_reg;
++    int i;
++
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++
++    ecam_alias = g_new0(MemoryRegion, 1);
++    ecam_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
++    memory_region_init_alias(ecam_alias, OBJECT(dev), "pcie-ecam",
++                             ecam_reg, 0, AM64_VIRT_PCIE_ECAM_SIZE);
++    memory_region_add_subregion(get_system_memory(),
++                                AM64_VIRT_PCIE_ECAM_BASE, ecam_alias);
++
++    mmio_alias = g_new0(MemoryRegion, 1);
++    mmio_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
++    memory_region_init_alias(mmio_alias, OBJECT(dev), "pcie-mmio",
++                             mmio_reg, AM64_VIRT_PCIE_MMIO_BASE,
++                             AM64_VIRT_PCIE_MMIO_SIZE);
++    memory_region_add_subregion(get_system_memory(),
++                                AM64_VIRT_PCIE_MMIO_BASE, mmio_alias);
++
++    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 2, AM64_VIRT_PCIE_PIO_BASE);
++
++    for (i = 0; i < PCI_NUM_PINS; i++) {
++        sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
++                           qdev_get_gpio_in(gic,
++                                            AM64_VIRT_PCIE_IRQ_BASE + i));
++        gpex_set_irq_num(GPEX_HOST(dev), i, AM64_VIRT_PCIE_IRQ_BASE + i);
 +    }
 +
-+    s->dev_hw_state[TISCI_DEV_MCU_M4FSS0_CORE0] =
-+        TISCI_MSG_VALUE_DEVICE_HW_STATE_OFF;
-+    s->dev_prog_state[TISCI_DEV_MCU_M4FSS0_CORE0] =
-+        TISCI_MSG_VALUE_DEVICE_HW_STATE_OFF;
-+    s->m4_running = false;
-+    memset(s->proc_bootvector, 0, sizeof(s->proc_bootvector));
++    pci = PCI_HOST_BRIDGE(dev);
++    pci_init_nic_devices(pci->bus, MACHINE_GET_CLASS(ams)->default_nic);
 +}
 +
-+static const char *ti_dmsc_message_name_from_id(uint16_t msg_id)
++static void am64_virt_create_rtc(hwaddr base, int irq, DeviceState *gic)
 +{
-+    switch (msg_id) {
-+    case TISCI_MSG_GET_DEVICE:
-+        return "GET_DEVICE";
-+    case TISCI_MSG_SET_DEVICE:
-+        return "SET_DEVICE";
-+    case TISCI_MSG_SET_DEVICE_RESETS:
-+        return "SET_DEVICE_RESETS";
-+    case TISCI_MSG_DEVICE_DROP_POWERUP_REF:
-+        return "DEVICE_DROP_POWERUP_REF";
-+    case TISCI_MSG_PREPARE_SLEEP:
-+        return "PREPARE_SLEEP";
-+    case TISCI_MSG_ENTER_SLEEP:
-+        return "ENTER_SLEEP";
-+    case TISCI_MSG_VERSION:
-+        return "VERSION";
-+    case TISCI_MSG_BOOT_NOTIFICATION:
-+        return "BOOT_NOTIFICATION";
-+    case TISCI_MSG_BOARD_CONFIG:
-+        return "BOARD_CONFIG";
-+    case TISCI_MSG_BOARD_CONFIG_RM:
-+        return "BOARD_CONFIG_RM";
-+    case TISCI_MSG_BOARD_CONFIG_SECURITY:
-+        return "BOARD_CONFIG_SECURITY";
-+    case TISCI_MSG_BOARD_CONFIG_PM:
-+        return "BOARD_CONFIG_PM";
-+    case TISCI_MSG_ENABLE_WDT:
-+        return "ENABLE_WDT";
-+    case TISCI_MSG_WAKE_RESET:
-+        return "WAKE_RESET";
-+    case TISCI_MSG_WAKE_REASON:
-+        return "WAKE_REASON";
-+    case TISCI_MSG_GOODBYE:
-+        return "GOODBYE";
-+    case TISCI_MSG_SYS_RESET:
-+        return "SYS_RESET";
-+    case TISCI_MSG_QUERY_MSMC:
-+        return "QUERY_MSMC";
-+    case TISCI_MSG_GET_TRACE_CONFIG:
-+        return "GET_TRACE_CONFIG";
-+    case TISCI_MSG_QUERY_FW_CAPS:
-+        return "QUERY_FW_CAPS";
-+    case TISCI_MSG_SET_CLOCK:
-+        return "SET_CLOCK";
-+    case TISCI_MSG_GET_CLOCK:
-+        return "GET_CLOCK";
-+    case TISCI_MSG_SET_CLOCK_PARENT:
-+        return "SET_CLOCK_PARENT";
-+    case TISCI_MSG_GET_CLOCK_PARENT:
-+        return "GET_CLOCK_PARENT";
-+    case TISCI_MSG_GET_NUM_CLOCK_PARENTS:
-+        return "GET_NUM_CLOCK_PARENTS";
-+    case TISCI_MSG_SET_FREQ:
-+        return "SET_FREQ";
-+    case TISCI_MSG_QUERY_FREQ:
-+        return "QUERY_FREQ";
-+    case TISCI_MSG_GET_FREQ:
-+        return "GET_FREQ";
-+    case TISCI_MSG_PROC_REQUEST:
-+        return "PROC_REQUEST";
-+    case TISCI_MSG_PROC_RELEASE:
-+        return "PROC_RELEASE";
-+    case TISCI_MSG_PROC_HANDOVER:
-+        return "PROC_HANDOVER";
-+    case TISCI_MSG_SET_CONFIG:
-+        return "SET_CONFIG";
-+    case TISCI_MSG_SET_CTRL:
-+        return "SET_CTRL";
-+    case TISCI_MSG_GET_STATUS:
-+        return "GET_STATUS";
-+    case TISCI_MSG_WAIT_PROC_BOOT_STATUS:
-+        return "WAIT_PROC_BOOT_STATUS";
-+    case TISCI_MSG_FWL_SET:
-+        return "FWL_SET";
-+    case TISCI_MSG_FWL_GET:
-+        return "FWL_GET";
-+    case TISCI_MSG_FWL_CHANGE_OWNER:
-+        return "FWL_CHANGE_OWNER";
-+    case TISCI_MSG_SA2UL_GET_DKEK:
-+        return "SA2UL_GET_DKEK";
-+    case TISCI_MSG_READ_SWREV:
-+        return "READ_SWREV";
-+    case TISCI_MSG_READ_KEYCNT_KEYREV:
-+        return "READ_KEYCNT_KEYREV";
-+    default:
-+        return "UNKNOWN";
-+    }
++    sysbus_create_simple(TYPE_PL031, base, qdev_get_gpio_in(gic, irq));
 +}
 +
-+/*
-+ * The DMSC has no MMIO. Sec-proxy calls us, when a client commits the last
-+ * word of a request data window.
-+ */
-+static void ti_dmsc_handle_one(TIDmscClient *client, uint16_t thread_id,
-+                               const uint32_t *words, size_t nwords);
-+
-+/*
-+ * Push a response to the client's TX thread. Secure hosts carry a 4-byte
-+ * {u16 checksum; u16 reserved} prefix before TISciMsgHdr. The checksum word
-+ * is present in the transport, but not validated by this model.
-+ *
-+ * TI_SCI_FLAG_REQ_GENERIC_NORESPONSE is handled here too. The handlers run
-+ * still for side effects, but replies are suppressed unless AOP was set.
-+ */
-+static size_t ti_dmsc_client_respond(TIDmscClient *client, const void *msg,
-+                                     size_t nbytes)
++static void am64_virt_create_gpio(hwaddr base, int irq, DeviceState *gic)
 +{
-+    TIDmscState *s = client->dmsc;
-+    const uint32_t *words = msg;
++    sysbus_create_simple("pl061", base, qdev_get_gpio_in(gic, irq));
++}
 +
-+    if (!client->cur_req_wants_resp) {
-+        return nbytes;
++static void am64_virt_create_flash(void)
++{
++    DeviceState *dev = qdev_new(TYPE_PFLASH_CFI01);
++
++    qdev_prop_set_uint32(dev, "num-blocks",
++                         AM64_VIRT_FLASH_SIZE / AM64_VIRT_FLASH_SECTOR_SIZE);
++    qdev_prop_set_uint64(dev, "sector-length", AM64_VIRT_FLASH_SECTOR_SIZE);
++    qdev_prop_set_uint8(dev, "width", 4);
++    qdev_prop_set_uint8(dev, "device-width", 2);
++    qdev_prop_set_bit(dev, "big-endian", false);
++    qdev_prop_set_uint16(dev, "id0", 0x89);
++    qdev_prop_set_uint16(dev, "id1", 0x18);
++    qdev_prop_set_uint16(dev, "id2", 0x00);
++    qdev_prop_set_uint16(dev, "id3", 0x00);
++    qdev_prop_set_string(dev, "name", "am64-virt.flash0");
++
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, AM64_VIRT_FLASH_BASE);
++}
++
++static void am64_virt_init(MachineState *machine)
++{
++    AM64VirtMachineState *ams = AM64_VIRT_MACHINE(machine);
++    DeviceState *soc = qdev_new(TYPE_TI_AM64X);
++    DeviceState *gic;
++    Clock *sysclk = clock_new(OBJECT(machine), "SYSCLK");
++    Chardev *mcu_chardev;
++    uint8_t a53_cpus = MIN(machine->smp.cpus, TI_AM64X_A53_NUM);
++    DriveInfo *sd_di = drive_get(IF_SD, 0, 0);
++
++    /*
++     * The SoC has M4 and R5F vCPUs beyond the A53s. Since TCG allocates
++     * context slots from smp.max_cpus at accelerator init, fail before realize.
++     */
++    if (machine->smp.max_cpus < a53_cpus + 2) {
++        error_report("am64-virt: -smp maxcpus=%d is too small for %d A53 "
++                     "+ M4 + R5F vCPUs; raise maxcpus (e.g. "
++                     "-smp cpus=2,maxcpus=7) or omit -smp",
++                     machine->smp.max_cpus, a53_cpus);
++        exit(1);
 +    }
 +
-+    if (client->secure) {
-+        uint32_t buf[TI_DMSC_MAX_WORDS + 1] = {0};
++    clock_set_hz(sysclk, SYSCLK_FRQ);
++    qdev_prop_set_uint8(soc, "a53-cpus", a53_cpus);
++    qdev_prop_set_uint64(soc, "ram-base", AM64_VIRT_DRAM_BASE);
++    qdev_prop_set_uint64(soc, "ram-size", machine->ram_size);
++    qdev_connect_clock_in(soc, "sysclk", sysclk);
++    mcu_chardev = qemu_chr_find("uart0");
++    if (mcu_chardev) {
++        qdev_prop_set_chr(DEVICE(&TI_AM64X(soc)->mcu_uart[0]),
++                          "chardev", mcu_chardev);
++    }
++    if (ams->m4boot_cpu >= 0) {
++        if (ams->m4boot_cpu != 0) {
++            error_report("am64-virt: m4boot_cpu only supports value 0");
++            exit(1);
++        }
++        qdev_prop_set_bit(soc, "a53-start-powered-off", true);
++        qdev_prop_set_bit(soc, "m4-start-powered-off", false);
++    }
 +
++    if (machine->firmware && ams->m4boot_cpu >= 0) {
++        error_report("am64-virt: -bios and m4boot-cpu are mutually "
++                     "exclusive");
++        exit(1);
++    }
++    if (machine->firmware && machine->kernel_filename) {
 +        /*
-+         * Control the sec-proxy payload limit, not only the local scratch
-+         * buffer. The scratch buffer has the extra secure-prefix word.
++         * ROM boot consumes -bios via k3_bootrom_load() and never calls
++         * arm_load_kernel(), therefore reject a silently ignored -kernel.
 +         */
-+        if (nbytes + sizeof(uint32_t) > TI_DMSC_SEC_PROXY_PAYLOAD_MAX) {
-+            qemu_log_mask(
-+                LOG_GUEST_ERROR,
-+                "ti-dmsc: secure response too large (%zu bytes), dropping\n",
-+                nbytes);
-+            return 0;
++        error_report("am64-virt: -bios and -kernel are mutually exclusive");
++        exit(1);
++    }
++    if (machine->firmware) {
++        /* ROM boot starts only R5F boot core. */
++        qdev_prop_set_bit(soc, "a53-start-powered-off", true);
++        qdev_prop_set_bit(soc, "m4-start-powered-off", true);
++        qdev_prop_set_bit(soc, "r5-start-powered-off", false);
++        qdev_prop_set_chr(DEVICE(&TI_AM64X(soc)->main_uart0),
++                          "chardev", serial_hd(0));
++        if (sd_di) {
++            /*
++             * DEVSTAT primary bootmode MMC (0x8), SD port: describe MMC2
++             * (sdhci[1]) FS-mode boot, not MMC1 raw mode.
++             */
++            qdev_prop_set_uint32(DEVICE(&TI_AM64X(soc)->ctrlmmr), "devstat",
++                                 0x240);
 +        }
-+
-+        memcpy((uint8_t *)buf + sizeof(uint32_t), words, nbytes);
-+        return ti_sec_proxy_push_msg(s->sec_proxy, client->tx_thread_id, buf,
-+                                     nbytes + sizeof(uint32_t));
 +    }
 +
-+    if (nbytes > TI_DMSC_SEC_PROXY_PAYLOAD_MAX) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: response too large (%zu bytes), dropping\n",
-+                      nbytes);
-+        return 0;
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(soc), &error_fatal);
++    ams->soc = TI_AM64X(soc);
++    gic = DEVICE(&ams->soc->gic);
++
++    if (sd_di) {
++        DeviceState *card = qdev_new(TYPE_SD_CARD);
++
++        qdev_prop_set_drive_err(card, "drive", blk_by_legacy_dinfo(sd_di),
++                                &error_fatal);
++        qdev_realize_and_unref(card,
++                               qdev_get_child_bus(DEVICE(&ams->soc->sdhci[1]),
++                                                  "sd-bus"),
++                               &error_fatal);
 +    }
 +
-+    return ti_sec_proxy_push_msg(s->sec_proxy, client->tx_thread_id, words,
-+                                 nbytes);
++    memory_region_add_subregion(get_system_memory(), AM64_VIRT_DRAM_BASE,
++                                machine->ram);
++
++    am64_virt_create_uart(AM64_VIRT_UART0_BASE, AM64_VIRT_UART0_IRQ,
++                          machine->firmware ? serial_hd(1) : serial_hd(0),
++                          gic);
++    am64_virt_create_uart(AM64_VIRT_UART1_BASE, AM64_VIRT_UART1_IRQ,
++                          machine->firmware ? serial_hd(2) : serial_hd(1),
++                          gic);
++    am64_virt_create_rtc(AM64_VIRT_RTC_BASE, AM64_VIRT_RTC_IRQ, gic);
++    am64_virt_create_gpio(AM64_VIRT_GPIO_BASE, AM64_VIRT_GPIO_IRQ, gic);
++    am64_virt_create_flash();
++    am64_virt_create_pcie(ams, gic);
++
++    memset(&ams->bootinfo, 0, sizeof(ams->bootinfo));
++    ams->bootinfo.ram_size = machine->ram_size;
++    ams->bootinfo.loader_start = AM64_VIRT_DRAM_BASE;
++    ams->bootinfo.board_id = -1;
++    ams->bootinfo.psci_conduit = QEMU_PSCI_CONDUIT_SMC;
++    g_assert(qemu_get_cpu(0));
++    if (machine->firmware) {
++        g_autofree char *fn =
++            qemu_find_file(QEMU_FILE_TYPE_BIOS, machine->firmware);
++
++        k3_bootrom_load(ams->soc, fn ? fn : machine->firmware,
++                        &error_fatal);
++    } else if (ams->m4boot_cpu < 0) {
++        arm_load_kernel(ARM_CPU(qemu_get_cpu(0)), machine, &ams->bootinfo);
++    }
 +}
 +
-+/*
-+ * Queue TISCI_MSG_BOOT_NOTIFICATION for secure boot hosts. SYSFW sends this
-+ * unsolicited message once it is ready on the host response thread.
-+ *
-+ * Re-arm it on every reset: sec-proxy reset leaves thread slots alone. Reset
-+ * the outbound counter first, since pushes only increment it.
-+ */
-+static void ti_dmsc_send_boot_notification(TIDmscClient *client)
++static void am64_virt_machine_class_init(ObjectClass *oc, const void *data)
 +{
-+    TISciMsgHdr notif = {0};
++    MachineClass *mc = MACHINE_CLASS(oc);
 +
-+    notif.type = TISCI_MSG_BOOT_NOTIFICATION;
-+    notif.host = TISCI_HOST_ID_DMSC;
-+    notif.seq = 0;
-+    notif.flags = 0;
-+
-+    ti_sec_proxy_reset_thread_count(client->dmsc->sec_proxy,
-+                                    client->tx_thread_id);
-+
++    mc->desc = "AM64 virt machine";
++    mc->init = am64_virt_init;
++    mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a53");
++    mc->default_nic = "virtio-net-pci";
++    mc->default_ram_id = "am64-virt.ram";
 +    /*
-+     * This is unsolicited, so ignore no-response state of the previous
-+     * request and force delivery.
++     * Real AM64x has four R5F cores plus one M4 beyond the A53 cluster.
++     * Reserve max_cpus headroom for the not yet modeled R5F cores.
 +     */
-+    client->cur_req_wants_resp = true;
-+
-+    if (!ti_dmsc_client_respond(client, &notif, sizeof(notif))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push BOOT_NOTIFICATION into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+/* Bottom half: handle pending message outside of MMIO context */
-+static void ti_dmsc_bh(void *opaque)
-+{
-+    TIDmscState *s = opaque;
-+    uint32_t local_words[TI_DMSC_MAX_WORDS];
-+
-+    while (true) {
-+        TIDmscClient *client = NULL;
-+        size_t local_nwords = 0;
-+        uint16_t tid = 0;
-+
-+        qemu_mutex_lock(&s->lock);
-+        for (uint32_t i = 0; i < s->num_clients; i++) {
-+            if (s->clients[i].pending) {
-+                client = &s->clients[i];
-+                break;
-+            }
-+        }
-+        if (!client) {
-+            qemu_mutex_unlock(&s->lock);
-+            return;
-+        }
-+
-+        tid = client->rx_thread_id;
-+        local_nwords = client->pending_nwords;
-+        if (local_nwords > TI_DMSC_MAX_WORDS) {
-+            local_nwords = TI_DMSC_MAX_WORDS;
-+        }
-+        memcpy(local_words, client->pending_words,
-+               local_nwords * sizeof(uint32_t));
-+        client->pending = false;
-+        client->pending_nwords = 0;
-+        qemu_mutex_unlock(&s->lock);
-+
-+        ti_dmsc_handle_one(client, tid, local_words, local_nwords);
-+    }
-+}
-+
-+/*
-+ * Sec-proxy calls this, when a client commits a message on our RX thread.
-+ */
-+static void ti_dmsc_sec_proxy_cb(void *opaque, uint16_t thread_id,
-+                                 const uint32_t *words, size_t nwords)
-+{
-+    TIDmscClient *client = opaque;
-+    TIDmscState *s = client->dmsc;
-+
-+    if (thread_id != client->rx_thread_id) {
-+        return;
-+    }
-+
-+    qemu_mutex_lock(&s->lock);
-+    client->pending = true;
-+
-+    if (nwords > TI_DMSC_MAX_WORDS) {
-+        nwords = TI_DMSC_MAX_WORDS;
-+    }
-+    memcpy(client->pending_words, words, nwords * sizeof(uint32_t));
-+    client->pending_nwords = nwords;
-+    qemu_mutex_unlock(&s->lock);
-+
-+    qemu_bh_schedule(s->bh);
-+}
-+
-+/* Dispatch one committed TISCI message. */
-+static void ti_dmsc_handle_one(TIDmscClient *client, uint16_t thread_id,
-+                               const uint32_t *words, size_t nwords)
-+{
-+    TIDmscState *s = client->dmsc;
-+
-+    if (!s->sec_proxy) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: No sec-proxy linked, dropping message\n");
-+        return;
-+    }
-+
-+    size_t hdr_words = sizeof(TISciMsgHdr) / sizeof(uint32_t);
-+    size_t min_words = hdr_words + (client->secure ? 1 : 0);
-+
-+    if (nwords < min_words) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Short message (words=%zu), dropping\n", nwords);
-+        return;
-+    }
-+
-+    if (client->secure) {
-+        /*
-+         * Secure R5 clients prepend a checksum/reserved word before
-+         * TISciMsgHdr. Drop it before we cast payloads.
-+         */
-+        words += 1;
-+        nwords -= 1;
-+    }
-+
-+    TISciMsgHdr hdr = {0};
-+    memcpy(&hdr, words, MIN(sizeof(hdr), nwords * sizeof(uint32_t)));
-+
++    mc->max_cpus = TI_AM64X_A53_NUM + 4 + 1; /* 4 R5F cores, 1 M4 */
 +    /*
-+     * Remember AOP before dispatch. ti_dmsc_client_respond() uses it to
-+     * suppress replies for requests with TI_SCI_FLAG_REQ_GENERIC_NORESPONSE.
++     * Default to the full heterogeneous vCPU budget, so plain invocations
++     * have enough TCG slots for A53, R5F and M4 cores.
 +     */
-+    client->cur_req_wants_resp = (hdr.flags & TISCI_MSG_FLAG_AOP) != 0;
++    mc->default_cpus = mc->max_cpus;
++    mc->default_ram_size = 2 * GiB;
 +
-+    if (hdr.type < ARRAY_SIZE(s->msg_handler) && s->msg_handler[hdr.type]) {
-+        trace_dmsc_new_message_received(
-+            hdr.type, ti_dmsc_message_name_from_id(hdr.type),
-+            ti_dmsc_host_name_from_id(hdr.host), thread_id);
-+        s->msg_handler[hdr.type](client, &hdr, thread_id, words, nwords);
-+        return;
-+    } else {
-+        TISciMsgHdr resp = hdr;
-+
-+        trace_dmsc_unsupported_message(
-+            ti_dmsc_message_name_from_id(hdr.type), hdr.type,
-+            ti_dmsc_host_name_from_id(hdr.host), thread_id);
-+        qemu_log_mask(
-+            LOG_GUEST_ERROR,
-+            "ti-dmsc: No handler for message type=0x%04x (%s), dropping\n",
-+            hdr.type, ti_dmsc_message_name_from_id(hdr.type));
-+
-+        /*
-+         * Header-only NAKs unblock callers, which wait for a response,
-+         * instead of leaving them to time out.
-+         */
-+        resp.flags = 0;
-+        if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "ti-dmsc: Failed to push NAK response into sec-proxy "
-+                          "thread=%u\n",
-+                          client->tx_thread_id);
-+        }
-+    }
++    object_class_property_add(oc, "m4boot-cpu", "int32",
++                              am64_virt_get_m4boot_cpu,
++                              am64_virt_set_m4boot_cpu,
++                              NULL, NULL);
++    object_class_property_set_description(oc, "m4boot-cpu",
++                                          "Set to 0 to boot only the M4 core");
 +}
 +
-+static void ti_dmsc_reset_hold(Object *obj, ResetType type)
-+{
-+    TIDmscState *s = TI_DMSC(obj);
-+
-+    qemu_mutex_lock(&s->lock);
-+    ti_dmsc_init_device_states(s);
-+    for (uint32_t i = 0; i < s->num_clients; i++) {
-+        s->clients[i].pending = false;
-+        s->clients[i].pending_nwords = 0;
-+        memset(s->clients[i].pending_words, 0,
-+               sizeof(s->clients[i].pending_words));
-+    }
-+    /*
-+     * msg_handler contains realize-time function pointers, not guest state.
-+     * Clearing it during reset disables all TISCI handlers after the first
-+     * cold reset.
-+     */
-+    qemu_mutex_unlock(&s->lock);
-+
-+    /*
-+     * Secure clients get a fresh boot notification after every reset.
-+     */
-+    for (uint32_t i = 0; i < s->num_clients; i++) {
-+        if (s->clients[i].secure) {
-+            ti_dmsc_send_boot_notification(&s->clients[i]);
-+        }
-+    }
-+}
-+
-+static TISciMsgHdr ti_dmsc_set_resp_flags(TISciMsgHdr *req_hdr, int add_flags)
-+{
-+    TISciMsgHdr resp = *req_hdr;
-+    resp.flags =
-+        ((req_hdr->flags & TISCI_MSG_FLAG_AOP) ? TISCI_MSG_FLAG_ACK : 0) |
-+        add_flags;
-+    return resp;
-+}
-+
-+static void ti_dmsc_handle_set_clock(TIDmscClient *client, TISciMsgHdr *hdr,
-+                                     uint16_t thread_id, const uint32_t *words,
-+                                     size_t nwords)
-+{
-+    struct TisciMsgSetClockReq *req = (struct TisciMsgSetClockReq *)words;
-+    TISciMsgHdr resp = ti_dmsc_set_resp_flags(hdr, 0);
-+
-+    trace_dmsc_handle_set_clock(ti_dmsc_message_name_from_id(hdr->type),
-+                                ti_dmsc_host_name_from_id(hdr->host),
-+                                ti_dmsc_device_name_from_id(req->device),
-+                                req->clk);
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push SET_CLOCK response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+/*
-+ * SET_CLOCK_PARENT stores no clock tree state. The model only returns the
-+ * generic TISCI ACK/NAK header.
-+ */
-+static void ti_dmsc_handle_set_clock_parent(TIDmscClient *client,
-+                                            TISciMsgHdr *hdr,
-+                                            uint16_t thread_id,
-+                                            const uint32_t *words,
-+                                            size_t nwords)
-+{
-+    struct TisciMsgSetClockParentReq *req =
-+        (struct TisciMsgSetClockParentReq *)words;
-+    TISciMsgHdr resp = ti_dmsc_set_resp_flags(hdr, 0);
-+
-+    trace_dmsc_handle_set_clock_parent(ti_dmsc_message_name_from_id(hdr->type),
-+                                       ti_dmsc_host_name_from_id(hdr->host),
-+                                       ti_dmsc_device_name_from_id(req->dev_id),
-+                                       req->clk_id, req->parent_id);
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push SET_CLOCK_PARENT response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+static void ti_dmsc_handle_set_freq(TIDmscClient *client, TISciMsgHdr *hdr,
-+                                    uint16_t thread_id, const uint32_t *words,
-+                                    size_t nwords)
-+{
-+    TISciMsgHdr resp = ti_dmsc_set_resp_flags(hdr, 0);
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push SET_FREQ response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+static void ti_dmsc_handle_query_freq(TIDmscClient *client, TISciMsgHdr *hdr,
-+                                      uint16_t thread_id, const uint32_t *words,
-+                                      size_t nwords)
-+{
-+    struct TisciMsgQueryFreqReq *req = (struct TisciMsgQueryFreqReq *)words;
-+    struct TisciMsgQueryFreqResp resp = {0};
-+
-+    trace_dmsc_handle_query_freq(ti_dmsc_message_name_from_id(hdr->type),
-+                                 ti_dmsc_host_name_from_id(hdr->host),
-+                                 ti_dmsc_device_name_from_id(req->device),
-+                                 req->clk, req->clk32, req->target_freq_hz);
-+
-+    resp.hdr = ti_dmsc_set_resp_flags(hdr, 0);
-+    resp.freq_hz = req->target_freq_hz;
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push QUERY_FREQ response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+static void ti_dmsc_handle_get_freq(TIDmscClient *client, TISciMsgHdr *hdr,
-+                                    uint16_t thread_id, const uint32_t *words,
-+                                    size_t nwords)
-+{
-+    struct TisciMsgGetFreqReq *req = (struct TisciMsgGetFreqReq *)words;
-+    struct TisciMsgQueryFreqResp resp = {0};
-+
-+    trace_dmsc_handle_get_freq(ti_dmsc_message_name_from_id(hdr->type),
-+                               ti_dmsc_host_name_from_id(hdr->host),
-+                               ti_dmsc_device_name_from_id(req->device),
-+                               req->clk);
-+
-+    resp.hdr = ti_dmsc_set_resp_flags(hdr, 0);
-+    /*
-+     * Clock rates are not modelled per device. Return the fixed 200 MHz
-+     * rate used by the AM64x board model for generic clocks.
-+     */
-+    resp.freq_hz = 200000000ULL;
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push GET_FREQ response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+static void ti_dmsc_handle_get_clock_parents(TIDmscClient *client,
-+                                             TISciMsgHdr *hdr,
-+                                             uint16_t thread_id,
-+                                             const uint32_t *words,
-+                                             size_t nwords)
-+{
-+    struct TisciMsgGetNumClockParentsReq *req =
-+        (struct TisciMsgGetNumClockParentsReq *)words;
-+    struct TisciMsgGetNumClockParentsResp resp = {0};
-+
-+    trace_dmsc_handle_get_clock_parents(
-+        ti_dmsc_message_name_from_id(hdr->type),
-+        ti_dmsc_host_name_from_id(hdr->host),
-+        ti_dmsc_device_name_from_id(req->device), req->clk, req->clk32);
-+
-+    resp.hdr = ti_dmsc_set_resp_flags(hdr, 0);
-+    /*
-+     * Clock parent topology is not modelled. Report two possible parents,
-+     * which is the minimum topology where SET_CLOCK_PARENT has a meaning.
-+     */
-+    resp.num_parents = 2;
-+    resp.num_parentint32_t = UINT_MAX;
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push GET_CLOCK_PARENTS response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+/*
-+ * Clock muxes are not modelled. Report parent 0 as actual parent for all
-+ * clocks.
-+ */
-+static void ti_dmsc_handle_get_clock_parent(TIDmscClient *client,
-+                                            TISciMsgHdr *hdr,
-+                                            uint16_t thread_id,
-+                                            const uint32_t *words,
-+                                            size_t nwords)
-+{
-+    struct TisciMsgGetClockParentResp resp = {0};
-+
-+    resp.hdr = ti_dmsc_set_resp_flags(hdr, 0);
-+    resp.parent = 0;
-+    resp.parent32 = 0;
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push GET_CLOCK_PARENT response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+static void ti_dmsc_handle_get_clock(TIDmscClient *client, TISciMsgHdr *hdr,
-+                                     uint16_t thread_id, const uint32_t *words,
-+                                     size_t nwords)
-+{
-+    struct TisciMsgGetClockReq *req = (struct TisciMsgGetClockReq *)words;
-+    struct TisciMsgGetClockResp resp = {0};
-+
-+    trace_dmsc_handle_get_clock(ti_dmsc_message_name_from_id(hdr->type),
-+                                ti_dmsc_host_name_from_id(hdr->host),
-+                                ti_dmsc_device_name_from_id(req->device),
-+                                req->clk, req->clk32);
-+
-+    resp.hdr = ti_dmsc_set_resp_flags(hdr, 0);
-+    resp.current_state = resp.programmed_state =
-+        TISCI_MSG_VALUE_DEVICE_HW_STATE_ON;
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push GET_CLOCK response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+static void ti_dmsc_stop_proc(TIDmscClient *client, TISciMsgHdr *hdr,
-+                              uint16_t thread_id, const uint32_t *words,
-+                              size_t nwords)
-+{
-+    TIDmscState *s = client->dmsc;
-+    struct TiSciMsgReqProcRelease *req = (struct TiSciMsgReqProcRelease *)words;
-+    TISciMsgHdr resp = ti_dmsc_set_resp_flags(hdr, 0);
-+    trace_dmsc_stop_proc(ti_dmsc_proc_name_from_id(req->processor_id),
-+                         req->processor_id,
-+                         ti_dmsc_host_name_from_id(hdr->host));
-+
-+    if (req->processor_id == SCICLIENT_PROCID_MCU_M4FSS0_C0) {
-+        s->m4_running = false;
-+    }
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push PROC_RELEASE response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+static void ti_dmsc_start_proc(TIDmscClient *client, TISciMsgHdr *hdr,
-+                               uint16_t thread_id, const uint32_t *words,
-+                               size_t nwords)
-+{
-+    struct TiSciMsgReqProcRequest *req = (struct TiSciMsgReqProcRequest *)words;
-+    TISciMsgHdr resp = ti_dmsc_set_resp_flags(hdr, 0);
-+
-+    trace_dmsc_start_proc(ti_dmsc_proc_name_from_id(req->processor_id),
-+                          req->processor_id,
-+                          ti_dmsc_host_name_from_id(hdr->host));
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push PROC_REQUEST response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+/*
-+ * SET_CTRL carries processor control flags, e.g. halt and reset-vector
-+ * latch. Boot vectors are captured by SET_CONFIG and release happens via
-+ * SET_DEVICE, so here is no processor-control state modeled.
-+ */
-+static void ti_dmsc_handle_proc_set_ctrl(TIDmscClient *client, TISciMsgHdr *hdr,
-+                                         uint16_t thread_id,
-+                                         const uint32_t *words, size_t nwords)
-+{
-+    TISciMsgHdr resp = ti_dmsc_set_resp_flags(hdr, 0);
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push SET_CTRL response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+/*
-+ * PROC_HANDOVER transfers a processor to another TISCI host. Ownership is
-+ * not modeled; the request gets only the generic ACK/NAK header.
-+ */
-+static void ti_dmsc_handover_proc(TIDmscClient *client, TISciMsgHdr *hdr,
-+                                  uint16_t thread_id, const uint32_t *words,
-+                                  size_t nwords)
-+{
-+    struct TiSciMsgReqProcHandover *req =
-+        (struct TiSciMsgReqProcHandover *)words;
-+    TISciMsgHdr resp = ti_dmsc_set_resp_flags(hdr, 0);
-+
-+    trace_dmsc_handover_proc(ti_dmsc_proc_name_from_id(req->processor_id),
-+                             req->processor_id,
-+                             ti_dmsc_host_name_from_id(req->host_id),
-+                             ti_dmsc_host_name_from_id(hdr->host));
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push PROC_HANDOVER response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+/*
-+ * SYS_RESET is a TISCI system-reset command and is normally sent without
-+ * AOP. Request a QEMU system reset; an AOP caller gets the bare ACK first.
-+ */
-+static void ti_dmsc_handle_sys_reset(TIDmscClient *client, TISciMsgHdr *hdr,
-+                                     uint16_t thread_id, const uint32_t *words,
-+                                     size_t nwords)
-+{
-+    TISciMsgHdr resp = ti_dmsc_set_resp_flags(hdr, 0);
-+
-+    trace_dmsc_handle_sys_reset(ti_dmsc_message_name_from_id(hdr->type),
-+                                ti_dmsc_host_name_from_id(hdr->host));
-+
-+    ti_dmsc_client_respond(client, &resp, sizeof(resp));
-+    qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-+}
-+
-+static void ti_dmsc_query_hw_caps(TIDmscClient *client, TISciMsgHdr *hdr,
-+                                  uint16_t thread_id, const uint32_t *words,
-+                                  size_t nwords)
-+{
-+    struct TiSciMsgQueryFwCapsResp resp = {0};
-+    resp.hdr = ti_dmsc_set_resp_flags(hdr, 0);
-+    resp.fw_caps = MSG_FLAG_CAPS_GENERIC;
-+    trace_dmsc_get_fw_caps(ti_dmsc_message_name_from_id(hdr->type),
-+                           ti_dmsc_host_name_from_id(hdr->host));
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push FW CAPABILITIES response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+static void ti_dmsc_get_version(TIDmscClient *client, TISciMsgHdr *hdr,
-+                                uint16_t thread_id, const uint32_t *words,
-+                                size_t nwords)
-+{
-+    struct TiSciMsgVersionResp resp = {0};
-+    resp.hdr = ti_dmsc_set_resp_flags(hdr, 0);
-+    resp.firmware_revision = 0x000a;
-+    resp.abi_major = 4;
-+    resp.abi_minor = 0;
-+    snprintf(resp.firmware_description, sizeof(resp.firmware_description),
-+             "QEMU_TI_DMSC (Wadims DMSC)");
-+    trace_dmsc_get_version(ti_dmsc_message_name_from_id(hdr->type),
-+                           ti_dmsc_host_name_from_id(hdr->host),
-+                           resp.firmware_description);
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push VERSION response into sec-proxy "
-+                      "thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+static void ti_dmsc_handle_get_device(TIDmscClient *client, TISciMsgHdr *hdr,
-+                                      uint16_t thread_id, const uint32_t *words,
-+                                      size_t nwords)
-+{
-+    TIDmscState *s = client->dmsc;
-+    struct TisciMsgGetDeviceReq *req = (struct TisciMsgGetDeviceReq *)words;
-+    struct TisciMsgGetDeviceResp resp = {0};
-+
-+    resp.hdr = ti_dmsc_set_resp_flags(hdr, 0);
-+    if (req->id < TISCI_DEV_ID_MAX) {
-+        resp.current_state = s->dev_hw_state[req->id];
-+        resp.programmed_state = s->dev_prog_state[req->id];
-+    } else {
-+        resp.current_state = resp.programmed_state =
-+            TISCI_MSG_VALUE_DEVICE_HW_STATE_ON;
-+    }
-+
-+    trace_dmsc_handle_get_device(ti_dmsc_message_name_from_id(hdr->type),
-+                                 ti_dmsc_host_name_from_id(hdr->host),
-+                                 ti_dmsc_device_name_from_id(req->id),
-+                                 resp.programmed_state, resp.current_state);
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push GET_DEVICE response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+static void ti_dmsc_handle_get_status(TIDmscClient *client, TISciMsgHdr *hdr,
-+                                      uint16_t thread_id, const uint32_t *words,
-+                                      size_t nwords)
-+{
-+    TIDmscState *s = client->dmsc;
-+    struct TisciMsgProcGetStatusReq *req =
-+        (struct TisciMsgProcGetStatusReq *)words;
-+    struct TisciMsgProcGetStatusResp resp = {0};
-+
-+    trace_dmsc_handle_get_status(ti_dmsc_message_name_from_id(hdr->type),
-+                                 ti_dmsc_host_name_from_id(hdr->host),
-+                                 ti_dmsc_proc_name_from_id(req->processor_id),
-+                                 req->processor_id);
-+
-+    resp.hdr = ti_dmsc_set_resp_flags(hdr, 0);
-+    resp.processor_id = req->processor_id;
-+    resp.bootvector_lo = 0;
-+    resp.bootvector_hi = 0;
-+    resp.config_flags_1 = 0;
-+    resp.control_flags_1 = 0;
-+    resp.status_flags_1 = 0;
-+
-+    if (req->processor_id == SCICLIENT_PROCID_A53_CL0_C0 ||
-+        req->processor_id == SCICLIENT_PROCID_A53_CL0_C1) {
-+        uint64_t bv =
-+            s->proc_bootvector[req->processor_id - SCICLIENT_PROCID_A53_CL0_C0];
-+
-+        resp.bootvector_lo = (uint32_t)bv;
-+        resp.bootvector_hi = (uint32_t)(bv >> 32);
-+    }
-+
-+    if (req->processor_id == SCICLIENT_PROCID_MCU_M4FSS0_C0) {
-+        resp.status_flags_1 |= TISCI_MSG_VAL_PROC_BOOT_STATUS_FLAG_M4F_WFI;
-+    }
-+
-+    trace_dmsc_get_status_resp(ti_dmsc_proc_name_from_id(req->processor_id),
-+                               req->processor_id, resp.status_flags_1,
-+                               s->m4_running);
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push GET_STATUS response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+/*
-+ * WAIT_PROC_BOOT_STATUS waits for processor WFE/WFI status bits. Per-core
-+ * polling is not modeled; no-response requests complete without a reply.
-+ */
-+static void ti_dmsc_handle_wait_proc_boot_status(TIDmscClient *client,
-+                                                 TISciMsgHdr *hdr,
-+                                                 uint16_t thread_id,
-+                                                 const uint32_t *words,
-+                                                 size_t nwords)
-+{
-+    struct TisciMsgReqWaitProcBootStatus *req =
-+        (struct TisciMsgReqWaitProcBootStatus *)words;
-+    TISciMsgHdr resp = ti_dmsc_set_resp_flags(hdr, 0);
-+
-+    trace_dmsc_handle_wait_proc_boot_status(
-+        ti_dmsc_message_name_from_id(hdr->type),
-+        ti_dmsc_host_name_from_id(hdr->host),
-+        ti_dmsc_proc_name_from_id(req->processor_id), req->processor_id);
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push WAIT_PROC_BOOT_STATUS response "
-+                      "into sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+static void ti_dmsc_handle_set_device_state(TIDmscClient *client,
-+                                            TISciMsgHdr *hdr,
-+                                            uint16_t thread_id,
-+                                            const uint32_t *words,
-+                                            size_t nwords)
-+{
-+    TIDmscState *s = client->dmsc;
-+    struct TisciMsgSetDeviceReq *req = (struct TisciMsgSetDeviceReq *)words;
-+    TISciMsgHdr resp = ti_dmsc_set_resp_flags(hdr, 0);
-+
-+    trace_dmsc_handle_set_device_state(ti_dmsc_message_name_from_id(hdr->type),
-+                                       ti_dmsc_host_name_from_id(hdr->host),
-+                                       ti_dmsc_device_name_from_id(req->id),
-+                                       ti_dmsc_device_state_to_str(req->state));
-+
-+    if (req->id < TISCI_DEV_ID_MAX) {
-+        s->dev_hw_state[req->id] = s->dev_prog_state[req->id] = req->state;
-+    }
-+
-+    if (req->id == TISCI_DEV_MCU_M4FSS0_CORE0 &&
-+        req->state != TISCI_MSG_VALUE_DEVICE_SW_STATE_ON) {
-+        s->m4_running = false;
-+    }
-+
-+    /*
-+     * SET_DEVICE ON releases an A53 core at the vector captured by
-+     * SET_CONFIG. Start the vCPU in EL3/AArch64; ALREADY_ON is harmless on
-+     * repeated handoffs.
-+     */
-+    if (req->id == TISCI_DEV_A53SS0_CORE_0 ||
-+        req->id == TISCI_DEV_A53SS0_CORE_1) {
-+        int core = req->id - TISCI_DEV_A53SS0_CORE_0;
-+        uint64_t cpuid = s->a53_cpu_id_base + core;
-+
-+        if (req->state == TISCI_MSG_VALUE_DEVICE_SW_STATE_ON) {
-+            uint64_t entry = s->proc_bootvector[core];
-+
-+            trace_dmsc_a53_start(core, entry);
-+            arm_set_cpu_on(cpuid, entry, 0, /* target_el */ 3,
-+                           /* target_aa64 */ true);
-+        } else if (req->state == TISCI_MSG_VALUE_DEVICE_SW_STATE_AUTO_OFF) {
-+            trace_dmsc_a53_stop(core);
-+            arm_set_cpu_off(cpuid);
-+        }
-+    }
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push SET_DEVICE response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+static void ti_dmsc_handle_set_device_resets(TIDmscClient *client,
-+                                             TISciMsgHdr *hdr,
-+                                             uint16_t thread_id,
-+                                             const uint32_t *words,
-+                                             size_t nwords)
-+{
-+    TIDmscState *s = client->dmsc;
-+    struct TisciMsgSetDeviceResetsReq *req =
-+        (struct TisciMsgSetDeviceResetsReq *)words;
-+    TISciMsgHdr resp = ti_dmsc_set_resp_flags(hdr, 0);
-+
-+    trace_dmsc_handle_set_device_resets(ti_dmsc_message_name_from_id(hdr->type),
-+                                        ti_dmsc_host_name_from_id(hdr->host),
-+                                        ti_dmsc_device_name_from_id(req->id),
-+                                        req->resets);
-+
-+    if (req->id == TISCI_DEV_MCU_M4FSS0_CORE0) {
-+        s->m4_running = !(req->resets);
-+        if (req->resets == 1) {
-+            arm_set_cpu_off(s->m4_cpu_id);
-+        } else {
-+            arm_set_cpu_on_and_reset(s->m4_cpu_id);
-+        }
-+    }
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push SET_DEVICE_RESETS response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+/*
-+ * BOARD_CONFIG messages carry SYSFW board-configuration blobs. This model
-+ * accepts them, but does not consume or store the blobs.
-+ */
-+static void ti_dmsc_handle_board_config(TIDmscClient *client, TISciMsgHdr *hdr,
-+                                        uint16_t thread_id,
-+                                        const uint32_t *words, size_t nwords)
-+{
-+    TISciMsgHdr resp = ti_dmsc_set_resp_flags(hdr, 0);
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push BOARD_CONFIG response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+/*
-+ * SET_CONFIG carries the A53 boot vector used later by SET_DEVICE. The
-+ * packed TISCI request puts bootvector_low at byte offset 9, so read it
-+ * with byte loads, not with a struct cast.
-+ */
-+static void ti_dmsc_handle_proc_set_config(TIDmscClient *client,
-+                                           TISciMsgHdr *hdr, uint16_t thread_id,
-+                                           const uint32_t *words, size_t nwords)
-+{
-+    TIDmscState *s = client->dmsc;
-+    TISciMsgHdr resp = ti_dmsc_set_resp_flags(hdr, 0);
-+
-+    trace_dmsc_handle_proc_set_config(ti_dmsc_message_name_from_id(hdr->type),
-+                                      ti_dmsc_host_name_from_id(hdr->host));
-+
-+    if (nwords * sizeof(uint32_t) >= sizeof(TISciMsgHdr) + 9) {
-+        /* Packed payload right after the 8-byte header. */
-+        const uint8_t *p = (const uint8_t *)words + sizeof(TISciMsgHdr);
-+        uint8_t proc_id = p[0];
-+        uint64_t bv = (uint64_t)(uint32_t)ldl_le_p(p + 1) |
-+                      ((uint64_t)(uint32_t)ldl_le_p(p + 5) << 32);
-+
-+        if (proc_id == SCICLIENT_PROCID_A53_CL0_C0 ||
-+            proc_id == SCICLIENT_PROCID_A53_CL0_C1) {
-+            s->proc_bootvector[proc_id - SCICLIENT_PROCID_A53_CL0_C0] = bv;
-+            trace_dmsc_a53_bootvector(proc_id, bv);
-+        }
-+    }
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push SET_CONFIG response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+/*
-+ * FWL_SET programs a firewall region. Firewall state is not modelled, so the
-+ * request is accepted and only a generic ACK/NAK is returned.
-+ */
-+static void ti_dmsc_handle_fwl_set(TIDmscClient *client, TISciMsgHdr *hdr,
-+                                   uint16_t thread_id, const uint32_t *words,
-+                                   size_t nwords)
-+{
-+    struct TisciMsgReqFwlSetFirewallRegion *req =
-+        (struct TisciMsgReqFwlSetFirewallRegion *)words;
-+    TISciMsgHdr resp = ti_dmsc_set_resp_flags(hdr, 0);
-+
-+    trace_dmsc_handle_fwl_set(ti_dmsc_message_name_from_id(hdr->type),
-+                              ti_dmsc_host_name_from_id(hdr->host), req->fwl_id,
-+                              req->region);
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push FWL_SET response into sec-proxy "
-+                      "thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+/*
-+ * FWL_GET returns one firewall region descriptor. The model echoes fwl_id
-+ * and region, and leaves control/permission fields zeroed.
-+ */
-+static void ti_dmsc_handle_fwl_get(TIDmscClient *client, TISciMsgHdr *hdr,
-+                                   uint16_t thread_id, const uint32_t *words,
-+                                   size_t nwords)
-+{
-+    struct TisciMsgReqFwlGetFirewallRegion *req =
-+        (struct TisciMsgReqFwlGetFirewallRegion *)words;
-+    struct TisciMsgRespFwlGetFirewallRegion resp = {0};
-+
-+    resp.hdr = ti_dmsc_set_resp_flags(hdr, 0);
-+    resp.fwl_id = req->fwl_id;
-+    resp.region = req->region;
-+
-+    trace_dmsc_handle_fwl_get(ti_dmsc_message_name_from_id(hdr->type),
-+                              ti_dmsc_host_name_from_id(hdr->host), req->fwl_id,
-+                              req->region);
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push FWL_GET response into sec-proxy "
-+                      "thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+/*
-+ * FWL_CHANGE_OWNER changes the owner of a firewall region. Ownership is not
-+ * tracked; echo the IDs and owner index back.
-+ */
-+static void ti_dmsc_handle_fwl_change_owner(TIDmscClient *client,
-+                                            TISciMsgHdr *hdr,
-+                                            uint16_t thread_id,
-+                                            const uint32_t *words,
-+                                            size_t nwords)
-+{
-+    struct TisciMsgReqFwlChangeOwnerInfo *req =
-+        (struct TisciMsgReqFwlChangeOwnerInfo *)words;
-+    struct TisciMsgRespFwlChangeOwnerInfo resp = {0};
-+
-+    resp.hdr = ti_dmsc_set_resp_flags(hdr, 0);
-+    resp.fwl_id = req->fwl_id;
-+    resp.region = req->region;
-+    resp.owner_index = req->owner_index;
-+
-+    trace_dmsc_handle_fwl_change_owner(ti_dmsc_message_name_from_id(hdr->type),
-+                                       ti_dmsc_host_name_from_id(hdr->host),
-+                                       req->fwl_id, req->region,
-+                                       req->owner_index);
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push FWL_CHANGE_OWNER response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+/*
-+ * SA2UL_GET_DKEK returns derived key data from SA2UL. No key ladder is
-+ * modelled; the response contains zero bytes and is no secret material.
-+ */
-+static void ti_dmsc_handle_sa2ul_get_dkek(TIDmscClient *client,
-+                                          TISciMsgHdr *hdr, uint16_t thread_id,
-+                                          const uint32_t *words, size_t nwords)
-+{
-+    struct TisciMsgReqSa2ulGetDkek *req =
-+        (struct TisciMsgReqSa2ulGetDkek *)words;
-+    struct TisciMsgRespSa2ulGetDkek resp = {0};
-+
-+    resp.hdr = ti_dmsc_set_resp_flags(hdr, 0);
-+
-+    trace_dmsc_handle_sa2ul_get_dkek(ti_dmsc_message_name_from_id(hdr->type),
-+                                     ti_dmsc_host_name_from_id(hdr->host),
-+                                     req->sa2ul_instance);
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push SA2UL_GET_DKEK response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+/*
-+ * READ_SWREV and READ_KEYCNT_KEYREV are security status queries. The status
-+ * words are not modelled and read back as zero.
-+ */
-+static void ti_dmsc_handle_read_swrev(TIDmscClient *client, TISciMsgHdr *hdr,
-+                                      uint16_t thread_id, const uint32_t *words,
-+                                      size_t nwords)
-+{
-+    struct TisciMsgRespReadSwrev resp = {0};
-+
-+    resp.hdr = ti_dmsc_set_resp_flags(hdr, 0);
-+
-+    trace_dmsc_handle_read_swrev(ti_dmsc_message_name_from_id(hdr->type),
-+                                 ti_dmsc_host_name_from_id(hdr->host));
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push READ_SWREV response into "
-+                      "sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+static void ti_dmsc_handle_read_keycnt_keyrev(TIDmscClient *client,
-+                                              TISciMsgHdr *hdr,
-+                                              uint16_t thread_id,
-+                                              const uint32_t *words,
-+                                              size_t nwords)
-+{
-+    struct TisciMsgRespReadKeycntKeyrev resp = {0};
-+
-+    resp.hdr = ti_dmsc_set_resp_flags(hdr, 0);
-+
-+    trace_dmsc_handle_read_keycnt_keyrev(
-+        ti_dmsc_message_name_from_id(hdr->type),
-+        ti_dmsc_host_name_from_id(hdr->host));
-+
-+    if (!ti_dmsc_client_respond(client, &resp, sizeof(resp))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: Failed to push READ_KEYCNT_KEYREV response "
-+                      "into sec-proxy thread=%u\n",
-+                      client->tx_thread_id);
-+    }
-+}
-+
-+static void ti_dmsc_realize(DeviceState *dev, Error **errp)
-+{
-+    ERRP_GUARD();
-+    TIDmscState *s = TI_DMSC(dev);
-+
-+    if (!s->sec_proxy) {
-+        error_setg(errp, "ti-dmsc: 'sec-proxy' link not set");
-+        return;
-+    }
-+
-+    s->msg_words = ti_sec_proxy_get_msg_words(s->sec_proxy);
-+    if (s->msg_words == 0) {
-+        /* Fallback if sec-proxy does not provide it yet. */
-+        s->msg_words = TI_DMSC_MAX_WORDS;
-+    }
-+
-+    if (s->msg_words > TI_DMSC_MAX_WORDS) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "ti-dmsc: msg_words=%u too large, clamping to %u\n",
-+                      s->msg_words, TI_DMSC_MAX_WORDS);
-+        s->msg_words = TI_DMSC_MAX_WORDS;
-+    }
-+
-+    if (s->num_rx_threads || s->num_tx_threads) {
-+        if (s->num_rx_threads != s->num_tx_threads) {
-+            error_setg(
-+                errp,
-+                "ti-dmsc: rx-threads and tx-threads must have the same length");
-+            return;
-+        }
-+        if (s->num_rx_threads == 0) {
-+            error_setg(errp, "ti-dmsc: rx-threads list is empty");
-+            return;
-+        }
-+        s->num_clients = s->num_rx_threads;
-+        s->clients = g_new0(TIDmscClient, s->num_clients);
-+        for (uint32_t i = 0; i < s->num_clients; i++) {
-+            s->clients[i].dmsc = s;
-+            s->clients[i].rx_thread_id = s->rx_thread_ids[i];
-+            s->clients[i].tx_thread_id = s->tx_thread_ids[i];
-+        }
-+    } else {
-+        s->num_clients = 1;
-+        s->clients = g_new0(TIDmscClient, s->num_clients);
-+        s->clients[0].dmsc = s;
-+        s->clients[0].rx_thread_id = s->rx_thread_id;
-+        s->clients[0].tx_thread_id = s->tx_thread_id;
-+    }
-+
-+    for (uint32_t i = 0; i < s->num_clients; i++) {
-+        for (uint32_t j = 0; j < s->num_secure_rx_threads; j++) {
-+            if (s->clients[i].rx_thread_id == s->secure_rx_threads[j]) {
-+                s->clients[i].secure = true;
-+                break;
-+            }
-+        }
-+    }
-+
-+    s->msg_handler[TISCI_MSG_PROC_RELEASE] = ti_dmsc_stop_proc;
-+    s->msg_handler[TISCI_MSG_PROC_REQUEST] = ti_dmsc_start_proc;
-+    s->msg_handler[TISCI_MSG_PROC_HANDOVER] = ti_dmsc_handover_proc;
-+    s->msg_handler[TISCI_MSG_SET_CTRL] = ti_dmsc_handle_proc_set_ctrl;
-+    s->msg_handler[TISCI_MSG_SYS_RESET] = ti_dmsc_handle_sys_reset;
-+    s->msg_handler[TISCI_MSG_QUERY_FW_CAPS] = ti_dmsc_query_hw_caps;
-+    s->msg_handler[TISCI_MSG_VERSION] = ti_dmsc_get_version;
-+    s->msg_handler[TISCI_MSG_GET_DEVICE] = ti_dmsc_handle_get_device;
-+    s->msg_handler[TISCI_MSG_SET_DEVICE] = ti_dmsc_handle_set_device_state;
-+    s->msg_handler[TISCI_MSG_GET_STATUS] = ti_dmsc_handle_get_status;
-+    s->msg_handler[TISCI_MSG_WAIT_PROC_BOOT_STATUS] =
-+        ti_dmsc_handle_wait_proc_boot_status;
-+    s->msg_handler[TISCI_MSG_SET_DEVICE_RESETS] =
-+        ti_dmsc_handle_set_device_resets;
-+    s->msg_handler[TISCI_MSG_GET_CLOCK] = ti_dmsc_handle_get_clock;
-+    s->msg_handler[TISCI_MSG_SET_CLOCK] = ti_dmsc_handle_set_clock;
-+    s->msg_handler[TISCI_MSG_GET_CLOCK_PARENT] =
-+        ti_dmsc_handle_get_clock_parent;
-+    s->msg_handler[TISCI_MSG_GET_NUM_CLOCK_PARENTS] =
-+        ti_dmsc_handle_get_clock_parents;
-+    s->msg_handler[TISCI_MSG_SET_CLOCK_PARENT] =
-+        ti_dmsc_handle_set_clock_parent;
-+    s->msg_handler[TISCI_MSG_QUERY_FREQ] = ti_dmsc_handle_query_freq;
-+    s->msg_handler[TISCI_MSG_GET_FREQ] = ti_dmsc_handle_get_freq;
-+    s->msg_handler[TISCI_MSG_SET_FREQ] = ti_dmsc_handle_set_freq;
-+    s->msg_handler[TISCI_MSG_SET_CONFIG] = ti_dmsc_handle_proc_set_config;
-+    s->msg_handler[TISCI_MSG_BOARD_CONFIG] = ti_dmsc_handle_board_config;
-+    s->msg_handler[TISCI_MSG_BOARD_CONFIG_RM] = ti_dmsc_handle_board_config;
-+    s->msg_handler[TISCI_MSG_BOARD_CONFIG_SECURITY] =
-+        ti_dmsc_handle_board_config;
-+    s->msg_handler[TISCI_MSG_BOARD_CONFIG_PM] = ti_dmsc_handle_board_config;
-+    s->msg_handler[TISCI_MSG_FWL_SET] = ti_dmsc_handle_fwl_set;
-+    s->msg_handler[TISCI_MSG_FWL_GET] = ti_dmsc_handle_fwl_get;
-+    s->msg_handler[TISCI_MSG_FWL_CHANGE_OWNER] =
-+        ti_dmsc_handle_fwl_change_owner;
-+    s->msg_handler[TISCI_MSG_SA2UL_GET_DKEK] = ti_dmsc_handle_sa2ul_get_dkek;
-+    s->msg_handler[TISCI_MSG_READ_SWREV] = ti_dmsc_handle_read_swrev;
-+    s->msg_handler[TISCI_MSG_READ_KEYCNT_KEYREV] =
-+        ti_dmsc_handle_read_keycnt_keyrev;
-+
-+    for (uint32_t i = 0; i < s->num_clients; i++) {
-+        ti_sec_proxy_register_msg_cb(s->sec_proxy, s->clients[i].rx_thread_id,
-+                                     ti_dmsc_sec_proxy_cb, &s->clients[i]);
-+    }
-+
-+    ti_dmsc_init_device_states(s);
-+
-+    /*
-+     * ti-dmsc is a pure QOM child with no bus/MMIO reset path. Register it
-+     * with the global reset container, so cold boot and system_reset both
-+     * requeue the DMSC boot notification.
-+     */
-+    qemu_register_resettable(OBJECT(dev));
-+}
-+
-+static void ti_dmsc_init(Object *obj)
-+{
-+    TIDmscState *s = TI_DMSC(obj);
-+
-+    qemu_mutex_init(&s->lock);
-+    s->bh = qemu_bh_new(ti_dmsc_bh, s);
-+    s->num_rx_threads = 0;
-+    s->rx_thread_ids = NULL;
-+    s->num_tx_threads = 0;
-+    s->tx_thread_ids = NULL;
-+    s->num_secure_rx_threads = 0;
-+    s->secure_rx_threads = NULL;
-+    s->num_clients = 0;
-+    s->clients = NULL;
-+
-+    /*
-+     * Legacy single-client defaults; machines pass normally thread arrays.
-+     */
-+    /* Legacy M4 response thread default: 16. */
-+
-+    s->msg_words = TI_DMSC_MAX_WORDS;
-+    object_property_add_link(
-+        obj, "sec-proxy", TYPE_TI_SEC_PROXY, (Object **)&s->sec_proxy,
-+        qdev_prop_allow_set_link_before_realize, OBJ_PROP_LINK_STRONG);
-+}
-+
-+static void ti_dmsc_finalize(Object *obj)
-+{
-+    TIDmscState *s = TI_DMSC(obj);
-+
-+    if (s->bh) {
-+        qemu_bh_delete(s->bh);
-+        s->bh = NULL;
-+    }
-+    g_free(s->clients);
-+    s->clients = NULL;
-+    s->num_clients = 0;
-+    g_free(s->rx_thread_ids);
-+    s->rx_thread_ids = NULL;
-+    s->num_rx_threads = 0;
-+    g_free(s->tx_thread_ids);
-+    s->tx_thread_ids = NULL;
-+    s->num_tx_threads = 0;
-+    g_free(s->secure_rx_threads);
-+    s->secure_rx_threads = NULL;
-+    s->num_secure_rx_threads = 0;
-+    qemu_mutex_destroy(&s->lock);
-+}
-+
-+static const Property ti_dmsc_props[] = {
-+    DEFINE_PROP_UINT16("rx-thread", TIDmscState, rx_thread_id, 17),
-+    DEFINE_PROP_UINT16("tx-thread", TIDmscState, tx_thread_id, 16),
-+    DEFINE_PROP_ARRAY("rx-threads", TIDmscState, num_rx_threads, rx_thread_ids,
-+                      qdev_prop_uint16, uint16_t),
-+    DEFINE_PROP_ARRAY("tx-threads", TIDmscState, num_tx_threads, tx_thread_ids,
-+                      qdev_prop_uint16, uint16_t),
-+    DEFINE_PROP_ARRAY("secure-rx-threads", TIDmscState, num_secure_rx_threads,
-+                      secure_rx_threads, qdev_prop_uint16, uint16_t),
-+    DEFINE_PROP_UINT64("m4-cpu-id", TIDmscState, m4_cpu_id, 0),
-+    DEFINE_PROP_UINT64("a53-cpu-id-base", TIDmscState, a53_cpu_id_base, 0),
++static const TypeInfo am64_virt_machine_info = {
++    .name = TYPE_AM64_VIRT_MACHINE,
++    .parent = TYPE_MACHINE,
++    .instance_size = sizeof(AM64VirtMachineState),
++    .instance_init = am64_virt_machine_instance_init,
++    .class_init = am64_virt_machine_class_init,
++    .interfaces = arm_aarch64_machine_interfaces,
 +};
 +
-+static void ti_dmsc_class_init(ObjectClass *klass, const void *data)
++static void am64_virt_machine_init_register_types(void)
 +{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+
-+    dc->realize = ti_dmsc_realize;
-+    rc->phases.hold = ti_dmsc_reset_hold;
-+    device_class_set_props(dc, ti_dmsc_props);
++    type_register_static(&am64_virt_machine_info);
 +}
 +
-+static const TypeInfo ti_dmsc_info = {
-+    .name = TYPE_TI_DMSC,
-+    .parent = TYPE_DEVICE,
-+    .instance_size = sizeof(TIDmscState),
-+    .instance_init = ti_dmsc_init,
-+    .instance_finalize = ti_dmsc_finalize,
-+    .class_init = ti_dmsc_class_init,
-+};
-+
-+static void ti_dmsc_types(void)
-+{
-+    type_register_static(&ti_dmsc_info);
-+}
-+
-+type_init(ti_dmsc_types)
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index dfa2d04117..d6fac538b4 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -456,6 +456,38 @@ iommu_testdev_dma_verify(uint32_t expected, uint32_t actual) "expected=0x%x actu
- iommu_testdev_dma_result(uint32_t result) "DMA completed result=0x%x"
- iommu_testdev_dma_armed(bool armed) "armed=%d"
++type_init(am64_virt_machine_init_register_types)
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 139692dd11..cb6e881d01 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -112,6 +112,7 @@ arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
+ arm_common_ss.add(when: 'CONFIG_TI_AM64X', if_true: files('ti-am64x.c'))
+ arm_common_ss.add(when: 'CONFIG_TI_AM64X', if_true: files('k3-bootrom-parse.c'))
+ arm_common_ss.add(when: 'CONFIG_TI_AM64X', if_true: files('k3-bootrom.c'))
++arm_common_ss.add(when: 'CONFIG_AM64_VIRT', if_true: files('am64-virt.c'))
  
-+# ti-dmsc.c
-+dmsc_handle_set_clock(const char *type, const char *host_name, const char *device_name, int clk) "%s received from host %s, device %s, clk: %i"
-+dmsc_handle_get_device(const char *type, const char *host_name, const char *device_name, uint8_t prog_state, uint8_t current_state) "%s received from host %s, device %s, response: prog_state: %i, current_state: %i"
-+dmsc_handle_get_clock(const char *type, const char *host_name, const char *device_name, uint8_t clk, uint32_t clk32) "%s received from host %s, device %s, clk %u, clk32 %u"
-+dmsc_handle_get_clock_parents(const char *type, const char *host_name, const char *device_name, uint8_t clk, uint32_t clk32) "%s received from host %s, device %s, clk %u, clk32 %u"
-+dmsc_handle_set_clock_parent(const char *type, const char *host_name, const char *device_name, uint8_t clk_id, uint8_t parent_id) "%s received from host %s, device %s, clk_id %u, parent_id %u"
-+dmsc_handle_query_freq(const char *type, const char *host_name, const char *device_name, uint8_t clk, uint32_t clk32, uint64_t target_freq) "%s received from host %s, device %s, clk %u, clk32 %u, target_frequency %"PRIu64
-+dmsc_handle_get_freq(const char *type, const char *host_name, const char *device_name, uint8_t clk) "%s received from host %s, device %s, clk %u"
-+dmsc_handle_proc_set_config(const char *type, const char *host_name) "%s received from host %s"
-+dmsc_handle_set_device_state(const char *type, const char *host_name, const char *device_name, const char *state) "%s received from host %s, device %s, state %s"
-+dmsc_handle_set_device_resets(const char *type, const char *host_name, const char *device_name, uint32_t resets) "%s received from host %s, device %s, resets 0x%08x"
-+dmsc_handle_get_status(const char *type, const char *host_name, const char *proc_name, uint8_t proc_id) "%s received from host %s, proc %s (%u)"
-+dmsc_handle_wait_proc_boot_status(const char *type, const char *host_name, const char *proc_name, uint8_t proc_id) "%s received from host %s, proc %s (%u)"
-+dmsc_get_status_resp(const char *proc_name, uint8_t proc_id, uint32_t status_flags, int m4_running) "GET_STATUS response for %s (%u): status_flags=0x%08x, m4_running=%d"
-+dmsc_unsupported_message(const char *msg, int type, const char *host, int thread_id) "No handler for message type=%s (%i) from host %s ... (thread id: %i) dropping"
-+dmsc_new_message_received(int type, const char *msg, const char *host, int thread_id) "Handling message type=0x%04x (%s) from host=%s, thread=%u"
-+dmsc_get_version(const char* msg, const char *host, const char *description) "Get Version received %s from host %s. Description returned %s"
-+dmsc_get_fw_caps(const char* msg, const char *host) "Get FW Caps Request received %s from host %s"
-+dmsc_start_proc(const char* proc_name, int proc_id, const char *host) "Requested to start Processor %s (%i) from host %s"
-+dmsc_stop_proc(const char* proc_name, int proc_id, const char *host) "Requested to stop Processor %s (%i) from host %s"
-+dmsc_handover_proc(const char* proc_name, int proc_id, const char *new_host, const char *host) "Requested to hand over Processor %s (%i) to host %s, from host %s"
-+dmsc_a53_bootvector(uint8_t proc_id, uint64_t bootvector) "Captured boot vector for A53 proc %u: 0x%" PRIx64
-+dmsc_a53_start(int core, uint64_t entry) "Cold-starting A53 core %d at entry 0x%" PRIx64 " (EL3/AArch64)"
-+dmsc_a53_stop(int core) "Powering off A53 core %d"
-+dmsc_handle_sys_reset(const char *type, const char *host_name) "%s received from host %s, requesting machine reset"
-+dmsc_handle_fwl_set(const char *type, const char *host_name, uint16_t fwl_id, uint16_t region) "%s received from host %s, fwl_id %u, region %u"
-+dmsc_handle_fwl_get(const char *type, const char *host_name, uint16_t fwl_id, uint16_t region) "%s received from host %s, fwl_id %u, region %u"
-+dmsc_handle_fwl_change_owner(const char *type, const char *host_name, uint16_t fwl_id, uint16_t region, uint8_t owner_index) "%s received from host %s, fwl_id %u, region %u, owner_index %u"
-+dmsc_handle_sa2ul_get_dkek(const char *type, const char *host_name, uint8_t sa2ul_instance) "%s received from host %s, sa2ul_instance %u (returning zeroed DKEK)"
-+dmsc_handle_read_swrev(const char *type, const char *host_name) "%s received from host %s (returning swrev=0)"
-+dmsc_handle_read_keycnt_keyrev(const char *type, const char *host_name) "%s received from host %s (returning keycnt=keyrev=0)"
-+
- # ti-rat.c
- rat_enable_region(int idx, uint64_t size, uint64_t source, uint64_t dest) "Enabling RAT Region %u: size 0x%"PRIx64" map 0x%"PRIx64" -> 0x%"PRIx64
- rat_disable_region(int idx) "Disabling RAT Region %u"
-diff --git a/include/hw/misc/ti-dmsc.h b/include/hw/misc/ti-dmsc.h
+ arm_common_ss.add(when: ['CONFIG_AXIADO_SOC', 'TARGET_AARCH64'], if_true: files(
+   'ax3000-soc.c'))
+diff --git a/pc-bios/dtb/am64-virt.dtb b/pc-bios/dtb/am64-virt.dtb
 new file mode 100644
-index 0000000000..f918890180
+index 0000000000000000000000000000000000000000..b9cf2dd0b494ade59cd8cd4e4dc7b4d1434f7724
+GIT binary patch
+literal 6116
+zcmb_gO^h5z6|SB*4hBLT9Kw$fj93F9xZ~ON*xnpAJCTS8jx8KT+=7<g?wXm__MiJ_
+ze*%X+Sc=5K5?nxV1>qaHAPz_okq|<b4;+HT0fY}GHw1SC;rm`y_4NFJMc_#_RqxgN
+ztM{tjRP}Ek{pVkl`sjV7)TUA&If4Euw8zm-qXByNlzQT>4CjA5i#~*&a)4uw*$C9Z
+zG5b#?an>B3i<&e&^7rGi294lk&tlx`;DZiM`R#ur@0GgJ<-U&mRHu1)1lCq(R|oy;
+z+92N*G%p>F{U{Br_$U|-1UOIM7=!I<8kDd=wj$4y?%c~ne#9SwiI`je*FbUWdlln{
+z(YQvjY21aq_4i=U*iq_l&}M9~U$l1;G};rJMHR+m0yv+dUm2eqo&e|A;nmIgoO~1W
+z%(<I?eYzhyeQOwO2W5JWcKr2c2C78{&up{^*=-CYU87AC?g8o4%aut?k1-&O<X7e%
+z!SL2B%|_2|Q;mjJi(wUB4u60~ogYBkuHv*vv=4S*vo+8#<3qj^XlFY(hU&*?ockCW
+z_ltUwKLFRC90}^=-vIV;G%pR}WH&z?4WrqH0-byW=i8GQZ`bj;AiZ>P=vO*yO6?bA
+zekeP6=GU9xbFqH{<2!XwPISE!1$CfsnyPR-0a^5OO%lUvq!8X`x+~u>eT$FgaQem=
+zzg-^g4AwVfj<gS=-4{%$&!A_V+<LjMDZ?1Dc|{V`<Gf56=~1|}cFF>dDbGe=T%ErE
+zln=&r`-V=NbIyob$Z99<8_y0d(K-zPsQ)yYjrGvC`RUF{%)Y==Bf#Z|TzCCfLF=x+
+zn-|jmIzR6*XS7TEIRD<6d@r!6ZP&~ga^6d^Vf=LHTc=5bZSNE49ndL9|18F?20J=^
+zpg#7bv9aD%)#ze38PxG1v{^jJ0|J0^eKd&&i<SVXfQPA>U@VjRezZGr8Kf%Wj{xcP
+zol7C-Dch5N2Bgc_@JK?~V7=qP&cGiZV8+;n1@8rnyK8y_ICW4SyV+wNcqZTN&|Dnp
+zq2miN<`S4y(lDOOfyAdes%oA3VV>1xo+P>)4Tpo_1-E-BM{s9W>Iu&5-p0gtRh2yS
+z`v!WfTWrCm_pS0!)rTNh8uo(c&J6i@b{@5JkD<R4>D^|slj^DpCVEz@AZPONr4tM(
+z;jw%8v34crvX&x0&}C;S<OD3P;c?KIdsgcr^`ji;ArsD4r}sK=>J+_Ul81W_*2^_e
+zuZ@i#CVQgQ#pj1zo&4{vAFPw{alVR(Xq@?Z+v@Dbf_u*SF8+@Xe3Z!1vxAMcD!7<1
+z796)RK1B%w++&=RcuDOsiu^Q<bIT+8Cq<n5d-|wzhIlTv7wDekCm)ZkEOqmo{0udb
+z`_%cwp8M$+=y_Kn{$b$1{_^#&e6|0QKI&g*qFY67t*F0)OY2xBcdy+kRu}h3YXfJ=
+zyBid{JB7=Tu|b=^2OrFdP43bAL;&2Yn0G#Uf3joBu<p?Z+G5PiU4Xur|Nb&gb*PgB
+zQ^GTgH6;W{GJCBEV?A2_-vopAccb1&;Fmr@L+==k^{fln1IMj)J3*Xl=mPv+;v>%@
+zA7q#Kn6pJb;7fe0KcL$`Vq<-kf7G?ex5__jcTV3b|5n*u<)4j<<iL1`V6Rw*wL8bR
+z%0Fv&j&GHJtL(1w&&GvYtA$nmS-W$5tNgQe=lE9nx61A+|J**XdV8OQm+(&!-$c7Y
+zqzljSpNoJAI4Ce(=xuhXgMoaR(=3JrE5kX0t6>o7`G%xEjo$fl+0raNchBV-2bR~(
+z-@+NB2ywZi0{5qRRr@*&Qh%Z|UB)3fj4P}=7g%@XIb-OQeJ^!}OQTPeZ`XaQ4WR5P
+z&M|qe&RkegXQ+pMt<x_75CD`#yu7<jP}VGeE9xNP=<49Hlj+t%db8{!IR#ewxc(p?
+z<?U${{6Bo;_F49k6oLQJ$F!jo{c>?&3{Za`>e`Te;OV!&iEBl(e}OWRhd8Ul(Ykr4
+zkqDqJ%JP4SW41n;>~rrJBZAGlchjIEVR+>p#%Jav4t--vbda(8rZ@|nJ~(@W4$k3=
+zvpG4p<P)FANl;DQy_r(2j^5WX?yg&WzAh|nm8TxL1BBz)7hPsvbccm~iMBfBOp>GP
+zCs*%*7w?sVb6$mOn6AYcFH9O-Tub8_`SMa*#Omlx5nI|bHZi|WEv*firwzyBdfFV#
+z>ykWi-uWkMwm9lvFIo7;Aa_CL2Y%K1&<`%kc4*~q!3M;wZ?HG-o7kgoU3(7yU+qae
+zYFtW6dSGmDx%bg%17%kBHOIJDv}5eKc8uJ%dmn7Q*YHDM`)HkWV5~3>JQtV!)~fh`
+z+T$<Z!DQ`FBl=K7dpA+1HiqexHV7`i-}ACd9o*yn+TlE>+vE5UpRVNgPP(y~#6e{q
+z7u171^?q`Gxlp>fpSE+e0wsDv{2^%bY9Q}b==ph>=k?b4NbjHDkAi-A(C_1m&DO?X
+zxOuIQ2Ue9QdaJIFUfJkk&tH3f(60{SyiRtv2K}Ik;(AMVpY!3Dtq-$8&bdBp-u>d*
+znRnu+zEeN<^vV4{|KY9MZ{554<oCaQyq|sU_HUm4{Prv0BQNS<?{}yF@xmY9{O%QQ
+zJg$N56l#+$%ciLP0w4OaTJcL?m`}AJX&&iBtyS@B+UFIvQfomJ;UQ94G|bZ?sN>y4
+zt1`&=YAf|bWx1T$Vj5%-X3}_42DMh$^E-KFI=ljiR!vptEK;eir+K6hyExQ4^--bK
+zE}~gX{Qwtd`efDHcN-Y}I8tl!*}!-P!+sXv^{8fRTEHs>aS_Ry)Nk<hbe=Mf$9biy
+zI;c^g94lY3Rtm3Kd4yGJ9GB?<0wxwY&&ROo_z5e7bCsecxMM!s`S35s>cJ#;33zWj
+z5trA@+ts{9U8wE5)5P6A7zN?Os#4~&aEKJCB-lls48K{kj4LHiu-W5Ytr>!7nS}`j
+z7745NI+0_|U7K;35aYX+$%D1ci;;akcUap`32HaU_WXl5s;5l0(pi9wg3ry8>mWG@
+zjw+uULf+STQx{EbQ)o!zQr~EF79J_2Dh`r??bl^<;42`L6+sZ27dFZaA0@Po)Lu{}
+Hr5XMU#<@8L
+
+literal 0
+HcmV?d00001
+
+diff --git a/pc-bios/dtb/am64-virt.dts b/pc-bios/dtb/am64-virt.dts
+new file mode 100644
+index 0000000000..09ab555c2e
 --- /dev/null
-+++ b/include/hw/misc/ti-dmsc.h
-@@ -0,0 +1,661 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
++++ b/pc-bios/dtb/am64-virt.dts
+@@ -0,0 +1,292 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
 + * Copyright (c) 2026 CMBLU Energy AG
 + * Author: Wadim Mueller <wafgo01@gmail.com>
-+ *
-+ * TI DMSC emulator device (minimal TISCI service)
-+ *
-+ * This device links to a TI SEC_PROXY instance and provides the minimal
-+ * DMSC/TISCI request/response handler.
 + */
-+
-+#ifndef HW_MISC_TI_DMSC_H
-+#define HW_MISC_TI_DMSC_H
-+
-+#include "qemu/compiler.h"
-+#include "hw/core/qdev.h"
-+#include "hw/misc/ti-sec-proxy.h"
-+
-+#define TISCI_MSG_VALUE_DEVICE_SW_STATE_AUTO_OFF 0
-+
-+/** Used by TISCI_MSG_SET_DEVICE to disable device but keep in retention. */
-+#define TISCI_MSG_VALUE_DEVICE_SW_STATE_RETENTION 1
-+
-+/** Used by TISCI_MSG_SET_DEVICE to turn device on for usage. */
-+#define TISCI_MSG_VALUE_DEVICE_SW_STATE_ON 2
-+
-+/* Device is off in TISCI_MSG_GET_DEVICE response. */
-+#define TISCI_MSG_VALUE_DEVICE_HW_STATE_OFF 0
-+
-+/* Device is on in TISCI_MSG_GET_DEVICE response. */
-+#define TISCI_MSG_VALUE_DEVICE_HW_STATE_ON 1
-+
-+/*
-+ * Device is changing state. The state may remain until dependent hardware,
-+ * e.g. pending IRQ handshakes, allows to complete the transition.
-+ */
-+#define TISCI_MSG_VALUE_DEVICE_HW_STATE_TRANS 2
-+
-+/** DMSC(Secure): Device Management and Security Control */
-+#define TISCI_HOST_ID_DMSC (0U)
-+/** MAIN_0_R5_0(Secure): Cortex R5_0 context 0 on Main island(BOOT) */
-+#define TISCI_HOST_ID_MAIN_0_R5_0 (35U)
-+/** MAIN_0_R5_1(Non Secure): Cortex R5_0 context 1 on Main island */
-+#define TISCI_HOST_ID_MAIN_0_R5_1 (36U)
-+/** MAIN_0_R5_2(Secure): Cortex R5_0 context 2 on Main island */
-+#define TISCI_HOST_ID_MAIN_0_R5_2 (37U)
-+/** MAIN_0_R5_3(Non Secure): Cortex R5_0 context 3 on Main island */
-+#define TISCI_HOST_ID_MAIN_0_R5_3 (38U)
-+/** A53_0(Secure): Cortex a53 context 0 on Main island */
-+#define TISCI_HOST_ID_A53_0 (10U)
-+/** A53_1(Secure): Cortex A53 context 1 on Main island */
-+#define TISCI_HOST_ID_A53_1 (11U)
-+/** A53_2(Non Secure): Cortex A53 context 2 on Main island */
-+#define TISCI_HOST_ID_A53_2 (12U)
-+/** A53_3(Non Secure): Cortex A53 context 3 on Main island */
-+#define TISCI_HOST_ID_A53_3 (13U)
-+/** M4_0(Non Secure): M4 */
-+#define TISCI_HOST_ID_M4_0 (30U)
-+/** MAIN_1_R5_0(Secure): Cortex R5_1 context 0 on Main island */
-+#define TISCI_HOST_ID_MAIN_1_R5_0 (40U)
-+/** MAIN_1_R5_1(Non Secure): Cortex R5_1 context 1 on Main island */
-+#define TISCI_HOST_ID_MAIN_1_R5_1 (41U)
-+/** MAIN_1_R5_2(Secure): Cortex R5_1 context 2 on Main island */
-+#define TISCI_HOST_ID_MAIN_1_R5_2 (42U)
-+/** MAIN_1_R5_3(Non Secure): Cortex R5_1 context 3 on Main island */
-+#define TISCI_HOST_ID_MAIN_1_R5_3 (43U)
-+/** A53_4(Non Secure): Cortex A53 context 1 on Main island */
-+#define TISCI_HOST_ID_A53_4 (14U)
-+/** ICSSG_0(Non Secure): ICSSG context 0 on Main island */
-+#define TISCI_HOST_ID_ICSSG_0 (50U)
-+/** ICSSG_1(Non Secure): ICSSG context 1 on Main island */
-+#define TISCI_HOST_ID_ICSSG_1 (51U)
-+
-+/* Catch-all host for board-config resource assignments. */
-+#define TISCI_HOST_ID_ALL (128U)
-+
-+/** Number of unique hosts on the SoC */
-+#define TISCI_HOST_ID_CNT (17U)
-+
-+#define TISCI_DEV_ADC0 0U
-+#define TISCI_DEV_CMP_EVENT_INTROUTER0 1U
-+#define TISCI_DEV_DBGSUSPENDROUTER0 2U
-+#define TISCI_DEV_MAIN_GPIOMUX_INTROUTER0 3U
-+#define TISCI_DEV_MCU_MCU_GPIOMUX_INTROUTER0 5U
-+#define TISCI_DEV_TIMESYNC_EVENT_INTROUTER0 6U
-+#define TISCI_DEV_MCU_M4FSS0 7U
-+#define TISCI_DEV_MCU_M4FSS0_CBASS_0 8U
-+#define TISCI_DEV_MCU_M4FSS0_CORE0 9U
-+#define TISCI_DEV_CPSW0 13U
-+#define TISCI_DEV_CPT2_AGGR0 14U
-+#define TISCI_DEV_STM0 15U
-+#define TISCI_DEV_DCC0 16U
-+#define TISCI_DEV_DCC1 17U
-+#define TISCI_DEV_DCC2 18U
-+#define TISCI_DEV_DCC3 19U
-+#define TISCI_DEV_DCC4 20U
-+#define TISCI_DEV_DCC5 21U
-+#define TISCI_DEV_DMSC0 22U
-+#define TISCI_DEV_MCU_DCC0 23U
-+#define TISCI_DEV_DEBUGSS_WRAP0 24U
-+#define TISCI_DEV_DMASS0 25U
-+#define TISCI_DEV_DMASS0_BCDMA_0 26U
-+#define TISCI_DEV_DMASS0_CBASS_0 27U
-+#define TISCI_DEV_DMASS0_INTAGGR_0 28U
-+#define TISCI_DEV_DMASS0_IPCSS_0 29U
-+#define TISCI_DEV_DMASS0_PKTDMA_0 30U
-+#define TISCI_DEV_DMASS0_RINGACC_0 33U
-+#define TISCI_DEV_MCU_TIMER0 35U
-+#define TISCI_DEV_TIMER0 36U
-+#define TISCI_DEV_TIMER1 37U
-+#define TISCI_DEV_TIMER2 38U
-+#define TISCI_DEV_TIMER3 39U
-+#define TISCI_DEV_TIMER4 40U
-+#define TISCI_DEV_TIMER5 41U
-+#define TISCI_DEV_TIMER6 42U
-+#define TISCI_DEV_TIMER7 43U
-+#define TISCI_DEV_TIMER8 44U
-+#define TISCI_DEV_TIMER9 45U
-+#define TISCI_DEV_TIMER10 46U
-+#define TISCI_DEV_TIMER11 47U
-+#define TISCI_DEV_MCU_TIMER1 48U
-+#define TISCI_DEV_MCU_TIMER2 49U
-+#define TISCI_DEV_MCU_TIMER3 50U
-+#define TISCI_DEV_ECAP0 51U
-+#define TISCI_DEV_ECAP1 52U
-+#define TISCI_DEV_ECAP2 53U
-+#define TISCI_DEV_ELM0 54U
-+#define TISCI_DEV_EMIF_DATA_0_VD 55U
-+#define TISCI_DEV_MMCSD0 57U
-+#define TISCI_DEV_MMCSD1 58U
-+#define TISCI_DEV_EQEP0 59U
-+#define TISCI_DEV_EQEP1 60U
-+#define TISCI_DEV_GTC0 61U
-+#define TISCI_DEV_EQEP2 62U
-+#define TISCI_DEV_ESM0 63U
-+#define TISCI_DEV_MCU_ESM0 64U
-+#define TISCI_DEV_FSIRX0 65U
-+#define TISCI_DEV_FSIRX1 66U
-+#define TISCI_DEV_FSIRX2 67U
-+#define TISCI_DEV_FSIRX3 68U
-+#define TISCI_DEV_FSIRX4 69U
-+#define TISCI_DEV_FSIRX5 70U
-+#define TISCI_DEV_FSITX0 71U
-+#define TISCI_DEV_FSITX1 72U
-+#define TISCI_DEV_FSS0 73U
-+#define TISCI_DEV_FSS0_FSAS_0 74U
-+#define TISCI_DEV_FSS0_OSPI_0 75U
-+#define TISCI_DEV_GICSS0 76U
-+#define TISCI_DEV_GPIO0 77U
-+#define TISCI_DEV_GPIO1 78U
-+#define TISCI_DEV_MCU_GPIO0 79U
-+#define TISCI_DEV_GPMC0 80U
-+#define TISCI_DEV_PRU_ICSSG0 81U
-+#define TISCI_DEV_PRU_ICSSG1 82U
-+#define TISCI_DEV_LED0 83U
-+#define TISCI_DEV_CPTS0 84U
-+#define TISCI_DEV_DDPA0 85U
-+#define TISCI_DEV_EPWM0 86U
-+#define TISCI_DEV_EPWM1 87U
-+#define TISCI_DEV_EPWM2 88U
-+#define TISCI_DEV_EPWM3 89U
-+#define TISCI_DEV_EPWM4 90U
-+#define TISCI_DEV_EPWM5 91U
-+#define TISCI_DEV_EPWM6 92U
-+#define TISCI_DEV_EPWM7 93U
-+#define TISCI_DEV_EPWM8 94U
-+#define TISCI_DEV_VTM0 95U
-+#define TISCI_DEV_MAILBOX0 96U
-+#define TISCI_DEV_MAIN2MCU_VD 97U
-+#define TISCI_DEV_MCAN0 98U
-+#define TISCI_DEV_MCAN1 99U
-+#define TISCI_DEV_MCU_MCRC64_0 100U
-+#define TISCI_DEV_MCU2MAIN_VD 101U
-+#define TISCI_DEV_I2C0 102U
-+#define TISCI_DEV_I2C1 103U
-+#define TISCI_DEV_I2C2 104U
-+#define TISCI_DEV_I2C3 105U
-+#define TISCI_DEV_MCU_I2C0 106U
-+#define TISCI_DEV_MCU_I2C1 107U
-+#define TISCI_DEV_PCIE0 114U
-+#define TISCI_DEV_R5FSS0 119U
-+#define TISCI_DEV_R5FSS1 120U
-+#define TISCI_DEV_R5FSS0_CORE0 121U
-+#define TISCI_DEV_R5FSS0_CORE1 122U
-+#define TISCI_DEV_R5FSS1_CORE0 123U
-+#define TISCI_DEV_R5FSS1_CORE1 124U
-+#define TISCI_DEV_RTI0 125U
-+#define TISCI_DEV_RTI1 126U
-+#define TISCI_DEV_RTI8 127U
-+#define TISCI_DEV_RTI9 128U
-+#define TISCI_DEV_RTI10 130U
-+#define TISCI_DEV_RTI11 131U
-+#define TISCI_DEV_MCU_RTI0 132U
-+#define TISCI_DEV_SA2_UL0 133U
-+#define TISCI_DEV_COMPUTE_CLUSTER0 134U
-+#define TISCI_DEV_A53SS0_CORE_0 135U
-+#define TISCI_DEV_A53SS0_CORE_1 136U
-+#define TISCI_DEV_A53SS0 137U
-+#define TISCI_DEV_DDR16SS0 138U
-+#define TISCI_DEV_PSC0 139U
-+#define TISCI_DEV_MCU_PSC0 140U
-+#define TISCI_DEV_MCSPI0 141U
-+#define TISCI_DEV_MCSPI1 142U
-+#define TISCI_DEV_MCSPI2 143U
-+#define TISCI_DEV_MCSPI3 144U
-+#define TISCI_DEV_MCSPI4 145U
-+#define TISCI_DEV_UART0 146U
-+#define TISCI_DEV_MCU_MCSPI0 147U
-+#define TISCI_DEV_MCU_MCSPI1 148U
-+#define TISCI_DEV_MCU_UART0 149U
-+#define TISCI_DEV_SPINLOCK0 150U
-+#define TISCI_DEV_TIMERMGR0 151U
-+#define TISCI_DEV_UART1 152U
-+#define TISCI_DEV_UART2 153U
-+#define TISCI_DEV_UART3 154U
-+#define TISCI_DEV_UART4 155U
-+#define TISCI_DEV_UART5 156U
-+#define TISCI_DEV_BOARD0 157U
-+#define TISCI_DEV_UART6 158U
-+#define TISCI_DEV_MCU_UART1 160U
-+#define TISCI_DEV_USB0 161U
-+#define TISCI_DEV_SERDES_10G0 162U
-+#define TISCI_DEV_PBIST0 163U
-+#define TISCI_DEV_PBIST1 164U
-+#define TISCI_DEV_PBIST2 165U
-+#define TISCI_DEV_PBIST3 166U
-+#define TISCI_DEV_COMPUTE_CLUSTER0_PBIST_0 167U
-+#define TISCI_DEV_ID_MAX 168U
-+
-+#define TISCI_MSG_FLAG_RESERVED0 BIT(0)
-+/*
-+ * ACK-on-processed: request a response after handling, ACK on success and
-+ * NAK otherwise.
-+ */
-+#define TISCI_MSG_FLAG_AOP BIT(1)
-+
-+/** Indicate that this message is marked secure */
-+#define TISCI_MSG_FLAG_SEC BIT(2)
-+
-+/* Response success flag; missing one means NAK. */
-+#define TISCI_MSG_FLAG_ACK BIT(1)
-+
-+/* TISCI Message IDs */
-+#define TISCI_MSG_VERSION (0x0002U)
-+#define TISCI_MSG_BOOT_NOTIFICATION (0x000AU)
-+#define TISCI_MSG_BOARD_CONFIG (0x000BU)
-+#define TISCI_MSG_BOARD_CONFIG_RM (0x000CU)
-+#define TISCI_MSG_BOARD_CONFIG_SECURITY (0x000DU)
-+#define TISCI_MSG_BOARD_CONFIG_PM (0x000EU)
-+
-+#define TISCI_MSG_ENABLE_WDT (0x0000U)
-+#define TISCI_MSG_WAKE_RESET (0x0001U)
-+#define TISCI_MSG_WAKE_REASON (0x0003U)
-+#define TISCI_MSG_GOODBYE (0x0004U)
-+#define TISCI_MSG_SYS_RESET (0x0005U)
-+
-+#define TISCI_MSG_QUERY_MSMC (0x0020U)
-+#define TISCI_MSG_GET_TRACE_CONFIG (0x0021U)
-+#define TISCI_MSG_QUERY_FW_CAPS (0x0022U)
-+
-+#define TISCI_MSG_SET_CLOCK (0x0100U)
-+#define TISCI_MSG_GET_CLOCK (0x0101U)
-+#define TISCI_MSG_SET_CLOCK_PARENT (0x0102U)
-+#define TISCI_MSG_GET_CLOCK_PARENT (0x0103U)
-+#define TISCI_MSG_GET_NUM_CLOCK_PARENTS (0x0104U)
-+#define TISCI_MSG_SET_FREQ (0x010cU)
-+#define TISCI_MSG_QUERY_FREQ (0x010dU)
-+#define TISCI_MSG_GET_FREQ (0x010eU)
-+
-+#define TISCI_MSG_SET_DEVICE (0x0200U)
-+#define TISCI_MSG_GET_DEVICE (0x0201U)
-+
-+#define TISCI_MSG_SET_DEVICE_RESETS (0x0202U)
-+#define TISCI_MSG_DEVICE_DROP_POWERUP_REF (0x0203U)
-+
-+#define TISCI_MSG_PREPARE_SLEEP (0x0300U)
-+#define TISCI_MSG_ENTER_SLEEP (0x0301U)
-+
-+#define TISCI_MSG_PROC_REQUEST (0xc000U)
-+#define TISCI_MSG_PROC_RELEASE (0xc001U)
-+#define TISCI_MSG_PROC_HANDOVER (0xc005U)
-+#define TISCI_MSG_SET_CONFIG (0xc100U)
-+#define TISCI_MSG_SET_CTRL (0xc101U)
-+#define TISCI_MSG_GET_STATUS (0xc400U)
-+#define TISCI_MSG_WAIT_PROC_BOOT_STATUS (0xc401U)
-+
-+/*
-+ * Security message IDs for K3 SA2UL, OTP and secure-boot TI-SCI services.
-+ * Layouts match the U-Boot/Zephyr TI-SCI protocol headers.
-+ */
-+#define TISCI_MSG_FWL_SET (0x9000U)
-+#define TISCI_MSG_FWL_GET (0x9001U)
-+#define TISCI_MSG_FWL_CHANGE_OWNER (0x9002U)
-+#define TISCI_MSG_SA2UL_GET_DKEK (0x9029U)
-+#define TISCI_MSG_READ_SWREV (0x9033U)
-+#define TISCI_MSG_READ_KEYCNT_KEYREV (0x9034U)
-+
-+#define TISCI_MSG_MAX_ID (0xc500U)
-+
-+/** AM64_MAIN_SEC_MMR_MAIN_0: (Cluster 9 Processor 0) */
-+#define SCICLIENT_PROCID_A53_CL0_C0 (0x20U)
-+/** AM64_MAIN_SEC_MMR_MAIN_0: (Cluster 9 Processor 1) */
-+#define SCICLIENT_PROCID_A53_CL0_C1 (0x21U)
-+/** AM64_MAIN_SEC_MMR_MAIN_0: (Cluster 0 Processor 0) */
-+#define SCICLIENT_PROCID_R5_CL0_C0 (0x01U)
-+/** AM64_MAIN_SEC_MMR_MAIN_0: (Cluster 0 Processor 1) */
-+#define SCICLIENT_PROCID_R5_CL0_C1 (0x02U)
-+/** AM64_MAIN_SEC_MMR_MAIN_0: (Cluster 1 Processor 0) */
-+#define SCICLIENT_PROCID_R5_CL1_C0 (0x06U)
-+/** AM64_MAIN_SEC_MMR_MAIN_0: (Cluster 1 Processor 1) */
-+#define SCICLIENT_PROCID_R5_CL1_C1 (0x07U)
-+/*** AM64_MAIN_SEC_MMR_MAIN_0: (Cluster 16 Processor 0) */
-+#define SCICLIENT_PROCID_MCU_M4FSS0_C0 (0x18U)
-+
-+#define TYPE_TI_DMSC "ti-dmsc"
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(TIDmscState, TI_DMSC)
-+
-+/* Default: 64 bytes -> 16 words */
-+#define TI_DMSC_MAX_WORDS 16
-+
-+/*
-+ * Minimal TISCI wire structs. Keep them packed and model only fields this
-+ * device actually consumes or returns.
-+ */
-+typedef struct TISciMsgHdr {
-+    uint16_t type;
-+    uint8_t host;
-+    uint8_t seq;
-+    uint32_t flags;
-+} QEMU_PACKED TISciMsgHdr;
-+
-+struct TiSciMsgReqProcRequest {
-+    TISciMsgHdr hdr;
-+    uint8_t processor_id;
-+} QEMU_PACKED;
-+
-+struct TiSciMsgReqProcRelease {
-+    TISciMsgHdr hdr;
-+    uint8_t processor_id;
-+} QEMU_PACKED;
-+
-+/*
-+ * TISCI_MSG_PROC_HANDOVER request. Response is only TISciMsgHdr ACK/NAK.
-+ */
-+struct TiSciMsgReqProcHandover {
-+    TISciMsgHdr hdr;
-+    uint8_t processor_id;
-+    uint8_t host_id;
-+} QEMU_PACKED;
-+
-+#define TISCI_MSG_VAL_PROC_BOOT_STATUS_FLAG_M4F_WFI (0x00000002U)
-+
-+struct TisciMsgProcGetStatusReq {
-+    TISciMsgHdr hdr;
-+    uint8_t processor_id;
-+} QEMU_PACKED;
-+
-+struct TisciMsgProcGetStatusResp {
-+    TISciMsgHdr hdr;
-+    uint8_t processor_id;
-+    uint32_t bootvector_lo;
-+    uint32_t bootvector_hi;
-+    uint32_t config_flags_1;
-+    uint32_t control_flags_1;
-+    uint32_t status_flags_1;
-+} QEMU_PACKED;
-+
-+/*
-+ * WAIT_PROC_BOOT_STATUS request. Only processor_id is consumed by the no-op
-+ * handler, so the trailing wait/status fields are left out.
-+ */
-+struct TisciMsgReqWaitProcBootStatus {
-+    TISciMsgHdr hdr;
-+    uint8_t processor_id;
-+} QEMU_PACKED;
-+
-+/*
-+ * SET_DEVICE matches the TISCI ABI layout: the reserved u32 before state is
-+ * on the wire and keeps the state byte aligned to SYSFW.
-+ */
-+struct TisciMsgSetDeviceReq {
-+    TISciMsgHdr hdr;
-+    uint32_t id;
-+    uint32_t reserved;
-+    uint8_t state;
-+} QEMU_PACKED;
-+
-+struct TisciMsgSetDeviceResetsReq {
-+    TISciMsgHdr hdr;
-+    uint32_t id;
-+    uint32_t resets;
-+} QEMU_PACKED;
-+
-+struct TiSciMsgQueryFwCapsResp {
-+    TISciMsgHdr hdr;
-+#define MSG_FLAG_CAPS_GENERIC BIT(0)
-+#define MSG_FLAG_CAPS_LPM_DEEP_SLEEP BIT(1)
-+#define MSG_FLAG_CAPS_LPM_MCU_ONLY BIT(2)
-+#define MSG_FLAG_CAPS_LPM_STANDBY BIT(3)
-+#define MSG_FLAG_CAPS_LPM_PARTIAL_IO BIT(4)
-+#define MSG_FLAG_CAPS_LPM_DM_MANAGED BIT(5)
-+    uint64_t fw_caps;
-+} QEMU_PACKED;
-+
-+struct TiSciMsgVersionResp {
-+    TISciMsgHdr hdr;
-+    char firmware_description[32];
-+    uint16_t firmware_revision;
-+    uint8_t abi_major;
-+    uint8_t abi_minor;
-+} QEMU_PACKED;
-+
-+struct TisciMsgSetFreqReq {
-+    TISciMsgHdr hdr;
-+    uint32_t device;
-+    uint64_t min_freq_hz;
-+    uint64_t target_freq_hz;
-+    uint64_t max_freq_hz;
-+    uint8_t clk;
-+    uint32_t clk32;
-+} QEMU_PACKED;
-+
-+struct TisciMsgQueryFreqReq {
-+    TISciMsgHdr hdr;
-+    uint32_t device;
-+    uint64_t min_freq_hz;
-+    uint64_t target_freq_hz;
-+    uint64_t max_freq_hz;
-+    uint8_t clk;
-+    uint32_t clk32;
-+} QEMU_PACKED;
-+
-+struct TisciMsgQueryFreqResp {
-+    TISciMsgHdr hdr;
-+    uint64_t freq_hz;
-+} QEMU_PACKED;
-+
-+/*
-+ * GET_FREQ has only device/clock in the request. The response is hdr plus
-+ * freq_hz, same payload as QUERY_FREQ.
-+ */
-+struct TisciMsgGetFreqReq {
-+    TISciMsgHdr hdr;
-+    uint32_t device;
-+    uint8_t clk;
-+} QEMU_PACKED;
-+
-+struct TisciMsgSetClockReq {
-+    TISciMsgHdr hdr;
-+    uint32_t device;
-+    uint8_t clk;
-+    uint8_t state;
-+    uint32_t clk32;
-+} QEMU_PACKED;
-+
-+struct TisciMsgGetNumClockParentsReq {
-+    TISciMsgHdr hdr;
-+    uint32_t device;
-+    uint8_t clk;
-+    uint32_t clk32;
-+} QEMU_PACKED;
-+
-+struct TisciMsgGetNumClockParentsResp {
-+    TISciMsgHdr hdr;
-+    uint8_t num_parents;
-+    uint32_t num_parentint32_t;
-+} QEMU_PACKED;
-+
-+struct TisciMsgGetClockParentReq {
-+    TISciMsgHdr hdr;
-+    uint32_t device;
-+    uint8_t clk;
-+    uint32_t clk32;
-+} QEMU_PACKED;
-+
-+struct TisciMsgGetClockParentResp {
-+    TISciMsgHdr hdr;
-+    uint8_t parent;
-+    uint32_t parent32;
-+} QEMU_PACKED;
-+
-+/*
-+ * TISCI_MSG_SET_CLOCK_PARENT request. Response is bare TISciMsgHdr ACK/NAK.
-+ */
-+struct TisciMsgSetClockParentReq {
-+    TISciMsgHdr hdr;
-+    uint32_t dev_id;
-+    uint8_t clk_id;
-+    uint8_t parent_id;
-+} QEMU_PACKED;
-+
-+struct TisciMsgGetClockReq {
-+    TISciMsgHdr hdr;
-+    uint32_t device;
-+    uint8_t clk;
-+    uint32_t clk32;
-+} QEMU_PACKED;
-+
-+struct TisciMsgGetClockResp {
-+    TISciMsgHdr hdr;
-+    uint8_t programmed_state;
-+    uint8_t current_state;
-+} QEMU_PACKED;
-+
-+struct TisciMsgGetDeviceReq {
-+    TISciMsgHdr hdr;
-+    uint32_t id;
-+} QEMU_PACKED;
-+
-+struct TisciMsgGetDeviceResp {
-+    TISciMsgHdr hdr;
-+    uint32_t context_loss_count;
-+    uint32_t resets;
-+    uint8_t programmed_state;
-+    uint8_t current_state;
-+} QEMU_PACKED;
-+
-+/*
-+ * Security message layouts for K3 SA2UL, OTP and secure-boot services. They
-+ * match the U-Boot and Zephyr TI-SCI protocol headers.
-+ */
-+#define FWL_MAX_PRIVID_SLOTS 3U
-+
-+struct TisciMsgReqFwlSetFirewallRegion {
-+    TISciMsgHdr hdr;
-+    uint16_t fwl_id;
-+    uint16_t region;
-+    uint32_t n_permission_regs;
-+    uint32_t control;
-+    uint32_t permissions[FWL_MAX_PRIVID_SLOTS];
-+    uint64_t start_address;
-+    uint64_t end_address;
-+} QEMU_PACKED;
-+
-+/* TISCI_MSG_FWL_SET response is bare generic ACK/NACK (TISciMsgHdr). */
-+
-+struct TisciMsgReqFwlGetFirewallRegion {
-+    TISciMsgHdr hdr;
-+    uint16_t fwl_id;
-+    uint16_t region;
-+    uint32_t n_permission_regs;
-+} QEMU_PACKED;
-+
-+struct TisciMsgRespFwlGetFirewallRegion {
-+    TISciMsgHdr hdr;
-+    uint16_t fwl_id;
-+    uint16_t region;
-+    uint32_t n_permission_regs;
-+    uint32_t control;
-+    uint32_t permissions[FWL_MAX_PRIVID_SLOTS];
-+    uint64_t start_address;
-+    uint64_t end_address;
-+} QEMU_PACKED;
-+
-+struct TisciMsgReqFwlChangeOwnerInfo {
-+    TISciMsgHdr hdr;
-+    uint16_t fwl_id;
-+    uint16_t region;
-+    uint8_t owner_index;
-+} QEMU_PACKED;
-+
-+struct TisciMsgRespFwlChangeOwnerInfo {
-+    TISciMsgHdr hdr;
-+    uint16_t fwl_id;
-+    uint16_t region;
-+    uint8_t owner_index;
-+    uint8_t owner_privid;
-+    uint16_t owner_permission_bits;
-+} QEMU_PACKED;
-+
-+#define SA2UL_DKEK_KEY_LEN 32
-+#define KDF_LABEL_AND_CONTEXT_LEN_MAX 41
-+
-+struct TisciMsgReqSa2ulGetDkek {
-+    TISciMsgHdr hdr;
-+    uint8_t sa2ul_instance;
-+    uint8_t kdf_label_len;
-+    uint8_t kdf_context_len;
-+    uint8_t kdf_label_and_context[KDF_LABEL_AND_CONTEXT_LEN_MAX];
-+} QEMU_PACKED;
-+
-+struct TisciMsgRespSa2ulGetDkek {
-+    TISciMsgHdr hdr;
-+    uint8_t dkek[SA2UL_DKEK_KEY_LEN];
-+} QEMU_PACKED;
-+
-+struct TisciMsgRespReadSwrev {
-+    TISciMsgHdr hdr;
-+    uint32_t swrev;
-+} QEMU_PACKED;
-+
-+struct TisciMsgRespReadKeycntKeyrev {
-+    TISciMsgHdr hdr;
-+    uint32_t keycnt;
-+    uint32_t keyrev;
-+} QEMU_PACKED;
-+
-+typedef struct TIDmscClient TIDmscClient;
-+
-+typedef void (*TiDmscMsgHandler)(TIDmscClient *client, TISciMsgHdr *hdr,
-+                                 uint16_t thread_id, const uint32_t *words,
-+                                 size_t nwords);
-+
-+struct TIDmscClient {
-+    TIDmscState *dmsc;
-+    uint16_t rx_thread_id;
-+    uint16_t tx_thread_id;
-+    bool pending;
-+    /*
-+     * Secure R5 clients add a 4-byte checksum/reserved word before the
-+     * normal TISciMsgHdr on requests and responses.
-+     */
-+    bool secure;
-+    uint32_t pending_words[TI_DMSC_MAX_WORDS];
-+    size_t pending_nwords;
-+
-+    /*
-+     * Set from the actual request's AOP bit before dispatch. The bottom
-+     * half handles one message at a time, so no extra locking is needed.
-+     */
-+    bool cur_req_wants_resp;
++/dts-v1/;
++
++/ {
++	interrupt-parent = <0x8003>;
++	dma-coherent;
++	model = "linux,dummy-virt";
++	#size-cells = <0x02>;
++	#address-cells = <0x02>;
++	compatible = "linux,dummy-virt";
++
++	reserved-memory {
++		#address-cells = <0x02>;
++		#size-cells = <0x02>;
++		ranges;
++
++		m4f-dma-memory@a4000000 {
++			compatible = "shared-dma-pool";
++			reg = <0x00 0xa4000000 0x00 0x100000>;
++			no-map;
++			phandle = <0x05>;
++		};
++
++		m4f-memory@a4100000 {
++			compatible = "shared-dma-pool";
++			reg = <0x00 0xa4100000 0x00 0xf00000>;
++			no-map;
++			phandle = <0x06>;
++		};
++	};
++
++	psci {
++		migrate = <0xc4000005>;
++		cpu_on = <0xc4000003>;
++		cpu_off = <0x84000002>;
++		cpu_suspend = <0xc4000001>;
++		method = "hvc";
++		compatible = "arm,psci-1.0", "arm,psci-0.2", "arm,psci";
++	};
++
++	memory@80000000 {
++		reg = <0x00 0x80000000 0x00 0x40000000>;
++		device_type = "memory";
++	};
++
++	bus@48000000 {
++		bootph-all;
++		compatible = "simple-bus";
++		#address-cells = <0x02>;
++		#size-cells = <0x02>;
++		dma-ranges;
++		ranges = <0x00 0x48000000 0x00 0x48000000 0x00 0x6400000>;
++		ti,sci-dev-id = <0x19>;
++
++		mailbox@4d000000 {
++			bootph-all;
++			compatible = "ti,am654-secure-proxy";
++			#mbox-cells = <0x01>;
++			reg-names = "target_data", "rt", "scfg";
++			reg = <0x00 0x4d000000 0x00 0x80000 0x00 0x4a600000 0x00 0x80000 0x00 0x4a400000 0x00 0x80000>;
++			interrupt-names = "rx_012";
++			interrupts = <0x00 0x22 0x04>;
++			phandle = <0x07>;
++		};
++	};
++
++	platform-bus@c000000 {
++		interrupt-parent = <0x8003>;
++		ranges;
++		#address-cells = <0x02>;
++		#size-cells = <0x02>;
++		compatible = "qemu,platform", "simple-bus";
++
++		mailbox@29060000 {
++			compatible = "ti,am64-mailbox";
++			reg = <0x00 0x29060000 0x00 0x200>;
++			interrupts = <0x00 0x4c 0x04>;
++			#mbox-cells = <0x01>;
++			ti,mbox-num-users = <0x04>;
++			ti,mbox-num-fifos = <0x10>;
++			status = "okay";
++			phandle = <0x03>;
++
++			mbox-m4-0 {
++				ti,mbox-rx = <0x00 0x00 0x02>;
++				ti,mbox-tx = <0x01 0x00 0x02>;
++				phandle = <0x04>;
++			};
++		};
++
++		m4fss@5000000 {
++			compatible = "ti,am64-m4fss";
++			reg = <0x00 0x5000000 0x00 0x30000 0x00 0x5040000 0x00 0x10000>;
++			reg-names = "iram", "dram";
++			resets = <0x01 0x09 0x01>;
++			firmware-name = "am64-mcu-m4f0_0-fw";
++			ti,sci = <0x02>;
++			ti,sci-dev-id = <0x09>;
++			ti,sci-proc-ids = <0x18 0xff>;
++			mboxes = <0x03 0x04>;
++			memory-region = <0x05 0x06>;
++			status = "okay";
++		};
++
++		system-controller@44043000 {
++			bootph-all;
++			compatible = "ti,k2g-sci";
++			ti,host-id = <0x0c>;
++			mbox-names = "rx", "tx";
++			mboxes = <0x07 0x0c 0x07 0x0d>;
++			reg-names = "debug_messages";
++			reg = <0x00 0x44043000 0x00 0xfe0>;
++			phandle = <0x02>;
++
++			power-controller {
++				bootph-all;
++				compatible = "ti,sci-pm-domain";
++				#power-domain-cells = <0x02>;
++			};
++
++			clock-controller {
++				bootph-all;
++				compatible = "ti,k2g-sci-clk";
++				#clock-cells = <0x02>;
++			};
++
++			reset-controller {
++				bootph-all;
++				compatible = "ti,sci-reset";
++				#reset-cells = <0x02>;
++				phandle = <0x01>;
++			};
++		};
++	};
++
++	fw-cfg@9020000 {
++		dma-coherent;
++		reg = <0x00 0x9020000 0x00 0x18>;
++		compatible = "qemu,fw-cfg-mmio";
++	};
++
++	gpio-keys {
++		compatible = "gpio-keys";
++
++		poweroff {
++			gpios = <0x8005 0x03 0x00>;
++			linux,code = <0x74>;
++			label = "GPIO Key Poweroff";
++		};
++	};
++
++	pl061@9030000 {
++		phandle = <0x8005>;
++		clock-names = "apb_pclk";
++		clocks = <0x8000>;
++		interrupts = <0x00 0x07 0x04>;
++		gpio-controller;
++		#gpio-cells = <0x02>;
++		compatible = "arm,pl061", "arm,primecell";
++		reg = <0x00 0x9030000 0x00 0x1000>;
++	};
++
++	pcie@d000000 {
++		interrupt-map-mask = <0x1800 0x00 0x00 0x07>;
++		interrupt-map = <0x00 0x00 0x00 0x01 0x8003 0x00 0x00 0x00 0x03 0x04 0x00 0x00 0x00 0x02 0x8003 0x00 0x00 0x00 0x04 0x04 0x00 0x00 0x00 0x03 0x8003 0x00 0x00 0x00 0x05 0x04 0x00 0x00 0x00 0x04 0x8003 0x00 0x00 0x00 0x06 0x04 0x800 0x00 0x00 0x01 0x8003 0x00 0x00 0x00 0x04 0x04 0x800 0x00 0x00 0x02 0x8003 0x00 0x00 0x00 0x05 0x04 0x800 0x00 0x00 0x03 0x8003 0x00 0x00 0x00 0x06 0x04 0x800 0x00 0x00 0x04 0x8003 0x00 0x00 0x00 0x03 0x04 0x1000 0x00 0x00 0x01 0x8003 0x00 0x00 0x00 0x05 0x04 0x1000 0x00 0x00 0x02 0x8003 0x00 0x00 0x00 0x06 0x04 0x1000 0x00 0x00 0x03 0x8003 0x00 0x00 0x00 0x03 0x04 0x1000 0x00 0x00 0x04 0x8003 0x00 0x00 0x00 0x04 0x04 0x1800 0x00 0x00 0x01 0x8003 0x00 0x00 0x00 0x06 0x04 0x1800 0x00 0x00 0x02 0x8003 0x00 0x00 0x00 0x03 0x04 0x1800 0x00 0x00 0x03 0x8003 0x00 0x00 0x00 0x04 0x04 0x1800 0x00 0x00 0x04 0x8003 0x00 0x00 0x00 0x05 0x04>;
++		#interrupt-cells = <0x01>;
++		ranges = <0x1000000 0x00 0x00 0x00 0x3eff0000 0x00 0x10000 0x2000000 0x00 0x68000000 0x00 0x68000000 0x00 0x08000000>;
++		reg = <0x00 0x0d000000 0x00 0x02000000>;
++		dma-coherent;
++		bus-range = <0x00 0x1f>;
++		linux,pci-domain = <0x00>;
++		#size-cells = <0x02>;
++		#address-cells = <0x03>;
++		device_type = "pci";
++		compatible = "pci-host-ecam-generic";
++	};
++
++	pl031@9010000 {
++		clock-names = "apb_pclk";
++		clocks = <0x8000>;
++		interrupts = <0x00 0x02 0x04>;
++		reg = <0x00 0x9010000 0x00 0x1000>;
++		compatible = "arm,pl031", "arm,primecell";
++	};
++
++	pl011@9000000 {
++		clock-names = "uartclk", "apb_pclk";
++		clocks = <0x8000 0x8000>;
++		interrupts = <0x00 0x01 0x04>;
++		reg = <0x00 0x9000000 0x00 0x1000>;
++		compatible = "arm,pl011", "arm,primecell";
++	};
++
++	pl011@9040000 {
++		clock-names = "uartclk", "apb_pclk";
++		clocks = <0x8000 0x8000>;
++		interrupts = <0x00 0x08 0x04>;
++		reg = <0x00 0x9040000 0x00 0x1000>;
++		compatible = "arm,pl011", "arm,primecell";
++	};
++
++	pmu {
++		interrupts = <0x01 0x07 0x304>;
++		compatible = "arm,armv8-pmuv3";
++	};
++
++	intc@1800000 {
++		phandle = <0x8003>;
++		reg = <0x00 0x1800000 0x00 0x10000
++		       0x00 0x1840000 0x00 0x40000>;
++		compatible = "arm,gic-v3";
++		ranges;
++		#size-cells = <0x02>;
++		#address-cells = <0x02>;
++		interrupt-controller;
++		#interrupt-cells = <0x03>;
++	};
++
++
++	flash@50000000 {
++		bank-width = <0x04>;
++		reg = <0x00 0x50000000 0x00 0x8000000>;
++		compatible = "cfi-flash";
++	};
++	cpus {
++		#size-cells = <0x00>;
++		#address-cells = <0x01>;
++
++		cpu-map {
++
++			socket0 {
++
++				cluster0 {
++
++					core0 {
++						cpu = <0x8002>;
++					};
++
++					core1 {
++						cpu = <0x8001>;
++					};
++				};
++			};
++		};
++
++		cpu@0 {
++			phandle = <0x8002>;
++			reg = <0x00>;
++			enable-method = "psci";
++			compatible = "arm,cortex-a53";
++			device_type = "cpu";
++		};
++
++		cpu@1 {
++			phandle = <0x8001>;
++			reg = <0x01>;
++			enable-method = "psci";
++			compatible = "arm,cortex-a53";
++			device_type = "cpu";
++		};
++	};
++
++	timer {
++		interrupts = <0x01 0x0d 0x304 0x01 0x0e 0x304 0x01 0x0b 0x304 0x01 0x0a 0x304>;
++		always-on;
++		compatible = "arm,armv8-timer", "arm,armv7-timer";
++	};
++
++	apb-pclk {
++		phandle = <0x8000>;
++		clock-output-names = "clk24mhz";
++		clock-frequency = <0x16e3600>;
++		#clock-cells = <0x00>;
++		compatible = "fixed-clock";
++	};
++
++	aliases {
++		serial0 = "/pl011@9000000";
++		serial1 = "/pl011@9040000";
++	};
++
++	chosen {
++		bootargs = "root=/dev/vda rw  mem=2048M console=ttyS2 console=ttyAMA0 swiotlb=0 audit=0";
++		stdout-path = "/pl011@9000000";
++		rng-seed = <0x2b2313e6 0x69289174 0x3e2a0676 0xe5dcc1a8 0xc1e04c16 0x988a8076 0x6e26a8c8 0x2a273f53>;
++		kaslr-seed = <0x10fd45dd 0xbe924a75>;
++	};
 +};
-+
-+struct TIDmscState {
-+    DeviceState parent_obj;
-+
-+    /* QOM link to SEC_PROXY */
-+    TISecProxyState *sec_proxy;
-+
-+    /* Config */
-+    uint16_t rx_thread_id; /* e.g. M4_0_WRITE_THREAD */
-+    uint16_t tx_thread_id; /* e.g. M4_0_READ_RESPONSE_THREAD */
-+    uint32_t num_rx_threads;
-+    uint16_t *rx_thread_ids;
-+    uint32_t num_tx_threads;
-+    uint16_t *tx_thread_ids;
-+    /* rx threads of clients, which use secure R5 transport framing */
-+    uint32_t num_secure_rx_threads;
-+    uint16_t *secure_rx_threads;
-+    uint64_t m4_cpu_id;       /* QEMU CPU index used for MCU M4 */
-+    uint64_t a53_cpu_id_base; /* MP affinity of A53 core 0 (core 1 = +1) */
-+
-+    uint32_t msg_words; /* usually 16 */
-+
-+    /* Optional async handling */
-+    QEMUBH *bh;
-+    QemuMutex lock;
-+
-+    TiDmscMsgHandler msg_handler[TISCI_MSG_MAX_ID];
-+    uint32_t num_clients;
-+    TIDmscClient *clients;
-+
-+    uint8_t dev_hw_state[TISCI_DEV_ID_MAX];
-+    uint8_t dev_prog_state[TISCI_DEV_ID_MAX];
-+    bool m4_running;
-+    /* A53 boot vectors captured from TISCI_MSG_SET_CONFIG. */
-+    uint64_t proc_bootvector[2];
-+};
-+
-+#endif /* HW_MISC_TI_DMSC_H */
 -- 
 2.43.0
 
