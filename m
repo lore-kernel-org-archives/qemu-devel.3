@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5B8CC5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:57:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9496DC5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:57:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwtk0-0002TM-3n; Wed, 19 Aug 2026 23:46:56 -0400
+	id 1wwtmD-0007lA-Q6; Wed, 19 Aug 2026 23:49:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtjy-0002R0-OA
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:54 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1wwtm5-0007Zb-RZ
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:49:06 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtjx-00047F-3L
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:54 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-c9b373d5af0so1122024a12.2
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:46:52 -0700 (PDT)
+ id 1wwtm4-0004TI-6a
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:49:05 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-38ea87caafeso1504415a91.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:49:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787197612; x=1787802412; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787197743; x=1787802543; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=fQDgWJg7DF9eHEdRBw/5L4zK1k6fMkTJXubxOKeqz3Y=;
- b=VKqKMb2TaFCG70GPcHb+VTp/sTFss25qiYRrBbGCstrV/Hdljtn0cewR75TcWVuvwx
- eDYgUmWwjAvyCsNWuhee47jTKWZPpOfmJhFHxCHMiayLve0CvqO7VOZYBhn/Zj5uC0tN
- dkOeoirYrxjmjcbF2Pu+3oCcn3KVn4aYlnrCv38aBxQOaS9VP4YnZmuWg8TbKXq7U2a0
- hfhlG7ze8JXFPe6A715fIz6bLSN5H8xEWqGaoYJ+HSfqO0g6NiroYUIqkykLt5JyXroP
- FhdnQdRjuGuQPnXdyf1zXDflpxklXOAiMMrqlHRFcihmFUBVC6sS8kOe364zDUxpN1bw
- jgyg==
+ bh=v1HHSGb013dDgNPZxkNVb6ZLlCJeWWRoZwdE2wte10s=;
+ b=OdaH7noCcHyFaGp1i0FyyAkvaRrMx8+ChhAnDDbI1lH56EYmRm6nb96CglvdChnkws
+ yllpRiPV4uiCIhM8iBhgusBmOAXed9dTBDk5WwAtr7r9mI2Odqvl8crhyZ2JJ1eD8OWC
+ kG0oWyEvzFak2oMJvAeNpXZt3dAM3/CGrolWPZ7RQWJl7C71pmnO6Y1xPr68Ht6ty9jf
+ f+hR5EnAu2J6mnzA+xYV70nb2s7Zh/W/t8GM7BQ0ZRz1xKKOcrD07CxxOsMBg9gDmofo
+ GPbT1M7SPCpqtuRkcfnjG/mdnFyZXBZLQfe2H5a8EuDEETQBNkcbaptxMJW5M6XRyukT
+ TadA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787197612; x=1787802412;
+ d=1e100.net; s=20251104; t=1787197743; x=1787802543;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=fQDgWJg7DF9eHEdRBw/5L4zK1k6fMkTJXubxOKeqz3Y=;
- b=YlqTxlMbCJatI8PTK555kL1D+YRlbEyaJBmFzh4ECv6zv3e5mdVyS3wKrkFpAZeeEr
- jRSMKX/yAGSzunM4uqIisoYlni5vS+R5Lh9dMHITcmYF5H/Yof4qR4MKqV37/uPXZPbx
- czZRLJj/SoBdfLzj+EAQaxWFQf3ej2RE8mOYv+9wjKG5xWp5Y/iW45+Tw0nE08hexiem
- ddoEFBCYbzC9L6rilXwm6v1dVK2vZZb7PPxj4yLVF5nQ6CS3Yqdn4+HUMmpytNZKgO9/
- VC9pCSNspgN/k7h9KWBwqE1YPjgIWSqmGQHdVk7Kvd15igvIsnrAz6IXGy+gI6YXAFR+
- LYbw==
-X-Gm-Message-State: AOJu0YzGxLgarsm9wA5KN/50xKow1C3d7mstiX1kr3CHi+gpmPowkIxe
- hhkNXGgv1YiC6860erEFaULo/LnUhCEPf1teB90KHLEJSr/a9Wn613a4WNP8pQ==
-X-Gm-Gg: AR+sD12yKCmTG0RjqHdO+NuJMl1i0dtASlfjVkBLtxOggKZQSdcXCgSMJPY9b2pXWoM
- BcBlXHN2xchkCz5GigYt3p1ttAyrwB8m4pfsphG0nRpDTakRfsfzHuUTc4b127P/3gV2k1HPCH4
- eTWYo/c1xlmnanI1CRDZIA8CZA54rDCC4yOtSLTXqAibwvPQSKU2NWaEgl/fKmJH7HN9HHca9na
- iXxlDj869F21O1CfOBXCoNjwcOe6vsTvJZjVwvmt69RFZ7h/toiFejaVkP7QHyYWTGhe/OLnCO0
- zdlJLzVhrhxsbf0ucyDO2cQ+pjGq5YPuv9QUes+wS+z2rClYLYschIQTWRFtgmfOU+E1v8m6KY7
- m+Gm5TRTnB37JhmVP875xWh0BZce0mXX8SEqWGdwMlR/6/1IIekpJ9Ak09V2HCdRFndW0thui2k
- UV8EzwqV6o9FbLVmxlhqGBrsVIq+MsymhmQTComEPz+rTdyOo4QRNz2BLwq2iIFHnlyUINXSl7J
- 6DuMyVG2vZJ679TzPi9GzkB7i/0
-X-Received: by 2002:a05:6a21:4cc2:b0:3cc:f008:8123 with SMTP id
- adf61e73a8af0-3cd010d38c4mr17724926637.8.1787197611580; 
- Wed, 19 Aug 2026 20:46:51 -0700 (PDT)
+ bh=v1HHSGb013dDgNPZxkNVb6ZLlCJeWWRoZwdE2wte10s=;
+ b=X1bTAQCxGdQ1Mb0OJtYpbYmiKh7XHeNCnm0qYEKc26BiK4Lcy11DZFMB2MZI2IUet7
+ LSIPZtHj0gFJJO7/6mhtxlyDsPRMYkgcSAllYbrx+dWQ+fu1uWMgalweLXS4Q4NtZ7sq
+ FrmjOteptaofaIspLASthZXniTmAyvL/mYM+lHUhFFYC3fSpIKhwiRwEtcldDyY/qEGO
+ a7nl+swcL8LZB41MIaUgj3kBsS5joMtqFDc4nlTxjGVxYXD2bhxW4XlSobD5gZa5LKUO
+ xYa+knOgLbQ7MhBk7rNW+ZJgTJtiC3nKPbtaH7m3YCD8elAeX7VQB03T8WO5C+rLI8H8
+ XZ4A==
+X-Gm-Message-State: AFuF++n6m5drFtGmXOSAOXFks7yizSqRqucPL5+waoDmEHxv339quDnI
+ A7tWtTbYu48VBiO8zGq0gDbvohu3Co3Z3oRMD9dlDB8jzQBKnOmnTy+u1X9TYA==
+X-Gm-Gg: AR+sD10pMEqEy9Jayf18/FT2lxZBLWpInK2xP+cNS9wdKE1/xqQtgiPTfwfDQG4+s+H
+ nnf31288yoKeFekVJKQtJM73WEneq/572cbfdFvLy8/CbXnJ6b18R/Y6StzuzVX68pz3Wqm1Y2a
+ Aliyh4iUUpx+vHTNiU/yIe8LjzvRxa9QJUmv2UrWRKaEgmpR6uzuJydH/ein3GGmxMoksbS3dtP
+ cCE5Ei5yattmDCM2AIzfyb00aewBMRxuO/Pu66iRqT23EMyFFgVqwzvItPEiSFTPyf4ms+hir+q
+ bARPKXYAFQZ/59x2WMvIb5HRyt/K3k3PYkQodXd9ggzkUjm6NEEbivAnI3g4BFl1g+4cg98tFCT
+ iqBgrFNftEVLZKaVZ7upLkFC9yR/7ZgvYNOJiIpfTcNejlZffiLbPgdVWdR6EP3tmCQ9fPApJ71
+ XPMKkWCBPyA49hTAP2qZMoLvh5v7hQvFrotsYY0OLbf/WKE4gSUx6hDUmnSrxCL0KR1yW6rC7gu
+ N1wJA==
+X-Received: by 2002:a17:90b:4fd0:b0:38e:5b59:c2ff with SMTP id
+ 98e67ed59e1d1-39580a4d031mr18112202a91.3.1787197742705; 
+ Wed, 19 Aug 2026 20:49:02 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.46.49
+ a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.49.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 20:46:51 -0700 (PDT)
+ Wed, 19 Aug 2026 20:49:02 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
+Cc: wangyang <wangyang25@otcaix.iscas.ac.cn>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 43/93] disas/riscv: Pass rv_opcode_data pointer to format_inst
-Date: Thu, 20 Aug 2026 13:43:40 +1000
-Message-ID: <20260820034430.1186695-44-alistair.francis@wdc.com>
+Subject: [PULL 90/93] target/riscv: reject FMV.X.W/FMV.W.X under Zfinx
+Date: Thu, 20 Aug 2026 13:44:27 +1000
+Message-ID: <20260820034430.1186695-91-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260820034430.1186695-1-alistair.francis@wdc.com>
 References: <20260820034430.1186695-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,51 +103,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: wangyang <wangyang25@otcaix.iscas.ac.cn>
 
+Zfinx explicitly excludes the FMV transfer instructions, but
+trans_fmv_x_w/trans_fmv_w_x used REQUIRE_ZFINX_OR_F so a Zfinx-only
+CPU accepted them.  Require RVF instead so the transfers trap with
+an illegal instruction when only Zfinx is present.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4108
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260812223142.349142-8-richard.henderson@linaro.org>
+Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
+Message-ID: <36c7cfebd27b4b6e8bcdd00e09e9dda0@wangyang25.otcaix.iscas.ac.cn>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- disas/riscv.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ target/riscv/tcg/insn_trans/trans_rvf.c.inc | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 0be2f07612..70ea41f125 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -5111,17 +5111,16 @@ static size_t inst_length(rv_inst inst)
- 
- /* format instruction */
- 
--static GString *format_inst(size_t tab, rv_decode *dec)
-+static GString *format_inst(size_t tab, rv_decode *dec,
-+                            const rv_opcode_data *op)
+diff --git a/target/riscv/tcg/insn_trans/trans_rvf.c.inc b/target/riscv/tcg/insn_trans/trans_rvf.c.inc
+index 481f7282da..636dec1664 100644
+--- a/target/riscv/tcg/insn_trans/trans_rvf.c.inc
++++ b/target/riscv/tcg/insn_trans/trans_rvf.c.inc
+@@ -434,7 +434,8 @@ static bool trans_fmv_x_w(DisasContext *ctx, arg_fmv_x_w *a)
  {
--    const rv_opcode_data *opcode_data = dec->opcode_data;
-     GString *buf = g_string_sized_new(64);
--    const char *fmt;
-+    const char *fmt = op->format;
+     /* NOTE: This was FMV.X.S in an earlier version of the ISA spec! */
+     REQUIRE_FPU;
+-    REQUIRE_ZFINX_OR_F(ctx);
++    /* Zfinx explicitly excludes the FMV transfer instructions. */
++    REQUIRE_EXT(ctx, RVF);
  
--    fmt = opcode_data[dec->op].format;
-     while (*fmt) {
-         switch (*fmt) {
-         case 'O':
--            g_string_append(buf, opcode_data[dec->op].name);
-+            g_string_append(buf, op->name);
-             break;
-         case '(':
-         case ',':
-@@ -5466,7 +5465,7 @@ static GString *disasm_inst(rv_isa isa, uint64_t pc, rv_inst inst,
-     decode_inst_operands(&dec, isa, op);
-     op = decode_inst_decompress(&dec, isa, op);
-     op = decode_inst_lift_pseudo(&dec, op);
--    return format_inst(24, &dec);
-+    return format_inst(24, &dec, op);
- }
+     TCGv dest = dest_gpr(ctx, a->rd);
+     TCGv_i64 src1 = get_fpr_hs(ctx, a->rs1);
+@@ -537,7 +538,8 @@ static bool trans_fmv_w_x(DisasContext *ctx, arg_fmv_w_x *a)
+ {
+     /* NOTE: This was FMV.S.X in an earlier version of the ISA spec! */
+     REQUIRE_FPU;
+-    REQUIRE_ZFINX_OR_F(ctx);
++    /* Zfinx explicitly excludes the FMV transfer instructions. */
++    REQUIRE_EXT(ctx, RVF);
  
- #define INST_FMT_2 "%04x              "
+     TCGv_i64 dest = dest_fpr(ctx, a->rd);
+     TCGv src = get_gpr(ctx, a->rs1, EXT_ZERO);
 -- 
 2.54.0
 
