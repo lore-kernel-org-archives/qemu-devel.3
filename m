@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7594CC5DF89
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 02:51:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 385EDC5DF88
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 02:51:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwsqR-0001zc-68; Wed, 19 Aug 2026 22:49:31 -0400
+	id 1wwsqZ-0002Bi-DA; Wed, 19 Aug 2026 22:49:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kylefoxaustin.github@gmail.com>)
- id 1wwspu-0001r0-Ks
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:48:59 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ id 1wwsqH-0001yP-Lk
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:49:24 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <kylefoxaustin.github@gmail.com>)
- id 1wwspr-0000PM-Mb
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:48:58 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-66c70d1672cso2042138d50.0
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 19:48:55 -0700 (PDT)
+ id 1wwsqB-0000ch-Hp
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:49:21 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-66c711b7f2aso2965943d50.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 19:49:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787194134; x=1787798934; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=uLySbPfUe/6ycb7XxkslGbgojMHRka83kHXjdiHFdOU=;
- b=GU1zfrVuH1kam2eHm1sYCVI497JKq/L3qSsVknFtHmLPeAgXeWJlJM4W5WnYxV4r/I
- ub2nD2ptc9Pl5wr+ENXaB8PwN9qPmJxxPByUtmo7e51EpXTSttXzBqrWQwIx4hAgD6Df
- K8uE6AOuwjbr7LjIm58OvtAF1wo2bPUulroe7+PYJ60/WvfRdIGBEfBC0N08V1AGLl7U
- /f+7+mIulGfwX1s3rlYl1zdodVAxh1qSOcyvoygPZQCzKqET5zLXDXENnyyktJAbXAvW
- H/X/g0PkC7ItaGQRuMFAqVVEkRbfp8P95hymMajTHAWbZXX/LHSrKV6+3z4/2bFi4pLo
- 1fQw==
+ d=gmail.com; s=20251104; t=1787194154; x=1787798954; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=gYrJCwDJoPwY3Q++OzxKWkU9UhZqFpzStszdt+XclHI=;
+ b=MyB3vpXq2s38D7DbGSVZxmxg9ApVYZ6WF2zG4g01zVSO1C+XM4tDeYRGe4ErxDou0c
+ Rsv6Mc1H0XVbxGYKCTiyBpY6Kjbp4K8wfolQ2gQmkmmJ/GtuGs+EyuauHBvRA2wPlj1U
+ tB6IoNCIo6fhL3PNnaWCeOwj5JCo1OJuIZeZvW74iTPhRwKWnQxqkLoG2LYm2h+x3rgd
+ Pvw/SMy8vbQzZPkJDY2JH21qUmof7TMGZHZDjJI86Te9CdrnyZKGgSYwWzFt0zrH0w/R
+ ex62f+UkYqKpidRpBNcn5lu6JPWWzY6Jnjj2caLyPXpvNFnG/fBBEcAgzQRMz26UI4iL
+ ZWBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787194134; x=1787798934;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=uLySbPfUe/6ycb7XxkslGbgojMHRka83kHXjdiHFdOU=;
- b=IPidNNK4yBclcNPdVeFaeaUc+KGw0kS/mhka+co5nzCQW3fzDQfu2I+IH3LodIWZh4
- 0qfuG7Z306QXkbuYDnHM4fsPzCgzf7IN5nCZSZ4MnkZO2Kp/OnPIVauCg6i8QjViqAB6
- 6qX8O4oy5nzsDyEuKUOaG8bPg3SwdYXVBOzx81SAE2jW0o0qqcHi9Y8Ws+XJDbNHPufu
- v3Y0RyR2ivwyZI+VbA4TZuoy7JLD7hMTj8Wj23w/qtfgHfHVNUdCH1JAjyZj4zyP03ab
- FJ6OXpOdM9gXp11OP+qFB1VKRIx+yiEj3dPwaSm8ayUCQYV3nKT1L81QFMLaqdbSVZ4h
- XBbw==
-X-Gm-Message-State: AFuF++mKRZ7AecfF4E8cXc/DBci+v1lLrX/7zKv1rL4nDgRrBA/lhBhI
- JqLB6SKOeErSWWtCUWzS03BeGwcS/ybEswmruy17q0kf8bJ7SKaNkirRRoCDLw==
-X-Gm-Gg: AR+sD137oOoqV3PAMQi+EIGVqw39bXNP3fOG/cOfJLIMMVe6Lz14ygEFW3h2BS8F6/I
- T2IizZNakMBcuImbXkl67B8D+qbfEKZD3wgiVXnl9E8TiA4exea8U5n/jVJEe6EFBF3PaoE+lEN
- eS8RdfCJV8QQgrMplTV6YeU5MToPTn4Tk/JHU2JdfkLXpqjtvgMIksgjk2rkX1F3yiI/BLAyUi5
- pLf8GHuFsdYe+oeAUUnU+OsiaMjb6jRx8t/9UwKruqdU11tGltAkIPbAJVuUyvJrMkSihkkNMb2
- Lqy9LntJL1nISI6dl2QZYhEP0znFZRDoGP+zdfPEpE+lU7A0DmJEAKueik+PDmLzntzJEgCs5aA
- vj+K2q6Q+PATMQxb7fvrQPmtQ8/+T7ZSPgRu0XkjctrjfnMAXQSI+1/Drjl2W5eUv0i6nf0vSuN
- 0E+nTANO5jru0uCP5IFxCSZo9f51pSELOT57tqFG6v2g1W106xx39qC8UMEJ05fo8m7A9f43DYf
- JxpUO8kq1oiMOdNqaOYU/4DOWtXl4+jR0SWgzcGEiy5bbIgajoRJQ==
-X-Received: by 2002:a53:bf0d:0:b0:667:7dae:8707 with SMTP id
- 956f58d0204a3-66ccb5a56f1mr2558707d50.8.1787194134007; 
- Wed, 19 Aug 2026 19:48:54 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787194154; x=1787798954;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=gYrJCwDJoPwY3Q++OzxKWkU9UhZqFpzStszdt+XclHI=;
+ b=dY342JdDHQ7az7HB3+70G47NbxWPPqQD22DntsLerSzvMkj9OuROTD1jT6pSMJV5kz
+ UUcCVT96XNAoeuX+dG1YjAs3yem/ehxMmvDEHbL5S0oh+ycjuKmPdYrineYPwRBdkprX
+ Abl7L+/o6zEQ2DmXiKJN32p4TSPlVs8+t9cZeuVhxnfEmgQoS9DLCbPQD7WQHIvCj40X
+ AMeEHDizi/VyMqUNdJKAmmGV2T06JKj9Vv1Q0rJ8z/pKnizbfaKpvNEOTmMAoFklmGaS
+ FE5NtScedFAEvLyvUAfuXXK47hnVxlP7GGiw9mpHn2eiTgJwisyGwPTf5LxPY4MJTgZf
+ yzJg==
+X-Gm-Message-State: AFuF++lAAU7GUwJACO0IOkAQb/HwbdlkVN6FOGWq6u6ryPelwm37TVih
+ mRGBlYUGQBo5MSgx7l5hybhdFepjHbJApa4cuGfqKr5WkKSXYlb8cH0rCu4TPg==
+X-Gm-Gg: AR+sD10UpHSnfXVug4zaHF7kTHhnojmetVXkrTebJAsJh3hdCxeh8WRA4MWHsRnRqvM
+ Hu/SraruLLNHpX/y5flH+0U1IQp8IQ6S6CQROprT2d8XDeSQiHFaCNsaaUFOFH6dHuHDJj8vNr/
+ uNLEzra20MV7hj3aB0uzWU911LoitL0ysPxD8Hyv9HrvM0eAG4cUpUfwC55Qjc4DOYRgQeSo8RT
+ 9pKod8h4i/S+Z4UFmhdND+DRQbughiHKMJ3zqoEuoLyeYiEbw7OdbVRBzuBUByEhQ7khK63pytP
+ jDQTIFYPCim2WrIqGg2LI9x2dEtIg2pemP5qaIHQPXe6rEYbBMJ+n7czSx7QhuJLSkLYQa5lrhw
+ 5phcoZFd+2FWpFp5g2VnLK0rjgzeO7cOdjimejpFOtNLSeIZ5/A27GWr3xpw4qpl97lwHfypery
+ KcppW7fMGOVHIddO014nxFYahgzwT6c8Aj54yvlFyzTI5V8pvg2tScjrhHdQCr12upES22AZ/Gx
+ UIS2pG1XxxUZLh8XRjfAfZofBGhCyueFVHuD2lFbKEWfUwqNfU0aQ==
+X-Received: by 2002:a05:690e:e0e:b0:667:dd2f:9441 with SMTP id
+ 956f58d0204a3-66ccb5def37mr2757574d50.13.1787194154046; 
+ Wed, 19 Aug 2026 19:49:14 -0700 (PDT)
 Received: from skippy.localdomain (99-61-67-1.lightspeed.austtx.sbcglobal.net.
  [99.61.67.1]) by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-66ccafd03basm1986454d50.1.2026.08.19.19.48.52
+ 956f58d0204a3-66ccafd03basm1986454d50.1.2026.08.19.19.49.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 19:48:52 -0700 (PDT)
+ Wed, 19 Aug 2026 19:49:12 -0700 (PDT)
 From: Kyle Fox <kylefoxaustin.github@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Fox <kylefoxaustin.github@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:i.MX31 (kzm))
-Subject: [PATCH 05/16] hw/char: add i.MX LPUART
-Date: Wed, 19 Aug 2026 21:48:23 -0500
-Message-Id: <20260820024834.3286721-6-kylefoxaustin.github@gmail.com>
+ qemu-arm@nongnu.org (open list:MCIMX95-19X19-EVK...)
+Subject: [PATCH 16/16] docs, MAINTAINERS, tests/functional: add i.MX 95 EVK
+Date: Wed, 19 Aug 2026 21:48:34 -0500
+Message-Id: <20260820024834.3286721-17-kylefoxaustin.github@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260820024834.3286721-1-kylefoxaustin.github@gmail.com>
 References: <20260820024834.3286721-1-kylefoxaustin.github@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=kylefoxaustin.github@gmail.com; helo=mail-yx1-xb12c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=kylefoxaustin.github@gmail.com; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,571 +105,494 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The i.MX Low-Power UART. Models the register subset the Linux fsl-lpuart
-driver and the SM firmware drive (BAUD/CTRL/STAT/DATA plus the TX/RX
-FIFOs) as an interrupt- and poll-capable serial device. On this machine
-LPUART1 is the Linux console (ttyLP0), LPUART2 the SM debug monitor and
-LPUART3 the M7 console.
+Add the machine documentation (docs/system/arm/imx95-evk.rst, linked
+into the target-arm manual), the MAINTAINERS entry, and an
+environment-gated functional test that boots Linux to userspace on the
+real System Manager firmware.
 
 Signed-off-by: Kyle Fox <kylefoxaustin.github@gmail.com>
 ---
- hw/char/Kconfig              |   3 +
- hw/char/imx_lpuart.c         | 382 +++++++++++++++++++++++++++++++++++
- hw/char/meson.build          |   1 +
- hw/char/trace-events         |   3 +
- include/hw/char/imx_lpuart.h | 123 +++++++++++
- 5 files changed, 512 insertions(+)
- create mode 100644 hw/char/imx_lpuart.c
- create mode 100644 include/hw/char/imx_lpuart.h
+ MAINTAINERS                                |  18 ++
+ docs/system/arm/imx95-evk.rst              | 242 +++++++++++++++++++++
+ docs/system/target-arm.rst                 |   1 +
+ tests/functional/aarch64/meson.build       |   2 +
+ tests/functional/aarch64/test_imx95_evk.py | 157 +++++++++++++
+ 5 files changed, 420 insertions(+)
+ create mode 100644 docs/system/arm/imx95-evk.rst
+ create mode 100644 tests/functional/aarch64/test_imx95_evk.py
 
-diff --git a/hw/char/Kconfig b/hw/char/Kconfig
-index 020c0a84bb6..51b4c3e00ce 100644
---- a/hw/char/Kconfig
-+++ b/hw/char/Kconfig
-@@ -95,3 +95,6 @@ config IP_OCTAL_232
-     bool
-     default y
-     depends on IPACK
-+
-+config IMX_LPUART
-+    bool
-diff --git a/hw/char/imx_lpuart.c b/hw/char/imx_lpuart.c
-new file mode 100644
-index 00000000000..714bc3e52a4
---- /dev/null
-+++ b/hw/char/imx_lpuart.c
-@@ -0,0 +1,382 @@
-+/*
-+ * NXP i.MX LPUART (Low-Power UART) device model
-+ *
-+ * Copyright (c) 2026, Kyle Fox
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Modelled on hw/char/imx_serial.c for structural conventions but with
-+ * the LPUART register set and semantics. TX bytes are pushed through the
-+ * chardev backend synchronously; RX bytes are buffered one-deep and
-+ * surface in DATA, with an interrupt raised when CTRL.RIE is set.
-+ * FIFO depth is reported as 1; no DMA, no baud-rate timing, no flow
-+ * control are modelled.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "hw/char/imx_lpuart.h"
-+#include "hw/core/irq.h"
-+#include "hw/core/qdev-properties.h"
-+#include "hw/core/qdev-properties-system.h"
-+#include "migration/vmstate.h"
-+#include "trace.h"
-+
-+static void imx_lpuart_update_irq(IMXLPUARTState *s);
-+
-+static int imx_lpuart_post_load(void *opaque, int version_id)
-+{
-+    /* Recompute the IRQ line level from the restored register state. */
-+    imx_lpuart_update_irq(opaque);
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_imx_lpuart = {
-+    .name = TYPE_IMX_LPUART,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .post_load = imx_lpuart_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(baud, IMXLPUARTState),
-+        VMSTATE_UINT32(stat, IMXLPUARTState),
-+        VMSTATE_UINT32(ctrl, IMXLPUARTState),
-+        VMSTATE_UINT32(match, IMXLPUARTState),
-+        VMSTATE_UINT32(modir, IMXLPUARTState),
-+        VMSTATE_UINT32(fifo, IMXLPUARTState),
-+        VMSTATE_UINT32(water, IMXLPUARTState),
-+        VMSTATE_UINT32(pincfg, IMXLPUARTState),
-+        VMSTATE_UINT8(rx_byte, IMXLPUARTState),
-+        VMSTATE_BOOL(rx_full, IMXLPUARTState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+/* Recompute the IRQ line from STAT & CTRL interrupt-enable bits. */
-+static void imx_lpuart_update_irq(IMXLPUARTState *s)
-+{
-+    bool level =
-+        ((s->stat & LPUART_STAT_RDRF) && (s->ctrl & LPUART_CTRL_RIE)) ||
-+        ((s->stat & LPUART_STAT_TDRE) && (s->ctrl & LPUART_CTRL_TIE)) ||
-+        ((s->stat & LPUART_STAT_TC)   && (s->ctrl & LPUART_CTRL_TCIE)) ||
-+        ((s->stat & LPUART_STAT_IDLE) && (s->ctrl & LPUART_CTRL_ILIE));
-+
-+    qemu_set_irq(s->irq, level);
-+}
-+
-+static void imx_lpuart_reset(IMXLPUARTState *s)
-+{
-+    /*
-+     * Power-on reset values per the i.MX LPUART chapter. STAT comes up
-+     * with TDRE and TC set because the FIFO is empty.
-+     */
-+    s->baud   = 0x0F000004;     /* default OSR = 4 + SBR field */
-+    s->stat   = LPUART_STAT_TDRE | LPUART_STAT_TC;
-+    s->ctrl   = 0;
-+    s->match  = 0;
-+    s->modir  = 0;
-+    s->fifo   = 0;
-+    s->water  = 0;
-+    s->pincfg = 0;
-+    s->rx_byte = 0;
-+    s->rx_full = false;
-+}
-+
-+static void imx_lpuart_reset_at_boot_hold(Object *obj, ResetType type)
-+{
-+    IMXLPUARTState *s = IMX_LPUART(obj);
-+
-+    imx_lpuart_reset(s);
-+    imx_lpuart_update_irq(s);
-+}
-+
-+static uint64_t imx_lpuart_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    IMXLPUARTState *s = opaque;
-+    uint32_t value = 0;
-+    uint32_t c;
-+
-+    switch (offset) {
-+    case LPUART_VERID:
-+        value = LPUART_VERID_VALUE;
-+        break;
-+
-+    case LPUART_PARAM:
-+        /* TXFIFO and RXFIFO size fields both zero -> depth = 1. */
-+        value = 0;
-+        break;
-+
-+    case LPUART_GLOBAL:
-+        value = 0;
-+        break;
-+
-+    case LPUART_PINCFG:
-+        value = s->pincfg;
-+        break;
-+
-+    case LPUART_BAUD:
-+        value = s->baud;
-+        break;
-+
-+    case LPUART_STAT:
-+        value = s->stat;
-+        break;
-+
-+    case LPUART_CTRL:
-+        value = s->ctrl;
-+        break;
-+
-+    case LPUART_DATA:
-+        if (s->rx_full) {
-+            c = s->rx_byte;
-+            s->rx_full = false;
-+            s->stat &= ~LPUART_STAT_RDRF;
-+            value = c & LPUART_DATA_MASK;
-+            imx_lpuart_update_irq(s);
-+            qemu_chr_fe_accept_input(&s->chr);
-+        } else {
-+            value = LPUART_DATA_RXEMPT;
-+        }
-+        break;
-+
-+    case LPUART_MATCH:
-+        value = s->match;
-+        break;
-+
-+    case LPUART_MODIR:
-+        value = s->modir;
-+        break;
-+
-+    case LPUART_FIFO:
-+        /*
-+         * Report the FIFO control bits the guest set, plus the read-only
-+         * TXEMPT/RXEMPT status computed from our 1-deep model. The status
-+         * bits must be derived fresh, never returned from s->fifo: the Linux
-+         * driver read-modify-writes UARTFIFO during setup, so a stored RXEMPT
-+         * would stick set and make its RX drain loop (while !(FIFO & RXEMPT))
-+         * believe the RX FIFO is always empty - it would never read DATA, RDRF
-+         * would never clear, and the RX interrupt would storm.
-+         */
-+        value = s->fifo & ~(LPUART_FIFO_TXEMPT | LPUART_FIFO_RXEMPT);
-+        value |= LPUART_FIFO_TXEMPT;  /* we drain TX instantly */
-+        if (!s->rx_full) {
-+            value |= LPUART_FIFO_RXEMPT;
-+        }
-+        break;
-+
-+    case LPUART_WATER:
-+        /*
-+         * Reflect the current fifo state in the RX/TX count fields
-+         * (bits[31:24] RXCOUNT, bits[15:8] TXCOUNT). U-Boot's
-+         * _lpuart32_serial_tstc() polls (water >> 24) for incoming-
-+         * char detection, so RXCOUNT must update when imx_lpuart_receive
-+         * stashes a byte. We are 1-deep: 0 or 1 in either slot.
-+         * Preserve the guest-written watermark bits unchanged.
-+         */
-+        value = (s->water & 0x00ff00ffu)
-+              | ((uint32_t)(s->rx_full ? 1 : 0) << 24)
-+              | 0u;  /* TXCOUNT always 0 - we drain TR writes instantly */
-+        break;
-+
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: bad read offset 0x%" HWADDR_PRIx "\n",
-+                      __func__, offset);
-+        break;
-+    }
-+
-+    return value;
-+}
-+
-+static void imx_lpuart_write(void *opaque, hwaddr offset,
-+                             uint64_t value, unsigned size)
-+{
-+    IMXLPUARTState *s = opaque;
-+    uint8_t ch;
-+
-+    switch (offset) {
-+    case LPUART_VERID:
-+    case LPUART_PARAM:
-+        /* Read-only registers; silently ignore writes (HW behavior). */
-+        break;
-+
-+    case LPUART_GLOBAL:
-+        if (value & LPUART_GLOBAL_RST) {
-+            imx_lpuart_reset(s);
-+            imx_lpuart_update_irq(s);
-+        }
-+        break;
-+
-+    case LPUART_PINCFG:
-+        s->pincfg = value;
-+        break;
-+
-+    case LPUART_BAUD:
-+        /*
-+         * Baud-rate timing isn't modelled, but the driver reads back what
-+         * it wrote. Preserve DMA-enable and other configuration bits.
-+         */
-+        s->baud = value;
-+        trace_imx_lpuart_baud(s->baud);
-+        break;
-+
-+    case LPUART_STAT:
-+        /*
-+         * STAT bits IDLE and OR are W1C; the rest are read-only status
-+         * managed by the model.
-+         */
-+        s->stat &= ~(value & LPUART_STAT_W1C_MASK);
-+        imx_lpuart_update_irq(s);
-+        break;
-+
-+    case LPUART_CTRL:
-+        s->ctrl = value;
-+        imx_lpuart_update_irq(s);
-+        break;
-+
-+    case LPUART_DATA:
-+        ch = value & LPUART_DATA_MASK;
-+        /*
-+         * Always push the byte through the chardev backend, even if
-+         * CTRL_TE is currently 0. Real silicon would queue or drop the
-+         * byte until TE is enabled; in emulation we don't model that
-+         * gating because some consumers (notably the Linux earlycon
-+         * path under -kernel direct boot, which assumes firmware
-+         * already set TE before the kernel runs) write to DATA without
-+         * first enabling TE themselves. Without this, kernel console
-+         * output vanishes silently and earlycon appears broken.
-+         */
-+        trace_imx_lpuart_tx(ch);
-+        qemu_chr_fe_write_all(&s->chr, &ch, 1);
-+        /*
-+         * TDRE and TC are pinned high; the byte goes out instantly. A
-+         * future model would clear them for one host tick, then set TC
-+         * when the line goes idle.
-+         */
-+        s->stat |= LPUART_STAT_TDRE | LPUART_STAT_TC;
-+        imx_lpuart_update_irq(s);
-+        break;
-+
-+    case LPUART_MATCH:
-+        s->match = value;
-+        break;
-+
-+    case LPUART_MODIR:
-+        s->modir = value;
-+        break;
-+
-+    case LPUART_FIFO:
-+        /*
-+         * Store only the writable configuration bits. The read-only status
-+         * bits (TXEMPT/RXEMPT/TXOF/RXUF) and the self-clearing flush commands
-+         * (TXFLUSH/RXFLUSH) must NOT be latched: the driver read-modify-writes
-+         * UARTFIFO, so latching RXEMPT would make it stick set and break the
-+         * RX drain loop (see the FIFO read).
-+         */
-+        s->fifo = value & ~LPUART_FIFO_RO_MASK;
-+        if (value & LPUART_FIFO_RXFLUSH) {
-+            s->rx_full = false;
-+            s->stat &= ~LPUART_STAT_RDRF;
-+        }
-+        imx_lpuart_update_irq(s);
-+        break;
-+
-+    case LPUART_WATER:
-+        s->water = value;
-+        break;
-+
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: bad write offset 0x%" HWADDR_PRIx
-+                      " value 0x%" PRIx64 "\n",
-+                      __func__, offset, value);
-+        break;
-+    }
-+}
-+
-+static int imx_lpuart_can_receive(void *opaque)
-+{
-+    IMXLPUARTState *s = opaque;
-+
-+    return ((s->ctrl & LPUART_CTRL_RE) && !s->rx_full) ? 1 : 0;
-+}
-+
-+static void imx_lpuart_receive(void *opaque, const uint8_t *buf, int size)
-+{
-+    IMXLPUARTState *s = opaque;
-+
-+    if (size <= 0 || s->rx_full) {
-+        return;
-+    }
-+
-+    s->rx_byte = buf[0];
-+    s->rx_full = true;
-+    trace_imx_lpuart_rx(s->rx_byte);
-+    s->stat |= LPUART_STAT_RDRF;
-+    imx_lpuart_update_irq(s);
-+}
-+
-+static const MemoryRegionOps imx_lpuart_ops = {
-+    .read = imx_lpuart_read,
-+    .write = imx_lpuart_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static void imx_lpuart_realize(DeviceState *dev, Error **errp)
-+{
-+    IMXLPUARTState *s = IMX_LPUART(dev);
-+
-+    qemu_chr_fe_set_handlers(&s->chr, imx_lpuart_can_receive,
-+                             imx_lpuart_receive, NULL, NULL, s, NULL, true);
-+}
-+
-+static void imx_lpuart_init(Object *obj)
-+{
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-+    IMXLPUARTState *s = IMX_LPUART(obj);
-+
-+    memory_region_init_io(&s->iomem, obj, &imx_lpuart_ops, s,
-+                          TYPE_IMX_LPUART, IMX_LPUART_REG_SIZE);
-+    sysbus_init_mmio(sbd, &s->iomem);
-+    sysbus_init_irq(sbd, &s->irq);
-+}
-+
-+static const Property imx_lpuart_properties[] = {
-+    DEFINE_PROP_CHR("chardev", IMXLPUARTState, chr),
-+};
-+
-+static void imx_lpuart_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+
-+    dc->realize = imx_lpuart_realize;
-+    dc->vmsd = &vmstate_imx_lpuart;
-+    rc->phases.hold = imx_lpuart_reset_at_boot_hold;
-+    set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
-+    dc->desc = "NXP i.MX LPUART";
-+    device_class_set_props(dc, imx_lpuart_properties);
-+}
-+
-+static const TypeInfo imx_lpuart_info = {
-+    .name           = TYPE_IMX_LPUART,
-+    .parent         = TYPE_SYS_BUS_DEVICE,
-+    .instance_size  = sizeof(IMXLPUARTState),
-+    .instance_init  = imx_lpuart_init,
-+    .class_init     = imx_lpuart_class_init,
-+};
-+
-+static void imx_lpuart_register_types(void)
-+{
-+    type_register_static(&imx_lpuart_info);
-+}
-+
-+type_init(imx_lpuart_register_types)
-diff --git a/hw/char/meson.build b/hw/char/meson.build
-index fc3d7ee506f..440142ae803 100644
---- a/hw/char/meson.build
-+++ b/hw/char/meson.build
-@@ -41,3 +41,4 @@ system_ss.add(when: 'CONFIG_GOLDFISH_TTY', if_true: files('goldfish_tty.c'))
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b51f5c3e602..f66082eadc4 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -956,6 +956,24 @@ F: docs/system/arm/imx8m.rst
+ F: tests/functional/aarch64/test_imx8mp_evk.py
+ F: tests/qtest/rs5c372-test.c
  
- specific_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('terminal3270.c'))
- specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_vty.c'))
-+system_ss.add(when: 'CONFIG_IMX_LPUART', if_true: files('imx_lpuart.c'))
-diff --git a/hw/char/trace-events b/hw/char/trace-events
-index a3fcc772877..6d9b71961e5 100644
---- a/hw/char/trace-events
-+++ b/hw/char/trace-events
-@@ -141,3 +141,6 @@ stm32f2xx_usart_receive(char *id, uint8_t chr) " %s receiving '%c'"
- # riscv_htif.c
- htif_uart_write_to_host(uint8_t device, uint8_t cmd, uint64_t payload) "device: %u cmd: %02u payload: %016" PRIx64
- htif_uart_unknown_device_command(uint8_t device, uint8_t cmd, uint64_t payload) "device: %u cmd: %02u payload: %016" PRIx64
-+imx_lpuart_tx(uint8_t ch) "tx 0x%02x"
-+imx_lpuart_rx(uint8_t ch) "rx 0x%02x"
-+imx_lpuart_baud(uint32_t baud) "baud <- 0x%08x"
-diff --git a/include/hw/char/imx_lpuart.h b/include/hw/char/imx_lpuart.h
++MCIMX95-19X19-EVK / i.MX95
++M: Kyle Fox <kylefoxaustin.github@gmail.com>
++L: qemu-arm@nongnu.org
++S: Maintained
++F: hw/arm/imx95-evk.c
++F: hw/arm/fsl-imx95.c
++F: hw/misc/imx95_*.c
++F: hw/timer/imx95_sysctr.c
++F: hw/char/imx_lpuart.c
++F: hw/i2c/imx_lpi2c.c
++F: hw/misc/imx_mu.c
++F: include/hw/arm/fsl-imx95.h
++F: include/hw/char/imx_lpuart.h
++F: include/hw/misc/imx_mu.h
++F: include/hw/misc/imx95_*.h
++F: docs/system/arm/imx95-evk.rst
++F: tests/functional/aarch64/test_imx95_evk.py
++
+ MPS2 / MPS3
+ M: Peter Maydell <peter.maydell@linaro.org>
+ L: qemu-arm@nongnu.org
+diff --git a/docs/system/arm/imx95-evk.rst b/docs/system/arm/imx95-evk.rst
 new file mode 100644
-index 00000000000..a18809c432f
+index 00000000000..d67cd2de16f
 --- /dev/null
-+++ b/include/hw/char/imx_lpuart.h
-@@ -0,0 +1,123 @@
-+/*
-+ * NXP i.MX LPUART (Low-Power UART) device model
-+ *
-+ * Copyright (c) 2026, Kyle Fox
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Models the LPUART IP found in i.MX 7ULP / 8ULP / 8QXP / 95 and other
-+ * recent NXP SoCs. Register layout matches the
-+ * "fsl,imx95-lpuart" / "fsl,imx8ulp-lpuart" / "fsl,imx7ulp-lpuart"
-+ * compatible string in the Linux fsl_lpuart driver.
-+ */
++++ b/docs/system/arm/imx95-evk.rst
+@@ -0,0 +1,242 @@
++NXP i.MX 95 19x19 Evaluation Kit (``imx95-19x19-evk``)
++======================================================
 +
-+#ifndef IMX_LPUART_H
-+#define IMX_LPUART_H
++The ``imx95-19x19-evk`` machine models the NXP i.MX 95 19x19 LPDDR5
++Evaluation Kit. The i.MX 95 is a heterogeneous SoC; the machine
++correspondingly emulates a fixed topology of **6 Cortex-A55 application
++cores, 1 Cortex-M33** that runs the NXP **System Manager** (SM)
++firmware, **and 1 Cortex-M7** real-time core that the System Manager
++boots, manages and fault-recovers (see ``Cortex-M7 real-time core``
++below).
 +
-+#include "hw/core/sysbus.h"
-+#include "chardev/char-fe.h"
-+#include "qom/object.h"
++A defining property of this SoC is that the System Manager firmware is
++the only SCMI provider: Linux's clock, perf-domain, power, sensor, and
++reset operations are all served by the SM running on the M33 over a
++shared mailbox (MU2), not by software inside QEMU. Booting Linux to
++userspace on this machine therefore requires the SM firmware as an
++input — see ``Required artifacts`` below.
 +
-+#define TYPE_IMX_LPUART "imx.lpuart"
-+OBJECT_DECLARE_SIMPLE_TYPE(IMXLPUARTState, IMX_LPUART)
++Supported devices
++-----------------
 +
-+/* MMIO size of one LPUART instance (from the device tree). */
-+#define IMX_LPUART_REG_SIZE     0x1000
++The ``imx95-19x19-evk`` machine implements the following devices:
 +
-+/*
-+ * Register offsets. The first four 32-bit words (VERID/PARAM/GLOBAL/
-+ * PINCFG) sit before the UART register block proper, which starts at
-+ * BAUD = 0x10. The Linux driver compensates with sport->reg_off = 0x10
-+ * on i.MX variants; the model exposes the absolute offsets directly.
-+ */
-+#define LPUART_VERID            0x00
-+#define LPUART_PARAM            0x04
-+#define LPUART_GLOBAL           0x08
-+#define LPUART_PINCFG           0x0C
-+#define LPUART_BAUD             0x10
-+#define LPUART_STAT             0x14
-+#define LPUART_CTRL             0x18
-+#define LPUART_DATA             0x1C
-+#define LPUART_MATCH            0x20
-+#define LPUART_MODIR            0x24
-+#define LPUART_FIFO             0x28
-+#define LPUART_WATER            0x2C
++ * 6 Cortex-A55 application cores
++ * 1 Cortex-M33 (System Manager core; runs NXP SM firmware)
++ * 1 Cortex-M7 (real-time core; SM-booted and SM-managed)
++ * Generic Interrupt Controller (GICv3, GIC-600 layout)
++ * LPUART serial controllers (LPUART1 = Linux console; LPUART2 = SM
++   debug monitor; LPUART3 = M7 console)
++ * NXP Messaging Unit v2 (MU2) with the dual-aperture A55-MUA <->
++   M33-MUB cross-connect that carries SCMI; plus MUI_A5 (M7 <-> SM
++   SCMI) and MU7 (A55 <-> M7 rpmsg) cross-connects
++ * BLK_CTRL_S_AONMIX M7 CPU-WAIT gate (the SM's M7 hold/run control)
++ * System Counter (24 MHz live up-counter with compare-match IRQ; the
++   Linux broadcast clockevent on this machine)
++ * uSDHC storage controller (SDMA, used by U-Boot SD boot)
++ * LPI2C master (polled; used by the SM for PMIC / IO
++   expander bring-up)
++ * Functional models for the SM bring-up path: ANATOP (PLL lock and
++   DFS), SRC (system reset controller), GPC (general power
++   controller), ELE responder, FSB (fuse shadow block), eMcem, PF53
++   and PCAL6408A on LPI2C
++ * Logging stubs for blocks that are not on the boot critical path or
++   that have no behaviour to emulate (NETC, USB host, PCIe link
++   training, GPU/VPU/NPU MMIO, DPU command sequencer, watchdog, etc.)
 +
-+/* GLOBAL: write GLOBAL_RST to trigger a software reset of the IP. */
-+#define LPUART_GLOBAL_RST       0x00000002
++The Mali-G310 (GPU), Amphion (VPU), Neutron (NPU), and DPU (display
++controller) are intentionally probe-time stubs only; no rendering,
++codec, inference, or scanout occurs. See ``Caveats`` below.
 +
-+/* STAT bits the model implements. */
-+#define LPUART_STAT_TDRE        0x00800000  /* TX data register empty */
-+#define LPUART_STAT_TC          0x00400000  /* TX complete */
-+#define LPUART_STAT_RDRF        0x00200000  /* RX data register full */
-+#define LPUART_STAT_IDLE        0x00100000  /* RX line idle */
-+#define LPUART_STAT_OR          0x00080000  /* RX overrun */
-+/* RW1C mask: writing 1 to these bits clears them. */
-+#define LPUART_STAT_W1C_MASK    (LPUART_STAT_IDLE | LPUART_STAT_OR)
++Boot options
++------------
 +
-+/* CTRL bits the model implements. */
-+#define LPUART_CTRL_TIE         0x00800000  /* TDRE IRQ enable */
-+#define LPUART_CTRL_TCIE        0x00400000  /* TC IRQ enable */
-+#define LPUART_CTRL_RIE         0x00200000  /* RDRF IRQ enable */
-+#define LPUART_CTRL_ILIE        0x00100000  /* IDLE IRQ enable */
-+#define LPUART_CTRL_TE          0x00080000  /* Transmitter enable */
-+#define LPUART_CTRL_RE          0x00040000  /* Receiver enable */
++The ``imx95-19x19-evk`` machine can start a Linux kernel directly
++using ``-kernel``, but **only together with the System Manager firmware
++loaded onto the Cortex-M33** via ``-device loader,...,cpu-num=6``.
++Booting Linux without the SM firmware leaves the M33 halted, nothing
++answers SCMI, and Linux will hang at ``arm-scmi`` probe.
 +
-+/* DATA: bits [7:0] carry the actual character; upper bits are status. */
-+#define LPUART_DATA_MASK        0x000000FF
-+#define LPUART_DATA_RXEMPT      0x00001000  /* RX buffer was empty */
++Required artifacts
++''''''''''''''''''
 +
-+/*
-+ * FIFO bits. TXEMPT/RXEMPT/TXOF/RXUF are read-only (status) and must never be
-+ * latched from a guest write - the Linux driver read-modify-writes UARTFIFO,
-+ * so a stored RXEMPT would stick and break its RX drain loop. TXFLUSH/RXFLUSH
-+ * are write-1 self-clearing commands.
-+ */
-+#define LPUART_FIFO_TXEMPT      0x00800000
-+#define LPUART_FIFO_RXEMPT      0x00400000
-+#define LPUART_FIFO_TXOF        0x00020000  /* TX overflow (W1C) */
-+#define LPUART_FIFO_RXUF        0x00010000  /* RX underflow (W1C) */
-+#define LPUART_FIFO_TXFLUSH     0x00008000  /* self-clearing */
-+#define LPUART_FIFO_RXFLUSH     0x00004000  /* self-clearing */
-+#define LPUART_FIFO_RO_MASK     (LPUART_FIFO_TXEMPT | LPUART_FIFO_RXEMPT | \
-+                                 LPUART_FIFO_TXOF | LPUART_FIFO_RXUF | \
-+                                 LPUART_FIFO_TXFLUSH | LPUART_FIFO_RXFLUSH)
++Four artifacts are needed; all are built from NXP source trees:
 +
-+/*
-+ * PARAM: FIFO depth is encoded as 1 << (field + 1) when nonzero, else 1.
-+ * The model implements a single-byte TX path and a 1-deep RX buffer, so
-+ * both TX and RX fields read back zero (depth = 1).
-+ */
-+#define LPUART_PARAM_TXFIFO_SHIFT   0
-+#define LPUART_PARAM_RXFIFO_SHIFT   8
++* **System Manager firmware** (``m33_image.elf``). Built from the NXP
++  ``imx-sm`` source tree, with the ``mx95evk`` board configuration:
 +
-+/*
-+ * VERID: report an i.MX 95-style version. The Linux driver
-+ * does not branch on this field for any of the imx*ulp variants, so the
-+ * exact value is not load-bearing.
-+ */
-+#define LPUART_VERID_VALUE      0x04040007
++  .. code-block:: bash
 +
-+struct IMXLPUARTState {
-+    SysBusDevice    parent_obj;
++     git clone https://github.com/nxp-imx/imx-sm.git
++     cd imx-sm
++     make config=mx95evk
++     # Result: build/mx95evk/m33_image.elf
 +
-+    MemoryRegion    iomem;
-+    CharFrontend    chr;
-+    qemu_irq        irq;
++* **aarch64 Linux kernel** (``Image``). Either the NXP BSP kernel
++  (e.g. ``linux-imx`` 6.12.49) built with the NXP defconfig, or a
++  mainline kernel built with the standard arm64 defconfig — both have
++  been tested.
 +
-+    /* Register state. Only the writable bits are tracked. */
-+    uint32_t        baud;
-+    uint32_t        stat;
-+    uint32_t        ctrl;
-+    uint32_t        match;
-+    uint32_t        modir;
-+    uint32_t        fifo;
-+    uint32_t        water;
-+    uint32_t        pincfg;
++* **Device tree blob** (``imx95-19x19-evk.dtb``). Produced by the same
++  kernel build under
++  ``arch/arm64/boot/dts/freescale/imx95-19x19-evk.dtb``.
 +
-+    /* Single-byte RX buffer (1-deep). */
-+    uint8_t         rx_byte;
-+    bool            rx_full;
-+};
++* **Initramfs** (``*.cpio.gz``) containing an ``/init``. Any aarch64
++  initramfs will do; a small static BusyBox initramfs (for example one
++  built from a prebuilt static-aarch64 BusyBox, no cross compiler
++  required) whose ``/init`` prints a recognisable marker is enough.
 +
-+#endif /* IMX_LPUART_H */
++Direct Linux Kernel Boot
++''''''''''''''''''''''''
++
++Once the four artifacts are built, boot Linux to userspace as
++follows:
++
++.. code-block:: bash
++
++  $ qemu-system-aarch64 -M imx95-19x19-evk -m 2G -display none \
++      -kernel Image \
++      -dtb imx95-19x19-evk.dtb \
++      -initrd initramfs.cpio.gz \
++      -device loader,file=m33_image.elf,cpu-num=6 \
++      -append "earlycon=lpuart32,mmio32,0x44380010 \
++               console=ttyLP0,115200 cpuidle.off=1 rdinit=/init" \
++      -serial mon:stdio -serial null
++
++On a successful boot, Linux negotiates SCMI with the real SM
++(``SCMI Protocol v2.1 'NXP:IMX' Firmware version 0x333``), brings up
++all 6 A55 cores via PSCI, mounts the initramfs, and starts ``/init``.
++
++LPUART1 (``ttyLP0``) is Linux's console; it is wired to the first
++``-serial`` backend above. LPUART2 carries the System Manager's own
++debug monitor; it is wired to the second ``-serial`` backend
++(``null`` above), and can be redirected to a separate file or pty if
++desired.
++
++System Manager standalone
++'''''''''''''''''''''''''
++
++To exercise the SM in isolation (no Linux), boot it with LPUART2 as
++the only console and stop at the SM debug monitor prompt:
++
++.. code-block:: bash
++
++  $ qemu-system-aarch64 -M imx95-19x19-evk -m 2G -display none \
++      -device loader,file=m33_image.elf,cpu-num=6 \
++      -serial null -serial mon:stdio
++
++Cortex-M7 real-time core
++''''''''''''''''''''''''
++
++The i.MX 95 System Manager owns the Cortex-M7's whole lifecycle. Unlike a
++generic remoteproc model where Linux starts the M-core, on this SoC the SM
++boots the M7 **before** the A-cluster and the AP logical machine does not own
++the M7; Linux's ``imx_rproc`` driver therefore only *attaches* to the
++already-running M7 (kernel log: ``imx-rproc imx95-cm7: lmm(1) not under Linux
++Control``).
++
++Load M7 firmware onto the M7 (CPU index 7) with a second loader device:
++
++.. code-block:: bash
++
++  $ qemu-system-aarch64 -M imx95-19x19-evk -m 2G -display none \
++      -device loader,file=m33_image.elf,cpu-num=6 \
++      -device loader,file=cm7_firmware.elf,cpu-num=7 \
++      ... (kernel/dtb/initrd as above for a full Linux + M7 boot)
++
++When the SM firmware is present it boots the M7 itself: the machine fabricates
++the boot-ROM image handover the SM reads at startup to learn it owns the M7
++(real hardware gets this from the boot ROM; the direct ``-device loader`` path
++bypasses it), so the SM runs its full ``DEV_SM_CpuStart`` for the M7. With no SM
++loaded, the M7 is released at reset if its reset vector was
++populated. The M7's console is LPUART3.
++
++Two SM-managed behaviours are modelled:
++
++* **rpmsg.** Once Linux has attached, the stock NXP ``imx_rpmsg_pingpong``
++  kernel module exchanges 100 messages with an M7 rpmsg-lite client over the
++  MU7 cross-connect (doorbell kicks) and shared vrings (payload) in the M7 DRAM
++  carveout, printing ``goodbye!`` after the final round-trip. The
++  ``Cortex-M7 rpmsg ping/pong`` functional test below exercises this end to
++  end.
++
++* **Fault recovery.** The M7 logical machine is configured ``reaction=lm_reset``,
++  so an M7 fault triggers an SM-driven cold reset of the M7. When the M7 asserts
++  ``SYSRESETREQ`` it is routed to the SM as ``CM7_SYSRESETREQ_IRQn``; the SM runs
++  ``LMM_SystemLmReset`` (stop then start the M7), printing ``Reset LM 1`` on its
++  debug monitor. The ``Cortex-M7 fault recovery`` functional test below
++  exercises this end to end.
++
++Caveats
++-------
++
++* **Deep cpuidle requires** ``cpuidle.off=1`` **on the kernel command
++  line.** Linux's ``cpu-pd-wait`` idle state quiesces the per-CPU GIC
++  CPU interface before WFI; QEMU's GICv3 model has no WakeRequest
++  path, so a halted CPU is not woken by a pending interrupt while its
++  interface is disabled. The kernel-command-line workaround is the
++  recommendation; the deeper fix needs upstream QEMU work in
++  ``hw/intc/arm_gicv3_cpuif.c``.
++
++* **No hardware-accelerated rendering, codec, or inference.** Mali-G310,
++  Amphion VPU, and Neutron NPU are logging stubs. The Mali kernel
++  driver in particular fails probe with ``-22`` at the product-ID
++  check (``Unknown GPU Product ID 0``), so no Mali Vulkan ICD is
++  installed and ``vulkaninfo`` reports
++  ``ERROR_INCOMPATIBLE_DRIVER``. The DPU stub does register
++  ``/dev/dri/card0``, but it has no connectors and no scanout, so
++  ``kmscube`` fails with ``no connected connector``.
++
++* **No networking interfaces.** The NETC blocks are stubs; only the
++  loopback interface ``lo`` appears in the guest.
++
++* **No Linux-visible block storage.** Linux's
++  ``sdhci-esdhc-imx`` driver defers probe on an unmet dependency, so
++  ``/dev/mmcblk*`` is empty even with an SD-card image attached via
++  ``-drive ...,if=sd``. (The uSDHC model itself works — U-Boot SPL
++  boots from SD on this machine — but the Linux MMC stack does not
++  complete probe.)
++
++* **icount is not the default boot mode.** ``-icount shift=auto``
++  delays interrupt/timer delivery to idle CPUs on this heterogeneous
++  A55+M33 machine, where both sides can WFI between SCMI/MU
++  round-trips, inflating the boot ~9x. Enable icount only when
++  debugging a race; do not use it for normal boots.
++
++Functional test
++---------------
++
++``tests/functional/aarch64/test_imx95_evk.py`` has three env-gated cases; each
++takes its artifacts from environment variables and skips cleanly (naming the
++unset variables) if any are absent, since the NXP-source-built artifacts are
++not redistributable:
++
++* **Linux to userspace on the real SM** — needs ``QEMU_TEST_IMX95_KERNEL``,
++  ``QEMU_TEST_IMX95_DTB``, ``QEMU_TEST_IMX95_INITRD`` and
++  ``QEMU_TEST_IMX95_SM_FW``. Boots Linux and checks for the SCMI handshake
++  followed by an init-printed userspace banner (~14 s on a development host).
++
++* **Cortex-M7 rpmsg ping/pong** — needs ``QEMU_TEST_IMX95_KERNEL``,
++  ``QEMU_TEST_IMX95_DTB``, ``QEMU_TEST_IMX95_SM_FW``,
++  ``QEMU_TEST_IMX95_M7_RPMSG_FW`` (the M7 rpmsg-lite pingpong firmware) and
++  ``QEMU_TEST_IMX95_RPMSG_INITRD`` (an initramfs bundling the matching
++  ``imx_rpmsg_pingpong.ko`` and an ``/init`` that loads it). Boots the full
++  A55 + SM + M7 stack and checks for the SCMI handshake followed by the
++  module's ``goodbye!`` line — printed only after the 100-message exchange
++  with the M7 over MU7 completes. The M7 firmware is NXP's
++  ``rpmsg_lite_pingpong_rtos_linux_remote`` multicore example; the NXP BSP
++  ships it prebuilt in the target rootfs at
++  ``/usr/lib/firmware/imx95-19x19-evk_m7_TCM_rpmsg_lite_pingpong_rtos_linux_remote.{elf,bin}``,
++  or it can be built from the MCUXpresso SDK multicore examples.
++
++* **Cortex-M7 fault recovery** — needs ``QEMU_TEST_IMX95_SM_FW`` and
++  ``QEMU_TEST_IMX95_M7_FW`` (an M7 fixture that asserts ``SYSRESETREQ`` on its
++  first boot). Boots
++  the SM + M7 alone and checks the SM debug monitor for ``Reset LM 1`` — the
++  SM taking the M7 fault and cold-resetting the M7 logical machine.
++
++.. code-block:: bash
++
++  $ QEMU_TEST_IMX95_SM_FW=/path/to/m33_image.elf \
++    QEMU_TEST_IMX95_M7_FW=/path/to/cm7_fault.elf \
++    meson test -C build --suite thorough func-aarch64-imx95_evk
+diff --git a/docs/system/target-arm.rst b/docs/system/target-arm.rst
+index e34492402f0..514d89e2d59 100644
+--- a/docs/system/target-arm.rst
++++ b/docs/system/target-arm.rst
+@@ -95,6 +95,7 @@ Board-specific documentation
+    arm/mcimx6ul-evk
+    arm/mcimx7d-sabre
+    arm/imx8m
++   arm/imx95-evk
+    arm/orangepi
+    arm/raspi
+    arm/collie
+diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
+index e81afd6c39f..972e896c149 100644
+--- a/tests/functional/aarch64/meson.build
++++ b/tests/functional/aarch64/meson.build
+@@ -7,6 +7,7 @@ test_aarch64_timeouts = {
+   'device_passthrough' : 720,
+   'imx8mm_evk' : 240,
+   'imx8mp_evk' : 240,
++  'imx95_evk' : 240,
+   'raspi4' : 480,
+   'reverse_debug' : 180,
+   'rme_virt' : 1200,
+@@ -33,6 +34,7 @@ tests_aarch64_system_thorough = [
+   'hotplug_pci',
+   'imx8mm_evk',
+   'imx8mp_evk',
++  'imx95_evk',
+   'kvm',
+   'multiprocess',
+   'raspi3',
+diff --git a/tests/functional/aarch64/test_imx95_evk.py b/tests/functional/aarch64/test_imx95_evk.py
+new file mode 100644
+index 00000000000..69ac27f4927
+--- /dev/null
++++ b/tests/functional/aarch64/test_imx95_evk.py
+@@ -0,0 +1,157 @@
++#!/usr/bin/env python3
++#
++# Functional tests for imx95-19x19-evk: boot Linux on the 6 Cortex-A55s
++# with the real NXP System Manager firmware on the Cortex-M33, and exercise
++# the System-Manager-orchestrated Cortex-M7 (boot + fault recovery).
++#
++# The boot artifacts (aarch64 Linux Image, imx95-19x19-evk.dtb, an initramfs
++# cpio.gz, the NXP System Manager firmware m33_image.elf, and the M7 fault
++# fixture cm7_fault.elf) are built from NXP source trees / the in-tree M7
++# firmware and are not redistributable as QEMU test assets, so the tests take
++# them from environment variables and skip cleanly if any are absent. See
++# docs/system/arm/imx95-evk.rst for the build recipes.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import os
++
++from qemu_test import LinuxKernelTest
++
++
++class Imx95EvkMachine(LinuxKernelTest):
++    """
++    Boot stock NXP BSP Linux on imx95-19x19-evk together with the real NXP
++    System Manager (SM) firmware on the emulated Cortex-M33, and exercise the
++    SM-orchestrated Cortex-M7. The SM is the only SCMI provider on this machine
++    (there is no built-in software SCMI server), so a successful boot validates
++    the M33 <-> A55 mailbox cross-connect as well as the Linux boot path; the
++    M7 test validates the SM's ownership of the M7's lifecycle.
++    """
++
++    def _require(self, *envvars):
++        """Return a dict of resolved artifact paths, or skip if any is unset."""
++        artifacts = {}
++        missing = []
++        for envvar in envvars:
++            path = os.environ.get(envvar)
++            if path and os.path.exists(path):
++                artifacts[envvar] = path
++            else:
++                missing.append(envvar)
++        if missing:
++            self.skipTest(
++                'requires NXP-source-built boot artifacts (see '
++                'docs/system/arm/imx95-evk.rst for build recipes); set '
++                + ', '.join(missing))
++        return artifacts
++
++    def test_aarch64_imx95_evk_real_sm(self):
++        """Linux boots to userspace on 6 A55s, SCMI served by the real SM."""
++        art = self._require('QEMU_TEST_IMX95_KERNEL', 'QEMU_TEST_IMX95_DTB',
++                            'QEMU_TEST_IMX95_INITRD', 'QEMU_TEST_IMX95_SM_FW')
++        self.require_accelerator("tcg")
++        self.set_machine('imx95-19x19-evk')
++        # LPUART1 (ttyLP0, index 0) is the Linux console; LPUART2 carries
++        # the SM debug monitor and is left null here.
++        self.vm.set_console(console_index=0)
++        # The machine has a fixed heterogeneous topology of 6 Cortex-A55 +
++        # 1 Cortex-M33 (SM) + 1 Cortex-M7 (RT), so do not pass -smp; the
++        # machine's default of 8 is the only accepted value.
++        self.vm.add_args(
++            '-m', '2G',
++            '-kernel', art['QEMU_TEST_IMX95_KERNEL'],
++            '-dtb',    art['QEMU_TEST_IMX95_DTB'],
++            '-initrd', art['QEMU_TEST_IMX95_INITRD'],
++            '-device',
++            'loader,file=%s,cpu-num=6' % art['QEMU_TEST_IMX95_SM_FW'],
++            '-append',
++            'earlycon=lpuart32,mmio32,0x44380010 '
++            'console=ttyLP0,115200 cpuidle.off=1 rdinit=/init',
++        )
++        self.vm.launch()
++        # Load-bearing signal #1: SCMI handshake against the real SM.
++        # Confirms the dual-aperture MU2 cross-connect (A55 MUA <-> M33 MUB)
++        # is working end-to-end and the SM answered protocol negotiation.
++        self.wait_for_console_pattern(
++            "SCMI Protocol v2.1 'NXP:IMX' Firmware version 0x333")
++        # Load-bearing signal #2: PID 1 ran. The string is printed by the
++        # /init in the supplied initramfs (QEMU_TEST_IMX95_INITRD).
++        self.wait_for_console_pattern('=== imx95 busybox userspace ===')
++
++    def test_aarch64_imx95_evk_m7_rpmsg_pingpong(self):
++        """Linux + the SM-booted M7 run NXP's rpmsg_lite ping/pong over MU7.
++
++        The full A55 + M33(SM) + M7 stack: the SM boots the M7 running NXP's
++        rpmsg_lite pingpong firmware, Linux's imx_rproc attaches to the
++        SM-managed core, and the stock imx_rpmsg_pingpong module exchanges
++        100 messages with the M7 - kicks over the modelled MU7 cross-connect,
++        payload in the shared vrings. The module prints "goodbye!" after the
++        final round-trip. The initramfs must bundle the matching
++        imx_rpmsg_pingpong.ko and an /init that loads it (see
++        docs/system/arm/imx95-evk.rst).
++        """
++        art = self._require('QEMU_TEST_IMX95_KERNEL', 'QEMU_TEST_IMX95_DTB',
++                            'QEMU_TEST_IMX95_RPMSG_INITRD',
++                            'QEMU_TEST_IMX95_SM_FW',
++                            'QEMU_TEST_IMX95_M7_RPMSG_FW')
++        self.require_accelerator("tcg")
++        self.set_machine('imx95-19x19-evk')
++        self.vm.set_console(console_index=0)
++        self.vm.add_args(
++            '-m', '2G',
++            '-kernel', art['QEMU_TEST_IMX95_KERNEL'],
++            '-dtb',    art['QEMU_TEST_IMX95_DTB'],
++            '-initrd', art['QEMU_TEST_IMX95_RPMSG_INITRD'],
++            '-device',
++            'loader,file=%s,cpu-num=6' % art['QEMU_TEST_IMX95_SM_FW'],
++            # The rpmsg pingpong firmware is a raw M7 TCM image; load it at the
++            # M7 TCM alias the remoteproc carveout points at (0x203c0000),
++            # rather than as an ELF with cpu-num.
++            '-device', 'loader,file=%s,addr=0x203c0000,force-raw=on'
++                       % art['QEMU_TEST_IMX95_M7_RPMSG_FW'],
++            '-append',
++            'earlycon=lpuart32,mmio32,0x44380010 '
++            'console=ttyLP0,115200 cpuidle.off=1 rdinit=/init',
++        )
++        self.vm.launch()
++        # SCMI handshake against the real SM (as in the boot test) - the M7
++        # cannot come up without the SM, which is the only SCMI provider.
++        self.wait_for_console_pattern(
++            "SCMI Protocol v2.1 'NXP:IMX' Firmware version 0x333")
++        # The 100-message ping/pong completed: imx_rpmsg_pingpong prints
++        # "goodbye!" after the final round-trip with the M7 rpmsg-lite client.
++        self.wait_for_console_pattern('goodbye!')
++
++    def test_aarch64_imx95_evk_m7_fault_recovery(self):
++        """The real SM boots the M7, takes its fault, and cold-resets it.
++
++        No A55/Linux: the SM (M33) and the M7 fault fixture run alone. The
++        fixture asserts SYSRESETREQ on its first boot; the SM routes that to
++        CM7_SYSRESETREQ_IRQn, runs lm_reset on the M7 logical machine, and
++        prints the recovery on its debug monitor (LPUART2). Observing that
++        line confirms the whole SM-managed M7 lifecycle - the SM had to learn
++        it owns the M7 (from the machine's fabricated boot-ROM handover),
++        enable the fault IRQ, and drive the CpuStop/CpuStart cold cycle.
++        """
++        art = self._require('QEMU_TEST_IMX95_SM_FW', 'QEMU_TEST_IMX95_M7_FW')
++        self.require_accelerator("tcg")
++        self.set_machine('imx95-19x19-evk')
++        # Console on LPUART2 (index 1) = the SM debug monitor; LPUART1 (the
++        # A55 console) is left null since no Linux runs here.
++        self.vm.set_console(console_index=1)
++        self.vm.add_args(
++            '-m', '2G',
++            '-device',
++            'loader,file=%s,cpu-num=6' % art['QEMU_TEST_IMX95_SM_FW'],
++            '-device',
++            'loader,file=%s,cpu-num=7' % art['QEMU_TEST_IMX95_M7_FW'],
++        )
++        self.vm.launch()
++        # The SM comes up...
++        self.wait_for_console_pattern('SM Debug Monitor')
++        # ...then the M7 faults and the SM cold-resets the M7 logical machine.
++        self.wait_for_console_pattern('Reset LM 1')
++
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
 2.34.1
 
