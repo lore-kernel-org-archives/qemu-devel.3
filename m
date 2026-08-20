@@ -4,133 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87366C5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 07:59:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 102D3C5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 08:13:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwxfg-0000gS-9o; Thu, 20 Aug 2026 03:58:44 -0400
+	id 1wwxss-00028a-73; Thu, 20 Aug 2026 04:12:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wwxfe-0000g4-Jx
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 03:58:42 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wwxfc-0006ja-KK
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 03:58:42 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4953e04ef16so20546845e9.2
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 00:58:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1787212719; x=1787817519; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=DvxJIX5REEgAjoaQUfIh/9VLwd5fuvQExru6eU7BFJo=;
- b=am/XryHl395mw+nU8sGH8i42tZMo7lsEqypnP+sk410ZnOQPRPzCTUDRWVIIsmlhyO
- Du/682yHJz2/WkdLnyOz6ryG5Y5SszR9+DZXQjujQ3WgB5GT+QlObbozZrmg9BWgWRqU
- +aoDxu7eNouEyt+9NxG35fD+Lr8R8eGYVYFsPfb2ht/8f9p6IIHojKapEdeH84OE0OTy
- 9fN7WvjnR0U3SE1wqsYGqOpyIdau7X7IP2FGtq5TKVoNZtx5y5evPKLtC/rAzvKVK6kj
- ljO2Cgj3kxDBIPIeg94x2DhwkllLanCLtUy+X+NduBFlO9abSujxr51eXUCjtWiKlEjq
- k8Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787212719; x=1787817519;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=DvxJIX5REEgAjoaQUfIh/9VLwd5fuvQExru6eU7BFJo=;
- b=rNC02Y+QJ9Xx/q25v58gNbhMEFLxoSWYk6VHJD5R2+gYdvbgGjxGPWN6KjZKUvpEMh
- gQcbdnjSlQhpkKU4Ppcj+6y0CgHIZ1xNBvp3pMN2bn7pFD24/uQCQG9iXqR9O3Vg2aZU
- 3loWfUVngHaX/HLR26KgXjmccHSSKzfGhk8nVauGEMgMO7RDYXAqZ9hO495GGWXMAZpr
- feoiO2Bex7z2K9UtvvMlcwvk625lAQ6CCqFexWObc5JtYq60ENOGkrQMB+hpiDojrxf1
- AbdxFZy3/8ShX6qfVbENXTAbB0tKztk6htqDo9IkL2ZDPfCqbewPtwPitHcsdD6HX0hz
- bQ4Q==
-X-Gm-Message-State: AOJu0Yxl3KAHjg6iBkJqANtdV6imHQDjFpkfM38PPoT1SiAOokjVBl69
- vlaPw5CxmUzr6ebElgOmCyZpG3Zw8AXOHiHTWtfX67ibvBDg5SX6ghzXRbHiMmf9QQ==
-X-Gm-Gg: AR+sD12DLMbLHVMbCBKQf13unVG63YCHkMQ+oW/B6gjP1b1xM8f7HW7rV3o6yDR+YfW
- 3BsjfKV0RTTC+9EXhEX5d/yIEi1LJWRJfluBxiYFLzm2ShrhHTukjRXV3mAERj0Ryw2M7pzEtSw
- qrSbz0msrbFKeRxdJOIDNRKMBXvEYtkEOdUchIE5/gjiU+SQLOBaL7GFSl448QdbnMuOUnEpfci
- A4Nu12HG4KgWkYjXPoh51sEsmZbFOSiTOGrSW7+PGBm5QSjJLIz2L3X8COr17ZcW5qJn+qfM4LU
- S0e/XmdPiOALEU1TItB9xXa+yyoHCy3J/w0TUxr9RDwz8UGUQyOPTLjNwH6TbdCY2YgmghKZmqk
- GsHqcYFcjLUFqXLZjNN9xiDEDt/PPGdYRt5PQtUFaOrgLixtA9uaEjDHteLm78cxwOywZg6oY40
- 3rfVumWGFeZP9vZRy9Lk2gyVqXIIFtMHPz/yTpwTiruHJN9N6N6Tte9KwH1PtHOSfm6bQOvAZpQ
- bo+wTPFy2mv7CHy37Nhhu8Ki7iivBbJG/2LNaXvmqIeb5q1HG/A
-X-Received: by 2002:a05:600c:468c:b0:499:48bb:417e with SMTP id
- 5b1f17b1804b1-499aa14a72dmr160304885e9.2.1787212718889; 
- Thu, 20 Aug 2026 00:58:38 -0700 (PDT)
-Received: from [10.156.60.236] (ip-037-024-206-209.um08.pools.vodafone-ip.de.
- [37.24.206.209]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b20bb2b4sm27973115e9.0.2026.08.20.00.58.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Aug 2026 00:58:38 -0700 (PDT)
-Message-ID: <b05a3553-398d-4ed0-bbf1-6e93cf385fe2@suse.com>
-Date: Thu, 20 Aug 2026 09:58:37 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
- support
-To: Chuck Zmudzinski <brchuckz@aol.com>
-Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
- Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
- xen-devel <xen-devel@lists.xenproject.org>
-References: <20260802050824.10554-1-brchuckz.ref@aol.com>
- <67579eba-e222-41dd-84bf-8440d2eaf2a9@netscape.net>
- <da2200cd-def7-4cce-a6c2-9f9ac9e202ce@suse.com>
- <de56c8bd-f0e8-4fe9-8cf5-f6807698176c@aol.com>
- <02a7dc18-4184-4e86-84cb-121769187f71@suse.com>
- <1858e8e6-73fa-4017-93e2-c733fbf0ec8d@aol.com>
- <d6e603bf-8dc5-4ac7-842f-ff9d1f67b98f@suse.com>
- <fdec0b6b-eddf-4a36-a755-c67963daa9ea@aol.com>
- <6ecf80ef-2f0e-44fb-beab-dbcf065a4431@suse.com>
- <bb44067c-6739-4e83-a0fd-cc7ea797048f@aol.com>
- <4c58bda6-e9ed-438d-b96e-feda74a6c4c7@suse.com>
- <31a5870f-2a4d-4dc0-af9c-f0567e0f6fb3@aol.com>
- <db8fd04d-bbc7-41c7-8473-b821d7f77d5f@aol.com>
- <302ed12f-40ca-405c-80ca-ac4f2785d754@suse.com>
- <cdae1785-4d9a-4aab-929e-de55c26b7b94@aol.com>
- <10cd9f6b-678b-407b-a51e-70e9ed7a35fd@aol.com>
- <131b1252-b108-4b4c-8457-673ff0d20d5e@suse.com>
- <682975cc-4857-42b2-badf-b638869f3268@aol.com>
- <7ab98288-0c5e-472d-87dd-5586e60027bb@aol.com>
- <f0ffe015-1bc5-4091-8dbe-2b4eee9cec2d@aol.com>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wwxsq-00028E-NT; Thu, 20 Aug 2026 04:12:20 -0400
+Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
+ ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1wwxsn-0001n5-Qi; Thu, 20 Aug 2026 04:12:20 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ocqbkRL+tgfyYnDmMlInwjeuKhqp1nRyM833gjlEifw54LxH+iYcCyl0gwIOdP4xh2r4Xy7LP029wapeL3RPGfxL9RomArqXnbonvLSD3CftsygC8GfIrJVUH6n7+ljvI8b/deZZi+7WUzy6QbhJWFmgVsMOE+73/d6n5vopxjb3R/AmZM95up9jrowpFo9ht4yRfSivrgN1SmmmWUQE/T2SVJddSFjJksHF4Faq1FD4UOxBsBzuv4LRUEBZo4dsUr4Mb4vNSiurqU2V72aul52Zh/mcxAqHBIJ1zWA3danbYpXR0pnAkBCqK5IeWSKzHwG3aB1tmD6XQdde0fsydA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TKnQI+ujwK7/vnC2L8Te6vZ+MrVndSwpdVR4Sqv4Yac=;
+ b=KKjr6goj/YC0/4yVsO6IT1B5QOu5+I0E6j6xnMCiFWB1gT9R2lzJpW283/3DEVTzKRUWNuvmJpUubAWBB0fRztdaDqbW8Hbj7/Tsl0ai1mc6jn/lqKBq0vLjJx7bOlkhlq6nqMY17DtlMJhuc4TgrIpBA0sYQpv9c0lPPbZmZ/VwHTEgexWFwmNSD0oUNhuBhYl3NGnFsf15LXRuVUAZHPowmIMi4+uM4VAjdcFvCv0znsZR9MRVpYQHJCfXfCGGX88v1EYENG2FiN6L93wXt27ssvo/RUnQWXfS7cHCZ7Kpgm2OuD7T992iwbZPLYXkNXbBSPp4vg2lGMSO2fG2zg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TKnQI+ujwK7/vnC2L8Te6vZ+MrVndSwpdVR4Sqv4Yac=;
+ b=X/o8nAOzW0SNAf6iLg87Dv0739Q2cP4Ght/BJUrQTUco8UhIR3lfGuCjltqEHi/peU7jAuKP3LBySif9NNAG3QMigL8CsOytqaDsfTG73C3ssu3vzNPeOHOp9N7HNFkP9Dj5zTXcpAuKffZ8hfwomN3YfEjbLewYyxioI9l9FJuYS7bgMcQaPQE7ek7HwUaCaIk2QCYcOtFzO5S55YqU6btqEEtMy5szBygf0pIFFACzjvyC8TSn4h4ZjXTjM6I4QHYnnjdTq3bnPvnkGXGoJvD+12jZypsmfHIOnlfH/L/3pagcq2DasAHgRspaNDtScL57ipRhcrzn4F8z9Xrw5Q==
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
+ by TYZPR06MB5661.apcprd06.prod.outlook.com (2603:1096:400:28e::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.8; Thu, 20 Aug
+ 2026 08:12:08 +0000
+Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
+ ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0339.007; Thu, 20 Aug 2026
+ 08:12:07 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
+ <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Fabiano Rosas
+ <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open
+ list:All patches CC here" <qemu-devel@nongnu.org>
+CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
+Subject: [PATCH v2 0/4] Add ASPEED ACRY RSA model for the AST2600
+Thread-Topic: [PATCH v2 0/4] Add ASPEED ACRY RSA model for the AST2600
+Thread-Index: AQHdMHuXpSIZ1OOZOEyu28ge3J3rLg==
+Date: Thu, 20 Aug 2026 08:12:07 +0000
+Message-ID: <20260820081206.3353463-1-jamin_lin@aspeedtech.com>
+Accept-Language: zh-TW, en-US
 Content-Language: en-US
-From: Jan Beulich <jbeulich@suse.com>
-Autocrypt: addr=jbeulich@suse.com; keydata=
- xsDiBFk3nEQRBADAEaSw6zC/EJkiwGPXbWtPxl2xCdSoeepS07jW8UgcHNurfHvUzogEq5xk
- hu507c3BarVjyWCJOylMNR98Yd8VqD9UfmX0Hb8/BrA+Hl6/DB/eqGptrf4BSRwcZQM32aZK
- 7Pj2XbGWIUrZrd70x1eAP9QE3P79Y2oLrsCgbZJfEwCgvz9JjGmQqQkRiTVzlZVCJYcyGGsD
- /0tbFCzD2h20ahe8rC1gbb3K3qk+LpBtvjBu1RY9drYk0NymiGbJWZgab6t1jM7sk2vuf0Py
- O9Hf9XBmK0uE9IgMaiCpc32XV9oASz6UJebwkX+zF2jG5I1BfnO9g7KlotcA/v5ClMjgo6Gl
- MDY4HxoSRu3i1cqqSDtVlt+AOVBJBACrZcnHAUSuCXBPy0jOlBhxPqRWv6ND4c9PH1xjQ3NP
- nxJuMBS8rnNg22uyfAgmBKNLpLgAGVRMZGaGoJObGf72s6TeIqKJo/LtggAS9qAUiuKVnygo
- 3wjfkS9A3DRO+SpU7JqWdsveeIQyeyEJ/8PTowmSQLakF+3fote9ybzd880fSmFuIEJldWxp
- Y2ggPGpiZXVsaWNoQHN1c2UuY29tPsJgBBMRAgAgBQJZN5xEAhsDBgsJCAcDAgQVAggDBBYC
- AwECHgECF4AACgkQoDSui/t3IH4J+wCfQ5jHdEjCRHj23O/5ttg9r9OIruwAn3103WUITZee
- e7Sbg12UgcQ5lv7SzsFNBFk3nEQQCACCuTjCjFOUdi5Nm244F+78kLghRcin/awv+IrTcIWF
- hUpSs1Y91iQQ7KItirz5uwCPlwejSJDQJLIS+QtJHaXDXeV6NI0Uef1hP20+y8qydDiVkv6l
- IreXjTb7DvksRgJNvCkWtYnlS3mYvQ9NzS9PhyALWbXnH6sIJd2O9lKS1Mrfq+y0IXCP10eS
- FFGg+Av3IQeFatkJAyju0PPthyTqxSI4lZYuJVPknzgaeuJv/2NccrPvmeDg6Coe7ZIeQ8Yj
- t0ARxu2xytAkkLCel1Lz1WLmwLstV30g80nkgZf/wr+/BXJW/oIvRlonUkxv+IbBM3dX2OV8
- AmRv1ySWPTP7AAMFB/9PQK/VtlNUJvg8GXj9ootzrteGfVZVVT4XBJkfwBcpC/XcPzldjv+3
- HYudvpdNK3lLujXeA5fLOH+Z/G9WBc5pFVSMocI71I8bT8lIAzreg0WvkWg5V2WZsUMlnDL9
- mpwIGFhlbM3gfDMs7MPMu8YQRFVdUvtSpaAs8OFfGQ0ia3LGZcjA6Ik2+xcqscEJzNH+qh8V
- m5jjp28yZgaqTaRbg3M/+MTbMpicpZuqF4rnB0AQD12/3BNWDR6bmh+EkYSMcEIpQmBM51qM
- EKYTQGybRCjpnKHGOxG0rfFY1085mBDZCH5Kx0cl0HVJuQKC+dV2ZY5AqjcKwAxpE75MLFkr
- wkkEGBECAAkFAlk3nEQCGwwACgkQoDSui/t3IH7nnwCfcJWUDUFKdCsBH/E5d+0ZnMQi+G0A
- nAuWpQkjM1ASeQwSHEeAWPgskBQL
-In-Reply-To: <f0ffe015-1bc5-4091-8dbe-2b4eee9cec2d@aol.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=jbeulich@suse.com; helo=mail-wm1-x332.google.com
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|TYZPR06MB5661:EE_
+x-ms-office365-filtering-correlation-id: 9c7b5b8f-deae-45e8-4a7c-08defe92ba57
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|7416014|23010399003|1800799024|366016|921020|38070700021|56012099006|10067099003|18002099003;
+x-microsoft-antispam-message-info: WkgfW+rEwdQ9mhxVcRskV5FMlz21N1h+tKcVU/Fsan//UnZ/e/6qLOgO53atJVKRhtlOLav+hZiDUOHplpRWzq63rPLXAOKmTzJehU1ZuS0oGYClTbuQGC/+1Ph3MvG0t6pRV5OfCkYzjHPuXKrX17jDUJ9M0UX5afkPDOYMG/SvmC27nslVaQMQ3lOdNc6oWyz6nVTfmyUinnjHs22M1UqhtIotJgOQbq5UWmpPJC/w1KuvM+gI+Lxbvz8OlSCrF8u3JnVJWotvBvQ2zpMB6v9OTgxlI9Pximdtv0Qt5fNQ8Ijft20CmmO4cPxsiRZkdcYu0nlPD9W5jFbTUjNhRXZ4Lz52/ppWfoQNWzxY9um1KhUTeHponprx3gMMDZ3Nlb+xWBh++13U+Z1MVOZkyG9XyXjxSRec5XGRSGPQQqC8qCG3uMBQlKr9eK29ZunJMxR/Y7YJCeON2DWP90GuXKY8T50hSMCJ8CcK3fX7xNs+i7Ke9L8thLIJ6p98kpbsR1v80z7anN63YIksc/xJbkAYV3dAoLQtTLl3VSAjofhbROmq/wB2bCG4tY8nHX3LbcXUyLIvnwYz8X/tYWLgY7Txyg0LCOaPbIjxx3c4avVtPU8PQcCDHI65g+y5jlkreKnm/MWViYKay5SkpMcsSOYkbr8TXCeVZhCCeN+p9ApSqO3S/2KidVtvcDOu0WcWtBomfN+dPgufzVnkYz1V6Xx9WEj54l5hXzU0r/Nz9WkGKmVj+f+uFIV3DWMD6S3M
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(23010399003)(1800799024)(366016)(921020)(38070700021)(56012099006)(10067099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?X6KZnz+rHMtBHOdU7w1GbLAu7wK0lyNJ2wIgazlS5AW5cCbM2nraRfhyn7?=
+ =?iso-8859-1?Q?F6vrlPod4NTXM6kbq8KTdUeHQmDU3VFtTxfoE8XRMTXN07Kfgb9hX7ydVc?=
+ =?iso-8859-1?Q?DX4UG4WGHxWTQNx3EuOjAwRhlgzbxIILAenb97F7v+mMijMxo8HZceGI11?=
+ =?iso-8859-1?Q?XDo/O1ySz8BmnO7t9pIGeTDpzomFLbStZ/vL/yZnXhGham2lZc16Wv2UwN?=
+ =?iso-8859-1?Q?ym0Azzal5Pz3x0hMaTpGlNx9NcMi/cH4yf49PL8QSiCoBmB9U7LypaSvoq?=
+ =?iso-8859-1?Q?1hzB01MnShiVod8oTd0yfFzHOgp1TirnOaeqK5O4uvGDnPHrk+kHovgoIr?=
+ =?iso-8859-1?Q?MXM/A3R9kv0UfokQ67rnOl4uSv+JFdQL+fB6ye6yWfb9b+64XsTfJ4ui1f?=
+ =?iso-8859-1?Q?C/Uc0wfPqTKYGWmGyPms14/+57R9JkhMqmzHHILv0ExXZrmn1LkNiL49OG?=
+ =?iso-8859-1?Q?BdgRZEkRz1DViLta3EqFY+ztkF5KhNN/AGiwaw9lZM8A7uhNXtBNSCLXug?=
+ =?iso-8859-1?Q?Iv+hv7s2RTkizKPnXvv7CTV05L/9qTKJp2KrfR0Unq47SDoswG99oNqO4I?=
+ =?iso-8859-1?Q?eG8HTpJ0nWbmKd13gSZjDJlmsaY0JjwbchIuq+qwXkRHJJ8UeuxaGPLUWf?=
+ =?iso-8859-1?Q?S34EcRMqnW1UKj4OZUDNqrwxxhIC6SheifLa5qbkivvpKP54OXUO8LhAkl?=
+ =?iso-8859-1?Q?v4khO3UjTyVYnfjv5lfmcv2MaQCPkhQvzM1PACKogMA8QNP7gjcyi7LiqO?=
+ =?iso-8859-1?Q?4jtxrVDI/7mAqFuc4No9USUGtgO8DGPdW5l7B/UivQuiIzSzC/nfx4olU4?=
+ =?iso-8859-1?Q?rr6wh+GO68y3ROF564xpAG+rjzGhoVez4qPJRiiujHpRQhvkTDLSMG2rAD?=
+ =?iso-8859-1?Q?HFm+MJ7B25qxFqak2n4s4itSuVS46i6THUUs0elsXW837GpQQ14j2NZ32v?=
+ =?iso-8859-1?Q?+aYJKSOMtP9Mx0dKVB6g5/Y/R2isLagA0tM7zpEfY+e0zN/h1GldCaZXlc?=
+ =?iso-8859-1?Q?WrjRiQYiVGJLaubEM6O1zaXo2H/ItQFGZVVYWTnj5mnWAX/5NVP3fcdmWy?=
+ =?iso-8859-1?Q?oiXusioEspdWxkwcEWKFnkxlmmDRL997qtxzg1wufPSbh+k5lI073p/Nep?=
+ =?iso-8859-1?Q?URhjyDzB/lFOT2Qe++Uoz8CndF13y8/wkvLdmhr/LQSZDrIK/kmR8Tkfj2?=
+ =?iso-8859-1?Q?cGzDV3H2S/3JKudUgRJi063aksB+y8aPX9BBzyfpTogLb8d10cvH7DciW4?=
+ =?iso-8859-1?Q?YqHdYp44yNmYiSnQIxrKcZDt1wEqxe9unon0pFWfL8YTKWbOcwAhvs9i3c?=
+ =?iso-8859-1?Q?b2yB7N5XldOtsvF+Ab3auY1VuX+Euuezh4LbkpK2R3LWfrXD4rsuRC6bZn?=
+ =?iso-8859-1?Q?/3ulC8REquZ6ebCKfCE/FxMpRqFNEhlWPfezN6AYncmo9imW72GVQA7bVq?=
+ =?iso-8859-1?Q?83PYfkV8++6x9B4DQl7XVYLbSD2OY8SV2Smgm5Y381V2pUE29WHtL40M0o?=
+ =?iso-8859-1?Q?KhTXp/uapOE5eFJvgubcBUX5TnJhciA5q9jIYzYZbRfSuCSUMWVJqn7m4K?=
+ =?iso-8859-1?Q?I3FCbA0ZLXhk9AKHbSwp+CT9YCsAD4vdo64Kgr94oUvfRSS+XYEkRHQjKu?=
+ =?iso-8859-1?Q?PRImGVSq24oj9KCSPoM/nCDaUA0lNMa9spBvqzzJ09ibeh2G19VWTFFLs/?=
+ =?iso-8859-1?Q?6iE/8IKNCQq2GDd9SgUkvOc12Opeo3Kmt/4pLeITme5VLfgyLrVEp8FZpC?=
+ =?iso-8859-1?Q?gUoQ5zlY/VoaqGoTvywVWXUsXyAbr24vw7rzL0ItQFPGu3L5dAfFVM4SWE?=
+ =?iso-8859-1?Q?Q3I02fFXFQ=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: YP7dJkBcWEXS8dROw6kkjX1FBLEN//0bhF0CG3t+TgGHibW40PKJQS6f09C7be9cjIDHLUNmoouRUovY5OxG/8uWz2veI1ZxtqFr8Hw8QrtOBAF3t1Z5jcg43DLltXjOBT5Adh+O18TDnp6qZxZr8rl2vcBV67KzhuCUsbOUG/vs/89v2n3DFJ1hd4cv8AzwXL8pxMIWjy6lGUbfdawbXhNEIU20lTWR+R81r44DEfxiA7dsYvmouZC7cP3xtEhYH2ykjQIqe95CtMoF5DZ8iTZTF5agBo9CO5Ew0sSfOaE5kTbgwnbx6AMZ8AOay1H0Ildd0bOA7EBy9e/q50z+gg==
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9c7b5b8f-deae-45e8-4a7c-08defe92ba57
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Aug 2026 08:12:07.8134 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: F49KbmmYlwBOAlJFAm7QicPeKL7DAxmY8QCB0+JhPSBm4+kch8/fBeRBO3Tyk5f0dMu229JK+CYKEsnYSksJvEiAG4qMO5eE3RqA6+2JWWQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB5661
+Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=SEYPR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -147,90 +145,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.08.2026 21:09, Chuck Zmudzinski wrote:
-> On 8/19/2026 1:49 PM, Chuck Zmudzinski wrote:
->> On 8/19/2026 11:47 AM, Chuck Zmudzinski wrote:
->>> On 8/19/2026 9:51 AM, Jan Beulich wrote:
->>>> On 19.08.2026 14:36, Chuck Zmudzinski wrote:
->>>>> On 8/19/2026 8:16 AM, Chuck Zmudzinski wrote:
->>>>>> Yes, I agree that v3 of the patch to hvmloader should presume that the DM can get
->>>>>> a copy of the OpRegion and read its contents so most of this can be done in the
->>>>>> DM instead of in hvmloader. So from hvmloader's perspective, the patch will be more
->>>>>> about avoiding the layering violation than anything else.
->>>>>
->>>>> However, there is one advantage, from the viewpoint of the Xen virtualization platform
->>>>> as a whole, to do the patching of the OpRegion in hvmloader instead of in the DM.
->>>>>
->>>>> If we patch the OpRegion in hvmloader as v2 of this patch does, we provide a common
->>>>> solution for extended VBT support for Intel IGD devices that would be compatible with
->>>>> all DM implementations, not just with Qemu. So why not do the patching of the OpRegion
->>>>> in hvmloader?
->>>>
->>>> As indicated before: If the OpRegion holds data that is needed to drive the
->>>> device, and if the OpRegion is exposed writable to guests, then guest can
->>>> screw up that data such that subsequent guests won't work anymore. Hence
->>>> exposing to guests (which includes hvmloader) needs to be stopped, or at
->>>> least be limited to r/o. That, in fact, includes exposing to any privilege-
->>>> restricted DM as well.
->>>>
->>>> Exposing r/o may be entirely okay (i.e. may not be a layering violation),
->>>> depending how exactly an OpRegion surfaces for a device (on the host). Aiui
->>>> it's not addressed by any of the BARs, yet it looks like it needs similar
->>>> treatment. Earlier on we also talked about the region not necessarily being
->>>> page-aligned. That poses, even with r/o exposure, the question of other
->>>> data on the same (leading / trailing) pages. This may imply that the
->>>> copying needs to be done strictly in Dom0, for both DM and guest to only
->>>> ever act on copies (which may then as well be r/w).
->>>
->>> Yes, I am thinking the DM should make a copy host OpRegion and never expose
->>> the host OpRegion to the guest but only a copy of it.
->>>
->>> The reason we need a patch like this is that with the introduction of the
->>> rvda/rvds fields into the OpRegion, the OpRegion is not always position-independent
->>> so its contents might be unsuitable in the guest address space, so in those cases
->>> we need to patch the copy of the OpRegion that will be exposed to the guest.
->>> If there is an extended VBT the DM will also get a copy of it, make a copy of
->>> it, and expose it to the guest by appending it contiguous with the OpRegion.
->>> Since in this scenario we are assuming the DM knows the contents of the OpRegion,
->>> then it can find the host VBT and make a copy of it without needing hvmloader
->>> to send the rvda and rvds values to it.
->>>
->>> Then, the remaining question is which component (DM or hvmloader) will patch it
->>> if it needs to be patched to make the guest's copy of it compatible with the guest
->>> address space.
->>
->> As I noted earlier, it think it would be advantageous for the Xen platform as whole
->> for the patching to be done in hvmloader. That way, support for extended VBT is
->> automatically added for all implementations of the DM, not just for Qemu. But the
->> downside is that for hvmloader to do the patching, it needs to know the host OpRegion
->> address, which one could argue it should not need to know. This is the only reason I
->> can think of to do the patching of the OpRegion in the DM instead of in hvmloader: to
->> avoid disclosing the host OpRegion address to the guest.
-> 
-> Correction: Actually, with this new scenario, we need not disclose any confidential
-> host addresses to hvmloader if the DM removes such information from the copy of
-> the OpRegion that it exposes to hvmloader. Then, all hvmloader needs to know to
-> ensure the OpRegion is compatible with the guest's address space is the guest
-> address of the OpRegion. It need not know either the host OpRegion address or the
-> host VBT address.
-> 
-> So the guidance I need from you to do v3 of the patch is simply to answer these
-> two questions.
-> 
-> 1. Should I write v3 of the patch not only assuming the DM will never expose the
-> host OpRegion to hvmloader, but also assuming that the DM is responsible for
-> patching the OpRegion to ensure it is compatible with guest address space?
-> 
-> Or
-> 
-> 2. Should I write v3 of the patch assuming that hvmloader is responsible for
-> patching the OpRegion so it is compatible with the guest address space?
-
-My tentative response is to use option 1, not the least because a mid to long term
-plan is to see about removing hvmloader altogether. However, a more firm response
-here depends on an answer to the question raised in
-<92022f85-9a53-4db8-b489-fc91c86b413c@suse.com> (sorry, the list archive hasn't
-caught up yet).
-
-Jan
+This series adds a model of the ASPEED ACRY engine found on the AST2600=0A=
+SoC, wires it into the SoC, and adds a qtest.=0A=
+=0A=
+The ACRY engine performs RSA modular exponentiation (c =3D m^e mod n). It=
+=0A=
+DMAs the operands (data, exponent, and modulus) from guest DRAM and writes=
+=0A=
+the result to a dedicated 64 KiB SRAM region.=0A=
+=0A=
+Guest firmware uses the engine for RSA signature verification during boot.=
+=0A=
+Without a model, the guest starts the engine and waits indefinitely for a=
+=0A=
+completion interrupt, causing the boot to hang.=0A=
+=0A=
+The model uses QEMU's generic akcipher API to perform raw (unpadded) RSA.=
+=0A=
+Raw RSA is currently supported only by the libgcrypt backend, which can be=
+=0A=
+enabled alongside gnutls with -Dgcrypt=3Denabled, so a build does not have =
+to=0A=
+choose between the two. When raw RSA is unavailable, the engine still=0A=
+completes and raises its interrupt, but returns an all-zero result. This=0A=
+allows the guest's signature verification to fail cleanly instead of=0A=
+hanging. The qtest is skipped when the selected crypto backend does not=0A=
+support raw RSA.=0A=
+=0A=
+Although the hardware documentation describes both RSA and ECDSA support,=
+=0A=
+ECDSA is known to be broken on this hardware and is therefore not modeled.=
+=0A=
+=0A=
+v1:=0A=
+ 1. Add ASPEED ACRY RSA model for the AST2600=0A=
+ 2. Add qtest for AST2600 ASPEED ACRY RSA model=0A=
+ =0A=
+v2:=0A=
+ 1. squash "Add the ACRY model to AspeedSoCState" into "Wire up the ACRY=0A=
+    model"=0A=
+ 2. wrap the ACRY SRAM in a container mapped at offset 0 so the device=0A=
+    addresses it by relative offset (drop the "sram-base" property)=0A=
+ 3. build the scattered SRAM byte offsets on the fly instead of caching=0A=
+    them in per-instance lookup tables=0A=
+ 4. write the result with address_space_stl_le() and check the MemTxResult=
+=0A=
+=0A=
+Jamin Lin (4):=0A=
+  hw/misc/aspeed_acry: Add ASPEED ACRY model=0A=
+  hw/arm/aspeed_ast2600: Introduce the ACRY SRAM=0A=
+  hw/arm/aspeed_ast2600: Wire up the ACRY model=0A=
+  tests/qtest/aspeed-acry-test: Add RSA ModExp tests=0A=
+=0A=
+ include/hw/arm/aspeed_soc.h    |   4 +=0A=
+ include/hw/misc/aspeed_acry.h  |  39 +++=0A=
+ hw/arm/aspeed_ast2600.c        |  34 +++=0A=
+ hw/misc/aspeed_acry.c          | 455 +++++++++++++++++++++++++++++++++=0A=
+ tests/qtest/aspeed-acry-test.c | 395 ++++++++++++++++++++++++++++=0A=
+ hw/misc/meson.build            |   1 +=0A=
+ hw/misc/trace-events           |   6 +=0A=
+ tests/qtest/meson.build        |   5 +-=0A=
+ 8 files changed, 938 insertions(+), 1 deletion(-)=0A=
+ create mode 100644 include/hw/misc/aspeed_acry.h=0A=
+ create mode 100644 hw/misc/aspeed_acry.c=0A=
+ create mode 100644 tests/qtest/aspeed-acry-test.c=0A=
+=0A=
+-- =0A=
+2.53.0=0A=
 
