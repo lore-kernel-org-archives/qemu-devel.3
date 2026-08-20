@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 965B8C5DF87
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1EDDC5DF89
 	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:56:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwtl7-0006DP-UP; Wed, 19 Aug 2026 23:48:05 -0400
+	id 1wwti3-0006sZ-K8; Wed, 19 Aug 2026 23:44:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtl6-00064A-Jn
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:48:04 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1wwti2-0006sO-JC
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:44:54 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtl5-0004MC-2B
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:48:04 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-38511175ad3so1646343a91.2
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:48:02 -0700 (PDT)
+ id 1wwti0-0003bz-H4
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:44:54 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-3810c5d691bso1231755a91.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:44:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787197682; x=1787802482; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787197490; x=1787802290; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=QT+NqtS29Jb8B76mVXI/GmUgsUgPIu04DUnpKcaegjs=;
- b=CqgAp5mUb5lzOydlEJNd7QBtFNJrPXoJVnCr/kNENWptyFDnzbbwfAE2OkmqGAqQjb
- BDyx0x0MmgpstQFBOanWcyLJwjNRWo6QF2sfBaTUVABz5dA5aGcW48cPUjkhc5hwXzWL
- 9VmZo/P4q0grylWKsZnMVRPLgMm7ZpMwZA2uR+E8dGKz1fkGiHfddo9duXQv66ItJyuA
- Bdjdm+jIW42ltxRlwr9G9s4cddk1x8EsmDE8CHXsBPXorfyyCxr3Lj/X/Llp0fDvon1U
- bDM5enb/t7oabOkHTGvZTl69O9IuUhN5rmXyYd/0Buka5B+gF9VHJN49iDnudouT7Yv/
- pF4A==
+ bh=YLZW+WC6XzwXmMPSObI4jtS6Mg2Ad7TYWfRIDenp+Hw=;
+ b=K274oJ2nS9wqC8IPZFeCvSuXEMzxv5j0JeGyRGeflMvQBKDo5fT71foCxcf3AkRKE6
+ aht+IYp8QEkhi8GxvirMdY0GvKf4UOqoBe6l+AfYgh8NKPQ5Q5W9gWjWqn4hCevWp+cG
+ FVnC1Am1/X6iSO2RT1qZVUnJmHua56UJACKYlULLOVBOu6GgleEhegNh0isZzIdQE0jw
+ lgBuLDe4B/iJ3kWWisN0nY6alqAkTJyt8inSvpZrLDnKrg7Fx03pttFHiXTKdQN8F+Sg
+ mejG0iBT28JcF49oySWcoBTHvsGzo8gT1OCtW2WN3CFWJuG+DZ2Ocnw2IjZ/0Gz4qvw9
+ PyvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787197682; x=1787802482;
+ d=1e100.net; s=20251104; t=1787197490; x=1787802290;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=QT+NqtS29Jb8B76mVXI/GmUgsUgPIu04DUnpKcaegjs=;
- b=WL4ZDj2Lp7cv8wrBJkUjXhoNpAreSM4CZ0lXjOE6pxXgqePa1uMn8/n1SCwkLWMkpK
- mifbajmi/FQtL8P1c+w+d0fbykORe1pvBI/0/8DWzffS78+ZGcaofW3faMqn7gwo8HKH
- 1flAtiMCF4zyK+tWFzkqojuw7Pov4y80uE91J31gEY+DVdLxxI9SAX82KkqsGMsUlKnI
- OzdXvwbENpuPkAaLeUSwwyJe8zWqCE8hLn3vbvuk04h7e8AFm2hY8x/9A49+sPT3EAyp
- SEX900+PjeIOfQ5mjvOgWHWeecCXjqrhJRYHSAcGjmSg68y8BRWf+3w8DRJWzIMVR9uj
- 96vA==
-X-Gm-Message-State: AFuF++mMUDgjpD7YpDOti6vWLWv12gJQ4YH53JyXBG1OMyAwvNaD0ZJf
- w/OE38cwgh3GBxYiixZO2INanfNTuOloxPbiB7U0m2IgEQASrOB5X4XujzC0VA==
-X-Gm-Gg: AR+sD13ro3QPhRuIDZn/5f8A/gOgT3EmJ1lQW8xbEnwyNP9tMWkFP5zlCd4PBXahwrY
- xPLogJMJzqDuDVj8DVCxJxnfQnkKCGCQdCNThr6JFRTsRL/59SQkwWJfOt3BrVc544vUZXIOkcy
- dlMriPpJveuih3ePZQiJMjACf7eO647k/LyPdcu2+qe14cqUCvJvaDVbfFKxVyUUpECahlPjMFh
- X2gf+U/8VFWy8fvRhU0z15T4+yf7xmmrH3Gcujf9T565ZdEGoHyJJXbWGbjQc+lHXzHLD6+SgIP
- G0XAerwAmzMrN96ZdCNcbEp1tZ/StMtvP7yyocVk/FaQqHep1RNMluxS75baOC0ifMxPDGWSHtd
- vEH+7/f73T7vwufoBn4viad7hXPnyeXKPe3Ku6th85WNC4U0F9s7kXXc3WPjYT3TyVWHmVRHs5f
- 0xLESre27jqin5IxLh/40W5AVT03Qk3AMblGNUyVyPWLuH9/d8AQ/Gpiyb1wZL+qKTYFnnceSLW
- kGffaZEUwVzpmeW
-X-Received: by 2002:a17:90b:1e4a:b0:37f:c97a:939f with SMTP id
- 98e67ed59e1d1-39580ace5fcmr16860915a91.7.1787197681765; 
- Wed, 19 Aug 2026 20:48:01 -0700 (PDT)
+ bh=YLZW+WC6XzwXmMPSObI4jtS6Mg2Ad7TYWfRIDenp+Hw=;
+ b=hTP/Ub2IwB0gyrGl66eklHSvlWxFc25oKUz8P66X7sOT3uPCfxacCiEJ2SKp1CcmVN
+ w1SYcKAbjZPHMpetPCwZl9q1Dr1O4JziRnaXtOE3EH1JaI4IF9lthn01XzhLzEGF4X2B
+ eJkAjTKclml/VnFbHTEf+USC2DR8iWynVmyLeD7BqKGFfKAegyzt9RxmKylEYiaVNyhr
+ vnYldoz0gsKiTUksxl/A2zC34sXrGKbN3gUl8M3S5cwXRQpX1A0yvjRycnWyZuwoWqGF
+ hrDrKc18GI98kC7edjHWLrQglhTjEyokWbX2Ez5itqCX0zth2YcHIWM6Dj54g6PSGzwM
+ XKTw==
+X-Gm-Message-State: AFuF++mVIBOv/BWDtF+EYd6/ukZqvwBswR3iSrruv+SGi107lMgRGSB7
+ +GNZmDFN6Ty/YBCd4EoADZophBpBnZ1lfpgrJHQcAbEnEE3nZOhujXZdtVLdOA==
+X-Gm-Gg: AR+sD11Q3AF9Xk3cHRtJ2qu5qIdCWzaiXsaqan1HH9+AOGdC+v8LA5q6yPJXclmN0x9
+ DV7jUDnMpC3wiEFNwOXcw/LhPTwsEybKZpsEXH2nXeNCwfIV2F9qQeowBcRLHPgiYjbdTKelk8+
+ qPDlQ32wGX8D3S1kvjfUhNzWaRrG+vIA39FPpDzqVp9sBJf0XS20f5zr8wMOW0prX7vfuq3iEY4
+ tocaCvum0B1rSwrxGVeSVp1COx4Fy5pi7DRxZLTD8vr+mOTWVYxCaL8as/K+hbJIz1ck0LrIRqR
+ 1nYHUGCvN9+UZ/7bfEzFz1AWSDPnFB+rL90WSQlTT2MOwLmerRGV3WL0oKoGCjcNTfeibWU9Nyv
+ mtQiom9s67MAe7LhPxcyif+gA2CVUXOtUC1tZbv7EMKgzOnCWes7fmA+dLBofraLNRbZ6QhiWJt
+ BixPcI9rpeVNXT+lQ3maHGe5X4rX6D5aAt2fg3YzLx0tNIqjiUuSzpBNknSeV4QEvMO+lA2onxu
+ YQetg==
+X-Received: by 2002:a17:90b:4d81:b0:37d:f206:a2ac with SMTP id
+ 98e67ed59e1d1-39580a7c832mr17918754a91.7.1787197490223; 
+ Wed, 19 Aug 2026 20:44:50 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.47.59
+ a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.44.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 20:48:01 -0700 (PDT)
+ Wed, 19 Aug 2026 20:44:49 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
+Cc: Junze Cao <caojunze424@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu@processmission.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 69/93] disas/riscv: Simplify some insn decompressions
-Date: Thu, 20 Aug 2026 13:44:06 +1000
-Message-ID: <20260820034430.1186695-70-alistair.francis@wdc.com>
+Subject: [PULL 03/93] tests/qtest: Add K230 DDR controller tests
+Date: Thu, 20 Aug 2026 13:43:00 +1000
+Message-ID: <20260820034430.1186695-4-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260820034430.1186695-1-alistair.francis@wdc.com>
 References: <20260820034430.1186695-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,43 +105,286 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Junze Cao <caojunze424@gmail.com>
 
-Route "c.j" to "j" instead of "jal", etc.
+Add qtests for DDRC and PHY reset values, register access policy, the
+software-update handshake, and PHY register ownership.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260812223142.349142-34-richard.henderson@linaro.org>
+Exercise PHY training and mailbox acknowledgement through the DFI
+initialization sequence. Include negative coverage to ensure DFI cannot
+complete before PHY training or enter Normal mode before completion is
+enabled.
+
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Suggested-by: Chao Liu <chao.liu@processmission.com>
+Signed-off-by: Junze Cao <caojunze424@gmail.com>
+Message-ID: <20260807-k230-ddr-v2-v2-3-c531308ae819@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- disas/riscv.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ MAINTAINERS                 |   1 +
+ tests/qtest/k230-ddr-test.c | 226 ++++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build     |   3 +-
+ 3 files changed, 229 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/k230-ddr-test.c
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index dedd925077..342e2db3cc 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -1848,15 +1848,15 @@ static const rv_opcode_data rvi_opcode_data[] = {
-     { "c.and", rv_codec_cs, NULL, DECOMP(rv_op_and) },
-     { "c.subw", rv_codec_cs, NULL, DECOMP(rv_op_subw) },
-     { "c.addw", rv_codec_cs, NULL, DECOMP(rv_op_addw) },
--    { "c.j", rv_codec_cj, NULL, DECOMP(rv_op_jal) },
--    { "c.beqz", rv_codec_cb, NULL, DECOMP(rv_op_beq) },
--    { "c.bnez", rv_codec_cb, NULL, DECOMP(rv_op_bne) },
-+    { "c.j", rv_codec_cj, NULL, DECOMP(rv_op_j) },
-+    { "c.beqz", rv_codec_cb, NULL, DECOMP(rv_op_beqz) },
-+    { "c.bnez", rv_codec_cb, NULL, DECOMP(rv_op_bnez) },
-     { "c.slli", rv_codec_ci_sh6, NULL, DECOMP(rv_op_slli) },
-     { "c.fldsp", rv_codec_ci_ldsp, NULL, DECOMP(rv_op_fld) },
-     { "c.lwsp", rv_codec_ci_lwsp, NULL, DECOMP(rv_op_lw) },
-     { "c.flwsp", rv_codec_ci_lwsp, NULL, DECOMP(rv_op_flw) },
--    { "c.jr", rv_codec_cr_jr, NULL, DECOMP(rv_op_jalr) },
--    { "c.mv", rv_codec_cr_mv, NULL, DECOMP(rv_op_addi) },
-+    { "c.jr", rv_codec_cr_jr, NULL, DECOMP(rv_op_jr) },
-+    { "c.mv", rv_codec_cr_mv, NULL, DECOMP(rv_op_mv) },
-     { "c.ebreak", rv_codec_ci_none, NULL, DECOMP(rv_op_ebreak) },
-     { "c.jalr", rv_codec_cr_jalr, NULL, DECOMP(rv_op_jalr) },
-     { "c.add", rv_codec_cr, NULL, DECOMP(rv_op_add) },
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b957fa74d9..b6fb59fdf5 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1850,6 +1850,7 @@ F: include/hw/misc/k230_ddr.h
+ F: include/hw/riscv/k230.h
+ F: include/hw/watchdog/k230_wdt.h
+ F: tests/functional/riscv64/test_k230.py
++F: tests/qtest/k230-ddr-test.c
+ F: tests/qtest/k230-wdt-test.c
+ 
+ RX Machines
+diff --git a/tests/qtest/k230-ddr-test.c b/tests/qtest/k230-ddr-test.c
+new file mode 100644
+index 0000000000..72362929bc
+--- /dev/null
++++ b/tests/qtest/k230-ddr-test.c
+@@ -0,0 +1,226 @@
++/*
++ * QTest testcase for the K230 DDR controller and PHY
++ *
++ * Exercises register access, reset, PHY ownership, training mailbox, and DFI
++ * initialization.
++ *
++ * Copyright (c) 2026 Junze Cao <caojunze424@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "libqtest.h"
++
++#define K230_DDRC_BASE    UINT64_C(0x98000000)
++#define K230_DDR_PHY_BASE UINT64_C(0x9a000000)
++
++#define K230_DDRC_MSTR    0x000
++#define K230_DDRC_STAT    0x004
++#define K230_DDRC_DRAMTMG4 0x110
++#define K230_DDRC_DFIMISC 0x1b0
++#define K230_DDRC_DFISTAT 0x1bc
++#define K230_DDRC_SWCTL   0x320
++#define K230_DDRC_SWSTAT  0x324
++
++#define K230_DDRC_STAT_OPERATING_MODE_MASK          0x7
++#define K230_DDRC_DFISTAT_DFI_INIT_COMPLETE_MASK    0x1
++
++#define K230_DDR_PHY_CSR(index) \
++    (K230_DDR_PHY_BASE + (uint64_t)(index) * sizeof(uint32_t))
++
++#define K230_DDR_PHY_ATX_IMPEDANCE      0x00043
++#define K230_DDR_PHY_TX_IMPEDANCE_CTRL1 0x10049
++#define K230_DDR_PHY_VREF_IN_GLOBAL     0x200b2
++#define K230_DDR_PHY_MICRO_CONT_MUX_SEL 0xd0000
++#define K230_DDR_PHY_TRAINING_STATUS    0xd0004
++#define K230_DDR_PHY_TRAINING_ACK       0xd0031
++#define K230_DDR_PHY_TRAINING_MESSAGE   0xd0032
++#define K230_DDR_PHY_TRAINING_TRIGGER   0xd0099
++
++static void complete_phy_training(QTestState *qts)
++{
++    qtest_writel(qts,
++                 K230_DDR_PHY_CSR(K230_DDR_PHY_MICRO_CONT_MUX_SEL), 1);
++    qtest_writel(qts, K230_DDR_PHY_CSR(K230_DDR_PHY_TRAINING_TRIGGER), 9);
++    qtest_writel(qts, K230_DDR_PHY_CSR(K230_DDR_PHY_TRAINING_TRIGGER), 1);
++    qtest_writel(qts, K230_DDR_PHY_CSR(K230_DDR_PHY_TRAINING_TRIGGER), 0);
++}
++
++static void test_reset_and_register_access(void)
++{
++    QTestState *qts = qtest_init("-machine k230");
++
++    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_MSTR),
++                    ==, 0x01040000);
++    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_STAT),
++                    ==, 0x00000000);
++    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_DRAMTMG4),
++                    ==, 0x05040405);
++    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_DFIMISC),
++                    ==, 0x00000001);
++    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_SWCTL),
++                    ==, 0x00000001);
++    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_SWSTAT),
++                    ==, 0x00000001);
++
++    g_assert_cmphex(qtest_readl(qts,
++                    K230_DDR_PHY_CSR(K230_DDR_PHY_ATX_IMPEDANCE)),
++                    ==, 0x03ff);
++    g_assert_cmphex(qtest_readl(qts,
++                    K230_DDR_PHY_CSR(K230_DDR_PHY_TX_IMPEDANCE_CTRL1)),
++                    ==, 0x0fff);
++    g_assert_cmphex(qtest_readl(qts,
++                    K230_DDR_PHY_CSR(K230_DDR_PHY_VREF_IN_GLOBAL)),
++                    ==, 0x0200);
++
++    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_MSTR, 0x01040008);
++    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_MSTR),
++                    ==, 0x01040008);
++
++    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_STAT, 0xffffffff);
++    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_STAT),
++                    ==, 0x00000000);
++
++    qtest_writel(qts, K230_DDR_PHY_CSR(K230_DDR_PHY_VREF_IN_GLOBAL),
++                 0xffffffff);
++    g_assert_cmphex(qtest_readl(qts,
++                    K230_DDR_PHY_CSR(K230_DDR_PHY_VREF_IN_GLOBAL)),
++                    ==, 0x7fff);
++
++    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_DRAMTMG4, 0);
++
++    qtest_system_reset(qts);
++    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_MSTR),
++                    ==, 0x01040000);
++    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_DRAMTMG4),
++                    ==, 0x05040405);
++    g_assert_cmphex(qtest_readl(qts,
++                    K230_DDR_PHY_CSR(K230_DDR_PHY_VREF_IN_GLOBAL)),
++                    ==, 0x0200);
++
++    qtest_quit(qts);
++}
++
++static void test_software_update_handshake(void)
++{
++    QTestState *qts = qtest_init("-machine k230");
++
++    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_SWCTL, 0);
++    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_SWSTAT),
++                    ==, 0);
++
++    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_SWCTL, 1);
++    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_SWSTAT),
++                    ==, 1);
++
++    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_SWSTAT, 0);
++    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_SWSTAT),
++                    ==, 1);
++
++    qtest_quit(qts);
++}
++
++static void test_phy_ownership(void)
++{
++    QTestState *qts = qtest_init("-machine k230");
++    uint64_t atx = K230_DDR_PHY_CSR(K230_DDR_PHY_ATX_IMPEDANCE);
++    uint64_t mux = K230_DDR_PHY_CSR(K230_DDR_PHY_MICRO_CONT_MUX_SEL);
++
++    qtest_writel(qts, atx, 0x155);
++    g_assert_cmphex(qtest_readl(qts, atx), ==, 0x155);
++
++    qtest_writel(qts, mux, 1);
++    qtest_writel(qts, atx, 0x2aa);
++    g_assert_cmphex(qtest_readl(qts, atx), ==, 0x155);
++
++    qtest_writel(qts, mux, 0);
++    qtest_writel(qts, atx, 0x2aa);
++    g_assert_cmphex(qtest_readl(qts, atx), ==, 0x2aa);
++
++    qtest_quit(qts);
++}
++
++static void test_dfi_prerequisites(void)
++{
++    QTestState *qts = qtest_init("-machine k230");
++
++    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_DFIMISC, 0x20);
++
++    g_assert_cmphex(qtest_readl(qts,
++                    K230_DDRC_BASE + K230_DDRC_DFISTAT) &
++                    K230_DDRC_DFISTAT_DFI_INIT_COMPLETE_MASK,
++                    ==, 0);
++    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_STAT) &
++                    K230_DDRC_STAT_OPERATING_MODE_MASK,
++                    ==, 0);
++
++    qtest_quit(qts);
++}
++
++static void test_dfi_complete_enable(void)
++{
++    QTestState *qts = qtest_init("-machine k230");
++
++    complete_phy_training(qts);
++    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_DFIMISC, 0x20);
++
++    g_assert_cmphex(qtest_readl(qts,
++                    K230_DDRC_BASE + K230_DDRC_DFISTAT) &
++                    K230_DDRC_DFISTAT_DFI_INIT_COMPLETE_MASK,
++                    ==, 1);
++    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_STAT) &
++                    K230_DDRC_STAT_OPERATING_MODE_MASK,
++                    ==, 0);
++
++    qtest_quit(qts);
++}
++
++static void test_training_and_dfi_handshake(void)
++{
++    QTestState *qts = qtest_init("-machine k230");
++
++    complete_phy_training(qts);
++
++    g_assert_cmphex(qtest_readl(qts,
++                    K230_DDR_PHY_CSR(K230_DDR_PHY_TRAINING_STATUS)),
++                    ==, 0);
++    g_assert_cmphex(qtest_readl(qts,
++                    K230_DDR_PHY_CSR(K230_DDR_PHY_TRAINING_MESSAGE)),
++                    ==, 0x07);
++
++    qtest_writel(qts, K230_DDR_PHY_CSR(K230_DDR_PHY_TRAINING_ACK), 0);
++    g_assert_cmphex(qtest_readl(qts,
++                    K230_DDR_PHY_CSR(K230_DDR_PHY_TRAINING_STATUS)),
++                    ==, 1);
++    qtest_writel(qts, K230_DDR_PHY_CSR(K230_DDR_PHY_TRAINING_ACK), 1);
++
++    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_DFIMISC, 0x20);
++    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_DFISTAT),
++                    ==, 1);
++
++    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_DFIMISC, 0);
++    qtest_writel(qts, K230_DDRC_BASE + K230_DDRC_DFIMISC, 1);
++    g_assert_cmphex(qtest_readl(qts, K230_DDRC_BASE + K230_DDRC_STAT) & 0x7,
++                    ==, 1);
++
++    qtest_quit(qts);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++
++    qtest_add_func("/k230-ddr/reset-and-register-access",
++                   test_reset_and_register_access);
++    qtest_add_func("/k230-ddr/software-update-handshake",
++                   test_software_update_handshake);
++    qtest_add_func("/k230-ddr/phy-ownership", test_phy_ownership);
++    qtest_add_func("/k230-ddr/dfi-prerequisites", test_dfi_prerequisites);
++    qtest_add_func("/k230-ddr/dfi-complete-enable",
++                   test_dfi_complete_enable);
++    qtest_add_func("/k230-ddr/training-and-dfi-handshake",
++                   test_training_and_dfi_handshake);
++
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index f7c7d06620..49b654036a 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -297,7 +297,8 @@ qtests_riscv64 = ['riscv-csr-test'] + \
+   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
+    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
+    ['iommu-riscv-test'] : []) + \
+-  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
++  (config_all_devices.has_key('CONFIG_K230') ?
++   ['k230-ddr-test', 'k230-wdt-test'] : [])
+ 
+ qtests_hexagon = ['boot-serial-test', 'l2vic-test', 'qct-qtimer-test']
+ 
 -- 
 2.54.0
 
