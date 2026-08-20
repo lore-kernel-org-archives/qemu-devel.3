@@ -4,106 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 391CBC5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 14:30:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A3A0C5DF85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 14:39:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx3kj-0003Kn-Kd; Thu, 20 Aug 2026 10:28:21 -0400
+	id 1wx3vG-0007cB-IM; Thu, 20 Aug 2026 10:39:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wx3kL-0002vq-Eb; Thu, 20 Aug 2026 10:28:01 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wx3vC-0007ad-Oy
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 10:39:12 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wx3kJ-0002E5-RM; Thu, 20 Aug 2026 10:27:57 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67K9ClPQ503860; Thu, 20 Aug 2026 14:27:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=MvwwcJd1y6wb06YRo
- P3LGSibNWfH4TR/9PA7aFD/ATU=; b=jYFr1a9Y75LZKpQ1DXC+iRTqTZw5Fkn37
- 4P+HiDNkOuBoh3TAWVGoFTOdKtGl2Lhur762nl5D+UEd9LQnO4Nqwhd2BfOYpDTj
- dV8py33FosKDG4FGuC4H5nC5VTnKxhMuFtraFPSnioPkHR/5sx6p+/XqR/CmlUhm
- MjTQMpB5TH+sp+YIM1ig0j0OX4/KP0hHpklWyP7kNJPDMTDpdrANFsXoS578l1OJ
- 4erLozwywg+IifyWTq5Zl6NylKw4apKMv1mCFDdRz+gbwoGRUmqEo5BP9VlYdsM0
- JMb0hNgtW/pdbNX70W5FCLch/S0Fep6KQjK/JXMa2oShLVK02onXA==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu4aqtf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Aug 2026 14:27:54 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67KEQZuc020988;
- Thu, 20 Aug 2026 14:27:53 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g34ngptjc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Aug 2026 14:27:53 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67KERn8251511564
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 20 Aug 2026 14:27:49 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 97F5A20049;
- Thu, 20 Aug 2026 14:27:49 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B280120040;
- Thu, 20 Aug 2026 14:27:45 +0000 (GMT)
-Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
- [9.39.17.115]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 20 Aug 2026 14:27:45 +0000 (GMT)
-From: Chinmay Rath <rathc@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com
-Cc: npiggin@gmail.com, milesg@linux.ibm.com, Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH v2 3/7] target/ppc: Use PPC2_ISA207 instead of PPC2_LSQ_ISA207
-Date: Thu, 20 Aug 2026 19:57:00 +0530
-Message-ID: <20260820142717.337686-4-rathc@linux.ibm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260820142717.337686-1-rathc@linux.ibm.com>
-References: <20260820142717.337686-1-rathc@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wx3v9-0004JC-3z
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 10:39:09 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67KE7dmS3987793
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 14:39:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ fvD9ke0N4Xr1wjAwqoimbGFZd+4Kj7ERmzAtGUyN/64=; b=kJns5wb3Cocq4f46
+ wU6iaOYEhN7EEJimQrt9XbMA91PnPtoAmMbMvM0uFQ19D5VqQBeto5IBAdjNfoj3
+ jX+vmekuE/r/lttgHYWomTyNnyY5zfR1Sramd/lN7k3pVmzaFLxAYbTe9JKPokgX
+ vfjnWcsQSPK5FNxiflh4kNeWaCNYC2RZ0/mNZevK8EkMJm8AShLFmMtMb4xNxUC8
+ JjRMmMK+qzI33C0E9XtSUyBPj+oNVmfAJlCvVjnncobyJsfVnOx+elYznOqbqx89
+ 1+8/Bi/xxFVW//pVClNiPbfr2EZQ7vmy3TK6PkSQfoV2hQxg9nq0hjXLw0xOkW+e
+ bSAjqw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g5yg893aj-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 14:39:02 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-93730c7c73fso76898285a.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 07:39:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1787236742; x=1787841542; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=fvD9ke0N4Xr1wjAwqoimbGFZd+4Kj7ERmzAtGUyN/64=;
+ b=Xg6MhOCTdR2mzkueFnlXBsRefdNqhzkh13nHPZe3FGbekXGbRM7qRItFNkjl+qUxYw
+ iaQSNIOOcaTNe22TTbrekDd1U4hYkSrZY0TNlZ8UkXb8fsyMVXQQUuRkDeCz6ZA1RDkz
+ VztncTQBe+nDEz3kQLxp0OP8Jrm6H2TZiNxJikfWJfRb2+VDbRDl52bKnHRTZw+zQfdP
+ 7QGE8SWilVFYjySwgAvzMhNnYHQu+hLGOsTBA6qN8Lhfp2hxTm8PXypz9iZyR9o1snI0
+ L7XwkNXEpZZnftXKp2RceiUjh0VId6YGhcRmj9rDrd8xbzXL611R2F5f56/ql1ZX4YlI
+ 8OXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787236742; x=1787841542;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=fvD9ke0N4Xr1wjAwqoimbGFZd+4Kj7ERmzAtGUyN/64=;
+ b=UB+jeIIs3x9Ush9VS+Q1sCAuebaFP7rRBjn7WPVLbifGesABhup4A4xUoRDLT5dPdI
+ VpBkdJ4l6zsCiTqahlGBLa8fGfbRECS62RfhkokuV1mhkCoF64tnfmWpjciRXIzTs1rq
+ E/fww9Rf/cDaaq+BPW/qMfNXZ0HJ7XJOL+cbSu2NNS6vncRAQ0Wen5Uqzd8NJwdtlO4d
+ 9NTV7SaZtwj/d9BDGxjNzN40Pq/EFpAi0kghx3yTRjpdBDrMkgIptwX5qboQY3IYVvms
+ l5k8oUtsrq1WBM0sRHZtG03sm5GKuxCRQy3ITMIL90ZBHV+bt8rj4nkonPipQnsobJyn
+ KEHw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rrv9goiV69fD/tFT/3OjvdsnsPdF758xGHnCOAJsQ/amON+a1gQgH5pyfMcvKo+5IDiUelFlwkfy9UZ@nongnu.org
+X-Gm-Message-State: AOJu0YxxANHCI7dcRyZRYRQYMi2GpuqVWK6rh71msF9SA4ACrpKQ1ekO
+ OYPvAQIsfnpx1btqdxRJIMV1ziETXgm0ifjwqbV9hUQLfNvixUZyaLnPddiYnaPW6F+EPSzdXFm
+ VsbzJw8qUr+7b6gpHFuRecbyJpimcwDjZXjNRFyF7gTy1wJKrF+P/XzM0XA==
+X-Gm-Gg: AR+sD132vtxiDz9+DryG1fGEHcgNFWFBE2FhpO48ezkBzu+N+xYjLo+PqSoXEBDdHGY
+ zziJpg2Dpb6rAizhoxqueSTONStY1F4pdCyu6LyHYIzR4p2XcbPyPxYKHzmKtVjLkc9TeeGsgiJ
+ 9mAgn4DEybpEAKdVkb8lii5UqyzjQUmqUCpK5xpnm4v5qzlc+5vdW6X+ogU9EvwMJ80QpT6CHnj
+ SxN7En+FstR/pPRPv7lMYgxoXTVRqY5yxvKwVmgeFUM2TJmIGyelUJtkOILhjTinrahwrQvc0Wm
+ 7WIak+DEmurWj2209dLQ0ltiRJDnn/0tjZ9HjB9vc49ERx+2m2dY4ZI01ykdAMKJL2xU3jl9FLQ
+ CSLdwT9PoHFMo7ZUpB83yBevJPNv3j+l4gm4HTuMx
+X-Received: by 2002:a05:620a:6413:b0:931:328:fecf with SMTP id
+ af79cd13be357-9371e2f095cmr1348858885a.26.1787236741991; 
+ Thu, 20 Aug 2026 07:39:01 -0700 (PDT)
+X-Received: by 2002:a05:620a:6413:b0:931:328:fecf with SMTP id
+ af79cd13be357-9371e2f095cmr1348852585a.26.1787236741598; 
+ Thu, 20 Aug 2026 07:39:01 -0700 (PDT)
+Received: from [192.168.69.231] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-499aa0fd728sm208741335e9.3.2026.08.20.07.39.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Aug 2026 07:39:00 -0700 (PDT)
+Message-ID: <54f7243a-aae3-4f1a-a213-bf302fc1b7ea@oss.qualcomm.com>
+Date: Thu, 20 Aug 2026 16:38:59 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 42/49] target: guard MonitorDef tables with CONFIG_HMP
+Content-Language: en-US
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
+ <20260816-qemu-no-hmp-v3-42-e53fc35bc550@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260816-qemu-no-hmp-v3-42-e53fc35bc550@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=CpuPtH4D c=1 sm=1 tr=0 ts=6a870eea cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=nQ85-MmU5D-d4o_ZYwcA:9
-X-Proofpoint-ORIG-GUID: KsMYSq401Jvl_AkEXmKbb1u6gMFZDmdS
-X-Proofpoint-GUID: 1PPm9z5KLr-z_q8BYwqQviBuKOimd9T2
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDEwNSBTYWx0ZWRfX/fLKbLu93t/I
- O6xRxEkfIP3RAtUfLqEoGL1SqNEim7gmI0NU7N5emOee+bR3UqIkvFOqgOMPJUbt82myfLJwBlW
- QUoG7BTdZrkWeN+nO28G95dlCer/wqY=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDEwNSBTYWx0ZWRfXyWn3vAG1eKQj
- PN97qDGtKb+ozDJc+CtqEiReYcWS+Ikw0Gq2fQ8a5Wpt0CbGh4FbTrEjUn84PwKbj2q29NR7QUH
- 4EKqupWHi3Z9IHgSmXkpNandQF9bP1+dCeTIKhcJ0H9oLX799cP9Ai6SloYbJVF73woz7DHB3NH
- b8iGwQvETfp4WwBsK+AYgWy+WBXaAkyPKCM+NdmBfEGIjFcvsdw8FArRZjVHyFrNJer8rXO79du
- tENH+WuWBF3kyNwxQhw4Dm8yWFgPqvw5Mj3of27PhMMcPp8QsTSiXYbhUJsenQgR5tO+PNb9fdj
- 1mASHX5q10rL2pViu9Z/zX7/Z706k5Liy6ZqjTAyHRs05X+8PoAQ5faVhc2ondD3Ymk9kyWd9he
- VzQDmVh096d28J1fCE6NQHVNfgg5vZJ67HrrDj+BKYSiyJ+a8bFMRL2LFonYjAh5Q7VA0KVnG0L
- fowWkgXFLz9SUvUHb2w==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDEwOSBTYWx0ZWRfX7r6OiQZfaqPs
+ 4Q/jlv/ZmYL2dX5KZ+Z1jrqjfZlfNiCKOzvpdJnLYHhhHW0nFYrDku7Cwmhyj9Jojl5MNVziHCI
+ 44AgqZDzE538k5WzkRu9ChoaT3FpDHc=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDEwOSBTYWx0ZWRfXzZcctyQLre5G
+ mleKy/KiQdYMTqVMliZojuc2q46r5f3ZU5rp1SEJy1E+yaRxZGf5/lDmJIDP5Nrv+T8YEM88e2e
+ lltH3wO9bJVPmWxy48V55sMub4QI2++IiPm/MmW9pY4j1O/Fio3i0DXy1rVV//IV0PBbmOy5f9Q
+ gzVOvN0v4EQx61vNKUBMsYnb2DP/e2ZYwheu/hv5c8yHZet08f8Rl3rESrtPoxcP7m0nKKLMSmM
+ I4unhcAqlGIMtWO7/vvcWcBc6tHoc7fNIPImYYGLiWkgav75BE4dWJi+ujbPvvCq0VjlcBEdUug
+ yMSSYF8hg7fr9VKf1l/y0+gV/mkn2jeuZ2Oz2Qva1aBmKt4GsjwHesdW0rg9k8/VDpN3MDI2yxH
+ TL++mFMji96W/RcpjrhZ4+gP7ortdFBPLC1gVNS0CJ2/Ih1cwKWjIIjQN6DxmYdYQV9GWT77OCu
+ K9uH8J54HsCqMQ9s6fA==
+X-Authority-Analysis: v=2.4 cv=Y7/IdBeN c=1 sm=1 tr=0 ts=6a871186 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=20KFwNOVAAAA:8 a=WaTGUccEzQP_nEDBHA4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-GUID: wNfNCnwBuPNebMT8rqOblWHxDai4sTCR
+X-Proofpoint-ORIG-GUID: wNfNCnwBuPNebMT8rqOblWHxDai4sTCR
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-19_06,2026-08-19_02,2025-10-01_01
+ definitions=2026-08-19_06,2026-08-20_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 spamscore=0 clxscore=1015 priorityscore=1501
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608200105
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ suspectscore=0 bulkscore=0 priorityscore=1501 malwarescore=0 adultscore=0
+ clxscore=1015 phishscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200109
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,105 +162,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PPC2_LSQ_ISA207 is only ever set in the CPUPPCState's insns_flags2
-alongside PPC2_ISA207. Checks made by PPC2_LSQ_ISA207 could be
-replaced with PPC2_ISA207, hence rendering it useless and apt for
-removal. This patch does the same.
+On 16/8/26 21:13, Marc-AndrÃ© Lureau wrote:
+> Guard SysemuCPUOps::monitor_defs field and the per-target MonitorDef
+> arrays with CONFIG_HMP. These tables are only used by HMP 'print' and
+> 'info registers' commands.
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   include/hw/core/sysemu-cpu-ops.h | 2 ++
+>   monitor/hmp.c                    | 4 +++-
+>   target/i386/cpu.c                | 4 ++++
+>   target/m68k/cpu.c                | 4 ++++
+>   target/sparc/cpu.c               | 5 +++--
+>   5 files changed, 16 insertions(+), 3 deletions(-)
+> 
+> diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
+> index 9a45596169a3..e56eea18b785 100644
+> --- a/include/hw/core/sysemu-cpu-ops.h
+> +++ b/include/hw/core/sysemu-cpu-ops.h
+> @@ -109,11 +109,13 @@ typedef struct SysemuCPUOps {
+>        */
+>       int (*monitor_get_register)(CPUState *cs, const char *name, int64_t *pval);
+>   
+> +#ifdef CONFIG_HMP
+>       /**
+>        * @monitor_defs: Array of MonitorDef entries. This field is legacy,
+>        *                use @gdb_core_xml_file to dump registers instead.
+>        */
+>       const MonitorDef *monitor_defs;
+> +#endif
+>   
+>       /**
+>        * @legacy_vmsd: Legacy state for migration.
+> diff --git a/monitor/hmp.c b/monitor/hmp.c
+> index e5f8b9c576e0..3c70adcd35bb 100644
+> --- a/monitor/hmp.c
+> +++ b/monitor/hmp.c
+> @@ -1725,13 +1725,15 @@ void monitor_register_hmp_info_hrt(const char *name,
+>   static int get_monitor_def(MonitorHMP *hmp, int64_t *pval, const char *name)
+>   {
+>       CPUState *cs = monitor_hmp_get_cpu(hmp);
+> -    const MonitorDef *md;
+> +    const MonitorDef *md = NULL;
+>       void *ptr;
+>   
+>       if (cs == NULL) {
+>           return -1;
+>       }
+> +#ifdef CONFIG_HMP
+>       md = cs->cc->sysemu_ops->monitor_defs;
+> +#endif
+>       if (md == NULL) {
+>           return -1;
+>       }
+Logically we need to skip more:
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+-- >8 --
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index 22b1972d346..cb4e070fc4c 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -1726,12 +1726,13 @@ void monitor_register_hmp_info_hrt(const char *name,
+  static int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
+  {
+      CPUState *cs = mon_get_cpu(mon);
+-    const MonitorDef *md;
++    const MonitorDef *md = NULL;
+      void *ptr;
+
+      if (cs == NULL) {
+          return -1;
+      }
++#ifdef CONFIG_HMP
+      md = cs->cc->sysemu_ops->monitor_defs;
+      if (md == NULL) {
+          return -1;
+@@ -1749,6 +1750,7 @@ static int get_monitor_def(Monitor *mon, int64_t 
+*pval, const char *name)
+              return 0;
+          }
+      }
++#endif
+
+      if (!cs->cc->sysemu_ops->monitor_get_register) {
+          return -1;
 ---
- linux-user/ppc/elfload.c                   | 2 +-
- target/ppc/cpu.h                           | 3 ---
- target/ppc/cpu_init.c                      | 3 +--
- target/ppc/cpu_init.h                      | 2 +-
- target/ppc/translate/fixedpoint-impl.c.inc | 4 ++--
- 5 files changed, 5 insertions(+), 9 deletions(-)
-
-diff --git a/linux-user/ppc/elfload.c b/linux-user/ppc/elfload.c
-index 5c6065e08a..76ab9f43de 100644
---- a/linux-user/ppc/elfload.c
-+++ b/linux-user/ppc/elfload.c
-@@ -116,7 +116,7 @@ abi_ulong get_elf_hwcap2(CPUState *cs)
-     do { if (cpu->env.insns_flags2 & flag) { features |= feature; } } while (0)
- 
-     GET_FEATURE(PPC_ISEL, QEMU_PPC_FEATURE2_HAS_ISEL);
--    GET_FEATURE2((PPC2_ISA207 | PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 |
-+    GET_FEATURE2((PPC2_ISA207 | PPC2_ALTIVEC_207 |
-                   PPC2_ISA207S), (QEMU_PPC_FEATURE2_ARCH_2_07 |
-                   QEMU_PPC_FEATURE2_VEC_CRYPTO | QEMU_PPC_FEATURE2_HAS_TAR));
-     GET_FEATURE2(PPC2_ISA300, QEMU_PPC_FEATURE2_ARCH_3_00 |
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index df1e943d8d..b3cd8d85df 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -2577,8 +2577,6 @@ enum {
-     PPC2_FP_CVT_ISA206 = 0x0000000000000400ULL,
-     /* ISA 2.06B floating point test instructions                            */
-     PPC2_FP_TST_ISA206 = 0x0000000000000800ULL,
--    /* ISA 2.07 load/store quadword                                          */
--    PPC2_LSQ_ISA207    = 0x0000000000002000ULL,
-     /* ISA 2.07 Altivec                                                      */
-     PPC2_ALTIVEC_207   = 0x0000000000004000ULL,
-     /* PowerISA 2.07 Book3s specification                                    */
-@@ -2608,7 +2606,6 @@ enum {
-                         PPC2_ISA205 | PPC2_ISA207 | PPC2_PERM_ISA206 | \
-                         PPC2_DIVE_ISA206 | PPC2_ATOMIC_ISA206 | \
-                         PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 | \
--                        PPC2_LSQ_ISA207 | \
-                         PPC2_ALTIVEC_207 | PPC2_ISA207S | PPC2_DFP | \
-                         PPC2_FP_CVT_S64 | PPC2_TM | PPC2_PM_ISA206 | \
-                         PPC2_ISA300 | PPC2_ISA310 | PPC2_MEM_LWSYNC | \
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 9bb94fed89..9077c5f581 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -6349,8 +6349,7 @@ POWERPC_FAMILY(POWER8)(ObjectClass *oc, const void *data)
-     pcc->insns_flags2 = PPC2_VSX | PPC2_ISA207 | PPC2_DFP | PPC2_DBRX |
-                         PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 |
-                         PPC2_ATOMIC_ISA206 | PPC2_FP_CVT_ISA206 |
--                        PPC2_FP_TST_ISA206 |
--                        PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 |
-+                        PPC2_FP_TST_ISA206 | PPC2_ALTIVEC_207 |
-                         PPC2_ISA205 | PPC2_ISA207S | PPC2_FP_CVT_S64 |
-                         PPC2_TM | PPC2_PM_ISA206 | PPC2_MEM_LWSYNC |
-                         PPC2_BCDA_ISA206;
-diff --git a/target/ppc/cpu_init.h b/target/ppc/cpu_init.h
-index 7dd587908e..6961007926 100644
---- a/target/ppc/cpu_init.h
-+++ b/target/ppc/cpu_init.h
-@@ -18,7 +18,7 @@
-     (PPC2_VSX | PPC2_ISA207 | PPC2_DFP | PPC2_DBRX |                 \
-      PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 | PPC2_ATOMIC_ISA206 |      \
-      PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 |                       \
--     PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 | PPC2_ISA205 |              \
-+     PPC2_ALTIVEC_207 | PPC2_ISA205 |                                \
-      PPC2_ISA207S | PPC2_FP_CVT_S64 | PPC2_ISA300 | PPC2_PRCNTL |    \
-      PPC2_MEM_LWSYNC | PPC2_BCDA_ISA206)
- 
-diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-index cef67d6431..b9c20b66dc 100644
---- a/target/ppc/translate/fixedpoint-impl.c.inc
-+++ b/target/ppc/translate/fixedpoint-impl.c.inc
-@@ -116,7 +116,7 @@ static bool do_ldst_quad(DisasContext *ctx, arg_D *a, bool store, bool prefixed)
- 
-     REQUIRE_INSNS_FLAGS(ctx, 64BX);
- 
--    if (!prefixed && !(ctx->insns_flags2 & PPC2_LSQ_ISA207)) {
-+    if (!prefixed && !(ctx->insns_flags2 & PPC2_ISA207)) {
-         /* lq and stq were privileged prior to V. 2.07 */
-         REQUIRE_SV(ctx);
- 
-@@ -280,7 +280,7 @@ TRANS64(STDCX, do_store_cond, MO_UQ);
- static bool trans_STQCX(DisasContext *ctx, arg_STQCX *a)
- {
-     REQUIRE_64BIT(ctx);
--    REQUIRE_INSNS_FLAGS2(ctx, LSQ_ISA207);
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA207);
- #if defined(TARGET_PPC64)
-     TCGLabel *lfail = gen_new_label();
-     TCGv ea = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
--- 
-2.55.0
-
 
