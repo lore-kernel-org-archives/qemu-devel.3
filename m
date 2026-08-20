@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51802C5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 07:52:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36561C5DF86
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 07:53:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwxZ8-0003wo-UX; Thu, 20 Aug 2026 03:51:58 -0400
+	id 1wwxaX-00084p-Bi; Thu, 20 Aug 2026 03:53:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wwxZ6-0003iM-RH
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 03:51:56 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wwxaT-00084g-RU
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 03:53:21 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wwxZ5-0004yN-4C
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 03:51:56 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-49558ce01afso15124205e9.1
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 00:51:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wwxaS-0005Hc-3I
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 03:53:21 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-490cf322ed0so17464095e9.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 00:53:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1787212313; x=1787817113; darn=nongnu.org;
+ d=suse.com; s=google; t=1787212398; x=1787817198; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=PhBK6YnNsECh8KigWIjCiZjoLxt1fp8hP0W1MkIlNMA=;
- b=X12/3yVBHdTdAa3pUUc4CStFBZ4jC75sOg0bamANeXe+WYsQdN1riUYZ8lZ/w31kZQ
- gZPBDRYL7NI+MuKfy3Hlc9d/VjmMCIjg/oDveYSf+yMqBpracTXMeWRQW5mvKMSB7rYy
- nBc1fwyTvZ75lQAgZbzifKNMttHqEgr9xx3qBhIPqcg8QwwRFuxnkylZ2mLzEFsvZlLV
- aehVnTld0gyBiaWYAXRCu3wXo7O3b6rD3ESqrXKDe8pRCpA3ObKhr4g09CIdXXKeNXdk
- ZQBHIJBQwKqcTvYDcNjLA/An9nwfXxNNMRmcJEIP0wAPKvGzuW1scp4qXYnM0EPdHOvw
- nTGA==
+ :content-type; bh=dHzBX9KPRgMkIWd5I1Gbf+AhNbdoMSEIZNKs+X7J9rE=;
+ b=TeUmEwPTj0yswRGl199qO3Q6/OOjwc4uVZ7zH+p+L/0Zlrx5ueJv+REijcxlc1A/Tg
+ qwCWeXI6+Dq8TjZ2jmFn0dmnr1iS7CsgOzwCKKiCOggmfyiym0P8J1ndtv8slQS7Zyzn
+ E7KjyH3rd7UkJv8B+Nmw80OMU/Di3oHZdyxsD3QSAoDLPcfgZ2hbQSmpcgZteVPPj4kE
+ Gv/JvUCP1CEstK2AEg5uN1XErNa0Qf1bcd530sonLRsVoAeUesEwBtDLoioi77HtYcJR
+ vAgnJ44q2Fa0PY1e/cwCrvUd36zrM9XPfKK5C5o2LxFfM3cLG5O9R2wegMtme7DtaKPf
+ kiXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787212313; x=1787817113;
+ d=1e100.net; s=20251104; t=1787212398; x=1787817198;
  h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=PhBK6YnNsECh8KigWIjCiZjoLxt1fp8hP0W1MkIlNMA=;
- b=sxoTj2/yZaxGp7pYrNYFghQuGwU86OzKC8IEJAloNgcw/66e12GwSaWdNhv3DN53Z6
- nKVE8suCOCW2AzgeDP/JvnHie9NBxe9sxJ85CSDJev1mFpmg4PGH9dj1Vsk9JaTzqcih
- SxPNnJgRNGTsrqyivVAB4DYGlB9PQxxkBHA43czCcUB3Nk3V9hbsn167kw2q2NzJb62g
- CuBJXthL+8FI2D/jw6RuANCH2h/nOLP/sEN9fRuyKO+pPj4oHeppY8B4D0ftpMugwyNO
- O7czq90I9Xrm/EEP9Oil6VOr9yHGTedxgylXKFjm+8MgW6eWOBmVjtZVhK+1ToGFEw2t
- 9fCg==
-X-Gm-Message-State: AOJu0YwzgKcPCmjT0bpFb6zb33aoJU0fG+yr1SEzbIB1aO4V/67TtBF7
- c3OyKF+q8NlS3DlI35bieAKDiHlqaQB+m+nBuVdtJ27izZ/O7cE/2gylf1yU25ncpw==
-X-Gm-Gg: AR+sD11w1xlWqxwlQqYW1yU1MKl6f7GXCxleexSKke5i5hlbvtBqpJCemkMr8UlcLKj
- XcggMUkmJ6Jhpo5qPdiyBAidIsfPk4jEtARMj1ZgzVNmH0s2hdHOR7SbOy+VPpDitfou1bXJAKO
- HMvuahd9B0mtLzwdc+WN4Isx/1QyW5uoCy506akIb91B5G53MMh+hcedLfN8HAh6dlesm3V1Xa1
- GZSK6EhoV/MPqIFM3d1Hha6Zvew85mCq/x3r3hNPrUB0t0nYADcom8kQmTVssQx6+BSv3S3Zba6
- A5kpzsz5wKVozYM+4r6LmS0yjF+hP93MEoAc3IRSN76CfIQoOU5p8F+JrmIZWbATP2ckKme5ggl
- B7niPIPsFnch2tLoWZg/Or7No63zdJ+vT2NcOpK7cRdtNrMQXL01OTLc1o1iD/HZp3Vg0G2vdbu
- HxrzMKPh6hAOs5j4E3t8kRVeu4hnU8yca3mduhcTDFutP41HrPsHugHdHd/shM/krZ9m1e8Pi57
- n1APH8+EpdTD7NKmAoQf8I9HuegOvM2XS6/D2VVH9i2hdNb7ySY
-X-Received: by 2002:a05:600c:a012:b0:499:593b:a15b with SMTP id
- 5b1f17b1804b1-499aa1431a5mr203011985e9.1.1787212313335; 
- Thu, 20 Aug 2026 00:51:53 -0700 (PDT)
+ bh=dHzBX9KPRgMkIWd5I1Gbf+AhNbdoMSEIZNKs+X7J9rE=;
+ b=nrYvrRib/IY/b+w0wj4p6yySmidgXu6HzZz3+afpiMCLxFFXi3zND6mTmBOB++Hgki
+ 0/kpKXYbbr8Eo+AeiWv0zO6H3sQdDTo+9z+F8F/7VqpAyPlqzdoLEpqf0nEeZV8jbatP
+ VTP99JfxLOD8M5hC6Ajwbfn7khSDPmuc1m0VgHPJX3JEw8ZmqGhaUSi49OCC5jZzscZZ
+ UsX+g8Z+M8UZ0s+PmMRH4b6ytn7M/B1k8/vRy5bWmZbmzFDgX0mOfJXGlbDxpgm3xgrj
+ 3HgK1xiCzGxOyJltA05T8RzAHeEO4n78rJaouo5v9RG2YI57MclmZaLyi9ackC72asqu
+ LNKQ==
+X-Gm-Message-State: AOJu0YzHtJ56eog9Y2SujNd3hL0c4gwnpt34gTBBt5NOdOqQvtYGgSBU
+ AUCbrl7ifc2PR94LhXAojKzfadCMUAx5UzoaOBx4xJN9QTeVifWBtRPd8kReabC/lQ==
+X-Gm-Gg: AR+sD13NS9q23itwE4a3Ci3QtJaMGE/ouJcgvgtzfxKhsodXkPYsmSDlvpAefjF2cMz
+ dhxUPCQiG27bXK0o59GQCg/dSQDU/c2EyNtMKOXl9gslC13qhRCU78gx5+lNl6qC8RjrjgepVIV
+ CNHZCDsIKs+ggrQnNISkeWy0PkRSYuWTkK8uyraPFUFeGnndI9vk7CLcf99M+q9UbrfTHy8yiq/
+ Jf6IWTJbkiyyKotuI2FlUS0gvE8KL1JI7dIoNJhfXW1aTaByYdjtuhxXU6f6TutV7/+TNVH062V
+ LoWvUExit3FWKUNEBdRSj3rH7qdBHNTUuZWsr3ONSkxFLLAWReNmGW6Perm5Ip8teQmWf5IcWPN
+ EKf3af5y+AtDYkvCSu8xNPj32/iDnjBIs04cdIM5FfR1M8o+HISSVpjzvqryTYj2GkPoz2cMVij
+ UWFmu5UjDGwChZ+6XuDIC2scnmZdqGXN0YNUvasTRuGMBA4+J0/mG95a3rpAoRefj4NShrqTntu
+ sp4TC2eQDzuzGGruPRAfAfiE03Du9w2ghZEMTN6eyqVCD3HJ7rC
+X-Received: by 2002:a05:600c:c114:b0:499:ad2e:f7bc with SMTP id
+ 5b1f17b1804b1-499ad2efd25mr150667025e9.10.1787212398437; 
+ Thu, 20 Aug 2026 00:53:18 -0700 (PDT)
 Received: from [10.156.60.236] (ip-037-024-206-209.um08.pools.vodafone-ip.de.
  [37.24.206.209]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b20a14c6sm32137555e9.0.2026.08.20.00.51.52
+ 5b1f17b1804b1-499aa0fd7a9sm158734505e9.2.2026.08.20.00.53.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Aug 2026 00:51:52 -0700 (PDT)
-Message-ID: <92022f85-9a53-4db8-b489-fc91c86b413c@suse.com>
-Date: Thu, 20 Aug 2026 09:51:51 +0200
+ Thu, 20 Aug 2026 00:53:18 -0700 (PDT)
+Message-ID: <efd82852-484d-4b59-8d04-887533c13dea@suse.com>
+Date: Thu, 20 Aug 2026 09:53:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
@@ -76,7 +76,6 @@ Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
  Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
  xen-devel <xen-devel@lists.xenproject.org>
 References: <20260802050824.10554-1-brchuckz.ref@aol.com>
- <20260802050824.10554-1-brchuckz@aol.com>
  <2110d4b7-ae37-47aa-99be-ab59e16f6167@suse.com>
  <67579eba-e222-41dd-84bf-8440d2eaf2a9@netscape.net>
  <da2200cd-def7-4cce-a6c2-9f9ac9e202ce@suse.com>
@@ -94,7 +93,8 @@ References: <20260802050824.10554-1-brchuckz.ref@aol.com>
  <cdae1785-4d9a-4aab-929e-de55c26b7b94@aol.com>
  <10cd9f6b-678b-407b-a51e-70e9ed7a35fd@aol.com>
  <131b1252-b108-4b4c-8457-673ff0d20d5e@suse.com>
- <b14969c8-9676-404e-b7cc-ce13a6d7ff94@aol.com>
+ <682975cc-4857-42b2-badf-b638869f3268@aol.com>
+ <7ab98288-0c5e-472d-87dd-5586e60027bb@aol.com>
 Content-Language: en-US
 From: Jan Beulich <jbeulich@suse.com>
 Autocrypt: addr=jbeulich@suse.com; keydata=
@@ -120,11 +120,11 @@ Autocrypt: addr=jbeulich@suse.com; keydata=
  EKYTQGybRCjpnKHGOxG0rfFY1085mBDZCH5Kx0cl0HVJuQKC+dV2ZY5AqjcKwAxpE75MLFkr
  wkkEGBECAAkFAlk3nEQCGwwACgkQoDSui/t3IH7nnwCfcJWUDUFKdCsBH/E5d+0ZnMQi+G0A
  nAuWpQkjM1ASeQwSHEeAWPgskBQL
-In-Reply-To: <b14969c8-9676-404e-b7cc-ce13a6d7ff94@aol.com>
+In-Reply-To: <7ab98288-0c5e-472d-87dd-5586e60027bb@aol.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=jbeulich@suse.com; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=jbeulich@suse.com; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -147,44 +147,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.08.2026 19:13, Chuck Zmudzinski wrote:
-> On 8/19/2026 9:51 AM, Jan Beulich wrote:
->> On 19.08.2026 14:36, Chuck Zmudzinski wrote:
->>> On 8/19/2026 8:16 AM, Chuck Zmudzinski wrote:
->>>> Yes, I agree that v3 of the patch to hvmloader should presume that the DM can get
->>>> a copy of the OpRegion and read its contents so most of this can be done in the
->>>> DM instead of in hvmloader. So from hvmloader's perspective, the patch will be more
->>>> about avoiding the layering violation than anything else.
+On 19.08.2026 19:49, Chuck Zmudzinski wrote:
+> On 8/19/2026 11:47 AM, Chuck Zmudzinski wrote:
+>> On 8/19/2026 9:51 AM, Jan Beulich wrote:
+>>> On 19.08.2026 14:36, Chuck Zmudzinski wrote:
+>>>> On 8/19/2026 8:16 AM, Chuck Zmudzinski wrote:
+>>>>> Yes, I agree that v3 of the patch to hvmloader should presume that the DM can get
+>>>>> a copy of the OpRegion and read its contents so most of this can be done in the
+>>>>> DM instead of in hvmloader. So from hvmloader's perspective, the patch will be more
+>>>>> about avoiding the layering violation than anything else.
+>>>>
+>>>> However, there is one advantage, from the viewpoint of the Xen virtualization platform
+>>>> as a whole, to do the patching of the OpRegion in hvmloader instead of in the DM.
+>>>>
+>>>> If we patch the OpRegion in hvmloader as v2 of this patch does, we provide a common
+>>>> solution for extended VBT support for Intel IGD devices that would be compatible with
+>>>> all DM implementations, not just with Qemu. So why not do the patching of the OpRegion
+>>>> in hvmloader?
 >>>
->>> However, there is one advantage, from the viewpoint of the Xen virtualization platform
->>> as a whole, to do the patching of the OpRegion in hvmloader instead of in the DM.
+>>> As indicated before: If the OpRegion holds data that is needed to drive the
+>>> device, and if the OpRegion is exposed writable to guests, then guest can
+>>> screw up that data such that subsequent guests won't work anymore. Hence
+>>> exposing to guests (which includes hvmloader) needs to be stopped, or at
+>>> least be limited to r/o. That, in fact, includes exposing to any privilege-
+>>> restricted DM as well.
 >>>
->>> If we patch the OpRegion in hvmloader as v2 of this patch does, we provide a common
->>> solution for extended VBT support for Intel IGD devices that would be compatible with
->>> all DM implementations, not just with Qemu. So why not do the patching of the OpRegion
->>> in hvmloader?
+>>> Exposing r/o may be entirely okay (i.e. may not be a layering violation),
+>>> depending how exactly an OpRegion surfaces for a device (on the host). Aiui
+>>> it's not addressed by any of the BARs, yet it looks like it needs similar
+>>> treatment. Earlier on we also talked about the region not necessarily being
+>>> page-aligned. That poses, even with r/o exposure, the question of other
+>>> data on the same (leading / trailing) pages. This may imply that the
+>>> copying needs to be done strictly in Dom0, for both DM and guest to only
+>>> ever act on copies (which may then as well be r/w).
 >>
->> As indicated before: If the OpRegion holds data that is needed to drive the
->> device, and if the OpRegion is exposed writable to guests, then guest can
->> screw up that data such that subsequent guests won't work anymore. Hence
->> exposing to guests (which includes hvmloader) needs to be stopped, or at
->> least be limited to r/o. That, in fact, includes exposing to any privilege-
->> restricted DM as well.
+>> Yes, I am thinking the DM should make a copy host OpRegion and never expose
+>> the host OpRegion to the guest but only a copy of it.
 >>
->> Exposing r/o may be entirely okay (i.e. may not be a layering violation),
->> depending how exactly an OpRegion surfaces for a device (on the host). Aiui
->> it's not addressed by any of the BARs, yet it looks like it needs similar
->> treatment.
+>> The reason we need a patch like this is that with the introduction of the
+>> rvda/rvds fields into the OpRegion, the OpRegion is not always position-independent
+>> so its contents might be unsuitable in the guest address space, so in those cases
+>> we need to patch the copy of the OpRegion that will be exposed to the guest.
+>> If there is an extended VBT the DM will also get a copy of it, make a copy of
+>> it, and expose it to the guest by appending it contiguous with the OpRegion.
+>> Since in this scenario we are assuming the DM knows the contents of the OpRegion,
+>> then it can find the host VBT and make a copy of it without needing hvmloader
+>> to send the rvda and rvds values to it.
+>>
+>> Then, the remaining question is which component (DM or hvmloader) will patch it
+>> if it needs to be patched to make the guest's copy of it compatible with the guest
+>> address space.
 > 
-> Yes, the OpRegion is not one of the BARs as specified by the PCI specs, but
-> it functions more or less like a BAR region with the devices's ASLS register
-> at offset 0xfc in the PCI device config space of the device acting like the
-> BAR for that region.
+> As I noted earlier, it think it would be advantageous for the Xen platform as whole
+> for the patching to be done in hvmloader. That way, support for extended VBT is
+> automatically added for all implementations of the DM, not just for Qemu. But the
+> downside is that for hvmloader to do the patching, it needs to know the host OpRegion
+> address, which one could argue it should not need to know. This is the only reason I
+> can think of to do the patching of the OpRegion in the DM instead of in hvmloader: to
+> avoid disclosing the host OpRegion address to the guest.
+> 
+> But we trust hvmloader, don't we, to not abuse this knowledge of the host's OpRegion
+> address?
 
-That is, on real hardware a write to that register moves the OpRegion? That
-would need following by the DM then, i.e. the DM would need to indicate the
-original position in the register, and the guest (incl hvmloader) would
-then be free to relocate it.
+No, we cannot (fully) trust hvmloader.
 
 Jan
+
+> The point is, hvmloader will discard the host OpRegion address and not
+> disclose it to guest firmware (ovmf/seabios) nor to the bootloader or guest OS, so
+> I think the advantage of adding support for extended VBT to all DMs that rely on
+> hvmloader outweighs the risk of disclosing the host OpRegion to the guest (hvmloader,
+> which, for security reasons, should not disclose it to ovmf or seabios).
+> 
+> Chuck
+
 
