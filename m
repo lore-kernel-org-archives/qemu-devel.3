@@ -4,93 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A16EDC5DF86
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DDA5C5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:51:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx5yx-0004i8-2D; Thu, 20 Aug 2026 12:51:11 -0400
+	id 1wx5zF-00063J-VK; Thu, 20 Aug 2026 12:51:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5yq-0004On-JM
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:06 -0400
+ id 1wx5zB-0005nQ-PY
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5yn-0005Y8-Uq
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:04 -0400
+ id 1wx5z8-0005fV-Kj
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787244661;
+ s=mimecast20190719; t=1787244681;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=61P6vk3oEE4JHqQ8OG8SmOWu+7pk+rtqZm31zmMIl+c=;
- b=LiP7mZxOQbxTOlcLDXSYuSDl06RLxwEBr8h2uHXFd7jTDA4+VP6RiJ4KZu7xB4uWhD2kal
- Pa+9x89ITAE873NbGMbx7X7PWjRYnQ878V2HHEwkcFHDEf1lpsn4050TERhOr266lDIgaJ
- tBnjtzvmRSShLAQZ2CawAO5g0e7YC5c=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ptLFXHmPh0mteELcKxHYZlguxqyO/4K7nY1fzdPX0UI=;
+ b=Y5DZDpchuglWBAIhzMjpqFlU/xbhVi6tB9eI5tuIyvzFCa2yA7y6nJ2IRHZbQiKxMPZ1V8
+ KTgQLbpePaFZGVDX+/8Px+S4tvvVJLIODVfq094xyYKj2e7ZyF0VzqsZFrluCwtwMJG6AI
+ ntgCb0umxM9O2y6edoND6yJ+iF04Frk=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-517-k1AKavqCM4GFyHGGD0VExA-1; Thu, 20 Aug 2026 12:50:52 -0400
-X-MC-Unique: k1AKavqCM4GFyHGGD0VExA-1
-X-Mimecast-MFC-AGG-ID: k1AKavqCM4GFyHGGD0VExA_1787244651
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-493fa6e28a7so315595e9.1
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:50:52 -0700 (PDT)
+ us-mta-319-nRGnSyopPKWVXJh2hsVxkw-1; Thu, 20 Aug 2026 12:51:16 -0400
+X-MC-Unique: nRGnSyopPKWVXJh2hsVxkw-1
+X-Mimecast-MFC-AGG-ID: nRGnSyopPKWVXJh2hsVxkw_1787244675
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-482b88653d9so80186f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:51:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787244651; x=1787849451; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787244675; x=1787849475; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=61P6vk3oEE4JHqQ8OG8SmOWu+7pk+rtqZm31zmMIl+c=;
- b=XIprMvAJ3JJ/X+jEfRyAdmExPi6eTntf1tADzuylq8SMlPSYp4heNp1OwgHq7q8Tkp
- 8kp6YTFsJISOtfj/G5w5WshQqSOcWiNvhS1KLkye/XzTNHNfqWMv4iDgLjSi1uVbAhq6
- A5RCi2GLjRh/9NdGnS0MDiyLJv6SNP8GpexhsloEgEGzJ79NQjNJcgOD6voHWVAapuHs
- ybcmLVG3887cAlQT2f5QY5VPL+A2W/8Evtdzw+wUrCeJQpFEBU/50DcE71ck9+7usjTR
- RFvSsmEzxlhXhI5QmYy3lCiyXJPoglEP0Ltq57pxYt5OR4rNU31ZruW5mNvqYjY+nOZs
- VY2w==
+ bh=ptLFXHmPh0mteELcKxHYZlguxqyO/4K7nY1fzdPX0UI=;
+ b=YLhUJthwrAAJa/o60dBtwc3pNXy8Jn1NgHM0Fw6uQke8dLm282FNU994Bdlg+s7nur
+ hW9L75gvspfy1p7WjAsnx8jTcZbsVo3ZyopIJXcm+dZNniknpkLXz/20DXaUoejH8fue
+ 5xHtaWvph6T1/pTTen2UAomPuW/u1Eugb0MBuJGF7EWijygQdxMgfKqWpPGPYj5vh7vi
+ huCoJhPW+AIs/1Kv9O8uf8X+/oeHU0ftj1kY2vQ8R5fHfc9JSBjCgQNdegK+WGMTpR4V
+ OnUgdLvYmTs1NJatNAJbRo8W47vQEigt7Du5EdpIoELREU+dlZIkygIaTSL8H7qHZhu/
+ zvyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787244651; x=1787849451;
+ d=1e100.net; s=20251104; t=1787244675; x=1787849475;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=61P6vk3oEE4JHqQ8OG8SmOWu+7pk+rtqZm31zmMIl+c=;
- b=ky2FZOIkrwQWz+8Aei8ZpGMUsiAy1/QNb1ZZPk5aAQ6PoRhdEq3/1lZ+pQpHoO3WyA
- 3B/xflOWYSagaf9Z+YdByRQ0eP22CwWEudWmfuf8A4xq84C66cs3rFfnIZRnHeq7gGqk
- V4xs/Ohsk5igrm9V2KmM0VdMhFpT1XgXvz9JVjmWm93NjbY9Tdl+iQowRPFyawT1XhBr
- W1+Bcus1HRJz0NmJLLAhBfSfNp8idNtN2k3qP6LO0kLfeo59XVhxe+EjrqYchoTWsCRn
- N5EhDsdeMAm87ApOKzvH38TA0nP9M5FP0BZ+1FGVr5hhUKnCJEzeIjbFsVzS7cQQl01S
- mIFQ==
-X-Gm-Message-State: AOJu0YwVMBr/kdYnKMMO5gl8B4VjAq/Sd7aCV7Tz9P3cwqjXZ9n+K93b
- Ye/LbKucUQm7vTxX1zMXSp3B+TYoKdo9wIAbi2HzuGlwUPCn14uZ9pDIpcK1M+Mp0AlB3QxOAHq
- 5rCUa2ms/TQRhLIMUt98HQHA3Srjx+KkzfiybieekNebwD57DeUFcL9qU3ooYZlB/uAeBDYsIx5
- zBoZ99OMEMmNk9zoMyBkY99IbpBP+vpF28I5VG78X6
-X-Gm-Gg: AR+sD13D+QLWiVnU3jLFNjvN2JpVfn1l93K81oihrvmBe08/kALCO3meG29l5g9tc6H
- /62q1DqDMe87/RCbvGukf6sgaahEz6jGHjQVfha+7lvqhtrjBSfbmHb7twiF9FCyI/OB6DFY9FR
- Jv4mtR3lsuiaINgAHqltfj5PnStkGpUhqRcUcqhTbfXSrtpvwgm1RoRJaPpr99CceHET9/SID3g
- 302QdPq/7K5arYAP9/LW7kgORpQDnlAvvVq0L67vS7Tj3yEcaYQJbcE1e9WJVcQaHob+bXinVY6
- ERSgOAMGaQs9ose7HCtiXfbQ/kQQzWcELbP3He56rNEom2nILq08UdbS3oSG5WKZ9rYhUslHV5r
- kjEFUbvem3rhuYmyovPleAF+m1/IGBc0lulys7t45uxFp7R7KllYnbtDY3NK4CA/m52zCFyi9Xg
- /w+bw=
-X-Received: by 2002:a05:600c:4f12:b0:499:b682:12bb with SMTP id
- 5b1f17b1804b1-499b82e8cb4mr5701305e9.1.1787244651485; 
- Thu, 20 Aug 2026 09:50:51 -0700 (PDT)
-X-Received: by 2002:a05:600c:4f12:b0:499:b682:12bb with SMTP id
- 5b1f17b1804b1-499b82e8cb4mr5700215e9.1.1787244651101; 
- Thu, 20 Aug 2026 09:50:51 -0700 (PDT)
+ bh=ptLFXHmPh0mteELcKxHYZlguxqyO/4K7nY1fzdPX0UI=;
+ b=FMNOqtWSgBrBJj0sInqvHr4ve8Dl3fJWhInK2xQ7YthbDT5Se1HvDXYRO8xx+hoJo3
+ u4FxCPBZza1KsBz3uHdiDIkWptYI19c1o7uOg/GzcB2PFd6uxOZBJFKeWr+sUqTx2ms8
+ 8IlbJmouGbJluQTCkRuOjQzS00yh+mJJnFQP0vj595g8tu1m58K45VHXqH88bdb8BEuT
+ TmCxJcpobguFkh2CDZtI4EgZGEWSGs9hq7BgX2xGIl5uFTbo3D0TRHRRBRvVMVpRm2Ri
+ pPI29iLUbkt6FeRCmmD1WdZedilxaPpMO9GoHeQmsImfh7877qAdg+rAPrrM1BudbxmG
+ NocQ==
+X-Gm-Message-State: AFuF++lo/iTgOfVXw+3+uGXc8hdWZasILaGYdVXQWp/zAU4RfhkE+mhS
+ 240cbhVTbm9GUmn69Rs7q+ct/qE9lh9e2VnzF/ra+PKuPaujooJ3j8x3ikMziMCJu7tyi6JGxHe
+ 7zcgcBjU51ubmYELEgsBod2NxSg+iZTy6LCd7hKnlV5K1E/hCN8zspkVUmPJg3zuRjmpEY3JHCm
+ x5FvBXhUSWllO8/H53Aoovgo5uRuIlEzcqRxM1EhwC
+X-Gm-Gg: AR+sD12XHsaKCCB4ztp1YVk1b1sLAIZ2YnVFh5oFFWx58K5KKCu3gsk5tgSWHU15wMY
+ FmD0tV8j6RG5laRiB0Nle7lVis86XIagSR9YfZHn8pM/0UFJjSXhVGV0pkRSvCE5SAFOJ3H2Zmn
+ epZLy8bFYgMIMBgFj6VhjUj5JKkuA1lhB0BM3ZOQ/txw31290NsV7QRapQlT0TAnWM18mgXeVkm
+ HFM+qWU/epBrQB9lzBO/k23AVe4jdKsN3kzJZ/TZtbQsk605IAQWeDkmAzUohnggyGbIz5a8/ze
+ 4BmKWeoHYXaAQNQkecZ3fJf0XJ3dZD37bMl26NBtS91X+HakcpgSLYwyg97Fj8o/g1KfTc6wlW/
+ xpyVz7g6YEbNhIJa0x8BBoPXaP99FQ6rkAT/wG6xp0DcEuZpR79FOitCelXJLQBygQLnR/1W92u
+ HNIjI=
+X-Received: by 2002:a05:6000:41dc:b0:482:aa2a:52f6 with SMTP id
+ ffacd0b85a97d-482c0b41f95mr57984f8f.1.1787244675063; 
+ Thu, 20 Aug 2026 09:51:15 -0700 (PDT)
+X-Received: by 2002:a05:6000:41dc:b0:482:aa2a:52f6 with SMTP id
+ ffacd0b85a97d-482c0b41f95mr57899f8f.1.1787244674640; 
+ Thu, 20 Aug 2026 09:51:14 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b2b0c295sm40686755e9.2.2026.08.20.09.50.47
+ ffacd0b85a97d-482b14b80a5sm14620314f8f.24.2026.08.20.09.51.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 09:50:47 -0700 (PDT)
+ Thu, 20 Aug 2026 09:51:14 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PULL 17/53] accel/mshv: write synthetic MSRs after migration
-Date: Thu, 20 Aug 2026 18:49:20 +0200
-Message-ID: <20260820164957.1895963-18-pbonzini@redhat.com>
+Cc: "Naveen N Rao (AMD)" <naveen@kernel.org>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>,
+ Nikunj A Dadhania <nikunj@amd.com>
+Subject: [PULL 26/53] target/i386: SEV: Add support for enabling Secure TSC
+ SEV feature
+Date: Thu, 20 Aug 2026 18:49:29 +0200
+Message-ID: <20260820164957.1895963-27-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820164957.1895963-1-pbonzini@redhat.com>
 References: <20260820164957.1895963-1-pbonzini@redhat.com>
@@ -120,106 +124,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+From: "Naveen N Rao (AMD)" <naveen@kernel.org>
 
-Write partition-wide synthetic MSRs. This ensures the hypercall page and
-SynIC facilities are set up before vCPUs attempt to use it.
+Add support for enabling Secure TSC VMSA SEV feature in SEV-SNP guests
+through a new "secure-tsc" boolean property on SEV-SNP guest objects. By
+default, KVM uses the host TSC frequency for Secure TSC.
 
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20260710101534.664604-10-magnuskulke@linux.microsoft.com
+Sample command-line:
+  -machine q35,confidential-guest-support=sev0 \
+  -object sev-snp-guest,id=sev0,cbitpos=51,reduced-phys-bits=1,secure-tsc=on
+
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Co-developed-by: Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>
+Signed-off-by: Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>
+Co-developed-by: Nikunj A Dadhania <nikunj@amd.com>
+Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
+Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
+Link: https://lore.kernel.org/r/9f58b92a173f319b3ef725f5ed8a2a173eed55b1.1779281646.git.naveen@kernel.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/hyperv/hvgdk_mini.h |  3 +++
- include/system/mshv_int.h      |  1 +
- accel/mshv/mshv-all.c          | 15 +++++++++++++++
- target/i386/mshv/mshv-cpu.c    | 15 +++++++++++++++
- 4 files changed, 34 insertions(+)
+ qapi/qom.json     |  6 +++++-
+ target/i386/sev.h |  1 +
+ target/i386/sev.c | 13 +++++++++++++
+ 3 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-index 0602a7c6cc6..a5527d49cf7 100644
---- a/include/hw/hyperv/hvgdk_mini.h
-+++ b/include/hw/hyperv/hvgdk_mini.h
-@@ -23,6 +23,9 @@
- #define HV_X64_MSR_APIC_FREQUENCY   0x40000023
+diff --git a/qapi/qom.json b/qapi/qom.json
+index ad7e39aa756..4732fa89751 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -1113,6 +1113,9 @@
+ #     firmware.  Set this to true to disable the use of VCEK.
+ #     (default: false) (since: 9.1)
+ #
++# @secure-tsc: enable Secure TSC
++#     (default: false) (since 11.1)
++#
+ # Since: 9.1
+ ##
+ { 'struct': 'SevSnpGuestProperties',
+@@ -1124,7 +1127,8 @@
+             '*id-auth': 'str',
+             '*author-key-enabled': 'bool',
+             '*host-data': 'str',
+-            '*vcek-disabled': 'bool' } }
++            '*vcek-disabled': 'bool',
++            '*secure-tsc': 'bool' } }
  
- typedef enum hv_register_name {
-+    /* VP Management Registers */
-+    HV_REGISTER_INTERNAL_ACTIVITY_STATE = 0x00000004,
-+
-     /* Pending Interruption Register */
-     HV_REGISTER_PENDING_INTERRUPTION = 0x00010002,
-     HV_REGISTER_INTERRUPT_STATE      = 0x00010003,
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 063852115eb..cbfcb8611b4 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -98,6 +98,7 @@ int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
-                           size_t n_regs);
- int mshv_arch_store_vcpu_state(const CPUState *cpu);
- int mshv_arch_load_vcpu_state(CPUState *cpu);
-+int mshv_arch_set_partition_msrs(const CPUState *cpu);
- void mshv_arch_init_vcpu(CPUState *cpu);
- void mshv_arch_destroy_vcpu(CPUState *cpu);
- void mshv_arch_amend_proc_features(
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 1516475f34f..1ca1d4b54ff 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -60,6 +60,20 @@ static int init_mshv(int *mshv_fd)
-     return 0;
+ ##
+ # @TdxGuestProperties:
+diff --git a/target/i386/sev.h b/target/i386/sev.h
+index d19a3966974..7725f92e195 100644
+--- a/target/i386/sev.h
++++ b/target/i386/sev.h
+@@ -48,6 +48,7 @@ bool sev_snp_enabled(void);
+ 
+ #define SVM_SEV_FEAT_SNP_ACTIVE     BIT(0)
+ #define SVM_SEV_FEAT_DEBUG_SWAP     BIT(5)
++#define SVM_SEV_FEAT_SECURE_TSC     BIT(9)
+ 
+ typedef struct SevKernelLoaderContext {
+     char *setup_data;
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 2103a121aa2..fdfeb604f6c 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -3212,6 +3212,16 @@ sev_snp_guest_set_host_data(Object *obj, const char *value, Error **errp)
+     memcpy(finish->host_data, blob, len);
  }
  
-+static int mshv_load_cleanup(void *opaque)
++static bool sev_snp_guest_get_secure_tsc(Object *obj, Error **errp)
 +{
-+    int ret;
-+
-+    ret = mshv_arch_set_partition_msrs(first_cpu);
-+    if (ret < 0) {
-+        error_report("Failed to set partition MSRs: %s", strerror(-ret));
-+        return -1;
-+    }
-+
-+    return 0;
++    return is_sev_feature_set(SEV_COMMON(obj), SVM_SEV_FEAT_SECURE_TSC);
 +}
 +
-+
- static int get_host_partition_property(int mshv_fd, uint32_t property_code,
-                                        uint64_t *value)
- {
-@@ -496,6 +510,7 @@ static int mshv_init_vcpu(CPUState *cpu)
- }
- 
- static SaveVMHandlers savevm_mshv = {
-+    .load_cleanup = mshv_load_cleanup,
- };
- 
- static int mshv_init(AccelState *as, MachineState *ms)
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 86d64c67fb2..6bb3045752c 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -1506,6 +1506,21 @@ int mshv_arch_store_vcpu_state(const CPUState *cpu)
-     return 0;
- }
- 
-+int mshv_arch_set_partition_msrs(const CPUState *cpu)
++static void sev_snp_guest_set_secure_tsc(Object *obj, bool value, Error **errp)
 +{
-+    CPUX86State *env = &X86_CPU(cpu)->env;
-+    struct hv_register_assoc assocs[] = {
-+        { .name = HV_REGISTER_GUEST_OS_ID,
-+          .value.reg64 = env->msr_hv_guest_os_id },
-+        { .name = HV_REGISTER_REFERENCE_TSC,
-+          .value.reg64 = env->msr_hv_tsc },
-+        { .name = HV_X64_REGISTER_HYPERCALL,
-+          .value.reg64 = env->msr_hv_hypercall },
-+    };
-+
-+    return mshv_set_generic_regs(cpu, assocs, ARRAY_SIZE(assocs));
++    sev_set_feature(SEV_COMMON(obj), SVM_SEV_FEAT_SECURE_TSC, value);
 +}
 +
- void mshv_arch_amend_proc_features(
-     union hv_partition_synthetic_processor_features *features)
+ static void
+ sev_snp_guest_class_init(ObjectClass *oc, const void *data)
  {
+@@ -3247,6 +3257,9 @@ sev_snp_guest_class_init(ObjectClass *oc, const void *data)
+     object_class_property_add_str(oc, "host-data",
+                                   sev_snp_guest_get_host_data,
+                                   sev_snp_guest_set_host_data);
++    object_class_property_add_bool(oc, "secure-tsc",
++                                  sev_snp_guest_get_secure_tsc,
++                                  sev_snp_guest_set_secure_tsc);
+ }
+ 
+ static void
 -- 
 2.55.0
 
