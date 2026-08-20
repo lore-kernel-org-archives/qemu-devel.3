@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3949C5DF8A
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 797D8C5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:56:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx5zj-0000fZ-N5; Thu, 20 Aug 2026 12:51:59 -0400
+	id 1wx5zm-0000rf-Tt; Thu, 20 Aug 2026 12:52:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5zi-0000fE-PA
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:58 -0400
+ id 1wx5zl-0000n4-Sw
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:52:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5zh-0005lc-6H
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:58 -0400
+ id 1wx5zj-0005m3-HL
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:52:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787244716;
+ s=mimecast20190719; t=1787244718;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=r0ygABJTpsHOhl9gB0pPnn5YiHCVRoF4PezK5Ys2JEE=;
- b=IdI2vwY2VCDk7Gz66rfi41QKdP2BlVDSsDwYsahheGkMRgcHkbOYTRNCptAEM3BpvchGqg
- 9Ju+YcoEKImwepJcPJMrPveA/D3kOJUjy/IdPUUPz5audjp77OxLVhsin7rqMaqqOWr52L
- hZkZJyW0Os5Pl2LCZIhL/mSJjApAfi4=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AekDmTCsqKE/7Em+fp4v05CEB3akDFAXUbS1t0WA4sE=;
+ b=LrT4YERlMvdYHVw0R4uiarr0BwNC2qhUZ6sGd9+oj1CJJrN8P1bbqgQTFy5opylqM9V2cm
+ oaZ+yfsxWx7hecy1+zM2EZgnDUzlarz2XSve1Dn+diGbAx8MorQBWQRPQbcoCQa9SJv7Dl
+ k5cdEg/04IbGiT/rKdFhLdIGp2hk+IE=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-518-mN7u_u8wNrW0DpuSrE_c5g-1; Thu, 20 Aug 2026 12:51:55 -0400
-X-MC-Unique: mN7u_u8wNrW0DpuSrE_c5g-1
-X-Mimecast-MFC-AGG-ID: mN7u_u8wNrW0DpuSrE_c5g_1787244714
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-47f8398ed9fso104185f8f.0
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:51:55 -0700 (PDT)
+ us-mta-142-IcNNSURlOCG1SzOUw6tFnQ-1; Thu, 20 Aug 2026 12:51:51 -0400
+X-MC-Unique: IcNNSURlOCG1SzOUw6tFnQ-1
+X-Mimecast-MFC-AGG-ID: IcNNSURlOCG1SzOUw6tFnQ_1787244710
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-482a2d55c4eso67511f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:51:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787244714; x=1787849514; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787244710; x=1787849510; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=r0ygABJTpsHOhl9gB0pPnn5YiHCVRoF4PezK5Ys2JEE=;
- b=Bl+mw3fFrxzABySUfgssNtYRXfkwsG4145j4H1X7974wAf9KEsLMYUVt2YhxJa5h8q
- F5iaBRfQCZrMpDVov0LrBYw/m5IkZy/MPmb4Cwig0kn0nblFvF73mAc8Ek73eEJ4ZAC5
- yCu+Mro1C6LWIYW/5SsW2yxW0UwJY+gk/eNfwGXCl0lSJ/508OECH2NxPWTMzJMEVKCG
- f6bdv6Op511BooOcGd7DGYxdyWVSDXI6c2OX84WepumUKaOf4FGwXgUK2OkPGucIpToO
- DUposR4ioDTJIjSB83ypXify9OrKelPhGw0xnoFv1jCxiIE2SofoT01p9/y4BvGF1qDE
- kWtQ==
+ bh=AekDmTCsqKE/7Em+fp4v05CEB3akDFAXUbS1t0WA4sE=;
+ b=tOLQWc2B+hxcDtifIQpW9sEs/zQWfYlKOLHu9bcZhU1WH0vo9BDyg6z14y1V70oLCh
+ MabLOfeUHGI/3jdCmhfjWZDJ6gBdYytkyfJwDX1+ct2bAXYf2gBvS+Vi93cPKmek502B
+ hgDsx8DQMr1q9CBxlu1VbRKn2s5NTaDK7P2eyjIEkV/4tPNXVOae26vNEHAq8S2pJ+6p
+ UHtxP9Mog8IXV1/KvVji4AAPdb145UoPI9Gu7M+Nh3rGk+PanCK6yLibGfgansE4DM/X
+ QVHMQ1MnfUCLxzA5EuvWJNlI1XPpSSNVMhdw16ciRVrHlgYPfYR9LTWLwSAF696mGMSx
+ hUkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787244714; x=1787849514;
+ d=1e100.net; s=20251104; t=1787244710; x=1787849510;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=r0ygABJTpsHOhl9gB0pPnn5YiHCVRoF4PezK5Ys2JEE=;
- b=kCjxz4mXprjzUxJdtZDleiZN5PIDHPR63zA8lnKGACnVIgEtrUaQYDCC3yeZDXhkG8
- N094nvTUQnOCFy0Kc06wAGtFNgiGJkXeMX90jZQuNVlIUetGrUTGZWcKGRO0EZSAXRqe
- if9tB0SwAPVOKQLNrAMWr3kvD7tiMRTcIfC1qdG/763YUxbEpLHS9fHxdPqYZkChu8p2
- DDix7AXiMg8XQzthH0F+6GEWqThF++6IYNWoUOEzTnysuVI33spJC5Dj4R26ORpedQhu
- UlJprChHsjX9+WP9OJq/CFvd5vu2w86bIW4Bxc5n4Q3djaDCybgwRE7TcEze3wo64dIm
- HPrg==
-X-Gm-Message-State: AFuF++ltlTkRWJuXRXAijam0ddlwgfGZVQsf7QVDYsfiXzPS+ICkmTIY
- TECgEPf5tmwuS9fhi9krxZsNnNDP4cksbRMR0DobcT+t4ElKf+0DODymHe1DLgjnGtQE0PcJ9F4
- MM9SfwC9xcjJTeVWea/1NIlYkY554v6BaRCY8rBCcOzf2ERn1yJt39x/00XLViXq97VZi5My499
- zPNAjfGDtJp2Yg14p4PeqYfl3hhta3shZvLDnPbY0S
-X-Gm-Gg: AR+sD10DGpaXlgMKm/PKpbglcKu5wsBhQLrtJFqvSn8w5kJxX89oIAKg6oBd91BHCTT
- p7WSUSPnwSxUxndBwPYWusDzdVWKRbzf2FN+FKzHxta0vtbirtrk8RDtSR3q2G6mBORrmxiVVaa
- V+JczInShfnwZBvFB2k3Q4pXOzzwfIgAYzzeVWHBIVNyEgL4StwMhnTdp+7Xlfp8ALhLuBuXhcO
- KunW0QQFq3P1otmCxO3v7b4+FUXvhoPa0OMLq11r8E3012SBK+LMHEiICM7/DLtoiEb+q/OoKVt
- E6du3l57uGvT6+AqxMYsr/sH9qis9Udkqn+rNGvxhoZO6RDsQ0S3Ean4c5ew0YNp0WFNKGWCYRm
- Zmo0Nkr3F4FHQ37DmfPWIt+i5V69D5LRHNQzDk19S80PW77lo9g81sglzsGycumoryGfEpMOO6G
- uxlII=
-X-Received: by 2002:a05:6000:1445:b0:482:aa2a:52f7 with SMTP id
- ffacd0b85a97d-482c0b62085mr12676f8f.6.1787244714066; 
- Thu, 20 Aug 2026 09:51:54 -0700 (PDT)
-X-Received: by 2002:a05:6000:1445:b0:482:aa2a:52f7 with SMTP id
- ffacd0b85a97d-482c0b62085mr12573f8f.6.1787244713570; 
- Thu, 20 Aug 2026 09:51:53 -0700 (PDT)
+ bh=AekDmTCsqKE/7Em+fp4v05CEB3akDFAXUbS1t0WA4sE=;
+ b=GFFNm3c5AQbC78h5eFFd9WlBcw94vezL/uf5yR7OPrw2CoAmOmTkE5egxwUyf2PFpr
+ FPVNDmvZHhuGXIuxmyfmbA6D6poTD2PV0egEm/rrnGJ2L62437AFf/Y8z5HkLBdTJa8K
+ /tekWAMnxvnTz42jPM16KI9R/clEoumWhvsiWfeAnYrnTBdtd4/idtFeiZb7lTfEhf+X
+ J+38O6n6xAhrK8/ZBiKt9a6nQ2aubOSgsFWQGuie0LZ1uStPcQiFdaHf9qPW40D27xf9
+ GNPbckXE/cKRvPRAF2jophT6P4yVYCkH9tx7mlXFAXC+S35FYK36xfCsIoOA6EWqhwz7
+ Lojw==
+X-Gm-Message-State: AFuF++lRPvQVOCY8ivhz6SnOcqcLJjpRie/IZU8E9Mya3gtXYaOJ7i6C
+ ClSTByT59NfniXEd7TilEX7uN73h20JmU7H3aTFZzYGsRH7i0C1mtvH4HD9KS/3wzXm4lliS+wA
+ jbFPktqfWsjdrxfY0XWh3xoeTDoETqpSnpz77ByLOTekisZZRfh4zdN8sqV6r1HSwQF+MLQFFvy
+ YgdK7A1PiViq/P48RoafIGr43IRYpCfGIQvo0CsH8m
+X-Gm-Gg: AR+sD12J8c97fMLx3egKU2K8GRI4WArdstBG65lN1G2zjW2FrUk2CYX0Pd+No6WP5OB
+ 2nJAA1fhk4pYtbDJwnjcE0JD1DmAAvxkqNl1c/OzU6GfkTap2QtL/xAJA7ArsVylqbgVOYwVQ39
+ xa+gyJAVHEn7NP/7CJBecrIM/L2kutI8FB6fG313JLxOWBu4MHPW+8vi3MOuSEJCb5r2ANZ/DZR
+ 3SOgVTA5A6PTQ0wHkKBncpiWZS1BjABSkfM7oS4bykHqcw5empS7KpsK4J03oQjqjlpLH7xNKB/
+ ObSSLr3jNIgiOJ1anNcLE3doZFZV6wyXQnLwjgR4OzgODWlEPjqvIT+qhR69rHApaE4FVivAzoO
+ ISvTib2ZmZi5+CGd3H8IUbifWyXbg7h5YvfIxSr8BG+LTiVziEUvE40zL3VIMdrSfPGJvDpMiV/
+ 5D1A8=
+X-Received: by 2002:a5d:64e6:0:b0:474:530:9d with SMTP id
+ ffacd0b85a97d-482b1fd894bmr24784304f8f.13.1787244709838; 
+ Thu, 20 Aug 2026 09:51:49 -0700 (PDT)
+X-Received: by 2002:a5d:64e6:0:b0:474:530:9d with SMTP id
+ ffacd0b85a97d-482b1fd894bmr24784190f8f.13.1787244709315; 
+ Thu, 20 Aug 2026 09:51:49 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b14b8038sm12739589f8f.20.2026.08.20.09.51.52
+ ffacd0b85a97d-482b14d05a6sm15332584f8f.35.2026.08.20.09.51.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 09:51:52 -0700 (PDT)
+ Thu, 20 Aug 2026 09:51:48 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 41/53] python, meson: update meson required for Rust to 1.12.0
-Date: Thu, 20 Aug 2026 18:49:44 +0200
-Message-ID: <20260820164957.1895963-42-pbonzini@redhat.com>
+Subject: [PULL 39/53] dockerfiles: remove packages required by Avocado
+Date: Thu, 20 Aug 2026 18:49:42 +0200
+Message-ID: <20260820164957.1895963-40-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820164957.1895963-1-pbonzini@redhat.com>
 References: <20260820164957.1895963-1-pbonzini@redhat.com>
@@ -122,78 +122,440 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Meson 1.11.0 brings support for parsing Cargo.toml inside QEMU's source
-tree, and Meson 1.12.0 brings support for cross-compilation of Cargo
-subprojects.
-
-Together, these two features allow QEMU to remove hundreds of lines of
-manual compilation scripts.
+Make our CI containers smaller, by removing a handful of packages that
+were only included as dependencies of Avocado.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- configure                                   |   4 ++--
- python/scripts/vendor.py                    |   4 ++--
- python/wheels/meson-1.11.1-py3-none-any.whl | Bin 1078534 -> 0 bytes
- python/wheels/meson-1.12.0-py3-none-any.whl | Bin 0 -> 1106208 bytes
- pythondeps.toml                             |   4 ++--
- 5 files changed, 6 insertions(+), 6 deletions(-)
- delete mode 100644 python/wheels/meson-1.11.1-py3-none-any.whl
- create mode 100644 python/wheels/meson-1.12.0-py3-none-any.whl
+ tests/docker/dockerfiles/alpine.docker               | 3 ---
+ tests/docker/dockerfiles/centos9.docker              | 3 ---
+ tests/docker/dockerfiles/debian-amd64-cross.docker   | 4 ----
+ tests/docker/dockerfiles/debian-arm64-cross.docker   | 4 ----
+ tests/docker/dockerfiles/debian-armhf-cross.docker   | 4 ----
+ tests/docker/dockerfiles/debian-i686-cross.docker    | 4 ----
+ tests/docker/dockerfiles/debian-ppc64el-cross.docker | 4 ----
+ tests/docker/dockerfiles/debian-riscv64-cross.docker | 4 ----
+ tests/docker/dockerfiles/debian-s390x-cross.docker   | 4 ----
+ tests/docker/dockerfiles/debian.docker               | 4 ----
+ tests/docker/dockerfiles/fedora-rust-nightly.docker  | 4 ----
+ tests/docker/dockerfiles/fedora-win64-cross.docker   | 4 ----
+ tests/docker/dockerfiles/fedora.docker               | 4 ----
+ tests/docker/dockerfiles/opensuse-leap.docker        | 4 ----
+ tests/docker/dockerfiles/ubuntu2404.docker           | 4 ----
+ .gitlab-ci.d/macos-14.vars                           | 2 +-
+ scripts/ci/setup/debian/debian-13-ppc64le.yaml       | 4 ----
+ scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml     | 4 ----
+ scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml       | 4 ----
+ tests/lcitool/projects/qemu.yml                      | 4 ----
+ tests/vm/generated/freebsd.json                      | 4 ----
+ 21 files changed, 1 insertion(+), 79 deletions(-)
 
-diff --git a/configure b/configure
-index 6ddfe4b5342..7f637c018c3 100755
---- a/configure
-+++ b/configure
-@@ -1166,12 +1166,12 @@ fi
- # detect rust triple
- 
- meson_version=$($meson --version)
--if test "$rust" != disabled && ! version_ge "$meson_version" 1.10.0; then
-+if test "$rust" != disabled && ! version_ge "$meson_version" 1.12.0; then
-   if test "$rust" = enabled; then
-     $mkvenv ensuregroup --dir "${source_path}/python/wheels" \
-          ${source_path}/pythondeps.toml meson-rust || exit 1
-   else
--    echo "Rust needs Meson 1.10.0, disabling" 2>&1
-+    echo "Rust needs Meson 1.12.0, disabling" 2>&1
-     rust=disabled
-   fi
- fi
-diff --git a/python/scripts/vendor.py b/python/scripts/vendor.py
-index 1bb59d863af..9b4c763f9ec 100755
---- a/python/scripts/vendor.py
-+++ b/python/scripts/vendor.py
-@@ -41,8 +41,8 @@ def main() -> int:
-     parser.parse_args()
- 
-     packages = {
--        "meson==1.11.1":
--        "9b3a023657e393dbc5335b95c561337d49b7a458f5541e47ec44f2cc566e0d80",
-+        "meson==1.12.0":
-+        "71f133147fa0fcfe8f4df49fa1045771064947834538409e5d97b3613aac8b4e",
-         "qemu.qmp==0.0.6":
-         "5d7c5af0e9de427696e3bf72e333965c3a697929f77f6b7ddc30c989fc7b539b",
-         "pycotap==1.3.1":
-diff --git a/pythondeps.toml b/pythondeps.toml
-index bef88d49a6e..061f0cff0c4 100644
---- a/pythondeps.toml
-+++ b/pythondeps.toml
-@@ -19,12 +19,12 @@
- 
- [meson]
- # The install key should match the version in python/wheels/
--meson = { accepted = ">=1.5.0", installed = "1.11.1", canary = "meson" }
-+meson = { accepted = ">=1.5.0", installed = "1.12.0", canary = "meson" }
- pycotap = { accepted = ">=1.1.0", installed = "1.3.1" }
- 
- [meson-rust]
- # The install key should match the version in python/wheels/
--meson = { accepted = ">=1.11.0", installed = "1.11.1", canary = "meson" }
-+meson = { accepted = ">=1.12.0", installed = "1.12.0", canary = "meson" }
- 
- [docs]
- # Please keep the installed versions in sync with docs/requirements.txt
+diff --git a/tests/docker/dockerfiles/alpine.docker b/tests/docker/dockerfiles/alpine.docker
+index 118c6e8eeaf..8a5a355e89a 100644
+--- a/tests/docker/dockerfiles/alpine.docker
++++ b/tests/docker/dockerfiles/alpine.docker
+@@ -83,14 +83,11 @@ RUN apk update && \
+         pixman-dev \
+         pkgconf \
+         pulseaudio-dev \
+-        py3-numpy \
+-        py3-pillow \
+         py3-pip \
+         py3-setuptools \
+         py3-sphinx \
+         py3-sphinx_rtd_theme \
+         py3-wheel \
+-        py3-yaml \
+         python3 \
+         rpm2cpio \
+         rust \
+diff --git a/tests/docker/dockerfiles/centos9.docker b/tests/docker/dockerfiles/centos9.docker
+index 0d5b5fa7f59..e38cd692db9 100644
+--- a/tests/docker/dockerfiles/centos9.docker
++++ b/tests/docker/dockerfiles/centos9.docker
+@@ -96,9 +96,6 @@ RUN dnf --quiet distro-sync -y && \
+                 pkgconfig \
+                 pulseaudio-libs-devel \
+                 python3 \
+-                python3-PyYAML \
+-                python3-numpy \
+-                python3-pillow \
+                 python3-pip \
+                 python3-setuptools \
+                 python3-sphinx \
+diff --git a/tests/docker/dockerfiles/debian-amd64-cross.docker b/tests/docker/dockerfiles/debian-amd64-cross.docker
+index 061cd8e9b82..823606dc52a 100644
+--- a/tests/docker/dockerfiles/debian-amd64-cross.docker
++++ b/tests/docker/dockerfiles/debian-amd64-cross.docker
+@@ -41,9 +41,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       openssh-client \
+                       pkgconf \
+                       python3 \
+-                      python3-numpy \
+-                      python3-opencv \
+-                      python3-pillow \
+                       python3-pip \
+                       python3-setuptools \
+                       python3-sphinx \
+@@ -51,7 +48,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-tomli \
+                       python3-venv \
+                       python3-wheel \
+-                      python3-yaml \
+                       rpm2cpio \
+                       rustc \
+                       sed \
+diff --git a/tests/docker/dockerfiles/debian-arm64-cross.docker b/tests/docker/dockerfiles/debian-arm64-cross.docker
+index 3dfa60fdfd7..ed58e089ec0 100644
+--- a/tests/docker/dockerfiles/debian-arm64-cross.docker
++++ b/tests/docker/dockerfiles/debian-arm64-cross.docker
+@@ -41,9 +41,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       openssh-client \
+                       pkgconf \
+                       python3 \
+-                      python3-numpy \
+-                      python3-opencv \
+-                      python3-pillow \
+                       python3-pip \
+                       python3-setuptools \
+                       python3-sphinx \
+@@ -51,7 +48,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-tomli \
+                       python3-venv \
+                       python3-wheel \
+-                      python3-yaml \
+                       rpm2cpio \
+                       rustc \
+                       sed \
+diff --git a/tests/docker/dockerfiles/debian-armhf-cross.docker b/tests/docker/dockerfiles/debian-armhf-cross.docker
+index 401c64269c1..0843f7428a9 100644
+--- a/tests/docker/dockerfiles/debian-armhf-cross.docker
++++ b/tests/docker/dockerfiles/debian-armhf-cross.docker
+@@ -41,9 +41,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       openssh-client \
+                       pkgconf \
+                       python3 \
+-                      python3-numpy \
+-                      python3-opencv \
+-                      python3-pillow \
+                       python3-pip \
+                       python3-setuptools \
+                       python3-sphinx \
+@@ -51,7 +48,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-tomli \
+                       python3-venv \
+                       python3-wheel \
+-                      python3-yaml \
+                       rpm2cpio \
+                       rustc \
+                       sed \
+diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
+index 8b60c7b085f..caba08f842e 100644
+--- a/tests/docker/dockerfiles/debian-i686-cross.docker
++++ b/tests/docker/dockerfiles/debian-i686-cross.docker
+@@ -41,9 +41,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       openssh-client \
+                       pkgconf \
+                       python3 \
+-                      python3-numpy \
+-                      python3-opencv \
+-                      python3-pillow \
+                       python3-pip \
+                       python3-setuptools \
+                       python3-sphinx \
+@@ -51,7 +48,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-tomli \
+                       python3-venv \
+                       python3-wheel \
+-                      python3-yaml \
+                       rpm2cpio \
+                       rustc \
+                       sed \
+diff --git a/tests/docker/dockerfiles/debian-ppc64el-cross.docker b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
+index 2a7e8cba056..17018c0dab7 100644
+--- a/tests/docker/dockerfiles/debian-ppc64el-cross.docker
++++ b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
+@@ -41,9 +41,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       openssh-client \
+                       pkgconf \
+                       python3 \
+-                      python3-numpy \
+-                      python3-opencv \
+-                      python3-pillow \
+                       python3-pip \
+                       python3-setuptools \
+                       python3-sphinx \
+@@ -51,7 +48,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-tomli \
+                       python3-venv \
+                       python3-wheel \
+-                      python3-yaml \
+                       rpm2cpio \
+                       rustc \
+                       sed \
+diff --git a/tests/docker/dockerfiles/debian-riscv64-cross.docker b/tests/docker/dockerfiles/debian-riscv64-cross.docker
+index 349de3a0bbb..2408d453c20 100644
+--- a/tests/docker/dockerfiles/debian-riscv64-cross.docker
++++ b/tests/docker/dockerfiles/debian-riscv64-cross.docker
+@@ -41,9 +41,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       openssh-client \
+                       pkgconf \
+                       python3 \
+-                      python3-numpy \
+-                      python3-opencv \
+-                      python3-pillow \
+                       python3-pip \
+                       python3-setuptools \
+                       python3-sphinx \
+@@ -51,7 +48,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-tomli \
+                       python3-venv \
+                       python3-wheel \
+-                      python3-yaml \
+                       rpm2cpio \
+                       rustc \
+                       sed \
+diff --git a/tests/docker/dockerfiles/debian-s390x-cross.docker b/tests/docker/dockerfiles/debian-s390x-cross.docker
+index 8bc42b1e00b..2b0a344c2c5 100644
+--- a/tests/docker/dockerfiles/debian-s390x-cross.docker
++++ b/tests/docker/dockerfiles/debian-s390x-cross.docker
+@@ -41,9 +41,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       openssh-client \
+                       pkgconf \
+                       python3 \
+-                      python3-numpy \
+-                      python3-opencv \
+-                      python3-pillow \
+                       python3-pip \
+                       python3-setuptools \
+                       python3-sphinx \
+@@ -51,7 +48,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-tomli \
+                       python3-venv \
+                       python3-wheel \
+-                      python3-yaml \
+                       rpm2cpio \
+                       rustc \
+                       sed \
+diff --git a/tests/docker/dockerfiles/debian.docker b/tests/docker/dockerfiles/debian.docker
+index 413986d3f07..064b2ad1f12 100644
+--- a/tests/docker/dockerfiles/debian.docker
++++ b/tests/docker/dockerfiles/debian.docker
+@@ -113,9 +113,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       openssh-client \
+                       pkgconf \
+                       python3 \
+-                      python3-numpy \
+-                      python3-opencv \
+-                      python3-pillow \
+                       python3-pip \
+                       python3-setuptools \
+                       python3-sphinx \
+@@ -123,7 +120,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-tomli \
+                       python3-venv \
+                       python3-wheel \
+-                      python3-yaml \
+                       rpm2cpio \
+                       rustc \
+                       sed \
+diff --git a/tests/docker/dockerfiles/fedora-rust-nightly.docker b/tests/docker/dockerfiles/fedora-rust-nightly.docker
+index 4f84b803798..dcad3af2a7f 100644
+--- a/tests/docker/dockerfiles/fedora-rust-nightly.docker
++++ b/tests/docker/dockerfiles/fedora-rust-nightly.docker
+@@ -104,10 +104,6 @@ exec "$@"\n' > /usr/bin/nosync && \
+                        pkgconfig \
+                        pulseaudio-libs-devel \
+                        python3 \
+-                       python3-PyYAML \
+-                       python3-numpy \
+-                       python3-opencv \
+-                       python3-pillow \
+                        python3-pip \
+                        python3-setuptools \
+                        python3-sphinx \
+diff --git a/tests/docker/dockerfiles/fedora-win64-cross.docker b/tests/docker/dockerfiles/fedora-win64-cross.docker
+index c1e63feb46f..bce350dfd8d 100644
+--- a/tests/docker/dockerfiles/fedora-win64-cross.docker
++++ b/tests/docker/dockerfiles/fedora-win64-cross.docker
+@@ -44,10 +44,6 @@ exec "$@"\n' > /usr/bin/nosync && \
+                        ninja-build \
+                        openssh-clients \
+                        python3 \
+-                       python3-PyYAML \
+-                       python3-numpy \
+-                       python3-opencv \
+-                       python3-pillow \
+                        python3-pip \
+                        python3-setuptools \
+                        python3-sphinx \
+diff --git a/tests/docker/dockerfiles/fedora.docker b/tests/docker/dockerfiles/fedora.docker
+index a6996917c4b..c541f5d5b18 100644
+--- a/tests/docker/dockerfiles/fedora.docker
++++ b/tests/docker/dockerfiles/fedora.docker
+@@ -104,10 +104,6 @@ exec "$@"\n' > /usr/bin/nosync && \
+                        pkgconfig \
+                        pulseaudio-libs-devel \
+                        python3 \
+-                       python3-PyYAML \
+-                       python3-numpy \
+-                       python3-opencv \
+-                       python3-pillow \
+                        python3-pip \
+                        python3-setuptools \
+                        python3-sphinx \
+diff --git a/tests/docker/dockerfiles/opensuse-leap.docker b/tests/docker/dockerfiles/opensuse-leap.docker
+index fc363c647cd..8d8631bbcf0 100644
+--- a/tests/docker/dockerfiles/opensuse-leap.docker
++++ b/tests/docker/dockerfiles/opensuse-leap.docker
+@@ -93,12 +93,8 @@ RUN zypper update -y && \
+            pcre2-devel-static \
+            pipewire-devel \
+            pkgconfig \
+-           python3-Pillow \
+-           python3-PyYAML \
+            python3-Sphinx \
+            python3-base \
+-           python3-numpy \
+-           python3-opencv \
+            python3-pip \
+            python3-setuptools \
+            python3-sphinx_rtd_theme \
+diff --git a/tests/docker/dockerfiles/ubuntu2404.docker b/tests/docker/dockerfiles/ubuntu2404.docker
+index 27992e34fd9..f027eef022e 100644
+--- a/tests/docker/dockerfiles/ubuntu2404.docker
++++ b/tests/docker/dockerfiles/ubuntu2404.docker
+@@ -113,9 +113,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       openssh-client \
+                       pkgconf \
+                       python3 \
+-                      python3-numpy \
+-                      python3-opencv \
+-                      python3-pillow \
+                       python3-pip \
+                       python3-setuptools \
+                       python3-sphinx \
+@@ -123,7 +120,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-tomli \
+                       python3-venv \
+                       python3-wheel \
+-                      python3-yaml \
+                       rpm2cpio \
+                       rustc-1.83 \
+                       sed \
+diff --git a/.gitlab-ci.d/macos-14.vars b/.gitlab-ci.d/macos-14.vars
+index def77cfdea5..0c187624dd0 100644
+--- a/.gitlab-ci.d/macos-14.vars
++++ b/.gitlab-ci.d/macos-14.vars
+@@ -12,5 +12,5 @@ NINJA='/opt/homebrew/bin/ninja'
+ PACKAGING_COMMAND='brew'
+ PIP3='/opt/homebrew/bin/pip3'
+ PKGS='bash bc bindgen bison bzip2 capstone ccache cmocka coreutils ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libcbor libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python-setuptools python3 rpm2cpio rust sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 vulkan-tools xorriso zlib zstd'
+-PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
++PYPI_PKGS='sphinx sphinx-rtd-theme tomli'
+ PYTHON='/opt/homebrew/bin/python3'
+diff --git a/scripts/ci/setup/debian/debian-13-ppc64le.yaml b/scripts/ci/setup/debian/debian-13-ppc64le.yaml
+index e64321357da..9acd99a7433 100644
+--- a/scripts/ci/setup/debian/debian-13-ppc64le.yaml
++++ b/scripts/ci/setup/debian/debian-13-ppc64le.yaml
+@@ -105,9 +105,6 @@ packages:
+   - openssh-client
+   - pkgconf
+   - python3
+-  - python3-numpy
+-  - python3-opencv
+-  - python3-pillow
+   - python3-pip
+   - python3-setuptools
+   - python3-sphinx
+@@ -115,7 +112,6 @@ packages:
+   - python3-tomli
+   - python3-venv
+   - python3-wheel
+-  - python3-yaml
+   - rpm2cpio
+   - rustc
+   - sed
+diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml b/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
+index 12b0e38a220..5c948109df8 100644
+--- a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
++++ b/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
+@@ -106,9 +106,6 @@ packages:
+   - openssh-client
+   - pkgconf
+   - python3
+-  - python3-numpy
+-  - python3-opencv
+-  - python3-pillow
+   - python3-pip
+   - python3-setuptools
+   - python3-sphinx
+@@ -116,7 +113,6 @@ packages:
+   - python3-tomli
+   - python3-venv
+   - python3-wheel
+-  - python3-yaml
+   - rpm2cpio
+   - rustc-1.83
+   - sed
+diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml b/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
+index 56299f4cc2b..010b7f86aab 100644
+--- a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
++++ b/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
+@@ -104,9 +104,6 @@ packages:
+   - openssh-client
+   - pkgconf
+   - python3
+-  - python3-numpy
+-  - python3-opencv
+-  - python3-pillow
+   - python3-pip
+   - python3-setuptools
+   - python3-sphinx
+@@ -114,7 +111,6 @@ packages:
+   - python3-tomli
+   - python3-venv
+   - python3-wheel
+-  - python3-yaml
+   - rpm2cpio
+   - rustc-1.83
+   - sed
+diff --git a/tests/lcitool/projects/qemu.yml b/tests/lcitool/projects/qemu.yml
+index 7d185cda3cc..b3c99936723 100644
+--- a/tests/lcitool/projects/qemu.yml
++++ b/tests/lcitool/projects/qemu.yml
+@@ -91,11 +91,7 @@ packages:
+  - pkg-config
+  - pulseaudio
+  - python3
+- - python3-numpy
+- - python3-opencv
+- - python3-pillow
+  - python3-pip
+- - python3-PyYAML
+  - python3-setuptools
+  - python3-sphinx
+  - python3-sphinx-rtd-theme
+diff --git a/tests/vm/generated/freebsd.json b/tests/vm/generated/freebsd.json
+index 08b6eb61553..dfa8b41a524 100644
+--- a/tests/vm/generated/freebsd.json
++++ b/tests/vm/generated/freebsd.json
+@@ -49,14 +49,10 @@
+     "ncurses",
+     "nettle",
+     "ninja",
+-    "opencv",
+     "pixman",
+     "pkgconf",
+     "png",
+-    "py311-numpy",
+-    "py311-pillow",
+     "py311-pip",
+-    "py311-pyyaml",
+     "py311-setuptools",
+     "py311-sphinx",
+     "py311-sphinx_rtd_theme",
 -- 
 2.55.0
 
