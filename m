@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E5E3C5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 02:52:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F0B6C5DF85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 02:52:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwsqR-00024v-Sm; Wed, 19 Aug 2026 22:49:31 -0400
+	id 1wwsqZ-0002Cd-Ht; Wed, 19 Aug 2026 22:49:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kylefoxaustin.github@gmail.com>)
- id 1wwsqA-0001w3-Uy
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:49:15 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ id 1wwsq7-0001us-TH
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:49:13 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <kylefoxaustin.github@gmail.com>)
- id 1wwsq8-0000at-Tx
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:49:14 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-836c4474028so22776387b3.0
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 19:49:12 -0700 (PDT)
+ id 1wwsq4-0000Z9-Fg
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:49:11 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-66c67a73eb7so896521d50.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 19:49:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787194152; x=1787798952; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787194147; x=1787798947; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Sn+x+uKMH7j7KOVVPKrmPvWpinOYdrhztY6mwQ/cHDA=;
- b=KtRCi2dhNwNppuJgTzcVYX/cg8I3tRSMEKnuVIe28BiCaQTGCGFkFysjfHZ6YkDiY8
- SrsPDVDG/LK4d0BLuENoFxnPhlCdtdcnTUkzwENp1Pqr61iKfdA5te6eFCsAyTGY3ulu
- uvguezXj4dK6sy/dDpzBFEjmoL1ota4BAQdtC9KUaSK1P6deTPSWVGrVugiRZdek9XZd
- cEPiz+iadvTcFl2LHmwwxqz7I6a7dZJrErxQZGqtPuFPI0k1bFjbz68zZCuoK2bzItbe
- CvHXqfnmkXsjrBMLLQD+bBqjOLCiKVK44nsnZDSh2jJiPjkopJsW4f2vqlkKAu/fbc8R
- /rtg==
+ bh=ULA0rOEJS/remkRsu+3bK7hmpmH4SXzIjWLm8NTqxUk=;
+ b=oZ3N+OPghaOt+GPVux4vdrz0IE0lGEBpj9PlJe61cP62uFZkLmYn907s6xVhXsekTI
+ bIsMQILGtmD9DjhWF/697ww/PO3ndRfxxWkX4f2uubAA57q6Fyr4tOwaResOApO1+JIa
+ mQJhAatP75mHtjleOv81k+DYAQOQmX3wFMoYMevk8ikFaKmfHXi61K+FbP7nXdgfBxpv
+ Bh8vp6nkxKsnrLxa0pcyrQYHUA495zxLPfPD+fflfozd5Hc3GBjeZMe9feCCVgCeaDwj
+ ExqZQtOOElbNLeKzPTTRhtIt0yzCRNxpQdBBuBMx2KRj3+cS8riWQHpGzYCV+uhRwctX
+ rFDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787194152; x=1787798952;
+ d=1e100.net; s=20251104; t=1787194147; x=1787798947;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Sn+x+uKMH7j7KOVVPKrmPvWpinOYdrhztY6mwQ/cHDA=;
- b=LM2UwjpCSrJ+Fc1PXczr6dD5CcSVOjfAIgFNcwwX/GWAJcubm8K+lxBbOEBcuuE2L8
- 6FMNejOcrGM4p6leZEqek8jqDPDUPq5InIrYljlb4I2L/gdWTk7OoBeEUOu4wnE11Kuk
- srWy1uZvgr1279TxQ/VaLfNKjwUFZiKqdqKc3ivTQ3v6SGokOM6kkB8kHmg5LgM9k5IW
- 12uynSOEts22GjYGyTePvVdnpzyEcotYv+ort7jmvJhHc6TOIzJk3rTZQg2Vc+SwBSdB
- Jzv+B1oLodbQ9p34cn3GUi7LmcMBKbak6H9lLRtxvfjyAOWK6p5hd2DEjXNJTCMA58ks
- XQ9A==
-X-Gm-Message-State: AFuF++mSsZc382TPU7XzfUXgFvZMBwJwee/fRMe829Apy+4o5+dptc4l
- Tk57KX6fAo8gcF4TSoXGAadI+sEVLGZ9VCp2lAiIEGCOC5sLcZpDF05SCWJIHA==
-X-Gm-Gg: AR+sD12wSyYhvLejlBr4JCVx+O0ODhzBjWvII6ji6ctp9MjH3QHNyWQ1cRh8AgjDY+h
- OfEHeMkG5R7YT3+zrCzwN2RuvIF6CAd5VB7fPYbiCi3q+DSIVC110DrR6jeLa5HolJ2FHtsIuTT
- bZhL5SuCNmSju5Tn381NbY2sIP7z399sNPuW0OUyLzE7Ep0lxFfBRtCqHPgEXAVYoEzTI4+MQFc
- TKTf/6q4sDPADKSNtDcytX/khNczmy6+o/fmCm425RyTcUik+Whxs/Q/lqFmPuPnxbv0jfDWIk1
- KzNfK+KgMhRX/j500S877DlQZbAyfEr3WEoWNlOFMF1J4fvnztz/qUkzDBDrQ/FEpcwFH5fr/Nz
- h2MJUuYFwHLttwNl/BYM4BJaProfN6PQeKwLvu82AjqR4wl3mlU9F/zhcVNN964+12+H4Kgd7lo
- RUlklRIblx+xXY7rWF2+fVtRdBa4Q87AMsK49GKIXz2XgzPM99PJIb2+NZpSh7gSVZTkT3KoM+B
- rRjvIsmWC5kIGW9FTsxlETGnomFmX0LLopPj08Vs0oJV9+uPLkO1A==
-X-Received: by 2002:a05:690e:2669:b0:66c:d36f:d2ef with SMTP id
- 956f58d0204a3-66cd36fd386mr1346477d50.32.1787194151717; 
- Wed, 19 Aug 2026 19:49:11 -0700 (PDT)
+ bh=ULA0rOEJS/remkRsu+3bK7hmpmH4SXzIjWLm8NTqxUk=;
+ b=DxpEKaYKregRmBGcRWm5mTHAGsxtEKn8/ihlEohVDdipfuW79tZ64YhWl04xla73Iu
+ z17EYpA4UaV6gnhpZbIyI07O9fmSZvaZS7PXjWma9D1fVEr46iB4M8y0Yc3JjCMh6FuD
+ 1XExju0U2CTtGan1LzzaOm8racl+rB8Sn25zAwvI2cgZJwce51gV6zHSy0ip7Cuc9mfH
+ 0nHzXt0fVamTByaQy+YfUB0aly4Zm5tt62H7lRukEd/YnmkbAoELgY8QtQjlrLngZM7o
+ aMPVPEDHrMUd6snx2UGrgEJomYR0miJ39s/7iwd1zzlj7nr0mkGspK6/3g4fXyAxvzCP
+ wkBA==
+X-Gm-Message-State: AFuF++mLAhciCl4M7c44sEhlZkTn7EZcMb6aHYTvv3ZhAlihm+sDfX5T
+ 8ZxK+A04lMA79Eu7Z/gQGVB8iQLA+SvZx0saHo2vMpnzt+lvKIPiRqMg5VPH7A==
+X-Gm-Gg: AR+sD11NBaQx40l4v/c0dFs1VwWq0XPCQxAorcx1u5agg3jsmwWrvxSY381UUzY5pkS
+ UWhSxFXlkaW0Nv3GEYtQGb5i9uAGK2tVXZv2qk3rTyzZlOw6PBI/32h2+yd8EUqDdrlk1E4L8eP
+ JJTHOhRyIiP2sT3G0RwOisr79vrYvtI6tKNjv2Cu684fcSx5Jea1jGgCpRHp6kMAyVW9tbD8OF5
+ 5mRahVP04S2wjnh/1/n7AqQ0iAflNOrTD2WHwS5V3BVw1h2Hzq1p4lLpuTw3FFgCeKdtbmEBpXV
+ jFAx9s/eFJfbUjEVSAmYs3GTW43KDtjJNWuYniHYqVBy8uTMzKU3fVuorB293uVTDX/97inIGeN
+ Yht02HeotuaxueBI66Evq4+qTSollUdhMznVoFdQlZ2XccVL/+PR3VuTRx86On4y4slsAE0GhJT
+ yYF5dZSvNr9NNtY6GPIjTpA1kc4OcW2yfqFBD4B0VRytiRSs6mUOEtcmqw1+GfyMriTIsbCQu6i
+ itZbmoAnW4vRx3Ndmdp+Ze5EaG9dLnu7tqed0XBOT+xlRovMnKJ8A==
+X-Received: by 2002:a53:a810:0:b0:668:8d0:20c with SMTP id
+ 956f58d0204a3-66cd6a0718fmr915365d50.20.1787194147429; 
+ Wed, 19 Aug 2026 19:49:07 -0700 (PDT)
 Received: from skippy.localdomain (99-61-67-1.lightspeed.austtx.sbcglobal.net.
  [99.61.67.1]) by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-66ccafd03basm1986454d50.1.2026.08.19.19.49.10
+ 956f58d0204a3-66ccafd03basm1986454d50.1.2026.08.19.19.49.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 19:49:10 -0700 (PDT)
+ Wed, 19 Aug 2026 19:49:07 -0700 (PDT)
 From: Kyle Fox <kylefoxaustin.github@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Fox <kylefoxaustin.github@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [PATCH 15/16] hw/arm: add i.MX 95 19x19 EVK board
-Date: Wed, 19 Aug 2026 21:48:33 -0500
-Message-Id: <20260820024834.3286721-16-kylefoxaustin.github@gmail.com>
+ qemu-arm@nongnu.org (open list:MCIMX95-19X19-EVK...)
+Subject: [PATCH 13/16] hw/misc: add i.MX 95 DPU command-sequencer stub
+ (headless)
+Date: Wed, 19 Aug 2026 21:48:31 -0500
+Message-Id: <20260820024834.3286721-14-kylefoxaustin.github@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260820024834.3286721-1-kylefoxaustin.github@gmail.com>
 References: <20260820024834.3286721-1-kylefoxaustin.github@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=kylefoxaustin.github@gmail.com; helo=mail-yw1-x112d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=kylefoxaustin.github@gmail.com; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,187 +103,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The i.MX 95 19x19 EVK board (machine type imx95-19x19-evk).
-Instantiates the SoC, sets up the LPDDR5 DRAM, and provides the direct
--kernel/-dtb/-initrd Linux boot path alongside the System Manager
-firmware loaded on the M33. This is the user-facing machine type.
+A minimal stub for the i.MX 95 DPU (display controller) command
+sequencer. This machine is headless, but Linux's dpu95 driver busy-waits
+with no timeout on the sequencer status register during probe, so a
+reads-as-zero stub would hang userspace bring-up. The stub reports the
+sequencer idle with FIFO space so the probe completes. Real display
+scanout is left to a follow-on series.
 
 Signed-off-by: Kyle Fox <kylefoxaustin.github@gmail.com>
 ---
- hw/arm/Kconfig     |   7 +++
- hw/arm/imx95-evk.c | 136 +++++++++++++++++++++++++++++++++++++++++++++
- hw/arm/meson.build |   1 +
- 3 files changed, 144 insertions(+)
- create mode 100644 hw/arm/imx95-evk.c
+ hw/misc/Kconfig      |   3 ++
+ hw/misc/imx95_dpu.c  | 117 +++++++++++++++++++++++++++++++++++++++++++
+ hw/misc/meson.build  |   1 +
+ hw/misc/trace-events |   1 +
+ 4 files changed, 122 insertions(+)
+ create mode 100644 hw/misc/imx95_dpu.c
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 7f1c0723ec0..d93808a48ee 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -764,3 +764,10 @@ config FSL_IMX95
-     select IMX_LPI2C
-     select SDHCI
-     select UNIMP
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index e1b8c390312..59c55cb5b83 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -290,3 +290,6 @@ config IMX95_PMIC
+ 
+ config IMX95_XCACHE
+     bool
 +
-+config FSL_IMX95_EVK
++config IMX95_DPU
 +    bool
-+    default y
-+    depends on AARCH64
-+    depends on TCG
-+    select FSL_IMX95
-diff --git a/hw/arm/imx95-evk.c b/hw/arm/imx95-evk.c
+diff --git a/hw/misc/imx95_dpu.c b/hw/misc/imx95_dpu.c
 new file mode 100644
-index 00000000000..470ca112376
+index 00000000000..4e09b399d85
 --- /dev/null
-+++ b/hw/arm/imx95-evk.c
-@@ -0,0 +1,136 @@
++++ b/hw/misc/imx95_dpu.c
+@@ -0,0 +1,117 @@
 +/*
-+ * NXP i.MX 95 19x19 Evaluation Kit (LPDDR5) - QEMU machine
-+ *
-+ * Modeled on hw/arm/imx8mp-evk.c by Bernhard Beschow
++ * NXP i.MX 95 DPU (Display Processing Unit) command-sequencer status stub
 + *
 + * Copyright (c) 2026, Kyle Fox
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
-+ * Instantiates the SoC, attaches DDR, and hands control to
-+ * arm_load_kernel() so -kernel works.
++ * The DPU is not modelled: this base machine is headless, and real display
++ * scanout is a follow-on series. With the real System Manager powering the
++ * display mix, however, Linux's dpu95 driver stops deferring and probes - and
++ * its blit-engine bring-up busy-waits with NO
++ * timeout on the command sequencer status register:
++ *   dpu95_cs_wait_idle()       spins until CMDSEQ_STATUS.IDLE      is set
++ *   dpu95_cs_wait_fifo_space() spins until CMDSEQ_STATUS.FIFOSPACE >= 192
++ * A plain zero-returning stub never satisfies either, so the probe kthread
++ * hangs forever, which in turn wedges wait_for_device_probe() in
++ * kernel_init() and userspace never starts.
++ *
++ * This stub returns CMDSEQ_STATUS with IDLE set and a full FIFOSPACE so both
++ * polls pass instantly; every other register reads back zero and writes are
++ * dropped. That is enough to let the probe complete (the actual command
++ * submission / fence path runs only at runtime, which we never reach). A
++ * follow-on series that models the DPU for real (adding display scanout and
++ * Wayland output) removes this stub.
 + */
 +
 +#include "qemu/osdep.h"
-+#include "system/address-spaces.h"
-+#include "hw/arm/boot.h"
-+#include "hw/arm/fsl-imx95.h"
-+#include "hw/arm/machines-qom.h"
-+#include "hw/core/boards.h"
-+#include "hw/core/qdev-properties.h"
-+#include "system/kvm.h"
-+#include "system/qtest.h"
-+#include "qemu/error-report.h"
-+#include "qapi/error.h"
++#include "qemu/module.h"
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
++#include "trace.h"
 +
-+static void imx95_evk_init(MachineState *machine)
-+{
-+    static struct arm_boot_info boot_info;
-+    FslImx95State *s;
++#define TYPE_IMX95_DPU "imx95.dpu"
++OBJECT_DECLARE_SIMPLE_TYPE(IMX95DPUState, IMX95_DPU)
 +
-+    if (kvm_enabled()) {
-+        error_report("The imx95-19x19-evk machine requires TCG: it emulates "
-+                     "Cortex-M33 and Cortex-M7 cores that KVM cannot run");
-+        exit(1);
-+    }
++#define IMX95_DPU_REG_SIZE 0x400000
 +
-+    if (machine->ram_size > FSL_IMX95_RAM_SIZE_MAX) {
-+        error_report("RAM size " RAM_ADDR_FMT
-+                     " above max supported (0x%" PRIx64 ")",
-+                     machine->ram_size, (uint64_t)FSL_IMX95_RAM_SIZE_MAX);
-+        exit(1);
-+    }
-+
-+    /*
-+     * The board presets the DTB at RAM_START + 128 MiB and the initrd at
-+     * RAM_START + 256 MiB (see below), so require enough RAM to hold them.
-+     */
-+    if (machine->ram_size < FSL_IMX95_RAM_SIZE_MIN) {
-+        error_report("RAM size " RAM_ADDR_FMT
-+                     " below min supported (0x%" PRIx64 ")",
-+                     machine->ram_size, (uint64_t)FSL_IMX95_RAM_SIZE_MIN);
-+        exit(1);
-+    }
-+
-+    boot_info = (struct arm_boot_info) {
-+        .loader_start = FSL_IMX95_RAM_START,
-+        .board_id     = -1,
-+        .ram_size     = machine->ram_size,
-+        .psci_conduit = QEMU_PSCI_CONDUIT_SMC,
-+        /*
-+         * The default arm_load_kernel() heuristic lands the initrd (and the
-+         * DTB right after it) at loader_start + 128 MiB == 0x88000000. That
-+         * is exactly where the NXP BSP device tree places the Cortex-M7
-+         * remoteproc carveout (vdev vrings + rsc-table @0x88220000). The
-+         * collision makes Linux reserve those pages for the initrd/FDT, so
-+         * the later reserved-memory no-map pass fails (-EBUSY) and imx-rproc
-+         * cannot ioremap the rsc-table (probe fails with -ENOMEM). Force the
-+         * initrd/DTB up to 0x90000000, in the free gap above the M7 carveout
-+         * and below the GPU/VPU carveouts at 0xa0000000.
-+         */
-+        .initrd_start = FSL_IMX95_RAM_START + 256 * MiB,
-+    };
-+
-+    s = FSL_IMX95(object_new(TYPE_FSL_IMX95));
-+    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
-+
-+    memory_region_add_subregion(get_system_memory(), FSL_IMX95_RAM_START,
-+                                machine->ram);
-+
-+    if (!qtest_enabled()) {
-+        arm_load_kernel(&s->cpu[0], machine, &boot_info);
-+
-+        /*
-+         * arm_load_kernel() registers its boot reset hook on every CPU in
-+         * the system and treats all non-boot cores as A-profile PSCI
-+         * secondaries. That is correct for the five A55 secondaries, but
-+         * the Cortex-M33 SM core and the Cortex-M7 RT core are not part of
-+         * the A55 boot flow - each boots from its own ITCM vector table.
-+         * Detach them from the A-profile boot machinery so their reset just
-+         * runs the normal M-profile vector-table reset. Whether each then
-+         * actually runs is decided by the SoC's M33/M7 reset hooks (only if
-+         * firmware was loaded into the respective ITCM).
-+         */
-+        if (s->m33.cpu) {
-+            s->m33.cpu->env.boot_info = NULL;
-+        }
-+        if (s->m7.cpu) {
-+            s->m7.cpu->env.boot_info = NULL;
-+        }
-+    }
-+}
-+
-+static const char *imx95_evk_get_default_cpu_type(const MachineState *ms)
-+{
-+    return ARM_CPU_TYPE_NAME("cortex-a55");
-+}
-+
-+static const char * const imx95_evk_valid_cpu_types[] = {
-+    ARM_CPU_TYPE_NAME("cortex-a55"),
-+    NULL
++struct IMX95DPUState {
++    SysBusDevice    parent_obj;
++    MemoryRegion    iomem;
 +};
 +
-+static void imx95_19x19_evk_machine_init(MachineClass *mc)
++/* Command-sequencer status, from the dpu95 blit register map. */
++#define DPU_CMDSEQ_STATUS           0x1019c
++#define DPU_CMDSEQ_STATUS_IDLE      0x40000000u
++#define DPU_CMDSEQ_STATUS_FIFOSPACE 0x0001ffffu
++
++static uint64_t imx95_dpu_read(void *opaque, hwaddr offset, unsigned size)
 +{
-+    mc->desc                  = "NXP i.MX 95 19x19 EVK (LPDDR5)";
-+    mc->init                  = imx95_evk_init;
-+    /*
-+     * Total vCPUs = 6 A55 + 1 Cortex-M33 System Manager core + 1 Cortex-M7
-+     * real-time core that the SoC always instantiates. TCG sizes its
-+     * per-CPU context table from the resolved smp.max_cpus, which defaults
-+     * to smp.cpus when -smp is not given - so both the default and the
-+     * max must include the M33 and the M7, otherwise the 8th CPU's
-+     * tcg_register_thread() asserts. The A55 cluster size is fixed in
-+     * the SoC regardless of -smp; this count is really "A55 cluster +
-+     * SM core + RT core".
-+     */
-+    mc->default_cpus          = FSL_IMX95_NUM_A55_CPUS + 2;
-+    mc->max_cpus              = FSL_IMX95_NUM_A55_CPUS + 2;
-+    mc->default_ram_id        = "imx95-19x19-evk.ram";
-+    mc->default_ram_size      = 8 * GiB;   /* 19x19 EVK has 8 GiB LPDDR5 */
-+    mc->get_default_cpu_type  = imx95_evk_get_default_cpu_type;
-+    mc->valid_cpu_types       = imx95_evk_valid_cpu_types;
++    if (offset == DPU_CMDSEQ_STATUS) {
++        /*
++         * Report the sequencer idle with a full FIFO. This is deliberately
++         * NOT the reset value (0x41000080: IDLE set but FIFOSPACE = 128, below
++         * the driver's threshold of 192), because the dpu95 probe polls
++         * FIFOSPACE before the enable handshake that would raise it on real
++         * silicon. Returning a constant full FIFO is sound only because the
++         * model is probe-time-only: no actual command sequence is ever
++         * submitted. If real DPU command submission is ever modelled,
++         * FIFOSPACE must track the command FIFO occupancy instead.
++         */
++        uint32_t status = DPU_CMDSEQ_STATUS_IDLE | DPU_CMDSEQ_STATUS_FIFOSPACE;
++        trace_imx95_dpu_cmdseq_status(status);
++        return status;
++    }
++    return 0;
 +}
 +
-+DEFINE_MACHINE_AARCH64("imx95-19x19-evk", imx95_19x19_evk_machine_init)
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 96fef4c5b5f..cdb61fa1612 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -118,5 +118,6 @@ arm_common_ss.add(when: ['CONFIG_AXIADO_EVK', 'TARGET_AARCH64'], if_true: files(
- 
- arm_common_ss.add(files('boot.c'))
- arm_common_ss.add(when: 'CONFIG_FSL_IMX95', if_true: files('fsl-imx95.c'))
-+arm_common_ss.add(when: 'CONFIG_FSL_IMX95_EVK', if_true: files('imx95-evk.c'))
- 
- hw_common_arch += {'arm': arm_common_ss}
++static void imx95_dpu_write(void *opaque, hwaddr offset,
++                            uint64_t value, unsigned size)
++{
++}
++
++static const MemoryRegionOps imx95_dpu_ops = {
++    .read = imx95_dpu_read,
++    .write = imx95_dpu_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .impl = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
++};
++
++static void imx95_dpu_init(Object *obj)
++{
++    IMX95DPUState *s = IMX95_DPU(obj);
++
++    memory_region_init_io(&s->iomem, obj, &imx95_dpu_ops, s,
++                          TYPE_IMX95_DPU, IMX95_DPU_REG_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
++}
++
++static void imx95_dpu_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
++    dc->desc = "NXP i.MX 95 DPU (status stub)";
++}
++
++static const TypeInfo imx95_dpu_info = {
++    .name           = TYPE_IMX95_DPU,
++    .parent         = TYPE_SYS_BUS_DEVICE,
++    .instance_size  = sizeof(IMX95DPUState),
++    .instance_init  = imx95_dpu_init,
++    .class_init     = imx95_dpu_class_init,
++};
++
++static void imx95_dpu_register_types(void)
++{
++    type_register_static(&imx95_dpu_info);
++}
++
++type_init(imx95_dpu_register_types)
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index d7d283a191b..9d629c8efef 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -180,3 +180,4 @@ system_ss.add(when: 'CONFIG_IMX95_GPC', if_true: files('imx95_gpc.c'))
+ system_ss.add(when: 'CONFIG_IMX95_SRC', if_true: files('imx95_src.c'))
+ system_ss.add(when: 'CONFIG_IMX95_PMIC', if_true: files('imx95_pmic.c'))
+ system_ss.add(when: 'CONFIG_IMX95_XCACHE', if_true: files('imx95_xcache.c'))
++system_ss.add(when: 'CONFIG_IMX95_DPU', if_true: files('imx95_dpu.c'))
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index 0555b15a1f3..e921b5f290a 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -466,3 +466,4 @@ pcal6408a_reg_read(uint8_t reg, uint8_t val) "PCAL6408A reg 0x%02x -> 0x%02x"
+ pcal6408a_reg_write(uint8_t reg, uint8_t val) "PCAL6408A reg 0x%02x <- 0x%02x"
+ pf53_reg_read(uint8_t reg, uint8_t val) "PF53 reg 0x%02x -> 0x%02x"
+ pf53_reg_write(uint8_t reg, uint8_t val) "PF53 reg 0x%02x <- 0x%02x"
++imx95_dpu_cmdseq_status(uint32_t value) "CMDSEQ_STATUS -> 0x%08x"
 -- 
 2.34.1
 
