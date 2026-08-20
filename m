@@ -4,131 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69CADC5DF82
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 18:42:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11BE8C5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 18:45:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx7i3-0002Fn-TQ; Thu, 20 Aug 2026 14:41:51 -0400
+	id 1wx7ka-0003Re-QB; Thu, 20 Aug 2026 14:44:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wx7i2-0002FU-2Z
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 14:41:50 -0400
+ id 1wx7kZ-0003RK-He
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 14:44:27 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wx7i0-0003bj-Ha
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 14:41:49 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1wx7kX-0004uw-M1
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 14:44:27 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67KIJLa84117958
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 18:41:47 GMT
+ 67KIJLmh352487
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 18:44:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- wXbHRLqjtWrsIyLcHCnkHFuESpX2Z8aVxrx+Utk1Jjg=; b=dIzv5kyXpURxprR7
- MKj10Ov+/AjR2C4F3o3oMQrd3UeWriKisE2xm3MUxCIa8x7ncDKZlH+3yxe+UpS9
- kUPYfRyqn408/L/dDr5QS74EE1skZl+xHCZSZUI8H0jRwwbvQ1kSUDTgCcxdbu8/
- 4B19w8F7cJ9sumLz69MFlAYTlq1LkaFw8lzm//A0j7P+PTfD9Z8isMOWfDdnurzQ
- h8FwpZLxZAD9po11XJ/Vxw/coAhIuUI70cEIbXFYCHb4hL8FPgkmAzFERk5gWli1
- bWVsU8CXWamrBOPVEUCNoC5XfpXk+vJ6qHEefR+krGfWWYfbAFSd6UUd/5iH4Mf9
- 7brPuQ==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g5xuk2fb5-1
+ CYFRXiuUWneGvXYjztda1KyCLZt2zjxKes58BRUutLQ=; b=Ss2s5pmyVtgWYCsh
+ +7STohREk6u1TPPI0tZxXjtltf93gx/DzjdtD11Jn+8IqUCa0nPSuPXsl/LuJY+3
+ mvr5CV/9t4G7IM0maQdp4T/49wIiempChSnKQX8yXnHs04yVrx0DjWs1j9gx33b4
+ bQD5kxt0f1OQiETf65C4Vh5Ta+7PbtvVosF8Cfq/jUm+KZ4RFuC4R8h154bCiToy
+ 7bpyq2DliLJj47GcZJ1fPtY0BXw/8X6qTAiKzv4tOzh2pmpcC35sSE1xGWPtekQo
+ CdcGztYCE3K5ouwoyDWsPraMZpfo0THnypGgXxTQrkAl4p5n8zE8ukBZwVXMmUhz
+ DlEVpA==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g5yg8aamq-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 18:41:47 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2cce14a21faso1122135ad.0
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 11:41:47 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 18:44:23 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-cbee5bab340so239414a12.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 11:44:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787251306; x=1787856106; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787251462; x=1787856262; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=wXbHRLqjtWrsIyLcHCnkHFuESpX2Z8aVxrx+Utk1Jjg=;
- b=ZXThKdX8O4wb0HmvvE29q6r3CZzFbSoXyasum5xQ3KEe96+AOtok9rCyuV315oesAZ
- k7bAAVrUnZbWVP4tP6hwHTQZI6q3g6E6Qr1sDY+DEgGhEbRyXjl93A1c257Y7M12TSCP
- JtskYgwODcBADJ+gRzBhXHUbzYSQeZLaiGZ0gBWE4giVZ07wvgaMr/cG4wR6lFggJmW3
- m5cZtPSgaInfcHj+oq4GXRu78b87K4AxQMkBEFK8Ufd44UK5ageFadLOOitgHRcIEw/h
- mWc4vKbX+9GSgq+iSWXSN/mm6iqUk50KM9sL+Ca2t+EAPLie3S2jrRqJtNkybAKw241h
- KS4w==
+ bh=CYFRXiuUWneGvXYjztda1KyCLZt2zjxKes58BRUutLQ=;
+ b=AWOBh5kb3EIir6GrOLrmW+DaUeR/gS1h3dIRj1f8CuYdH8MNTs4zvD6RbpMovA5MfD
+ t4+vbgOIg/Oz7uYD/S8TtGcpSWuThYgVK+jxy+Qhu/WECOl78DIyupsvHY1dpd3Mo+8w
+ qg7ga9Mq+24WjvgnKgBzMKwwYX1L1d+0GjKp5f36luGnhTUQv7wpqYSSQDNyZqtc6M/d
+ g3Lo8pBEk3OKnSh3hAZWc+r724KBecyYUDq42pup7H4KqwXIMg/qOaMHLIbIEJfT+C7n
+ ib3e2/NDWm0T7Uub/SYTqeo5jzUxIxk2txDP/m6fapLAuXwUfQS9kzAE6/WHAxShnDON
+ OEXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787251306; x=1787856106;
+ d=1e100.net; s=20251104; t=1787251462; x=1787856262;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=wXbHRLqjtWrsIyLcHCnkHFuESpX2Z8aVxrx+Utk1Jjg=;
- b=coGoawK8XY2pNI6aPmyhydDyy18FlajRsGdTXLH0aUhqA42P6Z9SLboE+SJa8bfHBG
- UYC2BgopAbuiGOyuSWDvp9Crl6MSQwFJrvlFLZdzzojncR8Fon1EDAgvrA3mPI8Gosu3
- wFTqpfH4tXONVVTuRHjz6GhtsdahwSgZIXtjScTwK6AFphC21vonV3YB/uW6ewDEHtaI
- UT62B7zJgYjCfdP9xDcPcfNEMJdT0M7/n6ANrbKJzITGKx6oc5bGtCmO69p8MZgNkHcE
- B8/HxihbslBE5lXD+9+cn3oszbyQTwPNth+wa6DInNEfgf595Z06Jwin38OXuvI/3pB5
- i7Qw==
+ bh=CYFRXiuUWneGvXYjztda1KyCLZt2zjxKes58BRUutLQ=;
+ b=biFKUmpp3U8qmWwQxuQYIunp2HRx6f5DY4CcPqDPOzLTXeKa8aR9bHoTKR1ggxwOSa
+ WeJXrTezL5iOF5cUdQO16KZWGe43SbDAM1UrB5UrTb6pvgekwfdFrqjqh36nqymaPfz6
+ NwcDBuxcB95pgNSLWSiZk62DrOaaFjVupCLJIcBUSofoaPED/188bdoSqED2A/MFOneN
+ TPqeofVyeRQh/2hI3MtDMKisESpOHhrRZ6ffzg8ya5h4N1XxrqJKu5V+2d7IcjMoshMQ
+ 1R3k20PzvtlgTJ43euWzjymlNy6xLA1JfivOjxIrbC+ztEPaP8mZaXsvPiPnZbQJhotJ
+ LXkQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrVXBPWaJiJgH4gLN3smxJ806HgkeGp4OISHwx8jeIs7hNAqXO6mcxPOobiH4tN9JGrTqaHxmvZyhRA@nongnu.org
-X-Gm-Message-State: AFuF++kxvgxntiRK1Wh2HlN6+lo2u9lB5HrJYAF6Z/acjzhG7cI9z7ph
- 0+i0HTEoWE8J5ngHNTbdFutPWCbXiaf5ieAEcndiVSybYMxq6rKEkamunkq0zK9FvzeGyZ3bWwW
- 97jg0S7LMaR13k1u0zcZB/iJcfGde1qSLStdjgxKBuwsPw80qFJsZxBxsDA==
-X-Gm-Gg: AR+sD12OE+E5cr5hbrVMGGbJMIoVr5Si37CMW8p4E1MPWXuTOdS4F5TXc6/iINqEgo0
- J7J/tZqlwT2kkbu6LCFEOPUp5AsZ+w52yRfY9tPt6TE/QosN9L71AIzC0INyWKzVYoO3TUojVNH
- eyoIaOhcWjtcMd8DhknXqixQ4x/J+f3IsDsZVb1isJZBuOBTSRXnSuzNsQ6nTnYnqPcDUf8qhxl
- tbu3jgBCjXcRo5DDmNCgsAxu0oGnEOkaNfDPF5zq5Lhc98fm0K0T97ipwT27PWyNaJwkuMNaQ8S
- uWHl9mr9Fa8wc3jAr2Uia+gtckKmFZJdVVfVh0K1NiDiWgkZptUSWzwKyrnIrJEoDg++MxLDxuY
- Pni8lbwY/nnFy6Wdy46TaZpUrFGv8ellYaVTikWRW+WfBPJfPSsYnHMPs1XybOyazGfHY
-X-Received: by 2002:a17:903:15c8:b0:2d3:c3b:c7cc with SMTP id
- d9443c01a7336-2d61a0308fdmr99996545ad.3.1787251306486; 
- Thu, 20 Aug 2026 11:41:46 -0700 (PDT)
-X-Received: by 2002:a17:903:15c8:b0:2d3:c3b:c7cc with SMTP id
- d9443c01a7336-2d61a0308fdmr99995855ad.3.1787251305868; 
- Thu, 20 Aug 2026 11:41:45 -0700 (PDT)
+ AHgh+RojEBNSJi55qS8/PvWQUsS1e5Ffj1J6i2SHDk8iGT8guLnKMzMbr+WcGHeNYcHNfQZXHHXLMWpaSvwd@nongnu.org
+X-Gm-Message-State: AOJu0YzdLrfnKs3CJQ7h2lGBuLXjsjxI/cezhFbCRCnRHdn2nWy5/PpY
+ DCmfBJhNJgfrYK1YLe3TN72sp+j3Ofnd3kEA0jgw0sE5FO8KaXgF8T/Y8+RnVfQzZIDTTDYJX39
+ JDiNIb0GpUL2haUvrBKoVM55i7DmuICfLz8eemHNwsqSKHFpm21ykXwTzHQ==
+X-Gm-Gg: AR+sD102P9okNix7ALOjpc656xXoVD6SQSBu9iFLpu+/VxS+VTxCE7zcGvCBcmpeNsn
+ hYondx80k3Eb1rtL2/R8Vgk+iPCoXNvLBIO3+ZnkWcR+8Jgf9+1JuC403w2CHv40aJzjtbyMFuz
+ W0oZD/flEo4nn29FI1OmW6onAPZMrtIr4oi+qEWL8YRaM0puFhNiuVkyhfXF7pGLL0FPY2Ao/g3
+ cK0XlTsKZFps5IQilsHCRbFnCCw/B63+knUDqRC064qmiGpZROvPlYFcM2mNkhXh8WvpND+kRnq
+ AhBRdq5nKJ03j2Arnamyn8MSg6gjiQ2qnW+tOSaX7L055ZtyY6hlUku1ratEGLVBG27DA5W/ffn
+ Chi9PKdki45duxfE47c8qc2szzxKNqFezzd7sv2kP0dSk4K0TrItlOIzN7N0nPdVWuZkk
+X-Received: by 2002:a05:6a20:c70a:b0:3c3:704d:57c4 with SMTP id
+ adf61e73a8af0-3cd3008be8amr984749637.12.1787251462462; 
+ Thu, 20 Aug 2026 11:44:22 -0700 (PDT)
+X-Received: by 2002:a05:6a20:c70a:b0:3c3:704d:57c4 with SMTP id
+ adf61e73a8af0-3cd3008be8amr984680637.12.1787251462042; 
+ Thu, 20 Aug 2026 11:44:22 -0700 (PDT)
 Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-327bf10b584sm31737324eec.16.2026.08.20.11.41.44
+ 5a478bee46e88-327bec30f49sm16896793eec.0.2026.08.20.11.44.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Aug 2026 11:41:45 -0700 (PDT)
-Message-ID: <2f891703-e57e-4f3d-a552-13b44de9027a@oss.qualcomm.com>
-Date: Thu, 20 Aug 2026 11:41:45 -0700
+ Thu, 20 Aug 2026 11:44:21 -0700 (PDT)
+Message-ID: <1d9ef45d-8d1b-45e5-b947-f87dab34fb4b@oss.qualcomm.com>
+Date: Thu, 20 Aug 2026 11:44:21 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/11] hw/intc: clear pending bit on l2vic de-assertion
+Subject: Re: [PATCH 04/11] target/hexagon: guard writes to unimplemented guest
+ registers
 To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Sid Manning <sidneym@quicinc.com>
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>
 References: <20260819013144.3264096-1-brian.cain@oss.qualcomm.com>
- <20260819013144.3264096-4-brian.cain@oss.qualcomm.com>
+ <20260819013144.3264096-5-brian.cain@oss.qualcomm.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260819013144.3264096-4-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260819013144.3264096-5-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: rG-dbEkBRDXU1brLx2LmK2s2OmEHY_bl
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDE0MCBTYWx0ZWRfX+bBa2efLFIsa
- YEodcxkE0TviE30HhTUcpAiroTqQmaOkYR7HcBjrDQQHArEvzLcYInO/1bVOVYbt+cIW0MmjwPv
- fYSCYdfBzkRJZfurSlnfWNDp8A9YpgY=
-X-Authority-Analysis: v=2.4 cv=T/O8ifKQ c=1 sm=1 tr=0 ts=6a874a6b cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDE0MCBTYWx0ZWRfXwAmdJxAWyUY4
+ 0UR/wwb7xCmtlbXpXX9pq/TkH1XfYI+cjkelo7FxGjoUsKxapwj6r3eqorCtX2mfglWRqNJJW8G
+ p7KSZmph/3kwck/6jKbLjIOGm1BhHPo=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDE0MCBTYWx0ZWRfX8OQzEDNm+mCj
+ EYc9V/yUxkidpovG9KYi8iaGh9Q5sK9xD00ojAgymqjet/zHcnIH/nLfnrIE/QxaARvyNg0hRYW
+ tiREyRwh1aQ0WozULen2E911AiojGqGcUQNjvWJSO8RiMbAxooh1QN+KIz8eVPKH6XcGmnpLFat
+ JuldMlQ484z5qZQXAzQ1TCgQyAe1CFbwj+7scZ+5VP2NvuOQlJ1EHpBeo/hkbg+HhBXXc/wxZ8W
+ 4VsGTIk8kQdZ/l9MPaBL+2wBN8EfckiOw2K5YWNEIioHuO4ZyZnmv4VBdVBjbRmpZ1+V6ofirs0
+ 8TDd2uuSQY0x8hozTf0hL5Rx/pVOMp3mP7WNdbtSH4F4tZ+7m1cx00QUie7rIt5PKLC2fpZHToh
+ ZTFjmG8LPi8YcAy/elJqkcO6tXoVxzBQc5DVjhuUaZF9yWwf/wv8nh1/V9dz9ufk1a8ZS91V7fm
+ cuh7pJ7MTWgA70vcXbA==
+X-Authority-Analysis: v=2.4 cv=Y7/IdBeN c=1 sm=1 tr=0 ts=6a874b07 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=kAVW4TL67sLhy5MMfsUA:9 a=QEXdDO2ut3YA:10
- a=uG9DUKGECoFWVXl0Dc02:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDE0MCBTYWx0ZWRfXztMvmr7YctE9
- 9dZV6UgWXFzqU54Zka2OBGCSY08ja9m0U0qDwjQBlb6lU/SD02TgB9HqARbIu+57QfkwfyavGA5
- 0Gq4Dcje9kCQazMSz+j5hssgpoRoPMpIG4p+XkJt0dsDSXVzL3EocxVFuWmY1FGpBuhuc14A2yL
- Dke8c1xQtyqI/day/v4nKKmDGoawN/Z4dMsjH/Vnj+mEOqRn/uDYkad5/FXuv/oXTY5VfYpIa31
- 2AvWKskxRt+8bh2IWGkB3eTuN8N/P0gqISwOMZcHYWfftSTL9FoXJbKsT6cwx8/E+WqXYUEp+Cv
- wGg9fNoarwqbks0ZLxyAo03uzUIIKe6qu0Txz2/81MYGthI83lMO1cqjqqyfXSEZqL5PEOSwKpp
- yI2VbjOQEu2euvgpMEjt5bs48YF4s/M1tt0gpGafCyVVhHCsFElNYzAyiGi/+CLMola2EwqmgYj
- uYZLZLERuh40DguG0PQ==
-X-Proofpoint-ORIG-GUID: rG-dbEkBRDXU1brLx2LmK2s2OmEHY_bl
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=igi6GqxGHG0Xb9lAMXwA:9 a=QEXdDO2ut3YA:10
+ a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-GUID: 1nJ3L2VSYLFnnMV8XoO2jHFcaugjq1HG
+X-Proofpoint-ORIG-GUID: 1nJ3L2VSYLFnnMV8XoO2jHFcaugjq1HG
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-20_01,2026-08-20_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015 bulkscore=0
- spamscore=0 adultscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ suspectscore=0 bulkscore=0 priorityscore=1501 malwarescore=0 adultscore=0
+ clxscore=1015 phishscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200140
 Received-SPF: pass client-ip=205.220.180.131;
@@ -157,19 +157,96 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/18/2026 6:31 PM, Brian Cain wrote:
-> From: Sid Manning <sidneym@quicinc.com>
-> 
-> l2vic_set_irq() clears a level-triggered source's pending bit on
-> de-assertion, so a source that drops before it is latched into
-> int_status is not spuriously re-delivered on the next ciad.
-> Edge-triggered sources (int_type set) keep the pulse semantics they
-> already have via SOFT_INT/set_irq(level=1).
+> Gate guest-register writes on greg_writable() in the generated code so
+> writes to gregs above G3 are dropped instead of dereferencing an
+> unallocated TCG temp.
 > 
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->  hw/intc/hex-l2vic.c | 2 ++
->  1 file changed, 2 insertions(+)
+>  target/hexagon/translate.h   |  7 ++++---
+>  target/hexagon/hex_common.py | 18 +++++++++++++++++-
+>  2 files changed, 21 insertions(+), 4 deletions(-)
 > 
+> diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
+> index 00de2b0d2ec..05425d92b29 100644
+> --- a/target/hexagon/translate.h
+> +++ b/target/hexagon/translate.h
+> @@ -97,9 +97,10 @@ bool is_gather_store_insn(DisasContext *ctx);
+>  #ifndef CONFIG_USER_ONLY
+>  static inline void ctx_log_greg_write(DisasContext *ctx, int rnum)
+>  {
+> -    assert(rnum <= HEX_GREG_G3);
+> -    ctx->greg_log[ctx->greg_log_idx] = rnum;
+> -    ctx->greg_log_idx++;
+> +    if (rnum <= HEX_GREG_G3) {
+> +        ctx->greg_log[ctx->greg_log_idx] = rnum;
+> +        ctx->greg_log_idx++;
+> +    }
+>  }
+>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+I'm not sure how this change is related to what is given in written
+message. The functional change here is that we'll ignore write, instead
+of asserting. Is that still expected to have a write on a wrong register
+anyway?
+
+If not, maybe we should at least log a guest_error instead of silently
+ignoring it.
+
+>  static inline void ctx_log_greg_write_pair(DisasContext *ctx, int rnum)
+> diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
+> index e33d43e3ce0..c180c19b092 100755
+> --- a/target/hexagon/hex_common.py
+> +++ b/target/hexagon/hex_common.py
+> @@ -1097,11 +1097,24 @@ def analyze_write(self, f, tag, regno):
+>          """))
+>  
+>  class GuestRegister(Register):
+> -    pass
+> +    def gen_check_impl(self, f, regno):
+> +        if self.is_written():
+> +            f.write(code_fmt(f"""\
+> +                if (!greg_writable(insn->regno[{regno}],
+> +                    {str(self.is_pair()).lower()})) {{
+> +                    return;
+> +                }}
+> +            """))
+> +        else:
+> +            f.write(code_fmt(f"""\
+> +                check_greg_impl(insn->regno[{regno}],
+> +                                {str(self.is_pair()).lower()});
+> +            """))
+>  
+>  class GuestDest(GuestRegister, Single, Dest):
+>      def decl_tcg(self, f, tag, regno):
+>          self.decl_reg_num(f, regno)
+> +        self.gen_check_impl(f, regno)
+>          f.write(code_fmt(f"""\
+>              TCGv_i32 {self.reg_tcg()} = tcg_temp_new_i32();
+>          """))
+> @@ -1121,6 +1134,7 @@ def decl_reg_num(self, f, regno):
+>          """))
+>      def decl_tcg(self, f, tag, regno):
+>          self.decl_reg_num(f, regno)
+> +        self.gen_check_impl(f, regno)
+>          f.write(code_fmt(f"""\
+>              TCGv_i32 {self.reg_tcg()} = tcg_temp_new_i32();
+>              gen_read_greg({self.reg_tcg()}, {self.reg_num});
+> @@ -1131,6 +1145,7 @@ def analyze_read(self, f, regno):
+>  class GuestPairDest(GuestRegister, Pair, Dest):
+>      def decl_tcg(self, f, tag, regno):
+>          self.decl_reg_num(f, regno)
+> +        self.gen_check_impl(f, regno)
+>          f.write(code_fmt(f"""\
+>              TCGv_i64 {self.reg_tcg()} = tcg_temp_new_i64();
+>          """))
+> @@ -1150,6 +1165,7 @@ def decl_reg_num(self, f, regno):
+>          """))
+>      def decl_tcg(self, f, tag, regno):
+>          self.decl_reg_num(f, regno)
+> +        self.gen_check_impl(f, regno)
+>          f.write(code_fmt(f"""\
+>              TCGv_i64 {self.reg_tcg()} = tcg_temp_new_i64();
+>              gen_read_greg_pair({self.reg_tcg()}, {self.reg_num});
+
 
