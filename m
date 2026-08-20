@@ -4,151 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72C6AC5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 22:17:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5EC6C5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 22:18:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxB4I-0005l9-6d; Thu, 20 Aug 2026 18:17:03 -0400
+	id 1wxB5C-0005vK-VM; Thu, 20 Aug 2026 18:17:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wxB49-0005kW-Gh
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 18:16:55 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wxB5B-0005uk-Sc
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 18:17:57 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wxB47-0007rS-Hg
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 18:16:53 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1wxB5A-0008Ew-7Y
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 18:17:57 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67KK7ZGg250333
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 22:16:49 GMT
+ 67KK7dKp3242372
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 22:17:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 2MPXZ7D/e9PSjB3nPi1GNR2NWNs0UUc/omjZdZZ+H+g=; b=dSCKNBwAcJL0Ez3z
- 1voo0IbEN5qRuHQP0Y0cHn8+DmrJIso1Lt9DyiMB9crcZ2XD9niS6rooHI4Qpnxz
- 3LS5PlwA5xFYNY+uFrCVDtBQSQyG07QJRpllMlwRdb3EzOoiF9SuciN/6gzaFeIW
- XdtjUDe9fa5r1qdtGizQi2aIWhmpWuC97PFrGudo6XU17nFIPm4CP070YMnCGvPK
- e3sp1Lg8XHVG0GMDAsRiTNK2Fucf1N2wdkXIIDNjEe+EF0XJiXZSJtaWUErHpZ1R
- CB5Ucs1d/II50e6W/okFMrg2oTJykvMaZ+rNlvn0AlMQigXTWRzYkYjxM78tFyiY
- v4eyAQ==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g5w49btug-1
+ O1DgHDdmWX02SUH2NBQJEeEj/Rl0+K/0+lthwEwT4gw=; b=Fx84ec0BU83KTlTW
+ bV8gGE1UmlbDwIr1E8ZfFqh4MbbfW7yCLAcaMyjI+7MFJII8T5a5AWKNA6kNEj5L
+ H98n3dcwVWPBxbrQa3U8TRhKeYDyRVhYDbPre+HrUtNjfHOORWWxo6vfO82weWSO
+ J0hes8c7gw/9Vi4NyJ/dbgE2sVMg7IuA3Hj8S1OzOEv3E7VuIJNd6vmvtVTMBINH
+ e8b+UBjntFEQ63EoKF41ExSeUrYPy95jpLn3eBqfnquHD5Q0LH/YOBtYMuaobwZg
+ ddomRc0bz1FPg3yeeUy/V+Lx4acIN5aK6RA5oCM38YMHhOauh6xSXqmUEoeFjGFd
+ tbTohA==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g5x05uja3-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 22:16:49 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-38dc085b0a7so521727a91.2
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 15:16:48 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 22:17:54 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-38f5ac7354dso399244a91.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 15:17:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787264208; x=1787869008; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787264274; x=1787869074; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=2MPXZ7D/e9PSjB3nPi1GNR2NWNs0UUc/omjZdZZ+H+g=;
- b=j3kK61arGsaU18QmXUmnvOOtK7Pkeua0/q8YqcB7uax69yH4YP61XeLA4/hFYfG/vB
- eObqF8sq1HPQGTyYV+UjxGh7NQ+TQ0BzYIfWlD0dnB62Df8qMHB3R3exoIMKk4xjuXrD
- XA3eJmhCps9b4KIgihxMe/P9ehqrTxdueDlXiDaTkL4GvdUHqC+Zx6ZZcBrn+RDVu2yq
- YzZUUIs1SFpZHPzMFQ4LUIlzI3Fh50QHELY2feqTbhuQ0KfbD3N5N2VAmVTEtArInFUq
- GO5XlV3HHIyhDSJz2x2oZottuj2IVcPYnopDVGu60o7LMsZcb77tS64/05junpOIpvq/
- /UFw==
+ bh=O1DgHDdmWX02SUH2NBQJEeEj/Rl0+K/0+lthwEwT4gw=;
+ b=BfmcLNJyNW5FA4PvkqF5eLeTrzfkjWk9TaRxPK2A9WXmWuRGgm5ThYffCrNyzPbfFY
+ +hdMjfQ4ZV4VPdH3ewfUb/HTwkA07ntMYs2VIrLlcYPia8KF0TDGnFgNAJl4PR+YFH79
+ oPPj3TX92MigaidFq+KSZS088vMyHyMkSnlydl4Le9nJDC0rBFb6VyWQPfiO8xIIawMc
+ cbAwuBT2CngyVIoedo0dpHLfH07K795EOViioeBFOrnLzKyLr+F9+uwCtEJbW4nTq7J0
+ GiXFk8xCQ50XfLtH7Re5qBUbsDwmC2fnx/uETuJ6CNjg0/hgZimuW8jAzxZ+A0dl0xZd
+ NYAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787264208; x=1787869008;
+ d=1e100.net; s=20251104; t=1787264274; x=1787869074;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=2MPXZ7D/e9PSjB3nPi1GNR2NWNs0UUc/omjZdZZ+H+g=;
- b=RfBqlSmFWte5HJn3DRrhXCQOqJlTMbyCC1+m+RS5KkewTVDmqDDiw9lK/FKsu+qTs3
- CNbW5SRdt5HJYvv5J/5Y9OEaH4TWa850IQ2RzghVFUOrQh13n29qcf5aXsYySubBB47Z
- 6UExDqeir0uBlwtoknaPx0GVrumc99zYGfqewk44i3n440gKi/1VeZ44PjtdruOUQjGA
- zrffLbN6Sv28uEtpvmBQAKJTq1w9fQm2eLmi/AhrzMhqy3ZQfsjgvIRII4YT6R4PfRhs
- hEqAJIWenKUFqGOO8ZX4mWEKMskO5Ipp+NR+Hh9xswi1JYywy9l6mF9L0lUIRNVhC3UP
- mUMQ==
-X-Gm-Message-State: AFuF++kInmdT081V7Itvwisr4w81oh/Tqp4Q15U2U2QpyHHmQI8waKOM
- gGfPUFxNI8HrJErWvg/0X6mGBFjw2PlI6JsSH00p+45FGfyIoLbRTaMpHDD2gKfBbzZae9zmIas
- UBAvqiYSXRzYkCh7NY7ZxuC3zlj+OgQ3P/QpRGjWGTuAchEB+kil9/i3VvQ==
-X-Gm-Gg: AR+sD10Hm+hewKRwNFr3o+stx0W/52qqb6uDnnhADWMQrU199ZeIIaADnNUy656eSac
- on4eKxEAwEByvaNK9XVezD0xZ1qrgk0EYlv5qkhQ3/z31YMaW7gL2ZudLOZoseRSnNYF4YIQ17s
- dIsg3V/ndCy2yMR3XjbmO1adiIB2FCwiiob2t5cIQ2/bLwbd1LVouYEA8cK0KAXh5ReqEyJLyiJ
- TOUl8pnf2ZX6hfViil9tP7oYyp1Degc1rTMHfm0cnsN3Cyvpe/lN75/OlL0U56EGWr+RaTTH9WI
- 2itingca8nrkl/OWLCXodIZAkSju/EpPbyovPEun3gXPjqjTYrXttwBtfmJLaTM45kqhkftxQbC
- IDpeqk/6UN5phD9JAjDYabQPbvC2XruTSEa8aNheFPE0PHQdGgd7eofLZlo62kR9sgDIS
-X-Received: by 2002:a17:90b:3d85:b0:395:4de0:b78f with SMTP id
- 98e67ed59e1d1-395c33ef91bmr3208102a91.1.1787264207252; 
- Thu, 20 Aug 2026 15:16:47 -0700 (PDT)
-X-Received: by 2002:a17:90b:3d85:b0:395:4de0:b78f with SMTP id
- 98e67ed59e1d1-395c33ef91bmr3207926a91.1.1787264206226; 
- Thu, 20 Aug 2026 15:16:46 -0700 (PDT)
+ bh=O1DgHDdmWX02SUH2NBQJEeEj/Rl0+K/0+lthwEwT4gw=;
+ b=mzFzepsNhzQI/QisvJs1TBN1UG/nV2s8wVuo2SapW7rmUcJKhxkZ7TkFXYqmNIyOGB
+ hYyBYTVGkRSHL1sxg4fGkNeYTnG+hNa+qeCAlMPLmrpmdXhqQDwaVr02tkB2f2pUYfDC
+ p2u3SbGbpJ1U/DoNNa+1Q5b95yUKPfoC9x7lyfasl2UnOV7X05bk1Dm8k87t54cOR4Wh
+ OXg7NQfMIbjvimuDavTZ8PQIWaM39W2KqoDzbEIdXLWeAjXYYWblqAEjjZXdM1Hz9ky9
+ SpOp9kzBTqsaAu17ReZmF9FkPQ4zrn93bfUNkkWECa+PpvZzfCPjUXSulkRRiXWP8jqo
+ d79w==
+X-Gm-Message-State: AFuF++nk5zIpi9e83CpozXyPCo5KtkBLSV8nq/DsbuDr+iSmNtUhPHMV
+ xzfoPDJc/8Ack1I4y4Z3B0Zz1I4JuDB8FwEquj440PHrKsS8tA9jf/Mc3rJ9MHDa99HoLJYuCyv
+ hywpstjvXNj1NzNdMwvw9T0Kv2D7I6JX8szwCEeRP6/JSJugfzhnOqIux1g==
+X-Gm-Gg: AR+sD13E/PZWhtJ76+vjjMSvqnsUrPPTTVeNIHeALBdFz8sF6yuSfdFHNche51uTz22
+ Ckq68ESdztm+9yqnpR8PIY/4zV3raYB6KFwefTWLwq1rzDWy2LPKBhTDXk5cgeHL7kJS7HqvV4X
+ V1h8mgPRpCsiSXVvC1Syh3MpfUCsQ++mEk6amgv496D3wGgC/RYbqkDOuNTBSLwZac4YtJ+9Kf1
+ Rad5okNcE6ynTTGGFkUUy+EDTgy0JZ6EMB285DiTqpFyzz6/OU2E/azFssXjLU30evBlG2Y2FM1
+ lBFLX9D4zgs+xLEN9kz3+d52Dme0oIgb88BcGthXN7LuPwHgUH43wwUwg7G65ldLYTb8XwtnT5B
+ f/NGxZShueo27HYxLObffYCGySPoqc/9w5q4crLxt/R/tx1hJNUPS2kSo/XxZtQza1erD
+X-Received: by 2002:a17:90b:4a81:b0:37d:f206:a2ac with SMTP id
+ 98e67ed59e1d1-395c33ec558mr2504089a91.7.1787264273889; 
+ Thu, 20 Aug 2026 15:17:53 -0700 (PDT)
+X-Received: by 2002:a17:90b:4a81:b0:37d:f206:a2ac with SMTP id
+ 98e67ed59e1d1-395c33ec558mr2503969a91.7.1787264273348; 
+ Thu, 20 Aug 2026 15:17:53 -0700 (PDT)
 Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ae14162sm18727395c88.9.2026.08.20.15.16.44
+ a92af1059eb24-1416ae5f1ffsm31415047c88.13.2026.08.20.15.17.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Aug 2026 15:16:45 -0700 (PDT)
-Message-ID: <0a4c3e34-574a-484c-8617-3af587f080fa@oss.qualcomm.com>
-Date: Thu, 20 Aug 2026 15:16:45 -0700
+ Thu, 20 Aug 2026 15:17:52 -0700 (PDT)
+Message-ID: <94e049b6-f144-4494-a089-2bef2251ca07@oss.qualcomm.com>
+Date: Thu, 20 Aug 2026 15:17:52 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v5 00/28] hw/arm/smmuv3: Support Secure state for SMMUv3
+Subject: Re: [RFC v5 05/28] hw/arm/smmu-common: Add security-aware address
+ space selector
 To: Tao Tang <tangtao1634@phytium.com.cn>, Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>
+ Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Chen Baozi <chenbaozi@phytium.com.cn>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Mostafa Saleh <smostafa@google.com>,
  Chao Liu <chao.liu@processmission.com>,
- Gustavo Romero <gustavo.romero@linaro.org>,
  Jim MacArthur <jim.macarthur@linaro.org>
 References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
+ <20260813162410.2805113-5-tangtao1634@phytium.com.cn>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
+In-Reply-To: <20260813162410.2805113-5-tangtao1634@phytium.com.cn>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDE2NiBTYWx0ZWRfXxezsLeWEjoZm
- 0cVhOpPKBpgEMzKg/lTmXV4F/JmLXw+1RLGRUxNE139Y75CvOgtui4ZHYruuTeEZ4+Bzhwjulo9
- vokqn+LQ8HpYGD08uOxj2tmKpuAvpc0=
-X-Authority-Analysis: v=2.4 cv=YP+vDxGx c=1 sm=1 tr=0 ts=6a877cd1 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-ORIG-GUID: KXFNu5QbHz1gL4XcZh0sCsAlrHFJCvFA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDE2NiBTYWx0ZWRfX5bWNv1L2+/p2
+ dLzn7T++vtl927cUTJw9cDlbo1M7KqITEgUJBfwbkss4yiwaoky+C639ZLeaXsWUcn4MES4vFCm
+ F+5BQ6CGzxQu/mC9JHYmb6Qxg2DOf4CxxtkvN4q5nE/d73IioLohTO0SsU+Aikq0Di8pDpan2IT
+ wgAaUcd4EAi6tpzy+jvRvESiI9ILzTeZ4IDWht75ew0KmNSOWDtsz6aly6uORRhEVui+DmjIi9C
+ hsZLRzE16QB+ZaFreWCG7cU+LR3/Wjbv59W0ZpJ0F7aYaIoFdfkiq7mC5sGyKDrviKM5m26E4rS
+ fTZXv3SHDur2TDaIfYdDyd2wHtpE5c23yPv+hYjqY3DAu0jgwGVMDwGew/9SYH/F/dgkVI6jfBf
+ avfp2U2v9rWwV6ofOU+6mfqUN0S2gA1Pxj+Obatpgn6fb3PvfGZ+w54WlU/HKEOI6LCl9Jpz94w
+ b/UmLpFhsVsj1jGHLqQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDE2NiBTYWx0ZWRfX7GoQupcFomCg
+ TnlUp87yReq0pl3YP9yKaIqeiWDeRr03uLBVCzUzW7zoiW8PGITALN+OCn4g688W1tH6Ay9MW0y
+ bGZzrFus32D7ppgYootOVDReSRbCfkk=
+X-Authority-Analysis: v=2.4 cv=VfPH+lp9 c=1 sm=1 tr=0 ts=6a877d12 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=VwQbUJbxAAAA:8 a=fgrLqfBXAAAA:8 a=KKAkSRfTAAAA:8 a=ZYi_vuD_AAAA:8
- a=ehYRL7wMAAAA:20 a=EUspDBNiAAAA:8 a=uVuSfXj6EEEykST30esA:9
- a=qcg49hLlgF0N60+LroqrWnV/Vu4=:19 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
- a=_Ge82aPy-h_wFa7gWU4u:22 a=cvBusfyB2V15izCimMoJ:22 a=BPQQxL4JNPAPRa8Tzepp:22
- a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-ORIG-GUID: J-YN_QbCGjIzLWQErbdcYcyaTCGnMCqA
-X-Proofpoint-GUID: J-YN_QbCGjIzLWQErbdcYcyaTCGnMCqA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDE2NiBTYWx0ZWRfXwJrWeWpDGQSq
- eFDDYeHLBb6yAMHCuIdQRW1ZIapySGAoabSeDlkLIvsfNMdxIPRtp3yT9wXdO9L0o2hltJmwj5J
- uGF/Pzb0LD5fR5AnHoAZRV5lkzbG4Wym4d3Ne5yTWUHRkC4ns9g7i7MsFUTnKhPL9SqOk1Ev5Tv
- KpbYhyULvzUmuuLbvoYERhQWKwfpzsg7ipwXxP2Hf6VJrkReCN0rZEOB0cthGqZ4LND1fuYOdhD
- zUisJ4H4TWKbCBUBcdQb2HXpg+zcIHQHSQt0yrO0zrgmUEsDN7F2LpJMjj4sbD7ea/sZBCKyWp5
- FPa89NDAcmDDorIS7qspp2Lur9UtJkT5zKkL6cGOCreW8oD31gqhmvCjR2t0zkvL5lYdssHW2TX
- 9HlJ3XvD9irQlAh/XeFksK4ilpJjKS8qX3W5S7hq0hxMWane+mgpcsF8W5xQUt8CIS3NdMxvb1Y
- uTX0o1+SIaPH5IuBeCQ==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=fgrLqfBXAAAA:8 a=EUspDBNiAAAA:8 a=a6Ko7388s_gqmAnDnXwA:9 a=QEXdDO2ut3YA:10
+ a=uKXjsCUrEbL0IQVhDsJ9:22 a=_Ge82aPy-h_wFa7gWU4u:22
+X-Proofpoint-GUID: KXFNu5QbHz1gL4XcZh0sCsAlrHFJCvFA
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-20_02,2026-08-20_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 bulkscore=0 adultscore=0 impostorscore=0
- lowpriorityscore=0 priorityscore=1501 phishscore=0 clxscore=1015
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608200166
-Received-SPF: pass client-ip=205.220.168.131;
+ spamscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0 clxscore=1015
+ priorityscore=1501 suspectscore=0 malwarescore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200166
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,112 +160,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/13/2026 9:15 AM, Tao Tang wrote:
-> Hi all,
+On 8/13/2026 9:24 AM, Tao Tang wrote:
+> Introduce SMMU_SEC_SID_S to represent SEC_SID == 1, meaning Secure. And
+> then provide smmu_get_address_space, a SMMU instance-based address space
+> selector. The helper returns the per-device memory or secure-memory
+> AddressSpace selected by SEC_SID.
 > 
-> This is v5 of the Secure SMMUv3 series.
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> ---
+>  hw/arm/smmu-common.c         | 15 +++++++++++++++
+>  include/hw/arm/smmu-common.h |  3 +++
+>  2 files changed, 18 insertions(+)
 > 
-> Many thanks to everyone who reviewed the earlier versions. This version contains
-> 28 commits in total. Only one patch touches hw/pci (patch #23); the remaining
-> patches are confined to the Arm SMMUv3 model. Also some patches in v4 have been
-> merged into the mainline QEMU tree, so the v5 series is now smaller than v4.
-> 
-> Secure Stage 2 is not implemented. Secure STEs which enable Stage 2 are
-> rejected with C_BAD_STE. Realm and Root programming interfaces are outside the
-> scope of this series.
-> 
-> Commits layout:
-> ---------------
-> The commits are roughly grouped as follows:
-> 1. (#23, hw/pci only) Add a PCIDevice "sec-sid" property so boards can mark a
->   device's SEC_SID (system integration knob).
-> 2. (#1-2, #24-27) Core data-structure and plumbing refactors.
-> 3. (#3-8) Introduce SEC_SID through caches, notifiers, and helpers.
-> 4. (#9-12) Page table walk related updates (e.g. NSCFG/PTE helpers).
-> 5. (#13-15) EVTQ/CMDQ handling and invalidation paths.
-> 6. (#16-22) MMIO/register access checks and architectural corner cases.
-> 7. (#28) A temporary [NOT-MERGE] commit used with Hafnium to exercise
->   secure-bank register access.
-> 
-> 
-> Main updates:
-> -------------
-> - (#23, hw/pci only) Add a "sec-sid" property to PCIDevice and consume it from
->   the SMMU in #24 to select the security context and validate capabilities.
-> 
->   @Michael: could you please review the hw/pci change
->   ("hw/pci: Add sec-sid property to PCIDevice") and confirm this kind of
->   system-integration property is acceptable for the PCI subtree?
-> 
->   For context, I previously posted this as a standalone patch [1]:
->   [1] https://lore.kernel.org/qemu-devel/20251211102729.227376-1-tangtao1634@phytium.com.cn/
-> 
->   The commit in this v5 series is an updated version based on Pierrick's
->   feedback (notably switching sec-sid to a string property). We also discussed
->   the need for this knob as a prerequisite for accurately modelling SMMU secure
->   state here [2]:
-> 
->   [2] https://lore.kernel.org/qemu-devel/4870b7df-4cb3-457e-9a18-87f3558adf09@linaro.org/
-> 
->   We do need a stable way for boards to statically mark devices that may issue
->   Secure transactions.
-> 
-> other updates:
-> - Drop the CR0 and CFGI_CD fixes which are already upstream.
-> - Select MemTxAttrs and AddressSpace on demand from SEC_SID and keep the
->   programming-interface namespace in the configuration and IOTLB keys.
-> - Route CMDQ, EventQ, IRQ and GERROR handling through the originating
->   programming-interface bank.
-> - Tighten MMIO RAZ/WI, writability and reserved-bit handling.
-> - Reject unsupported non-NS IOMMU notifier registration.
-> - Make secure-impl an on/off/auto property, resolve auto from the Secure
->   AddressSpace, and require Stage 1 support when enabled.
-> 
-> 
-> Testing notes:
-> --------------
-> - Testing MMIO accesses
->   The branch currently contains one commit explicitly marked [NOT-MERGE]. It is
->   only used to cooperate with Hafnium to exercise and validate secure-bank
->   register read/write paths in a small, reproducible setup as described in [3]:
->   [3] https://hnusdr.github.io/2025/08/09/Test-Secure-SMMU-with-Hafnium-ENG/
-> 
->   This commit is not intended for upstream and will be dropped before posting
->   the final mergeable series.
-> 
->   For reference, the Hafnium test logs show the SMMU being initialized
->   successfully:
-> 
->   INFO: Loading VM id 0x8001: op-tee.
->   INFO: Loaded with 4 vCPUs, entry at 0xe300000.
->   INFO: Hafnium initialisation completed
->
+> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+> index 8e40ba603d3..54a6a9f4d62 100644
+> --- a/hw/arm/smmu-common.c
+> +++ b/hw/arm/smmu-common.c
+> @@ -30,6 +30,21 @@
+>  #include "hw/arm/smmu-common.h"
+>  #include "smmu-internal.h"
+>  
+> +AddressSpace *smmu_get_address_space(SMMUState *s, SMMUSecSID sec_sid)
+> +{
+> +    switch (sec_sid) {
+> +    case SMMU_SEC_SID_NS:
+> +        return &s->memory_as;
+> +    case SMMU_SEC_SID_S:
+> +        g_assert(s->secure_memory);
+> +        g_assert(s->secure_memory_as.root);
 
-If anyone wants to reproduce it, you can file a precompiled archive
-(with optee + hafnium):
+This second assert is not needed as we know it was initialized in realize.
 
-$ wget
-https://github.com/p-b-o/qemu-linux-stack/releases/download/build/optee-secure-smmu-10674a1.tar.xz
-$ tar xvf optee-secure-smmu*
-$ ./run.sh ./build/qemu-system-aarch64
- With current master branch:
-INFO: Initializing Hafnium (SPMC)
-...
-ERROR: SMMUv3 does not implement secure state
-ERROR: SMMUv3: Failed to initialize driver
-Panic: Could not initialize IOMMUs.
+> +        return &s->secure_memory_as;
+> +    case SMMU_SEC_SID_NUM:
+> +        g_assert_not_reached();
+> +    }
+> +    g_assert_not_reached();
+> +}
+> +
+>  /* IOTLB Management */
+>  
+>  static guint smmu_iotlb_key_hash(gconstpointer v)
+> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
+> index 6ea40f6b074..9d6e2d3038f 100644
+> --- a/include/hw/arm/smmu-common.h
+> +++ b/include/hw/arm/smmu-common.h
+> @@ -43,6 +43,7 @@
+>  /* StreamID Security state */
+>  typedef enum SMMUSecSID {
+>      SMMU_SEC_SID_NS = 0,
+> +    SMMU_SEC_SID_S,
+>      SMMU_SEC_SID_NUM,
+>  } SMMUSecSID;
+>  
+> @@ -188,6 +189,8 @@ struct SMMUBaseClass {
+>  #define TYPE_ARM_SMMU "arm-smmu"
+>  OBJECT_DECLARE_TYPE(SMMUState, SMMUBaseClass, ARM_SMMU)
+>  
+> +AddressSpace *smmu_get_address_space(SMMUState *s, SMMUSecSID sec_sid);
+> +
+>  /* Return the SMMUPciBus handle associated to a PCI bus number */
+>  SMMUPciBus *smmu_find_smmu_pcibus(SMMUState *s, uint8_t bus_num);
+>  
 
-With this series applied:
-INFO: Initializing Hafnium (SPMC)
-...
-INFO: Arm SMMUv3 initialized
-...
-INFO: Loading VM id 0x8001: op-tee.
-INFO: Loaded with 4 vCPUs, entry at 0xe300000.
-INFO: Hafnium initialisation completed
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-Tested-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-
-Regards,
-Pierrick
 
