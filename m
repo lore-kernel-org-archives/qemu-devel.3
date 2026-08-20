@@ -4,62 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C0B2C5DF82
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 06:03:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D16AC5DF82
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 06:14:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwvrr-0007Jx-Kv; Thu, 20 Aug 2026 02:03:11 -0400
+	id 1www2V-00028b-C8; Thu, 20 Aug 2026 02:14:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1wwvrq-0007Ji-J8; Thu, 20 Aug 2026 02:03:10 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dlemoal@kernel.org>)
- id 1wwvrn-0008Ma-OQ; Thu, 20 Aug 2026 02:03:10 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 3821643D1A;
- Thu, 20 Aug 2026 06:03:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28601F00A3A;
- Thu, 20 Aug 2026 06:03:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1787205786;
- bh=I54/khN16Xlie2DX6X482I1h4axFgncNGgp+dI3x8cg=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=HDf3gWlA4mS5oKu2gkUK1oLYjHeV16Np64hMga9NqsCLymFeB/r/pveubY8aQGvyn
- Ia49l0zaV9NkifQ9q9FFH8vUfK89+cXw/Zh7SUM/iT3NajpGfaioWJ5u2U8QKqV1Iw
- D0GYzQu6b7EN3sauYqw1Lq9pyWEiGj9+poT3U5NXq9A62zz3B1sFif43E7K6CeKLFu
- w1PE4UXiwEwFG1wl42glod0oKSgOT5YjkQRrVBhzXC33ewUvt8ZDnirEohU4OhWX5K
- sKoxMo9mb/RGWTUxhdqxhSugW6/43DAmgZEVO3EPDhcZfTAFqb3O2vwqT0wwFwA6x2
- gxdvx7WEtbiLQ==
-Message-ID: <c5c4c68f-a8ad-4f1f-852f-c53c0141f836@kernel.org>
-Date: Thu, 20 Aug 2026 15:03:03 +0900
+ (Exim 4.90_1) (envelope-from <fre3dm4n@gmail.com>)
+ id 1www2S-00027b-Vk
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 02:14:08 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fre3dm4n@gmail.com>)
+ id 1www2R-0002aY-Eb
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 02:14:08 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-84e3007a2b7so1485810b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 23:14:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1787206446; x=1787811246; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ge48iWvqQuweSPFBnOAGMpJHsKcBn/Ek99Lc6vdvC7E=;
+ b=EIq5z9KIDiQ31yUUfdvhLL4yxJpk0Bp6v8kp4NVqSZhXhyczl96+UtNg9HoLGdRzjj
+ 8BXp7NRfAeC6WGSMyuI1WnUMmt38z2/fLRxbaea9epfKbtgB520vVJHiCCCkhXZv6v2c
+ 5MwsKn4zopqFxzH0BxWw2nmf8n11+MZ4xAF8BP3HqwvRCeCe7heYO/kgt1Vs3CeIP0hw
+ LqQIP4uO/fCsBPsuEbb0D8i/86BKic0Z+NguG+R80QVHAdvHorp2GTW5tlniQC6FjBe6
+ uW/OuPuOV93UoCO3uLg0fOH/VPSx9ebNu1j4nbfEebnxsQp6w+J6bk08DWphT59Z8sn+
+ rWPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787206446; x=1787811246;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=ge48iWvqQuweSPFBnOAGMpJHsKcBn/Ek99Lc6vdvC7E=;
+ b=AjPMsr6ED8gLsUKwL+eAs6/kpEWLQziyIE/sjj3wlUKSdXmJR7DLN0MI3oIWUQQW9f
+ eXpsK7pzkO4NSDM0lRwROVXj1l2JZmnqwYL31k52i5a0y7u2mqzVV3gmmPPp5X9Qh0XA
+ TntAlO2h6zcpZn80c7WnAtPevQ+B2i2yEmBWHn3ncwz3MMC9C4NLTykpHuNqDcSU/Ur9
+ DTV/1FSfQntVQ0d+Qa1w43kdCPm4pxDIjkFdi4vrLzAdzbiM92y/LfLBN6QZc7D0tmTs
+ afwa9EZpPevqJmwAQ72XvKTz/kSXNGYdJ+NmdUJzeXkEVKOIhO/yRToe7wydU/ZyfN0O
+ Y6Og==
+X-Gm-Message-State: AOJu0YxBH4/HBUVTbdbdK0dOROY5IAcObs+h8Iwi0kDyocn1nJ8GatQS
+ gd0/vdeVYHohyoB9bSQXuEwuHvQKu14FPKvH+jTZuZwPLOnShoxXSmudgbMefMqLLCLaHw==
+X-Gm-Gg: AR+sD12XUDTYrc9CEirfvDzRDF8y0TOH/Q0oAfC+otPJAq5l5B/ClQAHTy2UmLREVck
+ f4FpIKA6EYp0P+8n7bqA5ZOwGeF6x2MNw9t8nRn+Tb2zu0Uk93MYB/A0avPW/TqZfzNFsBuNuZL
+ 05HSLhEXgYv60zPXEiqrVBpaocQlsKSykOu/jTTcbIcaM6OjS7vRpSKtE6dl0uClKmVZcY1pzlD
+ WZNFe+8trbvxfcTuwXVwvwj5edACHPMMoRt4nQdMuTz9vhMz0P7FTONRONBe2zB2Ks294wpr8hJ
+ 0KG8uGhgLByfejxodesm7/zABO6xyiv3P4nc2nQGTvUc+e93Sty93lZSWTWOygAic8NMtQrU24n
+ SqgSAdUyUrRaVQ9pNMhRa88yxE/TK1Z4Xq501fl0BZpwxqBEdV9kMZRoJxo/B4fupBz7tdEWMbv
+ HmgB7abJ+EeLpsJjKTRlt6NbVw6HyE+4QRB4tzlNvJ4a9jyfpz6ycNIvdZ0LaDI4E=
+X-Received: by 2002:a05:6a00:189c:b0:84f:b01d:3693 with SMTP id
+ d2e1a72fcca58-851d39419a7mr16069430b3a.15.1787206446026; 
+ Wed, 19 Aug 2026 23:14:06 -0700 (PDT)
+Received: from 6a8281486e01 ([183.241.215.198])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-851d3640dd4sm1260483b3a.41.2026.08.19.23.14.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Aug 2026 23:14:05 -0700 (PDT)
+From: Saul Freedman <fre3dm4n@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, mtosatti@redhat.com, kvm@vger.kernel.org,
+ Saul Freedman <fre3dm4n@gmail.com>
+Subject: [PATCH RFC 1/1] target/i386: skip ICEBP before reinjecting #DB
+Date: Thu, 20 Aug 2026 06:13:55 +0000
+Message-ID: <20260820061355.196465-2-fre3dm4n@gmail.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260820061355.196465-1-fre3dm4n@gmail.com>
+References: <20260820061355.196465-1-fre3dm4n@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] virtio-blk: check the write granularity of writes to
- sequential zones
-To: Niklas Cassel <cassel@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-Cc: Sam Li <faithilikerun@gmail.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260819191031.3001633-1-cassel@kernel.org>
- <20260819191031.3001633-3-cassel@kernel.org>
-Content-Language: en-US
-From: Damien Le Moal <dlemoal@kernel.org>
-Organization: Western Digital Research
-In-Reply-To: <20260819191031.3001633-3-cassel@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=dlemoal@kernel.org;
- helo=sea.source.kernel.org
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=fre3dm4n@gmail.com; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,79 +100,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/20/26 04:10, Niklas Cassel wrote:
-> All VIRTIO_BLK_T_OUT requests issued to sequential zones and all
-> VIRTIO_BLK_T_ZONE_APPEND requests must have an offset and a data size
-> that are multiples of the write granularity reported by the device
-> (virtio 1.4, 5.2.6.1), and a violation is reported as
-> VIRTIO_BLK_S_ZONE_UNALIGNED_WP (virtio 1.4, 5.2.6).
-> 
-> Neither request type was fully checked. Zone appends validated only the
-> offset, while writes were not checked at all.
-> 
-> Check the size of the appended data, and both the offset and the size of
-> a write, against virtio_blk_write_granularity(), so that every request
-> the device accepts is one that the driver was told is valid. Writes to
-> conventional zones keep no alignment constraint beyond the logical block
-> size. The write path performs the check after virtio_blk_sect_range_ok()
-> so that the zone index derived from the guest supplied sector is known to
-> be in range.
-> 
-> Signed-off-by: Niklas Cassel <cassel@kernel.org>
-> ---
->  hw/block/virtio-blk.c | 24 +++++++++++++++++++++++-
->  1 file changed, 23 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-> index ef5581c1e6..b1be0e9eda 100644
-> --- a/hw/block/virtio-blk.c
-> +++ b/hw/block/virtio-blk.c
-> @@ -514,7 +514,7 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
->      if (append) {
->          uint32_t wg = virtio_blk_write_granularity(s);
->  
-> -        if ((offset % wg) != 0) {
-> +        if ((offset % wg) != 0 || (len % wg) != 0) {
+KVM handles an ICEBP trap itself when userspace debugging is disabled:
+it advances RIP and queues #DB for delivery to the guest.  When hardware
+breakpoints are enabled, KVM instead reports the #DB to userspace before
+advancing RIP.
 
-uint32_t wg_mask = virtio_blk_write_granularity(s) - 1;
+QEMU currently reinjects that event without advancing RIP, so the guest
+returns to ICEBP and traps again indefinitely.  KVM_EXIT_DEBUG does not
+preserve KVM's exact ICEBP classification, but ICEBP has no mutable DR6
+cause bits and is a one-byte opcode that may be preceded by instruction
+prefixes.  Use those properties to recognize the instruction, advance RIP
+past its complete encoding, and reinject the trap-like #DB.
 
-if (offset & wg_mask || len & wg_mask)
+Also convert the DR6 value reported by KVM_EXIT_DEBUG to the exception
+payload form expected by KVM_SET_VCPU_EVENTS.  Clearing the active-low
+bits leaves breakpoint, single-step, task-switch and RTM payload bits
+unchanged.
 
->              *status = VIRTIO_BLK_S_ZONE_UNALIGNED_WP;
->              return false;
->          }
-> @@ -903,6 +903,28 @@ static int virtio_blk_handle_request(VirtIOBlockReq *req, MultiReqBuffer *mrb)
->              return 0;
->          }
->  
-> +        if (is_write) {
-> +            BlockDriverState *bs = blk_bs(s->blk);
-> +            int64_t offset = req->sector_num << BDRV_SECTOR_BITS;
-> +            uint32_t wg = virtio_blk_write_granularity(s);
-> +
-> +            /*
-> +             * Both the offset and the size of a write to a sequential zone
-> +             * must be a multiple of the write granularity reported by the
-> +             * device. Conventional zones are not constrained. The zone index
-> +             * is derived from a guest supplied sector, so this must come after
-> +             * virtio_blk_sect_range_ok() has bounded it.
-> +             */
-> +            if (bs->bl.zoned != BLK_Z_NONE &&
-> +                ((offset % wg) != 0 || (req->qiov.size % wg) != 0) &&
-> +                !BDRV_ZT_IS_CONV(bs->wps->wp[offset / bs->bl.zone_size])) {
-> +                virtio_blk_req_complete(req, VIRTIO_BLK_S_ZONE_UNALIGNED_WP);
-> +                block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_WRITE);
-> +                g_free(req);
-> +                return 0;
-> +            }
-> +        }
-> +
->          block_acct_start(blk_get_stats(s->blk), &req->acct, req->qiov.size,
->                           is_write ? BLOCK_ACCT_WRITE : BLOCK_ACCT_READ);
->  
+The fix was tested on Intel VT-x with a real Linux guest executing a
+kernel-mode ICEBP instruction while an unrelated hardware breakpoint was
+installed through QEMU's GDB stub.
 
+Signed-off-by: Saul Freedman <fre3dm4n@gmail.com>
+---
+ target/i386/kvm/kvm.c | 62 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 61 insertions(+), 1 deletion(-)
 
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 644c45f..c02a155 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -6240,6 +6240,48 @@ void kvm_arch_remove_all_gdbstub_hw_breakpoints(void)
+ 
+ static CPUWatchpoint hw_watchpoint;
+ 
++static int kvm_debug_exit_icebp_len(CPUState *cs, CPUX86State *env,
++                                    const struct kvm_debug_exit_arch *arch_info)
++{
++    int offset;
++
++    if (arch_info->exception != EXCP01_DB ||
++        arch_info->dr6 & ~DR6_FIXED_1) {
++        return 0;
++    }
++
++    /* An x86 instruction is at most fifteen bytes, including prefixes. */
++    for (offset = 0; offset < 15; offset++) {
++        uint8_t opcode;
++
++        if (cpu_memory_rw_debug(cs, arch_info->pc + offset,
++                                &opcode, sizeof(opcode), false) != 0) {
++            break;
++        }
++
++        if (opcode == 0xf1) {
++            return offset + 1;
++        }
++
++        switch (opcode) {
++        case 0x26: case 0x2e: case 0x36: case 0x3e:
++        case 0x64: case 0x65: case 0x66: case 0x67:
++        case 0xf0: case 0xf2: case 0xf3:
++            continue;
++        default:
++            if ((env->hflags & HF_CS64_MASK) &&
++                opcode >= 0x40 && opcode <= 0x4f) {
++                continue;
++            }
++            break;
++        }
++
++        break;
++    }
++
++    return 0;
++}
++
+ static int kvm_handle_debug(X86CPU *cpu,
+                             struct kvm_debug_exit_arch *arch_info)
+ {
+@@ -6280,13 +6322,31 @@ static int kvm_handle_debug(X86CPU *cpu,
+         ret = EXCP_DEBUG;
+     }
+     if (ret == 0) {
++        uint64_t exception_payload = arch_info->dr6;
++
+         cpu_synchronize_state(cs);
++
++        if (arch_info->exception == EXCP01_DB) {
++            int icebp_len;
++
++            icebp_len = kvm_debug_exit_icebp_len(cs, env, arch_info);
++            if (icebp_len != 0) {
++                env->eip += icebp_len;
++            }
++
++            /*
++             * KVM_EXIT_DEBUG reports an architectural DR6 image, while
++             * exception payloads use the VMX pending-debug format.
++             */
++            exception_payload &= ~DR6_FIXED_1;
++        }
++
+         assert(env->exception_nr == -1);
+ 
+         /* pass to guest */
+         kvm_queue_exception(env, arch_info->exception,
+                             arch_info->exception == EXCP01_DB,
+-                            arch_info->dr6);
++                            exception_payload);
+         env->has_error_code = 0;
+     }
+ 
 -- 
-Damien Le Moal
-Western Digital Research
+2.55.0
 
