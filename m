@@ -4,107 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77D4CC5DF86
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10DE7C5DF85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:52:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx5yy-0004mw-DW; Thu, 20 Aug 2026 12:51:12 -0400
+	id 1wx5zC-0005j3-KZ; Thu, 20 Aug 2026 12:51:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5yk-0004LE-W6
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wx5z5-0005Tx-Of
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5yh-0005WL-W2
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:50:58 -0400
+ id 1wx5z3-0005ep-Ko
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787244655;
+ s=mimecast20190719; t=1787244676;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Vc6p2d2qQruEsDFEmVNNYwOdKQZR2T0jPEMA3rc8Oew=;
- b=IdS7AxFSGic7o1rWIfxxtQVhdsxokLr6hTEND7KUz5+VhISmkJjk2vrCCyZosZOiDHZqDC
- efjksqaE8FTdzw+HiOaTtBtqmW/isXDtLtxt9M/SGzvnfuGQvBXyCHT6TbNHNHJ54FWhnX
- +zta0zq5EV6WxNkSbL+oef++3NjDZUk=
+ bh=h7zYr8kpZYKg21q1pd5cKDA8VPO1ZSHlqsrFeP9oTww=;
+ b=HPQlGQ+C8a/ScQvkNZL9APFB4j5DEYkqyPmXJpaL+HfCzsDtF4Racvp8HxrrVxLX0ax3OT
+ KUiVSsZuh3MgWJBFMAx9odTuVgzQE4G/0axfLG4VNp/a6rerKfGGoWDzroCqStO/dezgw6
+ T+44ZMI71kAyC4vkkydvYZbtfvGTDVc=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-498-ra5P0GmcPC-nzT1LZ4Ui2Q-1; Thu, 20 Aug 2026 12:50:49 -0400
-X-MC-Unique: ra5P0GmcPC-nzT1LZ4Ui2Q-1
-X-Mimecast-MFC-AGG-ID: ra5P0GmcPC-nzT1LZ4Ui2Q_1787244648
+ us-mta-669-xLQvaybqNJyAy4xd64IQGw-1; Thu, 20 Aug 2026 12:51:14 -0400
+X-MC-Unique: xLQvaybqNJyAy4xd64IQGw-1
+X-Mimecast-MFC-AGG-ID: xLQvaybqNJyAy4xd64IQGw_1787244673
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490a767b782so265255e9.2
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:50:48 -0700 (PDT)
+ 5b1f17b1804b1-490a767b782so267875e9.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:51:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787244648; x=1787849448; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787244673; x=1787849473; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=Vc6p2d2qQruEsDFEmVNNYwOdKQZR2T0jPEMA3rc8Oew=;
- b=cRGC/bHDZzRvYHJB4dhl8C6b7dFhV77MUuQuAY3cRELQdu0/7gvffCcucW5AUQZ9Tv
- krhyihBHdViwrSWPK5QHIdOpiQpQe06lsZ7tWkAbZRu8DIHVXRLunrpvxmq8zSjZUuzb
- Kxeq4domsI4rIFvVS4RihlVIMDAzKtCJfOn/Vs0oZmbWWsaAfdW/XlUu084bdtctQr6a
- 2QsI33rEhi6Fin13BAd3nB3Mrwnm1LMTvXaHd81gITjGwCXMNtTGT8/0qB0I5/0oPgXl
- ckL/J/5krf7mGxh9ooijY09NRwNXs0itl/6iFnKY4C9PwzJ2UjIunCdyAJ7xbeRm7v9Q
- 96/Q==
+ bh=h7zYr8kpZYKg21q1pd5cKDA8VPO1ZSHlqsrFeP9oTww=;
+ b=TpCNlnZZ3zaL8Vn2mn0ThrgMuAqbJrnof/OOcQyntACOYwLvKpN6yhZ5Skl9X4gZwm
+ eUL2Aj/t7sfqexff1i1oOfEmI3sfC05O2GWVxMVZC7CxUa9gXlV/0ksPDPDnZ6GpnGde
+ ja+U78zj0uA/lWCcq/x5gsRJ/F2md3Rck5MpZGGyQlfaOitTh61VWVytqC0OhrM7KKVR
+ BikbyrE2tpopkI7BY/Q0ecHiCn9yZ6flhWqaBlN0OFctplvnKVf0bKZp9z8KJaeQqdJL
+ vDEq//EbOEexd06wpm/Yr6M43twQ7CPBv2fubL1nfZZxwYOBh3q1GX065CLh1UJOTRS3
+ hnFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787244648; x=1787849448;
+ d=1e100.net; s=20251104; t=1787244673; x=1787849473;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=Vc6p2d2qQruEsDFEmVNNYwOdKQZR2T0jPEMA3rc8Oew=;
- b=WSB9ZHG0d1fNIvk9xW0zDWleWe3ofuySze4yLjDEAHgTbOvNVJIpyeoje+7+rtVGG4
- 0J3FxkYr8V//lVPlkLup338yzyy9yihzjRhRfzyneUDaOjHiyNpm26c7W5JPdnBXPIT7
- 3ClHrqK/53Y+tgJ8dSraBoKvL96l3xdj12VnGTS+HC8IrVWYKc48lNfwM2PT0PyjyWGE
- Jxky4XMmDMizKc+Q46fRGTquRJ6RSiCAl/y9JezCDaeFYGeR+XZSKzxKR2bPkGvJEE3K
- FFmTYNUZFngMDi5rsPj0Fq4rAE4cL9mWJJqAH5xM7PTGFzdB1ukHa7fzOOcW3fe72k0v
- 0ukw==
-X-Gm-Message-State: AOJu0YyezmubbeRzvGTEms0U13XOCxQlhbcqDHdqAjToOfQNTl8YY/3v
- JDVOPd0LgMHA89N8Lm8o1B67SAv2XM1zcidFRf9zrSch7s9uXgxiD5ABvWxlfls0Yq4OQ/mdit3
- MCeBbg5BtISH96HJ/k1OuhY9XvFIvOINMKyluLYn4O4WHXRa+CXkqPO5SggmeaVX1OVuxF1Dk6l
- 6vg1jeHtNyOccMciW6Iz428UKNH8jdOroIes/+3J0c
-X-Gm-Gg: AR+sD13+J8YyLw2G7zGUSSlVWeZskVMy3gWs4NTav/YyinqFUVc8fl+d1l0jd3puevE
- 3YMniXAD+7Yhzh69ZSjQi8OeuoB9gVnzzb08CiB3OCYXFxJyuwgRu5X/4qD2EeFEnVrtMXGXUP+
- BoXLmTgMd2dzRvCcJbf0MeckdEXjSoANulRvWnN1k9hGmfq8SSpqCiAPofncq5jqgfYj8uPyMos
- B/6ie1LuCiW4rJPlOe6tRIq1AsnrCFf9hZqXVPEz9BizoVb3gbXy+cnQVruq5kderqDHFw5UVEl
- xHlLVvwE0c4NlTpVJID5Nvy2tlL8I0A4sGSLePfpGm0pXZ/QOnK5pwseTrjs8DfzZUfB+UoKOg+
- wjS3O58RLqlGxXs7OchJK2qRG9yTUPrSL3/W64/e/NNW43y1SZxlqbWPWCcMo6z/6MpkVmSSACn
- kprxI=
-X-Received: by 2002:a05:600c:4704:b0:499:9069:c2c9 with SMTP id
- 5b1f17b1804b1-499b84613fcmr2687515e9.11.1787244647683; 
- Thu, 20 Aug 2026 09:50:47 -0700 (PDT)
-X-Received: by 2002:a05:600c:4704:b0:499:9069:c2c9 with SMTP id
- 5b1f17b1804b1-499b84613fcmr2686585e9.11.1787244647185; 
- Thu, 20 Aug 2026 09:50:47 -0700 (PDT)
+ bh=h7zYr8kpZYKg21q1pd5cKDA8VPO1ZSHlqsrFeP9oTww=;
+ b=UL+71jH39urWT3jtmOmpuQ6iPO1zA0DXktN7yekDjUZWc/IOiClTG+nk/OR8TC35uE
+ p2ipeJStJK6lhPXxnkJs+zcEBj2DY9JStmB9wbkGLwQcRwsk7UvXe6q/++wamP6y1YBN
+ BwtFlDmly9wkLPPqK+jjQJiG8+h/veTwqmQe6J4b4wF13Y7wJeFw7dfBUibDdiEbKO+k
+ XpOffFQl8GtaEUDDrReomJ51k4+hqy+NDMZV0nxBbk3GBCFoIZ8Iy+GA8miJvisc6U30
+ xEFNuYLxTYUnTv6GnHZY9JTyQloDancXWx5mQGjz7EM3kCRMsX0Xp//ffKtWMuV8tsz/
+ 395A==
+X-Gm-Message-State: AOJu0YwvRQF602/oFAYk1tUwvfgJOSGTt8/toEdskeS0T4Be548ezKH8
+ +ePj3aVBSSOLruGLhz1wyWkqOkc7iBPY8lMi6Um+Wsj26OhHbYcoBzkYMnsVZhjT60hsR1lYwMA
+ 8kA4vM0v3sOd/kJy21hwBiBcVhozPPvd8p6ffNaiIc964ROymqxJqAQRp2NhAneOJch+VPwfljq
+ 3tSq9krbZb60Ny/JNX5Gq51T9E1CGV8Ggk4+o4Q0H5
+X-Gm-Gg: AR+sD10EvoaEbifB9suY+0Nu0tkQ5IMTScQy0JFsuMlPAa6kWDBZNx/D9dXJga56WYs
+ T/RKyv+lgG1u0+dZuXWQ6hHJDc6FfC7MilrvYSZGC1pKXcz45JyPBIl+v2/p1EF6Lllvpe08p//
+ CfphIEkbAoElYPl0f5K0U0oWyKmGGAG/PpoARCLMuaqC5OLCvc0pHFUV2mLFeIn2AOktHTT1phd
+ MXCNezoyFOASqXVGIcCY4DGqu41qGlaCisgk/C+HVMi5xyNgGIFr9kc2RR3OQu9L7VBSnb3x3xs
+ Nz3U7Fnh6V/0GBRaA31f93o0oGFY5+sbbmIWbvfjYGxV0I1Rvvg4M/Ug5obNsPErWbXTuxT4QeR
+ tP6KRC0n5hxIAA9ztJTQ+T9ENzyBRGHoDJaBhW/nGm1jhdMmMtJ+O8hWIwvdAYRztl+tvVyeiAX
+ ovA4M=
+X-Received: by 2002:a05:600c:3492:b0:495:5890:8f6c with SMTP id
+ 5b1f17b1804b1-499b8339418mr4078695e9.7.1787244673425; 
+ Thu, 20 Aug 2026 09:51:13 -0700 (PDT)
+X-Received: by 2002:a05:600c:3492:b0:495:5890:8f6c with SMTP id
+ 5b1f17b1804b1-499b8339418mr4077625e9.7.1787244672989; 
+ Thu, 20 Aug 2026 09:51:12 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499aa0fd7a9sm199550075e9.2.2026.08.20.09.50.46
+ 5b1f17b1804b1-499aa175d0fsm158711715e9.9.2026.08.20.09.51.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 09:50:46 -0700 (PDT)
+ Thu, 20 Aug 2026 09:51:09 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PULL 16/53] target/i386/mshv: migrate STIMER state
-Date: Thu, 20 Aug 2026 18:49:19 +0200
-Message-ID: <20260820164957.1895963-17-pbonzini@redhat.com>
+Cc: "Naveen N Rao (AMD)" <naveen@kernel.org>
+Subject: [PULL 25/53] target/i386: SEV: Add support for enabling debug-swap
+ SEV feature
+Date: Thu, 20 Aug 2026 18:49:28 +0200
+Message-ID: <20260820164957.1895963-26-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820164957.1895963-1-pbonzini@redhat.com>
 References: <20260820164957.1895963-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.346,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,198 +121,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+From: "Naveen N Rao (AMD)" <naveen@kernel.org>
 
-This part of Synic state is retrieved via a mem-aligned page. We declare
-the required space (size reference: rust-vmm/mshv) as a buffer on the VM
-state struct for inclusion in a migration.
+Add support for enabling debug-swap VMSA SEV feature in SEV-ES and
+SEV-SNP guests through a new "debug-swap" boolean property on SEV guest
+objects. Though the boolean property is available for plain SEV guests,
+check_sev_features() has a check that rejects attempts to enable any SEV
+feature for a plain SEV guest.
 
-Other than other SynIC features, STIMER doesn't depend on SCONTROL being
-set.
+Though this SEV feature is called "Debug virtualization" in the APM, KVM
+calls this "debug swap" so use the same name for consistency.
 
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20260710101534.664604-9-magnuskulke@linux.microsoft.com
+Sample command-line:
+  -machine q35,confidential-guest-support=sev0 \
+  -object sev-snp-guest,id=sev0,cbitpos=51,reduced-phys-bits=1,debug-swap=on
+
+Restrict debug-swap to SEV-SNP guests at this time due to a
+compatibility issue with SEV-ES pflash devices.
+
+Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
+Link: https://lore.kernel.org/r/416e7b156e49f95958f8c5c8549b48a88c1995fc.1779281646.git.naveen@kernel.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/mshv_int.h   |  2 ++
- target/i386/cpu.h           |  5 ++++
- target/i386/machine.c       | 20 +++++++++++++++
- target/i386/mshv/mshv-cpu.c | 12 +++++++++
- target/i386/mshv/synic.c    | 51 +++++++++++++++++++++++++++++++++++++
- 5 files changed, 90 insertions(+)
+ qapi/qom.json     |  7 ++++++-
+ target/i386/sev.h |  1 +
+ target/i386/sev.c | 26 ++++++++++++++++++++++++++
+ 3 files changed, 33 insertions(+), 1 deletion(-)
 
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index bc023d35355..063852115eb 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -144,5 +144,7 @@ int mshv_set_simp(int cpu_fd, const uint8_t *page);
- int mshv_get_siefp(int cpu_fd, uint8_t *page);
- int mshv_set_siefp(int cpu_fd, const uint8_t *page);
- bool mshv_synic_enabled(const CPUState *cpu);
-+int mshv_get_synthetic_timers(int cpu_fd, uint8_t *state);
-+int mshv_set_synthetic_timers(int cpu_fd, const uint8_t *state);
+diff --git a/qapi/qom.json b/qapi/qom.json
+index c55776af7d3..ad7e39aa756 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -1017,6 +1017,10 @@
+ #     designated guest firmware page for measured boot with -kernel
+ #     (default: false) (since 6.2)
+ #
++# @debug-swap: enable virtualization of debug registers,
++#     only supported on SEV-ES and SEV-SNP guests
++#     (default: false) (since 11.1)
++#
+ # Features:
+ #
+ # @confidential-guest-reset: If present, the hypervisor supports
+@@ -1028,7 +1032,8 @@
+   'data': { '*sev-device': 'str',
+             '*cbitpos': 'uint32',
+             'reduced-phys-bits': 'uint32',
+-            '*kernel-hashes': 'bool' },
++            '*kernel-hashes': 'bool',
++            '*debug-swap': 'bool' },
+   'features': ['confidential-guest-reset']}
  
- #endif
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index fcde8956008..641f3ee5c2f 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -45,6 +45,10 @@
- #define ELF_MACHINE_UNAME "i686"
- #endif
+ ##
+diff --git a/target/i386/sev.h b/target/i386/sev.h
+index b84ca3ce0b6..d19a3966974 100644
+--- a/target/i386/sev.h
++++ b/target/i386/sev.h
+@@ -47,6 +47,7 @@ bool sev_snp_enabled(void);
+ #define SEV_SNP_POLICY_DBG      0x80000
  
-+#ifdef CONFIG_MSHV
-+#define MSHV_STIMERS_STATE_SIZE 200
-+#endif
-+
- enum {
-     R_EAX = 0,
-     R_ECX = 1,
-@@ -2305,6 +2309,7 @@ typedef struct CPUArchState {
- #if defined(CONFIG_MSHV)
-     uint8_t hv_simp_page[HV_HYP_PAGE_SIZE];
-     uint8_t hv_siefp_page[HV_HYP_PAGE_SIZE];
-+    uint8_t hv_synthetic_timers_state[MSHV_STIMERS_STATE_SIZE];
- #endif
+ #define SVM_SEV_FEAT_SNP_ACTIVE     BIT(0)
++#define SVM_SEV_FEAT_DEBUG_SWAP     BIT(5)
  
-     uint64_t mcg_cap;
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index 023a397ab89..8d69d7e25ef 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -10,6 +10,7 @@
- #include "exec/watchpoint.h"
- #include "system/kvm.h"
- #include "system/kvm_xen.h"
-+#include "system/mshv.h"
- #include "system/tcg.h"
+ typedef struct SevKernelLoaderContext {
+     char *setup_data;
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 9cdccc872a3..2103a121aa2 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -324,6 +324,11 @@ sev_set_guest_state(SevCommonState *sev_common, SevState new_state)
+     sev_common->state = new_state;
+ }
  
- #include "qemu/error-report.h"
-@@ -952,6 +953,24 @@ static const VMStateDescription vmstate_msr_hyperv_reenlightenment = {
- };
- 
- #ifdef CONFIG_MSHV
-+
-+static bool mshv_synthetic_timers_needed(void *opaque)
++static bool is_sev_feature_set(SevCommonState *sev_common, uint64_t feature)
 +{
-+    /* Always migrate synthetic timers */
-+    return mshv_enabled();
++    return !!(sev_common->sev_features & feature);
 +}
 +
-+static const VMStateDescription vmstate_mshv_synthetic_timers = {
-+    .name = "cpu/mshv_synthetic_timers",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = mshv_synthetic_timers_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_BUFFER(env.hv_synthetic_timers_state, X86CPU),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- static bool mshv_synic_vp_state_needed(void *opaque)
+ static void sev_set_feature(SevCommonState *sev_common, uint64_t feature, bool set)
  {
-     X86CPU *cpu = opaque;
-@@ -1941,6 +1960,7 @@ const VMStateDescription vmstate_x86_cpu = {
- #endif
- #ifdef CONFIG_MSHV
-         &vmstate_mshv_synic_vp_state,
-+        &vmstate_mshv_synthetic_timers,
- #endif
-         NULL
+     if (set) {
+@@ -523,6 +528,12 @@ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
+             __func__);
+         return -1;
      }
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index ea6a660d054..86d64c67fb2 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -118,6 +118,12 @@ static int get_synic_state(CPUState *cpu)
-     int cpu_fd = mshv_vcpufd(cpu);
-     int ret;
- 
-+    ret = mshv_get_synthetic_timers(cpu_fd, env->hv_synthetic_timers_state);
-+    if (ret < 0) {
-+        error_report("failed to get synthetic timers");
++    if (sev_features && sev_es_enabled() && !sev_snp_enabled()) {
++        error_setg(errp,
++                   "%s: SEV features are not supported with SEV-ES at this time",
++                   __func__);
 +        return -1;
 +    }
-+
-     /* SIMP/SIEFP can only be read when SynIC is enabled */
-     if (!mshv_synic_enabled(cpu)) {
-         return 0;
-@@ -1420,6 +1426,12 @@ static int set_synic_state(const CPUState *cpu)
-     int cpu_fd = mshv_vcpufd(cpu);
-     int ret;
- 
-+    ret = mshv_set_synthetic_timers(cpu_fd, env->hv_synthetic_timers_state);
-+    if (ret < 0) {
-+        error_report("failed to set synthetic timers state");
-+        return -1;
-+    }
-+
-     /* SIMP/SIEFP can only be written when SynIC is enabled */
-     if (!mshv_synic_enabled(cpu)) {
-         return 0;
-diff --git a/target/i386/mshv/synic.c b/target/i386/mshv/synic.c
-index 8f9fee6ed7e..4c629adc3a0 100644
---- a/target/i386/mshv/synic.c
-+++ b/target/i386/mshv/synic.c
-@@ -54,6 +54,57 @@ static int set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state)
+     if (sev_features && !sev_es_enabled()) {
+         error_setg(errp,
+                    "%s: SEV features require either SEV-ES or SEV-SNP to be enabled",
+@@ -2797,6 +2808,16 @@ static int cgs_set_guest_policy(ConfidentialGuestPolicyType policy_type,
      return 0;
  }
  
-+int mshv_get_synthetic_timers(int cpu_fd, uint8_t *state)
++static bool sev_common_get_debug_swap(Object *obj, Error **errp)
 +{
-+    int ret;
-+    void *buffer;
-+    struct mshv_get_set_vp_state args = {0};
-+
-+    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
-+    args.buf_ptr = (uint64_t)buffer;
-+    args.buf_sz = HV_HYP_PAGE_SIZE;
-+    args.type = MSHV_VP_STATE_SYNTHETIC_TIMERS;
-+
-+    ret = get_vp_state(cpu_fd, &args);
-+
-+    if (ret < 0) {
-+        qemu_vfree(buffer);
-+        error_report("failed to get synthetic timers");
-+        return -1;
-+    }
-+
-+    memcpy(state, buffer, MSHV_STIMERS_STATE_SIZE);
-+    qemu_vfree(buffer);
-+
-+    return 0;
++    return is_sev_feature_set(SEV_COMMON(obj), SVM_SEV_FEAT_DEBUG_SWAP);
 +}
 +
-+int mshv_set_synthetic_timers(int cpu_fd, const uint8_t *state)
++static void sev_common_set_debug_swap(Object *obj, bool value, Error **errp)
 +{
-+    int ret;
-+    void *buffer;
-+    struct mshv_get_set_vp_state args = {0};
-+
-+    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
-+    memset(buffer, 0, HV_HYP_PAGE_SIZE);
-+    args.buf_ptr = (uint64_t)buffer;
-+    args.buf_sz = HV_HYP_PAGE_SIZE;
-+    args.type = MSHV_VP_STATE_SYNTHETIC_TIMERS;
-+
-+    assert(state);
-+    memcpy(buffer, state, MSHV_STIMERS_STATE_SIZE);
-+
-+    ret = set_vp_state(cpu_fd, &args);
-+    qemu_vfree(buffer);
-+
-+    if (ret < 0) {
-+        error_report("failed to set synthetic timers");
-+        return -1;
-+    }
-+
-+    return 0;
++    sev_set_feature(SEV_COMMON(obj), SVM_SEV_FEAT_DEBUG_SWAP, value);
 +}
 +
- int mshv_get_simp(int cpu_fd, uint8_t *page)
+ static void
+ sev_common_class_init(ObjectClass *oc, const void *data)
  {
-     int ret;
+@@ -2822,6 +2843,11 @@ sev_common_class_init(ObjectClass *oc, const void *data)
+                                    sev_common_set_kernel_hashes);
+     object_class_property_set_description(oc, "kernel-hashes",
+             "add kernel hashes to guest firmware for measured Linux boot");
++    object_class_property_add_bool(oc, "debug-swap",
++                                   sev_common_get_debug_swap,
++                                   sev_common_set_debug_swap);
++    object_class_property_set_description(oc, "debug-swap",
++            "enable virtualization of debug registers");
+ }
+ 
+ static void
 -- 
 2.55.0
 
