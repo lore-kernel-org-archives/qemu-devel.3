@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B08CC5DF86
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:56:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AFECC5DF89
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:56:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx5yU-00040m-3c; Thu, 20 Aug 2026 12:50:42 -0400
+	id 1wx60E-0001zi-JM; Thu, 20 Aug 2026 12:52:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5yS-00040K-D5
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:50:40 -0400
+ id 1wx603-0001UW-4N
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:52:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5yP-0005Rj-PF
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:50:40 -0400
+ id 1wx5zy-0005nL-Rp
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:52:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787244637;
+ s=mimecast20190719; t=1787244734;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=52s1E0TAzXaWqv4I1VNn/GeUoyMAJxYF6VAAT+4/X/8=;
- b=KvhgqyY9Zsv8caoHCCg6CLxiss4wdbvve59AFMZgPlTkzLoHU36h70O2Qv47RWMCyGTnZT
- xHlGvj9Ms2QLOc5XzwaWo3/ecolwIuUbkG6hd143THIRtIXaqyHVZgZEwVjHiu8q2lYEVw
- 7xsgWHkuSAJp0djFBzJeACusKjHgnak=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QSsgD2Y9i4WPQ2JqLpzZ2kgelaCPueWV8L/J1yXMePc=;
+ b=KGvihxVuWT1zkyYVrS3OQ+Fbh6IoCaQEB8PFVUa4ALixbi+1XvdIPVC1JreqfYqa5V4Hvn
+ m0CbzqNJ0T35NTntcNQ+pQGABYlHIkiBKV17IR723lPVxmUlKjIvx6zdhwYFAaiiKJR8VH
+ JRRCzYfw+yeTMjU4/NQaAzoV+xyyV/U=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-491-geOGaj55P6OZiNd1zLJOSg-1; Thu, 20 Aug 2026 12:50:35 -0400
-X-MC-Unique: geOGaj55P6OZiNd1zLJOSg-1
-X-Mimecast-MFC-AGG-ID: geOGaj55P6OZiNd1zLJOSg_1787244634
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4955e865174so135935e9.3
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:50:35 -0700 (PDT)
+ us-mta-675-bqLBtWXGMtSEiEk0XL1vaQ-1; Thu, 20 Aug 2026 12:52:07 -0400
+X-MC-Unique: bqLBtWXGMtSEiEk0XL1vaQ-1
+X-Mimecast-MFC-AGG-ID: bqLBtWXGMtSEiEk0XL1vaQ_1787244726
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49554715277so277765e9.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:52:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787244634; x=1787849434; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787244726; x=1787849526; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=52s1E0TAzXaWqv4I1VNn/GeUoyMAJxYF6VAAT+4/X/8=;
- b=duCVqVrgMVZUetSiiG7hJMFOUxIwmb456jrAKxjOmkx4RZQPngsICr93D0gRRcy3GU
- m5u2dF16orb0LTfxFBvLK5zZpspxO3ehNRnhATi3IEn9iwNiOYIsdsQj1Ux5MTp7/ulr
- 1AWe1+T6e1zvot5v17r74l+YnLQ8agmlsrefy48mIjeDIQFYOuvCKhuCJslPPbBeRwAo
- tyLLLgparWuKnFzscNvT7C+yLVqZA16x73cQbJy5xnREZ+sCw0lIJwBHmTYqlJCIO2XZ
- d14iHBrZgXikug7440VuKopzg0CYUA7KxQGtjU/9sBrw1ZD6zDKUL/guw87Z6iHEpZPj
- rt8w==
+ bh=QSsgD2Y9i4WPQ2JqLpzZ2kgelaCPueWV8L/J1yXMePc=;
+ b=RqcRCeS2ijqoCzrDCdYR/T2vNBZmCGCzBMgB1ySarvpJoTbDUtf2ItuQybkHpGwUcQ
+ OlM6QLGLX68WMKVIkdFVfU0GgGPhTuVc21YuYWQ/f0aDpM5WsQ2VmWztaxANwzn+7jdo
+ 1dpbtZnU5i0NVE+dwJXPYhbNdNpdPfi7IJNRXRayp4FOCUpdxGBvciM5WxktXN3hUI0a
+ gpnhIsz6iUgihp8+CvpNKtASSy+AcNUtFpc1VNFomjoSEeFe9h93YgHwRxL5Mpgf1NDd
+ /5s03+6JLsXIX6YIh0DeS5198DWpf335nvM1AzFCZCxkAOymexNqzRKmKu/P1OedYnxB
+ OW1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787244634; x=1787849434;
+ d=1e100.net; s=20251104; t=1787244726; x=1787849526;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=52s1E0TAzXaWqv4I1VNn/GeUoyMAJxYF6VAAT+4/X/8=;
- b=bPngnYsnd+nQsLdcZbZeEyFHSySb/QgmT9Lf+8Axa8mwjTMmvhubHiDCR4sFXJ962x
- p/gCOKFLWlWBnNHSyDoZAeABFO8YWcyKkYWYYXBHtLp+OnYMGuiT5DSOuRXw9BC3q70q
- QFg+NNg2mWEgzwJR/FpjJBmU4AZiWdqLB0Vm+BDlTcmYRSvO+0+aGwdwT37T1hRxTr2C
- tU/r4OtbIZngnoq3kDZCS3g/a+9odxPbOcCwRsQ6xMM15fRTefMFxoBkNfpk6EK4l/Gx
- 6Ti8ImMtQ1oQSSgxxyb5AxNN2S7oyHTtcSU/o/ZkonP3zDHf7ER211C5zx+p1IkQO8we
- IYIQ==
-X-Gm-Message-State: AOJu0YygpeGaxWYz2N/WvTfSIsDq8gUvDszuDB5dJS9p6TrMh07DRLFP
- Wh4mWyvWzDvIG5EKc0LgUMn8ozYkJalzLvdP9D6g7nZ5r0TKNDWlEH3iI82kmML6BJ7JFKhBICT
- A6j9aao/nVsUW1GsN/XsuWvQfYNHIuves/qYZj7pWQ2x3RwyZsT3aUGYMgKHye90vf3i8fiHHVZ
- sSiq97nPCYdp7WUJIGkag8fd8rhfEZS8VMMfagj1g+
-X-Gm-Gg: AR+sD12UtvJeE5oNLoKmWIuNPtk0MJqYE9mHtFhTf8DXErTvRlYm8UgHF2CBpo48Fuq
- lvTKfbyZJZ+t1nTWThEm10bTEVpYiAuSK+3Ed0U0aJk7Vu1666kXfpKcHtRZ0abNs5tB5hLF3KQ
- GhKGOO2Z6kMnZBeAbk+UYJxV57cBHtZRBKYuCy+UVt6vu9AWTGrNIRqNgLm87A5ycG1eMCCgGE8
- oZj890aF5rqd94yWDKwUr7oJhj5aQvO208j4RO9AIqx74mDmyyW5TRonnWNM7sKcYuae9MPL45A
- E/2+9qBs+Bz6HL+xnNsYIJhF8gw+qRCgo0obYkRQWXL/XNN2mfWBcXBUvuaYpJ413tPYmqnqkYP
- MqNuYy3FOCVyNUVeTToAYdCcKiNC+7zlvWYuScMzmCyJWCcd3inP8ZIqp9b/Z665s1zrgSJ5M3V
- Uvq5k=
-X-Received: by 2002:a05:600c:4f09:b0:499:ad2e:f7bc with SMTP id
- 5b1f17b1804b1-499b8455734mr3195175e9.10.1787244634253; 
- Thu, 20 Aug 2026 09:50:34 -0700 (PDT)
-X-Received: by 2002:a05:600c:4f09:b0:499:ad2e:f7bc with SMTP id
- 5b1f17b1804b1-499b8455734mr3193965e9.10.1787244633776; 
- Thu, 20 Aug 2026 09:50:33 -0700 (PDT)
+ bh=QSsgD2Y9i4WPQ2JqLpzZ2kgelaCPueWV8L/J1yXMePc=;
+ b=Mb4y08HG2WYlyXlWxe5PCuZro0A1Ix5tXY94q/rnP+wCZLRGPC8TJTDA7Y5asQKgRE
+ i4v6y0ftydn1Z50fFpxtmyzxU8W6Xit9ucczG01sGBJBAJ0+a/wgS5C5m40lDw1ESuGb
+ j3m9V6Uss11snX0YM5llz7gpDAH4lIRK/GNqwvL4FH6HVDkMtccqUDpOX8CA/TH+7Jy7
+ elM2/ARGaeyu4/4PPzThfOY4HSsNGy43nutEUeQ13Q0Wvgt8FXZ0qgtDWn3cPcm28PZw
+ a7VfPRvBXToTlzY/0RhfBNP3gnpNyOWOVw+wJHgB0a3Ne6A6kqqrxQxTURDKk9JfA8p3
+ 4p3g==
+X-Gm-Message-State: AOJu0YzV6s2ri1+pGtD2Zxt7nlAUdvlQf4MLnymaQdmT7BP1k8IH8z0E
+ /Zre7IsD8uOGPXQuc1U3n4MJSDhJ7GwMzZGmlasD3mfyT7bbPK+MA7fEgbiVZeYsiYXewHig12g
+ XjhSlOSpcg4Q2yzmed7w7appeD2vpX2rtiX9AAJf1UzfrTLno32il8yt6VVDOWVGBl+2yO1faEU
+ RSabmbLW2jNj8si6nFLtvQJFiVtHJ941ZDd78x/wsO
+X-Gm-Gg: AR+sD11Wu2I9yKwGDT3AUYkXMfjx1/y7sa9tnbf9JQnraAs+8YYtWo+pPOCxK0leAhI
+ yfZJ084d+l2gZIYtmBTXF/eLZS9mltYw60pXl4TeaubFoIcPXEIOWpmx3tnHluLY+SNTWu53lyv
+ 1FC1GyQlkXgIjvfWrkZSpV+FwRb927mdfKPEuGrijSwW1MJpJdp2Arh72+1khGvtNZXmKCWKTjn
+ AnhDp31n7y4IIPAYlM+7NEV3526bAhJpHgoaMsInn/dw9TQSydhComk0XhmUuNlS5pBqWHvPp5Y
+ 6NYVZkfPoo7lY8v9dPDaFPBAjpH6yggmZZJLljdLstlNssPhKOODfymf7bcaybmAHuBflRuCI31
+ 4VzO8mpar05sIDvC019Ffdb10nW2bieH85/L33iCyVUDQXrHBeYTW3EkWs88DWHfY7FivpeZipU
+ RMzzc=
+X-Received: by 2002:a05:600c:3485:b0:499:83f1:398 with SMTP id
+ 5b1f17b1804b1-499b8343de0mr4227325e9.9.1787244725793; 
+ Thu, 20 Aug 2026 09:52:05 -0700 (PDT)
+X-Received: by 2002:a05:600c:3485:b0:499:83f1:398 with SMTP id
+ 5b1f17b1804b1-499b8343de0mr4225595e9.9.1787244724868; 
+ Thu, 20 Aug 2026 09:52:04 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499aaef1665sm161257475e9.5.2026.08.20.09.50.31
+ 5b1f17b1804b1-499b29e19f2sm49162645e9.4.2026.08.20.09.52.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 09:50:31 -0700 (PDT)
+ Thu, 20 Aug 2026 09:52:01 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
-Subject: [PULL 11/53] hw/i386/mshv: migrate REFERENCE_TIME
-Date: Thu, 20 Aug 2026 18:49:14 +0200
-Message-ID: <20260820164957.1895963-12-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 45/53] rust: switch to cargo subprojects
+Date: Thu, 20 Aug 2026 18:49:48 +0200
+Message-ID: <20260820164957.1895963-46-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820164957.1895963-1-pbonzini@redhat.com>
 References: <20260820164957.1895963-1-pbonzini@redhat.com>
@@ -123,395 +122,393 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Let Meson parse Cargo.lock and Cargo.toml and figure out the set
+of Rust build dependencies.  For now, the only change is that
+subprojects are retrieved with "cargo_ws.subproject('NAME')"
+instead of "subproject('NAME-API-rs')".  However, just calling
+"import('rust').workspace()" enables extra functionality that
+operates by parsing Cargo.toml; it will be introduced a step
+at a time in subsequent commits.
 
-This is a partition-wide state for which we use a dedicated hw clock
-facility, similar to KVM. We have to freeze the time for a partition
-before we are allowed to set it. We register a state change handler for
-the clock device and a post-load handler for migration state. In the
-post-load handler we toggle a flag that will set the reference time
-state on next state to "running" on the partition.
-
-We can move the time freeze and reference-time ioctls/hvcalls to the
-clock module.
-
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Reviewed-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20260710101534.664604-4-magnuskulke@linux.microsoft.com
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- MAINTAINERS              |   1 +
- include/system/mshv.h    |   3 +
- accel/mshv/mshv-all.c    |  67 ++------------
- hw/i386/mshv/clock.c     | 189 +++++++++++++++++++++++++++++++++++++++
- accel/mshv/trace-events  |   1 +
- hw/i386/meson.build      |   1 +
- hw/i386/mshv/meson.build |   4 +
- 7 files changed, 208 insertions(+), 58 deletions(-)
- create mode 100644 hw/i386/mshv/clock.c
- create mode 100644 hw/i386/mshv/meson.build
+ docs/devel/rust.rst                         |  8 ++---
+ meson.build                                 |  3 +-
+ .gitlab-ci.d/static_checks.yml              |  4 +--
+ rust/Cargo.lock => Cargo.lock               |  0
+ rust/Cargo.toml => Cargo.toml               |  6 ++--
+ rust/meson.build                            | 37 +++++++--------------
+ subprojects/anyhow-1-rs.wrap                |  2 +-
+ subprojects/arbitrary-int-1-rs.wrap         |  2 +-
+ subprojects/attrs-0.2-rs.wrap               |  2 +-
+ subprojects/bilge-0.2-rs.wrap               |  2 +-
+ subprojects/bilge-impl-0.2-rs.wrap          |  2 +-
+ subprojects/either-1-rs.wrap                |  2 +-
+ subprojects/foreign-0.3-rs.wrap             |  2 +-
+ subprojects/glib-sys-0.21-rs.wrap           |  2 +-
+ subprojects/itertools-0.11-rs.wrap          |  2 +-
+ subprojects/libc-0.2-rs.wrap                |  2 +-
+ subprojects/probe-0.5-rs.wrap               |  2 +-
+ subprojects/proc-macro-error-1-rs.wrap      |  2 +-
+ subprojects/proc-macro-error-attr-1-rs.wrap |  2 +-
+ subprojects/proc-macro2-1-rs.wrap           |  2 +-
+ subprojects/quote-1-rs.wrap                 |  2 +-
+ subprojects/syn-2-rs.wrap                   |  2 +-
+ subprojects/unicode-ident-1-rs.wrap         |  2 +-
+ 23 files changed, 40 insertions(+), 52 deletions(-)
+ rename rust/Cargo.lock => Cargo.lock (100%)
+ rename rust/Cargo.toml => Cargo.toml (97%)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index f249be744e9..937c47f4919 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -620,6 +620,7 @@ R: Wei Liu <wei.liu@kernel.org>
- R: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
- S: Supported
- F: target/i386/mshv/
-+F: hw/i386/mshv/
+diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
+index 67ea84539a2..af142c4a694 100644
+--- a/docs/devel/rust.rst
++++ b/docs/devel/rust.rst
+@@ -26,14 +26,14 @@ are accustomed to the more "normal" Cargo-based development workflow.
+ In particular:
  
- X86 Instruction Emulator
- M: Roman Bolshakov <rbolshakov@ddn.com>
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 46fe3fcebc2..a6f815b822a 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -55,6 +55,9 @@ DECLARE_INSTANCE_CHECKER(MshvState, MSHV_STATE,
+ * the set of warnings and lints that are used to build QEMU always
+-  comes from the ``rust/Cargo.toml`` workspace file
++  comes from the ``Cargo.toml`` workspace file
  
- extern MshvState *mshv_state;
+ * it is also possible to use ``cargo`` for common Rust-specific coding
+   tasks, in particular to invoke ``clippy``, ``rustfmt`` and ``rustdoc``.
  
-+/* clock (partition reference time) */
-+void mshv_clock_init(void);
+ To this end, QEMU includes a ``build.rs`` build script that picks up
+ generated sources from QEMU's build directory and puts it in Cargo's
+-output directory (typically ``rust/target/``).  A vanilla invocation
++output directory (typically ``target/``).  A vanilla invocation
+ of Cargo will complain that it cannot find the generated sources,
+ which can be fixed in different ways:
+ 
+@@ -475,8 +475,8 @@ files, it is still highly experimental and is therefore not used.
+ 
+ Therefore, external crates must be added as subprojects for Meson to
+ learn how to build them, as well as to the relevant ``Cargo.toml`` files.
+-The versions specified in ``rust/Cargo.lock`` must be the same as the
+-subprojects; note that the ``rust/`` directory forms a Cargo `workspace`__,
++The versions specified in ``Cargo.lock`` must be the same as the
++subprojects; note that the QEMU source tree forms a Cargo `workspace`__,
+ and therefore there is a single lock file for the whole build.
+ 
+ __ https://doc.rust-lang.org/cargo/reference/workspaces.html#virtual-workspace
+diff --git a/meson.build b/meson.build
+index 40e3f4ec44c..2a289960ee8 100644
+--- a/meson.build
++++ b/meson.build
+@@ -130,7 +130,8 @@ endif
+ if have_rust
+   rustc_args = [find_program('scripts/rust/rustc_args.py'),
+     '--rustc-version', rustc.version(),
+-    '--workspace', meson.project_source_root() / 'rust']
++    '--workspace', meson.project_source_root()]
 +
- /* interrupt */
- int mshv_request_interrupt(MshvState *mshv_state, uint32_t interrupt_type, uint32_t vector,
-                            uint32_t vp_index, bool logical_destination_mode,
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index b34fb34d053..7b3c13cf1ed 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -60,54 +60,6 @@ static int init_mshv(int *mshv_fd)
-     return 0;
- }
+   rustfmt = find_program('rustfmt', required: false)
  
--/* freeze 1 to pause, 0 to resume */
--static int set_time_freeze(int vm_fd, int freeze)
--{
--    int ret;
--    struct hv_input_set_partition_property in = {0};
--    in.property_code = HV_PARTITION_PROPERTY_TIME_FREEZE;
--    in.property_value = freeze;
+   rustc_lint_args = run_command(rustc_args, '--lints',
+diff --git a/.gitlab-ci.d/static_checks.yml b/.gitlab-ci.d/static_checks.yml
+index 61fe2fa39ab..568e56e1204 100644
+--- a/.gitlab-ci.d/static_checks.yml
++++ b/.gitlab-ci.d/static_checks.yml
+@@ -55,7 +55,7 @@ check-rust-tools-nightly:
+     - source scripts/ci/gitlab-ci-section
+     - section_start test "Running Rust code checks"
+     - cd build
+-    - pyvenv/bin/meson devenv -w ../rust ${CARGO-cargo} fmt --check
++    - pyvenv/bin/meson devenv -w ../ ${CARGO-cargo} fmt --check
+     - make clippy
+     - make rustdoc
+     - section_end test
+@@ -69,7 +69,7 @@ check-rust-tools-nightly:
+     when: on_success
+     expire_in: 2 days
+     paths:
+-      - rust/target/doc
++      - target/doc
+ 
+ check-build-units:
+   extends: .base_job_template
+diff --git a/rust/Cargo.lock b/Cargo.lock
+similarity index 100%
+rename from rust/Cargo.lock
+rename to Cargo.lock
+diff --git a/rust/Cargo.toml b/Cargo.toml
+similarity index 97%
+rename from rust/Cargo.toml
+rename to Cargo.toml
+index 0d24eb84e1c..0566850ecef 100644
+--- a/rust/Cargo.toml
++++ b/Cargo.toml
+@@ -1,9 +1,9 @@
+ [workspace]
+ resolver = "2"
+ members = [
+-    "hw/char/pl011",
+-    "hw/timer/hpet",
+-    "tests",
++    "rust/hw/char/pl011",
++    "rust/hw/timer/hpet",
++    "rust/tests",
+ ]
+ 
+ [workspace.package]
+diff --git a/rust/meson.build b/rust/meson.build
+index b6711fe77dd..1622a50a978 100644
+--- a/rust/meson.build
++++ b/rust/meson.build
+@@ -4,31 +4,18 @@ else
+   message('Rust enabled but it is only used by system emulators.')
+ endif
+ 
+-subproject('anyhow-1-rs', required: true)
+-subproject('bilge-0.2-rs', required: true)
+-subproject('bilge-impl-0.2-rs', required: true)
+-subproject('foreign-0.3-rs', required: true)
+-subproject('glib-sys-0.21-rs', required: true)
+-subproject('libc-0.2-rs', required: true)
+-subproject('probe-0.5-rs', required: true)
 -
--    struct mshv_root_hvcall args = {0};
--    args.code = HVCALL_SET_PARTITION_PROPERTY;
--    args.in_sz = sizeof(in);
--    args.in_ptr = (uint64_t)&in;
+-anyhow_rs = dependency('anyhow-1-rs')
+-bilge_rs = dependency('bilge-0.2-rs')
+-bilge_impl_rs = dependency('bilge-impl-0.2-rs')
+-foreign_rs = dependency('foreign-0.3-rs')
+-glib_sys_rs = dependency('glib-sys-0.21-rs')
+-libc_rs = dependency('libc-0.2-rs')
+-probe_rs = dependency('probe-0.5-rs')
 -
--    ret = mshv_hvcall(vm_fd, &args);
--    if (ret < 0) {
--        error_report("Failed to set time freeze");
--        return -1;
--    }
+-subproject('proc-macro2-1-rs', required: true)
+-subproject('quote-1-rs', required: true)
+-subproject('syn-2-rs', required: true)
+-subproject('attrs-0.2-rs', required: true)
 -
--    return 0;
--}
--
--static int pause_vm(int vm_fd)
--{
--    int ret;
--
--    ret = set_time_freeze(vm_fd, 1);
--    if (ret < 0) {
--        error_report("Failed to pause partition: %s", strerror(errno));
--        return -1;
--    }
--
--    return 0;
--}
--
--static int resume_vm(int vm_fd)
--{
--    int ret;
--
--    ret = set_time_freeze(vm_fd, 0);
--    if (ret < 0) {
--        error_report("Failed to resume partition: %s", strerror(errno));
--        return -1;
--    }
--
--    return 0;
--}
--
- static int get_host_partition_property(int mshv_fd, uint32_t property_code,
-                                        uint64_t *value)
- {
-@@ -330,9 +282,6 @@ static int create_vm(int mshv_fd, int *vm_fd)
-         return -1;
-     }
+-quote_rs_native = dependency('quote-1-rs', native: true)
+-syn_rs_native = dependency('syn-2-rs', native: true)
+-proc_macro2_rs_native = dependency('proc-macro2-1-rs', native: true)
+-attrs_rs_native = dependency('attrs-0.2-rs', native: true)
++cargo_ws = import('rust').workspace()
++anyhow_rs = cargo_ws.subproject('anyhow').dependency()
++bilge_rs = cargo_ws.subproject('bilge').dependency()
++bilge_impl_rs = cargo_ws.subproject('bilge-impl').dependency()
++foreign_rs = cargo_ws.subproject('foreign').dependency()
++glib_sys_rs = cargo_ws.subproject('glib-sys').dependency()
++libc_rs = cargo_ws.subproject('libc').dependency()
++probe_rs = cargo_ws.subproject('probe').dependency()
++quote_rs_native = cargo_ws.subproject('quote').dependency()
++syn_rs_native = cargo_ws.subproject('syn').dependency()
++proc_macro2_rs_native = cargo_ws.subproject('proc-macro2').dependency()
++attrs_rs_native = cargo_ws.subproject('attrs').dependency()
  
--    /* Always create a frozen partition */
--    pause_vm(*vm_fd);
--
-     return 0;
- }
+ genrs = []
  
-@@ -578,13 +527,6 @@ static int mshv_init(AccelState *as, MachineState *ms)
-         return -1;
-     }
+diff --git a/subprojects/anyhow-1-rs.wrap b/subprojects/anyhow-1-rs.wrap
+index a69a3645b49..fb4603e74c8 100644
+--- a/subprojects/anyhow-1-rs.wrap
++++ b/subprojects/anyhow-1-rs.wrap
+@@ -3,5 +3,5 @@ directory = anyhow-1.0.98
+ source_url = https://crates.io/api/v1/crates/anyhow/1.0.98/download
+ source_filename = anyhow-1.0.98.tar.gz
+ source_hash = e16d2d3311acee920a9eb8d33b8cbc1787ce4a264e85f964c2404b969bdcd487
+-#method = cargo
++method = cargo
+ patch_directory = anyhow-1-rs
+diff --git a/subprojects/arbitrary-int-1-rs.wrap b/subprojects/arbitrary-int-1-rs.wrap
+index a1838b20b0f..f8d7c68da64 100644
+--- a/subprojects/arbitrary-int-1-rs.wrap
++++ b/subprojects/arbitrary-int-1-rs.wrap
+@@ -3,7 +3,7 @@ directory = arbitrary-int-1.2.7
+ source_url = https://crates.io/api/v1/crates/arbitrary-int/1.2.7/download
+ source_filename = arbitrary-int-1.2.7.tar.gz
+ source_hash = c84fc003e338a6f69fbd4f7fe9f92b535ff13e9af8997f3b14b6ddff8b1df46d
+-#method = cargo
++method = cargo
+ patch_directory = arbitrary-int-1-rs
  
--    ret = resume_vm(vm_fd);
--    if (ret < 0) {
--        close(mshv_fd);
--        close(vm_fd);
--        return -1;
--    }
--
-     s->vm = vm_fd;
-     s->fd = mshv_fd;
+ # bump this version number on every change to meson.build or the patches:
+diff --git a/subprojects/attrs-0.2-rs.wrap b/subprojects/attrs-0.2-rs.wrap
+index cd43c91d63e..4ff4c424e6b 100644
+--- a/subprojects/attrs-0.2-rs.wrap
++++ b/subprojects/attrs-0.2-rs.wrap
+@@ -3,5 +3,5 @@ directory = attrs-0.2.9
+ source_url = https://crates.io/api/v1/crates/attrs/0.2.9/download
+ source_filename = attrs-0.2.9.tar.gz
+ source_hash = 2a207d40f43de65285f3de0509bb6cb16bc46098864fce957122bbacce327e5f
+-#method = cargo
++method = cargo
+ patch_directory = attrs-0.2-rs
+diff --git a/subprojects/bilge-0.2-rs.wrap b/subprojects/bilge-0.2-rs.wrap
+index 900bb1497b9..cb202cfd9fe 100644
+--- a/subprojects/bilge-0.2-rs.wrap
++++ b/subprojects/bilge-0.2-rs.wrap
+@@ -3,7 +3,7 @@ directory = bilge-0.2.0
+ source_url = https://crates.io/api/v1/crates/bilge/0.2.0/download
+ source_filename = bilge-0.2.0.tar.gz
+ source_hash = dc707ed8ebf81de5cd6c7f48f54b4c8621760926cdf35a57000747c512e67b57
+-#method = cargo
++method = cargo
+ patch_directory = bilge-0.2-rs
  
-@@ -606,6 +548,8 @@ static int mshv_init(AccelState *as, MachineState *ms)
+ # bump this version number on every change to meson.build or the patches:
+diff --git a/subprojects/bilge-impl-0.2-rs.wrap b/subprojects/bilge-impl-0.2-rs.wrap
+index 4f84eca1ccd..b3dbfafb265 100644
+--- a/subprojects/bilge-impl-0.2-rs.wrap
++++ b/subprojects/bilge-impl-0.2-rs.wrap
+@@ -3,7 +3,7 @@ directory = bilge-impl-0.2.0
+ source_url = https://crates.io/api/v1/crates/bilge-impl/0.2.0/download
+ source_filename = bilge-impl-0.2.0.tar.gz
+ source_hash = feb11e002038ad243af39c2068c8a72bcf147acf05025dcdb916fcc000adb2d8
+-#method = cargo
++method = cargo
+ patch_directory = bilge-impl-0.2-rs
  
-     register_savevm_live("mshv", 0, 1, &savevm_mshv, s);
+ # bump this version number on every change to meson.build or the patches:
+diff --git a/subprojects/either-1-rs.wrap b/subprojects/either-1-rs.wrap
+index 352e11cfee6..1c74a95645f 100644
+--- a/subprojects/either-1-rs.wrap
++++ b/subprojects/either-1-rs.wrap
+@@ -3,7 +3,7 @@ directory = either-1.12.0
+ source_url = https://crates.io/api/v1/crates/either/1.12.0/download
+ source_filename = either-1.12.0.tar.gz
+ source_hash = 3dca9240753cf90908d7e4aac30f630662b02aebaa1b58a3cadabdb23385b58b
+-#method = cargo
++method = cargo
+ patch_directory = either-1-rs
  
-+    mshv_clock_init();
-+
-     return 0;
- }
+ # bump this version number on every change to meson.build or the patches:
+diff --git a/subprojects/foreign-0.3-rs.wrap b/subprojects/foreign-0.3-rs.wrap
+index 0d218ec2c25..a5fec6c09df 100644
+--- a/subprojects/foreign-0.3-rs.wrap
++++ b/subprojects/foreign-0.3-rs.wrap
+@@ -3,5 +3,5 @@ directory = foreign-0.3.1
+ source_url = https://crates.io/api/v1/crates/foreign/0.3.1/download
+ source_filename = foreign-0.3.1.tar.gz
+ source_hash = 17ca1b5be8c9d320daf386f1809c7acc0cb09accbae795c2001953fa50585846
+-#method = cargo
++method = cargo
+ patch_directory = foreign-0.3-rs
+diff --git a/subprojects/glib-sys-0.21-rs.wrap b/subprojects/glib-sys-0.21-rs.wrap
+index 313ced731ac..f4e1514af57 100644
+--- a/subprojects/glib-sys-0.21-rs.wrap
++++ b/subprojects/glib-sys-0.21-rs.wrap
+@@ -3,5 +3,5 @@ directory = glib-sys-0.21.2
+ source_url = https://crates.io/api/v1/crates/glib-sys/0.21.2/download
+ source_filename = glib-sys-0.21.2.tar.gz
+ source_hash = d09d3d0fddf7239521674e57b0465dfbd844632fec54f059f7f56112e3f927e1
+-#method = cargo
++method = cargo
+ patch_directory = glib-sys-0.21-rs
+diff --git a/subprojects/itertools-0.11-rs.wrap b/subprojects/itertools-0.11-rs.wrap
+index ee12d0053bc..6fe89d17caa 100644
+--- a/subprojects/itertools-0.11-rs.wrap
++++ b/subprojects/itertools-0.11-rs.wrap
+@@ -3,7 +3,7 @@ directory = itertools-0.11.0
+ source_url = https://crates.io/api/v1/crates/itertools/0.11.0/download
+ source_filename = itertools-0.11.0.tar.gz
+ source_hash = b1c173a5686ce8bfa551b3563d0c2170bf24ca44da99c7ca4bfdab5418c3fe57
+-#method = cargo
++method = cargo
+ patch_directory = itertools-0.11-rs
  
-@@ -643,6 +587,13 @@ static int mshv_cpu_exec(CPUState *cpu)
-             cpu->vcpu_dirty = false;
-         }
+ # bump this version number on every change to meson.build or the patches:
+diff --git a/subprojects/libc-0.2-rs.wrap b/subprojects/libc-0.2-rs.wrap
+index bbe08f87883..488330178ed 100644
+--- a/subprojects/libc-0.2-rs.wrap
++++ b/subprojects/libc-0.2-rs.wrap
+@@ -3,5 +3,5 @@ directory = libc-0.2.162
+ source_url = https://crates.io/api/v1/crates/libc/0.2.162/download
+ source_filename = libc-0.2.162.tar.gz
+ source_hash = 18d287de67fe55fd7e1581fe933d965a5a9477b38e949cfa9f8574ef01506398
+-#method = cargo
++method = cargo
+ patch_directory = libc-0.2-rs
+diff --git a/subprojects/probe-0.5-rs.wrap b/subprojects/probe-0.5-rs.wrap
+index 73229ee1c29..d3c6b187244 100644
+--- a/subprojects/probe-0.5-rs.wrap
++++ b/subprojects/probe-0.5-rs.wrap
+@@ -3,5 +3,5 @@ directory = probe-0.5.2
+ source_url = https://crates.io/api/v1/crates/probe/0.5.2/download
+ source_filename = probe-0.5.2.tar.gz
+ source_hash = 136558b6e1ebaecc92755d0ffaf9421f519531bed30cc2ad23b22cb00965cc5e
+-#method = cargo
++method = cargo
+ patch_directory = probe-0.5-rs
+diff --git a/subprojects/proc-macro-error-1-rs.wrap b/subprojects/proc-macro-error-1-rs.wrap
+index 59f892f7825..4f300c3ac41 100644
+--- a/subprojects/proc-macro-error-1-rs.wrap
++++ b/subprojects/proc-macro-error-1-rs.wrap
+@@ -3,7 +3,7 @@ directory = proc-macro-error-1.0.4
+ source_url = https://crates.io/api/v1/crates/proc-macro-error/1.0.4/download
+ source_filename = proc-macro-error-1.0.4.tar.gz
+ source_hash = da25490ff9892aab3fcf7c36f08cfb902dd3e71ca0f9f9517bea02a73a5ce38c
+-#method = cargo
++method = cargo
+ patch_directory = proc-macro-error-1-rs
  
-+        /* Corresponding store-release is in cpu_exit. */
-+        if (qatomic_load_acquire(&cpu->exit_request)) {
-+            trace_mshv_interrupt_exit_request(cpu->cpu_index);
-+            ret = EXCP_INTERRUPT;
-+            break;
-+        }
-+
-         ret = mshv_run_vcpu(mshv_state->vm, cpu, &mshv_msg, &exit_reason);
-         if (ret < 0) {
-             error_report("Failed to run on vcpu %d", cpu->cpu_index);
-diff --git a/hw/i386/mshv/clock.c b/hw/i386/mshv/clock.c
-new file mode 100644
-index 00000000000..02c586503a6
---- /dev/null
-+++ b/hw/i386/mshv/clock.c
-@@ -0,0 +1,189 @@
-+/*
-+ * MSHV partition reference clock
-+ *
-+ * Copyright Microsoft, Corp. 2026
-+ *
-+ * Authors: Magnus Kulke <magnuskulke@microsoft.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
-+#include "migration/vmstate.h"
-+#include "system/runstate.h"
-+#include "hw/hyperv/hvhdk.h"
-+#include "hw/hyperv/hvhdk_mini.h"
-+#include "hw/hyperv/hvgdk.h"
-+#include "hw/hyperv/hvgdk_mini.h"
-+#include "linux/mshv.h"
-+#include "system/mshv.h"
-+#include "system/mshv_int.h"
-+
-+/*
-+ * Partition reference clock (HV_PARTITION_PROPERTY_REFERENCE_TIME), captured
-+ * when the VM is stopped and re-applied when it resumes.
-+ *
-+ * Mirrors hw/i386/kvm/clock.c.
-+ */
-+typedef struct MshvClockState {
-+    uint64_t ref_time;
-+    bool ref_time_pending;
-+} MshvClockState;
-+
-+static MshvClockState mshv_clock;
-+
-+static int mshv_get_reference_time(int vm_fd, uint64_t *ref_time)
-+{
-+    struct hv_input_get_partition_property in = { 0 };
-+    struct hv_output_get_partition_property out = { 0 };
-+    struct mshv_root_hvcall args = { 0 };
-+    int ret;
-+
-+    in.property_code = HV_PARTITION_PROPERTY_REFERENCE_TIME;
-+
-+    args.code        = HVCALL_GET_PARTITION_PROPERTY;
-+    args.in_sz       = sizeof(in);
-+    args.in_ptr      = (uint64_t)&in;
-+    args.out_sz      = sizeof(out);
-+    args.out_ptr     = (uint64_t)&out;
-+
-+    ret = mshv_hvcall(vm_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to get reference time");
-+        return -1;
-+    }
-+
-+    *ref_time = out.property_value;
-+    return 0;
-+}
-+
-+static int mshv_set_reference_time(int vm_fd, uint64_t ref_time)
-+{
-+    struct hv_input_set_partition_property in = { 0 };
-+    struct mshv_root_hvcall args = { 0 };
-+    int ret;
-+
-+    in.property_code  = HV_PARTITION_PROPERTY_REFERENCE_TIME;
-+    in.property_value = ref_time;
-+
-+    args.code         = HVCALL_SET_PARTITION_PROPERTY;
-+    args.in_sz        = sizeof(in);
-+    args.in_ptr       = (uint64_t)&in;
-+
-+    ret = mshv_hvcall(vm_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to set reference time");
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+/*
-+ * Freeze (freeze=1) or unfreeze (freeze=0) time for a partition. This will not
-+ * pause/eject vCPU execution. It is assumed that the caller already has stopped
-+ * the partition's vCPUs.
-+ *
-+ * NB: a partition's reference clock can only be written while the time is
-+ * frozen.
-+ */
-+static int mshv_set_time_freeze(int vm_fd, int freeze)
-+{
-+    struct hv_input_set_partition_property in = { 0 };
-+    struct mshv_root_hvcall args = { 0 };
-+    int ret;
-+
-+    in.property_code  = HV_PARTITION_PROPERTY_TIME_FREEZE;
-+    in.property_value = freeze;
-+
-+    args.code         = HVCALL_SET_PARTITION_PROPERTY;
-+    args.in_sz        = sizeof(in);
-+    args.in_ptr       = (uint64_t)&in;
-+
-+    ret = mshv_hvcall(vm_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to set time freeze");
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+static void mshv_clock_vm_state_change(void *opaque, bool running,
-+                                       RunState state)
-+{
-+    MshvClockState *s = opaque;
-+    int vm_fd = mshv_state->vm;
-+    int ret;
-+
-+    if (running) {
-+        /* Skip if we have nothing to restore, e.g. on initial boot. */
-+        if (!s->ref_time_pending) {
-+            return;
-+        }
-+
-+        ret = mshv_set_time_freeze(vm_fd, 1);
-+        if (ret < 0) {
-+            error_report("Failed to freeze partition time on resume");
-+            abort();
-+        }
-+
-+        /* INVARIANT: reference time can only be written if time is frozen. */
-+        ret = mshv_set_reference_time(vm_fd, s->ref_time);
-+        if (ret < 0) {
-+            error_report("Failed to restore reference time on resume");
-+            abort();
-+        }
-+
-+        if (mshv_set_time_freeze(vm_fd, 0) < 0) {
-+            error_report("Failed to unfreeze partition time on resume");
-+            abort();
-+        }
-+
-+        s->ref_time_pending = false;
-+    } else {
-+        /* Skip if we already have a to-be-set ref time */
-+        if (s->ref_time_pending) {
-+            return;
-+        }
-+
-+        ret = mshv_get_reference_time(vm_fd, &s->ref_time);
-+        if (ret < 0) {
-+            error_report("Failed to capture reference time on stop");
-+            abort();
-+        }
-+
-+        s->ref_time_pending = true;
-+    }
-+}
-+
-+/*
-+ * The incoming reference time should be applied on the next resume before
-+ * vCPUs start executing.
-+ */
-+static int mshv_clock_post_load(void *opaque, int version_id)
-+{
-+    MshvClockState *s = opaque;
-+
-+    s->ref_time_pending = true;
-+
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_mshv_clock = {
-+    .name = "mshv-clock",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .post_load = mshv_clock_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(ref_time, MshvClockState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+void mshv_clock_init(void)
-+{
-+    vmstate_register(NULL, 0, &vmstate_mshv_clock, &mshv_clock);
-+    qemu_add_vm_change_state_handler(mshv_clock_vm_state_change, &mshv_clock);
-+}
-diff --git a/accel/mshv/trace-events b/accel/mshv/trace-events
-index a4dffeb24a3..859e8bfb0f3 100644
---- a/accel/mshv/trace-events
-+++ b/accel/mshv/trace-events
-@@ -4,6 +4,7 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
+ # bump this version number on every change to meson.build or the patches:
+diff --git a/subprojects/proc-macro-error-attr-1-rs.wrap b/subprojects/proc-macro-error-attr-1-rs.wrap
+index 5aeb224a103..739e451c37b 100644
+--- a/subprojects/proc-macro-error-attr-1-rs.wrap
++++ b/subprojects/proc-macro-error-attr-1-rs.wrap
+@@ -3,7 +3,7 @@ directory = proc-macro-error-attr-1.0.4
+ source_url = https://crates.io/api/v1/crates/proc-macro-error-attr/1.0.4/download
+ source_filename = proc-macro-error-attr-1.0.4.tar.gz
+ source_hash = a1be40180e52ecc98ad80b184934baf3d0d29f979574e439af5a55274b35f869
+-#method = cargo
++method = cargo
+ patch_directory = proc-macro-error-attr-1-rs
  
- mshv_start_vcpu_thread(const char* thread, uint32_t cpu) "thread=%s cpu_index=%d"
-+mshv_interrupt_exit_request(uint32_t cpu) "cpu_index=%d"
+ # bump this version number on every change to meson.build or the patches:
+diff --git a/subprojects/proc-macro2-1-rs.wrap b/subprojects/proc-macro2-1-rs.wrap
+index 0f06cd8e111..3600f4eb191 100644
+--- a/subprojects/proc-macro2-1-rs.wrap
++++ b/subprojects/proc-macro2-1-rs.wrap
+@@ -3,7 +3,7 @@ directory = proc-macro2-1.0.95
+ source_url = https://crates.io/api/v1/crates/proc-macro2/1.0.95/download
+ source_filename = proc-macro2-1.0.95.0.tar.gz
+ source_hash = 02b3e5e68a3a1a02aad3ec490a98007cbc13c37cbe84a3cd7b8e406d76e7f778
+-#method = cargo
++method = cargo
+ patch_directory = proc-macro2-1-rs
  
- mshv_set_memory(bool add, uint64_t gpa, uint64_t size, uint64_t user_addr, bool readonly, int ret) "add=%d gpa=0x%" PRIx64 " size=0x%" PRIx64 " user=0x%" PRIx64 " readonly=%d result=%d"
- mshv_mem_ioeventfd_add(uint64_t addr, uint32_t size, uint32_t data) "addr=0x%" PRIx64 " size=%d data=0x%x"
-diff --git a/hw/i386/meson.build b/hw/i386/meson.build
-index b611fbb5a7f..f4d31228633 100644
---- a/hw/i386/meson.build
-+++ b/hw/i386/meson.build
-@@ -39,6 +39,7 @@ i386_ss.add(when: 'CONFIG_TDX', if_true: files('tdvf.c', 'tdvf-hob.c'))
+ # bump this version number on every change to meson.build or the patches:
+diff --git a/subprojects/quote-1-rs.wrap b/subprojects/quote-1-rs.wrap
+index 8b721dfa00b..10626be6521 100644
+--- a/subprojects/quote-1-rs.wrap
++++ b/subprojects/quote-1-rs.wrap
+@@ -3,7 +3,7 @@ directory = quote-1.0.36
+ source_url = https://crates.io/api/v1/crates/quote/1.0.36/download
+ source_filename = quote-1.0.36.0.tar.gz
+ source_hash = 0fa76aaf39101c457836aec0ce2316dbdc3ab723cdda1c6bd4e6ad4208acaca7
+-#method = cargo
++method = cargo
+ patch_directory = quote-1-rs
  
- subdir('kvm')
- subdir('xen')
-+subdir('mshv')
+ # bump this version number on every change to meson.build or the patches:
+diff --git a/subprojects/syn-2-rs.wrap b/subprojects/syn-2-rs.wrap
+index 1e5e9d9fb6e..db6576f5812 100644
+--- a/subprojects/syn-2-rs.wrap
++++ b/subprojects/syn-2-rs.wrap
+@@ -3,7 +3,7 @@ directory = syn-2.0.104
+ source_url = https://crates.io/api/v1/crates/syn/2.0.104/download
+ source_filename = syn-2.0.104.0.tar.gz
+ source_hash = 17b6f705963418cdb9927482fa304bc562ece2fdd4f616084c50b7023b435a40
+-#method = cargo
++method = cargo
+ patch_directory = syn-2-rs
  
- i386_ss.add_all(xenpv_ss)
+ # bump this version number on every change to meson.build or the patches:
+diff --git a/subprojects/unicode-ident-1-rs.wrap b/subprojects/unicode-ident-1-rs.wrap
+index 50988f612e2..b420ebfe1f4 100644
+--- a/subprojects/unicode-ident-1-rs.wrap
++++ b/subprojects/unicode-ident-1-rs.wrap
+@@ -3,7 +3,7 @@ directory = unicode-ident-1.0.12
+ source_url = https://crates.io/api/v1/crates/unicode-ident/1.0.12/download
+ source_filename = unicode-ident-1.0.12.tar.gz
+ source_hash = 3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b
+-#method = cargo
++method = cargo
+ patch_directory = unicode-ident-1-rs
  
-diff --git a/hw/i386/mshv/meson.build b/hw/i386/mshv/meson.build
-new file mode 100644
-index 00000000000..0e556851b67
---- /dev/null
-+++ b/hw/i386/mshv/meson.build
-@@ -0,0 +1,4 @@
-+i386_mshv_ss = ss.source_set()
-+i386_mshv_ss.add(files('clock.c'))
-+
-+i386_ss.add_all(when: 'CONFIG_MSHV', if_true: i386_mshv_ss)
+ # bump this version number on every change to meson.build or the patches:
 -- 
 2.55.0
 
