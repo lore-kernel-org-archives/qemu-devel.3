@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08DA6C5DF87
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 10:12:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8756EC5DF82
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 10:12:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwzif-0007GN-Q9; Thu, 20 Aug 2026 06:09:58 -0400
+	id 1wwzhu-0006uV-8t; Thu, 20 Aug 2026 06:09:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhx-0006w2-9O
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:16 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhl-0006pm-Kg
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:02 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhv-0008Pl-5n
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:12 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-47fd66a094eso737748f8f.3
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 03:09:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhj-0008Kt-Gt
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:01 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4954df200ddso16037005e9.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 03:08:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1787220549; x=1787825349; darn=nongnu.org;
+ d=openvz.org; s=google; t=1787220538; x=1787825338; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=fDm9ZpUciP0grPAB9hW7JUEStxBgYv9yYQDvW3aVEbQ=;
- b=EN5MzEWsOWSoFHzDdmkU6oUyFXFLoU4oTHiWr1rMZRogXDyyB/IH9c8ssJctN6sJIR
- Vqf9Bs2P9kL1jm+c272fZeeT7PxT/hRyBewbM2RgQWrOwCVKaNOYjmwi9eSuEqaVO8ku
- PoIjy2o+Uh7Sa5B98ArzcJiIYhWfsqGIw4pZvpBrWAM9UtyDLT2fNsdwHHKGSDsm84Dy
- 9LjeP9xhmcpld+/OQt9/J7fmrlF5iXw1zh9UCvdc0JXyOgZmJ/+2OD/0pGAmGI10SrrY
- WXsb448IYJX1irX94HBE0AVNJyxsAHLIPNcIgApCBBOYAno9mPlDpUkZYCgecwIKDOpx
- miYA==
+ bh=5m9uheqn5F5pEee9Tp/EbVvueEOqVOsxBiATdriU+vo=;
+ b=jDArqZD84KJf/T8B64HqodvjHAHHeXyo/syTDSI966J2ewgmjpQh3euHIHGXdWf767
+ 4zG1210twm8cp++LUmt1+RLx6Vya+IztWSav7KeeYxy72Xnw7H6QX6TBxUjYQOz07dYu
+ wf3kl6TZbGHDfvtu4UwjorROWv6skQQX05gIJyDY38fdkBqfEP8o+Qm8lO/f4zACNP14
+ sUU/LsXLZURyUkIApwsylZ6CmtYJ3hIVNLnBqfGMNQCEAo561uRAy7ksfxOBQk65u1il
+ n7wksN2MENJdJtbVRRAciJZGlj+L2WqjL2pfZXpLH7wfwlp+tWlAn3JfV2knaZ3bmw0Y
+ O4fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787220549; x=1787825349;
+ d=1e100.net; s=20251104; t=1787220538; x=1787825338;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=fDm9ZpUciP0grPAB9hW7JUEStxBgYv9yYQDvW3aVEbQ=;
- b=pFPgpmBNGSDbWPh+NAqVES0kCATyB8lz9KLAUAitKJSlFZ+vtrIFkCXeMtcvLE3n0d
- s0KfXdfnDwugul5SYWKguEmdz+G280PzedshltkOfNiAYFg1QQVWB2nAzQ2voHOS9ZTB
- PPeMKJZ3EnixSV4GC4cEECt1Vm9QtMZy+8TdHDPuCjSRVvCUFUbtE5J/ppcgg7D+l+/H
- GxWQ4Q1G5o26PGZt2G0iLbNvFrmaQPMwbrQzqXVDsrY5UQgHE6qL4J0TzzujciMPLHEo
- gXni2zpDNL3k/Tt2B5Dx2lqE8HjbEs6YS+Qt+DcNYKz8JhtYLEsWBEIz5lS3WUnnHumY
- HNYA==
-X-Gm-Message-State: AFuF++lXD0AEr8OFuLf8FkwjKehRwIiQee4K4KzWfwjW54Bgs5J8mMX7
- CtMVGiu7MDg+cvbOirHJ1D8Qt00Iax1ZKT1HXfFAjSNm0AwPWlXXISu1qpmkG7lK2/+XOCNkR5h
- 58j2u
-X-Gm-Gg: AR+sD13mKVDwRn4sLlwWpQ7ksc2TSFZqbW60gaW8/yv/fK93R9rBUOdL4YuzuiWB+Hc
- 2u/LgPLRA4mCSJqkdq0sS8+xkv7nfr8j5NophSxSypVrwBl2FO48MmOZoJrociWy4Ydp9SOV0Z1
- 7nD4aFuRr3FIpjQDmetaPD7y6NjnJ8Jh0ZmryLh6xBwPsDqDZbORdWVHX+NwB1A0RyrN9wFHCH0
- ftvs9prm2m+Gm6kMiEmWi5fxW+zR1l+95ADV6ipi6Hj3+NF+Vg7aX72UNTCPUXj9vFuACOZFG28
- vGhexh6J3vS9WaUhXsQGxxjeI76gBR9U/A8NoohdQLhXC5R4QNOCNFaqkqhogELz91FvEPz/gGI
- Qy99++rusMV0sKQS12LCSB8MmpKj+M3CUdHTKHp6rG37sG3EWbXwSSWaGMoP/uv9rLWDHZBWGFm
- azwIsbl8ASaLB+7y1Cr1hXwHGWxekf8+hJEckRZnmLY5pkEUsjTPB7KJe+hg==
-X-Received: by 2002:a05:6000:144d:b0:47f:8fc9:6eaa with SMTP id
- ffacd0b85a97d-482b1ea2c22mr18216319f8f.8.1787220549244; 
- Thu, 20 Aug 2026 03:09:09 -0700 (PDT)
+ bh=5m9uheqn5F5pEee9Tp/EbVvueEOqVOsxBiATdriU+vo=;
+ b=MxCxGOZjLxvJzuLrhu4O6be9U7fcuFZESaQuCzVIu17CmS/8HwvQaztXhnbxvVkYKc
+ 4watFn2GtvORqgyup+yCZujWsrUsaPOJ/3h52xzs5p2I5XXeS4cAnG13epnca+yVQLGK
+ vutVFJ72nu5PYTrY3NRjGVy+73shZ92IFgEG13USrnlF5s9C4LFTwUNP43x6tjLNOw0J
+ t6YJ06DUFD3DNoSrxKYdHck9P+6iMEr/sw/WIQEIIqwxSkokG6swWxwkfn67JuMvVFw2
+ H5QBgt3aekaz0Dw++/eCmzTiC4Exz2IIuw/HJff9eaPYudiR+c4LKeedFL0kcQoQ+8B9
+ 91Ug==
+X-Gm-Message-State: AOJu0YzUz7d5xtsV4HuI7s9BA8Yl7QgqoNuzgHz2Y/tKCz2SWiWPC3+F
+ OVBOW+hzElO/nN+vjoEaER9XyZa90kr3+RkRQcVCGC6NBcY6C08HV8HUj9e8WGnB/fGJeJL9V2m
+ 7S1+N
+X-Gm-Gg: AR+sD11EL3q4LbEiAqHDn8bR+/1f3i3xO8XyJI3bCODuWkIrCVxIm9FdNwQjuVBxBVH
+ NDAgtuy49Tlv53fnynGOz1QrBx7MlmW2jgeTMf/hWnjsasap5c+p596xeXGU0rQHsV2L7o5rGR+
+ rtZ496PUTG295Ty9ROePDu/Jry5uMVXIDswWUI5Vt/1BVL2N+WpnRhR1IfuGb0qFXXdxLFWf/qo
+ S6TjvMsKWDLZivIBEQ20LsMWeWe/IqlDzjUJinxVfqm3jeU5bcC+94xciul2xHrQhQMNvGwY4nF
+ mXUnvah1LlYiUJgztIWjeQdnb6vTr040lK0fiAY4ng5W/BUNamY7dlxE+ztjifF6t/SV20gwL36
+ XlopI4QPiQbKltQhCtJs3/4HTSEl77hMjY6Ao/yvvu1DSArrWLX/zS4Rwi268qJ4RdrAmJT8CHo
+ bhIniRpP0Vi8JLJsDhwWY1MeXaLv1DedxcC0ItquYWjLfZCI4ICzhq1OurQg==
+X-Received: by 2002:a05:600c:46cb:b0:499:781e:25fc with SMTP id
+ 5b1f17b1804b1-499aa17d75bmr162099335e9.3.1787220537682; 
+ Thu, 20 Aug 2026 03:08:57 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:a123:7b43:afd8:8b47])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b1441b0fsm11678929f8f.4.2026.08.20.03.09.08
+ ffacd0b85a97d-482b1441b0fsm11678929f8f.4.2026.08.20.03.08.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 03:09:08 -0700 (PDT)
+ Thu, 20 Aug 2026 03:08:56 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 14/17] tests/qtest/ide-test: cover the IDENTIFY DEVICE
- geometry words
-Date: Thu, 20 Aug 2026 12:08:41 +0200
-Message-ID: <20260820100844.411717-15-den@openvz.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-stable@nongnu.org
+Subject: [PATCH v2 05/17] hw/ide: report the default CHS translation in
+ IDENTIFY DEVICE
+Date: Thu, 20 Aug 2026 12:08:32 +0200
+Message-ID: <20260820100844.411717-6-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260820100844.411717-1-den@openvz.org>
 References: <20260820100844.411717-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=den@openvz.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=den@openvz.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,147 +106,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-INITIALIZE DEVICE PARAMETERS has to leave the geometry the drive came with
-in words 3 and 6 and describe the translation it selected in words 54 to
-58, and the data is cached, so which of the two a guest is told depends on
-when it first asked. Cover both orders, as each alone leaves half of it
-untested: one test has the data built while the default is in effect and
-then replaces the translation, which the cached copy has to follow, the
-other replaces it before the first IDENTIFY DEVICE, where the words
-describing the default have to keep doing so.
+IDENTIFY DEVICE words 1, 3 and 6 describe the default CHS translation,
+and ATA-5 8.16.8 requires INITIALIZE DEVICE PARAMETERS to leave them
+alone; the translation in effect is described by words 54 to 56 instead.
+Words 3 and 6 were filled from s->heads and s->sectors, which the command
+replaces, so a guest that selected a translation of its own was told that
+its choice was what the drive came with, and could no longer find out the
+default. Word 1 is already right, as no command changes s->cylinders.
 
-Factor the reading of the data out of test_specify_zero_sectors() for the
-three of them to share.
+Report s->drive_heads and s->drive_sectors, which ide_init_drive() keeps
+for exactly this, along with the retired word 4 derived from them. The
+CompactFlash data labels those words as the default geometry too, and
+INITIALIZE DEVICE PARAMETERS is accepted for CFA drives, so fix both.
 
 Cc: John Snow <jsnow@redhat.com>
 Cc: Peter Maydell <peter.maydell@linaro.org>
 Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Cc: qemu-stable@nongnu.org
+Fixes: 176e4961bb33 ("hw/ide/core.c: Implement ATA INITIALIZE_DEVICE_PARAMETERS command")
 Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- tests/qtest/ide-test.c | 89 +++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 84 insertions(+), 5 deletions(-)
+ hw/ide/core.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
-index 4fa58ac525..e7a56e0710 100644
---- a/tests/qtest/ide-test.c
-+++ b/tests/qtest/ide-test.c
-@@ -1196,6 +1196,18 @@ static void cdrom_read_impl(int nblocks, unsigned flags)
-     free_pci_device(dev);
- }
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index 747fa71677..befbab9486 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -138,11 +138,12 @@ static void ide_identify(IDEState *s)
+     memset(p, 0, sizeof(s->identify_data));
  
-+static void ide_identify_words(QPCIDevice *dev, QPCIBar ide_bar,
-+                               uint16_t buf[256])
-+{
-+    int i;
-+
-+    qpci_io_writeb(dev, ide_bar, reg_device, 0);
-+    qpci_io_writeb(dev, ide_bar, reg_command, CMD_IDENTIFY);
-+    for (i = 0; i < 256; i++) {
-+        buf[i] = qpci_io_readw(dev, ide_bar, reg_data);
-+    }
-+}
-+
- /* Zero sectors per track has to abort (ATA-5 8.16.6), not divide by zero */
- static void test_specify_zero_sectors(void)
- {
-@@ -1221,11 +1233,7 @@ static void test_specify_zero_sectors(void)
-     assert_bit_set(qpci_io_readb(dev, ide_bar, reg_error), ABRT);
+     put_le16(p + 0, 0x0040);
++    /* Words 1, 3 and 6 describe the default translation (ATA-5 8.16.8) */
+     put_le16(p + 1, s->cylinders);
+-    put_le16(p + 3, s->heads);
+-    put_le16(p + 4, 512 * s->sectors); /* XXX: retired, remove ? */
++    put_le16(p + 3, s->drive_heads);
++    put_le16(p + 4, 512 * s->drive_sectors); /* XXX: retired, remove ? */
+     put_le16(p + 5, 512); /* XXX: retired, remove ? */
+-    put_le16(p + 6, s->sectors);
++    put_le16(p + 6, s->drive_sectors);
+     padstr((char *)(p + 10), s->drive_serial_str, 20); /* serial number */
+     put_le16(p + 20, 3); /* XXX: retired, remove ? */
+     put_le16(p + 21, 512); /* cache size in sectors */
+@@ -332,8 +333,8 @@ static void ide_cfata_identify(IDEState *s)
  
-     /* The refused request has to leave the default translation in effect */
--    qpci_io_writeb(dev, ide_bar, reg_device, 0);
--    qpci_io_writeb(dev, ide_bar, reg_command, CMD_IDENTIFY);
--    for (i = 0; i < 256; i++) {
--        buf[i] = qpci_io_readw(dev, ide_bar, reg_data);
--    }
-+    ide_identify_words(dev, ide_bar, buf);
-     g_assert_cmpint(buf[55], ==, 16);
-     g_assert_cmpint(buf[56], ==, 63);
- 
-@@ -1563,6 +1571,74 @@ static void test_migrate_chs_rejected(void)
-     unlink(path);
- }
- 
-+/* Words 54 to 58 follow the translation even when the data was cached first */
-+static void test_specify_identify(void)
-+{
-+    QTestState *qts;
-+    QPCIDevice *dev;
-+    QPCIBar bmdma_bar, ide_bar;
-+    uint16_t buf[256];
-+    unsigned int cyls;
-+
-+    qts = ide_test_start(
-+        "-blockdev driver=file,node-name=hda,filename=%s "
-+        "-device ide-hd,drive=hda,bus=ide.0,unit=0 ",
-+        tmp_path[0]);
-+    dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
-+
-+    /* Have the data built while the default translation is still in effect */
-+    ide_identify_words(dev, ide_bar, buf);
-+    cyls = buf[1];
-+    g_assert_cmpint(buf[3], ==, 16);
-+    g_assert_cmpint(buf[6], ==, 63);
-+    g_assert_cmpint(buf[53] & 1, ==, 1);
-+    g_assert_cmpint(buf[55], ==, 16);
-+    g_assert_cmpint(buf[56], ==, 63);
-+    g_assert_cmpint(buf[57] | (buf[58] << 16), ==, cyls * 16 * 63);
-+
-+    ide_set_translation(dev, ide_bar, 8, 32);
-+
-+    ide_identify_words(dev, ide_bar, buf);
-+    g_assert_cmpint(buf[1], ==, cyls);
-+    g_assert_cmpint(buf[3], ==, 16);
-+    g_assert_cmpint(buf[4], ==, 512 * 63);
-+    g_assert_cmpint(buf[6], ==, 63);
-+    g_assert_cmpint(buf[55], ==, 8);
-+    g_assert_cmpint(buf[56], ==, 32);
-+    g_assert_cmpint(buf[57] | (buf[58] << 16), ==, cyls * 8 * 32);
-+
-+    free_pci_device(dev);
-+    ide_test_quit(qts);
-+}
-+
-+/* Words 3 and 6 keep the drive's own geometry even if built after a change */
-+static void test_specify_identify_default(void)
-+{
-+    QTestState *qts;
-+    QPCIDevice *dev;
-+    QPCIBar bmdma_bar, ide_bar;
-+    uint16_t buf[256];
-+
-+    qts = ide_test_start(
-+        "-blockdev driver=file,node-name=hda,filename=%s "
-+        "-device ide-hd,drive=hda,bus=ide.0,unit=0 ",
-+        tmp_path[0]);
-+    dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
-+
-+    /* No IDENTIFY DEVICE before this one, so nothing was cached yet */
-+    ide_set_translation(dev, ide_bar, 8, 32);
-+    ide_identify_words(dev, ide_bar, buf);
-+    g_assert_cmpint(buf[3], ==, 16);
-+    g_assert_cmpint(buf[4], ==, 512 * 63);
-+    g_assert_cmpint(buf[6], ==, 63);
-+    g_assert_cmpint(buf[55], ==, 8);
-+    g_assert_cmpint(buf[56], ==, 32);
-+    g_assert_cmpint(buf[57] | (buf[58] << 16), ==, buf[1] * 8 * 32);
-+
-+    free_pci_device(dev);
-+    ide_test_quit(qts);
-+}
-+
- static void test_cdrom_pio(void)
- {
-     cdrom_read_impl(1, CDROM_PIO);
-@@ -1635,6 +1711,9 @@ int main(int argc, char **argv)
- 
-     qtest_add_func("/ide/read_native", test_specify);
-     qtest_add_func("/ide/specify/zero_sectors", test_specify_zero_sectors);
-+    qtest_add_func("/ide/specify/identify", test_specify_identify);
-+    qtest_add_func("/ide/specify/identify_default",
-+                   test_specify_identify_default);
-     qtest_add_func("/ide/migration/chs_translation",
-                    test_migrate_chs_translation);
-     qtest_add_func("/ide/migration/chs_snapshot", test_migrate_chs_snapshot);
+     put_le16(p + 0, 0x848a);                    /* CF Storage Card signature */
+     put_le16(p + 1, s->cylinders);              /* Default cylinders */
+-    put_le16(p + 3, s->heads);                  /* Default heads */
+-    put_le16(p + 6, s->sectors);                /* Default sectors per track */
++    put_le16(p + 3, s->drive_heads);            /* Default heads */
++    put_le16(p + 6, s->drive_sectors);          /* Default sectors per track */
+     /* *(p + 7) := nb_sectors >> 16 -- see ide_cfata_identify_size */
+     /* *(p + 8) := nb_sectors       -- see ide_cfata_identify_size */
+     padstr((char *)(p + 10), s->drive_serial_str, 20); /* serial number */
 -- 
 2.53.0
 
