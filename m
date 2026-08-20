@@ -4,82 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DCABC5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 14:44:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 001E5C5DF87
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 14:44:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx3zT-0000dS-Ih; Thu, 20 Aug 2026 10:43:35 -0400
+	id 1wx3zC-0000WA-Bo; Thu, 20 Aug 2026 10:43:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wx3zM-0000b6-4v
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 10:43:28 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wx3zA-0000Vp-Mb
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 10:43:16 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wx3zI-0005Bh-7f
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 10:43:27 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4998b5a63e2so24339575e9.1
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 07:43:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wx3z8-00058y-Pu
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 10:43:16 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-493b966dd74so15648365e9.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 07:43:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1787237003; x=1787841803; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=UBFPtGvi7DqI4Ui5hNdIN9aVXsLQeDDR8Rmf7GilLVY=;
- b=WbkaWgs72yMQ/ayr3iM+Aqe4xsjMhrIwRcFAEnngI4yUS7n69Avg3CoWGfs6kaZasg
- Jri439s9qQMKyK2MJZc3E4U105HKqlfu+TWqROUhpaBY6RxvV0XtKaikyHUL8ASLF8sP
- sJH21lfLpD2DG93RPnFSWht6z0NXxySjAtmUCKBMLsq6NUJbAbj/n2ls1rqZAY19O7jL
- vnNSc418yi/Gx/OuZI8CDyzh+xFcVmw5bbV893H5bxFD4OKQHqzOuu/4jNn4OoHPmbCz
- /UpLK2xwp6NNBOElb2Xj8JEfhvU0xLVW/Y8q7qxt9EkMjJaoQXb2Ai7O6koStzD3H3DM
- JDwA==
+ d=openvz.org; s=google; t=1787236992; x=1787841792; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=rqrcX+w3ODt714ovAIrNXwoV9XbEiB7vP29/TtziXnA=;
+ b=jXsBXcX+8RTqAN9sg47LI2EZt+WNKxfWRxlNQv3JssAiGsPmN9h13ZNKTusNrVeVmK
+ nariULTH1JGPLV8BKP9xaalByVYIf05ORJJV+S17h3nKZmANn1ponI0jW7l4E0WU5MUC
+ 9XbAvQW/jTdMmLbxoaC1EmzrKXIbDG/Sej/xChw0Bsqryu9NfHXik7Z0LF7AsfaFagV5
+ tAso2ZTcFfvHKZy1cdA64hieFF1U+ceNJTHHP7VVuHHRz5L0xLTObDUjg+3VdmdLPDBP
+ djOPAXfU9hcsXqyFjK2Y4sPaDmB9TfE25A/KkNsWultEb4QMaBXf/lL7V1K0AlhuBLJo
+ 5Waw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787237003; x=1787841803;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=UBFPtGvi7DqI4Ui5hNdIN9aVXsLQeDDR8Rmf7GilLVY=;
- b=S5xICK6WsUrPmJySzvZxwDz/f87LfVlvVhiyaolMq13TRFWIy6yn0AatRh+TZoZVq0
- 8l5z7UCaHKfEuvNntk32rcLn6FDiJUJ9JDGT59m5+G777Zu8W85WpzHlG9LEgt8hdnZ3
- l5rmwxfOn74bN7HCZNxbqJ8va6ePuYmh+XYeEQp4eSJto0JypZoyED2bhKjouSfKjesP
- ixZXj9Rh9Rvlv1bB+NKGpQgGmLyv2krTa0Fz/wNTWJVW2vJPmvRHtsHEEcFdIoPetPnr
- JShSoVz450s5MR9c8ktDZNFYlugE42uWDKFh4LtCMVBBa1yjjCRj309bH423oOJLZadW
- MB4g==
-X-Gm-Message-State: AOJu0YySo4mE8o0adarTfO2O0ArzDLaD1JSDhFeIXu81e0P2iKWEpi6J
- GwEFZietLgWhfI4R8hY1dHsYrow34MyqWmqJhBvlL8BZDl38XOtazhvEXQMpDtUbU+Sp9ejUWG/
- 5UxGu
-X-Gm-Gg: AR+sD10w0EWq8oAROXnMT1NNuAP+9MbHTF3oNteDnfwHI0H0rGwuDBrErW0rN8354d/
- 10PK0YB1+iQBeEJ0+JfjKcw7GI1vGuOP07Gl8phb5nSH7qDxfJSQbT2NezeH9bpepmoD+OKquU0
- qWlEbL/FsaubGeMyu/O1q5rxwHu/Z+raSJ/lTVv1G1Fp4P2lO5ht0SsdWAuXOL/RVu4XpdJu6Pn
- oZaaJE7BW9sdlZxeC+xW4AgrBS0mtqZLhcWSlfa8AhNZKLGYAdGGxbDsIcxs26e55id1yscX0Hx
- z6FFcTtAlWmpUOXhmIEX31+QBIcSl5UOh5LqnvBZhx4fPA+Mx2YVkks3FtoDJq6VKRTiCjXisU3
- FkKJtjBeh9OFP7+vuOfRAfv2p0cQa0Uo8llgfl2Lfll5E3TjoV96GrcyiOMvo7ovdlXDRj//FQ2
- k4YF4OQB7I1xivOKFsg445GGvxdPt31gcXiKyac37TwZ51vfpZlk6axcfbSA==
-X-Received: by 2002:a05:600c:628d:b0:499:8ae1:b900 with SMTP id
- 5b1f17b1804b1-499aa1c9610mr245799395e9.12.1787237002714; 
- Thu, 20 Aug 2026 07:43:22 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787236992; x=1787841792;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=rqrcX+w3ODt714ovAIrNXwoV9XbEiB7vP29/TtziXnA=;
+ b=WoAlWI8DbJHOmXKrH8uP4aOtELiYeZCPSVI78O6+sbpcWopnMLLDBaOugnbUaY8JjQ
+ C+s3onyzlYRxSRl3PauDPxnCDQFin0Wmkfb9israf8FEkhqqZO40VfrfVy/8114EcJJq
+ X5OQyrOFwfv5S235JkvsBosYElevBXrfBHNRuKJslYI1zGginGwn870ShPR70R+zDaqa
+ hQ3taBreAaDq3lD0YCDBa+WkZZkoGNPjTgPj7d+C1wq3pnuixpt9HX9DaJcLy4ArwULJ
+ VpBBN7c/nKYARpW5CftePsqn0sGd+qPuOTYhwhDr5bSuBb07xHeIPlRkLI7+AbOe1Lk9
+ qccw==
+X-Gm-Message-State: AOJu0Yx63d44ly47uuca94T+IvhCZO0n90LisKuHArlcY0Eo7cAdfL4M
+ MvTVuTogKx9s8LWA0tFz9gY7y8QJtWd/o8u4W/ane5qaIvr3DZ5x70MjME4WbmxDqEYj+5ZHrlj
+ fG1zt
+X-Gm-Gg: AR+sD109TI7W3YLxP+/U4vfV2cKrf7aTNNCdU1IONQvn/KT058OZDyASFroTxb0VAs3
+ TPXtkitd5LGIyPskJV3YZPa5WmZcsep00fTctSMObBl8MpFnx6w3xSO4bd86+Hq1mZ4gW+5tTEs
+ TlW5Eta6JEQNDW6Kf7s0JSdjUEtHdidxWfJpk+ayOaR8ODtr+nWLaWv5PgA6igYbvRCICKhqxFd
+ FliV52bR2xS1vG3kmSNS32BD+d3TdaqTa1J/KJvqnbnRDTUrcciv2g4qTveSb1/i7vHgM4f/ad+
+ 0Iy1y4HOwyYD9SWIKTB/x4cJVKU90e5vchH3DsyTqq7WgUnpbnx7O2gHf5f2RugROPiEPnyySXt
+ YhC4WnyisXMhjMT5s6UjFT9sJoh+2wwmEfP75MjjQ3Ws8hx891Nm7jorhr7ZjCfqwMOidq6Gvo/
+ d20qbv3Yya7vzOWbwz2rOyBTR7SIAwMJUkdZ8ikCaIeBlCT0yCvvLuViPkLQ==
+X-Received: by 2002:a05:600c:1387:b0:493:f5bf:4dc6 with SMTP id
+ 5b1f17b1804b1-499aa1a47cfmr191095615e9.7.1787236992429; 
+ Thu, 20 Aug 2026 07:43:12 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:a123:7b43:afd8:8b47])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499aa0dd620sm136791565e9.13.2026.08.20.07.43.21
+ 5b1f17b1804b1-499aa0dd620sm136791565e9.13.2026.08.20.07.43.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 07:43:22 -0700 (PDT)
+ Thu, 20 Aug 2026 07:43:11 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH 08/11] hw/ide/ahci: drain the ports on teardown
-Date: Thu, 20 Aug 2026 16:43:06 +0200
-Message-ID: <20260820144309.835173-9-den@openvz.org>
+Subject: [PATCH 00/11] hw/ide: pending IDE fixes
+Date: Thu, 20 Aug 2026 16:42:58 +0200
+Message-ID: <20260820144309.835173-1-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260820144309.835173-1-den@openvz.org>
-References: <20260820144309.835173-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=den@openvz.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=den@openvz.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,142 +98,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+Pending IDE fixes for various issues reported on GitLab.
 
-ahci_uninit() frees s->dev without touching the requests still in flight.
-The only blk_aio_cancel() for them lives in ahci_reset_port(), which the
-unplug path does not run, and the ide-hd child's own drain is deferred
-through call_rcu so it happens after the free. A guest that powers the
-root port slot off through SLTCTL, or writes the ACPI ejection register,
-while a read is outstanding therefore leaves the completion to run
-against freed memory.
+Based on:
+[PATCH v2 00/17] hw/ide: fix the logical CHS translation a guest selects
+https://lore.kernel.org/qemu-devel/20260820100844.411717-1-den@openvz.org/
 
-A plain device_del is not affected: the pciehp attention-button flow
-resets the secondary bus first, which cancels through the reset path.
-Surprise removal is what skips it.
-
-Cancelling the NCQ requests alone is not enough. IDEDMA and IDEBus are
-embedded in AHCIDevice, so a plain DMA read reaches the freed array
-through dma_blk_cb() and a PIO read through ide_buffered_readv_cb(),
-neither of which the NCQ bookkeeping covers. ide_exit() drains nothing
-and frees io_buffer, which an outstanding request may still target.
-
-Move the NCQ cancel loop into a helper, run it from ahci_uninit() too,
-and drain each port before ide_exit() so no class of request can outlive
-the allocation. Delete check_bh there as well; qemu_bh_new_guarded() in
-check_cmd() has no counterpart on this path either.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4069
+Signed-off-by: Denis V. Lunev <den@openvz.org>
 Cc: John Snow <jsnow@redhat.com>
 Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
----
- hw/ide/ahci.c | 72 +++++++++++++++++++++++++++++++++++----------------
- 1 file changed, 49 insertions(+), 23 deletions(-)
 
-diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
-index 2b2ef873e0..6b04762c4a 100644
---- a/hw/ide/ahci.c
-+++ b/hw/ide/ahci.c
-@@ -619,12 +619,37 @@ static void ahci_set_signature(AHCIDevice *ad, uint32_t sig)
-                              s->lcyl, s->hcyl, sig);
- }
- 
-+static void ahci_cancel_ncq_requests(AHCIDevice *ad)
-+{
-+    int i;
-+
-+    for (i = 0; i < AHCI_MAX_CMDS; i++) {
-+        NCQTransferState *ncq_tfs = &ad->ncq_tfs[i];
-+        ncq_tfs->halt = false;
-+        if (!ncq_tfs->used) {
-+            continue;
-+        }
-+
-+        if (ncq_tfs->aiocb) {
-+            blk_aio_cancel(ncq_tfs->aiocb);
-+            ncq_tfs->aiocb = NULL;
-+        }
-+
-+        /* Maybe we just finished the request thanks to blk_aio_cancel() */
-+        if (!ncq_tfs->used) {
-+            continue;
-+        }
-+
-+        qemu_sglist_destroy(&ncq_tfs->sglist);
-+        ncq_tfs->used = 0;
-+    }
-+}
-+
- static void ahci_reset_port(AHCIState *s, int port, IDEResetKind kind)
- {
-     AHCIDevice *d = &s->dev[port];
-     AHCIPortRegs *pr = &d->port_regs;
-     IDEState *ide_state = &d->port.ifs[0];
--    int i;
- 
-     trace_ahci_reset_port(s, port);
- 
-@@ -645,27 +670,7 @@ static void ahci_reset_port(AHCIState *s, int port, IDEResetKind kind)
-         return;
-     }
- 
--    /* reset ncq queue */
--    for (i = 0; i < AHCI_MAX_CMDS; i++) {
--        NCQTransferState *ncq_tfs = &s->dev[port].ncq_tfs[i];
--        ncq_tfs->halt = false;
--        if (!ncq_tfs->used) {
--            continue;
--        }
--
--        if (ncq_tfs->aiocb) {
--            blk_aio_cancel(ncq_tfs->aiocb);
--            ncq_tfs->aiocb = NULL;
--        }
--
--        /* Maybe we just finished the request thanks to blk_aio_cancel() */
--        if (!ncq_tfs->used) {
--            continue;
--        }
--
--        qemu_sglist_destroy(&ncq_tfs->sglist);
--        ncq_tfs->used = 0;
--    }
-+    ahci_cancel_ncq_requests(d);
- 
-     s->dev[port].port_state = STATE_RUN;
-     if (ide_state->drive_kind == IDE_CD) {
-@@ -1659,8 +1664,29 @@ void ahci_uninit(AHCIState *s)
-     for (i = 0; i < s->ports; i++) {
-         AHCIDevice *ad = &s->dev[i];
- 
-+        /*
-+         * Unplug does not go through a reset, so this is the only chance to
-+         * detach the requests and the bottom half that would otherwise walk
-+         * s->dev after it is freed below.
-+         */
-+        ahci_cancel_ncq_requests(ad);
-+        if (ad->check_bh) {
-+            qemu_bh_delete(ad->check_bh);
-+            ad->check_bh = NULL;
-+        }
-+
-         for (j = 0; j < 2; j++) {
--            ide_exit(&ad->port.ifs[j]);
-+            IDEState *ide_state = &ad->port.ifs[j];
-+
-+            /*
-+             * Everything the port still owns points into the allocation this
-+             * function frees, io_buffer included, so nothing may be left in
-+             * flight once ide_exit() has run.
-+             */
-+            if (ide_state->blk) {
-+                blk_drain(ide_state->blk);
-+            }
-+            ide_exit(ide_state);
-         }
-         object_unparent(OBJECT(&ad->port));
-     }
+Denis V. Lunev (11):
+  hw/ide: reject an out-of-range PIO transfer window on load
+  tests/qtest/ide-test: cover the migrated PIO transfer window
+  hw/ide/ahci: refuse a PIO transfer with no command header
+  hw/ide/ahci: clear cur_cmd when the command list is unmapped
+  tests/qtest/ahci: regression test for a PIO write vs. engine stop
+  hw/ide/ahci: treat a failed PRDT walk as a PIO transfer failure
+  hw/ide/ahci: reject a command header with an invalid FIS length
+  hw/ide/ahci: drain the ports on teardown
+  tests/qtest/ahci: regression test for a request outliving an unplug
+  hw/ide: report ATAPI UDMA5 with a matching standard and cable
+  tests/qtest/ide-test: cover the UDMA5 identify words
+
+ hw/ide/ahci.c            | 136 ++++++++++++++++++++++++++---------
+ hw/ide/core.c            |  23 +++++-
+ hw/ide/trace-events      |   3 +
+ include/hw/ide/ide-dma.h |   3 +-
+ tests/qtest/ahci-test.c  | 147 ++++++++++++++++++++++++++++++++++++++
+ tests/qtest/ide-test.c   | 148 +++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 423 insertions(+), 37 deletions(-)
+
+
+base-commit: 7f1fc6c9b9d2859577fb8837e05ca6eaa5a8a0ba
 -- 
 2.53.0
 
