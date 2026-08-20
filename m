@@ -4,99 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D966EC5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 15:21:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F491C5DF85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 15:23:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx4Zz-0006kr-3v; Thu, 20 Aug 2026 11:21:19 -0400
+	id 1wx4bc-0007SC-JJ; Thu, 20 Aug 2026 11:23:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wx4Zw-0006jW-7y
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 11:21:16 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wx4ba-0007RK-A5
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 11:22:58 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wx4Zu-0002ca-Hh
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 11:21:15 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-383cb94f742so2598539a91.3
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 08:21:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787239273; x=1787844073; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=JBiklarrCZGlNuTGlfjF66tiZXZ/iOMyq4iHSICM5cc=;
- b=RM0YQ7zj9vNJ54qF0TPbhzeRzS32C4bekijOaOS6twd3AI+pfaruq+l9THl46cdiUp
- DsL+8Ms8yb9WXCtMcDce6KmvqF+f5cx+Y3+uPKpZeYt4z+NG2L87BjZPqWe9fmE3XRGr
- rGP+WfSN1HpWn9ojSwvL8mA1Tj/OLuzVLpKKMxxgAuSGK/pPbGls3rCiL0R3WRtYDzxQ
- dYaxXe0Z0OPSALS4T/4HHZG7/36lieaU7JmvkXHBdTFQpuBJbFMDw1l3/0KWQnusc9Q4
- B69taZEGxlXPGNOp+FxW1vWefo6fZzrEuptml9ffXPn9cAaRr6iNiLeA/lTzwTKzLtLS
- YhMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787239273; x=1787844073;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=JBiklarrCZGlNuTGlfjF66tiZXZ/iOMyq4iHSICM5cc=;
- b=HOGiD42bEfC5H43KyOxDOMy1EYEov7PAvEtArBppi3Mdp+ElC7uoTs777v7Hdnxis1
- 7etaidML3lt5zFkze7rZuAhoR1OVqcDsxcJJg4GucxDMEaPOyfl0NHGJK2Dl0vhcHSkS
- Im48d04ECk6vCgCRW3noC2J0gdE/BUl1xSdw7X3lJ36pNreNp0IRAGA5gT62v3xwJL/D
- pS8lwQ1FrdSodCEV1L32O+Kpeze8sALE5TkDACLAgS5FrHGgEDIcuMX3eBezx8KScaHo
- LUXpFJG5bvowwsIZBwqxPpMoeH2783rflA3ns1qZjDhYCLzBaoNr81T5VD+/k+wwyp+R
- Rj2Q==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rp7BgnPpIMaM7YTF8mlUZW7ex7FAE4lbU4whT9dnPzE2sAPy1pOWwdmOKsCx00Q9azEZ+1nIRcb+bVz@nongnu.org
-X-Gm-Message-State: AFuF++mdycd0I/lsW7FJ3z0q1yWnT5s0t4zexwD1ovhL4ygeJVxp+s19
- zunRyozZF6ZWnFPFiHi1JV7HgbFli8Go3qWd7MHT0801efGxntYR3y8anLqdieYSMgw=
-X-Gm-Gg: AR+sD117ZPcYsCzWHbdqGJ/+/U/0i3aIOD9rQkhF6b59j4oJC0KsfDfYimXtYMsDzzm
- tdTR8Wz69ueVtDUF5wIvnFAJs+o2+MoG9Bx8C28bvUhmEtJQ7E574qsRxl7uWzrtivrtfQ/rTx6
- d3Fh25/g8gnfRqNKmbKe4NVGPailZun6OWgMCOxHeRXRUEOl0nNbHsvMJfa5/1AbuBqG5E+BTtl
- wPK4dEezxCqrbXZfKqzdzxQ9X2eMuj8Kgb193NSiWsnIzG0SxK5Cj5sV1afj9UvVP/xLjiAoRWk
- FR9H71SBfzEpTE5pmU0B4QROVUTy+fLoiM0cg18w3KJUIxGZA9UomX+sWCMETiu03qjbVB3WIKR
- qJ9sg9lTCAlBrMw+f+Seo/A5hFJ/7Y7QLnSvSZTMjG1LGtjraXNww0QNRUas8DEWkzyCXn44T9L
- AjRZsthUkbfnzar2ZzSheC+eP6ntKmouWW80Y7hVF47cxhcOlaBUxQ7iu+rICeRItZ6W3CQyGm1
- rso8D8=
-X-Received: by 2002:a17:90b:390c:b0:381:cef1:11ac with SMTP id
- 98e67ed59e1d1-3958110c03emr21321281a91.10.1787239272449; 
- Thu, 20 Aug 2026 08:21:12 -0700 (PDT)
-Received: from ?IPV6:2607:fb90:331d:db6f:e6eb:39ca:2251:a26f?
- ([2607:fb90:331d:db6f:e6eb:39ca:2251:a26f])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3957fb17f48sm7805182a91.2.2026.08.20.08.21.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Aug 2026 08:21:11 -0700 (PDT)
-Message-ID: <0b70e3cc-e14f-4737-b265-c7d12898169a@linaro.org>
-Date: Thu, 20 Aug 2026 08:21:06 -0700
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wx4bX-0002rY-IM
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 11:22:58 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 7B81885167;
+ Thu, 20 Aug 2026 15:22:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1787239369; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bny/hLnq/D5J+sf0TC+t+uAdUtdkUH6i0RBqtyUBVFE=;
+ b=Qo1Y1Y4X+P+16tO0qbkVNJoWo1VFWDzH0tYds3tubfWMEnkKrTqDP3LBr1zJL4Kxa+1aNX
+ GLHHAs8QAx6olxvnfEX13uPS/S13p0BUw+JZ2pabf4LPUlvWepmwKORK7WDhDvbBcaWbOd
+ t6aF1wJTra2NB6c1UkCI0rkAmYsp18w=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1787239369;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bny/hLnq/D5J+sf0TC+t+uAdUtdkUH6i0RBqtyUBVFE=;
+ b=ZSWdf2ttsJniuRjorMsLbx7+Xvend0emTxv3URc8GbXbRTA5p3rKk9TO9jciYR7e2BGcn8
+ ddpXbphm3CLPIeAg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1787239365; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bny/hLnq/D5J+sf0TC+t+uAdUtdkUH6i0RBqtyUBVFE=;
+ b=0ONAv4r+/QtJ5HlsTNIfuOJgIu3KccLwRc8Hy/v99SqRoQeelJQSNs2wHeqdAj+voecD26
+ K1AjQJxmu/W8cLnWrXM7le0d9WdeigIFbVuLk43pHI/CgLADW+Rb4WMZ0scfBkdFzfv0oU
+ 4MWG2f2mJVmrLCol95wz2NJjPFV1lsE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1787239365;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bny/hLnq/D5J+sf0TC+t+uAdUtdkUH6i0RBqtyUBVFE=;
+ b=KX9pjO5XsKAfeO5pjpvx+2+N+rM4G2ZeIDzEOLl/CvVB9+QtVGKnAS2Vbb5RAxL8bAF7yZ
+ jGBtTEW1MawvHlAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1CEE927A8;
+ Thu, 20 Aug 2026 15:22:44 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id neLnN8Qbh2ofJAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 20 Aug 2026 15:22:44 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: phind.uet@gmail.com, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Lukas Straub <lukasstraub2@web.de>, Peter Xu
+ <peterx@redhat.com>, "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>
+Cc: Nguyen Dinh Phi <phind.uet@gmail.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 0/3]  Support chain migration in test
+In-Reply-To: <20260709130032.58667-1-phind.uet@gmail.com>
+References: <20260709130032.58667-1-phind.uet@gmail.com>
+Date: Thu, 20 Aug 2026 12:22:42 -0300
+Message-ID: <87lda0lsu5.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 09/13] cpus: Add const-qualified CPU environment
- accessors
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
- qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>
-References: <20260820104730.25462-1-philmd@oss.qualcomm.com>
- <20260820104730.25462-10-philmd@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260820104730.25462-10-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com,web.de]; RCVD_TLS_ALL(0.00)[];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; TAGGED_RCPT(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ FREEMAIL_TO(0.00)[gmail.com,redhat.com,web.de,oracle.com,akamai.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; FREEMAIL_CC(0.00)[gmail.com,nongnu.org];
+ RCPT_COUNT_SEVEN(0.00)[10]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,60 +123,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/20/26 03:47, Philippe Mathieu-Daudé wrote:
-> Introduce const-qualified variants of cpu_env() and
-> env_archcpu(), to safely access CPU architecture
-> state when it should not be modified.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> ---
->   include/exec/cpu-common.h | 11 +++++++++++
->   include/hw/core/cpu.h     |  6 ++++++
->   2 files changed, 17 insertions(+)
-> 
-> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-> index 6594f7fa1be..f3a3799f451 100644
-> --- a/include/exec/cpu-common.h
-> +++ b/include/exec/cpu-common.h
-> @@ -79,6 +79,17 @@ static inline bool cpu_loop_exit_requested(const CPUState *cpu)
->   }
->   #endif /* CONFIG_TCG */
->   
-> +/**
-> + * env_archcpu_const(env)
-> + * @env: The architecture environment (const).
-> + *
-> + * Return the const ArchCPU associated with the environment.
-> + */
-> +static inline const ArchCPU *env_archcpu_const(const CPUArchState *env)
-> +{
-> +    return (const void *)env - sizeof(CPUState);
-> +}
-> +
->   /**
->    * env_archcpu(env)
->    * @env: The architecture environment
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index 81af7b9ee1a..59f777f3f15 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -594,6 +594,12 @@ struct CPUState {
->   QEMU_BUILD_BUG_ON(offsetof(CPUState, neg) !=
->                     sizeof(CPUState) - sizeof(CPUNegativeOffsetState));
->   
-> +static inline const CPUArchState *cpu_env_const(const CPUState *cpu)
-> +{
-> +    /* We validate that CPUArchState follows CPUState in cpu-target.c */
-> +    return (const CPUArchState *)(cpu + 1);
-> +}
-> +
->   static inline CPUArchState *cpu_env(CPUState *cpu)
->   {
->       /* We validate that CPUArchState follows CPUState in cpu-target.c */
+phind.uet@gmail.com writes:
 
-I wonder if we can use _Generic to make this automatic, rather than have to choose between 
-two different function names.
+> From: Nguyen Dinh Phi <phind.uet@gmail.com>
+>
+> This series adds test infrastructure and test cases for multi-hop chain
+> migration, where a VM migrates from host A to B and then from B to C.
+>
+> The migration test TODO list mentions ping-pong migration (A=E2=86=92B=E2=
+=86=92A) as a
+> desirable scenario; the true ping-pong (A=E2=86=92B=E2=86=92A) would requ=
+ire the original
+> source A to become a destination for the return leg.
+> This is not possible: a QEMU process launched without -incoming cannot
+> later accept an incoming migration stream. Instead, this series implements
+> chain migration (A=E2=86=92B=E2=86=92C): B was already launched with -inc=
+oming and can
+> be re-wired as the source for the next hop, while a fresh QEMU instance C
+> is started as the new destination.
+>
+> Nguyen Dinh Phi (3):
+>   tests/migration: Factor out per-process launch and setup helpers
+>   tests/migration: Retrieve serial path from QTestState
+>   tests/migration: Add chain (A to B to C) precopy migration tests
+>
+>  tests/qtest/libqtest.c                |  16 +
+>  tests/qtest/libqtest.h                |   8 +
+>  tests/qtest/migration/colo-tests.c    |  14 +-
+>  tests/qtest/migration/cpr-tests.c     |   8 +-
+>  tests/qtest/migration/framework.c     | 475 ++++++++++++++++----------
+>  tests/qtest/migration/framework.h     |  21 +-
+>  tests/qtest/migration/misc-tests.c    |   4 +-
+>  tests/qtest/migration/precopy-tests.c |  51 ++-
+>  8 files changed, 389 insertions(+), 208 deletions(-)
 
+This has been attempted before, but we ended up not continuing the work
+for other reasons. I think your ideas on the first patch are a step in
+the right direction. As for the serial work, I'm not so sure we should
+be adding migration-specific data into QTestState, even though the
+serial is not technically exclusive to migration. I need to give it a
+bit more thought.
 
-r~
+Here are the links to the previous work (for reference, I don't have
+plans to carry it forward at the moment):
+
+Cleanups and dealing with serial:=20
+https://lore.kernel.org/all/20241125144612.16194-2-farosas@suse.de/
+https://lore.kernel.org/all/20241125144612.16194-3-farosas@suse.de/
+https://lore.kernel.org/all/20241125144612.16194-4-farosas@suse.de/
+
+Ping-pong test:
+https://lore.kernel.org/all/20241125144612.16194-6-farosas@suse.de/
 
