@@ -4,107 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F28FC5DF82
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 10:32:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34617C5DF82
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 10:47:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx04B-000666-LM; Thu, 20 Aug 2026 06:32:11 -0400
+	id 1wx0Ik-00084e-1N; Thu, 20 Aug 2026 06:47:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wx04A-00065b-1b
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:32:10 -0400
-Received: from mail-eastusazon11022106.outbound.protection.outlook.com
- ([52.101.53.106] helo=BL0PR03CU003.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wx0Ij-00084J-00
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:47:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wx048-0003lx-Em
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:32:09 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=oRnAEO0gufVukZnbgsekeRqagssn+omxBD7OjRHvd/Xfgb1Eeyu2uOfTYULa7hvs7Ze7getGl4zpMcfAd+eIM97i9qlxmLr9LLVljhFTIiaSPPaHznD55Mi9VyoQGM7xRP3Ey0yYh0Vk7+g7n9Ph2CouHzLE9Nc8IGm56wWK8SEX/4fexYF2ihqAyFZHbHf2vWdvDoBEORd8Z4C1nVBBz+1s4g7XVCLSc21VIoo+LCgla4377oW8KEQJcbP3H8xtUduXdABrYDBEaOC/r2vxgjkbFsqWk4q6wPFDl1plrGIVaU+EZe/gvDFb3gnlto2ceJ0M/mluq3IBrq7ZJo62gA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sfMRbeKHti39Rkjz1jBp9+nT6iulJO4bkyNMI2AfOtQ=;
- b=q1uh7Cqtdck2539dbyfMMR+JbdGPsHctA8gS2ip2W8gKcfNtAc7ZOR6ri/apg+l8j20mJ+M5CdDyW6osfqiEmvIl4OquTO9VpMIlFtJmN76XGTnugGdiiUlngR+OKG/wnhmqwcLecu4XGD4S80LUZFYd6n7hedYPQ06BRbBuE3JCAD/6bzqB8eOye0xMGJj9UwRRBi+LXQMjJAg7mBkP7rzjS2W89QSQRo9FL8fdYeovyK2/yTehYzuJOr4XRI0I5+9gh7btiHhjJwEQk9aXZgCC9nyZL7alAOzmnZRych5HQHIViVCfBVdpEjjjyl2HKzCaR7NBzzM2Q2veCC3Gbw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
- dmarc=none action=none header.from=axiado.com; dkim=none (message not
- signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sfMRbeKHti39Rkjz1jBp9+nT6iulJO4bkyNMI2AfOtQ=;
- b=ULHxshRlcPBGAiQGN8sbrQIhb6wuIP2KlBIDw5OnDKMYPngYHWeoxNIRhyuCU6FH9MWAGvk1dQuXyiy6g31Dkc8YGdSOVhHqJLa/Bofg/aaBb1kw0XoBWtrEB5X3a/MYSqrjzMKRurbixeuCLqcjnPgptlhWEwhc+tSEYVRWx3+zv26r0ugbXdUBiPS6lmpIpL6CLjHRriIYxwwxeIPrfCLTBb3UjsrHjraKOkBGDZdXcM7M6H8FOtoj22o1BXcCEbLR6xVdlXhYvglK93wxGzNuCE4kSpIxg7ZwpbXR+j5tKGWd1BlNNnPKLloApYI0rFl56BsGfbewUf0NWSfMsA==
-Received: from BY1P220CA0026.NAMP220.PROD.OUTLOOK.COM (2603:10b6:a03:5c3::17)
- by DS1PR18MB6170.namprd18.prod.outlook.com (2603:10b6:8:1ef::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.8; Thu, 20 Aug
- 2026 10:27:01 +0000
-Received: from SJ1PEPF00002317.namprd03.prod.outlook.com
- (2603:10b6:a03:5c3:cafe::4e) by BY1P220CA0026.outlook.office365.com
- (2603:10b6:a03:5c3::17) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.339.10 via Frontend Transport; Thu,
- 20 Aug 2026 10:27:01 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
- smtp.mailfrom=axiado.com; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axiado.com;
-Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
- designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
- client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
-Received: from smtp.corp.axiado.com (64.62.143.114) by
- SJ1PEPF00002317.mail.protection.outlook.com (10.167.242.171) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.339.3
- via Frontend Transport; Thu, 20 Aug 2026 10:27:01 +0000
-Received: from axiado.com (unknown [10.4.1.181])
- by smtp.corp.axiado.com (Postfix) with ESMTP id CE84140BFE04;
- Thu, 20 Aug 2026 03:27:00 -0700 (PDT)
-From: Kuan-Jui Chiu <kchiu@axiado.com>
-To: qemu-devel@nongnu.org,
-	peter.maydell@linaro.org
-Cc: Kuan-Jui Chiu <kchiu@axiado.com>
-Subject: [PATCH v1 2/5] hw/arm: Rename ax3000-boards as axiado-boards
-Date: Thu, 20 Aug 2026 03:21:29 -0700
-Message-Id: <20260820102132.361642-3-kchiu@axiado.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260820102132.361642-1-kchiu@axiado.com>
-References: <20260820102132.361642-1-kchiu@axiado.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wx0Ih-0005cB-CJ
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:47:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787222829;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=M+U6qaYNydOPxWrJ6wsFwZFbNXGWnhTqQborUxUW6D8=;
+ b=idjDSKh6Sq6Kyx31yltl2jXtfpgaXfzJKFIyjfu4Lmn91dCONLcHz78uoYZTg7zY6P5RZ3
+ Sf7S78wYmhbRvHkXOBY/bujDUUmLf0MGQ1w63v2JY88GhbRk9mjiI8aCwd1ZmaxR5JwFC0
+ 8cBvLwumfQkuFcwO4E96vE77tYdx3pc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-GDcNL4IkNVSkY-7dIHEGpQ-1; Thu,
+ 20 Aug 2026 06:47:05 -0400
+X-MC-Unique: GDcNL4IkNVSkY-7dIHEGpQ-1
+X-Mimecast-MFC-AGG-ID: GDcNL4IkNVSkY-7dIHEGpQ_1787222824
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BF5B31956046; Thu, 20 Aug 2026 10:47:03 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.12])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 469D31955F04; Thu, 20 Aug 2026 10:47:03 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id DB21821E6920; Thu, 20 Aug 2026 12:47:00 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Rohitashv Kumar <rohit.kuma1313@gmail.com>
+Cc: Jason Wang <jasowangio@gmail.com>,  qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org,  Eric Blake <eblake@redhat.com>,  Rohitashv
+ Kumar <roohiit@amazon.de>
+Subject: Re: [PATCH] qapi/net: gate user/vde/netmap netdev backends behind
+ their CONFIG symbols
+In-Reply-To: <20260728144303.223207-1-rohit.kuma1313@gmail.com> (Rohitashv
+ Kumar's message of "Tue, 28 Jul 2026 14:43:03 +0000")
+References: <20260728144303.223207-1-rohit.kuma1313@gmail.com>
+Date: Thu, 20 Aug 2026 12:47:00 +0200
+Message-ID: <87mruh3w7v.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF00002317:EE_|DS1PR18MB6170:EE_
 Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: baa338b3-f7d0-4a8c-09e9-08defea5926f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|36860700016|23010399003|82310400026|376014|56012099006|10067099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: sLAdawoM341W2nRfy4PuXAlhUZhUQzsjE9sS7k4uvLm4z5Qnl6jbY21piVr6dBqMR+FvV1L5CO42Tfc4KGOl7c64FBDoWLIjiTB1nfy5pWy/xUgkjF3T0i55LfRHF4fchiQJ4mcXRNQrk8DG8Cd2XgJIjjhhqbmiXinAFwgnK97xYHn+WJofFDE6ylCGKRsh+lzy/GVeht78Xy3/Fr1mOFZynWGe8pQl3GFckpY9EmZ7ukBEx93Mv2vW44Q7HZE0qSCfz1Dw/641KfwS9VlKK0twJXcwZrTottzsI0608EAFxCCkwKMO/dZh1NcIn8E1B0TgQSH6d9obtsHWHWastwNpTxkWli58LSsWIlXCdxj7MYdZKwIxv8X7a0O485o0g70Q5pzE3Pl2E94k2maZPlCHdj9C27qMdZzCcU7g2TFcsmOyWJ9yPs9/w8AgfiySTlW5AUZ15g5Z6NmNqKPbAr+d+k3aVfbmsqYfi7gqSJhOYyFVcKSHxCTMHnc9pxl5Kkzuo+ReH6a3cpNOZW6/iAhteVxDOp9qmUKWTDuCImEOwJ/LRenlm3k5T7v10BWC++/iG8bHPLur974mn2aFsta4+FbOrvFxQjJa7Wf/Swgb/BuJIbG24upWHuu8Iux5FbFTLblEN1P/RCQh44DyeCuV6S02p/vJKoK9Hy96eor7YHwmvY2ldSRhfwYlLRME1iTydpy+TcS2UMQh10CG+A==
-X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(36860700016)(23010399003)(82310400026)(376014)(56012099006)(10067099003)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: PVtLCjxINQ4cAcsC1OYtNTN0oT/j8boO4bsc7PCkYJ+6k80qtfiddmOO1uXWadhj3DTKBigpxTovkXbeQeWPuXdeyuCVgwyhAueRsQS1tOXE8zevd9rt/rFb/IjQ/6CziHrOcgBM+BCdXDX09Q+f9fhauQrjWGt8hAySHygwPkKQiol4awUd/iNWiUhz4R3zSSK0ZkoIJWKwsahofikaYe+0MUWAn5I2XkAPUywJEzzfFOROSZgPWBDCrgkjR69ETT9OM2Me/T/j2GQr129peM6XxOFGsFTF1yIEhMfSUl51JzLhhunuSciYcLRjCP9LY/Y8DVxXS5p6G9MnYoCLTETGBMSDu84F/MW5JChv5vQrGVIUtjfeOPHDw44rLNHCm7thwORX7la2bexlggxo7HeBxcTnjPi6wz9RaUGakmd+KWpKAIwXkpv3Tb8mUZSn
-X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Aug 2026 10:27:01.2552 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: baa338b3-f7d0-4a8c-09e9-08defea5926f
-X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
- Helo=[smtp.corp.axiado.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00002317.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS1PR18MB6170
-Received-SPF: pass client-ip=52.101.53.106; envelope-from=kchiu@axiado.com;
- helo=BL0PR03CU003.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,48 +86,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename header file ax3000-boards.h as axiado-boards.h for sharing across
-different Axiado SoC series
+Rohitashv Kumar <rohit.kuma1313@gmail.com> writes:
 
-Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
----
- hw/arm/ax3000-boards.c                              | 2 +-
- hw/arm/ax3000-evk.c                                 | 2 +-
- include/hw/arm/{ax3000-boards.h => axiado-boards.h} | 0
- 3 files changed, 2 insertions(+), 2 deletions(-)
- rename include/hw/arm/{ax3000-boards.h => axiado-boards.h} (100%)
+> From: Rohitashv Kumar <roohiit@amazon.de>
+>
+> Their NetClientDriver enum members and Netdev union branches were
+> unconditional, so query-qmp-schema advertised them even when built without
+> CONFIG_SLIRP/CONFIG_VDE/CONFIG_NETMAP. Gate them, and guard the matching
+> NET_CLIENT_DRIVER_USER/_VDE case labels in net/hub.c.
+>
+> Signed-off-by: Rohitashv Kumar <roohiit@amazon.de>
+> ---
+>  net/hub.c     |  4 ++++
+>  qapi/net.json | 19 +++++++++++++------
+>  2 files changed, 17 insertions(+), 6 deletions(-)
+>
+> diff --git a/net/hub.c b/net/hub.c
+> index ee5881f6d5..2a7c2bc6d7 100644
+> --- a/net/hub.c
+> +++ b/net/hub.c
+> @@ -294,12 +294,16 @@ void net_hub_check_clients(void)
+>  #ifdef CONFIG_PASST
+>              case NET_CLIENT_DRIVER_PASST:
+>  #endif
+> +#ifdef CONFIG_SLIRP
+>              case NET_CLIENT_DRIVER_USER:
+> +#endif
+>              case NET_CLIENT_DRIVER_TAP:
+>              case NET_CLIENT_DRIVER_SOCKET:
+>              case NET_CLIENT_DRIVER_STREAM:
+>              case NET_CLIENT_DRIVER_DGRAM:
+> +#ifdef CONFIG_VDE
+>              case NET_CLIENT_DRIVER_VDE:
+> +#endif
+>              case NET_CLIENT_DRIVER_VHOST_USER:
+>                  has_host_dev = 1;
+>                  break;
+> diff --git a/qapi/net.json b/qapi/net.json
+> index 1a6382825c..e9f1300629 100644
+> --- a/qapi/net.json
+> +++ b/qapi/net.json
+> @@ -922,9 +922,13 @@
+>  # Since: 2.7
+>  ##
+>  { 'enum': 'NetClientDriver',
+> -  'data': [ 'none', 'nic', 'user', 'tap', 'l2tpv3', 'socket', 'stream',
+> -            'dgram', 'vde', 'bridge', 'hubport', 'netmap', 'vhost-user',
+> -            'vhost-vdpa',
+> +  'data': [ 'none', 'nic',
+> +            { 'name': 'user', 'if': 'CONFIG_SLIRP' },
+> +            'tap', 'l2tpv3', 'socket', 'stream', 'dgram',
+> +            { 'name': 'vde', 'if': 'CONFIG_VDE' },
+> +            'bridge', 'hubport',
+> +            { 'name': 'netmap', 'if': 'CONFIG_NETMAP' },
+> +            'vhost-user', 'vhost-vdpa',
+>              { 'name': 'passt', 'if': 'CONFIG_PASST' },
+>              { 'name': 'af-xdp', 'if': 'CONFIG_AF_XDP' },
+>              { 'name': 'vmnet-host', 'if': 'CONFIG_VMNET' },
+> @@ -949,16 +953,19 @@
+>      'nic':      'NetLegacyNicOptions',
+>      'passt':    { 'type': 'NetdevPasstOptions',
+>                    'if': 'CONFIG_PASST' },
+> -    'user':     'NetdevUserOptions',
+> +    'user':     { 'type': 'NetdevUserOptions',
+> +                  'if': 'CONFIG_SLIRP' },
+>      'tap':      'NetdevTapOptions',
+>      'l2tpv3':   'NetdevL2TPv3Options',
+>      'socket':   'NetdevSocketOptions',
+>      'stream':   'NetdevStreamOptions',
+>      'dgram':    'NetdevDgramOptions',
+> -    'vde':      'NetdevVdeOptions',
+> +    'vde':      { 'type': 'NetdevVdeOptions',
+> +                  'if': 'CONFIG_VDE' },
+>      'bridge':   'NetdevBridgeOptions',
+>      'hubport':  'NetdevHubPortOptions',
+> -    'netmap':   'NetdevNetmapOptions',
+> +    'netmap':   { 'type': 'NetdevNetmapOptions',
+> +                  'if': 'CONFIG_NETMAP' },
+>      'af-xdp':   { 'type': 'NetdevAFXDPOptions',
+>                    'if': 'CONFIG_AF_XDP' },
+>      'vhost-user': 'NetdevVhostUserOptions',
 
-diff --git a/hw/arm/ax3000-boards.c b/hw/arm/ax3000-boards.c
-index 4b8deec15c..1b645b7f43 100644
---- a/hw/arm/ax3000-boards.c
-+++ b/hw/arm/ax3000-boards.c
-@@ -7,7 +7,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "hw/arm/ax3000-boards.h"
-+#include "hw/arm/axiado-boards.h"
- #include "hw/arm/boot.h"
- #include "hw/arm/machines-qom.h"
- #include "qemu/error-report.h"
-diff --git a/hw/arm/ax3000-evk.c b/hw/arm/ax3000-evk.c
-index a170848871..f491de7521 100644
---- a/hw/arm/ax3000-evk.c
-+++ b/hw/arm/ax3000-evk.c
-@@ -7,7 +7,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "hw/arm/ax3000-boards.h"
-+#include "hw/arm/axiado-boards.h"
- 
- static void axiado_scm3003_class_init(ObjectClass *oc, const void *data)
- {
-diff --git a/include/hw/arm/ax3000-boards.h b/include/hw/arm/axiado-boards.h
-similarity index 100%
-rename from include/hw/arm/ax3000-boards.h
-rename to include/hw/arm/axiado-boards.h
--- 
-2.34.1
+Any occurence of NET_CLIENT_DRIVER_USER, NET_CLIENT_DRIVER_VDE,
+NET_CLIENT_DRIVER_NETMAP must now be properly guarded the same way.
+
+The patch fixes up the ones in net/hub.c.
+
+Checking the other ones:
+
+* all three in net/net.c: already guarded by the same #ifdef
+
+* _USER in net/slirp.c: net/meson.build compiles it only when: slirp
+
+* _VDE in net/vde.c: net/meson.build compiles it only when: vde
+
+* _NETMAP in net/netmap.c: net/meson.build compiles it only
+  if have_netmap
+
+Good.
+
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
