@@ -4,89 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE60AC5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 04:02:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E8E2C5DF8C
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 04:38:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwtls-0007Fo-Vf; Wed, 19 Aug 2026 23:48:53 -0400
+	id 1wwuXY-0000op-P7; Thu, 20 Aug 2026 00:38:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtlq-0007F4-J5
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:48:50 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
+ id 1wwuXX-0000oS-Lz
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 00:38:07 -0400
+Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtlo-0004Rp-VG
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:48:50 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-38dfe910e9dso2044449a91.3
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:48:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
+ id 1wwuXV-0002VX-Cs
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 00:38:07 -0400
+Received: by mail-oa1-x2a.google.com with SMTP id
+ 586e51a60fabf-44ae14b4fd6so814305fac.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 21:38:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787200684; cv=none;
+ d=google.com; s=arc-20260327;
+ b=lFc/LrhLasMFkuz+7kQT1BjGvQtvvJo0Sav6uPXaO7ZH8zWWB3ZMDVi23D4uZro+7J
+ 4mf2Q5XM3dEREYnzXn+i0lg3PfsqU4O3/5ikORuGGXs9UeC/CA8iLvWSGe0ajYKyMoLO
+ IZxJXGp7vP3kDb5FxSUbVGXeaVP0CN5zrqwvT2jDdUr4vdd3bAzr1yS26M86wq3YRpN0
+ wTglPQFlC6gZFZEEopdL33734yX7oHxGfVUxj4NOmiTp/iclm3M3zLEbrgHh1WV35fcc
+ K6AyzC82r/0TpXjph7j+GtBhujcOXNhHXEgRZ+jqwyJTsLDiZsKta0ADklWQjFv7uP6r
+ Xdlg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=O+SJ4ouO8DER862HmtBQSJ0QwR/GgCYHEpXacXbpjgY=;
+ fh=LOst6OIdEaBMuurtzYNBHMLjQ7N+6u1lDyAAXE75Ms4=;
+ b=K12sm216ui+4LPO4S5arlAZRF/0e1LFtM3xxPC2Z1ZG3ykBaHVisXtVLG/jAy8/5Ol
+ YCZBq8Yrp9jKBzXQUvXNZdM/kFP2+s9Q/z9mLzJ/9kym0CdP0VwIv0rmvwMby7TMkbI+
+ YyBKkf+sguhOkNp1hQqLYJ7AtjI1GU1KRJvuetevkGTusV5DMzDE4b0Mh4LAXf7IeaV0
+ YtWSeD99iRzXSDD5MFwrcJkZ12VqNJNVXBlBKs9zniVoV3ja7Sx1duWoeq9oZs1Qb86T
+ hM9c+d0WtiJTVOX0sM746bmbrndtjDCQ3pGrrrtoR5JvvDvp99XK1AOGKSuiCcFx37Lc
+ iegg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787197728; x=1787802528; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=sVV9c8S04txxWkCEX8+hRViSARQ6uNL7zv3RnJ4UqLs=;
- b=h6o+31kM49y2pbqN0oITp/oIKX84EjnBV5veFL+PoCza0V9zVCz4/rikJqg+LJSM8v
- HFCgRGKAvSw2nE5tbIDkIqBUyBNY8pFKFSCfV3TqGAfgn1+2cbuxOsV2hngRPE6JyUAn
- Nykl4PqJodrkgpl+BGQLJ6QvkwiMp5A6habYOgsU9uAvKsSNu6AM79gwVEFlksw7KYju
- d5U8GqFbOgnJCwGs39G/wqcHpenlz1Wl/pLMbLABP8kGgrC6SXPKeA0tBrmyqO8Cp+bA
- JGRGQLXDlwHsugkK4Y2oac4jSDBdi2LTaI6ZMSL3BeX02L449Je/EAMuynGH0jIKU7+6
- 9c4g==
+ d=gmail.com; s=20251104; t=1787200684; x=1787805484; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=O+SJ4ouO8DER862HmtBQSJ0QwR/GgCYHEpXacXbpjgY=;
+ b=mCEipcrgOS9iaD2sRipaQMSK7DK/xlCEWrTX3UwHw5uniI3LKGjrR9zhhqQuFM2oV9
+ OF9MzACrHRYV5IBmBj4Naej1OIKrmK7tTixss4u1MuZpX4WqdA7arYgR5DNB9oe1PjSA
+ cJX6gs7egBMdqNu/oHIAsXHVXYil6HX+siYfL43Wg1yai0SIODUVhtzVNqsoe8LuPwZ+
+ 0Cxc/pB0+p9cKAFpsB741zT3hzg8IqE+hGKl3qQFWzk0ZiZRkEt1iIPOZ6vJtMP4VM6K
+ g4ifyyu+8KyeaNTbEtuSmh6nuL9ucFYbPOxFGDSWKvtf+NEkJv+rah4nvH5ylo57Va6D
+ A3RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787197728; x=1787802528;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=sVV9c8S04txxWkCEX8+hRViSARQ6uNL7zv3RnJ4UqLs=;
- b=rrRalfAB6MFHUH6dtXLFu/826JL+ZCkie0XBBTdRyFIuG/h2LRwYlBlnH/jVAoGYES
- 8rpu3816y+C20OON+TwdoVSKYHhCEWCiMppoffPggwDUQV4GvyBSVGmSqcg3vRoaMkXQ
- XAYPzGRe/mjo3U6BUzTHZBRn5Dkk29dl5HTk4cdOhK1QU7kYSdxI0ivf9ZGLpr7C6t7n
- ndzgNN5TAAW5m4OqUwyWxuYmTkXWluFrs1E40I7sic33joD0K+z5TXk72jJsbWw6o6/O
- 5xCltToWa1AxO3mbauEqCf4ZG9rvJoZGlveuXn5xRBOZEWytaEj2vu3iEnU+nyu8eJOh
- tcfA==
-X-Gm-Message-State: AFuF++nKwjdMBiY1NCnuH9Jzu8kAOF8jK4zHVRyo9DVaO+tQ7UAmbmVp
- Vr+Mw5XEWRjR8GEi2rljgeW92YP+vSKB/lT8ljZvpxCllJ71QF29s7iS31FZEw==
-X-Gm-Gg: AR+sD12hAa9w7kHrSSOoLb1IW7noQNIlY+wghTv3bbWskj7x8Ys4c+ZxnFXE3Kheeoi
- ySYnr/KqQbYPkl/u56fcDwd0FwGc+xUaP777ERaU/9knhYkdl/0otBBss1JCpqIYA7bZ6azeARR
- XeB8rvWsz2/xM/M6V0ByYEzKy0dO9cNSYBgl0Coa1vP2WoD7fjyUtQToms/0R3uEWTRm5OFntwd
- zR8U5eO7JJm/AwqDvfpgxytoAFpbRdJ4lBDg1xDFrBzeBCIDulyKq2BfG+XHFRRGFrBJggYM51b
- fJkAq5Kiynyt1GlJpEz9/tBAa7GIpTIE5YAstZrb8941fSx/fBcesr2+wJX+WbrWVaBGuAJLUBz
- WQFltnfqvPZ8ZgCDNkpi6u/3oyJQhYCYPWXppDamzssnfzHHtw6z590SKh9AVW/kk05HYlSfWmp
- CH7n4Wys3NZKlV1G8a++oja2OLrNuYjJV8cVjC0TBzU+1104QCTfuGYagde0P34Dm1fnrTogCj/
- 6WTtQ==
-X-Received: by 2002:a17:90b:540b:b0:38f:837e:fc5d with SMTP id
- 98e67ed59e1d1-39580a8de4emr19574534a91.3.1787197727699; 
- Wed, 19 Aug 2026 20:48:47 -0700 (PDT)
-Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.48.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 20:48:47 -0700 (PDT)
-From: alistair23@gmail.com
-X-Google-Original-From: alistair.francis@wdc.com
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 85/93] disas/riscv: Tidy decode of c.mop.n
-Date: Thu, 20 Aug 2026 13:44:22 +1000
-Message-ID: <20260820034430.1186695-86-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260820034430.1186695-1-alistair.francis@wdc.com>
-References: <20260820034430.1186695-1-alistair.francis@wdc.com>
+ d=1e100.net; s=20251104; t=1787200684; x=1787805484;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=O+SJ4ouO8DER862HmtBQSJ0QwR/GgCYHEpXacXbpjgY=;
+ b=MbrboYcZJlcAht+Pjsp1qZTpj61L8SXCa/E6FimoAs4MDKtUffO6Yf7WyFCI6Dr1d2
+ upyQFyRoQx3zFd6emNkdXdIxbAQCq10Fh8Xwnu4mDjWLz8B2Mgg1aYhK11kTagDiLfVu
+ OEeS5yz50iWtMvWp/tt8cOKF7al2FXP5i1DtSD24HxYL8GuQz+SgZ7hCRoarWKMun49M
+ g0AMxdL9xOJNl4N/I7E3j2fawchPPMTuPjUL/BJyI64AHkJrB0EYMKf0arxxIni1frHy
+ Y8KMI+vW05ehFDG/yO8SOPcdurew9YREWau4J5FFH+Z8xSvdwU7QfVDzO/DofaHBcFJ8
+ zuCg==
+X-Gm-Message-State: AOJu0YzHEgovyIYktloG5GP6XpPToYQ4z6rWPgnG8kxlda/WXyjhv5CH
+ fHq3KKPFOKu+Wsg0bk1x7bP1YjCdDSR2vGabipbe0GgIjPlwlj/EkEIVm//+yVFy61zuYNc52Kh
+ hlJFN7QfCuIwdgwVSBk9yFfRC3i6tvlo=
+X-Gm-Gg: AR+sD13hKZzZOEBmteKg9lMZajYEBvhjhuj3rSYarqcuGJPOKGRupP3Vz0Zg0UVjO6o
+ NOos+71AF6HwnuenN4kiSLOOgiy0JijXoy+KPOLQSbe5fJl1uRqk3mQ3a0+leH3/NIUu4S46gsD
+ d1Mgr3Ry6bHFkFO2J0TDD5D4FPMz6RcN0+5vhLQB9D09kVsH7np491bDJSWC31bR8nr8CIeB25W
+ Fd8RMOopN593hcGUKP/JihtawYIekuAaDQYTPvnYk3Fn/D+fr1EhA8uCLX/qfZ2qwtCb9u90Ams
+ ++A7V3k3P9FNz3D3Rfn1QAZBFS3vzii1QtIsPNj74wS8QQ==
+X-Received: by 2002:a05:6870:c210:b0:45e:caa2:4ea with SMTP id
+ 586e51a60fabf-462f653f83cmr10421660fac.6.1787200683673; Wed, 19 Aug 2026
+ 21:38:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+References: <20260818022225.31801-1-54weasels@gmail.com>
+ <20260818022225.31801-3-54weasels@gmail.com>
+ <a9c04b36-c217-c0f7-0328-70c89d5ca667@eik.bme.hu>
+In-Reply-To: <a9c04b36-c217-c0f7-0328-70c89d5ca667@eik.bme.hu>
+From: Purr Box <54weasels@gmail.com>
+Date: Wed, 19 Aug 2026 21:37:52 -0700
+X-Gm-Features: AcwNN1UsLAB72LUlqjzB4aFmEe0CnyOvRDu1y69P6mGXh3QkRmBYHYZ9k3QqOOs
+Message-ID: <CAFWf6u-D2WJA01gz=eHgwShtt9si3_R-7FJvfTPDRNQFyt17EA@mail.gmail.com>
+Subject: Re: [PATCH v4 2/6] target/m68k: Fix fsave/frestore for 68881 FPU
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, laurent@vivier.eu
+Content-Type: multipart/alternative; boundary="000000000000e48e5f065973154d"
+Received-SPF: pass client-ip=2001:4860:4864:20::2a;
+ envelope-from=54weasels@gmail.com; helo=mail-oa1-x2a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,53 +115,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+--000000000000e48e5f065973154d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Merge nested if's.
-Reuse operand_cmop_imm for zicfiss decode.
-Return pointers directly.
+Hi Zoltan,
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260812223142.349142-50-richard.henderson@linaro.org>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- disas/riscv.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+Thanks for the review!
+I've refactored the logic for v5. I removed the redundant M68040 checks in
+frestore (keeping just the FIXME), and streamlined fsave so that it
+uniformly checks for M68K_FEATURE_FPU, writing an IDLE frame (0x41000000)
+for the 68040 and a NULL frame (0x00000000) for the 68881/68882.
+Also, thanks for the tip on the Context: tag. I've updated my script to
+inject it below the --- separator in the .patch files so it stays off the
+permanent git commit log while remaining visible to reviewers.
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 39235e5bc7..197eaa43b1 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -1027,18 +1027,17 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
-             break;
-         case 2: op = rv_op_c_li; break;
-         case 3:
--            if (dec->cfg && dec->cfg->ext_zcmop) {
--                if ((((inst >> 2) & 0b111111) == 0b100000) &&
--                    (((inst >> 11) & 0b11) == 0b0)) {
--                    unsigned int cmop_code = 0;
--                    cmop_code = ((inst >> 8) & 0b111);
--                    op = rv_op_c_mop;
--                    if (dec->cfg->ext_zicfiss) {
--                        op = (cmop_code == 0) ? rv_op_c_sspush : op;
--                        op = (cmop_code == 2) ? rv_op_c_sspopchk : op;
-+            if (dec->cfg
-+                && dec->cfg->ext_zcmop
-+                && ((inst >> 2) & 0b111111) == 0b100000
-+                && ((inst >> 11) & 0b11) == 0) {
-+                if (dec->cfg->ext_zicfiss) {
-+                    switch (operand_cmop_imm(inst)) {
-+                    case 1: return &rvi_opcode_data[rv_op_c_sspush];
-+                    case 5: return &rvi_opcode_data[rv_op_c_sspopchk];
-                     }
--                    break;
-                 }
-+                return &rvi_opcode_data[rv_op_c_mop];
-             }
-             if (inst & ((1 << 12) | (0x1f << 2))) {
-                 switch ((inst >> 7) & 0b11111) {
--- 
-2.54.0
+I'll wait a bit longer to see if there are comments on the rest of the
+series before spinning new patches.
 
+Dan.
+
+On Tue, Aug 18, 2026 at 3:52=E2=80=AFAM BALATON Zoltan <balaton@eik.bme.hu>=
+ wrote:
+
+> On Mon, 17 Aug 2026, 54weasels wrote:
+> > High level description:
+> > The 68881/68882 FPUs require fsave/frestore instructions to read/write
+> state frames. QEMU only fully implemented this for the 68040. The Sun-3
+> uses a 68881 FPU, and the boot ROM executes `fsave` to probe FPU presence=
+.
+> This patch adds basic 68881 FPU state frame handling (NULL frame) to
+> accurately simulate an idle FPU state.
+> >
+> > Impact on existing functionality:
+> > Fixes FPU detection for 68881/68882 across all M68k boards without
+> affecting 68040 specific state logic.
+>
+> Comments such as the next Context: should go below the --- as everything
+> before that is part of the commit message. In QEMU a Context: tag is not
+> commonly used so I think you want this as a comment not part of the
+> commit message.
+>
+> > Context: This patch was originally submitted as part of the monolithic
+> Sun-3 Machine Emulation series (
+> https://patchew.org/QEMU/20260503015756.99176-1-54weasels@gmail.com/) and
+> has been split into atomic components.
+> > ---
+> > target/m68k/translate.c | 20 ++++++++++++++++----
+> > 1 file changed, 16 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/target/m68k/translate.c b/target/m68k/translate.c
+> > index 138c89d3e5..bdf619883c 100644
+> > --- a/target/m68k/translate.c
+> > +++ b/target/m68k/translate.c
+> > @@ -5364,11 +5364,19 @@ DISAS_INSN(frestore)
+> >         gen_exception(s, s->base.pc_next, EXCP_PRIVILEGE);
+> >         return;
+> >     }
+> > -    if (m68k_feature(s->env, M68K_FEATURE_M68040)) {
+> > +    if (m68k_feature(s->env, M68K_FEATURE_M68040) ||
+> > +        m68k_feature(s->env, M68K_FEATURE_FPU)) {
+>
+> M68020+ (including M68040) has FPU set so no need to keep that test and
+> can be replaced with M68K_FEATURE_FPU.
+>
+> >         SRC_EA(env, addr, OS_LONG, 0, NULL);
+> > -        /* FIXME: check the state frame */
+> > +        if (m68k_feature(s->env, M68K_FEATURE_M68040)) {
+> > +            /* FIXME: check the state frame */
+> > +        } else {
+>
+> What about M68060 or other CPUs with built-in FPU? As none of these do
+> anything maybe the if/else is not needed and can just keep the FIXME
+> comment?
+>
+> > +            /*
+> > +             * 68881/68882 FRESTORE: read the state frame
+> > +             * (NULL frame is 4 bytes)
+> > +             */
+> > +        }
+> >     } else {
+> > -        disas_undef(env, s, insn);
+> > +        disas_undef_fpu(env, s, insn);
+> >     }
+> > }
+> >
+> > @@ -5383,8 +5391,12 @@ DISAS_INSN(fsave)
+> >         /* always write IDLE */
+> >         TCGv idle =3D tcg_constant_i32(0x41000000);
+> >         DEST_EA(env, insn, OS_LONG, idle, NULL);
+> > +    } else if (m68k_feature(s->env, M68K_FEATURE_FPU)) {
+> > +        /* 68881/68882 FSAVE: always write NULL frame */
+> > +        TCGv null_frame =3D tcg_constant_i32(0x00000000);
+> > +        DEST_EA(env, insn, OS_LONG, null_frame, NULL);
+>
+> Same comment as above about CPUs with FPU. Maybe there should be only one
+> block for M68K_FEATURE_FPU replacing M68K_FEATURE_M68040 and a switch for
+> setting the frame value?
+>
+> Regards,
+> BALATON Zoltan
+>
+> >     } else {
+> > -        disas_undef(env, s, insn);
+> > +        disas_undef_fpu(env, s, insn);
+> >     }
+> > }
+> > #endif
+> >
+>
+
+--000000000000e48e5f065973154d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi Zoltan,<br><br>Thanks for the review!<div>I&#39;ve refa=
+ctored the logic for v5. I removed the redundant M68040 checks in frestore =
+(keeping just the FIXME), and streamlined fsave so that it uniformly checks=
+ for M68K_FEATURE_FPU, writing an IDLE frame (0x41000000) for the 68040 and=
+ a NULL frame (0x00000000) for the 68881/68882.<br>Also, thanks for the tip=
+ on the Context: tag. I&#39;ve updated my script to inject it below the ---=
+ separator in the .patch files so it stays off the permanent git commit log=
+ while remaining visible to reviewers.<br><br>I&#39;ll wait a bit longer to=
+ see if there are comments on the rest of the series before spinning new pa=
+tches.<br><br>Dan.</div></div><br><div class=3D"gmail_quote gmail_quote_con=
+tainer"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Aug 18, 2026 at 3:52=
+=E2=80=AFAM BALATON Zoltan &lt;<a href=3D"mailto:balaton@eik.bme.hu">balato=
+n@eik.bme.hu</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
+g-left:1ex">On Mon, 17 Aug 2026, 54weasels wrote:<br>
+&gt; High level description:<br>
+&gt; The 68881/68882 FPUs require fsave/frestore instructions to read/write=
+ state frames. QEMU only fully implemented this for the 68040. The Sun-3 us=
+es a 68881 FPU, and the boot ROM executes `fsave` to probe FPU presence. Th=
+is patch adds basic 68881 FPU state frame handling (NULL frame) to accurate=
+ly simulate an idle FPU state.<br>
+&gt;<br>
+&gt; Impact on existing functionality:<br>
+&gt; Fixes FPU detection for 68881/68882 across all M68k boards without aff=
+ecting 68040 specific state logic.<br>
+<br>
+Comments such as the next Context: should go below the --- as everything <b=
+r>
+before that is part of the commit message. In QEMU a Context: tag is not <b=
+r>
+commonly used so I think you want this as a comment not part of the <br>
+commit message.<br>
+<br>
+&gt; Context: This patch was originally submitted as part of the monolithic=
+ Sun-3 Machine Emulation series (<a href=3D"https://patchew.org/QEMU/202605=
+03015756.99176-1-54weasels@gmail.com/" rel=3D"noreferrer" target=3D"_blank"=
+>https://patchew.org/QEMU/20260503015756.99176-1-54weasels@gmail.com/</a>) =
+and has been split into atomic components.<br>
+&gt; ---<br>
+&gt; target/m68k/translate.c | 20 ++++++++++++++++----<br>
+&gt; 1 file changed, 16 insertions(+), 4 deletions(-)<br>
+&gt;<br>
+&gt; diff --git a/target/m68k/translate.c b/target/m68k/translate.c<br>
+&gt; index 138c89d3e5..bdf619883c 100644<br>
+&gt; --- a/target/m68k/translate.c<br>
+&gt; +++ b/target/m68k/translate.c<br>
+&gt; @@ -5364,11 +5364,19 @@ DISAS_INSN(frestore)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gen_exception(s, s-&gt;base.pc_next, =
+EXCP_PRIVILEGE);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0}<br>
+&gt; -=C2=A0 =C2=A0 if (m68k_feature(s-&gt;env, M68K_FEATURE_M68040)) {<br>
+&gt; +=C2=A0 =C2=A0 if (m68k_feature(s-&gt;env, M68K_FEATURE_M68040) ||<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 m68k_feature(s-&gt;env, M68K_FEATURE_FPU)=
+) {<br>
+<br>
+M68020+ (including M68040) has FPU set so no need to keep that test and <br=
+>
+can be replaced with M68K_FEATURE_FPU.<br>
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0SRC_EA(env, addr, OS_LONG, 0, NULL);<=
+br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* FIXME: check the state frame */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (m68k_feature(s-&gt;env, M68K_FEATURE_=
+M68040)) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* FIXME: check the state f=
+rame */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
+<br>
+What about M68060 or other CPUs with built-in FPU? As none of these do <br>
+anything maybe the if/else is not needed and can just keep the FIXME <br>
+comment?<br>
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* 68881/68882 FRESTOR=
+E: read the state frame<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* (NULL frame is 4 by=
+tes)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0} else {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 disas_undef(env, s, insn);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 disas_undef_fpu(env, s, insn);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0}<br>
+&gt; }<br>
+&gt;<br>
+&gt; @@ -5383,8 +5391,12 @@ DISAS_INSN(fsave)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* always write IDLE */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TCGv idle =3D tcg_constant_i32(0x4100=
+0000);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0DEST_EA(env, insn, OS_LONG, idle, NUL=
+L);<br>
+&gt; +=C2=A0 =C2=A0 } else if (m68k_feature(s-&gt;env, M68K_FEATURE_FPU)) {=
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* 68881/68882 FSAVE: always write NULL f=
+rame */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 TCGv null_frame =3D tcg_constant_i32(0x00=
+000000);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 DEST_EA(env, insn, OS_LONG, null_frame, N=
+ULL);<br>
+<br>
+Same comment as above about CPUs with FPU. Maybe there should be only one <=
+br>
+block for M68K_FEATURE_FPU replacing M68K_FEATURE_M68040 and a switch for <=
+br>
+setting the frame value?<br>
+<br>
+Regards,<br>
+BALATON Zoltan<br>
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0} else {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 disas_undef(env, s, insn);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 disas_undef_fpu(env, s, insn);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0}<br>
+&gt; }<br>
+&gt; #endif<br>
+&gt;<br>
+</blockquote></div>
+
+--000000000000e48e5f065973154d--
 
