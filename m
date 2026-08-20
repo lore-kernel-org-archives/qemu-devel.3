@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 451D2C5DF82
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 11:32:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DF0EC5DF82
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 11:32:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx0zW-0003OQ-Sr; Thu, 20 Aug 2026 07:31:26 -0400
+	id 1wx0zV-0003N4-Vs; Thu, 20 Aug 2026 07:31:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wx0zV-0003MW-1Q; Thu, 20 Aug 2026 07:31:25 -0400
+ id 1wx0zU-0003KA-6E
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 07:31:24 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>)
- id 1wx0zR-0000We-R7; Thu, 20 Aug 2026 07:31:24 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1wx0zR-0000WG-JB
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 07:31:23 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxntKF5YZqohgDAA--.9147S3;
- Thu, 20 Aug 2026 19:31:17 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxS_CD5YZqnBgDAA--.9322S3;
+ Thu, 20 Aug 2026 19:31:15 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCxvM5_5YZq_N4LAA--.10909S6;
- Thu, 20 Aug 2026 19:31:16 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJCxvM5_5YZq_N4LAA--.10909S3;
+ Thu, 20 Aug 2026 19:31:14 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, Jan Mercl <0xjnml@gmail.com>,
- qemu-stable@nongnu.org
-Subject: [PULL 4/4] target/loongarch: check FPE before reading fcc in
- bceqz/bcnez
-Date: Thu, 20 Aug 2026 19:11:09 +0800
-Message-Id: <20260820111109.786405-5-gaosong@loongson.cn>
+Cc: richard.henderson@linaro.org,
+	Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL 1/4] target/loongarch: Add kvm support dintc
+Date: Thu, 20 Aug 2026 19:11:06 +0800
+Message-Id: <20260820111109.786405-2-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20260820111109.786405-1-gaosong@loongson.cn>
 References: <20260820111109.786405-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxvM5_5YZq_N4LAA--.10909S6
+X-CM-TRANSID: qMiowJCxvM5_5YZq_N4LAA--.10909S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -64,54 +64,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jan Mercl <0xjnml@gmail.com>
+This patch adds Kvm put/get msgint CSRs and check msgint feature.
 
-gen_cz_bc() loads env->cf[cj] without CHECK_FPE, unlike every other
-translator that touches an fcc register (trans_fcmp.c.inc and
-trans_fmov.c.inc, for movcf2gr/movgr2cf/movcf2fr/movfr2cf/fsel).
-
-A guest that manages the FPU lazily -- Linux clears CSR.EUEN.FPE in
-lose_fpu() on every context switch -- relies on the next fcc access
-raising a Floating-Point-Disabled exception so the kernel can restore
-that task's fcc.  Because bceqz and bcnez never raise it, they branch on
-the condition flag left behind by whichever task last owned the FPU.
-
-Real Loongson hardware does raise the exception, so this is TCG-only.
-It surfaces as Go binaries dying at startup in runtime.check() with
-"fatal error: float64nan1" -- roughly one process start in a thousand
-once the guest has more runnable tasks than vCPUs -- and in general as a
-conditional branch silently taking the wrong path.
-
-With four tasks each executing 5M bcnez on a 2-vCPU guest, master
-mispredicts 89 of 20000000.  With this patch, 0 of 100000000 over five
-runs; a Loongson-3C5000 is likewise 0 of 600000000.
-
-CHECK_FPE is defined in trans_farith.c.inc, which translate.c includes
-before trans_branch.c.inc, so it is already in scope.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4209
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Jan Mercl <0xjnml@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260819132422.5164-1-0xjnml@gmail.com>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <20260813111000.446232-2-gaosong@loongson.cn>
 ---
- target/loongarch/tcg/insn_trans/trans_branch.c.inc | 2 ++
- 1 file changed, 2 insertions(+)
+ target/loongarch/cpu.c     |  5 ++-
+ target/loongarch/cpu.h     |  1 +
+ target/loongarch/kvm/kvm.c | 74 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 77 insertions(+), 3 deletions(-)
 
-diff --git a/target/loongarch/tcg/insn_trans/trans_branch.c.inc b/target/loongarch/tcg/insn_trans/trans_branch.c.inc
-index f94c1f37ab..da07778658 100644
---- a/target/loongarch/tcg/insn_trans/trans_branch.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_branch.c.inc
-@@ -66,6 +66,8 @@ static bool gen_cz_bc(DisasContext *ctx, arg_c_offs *a, TCGCond cond)
-     TCGv src1 = tcg_temp_new();
-     TCGv src2 = tcg_constant_tl(0);
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 8cd5bc18a3..48e1ad83c9 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -451,9 +451,6 @@ static void loongarch_max_initfn(Object *obj)
  
-+    CHECK_FPE;
+     cpu->ptw = ON_OFF_AUTO_AUTO;
+     if (tcg_enabled()) {
+-        cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
+-        cpu->msgint = ON_OFF_AUTO_AUTO;
+-
+         uint32_t data = cpu->env.cpucfg[2];
+         data = FIELD_DP32(data, CPUCFG2, HPTW, 1);
+         /* Enable LA v1.1 instructions */
+@@ -468,6 +465,8 @@ static void loongarch_max_initfn(Object *obj)
+         data = FIELD_DP32(data, CPUCFG3, DBAR_HINTS, 1);
+         cpu->env.cpucfg[3] = data;
+     }
++    cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
++    cpu->msgint = ON_OFF_AUTO_AUTO;
+ }
+ 
+ #if defined(CONFIG_KVM)
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index ad30c73167..97db3b453f 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -301,6 +301,7 @@ enum loongarch_features {
+     LOONGARCH_FEATURE_PV_IPI,
+     LOONGARCH_FEATURE_STEALTIME,
+     LOONGARCH_FEATURE_PTW,
++    LOONGARCH_FEATURE_MSGINT,
+ };
+ 
+ typedef struct  LoongArchBT {
+diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+index 4d0cad5732..15082a01f8 100644
+--- a/target/loongarch/kvm/kvm.c
++++ b/target/loongarch/kvm/kvm.c
+@@ -36,6 +36,13 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
+     KVM_CAP_LAST_INFO
+ };
+ 
++static bool kvm_cpu_has_msgint(CPUState *cs)
++{
++    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
 +
-     tcg_gen_ld8u_tl(src1, tcg_env,
-                     offsetof(CPULoongArchState, cf[a->cj]));
-     gen_bc(ctx, src1, src2, a->offs, cond);
++    return FIELD_EX64(cpu->env.cpucfg[1], CPUCFG1, MSG_INT);
++}
++
+ static int kvm_get_stealtime(CPUState *cs)
+ {
+     CPULoongArchState *env = cpu_env(cs);
+@@ -362,6 +369,25 @@ static int kvm_loongarch_get_csr(CPUState *cs)
+ 
+     ret |= kvm_loongarch_get_pmu(cs);
+ 
++    /*
++     * CSR register MSGIS getting must be put after CSR register CSR_ESTAT,
++     * Since register CSR_ESTAT will sync software pending MSGINT status to
++     * hardware register and modify HW CSR MSGIS registers.
++     */
++    if (kvm_cpu_has_msgint(cs)) {
++        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
++                               &sys->CSR_MSGIS[0]);
++
++        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
++                               &sys->CSR_MSGIS[1]);
++
++        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
++                               &sys->CSR_MSGIS[2]);
++
++        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
++                               &sys->CSR_MSGIS[3]);
++    }
++
+     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TVAL),
+                            &sys->CSR_TVAL);
+ 
+@@ -538,6 +564,20 @@ static int kvm_loongarch_put_csr(CPUState *cs, KvmPutState level)
+ 
+     ret |= kvm_loongarch_put_pmu(cs);
+ 
++    if (kvm_cpu_has_msgint(cs)) {
++        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
++                               &sys->CSR_MSGIS[0]);
++
++        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
++                               &sys->CSR_MSGIS[1]);
++
++        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
++                               &sys->CSR_MSGIS[2]);
++
++        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
++                               &sys->CSR_MSGIS[3]);
++    }
++
+     /*
+      * timer cfg must be put at last since it is used to enable
+      * guest timer
+@@ -993,6 +1033,12 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
+         ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
+         return (ret == 0);
+ 
++    case LOONGARCH_FEATURE_MSGINT:
++        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
++        attr.attr = KVM_LOONGARCH_VM_FEAT_MSGINT;
++        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
++        return (ret == 0);
++
+     default:
+         return false;
+     }
+@@ -1166,6 +1212,28 @@ static int kvm_cpu_check_pv_features(CPUState *cs, Error **errp)
+     return 0;
+ }
+ 
++static int kvm_cpu_check_msgint(CPUState *cs, Error **errp)
++{
++    CPULoongArchState *env = cpu_env(cs);
++    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
++    bool kvm_supported;
++
++    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_MSGINT);
++    env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 0);
++    if (cpu->msgint == ON_OFF_AUTO_ON) {
++        if (kvm_supported) {
++            env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 1);
++        } else {
++            error_setg(errp, "'msgint' feature not supported by KVM on this host");
++            return -ENOTSUP;
++        }
++    } else if ((cpu->msgint == ON_OFF_AUTO_AUTO) && kvm_supported) {
++        env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 1);
++    }
++
++    return 0;
++}
++
+ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+ {
+     return 0;
+@@ -1221,6 +1289,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
+         return ret;
+     }
+ 
++    ret = kvm_cpu_check_msgint(cs, &local_err);
++    if (ret < 0) {
++        error_report_err(local_err);
++        return ret;
++    }
++
+     return 0;
+ }
+ 
 -- 
 2.55.0
 
