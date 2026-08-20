@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86FCBC5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 13:03:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E33C5DF87
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 13:03:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx2Q3-0006x7-45; Thu, 20 Aug 2026 09:02:55 -0400
+	id 1wx2QY-00078a-6D; Thu, 20 Aug 2026 09:03:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wx2Q1-0006wb-2V; Thu, 20 Aug 2026 09:02:53 -0400
-Received: from smtpout1.mo528.mail-out.ovh.net ([46.105.34.251])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wx2QU-00076Y-7z
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 09:03:22 -0400
+Received: from smtpout2.mo540.mail-out.ovh.net ([51.210.91.51])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wx2Py-0006Ol-Pj; Thu, 20 Aug 2026 09:02:52 -0400
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net [79.137.60.226])
- by mo528.mail-out.ovh.net (Postfix) with ESMTPS id 4hQkBF3Q0Zz67Lg;
- Thu, 20 Aug 2026 13:02:45 +0000 (UTC)
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net. [127.0.0.1])
- by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Thu, 20 Aug 2026 13:02:45 +0000 (UTC)
-Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.164.62])
- by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4hQkBF2Hqpz48x8; Thu, 20 Aug 2026 13:02:45 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.1])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wx2QP-0006W7-UB
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 09:03:21 -0400
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net [79.137.60.36])
+ by mo540.mail-out.ovh.net (Postfix) with ESMTPS id 4hQkBq0cK7z41xL;
+ Thu, 20 Aug 2026 13:03:15 +0000 (UTC)
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net. [127.0.0.1])
+ by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Thu, 20 Aug 2026 13:03:14 +0000 (UTC)
+Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.178.118])
+ by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4hQkBp6clMz1xq6;
+ Thu, 20 Aug 2026 13:03:14 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.3])
  (Authenticated sender: clg@kaod.org)
- by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 54BBF1B43F57;
- Thu, 20 Aug 2026 13:02:43 +0000 (UTC)
+ by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ 035D41923F21; Thu, 20 Aug 2026 13:03:12 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-104R00567fe1204-6266-4134-8c92-4dbc6d8bdd24,
+ (GARM-100R003e5666219-02a3-4a78-8cc0-99e313863aa5,
  290C66463DCC85845983D07CBD6D5DF49C8F16C8) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 2.10.174.70
-Message-ID: <3d481220-9126-47fe-bfda-7954b7cda0e1@kaod.org>
-Date: Thu, 20 Aug 2026 15:02:42 +0200
+Message-ID: <18945ddb-a9f0-48b0-bdd9-a44cdad9e899@kaod.org>
+Date: Thu, 20 Aug 2026 15:03:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] hw/arm/aspeed_ast2600: Introduce the ACRY SRAM
+Subject: Re: [PATCH v2 3/4] hw/arm/aspeed_ast2600: Wire up the ACRY model
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -53,7 +53,7 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>
 References: <20260820081206.3353463-1-jamin_lin@aspeedtech.com>
- <20260820081206.3353463-3-jamin_lin@aspeedtech.com>
+ <20260820081206.3353463-4-jamin_lin@aspeedtech.com>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -98,30 +98,30 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260820081206.3353463-3-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260820081206.3353463-4-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 18083359879728573485
+x-ovh-tracer-id: 18091522654030507053
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGl6iZAQbWNtbkebDSGUaHKrg0LQ3eV6dJYf2jlkNbLtU2r6OOPBXjDBXvyUIe+M65GGTk0iwS74/k8WdfXNlJfOJr/XXqznXmM93DmF1jhwHytjjB5+ZAlc3TFoU3oKMAUUEHR6hVPNC4Z9iFtbq0fs6GhNvtpGLVaY600pwveIeKJ6a/YHDSsDblnI3WvHHRnNiGnY/xrgayH0oujAXBqoJSUm/uwe7nf16gH/gQfzqyk9EBzq87cEY8wr/3zw5mEU4gInkQLZePlQdR3UX0oFMBfD+Z9buZOp0E25dIoX5BVxpsfad2WmBQ+39O5YIWMJPuXfw4Sgk5N+DKKJCCuTrXco93dwQzDmzmOtm7WqR76l5xb902WEzjH1YNFfX1foAjcuZsVHWXYO4ZFbUtcnVpRwJcUVtXE045E4Srhm+eCACRDRinhlDqAhFNGtsK9Vz9hnrvGp+NYCB/m2YaHKcKhk/BYFADMEe8jM0VO6MVqHe2PB8BEFF7PPUs7dcm/lkPHZjM5cOY6hFFS+dUsHVVY4esepNcDVojURZqbJefD8f6pXegkryKiF3mKYlJrskvRHDIUIYV4oMLEOCs90TX0uhl/kU5NW+miPsKfEvpl9iTE5f6FsNNaKO6hrgTFir7Y+Xa+KcsbpzUuow7LK9XoyIdKvf45LnkHKUZKcA
-DKIM-Signature: a=rsa-sha256; bh=7f/rDBrsbMOoF/8E8X97b2RT9obQm/fcyu6oXMfXPI4=; 
+X-VR-SPAMCAUSE: dmFkZTF1PGCcAwnx0WmeiPlR8WsqYQtOKStaZXuP90gj0pflBTQ2XZ4goRh8ly1Ax24rQvxIDktsHDNjvSZVV13qU1uLDOR33PQa+9/y6Uh3p5/RO+vx4VJr/Ea80PQs3BKnjfk7f8lmm1Hi/B+6B4+27JqcHlCu0Bvt5LffHGqDMdk3C2O5tqGVL/0UiX5w9yweRpQUfT5zQ5xAwztbNmfZo68UcFlAXdTt/HqJjtgrVIIOBlz27SlulpPKiQoCSRBDxyefupcOg4gvIOlvHhYJITZ3kvqlF+8SoPklybDaHvyQLI4G6znPop45ThOszK9oTi51scufV6jYlrCtdvSDR9v+XLafcc5Zy6pUZoc+LWGPfLLjr7ctqlgh/eZ+oASOFp9Ge6rhzbaXEytxwdEadRRw84Tdad8VMBoerW0MxxktNd/wIPyXPVx6HezLbV7kkr865Fm1XIW7XPhRw/DEfZYVU25jq/J83z+hbed/DM7vLNrW6ekSC2LD1EHSlBQ9DlY/RompY95xTYNy7BzVd5TVwY+QjD6fPfNd2maK8Rz6NnpqGFvYqLv0Zw8bM/Bh1QaYX9RNwzaw6uceSsMCEHUMDN/5zfHDx6OaXTYoweIGaJCr+rzU2b78wO9iACjVQoAnEKTTXNb0yBZm6DTjE0UuBP/IFVSyfg/9mGKjNkZtCw
+DKIM-Signature: a=rsa-sha256; bh=woGrygIhqvQO0TnXFL9rBmMuNdSt2FXIXslIK0gHLGk=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1787230966; v=1;
- b=S/Ns1QgtaNFbSSWkWRclQH1Czd0gxYU82hC1cQ5cQX0Ro+Lw6a/QaN3zmjqgeyzxnwUy6EuY
- dKC0EEiP1Q0s6FijwAfrp1MQgpRioSqRU0Wirx+9d4rsOX8sFz0Ak7V9shp+X1jHdpOKJtulTDZ
- ZdwGJ9C4nzHDI8zYNwhk/w7hCZJ3iWlNH+PF8lSeQyev+XdDUf/sgM7m0QR7cckg6INojq+1EIm
- jUh0EAsbaf+BMi3lvLNqdnftLhFYxPngV6kMbDvjOJM8Yw6eL6ia0c8lF3D24ThV+/7djjcRB7q
- bdis+Ca8+78sCgv1tUpNcebTDqiZOD7jI+i7uJUlgVIPA==
-Received-SPF: pass client-ip=46.105.34.251; envelope-from=clg@kaod.org;
- helo=smtpout1.mo528.mail-out.ovh.net
+ t=1787230995; v=1;
+ b=iY6vcE2HMfn4CXQlf14JaWkeRm/RBR33NuJiOs8djjB7DCVD/iDqdkPZhYDOFr8eQE6z4qHY
+ KpP/P1RCpREdhSLo1KNG/HvUgepyn+7mOHsRLHEd+erB4rQh5Aw1xdGmRcxIy8sxfPm9qCEhuXV
+ xrK0TBx+9b9YZwwL63EvwWqw1HbkCMELr6cHWEntwM9+0bmq97arJ8+bs87kd8k2ae5QIZMwd7M
+ jHn5DaH7LndNkU4ROhPLr3bhjhc47Jlq9SorkXjyQzKazWXW8WgRUFPMEU2VCsg7BNxdzqcPXp5
+ s3AAbOMzr2PYtIlfItWg8iK2SET9pwhDQd6WJYb/cxNYQ==
+Received-SPF: pass client-ip=51.210.91.51; envelope-from=clg@kaod.org;
+ helo=smtpout2.mo540.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,92 +138,103 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/20/26 10:12, Jamin Lin wrote:
-> Reuse the existing SRAM array convention on AspeedSoCState to add the
-> 64 KiB ACRY SRAM region to the AST2600 at its real-silicon address
-> (0x1e710000-0x1e71ffff).
+> Introduce the ASPEED_DEV_ACRY enum slot and add the ACRY model state
+> to AspeedSoCState.
 > 
-> Wrap the RAM in a container mapped at offset 0 so the ACRY engine wired
-> up in a later patch can address the SRAM by relative offset without the
-> device model knowing its mapping address.
+> Instantiate the new ACRY model on the AST2600 SoC using its
+> real-silicon register address and IRQ:
+> 
+> - ACRY register region 0x1e6fa000-0x1e6fafff
+> - IRQ 160
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   include/hw/arm/aspeed_soc.h |  1 +
+>   include/hw/arm/aspeed_soc.h |  3 +++
 >   hw/arm/aspeed_ast2600.c     | 17 +++++++++++++++++
->   2 files changed, 18 insertions(+)
+>   2 files changed, 20 insertions(+)
 > 
 > diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-> index cd68c7f1ca..46e7854727 100644
+> index 46e7854727..8d80f16705 100644
 > --- a/include/hw/arm/aspeed_soc.h
 > +++ b/include/hw/arm/aspeed_soc.h
-> @@ -69,6 +69,7 @@ struct AspeedSoCState {
->       MemoryRegion *dram_mr;
->       MemoryRegion dram_container;
->       MemoryRegion sram[ASPEED_SRAM_NUM];
-> +    MemoryRegion sram_container[ASPEED_SRAM_NUM];
->       MemoryRegion spi_boot_container;
->       MemoryRegion spi_boot;
->       MemoryRegion vbootrom;
+> @@ -25,6 +25,7 @@
+>   #include "hw/i2c/aspeed_i2c.h"
+>   #include "hw/i3c/aspeed_i3c.h"
+>   #include "hw/ssi/aspeed_smc.h"
+> +#include "hw/misc/aspeed_acry.h"
+>   #include "hw/misc/aspeed_hace.h"
+>   #include "hw/misc/aspeed_sbc.h"
+>   #include "hw/misc/aspeed_sli.h"
+> @@ -82,6 +83,7 @@ struct AspeedSoCState {
+>       AspeedSCUState scu;
+>       AspeedSCUState scuio;
+>       AspeedHACEState hace;
+> +    AspeedACRYState acry;
+>       AspeedXDMAState xdma;
+>       AspeedADCState adc;
+>       AspeedSMCState fmc;
+> @@ -271,6 +273,7 @@ enum {
+>       ASPEED_DEV_EMMC,
+>       ASPEED_DEV_KCS,
+>       ASPEED_DEV_HACE,
+> +    ASPEED_DEV_ACRY,
+>       ASPEED_DEV_DPMCU,
+>       ASPEED_DEV_DP,
+>       ASPEED_DEV_I3C,
 > diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-> index d1f18e471a..f23a51c8a4 100644
+> index f23a51c8a4..f7c7ec7fb1 100644
 > --- a/hw/arm/aspeed_ast2600.c
 > +++ b/hw/arm/aspeed_ast2600.c
-> @@ -8,6 +8,7 @@
->    */
+> @@ -52,6 +52,7 @@ static const hwaddr aspeed_soc_ast2600_memmap[] = {
+>       [ASPEED_DEV_DP]        = 0x1E6EB000,
+>       [ASPEED_DEV_PCIE_PHY1] = 0x1E6ED200,
+>       [ASPEED_DEV_SBC]       = 0x1E6F2000,
+> +    [ASPEED_DEV_ACRY]      = 0x1E6FA000,
+>       [ASPEED_DEV_EMMC_BC]   = 0x1E6f5000,
+>       [ASPEED_DEV_VIDEO]     = 0x1E700000,
+>       [ASPEED_DEV_SDHCI]     = 0x1E740000,
+> @@ -144,6 +145,7 @@ static const int aspeed_soc_ast2600_irqmap[] = {
+>       [ASPEED_DEV_FSI1]      = 100,
+>       [ASPEED_DEV_FSI2]      = 101,
+>       [ASPEED_DEV_I3C]       = 102,   /* 102 -> 107 */
+> +    [ASPEED_DEV_ACRY]      = 160,
+>   };
 >   
->   #include "qemu/osdep.h"
-> +#include "qemu/units.h"
->   #include "qapi/error.h"
->   #include "hw/misc/unimp.h"
->   #include "hw/arm/aspeed_soc.h"
-> @@ -24,6 +25,7 @@
->   static const hwaddr aspeed_soc_ast2600_memmap[] = {
->       [ASPEED_DEV_SPI_BOOT]  = 0x00000000,
->       [ASPEED_DEV_SRAM0]     = 0x10000000,
-> +    [ASPEED_DEV_SRAM1]     = 0x1E710000, /* ACRY SRAM */
->       [ASPEED_DEV_DPMCU]     = 0x18000000,
->       /* 0x16000000     0x17FFFFFF : AHB BUS do LPC Bus bridge */
->       [ASPEED_DEV_IOMEM]     = 0x1E600000,
-> @@ -361,6 +363,7 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
->       AspeedSoCState *s = ASPEED_SOC(dev);
->       AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
->       qemu_irq irq;
-> +    g_autofree char *sram1_name = NULL;
->       g_autofree char *sram_name = NULL;
->       int uart;
+>   static qemu_irq aspeed_soc_ast2600_get_irq(AspeedSoCState *s, int dev)
+> @@ -269,6 +271,8 @@ static void aspeed_soc_ast2600_init(Object *obj)
+>       snprintf(typename, sizeof(typename), "aspeed.hace-%s", socname);
+>       object_initialize_child(obj, "hace", &s->hace, typename);
 >   
-> @@ -444,6 +447,19 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
->       memory_region_add_subregion(s->memory,
->                                   sc->memmap[ASPEED_DEV_SRAM0], &s->sram[0]);
+> +    object_initialize_child(obj, "acry", &s->acry, TYPE_ASPEED_ACRY);
+> +
+>       object_initialize_child(obj, "i3c", &s->i3c, TYPE_ASPEED_I3C);
 >   
-> +    /* ACRY SRAM */
-> +    sram1_name = g_strdup_printf("aspeed.acry.sram.%d",
-> +                                 CPU(&a->cpu[0])->cpu_index);
-> +    if (!memory_region_init_ram(&s->sram[1], OBJECT(s), sram1_name,
-> +                                sc->sram_size[1], errp)) {
+>       object_initialize_child(obj, "sbc", &s->sbc, TYPE_ASPEED_AST2600_SBC);
+> @@ -726,6 +730,19 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
+>       sysbus_connect_irq(SYS_BUS_DEVICE(&s->hace), 0,
+>                          aspeed_soc_ast2600_get_irq(s, ASPEED_DEV_HACE));
+>   
+> +    /* ACRY */
+> +    object_property_set_link(OBJECT(&s->acry), "dram", OBJECT(s->dram_mr),
+> +                             &error_abort);
+> +    object_property_set_link(OBJECT(&s->acry), "sram", OBJECT(&s->sram[1]),
+> +                             &error_abort);
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->acry), errp)) {
 > +        return;
 > +    }
-> +    memory_region_init(&s->sram_container[1], OBJECT(s),
-> +                       "aspeed.acry.sram-container", sc->sram_size[1]);
-> +    memory_region_add_subregion(&s->sram_container[1], 0, &s->sram[1]);
-> +    memory_region_add_subregion(s->memory, sc->memmap[ASPEED_DEV_SRAM1],
-> +                                &s->sram_container[1]);
+> +    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->acry), 0,
+> +                    sc->memmap[ASPEED_DEV_ACRY]);
+> +    sysbus_connect_irq(SYS_BUS_DEVICE(&s->acry), 0,
+> +                       aspeed_soc_ast2600_get_irq(s, ASPEED_DEV_ACRY));
 > +
->       /* DPMCU */
->       aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),
->                                     "aspeed.dpmcu",
-> @@ -765,6 +781,7 @@ static void aspeed_soc_ast2600_class_init(ObjectClass *oc, const void *data)
->       sc->valid_cpu_types = valid_cpu_types;
->       sc->silicon_rev  = AST2600_A3_SILICON_REV;
->       sc->sram_size[0] = 0x16400;
-> +    sc->sram_size[1] = 64 * KiB; /* ACRY SRAM */
->       sc->spis_num     = 2;
->       sc->ehcis_num    = 2;
->       sc->wdts_num     = 4;
+>       /* I3C */
+>       if (!sysbus_realize(SYS_BUS_DEVICE(&s->i3c), errp)) {
+>           return;
 
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
 Thanks,
 
 C.
+
 
