@@ -4,96 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E73CEC5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:54:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB833C5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:54:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx5zG-0006Dj-Pb; Thu, 20 Aug 2026 12:51:30 -0400
+	id 1wx5zL-0006ns-0l; Thu, 20 Aug 2026 12:51:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5zA-0005kU-ME
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:26 -0400
+ id 1wx5zC-0005oC-L4
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5z8-0005fZ-Ka
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:24 -0400
+ id 1wx5zA-0005fi-EJ
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787244681;
+ s=mimecast20190719; t=1787244683;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GHMjxFzNA661zOFOpV7Ud+oCkAP1toVbytmTYNQiqSY=;
- b=B4ZCGFPwThZb1QihjakoMfnbVlhyqdBefuwZGlLQWbpRIw8L/j9DgnIRUPonXfUZXmbbCf
- gBDtvIzK90EfTa7SaypyquplM8bFm16RNTBt3u/pjEu+VqKDC8eEVvq1WT7y9U+YvASBWE
- gLZKkrJegIJ2xWEWbrD70VuCTQ0eeMs=
+ bh=V8uegqHxKQ/1NXEPewm6GGy0naItBS1eOwztkv4A8yU=;
+ b=HqB8plUAGXAaTBmG1NJ73rsYeMSOgtoXVu8OMWm/nrnaGzHxO9K4XUzKlIkq1QyH4Mn5bj
+ 3yVuMdk7DaRPxXpCEIoZlAhZH3JydfZUKYWgZJxEnMk6WVhPsWATH5BgEFxJpQcUeMlJmC
+ 32NpCV+rn/hMZc/p9L7a4N6MR8CpMMc=
 Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
  [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-135-bh_sAZZtNEWy9FdJWRUDfA-1; Thu, 20 Aug 2026 12:51:20 -0400
-X-MC-Unique: bh_sAZZtNEWy9FdJWRUDfA-1
-X-Mimecast-MFC-AGG-ID: bh_sAZZtNEWy9FdJWRUDfA_1787244679
+ us-mta-379-pZ28aLjvPgmIkM87DYdi8Q-1; Thu, 20 Aug 2026 12:51:21 -0400
+X-MC-Unique: pZ28aLjvPgmIkM87DYdi8Q-1
+X-Mimecast-MFC-AGG-ID: pZ28aLjvPgmIkM87DYdi8Q_1787244680
 Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-47f8398ed9fso103723f8f.0
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:51:20 -0700 (PDT)
+ ffacd0b85a97d-47f835ac1aeso66888f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:51:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787244679; x=1787849479; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787244680; x=1787849480; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=GHMjxFzNA661zOFOpV7Ud+oCkAP1toVbytmTYNQiqSY=;
- b=QIHbmJLEvuXaELf/Rq5YA2+v/+rEBJXMbIbivVYPhJtfsi7TgE/v4DCfbr4IUgruNL
- OicHZ5Bk1nBY6dYoWcO6g7Ayk4UO9XF7mD5AOXzyvKq5phIL5A8ok/GtZMrID7xJM0pw
- 3mTsoZnm9UttHBkblXf+yz+CEIIPMLQ1brMUAtW3P0v8/iAL+fUF84varyvQUq+1a0Qb
- uxeRClN9SXyMTTNdZkC6vaxfos0vu21iWnKcsLCjdFWi+p8VKx9PfmNkLTBrlRG/Snjh
- iGe7DNwpeynI85lRVsL/xDqvtSOtn4N/azDq7cj/nLbsyhfaRW/ADDd2p7Byp+97ODxb
- PnkA==
+ bh=V8uegqHxKQ/1NXEPewm6GGy0naItBS1eOwztkv4A8yU=;
+ b=Dftz57JgHdD07CHKXwNow1g9OyHUntvLt0jVfmto3Mp12gekLuNxZhiNSfEW9+0YSp
+ tvCzHbsVyv/oL14WcTAU+WF5xbSrsuElCgHJFKV1qpDuJ3qjHgKIELYSjZFjmMF7uiQl
+ t0cYdrW/32IkIu0Rp2FUG+kqFenIOag6dRYM90uOSrPjRcV/2+QPfu956onNS5uKJGbc
+ miAE/F1Y3lOhHhZvsGQj0SckXZY+/7vKwbhYR/aDGKO+7wGIZSTZCvWI58ZEhdv90v4N
+ tLqjZ22mmPEbNDBN84bYs25v3lWpcdjFa5hDP3+0XsSNcNM1dCdodkWqHlYNJSfkwtAs
+ X9NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787244679; x=1787849479;
+ d=1e100.net; s=20251104; t=1787244680; x=1787849480;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=GHMjxFzNA661zOFOpV7Ud+oCkAP1toVbytmTYNQiqSY=;
- b=pdLFJ+OnxvyRoSotPMoWHn6PcZJs7O3xo1DhuR83p2NN+bCwkv6rNNKDB1R5Yl0aZ1
- c46N8izN5C81zPdClcfIRy/XEVjQ6OVKJzuy1Hp3FDP2+KmgUZ33+o9hj37EeSG9lU+j
- uuPt/emQoNMh2INzgjY7cgFqm/5DMm9Rr0Svl+THEEegJ1NHkE7q+MydjlnXHygT6aku
- xr/meRMd7Od51Mm0cRfmLq+atE27r4iYsjlQymPneC8ZUDLy1st40PJ4FY3BoWaAy2p6
- plcTYuLo4Vj9Dk8wvqpY8emEUJ+ETbdfbaZTo1BRq85dieOi8J78n/F2Q3z+LSsjqdlK
- XXpw==
-X-Gm-Message-State: AFuF++nSwlnC/bQpID3pFdaub9uGlvAR7fHme0OcOV4kLOSjBTg+U3um
- YKlJ3zxPcx00qU/hvM5kfOsCVI2NYY3nutWbsV6yvaywIKFEH6W5+T8ljJuNeE1kshCNh/YyyFB
- 7OXl/HLUcZqp8tVRuftkTdl/mXlxA5xNZCiF0SxcfyNcGCFnHJzy0VKMZOcfxivZUz6HBfmjfvG
- 6qcGJRVbIXAJuqikXue8X9pncy3grGi7agGI04bDFC
-X-Gm-Gg: AR+sD10VC6AAlTDcxjb/9R58vJYpEK4PWv6MnwUhtCS5Z4c3EbrjXnEDkQrgFzaJ1ZL
- utrJvju/dxb2bi93LaJCEC13LYoyKUGUsIKupYlE/c5wbAtU+S5FVysCzNxtLbuukNNc/Iw11w9
- n58O70tIHrhHLJT2YTXfSVbLegmTR0Lna5kUa/FWl/xxUfdEhBpTlfVWXSVkKLau8NmCbpibdiC
- EOVDRFAmFbE5/Zf2PKWxy9OTjyeV8YXoQy0yBStio0IMfGtnOIccHPk8KTqvaX94n9YgvFxRQw/
- enOfwm0QADFKBWzz9pprlSi1Ef57Eyo9kgL/bJ/zRH6nLCOgZh3cuNtMzWIocoeh7tQfjY1LQ+y
- F1jik/nmjwcclbjx2nQHjj3Ga/kmr/G/p8ojMRkw6vxGtFNZ51VaP0nY6UrlG4WQw//4YgGgcjz
- st7/U=
-X-Received: by 2002:a05:6000:41f6:b0:47d:eedb:ee62 with SMTP id
- ffacd0b85a97d-482b1fd3b69mr28864596f8f.14.1787244678947; 
- Thu, 20 Aug 2026 09:51:18 -0700 (PDT)
-X-Received: by 2002:a05:6000:41f6:b0:47d:eedb:ee62 with SMTP id
- ffacd0b85a97d-482b1fd3b69mr28864484f8f.14.1787244678468; 
- Thu, 20 Aug 2026 09:51:18 -0700 (PDT)
+ bh=V8uegqHxKQ/1NXEPewm6GGy0naItBS1eOwztkv4A8yU=;
+ b=X+CuXcGLVsCVmK9RuKVV6wYigS6QXMvMVIi83YxJwUgL2EM0H3U58h3C3WFSEHWHA5
+ UyBVqThcInZxKUh8NYvQ7UZBXieZrof2e8OJ1EKXak+GR1rz8ikLVf/X/74g9iojZhfw
+ OuLqdCu7cVU6LVwwQ3v10ZHr9AEtvhDG15re6o7yR04NfZT3/+W6JjnGCbILRhgkuT06
+ 77c+GGxv0e6GhK6ReyAfIM3lpHsdoxqMpVO4KlMng7Cb+CphPnBN8R5NYPmlqKBqDwZP
+ bjrHeTZPTQCFzKjcnIlALWrHrCC3m3xaQYNt12C4COpYghYe65LvgAmkJMBKI679YXIY
+ 8oBA==
+X-Gm-Message-State: AFuF++nNe77xYEDFNTj+9kaNFyndBphIpSk8mR4aJiobwzPv4DfpwhF7
+ U3BoSN1qXKe3P9Rq2H1hbLAwwIQJYkkga557M/PavUeiw5xDieYWtQoivD3sbzKhUTfiuSd/a9g
+ RmnA5lSL1Z5Ib7uIRgr2EgTAhZMguTZGaa9/4fCdC7gFRYZvACUSizPEjinWAAV6r+uCm3wamGH
+ +Gndfxk7UsuFeMnRmF9yCLnitTpHvpVN6Vo4AE+ePD
+X-Gm-Gg: AR+sD10dQXzFA0FPE2YwOEHgWJs513RegJUi6nSMbqxRZuOacLovAR2TiaJnL1mUlMG
+ THvAUstYJ8HPHzS9r7cae3f7q6csPuSBcBMcDW0Yz0juXG6y9HCDCLTctSl+i39YdKLdpbz5BU0
+ KETPBizhyOmNB0alLGMoSDGIVdquzXN+hTQnQ0Taz+37NFauK7e1sw5ALR0Gd7KRGwrdOFz+79/
+ nWemEoEbgF/+g10cpUQ9g7AOC+MXbqU2MAoSDBG3ISpc5zbSNJ3kbbZOFJgJE5idqzd6aTtZjl9
+ 1LdakCUAf17WeEn06y4wT2Kw6jQxxQMn88YheAxXH4mbScw4X1//UeDHipiyFwN+iMy+0lx3TIU
+ mjDdED/ROecnbt/1hWirsBiVQf3fpgbYS0ph7OeQFs5zWmggz0V8iO7Vi4Z+HC9Q8tLTqKBh731
+ X9K7Q=
+X-Received: by 2002:a05:6000:4b1b:b0:482:bb55:8bda with SMTP id
+ ffacd0b85a97d-482c0b5bf64mr18882f8f.5.1787244680204; 
+ Thu, 20 Aug 2026 09:51:20 -0700 (PDT)
+X-Received: by 2002:a05:6000:4b1b:b0:482:bb55:8bda with SMTP id
+ ffacd0b85a97d-482c0b5bf64mr18752f8f.5.1787244679838; 
+ Thu, 20 Aug 2026 09:51:19 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b145153fsm14254951f8f.12.2026.08.20.09.51.15
+ ffacd0b85a97d-482bab42f8esm6390603f8f.28.2026.08.20.09.51.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 09:51:15 -0700 (PDT)
+ Thu, 20 Aug 2026 09:51:19 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Naveen N Rao (AMD)" <naveen@kernel.org>,
- Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>,
- Nikunj A Dadhania <nikunj@amd.com>
-Subject: [PULL 27/53] target/i386: SEV: Add support for setting TSC frequency
- for Secure TSC
-Date: Thu, 20 Aug 2026 18:49:30 +0200
-Message-ID: <20260820164957.1895963-28-pbonzini@redhat.com>
+ Tom Lendacky <thomas.lendacky@amd.com>
+Subject: [PULL 28/53] target/i386: SEV: Refactor check_sev_features()
+Date: Thu, 20 Aug 2026 18:49:31 +0200
+Message-ID: <20260820164957.1895963-29-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820164957.1895963-1-pbonzini@redhat.com>
 References: <20260820164957.1895963-1-pbonzini@redhat.com>
@@ -125,145 +123,118 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Naveen N Rao (AMD)" <naveen@kernel.org>
 
-Add support for configuring the TSC frequency when Secure TSC is enabled
-in SEV-SNP guests through a new "tsc-frequency" property on SEV-SNP
-guest objects, similar to the vCPU-specific property used by regular
-guests and TDX. A new property is needed since SEV-SNP guests require
-the TSC frequency to be specified during early SNP_LAUNCH_START command
-before any vCPUs are created.
+Refactor check_sev_features() to consolidate SEV-SNP checks to a single
+if block. This is also helpful when adding checks for future SEV
+features.  While at it, move the comment about the checks being done
+outside of the function body and expand it to describe what this
+function does. Update error_setg() invocations to use a consistent
+format.
 
-The user-provided TSC frequency is set through KVM_SET_TSC_KHZ before
-issuing KVM_SEV_SNP_LAUNCH_START.
+No functional change intended.
 
-Attempts to set TSC frequency on both the SEV_SNP object and the cpu
-object result in an error from KVM (on the vCPU ioctl), so do not add
-separate checks for the same.
-
-Sample command-line:
-  -machine q35,confidential-guest-support=sev0 \
-  -object sev-snp-guest,id=sev0,cbitpos=51,reduced-phys-bits=1,secure-tsc=on,tsc-frequency=2500000000
-
-Co-developed-by: Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>
-Signed-off-by: Ketan Chaturvedi <Ketan.Chaturvedi@amd.com>
-Co-developed-by: Nikunj A Dadhania <nikunj@amd.com>
-Signed-off-by: Nikunj A Dadhania <nikunj@amd.com>
+Suggested-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Link: https://lore.kernel.org/r/af688610978f213a456a7753e1d9fe7d3a51e80a.1779281646.git.naveen@kernel.org
+Link: https://lore.kernel.org/r/cae04d88adfbcdc2997e518475f3b89091adf8a9.1779281646.git.naveen@kernel.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- qapi/qom.json     |  6 +++++-
- target/i386/sev.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+), 1 deletion(-)
+ target/i386/sev.c | 67 +++++++++++++++++++++++++----------------------
+ 1 file changed, 36 insertions(+), 31 deletions(-)
 
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 4732fa89751..4a9b7f90884 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -1116,6 +1116,9 @@
- # @secure-tsc: enable Secure TSC
- #     (default: false) (since 11.1)
- #
-+# @tsc-frequency: set secure TSC frequency.  Only valid if Secure TSC
-+#     is enabled (default: zero) (since 11.1)
-+#
- # Since: 9.1
- ##
- { 'struct': 'SevSnpGuestProperties',
-@@ -1128,7 +1131,8 @@
-             '*author-key-enabled': 'bool',
-             '*host-data': 'str',
-             '*vcek-disabled': 'bool',
--            '*secure-tsc': 'bool' } }
-+            '*secure-tsc': 'bool',
-+            '*tsc-frequency': 'uint32' } }
- 
- ##
- # @TdxGuestProperties:
 diff --git a/target/i386/sev.c b/target/i386/sev.c
-index fdfeb604f6c..ae9c85af131 100644
+index ae9c85af131..8acbb01da22 100644
 --- a/target/i386/sev.c
 +++ b/target/i386/sev.c
-@@ -183,6 +183,7 @@ struct SevSnpGuestState {
-     char *id_auth_base64;
-     uint8_t *id_auth;
-     char *host_data;
-+    uint32_t tsc_khz;
+@@ -507,40 +507,22 @@ static void sev_apply_cpu_context(CPUState *cpu)
+     }
+ }
  
-     struct kvm_sev_snp_launch_start kvm_start_conf;
-     struct kvm_sev_snp_launch_finish kvm_finish_conf;
-@@ -547,6 +548,13 @@ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
++/*
++ * Ensure SEV_FEATURES is configured for correct SEV hardware and that
++ * the requested features are supported. In addition, ensure feature
++ * dependencies are satisfied (allow tsc-frequency only if secure-tsc
++ * is also enabled, as an example).
++ */
+ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
+                               Error **errp)
+ {
+-    /*
+-     * Ensure SEV_FEATURES is configured for correct SEV hardware and that
+-     * the requested features are supported. If SEV-SNP is enabled then
+-     * that feature must be enabled, otherwise it must be cleared.
+-     */
+-    if (sev_snp_enabled() && !(sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
+-        error_setg(
+-            errp,
+-            "%s: SEV_SNP is enabled but is not enabled in VMSA sev_features",
+-            __func__);
+-        return -1;
+-    } else if (!sev_snp_enabled() &&
+-               (sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
+-        error_setg(
+-            errp,
+-            "%s: SEV_SNP is not enabled but is enabled in VMSA sev_features",
+-            __func__);
+-        return -1;
+-    }
+-    if (sev_features && sev_es_enabled() && !sev_snp_enabled()) {
+-        error_setg(errp,
+-                   "%s: SEV features are not supported with SEV-ES at this time",
+-                   __func__);
+-        return -1;
+-    }
+     if (sev_features && !sev_es_enabled()) {
+         error_setg(errp,
+                    "%s: SEV features require either SEV-ES or SEV-SNP to be enabled",
+                    __func__);
+         return -1;
+     }
++
+     if (sev_features & ~sev_common->supported_sev_features) {
+         error_setg(errp,
+                    "%s: VMSA contains unsupported sev_features: %lX, "
+@@ -548,13 +530,36 @@ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
                     __func__, sev_features, sev_common->supported_sev_features);
          return -1;
      }
-+    if (sev_snp_enabled() && SEV_SNP_GUEST(sev_common)->tsc_khz &&
-+        !(sev_features & SVM_SEV_FEAT_SECURE_TSC)) {
-+        error_setg(errp,
-+                   "%s: TSC frequency can only be set if Secure TSC is enabled",
-+                   __func__);
-+        return -1;
-+    }
+-    if (sev_snp_enabled() && SEV_SNP_GUEST(sev_common)->tsc_khz &&
+-        !(sev_features & SVM_SEV_FEAT_SECURE_TSC)) {
+-        error_setg(errp,
+-                   "%s: TSC frequency can only be set if Secure TSC is enabled",
+-                   __func__);
+-        return -1;
++
++    if (sev_snp_enabled()) {
++        if (!(sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
++            error_setg(errp,
++                       "%s: SEV_SNP is enabled but is not enabled in VMSA sev_features",
++                       __func__);
++            return -1;
++        }
++        if (SEV_SNP_GUEST(sev_common)->tsc_khz &&
++            !(sev_features & SVM_SEV_FEAT_SECURE_TSC)) {
++            error_setg(errp,
++                       "%s: TSC frequency can only be set if Secure TSC is enabled",
++                       __func__);
++            return -1;
++        }
++    } else {
++        if (sev_features && sev_es_enabled()) {
++            error_setg(errp,
++                       "%s: SEV features are not supported with SEV-ES at this time",
++                       __func__);
++            return -1;
++        }
++        if (sev_features & SVM_SEV_FEAT_SNP_ACTIVE) {
++            error_setg(errp,
++                       "%s: SEV_SNP is not enabled but is enabled in VMSA sev_features",
++                       __func__);
++            return -1;
++        }
+     }
++
      return 0;
  }
  
-@@ -1095,6 +1103,19 @@ sev_snp_launch_start(SevCommonState *sev_common)
-             return 1;
-     }
- 
-+    if (is_sev_feature_set(sev_common, SVM_SEV_FEAT_SECURE_TSC) &&
-+        sev_snp_guest->tsc_khz) {
-+        rc = -EINVAL;
-+        if (kvm_check_extension(kvm_state, KVM_CAP_VM_TSC_CONTROL)) {
-+            rc = kvm_vm_ioctl(kvm_state, KVM_SET_TSC_KHZ, sev_snp_guest->tsc_khz);
-+        }
-+        if (rc < 0) {
-+            error_report("%s: Unable to set Secure TSC frequency to %u kHz ret=%d",
-+                         __func__, sev_snp_guest->tsc_khz, rc);
-+            return 1;
-+        }
-+    }
-+
-     rc = sev_ioctl(sev_common->sev_fd, KVM_SEV_SNP_LAUNCH_START,
-                    start, &fw_error);
-     if (rc < 0) {
-@@ -3222,6 +3243,28 @@ static void sev_snp_guest_set_secure_tsc(Object *obj, bool value, Error **errp)
-     sev_set_feature(SEV_COMMON(obj), SVM_SEV_FEAT_SECURE_TSC, value);
- }
- 
-+static void
-+sev_snp_guest_get_tsc_frequency(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
-+{
-+    uint32_t value = SEV_SNP_GUEST(obj)->tsc_khz * 1000;
-+
-+    visit_type_uint32(v, name, &value, errp);
-+}
-+
-+static void
-+sev_snp_guest_set_tsc_frequency(Object *obj, Visitor *v, const char *name,
-+                                void *opaque, Error **errp)
-+{
-+    uint32_t value;
-+
-+    if (!visit_type_uint32(v, name, &value, errp)) {
-+        return;
-+    }
-+
-+    SEV_SNP_GUEST(obj)->tsc_khz = value / 1000;
-+}
-+
- static void
- sev_snp_guest_class_init(ObjectClass *oc, const void *data)
- {
-@@ -3260,6 +3303,9 @@ sev_snp_guest_class_init(ObjectClass *oc, const void *data)
-     object_class_property_add_bool(oc, "secure-tsc",
-                                   sev_snp_guest_get_secure_tsc,
-                                   sev_snp_guest_set_secure_tsc);
-+    object_class_property_add(oc, "tsc-frequency", "uint32",
-+                              sev_snp_guest_get_tsc_frequency,
-+                              sev_snp_guest_set_tsc_frequency, NULL, NULL);
- }
- 
- static void
 -- 
 2.55.0
 
