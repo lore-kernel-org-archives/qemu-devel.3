@@ -4,100 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8154C5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:51:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34C5AC5DF86
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:51:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx5yd-00046R-5l; Thu, 20 Aug 2026 12:50:51 -0400
+	id 1wx5yy-0004o0-Us; Thu, 20 Aug 2026 12:51:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5yb-00043O-9s
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:50:49 -0400
+ id 1wx5yu-0004U4-Qd
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5yX-0005TR-St
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:50:47 -0400
+ id 1wx5ys-0005b2-TR
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787244645;
+ s=mimecast20190719; t=1787244666;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=esr51iSHBjd/y3UjyJmq4pMVM2wH/MerbWeavAT2qh0=;
- b=AKja7Yqp3FyQLL0eyk982b8HmD9M9OCsFCsQEQcOrJW6Ik8Z+FBH4iHT5qS1k7byhve3Lk
- ooHxIFMxCFM67wkRnNdoNUFFvRgMUJIQqY6O8VoOKtcKXMbnMPqGUWhVojiGeuYMofbR+e
- YqosxHWPL+7U3vsaTViP2kfATHWiV4A=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=johAxnEead98P7nJRpW8CC1fh54YCcvqBd2m+8U/+pY=;
+ b=X3XUm7wylQ5DwNk1dp05S//XyLvBYEoeCFZI6EkWH7lqMM+Oz5MOYoJZaVUauF2LXE/xGA
+ peaScyalMXAHLViFa2yt1QJH56ViaHxoJfvXSy6R9qgt2wVDhEjKC+dbHx1IDjs7Gl60G5
+ SrRPp0d2iUcX+Jstg8BT7VJtTTP7U/0=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-653-LTQ7m2e6MBqPKdVXXJcRlg-1; Thu, 20 Aug 2026 12:50:42 -0400
-X-MC-Unique: LTQ7m2e6MBqPKdVXXJcRlg-1
-X-Mimecast-MFC-AGG-ID: LTQ7m2e6MBqPKdVXXJcRlg_1787244641
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-47faa02f707so976826f8f.1
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:50:42 -0700 (PDT)
+ us-mta-583-xyyZKFJ8NR2A1NGPc7aGgA-1; Thu, 20 Aug 2026 12:51:04 -0400
+X-MC-Unique: xyyZKFJ8NR2A1NGPc7aGgA-1
+X-Mimecast-MFC-AGG-ID: xyyZKFJ8NR2A1NGPc7aGgA_1787244663
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-47f83999cceso96359f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:51:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787244641; x=1787849441; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=esr51iSHBjd/y3UjyJmq4pMVM2wH/MerbWeavAT2qh0=;
- b=si2l1JP6bDTw/TvdnRECLOzrM3EsDBGudV7cNe1T/6ICXzLuBiMzXfdfSMFYo4yiq+
- FmVUp2ybnc5eckIrrE4JVy/eweyYBzNborTqbJrLcY6amn+X8hUA8hNN3HWIDXsKYVnx
- xjk58coUxv1cetDyOVtwovR9sCq9G5y4vOgwCqVMoJLES8ILGaL0hBnFfRzgmWi3jydk
- q4Z4k7W5Nf42PrKSxivjijLu/Z7c6sP4lc3nWrdL/kdn93UjjxgDE7ZVkttWrDx94EYJ
- IxDJ4PSt5PGPkQDb+bW57w0yeTUqlGyorxNmBt3BlW7Zql1gaP22ipzrcT1gtx3m+XE7
- xJCA==
+ d=redhat.com; s=google; t=1787244663; x=1787849463; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=johAxnEead98P7nJRpW8CC1fh54YCcvqBd2m+8U/+pY=;
+ b=m/AMvgMBk4Zs2dSRPPJA/dTbpcEmSfKpzKnBKRYyteU3SxxrUli5Vmcjl9wuqJRAIf
+ ezSwXbZ9tRgJ2xYgBdDXDCGKjd0cwnAmlqpeuiQATqVvlhpId6mHrOYV6BIuVXij+xcD
+ Pr5Yl98RgjPLYk9weEPcLEM9HI/+WlGaXlM+k1axU07+woDRBH7hmv78k9yevzzrir4y
+ VBtOQFjp7+mwLp8kbVj1VbwWQuQhbyC8IeAowbbUMo06qWLrFF4QyqyplIHNSJeskki6
+ 83AxNLcK+HjYOYYmkA1qi4y/IAmkYbOeF31mvc9Uhoc8liixkqq3lAa2Et2B8ADyv+PQ
+ WLUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787244641; x=1787849441;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=esr51iSHBjd/y3UjyJmq4pMVM2wH/MerbWeavAT2qh0=;
- b=sF2M+lt5rsM5UbC7+GC42Qa0XR+0WKZlBP16jupY62btCJyX7wPyKvt1IlE29if9+V
- O0mQNzujmaSI7X7UZMxzCxgbm88MTyDeVYLDEDnGEnqye9lmI/lXpTFBNLcqLpe6xbzX
- 4uLWw7yZiNR/idZPkJYAR0ShTHL+ujfKTalQKYN7TeCks1yQ2s3WqzNBN4y59pmo6Acc
- cy4xHGwghV6E55xrzyZD45aS22LgTrskGN7i1gjYPei+KXOr9XvvLrTo1nI2f6L4UgVK
- Eyh6w5lMI+X55Xq0zvxaCp8PpqUSHyv9MlrzBMPq8NsqJuT2uvE4cMjYG1R0E/yyJr1R
- sqAw==
-X-Gm-Message-State: AFuF++m5awaU2YKFYrVwGLEjKe98gnDqozMi6N6eUMxdO39ZlAPIUfmU
- PDk9q3WmwYMwtry8qjCdEVC5e3zwhWTb92xhbiImShft3zUaQfNDyFySR1lXXP9AmqwaoXtS31q
- CjHos+LBikPg56jkbl6NXlgMB/FY+2SgRwUtscMv+YQ3DybwN4lBTV8Ac7GkmMoEJpgsIm2NSGX
- DB9MGTV6UETuRNiUTAYXsqKR4kfC6UjabXq88CJ8Lq
-X-Gm-Gg: AR+sD10aW/Xj6JhIHghSK7rIgDJrAoLpdDUhTJO8chd3yN8QOMTQUb9Ufx5k868Ew+n
- 8NfKQYnGjbJ+vYfntW6FwmehC7lUiKFP30M8aNkwCz/CVgkJThuzXOWjDu0sHBjTYR1HYxK4oTJ
- /GZYLuO3eyuFxupQHRzOec/jFGcO8pA4Yui4r871t1f5XM780AzMBNBvy4QWjsYxgU9QcgXhwOu
- X4mkOSSLckiYv8SMpUrg4KTjzrlag0aH2PpJ6chdZP74urgehfQ0LW/LbPc65RirLZe33useeKc
- oalL3OZrSLyh6cfFXXjJNddEmfLO1hHHo5c6ozGHPCR2YZDi+Tac8+yMr4B1CXkZIaPcpYVE2XF
- o6hIekvOMrnb5/qvAzhnM7TZbj0Pdq1VfLpnBdB38IGBrKtty8NtUz4ELpUT00BUAqNrUWr3ED7
- nk4ik=
-X-Received: by 2002:a05:6000:61e:b0:481:5a46:dbef with SMTP id
- ffacd0b85a97d-482b7811899mr13475347f8f.5.1787244641056; 
- Thu, 20 Aug 2026 09:50:41 -0700 (PDT)
-X-Received: by 2002:a05:6000:61e:b0:481:5a46:dbef with SMTP id
- ffacd0b85a97d-482b7811899mr13475226f8f.5.1787244640514; 
- Thu, 20 Aug 2026 09:50:40 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787244663; x=1787849463;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=johAxnEead98P7nJRpW8CC1fh54YCcvqBd2m+8U/+pY=;
+ b=fSxSv+xidilAgRBc0iHGQzRMc3aVtpujUtszxlKV1LEQWrpckH9B4GfPjD1xuoRhf9
+ E+HZSlJMx40fXZDOPCoBkyO3sz7ern0Drz1Xn1ftAXuCM0IZMBFCkCfHsjRWRFWtFZhu
+ 8cjcroRxtDA6hQ6hogGZy5uUSNKZMJQyqk4zwbjrJ2V2QZ1T0GczzfXZpFAR+AzDzp6t
+ UGxMJUt6rB01atCjphwd3WZvipUzzdBCajeeShYRZYXzvXY8Mw/4jCm7UhdNe3CFZ2As
+ 5pnailQpeFjSv8F0xV60XSJV0J3fRN/+ySxIOaL2tbp73yQSUauaHq7etO/ZXJbRCUrG
+ V8sw==
+X-Gm-Message-State: AFuF++kLvx71Rhe0mp8Kd0ilSoE8PSOUc4CKxp48qdxDv/STp9rEdFS6
+ +r53l/GF8cpintdQLAH37AEosL6p9Fe3Ee/1kqf2le/pyvC7ZulJJnwiiKzOfhvj5nv1MZeDmwD
+ dG9J3c4gpT/OMaMYS6MFGMHZ4F6CalD0ZnextN8Na1hlzGjeU0HRQJuB/6eAtAJJmNXKd+SsxyB
+ iGScQHOKdCZL0o58kxI3+YucTnyRxFZw/tHEPaFBPQ
+X-Gm-Gg: AR+sD138WMaoo8vz8TP9ws1R2UIMS/z78WUm0echQE9n8CZm8yf8ux5ziR6wEiCh0+0
+ +n0QRqMnFfFWXQtbmGZQjCWpqgdYhLzUoPpc3zF/G7nZNEHIXdKSoMhrWT/0o01JDfeSBpcka5S
+ 5AsU4iWqPxv3M9NAl+Nu4p50SeTlF2cMGsCetmersE0fxfGYhBwLTmkBdNU6LkSfOdacsKIoEWo
+ 17LhatQY+wQ8K4HgPFYbbahXc3FYn06rl3i7Nw54LimUyZEdyjz1TCakwhrUd8zGShqO70Ad5Dk
+ jQsxEX7Mf+Lip8dS/Q4IqTtF+5/Qf8Qk+KnPil/0t9xIQIH0VgCkFEhYUefbvT1b5pfpXvnvqy1
+ utVffPPcpzFvGBDnAfd7xpV3Pziofngkq9YfR9DepxGicU+GEd4uTSBKKzWfCyOL+wK9rfd78VW
+ ggTxU=
+X-Received: by 2002:a05:6000:2209:b0:481:573d:9d29 with SMTP id
+ ffacd0b85a97d-482b1fdb100mr25099356f8f.14.1787244663268; 
+ Thu, 20 Aug 2026 09:51:03 -0700 (PDT)
+X-Received: by 2002:a05:6000:2209:b0:481:573d:9d29 with SMTP id
+ ffacd0b85a97d-482b1fdb100mr25099293f8f.14.1787244662776; 
+ Thu, 20 Aug 2026 09:51:02 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b14b7d3asm13351802f8f.23.2026.08.20.09.50.38
+ ffacd0b85a97d-482b14b7d4asm12123479f8f.21.2026.08.20.09.51.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 09:50:39 -0700 (PDT)
+ Thu, 20 Aug 2026 09:51:01 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
- =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
-Subject: [PULL 14/53] target/i386/mshv: migrate Synic SINT MSRs
-Date: Thu, 20 Aug 2026 18:49:17 +0200
-Message-ID: <20260820164957.1895963-15-pbonzini@redhat.com>
+Cc: "Naveen N Rao (AMD)" <naveen@kernel.org>,
+ Tom Lendacky <thomas.lendacky@amd.com>
+Subject: [PULL 22/53] target/i386: SEV: Consolidate SEV feature validation to
+ common init path
+Date: Thu, 20 Aug 2026 18:49:25 +0200
+Message-ID: <20260820164957.1895963-23-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820164957.1895963-1-pbonzini@redhat.com>
 References: <20260820164957.1895963-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -123,92 +122,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+From: "Naveen N Rao (AMD)" <naveen@kernel.org>
 
-Migrate HyperV SynIC SINT MSRs. We can only read/write those if SCONTROL
-is enabled in the guest, hence we have to split the SINT MSR out and
-make reading/writing them dependent on that MSR.
+Currently, check_sev_features() is called in multiple places when
+processing IGVM files: both when processing the initial VMSA SEV
+features from IGVM, as well as when validating the full contents of the
+VMSA. Move this to a single point in sev_common_kvm_init() to simplify
+the flow, as well as to re-use this function when VMSA SEV features are
+being set without using IGVM files.
 
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Reviewed-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20260710101534.664604-7-magnuskulke@linux.microsoft.com
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
+Link: https://lore.kernel.org/r/35449df94eb20c29923a7cd0e2742ddba605928c.1779281646.git.naveen@kernel.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/mshv/msr.c | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ target/i386/sev.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/target/i386/mshv/msr.c b/target/i386/mshv/msr.c
-index a5f639c3ca6..5288e32b6da 100644
---- a/target/i386/mshv/msr.c
-+++ b/target/i386/mshv/msr.c
-@@ -331,6 +331,8 @@ int mshv_get_msrs(CPUState *cpu)
-     struct hv_register_assoc assocs[MSHV_MSR_TOTAL_COUNT];
-     size_t i, j;
-     uint32_t name;
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    bool synic_enabled;
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 093d29e7613..d8fb88d2b21 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -600,9 +600,6 @@ static int check_vmsa_supported(SevCommonState *sev_common, hwaddr gpa,
+     vmsa_check.x87_fcw = 0;
+     vmsa_check.mxcsr = 0;
  
-     set_hv_name_in_assocs(assocs, n_assocs);
+-    if (check_sev_features(sev_common, vmsa_check.sev_features, errp) < 0) {
+-        return -1;
+-    }
+     vmsa_check.sev_features = 0;
  
-@@ -357,6 +359,27 @@ int mshv_get_msrs(CPUState *cpu)
+     if (!buffer_is_zero(&vmsa_check, sizeof(vmsa_check))) {
+@@ -1920,6 +1917,10 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+             }
+         }
  
-     store_in_env(cpu, assocs, n_assocs);
- 
-+    /* Read SINT MSRs only if SynIC is enabled */
-+    synic_enabled = x86cpu->env.msr_hv_synic_control & 1;
-+    if (synic_enabled) {
-+        QEMU_BUILD_BUG_ON(MSHV_MSR_TOTAL_COUNT < HV_SINT_COUNT);
-+
-+        for (i = 0; i < HV_SINT_COUNT; i++) {
-+            assocs[i].name = HV_REGISTER_SINT0 + i;
++        if (check_sev_features(sev_common, sev_common->sev_features, errp) < 0) {
++            return -1;
 +        }
 +
-+        ret = mshv_get_generic_regs(cpu, assocs, HV_SINT_COUNT);
-+        if (ret < 0) {
-+            error_report("Failed to get SynIC SINT MSRs");
-+            return -errno;
-+        }
-+
-+        for (i = 0; i < HV_SINT_COUNT; i++) {
-+            uint64_t hv_sint_value = assocs[i].value.reg64;
-+            x86cpu->env.msr_hv_synic_sint[i] = hv_sint_value;
-+        }
-+    }
-+
-     return 0;
- }
- 
-@@ -391,6 +414,8 @@ int mshv_set_msrs(const CPUState *cpu)
-     struct hv_register_assoc assocs[MSHV_MSR_TOTAL_COUNT];
-     int ret;
-     size_t i, j;
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    bool synic_enabled = x86cpu->env.msr_hv_synic_control & 1;
- 
-     load_from_env(cpu, assocs, n_assocs);
- 
-@@ -423,5 +448,21 @@ int mshv_set_msrs(const CPUState *cpu)
-         return -errno;
-     }
- 
-+    /* SINT MSRs can only be written if SCONTROL has been set, so we split */
-+    if (synic_enabled) {
-+        QEMU_BUILD_BUG_ON(MSHV_MSR_TOTAL_COUNT < HV_SINT_COUNT);
-+
-+        for (i = 0; i < HV_SINT_COUNT; i++) {
-+            assocs[i].name        = HV_REGISTER_SINT0 + i;
-+            assocs[i].value.reg64 = x86cpu->env.msr_hv_synic_sint[i];
-+        }
-+
-+        ret = mshv_set_generic_regs(cpu, assocs, HV_SINT_COUNT);
-+        if (ret < 0) {
-+            error_report("Failed to set SynIC SINT MSRs");
-+            return -errno;
-+        }
-+    }
-+
-     return 0;
- }
+         /*
+          * KVM maintains a bitmask of allowed sev_features. This does not
+          * include SVM_SEV_FEAT_SNP_ACTIVE which is set accordingly by KVM
+@@ -2581,9 +2582,6 @@ static int cgs_set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
+                            __func__);
+                 return -1;
+             }
+-            if (check_sev_features(sev_common, sa->sev_features, errp) < 0) {
+-                return -1;
+-            }
+             sev_common->sev_features = sa->sev_features;
+         }
+         return 0;
 -- 
 2.55.0
 
