@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28987C5DF87
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2568DC5DF85
 	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:55:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwtj3-0000Rr-Al; Wed, 19 Aug 2026 23:45:57 -0400
+	id 1wwtji-0001as-BR; Wed, 19 Aug 2026 23:46:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtj1-0000Ix-Kg
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:45:55 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1wwtjf-0001YL-LR
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:36 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtiz-00040K-Un
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:45:55 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-3811f512167so2522485a91.3
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:45:53 -0700 (PDT)
+ id 1wwtjd-00044d-QE
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:35 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-c999f162c9aso1095686a12.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:46:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787197552; x=1787802352; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787197592; x=1787802392; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=PltKUjMnHc0h/eHYDCnaxVw3n7hGNmURlznNMKxaWok=;
- b=OFOwshXN1nGgeWigLfBcsXCC54q1miIhHw/L9mCjVu8wA9PMfrmAKsWjKOibNnuhWA
- jAYvCjIxpKfyTan7U1wQwYjN3zDG7TbWyabsiS9qir3qTZRZYR6CYGHK3BiK2c9pqWa/
- LPdKs8kHellxnMVT5WJEjKkhMK1ZjQQ9HEqDHavxUGyWNngbuCfAsZCS0KiKulp4p48E
- VuNfJRj0dvyVcvhP/cWq5p5Vl7J23noMIf/GEyi02XJV+THC35deUF1GjWzZI0lY06LM
- z9ObvVNLFRDr6VEBuQAk06Rx927Luphz5e2hAQajsFe3qRcMskZ7U0FuoFhLhYHGAF34
- dmBg==
+ bh=8ZvrE0OJGfngMr7vtDZpzHvPZXdScoco3DbqKgkdkXM=;
+ b=jVKgwCfeCfCs/OkIxKIoyiIAY/7arl4c/G+yQOiyMCEpuatVCyAvmoWmg4O4fBcBrw
+ jlnnaaOTSl5IvUHFW11i8fAEd1jTCaHsVLB5HU4VSdIlCK1jLDnMCV7R6b6JR7vHzTMU
+ BQ+inxqHD+qkZ0Giga52cpxf2jbq84SG9CpwN5VUiVqAHzJTC8JhUfSQk7QYjRPfWuxC
+ oeoNilcqSn1yzyZOugz8OGJPrx0OeftPc3hPJBm9CSMPQtYOf12rW9WumqIveyiUVJWY
+ Iwz1QW9M7rXptf+dCfVsLm6Ap4ff5A4UEn2CHLteyNKI2/1pzFhlZbdYLTsEr8AALx2A
+ lZ6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787197552; x=1787802352;
+ d=1e100.net; s=20251104; t=1787197592; x=1787802392;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=PltKUjMnHc0h/eHYDCnaxVw3n7hGNmURlznNMKxaWok=;
- b=KBUkn/BJGvnHVRv725M6cFS4IJcgqVAajx3xoVwIGc1TyIN0nYfHxyqOU3LdYrVd/0
- ra5A/dYpuW/5JZ0iKWd+WeQOGEbva8YNcVRZlczKOULcUWfCnAWNi45feLF/sZwqmmkU
- +Ec7aEyzO7wlHleLMfotClrRBD3cJSnyylJ6/ZiMd9VvzJiAoQvpv1SKXartiOKgS0uL
- o90uwi07EOFfokq4AxYU+8TdC/qTRTWlb7S0r5sj5p8v45Q+PQBByQwSWrsuCNC247XC
- DbMKgOeElhOXHjzMAofKyvjRviLdObnC7IWE2xoYfzZWsYY9ToMXcMGNQ8ZiywNHJRHC
- EPcg==
-X-Gm-Message-State: AFuF++mqkIwFgFK96ZxoHGaQtojsGgpYjh1eh1TWBrKfqKYHNXjtSVqt
- RfhxE+oZgBsGEGA/Mb3Tku7ZBqWFpf17SSWcffAqai7ETMC1IG8Rs9myrb8H2g==
-X-Gm-Gg: AR+sD136bfjmYRclYw3Uhq9P3wvW1GvlwQRbqeDZkVwxeYOPCcGxTN+IZWuTuVjGr6M
- NMhfg4avziCWv+VlkGpln2bCpOKBLGwBlKQOqRfMzo155+21vFBNwXRKl2l8caVdlxnjkEfgGwS
- 6gSwUacfUNYK2THlI4WRdruvILyqvZrFkXnutYuHUz8p0hIbJcJqhK23Ze3q6aByTsQD9m3vHmr
- lSmDiPsF1EVQClG+h/qNuDy1qP6Xtv1AKsLU/tWdBq5gPL0yK6m6pKqWWv0CA7IY4pKS5koDtYL
- 3uHg+N2bcX6K0k+liNDtyZGJB5b9cl/b3wzaawPHogv0KX+Z8RtI4zbvMLLRwK4DatGaD/X7PwR
- K6++6NSW2u9ckChV/rySaY1nd+pMmxz9Sv3gcw4+nEHZTMCQ5m22NyjGHPz2JVG4b1p7D4x0J5n
- FHgpkHex9Eo1IHlDMB8/PdQ2h2i/Mysy/IR8Y2P8gFlZ4hNsxW4nRpx4UN201O3kU0y0gQzAICA
- N4tbQ==
-X-Received: by 2002:a17:90b:4e8f:b0:392:ca3b:370a with SMTP id
- 98e67ed59e1d1-39580a50d67mr19140461a91.2.1787197552157; 
- Wed, 19 Aug 2026 20:45:52 -0700 (PDT)
+ bh=8ZvrE0OJGfngMr7vtDZpzHvPZXdScoco3DbqKgkdkXM=;
+ b=S0prwInbqoiBBr3HXnbIPjtXyP6BUu79aQ/3AjHqZBsgJJySa2jgQpyLDdP6ToQXIM
+ appV9JbYXs6peQAvKx0Y5kJbwIvTVVJMJlWVmZXMmNGvDtDqiTQMqCBZF3BCr3SV0a/T
+ L6p7KV/2m9NvzILaPoMKC+jBpJ/FzI9HlswwqRHb/IGItEROv+wxl4FGxnCw3zq6v99q
+ ADVbLjVlKjA81Ya5D98ouYiGvQ3ADNIikR34afjDwW/uJRcFOz7X4Avsls8CTSEzt041
+ nOe23O4eJTuwJMOaGg4WT5Ccuj7nydblwOOvLprM94UTt+OJpEL50hKhThWqu4CQ5bNZ
+ N/nw==
+X-Gm-Message-State: AOJu0Yzeccul+QnAbb5rSzy5iCU0czZmwdMrfBVQhn0zlvYgHyqMSHLz
+ mnUdxt5ZemUd7jyQFsgApbNuIrEVmfgiL62Bvup3MnGMMji1f4Z/Or/whoaDnQ==
+X-Gm-Gg: AR+sD12hEHRPuRe5cID86nAtECTmv/FMDVM5aAzh0iTcT3sjjbDAsivmnby9IAsqq4U
+ dNxCA1lMJl8WVDFkA3Q6W8hjYsAqIVdFwLpUeZ5d5mFXUn63uyNvIL6j8xcHED/0y4Rz6KFNTiO
+ SXUyozERFG1WnJXd0hQX9TF/UWdhTSL8ek//L+2ev8KZvKYcrODOfc+4Ya9KsFnxU0YAOfcT0c6
+ e7CcxgYsBwWMACTTH6Zn2bu4ghPSWadj/Pj4680aBMMfAZq7m7CLJ20Dxn1M5ZKQHS5yR5Vf7nw
+ sJEtWqeXBjgnCHLo4jpqwN71WalpU+rhxFO0P6miYahr8BPvMavvQ9C78qjfsnEtQvCqUAhRYN+
+ EXwqc2fbUZtjglFbx4qXk/EJO9r8VCF6jRVcHXZkwKW9psSzZGYaJtx1jcFBw6VnQ3EPK5h+mjv
+ FROrWdGrc3gSRrFvRkh2MgKeH2EjgVuXSdl8F4p4PgYvJ9Ci80onkvwSddDd4G7B42gTezU3is5
+ T+tqQ==
+X-Received: by 2002:a05:6a21:9984:b0:3c3:b57b:6291 with SMTP id
+ adf61e73a8af0-3cd0132c618mr15438400637.18.1787197592488; 
+ Wed, 19 Aug 2026 20:46:32 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.45.49
+ a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.46.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 20:45:51 -0700 (PDT)
+ Wed, 19 Aug 2026 20:46:31 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Flavien Solt <flavien.solt97@gmail.com>,
- Tao Tang <tangtao1634@phytium.com.cn>, Nutty Liu <nutty.liu@hotmail.com>,
+Cc: A-Shehab <ahshehab24@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 23/93] hw/misc/iommu-testdev: support PCI MSI test writes
-Date: Thu, 20 Aug 2026 13:43:20 +1000
-Message-ID: <20260820034430.1186695-24-alistair.francis@wdc.com>
+Subject: [PULL 36/93] target/riscv: allow menvcfg/henvcfg LPE and SSE bits on
+ RV32
+Date: Thu, 20 Aug 2026 13:43:33 +1000
+Message-ID: <20260820034430.1186695-37-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260820034430.1186695-1-alistair.francis@wdc.com>
 References: <20260820034430.1186695-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,112 +105,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Flavien Solt <flavien.solt97@gmail.com>
+From: A-Shehab <ahshehab24@gmail.com>
 
-iommu-testdev writes ITD_DMA_WRITE_VAL with unspecified requester
-attributes. RISC-V MSI remapping tests need to select an interrupt
-identity in the payload. The MSI trap also identifies the device through
-MemTxAttrs.requester_id.
+The Zicfilp landing-pad enable (LPE, bit 2) and Zicfiss shadow-stack
+enable (SSE, bit 3) controls live in the low 32 bits of menvcfg and
+henvcfg, and the CFI specification defines them for both RV32 and RV64.
 
-Add a write-value register with the existing constant as its reset
-default. Populate the requester ID from the PCI function. Existing
-translation tests retain their payload while interrupt-remapping tests
-can issue a valid MSI for the test device.
+QEMU only adds MENVCFG_LPE/MENVCFG_SSE (and the henvcfg equivalents) to
+the writable mask inside the "riscv_cpu_mxl(env) == MXL_RV64" block, so
+on RV32 these bits are silently dropped and the features cannot be
+enabled. This is inconsistent with write_senvcfg(), which already
+handles SENVCFG_LPE/SENVCFG_SSE regardless of MXLEN.
 
-Signed-off-by: Flavien Solt <flavien.solt97@gmail.com>
-Reviewed-by: Tao Tang <tangtao1634@phytium.com.cn>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260727-qemu-mrif-v4-v4-1-73e0890ad395@gmail.com>
+Hoist the LPE/SSE mask handling out of the RV64-only block in
+write_menvcfg() and write_henvcfg() so the bits become writable on RV32
+as well. The upper-half writers (write_menvcfgh/write_henvcfgh) are
+unaffected because these bits reside in the low 32 bits.
+
+Reproducible on qemu-system-riscv32 -cpu rv32,zicfilp=true,zicfiss=true:
+an M-mode write of menvcfg.{LPE,SSE} reads back as zero, while the same
+program on rv64 keeps the bits set.
+
+Fixes: 4923f672e3d7 ("target/riscv: Introduce elp state and enabling controls for zicfilp")
+Fixes: 8205bc127a83 ("target/riscv: introduce ssp and enabling controls for zicfiss")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4045
+Signed-off-by: A-Shehab <ahshehab24@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260726080537.13913-1-ahshehab24@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/misc/iommu-testdev.h |  1 +
- hw/misc/iommu-testdev.c         | 14 ++++++++++++--
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ target/riscv/tcg/csr.c | 45 +++++++++++++++++++++++++-----------------
+ 1 file changed, 27 insertions(+), 18 deletions(-)
 
-diff --git a/include/hw/misc/iommu-testdev.h b/include/hw/misc/iommu-testdev.h
-index 338365947c..2f4e9310df 100644
---- a/include/hw/misc/iommu-testdev.h
-+++ b/include/hw/misc/iommu-testdev.h
-@@ -81,6 +81,7 @@ enum {
-     ITD_REG_DMA_ATTRS       = 0x18,
-     ITD_REG_DMA_GPA_LO      = 0x1c,
-     ITD_REG_DMA_GPA_HI      = 0x20,
-+    ITD_REG_DMA_WRITE_VAL   = 0x24,
-     BAR0_SIZE               = 0x1000,
- };
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index a90449b87f..ffd751caa5 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -3221,6 +3221,19 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+                     MENVCFG_CBZE;
+     bool stce_changed = false;
  
-diff --git a/hw/misc/iommu-testdev.c b/hw/misc/iommu-testdev.c
-index 15eb6de78a..6428a57fed 100644
---- a/hw/misc/iommu-testdev.c
-+++ b/hw/misc/iommu-testdev.c
-@@ -28,6 +28,7 @@ struct IOMMUTestDevState {
-     uint64_t dma_paddr;
-     uint32_t dma_len;
-     uint32_t dma_result;
-+    uint32_t dma_write_val;
-     bool dma_armed; /* armed until a trigger consumes the request */
++    /*
++     * menvcfg.LPE (Zicfilp) and menvcfg.SSE (Zicfiss) reside in the low
++     * 32 bits and are defined for both RV32 and RV64, so they must be
++     * writable regardless of MXLEN.
++     */
++    if (cfg->ext_zicfilp) {
++        mask |= MENVCFG_LPE;
++    }
++
++    if (cfg->ext_zicfiss) {
++        mask |= MENVCFG_SSE;
++    }
++
+     if (riscv_cpu_mxl(env) == MXL_RV64) {
+         mask |= (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
+                 (cfg->ext_sstc ? MENVCFG_STCE : 0) |
+@@ -3228,14 +3241,6 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+                 (cfg->ext_svadu ? MENVCFG_ADUE : 0) |
+                 (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
  
-     AddressSpace *dma_as;   /* IOMMU-mediated DMA AS for this device */
-@@ -80,6 +81,7 @@ static void iommu_testdev_maybe_run_dma(IOMMUTestDevState *s)
- 
-     /* Initialize MemTxAttrs from generic register. */
-     attrs.secure = ITD_ATTRS_GET_SECURE(s->dma_attrs_cfg);
-+    attrs.requester_id = pci_requester_id(&s->parent_obj);
- 
-     space_valid = ITD_ATTRS_GET_SPACE_VALID(s->dma_attrs_cfg);
-     if (space_valid) {
-@@ -97,12 +99,12 @@ static void iommu_testdev_maybe_run_dma(IOMMUTestDevState *s)
- 
-     as = s->dma_as;
- 
--    /* Step 1: Write ITD_DMA_WRITE_VAL to DMA address */
-+    /* Step 1: Write the configured test value to DMA address */
-     trace_iommu_testdev_dma_write(s->dma_vaddr, s->dma_len);
- 
-     for (int i = 0; i < s->dma_len; i++) {
-         /* Data is written in little-endian order */
--        write_buf[i] = (ITD_DMA_WRITE_VAL >> ((i % 4) * 8)) & 0xff;
-+        write_buf[i] = (s->dma_write_val >> ((i % 4) * 8)) & 0xff;
+-        if (env_archcpu(env)->cfg.ext_zicfilp) {
+-            mask |= MENVCFG_LPE;
+-        }
+-
+-        if (env_archcpu(env)->cfg.ext_zicfiss) {
+-            mask |= MENVCFG_SSE;
+-        }
+-
+         /* Update PMM field only if the value is valid according to Zjpm v1.0 */
+         if (env_archcpu(env)->cfg.ext_smnpm &&
+             get_field(val, MENVCFG_PMM) != PMM_FIELD_RESERVED) {
+@@ -3383,20 +3388,24 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
+         return ret;
      }
-     write_res = dma_memory_write(as, s->dma_vaddr, write_buf,
-                                  s->dma_len, attrs);
-@@ -186,6 +188,9 @@ static uint64_t iommu_testdev_mmio_read(void *opaque, hwaddr addr,
-     case ITD_REG_DMA_ATTRS:
-         value = s->dma_attrs_cfg;
-         break;
-+    case ITD_REG_DMA_WRITE_VAL:
-+        value = s->dma_write_val;
-+        break;
-     default:
-         value = 0;
-         break;
-@@ -240,6 +245,9 @@ static void iommu_testdev_mmio_write(void *opaque, hwaddr addr, uint64_t val,
-     case ITD_REG_DMA_ATTRS:
-         s->dma_attrs_cfg = data;
-         break;
-+    case ITD_REG_DMA_WRITE_VAL:
-+        s->dma_write_val = data;
-+        break;
-     default:
-         break;
-     }
-@@ -263,6 +271,7 @@ static void iommu_testdev_realize(PCIDevice *pdev, Error **errp)
-     s->dma_paddr = 0;
-     s->dma_len = 0;
-     s->dma_result = ITD_DMA_RESULT_IDLE;
-+    s->dma_write_val = ITD_DMA_WRITE_VAL;
-     s->dma_armed = false;
-     s->dma_attrs_cfg = ITD_ATTRS_SET_SPACE(0, ITD_ATTRS_SPACE_NONSECURE);
-     s->dma_as = pci_device_iommu_address_space(pdev);
-@@ -280,6 +289,7 @@ static void iommu_testdev_reset(DeviceState *dev)
-     s->dma_paddr = 0;
-     s->dma_len = 0;
-     s->dma_result = ITD_DMA_RESULT_IDLE;
-+    s->dma_write_val = ITD_DMA_WRITE_VAL;
-     s->dma_armed = false;
-     s->dma_attrs_cfg = ITD_ATTRS_SET_SPACE(0, ITD_ATTRS_SPACE_NONSECURE);
- }
+ 
++    /*
++     * henvcfg.LPE (Zicfilp) and henvcfg.SSE (Zicfiss) reside in the low
++     * 32 bits and are defined for both RV32 and RV64, so they must be
++     * writable regardless of MXLEN.
++     */
++    if (cfg->ext_zicfilp) {
++        mask |= HENVCFG_LPE;
++    }
++
++    /* H can light up SSE for VS only if HS had it from menvcfg */
++    if (cfg->ext_zicfiss && get_field(env->menvcfg, MENVCFG_SSE)) {
++        mask |= HENVCFG_SSE;
++    }
++
+     if (riscv_cpu_mxl(env) == MXL_RV64) {
+         mask |= env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE |
+                                 HENVCFG_DTE);
+ 
+-        if (env_archcpu(env)->cfg.ext_zicfilp) {
+-            mask |= HENVCFG_LPE;
+-        }
+-
+-        /* H can light up SSE for VS only if HS had it from menvcfg */
+-        if (env_archcpu(env)->cfg.ext_zicfiss &&
+-            get_field(env->menvcfg, MENVCFG_SSE)) {
+-            mask |= HENVCFG_SSE;
+-        }
+-
+         /* Update PMM field only if the value is valid according to Zjpm v1.0 */
+         if (env_archcpu(env)->cfg.ext_ssnpm &&
+             get_field(val, HENVCFG_PMM) != PMM_FIELD_RESERVED) {
 -- 
 2.54.0
 
