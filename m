@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4788C5DF89
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:45:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02115C5DF87
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:45:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwtiJ-00073J-7K; Wed, 19 Aug 2026 23:45:11 -0400
+	id 1wwthx-0006rX-IT; Wed, 19 Aug 2026 23:44:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtiI-0006zy-5q
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:45:10 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1wwthw-0006rO-A3
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:44:48 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtiG-0003o8-Gn
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:45:09 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-8486ac3f347so399326b3a.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:45:08 -0700 (PDT)
+ id 1wwtht-0003bP-FJ
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:44:48 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2ced3386430so15113445ad.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:44:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787197507; x=1787802307; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787197484; x=1787802284; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=qZOFXhGNRxNOm5KFMFQUurJQSlkP1SuCKksgxHQSBBc=;
- b=f9JotdpJGo8Y0LLbfBdxkBzCPIy36GmGJsbvK2UZ+WvKlEJdSjmxXMHic7K6O+TjHc
- qatJTJ0OVdJqOF/gc86Abg/pQTnf3aLjoGC0N32WI1dZ+jr7C9c9Z+PylK3sSqazpVMI
- VVinJ/X5uSNQSffNfdWletnleyeTraVwQ7JPJAwfTLT9mY272tOgtVaJ8wSCKrjxc7ry
- d1VR75+Bv0snjqLJjFamnCKZ4b9xd10UqkDlZcsfVqINZNjrrhz8hvDdQoQsR5o+AOv/
- zvrLmyTMAw1g1/ULApVZYkWEKD6m07iapl39HxAeBXu396lUI5NIzIFBvGs5y6Ti5GGF
- fVgA==
+ bh=GzgYJSOfb1JzqJElM0sfMHzqHZr3yXBM8BzCAb4upso=;
+ b=e5t92DL7WWKMjXL40v4VaYRZBnCo99RDpB6rxQmsZH5Zw6imCXkaMOXWvZxdCDtr9T
+ byttFhb5F2dWHLkH8urDSLzzcbSQ/hMODk+n/dYAPYp5V2ic+IWifkkWm2RJrlMcWKaX
+ Q4ZK/gVC4O1/PzrxatVIc+b1NjTqGuRTQm1RkHdREWPXHX7Y1rolekGxc2zcByuyxWo/
+ P0IiHsWcnulk6LqdiRHetgXKnQz7PqjWDwzBG/fmaEnWj2Q7RgJ8nfsqsisMf96vK2cw
+ h5G4ycN6PO3yDTy356O2/HOsz4yXj7dmb1C3oIC+yQtat4GUGXsbYtNv7mLfTQIHJFo1
+ /8rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787197507; x=1787802307;
+ d=1e100.net; s=20251104; t=1787197484; x=1787802284;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=qZOFXhGNRxNOm5KFMFQUurJQSlkP1SuCKksgxHQSBBc=;
- b=M6gza64N9mKXeas44CvZe2kIlTkG0Dx6JJJ2FhrlVHfwWqgFqDN3tNI1UiXDkqwp/w
- dxapTYyRtSoEKCIbtKDBw5oqHllMBiLHIUHEjqCEd2a2cekmzgRaXFxLn7YFDJT7ygFF
- ignPrR9jMLxFNsGIfUazuBV3/49ZtAGu7QCR0jz77m/f9p3PZkEgMJklX4t6kXz/KC0W
- eevbYwhxDA24T0Hsrzv7zsddGGN5s0irghJlnif/VmKbbu6t2nSaTMMFafcEA5Kn9uJz
- Ji6twT7U1xumifR7/JtGiSKWTRg+jKkSlmpm+L/82cvzBTtR2Ehp6IHi1//8G/MkYTCw
- BOmg==
-X-Gm-Message-State: AOJu0YxD+LWbjfplP20YmGc38NfwOqNl4HyhXcDf33dZFx4j5xtYY5+a
- ia+7hWgspz8FD3NE+raor60maTqNvkKwHWkhDHccy5hVWOJzAF/7WRH+/d3Ydw==
-X-Gm-Gg: AR+sD12oob8GY8klFRKpcRUH0yJXzGPDbAp3tKdvx62vq87u/H6BjUkEvGiQry1tEzp
- NAAWC28FTYuuYMN0YS1tVfRaXPQkOrcFHHrtMfLm1Al3EIbPiwjRdT+4q9MjWDnuLABRCx6HvNV
- w9TyXj1Cc7cFy/7Up26iR20bIeIHZNVUooOnwhQ2MMMyXMbDk7q5BsW+PcCFQA5kLMQdogiRZnw
- 8/PBLzbALHwSEDnOiJTk+Yz58Sr0FcSkDhNSOKuk1T1nP8mj1ZubdbQYmXkySQEkbvruyl7W826
- oIzFghy2PaZjFidgT1tFFUoeid3mZ2ylBtjdTaRVBBvyqIloITPEpZSxcElpI6aYWJFSFM0aoCm
- ieIo9mWbKMny3ZmkNQ2its6ebopnbAUPLPZZE5lsX+83MXF3EoOFdy2o6UY2DiF2vCN6bcDGye5
- q1XY5Y8NEgfNZ/B2+dH1xAhokRnMNnMzC85AFhmSRean6/dIjnQdV3yOVjpNTk+YYfX/vid6fBT
- kgoUg==
-X-Received: by 2002:a05:6a21:c188:b0:3cc:f9a0:3ada with SMTP id
- adf61e73a8af0-3cd14fbd28cmr3603558637.16.1787197506930; 
- Wed, 19 Aug 2026 20:45:06 -0700 (PDT)
+ bh=GzgYJSOfb1JzqJElM0sfMHzqHZr3yXBM8BzCAb4upso=;
+ b=eTgOhu4JYBCOgxQXuVi9K/SCNterHEhYknQ4ADieVZmzXLs6ouA3u5RwSc45HRx7Tp
+ MWE/6OzlhtSYidKT8xxvcGyG+Iw3alxs2Kvkb3XISJ0R9hjP9KJODatS/+c8YuenC3/k
+ 3VTtq2BVHKFEDG30piEBrayY5hUE3zfydWKv2qdKNGPQSQu/ChwBpYFmwSrgQvI90AZ0
+ 84nwgjENu/cYBhHPTSEvSTRWFEsO4e8V4vEE9S+8EuLCeANJUXLvzUWQRKyusdzHn+GP
+ GIAIyHWbgX4pOJII0ujzcRgE6eVOFBO8v3SI9GJtbFSeOi8bvuuS781o61s9OEMpdF6/
+ wWCQ==
+X-Gm-Message-State: AFuF++kf/ALvfqQi+4p/8pBcK0S5AzncJntTjZQegFcbwmPDB8pQsess
+ H3Za+C/u23/uVXdRm/AysDCuv3wWbRSuUGGRHvAgRTb+3+0+BYtKofZJ6QfEqA==
+X-Gm-Gg: AR+sD11JJZWXR5lN5hqNLcJKbykPfVVzJSLu8yo8wyojDMZdAbDVnxEeYKQgvOYjRO/
+ dn2XfD6a4l1+81yMQQVsp2iCMSSFpjdP24MQAyR/fr5jr3nlEIPsqGxvm7UUAi7I7f7g7tVJsEr
+ 0o94iZO1qmbuSC4WLJrC6k7pv7Xbj6vHoZZqbC08JVskZ53Z+I+EPj1Z3i52udwK7i7igqzstvE
+ ZmZ9REBqoxbbrfSfw51sYnbdPa3tNJAuMoQbDB3AvHl4X/o69xQKvF1xoIPkIt9e8MmCrn+HSaN
+ ML2PEBHkIvySF7h2QbviQ4fF86J2hJYbBydOjnYGK8RIQitLU5aBz33F5sL0pgllUZjnELPlHTH
+ 8p8KA5RZi9Ehn42t2Z8JDH22kNpqLUr5xKSOEcwDRu7SwhkRMW4Q6igNEaj8mhScqUI8m9H+3GF
+ cM5dZfcTBvaKPD6PdjMqpxg0gDyq4jx4bkkWHYYR+e83O7VlTEI4AgTXyR+ezuTTsuIQjdTBPmG
+ cKQUg==
+X-Received: by 2002:a17:90b:4b0e:b0:38f:26c7:165e with SMTP id
+ 98e67ed59e1d1-39580f6c042mr17435450a91.9.1787197483834; 
+ Wed, 19 Aug 2026 20:44:43 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.45.04
+ a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.44.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 20:45:06 -0700 (PDT)
+ Wed, 19 Aug 2026 20:44:43 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Tao Ding <dingtao0430@163.com>, Junze Cao <caojunze424@gmail.com>,
+Cc: Junze Cao <caojunze424@gmail.com>, Chao Liu <chao.liu@processmission.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 08/93] hw/riscv: k230: add decomp gzip in K230 board
-Date: Thu, 20 Aug 2026 13:43:05 +1000
-Message-ID: <20260820034430.1186695-9-alistair.francis@wdc.com>
+Subject: [PULL 01/93] hw/misc: Add K230 DDR controller and PHY models
+Date: Thu, 20 Aug 2026 13:42:58 +1000
+Message-ID: <20260820034430.1186695-2-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260820034430.1186695-1-alistair.francis@wdc.com>
 References: <20260820034430.1186695-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,99 +104,685 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tao Ding <dingtao0430@163.com>
+From: Junze Cao <caojunze424@gmail.com>
 
-This commit replaces the unimplemented part of Decomp_gzip in K230.
-Connect to the handshake interface of GSDMA.
+The K230 SDK U-Boot SPL programs K230 DDRC CFG and K230 DDR PHY
+registers before DRAM can be used.
 
-Signed-off-by: Tao Ding <dingtao0430@163.com>
-Reviewed-by: Junze Cao <caojunze424@gmail.com>
+Add separate SysBus devices for both register ranges. Model controller
+reset values, DFI and software-update handshakes. For the PHY, model
+register ownership, the training mailbox, and DFI completion.
+
+Include migration state for both devices.
+
+Signed-off-by: Junze Cao <caojunze424@gmail.com>
+Suggested-by: Chao Liu <chao.liu@processmission.com>
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260808062227.66961-6-dingtao0430@163.com>
+Message-ID: <20260807-k230-ddr-v2-v2-1-c531308ae819@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/riscv/k230.h |  2 ++
- hw/riscv/k230.c         | 23 +++++++++++++++++++----
- hw/riscv/Kconfig        |  1 +
- 3 files changed, 22 insertions(+), 4 deletions(-)
+ MAINTAINERS                |   2 +
+ include/hw/misc/k230_ddr.h |  59 ++++
+ hw/misc/k230_ddr.c         | 556 +++++++++++++++++++++++++++++++++++++
+ hw/misc/meson.build        |   1 +
+ 4 files changed, 618 insertions(+)
+ create mode 100644 include/hw/misc/k230_ddr.h
+ create mode 100644 hw/misc/k230_ddr.c
 
-diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
-index 8879d56d98..8679d09891 100644
---- a/include/hw/riscv/k230.h
-+++ b/include/hw/riscv/k230.h
-@@ -20,6 +20,7 @@
- #include "hw/riscv/riscv_hart.h"
- #include "hw/watchdog/k230_wdt.h"
- #include "hw/dma/k230_gsdma.h"
-+#include "hw/misc/k230_decomp_gzip.h"
- 
- #define C908_CPU_HARTID   (0)
- 
-@@ -38,6 +39,7 @@ typedef struct K230SoCState {
-     K230DDRPhyState ddr_phy;
-     K230WdtState wdt[2];
-     K230GSDMAState gsdma;
-+    K230DecompGzipState decomp_gzip;
-     MemoryRegion sram;
-     MemoryRegion bootrom;
- 
-diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
-index 49c3b50c57..5163eaa7ef 100644
---- a/hw/riscv/k230.c
-+++ b/hw/riscv/k230.c
-@@ -117,6 +117,8 @@ static void k230_soc_init(Object *obj)
-     object_initialize_child(obj, "k230-wdt0", &s->wdt[0], TYPE_K230_WDT);
-     object_initialize_child(obj, "k230-wdt1", &s->wdt[1], TYPE_K230_WDT);
-     object_initialize_child(obj, "k230-gsdma", &s->gsdma, TYPE_K230_GSDMA);
-+    object_initialize_child(obj, "k230-decomp-gzip", &s->decomp_gzip,
-+                            TYPE_K230_DECOMP_GZIP);
- 
-     qdev_prop_set_uint32(DEVICE(cpu0), "hartid-base", 0);
-     qdev_prop_set_string(DEVICE(cpu0), "cpu-type", TYPE_RISCV_CPU_THEAD_C908);
-@@ -231,6 +233,23 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->gsdma), 0,
-                        qdev_get_gpio_in(DEVICE(s->c908_plic), K230_GSDMA_IRQ));
- 
-+    /* Decomp gzip */
-+    qdev_prop_set_uint64(DEVICE(&s->decomp_gzip), "sram-base",
-+                         memmap[K230_DEV_SRAM].base);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->decomp_gzip), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->decomp_gzip), 0,
-+                    memmap[K230_DEV_DECOMP_GZIP].base);
-+    for (int i = 0; i < K230_DECOMP_GZIP_NUM_GPIOS_OUT; i++) {
-+        qdev_connect_gpio_out(DEVICE(&s->decomp_gzip), i,
-+                              qdev_get_gpio_in(DEVICE(&s->gsdma), i));
-+    }
-+    for (int i = 0; i < K230_DECOMP_GZIP_NUM_GPIOS_IN; i++) {
-+        qdev_connect_gpio_out(DEVICE(&s->gsdma), i,
-+                              qdev_get_gpio_in(DEVICE(&s->decomp_gzip), i));
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b51f5c3e60..b957fa74d9 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1843,8 +1843,10 @@ M: Chao Liu <chao.liu@processmission.com>
+ L: qemu-riscv@nongnu.org
+ S: Maintained
+ F: docs/system/riscv/k230.rst
++F: hw/misc/k230_ddr.c
+ F: hw/riscv/k230.c
+ F: hw/watchdog/k230_wdt.c
++F: include/hw/misc/k230_ddr.h
+ F: include/hw/riscv/k230.h
+ F: include/hw/watchdog/k230_wdt.h
+ F: tests/functional/riscv64/test_k230.py
+diff --git a/include/hw/misc/k230_ddr.h b/include/hw/misc/k230_ddr.h
+new file mode 100644
+index 0000000000..d912e8e1b0
+--- /dev/null
++++ b/include/hw/misc/k230_ddr.h
+@@ -0,0 +1,59 @@
++/*
++ * Kendryte K230 DDR controller and PHY models
++ *
++ * Device state and type declarations for the K230 DDRC CFG and K230 DDR PHY
++ * registers.
++ *
++ * Copyright (c) 2026 Junze Cao <caojunze424@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef HW_MISC_K230_DDR_H
++#define HW_MISC_K230_DDR_H
++
++#include "hw/core/sysbus.h"
++
++#define K230_DDRC_MMIO_SIZE    0x02000000
++#define K230_DDR_PHY_MMIO_SIZE 0x00400000
++
++#define K230_DDRC_REG_SIZE  0x328
++#define K230_DDRC_REG_COUNT (K230_DDRC_REG_SIZE / sizeof(uint32_t))
++
++#define K230_DDR_PHY_ANIB_COUNT             10
++#define K230_DDR_PHY_DBYTE_COUNT             4
++#define K230_DDR_PHY_NIBBLES_PER_DBYTE       2
++
++#define TYPE_K230_DDR_CFG "riscv.k230.ddr-cfg"
++OBJECT_DECLARE_SIMPLE_TYPE(K230DDRCfgState, K230_DDR_CFG)
++
++#define TYPE_K230_DDR_PHY "riscv.k230.ddr-phy"
++OBJECT_DECLARE_SIMPLE_TYPE(K230DDRPhyState, K230_DDR_PHY)
++
++struct K230DDRCfgState {
++    SysBusDevice parent_obj;
++
++    MemoryRegion mmio;
++    K230DDRPhyState *phy;
++    uint32_t regs[K230_DDRC_REG_COUNT];
++    bool initialized;
++};
++
++struct K230DDRPhyState {
++    SysBusDevice parent_obj;
++
++    MemoryRegion mmio;
++    uint16_t atx_impedance[K230_DDR_PHY_ANIB_COUNT];
++    uint16_t tx_impedance_ctrl1[K230_DDR_PHY_DBYTE_COUNT]
++                                [K230_DDR_PHY_NIBBLES_PER_DBYTE];
++    uint16_t tx_odt_drv_stren[K230_DDR_PHY_DBYTE_COUNT]
++                             [K230_DDR_PHY_NIBBLES_PER_DBYTE];
++    uint16_t dfi_init_complete;
++    uint16_t vref_in_global;
++    uint16_t micro_cont_mux_sel;
++    bool training_trigger_seen;
++    bool training_complete;
++    bool mailbox_message_pending;
++};
++
++#endif
+diff --git a/hw/misc/k230_ddr.c b/hw/misc/k230_ddr.c
+new file mode 100644
+index 0000000000..dac700b201
+--- /dev/null
++++ b/hw/misc/k230_ddr.c
+@@ -0,0 +1,556 @@
++/*
++ * Kendryte K230 DDR controller and PHY models
++ *
++ * Models the K230 DDRC CFG registers and K230 DDR PHY registers exercised
++ * by the K230 SDK U-Boot SPL.
++ *
++ * Copyright (c) 2026 Junze Cao <caojunze424@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "migration/vmstate.h"
++#include "hw/core/registerfields.h"
++#include "hw/core/resettable.h"
++#include "hw/misc/k230_ddr.h"
++
++/* DDRC CFG registers */
++
++enum K230DDRCOperatingMode {
++    K230_DDRC_MODE_INIT = 0,
++    K230_DDRC_MODE_NORMAL = 1,
++};
++
++REG32(K230_DDRC_MSTR, 0x000)
++
++REG32(K230_DDRC_STAT, 0x004)
++    FIELD(K230_DDRC_STAT, OPERATING_MODE, 0, 3)
++
++REG32(K230_DDRC_PWRCTL, 0x030)
++
++REG32(K230_DDRC_RFSHCTL0, 0x050)
++
++REG32(K230_DDRC_RFSHTMG, 0x064)
++
++REG32(K230_DDRC_RFSHTMG1, 0x068)
++
++REG32(K230_DDRC_INIT0, 0x0d0)
++
++REG32(K230_DDRC_INIT2, 0x0d8)
++
++REG32(K230_DDRC_INIT3, 0x0dc)
++
++REG32(K230_DDRC_INIT5, 0x0e4)
++
++REG32(K230_DDRC_DRAMTMG0, 0x100)
++#define R_K230_DDRC_DRAMTMG(index) \
++    (R_K230_DDRC_DRAMTMG0 + (index))
++
++REG32(K230_DDRC_ZQCTL0, 0x180)
++
++REG32(K230_DDRC_ZQCTL1, 0x184)
++
++REG32(K230_DDRC_ZQCTL2, 0x188)
++
++REG32(K230_DDRC_ZQSTAT, 0x18c)
++
++REG32(K230_DDRC_DFITMG0, 0x190)
++
++REG32(K230_DDRC_DFITMG1, 0x194)
++
++REG32(K230_DDRC_DFIUPD0, 0x1a0)
++
++REG32(K230_DDRC_DFIUPD1, 0x1a4)
++
++REG32(K230_DDRC_DFIUPD2, 0x1a8)
++
++REG32(K230_DDRC_DFIMISC, 0x1b0)
++    FIELD(K230_DDRC_DFIMISC, DFI_INIT_COMPLETE_EN, 0, 1)
++    FIELD(K230_DDRC_DFIMISC, DFI_INIT_START, 5, 1)
++
++REG32(K230_DDRC_DFITMG2, 0x1b4)
++
++REG32(K230_DDRC_DFISTAT, 0x1bc)
++    FIELD(K230_DDRC_DFISTAT, DFI_INIT_COMPLETE, 0, 1)
++
++REG32(K230_DDRC_ODTCFG, 0x240)
++
++REG32(K230_DDRC_SWCTL, 0x320)
++    FIELD(K230_DDRC_SWCTL, SW_DONE, 0, 1)
++
++REG32(K230_DDRC_SWSTAT, 0x324)
++    FIELD(K230_DDRC_SWSTAT, SW_DONE_ACK, 0, 1)
++
++static const uint32_t k230_ddrc_reset_values[K230_DDRC_REG_COUNT] = {
++    [R_K230_DDRC_MSTR]      = 0x01040000,
++    [R_K230_DDRC_RFSHCTL0]  = 0x00210000,
++    [R_K230_DDRC_RFSHTMG]   = 0x0062008c,
++    [R_K230_DDRC_RFSHTMG1]  = 0x0000008c,
++    [R_K230_DDRC_INIT0]     = 0x0002004e,
++    [R_K230_DDRC_INIT3]     = 0x00000510,
++    [R_K230_DDRC_INIT5]     = 0x00100000,
++    [R_K230_DDRC_DRAMTMG(0)]  = 0x0f101b0f,
++    [R_K230_DDRC_DRAMTMG(1)]  = 0x00080414,
++    [R_K230_DDRC_DRAMTMG(2)]  = 0x0305060d,
++    [R_K230_DDRC_DRAMTMG(3)]  = 0x00004000,
++    [R_K230_DDRC_DRAMTMG(4)]  = 0x05040405,
++    [R_K230_DDRC_DRAMTMG(5)]  = 0x05050403,
++    [R_K230_DDRC_DRAMTMG(6)]  = 0x02020005,
++    [R_K230_DDRC_DRAMTMG(7)]  = 0x00000202,
++    [R_K230_DDRC_DRAMTMG(8)]  = 0x03034405,
++    [R_K230_DDRC_DRAMTMG(9)]  = 0x0004040d,
++    [R_K230_DDRC_DRAMTMG(10)] = 0x001c180a,
++    [R_K230_DDRC_DRAMTMG(11)] = 0x440c021c,
++    [R_K230_DDRC_DRAMTMG(12)] = 0x00020610,
++    [R_K230_DDRC_DRAMTMG(13)] = 0x1c200004,
++    [R_K230_DDRC_DRAMTMG(14)] = 0x000000a0,
++    [R_K230_DDRC_DRAMTMG(16)] = 0x05100404,
++    [R_K230_DDRC_ZQCTL0]    = 0x02000040,
++    [R_K230_DDRC_ZQCTL1]    = 0x02000100,
++    [R_K230_DDRC_DFITMG0]   = 0x07020002,
++    [R_K230_DDRC_DFITMG1]   = 0x00000404,
++    [R_K230_DDRC_DFIUPD0]   = 0x00400003,
++    [R_K230_DDRC_DFIUPD1]   = 0x00010001,
++    [R_K230_DDRC_DFIUPD2]   = 0x80000000,
++    [R_K230_DDRC_DFIMISC]   = 0x00000001,
++    [R_K230_DDRC_DFITMG2]   = 0x00000202,
++    [R_K230_DDRC_ODTCFG]    = 0x04000400,
++    [R_K230_DDRC_SWCTL]     = 0x00000001,
++    [R_K230_DDRC_SWSTAT]    = 0x00000001,
++};
++
++/* K230 DDR PHY CSRs use byte offset = CSR index * 4. */
++#define K230_DDR_PHY_CSR_OFFSET(index) ((index) * 4)
++#define K230_DDR_PHY_MASTER_CSR(reg) \
++    K230_DDR_PHY_CSR_OFFSET(0x20000 + (reg))
++#define K230_DDR_PHY_APBONLY_CSR(reg) \
++    K230_DDR_PHY_CSR_OFFSET(0xd0000 + (reg))
++
++#define K230_DDR_PHY_ATX_IMPEDANCE_RESET UINT32_C(0x03ff)
++
++REG32(K230_DDR_PHY_MICRO_CONT_MUX_SEL,
++      K230_DDR_PHY_APBONLY_CSR(0x000))
++    FIELD(K230_DDR_PHY_MICRO_CONT_MUX_SEL, MICRO_CONT_MUX_SEL, 0, 1)
++
++REG32(K230_DDR_PHY_TRAINING_STATUS,
++      K230_DDR_PHY_APBONLY_CSR(0x004))
++    FIELD(K230_DDR_PHY_TRAINING_STATUS, MAILBOX_EMPTY, 0, 1)
++
++REG32(K230_DDR_PHY_TRAINING_ACK,
++      K230_DDR_PHY_APBONLY_CSR(0x031))
++
++REG32(K230_DDR_PHY_TRAINING_MESSAGE,
++      K230_DDR_PHY_APBONLY_CSR(0x032))
++
++REG32(K230_DDR_PHY_TRAINING_TRIGGER,
++      K230_DDR_PHY_APBONLY_CSR(0x099))
++
++#define K230_DDR_PHY_TX_IMPEDANCE_CTRL1_RESET UINT32_C(0x0fff)
++
++REG32(K230_DDR_PHY_DFI_INIT_COMPLETE,
++      K230_DDR_PHY_MASTER_CSR(0x0f9))
++    FIELD(K230_DDR_PHY_DFI_INIT_COMPLETE, DFI_INIT_COMPLETE, 0, 1)
++
++REG32(K230_DDR_PHY_VREF_IN_GLOBAL,
++      K230_DDR_PHY_MASTER_CSR(0x0b2))
++#define K230_DDR_PHY_VREF_IN_GLOBAL_RESET UINT32_C(0x0200)
++
++static void k230_ddr_cfg_update_state(K230DDRCfgState *s)
++{
++    bool dfi_complete = false;
++    unsigned int operating_mode = K230_DDRC_MODE_INIT;
++
++    if (s->phy) {
++        dfi_complete = FIELD_EX32(s->phy->dfi_init_complete,
++                                  K230_DDR_PHY_DFI_INIT_COMPLETE,
++                                  DFI_INIT_COMPLETE);
 +    }
 +
-     /* unimplemented devices */
-     create_unimplemented_device("kpu.l2-cache",
-                                 memmap[K230_DEV_KPU_L2_CACHE].base,
-@@ -249,10 +268,6 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
-     create_unimplemented_device("dma", memmap[K230_DEV_DMA].base,
-                                 memmap[K230_DEV_DMA].size);
++    ARRAY_FIELD_DP32(s->regs, K230_DDRC_DFISTAT,
++                     DFI_INIT_COMPLETE, dfi_complete);
++    ARRAY_FIELD_DP32(s->regs, K230_DDRC_SWSTAT, SW_DONE_ACK,
++                     ARRAY_FIELD_EX32(s->regs, K230_DDRC_SWCTL, SW_DONE));
++
++    if (dfi_complete &&
++        ARRAY_FIELD_EX32(s->regs, K230_DDRC_DFIMISC,
++                         DFI_INIT_COMPLETE_EN)) {
++        s->initialized = true;
++    }
++
++    if (s->initialized) {
++        operating_mode = K230_DDRC_MODE_NORMAL;
++    }
++
++    ARRAY_FIELD_DP32(s->regs, K230_DDRC_STAT,
++                     OPERATING_MODE, operating_mode);
++}
++
++static uint64_t k230_ddr_cfg_read(void *opaque, hwaddr addr, unsigned int size)
++{
++    K230DDRCfgState *s = opaque;
++    uint64_t value = 0;
++
++    if (addr < K230_DDRC_REG_SIZE) {
++        k230_ddr_cfg_update_state(s);
++        value = s->regs[addr / sizeof(uint32_t)];
++    }
++
++    return value;
++}
++
++static void k230_ddr_cfg_write(void *opaque, hwaddr addr, uint64_t value,
++                               unsigned int size)
++{
++    K230DDRCfgState *s = opaque;
++    uint32_t val = value;
++
++    if (addr >= K230_DDRC_REG_SIZE) {
++        return;
++    }
++
++    switch (addr) {
++    case A_K230_DDRC_STAT:
++    case A_K230_DDRC_DFISTAT:
++    case A_K230_DDRC_ZQSTAT:
++    case A_K230_DDRC_SWSTAT:
++        return;
++    case A_K230_DDRC_PWRCTL:
++        s->regs[R_K230_DDRC_PWRCTL] = val & MAKE_64BIT_MASK(0, 9);
++        break;
++    case A_K230_DDRC_ZQCTL2:
++        /* ZQ reset completes immediately and the W1S bit self-clears. */
++        s->regs[R_K230_DDRC_ZQCTL2] = 0;
++        s->regs[R_K230_DDRC_ZQSTAT] = 0;
++        break;
++    case A_K230_DDRC_DFIMISC:
++        s->regs[R_K230_DDRC_DFIMISC] =
++            val & (MAKE_64BIT_MASK(0, 6) | MAKE_64BIT_MASK(8, 5));
++        if (s->phy && s->phy->training_complete &&
++            FIELD_EX32(val, K230_DDRC_DFIMISC, DFI_INIT_START)) {
++            s->phy->dfi_init_complete = FIELD_DP32(
++                s->phy->dfi_init_complete,
++                K230_DDR_PHY_DFI_INIT_COMPLETE, DFI_INIT_COMPLETE, 1);
++        }
++        break;
++    case A_K230_DDRC_SWCTL:
++        s->regs[R_K230_DDRC_SWCTL] =
++            val & R_K230_DDRC_SWCTL_SW_DONE_MASK;
++        break;
++    default:
++        s->regs[addr / sizeof(uint32_t)] = val;
++        break;
++    }
++
++    k230_ddr_cfg_update_state(s);
++}
++
++static bool k230_ddr_phy_decode_anib(hwaddr addr, unsigned int *anib)
++{
++    uint32_t csr = addr / sizeof(uint32_t);
++
++    if ((csr & 0xfff) != 0x043) {
++        return false;
++    }
++
++    *anib = csr >> 12;
++    return *anib < K230_DDR_PHY_ANIB_COUNT;
++}
++
++static bool k230_ddr_phy_decode_dbyte(hwaddr addr, uint32_t reg,
++                                     unsigned int *dbyte,
++                                     unsigned int *nibble)
++{
++    uint32_t csr = addr / sizeof(uint32_t);
++    uint32_t block_offset;
++
++    if (csr < 0x10000) {
++        return false;
++    }
++
++    csr -= 0x10000;
++    *dbyte = csr >> 12;
++    if (*dbyte >= K230_DDR_PHY_DBYTE_COUNT) {
++        return false;
++    }
++
++    block_offset = csr & 0xfff;
++    *nibble = block_offset >> 8;
++    return *nibble < K230_DDR_PHY_NIBBLES_PER_DBYTE &&
++           (block_offset & 0xff) == reg;
++}
++
++static uint64_t k230_ddr_phy_read(void *opaque, hwaddr addr,
++                                  unsigned int size)
++{
++    K230DDRPhyState *s = opaque;
++    unsigned int dbyte;
++    unsigned int nibble;
++    unsigned int anib;
++    uint64_t value = 0;
++
++    switch (addr) {
++    case A_K230_DDR_PHY_MICRO_CONT_MUX_SEL:
++        value = s->micro_cont_mux_sel;
++        break;
++    case A_K230_DDR_PHY_TRAINING_STATUS:
++        value = s->mailbox_message_pending ? 0 :
++                R_K230_DDR_PHY_TRAINING_STATUS_MAILBOX_EMPTY_MASK;
++        break;
++    case A_K230_DDR_PHY_TRAINING_MESSAGE:
++        value = s->training_complete ? 0x07 : 0;
++        break;
++    case A_K230_DDR_PHY_TRAINING_ACK:
++    case A_K230_DDR_PHY_TRAINING_TRIGGER:
++        break;
++    case A_K230_DDR_PHY_DFI_INIT_COMPLETE:
++        value = s->dfi_init_complete;
++        break;
++    case A_K230_DDR_PHY_VREF_IN_GLOBAL:
++        value = s->vref_in_global;
++        break;
++    default:
++        if (k230_ddr_phy_decode_anib(addr, &anib)) {
++            value = s->atx_impedance[anib];
++        } else if (k230_ddr_phy_decode_dbyte(addr, 0x049,
++                                            &dbyte, &nibble)) {
++            value = s->tx_impedance_ctrl1[dbyte][nibble];
++        } else if (k230_ddr_phy_decode_dbyte(addr, 0x04d,
++                                            &dbyte, &nibble)) {
++            value = s->tx_odt_drv_stren[dbyte][nibble];
++        } else {
++            qemu_log_mask(LOG_UNIMP,
++                          "%s: unimplemented DDR PHY read at offset 0x%"
++                          HWADDR_PRIx ", returning 0\n",
++                          __func__, addr);
++        }
++        break;
++    }
++
++    return value;
++}
++
++static void k230_ddr_phy_write(void *opaque, hwaddr addr, uint64_t value,
++                               unsigned int size)
++{
++    K230DDRPhyState *s = opaque;
++    uint16_t val = value;
++    unsigned int dbyte;
++    unsigned int nibble;
++    unsigned int anib;
++
++    switch (addr) {
++    case A_K230_DDR_PHY_MICRO_CONT_MUX_SEL:
++        s->micro_cont_mux_sel =
++            val & R_K230_DDR_PHY_MICRO_CONT_MUX_SEL_MICRO_CONT_MUX_SEL_MASK;
++        return;
++    case A_K230_DDR_PHY_TRAINING_STATUS:
++    case A_K230_DDR_PHY_TRAINING_MESSAGE:
++        return;
++    case A_K230_DDR_PHY_TRAINING_ACK:
++        if (val == 0) {
++            s->mailbox_message_pending = false;
++        }
++        return;
++    case A_K230_DDR_PHY_TRAINING_TRIGGER:
++        if (val != 0) {
++            s->training_trigger_seen = true;
++        } else if (s->training_trigger_seen) {
++            /* Abstract the loaded firmware run to its final mailbox message. */
++            s->training_trigger_seen = false;
++            s->training_complete = true;
++            s->mailbox_message_pending = true;
++        }
++        return;
++    default:
++        break;
++    }
++
++    if (FIELD_EX32(s->micro_cont_mux_sel,
++                   K230_DDR_PHY_MICRO_CONT_MUX_SEL,
++                   MICRO_CONT_MUX_SEL)) {
++        return;
++    }
++
++    switch (addr) {
++    case A_K230_DDR_PHY_DFI_INIT_COMPLETE:
++        s->dfi_init_complete =
++            val & R_K230_DDR_PHY_DFI_INIT_COMPLETE_DFI_INIT_COMPLETE_MASK;
++        return;
++    case A_K230_DDR_PHY_VREF_IN_GLOBAL:
++        s->vref_in_global = val & UINT16_C(0x7fff);
++        return;
++    default:
++        break;
++    }
++
++    if (k230_ddr_phy_decode_anib(addr, &anib)) {
++        s->atx_impedance[anib] = val & UINT16_C(0x03ff);
++        return;
++    }
++
++    if (k230_ddr_phy_decode_dbyte(addr, 0x049, &dbyte, &nibble)) {
++        s->tx_impedance_ctrl1[dbyte][nibble] = val & UINT16_C(0x0fff);
++        return;
++    }
++
++    if (k230_ddr_phy_decode_dbyte(addr, 0x04d, &dbyte, &nibble)) {
++        s->tx_odt_drv_stren[dbyte][nibble] = val & UINT16_C(0x0fff);
++        return;
++    }
++
++    qemu_log_mask(LOG_UNIMP,
++                  "%s: unimplemented DDR PHY write at offset 0x%"
++                  HWADDR_PRIx ", value 0x%" PRIx64 "\n",
++                  __func__, addr, value);
++}
++
++static const MemoryRegionOps k230_ddr_cfg_ops = {
++    .read = k230_ddr_cfg_read,
++    .write = k230_ddr_cfg_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++        .unaligned = false,
++    },
++};
++
++static const MemoryRegionOps k230_ddr_phy_ops = {
++    .read = k230_ddr_phy_read,
++    .write = k230_ddr_phy_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++        .unaligned = false,
++    },
++};
++
++static void k230_ddr_cfg_init(Object *obj)
++{
++    K230DDRCfgState *s = K230_DDR_CFG(obj);
++
++    memory_region_init_io(&s->mmio, obj, &k230_ddr_cfg_ops, s,
++                          "k230-ddr-cfg", K230_DDRC_MMIO_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
++}
++
++static void k230_ddr_phy_init(Object *obj)
++{
++    K230DDRPhyState *s = K230_DDR_PHY(obj);
++
++    memory_region_init_io(&s->mmio, obj, &k230_ddr_phy_ops, s,
++                          "k230-ddr-phy", K230_DDR_PHY_MMIO_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
++}
++
++static void k230_ddr_cfg_reset_enter(Object *obj, ResetType type)
++{
++    K230DDRCfgState *s = K230_DDR_CFG(obj);
++
++    s->initialized = false;
++    memcpy(s->regs, k230_ddrc_reset_values, sizeof(s->regs));
++}
++
++static void k230_ddr_phy_reset_enter(Object *obj, ResetType type)
++{
++    K230DDRPhyState *s = K230_DDR_PHY(obj);
++    unsigned int dbyte;
++    unsigned int nibble;
++    unsigned int anib;
++
++    memset(s->tx_odt_drv_stren, 0, sizeof(s->tx_odt_drv_stren));
++
++    for (anib = 0; anib < ARRAY_SIZE(s->atx_impedance); anib++) {
++        s->atx_impedance[anib] = K230_DDR_PHY_ATX_IMPEDANCE_RESET;
++    }
++
++    for (dbyte = 0; dbyte < ARRAY_SIZE(s->tx_impedance_ctrl1); dbyte++) {
++        for (nibble = 0;
++             nibble < ARRAY_SIZE(s->tx_impedance_ctrl1[dbyte]); nibble++) {
++            s->tx_impedance_ctrl1[dbyte][nibble] =
++                K230_DDR_PHY_TX_IMPEDANCE_CTRL1_RESET;
++        }
++    }
++
++    s->dfi_init_complete = 0;
++    s->vref_in_global = K230_DDR_PHY_VREF_IN_GLOBAL_RESET;
++    s->micro_cont_mux_sel = 0;
++    s->training_trigger_seen = false;
++    s->training_complete = false;
++    s->mailbox_message_pending = false;
++}
++
++static const VMStateDescription vmstate_k230_ddr_cfg = {
++    .name = "k230-ddr-cfg",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32_ARRAY(regs, K230DDRCfgState, K230_DDRC_REG_COUNT),
++        VMSTATE_BOOL(initialized, K230DDRCfgState),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
++static const VMStateDescription vmstate_k230_ddr_phy = {
++    .name = "k230-ddr-phy",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT16_ARRAY(atx_impedance, K230DDRPhyState,
++                             K230_DDR_PHY_ANIB_COUNT),
++        VMSTATE_UINT16_2DARRAY(tx_impedance_ctrl1, K230DDRPhyState,
++                               K230_DDR_PHY_DBYTE_COUNT,
++                               K230_DDR_PHY_NIBBLES_PER_DBYTE),
++        VMSTATE_UINT16_2DARRAY(tx_odt_drv_stren, K230DDRPhyState,
++                               K230_DDR_PHY_DBYTE_COUNT,
++                               K230_DDR_PHY_NIBBLES_PER_DBYTE),
++        VMSTATE_UINT16(dfi_init_complete, K230DDRPhyState),
++        VMSTATE_UINT16(vref_in_global, K230DDRPhyState),
++        VMSTATE_UINT16(micro_cont_mux_sel, K230DDRPhyState),
++        VMSTATE_BOOL(training_trigger_seen, K230DDRPhyState),
++        VMSTATE_BOOL(training_complete, K230DDRPhyState),
++        VMSTATE_BOOL(mailbox_message_pending, K230DDRPhyState),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
++static void k230_ddr_cfg_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    rc->phases.enter = k230_ddr_cfg_reset_enter;
++    dc->vmsd = &vmstate_k230_ddr_cfg;
++}
++
++static void k230_ddr_phy_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    rc->phases.enter = k230_ddr_phy_reset_enter;
++    dc->vmsd = &vmstate_k230_ddr_phy;
++}
++
++static const TypeInfo k230_ddr_types[] = {
++    {
++        .name = TYPE_K230_DDR_CFG,
++        .parent = TYPE_SYS_BUS_DEVICE,
++        .instance_size = sizeof(K230DDRCfgState),
++        .instance_init = k230_ddr_cfg_init,
++        .class_init = k230_ddr_cfg_class_init,
++    },
++    {
++        .name = TYPE_K230_DDR_PHY,
++        .parent = TYPE_SYS_BUS_DEVICE,
++        .instance_size = sizeof(K230DDRPhyState),
++        .instance_init = k230_ddr_phy_init,
++        .class_init = k230_ddr_phy_class_init,
++    },
++};
++
++DEFINE_TYPES(k230_ddr_types)
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index e86d9ad6b3..15a06974f1 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -29,6 +29,7 @@ system_ss.add(when: 'CONFIG_IOSB', if_true: files('iosb.c'))
+ system_ss.add(when: 'CONFIG_VIRT_CTRL', if_true: files('virt_ctrl.c'))
  
--    create_unimplemented_device("decomp-gzip",
--                                memmap[K230_DEV_DECOMP_GZIP].base,
--                                memmap[K230_DEV_DECOMP_GZIP].size);
--
-     create_unimplemented_device("2d-engine.non-ai",
-                                 memmap[K230_DEV_NON_AI_2D].base,
-                                 memmap[K230_DEV_NON_AI_2D].size);
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index d28ac06043..d06ac26648 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -163,3 +163,4 @@ config K230
-     select UNIMP
-     select K230_WDT
-     select K230_GSDMA
-+    select K230_DECOMP_GZIP
+ # RISC-V devices
++system_ss.add(when: 'CONFIG_K230', if_true: files('k230_ddr.c'))
+ system_ss.add(when: 'CONFIG_MCHP_PFSOC_DMC', if_true: files('mchp_pfsoc_dmc.c'))
+ system_ss.add(when: 'CONFIG_MCHP_PFSOC_IOSCB', if_true: files('mchp_pfsoc_ioscb.c'))
+ system_ss.add(when: 'CONFIG_MCHP_PFSOC_SYSREG', if_true: files('mchp_pfsoc_sysreg.c'))
 -- 
 2.54.0
 
