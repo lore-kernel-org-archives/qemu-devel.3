@@ -4,92 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75637C5DF87
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 23:21:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04DF9C5DF8F
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 23:33:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxC4e-0006V4-V3; Thu, 20 Aug 2026 19:21:28 -0400
+	id 1wxCF6-00027C-9z; Thu, 20 Aug 2026 19:32:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wxC4b-0006Sv-6o
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 19:21:25 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ id 1wxCF4-00026w-Hz
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 19:32:14 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wxC4Z-0008Ex-Lt
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 19:21:24 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-c9d1fff21edso332808a12.1
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 16:21:23 -0700 (PDT)
+ id 1wxCF3-0001hF-0i
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 19:32:14 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-cbedf6a6fe8so322750a12.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 16:32:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787268082; x=1787872882; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787268731; x=1787873531; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=tgrl9FGsBX2gHKWmEW2wbhUIJuCCqzVLGOz8ZAg0z+8=;
- b=D8UVtkO4BbC0wRaU+reNVZX+PzbeARZ3y65oDGrWGz+5rtgWzz6BueQkuyMEEVEGP4
- SQcupYbwQTxmabVpCXZaHTJJBNWMwsMoZ3XdzMLiiCY3fJDmWdaW7DBsRXh/Ka3KZVRt
- Vl/jXJEmXOwlfCnZPT+83SWGv4Gg8vtbDYckYp5zxl4JP5SpUeizwQxZqSKP2ZN2Ogb/
- 05eo2ZLiZ8TSD068M69hCFuE+iHL4j0bPefMhfUVl5DMvS1c4keug12ycAmEE65WSB5u
- 24RoKN4Q6gVktBm3vC4SqCEuUUcwgk5VzY/NcbvcOUJnXSIbqlRX2DYSExYhQZ/b/sAt
- ppgA==
+ bh=kYt82G8cEeyX8CUQcRRMEnvpMwo/kIV7i+eXjCVKu6c=;
+ b=P8n378HJPwMd7XCAqDQfv0Bo6P8EuMqQoLKWWEo5gvXw1vC8wEJ/X3ad+cTVTfblXK
+ fcaAnRfiMIQmavTn9j/agHLYAeNKLvvQhriv1+qwlR5JFhDyxOR5QRt0A2pKFEV3z6wL
+ PgC8lm80OGxn0xEzEJGj5E93RW0nB7cmQRyP7Iz7rXAfqdMzmLIOuOEblrNXPfJNgWVf
+ dcWO512dC/uByT7zIYlJvN0Knh7u6nweXS25qUl5jQ5+LVn3jYdmm1iwHC5mMvZ1xiLX
+ ten62vobH5voh8mSBp3Qz5ZSL9OWkU+A02QkE19LrvZQpmFiSjhYvejuC6UWLH/Au+ce
+ FdhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787268082; x=1787872882;
+ d=1e100.net; s=20251104; t=1787268731; x=1787873531;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=tgrl9FGsBX2gHKWmEW2wbhUIJuCCqzVLGOz8ZAg0z+8=;
- b=mVCiZMcqu/GI8O+MG5pK2jKqTg5gVMczLDmCLUekSAt7ktaV0p14QQf/yS7umeZokT
- s9tXX6biNewOeGuL0MlBoPi1wtBSDehUuK4SywqV7ojLrbcoGGnAHhjaoFIEuv70lC7V
- yQwOqmF236SB6bgT9u7TWma8WQ4efBYeVrSIZD1Koa6ssVsmz/6rbCgPRcp4FA3iEYSE
- TD4OPT+EvwNDANUoSf24ejdLmSuvLvszlg1eILYCEJUiKagMrbHXAA+lf15/e5mSgo+p
- OrVsKzMD/ftMLVHdC0wFHHc8uJrsHvA45VoaJ9NPwDl2HpaRTWPrJ0YINwMvyz4Qkxog
- xCLQ==
+ bh=kYt82G8cEeyX8CUQcRRMEnvpMwo/kIV7i+eXjCVKu6c=;
+ b=XJeiSeWv7Rfrh7K3IdXC/Rh0l4fX/MkjqaoT06RarvflXkPxStI8+Is2UgvqLWtEaW
+ x4QJB9xejYiP3rZW9jNUEW3YXPZjZQhJoAoN8rYw6D5gQkT4UBgwTuvV6dQ0FyF3hgym
+ luqXNNWpvkje6DfaM7jW4dL9G+sSUpceikRSougrKqbYFKCJSrZNrUF8tgVyvpTnFLfd
+ ixaiJarmJn0WPC1Cy2vmhcm4iYSxMEApW1j2PyAJk8FPJmF5RoTuZsqjggjutwL7GJj2
+ OP6IZlXB6Yvmbos1TIAzULmKwC9YVy6HSRZpIC89zVInhqEQ/05yO/G4KlM6l+SKCdyH
+ tRwA==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrPteH0Xr5Vm9nNd9Cf2B6JUbBV6qKiZIwEUNq0Y/jSoIokfz49GsVvZn3VM2bMzOjymUN0TjNHRfLI@nongnu.org
-X-Gm-Message-State: AFuF++kCVwuLF4AGK+EnJ0EMRFe3fhS4hd5vHKZWmfEFUex9I9GwTlyA
- OOIlZ5+SLRrGhrtNDL3AvdmYFVzO6q46RzAT/nMAj6eQiDIfS7EdlosbBQ0S4AtT/6o=
-X-Gm-Gg: AR+sD13giYqAgSCnoqzwMiowFYX53ZGELmRqLxSiTQJ4h6q4fKwEt2wwV6QT8jGHH8u
- KdSoIVTASF+gtOn5gOUWjbej6LN9ymPHFthV8GmfSgJS5jftlMzgivBSnGRdbuQ+ZdLVnCTelFX
- 5sqwkVOZ4eMDIk1Q8iEDEZy1wFx84dIQM6X5Xsmm3t9vo1bPF5HeaI9RN984Vjp6MhzJWqPFpZ4
- wZA24umWuvHKcK7LwIBa3kTwQQCbRPzyTYogrmG2fZp6gCUKVws/r/hPPqHUGTRgBdP5zGQbeyc
- iF2nONoK6KAxogEUPHb2sb12osAzd7bFSTUx7zdw1v4kFo7j7nTOM+G0lUXYBN1ASKymfHrV7gg
- UGKH/8FJzV9hyCG7W5i5sjYQuxB+WUY1v6CrbGKTp5q12rWsEJhpBQMq6ceROuibyfaQSzqhhlT
- dJOMixzDrZObloVj3iTZid9Q19WXpYlnzT1nIBwrja5t30m3AkF69ubpMmhYN9Adkp9QbAos7tc
- 4Ikwz+02sq1Qio=
-X-Received: by 2002:a17:90b:1b04:b0:38d:dfd1:7c1 with SMTP id
- 98e67ed59e1d1-395c33406e0mr3024274a91.2.1787268082091; 
- Thu, 20 Aug 2026 16:21:22 -0700 (PDT)
+ AHgh+Ro7GUXcktTZ87B76GFs3kiL5gLrPYQKEQ3GITs55NBnL7qRmTRuKFDE/zIMtG7D1qGduMcBpZmUElzK@nongnu.org
+X-Gm-Message-State: AOJu0YxEBQmGf2OJXav2IDPuffPNP8KwWNH7z7rBMtUM8rO+V0mTiv1b
+ MlFnOD6b2rKGfMcHf4RYAhj+nZqOOpf2d5bvo8Sab6PA3xsskIWk+s3FTvTkfgNDFezkouk6mbg
+ cSUGp
+X-Gm-Gg: AR+sD10lB+LC6oVmALrjAEtCORZV7SAsHWtHPzobSc0AayBbuNUR9GYsddsw97OzyVO
+ xnTEvjkEmgqYYLVlyM9SA/KhgnAGx10rI9hQDSlD7xVq6ZLUMlel/YHyb+QJohNb70AZ7rBlH4K
+ 2MVEkgjLB1cPtVha0badesCZWCXQ43ho2xN6pDFNF6ogo0nME7l1+Sk+hSJ5Iz72StHkBk4jg4R
+ Vr8GIpNla2sd77IYrijqXjIcUh4iFg+fZMeza67vNPIMilxFeHGuQ+mv1I0kYvIsNbwnMgg5VDR
+ 6Zsy3+IldgDVxI5co5JjLbFoIj/kMT2/7FYgW/Z0PWXOf4Tj+mSUYPuN5w4crLj1K9si4EYY0us
+ j4esv+HQO6i+LkKWymg/bdIVNM+pNM9fANtba5GppQYsXJczviJ44gPOaZKSaAxssGhIIXZt1ZE
+ LDb4zxpUNfiN8uckaTUn2R5MDKSnMT9YYLjPb4SDeuNO7INHDLM6uRqlizCRjyEuip+3+aH85KQ
+ Ux7
+X-Received: by 2002:a05:6a20:a121:b0:3b2:a809:1000 with SMTP id
+ adf61e73a8af0-3cd30586d26mr3175916637.3.1787268730840; 
+ Thu, 20 Aug 2026 16:32:10 -0700 (PDT)
 Received: from [172.20.6.151] ([108.174.179.84])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c4b635d4sm623899a91.15.2026.08.20.16.21.21
+ 41be03b00d2f7-cc15cada6fesm1880859a12.27.2026.08.20.16.32.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Aug 2026 16:21:21 -0700 (PDT)
-Message-ID: <dc581081-a65e-4946-8aac-c80085b81e80@linaro.org>
-Date: Thu, 20 Aug 2026 16:21:19 -0700
+ Thu, 20 Aug 2026 16:32:10 -0700 (PDT)
+Message-ID: <d9971d3e-0faa-4517-b748-9737822c5c66@linaro.org>
+Date: Thu, 20 Aug 2026 16:32:07 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/15] linux-user: Uncast void pointer argument as
- Object in target_cpu_free()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Subject: Re: [PATCH 0/2] tests/tcg/riscv64: Add vector load and store tests
+To: Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair.francis@wdc.com>
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
  qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
- qemu-ppc@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-arm@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- Helge Deller <deller@gmx.de>
-References: <20260820201356.29775-1-philmd@oss.qualcomm.com>
- <20260820201356.29775-13-philmd@oss.qualcomm.com>
+References: <20260820130223.2762-1-joel@jms.id.au>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260820201356.29775-13-philmd@oss.qualcomm.com>
+In-Reply-To: <20260820130223.2762-1-joel@jms.id.au>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,46 +109,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/20/26 13:13, Philippe Mathieu-Daudé wrote:
-> init_main_thread() is registered as Object::free() hook, thus
-> take an Object* argument. Uncast the void pointer as such.
+On 8/20/26 06:02, Joel Stanley wrote:
+> Hi Richard, I was testing your riscv vector load/store series and
+> noticed there were some regressions with page crossing loads and stores.
+> We don't have any tests for that in the tree, so I wrote some.
 > 
-> While now cpu_env() accept any pointer type, next commit will
-> restrict it to CPUState* type. QOM-cast the Object to CPU type,
-> otherwise we will get:
+> The tests trigger assertions in linux-user for me:
 > 
->    ../linux-user/i386/cpu_loop.c: In function ‘target_cpu_free’:
->    include/hw/core/cpu.h:604:31: error: ‘_Generic’ selector of type ‘void’ is not compatible with any association
-> ../linux-user/x86_64/../i386/cpu_loop.c:331:19: note: in expansion of macro ‘cpu_env’
->    331 |     target_munmap(cpu_env(obj)->gdt.base,
->        |                   ^~~~~~~
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> ---
->   linux-user/i386/cpu_loop.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/linux-user/i386/cpu_loop.c b/linux-user/i386/cpu_loop.c
-> index fe922fceb5a..a0790f3f352 100644
-> --- a/linux-user/i386/cpu_loop.c
-> +++ b/linux-user/i386/cpu_loop.c
-> @@ -326,9 +326,10 @@ void cpu_loop(CPUX86State *env)
->       }
->   }
->   
-> -static void target_cpu_free(void *obj)
-> +static void target_cpu_free(void *ptr)
->   {
-> -    target_munmap(cpu_env(obj)->gdt.base,
-> +    Object *obj = ptr;
-> +    target_munmap(cpu_env(CPU(obj))->gdt.base,
+>    $ make -C build/tests/tcg/riscv64-linux-user run-test-rvv-ldst
+>    make: Entering directory 'build/tests/tcg/riscv64-linux-user'
+>      TEST    test-rvv-ldst on riscv64
+>    **
+>    ERROR:../accel/tcg/user-exec.c:810:probe_access: assertion failed: (-(addr | TARGET_PAGE_MASK) >= size)
+>    timeout: the monitored command dumped core
+>    Aborted
+>    make: *** [Makefile:223: run-test-rvv-ldst] Error 134
+>    make: Leaving directory 'build/tests/tcg/riscv64-linux-user'
 
-If you're going to have any dynamic cast, you might as well use
-
-    X86_CPU(obj)->env.gdt.base.
-
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Bah.  Off by one bug.  I'll post v2 shortly.
+Thanks again.
 
 
 r~
