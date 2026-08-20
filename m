@@ -4,138 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3F99C5DF86
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 19:38:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 991DEC5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 19:40:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx8aW-0007fy-0B; Thu, 20 Aug 2026 15:38:08 -0400
+	id 1wx8cI-0008MF-FY; Thu, 20 Aug 2026 15:39:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wx8aT-0007Y8-V5
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 15:38:05 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wx8cH-0008M6-31
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 15:39:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wx8aS-0006vK-BW
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 15:38:05 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67KIJ35j4117203
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 19:38:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 3F7m0bphksuTWboa6iLDj6M4eLWPH3kCX0sUS+Tf77Q=; b=cj0l8rp4rba+Qbml
- tw3HYVXcjDIjWPbw2eD9QM4fSIjJRl8CLku3xZrQUK7ToMENd9IZqRwhUXxjo9eZ
- 3Qw2UGrZCklDwqKrgFhYJ2L7opvEx/xfFmX+z9yiKHGHFO8d6FhqZZwPTclROEHZ
- iP3eA64tsVwkp5VcOcKfE3o0U3OZEDdcsaq5zmelyn6PdQzRa/C7caTDpXSSE64j
- c4VsrEMdx4Kzd/Fbj8mQreLno9w5XBREvE9M3X3IaQwFnKhgLx+EKE2mB3tEBJGR
- tmkwvkJggM7lbEKMiw1D6TQ6+U9RZlXzqvG1LutbXdBRVMaKTFtvYEK1hiaAYomK
- LfouSQ==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g5xuk2u3c-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 19:38:02 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8f1e4e0eac1so1877336d6.1
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 12:38:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wx8cF-0007uF-Bj
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 15:39:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787254793;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rudLtd0zR7uZ/Daq2SQBxk9mGzU6JQtbD2efOcpFZWM=;
+ b=QnlWywfdTVX4fr0QARx/msaK+NoPPuBRGOQKEGcmrp5L0MqkamySxVBd5bbl5Mkm2RPVUy
+ 2AwtioAke/aIRlU9/jnB+Wy/tjiSabkuUiEBnnTfHtk5mJrGMsPxsP/73ORyBwdZqMIJwR
+ 8qpxqbhAAVIm0DGbZjD5TBSkA6aAQag=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-515-_FtPyhQTN6q9sJhXoJ_IJA-1; Thu, 20 Aug 2026 15:39:52 -0400
+X-MC-Unique: _FtPyhQTN6q9sJhXoJ_IJA-1
+X-Mimecast-MFC-AGG-ID: _FtPyhQTN6q9sJhXoJ_IJA_1787254792
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-92e62e3459fso22482785a.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 12:39:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787254682; x=1787859482; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=3F7m0bphksuTWboa6iLDj6M4eLWPH3kCX0sUS+Tf77Q=;
- b=Ft+Zs5RYl/ZeDhKWk1In+e4K4gWndKzPQkL888y/RP+enBUgx3y06QByJrNRjUHKwk
- rPiXRRpQU5kBMQx2aaPySTMPgKckP4Q7SdCto1KroxhxNZft4Mzh4sMvDy+GzmivBkY+
- Nm3RXEFWpV167pAFfahsDQhoAc8X+uSobYLtZQKqIG33PdwoLKxLY7Qec7BahcNzxH7i
- RIBc1oMVImXZH/x2S3khfpnKrSCniA8d98Jd7PUUtcn9dFXn2Ym1YzLFLnE99ajwsKaG
- /hy/266T/yfGzAqW0JGTI5hDGnkvUzfprYATecvn6JAxnK/hx6PyHmTiMTJzmUozb4ip
- ffUw==
+ d=redhat.com; s=google; t=1787254792; x=1787859592; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=rudLtd0zR7uZ/Daq2SQBxk9mGzU6JQtbD2efOcpFZWM=;
+ b=PTileW/thB9oDwz4GQTQELIbJaTWQWxJiZ7oq6JYqjOWOZPukseaITvfROaHonPaZw
+ 2+oNuL9V0tPQRisCKICFQF5x2/NLZlwjtrHsR5rvPtzglcolYAtIB7b46YevPrnRnoB+
+ So01uu4JmnEauxjCVG6RnVe4JMGLMm3iEkIK9Dj6xjc5IaJaJVxKSjHx/iZzMwnKyWND
+ pt/sifScCkkfnPpYPudxvWhDVZXASDeK8LuFAaG5Jrz51z7k8V+6sHVCIeM0WRxvh8AA
+ 9TWVv2J3+wnDza00vlStbeRT1W2FdHKtjU5cvz0iQu443qegGNdFpDkv4KzyioDHAnwb
+ UuVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787254682; x=1787859482;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=3F7m0bphksuTWboa6iLDj6M4eLWPH3kCX0sUS+Tf77Q=;
- b=PDPegjjJHyKxC1qRVlod3joAMTPYZi0Kg12S9QU0l7WpyFnXe2a63cj3rVDbbTF/fG
- b36fr+zGCql5msotNb4zXzjGoRn8GTUHXSYaQTLT41F3YsVESu2ERH81+x6VDcGK3zLc
- AEZUUkKA7MXA5DwY51oYtTlK9aeJuf+Cp1huVkKsIGAHL36pC7nq5wxsnZQDjP1tGBdM
- bIWe3XxtIff9FhQj2METqEBqqtAtBOBXMWe3KlaEXoJFUA0+LH569fGzcgFgRDsvn5lY
- Q12QPOlkc0TYA2757xTCbhiKlo30Zpi/MszsQiJDpCwpHG71RKCpfOxT0x4v5EyNcxdb
- RJOA==
-X-Gm-Message-State: AFuF++mGaCVlkpFRmKu7DUsyXNeQfgnSs/WXZckfErbsBQ6Y0YxKcjHF
- 6KQSjSSHwszifP4Hr765HK5et4JmuAVnYVcHjN5USTrbEvJ+0M18a62cI9TEE7OuTZTW8EhGWhQ
- /CSdesARvkhankYf1CppB2GKlRShlk09gO/uCwYBAlBgeBYvcjx5jvaAr3Q==
-X-Gm-Gg: AR+sD12nAqkwaMGERHmuiLLLRQedQtuxLA8vnOEBfHGiBtOtbjCeM5OFm3AqPtAerI4
- JhMnTQ3HQ4hDVV7vIUC7EjxYPsyZGRbyc3TxQTyELPOGYNSnqlF+Qd+t3KBghiB9cJrZmKbgUBu
- KadGsPhDwQ0SV1SoFrvoJ9nNPP4Es/zQlKiMEZJIEuNJpPiK+A8TVQyhoGkbvYTpGlRI8R3zi7V
- g1rv5AZ2WXg8TCTq1xUQ9BKNp7CEXPwzdbUMpvipBH1HHBKQTY3sGnakWiZ6iNEqxCcVEIBT7lq
- Kl086Y/itjXb+pj2FD4/FucEYjE1phFvrf/XxssyYpUpsuQXqfY9rrMgcEJppfDh9xCt/hSoaxF
- 1pb/xwYh9bE9uYUv+7qjP6RU1nwBl8yYZPKS76Z3mM8fy3VLbBuP/l49RqgNmnnUt
-X-Received: by 2002:a05:6214:2344:b0:907:840e:bf11 with SMTP id
- 6a1803df08f44-90c8098f7d6mr6015496d6.10.1787254682230; 
- Thu, 20 Aug 2026 12:38:02 -0700 (PDT)
-X-Received: by 2002:a05:6214:2344:b0:907:840e:bf11 with SMTP id
- 6a1803df08f44-90c8098f7d6mr6015026d6.10.1787254681787; 
- Thu, 20 Aug 2026 12:38:01 -0700 (PDT)
-Received: from [10.222.168.219] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90c6b42455dsm27380866d6.37.2026.08.20.12.37.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Aug 2026 12:38:00 -0700 (PDT)
-Message-ID: <82275d79-770e-49b8-ad17-4e136c8273e6@oss.qualcomm.com>
-Date: Thu, 20 Aug 2026 14:37:59 -0500
+ d=1e100.net; s=20251104; t=1787254792; x=1787859592;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=rudLtd0zR7uZ/Daq2SQBxk9mGzU6JQtbD2efOcpFZWM=;
+ b=OPkkMI4fcJiteCpYBnHdX2cJRnDLyakLyVDU92KJlxFVyd4W8pholK/kUE+mYQrD02
+ F2MgyP6stKXSCslWwg5S0hZOLw5e4uWTazLszWnDOHt+nRGUOAyvwNbLblpkRSnry0me
+ dmsSiqDTlXVqPW/+PO0sYdGDqXEj9sJK7XgiISPHQP+HUeG60oDWYLXhpWKSIZuo/lXf
+ PcEQ2L5m6mfuc9Owemmz0XkSwJ6z5FO3KAXBLulUor4hzyrQwBWFZw4bKIGWMtMOmcQu
+ jf3HQ74GDtmTcdOI5dMfEQuVaQ4oGAlGScKl5fRwryP2bUeramLFrnT/sjiCQOUzT+03
+ P7mg==
+X-Gm-Message-State: AOJu0YxoNdKItuPw2GWOeOFXUgFeMyOLcKCL0RRe8/GRALEVDtz6KHq+
+ h85shysdfjzTHuMOtYJk78iwF3n1+TRNpI7eAsB7xXt7nUD2qbQ9oqViNtr8UzNewkE1xsgii+V
+ aJeIQ36gdi2TTp7e6mzDqwVecIQYYFGlcODcSFQUZxMaeEwkvi7M1d6CG
+X-Gm-Gg: AR+sD13o6NxV1NaGAxL8rk7JsUu5jsP4LJGzw8aW67WqM+IBu+fIh7AiHq9svpvV5p1
+ uYMREolyEMH1dEdWuaLdIaqH/hoOBDbQwJ1d3Fezeyd0XBxPnNP94LJS/E+q/sO93cBF2CPhozR
+ fnIN2b09sqhUg7CaF2nxGRLaWvq2aEUAUCZ7QKDOM3j6+LGyaHBtV583usap0sO4Hodn775O/D3
+ vAeP+RAH7ogaTu28fDS31Gvy6v1/Wu899gOAhxUb6KsaKTpkmOwBB8UZHkIuOQ3HD+KCZjyN+U4
+ MAzn04nnE7Oe3RF/SIwB5n1SCjEXIi0sy0OcE6jui8C55clMlK8TIqDp7L9nEOndBuSa
+X-Received: by 2002:ac8:6546:0:b0:51b:f857:cf82 with SMTP id
+ d75a77b69052e-52df5694797mr9447701cf.8.1787254792004; 
+ Thu, 20 Aug 2026 12:39:52 -0700 (PDT)
+X-Received: by 2002:ac8:6546:0:b0:51b:f857:cf82 with SMTP id
+ d75a77b69052e-52df5694797mr9447031cf.8.1787254791391; 
+ Thu, 20 Aug 2026 12:39:51 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-52dd8749329sm36597231cf.25.2026.08.20.12.39.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Aug 2026 12:39:50 -0700 (PDT)
+Date: Thu, 20 Aug 2026 15:39:39 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Yanfei Xu <yanfei.xu@bytedance.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, lizhijian@fujitsu.com,
+ isyanfei.xu@gmail.com, jinpu.wang@cloud.ionos.com
+Subject: Re: [RFC PATCH v1 2/2] migration/rdma: Allow multiple in-flight
+ writes per chunk
+Message-ID: <aodX-7MIcGXmHEpP@x1.local>
+References: <20260820125833.1541756-1-yanfei.xu@bytedance.com>
+ <20260820125833.1541756-3-yanfei.xu@bytedance.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] target/hexagon: fix HVX big-endian byte access
-To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, pierrick.bouvier@oss.qualcomm.com, anjo@rev.ng
-References: <20260819230939.466856-2-brian.cain@oss.qualcomm.com>
- <20260820150239.3061104-1-matheus.bernardino@oss.qualcomm.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260820150239.3061104-1-matheus.bernardino@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: kKjC5Lr2TgTeSFUSLAwyy_Fvy7CG9Ztq
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDE0NyBTYWx0ZWRfX9ulrahjAELxp
- xzwI5qX74J7TbQXUCgWjytRQEd9M41S70IxbjXTOl7ikmb1WwIrHTvcUjGwXWVz/8i0YJQTZmwc
- bB18DfgsF8xVNiJ2yHEt2NXjnm8dViQ=
-X-Authority-Analysis: v=2.4 cv=T/O8ifKQ c=1 sm=1 tr=0 ts=6a87579a cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=IN7JBnBnK5oxI6k1dOwA:9 a=QEXdDO2ut3YA:10
- a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDE0NyBTYWx0ZWRfX32McMapY3D8z
- xlL49vFZgk6KSClb8QDwiiQzjODVjg6HL2EIXm9aBykjxkrGP2fKOwNHKolBOvUgqtNvdAsFwtd
- GlluHKw7Q0Cv9ad4x3wpU63RcFMyXXFf41G57mGE2pGOA/NCi5hixrWfZD1qlDNIHvOdo7ULpVF
- ewxPWmpjvuf9boVqBzB0cpBMSi+W2quNK3TozRI+tj44WaGDn2DwEbKoBlw5dbLhyGNt45FWgSS
- jQuQ46ZPP+lcyn6cznutZcq7OVclwL0O3nRwIX4q4neYfuU+fPfu5QRIV5R2AQZal/GVAZWORmk
- Og0CuFEeo+YO69XTS9to1f4byI2HibqHPH06jGZWky/0SXqQt6wde0blbkLElrgYBMe6CV15qgo
- rvtzacBbplzh+dOokZZeQZUcjAGqK8yGvuKMyRsN7YwABskHyUQ5XEtWZ15E7YEfeCyn8yl/d6Q
- ZUZlL4wUqNFMh0TnmCA==
-X-Proofpoint-ORIG-GUID: kKjC5Lr2TgTeSFUSLAwyy_Fvy7CG9Ztq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-20_01,2026-08-20_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015 bulkscore=0
- spamscore=0 adultscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200147
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260820125833.1541756-3-yanfei.xu@bytedance.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.346,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -152,37 +117,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Aug 20, 2026 at 08:58:33PM +0800, Yanfei Xu wrote:
+> qemu_rdma_write_one() waits for an earlier write to the same
+> registration chunk to complete.  This serializes disjoint dirty ranges
+> in a chunk and leaves send queue capacity unused.
+> 
+> Remove the per-chunk wait and use the reference counts to track all
+> outstanding writes.  The existing per-iteration drain remains the
+> completion barrier.
 
-On 8/20/2026 10:02 AM, Matheus Tavares Bernardino wrote:
-> On Wed, 19 Aug 2026 16:09:37 -0700 Brian Cain <brian.cain@oss.qualcomm.com> wrote:
->> diff --git a/target/hexagon/mmvec/mmvec.h b/target/hexagon/mmvec/mmvec.h
->> index 8e72f2f6ae7..a8a777812b9 100644
->> @@ -69,6 +70,23 @@ typedef union {
->>       int8_t    b[MAX_VEC_SIZE_BYTES / 1 / 8];
->>   } MMQReg;
->>   
->> +/* Map architectural byte indexes over host-native HVX lanes. */
->> +static inline uint8_t hexagon_mmvec_get_byte(const MMVector *v, size_t index)
->> +{
->> +    return extract64(v->ud[index / 8], (index % 8) * 8, 8);
->> +}
->> +
->> +static inline void mmvec_set_byte(MMVector *v, size_t index, uint8_t value)
-> Should this be named hexagon_mmvec_set_byte to match the getter?
->
->> +{
->> +    v->ud[index / 8] = deposit64(v->ud[index / 8], (index % 8) * 8, 8,
->> +                                 value);
->> +}
->> +
->> +static inline uint8_t mmqreg_get_byte(const MMQReg *q, size_t index)
->> +{
->> +    return extract64(q->ud[index / 8], (index % 8) * 8, 8);
->> +}
-> For QRegs, I think this should be:
->
->   extract32(q->uw[index / 4], (index % 4) * 8, 8)
+I think this should work (by accident; will explain below), but I want to
+raise the definition of iteration here, and it may or may not be what was
+expected.
 
-You're right about both of the above, I'll fix these.
+Migration core has this problem likely since 10+ years ago when it start to
+have two definitions..
+
+- Each time ram_save_iterate() is invoked: this is the "iteration" that
+  RDMA is tracking, it does qemu_rdma_drain_cq() when finishing for each
+  call (applies to complete() too)
+
+- Each time migration RAM core syncs dirty info and re-scans the whole
+  guest memories (all ramblocks)
+
+For RDMA (and non-RDMA too), what matters is for each same page its new
+version always lands *after* its old version.  IIUC, what it really needs
+is defintion 2), not 1)..  See the call of multifd_ram_sync_per_round() of
+find_dirty_block(), so it was called "a round" there, but I believe we
+report such iteration count (in reality, "dirty-sync-count") in QMP
+query-migrate with this concept.
+
+I still think relying on the qemu_rdma_drain_cq() should be fine for now,
+it's because currently we hold bitmap_mutex across the whole
+ram_save_iterate() (NOTE: postcopy preempt may release it.. another thing
+to discuss..), so bmap at least for precopy shouldn't be able to change, it
+also means for each ram_save_iterate() we shouldn't be sending the same
+page twice.  But I think it's risky relying on that fact, e.g. we already
+have concurrent sync dirty bitmap, like cpu_throttle_dirty_sync_timer_tick,
+so maybe it's better RDMA also flush its pages at definition 2) not 1).
+IIUC, it'll also improve on performance because RDMA needs to flush less.
+
+Maybe we should make it a generic API in find_dirty_block(), like
+notifiers, so that multifd (and maybe RDMA too?) doesn't need to hard code
+things like multifd_ram_flush_and_sync().
+
+Thanks,
+
+> 
+> Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+> ---
+>  migration/rdma.c       | 19 +------------------
+>  migration/trace-events |  1 -
+>  2 files changed, 1 insertion(+), 19 deletions(-)
+> 
+> diff --git a/migration/rdma.c b/migration/rdma.c
+> index 973a7a745a..63bc357657 100644
+> --- a/migration/rdma.c
+> +++ b/migration/rdma.c
+> @@ -1869,7 +1869,7 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
+>      struct ibv_sge sge;
+>      struct ibv_send_wr send_wr = { 0 };
+>      struct ibv_send_wr *bad_wr;
+> -    int reg_result_idx, ret, count = 0;
+> +    int reg_result_idx, ret;
+>      uint64_t chunk, chunks;
+>      uint64_t chunk_size = migrate_rdma_chunk_size();
+>      uint8_t *chunk_start, *chunk_end;
+> @@ -1910,23 +1910,6 @@ retry:
+>  
+>      chunk_end = ram_chunk_end(block, chunk + chunks);
+>  
+> -
+> -    while (qemu_rdma_chunk_in_transit(block, chunk)) {
+> -        (void)count;
+> -        trace_qemu_rdma_write_one_block(count++, current_index, chunk,
+> -                sge.addr, length, rdma->nb_sent, block->nb_chunks);
+> -
+> -        ret = qemu_rdma_block_for_wrid(rdma, RDMA_WRID_RDMA_WRITE, NULL);
+> -
+> -        if (ret < 0) {
+> -            error_setg(errp, "Failed to Wait for previous write to complete "
+> -                    "block %d chunk %" PRIu64
+> -                    " current %" PRIu64 " len %" PRIu64 " %d",
+> -                    current_index, chunk, sge.addr, length, rdma->nb_sent);
+> -            return -1;
+> -        }
+> -    }
+> -
+>      if (!rdma->pin_all || !block->is_ram_block) {
+>          if (!block->remote_keys[chunk]) {
+>              /*
+> diff --git a/migration/trace-events b/migration/trace-events
+> index 172761be78..253ff71891 100644
+> --- a/migration/trace-events
+> +++ b/migration/trace-events
+> @@ -249,7 +249,6 @@ qemu_rdma_unregister_waiting_proc(uint64_t chunk, int pos) "Processing unregiste
+>  qemu_rdma_unregister_waiting_send(uint64_t chunk) "Sending unregister for chunk: %" PRIu64
+>  qemu_rdma_unregister_waiting_complete(uint64_t chunk) "Unregister for chunk: %" PRIu64 " complete."
+>  qemu_rdma_write_flush(int sent) "sent total: %d"
+> -qemu_rdma_write_one_block(int count, int block, uint64_t chunk, uint64_t current, uint64_t len, int nb_sent, int nb_chunks) "(%d) Not clobbering: block: %d chunk %" PRIu64 " current %" PRIu64 " len %" PRIu64 " %d %d"
+>  qemu_rdma_write_one_post(uint64_t chunk, long addr, long remote, uint32_t len) "Posting chunk: %" PRIu64 ", addr: 0x%lx remote: 0x%lx, bytes %" PRIu32
+>  qemu_rdma_write_one_queue_full(void) ""
+>  qemu_rdma_write_one_recvregres(int mykey, int theirkey, uint64_t chunk) "Received registration result: my key: 0x%x their key 0x%x, chunk %" PRIu64
+> -- 
+> 2.20.1
+> 
+
+-- 
+Peter Xu
 
 
