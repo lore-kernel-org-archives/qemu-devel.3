@@ -4,78 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 001E5C5DF87
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 14:44:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B380C5DF87
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 14:45:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx3zC-0000WA-Bo; Thu, 20 Aug 2026 10:43:18 -0400
+	id 1wx3zE-0000Xk-7W; Thu, 20 Aug 2026 10:43:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wx3zA-0000Vp-Mb
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 10:43:16 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wx3zC-0000W8-6g
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 10:43:18 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wx3z8-00058y-Pu
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 10:43:16 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-493b966dd74so15648365e9.3
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 07:43:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wx3z9-000598-8T
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 10:43:17 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4954dff6536so20176555e9.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 07:43:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1787236992; x=1787841792; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=rqrcX+w3ODt714ovAIrNXwoV9XbEiB7vP29/TtziXnA=;
- b=jXsBXcX+8RTqAN9sg47LI2EZt+WNKxfWRxlNQv3JssAiGsPmN9h13ZNKTusNrVeVmK
- nariULTH1JGPLV8BKP9xaalByVYIf05ORJJV+S17h3nKZmANn1ponI0jW7l4E0WU5MUC
- 9XbAvQW/jTdMmLbxoaC1EmzrKXIbDG/Sej/xChw0Bsqryu9NfHXik7Z0LF7AsfaFagV5
- tAso2ZTcFfvHKZy1cdA64hieFF1U+ceNJTHHP7VVuHHRz5L0xLTObDUjg+3VdmdLPDBP
- djOPAXfU9hcsXqyFjK2Y4sPaDmB9TfE25A/KkNsWultEb4QMaBXf/lL7V1K0AlhuBLJo
- 5Waw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787236992; x=1787841792;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ d=openvz.org; s=google; t=1787236994; x=1787841794; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=rqrcX+w3ODt714ovAIrNXwoV9XbEiB7vP29/TtziXnA=;
- b=WoAlWI8DbJHOmXKrH8uP4aOtELiYeZCPSVI78O6+sbpcWopnMLLDBaOugnbUaY8JjQ
- C+s3onyzlYRxSRl3PauDPxnCDQFin0Wmkfb9israf8FEkhqqZO40VfrfVy/8114EcJJq
- X5OQyrOFwfv5S235JkvsBosYElevBXrfBHNRuKJslYI1zGginGwn870ShPR70R+zDaqa
- hQ3taBreAaDq3lD0YCDBa+WkZZkoGNPjTgPj7d+C1wq3pnuixpt9HX9DaJcLy4ArwULJ
- VpBBN7c/nKYARpW5CftePsqn0sGd+qPuOTYhwhDr5bSuBb07xHeIPlRkLI7+AbOe1Lk9
- qccw==
-X-Gm-Message-State: AOJu0Yx63d44ly47uuca94T+IvhCZO0n90LisKuHArlcY0Eo7cAdfL4M
- MvTVuTogKx9s8LWA0tFz9gY7y8QJtWd/o8u4W/ane5qaIvr3DZ5x70MjME4WbmxDqEYj+5ZHrlj
- fG1zt
-X-Gm-Gg: AR+sD109TI7W3YLxP+/U4vfV2cKrf7aTNNCdU1IONQvn/KT058OZDyASFroTxb0VAs3
- TPXtkitd5LGIyPskJV3YZPa5WmZcsep00fTctSMObBl8MpFnx6w3xSO4bd86+Hq1mZ4gW+5tTEs
- TlW5Eta6JEQNDW6Kf7s0JSdjUEtHdidxWfJpk+ayOaR8ODtr+nWLaWv5PgA6igYbvRCICKhqxFd
- FliV52bR2xS1vG3kmSNS32BD+d3TdaqTa1J/KJvqnbnRDTUrcciv2g4qTveSb1/i7vHgM4f/ad+
- 0Iy1y4HOwyYD9SWIKTB/x4cJVKU90e5vchH3DsyTqq7WgUnpbnx7O2gHf5f2RugROPiEPnyySXt
- YhC4WnyisXMhjMT5s6UjFT9sJoh+2wwmEfP75MjjQ3Ws8hx891Nm7jorhr7ZjCfqwMOidq6Gvo/
- d20qbv3Yya7vzOWbwz2rOyBTR7SIAwMJUkdZ8ikCaIeBlCT0yCvvLuViPkLQ==
-X-Received: by 2002:a05:600c:1387:b0:493:f5bf:4dc6 with SMTP id
- 5b1f17b1804b1-499aa1a47cfmr191095615e9.7.1787236992429; 
- Thu, 20 Aug 2026 07:43:12 -0700 (PDT)
+ bh=F31PMa12IiO/re93aMILk1LSzM11AyPxrVTqJ97tIV0=;
+ b=ciky6r4NCbxwxxi9fj3TMBAhY+8zf1gFG2tNgbpoxuepEwM10c5UsivlqX5qslAVek
+ Hb+UqEakbGBA2H0UowHkQEnNyXwfOBab3xpQ81oz1RqT/7WC0TJJnjME1BAfZvCFaYbn
+ 9rWEJwzL85y4ufOkcDr9PbLyh5P7DBSu378XhnnfaIkjfrpYaL4vxxkTLfEXUprNLkrr
+ e1oh89v4+OKGq07QFvTxF62wZkmqVikIVfCT4uJlJk/lv/JPQCUXU2or1GLEnRgmXEVu
+ oz7IRZWpfnvJmOjP5rMXMjpJ1NYDCEHcpWxqE0l5UotbHyh1K7duePR3C9RK7ykYtKs0
+ xTnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787236994; x=1787841794;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=F31PMa12IiO/re93aMILk1LSzM11AyPxrVTqJ97tIV0=;
+ b=Rqq7cj98fhPb+VGTh/Ep4Ry8rvegqWT3oreQKmfdzza7MipCSYIDqdw3nzEhADEYyL
+ dnUud0BAzJL1jR1wUk2L8xTHLy8A8VZg6RNVQdk9EStU+JrQF/dRtKaBy60EKqgiBXF3
+ mf90hehGewqFfK3gz6+tUJqsdvzNYmVufZ4wgrPALsWXjwwrGNGJ/vZ5FCzf42fZsPt7
+ ZGDFPmS1+mVEhfuAOGZ6SA5wAzWZad0m0SLIaXy+N4n2cKShRdV6Fkef4XK2DrZQghJm
+ 2dISO8sNqwhTbSHdxWtWnigibdV2+6KzxT8xsaInRkF7hR+1u4mAgWhVbuUGafED+C9n
+ Ej0w==
+X-Gm-Message-State: AOJu0YxCIRsbQqm0co9oXBaSuz73xaNVRWKgsGAKpz503b/d8n/kPnUh
+ iA6XhWtzDhmWq6nBSa07madh7K2u/+tRGK8pzNlVD75CJs8yg3RcULPTCPo42DAw6gEi42QGXMd
+ 7m8xV
+X-Gm-Gg: AR+sD11DgXFN09ihFnbhlnHCTnL+u/h0mQ9u3q0F2tp9zFu92M5pl+BM1Fv/JOUQl6t
+ rvmYWJxZPulQgy/pB6x2UM8AU0e254xoAGSvGdhJABHx09ZmYAB8IS3A+sWI+PFk2hd6eX97Wp2
+ nFvlyR68BsSMlxNcxDfCYLG9M7jQw8fRMJk46MdKFd0GFHa5fs86XUTe4OEVtSUoHOGSLyCyAf6
+ xL6zbos6W1HbytU03q3gO4ifMWPK+tvjtZSskZC1LGM9tU6TsSA4L2vXEjnd+uIZohRA5vTXxWG
+ bjg4qrRs0aAFlJli6NizlaywnGdA4V949NB/jQjXsX3xv0niwAUah43LyxC6f6F49lnlIL9jlf1
+ oRQnu0T5dbzkGRnkCujHAGmnhTxbt0xOn22igrvz1XH/z43+uMi1gunXMsznAkSkmpOJBaVn5AS
+ Wq+jTm8AfJzSsWbTSP/Isn4DVwFw1mJ5a6/AsI9aiF5lt9Dwlud934AhXnSA==
+X-Received: by 2002:a05:600c:c168:b0:495:779a:ed33 with SMTP id
+ 5b1f17b1804b1-499aa17d30cmr252497595e9.7.1787236993755; 
+ Thu, 20 Aug 2026 07:43:13 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:a123:7b43:afd8:8b47])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499aa0dd620sm136791565e9.13.2026.08.20.07.43.11
+ 5b1f17b1804b1-499aa0dd620sm136791565e9.13.2026.08.20.07.43.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 07:43:11 -0700 (PDT)
+ Thu, 20 Aug 2026 07:43:13 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ XlabAI Team of Tencent Xuanwu Lab <xlabai@tencent.com>,
  John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH 00/11] hw/ide: pending IDE fixes
-Date: Thu, 20 Aug 2026 16:42:58 +0200
-Message-ID: <20260820144309.835173-1-den@openvz.org>
+Subject: [PATCH 01/11] hw/ide: reject an out-of-range PIO transfer window on
+ load
+Date: Thu, 20 Aug 2026 16:42:59 +0200
+Message-ID: <20260820144309.835173-2-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260820144309.835173-1-den@openvz.org>
+References: <20260820144309.835173-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=den@openvz.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,39 +104,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pending IDE fixes for various issues reported on GitLab.
+From: Denis V. Lunev <den@openvz.org>
 
-Based on:
-[PATCH v2 00/17] hw/ide: fix the logical CHS translation a guest selects
-https://lore.kernel.org/qemu-devel/20260820100844.411717-1-den@openvz.org/
+ide_drive_pio_post_load() validates end_transfer_fn_idx but takes
+cur_io_buffer_offset and cur_io_buffer_len straight from the migration
+stream, so data_ptr and data_end can be placed anywhere within +-2GB of
+the 131076-byte io_buffer allocation. Both fields are signed 32-bit.
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
+The subsection loader consumes every subsection present in the stream
+without consulting needed(), so a crafted stream can inject
+ide_drive/pio_state for a drive that was never in a DRQ state. Once
+data_end is out of bounds, ide_data_writew() only compares the guest's
+pointer against that same bogus data_end, and the resumed guest turns a
+repeated outw to the data port into a controlled 16-bit heap write.
+end_transfer_fn_idx picks the direction, so the read side of the same
+code path leaks host heap instead.
+
+Validate the window against io_buffer_total_len and fail the load. The
+subtraction form avoids overflowing the addition.
+
+Reported-by: XlabAI Team of Tencent Xuanwu Lab <xlabai@tencent.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4179
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3738
 Cc: John Snow <jsnow@redhat.com>
 Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+---
+ hw/ide/core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Denis V. Lunev (11):
-  hw/ide: reject an out-of-range PIO transfer window on load
-  tests/qtest/ide-test: cover the migrated PIO transfer window
-  hw/ide/ahci: refuse a PIO transfer with no command header
-  hw/ide/ahci: clear cur_cmd when the command list is unmapped
-  tests/qtest/ahci: regression test for a PIO write vs. engine stop
-  hw/ide/ahci: treat a failed PRDT walk as a PIO transfer failure
-  hw/ide/ahci: reject a command header with an invalid FIS length
-  hw/ide/ahci: drain the ports on teardown
-  tests/qtest/ahci: regression test for a request outliving an unplug
-  hw/ide: report ATAPI UDMA5 with a matching standard and cable
-  tests/qtest/ide-test: cover the UDMA5 identify words
-
- hw/ide/ahci.c            | 136 ++++++++++++++++++++++++++---------
- hw/ide/core.c            |  23 +++++-
- hw/ide/trace-events      |   3 +
- include/hw/ide/ide-dma.h |   3 +-
- tests/qtest/ahci-test.c  | 147 ++++++++++++++++++++++++++++++++++++++
- tests/qtest/ide-test.c   | 148 +++++++++++++++++++++++++++++++++++++++
- 6 files changed, 423 insertions(+), 37 deletions(-)
-
-
-base-commit: 7f1fc6c9b9d2859577fb8837e05ca6eaa5a8a0ba
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index 8190549ee8..0dca2b5c52 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -2898,6 +2898,12 @@ static int ide_drive_pio_post_load(void *opaque, int version_id)
+     if (s->end_transfer_fn_idx >= ARRAY_SIZE(transfer_end_table)) {
+         return -EINVAL;
+     }
++    if (s->cur_io_buffer_offset < 0 || s->cur_io_buffer_len < 0 ||
++        s->cur_io_buffer_offset > s->io_buffer_total_len ||
++        s->cur_io_buffer_len >
++            s->io_buffer_total_len - s->cur_io_buffer_offset) {
++        return -EINVAL;
++    }
+     s->end_transfer_func = transfer_end_table[s->end_transfer_fn_idx];
+     s->data_ptr = s->io_buffer + s->cur_io_buffer_offset;
+     s->data_end = s->data_ptr + s->cur_io_buffer_len;
 -- 
 2.53.0
 
