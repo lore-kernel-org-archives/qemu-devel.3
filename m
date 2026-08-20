@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93638C5DF82
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 969D1C5DF81
 	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 10:10:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwziI-00071b-3I; Thu, 20 Aug 2026 06:09:34 -0400
+	id 1wwzib-0007AH-4Y; Thu, 20 Aug 2026 06:09:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhv-0006ux-Lr
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:12 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzht-0008PN-Hz
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhv-0006uu-DK
  for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:11 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-47f6609c657so971338f8f.2
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 03:09:09 -0700 (PDT)
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhs-0008Op-Mc
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:10 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-47f633e6058so1704806f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 03:09:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1787220548; x=1787825348; darn=nongnu.org;
+ d=openvz.org; s=google; t=1787220547; x=1787825347; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=nkj2k6nchMuIJVjh47utAhxnpSusPJpE2MYttsvWBKI=;
- b=qra7BUBruBUQ1qoJNAzV+ejEkB5K+5xmm6nbyl6LAhUjQvNUiUgUb0Rrf6OnMvRXsZ
- ll5D1lFqNiWvoVDqstQusmL1f0DC/0Vykia9A9b7dRWppxsQI/vnOPo6BzbVvuuHVK0G
- bqUDEHzEs4MMmK5TZ56s1lMQSwm3ujnaMY0s+ndcRSuTBVe8Wwt1bJh1rUb1uDszoXQw
- tP97bYG7Fbd03LudWY/wOE4WxhRyJ9CBQQQCpL5huCK0QEPYpy6IaadlYqUs71DfXhxJ
- lXU9WNd/IQ0KSRpjXgYCeKTwTyebyoXZZebIky9HhKDE1qbszfnpP80AQFPP95cs732+
- D+5A==
+ bh=oGUR0cenTpNa60oyZashSxoxcA0EDHIVX1H0+0f+Yow=;
+ b=SIMV41uc9noMqW0QP+udSeva6ylPftLcYAAb9CpAW/nfo56dZUVesKAQU1Pw5qZs8r
+ LJMGvACyVydzcqL1dnLyWvL9LHWiJanooEcVtIBj39Lomm1XYIpRvw+nRpZTTtcdhn1q
+ vdXXstSgSkc1saJhL4Zutmpn8jW0sCPGYrKALYJkS5PzjfHDf/jm6abt6IBUkvLSkvfs
+ gMGUl33JT8+EMQJDHQbO8rqqhg6Vcg+VPQZcWi3f8VkUtXdUdzKE3fqr2Hw5XihQZflf
+ CuUuCyH/O43VQ8yY73VvCoRAyp9oAr45B2qaXQ3UZGC4JCI7diJi8AF/hpNgTqsyWHvl
+ fkIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787220548; x=1787825348;
+ d=1e100.net; s=20251104; t=1787220547; x=1787825347;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=nkj2k6nchMuIJVjh47utAhxnpSusPJpE2MYttsvWBKI=;
- b=O9aGsKwBSG3lPPBHNRC7YGnqsfA7rduJ+hmNbdlGkrzjoEoQsAZD3Qx/ZN7qlt0jTP
- DidIzNNwqAULu3jKVDHn8aZA+iMHNocP8AcBdR/8B15Cpj7hRAga3pbdpbrBPbYXO6eV
- lGFIwFGznuAub+0KWMhGSN8SbwFsAGHYyaI7pxRBJ7yV8xWhBM/OfBjHdo9EcEfQg/bu
- 4CkB0gGuTbM9K4eDOhHZAlQYNmqk5FORj8Qz/2FCm2a9OpCiglvv/zUGuxEaIgrkJLDP
- ShmkZDMBlu+iqJ+F5Em21x9E37U6HcjXgxeGkQJc/QmrdXk1cOqQYZcvOqw0H2bBLjaY
- RHhA==
-X-Gm-Message-State: AFuF++kvo8lwjWND9fW0+jDvEgk/ATmPoYdFkB+aSVAaiMGZAVCAMOZ1
- tYw1KX8fGyTpweP1Ej4BR4lQnCzuFTHgjn2RJiA1Ei/mQpY62D0L0mTp1Kt6K+lexSJFK1XRp3q
- pHSQp
-X-Gm-Gg: AR+sD1042hFY4qRbstZfw42PqxsrUruCN8ok9oU+aOG6NjEcmTG3JO6rNJEMODFnaUH
- kIM0pBYhFz4STsBmTv8uxs/unXDMcR9c0atxMGyI37oAcTWbFwBbA68vMlRg3N0C+E79B0uLWOv
- Y4qYIjgFJOhmfawYRegtJqAsqA/dw5PPNF/1VlrSCNAs3tK5Z/RFF9NC/tjRyfBq6fkOzYdE9LW
- T8yefRxT1QbouCS3Q/k+6t1Mvt4rB9ij8woJ4FZ64QCox1SIsJu6S35aPo7FemUSBGYgB03+0ln
- XeOZK/d3wF4Gi7OfNCApllxjPKX8/TTBC0j9oGx5aWmHy9vJ3cGinBXeGtx5KcfBIPBe7IdAC6m
- q3nj90oFG3SstpJHv2Ui/DVXaJtL4g4LQCWm0jgMVVnIGJWKie4hFkFktAaXT0mL8kqFxyFru2/
- 1X/vOJ/4w50Yy/6+R6y21gTB2W9aGWMAEomvvPVGtUQlHXOuycwug8pE1cug==
-X-Received: by 2002:a05:6000:4619:b0:47f:5b52:5579 with SMTP id
- ffacd0b85a97d-482b1fe8a4bmr21190909f8f.18.1787220548147; 
- Thu, 20 Aug 2026 03:09:08 -0700 (PDT)
+ bh=oGUR0cenTpNa60oyZashSxoxcA0EDHIVX1H0+0f+Yow=;
+ b=rvzVGI3E8EgmopabMzwPkzH7QYpJ6Quv3QZ/Wh7T4Fn0T+97nG90N0+yBGZKwQWWmb
+ D9XyrCCkda5eq2gkPmfnUxQpPtxyqMJYB2c0zHZQ9ztTSTcEiWBYEYtmabehTaZWpkjG
+ PtkUCG3Kq9zEqJLT/qvk9ahuK0qYPxK4Tv2oq3mb/zIVZlQ95+/gNxOxjZnd6Fa+qRjn
+ pwsf67YN/Qu8mfRYT9dP+10TrGkTlrNJ/ShKoSBax5J1wctY796qjvLftnyyyWFXccJr
+ 17uegNQV6J//ff5yw7keGTUzaExFv1/CPguozh8fMZa7ePMEZctwp6FilvU6IEJ8Zq9f
+ Wmtg==
+X-Gm-Message-State: AFuF++ntLXWQzMSAPCZA3s0Rk6g9WUGV5ThWyURJrINiGss3aNyK+AO7
+ MCxHhPPweKE8Bh69WiceW7hPZGacAYsGZQgByKpFNb2czr0ZtQz2xQF9qFVAO43oDvrRsT1D31I
+ bf69X
+X-Gm-Gg: AR+sD10+8JQUZ0JDnmB57isbkUzh8bqGryH/wM6C949Lpu3/FB3LmyzPURP+0TRIkB0
+ EV1VyCRym8DXPYprMDn/8l4Yun992FrQIWYG343lDC43QmTHWQL0KsHtcD7AhVthXbwJNgKR75Z
+ a/ArkMQ90xdLKCo6I20Js1/moTdUdTf02HcVSUKlG6AlvOGYX9+EVZys318K1sZ1xqkx5mrS+bb
+ AWMpsYD4Dt1u+99ZOb+aaWf3vNWtuJXpG4Yx5BR/UMxrCSdn/88GDFLuVaMddHwbjC5NCMygXC7
+ 8T8+yz1AI0jhOjV/2TbbZxghMe4ph7S+BArxctdr6DutAmW174QYeiRUl6+5jGkU1j/pwcxskiH
+ 4/0JvcxA6v/oTlFTw9eEgB3W3vHlkWBWIkenVlGOevY8FdrIqv3OLwXR58mXDEWJ1S8xSsFwZh5
+ nVRmiGDSVCZ7tlBEaGFagxXc5VDq8U3Vx7hOTmILoeVPDx7J1q7k1ttt4cTw==
+X-Received: by 2002:a05:6000:26cb:b0:47f:c62e:9cca with SMTP id
+ ffacd0b85a97d-482b1fed744mr19145271f8f.22.1787220547001; 
+ Thu, 20 Aug 2026 03:09:07 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:a123:7b43:afd8:8b47])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b1441b0fsm11678929f8f.4.2026.08.20.03.09.07
+ ffacd0b85a97d-482b1441b0fsm11678929f8f.4.2026.08.20.03.09.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 03:09:07 -0700 (PDT)
+ Thu, 20 Aug 2026 03:09:06 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 13/17] tests/qtest/ide-test: cover a rejected CHS
- translation in the stream
-Date: Thu, 20 Aug 2026 12:08:40 +0200
-Message-ID: <20260820100844.411717-14-den@openvz.org>
+Subject: [PATCH v2 12/17] tests/qtest/ide-test: cover the CHS translation
+ across migration
+Date: Thu, 20 Aug 2026 12:08:39 +0200
+Message-ID: <20260820100844.411717-13-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260820100844.411717-1-den@openvz.org>
 References: <20260820100844.411717-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=den@openvz.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=den@openvz.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,121 +105,279 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-ide_drive_post_load() refuses a logical CHS translation that no command
-could have selected, as the fields are a divisor in ide_set_sector() and a
-factor in ide_get_sector(). Nothing exercised that, a fixed QEMU having no
-way to produce such a stream.
+Both defects here are silent: the guest addresses the disk in the
+translation it selected while the device translates with another, so reads
+and writes land on a sector nobody asked for. Put a marker in each of the
+two candidate sectors and name the one the translation picked. CHS 0/1/1
+is LBA 32 under 8 heads and 32 sectors per track and LBA 63 under the
+16/63 the test drive is configured with; both markers are written by LBA,
+which no translation can influence.
 
-Migrate a guest that selected a translation to a file, replace the number
-of sectors per logical track in the subsection with a zero, and let a
-destination read the result back. The load has to fail rather than take
-the value, so the destination is asked not to exit on a failed incoming
-migration and its migration status is what the test looks at.
+A translation the guest selected has to survive migration, and one it
+selected after a snapshot was taken must not outlive loading that snapshot
+back. The second needs a qcow2 image, so it is skipped without qemu-img.
 
 Cc: John Snow <jsnow@redhat.com>
 Cc: Peter Maydell <peter.maydell@linaro.org>
 Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- tests/qtest/ide-test.c | 81 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 81 insertions(+)
+ tests/qtest/ide-test.c | 231 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 231 insertions(+)
 
 diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
-index 19e9734d3c..4fa58ac525 100644
+index 99aa5e039c..19e9734d3c 100644
 --- a/tests/qtest/ide-test.c
 +++ b/tests/qtest/ide-test.c
-@@ -1483,6 +1483,86 @@ static void test_migrate_chs_snapshot(void)
-     unlink(img);
+@@ -96,6 +96,7 @@ enum {
+ enum {
+     CMD_DSM         = 0x06,
+     CMD_READ        = 0x20,  /* READ SECTOR(S) */
++    CMD_WRITE       = 0x30,  /* WRITE SECTOR(S) */
+     CMD_DIAGNOSE    = 0x90,
+     CMD_INIT_DP     = 0x91,  /* INITIALIZE DEVICE PARAMETERS */
+     CMD_READ_DMA    = 0xc8,
+@@ -1255,6 +1256,233 @@ static void test_specify_zero_sectors(void)
+     free_pci_device(dev);
  }
  
-+/* A migration stream holds NUL bytes, so this cannot be a string search */
-+static char *ide_stream_find(char *stream, gsize len, const char *name)
++/* Addressed by LBA, so no translation can influence where it lands */
++static void ide_write_marker(QTestState *qts, QPCIDevice *dev, QPCIBar ide_bar,
++                             uint32_t lba, const char *marker)
 +{
-+    gsize name_len = strlen(name);
-+    gsize i;
++    uint16_t buf[256];
++    uint8_t data;
++    int i;
 +
-+    if (len < name_len) {
-+        return NULL;
-+    }
-+    for (i = 0; i <= len - name_len; i++) {
-+        if (memcmp(stream + i, name, name_len) == 0) {
-+            return stream + i;
-+        }
-+    }
++    memset(buf, 0, sizeof(buf));
++    memcpy(buf, marker, strlen(marker));
 +
-+    return NULL;
++    qpci_io_writeb(dev, ide_bar, reg_nsectors, 1);
++    qpci_io_writeb(dev, ide_bar, reg_lba_low, lba & 0xff);
++    qpci_io_writeb(dev, ide_bar, reg_lba_middle, (lba >> 8) & 0xff);
++    qpci_io_writeb(dev, ide_bar, reg_lba_high, (lba >> 16) & 0xff);
++    qpci_io_writeb(dev, ide_bar, reg_device, LBA | ((lba >> 24) & 0xf));
++    qpci_io_writeb(dev, ide_bar, reg_command, CMD_WRITE);
++
++    data = ide_wait_clear(qts, BSY);
++    assert_bit_set(data, DRQ);
++    for (i = 0; i < 256; i++) {
++        qpci_io_writew(dev, ide_bar, reg_data, buf[i]);
++    }
++    data = ide_wait_clear(qts, BSY);
++    assert_bit_clear(data, ERR | DF | DRQ);
++
++    qpci_io_writeb(dev, ide_bar, reg_command, CMD_FLUSH_CACHE);
++    data = ide_wait_clear(qts, BSY);
++    assert_bit_clear(data, ERR | DF);
 +}
 +
-+/* A translation no command could have selected has to be refused on load */
-+static void test_migrate_chs_rejected(void)
++/* The marker read back names the sector the translation selected */
++static void ide_read_chs_marker(QTestState *qts, QPCIDevice *dev,
++                                QPCIBar ide_bar, uint8_t cyl_lo, uint8_t head,
++                                uint8_t sector, char out[9])
 +{
-+    const char *name = "ide_drive/chs_translation";
-+    QTestState *src, *dst;
-+    QPCIDevice *dev;
-+    QPCIBar bmdma_bar, ide_bar;
-+    g_autofree char *path = NULL;
-+    g_autofree char *uri = NULL;
-+    g_autofree char *dst_args = NULL;
-+    g_autofree char *stream = NULL;
-+    char *subsection;
-+    gsize len;
-+    int fd;
++    uint16_t buf[256];
++    uint8_t data;
++    int i;
 +
-+    fd = g_file_open_tmp("qtest-ide-stream.XXXXXX", &path, NULL);
-+    g_assert(fd >= 0);
-+    close(fd);
-+    uri = g_strdup_printf("file:%s", path);
++    qpci_io_writeb(dev, ide_bar, reg_nsectors, 1);
++    qpci_io_writeb(dev, ide_bar, reg_lba_low, sector);
++    qpci_io_writeb(dev, ide_bar, reg_lba_middle, cyl_lo);
++    qpci_io_writeb(dev, ide_bar, reg_lba_high, 0);
++    qpci_io_writeb(dev, ide_bar, reg_device, head & 0xf);
++    qpci_io_writeb(dev, ide_bar, reg_command, CMD_READ);
 +
-+    src = ide_test_start(
-+        "-blockdev driver=file,node-name=hda,filename=%s "
-+        "-device ide-hd,drive=hda,bus=ide.0,unit=0 ",
-+        tmp_path[0]);
-+    dev = get_pci_device(src, &bmdma_bar, &ide_bar);
++    data = ide_wait_clear(qts, BSY);
++    assert_bit_set(data, DRQ);
++    assert_bit_clear(data, ERR | DF);
++    for (i = 0; i < 256; i++) {
++        buf[i] = qpci_io_readw(dev, ide_bar, reg_data);
++    }
++    data = ide_wait_clear(qts, BSY);
++    assert_bit_clear(data, ERR | DF | DRQ);
 +
-+    ide_set_translation(dev, ide_bar, 8, 32);
++    memcpy(out, buf, 8);
++    out[8] = '\0';
++}
++
++static void ide_set_translation(QPCIDevice *dev, QPCIBar ide_bar,
++                                uint8_t heads, uint8_t sectors)
++{
++    qpci_io_writeb(dev, ide_bar, reg_nsectors, sectors);
++    qpci_io_writeb(dev, ide_bar, reg_device, heads - 1);
++    qpci_io_writeb(dev, ide_bar, reg_command, CMD_INIT_DP);
++    assert_bit_clear(qpci_io_readb(dev, ide_bar, reg_status), ERR);
++}
++
++/* CHS 0/1/1 is LBA 32 under 8/32, and LBA 63 under the drive's own 16/63 */
++#define CHS_MARKER_CUSTOM  "CUSTOM__"
++#define CHS_MARKER_DEFAULT "DEFAULT_"
++
++static void ide_prepare_markers(QTestState *qts, QPCIDevice *dev,
++                                QPCIBar ide_bar)
++{
++    ide_write_marker(qts, dev, ide_bar, 32, CHS_MARKER_CUSTOM);
++    ide_write_marker(qts, dev, ide_bar, 63, CHS_MARKER_DEFAULT);
++}
++
++static void ide_hmp_quiet(QTestState *qts, const char *command)
++{
++    g_autofree char *out = qtest_hmp(qts, "%s", command);
++
++    g_assert_cmpstr(out, ==, "");
++}
++
++static char *ide_migration_status(QTestState *qts)
++{
++    QDict *ret;
++    char *status;
++
++    ret = qtest_qmp_assert_success_ref(qts, "{ 'execute': 'query-migrate' }");
++    g_assert(qdict_haskey(ret, "status"));
++    status = g_strdup(qdict_get_str(ret, "status"));
++    qobject_unref(ret);
++
++    return status;
++}
++
++/* Waiting for the other side's event would hang if it refuses the stream */
++static void ide_migration_wait(QTestState *qts, const char *expected)
++{
++    while (true) {
++        g_autofree char *status = ide_migration_status(qts);
++
++        if (g_str_equal(status, expected)) {
++            return;
++        }
++        if (!g_str_equal(status, "setup") && !g_str_equal(status, "active") &&
++            !g_str_equal(status, "device")) {
++            fprintf(stderr, "Migration status is %s, expected %s\n",
++                    status, expected);
++            g_assert_not_reached();
++        }
++        g_usleep(5000);
++    }
++}
++
++static void ide_migrate(QTestState *src, QTestState *dst, const char *uri)
++{
 +    qtest_qmp_assert_success(src, "{ 'execute': 'migrate',"
 +                             " 'arguments': { 'uri': %s } }", uri);
 +    qtest_qmp_eventwait(src, "STOP");
 +    ide_migration_wait(src, "completed");
-+    free_pci_device(dev);
-+    ide_test_quit(src);
++    qtest_qmp_eventwait(dst, "RESUME");
++}
 +
-+    /*
-+     * Behind the name come version, heads and sectors, each big endian 32 bit.
-+     * The name recurs in the description at the end of the stream, so the
-+     * first match is the one carrying data.
-+     */
-+    g_assert(g_file_get_contents(path, &stream, &len, NULL));
-+    subsection = ide_stream_find(stream, len, name);
-+    g_assert(subsection);
-+    g_assert_cmpint(subsection - stream + strlen(name) + 12, <=, len);
-+    memset(subsection + strlen(name) + 8, 0, 4);
-+    g_assert(g_file_set_contents(path, stream, len, NULL));
++/* A translation the guest selected has to survive migration */
++static void test_migrate_chs_translation(void)
++{
++    QTestState *src, *dst;
++    QPCIDevice *dev;
++    QPCIBar bmdma_bar, ide_bar;
++    g_autofree char *mig_path = NULL;
++    g_autofree char *uri = NULL;
++    g_autofree char *dst_args = NULL;
++    char marker[9];
++    int fd;
++
++    fd = g_file_open_tmp("qtest-ide-migration.XXXXXX", &mig_path, NULL);
++    g_assert(fd >= 0);
++    close(fd);
++    uri = g_strdup_printf("unix:%s", mig_path);
++
++    src = ide_test_start(
++        "-blockdev driver=file,node-name=hda,filename=%s,locking=off "
++        "-device ide-hd,drive=hda,bus=ide.0,unit=0 ",
++        tmp_path[0]);
++    dev = get_pci_device(src, &bmdma_bar, &ide_bar);
++
++    ide_prepare_markers(src, dev, ide_bar);
++    ide_set_translation(dev, ide_bar, 8, 32);
++    ide_read_chs_marker(src, dev, ide_bar, 0, 1, 1, marker);
++    g_assert_cmpstr(marker, ==, CHS_MARKER_CUSTOM);
 +
 +    dst_args = g_strdup_printf(
 +        "-machine pc "
-+        "-blockdev driver=file,node-name=hda,filename=%s "
-+        "-device ide-hd,drive=hda,bus=ide.0,unit=0 -incoming defer",
-+        tmp_path[0]);
++        "-blockdev driver=file,node-name=hda,filename=%s,locking=off "
++        "-device ide-hd,drive=hda,bus=ide.0,unit=0 -incoming %s",
++        tmp_path[0], uri);
 +    dst = qtest_init(dst_args);
 +
-+    qtest_qmp_assert_success(dst, "{ 'execute': 'migrate-incoming',"
-+                             " 'arguments': { 'uri': %s,"
-+                             " 'exit-on-error': false } }", uri);
-+    ide_migration_wait(dst, "failed");
++    ide_migrate(src, dst, uri);
 +
++    /* Talk to the destination instead of the source */
++    qpci_free_pc(pcibus);
++    pcibus = NULL;
++    free_pci_device(dev);
++    dev = get_pci_device(dst, &bmdma_bar, &ide_bar);
++
++    ide_read_chs_marker(dst, dev, ide_bar, 0, 1, 1, marker);
++    g_assert_cmpstr(marker, ==, CHS_MARKER_CUSTOM);
++
++    free_pci_device(dev);
 +    qtest_quit(dst);
-+    unlink(path);
++    ide_test_quit(src);
++    unlink(mig_path);
++}
++
++/* A translation selected after the snapshot must not outlive loading it */
++static void test_migrate_chs_snapshot(void)
++{
++    QTestState *qts;
++    QPCIDevice *dev;
++    QPCIBar bmdma_bar, ide_bar;
++    g_autofree char *img = NULL;
++    char marker[9];
++    int fd;
++
++    if (!have_qemu_img()) {
++        g_test_skip("QTEST_QEMU_IMG not set, snapshots need a qcow2 image");
++        return;
++    }
++
++    fd = g_file_open_tmp("qtest-ide-snapshot.XXXXXX", &img, NULL);
++    g_assert(fd >= 0);
++    close(fd);
++    g_assert(mkimg(img, "qcow2", TEST_IMAGE_SIZE / (1024 * 1024)));
++
++    qts = ide_test_start(
++        "-blockdev driver=qcow2,node-name=hda,file.driver=file,"
++        "file.filename=%s "
++        "-device ide-hd,drive=hda,bus=ide.0,unit=0 ", img);
++    dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
++
++    ide_prepare_markers(qts, dev, ide_bar);
++
++    /* Snapshot taken while the default translation is in effect */
++    ide_read_chs_marker(qts, dev, ide_bar, 0, 1, 1, marker);
++    g_assert_cmpstr(marker, ==, CHS_MARKER_DEFAULT);
++    ide_hmp_quiet(qts, "savevm s0");
++
++    ide_set_translation(dev, ide_bar, 8, 32);
++    ide_read_chs_marker(qts, dev, ide_bar, 0, 1, 1, marker);
++    g_assert_cmpstr(marker, ==, CHS_MARKER_CUSTOM);
++
++    ide_hmp_quiet(qts, "loadvm s0");
++
++    ide_read_chs_marker(qts, dev, ide_bar, 0, 1, 1, marker);
++    g_assert_cmpstr(marker, ==, CHS_MARKER_DEFAULT);
++
++    free_pci_device(dev);
++    ide_test_quit(qts);
++    unlink(img);
 +}
 +
  static void test_cdrom_pio(void)
  {
      cdrom_read_impl(1, CDROM_PIO);
-@@ -1558,6 +1638,7 @@ int main(int argc, char **argv)
-     qtest_add_func("/ide/migration/chs_translation",
-                    test_migrate_chs_translation);
-     qtest_add_func("/ide/migration/chs_snapshot", test_migrate_chs_snapshot);
-+    qtest_add_func("/ide/migration/chs_rejected", test_migrate_chs_rejected);
+@@ -1327,6 +1555,9 @@ int main(int argc, char **argv)
+ 
+     qtest_add_func("/ide/read_native", test_specify);
+     qtest_add_func("/ide/specify/zero_sectors", test_specify_zero_sectors);
++    qtest_add_func("/ide/migration/chs_translation",
++                   test_migrate_chs_translation);
++    qtest_add_func("/ide/migration/chs_snapshot", test_migrate_chs_snapshot);
  
      qtest_add_func("/ide/identify", test_identify);
  
