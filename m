@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F9E4C5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 02:51:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 487A2C5DF85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 02:51:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwsqG-0001xi-Ch; Wed, 19 Aug 2026 22:49:20 -0400
+	id 1wwsqR-00023K-Nv; Wed, 19 Aug 2026 22:49:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kylefoxaustin.github@gmail.com>)
- id 1wwspw-0001rL-2G
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:49:00 -0400
+ id 1wwsq1-0001sN-3q
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:49:07 -0400
 Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <kylefoxaustin.github@gmail.com>)
- id 1wwspt-0000Qm-GX
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:48:59 -0400
+ id 1wwspx-0000Su-IV
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:49:04 -0400
 Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-6689f36ae56so2769206d50.3
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 19:48:57 -0700 (PDT)
+ 956f58d0204a3-66c4e9769bdso2207549d50.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 19:49:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787194136; x=1787798936; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787194140; x=1787798940; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=nFHiIEmOcu4TOMWGnoK+gf1EPtClTsY0iv6DpQyk0PM=;
- b=j7EwnP3EE9SkQXinnqmxu/JlQFZYtbMWerQ3dFsFd4HTW9ePvPF37zRknJ0V1RQJl4
- HUvhN7g1GF/jMHEdAMgDzHOTtGphhNpofi4Nu5gT+m/RP8Gt/6nO9cLzUUhKoi5bCZVf
- Z2J5db78i3d+RMU2hANy/MBDoXOC/Njz+LI8B5tsBhykQ6Zpqi9x+LXzY6gwiLdELZz0
- W5gLk0ejTi3c7Ar6uOpM5GfSXCzbY9xdAd/8TH8VoNTLiFudXAhn0KyTCBX1QlkkruoM
- zIDc3aXYYSb5eO8/FYIoJSIeeoRETGqFcP6bt6k/+1FnKN9Nj3xqaN2yM0dN8R4Py7FV
- NInQ==
+ bh=TuEY6h8uSBfSVhgKCRtzXbvzolUunUFUPvBQ5EhqMr0=;
+ b=dohYM8NuzTHUt0rpcjJXP4S0LCkFb/LTL+fS3BCwJ1v6HuznMXPftafJtcxV0+kLy8
+ 3OZkKoQxcnyN8z3fhLqwiJ9/zXkqLD9df/34e8SqJxRQlIarLhcBM4ymjjvYOecW6S+0
+ lV31i9LSif+iFtlMnrNrHwDZUvVs7DKPdLLkzImKPXpdf26RzZ3ZCOb0cWTarlP6dGRV
+ FXxEIdF+8sCXjSqtyfR7ivwx5wVVPcO72kZ2/sSPqTVERNpMMm9dyMmB/4a31Q22e3b0
+ ZxQ8pHZiipQDAekiuwa4b/gEajB2UEVUH/gyqwlwhAxqLRvvshwOtFKe23c1Bjjf6JNi
+ gQdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787194136; x=1787798936;
+ d=1e100.net; s=20251104; t=1787194140; x=1787798940;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=nFHiIEmOcu4TOMWGnoK+gf1EPtClTsY0iv6DpQyk0PM=;
- b=PigMbsJmqzbzbH7G+7jDZvwpazgycD/7MCNDov/GM4XnBeastlXXpFvFSaSyoG1EHP
- GB6AzD+2mOqsusU6cW0y9EPjSIzJW0zy1AhF8IkgsKV6D7XI/CTf9SbIDx5bAQ/RH0HR
- yZdM57HDv0Hwaaj5DUwcypr/BSiKDQmRf+gtNkn5YdAhFxaAGMb8DUXcFKbgiIM/j4d7
- mV9q+ECSI/i0Qshr+TDBwJB3smP6lsw7dRmfTPQISpYQdoviSNtRQnUKMMvBtvvWX0om
- YijB0zMbIxvqpmCbI1w5lJQN4sRl3A8ZUzgPHO4ojpt5MYWbjlPs32n3HEMX/nJdaGI0
- diTw==
-X-Gm-Message-State: AFuF++lTEy2HfMl/UbKx+LUV8tsHI9NITFqHjF9kT7hwrqljJ4o+5WHC
- 9L7a/RgTF2qsr+hBPEvQPVcaj/+yPzrZmVgcQ3+lAIt9mFzogppLuBapivIbIQ==
-X-Gm-Gg: AR+sD13P8YKw0kOnSf14MTY0iHh5+cXTvx+fFXyiNCH2G1p3ZBdfywA0pm6xKNKm159
- rKmuzBUVQibtxi/ExdBXrVK8c2cK6PCnKaVWwFBhsWa39RZmXG70mpd0hPup5JuF6H4hKPW0Dby
- 5lnGra1YdeMSs7vN/ef+qVJgXON5ZBJNDC4JgRvQHHiFAA/69UGdxcJ1/kCY4ZdGWvZwpu/zCUo
- 4PJCWGK38h9N3JY2QS+0O6gHTf1bwgjZlJ6U7q6Ad15ONb0vJXPzIx9JRWdkpeDpiMh6DfpGYki
- AhFG7pI2q7ESd+IydnkG1rKp5CgCWKuAa6ae+XrEe1tIk8YLccnUzFfLXOQOXTtC5RoYIw7l6RU
- xzUhEfATzP1PuKvTsFgPaox/JkTYUeQbWxd7mff3uGMqvq0k8bvtHvMlWLM1/nRT4/jwqYFFkGd
- 3AEIDmX2bzdRMnjQd3VZidJmiIRgjiehmFZDeIN2UjJLlo/tNyHU5IfpZEV3QC3UDOwZxRIg0pr
- qMQdFIb4Pn80Sxskfuzh+elOMIZbQzC07bKYB4aSVS5bMmbOb5cBQE40zxAneri
-X-Received: by 2002:a53:d048:0:10b0:667:dc6d:736b with SMTP id
- 956f58d0204a3-66ccb70e227mr2695592d50.32.1787194136346; 
- Wed, 19 Aug 2026 19:48:56 -0700 (PDT)
+ bh=TuEY6h8uSBfSVhgKCRtzXbvzolUunUFUPvBQ5EhqMr0=;
+ b=kYyguscxxGph2yp0PwcJcNC/TPuGYM3MwHMS49/RuKxi7Pi6SBfANTozZBEqa/59g8
+ KKKNnute5975gCRVw4C2F4Uvqw8H+iDxCBem4bc2De+psPmuo6x587CICENXkyUX4KiX
+ HGvOowS7cgEZsrrJfHJcg57oF0l61nfRVleMg6PwVS4ZE1y8XS5vsritFj1l1RRqymhO
+ 7yWdAwUPd2dwaF1WsLNPnSZQQZoFeN3St/OqbB7kQeKzzkg8W4QdzexXo8VGLLs3gTQH
+ cTjJ4yXDa2wh/Gbqtch1/wc1zUUOhUO+NOQ/cbsyPtJ2jaCHhMwdtaXHDip7qpSe7Q93
+ 0a+g==
+X-Gm-Message-State: AFuF++mIAThTYeuohtH3jifBjF/nETyKE/RMfF2sNP6oB4V/tye0dmOP
+ L0ofIzhzc5HM0rAIcnYICOM2NAbXmuifCu6mapjezs9AFxF6CS8/73+S+vrzyA==
+X-Gm-Gg: AR+sD128MkzHtxtqJ0SuysOV8XP3vSI9p/Uix0S8cklmgS51mjR/Pg+ioA0WcP0EB7q
+ b/TGlUXy33HyYQRZjhgzpy1Ts8l46QqHgzepb4AZIC7v1clzkc/6Pmf6vCYfOAjLHswV4ji6eDO
+ 0RUFRAaDofwKP2i0mdMBHNqp5WHe2xjanpkCgRaVxBQuK9m+rlyV9RemjWqXzOGxq+PPTdkMv/E
+ bUIWXEXLPq7pXz3dA5/SbKdV+RWm+/p8vrhmSwClX85iFv5mDva/llzcP4vC9CjDAihwacSbx/U
+ vt3XFsNQXKsn9KqPAI914N+LlR5NGK5xvtQ3SqGvxDZpdBiccDpr7OS4mCMFuKrCUgzMeIAah1u
+ 96ueNLd/Df2qWScWBB5tFTZfUBENJAfmYVdWVs6aSz9vlYlzF3kHFOiUkHVHpusOzSRGHd2IkBA
+ rRY6AqB1Ot5ZlmbWanGhQn7s8AH7tzNC7K55yrgZHctaKzYcMmobsaidYHWroXczFQqj9Caxl9s
+ BQEnzy9gSBCpj4b25gUy4mXghd7TGsZON/imFh4aWfoQdHz+AykAQ==
+X-Received: by 2002:a53:c9c4:0:b0:668:8dfd:8c7f with SMTP id
+ 956f58d0204a3-66ccb745f7cmr2614998d50.43.1787194140437; 
+ Wed, 19 Aug 2026 19:49:00 -0700 (PDT)
 Received: from skippy.localdomain (99-61-67-1.lightspeed.austtx.sbcglobal.net.
  [99.61.67.1]) by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-66ccafd03basm1986454d50.1.2026.08.19.19.48.54
+ 956f58d0204a3-66ccafd03basm1986454d50.1.2026.08.19.19.48.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 19:48:55 -0700 (PDT)
+ Wed, 19 Aug 2026 19:48:59 -0700 (PDT)
 From: Kyle Fox <kylefoxaustin.github@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Fox <kylefoxaustin.github@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
  qemu-arm@nongnu.org (open list:MCIMX95-19X19-EVK...)
-Subject: [PATCH 06/16] hw/i2c: add i.MX LPI2C
-Date: Wed, 19 Aug 2026 21:48:24 -0500
-Message-Id: <20260820024834.3286721-7-kylefoxaustin.github@gmail.com>
+Subject: [PATCH 09/16] hw/timer: add i.MX 95 system counter
+Date: Wed, 19 Aug 2026 21:48:27 -0500
+Message-Id: <20260820024834.3286721-10-kylefoxaustin.github@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260820024834.3286721-1-kylefoxaustin.github@gmail.com>
 References: <20260820024834.3286721-1-kylefoxaustin.github@gmail.com>
@@ -103,263 +102,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The i.MX Low-Power I2C master. Models the polled master transfer path
-(MCR/MSR, the MTDR command FIFO and the MRDR receive FIFO) that the
-System Manager firmware uses to bring up the PMIC and IO expander. No
-interrupts are modelled (MIER reads back 0). Slave devices attach on the
-QEMU I2C bus.
+The i.MX 95 System Counter: a 24 MHz free-running up-counter with a
+compare-match interrupt. On this machine it is the Linux broadcast
+clockevent. Models the counter read-back, compare-value programming and
+the compare IRQ (backed by a QEMUTimer).
 
 Signed-off-by: Kyle Fox <kylefoxaustin.github@gmail.com>
 ---
- hw/i2c/Kconfig      |   4 +
- hw/i2c/imx_lpi2c.c  | 296 ++++++++++++++++++++++++++++++++++++++++++++
- hw/i2c/meson.build  |   1 +
- hw/i2c/trace-events |   4 +
- 4 files changed, 305 insertions(+)
- create mode 100644 hw/i2c/imx_lpi2c.c
+ hw/timer/Kconfig        |   3 +
+ hw/timer/imx95_sysctr.c | 241 ++++++++++++++++++++++++++++++++++++++++
+ hw/timer/meson.build    |   1 +
+ hw/timer/trace-events   |   2 +
+ 4 files changed, 247 insertions(+)
+ create mode 100644 hw/timer/imx95_sysctr.c
 
-diff --git a/hw/i2c/Kconfig b/hw/i2c/Kconfig
-index 0766130b596..ee31513529f 100644
---- a/hw/i2c/Kconfig
-+++ b/hw/i2c/Kconfig
-@@ -54,3 +54,7 @@ config PMBUS
- config BCM2835_I2C
+diff --git a/hw/timer/Kconfig b/hw/timer/Kconfig
+index e1b751a54a7..1e8c5d50d7e 100644
+--- a/hw/timer/Kconfig
++++ b/hw/timer/Kconfig
+@@ -68,3 +68,6 @@ config AVR_TIMER16
+ 
+ config HEX_QTIMER
      bool
-     select I2C
 +
-+config IMX_LPI2C
++config IMX95_SYSCTR
 +    bool
-+    select I2C
-diff --git a/hw/i2c/imx_lpi2c.c b/hw/i2c/imx_lpi2c.c
+diff --git a/hw/timer/imx95_sysctr.c b/hw/timer/imx95_sysctr.c
 new file mode 100644
-index 00000000000..96180c02c8f
+index 00000000000..597bb851f23
 --- /dev/null
-+++ b/hw/i2c/imx_lpi2c.c
-@@ -0,0 +1,296 @@
++++ b/hw/timer/imx95_sysctr.c
+@@ -0,0 +1,241 @@
 +/*
-+ * NXP i.MX LPI2C master controller
++ * NXP i.MX 95 System Counter (sysctr) timer
 + *
 + * Copyright (c) 2026, Kyle Fox
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
-+ * Models the master side of the i.MX LPI2C used by the System Manager
-+ * firmware to talk to the board PMIC / IO-expander. Only the polled
-+ * blocking-transfer path the SM driver uses is modelled:
++ * The system counter is a free-running up-counter plus a compare block that
++ * raises an interrupt when the counter reaches a programmed value. Linux uses
++ * it as the tick BROADCAST clockevent: the imx95 idle state `cpu-pd-wait`
++ * carries `local-timer-stop`, so a core entering cpuidle shuts down its
++ * per-CPU arch timer and depends entirely on this counter's compare interrupt
++ * to be woken. Modelling it as plain RAM (the previous stub) left idle cores
++ * with no wake source -> RCU stalls -> the boot needed `cpuidle.off=1`. This
++ * model gives a live counter + working compare IRQ so the broadcast-timer
++ * wake path works (deep cpuidle still needs cpuidle.off=1 - see the docs).
 + *
-+ *   - MTDR is a command FIFO: the agent writes START (with address),
-+ *     TX-data, RX-data (count) and STOP commands.
-+ *   - Each command is executed synchronously against the QEMU I2C bus
-+ *     (i2c_start_transfer / i2c_send / i2c_recv / i2c_end_transfer).
-+ *   - MSR exposes the status flags the driver polls: TDF (tx ready,
-+ *     always set since we drain the FIFO immediately), RDF (rx data
-+ *     available), SDF (stop detected), NDF (NACK), MBF/BBF (busy).
-+ *   - MRDR pops received bytes (RXEMPTY when the rx FIFO is empty).
++ * Register layout (from Linux drivers/clocksource/timer-imx-sysctr.c, the
++ * imx95 quirk path which QEMU always takes - the IMX_SIP_GET_SOC_INFO SiP
++ * SMC is unimplemented here, so the driver sets SYS_CTR_IMX95_QUIRK):
++ *   - read frame  @ 0x20000: CNTCV_LO 0x20008 / CNTCV_HI 0x2000c (RO counter)
++ *     (also exposed at 0x8 / 0xc for the non-quirk read path)
++ *   - cmp frame   @ 0x10000: CMPCV_LO 0x10020 / CMPCV_HI 0x10024 (compare
++ *     value, RW, read-back-verified by the driver) and CMPCR 0x1002c
++ *     (control: EN = bit0; the driver acks the IRQ by clearing EN, which
++ *     drops the status bit and negates the interrupt).
 + *
-+ * No interrupts, DMA, slave mode, clocking or timing are modelled.
++ * Only the master compare channel + its single interrupt are modelled (the
++ * DT exposes one IRQ; the broadcast framework needs only one channel).
 + */
 +
 +#include "qemu/osdep.h"
-+#include "qemu/log.h"
 +#include "qemu/module.h"
++#include "qemu/timer.h"
++#include "qemu/host-utils.h"
 +#include "hw/core/sysbus.h"
-+#include "hw/i2c/i2c.h"
++#include "hw/core/irq.h"
 +#include "migration/vmstate.h"
 +#include "trace.h"
 +
-+#define TYPE_IMX_LPI2C "imx.lpi2c"
-+OBJECT_DECLARE_SIMPLE_TYPE(IMXLPI2CState, IMX_LPI2C)
++#define TYPE_IMX95_SYSCTR "imx95.sysctr"
++OBJECT_DECLARE_SIMPLE_TYPE(IMX95SysctrState, IMX95_SYSCTR)
 +
-+#define IMX_LPI2C_REG_SIZE      0x10000
++#define IMX95_SYSCTR_REG_SIZE   0x30000
 +
-+/* Register offsets. */
-+#define LPI2C_VERID             0x00
-+#define LPI2C_PARAM             0x04
-+#define LPI2C_MCR               0x10
-+#define LPI2C_MSR               0x14
-+#define LPI2C_MIER              0x18
-+#define LPI2C_MCFGR1            0x24
-+#define LPI2C_MFSR              0x5C
-+#define LPI2C_MTDR              0x60
-+#define LPI2C_MRDR              0x70
++/* The system counter reference is the 24 MHz oscillator (nxp,no-divider). */
++#define IMX95_SYSCTR_FREQ_HZ    24000000ULL
 +
-+/* MCR bits. */
-+#define MCR_MEN                 (1u << 0)
-+#define MCR_RST                 (1u << 1)
-+#define MCR_RTF                 (1u << 8)   /* reset tx FIFO (self-clearing) */
-+#define MCR_RRF                 (1u << 9)   /* reset rx FIFO (self-clearing) */
++/* Register offsets (see file header). */
++#define SYSCTR_CNTCV_LO         0x8
++#define SYSCTR_CNTCV_HI         0xc
++#define SYSCTR_CMPCV_LO         0x10020
++#define SYSCTR_CMPCV_HI         0x10024
++#define SYSCTR_CMPCR            0x1002c
++#define SYSCTR_CNTCV_LO_RD      0x20008
++#define SYSCTR_CNTCV_HI_RD      0x2000c
 +
-+/* MSR bits. */
-+#define MSR_TDF                 (1u << 0)
-+#define MSR_RDF                 (1u << 1)
-+#define MSR_EPF                 (1u << 8)
-+#define MSR_SDF                 (1u << 9)
-+#define MSR_NDF                 (1u << 10)
-+#define MSR_MBF                 (1u << 24)
-+#define MSR_BBF                 (1u << 25)
-+/* Write-1-to-clear status bits. */
-+#define MSR_W1C                 (MSR_EPF | MSR_SDF | MSR_NDF | (0xfu << 11))
++#define SYSCTR_CMPCR_EN         0x1
 +
-+/* MTDR command field [10:8]. */
-+#define MTDR_CMD_TXDATA         0x0
-+#define MTDR_CMD_RXDATA         0x1
-+#define MTDR_CMD_STOP           0x2
-+#define MTDR_CMD_START          0x4
-+
-+/* MRDR bits. */
-+#define MRDR_RXEMPTY            (1u << 14)
-+
-+#define RXFIFO_LEN              256
-+
-+struct IMXLPI2CState {
++struct IMX95SysctrState {
 +    SysBusDevice    parent_obj;
-+
 +    MemoryRegion    iomem;
-+    I2CBus         *bus;
++    qemu_irq        irq;
++    QEMUTimer       timer;
 +
-+    uint32_t        mcr;
-+    uint32_t        msr;       /* sticky status bits (SDF/NDF/MBF/BBF/...) */
-+    uint32_t        mcfgr1;
-+
-+    uint8_t         rxfifo[RXFIFO_LEN];
-+    uint32_t        rx_head;
-+    uint32_t        rx_count;
++    uint32_t        cmpcv_lo;
++    uint32_t        cmpcv_hi;
++    uint32_t        cmpcr;
 +};
 +
-+static void imx_lpi2c_rx_push(IMXLPI2CState *s, uint8_t b)
++static uint64_t imx95_sysctr_count(void)
 +{
-+    if (s->rx_count < RXFIFO_LEN) {
-+        unsigned tail = (s->rx_head + s->rx_count) % RXFIFO_LEN;
-+        s->rxfifo[tail] = b;
-+        s->rx_count++;
++    return muldiv64(qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL),
++                    IMX95_SYSCTR_FREQ_HZ, NANOSECONDS_PER_SECOND);
++}
++
++static uint64_t imx95_sysctr_cmpcv(IMX95SysctrState *s)
++{
++    return ((uint64_t)s->cmpcv_hi << 32) | s->cmpcv_lo;
++}
++
++/*
++ * (Re)arm or disarm the compare. When the compare is enabled, schedule the
++ * timer for the virtual-time instant the counter reaches CMPCV; a value
++ * already in the past makes timer_mod fire at the next opportunity. When
++ * disabled, cancel the timer and negate the interrupt (this is how the
++ * driver's ISR acks: it clears EN).
++ */
++static void imx95_sysctr_update(IMX95SysctrState *s)
++{
++    if (s->cmpcr & SYSCTR_CMPCR_EN) {
++        uint64_t deadline = muldiv64(imx95_sysctr_cmpcv(s),
++                                     NANOSECONDS_PER_SECOND,
++                                     IMX95_SYSCTR_FREQ_HZ);
++        trace_imx95_sysctr_cmp(imx95_sysctr_cmpcv(s));
++        timer_mod(&s->timer, deadline);
++    } else {
++        timer_del(&s->timer);
++        qemu_set_irq(s->irq, 0);
 +    }
 +}
 +
-+static void imx_lpi2c_do_command(IMXLPI2CState *s, uint32_t val)
++static void imx95_sysctr_timer_cb(void *opaque)
 +{
-+    uint32_t cmd = (val >> 8) & 0x7;
-+    uint8_t data = val & 0xff;
++    IMX95SysctrState *s = opaque;
 +
-+    switch (cmd) {
-+    case MTDR_CMD_START: {
-+        /* DATA = (addr << 1) | rw. */
-+        uint8_t addr = data >> 1;
-+        bool recv = data & 1;
-+        trace_imx_lpi2c_start(addr, recv);
-+        if (i2c_start_transfer(s->bus, addr, recv) != 0) {
-+            s->msr |= MSR_NDF;     /* no slave acked the address */
-+        } else {
-+            s->msr |= MSR_MBF | MSR_BBF;
-+        }
-+        break;
-+    }
-+    case MTDR_CMD_TXDATA:
-+        trace_imx_lpi2c_send(data);
-+        if (i2c_send(s->bus, data) != 0) {
-+            s->msr |= MSR_NDF;
-+        }
-+        break;
-+    case MTDR_CMD_RXDATA: {
-+        /* Receive (DATA + 1) bytes. */
-+        unsigned n = (unsigned)data + 1;
-+        for (unsigned i = 0; i < n; i++) {
-+            uint8_t b = i2c_recv(s->bus);
-+            trace_imx_lpi2c_recv(b);
-+            imx_lpi2c_rx_push(s, b);
-+        }
-+        break;
-+    }
-+    case MTDR_CMD_STOP:
-+        trace_imx_lpi2c_stop();
-+        i2c_end_transfer(s->bus);
-+        s->msr |= MSR_SDF | MSR_EPF;
-+        s->msr &= ~(MSR_MBF | MSR_BBF);
-+        break;
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "%s: unhandled MTDR cmd %u\n", __func__, cmd);
-+        break;
++    if (s->cmpcr & SYSCTR_CMPCR_EN) {
++        trace_imx95_sysctr_expire();
++        qemu_set_irq(s->irq, 1);
 +    }
 +}
 +
-+static uint64_t imx_lpi2c_read(void *opaque, hwaddr offset, unsigned size)
++static uint64_t imx95_sysctr_read(void *opaque, hwaddr offset, unsigned size)
 +{
-+    IMXLPI2CState *s = opaque;
++    IMX95SysctrState *s = opaque;
++    uint64_t cnt = imx95_sysctr_count();
 +
 +    switch (offset) {
-+    case LPI2C_VERID:
-+        return 0x01000003;     /* plausible LPI2C version */
-+    case LPI2C_PARAM:
-+        return 0x00000303;     /* 8-deep tx/rx FIFOs (not load-bearing) */
-+    case LPI2C_MCR:
-+        return s->mcr;
-+    case LPI2C_MSR: {
-+        /*
-+         * TDF is always ready (we drain the tx command immediately);
-+         * RDF reflects the rx FIFO.
-+         */
-+        uint32_t v = s->msr | MSR_TDF;
-+        if (s->rx_count) {
-+            v |= MSR_RDF;
-+        }
-+        return v;
-+    }
-+    case LPI2C_MIER:
-+        return 0;
-+    case LPI2C_MCFGR1:
-+        return s->mcfgr1;
-+    case LPI2C_MFSR:
-+        /* rx FIFO count in [22:16]; tx always empty. */
-+        return (s->rx_count & 0x7f) << 16;
-+    case LPI2C_MRDR:
-+        if (s->rx_count == 0) {
-+            return MRDR_RXEMPTY;
-+        } else {
-+            uint8_t b = s->rxfifo[s->rx_head];
-+            s->rx_head = (s->rx_head + 1) % RXFIFO_LEN;
-+            s->rx_count--;
-+            return b;
-+        }
++    case SYSCTR_CNTCV_LO:
++    case SYSCTR_CNTCV_LO_RD:
++        return cnt & 0xffffffff;
++    case SYSCTR_CNTCV_HI:
++    case SYSCTR_CNTCV_HI_RD:
++        return (cnt >> 32) & 0xffffffff;
++    case SYSCTR_CMPCV_LO:
++        return s->cmpcv_lo;
++    case SYSCTR_CMPCV_HI:
++        return s->cmpcv_hi;
++    case SYSCTR_CMPCR:
++        return s->cmpcr;
 +    default:
 +        return 0;
 +    }
 +}
 +
-+static void imx_lpi2c_write(void *opaque, hwaddr offset,
-+                            uint64_t value, unsigned size)
++static void imx95_sysctr_write(void *opaque, hwaddr offset,
++                               uint64_t value, unsigned size)
 +{
-+    IMXLPI2CState *s = opaque;
++    IMX95SysctrState *s = opaque;
 +
 +    switch (offset) {
-+    case LPI2C_MCR:
-+        if (value & MCR_RRF) {
-+            s->rx_head = s->rx_count = 0;
-+        }
-+        /* RST / RTF / RRF are momentary; don't persist them. */
-+        s->mcr = value & ~(MCR_RST | MCR_RTF | MCR_RRF);
++    case SYSCTR_CMPCV_LO:
++        s->cmpcv_lo = value;
++        imx95_sysctr_update(s);
 +        break;
-+    case LPI2C_MSR:
-+        /* Write-1-to-clear the status flags. */
-+        s->msr &= ~((uint32_t)value & MSR_W1C);
++    case SYSCTR_CMPCV_HI:
++        s->cmpcv_hi = value;
++        imx95_sysctr_update(s);
 +        break;
-+    case LPI2C_MIER:
-+    case LPI2C_MCFGR1:
-+        if (offset == LPI2C_MCFGR1) {
-+            s->mcfgr1 = value;
-+        }
-+        break;
-+    case LPI2C_MTDR:
-+        if (s->mcr & MCR_MEN) {
-+            imx_lpi2c_do_command(s, value);
-+        }
++    case SYSCTR_CMPCR:
++        s->cmpcr = value;
++        imx95_sysctr_update(s);
 +        break;
 +    default:
 +        break;
 +    }
 +}
 +
-+static const MemoryRegionOps imx_lpi2c_ops = {
-+    .read = imx_lpi2c_read,
-+    .write = imx_lpi2c_write,
++static const MemoryRegionOps imx95_sysctr_ops = {
++    .read = imx95_sysctr_read,
++    .write = imx95_sysctr_write,
 +    .endianness = DEVICE_LITTLE_ENDIAN,
 +    .impl = {
 +        .min_access_size = 4,
@@ -371,89 +305,94 @@ index 00000000000..96180c02c8f
 +    },
 +};
 +
-+static void imx_lpi2c_reset_hold(Object *obj, ResetType type)
++static void imx95_sysctr_reset_hold(Object *obj, ResetType type)
 +{
-+    IMXLPI2CState *s = IMX_LPI2C(obj);
++    IMX95SysctrState *s = IMX95_SYSCTR(obj);
 +
-+    s->mcr = 0;
-+    s->msr = 0;
-+    s->mcfgr1 = 0;
-+    s->rx_head = s->rx_count = 0;
++    s->cmpcv_lo = 0;
++    s->cmpcv_hi = 0;
++    s->cmpcr = 0;
++    timer_del(&s->timer);
++    qemu_set_irq(s->irq, 0);
 +}
 +
-+static void imx_lpi2c_init(Object *obj)
++static void imx95_sysctr_init(Object *obj)
 +{
 +    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-+    IMXLPI2CState *s = IMX_LPI2C(obj);
++    IMX95SysctrState *s = IMX95_SYSCTR(obj);
 +
-+    memory_region_init_io(&s->iomem, obj, &imx_lpi2c_ops, s,
-+                          TYPE_IMX_LPI2C, IMX_LPI2C_REG_SIZE);
++    memory_region_init_io(&s->iomem, obj, &imx95_sysctr_ops, s,
++                          TYPE_IMX95_SYSCTR, IMX95_SYSCTR_REG_SIZE);
 +    sysbus_init_mmio(sbd, &s->iomem);
-+    s->bus = i2c_init_bus(DEVICE(obj), "i2c");
++    sysbus_init_irq(sbd, &s->irq);
++    timer_init_ns(&s->timer, QEMU_CLOCK_VIRTUAL, imx95_sysctr_timer_cb, s);
 +}
 +
-+static const VMStateDescription vmstate_imx_lpi2c = {
-+    .name = TYPE_IMX_LPI2C,
++static int imx95_sysctr_post_load(void *opaque, int version_id)
++{
++    /* Re-arm the compare (and re-raise a past-due IRQ) from restored state. */
++    imx95_sysctr_update(opaque);
++    return 0;
++}
++
++static const VMStateDescription vmstate_imx95_sysctr = {
++    .name = TYPE_IMX95_SYSCTR,
 +    .version_id = 1,
 +    .minimum_version_id = 1,
++    .post_load = imx95_sysctr_post_load,
 +    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(mcr, IMXLPI2CState),
-+        VMSTATE_UINT32(msr, IMXLPI2CState),
-+        VMSTATE_UINT32(mcfgr1, IMXLPI2CState),
-+        VMSTATE_UINT8_ARRAY(rxfifo, IMXLPI2CState, RXFIFO_LEN),
-+        VMSTATE_UINT32(rx_head, IMXLPI2CState),
-+        VMSTATE_UINT32(rx_count, IMXLPI2CState),
++        VMSTATE_UINT32(cmpcv_lo, IMX95SysctrState),
++        VMSTATE_UINT32(cmpcv_hi, IMX95SysctrState),
++        VMSTATE_UINT32(cmpcr, IMX95SysctrState),
++        VMSTATE_TIMER(timer, IMX95SysctrState),
 +        VMSTATE_END_OF_LIST()
 +    },
 +};
 +
-+static void imx_lpi2c_class_init(ObjectClass *klass, const void *data)
++static void imx95_sysctr_class_init(ObjectClass *klass, const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
 +    ResettableClass *rc = RESETTABLE_CLASS(klass);
 +
-+    dc->vmsd = &vmstate_imx_lpi2c;
-+    rc->phases.hold = imx_lpi2c_reset_hold;
++    dc->vmsd = &vmstate_imx95_sysctr;
++    rc->phases.hold = imx95_sysctr_reset_hold;
 +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+    dc->desc = "NXP i.MX LPI2C master";
++    dc->desc = "NXP i.MX 95 system counter timer";
 +}
 +
-+static const TypeInfo imx_lpi2c_info = {
-+    .name           = TYPE_IMX_LPI2C,
++static const TypeInfo imx95_sysctr_info = {
++    .name           = TYPE_IMX95_SYSCTR,
 +    .parent         = TYPE_SYS_BUS_DEVICE,
-+    .instance_size  = sizeof(IMXLPI2CState),
-+    .instance_init  = imx_lpi2c_init,
-+    .class_init     = imx_lpi2c_class_init,
++    .instance_size  = sizeof(IMX95SysctrState),
++    .instance_init  = imx95_sysctr_init,
++    .class_init     = imx95_sysctr_class_init,
 +};
 +
-+static void imx_lpi2c_register_types(void)
++static void imx95_sysctr_register_types(void)
 +{
-+    type_register_static(&imx_lpi2c_info);
++    type_register_static(&imx95_sysctr_info);
 +}
 +
-+type_init(imx_lpi2c_register_types)
-diff --git a/hw/i2c/meson.build b/hw/i2c/meson.build
-index 88aea35662d..ad6738f820e 100644
---- a/hw/i2c/meson.build
-+++ b/hw/i2c/meson.build
-@@ -19,4 +19,5 @@ i2c_ss.add(when: 'CONFIG_PPC4XX', if_true: files('ppc4xx_i2c.c'))
- i2c_ss.add(when: 'CONFIG_PCA954X', if_true: files('i2c_mux_pca954x.c'))
- i2c_ss.add(when: 'CONFIG_PMBUS', if_true: files('pmbus_device.c'))
- i2c_ss.add(when: 'CONFIG_BCM2835_I2C', if_true: files('bcm2835_i2c.c'))
-+i2c_ss.add(when: 'CONFIG_IMX_LPI2C', if_true: files('imx_lpi2c.c'))
- system_ss.add_all(when: 'CONFIG_I2C', if_true: i2c_ss)
-diff --git a/hw/i2c/trace-events b/hw/i2c/trace-events
-index 1ad0e95c0e6..88078e1c590 100644
---- a/hw/i2c/trace-events
-+++ b/hw/i2c/trace-events
-@@ -61,3 +61,7 @@ pca954x_read_data(uint8_t value) "PCA954X read data: 0x%02x"
++type_init(imx95_sysctr_register_types)
+diff --git a/hw/timer/meson.build b/hw/timer/meson.build
+index 8323efaf46b..5ce27a6df0a 100644
+--- a/hw/timer/meson.build
++++ b/hw/timer/meson.build
+@@ -36,3 +36,4 @@ system_ss.add(when: 'CONFIG_SIFIVE_PWM', if_true: files('sifive_pwm.c'))
+ system_ss.add(when: 'CONFIG_AVR_TIMER16', if_true: files('avr_timer16.c'))
  
- imx_i2c_read(const char *id, const char *reg, uint64_t ofs, uint64_t value) "%s:[%s (0x%" PRIx64 ")] -> 0x%02" PRIx64
- imx_i2c_write(const char *id, const char *reg, uint64_t ofs, uint64_t value) "%s:[%s (0x%" PRIx64 ")] <- 0x%02" PRIx64
-+imx_lpi2c_start(uint8_t addr, int recv) "start addr 0x%02x recv %d"
-+imx_lpi2c_send(uint8_t data) "tx 0x%02x"
-+imx_lpi2c_recv(uint8_t data) "rx 0x%02x"
-+imx_lpi2c_stop(void) "stop"
+ system_ss.add(when: 'CONFIG_HEX_QTIMER', if_true: files('qct-qtimer.c'))
++system_ss.add(when: 'CONFIG_IMX95_SYSCTR', if_true: files('imx95_sysctr.c'))
+diff --git a/hw/timer/trace-events b/hw/timer/trace-events
+index 636310f8caa..df457bbb967 100644
+--- a/hw/timer/trace-events
++++ b/hw/timer/trace-events
+@@ -133,3 +133,5 @@ imx_epit_cmp(uint32_t sr) "sr was %d"
+ qtimer_interrupt(void) "qtimer interrupt line updated"
+ qtimer_read(uint64_t offset) "offset 0x%" PRIx64
+ qtimer_write(uint64_t offset, uint64_t value) "offset 0x%" PRIx64 " value 0x%" PRIx64
++imx95_sysctr_cmp(uint64_t cmpcv) "compare value 0x%" PRIx64
++imx95_sysctr_expire(void) "compare fired"
 -- 
 2.34.1
 
