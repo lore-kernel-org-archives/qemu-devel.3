@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 102D3C5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 08:13:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E044C5DF87
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 08:13:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwxss-00028a-73; Thu, 20 Aug 2026 04:12:22 -0400
+	id 1wwxt2-0002BY-SU; Thu, 20 Aug 2026 04:12:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wwxsq-00028E-NT; Thu, 20 Aug 2026 04:12:20 -0400
+ id 1wwxt1-0002B0-JO; Thu, 20 Aug 2026 04:12:31 -0400
 Received: from mail-koreacentralazlp170130006.outbound.protection.outlook.com
  ([2a01:111:f403:c40f::6] helo=SEYPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wwxsn-0001n5-Qi; Thu, 20 Aug 2026 04:12:20 -0400
+ id 1wwxt0-0001n5-1T; Thu, 20 Aug 2026 04:12:31 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ocqbkRL+tgfyYnDmMlInwjeuKhqp1nRyM833gjlEifw54LxH+iYcCyl0gwIOdP4xh2r4Xy7LP029wapeL3RPGfxL9RomArqXnbonvLSD3CftsygC8GfIrJVUH6n7+ljvI8b/deZZi+7WUzy6QbhJWFmgVsMOE+73/d6n5vopxjb3R/AmZM95up9jrowpFo9ht4yRfSivrgN1SmmmWUQE/T2SVJddSFjJksHF4Faq1FD4UOxBsBzuv4LRUEBZo4dsUr4Mb4vNSiurqU2V72aul52Zh/mcxAqHBIJ1zWA3danbYpXR0pnAkBCqK5IeWSKzHwG3aB1tmD6XQdde0fsydA==
+ b=ActhQIGVZGHVeD1Gd932HXQ8u0YEMqqgbgRD/ixRhH9eUizPxNuS/R1QMbyg3Q/Fpo7qdijrxlRhq5lNCiPlLMVgbwVmQfPqjhQnGJTuDMuwikphfluhnSvDPKyg4tni3uiD1xqGTa9XUAUYvFpCt21ioJJ+RY+vtDirUTqI4TSxN1/snsrTdxuIU6R5xlYEuRUsmc30BUMi1Dx0pjnQqKvRazEsLRody/uwwuEuFH9R/D+u5B6YmuYh14ZWyQeT81H2Wbrx1l7sD3mfBcR7L4rHF+qaT7drC2Ap+xIywsL0KoRDufhfqvIzg1CuYtzeUxt3tLrfCsje2Uv7n6nxZA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TKnQI+ujwK7/vnC2L8Te6vZ+MrVndSwpdVR4Sqv4Yac=;
- b=KKjr6goj/YC0/4yVsO6IT1B5QOu5+I0E6j6xnMCiFWB1gT9R2lzJpW283/3DEVTzKRUWNuvmJpUubAWBB0fRztdaDqbW8Hbj7/Tsl0ai1mc6jn/lqKBq0vLjJx7bOlkhlq6nqMY17DtlMJhuc4TgrIpBA0sYQpv9c0lPPbZmZ/VwHTEgexWFwmNSD0oUNhuBhYl3NGnFsf15LXRuVUAZHPowmIMi4+uM4VAjdcFvCv0znsZR9MRVpYQHJCfXfCGGX88v1EYENG2FiN6L93wXt27ssvo/RUnQWXfS7cHCZ7Kpgm2OuD7T992iwbZPLYXkNXbBSPp4vg2lGMSO2fG2zg==
+ bh=pE1td2hTZ9vm6g8idVYcayqlIvLuIs/7DS4fD4DfdVU=;
+ b=AR1ZAhx4DegRj70zjtBIXXQ4FCedUUhYnpOZVnccCG4jNLtHGFYtNrIhRGHRAQFg7nV6VaXLSsLwda64DlDcsDFoQBjSNyGwbTFbRCO8Nj7Tk8yGZ87V7/gYvGvtQTNENsLN4g9PyzvoBjErWqLglp/qtpqD/EJLkRZ6suWdu9CL/2OkfR+5OttNoyG5MGazTct8+FoGlXWrEBgj+IK7VOwzdqpZ1KGxC0ojREOtf843q2KEjsnoMq8gMTWCul3bKGiGD3kLDqp9/nxKmkX845GyzfivZBhOeZxkOUKWhvTk5lQ8+M1D3RX7r3q+jb9R7LSUyZPCExmo7IlytkYIEQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TKnQI+ujwK7/vnC2L8Te6vZ+MrVndSwpdVR4Sqv4Yac=;
- b=X/o8nAOzW0SNAf6iLg87Dv0739Q2cP4Ght/BJUrQTUco8UhIR3lfGuCjltqEHi/peU7jAuKP3LBySif9NNAG3QMigL8CsOytqaDsfTG73C3ssu3vzNPeOHOp9N7HNFkP9Dj5zTXcpAuKffZ8hfwomN3YfEjbLewYyxioI9l9FJuYS7bgMcQaPQE7ek7HwUaCaIk2QCYcOtFzO5S55YqU6btqEEtMy5szBygf0pIFFACzjvyC8TSn4h4ZjXTjM6I4QHYnnjdTq3bnPvnkGXGoJvD+12jZypsmfHIOnlfH/L/3pagcq2DasAHgRspaNDtScL57ipRhcrzn4F8z9Xrw5Q==
+ bh=pE1td2hTZ9vm6g8idVYcayqlIvLuIs/7DS4fD4DfdVU=;
+ b=h5V1O2LR63d7nxgKBcG6SRn24RccH/0JxDswRCkOszq7yoNIyhHnz1140+yrO78Jsc+6AFt2CQnfr7+LaUYSr5WCAZzmMLdJkswUkGpjkfHAcs1lC0lC2ic1DI+iSVobOLZHJ4vyz9TO6/uI2biC59GFXOTaWVF3IoZqgFYbJ+zh8lMH96RmwT9P7QmduAj9F3FWqtqIazFAFTNDlefWZpXDBfDyA5RO0/hOiRnNVttMmJ73YnijlIklnMl4Ie0PilL4WXCoWT+PBIEX8DSwvOpEcRl5Yxqh7VLaJJeP0MF4v0P9Qc1axFrciyGRk2wr27IvOuMgkc3JGiPxw7Yalg==
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
  by TYZPR06MB5661.apcprd06.prod.outlook.com (2603:1096:400:28e::11)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.8; Thu, 20 Aug
- 2026 08:12:08 +0000
+ 2026 08:12:11 +0000
 Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
  ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0339.007; Thu, 20 Aug 2026
- 08:12:07 +0000
+ 08:12:11 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -52,11 +52,13 @@ To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <pbonzini@redhat.com>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open
  list:All patches CC here" <qemu-devel@nongnu.org>
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v2 0/4] Add ASPEED ACRY RSA model for the AST2600
-Thread-Topic: [PATCH v2 0/4] Add ASPEED ACRY RSA model for the AST2600
-Thread-Index: AQHdMHuXpSIZ1OOZOEyu28ge3J3rLg==
-Date: Thu, 20 Aug 2026 08:12:07 +0000
-Message-ID: <20260820081206.3353463-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 3/4] hw/arm/aspeed_ast2600: Wire up the ACRY model
+Thread-Topic: [PATCH v2 3/4] hw/arm/aspeed_ast2600: Wire up the ACRY model
+Thread-Index: AQHdMHua26bF2D6Qkk2Fm6WjmXrk3g==
+Date: Thu, 20 Aug 2026 08:12:11 +0000
+Message-ID: <20260820081206.3353463-4-jamin_lin@aspeedtech.com>
+References: <20260820081206.3353463-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260820081206.3353463-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -65,61 +67,61 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|TYZPR06MB5661:EE_
-x-ms-office365-filtering-correlation-id: 9c7b5b8f-deae-45e8-4a7c-08defe92ba57
+x-ms-office365-filtering-correlation-id: ab8d2b97-309b-411f-a184-08defe92bcab
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|7416014|23010399003|1800799024|366016|921020|38070700021|56012099006|10067099003|18002099003;
-x-microsoft-antispam-message-info: WkgfW+rEwdQ9mhxVcRskV5FMlz21N1h+tKcVU/Fsan//UnZ/e/6qLOgO53atJVKRhtlOLav+hZiDUOHplpRWzq63rPLXAOKmTzJehU1ZuS0oGYClTbuQGC/+1Ph3MvG0t6pRV5OfCkYzjHPuXKrX17jDUJ9M0UX5afkPDOYMG/SvmC27nslVaQMQ3lOdNc6oWyz6nVTfmyUinnjHs22M1UqhtIotJgOQbq5UWmpPJC/w1KuvM+gI+Lxbvz8OlSCrF8u3JnVJWotvBvQ2zpMB6v9OTgxlI9Pximdtv0Qt5fNQ8Ijft20CmmO4cPxsiRZkdcYu0nlPD9W5jFbTUjNhRXZ4Lz52/ppWfoQNWzxY9um1KhUTeHponprx3gMMDZ3Nlb+xWBh++13U+Z1MVOZkyG9XyXjxSRec5XGRSGPQQqC8qCG3uMBQlKr9eK29ZunJMxR/Y7YJCeON2DWP90GuXKY8T50hSMCJ8CcK3fX7xNs+i7Ke9L8thLIJ6p98kpbsR1v80z7anN63YIksc/xJbkAYV3dAoLQtTLl3VSAjofhbROmq/wB2bCG4tY8nHX3LbcXUyLIvnwYz8X/tYWLgY7Txyg0LCOaPbIjxx3c4avVtPU8PQcCDHI65g+y5jlkreKnm/MWViYKay5SkpMcsSOYkbr8TXCeVZhCCeN+p9ApSqO3S/2KidVtvcDOu0WcWtBomfN+dPgufzVnkYz1V6Xx9WEj54l5hXzU0r/Nz9WkGKmVj+f+uFIV3DWMD6S3M
+ ARA:13230040|376014|7416014|23010399003|1800799024|366016|921020|38070700021|56012099006|10067099003|22082099003|18002099003;
+x-microsoft-antispam-message-info: sC0h8morEtuCWt1Nal4T6XiJtzWlghS3+Zp3/8X4uTkVwgAewW1o9vxPuVjVA7tUVBKxiSrolH3RHOzyjEMfTiYgmS+ishSVMHS4/wfce68PWig2Bt8tVkupgB0EBvdjERrUbffI7Qp8JR5Uy6q7E+UQouWc/hUwL8YwIOBRvE7Bg7SRScVArlhHqThhJiLS/GlknzrkdwzEAjQqBCjQZSlROKDIDYkRj6qEwD1PMVzuhTlgRu+5NQN6F0wbMahM2W6tcD4VNqgVcsaB1JhL3jZ+PiFVAwmplZ9FOobGHgYVvSi3qCIivevi/8m565SxfL9rNmG3lGFK4daiddjwLfegYQidKmJC4A2vi1gOL5S0/R3Vy9W8BDBwQ1pD3D5YLOkS1Zfaq8iAScgcKh7mVYgibflUqnpKPfDK/Ca7HW91SlargJt1RelpuUrshxB8nTtEFuEcdZC/+978mAgogkdRGt+bXxBaEvvWbPy5qeIMuwQ4cJoh41hI5/5SdILo34Nu/4YuSXroSgOkMehhWeXGKzotq/mECOpev7l2s2aGIKr+4xJBBEwus2efYqlwVhYagacjayQXStfvrVqIstaGIF06HRsOX6Bn5g2bycnjwiN96XQPWc5N/RE8hb+LJIzZgxa1Wkt6PoQxghNnMwy5N0IdKkXjK+uCpm1pje/grXpUgejf1CdD+kDHn16Gy537LNEsAf9kUWRJMicmuDxQvkEj8QfNJjRuzJpEZrU6yuGwqemovTlbIJfPF4I8
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(23010399003)(1800799024)(366016)(921020)(38070700021)(56012099006)(10067099003)(18002099003);
+ SFS:(13230040)(376014)(7416014)(23010399003)(1800799024)(366016)(921020)(38070700021)(56012099006)(10067099003)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?X6KZnz+rHMtBHOdU7w1GbLAu7wK0lyNJ2wIgazlS5AW5cCbM2nraRfhyn7?=
- =?iso-8859-1?Q?F6vrlPod4NTXM6kbq8KTdUeHQmDU3VFtTxfoE8XRMTXN07Kfgb9hX7ydVc?=
- =?iso-8859-1?Q?DX4UG4WGHxWTQNx3EuOjAwRhlgzbxIILAenb97F7v+mMijMxo8HZceGI11?=
- =?iso-8859-1?Q?XDo/O1ySz8BmnO7t9pIGeTDpzomFLbStZ/vL/yZnXhGham2lZc16Wv2UwN?=
- =?iso-8859-1?Q?ym0Azzal5Pz3x0hMaTpGlNx9NcMi/cH4yf49PL8QSiCoBmB9U7LypaSvoq?=
- =?iso-8859-1?Q?1hzB01MnShiVod8oTd0yfFzHOgp1TirnOaeqK5O4uvGDnPHrk+kHovgoIr?=
- =?iso-8859-1?Q?MXM/A3R9kv0UfokQ67rnOl4uSv+JFdQL+fB6ye6yWfb9b+64XsTfJ4ui1f?=
- =?iso-8859-1?Q?C/Uc0wfPqTKYGWmGyPms14/+57R9JkhMqmzHHILv0ExXZrmn1LkNiL49OG?=
- =?iso-8859-1?Q?BdgRZEkRz1DViLta3EqFY+ztkF5KhNN/AGiwaw9lZM8A7uhNXtBNSCLXug?=
- =?iso-8859-1?Q?Iv+hv7s2RTkizKPnXvv7CTV05L/9qTKJp2KrfR0Unq47SDoswG99oNqO4I?=
- =?iso-8859-1?Q?eG8HTpJ0nWbmKd13gSZjDJlmsaY0JjwbchIuq+qwXkRHJJ8UeuxaGPLUWf?=
- =?iso-8859-1?Q?S34EcRMqnW1UKj4OZUDNqrwxxhIC6SheifLa5qbkivvpKP54OXUO8LhAkl?=
- =?iso-8859-1?Q?v4khO3UjTyVYnfjv5lfmcv2MaQCPkhQvzM1PACKogMA8QNP7gjcyi7LiqO?=
- =?iso-8859-1?Q?4jtxrVDI/7mAqFuc4No9USUGtgO8DGPdW5l7B/UivQuiIzSzC/nfx4olU4?=
- =?iso-8859-1?Q?rr6wh+GO68y3ROF564xpAG+rjzGhoVez4qPJRiiujHpRQhvkTDLSMG2rAD?=
- =?iso-8859-1?Q?HFm+MJ7B25qxFqak2n4s4itSuVS46i6THUUs0elsXW837GpQQ14j2NZ32v?=
- =?iso-8859-1?Q?+aYJKSOMtP9Mx0dKVB6g5/Y/R2isLagA0tM7zpEfY+e0zN/h1GldCaZXlc?=
- =?iso-8859-1?Q?WrjRiQYiVGJLaubEM6O1zaXo2H/ItQFGZVVYWTnj5mnWAX/5NVP3fcdmWy?=
- =?iso-8859-1?Q?oiXusioEspdWxkwcEWKFnkxlmmDRL997qtxzg1wufPSbh+k5lI073p/Nep?=
- =?iso-8859-1?Q?URhjyDzB/lFOT2Qe++Uoz8CndF13y8/wkvLdmhr/LQSZDrIK/kmR8Tkfj2?=
- =?iso-8859-1?Q?cGzDV3H2S/3JKudUgRJi063aksB+y8aPX9BBzyfpTogLb8d10cvH7DciW4?=
- =?iso-8859-1?Q?YqHdYp44yNmYiSnQIxrKcZDt1wEqxe9unon0pFWfL8YTKWbOcwAhvs9i3c?=
- =?iso-8859-1?Q?b2yB7N5XldOtsvF+Ab3auY1VuX+Euuezh4LbkpK2R3LWfrXD4rsuRC6bZn?=
- =?iso-8859-1?Q?/3ulC8REquZ6ebCKfCE/FxMpRqFNEhlWPfezN6AYncmo9imW72GVQA7bVq?=
- =?iso-8859-1?Q?83PYfkV8++6x9B4DQl7XVYLbSD2OY8SV2Smgm5Y381V2pUE29WHtL40M0o?=
- =?iso-8859-1?Q?KhTXp/uapOE5eFJvgubcBUX5TnJhciA5q9jIYzYZbRfSuCSUMWVJqn7m4K?=
- =?iso-8859-1?Q?I3FCbA0ZLXhk9AKHbSwp+CT9YCsAD4vdo64Kgr94oUvfRSS+XYEkRHQjKu?=
- =?iso-8859-1?Q?PRImGVSq24oj9KCSPoM/nCDaUA0lNMa9spBvqzzJ09ibeh2G19VWTFFLs/?=
- =?iso-8859-1?Q?6iE/8IKNCQq2GDd9SgUkvOc12Opeo3Kmt/4pLeITme5VLfgyLrVEp8FZpC?=
- =?iso-8859-1?Q?gUoQ5zlY/VoaqGoTvywVWXUsXyAbr24vw7rzL0ItQFPGu3L5dAfFVM4SWE?=
- =?iso-8859-1?Q?Q3I02fFXFQ=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?My5fEg6b8WteZ6MlkYtStWMiJMCIHprVwdtiWhXM+gxN2AKPG2/rF3stoh?=
+ =?iso-8859-1?Q?HIVWZvnXgb+BkCx4L/CbfpDUQNT2BKBl5+49usu6MGaLueYgWltqC7IIBq?=
+ =?iso-8859-1?Q?LJuuBcfVqnm2T7uw5givOdbfYYwqq6MZbDdKnxgQN8TugflFFZIrotUtHC?=
+ =?iso-8859-1?Q?XI798qNXMvwJjFJwBWftOo9MowVzze75VvQujPzFuB+846cqVUWtEo4wL9?=
+ =?iso-8859-1?Q?Nql84u+5LeFljDX76N2TnJoZgFPogHxJx1LvwMVsCPxSdCts30C4sUpafb?=
+ =?iso-8859-1?Q?Xkc2KWiqI8zR+04JAhMGEexVSxG2ffCfsEJJnBP7HaoXXypgbAh1oBLcI3?=
+ =?iso-8859-1?Q?NEwZW/jR9ZhSiYxC95zpvKgju0Zc8I6u9jWS5rseC4M7JEiq3tNu+MSHHZ?=
+ =?iso-8859-1?Q?Pl3BPCv8EvpBBjSfbOnBpIWIbWb7hDvZiqXB45aWftW8R8pBrudAWqdi7G?=
+ =?iso-8859-1?Q?GDM7IfOMgdOMcfyEj3oaYbH6/C567/ntDO8CaZAJvaAsCuPVh8/6sZzZUj?=
+ =?iso-8859-1?Q?qyjCv/M59jzfR5bFxlWGX3fFzmmlzuFsT0Al9wL72nix6UZBEZqySh5LUQ?=
+ =?iso-8859-1?Q?IM+yutWLUtSOr/p1AW9NfVF0O59rW/OdUc/K4We/f7GRHQRoKLEIp2jPfI?=
+ =?iso-8859-1?Q?wVl/kqSxdfbL1A2SKrvuWIoHZMfEsmUh7tHhGlEfKRDaF3Csfw0B7PxpS9?=
+ =?iso-8859-1?Q?3n54RxXSW2vM9cV5As4jTqvqiGgrU83bhoa93FZmW5ML8V7wOTSNJfMIPn?=
+ =?iso-8859-1?Q?orG7c1aLomIzHJBFRADkEXmjlsrIb/FUqdXXrCxt2lA0fARd380bIGonuB?=
+ =?iso-8859-1?Q?G81QQ170NO+GvsUG6Ukye9jS0TQ9z4fYpLuRnX9L2Zrod1hrUqHbWXjNA3?=
+ =?iso-8859-1?Q?UF7RRKpzfb6eKNpSJX1ZHph5E6in6b0yRwmxaPeG92WZyz7tZOhceZ0hLq?=
+ =?iso-8859-1?Q?OS2sCIeyVKRMmQ27TmfUBVnQx0zH5r9C7mNwNys8Ecg2D/dT4yZX0zd3Hw?=
+ =?iso-8859-1?Q?hkyGauNBD6IOc8F2TRqifLJ2E+v36d7Ig/3+CgCEiLfCAEkBb8bz3IHKnR?=
+ =?iso-8859-1?Q?nyQpy5ny7aQoe6XYWQhEH/yPE4uAXvymU5pe6HJ5qERyYQQFlDWw+HexJj?=
+ =?iso-8859-1?Q?LCPJIYtkdTif195Ab/rp9m3CQ1DyLIUaRdzjqfutpbVcnOZMZVBkols6BC?=
+ =?iso-8859-1?Q?aOvY6ryjwWj1Y89uZChEfQq4uscCDeV1U7AvtRs4DNP8xY/fP8MQHeSTnx?=
+ =?iso-8859-1?Q?QHPKGww4KP1qX4rOcaXGBnFIntTV8S00/4axMtCd3JYvI4fy0VuuXRGai3?=
+ =?iso-8859-1?Q?5DNTyArCdnSRugmDfoLlr2PeZsBOzkSFKF6p+vlAv8Mw0kgbn6oKZ64oYD?=
+ =?iso-8859-1?Q?TBH1NpmqT73aFQPtRv63wc53BZ9bEpUPUQBprkRpSU0ndNue14S6/S5L7C?=
+ =?iso-8859-1?Q?OXu0cI7Xs99jmpn57gctQjSsCcC7oPiBQ2/wstZ7EvJpQmpkHTavQ+2MRf?=
+ =?iso-8859-1?Q?pJ4TSUaWgVgabCaCEVAHczJ2LVyHlbwPMpAujJOZqNPJdZJTbIu5YMliW2?=
+ =?iso-8859-1?Q?VykhfgcBreREoTldUHQ0WA2wCvO9AQcBcXYi+vge4hlubh5nLVPp/01byK?=
+ =?iso-8859-1?Q?CERZIHgTOPTvU2R4nIRTPBoMscOieQxGWTMjeJbPtrMakH8JEfopDa/Vdm?=
+ =?iso-8859-1?Q?eKsDzaDDFDg1mKX5qzd+3ycmX23NbhqEPzIThaDWcO4OHqql4YcRm8eO6D?=
+ =?iso-8859-1?Q?BXjF1pUq1shCawnGtQUB28VNR2L31w3Npq7GLqJhbgXV6gbqzDeqbPTlH/?=
+ =?iso-8859-1?Q?AD76VoWbhA=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: YP7dJkBcWEXS8dROw6kkjX1FBLEN//0bhF0CG3t+TgGHibW40PKJQS6f09C7be9cjIDHLUNmoouRUovY5OxG/8uWz2veI1ZxtqFr8Hw8QrtOBAF3t1Z5jcg43DLltXjOBT5Adh+O18TDnp6qZxZr8rl2vcBV67KzhuCUsbOUG/vs/89v2n3DFJ1hd4cv8AzwXL8pxMIWjy6lGUbfdawbXhNEIU20lTWR+R81r44DEfxiA7dsYvmouZC7cP3xtEhYH2ykjQIqe95CtMoF5DZ8iTZTF5agBo9CO5Ew0sSfOaE5kTbgwnbx6AMZ8AOay1H0Ildd0bOA7EBy9e/q50z+gg==
+X-Exchange-RoutingPolicyChecked: ajtqKiGODDBD5jAgjjwjnOhXMb6ZaLVGmS64gyshd+aigLqUjMTF1CMU9oLZGbYA75D32iNAQg++fly101yc2xs0wP65NqGoJ3rGux5CqBnGveJIqBe2s6mLjGNL9DzuJPE6gU6e6VK9+4KTSOaIF2P9QovHRCx2D7sz+Aq26P6dsXPsyonxo84sZT1tsHGu8fJRS3I7EHt72UdpsEGhP0otAlkro41nq+k3N/sqJKczc8SYfZmSM3SwdM7h86gyLsx9E/pO/JQ6xhRM61S10CGErYJe5raUwmyGtLF5yeE3Xon3h5CsY9/C1/5I39zQl7TmLbYFfYnnC4vYftIo3w==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9c7b5b8f-deae-45e8-4a7c-08defe92ba57
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Aug 2026 08:12:07.8134 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ab8d2b97-309b-411f-a184-08defe92bcab
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Aug 2026 08:12:11.6864 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: F49KbmmYlwBOAlJFAm7QicPeKL7DAxmY8QCB0+JhPSBm4+kch8/fBeRBO3Tyk5f0dMu229JK+CYKEsnYSksJvEiAG4qMO5eE3RqA6+2JWWQ=
+X-MS-Exchange-CrossTenant-userprincipalname: pPuKPjz3gYNKGaASNldRYG4uvnr3BA99rKhweTG/6aIb8N1ZWZntvnxITPxKHnnAgAM6MwKm2EMsCMeQwvMZ7yr1299q/3sTKXFFF+hdX0I=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB5661
 Received-SPF: pass client-ip=2a01:111:f403:c40f::6;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -145,71 +147,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds a model of the ASPEED ACRY engine found on the AST2600=0A=
-SoC, wires it into the SoC, and adds a qtest.=0A=
+Introduce the ASPEED_DEV_ACRY enum slot and add the ACRY model state=0A=
+to AspeedSoCState.=0A=
 =0A=
-The ACRY engine performs RSA modular exponentiation (c =3D m^e mod n). It=
+Instantiate the new ACRY model on the AST2600 SoC using its=0A=
+real-silicon register address and IRQ:=0A=
 =0A=
-DMAs the operands (data, exponent, and modulus) from guest DRAM and writes=
+- ACRY register region 0x1e6fa000-0x1e6fafff=0A=
+- IRQ 160=0A=
 =0A=
-the result to a dedicated 64 KiB SRAM region.=0A=
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+---=0A=
+ include/hw/arm/aspeed_soc.h |  3 +++=0A=
+ hw/arm/aspeed_ast2600.c     | 17 +++++++++++++++++=0A=
+ 2 files changed, 20 insertions(+)=0A=
 =0A=
-Guest firmware uses the engine for RSA signature verification during boot.=
-=0A=
-Without a model, the guest starts the engine and waits indefinitely for a=
-=0A=
-completion interrupt, causing the boot to hang.=0A=
-=0A=
-The model uses QEMU's generic akcipher API to perform raw (unpadded) RSA.=
-=0A=
-Raw RSA is currently supported only by the libgcrypt backend, which can be=
-=0A=
-enabled alongside gnutls with -Dgcrypt=3Denabled, so a build does not have =
-to=0A=
-choose between the two. When raw RSA is unavailable, the engine still=0A=
-completes and raises its interrupt, but returns an all-zero result. This=0A=
-allows the guest's signature verification to fail cleanly instead of=0A=
-hanging. The qtest is skipped when the selected crypto backend does not=0A=
-support raw RSA.=0A=
-=0A=
-Although the hardware documentation describes both RSA and ECDSA support,=
-=0A=
-ECDSA is known to be broken on this hardware and is therefore not modeled.=
-=0A=
-=0A=
-v1:=0A=
- 1. Add ASPEED ACRY RSA model for the AST2600=0A=
- 2. Add qtest for AST2600 ASPEED ACRY RSA model=0A=
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h=0A=
+index 46e7854727..8d80f16705 100644=0A=
+--- a/include/hw/arm/aspeed_soc.h=0A=
++++ b/include/hw/arm/aspeed_soc.h=0A=
+@@ -25,6 +25,7 @@=0A=
+ #include "hw/i2c/aspeed_i2c.h"=0A=
+ #include "hw/i3c/aspeed_i3c.h"=0A=
+ #include "hw/ssi/aspeed_smc.h"=0A=
++#include "hw/misc/aspeed_acry.h"=0A=
+ #include "hw/misc/aspeed_hace.h"=0A=
+ #include "hw/misc/aspeed_sbc.h"=0A=
+ #include "hw/misc/aspeed_sli.h"=0A=
+@@ -82,6 +83,7 @@ struct AspeedSoCState {=0A=
+     AspeedSCUState scu;=0A=
+     AspeedSCUState scuio;=0A=
+     AspeedHACEState hace;=0A=
++    AspeedACRYState acry;=0A=
+     AspeedXDMAState xdma;=0A=
+     AspeedADCState adc;=0A=
+     AspeedSMCState fmc;=0A=
+@@ -271,6 +273,7 @@ enum {=0A=
+     ASPEED_DEV_EMMC,=0A=
+     ASPEED_DEV_KCS,=0A=
+     ASPEED_DEV_HACE,=0A=
++    ASPEED_DEV_ACRY,=0A=
+     ASPEED_DEV_DPMCU,=0A=
+     ASPEED_DEV_DP,=0A=
+     ASPEED_DEV_I3C,=0A=
+diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c=0A=
+index f23a51c8a4..f7c7ec7fb1 100644=0A=
+--- a/hw/arm/aspeed_ast2600.c=0A=
++++ b/hw/arm/aspeed_ast2600.c=0A=
+@@ -52,6 +52,7 @@ static const hwaddr aspeed_soc_ast2600_memmap[] =3D {=0A=
+     [ASPEED_DEV_DP]        =3D 0x1E6EB000,=0A=
+     [ASPEED_DEV_PCIE_PHY1] =3D 0x1E6ED200,=0A=
+     [ASPEED_DEV_SBC]       =3D 0x1E6F2000,=0A=
++    [ASPEED_DEV_ACRY]      =3D 0x1E6FA000,=0A=
+     [ASPEED_DEV_EMMC_BC]   =3D 0x1E6f5000,=0A=
+     [ASPEED_DEV_VIDEO]     =3D 0x1E700000,=0A=
+     [ASPEED_DEV_SDHCI]     =3D 0x1E740000,=0A=
+@@ -144,6 +145,7 @@ static const int aspeed_soc_ast2600_irqmap[] =3D {=0A=
+     [ASPEED_DEV_FSI1]      =3D 100,=0A=
+     [ASPEED_DEV_FSI2]      =3D 101,=0A=
+     [ASPEED_DEV_I3C]       =3D 102,   /* 102 -> 107 */=0A=
++    [ASPEED_DEV_ACRY]      =3D 160,=0A=
+ };=0A=
  =0A=
-v2:=0A=
- 1. squash "Add the ACRY model to AspeedSoCState" into "Wire up the ACRY=0A=
-    model"=0A=
- 2. wrap the ACRY SRAM in a container mapped at offset 0 so the device=0A=
-    addresses it by relative offset (drop the "sram-base" property)=0A=
- 3. build the scattered SRAM byte offsets on the fly instead of caching=0A=
-    them in per-instance lookup tables=0A=
- 4. write the result with address_space_stl_le() and check the MemTxResult=
+ static qemu_irq aspeed_soc_ast2600_get_irq(AspeedSoCState *s, int dev)=0A=
+@@ -269,6 +271,8 @@ static void aspeed_soc_ast2600_init(Object *obj)=0A=
+     snprintf(typename, sizeof(typename), "aspeed.hace-%s", socname);=0A=
+     object_initialize_child(obj, "hace", &s->hace, typename);=0A=
+ =0A=
++    object_initialize_child(obj, "acry", &s->acry, TYPE_ASPEED_ACRY);=0A=
++=0A=
+     object_initialize_child(obj, "i3c", &s->i3c, TYPE_ASPEED_I3C);=0A=
+ =0A=
+     object_initialize_child(obj, "sbc", &s->sbc, TYPE_ASPEED_AST2600_SBC);=
 =0A=
+@@ -726,6 +730,19 @@ static void aspeed_soc_ast2600_realize(DeviceState *de=
+v, Error **errp)=0A=
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->hace), 0,=0A=
+                        aspeed_soc_ast2600_get_irq(s, ASPEED_DEV_HACE));=0A=
+ =0A=
++    /* ACRY */=0A=
++    object_property_set_link(OBJECT(&s->acry), "dram", OBJECT(s->dram_mr),=
 =0A=
-Jamin Lin (4):=0A=
-  hw/misc/aspeed_acry: Add ASPEED ACRY model=0A=
-  hw/arm/aspeed_ast2600: Introduce the ACRY SRAM=0A=
-  hw/arm/aspeed_ast2600: Wire up the ACRY model=0A=
-  tests/qtest/aspeed-acry-test: Add RSA ModExp tests=0A=
-=0A=
- include/hw/arm/aspeed_soc.h    |   4 +=0A=
- include/hw/misc/aspeed_acry.h  |  39 +++=0A=
- hw/arm/aspeed_ast2600.c        |  34 +++=0A=
- hw/misc/aspeed_acry.c          | 455 +++++++++++++++++++++++++++++++++=0A=
- tests/qtest/aspeed-acry-test.c | 395 ++++++++++++++++++++++++++++=0A=
- hw/misc/meson.build            |   1 +=0A=
- hw/misc/trace-events           |   6 +=0A=
- tests/qtest/meson.build        |   5 +-=0A=
- 8 files changed, 938 insertions(+), 1 deletion(-)=0A=
- create mode 100644 include/hw/misc/aspeed_acry.h=0A=
- create mode 100644 hw/misc/aspeed_acry.c=0A=
- create mode 100644 tests/qtest/aspeed-acry-test.c=0A=
-=0A=
++                             &error_abort);=0A=
++    object_property_set_link(OBJECT(&s->acry), "sram", OBJECT(&s->sram[1])=
+,=0A=
++                             &error_abort);=0A=
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->acry), errp)) {=0A=
++        return;=0A=
++    }=0A=
++    aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->acry), 0,=0A=
++                    sc->memmap[ASPEED_DEV_ACRY]);=0A=
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->acry), 0,=0A=
++                       aspeed_soc_ast2600_get_irq(s, ASPEED_DEV_ACRY));=0A=
++=0A=
+     /* I3C */=0A=
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->i3c), errp)) {=0A=
+         return;=0A=
 -- =0A=
 2.53.0=0A=
 
