@@ -4,107 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C90F1C5DF87
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 11:51:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D38DC5DF88
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 11:53:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx1I7-0006yL-C3; Thu, 20 Aug 2026 07:50:39 -0400
+	id 1wx1K2-00087q-AM; Thu, 20 Aug 2026 07:52:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wx1I5-0006uY-3j
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 07:50:37 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wx1K0-00086m-9l
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 07:52:36 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wx1I3-0005CE-4I
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 07:50:36 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-66cd07da38fso2129088d50.2
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 04:50:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787226634; cv=none;
- d=google.com; s=arc-20260327;
- b=Vgt5ru1KfxjVdGoiuQe+LTUHLkIw3oAYQxSW6HugMnXhxb5/1OKB28PNf1/ig/7NHk
- 8R5oOBEKvn20ogsijOHwEcTS9b5ID/9C3VMib6bXVYzPoyCq0vR/q6bKwSLpyAD0o3mI
- kMUXG/ZirA8xyuCJzJ3TZ5R+N3Vu6LfNb6iing+L5yhvM3jioNQTPJ2oWPofNgLr5sfu
- IjfkWCpQpv4FgE2b9jA4uab/bayfQhElVMICyS7yAfBx3Yg4Sul88Fl9JhPWvgtR8q32
- TJbMI6Rtwg3aCpEBUua5e6xDpf6lCPtttWwfhxOeoOWGliJfsZUWWngz1YjirAG5NCCt
- Dvkg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Y0dYfev4ExP7gbnuioImKtNXmOfTbxUEBas0KSbMMXk=;
- fh=90H685tgdCqFnjzSfPl1O7q2DFaOXI/OZbYpRHaghpM=;
- b=IJCmiy1iaCLIQjrQlzOqukf4P/l7wdDg1DIoeUcgeSrrp4dW/72LAcOBGuMtts/1sg
- /7tEF6D1ATWvkRtl+lLuOtUWM6R54cniCyL2xqV35u46TgImaBcZxPgzzouzstqjn6CD
- 7LOlfW+yt7FE7vmHufzQM7JUwVB/9L5nvqyykTMLBeIJl0IKR19oxiS6v+17/iLtVrMb
- 43JeEHnU5SuhlL705ZGv1Vc068HWK+RuaY3UNZILZym/k3Xf/A0LnDBz8+1IgJaKGDct
- 1GKzb6AK9QUerlht9VUMd4Adp2gyu/RB8bOQB7UCVzjPGAe6qPrLIVLVh/YYzT07u70l
- xuaw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wx1Jy-0005p0-9y
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 07:52:36 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-47f93b2fe4cso1229224f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 04:52:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787226634; x=1787831434; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Y0dYfev4ExP7gbnuioImKtNXmOfTbxUEBas0KSbMMXk=;
- b=JU9p6MjwBqN8EdanwS7s1O9Ena0bX/jg0dluYapmOaFW6REcF9KRN9JFXtUXeWbbQ6
- XBfBh/NmpnXqGG3tF5VGXUcFgcxJJhB9Uc+59jLJJJYp5O1FqAKQZNlLd+Oa+FkPJ8a6
- uHsulrnoR7gMAnaKt6cOcaoQo2GdufGSzIMa5LQIOfW3LwBbWjHoKtNEU6CXbl7HKD4T
- drVUtfif8Wgl8Bb9zLspsrfYxnA8cMjcmoGz6rl8jTiv+75PRhe546IU8sAvGrRnkXiM
- gAVOfUh7IJKe+8CXfFr8tIcNXaz1J4v9YlMDk9np2JhZohOQFXhsojw7WeeW2mLzoDij
- VMJw==
+ d=openvz.org; s=google; t=1787226753; x=1787831553; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=lJGFRZT4xBgbHoDeIFX0KDibwMy8Oj0WwFErBWi550o=;
+ b=oj6kco/7STE/U3TOOQSnvXJp8K7OtlXApQispR7fkz4N4PXVfnBPigZ2WSkx3m61Xc
+ vIH+5S55Koy9qrFZFE7Onrp2OCX6MKAARzYZWNLEblh/enbkrfY4VucSK6JsLw4JcmcH
+ ZEPVBFi3MqsAEA7P8lIUEsqROBlwVsSfg9IPKW3D3w/NDUxpegfPUIGjcJGMHdYJ7w4q
+ nzrrLVR6lJYvayrpajBRJBPpmmZvnjEXRt6UWTcOUzq4rFDzonWtijUvpIhIGdaw8m73
+ NJtnSJ4eFuxNWJ8JOSvh9khlxkVitMhGD420/jQY6DGZiJYnJuZuvOlyv7n6CQ+hH7Tw
+ nIMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787226634; x=1787831434;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Y0dYfev4ExP7gbnuioImKtNXmOfTbxUEBas0KSbMMXk=;
- b=ibruP8o67K9YXVFytQUtt0dSOmepuV6sA/Y2zMwwCCgiNiFX1UMeuXGzqJWI+5qdEX
- oIJbluHuGrrgDp7zqluxAsuFNuPhBs5v1QzAk73gnsORkCVFNaY/NQ13W4iKzv9GTjnM
- JSs3cQ9YftOACR5d9pEWiLoloUb/lRjmihO4aJmy4jTfkKWU8z/czWsUpZYuo7CbqyD7
- R2ZxYFkiGutJVQKLi4nYvaGjIzRmFatQ0miObel4MBp6itAXkpHmWy4ZGaKtQ2sClTru
- D6ApaH9ZvYapWy+IdMNf+rXtlgwWJbR8PA0cWqQGiuISZ5nNV+GnaXhVBKzOvMc4Bxvx
- KY6Q==
-X-Gm-Message-State: AFuF++m9pPQlOLJ1w8mJJyBq9igcl4DI4lKzxz9HysYilTKQTy7lx8Wp
- MwIT6aOikOjzsApNiZAECRkCqAgKyyW4OGrPL72W0UfSmhpxrk9OGU/l0gj25YE+hoD5atF2S9N
- n1nMl0R2RYmYNYYEnXPFQtJYw1JqlQIg=
-X-Gm-Gg: AR+sD12bFo/ddDlQZ0g1cGNDpI5wxKzSIo/0XN+tn/WFVecowKQ7jU2HBL44ZJJqTn8
- oH4PLDDCXuNY3yJRDmFvHiBDPa7rDYavVgrqD0Lx3lTUvWyE6SDY4mkdYpizef0e867YYMER/vB
- rHtunrTHfHG7ekotZwTdSTS18phQ5X/puLmu7E0zx4jTC6dKDvGr9gRU7BMLBuaZwh1NEDOiJaK
- OH38JwanUg8EX4DEj4KIvUOrreR4hH90Z/jfZNmpDaUQyuWn6StEGEzew/lnkI7iyW32eoxtbQj
- ibF8ZnLuAIgdHen3wPiRU6SQekrE3jFbaf44v9r4M5Ti
-X-Received: by 2002:a05:690e:480f:b0:667:72da:e798 with SMTP id
- 956f58d0204a3-66ccb6cf484mr3049706d50.31.1787226633430; Thu, 20 Aug 2026
- 04:50:33 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787226753; x=1787831553;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=lJGFRZT4xBgbHoDeIFX0KDibwMy8Oj0WwFErBWi550o=;
+ b=rwLmbaRMvsW+cTscxp7fR7VjwOszNin4cgjBSl0/JaVhvM8PUzCYl4ro/4NS7JgYTF
+ V+OWPWdvydhdQjgJosLDDRbc3qprfyLAEKsfAw1DCaETG50dP/3wf/NljjQctQ2W6fRe
+ mewPk/LjUnxwJ7PfARobeuG3rVQqHrSp1LTQBYYLahpcaeSflEs9lIVK+nPK+lFNlPUw
+ YoPL2fwu5I/l8GcblEDyaL97RwubStZueDgMiIUYkdCd++4g3KLUAowJaMaUSnAgfeGu
+ dsvLrZ82GjxO+Paewg2S3lbCV4xYpvn6gOiDQNkXagwFDNzzRwen0iIfQ4TE+2gxuj7P
+ CMpA==
+X-Gm-Message-State: AFuF++m3v7+KBDb9MxIKNiPj7A75m562LIHskMZWL4TtK2xeCylguRmq
+ gdOlNc4TswjfQZ2TTda3mWvLe++5pioQ3UP15Je9hb1NdaAwejaHgW0MlRlrTvt5o+llM0FGT0M
+ XTlYe
+X-Gm-Gg: AR+sD11vYh+EUL6eJM95XCKOD+pkNTisLgLD4t2RmCZMJBjZW0dlHVRkPhtp0hA3dqr
+ j6d6Loh4Dz4NxyO8pZtaLJWyONhJ+2Uy/cvhIa6eOKKcBgfV/sBsvn8d2v7J8na9CewszKtU8ey
+ 6NtyHQiQ0Qoh8V7+p/iPGs43tfLBEXl4dvsRNZ8fFPXHtxrdQ1DEYcrbWDkftjVAw9h8/Hr1s+m
+ b5COAeNxAMyFvNfIym08qBtGAPQtLitUVrqgQQ6C1t0WNfYbYC9iLYVC4hri3b++M6I9GHADeBb
+ d2kQRLaln9y4YorNoL0jRLT9P7dZlPuvmbzAn1qdGUemSPzWaiT7yZIpjOlL92SXttNpm2bRtsh
+ X928dW5IjF689qaFbuK7r37ihtgJ7pP3BZJpzpGTzqeyFts1Tz8PAuyZE/dQxLFAQIpk0/7xmTP
+ GqirUrEOV0b8yvHsA0Ha7Viy6vNjNAh/IyCOofSme0zbap0vOqFNnlLFEaQXrT2xVnv8tg
+X-Received: by 2002:a05:6000:298e:20b0:482:b887:f033 with SMTP id
+ ffacd0b85a97d-482b887f05dmr6991049f8f.16.1787226752888; 
+ Thu, 20 Aug 2026 04:52:32 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:a123:7b43:afd8:8b47])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482b10fcebdsm13069627f8f.0.2026.08.20.04.52.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Aug 2026 04:52:32 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [PATCH v2 1/3] block/nbd: clear reply.cookie when the reply is
+ rejected
+Date: Thu, 20 Aug 2026 13:52:26 +0200
+Message-ID: <20260820115228.587427-2-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260820115228.587427-1-den@openvz.org>
+References: <20260820115228.587427-1-den@openvz.org>
 MIME-Version: 1.0
-References: <20260820024834.3286721-1-kylefoxaustin.github@gmail.com>
- <20260820024834.3286721-2-kylefoxaustin.github@gmail.com>
-In-Reply-To: <20260820024834.3286721-2-kylefoxaustin.github@gmail.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Thu, 20 Aug 2026 19:50:20 +0800
-X-Gm-Features: AcwNN1XVHrrZaGUwHaKdLpFN7ECQ9UjFjPdRwfgQm3fHoFhOkuGGhTCIgHdnHFs
-Message-ID: <CAEUhbmXjTHjw3v90p9eg4Pv587kQxuiEcMwkwT1XT-ZedWhbMA@mail.gmail.com>
-Subject: Re: [PATCH 01/16] hw/sd/sdhci: add i.MX uSDHC SDCLK_AUTO_GATE and
- NO_SDMA_BOUNDARY quirks
-To: Kyle Fox <kylefoxaustin.github@gmail.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- "open list:SD (Secure Card)" <qemu-block@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb133.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=den@openvz.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,197 +101,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Kyle,
+From: Denis V. Lunev <den@openvz.org>
 
-On Thu, Aug 20, 2026 at 10:48=E2=80=AFAM Kyle Fox
-<kylefoxaustin.github@gmail.com> wrote:
->
-> The i.MX uSDHC issues commands with SDCLK auto-gated (its driver never
-> sets SDCLK_EN), and its SDMA does not honour the 512 KiB ADMA buffer
-> boundary the generic core assumes. Add two opt-in quirk bits for this:
->
->   - SDCLK_AUTO_GATE: treat the clock as running once the internal clock
->     is enabled and stable, instead of also requiring SDCLK_EN.
->   - NO_SDMA_BOUNDARY: skip the buffer-boundary break in multi-block SDMA.
->
-> Both default off and are a no-op when the bit is clear, so no existing
-> user of the SDHCI models changes behaviour; a machine opts in by setting
-> the bits on its own uSDHC instances (the i.MX 95 SoC does so).
->
-> Signed-off-by: Kyle Fox <kylefoxaustin.github@gmail.com>
-> ---
->  hw/sd/sdhci.c         | 67 +++++++++++++++++++++++++++++++++++++++----
->  include/hw/sd/sdhci.h | 21 ++++++++++++++
->  2 files changed, 82 insertions(+), 6 deletions(-)
->
-> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-> index e58a6103970..327e9a7cb74 100644
-> --- a/hw/sd/sdhci.c
-> +++ b/hw/sd/sdhci.c
-> @@ -611,12 +611,27 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIS=
-tate *s)
->      }
->
->      /*
-> -     * XXX: Some sd/mmc drivers (for example, u-boot-slp) do not account=
- for
-> -     * possible stop at page boundary if initial address is not page ali=
-gned,
-> -     * allow them to work properly
-> +     * The i.MX/FSL uSDHC silicon does not implement the SDHCI "Host SDM=
-A
-> +     * Buffer Boundary" mechanism; it transfers all blocks back-to-back
-> +     * regardless of buffer-boundary address alignment. The blksize-quir=
-k
-> +     * in esdhc_write() forces bits 14:12 to 0b111 (=3D 512 KiB) so Linu=
-x's
-> +     * "zero this field out" pattern doesn't trip a 4 KiB boundary break=
-,
-> +     * but the real hardware never pauses for the boundary at all, so
-> +     * neither should we. Skipping the page-aligned path makes the SDMA
-> +     * transfer run to completion (blkcnt -> 0) and fire transfer-comple=
-te,
-> +     * which is what the FSL U-Boot SPL driver expects (it doesn't ack
-> +     * SDMA-boundary IRQs by re-writing SYSAD). Controllers with this
-> +     * behaviour set SDHCI_QUIRK_NO_SDMA_BOUNDARY.
->       */
-> -    if ((s->sdmasysad % boundary_chk) =3D=3D 0) {
-> -        page_aligned =3D true;
-> +    if (!(s->quirks & SDHCI_QUIRK_NO_SDMA_BOUNDARY)) {
-> +        /*
-> +         * XXX: Some sd/mmc drivers (for example, u-boot-slp) do not
-> +         * account for possible stop at page boundary if initial address
-> +         * is not page aligned, allow them to work properly
-> +         */
-> +        if ((s->sdmasysad % boundary_chk) =3D=3D 0) {
-> +            page_aligned =3D true;
-> +        }
->      }
->
->      s->prnsts |=3D SDHC_DATA_INHIBIT | SDHC_DAT_LINE_ACTIVE;
-> @@ -992,9 +1007,26 @@ static void sdhci_data_transfer(void *opaque)
->      }
->  }
->
-> +static bool sdhci_clock_is_on(SDHCIState *s)
-> +{
-> +    /*
-> +     * The i.MX (u)SDHC has no software SD-clock-enable bit (the card cl=
-ock
-> +     * is auto-gated by hardware), so its driver never sets
-> +     * SDHC_CLOCK_SDCLK_EN. For such a controller, treat the clock as
-> +     * running once the internal clock is enabled and stable; otherwise
-> +     * every command would be silently dropped (no completion/timeout IR=
-Q),
-> +     * stalling the guest on 10s host-side timeouts.
-> +     */
-> +    if (s->quirks & SDHCI_QUIRK_SDCLK_AUTO_GATE) {
-> +        return (s->clkcon & (SDHC_CLOCK_INT_EN | SDHC_CLOCK_INT_STABLE))=
- =3D=3D
-> +               (SDHC_CLOCK_INT_EN | SDHC_CLOCK_INT_STABLE);
-> +    }
-> +    return SDHC_CLOCK_IS_ON(s->clkcon);
-> +}
-> +
->  static bool sdhci_can_issue_command(SDHCIState *s)
->  {
-> -    if (!SDHC_CLOCK_IS_ON(s->clkcon) ||
-> +    if (!sdhci_clock_is_on(s) ||
->          (((s->prnsts & SDHC_DATA_INHIBIT) || s->stopped_state) &&
->          ((s->cmdreg & SDHC_CMD_DATA_PRESENT) ||
->          ((s->cmdreg & SDHC_CMD_RESPONSE) =3D=3D SDHC_CMD_RSP_WITH_BUSY &=
-&
-> @@ -1613,6 +1645,9 @@ static void sdhci_bus_class_init(ObjectClass *klass=
-, const void *data)
->
->  #define ESDHC_VENDOR_SPEC               0xc0
->  #define ESDHC_FRC_SDCLK_ON              (1 << 8)
-> +#define ESDHC_VENDORSPEC_IPGEN          (1 << 11)
-> +#define ESDHC_VENDORSPEC_HCKEN          (1 << 12)
-> +#define ESDHC_VENDORSPEC_CKEN           (1 << 14)
->
->  #define ESDHC_DLL_CTRL                  0x60
->
-> @@ -1707,6 +1742,26 @@ esdhc_write(void *opaque, hwaddr offset, uint64_t =
-val, unsigned size)
->          } else {
->              s->prnsts |=3D ESDHC_PRNSTS_CLOCK_GATE_OFF;
->          }
-> +        /*
-> +         * An SDCLK_AUTO_GATE i.MX uSDHC drives the SD clock through
-> +         * VENDORSPEC, not through the SDHCI CLKCON. For those instances
-> +         * mirror the VENDORSPEC clock-enable bits into clkcon so the
-> +         * standard SDHCI paths (PRNSTS.SDSTB derived from CLOCK_INT_STA=
-BLE;
-> +         * sdhci_can_issue_command gating on CLOCK_IS_ON) see the clock =
-as
-> +         * enabled; otherwise the U-Boot fsl_esdhc_imx driver waits fore=
-ver
-> +         * for SDSTB. Consumers without the quirk keep the upstream beha=
-viour
-> +         * (a VENDORSPEC write touches only vendor_spec/prnsts).
-> +         */
-> +        if (s->quirks & SDHCI_QUIRK_SDCLK_AUTO_GATE) {
-> +            if (value & (ESDHC_VENDORSPEC_HCKEN | ESDHC_VENDORSPEC_IPGEN=
-)) {
-> +                s->clkcon |=3D SDHC_CLOCK_INT_EN | SDHC_CLOCK_INT_STABLE=
-;
-> +            }
-> +            if (value & ESDHC_VENDORSPEC_CKEN) {
-> +                s->clkcon |=3D SDHC_CLOCK_SDCLK_EN;
-> +            } else {
-> +                s->clkcon &=3D ~SDHC_CLOCK_SDCLK_EN;
-> +            }
-> +        }
->          break;
->
->      case SDHC_HOSTCTL:
-> diff --git a/include/hw/sd/sdhci.h b/include/hw/sd/sdhci.h
-> index a9da6203fcb..e6940b62562 100644
-> --- a/include/hw/sd/sdhci.h
-> +++ b/include/hw/sd/sdhci.h
-> @@ -115,6 +115,27 @@ typedef struct SDHCIState SDHCIState;
->   */
->  #define SDHCI_QUIRK_NO_BUSY_IRQ    BIT(14)
->
-> +/*
-> + * The i.MX (u)SDHC gates the SD card clock automatically and has no
-> + * software-visible "SD Clock Enable" bit: its driver programs only the
-> + * divider and the internal-clock enable, never SDHC_CLOCK_SDCLK_EN. Wit=
-h
-> + * this quirk the controller is considered ready to issue commands once =
-the
-> + * internal clock is enabled and stable, instead of also requiring
-> + * SDHC_CLOCK_SDCLK_EN (which such a driver never sets). QEMU-internal b=
-it,
-> + * taken from the top of the word to avoid the Linux quirk numbering.
-> + */
-> +#define SDHCI_QUIRK_SDCLK_AUTO_GATE    BIT(31)
-> +
-> +/*
-> + * The i.MX uSDHC silicon does not implement the SDHCI "Host SDMA Buffer
-> + * Boundary" mechanism; it streams all blocks back-to-back regardless of=
- the
-> + * buffer-boundary alignment, never pausing at the boundary. With this q=
-uirk
-> + * the SDMA engine skips the page-aligned boundary-break path so the tra=
-nsfer
-> + * runs to completion. QEMU-internal bit, taken from the top of the word=
- to
-> + * avoid the Linux quirk numbering.
-> + */
-> +#define SDHCI_QUIRK_NO_SDMA_BOUNDARY    BIT(30)
-> +
->  #define TYPE_PCI_SDHCI "sdhci-pci"
->  DECLARE_INSTANCE_CHECKER(SDHCIState, PCI_SDHCI,
->                           TYPE_PCI_SDHCI)
-> --
+nbd_receive_replies() reads a reply header into s->reply and, when the
+header turns out to be unusable, reports a channel error and returns
+without touching it. The cookie stays there until the request which
+owns the reply clears it, and until then the waiters are explicitly
+allowed to look at a cookie which is not theirs:
 
-A patch series was already sent to ML before to enable the i.MX uSDHC
-controller.
-Please see https://patchwork.ozlabs.org/project/qemu-devel/list/?series=3D5=
-18052
+    if (s->reply.cookie != 0) {
+        ind2 = COOKIE_TO_INDEX(s->reply.cookie);
+        assert(!s->requests[ind2].receiving);
 
-Regards,
-Bin
+Two of the error paths leave a value chosen by the server behind: one
+returns before the cookie is validated at all, the other returns
+because that validation has failed. A waiter which picks such a cookie
+up turns it into an index which is not in requests[] and accesses the
+array out of bounds, at an offset the server controls.
+
+The reply is of no use to anybody at this point, so clear the cookie
+before the mutex is released and keep the invariant that a non-zero
+s->reply.cookie is always an index of a live request.
+
+Observing the stale cookie takes a second thread, which a multiqueue
+configuration provides. Within one AioContext there is no yield point
+between the failed read and the clearing done by the owner in
+nbd_co_receive_one_chunk(), so nothing else of this node runs in
+between. The parked waiters cannot see it either, as they are woken
+only after the cookie has been cleared. What can get in is a request
+entering nbd_receive_replies() afresh, one just sent or one back for
+its next reply chunk, because that path takes the mutex without
+looking at the state.
+
+Cc: Eric Blake <eblake@redhat.com>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ block/nbd.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
+
+diff --git a/block/nbd.c b/block/nbd.c
+index 5d231d5c4e..d9b776283f 100644
+--- a/block/nbd.c
++++ b/block/nbd.c
+@@ -466,20 +466,19 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
+             error_setg(errp, "server dropped connection");
+         }
+         if (ret < 0) {
+-            nbd_channel_error(s, ret);
+-            return ret;
++            goto err;
+         }
+         if (nbd_reply_is_structured(&s->reply) &&
+             s->info.mode < NBD_MODE_STRUCTURED) {
+-            nbd_channel_error(s, -EINVAL);
++            ret = -EINVAL;
+             error_setg(errp, "unexpected structured reply");
+-            return -EINVAL;
++            goto err;
+         }
+         ind2 = COOKIE_TO_INDEX(s->reply.cookie);
+         if (ind2 >= MAX_NBD_REQUESTS || !s->requests[ind2].coroutine) {
+-            nbd_channel_error(s, -EINVAL);
++            ret = -EINVAL;
+             error_setg(errp, "unexpected cookie value");
+-            return -EINVAL;
++            goto err;
+         }
+         if (s->reply.cookie == cookie) {
+             /* We are done */
+@@ -487,6 +486,13 @@ static coroutine_fn int nbd_receive_replies(BDRVNBDState *s, uint64_t cookie,
+         }
+         nbd_recv_coroutine_wake_one(&s->requests[ind2]);
+     }
++
++err:
++    /* Waiters look at this cookie, so do not leave a rejected one behind. */
++    s->reply.cookie = 0;
++    nbd_channel_error(s, ret);
++
++    return ret;
+ }
+ 
+ static int coroutine_fn GRAPH_RDLOCK
+-- 
+2.53.0
+
 
