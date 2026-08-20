@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA130C5DF82
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 10:10:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80936C5DF82
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 10:10:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwzi6-0006xn-QF; Thu, 20 Aug 2026 06:09:25 -0400
+	id 1wwziA-0006zH-P5; Thu, 20 Aug 2026 06:09:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhn-0006pz-3z
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:03 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhs-0006th-Us
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:09 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhl-0008Lx-9V
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:02 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-480001972b8so742129f8f.2
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 03:09:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhq-0008O3-PN
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:08 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-49554ebb87dso21321285e9.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 03:09:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1787220539; x=1787825339; darn=nongnu.org;
+ d=openvz.org; s=google; t=1787220545; x=1787825345; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=PGxOxbJCTHpjzoR3+U5OxJn0dZ4GKFvitmqy32ujxR0=;
- b=eoY5GgFtL85JNpX1SGZaYBeWKn0JVUjnUu6P3GRhud/UUIQPervRRKslkfivK0na+f
- wNp0uAXXq1rPtiVWrNcFAp1CWv3Lqt6/VG7nPAlhxAXspdSGGlEoMkbwrTzfewzHtsUA
- bpdh6wSjWMLWBs2ZAGlqqO43olm1el9HD9VN6wGSKy2wWKIsTRIs1MnLyGhd3LHLunJa
- 6gxzUH+gid3QbVZhBmAzxp+jJ1LfoTBoiMrshYrvK57zjZRvrlH6ItYzPTZbPD/YxL86
- 4x6FGBqf+9RlEqoZSB7Y3M4yCAn6wFbDK1NTcTWwBkfz86qkHxTq6t3g6IAtyY60CWKf
- 0L/w==
+ bh=5cfoTqeUfsT7GA5iC2nqqY7WKdSsJfkybOKIrlz+Kvg=;
+ b=Z0tgKAfQe6hCnjQYy0+AC6NidiyowIpJftMlZ5OTVeTgHMj50jyiizdbEk910fg+Ra
+ GFgn1DJneR2bEO+gMuNQx3TYs5YC9VWKm7g5V+HOjPEjGaL4Lw7S+lNjEOt4eWg2GxVL
+ qpIJ/RGZo48Y38v+JL970scmeggi0qu3tKaWOkRrATF/XfBOHHJbPA40m9yETOy7vO1X
+ exNjBpS+UtLw/t1KyUAgArEWlFbqpl51OWyuqaNQkmAZNam528/Mugt/o0dsFY3bbixc
+ 0hvT3zILEL2oMNNnh1PdmBg7vXoUpkGXwrPdHOQ3K+76IRZZUMveMsJtJydU+SIEMRRN
+ eTGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787220539; x=1787825339;
+ d=1e100.net; s=20251104; t=1787220545; x=1787825345;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=PGxOxbJCTHpjzoR3+U5OxJn0dZ4GKFvitmqy32ujxR0=;
- b=Wgm6kaF7F4nSK3UT6WRhw4FAmpnwa9STKVwa1zgU6PsOXr4+YODemmim58eeZuHiUC
- vWgWlUf9VxZWM150vzTVDa+BBoQtrwoEDZAigMJogruteS2S8LSNyZnk4Gf7Mtxb0VaQ
- bN9CDCzokVF/oDLGzzBGKdf2nm7c+tnMgiFz3LHa2kzbIZZeYVb6yyxM/fd+cgDuRt/U
- 9GUs9ZXmjicVopu4AATagnkRgz9IYKp7HyEQ7ZCqW0utR4sBTF0afedeKdl3m/4NnBTq
- clVwcx8zKOrXDJTDehWOo7golrH3LuvvwRGVeCo1m4KI2KMzVvIKKU/FqLU5asFSC+OH
- tNjw==
-X-Gm-Message-State: AFuF++kfPb8S1Ze49fgD4M6epmujNp8QUe1UCZJtoIoynSU52+se+tQ9
- 5cFTs77PXY5MdBZqsMlfQDdoL9bL5jWFqesNF/y6rD1nPosQPdGAv8AcrjxlEP8qhW6jl/RlXIu
- bijni
-X-Gm-Gg: AR+sD13VVDE2PUhMnwSDVUOJsU0zatvs0wGiRqorEpP9uiQvYJD+8gPuxpFbY+Or6TA
- okxwr3FSgSmfnC3pLFHJitevWXK8EPfjchXnYujNjFhffkgkoEjFi55zEz09zG702ZmNTdm0BOz
- a6UYRE7jdgSczA7ZRN0mkcLgEsSgJ46+jbsFMSUxM7aDhN2Sl+qSL8KA+QGw7UsI5qvRpTozd7F
- p3eu8ctoW4lLQ2cUX+I4hdhQ4L13Kke5zYT3YnbtuiPsaIS/N8gAcTopsDrbo8nvnqwkvLM7vzO
- ZI00MZP0tJ5DcQWW9ONS3vLGhHRt6ndHUI2F2ZH3K0cqDJOV//KMoW3f9B8PjE9aY7sltqAMvOu
- 8ACPz8vyqTTIE0fDOfx/OhJVPV8k/f+7MRodVQlQAVoG8Y4nqblvv+i5urpL6MLVqHJuQ+hzR2w
- xoef/2w4gbR4KPcAy83xhBU5yY+dFZl0aGYJ71xuVP5hM/6CPcVZd9l+Lv3g==
-X-Received: by 2002:a5d:5f95:0:b0:481:4dcd:aefa with SMTP id
- ffacd0b85a97d-482b1e95522mr16472987f8f.6.1787220539574; 
- Thu, 20 Aug 2026 03:08:59 -0700 (PDT)
+ bh=5cfoTqeUfsT7GA5iC2nqqY7WKdSsJfkybOKIrlz+Kvg=;
+ b=S+9EC1aPtG+1D07UblSYpmdup00MQBtGZaivhqWzUXgznIxzPatQMiglJ9q4WBBFI7
+ YRPe6o81DmyUqI6tzpZpvqAno/wCyps3hbcfUFxuXtVZf6S/F/zwlPI45Z3a0jFvj/9v
+ kPKuL+6HrKuRUHCopUgz057qwRMhNsAAD8ap9Vk16r6ie5aaC135nms7f5kQzNgRAnQv
+ ALZqiZ7EAq+XWaPXAw/Bt2CHXh9eZNx+jmV+n272WyF1a+R1ByNQxQhl1mpU2kN/d8go
+ YJjMX30cDiYITCkoaHNKH0q9Kjcggl6SpSssxA2mBAxCXzXASpZpa2lK0eLGVTiep9m2
+ B8iw==
+X-Gm-Message-State: AOJu0YzAc99UjU7ypmi8UhfSynZRxMwI1dfghoDf326Pi5+hZ3BX4JP/
+ PnkK5+5Ag1ud6t/PN/Z6pAKD75XMq+s8e0FWzBeGVPpjLKLcvBC69CXGPVni3qUs498KgTYSaT4
+ hGU3I
+X-Gm-Gg: AR+sD13Hs36yfpIq5Oz9uut7xvorfIgZuE3OgWed1mOcOvInhTAr1YV6ihctmLGK35t
+ xP/KQ9AjMSUbz1E6maNjZIQAefFhqN5HN2IqUobtCB4+N/VyFVTbLjJHY6B+qiQFzAaCsuSYHvF
+ opNSOvyDll2QGanJsPYumiDgueq397HKTTN9fqSRYxl/Hhe+4JZRSbNki0zXIEZsd17v9VvyCXg
+ J7wQfieNIaiF2UU2Hx5szLTxq2lnq6fd2KsRv7YVJGY+NjCfgUt2zAUvta+lUgUzZhDrVOR1zSP
+ joqFXYPeC+Esvo91PzQVJPTT1d5c8UFrq5Nw+etse7NybEENBPjG5VGBGPwHzUqY1gRWfr/9heo
+ lrQgBJYOmmiXRfNe5H1TY9GyMqHlnpuXXztzIPJ4Y90FuOZYybwv2I7/yGjwqWeMya4XOBMZ49c
+ YKXyhTAp4lDF6ZHSdECjGvCTNm6TotgavzDtqkbBuMgBld4WSCAM+rYJOXN67DwHe9KfMR
+X-Received: by 2002:a05:600c:3596:b0:495:4749:16a7 with SMTP id
+ 5b1f17b1804b1-499aa1e269emr199503515e9.14.1787220545340; 
+ Thu, 20 Aug 2026 03:09:05 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:a123:7b43:afd8:8b47])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b1441b0fsm11678929f8f.4.2026.08.20.03.08.57
+ ffacd0b85a97d-482b1441b0fsm11678929f8f.4.2026.08.20.03.09.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 03:08:58 -0700 (PDT)
+ Thu, 20 Aug 2026 03:09:04 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 06/17] hw/ide: name the retired IDENTIFY DEVICE words the
- device fills in
-Date: Thu, 20 Aug 2026 12:08:33 +0200
-Message-ID: <20260820100844.411717-7-den@openvz.org>
+Subject: [PATCH v2 11/17] hw/ide: migrate the power-on defaults revert flag
+Date: Thu, 20 Aug 2026 12:08:38 +0200
+Message-ID: <20260820100844.411717-12-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260820100844.411717-1-den@openvz.org>
 References: <20260820100844.411717-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=den@openvz.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,51 +104,68 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-Words 4, 5 and 20 have carried an "XXX: retired, remove ?" since the
-device was written, and word 21 is labelled a cache size when it is a
-buffer size. ATA-4 8.12.13 retired words 4 and 5, 8.12.17 retired words
-20 and 21, and ATA-5 keeps all four that way.
+SET FEATURES 0xCC asks for the next reset to revert to the power-on
+defaults, and 0x66 cancels that; ide_reset() restores the default CHS
+translation only when the flag is set. It was in no VMStateDescription, so
+it always arrived cleared.
 
-Retired is not a reason to drop them. ATA-5 3.2.3.6 says a retired word
-that is still used shall have "the meaning or functionality as described
-in previous standards", and that is what these carry: ATA-1 9.9.3, 9.9.4
-and 9.9.7 define the unformatted bytes per track and per sector and the
-buffer type, and the ATA-1 IDENTIFY table gives word 21 as the buffer
-size in 512 byte increments. Software old enough to read them gets what
-it expects, so answer the question rather than leave it open.
+That was invisible while the destination had the default translation
+anyway. Now that the translation is migrated, the flag decides how long it
+stays in effect: without it, a reset after the migration reverts the
+geometry on the source and keeps it on the destination.
 
-Word 22 is obsolete rather than retired (ATA-4 8.12.18) and already
-carries its ATA-1 9.9.8 name, so leave it alone.
+Send it only alongside a translation the guest replaced. On the default
+geometry it reverts to what is already in effect, so such a guest need not
+lose its migration to an older QEMU over a subsection that changes
+nothing.
 
 Cc: John Snow <jsnow@redhat.com>
 Cc: Peter Maydell <peter.maydell@linaro.org>
 Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Fixes: 176e4961bb33 ("hw/ide/core.c: Implement ATA INITIALIZE_DEVICE_PARAMETERS command")
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- hw/ide/core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/ide/core.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
 diff --git a/hw/ide/core.c b/hw/ide/core.c
-index befbab9486..292908fb1c 100644
+index b074325afa..5a5f072630 100644
 --- a/hw/ide/core.c
 +++ b/hw/ide/core.c
-@@ -141,12 +141,12 @@ static void ide_identify(IDEState *s)
-     /* Words 1, 3 and 6 describe the default translation (ATA-5 8.16.8) */
-     put_le16(p + 1, s->cylinders);
-     put_le16(p + 3, s->drive_heads);
--    put_le16(p + 4, 512 * s->drive_sectors); /* XXX: retired, remove ? */
--    put_le16(p + 5, 512); /* XXX: retired, remove ? */
-+    put_le16(p + 4, 512 * s->drive_sectors); /* ATA-1 unformatted bytes/trk */
-+    put_le16(p + 5, 512); /* ATA-1 unformatted bytes per sector */
-     put_le16(p + 6, s->drive_sectors);
-     padstr((char *)(p + 10), s->drive_serial_str, 20); /* serial number */
--    put_le16(p + 20, 3); /* XXX: retired, remove ? */
--    put_le16(p + 21, 512); /* cache size in sectors */
-+    put_le16(p + 20, 3); /* ATA-1 buffer type: dual ported, read caching */
-+    put_le16(p + 21, 512); /* ATA-1 buffer size in 512 byte increments */
-     put_le16(p + 22, 4); /* ecc bytes */
-     padstr((char *)(p + 23), s->version, 8); /* firmware version */
-     padstr((char *)(p + 27), s->drive_model_str, 40); /* model */
+@@ -2988,6 +2988,25 @@ static const VMStateDescription vmstate_ide_drive_chs_translation = {
+     }
+ };
+ 
++static bool ide_reset_reverts_needed(void *opaque)
++{
++    IDEState *s = opaque;
++
++    return s->reset_reverts && ide_chs_translation_needed(opaque);
++}
++
++/* The flag decides nothing on the default geometry, so it travels with one */
++static const VMStateDescription vmstate_ide_drive_reset_reverts = {
++    .name = "ide_drive/reset_reverts",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = ide_reset_reverts_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_BOOL(reset_reverts, IDEState),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static const VMStateDescription vmstate_ide_tray_state = {
+     .name = "ide_drive/tray_state",
+     .version_id = 1,
+@@ -3052,6 +3071,7 @@ const VMStateDescription vmstate_ide_drive = {
+     .subsections = (const VMStateDescription * const []) {
+         &vmstate_ide_drive_pio_state,
+         &vmstate_ide_drive_chs_translation,
++        &vmstate_ide_drive_reset_reverts,
+         &vmstate_ide_tray_state,
+         &vmstate_ide_atapi_gesn_state,
+         NULL
 -- 
 2.53.0
 
