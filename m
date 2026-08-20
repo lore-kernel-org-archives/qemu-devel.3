@@ -4,161 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B259BC5DF86
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 19:24:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB55C5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 19:24:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx8MB-00036y-T1; Thu, 20 Aug 2026 15:23:19 -0400
+	id 1wx8NQ-0004CF-Ur; Thu, 20 Aug 2026 15:24:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wx8M3-000350-I4; Thu, 20 Aug 2026 15:23:11 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wx8M1-0006tE-Lj; Thu, 20 Aug 2026 15:23:11 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67KIVYNi1475187; Thu, 20 Aug 2026 19:23:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=esG1pk
- B67gpfr9xVCjc9GXD6pQIoQAvbS7TqbMB/Iwk=; b=EgeRksVMx5rkven3rBtEoZ
- Vs9E3sEZDDtX6/jWHZwkC4p9EXJ4RaDN2QW7I57e0rl23sxwbTHGE3iI49vqcCsy
- QLH8fPzYGP04IEn6v5XTsD+iWcdSE0FLt4aU8+X8K5tr8y8NsffCWl8688DZnsoj
- yENKieXK/U46NZ+pGsK6bMPBakU/KxEwV06TnkmiGoYOEUIi8qIxtXg1lMJuBFng
- QWoUb68jMuRIWtL0x/CRzUKn4yQKyEQpDJN3xpOp03alocowKXKO/nutWOkGD/9A
- 5tGdLVRTYOUG+P13zJ5zUCi4LIIIg6XdaNcmZHkmKJLVI9868rnQjzQJo0I29IGg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu0ckvn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Aug 2026 19:23:03 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67KJBINO008851;
- Thu, 20 Aug 2026 19:23:02 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g354yr5t7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Aug 2026 19:23:02 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67KJMLFv26542646
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 20 Aug 2026 19:22:21 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 83FFF58056;
- Thu, 20 Aug 2026 19:23:00 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 87CEC5803F;
- Thu, 20 Aug 2026 19:22:59 +0000 (GMT)
-Received: from [9.61.78.161] (unknown [9.61.78.161])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 20 Aug 2026 19:22:59 +0000 (GMT)
-Message-ID: <7ab9d9a8-7a97-413a-8e10-7db17dd918ed@linux.ibm.com>
-Date: Thu, 20 Aug 2026 15:22:59 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wx8NQ-0004A8-1F
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 15:24:36 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wx8NO-0007eC-BR
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 15:24:35 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-ca88130e09aso160514a12.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 12:24:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787253872; cv=none;
+ d=google.com; s=arc-20260327;
+ b=WnrwNun3bWBH29ZG0ATNh8X1QP2dAe+SmvING6+x5L7fQ4IoIbe8T3PNMmULubpeb6
+ y791gMS8bvCrmNVFQKHX1KZHr9SPhAg9+8Sbokgalr1KZutwL5pkyw8nvalmhLwNi4Vq
+ plgnLmbNb68PsUvjQlpJHeAA6yg82Zb+gQE4CVePXAxmpX05R3aAADG9FGRbEn9SkRuy
+ 08/40Qkj4jBm58nKiwMAqDzqvfnThb68cxQW1c7OgBSYPawJNumRvhXMnMp1H2uKDL5A
+ WJ//yjzMftHMtoKycB85aB3lwyweWiwYJTh8lqa6mYO7vrwQjXuSzbkNFiQc6cwNun28
+ ShVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ZUgOHRKd3y1O7SgFY/8oGN3tRWQXtEgyzNlERbf9Dxc=;
+ fh=5717E/dCbW4+veQxTp+zvFQh05r3OH3Hzt1ZrbLZyKM=;
+ b=FJhGYbc+1iSE1nHs8UJm+qJMapkb5kMOCKt3jRdbPWh10Ivkiy7ApFGSliPsa+gDuV
+ DEe1f/3Nh76HG6XVMgq43hIch1Q584qvj7vjKZIPeTxQ1iEh5B5jp8pLvb8k56E1eXEz
+ Hoqly9DBh3qKoqDmnhHCGxXp+GAWZjBih1MqAyqBz610TNe8IohCpKxhqjxFf3jWVxgI
+ Shn3EOe2mrdTMPdpPH+uJ2gIzwVwfj8nYfppH/jCUnln/ivmsK8cT+fPZbkO8HZlczkx
+ oDmV7ugEhIxch6BkPYJh72U7fOpxeJ5Y5COdkm/414ccXd/Nzj21yItAW+TLQAKwJX1K
+ DucQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1787253872; x=1787858672; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=ZUgOHRKd3y1O7SgFY/8oGN3tRWQXtEgyzNlERbf9Dxc=;
+ b=hXRq9wIhOEH+/GD9hWkjFtA94OjiQSEVRSd8+8bU3A7dQeByGN/RQVRj3LQ74yLi+s
+ NdF+zFWK0JqTgF1AtgsqtTAYQluZhg0VkwB+DzmmPBvS89+ijD1/mw+SyqdnxbQx/OLE
+ 6pKX7eJVyRFj2A+iDietzSydVYICaKSI1XVvXIsi6NhJvqwj8A4r2EZjybjrsa24YhyE
+ iZV02kD/MpSSG601bL98h5PA9jTg4mN6RxMKgcNEI5wkv/3DapOAoq9/R+4J3ctyc8qF
+ x24/qbvj0DIkUZx/NUsMUc46x/Y8sdANe8lwFpshbiEemPdMyNaFMqzhVbOb/LNmt3OP
+ 3J2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787253872; x=1787858672;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ZUgOHRKd3y1O7SgFY/8oGN3tRWQXtEgyzNlERbf9Dxc=;
+ b=JVdc+SYkp1Kcgqm5t0bZmDeVr1tWNoqRv/1WmYFYNzOWn81/InCR+T/1ObIZ/0Rdtc
+ TWeauohkzZsGcuaGs8MmZk/MghIMO5IlYCDWkqI+ajJKpXFQzHYAaLW6/EVeorGxbmjc
+ U0q8NNGTGy8U5HCr9dTNr2LnRT9LzXCSUg1MtRv/WYkUhiMW1Zf+xzfZW5reBhBPohAO
+ o5OHmhyb8AmZDoGicPBmxRVgG1ZVPkehwRroQQTRdd8Tal9bdlBnS5LSgN/zpd8bCKAu
+ v36IrLmLLaF54b/NrqdRRvfzVIwzWUk5jpI3Ha3j3ElTmk4cptdZuT0wx/BhPMlNfLOY
+ /pvg==
+X-Gm-Message-State: AOJu0YzXQJsyWBlmImd67HO0LrFW1H428Yy/6NmEv5b5CyG1snQc4Hyk
+ BhoYMIDvxNjG+ua5p00H1AS2Y3Kka/CUxvr/jN/oCiBsDKaOkNgaOP1694ZSLRM2EujZVfcum4g
+ QCoyciu25ewW3PC7rH6gK/M511wkoeKE=
+X-Gm-Gg: AR+sD10DPMZwxPNg1dUO925X9PIPzi+/ue9eo3mpyP23QYVoqF/GWYykqB/UIXR1cUD
+ RhHoiCIi7xt961sU/1y28QZI9w4/nmQlKsnI2LzUrJKk0sqNIV763zV1r8s88Avdxk96FHOMw9Y
+ cerM2oJuB6A+ciYqeJFsMSU7z8bkgCn8ImWJiQgOhfN5cjiKYyLoVhB7bIYjkgip+cnOhxL8p86
+ jA8Hex6cveqEtyf5CHcp6LwZZMBufriycn/0EqBGWAo7SPxydGenrEB0jrJMzzELmuIXTVVUmeu
+ I/nvbyhNYUWafeNRQutgolhoDlF1p9iyGGFJz5l48ZOKvwlfMCrojxXLOdPYHtc9WJlpKmLuZOg
+ 6AIn1OPUGOkHA
+X-Received: by 2002:a05:6300:67c8:b0:3cc:3d08:da3e with SMTP id
+ adf61e73a8af0-3cd2fdd1cfcmr1432871637.2.1787253872111; Thu, 20 Aug 2026
+ 12:24:32 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/13] target/s390x: Constify S390CPU for cpu_has_*()
- getters
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-ppc@nongnu.org,
- qemu-riscv@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
- Cornelia Huck <cohuck@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>
-References: <20260820104730.25462-1-philmd@oss.qualcomm.com>
- <20260820104730.25462-6-philmd@oss.qualcomm.com>
-Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- xsFNBF7EiEwBEADGG0EtNKnjp+kQfEVqlqxXoBHjnaQptFpMgxNlz2GtqOujY6nzEWnybIXY
- 63XUTmMS/tWUf2DTbNCNoWwumGM/I2Gj1uGyMnc4Q477BQlL/e2/9MRaut11rwHsi4zmWylc
- jO0eFTSLFA8yFBj9osT3uZzk5TwWkD8sf+rD916fFVk0G39uYEd5sjEzjeOf9/dwXyZpjJY6
- api1pUHEw7weRvOnllJAfIKFz+KoR6d7ezvMF9zOYHF73FGeSVIYoIEUhA5Cdg60rSlTtHb2
- cftex3/cEapvY5bK3CKJ33BVVK10Bht9XfVaA/AOcg/3o5ZbhSIwz4xScGsEVf/Yr368YMdr
- 3VkCZrmN2ppmVRz/RvAmCyItnmzoVDlSREA6Faw6S0x8Oi7lN0cKh2hy9VPcVupraXJZrdAh
- GtdU+jrJvSbpdsrX8F7K3RwynbiqGrqC0izGla04hhtei/uwthatglukuxep4PknDGbzijg8
- Ef7A8t3qEVklUDrsnNPN5HbR9QQdeF0HuWsDTfILbZv1MICfOK3BCDeT5mJWaJCoQ2rbuljM
- e1hFSt+mr7GV4h6NcBE+uGIqDSzQORtyTo0uBV4et3cSE84JxOfXBMrj0TlL1855JaIoPWEN
- uhDRB/dHW8+Fumq2du5hLcaXPka+MO26cNVKVLF0/JjwMTZ9bQARAQABzSJFcmljIEZhcm1h
- biA8ZmFybWFuQGxpbnV4LmlibS5jb20+wsGuBBMBCABYAhsDBwsJCAcDAgEGFQgCCQoLBBYC
- AwECHgECF4AdGGh0dHBzOi8va2V5c2VydmVyLnVidW50dS5jb20WIQTSxgUEyej1aM/lh7U4
- J7IScb+VYgUCYel8TgAKCRA4J7IScb+VYsHAD/9BSQj7HeJf90PttOmVh35Bb4QyHLZ4g+9x
- waM59JCKGbiURuNRIGnoRarYXHk6vfy19v8v56Dy1IOlKWaRnizp5Mw9zXBBTCs4fgNbOzY/
- SggFY2UzcziXDG29X9zznq5LgY1Jf/cwm1O+rn89GKCZWZhLEB2wKzBj7hum7NBdW+lxfVwp
- 2qONGDerttWDwAHxJ995k9aDJahq9kIKEMEZbrTQ8JI8KZGoox6+HA04EhoNzxvbV0J+/gLJ
- 2DkvxN5/xmcD3z+s8B5ev3NarOF17AIA9oCdfu8CPAupcNqJW86m19P5q6AyRB2ZLyAIAAhr
- HCXrnlh/8HJW1yCOVXxprFdpg1SX1fuArjbFAh53vVVDfkZlwHeTeE7+3y1rtDLfy830pqdD
- ymv94yey2y1+iZBdbaW0fSC/JkjkOCy8oZawkH3geM4MXV4ze4gbBH6BhxW/0gbEYjnLm3FA
- 53JcXwhHQFPWIYEYYPvATJi0JUiMY1Znkm3QBWDOCXSrG0tHpAclBa9L40zLRwA1h9YOMFEs
- qvKijUdvcDf4sTdJ+A6YL66grzul5vNt06NlqsI8HUDHE6vghqyWxupCav2+9b1BuLie++er
- b8OCo5n3TUHsVMjYJEePU1EkcCa84dCm+CXqPthgRv0sbe4UQEd/qUoVMdWj7Q7FL96mBn0G
- zM7BTQRexIhMARAAp+k1sC4y7Wtwjqtfu9wIihvY/Vot0v/sKg8CRGRIIRGLiCeA9o+2ZlxC
- jYztT3Leri5Vo5z09OmRMvoFLJjcHMCG5sYeZwOWNAbeuAxGkIMDSB4pLl3t2c+1PQuMBCd7
- +mRZFaMEJfT3nhdUKxy2rp1+YucnA67xGXUJCiD5l9UmhPqa7SAYlpMAqDz7cmBo25c/UNm1
- Tpwjrh70jq/4guV5gnprawH8nkRjdKH1JvKWvkuaB7FNZ9IuSHlWclcQX4IQMsaxsU2emAbP
- VYv7l4YNlKfdlJd8tuEodjuMLOBnr7e9H0hVNUWGFN9bkBNRu3zi/jvhyu15Iu4euR/WdVNu
- 2K2iYxIfiGMnv0F/a6R1bm10lCJrjyf23J8DYIeH4YmHvOOqYFkq3DWOctlXbb3+aABqjYt3
- mkiOLXeplqbo/m3rWcGNd8Q/d1aVA0wm5+Nt3RdSuXG2FHOFdVUQKPLpf1NUH/LInBhS/9Ys
- ajm6tWXKv7hxwWmyz0u/th6gUra3KpARB1ypebWHULLNzKGwVS81XNs76QhXwX04cyiwLqKb
- WqLqJKThz+rLa09Ap+eO/UzPfFXvWYWfTeFRIQ/tKF332ZzRR8Xrh/fk//YXyRfpoE/7i5uz
- ve0HZWp5jXg9Yb+S6g0+XUKznnN9B8WLLCcuRIuSa722070v7KsAEQEAAcLBdgQYAQgAIAIb
- DBYhBNLGBQTJ6PVoz+WHtTgnshJxv5ViBQJh6XwwAAoJEDgnshJxv5Vib28P/1BYT5gvjuEB
- A80AXo/IqycicXxDJtrfmyw4COP7bi7AuiDcKyA1wRzC51paKwPFB8Unk2GvG4DV6aDmGTJY
- +GeCYgthQ+znW461S8B6GqDCAQt2VDNNFVU+gTuh7vYQOgt/OjtiiAvMIJBVRbXoNSRokKOF
- tpTiXf3ZOsAkot5ZmxE0TV94v18sp/bC84YvFyaxpw5bilT7bmpcq8B8/3yb0kmy6gXLcQAp
- OnomV3sQBmm050amiO3tvxMNv8J71AvNdTG/rojTDKUl2Nw4f+aw4nVw874m2XpEe9JGRw54
- 5d2dN8k3GpzcTBe9fCQPOFHOGkQ1CgptDkQuQVD3DIeNzQjXf6xehEymIKnLOkukT2smV0zh
- fj08z7eiv+dsmnBsbhdM6DKU8qIgkTu77TfHUKjjOY/Mj0YHPuH/J4b1AZFxBhGP0BTKiB2W
- CR6/49XVKvY1jHxgadSSNCD+f7tEqUNBlVl+P0emMJaYpK1+gy88ma4g3nvyOVe/VzDPjGDC
- 4HX/6RAR4Dbzry6/epWTTji+7ApzePzmJzPcuzD31ICsgT2dJ6ydxyxxXikBFJqx6BPOF+u+
- 1BtKcTz1ek3I2sWvBM1V5CKaFw7iNXxS6HgS2scuAT2awKq+BQlt778/GfBWpXonfqixMvit
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260820104730.25462-6-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: QziXKDFapTgc1jB8NI3CBj0joWK_DyuT
-X-Proofpoint-GUID: QziXKDFapTgc1jB8NI3CBj0joWK_DyuT
-X-Authority-Analysis: v=2.4 cv=RoX16imK c=1 sm=1 tr=0 ts=6a875417 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=EUspDBNiAAAA:8
- a=VnNF1IyMAAAA:8 a=DwDBe3OJ7H-l8F9KR2UA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDE0MyBTYWx0ZWRfX3a1GTAjvttc2
- MnP5KlYWGceNB0vs4SfatD56kXXC1BRn4ZZ8V5xiSoheklXwrHKSovv2ZyX19qxOiIBIZryXA6G
- hIbvDyut0CGK9CtXXRN7LkbDBQWdyG4=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDE0MyBTYWx0ZWRfXyX49TNIn6Rj9
- onIzGZLN3FUhO1rCaN/8/8OGZDEOmnZvLuUWgPAmCz7ANETn4+rUUPrkXhFOf1hj9OVZWO5UYSM
- 1OwYJuZki2fOsRESkJFO8oSJnBUHM4+0FSdUjuE4VmhdscLqcw3Tk1ZvquYOptdXSSbb6hYv4kg
- lqo40zn7DnxAycaR8aFUTQPrFzMeLyfARNOp4T7jwIhgcFguAUgU3z1KVhudOg9PunHpmyTlQkA
- V6gRKEbKMvaLaOpa0uFIrq7adX0gstg8uEiY5/OvIMzpbbMKd+ZQ6dgHbFbTkgvZg4lCaL3Ymug
- X016pKGhdfhtyjiCcWkClTpq2uLz6B3d2DsXp47JMMql7UlvCJKfwFZG1Lsav4ugnZ82r+U7e8s
- L9rpZlEYoNpjCdXZvVuiZRsYfFH5qhSnBBD5ajyoqPvyACl/6FRi8CDzGaq+M0P+9Nop64BWWuR
- k+WrWoYo4/JDVe6ybxA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-20_01,2026-08-20_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 suspectscore=0 malwarescore=0 adultscore=0
- clxscore=1011 phishscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200143
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
+ <20260816-qemu-no-hmp-v3-42-e53fc35bc550@redhat.com>
+ <54f7243a-aae3-4f1a-a213-bf302fc1b7ea@oss.qualcomm.com>
+In-Reply-To: <54f7243a-aae3-4f1a-a213-bf302fc1b7ea@oss.qualcomm.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Thu, 20 Aug 2026 23:24:20 +0400
+X-Gm-Features: AcwNN1WACX_FtSDdSnDwafI69-1QNLV0P0_AZ2rIKZBtZ2IJ8QGvsL3cKXZ7Z1U
+Message-ID: <CAJ+F1CJmf9spgeOpLSSK3KmaefGQUmJbfe70TS7qC-j9hhU95w@mail.gmail.com>
+Subject: Re: [PATCH v3 42/49] target: guard MonitorDef tables with CONFIG_HMP
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Laurent Vivier <laurent@vivier.eu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x530.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -174,127 +128,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi
 
+On Thu, Aug 20, 2026 at 6:40=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> On 16/8/26 21:13, Marc-Andr=C3=83=C2=A9 Lureau wrote:
+> > Guard SysemuCPUOps::monitor_defs field and the per-target MonitorDef
+> > arrays with CONFIG_HMP. These tables are only used by HMP 'print' and
+> > 'info registers' commands.
+> >
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >   include/hw/core/sysemu-cpu-ops.h | 2 ++
+> >   monitor/hmp.c                    | 4 +++-
+> >   target/i386/cpu.c                | 4 ++++
+> >   target/m68k/cpu.c                | 4 ++++
+> >   target/sparc/cpu.c               | 5 +++--
+> >   5 files changed, 16 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-=
+cpu-ops.h
+> > index 9a45596169a3..e56eea18b785 100644
+> > --- a/include/hw/core/sysemu-cpu-ops.h
+> > +++ b/include/hw/core/sysemu-cpu-ops.h
+> > @@ -109,11 +109,13 @@ typedef struct SysemuCPUOps {
+> >        */
+> >       int (*monitor_get_register)(CPUState *cs, const char *name, int64=
+_t *pval);
+> >
+> > +#ifdef CONFIG_HMP
+> >       /**
+> >        * @monitor_defs: Array of MonitorDef entries. This field is lega=
+cy,
+> >        *                use @gdb_core_xml_file to dump registers instea=
+d.
+> >        */
+> >       const MonitorDef *monitor_defs;
+> > +#endif
+> >
+> >       /**
+> >        * @legacy_vmsd: Legacy state for migration.
+> > diff --git a/monitor/hmp.c b/monitor/hmp.c
+> > index e5f8b9c576e0..3c70adcd35bb 100644
+> > --- a/monitor/hmp.c
+> > +++ b/monitor/hmp.c
+> > @@ -1725,13 +1725,15 @@ void monitor_register_hmp_info_hrt(const char *=
+name,
+> >   static int get_monitor_def(MonitorHMP *hmp, int64_t *pval, const char=
+ *name)
+> >   {
+> >       CPUState *cs =3D monitor_hmp_get_cpu(hmp);
+> > -    const MonitorDef *md;
+> > +    const MonitorDef *md =3D NULL;
+> >       void *ptr;
+> >
+> >       if (cs =3D=3D NULL) {
+> >           return -1;
+> >       }
+> > +#ifdef CONFIG_HMP
+> >       md =3D cs->cc->sysemu_ops->monitor_defs;
+> > +#endif
+> >       if (md =3D=3D NULL) {
+> >           return -1;
+> >       }
+> Logically we need to skip more:
+>
+> -- >8 --
+> diff --git a/monitor/hmp.c b/monitor/hmp.c
+> index 22b1972d346..cb4e070fc4c 100644
+> --- a/monitor/hmp.c
+> +++ b/monitor/hmp.c
+> @@ -1726,12 +1726,13 @@ void monitor_register_hmp_info_hrt(const char *na=
+me,
+>   static int get_monitor_def(Monitor *mon, int64_t *pval, const char *nam=
+e)
+>   {
+>       CPUState *cs =3D mon_get_cpu(mon);
+> -    const MonitorDef *md;
+> +    const MonitorDef *md =3D NULL;
+>       void *ptr;
+>
+>       if (cs =3D=3D NULL) {
+>           return -1;
+>       }
+> +#ifdef CONFIG_HMP
+>       md =3D cs->cc->sysemu_ops->monitor_defs;
+>       if (md =3D=3D NULL) {
+>           return -1;
+> @@ -1749,6 +1750,7 @@ static int get_monitor_def(Monitor *mon, int64_t
+> *pval, const char *name)
+>               return 0;
+>           }
+>       }
+> +#endif
+>
 
-On 8/20/26 6:47 AM, Philippe Mathieu-Daudé wrote:
-> Add the const qualifier to S390CPU when the argument
-> is accessed without modification.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> ---
->   target/s390x/cpu.h            |  2 +-
->   target/s390x/s390x-internal.h | 12 ++++++------
->   target/s390x/interrupt.c      | 22 +++++++++++-----------
->   3 files changed, 18 insertions(+), 18 deletions(-)
-
-Acked-by: Eric Farman <farman@linux.ibm.com>
-
-> 
-> diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
-> index f55b79ef8ac..998bbb0d7ff 100644
-> --- a/target/s390x/cpu.h
-> +++ b/target/s390x/cpu.h
-> @@ -854,7 +854,7 @@ static inline unsigned int s390_cpu_set_state(uint8_t cpu_state, S390CPU *cpu)
->       return 0;
->   }
->   #endif /* CONFIG_USER_ONLY */
-> -static inline uint8_t s390_cpu_get_state(S390CPU *cpu)
-> +static inline uint8_t s390_cpu_get_state(const S390CPU *cpu)
->   {
->       return cpu->env.cpu_state;
->   }
-> diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
-> index 35d1e34ef4d..54b62808d83 100644
-> --- a/target/s390x/s390x-internal.h
-> +++ b/target/s390x/s390x-internal.h
-> @@ -334,12 +334,12 @@ void cpu_inject_clock_comparator(S390CPU *cpu);
->   void cpu_inject_cpu_timer(S390CPU *cpu);
->   void cpu_inject_emergency_signal(S390CPU *cpu, uint16_t src_cpu_addr);
->   int cpu_inject_external_call(S390CPU *cpu, uint16_t src_cpu_addr);
-> -bool s390_cpu_has_io_int(S390CPU *cpu);
-> -bool s390_cpu_has_ext_int(S390CPU *cpu);
-> -bool s390_cpu_has_mcck_int(S390CPU *cpu);
-> -bool s390_cpu_has_int(S390CPU *cpu);
-> -bool s390_cpu_has_restart_int(S390CPU *cpu);
-> -bool s390_cpu_has_stop_int(S390CPU *cpu);
-> +bool s390_cpu_has_io_int(const S390CPU *cpu);
-> +bool s390_cpu_has_ext_int(const S390CPU *cpu);
-> +bool s390_cpu_has_mcck_int(const S390CPU *cpu);
-> +bool s390_cpu_has_int(const S390CPU *cpu);
-> +bool s390_cpu_has_restart_int(const S390CPU *cpu);
-> +bool s390_cpu_has_stop_int(const S390CPU *cpu);
->   void cpu_inject_restart(S390CPU *cpu);
->   void cpu_inject_stop(S390CPU *cpu);
->   #endif /* CONFIG_USER_ONLY */
-> diff --git a/target/s390x/interrupt.c b/target/s390x/interrupt.c
-> index 1dca835c5d8..d7e3fd45e4b 100644
-> --- a/target/s390x/interrupt.c
-> +++ b/target/s390x/interrupt.c
-> @@ -139,10 +139,10 @@ void s390_crw_mchk(void)
->       fsc->inject_crw_mchk(fs);
->   }
->   
-> -bool s390_cpu_has_mcck_int(S390CPU *cpu)
-> +bool s390_cpu_has_mcck_int(const S390CPU *cpu)
->   {
->       QEMUS390FLICState *flic = s390_get_qemu_flic(s390_get_flic());
-> -    CPUS390XState *env = &cpu->env;
-> +    const CPUS390XState *env = &cpu->env;
->   
->       if (!(env->psw.mask & PSW_MASK_MCHECK)) {
->           return false;
-> @@ -157,10 +157,10 @@ bool s390_cpu_has_mcck_int(S390CPU *cpu)
->       return false;
->   }
->   
-> -bool s390_cpu_has_ext_int(S390CPU *cpu)
-> +bool s390_cpu_has_ext_int(const S390CPU *cpu)
->   {
->       QEMUS390FLICState *flic = s390_get_qemu_flic(s390_get_flic());
-> -    CPUS390XState *env = &cpu->env;
-> +    const CPUS390XState *env = &cpu->env;
->   
->       if (!(env->psw.mask & PSW_MASK_EXT)) {
->           return false;
-> @@ -199,10 +199,10 @@ bool s390_cpu_has_ext_int(S390CPU *cpu)
->       return false;
->   }
->   
-> -bool s390_cpu_has_io_int(S390CPU *cpu)
-> +bool s390_cpu_has_io_int(const S390CPU *cpu)
->   {
->       QEMUS390FLICState *flic = s390_get_qemu_flic(s390_get_flic());
-> -    CPUS390XState *env = &cpu->env;
-> +    const CPUS390XState *env = &cpu->env;
->   
->       if (!(env->psw.mask & PSW_MASK_IO)) {
->           return false;
-> @@ -211,21 +211,21 @@ bool s390_cpu_has_io_int(S390CPU *cpu)
->       return qemu_s390_flic_has_io(flic, env->cregs[6]);
->   }
->   
-> -bool s390_cpu_has_restart_int(S390CPU *cpu)
-> +bool s390_cpu_has_restart_int(const S390CPU *cpu)
->   {
-> -    CPUS390XState *env = &cpu->env;
-> +    const CPUS390XState *env = &cpu->env;
->   
->       return env->pending_int & INTERRUPT_RESTART;
->   }
->   
-> -bool s390_cpu_has_stop_int(S390CPU *cpu)
-> +bool s390_cpu_has_stop_int(const S390CPU *cpu)
->   {
-> -    CPUS390XState *env = &cpu->env;
-> +    const CPUS390XState *env = &cpu->env;
->   
->       return env->pending_int & INTERRUPT_STOP;
->   }
->   
-> -bool s390_cpu_has_int(S390CPU *cpu)
-> +bool s390_cpu_has_int(const S390CPU *cpu)
->   {
->       if (!tcg_enabled()) {
->           return false;
-
+Yeah, I will add a note, the #ifdef is removed again with "build-sys:
+make HMP source files conditional on have_hmp"
 
