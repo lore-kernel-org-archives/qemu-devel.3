@@ -4,125 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8DCEC5B572
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 01:07:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDCB3C5B572
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 01:13:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwrF3-0003an-Dq; Wed, 19 Aug 2026 21:06:49 -0400
+	id 1wwrKu-0004uP-EP; Wed, 19 Aug 2026 21:12:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wwrEz-0003Zi-2C
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 21:06:45 -0400
-Received: from mail-qk1-x72d.google.com ([2607:f8b0:4864:20::72d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wwrEx-00034s-JT
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 21:06:44 -0400
-Received: by mail-qk1-x72d.google.com with SMTP id
- af79cd13be357-92ed3993c1eso107468785a.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 18:06:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787188002; cv=none;
- d=google.com; s=arc-20260327;
- b=Fl9+AO3DACfJImXncnwiHl+5lPy7CAeJqkf4Hct8C65WPABbgaKzzvdkJlWcda+O7z
- 8ibYoCS0xzO+KjSEOsi4I40RiuLtk96Moic88LhjKG4lgoGj0xgfxI4V5109WQj7AeUo
- Q3Ag6V33C/IAiZ+UkeZGm5no2/9L1G2Pb8oOrbffvDPlPsrMsm0u/rXJlT5hDERG8Jpn
- 3+2YIgkVT8Hi0P2WDGqKh5OzYsrgLi8c85L156A/tuHi/j9Bvkc0aS21hS83o2x9eyP6
- BZfbIC7PkjwTqPJmAjerjIqx0xZFw7BbviJXB9se8o/pLKtLNTB4gf5AuabBr2nONQNR
- jGhw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=vsWCscNzkxiVMmU/QBKBdlqpIVF9XvSYTxKTjjRPnYA=;
- fh=JLmbCqUWYmVW9X9vBHMbKGXTZydqTLdZloMZVZzLFJU=;
- b=LhnkgP4dKOXJEpvpl/2sCe8q4iYbL+EydFtMnsLfqpEyyo49a844cGvH89IKECh9HW
- ZKu3O4LbYFzzX9PpTBreRBWza4ARwAuFJou24YLX7TAEF1wKPplUDulcIcuq6/agU7nF
- CUvDJKPdiRZ+PiePJyPiMt1EVliLmmSK8JWXrQGwoVQTGi8XUndCbrNJLa7kVAF5fqTO
- rtIE2zxPoX6r1c4FGpijJ+RrVlE8fa6rWCKgU6U5kUZALMXpdLYS928YWWYqeHr4KtOL
- RsQd0RDq5srJJjWqfEFhKIhjXxQevDfGUfe1TCcZDL9yUmtb+rz8SIFxrSrwUXxeIqCE
- W/BA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787188002; x=1787792802; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=vsWCscNzkxiVMmU/QBKBdlqpIVF9XvSYTxKTjjRPnYA=;
- b=cn1fLK8eH1AUurjoLX1+eVSeK/PxiRnosMzcIsq6M2LVx2MuvK5zZsHKR1nZbT0fyO
- lYloQKtrMS8DfiuQM+dFz42SKafs1VijEvK1R3wxprYIPXyU1eDd335kaW4X81HtnbTP
- 9R40JO3f5iRNiZzPFGUvwGVxOQRA0YA8DRvXor2vuGc4tvKP97dLEi+0jTidNpczG9VS
- ZkN/rmZF96ONa9hWJW45gObU0R11o1uJhTRF82B4X+MJh+I3fWpT/e817tT+UXvdIs8/
- aUI8+rXeG1/cw3OHk1cRFWn4mPnDNy24pO8jAyWxFWSOY87ipiR9kE2iuolRjcJTNC8h
- 3d+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787188002; x=1787792802;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=vsWCscNzkxiVMmU/QBKBdlqpIVF9XvSYTxKTjjRPnYA=;
- b=qUgGCj09SLH37gPTpoqdL8TDlna9cSTJjzF8F5E2PHTBU7oTh/i580ibHwOGqDTl3S
- vilC71EPPQoLs6VBnb19hC69KZQ69KLZAVbYsUPJuTn9QufE78qubup1rqCOQ0kEgi3D
- S0b9EAldcYUMvv+km9jSPAs7r8NAj9hondGvtNxaF06Ubc5scPfJIpyxAzCRQbvilsvt
- FB8Dbrt+kYEl95uARNiUCGUFEl/3qd/LCRfxf/3I7xuLrE80D6ojvKLAoCMt9xQjwLdO
- n/zSG+rQwmNnXDrxCt3aG3C+Mzlyk5XHBXAzJROtG3gwRkOxFVV1mIJMo2rKF1sUmwjR
- smyQ==
-X-Gm-Message-State: AOJu0YxAaizSADjrKu8gc7edFdgQxxEDUTlbd5SrBvTLJMBnAT9bkRfu
- URdrWonzocpm071FkS0A96jfv0sCHSbVTCBUMreSNt2ApsfTV41grzr2Sd8LWjjIxuEBOdUPEDN
- jxzZFbcKsaL9QOnO4AT0XR7gUcRE/w8w=
-X-Gm-Gg: AR+sD12Ks/WLl/aNU6De2nMqELqKFkE4UBkfU3r+tk6y7JOKkB2omTe6GfE1M6B4bg6
- VxrdOZGNLJZX2klKKBrc44TJ8XjLekqs0kTDeZLQgBV/m8rN+9uq+YOmMI+g+8k1cl1NELkvg5l
- hLOBMZRsBCCK9/QkGfOsBmrB02VIxBNoAdsJaMeQDvpDtGmTc66chYGqs0XiXanrZesXEewhuDq
- hQKroD2qrrvZMHNfVV+J/8hYb8Od7nPEYZ8pd6HQVaKod1iaARJIqjqIBc7yLY/D4yNwlv+KUwe
- AAnpEuEAaOopdjJSC1m9/y0cHwMhtguscKDhsng0IGYZrFLqD1PvcDP7iPGJVav/HRDCgB0IG5p
- 5DSw=
-X-Received: by 2002:a05:620a:6015:b0:92e:7cc9:a888 with SMTP id
- af79cd13be357-9371e2cf759mr924864285a.2.1787188002133; Wed, 19 Aug 2026
- 18:06:42 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
- <20260817-vhost-user-isolated-memory-v2-4-948aae960abb@gmail.com>
- <b6f79ec9-7842-47ff-b210-855036712547@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <b6f79ec9-7842-47ff-b210-855036712547@rsg.ci.i.u-tokyo.ac.jp>
-From: Connor Kite <connorkite@gmail.com>
-Date: Wed, 19 Aug 2026 18:06:30 -0700
-X-Gm-Features: AcwNN1Vitk5XJi1kg1YAvcpdy9Kk9-83pUVn-HXmmhlZta59p0cOti38aI4rTGg
-Message-ID: <CA+spn3rouMQ=yG1m2fS=vm40c-zWWMZPK+yk0K_ip5iXzLZWow@mail.gmail.com>
-Subject: Re: [PATCH RFC v2 04/13] hw/virtio/vhost-shadow-virtqueue: used
- callback
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Raphael Norwitz <rnorwitz@nvidia.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
- virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
- zhenwei pi <zhenwei.pi@linux.dev>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
- Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>, 
- 20260817233147.2867623-1-connorkite@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wwrKs-0004uG-T4
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 21:12:50 -0400
+Received: from qs-2006g-snip6-3.eps.apple.com ([2a01:b747:3006:202::42]
+ helo=outbound.qs.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wwrKq-0004eu-NA
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 21:12:50 -0400
+Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-5 (Postfix) with ESMTPS id
+ AA32F1800105; Thu, 20 Aug 2026 01:12:40 +0000 (UTC)
+X-ICL-RepId: 01a01cba-3508-7bc6-b217-0c494e257109
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQBIHVoORQNGCVYLWhcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0KWFsIWwQPH0wMUQJCBVZeSAsdBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDjZ/THZZAl0CXX1BAFgaXwJBCVULVXUvH0cBOgYvcVgAMQhJAy1CBUICXBxaDkMKUBxcVlUfCUtGCUkdDg5CGEYfVCdXAloKWx4=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1787188363; x=1789780363;
+ bh=K2tue7a+CAeIdHQOnCNGDmUbQA2KhQiQ4QUoOPguBJI=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=Wh0K0K81tg3cAnF9sI1HT/QHDXfAJwOj7ukhzHR1Mw/FbiOe9vaUCXmEeHbrNcJ8Po285I2QcRT7ynAXnLImxkk+xQ+OkbuaGcrLWlpOZkDdJq8Op9QB/Rq5KvdWpJ2DayIx8VKiy0VIQ0mh5nAr5W8vxyX2RwNmDmhR47RaGeSOG3hy2HWATd5f//WN9+6ZR8WJ+9r0TAzSrvN7AqT35chSwWdot6Obm8p3BYqk5l9K5S3EZgUGJS7lTY9b0Z5vXbCoRldRHI2XRhfOCVwZmT+KByLyveTaASC9fLLqs3eiJh5t/jtavH3saoqKimAZcSGv5BG8zJqbmVlW5RTD4Q==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.155.37])
+ by p00-icloudmta-asmtp-us-east-2d-100-percent-5 (Postfix) with ESMTPSA id
+ 0E2F0180014E; Thu, 20 Aug 2026 01:12:38 +0000 (UTC)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3901.100.1.1.11\))
+Subject: Re: [PATCH] target/i386/whpx: whpx_get_xsave_state error handling
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <LVXPR21MB70090CD62E78CC3BA2EB7E52ADA42@LVXPR21MB7009.namprd21.prod.outlook.com>
+Date: Thu, 20 Aug 2026 03:12:26 +0200
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Pedro d'Aquino Filocre F S Barbuda <pbarbuda@microsoft.com>
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72d;
- envelope-from=connorkite@gmail.com; helo=mail-qk1-x72d.google.com
+Message-Id: <FF4E4560-D935-4010-88BD-78B5BF32A110@unpredictable.fr>
+References: <LVXPR21MB70090CD62E78CC3BA2EB7E52ADA42@LVXPR21MB7009.namprd21.prod.outlook.com>
+To: "Doug Cook (WINDOWS)" <dcook@microsoft.com>
+X-Mailer: Apple Mail (2.3901.100.1.1.11)
+X-Proofpoint-ORIG-GUID: mv0GnHGXHxhY-n-CELWP6M2KvSdisDpn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDAwNiBTYWx0ZWRfX5hknt8TT9mDQ
+ wd0MmPs4i+7XMnG5rucUaWa45AhnE74g4RzCxpzfQ+ISpumhFW7eqqqr/P2mjN0unT/Kk2NLULi
+ ExzWBS+EDSoLKBvccxZfAXaw6mABxCSiBzdpj+5SUmzC9iWJe4fkYZrZ2mgMUHoCPO6C83lKKX6
+ ieC4fEcYuEZVPeo1Xlm/jhSV1d7rszUjTqgiGWihLy3eFTVFe+qAHyL4g8ShOXhuumQbdJhVTze
+ cXq9eIovZNR3xWntyfKta7TIEsoTmtarfOldeaPQVI42ZkymqJw9XcQTeruZfwinTkaJf2jBZYB
+ 2J7ZZdtxNp2uVDBHHfnC+oGJpRDowg8vTZtj1h+MaYe3z9zh+FR4qOreAs9CxY=
+X-Authority-Info-Out: v=2.4 cv=TN1Iilla c=1 sm=1 tr=0 ts=6a865489
+ cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
+ a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=yMhMjlubAAAA:8 a=POd5bVGQ_sbSSP8puIgA:9
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: mv0GnHGXHxhY-n-CELWP6M2KvSdisDpn
+X-JNJ: AAAAAAAB6G40NUq6mj+15eH0ymkZKPblXoQ2IxM23QBK5Y3zxe/tlBeJYuYV4oIlpAAdjifdqRZyqNM61jEHltT4NCUMPtYs6BZY22ttk6KfoPOTJnV2cW37w/oAe5CZKXlcJ1lancgJu4Qz10AfQSU5hi3AxaaB94aFCEjYdJuKT8287AIZGAtHcAUcrmGqbvl5D2i8RytOBiPwFtaVN5AVUWf8Y5HQa37jaHwbL5epeAYzhEQQHrh+wgDviwbmpdvQ0U6JJC/uyl8U6eyalopDkFXgU+h4ZrRPNk3DzdeO7IBGahb82pSj9MIxhQfpoC4J/KsV+ZS9/XrNAdXczsLUmYRE3vIaVWcmbTV/wkt8D6i5w4zbVGhUL/Hl5MCTNu3N2FGBnWsrV6fPc9xsGIolqsN6xK8uFY/UrDFFYuSDR92Al6x1rm8cIOzGL+x9tKh/UsBMPRD8HyJQ3IorcU3fTiIQPNAxKTUz/WV69o9AdYWA1doy/mNWOOvyIjjP5eMiHsTbVlKJx0R6fmA7iAtrkdc0JkNHXnIM4dhQ8qzIbzH0OJVPjsSRppciEy9oPtCuEvtkBMh9PEYPexla+xLWXPXRLzbK3Dp3eF/Ct0aaT5O+8KEe+UdK0oOh7l53p1HO340/k4J8ErHig5O8oJ+wd+JpAWdoAN7W8G3JlAYFEkGiW2RmgVfNBGWKeTjnWBxnhMGYNYQdFoxIBFFZe7kWPv1yfv25flS4hKgBk3zgWYZOLJDJHOIxE93jsrIBYB2VFfXRFXOWUcfSoVzhSYS2ocTszdKXiQJnECt5OKqwjJR4OFNb4029SXCqEHfgWKRWR2WCf8jATrWkYq5bzmaHGN5iP4iBfrBJhZy3hy1QkG9zCysTGC4Pz/iGjF82fZRT+UWh4xqi6AL2nMxz66dYTNWv7hFmNpaiRwhh6DXUGtLkMefqxX4ct8laFQHfwXPmTms+jAIiC5ygbp9cbB279gXyVcY
+ +lHY7t1MAv5z9/SAD6nILVrdo+aMgpe2X7jL/Ox9rn1hB8SXxVUBMr9cit6dFysWLrnTnyYF00K8FETMbTVvB4OAOn/uX9di70XHej8P02x7C7sdX6YIhjWlCQksefMH8qK2ebB15uxrK2Ozfl0pBaZJcaKQx5R4uDfKkUfn1pxYEIyH4LL1bGXTt3K9O8wQkO5USx3jI5HYlDg6sdRAg3j486wp/X58tUKZy32yBNDJGwSSYAwf5yX0pcKJd1L5pDLOidFXh/+XayU58g3sfFTLaJVOegINH+2Fsh+PWs73M3LVydSgAxqFplWjUHwTU/TciREC6xx2T4fmHWLB5n/YPob8n7hpcnZDDvgE=
+Received-SPF: pass client-ip=2a01:b747:3006:202::42;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -139,35 +87,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 18, 2026 at 11:23=E2=80=AFPM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> > +
-> > +                if (r < 0) {
-> > +                    /* VQ or handler is broken. Do not set guest notif=
-ier */
->
-> This comment is extraneous. It is obvious that event_notifier_set()
-> below is not called, and it is same with the existing error path below.
->
-> What matters here is the difference with the existing error path. Why
-> doesn't it call virtqueue_fill() nor virtqueue_flush()? They need to be
-> addressed here.
->
-> Regards,
-> Akihiko Odaki
->
 
-Here, apart from not calling event_notifier_set (not notifying the
-guest), we are also not calling vhost_svq_enable_notification, so the
-device is directed not to send any more call notifications.  If the
-guest isn't receiving notifications, and the device isn't sending
-them, is there a purpose to flushing the current element?  With the
-current implementation, I'm not sure there is a path to re-enable
-calls on either the front-end or back-end, but maybe a case could be
-made that it's good hygiene to flush the known bad element?  For now,
-I will add the calls to add and flush the element
 
-Thank you!
-Connor
+> On 20. Aug 2026, at 02:56, Doug Cook (WINDOWS) <dcook@microsoft.com> =
+wrote:
+>=20
+> Several problems with error handling in whpx_get_xsave_state:
+>=20
+> - Does not handle WHV_E_INSUFFICIENT_BUFFER, which occurs frequently
+>  in practice for XSAVE state.
+> - Does not free xsavec_buf when an error occurs.
+> - Error message and return code use errno where they should use hr.
+>=20
+> Fixes: cfaa3b6c9597 ("whpx: xsave support")
+>=20
+> Signed-off-by: Doug Cook <dcook@microsoft.com>
+
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+
+> ---
+> include/system/whpx-internal.h |  5 ++-
+> target/i386/whpx/whpx-all.c    | 73 +++++++++++++++++++++++++---------
+> 2 files changed, 57 insertions(+), 21 deletions(-)
+>=20
+> diff --git a/include/system/whpx-internal.h =
+b/include/system/whpx-internal.h
+> index c295c5a529..b15f3d8faf 100644
+> --- a/include/system/whpx-internal.h
+> +++ b/include/system/whpx-internal.h
+> @@ -58,8 +58,9 @@ void whpx_apic_get(APICCommonState *s);
+>=20
+> #define WHV_E_UNKNOWN_CAPABILITY 0x80370300L
+>=20
+> -/* This should eventually come from the Windows SDK */
+> -#define WHV_E_UNKNOWN_PROPERTY 0x80370302
+> +/* These should eventually come from the Windows SDK */
+> +#define WHV_E_INSUFFICIENT_BUFFER 0x80370301L
+> +#define WHV_E_UNKNOWN_PROPERTY 0x80370302L
+>=20
+> #define LIST_WINHVPLATFORM_FUNCTIONS(X) \
+>   X(HRESULT, WHvGetCapability, (WHV_CAPABILITY_CODE CapabilityCode, =
+VOID* CapabilityBuffer, UINT32 CapabilityBufferSizeInBytes, UINT32* =
+WrittenSizeInBytes)) \
+> diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+> index 634d542821..682c85cef1 100644
+> --- a/target/i386/whpx/whpx-all.c
+> +++ b/target/i386/whpx/whpx-all.c
+> @@ -442,8 +442,8 @@ static int whpx_set_xsave_state(const CPUState =
+*cpu)
+>=20
+>     qemu_vfree(xsavec_buf);
+>     if (FAILED(hr)) {
+> -        error_report("WHPX: Failed to get virtual processor context, =
+hr=3D%08lx",
+> -                     hr);
+> +        error_report("WHPX: Failed to set xsave state, hr=3D%08lx", =
+hr);
+> +        return -EIO;
+>     }
+>=20
+>     return 0;
+> @@ -810,9 +810,28 @@ static void whpx_get_legacy_fp_registers(CPUState =
+*cpu, WHPXStateLevel level)
+>     idx +=3D 1;
+> }
+>=20
+> -static int whpx_get_xsave_state(CPUState *cpu)
+> +static HRESULT whpx_get_xsave_state_buffer(const CPUState *cpu, void =
+*buf,
+> +                                           size_t buf_len,
+> +                                           UINT32 *bytes_written)
+> {
+>     struct whpx_state *whpx =3D &whpx_global;
+> +
+> +    if (!whpx_is_legacy_os()) {
+> +        return whp_dispatch.WHvGetVirtualProcessorState(
+> +            whpx->partition, cpu->cpu_index,
+> +            WHvVirtualProcessorStateTypeXsaveState,
+> +            buf,
+> +            buf_len, bytes_written);
+> +    } else {
+> +        return whp_dispatch.WHvGetVirtualProcessorXsaveState(
+> +            whpx->partition, cpu->cpu_index,
+> +            buf,
+> +            buf_len, bytes_written);
+> +    }
+> +}
+> +
+> +static int whpx_get_xsave_state(CPUState *cpu)
+> +{
+>     X86CPU *x86cpu =3D X86_CPU(cpu);
+>     CPUX86State *env =3D &x86cpu->env;
+>     int ret;
+> @@ -825,27 +844,43 @@ static int whpx_get_xsave_state(CPUState *cpu)
+>     xsavec_buf =3D qemu_memalign(page, xsavec_buf_len);
+>     memset(xsavec_buf, 0, xsavec_buf_len);
+>=20
+> -    if (!whpx_is_legacy_os()) {
+> -        hr =3D whp_dispatch.WHvGetVirtualProcessorState(
+> -            whpx->partition, cpu->cpu_index,
+> -            WHvVirtualProcessorStateTypeXsaveState,
+> -            xsavec_buf,
+> -            xsavec_buf_len, &bytes_written);
+> -    } else {
+> -        hr =3D whp_dispatch.WHvGetVirtualProcessorXsaveState(
+> -            whpx->partition, cpu->cpu_index,
+> -            xsavec_buf,
+> -            xsavec_buf_len, &bytes_written);
+> +    bytes_written =3D 0;
+> +    hr =3D whpx_get_xsave_state_buffer(cpu, xsavec_buf, =
+xsavec_buf_len,
+> +                                     &bytes_written);
+> +
+> +    /*
+> +     * whpx_get_xsave_max_len() returns the size of user state =
+components
+> +     * enabled in XCR0. The hypervisor returns an XSAVES image, which =
+also
+> +     * contains the supervisor state, so the whpx_get_xsave_max_len() =
+size
+> +     * may be too small.
+> +     */
+> +    if (hr =3D=3D WHV_E_INSUFFICIENT_BUFFER && bytes_written > =
+xsavec_buf_len) {
+> +        qemu_vfree(xsavec_buf);
+> +        xsavec_buf_len =3D bytes_written;
+> +        xsavec_buf =3D qemu_memalign(page, xsavec_buf_len);
+> +        memset(xsavec_buf, 0, xsavec_buf_len);
+> +
+> +        bytes_written =3D 0;
+> +        hr =3D whpx_get_xsave_state_buffer(cpu, xsavec_buf, =
+xsavec_buf_len,
+> +                                         &bytes_written);
+>     }
+> -    if (FAILED(hr) || bytes_written =3D=3D 0) {
+> -        error_report("failed to get xsave state: %s", =
+strerror(errno));
+> -        return -errno;
+> +
+> +    if (FAILED(hr)) {
+> +        error_report("WHPX: Failed to get xsave state, hr=3D%08lx", =
+hr);
+> +        qemu_vfree(xsavec_buf);
+> +        return -EIO;
+> +    }
+> +
+> +    if (bytes_written =3D=3D 0) {
+> +        error_report("WHPX: Failed to get xsave state, no data =
+returned");
+> +        qemu_vfree(xsavec_buf);
+> +        return -EIO;
+>     }
+>=20
+> -    ret =3D decompact_xsave_area(xsavec_buf, xsavec_buf_len, env);
+> +    ret =3D decompact_xsave_area(xsavec_buf, bytes_written, env);
+>     qemu_vfree(xsavec_buf);
+>     if (ret < 0) {
+> -        error_report("failed to decompact xsave area");
+> +        error_report("WHPX: Failed to decompact xsave area");
+>         return ret;
+>     }
+>     x86_cpu_xrstor_all_areas(x86cpu, env->xsave_buf, =
+env->xsave_buf_len);
+> --=20
+> 2.55.0.vfs.0.3
+>=20
+
 
