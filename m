@@ -4,107 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19612C5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 05:47:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED364C5DF82
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 05:47:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwvcQ-0003cu-8H; Thu, 20 Aug 2026 01:47:14 -0400
+	id 1wwvcx-0003g6-9C; Thu, 20 Aug 2026 01:47:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
- id 1wwvcN-0003ch-8R
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 01:47:11 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wwvcr-0003eG-BV
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 01:47:41 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
- id 1wwvcL-00058u-Hs
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 01:47:11 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-6a3ec9ef8d4so304564a12.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 22:47:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787204827; cv=none;
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wwvcp-0005Aa-Iv
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 01:47:41 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-3856d6fbcb3so1725065a91.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 22:47:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787204857; cv=none;
  d=google.com; s=arc-20260327;
- b=eEilD56HVMykFfmhEzk6iDjnp0+CgD3IkQghoYqDPBAXAKLCbzEojjKUA+FSF3MVSH
- wnQEjV6vt8Kpo+YGOwvU7QO2HXOg0yUBBDWbbJ2hkIdBXnBB/2BuxHmm+pkkp1DrGB6T
- fzqmpPxyiB8K0mEWWe06YxFJW9wNfO3WCN/IqDSaH/oJ2EZDEjP26l/qUoVxN8Bu3OZH
- VJtj4GAv/mYGOM3JWi2ijFrxmFsXYXNcowllEvtpfR3aVVmmpvMzKAknuVd+wdP0p5Jh
- wHAC/ysmG0sQJ+PKEVayCB3swv807KCB3Gh4JIODknV/uilrV/cB+CtZCTroeysrSuGn
- +6YA==
+ b=UbPhREZV407672Y85U8Wdzu2r39Gmfl9AKRe58mTDpZcHd1oNoVBUX50R97VWUGKCB
+ CxKkl+5KV6TxGEnD409LecWYXMXjMRPs+gulASsxSlF8GRl8Vg2m+WiodDRr4A0HMAt3
+ hymVYKa4WbRfOvo1vwRVxqtWObYmg2uBEfZVO9ahTc/WnYId1u9Jl+PMosSBgLd073f6
+ ia7ShdUh/K/K8O1IxD2aYGvN6B8m0lEWPG0z8XvScJfQdnq9txx9B/V7PBUKi7vXynRG
+ 2Y7IPkHO9/Z7kdDIqkVT6HavMhk/AgYXEdHn8lzpgBPmZnuKg7yQBFpqwmXBK+RonbfA
+ PIEw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=UNa2wv58vg48628LwERxNUNYy4Ouarul0nS3MGWZbNA=;
- fh=0OrEgs2AR2ZyZFpA0iVTzhEwZS9fM9hbxZNweVjg8tA=;
- b=kbC+Wj28dxITOsu0AtGYTx9teHAf98R6Q3tv4i2jpUh+Vo9K/xWQMdl4mxIZ2Q7MRJ
- hgm0OGlnN9PiuYHtJY6L6Udr7bE3a9VBZGdQGFxAe3Z7unjbDo1UdqZMcDRD/4w30DZa
- ddB7RGjmnNeMm74txSv7K12o1nkqNUcSUfl8CNhCyN9RGGDAA0Wbh+TlZ3NDhD3YiCtO
- lvSmGih85C27nZewEVaLoMRFRWrOm1CbDI6X9hWIs8APhrCwRFzKPEK5Jb+Sj332yN8n
- p+NT2g/cfTxnPR167jqQnXD+s7xmwzHyooeQ//S2Jzr1r2pRfd52f/l1btiJzLzCFFW5
- 3KrQ==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=2xLh0uFCjClhg+2rbJQ6BEQZeT5+S2r6VlVPybYx4O0=;
+ fh=E29895X+iqR6jIfsM/7ZQNDcc1c5xVRzorsAbPEmkKU=;
+ b=ixY2T/MvIwI3Gdqh9FarFtheN0MC3SQ8UKGbVMOY+LfgiVNj9vmx+ZBiNWtu0C7mvm
+ QLMzxfiIJ73ys1btJN+NiMcZq3eFYLjuv2/G80N+nl6Lr1cKR/oe+l9Ko+QDlVvwg2VB
+ 7lX5B4mH4x8Ti8SpbTIdKwHMKamhI0sxQuHJqBEDmFioK1t/X9tpR2+FmQdgdhZ30C56
+ ZZ4S7+H9jV2mbn+X+wrz5NrXU7MYL9yIej1q53NT7u0qebDgfPQtZf9G/gGgNXDN5ANZ
+ F2xXQmTupTsSq3cXjiude/EszNo+v/JbvE9DxohEiqfYgY/wD/qU+CCfH4cKHPQptW2h
+ AiEA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cloud.ionos.com; s=google; t=1787204827; x=1787809627; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=UNa2wv58vg48628LwERxNUNYy4Ouarul0nS3MGWZbNA=;
- b=d9xdxv210g73nvaRd+7GTJ04hQx7MoEFqyrAN92lXK+0ZSxFohem57SAeZU7s2EqVH
- by1/SFmU4ZEo0YhhXFzn+DQ3OYtiOlE3X423A/HvlgY9ioaMXGIdzBlw2TBXyRxuBAOJ
- o95atMe3LzndN5VeW6XGKgbhFRRQ90CoAHt1upaH+kuJOIaM+5USMig9NJC+mhE4ilOY
- PNuiwdfTGJwE2iyjmulcYQQs3v3rhTgxXlpPwu86ndXsz4d09jTc4RH7iiGt9dNPWx69
- LB+QbP+Xj/hirIuir63rTNCeNSDFri8msAZUk0V2A6mI0ALSYDBADD7qVUkU9zdHT+sT
- +2mA==
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1787204857; x=1787809657;
+ darn=nongnu.org; 
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=2xLh0uFCjClhg+2rbJQ6BEQZeT5+S2r6VlVPybYx4O0=;
+ b=dPrpAHS9vC1zHN3KoOgu/2tkl08R0AUvcrpC6LArKoxVJoKr95ATp/Bdg54sYMzY3j
+ Bb7J2hdtAChBQVwDLGANexmLhkKtH8BCVeit/BGP3AsDELv3nguS2/uKy7m39YY0FnHj
+ 44Ifymk4VMTocT8KSkeStlMII3oN2+HX6B2jzicjUnXVkf4+cD/j2vpvTbgsQpEl87PM
+ vgrem6pDJdSD7JB/RhK5BQYrXkPUWdCuVzUSbf5u86MCMMTbrB09J2XXoAVtW5i+lmNt
+ QFEVKQ+ebVhWCMAsQ48Qrld9Jg242lZfCgCYHCFR6rF3AOZs70mDscpVCOCA4BiWoxb6
+ Tt9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787204827; x=1787809627;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=UNa2wv58vg48628LwERxNUNYy4Ouarul0nS3MGWZbNA=;
- b=q1hfm3fz9k9gDUFElqqgoZO20IboD5SFJANDvfsQDoqD2lHgK3LJFPEaYYPk7fQyr6
- whaA7jnfrYspe6k5wu1emCW2c2NQcuuBkIvjJoyMxFKxrmXwMompNnn/UODr0q5RYan8
- rDpCOFI0YVNlptraQh+vuCE6pw64UI5bxvPzcovNYiIhgsRDm4zMIQy3ztDcoW7DU8ZY
- A7uAay9CJrvuvEbzmgUdf6SKhBuep4jM1qd2J+H7VZ4D4Mal2URX0ETVykPSYts5hmqR
- zlFNebJRTyn+od1CELDeYK4jXCmRnTYRG924YqVFRMhHy3qqvwBB60vj9wT5rgA/sZ0d
- dqhQ==
+ d=1e100.net; s=20251104; t=1787204857; x=1787809657;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=2xLh0uFCjClhg+2rbJQ6BEQZeT5+S2r6VlVPybYx4O0=;
+ b=dONVglYMF/XnDBRAKUhElbAlOJVJj0axnalrZHMGGkL2F9H9cDykrRHJcBa+CFumB3
+ mLGLZWPhQVYxaVQdGA6QUe6fcBKea0m7V1kU3F5fdmKKFXM1ubTpk3UCRnndCzEXAUAS
+ wetHMu+xmkIARXwDAwliPJadc700eOD3xEdBiXABtyQITqkmC/+6oSjiiFg7Z5Nb+Ccs
+ 9aox+zibPIMQLctStLVOx1yM7tS9I2hT+HWm178BgVMPcIT6pZJ5jEXu5JqvIT+TM2lu
+ zgH7X8dkIXtXMSOxI7T5X9zD8ydig86hYEJy8wUc2349o42dM2HZwtQccBpAPFSsav+v
+ 8CAQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoiB9NLVpVUf9p53+YfX/IxNaBW6DL/Ufc2m6+AJlOXcJfxcWatBn6bLGB7x2gWiocJj8CkW1nZAFM/@nongnu.org
-X-Gm-Message-State: AOJu0Yw72wQa20nkatyzZW4UkrE/9t+fqpwbn74lI2w22csRrMj/pf4Z
- mJNEPuQpadX3oYZMQ0JIyL3KC9ujhbUojwsnij2Hh2cFT6WVsapIrhVTc47cHiK4Uc5AMGwU+eh
- gAr6H13xwwWXHt6hnw5Tg4LFLRF6DbzZkVtrgr9P6yA==
-X-Gm-Gg: AR+sD13gAKSDO0iTAhGPNrD62uAcZSSNnwjB2Yd5L2MK8WhX5Aexf98+o0k14EFSzNC
- Oz6zEKKV54F1r3kJQoBpyKnklbYofgHrUZBF+1S3oOLK/22BOQ1j2UUJKty7WpnVoCrsdOKIjsw
- AFwQIoWVt3k1juqac0iVOuPyf1GpRz193F98YPSGNpnUPShyPuAJWGoHXGFnWnP9MNjuz1BsAm9
- 5l1M1X1RWh8/ul1Dze0sEyvDlWSPKuxoO0lLdNa8EeWto5/XBrqt3D7jnZZfdaQHL6oTEHXiHFZ
- /iIGjCW1UBfg5uHOJqgheBrylDQ68W+4NyJKM4kd2cwjaYX3Pg6HgeM3gM9U/S8psuz9fhaMblx
- Dpw==
-X-Received: by 2002:a17:907:d19:b0:c15:ccda:26d5 with SMTP id
- a640c23a62f3a-c242e3877c8mr324754566b.4.1787204826883; Wed, 19 Aug 2026
- 22:47:06 -0700 (PDT)
+ AHgh+RrAMu1sXU5u+ReMU3Qb2TZ4sHASC7UIeI2DW8m1q3Hl8Z87vp8GfSlZlFEa8Rn2g1rwR2k0uNt/+htX@nongnu.org
+X-Gm-Message-State: AFuF++m5ca7sCWHx17d4bLnvKFzZtNzbYPPEHqjsLO67GyTl2eL1wM7e
+ pAFcVvgnbirGzyMmztmpIPPepAxMuKZI9tR/z5sFrOiKmOor5MIya2kKhqzgbNh6hHZSdLQsrE+
+ mT6ypnJR7kMcyTMBMX92btBhVWZbIqirgrY1EF4FeHQ==
+X-Gm-Gg: AR+sD11XcBzweDz9croLAhy0Cy8/Odx+5BlpOqQAYi0gYoH/qEu6JQBdPgRRK9YU9u3
+ Z+Nye4fb/mdGFErI7XjKmvoPmvy9A3PlWj2W+C80rEJKO/gIT9H68/dI5l54Od4N5SP3hiBBxaI
+ zOKnf/Oeps1K9TvxRm1S4jUXmdL2X+rA0dFWk5RkZnguRZo8Yy0eOn8CRfgrakEYrxcKa1VY362
+ cSCXz3plGbd4b74XF1KGjbIzewb+svU2ZzoWu/HwLhBu89de8IdpJe5EUQq05KBAWYSfESOJhGm
+ DO7wX/2kgod8N6h75UCczW3JYFcF5yVR1/iaAijn30PXPI0QtYKeszXhgq9TrZK+8edmoBtdgJ2
+ 031o=
+X-Received: by 2002:a17:90b:4b8b:b0:38f:efed:5448 with SMTP id
+ 98e67ed59e1d1-395812aa117mr18024528a91.8.1787204857123; Wed, 19 Aug 2026
+ 22:47:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260817105117.3072040-1-yanfei.xu@bytedance.com>
- <20260817105117.3072040-3-yanfei.xu@bytedance.com> <aoYBIaisgpP6lklk@x1.local>
-In-Reply-To: <aoYBIaisgpP6lklk@x1.local>
-From: Jinpu Wang <jinpu.wang@cloud.ionos.com>
-Date: Thu, 20 Aug 2026 07:46:54 +0200
-X-Gm-Features: AcwNN1W9k7V6PCDJflo7zv43ogh9U76gpkktVH1Wt_A155tHRuDBQ6SG7pIFAaY
-Message-ID: <CAMGffEmTC03Ao5Ttt6rC1Hh-mLqFR0RA62KwyUaFNxjs6Dt08A@mail.gmail.com>
-Subject: Re: [PATCH 2/3] migration/rdma: Post initial receive before accepting
-To: Peter Xu <peterx@redhat.com>
-Cc: Yanfei Xu <yanfei.xu@bytedance.com>, qemu-devel@nongnu.org, farosas@suse.de,
- lizhijian@fujitsu.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: permerror client-ip=2a00:1450:4864:20::536;
- envelope-from=jinpu.wang@ionos.com; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+References: <20260818172012.3052821-1-peterx@redhat.com>
+ <20260818172012.3052821-6-peterx@redhat.com>
+ <50d978ae-485b-4790-a2b0-fc78051de565@linaro.org>
+In-Reply-To: <50d978ae-485b-4790-a2b0-fc78051de565@linaro.org>
+From: Warner Losh <imp@bsdimp.com>
+Date: Wed, 19 Aug 2026 23:47:25 -0600
+X-Gm-Features: AcwNN1VF2mdbeRMOTwcEvk3xgT5ZkJFXfM8iGx_1ffFGoRX8wZ8IToJdLeumvRQ
+Message-ID: <CANCZdfr792uu9e-1--YihnFwkc9oHVS7+=LS8LNUgw_9QjJ+jA@mail.gmail.com>
+Subject: Re: [PATCH v2 5/9] bsd-user: Remove 32bit host support in
+ thunk_convert|print()
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Peter Xu <peterx@redhat.com>, QEMU Developers <qemu-devel@nongnu.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
+Content-Type: multipart/alternative; boundary="000000000000a669d40659740e26"
+Received-SPF: none client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,68 +119,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 19, 2026 at 9:17=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
->
-> On Mon, Aug 17, 2026 at 06:51:16PM +0800, Yanfei Xu wrote:
-> > The source return-path thread can send READY before the destination has
-> > posted its initial receive.  Since RNR retries default to zero, the sen=
-d
-> > can fail and abort migration.
+--000000000000a669d40659740e26
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Aug 19, 2026, 1:48=E2=80=AFPM Richard Henderson <
+richard.henderson@linaro.org> wrote:
+
+> On 8/18/26 10:20, Peter Xu wrote:
+> > QEMU has switched to 64bit-only hosts for all system/user emulations.
 > >
-> > Post the initial receive before rdma_accept() to close this window.
-> >
-> > Fixes: 55cc1b5937a8 ("migration: create a dedicated connection for rdma=
- return path")
-> > Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
->
-> This one looks correct to me,
->
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Jack Wang <jinpu.wang@cloud.ionos.com>
->
-> Do you have way to reproduce it, or is this theory (or can be reproduced =
-by
-> adding delays)?
->
+> > Signed-off-by: Peter Xu<peterx@redhat.com>
 > > ---
-> >  migration/rdma.c | 12 ++++++------
-> >  1 file changed, 6 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/migration/rdma.c b/migration/rdma.c
-> > index e17ace62b0..6e8436ccc1 100644
-> > --- a/migration/rdma.c
-> > +++ b/migration/rdma.c
-> > @@ -3263,6 +3263,12 @@ static int qemu_rdma_accept(RDMAContext *rdma)
-> >          }
-> >      }
-> >
-> > +    ret =3D qemu_rdma_post_recv_control(rdma, RDMA_WRID_READY, &err);
-> > +    if (ret < 0) {
-> > +        error_report_err(err);
-> > +        goto err_rdma_dest_wait;
-> > +    }
-> > +
-> >      /* Accept the second connection request for return path */
-> >      if ((migrate_postcopy() || migrate_return_path())
-> >          && !rdma->is_return_path) {
-> > @@ -3295,12 +3301,6 @@ static int qemu_rdma_accept(RDMAContext *rdma)
-> >      rdma_ack_cm_event(cm_event);
-> >      rdma->connected =3D true;
-> >
-> > -    ret =3D qemu_rdma_post_recv_control(rdma, RDMA_WRID_READY, &err);
-> > -    if (ret < 0) {
-> > -        error_report_err(err);
-> > -        goto err_rdma_dest_wait;
-> > -    }
-> > -
-> >      qemu_rdma_dump_gid("dest_connect", rdma->cm_id);
-> >
-> >      return 0;
-> > --
-> > 2.20.1
-> >
+> >   bsd-user/thunk.c | 47 +++--------------------------------------------
+> >   1 file changed, 3 insertions(+), 44 deletions(-)
 >
-> --
-> Peter Xu
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 >
+
+
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+
+
+r~
+>
+>
+
+--000000000000a669d40659740e26
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Aug 19, 2026, 1:48=E2=80=
+=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.henderson@linaro.org"=
+>richard.henderson@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"=
+gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-=
+left:1ex">On 8/18/26 10:20, Peter Xu wrote:<br>
+&gt; QEMU has switched to 64bit-only hosts for all system/user emulations.<=
+br>
+&gt; <br>
+&gt; Signed-off-by: Peter Xu&lt;<a href=3D"mailto:peterx@redhat.com" target=
+=3D"_blank" rel=3D"noreferrer">peterx@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0bsd-user/thunk.c | 47 +++---------------------------------=
+-----------<br>
+&gt;=C2=A0 =C2=A01 file changed, 3 insertions(+), 44 deletions(-)<br>
+<br>
+Reviewed-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson@lina=
+ro.org" target=3D"_blank" rel=3D"noreferrer">richard.henderson@linaro.org</=
+a>&gt;<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"=
+auto"><br></div><div dir=3D"auto">Reviewed-by: Warner Losh &lt;<a href=3D"m=
+ailto:imp@bsdimp.com">imp@bsdimp.com</a>&gt;</div><div dir=3D"auto"><br></d=
+iv><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote =
+gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0 =
+0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
+r~<br>
+<br>
+</blockquote></div></div></div>
+
+--000000000000a669d40659740e26--
 
