@@ -4,80 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05531C5DF82
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 09:08:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AF58C5DF82
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 09:17:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwykx-0005W3-9M; Thu, 20 Aug 2026 05:08:15 -0400
+	id 1wwytO-0007UC-Ul; Thu, 20 Aug 2026 05:16:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wwykw-0005Vq-Ck
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 05:08:14 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wwytN-0007Ty-9N
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 05:16:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wwykv-0005rJ-0v
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 05:08:14 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wwytL-0007Va-NM
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 05:16:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787216892;
+ s=mimecast20190719; t=1787217414;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uecjAU2gYRvxn8fyHC3pgm+iKARx1K9M8EVQ6QBZHVE=;
- b=Cl7EDWY3CI1skWolSVlEGuJfsLTz5FCCFJTqq1o5gicZp8wSaKujcDgwyl+lZ6bmuL1SiG
- O0AvKDTLLBkkVQTEv/u/K5MwM+6z3V37bEql0iFZbjiybi/y9C2dXk04lAoBfV6L2CF5+F
- imxVcHD7+7LXOs1JFuyJXYhOoOgqKx8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=bpHna6wP0Ley8lIGpZRXmpAgnbZFmLgNWcMA/+hwyII=;
+ b=KHrBiVv7kquvhZgAAhr9zNYLyIerGYNq+eUjzEHg2zVorOdKAO1viS/lfi8COsy7CP54EH
+ cWUJocRZFzxavqtYVsjki/YHEORHVFuquQZwDexxfSXLTBuyGtnHBb34oU8EoluKsPQeMg
+ Y8/JaNvTB7RDOS3fGBSUVhYRasUlAHk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-349-Dl9Q59jZN1mD5EGFayX7Gw-1; Thu,
- 20 Aug 2026 05:08:04 -0400
-X-MC-Unique: Dl9Q59jZN1mD5EGFayX7Gw-1
-X-Mimecast-MFC-AGG-ID: Dl9Q59jZN1mD5EGFayX7Gw_1787216882
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-XAm8tHoMMs-TH8ZPokDPZw-1; Thu,
+ 20 Aug 2026 05:16:51 -0400
+X-MC-Unique: XAm8tHoMMs-TH8ZPokDPZw-1
+X-Mimecast-MFC-AGG-ID: XAm8tHoMMs-TH8ZPokDPZw_1787217409
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 36B7A180049D; Thu, 20 Aug 2026 09:08:01 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 274AF1955BDD; Thu, 20 Aug 2026 09:16:49 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.12])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CEEB7180034F; Thu, 20 Aug 2026 09:07:59 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 65B1519560AB; Thu, 20 Aug 2026 09:16:48 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3D0C521E6920; Thu, 20 Aug 2026 11:07:57 +0200 (CEST)
+ id ECA8021E6920; Thu, 20 Aug 2026 11:16:45 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: Jamin Lin <jamin_lin@aspeedtech.com>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@kaod.org>,  Peter Maydell <peter.maydell@linaro.org>,  Steven Lee
- <steven_lee@aspeedtech.com>,  Troy Lee <leetroy@gmail.com>,  Kane Chen
- <kane_chen@aspeedtech.com>,  Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>,  Eric Blake <eblake@redhat.com>,  Fabiano
- Rosas <farosas@suse.de>,  Laurent Vivier <lvivier@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  "open list:All patches CC here"
- <qemu-devel@nongnu.org>,  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- Troy Lee <troy_lee@aspeedtech.com>
-Subject: Re: [PATCH v1 1/8] qapi/crypto: Add ECDSA algorithm and curve id
-In-Reply-To: <20260818092249.602137-2-jamin_lin@aspeedtech.com> (Jamin Lin's
- message of "Tue, 18 Aug 2026 09:22:53 +0000")
-References: <20260818092249.602137-1-jamin_lin@aspeedtech.com>
- <20260818092249.602137-2-jamin_lin@aspeedtech.com>
-Date: Thu, 20 Aug 2026 11:07:57 +0200
-Message-ID: <87h5kp2m8i.fsf@pond.sub.org>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: jasowang@redhat.com,  mst@redhat.com,  peterx@redhat.com,
+ farosas@suse.de,  raphael.s.norwitz@gmail.com,  bchaney@akamai.com,
+ qemu-devel@nongnu.org,  berrange@redhat.com,  pbonzini@redhat.com,
+ yc-core@yandex-team.ru,  mark.caveayland@nutanix.com,  Jason Wang
+ <jasowangio@gmail.com>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v21 15/16] net/tap: support local migration with virtio-net
+In-Reply-To: <20260819180201.1970193-16-vsementsov@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Wed, 19 Aug 2026 21:01:58 +0300")
+References: <20260819180201.1970193-1-vsementsov@yandex-team.ru>
+ <20260819180201.1970193-16-vsementsov@yandex-team.ru>
+Date: Thu, 20 Aug 2026 11:16:45 +0200
+Message-ID: <87cxvd2ltu.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,85 +88,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jamin Lin <jamin_lin@aspeedtech.com> writes:
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-> Introduce a new asymmetric cipher algorithm, ECDSA, a curve identifier
-> enum (prime256v1 / NIST P-256 and secp384r1 / NIST P-384) and the
-> per-algorithm ECDSA options. This is the QAPI groundwork consumed by the
-> crypto akcipher backends in the following patches.
+> Support transferring of TAP state (including open fd).
 >
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-
-Why do you need this algorithm?  Oh, the cover letter explains.  Please
-add a suitable brief explanation to this commit message, too.
-
-> ---
->  qapi/crypto.json | 33 +++++++++++++++++++++++++++++++--
->  1 file changed, 31 insertions(+), 2 deletions(-)
+> Add new property "x-permit-local-migration", which defines whether
+> local migration is actually permitted for this TAP device.
 >
-> diff --git a/qapi/crypto.json b/qapi/crypto.json
-> index 6e3a98ff68..016d7c65bf 100644
-> --- a/qapi/crypto.json
-> +++ b/qapi/crypto.json
-> @@ -557,10 +557,26 @@
->  #
->  # @rsa: RSA algorithm
->  #
-> +# @ecdsa: ECDSA algorithm
+> Note that local-migration is enabled by global "local" migration
+> parameter, but individual devices may have additional options to
+> enable/disable it per device.
+>
+> The tricky thing is that we need to know whether to call open/connect in
+> TAP initialization code, i.e. we need to know the value of migration
+> parameter "local" when creating the TAP device.  For incoming migration,
+> we can know only for TAP devices created with QMP after setting the
+> migration parameter with QMP.
+>
+> So the full picture is:
+>
+> On source, to start outgoing "local" migration you need:
+>
+>  - migration parameter "local" set to true
+>  - "x-permit-local-migration" TAP option set to true
+>
+> If at least one of these options is not set, TAP backend
+> doesn't participate in migration.
+>
+> On target, things are more difficult:
+>
+> Same, you need both "local" and "x-permit-local-migration"
+> be set. And same, if one of them is not set, TAP backend
+> is initialized as usual, and doesn't accept any incoming
+> state.
+>
+> Additionally, if you are going to set "local", it must be
+> set before creating the TAP device. If TAP device created
+> with "local" unset, it initializes as usual. If you enable
+> "local" after it and start incoming migration, it will fail
+> in .pre_load handler of TAP backend.
+>
+> Moreover, there are interface restrictions: if you create TAP
+> device when QEMU is in INCOMING state, and both "local"
+> and "x-permit-local-migration" set, most of TAP options are
+> not allowed, and script/downscript are required to be explicitly
+> disabled.
+>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Reviewed-by: Ben Chaney <bchaney@akamai.com>
 
-Missing (since 11.2)
-
-> +#
->  # Since: 7.1
->  ##
->  { 'enum': 'QCryptoAkCipherAlgo',
-> -  'data': ['rsa']}
-> +  'data': ['rsa', 'ecdsa']}
-> +
-> +##
-> +# @QCryptoCurveID:
-> +#
-> +# The supported elliptic curves.
-> +#
-> +# @prime256v1: NIST P-256 curve (prime256v1)
-> +#
-> +# @secp384r1: NIST P-384 curve (secp384r1)
-> +#
-> +# Since: 11.2
-> +##
-> +{ 'enum': 'QCryptoCurveID',
-> +  'data': ['prime256v1', 'secp384r1']}
->  
->  ##
->  # @QCryptoAkCipherKeyType:
-> @@ -605,6 +621,18 @@
->    'data': { 'hash-alg':'QCryptoHashAlgo',
->              'padding-alg': 'QCryptoRSAPaddingAlgo'}}
->  
-> +##
-> +# @QCryptoAkCipherOptionsECDSA:
-> +#
-> +# Specific parameters for the ECDSA algorithm.
-> +#
-> +# @curve-id: the elliptic curve to use
-> +#
-> +# Since: 11.2
-> +##
-> +{ 'struct': 'QCryptoAkCipherOptionsECDSA',
-> +  'data': { 'curve-id': 'QCryptoCurveID' }}
-> +
->  ##
->  # @QCryptoAkCipherOptions:
->  #
-> @@ -618,4 +646,5 @@
->  { 'union': 'QCryptoAkCipherOptions',
->    'base': { 'alg': 'QCryptoAkCipherAlgo' },
->    'discriminator': 'alg',
-> -  'data': { 'rsa': 'QCryptoAkCipherOptionsRSA' }}
-> +  'data': { 'rsa': 'QCryptoAkCipherOptionsRSA',
-> +            'ecdsa': 'QCryptoAkCipherOptionsECDSA' }}
-
-With the missing since corrected, QAPI schema
+QAPI schema
 Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
