@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F66C5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:01:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A031C5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:02:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx5CU-0000t1-EL; Thu, 20 Aug 2026 12:01:06 -0400
+	id 1wx5DB-0001Se-7G; Thu, 20 Aug 2026 12:01:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wx5CS-0000q9-Sv
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:01:04 -0400
+ id 1wx5D9-0001Qv-HL
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:01:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wx5CQ-0001Te-Nv
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:01:04 -0400
+ id 1wx5D7-0001ZQ-Sn
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:01:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787241661;
+ s=mimecast20190719; t=1787241705;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bfcVWwh/y440qFMJt0bsGIXtJnzC4KlT0imLo1y60K4=;
- b=U+TJrE+n9K9zcWIFFAxFdSSc2yNYnV7ypBc6QsZJxKuEink30EC3VHI2dFUmqQMp4Ttinu
- ThAvhoanZ70rPnTejK7YTYwysUOL5g1I7WfBnvZKiFG69NUPL4ktZKDIhytPGCKRuOU7Wc
- QB+HfnmF49teOhavTygrIsZ8YYTUCIw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jgxfJA5YmAPMWiGBYOTfNd4f6lfx0My1rIrOn4iPbsE=;
+ b=MObRl0X8gt7ZZps5NfFTz4zxuHQF6l8d4ZidiwE4z1hzbHGK1FgP6tXE3fYDvNKORo43PO
+ ZjY8F+a7jGPPo21S5F+KiUirHg9KmBO1QMlMLCVc+84PZf/DNW54U0QHqnvaM0+1Qlekyg
+ gUlvhBnqw4Q4Z5HiOP+IkMKeBtfevKM=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-182-Z_9m3VgwNuyBNuTiO81X2A-1; Thu, 20 Aug 2026 12:00:59 -0400
-X-MC-Unique: Z_9m3VgwNuyBNuTiO81X2A-1
-X-Mimecast-MFC-AGG-ID: Z_9m3VgwNuyBNuTiO81X2A_1787241658
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-490a767b782so18597415e9.2
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:00:59 -0700 (PDT)
+ us-mta-170-6ZpywneoPfqb0UbdlPkF-g-1; Thu, 20 Aug 2026 12:01:38 -0400
+X-MC-Unique: 6ZpywneoPfqb0UbdlPkF-g-1
+X-Mimecast-MFC-AGG-ID: 6ZpywneoPfqb0UbdlPkF-g_1787241698
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-47eaa4006a1so565724f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:01:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787241658; x=1787846458;
+ d=1e100.net; s=20251104; t=1787241697; x=1787846497;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:reply-to:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=bfcVWwh/y440qFMJt0bsGIXtJnzC4KlT0imLo1y60K4=;
- b=nBUbpVyGxZ1V/BBX6vISLWyrNRUeFXgehZePXRVJuDTcHR1d0za0UqWtK9RHamZATL
- hKd2RcIJhSSD2nECdw8Mt5NZF6eTxrVmzZzcTyKxgwuVwABItSj1Wgi4MZrlKnAdHDRI
- JOHDeCOrGLNcijGvtDxyqyw5TRFiD3lFpvk+h+IENNV/3MKKyTsTnF+T1UiuWDZYc84Z
- h21EKSXVSBt8c1jRenPCffRo/CUsJfpmtIsooSz9ofOABAV7vbB7a+UqT1+TNELX25Bc
- KCh3kXqqnnhkdo3ldI6vn0PrM7qu/4oiRMEkrxJZ/5ZW9JkbryBSxnHSsIwUM9vaWadT
- kgCg==
-X-Gm-Message-State: AOJu0Yx5banFm0fwctkurb+k9J/7CIeOYTWdHaR7dYInCve3C2wssBJu
- 20ycIZ9AlxGo9GOIVoeJTNI2DPnGc0tqWglOU59OmrPDAt0UYOWyj/e2NgABk5XnkULaQQscYry
- wR0gC59VZR+NvYM1tRks/wC0VZHuW2K7VF+JJpXYVNUWIp5Ru/lxP5/dH
-X-Gm-Gg: AR+sD11XVhQQMZ8q+eyB1wKDUZHpXzwIzBf0IJQ6nSaT9sH3eOvqGbkIWZYkbfdz9Bp
- Hah3qyV40k1NOa3DjdKPgdxiq4sIhcCp1idPZzX1jAFXL2A6n4IiQ4hMevpgUsfGJphmDKVu2h+
- A+h3k2bHdaXaxeblQ8GudnuoNcQUNEGtHU83miOi5FzjuRPzWxbgqwepsnWiUzPGYRPO9CEAKt9
- fUvQQdcwMEH85zsYjCiJHmNLF/lPmLXqimc5b4cDG0hGXKI0ZAa0sNpSGF1SUTuGp/Zk1pEyA5s
- uOO7ZdvYqKvB5DcJADUid0r3Q+Ss501jNvLx0FhQpwJBtEsXkNgZBnAzKchjcnSKDA2mq3ECVJ5
- ReG+Dvr9BoJU3GthAaHJyUT09hox3XBdMDtBajQWoo6h3NhV6
-X-Received: by 2002:a05:600c:8b62:b0:499:a6ae:20a1 with SMTP id
- 5b1f17b1804b1-499aa1dc5b6mr266871925e9.14.1787241657676; 
- Thu, 20 Aug 2026 09:00:57 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b62:b0:499:a6ae:20a1 with SMTP id
- 5b1f17b1804b1-499aa1dc5b6mr266870255e9.14.1787241657090; 
- Thu, 20 Aug 2026 09:00:57 -0700 (PDT)
+ bh=jgxfJA5YmAPMWiGBYOTfNd4f6lfx0My1rIrOn4iPbsE=;
+ b=Lce2HUdU0VWzE9eXyxgOwYEIEomYNTGTvoTwhXHAOftGLWQzPO782zB/KgraxcN6tx
+ +vswVEbFPKuRfbSHsTbh022ddR/2Bc7+3atviSHEiNQMaRUXRmrqlHLrFGJEA4r8RTNb
+ ALGxz66Fb+Gx9yPLMIbI73EAXBWh/Vjl6l+SCJd7DCHA1ELj2UbtJ/T3u4bNd/fd4SjE
+ eIRMqpkZlyO3HrqP4pWuGgDK2hIMOoebiL5TQ+SnExjsbPTeog5IUq7S7KWzYEpSBjZP
+ TPjyUrZq3oDN6oohJqBtk+xteF3YgpjNsqyoLvScA/t/ZLMAYVgN2I+EYb2Q2Xc4duJn
+ JI2w==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoiS0kjr1dlu3Ep3Abnzfsznx2EF/JPDIde1uqc7F18Sa2g1i2Kx3r35DtlmBcNulyLdPkGq5Lqm5nB@nongnu.org
+X-Gm-Message-State: AFuF++l9/WJsvYuvgi6fr+njmjfj0wdmleqjeTugzappmqYLQ2xoSeg6
+ CNKl9jfJ9pS1kFd1lTVp3+dYG8EKU/HbU9dOLW8Bcv6kPzXO+kTfsnG2iIHiJCTWn6wvDEzIv+Z
+ IxxWefy6PPPCGiM3jgrppf7o/dt5Xh4j72HGt/BAXI62DGH7R5PHCWD81
+X-Gm-Gg: AR+sD11dM0lHWznLwMClaR4Qxoru9zg9nqnMMPHiwWtoUWUN1Los8slwEGl8qrp7bmT
+ YkQuYKHl4HeOkk1feuFyONptvSPyKDzRBM8Mfp55mpAmBFhPlxRlG9GnCOhqqhX0XgUo+7fZI6I
+ Uv2wq+Xg3IW9rvfBRZPZlVgLZB67hP9UiAUf4ZHCaXhWkdoguymo4YF+N7sO5bO5YygUFGZaYpW
+ Y4TWQo7ur3EKsRpIb4pkyKL4udUGG1KRjfizQYXc8vwxGTIIRcXAv3NEiO/YLXbtIiqIN/zF4n5
+ NT3kUvUfYdx7HsIUoLDl+avUBtGQWAoxRZrDkf33IA7nYPjofCVdGK4eUTG1VyMyJ0DZUb4YSmR
+ /xpsyahb+jIXjtB8/kIDjuf0Jc0WTr21yc2V7zvBvjDjkEL00
+X-Received: by 2002:a05:6000:4b06:b0:47f:e746:dcab with SMTP id
+ ffacd0b85a97d-482b785dc08mr13918654f8f.10.1787241697497; 
+ Thu, 20 Aug 2026 09:01:37 -0700 (PDT)
+X-Received: by 2002:a05:6000:4b06:b0:47f:e746:dcab with SMTP id
+ ffacd0b85a97d-482b785dc08mr13918516f8f.10.1787241697127; 
+ Thu, 20 Aug 2026 09:01:37 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499aa0fda98sm231359415e9.1.2026.08.20.09.00.55
+ ffacd0b85a97d-482bf82594esm267911f8f.29.2026.08.20.09.01.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Aug 2026 09:00:56 -0700 (PDT)
-Message-ID: <4d45766a-f0f5-4e59-b1ca-cf8d5b039a80@redhat.com>
-Date: Thu, 20 Aug 2026 18:00:54 +0200
+ Thu, 20 Aug 2026 09:01:36 -0700 (PDT)
+Message-ID: <9ac6089a-2dad-441b-8ec7-f6c03cdad312@redhat.com>
+Date: Thu, 20 Aug 2026 18:01:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH v3 16/19] qmp: add query-cpu-props-info command
 Content-Language: en-US
-To: Khushit Shah <khushit.shah@nutanix.com>,
- Markus Armbruster <armbru@redhat.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+To: Khushit Shah <khushit.shah@nutanix.com>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
  "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
  "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
  "cohuck@redhat.com" <cohuck@redhat.com>,
@@ -103,19 +105,12 @@ Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
  Prerna Saxena <prerna.saxena@nutanix.com>
 References: <20260716213858.609699-1-khushit.shah@nutanix.com>
  <20260716213858.609699-17-khushit.shah@nutanix.com>
- <87y0f5u78t.fsf@pond.sub.org>
- <6AA3BD42-9596-476B-9F64-AB09372821B9@nutanix.com>
- <87tspa5skn.fsf@pond.sub.org>
- <FD805FA0-9323-450C-9D79-319C0883F05E@nutanix.com>
- <FDD5760F-94E6-46F4-AC62-AB0DC98322FD@nutanix.com>
- <8733wu5qfs.fsf@pond.sub.org>
- <08DA9B28-D5BD-4EC3-8182-FEE212F0C2A0@nutanix.com>
- <871pcd12bf.fsf@pond.sub.org>
- <5F6481F1-B5E1-4B30-A4D1-481D9C0731AC@nutanix.com>
- <87o6fgzopu.fsf@pond.sub.org>
- <7B2898F0-DA7A-4DFD-A2CB-997833A47A05@nutanix.com>
+ <878q6m5qox.fsf@pond.sub.org>
+ <3099C064-6051-4B93-BE0F-C54B7FD91D82@nutanix.com>
+ <9909725f-7dd8-4f88-b016-2a6134906a60@redhat.com>
+ <676C0BA3-A842-4784-84D2-8B446E8CAB67@nutanix.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <7B2898F0-DA7A-4DFD-A2CB-997833A47A05@nutanix.com>
+In-Reply-To: <676C0BA3-A842-4784-84D2-8B446E8CAB67@nutanix.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124;
@@ -145,18 +140,19 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 8/6/26 11:24 AM, Khushit Shah wrote:
+On 8/18/26 11:46 AM, Khushit Shah wrote:
 >
->> On 5 Aug 2026, at 6:52 PM, Markus Armbruster <armbru@redhat.com> wrote:
+>> On 14 Aug 2026, at 7:08 PM, Eric Auger <eric.auger@redhat.com> wrote:
 >>
 >> !-------------------------------------------------------------------|
 >>  CAUTION: External Email
 >>
 >> |-------------------------------------------------------------------!
 >>
->> Khushit Shah <khushit.shah@nutanix.com> writes:
+>> Hi Khushit,
 >>
->>>> On 5 Aug 2026, at 12:28 PM, Markus Armbruster <armbru@redhat.com> wrote:
+>> On 8/5/26 8:47 AM, Khushit Shah wrote:
+>>>> On 4 Aug 2026, at 12:15 PM, Markus Armbruster <armbru@redhat.com> wrote:
 >>>>
 >>>> !-------------------------------------------------------------------|
 >>>> CAUTION: External Email
@@ -165,46 +161,52 @@ On 8/6/26 11:24 AM, Khushit Shah wrote:
 >>>>
 >>>> Khushit Shah <khushit.shah@nutanix.com> writes:
 >>>>
->>>>>> On 4 Aug 2026, at 12:21 PM, Markus Armbruster <armbru@redhat.com> wrote:
->>>>>>
->>>>>> !-------------------------------------------------------------------|
->>>>>> CAUTION: External Email
->>>>>>
->>>>>> |-------------------------------------------------------------------!
->>>>>>
->>>>>> Khushit Shah <khushit.shah@nutanix.com> writes:
->>>>>>
->>>>>> [...]
->>>>>>
->>>>>>> Stub file was missing on arm user builds. 
->>>>>>>
->>>>>>> I have fixed this on the private branch if you want to take a look.
->>>>>> I'm willing to pull an update to v3, assuming it's a small fix.
->>>>> It is a small fix :)
->>>> Please tell me what to pull.  When you're ready, of course.
->>> It’s on the same private branch: https://urldefense.proofpoint.com/v2/url?u=https-3A__github.com_khushit-2Dshah-2Dnx_qemu_tree_upstream-2Drfc-2Dv3-2Dfixups&d=DwIFaQ&c=s883GpUCOChKOHiocYtGcg&r=PGWMyignA0NiDmTlyP7vOTHozBws_VN86yrVmSMkBp0&m=lv46ybodStjAtdapjMwLnohED9-uQST3KdkvwYej9yhiKYNrRdzDyHjeuYqUxdyg&s=7IbcSv1pGL29PTHAOxj2lZWr2tySQeQqB88qHxlTpvE&e=
->> Builds, but fails "make check" on my box *sigh*.
->>
->> tests/qtest/qmp-cmd-test.c needs an update.
-> :’)
->
-> Fixed it, available on: 
-> https://github.com/khushit-shah-nx/qemu/tree/upstream-rfc-v3-fixups
->
-> On my machine, qemu:qtest+qtest-aarch64 / qtest-aarch64/device-introspect-test
-> still fails. (It will likely not fail for you if you are on (arm + kvm or any
-> other Arch))
->
-> I have reported this to Eric as the fail stems from the base "customizable host
-> model” series.
+>>>>> Introduce the 'query-cpu-props-info' QMP command. For CPU model
+>>>>> properties it reports the type (boolean or number) and the set of values
+>>>>> supported under the active accelerator and host.
+>>>>>
+>>>>> For numbers the supported values are expressed as a list of inclusive
+>>>>> {min, max} ranges; for booleans as the list of allowed true/false
+>>>>> values.
+>>>>>
+>>>>> The command and its return types (CpuPropertyType, CpuPropertyInfo and
+>>>>> friends) are defined in qapi/machine.json rather than an Arm-specific
+>>>>> schema, since the concept applies to other targets (e.g. x86, riscv)
+>>>>> too. Target that do not implement it return an error.
+>>>>>
+>>>>> The Arm/KVM implementation spins up a scratch "host" vCPU object,
+>>>>> walks its QOM properties: SYSREG_ ID-register fields become 'number'
+>>>>> properties whose ranges come from arm_field_get_supported_values(),
+>>>>> and the advertised feature toggles become 'boolean' properties.
+>>>>>
+>>>>> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
+>>>> This explains what the command does and how it's implemented.  It's
+>>>> silent on the most important aspect: why do we want the command?  What
+>>>> is its intended purpose?
+>>> Will add something like:
+>>>
+>>> This helps the management stack to discover which values are supported
+>>> for a given CPU property. This is especially important for non-boolean
+>>> properties, where knowing that the host has value 'x' does not inherently
+>>> reveal the full range of valid values supported on the host.
+>> How does x86 handle this at the moment, they don't have the cmd either?
+>> How do they currently introspect what are the valid values for a
+>> specific host? Is it easier for them?
+> x86 is much simpler, all the cpu features properties are backed by cpuid bits
+> and assumption is simple, if host value is “true”, “false" is supported, and
+> if the host value is “false", “true" is not supported.
 
-yes my bad, this will be fixed in v8
+OK thanks!
 
 Eric
 >
-> Sorry for the hiccups, and thanks for your patience, will take care from now on.
->
->
->
+> Warm Regards,
+> Khushit
+>>
+>> Thanks
+>>
+>> Eric
+>>>
+>>>
 
 
