@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD991C5DF87
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 12:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B60BC5DF87
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 12:49:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx2CG-0004qj-Hw; Thu, 20 Aug 2026 08:48:40 -0400
+	id 1wx2CJ-0004uv-Gq; Thu, 20 Aug 2026 08:48:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wx2CD-0004p1-Vv
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:48:38 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wx2CH-0004rj-5I
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:48:41 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wx2CB-0001XI-7B
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:48:37 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-6a173ad7cf4so3731900a12.3
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 05:48:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wx2CD-0001Yb-O6
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:48:40 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-6a36982a875so3484643a12.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 05:48:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787230114; x=1787834914; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787230116; x=1787834916; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=4MRvYdw615nh8ZPgiL5QIiN8untfHb3/fkVaP/Y9iL0=;
- b=IeYnbHXjBv50SjvzQjBQzhnbv5BPSuMSL7q4m3RQuRtVkhuzHCOjJm91MRq3YMAMmK
- 0RRx1rxP2TLdQlLuZHattVCjFvWqE3fd++80AuKDae9gbvcvX3TpiIQPv+a/r652U/tA
- EsbQP5l0lYSYx0pwrAbHnuYF9LVvNt+7zwBhc+bRXvsKq6jWfPm1PqCNXpkIqM3d6MLQ
- KPPHkoUuCHYg3FnFBrAjpb1v/cz/3Jb7e9PFWsFqyTthMh8u/LWK/RCke7Lsqd5disWY
- xu/ntBqPFZ7izLo7O9hE/h0+r3cevpMB07BHhjCvUmsk7vFtikksMG+mtlVVBcSfLk3V
- Tw1w==
+ bh=sS1gXEmemUC6ULE4hdREjbYJb8+o5+CI4A9QQ0fRey8=;
+ b=Tf8Cq8fKBOjXg/Zo4JN3ji8FDXzmQ8daG9kYB699w+bvC0jGmxWHO80E/iQ4/A4Pv8
+ B8IjNsd/OafDxrxPjtIucHL6HfII6GAHId5Ixpwpq6UmApvymgzFi+LHTKUVnP5U0pB7
+ frV+ct164jdKOKMr0sfM61jlPN+rkvX9qoic9SBNTek5JFe6tiqAjc2YWAvKopqn6/ja
+ wniy//nwJgyC7KetaIdVjI3MI4duAzaqkGBM4K0muK+GOX8nWwEcoA3PAUy3t/YNkfUr
+ Rkw+nn8+Z5FKb9VCKsK+TqdPIQPoB3ACRxWsYBGcqdyyhcP8wMebw+7E5xZa7fWpN4L/
+ kuUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787230114; x=1787834914;
+ d=1e100.net; s=20251104; t=1787230116; x=1787834916;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=4MRvYdw615nh8ZPgiL5QIiN8untfHb3/fkVaP/Y9iL0=;
- b=JNcVTAbJCSyN5TLGncMAxDzooNdMCpJoidEuIL0V6ZIiqVBB8opQElxJMLiWPsfq1b
- q/6msnlnHFtCBUOjg69FaRikANZrWu6D/Oyfq/LKTX+OszkMVqYlfQFlWiVEIoeDRp3D
- Xs2ZRG8i/rgOirzS94G45qL5LLwhc22WHCfJ26Jl3cEytrGtqhf9KSWmYDjvppPqB8wC
- ToD2Cvh+D67+ZWdeXm2gcODUk8quTIO+4s7QsQX1kO9oyGtI/lcJOffK+qdnq0BVdTgZ
- Lmz79ruAZEganhx6Nd2a4vWCudHRp5knjceZkbNvhutYULfpqo8ZMF+wycDBvn2nk1LR
- vzZA==
-X-Gm-Message-State: AFuF++nWIGt5LnbmFeH4y2RZU49qa7uElDJOrayC4EUcMzA2mhlR78/+
- NPY9c3IGYQ19ykKpoevQy0oIF7js0M9Fd17c5X6p5OWGMuiB4kh/gE5Ot52/RQuA
-X-Gm-Gg: AR+sD10GgmeGtKiTL68K22pPfwvBmJUVSW3QRw7Td/Vb9tZVWxZyk4yhh0XcnjasHa4
- 2Kt1aWMB98fX1TOUaF5p88vqPMbBRkyoHK0JMoZ/qea9Qd59us3gPAeN5ox4FSy1W6YPBEMYDKq
- tqYmr4bEiz4nypMicmCKtg4h2koMkcrs5SOOkSlsTAzo3zg3av4hLVmAXnQXC2N1FdQrJrGn/6c
- RcjG+XkYtFfIpqwZFFBsb7z2mHnHZTidfwIoNPpbdQ1eUlHQEViY994EjER7HrtrcYdN2aqAoQ3
- 5fpQETiEriflljLzCy/cE6jzNFpCSoxRMJwhD/1g/l7AKMAJ3EBLE/DFUtUnEXIJ7ZeD6AWzJNh
- bXGkcGqKMqwexuHVf1YKO17NasYWW6TjZJEOkluoOD1ent37w3EcO1y8Xrz+Le2wAJG7nGTOytA
- eLP3o1tiTdTF/WGOMKrU97UILn8k2PRVM54s4gRF/VME1S9mH8/x3j3Oeixf1kGoXeAk/+ngFd4
- CR72N9SNbU=
-X-Received: by 2002:a05:6402:42cb:b0:6a3:f8ab:19f7 with SMTP id
- 4fb4d7f45d1cf-6a4032f4508mr8312845a12.11.1787230113266; 
- Thu, 20 Aug 2026 05:48:33 -0700 (PDT)
+ bh=sS1gXEmemUC6ULE4hdREjbYJb8+o5+CI4A9QQ0fRey8=;
+ b=MoW3l4Ymupdf2R53zBw2oX36hk7u1c3b2biDulYHYRfYDBo/fdKHmgnuSHLPZHDAr5
+ 6Cw52nelHK1vOlSJ5GgRVVojrE8gqvla50aELQ73k4bmoXmGVQc3hY2nxr2n86Q4uf6+
+ xE7pxRk/us/aMPD0XPcnIStA4PpqRTd/hug+gjzosTgOnWEW8v4YeZOgRaT78GJZ6Ats
+ 6N8jriehhBpwd3Robmn/K/aIdrpL7dPZg6Sgv7ga5HuvBRGZwFMp5N2YiZlWkDKRxyL/
+ OPETbnbp7I2RoChdU9I550lp3Aj5YqPG3500IaGM/1LZwGSc4R0MyuWncyUTKnIvdxnj
+ vU4g==
+X-Gm-Message-State: AFuF++kVWx0ST15JGd4Xyv0REWzxr92KwE5BuCVmRkZdd+ZsfYYbhnCy
+ 5VXaTbWcaBky70sQU7u3hlK6COFUAqPmQAlnG70PnzRa+cdL9Gb/F9uRXNmHWvAC
+X-Gm-Gg: AR+sD11T3JQEuQpylOGgQBBlVMXJd8d3XXWUCYhV8sWczhU5MrsRWaX2+yryDtovPgf
+ wUpdeH1wW1Y2dZryYf/DXymqoqcsZ/FQBSfQ2WDggIbAMXNNtvm3lG3H7tBJzzQVCtgzp+faW7Y
+ Twxz91kWu59YJBSbzIZ4LY6/VpIare2kw+AQi7I97dcv55ZjhiMPuCjvX2QqS5h7qvyROlTJfWq
+ W9JPQfW6byN/Fc/K5BbOGpiQEWK/q1J6GfBWcES5wuU1AHKc+085FNztwmKp9YvcrS78LuufmVf
+ gT8lMqOp7AtZHJ6nbyk11ROemviB/kcm4AMV8HE1JpUKuvxW0kiy2C5TOBqlau604c3fPBxPlSM
+ 10lu7Z/laRpsby8xyEoNWFpXL2upjVHoemlRwgg11WUYr8Tn7SqLxBOaNayHGV/hKqyjLeE1wxj
+ TvqE2jAXK7ik4fh1Xa1/nAHMpmp5KIwaX/eNGnceVgoFwAJQEGAx8JwLqmyLoEuoAnHGfqx+HU6
+ 7+zGS/+X2c=
+X-Received: by 2002:a05:6402:2403:b0:6a3:e813:8457 with SMTP id
+ 4fb4d7f45d1cf-6a4032f9c61mr9187666a12.12.1787230115922; 
+ Thu, 20 Aug 2026 05:48:35 -0700 (PDT)
 Received: from DE-PF5B95TD.embedded.cmblu.dev ([87.129.199.250])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a3ff1563c5sm2270449a12.14.2026.08.20.05.48.32
+ 4fb4d7f45d1cf-6a3ff1563c5sm2270449a12.14.2026.08.20.05.48.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 05:48:32 -0700 (PDT)
+ Thu, 20 Aug 2026 05:48:35 -0700 (PDT)
 From: Wadim Mueller <wafgo01@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Bin Meng <bmeng.cn@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Wadim Mueller <wafgo01@gmail.com>
-Subject: [RFC PATCH v2 02/14] hw/i2c/omap_i2c: implement soft reset and NACK
- reporting
-Date: Thu, 20 Aug 2026 14:48:02 +0200
-Message-ID: <20260820124824.618671-3-wafgo01@gmail.com>
+Subject: [RFC PATCH v2 05/14] hw/timer: add TI K3 DMTimer model
+Date: Thu, 20 Aug 2026 14:48:05 +0200
+Message-ID: <20260820124824.618671-6-wafgo01@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260820124824.618671-1-wafgo01@gmail.com>
 References: <20260820124824.618671-1-wafgo01@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=wafgo01@gmail.com; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=wafgo01@gmail.com; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,311 +102,262 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the pieces of the controller that the TI K3 ROM/SPL and the Linux
-omap-i2c driver actually exercise:
-
- - OMAP_I2C_SYSC.SRST triggers a soft reset and SYSS.RDONE reports its
-   completion, instead of the register being a plain scratch value.
- - A transfer to an address that nobody acknowledges raises STAT.NACK and
-   ends the transfer, rather than being silently completed.
-
-This allows to let a guest probe an I2C bus and correctly conclude that a
-device is absent.
+Add a model of the K3 DMTimer used, among others, by the R5 SPL for its
+udelay() implementation. It is a free-running counter with load/reload and
+overflow interrupt.
 
 Signed-off-by: Wadim Mueller <wafgo01@gmail.com>
 ---
- hw/i2c/omap_i2c.c | 234 +++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 232 insertions(+), 2 deletions(-)
+ hw/timer/Kconfig                 |   3 +
+ hw/timer/meson.build             |   1 +
+ hw/timer/ti-k3-dmtimer.c         | 177 +++++++++++++++++++++++++++++++
+ include/hw/timer/ti-k3-dmtimer.h |  30 ++++++
+ 4 files changed, 211 insertions(+)
+ create mode 100644 hw/timer/ti-k3-dmtimer.c
+ create mode 100644 include/hw/timer/ti-k3-dmtimer.h
 
-diff --git a/hw/i2c/omap_i2c.c b/hw/i2c/omap_i2c.c
-index d6e28a1a89..e56f75d6f5 100644
---- a/hw/i2c/omap_i2c.c
-+++ b/hw/i2c/omap_i2c.c
-@@ -37,6 +37,7 @@ struct OMAPI2CState {
-     I2CBus *bus;
+diff --git a/hw/timer/Kconfig b/hw/timer/Kconfig
+index e1b751a54a..fac5ba5a7e 100644
+--- a/hw/timer/Kconfig
++++ b/hw/timer/Kconfig
+@@ -68,3 +68,6 @@ config AVR_TIMER16
  
-     uint8_t revision;
-+    uint8_t mmio_version;
-     void *iclk;
-     void *fclk;
- 
-@@ -58,6 +59,61 @@ struct OMAPI2CState {
- #define OMAP2_INTR_REV  0x34
- #define OMAP2_GC_REV    0x34
- 
-+/*
-+ * MMIO register layout selector.  The classic OMAP1/OMAP2 "IP V1" map is the
-+ * default and is what every existing OMAP board relies on.  "IP V2" is the
-+ * OMAP4-and-later layout ("ti,omap4-i2c" / "ti,am64-i2c"), which relocates the
-+ * registers and adds the IRQSTATUS_RAW / IRQENABLE_SET / IRQENABLE_CLR set.
-+ * The transfer/reset/NACK engine is shared; only the address decode differs.
-+ */
-+#define OMAP_I2C_MMIO_V1  0
-+#define OMAP_I2C_MMIO_V2  2
+ config HEX_QTIMER
+     bool
 +
-+/* IP V2 register offsets, as used from OMAP4 onwards. */
-+#define OMAP_I2C_V2_REVNB_LO       0x00
-+#define OMAP_I2C_V2_REVNB_HI       0x04
-+#define OMAP_I2C_V2_SYSC           0x10
-+#define OMAP_I2C_V2_IRQSTATUS_RAW  0x24
-+#define OMAP_I2C_V2_IRQSTATUS      0x28
-+#define OMAP_I2C_V2_IRQENABLE_SET  0x2c
-+#define OMAP_I2C_V2_IRQENABLE_CLR  0x30
-+#define OMAP_I2C_V2_WE             0x34
-+#define OMAP_I2C_V2_SYSS           0x90
-+#define OMAP_I2C_V2_BUF            0x94
-+#define OMAP_I2C_V2_CNT            0x98
-+#define OMAP_I2C_V2_DATA           0x9c
-+#define OMAP_I2C_V2_CON            0xa4
-+#define OMAP_I2C_V2_OA             0xa8
-+#define OMAP_I2C_V2_SA             0xac
-+#define OMAP_I2C_V2_PSC            0xb0
-+#define OMAP_I2C_V2_SCLL           0xb4
-+#define OMAP_I2C_V2_SCLH           0xb8
-+#define OMAP_I2C_V2_SYSTEST        0xbc
-+#define OMAP_I2C_V2_BUFSTAT        0xc0
-+
++config TI_K3_DMTIMER
++    bool
+diff --git a/hw/timer/meson.build b/hw/timer/meson.build
+index 8323efaf46..4cf49ef6d6 100644
+--- a/hw/timer/meson.build
++++ b/hw/timer/meson.build
+@@ -32,6 +32,7 @@ system_ss.add(when: 'CONFIG_STM32F2XX_TIMER', if_true: files('stm32f2xx_timer.c'
+ system_ss.add(when: 'CONFIG_XILINX', if_true: files('xilinx_timer.c'))
+ specific_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_timer.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_PWM', if_true: files('sifive_pwm.c'))
++system_ss.add(when: 'CONFIG_TI_K3_DMTIMER', if_true: files('ti-k3-dmtimer.c'))
+ 
+ system_ss.add(when: 'CONFIG_AVR_TIMER16', if_true: files('avr_timer16.c'))
+ 
+diff --git a/hw/timer/ti-k3-dmtimer.c b/hw/timer/ti-k3-dmtimer.c
+new file mode 100644
+index 0000000000..e65098d101
+--- /dev/null
++++ b/hw/timer/ti-k3-dmtimer.c
+@@ -0,0 +1,177 @@
 +/*
-+ * Translate an IP-V2 offset for a register whose semantics are identical to
-+ * the V1 model into the V1 offset the shared read/write switch decodes.
-+ * Returns -1 for offsets that have no direct V1 equivalent (those are handled
-+ * inline by the V2 front-end).
++ * TI K3 DM timer (dmtimer, am654 register layout)
++ *
++ * Minimal TCRR counter model. TCLR.PRE_EN and TCLR.PTV divide the clock
++ * by (2 << PTV); interrupts and PWM we omit.
++ *
++ * Copyright (c) 2026 CMBLU Energy AG
++ * Author: Wadim Mueller <wafgo01@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+static int omap_i2c_v2_to_v1(int offset)
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qemu/timer.h"
++#include "hw/core/qdev-properties.h"
++#include "hw/timer/ti-k3-dmtimer.h"
++
++#define R_TIDR  0x00
++#define R_TCLR  0x38
++#define R_TCRR  0x3c
++#define R_TLDR  0x40
++#define R_TTGR  0x44
++#define R_TWPS  0x48
++
++#define TCLR_ST     (1u << 0)
++#define TCLR_AR     (1u << 1)
++#define TCLR_PTV    (7u << 2)
++#define TCLR_PRE_EN (1u << 5)
++
++static uint32_t dmtimer_effective_freq(TIK3DmTimerState *s)
 +{
-+    switch (offset) {
-+    case OMAP_I2C_V2_BUF:     return 0x14;
-+    case OMAP_I2C_V2_CNT:     return 0x18;
-+    /* DATA (0x9c) is handled inline byte-wise by the V2 front-end. */
-+    case OMAP_I2C_V2_CON:     return 0x24;
-+    case OMAP_I2C_V2_OA:      return 0x28;
-+    case OMAP_I2C_V2_SA:      return 0x2c;
-+    case OMAP_I2C_V2_PSC:     return 0x30;
-+    case OMAP_I2C_V2_SCLL:    return 0x34;
-+    case OMAP_I2C_V2_SCLH:    return 0x38;
-+    case OMAP_I2C_V2_SYSTEST: return 0x3c;
-+    default:                  return -1;
++    uint32_t freq = s->freq_hz;
++
++    if (s->tclr & TCLR_PRE_EN) {
++        uint32_t ptv = (s->tclr >> 2) & 7;
++        freq = s->freq_hz / (2u << ptv);
++    }
++    return freq;
++}
++
++static uint32_t dmtimer_tcrr(TIK3DmTimerState *s)
++{
++    int64_t now;
++    uint32_t eff_freq;
++
++    if (!s->running) {
++        return s->tcrr_base;
++    }
++
++    now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++    eff_freq = dmtimer_effective_freq(s);
++
++    return s->tcrr_base +
++           (uint32_t)muldiv64(now - s->base_ns, eff_freq,
++                              NANOSECONDS_PER_SECOND);
++}
++
++static void dmtimer_set_tcrr(TIK3DmTimerState *s, uint32_t val)
++{
++    s->tcrr_base = val;
++    s->base_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++}
++
++static uint64_t ti_k3_dmtimer_read(void *opaque, hwaddr addr, unsigned size)
++{
++    TIK3DmTimerState *s = TI_K3_DMTIMER(opaque);
++
++    switch (addr) {
++    case R_TIDR:
++        return 0x0;
++    case R_TCLR:
++        return s->tclr;
++    case R_TCRR:
++        return dmtimer_tcrr(s);
++    case R_TLDR:
++        return s->tldr;
++    case R_TWPS:
++        return 0; /* no write is pending, ever */
++    default:
++        qemu_log_mask(LOG_UNIMP,
++                      "%s: unimplemented read @0x%" HWADDR_PRIx "\n",
++                      __func__, addr);
++        return 0;
 +    }
 +}
 +
- static void omap_i2c_interrupts_update(OMAPI2CState *s)
- {
-     qemu_set_irq(s->irq, s->stat & s->mask);
-@@ -162,6 +218,83 @@ static uint32_t omap_i2c_read(void *opaque, hwaddr addr)
-     int offset = addr & OMAP_MPUI_REG_MASK;
-     uint16_t ret;
- 
-+    if (s->mmio_version == OMAP_I2C_MMIO_V2) {
-+        switch (offset) {
-+        case OMAP_I2C_V2_REVNB_LO:
-+            return s->revision;
-+        case OMAP_I2C_V2_REVNB_HI:
-+            return 0;
-+        case OMAP_I2C_V2_SYSC:
-+            return 0;
-+        case OMAP_I2C_V2_IRQSTATUS_RAW:
-+        case OMAP_I2C_V2_IRQSTATUS:     /* STAT mirrors IRQSTATUS_RAW */
-+            return s->stat | (i2c_bus_busy(s->bus) << 12);
-+        case OMAP_I2C_V2_IRQENABLE_SET:
-+        case OMAP_I2C_V2_IRQENABLE_CLR:
-+            return s->mask;
-+        case OMAP_I2C_V2_WE:
-+            return 0;
-+        case OMAP_I2C_V2_SYSS:
-+            /* reset is instantaneous in the model: RDONE always reads set */
-+            return 1;
-+        case OMAP_I2C_V2_BUFSTAT:
-+            return 0;
-+        case OMAP_I2C_V2_DATA: {
-+            /*
-+             * The OMAP4/AM64x driver accesses the DATA register one byte per
-+             * MMIO access (readw of a single byte), unlike the classic V1
-+             * 16-bit FIFO convention.  Pop exactly one byte (oldest first,
-+             * FIFO is filled LSB-first by omap_i2c_fifo_run()).
-+             */
-+            uint8_t b = s->fifo & 0xff;
-+            if (s->rxlen > 0) {
-+                s->fifo >>= 8;
-+                s->rxlen--;
-+            }
-+            /*
-+             * Refill from the slave while the transfer is still live (this
-+             * may complete count_cur and issue the STOP, leaving the last
-+             * few prefetched bytes buffered in the FIFO with the bus idle).
-+             */
-+            omap_i2c_fifo_run(s);
-+            /*
-+             * Drive the RRDY/ARDY handshake directly off the FIFO drain
-+             * state so it keeps working after the bus has gone idle: RRDY
-+             * stays asserted while buffered bytes remain, and ARDY is raised
-+             * once the last byte has been consumed (master-receive).
-+             */
-+            if (s->rxlen > 0) {
-+                s->stat |= 1 << 3;                          /* RRDY */
-+            } else {
-+                s->stat &= ~(1 << 3);                       /* RRDY */
-+                if (((s->control >> 10) & 1) &&             /* MST */
-+                    ((~s->control >> 9) & 1)) {             /* TRX (receive) */
-+                    s->stat |= 1 << 2;                      /* ARDY */
-+                    s->control &= ~(1 << 10);               /* MST */
-+                    /*
-+                     * DCOUNT decrements to 0 on real hardware and stays
-+                     * there; leave it at 0 so a following address-only probe
-+                     * (which programs no CNT) starts from 0 and completes
-+                     * with ARDY instead of waiting for phantom TX bytes.
-+                     */
-+                    s->count = 0;
-+                    s->count_cur = 0;
-+                }
-+            }
-+            s->stat &= ~(1 << 11);                          /* ROVR */
-+            omap_i2c_interrupts_update(s);
-+            return b;
-+        }
-+        default:
-+            offset = omap_i2c_v2_to_v1(offset);
-+            if (offset < 0) {
-+                OMAP_BAD_REG(addr);
-+                return 0;
-+            }
-+            break;
-+        }
-+    }
++static void ti_k3_dmtimer_write(void *opaque, hwaddr addr, uint64_t val,
++                                unsigned size)
++{
++    TIK3DmTimerState *s = TI_K3_DMTIMER(opaque);
 +
-     switch (offset) {
-     case 0x00:  /* I2C_REV */
-         return s->revision;                     /* REV */
-@@ -266,6 +399,83 @@ static void omap_i2c_write(void *opaque, hwaddr addr,
-     int offset = addr & OMAP_MPUI_REG_MASK;
-     int nack;
- 
-+    if (s->mmio_version == OMAP_I2C_MMIO_V2) {
-+        switch (offset) {
-+        case OMAP_I2C_V2_SYSC:
-+            if (value & 2) {                    /* SRST */
-+                omap_i2c_reset(DEVICE(s));
-+            }
-+            return;
-+        case OMAP_I2C_V2_DATA:
-+            /*
-+             * The OMAP4/AM64x driver writes the DATA register one byte per
-+             * MMIO access (writew of a single byte).  Push exactly one byte,
-+             * mirroring the classic 8-bit FIFO path (omap_i2c_writeb()).
-+             */
-+            if (s->txlen <= 2) {
-+                s->fifo <<= 8;
-+                s->txlen += 1;
-+                s->fifo |= value & 0xff;
-+                s->stat &= ~(1 << 10);                  /* XUDF */
-+                if (s->txlen > 2) {
-+                    s->stat &= ~(1 << 4);               /* XRDY */
-+                }
-+                omap_i2c_fifo_run(s);
-+                /*
-+                 * If the transmit finished and issued its STOP, leave DCOUNT
-+                 * at 0 (see the DATA read path) so the next probe/transfer
-+                 * that does not reprogram CNT is not tricked into expecting
-+                 * stale phantom bytes.
-+                 */
-+                if (!i2c_bus_busy(s->bus)) {
-+                    s->count = 0;
-+                    s->count_cur = 0;
-+                }
-+                omap_i2c_interrupts_update(s);
-+            }
-+            return;
-+        case OMAP_I2C_V2_IRQSTATUS_RAW:
-+        case OMAP_I2C_V2_IRQSTATUS:             /* write-1-to-clear */
-+            s->stat &= ~(value & 0x7fff);
-+            /*
-+             * XRDY/RRDY are level events: after the driver clears them it
-+             * expects them to re-assert while the transfer still has room /
-+             * data.  Re-run the FIFO engine for a live transfer, then
-+             * re-assert RRDY if bytes remain buffered even after the bus has
-+             * gone idle (the tail of a receive drains from the FIFO).
-+             */
-+            omap_i2c_fifo_run(s);
-+            if (s->rxlen > 0) {
-+                s->stat |= 1 << 3;              /* RRDY */
-+            }
-+            omap_i2c_interrupts_update(s);
-+            return;
-+        case OMAP_I2C_V2_IRQENABLE_SET:
-+            s->mask |= value & 0xff;
-+            omap_i2c_interrupts_update(s);
-+            return;
-+        case OMAP_I2C_V2_IRQENABLE_CLR:
-+            s->mask &= ~(value & 0xff);
-+            omap_i2c_interrupts_update(s);
-+            return;
-+        case OMAP_I2C_V2_WE:
-+            return;                             /* wakeup enable: ignored */
-+        case OMAP_I2C_V2_REVNB_LO:
-+        case OMAP_I2C_V2_REVNB_HI:
-+        case OMAP_I2C_V2_SYSS:
-+        case OMAP_I2C_V2_BUFSTAT:
-+            OMAP_RO_REG(addr);
-+            return;
-+        default:
-+            offset = omap_i2c_v2_to_v1(offset);
-+            if (offset < 0) {
-+                OMAP_BAD_REG(addr);
-+                return;
-+            }
-+            break;
-+        }
++    switch (addr) {
++    case R_TCLR:
++        /*
++         * Rebase with the old TCLR first.  Prescaler changes must only
++         * affect ticks after this write.
++         */
++        dmtimer_set_tcrr(s, dmtimer_tcrr(s));
++        s->tclr = val;
++        s->running = (val & TCLR_ST) != 0;
++        break;
++    case R_TCRR:
++        dmtimer_set_tcrr(s, val);
++        break;
++    case R_TLDR:
++        s->tldr = val;
++        break;
++    case R_TTGR:
++        dmtimer_set_tcrr(s, s->tldr);
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP,
++                      "%s: unimplemented write @0x%" HWADDR_PRIx "\n",
++                      __func__, addr);
++        break;
 +    }
++}
 +
-     switch (offset) {
-     case 0x00:  /* I2C_REV */
-     case 0x0c:  /* I2C_IV */
-@@ -412,6 +622,10 @@ static void omap_i2c_writeb(void *opaque, hwaddr addr,
-     OMAPI2CState *s = opaque;
-     int offset = addr & OMAP_MPUI_REG_MASK;
- 
-+    if (s->mmio_version == OMAP_I2C_MMIO_V2 && offset == OMAP_I2C_V2_DATA) {
-+        offset = 0x1c;                          /* I2C_DATA */
-+    }
++static const MemoryRegionOps ti_k3_dmtimer_ops = {
++    .read = ti_k3_dmtimer_read,
++    .write = ti_k3_dmtimer_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid.min_access_size = 4,
++    .valid.max_access_size = 4,
++};
 +
-     switch (offset) {
-     case 0x1c:  /* I2C_DATA */
-         if (s->txlen > 2) {
-@@ -489,10 +703,24 @@ static void omap_i2c_init(Object *obj)
- static void omap_i2c_realize(DeviceState *dev, Error **errp)
- {
-     OMAPI2CState *s = OMAP_I2C(dev);
-+    uint64_t size;
- 
-+    if (s->mmio_version == OMAP_I2C_MMIO_V2) {
-+        size = 0x100;                           /* AM64x main_i2c reg length */
-+    } else {
-+        size = (s->revision < OMAP2_INTR_REV) ? 0x800 : 0x1000;
-+    }
-     memory_region_init_io(&s->iomem, OBJECT(dev), &omap_i2c_ops, s, "omap.i2c",
--                          (s->revision < OMAP2_INTR_REV) ? 0x800 : 0x1000);
--
-+                          size);
++static void ti_k3_dmtimer_reset(DeviceState *dev)
++{
++    TIK3DmTimerState *s = TI_K3_DMTIMER(dev);
 +
++    s->tclr = 0;
++    s->tldr = 0;
++    s->tcrr_base = 0;
++    s->base_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
 +    /*
-+     * The IP-V2 wiring (e.g. TI AM64x) drives the module from the SoC clock
-+     * tree rather than the legacy omap_clk pointer stubs, so the fclk/iclk
-+     * requirement only applies to the classic OMAP boards.
++     * This model exposes TCRR as free-running already after reset; TCLR.ST
++     * still reads back as reset value 0.
 +     */
-+    if (s->mmio_version == OMAP_I2C_MMIO_V2) {
-+        return;
-+    }
-     if (!s->fclk) {
-         error_setg(errp, "omap_i2c: fclk not connected");
-         return;
-@@ -516,6 +744,8 @@ void omap_i2c_set_fclk(OMAPI2CState *i2c, omap_clk clk)
- 
- static const Property omap_i2c_properties[] = {
-     DEFINE_PROP_UINT8("revision", OMAPI2CState, revision, 0),
-+    DEFINE_PROP_UINT8("mmio-version", OMAPI2CState, mmio_version,
-+                      OMAP_I2C_MMIO_V1),
- };
- 
- static void omap_i2c_class_init(ObjectClass *klass, const void *data)
++    s->running = true;
++}
++
++static void ti_k3_dmtimer_init(Object *obj)
++{
++    TIK3DmTimerState *s = TI_K3_DMTIMER(obj);
++
++    memory_region_init_io(&s->iomem, obj, &ti_k3_dmtimer_ops, s,
++                          TYPE_TI_K3_DMTIMER, 0x400);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
++}
++
++static const Property ti_k3_dmtimer_properties[] = {
++    /* AM64 main_timer0 default input clock is 20 MHz. */
++    DEFINE_PROP_UINT32("freq-hz", TIK3DmTimerState, freq_hz, 20000000),
++};
++
++static void ti_k3_dmtimer_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    device_class_set_props(dc, ti_k3_dmtimer_properties);
++    device_class_set_legacy_reset(dc, ti_k3_dmtimer_reset);
++}
++
++static const TypeInfo ti_k3_dmtimer_info = {
++    .name = TYPE_TI_K3_DMTIMER,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(TIK3DmTimerState),
++    .instance_init = ti_k3_dmtimer_init,
++    .class_init = ti_k3_dmtimer_class_init,
++};
++
++static void ti_k3_dmtimer_register_types(void)
++{
++    type_register_static(&ti_k3_dmtimer_info);
++}
++
++type_init(ti_k3_dmtimer_register_types)
+diff --git a/include/hw/timer/ti-k3-dmtimer.h b/include/hw/timer/ti-k3-dmtimer.h
+new file mode 100644
+index 0000000000..04c3925e2d
+--- /dev/null
++++ b/include/hw/timer/ti-k3-dmtimer.h
+@@ -0,0 +1,30 @@
++/*
++ * TI K3 DM timer (am654 layout)
++ *
++ * Copyright (c) 2026 CMBLU Energy AG
++ * Author: Wadim Mueller <wafgo01@gmail.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef HW_TIMER_TI_K3_DMTIMER_H
++#define HW_TIMER_TI_K3_DMTIMER_H
++
++#include "hw/core/sysbus.h"
++#include "qom/object.h"
++
++#define TYPE_TI_K3_DMTIMER "ti-k3-dmtimer"
++OBJECT_DECLARE_SIMPLE_TYPE(TIK3DmTimerState, TI_K3_DMTIMER)
++
++struct TIK3DmTimerState {
++    SysBusDevice parent_obj;
++    MemoryRegion iomem;
++    uint32_t freq_hz;
++    uint32_t tclr;
++    uint32_t tldr;
++    /* counter value latched at last write/start */
++    uint32_t tcrr_base;
++    int64_t base_ns;
++    bool running;
++};
++
++#endif
 -- 
 2.43.0
 
