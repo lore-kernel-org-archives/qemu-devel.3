@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DA30C5DF87
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 11:53:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CDC1C5DF87
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 11:57:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx1K3-000896-Vp; Thu, 20 Aug 2026 07:52:40 -0400
+	id 1wx1ON-0001hC-61; Thu, 20 Aug 2026 07:57:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wx1K2-000883-Kt
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 07:52:38 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wx1K0-0005pz-Uz
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 07:52:38 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-47f7027ca11so1318165f8f.3
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 04:52:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1787226755; x=1787831555; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=GPlAeeOjoY4SZFtVFtu8z+mQmq26G3t8GLazxFHp+fg=;
- b=n6mEE4D9YMhlAkAcqgPvRHEy+SdJ661YuLiM9Cp5/Ly5UOBIMqwRDjfT8iYp7Nznr9
- RUU067Hoxdo7+ckvrNCZenmgUVg+mOIfb3sUBzyPdtzeWIm6aynDO/Vp1UcO3FgJbs9q
- M3hGjlXkeb5nST3JYO0XUCF/cUpRsOhSYPN9laBxpSkp4rx0ttod+3J6yKz+hwXmUefw
- ZgO8FV0ZZ4Qxu4POSR74YTglhOkfRbVrvvX2PSH1zN61ouOIYuHo8KGZsenMeiNPCLDj
- m/uta16V3xn1bizyRlYyIoSkn0bIzsj26m2ium2uM4b0lUfARxkcAmtyOKR4Cug3aVqx
- okpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787226755; x=1787831555;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=GPlAeeOjoY4SZFtVFtu8z+mQmq26G3t8GLazxFHp+fg=;
- b=qBjhn0QBnn2HP2gLmzaywotc+SbStvrY2+YJjBfT0EQXL7fcoJD96tBZqF1zMofPlm
- wd3dp6RDxZ+RJlKQ7i0Uf7ucaIZo5ORQnlpTu1cUu3Cmt2FCfz663GriMP03N9Ca/NBs
- rOeKypBpHVvvFBuJfYkBXsKq53pIjZlt8iFNkSJ8S6ZLR17mDbRDbpmW8GyFa7Yr/EWj
- pttkb67w8Ou1E+4sj5EfmAVF9Rl2HhbV7RPesivFSNPdXKa67UpXx8xw/vCwVhCdgRxL
- oK+YUYRqHXZ0u+qcTqesGvuw+fbnxXsySxTP+6U42B4h1yfHVYXgJRx2n6zYG+WrB4MR
- 3efA==
-X-Gm-Message-State: AFuF++kwYGWo5FaCPf/bIRsbBgleiFg3Xw9/iHXs+SIL7CARwrlvZ0Qf
- cEeCVyQlV7k0ixEV3I6HarrCjUpO7sq5M0dIwrVoLUnhEM1eoK1Rz2+Wu3vQZsFfAENmNtpdcRa
- G/RwG
-X-Gm-Gg: AR+sD11JEr8X7YdBL0WMhSIFcOX7qAg6WHAZwSDZAgCmN11VUKFZckQnSUuszF93eEZ
- g8B1YMc6N8z9saHNiZWPkWalsqBXoMVwtGcpLyv/NVOY0dgl9L9vmpcEB/JjzkvgsVu5b/G6wD4
- TkWKsd9J1XYToZNVrUUty9nx94YXdp+Aa9T7bDqN22phUj94lIpOEcGxf1eZthZWoKUimJk1IsS
- E5yUof8s30mJHpL/iBCuG5xMhn8jNgwIW56UNvJg06s1z6kaOEzh/xPU6xPSLZTLKykgu8U+dib
- mdtnPhk1rPQkSm22rw6Ux0bw2eu/bwcOOJ+veI/xaECiX/nO/WYWeZP/tI4uDFOUgd5Oq13IC9c
- DZVGCmZcpD2+04OhD5J5eyA6MqwUb6JRwckW4d/gk3fzcm+X48GELISNLaSKe1p5UGgWGlrx6Fq
- JLT9OfWjaNBe66CCS+O2GArDZb7WSiUD2ttXWL0OF8/iB/BTxhjixB8is81A==
-X-Received: by 2002:a05:6000:1884:b0:47f:9662:85fe with SMTP id
- ffacd0b85a97d-482b1fe8a3dmr19862231f8f.16.1787226755218; 
- Thu, 20 Aug 2026 04:52:35 -0700 (PDT)
-Received: from athena.sw.ru ([2a06:5b06:b600:300:a123:7b43:afd8:8b47])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b10fcebdsm13069627f8f.0.2026.08.20.04.52.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 04:52:34 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: [PATCH v2 3/3] block/nbd: clear reply.cookie under receive_mutex
-Date: Thu, 20 Aug 2026 13:52:28 +0200
-Message-ID: <20260820115228.587427-4-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260820115228.587427-1-den@openvz.org>
-References: <20260820115228.587427-1-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
+ id 1wx1OL-0001gz-D5; Thu, 20 Aug 2026 07:57:05 -0400
+Received: from mx1.catap.net ([162.55.82.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kirill@korins.ky>)
+ id 1wx1OJ-0007Xx-49; Thu, 20 Aug 2026 07:57:05 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=20240125rsa; cv=none; d=mx.catap.net; b=Rphan94
+ oAsgX9gRemCin/nJkPsXczczbcYk6IXrSDnKOFp6b9QQMo0NbH5dCQ3ihL4q6oGlLkQzSG
+ 2F7hd9vRBChNDSj9xcFJdcthfJRIgtPnhEGF/TWP4l58pgDbOasRnejPhKeXY/ZJkLmetq
+ kOqI75vkrwB0SA+7hN0NJ9KYU0rsbUhLC1Hstzk0qJied1tAWYGEFJ24LlYlmuxLShSwkb
+ GLY2jjvjX7N9VLV4h20Ym6E68e6FPbFVFdbrlLB9DxZmCx0ylDs2Th8qxFtoepVlmillcv
+ wDYjxTKNAvmXjtRIbVT0OvHE4RwFs1HDQasApArM31mScSOUtnNDkog==
+ARC-Message-Signature: i=1; a=rsa-sha256; s=20240125rsa; c=simple/simple; bh=T
+ PRvmg9k2mFdSha3OqaXrN7kMPZs7mbpPIiHmqFb6os=;
+ h=references:in-reply-to:
+ subject:cc:to:from:date:dkim-signature:dkim-signature; d=mx.catap.net;
+ b=HXyYweBokZb28At6b7qPt4QmVBBcPe0eSFhPETbAGwlHpIr20j992yjXrDJTOAx/lCZy
+ EYRctBKZ12RPf1S9UDoveHzEztSgvxQZBuid5WXyRsZTcm6DEycn5bbsjGEVKsH2QLphlD
+ 6TjnXvgAZPOCRWqnVl7rUtZW+7MqiDESb42pXHWPAnD+Il0erCqWF4R2BjKw3ZK5nOliME
+ gzRlRIj9aeLznoOqJZrrdwT/QCEK2vCLcQms543NmMWQQY/orT7q4Gq9qL/kJ2ZzqiOf9z
+ Nfe5cqhGtjwgHuHO8Ckaa6IXIiV+3Ft91nWe6lb7S0EId6hmdaLCnWQ5r3TBhjYg==
+ARC-Authentication-Results: i=1; mx.catap.net; dkim=pass
+ header.s=20240125rsa header.d=korins.ky header.a=rsa-sha256 
+ header.b=rxI8r/Mi; dkim=pass header.s=20240125ed25519 
+ header.d=korins.ky header.a=ed25519-sha256 header.b=p3tB9NN0;
+ arc=none; iprev=fail; spf=none
+ smtp.helo=postmaster@matebook.home.arpa; spf=softfail
+ smtp.mailfrom=kirill@korins.ky
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=20240125rsa; bh=TPRvmg9k
+ 2mFdSha3OqaXrN7kMPZs7mbpPIiHmqFb6os=; h=references:in-reply-to:
+ subject:cc:to:from:date; d=korins.ky;
+ b=rxI8r/Miu9qdxyre6qp+4KoJAtcly5
+ l5se2Jo8hgkZgNhXrjvqZKOGSusz4pf4zqm9BDMc62rDNqA0pyM6BVwjQtepD7E+qJ5X85
+ iS+mR96apCRN4bl6VNOajLXUitT+gAtFmzL5qoq3u8NP3b3ddM36B51HEMSeHfAb5uvod9
+ Kv9QWGXwpj2S4ymgF2zF++XjlVI9RNvreHpgSnuJ9srBeLetuJ3XxLPadjKo8iQUsOcGko
+ XhdOiu/HgpfQDMgg7Yg23Pkm9UyjCqJhcguzxhWr+0W1L6FKNR/BIxceEF+hBins3AoOJx
+ bzGTnW89fy5tmWcxvPxUG/xqUSbVqVGA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple; s=20240125ed25519;
+ bh=TPRvmg9k2mFdSha3OqaXrN7kMPZs7mbpPIiHmqFb6os=; h=references:
+ in-reply-to:subject:cc:to:from:date; d=korins.ky; b=p3tB9NN0QoiO+LhIHA
+ EDOimjXP+60B7voRRx/z26BtowxUlQYH9Bn3GbXugFvM1NmkumPy6MREvhCpTSHX9kAQ==
+Received: by mx1.catap.net (OpenSMTPD) with ESMTPSA id ffa29b2b
+ (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO); 
+ Thu, 20 Aug 2026 13:56:58 +0200 (CEST)
+Received: by matebook.home.arpa (OpenSMTPD) with ESMTP id f4b88aa8;
+ Thu, 20 Aug 2026 13:56:54 +0200 (CEST)
+Date: Thu, 20 Aug 2026 13:56:54 +0200
+Message-ID: <87tsopqa2h.wl-kirill@korins.ky>
+From: Kirill A. Korinsky <kirill@korins.ky>
+To: Chinmay Rath <rathc@linux.ibm.com>
+Cc: shivangu@linux.ibm.com, adityag@linux.ibm.com, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, npiggin@gmail.com, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, brad@comstyle.com
+Subject: Re: [PATCH v4] powernv: boot OpenBSD on POWER9
+In-Reply-To: <f6514bca-aae6-46ea-9e40-c111865f6b26@linux.ibm.com>
+References: <20260719145559.94342-1-kirill@korins.ky>
+ <f6514bca-aae6-46ea-9e40-c111865f6b26@linux.ibm.com>
+User-Agent: Wanderlust
+Mail-Followup-To: rathc@linux.ibm.com, shivangu@linux.ibm.com,
+ adityag@linux.ibm.com, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, npiggin@gmail.com,
+ harshpb@linux.ibm.com, milesg@linux.ibm.com,
+ brad@comstyle.com, Kirill A. Korinsky <kirill@korins.ky>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=den@openvz.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=162.55.82.72; envelope-from=kirill@korins.ky;
+ helo=mx1.catap.net
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,108 +101,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis V. Lunev <den@openvz.org>
+On Thu, 20 Aug 2026 12:49:36 +0200,
+Chinmay Rath <rathc@linux.ibm.com> wrote:
+> 
+> 
+> On 7/19/26 20:25, Kirill A. Korinsky wrote:
+> > The POWER9 Processor User's Manual, section 4.9.4, specifies that POWER9
+> > ignores PTCR[PATS] and only supports a 64 KiB partition table. Use an
+> > effective PATS value of 4 on POWER9; other processors keep the existing
+> > ISA v3.0 interpretation.
+> > 
+> > The PSI model now exposes POWER9 IRQ level and pending status registers,
+> > and keeps both updated while delivering through the existing XIVE LSI
+> > source. This lets guests that select the POWER9 PSI LSI IRQ method
+> > continue to receive LPC interrupts.
+> > 
+> > The blast radius is probably minimal: the PTCR change is limited to
+> > POWER9, while the PSI change only touches POWER9 PSI state and reuses
+> > the existing delivery path.
+> <Signed-off-by> is missing :)
 
-s->reply is documented as protected by s->receive_mutex, but the cookie
-is cleared without it once the owning request has consumed its chunk.
-A waiter in nbd_receive_replies() inspects the very same field under
-the mutex, and does so with two separate loads:
+Oops, shall I send a v5 version with:
 
-    if (s->reply.cookie != 0) {
-        ind2 = COOKIE_TO_INDEX(s->reply.cookie);
-        assert(!s->requests[ind2].receiving);
+Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
 
-Nothing keeps those two loads consistent. If the owner clears the
-cookie in between, the second one reads 0, COOKIE_TO_INDEX() turns it
-into an index of -1, and s->requests[] is accessed out of bounds:
+or it's ok?
 
-  Assertion `!s->requests[ind2].receiving' failed.
+> > ---
+> >   hw/ppc/pnv_psi.c                       | 11 ++++--
+> >   target/ppc/mmu-book3s-v3.c             | 21 +++++++++--
+> >   tests/functional/ppc64/meson.build     |  2 +
+> >   tests/functional/ppc64/test_openbsd.py | 52 ++++++++++++++++++++++++++
+> >   4 files changed, 79 insertions(+), 7 deletions(-)
+> >   create mode 100755 tests/functional/ppc64/test_openbsd.py
+> > 
+> > diff --git a/hw/ppc/pnv_psi.c b/hw/ppc/pnv_psi.c
+> > index e8701c6100..39ec448f3c 100644
+> > --- a/hw/ppc/pnv_psi.c
+> > +++ b/hw/ppc/pnv_psi.c
+> > @@ -688,6 +688,8 @@ static uint64_t pnv_psi_p9_mmio_read(void *opaque, hwaddr addr, unsigned size)
+> >       case PSIHB9_ESB_CI_BASE:
+> >       case PSIHB9_ESB_NOTIF_ADDR:
+> >       case PSIHB9_IVT_OFFSET:
+> > +    case PSIHB9_IRQ_LEVEL:
+> > +    case PSIHB9_IRQ_STAT:
+> >           val = psi->regs[reg];
+> >           break;
+> >       default:
+> > @@ -818,17 +820,20 @@ static void pnv_psi_power9_set_irq(void *opaque, int irq, int state)
+> >   {
+> >       PnvPsi *psi = opaque;
+> >       uint64_t irq_method = psi->regs[PSIHB_REG(PSIHB9_INTERRUPT_CONTROL)];
+> > +    uint64_t irq_bit = PPC_BIT(irq);
+> >         if (irq_method & PSIHB9_IRQ_METHOD) {
+> >           qemu_log_mask(LOG_GUEST_ERROR, "PSI: LSI IRQ method no supported\n");
+> >           return;
+> >       }
+> >   -    /* Update LSI levels */
+> > +    /* Update LSI levels and pending status */
+> >       if (state) {
+> > -        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] |= PPC_BIT(irq);
+> > +        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] |= irq_bit;
+> > +        psi->regs[PSIHB_REG(PSIHB9_IRQ_STAT)] |= irq_bit;
+> >       } else {
+> > -        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] &= ~PPC_BIT(irq);
+> > +        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] &= ~irq_bit;
+> > +        psi->regs[PSIHB_REG(PSIHB9_IRQ_STAT)] &= ~irq_bit;
+> >       }
+> >         qemu_set_irq(psi->qirqs[irq], state);
+> > diff --git a/target/ppc/mmu-book3s-v3.c b/target/ppc/mmu-book3s-v3.c
+> > index 3865556310..f329a7a0f2 100644
+> > --- a/target/ppc/mmu-book3s-v3.c
+> > +++ b/target/ppc/mmu-book3s-v3.c
+> > @@ -23,24 +23,37 @@
+> >   #include "mmu-hash64.h"
+> >   #include "mmu-book3s-v3.h"
+> >   +#define PPC64_V3_PATE_SIZE 16 /* two 64-bit words */
+> > +
+> >   bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lpid, ppc_v3_pate_t *entry)
+> >   {
+> >       uint64_t patb = cpu->env.spr[SPR_PTCR] & PTCR_PATB;
+> >       uint64_t pats = cpu->env.spr[SPR_PTCR] & PTCR_PATS;
+> > +    uint64_t table_size;
+> > +    uint64_t entries;
+> > +
+> > +    /*
+> > +     * The POWER9 Processor User's Manual, section 4.9.4, specifies that
+> > +     * POWER9 ignores PTCR[PATS] and only supports a 64 KiB partition table.
+> > +     */
+> > +    if (cpu->env.excp_model == POWERPC_EXCP_POWER9) {
+> > +        pats = 4;
+> > +    }
+> > +    table_size = 1ULL << (pats + 12);
+> >         /* Check if partition table is properly aligned */
+> > -    if (patb & MAKE_64BIT_MASK(0, pats + 12)) {
+> > +    if (patb & (table_size - 1)) {
+> >           return false;
+> >       }
+> >         /* Calculate number of entries */
+> > -    pats = 1ull << (pats + 12 - 4);
+> > -    if (pats <= lpid) {
+> > +    entries = table_size / PPC64_V3_PATE_SIZE;
+> > +    if (entries <= lpid) {
+> >           return false;
+> >       }
+> >         /* Grab entry */
+> > -    patb += 16 * lpid;
+> > +    patb += PPC64_V3_PATE_SIZE * lpid;
+> >       entry->dw0 = ldq_phys(CPU(cpu)->as, patb);
+> >       entry->dw1 = ldq_phys(CPU(cpu)->as, patb + 8);
+> >       return true;
+> > diff --git a/tests/functional/ppc64/meson.build b/tests/functional/ppc64/meson.build
+> > index f0f8ab8f61..cb3c745624 100644
+> > --- a/tests/functional/ppc64/meson.build
+> > +++ b/tests/functional/ppc64/meson.build
+> > @@ -4,6 +4,7 @@ test_ppc64_timeouts = {
+> >     'fadump' : 480,
+> >     'hv' : 1000,
+> >     'mac99' : 120,
+> > +  'openbsd' : 240,
+> >     'powernv' : 480,
+> >     'pseries' : 480,
+> >     'replay' : 210,
+> > @@ -20,6 +21,7 @@ tests_ppc64_system_thorough = [
+> >     'fadump',
+> >     'hv',
+> >     'mac99',
+> > +  'openbsd',
+> >     'powernv',
+> >     'pseries',
+> >     'replay',
+> > diff --git a/tests/functional/ppc64/test_openbsd.py b/tests/functional/ppc64/test_openbsd.py
+> > new file mode 100755
+> > index 0000000000..bdbef6bf82
+> > --- /dev/null
+> > +++ b/tests/functional/ppc64/test_openbsd.py
+> > @@ -0,0 +1,52 @@
+> > +#!/usr/bin/env python3
+> > +#
+> > +# Test that OpenBSD boots on a ppc powernv machine and reaches the installer.
+> > +#
+> > +# SPDX-License-Identifier: GPL-2.0-or-later
+> > +
+> > +from qemu_test import QemuSystemTest, Asset
+> > +from qemu_test import wait_for_console_pattern
+> > +
+> > +
+> > +class OpenBSDPowerNV(QemuSystemTest):
+> > +
+> > +    ASSET_MINIROOT = Asset(
+> > +        'https://kirill.korins.ky/pub/qemu-powerpc64-openbsd/miniroot79.img',
+> > +        '7829e42b75d81cafd732038b9d63228b79c1f5828d8375872a4bb655e1d6b13c')
+> > +
+> > +    ASSET_BOOTKERNEL = Asset(
+> > +        'https://kirill.korins.ky/pub/qemu-powerpc64-openbsd/pnor.BOOTKERNEL',
+> > +        '397ce43ce61910e1a2c4f13d301f957e61513a9ec5371bc3e87d3095411fae7b')
+> > +
+> > +    def test_powernv9_openbsd_installer(self):
+> > +        self.set_machine('powernv9')
+> > +        self.require_accelerator('tcg')
+> > +
+> > +        miniroot_path = self.ASSET_MINIROOT.fetch()
+> > +        bootkernel_path = self.ASSET_BOOTKERNEL.fetch()
+> > +
+> > +        self.vm.set_console()
+> > +        self.vm.add_args('-cpu', 'power9',
+> > +                         '-accel', 'tcg,thread=single',
+> > +                         '-smp', '1,cores=1,threads=1',
+> > +                         '-m', '2g',
+> > +                         '-kernel', bootkernel_path,
+> > +                         '-device',
+> > +                         'ich9-ahci,id=sata0,bus=pcie.0,addr=0x0',
+> > +                         '-drive',
+> > +                         f'file={miniroot_path},format=raw,if=none,'
+> > +                         'id=bootdisk,snapshot=on',
+> > +                         '-device',
+> > +                         'ide-hd,bus=sata0.0,unit=0,drive=bootdisk,'
+> > +                         'bootindex=1')
+> > +        self.vm.launch()
+> > +
+> > +        wait_for_console_pattern(self, 'OpenBSD 7.9 (RAMDISK)', 'panic:')
+> > +        wait_for_console_pattern(
+> > +            self,
+> > +            '(I)nstall, (U)pgrade, (A)utoinstall or (S)hell?',
+> > +            'panic:')
+> > +
+> > +
+> > +if __name__ == '__main__':
+> > +    QemuSystemTest.main()
 
-  (gdb) p cookie
-  $1 = 8
-  (gdb) p s->reply.cookie
-  $2 = 0
-  (gdb) p &((NBDClientRequest *)s->requests)[-1].receiving
-  $3 = (_Bool *) 0x5555558416c0
-  (gdb) p &s->in_flight
-  $4 = (unsigned int *) 0x5555558416c0
-  (gdb) p s->in_flight
-  $5 = 8
-
-The cookie we wait for is 8, yet reply.cookie reads 0 one line after it
-was found non-zero, so the index is -1. requests[-1].receiving lands on
-in_flight, which is non-zero while requests are outstanding, and that is
-what the assertion trips over.
-
-Hitting this requires two coroutines of one NBD node to run in
-different threads, as there is no yield point between the two loads
-for the owner to squeeze into. A multiqueue configuration provides
-exactly that, with the virtqueues of one disk spread over several
-iothreads. Note that a compiler is free to merge the two loads into
-one, in which case the race is invisible, so builds with reduced
-optimization are much more likely to trip over it.
-
-Accessing s->reply without the mutex is fine for the coroutine that
-owns the reply: a non-zero cookie makes the field private to it.
-Releasing that ownership is not, as it races with the waiters which
-are explicitly allowed to look at the cookie. Clear it under the
-mutex, in the same critical section as the wakeup, and make
-nbd_recv_coroutines_wake() caller-locked, as CoMutex is not
-recursive. It has a single caller.
-
-The added acquisition cannot block behind the header read in
-nbd_receive_replies(), because that path is only reachable with
-reply.cookie == 0 while we still own a non-zero cookie. Merging the
-clear with the wakeup also keeps a newcomer from starting a header
-read in between, which would stall this already completed request for
-the duration of that read.
-
-There is no cookie to own when we get here after an error, and then a
-newcomer can indeed be inside that read. It does not hold us for long
-either, as the channel has been shut down before the error was
-reported, so the read it sits in returns right away.
-
-Fixes: 4ddb5d2fde ("block/nbd: drop connection_co")
-Cc: Eric Blake <eblake@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- block/nbd.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/block/nbd.c b/block/nbd.c
-index d0a7097034..e5e16722ba 100644
---- a/block/nbd.c
-+++ b/block/nbd.c
-@@ -161,11 +161,11 @@ static bool coroutine_fn nbd_recv_coroutine_wake_one(NBDClientRequest *req)
-     return false;
- }
- 
-+/* Called with s->receive_mutex taken. */
- static void coroutine_fn nbd_recv_coroutines_wake(BDRVNBDState *s)
- {
-     int i;
- 
--    QEMU_LOCK_GUARD(&s->receive_mutex);
-     for (i = 0; i < MAX_NBD_REQUESTS; i++) {
-         if (nbd_recv_coroutine_wake_one(&s->requests[i])) {
-             return;
-@@ -974,9 +974,11 @@ static coroutine_fn int nbd_co_receive_one_chunk(
-         /* For assert at loop start in nbd_connection_entry */
-         *reply = s->reply;
-     }
--    s->reply.cookie = 0;
- 
--    nbd_recv_coroutines_wake(s);
-+    WITH_QEMU_LOCK_GUARD(&s->receive_mutex) {
-+        s->reply.cookie = 0;
-+        nbd_recv_coroutines_wake(s);
-+    }
- 
-     return ret;
- }
 -- 
-2.53.0
-
+wbr, Kirill
 
