@@ -4,142 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11BE8C5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 18:45:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 243A2C5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 18:45:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx7ka-0003Re-QB; Thu, 20 Aug 2026 14:44:28 -0400
+	id 1wx7lo-0003yy-BB; Thu, 20 Aug 2026 14:45:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wx7kZ-0003RK-He
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 14:44:27 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wx7ln-0003ye-5I
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 14:45:43 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wx7kX-0004uw-M1
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 14:44:27 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ id 1wx7lk-0005cJ-3O
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 14:45:41 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67KIJLmh352487
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 18:44:23 GMT
+ 67KIIvNY571537
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 18:45:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- CYFRXiuUWneGvXYjztda1KyCLZt2zjxKes58BRUutLQ=; b=Ss2s5pmyVtgWYCsh
- +7STohREk6u1TPPI0tZxXjtltf93gx/DzjdtD11Jn+8IqUCa0nPSuPXsl/LuJY+3
- mvr5CV/9t4G7IM0maQdp4T/49wIiempChSnKQX8yXnHs04yVrx0DjWs1j9gx33b4
- bQD5kxt0f1OQiETf65C4Vh5Ta+7PbtvVosF8Cfq/jUm+KZ4RFuC4R8h154bCiToy
- 7bpyq2DliLJj47GcZJ1fPtY0BXw/8X6qTAiKzv4tOzh2pmpcC35sSE1xGWPtekQo
- CdcGztYCE3K5ouwoyDWsPraMZpfo0THnypGgXxTQrkAl4p5n8zE8ukBZwVXMmUhz
- DlEVpA==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g5yg8aamq-1
+ wXVHmcfZaRdzLjpu+141+qz88/OQecfK+hrcfheyD6E=; b=MbeR/LRdJb+C9nX0
+ S1XSp5/ISii1jmpcYbddNtNyCxDnlLNBLvLUrwGWbkWQBMGWrBwNhJu0P3T7cPgy
+ 8YAmixfnSfof7o3kqYrwO6NkeHy+MBH5TtiudY3SqSM3MA4jjKeq/vyiaU90y8Yj
+ kM+J0l7qYTdfjpRXJ30VVlCtafmQ5E6na1elBg4tjCz+ilVaKqB9oXyK9r+nCy2Q
+ Q4GdSBRYALxwSs/kuN4EdHjuJCFYgLihV3waAk8yd810OjaV0rr7Wa1cJYGwMgD5
+ ruOXrzFezTdvQzkZAVVt92upmksmRWSMQMi7/XwdOyA1oNy/7djRi637JEY0Ud3U
+ rX9/vA==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g5xgcan7s-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 18:44:23 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-cbee5bab340so239414a12.2
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 11:44:23 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 18:45:38 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-38dde0df80bso148425a91.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 11:45:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787251462; x=1787856262; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787251538; x=1787856338; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=CYFRXiuUWneGvXYjztda1KyCLZt2zjxKes58BRUutLQ=;
- b=AWOBh5kb3EIir6GrOLrmW+DaUeR/gS1h3dIRj1f8CuYdH8MNTs4zvD6RbpMovA5MfD
- t4+vbgOIg/Oz7uYD/S8TtGcpSWuThYgVK+jxy+Qhu/WECOl78DIyupsvHY1dpd3Mo+8w
- qg7ga9Mq+24WjvgnKgBzMKwwYX1L1d+0GjKp5f36luGnhTUQv7wpqYSSQDNyZqtc6M/d
- g3Lo8pBEk3OKnSh3hAZWc+r724KBecyYUDq42pup7H4KqwXIMg/qOaMHLIbIEJfT+C7n
- ib3e2/NDWm0T7Uub/SYTqeo5jzUxIxk2txDP/m6fapLAuXwUfQS9kzAE6/WHAxShnDON
- OEXg==
+ bh=wXVHmcfZaRdzLjpu+141+qz88/OQecfK+hrcfheyD6E=;
+ b=QrlN2ax4+S4OpwzesjUyZfZyrSJdR1qdKBZR83myqBYqAi9xj4X2ymeG88EX/ibB2Y
+ pymOzDPvq/DZMkwVOFkxbFF/7N709pcW8DQ7vf9fej+siZkHoth2Gxo3m4mx5ub3Gfm4
+ R1sdX3Qvhm6i2btnuWQmfAqGRpE4dCacAvfHYkGTY0bWxv5mqL7nV4py7BduITQ9jlyQ
+ VYskSfMrS+sPL7ZuF1r4AoWKXtuxsf9uzfGVXDqUs4pQ9DOZ7M6vwtiRLSAu6MHh3yAB
+ vh14hIXgZYx88eZU5UUPwAPQdU7OGOwsGewefb/sOzg0mxYyyzZ48eCr+qGO7cbyG3Nh
+ Awsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787251462; x=1787856262;
+ d=1e100.net; s=20251104; t=1787251538; x=1787856338;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=CYFRXiuUWneGvXYjztda1KyCLZt2zjxKes58BRUutLQ=;
- b=biFKUmpp3U8qmWwQxuQYIunp2HRx6f5DY4CcPqDPOzLTXeKa8aR9bHoTKR1ggxwOSa
- WeJXrTezL5iOF5cUdQO16KZWGe43SbDAM1UrB5UrTb6pvgekwfdFrqjqh36nqymaPfz6
- NwcDBuxcB95pgNSLWSiZk62DrOaaFjVupCLJIcBUSofoaPED/188bdoSqED2A/MFOneN
- TPqeofVyeRQh/2hI3MtDMKisESpOHhrRZ6ffzg8ya5h4N1XxrqJKu5V+2d7IcjMoshMQ
- 1R3k20PzvtlgTJ43euWzjymlNy6xLA1JfivOjxIrbC+ztEPaP8mZaXsvPiPnZbQJhotJ
- LXkQ==
+ bh=wXVHmcfZaRdzLjpu+141+qz88/OQecfK+hrcfheyD6E=;
+ b=Jh2MVVaSzSkiI9PoYf2G+37gg3pwcFyTiPbBLjlY9U/W7hKev8I3J3OhR8hQPMSXkb
+ KJPaaJzgJaK0R43J0wP7yo98yXbxw1PYLbe6wu5jKIMrdfTgVg/CYbmEmO8CjzxLUT5M
+ N39adu34xTi3sP0E1VVqLyjO3aGJR6QGT1eykN8pwFGxbCrbIE83tyXGH1wStAWSJlFQ
+ nlK9dyMQBzPVyii51y1Po57BKJB0f1NUdB/ZT9FXQLIirhcsvdMGWhoyghq1s23JVwzG
+ G9/w1W6PJv+kKvkhjZx+07RWatMNeQGmd6h6H0mSo/Ijin6QheY2cJ73v2N0fRsfH2Dp
+ D/MQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RojEBNSJi55qS8/PvWQUsS1e5Ffj1J6i2SHDk8iGT8guLnKMzMbr+WcGHeNYcHNfQZXHHXLMWpaSvwd@nongnu.org
-X-Gm-Message-State: AOJu0YzdLrfnKs3CJQ7h2lGBuLXjsjxI/cezhFbCRCnRHdn2nWy5/PpY
- DCmfBJhNJgfrYK1YLe3TN72sp+j3Ofnd3kEA0jgw0sE5FO8KaXgF8T/Y8+RnVfQzZIDTTDYJX39
- JDiNIb0GpUL2haUvrBKoVM55i7DmuICfLz8eemHNwsqSKHFpm21ykXwTzHQ==
-X-Gm-Gg: AR+sD102P9okNix7ALOjpc656xXoVD6SQSBu9iFLpu+/VxS+VTxCE7zcGvCBcmpeNsn
- hYondx80k3Eb1rtL2/R8Vgk+iPCoXNvLBIO3+ZnkWcR+8Jgf9+1JuC403w2CHv40aJzjtbyMFuz
- W0oZD/flEo4nn29FI1OmW6onAPZMrtIr4oi+qEWL8YRaM0puFhNiuVkyhfXF7pGLL0FPY2Ao/g3
- cK0XlTsKZFps5IQilsHCRbFnCCw/B63+knUDqRC064qmiGpZROvPlYFcM2mNkhXh8WvpND+kRnq
- AhBRdq5nKJ03j2Arnamyn8MSg6gjiQ2qnW+tOSaX7L055ZtyY6hlUku1ratEGLVBG27DA5W/ffn
- Chi9PKdki45duxfE47c8qc2szzxKNqFezzd7sv2kP0dSk4K0TrItlOIzN7N0nPdVWuZkk
-X-Received: by 2002:a05:6a20:c70a:b0:3c3:704d:57c4 with SMTP id
- adf61e73a8af0-3cd3008be8amr984749637.12.1787251462462; 
- Thu, 20 Aug 2026 11:44:22 -0700 (PDT)
-X-Received: by 2002:a05:6a20:c70a:b0:3c3:704d:57c4 with SMTP id
- adf61e73a8af0-3cd3008be8amr984680637.12.1787251462042; 
- Thu, 20 Aug 2026 11:44:22 -0700 (PDT)
+ AHgh+RqYzQPHzAyj96UaWAvmi0UKMhdslfIdMTy09UE1haYhPLjr2cQLMAQVlHVJg7DkUGQC63ldp5QoCDaw@nongnu.org
+X-Gm-Message-State: AFuF++k3D0W6Rm+/v1Wq3nExxdWnDCnqbsVxLbQDlUH97mHDVLR5dXA/
+ Fqi+YCIMtYB8/qIxPJZtWSFBVZKv9boOfNB21BG7Vnf9RUoLCd8qIlke0uUAsNvylBlTLDLQFxV
+ MZXlylNuks4s/sO1PVJGlWxNreWEqcdabGSD6FMxCLdRiEUu2OvXecaPKyA==
+X-Gm-Gg: AR+sD13kOpu/wtmSq5dzDk7RbyJMaiEmsYFMPaJjQmgPmKZD+3H/PEQY3qmw9m7CI/F
+ Gc3ElU/4nzmiKhx4zUMWvt3lwfvbxlri6m7sxnZwrFEXhAWQcylIlOR4qGV0g2c0wHdctx6kjpy
+ qH2/98alaQX40U+2z3LQrnyKoGXlVRP0VtaTuIJFXiHaA9gFNQXPMK2W3dKwXpgJ0zDnG6UYAEy
+ uI4OWLQdHMFFSdfYjRMsAQBg/LwiKhGLhusIkpyaxiZ0yFBPdr85L+LinKqeUQhJgV4PjqMnIPP
+ i03mneJs5CT1mNOCxSWhsSUCCbZk8mYFO0uxAYKO0xrtH3VQqcE+LB/XNaDMZEvJzOBsROdifKS
+ Hxpaw1K4CiXb7FiGRAo0zpv3HhfneBkq0yaHUyM7zIbGoUpYFlpucnV8izsM4G0Lfbcul
+X-Received: by 2002:a17:90b:4a89:b0:390:8361:a532 with SMTP id
+ 98e67ed59e1d1-395c33bd6d1mr1106832a91.7.1787251537611; 
+ Thu, 20 Aug 2026 11:45:37 -0700 (PDT)
+X-Received: by 2002:a17:90b:4a89:b0:390:8361:a532 with SMTP id
+ 98e67ed59e1d1-395c33bd6d1mr1106729a91.7.1787251537032; 
+ Thu, 20 Aug 2026 11:45:37 -0700 (PDT)
 Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-327bec30f49sm16896793eec.0.2026.08.20.11.44.21
+ a92af1059eb24-1416ad564bcsm20237447c88.5.2026.08.20.11.45.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Aug 2026 11:44:21 -0700 (PDT)
-Message-ID: <1d9ef45d-8d1b-45e5-b947-f87dab34fb4b@oss.qualcomm.com>
-Date: Thu, 20 Aug 2026 11:44:21 -0700
+ Thu, 20 Aug 2026 11:45:36 -0700 (PDT)
+Message-ID: <cb8d2eb9-8ff8-4b52-990a-85ecb2235ad4@oss.qualcomm.com>
+Date: Thu, 20 Aug 2026 11:45:36 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/11] target/hexagon: guard writes to unimplemented guest
- registers
+Subject: Re: [PATCH 05/11] target/hexagon: take BQL when reading the system
+ pcycle count
 To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>
 References: <20260819013144.3264096-1-brian.cain@oss.qualcomm.com>
- <20260819013144.3264096-5-brian.cain@oss.qualcomm.com>
+ <20260819013144.3264096-6-brian.cain@oss.qualcomm.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260819013144.3264096-5-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260819013144.3264096-6-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDE0MCBTYWx0ZWRfXwAmdJxAWyUY4
- 0UR/wwb7xCmtlbXpXX9pq/TkH1XfYI+cjkelo7FxGjoUsKxapwj6r3eqorCtX2mfglWRqNJJW8G
- p7KSZmph/3kwck/6jKbLjIOGm1BhHPo=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDE0MCBTYWx0ZWRfX8OQzEDNm+mCj
- EYc9V/yUxkidpovG9KYi8iaGh9Q5sK9xD00ojAgymqjet/zHcnIH/nLfnrIE/QxaARvyNg0hRYW
- tiREyRwh1aQ0WozULen2E911AiojGqGcUQNjvWJSO8RiMbAxooh1QN+KIz8eVPKH6XcGmnpLFat
- JuldMlQ484z5qZQXAzQ1TCgQyAe1CFbwj+7scZ+5VP2NvuOQlJ1EHpBeo/hkbg+HhBXXc/wxZ8W
- 4VsGTIk8kQdZ/l9MPaBL+2wBN8EfckiOw2K5YWNEIioHuO4ZyZnmv4VBdVBjbRmpZ1+V6ofirs0
- 8TDd2uuSQY0x8hozTf0hL5Rx/pVOMp3mP7WNdbtSH4F4tZ+7m1cx00QUie7rIt5PKLC2fpZHToh
- ZTFjmG8LPi8YcAy/elJqkcO6tXoVxzBQc5DVjhuUaZF9yWwf/wv8nh1/V9dz9ufk1a8ZS91V7fm
- cuh7pJ7MTWgA70vcXbA==
-X-Authority-Analysis: v=2.4 cv=Y7/IdBeN c=1 sm=1 tr=0 ts=6a874b07 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Authority-Analysis: v=2.4 cv=GPM41ONK c=1 sm=1 tr=0 ts=6a874b52 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=igi6GqxGHG0Xb9lAMXwA:9 a=QEXdDO2ut3YA:10
- a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-GUID: 1nJ3L2VSYLFnnMV8XoO2jHFcaugjq1HG
-X-Proofpoint-ORIG-GUID: 1nJ3L2VSYLFnnMV8XoO2jHFcaugjq1HG
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=03wZY-MIjpm2ANNGR2sA:9 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-ORIG-GUID: dBl5wcvb8XBGRT6PJD2EJhu_BDPlx2cw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDE0MCBTYWx0ZWRfX8iNvXYxYT+YP
+ oXKviz8lO03kKd4IwnSFhjBtfiTfdhHNV86L5XoUnpPCZc5p8PnMDiE9k6Lfn+PX2RMgV5WpXW4
+ 1lBoS0TlfGNFDTuQGCBvZhxQEN1FAiC5tEsqqwtYPpP+QwxFvnK/8Z7UKKynBUj9+kOzln82uLo
+ lVVfMXQIhmFLvpHjpU9k2QesA0puhLmIZPAfmlrAWAOuG7Xs5J28XbAP48uknggWH4JhZOBQ89g
+ 4vyt8vf45teI30NChFyHYrA/34Qq7qZexsIYCG59DG1v1X/hdG/e6i19IFJgtVTKFJumURbzwl0
+ cppCSAIJyvBdpi/EHJ7VgcQNyCTNDiTyNltuvHjP+jUUtr65t3uzebyMaiJxmPAF+Wb8r/G+HEZ
+ KSnNwiD7PkfLZc91ac86ju006nPmPKH1AOjno1azKRneXjP8VdRDWoJaTO4h2er3YPV1O4v8KmK
+ I06cI0qLam4yhTtMV8Q==
+X-Proofpoint-GUID: dBl5wcvb8XBGRT6PJD2EJhu_BDPlx2cw
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDE0MCBTYWx0ZWRfX4uXUDkIOoPBa
+ rE7UkZJIKhfPlUNL/bUSVhxoNIirGrj/KqsRwuiDaCwqdZeC2/kO5dYtaUIXRKuyWWS76vKvZWS
+ MVLiYpbP0LCmSNHOzM1YjyszZ2xvoN0=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-20_01,2026-08-20_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 priorityscore=1501 malwarescore=0 adultscore=0
- clxscore=1015 phishscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0
+ bulkscore=0 priorityscore=1501 spamscore=0 clxscore=1015 impostorscore=0
+ lowpriorityscore=0 suspectscore=0 phishscore=0 malwarescore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200140
-Received-SPF: pass client-ip=205.220.180.131;
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,96 +157,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/18/2026 6:31 PM, Brian Cain wrote:
-> Gate guest-register writes on greg_writable() in the generated code so
-> writes to gregs above G3 are dropped instead of dereferencing an
-> unallocated TCG temp.
+> hexagon_get_sys_pcycle_count() iterates all CPUs, so take the BQL with
+> BQL_LOCK_GUARD() instead of asserting the caller already holds it.
+> Convert the matching setters the same way, which keeps the locking
+> contract symmetric and makes the read-modify-write in the _low/_high
+> setters atomic.  BQL_LOCK_GUARD() is a no-op when the lock is already
+> held, so the nested guards on the guest-register read path cost nothing.
 > 
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->  target/hexagon/translate.h   |  7 ++++---
->  target/hexagon/hex_common.py | 18 +++++++++++++++++-
->  2 files changed, 21 insertions(+), 4 deletions(-)
+>  target/hexagon/cpu_helper.c | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
 > 
-> diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
-> index 00de2b0d2ec..05425d92b29 100644
-> --- a/target/hexagon/translate.h
-> +++ b/target/hexagon/translate.h
-> @@ -97,9 +97,10 @@ bool is_gather_store_insn(DisasContext *ctx);
->  #ifndef CONFIG_USER_ONLY
->  static inline void ctx_log_greg_write(DisasContext *ctx, int rnum)
->  {
-> -    assert(rnum <= HEX_GREG_G3);
-> -    ctx->greg_log[ctx->greg_log_idx] = rnum;
-> -    ctx->greg_log_idx++;
-> +    if (rnum <= HEX_GREG_G3) {
-> +        ctx->greg_log[ctx->greg_log_idx] = rnum;
-> +        ctx->greg_log_idx++;
-> +    }
->  }
->
 
-I'm not sure how this change is related to what is given in written
-message. The functional change here is that we'll ignore write, instead
-of asserting. Is that still expected to have a write on a wrong register
-anyway?
-
-If not, maybe we should at least log a guest_error instead of silently
-ignoring it.
-
->  static inline void ctx_log_greg_write_pair(DisasContext *ctx, int rnum)
-> diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-> index e33d43e3ce0..c180c19b092 100755
-> --- a/target/hexagon/hex_common.py
-> +++ b/target/hexagon/hex_common.py
-> @@ -1097,11 +1097,24 @@ def analyze_write(self, f, tag, regno):
->          """))
->  
->  class GuestRegister(Register):
-> -    pass
-> +    def gen_check_impl(self, f, regno):
-> +        if self.is_written():
-> +            f.write(code_fmt(f"""\
-> +                if (!greg_writable(insn->regno[{regno}],
-> +                    {str(self.is_pair()).lower()})) {{
-> +                    return;
-> +                }}
-> +            """))
-> +        else:
-> +            f.write(code_fmt(f"""\
-> +                check_greg_impl(insn->regno[{regno}],
-> +                                {str(self.is_pair()).lower()});
-> +            """))
->  
->  class GuestDest(GuestRegister, Single, Dest):
->      def decl_tcg(self, f, tag, regno):
->          self.decl_reg_num(f, regno)
-> +        self.gen_check_impl(f, regno)
->          f.write(code_fmt(f"""\
->              TCGv_i32 {self.reg_tcg()} = tcg_temp_new_i32();
->          """))
-> @@ -1121,6 +1134,7 @@ def decl_reg_num(self, f, regno):
->          """))
->      def decl_tcg(self, f, tag, regno):
->          self.decl_reg_num(f, regno)
-> +        self.gen_check_impl(f, regno)
->          f.write(code_fmt(f"""\
->              TCGv_i32 {self.reg_tcg()} = tcg_temp_new_i32();
->              gen_read_greg({self.reg_tcg()}, {self.reg_num});
-> @@ -1131,6 +1145,7 @@ def analyze_read(self, f, regno):
->  class GuestPairDest(GuestRegister, Pair, Dest):
->      def decl_tcg(self, f, tag, regno):
->          self.decl_reg_num(f, regno)
-> +        self.gen_check_impl(f, regno)
->          f.write(code_fmt(f"""\
->              TCGv_i64 {self.reg_tcg()} = tcg_temp_new_i64();
->          """))
-> @@ -1150,6 +1165,7 @@ def decl_reg_num(self, f, regno):
->          """))
->      def decl_tcg(self, f, tag, regno):
->          self.decl_reg_num(f, regno)
-> +        self.gen_check_impl(f, regno)
->          f.write(code_fmt(f"""\
->              TCGv_i64 {self.reg_tcg()} = tcg_temp_new_i64();
->              gen_read_greg_pair({self.reg_tcg()}, {self.reg_num});
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
