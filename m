@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B60BC5DF87
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 12:49:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93327C5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 12:49:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx2CJ-0004uv-Gq; Thu, 20 Aug 2026 08:48:43 -0400
+	id 1wx2CB-0004o7-M3; Thu, 20 Aug 2026 08:48:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wx2CH-0004rj-5I
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:48:41 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wx2CA-0004kj-1x
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:48:34 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wx2CD-0001Yb-O6
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:48:40 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-6a36982a875so3484643a12.0
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 05:48:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wx2C7-0001W2-O4
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:48:33 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-c20e70a0962so313640866b.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 05:48:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787230116; x=1787834916; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=sS1gXEmemUC6ULE4hdREjbYJb8+o5+CI4A9QQ0fRey8=;
- b=Tf8Cq8fKBOjXg/Zo4JN3ji8FDXzmQ8daG9kYB699w+bvC0jGmxWHO80E/iQ4/A4Pv8
- B8IjNsd/OafDxrxPjtIucHL6HfII6GAHId5Ixpwpq6UmApvymgzFi+LHTKUVnP5U0pB7
- frV+ct164jdKOKMr0sfM61jlPN+rkvX9qoic9SBNTek5JFe6tiqAjc2YWAvKopqn6/ja
- wniy//nwJgyC7KetaIdVjI3MI4duAzaqkGBM4K0muK+GOX8nWwEcoA3PAUy3t/YNkfUr
- Rkw+nn8+Z5FKb9VCKsK+TqdPIQPoB3ACRxWsYBGcqdyyhcP8wMebw+7E5xZa7fWpN4L/
- kuUA==
+ d=gmail.com; s=20251104; t=1787230110; x=1787834910; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=GNkCfOLEsLAHbHCKhsqza9SCuQeJzZU8ZEAm4tg/LtU=;
+ b=oiY0G7KEKOtwU3PUKbV/zrFZ25yHUSBx075rvSbelIxaUFQ0X/EGFnnMevjxbUnHuq
+ UYsp2yvr12l28Zr+sHlhSQwsUwaxcdP5yWiz9yqW/BMA39aqu9WKvVj6jpSp+0+tgnJq
+ agSwqkJ93TQgHBqkNRYplh/+NiwnVtiekWqMLb33q8SloFmidbGDKS2N7dhkTgqYnOjY
+ nzmD6RoPg7jih8NZOUWgcaIOyllvMQw2iETdvzQ/vnH6d6FBl/ZzUhlhbOHo9q/THwoe
+ Cng8ZDfJZDxkhb7qV26vdE1DAe9DYon5MAkxYDuvQitKB/WeXR0497iZtFAc5/+crbAE
+ XYfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787230116; x=1787834916;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=sS1gXEmemUC6ULE4hdREjbYJb8+o5+CI4A9QQ0fRey8=;
- b=MoW3l4Ymupdf2R53zBw2oX36hk7u1c3b2biDulYHYRfYDBo/fdKHmgnuSHLPZHDAr5
- 6Cw52nelHK1vOlSJ5GgRVVojrE8gqvla50aELQ73k4bmoXmGVQc3hY2nxr2n86Q4uf6+
- xE7pxRk/us/aMPD0XPcnIStA4PpqRTd/hug+gjzosTgOnWEW8v4YeZOgRaT78GJZ6Ats
- 6N8jriehhBpwd3Robmn/K/aIdrpL7dPZg6Sgv7ga5HuvBRGZwFMp5N2YiZlWkDKRxyL/
- OPETbnbp7I2RoChdU9I550lp3Aj5YqPG3500IaGM/1LZwGSc4R0MyuWncyUTKnIvdxnj
- vU4g==
-X-Gm-Message-State: AFuF++kVWx0ST15JGd4Xyv0REWzxr92KwE5BuCVmRkZdd+ZsfYYbhnCy
- 5VXaTbWcaBky70sQU7u3hlK6COFUAqPmQAlnG70PnzRa+cdL9Gb/F9uRXNmHWvAC
-X-Gm-Gg: AR+sD11T3JQEuQpylOGgQBBlVMXJd8d3XXWUCYhV8sWczhU5MrsRWaX2+yryDtovPgf
- wUpdeH1wW1Y2dZryYf/DXymqoqcsZ/FQBSfQ2WDggIbAMXNNtvm3lG3H7tBJzzQVCtgzp+faW7Y
- Twxz91kWu59YJBSbzIZ4LY6/VpIare2kw+AQi7I97dcv55ZjhiMPuCjvX2QqS5h7qvyROlTJfWq
- W9JPQfW6byN/Fc/K5BbOGpiQEWK/q1J6GfBWcES5wuU1AHKc+085FNztwmKp9YvcrS78LuufmVf
- gT8lMqOp7AtZHJ6nbyk11ROemviB/kcm4AMV8HE1JpUKuvxW0kiy2C5TOBqlau604c3fPBxPlSM
- 10lu7Z/laRpsby8xyEoNWFpXL2upjVHoemlRwgg11WUYr8Tn7SqLxBOaNayHGV/hKqyjLeE1wxj
- TvqE2jAXK7ik4fh1Xa1/nAHMpmp5KIwaX/eNGnceVgoFwAJQEGAx8JwLqmyLoEuoAnHGfqx+HU6
- 7+zGS/+X2c=
-X-Received: by 2002:a05:6402:2403:b0:6a3:e813:8457 with SMTP id
- 4fb4d7f45d1cf-6a4032f9c61mr9187666a12.12.1787230115922; 
- Thu, 20 Aug 2026 05:48:35 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787230110; x=1787834910;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=GNkCfOLEsLAHbHCKhsqza9SCuQeJzZU8ZEAm4tg/LtU=;
+ b=PxUxZ37eLV7Ju+7zffHuIH6rPpsNTNiSnqlcZPneFAaEcVrNt/edo44lIyPL/7rVaW
+ 8Dhsv4ERP9+lOYBz6AQ6JEI8jR2uyF0T7AJZLywuPavhW5RTSQsD92mg5W6K+0i2kLSh
+ g+6AOlpIGYL7Y3YEyElvp9mPvEDKQ4Mi6uURpk4WcN7dldcDFZ553GNBGpvY7XEagFmz
+ 5NeUxAyAKeaXJteXD7xA2tVXGnCryJ1Z2f33ApOI+9tzQaG8hNt97Rrm5hcyjAUF+0ia
+ nL2GXpy/jneOkwAGXEUkxNkpPIqxCdvb6+XSU9hI8p9hW2aU52H6okq2JAKGmmK58y7F
+ MJig==
+X-Gm-Message-State: AOJu0YxXYhJS15m3jJ+aPuxqg5etXaVH2pLgn9pl6Pfeyo68BlmyYBrV
+ KMFSNOOZQRbMKR958USfMhVneQJb0i57k/s6Y1NI+ZkhRPTRNaumdSjT3Q/Sdolf
+X-Gm-Gg: AR+sD10BA8hMWEL00iI7KfbVpFRLOm0oitTJmh2cEQO0QOawH934SCYY7OtkcYdi4Qn
+ PspOAQ4g+W3wGcIictnO/F3IM2akJ2guj0q1955aBB7fip5Zf8J5f9XF2CeHbpIp0BSbnv84G+6
+ TgwZGlYn444eXhEYWb8w+/dF+2fsFUzcjZA65v07ghs40LlRMjtwSeO6TjUVCpMGS7BY0Cxn5vA
+ njBsP+bi3DyVvMgSsE72+WwBEKQl6KNX3TzD1tOFi47HS7rUVvXi2fUjPLgUFfzz/iY6D/y7JmV
+ uegyUdooRzmvuglw5hdhm+fxuWqqI9SXa8si7E2HyAIAhLYt1I/kPBk/SUsrItYQEYS4/XmYVUy
+ q+0vSre4dVI6u9OlO002Xl5LaR24wzolzLO1FQsjgErKh3O/ox9kE7CJuw/yKdClV4JtZ0CjVv6
+ bcQorMNMmfDqOKyKf8byV/2IPlknJXMCnW5ZOImYRsacHFpa9P0dM4ALicM+IKaMhWtSms62KFh
+ 89rtAAzkEM=
+X-Received: by 2002:a17:907:9997:b0:c20:af9d:4544 with SMTP id
+ a640c23a62f3a-c23f92c2a0emr1066129966b.6.1787230109385; 
+ Thu, 20 Aug 2026 05:48:29 -0700 (PDT)
 Received: from DE-PF5B95TD.embedded.cmblu.dev ([87.129.199.250])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a3ff1563c5sm2270449a12.14.2026.08.20.05.48.35
+ 4fb4d7f45d1cf-6a3ff1563c5sm2270449a12.14.2026.08.20.05.48.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 05:48:35 -0700 (PDT)
+ Thu, 20 Aug 2026 05:48:28 -0700 (PDT)
 From: Wadim Mueller <wafgo01@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Bin Meng <bmeng.cn@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Wadim Mueller <wafgo01@gmail.com>
-Subject: [RFC PATCH v2 05/14] hw/timer: add TI K3 DMTimer model
-Date: Thu, 20 Aug 2026 14:48:05 +0200
-Message-ID: <20260820124824.618671-6-wafgo01@gmail.com>
+Subject: [RFC PATCH v2 00/14] hw/arm: add TI AM64x SoC and am64-virt machine
+Date: Thu, 20 Aug 2026 14:48:00 +0200
+Message-ID: <20260820124824.618671-1-wafgo01@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260820124824.618671-1-wafgo01@gmail.com>
-References: <20260820124824.618671-1-wafgo01@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=wafgo01@gmail.com; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=wafgo01@gmail.com; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,262 +99,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a model of the K3 DMTimer used, among others, by the R5 SPL for its
-udelay() implementation. It is a free-running counter with load/reload and
-overflow interrupt.
+Add support for the TI AM64x (Sitara AM6442) SoC and a board around it,
+``am64-virt``. The model is complete enough to run the stock TI boot chain
+end to end:
 
-Signed-off-by: Wadim Mueller <wafgo01@gmail.com>
----
- hw/timer/Kconfig                 |   3 +
- hw/timer/meson.build             |   1 +
- hw/timer/ti-k3-dmtimer.c         | 177 +++++++++++++++++++++++++++++++
- include/hw/timer/ti-k3-dmtimer.h |  30 ++++++
- 4 files changed, 211 insertions(+)
+  ROM boot (tiboot3.bin) -> R5 SPL -> TF-A/OP-TEE -> U-Boot -> Linux SMP
+
+This is a resend: I posted a first RFC back in May [1] but got no feedback
+on it. Since then was the series rebased onto actual master, reworked for
+style and split into reviewable pieces, so I send it out again in the hope
+of getting some review.
+
+RFC because I would like feedback on the overall approach before polishing
+further; see the open questions at the end.
+
+[1] https://lore.kernel.org/qemu-devel/20260528211210.74266-1-wafgo01@gmail.com/
+
+What is modelled
+================
+
+The SoC is heterogeneous, and the model reflects that: a Cortex-A53
+cluster behind a GICv3 (GIC-500) at the real addresses, the Cortex-R5F
+MCU boot core, and the Cortex-M4F, each with their own RAT (region
+address translation) view of the memory map.
+
+The interesting part is the DMSC. On real silicon it is a hidden core
+running TI's system firmware (SYSFW) which answers TI-SCI requests for
+clocks, power, firewalls and processor boot control from every other core.
+Rather than trying to execute the vendor blob, patch 10 models the DMSC
+as a TI-SCI endpoint sitting on top of the secure proxy model (patch 9).
+That is what actually starts the A53 and M4F cores when the R5 SPL asks
+for it, and what TF-A, OP-TEE, U-Boot and Linux talk to for clock/power
+management.
+
+The remaining devices (patches 4-8) are the supporting cast: the UART,
+the K3 DMTimer, mailboxes, and register-level stubs for CTRL_MMR
+(including the DEVSTAT boot pins), GTC, DDRSS, the SDHCI PHY wrapper and
+the TRNG. The
+stubs implement the handshakes, which firmware polls for, not the
+underlying hardware.
+
+Patches 1-3 are prerequisites that touch existing code:
+
+  1-2  give the OMAP I2C model its own Kconfig symbol so it can be reused
+       outside the OMAP1 SoC, and implement soft reset and NACK reporting
+  3    fixes SDHCI ADMA chain processing; without it, transfer rate
+       depends from the virtual clock instead of on the guest's
+       programming. Patch 14 contains a qtest that fails without it.
+
+To patch 3: it is only needed as long as Bin Meng's SDHCI series [2] (on
+top of the SDMA boundary fix [3]) is not merged. I posted the same fix
+standalone in August, Bin showed then, that his series already covers
+the AM64x case, and I have withdrawn it there [4]. It is kept here only
+so that this series works on actual master - please drop patch 3
+together with the pacing qtest in patch 14 as soon as [2] lands. A
+version of that qtest for the Icicle Kit was posted separately [5].
+
+[2] https://patchwork.ozlabs.org/project/qemu-devel/list/?series=515264
+[3] https://patchwork.ozlabs.org/project/qemu-devel/list/?series=513930
+[4] https://lore.kernel.org/qemu-devel/20260810124519.34501-1-wafgo01@gmail.com/
+[5] https://lore.kernel.org/qemu-devel/20260813123210.28987-1-wafgo01@gmail.com/
+
+Testing
+=======
+
+Patch 14 adds:
+
+  * a unit test for the combined-boot-image parser
+  * qtests for the machine topology, GICv3 layout, SMP handling and the
+    DMSC TI-SCI request/response path
+  * an I2C qtest (soft reset, NACK, and a read from an at24c EEPROM which
+    the test attaches with -device)
+  * the SDHCI ADMA pacing reproducer
+  * a functional test that builds a synthetic tiboot3.bin containing a
+    bare-metal R5 payload and checks it runs from the certified entry
+    point. Setting QEMU_TEST_TIBOOT3 boots a real image instead.
+
+Migration is not supported yet: none of the new devices has a VMState.
+I left it out for the RFC, but can add it if you want it before merge.
+
+The series was built and tested on top of ae4f344320. Every patch builds
+on its own, and checkpatch reports no errors.
+
+Open questions
+==============
+
+  * pc-bios/dtb/am64-virt.dtb: patch 13 checks in a generated DTB (with
+    its source) for convenience. I am not sure a machine-specific blob
+    belongs in pc-bios; happy to drop it and have the functional test
+    generate it with dtc instead, or drop the Linux-boot part of the test.
+
+  * Splitting the DMSC: hw/misc/ti-dmsc.c is large because TI-SCI is
+    large. It could be split per message class (clocks / devices /
+    processor boot / security) if reviewers prefer, at the cost of a
+    non-functional intermediate state.
+
+  * Only one of the four R5F cores is modelled. mc->max_cpus reserves
+    room for the rest. Because the SoC realizes M4F/R5F vCPUs in addition
+    to the A53s and every vCPU needs a TCG context slot inside
+    smp.max_cpus, the machine defaults to the full vCPU budget. I would
+    appreciate a better idea than the actual "fail early with an
+    explanatory message" handling when the user passes a too-small -smp.
+
+  * The register-level stubs (DDRSS in particular) fake success rather
+    than modelling the hardware. That is deliberate, but tell me if you
+    would rather see them as plain unimplemented-device windows plus
+    firmware quirks elsewhere.
+
+Wadim Mueller (14):
+  hw/i2c/omap_i2c: add a dedicated CONFIG_OMAP_I2C symbol
+  hw/i2c/omap_i2c: implement soft reset and NACK reporting
+  hw/sd/sdhci: complete non-interrupt ADMA descriptor chains in one pass
+  hw/char: add TI AM64x UART model
+  hw/timer: add TI K3 DMTimer model
+  hw/misc: add TI K3 CTRL_MMR, GTC, DDRSS, SDHCI PHY and TRNG models
+  hw/misc: add TI RAT (region address translation) model
+  hw/misc: add TI mailbox (IPC) model
+  hw/misc: add TI K3 secure proxy model
+  hw/misc: add TI DMSC (TI-SCI system controller) model
+  hw/arm: add TI K3 combined boot image parser
+  hw/arm: add TI AM64x SoC model
+  hw/arm: add the am64-virt machine
+  tests: add AM64x unit, qtest and functional tests
+
+ MAINTAINERS                                   |   22 +
+ docs/system/arm/am64.rst                      |   74 +
+ docs/system/target-arm.rst                    |    1 +
+ hw/arm/Kconfig                                |   26 +
+ hw/arm/am64-virt.c                            |  347 ++++
+ hw/arm/k3-bootrom-parse.c                     |  250 +++
+ hw/arm/k3-bootrom.c                           |  125 ++
+ hw/arm/meson.build                            |    4 +
+ hw/arm/ti-am64x.c                             | 1223 ++++++++++++
+ hw/arm/trace-events                           |    4 +
+ hw/char/Kconfig                               |    4 +
+ hw/char/meson.build                           |    1 +
+ hw/char/ti-am64-uart.c                        |  109 ++
+ hw/i2c/Kconfig                                |    4 +
+ hw/i2c/meson.build                            |    2 +-
+ hw/i2c/omap_i2c.c                             |  234 ++-
+ hw/misc/Kconfig                               |   27 +
+ hw/misc/meson.build                           |   10 +
+ hw/misc/ti-dmsc.c                             | 1725 +++++++++++++++++
+ hw/misc/ti-k3-ctrlmmr.c                       |  103 +
+ hw/misc/ti-k3-ddrss.c                         |   98 +
+ hw/misc/ti-k3-gtc.c                           |  100 +
+ hw/misc/ti-k3-sdhci-phy.c                     |   91 +
+ hw/misc/ti-k3-trng.c                          |  139 ++
+ hw/misc/ti-mailbox.c                          |  566 ++++++
+ hw/misc/ti-rat.c                              |  290 +++
+ hw/misc/ti-sec-proxy.c                        |  446 +++++
+ hw/misc/trace-events                          |   62 +
+ hw/sd/sdhci-internal.h                        |    9 +
+ hw/sd/sdhci.c                                 |   23 +-
+ hw/timer/Kconfig                              |    3 +
+ hw/timer/meson.build                          |    1 +
+ hw/timer/ti-k3-dmtimer.c                      |  177 ++
+ include/hw/arm/k3-bootrom.h                   |   43 +
+ include/hw/arm/ti-am64x.h                     |   86 +
+ include/hw/char/ti-am64-uart.h                |   28 +
+ include/hw/misc/ti-dmsc.h                     |  661 +++++++
+ include/hw/misc/ti-k3-ctrlmmr.h               |   26 +
+ include/hw/misc/ti-k3-ddrss.h                 |   26 +
+ include/hw/misc/ti-k3-gtc.h                   |   23 +
+ include/hw/misc/ti-k3-sdhci-phy.h             |   26 +
+ include/hw/misc/ti-k3-trng.h                  |   35 +
+ include/hw/misc/ti-mailbox.h                  |   44 +
+ include/hw/misc/ti-rat.h                      |   51 +
+ include/hw/misc/ti-sec-proxy.h                |  108 ++
+ include/hw/timer/ti-k3-dmtimer.h              |   30 +
+ pc-bios/dtb/am64-virt.dtb                     |  Bin 0 -> 6116 bytes
+ pc-bios/dtb/am64-virt.dts                     |  292 +++
+ tests/functional/aarch64/meson.build          |    2 +
+ tests/functional/aarch64/test_am64_bootrom.py |  137 ++
+ tests/qtest/am64-adma-pacing-test.c           |  243 +++
+ tests/qtest/am64-virt-test.c                  |  502 +++++
+ tests/qtest/meson.build                       |    1 +
+ tests/qtest/ti-am64-i2c-test.c                |  137 ++
+ tests/unit/meson.build                        |    1 +
+ tests/unit/test-k3-bootrom.c                  |  263 +++
+ 56 files changed, 9060 insertions(+), 5 deletions(-)
+ create mode 100644 docs/system/arm/am64.rst
+ create mode 100644 hw/arm/am64-virt.c
+ create mode 100644 hw/arm/k3-bootrom-parse.c
+ create mode 100644 hw/arm/k3-bootrom.c
+ create mode 100644 hw/arm/ti-am64x.c
+ create mode 100644 hw/char/ti-am64-uart.c
+ create mode 100644 hw/misc/ti-dmsc.c
+ create mode 100644 hw/misc/ti-k3-ctrlmmr.c
+ create mode 100644 hw/misc/ti-k3-ddrss.c
+ create mode 100644 hw/misc/ti-k3-gtc.c
+ create mode 100644 hw/misc/ti-k3-sdhci-phy.c
+ create mode 100644 hw/misc/ti-k3-trng.c
+ create mode 100644 hw/misc/ti-mailbox.c
+ create mode 100644 hw/misc/ti-rat.c
+ create mode 100644 hw/misc/ti-sec-proxy.c
  create mode 100644 hw/timer/ti-k3-dmtimer.c
+ create mode 100644 include/hw/arm/k3-bootrom.h
+ create mode 100644 include/hw/arm/ti-am64x.h
+ create mode 100644 include/hw/char/ti-am64-uart.h
+ create mode 100644 include/hw/misc/ti-dmsc.h
+ create mode 100644 include/hw/misc/ti-k3-ctrlmmr.h
+ create mode 100644 include/hw/misc/ti-k3-ddrss.h
+ create mode 100644 include/hw/misc/ti-k3-gtc.h
+ create mode 100644 include/hw/misc/ti-k3-sdhci-phy.h
+ create mode 100644 include/hw/misc/ti-k3-trng.h
+ create mode 100644 include/hw/misc/ti-mailbox.h
+ create mode 100644 include/hw/misc/ti-rat.h
+ create mode 100644 include/hw/misc/ti-sec-proxy.h
  create mode 100644 include/hw/timer/ti-k3-dmtimer.h
+ create mode 100644 pc-bios/dtb/am64-virt.dtb
+ create mode 100644 pc-bios/dtb/am64-virt.dts
+ create mode 100644 tests/functional/aarch64/test_am64_bootrom.py
+ create mode 100644 tests/qtest/am64-adma-pacing-test.c
+ create mode 100644 tests/qtest/am64-virt-test.c
+ create mode 100644 tests/qtest/ti-am64-i2c-test.c
+ create mode 100644 tests/unit/test-k3-bootrom.c
 
-diff --git a/hw/timer/Kconfig b/hw/timer/Kconfig
-index e1b751a54a..fac5ba5a7e 100644
---- a/hw/timer/Kconfig
-+++ b/hw/timer/Kconfig
-@@ -68,3 +68,6 @@ config AVR_TIMER16
- 
- config HEX_QTIMER
-     bool
-+
-+config TI_K3_DMTIMER
-+    bool
-diff --git a/hw/timer/meson.build b/hw/timer/meson.build
-index 8323efaf46..4cf49ef6d6 100644
---- a/hw/timer/meson.build
-+++ b/hw/timer/meson.build
-@@ -32,6 +32,7 @@ system_ss.add(when: 'CONFIG_STM32F2XX_TIMER', if_true: files('stm32f2xx_timer.c'
- system_ss.add(when: 'CONFIG_XILINX', if_true: files('xilinx_timer.c'))
- specific_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_timer.c'))
- system_ss.add(when: 'CONFIG_SIFIVE_PWM', if_true: files('sifive_pwm.c'))
-+system_ss.add(when: 'CONFIG_TI_K3_DMTIMER', if_true: files('ti-k3-dmtimer.c'))
- 
- system_ss.add(when: 'CONFIG_AVR_TIMER16', if_true: files('avr_timer16.c'))
- 
-diff --git a/hw/timer/ti-k3-dmtimer.c b/hw/timer/ti-k3-dmtimer.c
-new file mode 100644
-index 0000000000..e65098d101
---- /dev/null
-+++ b/hw/timer/ti-k3-dmtimer.c
-@@ -0,0 +1,177 @@
-+/*
-+ * TI K3 DM timer (dmtimer, am654 register layout)
-+ *
-+ * Minimal TCRR counter model. TCLR.PRE_EN and TCLR.PTV divide the clock
-+ * by (2 << PTV); interrupts and PWM we omit.
-+ *
-+ * Copyright (c) 2026 CMBLU Energy AG
-+ * Author: Wadim Mueller <wafgo01@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qemu/timer.h"
-+#include "hw/core/qdev-properties.h"
-+#include "hw/timer/ti-k3-dmtimer.h"
-+
-+#define R_TIDR  0x00
-+#define R_TCLR  0x38
-+#define R_TCRR  0x3c
-+#define R_TLDR  0x40
-+#define R_TTGR  0x44
-+#define R_TWPS  0x48
-+
-+#define TCLR_ST     (1u << 0)
-+#define TCLR_AR     (1u << 1)
-+#define TCLR_PTV    (7u << 2)
-+#define TCLR_PRE_EN (1u << 5)
-+
-+static uint32_t dmtimer_effective_freq(TIK3DmTimerState *s)
-+{
-+    uint32_t freq = s->freq_hz;
-+
-+    if (s->tclr & TCLR_PRE_EN) {
-+        uint32_t ptv = (s->tclr >> 2) & 7;
-+        freq = s->freq_hz / (2u << ptv);
-+    }
-+    return freq;
-+}
-+
-+static uint32_t dmtimer_tcrr(TIK3DmTimerState *s)
-+{
-+    int64_t now;
-+    uint32_t eff_freq;
-+
-+    if (!s->running) {
-+        return s->tcrr_base;
-+    }
-+
-+    now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+    eff_freq = dmtimer_effective_freq(s);
-+
-+    return s->tcrr_base +
-+           (uint32_t)muldiv64(now - s->base_ns, eff_freq,
-+                              NANOSECONDS_PER_SECOND);
-+}
-+
-+static void dmtimer_set_tcrr(TIK3DmTimerState *s, uint32_t val)
-+{
-+    s->tcrr_base = val;
-+    s->base_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+}
-+
-+static uint64_t ti_k3_dmtimer_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    TIK3DmTimerState *s = TI_K3_DMTIMER(opaque);
-+
-+    switch (addr) {
-+    case R_TIDR:
-+        return 0x0;
-+    case R_TCLR:
-+        return s->tclr;
-+    case R_TCRR:
-+        return dmtimer_tcrr(s);
-+    case R_TLDR:
-+        return s->tldr;
-+    case R_TWPS:
-+        return 0; /* no write is pending, ever */
-+    default:
-+        qemu_log_mask(LOG_UNIMP,
-+                      "%s: unimplemented read @0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        return 0;
-+    }
-+}
-+
-+static void ti_k3_dmtimer_write(void *opaque, hwaddr addr, uint64_t val,
-+                                unsigned size)
-+{
-+    TIK3DmTimerState *s = TI_K3_DMTIMER(opaque);
-+
-+    switch (addr) {
-+    case R_TCLR:
-+        /*
-+         * Rebase with the old TCLR first.  Prescaler changes must only
-+         * affect ticks after this write.
-+         */
-+        dmtimer_set_tcrr(s, dmtimer_tcrr(s));
-+        s->tclr = val;
-+        s->running = (val & TCLR_ST) != 0;
-+        break;
-+    case R_TCRR:
-+        dmtimer_set_tcrr(s, val);
-+        break;
-+    case R_TLDR:
-+        s->tldr = val;
-+        break;
-+    case R_TTGR:
-+        dmtimer_set_tcrr(s, s->tldr);
-+        break;
-+    default:
-+        qemu_log_mask(LOG_UNIMP,
-+                      "%s: unimplemented write @0x%" HWADDR_PRIx "\n",
-+                      __func__, addr);
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps ti_k3_dmtimer_ops = {
-+    .read = ti_k3_dmtimer_read,
-+    .write = ti_k3_dmtimer_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid.min_access_size = 4,
-+    .valid.max_access_size = 4,
-+};
-+
-+static void ti_k3_dmtimer_reset(DeviceState *dev)
-+{
-+    TIK3DmTimerState *s = TI_K3_DMTIMER(dev);
-+
-+    s->tclr = 0;
-+    s->tldr = 0;
-+    s->tcrr_base = 0;
-+    s->base_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+    /*
-+     * This model exposes TCRR as free-running already after reset; TCLR.ST
-+     * still reads back as reset value 0.
-+     */
-+    s->running = true;
-+}
-+
-+static void ti_k3_dmtimer_init(Object *obj)
-+{
-+    TIK3DmTimerState *s = TI_K3_DMTIMER(obj);
-+
-+    memory_region_init_io(&s->iomem, obj, &ti_k3_dmtimer_ops, s,
-+                          TYPE_TI_K3_DMTIMER, 0x400);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
-+}
-+
-+static const Property ti_k3_dmtimer_properties[] = {
-+    /* AM64 main_timer0 default input clock is 20 MHz. */
-+    DEFINE_PROP_UINT32("freq-hz", TIK3DmTimerState, freq_hz, 20000000),
-+};
-+
-+static void ti_k3_dmtimer_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    device_class_set_props(dc, ti_k3_dmtimer_properties);
-+    device_class_set_legacy_reset(dc, ti_k3_dmtimer_reset);
-+}
-+
-+static const TypeInfo ti_k3_dmtimer_info = {
-+    .name = TYPE_TI_K3_DMTIMER,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(TIK3DmTimerState),
-+    .instance_init = ti_k3_dmtimer_init,
-+    .class_init = ti_k3_dmtimer_class_init,
-+};
-+
-+static void ti_k3_dmtimer_register_types(void)
-+{
-+    type_register_static(&ti_k3_dmtimer_info);
-+}
-+
-+type_init(ti_k3_dmtimer_register_types)
-diff --git a/include/hw/timer/ti-k3-dmtimer.h b/include/hw/timer/ti-k3-dmtimer.h
-new file mode 100644
-index 0000000000..04c3925e2d
---- /dev/null
-+++ b/include/hw/timer/ti-k3-dmtimer.h
-@@ -0,0 +1,30 @@
-+/*
-+ * TI K3 DM timer (am654 layout)
-+ *
-+ * Copyright (c) 2026 CMBLU Energy AG
-+ * Author: Wadim Mueller <wafgo01@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef HW_TIMER_TI_K3_DMTIMER_H
-+#define HW_TIMER_TI_K3_DMTIMER_H
-+
-+#include "hw/core/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_TI_K3_DMTIMER "ti-k3-dmtimer"
-+OBJECT_DECLARE_SIMPLE_TYPE(TIK3DmTimerState, TI_K3_DMTIMER)
-+
-+struct TIK3DmTimerState {
-+    SysBusDevice parent_obj;
-+    MemoryRegion iomem;
-+    uint32_t freq_hz;
-+    uint32_t tclr;
-+    uint32_t tldr;
-+    /* counter value latched at last write/start */
-+    uint32_t tcrr_base;
-+    int64_t base_ns;
-+    bool running;
-+};
-+
-+#endif
+
+base-commit: ae4f3443209ab154b48b706a146e5f557ab147cb
 -- 
 2.43.0
 
