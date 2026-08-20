@@ -4,134 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E788C5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 15:03:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B20A8C5DF85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 15:07:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx4I7-0000ij-EH; Thu, 20 Aug 2026 11:02:51 -0400
+	id 1wx4MJ-0002R6-Fc; Thu, 20 Aug 2026 11:07:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wx4I5-0000iJ-Af
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 11:02:49 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wx4I3-0007mj-O4
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 11:02:49 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67KE7oZi3220262
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 15:02:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=OrfwWrCfKES
- FnNdiUi7OARnWiyLEZTK5KQ40L8T6M5o=; b=hNCjoJj11LqJIWkOEEE1aP5M0TN
- uGsal4DKPtGq8yapk1oAURv5Z/oJFsUJO/ek2WLx96DIA+LA/omVnnkY7oz05UoL
- mGGEy5LeA+7KvbYOUql36zyEVuHCcWllNd609JGaJQc5B6MpQNpYiLnQRHKpVTH0
- 5qlpIzMm+rgra1jWTYpV7/Hl2ZEQ/26TYrzmAcaQKl52w4312OxLHosBtDg3bXy9
- vPP9asciMkD5MSfSEsxpt3qOFh7uv6jP4VSSFOYISCyBkhhuFaUyKfhj3O1kd9pq
- tiPo4WSdY1hKt/6hPqvzrBft0PZ7msxMWJ/Irp3EukBEgXTESK3QMH23Krw==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g5x29hmcp-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 15:02:45 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-38f97b3f853so3955638a91.3
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 08:02:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wx4MH-0002Ql-CK
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 11:07:09 -0400
+Received: from mail-oo1-xc2c.google.com ([2607:f8b0:4864:20::c2c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wx4MF-0000DM-PE
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 11:07:09 -0400
+Received: by mail-oo1-xc2c.google.com with SMTP id
+ 006d021491bc7-6b14a370dc5so857969eaf.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 08:07:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787238164; x=1787842964; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=OrfwWrCfKESFnNdiUi7OARnWiyLEZTK5KQ40L8T6M5o=;
- b=C043gFKaj8Z8/sTy65RTsnUwJUgIODYLT2tODjfvw4H7vBEhbMA8rGjQJampSOgHnm
- feu1Lgcdd7u3KRCzPwObjHxusBRKQ2BvMMhSz/7ckYj3PQV+ZBaG4agQHBv66chcSFeq
- ivkR7Q7V9uZ5vfErBndrVRWAfVCOEiFajxunyYBtctX54FaiGVz6YJwwYy7zBKsGhIVm
- qZmaRYA/8ikOjtM/l+Cf3PBYJLWpH0bzvzY+IB9I8052330dOerY3Fs8MCvlu2z0H4c1
- wEYMbauFQw/IHwFgPqyouiafRZF05s0q03FtRKCs4wZX9+MwSjXJ8iPqDvciO5Sox18q
- h9sw==
+ d=linaro.org; s=google; t=1787238426; x=1787843226; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=F0LkW4n6k6gFhdjph7Yimqrb83nBqdzl2uuNTxhvXCA=;
+ b=dCNsWAuix+xr6ET2bnH/5245Rn25Ic6Y31ljetquEBFZrwcOSWQZRaPR58DVv9tSpQ
+ UBg9tavD5UWjVnX1Bmvxwuqv5YBWDd/SRnsag9Q/v9wm8OrDRk1huhv5O24S1lleGI1P
+ EDQMwVUzlsM/M1XLHtoeAtgtBaZMbuLj76Fvj2tlqQRaDno05egQk3VobX9nICZCft9w
+ hpuVHOyLR7ihbCHzKYd4pg314JRsu2fUGgSD+vPZdvTffwRu9pdQioMOjL5c0R0rBlTN
+ wJuxP1QNzSBJmKpmZmZ19WCwa5iwQj0Vx3IgkEHRwlSlE9RuWXTYBbJ+bBMLgdr/uDvt
+ wKQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787238164; x=1787842964;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=OrfwWrCfKESFnNdiUi7OARnWiyLEZTK5KQ40L8T6M5o=;
- b=E/XGEQJeI7y5iCd8pSUUoD/ZKCQNZ1eWyMeHZxEhwLQRvBGgHXcmOvqaxxrQ6ztGaq
- DIJCOuRC3aq8CmZ3dcDK6DFUY7S8scEhREnzaD53D7H3wJc0XIvCtanH+giW5FROsie6
- nPYSYSY/bz59Jn5s+hibo9BRn1D+D97qBlIqy/a73WVANXyhiIloOh3owV6Xd6SrVdeN
- vdC5w5WNH/ChFnaBjssgoGFjna/FdJqf2TcRyJ0VI1BBxqyVdi76AjTWGuiOT+FrHo5X
- SfI4iAAGYk/GiCJp0zOum4tq/5dePby7i1fjYv+PA7yLV2rmq0eslf/SQr3hquj1P4ES
- z2/Q==
-X-Gm-Message-State: AFuF++lZo+imKr8kfvYoz9YC2aaRPZKppnSMXbrLikKAj8UtX3WIZ77p
- vkQsanWanKnG/ANotf2mLbYS+8Eh8O5jdedBgPPjSipzs8MoJS3FeeruwUvvzBK7u+crpDrmb8p
- Dx5BK/Wvcr3fg/dgpkjyqg9JBtBnhs1jSID86y47hWEPWo57g7qeZNbZzOg==
-X-Gm-Gg: AR+sD13hpOEHO3MOKTadtkbGP7e+lqCiSW+qtJXQN5uQpXKRYHUuEhLyNs4Y954U3Hm
- ZWn7NUikNiCmdYj1yzEmTs8ibGJbGFbrvaVCm6fOH/x2xMQUNAVdFkc3LHsG6WpyiQIrve46M+5
- Zf+Ng5SsGqou6sDyAkNKUyTTIoV9r9b/9V7DF4XJqBCsUZTt/Aosumw3LiYKUZcVUk4DhP6NsTA
- 04/ncc7T6cveVV6nt5ApvZMnT5Rf2huXgQvsGnOEyEWkrrQoCYrV0Srbmj7ap3aV0RZbmr5CgXi
- JK0Gfwzpb/ffgvQNHk4r5U3xlN6afhGTbVQTykmEh1Qs5bN6HD/KbVgDDaQeKDGSAcBwfup0kxr
- IFQ8BhQ6xXr8HKh4I14zhBkr40cW7evFflaZxrV/RKA1nrEHV6ar4jA9EvDy/e00=
-X-Received: by 2002:a17:90b:5868:b0:38e:2517:5d1f with SMTP id
- 98e67ed59e1d1-395810b4213mr25746157a91.9.1787238162900; 
- Thu, 20 Aug 2026 08:02:42 -0700 (PDT)
-X-Received: by 2002:a17:90b:5868:b0:38e:2517:5d1f with SMTP id
- 98e67ed59e1d1-395810b4213mr25746051a91.9.1787238162410; 
- Thu, 20 Aug 2026 08:02:42 -0700 (PDT)
-Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-327bf10a94dsm17406481eec.15.2026.08.20.08.02.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 08:02:41 -0700 (PDT)
-From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-To: brian.cain@oss.qualcomm.com
-Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com,
- pierrick.bouvier@oss.qualcomm.com, anjo@rev.ng
-Subject: Re: [PATCH 1/3] target/hexagon: fix HVX big-endian byte access
-Date: Thu, 20 Aug 2026 08:02:39 -0700
-Message-Id: <20260820150239.3061104-1-matheus.bernardino@oss.qualcomm.com>
-X-Mailer: git-send-email 2.37.2
-In-Reply-To: <20260819230939.466856-2-brian.cain@oss.qualcomm.com>
-References: <20260819230939.466856-2-brian.cain@oss.qualcomm.com>
+ d=1e100.net; s=20251104; t=1787238426; x=1787843226;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=F0LkW4n6k6gFhdjph7Yimqrb83nBqdzl2uuNTxhvXCA=;
+ b=LHLIV627wA39Baoc5NCXacux2Ic1hM+HLWhNvPWZv/2y2HEfUm531T/d3hH5qkuQCw
+ I7UzqVf4N7ehW8xSC5igfcEpkJy+l3WnXKZm8r/QV9WlRTFq4VxKIyHzM2RQgOxrjwNk
+ pf3/GdtF+/YPf4lLS5bdT222WDPOgen+p9vNFGn1dKauZ5503xVm92d6dMYm9/arwijD
+ 38mkJJUI4HG100yyRwBvpVQyq6IG4uXXgjzvJwhIGYbyjPqHDNfhIUhj8pGunk8SkuAm
+ J+iNQ5NOPgzVoJ/JX/MI/N5xz1sZoIJnUl3fBZmsbgHeYmTjmxkg/OjyqqQhxDwzDqA6
+ NT8g==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoqO8E3n5HhOt6GeyDs51DjIbUd4K+L6blCCnhr5nhuCUtBiFM7mK/5SFkuZVs21m1KqhsysREEkQEq@nongnu.org
+X-Gm-Message-State: AOJu0Yz69fMfHQliowYe38B5Plx8tT/k45pf0WcnF2/nWlM55C7SyvwC
+ yukfzbdImcbMc+nmOb597PLIYzT/FIZBzrTGtjKsirNmCtvrQ3J3OxHpbDdp3dQOHTY=
+X-Gm-Gg: AR+sD13b83EuIfBwbE2vpw7WI88bLxt1PK6UUqEFIgBXTnGRJvRv7XznxsDyYj4ixPq
+ Z2yg9z2z4+1n/LpHsc7SUfCSUj3R8FaJSQMFytarl5dTbrw2NKXjT6AfiwaoSfwbVZ4EUkFoqs5
+ V/WC3N0hZgGz9j5bFj9HP1uKL7X3TZ8uVm6lmyYcNYQ3spZxm6PzMzXEFoFPWXhZQHbCJdwOEuW
+ +QTCXZHFGsVUmWzeuERx9VHTR/3wxB9GRIgnRNpUaOtGkXrN40w5RWZUftv4TY/PFgOzBe8mt3o
+ 4CR/pGhc/LnSGxJHgVPHOK4uyTmKFoxlNS2zoJPJsKwuoqQT66HJd0MdHKYhncoTgo+BurRLf1p
+ jU+xAAYM7m4Kgm+hq85oG9sAeAPojpUnnWtg96KtmC29WeOAeI3yUNIJcpCePd5EEAuO1GXlcZ7
+ cXvH4jSljwhqeNQrWaTzarOQukkNj8aZQrcENg29c64vqOCpLSql0jF20WQtPwCajKQzSc5Q+MP
+ A6E759na6yY5RbHKuhI4cKlFagibPzglj25uy1bGDjHpRBCYpqKAoWDoD3k
+X-Received: by 2002:a05:6820:c2ce:20b0:6ae:4403:1c13 with SMTP id
+ 006d021491bc7-6b149278f88mr4698536eaf.18.1787238426135; 
+ Thu, 20 Aug 2026 08:07:06 -0700 (PDT)
+Received: from ?IPV6:2607:fb90:331d:db6f:e6eb:39ca:2251:a26f?
+ ([2607:fb90:331d:db6f:e6eb:39ca:2251:a26f])
+ by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-6b13cb557c1sm5623414eaf.2.2026.08.20.08.07.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Aug 2026 08:07:05 -0700 (PDT)
+Message-ID: <5f31ce64-1ee6-4b2b-bac5-0f3607f32bad@linaro.org>
+Date: Thu, 20 Aug 2026 08:07:01 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: s6gJLeIjeI0ZL1dE_lWWwgv_5yOdo5yX
-X-Authority-Analysis: v=2.4 cv=V8BNF+ni c=1 sm=1 tr=0 ts=6a871715 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8
- a=IkY0kWWqsKwzHyvBw5kA:9 a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDExMyBTYWx0ZWRfX/waJXoRWLGJJ
- azQ7VEgG68rys/1MEWCQCG7x2IusQIufHTpOGu8nLFl8uwgV5lDnxdGmwKVHU4FSeKVL8wmQsFc
- ktqRPeV2yvQJD4sd7fKbE4MrBoiKehPZNS8gGf0hv87jQnjqxsXQWm0sun+zJr2cEfUV/kkBwmH
- IKjB2vKEDqZNS2XCdfG7x7TujU9IOBXaqX2RO4/9yCvFql/2s9ZJ93CIhpEdWTJFCRWKK/JCg0P
- eQG4JVcbvc4ZhAZ6CbTbMa9aPnMTuiXn4+BWPsxzg0ir80kzwoHahRf+OW1+6/PjLl8Iji2MV66
- 5WIICUOgf/0CuZkOauglMcZduVTuwj34bg88ZH5ISV/s5MWJKBs+cfHMI1UaDsLkfTqXYMWu11w
- /E3j/pRLiER05CITVvEFPOj32aWUT/ZljHs43dxUU110odE5FKB2QSHH/HRHL11Y9l7H9xjnezq
- 1cBrNh3S3vY/Dt8aiog==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDExMyBTYWx0ZWRfX34PPYl6tz93d
- XRuu7ci4nGJDw+fpMcGjmkxAXZZY021cMRAWjj3jisHm32ki61J3WICx497L61YbySpX4KlWtlA
- W5+t6TsWg2kASIoRyWMKrHgbbcOk5GU=
-X-Proofpoint-GUID: s6gJLeIjeI0ZL1dE_lWWwgv_5yOdo5yX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-19_06,2026-08-20_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 clxscore=1015 bulkscore=0 adultscore=0
- lowpriorityscore=0 phishscore=0 spamscore=0 suspectscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200113
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=matheus.bernardino@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] tests/tcg/riscv64: Add vector load and store tests
+To: Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair.francis@wdc.com>
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260820130223.2762-1-joel@jms.id.au>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260820130223.2762-1-joel@jms.id.au>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -148,35 +109,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 19 Aug 2026 16:09:37 -0700 Brian Cain <brian.cain@oss.qualcomm.com> wrote:
->
-> diff --git a/target/hexagon/mmvec/mmvec.h b/target/hexagon/mmvec/mmvec.h
-> index 8e72f2f6ae7..a8a777812b9 100644
-> @@ -69,6 +70,23 @@ typedef union {
->      int8_t    b[MAX_VEC_SIZE_BYTES / 1 / 8];
->  } MMQReg;
->  
-> +/* Map architectural byte indexes over host-native HVX lanes. */
-> +static inline uint8_t hexagon_mmvec_get_byte(const MMVector *v, size_t index)
-> +{
-> +    return extract64(v->ud[index / 8], (index % 8) * 8, 8);
-> +}
-> +
-> +static inline void mmvec_set_byte(MMVector *v, size_t index, uint8_t value)
+On 8/20/26 06:02, Joel Stanley wrote:
+> Hi Richard, I was testing your riscv vector load/store series and
+> noticed there were some regressions with page crossing loads and stores.
+> We don't have any tests for that in the tree, so I wrote some.
+> 
+> The tests trigger assertions in linux-user for me:
+> 
+>    $ make -C build/tests/tcg/riscv64-linux-user run-test-rvv-ldst
+>    make: Entering directory 'build/tests/tcg/riscv64-linux-user'
+>      TEST    test-rvv-ldst on riscv64
+>    **
+>    ERROR:../accel/tcg/user-exec.c:810:probe_access: assertion failed: (-(addr | TARGET_PAGE_MASK) >= size)
+>    timeout: the monitored command dumped core
+>    Aborted
+>    make: *** [Makefile:223: run-test-rvv-ldst] Error 134
+>    make: Leaving directory 'build/tests/tcg/riscv64-linux-user'
+> 
+> I wrote the assembly one first before realising a C version would be
+> easy enough to do too. I'm not sure about using memcmp to check (in case
+> it's vectorised) so perhaps that's where the asm wins. I can tidy them
+> up and send the preferred version if we decide to put it in the tree.
 
-Should this be named hexagon_mmvec_set_byte to match the getter?
+Thanks!  I'll take a look at these failures.
 
-> +{
-> +    v->ud[index / 8] = deposit64(v->ud[index / 8], (index % 8) * 8, 8,
-> +                                 value);
-> +}
-> +
-> +static inline uint8_t mmqreg_get_byte(const MMQReg *q, size_t index)
-> +{
-> +    return extract64(q->ud[index / 8], (index % 8) * 8, 8);
-> +}
 
-For QRegs, I think this should be:
-
- extract32(q->uw[index / 4], (index % 4) * 8, 8)
+r~
 
