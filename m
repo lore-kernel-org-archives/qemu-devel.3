@@ -4,94 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6455CC5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 05:36:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBD6BC5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 05:39:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwvRS-0001XD-Ei; Thu, 20 Aug 2026 01:35:54 -0400
+	id 1wwvUI-00020i-Ln; Thu, 20 Aug 2026 01:38:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <77239050qq@gmail.com>)
- id 1wwt5q-00020p-UP
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:05:26 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wwvU4-00020D-KR
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 01:38:39 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <77239050qq@gmail.com>)
- id 1wwt5p-0004vq-Cw
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:05:26 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-cbedda4c154so808184a12.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:05:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wwvU0-0002UX-3T
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 01:38:35 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-66c67a73eb7so1023476d50.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 22:38:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787204310; cv=none;
+ d=google.com; s=arc-20260327;
+ b=Isj/4V4ymM8RkQHk3bt3EZKpBfJ1P3FnMZCbAou4+exUgLI4Xg3l74Umx2FngllXnQ
+ gOLm1s8qVqI1G1cLWbHG3Tr7JxU5zLgV4Ig7pmbMU18tsEkIWY6outO0d8peH7V+wFWv
+ aEEMun1GCcS1XG4r6rVqnJAeWi6brCkenQCe8Lnca7kYfFlWrrTNyGvUJsjaIAMMEGIw
+ 75omaO54I3wRrOA1vBIsZNWF4x7Z84KVdXYnitugm4OxS+BvQ4ENgo2n4TNS9nyPdzSo
+ L9sssnxWnjs9uycbyP5m4MNVmQqjKOTIq056BBrlMpe6JqiJcKLlZR5/XKrluKhxqPi9
+ C4Ow==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=8tAPdeXuFOSer+0GgMhti1jiYqc5de8tbD4UHaAkuUo=;
+ fh=KXNQ9XmFBOlSIff3X3hN9n02+QHDK46FBHy7KKDTkOk=;
+ b=Af3Ql80gwQucpNLqgceyFSbY/WxFIR5gkGbCQ0AD5m39jJ3qPO7v1aff7tbW6TD25B
+ KfJSDxPRYS3BQq1S8ycxFneqvOoNXG4Cb7lnJXzPxAxqWRz1m9OgZkM3ZCX6ELiYbOWq
+ evYb6IG0TEqN75FH2pe/blaytrVVzqRDlYRRzaRADAMOWtYc9i26xwAzaoOJwM+7Smf0
+ 5Ed5bOAuC8XiZWSB61RV2qX8CZLazaY/nZjpLYXqKjgic/WTefa4H/myeSvVSnrmSsbx
+ 2Vm/SNd0/dAWNfnDNreVlbtRJ+Qgf//5ifZ5Uvdbbcw8+YRBUdh1HM4/kLyGZ568l6yg
+ jkqQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787195123; x=1787799923; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:subject:mime-version:content-type:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=ghxySRuNEwME97ZhSqGP3DACdmgq8OdxuvKRYGOW7qs=;
- b=fjJfO6i2Ir+hCgu+CAEsiaFFHXsbHToPLQCJv0twrXSMI3wHb9VmPMKdKVoHH3pVSh
- grxWKmoHA5Kf/pW0NBO3TcAx/melnzzdX0CYC4UGTiOtnm9AY98fZbegHHp8GLWfwYVC
- FXZYonor4lkyyN4CLlF/1XpOFmzPL/nbhGdD3qzKiX9+VSVNMn7vxpt8OYWbElzlan7c
- A9LKgxTFIbZX4Qc8DM1T/Tm/hwFEdavNvJqrdkbeqQB+mNIqDalSqwOJba4+DtZPYUw9
- PgN/OfDap5kxVi3y6GIr+t3aguF/YugVJdi1hT9v0JSCteDJPhqKwFfsla72RZa6ALci
- IKVg==
+ d=jms.id.au; s=google; t=1787204310; x=1787809110; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=8tAPdeXuFOSer+0GgMhti1jiYqc5de8tbD4UHaAkuUo=;
+ b=DmNqyP8LBSW3KZA7y+7jBLa6tXoLEcB1vUnm8ZDM1tIUTlUozKGgDSWDvAJbwuwDO8
+ lH5ypelE4sgE/wxwvg1kTR7sc64iNYsv1ALMaoK5OR4/FrotrZgEVbVuyKc8DWDA3/SY
+ wq3O2w6tEyk7NG1Zrwb7uICW7lUL2Sp7bfkik=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787195123; x=1787799923;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:subject:mime-version:content-type:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=ghxySRuNEwME97ZhSqGP3DACdmgq8OdxuvKRYGOW7qs=;
- b=lesTbPuo0pRLildeP8XX59ZxUv+1mk02U5e/yBOZElJb2N2TWFdJTvArDCsZnuvcJ0
- tDe8PbclRoEiA+XWrmIBAgR+24UbnZPxFoWsfDRBWKkEoHgpX1xygZDwW+UNn1NsPiiI
- 5AAZ9Ww8kO8YrdVCB5qBzAlBcSbXTRwd2ob2hoW09QvDaYEyPILIoMWpQmpatxCknw2Y
- DDka6MTt/Cc3pj9kypFsoGbXptJ1b58vc/x1qSfJsSeIRbVsXkVkvBq1ZsxwsD8nyxU1
- 9qLtXAWdJSahej3lmq8Tmj0nou2ZfhrYFZFXeCg8i/hhk0gCmpuPfNHC8dlJy6inBYNT
- hIZw==
-X-Gm-Message-State: AFuF++nhdciKjmPHQSC7mPqnG7ag8W1XWuZjsO//l6Srt5PBRZkarilP
- nRgWJ4Ox3k1TqeikYLEluDgVXD/s6iLV5GvktBUHvSeVo+Q66kATkiPK
-X-Gm-Gg: AR+sD1161CCCGZVC9rDXmh8d93gdqq8YNSEw61oKFDYmwUTZqAFDomO4NuAjV2JagXX
- e1LYjkrPl5mFVPKGbWHNantq0u+6zPO/MAjTUfy1FnDwTdXCbr4jtmXcVG0SOOQeWBRcSU+Z6os
- ozZNZwcsmEXu/7dOFieb1IVWdtL4AydchQM1dI2t0mBEz4l+wQAv9TrpXYBrrmH60m6AIQKVaL1
- ujgqHGp0pYyKrsXFhT64PnlIrTVgkJf5pciA/oVLYobtJ94ky0wHTrN2a2JbOISuqv1G9TY5BMt
- aiuByojkAClqcHqIIC5swqSo8YpZ9v40/aqbisdMXdEGnZ3xEKm8uqgRSOV4CIuANbGZNdJLN03
- OY0BqJnpDbic5Rua9ZRvJezGEvwVe4NEyZMWERAAn/G2/3pifJun7TQQ80tQfnnJ4ZO1KZDZT4G
- rw2qxhFUGDLVpZ6IVEr2kSPoaTAGgAmBJ/uZiTEum6ohCjSiXCSofp50vxiwh107BtceUN
-X-Received: by 2002:a17:90b:4fd0:b0:38e:5b59:c2ff with SMTP id
- 98e67ed59e1d1-39580a4d031mr17666946a91.3.1787195123371; 
- Wed, 19 Aug 2026 20:05:23 -0700 (PDT)
-Received: from smtpclient.apple ([117.55.237.216])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ae89189sm11636156c88.14.2026.08.19.20.05.20
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 19 Aug 2026 20:05:22 -0700 (PDT)
-From: Jack Wang <77239050qq@gmail.com>
-X-Google-Original-From: Jack Wang <163wangjack@gmail.com>
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
-Subject: Re: [PATCH 1/3] hw/gpio: Allwinner A10 GPIO emulation
-In-Reply-To: <20260819-allwinner-gpio-v1-1-2a64866dff11@gmail.com>
-Date: Thu, 20 Aug 2026 11:05:07 +0800
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, peter.maydell@linaro.org,
- qemu-arm@nongnu.org, pierrick.bouvier@oss.qualcomm.com, farosas@suse.de,
- lvivier@redhat.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <F3E16C1D-C4C9-46AC-9762-FB0081B6A27A@gmail.com>
-References: <20260819-allwinner-gpio-v1-1-2a64866dff11@gmail.com>
-To: strahinja.p.jankovic@gmail.com
-X-Mailer: Apple Mail (2.3864.600.51.1.1)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=77239050qq@gmail.com; helo=mail-pg1-x529.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
+ d=1e100.net; s=20251104; t=1787204310; x=1787809110;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=8tAPdeXuFOSer+0GgMhti1jiYqc5de8tbD4UHaAkuUo=;
+ b=aQGGzVUKEi0FRXb/p4ukfOTHeqqJ98sevzsnoi0MNs0qNFXah4tdS4DCrpPEGNk1qV
+ Vzb/FnH/YxythlnIr3mvRgSiSP3WyoED+xqkEq67eyjCsb5eDTTEElM6cmgdeXFd1GsH
+ lJDpZ2lKqR1TBXVjgZdjOPZIrTQYVt7ljvHFouH+eIh4c3PFGRWlKSYEokCYsCcABJP7
+ u/MXx4a7MJZ5MfHL6sX4wMgFinM0Tz+kIrVyE+PZ/6CzcmiMQWowJHJ0FSP0mpee3fqI
+ o7rPeV4O4vz47fhHwd3QRlYjg1y0onivCxgUJgoXUPzxV2etxvasJk0/g4OY9pOuf/gG
+ yugQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RomSiQNAPMk5HbBTHsh517cWdbLc5UlJHBUfi5bl9ty+hyCbqXcKgaO+TIh78LCBI9JctFYxXelYa/I@nongnu.org
+X-Gm-Message-State: AFuF++m07+zg2TOe8YYNwm3rz3R7DfpWvfvGdmwKX/8hja+4PoX052C4
+ bVcloF1Fj75ZrGmEVqZxLXrhgManm716AVNkavu95JUi+TU3vMPwkXlf3rgjQXWd9tLd+n/RmgU
+ Rx2stHWPPaRdxvDBZC8xBuMSwpMaE+e4=
+X-Gm-Gg: AR+sD10WBZxvNM/J3383/5IoHHjkXO+8YG+hZjopIJex53nT/u1MeyweXETKrzhKkR6
+ JBhcesMASVdSeqysJgmobThoH9isXR0ezELfPiHxydX8APbxAa66Ksj6jO8ORlCct7YRHYPBGhy
+ S9JuX75NzOl+xh6SLSEnKWZJN6Fp4wh/vr8HtheLk8QcqRCAn4UEdm4MO9nJh0gtneL4FkMlC2P
+ 8MoU8UFp97RM4Q7SCkxoESwZup21bTmEmqElxQt7mUuHpxMA+OKPRLfAHKkkQZvmegquk+Y/T52
+ Kz38eX5cWyTECVIGKpZDUp2afR0grs81+/9l8/thzykb1wpZnOGUJzSc2HaUAodPwtZyyBD/XlO
+ +MGX5QSSAy+Ah3sSnzQup+mhA+tBwIKwX38X2sItCvIg8ZPB8WqF5WZJ0sQC7beZHtbfuUc10Ot
+ GlkWN/AXextw0Kz22OiL8lu9wg1g==
+X-Received: by 2002:a05:690e:4507:20b0:66b:28a9:5729 with SMTP id
+ 956f58d0204a3-66cd68909d4mr1079939d50.8.1787204310251; Wed, 19 Aug 2026
+ 22:38:30 -0700 (PDT)
+MIME-Version: 1.0
+References: <tencent_4EEBFC805F3E59863BEDC38094EF5A109206@qq.com>
+In-Reply-To: <tencent_4EEBFC805F3E59863BEDC38094EF5A109206@qq.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 20 Aug 2026 15:08:19 +0930
+X-Gm-Features: AcwNN1X7R3F2N1_8svoQgdgp7EIDnIe3SCNkCgp0YjzHIq1wWDKZ8dv6vARowkc
+Message-ID: <CACPK8XefKWYjBqZrhbgf62QaSGqdgGMFwVbB4uwoWz+4ZfhmkQ@mail.gmail.com>
+Subject: Re: [PATCH v3] riscv/virt: Add optional UART1
+To: Yanfeng Liu <yfliu2008@qq.com>, alistair.francis@wdc.com
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ pierrick.bouvier@oss.qualcomm.com, sunilvl@ventanamicro.com, 
+ palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com, 
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=joel.stan@gmail.com; helo=mail-yx1-xb132.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 20 Aug 2026 01:35:53 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,44 +118,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,jankovic,I read datasheet of Allwinner and confirm basic address and =
-most function do well. But there are still some place needing =
-improvement.
+On Sat, 18 Jul 2026 at 11:46, Yanfeng Liu <yfliu2008@qq.com> wrote:
+> --- a/docs/system/riscv/virt.rst
+> +++ b/docs/system/riscv/virt.rst
+> @@ -16,7 +16,7 @@ The ``virt`` machine supports the following devices:
+>  * Core Local Interruptor (CLINT)
+>  * Platform-Level Interrupt Controller (PLIC)
+>  * CFI parallel NOR flash memory
+> -* 1 NS16550 compatible UART
+> +* Either 1 or 2 NS16550 compatible UARTs
+>  * 1 Google Goldfish RTC
+>  * 1 SiFive Test device
+>  * 8 virtio-mmio transport devices
+> @@ -27,6 +27,9 @@ The hypervisor extension has been enabled for the default CPU, so virtual
+>  machines with hypervisor extension can simply be used without explicitly
+>  declaring.
+>
+> +The second UART only exists if a backend is configured explicitly (e.g.
+> +with a second `-serial` command line option).
 
-> +static inline bool gpio_is_output(AWPortMap *port, uint32_t pin)
-> +{
-> +    uint32_t cfg_n =3D pin / CFG_PINS_PER_REG;
-> +    uint32_t pin_shift =3D (pin % CFG_PINS_PER_REG) * CFG_PIN_STRIDE;
-> +    return (extract32(port->cfg[cfg_n], pin_shift, CFG_PIN_STRIDE - =
-1) =3D=3D
-> +        CFG_OUTPUT_MASK);
-> +}
-> +
-> +static inline bool gpio_is_input(AWPortMap *port, uint32_t pin)
-> +{
-> +    uint32_t cfg_n =3D pin / CFG_PINS_PER_REG;
-> +    uint32_t pin_shift =3D (pin % CFG_PINS_PER_REG) * CFG_PIN_STRIDE;
-> +    return (extract32(port->cfg[cfg_n], pin_shift, CFG_PIN_STRIDE - =
-1) =3D=3D
-> +        CFG_INPUT_MASK);
-> +}
-> +
-> +static inline int int_ctl_cfg(AWGPIOState *s, int irq_line)
-> +{
-> +    unsigned int_cfg_n =3D s->regs[REG_INDEX(GPIO_INT_CFG0) + =
-irq_line / 8];
-> +    return extract32(int_cfg_n,
-> +                     (irq_line % INT_CFG_IRQ_PER_REG) * =
-INT_CFG_IRQ_STRIDE,
-> +                     INT_CFG_IRQ_STRIDE - 1);
-> +}
-> +
-there you use 'INT_CFG_IRQ_STRIDE - 1=E2=80=99 as stride for both two =
-function=E3=80=82For int_ctl_cfg the stride is supposed to be 4 =
-https://linux-sunxi.org/images/1/1e/Allwinner_A10_User_manual_V1.5.pdf =
-in page 333 you can find it, now all qtest pass because double edge do =
-not be designed in qtest=EF=BC=88better add this test=EF=BC=89. But for =
-input and output function it is right due to byte 3 is reserved.
+This breaks the docs build. I think you want ``-serial``.
 
-Jack Wang
+Cheers,
+
+Joel
 
