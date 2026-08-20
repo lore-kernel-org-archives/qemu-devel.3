@@ -4,99 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76D19C5DF86
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:55:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F13FC5DF85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:55:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx60A-0001WH-QU; Thu, 20 Aug 2026 12:52:26 -0400
+	id 1wx5zQ-0007B0-0a; Thu, 20 Aug 2026 12:51:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5zx-0001MR-GV
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:52:15 -0400
+ id 1wx5zN-00075a-8t
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5zw-0005mz-4W
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:52:13 -0400
+ id 1wx5zL-0005hF-B1
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787244731;
+ s=mimecast20190719; t=1787244694;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FNM9WY3GDs9NFIUbF6VOCyMHiscyOHLyp4b12lS9z/8=;
- b=NKepYMs+R/vLm4tOf3/A69W2oFvzxvfP4CcwX69cvYpOOR5Hqnh7b6cAEja58wZiWmi75Y
- gkgt4Nz6x82dYmEynW4+uWQGTOGPWPU1/FBJugtsnlTcdpKJ7npJ4W+nMfrLzngdu+J4Zu
- mas+42+s5fOfAvmriRNFyVnYBn5Tc18=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6rdHyprio2WIUkP4wRMjJtXdNaa+gjXkNn2M1xJTDrs=;
+ b=F8plh3F2txWagY1HmCbQMtDE8xWQfC9AKFJ2V1zOhJ7TZCZINFRai9eUqXZ33rXG0Rw02h
+ IBh3Jx8L8b0DzWNieSQRKCDa6PtJOHHYhJJhbNyxqw7W/Gqsl2FUZhz2jRLSuDiMVnx3w6
+ XhCIy3JigYFMXPgb5p76blH+ECndgDA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-299-mh51oqVlORigBfNEmMp-dw-1; Thu, 20 Aug 2026 12:52:10 -0400
-X-MC-Unique: mh51oqVlORigBfNEmMp-dw-1
-X-Mimecast-MFC-AGG-ID: mh51oqVlORigBfNEmMp-dw_1787244729
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49808ea1b64so12545675e9.1
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:52:09 -0700 (PDT)
+ us-mta-591-fXe_rogQMwesBluEnV2hMQ-1; Thu, 20 Aug 2026 12:51:27 -0400
+X-MC-Unique: fXe_rogQMwesBluEnV2hMQ-1
+X-Mimecast-MFC-AGG-ID: fXe_rogQMwesBluEnV2hMQ_1787244686
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47fe85684b9so94999f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:51:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787244729; x=1787849529; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=FNM9WY3GDs9NFIUbF6VOCyMHiscyOHLyp4b12lS9z/8=;
- b=OoSH08sLZhExaxao6bg1FY7ku1vpBSLhgkk9aSsFQ/ifrii3uTIB/Xt3wzeFn74Yhx
- AUHi8RQ9r/dcGlAGDJaVo/q1U0s/gsfY0I/WhxMHisKJL5A7ql22SNR2xUVyHRE+e454
- 9JvxcRNbcq8p4vfFcZwHocuxXHFV1OKvefODjI6+73yabN+rAyjwGLxvQ8FmNsbBoya2
- WP7I5Ht+TmYs31jBeNyHNke9JzzQHVXZxxg4t8vswOYSxZBSFAk1mFNcULZB4U4jXcwY
- f0rfqJkQcmOXdAW63D88vBDqLczESwAyV9kIkjz/Jqt24NPADH5WeiSyvD5Y4j6+bUp+
- Z70A==
+ d=redhat.com; s=google; t=1787244686; x=1787849486; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=6rdHyprio2WIUkP4wRMjJtXdNaa+gjXkNn2M1xJTDrs=;
+ b=b6py1pHPGx5PVtVgpLXvSenaiaHFqxtBmMnEqK+rpr530+c9TUbUsh+DPik6ssHunH
+ 3PNbwfyQ3TkrYa99xC8DCQUcA2V5ZYbRYHK8biD31K9oxrahnSg8zBihHk0/pcpwAzmd
+ YKIsBNjhGaLhaSsaPVJIyePq7cMZ01lWovHhnqcBPN46rn16YTuthRgqqPb0MDi9aOz0
+ GylLXXz5MsEuTPs34122C1O2Z+Zav1RYmTJRxXGj6nsneVaC7RL+QR7F2YVsIMrSJ/B5
+ YScXsxGjSYQFXkeKbqPwEvU4JT3oiwaz7CdDK1sNH9o0AAXSqwDvrJfk2OoSRkQx1hGt
+ b6TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787244729; x=1787849529;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=FNM9WY3GDs9NFIUbF6VOCyMHiscyOHLyp4b12lS9z/8=;
- b=ehVuKq5WQeRvr2nRC7oE8j6ZfqSKrxzaiGUvdmzZErqMt7Cd81tFJbWXgXXaNC70+9
- Id3X3/woCix0yj/b08DT/a/tNl8tydQWtqYFP/290OS9n5rN6lsmo+atBDuFhPGjCZqh
- 5Gy8uzzjpsCm0gx4yHzijjW439HWbZ+dS0fLbX57Ou9wn1/ZkAOVj2gq8xN405TJT5Bo
- 6XoMZLyBT3wGUxRpPfXauvbGYKDQZYpLqIyCtfFNlCMPXmr3Tg2MpzGTP6Ljf+5sPQgC
- POU0y4VBa1ShQtJAksfZOcjIFxReA2CZmXtHhGWkVYNLVlLLfgfniam8rGFi7Z6+xGqg
- lYzg==
-X-Gm-Message-State: AOJu0YzAOYeE20vJ7D6fgSA6JBqxB4LDr0Ls8319hWuBln74WKvjwr2F
- NjMV1kRSO3ciHBAw+C/QWcILDocp7opjLCHkhsHiENon9/nSZXBY0noniNzd6YyBeI1XTKuaQ/f
- otZyaVsLdKsgmzapxHjso0QeViKKI4UdFGGcc+aSrhoEBV7QcMGL8UjCEtTApfMA8e1tVXWozPZ
- n1ThS2i0KmLZNNUiN1AYbmNaS5v9kUkF/6D3nqRQs7
-X-Gm-Gg: AR+sD12jq8CbGGG+OOFoIDp3UIkUgOgijzXGkyRfTYM+/X9HTlJuLfCWWTT7A1m4/4g
- uErxOK9kmjU8SS2wgNoxy7l0UABeeiGEU+3hRiw4r6KhqpK4jstD+BVpQFyI1XA354o5Wfb1hj8
- 3fIa6PmS54K5AQPg0nzipjuMGPRrBF5V6b9VNAqFhNjroEnjEXpjob6chj1R6VJvm2m/DiL1fm6
- PvUGndKzPOluU/Empm8Cip2Xh5xUrMowEkyx0uNOctn+lt1gLXIeVn7JIogtwaH/cQA6mz1BKfa
- I1YJ4HiZrg5sG63cvjnneMeWlsVlrbRWESmHCXK0WyydvZz1TxZK4u2xbUihOLrX51bRvcKmHqM
- /JeSeFljiXLbqxpjxAQ/GBvpOFyvdgSw43oFCKpwY1tFAiX3kUxc3oxUQbNtoMvdzFM4gfDKvZJ
- P92AU=
-X-Received: by 2002:a05:600c:674a:b0:499:5f80:83ac with SMTP id
- 5b1f17b1804b1-499b06cbaf2mr130356515e9.7.1787244728768; 
- Thu, 20 Aug 2026 09:52:08 -0700 (PDT)
-X-Received: by 2002:a05:600c:674a:b0:499:5f80:83ac with SMTP id
- 5b1f17b1804b1-499b06cbaf2mr130355195e9.7.1787244728137; 
- Thu, 20 Aug 2026 09:52:08 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787244686; x=1787849486;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=6rdHyprio2WIUkP4wRMjJtXdNaa+gjXkNn2M1xJTDrs=;
+ b=fvccGXLvZ7ptCu3E2tRL8qIWhm+xo1RVUNOg7R/MmX8TwPTqW5sa4FkLcy2fybu0WK
+ C3pt6kgItaDzBPYyLmMs/np1VUVM8pM6H1oNJoM+xbuATmV+H6IvDSm7tXmmo7SISozi
+ Dk8Sy7t4aC2EV2wjHEa4AP43uyRog2xb2DM1D9uuvfO2A2Ybn45KCGy+5t80I/KbjnqP
+ fTOQWofmgyvofr/1PPFOtJTDK9GighfNpKjSH4rwjL3tSMnCD10ZTX+1WechHotoFr6I
+ ghjIBMXf9I5lhltqj11gT6s9UW9netLKj0c1kgP/dhSu9D/duk1/E52QqS/QECtHjO6l
+ Z5Pw==
+X-Gm-Message-State: AFuF++nBuQnVTj0QIQcxXv8mnl3Onzv6SdUyalgNe4l2AgZPP5bXshRr
+ ERIfadW6HukR4SU1X/Zlw5LhFIioJ8PurWnnKbxGsYn1OwTO1QL9csA+5r2+fujfBRhQLpbkIIf
+ R61K8muqwSrKHMXrk3aPLVWRnbWbzf+bGs4M4KMhEYG9zIdVlMBNh4MgFzeWQy5xda1ON24C+Id
+ v/AA1mK23dNz9Uf125LKUyfFdCWz1yKsB9o7ezxdQQ
+X-Gm-Gg: AR+sD114037fPR0jU8d4zVVt+wT2r8rqWkFU7pGHi7MMgR6pHpf0ffQFJ2AyMUJ+ggy
+ t7FOzav4coATAve0rsi05SCD/W5PvezltSiPd8KaYnbFOUCqhN4hI1Ux+3D2wYoH7e3zQ3uxcTH
+ E0cLdEnmnlroC6dsw3ZaUgX5NQ8uCK7/YAhjVNGvh2G3lLnUhAk1vTxLEse+Bqll4KmmGO4gmcK
+ 2lDb3JI9BNF3RfC+gJ99Sg7u4Kt4hzUncdwV33YicwQmr0e1pVywHb1BvTgPPdmrIBp4XxHbfd8
+ 7CCVcYKeZDbAHbOfq+zyCM+7hGy3RGupWMGJLwa9JgX6eLu7sigV4bF6VEEkRktqcFw2kpSXjVG
+ ggm8Yk53u2wIWOioXb+DCWKMlQt6+jwZYB8gLhNRbXpxBvKXYgBuzl9fIMjoHLNKpdFqNcJA8Aj
+ Hfrgw=
+X-Received: by 2002:a05:6000:22c6:b0:481:5021:33cd with SMTP id
+ ffacd0b85a97d-482c0b5482cmr21785f8f.3.1787244686203; 
+ Thu, 20 Aug 2026 09:51:26 -0700 (PDT)
+X-Received: by 2002:a05:6000:22c6:b0:481:5021:33cd with SMTP id
+ ffacd0b85a97d-482c0b5482cmr21655f8f.3.1787244685466; 
+ Thu, 20 Aug 2026 09:51:25 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499aa11f832sm148671175e9.7.2026.08.20.09.52.07
+ ffacd0b85a97d-482b14c45d1sm12031794f8f.30.2026.08.20.09.51.24
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 09:52:07 -0700 (PDT)
+ Thu, 20 Aug 2026 09:51:24 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 47/53] meson: use compiler_target() to get rustc target
-Date: Thu, 20 Aug 2026 18:49:50 +0200
-Message-ID: <20260820164957.1895963-48-pbonzini@redhat.com>
+Subject: [PULL 30/53] target/i386: emulate: stop torturing cc_src into
+ carrying SF/PF
+Date: Thu, 20 Aug 2026 18:49:33 +0200
+Message-ID: <20260820164957.1895963-31-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820164957.1895963-1-pbonzini@redhat.com>
 References: <20260820164957.1895963-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -122,43 +121,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The new method in Meson 1.11.x removes the need to pass the triple
-via config-host.mak.
+x86_flags.c encodes the flags into cc_dst and cc_src with algorithms
+essentially derived from Bochs; the exact details have changed but cc_dst
+is Bochs result and cc_src is very close to Bochs auxbits.  However,
+using only two words is unnecessarily limiting because it splits SF/PF
+between the two words even though *ZF* is the real nuisance (ZF=1 implies
+SF=PF=0) and the one that commands usage of PD/SD delta bits.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Within TCG, the CCMP instruction would have a similar need of efficiently
+encoding an arithmetic result or an EFLAGS value; it is not implemented,
+but there are plans (see commit message for 5dcdbd07125, "target/i386:
+tcg: use cout to commonize add/adc/sub/sbb cases", 2025-04-17) to use
+an algorithm very similar to target/i386/emulate's, but with *three* words.
+Then SF and PF live together in harmony, because SF can be encoded with
+either parity and PF does not use the high bit where SF is stored; by
+placing them in a third word their computation is isolated from ZF's
+and everything becomes simpler.
+
+In fact I'm not even sure why Bochs did it like that, and did not just
+give SF/PF their own home in a third word as well; the developers believe
+that the extra store is too expensive.  I am not really sure about that,
+but as far as QEMU is concerned, emulation proceeds one instruction at a
+time so using SRC2 should actually be faster, not just easier.  To convert
+from the output of arithmetic operations, PD and SD disappear and DST
+simply has to be stored in two places; to convert to RFLAGS, SF/PF are
+easily computed from SRC2 as if PD=SD=0; conversion to LFLAGS encodes
+parity in bit 0 and mixes in SF as an even-parity value with the right
+sign bit.
+
+Unlike TCG, there is a single meaning for all operand lengths, which
+corresponds to either CCMPL or CCMPQ depending on sizeof(target_ulong).
+So the carry-out value still needs to be split---with AF in bit 3
+and CF/PO in the higher bits of the target_ulong-sized env->cc_src.
+This is an acceptable tradeoff for the interpreter, in order to optimize
+lflags_to_rflags.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- configure   | 3 ---
- meson.build | 2 +-
- 2 files changed, 1 insertion(+), 4 deletions(-)
+ target/i386/emulate/x86_flags.c | 65 +++++++++++++--------------------
+ 1 file changed, 25 insertions(+), 40 deletions(-)
 
-diff --git a/configure b/configure
-index 7f637c018c3..56158cd95f7 100755
---- a/configure
-+++ b/configure
-@@ -1740,9 +1740,6 @@ if test "$container_command" != ""; then
-     echo "CONTAINER_COMMAND=$container_command" >> $config_host_mak
- fi
- echo "SUBDIRS=$subdirs" >> $config_host_mak
--if test "$rust" != disabled; then
--  echo "RUST_TARGET_TRIPLE=$rust_target_triple" >> $config_host_mak
--fi
- echo "PYTHON=$python" >> $config_host_mak
- echo "MKVENV_ENSUREGROUP=$mkvenv ensuregroup $mkvenv_online_flag" >> $config_host_mak
- echo "GENISOIMAGE=$genisoimage" >> $config_host_mak
-diff --git a/meson.build b/meson.build
-index 2139dfc7ce8..2593eb97624 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4747,7 +4747,7 @@ else
- endif
- summary_info += {'Rust support':      have_rust}
- if have_rust
--  summary_info += {'Rust target':     config_host['RUST_TARGET_TRIPLE']}
-+  summary_info += {'Rust target':     rust.compiler_target(native: false)}
-   summary_info += {'rustc':           ' '.join(rustc.cmd_array())}
-   summary_info += {'rustc version':   rustc.version()}
-   summary_info += {'rustdoc':         rustdoc}
+diff --git a/target/i386/emulate/x86_flags.c b/target/i386/emulate/x86_flags.c
+index 3c4270a14c1..c49d8bb836a 100644
+--- a/target/i386/emulate/x86_flags.c
++++ b/target/i386/emulate/x86_flags.c
+@@ -30,28 +30,24 @@
+ 
+ 
+ /*
+- * The algorithms here are similar to those in Bochs.  After an ALU
+- * operation, CC_DST can be used to compute ZF, SF and PF, whereas
+- * CC_SRC is used to compute AF, CF and OF.  In reality, SF and PF are the
+- * XOR of the value computed from CC_DST and the value found in bits 7 and 2
+- * of CC_SRC; this way the same logic can be used to compute the flags
+- * both before and after an ALU operation.
++ * The emulator always encodes flags in the same way as CC_OP_CCMPB + MO_TL.
++ * While for arithmetic operations ZF/SF/PF are computed from the same value,
++ * ZF=1 may be inconsistent with PF/SF for arbitrary RFLAGS values so CC_SRC2
++ * is used for SF and PF.  CC_SRC holds a carry-out vector that is used to
++ * compute AF, CF and OF.
+  *
+  * Compared to the TCG CC_OP codes, this avoids conditionals when converting
+  * to and from the RFLAGS representation.
++ *
++ * The underlying ideas ultimately descend from Bochs, but with significant
++ * simplifications obtained by storing flags in three words rather than two.
+  */
+ 
+ #define LF_SIGN_BIT    (TARGET_LONG_BITS - 1)
+ 
+-#define LF_BIT_PD      (2)          /* lazy Parity Delta, same bit as PF */
+-#define LF_BIT_AF      (3)          /* lazy Adjust flag */
+-#define LF_BIT_SD      (7)          /* lazy Sign Flag Delta, same bit as SF */
+ #define LF_BIT_CF      (TARGET_LONG_BITS - 1) /* lazy Carry Flag */
+ #define LF_BIT_PO      (TARGET_LONG_BITS - 2) /* lazy Partial Overflow = CF ^ OF */
+ 
+-#define LF_MASK_PD     ((target_ulong)0x01 << LF_BIT_PD)
+-#define LF_MASK_AF     ((target_ulong)0x01 << LF_BIT_AF)
+-#define LF_MASK_SD     ((target_ulong)0x01 << LF_BIT_SD)
+ #define LF_MASK_CF     ((target_ulong)0x01 << LF_BIT_CF)
+ #define LF_MASK_PO     ((target_ulong)0x01 << LF_BIT_PO)
+ 
+@@ -59,19 +55,15 @@
+ /* OSZAPC */
+ /* ******************* */
+ 
+-/* use carries to fill in AF, PO and CF, while ensuring PD and SD are clear.
+- * for full-word operations just clear PD and SD; for smaller operand
+- * sizes only keep AF in the low byte and shift the carries left to
+- * place PO and CF in the top two bits.
++/*
++ * For arithmetic operations ZF/SF/PF are consistent so DST == SRC2.
++ * For operations that are not full-word, keep AF in the low byte and shift
++ * the carries left to place PO and CF in the top two bits.
+  */
+ #define SET_FLAGS_OSZAPC_SIZE(size, lf_carries, lf_result) { \
+-    env->cc_dst = (target_ulong)(int##size##_t)(lf_result); \
+-    target_ulong temp = (lf_carries); \
+-    if ((size) == TARGET_LONG_BITS) { \
+-        temp = temp & ~(LF_MASK_PD | LF_MASK_SD); \
+-    } else { \
+-        temp = (temp & LF_MASK_AF) | (temp << (TARGET_LONG_BITS - (size))); \
+-    } \
++    env->cc_dst = env->cc_src2 = (target_ulong)(int##size##_t)(lf_result); \
++    target_ulong temp = (lf_carries) & MAKE_64BIT_MASK(0, size); \
++    temp |= temp << (TARGET_LONG_BITS - (size)); \
+     env->cc_src = temp; \
+ }
+ 
+@@ -93,13 +85,9 @@
+ /* same as setting OSZAPC, but preserve CF and flip PO if the old value of CF
+  * did not match the high bit of lf_carries. */
+ #define SET_FLAGS_OSZAP_SIZE(size, lf_carries, lf_result) { \
+-    env->cc_dst = (target_ulong)(int##size##_t)(lf_result); \
+-    target_ulong temp = (lf_carries); \
+-    if ((size) == TARGET_LONG_BITS) { \
+-        temp = (temp & ~(LF_MASK_PD | LF_MASK_SD)); \
+-    } else { \
+-        temp = (temp & LF_MASK_AF) | (temp << (TARGET_LONG_BITS - (size))); \
+-    } \
++    env->cc_dst = env->cc_src2 = (target_ulong)(int##size##_t)(lf_result); \
++    target_ulong temp = (lf_carries) & MAKE_64BIT_MASK(0, size); \
++    temp |= temp << (TARGET_LONG_BITS - (size)); \
+     target_ulong cf_changed = ((target_long)(env->cc_src ^ temp)) < 0; \
+     env->cc_src = temp ^ (cf_changed * (LF_MASK_PO | LF_MASK_CF)); \
+ }
+@@ -255,7 +243,7 @@ void SET_FLAGS_OSZAPC_LOGIC8(CPUX86State *env, uint8_t v1, uint8_t v2,
+ 
+ static inline uint32_t get_PF(CPUX86State *env)
+ {
+-    return ((parity8(env->cc_dst) - 1) ^ env->cc_src) & CC_P;
++    return (parity8(env->cc_src2) - 1) & CC_P;
+ }
+ 
+ static inline uint32_t get_OF(CPUX86State *env)
+@@ -283,8 +271,7 @@ static inline uint32_t get_ZF(CPUX86State *env)
+ 
+ static inline uint32_t get_SF(CPUX86State *env)
+ {
+-    return ((env->cc_dst >> (LF_SIGN_BIT - LF_BIT_SD)) ^
+-            env->cc_src) & CC_S;
++    return (target_long)env->cc_src2 < 0 ? CC_S : 0;
+ }
+ 
+ void lflags_to_rflags(CPUX86State *env)
+@@ -304,16 +291,14 @@ void rflags_to_lflags(CPUX86State *env)
+ {
+     target_ulong cf_af, cf_xor_of;
+ 
+-    /* Leave the low byte zero so that parity is always even...  */
+-    env->cc_dst = !(env->eflags & CC_Z) << 8;
+-
+-    /* ... and therefore cc_src always uses opposite polarity.  */
+-    env->cc_src = CC_P;
+-    env->cc_src ^= env->eflags & (CC_S | CC_P);
++    /* compute DST and SRC2 that reconstruct ZF/SF/PF.  */
++    env->cc_dst = ~env->eflags & CC_Z;     /* DST = 0 if ZF=1 */
++    env->cc_src2 = ~env->eflags & CC_P;    /* odd parity if PF=0 */
++    env->cc_src2 ^= -!!(env->eflags & CC_S);
+ 
+     /* rotate right by one to move CF and AF into the carry-out positions */
+     cf_af = env->eflags & (CC_C | CC_A);
+-    env->cc_src |= ((cf_af >> 1) | (cf_af << (TARGET_LONG_BITS - 1)));
++    env->cc_src = ((cf_af >> 1) | (cf_af << (TARGET_LONG_BITS - 1)));
+ 
+     cf_xor_of = ((env->eflags & (CC_C | CC_O)) + (CC_O - CC_C)) & CC_O;
+     env->cc_src |= -cf_xor_of & LF_MASK_PO;
 -- 
 2.55.0
 
