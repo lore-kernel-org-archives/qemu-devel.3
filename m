@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5749C5DF88
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 12:51:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 722C6C5DF87
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 12:51:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx2CS-00053o-Gf; Thu, 20 Aug 2026 08:48:52 -0400
+	id 1wx2CP-0004zZ-57; Thu, 20 Aug 2026 08:48:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wx2CQ-00050p-FU
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:48:50 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wx2CM-0004xA-0w
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:48:46 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wx2CK-0001bo-Uo
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:48:50 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-69c600f76ccso3523988a12.0
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 05:48:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wx2CH-0001aK-Re
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 08:48:45 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-c15c42a45adso155239566b.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 05:48:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787230123; x=1787834923; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787230120; x=1787834920; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=LQjW4ZqLG71kaRLUn6+TDszp+wepcmXTnvIbDAyZt+M=;
- b=mdkss4uYg0kFIXQiducQx6FBwwNObZWJCQP7Jnk1bXFB2/ZMrEXUZRP71alD3pnDZF
- Sd03uNLubqbP2XHroqHp71N+MTEMpHt5so4kSUQeI3mJPE/DNMCNOnkxHox1SSdfN1/Q
- n5JHbF1cc3ShstMc2zPjHSczi0szTRn5dgxScbTehC7kdmEamrYsPMk4uJ+AM3VdyFGD
- 7938FAJ3ep+bGWFD7vPpLz74JGOuRiFQfhlSl+rEKu9qPMojo4zdfIJrFWCzXfgVqISX
- bKRhyxYQU9Qo/RVg3bLBrVOAq4HA25Igq9muecmbPkNUclP/1dJaXCUWrkK+lAvv3u8Y
- c3Mw==
+ bh=hzX+dEd1qszbOG5kzSqRIrxHhRa8NHKy5vl7lbynnI4=;
+ b=Vi/FY8WV/stPuXADAJ/q0ZGXpmobxEM60sjGWHK3JzHgotsxPqM08EEaaWr8EYpAln
+ S713CGqBZ8z8B2Ybri2WZLn45cqTYHJEWBL5CSXJRyh41oqcwBJsutb0SffG6ED1V6c+
+ rvJTjkoAxU/HnHFaLOmRZlAbgnlXQRn22Fiq76MF/cAHK+XXQhT+JId76rtBsjZKa84x
+ n4fUTyp1BrtmGLulpFpJe/x/yEv++bz728s2fdD9iDitfrRDUulQOuoOuNiTeAY0uSN2
+ l6ILQkv3ahJvYxHRbFGF40qG+9pKzDC4JEF1HnQQ7grauzlqD1njuZNnsWApR3cuooNg
+ 7BYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787230123; x=1787834923;
+ d=1e100.net; s=20251104; t=1787230120; x=1787834920;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=LQjW4ZqLG71kaRLUn6+TDszp+wepcmXTnvIbDAyZt+M=;
- b=EpwQuGks91xCaehjbso8VOxeJtaWNa5YG7HYcOGV4LHCZ6vyFdTBW68KKqFBFX1ISg
- UXKyKIJWNgW4clUqqc1lDKPTeQVlcbPAkSrGMGa87CEmM52YmYv0W7l3Ztq6OxQ72ypp
- pBuz7Se8F7yqTSHMHmXU1UTpYvyvAegEwCWySScsdcVp3TOuinVCP0/ALz0GMseyNHc9
- T1ukIFHBV1/+jMA6lcYd+RmQxcR7W43Ly2lWYcyuRL0AG33TGv2g86P2PFCnQQh/dZC5
- GQfbVtAbuOoTDmyYJ5bvsvY5W5+q0Vg4BSIc1QxtbZYMVv9jmaV+JFS7Z5fuCVf8Bwwv
- QSTg==
-X-Gm-Message-State: AFuF++mOuWC2VUugQp7F+ZScMJckAQQPT63wERaHa5CMajE+EfqreO4h
- 7jwXBz2p4asuwQKuTHe4zWlY37fKEDZ8erd/4n97YJJaKb6G86J/BO8pEal91YvD
-X-Gm-Gg: AR+sD12d1XKVL9Egik8iZggs+n7Q5XJn0xYqvObrrUXUJi5JflakeUhwAPy9CEAUXuT
- XOkQ+YCkrzMnMzYnyZLkYcD5ga4QU13JXbcfy6Va76eHxzfSdakh0urtYgZwuZXLLat4WzO2DGc
- 8G01Y66W0RoRGKFKai8Usof3hFI+3vH7Bk8RU1PqAM8B4ctJNQcE+SC6y/9aI2PZqy1AiyOO91f
- 66D/jgRL2iHsJGNrwYkkPglFLFd6Fq6zlvBxFJh7tyOfmkq39jxEx4uTEJCMnTyiVzuAabeif5X
- RS7EgewFBty9BQogqYTrDqPmGvqszAjUTO0xKvGkd61yn5LJTv3vNbQ5c3CgRuBYvPYFD1f6zzA
- 2d5lC3H9XDMEmBtBmfEsFo0mpvAmVV2fEbbxDjHKexM/OM6EWgcoV12pNJmS6ERLU0apuiGDfTZ
- 4E6RNC0m13Qf/ME03DcZIo9giIsp6+QWwPWllo7aQN3hQdzt88+ukkLbtpPyoe+mzyWxxfruDpP
- iDvaPjErog=
-X-Received: by 2002:a05:6402:4541:b0:6a0:edbb:9af1 with SMTP id
- 4fb4d7f45d1cf-6a403297051mr7581993a12.3.1787230123014; 
- Thu, 20 Aug 2026 05:48:43 -0700 (PDT)
+ bh=hzX+dEd1qszbOG5kzSqRIrxHhRa8NHKy5vl7lbynnI4=;
+ b=gUrPppb/ZGZIsB3jGY6uNUoePyHvIDhPcy9SWsnNJ1WxGrvyea5cDbTls2ZWxVYUNQ
+ an4uyGQDtXf5Yok3TnPk4ZMZWxzdUoxk471ZBG6AJ533MRW4P6P78p1cV8mjJOhd615e
+ diN8KWu973/JDyRwGZOnBe74GmgkmDgfmsBnumGCPXg5yMJEKtbrjYszgXu81yZlRhT0
+ 65Rx1u+pCapJ5ZE8wPBpKOrhTMKf+4EY3cPzCc7d50uxWGRWiw6uIWqXSb50ROwwv2C8
+ nD+8GODFFdzWWN909S2U8V3Ha76bnt8q27bTU79+xpMVXwxqRchmsLGLlyvFZ6o/YF8N
+ 3sNQ==
+X-Gm-Message-State: AOJu0YzcCs8Ppi4cyxbd+8CCJD6/dPOmIgZc+ADJROE+vcXsBfs21U0p
+ SFC/S71Ahs1vHkQrlfblgD+UGf8DBZLJhLW90H/67GRMFJJc4sGzPLrsDLKiQCRj
+X-Gm-Gg: AR+sD11jq5GPIVE8j2Mejv5r/ap+j7sWiip3wRpAyeQJAavW7hLc3qdMVFwze+eJQY5
+ wFM3QbHIYoXtDS3hXn4jNcKGbvo04esWTVcVX7+bzOwxYL5didPcrogUzD0wbX56z/rk0Q1WUlv
+ 2VbHIP7PqC20we38X714T9S1FVIEZrDh0qiQQyehToBDYf2J/EQWs8K+xdBCi2QFEFM0+ypVPsd
+ n0p/C2f1XSrGzjCSfziXH10+RVD+mLErq1B3C0WJQl2ZT50xqdCp1t6AUhbv3E7kPgl/Y4JZd0u
+ JcCtZY/+PiCH6iG1h8suGGhABd2/3cGYz+Y09GNTEQtz+6Q14J/jtJ4vYCfkx27MO5ngA+++x2V
+ UfI0+eFa1qJKFjUUvRg4Fmto1lXaUB8Y0JV56SfzJMZUY7dJTlg4E0Jh3LdILz3AU8Ig2ghCBlO
+ pEiHEzk4a/oyK1H+Q8JiJG1+mP+XRxdknY9UTBIhTN7RTin5rEvIlnn5WnXn8Q3t+f1NEDoZFh8
+ 6UknsKmv4Q=
+X-Received: by 2002:a17:907:a01:b0:c20:7cb0:f33c with SMTP id
+ a640c23a62f3a-c244d86d229mr439477666b.16.1787230120211; 
+ Thu, 20 Aug 2026 05:48:40 -0700 (PDT)
 Received: from DE-PF5B95TD.embedded.cmblu.dev ([87.129.199.250])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a3ff1563c5sm2270449a12.14.2026.08.20.05.48.42
+ 4fb4d7f45d1cf-6a3ff1563c5sm2270449a12.14.2026.08.20.05.48.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 05:48:42 -0700 (PDT)
+ Thu, 20 Aug 2026 05:48:39 -0700 (PDT)
 From: Wadim Mueller <wafgo01@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Bin Meng <bmeng.cn@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Wadim Mueller <wafgo01@gmail.com>
-Subject: [RFC PATCH v2 12/14] hw/arm: add TI AM64x SoC model
-Date: Thu, 20 Aug 2026 14:48:12 +0200
-Message-ID: <20260820124824.618671-13-wafgo01@gmail.com>
+Subject: [RFC PATCH v2 09/14] hw/misc: add TI K3 secure proxy model
+Date: Thu, 20 Aug 2026 14:48:09 +0200
+Message-ID: <20260820124824.618671-10-wafgo01@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260820124824.618671-1-wafgo01@gmail.com>
 References: <20260820124824.618671-1-wafgo01@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=wafgo01@gmail.com; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=wafgo01@gmail.com; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -86,7 +86,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,1455 +102,527 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a model of the TI AM64x (AM6442) Sitara SoC tying the previous patches
-together:
-
- - Cortex-A53 cluster with a GICv3 (GIC-500) at the real addresses
- - Cortex-R5F MCU boot core and a Cortex-M4F, each behind their own RAT
- - MCU and MAIN domain UARTs, mailboxes, secure proxy instances and the
-   DMSC endpoint
- - CTRL_MMR, GTC, DDRSS, DMTimer, TRNG, SDHCI controllers with the K3 PHY
-   wrapper and the MAIN domain I2C0
- - OCSRAM and DDR windows
-
-Also add the ROM boot loader, which parses a combined boot image, places
-the components and starts the R5F boot core at the certified entry point,
-mirroring what the on-chip boot ROM does.
+The secure proxy is the message transport between the K3 host cores and
+the device management and security controller (DMSC). Model the per-thread
+RT/SCFG register banks and the message buffers, and provide a callback
+interface, which the DMSC model plugs into.
 
 Signed-off-by: Wadim Mueller <wafgo01@gmail.com>
 ---
- hw/arm/Kconfig            |   16 +
- hw/arm/k3-bootrom.c       |  125 ++++
- hw/arm/meson.build        |    2 +
- hw/arm/ti-am64x.c         | 1223 +++++++++++++++++++++++++++++++++++++
- hw/arm/trace-events       |    4 +
- include/hw/arm/ti-am64x.h |   86 +++
- 6 files changed, 1456 insertions(+)
- create mode 100644 hw/arm/k3-bootrom.c
- create mode 100644 hw/arm/ti-am64x.c
- create mode 100644 include/hw/arm/ti-am64x.h
+ hw/misc/Kconfig                |   3 +
+ hw/misc/meson.build            |   1 +
+ hw/misc/ti-sec-proxy.c         | 446 +++++++++++++++++++++++++++++++++
+ hw/misc/trace-events           |   8 +
+ include/hw/misc/ti-sec-proxy.h | 108 ++++++++
+ 5 files changed, 566 insertions(+)
+ create mode 100644 hw/misc/ti-sec-proxy.c
+ create mode 100644 include/hw/misc/ti-sec-proxy.h
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index b2dc2714c0..2172fc803b 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -415,6 +415,22 @@ config STM32L4X5_SOC
-     select STM32L4X5_GPIO
-     select STM32L4X5_USART
- 
-+config TI_AM64X
-+    bool
-+    select ARM_V7M
-+    select ARM_GIC
-+    select OMAP_I2C
-+    select TI_MAILBOX
-+    select TI_RAT
-+    select TI_K3_CTRLMMR
-+    select TI_K3_GTC
-+    select TI_K3_DDRSS
-+    select TI_K3_DMTIMER
-+    select TI_K3_SDHCI_PHY
-+    select TI_K3_TRNG
-+    select SDHCI
-+    select AM64_UART
-+
- config XLNX_ZYNQMP_ARM
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index e80fdc3214..bea8e9341f 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -161,6 +161,9 @@ config TI_K3_SDHCI_PHY
+ config TI_K3_TRNG
      bool
-     default y if PIXMAN
-diff --git a/hw/arm/k3-bootrom.c b/hw/arm/k3-bootrom.c
+ 
++config TI_SEC_PROXY
++    bool
++
+ config TI_MAILBOX
+     bool
+ 
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index d190d8608a..a8a40ea2a7 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -129,6 +129,7 @@ system_ss.add(when: 'CONFIG_TI_K3_GTC', if_true: files('ti-k3-gtc.c'))
+ system_ss.add(when: 'CONFIG_TI_K3_DDRSS', if_true: files('ti-k3-ddrss.c'))
+ system_ss.add(when: 'CONFIG_TI_K3_SDHCI_PHY', if_true: files('ti-k3-sdhci-phy.c'))
+ system_ss.add(when: 'CONFIG_TI_K3_TRNG', if_true: files('ti-k3-trng.c'))
++system_ss.add(when: 'CONFIG_TI_SEC_PROXY', if_true: files('ti-sec-proxy.c'))
+ system_ss.add(when: 'CONFIG_TI_MAILBOX', if_true: files('ti-mailbox.c'))
+ system_ss.add(when: 'CONFIG_TZ_MPC', if_true: files('tz-mpc.c'))
+ system_ss.add(when: 'CONFIG_TZ_MSC', if_true: files('tz-msc.c'))
+diff --git a/hw/misc/ti-sec-proxy.c b/hw/misc/ti-sec-proxy.c
 new file mode 100644
-index 0000000000..172dbe99a3
+index 0000000000..524bd1353c
 --- /dev/null
-+++ b/hw/arm/k3-bootrom.c
-@@ -0,0 +1,125 @@
++++ b/hw/misc/ti-sec-proxy.c
+@@ -0,0 +1,446 @@
 +/*
-+ * TI K3 boot-ROM (RBL) emulation for the AM64x
++ * TI SEC PROXY SysBus device
 + *
-+ * Loads a TI combined boot image, places the R5 SPL in OCSRAM, and
-+ * starts R5F0_0 at the ROM-certified entry point. Since ti-dmsc emulates
-+ * TIFS, SYSFW payloads are ignored.
-+ *
-+ * Copyright (c) 2026 CMBLU Energy AG
++ * Copyright (c) 2025 CMBLU Energy AG
 + * Author: Wadim Mueller <wafgo01@gmail.com>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * TI K3 SoCs use it as mailbox transport to the DMSC/SYSFW endpoint.
 + */
++
 +#include "qemu/osdep.h"
-+#include "qemu/units.h"
++#include "qemu/cutils.h"
++#include "hw/misc/ti-sec-proxy.h"
++#include "hw/core/sysbus.h"
++#include "hw/core/register.h"
++#include "qemu/log.h"
 +#include "qapi/error.h"
-+#include "hw/core/loader.h"
-+#include "hw/core/cpu.h"
-+#include "system/address-spaces.h"
-+#include "system/reset.h"
-+#include "hw/arm/ti-am64x.h"
-+#include "hw/arm/k3-bootrom.h"
++#include "hw/core/irq.h"
 +#include "trace.h"
 +
-+#define K3_OCSRAM_BASE              0x70000000ULL
-+#define K3_OCSRAM_SIZE              (2 * MiB)
-+/* u-boot: CONFIG_SYS_K3_BOOT_PARAM_TABLE_INDEX (AM642) */
-+#define K3_BOOT_PARAM_TABLE_INDEX   0x701bebfcULL
-+#define K3_PRIMARY_BOOTMODE         0x0
-+/* u-boot: ROM_EXTENDED_BOOT_DATA_INFO (AM64) */
-+#define K3_ROM_EXTENDED_BOOT_DATA   0x701beb00ULL
++#define SEC_PROXY_MAX_MSG (16)
 +
-+typedef struct K3BootRomReset {
-+    ARMCPU *cpu;
-+    uint64_t entry;
-+    TIAM64xState *soc;
-+} K3BootRomReset;
++REG32(SEC_PROXY_0_thread_status, 0x0)
++FIELD(SEC_PROXY_0_thread_status, ERROR, 31, 1)
++FIELD(SEC_PROXY_0_thread_status, DIR, 30, 1)
++FIELD(SEC_PROXY_0_thread_status, MAX_CNT, 16, 8)
++FIELD(SEC_PROXY_0_thread_status, CUR_CNT, 0, 8)
 +
-+static void k3_bootrom_cpu_reset(void *opaque)
-+{
-+    K3BootRomReset *r = opaque;
-+    CPUState *cs = CPU(r->cpu);
++REG32(SEC_PROXY_0_thread_threshold, 0x4)
++FIELD(SEC_PROXY_0_thread_threshold, THR_CNT, 0, 8)
 +
-+    /*
-+     * On warm reset only the R5 boot core runs from ROM. Reset A53s back to
-+     * PSCI_OFF, matching the SoC reset state.
-+     */
-+    if (r->soc) {
-+        for (unsigned i = 0; i < r->soc->a53_cpus; i++) {
-+            cpu_reset(CPU(&r->soc->a53[i]));
-+        }
++REG32(SEC_PROXY_0_thread_private, 0x0)
++FIELD(SEC_PROXY_0_thread_private, SRC_THR, 0, 10)
 +
-+        /*
-+         * ROM boot does not install armv7m_load_kernel's reset hook.
-+         * Therefore reset the M4 too, back to its powered-off reset state.
-+         */
-+        if (r->soc->armv7m.cpu) {
-+            cpu_reset(CPU(r->soc->armv7m.cpu));
-+        }
++REG32(SEC_PROXY_0_thread_message, 0x4)
++
++REG32(SEC_PROXY_0_buffer_l, 0x0)
++REG32(SEC_PROXY_0_buffer_h, 0x4)
++FIELD(SEC_PROXY_0_buffer_h, BASE_H, 0, 16)
++
++REG32(SEC_PROXY_0_target_l, 0x8)
++REG32(SEC_PROXY_0_target_h, 0xc)
++FIELD(SEC_PROXY_0_target_h, TARGET_H, 0, 16)
++
++REG32(SEC_PROXY_0_orderid, 0x10)
++FIELD(SEC_PROXY_0_orderid, ORDERID, 0, 4)
++FIELD(SEC_PROXY_0_orderid, REPLACE, 4, 1)
++
++REG32(SEC_PROXY_0_thread_ctl, 0x0)
++FIELD(SEC_PROXY_0_thread_ctl, QUEUE, 0, 16)
++FIELD(SEC_PROXY_0_thread_ctl, MAX_CNT, 16, 8)
++FIELD(SEC_PROXY_0_thread_ctl, DIR, 31, 1)
++
++REG32(SEC_PROXY_0_thread_evt_map, 0x4)
++FIELD(SEC_PROXY_0_thread_evt_map, THR_EVT, 0, 16)
++FIELD(SEC_PROXY_0_thread_evt_map, ERR_EVT, 16, 16)
++
++REG32(SEC_PROXY_0_thread_dst, 0x8)
++FIELD(SEC_PROXY_0_thread_dst, THREAD, 0, 16)
++
++REG32(SEC_PROXY_0_pid, 0x0)
++FIELD(SEC_PROXY_0_pid, SCHEME, 30, 2)
++FIELD(SEC_PROXY_0_pid, BU, 28, 2)
++FIELD(SEC_PROXY_0_pid, FUNC, 16, 12)
++FIELD(SEC_PROXY_0_pid, RTL, 11, 5)
++FIELD(SEC_PROXY_0_pid, MAJOR, 8, 3)
++FIELD(SEC_PROXY_0_pid, CUSTOM, 6, 2)
++FIELD(SEC_PROXY_0_pid, MINOR, 0, 6)
++
++REG32(SEC_PROXY_0_config, 0x4)
++FIELD(SEC_PROXY_0_config, MSG_SIZE, 16, 16)
++FIELD(SEC_PROXY_0_config, THREADS, 0, 16)
++
++REG32(SEC_PROXY_0_glb_evt, 0x14)
++FIELD(SEC_PROXY_0_glb_evt, ERR_EVENT, 0, 16)
++
++static RegisterAccessInfo sec_proxy_mmrs_regs_info[] = {
++    {
++        .name = "SEC_PROXY_0_pid",
++        .addr = A_SEC_PROXY_0_pid,
++        .ro = 0xffffffff,
++        .reset = 1714843904,
++    },
++    {
++        .name = "SEC_PROXY_0_config",
++        .addr = A_SEC_PROXY_0_config,
++        .ro = 0xffffffff,
++        .reset = 4194380,
++    },
++    {
++        .name = "SEC_PROXY_0_glb_evt",
++        .addr = A_SEC_PROXY_0_glb_evt,
++        .rsvd = 0xffff0000,
++        .reset = 65535,
 +    }
++};
 +
-+    cpu_reset(cs);
-+    cpu_set_pc(cs, r->entry);
-+}
-+
-+void k3_bootrom_load(TIAM64xState *soc, const char *filename, Error **errp)
-+{
-+    g_autofree uint8_t *buf = NULL;
-+    gsize len;
-+    GError *gerr = NULL;
-+    K3BootImage img;
-+    const K3BootComponent *sbl = NULL;
-+    K3BootRomReset *r;
-+    struct {
-+        char magic[8];
-+        uint32_t num_components;
-+    } QEMU_PACKED extboot = { "EXTBOOT", 0 };
-+    uint32_t bootindex = cpu_to_le32(K3_PRIMARY_BOOTMODE);
-+
-+    if (!g_file_get_contents(filename, (char **)&buf, &len, &gerr)) {
-+        error_setg(errp, "k3-bootrom: cannot read '%s': %s", filename,
-+                   gerr->message);
-+        g_error_free(gerr);
-+        return;
-+    }
-+    if (!k3_bootrom_parse(buf, len, &img, errp)) {
-+        return;
-+    }
-+
-+    for (uint32_t i = 0; i < img.num_comps; i++) {
-+        const K3BootComponent *c = &img.comps[i];
-+
-+        trace_k3_bootrom_component(c->comp_type, c->dest_addr,
-+                                   c->comp_size);
-+        if (c->comp_type == K3_COMP_TYPE_SBL && !sbl) {
-+            sbl = c;
-+        }
-+        /* SYSFW/SYSFW-DATA are DMSC payloads; TIFS is in ti-dmsc. */
-+    }
-+    if (!sbl) {
-+        error_setg(errp, "k3-bootrom: image has no SBL component");
-+        return;
-+    }
-+    if (sbl->dest_addr < K3_OCSRAM_BASE ||
-+        sbl->dest_addr + sbl->comp_size > K3_OCSRAM_BASE + K3_OCSRAM_SIZE) {
-+        error_setg(errp, "k3-bootrom: SBL 0x%" PRIx64 "+0x%x outside "
-+                   "OCSRAM", sbl->dest_addr, sbl->comp_size);
-+        return;
-+    }
-+
-+    rom_add_blob_fixed_as("k3.sbl", buf + sbl->payload_offset,
-+                          sbl->comp_size, sbl->dest_addr,
-+                          &address_space_memory);
-+    rom_add_blob_fixed_as("k3.bootindex", &bootindex, sizeof(bootindex),
-+                          K3_BOOT_PARAM_TABLE_INDEX, &address_space_memory);
-+    extboot.num_components = cpu_to_le32(img.num_comps);
-+    rom_add_blob_fixed_as("k3.extboot", &extboot, sizeof(extboot),
-+                          K3_ROM_EXTENDED_BOOT_DATA, &address_space_memory);
-+
-+    r = g_new0(K3BootRomReset, 1);
-+    r->cpu = &soc->r5[0];
-+    r->entry = sbl->dest_addr;
-+    r->soc = soc;
-+    qemu_register_reset(k3_bootrom_cpu_reset, r);
-+    trace_k3_bootrom_boot(sbl->dest_addr);
-+}
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 22691afdd8..139692dd11 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -109,7 +109,9 @@ arm_common_ss.add(when: 'CONFIG_STRONGARM', if_true: files('strongarm.c'))
- arm_common_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
- arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
- arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
-+arm_common_ss.add(when: 'CONFIG_TI_AM64X', if_true: files('ti-am64x.c'))
- arm_common_ss.add(when: 'CONFIG_TI_AM64X', if_true: files('k3-bootrom-parse.c'))
-+arm_common_ss.add(when: 'CONFIG_TI_AM64X', if_true: files('k3-bootrom.c'))
- 
- arm_common_ss.add(when: ['CONFIG_AXIADO_SOC', 'TARGET_AARCH64'], if_true: files(
-   'ax3000-soc.c'))
-diff --git a/hw/arm/ti-am64x.c b/hw/arm/ti-am64x.c
-new file mode 100644
-index 0000000000..551e743476
---- /dev/null
-+++ b/hw/arm/ti-am64x.c
-@@ -0,0 +1,1223 @@
-+/*
-+ * TI AM64x SoC family model
-+ *
-+ * Copyright (c) 2025 CMBLU Energy AG
-+ * Author: Wadim Mueller <wafgo01@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include "qemu/osdep.h"
-+#include "hw/core/boards.h"
-+#include "hw/arm/ti-am64x.h"
-+#include "hw/misc/unimp.h"
-+#include "hw/core/or-irq.h"
-+#include "hw/core/qdev-clock.h"
-+#include "hw/core/qdev-properties.h"
-+#include "hw/arm/bsa.h"
-+#include "qapi/error.h"
-+#include "hw/char/ti-am64-uart.h"
-+#include "hw/misc/ti-sec-proxy.h"
-+#include "hw/intc/arm_gicv3.h"
-+#include "hw/arm/omap.h"
-+
-+#include "qobject/qlist.h"
-+#include "qemu/units.h"
-+#include "system/address-spaces.h"
-+#include "system/system.h"
-+
-+/* MCU MMIO */
-+#define MCU_RAT_MMIO_ADDRESS 0x44200000
-+
-+/* MAIN MMIO */
-+#define MAIN_SEC_PROXY_MMRS_ADDRESS 0x48250000
-+#define MAIN_SEC_PROXY_SCFG_ADDRESS 0x4A400000
-+#define MAIN_SEC_PROXY_RT_ADDRESS 0x4A600000
-+#define MAIN_SEC_PROXY_TARGET_ADDRESS 0x4D000000
-+#define MAIN_MAILBOX_BASE_ADDRESS 0x029000000ULL
-+#define MAIN_MAILBOX_STRIDE 0x00010000ULL
-+#define MAIN_RAM_BASE_ADDRESS 0x80000000ULL
-+/* AM64 TRM: GICSS0_GIC at 0x001800000 (1 MiB). */
-+#define MAIN_GIC_DIST_ADDRESS 0x01800000ULL
-+#define MAIN_GIC_REDIST_ADDRESS 0x01840000ULL /* GIC-500 GICR */
-+
-+#define MCU_IRAM_SIZE (192 * 1024)
-+#define MCU_IRAM_BASE_ADDRESS 0x00000000
-+
-+#define MCU_DRAM_SIZE (64 * 1024)
-+#define MCU_DRAM_BASE_ADDRESS 0x00030000
-+
-+#define MCU_DDR_SIZE (512 * 1024 * 1024)
-+#define MCU_DDR_BASE_ADDRESS 0xa4100000
-+
-+#define MCU_RAT_SIZE (2 * 1024 * 1024)
-+#define MCU_RAT_BASE_ADDRESS 0x60000000
-+
-+static void ti_am64x_initfn(Object *obj)
-+{
-+    TIAM64xState *s = TI_AM64X(obj);
-+
-+    object_initialize_child(obj, "a53-cluster", &s->a53_cluster,
-+                            TYPE_CPU_CLUSTER);
-+    qdev_prop_set_uint32(DEVICE(&s->a53_cluster), "cluster-id", 0);
-+
-+    object_initialize_child(obj, "m4-cluster", &s->m4_cluster,
-+                            TYPE_CPU_CLUSTER);
-+    qdev_prop_set_uint32(DEVICE(&s->m4_cluster), "cluster-id", 1);
-+
-+    object_initialize_child(OBJECT(&s->m4_cluster), "armv7m", &s->armv7m,
-+                            TYPE_ARMV7M);
-+
-+    object_initialize_child(obj, "r5-cluster", &s->r5_cluster,
-+                            TYPE_CPU_CLUSTER);
-+    qdev_prop_set_uint32(DEVICE(&s->r5_cluster), "cluster-id", 2);
-+    object_initialize_child(OBJECT(&s->r5_cluster), "r5-cpu[*]", &s->r5[0],
-+                            ARM_CPU_TYPE_NAME("cortex-r5f"));
-+
-+    object_initialize_child(obj, "gic", &s->gic, TYPE_ARM_GICV3);
-+    object_initialize_child(obj, "rat", &s->rat, TYPE_TI_RAT);
-+    object_initialize_child(obj, "sec-proxy", &s->sec_proxy, TYPE_TI_SEC_PROXY);
-+    object_initialize_child(obj, "dmsc", &s->dmsc, TYPE_TI_DMSC);
-+    object_initialize_child(obj, "ctrlmmr", &s->ctrlmmr, TYPE_TI_K3_CTRLMMR);
-+    object_initialize_child(obj, "mcu-ctrlmmr", &s->mcu_ctrlmmr,
-+                            TYPE_TI_K3_CTRLMMR);
-+    object_initialize_child(obj, "sec-ctrlmmr", &s->sec_ctrlmmr,
-+                            TYPE_TI_K3_CTRLMMR);
-+    object_initialize_child(obj, "ddrss", &s->ddrss, TYPE_TI_K3_DDRSS);
-+    object_initialize_child(obj, "trng", &s->trng, TYPE_TI_K3_TRNG);
-+    object_initialize_child(obj, "main-timer0", &s->main_timer0,
-+                            TYPE_TI_K3_DMTIMER);
-+    object_initialize_child(obj, "gtc", &s->gtc, TYPE_TI_K3_GTC);
-+
-+    for (int i = 0; i < TI_AM64X_SDHCI_NUM; i++) {
-+        object_initialize_child(obj, "sdhci[*]", &s->sdhci[i],
-+                                TYPE_SYSBUS_SDHCI);
-+        object_initialize_child(obj, "sdhci-phy[*]", &s->sdhci_phy[i],
-+                                TYPE_TI_K3_SDHCI_PHY);
-+    }
-+
-+    for (int i = 0; i < TI_AM64X_A53_NUM; i++) {
-+        object_initialize_child(OBJECT(&s->a53_cluster), "a53[*]", &s->a53[i],
-+                                ARM_CPU_TYPE_NAME("cortex-a53"));
-+    }
-+
-+    for (int i = 0; i < TI_AM64X_MAILBOX_NUM; i++) {
-+        object_initialize_child(obj, "mailbox[*]", &s->mailbox[i],
-+                                TYPE_TI_MAILBOX);
-+    }
-+
-+    for (int i = 0; i < TI_AM64X_MCU_UART_NUM; i++) {
-+        object_initialize_child(obj, "mcu-uart[*]", &s->mcu_uart[i],
-+                                TYPE_AM64_UART);
-+    }
-+
-+    object_initialize_child(obj, "main-uart0", &s->main_uart0, TYPE_AM64_UART);
-+
-+    s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
-+    s->refclk = qdev_init_clock_in(DEVICE(s), "refclk", NULL, NULL, 0);
-+    s->main_ram_base = MAIN_RAM_BASE_ADDRESS;
-+    s->main_ram_size = 0;
-+    s->a53_cpus = TI_AM64X_A53_NUM;
-+}
-+
-+static void create_unimplemented_device_in_root(MemoryRegion *root,
-+                                                const char *name, hwaddr base,
-+                                                hwaddr size)
-+{
-+    DeviceState *dev = qdev_new(TYPE_UNIMPLEMENTED_DEVICE);
-+
-+    qdev_prop_set_string(dev, "name", name);
-+    qdev_prop_set_uint64(dev, "size", size);
-+
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+
-+    /* Allows to map the unimplemented MMIO window into this root. */
-+    MemoryRegion *mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
-+    memory_region_add_subregion(root, base, mr);
-+}
-+
-+static void ti_am64_create_main_unimplemented(MemoryRegion *root)
-+{
-+/* === MAIN MMIO / register blocks (<= 256 KiB) === */
-+#define ADD_MAIN_UNIMP(_name, _base, _size)                             \
-+    create_unimplemented_device_in_root(root, (_name), (hwaddr)(_base), \
-+                                        (hwaddr)(_size))
-+
-+    /* 0x0000_xxxx */
-+    ADD_MAIN_UNIMP("PSRAMECC0_RAM", 0x000000000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("PADCFG_CTRL0_CFG0", 0x0000F0000ULL, 0x00008000ULL);
-+    ADD_MAIN_UNIMP("PADCFG_CTRL0_CFG1", 0x0000F8000ULL, 0x00008000ULL);
-+    ADD_MAIN_UNIMP("CBASS_DBG0_ERR", 0x000200000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("CBASS_INFRA1_ERR", 0x000210000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("CBASS_FW0_ERR", 0x000220000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("EFUSE0", 0x000300000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("PBIST0", 0x000310000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("COMPUTE_CLUSTER0_PBIST", 0x000330000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("PSC0", 0x000400000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("PLLCTRL0", 0x000410000ULL, 0x00000200ULL);
-+    ADD_MAIN_UNIMP("ESM0_CFG", 0x000420000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("DFTSS0", 0x000500000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("DDPA0", 0x000580000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("GPIO0", 0x000600000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("GPIO1", 0x000601000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("PLL0_CFG", 0x000680000ULL, 0x00010000ULL);
-+
-+    /* ECC aggregators */
-+    ADD_MAIN_UNIMP("PSRAMECC0_ECC_AGGR0", 0x000700000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("ECC_AGGR1_ECC_AGGR0", 0x000701000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("USB0_ECC_AGGR0", 0x000703000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("CPSW0_ECC0", 0x000704000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("MMCSD0_ECC_AGGR_RXMEM", 0x000706000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("MMCSD0_ECC_AGGR_TXMEM", 0x000707000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("MMCSD1_ECC_AGGR_RXMEM", 0x000708000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("MMCSD1_ECC_AGGR_TXMEM", 0x000709000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("SA2_UL0_ECC_AGGR0", 0x000712000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("FSS0_OSPI0_ECC_AGGR0", 0x000716000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("COMPUTE_CLUSTER0_SS_ECC_AGGR", 0x000717000ULL,
-+                   0x00000400ULL);
-+    ADD_MAIN_UNIMP("COMPUTE_CLUSTER0_CORE0_ECC_AGGR", 0x000717400ULL,
-+                   0x00000400ULL);
-+    ADD_MAIN_UNIMP("COMPUTE_CLUSTER0_CORE1_ECC_AGGR", 0x000717800ULL,
-+                   0x00000400ULL);
-+    ADD_MAIN_UNIMP("PCIE0_CORE_ECC_AGGR0", 0x000718000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("PCIE0_CORE_ECC_AGGR1", 0x000719000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("ADC0_ECC_REGS", 0x00071A000ULL, 0x00000400ULL);
-+
-+    /* DCC */
-+    ADD_MAIN_UNIMP("DCC0", 0x000800000ULL, 0x00000040ULL);
-+    ADD_MAIN_UNIMP("DCC1", 0x000804000ULL, 0x00000040ULL);
-+    ADD_MAIN_UNIMP("DCC2", 0x000808000ULL, 0x00000040ULL);
-+    ADD_MAIN_UNIMP("DCC3", 0x00080C000ULL, 0x00000040ULL);
-+    ADD_MAIN_UNIMP("DCC4", 0x000810000ULL, 0x00000040ULL);
-+    ADD_MAIN_UNIMP("DCC5", 0x000814000ULL, 0x00000040ULL);
-+
-+    /* Routers, GTC and VTM */
-+    ADD_MAIN_UNIMP("MAIN_GPIOMUX_INTROUTER0_CFG", 0x000A00000ULL,
-+                   0x00000800ULL);
-+    ADD_MAIN_UNIMP("CMP_EVENT_INTROUTER0_CFG", 0x000A30000ULL, 0x00000800ULL);
-+    ADD_MAIN_UNIMP("TIMESYNC_EVENT_INTROUTER0_CFG", 0x000A40000ULL,
-+                   0x00000800ULL);
-+    ADD_MAIN_UNIMP("GTC0_GTC_CFG0", 0x000A80000ULL, 0x00000400ULL);
-+    /* GTC0_GTC_CFG1 gets modeled by TIK3GtcState at 0x000a90000. */
-+    ADD_MAIN_UNIMP("GTC0_GTC_CFG2", 0x000AA0000ULL, 0x00004000ULL);
-+    ADD_MAIN_UNIMP("GTC0_GTC_CFG3", 0x000AB0000ULL, 0x00004000ULL);
-+    ADD_MAIN_UNIMP("VTM0_MMR_VBUSP_CFG1", 0x000B00000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("VTM0_MMR_VBUSP_CFG2", 0x000B01000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("VTM0_ECCAGGR_CFG0", 0x000B02000ULL, 0x00000400ULL);
-+
-+    /* PDMA */
-+    ADD_MAIN_UNIMP("PDMA0_REGS", 0x000C00000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("PDMA1_REGS", 0x000C01000ULL, 0x00000400ULL);
-+
-+    /* Timers */
-+    /* TIMER0_CFG (main_timer0) is realized as a device at 0x02400000 */
-+    ADD_MAIN_UNIMP("TIMER1_CFG", 0x002410000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("TIMER2_CFG", 0x002420000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("TIMER3_CFG", 0x002430000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("TIMER4_CFG", 0x002440000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("TIMER5_CFG", 0x002450000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("TIMER6_CFG", 0x002460000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("TIMER7_CFG", 0x002470000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("TIMER8_CFG", 0x002480000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("TIMER9_CFG", 0x002490000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("TIMER10_CFG", 0x0024A0000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("TIMER11_CFG", 0x0024B0000ULL, 0x00000400ULL);
-+
-+    /* UARTs */
-+    ADD_MAIN_UNIMP("UART1", 0x002810000ULL, 0x00000200ULL);
-+    ADD_MAIN_UNIMP("UART2", 0x002820000ULL, 0x00000200ULL);
-+    ADD_MAIN_UNIMP("UART3", 0x002830000ULL, 0x00000200ULL);
-+    ADD_MAIN_UNIMP("UART4", 0x002840000ULL, 0x00000200ULL);
-+    ADD_MAIN_UNIMP("UART5", 0x002850000ULL, 0x00000200ULL);
-+    ADD_MAIN_UNIMP("UART6", 0x002860000ULL, 0x00000200ULL);
-+
-+    /* PBIST */
-+    ADD_MAIN_UNIMP("PBIST3", 0x003310000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("PBIST2", 0x003330000ULL, 0x00000400ULL);
-+
-+    /* RTI */
-+    ADD_MAIN_UNIMP("RTI0_CFG", 0x00E000000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("RTI1_CFG", 0x00E010000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("RTI8_CFG", 0x00E080000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("RTI9_CFG", 0x00E090000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("RTI10_CFG", 0x00E0A0000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("RTI11_CFG", 0x00E0B0000ULL, 0x00000100ULL);
-+
-+    /* SERDES, PCIe, DDR, USB, MMC and FSS */
-+    ADD_MAIN_UNIMP("SERDES_10G0", 0x00F000000ULL, 0x00010000ULL);
-+    /* PCIe core config space is used for ECAM; avoid shadowing it here. */
-+    ADD_MAIN_UNIMP("DDR16SS0_SS_CFG", 0x00F300000ULL, 0x00000200ULL);
-+    ADD_MAIN_UNIMP("USB0_MMR_MMRVBP_USBSS_CMN0", 0x00F900000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("USB0_RAMS_INJ_CFG", 0x00F901000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("USB0_PHY2", 0x00F908000ULL, 0x00000400ULL);
-+    /*
-+     * MMCSD0/1 use real SDHCI devices for the first 0x100 bytes and
-+     * ti-k3-sdhci-phy stubs for SS_CFG; only the vendor tail stays here.
-+     */
-+    ADD_MAIN_UNIMP("MMCSD1_CTL_VENDOR", 0x00FA00100ULL, 0x00000F00ULL);
-+    ADD_MAIN_UNIMP("MMCSD0_CTL_VENDOR", 0x00FA10100ULL, 0x00000F00ULL);
-+    ADD_MAIN_UNIMP("FSS0_CFG", 0x00FC00000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("FSS0_FSAS_CFG", 0x00FC10000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("FSS0_OTFA_CFG", 0x00FC20000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("FSS0_OSPI0_CTRL0", 0x00FC40000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("FSS0_OSPI0_SS_CFG", 0x00FC44000ULL, 0x00000200ULL);
-+
-+    /* I2C */
-+    /* I2C0_CFG is a real OMAP-I2C V2 device; only I2C1/2/3 stay as stubs. */
-+    ADD_MAIN_UNIMP("I2C1_CFG", 0x020010000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("I2C2_CFG", 0x020020000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("I2C3_CFG", 0x020030000ULL, 0x00000100ULL);
-+
-+    /* MCSPI */
-+    ADD_MAIN_UNIMP("MCSPI0_CFG", 0x020100000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("MCSPI1_CFG", 0x020110000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("MCSPI2_CFG", 0x020120000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("MCSPI3_CFG", 0x020130000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("MCSPI4_CFG", 0x020140000ULL, 0x00000400ULL);
-+
-+    /* MCAN */
-+    ADD_MAIN_UNIMP("MCAN0_SS", 0x020700000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("MCAN0_CFG", 0x020701000ULL, 0x00000200ULL);
-+    ADD_MAIN_UNIMP("MCAN0_MSGMEM_RAM", 0x020708000ULL, 0x00008000ULL);
-+    ADD_MAIN_UNIMP("MCAN1_SS", 0x020710000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("MCAN1_CFG", 0x020711000ULL, 0x00000200ULL);
-+    ADD_MAIN_UNIMP("MCAN1_MSGMEM_RAM", 0x020718000ULL, 0x00008000ULL);
-+    ADD_MAIN_UNIMP("MCAN0_ECC_AGGR", 0x024018000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("MCAN1_ECC_AGGR", 0x024019000ULL, 0x00000400ULL);
-+
-+    /* PWM / QEP / FSI */
-+    ADD_MAIN_UNIMP("EPWM0", 0x023000000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("EPWM1", 0x023010000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("EPWM2", 0x023020000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("EPWM3", 0x023030000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("EPWM4", 0x023040000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("EPWM5", 0x023050000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("EPWM6", 0x023060000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("EPWM7", 0x023070000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("EPWM8", 0x023080000ULL, 0x00000100ULL);
-+
-+    ADD_MAIN_UNIMP("ECAP0_CTL_STS", 0x023100000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("ECAP1_CTL_STS", 0x023110000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("ECAP2_CTL_STS", 0x023120000ULL, 0x00000100ULL);
-+
-+    ADD_MAIN_UNIMP("EQEP0_REG", 0x023200000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("EQEP1_REG", 0x023210000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("EQEP2_REG", 0x023220000ULL, 0x00000100ULL);
-+
-+    ADD_MAIN_UNIMP("FSIRX0_CFG", 0x023500000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("FSIRX1_CFG", 0x023510000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("FSIRX2_CFG", 0x023520000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("FSIRX3_CFG", 0x023530000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("FSIRX4_CFG", 0x023540000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("FSIRX5_CFG", 0x023550000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("FSITX0_CFG", 0x023600000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("FSITX1_CFG", 0x023610000ULL, 0x00000100ULL);
-+
-+    /* ELM/ADC/SPINLOCK */
-+    ADD_MAIN_UNIMP("ELM0", 0x025010000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("ADC0_FIFO", 0x028000000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("ADC0", 0x028001000ULL, 0x00000400ULL);
-+
-+    ADD_MAIN_UNIMP("SPINLOCK0", 0x02A000000ULL, 0x00008000ULL);
-+    /* === PRU_ICSSG0 / PRU_ICSSG1 blocks === */
-+
-+    /* PRU_ICSSG0 */
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_DRAM0_SLV_RAM", 0x030000000ULL, 0x00002000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_DRAM1_SLV_RAM", 0x030002000ULL, 0x00002000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_RTU0_IRAM_RAM", 0x030004000ULL,
-+                   0x00002000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_RTU1_IRAM_RAM", 0x030006000ULL,
-+                   0x00002000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_RAT_SLICE0_CFG", 0x030008000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_RAT_SLICE1_CFG", 0x030009000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_PDSP_TX0_IRAM_RAM", 0x03000A000ULL,
-+                   0x00002000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_PDSP_TX1_IRAM_RAM", 0x03000C000ULL,
-+                   0x00002000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_RAM_SLV_RAM", 0x030010000ULL, 0x00010000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_ICSS_INTC_SLV", 0x030020000ULL,
-+                   0x00002000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_PDSP0_IRAM", 0x030022000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_PDSP0_IRAM_DEBUG", 0x030022400ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_RTU0_IRAM", 0x030023000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_RTU0_IRAM_DEBUG", 0x030023400ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_RTU1_IRAM", 0x030023800ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_RTU1_IRAM_DEBUG", 0x030023C00ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_PDSP1_IRAM", 0x030024000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_PDSP1_IRAM_DEBUG", 0x030024400ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_PROT_SLV", 0x030024C00ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_PDSP_TX0_IRAM", 0x030025000ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_PDSP_TX0_IRAM_DEBUG", 0x030025400ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_PDSP_TX1_IRAM", 0x030025800ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_PDSP_TX1_IRAM_DEBUG", 0x030025C00ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_CFG_SLV", 0x030026000ULL, 0x00000200ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PA_STAT_WRAP_QSTAT", 0x030027000ULL,
-+                   0x00000800ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_ICSS_UART_SLV", 0x030028000ULL,
-+                   0x00000040ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_TASKS_MGR_PRU0_MMR0", 0x03002A000ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_TASKS_MGR_RTU0_MMR0", 0x03002A100ULL,
-+                   0x00000200ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_TASKS_MGR_PRU1_MMR0", 0x03002A200ULL,
-+                   0x00000300ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_TASKS_MGR_RTU1_MMR0", 0x03002A300ULL,
-+                   0x00000400ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_TASKS_MGR_PRU_TX0_MMR0", 0x03002A400ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_TASKS_MGR_PRU_TX1_MMR0", 0x03002A500ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PA_STAT_WRAP_CSTAT", 0x03002C000ULL,
-+                   0x00000800ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_IEP0", 0x03002E000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_IEP1", 0x03002F000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_ICSS_ECAP0_SLV", 0x030030000ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_MII_RT_CFG", 0x030032000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_MII_RT_SGMII0_CFG", 0x030032100ULL,
-+                   0x00000200ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_MII_RT_SGMII1_CFG", 0x030032200ULL,
-+                   0x00000300ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_MDIO", 0x030032400ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_MII_RT_G_CFG_REGS_G0", 0x030033000ULL,
-+                   0x00001000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_PDSP0_IRAM_RAM", 0x030034000ULL,
-+                   0x00004000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PR1_PDSP1_IRAM_RAM", 0x030038000ULL,
-+                   0x00004000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_PA_STAT_WRAP_PA_SLV", 0x03003C000ULL,
-+                   0x00000100ULL);
-+
-+    /* PRU_ICSSG1 */
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_DRAM0_SLV_RAM", 0x030080000ULL, 0x00002000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_DRAM1_SLV_RAM", 0x030082000ULL, 0x00002000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_RTU0_IRAM_RAM", 0x030084000ULL,
-+                   0x00002000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_RTU1_IRAM_RAM", 0x030086000ULL,
-+                   0x00002000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_RAT_SLICE0_CFG", 0x030088000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_RAT_SLICE1_CFG", 0x030089000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_PDSP_TX0_IRAM_RAM", 0x03008A000ULL,
-+                   0x00002000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_PDSP_TX1_IRAM_RAM", 0x03008C000ULL,
-+                   0x00002000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_RAM_SLV_RAM", 0x030090000ULL, 0x00010000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_ICSS_INTC_SLV", 0x0300A0000ULL,
-+                   0x00002000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_PDSP0_IRAM", 0x0300A2000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_PDSP0_IRAM_DEBUG", 0x0300A2400ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_RTU0_IRAM", 0x0300A3000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_RTU0_IRAM_DEBUG", 0x0300A3400ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_RTU1_IRAM", 0x0300A3800ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_RTU1_IRAM_DEBUG", 0x0300A3C00ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_PDSP1_IRAM", 0x0300A4000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_PDSP1_IRAM_DEBUG", 0x0300A4400ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_PROT_SLV", 0x0300A4C00ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_PDSP_TX0_IRAM", 0x0300A5000ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_PDSP_TX0_IRAM_DEBUG", 0x0300A5400ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_PDSP_TX1_IRAM", 0x0300A5800ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_PDSP_TX1_IRAM_DEBUG", 0x0300A5C00ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_CFG_SLV", 0x0300A6000ULL, 0x00000200ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PA_STAT_WRAP_QSTAT", 0x0300A7000ULL,
-+                   0x00000800ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_ICSS_UART_SLV", 0x0300A8000ULL,
-+                   0x00000040ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_TASKS_MGR_PRU0_MMR0", 0x0300AA000ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_TASKS_MGR_RTU0_MMR0", 0x0300AA100ULL,
-+                   0x00000200ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_TASKS_MGR_PRU1_MMR0", 0x0300AA200ULL,
-+                   0x00000300ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_TASKS_MGR_RTU1_MMR0", 0x0300AA300ULL,
-+                   0x00000400ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_TASKS_MGR_PRU_TX0_MMR0", 0x0300AA400ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_TASKS_MGR_PRU_TX1_MMR0", 0x0300AA500ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PA_STAT_WRAP_CSTAT", 0x0300AC000ULL,
-+                   0x00000800ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_IEP0", 0x0300AE000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_IEP1", 0x0300AF000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_ICSS_ECAP0_SLV", 0x0300B0000ULL,
-+                   0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_MII_RT_CFG", 0x0300B2000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_MII_RT_SGMII0_CFG", 0x0300B2100ULL,
-+                   0x00000200ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_MII_RT_SGMII1_CFG", 0x0300B2200ULL,
-+                   0x00000300ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_MDIO", 0x0300B2400ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_MII_RT_G_CFG_REGS_G0", 0x0300B3000ULL,
-+                   0x00001000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_PDSP0_IRAM_RAM", 0x0300B4000ULL,
-+                   0x00004000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PR1_PDSP1_IRAM_RAM", 0x0300B8000ULL,
-+                   0x00004000ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_PA_STAT_WRAP_PA_SLV", 0x0300BC000ULL,
-+                   0x00000100ULL);
-+
-+    /* === Large MAIN regions and windows (MiB..GiB) === */
-+
-+    /* The GIC device maps these regions, so do not shadow them here. */
-+
-+    /* CPSW / PCIe DBN */
-+    ADD_MAIN_UNIMP("CPSW0_NUSS0", 0x008000000ULL, 0x00200000ULL);
-+    /*
-+     * Since PCIE0_CORE_DBN_CFG_PCIE_CORE0 overlaps ECAM, do not map it as
-+     * unimplemented.
-+     */
-+
-+    /* USB VBP core address map */
-+    ADD_MAIN_UNIMP("USB0_VBP2APB_WRAP_CONTROLLER_VBP_CORE_ADDR_MAP",
-+                   0x00F400000ULL, 0x00040000ULL); /* 256 KB */
-+
-+    /* TIMERMGR, CPTS, CBASS0, GPMC and R5F */
-+    ADD_MAIN_UNIMP("TIMERMGR0_TIMERS", 0x037000000ULL, 0x00040000ULL);
-+    ADD_MAIN_UNIMP("CPTS0", 0x039000000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("CBASS0_ERR0", 0x03A000000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("GPMC0_CFG", 0x03B000000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("R5FSS0_ECC_AGGR0", 0x03C010000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("R5FSS0_EVNT_BUS_VBUSP_MMRS", 0x03C018000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("R5FSS1_ECC_AGGR0", 0x03C030000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("R5FSS1_EVNT_BUS_VBUSP_MMRS", 0x03C038000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("TIMERMGR0_CONFIG", 0x03CD00000ULL, 0x00000200ULL);
-+
-+    /* MSRAM ECC aggregators / misc at 0x03F0_xxxx */
-+    ADD_MAIN_UNIMP("MSRAM_256K0_ECC_AGGR_REGS", 0x03F001000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("MSRAM_256K1_ECC_AGGR_REGS", 0x03F002000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("MSRAM_256K2_ECC_AGGR_REGS", 0x03F003000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("GICSS0_REGS", 0x03F004000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("DMASS0_ECCAGGR0", 0x03F005000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("MSRAM_256K5_ECC_AGGR_REGS", 0x03F006000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("MSRAM_256K4_ECC_AGGR_REGS", 0x03F007000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("MSRAM_256K3_ECC_AGGR_REGS", 0x03F008000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG0_ECC_AGGR0", 0x03F00A000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("PRU_ICSSG1_ECC_AGGR0", 0x03F00B000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("R5FSS0_CORE0_ECC_AGGR0", 0x03F00D000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("R5FSS1_CORE0_ECC_AGGR0", 0x03F00E000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("ECC_AGGR0_ECC_AGGR0", 0x03F00F000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("MSRAM_256K6_ECC_AGGR_REGS", 0x03F010000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("MSRAM_256K7_ECC_AGGR_REGS", 0x03F011000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("PBIST1", 0x03F100000ULL, 0x00000400ULL);
-+
-+    /* SA2/DEBUGSS/ROM/STM/CTRL/FW/SEC MMR/GLB */
-+    ADD_MAIN_UNIMP("SA2_UL0", 0x040900000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("SA2_UL0_MMRA", 0x040901000ULL, 0x00000200ULL);
-+    /* SA2_UL0_EIP_76 (0x040910000, 128 B) is now the real TIK3Trng device. */
-+    ADD_MAIN_UNIMP("SA2_UL0_EIP_29T2", 0x040920000ULL, 0x00010000ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS0_SYS", 0x041000000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("ROM0", 0x041800000ULL, 0x00040000ULL);
-+    ADD_MAIN_UNIMP("STM0_STIMULUS", 0x042000000ULL, 0x01000000ULL);
-+    ADD_MAIN_UNIMP("CBASS0_FW0", 0x045000000ULL, 0x00008000ULL);
-+    ADD_MAIN_UNIMP("CBASS_INFRA1_FW0", 0x045008000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("MAIN_SEC_MMR0_CFG2", 0x045900000ULL, 0x00020000ULL);
-+    ADD_MAIN_UNIMP("MAIN_SEC_MMR0_CFG0", 0x045A00000ULL, 0x00020000ULL);
-+    ADD_MAIN_UNIMP("CBASS_INFRA1_GLB0", 0x045B01000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("DMASS0_CBASS_DMSC_GLB0", 0x045B03000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("CBASS0_GLB0", 0x045B08000ULL, 0x00000400ULL);
-+
-+    /* DMASS0 regions */
-+    ADD_MAIN_UNIMP("DMASS0_INTAGGR_INTR0", 0x048000000ULL, 0x00100000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_INTAGGR_IMAP0", 0x048100000ULL, 0x00004000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_INTAGGR_CFG0", 0x048110000ULL, 0x00000020ULL);
-+    ADD_MAIN_UNIMP("DMASS0_INTAGGR_L2G0", 0x048120000ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("DMASS0_PSILCFG_PROXY0", 0x048130000ULL, 0x00000200ULL);
-+    ADD_MAIN_UNIMP("DMASS0_PSILSS_MMRS0", 0x048140000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_INTAGGR_UNMAP0", 0x048180000ULL, 0x00020000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_INTAGGR_MCAST0", 0x048210000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_INTAGGR_GCNTCFG0", 0x048220000ULL, 0x00002000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_ETLSW_MMRS0", 0x048230000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_RINGACC_GCFG0", 0x048240000ULL, 0x00000400ULL);
-+
-+    ADD_MAIN_UNIMP("DMASS0_BCDMA_CRED", 0x048400000ULL, 0x00000800ULL);
-+    ADD_MAIN_UNIMP("DMASS0_PKTDMA_CRED", 0x048410000ULL, 0x00002000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_BCDMA_BCHAN", 0x048420000ULL, 0x00002000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_PKTDMA_RFLOW", 0x048430000ULL, 0x00004000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_PKTDMA_TCHAN", 0x0484A0000ULL, 0x00004000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_BCDMA_TCHAN", 0x0484A4000ULL, 0x00002000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_PKTDMA_RCHAN", 0x0484C0000ULL, 0x00002000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_BCDMA_RCHAN", 0x0484C2000ULL, 0x00002000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_PKTDMA_GCFG", 0x0485C0000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("DMASS0_BCDMA_GCFG", 0x0485C0100ULL, 0x00000200ULL);
-+    ADD_MAIN_UNIMP("DMASS0_PKTDMA_RING", 0x0485E0000ULL, 0x00020000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_BCDMA_RING", 0x048600000ULL, 0x00008000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_RINGACC_RT0", 0x049000000ULL, 0x00400000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_RINGACC_CFG0", 0x049800000ULL, 0x00040000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_INTAGGR_GCNTRTI0", 0x04A000000ULL, 0x00100000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_PKTDMA_RCHANRT0", 0x04A800000ULL, 0x00020000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_BCDMA_RCHANRT0", 0x04A820000ULL, 0x00020000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_PKTDMA_TCHANRT0", 0x04AA00000ULL, 0x00040000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_BCDMA_TCHANRT0", 0x04AA40000ULL, 0x00020000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_PKTDMA_RINGRT0", 0x04B800000ULL, 0x00400000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_BCDMA_RINGRT0", 0x04BC00000ULL, 0x00100000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_BCDMA_BCHANRT0", 0x04C000000ULL, 0x00020000ULL);
-+    ADD_MAIN_UNIMP("DMASS0_RINGACC_SRC_FIFOS0", 0x04E000000ULL, 0x00400000ULL);
-+
-+    /* DEBUGSS_WRAP0 region set */
-+
-+    ADD_MAIN_UNIMP("STM0_CXSTM0", 0x73D200000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("STM0_CTI_CSCTI0", 0x73D201000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("DBGSUSPENDROUTER0_CFG", 0x73D300000ULL, 0x00000800ULL);
-+
-+    /* CPT2 blocks */
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MMR0", 0x73E100000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM0", 0x73E120000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM1", 0x73E121000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM2", 0x73E122000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM3", 0x73E123000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM4", 0x73E124000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM5", 0x73E125000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM6", 0x73E126000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM7", 0x73E127000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM8", 0x73E128000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM9", 0x73E129000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM10", 0x73E12A000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM11", 0x73E12B000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM12", 0x73E12C000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM13", 0x73E12D000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM14", 0x73E12E000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM15", 0x73E12F000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM16", 0x73E130000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM17", 0x73E131000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM18", 0x73E132000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM19", 0x73E133000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM20", 0x73E134000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM21", 0x73E135000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM22", 0x73E136000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM23", 0x73E137000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM24", 0x73E138000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM25", 0x73E139000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM26", 0x73E13A000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM27", 0x73E13B000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM28", 0x73E13C000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM29", 0x73E13D000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM30", 0x73E13E000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("CPT2_AGGR0_MEM31", 0x73E13F000ULL, 0x00001000ULL);
-+
-+    /* DEBUGSS_WRAP0 set 0_1, 1_1 and EXT_APB1 */
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_ROM_TABLE_0_1", 0x740000000ULL,
-+                   0x00001000ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_RESV0_1", 0x740001000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_CFGAP1", 0x740002000ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_APBAP1", 0x740002100ULL, 0x00000200ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_AXIAP1", 0x740002200ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_PWRAP1", 0x740002300ULL, 0x00000400ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_PVIEW1", 0x740002400ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_JTAGAP1", 0x740002500ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_SECAP1", 0x740002600ULL, 0x00000100ULL);
-+
-+    /* Cortex config blocks 0..8, 256 bytes each */
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_CORTEX0_CFG1", 0x740002700ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_CORTEX1_CFG1", 0x740002800ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_CORTEX2_CFG1", 0x740002900ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_CORTEX3_CFG1", 0x740002A00ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_CORTEX4_CFG1", 0x740002B00ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_CORTEX5_CFG1", 0x740002C00ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_CORTEX6_CFG1", 0x740002D00ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_CORTEX7_CFG1", 0x740002E00ULL, 0x00000100ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_CORTEX8_CFG1", 0x740002F00ULL, 0x00000100ULL);
-+
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_RESV1_1", 0x740003000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_RESV2_1", 0x740004000ULL, 0x02000000ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_ROM_TABLE_1_1", 0x760000000ULL,
-+                   0x00001000ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_CSCTI1", 0x760001000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_DRM1", 0x760002000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_RESV3_1", 0x760003000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_CSTPIU1", 0x760004000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_CTF1", 0x760005000ULL, 0x00001000ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_RESV4_1", 0x760006000ULL, 0x01000000ULL);
-+    ADD_MAIN_UNIMP("DEBUGSS_WRAP0_EXT_APB1", 0x770000000ULL, 0x10000000ULL);
-+}
-+
-+static void ti_am64_create_mcu_unimplemented(MemoryRegion *root)
-+{
-+    create_unimplemented_device_in_root(root, "MCU_PSC0", 0x04000000, 0x1000);
-+    create_unimplemented_device_in_root(root, "MCU_PLLCTRL0", 0x04020000,
-+                                        0x200);
-+    create_unimplemented_device_in_root(root, "MCU_PLL0_CFG", 0x04040000,
-+                                        0x1000);
-+    create_unimplemented_device_in_root(root, "MCU_PADCFG_CTRL0_CFG0",
-+                                        0x04080000, 0x8000);
-+    create_unimplemented_device_in_root(root, "MCU_ESM0_CFG", 0x04100000,
-+                                        0x1000);
-+    create_unimplemented_device_in_root(root, "MCU_GPIO0", 0x04201000, 0x100);
-+    create_unimplemented_device_in_root(root, "MCU_GPIOMUX_INTROUTER0_CFG",
-+                                        0x04210000, 0x200);
-+    create_unimplemented_device_in_root(root, "MCU_TIMEOUT0_CFG", 0x04300000,
-+                                        0x400);
-+    /*
-+     * MCU_CTRL_MMR0 is a ctrlmmr stub, so MCU_RST_SRC reads as warm reset.
-+     */
-+    create_unimplemented_device_in_root(root, "MCU_ECC_AGGR0_ECC_AGGR0",
-+                                        0x04700000, 0x0400);
-+    create_unimplemented_device_in_root(root, "MCU_CBASS0_ERR0", 0x04720000,
-+                                        0x0400);
-+    create_unimplemented_device_in_root(root, "MCU_TIMER0_CFG", 0x04800000,
-+                                        0x0400);
-+    create_unimplemented_device_in_root(root, "MCU_TIMER1_CFG", 0x04810000,
-+                                        0x0400);
-+    create_unimplemented_device_in_root(root, "MCU_TIMER2_CFG", 0x04820000,
-+                                        0x0400);
-+    create_unimplemented_device_in_root(root, "MCU_TIMER3_CFG", 0x04830000,
-+                                        0x0400);
-+    create_unimplemented_device_in_root(root, "MCU_RTI0_CFG", 0x04880000,
-+                                        0x0100);
-+    create_unimplemented_device_in_root(root, "MCU_I2C0_CFG", 0x04900000,
-+                                        0x0100);
-+    create_unimplemented_device_in_root(root, "MCU_I2C1_CFG", 0x04910000,
-+                                        0x0100);
-+    create_unimplemented_device_in_root(root, "MCU_MCSPI0_CFG", 0x04B00000,
-+                                        0x0400);
-+    create_unimplemented_device_in_root(root, "MCU_MCSPI1_CFG", 0x04B10000,
-+                                        0x0400);
-+    create_unimplemented_device_in_root(root, "MCU_DCC0", 0x04C00000, 0x0040);
-+    create_unimplemented_device_in_root(root, "MCU_MCRC64_0_REGS", 0x04D00000,
-+                                        0x1000);
-+    create_unimplemented_device_in_root(root, "MCU_M4FSS0_RAT", 0x05FF0000,
-+                                        0x1000);
-+    create_unimplemented_device_in_root(root, "MCU_M4FSS0_ECC_AGGR0",
-+                                        0x05FF1000, 0x0400);
-+    create_unimplemented_device_in_root(root, "MCU_CBASS0_GLB0", 0x45B02000,
-+                                        0x0400);
-+    create_unimplemented_device_in_root(root, "MCU_ECC_AGGR", 0x44201000,
-+                                        0x400);
-+}
-+
-+static bool ti_am64x_uart_realize(TIAM64xState *s, MemoryRegion *memory,
-+                                  AM64Uart *au, const hwaddr addr, Error **errp)
-+{
-+    qdev_prop_set_uint8(DEVICE(au), "regshift", 2);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(au), errp)) {
-+        return false;
-+    }
-+
-+    memory_region_add_subregion(memory, addr,
-+                                sysbus_mmio_get_region(SYS_BUS_DEVICE(au), 0));
-+    return true;
-+}
-+
-+static void ti_am64x_realize(DeviceState *dev_soc, Error **errp)
++static void ti_sec_proxy_realize(DeviceState *dev_soc, Error **errp)
 +{
 +    ERRP_GUARD();
++    TISecProxyState *s = TI_SEC_PROXY(dev_soc);
 +
-+    TIAM64xState *s = TI_AM64X(dev_soc);
-+    Error *err = NULL;
-+    DeviceState *armv7m;
-+    MachineState *ms = MACHINE(qdev_get_machine());
-+    MemoryRegion *sysmem = get_system_memory();
-+
-+    if (clock_has_source(s->refclk)) {
-+        error_setg(errp, "refclk clock must not be wired up by the board code");
-+        return;
++    for (int i = 0; i < SEC_PROXY_THREAD_ID_MAX; ++i) {
++        struct TISecProxyThreadInfo *ti = &s->thread_info[i];
++        ti->thread_id = i;
++        /* K3 secure proxy alternates inbound and outbound threads. */
++        ti->is_outbound = (i % 2) ? true : false;
++        ti->num_messages = ti->is_outbound ? SEC_PROXY_MSG_MAX_WORDS : 0;
++        memset(ti->current_message, 0, sizeof(ti->current_message));
 +    }
-+
-+    if (!clock_has_source(s->sysclk)) {
-+        error_setg(errp, "sysclk clock must be wired up by the board code");
-+        return;
-+    }
-+
-+    memory_region_init_ram(&s->mcu_iram, OBJECT(dev_soc), "am64x.mcu.iram",
-+                           MCU_IRAM_SIZE, &err);
-+
-+    if (err != NULL) {
-+        error_propagate(errp, err);
-+        return;
-+    }
-+
-+    memory_region_init_ram(&s->mcu_dram, OBJECT(dev_soc), "am64x.mcu.dram",
-+                           MCU_DRAM_SIZE, &err);
-+
-+    if (err != NULL) {
-+        error_propagate(errp, err);
-+        return;
-+    }
-+
-+    memory_region_init_ram(&s->mcu_ddr, OBJECT(dev_soc), "am64x.mcu.ddr",
-+                           MCU_DDR_SIZE, &err);
-+
-+    if (err != NULL) {
-+        error_propagate(errp, err);
-+        return;
-+    }
-+
-+    if (s->main_ram_size == 0) {
-+        s->main_ram_size = ms->ram_size;
-+    }
-+    if (s->main_ram_base == 0) {
-+        s->main_ram_base = MAIN_RAM_BASE_ADDRESS;
-+    }
-+    if (s->a53_cpus == 0) {
-+        s->a53_cpus = TI_AM64X_A53_NUM;
-+    }
-+    if (s->a53_cpus > TI_AM64X_A53_NUM) {
-+        error_setg(errp, "a53-cpus must be between 1 and %u", TI_AM64X_A53_NUM);
-+        return;
-+    }
-+
-+    memory_region_init(&s->mcu_root, OBJECT(s), "am64x.mcu-root", UINT64_MAX);
-+
-+    memory_region_add_subregion(&s->mcu_root, MCU_IRAM_BASE_ADDRESS,
-+                                &s->mcu_iram);
-+    memory_region_add_subregion(&s->mcu_root, MCU_DRAM_BASE_ADDRESS,
-+                                &s->mcu_dram);
-+    memory_region_init_alias(&s->mcu_iram_sysmem, OBJECT(s),
-+                             "am64x.mcu.iram.sysmem", &s->mcu_iram, 0,
-+                             MCU_IRAM_SIZE);
-+    memory_region_init_alias(&s->mcu_dram_sysmem, OBJECT(s),
-+                             "am64x.mcu.dram.sysmem", &s->mcu_dram, 0,
-+                             MCU_DRAM_SIZE);
-+    memory_region_add_subregion(sysmem, 0x05000000, &s->mcu_iram_sysmem);
-+    memory_region_add_subregion(sysmem, 0x05040000, &s->mcu_dram_sysmem);
-+
-+    /* Main-domain SRAM (OCSRAM/MSRAM), where ROM places the boot image. */
-+    memory_region_init_ram(&s->ocsram, OBJECT(dev_soc), "am64x.ocsram", 2 * MiB,
-+                           &err);
-+
-+    if (err != NULL) {
-+        error_propagate(errp, err);
-+        return;
-+    }
-+
-+    memory_region_add_subregion(sysmem, 0x70000000, &s->ocsram);
-+
-+    /* DDR window of the MCU domain, the M4F fetches and runs from here. */
-+    memory_region_add_subregion(&s->mcu_root, MCU_DDR_BASE_ADDRESS,
-+                                &s->mcu_ddr);
-+
-+    for (int i = 0; i < s->a53_cpus; i++) {
-+        CPUState *cs = CPU(&s->a53[i]);
-+        if (!object_property_set_int(OBJECT(&s->a53[i]), "mp-affinity", i,
-+                                     errp)) {
-+            return;
-+        }
-+        cs->cpu_index = i;
-+        qdev_prop_set_bit(DEVICE(&s->a53[i]), "start-powered-off",
-+                          s->a53_start_powered_off || i > 0);
-+        qdev_prop_set_bit(DEVICE(&s->a53[i]), "has_el3", true);
-+        qdev_prop_set_bit(DEVICE(&s->a53[i]), "has_el2", true);
-+        /*
-+         * AM64x uses a 200 MHz system counter rate. Override QEMU's
-+         * Cortex-A53 default of 62.5 MHz.
-+         */
-+        object_property_set_int(OBJECT(&s->a53[i]), "cntfrq", 200000000,
-+                                &error_abort);
-+        if (!qdev_realize(DEVICE(&s->a53[i]), NULL, errp)) {
-+            return;
-+        }
-+    }
-+    if (!qdev_realize(DEVICE(&s->a53_cluster), NULL, errp)) {
-+        return;
-+    }
-+
-+    {
-+        DeviceState *gicdev = DEVICE(&s->gic);
-+        SysBusDevice *gicsbd = SYS_BUS_DEVICE(&s->gic);
-+        QList *redist_region_count;
-+
-+        qdev_prop_set_uint32(gicdev, "revision", 3);
-+        qdev_prop_set_uint32(gicdev, "num-cpu", s->a53_cpus);
-+        qdev_prop_set_uint32(gicdev, "num-irq",
-+                             TI_AM64X_GIC_NUM_SPI + GIC_INTERNAL);
-+        qdev_prop_set_bit(gicdev, "has-security-extensions", true);
-+        redist_region_count = qlist_new();
-+        qlist_append_int(redist_region_count, s->a53_cpus);
-+        qdev_prop_set_array(gicdev, "redist-region-count", redist_region_count);
-+
-+        if (!sysbus_realize(gicsbd, errp)) {
-+            return;
-+        }
-+        sysbus_mmio_map(gicsbd, 0, MAIN_GIC_DIST_ADDRESS);
-+        sysbus_mmio_map(gicsbd, 1, MAIN_GIC_REDIST_ADDRESS);
-+
-+        for (int i = 0; i < s->a53_cpus; i++) {
-+            DeviceState *cpudev = DEVICE(&s->a53[i]);
-+            int ppibase = TI_AM64X_GIC_NUM_SPI + i * GIC_INTERNAL + GIC_NR_SGIS;
-+            const int timer_irq[] = {
-+                [GTIMER_PHYS] = INTID_TO_PPI(ARCH_TIMER_NS_EL1_IRQ),
-+                [GTIMER_VIRT] = INTID_TO_PPI(ARCH_TIMER_VIRT_IRQ),
-+                [GTIMER_HYP] = INTID_TO_PPI(ARCH_TIMER_NS_EL2_IRQ),
-+                [GTIMER_SEC] = INTID_TO_PPI(ARCH_TIMER_S_EL1_IRQ),
-+            };
-+
-+            for (int j = 0; j < ARRAY_SIZE(timer_irq); j++) {
-+                qdev_connect_gpio_out(
-+                    cpudev, j,
-+                    qdev_get_gpio_in(gicdev, ppibase + timer_irq[j]));
-+            }
-+            qdev_connect_gpio_out_named(
-+                cpudev, "gicv3-maintenance-interrupt", 0,
-+                qdev_get_gpio_in(gicdev,
-+                                 ppibase + INTID_TO_PPI(ARCH_GIC_MAINT_IRQ)));
-+
-+            sysbus_connect_irq(gicsbd, i,
-+                               qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
-+            sysbus_connect_irq(gicsbd, i + s->a53_cpus,
-+                               qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
-+            sysbus_connect_irq(gicsbd, i + (2 * s->a53_cpus),
-+                               qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
-+            sysbus_connect_irq(gicsbd, i + (3 * s->a53_cpus),
-+                               qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
-+        }
-+    }
-+
-+    armv7m = DEVICE(&s->armv7m);
-+    qdev_prop_set_uint32(armv7m, "num-irq", 64);
-+    qdev_prop_set_uint8(armv7m, "num-prio-bits", 3);
-+    qdev_prop_set_string(armv7m, "cpu-type", ARM_CPU_TYPE_NAME("cortex-m4"));
-+    qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
-+    qdev_prop_set_bit(armv7m, "start-powered-off", s->m4_start_powered_off);
-+    object_property_set_link(OBJECT(&s->armv7m), "memory", OBJECT(&s->mcu_root),
-+                             &error_abort);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->armv7m), errp)) {
-+        return;
-+    }
-+    CPU(s->armv7m.cpu)->cpu_index = s->a53_cpus;
-+    if (!qdev_realize(DEVICE(&s->m4_cluster), NULL, errp)) {
-+        return;
-+    }
-+
-+    /* Cortex-R5F0_0 - the AM64x boot core released by ROM. */
-+    object_property_set_bool(OBJECT(&s->r5[0]), "start-powered-off",
-+                             s->r5_start_powered_off, &error_abort);
-+    /*
-+     * R5F0_0 has MPIDR.Aff0 == 0 on the SoC. Pin the affinity here,
-+     * since QEMU would derive it from the nonzero cpu_index.
-+     */
-+    object_property_set_int(OBJECT(&s->r5[0]), "mp-affinity", 0, &error_abort);
-+    /* R5 reset vectors live low at 0x70000000, not in hivecs. */
-+    object_property_set_bool(OBJECT(&s->r5[0]), "reset-hivecs", false,
-+                             &error_abort);
-+    if (!qdev_realize(DEVICE(&s->r5[0]), NULL, errp)) {
-+        return;
-+    }
-+    CPU(&s->r5[0])->cpu_index = s->a53_cpus + 1;
-+    qdev_realize(DEVICE(&s->r5_cluster), NULL, &error_abort);
-+
-+    object_property_set_link(OBJECT(&s->rat), "window-root",
-+                             OBJECT(&s->mcu_root), &error_abort);
-+
-+    object_property_set_link(OBJECT(&s->rat), "target-root", OBJECT(sysmem),
-+                             &error_abort);
-+
-+    /* Map RAT config registers. */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->rat), errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(
-+        &s->mcu_root, MCU_RAT_MMIO_ADDRESS,
-+        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->rat), 0));
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sec_proxy), errp)) {
-+        return;
-+    }
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->sec_proxy), 0,
-+                       qdev_get_gpio_in(DEVICE(&s->gic), 34));
-+
-+    object_property_set_link(OBJECT(&s->dmsc), "sec-proxy",
-+                             OBJECT(&s->sec_proxy), &error_abort);
-+
-+    {
-+        static const uint16_t a53_rx_threads[] = {
-+            A53_0_WRITE_THREAD_ID,
-+            A53_1_WRITE_THREAD_ID,
-+        };
-+        static const uint16_t a53_tx_threads[] = {
-+            A53_0_READ_RESPONSE_THREAD_ID,
-+            A53_1_READ_RESPONSE_THREAD_ID,
-+        };
-+        QList *rx_threads = qlist_new();
-+        QList *tx_threads = qlist_new();
-+
-+        for (int i = 0; i < s->a53_cpus && i < ARRAY_SIZE(a53_rx_threads);
-+             i++) {
-+            qlist_append_int(rx_threads, a53_rx_threads[i]);
-+            qlist_append_int(tx_threads, a53_tx_threads[i]);
-+        }
-+        /* Keep the old A53_2 threads for existing guest. */
-+        qlist_append_int(rx_threads, A53_2_WRITE_THREAD_ID);
-+        qlist_append_int(tx_threads, A53_2_READ_RESPONSE_THREAD_ID);
-+        qlist_append_int(rx_threads, M4_0_WRITE_THREAD_ID);
-+        qlist_append_int(tx_threads, M4_0_READ_RESPONSE_THREAD_ID);
-+
-+        /* R5F0_0 secure host 35: writes on thread 1, reads on 0. */
-+        qlist_append_int(rx_threads, MAIN_0_R5_0_WRITE_THREAD_ID);
-+        qlist_append_int(tx_threads, MAIN_0_R5_0_READ_RESPONSE_THREAD_ID);
-+
-+        qdev_prop_set_array(DEVICE(&s->dmsc), "rx-threads", rx_threads);
-+        qdev_prop_set_array(DEVICE(&s->dmsc), "tx-threads", tx_threads);
-+
-+        /*
-+         * Secure TISCI hosts use a 4-byte {u16 checksum; u16 reserved}
-+         * prefix on the TX thread. We mark those RX threads secure, so
-+         * ti-dmsc strips and restores the prefix around message handling.
-+         */
-+        QList *secure_rx = qlist_new();
-+
-+        qlist_append_int(secure_rx, MAIN_0_R5_0_WRITE_THREAD_ID);
-+        qlist_append_int(secure_rx, A53_0_WRITE_THREAD_ID);
-+        qlist_append_int(secure_rx, A53_1_WRITE_THREAD_ID);
-+        qdev_prop_set_array(DEVICE(&s->dmsc), "secure-rx-threads", secure_rx);
-+    }
-+    qdev_prop_set_uint64(DEVICE(&s->dmsc), "m4-cpu-id", s->a53_cpus);
-+    /* arm_set_cpu_on() uses MP affinity; the A53 core 0 has affinity 0. */
-+    qdev_prop_set_uint64(DEVICE(&s->dmsc), "a53-cpu-id-base", 0);
-+
-+    if (!qdev_realize(DEVICE(&s->dmsc), NULL, errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(
-+        sysmem, MAIN_SEC_PROXY_MMRS_ADDRESS,
-+        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->sec_proxy), 0));
-+
-+    memory_region_add_subregion(
-+        sysmem, MAIN_SEC_PROXY_SCFG_ADDRESS,
-+        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->sec_proxy), 1));
-+
-+    memory_region_add_subregion(
-+        sysmem, MAIN_SEC_PROXY_RT_ADDRESS,
-+        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->sec_proxy), 2));
-+
-+    memory_region_add_subregion(
-+        sysmem, MAIN_SEC_PROXY_TARGET_ADDRESS,
-+        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->sec_proxy), 3));
-+
-+    for (int i = 0; i < TI_AM64X_MAILBOX_NUM; i++) {
-+        hwaddr base = MAIN_MAILBOX_BASE_ADDRESS + (i * MAIN_MAILBOX_STRIDE);
-+        qdev_prop_set_uint8(DEVICE(&s->mailbox[i]), "mailbox-id", i);
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->mailbox[i]), errp)) {
-+            return;
-+        }
-+        memory_region_add_subregion(
-+            sysmem, base,
-+            sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->mailbox[i]), 0));
-+    }
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->mailbox[6]), 3,
-+                       qdev_get_gpio_in(DEVICE(&s->armv7m), 56));
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->mailbox[7]), 3,
-+                       qdev_get_gpio_in(DEVICE(&s->armv7m), 57));
-+    /* GIC SPI 108..: mailbox cluster pending intr2/3 (UM 7.1.2.1). */
-+    {
-+        struct {
-+            uint8_t mbox;
-+            uint8_t user;
-+            uint16_t spi;
-+        } gic_map[] = {
-+            {6, 2, 108}, /* CLUSTER6_PEND_INTR2 */
-+            {7, 2, 109}, /* CLUSTER7_PEND_INTR2 */
-+            {2, 2, 110}, /* CLUSTER2_PEND_INTR2 */
-+            {2, 3, 111}, /* CLUSTER2_PEND_INTR3 */
-+            {3, 2, 112}, /* CLUSTER3_PEND_INTR2 */
-+            {3, 3, 113}, /* CLUSTER3_PEND_INTR3 */
-+            {4, 2, 114}, /* CLUSTER4_PEND_INTR2 */
-+            {4, 3, 115}, /* CLUSTER4_PEND_INTR3 */
-+            {5, 2, 116}, /* CLUSTER5_PEND_INTR2 */
-+            {5, 3, 117}, /* CLUSTER5_PEND_INTR3 */
-+        };
-+
-+        for (int i = 0; i < ARRAY_SIZE(gic_map); i++) {
-+            uint16_t spi_index = gic_map[i].spi - GIC_INTERNAL;
-+            sysbus_connect_irq(SYS_BUS_DEVICE(&s->mailbox[gic_map[i].mbox]),
-+                               gic_map[i].user,
-+                               qdev_get_gpio_in(DEVICE(&s->gic), spi_index));
-+        }
-+    }
-+
-+    struct ti_am64_uart_config {
-+        hwaddr base_addr;
-+        int irq_num;
-+    } mcu_uart_configs[TI_AM64X_MCU_UART_NUM] = {
-+        {.base_addr = 0x04A00000, .irq_num = 24}, /* MCU_UART0 */
-+        {.base_addr = 0x04A10000, .irq_num = 25}, /* MCU_UART1 */
-+    };
-+
-+    /* UARTs */
-+    for (int i = 0; i < TI_AM64X_MCU_UART_NUM; i++) {
-+        struct ti_am64_uart_config *cfg = &mcu_uart_configs[i];
-+        if (!ti_am64x_uart_realize(s, sysmem, &s->mcu_uart[i], cfg->base_addr,
-+                                   errp)) {
-+            return;
-+        }
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->mcu_uart[i]), 0,
-+                           qdev_get_gpio_in(DEVICE(&s->armv7m), cfg->irq_num));
-+    }
-+
-+    /* Main-domain UART0. */
-+    if (!ti_am64x_uart_realize(s, sysmem, &s->main_uart0, 0x02800000, errp)) {
-+        return;
-+    }
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->main_uart0), 0,
-+                       qdev_get_gpio_in(DEVICE(&s->gic), 178));
-+
-+    /* Control MMR: DEVSTAT and lock-kick sink. */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->ctrlmmr), errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(
-+        sysmem, 0x43000000,
-+        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->ctrlmmr), 0));
-+
-+    /*
-+     * MCU_CTRL_MMR0 only implements MCU_RST_SRC (0x18178). The reset value
-+     * reports a warm reset source.
-+     */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->mcu_ctrlmmr), errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(
-+        sysmem, 0x04500000,
-+        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->mcu_ctrlmmr), 0));
-+
-+    /*
-+     * Security Manager MMR only implements K3_SEC_MGR_SYS_STATUS at
-+     * 0x44234100. The reset value reports SYS_STATUS_DEV_TYPE_GP.
-+     */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sec_ctrlmmr), errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(
-+        sysmem, 0x44234000,
-+        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->sec_ctrlmmr), 0));
-+
-+    /* DDRSS config stub: RAM-backed, with status bits ORed into it. */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->ddrss), errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(
-+        sysmem, 0x0f308000,
-+        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->ddrss), 0));
-+
-+    /* SA2UL TRNG (EIP-76) register window. */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->trng), errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(
-+        sysmem, 0x40910000,
-+        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->trng), 0));
-+
-+    /* DM Timer0: 20 MHz free-running main_timer0. */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->main_timer0), errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(
-+        sysmem, 0x02400000,
-+        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->main_timer0), 0));
-+
-+    /*
-+     * GTC0_GTC_CFG1 exposes CNTCR/CNTFID0. Reset reports the counter enabled
-+     * at 200 MHz, matching the AM64x default system counter.
-+     */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->gtc), errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(
-+        sysmem, 0x00A90000, sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->gtc), 0));
-+
-+    /*
-+     * MAIN domain I2C0, an OMAP-I2C V2 controller. The other three MAIN
-+     * instances are not modelled yet.
-+     */
-+    s->i2c0 = qdev_new(TYPE_OMAP_I2C);
-+    /* revision >= OMAP2 selects OMAP2+ reset semantics; MMIO stays V2. */
-+    qdev_prop_set_uint8(s->i2c0, "revision", 0x40);
-+    qdev_prop_set_uint8(s->i2c0, "mmio-version", 2);
-+    if (!sysbus_realize_and_unref(SYS_BUS_DEVICE(s->i2c0), errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(
-+        sysmem, 0x20000000, sysbus_mmio_get_region(SYS_BUS_DEVICE(s->i2c0), 0));
-+
-+    /*
-+     * MMCSD0/1 SDHCI controllers and am654-style PHY windows. IRQs are raw
-+     * GIC_SPI values: sdhci0 = 133, sdhci1 = 134.
-+     */
-+    {
-+        static const struct {
-+            hwaddr ctl;
-+            hwaddr phy;
-+            int irq;
-+        } sdhci_cfg[] = {
-+            {0x0fa10000, 0x0fa18000, 133}, /* MMCSD0 / sdhci0, eMMC */
-+            {0x0fa00000, 0x0fa08000, 134}, /* MMCSD1 / sdhci1, SD   */
-+        };
-+
-+        for (int i = 0; i < TI_AM64X_SDHCI_NUM; i++) {
-+            SysBusDevice *sbd = SYS_BUS_DEVICE(&s->sdhci[i]);
-+
-+            object_property_set_uint(OBJECT(&s->sdhci[i]), "sd-spec-version", 3,
-+                                     &error_abort);
-+            /*
-+             * capareg 0x157c34b4 is the am654 SDHCI 3.0 capability set plus
-+             * SDHC_CAPAB_BUS64BIT. Bit 28 advertises 64-bit ADMA2 support.
-+             */
-+            object_property_set_uint(OBJECT(&s->sdhci[i]), "capareg",
-+                                     0x157c34b4, &error_abort);
-+            if (!sysbus_realize(sbd, errp)) {
-+                return;
-+            }
-+            memory_region_add_subregion(sysmem, sdhci_cfg[i].ctl,
-+                                        sysbus_mmio_get_region(sbd, 0));
-+            sysbus_connect_irq(
-+                sbd, 0, qdev_get_gpio_in(DEVICE(&s->gic), sdhci_cfg[i].irq));
-+
-+            sbd = SYS_BUS_DEVICE(&s->sdhci_phy[i]);
-+            if (!sysbus_realize(sbd, errp)) {
-+                return;
-+            }
-+            memory_region_add_subregion(sysmem, sdhci_cfg[i].phy,
-+                                        sysbus_mmio_get_region(sbd, 0));
-+        }
-+    }
-+
-+    ti_am64_create_mcu_unimplemented(sysmem);
-+    ti_am64_create_main_unimplemented(sysmem);
 +}
 +
-+static const Property ti_am64x_properties[] = {
-+    DEFINE_PROP_UINT64("ram-base", TIAM64xState, main_ram_base,
-+                       MAIN_RAM_BASE_ADDRESS),
-+    DEFINE_PROP_UINT64("ram-size", TIAM64xState, main_ram_size, 0),
-+    DEFINE_PROP_UINT8("a53-cpus", TIAM64xState, a53_cpus, TI_AM64X_A53_NUM),
-+    DEFINE_PROP_BOOL("a53-start-powered-off", TIAM64xState,
-+                     a53_start_powered_off, false),
-+    DEFINE_PROP_BOOL("m4-start-powered-off", TIAM64xState, m4_start_powered_off,
-+                     true),
-+    DEFINE_PROP_BOOL("r5-start-powered-off", TIAM64xState, r5_start_powered_off,
-+                     true),
-+};
++/* --- Backend API exported to DMSC -------------------------------------- */
++void ti_sec_proxy_register_msg_cb(TISecProxyState *sp, uint16_t thread_id,
++                                  TISecProxyMsgCb cb, void *opaque)
++{
++    if (thread_id >= ARRAY_SIZE(sp->thread_info)) {
++        return;
++    }
 +
-+static void ti_am64x_class_init(ObjectClass *klass, const void *data)
++    sp->thread_info[thread_id].cb = cb;
++    sp->thread_info[thread_id].cb_opaque = opaque;
++}
++
++size_t ti_sec_proxy_push_msg(TISecProxyState *sp, uint16_t thread_id,
++                             const uint32_t *words, size_t nbytes)
++{
++    struct TISecProxyThreadInfo *ti;
++
++    if (thread_id >= ARRAY_SIZE(sp->thread_info)) {
++        return 0;
++    }
++
++    ti = &sp->thread_info[thread_id];
++    if (nbytes > sizeof(ti->current_message) - sizeof(uint32_t)) {
++        return 0;
++    }
++
++    memcpy(&ti->current_message[1], words, nbytes);
++    qemu_irq_raise(sp->irq_evt);
++
++    ti->num_messages++;
++    return ti->num_messages;
++}
++
++uint32_t ti_sec_proxy_get_msg_words(TISecProxyState *sp)
++{
++    return sp->msg_words;
++}
++
++void ti_sec_proxy_reset_thread_count(TISecProxyState *sp, uint16_t thread_id)
++{
++    if (thread_id >= ARRAY_SIZE(sp->thread_info)) {
++        return;
++    }
++
++    sp->thread_info[thread_id].num_messages = 0;
++}
++
++static const char *
++ti_sec_proxy_get_thread_channel_name(enum TISciThreadIds thread_id)
++{
++    const char *thread_names[] = {
++        "MAIN_0_R5_0_READ_RESPONSE_THREAD", "MAIN_0_R5_0_WRITE_THREAD",
++        "MAIN_0_R5_1_READ_RESPONSE_THREAD", "MAIN_0_R5_1_WRITE_THREAD",
++        "MAIN_0_R5_2_READ_RESPONSE_THREAD", "MAIN_0_R5_2_WRITE_THREAD",
++        "MAIN_0_R5_3_READ_RESPONSE_THREAD", "MAIN_0_R5_3_WRITE_THREAD",
++        "A53_0_READ_RESPONSE_THREAD",       "A53_0_WRITE_THREAD",
++        "A53_1_READ_RESPONSE_THREAD",       "A53_1_WRITE_THREAD",
++        "A53_2_READ_RESPONSE_THREAD",       "A53_2_WRITE_THREAD",
++        "A53_3_READ_RESPONSE_THREAD",       "A53_3_WRITE_THREAD",
++        "M4_0_READ_RESPONSE_THREAD",        "M4_0_WRITE_THREAD",
++        "MAIN_1_R5_0_READ_RESPONSE_THREAD", "MAIN_1_R5_0_WRITE_THREAD",
++        "MAIN_1_R5_1_READ_RESPONSE_THREAD", "MAIN_1_R5_1_WRITE_THREAD",
++        "MAIN_1_R5_2_READ_RESPONSE_THREAD", "MAIN_1_R5_2_WRITE_THREAD",
++        "MAIN_1_R5_3_READ_RESPONSE_THREAD", "MAIN_1_R5_3_WRITE_THREAD",
++        "A53_4_READ_RESPONSE_THREAD",       "A53_4_WRITE_THREAD",
++        "ICSSG_0_READ_RESPONSE_THREAD",     "ICSSG_0_WRITE_THREAD",
++        "ICSSG_1_READ_RESPONSE_THREAD",     "ICSSG_1_WRITE_THREAD"};
++
++    if (thread_id < ARRAY_SIZE(thread_names)) {
++        return thread_names[thread_id];
++    }
++    return "UNKNOWN_THREAD";
++}
++
++static void ti_sec_proxy_reset_hold(Object *obj, ResetType type)
++{
++    TISecProxyState *s = TI_SEC_PROXY(obj);
++
++    for (int i = 0; i < ARRAY_SIZE(s->regs_info); ++i) {
++        register_reset(&s->regs_info[i]);
++    }
++}
++
++static void ti_sec_proxy_class_init(ObjectClass *klass, const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
 +
-+    dc->realize = ti_am64x_realize;
-+    /* Fixed system-bus mapping. */
-+    dc->user_creatable = false;
-+    device_class_set_props(dc, ti_am64x_properties);
++    dc->realize = ti_sec_proxy_realize;
++    rc->phases.hold = ti_sec_proxy_reset_hold;
 +}
 +
-+static const TypeInfo am64_mcu_types[] = {
-+    {
-+    .name = TYPE_TI_AM64X,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(TIAM64xState),
-+    .instance_init = ti_am64x_initfn,
-+    .class_init = ti_am64x_class_init,
-+    }
++static const MemoryRegionOps ti_sec_proxy_mmr_ops = {
++    .read = register_read_memory,
++    .write = register_write_memory,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
 +};
 +
-+DEFINE_TYPES(am64_mcu_types)
-diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-index 1b16f710fe..605b71dd62 100644
---- a/hw/arm/trace-events
-+++ b/hw/arm/trace-events
-@@ -96,3 +96,7 @@ z2_aer915_event(int8_t event, int8_t len) "i2c event =0x%x len=%d bytes"
- 
- # bcm2838.c
- bcm2838_gic_set_irq(int irq, int level) "gic irq:%d lvl:%d"
++static uint64_t ti_sec_proxy_read_scfg(void *opaque, hwaddr addr, unsigned size)
++{
++    TISecProxyState *s = opaque;
++    if (addr <= 0x10) {
++        return 0;
++    }
 +
-+# k3-bootrom.c
-+k3_bootrom_component(uint32_t comp_type, uint64_t dest, uint32_t size) "comp_type %u dest 0x%" PRIx64 " size 0x%x"
-+k3_bootrom_boot(uint64_t entry) "starting R5F0_0 at 0x%" PRIx64
-diff --git a/include/hw/arm/ti-am64x.h b/include/hw/arm/ti-am64x.h
++    hwaddr thread_rel_addr = addr - 0x10;
++    int thread_num = thread_rel_addr / 0x1000;
++    int reg = (thread_rel_addr % 0x1000) / 4;
++    struct TISecProxyThreadInfo *tinfo = &s->thread_info[thread_num];
++
++    trace_ti_sec_proxy_read_scfg(
++        ti_sec_proxy_get_thread_channel_name(thread_num), reg, addr);
++    return tinfo->is_outbound ? 0x0 : 0x80000000;
++}
++
++static void ti_sec_proxy_write_scfg(void *opaque, hwaddr addr, uint64_t value,
++                                    unsigned size)
++{
++    if (addr <= 0x10) {
++        return;
++    }
++
++    int thread_num = addr / 0x1000;
++    int reg = (addr % 0x1000) / 4;
++
++    trace_ti_sec_proxy_write_scfg(
++        ti_sec_proxy_get_thread_channel_name(thread_num), reg, addr, value);
++}
++
++static const MemoryRegionOps ti_sec_proxy_scfg_ops = {
++    .read = ti_sec_proxy_read_scfg,
++    .write = ti_sec_proxy_write_scfg,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 4,
++    },
++};
++
++static uint64_t ti_sec_proxy_read_rt(void *opaque, hwaddr addr, unsigned size)
++{
++    TISecProxyState *s = opaque;
++    int thread_num = addr / 0x1000;
++    hwaddr off = addr % 0x1000;
++
++    int byte = off & 0x3;
++
++    struct TISecProxyThreadInfo *tinfo = &s->thread_info[thread_num];
++
++    uint32_t reg_val = (tinfo->num_messages) |
++                       (tinfo->is_outbound ? 0x0 : 0x40000000) |
++                       (tinfo->is_outbound ? (tinfo->num_messages << 16) : 0x0);
++
++    uint64_t ret;
++
++    if (size == 1) {
++        ret = (reg_val >> (8 * byte)) & 0xff;
++    } else if (size == 2) {
++        ret = (reg_val >> (8 * (byte & ~1))) & 0xffff;
++    } else if (size == 4) {
++        ret = reg_val;
++    } else {
++        ret = 0;
++    }
++    trace_ti_sec_proxy_read_rt(ti_sec_proxy_get_thread_channel_name(thread_num),
++                               ret, addr);
++    return ret;
++}
++
++static void ti_sec_proxy_write_rt(void *opaque, hwaddr addr, uint64_t value,
++                                  unsigned size)
++{
++}
++
++static const MemoryRegionOps ti_sec_proxy_rt_ops = {
++    .read = ti_sec_proxy_read_rt,
++    .write = ti_sec_proxy_write_rt,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 4,
++    },
++};
++
++static uint64_t ti_sec_proxy_read_target(void *opaque, hwaddr addr,
++                                         unsigned size)
++{
++    TISecProxyState *s = opaque;
++    int thread_num = addr / 0x1000;
++    hwaddr off = addr % 0x1000;
++
++    int reg = off >> 2;    /* 32-bit register index */
++    int byte = off & 0x3;  /* byte offset within the 32-bit register */
++
++    struct TISecProxyThreadInfo *tinfo = &s->thread_info[thread_num];
++
++    /* First fetch the full little-endian 32-bit register. */
++    uint32_t reg_val = (uint32_t)tinfo->current_message[reg];
++    uint64_t ret = 0;
++
++    if (size == 1) {
++        ret = (reg_val >> (8 * byte)) & 0xffu;
++    } else if (size == 2) {
++        /*
++         * Odd halfword reads are rounded down. Guest drivers use aligned
++         * accesses, but this keeps byte-lane handling tolerant.
++         */
++        ret = (reg_val >> (8 * (byte & ~1))) & 0xffffu;
++    } else if (size == 4) {
++        ret = reg_val;
++    } else {
++        /* Shouldn't happen given .valid, but be defensive. */
++        ret = 0;
++    }
++
++    /* For inbound threads reset the message counter */
++    if (!tinfo->is_outbound && reg == SEC_PROXY_MAX_MSG - 1) {
++        trace_ti_sec_proxy_complete_read(
++            ti_sec_proxy_get_thread_channel_name(thread_num),
++            tinfo->num_messages);
++        tinfo->num_messages = 0;
++        qemu_irq_lower(s->irq_evt);
++    }
++    return ret;
++}
++
++static void ti_sec_proxy_write_target(void *opaque, hwaddr addr, uint64_t value,
++                                      unsigned size)
++{
++    TISecProxyState *s = opaque;
++    int thread_num = addr / 0x1000;
++    hwaddr off = addr % 0x1000;
++
++    int reg = off >> 2;    /* 32-bit register index */
++    int byte = off & 0x3;  /* byte offset within the 32-bit register */
++
++    struct TISecProxyThreadInfo *tinfo = &s->thread_info[thread_num];
++
++    if (reg >= 16) {
++        return;
++    }
++
++    uint32_t cur = (uint32_t)tinfo->current_message[reg];
++    uint32_t v32 = (uint32_t)value;
++
++    if (size == 1) {
++        uint32_t mask = 0xffu << (8 * byte);
++        cur = (cur & ~mask) | ((v32 & 0xffu) << (8 * byte));
++    } else if (size == 2) {
++        /* Round odd halfword writes down, same as in the read path. */
++        int hbyte = (byte & ~1);
++        uint32_t mask = 0xffffu << (8 * hbyte);
++        cur = (cur & ~mask) | ((v32 & 0xffffu) << (8 * hbyte));
++    } else if (size == 4) {
++        cur = v32;
++    } else {
++        return;
++    }
++
++    tinfo->current_message[reg] = cur;
++
++    /*
++     * The data-window commit point is the last register. Byte writes can
++     * hit it more than once while the last word is assembled.
++     */
++    if (reg == SEC_PROXY_MAX_MSG - 1) {
++        trace_ti_sec_proxy_complete_write(
++            ti_sec_proxy_get_thread_channel_name(thread_num),
++            tinfo->num_messages);
++
++        if (tinfo->cb) {
++            trace_ti_sec_proxy_announce_callback(
++                ti_sec_proxy_get_thread_channel_name(thread_num));
++            tinfo->cb(tinfo->cb_opaque, thread_num, &tinfo->current_message[1],
++                      SEC_PROXY_MAX_MSG);
++        }
++    }
++}
++
++static const MemoryRegionOps ti_sec_proxy_target_ops = {
++    .read = ti_sec_proxy_read_target,
++    .write = ti_sec_proxy_write_target,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 4,
++    },
++};
++
++static void ti_sec_proxy_init(Object *obj)
++{
++    TISecProxyState *s = TI_SEC_PROXY(obj);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
++    s->reg_array = register_init_block32(DEVICE(obj), sec_proxy_mmrs_regs_info,
++                                         ARRAY_SIZE(sec_proxy_mmrs_regs_info),
++                                         s->regs_info, s->regs,
++                                         &ti_sec_proxy_mmr_ops, true, 0x100);
++    sysbus_init_mmio(sbd, &s->reg_array->mem);
++
++    memory_region_init_io(&s->iomem_scfg, OBJECT(s), &ti_sec_proxy_scfg_ops, s,
++                          "ti-sec-proxy-scfg", 0x80000);
++    sysbus_init_mmio(sbd, &s->iomem_scfg);
++
++    memory_region_init_io(&s->iomem_rt, OBJECT(s), &ti_sec_proxy_rt_ops, s,
++                          "ti-sec-proxy-rt", 0x80000);
++    sysbus_init_mmio(sbd, &s->iomem_rt);
++
++    memory_region_init_io(&s->iomem_target_data, OBJECT(s),
++                          &ti_sec_proxy_target_ops, s, "ti-sec-proxy-target",
++                          0x80000);
++    sysbus_init_mmio(sbd, &s->iomem_target_data);
++
++    sysbus_init_irq(sbd, &s->irq_evt);
++}
++
++static const TypeInfo ti_sec_proxy_info = {
++    .name = TYPE_TI_SEC_PROXY,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(TISecProxyState),
++    .class_init = ti_sec_proxy_class_init,
++    .instance_init = ti_sec_proxy_init,
++};
++
++static void ti_sec_proxy_types(void)
++{
++    type_register_static(&ti_sec_proxy_info);
++}
++
++type_init(ti_sec_proxy_types)
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index ea7cde021e..dfa2d04117 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -461,6 +461,14 @@ rat_enable_region(int idx, uint64_t size, uint64_t source, uint64_t dest) "Enabl
+ rat_disable_region(int idx) "Disabling RAT Region %u"
+ rat_read_entry(int entry, int rel_offset, uint64_t offset) "Reading Entry %i at offset %i: offset: 0x%"PRIx64
+ 
++# ti-sec-proxy.c
++ti_sec_proxy_read_scfg(const char *name, int reg, uint64_t addr) "thread: %s, reg: %i. read from SCFG addr 0x%" PRIx64
++ti_sec_proxy_write_scfg(const char *name, int reg, uint64_t addr, uint64_t value) "thread: %s, reg: %i. write 0x%" PRIx64 "0x%" PRIx64
++ti_sec_proxy_complete_read(const char *name, int num) "thread: %s completed read message %i. Resetting number of messages"
++ti_sec_proxy_complete_write(const char *name, int num) "thread: %s completed write message %i. Resetting number of messages"
++ti_sec_proxy_announce_callback(const char *name) "invoce callback for thread: %s"
++ti_sec_proxy_read_rt(const char *name, int reg, uint64_t addr) "thread: %s, reg: 0x%x, read from RT addr 0x%" PRIx64
++
+ # ti-k3-trng.c
+ ti_k3_trng_read(uint64_t addr, uint32_t val) "offset 0x%" PRIx64 " -> 0x%08x"
+ ti_k3_trng_write(uint64_t addr, uint64_t val) "offset 0x%" PRIx64 " <- 0x%" PRIx64
+diff --git a/include/hw/misc/ti-sec-proxy.h b/include/hw/misc/ti-sec-proxy.h
 new file mode 100644
-index 0000000000..a362569f36
+index 0000000000..d028242eff
 --- /dev/null
-+++ b/include/hw/arm/ti-am64x.h
-@@ -0,0 +1,86 @@
++++ b/include/hw/misc/ti-sec-proxy.h
+@@ -0,0 +1,108 @@
 +/*
-+ * TI AM64x SoC family model
++ * TI K3 secure proxy
 + *
 + * Copyright (c) 2025 CMBLU Energy AG
 + * Author: Wadim Mueller <wafgo01@gmail.com>
@@ -1558,82 +630,104 @@ index 0000000000..a362569f36
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#ifndef HW_ARM_TI_AM64X_H
-+#define HW_ARM_TI_AM64X_H
++#ifndef TI_SEC_PROXY_H
++#define TI_SEC_PROXY_H
 +
-+#include "system/memory.h"
-+#include "hw/arm/armv7m.h"
-+#include "cpu.h"
-+#include "hw/cpu/cluster.h"
-+#include "hw/intc/arm_gicv3.h"
-+#include "hw/core/clock.h"
++#include "hw/core/sysbus.h"
++#include "hw/core/register.h"
++#include "system/dma.h"
 +#include "qom/object.h"
-+#include "hw/misc/ti-rat.h"
-+#include "hw/misc/ti-sec-proxy.h"
-+#include "hw/misc/ti-dmsc.h"
-+#include "hw/misc/ti-mailbox.h"
-+#include "hw/misc/ti-k3-ctrlmmr.h"
-+#include "hw/misc/ti-k3-gtc.h"
-+#include "hw/misc/ti-k3-ddrss.h"
-+#include "hw/misc/ti-k3-sdhci-phy.h"
-+#include "hw/misc/ti-k3-trng.h"
-+#include "hw/sd/sdhci.h"
-+#include "hw/char/ti-am64-uart.h"
-+#include "hw/timer/ti-k3-dmtimer.h"
 +
-+#define TYPE_TI_AM64X "ti-am64x"
-+OBJECT_DECLARE_SIMPLE_TYPE(TIAM64xState, TI_AM64X)
++#define TYPE_TI_SEC_PROXY "ti.sec-proxy"
 +
-+#define TI_AM64X_MCU_UART_NUM 2
-+#define TI_AM64X_MAILBOX_NUM 8
-+#define TI_AM64X_A53_NUM 2
-+#define TI_AM64X_GIC_NUM_SPI 256
-+#define TI_AM64X_R5_NUM 1
-+#define TI_AM64X_SDHCI_NUM 2
++#define RMAX_TI_SEC_PROXY (3)
 +
-+struct TIAM64xState {
-+    SysBusDevice parent_obj;
-+    CPUClusterState a53_cluster;
-+    CPUClusterState m4_cluster;
-+    CPUClusterState r5_cluster;
-+    ARMv7MState armv7m;
-+    ARMCPU a53[TI_AM64X_A53_NUM];
-+    ARMCPU r5[TI_AM64X_R5_NUM];
-+    GICv3State gic;
-+    MemoryRegion mcu_iram;
-+    MemoryRegion mcu_dram;
-+    MemoryRegion mcu_ddr;
-+    MemoryRegion mcu_iram_sysmem;
-+    MemoryRegion mcu_dram_sysmem;
-+    MemoryRegion mcu_root;
-+    MemoryRegion ocsram;
-+    Clock *sysclk;
-+    Clock *refclk;
-+    TIRATState rat;
-+    TISecProxyState sec_proxy;
-+    TIDmscState dmsc;
-+    TIMailboxState mailbox[TI_AM64X_MAILBOX_NUM];
-+    AM64Uart mcu_uart[TI_AM64X_MCU_UART_NUM];
-+    AM64Uart main_uart0;
-+    TIK3CtrlMmrState ctrlmmr;
-+    TIK3CtrlMmrState mcu_ctrlmmr;
-+    TIK3CtrlMmrState sec_ctrlmmr;
-+    TIK3DdrssState ddrss;
-+    TIK3TrngState trng;
-+    TIK3DmTimerState main_timer0;
-+    TIK3GtcState gtc;
-+    SDHCIState sdhci[TI_AM64X_SDHCI_NUM];
-+    TIK3SdhciPhyState sdhci_phy[TI_AM64X_SDHCI_NUM];
-+    /* MAIN domain I2C0, an OMAP-I2C V2 controller. */
-+    DeviceState *i2c0;
-+    uint64_t main_ram_base;
-+    uint64_t main_ram_size;
-+    uint8_t a53_cpus;
-+    bool a53_start_powered_off;
-+    bool m4_start_powered_off;
-+    bool r5_start_powered_off;
++OBJECT_DECLARE_SIMPLE_TYPE(TISecProxyState, TI_SEC_PROXY)
++
++typedef void (*TISecProxyMsgCb)(void *opaque,
++                               uint16_t thread_id,
++                               const uint32_t *words,
++                               size_t nwords);
++
++enum TISciThreadIds {
++    MAIN_0_R5_0_READ_RESPONSE_THREAD_ID = 0,
++    MAIN_0_R5_0_WRITE_THREAD_ID = 1,
++    MAIN_0_R5_1_READ_RESPONSE_THREAD_ID = 2,
++    MAIN_0_R5_1_WRITE_THREAD_ID = 3,
++    MAIN_0_R5_2_READ_RESPONSE_THREAD_ID = 4,
++    MAIN_0_R5_2_WRITE_THREAD_ID = 5,
++    MAIN_0_R5_3_READ_RESPONSE_THREAD_ID = 6,
++    MAIN_0_R5_3_WRITE_THREAD_ID = 7,
++    A53_0_READ_RESPONSE_THREAD_ID = 8,
++    A53_0_WRITE_THREAD_ID = 9,
++    A53_1_READ_RESPONSE_THREAD_ID = 10,
++    A53_1_WRITE_THREAD_ID = 11,
++    A53_2_READ_RESPONSE_THREAD_ID = 12,
++    A53_2_WRITE_THREAD_ID = 13,
++    A53_3_READ_RESPONSE_THREAD_ID = 14,
++    A53_3_WRITE_THREAD_ID = 15,
++    M4_0_READ_RESPONSE_THREAD_ID = 16,
++    M4_0_WRITE_THREAD_ID = 17,
++    MAIN_1_R5_0_READ_RESPONSE_THREAD_ID = 18,
++    MAIN_1_R5_0_WRITE_THREAD_ID = 19,
++    MAIN_1_R5_1_READ_RESPONSE_THREAD_ID = 20,
++    MAIN_1_R5_1_WRITE_THREAD_ID = 21,
++    MAIN_1_R5_2_READ_RESPONSE_THREAD_ID = 22,
++    MAIN_1_R5_2_WRITE_THREAD_ID = 23,
++    MAIN_1_R5_3_READ_RESPONSE_THREAD_ID = 24,
++    MAIN_1_R5_3_WRITE_THREAD_ID = 25,
++    A53_4_READ_RESPONSE_THREAD_ID = 26,
++    A53_4_WRITE_THREAD_ID = 27,
++    ICSSG_0_READ_RESPONSE_THREAD_ID = 28,
++    ICSSG_0_WRITE_THREAD_ID = 29,
++    ICSSG_1_READ_RESPONSE_THREAD_ID = 30,
++    ICSSG_1_WRITE_THREAD_ID = 31,
++    SEC_PROXY_THREAD_ID_MAX,
 +};
 +
++#define SEC_PROXY_MSG_MAX_WORDS (16)
++#define SEC_PROXY_MSG_FIFO_DEPTH (16)
++
++struct TISecProxyThreadInfo {
++    uint8_t thread_id;
++    uint8_t num_messages;
++    uint32_t current_message[SEC_PROXY_MSG_MAX_WORDS];
++    bool is_outbound;
++    /* Callback invoked on commit (outbound only) */
++    TISecProxyMsgCb cb;
++    void *cb_opaque;
++};
++
++struct TISecProxyState {
++    SysBusDevice parent_obj;
++    MemoryRegion iomem_scfg;
++    MemoryRegion iomem_rt;
++    MemoryRegion iomem_target_data;
++    RegisterInfoArray *reg_array;
++    qemu_irq irq_evt;
++    uint32_t regs[RMAX_TI_SEC_PROXY];
++    RegisterInfo regs_info[RMAX_TI_SEC_PROXY];
++    struct TISecProxyThreadInfo thread_info[SEC_PROXY_THREAD_ID_MAX];
++    uint32_t msg_words;
++};
++
++
++/* Backend API used by ti-dmsc, resp. other consumers */
++void ti_sec_proxy_register_msg_cb(TISecProxyState *sp,
++                                  uint16_t thread_id,
++                                  TISecProxyMsgCb cb,
++                                  void *opaque);
++
++size_t ti_sec_proxy_push_msg(TISecProxyState *sp, uint16_t thread_id,
++                             const uint32_t *words, size_t nbytes);
++
++uint32_t ti_sec_proxy_get_msg_words(TISecProxyState *sp);
++
++/*
++ * Clear an outbound thread counter before requeueing unsolicited messages.
++ * push_msg() only increments it; reads clear only inbound threads.
++ */
++void ti_sec_proxy_reset_thread_count(TISecProxyState *sp, uint16_t thread_id);
 +#endif
 -- 
 2.43.0
