@@ -4,112 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7756DC5DF87
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 14:04:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6271BC5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 14:04:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx3N8-0000tQ-E1; Thu, 20 Aug 2026 10:03:58 -0400
+	id 1wx3NS-0001fQ-CL; Thu, 20 Aug 2026 10:04:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wx3N5-0000hI-8u; Thu, 20 Aug 2026 10:03:55 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wx3NI-0001XX-7g
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 10:04:08 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wx3N3-0005uA-8s; Thu, 20 Aug 2026 10:03:54 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67K86rEE504254; Thu, 20 Aug 2026 14:03:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=887Y0xfFtfVAjojWr
- vECSoIx4+5N30xlfKYDlRffVPE=; b=oEU0Bi1c7XTtda3S0uRKBNlBr1u+YFQ9m
- oEcoplUV0TxzwIeD4XnoH4QNlit0kAiC79VnfwgnKeBiIoq+gB2iNFeukYfHMlLR
- 70VxrfURjuNPXdMLG6N65R+UELEDfLWs6jgGsXWMUWh4cJN/t+Z7l7yLwBST6Okk
- XEncpxXoUR0mb3W18vYqyoUF79CaWXCC8XFrJ7tpWDjP8YQbXAqNmcziQdSJyp2y
- wX/jIYV/DsI27teJpK0Fw1o7yT4NhKfvXFWXGxtgsw7aK5Er5Inixut2IgM4+6My
- tzkX/+AX1D8bp7YOiGgNwM7WjsNYWa8IDexRwbY12m/qSFHr1uyqA==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu4akrt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Aug 2026 14:03:51 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67KDuNWq032434;
- Thu, 20 Aug 2026 14:03:50 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g32twf0h7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 20 Aug 2026 14:03:50 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67KE3iNm46531012
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 20 Aug 2026 14:03:45 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BE55E2004D;
- Thu, 20 Aug 2026 14:03:44 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 19A7C2004B;
- Thu, 20 Aug 2026 14:03:35 +0000 (GMT)
-Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
- [9.39.17.115]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 20 Aug 2026 14:03:34 +0000 (GMT)
-From: Chinmay Rath <rathc@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- milesg@linux.ibm.com
-Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
- tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com,
- aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, sv@linux.ibm.com,
- shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
- nikhilks@linux.ibm.com, Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH 07/29] target/ppc: convert slw, srw instruction via decode spec
-Date: Thu, 20 Aug 2026 19:30:36 +0530
-Message-ID: <20260820140114.327023-8-rathc@linux.ibm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260820140114.327023-1-rathc@linux.ibm.com>
-References: <20260820140114.327023-1-rathc@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wx3NG-0005zE-LJ
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 10:04:07 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67K9JGet2927196
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 14:04:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=a01+Hds8ob4eQ0yaHPUq2D
+ LlMH5d50F/gNkUoi3bMMk=; b=EYQ5TxaNIYRg1gtcpioWhjHqtDI/SSLDKJWtSd
+ csFBNMuyriPKYgwYBsjiKeW2ak5t+rQNdaMLzwOi4JHOihIiH/W8/h0tNRKjN76V
+ PjGHWl94LmYKpiYYJ6kNimLUpx0UUFQ6Zsf+n5KUtsb/y7lxqM6qUVGi0+q3V/s9
+ tEN5Nd/z49KQAK9KQzyg84fOWPhTQBQyPRGnjrXEVeux9p7Yd3HjWJzA/UEHdvT3
+ uS3678+QxUC3a0RV4QxxHcY6F9/FgrtFCM2VajBt8CXJA39jhAEdTWNV7u4vOTVW
+ R1RS5+5xDm6abR9bnhjsoh5U0FQ5hxhEEbF+ZRlMedrfSN0A==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g5xuk13yj-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 14:04:05 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-92e63df032bso110842285a.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 07:04:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1787234644; x=1787839444; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=a01+Hds8ob4eQ0yaHPUq2DLlMH5d50F/gNkUoi3bMMk=;
+ b=CRAs3f1M3iHrIImMI9fvLKJ4B9kwbbqPqp8/obMMkIFONnyTQYVceuUwN1v+GUPrri
+ +hjEKRBIjq7nL6UXeMT7f/9KDEZgN3n5DjIRXUORr22VAyfVfQHZWmvO019vXUTmxsdY
+ 7a63Osj5KB6frxdhsEaibJUHNc6lyQXZrwa49aYyrcs92HICyDnTvZqTtOjXRSWhxMMv
+ MQCRcBJiK4hCbZnO4GdIUZDxUHHI9k0Q+XoMyd7qBkqNdjpLzpnJAE3lWHXEYdPA2ZQT
+ 8wS+QjMCD7vHwlbNzSoh80Ycx02riiBWyrFSDQpOJ6F+n4hXTkwgAvDQr/RfwZEaYDCG
+ +6Hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787234644; x=1787839444;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=a01+Hds8ob4eQ0yaHPUq2DLlMH5d50F/gNkUoi3bMMk=;
+ b=e7DS9NM38YvUjBtlHX3gz8BkchkS5y62mz+ulf4WFrJkHrilr7hGym28vW7Z03Sa1m
+ WhfaEj6XMtAWfjzjrXOXFqgPFakSJ0Z+fGzSlDCLwj4Va0lWDRNArGgj64RZmGE2i3Mc
+ 0mEhuROxOrnyODOm/D+wRVO7vULHREVl0qKkBQ1X4Ahw1tzZIATCp+boD+7U+urto7T2
+ k8xDmNHnKGz80ytAPCYMvqoKX5ZAAH/pMYejf/lUfMsfWTP2ybtKVhgO6IRaXkWHgVSc
+ 9AUZ+NO28cSf+ak+7XxLyYJtVH5cJCpGbX1zUFtJYMXBpxAAkwPkW+aKwjqNECD8gg7w
+ f7dg==
+X-Gm-Message-State: AOJu0Yw3E5VBwR8QOtpEHKhP3jkxcVNQGryXx7YmDZFvDTliy6guH0TK
+ vZPkBWeRoBj5yeY+JdjeIxb0wSK0u4CeIGfANZDHLUTacJK+zkFezzCGaUMiTykcWJoPE45H4xD
+ 62ikysDiy1Z+GIzfnavw55EuwrYhy7Kfe/l4FTvU9ZYrjMVArM1XP39LoqWGcK1dtPqc2
+X-Gm-Gg: AR+sD12lCwui1RFBZBXqrJyB2syzG/4R2D/xiI81jXDafvYqeSEXzAybpxiH4YQjuTa
+ H1kE96U0qUNOLi+7HsLSdu8VluWipeUsNy2ARRJe1sFy04KSsdNx+B4/BL8Jumsa10ygNj3WXfT
+ NQh+2j64p4oizBmR8sfPMkEbNi5b/LtQ/862dMN9gu6cP1z+6/jouRPLzAxOFv4LOIW/fiNjuaG
+ NB0nYsLNnXKCaM0rMk5UxwES09Qm6RruwvjetllCjKBKUIJu1j9bvP8fl2kVOobrbvF3MiuPl1Y
+ 8cccQWmAUmFlI/fTB5oQ9UpnDe0OcKbcD00GTPyihBXV7k5kDWlIOGMGrxLy6N8eZxJg92fjZoi
+ PbtU0xzY3/f/b2RBMETLIGB/OggqwT9WbYCwX16+4FUtswO0=
+X-Received: by 2002:a05:620a:7003:b0:936:ce17:7792 with SMTP id
+ af79cd13be357-937283bd34cmr651754785a.8.1787234644221; 
+ Thu, 20 Aug 2026 07:04:04 -0700 (PDT)
+X-Received: by 2002:a05:620a:7003:b0:936:ce17:7792 with SMTP id
+ af79cd13be357-937283bd34cmr651745185a.8.1787234643810; 
+ Thu, 20 Aug 2026 07:04:03 -0700 (PDT)
+Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-499ab2a8b34sm177240125e9.8.2026.08.20.07.04.02
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 20 Aug 2026 07:04:02 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Parthiban Nallathambi <parthiban@linumiz.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH] target/tricore: Document architectural interrupts as not
+ implemented
+Date: Thu, 20 Aug 2026 16:04:01 +0200
+Message-ID: <20260820140401.26482-1-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=CpuPtH4D c=1 sm=1 tr=0 ts=6a870947 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8
- a=Fp1rp7siH0uluUpQqjEA:9
-X-Proofpoint-ORIG-GUID: qDj6Bw0kk6K1DGV5DiAo7JTsVpnQG5xJ
-X-Proofpoint-GUID: 0cv623a0lDpxhbKkRBXBJgm9ew1UUw3z
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDEwNSBTYWx0ZWRfX/QfhpLhchsvu
- LthcltWXIEy/L3ZixGYjNmmuQXJWyXG8eV50xAAzlTVkAZeA6TbIm8IgwTn9LCKQvzsQH4t6atv
- Q/SLYciSvnuxtPWP6GaVoyQ4m3QBZLE=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDEwNSBTYWx0ZWRfX6Pq8D8hj3o96
- dUoWIVQKzaMukWI2uPb3+jcJct4x2hLHuMbPpLDzIO6MsVtks2u/EZsvrGmNE4LEBjGVyPD/ANe
- TsShQuNxvfhskWQjaDIHXEqee/0Y/oPfr/IBtKOfcxLGQ8/EgCc6SQp69xnXTqrKudgCthp8YdR
- Fiyy6d3NWQvzNFLdA4ZwCRxTnvrI3bHc40zE7QO9hYSsBunSaceWdCwej9rirQ8QCqT8HcgG0Bt
- tNi3+alBW6Zbuh1jHB9JJnTuDdexKhcNzR0h1MLORyk5z4abaHzilqrLBnhv5sbfz3aCB3CSDDL
- KLr2of/x22e/34xAu9Nl4GSLfyWvjo02vvcyCSROsDOhjfo6urrEjKH9BTlt3jPywFdZLpyd1yi
- otRuPYYaSrL9z3mdz2hruHpF7xXydY4UrZY/27DjwmjJIV8FJYfsEkoJj1DeEBUqdG/POtzPSLs
- ICseVf5xKKqejkH876w==
+X-Proofpoint-GUID: gYO0oTbu31PK1sLHE7kR10CR0SK2itdd
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDEwNSBTYWx0ZWRfX6CF5YSDubBva
+ X2mja7+IgU4l0XZ28vQ54IM0UUC1GAMK9cyS/qw8gAaFPLRV4JLXJ52bTR4SGo22/veNN4ZyajF
+ GQv1s/JYb7983jvUCUhvRfIAL/4YgRY=
+X-Authority-Analysis: v=2.4 cv=T/O8ifKQ c=1 sm=1 tr=0 ts=6a870955 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=EUspDBNiAAAA:8 a=upbChxJvKZbVNEh_z2QA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDEwNSBTYWx0ZWRfX6/toFLvu0RbK
+ Zbgl0PkW62+ss3MwSWZdUiAZ1F5OSZyMFSha9FD/5zGggZsuXSfF7nPU7KwELeMEVjIMlduGnJF
+ kT5nRxI2FHqKbccAzYABKyOGyr5muEuqvJ5GR/i9Myj8vkl98LLxP8tnLFbyQfly90LFZjfHgIB
+ yQuX8K2K/87+nK/y8zFgCilGfGSpEXKbNLG7cChoEnuB8+GsT+nIbwRdzdVGvGD4aCb8fSxkHdQ
+ gozGdFRELVyBq5GE/HogHXLzAo9I1wiehAPGNN05SPQWfKrmycAx7bYbqzylmZFZFF9HPy/R/TQ
+ Xf2oplGTsKtpZaP22+kcj7Sy0Fw9Etxt1g9eSYK+vRYbCrGazZ0ucrnjlaCCqZTfMuaDfHQF2EL
+ WK6ABBNoWwqJ+tkEbQwXZSe1AAN7MmBx2xHYqL9+9oxB7E0RygzzmqFVHK656Lp5s4ZcaY63TJ5
+ E9wiqinhTtBj7djYCpw==
+X-Proofpoint-ORIG-GUID: gYO0oTbu31PK1sLHE7kR10CR0SK2itdd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-19_06,2026-08-19_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 bulkscore=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 spamscore=0 clxscore=1015 priorityscore=1501
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608200105
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ suspectscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015 bulkscore=0
+ spamscore=0 adultscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200105
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,171 +148,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>
+As mentioned in commit de680286b52 ("accel/tcg: Make
+cpu_exec_interrupt hook mandatory"):
 
-Instructions converted:
+ > Tricore doesn't currently implement the architectural
+ > interrupt handling.
 
-- slw
-- srw
+Add a comment to help understanding why this SysemuCPUOps
+has_work() handler is simply always returning %true.
 
-Signed-off-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
-Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/ppc/insn32.decode                   |  6 +++
- target/ppc/translate.c                     | 49 ----------------------
- target/ppc/translate/fixedpoint-impl.c.inc | 48 +++++++++++++++++++++
- 3 files changed, 54 insertions(+), 49 deletions(-)
+ target/tricore/cpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index 701c66b347..66d2f455a9 100644
---- a/target/ppc/insn32.decode
-+++ b/target/ppc/insn32.decode
-@@ -505,6 +505,12 @@ HASHCHK         011111 ..... ..... ..... 1011110010 .   @X_DW
- HASHSTP         011111 ..... ..... ..... 1010010010 .   @X_DW
- HASHCHKP        011111 ..... ..... ..... 1010110010 .   @X_DW
+diff --git a/target/tricore/cpu.c b/target/tricore/cpu.c
+index 6d448727005..82b56c3cd56 100644
+--- a/target/tricore/cpu.c
++++ b/target/tricore/cpu.c
+@@ -113,6 +113,7 @@ static void tricore_cpu_reset_hold(Object *obj, ResetType type)
  
-+# Fixed-Point Shift Instructions
-+
-+SLW		011111 ..... ..... ..... 0000011000 .	@X_rc
-+SRW		011111 ..... ..... ..... 1000011000 .	@X_rc
-+
-+
- ## BCD Assist
- 
- ADDG6S          011111 ..... ..... ..... - 001001010 -  @X
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index ee14fbfd96..f2b7505634 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -2315,29 +2315,6 @@ GEN_PPC64_R4(rldimi, 0x1E, 0x06);
- 
- /***                             Integer shift                             ***/
- 
--/* slw & slw. */
--static void gen_slw(DisasContext *ctx)
--{
--    TCGv t0, t1;
--
--    t0 = tcg_temp_new();
--    /* AND rS with a mask that is 0 when rB >= 0x20 */
--#if defined(TARGET_PPC64)
--    tcg_gen_shli_tl(t0, cpu_gpr[rB(ctx->opcode)], 0x3a);
--    tcg_gen_sari_tl(t0, t0, 0x3f);
--#else
--    tcg_gen_shli_tl(t0, cpu_gpr[rB(ctx->opcode)], 0x1a);
--    tcg_gen_sari_tl(t0, t0, 0x1f);
--#endif
--    tcg_gen_andc_tl(t0, cpu_gpr[rS(ctx->opcode)], t0);
--    t1 = tcg_temp_new();
--    tcg_gen_andi_tl(t1, cpu_gpr[rB(ctx->opcode)], 0x1f);
--    tcg_gen_shl_tl(cpu_gpr[rA(ctx->opcode)], t0, t1);
--    tcg_gen_ext32u_tl(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rA(ctx->opcode)]);
--    if (unlikely(Rc(ctx->opcode) != 0)) {
--        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
--    }
--}
- 
- /* sraw & sraw. */
- static void gen_sraw(DisasContext *ctx)
-@@ -2379,30 +2356,6 @@ static void gen_srawi(DisasContext *ctx)
-     }
+ static bool tricore_cpu_has_work(CPUState *cs)
+ {
++    /* Interrupts are not implemented */
+     return true;
  }
  
--/* srw & srw. */
--static void gen_srw(DisasContext *ctx)
--{
--    TCGv t0, t1;
--
--    t0 = tcg_temp_new();
--    /* AND rS with a mask that is 0 when rB >= 0x20 */
--#if defined(TARGET_PPC64)
--    tcg_gen_shli_tl(t0, cpu_gpr[rB(ctx->opcode)], 0x3a);
--    tcg_gen_sari_tl(t0, t0, 0x3f);
--#else
--    tcg_gen_shli_tl(t0, cpu_gpr[rB(ctx->opcode)], 0x1a);
--    tcg_gen_sari_tl(t0, t0, 0x1f);
--#endif
--    tcg_gen_andc_tl(t0, cpu_gpr[rS(ctx->opcode)], t0);
--    tcg_gen_ext32u_tl(t0, t0);
--    t1 = tcg_temp_new();
--    tcg_gen_andi_tl(t1, cpu_gpr[rB(ctx->opcode)], 0x1f);
--    tcg_gen_shr_tl(cpu_gpr[rA(ctx->opcode)], t0, t1);
--    if (unlikely(Rc(ctx->opcode) != 0)) {
--        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
--    }
--}
--
- #if defined(TARGET_PPC64)
- /* sld & sld. */
- static void gen_sld(DisasContext *ctx)
-@@ -5777,10 +5730,8 @@ GEN_HANDLER_E(paste, 0x1F, 0x06, 0x1C, 0x03C00000, PPC_NONE, PPC2_ISA300),
- GEN_HANDLER(rlwimi, 0x14, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
- GEN_HANDLER(rlwinm, 0x15, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
- GEN_HANDLER(rlwnm, 0x17, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
--GEN_HANDLER(slw, 0x1F, 0x18, 0x00, 0x00000000, PPC_INTEGER),
- GEN_HANDLER(sraw, 0x1F, 0x18, 0x18, 0x00000000, PPC_INTEGER),
- GEN_HANDLER(srawi, 0x1F, 0x18, 0x19, 0x00000000, PPC_INTEGER),
--GEN_HANDLER(srw, 0x1F, 0x18, 0x10, 0x00000000, PPC_INTEGER),
- #if defined(TARGET_PPC64)
- GEN_HANDLER(sld, 0x1F, 0x1B, 0x00, 0x00000000, PPC_64B),
- GEN_HANDLER(srad, 0x1F, 0x1A, 0x18, 0x00000000, PPC_64B),
-diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-index 91f9c6c391..9d04b96316 100644
---- a/target/ppc/translate/fixedpoint-impl.c.inc
-+++ b/target/ppc/translate/fixedpoint-impl.c.inc
-@@ -1406,3 +1406,51 @@ TRANS(HASHST, do_hash, false, gen_helper_HASHST)
- TRANS(HASHCHK, do_hash, false, gen_helper_HASHCHK)
- TRANS(HASHSTP, do_hash, true, gen_helper_HASHSTP)
- TRANS(HASHCHKP, do_hash, true, gen_helper_HASHCHKP)
-+
-+static bool trans_SLW(DisasContext *ctx, arg_SLW *a)
-+{
-+    TCGv t0, t1;
-+
-+    t0 = tcg_temp_new();
-+    /* AND rt with a mask that is 0 when rB >= 0x20 */
-+#if defined(TARGET_PPC64)
-+    tcg_gen_shli_tl(t0, cpu_gpr[a->rb], 0x3a);
-+    tcg_gen_sari_tl(t0, t0, 0x3f);
-+#else
-+    tcg_gen_shli_tl(t0, cpu_gpr[a->rb], 0x1a);
-+    tcg_gen_sari_tl(t0, t0, 0x1f);
-+#endif
-+    tcg_gen_andc_tl(t0, cpu_gpr[a->rt], t0);
-+    t1 = tcg_temp_new();
-+    tcg_gen_andi_tl(t1, cpu_gpr[a->rb], 0x1f);
-+    tcg_gen_shl_tl(cpu_gpr[a->ra], t0, t1);
-+    tcg_gen_ext32u_tl(cpu_gpr[a->ra], cpu_gpr[a->ra]);
-+    if (unlikely(a->rc)) {
-+        gen_set_Rc0(ctx, cpu_gpr[a->ra]);
-+    }
-+    return true;
-+}
-+
-+static bool trans_SRW(DisasContext *ctx, arg_SRW *a)
-+{
-+    TCGv t0, t1;
-+
-+    t0 = tcg_temp_new();
-+    /* AND rt with a mask that is 0 when rB >= 0x20 */
-+#if defined(TARGET_PPC64)
-+    tcg_gen_shli_tl(t0, cpu_gpr[a->rb], 0x3a);
-+    tcg_gen_sari_tl(t0, t0, 0x3f);
-+#else
-+    tcg_gen_shli_tl(t0, cpu_gpr[a->rb], 0x1a);
-+    tcg_gen_sari_tl(t0, t0, 0x1f);
-+#endif
-+    tcg_gen_andc_tl(t0, cpu_gpr[a->rt], t0);
-+    tcg_gen_ext32u_tl(t0, t0);
-+    t1 = tcg_temp_new();
-+    tcg_gen_andi_tl(t1, cpu_gpr[a->rb], 0x1f);
-+    tcg_gen_shr_tl(cpu_gpr[a->ra], t0, t1);
-+    if (unlikely(a->rc)) {
-+        gen_set_Rc0(ctx, cpu_gpr[a->ra]);
-+    }
-+    return true;
-+}
 -- 
-2.55.0
+2.53.0
 
 
