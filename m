@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A589C5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 02:50:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 382AFC5B572
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 02:50:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwsqB-0001w5-GS; Wed, 19 Aug 2026 22:49:16 -0400
+	id 1wwsqG-0001xy-Gl; Wed, 19 Aug 2026 22:49:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kylefoxaustin.github@gmail.com>)
- id 1wwspx-0001s1-Qz
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:49:03 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ id 1wwsq7-0001tz-2t
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:49:11 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <kylefoxaustin.github@gmail.com>)
- id 1wwspu-0000Rv-S1
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:49:01 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-66b35d2c4edso2796962d50.2
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 19:48:58 -0700 (PDT)
+ id 1wwsq3-0000YS-Uv
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 22:49:10 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-66c70d73210so2366531d50.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 19:49:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787194137; x=1787798937; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787194147; x=1787798947; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=vhrrmVXgiHV55vONvF9mCuACTf5Rtr1rMIvzakWRaVA=;
- b=C3HtFOe2AfCWwz8R44G7InlIppW1nV4qD1iBzapNsnihRC+V1bMdCqAlvDJxD/6QA7
- wtQa5UyRU188Wp6vag1DCWMsbsnC6/gokAtmtNyW9WuvZ/vp4rNEWnlEl5yNzNqq6W9D
- YQvBGDF89G9nUYu3+PLuGgK7NXTOl1BfGrue9pz5vpcgHSs2wFKFiPpljhfRmxH54j5Y
- 6K89ZPfSSD/ZF3r+NZEUFycakWzpp1QuIwEaQv+aOKO77WaRMoanC5/Gtm4rcLJNawsD
- rq5cTzFhxMM+TLWtd+N6PKIuaAfJDg5fBf06CRXRYJU4WRW6HPpBKHQGv+juFkyEwbe2
- HCgQ==
+ bh=TCYTy9d5gmT9RQQ2gbZfFGHaTBT8oPoZWb28xvQ5yu4=;
+ b=rarmh6nmgMz7gfo9Iv04O3IHQQ3thcssGl8KtMnPmDvR7UpCMSGrEWvNS+DpAPfWBs
+ Mimc6tdSsBlovmC28+ywDx/N8tPGtNOhnm0ChnOitlbpPNw4PH2O69Sra5VXCiZq1pLx
+ HKbLF+0nFd2Iv68jW4IrlZpb5Thz8Ad4Dcs9YA4nPShrO5LbX4Mu0ET4UPZl0X/nZpEB
+ 55NE/XTwBRDUuA5W2t4PRw3GoR77zkkjwVK8DMXAmfjUoaclWGikOeKMyiiQ288c+D27
+ l1p3eKs3g8e6d4tWn/Rau6otiPv/q4jN3R8OAy2A/og6uTBswHTjkNyZjHddasGOxHEZ
+ 6CKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787194137; x=1787798937;
+ d=1e100.net; s=20251104; t=1787194147; x=1787798947;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=vhrrmVXgiHV55vONvF9mCuACTf5Rtr1rMIvzakWRaVA=;
- b=SwLEZKc5m7ESK3AlVAoAfD9bs2iXVS6Cof3erPH2DjDZbW6gWqfbOoD690io8S5XV7
- IrDL2yOWI/pLiSQeJzfKjFk935JVCm/UeOKcz7d74ZWJrqo2BR6XfE8UNVNKCLAh7QNr
- 225HF+eYQiJlXoGX6gWQGrSd9Gv4rNz+VQcV3TXherglV15Q5B14MhArH4/uArcMx03I
- Wd4ElV99igGzy1YXpIR75Sno88L6/xqebFIVlXw441sZzupZsXKL4V9WD/mqFqIrMHnS
- 4pmFg8aLXrQZdGG+y1/5vImvDpiuVVYqKmMcX3/S7zCMRIO0SEfU20CdfbmW+DrX9OHT
- qq3Q==
-X-Gm-Message-State: AFuF++mdb2TyQVCIzObGEpaTkJ8NSw1XZU29yjCe9+sh3KP1eMFBEfdf
- po5db+pr/up0ALb9YUv/meCRqvcvTMHTBUFGb8D7VSRmj4gREpwZI+gSLGJAsQ==
-X-Gm-Gg: AR+sD1225+3o6NuLrQdWW6v6PKcj2RZusjcRxZTqGdGnvWROqa28il/Ot2NLowLpeRa
- GmiTPPTgJxTJE2HvJtOm4s11ZFmz409Ni7FBzttWpxi3m3LMQQcikrz7OyIrzsSYgV8jaIcGQGw
- u8jnNlDkNRCn45HkRKP8M82nTXsaHQMsYUt7Cb5oGVF2tXjYU8OMmgvIluRYIyiRz3G3XBt9TpO
- of0oPAgG5Y4mMPzcWBDt2zu3OxcLza9aEVrFyl/pvt7RbPTXaFaN/7eHAoAql63nWdR05TF0o6V
- 6GZEViR3PqgJgphvydLN1v/cTzZeTzTDgM0mNHOhq5OD7HGSxzT9kVFLTa6+Di3IaMt68V/1yJC
- u/yjurLH26nMs+cF9L90Y9I+hBx65kR3Hf7KlKCYAuNH4LVJDWKACfPDpqEjT/on0LTgoy9qqEB
- qReXoFEEgu3soNALDCnBUP7b1h0Q6D2rtV7gbuUxLuQuZC4jbxJo0sYQa0PrukIZWHkNCUL/StW
- 5B5vb5LjJSHdTsp5Lu2SbwnUImFeONRLsteFyJGIvf/4d4Jl1b7fQ==
-X-Received: by 2002:a05:690e:43ce:b0:66b:3c3c:c8a6 with SMTP id
- 956f58d0204a3-66ccb6aa08amr2636613d50.52.1787194137370; 
- Wed, 19 Aug 2026 19:48:57 -0700 (PDT)
+ bh=TCYTy9d5gmT9RQQ2gbZfFGHaTBT8oPoZWb28xvQ5yu4=;
+ b=dXpnMc/WHI4bB0LfxdRBCKeh8YF0SVzlHxe7MlGCmmsUmhRk7wVOIqQ/5bG7XbOa4A
+ CcYyD+mZLlUzjH0z1pbjjrEWkIdpljxkM6hyga8V8ltSNCEsssrqUVl5HGaNHyRmHUZ6
+ rfq3w48jHec6NvMV0NNnn2ET4HJ5eeMpKRoia4yQuVoktMK/4TbTx1uj9AwWHfIVQxJg
+ Ql8Zfew7S7R0+XDYHx0E+8q+gyWOpo2xu0oJ+dMkMlM62FgJMYHqnJPfzy94Rd56uqaK
+ Al3ab+pZ5xPsBa6XyfXSgOfaOpuf2FjuTG2ZAiIX87xPmUQHWk4qi3M2SFVUOJ1pEHCd
+ PJIQ==
+X-Gm-Message-State: AFuF++lql6ZAkSipmc3l37MtispzYG3U35nJeTkHNXUSOTwDZg0sJexz
+ KRABSxOME1sdQX8IfkSIrsmEFY7ox1LPv+kSayOqiAwwA2KZMmLNuhFgUQTmHA==
+X-Gm-Gg: AR+sD10Bn7J/wJKpAQf3yPoVp7rQ8mpKYBm0FddW5KrW+8Qi2jnk09DprV/vRq/wbEV
+ UoZeZpEJb5ZBjdhGbcDV56URGjL+K6fxkwzXh44BbqODHN9zrrX80ecQPIAnJN5X+uvvLyGjGYy
+ /rN0UgmvS9MSeD6r3jTuiyi4ds898tlltyd9+BhqQc8oCfm5LJ4VdKU8imngZ0VN2ME+w65/NB2
+ gC4KSpSlclE/MIq329dGkwkA66FrfyMU+ODptx0PP/JGtXQfLRYTi7m+l8/UL/KgHVy1zKQnD52
+ qExDjsTP0sxAxZIjbFOj6FFjcuV+gmS/duP99NW2DesRyZpRqKs5GzXHOhgzINVmKpB4iAmAPuS
+ S+xCwAeGKg/3GZL1KojrW49zvyyymnv0nWhMug4B2TV/9yD2U2/h5Q9TmtC7xXWhACjB7Gae78H
+ G/dDGRUxOw0OtQptb6QR5LCgrnkbFCcQFMjEtjFAVunq8BZhAX+BSs73Kp2hq+j3S10pIZ97HLM
+ OfFmQsIOGievg66jk4c4VeuPM0fTXKw/ntvYDNJaH41nP5LGa2/rQ==
+X-Received: by 2002:a05:690e:4090:b0:668:91a8:d447 with SMTP id
+ 956f58d0204a3-66ccb7375c9mr2792359d50.43.1787194146591; 
+ Wed, 19 Aug 2026 19:49:06 -0700 (PDT)
 Received: from skippy.localdomain (99-61-67-1.lightspeed.austtx.sbcglobal.net.
  [99.61.67.1]) by smtp.gmail.com with ESMTPSA id
- 956f58d0204a3-66ccafd03basm1986454d50.1.2026.08.19.19.48.56
+ 956f58d0204a3-66ccafd03basm1986454d50.1.2026.08.19.19.49.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 19:48:56 -0700 (PDT)
+ Wed, 19 Aug 2026 19:49:05 -0700 (PDT)
 From: Kyle Fox <kylefoxaustin.github@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Fox <kylefoxaustin.github@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:i.MX31 (kzm))
-Subject: [PATCH 07/16] hw/misc: add i.MX Messaging Unit (MU v2)
-Date: Wed, 19 Aug 2026 21:48:25 -0500
-Message-Id: <20260820024834.3286721-8-kylefoxaustin.github@gmail.com>
+ qemu-arm@nongnu.org (open list:MCIMX95-19X19-EVK...)
+Subject: [PATCH 12/16] hw/misc: add i.MX 95 PMIC (PF09/PF53/PCAL6408A) and
+ xcache controllers
+Date: Wed, 19 Aug 2026 21:48:30 -0500
+Message-Id: <20260820024834.3286721-13-kylefoxaustin.github@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260820024834.3286721-1-kylefoxaustin.github@gmail.com>
 References: <20260820024834.3286721-1-kylefoxaustin.github@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=kylefoxaustin.github@gmail.com; helo=mail-yx1-xb131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=kylefoxaustin.github@gmail.com; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,415 +103,510 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The i.MX Messaging Unit (V2 register layout): the mailbox that carries
-SCMI between the A55 cluster and the M33 System Manager. Models
-CR/SR/GCR/GSR/GIER, the TR/RR data registers and the GCR.GIRn/GSR.GIPn
-doorbell. Two endpoints pair through a peer QOM link: a TR write is
-delivered into the peer's RR and the TX handshake completes when the
-peer reads RR, so the real, unmodified SM firmware answers Linux's SCMI
-traffic over the emulated mailbox.
+The i.MX 95 EVK power devices on LPI2C - the PF09 and PF53 regulators
+and the PCAL6408A IO expander that the SM firmware sequences during
+power-up - modelled as I2C-slave register files, plus the xcache (cache
+controller) register block.
 
 Signed-off-by: Kyle Fox <kylefoxaustin.github@gmail.com>
 ---
- hw/misc/Kconfig          |   3 +
- hw/misc/imx_mu.c         | 454 +++++++++++++++++++++++++++++++++++++++
- hw/misc/meson.build      |   1 +
- hw/misc/trace-events     |   4 +
- include/hw/misc/imx_mu.h | 144 +++++++++++++
- 5 files changed, 606 insertions(+)
- create mode 100644 hw/misc/imx_mu.c
- create mode 100644 include/hw/misc/imx_mu.h
+ hw/misc/Kconfig        |   7 +
+ hw/misc/imx95_pmic.c   | 357 +++++++++++++++++++++++++++++++++++++++++
+ hw/misc/imx95_xcache.c | 185 +++++++++++++++++++++
+ hw/misc/meson.build    |   2 +
+ hw/misc/trace-events   |   8 +
+ 5 files changed, 559 insertions(+)
+ create mode 100644 hw/misc/imx95_pmic.c
+ create mode 100644 hw/misc/imx95_xcache.c
 
 diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index b8860dd3e77..8645ca11f3f 100644
+index 1e1cae92f6f..e1b8c390312 100644
 --- a/hw/misc/Kconfig
 +++ b/hw/misc/Kconfig
-@@ -261,3 +261,6 @@ config AXIADO_CLK
-     bool
+@@ -283,3 +283,10 @@ config IMX95_GPC
  
- source macio/Kconfig
+ config IMX95_SRC
+     bool
 +
-+config IMX_MU
++config IMX95_PMIC
 +    bool
-diff --git a/hw/misc/imx_mu.c b/hw/misc/imx_mu.c
++    select I2C
++
++config IMX95_XCACHE
++    bool
+diff --git a/hw/misc/imx95_pmic.c b/hw/misc/imx95_pmic.c
 new file mode 100644
-index 00000000000..c9f372a8726
+index 00000000000..e7101f1ed06
 --- /dev/null
-+++ b/hw/misc/imx_mu.c
-@@ -0,0 +1,454 @@
++++ b/hw/misc/imx95_pmic.c
+@@ -0,0 +1,357 @@
 +/*
-+ * NXP i.MX Messaging Unit (MU) device model - V2 register layout
++ * Minimal I2C device models for the i.MX 95 EVK System Manager:
++ *   - PF09 (PF0900) PMIC          (TYPE_PF09_PMIC,  addr 0x08, CRC'd)
++ *   - PCAL6408A 8-bit IO expander (TYPE_PCAL6408A,  addr 0x20)
++ *   - PF53 buck regulator         (TYPE_PF53_PMIC,  addr 0x2a/0x29)
 + *
 + * Copyright (c) 2026, Kyle Fox
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
-+ * Implements the subset of the V2 MU register set exercised by U-Boot
-+ * SPL's imx_mu_init_generic() probe path and by SCMI mailbox traffic:
-+ * CR/SR/GCR/GSR/GIER/TCR/TSR/RCR/RSR + 4 TR/RR data registers, plus
-+ * a doorbell mechanism via GCR.GIRn / GSR.GIPn.
++ * The NXP SM firmware probes/configures both over LPI2C1 during board
++ * init (BRD_SM_SerialDevicesInit); a failed transfer aborts SM init.
++ * These are register-file models: writes store, reads return the stored
++ * byte. The PF09 driver protects each transfer with a J1850 CRC, so the
++ * PF09 read path appends the CRC the driver expects
++ * (CRC_J1850((devAddr<<1)|1, reg, data)); without it PF09_Init fails.
++ * No actual PMIC/regulator or GPIO behaviour is modelled.
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/module.h"
++#include "hw/i2c/i2c.h"
++#include "migration/vmstate.h"
++#include "trace.h"
++
++/* ---- J1850 CRC (matches imx-sm components/crc/crc.c CRC_J1850) ---- */
++#define CRC_J1850_POLY  0x1Du
++
++static uint8_t crc_j1850(const uint8_t *p, unsigned n)
++{
++    uint32_t crc = 0xffu;
++
++    for (unsigned i = 0; i < n; i++) {
++        crc ^= p[i];
++        for (unsigned b = 0; b < 8; b++) {
++            crc = (crc & 0x80u) ? ((crc << 1) ^ CRC_J1850_POLY)
++                                : ((crc << 1) & 0xffu);
++        }
++    }
++    return (uint8_t)crc;
++}
++
++/* ============================ PF09 PMIC ============================ */
++
++#define TYPE_PF09_PMIC "pf09-pmic"
++OBJECT_DECLARE_SIMPLE_TYPE(PF09State, PF09_PMIC)
++
++#define PF09_NUM_REG    256
++
++struct PF09State {
++    I2CSlave    parent_obj;
++
++    uint8_t     regs[PF09_NUM_REG];
++    uint8_t     cur_reg;
++    uint32_t    wcount;     /* bytes received since START(write) */
++    uint32_t    rcount;     /* bytes returned since START(read) */
++};
++
++static int pf09_event(I2CSlave *i2c, enum i2c_event event)
++{
++    PF09State *s = PF09_PMIC(i2c);
++
++    switch (event) {
++    case I2C_START_SEND:
++        s->wcount = 0;
++        break;
++    case I2C_START_RECV:
++        s->rcount = 0;
++        break;
++    default:
++        break;
++    }
++    return 0;   /* ACK */
++}
++
++static int pf09_send(I2CSlave *i2c, uint8_t data)
++{
++    PF09State *s = PF09_PMIC(i2c);
++
++    if (s->wcount == 0) {
++        s->cur_reg = data;          /* register address */
++    } else if (s->wcount == 1) {
++        s->regs[s->cur_reg] = data; /* data byte */
++        trace_pf09_reg_write(s->cur_reg, data);
++    }
++    /* wcount >= 2 is the trailing CRC byte: accept and ignore. */
++    s->wcount++;
++    return 0;   /* ACK */
++}
++
++static uint8_t pf09_recv(I2CSlave *i2c)
++{
++    PF09State *s = PF09_PMIC(i2c);
++    uint8_t val;
++
++    if (s->rcount == 0) {
++        val = s->regs[s->cur_reg];
++        trace_pf09_reg_read(s->cur_reg, val);
++    } else {
++        /* CRC over (devAddr<<1)|1, reg, data - what PF09_PmicRead checks. */
++        uint8_t buf[3] = {
++            (uint8_t)((i2c->address << 1) | 1u),
++            s->cur_reg,
++            s->regs[s->cur_reg],
++        };
++        val = crc_j1850(buf, 3);
++    }
++    s->rcount++;
++    return val;
++}
++
++static void pf09_reset_hold(Object *obj, ResetType type)
++{
++    PF09State *s = PF09_PMIC(obj);
++
++    memset(s->regs, 0, sizeof(s->regs));
++    s->cur_reg = 0;
++    s->wcount = 0;
++    s->rcount = 0;
++    /* REV_ID >= 0x20 lets PF09_Init skip the STANDBY-monitor write. */
++    s->regs[0x00] = 0x20;
++}
++
++static const VMStateDescription vmstate_pf09 = {
++    .name = TYPE_PF09_PMIC,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_I2C_SLAVE(parent_obj, PF09State),
++        VMSTATE_UINT8_ARRAY(regs, PF09State, PF09_NUM_REG),
++        VMSTATE_UINT8(cur_reg, PF09State),
++        VMSTATE_UINT32(wcount, PF09State),
++        VMSTATE_UINT32(rcount, PF09State),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
++static void pf09_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
++
++    k->event = pf09_event;
++    k->recv = pf09_recv;
++    k->send = pf09_send;
++    dc->vmsd = &vmstate_pf09;
++    rc->phases.hold = pf09_reset_hold;
++    dc->desc = "NXP PF09 PMIC (i.MX95 SM stub)";
++}
++
++static const TypeInfo pf09_info = {
++    .name          = TYPE_PF09_PMIC,
++    .parent        = TYPE_I2C_SLAVE,
++    .instance_size = sizeof(PF09State),
++    .class_init    = pf09_class_init,
++};
++
++/* ========================== PCAL6408A ============================= */
++
++#define TYPE_PCAL6408A "pcal6408a"
++OBJECT_DECLARE_SIMPLE_TYPE(PCAL6408AState, PCAL6408A)
++
++#define PCAL6408A_NUM_REG   256
++
++struct PCAL6408AState {
++    I2CSlave    parent_obj;
++
++    uint8_t     regs[PCAL6408A_NUM_REG];
++    uint8_t     cur_reg;
++    uint32_t    wcount;
++};
++
++static int pcal6408a_event(I2CSlave *i2c, enum i2c_event event)
++{
++    PCAL6408AState *s = PCAL6408A(i2c);
++
++    if (event == I2C_START_SEND) {
++        s->wcount = 0;
++    }
++    return 0;
++}
++
++static int pcal6408a_send(I2CSlave *i2c, uint8_t data)
++{
++    PCAL6408AState *s = PCAL6408A(i2c);
++
++    if (s->wcount == 0) {
++        s->cur_reg = data;
++    } else {
++        trace_pcal6408a_reg_write(s->cur_reg, data);
++        s->regs[s->cur_reg++] = data;
++    }
++    s->wcount++;
++    return 0;
++}
++
++static uint8_t pcal6408a_recv(I2CSlave *i2c)
++{
++    PCAL6408AState *s = PCAL6408A(i2c);
++    uint8_t val = s->regs[s->cur_reg];
++
++    trace_pcal6408a_reg_read(s->cur_reg, val);
++    s->cur_reg++;
++    return val;
++}
++
++static void pcal6408a_reset_hold(Object *obj, ResetType type)
++{
++    PCAL6408AState *s = PCAL6408A(obj);
++
++    memset(s->regs, 0, sizeof(s->regs));
++    s->cur_reg = 0;
++    s->wcount = 0;
++}
++
++static const VMStateDescription vmstate_pcal6408a = {
++    .name = TYPE_PCAL6408A,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_I2C_SLAVE(parent_obj, PCAL6408AState),
++        VMSTATE_UINT8_ARRAY(regs, PCAL6408AState, PCAL6408A_NUM_REG),
++        VMSTATE_UINT8(cur_reg, PCAL6408AState),
++        VMSTATE_UINT32(wcount, PCAL6408AState),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
++static void pcal6408a_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
++
++    k->event = pcal6408a_event;
++    k->recv = pcal6408a_recv;
++    k->send = pcal6408a_send;
++    dc->vmsd = &vmstate_pcal6408a;
++    rc->phases.hold = pcal6408a_reset_hold;
++    dc->desc = "NXP PCAL6408A IO expander (i.MX95 SM stub)";
++}
++
++static const TypeInfo pcal6408a_info = {
++    .name          = TYPE_PCAL6408A,
++    .parent        = TYPE_I2C_SLAVE,
++    .instance_size = sizeof(PCAL6408AState),
++    .class_init    = pcal6408a_class_init,
++};
++
++/* ============================ PF53 PMIC ============================ */
++
++/*
++ * PF5301 / PF5302 (PF53-family) buck regulators on the same LPI2C bus.
++ * BRD_SM_SerialDevicesInit calls PF53_Init() on each, which only reads
++ * the DEV_ID register and checks that the transfer ACKs (it does not
++ * validate the value, and the SM configures crcEn=false for these). So a
++ * plain register file that ACKs is sufficient to get past SM init.
++ */
++#define TYPE_PF53_PMIC "pf53-pmic"
++OBJECT_DECLARE_SIMPLE_TYPE(PF53State, PF53_PMIC)
++
++#define PF53_NUM_REG    256
++
++struct PF53State {
++    I2CSlave    parent_obj;
++
++    uint8_t     regs[PF53_NUM_REG];
++    uint8_t     cur_reg;
++    uint32_t    wcount;
++};
++
++static int pf53_event(I2CSlave *i2c, enum i2c_event event)
++{
++    PF53State *s = PF53_PMIC(i2c);
++
++    if (event == I2C_START_SEND) {
++        s->wcount = 0;
++    }
++    return 0;
++}
++
++static int pf53_send(I2CSlave *i2c, uint8_t data)
++{
++    PF53State *s = PF53_PMIC(i2c);
++
++    if (s->wcount == 0) {
++        s->cur_reg = data;
++    } else {
++        trace_pf53_reg_write(s->cur_reg, data);
++        s->regs[s->cur_reg++] = data;
++    }
++    s->wcount++;
++    return 0;
++}
++
++static uint8_t pf53_recv(I2CSlave *i2c)
++{
++    PF53State *s = PF53_PMIC(i2c);
++    uint8_t val = s->regs[s->cur_reg];
++
++    trace_pf53_reg_read(s->cur_reg, val);
++    s->cur_reg++;
++    return val;
++}
++
++static void pf53_reset_hold(Object *obj, ResetType type)
++{
++    PF53State *s = PF53_PMIC(obj);
++
++    memset(s->regs, 0, sizeof(s->regs));
++    s->cur_reg = 0;
++    s->wcount = 0;
++}
++
++static const VMStateDescription vmstate_pf53 = {
++    .name = TYPE_PF53_PMIC,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_I2C_SLAVE(parent_obj, PF53State),
++        VMSTATE_UINT8_ARRAY(regs, PF53State, PF53_NUM_REG),
++        VMSTATE_UINT8(cur_reg, PF53State),
++        VMSTATE_UINT32(wcount, PF53State),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
++static void pf53_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
++
++    k->event = pf53_event;
++    k->recv = pf53_recv;
++    k->send = pf53_send;
++    dc->vmsd = &vmstate_pf53;
++    rc->phases.hold = pf53_reset_hold;
++    dc->desc = "NXP PF53 PMIC (i.MX95 SM stub)";
++}
++
++static const TypeInfo pf53_info = {
++    .name          = TYPE_PF53_PMIC,
++    .parent        = TYPE_I2C_SLAVE,
++    .instance_size = sizeof(PF53State),
++    .class_init    = pf53_class_init,
++};
++
++static void imx95_pmic_register_types(void)
++{
++    type_register_static(&pf09_info);
++    type_register_static(&pcal6408a_info);
++    type_register_static(&pf53_info);
++}
++
++type_init(imx95_pmic_register_types)
+diff --git a/hw/misc/imx95_xcache.c b/hw/misc/imx95_xcache.c
+new file mode 100644
+index 00000000000..ef7752a6201
+--- /dev/null
++++ b/hw/misc/imx95_xcache.c
+@@ -0,0 +1,185 @@
++/*
++ * NXP i.MX 95 XCACHE controller stub model
 + *
-+ * Models enough for the SPL probe to succeed and for the SM to
-+ * handshake on doorbells. No
-+ * cross-domain interrupt routing, no flag-bit semantics beyond
-+ * read/write-back, no per-channel TX/RX FIFO depth modelling.
++ * Copyright (c) 2026, Kyle Fox
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Minimal model of the M33 XCACHE controller (the two instances at
++ * 0x44400000 "PC" and 0x44400800 "PS"). The NXP System Manager firmware
++ * enables and invalidates its caches early in init by writing the cache
++ * control register (CCR): it sets ENCACHE plus the invalidate/push
++ * command bits and the GO bit, then polls.
++ *
++ * QEMU has no cache to model, so the only behaviour that matters is the
++ * self-clearing of the command bits: real hardware clears GO and the
++ * INVWn/PUSHWn bits once the (instantaneous, for us) operation completes,
++ * and leaves ENCACHE/config bits set. A plain RAM stub would leave GO set
++ * forever (the SM's "wait for GO to clear" loop would hang); a zero-return
++ * stub would leave ENCACHE clear (an "is cache enabled" check would hang).
++ * So CCR persists everything except the command bits, which read back 0.
++ * The line-maintenance registers (CLCR/CSAR/CCVR) are plain storage.
 + */
 +
 +#include "qemu/osdep.h"
 +#include "qemu/log.h"
 +#include "qemu/module.h"
-+#include "hw/misc/imx_mu.h"
-+#include "hw/core/irq.h"
-+#include "hw/core/qdev-properties.h"
++#include "hw/core/sysbus.h"
 +#include "migration/vmstate.h"
 +#include "trace.h"
 +
-+static void imx_mu_update_irq(IMXMUState *s);
++#define TYPE_IMX95_XCACHE "imx95.xcache"
++OBJECT_DECLARE_SIMPLE_TYPE(IMX95XCacheState, IMX95_XCACHE)
 +
-+static int imx_mu_post_load(void *opaque, int version_id)
-+{
-+    /* Recompute the IRQ line level from the restored register state. */
-+    imx_mu_update_irq(opaque);
-+    return 0;
-+}
++/* Each instance owns 0x800 (the two M33 instances are 0x800 apart). */
++#define IMX95_XCACHE_REG_SIZE   0x800
 +
-+static const VMStateDescription vmstate_imx_mu = {
-+    .name = TYPE_IMX_MU,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .post_load = imx_mu_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(cr, IMXMUState),
-+        VMSTATE_UINT32(sr, IMXMUState),
-+        VMSTATE_UINT32(fcr, IMXMUState),
-+        VMSTATE_UINT32(fsr, IMXMUState),
-+        VMSTATE_UINT32(gier, IMXMUState),
-+        VMSTATE_UINT32(gcr, IMXMUState),
-+        VMSTATE_UINT32(gsr, IMXMUState),
-+        VMSTATE_UINT32(tcr, IMXMUState),
-+        VMSTATE_UINT32(tsr, IMXMUState),
-+        VMSTATE_UINT32(rcr, IMXMUState),
-+        VMSTATE_UINT32(rsr, IMXMUState),
-+        VMSTATE_UINT32_ARRAY(tr, IMXMUState, IMX_MU_NUM_CHANNELS),
-+        VMSTATE_UINT32_ARRAY(rr, IMXMUState, IMX_MU_NUM_CHANNELS),
-+        VMSTATE_END_OF_LIST()
-+    },
++#define XCACHE_CCR              0x00
++#define XCACHE_CLCR             0x04
++#define XCACHE_CSAR             0x08
++#define XCACHE_CCVR             0x0C
++
++/* CCR bits that self-clear when the cache command completes. */
++#define CCR_GO                  0x80000000u
++#define CCR_PUSHW1              0x08000000u
++#define CCR_INVW1               0x04000000u
++#define CCR_PUSHW0              0x02000000u
++#define CCR_INVW0               0x01000000u
++#define CCR_CMD_BITS \
++    (CCR_GO | CCR_PUSHW1 | CCR_INVW1 | CCR_PUSHW0 | CCR_INVW0)
++
++struct IMX95XCacheState {
++    SysBusDevice    parent_obj;
++    MemoryRegion    iomem;
++
++    uint32_t        ccr;
++    uint32_t        clcr;
++    uint32_t        csar;
++    uint32_t        ccvr;
 +};
 +
-+/*
-+ * Recompute the IRQ line. V2 layout: each xSR pending bit ANDed with
-+ * the matching xCR enable bit; any one of those produces an interrupt.
-+ * GP-IRQ comes from (GSR.GIPn & GIER.GIEn) across the channels in use.
-+ */
-+static void imx_mu_update_irq(IMXMUState *s)
++static uint64_t imx95_xcache_read(void *opaque, hwaddr offset, unsigned size)
 +{
-+    uint32_t mask = (1u << IMX_MU_NUM_CHANNELS) - 1u;
-+    bool level =
-+        ((s->gsr & s->gier & mask) != 0) ||
-+        ((s->tsr & s->tcr  & mask) != 0) ||
-+        ((s->rsr & s->rcr  & mask) != 0);
++    IMX95XCacheState *s = opaque;
 +
-+    qemu_set_irq(s->irq, level);
-+}
-+
-+static void imx_mu_reset_state(IMXMUState *s)
-+{
-+    s->cr   = 0;
-+    s->sr   = 0;
-+    s->fcr  = 0;
-+    s->fsr  = 0;
-+    s->gier = 0;
-+    s->gcr  = 0;
-+    s->gsr  = 0;
-+    s->tcr  = 0;
-+    /* All TX slots come up empty - TEn bits set. */
-+    s->tsr  = (1u << IMX_MU_NUM_CHANNELS) - 1u;
-+    s->rcr  = 0;
-+    s->rsr  = 0;
-+    memset(s->tr, 0, sizeof(s->tr));
-+    memset(s->rr, 0, sizeof(s->rr));
-+}
-+
-+static void imx_mu_reset_at_boot_hold(Object *obj, ResetType type)
-+{
-+    IMXMUState *s = IMX_MU(obj);
-+
-+    imx_mu_reset_state(s);
-+    imx_mu_update_irq(s);
-+}
-+
-+void imx_mu_assert_gip(IMXMUState *s, unsigned int idx)
-+{
-+    if (idx >= IMX_MU_NUM_CHANNELS) {
-+        return;
-+    }
-+    trace_imx_mu_gip(idx);
-+    s->gsr |= IMX_MU_V2_BIT(idx);
-+    imx_mu_update_irq(s);
-+}
-+
-+void imx_mu_set_doorbell_handler(IMXMUState *s,
-+                                 IMXMUDoorbellHandler handler,
-+                                 void *opaque)
-+{
-+    s->doorbell_handler = handler;
-+    s->doorbell_opaque  = opaque;
-+}
-+
-+void imx_mu_set_tr_write_handler(IMXMUState *s,
-+                                 IMXMUTRWriteHandler handler,
-+                                 void *opaque)
-+{
-+    s->tr_write_handler = handler;
-+    s->tr_write_opaque  = opaque;
-+}
-+
-+void imx_mu_deliver_rr(IMXMUState *s, unsigned int idx, uint32_t value)
-+{
-+    if (idx >= IMX_MU_NUM_CHANNELS) {
-+        return;
-+    }
-+    trace_imx_mu_rr_deliver(idx, value);
-+    s->rr[idx]  = value;
-+    s->rsr     |= IMX_MU_V2_BIT(idx);
-+    imx_mu_update_irq(s);
-+}
-+
-+static uint64_t imx_mu_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    IMXMUState *s = opaque;
-+    uint64_t value = 0;
-+
-+    if (offset >= IMX_MU_TR_BASE &&
-+        offset < IMX_MU_TR_BASE + IMX_MU_NUM_CHANNELS * 4) {
-+        value = s->tr[(offset - IMX_MU_TR_BASE) / 4];
-+        return value;
-+    }
-+    if (offset >= IMX_MU_RR_BASE &&
-+        offset < IMX_MU_RR_BASE + IMX_MU_NUM_CHANNELS * 4) {
-+        unsigned idx = (offset - IMX_MU_RR_BASE) / 4;
-+        value = s->rr[idx];
-+        /*
-+         * Reading RR[n] clears RSR.RFn (the receive-full status bit)
-+         * so the next sender can re-queue. The SCMI transport doesn't
-+         * rely on this, but it matches the documented HW
-+         * behaviour and lets the U-Boot probe drain pending data.
-+         *
-+         * For a peer-linked MU this completes the TX handshake: the word
-+         * was delivered into RR[n] by the peer's TR[n] write (which left
-+         * the peer's TSR.TEn clear), so draining it re-asserts the peer's
-+         * TX-empty and lets a blocked mbox send finish.
-+         */
-+        s->rsr &= ~IMX_MU_V2_BIT(idx);
-+        if (s->peer) {
-+            s->peer->tsr |= IMX_MU_V2_BIT(idx);
-+            imx_mu_update_irq(s->peer);
-+        }
-+        imx_mu_update_irq(s);
-+        return value;
-+    }
++    trace_imx95_xcache_read(offset);
 +
 +    switch (offset) {
-+    case IMX_MU_VER:
-+        /* Plausible V2 version. Linux/U-Boot do not branch on this. */
-+        value = 0x00020000;
-+        break;
-+    case IMX_MU_PAR:
-+        /* TR count in [7:0], RR count in [15:8] (V2 encoding). */
-+        value = ((uint32_t)IMX_MU_NUM_CHANNELS) |
-+                ((uint32_t)IMX_MU_NUM_CHANNELS << 8);
-+        break;
-+    case IMX_MU_CR:
-+        value = s->cr;
-+        break;
-+    case IMX_MU_SR:
-+        value = s->sr;
-+        break;
-+    case IMX_MU_FCR:
-+        value = s->fcr;
-+        break;
-+    case IMX_MU_FSR:
-+        value = s->fsr;
-+        break;
-+    case IMX_MU_GIER:
-+        value = s->gier;
-+        break;
-+    case IMX_MU_GCR:
-+        value = s->gcr;
-+        break;
-+    case IMX_MU_GSR:
-+        value = s->gsr;
-+        break;
-+    case IMX_MU_TCR:
-+        value = s->tcr;
-+        break;
-+    case IMX_MU_TSR:
-+        value = s->tsr;
-+        break;
-+    case IMX_MU_RCR:
-+        value = s->rcr;
-+        break;
-+    case IMX_MU_RSR:
-+        value = s->rsr;
-+        break;
++    case XCACHE_CCR:
++        return s->ccr;
++    case XCACHE_CLCR:
++        return s->clcr;
++    case XCACHE_CSAR:
++        return s->csar;
++    case XCACHE_CCVR:
++        return s->ccvr;
 +    default:
 +        qemu_log_mask(LOG_GUEST_ERROR,
 +                      "%s: bad read offset 0x%" HWADDR_PRIx "\n",
 +                      __func__, offset);
-+        break;
++        return 0;
 +    }
-+    return value;
 +}
 +
-+static void imx_mu_write(void *opaque, hwaddr offset,
-+                         uint64_t value, unsigned size)
++static void imx95_xcache_write(void *opaque, hwaddr offset,
++                               uint64_t value, unsigned size)
 +{
-+    IMXMUState *s = opaque;
++    IMX95XCacheState *s = opaque;
 +
-+    if (offset >= IMX_MU_TR_BASE &&
-+        offset < IMX_MU_TR_BASE + IMX_MU_NUM_CHANNELS * 4) {
-+        unsigned idx = (offset - IMX_MU_TR_BASE) / 4;
-+        s->tr[idx] = value;
-+        trace_imx_mu_tr_write(idx, value);
-+        /*
-+         * Writing TR[n] clears TSR.TEn (TX empty). Three delivery modes:
-+         *  - TR-write handler (a responder, e.g. the ELE server): consumes
-+         *    synchronously and we re-set TEn so the next write succeeds
-+         *    without polling.
-+         *  - peer linked (the other side of a real MU, e.g. the A55<->M7
-+         *    rpmsg channel on MU7): deliver the word into the peer's RR[n]
-+         *    and raise its RX interrupt. TEn stays clear until the peer
-+         *    reads RR[n] (see the RR read path), which is the real MU TX
-+         *    full/empty handshake the imx-mailbox driver waits on.
-+         *  - neither (unattached MU): the slot stays "full" forever, which
-+         *    is correct for a mailbox with nothing on the far side.
-+         */
-+        s->tsr &= ~IMX_MU_V2_BIT(idx);
-+        if (s->tr_write_handler) {
-+            s->tr_write_handler(s->tr_write_opaque, idx, value);
-+            s->tsr |= IMX_MU_V2_BIT(idx);
-+        } else if (s->peer) {
-+            imx_mu_deliver_rr(s->peer, idx, (uint32_t)value);
-+        }
-+        imx_mu_update_irq(s);
-+        return;
-+    }
-+    if (offset >= IMX_MU_RR_BASE &&
-+        offset < IMX_MU_RR_BASE + IMX_MU_NUM_CHANNELS * 4) {
-+        /* RR is RO from the guest's perspective. */
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: write to read-only RR at 0x%" HWADDR_PRIx "\n",
-+                      __func__, offset);
-+        return;
-+    }
++    trace_imx95_xcache_write(offset, value);
 +
 +    switch (offset) {
-+    case IMX_MU_VER:
-+    case IMX_MU_PAR:
-+        /* Read-only. Silent ignore matches HW. */
++    case XCACHE_CCR:
++        /* Command bits complete instantly: store everything else. */
++        s->ccr = (uint32_t)value & ~CCR_CMD_BITS;
 +        break;
-+
-+    case IMX_MU_CR:
-+        if (value & IMX_MU_CR_RST) {
-+            imx_mu_reset_state(s);
-+            imx_mu_update_irq(s);
-+            return;
-+        }
-+        s->cr = value;
++    case XCACHE_CLCR:
++        s->clcr = value;
 +        break;
-+
-+    case IMX_MU_SR:
-+        /*
-+         * Per the kernel/U-Boot drivers, SR bits in V2 are read-only
-+         * status that the model manages. Writing has no effect.
-+         */
++    case XCACHE_CSAR:
++        s->csar = value;
 +        break;
-+
-+    case IMX_MU_FCR:
-+        /*
-+         * Flag-update register. On hardware a written flag bit is reflected
-+         * to the peer's FSR; the SCMI transport does not use these flags, so
-+         * we just store the value (no peer reflection or interrupt modelled).
-+         */
-+        s->fcr = value;
++    case XCACHE_CCVR:
++        s->ccvr = value;
 +        break;
-+
-+    case IMX_MU_FSR:
-+        /* Write-1-to-clear of latched flag-status bits. */
-+        s->fsr &= ~value;
-+        imx_mu_update_irq(s);
-+        break;
-+
-+    case IMX_MU_GIER:
-+        s->gier = value;
-+        imx_mu_update_irq(s);
-+        break;
-+
-+    case IMX_MU_GCR: {
-+        /*
-+         * GCR.GIRn writes are doorbell triggers. Detect 0->1 transitions
-+         * and, for each newly-asserted channel, deliver the doorbell. The
-+         * bit is auto-cleared afterwards (write-1-to-trigger pulse),
-+         * mirroring real HW where the request clears once the peer ACKs.
-+         *
-+         * Two delivery modes:
-+         *  - peer linked (the other side of a real MU): latch the matching
-+         *    GSR.GIPn on the peer and recompute the peer's IRQ. GIPn latches
-+         *    regardless of the peer's GIER, so a doorbell that arrives before
-+         *    the peer enables GIER.GIEn fires the moment it does (the peer's
-+         *    GIER write recomputes the IRQ) - real pending-vs-enable HW.
-+         *  - doorbell handler (a responder, e.g. the ELE server): invoke it
-+         *    synchronously to consume the request.
-+         */
-+        uint32_t mask  = (1u << IMX_MU_NUM_CHANNELS) - 1u;
-+        uint32_t newly = (value & ~s->gcr) & mask;
-+        s->gcr = value;
-+        for (unsigned i = 0; i < IMX_MU_NUM_CHANNELS; i++) {
-+            if (!(newly & IMX_MU_V2_BIT(i))) {
-+                continue;
-+            }
-+            trace_imx_mu_doorbell(i);
-+            if (s->peer) {
-+                s->peer->gsr |= IMX_MU_V2_BIT(i);
-+                imx_mu_update_irq(s->peer);
-+                s->gcr &= ~IMX_MU_V2_BIT(i);
-+            } else if (s->doorbell_handler) {
-+                s->doorbell_handler(s->doorbell_opaque, i);
-+                s->gcr &= ~IMX_MU_V2_BIT(i);
-+            }
-+        }
-+        imx_mu_update_irq(s);
-+        break;
-+    }
-+
-+    case IMX_MU_GSR:
-+        /* Write-1-to-clear of GIP bits. */
-+        s->gsr &= ~value;
-+        imx_mu_update_irq(s);
-+        break;
-+
-+    case IMX_MU_TCR:
-+        s->tcr = value;
-+        imx_mu_update_irq(s);
-+        break;
-+
-+    case IMX_MU_TSR:
-+        /* W1C of TX status. */
-+        s->tsr &= ~value;
-+        imx_mu_update_irq(s);
-+        break;
-+
-+    case IMX_MU_RCR:
-+        s->rcr = value;
-+        imx_mu_update_irq(s);
-+        break;
-+
-+    case IMX_MU_RSR:
-+        /* W1C of RX status. */
-+        s->rsr &= ~value;
-+        imx_mu_update_irq(s);
-+        break;
-+
 +    default:
 +        qemu_log_mask(LOG_GUEST_ERROR,
 +                      "%s: bad write offset 0x%" HWADDR_PRIx
@@ -521,9 +616,9 @@ index 00000000000..c9f372a8726
 +    }
 +}
 +
-+static const MemoryRegionOps imx_mu_ops = {
-+    .read = imx_mu_read,
-+    .write = imx_mu_write,
++static const MemoryRegionOps imx95_xcache_ops = {
++    .read = imx95_xcache_read,
++    .write = imx95_xcache_write,
 +    .endianness = DEVICE_LITTLE_ENDIAN,
 +    .impl = {
 +        .min_access_size = 4,
@@ -535,235 +630,90 @@ index 00000000000..c9f372a8726
 +    },
 +};
 +
-+/*
-+ * "peer" accepts any TYPE_IMX_MU and is settable at any time: the SM/M7 MUB
-+ * endpoint is only created (and hence linkable) once its M-core is realized,
-+ * so the SoC establishes the link after realize. A non-NULL check is what
-+ * makes the link writable; the type is already enforced by the link itself.
-+ */
-+static void imx_mu_peer_check(const Object *obj, const char *name,
-+                              Object *val, Error **errp)
++static void imx95_xcache_reset_hold(Object *obj, ResetType type)
 +{
++    IMX95XCacheState *s = IMX95_XCACHE(obj);
++
++    s->ccr = 0;
++    s->clcr = 0;
++    s->csar = 0;
++    s->ccvr = 0;
 +}
 +
-+static void imx_mu_init(Object *obj)
++static void imx95_xcache_init(Object *obj)
 +{
 +    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-+    IMXMUState *s = IMX_MU(obj);
++    IMX95XCacheState *s = IMX95_XCACHE(obj);
 +
-+    memory_region_init_io(&s->iomem, obj, &imx_mu_ops, s,
-+                          TYPE_IMX_MU, IMX_MU_REG_SIZE);
++    memory_region_init_io(&s->iomem, obj, &imx95_xcache_ops, s,
++                          TYPE_IMX95_XCACHE, IMX95_XCACHE_REG_SIZE);
 +    sysbus_init_mmio(sbd, &s->iomem);
-+    sysbus_init_irq(sbd, &s->irq);
-+
-+    /*
-+     * "peer" links the two endpoints (MUA/MUB) of one physical MU. It is a
-+     * weak link - both endpoints are owned by the SoC container, so neither
-+     * refs the other - and is settable after realize, because the SM/M7 MUB
-+     * side is only created once the M-core it faces exists. That is why this
-+     * uses object_property_add_link() rather than a static DEFINE_PROP_LINK
-+     * (which forbids setting a link once the device is realized).
-+     */
-+    object_property_add_link(obj, "peer", TYPE_IMX_MU,
-+                             (Object **)&s->peer, imx_mu_peer_check, 0);
 +}
 +
-+static void imx_mu_class_init(ObjectClass *klass, const void *data)
++static const VMStateDescription vmstate_imx95_xcache = {
++    .name = TYPE_IMX95_XCACHE,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(ccr, IMX95XCacheState),
++        VMSTATE_UINT32(clcr, IMX95XCacheState),
++        VMSTATE_UINT32(csar, IMX95XCacheState),
++        VMSTATE_UINT32(ccvr, IMX95XCacheState),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
++static void imx95_xcache_class_init(ObjectClass *klass, const void *data)
 +{
 +    DeviceClass *dc = DEVICE_CLASS(klass);
 +    ResettableClass *rc = RESETTABLE_CLASS(klass);
 +
-+    dc->vmsd = &vmstate_imx_mu;
-+    rc->phases.hold = imx_mu_reset_at_boot_hold;
++    dc->vmsd = &vmstate_imx95_xcache;
++    rc->phases.hold = imx95_xcache_reset_hold;
 +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+    dc->desc = "NXP i.MX Messaging Unit (V2)";
++    dc->desc = "NXP i.MX 95 XCACHE controller (stub)";
 +}
 +
-+static const TypeInfo imx_mu_info = {
-+    .name           = TYPE_IMX_MU,
++static const TypeInfo imx95_xcache_info = {
++    .name           = TYPE_IMX95_XCACHE,
 +    .parent         = TYPE_SYS_BUS_DEVICE,
-+    .instance_size  = sizeof(IMXMUState),
-+    .instance_init  = imx_mu_init,
-+    .class_init     = imx_mu_class_init,
++    .instance_size  = sizeof(IMX95XCacheState),
++    .instance_init  = imx95_xcache_init,
++    .class_init     = imx95_xcache_class_init,
 +};
 +
-+static void imx_mu_register_types(void)
++static void imx95_xcache_register_types(void)
 +{
-+    type_register_static(&imx_mu_info);
++    type_register_static(&imx95_xcache_info);
 +}
 +
-+type_init(imx_mu_register_types)
++type_init(imx95_xcache_register_types)
 diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index e86d9ad6b39..9d0e3ed220d 100644
+index 0b7f5e4382d..d7d283a191b 100644
 --- a/hw/misc/meson.build
 +++ b/hw/misc/meson.build
-@@ -171,3 +171,4 @@ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
- system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
- 
- system_ss.add(when: 'CONFIG_AXIADO_CLK', if_true: files('axiado_clk.c'))
-+system_ss.add(when: 'CONFIG_IMX_MU', if_true: files('imx_mu.c'))
+@@ -178,3 +178,5 @@ system_ss.add(when: 'CONFIG_IMX95_ANATOP', if_true: files('imx95_anatop.c'))
+ system_ss.add(when: 'CONFIG_IMX95_AONMIX', if_true: files('imx95_aonmix.c'))
+ system_ss.add(when: 'CONFIG_IMX95_GPC', if_true: files('imx95_gpc.c'))
+ system_ss.add(when: 'CONFIG_IMX95_SRC', if_true: files('imx95_src.c'))
++system_ss.add(when: 'CONFIG_IMX95_PMIC', if_true: files('imx95_pmic.c'))
++system_ss.add(when: 'CONFIG_IMX95_XCACHE', if_true: files('imx95_xcache.c'))
 diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index c9a868b3efb..01b0b275f7f 100644
+index 15fab0596c2..0555b15a1f3 100644
 --- a/hw/misc/trace-events
 +++ b/hw/misc/trace-events
-@@ -442,3 +442,7 @@ iommu_testdev_dma_read(uint64_t gva, uint32_t len) "gva=0x%" PRIx64 " len=%u"
- iommu_testdev_dma_verify(uint32_t expected, uint32_t actual) "expected=0x%x actual=0x%x"
- iommu_testdev_dma_result(uint32_t result) "DMA completed result=0x%x"
- iommu_testdev_dma_armed(bool armed) "armed=%d"
-+imx_mu_tr_write(unsigned idx, uint32_t val) "TR[%u] <- 0x%08x"
-+imx_mu_rr_deliver(unsigned idx, uint32_t val) "RR[%u] <- 0x%08x"
-+imx_mu_doorbell(unsigned idx) "doorbell GIR channel %u"
-+imx_mu_gip(unsigned idx) "GIP assert channel %u"
-diff --git a/include/hw/misc/imx_mu.h b/include/hw/misc/imx_mu.h
-new file mode 100644
-index 00000000000..e308ebf70ea
---- /dev/null
-+++ b/include/hw/misc/imx_mu.h
-@@ -0,0 +1,144 @@
-+/*
-+ * NXP i.MX Messaging Unit (MU) device model - V2 register layout
-+ *
-+ * Copyright (c) 2026, Kyle Fox
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Models the V2 MU register layout used by i.MX 95 (compatible
-+ * "fsl,imx95-mu") and other recent NXP SoCs. The MU is the
-+ * messaging channel between the Cortex-A55 cluster and the Cortex-M33
-+ * System Manager (and ELE, V2X, camera-mix, etc., depending on which
-+ * instance); it carries SCMI traffic for clock / pinctrl / power-
-+ * domain operations.
-+ */
-+
-+#ifndef IMX_MU_H
-+#define IMX_MU_H
-+
-+#include "hw/core/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_IMX_MU "imx.mu"
-+OBJECT_DECLARE_SIMPLE_TYPE(IMXMUState, IMX_MU)
-+
-+#define IMX_MU_REG_SIZE         0x1000
-+#define IMX_MU_NUM_CHANNELS     4       /* TR[0..3] / RR[0..3] */
-+
-+/*
-+ * V2 register offsets. Source: NXP U-Boot imx_mu_cfg_imx95 in
-+ * U-Boot drivers/mailbox/imx-mailbox.c.
-+ */
-+#define IMX_MU_VER              0x000   /* version (RO) */
-+#define IMX_MU_PAR              0x004   /* parameter (RO; TR/RR counts) */
-+#define IMX_MU_CR               0x008   /* control */
-+#define IMX_MU_SR               0x00C   /* status */
-+#define IMX_MU_FCR              0x100   /* flag control */
-+#define IMX_MU_FSR              0x104   /* flag status */
-+#define IMX_MU_GIER             0x110   /* general-purpose IRQ enable */
-+#define IMX_MU_GCR              0x114   /* general-purpose control */
-+#define IMX_MU_GSR              0x118   /* general-purpose status (GIP bits) */
-+#define IMX_MU_TCR              0x120   /* TX IRQ enable */
-+#define IMX_MU_TSR              0x124   /* TX status (TEn = TX empty) */
-+#define IMX_MU_RCR              0x128   /* RX IRQ enable */
-+#define IMX_MU_RSR              0x12C   /* RX status (RFn = RX full) */
-+#define IMX_MU_TR_BASE          0x200   /* TR[0..15] (TX data) */
-+#define IMX_MU_RR_BASE          0x280   /* RR[0..15] (RX data) */
-+
-+/* Helpers for V2 bit numbering (one bit per channel index, starting at 0). */
-+#define IMX_MU_V2_BIT(idx)      (1u << (idx))
-+
-+/* CR.RST clears all state when written (V2 bit 0). */
-+#define IMX_MU_CR_RST           BIT(0)
-+
-+/*
-+ * Optional callback invoked when the guest writes a 0->1 transition
-+ * on any GCR.GIRn bit (a doorbell trigger from the agent side). A
-+ * responder (e.g. the ELE server) registers itself here to process
-+ * inbound messages. Unset by default; the model functions as a plain
-+ * register file when no handler is registered.
-+ */
-+typedef void (*IMXMUDoorbellHandler)(void *opaque, unsigned int idx);
-+
-+/*
-+ * Optional callback invoked when the guest writes to a TR[idx] register.
-+ * The ELE responder stub uses this to accumulate incoming ELE-protocol
-+ * message words and react when a full message has arrived. Unset by
-+ * default; the model is a plain register file with no consumer.
-+ */
-+typedef void (*IMXMUTRWriteHandler)(void *opaque, unsigned int idx,
-+                                    uint32_t value);
-+
-+struct IMXMUState {
-+    SysBusDevice    parent_obj;
-+
-+    MemoryRegion    iomem;
-+    qemu_irq        irq;
-+
-+    /*
-+     * Writable register state. Read-only registers (VER, PAR) are
-+     * computed at read time from the configured channel count.
-+     */
-+    uint32_t        cr;
-+    uint32_t        sr;
-+    uint32_t        fcr;
-+    uint32_t        fsr;
-+    uint32_t        gier;
-+    uint32_t        gcr;
-+    uint32_t        gsr;
-+    uint32_t        tcr;
-+    uint32_t        tsr;
-+    uint32_t        rcr;
-+    uint32_t        rsr;
-+    uint32_t        tr[IMX_MU_NUM_CHANNELS];
-+    uint32_t        rr[IMX_MU_NUM_CHANNELS];
-+
-+    /* Doorbell forwarding (see typedef above). */
-+    IMXMUDoorbellHandler doorbell_handler;
-+    void                *doorbell_opaque;
-+
-+    /* TR-write forwarding (see typedef above). */
-+    IMXMUTRWriteHandler  tr_write_handler;
-+    void                *tr_write_opaque;
-+
-+    /*
-+     * Optional peer MU endpoint (the other side of a real hardware MU).
-+     * When set, a GCR.GIRn doorbell trigger on this side latches the
-+     * matching GSR.GIPn on the peer (raising the peer's IRQ once the peer
-+     * enables GIER.GIEn), instead of invoking doorbell_handler. This models
-+     * the A55-side (MUA) <-> M33-side (MUB) cross-connect used to let the
-+     * real SM firmware service the A55's SCMI traffic. Set via the "peer"
-+     * QOM link property (registered in imx_mu_init()).
-+     */
-+    IMXMUState          *peer;
-+};
-+
-+/*
-+ * Register a doorbell handler. Replaces any previously registered
-+ * handler. Call with handler = NULL to deregister.
-+ */
-+void imx_mu_set_doorbell_handler(IMXMUState *s,
-+                                 IMXMUDoorbellHandler handler,
-+                                 void *opaque);
-+
-+/* Register a TR-write handler. NULL to deregister. */
-+void imx_mu_set_tr_write_handler(IMXMUState *s,
-+                                 IMXMUTRWriteHandler handler,
-+                                 void *opaque);
-+
-+/*
-+ * Deliver a response word into RR[idx] and assert RSR.RFn so the
-+ * agent's mu_hal_receivemsg() poll loop exits. Used by responder
-+ * stubs (e.g. ELE) to push a message back to the agent.
-+ */
-+void imx_mu_deliver_rr(IMXMUState *s, unsigned int idx, uint32_t value);
-+
-+/*
-+ * External hook: peripheral code (e.g. a responder) can call
-+ * this to assert a GP-interrupt-pending bit on a particular channel,
-+ * which surfaces as GSR.GIPn and (if GIER.GIEn is set) raises the IRQ.
-+ * Used by the response side of a doorbell handshake.
-+ */
-+void imx_mu_assert_gip(IMXMUState *s, unsigned int idx);
-+
-+#endif /* IMX_MU_H */
+@@ -458,3 +458,11 @@ imx95_aonmix_m7_gate(int run) "M7 wait gate -> run=%d"
+ imx95_gpc_mode(uint64_t offset, uint32_t target) "CMC_MODE_CTRL off 0x%" PRIx64 " target %u"
+ imx95_src_m7mix_release(void) "SRC_GEN.SCR M7MIX reset released"
+ imx95_src_slice_ctrl(uint64_t offset, uint32_t value) "SLICE_SW_CTRL off 0x%" PRIx64 " <- 0x%08x"
++imx95_xcache_read(uint64_t offset) "read off 0x%" PRIx64
++imx95_xcache_write(uint64_t offset, uint64_t value) "write off 0x%" PRIx64 " <- 0x%08" PRIx64
++pf09_reg_read(uint8_t reg, uint8_t val) "PF09 reg 0x%02x -> 0x%02x"
++pf09_reg_write(uint8_t reg, uint8_t val) "PF09 reg 0x%02x <- 0x%02x"
++pcal6408a_reg_read(uint8_t reg, uint8_t val) "PCAL6408A reg 0x%02x -> 0x%02x"
++pcal6408a_reg_write(uint8_t reg, uint8_t val) "PCAL6408A reg 0x%02x <- 0x%02x"
++pf53_reg_read(uint8_t reg, uint8_t val) "PF53 reg 0x%02x -> 0x%02x"
++pf53_reg_write(uint8_t reg, uint8_t val) "PF53 reg 0x%02x <- 0x%02x"
 -- 
 2.34.1
 
