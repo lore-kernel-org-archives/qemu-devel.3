@@ -4,101 +4,169 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E8E2C5DF8C
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 04:38:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52DE2C5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 04:44:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwuXY-0000op-P7; Thu, 20 Aug 2026 00:38:08 -0400
+	id 1wwud7-0001Zt-5b; Thu, 20 Aug 2026 00:43:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1wwuXX-0000oS-Lz
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 00:38:07 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1wwuXV-0002VX-Cs
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 00:38:07 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-44ae14b4fd6so814305fac.2
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 21:38:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787200684; cv=none;
- d=google.com; s=arc-20260327;
- b=lFc/LrhLasMFkuz+7kQT1BjGvQtvvJo0Sav6uPXaO7ZH8zWWB3ZMDVi23D4uZro+7J
- 4mf2Q5XM3dEREYnzXn+i0lg3PfsqU4O3/5ikORuGGXs9UeC/CA8iLvWSGe0ajYKyMoLO
- IZxJXGp7vP3kDb5FxSUbVGXeaVP0CN5zrqwvT2jDdUr4vdd3bAzr1yS26M86wq3YRpN0
- wTglPQFlC6gZFZEEopdL33734yX7oHxGfVUxj4NOmiTp/iclm3M3zLEbrgHh1WV35fcc
- K6AyzC82r/0TpXjph7j+GtBhujcOXNhHXEgRZ+jqwyJTsLDiZsKta0ADklWQjFv7uP6r
- Xdlg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=O+SJ4ouO8DER862HmtBQSJ0QwR/GgCYHEpXacXbpjgY=;
- fh=LOst6OIdEaBMuurtzYNBHMLjQ7N+6u1lDyAAXE75Ms4=;
- b=K12sm216ui+4LPO4S5arlAZRF/0e1LFtM3xxPC2Z1ZG3ykBaHVisXtVLG/jAy8/5Ol
- YCZBq8Yrp9jKBzXQUvXNZdM/kFP2+s9Q/z9mLzJ/9kym0CdP0VwIv0rmvwMby7TMkbI+
- YyBKkf+sguhOkNp1hQqLYJ7AtjI1GU1KRJvuetevkGTusV5DMzDE4b0Mh4LAXf7IeaV0
- YtWSeD99iRzXSDD5MFwrcJkZ12VqNJNVXBlBKs9zniVoV3ja7Sx1duWoeq9oZs1Qb86T
- hM9c+d0WtiJTVOX0sM746bmbrndtjDCQ3pGrrrtoR5JvvDvp99XK1AOGKSuiCcFx37Lc
- iegg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1)
+ (envelope-from <prvs=685c7dad1=Alistair.Francis@wdc.com>)
+ id 1wwud6-0001Zg-7V; Thu, 20 Aug 2026 00:43:52 -0400
+Received: from esa1.hgst.iphmx.com ([68.232.141.245])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <prvs=685c7dad1=Alistair.Francis@wdc.com>)
+ id 1wwud4-00030Y-7U; Thu, 20 Aug 2026 00:43:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
+ t=1787201030; x=1818737030;
+ h=from:to:subject:date:message-id:references:in-reply-to:
+ content-id:content-transfer-encoding:mime-version;
+ bh=PvMSJDmebMfZ+ktTp8SrBfoCU1Cars1NLjNr2yCEjU4=;
+ b=ZDALkTCOH0cfxv4+s9z7pLYgNuEy0a/BC8dVdGEwTteQTkLa429Vr2ab
+ RrsS8vI6bf6d87ZYpyoWIL4ClxWWuNLMx2kUrHV4bPBnBoi2SbBqxHvm6
+ rqBSjS3TzmNRucHpDRnl7wiHrOAzMuOe4h6I7H+DXeADgHm5jDZkkCenL
+ 0Hp99I4siY0KIOoGFLrzL2SCdtl+IcWhLKyGPj68sCzSJ+39GRKZM5qcu
+ /XApLWWoIkvC8O9n1mWzISXr9YAK5Gp4pOHRuhEe5GWe7XyIW1D4kx+hm
+ MmbTFwcWsZnNl3xiHXSwsjJiJBsDTWN0zyRip1lF8vRV9rzy713qL5pEX Q==;
+X-CSE-ConnectionGUID: RQRQkv6nQoayuXyG2YhyaA==
+X-CSE-MsgGUID: VhzxlcluTnyr9Xf4VcXBYA==
+X-IronPort-AV: E=Sophos;i="6.25,232,1779120000"; d="scan'208";a="153664156"
+Received: from mail-eastus2azon11010070.outbound.protection.outlook.com (HELO
+ BN1PR04CU002.outbound.protection.outlook.com) ([52.101.56.70])
+ by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
+ 20 Aug 2026 12:43:44 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Uahzqn6U4e97MTFaVfr/cTFwgLcCRGnJRKiYD6JXaxD3mre0SEnNuSTXmN+UwJzvNidXiYHk6PaQTydRJdByXEjBm8JM2HwbNd1FGHmjUQ7NKWsUfeDDGjXWm4c3+dbV79+w1bkraIRJbU6oFzUno35uV3SXKDKgxDN35g9EhTwcpIO4+wOhDIdqPwUbiPPWNWvNxAXaXoVkgFQ1ipLhNmNnFZ+tcSPUmE11d1ps9Q3xLxFhJ1/Tdwpo9v2Co1ZYGPukQf4SuyYAR24tLbVGQBqASvEcz+p8c209jP621ZH5h/YHZk+lcV5mvmJVzGMMoO9MmC4mp0NylmpVgQX1hQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PvMSJDmebMfZ+ktTp8SrBfoCU1Cars1NLjNr2yCEjU4=;
+ b=dGdzs8q/uGHg0PTyoOxmNe6/aTrM50DMJ03/KKtJ16cBEE4bSQRLZk02VdUtLf6M0MUuAh6ffNAo7rhvS6roxK2RUHlLwr+qhFsqxacsqeXNdtC3xAi8Unh/6b8ktbovGcooibKGq2VaoT2L1WaWC8ZRZkrWrjTSc/3FJg3OKX2gu0Zjq7rl662J4GV5CiO5fNkZaH7iUFho0ksJcAPbZT3zqQDIp5+G1hAAj7ppiOi3//7Tuj32WsQVdIPknWbXQ6eAdzU8rtCF+7+iA36FRaW+Zp3Aomgkq6AIWFoO5QrUMWIQI6En7PwD6YZ8PKoXLgrEVSEU4R4ni8m7lAuBbA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
+ header.d=wdc.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787200684; x=1787805484; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=O+SJ4ouO8DER862HmtBQSJ0QwR/GgCYHEpXacXbpjgY=;
- b=mCEipcrgOS9iaD2sRipaQMSK7DK/xlCEWrTX3UwHw5uniI3LKGjrR9zhhqQuFM2oV9
- OF9MzACrHRYV5IBmBj4Naej1OIKrmK7tTixss4u1MuZpX4WqdA7arYgR5DNB9oe1PjSA
- cJX6gs7egBMdqNu/oHIAsXHVXYil6HX+siYfL43Wg1yai0SIODUVhtzVNqsoe8LuPwZ+
- 0Cxc/pB0+p9cKAFpsB741zT3hzg8IqE+hGKl3qQFWzk0ZiZRkEt1iIPOZ6vJtMP4VM6K
- g4ifyyu+8KyeaNTbEtuSmh6nuL9ucFYbPOxFGDSWKvtf+NEkJv+rah4nvH5ylo57Va6D
- A3RA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787200684; x=1787805484;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=O+SJ4ouO8DER862HmtBQSJ0QwR/GgCYHEpXacXbpjgY=;
- b=MbrboYcZJlcAht+Pjsp1qZTpj61L8SXCa/E6FimoAs4MDKtUffO6Yf7WyFCI6Dr1d2
- upyQFyRoQx3zFd6emNkdXdIxbAQCq10Fh8Xwnu4mDjWLz8B2Mgg1aYhK11kTagDiLfVu
- OEeS5yz50iWtMvWp/tt8cOKF7al2FXP5i1DtSD24HxYL8GuQz+SgZ7hCRoarWKMun49M
- g0AMxdL9xOJNl4N/I7E3j2fawchPPMTuPjUL/BJyI64AHkJrB0EYMKf0arxxIni1frHy
- Y8KMI+vW05ehFDG/yO8SOPcdurew9YREWau4J5FFH+Z8xSvdwU7QfVDzO/DofaHBcFJ8
- zuCg==
-X-Gm-Message-State: AOJu0YzHEgovyIYktloG5GP6XpPToYQ4z6rWPgnG8kxlda/WXyjhv5CH
- fHq3KKPFOKu+Wsg0bk1x7bP1YjCdDSR2vGabipbe0GgIjPlwlj/EkEIVm//+yVFy61zuYNc52Kh
- hlJFN7QfCuIwdgwVSBk9yFfRC3i6tvlo=
-X-Gm-Gg: AR+sD13hKZzZOEBmteKg9lMZajYEBvhjhuj3rSYarqcuGJPOKGRupP3Vz0Zg0UVjO6o
- NOos+71AF6HwnuenN4kiSLOOgiy0JijXoy+KPOLQSbe5fJl1uRqk3mQ3a0+leH3/NIUu4S46gsD
- d1Mgr3Ry6bHFkFO2J0TDD5D4FPMz6RcN0+5vhLQB9D09kVsH7np491bDJSWC31bR8nr8CIeB25W
- Fd8RMOopN593hcGUKP/JihtawYIekuAaDQYTPvnYk3Fn/D+fr1EhA8uCLX/qfZ2qwtCb9u90Ams
- ++A7V3k3P9FNz3D3Rfn1QAZBFS3vzii1QtIsPNj74wS8QQ==
-X-Received: by 2002:a05:6870:c210:b0:45e:caa2:4ea with SMTP id
- 586e51a60fabf-462f653f83cmr10421660fac.6.1787200683673; Wed, 19 Aug 2026
- 21:38:03 -0700 (PDT)
+ d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PvMSJDmebMfZ+ktTp8SrBfoCU1Cars1NLjNr2yCEjU4=;
+ b=laJVwPD8vNej45MfLUTGoQCNXN4xBdYtej4gazrry4USKgOiZAFbe/EltHoAPV5n0xewIjYp+ugpXJrlx/n84W/AAYmIa4KKZl1NFh9D/9IixRD0J/Kef8qb7T9n56y1VNGQQjBmXB9gBKs/K8kiG6V36GVAo8w+naiOSqL3KIc=
+Received: from BY1PR04MB9561.namprd04.prod.outlook.com (2603:10b6:a03:5b6::11)
+ by CH8PR04MB993885.namprd04.prod.outlook.com (2603:10b6:610:2eb::5)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.10; Thu, 20 Aug
+ 2026 04:43:41 +0000
+Received: from BY1PR04MB9561.namprd04.prod.outlook.com
+ ([fe80::3869:e494:2fa8:9888]) by BY1PR04MB9561.namprd04.prod.outlook.com
+ ([fe80::3869:e494:2fa8:9888%5]) with mapi id 15.21.0339.007; Thu, 20 Aug 2026
+ 04:43:41 +0000
+From: Alistair Francis <Alistair.Francis@wdc.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "chao.liu@processmission.com" <chao.liu@processmission.com>,
+ "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>,
+ "palmer@dabbelt.com" <palmer@dabbelt.com>, "liwei1518@gmail.com"
+ <liwei1518@gmail.com>, "frederic.petrot@univ-grenoble-alpes.fr"
+ <frederic.petrot@univ-grenoble-alpes.fr>
+Subject: Re: [PATCH 0/2] target/riscv: Handle [ms]status updates for rv128
+Thread-Topic: [PATCH 0/2] target/riscv: Handle [ms]status updates for rv128
+Thread-Index: AQHdL8l15AaC+gDBHkykvsTTbHllkLamXV4A
+Date: Thu, 20 Aug 2026 04:43:41 +0000
+Message-ID: <95a50349667ed9fbdea78af8a03f5f8d527b7833.camel@wdc.com>
+References: <20260819105655.33391-1-frederic.petrot@univ-grenoble-alpes.fr>
+In-Reply-To: <20260819105655.33391-1-frederic.petrot@univ-grenoble-alpes.fr>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Evolution 3.60.2 (by Flathub.org) 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wdc.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BY1PR04MB9561:EE_|CH8PR04MB993885:EE_
+x-ms-office365-filtering-correlation-id: b8ff26e9-9b07-499d-717a-08defe759c11
+wdcipoutbound: EOP-TRUE
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|19092799006|23010399003|10070799003|10067099003|11063799006|56012099006|18002099003|22082099003|38070700021;
+x-microsoft-antispam-message-info: B8JFZAvdKkLecXjrdBf1NhpjHeGc6sBGQ41ymed4cmexuuOc5rxjPIYBGiLiyIEe4+3RBTRdadBzjwp/9ZOL1xWkJBMV4+U2jixdErmgX3qLQR8nqJakOKhs6k0IBcgFgfzDGzH+9BERvH/KHBmRX+SyJj3vncjHI2N15emaGFZ1awvxnADY6tZjXBtPA/IQQskOk1rs3i5otoF5WXvjdCI1Jj+Fg7yPAqIqmzS1AEXttUfeD7qeYOyguvYbZ/9+v2zEzEc31lIhsCkBLUeFFNHrbSseW8/m6PSavD8GqNFpveXKL8PZFeVQ5EYVnXftYqbCDhURwgMp5GRDDYoeLUHPmdzbX0SR7rae7fmIu9i1TJAVPjTSconB2KvlwD37VOSXl7Mo8eM5FtaeIVYc17Jcr4EPgeum5T8+QaI/TcJ5hhN5RoRshpoLIaQnIEo6TVLwW6p0nZMhHDHQznvLjbwdycIynmPb58FmcrHeY/dhMrR1EsQ/1JySV7kYN4oa0+xhkTMszJi3MwCI6bThohN26euZP0VC8mzb00M4k54SAGrpwjzDLSJRkwofnJEBiBmoZAP1WqBvgwBJ2Alr5xa8W85V1Qxp/d3hoSBwbA4eaxP7boL6VdsXT7jls3R7RIobEX+3+uTjhumIdsvlok3/vxtaeU5bFo5iSZzxVXVD0Q9uHsfOP1RenR5YabJD7ruBNIyrpX/o9IjmtFzy01Ap881pKVLyFIpQafHAxAk=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BY1PR04MB9561.namprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(19092799006)(23010399003)(10070799003)(10067099003)(11063799006)(56012099006)(18002099003)(22082099003)(38070700021);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 2
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?OXVnUldDZENmOForT09MUTFTYlNHWDE2QU9ybjg3R2o0enpQTXZJUlh1MWh4?=
+ =?utf-8?B?N3U2eTVkNm9KUG5nWlRLTTYreXd2aDlsb3ZtbEIvM05PMVJFRDZQam1Od2VW?=
+ =?utf-8?B?bkZLeitjM3c2Ujlpc2diWWsrY0ZBYzlWMXZmNTdFQnFNOFVENXBXSXd0LzVR?=
+ =?utf-8?B?NGk2Z0NYMTBPUTZuaVJ5Y3Z6ODFBeVZ0bEhUYUxOZlNMamVLQi9DYlNETXF1?=
+ =?utf-8?B?TGpRRnQ3akQzT2g5OW4rT3VFRWZYa1NVRVdCanNQbnpBYUFteDZJSjM2a3RH?=
+ =?utf-8?B?YUF6M3BmOHlvemRJK204Y0ZJOGhZUG9INlFBTnFRS2xJVEV4a1BuOVo3MG5F?=
+ =?utf-8?B?Ukx4V2RlZU1aL2hkK3pKZmRUbnlnUFJoaHZrT2dYczVrZldJYVljNThsYlBa?=
+ =?utf-8?B?TGZzRGdEVzdiTml5QWJrZ00zS0xGZ3NPVWFQTS91R0dtTGlVWUlSL3BibURH?=
+ =?utf-8?B?dVdzWTNBNnArSUVDUVdRaEZ5VXBPNmh0YWZDSm1ibE9GWDE3SVdBNGcyd29F?=
+ =?utf-8?B?MmFML09pelQ3aWo5bzd5NTB6aTBLeFR5eEczcVdjeDRKc3BlMGpUcUtkVlVw?=
+ =?utf-8?B?NHQrZTg2THU5dHhialo0bk1tSHdJTndGOWZpb0hHK3d2OTdsS3NDYTFRb1By?=
+ =?utf-8?B?T1hWUVVyWXFmWkVxa2lTcVlTZkRTVWVqZERWVGZLMC9UU2FaTWdSWCtReXBt?=
+ =?utf-8?B?V3BEbDU4UC9KRnJheCt0amdxQTBkTVN5S044ZndxMmFJaWJsNmtWaTdkVVBp?=
+ =?utf-8?B?Q3NTVkNCWk1DV0ZYOC94NXFBSnpGWndwMXBhRU41OFJ5bndJUmZZcCt1UFFv?=
+ =?utf-8?B?LzFnTmxCYW5nMCtUR2l6WHBzc1RLTmhuOXphcXpsY1BGMW5lZG0zUytxZjNv?=
+ =?utf-8?B?RjVVUGVRWXhoL1dIUW5VRjJHTEpBQW1rOEc5d3llQVJjQ3k5ZFN5YnZoNHFR?=
+ =?utf-8?B?bFVGVXB3ZTJsb0x0aGZWRG5wMXlHM0NJTnp2OWxRVXFrVGxzZWhjbHZ5eVdu?=
+ =?utf-8?B?TGw5L2FRbmhPTWNiTXZTQUIySWhsc2ZwcHJFVXVTa3VlRm9rTEhWNit0RWRZ?=
+ =?utf-8?B?UG02Y1lnUlZNbHZKRnZSYktTVWdtYzlEN1NGOEZEY0ZOTHRWZTdOMXUybDdP?=
+ =?utf-8?B?cjlwMzhOUkJrMDdNdDNyS1BWdHpHdjBvemlndTJXRjdBUU1YcjdqSTN6ZWJj?=
+ =?utf-8?B?aU5tcXg5YmczYWExZDFqSkZtbGFBLzBJcFgvVzNNOUVsN0ZmbkdnN3A0OXdu?=
+ =?utf-8?B?QndBMlNzUExVQ1JFNjVFbDl5Q0FPQTBMNlJ6WSsxSDJYSWtoKzQ1SnNMZ1c1?=
+ =?utf-8?B?emZNeE1DRmpOemRUaXNTWWlJZElYSmJ3aFNXQjk1bFg0eVRJSDhiMFRHWGZQ?=
+ =?utf-8?B?ZXhVVklEbDZwM0hIUXdvdGlEV0JOZStiYTQrbjQ4QllURFJXeUhyL2sxb1lO?=
+ =?utf-8?B?RE9FeWQvZm9nMDVtZGwyZUIxWktoeEhJandFUzhUS1c3alFVMThiQXQ2cWVZ?=
+ =?utf-8?B?ejduU0dNUkRDOGFCN0xsaDMwLzlRVW5nRGJDODJVU0ZvTEQxMzRXbGJOdGlK?=
+ =?utf-8?B?TmxhTkZpeDA5aHU5cGNnbXB1NG41U0twaXRZME1IU042YU9za1plemJZaG5Z?=
+ =?utf-8?B?Z293dEYvTzRzNWNmVjl1emFocFArN2dQa3Y3THY0KzFKWWdzNDE1TlJGQTZv?=
+ =?utf-8?B?ZDYvYjIvV2FpMExSbGRCNXg0bHBTMURyZlRaMHpONkNtSjZzWERxSzB1M0d0?=
+ =?utf-8?B?ZFhiZFVWOGplclBVcjdmeDQrS1lxWDhxbE5kOHRvVGZ6NmpaSlNZMG01cTNi?=
+ =?utf-8?B?WEF4cC82TG9RQXVLa2Y5QUxZRFRtU1ZVbVVpS0xrVFJlaXpOVFhMa0c2TzFU?=
+ =?utf-8?B?aGxlRC85bWNlcCtrUGEwaE8vQWlFOHRqcThoMVZnSFQ4alZmZG9WbGsrVnJi?=
+ =?utf-8?B?c2pGdzRaV0xMcVp5T1BDTGQyWGFnR2M3ZzN3UnNhWHdiQVg5dGtMelZmWjh4?=
+ =?utf-8?B?RUZadEhuc01UV1lSQXRmWkVneXBYRVVjV1h6bkdyS0R6RVZhOUF0a2U0SlpG?=
+ =?utf-8?B?Vk9ZRkYzdi83UlVJWXVPWmU4TTB2UDdyWjNsaGdEeGZmalN2NUVhL3FJc1gy?=
+ =?utf-8?B?QUkyZ1FPbmVXeUZJV1lFZFNhNDVDNk9pZTljUWFBeEYrUEQrcWU2eUxDcGRI?=
+ =?utf-8?B?TWM0dFU4b1BRZ3BYYk9wL0FKUlNwUGRCWXk2NTZYRWRMLzNrak5YeUk2dmtt?=
+ =?utf-8?B?WmdBQ2xXdUpRdWFaeEhpTExNdzBQRlJXNTVKby81ZG53c3JmT2VhMHZKWEtn?=
+ =?utf-8?B?QWE0UHduVGpRcDNiazAvMlN0U3RTZm5YdEtMZTdtREdRSzJqcG1tWXNzbVZG?=
+ =?utf-8?Q?JOfNstRtNun/ACz2qV5+s30byzSaD5Hhm6i6Mc2SVUlvP?=
+x-ms-exchange-antispam-messagedata-1: LFpCg99p8EmVW56sWR1hH6gzaMCzHgwCe8M=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <2B0F2373CFB36745BC4D450CF903C02D@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20260818022225.31801-1-54weasels@gmail.com>
- <20260818022225.31801-3-54weasels@gmail.com>
- <a9c04b36-c217-c0f7-0328-70c89d5ca667@eik.bme.hu>
-In-Reply-To: <a9c04b36-c217-c0f7-0328-70c89d5ca667@eik.bme.hu>
-From: Purr Box <54weasels@gmail.com>
-Date: Wed, 19 Aug 2026 21:37:52 -0700
-X-Gm-Features: AcwNN1UsLAB72LUlqjzB4aFmEe0CnyOvRDu1y69P6mGXh3QkRmBYHYZ9k3QqOOs
-Message-ID: <CAFWf6u-D2WJA01gz=eHgwShtt9si3_R-7FJvfTPDRNQFyt17EA@mail.gmail.com>
-Subject: Re: [PATCH v4 2/6] target/m68k: Fix fsave/frestore for 68881 FPU
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, laurent@vivier.eu
-Content-Type: multipart/alternative; boundary="000000000000e48e5f065973154d"
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=54weasels@gmail.com; helo=mail-oa1-x2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Exchange-RoutingPolicyChecked: dywFLd65PIn+E+Tt6FWGrODdUTR3TpbW2WBJQui+ALKj17UsFSo0fM05LMlEXri3ro2moq/BJBXxTGYuB1rhgwdg1sMkJH92vNBTIJZa5yDwpKBieU+AmbzwCU+ZELjDs0icT1stgZaknRaTLRWEdl42AZfjE6b9Iyq5bU6rdIxrGcqxeOU2dnaXEBkbBXnyuyXPF8WKfL5RTo6rTmphy+8aJZCjXEeH5tlWtXXkmgmPt8XFCiueemvjk6BQLHy2V8WzdWft2QIo3TW95qMl8NNIF5n8ghUN2+3Y5atYTeL2Vrym0g2dZrYgk7lzcdaeDEeuHAYMllzaYwFm67btHg==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: Z7bQuBKrN0UmCYRvspSWh6TFHg6CNsIWQmcYnlakIOvnpnwfAl8fkZLzadFGrEtPSpQpDIySSdRdhfeUTqAiYNQ2pWOUyWVrW9hecIc4W7SrnXu8l/UH2Za2bD89cGph6MOwYk3vyJyLX9C0NHwujNHipxSLlLOsloGwM7KKJ/MS52+HIEicdPv+PRX+lXh7cFiJnxfy0p718F/EEX+zWb2BTg0IRX3irKf86ZuByoaYRq4sqWMp00RhFEFY8gPibrtmUb0Q8w4dzl+l9g+Usz1lSjnEzNQ0ul8r4iislE5m+o+hQo6pKIAxHqNu3WpnLcgj4lNW9kqRdTQurMooHI5EpR0tUspL31iKULk2U08io58DC5FQtkOJW9h3GMPPOIgt4RlF1lEU73L6ZPZbj2FPCMvIlWFZR1VXwTw09lSbxIe/PG+OfqdEbh7/HZVcUQDKU+3X4bobaEuP0AOCY7OBpDAUo15tknu6QAIO/32diIKwDT0Xa2H+pfpRbRk1T46frHoBINEg663pRcbbQn+m0ulvKZeMvL0Uw1modGV+BJcYVJDUdrqJ2Nh9QkrZloCxjMsmdoJLp2kQ9jXGO5RcLxNelVe5Ug4wpoepnpUR0f+ZJEDB2olbXTT60Lhv
+X-OriginatorOrg: wdc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BY1PR04MB9561.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b8ff26e9-9b07-499d-717a-08defe759c11
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Aug 2026 04:43:41.6069 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: O+TvccOgfw2qNWD9VCKOb6Yrnl1gnTJb+OLFFjRLg170l+2zRdeK7ByVov+ZrokV/bBNhmNhLyrEwCBgaCVj9opFLL3QnCxBfraYeRJCC0g=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH8PR04MB993885
+Received-SPF: pass client-ip=68.232.141.245;
+ envelope-from=prvs=685c7dad1=Alistair.Francis@wdc.com;
+ helo=esa1.hgst.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,238 +183,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e48e5f065973154d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hi Zoltan,
-
-Thanks for the review!
-I've refactored the logic for v5. I removed the redundant M68040 checks in
-frestore (keeping just the FIXME), and streamlined fsave so that it
-uniformly checks for M68K_FEATURE_FPU, writing an IDLE frame (0x41000000)
-for the 68040 and a NULL frame (0x00000000) for the 68881/68882.
-Also, thanks for the tip on the Context: tag. I've updated my script to
-inject it below the --- separator in the .patch files so it stays off the
-permanent git commit log while remaining visible to reviewers.
-
-I'll wait a bit longer to see if there are comments on the rest of the
-series before spinning new patches.
-
-Dan.
-
-On Tue, Aug 18, 2026 at 3:52=E2=80=AFAM BALATON Zoltan <balaton@eik.bme.hu>=
- wrote:
-
-> On Mon, 17 Aug 2026, 54weasels wrote:
-> > High level description:
-> > The 68881/68882 FPUs require fsave/frestore instructions to read/write
-> state frames. QEMU only fully implemented this for the 68040. The Sun-3
-> uses a 68881 FPU, and the boot ROM executes `fsave` to probe FPU presence=
-.
-> This patch adds basic 68881 FPU state frame handling (NULL frame) to
-> accurately simulate an idle FPU state.
-> >
-> > Impact on existing functionality:
-> > Fixes FPU detection for 68881/68882 across all M68k boards without
-> affecting 68040 specific state logic.
->
-> Comments such as the next Context: should go below the --- as everything
-> before that is part of the commit message. In QEMU a Context: tag is not
-> commonly used so I think you want this as a comment not part of the
-> commit message.
->
-> > Context: This patch was originally submitted as part of the monolithic
-> Sun-3 Machine Emulation series (
-> https://patchew.org/QEMU/20260503015756.99176-1-54weasels@gmail.com/) and
-> has been split into atomic components.
-> > ---
-> > target/m68k/translate.c | 20 ++++++++++++++++----
-> > 1 file changed, 16 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-> > index 138c89d3e5..bdf619883c 100644
-> > --- a/target/m68k/translate.c
-> > +++ b/target/m68k/translate.c
-> > @@ -5364,11 +5364,19 @@ DISAS_INSN(frestore)
-> >         gen_exception(s, s->base.pc_next, EXCP_PRIVILEGE);
-> >         return;
-> >     }
-> > -    if (m68k_feature(s->env, M68K_FEATURE_M68040)) {
-> > +    if (m68k_feature(s->env, M68K_FEATURE_M68040) ||
-> > +        m68k_feature(s->env, M68K_FEATURE_FPU)) {
->
-> M68020+ (including M68040) has FPU set so no need to keep that test and
-> can be replaced with M68K_FEATURE_FPU.
->
-> >         SRC_EA(env, addr, OS_LONG, 0, NULL);
-> > -        /* FIXME: check the state frame */
-> > +        if (m68k_feature(s->env, M68K_FEATURE_M68040)) {
-> > +            /* FIXME: check the state frame */
-> > +        } else {
->
-> What about M68060 or other CPUs with built-in FPU? As none of these do
-> anything maybe the if/else is not needed and can just keep the FIXME
-> comment?
->
-> > +            /*
-> > +             * 68881/68882 FRESTORE: read the state frame
-> > +             * (NULL frame is 4 bytes)
-> > +             */
-> > +        }
-> >     } else {
-> > -        disas_undef(env, s, insn);
-> > +        disas_undef_fpu(env, s, insn);
-> >     }
-> > }
-> >
-> > @@ -5383,8 +5391,12 @@ DISAS_INSN(fsave)
-> >         /* always write IDLE */
-> >         TCGv idle =3D tcg_constant_i32(0x41000000);
-> >         DEST_EA(env, insn, OS_LONG, idle, NULL);
-> > +    } else if (m68k_feature(s->env, M68K_FEATURE_FPU)) {
-> > +        /* 68881/68882 FSAVE: always write NULL frame */
-> > +        TCGv null_frame =3D tcg_constant_i32(0x00000000);
-> > +        DEST_EA(env, insn, OS_LONG, null_frame, NULL);
->
-> Same comment as above about CPUs with FPU. Maybe there should be only one
-> block for M68K_FEATURE_FPU replacing M68K_FEATURE_M68040 and a switch for
-> setting the frame value?
->
-> Regards,
-> BALATON Zoltan
->
-> >     } else {
-> > -        disas_undef(env, s, insn);
-> > +        disas_undef_fpu(env, s, insn);
-> >     }
-> > }
-> > #endif
-> >
->
-
---000000000000e48e5f065973154d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi Zoltan,<br><br>Thanks for the review!<div>I&#39;ve refa=
-ctored the logic for v5. I removed the redundant M68040 checks in frestore =
-(keeping just the FIXME), and streamlined fsave so that it uniformly checks=
- for M68K_FEATURE_FPU, writing an IDLE frame (0x41000000) for the 68040 and=
- a NULL frame (0x00000000) for the 68881/68882.<br>Also, thanks for the tip=
- on the Context: tag. I&#39;ve updated my script to inject it below the ---=
- separator in the .patch files so it stays off the permanent git commit log=
- while remaining visible to reviewers.<br><br>I&#39;ll wait a bit longer to=
- see if there are comments on the rest of the series before spinning new pa=
-tches.<br><br>Dan.</div></div><br><div class=3D"gmail_quote gmail_quote_con=
-tainer"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Aug 18, 2026 at 3:52=
-=E2=80=AFAM BALATON Zoltan &lt;<a href=3D"mailto:balaton@eik.bme.hu">balato=
-n@eik.bme.hu</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" styl=
-e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
-g-left:1ex">On Mon, 17 Aug 2026, 54weasels wrote:<br>
-&gt; High level description:<br>
-&gt; The 68881/68882 FPUs require fsave/frestore instructions to read/write=
- state frames. QEMU only fully implemented this for the 68040. The Sun-3 us=
-es a 68881 FPU, and the boot ROM executes `fsave` to probe FPU presence. Th=
-is patch adds basic 68881 FPU state frame handling (NULL frame) to accurate=
-ly simulate an idle FPU state.<br>
-&gt;<br>
-&gt; Impact on existing functionality:<br>
-&gt; Fixes FPU detection for 68881/68882 across all M68k boards without aff=
-ecting 68040 specific state logic.<br>
-<br>
-Comments such as the next Context: should go below the --- as everything <b=
-r>
-before that is part of the commit message. In QEMU a Context: tag is not <b=
-r>
-commonly used so I think you want this as a comment not part of the <br>
-commit message.<br>
-<br>
-&gt; Context: This patch was originally submitted as part of the monolithic=
- Sun-3 Machine Emulation series (<a href=3D"https://patchew.org/QEMU/202605=
-03015756.99176-1-54weasels@gmail.com/" rel=3D"noreferrer" target=3D"_blank"=
->https://patchew.org/QEMU/20260503015756.99176-1-54weasels@gmail.com/</a>) =
-and has been split into atomic components.<br>
-&gt; ---<br>
-&gt; target/m68k/translate.c | 20 ++++++++++++++++----<br>
-&gt; 1 file changed, 16 insertions(+), 4 deletions(-)<br>
-&gt;<br>
-&gt; diff --git a/target/m68k/translate.c b/target/m68k/translate.c<br>
-&gt; index 138c89d3e5..bdf619883c 100644<br>
-&gt; --- a/target/m68k/translate.c<br>
-&gt; +++ b/target/m68k/translate.c<br>
-&gt; @@ -5364,11 +5364,19 @@ DISAS_INSN(frestore)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gen_exception(s, s-&gt;base.pc_next, =
-EXCP_PRIVILEGE);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0}<br>
-&gt; -=C2=A0 =C2=A0 if (m68k_feature(s-&gt;env, M68K_FEATURE_M68040)) {<br>
-&gt; +=C2=A0 =C2=A0 if (m68k_feature(s-&gt;env, M68K_FEATURE_M68040) ||<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 m68k_feature(s-&gt;env, M68K_FEATURE_FPU)=
-) {<br>
-<br>
-M68020+ (including M68040) has FPU set so no need to keep that test and <br=
->
-can be replaced with M68K_FEATURE_FPU.<br>
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0SRC_EA(env, addr, OS_LONG, 0, NULL);<=
-br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* FIXME: check the state frame */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (m68k_feature(s-&gt;env, M68K_FEATURE_=
-M68040)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* FIXME: check the state f=
-rame */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-<br>
-What about M68060 or other CPUs with built-in FPU? As none of these do <br>
-anything maybe the if/else is not needed and can just keep the FIXME <br>
-comment?<br>
-<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* 68881/68882 FRESTOR=
-E: read the state frame<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* (NULL frame is 4 by=
-tes)<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0} else {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 disas_undef(env, s, insn);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 disas_undef_fpu(env, s, insn);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0}<br>
-&gt; }<br>
-&gt;<br>
-&gt; @@ -5383,8 +5391,12 @@ DISAS_INSN(fsave)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* always write IDLE */<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TCGv idle =3D tcg_constant_i32(0x4100=
-0000);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0DEST_EA(env, insn, OS_LONG, idle, NUL=
-L);<br>
-&gt; +=C2=A0 =C2=A0 } else if (m68k_feature(s-&gt;env, M68K_FEATURE_FPU)) {=
-<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* 68881/68882 FSAVE: always write NULL f=
-rame */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 TCGv null_frame =3D tcg_constant_i32(0x00=
-000000);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 DEST_EA(env, insn, OS_LONG, null_frame, N=
-ULL);<br>
-<br>
-Same comment as above about CPUs with FPU. Maybe there should be only one <=
-br>
-block for M68K_FEATURE_FPU replacing M68K_FEATURE_M68040 and a switch for <=
-br>
-setting the frame value?<br>
-<br>
-Regards,<br>
-BALATON Zoltan<br>
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0} else {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 disas_undef(env, s, insn);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 disas_undef_fpu(env, s, insn);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0}<br>
-&gt; }<br>
-&gt; #endif<br>
-&gt;<br>
-</blockquote></div>
-
---000000000000e48e5f065973154d--
+T24gV2VkLCAyMDI2LTA4LTE5IGF0IDEyOjU2ICswMjAwLA0KZnJlZGVyaWMucGV0cm90QHVuaXYt
+Z3Jlbm9ibGUtYWxwZXMuZnIgd3JvdGU6DQo+IEZyb206IEZyw6lkw6lyaWMgUMOpdHJvdCA8ZnJl
+ZGVyaWMucGV0cm90QHVuaXYtZ3Jlbm9ibGUtYWxwZXMuZnI+DQo+IA0KPiBDb3JyZWN0IHNzdGF0
+dXMgdXBkYXRlIGFuZCBhbGxvdyBzdXBwb3J0IGZvciBydjEyOCBpbiBtc3RhdHVzLA0KPiBwcm92
+aWRlZCB0aGUgY3B1IGlzIGFuIHJ2MTI4Lg0KPiANCj4gQ2hhbmdlcyBjb21wYXJlZCB0byB2MToN
+Cj4gLSBhZGQgY292ZXIgbGV0dGVyDQo+IC0gYWRkIHRoZSBSZXZpZXdlZC1ieSB0YWdzDQo+IA0K
+PiBGcsOpZMOpcmljIFDDqXRyb3QgKDIpOg0KPiDCoCB0YXJnZXQvcmlzY3Y6IEZpeCBzc3RhdHVz
+IHVwZGF0ZSBpbiBydjEyOA0KPiDCoCB0YXJnZXQvcmlzY3Y6IEFsbG93IFVYTCB0byBiZSAzIGlu
+IG1zdGF0dXMgb24gcnYxMjgNCg0KVGhhbmtzIQ0KDQpBcHBsaWVkIHRvIHJpc2N2LXRvLWFwcGx5
+Lm5leHQNCg0KQWxpc3RhaXINCg0KPiANCj4gwqB0YXJnZXQvcmlzY3YvdGNnL2Nzci5jIHwgOCAr
+KysrLS0tLQ0KPiDCoDEgZmlsZSBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKyksIDQgZGVsZXRpb25z
+KC0pDQo=
 
