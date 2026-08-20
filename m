@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB833C5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:54:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24780C5DF85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:54:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx5zL-0006ns-0l; Thu, 20 Aug 2026 12:51:35 -0400
+	id 1wx5yP-0003z8-Op; Thu, 20 Aug 2026 12:50:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5zC-0005oC-L4
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:28 -0400
+ id 1wx5yL-0003uY-Iz
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:50:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5zA-0005fi-EJ
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:26 -0400
+ id 1wx5yJ-0005QP-Dr
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:50:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787244683;
+ s=mimecast20190719; t=1787244630;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=V8uegqHxKQ/1NXEPewm6GGy0naItBS1eOwztkv4A8yU=;
- b=HqB8plUAGXAaTBmG1NJ73rsYeMSOgtoXVu8OMWm/nrnaGzHxO9K4XUzKlIkq1QyH4Mn5bj
- 3yVuMdk7DaRPxXpCEIoZlAhZH3JydfZUKYWgZJxEnMk6WVhPsWATH5BgEFxJpQcUeMlJmC
- 32NpCV+rn/hMZc/p9L7a4N6MR8CpMMc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/+3VB50P9IeYwtauM/g5NERrE6CRpOAQgHkmrcSXNw8=;
+ b=jM0HNcmCPrGrmTR0mx6H6UjPt6d1PCscNNKb2f3Nxol6gQ973kubr2BsbdlAudCslVEeZ2
+ YQt5SsKRefcfCbri/jsXCUsXT/TlwJ/30+6B7a0y/4M2EOdD8TR09ItOXLEgvT/iRBc2yz
+ sYL2RG7BOL/7uwFKbAj1c01V5NLsCqY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-379-pZ28aLjvPgmIkM87DYdi8Q-1; Thu, 20 Aug 2026 12:51:21 -0400
-X-MC-Unique: pZ28aLjvPgmIkM87DYdi8Q-1
-X-Mimecast-MFC-AGG-ID: pZ28aLjvPgmIkM87DYdi8Q_1787244680
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-47f835ac1aeso66888f8f.3
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:51:21 -0700 (PDT)
+ us-mta-241-06j2AidNP5ur2B_JRIC1Fw-1; Thu, 20 Aug 2026 12:50:25 -0400
+X-MC-Unique: 06j2AidNP5ur2B_JRIC1Fw-1
+X-Mimecast-MFC-AGG-ID: 06j2AidNP5ur2B_JRIC1Fw_1787244624
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-495569acf8dso171185e9.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:50:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787244680; x=1787849480; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787244623; x=1787849423; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=V8uegqHxKQ/1NXEPewm6GGy0naItBS1eOwztkv4A8yU=;
- b=Dftz57JgHdD07CHKXwNow1g9OyHUntvLt0jVfmto3Mp12gekLuNxZhiNSfEW9+0YSp
- tvCzHbsVyv/oL14WcTAU+WF5xbSrsuElCgHJFKV1qpDuJ3qjHgKIELYSjZFjmMF7uiQl
- t0cYdrW/32IkIu0Rp2FUG+kqFenIOag6dRYM90uOSrPjRcV/2+QPfu956onNS5uKJGbc
- miAE/F1Y3lOhHhZvsGQj0SckXZY+/7vKwbhYR/aDGKO+7wGIZSTZCvWI58ZEhdv90v4N
- tLqjZ22mmPEbNDBN84bYs25v3lWpcdjFa5hDP3+0XsSNcNM1dCdodkWqHlYNJSfkwtAs
- X9NA==
+ bh=/+3VB50P9IeYwtauM/g5NERrE6CRpOAQgHkmrcSXNw8=;
+ b=cvBIx06BwvJPrYzhV8psylRK4BzPHDFgp/IOEhEEZlAVZVDkucvLAgmezGMKo1stS3
+ fDmBWCsRuBGFrfYVL60sBaFsdoCixfSMD8pQmoWKEafxBJMYJodBStpqQKovZF5dD34B
+ pssrErlm3rpMZOWcjNrW7AOoI8x19Zu6tlQTfXc5DXxsNhBspBJKlLe3c1v8vqJH+Q03
+ 9H1Taboar5G9T2EMqODh+5cYcE11XizTNLB5ta0DMtkU5Kkv2axlM47h3+Y3pn9f901a
+ 7IA8Y40pu14J6It38/S1NvNUsjFc2hi7/DxDSnXMmXzNmOOUj7BJCqPXzxVkl+VbOzpc
+ 0PPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787244680; x=1787849480;
+ d=1e100.net; s=20251104; t=1787244623; x=1787849423;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=V8uegqHxKQ/1NXEPewm6GGy0naItBS1eOwztkv4A8yU=;
- b=X+CuXcGLVsCVmK9RuKVV6wYigS6QXMvMVIi83YxJwUgL2EM0H3U58h3C3WFSEHWHA5
- UyBVqThcInZxKUh8NYvQ7UZBXieZrof2e8OJ1EKXak+GR1rz8ikLVf/X/74g9iojZhfw
- OuLqdCu7cVU6LVwwQ3v10ZHr9AEtvhDG15re6o7yR04NfZT3/+W6JjnGCbILRhgkuT06
- 77c+GGxv0e6GhK6ReyAfIM3lpHsdoxqMpVO4KlMng7Cb+CphPnBN8R5NYPmlqKBqDwZP
- bjrHeTZPTQCFzKjcnIlALWrHrCC3m3xaQYNt12C4COpYghYe65LvgAmkJMBKI679YXIY
- 8oBA==
-X-Gm-Message-State: AFuF++nNe77xYEDFNTj+9kaNFyndBphIpSk8mR4aJiobwzPv4DfpwhF7
- U3BoSN1qXKe3P9Rq2H1hbLAwwIQJYkkga557M/PavUeiw5xDieYWtQoivD3sbzKhUTfiuSd/a9g
- RmnA5lSL1Z5Ib7uIRgr2EgTAhZMguTZGaa9/4fCdC7gFRYZvACUSizPEjinWAAV6r+uCm3wamGH
- +Gndfxk7UsuFeMnRmF9yCLnitTpHvpVN6Vo4AE+ePD
-X-Gm-Gg: AR+sD10dQXzFA0FPE2YwOEHgWJs513RegJUi6nSMbqxRZuOacLovAR2TiaJnL1mUlMG
- THvAUstYJ8HPHzS9r7cae3f7q6csPuSBcBMcDW0Yz0juXG6y9HCDCLTctSl+i39YdKLdpbz5BU0
- KETPBizhyOmNB0alLGMoSDGIVdquzXN+hTQnQ0Taz+37NFauK7e1sw5ALR0Gd7KRGwrdOFz+79/
- nWemEoEbgF/+g10cpUQ9g7AOC+MXbqU2MAoSDBG3ISpc5zbSNJ3kbbZOFJgJE5idqzd6aTtZjl9
- 1LdakCUAf17WeEn06y4wT2Kw6jQxxQMn88YheAxXH4mbScw4X1//UeDHipiyFwN+iMy+0lx3TIU
- mjDdED/ROecnbt/1hWirsBiVQf3fpgbYS0ph7OeQFs5zWmggz0V8iO7Vi4Z+HC9Q8tLTqKBh731
- X9K7Q=
-X-Received: by 2002:a05:6000:4b1b:b0:482:bb55:8bda with SMTP id
- ffacd0b85a97d-482c0b5bf64mr18882f8f.5.1787244680204; 
- Thu, 20 Aug 2026 09:51:20 -0700 (PDT)
-X-Received: by 2002:a05:6000:4b1b:b0:482:bb55:8bda with SMTP id
- ffacd0b85a97d-482c0b5bf64mr18752f8f.5.1787244679838; 
- Thu, 20 Aug 2026 09:51:19 -0700 (PDT)
+ bh=/+3VB50P9IeYwtauM/g5NERrE6CRpOAQgHkmrcSXNw8=;
+ b=VfnODmBxHfQ27Ds3oil8Ck4v/hNuxBTh7CwYF8uSoDtTlUDOgnYaAa8tjhFsheZ7vb
+ MjCDqjsFhutkESlQWc8K0uOQPK4KDxw1vw+7r4ehbG8CtwLOF1tStvDjWCRTBO/Yov+i
+ xcDOzNpGAHNquTp1xsaWIyV66YiXReYJk3WZbkJ6LHDwzkgTWFZqPFRKJHB+yGkYUpdf
+ +T7z1GwcpGwbxB0RkEDriKetd+22Z9Fv2wZLLk3zJpNk2yuaLLPoMlY0YzvwVdDHUpCn
+ 7T8to2CX/+6fs2AtqkLrOTGqKIA1/j8kQjyHm9Inkn+Kdp7at2owMT8ebNDEwuI/iJ1p
+ 0/Cg==
+X-Gm-Message-State: AOJu0YxkPJJwJtc1oHniawbmCrm3kDulJPviQomuSEXR7yKGYJzwMVEP
+ CIHOQ2cpAg7Bm45Y8rvghoLqkq7wmrQYWrvwSWShgM0VVN+sNMCFGhSZ0EXj246XordlBrOCQga
+ eysvGsIkYa90ifCjNIMlmhHDVqQIUUlHOi2HMqpLI/z+RU94ewD+M4iyvaXQYoGPDEIQNmJ1jJJ
+ zsK/B/9zpHqTBCF1wDBPRdAVr5F8zptktluBEWTISH
+X-Gm-Gg: AR+sD10/2t3gIt3dXO7H7ci2UlFU6BW7a8WNqOV02xS1Y49bzJw8JSxzOtCozEvAw2X
+ NyCfpPa6nbiA5+5+eSmK8ZM9xfN0XM1Zh7jZeLl4+uPv9EJvDUg0kO0ooihXMXVwyf03Eh4NZhu
+ 5e0tkxXxKtoH3cvgm/TcVTLHSSNX23WZQpnygHv2TYxvqSyBYoq4AjJcVXE7ygjmCydDvgmdK+A
+ JlDxcCt7qm/XhCXyjdo7BN7LYmtoVAQE8e8GEBqVT0OBl3kYSBB70P/tlFmklDxnB5wseeXe04n
+ Qxic9hThPpeANjl7TIT8qwp0xg2O+X6kKlWWq0/PF0otwl2R8lBg+7AwLdxjPZ8Hj4w6xisjBF0
+ wBIWAxfa5Tnva7sxDINb/MrPzLcGtdiI1eP8MLClZHFGWxWOCl9gFmEKSyiGKIEXBJLESDjQisn
+ Wi9a4=
+X-Received: by 2002:a05:600c:8b25:b0:499:8807:345f with SMTP id
+ 5b1f17b1804b1-499b84617bdmr3969685e9.13.1787244623569; 
+ Thu, 20 Aug 2026 09:50:23 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b25:b0:499:8807:345f with SMTP id
+ 5b1f17b1804b1-499b84617bdmr3968425e9.13.1787244623079; 
+ Thu, 20 Aug 2026 09:50:23 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482bab42f8esm6390603f8f.28.2026.08.20.09.51.18
+ 5b1f17b1804b1-499b29e19f2sm49098615e9.4.2026.08.20.09.50.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 09:51:19 -0700 (PDT)
+ Thu, 20 Aug 2026 09:50:20 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: "Naveen N Rao (AMD)" <naveen@kernel.org>,
- Tom Lendacky <thomas.lendacky@amd.com>
-Subject: [PULL 28/53] target/i386: SEV: Refactor check_sev_features()
-Date: Thu, 20 Aug 2026 18:49:31 +0200
-Message-ID: <20260820164957.1895963-29-pbonzini@redhat.com>
+Cc: Andrey Polivoda <apolivodaa433@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 07/53] target/i386: decode opcode extensions group 3 /1 as TEST
+Date: Thu, 20 Aug 2026 18:49:10 +0200
+Message-ID: <20260820164957.1895963-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820164957.1895963-1-pbonzini@redhat.com>
 References: <20260820164957.1895963-1-pbonzini@redhat.com>
@@ -121,120 +121,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Naveen N Rao (AMD)" <naveen@kernel.org>
+From: Andrey Polivoda <apolivodaa433@gmail.com>
 
-Refactor check_sev_features() to consolidate SEV-SNP checks to a single
-if block. This is also helpful when adding checks for future SEV
-features.  While at it, move the comment about the checks being done
-outside of the function body and expand it to describe what this
-function does. Update error_setg() invocations to use a consistent
-format.
+According to Table A-6 in Volume 3 of AMD64 Architecture Programmer's Manual,
+opcodes F6 and F7 (opcode extensions group 3) with ModRM's reg field values
+of 0 and 1 can be used to encode a TEST instruction.
 
-No functional change intended.
+Although Intel 64 and IA-32 Architectures Software Developer's Manual leaves
+the cell 1 of opcode extensions group 3 blank in the opcode table
+(Table A-6, Volume 2D), the instruction in a group 3 with reg field of ModRM
+byte set to 1 actually behaves like TEST instruction on Intel CPUs.
 
-Suggested-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Link: https://lore.kernel.org/r/cae04d88adfbcdc2997e518475f3b89091adf8a9.1779281646.git.naveen@kernel.org
+Currently, QEMU decodes group 3 instruction as TEST only if reg field of ModRM
+byte is 0. When the reg field is 1, QEMU raises a #UD exception.
+This behavior does not match real Intel and AMD hardware.
+
+This patch fixes this issue by duplicating the existing [0x00] and [0x08]
+X86_OP_ENTRYrr(AND, ...) entries into slots [0x01] and [0x09] in the
+opcodes_grp3 table.
+
+Fixes: d7c41a60d0c5 ("target/i386: move C0-FF opcodes to new decoder (except for x87)")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3580
+Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
+Cc: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/r/20260621032524.1138213-1-apolivodaa433@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/sev.c | 67 +++++++++++++++++++++++++----------------------
- 1 file changed, 36 insertions(+), 31 deletions(-)
+ target/i386/tcg/decode-new.c.inc | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index ae9c85af131..8acbb01da22 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -507,40 +507,22 @@ static void sev_apply_cpu_context(CPUState *cpu)
-     }
- }
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index faf74b00bbd..9c429e113de 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1624,6 +1624,7 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+     static const X86OpEntry opcodes_grp3[16] = {
+         /* 0xf6 */
+         [0x00] = X86_OP_ENTRYrr(AND, E,b, I,b),
++        [0x01] = X86_OP_ENTRYrr(AND, E,b, I,b),
+         [0x02] = X86_OP_ENTRY1(NOT,  E,b,      lock),
+         [0x03] = X86_OP_ENTRY1(NEG,  E,b,      lock),
+         [0x04] = X86_OP_ENTRYrr(MUL, E,b, 0,b, zextT0),
+@@ -1633,6 +1634,7 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
  
-+/*
-+ * Ensure SEV_FEATURES is configured for correct SEV hardware and that
-+ * the requested features are supported. In addition, ensure feature
-+ * dependencies are satisfied (allow tsc-frequency only if secure-tsc
-+ * is also enabled, as an example).
-+ */
- static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
-                               Error **errp)
- {
--    /*
--     * Ensure SEV_FEATURES is configured for correct SEV hardware and that
--     * the requested features are supported. If SEV-SNP is enabled then
--     * that feature must be enabled, otherwise it must be cleared.
--     */
--    if (sev_snp_enabled() && !(sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
--        error_setg(
--            errp,
--            "%s: SEV_SNP is enabled but is not enabled in VMSA sev_features",
--            __func__);
--        return -1;
--    } else if (!sev_snp_enabled() &&
--               (sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
--        error_setg(
--            errp,
--            "%s: SEV_SNP is not enabled but is enabled in VMSA sev_features",
--            __func__);
--        return -1;
--    }
--    if (sev_features && sev_es_enabled() && !sev_snp_enabled()) {
--        error_setg(errp,
--                   "%s: SEV features are not supported with SEV-ES at this time",
--                   __func__);
--        return -1;
--    }
-     if (sev_features && !sev_es_enabled()) {
-         error_setg(errp,
-                    "%s: SEV features require either SEV-ES or SEV-SNP to be enabled",
-                    __func__);
-         return -1;
-     }
-+
-     if (sev_features & ~sev_common->supported_sev_features) {
-         error_setg(errp,
-                    "%s: VMSA contains unsupported sev_features: %lX, "
-@@ -548,13 +530,36 @@ static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
-                    __func__, sev_features, sev_common->supported_sev_features);
-         return -1;
-     }
--    if (sev_snp_enabled() && SEV_SNP_GUEST(sev_common)->tsc_khz &&
--        !(sev_features & SVM_SEV_FEAT_SECURE_TSC)) {
--        error_setg(errp,
--                   "%s: TSC frequency can only be set if Secure TSC is enabled",
--                   __func__);
--        return -1;
-+
-+    if (sev_snp_enabled()) {
-+        if (!(sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
-+            error_setg(errp,
-+                       "%s: SEV_SNP is enabled but is not enabled in VMSA sev_features",
-+                       __func__);
-+            return -1;
-+        }
-+        if (SEV_SNP_GUEST(sev_common)->tsc_khz &&
-+            !(sev_features & SVM_SEV_FEAT_SECURE_TSC)) {
-+            error_setg(errp,
-+                       "%s: TSC frequency can only be set if Secure TSC is enabled",
-+                       __func__);
-+            return -1;
-+        }
-+    } else {
-+        if (sev_features && sev_es_enabled()) {
-+            error_setg(errp,
-+                       "%s: SEV features are not supported with SEV-ES at this time",
-+                       __func__);
-+            return -1;
-+        }
-+        if (sev_features & SVM_SEV_FEAT_SNP_ACTIVE) {
-+            error_setg(errp,
-+                       "%s: SEV_SNP is not enabled but is enabled in VMSA sev_features",
-+                       __func__);
-+            return -1;
-+        }
-     }
-+
-     return 0;
- }
- 
+         /* 0xf7 */
+         [0x08] = X86_OP_ENTRYrr(AND, E,v, I,z),
++        [0x09] = X86_OP_ENTRYrr(AND, E,v, I,z),
+         [0x0a] = X86_OP_ENTRY1(NOT,  E,v,      lock),
+         [0x0b] = X86_OP_ENTRY1(NEG,  E,v,      lock),
+         [0x0c] = X86_OP_ENTRYrr(MUL, E,v, 0,v, zextT0),
 -- 
 2.55.0
 
