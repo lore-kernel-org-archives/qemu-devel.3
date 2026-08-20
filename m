@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F38E0C5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:48:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C273BC5DF85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:49:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwtjb-0001Ov-Mc; Wed, 19 Aug 2026 23:46:31 -0400
+	id 1wwtl2-0005rB-76; Wed, 19 Aug 2026 23:48:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtjZ-0001Hu-Q0
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:29 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1wwtl1-0005ol-8k
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:47:59 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtjY-00043q-20
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:29 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-38dc69c74b8so2168806a91.0
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:46:27 -0700 (PDT)
+ id 1wwtkz-0004LX-LX
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:47:58 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-38de840f2f0so1562241a91.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:47:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787197587; x=1787802387; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787197676; x=1787802476; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=SgsaYtQ8tDSYVVM1L00F+By8GMWleAT9fxOmw/AcfMA=;
- b=Vlz3R3rWZoJY1Zqj3BM5/Oj7WZjmXao/FMz1kx6vVoJZrn0SX4VdNbCE2rlvOO8nV7
- bVmRavytSoqXpQPiw+JkbcbLwm+7icRhEEOLp9Go1xmUV2TEJqiwimzyjTCS4CVkIBqf
- iaXL+g5MM29csPsF35YsTpSdagiqG+BFy7Iu3J0T3EC+Jh8gDSe6ji+Ugi6TWdQhtCEM
- AfrvCpVreauOzZDhzOUzr9Q2gfWEEhIj+xOS5jpUINSGOnX8QZsQniJJvTa+CrDohY6j
- 8CVnB5SuZ+rIpsFYYpfalV+BXT/Do7NmJfOBh2a7ny+uAidlf9J0BFfICLtQPlbL6s6F
- mFSg==
+ bh=Hk5GZbBPE9k/cD83hwQyRHgA+R2YMqa9HODNXp3uV+Q=;
+ b=ZSY7lgOcMLE56jlMKONpiqc2SmhccSeTs8GB3FrrGvH2JTwXbk/91XIozXMcqqgD+m
+ UZkZRD1y8R43jkpOtUCcArn9lJkW/DOrR41szsXmrv7QVnbgZ/TRqH9XUggBCB4UOhHU
+ Ze9Z8dBns72kSYgEYi/XjWoevUsOOU8IlA2QcPY2PdkMqZLQcL8Lo1/yexB5bNRfnn46
+ m4fLpBgB3QU3+QTACns9KbDcFmVjlqr/dEVqY3+B+fGRdyUzmeCv3qF4DmReCV7RhpSD
+ 39gZdKwIbnOmrl/Pi2lFB85FKRQfoQ5ry1r4kiG01c8D866/4NFOH3U3nLeMUYwnLsGE
+ ZojA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787197587; x=1787802387;
+ d=1e100.net; s=20251104; t=1787197676; x=1787802476;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=SgsaYtQ8tDSYVVM1L00F+By8GMWleAT9fxOmw/AcfMA=;
- b=GabrICtc1/rrHFeDy8r8yU+kvNcXhR9RkdxJulay4t1oA13Jq510WcYtJfejYUcKZt
- j7zDzoZKThmc7s9bTrC2HvvmVG0TQWya6/4D9g8SrzOoX4jId1MoBhMd9USa273l9JgS
- zcF/R44lPL0Jd4SlmQsMSHrhZBDZFWgsCUjbb6nRwz4QuUYgofALzBtQ4rRiQEGvOlzw
- HlhjWZ8Z9bOGRgMpDQQg6XTjeR9PT4Zt6Wtw1SUdFy/kNmJVIxPRa6tuap3xdsAoLq6B
- CRTK3w+8pVGtFkjt2KgKEhRc0xmLNWB/+Z1w7IdXoFKfkUCYCD/8uZsg6ROknx68N4qC
- N1Mg==
-X-Gm-Message-State: AFuF++lzODpr7bbQn5d4dUECBO0aRvet2NBilTkmTwWnfy2U7mb3RVXS
- Ms6WvtS/9AfLvKiiaboR3PvWNs7tJ4QHfwhC0mFTVrYKWnT6AdA0hCK0V0+Sgw==
-X-Gm-Gg: AR+sD13Xz6lLH6Cv6K1W9ZaIbbQYc6m3HhdPhhvExQhy7aGR/i6awGPefD8sqm5ANMF
- 0Hlmp85CqB5hycRBqzPPA1/4yHhDjINTuKTrfD8ubkRdr+nVXDNXxNEFuJeoIx1KbUbcX6nQd+/
- JSY8brZTbx6cQN0813wmGQRn6yKAFCh1tPhQqWwibXceNMzI7Ou4Wl9AGGMJqrwEsn+dI1jnZK/
- JElJAuPNfXFmFslQGzc1IsepsRmlrSh5aCTaLJXFu884ZWzuAQLqywA9beNdnkmfLTz4TPbh7yg
- 4zZ0jOchcmKTcw59n5y+LZ+AZJj148AxKx2LaBlbehzwr3BZ8+G3+gPq1AoYEko/lH0MCVw+MAb
- vAHt5yjjxn/geDELr/jbbr4hA7seziXY6pY1ASw9ajoaVEEEqF6bqxS1dEyf7f1ycYmzd063dIC
- MJXUho5sjVFBazPWJC/KbktHCCTK5bDL+a2GDXGEvF+iTrU8PZUxYxaEidoDuu0Pz+8pCGDhtl2
- Ixt2g==
-X-Received: by 2002:a17:90b:2b8e:b0:38e:75f3:ad4d with SMTP id
- 98e67ed59e1d1-39580f03c97mr18254727a91.7.1787197586624; 
- Wed, 19 Aug 2026 20:46:26 -0700 (PDT)
+ bh=Hk5GZbBPE9k/cD83hwQyRHgA+R2YMqa9HODNXp3uV+Q=;
+ b=ssEPJvac7nqW+9tN4HCYHHDElyZRYmMPOjzoubGrTxMT64IFukGPzxX1jwNnAYn93P
+ 3Toh66yL1hfv+OOYzYtV9hDqumxoIxRYNoZvXlkik9Lcu3729xwFVLq12iJGmfDSeowl
+ /PEtvb29AO+JS69JxPh5eeVth5Tj2kKwdY8YIJl+SFaC/ksZWutkZ/sd+tP7JSvWsu67
+ jjNHjERiYRBc2gVWIbNXCMj4SAVzmgxCsdfUSx6kMQ1aJWYp1dfoWwY5QKODG/nqLQRJ
+ 5BoPut+1X4l70HLd1Dx5yLdtVPi4r0EhCwAdJsmz8jus58vndSMVjglHWolTM3+BTueK
+ i2Vg==
+X-Gm-Message-State: AFuF++mUORKlsM5zTf4gEGV9FnNmewQbDEqaJVmcrsejYRBkjRv7JimI
+ oifw4hj8oFnQAgfNuHNFzZcdCu0av/vpV6YV58bepZ/DyFaExJAJaA5YmrZL6A==
+X-Gm-Gg: AR+sD12FIYi/7IR8ba+QjZaEb8u/y5msJX7S94hyHT3BkFrYp8bz9hT4+mctFXwWsr3
+ tEOvAzJsEKq5JzgkMvvKyCGlcpdNQL8Dmmk82kVG3BX8TF8xkUsNB272uldDN/q8NOkRU3RgX4M
+ XIGSe7m9EJuNfyvTSoJJwBYDRZIVw4cOl56zx/PpdI8SYq1Og2WKY6t6Lf3z7/ExYi317zdQSxJ
+ RSCg20aPEcxswY2i9uOa79xmvMiYoPXLlssSJ+Fm2MHRu5snSGUatYOZy24pZnCSK34TRCWDzPB
+ 25ch6q+ytZKVM8dpjgYT7W1YmxTkQ0L2ovZRnFmbRZ8Jo5ge2DqSDtR8qU23LvoMlrJFYPCwsqX
+ vpX3QRAXYYUaJBXdydyvQrnEC34yZWP++j/8OdlU0NOVJy41bumgPwvxg6WJOpUYraTcbnE2Hz3
+ HJXZNvUZ+IGARLbF9c6VagFN1Si63vEFd9JuQ/taSwbGbb5QOSGpfpAzblKhCyf0GCAGp0ebO6Q
+ XWZBQ==
+X-Received: by 2002:a17:90b:2d05:b0:380:21b7:e727 with SMTP id
+ 98e67ed59e1d1-39581470f03mr18247322a91.14.1787197676348; 
+ Wed, 19 Aug 2026 20:47:56 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.46.23
+ a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.47.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 20:46:26 -0700 (PDT)
+ Wed, 19 Aug 2026 20:47:55 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Andrew Jones <andrew.jones@oss.qualcomm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Nutty Liu <nutty.liu@hotmail.com>,
+Cc: Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 34/93] hw/riscv/riscv-iommu: fix U-bit check to apply only to
- leaf S/VS-stage PTEs
-Date: Thu, 20 Aug 2026 13:43:31 +1000
-Message-ID: <20260820034430.1186695-35-alistair.francis@wdc.com>
+Subject: [PULL 67/93] disas/riscv: Chain "nop" pseudo off "mv" pseudo
+Date: Thu, 20 Aug 2026 13:44:04 +1000
+Message-ID: <20260820034430.1186695-68-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260820034430.1186695-1-alistair.francis@wdc.com>
 References: <20260820034430.1186695-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,64 +103,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Jones <andrew.jones@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Commit b795ea0ba471 ("hw/riscv/riscv-iommu.c: fault when !PTE_U and
-no priv access") placed its check ahead of the leaf-vs-non-leaf
-branch in riscv_iommu_spa_fetch(), so it fires on every PTE walked,
-including non-leaf/table entries. Per the RISC-V privileged spec's
-address translation algorithm (Sv39/Sv48/etc., the "leaf PTE has
-been reached" step, followed separately by the U-bit permission
-check), the U bit is only defined and checked for the leaf PTE
-reached at the end of the walk -- non-leaf PTEs don't carry a
-meaningful U bit at all.
+"mv" has already checked a condition that applies to "nop".
 
-Move the check after the leaf/non-leaf branch, alongside the other
-leaf-only checks, mirroring how the G_STAGE U-bit check (added in
-9158c900ab30) is already correctly placed.
-
-Fixes: b795ea0ba471 ("hw/riscv/riscv-iommu.c: fault when !PTE_U and no priv access")
-Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20260717112340.1071148-1-andrew.jones@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260812223142.349142-32-richard.henderson@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/riscv-iommu.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ disas/riscv.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 2bbac30cfa..462087f401 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -476,13 +476,6 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-             break;                /* Invalid PTE */
-         } else if (pte & PTE_RESERVED(false)) {
-             break;                /* Reserved PTE bits set */
--        } else if (!(pte & PTE_U) && !pv) {
--            /*
--             * All accesses are assumed to be User mode unless
--             * process_id is valid (pv).  In case we have a
--             * non-user mode PTE and !pv we need to fault.
--             */
--            break;
-         } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
-             base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
-         } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
-@@ -491,6 +484,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-             break;                /* Reserved leaf PTE flags: PTE_W + PTE_X */
-         } else if (ppn & ((1ULL << (va_skip - TARGET_PAGE_BITS)) - 1)) {
-             break;                /* Misaligned PPN */
-+        } else if (!(pte & PTE_U) && !pv) {
-+            /*
-+             * All accesses are assumed to be User mode unless
-+             * process_id is valid (pv).  In case we have a
-+             * non-user mode leaf PTE and !pv we need to fault.
-+             */
-+            break;
-         } else if ((iotlb->perm & IOMMU_RO) && !(pte & PTE_R)) {
-             break;                /* Read access check failed */
-         } else if ((iotlb->perm & IOMMU_WO) && !(pte & PTE_W)) {
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 91f6d9e4af..7fa76b2d15 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -1035,7 +1035,7 @@ static const rvc_constraint rvcc_jal_ra[] = { rvc_rd_eq_ra, rvc_end };
+ static const rvc_constraint rvcc_jalr_ra[] = { rvc_rd_eq_ra, rvc_imm_eq_zero,
+                                                rvc_end };
+ static const rvc_constraint rvcc_nop[] = { rvc_rd_eq_x0, rvc_rs1_eq_x0,
+-                                           rvc_imm_eq_zero, rvc_end };
++                                           rvc_end };
+ static const rvc_constraint rvcc_mv[] = { rvc_imm_eq_zero, rvc_end };
+ static const rvc_constraint rvcc_not[] = { rvc_imm_eq_n1, rvc_end };
+ static const rvc_constraint rvcc_neg[] = { rvc_rs1_eq_x0, rvc_end };
+@@ -1108,11 +1108,15 @@ static const rv_comp_data rvcp_bge[] = {
+ };
+ 
+ static const rv_comp_data rvcp_addi[] = {
+-    { rv_op_nop, rvcc_nop },
+     { rv_op_mv, rvcc_mv },
+     { },
+ };
+ 
++static const rv_comp_data rvcp_mv[] = {
++    { rv_op_nop, rvcc_nop },
++    { },
++};
++
+ static const rv_comp_data rvcp_sltiu[] = {
+     { rv_op_seqz, rvcc_seqz },
+     { },
+@@ -1869,7 +1873,7 @@ static const rv_opcode_data rvi_opcode_data[] = {
+     { "c.lqsp", rv_codec_ci_lqsp, NULL, DECOMP(rv_op_lq) },
+     { "c.sqsp", rv_codec_css_sqsp, NULL, DECOMP(rv_op_sq) },
+     { "nop", rv_codec_i, rv_fmt_none },
+-    { "mv", rv_codec_i, rv_fmt_rd_rs1 },
++    { "mv", rv_codec_i, rv_fmt_rd_rs1, rvcp_mv },
+     { "not", rv_codec_i, rv_fmt_rd_rs1 },
+     { "neg", rv_codec_r, rv_fmt_rd_rs2 },
+     { "negw", rv_codec_r, rv_fmt_rd_rs2 },
 -- 
 2.54.0
 
