@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04DF9C5DF8F
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 23:33:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BAA3C5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 23:35:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxCF6-00027C-9z; Thu, 20 Aug 2026 19:32:16 -0400
+	id 1wxCHL-0003NC-5D; Thu, 20 Aug 2026 19:34:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wxCF4-00026w-Hz
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 19:32:14 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1wxCHJ-0003M0-4P
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 19:34:33 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wxCF3-0001hF-0i
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 19:32:14 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-cbedf6a6fe8so322750a12.3
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 16:32:12 -0700 (PDT)
+ id 1wxCHH-0001sz-Jx
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 19:34:32 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-3900e39d935so349524a91.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 16:34:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787268731; x=1787873531; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787268870; x=1787873670; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=kYt82G8cEeyX8CUQcRRMEnvpMwo/kIV7i+eXjCVKu6c=;
- b=P8n378HJPwMd7XCAqDQfv0Bo6P8EuMqQoLKWWEo5gvXw1vC8wEJ/X3ad+cTVTfblXK
- fcaAnRfiMIQmavTn9j/agHLYAeNKLvvQhriv1+qwlR5JFhDyxOR5QRt0A2pKFEV3z6wL
- PgC8lm80OGxn0xEzEJGj5E93RW0nB7cmQRyP7Iz7rXAfqdMzmLIOuOEblrNXPfJNgWVf
- dcWO512dC/uByT7zIYlJvN0Knh7u6nweXS25qUl5jQ5+LVn3jYdmm1iwHC5mMvZ1xiLX
- ten62vobH5voh8mSBp3Qz5ZSL9OWkU+A02QkE19LrvZQpmFiSjhYvejuC6UWLH/Au+ce
- FdhQ==
+ bh=8pmz72ukyhktWInfrHaDweaZHLz5vc5IxHyAKQxe2pQ=;
+ b=GvYCdkMhu6oMnDIN07feBJB+nV3Gf/3tdfUARMWD05JXFBO0VvsSvs6+P1uKkUX000
+ 4MN+YM5dMw4h8/lL34LMklgXpu5LSbsun5OJ/NZD1EyVbrYa2r5rdTJWYnQQSd5JZTLP
+ yySALyyNs4NKpeLYxORj37psiJ0NSVggoELP+yZo4trtD6sis3JhQ6g0STxvwCS1xLKJ
+ aFaW6dexsMrcHqIIAQTMTNIwqQpA/COrEOyBflLVf+nkCugnpsvqSafsv7oUTdLRVqX2
+ S/UgMHmsh+Zf+9aPD4FgFUdYQTsyhaxsN8RfqT2WKcBYgJqmsln6uq6RP9VK3gbU9Qx5
+ BtlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787268731; x=1787873531;
+ d=1e100.net; s=20251104; t=1787268870; x=1787873670;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=kYt82G8cEeyX8CUQcRRMEnvpMwo/kIV7i+eXjCVKu6c=;
- b=XJeiSeWv7Rfrh7K3IdXC/Rh0l4fX/MkjqaoT06RarvflXkPxStI8+Is2UgvqLWtEaW
- x4QJB9xejYiP3rZW9jNUEW3YXPZjZQhJoAoN8rYw6D5gQkT4UBgwTuvV6dQ0FyF3hgym
- luqXNNWpvkje6DfaM7jW4dL9G+sSUpceikRSougrKqbYFKCJSrZNrUF8tgVyvpTnFLfd
- ixaiJarmJn0WPC1Cy2vmhcm4iYSxMEApW1j2PyAJk8FPJmF5RoTuZsqjggjutwL7GJj2
- OP6IZlXB6Yvmbos1TIAzULmKwC9YVy6HSRZpIC89zVInhqEQ/05yO/G4KlM6l+SKCdyH
- tRwA==
+ bh=8pmz72ukyhktWInfrHaDweaZHLz5vc5IxHyAKQxe2pQ=;
+ b=CDS2PYQ0QwNWZglfWKh/Lmz5XMmwjKfHhIaxNE7X7nZGfjo0v77BnVk7gXwlYPpqoY
+ NL2zFUJ35h0KZ1OKXb8iykOofNpwWKXYw8QU+0Zt99JXGqHnp0yktZwTPhJRlCmfCgHC
+ 0aS6yax/pYKdpmUkFMGAyeEnjbQvo5v2Ib9UD1WuufbXnaWQRbLFsio3PXjDAivXEVQm
+ CYm4AtsUL2esCio93Z/As2hvodlccCkiY3wJaYCP/r7/NO5h17ytnQAEfWduFuV4FRek
+ RUbBfZClGlrzi+bpAXvHa1q1IyermjkXVgINBkJOsOozH3PxK9NihHIu8m7SpLbPJRUI
+ hNVQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+Ro7GUXcktTZ87B76GFs3kiL5gLrPYQKEQ3GITs55NBnL7qRmTRuKFDE/zIMtG7D1qGduMcBpZmUElzK@nongnu.org
-X-Gm-Message-State: AOJu0YxEBQmGf2OJXav2IDPuffPNP8KwWNH7z7rBMtUM8rO+V0mTiv1b
- MlFnOD6b2rKGfMcHf4RYAhj+nZqOOpf2d5bvo8Sab6PA3xsskIWk+s3FTvTkfgNDFezkouk6mbg
- cSUGp
-X-Gm-Gg: AR+sD10lB+LC6oVmALrjAEtCORZV7SAsHWtHPzobSc0AayBbuNUR9GYsddsw97OzyVO
- xnTEvjkEmgqYYLVlyM9SA/KhgnAGx10rI9hQDSlD7xVq6ZLUMlel/YHyb+QJohNb70AZ7rBlH4K
- 2MVEkgjLB1cPtVha0badesCZWCXQ43ho2xN6pDFNF6ogo0nME7l1+Sk+hSJ5Iz72StHkBk4jg4R
- Vr8GIpNla2sd77IYrijqXjIcUh4iFg+fZMeza67vNPIMilxFeHGuQ+mv1I0kYvIsNbwnMgg5VDR
- 6Zsy3+IldgDVxI5co5JjLbFoIj/kMT2/7FYgW/Z0PWXOf4Tj+mSUYPuN5w4crLj1K9si4EYY0us
- j4esv+HQO6i+LkKWymg/bdIVNM+pNM9fANtba5GppQYsXJczviJ44gPOaZKSaAxssGhIIXZt1ZE
- LDb4zxpUNfiN8uckaTUn2R5MDKSnMT9YYLjPb4SDeuNO7INHDLM6uRqlizCRjyEuip+3+aH85KQ
- Ux7
-X-Received: by 2002:a05:6a20:a121:b0:3b2:a809:1000 with SMTP id
- adf61e73a8af0-3cd30586d26mr3175916637.3.1787268730840; 
- Thu, 20 Aug 2026 16:32:10 -0700 (PDT)
+ AHgh+RrntD8CRUh7IrwyO138m2lZKvY1agCiCRB2bYS9kUdtUj+dTDOvC6VoCnFC3stfvrYPpdroLqx4fNS6@nongnu.org
+X-Gm-Message-State: AFuF++kjgLCixz5K9DlhGFQlDkAQlhU93bkcN3ezPWoTellkNqcrymge
+ 92TQgUovq24kT92OaJUgB1gr0XaeLt66XLkkS6be2xRCGmhiyJWfYugo98WkO9WPAck=
+X-Gm-Gg: AR+sD131JpZaOiJUCgTdLcY20oJazAE2w/dIvnJ3FQKe1LssDqVSAX7eZE+SnAcd895
+ D0MUXIBTzNn4Rmdy29Yqs9pD3bvWopaUucXenB09uxSehx22UHlOhDnpGbhmC/iN9MoJEZopkb8
+ ZMDpQQmhNZAX8iVTWf11/0kGvQ4JA8LyWxwLCFJ+KdwTb5jzuCD+5DTdXcF7P8xeZwvxRiXdsz9
+ Ffiqm3J21VSLQ+gwtcj7lzFWhR3KWIJEQWkSwnkCHkZIsqri96srnnT1QwXKS1utznNqkZGuZwl
+ zCcqjTLv/FZpKuldsh0AxnAPa38mwFpjx/j7q5YPT1PRlk23od2Rbj9EC2vt0HK9qdpHHmgexdA
+ jJIITi7vK1c7/2qGKZMSsD9mKyzKtCWhaAFYBwSPX6dUjWANBXzTBmDCOyvWaUVTNpnVX1wGmAE
+ W46GPLQj36JkHvTI4u94nTxquYw86NF3xRcfS5nyZJBW9x4mDX3YnlIUhT6ck4dtro2SVbDgocd
+ afe
+X-Received: by 2002:a17:90a:da87:b0:38e:2860:253f with SMTP id
+ 98e67ed59e1d1-395c3731c29mr3675013a91.12.1787268870070; 
+ Thu, 20 Aug 2026 16:34:30 -0700 (PDT)
 Received: from [172.20.6.151] ([108.174.179.84])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc15cada6fesm1880859a12.27.2026.08.20.16.32.09
+ 98e67ed59e1d1-395c467d907sm667809a91.7.2026.08.20.16.34.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Aug 2026 16:32:10 -0700 (PDT)
-Message-ID: <d9971d3e-0faa-4517-b748-9737822c5c66@linaro.org>
-Date: Thu, 20 Aug 2026 16:32:07 -0700
+ Thu, 20 Aug 2026 16:34:29 -0700 (PDT)
+Message-ID: <375ec889-0a10-4456-974a-f46cce634309@linaro.org>
+Date: Thu, 20 Aug 2026 16:34:26 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] tests/tcg/riscv64: Add vector load and store tests
-To: Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair.francis@wdc.com>
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260820130223.2762-1-joel@jms.id.au>
+Subject: Re: [PATCH v2 0/3] tcg: Defer tb_flush when initial thread region
+ alloc fails
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: yvyas1991@gmail.com, qemu-ppc@nongnu.org, rathc@linux.ibm.com,
+ anushree.mathur@linux.ibm.com, npiggin@gmail.com, harshpb@linux.ibm.com,
+ QEMU Stable <qemu-stable@nongnu.org>
+References: <20260813005031.518387-1-richard.henderson@linaro.org>
+ <35d6cbd3-ac16-496d-a8b9-97b5a3adf596@tls.msk.ru>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260820130223.2762-1-joel@jms.id.au>
+In-Reply-To: <35d6cbd3-ac16-496d-a8b9-97b5a3adf596@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,26 +109,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/20/26 06:02, Joel Stanley wrote:
-> Hi Richard, I was testing your riscv vector load/store series and
-> noticed there were some regressions with page crossing loads and stores.
-> We don't have any tests for that in the tree, so I wrote some.
+On 8/20/26 09:45, Michael Tokarev wrote:
+> On 8/13/26 03:50, Richard Henderson wrote:
+>> Hi Yogesh,
+>>
+>> The main problem with your patch is where you've placed the change:
+>> tcg_region_initial_alloc__locked is also used by tcg_region_reset_all,
+>> used by tb_flush.  Along that path, we really can't have a failure.
+>> The path on which we can defer allocation is via tcg_register_thread.
+>>
+>> The second change I made is to use code_buf_ptr == NULL to signal
+>> reallocation is required.  In addition, tcg_tb_alloc doesn't need
+>> to immediately fail: in the interim since thread creation, we may
+>> well have performed a tb_flush already.
+>>
+>> Please have a try vs your hotplug test case.
 > 
-> The tests trigger assertions in linux-user for me:
+> Hi!
 > 
->    $ make -C build/tests/tcg/riscv64-linux-user run-test-rvv-ldst
->    make: Entering directory 'build/tests/tcg/riscv64-linux-user'
->      TEST    test-rvv-ldst on riscv64
->    **
->    ERROR:../accel/tcg/user-exec.c:810:probe_access: assertion failed: (-(addr | TARGET_PAGE_MASK) >= size)
->    timeout: the monitored command dumped core
->    Aborted
->    make: *** [Makefile:223: run-test-rvv-ldst] Error 134
->    make: Leaving directory 'build/tests/tcg/riscv64-linux-user'
-
-Bah.  Off by one bug.  I'll post v2 shortly.
-Thanks again.
-
+> Is this a qemu-stable material?
+> 
+> I'm not picking it up, but it feels I should :)
+Yes, I think it could be trivially picked up.  I don't think any of this code has changed 
+in years.
 
 r~
 
