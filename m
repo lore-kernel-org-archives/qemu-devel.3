@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CC8BC5DF87
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 10:10:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91592C5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 10:10:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwzi0-0006w0-L9; Thu, 20 Aug 2026 06:09:20 -0400
+	id 1wwziM-00074p-Fx; Thu, 20 Aug 2026 06:09:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhs-0006td-6i
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:09 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhq-0006sF-Dh
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:06 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhq-0008Nn-5e
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:07 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-49954b88fffso20744575e9.0
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 03:09:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wwzhn-0008Mo-OK
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 06:09:05 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-47f703a9d05so1312693f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 03:09:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1787220544; x=1787825344; darn=nongnu.org;
+ d=openvz.org; s=google; t=1787220542; x=1787825342; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=mvbyu72RNCBKA30dtO0psq+nr2zGhTtycdQqI3vt+Gw=;
- b=egibajmtfmpvPdDxTh/OBfavbjozrOrsnzlNIvnqvzS5QcwBC74G/SFWIT4A8HdVK0
- QSK+KnWPZyV49vgTVZEcLhWl3ls27Uu1ZAkLQizjOmeTZsOqR6enUMaWrrgWcd5BUJz9
- WgFRdCx5L04PBX7ZWPmdF7xpUsaJJRDAFkO1+gxzWcVz/S5JRCJBo4U54phQTIsTaFKk
- s801wSB5mzO8JfJI02xD0vuJjZ2rMWloqyhSbF8HkbkWw3bDUpiP34DHTzzkq2Y14Y14
- qS7A14pSaCklBMLU1QglLk3ga5R67Mo43/5w9etzyCBK+I0hcNrBnMD1DqKB86HahkPt
- aaSw==
+ bh=fbFPcumdwqQtTm/8eCl+Gz40GixriWu5Kdq29TJDuH0=;
+ b=hIoHHd8UWxWZuuZYpz2DiW3XEXXPIF6SW45m2LZwic6mUFj/5+VZeiBoxscBXUCmuw
+ zZZyglNom57iKieQfxbbgykfXtY1S1jtRp5WWCK0cpPqHEDAe39hoXn7GKKI/fweS84M
+ v+YB8U/fTH+lJxZQA5MaxK5NFyV6GjjTzxMdXbv+a5kUM/3Im0tGqsiP04zuc02RQalN
+ DViOosDwQWwIhYCDAeFbpEMA/8+VFTdtCdzCyEENDy2sR4hE4u8PI/bM5faxbrAkEezi
+ FIiYbYv9D6FhjXSEGJmw8xI9hEX0RegcjpIZ9IpxOqQXLYMIZRt7BnMgMFIzQm4Araa9
+ 39+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787220544; x=1787825344;
+ d=1e100.net; s=20251104; t=1787220542; x=1787825342;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=mvbyu72RNCBKA30dtO0psq+nr2zGhTtycdQqI3vt+Gw=;
- b=XW8Cgqe2sn0VjTf4KM8TJvof6yfrsik32/8ciFeH3UiD8GUkGa3+KCe4HF86hTH6Iz
- JGseLtI+th1J/fqoY3Ymv98jcpAiHcEMU1+8lYnZMQxY3Kd/TFDOF4E0NvOVtDGV2uJG
- IKgbwRgLWmrh7y+kQVknjwsjXvz4INybtB40cFVpbqrREb8YWA3IqV9JuBE6JH6b/WHl
- iJBAkF3bcs76SVyidyfuXl4x11cJD+/WF5zSV+v3nXb+fbJfSu5ppCqsCiqzjh+UFd2r
- e5s+fRaE/DiNmcFhgd5xR4MXB6+pCk5di0Xf+wKFfweCxFWVbuC8j2UIVM2N5JdCDQQV
- tEfw==
-X-Gm-Message-State: AOJu0YzrLZEaSKzJ11tf5jKuLhhmlMbrtiBamyNvBcQYDdqroqpaB1u4
- /34p91OHrX03uvx3iGn5pof4oo91GsfF2JhLZ/mJNYnMmkspeM8ITRg6pVyKfirIq23aJoqzPY+
- xvxG7
-X-Gm-Gg: AR+sD13mol90eJcN8TgNtpTjw+304dd3PhBcJuqcj+2ozGQxSuIvkN/EYLmzm5KrDru
- dEbyNY932gRT8WwX4a0PwVAJZ7KbQEDRJWGpQOwuyqarySCyARsFIehRQ/clQ0Yal7WpUWPHbv0
- +yYP3382qBVkXHhUFBOQUP720BkvKXlhgaHIyRSgStXSiGAp99BBZ7IGTq+yQWc7JAQMwZUadkg
- YYZ9Sj7Pu6UuQTdM90Vqv0/c4JpgvYcxPOrH7e8m6E7Y7p0GM8PJ7EykAdQYRucW9xUMMiWi6J4
- gXoZ5hRxauyM4q/H+RdB34E6ce5vt97LKxsHqeOn4Y0KF7kZt2juPGUXvdd3DgvSTkD3EouRwLQ
- l75qdyHcCK2/k/mNSIAPLdI++mjess0w6TpRO38lvRU2Fp3uiIY2EwyE/AU43LJzHcHOhNTyZ5F
- nJxtUg8MQ1+DXzh+OURUHJDmQ+9je097ptm/nCijh8dbC29uRnv8B7pGbQ1g==
-X-Received: by 2002:a05:600c:37c6:b0:499:87f3:a2a3 with SMTP id
- 5b1f17b1804b1-499aa1c7bafmr208408085e9.15.1787220544337; 
- Thu, 20 Aug 2026 03:09:04 -0700 (PDT)
+ bh=fbFPcumdwqQtTm/8eCl+Gz40GixriWu5Kdq29TJDuH0=;
+ b=GuVmNyCrlPcLONwN7XF8NQvEIvBhshI5QsdHieA/I12QE3ByqbjwAxZgwIPmO88GH5
+ V61VPcrz0QHoQSdOuuRBjUHIQAfZ8gGKms59e+fNBtwRsxHvY7zG8ejfMsMIlE6sia5i
+ 4gHCAjgdfWIMeSJSpd70qx0Bo1bwWs1m8S4LsBqKSPKJGFiJgYF95FuSOtLMAH0GAMMG
+ hzpPaREZgAjkWYa4KLiHDU8zLk0UyBViyVSqgNwNFFwunniLv0WXeFI2OYpx++ttPipC
+ bklbYwdCrNAxmDjr9iLMZOEBLCWAlakwC4Wc1NKLY0UDWqQVZkU8t1rbjEI/498Qqiy9
+ tZZQ==
+X-Gm-Message-State: AFuF++nG6BqtfvU3FTlJDfUARXgwJXbLDhnv7UR+2gCHmF5Q+Dn8fN0e
+ OOkM+cU3nnWeHIUGQyScyWpQNTYWAs6oTPIpy3teyOdXGiseSR5XJwccVS3HkyPM3Q+Aq5gCIgi
+ DYqmj
+X-Gm-Gg: AR+sD13sog88fN2EOh6Vcj1daevpq+fGGZyo9QtaSiWjGwTzl0X7BaMU8aWQk6Pyh9z
+ cAYjm/HLr54kNzSsOIRsGldc/A9yZSywUAP6cuqQmAmeE3qReUjWiU5Utbo3fGvPPhYnsqV60tu
+ gFOXt7J1Wb2Lph11JgYQ6PTIb47FvvWpFDDaW9h7gZrqfydfzh5mKhaJszs+9DkM3eeSEU+PanP
+ FGqARpqMlSEqvw8uS5lETMd6qu0SQ2OwSuitCHkwydMCklcRl+IsE8KhsFb4Lu7ijkse7N1RjI2
+ E0g/aev2J55eGegGRgc/T0AtQoyIsxRQlQGp8lsVr4MKs3MxczXrLrGx6FeA2se4fiAzuBlfU5G
+ +WSvMvmgiq0XjrapbHM+x5WsxfG5lmKFFegycCdSnw1mMvLLCWEYT5RtkLM/gfbVE6WQ9rfRjSp
+ 0sKqPxbpuZAVNuwzUv91P4GeEQKZ17knq4BGHkw/MNyhfnhBGxLT0MyhdR8A==
+X-Received: by 2002:a05:6000:613:b0:47f:f31d:27a4 with SMTP id
+ ffacd0b85a97d-482b1fd9bf6mr18659863f8f.13.1787220542266; 
+ Thu, 20 Aug 2026 03:09:02 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:a123:7b43:afd8:8b47])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b1441b0fsm11678929f8f.4.2026.08.20.03.09.03
+ ffacd0b85a97d-482b1441b0fsm11678929f8f.4.2026.08.20.03.09.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 03:09:03 -0700 (PDT)
+ Thu, 20 Aug 2026 03:09:01 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 10/17] hw/ide: migrate the logical CHS translation
-Date: Thu, 20 Aug 2026 12:08:37 +0200
-Message-ID: <20260820100844.411717-11-den@openvz.org>
+Subject: [PATCH v2 08/17] hw/ide: keep the IDENTIFY DEVICE current geometry in
+ sync
+Date: Thu, 20 Aug 2026 12:08:35 +0200
+Message-ID: <20260820100844.411717-9-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260820100844.411717-1-den@openvz.org>
 References: <20260820100844.411717-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=den@openvz.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=den@openvz.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,19 +105,23 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-INITIALIZE DEVICE PARAMETERS lets a guest replace the logical CHS
-translation used to turn the CHS registers into an LBA, but s->heads and
-s->sectors were in no VMStateDescription. The destination rebuilt them
-from the drive configuration, so a guest that had selected one of its own
-kept addressing the disk in it while the device translated with the
-default, landing on sectors nobody asked for.
+Bit 0 of IDENTIFY DEVICE word 53 says that words 54 to 58 describe the CHS
+translation in effect, and ATA-5 8.16.8 has INITIALIZE DEVICE PARAMETERS
+set words 55 and 56 to the heads and sectors per track it was given. The
+data is built once and then cached, so those words kept describing
+whatever was in effect when a guest first asked for IDENTIFY DEVICE: the
+device reported one geometry while addressing the medium with another, and
+nothing reported an error. The revert SET FEATURES 0xCC asks for on the
+next reset left the same disagreement.
 
-Add a subsection for it, sent only when the guest replaced the default, so
-that migration to an older QEMU keeps working for every other guest.
-s->cylinders is left out, as no command changes it.
+Do not drop the cached data on a change, as parts of it are guest state
+rather than a description of the drive: SET FEATURES records the write
+cache setting in word 85, which ide_drive_post_load() reads back after
+migration. Refresh the affected words in place instead, the way
+ide_identify_size() does for the capacity words.
 
-Validate what is loaded in the existing post_load: ide_get_sector()
-multiplies by these fields and ide_set_sector() divides by them.
+An ATAPI device has no translation but does take SET FEATURES 0xCC, so
+leave its IDENTIFY PACKET DEVICE data alone, where those words differ.
 
 Cc: John Snow <jsnow@redhat.com>
 Cc: Peter Maydell <peter.maydell@linaro.org>
@@ -124,61 +129,34 @@ Cc: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Fixes: 176e4961bb33 ("hw/ide/core.c: Implement ATA INITIALIZE_DEVICE_PARAMETERS command")
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- hw/ide/core.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ hw/ide/core.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/hw/ide/core.c b/hw/ide/core.c
-index 28219f5ef8..b074325afa 100644
+index e5fd570575..048655b2d0 100644
 --- a/hw/ide/core.c
 +++ b/hw/ide/core.c
-@@ -2879,6 +2879,13 @@ static int ide_drive_post_load(void *opaque, int version_id)
- {
-     IDEState *s = opaque;
- 
-+    /* Only a disk has a translation; an empty slot and ATAPI keep these zero */
-+    if (s->blk && s->drive_kind != IDE_CD &&
-+        (s->heads < 1 || s->heads > 16 ||
-+         s->sectors < 1 || s->sectors > 255)) {
-+        return -EINVAL;
-+    }
-+
-     if (s->blk && s->identify_set) {
-         blk_set_enable_write_cache(s->blk, !!(s->identify_data[85] & (1 << 5)));
+@@ -1360,6 +1360,10 @@ static void ide_reset(IDEState *s)
+         s->reset_reverts = false;
+         s->heads         = s->drive_heads;
+         s->sectors       = s->drive_sectors;
++        /* An ATAPI device takes SET FEATURES 0xCC but has no translation */
++        if (s->identify_set && s->drive_kind != IDE_CD) {
++            ide_identify_chs(s);
++        }
      }
-@@ -2962,6 +2969,25 @@ static const VMStateDescription vmstate_ide_atapi_gesn_state = {
-     }
- };
+     if (s->drive_kind == IDE_CFATA)
+         s->mult_sectors = 0;
+@@ -1668,6 +1672,9 @@ static bool cmd_specify(IDEState *s, uint8_t cmd)
  
-+static bool ide_chs_translation_needed(void *opaque)
-+{
-+    IDEState *s = opaque;
-+
-+    return s->heads != s->drive_heads || s->sectors != s->drive_sectors;
-+}
-+
-+static const VMStateDescription vmstate_ide_drive_chs_translation = {
-+    .name = "ide_drive/chs_translation",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = ide_chs_translation_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_INT32(heads, IDEState),
-+        VMSTATE_INT32(sectors, IDEState),
-+        VMSTATE_END_OF_LIST()
+     s->heads = (s->select & (ATA_DEV_HS)) + 1;
+     s->sectors = s->nsector;
++    if (s->identify_set) {
++        ide_identify_chs(s);
 +    }
-+};
-+
- static const VMStateDescription vmstate_ide_tray_state = {
-     .name = "ide_drive/tray_state",
-     .version_id = 1,
-@@ -3025,6 +3051,7 @@ const VMStateDescription vmstate_ide_drive = {
-     },
-     .subsections = (const VMStateDescription * const []) {
-         &vmstate_ide_drive_pio_state,
-+        &vmstate_ide_drive_chs_translation,
-         &vmstate_ide_tray_state,
-         &vmstate_ide_atapi_gesn_state,
-         NULL
+     ide_bus_set_irq(s->bus);
+ 
+     return true;
 -- 
 2.53.0
 
