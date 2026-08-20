@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B166C5DF81
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77D4CC5DF86
 	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:51:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx5yw-0004cL-5Q; Thu, 20 Aug 2026 12:51:10 -0400
+	id 1wx5yy-0004mw-DW; Thu, 20 Aug 2026 12:51:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5ym-0004M6-U4
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:01 -0400
+ id 1wx5yk-0004LE-W6
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5yk-0005X4-PV
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:00 -0400
+ id 1wx5yh-0005WL-W2
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:50:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787244658;
+ s=mimecast20190719; t=1787244655;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=c1K9klrhQHZKoPe0lHDf6bH+V/OALPdZXPiuQCqnwFY=;
- b=Q1fMotDnSiQRFKW3ceOfP6Kge7JjJbZK9KN/rsh0cec3vwK/uvwSMetygAucTOfG7yFNd7
- C7Ul47SW8/yeojDXcfhhcPfSUh1lo2NlnCJkhoKmyHK3VdImPvX5o23SmeeHvbNPzKpEc9
- WtHH2rzksYt1ie8VxcUqP3Wa577AvMg=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Vc6p2d2qQruEsDFEmVNNYwOdKQZR2T0jPEMA3rc8Oew=;
+ b=IdS7AxFSGic7o1rWIfxxtQVhdsxokLr6hTEND7KUz5+VhISmkJjk2vrCCyZosZOiDHZqDC
+ efjksqaE8FTdzw+HiOaTtBtqmW/isXDtLtxt9M/SGzvnfuGQvBXyCHT6TbNHNHJ54FWhnX
+ +zta0zq5EV6WxNkSbL+oef++3NjDZUk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-462-_Vq0xYauNHua9_mk7hTDRg-1; Thu, 20 Aug 2026 12:50:56 -0400
-X-MC-Unique: _Vq0xYauNHua9_mk7hTDRg-1
-X-Mimecast-MFC-AGG-ID: _Vq0xYauNHua9_mk7hTDRg_1787244655
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-490a767c7dcso219005e9.2
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:50:56 -0700 (PDT)
+ us-mta-498-ra5P0GmcPC-nzT1LZ4Ui2Q-1; Thu, 20 Aug 2026 12:50:49 -0400
+X-MC-Unique: ra5P0GmcPC-nzT1LZ4Ui2Q-1
+X-Mimecast-MFC-AGG-ID: ra5P0GmcPC-nzT1LZ4Ui2Q_1787244648
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-490a767b782so265255e9.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:50:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787244655; x=1787849455; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787244648; x=1787849448; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=c1K9klrhQHZKoPe0lHDf6bH+V/OALPdZXPiuQCqnwFY=;
- b=j858GM7oKcLULH65WudOg4DJn0G0FasAZKemCVMAV1nuEisXChlUy8oMCJS9GGUS3P
- OALVgeXkHoEUSRV+sNPfLQCrMiZA/mnDDZ2tQMlNkE9NzRqK7BoH3ACiLjYHPhn28cTH
- 5NExnTOqEoM/R7FkRCq4hIyJo6v2ALqnQoV/lmlhxj3UL5ynrdjohW9y35uVyMTZSYjD
- UFvBVbjflRcDCVf2+Mx7/6ZS3F5e3LXFST6vtXqN8sKtbzpXflM2DJdZ31KujCWgHjfM
- 7EkjnmUcRIwbgPx26GCHpB5sYFAgOs+K4+MInHQ3PCtcjYMiQ04R/3aLhR/qM0+h2aUK
- w+qw==
+ bh=Vc6p2d2qQruEsDFEmVNNYwOdKQZR2T0jPEMA3rc8Oew=;
+ b=cRGC/bHDZzRvYHJB4dhl8C6b7dFhV77MUuQuAY3cRELQdu0/7gvffCcucW5AUQZ9Tv
+ krhyihBHdViwrSWPK5QHIdOpiQpQe06lsZ7tWkAbZRu8DIHVXRLunrpvxmq8zSjZUuzb
+ Kxeq4domsI4rIFvVS4RihlVIMDAzKtCJfOn/Vs0oZmbWWsaAfdW/XlUu084bdtctQr6a
+ 2QsI33rEhi6Fin13BAd3nB3Mrwnm1LMTvXaHd81gITjGwCXMNtTGT8/0qB0I5/0oPgXl
+ ckL/J/5krf7mGxh9ooijY09NRwNXs0itl/6iFnKY4C9PwzJ2UjIunCdyAJ7xbeRm7v9Q
+ 96/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787244655; x=1787849455;
+ d=1e100.net; s=20251104; t=1787244648; x=1787849448;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=c1K9klrhQHZKoPe0lHDf6bH+V/OALPdZXPiuQCqnwFY=;
- b=EtahQwSjSK5LlOQ+noGuOLp6IOjH3m/pYtkRGkVZIFim8BNGe4as2kCpEsEXMCrmrV
- Cs7YkgrvBsESphC3RzkIyerTFJy55d/ZblE/eV/UlEUb3pdqLpghr5i1rWMTpBFTgJtT
- 8GNsKirBlvfGLqNSangdYfkMb4rN39l0dkzOebvJ+NPjIywu+oAIsBuy7ig3qP8r7hjd
- 3Jr7DxzLG2TQ4RxtxuYzx1G0ZITgvbG8LtdnUerxR2tWwvXg9J5NSzCilG+Jtpv5CLos
- PfL88lCqheqLTmzS5qxJAxtF4E/G+7fcyLAa9pnARAVsPU98cI9oAVB5bzov5a6SqaGa
- ojOw==
-X-Gm-Message-State: AOJu0Yw+W2UthQVibuP6Df3Zl0f+/vj/o1a6HNrdHXfKufq3nnvQB2rZ
- kI/nfD92tge7WqtKqakov+v3imRCrnDvEgIg4WkFDzL3ASLg/uuFR2srRy9Cs3JiJpq21t19wZv
- m1XxOWdPuHKV3UTGYHnGAgSm5iKykiS6jJ4PqFNi5NgfM08SRu8COhsLig/ZPGZz4zHOifHcT+c
- 0knmEh9WiJ3Hnz/4M3sL1MN+hrGNo9hUqRLsQuHETh
-X-Gm-Gg: AR+sD11/BG+/Svho/wfDeWimBP4cW0ZxAUkxMRWgXDJ/coKWI9dO0IIQIDEwD2sHQqR
- Lm5FoF6ocRH6X2r7K4ml8WmAn07qR/ZaNg60GHf6+4QGUhwv4UqOcH7NMU1Cm7PD6gYztkBJg3h
- fWazh6iLjQYn+vYv22eL9FpQ049KP612KUQEzJsVHNNLTPtfmYVQ8k42fTF64TrYTk6riW0KNJK
- 9Z7iWaPzH/ExkfdN/fi5Ey/JEVbklG82MoDHF0E6R5pK865qUAdrrICHnRr/1qkreNaXI32okOS
- uRpo06rn7JiSNbeIBHlgtageQPOkdEe4r6xvzxHt+fx96r2QncxyE6ELUjXj3p79OPAepukhc2E
- fMeowuoxg/SXtd3Jaxuht84rPkkOylMtDKJ0EhFH63CP6RuapEP5DLS8SNIRkcvhZ62d7oVf3Zq
- /1zC4=
-X-Received: by 2002:a05:600c:4f09:b0:499:ad2e:f7bc with SMTP id
- 5b1f17b1804b1-499b8455734mr3238415e9.10.1787244655284; 
- Thu, 20 Aug 2026 09:50:55 -0700 (PDT)
-X-Received: by 2002:a05:600c:4f09:b0:499:ad2e:f7bc with SMTP id
- 5b1f17b1804b1-499b8455734mr3237635e9.10.1787244654896; 
- Thu, 20 Aug 2026 09:50:54 -0700 (PDT)
+ bh=Vc6p2d2qQruEsDFEmVNNYwOdKQZR2T0jPEMA3rc8Oew=;
+ b=WSB9ZHG0d1fNIvk9xW0zDWleWe3ofuySze4yLjDEAHgTbOvNVJIpyeoje+7+rtVGG4
+ 0J3FxkYr8V//lVPlkLup338yzyy9yihzjRhRfzyneUDaOjHiyNpm26c7W5JPdnBXPIT7
+ 3ClHrqK/53Y+tgJ8dSraBoKvL96l3xdj12VnGTS+HC8IrVWYKc48lNfwM2PT0PyjyWGE
+ Jxky4XMmDMizKc+Q46fRGTquRJ6RSiCAl/y9JezCDaeFYGeR+XZSKzxKR2bPkGvJEE3K
+ FFmTYNUZFngMDi5rsPj0Fq4rAE4cL9mWJJqAH5xM7PTGFzdB1ukHa7fzOOcW3fe72k0v
+ 0ukw==
+X-Gm-Message-State: AOJu0YyezmubbeRzvGTEms0U13XOCxQlhbcqDHdqAjToOfQNTl8YY/3v
+ JDVOPd0LgMHA89N8Lm8o1B67SAv2XM1zcidFRf9zrSch7s9uXgxiD5ABvWxlfls0Yq4OQ/mdit3
+ MCeBbg5BtISH96HJ/k1OuhY9XvFIvOINMKyluLYn4O4WHXRa+CXkqPO5SggmeaVX1OVuxF1Dk6l
+ 6vg1jeHtNyOccMciW6Iz428UKNH8jdOroIes/+3J0c
+X-Gm-Gg: AR+sD13+J8YyLw2G7zGUSSlVWeZskVMy3gWs4NTav/YyinqFUVc8fl+d1l0jd3puevE
+ 3YMniXAD+7Yhzh69ZSjQi8OeuoB9gVnzzb08CiB3OCYXFxJyuwgRu5X/4qD2EeFEnVrtMXGXUP+
+ BoXLmTgMd2dzRvCcJbf0MeckdEXjSoANulRvWnN1k9hGmfq8SSpqCiAPofncq5jqgfYj8uPyMos
+ B/6ie1LuCiW4rJPlOe6tRIq1AsnrCFf9hZqXVPEz9BizoVb3gbXy+cnQVruq5kderqDHFw5UVEl
+ xHlLVvwE0c4NlTpVJID5Nvy2tlL8I0A4sGSLePfpGm0pXZ/QOnK5pwseTrjs8DfzZUfB+UoKOg+
+ wjS3O58RLqlGxXs7OchJK2qRG9yTUPrSL3/W64/e/NNW43y1SZxlqbWPWCcMo6z/6MpkVmSSACn
+ kprxI=
+X-Received: by 2002:a05:600c:4704:b0:499:9069:c2c9 with SMTP id
+ 5b1f17b1804b1-499b84613fcmr2687515e9.11.1787244647683; 
+ Thu, 20 Aug 2026 09:50:47 -0700 (PDT)
+X-Received: by 2002:a05:600c:4704:b0:499:9069:c2c9 with SMTP id
+ 5b1f17b1804b1-499b84613fcmr2686585e9.11.1787244647185; 
+ Thu, 20 Aug 2026 09:50:47 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499aa0fda98sm235823415e9.1.2026.08.20.09.50.53
+ 5b1f17b1804b1-499aa0fd7a9sm199550075e9.2.2026.08.20.09.50.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 09:50:53 -0700 (PDT)
+ Thu, 20 Aug 2026 09:50:46 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Subject: [PULL 19/53] hw/i386/mshv: drop initial msi vector 0
-Date: Thu, 20 Aug 2026 18:49:22 +0200
-Message-ID: <20260820164957.1895963-20-pbonzini@redhat.com>
+Subject: [PULL 16/53] target/i386/mshv: migrate STIMER state
+Date: Thu, 20 Aug 2026 18:49:19 +0200
+Message-ID: <20260820164957.1895963-17-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820164957.1895963-1-pbonzini@redhat.com>
 References: <20260820164957.1895963-1-pbonzini@redhat.com>
@@ -122,38 +122,196 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
-This has been a warning before that was always raised if the machine has
-a hpet. hpet_reset() will eventually result in mshv_send_msi called w/
-vector 0, which we can safely drop.
+This part of Synic state is retrieved via a mem-aligned page. We declare
+the required space (size reference: rust-vmm/mshv) as a buffer on the VM
+state struct for inclusion in a migration.
+
+Other than other SynIC features, STIMER doesn't depend on SCONTROL being
+set.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20260710101534.664604-13-magnuskulke@linux.microsoft.com
+Link: https://lore.kernel.org/r/20260710101534.664604-9-magnuskulke@linux.microsoft.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/i386/mshv/apic.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ include/system/mshv_int.h   |  2 ++
+ target/i386/cpu.h           |  5 ++++
+ target/i386/machine.c       | 20 +++++++++++++++
+ target/i386/mshv/mshv-cpu.c | 12 +++++++++
+ target/i386/mshv/synic.c    | 51 +++++++++++++++++++++++++++++++++++++
+ 5 files changed, 90 insertions(+)
 
-diff --git a/hw/i386/mshv/apic.c b/hw/i386/mshv/apic.c
-index 9188a93b2fe..ad326030bfa 100644
---- a/hw/i386/mshv/apic.c
-+++ b/hw/i386/mshv/apic.c
-@@ -293,6 +293,16 @@ static void mshv_send_msi(MSIMessage *msi)
-     delivery     = (data >> MSI_DATA_DELIVERY_MODE_SHIFT) &
-                    MSI_DATA_DELIVERY_MODE_MASK;
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index bc023d35355..063852115eb 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -144,5 +144,7 @@ int mshv_set_simp(int cpu_fd, const uint8_t *page);
+ int mshv_get_siefp(int cpu_fd, uint8_t *page);
+ int mshv_set_siefp(int cpu_fd, const uint8_t *page);
+ bool mshv_synic_enabled(const CPUState *cpu);
++int mshv_get_synthetic_timers(int cpu_fd, uint8_t *state);
++int mshv_set_synthetic_timers(int cpu_fd, const uint8_t *state);
  
-+    /*
-+     * Vector 0 is not a valid interrupt vector (0-15 are reserved for CPU
-+     * exceptions). This can trigger during machine reset, if hpet_reset()
-+     * forces the PIT to pulse GSI 2 before IOAPIC's own reset has masked its
-+     * redirection entries.
-+     */
-+    if (vector == 0) {
-+        return;
+ #endif
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index fcde8956008..641f3ee5c2f 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -45,6 +45,10 @@
+ #define ELF_MACHINE_UNAME "i686"
+ #endif
+ 
++#ifdef CONFIG_MSHV
++#define MSHV_STIMERS_STATE_SIZE 200
++#endif
++
+ enum {
+     R_EAX = 0,
+     R_ECX = 1,
+@@ -2305,6 +2309,7 @@ typedef struct CPUArchState {
+ #if defined(CONFIG_MSHV)
+     uint8_t hv_simp_page[HV_HYP_PAGE_SIZE];
+     uint8_t hv_siefp_page[HV_HYP_PAGE_SIZE];
++    uint8_t hv_synthetic_timers_state[MSHV_STIMERS_STATE_SIZE];
+ #endif
+ 
+     uint64_t mcg_cap;
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index 023a397ab89..8d69d7e25ef 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -10,6 +10,7 @@
+ #include "exec/watchpoint.h"
+ #include "system/kvm.h"
+ #include "system/kvm_xen.h"
++#include "system/mshv.h"
+ #include "system/tcg.h"
+ 
+ #include "qemu/error-report.h"
+@@ -952,6 +953,24 @@ static const VMStateDescription vmstate_msr_hyperv_reenlightenment = {
+ };
+ 
+ #ifdef CONFIG_MSHV
++
++static bool mshv_synthetic_timers_needed(void *opaque)
++{
++    /* Always migrate synthetic timers */
++    return mshv_enabled();
++}
++
++static const VMStateDescription vmstate_mshv_synthetic_timers = {
++    .name = "cpu/mshv_synthetic_timers",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = mshv_synthetic_timers_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_BUFFER(env.hv_synthetic_timers_state, X86CPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static bool mshv_synic_vp_state_needed(void *opaque)
+ {
+     X86CPU *cpu = opaque;
+@@ -1941,6 +1960,7 @@ const VMStateDescription vmstate_x86_cpu = {
+ #endif
+ #ifdef CONFIG_MSHV
+         &vmstate_mshv_synic_vp_state,
++        &vmstate_mshv_synthetic_timers,
+ #endif
+         NULL
+     }
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index ea6a660d054..86d64c67fb2 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -118,6 +118,12 @@ static int get_synic_state(CPUState *cpu)
+     int cpu_fd = mshv_vcpufd(cpu);
+     int ret;
+ 
++    ret = mshv_get_synthetic_timers(cpu_fd, env->hv_synthetic_timers_state);
++    if (ret < 0) {
++        error_report("failed to get synthetic timers");
++        return -1;
 +    }
 +
-     mshv_request_interrupt(mshv_state, delivery, vector, dest, dest_mode,
-                            trigger_mode);
+     /* SIMP/SIEFP can only be read when SynIC is enabled */
+     if (!mshv_synic_enabled(cpu)) {
+         return 0;
+@@ -1420,6 +1426,12 @@ static int set_synic_state(const CPUState *cpu)
+     int cpu_fd = mshv_vcpufd(cpu);
+     int ret;
+ 
++    ret = mshv_set_synthetic_timers(cpu_fd, env->hv_synthetic_timers_state);
++    if (ret < 0) {
++        error_report("failed to set synthetic timers state");
++        return -1;
++    }
++
+     /* SIMP/SIEFP can only be written when SynIC is enabled */
+     if (!mshv_synic_enabled(cpu)) {
+         return 0;
+diff --git a/target/i386/mshv/synic.c b/target/i386/mshv/synic.c
+index 8f9fee6ed7e..4c629adc3a0 100644
+--- a/target/i386/mshv/synic.c
++++ b/target/i386/mshv/synic.c
+@@ -54,6 +54,57 @@ static int set_vp_state(int cpu_fd, const struct mshv_get_set_vp_state *state)
+     return 0;
  }
+ 
++int mshv_get_synthetic_timers(int cpu_fd, uint8_t *state)
++{
++    int ret;
++    void *buffer;
++    struct mshv_get_set_vp_state args = {0};
++
++    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
++    args.buf_ptr = (uint64_t)buffer;
++    args.buf_sz = HV_HYP_PAGE_SIZE;
++    args.type = MSHV_VP_STATE_SYNTHETIC_TIMERS;
++
++    ret = get_vp_state(cpu_fd, &args);
++
++    if (ret < 0) {
++        qemu_vfree(buffer);
++        error_report("failed to get synthetic timers");
++        return -1;
++    }
++
++    memcpy(state, buffer, MSHV_STIMERS_STATE_SIZE);
++    qemu_vfree(buffer);
++
++    return 0;
++}
++
++int mshv_set_synthetic_timers(int cpu_fd, const uint8_t *state)
++{
++    int ret;
++    void *buffer;
++    struct mshv_get_set_vp_state args = {0};
++
++    buffer = qemu_memalign(HV_HYP_PAGE_SIZE, HV_HYP_PAGE_SIZE);
++    memset(buffer, 0, HV_HYP_PAGE_SIZE);
++    args.buf_ptr = (uint64_t)buffer;
++    args.buf_sz = HV_HYP_PAGE_SIZE;
++    args.type = MSHV_VP_STATE_SYNTHETIC_TIMERS;
++
++    assert(state);
++    memcpy(buffer, state, MSHV_STIMERS_STATE_SIZE);
++
++    ret = set_vp_state(cpu_fd, &args);
++    qemu_vfree(buffer);
++
++    if (ret < 0) {
++        error_report("failed to set synthetic timers");
++        return -1;
++    }
++
++    return 0;
++}
++
+ int mshv_get_simp(int cpu_fd, uint8_t *page)
+ {
+     int ret;
 -- 
 2.55.0
 
