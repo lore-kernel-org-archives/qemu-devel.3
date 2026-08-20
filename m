@@ -4,109 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DC6AC5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:55:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 756EBC5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:56:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx60H-0002Od-Fy; Thu, 20 Aug 2026 12:52:33 -0400
+	id 1wx5zZ-000807-CE; Thu, 20 Aug 2026 12:51:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx60F-0002As-5b
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:52:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wx5zW-0007lO-GK
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx60D-0005oo-Dg
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:52:30 -0400
+ id 1wx5zU-0005iQ-R6
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787244748;
+ s=mimecast20190719; t=1787244704;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XtsaqgiyMjWc11nXZ/58/F9qHxa9T6D5V0veqe5qfXY=;
- b=DQYyLKsF+eoln3IUUdNBgO6UWowm0e5TN5rbJl4D2xmF4sqhMEGIDTpveVgU7F5Lbsm/cu
- oAbXiGCNqx/HlSpNZkby3MDYusoX8uljnAaZfK+cUzDWtED18x7Tt6fZ50cvXka/UYRzo6
- SQwlgXUZI8lvs0dc/LJlRGFBhzVNN2U=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kqq9Qg28PeFYQDhF8/CvyMcQOpgjlUe2VXm7wKnJLUs=;
+ b=FvoNxA59xBKncOJAPe4yypkwdC4IJF74PWhT2egvTz0pIsnysSg7Brh4lf2BnlRQaDFEJk
+ bSR+lNP4Ca4ov4rxaFzv+/rQeaHLAB6hksjUO1CxLEHKTKDSX20kTdzb9nXOEPWF53gGBl
+ vJR6IdnNsVWgQsLrGHSwSyiQhx4X4ZI=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-101-DAzygxfWMFiNkUNhXx8dLQ-1; Thu, 20 Aug 2026 12:52:21 -0400
-X-MC-Unique: DAzygxfWMFiNkUNhXx8dLQ-1
-X-Mimecast-MFC-AGG-ID: DAzygxfWMFiNkUNhXx8dLQ_1787244740
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-47f83416551so83669f8f.3
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:52:21 -0700 (PDT)
+ us-mta-516-klW7BiZ1Pu2uRmZxIuK8EQ-1; Thu, 20 Aug 2026 12:51:30 -0400
+X-MC-Unique: klW7BiZ1Pu2uRmZxIuK8EQ-1
+X-Mimecast-MFC-AGG-ID: klW7BiZ1Pu2uRmZxIuK8EQ_1787244689
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-47f83416551so83037f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:51:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787244740; x=1787849540; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=XtsaqgiyMjWc11nXZ/58/F9qHxa9T6D5V0veqe5qfXY=;
- b=r/+qk0pBhL+Zjqc3vypnWIP9uC/kCSprsz40dFfTVT92faan+DkIDMMvW7jB0m7kCw
- FuFyH0fTy/5E6MgOT2B+2A+XjNp/RgGKorUffKU3hsgkEgK/eo0AfpQETgteyPsY86tq
- IIMREW2uOu97KT/16XbwwMfg29xcz4WJkck84zy0a4WSaLGUVfG5xeW9F1AulopYMdCx
- fYN54esA6RcuoxGHLXb6FkX+EIb6LZ9K4sygonXLRv7CPBDkjSd/11IoSREsLc0h6ocF
- NYLvKeTwXSIY63JQbnykXLJo+9mC8dNlIzmpBWRC97uhavSt9YIyc/vMAvERN6vUkaey
- +/YA==
+ d=redhat.com; s=google; t=1787244689; x=1787849489; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=kqq9Qg28PeFYQDhF8/CvyMcQOpgjlUe2VXm7wKnJLUs=;
+ b=hSYqyljfRiHnZm6p0c/m4nC8m4LaLotnvebtRs24x6NUyMCCmtv9G8TnxQivirf2V7
+ Alces08WOHvKzhjOOZJD9qQxIuqeJlxw9+vBP4u+A1I9h6OCYiWLU8dbc13hTeK0B2do
+ GHnQualOqOsc+d3eKgnRtj93gQdmwkLSsTfGuH7QVs/kzKqsdZRUBfp8/GA4uFk0gjVL
+ 2thOA63pF61u9roLATg0r5Fr6P9DDh5dVi7X2qcZLIT0yLM7h+cNk+i07C6cQWi3BVjX
+ jpgSpPCqE/Z//91RIN0dnEqV43jropdyvbNjYwRgvydTYYQEjZwrSU5QpKIiarHONDLz
+ tYUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787244740; x=1787849540;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=XtsaqgiyMjWc11nXZ/58/F9qHxa9T6D5V0veqe5qfXY=;
- b=netTT9jc+9LMeGazY8+ZN/vA7WeSdQReSwimuSDT4++R1bbuZGCcLbw84huHs1wbCt
- OCrYTYqeukaVJViZOL/2BFYnBg7QQNmFkGC5ENd0AgVKCe/1XZ0zXwa7oTY6vdwSNlSC
- TH1KpF95haNcP7Ud0RJrl6/HfqLZ2E7AEVdebQPvBgCKhnfdWHYa00Cerdw/sP159zW4
- lBvUqygw2dS6ZAIk5bFwEXLzlHkLwRCn7p7LztyPc64KrG+hjwQcsL+RJezLTxU0Tm9i
- tatSZMuUxLTKETbbnV9RoegL+pfmajp+7KUhB+sLplanF73GvfeXv5w9kre/8yjjtof7
- KNww==
-X-Gm-Message-State: AOJu0Yx1BvL0eb0/rbn5UlQj1s5k1g+MyHsLHCQTmfxXLuZDw56SKoa2
- GnL0+nVhC37Fo7LoxFeyqRFDpMCz1dl2YBI2hQ0gXuVQFFzKkdhfy1qoBKKICg3OmyUK3whmA8n
- qQXpdgoa8bansFnxY2xe8FmwMNftGWbmA+Zkv1cf2Hb0WUi3PvFPqa3YTIzr+FYIiTmbPBxIuLQ
- DKlTV56hJQqZAUG4DMV0sCbSqRMQgLUMXDm6JFrp76
-X-Gm-Gg: AR+sD11vaIlyQEfRZJPAfFCpjc8kQLcI1dCDHUMjYKJm5mNCLwwxZRrByZVwpyCU1oo
- Fta6tbiZXur0XQhFq6m7Qeah3CChG/oiPELzs/r9sHVhXoD8K1CG+mKhFCgdctDWAOpTaVoAfvM
- 8EdAF2tIdpgADRQS69rpUYDXM9+hAa3xN2EPFPXRjXBnH3Ii/WbCdnkhl4uwxoH5hC/M8LskLKu
- hJex4cDX1Yw/7nupQdsGdV6lD8K3IZdO6dspNvBH5wVHyRGzUR7QOnnW15AijX6RSb8g4KEzxGZ
- TIeYpLYL8Bmk00vwvuxfpCq/yqwpG2Zo/p1c5yZqMOgpuUJWuJjmXMisQT7Rs8ZsbfbK8ul/bsB
- p/dmqh+WA9UIqOKJIA3jL4oMRVveoO+lmdPZnmYzktRbHHZQ0+dCbeLX+rE8nYzyYV1DiPFz5W0
- U6SGY=
-X-Received: by 2002:a05:600c:34c6:b0:495:779a:ed33 with SMTP id
- 5b1f17b1804b1-499b8325a6dmr4613775e9.7.1787244740368; 
- Thu, 20 Aug 2026 09:52:20 -0700 (PDT)
-X-Received: by 2002:a05:600c:34c6:b0:495:779a:ed33 with SMTP id
- 5b1f17b1804b1-499b8325a6dmr4612655e9.7.1787244739865; 
- Thu, 20 Aug 2026 09:52:19 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787244689; x=1787849489;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=kqq9Qg28PeFYQDhF8/CvyMcQOpgjlUe2VXm7wKnJLUs=;
+ b=Qmjps/9tzJe3Hg57CUsuOTJmA+wd0Xc+/S9f6UUb/+QmvjcZ5bGlzKqgYW189Pqqow
+ LruZkkQi65CpgyvoRvn/zIcq9CaQV6U3OZ13s7KXWpKPTl0edT4bwalHZ+9gxHgWfZuy
+ q9T2Us62RMdHT2morNxEl5ViZlwc0LJKQvAHQP5D+h+iTT7/QnZjq0RrdDvbmGRgDv+Z
+ kFQMqdKrIiWkPgtkTuXc6Yqd/IGxPvaVf6QwPzKbhB77BfKMLc4N5QChpjOvn5EFt3k/
+ tzA0AE64m4yj7rtes+V7I7pWzmr2218Zgkavx4PH/fFkNMdTT/cWwcr6TnKPBcV/wSU3
+ qOyA==
+X-Gm-Message-State: AOJu0YwbGDemHPDGZ/WcaPK6OhKi7WN67S9bsCkm3V9tA7qvZKTGtyJy
+ j68MiECsZSRBlG8YFP2xSUiCATCzhowxUsEST6e9NLwOY0QfneafABMeukJTfo/w895Bb5sSvee
+ pQcMAIT4g1KCK3s5XVgDZIYXJsqwV+RoJHOlR8oqMv2hNOIHFausIm4eL9NpgM8fDYqEjVlgNn6
+ i7JArDnzTgiIV5nW/MmfEOYouVzMXn6C7jpT1RkWtg
+X-Gm-Gg: AR+sD10OIa6CUpbMcsOvDIfZ4oZYo3iENcWFoy6a8sMJMMeJflRrjFZ1A/T/JFSPdOl
+ pRqHVX0excW1ouzd3XevzzwUR6dR5MVL5SaFp6NRwwNwz8sV1pyWd9Efixwy4UjpwwRYiH3aof5
+ f1Ezhmz58ORyHTge9TI9rKX0EXEdgrXqHGn9jTFhE9/W5smu4bzEsjmNjNYy5JXh0tC9BYBGPHv
+ qA2/UrdOTdkFS5Nkj4y+15AOtBhEUN9P0pO4v7TDBHAv1Cwt3Z8SG10S2dDEPf5LBIpU6pf+jzg
+ xahjo4euqfLxXUcQdJThpCDPD29hIIpXTpFgMKd6/MzWU5zpG30p1VprF9iNo9Ca3GDTqcqTmaj
+ xmpiabaUjfAYqvvawTAF4tFmgewS/geytyPoYG66a9AZckEauWGpnOr0QhGSTzSzPuiUY1ZC83w
+ omMzM=
+X-Received: by 2002:a05:600c:3556:b0:495:48d7:f178 with SMTP id
+ 5b1f17b1804b1-499b8454819mr2932305e9.11.1787244689380; 
+ Thu, 20 Aug 2026 09:51:29 -0700 (PDT)
+X-Received: by 2002:a05:600c:3556:b0:495:48d7:f178 with SMTP id
+ 5b1f17b1804b1-499b8454819mr2931435e9.11.1787244688914; 
+ Thu, 20 Aug 2026 09:51:28 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499a9e78496sm167766805e9.2.2026.08.20.09.52.18
+ 5b1f17b1804b1-499b70bddf3sm3960275e9.1.2026.08.20.09.51.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 09:52:19 -0700 (PDT)
+ Thu, 20 Aug 2026 09:51:26 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 50/53] scripts: remove now dead parts of rustc_args.py
-Date: Thu, 20 Aug 2026 18:49:53 +0200
-Message-ID: <20260820164957.1895963-51-pbonzini@redhat.com>
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PULL 31/53] whpx: i386: fix xsaves enablement in legacy probing path
+Date: Thu, 20 Aug 2026 18:49:34 +0200
+Message-ID: <20260820164957.1895963-32-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820164957.1895963-1-pbonzini@redhat.com>
 References: <20260820164957.1895963-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.346,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,146 +120,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The logic to parse the [lints] section has been integrated
-into Meson and can be removed.
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Without this, Linux will crash in a configuration where
+xsaves is expected.
+
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Link: https://lore.kernel.org/r/20260812082814.27217-2-mohamed@unpredictable.fr
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build                |  1 -
- scripts/rust/rustc_args.py | 80 +-------------------------------------
- 2 files changed, 1 insertion(+), 80 deletions(-)
+ target/i386/whpx/whpx-cpu-legacy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/meson.build b/meson.build
-index 3c6a82ab440..6dcfdceb507 100644
---- a/meson.build
-+++ b/meson.build
-@@ -130,7 +130,6 @@ endif
- 
- if have_rust
-   rustc_args = [find_program('scripts/rust/rustc_args.py'),
--    '--rustc-version', rustc.version(),
-     '--workspace', meson.project_source_root()]
- 
-   rustfmt = find_program('rustfmt', required: false)
-diff --git a/scripts/rust/rustc_args.py b/scripts/rust/rustc_args.py
-index 8098053720a..107b944c161 100644
---- a/scripts/rust/rustc_args.py
-+++ b/scripts/rust/rustc_args.py
-@@ -25,10 +25,9 @@
- """
- 
- import argparse
--from dataclasses import dataclass
- import logging
- from pathlib import Path
--from typing import Any, Iterable, List, Mapping, Optional, Set
-+from typing import Any, Iterable, Mapping, Optional, Set
- 
- try:
-     import tomllib
-@@ -74,40 +73,6 @@ def get_table(self, key: str, can_be_workspace: bool = False) -> Mapping[Any, An
-         return table
- 
- 
--@dataclass
--class LintFlag:
--    flags: List[str]
--    priority: int
--
--
--def generate_lint_flags(cargo_toml: CargoTOML) -> Iterable[str]:
--    """Converts Cargo.toml lints to rustc -A/-D/-F/-W flags."""
--
--    toml_lints = cargo_toml.lints
--
--    lint_list = []
--    for k, v in toml_lints.items():
--        prefix = "" if k == "rust" else k + "::"
--        for lint, data in v.items():
--            level = data if isinstance(data, str) else data["level"]
--            priority = 0 if isinstance(data, str) else data.get("priority", 0)
--            if level == "deny":
--                flag = "-D"
--            elif level == "allow":
--                flag = "-A"
--            elif level == "warn":
--                flag = "-W"
--            elif level == "forbid":
--                flag = "-F"
--            else:
--                raise Exception(f"invalid level {level} for {prefix}{lint}")
--            lint_list.append(LintFlag(flags=[flag, prefix + lint], priority=priority))
--
--    lint_list.sort(key=lambda x: x.priority)
--    for lint in lint_list:
--        yield from lint.flags
--
--
- def generate_cfg_flags(header: str, cargo_toml: CargoTOML) -> Iterable[str]:
-     """Converts defines from config[..].h headers to rustc --cfg flags."""
- 
-@@ -154,60 +119,17 @@ def main() -> None:
-         required=False,
-         default=None,
-     )
--    parser.add_argument(
--        "--features",
--        action="store_true",
--        dest="features",
--        help="generate --check-cfg arguments for features",
--        required=False,
--        default=None,
--    )
--    parser.add_argument(
--        "--lints",
--        action="store_true",
--        dest="lints",
--        help="generate arguments from [lints] table",
--        required=False,
--        default=None,
--    )
--    parser.add_argument(
--        "--rustc-version",
--        metavar="VERSION",
--        dest="rustc_version",
--        action="store",
--        help="version of rustc",
--        required=False,
--        default="1.0.0",
--    )
-     args = parser.parse_args()
-     if args.verbose:
-         logging.basicConfig(level=logging.DEBUG)
-     logging.debug("args: %s", args)
- 
--    rustc_version = tuple((int(x) for x in args.rustc_version.split('.')[0:2]))
-     if args.workspace:
-         workspace_cargo_toml = Path(args.workspace, "Cargo.toml").resolve()
-         cargo_toml = CargoTOML(args.cargo_toml, str(workspace_cargo_toml))
-     else:
-         cargo_toml = CargoTOML(args.cargo_toml, None)
- 
--    if args.lints:
--        for tok in generate_lint_flags(cargo_toml):
--            print(tok)
--
--    if rustc_version >= (1, 80):
--        if args.lints:
--            print("--check-cfg")
--            print("cfg(test)")
--            for cfg in sorted(cargo_toml.check_cfg):
--                print("--check-cfg")
--                print(cfg)
--        if args.features:
--            for feature in cargo_toml.get_table("features"):
--                if feature != "default":
--                    print("--check-cfg")
--                    print(f'cfg(feature,values("{feature}"))')
--
-     for header in args.config_headers:
-         for tok in generate_cfg_flags(header, cargo_toml):
-             print(tok)
+diff --git a/target/i386/whpx/whpx-cpu-legacy.c b/target/i386/whpx/whpx-cpu-legacy.c
+index d341e6f4fd1..3fb5ed79e39 100644
+--- a/target/i386/whpx/whpx-cpu-legacy.c
++++ b/target/i386/whpx/whpx-cpu-legacy.c
+@@ -113,7 +113,7 @@ uint32_t whpx_get_supported_cpuid_legacy(uint32_t func, uint32_t idx,
+         if (idx == 0) {
+             eax = supported_xcr0;
+         } else if (idx == 1) {
+-            eax &= CPUID_XSAVE_XSAVEOPT | CPUID_XSAVE_XGETBV1;
++            eax &= CPUID_XSAVE_XSAVEOPT | CPUID_XSAVE_XGETBV1 | CPUID_XSAVE_XSAVES;
+             if (!whpx_has_xsaves()) {
+                 eax &= ~CPUID_XSAVE_XSAVES;
+             }
 -- 
 2.55.0
 
