@@ -4,98 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69E26C5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:55:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76D19C5DF86
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:55:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx5y0-0003fW-V0; Thu, 20 Aug 2026 12:50:12 -0400
+	id 1wx60A-0001WH-QU; Thu, 20 Aug 2026 12:52:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5xy-0003eT-Is
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:50:10 -0400
+ id 1wx5zx-0001MR-GV
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:52:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5xw-0005KR-FU
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:50:10 -0400
+ id 1wx5zw-0005mz-4W
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:52:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787244607;
+ s=mimecast20190719; t=1787244731;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6S7x7mnliwyjD2cUQSXzS+dP8lkV219BxBtpL7Cvczc=;
- b=crhHCG9w0vqkACpWWSJ/5MtSkX4Nll58SbZyonsva4+xQrfwij256IbwPJYrFOTzTrIJjV
- OzzGbZLvuDKfI/O+/fcbvD7OuJ8IJthoGt92QfDDdksPBEpvuSirWVL6+yGC2Xe6v9rCAS
- 6E0LC0zPpWq2qOMRU6g9NkSNQmXO8+w=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FNM9WY3GDs9NFIUbF6VOCyMHiscyOHLyp4b12lS9z/8=;
+ b=NKepYMs+R/vLm4tOf3/A69W2oFvzxvfP4CcwX69cvYpOOR5Hqnh7b6cAEja58wZiWmi75Y
+ gkgt4Nz6x82dYmEynW4+uWQGTOGPWPU1/FBJugtsnlTcdpKJ7npJ4W+nMfrLzngdu+J4Zu
+ mas+42+s5fOfAvmriRNFyVnYBn5Tc18=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-215-2zrV4qa9N5mllL9uygEbZQ-1; Thu, 20 Aug 2026 12:50:04 -0400
-X-MC-Unique: 2zrV4qa9N5mllL9uygEbZQ-1
-X-Mimecast-MFC-AGG-ID: 2zrV4qa9N5mllL9uygEbZQ_1787244604
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-47f4601af62so50344f8f.1
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:50:04 -0700 (PDT)
+ us-mta-299-mh51oqVlORigBfNEmMp-dw-1; Thu, 20 Aug 2026 12:52:10 -0400
+X-MC-Unique: mh51oqVlORigBfNEmMp-dw-1
+X-Mimecast-MFC-AGG-ID: mh51oqVlORigBfNEmMp-dw_1787244729
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-49808ea1b64so12545675e9.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:52:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787244603; x=1787849403; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=6S7x7mnliwyjD2cUQSXzS+dP8lkV219BxBtpL7Cvczc=;
- b=M5T6eTRHQOVrXM7dUV3FSEPkVx+c3iK2FeaOWzjIyGTMQIpplyj1ySvdOVbDpdqiNt
- spWnoyLpdkZyyY/Q8beSBOQ6v4bF6lLzV4/uYW9ROpTFG7E7tGKIgETPgvvuvhw3Ji5X
- oI6jZyW/+FnigByh2/o5HK8Cfrw3IhBQKtu2uZQQd2MHf1NJGt3knCaIdfJjGeFj0HOO
- iNQZF0Zpu/3DUMHIxMayxD/iMt/Tss7XYlPB2mM/6pzZO+OzUWiZJCt4eCxfObq+/4/K
- wHPXAXuHTWcykx0FIf1v2NqPePtcPwb3WF8tDhNsgDpAP1jdCT/L4ZI6YzMG4EJzi9oI
- 0Q0g==
+ d=redhat.com; s=google; t=1787244729; x=1787849529; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=FNM9WY3GDs9NFIUbF6VOCyMHiscyOHLyp4b12lS9z/8=;
+ b=OoSH08sLZhExaxao6bg1FY7ku1vpBSLhgkk9aSsFQ/ifrii3uTIB/Xt3wzeFn74Yhx
+ AUHi8RQ9r/dcGlAGDJaVo/q1U0s/gsfY0I/WhxMHisKJL5A7ql22SNR2xUVyHRE+e454
+ 9JvxcRNbcq8p4vfFcZwHocuxXHFV1OKvefODjI6+73yabN+rAyjwGLxvQ8FmNsbBoya2
+ WP7I5Ht+TmYs31jBeNyHNke9JzzQHVXZxxg4t8vswOYSxZBSFAk1mFNcULZB4U4jXcwY
+ f0rfqJkQcmOXdAW63D88vBDqLczESwAyV9kIkjz/Jqt24NPADH5WeiSyvD5Y4j6+bUp+
+ Z70A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787244603; x=1787849403;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=6S7x7mnliwyjD2cUQSXzS+dP8lkV219BxBtpL7Cvczc=;
- b=SaCQVt8NT7MUUWsOD03LwS9ZIOAHwOKjdHChjZ0WpebRch0xmxu7HRKP8hF5EkrDTo
- 0g3I8HW6VL5dmj1vpDdMfWsHtz0VnoS4iDNUU9NNtZx4mGhLKrvEhYXxiEHQPitGYugc
- qm2+I+tbtyfH1mIi7bdsiXf8iYaCkBh3Ukqi0mQryMLSfjufn3olmXMh5KPbb+tyUS0O
- gS3YYdk/K7oUrt6Ua9+5TlHEjx6amm4CbgW4j99WMbBUcN/kXqFwLaxeGmJZO35xq3lV
- Nygs6KsQjy0wrAsBW/SdKyqVsBDYazOfQ9xf1+Y2+amBxKMuVxFrH92L7fBmJMR2ElMJ
- 4+lw==
-X-Gm-Message-State: AFuF++k85mnRaGvhSK9HFL6nxu2HBG/g3rbhI7BVupuv2Nu/MglbrxHU
- CfrkMvy3HrAvxxF833uQtdDdqYcAjrURtQRywS0t1nDOjicvZLwEfCT2EjKtcAYFTWkQqdNLHSY
- t3kjTLcgBHKgerPDVOfkU7vBQVVxLC1ZyJF++JYRPGh3SoNAQ/FbjXBAc3mQQohr9dZ4Tis20tv
- gGDI6hBZG3Sk9qXxyyX0TTsEAKuEcU1pymSk/6DTNL
-X-Gm-Gg: AR+sD103JHuWG8hOBIQVAhek++XY8rxcKc9ZKn4xZ3NaQ13bE4vrA8gcGy31AwMrl/t
- t189rNKaNz3vUe9X1CeeGZuHKuA7SGYRTqjmz28VYvfVOtuQUxKjCQIw/SdESY1Avf1INLutciD
- vQMLKWFEKFnAqzN9ISYaB79WjfxGOh1FeDKj+HRApIz0Ex31hm6aQabkdhzMYCif/fJD6BXS1SK
- PdLntEG/u+vIDm3DWgfmqCBA6BZfaLTGEikyGl0U17vqF0oOOwaKXN/0Pn5oerMBwXHDK+d1AUC
- 7TwYyDYGGULmczN8ftkhsIqZMf6q/BGkZj7VNDinfjNQ9D2YvIptOswAzA0v5JoICQxQfZk0H12
- k7r9eNn2i6Vfq7xJx0QQzW24PdqpjNIQFM96N/R723wVviFGga7mQ0vbHfazMz5q6havxP0FuC9
- gjyu4=
-X-Received: by 2002:a05:6000:1449:b0:47f:8183:e9b8 with SMTP id
- ffacd0b85a97d-482b1feeb3dmr23105698f8f.22.1787244603515; 
- Thu, 20 Aug 2026 09:50:03 -0700 (PDT)
-X-Received: by 2002:a05:6000:1449:b0:47f:8183:e9b8 with SMTP id
- ffacd0b85a97d-482b1feeb3dmr23105619f8f.22.1787244603057; 
- Thu, 20 Aug 2026 09:50:03 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787244729; x=1787849529;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=FNM9WY3GDs9NFIUbF6VOCyMHiscyOHLyp4b12lS9z/8=;
+ b=ehVuKq5WQeRvr2nRC7oE8j6ZfqSKrxzaiGUvdmzZErqMt7Cd81tFJbWXgXXaNC70+9
+ Id3X3/woCix0yj/b08DT/a/tNl8tydQWtqYFP/290OS9n5rN6lsmo+atBDuFhPGjCZqh
+ 5Gy8uzzjpsCm0gx4yHzijjW439HWbZ+dS0fLbX57Ou9wn1/ZkAOVj2gq8xN405TJT5Bo
+ 6XoMZLyBT3wGUxRpPfXauvbGYKDQZYpLqIyCtfFNlCMPXmr3Tg2MpzGTP6Ljf+5sPQgC
+ POU0y4VBa1ShQtJAksfZOcjIFxReA2CZmXtHhGWkVYNLVlLLfgfniam8rGFi7Z6+xGqg
+ lYzg==
+X-Gm-Message-State: AOJu0YzAOYeE20vJ7D6fgSA6JBqxB4LDr0Ls8319hWuBln74WKvjwr2F
+ NjMV1kRSO3ciHBAw+C/QWcILDocp7opjLCHkhsHiENon9/nSZXBY0noniNzd6YyBeI1XTKuaQ/f
+ otZyaVsLdKsgmzapxHjso0QeViKKI4UdFGGcc+aSrhoEBV7QcMGL8UjCEtTApfMA8e1tVXWozPZ
+ n1ThS2i0KmLZNNUiN1AYbmNaS5v9kUkF/6D3nqRQs7
+X-Gm-Gg: AR+sD12jq8CbGGG+OOFoIDp3UIkUgOgijzXGkyRfTYM+/X9HTlJuLfCWWTT7A1m4/4g
+ uErxOK9kmjU8SS2wgNoxy7l0UABeeiGEU+3hRiw4r6KhqpK4jstD+BVpQFyI1XA354o5Wfb1hj8
+ 3fIa6PmS54K5AQPg0nzipjuMGPRrBF5V6b9VNAqFhNjroEnjEXpjob6chj1R6VJvm2m/DiL1fm6
+ PvUGndKzPOluU/Empm8Cip2Xh5xUrMowEkyx0uNOctn+lt1gLXIeVn7JIogtwaH/cQA6mz1BKfa
+ I1YJ4HiZrg5sG63cvjnneMeWlsVlrbRWESmHCXK0WyydvZz1TxZK4u2xbUihOLrX51bRvcKmHqM
+ /JeSeFljiXLbqxpjxAQ/GBvpOFyvdgSw43oFCKpwY1tFAiX3kUxc3oxUQbNtoMvdzFM4gfDKvZJ
+ P92AU=
+X-Received: by 2002:a05:600c:674a:b0:499:5f80:83ac with SMTP id
+ 5b1f17b1804b1-499b06cbaf2mr130356515e9.7.1787244728768; 
+ Thu, 20 Aug 2026 09:52:08 -0700 (PDT)
+X-Received: by 2002:a05:600c:674a:b0:499:5f80:83ac with SMTP id
+ 5b1f17b1804b1-499b06cbaf2mr130355195e9.7.1787244728137; 
+ Thu, 20 Aug 2026 09:52:08 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b1441c78sm13877367f8f.2.2026.08.20.09.50.01
+ 5b1f17b1804b1-499aa11f832sm148671175e9.7.2026.08.20.09.52.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 09:50:01 -0700 (PDT)
+ Thu, 20 Aug 2026 09:52:07 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Simon Scherer <scherer.simon89@gmail.com>,
-	qemu-stable@nongnu.org
-Subject: [PULL 01/53] target/i386: Clear OF, SF, and AF for fcomi/fucomi
-Date: Thu, 20 Aug 2026 18:49:04 +0200
-Message-ID: <20260820164957.1895963-2-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 47/53] meson: use compiler_target() to get rustc target
+Date: Thu, 20 Aug 2026 18:49:50 +0200
+Message-ID: <20260820164957.1895963-48-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260820164957.1895963-1-pbonzini@redhat.com>
 References: <20260820164957.1895963-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -121,67 +122,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Simon Scherer <scherer.simon89@gmail.com>
+The new method in Meson 1.11.x removes the need to pass the triple
+via config-host.mak.
 
-helper_fcomi_ST0_FT0() and helper_fucomi_ST0_FT0() only cleared
-CC_Z, CC_P, and CC_C before merging in the comparison result,
-leaving CC_O, CC_S, and CC_A untouched from whatever they were
-set to beforehand.
-
-The Intel SDM documents FCOMI/FCOMIP/FUCOMI/FUCOMIP as setting OF,
-SF, and AF to 0 unconditionally. The AMD manual doesn't mention them
-at all. However, testing on multiple real Intel and AMD systems confirms
-all three are unconditionally cleared regardless of the comparison
-result or their prior value.
-
-Since fcomi_ccval[] only ever contains CC_C, CC_Z, 0, or CC_Z|CC_P|CC_C,
-and CC_O|CC_S|CC_Z|CC_A|CC_P|CC_C already covers every flag bit, CC_SRC
-can be assigned from fcomi_ccval[ret + 1] directly instead of ORing it
-into a masked cpu_cc_compute_all() result.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4133
-Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-Link: https://lore.kernel.org/r/20260807062831.19618-1-scherer.simon89@gmail.com
-Cc: qemu-stable@nongnu.org
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/fpu_helper.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ configure   | 3 ---
+ meson.build | 2 +-
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index 978eb1411b4..b812125efa1 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -550,12 +550,11 @@ static const int fcomi_ccval[4] = {CC_C, CC_Z, 0, CC_Z | CC_P | CC_C};
- void helper_fcomi_ST0_FT0(CPUX86State *env)
- {
-     int old_flags = save_exception_flags(env);
--    int eflags;
-     FloatRelation ret;
- 
-     ret = floatx80_compare(ST0, FT0, &env->fp_status);
--    eflags = cpu_cc_compute_all(env) & ~(CC_Z | CC_P | CC_C);
--    CC_SRC = eflags | fcomi_ccval[ret + 1];
-+    /* OF, SF, and AF are unconditionally cleared to 0 */
-+    CC_SRC = fcomi_ccval[ret + 1];
-     CC_OP = CC_OP_EFLAGS;
-     merge_exception_flags(env, old_flags);
- }
-@@ -563,12 +562,11 @@ void helper_fcomi_ST0_FT0(CPUX86State *env)
- void helper_fucomi_ST0_FT0(CPUX86State *env)
- {
-     int old_flags = save_exception_flags(env);
--    int eflags;
-     FloatRelation ret;
- 
-     ret = floatx80_compare_quiet(ST0, FT0, &env->fp_status);
--    eflags = cpu_cc_compute_all(env) & ~(CC_Z | CC_P | CC_C);
--    CC_SRC = eflags | fcomi_ccval[ret + 1];
-+    /* OF, SF, and AF are unconditionally cleared to 0 */
-+    CC_SRC = fcomi_ccval[ret + 1];
-     CC_OP = CC_OP_EFLAGS;
-     merge_exception_flags(env, old_flags);
- }
+diff --git a/configure b/configure
+index 7f637c018c3..56158cd95f7 100755
+--- a/configure
++++ b/configure
+@@ -1740,9 +1740,6 @@ if test "$container_command" != ""; then
+     echo "CONTAINER_COMMAND=$container_command" >> $config_host_mak
+ fi
+ echo "SUBDIRS=$subdirs" >> $config_host_mak
+-if test "$rust" != disabled; then
+-  echo "RUST_TARGET_TRIPLE=$rust_target_triple" >> $config_host_mak
+-fi
+ echo "PYTHON=$python" >> $config_host_mak
+ echo "MKVENV_ENSUREGROUP=$mkvenv ensuregroup $mkvenv_online_flag" >> $config_host_mak
+ echo "GENISOIMAGE=$genisoimage" >> $config_host_mak
+diff --git a/meson.build b/meson.build
+index 2139dfc7ce8..2593eb97624 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4747,7 +4747,7 @@ else
+ endif
+ summary_info += {'Rust support':      have_rust}
+ if have_rust
+-  summary_info += {'Rust target':     config_host['RUST_TARGET_TRIPLE']}
++  summary_info += {'Rust target':     rust.compiler_target(native: false)}
+   summary_info += {'rustc':           ' '.join(rustc.cmd_array())}
+   summary_info += {'rustc version':   rustc.version()}
+   summary_info += {'rustdoc':         rustdoc}
 -- 
 2.55.0
 
