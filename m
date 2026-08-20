@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE4F2C5DF81
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F38E0C5DF85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:48:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwtiu-0008Rf-Pm; Wed, 19 Aug 2026 23:45:48 -0400
+	id 1wwtjb-0001Ov-Mc; Wed, 19 Aug 2026 23:46:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtit-0008Kw-1D
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:45:47 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1wwtjZ-0001Hu-Q0
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:29 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtiq-0003zA-SG
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:45:46 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2d032846c95so22135785ad.1
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:45:44 -0700 (PDT)
+ id 1wwtjY-00043q-20
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:29 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-38dc69c74b8so2168806a91.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:46:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787197543; x=1787802343; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787197587; x=1787802387; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=/8dJDx1ilTYyZ18Kjsv/DFio2MP9Dc526iF16cUqG6E=;
- b=iEV8XOlhYa7Xoo6PwIEm40RqgE1dyY4YNE191CZrI6LkaL2NbgGPYO1mreObSxvf7G
- AztQhEnA4u3aW+SipZFN9KmdBs79N2LnrpLXTlA4YrSWps177Sq0Wy6AVRhuW7VTaySa
- SpW/eSeHZ/5FlFOaRE4k8bzL0WIaacBoTuKJ1Kkoho2YsTQlbZgpcvM99hKU3VQxaR0T
- tqOYUrfhQAM4yeBdSkOUbhh0J2eftjNYuPSXYxeRGe5oSKlLLhu+P+6u3SM+PXxh+UOd
- hZPivC/SJ6/zpN7kqjN4aWz6Nt5hYFg89Y5HXYbPcNI3dHu5uivnVWFqcW/H1a2gr/AZ
- Vf1Q==
+ bh=SgsaYtQ8tDSYVVM1L00F+By8GMWleAT9fxOmw/AcfMA=;
+ b=Vlz3R3rWZoJY1Zqj3BM5/Oj7WZjmXao/FMz1kx6vVoJZrn0SX4VdNbCE2rlvOO8nV7
+ bVmRavytSoqXpQPiw+JkbcbLwm+7icRhEEOLp9Go1xmUV2TEJqiwimzyjTCS4CVkIBqf
+ iaXL+g5MM29csPsF35YsTpSdagiqG+BFy7Iu3J0T3EC+Jh8gDSe6ji+Ugi6TWdQhtCEM
+ AfrvCpVreauOzZDhzOUzr9Q2gfWEEhIj+xOS5jpUINSGOnX8QZsQniJJvTa+CrDohY6j
+ 8CVnB5SuZ+rIpsFYYpfalV+BXT/Do7NmJfOBh2a7ny+uAidlf9J0BFfICLtQPlbL6s6F
+ mFSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787197543; x=1787802343;
+ d=1e100.net; s=20251104; t=1787197587; x=1787802387;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=/8dJDx1ilTYyZ18Kjsv/DFio2MP9Dc526iF16cUqG6E=;
- b=K/ry0/wTwuvNSUrg4ZvX69hzhHPDqfDnd/K0biy8hXBwDDceLEdB8YTnkkYb5F7Po6
- O4rgpFXFFxI0CnFCTX5sNxKZrY8U51daCTBJyL5IgFVvqP+2Uluoj2lEB0h3iyZWuc1a
- jkC7i9rFHC7VLQDtuaUlK53eXnEVWGPh2vXMApieIrcfG1TnKijIHPcCUgKtoIAuyM6b
- t23iCI1N72W6ltQMh4mVJys+pblqkaey2uov1us5BgAmN6wxpAAWdITHVgZuajWPtiqG
- zUWOZIXSfBxTWftIGwWSZ+2csCmeguJM/OnntmybZNnBdFTCF8Wx8R5M/H/0UJB8oblY
- P14w==
-X-Gm-Message-State: AOJu0YyHHV7mj7kuzg+hHEBHNNPwxW1wMsKgXlIsAnqjRWY2a+YxsXEf
- 0H9mrezvWXiqPL4NGO5MuHJpJWycfGUcmHOErOaXTmH4muPvnPVh/yXVKFPfPg==
-X-Gm-Gg: AR+sD13FOuOOyScYuWxO1huDIlVvvJxI2N0Oets1EwOBkwpqkSLS5rwOAhhw2Dt5kxY
- R9rYxAORN7j8rE/GtAK2E2u20IMlRsIXXdhOm52zVa/7BLLZwfzBB/HAnyHKKKiiQbI9ZBfspMn
- 9L1IWV+cmf0GYRNEzW2r38kNzm45hLtkcp10x257iXNDM4aaM0S48ObUZGt5uaVnlnROhQIo7GG
- 3RY79eqP7ATALISfjri7h4nJV0mEYZQ1cI8eyW/f4GZfWB1oKX4o5Bn07g8MfQZukphdaK+npUQ
- LEjHU0xR7ZSUJKLCt0clDGMGoiokw0vXbrOKvMdRcg5l7U4KE05LMq/pYv1z+yJ2ZyRBPCTB0ha
- Z+c1okRJ12Nca0/zKwRV+Y4/XlIbKC0iIa4M++im9AIzT9/98w2JH3E4BXGHqoJykt+IuDZu6iq
- QcOPbWS4g73W8dZ2fGcsHL3oCMfICbXBN9npVePV0CztMCkagFy6cXr+wfUdT6NqIhZ3l2br5r7
- wtpfd+mQYxfttRm
-X-Received: by 2002:a05:6a20:12c7:b0:3c3:cc3e:a9 with SMTP id
- adf61e73a8af0-3cd00dd6be8mr15148105637.4.1787197543215; 
- Wed, 19 Aug 2026 20:45:43 -0700 (PDT)
+ bh=SgsaYtQ8tDSYVVM1L00F+By8GMWleAT9fxOmw/AcfMA=;
+ b=GabrICtc1/rrHFeDy8r8yU+kvNcXhR9RkdxJulay4t1oA13Jq510WcYtJfejYUcKZt
+ j7zDzoZKThmc7s9bTrC2HvvmVG0TQWya6/4D9g8SrzOoX4jId1MoBhMd9USa273l9JgS
+ zcF/R44lPL0Jd4SlmQsMSHrhZBDZFWgsCUjbb6nRwz4QuUYgofALzBtQ4rRiQEGvOlzw
+ HlhjWZ8Z9bOGRgMpDQQg6XTjeR9PT4Zt6Wtw1SUdFy/kNmJVIxPRa6tuap3xdsAoLq6B
+ CRTK3w+8pVGtFkjt2KgKEhRc0xmLNWB/+Z1w7IdXoFKfkUCYCD/8uZsg6ROknx68N4qC
+ N1Mg==
+X-Gm-Message-State: AFuF++lzODpr7bbQn5d4dUECBO0aRvet2NBilTkmTwWnfy2U7mb3RVXS
+ Ms6WvtS/9AfLvKiiaboR3PvWNs7tJ4QHfwhC0mFTVrYKWnT6AdA0hCK0V0+Sgw==
+X-Gm-Gg: AR+sD13Xz6lLH6Cv6K1W9ZaIbbQYc6m3HhdPhhvExQhy7aGR/i6awGPefD8sqm5ANMF
+ 0Hlmp85CqB5hycRBqzPPA1/4yHhDjINTuKTrfD8ubkRdr+nVXDNXxNEFuJeoIx1KbUbcX6nQd+/
+ JSY8brZTbx6cQN0813wmGQRn6yKAFCh1tPhQqWwibXceNMzI7Ou4Wl9AGGMJqrwEsn+dI1jnZK/
+ JElJAuPNfXFmFslQGzc1IsepsRmlrSh5aCTaLJXFu884ZWzuAQLqywA9beNdnkmfLTz4TPbh7yg
+ 4zZ0jOchcmKTcw59n5y+LZ+AZJj148AxKx2LaBlbehzwr3BZ8+G3+gPq1AoYEko/lH0MCVw+MAb
+ vAHt5yjjxn/geDELr/jbbr4hA7seziXY6pY1ASw9ajoaVEEEqF6bqxS1dEyf7f1ycYmzd063dIC
+ MJXUho5sjVFBazPWJC/KbktHCCTK5bDL+a2GDXGEvF+iTrU8PZUxYxaEidoDuu0Pz+8pCGDhtl2
+ Ixt2g==
+X-Received: by 2002:a17:90b:2b8e:b0:38e:75f3:ad4d with SMTP id
+ 98e67ed59e1d1-39580f03c97mr18254727a91.7.1787197586624; 
+ Wed, 19 Aug 2026 20:46:26 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.45.40
+ a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.46.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 20:45:42 -0700 (PDT)
+ Wed, 19 Aug 2026 20:46:26 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Frank Chang <frank.chang@sifive.com>, Max Chou <max.chou@sifive.com>,
+Cc: Andrew Jones <andrew.jones@oss.qualcomm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Nutty Liu <nutty.liu@hotmail.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 20/93] target/riscv: Support raising misaligned exceptions for
- vector loads/stores
-Date: Thu, 20 Aug 2026 13:43:17 +1000
-Message-ID: <20260820034430.1186695-21-alistair.francis@wdc.com>
+Subject: [PULL 34/93] hw/riscv/riscv-iommu: fix U-bit check to apply only to
+ leaf S/VS-stage PTEs
+Date: Thu, 20 Aug 2026 13:43:31 +1000
+Message-ID: <20260820034430.1186695-35-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260820034430.1186695-1-alistair.francis@wdc.com>
 References: <20260820034430.1186695-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,186 +106,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+From: Andrew Jones <andrew.jones@oss.qualcomm.com>
 
-When the Zicclsm extension is not enabled, raise misaligned load/store
-exceptions for misaligned accesses from vector load/store instructions.
+Commit b795ea0ba471 ("hw/riscv/riscv-iommu.c: fault when !PTE_U and
+no priv access") placed its check ahead of the leaf-vs-non-leaf
+branch in riscv_iommu_spa_fetch(), so it fires on every PTE walked,
+including non-leaf/table entries. Per the RISC-V privileged spec's
+address translation algorithm (Sv39/Sv48/etc., the "leaf PTE has
+been reached" step, followed separately by the U-bit permission
+check), the U bit is only defined and checked for the leaf PTE
+reached at the end of the walk -- non-leaf PTEs don't carry a
+meaningful U bit at all.
 
-We will skip the host fast-path and fall back to the slow TLB-path to
-raise misaligned load/store exceptions for the misaligned accesses when
-Zicclsm extension is disabled.
+Move the check after the leaf/non-leaf branch, alongside the other
+leaf-only checks, mirroring how the G_STAGE U-bit check (added in
+9158c900ab30) is already correctly placed.
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260810055618.1175500-6-frank.chang@sifive.com>
+Fixes: b795ea0ba471 ("hw/riscv/riscv-iommu.c: fault when !PTE_U and no priv access")
+Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Message-ID: <20260717112340.1071148-1-andrew.jones@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/vector_helper.c            | 65 ++++++++++++++++-----
- target/riscv/tcg/insn_trans/trans_rvv.c.inc | 18 +++++-
- 2 files changed, 65 insertions(+), 18 deletions(-)
+ hw/riscv/riscv-iommu.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-index e321ca2616..e28d8a3d9f 100644
---- a/target/riscv/tcg/vector_helper.c
-+++ b/target/riscv/tcg/vector_helper.c
-@@ -199,20 +199,34 @@ static inline void vext_set_elem_mask(void *v0, int index,
-     ((uint64_t *)v0)[idx] = deposit64(old, pos, 1, value);
- }
- 
-+static inline MemOpIdx vext_make_memop_idx(CPURISCVState *env, size_t size)
-+{
-+    int mmu_idx = riscv_env_mmu_index(env, false);
-+    MemOp memop = size_memop(size) | mo_endian_env(env);
-+
-+    if (!riscv_cpu_cfg(env)->ext_zicclsm) {
-+        memop |= MO_ALIGN;
-+    }
-+
-+    return make_memop_idx(memop, mmu_idx);
-+}
-+
- /* elements operations for load and store */
- typedef void vext_ldst_elem_fn_tlb(CPURISCVState *env, abi_ptr addr,
-                                    uint32_t idx, void *vd, uintptr_t retaddr);
- typedef void vext_ldst_elem_fn_host(void *vd, uint32_t idx, void *host);
- 
--#define GEN_VEXT_LD_ELEM(NAME, ETYPE, H, LDSUF)             \
-+#define GEN_VEXT_TLB_LD_ELEM(NAME, ETYPE, H, LDSUF)         \
- static inline QEMU_ALWAYS_INLINE                            \
- void NAME##_tlb(CPURISCVState *env, abi_ptr addr,           \
-                 uint32_t idx, void *vd, uintptr_t retaddr)  \
- {                                                           \
-     ETYPE *cur = ((ETYPE *)vd + H(idx));                    \
--    *cur = cpu_##LDSUF##_data_ra(env, addr, retaddr);       \
-+    MemOpIdx oi = vext_make_memop_idx(env, sizeof(ETYPE));  \
-+    *cur = cpu_##LDSUF##_mmu(env, addr, oi, retaddr);       \
- }                                                           \
--                                                            \
-+
-+#define GEN_VEXT_HOST_LD_ELEM(NAME, ETYPE, H, LDSUF)        \
- static inline QEMU_ALWAYS_INLINE                            \
- void NAME##_host(void *vd, uint32_t idx, void *host)        \
- {                                                           \
-@@ -220,20 +234,27 @@ void NAME##_host(void *vd, uint32_t idx, void *host)        \
-     *cur = (ETYPE)LDSUF##_p(host);                          \
- }
- 
--GEN_VEXT_LD_ELEM(lde_b, uint8_t,  H1, ldub)
--GEN_VEXT_LD_ELEM(lde_h, uint16_t, H2, lduw_le)
--GEN_VEXT_LD_ELEM(lde_w, uint32_t, H4, ldl_le)
--GEN_VEXT_LD_ELEM(lde_d, uint64_t, H8, ldq_le)
-+GEN_VEXT_TLB_LD_ELEM(lde_b, uint8_t,  H1, ldb)
-+GEN_VEXT_TLB_LD_ELEM(lde_h, uint16_t, H2, ldw)
-+GEN_VEXT_TLB_LD_ELEM(lde_w, uint32_t, H4, ldl)
-+GEN_VEXT_TLB_LD_ELEM(lde_d, uint64_t, H8, ldq)
- 
--#define GEN_VEXT_ST_ELEM(NAME, ETYPE, H, STSUF)             \
-+GEN_VEXT_HOST_LD_ELEM(lde_b, uint8_t,  H1, ldub)
-+GEN_VEXT_HOST_LD_ELEM(lde_h, uint16_t, H2, lduw_le)
-+GEN_VEXT_HOST_LD_ELEM(lde_w, uint32_t, H4, ldl_le)
-+GEN_VEXT_HOST_LD_ELEM(lde_d, uint64_t, H8, ldq_le)
-+
-+#define GEN_VEXT_TLB_ST_ELEM(NAME, ETYPE, H, STSUF)         \
- static inline QEMU_ALWAYS_INLINE                            \
- void NAME##_tlb(CPURISCVState *env, abi_ptr addr,           \
-                 uint32_t idx, void *vd, uintptr_t retaddr)  \
- {                                                           \
-     ETYPE data = *((ETYPE *)vd + H(idx));                   \
--    cpu_##STSUF##_data_ra(env, addr, data, retaddr);        \
-+    MemOpIdx oi = vext_make_memop_idx(env, sizeof(ETYPE));  \
-+    cpu_##STSUF##_mmu(env, addr, data, oi, retaddr);        \
- }                                                           \
--                                                            \
-+
-+#define GEN_VEXT_HOST_ST_ELEM(NAME, ETYPE, H, STSUF)        \
- static inline QEMU_ALWAYS_INLINE                            \
- void NAME##_host(void *vd, uint32_t idx, void *host)        \
- {                                                           \
-@@ -241,10 +262,15 @@ void NAME##_host(void *vd, uint32_t idx, void *host)        \
-     STSUF##_p(host, data);                                  \
- }
- 
--GEN_VEXT_ST_ELEM(ste_b, uint8_t,  H1, stb)
--GEN_VEXT_ST_ELEM(ste_h, uint16_t, H2, stw_le)
--GEN_VEXT_ST_ELEM(ste_w, uint32_t, H4, stl_le)
--GEN_VEXT_ST_ELEM(ste_d, uint64_t, H8, stq_le)
-+GEN_VEXT_TLB_ST_ELEM(ste_b, uint8_t,  H1, stb)
-+GEN_VEXT_TLB_ST_ELEM(ste_h, uint16_t, H2, stw)
-+GEN_VEXT_TLB_ST_ELEM(ste_w, uint32_t, H4, stl)
-+GEN_VEXT_TLB_ST_ELEM(ste_d, uint64_t, H8, stq)
-+
-+GEN_VEXT_HOST_ST_ELEM(ste_b, uint8_t,  H1, stb)
-+GEN_VEXT_HOST_ST_ELEM(ste_h, uint16_t, H2, stw_le)
-+GEN_VEXT_HOST_ST_ELEM(ste_w, uint32_t, H4, stl_le)
-+GEN_VEXT_HOST_ST_ELEM(ste_d, uint64_t, H8, stq_le)
- 
- static inline QEMU_ALWAYS_INLINE void
- vext_continuous_ldst_tlb(CPURISCVState *env, vext_ldst_elem_fn_tlb *ldst_tlb,
-@@ -398,7 +424,16 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
-     probe_pages(env, addr, size, ra, access_type, mmu_index, &host, &flags,
-                 true);
- 
--    if (flags == 0) {
-+    bool misaligned = addr & (esz - 1);
-+
-+    /*
-+     * Allow the host fast-pash when:
-+     *   1. Page permission/pmp/watchpoint are checked and we have a contigous
-+     *      host mapping.
-+     *   2. Zicclsm is enabled or load/store is not a misaligned access.
-+     * Otherwise, we will fall back to the slow TLB-path.
-+     */
-+    if (flags == 0 && (riscv_cpu_cfg(env)->ext_zicclsm || !misaligned)) {
-         if (nf == 1) {
-             vext_continuous_ldst_host(env, ldst_host, vd, evl, env->vstart,
-                                       host, esz, is_load);
-diff --git a/target/riscv/tcg/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-index 23262b1d03..a22e2cae6c 100644
---- a/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-@@ -1191,26 +1191,38 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
-      * Use the helper function if either:
-      * - vstart is not 0.
-      */
--
-     bool use_helper_fn = !s->vstart_eq_zero;
- 
-     if (!use_helper_fn) {
-         uint32_t size = s->cfg_ptr->vlenb * nf;
-         TCGv_i64 t8 = tcg_temp_new_i64();
-         MemOp atomicity = MO_ATOM_NONE;
-+        MemOp alignment = MO_UNALN;
-+
-+        /*
-+         * If Zicclsm is disabled, require alignment based on element size.
-+         * Use MO_ALIGN_* based on log2_esz (0 = MO_UNALN, 1 = MO_ALIGN_2, etc).
-+         */
-+        if (!s->cfg_ptr->ext_zicclsm) {
-+            alignment = log2_esz << MO_ASHIFT;
-+        }
-+
-         if (log2_esz == 0) {
-             atomicity = MO_ATOM_NONE;
-         } else {
-             atomicity = MO_ATOM_IFALIGN_PAIR;
-         }
-+
-         for (int i = 0; i < size; i += 8) {
-             TCGv addr = get_address(s, rs1, i);
-             if (is_load) {
--                tcg_gen_qemu_ld_i64(t8, addr, s->mem_idx, MO_LEUQ | atomicity);
-+                tcg_gen_qemu_ld_i64(t8, addr, s->mem_idx,
-+                                    MO_LEUQ | atomicity | alignment);
-                 tcg_gen_st_i64(t8, tcg_env, vreg_ofs(s, vd) + i);
-             } else {
-                 tcg_gen_ld_i64(t8, tcg_env, vreg_ofs(s, vd) + i);
--                tcg_gen_qemu_st_i64(t8, addr, s->mem_idx, MO_LEUQ | atomicity);
-+                tcg_gen_qemu_st_i64(t8, addr, s->mem_idx,
-+                                    MO_LEUQ | atomicity | alignment);
-             }
-             if (i == size - 8) {
-                 tcg_gen_movi_i32(cpu_vstart, 0);
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 2bbac30cfa..462087f401 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -476,13 +476,6 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+             break;                /* Invalid PTE */
+         } else if (pte & PTE_RESERVED(false)) {
+             break;                /* Reserved PTE bits set */
+-        } else if (!(pte & PTE_U) && !pv) {
+-            /*
+-             * All accesses are assumed to be User mode unless
+-             * process_id is valid (pv).  In case we have a
+-             * non-user mode PTE and !pv we need to fault.
+-             */
+-            break;
+         } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
+             base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
+         } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
+@@ -491,6 +484,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+             break;                /* Reserved leaf PTE flags: PTE_W + PTE_X */
+         } else if (ppn & ((1ULL << (va_skip - TARGET_PAGE_BITS)) - 1)) {
+             break;                /* Misaligned PPN */
++        } else if (!(pte & PTE_U) && !pv) {
++            /*
++             * All accesses are assumed to be User mode unless
++             * process_id is valid (pv).  In case we have a
++             * non-user mode leaf PTE and !pv we need to fault.
++             */
++            break;
+         } else if ((iotlb->perm & IOMMU_RO) && !(pte & PTE_R)) {
+             break;                /* Read access check failed */
+         } else if ((iotlb->perm & IOMMU_WO) && !(pte & PTE_W)) {
 -- 
 2.54.0
 
