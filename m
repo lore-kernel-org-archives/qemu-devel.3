@@ -4,110 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4979EC5DF86
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:56:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D161EC5DF81
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 16:56:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wx5zU-0007Vu-SJ; Thu, 20 Aug 2026 12:51:44 -0400
+	id 1wx62C-0005cl-Jw; Thu, 20 Aug 2026 12:54:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5zS-0007Jr-1O
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wx629-0005LL-Qa
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:54:29 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wx5zQ-0005hf-A1
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:51:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787244699;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9fJlPytlgaiUE+eQaKMwRmE6INF6QyKWPU9Lu5/h3MM=;
- b=fk6yRcdV8UZbKYRKUO37P/LSo/AJm6pn+UdxSNZoyR38vgHcmIYmry5pxF0J7qnPm6ChvO
- OuETBnNIOXHe2+jg7srv2cOEqPnMGoxSY9WTtcocR93knCLJTuFn4DK/9q+Gs9wWEDIpkc
- 6FQNBZJBFZeSMA9fTQyQ+p4UYz6aPdM=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-672-FjVnfsHXMbarAXgfL0PFKw-1; Thu, 20 Aug 2026 12:51:38 -0400
-X-MC-Unique: FjVnfsHXMbarAXgfL0PFKw-1
-X-Mimecast-MFC-AGG-ID: FjVnfsHXMbarAXgfL0PFKw_1787244697
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-47f83450a8eso92732f8f.0
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:51:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wx628-0006AD-3f
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 12:54:29 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67KG6oLD3415065
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 16:54:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ cRaYGN7M143Sn6+e6oqelPGQQLSBSJRMuXqmt8oXNbs=; b=WgLoa4iReCR3MwPR
+ dMyYNQbSskCXmj27FVv0zEo3j4qNsVuCA8/Db7JENqeG0eZuV72bzLnh5r5Bst/+
+ WFptZnIufhQVhxubfO1Zx3PfcnHn2G+hnOxdzEEghsfpoOA7T8jtKn55bojGHbqC
+ omz9TNIMjZfK+FfE4J4mF8xSRuM1w31IHN5HWrIyI6/jiE/CBnW4rPviIkGzbMzJ
+ OE0Kk9prYbHPZQUjt58ZnwVoectFtU3an/rbzDe2eEd5Ii8lDVapcGmMCM9YW93Y
+ J2vDme9YAQCaSTbUciydO3CxGpRLY0MhZRhtpC7fc/7mU9frt+BTnwVrriZs5yq+
+ kYZu8Q==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g5vh7tjkg-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 16:54:25 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-cc15155cde2so85770a12.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 09:54:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787244697; x=1787849497; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=9fJlPytlgaiUE+eQaKMwRmE6INF6QyKWPU9Lu5/h3MM=;
- b=suNPHJBZrZeAVVwjmd3V+eaeW0HreKdTv2hjQmT3/Jr5erl55R9ltVCfFM1mxIh2/P
- a8z2maZk0l5EuTR4yMyEW2KK78NNkKnMHxqXKojcx4jmf0L2dUG/VZ+03rat4irGAMoC
- 8IsHaSoxGVnse7QXwnlta+7mEShEaUXYvShX0DbVUt1ttd51YR8xgsw1qUwly/rpOw/Q
- Cm3KZZuIT/wQxm/AirjGlbPQ67Fl+H+y56+WQ6peA1pE+mst/ABz8d64jDalR7E9+whS
- AXbeLGxVnsKPGgRj17SvGmJI1PINm8eVXOPmPVrjIaxTivy5d8aJTr1+809MBdkqegDO
- NHfg==
+ d=oss.qualcomm.com; s=google; t=1787244861; x=1787849661; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=cRaYGN7M143Sn6+e6oqelPGQQLSBSJRMuXqmt8oXNbs=;
+ b=F6SiJzcaw/ClrO/Fn3eCMTwPi+XEm3wmECeIBV6Xy0zafCyVOMm5YwyGYEWnxJEvsJ
+ 770R9sayuiMAFfK15ekiC1ZNgGp+tWnTKn8XwuAN9aAbfhqWhrrQkUhPaIRSqqIba48U
+ /KAd/OIGdpekJZlC2Sqx8YQfNj9I/nLWPvDsdjStqe48S8q/D+HD19m8pAeHdvKTn/ur
+ wf0dSUaThzLHxVc8Ffi0MSIRFgRroHwNvnl/DO2USBHnN/iIsmVBwb+ZIRulF78A1gB1
+ d4QDGAvlBdleUpNdSq6SGU2R52fXidbl4csQM3GHEF6QfMjcpHx+J6gtvNNRIJAGUWWJ
+ DjKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787244697; x=1787849497;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=9fJlPytlgaiUE+eQaKMwRmE6INF6QyKWPU9Lu5/h3MM=;
- b=Mus/xNOV/L85LiZQ5GK1pi0tNiyCYbTfiAjwgA0R+O4yzS5+P5QvmNbvaFHhLkiZC0
- VfCCkE4ywAutSC8XrGCAJxXT+GYu+YQcBvbbQ+zWtsUzZVQ69kE/kgMdy9Be7NjYU477
- gaU585NeHGiG5i/J5pYos2lymgH2lwi+2s2fN4tAcwUV2NETl8FdA0tC/pYVGxweOz1T
- VyNYj3m4xTfoXDXLGBdsAK+MlRWVba83rm8jqtNRrPXb+dg3X9tZQaw055b1JkENt4M/
- GUiBqZrSdbYTzw8xwjZxF5z51NeMFB+usZVtuY/GLDXctxMLAG3TO8oPXWYQQv/KFYsD
- AUsQ==
-X-Gm-Message-State: AFuF++lDedVSzA26ct3s2W6qIOwj3QPJp54LtZbOl8u9eQHThdnsMGFG
- 8AgFgILL6ZXfFHYXmfmyH9MRw3HWU6wtC3Ih2p2Fygg/aOhRH2HAt0qQHERiuyjCdSai5zKreGL
- rQ6f1uiH0TkL4LIpajzOVkiTsRMsIkHMMKlqXXMPd1m5/BR+fG1YGcv4c0pCT6xwC9Uh+pvsUkb
- +g9ftBvp2/+5R7dUsyQUnmFFAAncJqPHXTpc2Dimt9
-X-Gm-Gg: AR+sD110NgWEcPsTGf812HcCnoOrW0WiYJhULGaqf1CSqdPiQF4Zo8lvYo9FPrwWa6j
- QobkcPTLCjeipS8rz4j8LwdtOcUS1wd/clXvcWVO5rivl9v/DTBVZqWNVejwR05wk9b1NYRx2ml
- nYYYxyiviPKRb73fXjg609tY7docegos/nakSuPoAqEwXcLjYF6PqGAQwEWPGVLmBD3aEy7qJ0x
- 46PefKM5k2Yh/EJwaiOhXDf6yur0FYo8Ng4REY1sKPfnXjll1bYTeDi0j/avtpkGK5gRG9CVbWq
- 4dVuGVlHWn5ZwsH2zYkMYmYflu+VGew/rLiHoDlNJnrxRfTdIJzrHD25xrjxAS7GKeCGQ96pJUY
- MJXdB5GAaYvS0U/riE0mwLroz2KX9BahG4ImyCCuhY+/Er2oZ+1ba2q5yt9MpsqZVGcEEczOyDZ
- N1uMc=
-X-Received: by 2002:a05:6000:4811:b0:47f:6f9e:1e82 with SMTP id
- ffacd0b85a97d-482c0b4ef34mr35997f8f.9.1787244696975; 
- Thu, 20 Aug 2026 09:51:36 -0700 (PDT)
-X-Received: by 2002:a05:6000:4811:b0:47f:6f9e:1e82 with SMTP id
- ffacd0b85a97d-482c0b4ef34mr35898f8f.9.1787244696518; 
- Thu, 20 Aug 2026 09:51:36 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.34.92])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b14b7d23sm14711535f8f.22.2026.08.20.09.51.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 09:51:32 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PULL 34/53] whpx: i386: synchronise PAT too
-Date: Thu, 20 Aug 2026 18:49:37 +0200
-Message-ID: <20260820164957.1895963-35-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260820164957.1895963-1-pbonzini@redhat.com>
-References: <20260820164957.1895963-1-pbonzini@redhat.com>
+ d=1e100.net; s=20251104; t=1787244861; x=1787849661;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=cRaYGN7M143Sn6+e6oqelPGQQLSBSJRMuXqmt8oXNbs=;
+ b=MRYl8Z1k3M/Tpx0Ay63Hy4VTkQmSYkRbL6FDa9g1n/FlEQzA7tJa+bPdltzR68q49/
+ uKVnjEkkDmXOKO4IIu/o5mPGF3sWmjDL41DZcS9hXfk5NX3DgJ1Ss031YlwpK0mQKWhc
+ 5KUsshoLEsA0+LqSprhZcJ3rhZBiY9TTE0JCTeynASx3DXt3Ii68JmgtC5niq7jlarUf
+ z3KpDfIMst/SxoOIo+BWz4DrCWZCxOw3AOwCENDSVBKJfyoNa9jsvecHkBS0gQ1DAHzr
+ GSF8IKeEdKlh4P1roy19lNychlIJgbjFsAUtg85N1YYbu249PzD1YIDsDv17gcn6lxU/
+ cepA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoKQPAWZ27hzT9yWQ4uQsTquSL3TR5VSckNhZA/Ukt11TjS/gI/z4UjqHqnB8qHEdWvoGeYzIBlujMF@nongnu.org
+X-Gm-Message-State: AFuF++kRpLBufOd+5GjCz4Dt3sGJT9McZCHQhiEgYbwfKCfeAyzHmDxv
+ yLrI5eNL4Q93B2iGGh3HXDJFngsvEcbauIe4PBCgrLfJj3EgfI7/alQk3Aoc1UdeibpchS6+EiP
+ SoXajpa9flqeudSfV4II/zKNvrY3ukDr0t8qRUlY6SlVeInRYb3UeMncJIw==
+X-Gm-Gg: AR+sD10G7Qi5Zp6okMvmYEqEmmpTAs3NbjyucCj9qfD4wusW1N9O4SZ9U33LP9wTxwL
+ ukjBsqdPY0ToUYngkJVvW+Sgwju/DUDL7jt0XC6SOqDPCeVdilLlhWnwtiXDJcDqMTpM3KtWx2M
+ NzAx5tkkmzGf33P9CoHZRXAJUpjOwCTxhxpZxgX39+mpsOOadyTl0pZy506dAAZUK/dbG2wTw9Z
+ fz2rkBOwjF124ii+/PlUk/jkZiDiMeGkd5VYd3SCks8QVriZ7xQLOFrV06Nb8CcbVUkvoOdVjdp
+ NoBRIpLPAHk6Cw1JOTm/nD/LhazOUlp69Vb4z5O+GGgihnQnVw+NdDaB2IcDBf5KX4bfxflGh5+
+ ychxtrSoRtE4+VcrDczRnRk208kEOL45DzvqF+joBETSDPcnKS8A/OFj2RAWpdrv+YciJ
+X-Received: by 2002:a17:90b:5484:b0:37d:f983:7b5 with SMTP id
+ 98e67ed59e1d1-3958110cfc4mr27198723a91.9.1787244860875; 
+ Thu, 20 Aug 2026 09:54:20 -0700 (PDT)
+X-Received: by 2002:a17:90b:5484:b0:37d:f983:7b5 with SMTP id
+ 98e67ed59e1d1-3958110cfc4mr27198632a91.9.1787244860338; 
+ Thu, 20 Aug 2026 09:54:20 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1416ad3dd15sm16289354c88.2.2026.08.20.09.54.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Aug 2026 09:54:19 -0700 (PDT)
+Message-ID: <cebd94f1-1fe7-4621-bd9f-2c8fbe16711e@oss.qualcomm.com>
+Date: Thu, 20 Aug 2026 09:54:19 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/hexagon: decode an empty TLB size field as 4KB
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+References: <20260819130201.4067696-1-brian.cain@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260819130201.4067696-1-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIwMDEyNyBTYWx0ZWRfX0ezMivn9Dqrc
+ S1hik6d6X5L+r0oEZCk8dWohs0Gd9Los9jeRkiO/1Y3pYyHNhS1fYKeyyjftL7mRc+TFYchAe4Q
+ 156qoQFfsa71rNtW7dpipmKOWqHLnvrN+6tn3xJwhW7qgJgO8nqAQER0dBGkAXezYtV7MtNiQFd
+ SUTpf3/mg+4ozMVkqs1iEJ397+THvPXRPj1pQlkbDv2BF9B4QsiuAtyaQqLA+jHUCp4el0oplco
+ lUOdTsvxBVxOGxuS7R+ouLTF4V6W7C/FyzFhpYwkebDWdQDUxFgMG//6I4Nme3/GzEZBh0qI371
+ jkWMROZBbgwA19SIygP628al+F/a2Q0ibAnHIar7RNv4mcYTWwai9nyiLrWj0v+Hr6vxidjiY0a
+ Xn0Koa35v9B2AdGgUyqbvUK2KEJIKDlAoT9f8QMCLuGB8a5+79CoqKwDdhzZDhGORkutJNaRtbN
+ kcO5rjaNHXm6M2an+9Q==
+X-Proofpoint-ORIG-GUID: XmWwu9RfdE3jQeT46VQF04RqUrZ_Rq2M
+X-Authority-Analysis: v=2.4 cv=Y7fIdBeN c=1 sm=1 tr=0 ts=6a873141 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=xIL2bMJ6wpxkYZl3OccA:9 a=QEXdDO2ut3YA:10
+ a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIwMDEyNyBTYWx0ZWRfXwn9spEJz3I4n
+ DnMPT/upu/CMs95CK94R6jhKC83r3B7/g8eGcMqqtcNg61BLBDgG3IW6dcBWaCUzpSvrEXbzYuc
+ KvNlelptAD53At9zEqtJWclpmXz+4sw=
+X-Proofpoint-GUID: XmWwu9RfdE3jQeT46VQF04RqUrZ_Rq2M
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-20_01,2026-08-20_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 clxscore=1015 malwarescore=0 impostorscore=0
+ lowpriorityscore=0 spamscore=0 adultscore=0 phishscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608200127
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.346,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,62 +153,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+On 8/19/2026 6:02 AM, Brian Cain wrote:
+> hex_tlb_pgsize_type() decoded a TLB entry's page size by scanning for
+> the lowest set bit across the entry with ctz.
+> 
+> A guest TLB write with an empty PPD[9:0] size field but any other bit
+> set caused an assertion.
+> 
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  hw/hexagon/hexagon_tlb.c | 24 ++++++++++++++----------
+>  1 file changed, 14 insertions(+), 10 deletions(-)
+> 
 
-https://github.com/cmspam/winq-emu hints that this might be wanted for
-some use-cases and it's a step towards full state sync:
-
-> Linux uses PAT to mark virtio-gpu / Venus shared memory as
-> Write-Combining. Previously the partition's PAT was not
-> synchronised with the guest, so the guest's MTRR/PAT cache-type
-> computation could fall back to UC for memory that should be WC.
-
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260812082814.27217-5-mohamed@unpredictable.fr
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/whpx/whpx-all.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
-
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 1800ba8eb19..2739a80da36 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -115,7 +115,7 @@ static const WHV_REGISTER_NAME whpx_register_names[] = {
- #ifdef TARGET_X86_64
-     WHvX64RegisterKernelGsBase,
- #endif
--    /* WHvX64RegisterPat, */
-+    WHvX64RegisterPat,
-     WHvX64RegisterSysenterCs,
-     WHvX64RegisterSysenterEip,
-     WHvX64RegisterSysenterEsp,
-@@ -624,9 +624,8 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
-         assert(whpx_register_names[idx] == WHvX64RegisterKernelGsBase);
-         vcxt.values[idx++].Reg64 = env->kernelgsbase;
- #endif
--
--        /* WHvX64RegisterPat - Skipped */
--
-+        assert(whpx_register_names[idx] == WHvX64RegisterPat);
-+        vcxt.values[idx++].Reg64 = env->pat;
-         assert(whpx_register_names[idx] == WHvX64RegisterSysenterCs);
-         vcxt.values[idx++].Reg64 = env->sysenter_cs;
-         assert(whpx_register_names[idx] == WHvX64RegisterSysenterEip);
-@@ -962,9 +961,8 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
-     assert(whpx_register_names[idx] == WHvX64RegisterKernelGsBase);
-     env->kernelgsbase = vcxt.values[idx++].Reg64;
- #endif
--
--    /* WHvX64RegisterPat - Skipped */
--
-+    assert(whpx_register_names[idx] == WHvX64RegisterPat);
-+    env->pat = vcxt.values[idx++].Reg64;
-     assert(whpx_register_names[idx] == WHvX64RegisterSysenterCs);
-     env->sysenter_cs = vcxt.values[idx++].Reg64;
-     assert(whpx_register_names[idx] == WHvX64RegisterSysenterEip);
--- 
-2.55.0
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
