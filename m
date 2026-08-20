@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2568DC5DF85
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:55:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E308AC5DF85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Aug 2026 03:56:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wwtji-0001as-BR; Wed, 19 Aug 2026 23:46:38 -0400
+	id 1wwtjN-0000vB-24; Wed, 19 Aug 2026 23:46:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtjf-0001YL-LR
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:36 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1wwtjJ-0000t1-SX
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:13 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wwtjd-00044d-QE
- for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:35 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-c999f162c9aso1095686a12.3
- for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:46:33 -0700 (PDT)
+ id 1wwtjI-00042L-DS
+ for qemu-devel@nongnu.org; Wed, 19 Aug 2026 23:46:13 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-cbe6295f05bso319034a12.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Aug 2026 20:46:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787197592; x=1787802392; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787197571; x=1787802371; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=8ZvrE0OJGfngMr7vtDZpzHvPZXdScoco3DbqKgkdkXM=;
- b=jVKgwCfeCfCs/OkIxKIoyiIAY/7arl4c/G+yQOiyMCEpuatVCyAvmoWmg4O4fBcBrw
- jlnnaaOTSl5IvUHFW11i8fAEd1jTCaHsVLB5HU4VSdIlCK1jLDnMCV7R6b6JR7vHzTMU
- BQ+inxqHD+qkZ0Giga52cpxf2jbq84SG9CpwN5VUiVqAHzJTC8JhUfSQk7QYjRPfWuxC
- oeoNilcqSn1yzyZOugz8OGJPrx0OeftPc3hPJBm9CSMPQtYOf12rW9WumqIveyiUVJWY
- Iwz1QW9M7rXptf+dCfVsLm6Ap4ff5A4UEn2CHLteyNKI2/1pzFhlZbdYLTsEr8AALx2A
- lZ6g==
+ bh=K7jyUxpCMyWmPG7deRl8ThJ1u0ATYoDtwpi499af0mc=;
+ b=UCphYrCXkdYWcRoh+ctkOp2TvNJQkzoFA3+xpt0te5RPwZ60cMOBkDlFMTwDCzQHUD
+ B4VK2YYwNihV0C+506YEq3gl7NhQfueytD/fu7mpUFP/zSC4gvqWNFk2YeI9vkFGNf5L
+ Qm+RJ9SyeEnELz9C0zL4DC5J7f2DqKO11VUYSTuWZVuy7/vcV90NBxY6DoXh0N3EtXQ6
+ jR87cyXvJfu/3EfLFdjAL3h0rivBI+hs8R8ynBVh6lFvWdZwohs0BU0fZFMjmGZmsOY1
+ oCeLIrEsdqXPNOwAwh5XStIkGkejb+xoExo7YYIRGclIknieNYakYuBOUWJ/Xg3Lk2hy
+ VLAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787197592; x=1787802392;
+ d=1e100.net; s=20251104; t=1787197571; x=1787802371;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=8ZvrE0OJGfngMr7vtDZpzHvPZXdScoco3DbqKgkdkXM=;
- b=S0prwInbqoiBBr3HXnbIPjtXyP6BUu79aQ/3AjHqZBsgJJySa2jgQpyLDdP6ToQXIM
- appV9JbYXs6peQAvKx0Y5kJbwIvTVVJMJlWVmZXMmNGvDtDqiTQMqCBZF3BCr3SV0a/T
- L6p7KV/2m9NvzILaPoMKC+jBpJ/FzI9HlswwqRHb/IGItEROv+wxl4FGxnCw3zq6v99q
- ADVbLjVlKjA81Ya5D98ouYiGvQ3ADNIikR34afjDwW/uJRcFOz7X4Avsls8CTSEzt041
- nOe23O4eJTuwJMOaGg4WT5Ccuj7nydblwOOvLprM94UTt+OJpEL50hKhThWqu4CQ5bNZ
- N/nw==
-X-Gm-Message-State: AOJu0Yzeccul+QnAbb5rSzy5iCU0czZmwdMrfBVQhn0zlvYgHyqMSHLz
- mnUdxt5ZemUd7jyQFsgApbNuIrEVmfgiL62Bvup3MnGMMji1f4Z/Or/whoaDnQ==
-X-Gm-Gg: AR+sD12hEHRPuRe5cID86nAtECTmv/FMDVM5aAzh0iTcT3sjjbDAsivmnby9IAsqq4U
- dNxCA1lMJl8WVDFkA3Q6W8hjYsAqIVdFwLpUeZ5d5mFXUn63uyNvIL6j8xcHED/0y4Rz6KFNTiO
- SXUyozERFG1WnJXd0hQX9TF/UWdhTSL8ek//L+2ev8KZvKYcrODOfc+4Ya9KsFnxU0YAOfcT0c6
- e7CcxgYsBwWMACTTH6Zn2bu4ghPSWadj/Pj4680aBMMfAZq7m7CLJ20Dxn1M5ZKQHS5yR5Vf7nw
- sJEtWqeXBjgnCHLo4jpqwN71WalpU+rhxFO0P6miYahr8BPvMavvQ9C78qjfsnEtQvCqUAhRYN+
- EXwqc2fbUZtjglFbx4qXk/EJO9r8VCF6jRVcHXZkwKW9psSzZGYaJtx1jcFBw6VnQ3EPK5h+mjv
- FROrWdGrc3gSRrFvRkh2MgKeH2EjgVuXSdl8F4p4PgYvJ9Ci80onkvwSddDd4G7B42gTezU3is5
- T+tqQ==
-X-Received: by 2002:a05:6a21:9984:b0:3c3:b57b:6291 with SMTP id
- adf61e73a8af0-3cd0132c618mr15438400637.18.1787197592488; 
- Wed, 19 Aug 2026 20:46:32 -0700 (PDT)
+ bh=K7jyUxpCMyWmPG7deRl8ThJ1u0ATYoDtwpi499af0mc=;
+ b=izas54o0JFLB2Y65vHAN5SDH2sNVw9p4p/z1q2UhZr/Yo5WeHzjFIscM6FAJZFtvPu
+ MHelR8d0LVC6Inyy5HP1/4xYOuoz85YE34WyauiIUq9BrJ9CPRSYtY0xXfF4l+OEkzW3
+ fqq0KcKhwfDLWg3XFnqggEq9zAzQGAHEuoELG2gXPr1j5FczIbQcCrcn/Ua/z7M7i75N
+ LWzf/wugXG/wxg3tzDj/Iing5fHrfGty+UdWhXUEh5Tn1x2yLaapZ1xirMSHifoTYFFv
+ dmqn4zgNslVO1xIHpfTVTOlaGO3c6Qo4nlWWqmAH0EvVYY5L8XTSuO1i+cYOGC4tfVZy
+ cP8g==
+X-Gm-Message-State: AFuF++lZ7DLgF7bw8hNNeu9NyHuIdbHPk7aSENb+hA4DmTV3d0MlwpYn
+ +/1citwAQT7uDL1BrZRmXy2mln4WsR/wOkM9SShZzJVbhx1ZgPHN8+mWkOhzcw==
+X-Gm-Gg: AR+sD12/xMzaM1rCPEPlgsDh8SibkZBZDnDPmq/obsLSkY+zjh2gf8hblX/XjOFr3VF
+ iialjFoAanFG0y6NrcYkxUq8EET+jbtmlDz0MgKY2X8ZQBZCOwWKW1GrdyuXhD1aoZl2p3+Qmb5
+ srRftYZY1Aeaqw0P9afw0QyTOliIaa0PGJnGGicbXicLhr/49bDdjQhuBbAlmjlD4Rz8P24lDQA
+ WWCLrLuuZBsw1AqyI/4ciXx8PyJa85tRJlg6oopv8fAEh/anZI9flCdmdy8IpKQ1T3wZLgZzt5k
+ dGW29nLXrazEM3J5FUJrAI18si3fH6HuPqjIo+Eu0lBwdEZbZAt5A3UwHLc57YDRXzv2IILNGru
+ drtFOp0nWtBQL1TChYwmZSHKTld557nptTQfYNkDI48rr+Ei1w4k08YLPrO6rIKNuo/GUSJlmB8
+ NkfbNAxhB9vQ+13c1YcPtBHggPOQZnSiqomxB/yhZe1KahuvncJSVKa/THt3bztdwCok8i45tFO
+ rRGJFo=
+X-Received: by 2002:a17:90a:d883:b0:38e:7e9b:5fbc with SMTP id
+ 98e67ed59e1d1-395a04e402emr4553795a91.7.1787197570989; 
+ Wed, 19 Aug 2026 20:46:10 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.46.29
+ a92af1059eb24-1416ad6060asm19506735c88.6.2026.08.19.20.46.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Aug 2026 20:46:31 -0700 (PDT)
+ Wed, 19 Aug 2026 20:46:10 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: A-Shehab <ahshehab24@gmail.com>,
+Cc: TANG Tiancheng <lyndra@linux.alibaba.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 36/93] target/riscv: allow menvcfg/henvcfg LPE and SSE bits on
- RV32
-Date: Thu, 20 Aug 2026 13:43:33 +1000
-Message-ID: <20260820034430.1186695-37-alistair.francis@wdc.com>
+Subject: [PULL 29/93] disas/riscv: Fix th.srri decoding
+Date: Thu, 20 Aug 2026 13:43:26 +1000
+Message-ID: <20260820034430.1186695-30-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260820034430.1186695-1-alistair.francis@wdc.com>
 References: <20260820034430.1186695-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,112 +105,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: A-Shehab <ahshehab24@gmail.com>
+From: TANG Tiancheng <lyndra@linux.alibaba.com>
 
-The Zicfilp landing-pad enable (LPE, bit 2) and Zicfiss shadow-stack
-enable (SSE, bit 3) controls live in the low 32 bits of menvcfg and
-henvcfg, and the CFI specification defines them for both RV32 and RV64.
+target/riscv/xthead.decode defines th.srri as funct6=000100 in
+bits 31:26, with the 6-bit immediate in bits 25:20.
 
-QEMU only adds MENVCFG_LPE/MENVCFG_SSE (and the henvcfg equivalents) to
-the writable mask inside the "riscv_cpu_mxl(env) == MXL_RV64" block, so
-on RV32 these bits are silently dropped and the features cannot be
-enabled. This is inconsistent with write_senvcfg(), which already
-handles SENVCFG_LPE/SENVCFG_SSE regardless of MXLEN.
+decode_xtheadbb() switches on bits 31:25, i.e. funct6 plus imm[5].
+Therefore valid th.srri encodings are 0001000 and 0001001. The
+current 0000100 and 0000101 cases use the wrong funct6 value and
+decode valid th.srri instructions as illegal.
 
-Hoist the LPE/SSE mask handling out of the RV64-only block in
-write_menvcfg() and write_henvcfg() so the bits become writable on RV32
-as well. The upper-half writers (write_menvcfgh/write_henvcfgh) are
-unaffected because these bits reside in the low 32 bits.
+Fix the cases to match funct6=000100 with both imm[5] values.
 
-Reproducible on qemu-system-riscv32 -cpu rv32,zicfilp=true,zicfiss=true:
-an M-mode write of menvcfg.{LPE,SSE} reads back as zero, while the same
-program on rv64 keeps the bits set.
-
-Fixes: 4923f672e3d7 ("target/riscv: Introduce elp state and enabling controls for zicfilp")
-Fixes: 8205bc127a83 ("target/riscv: introduce ssp and enabling controls for zicfiss")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4045
-Signed-off-by: A-Shehab <ahshehab24@gmail.com>
+Fixes: 318df7238b9f ("disas/riscv: Add support for XThead* instructions")
+Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260726080537.13913-1-ahshehab24@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260703-b4-disas-xthead-fix-riscv-next-v4-1-84c566330bc7@linux.alibaba.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/csr.c | 45 +++++++++++++++++++++++++-----------------
- 1 file changed, 27 insertions(+), 18 deletions(-)
+ disas/riscv-xthead.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index a90449b87f..ffd751caa5 100644
---- a/target/riscv/tcg/csr.c
-+++ b/target/riscv/tcg/csr.c
-@@ -3221,6 +3221,19 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
-                     MENVCFG_CBZE;
-     bool stce_changed = false;
- 
-+    /*
-+     * menvcfg.LPE (Zicfilp) and menvcfg.SSE (Zicfiss) reside in the low
-+     * 32 bits and are defined for both RV32 and RV64, so they must be
-+     * writable regardless of MXLEN.
-+     */
-+    if (cfg->ext_zicfilp) {
-+        mask |= MENVCFG_LPE;
-+    }
-+
-+    if (cfg->ext_zicfiss) {
-+        mask |= MENVCFG_SSE;
-+    }
-+
-     if (riscv_cpu_mxl(env) == MXL_RV64) {
-         mask |= (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
-                 (cfg->ext_sstc ? MENVCFG_STCE : 0) |
-@@ -3228,14 +3241,6 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
-                 (cfg->ext_svadu ? MENVCFG_ADUE : 0) |
-                 (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
- 
--        if (env_archcpu(env)->cfg.ext_zicfilp) {
--            mask |= MENVCFG_LPE;
--        }
--
--        if (env_archcpu(env)->cfg.ext_zicfiss) {
--            mask |= MENVCFG_SSE;
--        }
--
-         /* Update PMM field only if the value is valid according to Zjpm v1.0 */
-         if (env_archcpu(env)->cfg.ext_smnpm &&
-             get_field(val, MENVCFG_PMM) != PMM_FIELD_RESERVED) {
-@@ -3383,20 +3388,24 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
-         return ret;
-     }
- 
-+    /*
-+     * henvcfg.LPE (Zicfilp) and henvcfg.SSE (Zicfiss) reside in the low
-+     * 32 bits and are defined for both RV32 and RV64, so they must be
-+     * writable regardless of MXLEN.
-+     */
-+    if (cfg->ext_zicfilp) {
-+        mask |= HENVCFG_LPE;
-+    }
-+
-+    /* H can light up SSE for VS only if HS had it from menvcfg */
-+    if (cfg->ext_zicfiss && get_field(env->menvcfg, MENVCFG_SSE)) {
-+        mask |= HENVCFG_SSE;
-+    }
-+
-     if (riscv_cpu_mxl(env) == MXL_RV64) {
-         mask |= env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE |
-                                 HENVCFG_DTE);
- 
--        if (env_archcpu(env)->cfg.ext_zicfilp) {
--            mask |= HENVCFG_LPE;
--        }
--
--        /* H can light up SSE for VS only if HS had it from menvcfg */
--        if (env_archcpu(env)->cfg.ext_zicfiss &&
--            get_field(env->menvcfg, MENVCFG_SSE)) {
--            mask |= HENVCFG_SSE;
--        }
--
-         /* Update PMM field only if the value is valid according to Zjpm v1.0 */
-         if (env_archcpu(env)->cfg.ext_ssnpm &&
-             get_field(val, HENVCFG_PMM) != PMM_FIELD_RESERVED) {
+diff --git a/disas/riscv-xthead.c b/disas/riscv-xthead.c
+index fcca326d1c..2f2ddb8dd9 100644
+--- a/disas/riscv-xthead.c
++++ b/disas/riscv-xthead.c
+@@ -315,8 +315,10 @@ void decode_xtheadbb(rv_decode *dec, rv_isa isa)
+                         op = rv_op_th_revw;
+                     }
+                     break;
+-                case 0b0000100:
+-                case 0b0000101: op = rv_op_th_srri; break;
++                case 0b0001000:
++                case 0b0001001:
++                    op = rv_op_th_srri;
++                    break;
+                 }
+                 break;
+             case 2: op = rv_op_th_ext; break;
 -- 
 2.54.0
 
