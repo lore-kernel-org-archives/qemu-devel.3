@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68F8BC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 19:15:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C28C3C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 19:28:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxUhh-0008Jt-7J; Fri, 21 Aug 2026 15:15:01 -0400
+	id 1wxUuF-0002rh-22; Fri, 21 Aug 2026 15:27:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sinxx198@gmail.com>)
- id 1wxUhf-0008Cl-Na
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 15:14:59 -0400
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ id 1wxUuC-0002r4-Rf
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 15:27:56 -0400
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <sinxx198@gmail.com>)
- id 1wxUhe-00079E-3h
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 15:14:59 -0400
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-5b4740ec30cso1378330e87.3
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 12:14:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787339696; cv=none;
+ id 1wxUuB-0001Su-98
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 15:27:56 -0400
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-5b01cb18515so1296801e87.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 12:27:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787340473; cv=none;
  d=google.com; s=arc-20260327;
- b=iRcFvA+XZn/Ebp7LD4EzL7xcVuYo3RvhIsvd8o1FfNd1BWPb72wDc7+jhtPcC821bo
- o5qvH3Z3AyPY0RCdVl3i+sbgpY8p+eNLqVPDz19pzde0QQA9bwuo/aIe69I+1PdsIMZz
- BnXX8Nk4B+BLOxajSIoWaSH3AT8BJZG24B9CR6VBALqSIE3qLSgP3DMSs3405rdao0zi
- lxHhjgMqAyEGfEUrKRbdJYxv9U2lmZJG88lQ8F96SCpfHiY87nnIEQpIZ8ZokA8TKgtq
- DPzYj/Y+JCOFYpvxa6O7zKPLdKBkqsXpUmaFgpx1AAELKCAJriCxWzQiXl2s3hLC2NPK
- u2IA==
+ b=AgqKdytGPVDT2U2WdxfcvSQQVUgMtEeqhO4I+uCNkA1FjCO1MSX+Q/SzCnuRF5XMGt
+ rZqNSHS3u1PITwIH5tHw7Epz1Ob/vBPsox098zDfqOGiTjzplHC0FBen/j32LGtKJvlJ
+ eqlofNcZB3xk2zdo9koGCbc5Zc8mXubaUBi2czzyac2WaLfyMijAKd9d4GQpx4gYDv6T
+ PGKdW7g4TfV1r27gaO8uzq5hSP486gdJBxOo+vXv+oGeDWAtlv0zOF+Gq2IX6xFwPSGg
+ Wji/EEJx0M+cudnglhsASmBKqmMW5ykH8sRvWCP/rLFsn3hQoWT/2JraaVVTBjZ9OUJU
+ CHVg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=+oA+jUn5llXQsoQ81nJjEf6x+kdBND1+WuOS+/5ZfYk=;
+ bh=liQ6gIq2fCUABSET/op+7K1EonSFvrL3S6iQeWpjV6k=;
  fh=WS/FPZF4INf3fCqbT+W34SJMw0WsZ1wrdPlyicLyxsI=;
- b=EGQ0efhF+z/OmForF+DWUjK9+WBZJG+FXG5amX7UKAAhtoqOyOrFiFWSNzLbDEgAZD
- O8apUuOGUqUZBnJFEkdhxROXvOgRYp/ju7NEAyMp0jgrXhOvOT0cpmwKixxa1eAkkl7r
- 4OkvLCJNsIGW5pXGSul/dRVx374KnjugOhB83lyScb8yxIEiKlbdmHYjqvN1oN9jlGQg
- RTF6NheScg/Xv7YVEpQudE2VjNaaOZ3WZxLnCCR+YEK8tAAd5m+63RedhExXMlqyS/z+
- 2lbwfQnFARSn4+z/6pLKdyIaHzAjwCDHhCMpOVtUtX9pTezb0Mq0i4uhncNOq6AGCxKI
- krqg==; darn=nongnu.org
+ b=fICK+mDmd9aV4JiZfEWBhaMMyGhclrtnimjQz0kNvq1vzXlp5CA+ZhZma3U5XLca/t
+ QRbPuPLXT1vvzLzhybEfs7hOj6ZDuZI+gTnJ6W0/JNNCcpD98FPGLarMq9gBb63CGqZV
+ PWjRA9PozHnM74tv0P6rKUmqh1fNy7GkRK/zYcDC6z5yTllq6yqPw4WXfeKkGppoZ53G
+ tgqxZYc9TvVxeypIRSOrqofEoao1X0oJTwew2ZwXqC1WAJThDgl+qWl7dw61K+thTgtm
+ 7oJOyFoGF23aMtvLpVlVN4zGsZn26UxKng5mAk0niG5IoBgmBma0Xx7gigdc4rzeGPVq
+ MjGQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787339696; x=1787944496; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787340473; x=1787945273; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:mime-version:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=+oA+jUn5llXQsoQ81nJjEf6x+kdBND1+WuOS+/5ZfYk=;
- b=aty1/OEJf4t/VsTSyU0jymX0CaK+DN//wYhF0EyXqLfOrOAYGNKO4u0+tWwrFl0mzO
- imryERL6eRXk8XE500OyoEqDemZLqwiAaxuzfI+eK8d/sAWNyO+C3z4OEWUOItPbD9e3
- qKhK/e63qqfXKjv8QVeduUQeTt7xYRlJeh6yHHNTVA6MX4UihQUA1mQLMu7C2yD/p34X
- w76JKNSkyUPxQuVwRp0Y/dTaKtm/wfZVMDsSUe5AoszIOD4jbjR/AZcTsdsE0WhgMJ9Z
- oUv47f1WNjXaf3TO2uT8VBeoPpQmRAOJ7Ksq6m4jG5cZa7Mifbz01DfJwobmOKEdx/ei
- Hr1g==
+ bh=liQ6gIq2fCUABSET/op+7K1EonSFvrL3S6iQeWpjV6k=;
+ b=Fayjhf8sjFQlxKGyf6P79PED8PfDxawDFAEw3hAnaVWZVMUlBiTgE9zekfqCDnCUWz
+ hkzix94hHedDA1eHazOCypTuiSVs189KLAYZj2UMyCqTA7FAZCTHxgKakOZwoQGRJIg0
+ K/sEYHhH/vHuZT54IxlqFyEohbyOmTHuYGM4qwd1cLAMH6wpUJu9V9AtUlo62Yhjs7Xd
+ fw3JNmw5QFLkwLkE6mz/7gjHgMq7XHXkDSv9bvKAJ+jDJAHGJXmmpPPldHgbPlnJVeAO
+ 6mpzPLW39rldPsrhB6eyTKGe8olsJ/XEM/Z076NSNtk5/sQmng4doklLrPtX9oM+rfrj
+ Bm3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787339696; x=1787944496;
+ d=1e100.net; s=20251104; t=1787340473; x=1787945273;
  h=content-type:cc:to:subject:message-id:date:from:mime-version
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=+oA+jUn5llXQsoQ81nJjEf6x+kdBND1+WuOS+/5ZfYk=;
- b=siJgYwxYFjwGe5JD7cCmq/n3TleUBg/NSn2T3KASSOWdATVm5Xp+oI6Uuq2nM9s2Rb
- ac9UcERQ+xdUrj8MdsCWe3hnuakCXRRx9NzHGVvCK9V7pQxuj7EgrjuEBT2XfTXqLxqa
- C11KG6I04fSVN0nRQrzn2xz114Yot5hfN62QVzvQEDXzxb5hZvj5Ge744xHYRac4c6F9
- 8Oet2E8WITKgJ0tibeXmI0Nl1JkXCNO4YIS6ErgE+kyrUehiv5g72HhdMgBm39uhOvVC
- Pn9UF0WRrwlHlSakffb2GrADUYUlXrXjMQyo1EWxEVGBbj11jUb9J9Om1oJL38AjeOPq
- fIPQ==
-X-Gm-Message-State: AFuF++kwPSGfyfP/UXUDFTD2QXFm+tXTJg8fpjezO5aG48hE+0JhBh0b
- xvalymi7s7ohYdFBzHYt32po4rA3qJ2nu+iJco4ODUQVcJV2aNWyHRHeQiKTvIN2MFK4ZTv3J1P
- lHRr5h9DLfc+wJ2nHWN68n059v5ovk7KYuFOpRyk=
-X-Gm-Gg: AR+sD13cT6zm4B0YBRHTZk/gt/4N7NKGYibhfaAwXIYfDaw/Yt/4eL7hg0d4G9GTVMc
- K9zRNwelOk3fCGWM7bqO1Zh84VhKF5lOIw26MSgk4OiBQ58vxx3Xg4UMvsdUnyHw8EjxnTMYhcw
- lohBW/ihvtw9wP+zK+5785nMRT7IxsHJ3oTt4NWjMr9Whqb9MWtlc0RpgB2GioEMeUEYyiLg5MJ
- j3wIEUyrd9XAkzUSVLQtDVowFmYL5tXBQ/lZ9JZmqdZ3LgxajM4w+6TR08XiTdnGTB4FVVfnQPp
- Eh0OYnnuUiLeO2IxLo7AgzwOwh/tLIFeMOZxO+ive2oftz9Pwu64xh/VUrqqZ2AQReaJMGgEh0i
- re+0=
-X-Received: by 2002:a05:6512:238b:b0:5ae:c27b:f7a0 with SMTP id
- 2adb3069b0e04-5b4841f503emr2746232e87.11.1787339695485; Fri, 21 Aug 2026
- 12:14:55 -0700 (PDT)
+ bh=liQ6gIq2fCUABSET/op+7K1EonSFvrL3S6iQeWpjV6k=;
+ b=imPA8t7k/lpuqwpYf1IvIDqbjfyunPYbnD0W3x7nvd7m5y5HNuk7Yn8BfnNcXdnsxb
+ CVxwLMrObX8vw5J6odWDyrAcOl7Qleyc8xoGuqytXu4IhuTWpSJQGv7axD5umtZlmJDl
+ 8MTAprPaobOK9mCMsRlwozYG4jwfh9OiXcb2Djvs8aAKJzylt0D54B9p87r9czUu0ket
+ 6LRMVb2JNQq/Ha+hFdkkNkPUI0zW6gy1nah8oaH2xh4DWnaHrR3xW7TB0Yj/gsxeZmP9
+ dhm8DmPYKsmE0mzidzfq6rfqSEzjQvemqMFifvdKoZ2dxMhFwZZQC2dkLohhk8IL+Q+G
+ mp4g==
+X-Gm-Message-State: AFuF++mA4ALsMIdWHVGExXCJvYuH3FamYRdDV/PuJntpG0cCzfaUe055
+ Pw0X/foeIUoMr905/dPbnTP9zU/ONN+dyCLbRgRKx+GnwLEFthoAMgEHgQmZtsb8IKuqdqbRBey
+ 9Qt1r+S2VG0MIbqiRrfJhsSMuq+oIs141+HW0KTc=
+X-Gm-Gg: AR+sD13g7gYmi3/rAdhzODk7PuDrbrnfYY2LYFS0Xylb+aH2FQDZ0NHTpPpFBx39Mnu
+ h+/0xc31El+8OPBy6PYUDoIE3PWBrPNfmr23eCBFi6HV4IuTWuID4oPEIbDfbpNcOW/YQ25gVno
+ psZmDfPX0nSYNNNME1YyYAmz9kqXoRf5jlh97WEUkY2WJyUkZPVFRweGvQRMHXLW1pSBdfQYkvE
+ H+h+7daTdL+69LjzgIk6qtiRAiAM1L12/LUIDvYZHm2MBw9JrGhTthd3WSJ5iQr7rYwT0q7GtLy
+ e9dDO4aD7/mpGYocGD7OoxK8XfpnGFQtH7Ee68ZTKYBJVYGBVQItkDxzNL1zEtfvEHktfHPYXWN
+ eZPY=
+X-Received: by 2002:a05:6512:3f18:b0:5b4:3ddd:8996 with SMTP id
+ 2adb3069b0e04-5b48424ba76mr2889926e87.15.1787340473055; Fri, 21 Aug 2026
+ 12:27:53 -0700 (PDT)
 MIME-Version: 1.0
 From: sin99xx <sinxx198@gmail.com>
-Date: Fri, 21 Aug 2026 15:14:44 -0400
-X-Gm-Features: AcwNN1Vutc5rckdA5P64UagxOth3m0nX95u7Lew0TnIAOtzz0IwU9SgehfFr-qM
-Message-ID: <CAMX0No0RNTzennt6Z7t4-zO1y=b1o2jBtz-CfdWTpV+wyq_NTw@mail.gmail.com>
-Subject: PATCH] vga: split text renderer geometry cache from graphics renderer
+Date: Fri, 21 Aug 2026 15:27:41 -0400
+X-Gm-Features: AcwNN1Xv-ugioZIxdE8Zpi6a0_r7PcloELDEwQtZ-3k0-J1PzKQNXDhr4Dsznxk
+Message-ID: <CAMX0No1tDwFE=XCDDOrE_n33fF-KKD5gqucOLfu8EBGXk6vFXw@mail.gmail.com>
+Subject: [PATCH] vga: split text renderer geometry cache from graphics renderer
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=sinxx198@gmail.com; helo=mail-lf1-x130.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=sinxx198@gmail.com; helo=mail-lf1-x12e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -111,6 +111,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
+
+Resending with the correct [PATCH] subject prefix; please ignore
+the previous copy.  Sorry for the noise.
 
 vga_draw_text() and vga_draw_graphic() share last_width/last_height
 but store them in different units (chars vs pixels).  A graphics
