@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F052EC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:03:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00DC9C5DF87
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:03:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxN1J-00015S-2b; Fri, 21 Aug 2026 07:02:45 -0400
+	id 1wxN16-0000h5-Fx; Fri, 21 Aug 2026 07:02:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN13-0000gW-Ii
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:30 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1wxN0z-0000WU-RJ
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:27 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN10-0007Uv-OK
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:29 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-499840a2575so4775865e9.3
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:25 -0700 (PDT)
+ id 1wxN0u-0007U5-Qj
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:22 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-499840a2575so4775435e9.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787310145; x=1787914945; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ZW+43f0HNk0MlxWq71xFTJBbmIurAt5Kb0ZGOXTKsqY=;
- b=XHhDhJMAoVxz+ZRkz4nPmy225bSXfQ98qvyP43izXJfDmPd7AyipddGs5MdN3EDOo4
- o9yk+PXv1aUCARjy2te9kBPNwN3asHw7sv+krcqXmtuWQ0Wy4JUytqIfSMzw7HTyaReo
- ZXYgVD3YV+az75e29lwfcw3nFKgRumgOiw2szJFbbF2zyw6U8dnf3uLrtE4TNyOVk/pn
- gck9+anTgWtxxtp/IrkeJ+9zyNq4IBKeJx39HQ9uatrdPL0OeVlkH2DHWuGxWN6jri4r
- Ks5h9Q8xPVjg4YKoDI8uUnF28VSMlQEXL7FZYBUz6r/uBXsaDfEfPcxBwX5DKFZCa8Uh
- s0XA==
+ d=linaro.org; s=google; t=1787310139; x=1787914939; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=ZhTa4gPey37Kb/POJTgaKRANSs+4AZwBwc9vJ063Ahw=;
+ b=qXjcDXUF5UaXH5cmBFdVm/vFgnKTT0HiytGGEaHvk7ff2RglLXy0qfecqpGPo+Wc27
+ oFb4PkV6aZ5W+Fk+GcbYeLBef/pWSsV16rMS9BeN/mtSTaoZ6AIVwxx+GI7NBVsDun6D
+ P8VaCgC0Qqj1HAZITNplC7ZdJkkys28/ASxkcjyzJxOcT1JbJilu86t3ViLVBTMGYByO
+ /kE2DlEEscD0d54XakErXEGVskbRd4wjsTYE5DsgaXgIkTvuB9+MD/bX5Cvh37rFRlwe
+ LSkT0kgcPAyJksOORO1ADDxuWqBvnYnuFiTVpK98ZHab7PtVvQ2zyJqpzPeXLeFoS79G
+ 9s0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787310145; x=1787914945;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=ZW+43f0HNk0MlxWq71xFTJBbmIurAt5Kb0ZGOXTKsqY=;
- b=ApJJeFc2q4JxRH87bRZLA/w3dwc4fRK3ZIYGxNmkB2Vwb6Yo4GdX3ZY7LybBZsLoN9
- tKT9utS9H2VBkglF050tFYQJTptvByGGcKCsBMCuvXYRswlXCxUm0QlP5sHQMPlJPHAM
- 8xFVLpdmzd8McYWzFlBmgpa9PFDFV+XD6bz9F1R3fcALpzZKMYxPkfCP5Ca8V2MkPcHH
- 8+lYCKIZFH59fLjOHoDWSUgetp4EOZjRjWO81KV48EGUBzfq2zceb00M1WjVmgO05bYG
- q3rLVF8DYeTTS+sr6W++XIpCAyFvy1YhqVXn3UspiVrzsUMO5OsaRLlj/1lZwHYr+w7h
- 3H9w==
-X-Gm-Message-State: AOJu0Yzzz+MqiwZyZ/TD+lKfWKB9DKuIpe7Hg28IUMJRVfeGTod8/8Wq
- obs6Hy7JhJ3uucoA+al1axsmfc+5seB6vXMkSyh9jJFadkKIqR+vAzKQDdmPFnBUhsIo1Pwacmo
- VP+rL
-X-Gm-Gg: AR+sD13vKT+OQClslTVL9Wlwb+WRpU6zt93ekYMDJdwaROjhVXrwDfj+pNYFl581XOL
- qe7PuRBOOMZNfbxvs5O4LknLce2aK/PgkOjU05t1v53T0BFxfCIacXG40fN/9Wg4Q9o4AnAFPco
- +mg/TG1BwlIsypVLtoRBOXTAcmJKRKEv9KReeeerHavTgqzy5KCwS5iAz+U1PxUu6CTNq4iQkUL
- s4jl3plPIbe9b0zg3T/8RU8O/qk4NbPzyoOPmZc6BlWa75PqME5WpdHEjQWEQjCSJPxT2L3XyCL
- 1kDhTLKDo+Blz3EfwcHHMaSLqHI9GzRkWIn6wjR29QuePz5bkz2eVmUlolLNR4vTPoZk0gdrYNV
- xHJuq2q1Hb8J+EYHVMXKwsIFkFAILI1bFkKLlJUDibwLq5fQ/kgFwF0YgoOUUi5X3BDPgcUFlHQ
- 8DjkxF4V4XLoA64+U9kuNCN95y7hWAgjEM9wlLClPy/HCjePSnanlnPnPTxzpO94sn7aThVJxwo
- xmP8VLjHB1rTXstOTvR1ChDLX5HT+2dEezYs5nspny95knbPGYhKBw8T8sO1zbIDHOL+2+qV4M2
- 5wz1
-X-Received: by 2002:a05:600c:1548:b0:495:5fdf:2075 with SMTP id
- 5b1f17b1804b1-499b8277214mr79175265e9.0.1787310144998; 
- Fri, 21 Aug 2026 04:02:24 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787310139; x=1787914939;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=ZhTa4gPey37Kb/POJTgaKRANSs+4AZwBwc9vJ063Ahw=;
+ b=c/db8cMdIxxGMC+bQY3hO++A12ubk/7oIqhjkmnVK3mgIWFnA+Eyj2t9NBUaLTSNYi
+ TE+lTXXLswgxQgqNBEPBG+oq/YdZdpaUGyoRlx8lMQ/w0ktIROVvWSjexdfoC1PTLjdL
+ 9U3DcptYTy+ayEL8sXYDebWR3wSdz7wB1cNOsy2P3oLvku14MdEY3ZYh9om9/gGJpFDk
+ +x+b2W4vT3ifXvRz8RLfngasbma7rEW57jmKuoFrnPteyggA56QPwXKo3JIzOEDHQIFw
+ RwxlMH3VriXdo7rdPTSslCFckh+Kpuf99DKW1JWoGnNGw4dorTCs86r46LiaeyQyTr7x
+ 6aUA==
+X-Gm-Message-State: AOJu0YwUWWpxH5tPh7w/qX1oSVoQ0/deBPTCUYCxGk04U7B+S2ywBpHM
+ yhcQOx41T92yw6AnzBvr0Y6I6b4W9Zt8He6czO+K42ieueECnz3dX1SCwaj+ms7Vtq0QXR0xKXh
+ OsUFX
+X-Gm-Gg: AR+sD10ACt5qhs0jnZScuU8TKq65+jHC+iZb1AAi6w0Bx1rupht1Es7CdBAwP+V4lng
+ 4/jAqUU8K3Lh0c5qSpQA49kvVnL3fKWqLd6IioM2hoJyM2rW9CZS+MaCMM2sAJT5Dalml4JrQC7
+ W8vHfLfBY9VSJeBqVyCxmnty8gfjg0CDyUmJ/fTQdThPiYTm5Xm6WIO/mfOVU8wWEBsffJdr7Vf
+ gXsYmAxnPTavKjsmU6elvjCclJLg/NL/+/iaKc0VRN4/QP7J7dMWLcgu3M/ncaFDmCWsaL1PlZD
+ o4mL87YJsPBYMw5ZOnu1S4CcxnBOspRG2mRZaRg2447e33F0ZQCKULs0W5zd0/F1cVg9icGjAVf
+ 87fuSvLyOz3ZMZzOsNCtmSXahZrzBiM498A/nLJDBbMP3Wgl+TtajCfHzyxpqwrGIBZcg1swlhn
+ cuYMzQGr90kH+2JQhmf9wUPOVaz/f5eu2he+T189Orr2Ezp4igwR4myEOwJS6D6ETrppYgSTBdG
+ nKqgj5N3c1Ai3jRzT23i6h9acxMsVt4Uc0w+l4oBJThxeh48daM+2hn1PHyebBiHuKaHQ==
+X-Received: by 2002:a05:600c:3492:b0:495:5890:8f6c with SMTP id
+ 5b1f17b1804b1-499b8339418mr82912465e9.7.1787310139298; 
+ Fri, 21 Aug 2026 04:02:19 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.23
+ 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 04:02:23 -0700 (PDT)
+ Fri, 21 Aug 2026 04:02:18 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 25/43] hw/arm: aspeed_ast27x0-fc: Store boot info in the
- machine state
-Date: Fri, 21 Aug 2026 12:00:43 +0100
-Message-ID: <20260821110101.3971391-26-peter.maydell@linaro.org>
+Subject: [PULL 21/43] target/arm: Pull VFP dregs checks out into a function
+Date: Fri, 21 Aug 2026 12:00:39 +0100
+Message-ID: <20260821110101.3971391-22-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260821110101.3971391-1-peter.maydell@linaro.org>
 References: <20260821110101.3971391-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,74 +101,283 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Meng <bin.meng@processmission.com>
+Currently we directly call dc_isar_feature(aa32_simd_r32, s) for VFP
+insns that use D16-D31 to see if they should UNDEF.  For some v7A
+CPUs (Cortex-A7, Cortex-A9) there is also a CPACR.D32DIS trap bit
+that will make VFP (and only VFP, not Neon) insns using D16-D31
+UNDEF.
 
-arm_load_kernel() keeps a pointer to the boot info struct for the
-lifetime of the VM, so the struct logically belongs to the machine
-rather than to a file scoped static object.
+Abstract out the register check for VFP insns into a new function
+which will provide us a place where we can make this check.
 
-Move the boot info into the existing Ast2700FCState.
+Since D32DIS takes precedence over traps to EL2 and EL3 and simply
+makes the insns UNDEF, we are OK to check it at the same point when
+we do the CPU feature check, rather than having to wait until
+vfp_access_check().
 
-As in the xlnx-zcu102 and raspi machines, the boot info belongs to
-the machine rather than to a static object:
-
-4d1ac883a7 ("hw/arm: xlnx-zcu102: Move arm_boot_info into XlnxZCU102")
-0f15c6e338 ("hw/arm/raspi: Move arm_boot_info structure to RaspiMachineState")
-
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260816131300.51799-3-bin.meng@processmission.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260817123838.1578060-7-peter.maydell@linaro.org
 ---
- hw/arm/aspeed_ast27x0-fc.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ target/arm/tcg/translate-vfp.c | 70 ++++++++++++++++++++--------------
+ 1 file changed, 42 insertions(+), 28 deletions(-)
 
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-index 058cea42edc..ceeae336df1 100644
---- a/hw/arm/aspeed_ast27x0-fc.c
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -27,10 +27,6 @@
- #define TYPE_AST2700FC MACHINE_TYPE_NAME("ast2700fc")
- OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700FC);
- 
--static struct arm_boot_info ast2700fc_board_info = {
--    .board_id = -1, /* device-tree-only board */
--};
--
- struct Ast2700FCState {
-     MachineState parent_obj;
- 
-@@ -46,6 +42,8 @@ struct Ast2700FCState {
-     Aspeed27x0SoCState ca35;
-     Aspeed27x0CoprocessorState ssp;
-     Aspeed27x0CoprocessorState tsp;
-+
-+    struct arm_boot_info bootinfo;
- };
- 
- #define AST2700FC_BMC_RAM_SIZE (2 * GiB)
-@@ -114,8 +112,9 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
-     aspeed_board_init_flashes(&soc->fmc, AST2700FC_FMC_MODEL, 2, 0);
-     aspeed_board_init_flashes(&soc->spi[0], AST2700FC_SPI_MODEL, 1, 2);
- 
--    ast2700fc_board_info.ram_size = machine->ram_size;
--    ast2700fc_board_info.loader_start = sc->memmap[ASPEED_DEV_SDRAM];
-+    s->bootinfo.ram_size = machine->ram_size;
-+    s->bootinfo.loader_start = sc->memmap[ASPEED_DEV_SDRAM];
-+    s->bootinfo.board_id = -1; /* device-tree-only board */
- 
-     dev = ssi_get_cs(soc->fmc.spi, 0);
-     fmc0 = dev ? m25p80_get_blk(dev) : NULL;
-@@ -129,7 +128,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
-     bios_name = machine->firmware ?: VBOOTROM_FILE_NAME;
-     aspeed_load_vbootrom(soc, bios_name, errp);
- 
--    arm_load_kernel(ARM_CPU(first_cpu), machine, &ast2700fc_board_info);
-+    arm_load_kernel(ARM_CPU(first_cpu), machine, &s->bootinfo);
- 
-     return true;
+diff --git a/target/arm/tcg/translate-vfp.c b/target/arm/tcg/translate-vfp.c
+index 4db4b14841d..a8d470ec49c 100644
+--- a/target/arm/tcg/translate-vfp.c
++++ b/target/arm/tcg/translate-vfp.c
+@@ -207,6 +207,23 @@ static void gen_update_fp_context(DisasContext *s)
+     }
  }
+ 
++/*
++ * Return true if a VFP insn is OK to access the registers indicated
++ * by regmask, false if it should UNDEF. This checks whether the
++ * D16-D31 regs are implemented by the CPU. Eventually we will also check
++ * CPACR.D32DIS.
++ * Note that Neon insns accessing D16..D31 do not need to check D32DIS,
++ * so this function is for VFP insns only.
++ *
++ * @regmask should be the logical OR of the VFP Dregs being accessed.
++ */
++static bool vfp_dregs_ok(DisasContext *s, int dregmask)
++{
++    int invalid_dreg_mask = dc_isar_feature(aa32_simd_r32, s) ? 0 : 0x10;
++
++    return !(dregmask & invalid_dreg_mask);
++}
++
+ /*
+  * Check that VFP access is enabled, A-profile specific version.
+  *
+@@ -347,8 +364,7 @@ static bool trans_VSEL(DisasContext *s, arg_VSEL *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (sz == 3 && !dc_isar_feature(aa32_simd_r32, s) &&
+-        ((a->vm | a->vn | a->vd) & 0x10)) {
++    if (sz == 3 && !vfp_dregs_ok(s, a->vm | a->vn | a->vd)) {
+         return false;
+     }
+ 
+@@ -473,8 +489,7 @@ static bool trans_VRINT(DisasContext *s, arg_VRINT *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (sz == 3 && !dc_isar_feature(aa32_simd_r32, s) &&
+-        ((a->vm | a->vd) & 0x10)) {
++    if (sz == 3 && !vfp_dregs_ok(s, a->vm | a->vd)) {
+         return false;
+     }
+ 
+@@ -541,7 +556,7 @@ static bool trans_VCVT(DisasContext *s, arg_VCVT *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (sz == 3 && !dc_isar_feature(aa32_simd_r32, s) && (a->vm & 0x10)) {
++    if (sz == 3 && !vfp_dregs_ok(s, a->vm)) {
+         return false;
+     }
+ 
+@@ -662,7 +677,7 @@ static bool trans_VMOV_to_gp(DisasContext *s, arg_VMOV_to_gp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vn & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vn & 0x10)) {
+         return false;
+     }
+ 
+@@ -709,7 +724,7 @@ static bool trans_VMOV_from_gp(DisasContext *s, arg_VMOV_from_gp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vn & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vn & 0x10)) {
+         return false;
+     }
+ 
+@@ -745,7 +760,7 @@ static bool trans_VDUP(DisasContext *s, arg_VDUP *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vn & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vn)) {
+         return false;
+     }
+ 
+@@ -1030,7 +1045,7 @@ static bool trans_VMOV_64_dp(DisasContext *s, arg_VMOV_64_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vm & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vm)) {
+         return false;
+     }
+ 
+@@ -1132,7 +1147,7 @@ static bool trans_VLDR_VSTR_dp(DisasContext *s, arg_VLDR_VSTR_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vd & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vd)) {
+         return false;
+     }
+ 
+@@ -1261,7 +1276,7 @@ static bool trans_VLDM_VSTM_dp(DisasContext *s, arg_VLDM_VSTM_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vd + n) > 16) {
++    if (!vfp_dregs_ok(s, a->vd + n - 1)) {
+         return false;
+     }
+ 
+@@ -1513,7 +1528,7 @@ static bool do_vfp_3op_dp(DisasContext *s, VFPGen3OpDPFn *fn,
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && ((vd | vn | vm) & 0x10)) {
++    if (!vfp_dregs_ok(s, vd | vn | vm)) {
+         return false;
+     }
+ 
+@@ -1685,7 +1700,7 @@ static bool do_vfp_2op_dp(DisasContext *s, VFPGen2OpDPFn *fn, int vd, int vm)
+     /* Note that the caller must check the aa32_fpdp_v2 feature. */
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && ((vd | vm) & 0x10)) {
++    if (!vfp_dregs_ok(s, vd | vm)) {
+         return false;
+     }
+ 
+@@ -2252,8 +2267,7 @@ static bool do_vfm_dp(DisasContext *s, arg_VFMA_dp *a, bool neg_n, bool neg_d)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) &&
+-        ((a->vd | a->vn | a->vm) & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vd | a->vn | a->vm)) {
+         return false;
+     }
+ 
+@@ -2380,7 +2394,7 @@ static bool trans_VMOV_imm_dp(DisasContext *s, arg_VMOV_imm_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (vd & 0x10)) {
++    if (!vfp_dregs_ok(s, vd)) {
+         return false;
+     }
+ 
+@@ -2555,7 +2569,7 @@ static bool trans_VCMP_dp(DisasContext *s, arg_VCMP_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && ((a->vd | a->vm) & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vd | a->vm)) {
+         return false;
+     }
+ 
+@@ -2621,7 +2635,7 @@ static bool trans_VCVT_f64_f16(DisasContext *s, arg_VCVT_f64_f16 *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vd  & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vd)) {
+         return false;
+     }
+ 
+@@ -2702,7 +2716,7 @@ static bool trans_VCVT_f16_f64(DisasContext *s, arg_VCVT_f16_f64 *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vm  & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vm)) {
+         return false;
+     }
+ 
+@@ -2777,7 +2791,7 @@ static bool trans_VRINTR_dp(DisasContext *s, arg_VRINTR_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && ((a->vd | a->vm) & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vd | a->vm)) {
+         return false;
+     }
+ 
+@@ -2856,7 +2870,7 @@ static bool trans_VRINTZ_dp(DisasContext *s, arg_VRINTZ_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && ((a->vd | a->vm) & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vd | a->vm)) {
+         return false;
+     }
+ 
+@@ -2930,7 +2944,7 @@ static bool trans_VRINTX_dp(DisasContext *s, arg_VRINTX_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && ((a->vd | a->vm) & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vd | a->vm)) {
+         return false;
+     }
+ 
+@@ -2956,7 +2970,7 @@ static bool trans_VCVT_sp(DisasContext *s, arg_VCVT_sp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vd & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vd)) {
+         return false;
+     }
+ 
+@@ -2982,7 +2996,7 @@ static bool trans_VCVT_dp(DisasContext *s, arg_VCVT_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vm & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vm)) {
+         return false;
+     }
+ 
+@@ -3063,7 +3077,7 @@ static bool trans_VCVT_int_dp(DisasContext *s, arg_VCVT_int_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vd & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vd)) {
+         return false;
+     }
+ 
+@@ -3100,7 +3114,7 @@ static bool trans_VJCVT(DisasContext *s, arg_VJCVT *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vm & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vm)) {
+         return false;
+     }
+ 
+@@ -3240,7 +3254,7 @@ static bool trans_VCVT_fix_dp(DisasContext *s, arg_VCVT_fix_dp *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vd & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vd)) {
+         return false;
+     }
+ 
+@@ -3369,7 +3383,7 @@ static bool trans_VCVT_dp_int(DisasContext *s, arg_VCVT_dp_int *a)
+     }
+ 
+     /* UNDEF accesses to D16-D31 if they don't exist. */
+-    if (!dc_isar_feature(aa32_simd_r32, s) && (a->vm & 0x10)) {
++    if (!vfp_dregs_ok(s, a->vm)) {
+         return false;
+     }
+ 
 -- 
 2.43.0
 
