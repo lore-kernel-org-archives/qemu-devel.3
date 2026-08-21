@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D6A8C5DF8E
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 13:26:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25266C5DF87
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 13:26:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxPFx-00023V-NJ; Fri, 21 Aug 2026 09:26:01 -0400
+	id 1wxPG2-00025i-EI; Fri, 21 Aug 2026 09:26:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxPFw-00022p-Du
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 09:26:00 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1wxPG1-00024h-1e
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 09:26:05 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxPFu-0006Ow-Rn
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 09:26:00 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-495590dde14so8831635e9.0
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 06:25:58 -0700 (PDT)
+ id 1wxPFz-0006Q3-0E
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 09:26:04 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-47f3b39f2a1so817684f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 06:26:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787318757; x=1787923557; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787318761; x=1787923561; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=p6lp+O4D/eE65qwxUb9w0dpA/8vp/oVveOpJwUREnbw=;
- b=eMabaMLj0xnnWMd6467caD9SyPUTYJ+9X1eXy9V0p735CnMS6308ITasLNt2iFqMYD
- dZHTDvJsEYrV/khY+Ac90OMbALcgAJjTxgeR8QKjtWNYANkMLGwW8b/NcMHR+ndo+z1N
- D+eZROF+CHs5uete21cYjyyUaV70tUfjfdz6gMMEoE4deSEfbpa4VaPOD0WL+OcOq9Gb
- CZKBh43XWbMvJ9LUBjyykf8PavSqUx07ATBNDL0846zU+2HzsxpTQps0m0bhFjBqEQMf
- R7pjxtU6l9DjyfyYSGTclOCk6wIhunkhA1yKtneVIoQez6jl88Xrpc6QpNv/NbcSkig3
- XCkg==
+ bh=2alkrNBhAO1wnw1fFIL9osRmaaFocWT88WNJqpH93Ps=;
+ b=dI5mT2WJaWc0pvL1aQ19pOtZD8PGBqill/UXeK9aCohosTec78z+HlozxMNxAFZy5J
+ 8OgxuDchZ/ZImPkBUXydwy5Uuy0eJmqGuj+C5KaPFvW2t4D3i/WZ1SyzMd09IU+kd6FZ
+ SIkLWgCMiHaj4inRcnj8xkTtk14TXjJhTg8hp8JFgFbK7eDawWsU3K+TA96akMJXxGu+
+ 3Sy2B/+jkX4rChz5wz1YsLBfTPzivoCfOPAho0r3MECpSWBKjzwmrCa/MCb3S5lMIfPa
+ qniryt92XMxErqd2eutvSGjymhhGPCcqE75S/K5MvZ+RUpgalchN8D8OpSio7ULZtCaj
+ zGWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787318757; x=1787923557;
+ d=1e100.net; s=20251104; t=1787318761; x=1787923561;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=p6lp+O4D/eE65qwxUb9w0dpA/8vp/oVveOpJwUREnbw=;
- b=hK05rTs+NP+CCt0nZvjCL0RaCXCPqf5KXjhcCh7d5ynnVMrhJ11kLaUJo2DWu68obm
- B4KQsMSuByIyg/8VfLAyI1CGehhebOSk1rNEUrjMLMVpBoWQrTwo2at1DMa4QfwTDlmj
- h2rHHra/od/phdfaQLrWFd8Jvdu2Pj5K3llF2bEUL5zygmIaCWAd5VaxaXJXpNmCl+wo
- Kvzs7umxELvGYbw7Lzyv0OR6L8fFIK9U/6MIdzScRc5pk0BzLDuGHRuD2T1p3OEUkA2r
- +bA1A6bkeHib5Q0yzl4H4pe3bowGtya6WGYerCsZI+RNy8KUepo09Ht0NHKEGQqmPCpL
- lgnQ==
+ bh=2alkrNBhAO1wnw1fFIL9osRmaaFocWT88WNJqpH93Ps=;
+ b=nXJszNLNKd22vzLn56qt/7CZDcFE2RNKflUK9QP7v2NHnOP+IRbP9ot6mG2QQQFn2g
+ 3/G629zoHzh7bGgqpEvSg+7TxD30H2igJYGGzt4hwog/6ERDZ7pGQAlxXusPB9IP1FB1
+ cDkLZEKBmlZXGdMdbLprOPn+U6MPewv6vxg22ctmueJpCOMUC4FBg38v+LSk9r0UE723
+ WeWXzksf2FPiqckdb/7ez21+M111X0rRCArxohBwCEx7F0Kthld3gbIp1rmdPiZMjePh
+ vRx9WrIxwVEYrMY3p42TKRV9SzfEAVIOSa2ryosdKjCeQunju5foFWuj8P7DT5AQ7mw3
+ 3H7w==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrTTWs6W/4oDk+o50uOaRJjrLGNulVV2VlpAid+3riBdfLHuov/ah2w3Ck3tfGioNabSygO53wLjpYY@nongnu.org
-X-Gm-Message-State: AOJu0Ywyh2GFbSY7Qi+US3Jg16nrwCG3+hwot9QBDl05H3H6iT9fDnao
- zebof+r6GMRRBbH8SIs83c3FgRaFqMAc/eb0Yk0QE8sRlr7dBZTUhPxjbmSbLAwBWog=
-X-Gm-Gg: AR+sD10E8fwDFEu1cVRZ+t9GPtp5UkjsBAhXahBJwuCbLFZ13av3Y1L2n9dzsQXud0T
- /deoNQ6f5k5H3SuJ8WdzCcAW+k2OKX57J40Ajb8NtAYriNmGbTCWfydZWxEEc1vpoyyASm6Yh8K
- S7e1RoinTKIFFrDazkxWLvna2FYmIyQ6ZGDgvi6pWLoJ5BQK26vQbE/Ae6US1VAVXoIIx0srJ/V
- ZTSLbLtIUZ6/unys06+Uo9xo4TjgYfPa0xkhGPQJBvZCVDLyNvanpH25KAXb2DwZ2XImwAfryXN
- /XsAgzx5NxScCHGjbvi2PqUoHeElRurZXca08EUNn7Y8HbMUsy2rRaer4/fR9GxeSd7d5Gh4Gjt
- 2VVlN78yWrKy/EGnWFyy9I0B4YS2aQSOYFk+ak5c1/3UeJ6UJBCOWQ+CztdO5mmAhbGmM/k5aGr
- LoYCSRjUSmJ8vXV7F6w+bHEDsSHDuhVxo9/dxwj4NPZU9ydbFV7NE8EJUm+2CBrE8pEl/DvtGGP
- FRIUIWdcZePgIJFvL2zCV8ybqGtrgUJ34lr3gNWhK3mblAtUNwYGDJr34oYdzjQpSPexA==
-X-Received: by 2002:a05:600c:c168:b0:499:7024:9d4a with SMTP id
- 5b1f17b1804b1-499b8327af5mr109630155e9.8.1787318757213; 
- Fri, 21 Aug 2026 06:25:57 -0700 (PDT)
+ AHgh+RrwV8tdM0SCcGU7fxw1ot5fPEMs4uGL5d1yStpNs4eTrwp2po6E+BOvgonwQe8nDFQyC+Uz4YgWOmng@nongnu.org
+X-Gm-Message-State: AFuF++lREGLeAIrEpw5CkYTqlfZQUgFLxhBa1c3pSmM0pwGf4RaGv+kV
+ swM27+VlJfaC6SyYaN8hkL+zIfB+Nc026fbHhE94qj3BD4pM9qmIlzU9z3qaT7DIe1Bm17ePbyn
+ NwAZcyaI=
+X-Gm-Gg: AR+sD13EenPkZlzsg4BdudkdI9JLsYTH9+/IJZb3kdgkDLCV//Zyfa22NmKnqPF0sC8
+ ZYyaRMOOIvahWPeVVH/kijm8b54CUf5p+K0WyYMFMchyqG1lyetGWSEOginH2v+PCwTw+ZEzD2S
+ CS/ndjl2Qhx3RqnfpcRCRgR6fbhRQMQMX+B5IrMvQVNUFFhDPpwvaBm/my4IKt6bDzlQUNB3VH5
+ DeuUQPIGWvL0zq6KKFo43lJkeL52y83ipJorRT73HKxEwk9eQLzAxrjA1xJXh5H36/CDMqaGd8Z
+ KotPLl24+ArtGbFKxQhZpb8Y0lad7pOH2/kDJtnO371EqD0xUM7KMJyQ1vzPpCPzY9/rvGXa2BB
+ ilBsVmWQLl/nN1aDU/hApmLnqYrZBOmTfJb6SYj/NeV7ZGE6mnvMLG8o1Vn3gCgXbvydxorbX7Y
+ P3/z3R0nEVG74s6gJwuKZI12wSnXkhm2T602dy2D/YS5nMHHPbCA2LqjdngRsTs2d1qqt9Kb9Cn
+ YtwBIDmuF2kfY98kpjJkrlfT7o3zZAXh/+N4TVO8QFQkQZ9lP30PYmTzc1uQGfo3hpxMrN8XzGw
+ G1oT
+X-Received: by 2002:a5d:64cd:0:b0:47f:51bc:efe2 with SMTP id
+ ffacd0b85a97d-482c0b95d85mr10259274f8f.11.1787318761395; 
+ Fri, 21 Aug 2026 06:26:01 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b1450e54sm18770327f8f.11.2026.08.21.06.25.54
+ ffacd0b85a97d-482b1450e54sm18770327f8f.11.2026.08.21.06.26.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 06:25:54 -0700 (PDT)
+ Fri, 21 Aug 2026 06:26:00 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 1/3] target/arm: Make CBZ/CBNZ UNDEF before v6T2
-Date: Fri, 21 Aug 2026 14:25:48 +0100
-Message-ID: <20260821132550.168896-2-peter.maydell@linaro.org>
+Subject: [PATCH 3/3] target/arm: Make Thumb T1 hint space UNDEF before v6T2
+Date: Fri, 21 Aug 2026 14:25:50 +0100
+Message-ID: <20260821132550.168896-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260821132550.168896-1-peter.maydell@linaro.org>
 References: <20260821132550.168896-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,39 +104,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Thumb CBZ/CBNZ encodings are only introduced in v6T2 (for
-A-profile) and v7M (for M-profile).  We missed out the feature-check
-in trans_CBZ(), so don't UNDEF on v5T or v6M.  Add the missing check:
-conveniently, the ARM_FEATURE_THUMB2 feature is true for exactly the
-cases where CBZ is implemented.
+The "hint space" is a region of the encoding space which is defined
+to NOP if not specified as an architected instruction, so that future
+instructions can be added there which fall back to NOPs on older
+CPUs.  In the A32 encoding, this hint space was carved out of the MSR
+(imm) insn by using the fact that a field_mask (bits [19:15]) of
+0b0000 meant that an MSR (imm) would set no parts of the CPSR from
+the immediate, so it was always NOP on existing CPUs.
+
+For the T1 encoding, the hint space is in a range that used to UNDEF
+in Armv5, and so the hint insns and the NOP region must all UNDEF
+before v6T2.  Rather than putting this check in the trans functions
+for each hint insn and for the NOP space (which is a lot of places,
+and awkward since those trans functions are often shared with the A64
+and A32 encodings), put in a decode line that covers the whole space
+which we check before any of the hints and which will explicitly
+UNDEF if necessary.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 9ee6e8bb853bde ("ARMv7 support.")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4208
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/translate.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ target/arm/tcg/t16.decode  |  3 +++
+ target/arm/tcg/translate.c | 18 ++++++++++++++++++
+ 2 files changed, 21 insertions(+)
 
+diff --git a/target/arm/tcg/t16.decode b/target/arm/tcg/t16.decode
+index 9a8f89538ac..43cd36e949c 100644
+--- a/target/arm/tcg/t16.decode
++++ b/target/arm/tcg/t16.decode
+@@ -224,6 +224,9 @@ REVSH           1011 1010 11 ... ...            @rdm
+ 
+ {
+   {
++    # Before v6T2 this was not NOP space and must UNDEF
++    MAYBE_UNDEF_T1_HINT 1011 1111 ---- 0000
++
+     YIELD       1011 1111 0001 0000
+     WFE         1011 1111 0010 0000
+     WFI         1011 1111 0011 0000
 diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 055f3c5b403..df98dc2e34d 100644
+index 103e2fe7c73..e889c6c6136 100644
 --- a/target/arm/tcg/translate.c
 +++ b/target/arm/tcg/translate.c
-@@ -5783,7 +5783,14 @@ static bool trans_TBH(DisasContext *s, arg_tbranch *a)
+@@ -3339,6 +3339,24 @@ static bool trans_NOP(DisasContext *s, arg_NOP *a)
+     return true;
+ }
  
- static bool trans_CBZ(DisasContext *s, arg_CBZ *a)
- {
--    TCGv_i32 tmp = load_reg(s, a->rn);
-+    TCGv_i32 tmp;
-+
-+    /* CBZ was introduced in v6T2 and v7M */
-+    if (!arm_dc_feature(s, ARM_FEATURE_THUMB2)) {
++static bool trans_MAYBE_UNDEF_T1_HINT(DisasContext *s,
++                                      arg_MAYBE_UNDEF_T1_HINT *a)
++{
++    /*
++     * The Thumb T1 encoding hint space was only defined starting
++     * in v6T2 for A-profile. For M-profile it always exists, even
++     * in v6M.
++     */
++    if (arm_dc_feature(s, ARM_FEATURE_M) ||
++        arm_dc_feature(s, ARM_FEATURE_THUMB2)) {
++        /* Allow decode to fall through to the hint insns and NOP space */
 +        return false;
 +    }
++    /* On the earlier cores, we must UNDEF */
++    unallocated_encoding(s);
++    return true;
++}
 +
-+    tmp = load_reg(s, a->rn);
- 
-     arm_gen_condlabel(s);
-     tcg_gen_brcondi_i32(a->nz ? TCG_COND_EQ : TCG_COND_NE,
+ static bool trans_MSR_imm(DisasContext *s, arg_MSR_imm *a)
+ {
+     uint32_t val = ror32(a->imm, a->rot * 2);
 -- 
 2.43.0
 
