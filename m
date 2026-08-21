@@ -4,56 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E3A7C5DF89
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 13:38:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C4A0C5DF89
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 13:41:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxPRU-0002g7-B3; Fri, 21 Aug 2026 09:37:56 -0400
+	id 1wxPUD-0004nJ-Vt; Fri, 21 Aug 2026 09:40:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
- id 1wxPRR-0002XB-MU
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 09:37:53 -0400
-Received: from va-1-114.ptr.blmpb.com ([209.127.230.114])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
- id 1wxPRP-0000np-L6
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 09:37:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1787319466; h=from:subject:
- mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
- mime-version:in-reply-to:message-id;
- bh=JcsPBIPKPtR3x0fEbCq/mhvKorUmjmYoZV6kGdQScWw=;
- b=F+d1KrnVYjJ6U1dLeT+TAmSe8eW/FDhnLmBGmHrDGP2Go2fAq1rWMRd0w8pT4CgdD6Kqc0
- KyrdmpY3hL/0orXPXpQGnK0+LZf/d6EOF4L94rSslSosLSUr8JZImcbgwP99X3Yq3gVpFm
- TRyP0s4wiLZVAOsWG/Nnk/mNvJVjpxbv0bKsQqHDbmVfFbC++0Yr1xM6NvKzQGZs4MZOxg
- x1mqy/x0Go036LBYNue0ok7ZuqYpuW4OICnwTwIW44YHXsvaFY7/eaf1LDnQOOGm1IiF0E
- GxkfgSB9zVhl7tawCjJjbQieiVvm5AhNNDxdtPBHY04W575AFG7Bny6fktaWpw==
-References: <20260821133559.3815727-1-yanfei.xu@bytedance.com>
-Message-Id: <20260821133559.3815727-4-yanfei.xu@bytedance.com>
-X-Lms-Return-Path: <lba+26a8854a8+536bd7+nongnu.org+yanfei.xu@bytedance.com>
-From: "Yanfei Xu" <yanfei.xu@bytedance.com>
-Subject: [PATCH v2 3/3] migration/rdma: Retry control sends on full queue
-Date: Fri, 21 Aug 2026 21:35:59 +0800
-Mime-Version: 1.0
-In-Reply-To: <20260821133559.3815727-1-yanfei.xu@bytedance.com>
-Content-Type: text/plain; charset=UTF-8
-To: <qemu-devel@nongnu.org>
-Cc: <peterx@redhat.com>, <farosas@suse.de>, <lizhijian@fujitsu.com>, 
- <jinpu.wang@cloud.ionos.com>, <isyanfei.xu@gmail.com>, 
- "Yanfei Xu" <yanfei.xu@bytedance.com>
-X-Original-From: Yanfei Xu <yanfei.xu@bytedance.com>
-X-Mailer: git-send-email 2.20.1
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=209.127.230.114;
- envelope-from=yanfei.xu@bytedance.com; helo=va-1-114.ptr.blmpb.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wxPUC-0004mr-HK
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 09:40:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wxPUA-0001Th-M1
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 09:40:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787319640;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=B9v4zU1RSXWVxzWJd/KXMbaohTjvT47waQmSyY0D7Fs=;
+ b=YbBBeSr8jjoxoUytQDiak9zHW6RcTqrj3i0vGOkowwi4HU/N4vEs6VO5IKxXgEqdaacd6F
+ FznhQbqXjRA5gTI5JdHuHkZm1uBevRDWLhG38JLgoGSoA0A8YGGYjM1/tDdEGhUelW2BVe
+ JW9ySNpV7KRX814pXLYcuW4XL8ZS18Q=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-VxNX31mCMkutS1sQrvt3VQ-1; Fri,
+ 21 Aug 2026 09:40:39 -0400
+X-MC-Unique: VxNX31mCMkutS1sQrvt3VQ-1
+X-Mimecast-MFC-AGG-ID: VxNX31mCMkutS1sQrvt3VQ_1787319637
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CF28A1955BDD; Fri, 21 Aug 2026 13:40:36 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.12])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EBC891956056; Fri, 21 Aug 2026 13:40:35 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8923E21E6920; Fri, 21 Aug 2026 15:40:33 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?= <philmd@mailo.com>
+Subject: Re: [PATCH v2 01/53] qapi: add QAPITypeInfo struct definition
+In-Reply-To: <CAMxuvax5Bnz7fK9DE+jWBfYg2ZX=YYA4W-j9gzU4gJmRTQVToQ@mail.gmail.com>
+ (=?utf-8?Q?=22Marc-Andr=C3=A9?= Lureau"'s message of "Thu, 13 Aug 2026
+ 10:55:45 +0400")
+References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
+ <20260616-qom-qapi-v2-1-cc9396b9c18c@redhat.com>
+ <87mrv78jwb.fsf@pond.sub.org>
+ <CAMxuvax5Bnz7fK9DE+jWBfYg2ZX=YYA4W-j9gzU4gJmRTQVToQ@mail.gmail.com>
+Date: Fri, 21 Aug 2026 15:40:33 +0200
+Message-ID: <87ecfrzj5a.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,158 +95,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RAM writes and control messages share the send queue. If outstanding
-writes fill it, RDMA writes drain a completion and retry, but control
-sends fail the migration.
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-Move send posting and queue-full handling into a common helper. On
-ENOMEM, drain one outstanding RDMA write and retry the failed request
-once. If no write is outstanding, or the retry still fails, propagate
-the error.
+> giHi
+>
+> On Fri, Jul 31, 2026 at 3:43=E2=80=AFPM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>>
+>> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+>>
+>> > Introduce a minimal struct that pairs a QAPI type's internal name with
+>> > its "masked" introspection name. Generated constants of this type will
+>> > let QOM property registration carry a reliable reference to the QAPI
+>> > schema and possibly other associated data.
+>> >
+>> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>> > ---
+>> >  include/qapi/qapi-type-info.h | 32 ++++++++++++++++++++++++++++++++
+>> >  1 file changed, 32 insertions(+)
+>> >
+>> > diff --git a/include/qapi/qapi-type-info.h b/include/qapi/qapi-type-in=
+fo.h
+>> > new file mode 100644
+>> > index 00000000000..a7a470af731
+>> > --- /dev/null
+>> > +++ b/include/qapi/qapi-type-info.h
 
-Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
----
- migration/rdma.c       | 78 +++++++++++++++++++++++++++---------------
- migration/trace-events |  2 +-
- 2 files changed, 51 insertions(+), 29 deletions(-)
+[...]
 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index 6e8436ccc1..ee6da4f137 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -1530,6 +1530,52 @@ err_block_for_wrid:
-     return -1;
- }
- 
-+/*
-+ * Post a send work request, draining an outstanding RDMA write if the send
-+ * queue is full.
-+ */
-+static int qemu_rdma_post_send(RDMAContext *rdma,
-+                               struct ibv_send_wr *send_wr,
-+                               Error **errp)
-+{
-+    struct ibv_send_wr *bad_wr;
-+    uint64_t wr_id = send_wr->wr_id & RDMA_WRID_TYPE_MASK;
-+    const char *wr_desc;
-+    int ret;
-+
-+    switch (wr_id) {
-+    case RDMA_WRID_RDMA_WRITE:
-+        wr_desc = "RDMA write";
-+        break;
-+    case RDMA_WRID_SEND_CONTROL:
-+        wr_desc = "control send";
-+        break;
-+    default:
-+        wr_desc = "send work request";
-+        break;
-+    }
-+
-+    ret = ibv_post_send(rdma->qp, send_wr, &bad_wr);
-+    if (ret == ENOMEM && rdma->nb_sent) {
-+        trace_qemu_rdma_post_send_queue_full(send_wr->wr_id, rdma->nb_sent);
-+        ret = qemu_rdma_block_for_wrid(rdma, RDMA_WRID_RDMA_WRITE, NULL);
-+        if (ret < 0) {
-+            error_setg(errp, "rdma migration: failed to make room for %s",
-+                       wr_desc);
-+            return -1;
-+        }
-+        ret = ibv_post_send(rdma->qp, send_wr, &bad_wr);
-+    }
-+
-+    if (ret > 0) {
-+        error_setg_errno(errp, ret, "rdma migration: post %s failed",
-+                         wr_desc);
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
- /*
-  * Post a SEND message work request for the control channel
-  * containing some data and block until the post completes.
-@@ -1540,7 +1586,6 @@ static int qemu_rdma_post_send_control(RDMAContext *rdma, uint8_t *buf,
- {
-     int ret;
-     RDMAWorkRequestData *wr = &rdma->wr_data[RDMA_WRID_CONTROL];
--    struct ibv_send_wr *bad_wr;
-     struct ibv_sge sge = {
-                            .addr = (uintptr_t)(wr->control),
-                            .length = head->len + sizeof(RDMAControlHeader),
-@@ -1572,11 +1617,8 @@ static int qemu_rdma_post_send_control(RDMAContext *rdma, uint8_t *buf,
-         memcpy(wr->control + sizeof(RDMAControlHeader), buf, head->len);
-     }
- 
--
--    ret = ibv_post_send(rdma->qp, &send_wr, &bad_wr);
--
--    if (ret > 0) {
--        error_setg(errp, "Failed to use post IB SEND for control");
-+    ret = qemu_rdma_post_send(rdma, &send_wr, errp);
-+    if (ret < 0) {
-         return -1;
-     }
- 
-@@ -1836,7 +1878,6 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
- {
-     struct ibv_sge sge;
-     struct ibv_send_wr send_wr = { 0 };
--    struct ibv_send_wr *bad_wr;
-     int reg_result_idx, ret, count = 0;
-     uint64_t chunk, chunks;
-     uint64_t chunk_size = migrate_rdma_chunk_size();
-@@ -1850,7 +1891,6 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
-                                .repeat = 1,
-                              };
- 
--retry:
-     sge.addr = (uintptr_t)(block->local_host_addr +
-                             (current_addr - block->offset));
-     sge.length = length;
-@@ -2020,26 +2060,8 @@ retry:
-     trace_qemu_rdma_write_one_post(chunk, sge.addr, send_wr.wr.rdma.remote_addr,
-                                    sge.length);
- 
--    /*
--     * ibv_post_send() does not return negative error numbers,
--     * per the specification they are positive - no idea why.
--     */
--    ret = ibv_post_send(rdma->qp, &send_wr, &bad_wr);
--
--    if (ret == ENOMEM) {
--        trace_qemu_rdma_write_one_queue_full();
--        ret = qemu_rdma_block_for_wrid(rdma, RDMA_WRID_RDMA_WRITE, NULL);
--        if (ret < 0) {
--            error_setg(errp, "rdma migration: failed to make "
--                         "room in full send queue!");
--            return -1;
--        }
--
--        goto retry;
--
--    } else if (ret > 0) {
--        error_setg_errno(errp, ret,
--                         "rdma migration: post rdma write failed");
-+    ret = qemu_rdma_post_send(rdma, &send_wr, errp);
-+    if (ret < 0) {
-         return -1;
-     }
- 
-diff --git a/migration/trace-events b/migration/trace-events
-index af0e784535..bc0c167a1a 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -251,7 +251,7 @@ qemu_rdma_unregister_waiting_complete(uint64_t chunk) "Unregister for chunk: %"
- qemu_rdma_write_flush(int sent) "sent total: %d"
- qemu_rdma_write_one_block(int count, int block, uint64_t chunk, uint64_t current, uint64_t len, int nb_sent, int nb_chunks) "(%d) Not clobbering: block: %d chunk %" PRIu64 " current %" PRIu64 " len %" PRIu64 " %d %d"
- qemu_rdma_write_one_post(uint64_t chunk, long addr, long remote, uint32_t len) "Posting chunk: %" PRIu64 ", addr: 0x%lx remote: 0x%lx, bytes %" PRIu32
--qemu_rdma_write_one_queue_full(void) ""
-+qemu_rdma_post_send_queue_full(uint64_t wr_id, int sent) "send queue full, wr_id=%" PRIu64 ", outstanding writes=%d"
- qemu_rdma_write_one_recvregres(int mykey, int theirkey, uint64_t chunk) "Received registration result: my key: 0x%x their key 0x%x, chunk %" PRIu64
- qemu_rdma_write_one_sendreg(uint64_t chunk, int len, int index, int64_t offset) "Sending registration request chunk %" PRIu64 " for %d bytes, index: %d, offset: %" PRId64
- qemu_rdma_write_one_top(uint64_t chunks, uint64_t size) "Writing %" PRIu64 " chunks, (%" PRIu64 " MB)"
--- 
-2.20.1
+>> > + */
+>> > +typedef struct QAPITypeInfo {
+>> > +    const char *name;
+>> > +    const char *schema_name;
+>> > +    const QEnumLookup *lookup;
+>> > +    const struct QAPITypeInfo *list;
+>> > +} QAPITypeInfo;
+>> > +
+>> > +#endif /* QAPI_TYPE_INFO_H */
+>>
+>> This is somewhat related to SchemaInfo, which is also meta-data about
+>> QAPI types (and also commands and events).
+>>
+>> SchemaInfo only has the masked name[*].  It has a reference from array
+>> type to element type instead of the other way round.  Everything else in
+>> QAPITypeInfo is also in SchemaInfo, I believe.
+>>
+>> So far, QEMU uses SchemaInfo only around qmp_query_qmp_schema().
+>> qmp_query_qmp_schema() a SchemaInfoList on the fly from something else,
+>> and the QMP core (it's only caller) then converts it via QObject to a
+>> string reply.
+>>
+>> Now I need to digress into history a bit.
+>>
+>> The value of query-qmp-schema is fixed at compile time.  My initial
+>> version simply generated the fixed reply as string.  Efficient, because
+>> it doesn't build a (bulky!) QObject reply.  Also a bit hacky.
+>>
+>> This got in the way of QAPI 'if' conditionals, so commit 7d0f982b
+>> switched to a pointer-less variation of the QObject that can be
+>> generated as data more easily: QLitObject[].  query-qmp-schema converts
+>> this to QObject every time it runs.  The QLitObject[] would be awkward
+>> to use for anything else.
+>>
+>> End of digression.
+>>
+>> I wonder whether it could make sense to have a single repository of QAPI
+>> type meta data, usable both for query-qmp-schema and for your QOM work.
+>> Something QOM could use about as easily as QAPITypeInfo, and
+>> query-qmp-schema could convert to its reply.
+>>
+>> At this time, this is an idea phrased as a question.  Is it a good idea?
+>> I'm not sure.  Even if it is, I'm not sure it should be implemented
+>> right away.  I'm just sharing the idea.
+>
+> I am not sure what you mean by "a single repository of QAPI type
+> metadata". Whatever it is, I don't think it is required for this
+> series. If you mean that we could generate one big structure holding
+> all QAPI metadata, that sounds challenging and it's not clear to me
+> what the benefit would be, beside a bit of memory saving.
+
+The information in QAPITypeInfo is a strict subset of the information
+returned by query-qmp-schema.  This makes QAPITypeInfo redundant from a
+pure information point of view.
+
+However, the information returned by query-qmp-schema is encoded in a
+way that makes it unwieldy for anything else: it's a big QLitObject.
+All you can do with it is convert it to a big QObject.  And all we do
+with that is convert to a big JSON string we send to the QMP client.  We
+could extract a QAPITypeInfo from the big QObject on the fly, but it
+would be rather cumbersome.
+
+The QLitObject data structure is an implementation choice.  We changed
+our choice in the past, we could change it again.  The question / idea I
+wanted to share: could we choose a single data structure that supports
+both QAPI/QMP introspection (query-qmp-schema) and QAPI/QOM
+introspection (what your series adds)?
+
+I don't think it would be all that difficult, just a good chunk of work.
+A bit of a yak-shave perhaps.
+
+Again, I'm just throwing out an idea.  If you'd like to run with it, go
+ahead.  If not, that's perfectly fine, too.
+
+>> [*] The QAPI generator has an option to make it have only the unmasked
+>> names.  Occasionally convenient when messing around.
+
 
