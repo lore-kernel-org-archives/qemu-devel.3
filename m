@@ -4,101 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E239C5DF8C
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 16:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8CBBC5DF94
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 16:48:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxSMQ-0007W8-MG; Fri, 21 Aug 2026 12:44:54 -0400
+	id 1wxSPc-0000NN-3b; Fri, 21 Aug 2026 12:48:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wxSMN-0007Vg-Ob; Fri, 21 Aug 2026 12:44:51 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wxSPa-0000N9-Cc
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 12:48:10 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wxSMK-0000sy-5J; Fri, 21 Aug 2026 12:44:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787330654; bh=JH3sm0gg58PT+PLfD7LyKWNFGXWho16jHhgPnCxvOwQ=;
- h=Date:Subject:To:References:Cc:From:In-Reply-To;
- b=fFfdlE6zc4foMw25isYRMkhSfKUTgWe5Gs4buTgC6K14+Wz5ZMlBStNuuUyukHuCt
- X2hJa3YZoMpRdMoml0nW+vw89k8Bttr+VXaG28kkqEbYSbMZVRAal2/BDkXnVHJxjh
- GodFVmj2r6iRTdZW8qiP7ATPE7UYUU6yIzTz1Id3TCCVAPfwgJKPAAaB8DMZ99+Vcx
- CDJC5s0bnDBxdwemMPkKqMAephsFgdMYy76j2mdPpm/dCWiDZSWdHpe4PeHCzEgPEK
- ay1LCdzTHoPwVF+6DbxvM1quoeTvJvpfpPJ5GfhpH3iBzT9yresdxrIOi5JBFyJnyR
- JKrocAXTVeUcw==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 50F841CD3AC;
- Fri, 21 Aug 2026 19:44:14 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C071D4113E8;
- Fri, 21 Aug 2026 19:44:43 +0300 (MSK)
-Message-ID: <fd8ab02f-d134-4241-ae40-1ae32007a9e1@tls.msk.ru>
-Date: Fri, 21 Aug 2026 19:44:13 +0300
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wxSPY-0001jY-EI
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 12:48:10 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67LFmCjf3876604
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 16:48:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ aWugJZIEhPp933tg/6ZVBahkyCK8i0nxWqCIs7v4BKE=; b=FKgNWbEGOBflP1hX
+ RJVB6KCCOsMIHcSgMfIa8Qn6XunzgLmwVUUVcbDhnm0B9ETgtaOgy5gWo9issfxz
+ ZHiA8C58wuw0biMJ4/oPzlk99r4cIp9UjEgeCTknBmJuE/1V4B8qYn5W5cHfV/k7
+ PQPJ/SsHURf7bRlufGUmApSt17hqPHroLL3FNvwEPhkMTvA5G9PAvebcpHdL3dHn
+ ily1pIJ550pU6w+a4yKkTB2dgNZfjdW7q0jTO7fiS0H4CBFUyweFAOgxg1CNHGFt
+ bXd+lUKrvOA58yNm02Yhl22+C+EDi7QR18nBU4TDMYgvDwvi6VHj4e3g4wG7BemO
+ daqlVQ==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g6fg9tpj9-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 16:48:05 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2ccb6f6a3f4so17686315ad.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 09:48:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1787330885; x=1787935685; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=aWugJZIEhPp933tg/6ZVBahkyCK8i0nxWqCIs7v4BKE=;
+ b=W/mDD4/8Jsx+lR+it4lEr/Kf77Je6ocHikQm9gnzGnQGC+VEM02F0UbzAUHpTKq1xz
+ zg/uBgrWrwDE4cnPFFHDrwdLG4FDGNugdj4WfYFsFPFrDVJ6TOpagNlTy48m94eKqnMA
+ ukYAXWC9nN6O8nLRmgbApqO07gTHp+64NrcnwY3F6R2Wz7eLMuPPfRVZ9fQC9Gahj1k2
+ RKjW24Cbomf+1/HkkUk46mx4KZZbKbUpQtB8BkXmXFK/jBhdEJMCTlUJAvP94uOh9sqt
+ KLOw/qFIk/2rsiGWO7rQvHDyr17LkhbwcEU4rtiiq6HbCTQoUQ3Oviw0m2tMv/ppiZye
+ ODcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787330885; x=1787935685;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=aWugJZIEhPp933tg/6ZVBahkyCK8i0nxWqCIs7v4BKE=;
+ b=iprx205N+8LeoadOhf0LfxQMnCD/dQJ6Isrtd14lRj36AhJWdSl3dPZXdLEz1ztDQ6
+ iNZopQ581zGCwkv8bfgagEMW0VU7a0AgLrlTgGKV57nwbuIfAG3LAtOApE2nOkJARG4v
+ 8NW75JjBIS+f0PAdQA6NGm6KvTJZMU5RDIZnhw1CwhB/zoU/nfxAVC65ozID2Lt/Jptc
+ cmumBvxilADhY+so/YapCrU4EWxBoYKtdOHzh30f4Kr36VNkHs2ZOYwR3qKPsAoeGmji
+ fCjqTkVoMFaqO7PK5yIcRSVhUJRCku/C6KmUI+fWtSpL6idk6z2Ih/Msrkovxf3iZZiA
+ HMow==
+X-Gm-Message-State: AFuF++kgardlkRAwB6n8AIkCensKEDutvzRFnFlEpAsLL83S2csB02ld
+ rvwOFVHzpxX8d7cNScOORIo3TdqqC1783zlhNDi1YQQ7iZG1Bz+gXws+zk8/hHj43Y940VqN3AA
+ 2SC8ODiRkWm3oMKZgsi4bVoVAxeFdDARY9ZLOEKX8wOmrsXEqaEH3qlMOKw==
+X-Gm-Gg: AR+sD13bSmbhjdvnmqoT5PZ+qDV/J1pq9CZjHPhWXQ0rp+pZ7VgoG8OSQNLabIi2bHC
+ PPmTQz2xBv17JVbEu+tRtFIBDWH0GvtkUiuXIardj/2Q0TMmE6imIP8zMiOqkEYuYoeQK7C0Ckj
+ JN2UiMisQdMU/Mi7Uu1cIvCPS1ByXf851jH7jBDvQctF7K70rLkwq/8+mAM+Cb/NyYXe0Mpn+Y5
+ 4xIv6cQoPEQttNqR1wqRJU9Os5D7HAW/zN+cymZXoFOfgcsru+fluZ+b2LgtE64Ssq/zErMT7zG
+ wX3n8rqioz5U7f5NHSL1jUAklUeS6Qkt004jl7x2SfjpQLkuCjLXBpM3yl5zNVYcBZUNPOol9UX
+ EUgMgzMUQaUxmFF8VA0zphHgtKqZcyMpqMJNK7Oj9peyTRHDQtJqJk1L4/7UanXOp80z9
+X-Received: by 2002:a17:903:94c:b0:2c0:d94f:50c7 with SMTP id
+ d9443c01a7336-2d61a0c9415mr204627705ad.7.1787330884786; 
+ Fri, 21 Aug 2026 09:48:04 -0700 (PDT)
+X-Received: by 2002:a17:903:94c:b0:2c0:d94f:50c7 with SMTP id
+ d9443c01a7336-2d61a0c9415mr204627035ad.7.1787330884321; 
+ Fri, 21 Aug 2026 09:48:04 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-327c3fc6675sm41208898eec.13.2026.08.21.09.48.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 21 Aug 2026 09:48:03 -0700 (PDT)
+Message-ID: <258d24cd-309d-4f15-bd91-20e549fcb08a@oss.qualcomm.com>
+Date: Fri, 21 Aug 2026 09:48:04 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 13/43] target/arm: Fix SVE2 WHILEWR/WHILERW zero diff
- boundary case
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-References: <20260821110101.3971391-1-peter.maydell@linaro.org>
- <20260821110101.3971391-14-peter.maydell@linaro.org>
-Content-Language: en-US, ru-RU
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- QEMU Stable <qemu-stable@nongnu.org>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260821110101.3971391-14-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Subject: Re: [PATCH v7 033/104] tests/tcg/Makefile: skip user/system tests if
+ target Makefile is not present
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Aniket Sahu <asahu1x@linux.ibm.com>
+References: <20260818192309.22169-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260818192309.22169-34-pierrick.bouvier@oss.qualcomm.com>
+ <87y0e2p4hy.fsf@draig.linaro.org>
+ <397f9e15-8be5-4e7d-8f5d-0eb686283154@oss.qualcomm.com>
+ <87ecfsppz4.fsf@draig.linaro.org>
+ <a5860c50-9839-4b46-8b36-0e4f4ea3c130@oss.qualcomm.com>
+ <8733w7q2om.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <8733w7q2om.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIxMDEzMiBTYWx0ZWRfXz7UgIAZIWwMo
+ K7kcKH0rcWVwPDirkdNZv2zYc9LKEX0WA2Cg2FP8dtqScGPX0E0DPoPSWP0t9j8QMyp8ViKvQB0
+ QMIxHhm4Erw6IEraAppsv1hOtEITt8llyD1jNOqs9+me6/x64sQMVChzVBIVmqhN1e4+veE/GOa
+ vtv1qLpOnodmwRLqOQNfVbekZM8v+1XbYlkC5T2SpyokOmvEcqbe5M+jImMdc51aZlG+F5+dMZ3
+ AZhPHublUVwCrAys08V1agyuwLREQ3+1vgQqJc7znl+UGYpcr03/12uRwyKHo9UJldcDN66vHYm
+ L/tjhvBj7fyEnqYrC0gMj1USedoTpoDWJ/bdS+osGj+v0DY7sRkYZksCLvbIOhgIRzYm94jka1S
+ owMhqcZBVL4DvJkoWhSMQJcCN44sFV6gogfLv2iITmbB29l4cKrBC+icTf6CwT54N9un1ULLcTM
+ I/4MnusIv7J5pZ1kNWQ==
+X-Proofpoint-ORIG-GUID: nZ66fi8WrDr1QCrz3UiOp0PjA5VoxPAC
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIxMDEzMiBTYWx0ZWRfXzDMdF9L/AT5Q
+ /iFv2OSpfBTniB6WwIIul50pR3s6HNOzGY/k8ySs94prSb3SBDImsP3aeuwSMSj4liduM+6ZnCH
+ UdZu6OKaizpEumrPFTGQCYEjT/SnUio=
+X-Authority-Analysis: v=2.4 cv=Av/eGu9P c=1 sm=1 tr=0 ts=6a888145 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=VnNF1IyMAAAA:8 a=KKAkSRfTAAAA:8 a=kfuGkC_R5-TUWadlOwgA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: nZ66fi8WrDr1QCrz3UiOp0PjA5VoxPAC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-21_05,2026-08-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
+ clxscore=1015 bulkscore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608210132
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,185 +168,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/21/26 14:00, Peter Maydell wrote:
-> From: Richard Henderson <richard.henderson@linaro.org>
+On 8/21/2026 1:48 AM, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 > 
-> The trans_WHILE_ptr function incorrectly handles the case where the
-> address difference divided by ESIZE results in zero. This happens when
-> the address difference is less than ESIZE but greater than zero.
+>> On 8/20/2026 12:10 PM, Alex Bennée wrote:
+>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>
+>>>> On 8/19/2026 7:30 AM, Alex Bennée wrote:
+>>>>> Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+>>>>>
+>>>>>> In the next commits, we'll port each architecture from Makefile to
+>>>>>> meson, and it's easier to review those changes if we remove Makefiles
+>>>>>> step by step.
+>>>>>>
+>>>>>> Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
+>>>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>>>>
+>>>>> Acked-by: Alex Bennée <alex.bennee@linaro.org>
+>>>>>
+>>>>
+>>>> It seems like you are the official maintainer for
+>>>> tests/tcg/Makefile.target, thus I'm not sure what is the Acked-by
+>>>> semantic for a component you "own".
+>>>
+>>> It means go ahead, I've acknowledged I've seen it although not looked
+>>> too closely. Generally when a maintainer acks something they trust the
+>>> poster taking it forward via their tree/pr.
+>>>
+>>
+>> That's why I'm confused. In this case, I expect you will be the one
+>> sending PR for current series, as you maintain tcg tests in general. It
+>> can't be me, the poster, as I don't have any authority on this
+>> subsystem.
 > 
-> Fix by dropping direct comparisons of op0 vs op1, and instead
-> testing the scaled diff vs 0.  Merge with the bounding to the
-> maximum vector length via wrapping arithmetic.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 14f6dad168e ("target/arm: Implement SVE2 WHILERW, WHILEWR")
-> Reported-by: YanjunYang <yang.yanjun1@sanechips.com.cn>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> Message-id: 20260811191540.79882-3-richard.henderson@linaro.org
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/arm/tcg/translate-sve.c | 38 +++++++++++++++++++++-------------
->   1 file changed, 24 insertions(+), 14 deletions(-)
-> 
-> diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-> index fc4cc8c479f..0becef16a94 100644
-> --- a/target/arm/tcg/translate-sve.c
-> +++ b/target/arm/tcg/translate-sve.c
-> @@ -3697,7 +3697,7 @@ TRANS_FEAT(WHILE_gt_cnt4, aa64_sme2_or_sve2p1, do_WHILE,
->   
->   static bool trans_WHILE_ptr(DisasContext *s, arg_WHILE_ptr *a)
->   {
-> -    TCGv_i64 op0, op1, diff, t1, tmax;
-> +    TCGv_i64 op0, op1, diff, t1;
->       TCGv_i32 t2;
->       TCGv_ptr ptr;
->       unsigned vsz = vec_full_reg_size(s);
-> @@ -3713,7 +3713,6 @@ static bool trans_WHILE_ptr(DisasContext *s, arg_WHILE_ptr *a)
->       op0 = read_cpu_reg(s, a->rn, 1);
->       op1 = read_cpu_reg(s, a->rm, 1);
->   
-> -    tmax = tcg_constant_i64(vsz >> a->esz);
->       diff = tcg_temp_new_i64();
->   
->       if (a->rw) {
-> @@ -3723,25 +3722,36 @@ static bool trans_WHILE_ptr(DisasContext *s, arg_WHILE_ptr *a)
->           tcg_gen_sub_i64(diff, op0, op1);
->           tcg_gen_sub_i64(t1, op1, op0);
->           tcg_gen_movcond_i64(TCG_COND_GEU, diff, op0, op1, diff, t1);
-> -        /* Divide, rounding down, by ESIZE.  */
-> -        tcg_gen_shri_i64(diff, diff, a->esz);
-> -        /* If op1 == op0, diff == 0, and the condition is always true. */
-> -        tcg_gen_movcond_i64(TCG_COND_EQ, diff, op0, op1, tmax, diff);
->       } else {
->           /* WHILEWR */
-> -        tcg_gen_sub_i64(diff, op1, op0);
-> -        /* Divide, rounding down, by ESIZE.  */
-> -        tcg_gen_shri_i64(diff, diff, a->esz);
-> -        /* If op0 >= op1, diff <= 0, the condition is always true. */
-> -        tcg_gen_movcond_i64(TCG_COND_GEU, diff, op0, op1, tmax, diff);
-> +        /* Saturating subtraction maps diff <= 0 to diff == 0. */
-> +        tcg_gen_ussub_i64(diff, op1, op0);
->       }
->   
-> -    /* Bound to the maximum.  */
-> -    tcg_gen_umin_i64(diff, diff, tmax);
-> +    /* Divide, rounding down, by ESIZE.  */
-> +    tcg_gen_shri_i64(diff, diff, a->esz);
+> I was under the impression with the rewrite you were going to be the
+> maintainer going forward anyway so I don't see an issue with you sending
+> the PR.
+>
 
-While picking this one up for 10.0.x stable series, I come across an
-interesting case.  This very code were changed in v10.0.0-1961-gf96fd13c6ea0
-("target/arm: Move scale by esz into helper_sve_while*"), and is now being
-dropped entirely.
+You suggested it indeed, I'll add a patch for next version to add myself
+under your name.
 
-The back-port of this patch to 10.0.x is below, and is also available at
-https://gitlab.com/mjt0k/qemu/-/commit/f25f16d5c5d364306ee88438704a9054855c12b0
-(staging-10.0 branch).  It should be okay, but I appreciate an additional
-look there, just in case :)
+>> This series will have to go at once, we can't delegate all architectures
+>> bits to sub maintainers.
+>>
+>>> Given its a temp patch for the migration I don't think you need worry
+>>> about having more review on it.
+>>>
+>>
+>> In my mind, it was expected (ideally) to have a reviewed-by on all
+>> patches before they can be taken to a PR.
+> 
+> I think we are almost there. I'm just looking at the prot-none
+> workarounds at the moment. Have all the architectures been acked or
+> reviewed by their various owners?
+>
 
-(Yes, I picked up the testcase too, and it passes).
+As mentioned on a previous version, my plan is to get all the
+infrastructure code (+ multiarch part) reviewed first, to make sure
+there are no last minute expected changes, which is why I insist on
+asking you to review for a few weeks now.
+
+Then I'll ping all the arch maintainers to ask them to review their part.
+
+Meanwhile, you, Peter, or Richard, could also help on aarch64 and arm to
+save some time also. It should take only a few minutes to review those ones.
 
 Thanks,
-
-/mjt
-
-commit f25f16d5c5d364306ee88438704a9054855c12b0
-Author: Richard Henderson <richard.henderson@linaro.org>
-Date:   Tue Aug 11 12:15:39 2026 -0700
-
-     target/arm: Fix SVE2 WHILEWR/WHILERW zero diff boundary case
-
-     The trans_WHILE_ptr function incorrectly handles the case where the
-     address difference divided by ESIZE results in zero. This happens when
-     the address difference is less than ESIZE but greater than zero.
-
-     Fix by dropping direct comparisons of op0 vs op1, and instead
-     testing the scaled diff vs 0.  Merge with the bounding to the
-     maximum vector length via wrapping arithmetic.
-
-     Cc: qemu-stable@nongnu.org
-     Fixes: 14f6dad168e ("target/arm: Implement SVE2 WHILERW, WHILEWR")
-     Reported-by: YanjunYang <yang.yanjun1@sanechips.com.cn>
-     Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-     Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-     Message-id: 20260811191540.79882-3-richard.henderson@linaro.org
-     Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-     (cherry picked from commit bab972a2b0e34b889fbe8deb1e41cbea47e797f2)
-     (Mjt: back-port to 10.0.x across missing v10.0.0-1961-gf96fd13c6ea0
-      "target/arm: Move scale by esz into helper_sve_while*")
-     Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 1d5b06e3917..e7d1f8d5b12 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -3218,7 +3218,7 @@ static bool trans_WHILE(DisasContext *s, arg_WHILE *a)
-
-  static bool trans_WHILE_ptr(DisasContext *s, arg_WHILE_ptr *a)
-  {
--    TCGv_i64 op0, op1, diff, t1, tmax;
-+    TCGv_i64 op0, op1, diff, t1;
-      TCGv_i32 t2;
-      TCGv_ptr ptr;
-      unsigned vsz = vec_full_reg_size(s);
-@@ -3234,7 +3234,6 @@ static bool trans_WHILE_ptr(DisasContext *s, arg_WHILE_ptr *a)
-      op0 = read_cpu_reg(s, a->rn, 1);
-      op1 = read_cpu_reg(s, a->rm, 1);
-
--    tmax = tcg_constant_i64(vsz);
-      diff = tcg_temp_new_i64();
-
-      if (a->rw) {
-@@ -3244,25 +3243,36 @@ static bool trans_WHILE_ptr(DisasContext *s, arg_WHILE_ptr *a)
-          tcg_gen_sub_i64(diff, op0, op1);
-          tcg_gen_sub_i64(t1, op1, op0);
-          tcg_gen_movcond_i64(TCG_COND_GEU, diff, op0, op1, diff, t1);
--        /* Round down to a multiple of ESIZE.  */
--        tcg_gen_andi_i64(diff, diff, -1 << a->esz);
--        /* If op1 == op0, diff == 0, and the condition is always true. */
--        tcg_gen_movcond_i64(TCG_COND_EQ, diff, op0, op1, tmax, diff);
-      } else {
-          /* WHILEWR */
--        tcg_gen_sub_i64(diff, op1, op0);
--        /* Round down to a multiple of ESIZE.  */
--        tcg_gen_andi_i64(diff, diff, -1 << a->esz);
--        /* If op0 >= op1, diff <= 0, the condition is always true. */
--        tcg_gen_movcond_i64(TCG_COND_GEU, diff, op0, op1, tmax, diff);
-+        /* Saturating subtraction maps diff <= 0 to diff == 0. */
-+        tcg_gen_ussub_i64(diff, op1, op0);
-      }
-
--    /* Bound to the maximum.  */
--    tcg_gen_umin_i64(diff, diff, tmax);
-+    /* Divide, rounding down, by ESIZE.  */
-+    tcg_gen_shri_i64(diff, diff, a->esz);
-
--    /* Since we're bounded, pass as a 32-bit type.  */
-+    /*
-+     * If diff == 0, the condition is always true.  Also, bound to max.
-+     * Simplify
-+     *    diff = diff ? diff : max;
-+     *    diff = umin(diff, max);
-+     * via
-+     *    diff -= 1;
-+     *    diff = umin(diff, max - 1);
-+     *    diff += 1;
-+     * via 0 - 1 == UINT64_MAX.
-+     */
-+    tcg_gen_addi_i64(diff, diff, -1);
-+    tcg_gen_umin_i64(diff, diff, tcg_constant_i64((vsz >> a->esz) - 1));
-+
-+    /*
-+     * Since we're bounded, pass as a 32-bit type.
-+     * Sink the diff += 1 from above into the 32-bit type.
-+     */
-      t2 = tcg_temp_new_i32();
-      tcg_gen_extrl_i64_i32(t2, diff);
-+    tcg_gen_addi_i32(t2, t2, 1);
-
-      desc = FIELD_DP32(desc, PREDDESC, OPRSZ, vsz / 8);
-      desc = FIELD_DP32(desc, PREDDESC, ESZ, a->esz);
-
-
+Pierrick
 
