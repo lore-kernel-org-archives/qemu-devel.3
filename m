@@ -4,94 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED0C3C5DF87
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 12:36:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B7E2C5DF87
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 13:12:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxOTG-0003Xs-7N; Fri, 21 Aug 2026 08:35:42 -0400
+	id 1wxP2e-000616-PQ; Fri, 21 Aug 2026 09:12:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wxOTC-0003XJ-Om
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 08:35:38 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wxP2d-00060v-Mg
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 09:12:15 -0400
+Received: from sonic302-21.consmr.mail.gq1.yahoo.com ([98.137.68.147])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wxOTA-00057v-Qj
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 08:35:38 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-47de008b020so497619f8f.1
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 05:35:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787315734; x=1787920534; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=IbJh2QSZ66GmvEyNk343YZCOFdbHwmsXMFl+nOfZwNk=;
- b=HfluvWxgqeYbWrmhBwTLCHqR4uy5XOw6CXS82Osiqp9KgTHbJys+iJUlGWPuRIEi4R
- e9/2i02iTH/CQCDq90G49VtRLndorIzzMIouhuzUSaLx28mQLzcEWjCqg0fZk3HOZzI7
- Wg3tFpwsCKrwX6a0ezC73KYhj0h00jk3C8FOYj5hReyGYKGpHE+dcvGlUWn3DP6YOG+K
- XllvSn/Rw9M+qKQ8SdBT8DP2bXjlfWoH1PNnUNBLhNdhvhsvSqXKXisMtjQPemwg9MqJ
- 6XCbU23A3APdJ0bsMeqqd0p0pp9ZY2HfFJnTOZyN+/5A845UtKNulvpR/wwXMbsYIYgv
- VmaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787315734; x=1787920534;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=IbJh2QSZ66GmvEyNk343YZCOFdbHwmsXMFl+nOfZwNk=;
- b=BE0Z6DGSydivrtPGjJpMCbWbhpj4F26Wo0u/nF+OO2qx6WkyXPnxqXnrnA1WXoHaAK
- fO1hfR9hpyLKtQHj4L+wboDnTuoDfGRiwu5u+VYlTbIWTU6Ncwayi7+WYnQ259L/1nLw
- 7npxcR1vB6eKXh5I/jgHcKg56iQNfVTbacZah4S5dJqWTOn6L/t11tQGll+RaKu1r1iU
- af6HjVnf6OVvVvbOpXnVGNeCOz4+tdAf6TBjCrPIUkfi7IpJittbctk4xxVnzkZTDQlk
- nHkV/koDtCoxMapTEHewSLgB3fHQGMWNcSiCvKKjAZYElbz4atL9QU5Qh/l5XP9EZgRq
- SHkA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoTpg16wUIf6IXScLnTQw3B3AmMe8qwT5M1PpbjOFArSuULkyIvzp5DVz0gxt/HeCgWTH655Pdjw0Zv@nongnu.org
-X-Gm-Message-State: AFuF++nanQhqKPEhoU/frL6ukaxO3qBa4cd8HE94Xko1PidzMmGp8cQo
- /KBDnKvz6NJ7y41L4ZiFuBDAs0YRxGXvuSOD/p1XmCIvwX/7YgXnUyWllOZ99vWAufA=
-X-Gm-Gg: AR+sD13gYcVTS4nYyHm377ucuiQWHYnYDMvLEy2V6/0FW2+KF6MGEnk5MrSYOp4KDSS
- DVSRf9Ulc1KFSXEjtdW95gkfgiluR1NIDCO7lwfQ85wWgqpcdxdiscom9e9WQnWE4htm7eKeiMD
- a3uzlLImPeDtc2RsCN25PkyMoslNR26+ITeVJQKsUFHuJ8E4e21hM5zaOUh2+v1CxZCBh8ajGlD
- 51/8O4qQQmKx0NnlKCv5t1iRvSLLdXuYvdTTN1W6Bj0BDUjInwqbCvcmYWQxbrkQDEFr64lb9S2
- 7uHTgcPD81eELyekbkibux4yEjoCxWws0UnTwYS/bEcKwkr3THhjb5WZurIxEh41vFAtbalotFk
- I6XK9VbuD9JtdmZu2U+2WwgK7z/9pvQqlKer6/BDMaUwTCKo66R+30TXu4zppwZM+LDSg++Nqp7
- QfNK2Wd88qM1bp4UJOpVfGt4nfNQAAAcvWfemtafaVjLqdH/9R6aKH9vStb/fqg2w=
-X-Received: by 2002:a05:6000:250f:b0:47f:8cd3:4bed with SMTP id
- ffacd0b85a97d-482c104d89amr6864367f8f.5.1787315734335; 
- Fri, 21 Aug 2026 05:35:34 -0700 (PDT)
-Received: from linaro.org ([2a10:d582:31e:0:fa47:b339:78a1:d4c6])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482b14b80a5sm17559328f8f.24.2026.08.21.05.35.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 05:35:33 -0700 (PDT)
-Date: Fri, 21 Aug 2026 13:35:32 +0100
-From: Jim MacArthur <jim.macarthur@linaro.org>
-To: Tao Tang <tangtao1634@phytium.com.cn>
-Cc: Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
- Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>
-Subject: Re: [RFC v5 04/28] hw/arm/smmuv3: Track SEC_SID in configs and events
-Message-ID: <aohGFNEatt53f0Bw@linaro.org>
-References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162410.2805113-4-tangtao1634@phytium.com.cn>
+ (Exim 4.90_1) (envelope-from <brchuckz@aol.com>) id 1wxP2b-00040Z-NN
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 09:12:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aol.com; s=a2048;
+ t=1787317929; bh=5zVYd1XG2alULCFSufa2I5v6mNIHhhyo27EKgEpsIMs=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From:Subject:Reply-To;
+ b=D4yB+rRQni0q1CvKdI5RbLiG5JiRHSg6tH38U/lEhlp0kxgtcmAefoweXoxysRFocIT/hF7MPgp12TtYEL7j94ocjsr9xz/d23BSp0LCRCqcGRaQgo4n11rvji3Wk7BmETNCqQWlF3PNlsmjjs2VZuttB/i0dn7ZQBB79XPsgfUQ+E1UA7qfL/c+jxpUQwKhCuSH2rE3QADgAoarCnMWDhxj2PFEk+G9T97CpuKAcu5psWJmRP+vnf8iGafTEB4mEsdkDALRCZLZIO3V7Mpjig1K5O/3lX8cccPhnwS6tiLSCC+vcBn7nONlPziBtRi6CcEs95hUr38VZnNtBYSLsw==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
+ t=1787317929; bh=sB5lDNfJerqyBHBh0LK6YLb0P4q43K0eOVdEd/EhEyL=;
+ h=X-Sonic-MF:Date:Subject:To:From:From:Subject;
+ b=J1rsFamuBdhDgqC5KOZ2+dz7lpeVl8ltHjDiUD2EgOPZisKwM6YHHslJTKzOSIPstMDccdm+jju6U/3iUXJsuzhS4+n5QbcYjtZtYPJpg0WVash8nVW1subkSGBn/mCqK4Hidki7r34nG3N7cXSN7S6W7pxKRGddLXXUJLuKmLaE4DaXIJEJKfP/xkePBYG9T5bO3PW28kzxtOyTCdANMQQuJIn4L2ZNRqjH3q8Pw7+xalcvfXhnlcfrjTI1gk9+vk3ezt/Oxhq/Ou+vAAiWeZ5wQ7n3hRDO25pQcO5ZBK7gXtjMgum9KXluVHMT06kTkwgQRz97GPuAwuFydqWBNA==
+X-YMail-OSG: 8VWMebkVM1kbktK5MBYZ5yNojDJ_0o4ar9Ck8xZh7LK_MQ38mYB1XlTclm6EdLm
+ IKctxdjrDTQkT39m.niTrAv461Q2kAy.jc_n8LAJWQbrIXOmBUSZQ5Hd7lyTdfFTG_5oWgc.maao
+ sqP0mg6BeqYR7Nsi6PPeubCKk6e.RV4ZKGCMhMU3StzF7nnpStJBPjj8TTtbhTS_Fdn8fi.roZOo
+ 7mZxLk.rXayh_mZioN3hA1_ctvijaqV9CETOZFRE1yzo2qSq8948XG1J1shbt4.TNFnqmUQMjgUb
+ NJ1qdjS5bM3dAKZf7AT_nF9OmgSw7ye1KbC0DCtSmUxgSmWYIpo34AUIIfLRyvk1_0O0HMJnAqLY
+ 9Jdu1KU12SEq9HCPyqBhtQYa.qOI4YGZhZkiS6iONCLUhkbopSfwDriUS1qfp9LpDowT5MLk4Hlv
+ b933D_BZ.dugMBPokxm5yzNsPYIvwJ0OVAOn5Vtg5TRz3M5OtDI2nYEwrBTQLJ6fcGiy.32ucTyn
+ KRmrN8PTuQiO1UQJFwddsKqTgtWuglOJzlzVBCW2RJ3Zvd4EiIyB5a4_F.iRz1oAStl9E1_V.Z9A
+ p2fEbELvyCC0QjyM5Vtl0BFMI_3AnFj6nfeb_QXY5e9QEUrP7U_4uX_O.HOqPTyXVXqPdYyUybtZ
+ 97YIj.Rb7WwkBss0DmNRebwjvSJqXWKDQfVfwduwmx5jVFx13CWv_g4tKVUaDFEQglYFEyKPTKy2
+ 6LZ7hjLcgPbbjHXNhfMyXfVf6JW3UuWOI2f7HvEQbAkfJ2eSHFFEhPAmrHxs.M7A3aYxGWGv_vCK
+ j4CX8HEEC7YRRnZXDcnHjfIYsCJWZyz_8gjmmZHZjVRXEqClkSobOI6zlZv9kCEV83TtcdHOgD9w
+ pRlis9SqokoGiWRu2fAfcfDcZ08Ia7et6_uPTzkNxIbuNig7o24THtbRLpAmYtPhuQpl3uWDp6j2
+ KC_gOlNzkPfToidVY0RbMxYaE666yPf9.IoMexIguIpkjkKXfTFnuDxxFb.thaEG6rxcChRRDiAj
+ rtJIl2uKSealiTjxMP3EjSvW7HBzQpqG0mw9GjbG_EZp7G9ahOHKelmYjtflRYvIFKeQlR5k60eZ
+ _WMloQMa1zHpJXkITjrwBnHqGzi_ryc0hcysfBUSY26qGhHgAanqBCopgRGObhkHGuzY9_2anaaz
+ qFrx0O2fksuHi3exJ5bLJ8hGT8w6h2UjmIm1gmJ6d85DHwYK0DnH7SwF3zx_9rqZCUwfjxRtNMl4
+ NRjpuYTh700oRO3J.2Lmgz6viuKQKZ846c7d0h_93wmMi7K28RlSQNb0NZIbvWOlT7WfO2QWQ2r.
+ 9y6V93_t4fYaIYbHnCHiU0QoGk0IJQnrkUIjJudnXOXjuoTejyU_aBTDSpBlP7ii8gDXm7oVp8bu
+ JS642ZGu8kKZrxOHcwCuPYPZvmtWN5z.EPnm7v2vW_KVNfOYDtMjbL4CsWnBLk_I.93bGFk5zmSE
+ mF3IGOGHt7cU_0N41LUlAr2SQqphMr.gXeaqsc1jZAH.fs5aWQbj4rcBIC5yfLFLXbHhSZshk0lU
+ KOpIAXWfes4NUjEBAOmCN7MKIbMoT.W1i93FPL44kDY0LlCzNRuseTB_lNjqN0aJgNjKkEXsfe3u
+ U.rYpCVdWljIsxyWCTGgLlUkDWBrjvMNHYprpdgvkMoVvbvAk13.MYhUnaOoekjnXMxrpobKpfqn
+ lgBjFziF947cBnNlQzHAXZfBbkMu0x9RIcMUvE8k0.56J0QiBAykGza0GCrB4611.EjVA5KA9bCf
+ Hkc.woZnLHjMJ5Xl0KeVuFxD0V5c5PMXneZNPoDFyUuxt7jv5ltXIkcDGwlhvqv__SIOWBRM5CMX
+ 3nVNWgo5HxvkwrjIQ9pDWXtZZ3pD25EgKdwK6wtI0W7YtJhkOGUysWTWX3RvdRSz3CuQuDG48ex5
+ AgQSlHR__QptP4HoTy1CCLT2KJnHZwef9YGDMF9AkKJVUzZU5Ap5S4ZFf8Yvs54B3ZCMiIviOJLV
+ 5SmyoOU7WP5tpoUS0PSINRmRJ6ZwIwQsG8bd.22JLdGDMUk41my5fbyprYeNIJ2C6XHzBieADxuJ
+ istIyW1ru9p3k.b9Jy6c3_UC.r9bpHI03dcKkB8PxR3QKRSZtdElWHDGI2PPewOURY5hYnUQjLxj
+ isPJZTsGTs7BEGZuHiwfiuz9HLjgsCBJPdXuhd8OOV5ksDlxpjTl2KFRX8WOV8SafZatqK9I1rEd
+ vOZ9AkSW1qgSdzleLEP3U8trYIUOu4jHHExlQoagYqvcXxw--
+X-Sonic-MF: <brchuckz@aol.com>
+X-Sonic-ID: 5c5ac2a8-00ef-4873-a97d-076503ba1328
+Received: from sonic.gate.mail.ne1.yahoo.com by
+ sonic302.consmr.mail.gq1.yahoo.com with HTTP; Fri, 21 Aug 2026 13:12:09 +0000
+Received: by hermes--production-bf1-54b5569bdc-7hp85 (Yahoo Inc. Hermes SMTP
+ Server) with ESMTPA ID be8bd0e2097ea023fd1597134141cdef; 
+ Fri, 21 Aug 2026 13:12:07 +0000 (UTC)
+Message-ID: <24008713-2516-4a26-ab37-acdfc174a5bd@aol.com>
+Date: Fri, 21 Aug 2026 09:12:05 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260813162410.2805113-4-tangtao1634@phytium.com.cn>
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x431.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
+ support
+To: Jan Beulich <jbeulich@suse.com>
+Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
+ Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
+ xen-devel <xen-devel@lists.xenproject.org>
+References: <20260802050824.10554-1-brchuckz.ref@aol.com>
+ <02a7dc18-4184-4e86-84cb-121769187f71@suse.com>
+ <1858e8e6-73fa-4017-93e2-c733fbf0ec8d@aol.com>
+ <d6e603bf-8dc5-4ac7-842f-ff9d1f67b98f@suse.com>
+ <fdec0b6b-eddf-4a36-a755-c67963daa9ea@aol.com>
+ <6ecf80ef-2f0e-44fb-beab-dbcf065a4431@suse.com>
+ <bb44067c-6739-4e83-a0fd-cc7ea797048f@aol.com>
+ <4c58bda6-e9ed-438d-b96e-feda74a6c4c7@suse.com>
+ <31a5870f-2a4d-4dc0-af9c-f0567e0f6fb3@aol.com>
+ <db8fd04d-bbc7-41c7-8473-b821d7f77d5f@aol.com>
+ <302ed12f-40ca-405c-80ca-ac4f2785d754@suse.com>
+ <cdae1785-4d9a-4aab-929e-de55c26b7b94@aol.com>
+ <10cd9f6b-678b-407b-a51e-70e9ed7a35fd@aol.com>
+ <131b1252-b108-4b4c-8457-673ff0d20d5e@suse.com>
+ <b14969c8-9676-404e-b7cc-ce13a6d7ff94@aol.com>
+ <92022f85-9a53-4db8-b489-fc91c86b413c@suse.com>
+ <fa497825-c8f0-4caf-94f5-b37108e31952@aol.com>
+ <42521391-885c-4b96-96e9-5da2e4b5efa1@suse.com>
+ <e86404e8-9966-44ab-86d1-4bd01a551313@aol.com>
+ <069cb01d-47b2-41c5-9956-611b338964e9@suse.com>
+Content-Language: en-US
+From: Chuck Zmudzinski <brchuckz@aol.com>
+In-Reply-To: <069cb01d-47b2-41c5-9956-611b338964e9@suse.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Mailer: WebService/1.1.26254
+ mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.aol
+Received-SPF: pass client-ip=98.137.68.147; envelope-from=brchuckz@aol.com;
+ helo=sonic302-21.consmr.mail.gq1.yahoo.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,27 +126,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 14, 2026 at 12:24:09AM +0800, Tao Tang wrote:
-> Pass the SEC_SID explicitly to smmuv3_decode_config() so configuration
-> decoding can be tied to the correct register bank.
+On 8/21/2026 4:19 AM, Jan Beulich wrote:
+> On 20.08.2026 18:53, Chuck Zmudzinski wrote:
+>> On 8/20/2026 11:17 AM, Jan Beulich wrote:
+>>> On 20.08.2026 13:47, Chuck Zmudzinski wrote:
+>>>> On 8/20/2026 3:51 AM, Jan Beulich wrote:
+>>>>> On 19.08.2026 19:13, Chuck Zmudzinski wrote:
+>>>>>> On 8/19/2026 9:51 AM, Jan Beulich wrote:
+>>>>>>> On 19.08.2026 14:36, Chuck Zmudzinski wrote:
+>>>>>>>> On 8/19/2026 8:16 AM, Chuck Zmudzinski wrote:
+>>>>>>>>> Yes, I agree that v3 of the patch to hvmloader should presume that the DM can get
+>>>>>>>>> a copy of the OpRegion and read its contents so most of this can be done in the
+>>>>>>>>> DM instead of in hvmloader. So from hvmloader's perspective, the patch will be more
+>>>>>>>>> about avoiding the layering violation than anything else.
+>>>>>>>>
+>>>>>>>> However, there is one advantage, from the viewpoint of the Xen virtualization platform
+>>>>>>>> as a whole, to do the patching of the OpRegion in hvmloader instead of in the DM.
+>>>>>>>>
+>>>>>>>> If we patch the OpRegion in hvmloader as v2 of this patch does, we provide a common
+>>>>>>>> solution for extended VBT support for Intel IGD devices that would be compatible with
+>>>>>>>> all DM implementations, not just with Qemu. So why not do the patching of the OpRegion
+>>>>>>>> in hvmloader?
+>>>>>>>
+>>>>>>> As indicated before: If the OpRegion holds data that is needed to drive the
+>>>>>>> device, and if the OpRegion is exposed writable to guests, then guest can
+>>>>>>> screw up that data such that subsequent guests won't work anymore. Hence
+>>>>>>> exposing to guests (which includes hvmloader) needs to be stopped, or at
+>>>>>>> least be limited to r/o. That, in fact, includes exposing to any privilege-
+>>>>>>> restricted DM as well.
+>>>>>>>
+>>>>>>> Exposing r/o may be entirely okay (i.e. may not be a layering violation),
+>>>>>>> depending how exactly an OpRegion surfaces for a device (on the host). Aiui
+>>>>>>> it's not addressed by any of the BARs, yet it looks like it needs similar
+>>>>>>> treatment.
+>>>>>>
+>>>>>> Yes, the OpRegion is not one of the BARs as specified by the PCI specs, but
+>>>>>> it functions more or less like a BAR region with the devices's ASLS register
+>>>>>> at offset 0xfc in the PCI device config space of the device acting like the
+>>>>>> BAR for that region.
+>>>>>
+>>>>> That is, on real hardware a write to that register moves the OpRegion? That
+>>>>> would need following by the DM then, i.e. the DM would need to indicate the
+>>>>> original position in the register, and the guest (incl hvmloader) would
+>>>>> then be free to relocate it.
+>>>>
+>>>> Why would that "need following by the DM" when the register in the guest is
+>>>> fully emulated, [1] which means that when the guest (incl hvmloader) writes to the
+>>>> register, the register on the real hardware is not touched, nor is the OpRegion
+>>>> in the host address space moved?
+>>>
+>>> You said it's BAR-like. If the guest writes to a BAR, the referenced MMIO
+>>> region moves accordingly.
+>> 
+>> It's BAR-like, but it is not actually a BAR (and the OpRegion is not exactly
+>> an MMIO region either (it is actually and ACPI thing), so that is not relevant
+>> to this patch.
+>> 
+>> Also, it is fully emulated so when the guest writes to it, the real register on the
+>> real device is not touched, as I have said multiple times in my responses to your
+>> question.
 > 
-> Plumb the SEC_SID through tracepoints and queue helpers so diagnostics
-> and event logs always show which security interface emitted the record.
-> To support this, the SEC_SID is placed in SMMUEventInfo so the bank is
-> identified as soon as an event record is built.
+> No matter how often you said that, I never put that under question. I was asking
+> about the behavior of writes (where the behavior on bare hardware would need to
+> be reflected in the behavior of the emulated register).
 > 
-> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->  hw/arm/smmuv3-accel.c    |  2 +-
->  hw/arm/smmuv3-internal.h |  3 ++-
->  hw/arm/smmuv3.c          | 26 +++++++++++++++-----------
->  hw/arm/trace-events      |  2 +-
->  include/hw/arm/smmuv3.h  |  1 +
->  5 files changed, 20 insertions(+), 14 deletions(-)
+>>>> Here is how I understand how this works in the current implementation and how
+>>>> this should be done:
+>>>
+>>> I'm sorry, but this is getting out of hand, at least as far as I'm concerned.
+>>> I've been trying to help, but even just reading your replies has already been
+>>> taking way more time than I would have wanted to spend here.
+>> 
+>> Fair enough. Thank you for the time you have spent on this patch, and also thank
+>> you for clearly stating that you don't want to spend any more time on it. So
+>> I consider this patch dead unless and until another maintainer shows some interest
+>> in it.
 > 
+> I didn't say I would not look at future versions of the patch. However, for me
+> to (usefully) do so, things need to be presented in a way that I can understand
+> without knowing all the details of IGD.
 
-Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
+Thanks for clarifying. If I do v3 I will try to present things in a way that clearly
+answers the questions you have raised here about IGD and provide more information
+about IGD than I did in v1/v2 for those who don't know all the details of it.
 
+If I do a v3, you will of course be on the Cc list since I expect you will be one of
+the maintainers of the affected code.
+
+Chuck
 
