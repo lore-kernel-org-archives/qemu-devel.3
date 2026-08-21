@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F029C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:03:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88E95C5DF87
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:03:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxN1G-0000zL-Jp; Fri, 21 Aug 2026 07:02:42 -0400
+	id 1wxN1T-0001rT-Uf; Fri, 21 Aug 2026 07:02:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN18-0000mw-Ac
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:34 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1wxN1D-0000vG-81
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:39 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN16-0007XA-EE
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:34 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4980dc26022so6245265e9.1
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:32 -0700 (PDT)
+ id 1wxN1B-0007YL-Eb
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:38 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4954dff6536so6796105e9.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787310151; x=1787914951; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=s/wyPsdg26Mcr2gBRpwr42/AQikAx4ixxJ47kYT8ulc=;
- b=TMoAWOUenJl6+F+sSkr0y2ykgHPYdaghqCGFtMzkQ51nSbKByaT6IErC7odEreBCPq
- qpu8aiDcgA/6MYaNaY1mSPd2+LaT4DnMKvpj2R7X53eC7Sy+2v84jeD96wyHIPVZlQMP
- TFuj+jeRrwY8EzNW8RNwM6vPQT91Wy8y/CLtbNHkOhJ5TSF023fiqgVNbAsJTQxHgjff
- D6siQhl5EzdJUPZwnipvKQwsn+ZEceA7TzdSVO/HxxBj5s5f8tJBO/AudhhwT2ZBwLCF
- 3CJ7Wz20QSU9CsJsARkOH9QSf9vzQuHsnMeGTmdumB0yWbuVl10488Fp7+N3FTCwakgH
- x9KQ==
+ d=linaro.org; s=google; t=1787310156; x=1787914956; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=Qd+OWW3qU6A06engUu0NRn2PFP6Sh3jtFDKQxp24mZ4=;
+ b=Fp3ATfco0GFmnIr/5bqgXgPmdyLz3HTTs9l98QJXMWpl8aF6uSc7/3QGBVdMgR9vxy
+ Khj0CCdQTc629k7WDs/YihvYMsq4EauvuTBVMlRfgAJfATDzBXMaGushRN8JGDC4GfrJ
+ BinuZbHZWYJaaObmThTxAn4/XtcEoQ8qrgsnsmzb2m7DXlmSd/Km49tT/wK9GRTm6YvG
+ eY/S9r54iSVmxcaiSKyH/FMavHsXdxZe6odnLyyisADNbxmP1psim9IF2ggEzondxJ15
+ bZWLPlnib74Mx4gJCseR+hzj1EGbauejsO4xidxQoFgmLjsUIUbdMbQqv3gvYUgNuZgD
+ 13Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787310151; x=1787914951;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=s/wyPsdg26Mcr2gBRpwr42/AQikAx4ixxJ47kYT8ulc=;
- b=qtHxnZVpaSNis2RtNTkloZ9k2tX246xeXEOrb11l9a6SszAWRYQ+o1yOOctRtOpo/u
- TUdqqD9FehRBsTs7I9J7YSkSxo4uZOuW40n9/QXVqAHJG5MI+zyU8iKf22Tpn2Ewmb1U
- 5goEXDNMO89mMJyQyGm9WQIeoUfJ5Mt4LeWkzaScqAdPeSzNjA9hAhKDLoyldpFvsyLj
- olSD9A+Phd/fVB/N+RmsU81i715FF87UFatdWA/7mrKlmrlY6xO2hRapzf+/clvxyfsP
- Zxm97miw0LAb3xzT+P4gMim0XWIr8c0EavDLcM206uJjiFHZUdViSM1P9c4WO7IJQ/+V
- gkWQ==
-X-Gm-Message-State: AOJu0YwmzLLmVJCt8mpENOSs/Bzw2ueS90nPaI/28AsS1PIE8K3V6Np5
- GxoxJxpQMRLVLls+0evnQXVlW/alwByiCpVFCksCHLtzROfyp/0lLDp1ZGrs7hp7aOoWYWq2r5D
- Iin7x
-X-Gm-Gg: AR+sD11KTbzeBOBq3ERxdPtuG1xJJIv6Y1DMNSICgfIjQLcqaieLhAshajaEf+XJrOP
- Z2Ln+PMHggqmAwo2Ll4FN7TP86a3Gm7vmUzRrtAFNtbWe/pZPgEVQ3ZYMWML7lOVvg7GD7LWJqW
- 4nDTwl2L5iwxQCfdoS/l6E8RdRhAxjRARgORN/BYrpHRPDEO/QkkwUclyOoDxGl4nTnYHiDD8pn
- mJNIlXJCcHDeloVZH4lg/1/GiFCiKntrETVWRc5iMD8cbn8qC13V4Wgo9sop5kyTY7eGl9j0/bZ
- +ccbo/GvmSiVu/TwFcV0Wpsxrp4FeFmuxxymp7XQ7K6Kyynh6B0NPX1eOKjLBmajC0GWinV8kpQ
- 3zi4FLZx1JSJYQyzOtCE3gjTlpVXWv5z+Bp9+e1yE/7hDvoO26Bn50K/C7LEHVV7yupItbiCPSk
- AAk5u00jGIa3kymO2V8mOKAx3fSXTFZkMQ6ol3hyrxNxJ5VfrXodWbbDqv1/tOdjndxhxeU3Qzn
- WcYsyiYXZQCsRb/DyW0Jkk8SPXkUmHWudv6raB0iot+sqHXTeXscc3gn997y9LTl+9t5w==
-X-Received: by 2002:a05:600c:c16f:b0:493:a623:d090 with SMTP id
- 5b1f17b1804b1-499b82e894emr82868985e9.10.1787310150999; 
- Fri, 21 Aug 2026 04:02:30 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787310156; x=1787914956;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=Qd+OWW3qU6A06engUu0NRn2PFP6Sh3jtFDKQxp24mZ4=;
+ b=MvXKEZKvj6EOv3d7dEIboq7UgPBB0Vi7tfF/7PQExjAOwYQ8J1hfpsFWtDHyzvoXyp
+ STWbTUWQnNvoVRkgfqQERo6vmx/LShc01shB+/ohQZXvtkLwG9BDkmrrK/RY6UHHWYlp
+ hrWv/b+EfxzdKTyliSmOLrL0NpNYmfo1+ebyrks8lpNhLhOSiJoiE0WbAF8vmYILjSxt
+ SiQSKi1h095P/qIF1cHBfIWcc5MXLTYEaP/02K51muSTotr+WMHikupUTOCPE31V2ngB
+ Bf2TT+AbpWrPh4R5umW1wH1YAtNcX7d1MyHNloDk5sGtnmwHXCL3HqeJ74D3QC8j39L0
+ k/sQ==
+X-Gm-Message-State: AOJu0YwZvIHqj+UNUTPGXwpoX58zkyP1J8kfZrSCh3LPJPFe2ECsCfmk
+ eLHxat09+C3EY6vUfQeGJXQ6o1rT8P7FSSp0pBi7Vmpqzx5rYWSvy0/cGHQDMhn8Gt1alPS0+dn
+ kFoJt
+X-Gm-Gg: AR+sD13VmvFakgPihNeDRe2sUd2Z6Qew0y9zVv353wkWT7W7LCLxdwb9JVYDgODdfRb
+ rC3mQ88QDZx/cvuiXndHEJR6YhW32bKXWyveY8p2+QZhnANVEVjvxuKHVFErzq9SrM+8jqZeXIY
+ aO8cn3F0zjb1WaRBTXFbLB/uxkNOCvzVTXsKxDXQYfQxK6oD7MpjRwgfwOkM6q5G0rYy79BWInZ
+ Q7cocT1+N0vs+i6+sflkc4/RvzuxY/zAn3GXEgiekvXFxWBXV2u7QUqwsXIgjcVZ2LT8/0YBHZW
+ Zz2cg/NXEwoYigKGOiKgPPwfAMzwefd7N8Ra4XQeIY7yqwD2qBGDNlb7i2kVGT4Rf2j7NEeASyh
+ 2D0S1sNLE/BmTNW2vJdDWk2iAYPHQEiEWscYEI56Lb8fBzhyPRygbiikE/HE4iSk5Mf7eU50/TA
+ c4i5nz+RefLH5In8ZQ6bXGFcGrSRMEk4LaQBlfhnBKsFSN13tzDvQvR+17aYm8OR228cynuyYKV
+ i9OrH+0eW4m631hEbfqLIg1IpRNVyU/nqPAzFC0xWUxNBYeTUjdq/YLuKID06OEkh+Ppg==
+X-Received: by 2002:a05:600c:8b77:b0:499:48bb:417e with SMTP id
+ 5b1f17b1804b1-499b82f4163mr87353215e9.2.1787310155931; 
+ Fri, 21 Aug 2026 04:02:35 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.29
+ 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.35
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 04:02:29 -0700 (PDT)
+ Fri, 21 Aug 2026 04:02:35 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 29/43] hw/arm: exynos4_boards: Store boot info in the board
+Subject: [PULL 34/43] hw/arm: mcimx7d-sabre: Store boot info in the machine
  state
-Date: Fri, 21 Aug 2026 12:00:47 +0100
-Message-ID: <20260821110101.3971391-30-peter.maydell@linaro.org>
+Date: Fri, 21 Aug 2026 12:00:52 +0100
+Message-ID: <20260821110101.3971391-35-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260821110101.3971391-1-peter.maydell@linaro.org>
 References: <20260821110101.3971391-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,10 +106,10 @@ From: Bin Meng <bin.meng@processmission.com>
 
 arm_load_kernel() keeps a pointer to the boot info struct for the
 lifetime of the VM, so the struct logically belongs to the machine
-rather than to a file scoped static object.
+rather than to a function scoped static object.
 
-The Exynos4BoardState struct is already allocated per machine
-instance, so move the boot info there.
+Move it into a new Mcimx7dSabreMachineState and register the machine
+type explicitly instead of through the DEFINE_MACHINE_ARM macro.
 
 As in the xlnx-zcu102 and raspi machines, the boot info belongs to
 the machine rather than to a static object:
@@ -120,79 +118,72 @@ the machine rather than to a static object:
 0f15c6e338 ("hw/arm/raspi: Move arm_boot_info structure to RaspiMachineState")
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260816131300.51799-7-bin.meng@processmission.com
+Message-id: 20260816131300.51799-12-bin.meng@processmission.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/exynos4_boards.c | 26 +++++++++++---------------
- 1 file changed, 11 insertions(+), 15 deletions(-)
+ hw/arm/mcimx7d-sabre.c | 28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/hw/arm/exynos4_boards.c b/hw/arm/exynos4_boards.c
-index 1b8c9b618f8..b7decdb2c7f 100644
---- a/hw/arm/exynos4_boards.c
-+++ b/hw/arm/exynos4_boards.c
-@@ -49,6 +49,7 @@ typedef struct Exynos4BoardState {
-     Exynos4210State soc;
-     MemoryRegion dram0_mem;
-     MemoryRegion dram1_mem;
+diff --git a/hw/arm/mcimx7d-sabre.c b/hw/arm/mcimx7d-sabre.c
+index a0ac647c3df..22fe1fa932f 100644
+--- a/hw/arm/mcimx7d-sabre.c
++++ b/hw/arm/mcimx7d-sabre.c
+@@ -22,9 +22,19 @@
+ #include "qemu/error-report.h"
+ #include "system/qtest.h"
+ 
++#define TYPE_MCIMX7D_SABRE_MACHINE MACHINE_TYPE_NAME("mcimx7d-sabre")
++OBJECT_DECLARE_SIMPLE_TYPE(Mcimx7dSabreMachineState,
++                           MCIMX7D_SABRE_MACHINE)
++
++struct Mcimx7dSabreMachineState {
++    MachineState parent;
++
 +    struct arm_boot_info bootinfo;
- } Exynos4BoardState;
- 
- static int exynos4_board_id[EXYNOS4_NUM_OF_BOARDS] = {
-@@ -66,12 +67,6 @@ static unsigned long exynos4_board_ram_size[EXYNOS4_NUM_OF_BOARDS] = {
-     [EXYNOS4_BOARD_SMDKC210] = 1 * GiB,
- };
- 
--static struct arm_boot_info exynos4_board_binfo = {
--    .loader_start     = EXYNOS4210_BASE_BOOT_ADDR,
--    .smp_loader_start = EXYNOS4210_SMP_BOOT_ADDR,
--    .write_secondary_boot = exynos4210_write_secondary,
--};
--
- static void lan9215_init(uint32_t base, qemu_irq irq)
++};
++
+ static void mcimx7d_sabre_init(MachineState *machine)
  {
-     DeviceState *dev;
-@@ -113,14 +108,15 @@ static Exynos4BoardState *
- exynos4_boards_init_common(MachineState *machine,
-                            Exynos4BoardType board_type)
- {
--    Exynos4BoardState *s = g_new(Exynos4BoardState, 1);
-+    Exynos4BoardState *s = g_new0(Exynos4BoardState, 1);
+-    static struct arm_boot_info boot_info;
++    Mcimx7dSabreMachineState *msms = MCIMX7D_SABRE_MACHINE(machine);
+     FslIMX7State *s;
+     int i;
  
--    exynos4_board_binfo.ram_size = exynos4_board_ram_size[board_type];
--    exynos4_board_binfo.board_id = exynos4_board_id[board_type];
--    exynos4_board_binfo.smp_bootreg_addr =
--            exynos4_board_smp_bootreg_addr[board_type];
--    exynos4_board_binfo.gic_cpu_if_addr =
--            EXYNOS4210_SMP_PRIVATE_BASE_ADDR + 0x100;
-+    s->bootinfo.loader_start = EXYNOS4210_BASE_BOOT_ADDR;
-+    s->bootinfo.smp_loader_start = EXYNOS4210_SMP_BOOT_ADDR;
-+    s->bootinfo.write_secondary_boot = exynos4210_write_secondary;
-+    s->bootinfo.ram_size = exynos4_board_ram_size[board_type];
-+    s->bootinfo.board_id = exynos4_board_id[board_type];
-+    s->bootinfo.smp_bootreg_addr = exynos4_board_smp_bootreg_addr[board_type];
-+    s->bootinfo.gic_cpu_if_addr = EXYNOS4210_SMP_PRIVATE_BASE_ADDR + 0x100;
+@@ -34,12 +44,10 @@ static void mcimx7d_sabre_init(MachineState *machine)
+         exit(1);
+     }
  
-     exynos4_boards_init_ram(s, get_system_memory(),
-                             exynos4_board_ram_size[board_type]);
-@@ -137,7 +133,7 @@ static void nuri_init(MachineState *machine)
-     Exynos4BoardState *s = exynos4_boards_init_common(machine,
-                                                       EXYNOS4_BOARD_NURI);
+-    boot_info = (struct arm_boot_info) {
+-        .loader_start = FSL_IMX7_MMDC_ADDR,
+-        .board_id = -1,
+-        .ram_size = machine->ram_size,
+-        .psci_conduit = QEMU_PSCI_CONDUIT_SMC,
+-    };
++    msms->bootinfo.loader_start = FSL_IMX7_MMDC_ADDR;
++    msms->bootinfo.board_id = -1;
++    msms->bootinfo.ram_size = machine->ram_size;
++    msms->bootinfo.psci_conduit = QEMU_PSCI_CONDUIT_SMC;
  
--    arm_load_kernel(s->soc.cpu[0], machine, &exynos4_board_binfo);
-+    arm_load_kernel(s->soc.cpu[0], machine, &s->bootinfo);
+     s = FSL_IMX7(object_new(TYPE_FSL_IMX7));
+     object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
+@@ -65,7 +73,7 @@ static void mcimx7d_sabre_init(MachineState *machine)
+     }
+ 
+     if (!qtest_enabled()) {
+-        arm_load_kernel(&s->cpu[0], machine, &boot_info);
++        arm_load_kernel(&s->cpu[0], machine, &msms->bootinfo);
+     }
  }
  
- static void smdkc210_init(MachineState *machine)
-@@ -147,7 +143,7 @@ static void smdkc210_init(MachineState *machine)
- 
-     lan9215_init(SMDK_LAN9118_BASE_ADDR,
-             qemu_irq_invert(s->soc.irq_table[exynos4210_get_irq(37, 1)]));
--    arm_load_kernel(s->soc.cpu[0], machine, &exynos4_board_binfo);
-+    arm_load_kernel(s->soc.cpu[0], machine, &s->bootinfo);
+@@ -78,4 +86,6 @@ static void mcimx7d_sabre_machine_init(MachineClass *mc)
+     mc->auto_create_sdcard = true;
  }
  
- static const char * const valid_cpu_types[] = {
+-DEFINE_MACHINE_ARM("mcimx7d-sabre", mcimx7d_sabre_machine_init)
++DEFINE_MACHINE_EXTENDED("mcimx7d-sabre", MACHINE, Mcimx7dSabreMachineState,
++                        mcimx7d_sabre_machine_init, false,
++                        arm_machine_interfaces)
 -- 
 2.43.0
 
