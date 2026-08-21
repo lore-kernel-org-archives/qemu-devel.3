@@ -4,114 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C35FC5DF87
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 09:24:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD6BFC5DF87
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 09:47:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxLTf-0005O0-GP; Fri, 21 Aug 2026 05:23:55 -0400
+	id 1wxLpj-0000xq-BM; Fri, 21 Aug 2026 05:46:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxLTd-0005Ne-MM
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 05:23:53 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxLTc-0003OB-6N
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 05:23:53 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-66c4e9769bdso906074d50.0
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 02:23:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787304230; cv=none;
- d=google.com; s=arc-20260327;
- b=BU99Cb0AY9YzDm90fK9SB8fbjl2HhfXbzvtXU9VHD5cC37Pgul0jmmH6bwqcJBSuEa
- HKJfJhrg31D6gwx/tb0iSk0xNGF5pLSwooIObLKkYjcEjgCC/7TNHrHje9tPxVQJeDOM
- MkUyxkMPJkOiFfpqKLgm0WQfq+BCzU19b7uEAi34kfiM4fPoTdTeM6gFtuLvuMqIhEvf
- bZeIEGzNrMKGdFZaVyr9D1yZ4PpFTmWwR0ACsv2uc+PCtBTUIlZ7GAlIEynZrXgzzMjx
- UqygJ2YgJJ/nIQaDHFoLEF0l5hC2EVbrf/i+/5KaHQSOpFdAoncrOo2eOWVW5QwoRVRp
- H67A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=k02/bwYb2C7W9O9X3E/L/K2Wz5vCdCbnOvWA2AOHkkw=;
- fh=B2R9c9dPyz8m/0Pc2hGy+IbXU5ZCYgi/G36ik355GiQ=;
- b=BhSpzDBP7KIZcFU/VT6nSThF1zFKblkwuYTWN5TfbZkKjqcTlfy+vWmglnFpUnbQBH
- TYtcqEPkpXq1RveMmf6NIRtwqJ60xFmT6c9imEcIm871THBlDp9uvMLKp19NYl8KUPNS
- K8OhEBE9hDVt9ZfPs4SNEvKPg5xTeM3wHouUMwsWC8UC3SdCTCrGHbLevKBARympTrQ4
- xx0gOT0omcPcX4F9FFihZv9qzrBHVeGqI288EVJiZtmX2GFAiESprRuZ7igMkaVnBvcZ
- LI6+Xjwd1mv4hSdTTTOyJIDaBiwEWqNOJlzGFOa0y/MwHhVxsBAHkhgVMvgMSwj46P5g
- 9hPw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787304230; x=1787909030; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=k02/bwYb2C7W9O9X3E/L/K2Wz5vCdCbnOvWA2AOHkkw=;
- b=lvhjuqIYT4eBTUl/J47kszrfM+dD8e+7QXD4izWMzavjVF1lgtLGg+rgANWyMGf3aR
- r/7vGz3JEBEQLzIQH7388MuSKQLbFnUylZZVDAkV1EJ/x89AoNT80R3NI4b1B3D7yD3z
- rXG0XwGI/zasp8wYYACh3UDCPwj48jza1cRy/bi5OKlFpsYy7vPPTECqFq+So+w7txVj
- O/5Sm6Vtt/ywWDqwBkLZQs0FCN2PsAgp0JxkiJ+xrdcDnkCYJBpg7FUOSjmMQ26nOt5f
- At911nrVHId4X9/silIqOBHuuZuZNoQ//8R4RqJyq7b9MEYTDhEXjjyO0tmTMs0nK4js
- kuyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787304230; x=1787909030;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=k02/bwYb2C7W9O9X3E/L/K2Wz5vCdCbnOvWA2AOHkkw=;
- b=aNDMeF2j6NnnKyxPhI+uTIbn9Rx0lcs63JLxNEMPJTvINGBEvAk4IllXVBTopJrZzy
- L3U13NN+HvNLuST2338iFIybKuNe3CaBfqryob71dmd5UGJX4tlfbNNkQ8o1+v6KZ155
- 3/LytL+z18pxWjxWDqd1u+V+vxecwC8fcvxz1wQL2YAI7OCtFUCmfO4P+1SyQUbL3kQa
- 3UowxFlRDq8WbDVRfVRrTZmT7GyWhrVIraqVsgXA/8sGfERQghrKiWnORRnxdxlJiiyh
- FxiD6H6jtw0ynXHn0DMAttd6Tqz9CyuO8LuVHzEE/E5NfV8qLn/+Jm275WRxhhvzS0DL
- 5jpA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqZ5G9LHKLKg9smqzbGn0Fkh9cXD56pnl6QnhbzShA+9lr4G0zfn9I1BBq6WlJXcpNYhCxUUzYoSPRB@nongnu.org
-X-Gm-Message-State: AFuF++nLalWGXlOzJLQnXzPl4EBKY72pKohz9Jz+2pV1gTUWolc2P+W0
- /bQqJZEFOBPkAqYFGehyB9mlJUQngIHWLrZfO5mrl0xvnw6yb9zN6dtPLYWyd2k9huqPxWj4jRo
- Nt9yK/3Ar7u4z3KGpPCiOS8+W02YLTc5/Xtz85xJ75g==
-X-Gm-Gg: AR+sD13mZQ0sj35oJigFMtuEGuOv5KnBO1FFI2Xj6Qm7rcjOToZAQmxlUura8oCyrph
- B7E6o0yv0gVH2rr3NQe0JNDCjEk9aoNG6uXUpsiyctuqBf8rS+pOnBxGPFJQ928N2CDtlePbJgf
- dMbC83AbC0UA8xf84HaLsG6Z7oZlojQpb9Y44PKLd+wv2xP0t46yv2NxQ6ww3bZiTMLUVuJ9ttd
- +x7lz+7AweZila4+uB+IltKWR3RceDBlRhW4YoYyK4X59m3vbDG3hMQmt4JqZREjW4925/F7kTr
- 14AsdFCtNfLHbj3t7HD8jIxBRAIy1XhVt2pTRyKZ/nJMXFiILZt5EiS1yF/hIGLjYgoqhVR5w0b
- Bc/166jw9Dgb7qfqDEV8ugchteluX
-X-Received: by 2002:a05:690e:2587:b0:669:48b1:d19f with SMTP id
- 956f58d0204a3-66ce4b4ace1mr1791102d50.39.1787304230558; Fri, 21 Aug 2026
- 02:23:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wxLpa-0000xR-Sf; Fri, 21 Aug 2026 05:46:35 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wxLpY-0001Qp-CC; Fri, 21 Aug 2026 05:46:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1787305558; bh=lGEP1fVQGN2WUbmnpYc8WnEjoCUmX39gZo+ylgIBTTU=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=dJ1zXsr0Zm7DYJweLACpqsrPGBagmNFInmh0PqM1nM+QtDP4CcLWZL6+Vnqv3l3op
+ lKcSi+514qupo2MRldMZiG5YxdzwpVN5rYQdMnI0chnl55FDZrvO58DUqKBfAFOK3p
+ gpjgezk4DH+Fd279yc2GmRGPDNvGq8e5ekXKbR1+4C0Sjo1HGgx+6x9gJ6Qy4nkOwm
+ OZ0MPwYaBUNato1HNqfWVocXqD9Iq3qvufuX7GbUm3YpuQnohrg01DHtrT6WtuUwX1
+ aw54t/7owH50HBWfYlvu3tQRklHA+J7UcqsWnNxC2idUKdLQJ+H+ZPNyKy8BwYGnvd
+ UCnrztL9jE+oA==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 7CEAD1CD1C6;
+ Fri, 21 Aug 2026 12:45:58 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5E5FF410E16;
+ Fri, 21 Aug 2026 12:46:27 +0300 (MSK)
+Message-ID: <026a13d3-9cc3-4ee0-8165-81d66c3cc5f5@tls.msk.ru>
+Date: Fri, 21 Aug 2026 12:45:58 +0300
 MIME-Version: 1.0
-References: <20260816131300.51799-1-bin.meng@processmission.com>
- <20260816131300.51799-2-bin.meng@processmission.com>
- <da09d1aa-5aed-492d-9afa-01d3a1fcb813@oss.qualcomm.com>
-In-Reply-To: <da09d1aa-5aed-492d-9afa-01d3a1fcb813@oss.qualcomm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 21 Aug 2026 10:23:38 +0100
-X-Gm-Features: AcwNN1VmNjs9pv03tbrjQRoB1TO9jDIYH5m2pCHQsZdE7OWn4O8qoZ--8hfv2tQ
-Message-ID: <CAFEAcA9scKMTHfrGdYRY6i+2rtU26z8ObTx5fOC3iDbDdtpPdA@mail.gmail.com>
-Subject: Re: [PATCH v2 01/20] hw/arm: aspeed: Store boot info in the machine
- state
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Joel Stanley <joel@jms.id.au>, 
- Kane Chen <kane_chen@aspeedtech.com>, Steven Lee <steven_lee@aspeedtech.com>, 
- Troy Lee <leetroy@gmail.com>, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386: fix incorrect decoding of EXTRQ_i
+To: Simon Scherer <scherer.simon89@gmail.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org,
+ QEMU Stable <qemu-stable@nongnu.org>
+References: <20260625155613.192643-1-scherer.simon89@gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <20260625155613.192643-1-scherer.simon89@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,42 +113,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 16 Aug 2026 at 15:54, Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> On 16/8/26 15:12, Bin Meng wrote:
-> > arm_load_kernel() keeps a pointer to the boot info struct for the
-> > lifetime of the VM, so the struct logically belongs to the machine
-> > rather than to a file scoped static object.
-> >
-> > Move the boot info into the existing AspeedMachineState.
+On 6/25/26 18:56, Simon Scherer wrote:
+> The decoding of the extrq instruction with an immediate operand (EXTRQ_i) is
+> incorrect. Per the AMD manual the instruction encoding looks as follows:
+> 
+> EXTRQ xmm1, imm8, imm8   66 0F 78 /0 ib ib
+> 
+> The /0 indicates that the "Reg" field of the ModR/M byte must be equal
+> to 0 and the XMM register operand is specified by the "R/M" field.
+> However, qemu incorrectly uses the "Reg" field to extract the register operand.
+> 
+> This patch instead extracts the XMM register operand from the "R/M"
+> field.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3611
+> Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
 
-> > -    aspeed_board_binfo.ram_size =3D machine->ram_size;
-> > -    aspeed_board_binfo.loader_start =3D sc->memmap[ASPEED_DEV_SDRAM];
-> > +    bmc->bootinfo.board_id =3D -1; /* device-tree-only board */
->
-> Should #define a self-explanatory BOARD_ID_DEVICE_TREE?
+This feels like a qemu-stable material.
+I'm picking it up, please let me know if I should not.
 
-> > @@ -42,6 +43,7 @@ struct AspeedMachineState {
-> >       char *fmc_model;
-> >       char *spi_model;
-> >       uint32_t hw_strap1;
-> > +    struct arm_boot_info bootinfo;
-> >   };
->
-> Maybe time to add a typedef to be style-consistent.
+Thanks,
 
-Mmm, and if we're adding a typedef then fixing the capitalization
-style to ArmBootInfo is what matches our style guide.
+/mjt
 
-I think these are both good ideas but in the interests of not
-delaying this touch-lots-of-files patchset too much longer
-I think we can do them as separate patches afterwards.
+> ---
+>   target/i386/tcg/decode-new.c.inc | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+> index ac181308ca..acb300457c 100644
+> --- a/target/i386/tcg/decode-new.c.inc
+> +++ b/target/i386/tcg/decode-new.c.inc
+> @@ -605,7 +605,7 @@ static void decode_0F78(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
+>   {
+>       static const X86OpEntry opcodes_0F78[4] = {
+>           {},
+> -        X86_OP_ENTRY3(EXTRQ_i,       V,x, None,None, I,w,  cpuid(SSE4A)), /* AMD extension */
+> +        X86_OP_ENTRY3(EXTRQ_i,       U,x, None,None, I,w,  cpuid(SSE4A)), /* AMD extension */
+>           {},
+>           X86_OP_ENTRY3(INSERTQ_i,     V,x, U,x, I,w,        cpuid(SSE4A)), /* AMD extension */
+>       };
 
-(Interestingly the kernel does not bother to define a
-name for the -1 value -- it just hardcodes ~0 in its
-DT_MACHINE_START macro.)
-
-thanks
--- PMM
 
