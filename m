@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 466F6C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:02:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EA2BC5DF87
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:02:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxN0s-0008TT-Ni; Fri, 21 Aug 2026 07:02:18 -0400
+	id 1wxN0i-0007PO-GP; Fri, 21 Aug 2026 07:02:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN0q-0008Eo-Kr
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:16 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1wxN0f-000790-Es
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:05 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN0o-0007NK-Pc
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:16 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-499b6c02b02so3966675e9.1
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:14 -0700 (PDT)
+ id 1wxN0d-0007Kb-9W
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:05 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-496bb7cdf51so8315165e9.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787310133; x=1787914933; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787310122; x=1787914922; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=4fLZD1ZpuLL9G6fmiVIFQ4fHwh4kYhArYqzEkRdpzKM=;
- b=njankd1rgqcDERk7dXvkIXbCL3cHYz+P58Is6jWP6+ulbNXAulAKfbZxhYZVZVrkyu
- 0RZUBAgC2aXLZzFUd9PukmU90bxakEDpZeAY82qDAmDGqxL1ojTTerwcTpqhlPaH+UPN
- Gq8LPzdrN3tpPL522MW1HHYP5zV3YuQlE5dDjkRwiq2el6YiD/he44f55NP1p5aD1j8K
- eGLMAjodpko3GJxhyO97ENw7Uc3DC+s6Gva6Bk4D7Epvm4aRWs/DGOFmpT8memxMyrko
- QHvOjTT7JkgIoJMgM4bsuXwu75xufEEzH5bgZkpDN0BlKRNZnVmgXL67zRZGeWpRsIVg
- Npuw==
+ bh=vnXUIz3SC8Ou6fd68xxg7mOuPxzgFf1mC6qX64/vths=;
+ b=KGzBEBgNPcZHWv6eRr2PQLkqakAinwpP5f8MGhOaQd5YIh5LmM/vSI1e408IxA+Ofz
+ AX3sMEfCQYeZdk/CfiItKF7cwOgy0Y84C/kfyGgdMYrTnyY8NnX+BL8VKIshVSEt8VIe
+ XgH0ESsUWUDO0uX5CYYotYhpu2tliQmBOivNVBKdE/PVR1xEmZJ2OnX6c9Zj6oX3vXT6
+ AcPEIkM9krH+68wnp964ef6wJoU1zTGJ/PyKgupj3CgowtAcxmLBjBNLB3YrMWMHBN7Y
+ PiivkKeDdQNm0sLr0dso1UYEYuHcbB4vpEF5Ml+67+bzm5wKrb/gh9lKbp6ckyZI4aYf
+ c34A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787310133; x=1787914933;
+ d=1e100.net; s=20251104; t=1787310122; x=1787914922;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=4fLZD1ZpuLL9G6fmiVIFQ4fHwh4kYhArYqzEkRdpzKM=;
- b=Df8H0qCTAq+OG0bR5hUt3V9ketOM1WH81IP7weBo7XR6Olbsyto/JQAoVEAI9pUCmB
- fDPjwVUcKtJPzKyRb80KLo9/4RrTgsefZx1aZG9ADkZmqS27dhmPykdk45DmSkJ6yy6J
- +RfiomrYM9SAlKjr+m3ET3W6YuOgbahEUUBzBM2lFLuF8gNN2qIdw1+RdOSEQNSV87wq
- RNpGU1X8c5vzsrcy6iD+ffsCvxPQxMzj9+/ULiEISef88eE4PePUgUgLq8E5C3w9r++b
- GCMEB/g7XZCS9F9rv58pxM06xHiff/8wUnNJrbJE+K9u7O/UiDE4C8OsOUeMhsPSdyAd
- Ndaw==
-X-Gm-Message-State: AOJu0Yw3/ST2et8shLafHo+77YHxJ4uNn6XiQQk8iKnl48d/GUPMa+UR
- sg8eTqQDKH2KinXPi02Zz/33+gAmZs1k7E3Py6sddJARpq9ClHdzFEYlZagfkB4pM+2fJvG0Ytu
- 5H5Ea
-X-Gm-Gg: AR+sD12FovyncB3NcfSGKjF0/P0Pslzv4WwfYU6YRRiOrxRDrd/zBn+qQwTg8YqQ+cQ
- 1WSjCHR9TUqLotat8SOJuDM7M1KPaoitz8dRCOA4o6z0e9bXc8XdNBICEbAaEny0CI4kd7S6qhS
- 0LQhvl48Cjdv8yAnMTIsIdEPTRxb/7bRagh9nJDZSgwloty1E78I4F47QRprZw2syoYK4WZRq5C
- SQ6gqywtelcQkUtDsQpJrHxHe4aKY+idqpSX/uXztrBXwrpNjs+CsHi6PX8kQgoBYMu6AhUM9oB
- QU+kzkIE9hjr6ei2whmcaLOXBWiopPvNG5ZdRSj91Ck4ZbmN0FO/Xe/xxuMZ3oQl90v4bFhTU0f
- J/V269ObBKdaYRgpMDDb02mb4vEZKYurPgDIqwnHRHHl5mcQj/B9pla5Z6yPttGutfUey+1nGD+
- A3Km9KVRMh9wQ2Gzk0Q0A9nd401H4xlZNb/eQYnkAbSd6VmVA9Q67wkQnKSmHrw/EEXrG8aGTo+
- ZXFKn93/d8tyMc8U7vH6QB7tG6T8gnzATT0Dt5MuuhRi+jFFzXiGWitKFu1cm/1z+LTHA==
-X-Received: by 2002:a05:600c:6610:b0:499:a660:f926 with SMTP id
- 5b1f17b1804b1-499b8454bb5mr67077195e9.11.1787310133019; 
- Fri, 21 Aug 2026 04:02:13 -0700 (PDT)
+ bh=vnXUIz3SC8Ou6fd68xxg7mOuPxzgFf1mC6qX64/vths=;
+ b=UsgEfh9lnTxV/v7UxLRk+SkVh4uEsUPKZ0wlmid7xibdBETN2OylvL6px6XSOO4lph
+ yKUNbcHPKVmdjegD/TXRZJWfFLKeDWYv5phqudz8vLkrIeMt/miDjtqquhiZgbbn2iut
+ lJhpRfYBFOlOKuqpSnYdbotK/79uI68u35gs0SwWVs4kDBRwwtSh+/oP3ouPxWBxs8ZK
+ H8AtmWQQ7rJ57GuPyKwp9IM9yrrnPr1DLxM/2/R3CAlAjXoI54LUQQS1dLS4URnTxl7m
+ lNC6oebDrhlPCLj7uu50xCzz1TeBlp6rjykT4Urb/IY2De1Dp7k2T/3pmospEZRxdzCR
+ wk9Q==
+X-Gm-Message-State: AOJu0YySm6SHVZ8bHagdK0zx5SV9DElkX3jTqn0OfFOB0X5elKXdZbRJ
+ +G9wxU1ZT29tix34Mr8Qc4o+soUc+qtHzMkWSa8+oSJa9QiaQYNFgq0wuAdTJ9CKg4j3XneeA/0
+ VS0FW
+X-Gm-Gg: AR+sD11Q4UtRCfgwH573Kyh8akq8fvDW9nqqjydo1P1f04J34y7D8Z3Ht2uz+75N0o+
+ wVc2/Qjcf1M+4k2BQidIEIOIUZf4915VSIUuyT4rp2YdcA+awbilgWgzulQftX8TDQUZivOfgit
+ cMTt/vGVRmZsBylKMQzzh0WH4lisHgxSqlXmq8GNmNp7KmZlSQcdv09Ekn9yWTS3gKU1wnv8/34
+ 6kNAA283uV0zRVhzrZLaxGWOH/E9ovclAmg+NKZlS6yprErc690xQzVDD7TQ3ytUh1fL9cZeoKO
+ ezlO4mCW+IL/twZRS0VxgLliQDexcwcr+qmEWyZb01BqcbZ61/n7AWuMP0mEyFs0HYSQEIURCdb
+ gzGhVaOSBnArZY5QWKMdko4qOu32qPywyl1B/Fz3In4uPe+bOxB95mKoHXXcBCYmsUMfmcJHoKy
+ /lmw6As0nMFWdIEk+4o01ZhZuOVPANbdkHg2GUk+GsY2nRBhcA9es506NuNZyWnmfglUEodXire
+ b1EUQbzkKz8amRLTGc1u57G98d1tQUq3lddB0YbeoT47RzTGCBykQuBPpk+K7DC3G3nUw==
+X-Received: by 2002:a05:600c:3e1b:b0:499:a685:c10 with SMTP id
+ 5b1f17b1804b1-499b82e5427mr86715255e9.4.1787310121633; 
+ Fri, 21 Aug 2026 04:02:01 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.09
+ 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.01.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 04:02:10 -0700 (PDT)
+ Fri, 21 Aug 2026 04:01:59 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/43] target/arm: Update confusing comment in cpacr_write()
-Date: Fri, 21 Aug 2026 12:00:36 +0100
-Message-ID: <20260821110101.3971391-19-peter.maydell@linaro.org>
+Subject: [PULL 15/43] hw/arm/ax3000-soc: fix heap overflow from missing
+ class_size
+Date: Fri, 21 Aug 2026 12:00:33 +0100
+Message-ID: <20260821110101.3971391-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260821110101.3971391-1-peter.maydell@linaro.org>
 References: <20260821110101.3971391-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,46 +102,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In cpacr_write() a comment says "In ARMv8 most bits of CPACR_EL1 are
-RES0", and the mask value is left at 0, implying that we enforce
-those RES0 bits.  In fact we only enforce RES0 when ARM_FEATURE_V8 is
-not implemented, and for v8 and up we allow the guest to write any
-bits.  The addition of architectural features in v8 and v9 has also
-resulted in the addition of new bits to CPACR_EL1, so "most bits are
-RES0" isn't really true any more.
+From: Doug Cook <dcook@microsoft.com>
 
-Update the comment to be a bit clearer.
+TYPE_AX3000_SOC declares an Ax3000SoCClass via OBJECT_DECLARE_TYPE() and
+ax3000_class_init() writes to it:
 
+    Ax3000SoCClass *sc = AX3000_SOC_CLASS(oc);
+    sc->num_cpus = AX3000_NUM_CPUS;
+
+but its TypeInfo omits .class_size, so type_initialize() only allocates
+class_size inherited from the parent, i.e. sizeof(SysBusDeviceClass).
+The store to sc->num_cpus therefore writes 4 bytes of the value 4 just
+past the end of the class allocation, corrupting whatever heap block
+follows it.
+
+Fix by setting class_size.
+
+Fixes: 33a71a68c6e1 ("hw/arm: Add Axiado SoC AX3000")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4197
+Signed-off-by: Doug Cook <dcook@microsoft.com>
+Message-id: LVXPR21MB70090B04FF7397B0F2A201C8ADA72@LVXPR21MB7009.namprd21.prod.outlook.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260817123838.1578060-4-peter.maydell@linaro.org
 ---
- target/arm/helper.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ hw/arm/ax3000-soc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index d582eeba577..7de38d82010 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -554,7 +554,17 @@ static void cpacr_write(CPUARMState *env, const ARMCPRegInfo *ri,
- {
-     uint32_t mask = 0;
+diff --git a/hw/arm/ax3000-soc.c b/hw/arm/ax3000-soc.c
+index 71e31c6fb46..ebe174fb978 100644
+--- a/hw/arm/ax3000-soc.c
++++ b/hw/arm/ax3000-soc.c
+@@ -236,6 +236,7 @@ static const TypeInfo axiado_soc_types[] = {
+         .instance_size  = sizeof(Ax3000SoCState),
+         .instance_init  = ax3000_init,
+         .class_init     = ax3000_class_init,
++        .class_size     = sizeof(Ax3000SoCClass),
+     }
+ };
  
--    /* In ARMv8 most bits of CPACR_EL1 are RES0. */
-+    /*
-+     * The AArch64 view of CPACR_EL1 has a different layout to the old
-+     * AArch32 one. We also need to permit the old AArch32 bits to be
-+     * read and written so that an AArch64 EL2 hypervisor can set up
-+     * the register for an AArch32 EL1 guest.  So we choose not to
-+     * enforce any RAZ/WI or RAO/WI bits for v8 based on feature
-+     * presence/absence.
-+     *
-+     * For v7 the situation is a bit simpler and there we do choose to
-+     * enforce RAZ/WI and RAO/WI.
-+     */
-     if (!arm_feature(env, ARM_FEATURE_V8)) {
-         /*
-          * ARMv7 defines bits for unimplemented coprocessors as RAZ/WI.
 -- 
 2.43.0
 
