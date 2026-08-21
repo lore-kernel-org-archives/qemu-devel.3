@@ -4,102 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64B16C5DF8C
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 09:04:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C43F2C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 09:11:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxLA8-0008O1-2S; Fri, 21 Aug 2026 05:03:44 -0400
+	id 1wxLGv-0004Ev-Ay; Fri, 21 Aug 2026 05:10:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wxLA7-0008Ne-2N
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 05:03:43 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ (Exim 4.90_1) (envelope-from <isyanfei.xu@gmail.com>)
+ id 1wxLGt-0004EM-5U
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 05:10:43 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wxLA4-0004nH-PK
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 05:03:41 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-c169ae1cb26so383123966b.1
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 02:03:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787303018; cv=none;
- d=google.com; s=arc-20260327;
- b=XDEk90ghrdEgY+4SRhTKD//nGdgXVDT6Zii2mzN0cfjWeaiRJ61ZqK9/vXyFaYIstM
- WFkSjfKrgojLNnJi29YkZkAtPIHt/rdGjUDS62sNQaeBR/qpQt1Anzbk6j/rS2jVmhZi
- uudlkcZ0n8IRyNhUPu50jCKkOIgG6Gluy0YnXH4GIHEZNGwI/jrzqSZeINUCgtDCiXDF
- 2OsB0JnxyVPmIjiPe3iyXfKbSdJN3om0UvipCNQ724pXCndC3NBgH3Fx6XbyikhWHMcd
- u3SCj4FjQ7f4mRVRTP3uQBta6L8gYn4CP+uWaGNKK/D4yqX1v64v4vZPARnS43jaQ/WF
- Ep7A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ZVxJHt/4b5mqJ4x+qkllSoDNCMU8pX9It2YrUvfMLUs=;
- fh=oR6KT4T9R4DzEe393lAnUFWLAI2XD1MXqDS3E+1BJZc=;
- b=UHtFumRRVGyPBil0c+OjQ6zLEniG/Y/2kb0WU9FVH0jhrzrMPS4NQwc5rKcT74QpFi
- LP2fCwSQt9TVxlV0KZwIF4r8es2guQOQnj6lBN6SokxJ+2KsekBql1oHsZ6Tzem53Ik1
- 4cI1Rdyh0pydGK3Rb53dk16NsxEV99CWQ6nb7/kKyHZSZcQQWWBwpyDH0YO/qC5I21cZ
- HF78fCz4vh+9H4jIwYnER1Aj+qUuKi0eASiqPYZcjDpMXlQrVwZHFZUGcrtoXHqkH3Ys
- 1ph6seXiLOCnWKr9qSIVqX/IGzKq3LYa3nJZq3XYknCd1D6zLi3QXAT8/kSaEeQw4IaC
- dgxQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <isyanfei.xu@gmail.com>)
+ id 1wxLGr-0006in-7i
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 05:10:42 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2cc7e86e7aeso9407855ad.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 02:10:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787303018; x=1787907818; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=ZVxJHt/4b5mqJ4x+qkllSoDNCMU8pX9It2YrUvfMLUs=;
- b=WYUzUuPJPy053S1QH2LnfP+6Q9nkbJuo3eXpAOCFOkx5C9o2tQnBlUbXJHNO/omo0U
- 5PnmL/vLkL71blSfNo/0UY8yruN2U++xqCxYlBrg94UjbwiEd+OthFU5kx3asCny0vHj
- WwsHFz+qmQbvWDFjLE96ujOflA2y0vF5o05ArgrqNVG2fTbQm2YDMQECynzhoV02Ly37
- tdvOY6NcPFZR0hrqhN70r7/kuabt+GWrIj4T7ugAzzWyEaD7RBlyuVa8SmtDx3ovJnB5
- pE7Ck3UqiP4lJTpnOqBbmN8nCT1eljsSi5ug0iYAXRZ8Xf6evQ2BC9nH8IezzwM1uG5u
- Ffpw==
+ d=gmail.com; s=20251104; t=1787303439; x=1787908239; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=U7Bn6hrmWAbG116V4Rb4gNtYTumscsBTWyz+VpWcxPI=;
+ b=D3S6bWQlVYKHHcJ8/HOo4adVnYSna8dW/h7tcbOK1uvNc9iZycpiv8R/okUbstraUH
+ U6lX5qCySMkXWudiBQoCcqvK6+Ay2TgW4385AXYwaaby6O+Z+jH5ecWtfJbWCcOS6pqA
+ e7TGU1PesOhhIuj4ZKrV9h//4hYCDDUpxpRZaRnHs7j/WMoCXlG73peXQo/WFXwbujYP
+ CWkfNdWKB7qkjnrd8TeNve1vA7g3EeFoKxwwMzOFK9EhO25BHAlXtCqZSoNO9fAR3kVl
+ sdlWAV3/1D/wP6DCC7omJct9+s+r/HpINUSQSwWze/NCP5MsOI5tQixTeKaFkQIjdv7a
+ f66A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787303018; x=1787907818;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20251104; t=1787303439; x=1787908239;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ZVxJHt/4b5mqJ4x+qkllSoDNCMU8pX9It2YrUvfMLUs=;
- b=fN4ENTmkof8q3cEucrMIgUe+Q87sefYRt44vT90vZ9JDL6AersbVc8G0lnGMUHzm7F
- axynLQe9ryGAtyo86ZJFA2noC4TRFj8pvSdWQzH7HJosfO1NUTDNQUC9xQzo2vSVTERu
- OknbtlkZos/cpb6S6A5aGjYivVDA9b4hUJBApZyIi29SIZGBMCQUv3+nPtfY3dTEg92y
- 1vQKdwt4d4ZCLZk85cR6Uc3Db9gGWxQ+Ca88Uigpr+BGoR+ooQNafVpQCyaLyX+F2k7/
- YDAXH8zt/nCJ4d3Q11/F3BCiTCgTRw3UYETDxTDUqGLrceGouG4uxZo43es5u3twG5H+
- xkYA==
-X-Gm-Message-State: AFuF++mSK75zvQRk+is8NQl1rVYYaRT9yFvgKkpITu8ftspek+Eal5Zl
- qBMXN76LJalCyWQdPJeuY2I1mTwMY3U5q+ItgXa9gGMh3rHxHs61nUN2Dtixel+x4eOktoLM5EA
- 8OLGuRTS7c+4fsUUVP0hSxoxDeoqubj0=
-X-Gm-Gg: AR+sD1052b/GHZtPhFNazAQDQy4IRK8n4N9yE/GEozxb9lX/WCmwJvG9nsMQWYoMATO
- VPnWlFu9jv6Zub39a5c87molX8r3rjCN8UOBP92DoFF7VfG8Ko1iBGb/0Z/TOyHMUvl/f5gKV/U
- 8zuZkkLg+sJ2nURl1TdAzD88uwVhH+sc88Rdvl3zlQdiUUVowe7YIImt7lrVhsmNqiU0ars+deN
- vw4U5gFmH4afjh/5bFJYckdepFAI92Uu5iYrvGT2Z8xmi+BglUTxiOUDKPsm3kbT4tR+jetWj48
- 0RlqWBlQ4b6q6ESiTAFH6ACvfu6jqZAdiSSXmnRNZgS5
-X-Received: by 2002:a17:907:9481:b0:c0d:7c31:26a9 with SMTP id
- a640c23a62f3a-c246d58210bmr368237266b.2.1787303007829; Fri, 21 Aug 2026
- 02:03:27 -0700 (PDT)
+ bh=U7Bn6hrmWAbG116V4Rb4gNtYTumscsBTWyz+VpWcxPI=;
+ b=YviVDfm3+M8SYq6DTXkTMOixEVpyZxlas+HSTglF2KOhiBaej75ANOF6pswVKb3059
+ LTeS7pE1BU4yjc6xFnV8OohYCJ9hpH2DY1UVArCxIUpYDznQlVlhw31rV50cTWtjNy4g
+ SXKOs0dynBR9CBNoI3I6ElUgYDv4ZKx4SEl/VPxIa/RroTVq4VxqDpz/rSqjTQnFqTOd
+ IQ4mmMaGxgP6uF1y/ad/8kEjQchgS9lQZUtg3o/JD4k6iWU1H0Qe8411QEdL1BiySNtK
+ ak/qtyOaLKTaZ+6YKROOE4se6yMrodYjHs2nSa026xhPBDYbbvmiSDGN1ndvJEoxoHZN
+ 81yw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rou+RITzEBCYOAMHPOJoV/Sp+2fIgn8nsoGTeKB1PVIJZz9Z/K6jVcWWqHhf9e7WzSKZQPvEdIYFg6s@nongnu.org
+X-Gm-Message-State: AFuF++kPsPdMGToCi3/+jRNCNQ0rd8vkT28aW2zDAIBvyG66IEcp8m9F
+ 3nbagN+bK+KEF4OswenGv9DMe5X9aE41CNKYeL8ed8z6BDWnz9/T7ziA
+X-Gm-Gg: AR+sD12c+c1awrtxvzp6vHLDByGNL+f3yZEIoh1HtLgo4aAy6qK0uDxWufBxarJ1lIh
+ if4cWt1sj32ZUe72sOy1SK1WscS86hO6XeKZvIXf2mIZlh2cnQtyVIH55KLDyiYGDdJJx3BJm4n
+ alVsY4IWRYO2lVQ5cPxl0awsbA+PVCSnw4IRYaTDCsk+/0q5Y2ygPi+C12YB+WTy70XZ3cma6+c
+ CkqDfkdMZiiX/3xZEXEQIZt+hhYVbpN0T+IPAKouVv5+sZ/3C67hoCao4MSiTCt6ieCoBlFKP/C
+ R8Bt4U2qzm1IioddleXkKZ6EViTOM1RuFnrCPIeDLUiAm3wrkmo4McAL0kMbHxtgd6Btc8N7/Py
+ N2rFRXIKje/bX3zqHhgcXwvoIDnA+J1PFmPM+sw6NChV+0TiBMljOOfpgXUOIrsqj+8Bwfob9fV
+ ENuwMg4YT+MJZwnSQ5p34uzmuq8XnxFLhU0SCMGprhdK+F4JcPfQOzleljYKqTnjzz6QrSEV4P3
+ A==
+X-Received: by 2002:a17:902:e943:b0:2d2:da8e:9017 with SMTP id
+ d9443c01a7336-2d64af5096bmr97644495ad.8.1787303438781; 
+ Fri, 21 Aug 2026 02:10:38 -0700 (PDT)
+Received: from [10.3.188.167] ([61.213.176.5])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2d62d555b51sm16105875ad.7.2026.08.21.02.10.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 21 Aug 2026 02:10:38 -0700 (PDT)
+Message-ID: <06ee44fe-fc50-457e-895a-08a7f95fe67d@gmail.com>
+Date: Fri, 21 Aug 2026 17:10:35 +0800
 MIME-Version: 1.0
-References: <20260814174830.1691540-1-zhangckid@gmail.com>
- <20260814174830.1691540-3-zhangckid@gmail.com>
- <20260819182509.GC222512@fedora>
-In-Reply-To: <20260819182509.GC222512@fedora>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Fri, 21 Aug 2026 17:02:50 +0800
-X-Gm-Features: AcwNN1UnRYY2lueBQPTMmtTfTvNIn8EkVboHHpGnUm7ksm9B38XABWH0PHqChU8
-Message-ID: <CAK3tnvJ65gWa6x0Ck2hhtVqUBcw+X_ngB-aVjQW6O3qLOyogxA@mail.gmail.com>
-Subject: Re: [PATCH V12 02/15] iothread: introduce holder tracking
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x630.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] migration/rdma: Retry control sends on full queue
+To: Peter Xu <peterx@redhat.com>
+Cc: Yanfei Xu <yanfei.xu@bytedance.com>, qemu-devel@nongnu.org,
+ farosas@suse.de, lizhijian@fujitsu.com,
+ Jinpu Wang <jinpu.wang@cloud.ionos.com>
+References: <20260817105117.3072040-1-yanfei.xu@bytedance.com>
+ <20260817105117.3072040-4-yanfei.xu@bytedance.com>
+ <aoYBhxpSL5w5gQcX@x1.local> <80b1c870-308f-4de4-ad53-c9ecfc91da24@gmail.com>
+ <aocFifqrtiv900Yr@x1.local>
+From: Yanfei Xu <isyanfei.xu@gmail.com>
+In-Reply-To: <aocFifqrtiv900Yr@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=isyanfei.xu@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,29 +109,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 20, 2026 at 2:25=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat.co=
-m> wrote:
->
-> On Sat, Aug 15, 2026 at 01:48:16AM +0800, Zhang Chen wrote:
-> > +static int iothread_holder_compare(const IOThreadHolder *holder_a,
-> > +                                   const IOThreadHolder *holder_b)
-> > +{
-> > +    const char *name_a, *name_b;
-> > +
-> > +    if (holder_a->type !=3D holder_b->type) {
-> > +        return holder_b->type - holder_a->type;
->
-> This isn't a bug, but compare functions return negative for a < b, 0 for
-> equals, and positive for a > b. That's how the strcmp() below behaves.
-> Here holder_b->type - holder_a->type reverses the order. Luckily I don't
-> think anything relies on ordering, so it doesn't really matter, but it's
-> inconsistent and a little confusing.
->
-> I suggest holder_a->type - holder_b->type instead.
 
-OK, will fix in the next version.
+On 2026/8/20 21:47, Peter Xu wrote:
+> On Thu, Aug 20, 2026 at 06:27:12PM +0800, Yanfei Xu wrote:
+>> Hi peter,
+>>
+>> On 2026/8/20 03:18, Peter Xu wrote:
+>>> On Mon, Aug 17, 2026 at 06:51:17PM +0800, Yanfei Xu wrote:
+>>>> RAM writes and control messages share the send queue.  If
+>>>> outstanding writes fill it, RDMA writes drain a completion and retry,
+>>>> but control sends fail the migration.
+>>>>
+>>>> Drain one outstanding write and retry the control send on ENOMEM.
+>>>>
+>>>> Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+>>>> ---
+>>>>    migration/rdma.c | 12 +++++++++++-
+>>>>    1 file changed, 11 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/migration/rdma.c b/migration/rdma.c
+>>>> index 6e8436ccc1..d1f44a5f55 100644
+>>>> --- a/migration/rdma.c
+>>>> +++ b/migration/rdma.c
+>>>> @@ -1572,9 +1572,19 @@ static int qemu_rdma_post_send_control(RDMAContext *rdma, uint8_t *buf,
+>>>>            memcpy(wr->control + sizeof(RDMAControlHeader), buf, head->len);
+>>>>        }
+>>>> -
+>>>> +retry:
+>>>>        ret = ibv_post_send(rdma->qp, &send_wr, &bad_wr);
+>>>> +    if (ret == ENOMEM && rdma->nb_sent) {
+>>>> +        ret = qemu_rdma_block_for_wrid(rdma, RDMA_WRID_RDMA_WRITE, NULL);
+>>>> +        if (ret < 0) {
+>>>> +            error_setg(errp, "rdma migration: failed to make room for "
+>>>> +                       "control send");
+>>>> +            return -1;
+>>>> +        }
+>>>> +        goto retry;
+>>>> +    }
+>>> Looks also correct, but two questions:
+>>>
+>>> - Should we provide a helper instead of duplicating the WRITE op handling?
+>>>     I believe only WRITE wrids can be on the fly.
+>> Yes, control message is syncronized, only WRITE can be on the fly. A helper
+>> is a good suggestion. Will do.
+>>
+>>> - Could ENOMEM be returned when nb_sent==0?  If that check applies to WRITE
+>>>     path too?
+>> ENOMEM can be regarded as SQ is full to RDMA usage in qemu. Actually ENOMEM
+>> is determined by provider and could have other meaning like
+>> inline_data > qp->max_inline_data in mlx5. Based on qemu codes, I think it's
+>> fine without nb_sent==0
+> I'm not familiar with mlx5 impl that you're discussing here, but IIUC the
+> point is we should be able to capture all recoverable faults and retry,
+> meanwhile we should fail immediately on non-recoverable faults.
+>
+>  From the name of the errno (ENOMEM), I expect non-recoverable faults can
+> happen with it.. unless this is something special to libibverbs to
+> explicitly imply "queue full"..
+>
+> I wonder if it means this nb_sent!=0 check should indeed make sense, but I
+> also wonder if we should add a number of retry so as to capture real ENOMEM
+> errors otherwise that is not recoverable?  As long as it won't keep
+> spinning with the same error then we should be good.
 
-Thanks
+After a rough search of the rdma-core code I didn't find any place explicit
+defining ENOMEM to post_send op as meaning "queue full" . You are right,
+ENOMEM can be non-recoverable fault, and we should avoid infinitely waitting
+in those cases.
 
-Chen
+ENOMEM && nb_sent==0 must not be the case "queue is full", so we can fail
+fast. As for other non-recoverable faults, I think limit the times of retry
+is neccessary.
+
+Thanks for your suggestions!
+
+>
+>> In addition, I encountered this bug when I attempt to send dirty pages
+>> belongs
+>> to same chunk in parallel. That could more efficiently utilizes throughput
+>> when
+>> many scattered page in one chunk, and quickly exhausts SQ's WRs. Will post a
+>> RFC with more data.
+> Sure, I hope that still makes sure different versions of a same page will
+> be still ordered.
+Sure we can discuss in that serial.
+
+Regards,
+Yanfei
+>
+> Thanks,
+>
 
