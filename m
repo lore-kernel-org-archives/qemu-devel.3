@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B15EC5DF87
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BC8EC5DF89
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxN1M-0001VP-V3; Fri, 21 Aug 2026 07:02:49 -0400
+	id 1wxN1M-0001Uv-PA; Fri, 21 Aug 2026 07:02:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN1J-00019X-G1
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:45 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1wxN1H-00012S-0X
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:44 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN1H-0007Zx-IZ
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:45 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4996f1ee4a4so5866745e9.2
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:43 -0700 (PDT)
+ id 1wxN1F-0007Z8-8g
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:42 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4954f5e8020so3570575e9.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787310162; x=1787914962; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=gDfut0uAhYBlev9mWhTT7UDrgSY0wWCSRE5ndjMg/dU=;
- b=W74ggF06lGfyaZ66P0cYlDtBgW1oqjGxuiVOvpHAt3nIXShhTI6Qvaa6Fmm+/hCBAL
- kRyObW2ZxhNtHi13oQvoRA2uz+kUGMTEOZOTAFHxaEgZ3iIDL7PgwZTt905ZzzCykSYF
- JdP7wVf+nqRluBC27MljYPsX7lSQ2XHO3wSW57DlsEPGqQCCR1aYtq3e2YbIhAm27d3F
- gpcfRf36zO1osfXBfehPNrcz0w8pgEfQmu8fUuuHpeyVOIwYSg0kZWGlRtUcyjeavC44
- FhZqhm6T45gcfZT9kOvU0xNEgpgTlfY+oy/fWKfQaY50qCVq64wOJpYWV6ylj6mEQdsN
- hV2A==
+ d=linaro.org; s=google; t=1787310160; x=1787914960; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=jDgg4EScB8bslHVWuzjdiznJQxcizlYwx+ib9GrZvI0=;
+ b=tVD7vVj8nJhHA/BcQ6EKO7p6PdriIxNeKFARshpll9esYVAitEP2GSLsQvzaiSJL7P
+ F4kIQ7JE5R7XowPcc375EY72QQfGjx068z1HnhGOYTkbjLwb6pDvOe9cVJnaPCfPfVFL
+ nbfpNpCPO529hFggE1ypfmWx/cuZcXyTdC0HiipPAqR3hiGcKe3WYo0MGnBjajE1Pmnu
+ axoGsGMWu0c9GX/5VcaYfKDyTU11FfAUWG6HD1L25SPGTS3fABIQ480PxtdzV2r03FsD
+ MDX6apwTVrLmoRkcikV+9OV9SWTdIkqbiVzL9KlEEbsMvvuPoKqoIYv+oKOs5hk9/V4w
+ q1bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787310162; x=1787914962;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=gDfut0uAhYBlev9mWhTT7UDrgSY0wWCSRE5ndjMg/dU=;
- b=SFQilVD12UwrMZW8qIKHCHakjcWu3HTlmjafNLwyzNM9vkkdUKt0J+CfJeB4NLpP6e
- RJpaMEEuPUVW2AY4NLtbSEIzP7hGAkJ3ZzmbJVlUGhjLOMk+bBLSEBI+jVytw0y8hK00
- H3cyH31dPV8z83IV3Mz9FPyw1G2VsKZmgjiEtpOondyFBMIWIJbkTpwXtyKBRBstzxaL
- KBHhm2kJ8mPLYQOVaFH7zJoNzwPj2dxlfNgEqRY49kfhdWapgBt1sKObU7KISY+uqx1L
- ug1P4Xy7XGbERtmmE9ECZt+s7AW4ujeTyc+b4LXQfbLUXrCgPDmxQ0gMoN6WHgIhWV50
- Rq3A==
-X-Gm-Message-State: AOJu0YwKkAz7jS0L4PWEj5Q6vjB4/tW8smR1oC0STwETzZPfseykeQ8x
- dqp9qYzFYHmLpeTAebVoKKRFWuu8omSUSoG4T9uTPGLSkTITuDPWFKqI2APJ+//Sz913HZmDOqg
- 3k6Fm
-X-Gm-Gg: AR+sD12vhByCzt2yHEJuhqyRsfCpfoZk7fJuuo7wysYKSouGKvK5YOdP/h4HgUwp1e0
- D2VS81wfRB46PAIuNEyOoAIkSUpZHnkyZc7Z/xX+ofCY+P+4oMJxGzyoH8DlmsEjGSwKGBI78p0
- J3DqfJazaQWq9HcL3mDmH2h9L8MFc6+/fi7TrQ8Pvo+sFwIn+CuBM0V8mFpJnZBqD9fSXvW7+qh
- kRnS/6WK+Us7IKvKoO0bOFwqWxQLZeaGpzigzaGozlzv4KpV8j0q4mpRpYijjieS6gx7VcUEeaE
- syfv3Cg7rl323p+XJmYWz6FWP91aQ0BchTxSfWt3lHI/OlCA2RD6bVkyy8FypS22raNVrhyRROh
- K+ppI2EWu9L5CyXWcbSJ5SgLSUM5vWjtQvQFT3s4B/bcRyikguiMIGT1MJOXvfE/jrSFjoLU5Io
- EBx6PcUP1fPGm0VWT9LVWUBnFZaKHUJFsM7ZC1qIl6oBaSC9zDgp7OdnUizaAdtPJZm+pGWKtFX
- 8mFqv0WvcWqBA1OpxWrT4u8Zgf7O21sfUX26wvJVC1rJsJnc6zUEqi9egfhfrz9IpiZFQ==
-X-Received: by 2002:a05:600c:1387:b0:499:7a4f:d13d with SMTP id
- 5b1f17b1804b1-499b8313ad3mr66282195e9.4.1787310161965; 
- Fri, 21 Aug 2026 04:02:41 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787310160; x=1787914960;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=jDgg4EScB8bslHVWuzjdiznJQxcizlYwx+ib9GrZvI0=;
+ b=L6G78tPrMAzBRSKoKY//wONhHGq/6Ok19wEeKwNJ3jPF+JHrS9L41obEazHFgImI75
+ rGqBqHHtntZwAX2H0PSwiQhREwTUZli7mGzWzuTlhZOoyT4HaZVhS7llmfAEQyIX7QLc
+ 9qS2G9W4BYmThOHRS6UWJRz/3I904YQzI2ujj4FoOoD26HFStj3kgDWRQL2ltnJtgcaC
+ LZKFXQE+mk4KYMRMjLHhMj1brpyLGyw9mjRyG98qCgJWaicF4UDWzGJRwDoWTNLck/zO
+ elZJ12vegsyQXV8gOKhfEgo282ag62iU3ZDEsHRhfMhDQr/QBLMmOmKdOgHC8b9CQ41Z
+ DiOA==
+X-Gm-Message-State: AOJu0YyBRy2NJ22T8QwFvqrvrBZkzRew3VP40TCWJDdNKmvYvGEMVdlv
+ l1cEFdCyZq2XGABjmZ+jqXbQW57UoDaLfX4LXahhIgz09kkKex77RksCmk53oDBdb2jjcohi6ju
+ wthkK
+X-Gm-Gg: AR+sD13NuMqFuVoNpVQfHwgvMt/MYrrrGg9/9w6KHPoikac9VMnFSbfd6NtKj59SXsx
+ 9IJGvRlpi6SAAe0mFUuimygGA67nJrc7EIiJ1kkYlHrSMUwuyE5NLyxI52NGTcdw9k6y7Ou08jj
+ yaoz1jxIzUXKueA8oQnnsQijID76o4tL1DXcnY7yOGqL7TnNCikWXVep6xzTWo/vlQ5DqMmhZDz
+ GNdTkNmL02SyVfBUte0sX9b2DdqYHnfkKZZIxSrHoVCWbFzZp2KfjOCTdEwPiG5MHbu0p9XXcmY
+ K3tqlBGG642mN43qRsfQGOMhCmPE5CKVuw9fxUpPMEkvnVE4w4CS346QvsKOOlarY4AX8/v8q+g
+ E6HOs8h5M+U/D0whE8beL4GRQUbVc3CAIk/SorxGIU9ApplzNi/nI6Ym01mW6cy6uZSGzo6UAgw
+ qdBFQxISiETzzKud8SF0hczyElmNHFgW+4w2gNgBu6WXt/nULZF3Ks9bCtRPBehp64qDfS9cx9F
+ 4jSAz4f4C5L/qoA56k9pM86wypGx854dNX1vTRh/v2J532h5CJZAPKuSw/i7BJUhOcf9w==
+X-Received: by 2002:a05:600c:37c6:b0:499:858f:2653 with SMTP id
+ 5b1f17b1804b1-499b830d08emr87013745e9.2.1787310159819; 
+ Fri, 21 Aug 2026 04:02:39 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.41
+ 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 04:02:41 -0700 (PDT)
+ Fri, 21 Aug 2026 04:02:39 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 40/43] hw/arm: realview: Store boot info in the machine state
-Date: Fri, 21 Aug 2026 12:00:58 +0100
-Message-ID: <20260821110101.3971391-41-peter.maydell@linaro.org>
+Subject: [PULL 38/43] hw/arm: omap_sx1: Store boot info in the machine state
+Date: Fri, 21 Aug 2026 12:00:56 +0100
+Message-ID: <20260821110101.3971391-39-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260821110101.3971391-1-peter.maydell@linaro.org>
 References: <20260821110101.3971391-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,7 +109,7 @@ arm_load_kernel() keeps a pointer to the boot info struct for the
 lifetime of the VM, so the struct logically belongs to the machine
 rather than to a file scoped static object.
 
-Give all four realview machine types the same RealViewMachineState
+Give both the sx1 and sx1-v1 machine types the same Sx1MachineState
 instance struct and store the boot info there.
 
 As in the xlnx-zcu102 and raspi machines, the boot info belongs to
@@ -117,97 +119,64 @@ the machine rather than to a static object:
 0f15c6e338 ("hw/arm/raspi: Move arm_boot_info structure to RaspiMachineState")
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Message-id: 20260816131300.51799-18-bin.meng@processmission.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-id: 20260816131300.51799-16-bin.meng@processmission.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/realview.c | 27 ++++++++++++++++++---------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ hw/arm/omap_sx1.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/hw/arm/realview.c b/hw/arm/realview.c
-index 2b9f3271d62..0c2daf5c01f 100644
---- a/hw/arm/realview.c
-+++ b/hw/arm/realview.c
-@@ -39,10 +39,11 @@
+diff --git a/hw/arm/omap_sx1.c b/hw/arm/omap_sx1.c
+index bcb7105323f..3b628d13cbc 100644
+--- a/hw/arm/omap_sx1.c
++++ b/hw/arm/omap_sx1.c
+@@ -91,14 +91,16 @@ static const MemoryRegionOps static_ops = {
+ #define FLASH1_SIZE     (8 * MiB)
+ #define FLASH2_SIZE     (32 * MiB)
  
- /* Board init.  */
- 
--static struct arm_boot_info realview_binfo = {
--    .smp_loader_start = SMP_BOOT_ADDR,
--    .smp_bootreg_addr = SMP_BOOTREG_ADDR,
+-static struct arm_boot_info sx1_binfo = {
+-    .loader_start = OMAP_EMIFF_BASE,
+-    .ram_size = SDRAM_SIZE,
+-    .board_id = 0x265,
 -};
-+typedef struct RealViewMachineState {
++typedef struct Sx1MachineState {
 +    MachineState parent;
 +
 +    struct arm_boot_info bootinfo;
-+} RealViewMachineState;
++} Sx1MachineState;
  
- /* The following two lists must be consistent.  */
- enum realview_board_type {
-@@ -76,6 +77,8 @@ static void split_irq_from_named(DeviceState *src, const char* outname,
- static void realview_init(MachineState *machine,
-                           enum realview_board_type board_type)
+ static void sx1_init(MachineState *machine, const int version)
  {
-+    /* All realview-* machines embed the same state as their first member */
-+    RealViewMachineState *rvms = (RealViewMachineState *)machine;
-     ARMCPU *cpu = NULL;
-     CPUARMState *env;
-     MemoryRegion *sysmem = get_system_memory();
-@@ -202,7 +205,7 @@ static void realview_init(MachineState *machine,
-         }
-         sysbus_create_varargs("l2x0", periphbase + 0x2000, NULL);
-         /* Both A9 and 11MPCore put the GIC CPU i/f at base + 0x100 */
--        realview_binfo.gic_cpu_if_addr = periphbase + 0x100;
-+        rvms->bootinfo.gic_cpu_if_addr = periphbase + 0x100;
-     } else {
-         uint32_t gic_addr = is_pb ? 0x1e000000 : 0x10040000;
-         /* For now just create the nIRQ GIC, and ignore the others.  */
-@@ -387,10 +390,12 @@ static void realview_init(MachineState *machine,
-                            &error_fatal);
-     memory_region_add_subregion(sysmem, SMP_BOOT_ADDR, ram_hack);
++    /* Both sx1 and sx1-v1 embed the same state as their first member */
++    Sx1MachineState *sms = (Sx1MachineState *)machine;
+     struct omap_mpu_state_s *mpu;
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
+     MemoryRegion *address_space = get_system_memory();
+@@ -187,7 +189,10 @@ static void sx1_init(MachineState *machine, const int version)
+     }
  
--    realview_binfo.ram_size = ram_size;
--    realview_binfo.board_id = realview_board_id[board_type];
--    realview_binfo.loader_start = (board_type == BOARD_PB_A8 ? 0x70000000 : 0);
--    arm_load_kernel(cpu, machine, &realview_binfo);
-+    rvms->bootinfo.smp_loader_start = SMP_BOOT_ADDR;
-+    rvms->bootinfo.smp_bootreg_addr = SMP_BOOTREG_ADDR;
-+    rvms->bootinfo.ram_size = ram_size;
-+    rvms->bootinfo.board_id = realview_board_id[board_type];
-+    rvms->bootinfo.loader_start = board_type == BOARD_PB_A8 ? 0x70000000 : 0;
-+    arm_load_kernel(cpu, machine, &rvms->bootinfo);
- }
+     /* Load the kernel.  */
+-    arm_load_kernel(mpu->cpu, machine, &sx1_binfo);
++    sms->bootinfo.loader_start = OMAP_EMIFF_BASE;
++    sms->bootinfo.ram_size = SDRAM_SIZE;
++    sms->bootinfo.board_id = 0x265;
++    arm_load_kernel(mpu->cpu, machine, &sms->bootinfo);
  
- static void realview_eb_init(MachineState *machine)
-@@ -431,6 +436,7 @@ static const TypeInfo realview_eb_type = {
-     .name = MACHINE_TYPE_NAME("realview-eb"),
+     /* TODO: fix next line */
+     //~ qemu_console_resize(ds, 640, 480);
+@@ -220,6 +225,7 @@ static const TypeInfo sx1_machine_v2_type = {
+     .name = MACHINE_TYPE_NAME("sx1"),
      .parent = TYPE_MACHINE,
-     .class_init = realview_eb_class_init,
-+    .instance_size = sizeof(RealViewMachineState),
+     .class_init = sx1_machine_v2_class_init,
++    .instance_size = sizeof(Sx1MachineState),
      .interfaces = arm_machine_interfaces,
  };
  
-@@ -453,6 +459,7 @@ static const TypeInfo realview_eb_mpcore_type = {
-     .name = MACHINE_TYPE_NAME("realview-eb-mpcore"),
+@@ -240,6 +246,7 @@ static const TypeInfo sx1_machine_v1_type = {
+     .name = MACHINE_TYPE_NAME("sx1-v1"),
      .parent = TYPE_MACHINE,
-     .class_init = realview_eb_mpcore_class_init,
-+    .instance_size = sizeof(RealViewMachineState),
-     .interfaces = arm_machine_interfaces,
- };
- 
-@@ -473,6 +480,7 @@ static const TypeInfo realview_pb_a8_type = {
-     .name = MACHINE_TYPE_NAME("realview-pb-a8"),
-     .parent = TYPE_MACHINE,
-     .class_init = realview_pb_a8_class_init,
-+    .instance_size = sizeof(RealViewMachineState),
-     .interfaces = arm_machine_interfaces,
- };
- 
-@@ -494,6 +502,7 @@ static const TypeInfo realview_pbx_a9_type = {
-     .name = MACHINE_TYPE_NAME("realview-pbx-a9"),
-     .parent = TYPE_MACHINE,
-     .class_init = realview_pbx_a9_class_init,
-+    .instance_size = sizeof(RealViewMachineState),
+     .class_init = sx1_machine_v1_class_init,
++    .instance_size = sizeof(Sx1MachineState),
      .interfaces = arm_machine_interfaces,
  };
  
