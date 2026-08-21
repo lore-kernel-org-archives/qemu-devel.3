@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88E95C5DF87
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:03:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 674BFC5DF92
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:03:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxN1T-0001rT-Uf; Fri, 21 Aug 2026 07:02:55 -0400
+	id 1wxN1L-0001NS-Bo; Fri, 21 Aug 2026 07:02:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN1D-0000vG-81
+ id 1wxN1D-0000vF-7Z
  for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:39 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN1B-0007YL-Eb
+ id 1wxN1B-0007YM-DX
  for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:38 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4954dff6536so6796105e9.0
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-496bb7cdf51so8319615e9.2
  for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787310156; x=1787914956; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787310155; x=1787914955; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=Qd+OWW3qU6A06engUu0NRn2PFP6Sh3jtFDKQxp24mZ4=;
- b=Fp3ATfco0GFmnIr/5bqgXgPmdyLz3HTTs9l98QJXMWpl8aF6uSc7/3QGBVdMgR9vxy
- Khj0CCdQTc629k7WDs/YihvYMsq4EauvuTBVMlRfgAJfATDzBXMaGushRN8JGDC4GfrJ
- BinuZbHZWYJaaObmThTxAn4/XtcEoQ8qrgsnsmzb2m7DXlmSd/Km49tT/wK9GRTm6YvG
- eY/S9r54iSVmxcaiSKyH/FMavHsXdxZe6odnLyyisADNbxmP1psim9IF2ggEzondxJ15
- bZWLPlnib74Mx4gJCseR+hzj1EGbauejsO4xidxQoFgmLjsUIUbdMbQqv3gvYUgNuZgD
- 13Eg==
+ bh=4rTL3SdYHRUqGgeIh0nHgD5mJ1eWi+Ul3pcLYk9c+W4=;
+ b=GMVLzeY20zhWqh7qWUkIbJw5aIXH6WG8z2Y02rydPUAbKYNNOWKef1/Z5n5wIIbRHq
+ p8RyJ/1Ym7ulusI+2Fo2YKf+uBHJ9N0fRpy6Tf//4Sjwkn6XQ+kHYNiWhw/NYS07J8z8
+ CDKFyXdHvLIxPyjmXhjZY9dGwp4UqqPriiwxVnRmtEBzEHnZqeOYGT8bhTIEhQq9QGJR
+ Cjfvgnw+7+aY6t0ZIMn9cJ+VbUmyF3w56c5TPDtaFb67iO0RoY63FSmIPdQ9B69pKSiO
+ pGRSeTp+gk6rlOyxIHSiHh5ClwPQmKj3rI7PpJYLuJvWymyC1mFmjBKLjYiU3YfF1ZDy
+ GMvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787310156; x=1787914956;
+ d=1e100.net; s=20251104; t=1787310155; x=1787914955;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=Qd+OWW3qU6A06engUu0NRn2PFP6Sh3jtFDKQxp24mZ4=;
- b=MvXKEZKvj6EOv3d7dEIboq7UgPBB0Vi7tfF/7PQExjAOwYQ8J1hfpsFWtDHyzvoXyp
- STWbTUWQnNvoVRkgfqQERo6vmx/LShc01shB+/ohQZXvtkLwG9BDkmrrK/RY6UHHWYlp
- hrWv/b+EfxzdKTyliSmOLrL0NpNYmfo1+ebyrks8lpNhLhOSiJoiE0WbAF8vmYILjSxt
- SiQSKi1h095P/qIF1cHBfIWcc5MXLTYEaP/02K51muSTotr+WMHikupUTOCPE31V2ngB
- Bf2TT+AbpWrPh4R5umW1wH1YAtNcX7d1MyHNloDk5sGtnmwHXCL3HqeJ74D3QC8j39L0
- k/sQ==
-X-Gm-Message-State: AOJu0YwZvIHqj+UNUTPGXwpoX58zkyP1J8kfZrSCh3LPJPFe2ECsCfmk
- eLHxat09+C3EY6vUfQeGJXQ6o1rT8P7FSSp0pBi7Vmpqzx5rYWSvy0/cGHQDMhn8Gt1alPS0+dn
- kFoJt
-X-Gm-Gg: AR+sD13VmvFakgPihNeDRe2sUd2Z6Qew0y9zVv353wkWT7W7LCLxdwb9JVYDgODdfRb
- rC3mQ88QDZx/cvuiXndHEJR6YhW32bKXWyveY8p2+QZhnANVEVjvxuKHVFErzq9SrM+8jqZeXIY
- aO8cn3F0zjb1WaRBTXFbLB/uxkNOCvzVTXsKxDXQYfQxK6oD7MpjRwgfwOkM6q5G0rYy79BWInZ
- Q7cocT1+N0vs+i6+sflkc4/RvzuxY/zAn3GXEgiekvXFxWBXV2u7QUqwsXIgjcVZ2LT8/0YBHZW
- Zz2cg/NXEwoYigKGOiKgPPwfAMzwefd7N8Ra4XQeIY7yqwD2qBGDNlb7i2kVGT4Rf2j7NEeASyh
- 2D0S1sNLE/BmTNW2vJdDWk2iAYPHQEiEWscYEI56Lb8fBzhyPRygbiikE/HE4iSk5Mf7eU50/TA
- c4i5nz+RefLH5In8ZQ6bXGFcGrSRMEk4LaQBlfhnBKsFSN13tzDvQvR+17aYm8OR228cynuyYKV
- i9OrH+0eW4m631hEbfqLIg1IpRNVyU/nqPAzFC0xWUxNBYeTUjdq/YLuKID06OEkh+Ppg==
-X-Received: by 2002:a05:600c:8b77:b0:499:48bb:417e with SMTP id
- 5b1f17b1804b1-499b82f4163mr87353215e9.2.1787310155931; 
- Fri, 21 Aug 2026 04:02:35 -0700 (PDT)
+ bh=4rTL3SdYHRUqGgeIh0nHgD5mJ1eWi+Ul3pcLYk9c+W4=;
+ b=EvnbGLPD5F7xGXtu6VXkAPQmDtLmfVqgKL/ikAOZVG+jjF+nXY9kjV6TrzmZQoPwD+
+ 14Pe5GAmEH98jivGGJxFvPqwYAxNXxRMDQxo2hjOsgnbpwpojaD6G2SVKzFpFKcMU7m6
+ Tb14bHaDJbeMWjQRm8P6uazV1scW5xCdKrmYQPDKYC4zi3PQYh7/lWIkfSJgtfqQzY6C
+ IGWnlmaFkoJhPqu4EKu83kcomLM8irmPbj2+64V2glRFtWcwokpQqdO0zYVVNA86CoMn
+ EMFmNltpb4Op7MmStB2aWXDBImVimqHZWenjuhceiS0yqE3ll7SCm5nYgehgRzD6Xxm0
+ E4zw==
+X-Gm-Message-State: AOJu0YzPZKFXviP0d9H0SNQDr51+3hZnnroAc7kspxS/9FtLZIxQpTSa
+ mYU0kbFbXnAzRyWTVUEntkk8Ly6Wt6QYjXflT/XCdodLt0Y5FxexlFjKwhWPKYT073ZLBgqGhSD
+ GatNK
+X-Gm-Gg: AR+sD12eoHsrSH8w/kPVMoICMgZpts0xvcLc68bxWiNUJqt9WsMwMoqvePynzE7/Qs+
+ E+aJPXbaq3QfMODAvHwG/6rnbW6rukS0P+s4EAKAVvwJN65TKtH5g22UiRDug8rmbPzI+KiTKIq
+ b8OljSN2in3wSoqKgb0w5RruHlWFllFNwi+gChuNwRbm2s7OYMoBDqTfQx5YPgRVknTUlInibl6
+ 6zHb/qHNlx41kwO/jaLf6WPrw5pTpbV9VHJ9fNadpOWXELePfF7kRRJReSMMqESUpOm8fIJrim2
+ fg7zPXWHTT8XFqBbsy6a0hnrK6NM2urhZFZLrDzA2OyA/QSZlWzkLhLLHNNVs+xmrhlgw0HUtWy
+ afdQPOGLL0BfGJktrIv/xha+XG4K1A4AqOCsYs2TuNGf4dHcNgjAI463ebvYVfKH5m+jnJzJqix
+ ldweh+KURp1ApAUJR9BlFY3kJFJ02u3JxQQeZWl5tWO9E9huXvEnhXMfb0Rr8IgLtaEjdkPG8bL
+ QlAGbk6UnnF+RaLYSoNlmnhdVNfMJKGBQYNafj5beoVm9CcwyPtwiRziR/9LchoUhs2Ag==
+X-Received: by 2002:a05:600c:1f8b:b0:495:6274:56c2 with SMTP id
+ 5b1f17b1804b1-499b82d359dmr75802725e9.2.1787310154851; 
+ Fri, 21 Aug 2026 04:02:34 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.35
+ 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.33
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 04:02:35 -0700 (PDT)
+ Fri, 21 Aug 2026 04:02:34 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 34/43] hw/arm: mcimx7d-sabre: Store boot info in the machine
- state
-Date: Fri, 21 Aug 2026 12:00:52 +0100
-Message-ID: <20260821110101.3971391-35-peter.maydell@linaro.org>
+Subject: [PULL 33/43] hw/arm: kzm: Store boot info in the board state
+Date: Fri, 21 Aug 2026 12:00:51 +0100
+Message-ID: <20260821110101.3971391-34-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260821110101.3971391-1-peter.maydell@linaro.org>
 References: <20260821110101.3971391-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,10 +105,10 @@ From: Bin Meng <bin.meng@processmission.com>
 
 arm_load_kernel() keeps a pointer to the boot info struct for the
 lifetime of the VM, so the struct logically belongs to the machine
-rather than to a function scoped static object.
+rather than to a file scoped static object.
 
-Move it into a new Mcimx7dSabreMachineState and register the machine
-type explicitly instead of through the DEFINE_MACHINE_ARM macro.
+The IMX31KZM struct is already allocated per machine instance, so
+move the boot info there.
 
 As in the xlnx-zcu102 and raspi machines, the boot info belongs to
 the machine rather than to a static object:
@@ -118,72 +117,51 @@ the machine rather than to a static object:
 0f15c6e338 ("hw/arm/raspi: Move arm_boot_info structure to RaspiMachineState")
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Message-id: 20260816131300.51799-12-bin.meng@processmission.com
+Message-id: 20260816131300.51799-11-bin.meng@processmission.com
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/mcimx7d-sabre.c | 28 +++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ hw/arm/kzm.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/hw/arm/mcimx7d-sabre.c b/hw/arm/mcimx7d-sabre.c
-index a0ac647c3df..22fe1fa932f 100644
---- a/hw/arm/mcimx7d-sabre.c
-+++ b/hw/arm/mcimx7d-sabre.c
-@@ -22,9 +22,19 @@
- #include "qemu/error-report.h"
- #include "system/qtest.h"
- 
-+#define TYPE_MCIMX7D_SABRE_MACHINE MACHINE_TYPE_NAME("mcimx7d-sabre")
-+OBJECT_DECLARE_SIMPLE_TYPE(Mcimx7dSabreMachineState,
-+                           MCIMX7D_SABRE_MACHINE)
-+
-+struct Mcimx7dSabreMachineState {
-+    MachineState parent;
-+
+diff --git a/hw/arm/kzm.c b/hw/arm/kzm.c
+index 168ecf35d09..1aa5b49de92 100644
+--- a/hw/arm/kzm.c
++++ b/hw/arm/kzm.c
+@@ -54,17 +54,13 @@
+ typedef struct IMX31KZM {
+     FslIMX31State soc;
+     MemoryRegion ram_alias;
 +    struct arm_boot_info bootinfo;
-+};
-+
- static void mcimx7d_sabre_init(MachineState *machine)
+ } IMX31KZM;
+ 
+ #define KZM_RAM_ADDR            (FSL_IMX31_SDRAM0_ADDR)
+ #define KZM_FPGA_ADDR           (FSL_IMX31_CS4_ADDR + 0x1040)
+ #define KZM_LAN9118_ADDR        (FSL_IMX31_CS5_ADDR)
+ 
+-static struct arm_boot_info kzm_binfo = {
+-    .loader_start = KZM_RAM_ADDR,
+-    .board_id = 1722,
+-};
+-
+ static void kzm_init(MachineState *machine)
  {
--    static struct arm_boot_info boot_info;
-+    Mcimx7dSabreMachineState *msms = MCIMX7D_SABRE_MACHINE(machine);
-     FslIMX7State *s;
-     int i;
- 
-@@ -34,12 +44,10 @@ static void mcimx7d_sabre_init(MachineState *machine)
-         exit(1);
+     IMX31KZM *s = g_new0(IMX31KZM, 1);
+@@ -125,10 +121,12 @@ static void kzm_init(MachineState *machine)
+                        14745600, serial_hd(2), DEVICE_NATIVE_ENDIAN);
      }
  
--    boot_info = (struct arm_boot_info) {
--        .loader_start = FSL_IMX7_MMDC_ADDR,
--        .board_id = -1,
--        .ram_size = machine->ram_size,
--        .psci_conduit = QEMU_PSCI_CONDUIT_SMC,
--    };
-+    msms->bootinfo.loader_start = FSL_IMX7_MMDC_ADDR;
-+    msms->bootinfo.board_id = -1;
-+    msms->bootinfo.ram_size = machine->ram_size;
-+    msms->bootinfo.psci_conduit = QEMU_PSCI_CONDUIT_SMC;
- 
-     s = FSL_IMX7(object_new(TYPE_FSL_IMX7));
-     object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
-@@ -65,7 +73,7 @@ static void mcimx7d_sabre_init(MachineState *machine)
-     }
+-    kzm_binfo.ram_size = machine->ram_size;
++    s->bootinfo.loader_start = KZM_RAM_ADDR;
++    s->bootinfo.board_id = 1722;
++    s->bootinfo.ram_size = machine->ram_size;
  
      if (!qtest_enabled()) {
--        arm_load_kernel(&s->cpu[0], machine, &boot_info);
-+        arm_load_kernel(&s->cpu[0], machine, &msms->bootinfo);
+-        arm_load_kernel(&s->soc.cpu, machine, &kzm_binfo);
++        arm_load_kernel(&s->soc.cpu, machine, &s->bootinfo);
      }
  }
  
-@@ -78,4 +86,6 @@ static void mcimx7d_sabre_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
- }
- 
--DEFINE_MACHINE_ARM("mcimx7d-sabre", mcimx7d_sabre_machine_init)
-+DEFINE_MACHINE_EXTENDED("mcimx7d-sabre", MACHINE, Mcimx7dSabreMachineState,
-+                        mcimx7d_sabre_machine_init, false,
-+                        arm_machine_interfaces)
 -- 
 2.43.0
 
