@@ -4,72 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1917C5DF89
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D7CAC5DF88
 	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 04:06:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxGUO-00061b-A1; Fri, 21 Aug 2026 00:04:20 -0400
+	id 1wxGV3-0006U4-Ae; Fri, 21 Aug 2026 00:05:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wxGUL-0005yv-Eo
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 00:04:17 -0400
+ id 1wxGUc-00069a-Pi
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 00:04:36 -0400
 Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wxGUI-0003A2-OO
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 00:04:17 -0400
+ id 1wxGUZ-0003Gp-Et
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 00:04:34 -0400
 Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-38a0c7e841fso687692a91.2
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 21:04:14 -0700 (PDT)
+ 98e67ed59e1d1-38ec1402b05so402486a91.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 21:04:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787285053; x=1787889853; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787285069; x=1787889869; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=taAgCVdsYQnHbEJNFb0X0g9aT5v9jNXyAHV3dCosVWA=;
- b=zR/hYNUheXP3fxmqSwV2kMCBUCydFFrVouoDIIa7WiAmWSasnCHNjzGm9Cof6K0Bh8
- F4Vo0n6z1v4QhWcrCIitSEYu83Rh2XQtyzsBcVGtXfEs3muNxGLQB2xDbcRJvn1Y+VXF
- TUmi1bn+mY2xt4imXBMoZOoduzJ92g4CoAZx7/9WQqr+ojLpOORINzK0Q3pa3xiTMZyN
- i9PdBco9zul0eM2PO2Gr/8m0xJK+BSqF7ywFmiwFtTQBNVe+6j4Afnf/UodzsAHoodEA
- jS7SojaFyrh5WzpXXY6acENbL4fP4mWf/eH79HI3g2Rc4K3PGafb8qGbfClONaQdvbW0
- D5Ww==
+ bh=oUcA47zI0T3mx+6NPIXLmuwEUg4/HjoJ4MZuVuTU53U=;
+ b=BGgzDcHdCBfsSXDsAQRxcXUaTcdl4Szu7CCO9LyZlTw1QnOIZc4lsIUq0IMazl0m0X
+ K/z/ERf5iCIfxVd2I1OiGXET/9MlX3rh0SRDxW3CqXO2xKFtrTGWRoU63+dpn5m2oCEg
+ T0wBag+9qqQFDMgGLtcF0IWKyFN7TqGxV3QBU1BzlKGZQsBRBe01NRid2xthh1Q6+F4N
+ Co9a+YS55aSW1cnxOZREOwORXm8JIs16Y0PqT6vWl1rx9gJtne7dai+HGk8M0ts4DH6n
+ B5Lj8OfM9qJVJBIljinPU3Li3gb4dk2iVCk9Nasna9AOLFqqZ+ES5l0iVXDRCsLY0rGS
+ q17A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787285053; x=1787889853;
+ d=1e100.net; s=20251104; t=1787285069; x=1787889869;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=taAgCVdsYQnHbEJNFb0X0g9aT5v9jNXyAHV3dCosVWA=;
- b=MOpOorY6kQ8VQAgcrYO1c6jSuOL16OhUsWqzgas8GY9CQh2RSObaz3Rb6g3JHHje8N
- 6by7aeiEeLGD0Cg+ZAqw43JY3+QQlyd2coTfVfXcuLm/n/VQa+bqzx2XlsYgsEyytpyh
- Z9CJnU0WNzRR4D0sUfJEDeVbVQh7RoY7JgDf6J8Zpet6Xlg9nZc3XU8eMG28/dRyoS2F
- s5Pz7he/q4bq2Igh4qRXAT69oYPo0CnqapcvYGj0OmXHW1V5bTa4f3E3v55AIhK2cTs3
- JXynw10E5MinMJTeZQUPnAGwyh4hYPESH3eEyMHdvYmEcLjKTqr65Iviq9/pGGfXrvaF
- vJ3A==
-X-Gm-Message-State: AFuF++ncUBZgSrn/TZnAipDUMjjv2KvcDaDp9E9qvTf98EKSB/WXnJBY
- tRspcvUyL7ENUAXFcApXitBYBLuAZiYdW7xuGc6/O7Ma86bcVagtyrJtlepkrPCymIYMy2UDToY
- W/50J
-X-Gm-Gg: AR+sD12YmwI8zaBLijG4e67ZD6keprDT68OAVnNYHkkH2wYjybQUsuKQB7HuLFRrsPC
- iwxipmTtOGJV73VC6CfSSEbC1Fmq3qaVvLzhvighyGzA3c6w2Ssr7D1P+BzxDY6kOcEGhrAkRBf
- y0caekkB/Z4rwZFfGW0m3h/4X0buOVZXEn5Sva6PKrOy9Ozg3B0axcucJgXyUEkRS6fZdS1vXAs
- FFCv3MEZ3do6lUZD1utqfgB3ET3P7Rq5/gULCFzOOcfeg3DIzTNBJ3Z7Inn34tBI/79jAgKMlOB
- eA5upC1vuxrpKMh57aRCZJ7TeZVg4C0ADfAGNNqpTI4fGjIe6P8qTp3mA7QCV1yYbPqlhGNdmeN
- fh4EQMDyrzo0YvxO9T7ORhZrAEKHtt8DGmHO/5G9i0CJq1zKD+Eu3DA/yoK3sXiKLbJK1RUDDNV
- u2M5oLcxTup5yb/CDZ+5wph/2NyXU2AQm4eiKa0StZPAzzHPfvMdzqRw1NOxVpQRsEOSc=
-X-Received: by 2002:a17:90b:5846:b0:38e:49c0:75a7 with SMTP id
- 98e67ed59e1d1-395c3718ee4mr6983439a91.8.1787285053274; 
- Thu, 20 Aug 2026 21:04:13 -0700 (PDT)
+ bh=oUcA47zI0T3mx+6NPIXLmuwEUg4/HjoJ4MZuVuTU53U=;
+ b=lgKxAUZR+MnBsWufRt7bo7Dej3gdxpM3thqH9ysEUGDrJmZMOwh6s6i9EejxNEBmcY
+ fDQNNu4Pye2hO4RVnVqaEUT/sGCaR46tvhI3CPBNouuPy6e7k7lenDlv8S2YgKLedYxA
+ ZQ6EPZvXwRADkSNFac9JUaE7RQqS0ApMjJ0NLy1kcggs4phFjDl4FpCfyjk5dPP64BE+
+ qgpZhH6hXtVg63oThma1wXZl46L2RGGgZVjxudwJJqBYES0+sH04yorWdNwAVpWsNwon
+ eyk8Saa+0Fnn+fn1RBzANyEl5xJBDSw/cXfxU8aV2lcrOT7i7cUab8iK32Dig2kPNmkw
+ YNFQ==
+X-Gm-Message-State: AFuF++nvEIZwEtcf4qJn9KridqJvDVjjsv26K0O1KX956b2jYgxB5dQv
+ ZlVIHy84uapMJp9eSrYRQRiq86owv1mDuPc0Qgxqcq64WrgfsDIkJKcMyt+4Z4osn/nDkT1dchH
+ EvrjJ
+X-Gm-Gg: AR+sD12rGdFbUawPnVsZ7vBhleBWXEsYGPNoQCcE1R6Lm6Frd4f57ChTwzVDBT5a9Ve
+ M1UpEGQX4zJj0CcKoj/H+WdO25H4211DHx8MlpYcWYWqdmlscYAFxJzcX0V5Z3SRWpmoXlf6eeg
+ lyCfrBSBNcLZPKXcpFOSG+0B0pg3qrIZegMNQiHJFcmInJukLGkB5LD01c1ZkmvTGRYByZj6dDC
+ e91LiqNGNrQpp/yt31JbIKmnvs3qATdBx9OZ0E+WXaSZlck5KnutufT4aHm+TQUO01EmHiD009G
+ Zt4UJQ4qBRzGuIDXAqKbhWr8RImcb4jl2tJhm3Wvc8v+vx+PD9u7X2yFptMm7cAEpFNqvK92kPk
+ gIDjpqAyFtSOkmQUzZog/4cXaBvMnAkqJeGzripiTuRXwpoIwVX+nyUEX8kxU9I28n2RYnQ3rqh
+ xwucy1mfPrreOJYJHbMsrXzO16nUcjujBtTZDAst7EiLqGF5OOO4x6nky/Avk+ZfWX5/oE91/XE
+ UM3Ow==
+X-Received: by 2002:a17:90b:2d91:b0:38e:2e86:ed02 with SMTP id
+ 98e67ed59e1d1-395c39cd288mr6454633a91.14.1787285069386; 
+ Thu, 20 Aug 2026 21:04:29 -0700 (PDT)
 Received: from stoup.. ([108.174.179.84]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c4c194d2sm1298383a91.15.2026.08.20.21.04.12
+ 98e67ed59e1d1-395c4c194d2sm1298383a91.15.2026.08.20.21.04.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 21:04:12 -0700 (PDT)
+ Thu, 20 Aug 2026 21:04:29 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org
-Subject: [PATCH v2 03/23] target/riscv: Split out vext_ldst_nf_host
-Date: Thu, 20 Aug 2026 21:03:44 -0700
-Message-ID: <20260821040404.268123-4-richard.henderson@linaro.org>
+Cc: qemu-riscv@nongnu.org,
+	Joel Stanley <joel@jms.id.au>
+Subject: [PATCH v2 23/23] tests/tcg/riscv64: Add intrinsics version of
+ test-rvv-ldst
+Date: Thu, 20 Aug 2026 21:04:04 -0700
+Message-ID: <20260821040404.268123-24-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260821040404.268123-1-richard.henderson@linaro.org>
 References: <20260821040404.268123-1-richard.henderson@linaro.org>
@@ -99,68 +102,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Provide a helper that calls ldst_host for all NF vectors.
+From: Joel Stanley <joel@jms.id.au>
 
+A C userspace program to perform vector loads and stores that cross page
+boundaries, and check the result.
+
+Signed-off-by: Joel Stanley <joel@jms.id.au>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260820130223.2762-3-joel@jms.id.au>
 ---
- target/riscv/tcg/vector_helper.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ tests/tcg/riscv64/test-rvv-ldst-intrinsics.c | 66 ++++++++++++++++++++
+ tests/tcg/riscv64/Makefile.target            | 12 +++-
+ 2 files changed, 75 insertions(+), 3 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-rvv-ldst-intrinsics.c
 
-diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-index b04d461c08..6108cf3a6c 100644
---- a/target/riscv/tcg/vector_helper.c
-+++ b/target/riscv/tcg/vector_helper.c
-@@ -337,6 +337,15 @@ static void vext_set_nf_elems_1s(void *vd, uint32_t i, uint32_t nf,
-     }
- }
- 
-+static void vext_ldst_nf_host(void *vd, void *host, uint32_t i, uint32_t nf,
-+                              uint32_t esz, uint32_t max_elems,
-+                              vext_ldst_elem_fn_host *ldst_host)
+diff --git a/tests/tcg/riscv64/test-rvv-ldst-intrinsics.c b/tests/tcg/riscv64/test-rvv-ldst-intrinsics.c
+new file mode 100644
+index 0000000000..3dbc862470
+--- /dev/null
++++ b/tests/tcg/riscv64/test-rvv-ldst-intrinsics.c
+@@ -0,0 +1,66 @@
++/*
++ * RISC-V vector load/store test, including accesses that cross a page
++ * boundary. Intrinsics version of test-rvv-ldst.S.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include <riscv_vector.h>
++#include <stdint.h>
++#include <stdlib.h>
++#include <string.h>
++
++#define MAX_PAGE_SIZE 65536
++#define NUM_BYTES 16
++
++struct cross_page {
++    uint8_t pad[MAX_PAGE_SIZE - NUM_BYTES / 2];
++    uint8_t data[NUM_BYTES];
++};
++
++/* Page aligned so the within-page cases never cross a boundary */
++static const uint8_t src_data[NUM_BYTES]
++    __attribute__((aligned(MAX_PAGE_SIZE))) = {
++    0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
++    0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F,
++};
++
++static const struct cross_page src_cross
++    __attribute__((aligned(MAX_PAGE_SIZE))) = {
++    .data = {
++        0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27,
++        0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F,
++    },
++};
++
++static uint8_t dst_data[NUM_BYTES] __attribute__((aligned(MAX_PAGE_SIZE)));
++static struct cross_page dst_cross __attribute__((aligned(MAX_PAGE_SIZE)));
++
++static void vec_copy(uint8_t *dst, const uint8_t *src, int code)
 +{
-+    for (uint32_t k = 0; k < nf; k++, host += esz) {
-+        ldst_host(vd, i + k * max_elems, host);
++    size_t vl = __riscv_vsetvl_e8m1(NUM_BYTES);
++    if (vl != NUM_BYTES) {
++        exit(code);
++    }
++
++    vuint8m1_t v = __riscv_vle8_v_u8m1(src, vl);
++    __riscv_vse8_v_u8m1(dst, v, vl);
++
++    if (memcmp(dst, src, NUM_BYTES)) {
++        exit(code);
 +    }
 +}
 +
- static void vext_ldst_nf_tlb(CPURISCVState *env, void *vd, target_ulong addr,
-                              uint32_t i, uint32_t nf,
-                              uint32_t esz, uint32_t max_elems,
-@@ -419,7 +428,7 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
-                   vext_ldst_elem_fn_host *ldst_host, uintptr_t ra)
- {
-     void *host;
--    int i, k, flags;
-+    int flags;
-     uint32_t esz = 1 << log2_esz;
-     uint32_t size = (elems * nf) << log2_esz;
-     uint32_t msize = nf * esz;
-@@ -450,13 +459,9 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
-             vext_continuous_ldst_host(env, ldst_host, vd, evl, env->vstart,
-                                       host, esz, is_load);
-         } else {
--            for (i = env->vstart; i < evl; ++i) {
--                k = 0;
--                while (k < nf) {
--                    ldst_host(vd, i + k * max_elems, host);
--                    host += esz;
--                    k++;
--                }
-+            for (uint32_t i = env->vstart; i < evl; ++i) {
-+                vext_ldst_nf_host(vd, host, i, nf, esz, max_elems, ldst_host);
-+                host += msize;
-             }
-         }
-         env->vstart += elems;
-@@ -465,7 +470,7 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
-             vext_continuous_ldst_tlb(env, ldst_tlb, vd, evl, addr, env->vstart,
-                                    ra, esz, is_load);
-         } else {
--            for (i = env->vstart; i < evl; env->vstart = ++i) {
-+            for (uint32_t i = env->vstart; i < evl; env->vstart = ++i) {
-                 vext_ldst_nf_tlb(env, vd, addr, i, nf, esz,
-                                  max_elems, ldst_tlb, ra);
-                 addr += msize;
++int main(void)
++{
++    /* Case 1: load/store within a page */
++    vec_copy(dst_data, src_data, 1);
++
++    /* Case 2: the load straddles a page boundary */
++    vec_copy(dst_data, src_cross.data, 2);
++
++    /* Case 3: the store straddles a page boundary */
++    vec_copy(dst_cross.data, src_data, 3);
++
++    return 0;
++}
+diff --git a/tests/tcg/riscv64/Makefile.target b/tests/tcg/riscv64/Makefile.target
+index 68a5ec5255..3c6cd4937c 100644
+--- a/tests/tcg/riscv64/Makefile.target
++++ b/tests/tcg/riscv64/Makefile.target
+@@ -14,10 +14,11 @@ TESTS += test-aes
+ run-test-aes: QEMU_OPTS += -cpu rv64,zk=on
+ 
+ # Vector load test
+-TESTS += test-rvv-ldst
+-test-rvv-ldst: CFLAGS += -march=rv64gcv
++TESTS += test-rvv-ldst test-rvv-ldst-intrinsics
++test-rvv-ldst-intrinsics test-rvv-ldst: CFLAGS += -march=rv64gcv
+ test-rvv-ldst: LDFLAGS = -nostdlib -static
+-run-test-rvv-ldst: QEMU_OPTS += -cpu max
++test-rvv-ldst-intrinsics: LDFLAGS = -static
++run-test-rvv-ldst-intrinsics run-test-rvv-ldst: QEMU_OPTS += -cpu max
+ 
+ # Re-run the vector tests at each supported VLEN
+ TEST_RVV_VLENS = 128 256 512 1024
+@@ -26,6 +27,11 @@ run-test-rvv-ldst-vlen%: test-rvv-ldst
+ 	$(call run-test, $@, env QEMU=$(QEMU) $(QEMU) $(QEMU_OPTS) -cpu max$(COMMA)vlen=$* $<, \
+ 		test-rvv-ldst with vlen=$*)
+ 
++EXTRA_RUNS += $(patsubst %,run-test-rvv-ldst-intrinsics-vlen%,$(TEST_RVV_VLENS))
++run-test-rvv-ldst-intrinsics-vlen%: test-rvv-ldst-intrinsics
++	$(call run-test, $@, env QEMU=$(QEMU) $(QEMU) $(QEMU_OPTS) -cpu max$(COMMA)vlen=$* $<, \
++		test-rvv-ldst-intrinsics with vlen=$*)
++
+ # Test for fcvtmod
+ TESTS += test-fcvtmod
+ test-fcvtmod: CFLAGS += -march=rv64imafdc
 -- 
 2.43.0
 
