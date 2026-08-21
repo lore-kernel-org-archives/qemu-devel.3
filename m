@@ -4,122 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2095EC5DF87
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 02:58:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B252C5DF87
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 03:10:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxFSJ-0004eX-9r; Thu, 20 Aug 2026 22:58:07 -0400
+	id 1wxFdN-0001Mo-6l; Thu, 20 Aug 2026 23:09:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wxFSH-0004dm-1j
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 22:58:05 -0400
-Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wxFdJ-0001K2-Tn
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 23:09:30 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <connorkite@gmail.com>)
- id 1wxFSF-0007r8-DT
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 22:58:04 -0400
-Received: by mail-qt1-x82f.google.com with SMTP id
- d75a77b69052e-51c04bf4711so4368801cf.2
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 19:58:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787281082; cv=none;
- d=google.com; s=arc-20260327;
- b=f76geWp8A3grayz8C4Ki9sCO70DlA5F3Ca72aXbxZPz+/rLs8rz9cMbiBL00WBnv7z
- jbGqNYoxqZev4LGScWexJJv+Ny9b26BsaMj4hsHdI1EVVKGY56HGULNpOTOVtZ2qs4Kv
- IqfTSvLN/yA955ngBen7G8VryEe2BE951Cc9eFnYANbp5D9jV6J+sZot9fA8QHQ/zJxZ
- tPP6uFRfzXqhCJAp82fgfj2FZ0G1uzz3ny39J88oRictIXZa9JJveMoB7gpJfciDNqmW
- Bes1kYUIfkO8Kp4HIKsqpBZqFDPVdVCRxe0qmUoGBtJfwMQz0OyHZdJYeol8Qi3cFE5N
- Y/+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=zSNmTPaNindB5nxKaFCyV4uOayvfqWNLHa5LTnes58A=;
- fh=zAf9Wul48xkTrIs6bAeEfpaQhknOU2iSq1CvwgfZtyM=;
- b=i1xHzVVqPr2EpVcgbb3scvte+eb2KiaQ1wYOlcQ2GsBpXFaJ++rGQbtWhwykFQLICF
- vYd4S+KaM5tWVXv0lX9KvKVsESoCskobVZABathr9Y8TiUzABCl4v0v11dR8Yldhy6UB
- X1TaDmUJT/nR9GKvFjn/u2e7Z6FKjc0EWaRq+4bhP8817OaYvgFtuDr+CKAqsw7+1zTZ
- OnTlqOLqOqKJFGqaeuCMh70RCkIw4P0iVC0lgC6ZYNh+9CQPN9w9RBSh+wGQZw9uCDsO
- pXNJlHCLHUWeWq5aZxqEOul8TpIVSgXkgWZt51d4YhS5A1zz7MjWWhvKPJ6RUy0Z5Hs5
- lTEg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wxFdI-0002BR-DK
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 23:09:29 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2cacf197759so7924065ad.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 20:09:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787281082; x=1787885882; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=zSNmTPaNindB5nxKaFCyV4uOayvfqWNLHa5LTnes58A=;
- b=bT6KsCnopDmGHWjjjRV5GO/zk6SuXsEWdMsLjAj4wHGLQa6+MCgKoSguvc20f9apvu
- /e4wZltn5DkjQOy0vEtcCBFHwPrjew9Urfrna2yyKOKpt4IKdYvkgtbj5aMBAr3iWXDn
- 7D0Tv7Q1Y8JYfJq2nU+8oPrkh6oubbetiCfVCPoVB1kr+KawAs58eI6aR2ahJq1pyDIu
- 8a9ECIsIoOiAtYCXfYrZT6676TiorpxGnjj21Cduw076LJLQSp+Ry9J2TDVINhEhxMKS
- O59fLlhzzMNNe7ej8oY/lQivi3XID1t0s4QXFt/9yAcyR4rTTzqKX1Upj5ou7z3KKMug
- IKwQ==
+ d=linaro.org; s=google; t=1787281766; x=1787886566; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=SAI6cFjbBZZAS1lEk5hZJUsQYoUGz9d8CpDsBK5EtOw=;
+ b=YqW+ZTClvU6EufnVReJuH0gKdMEkQdMcTWoIwT/vT4ab71ylQX4oSHHY3L9HNt2Ltw
+ LngbELBJRmpXJnKPXC78DYcCmeOB+BLMKPjslkaZGkTPABJosgjNg5a+5fUkAO2o6rSG
+ B6edNWgO9tPuEuCAgd6d6skDCLXzFp/Gb8dcBl6X+yDV1KIBq1GCE05FDSO6zxBn6qtV
+ kj3VX5MpZ2RKem0ZrNcZHXuJw2kx3pSNJlG0/uQoMwXjGxBX1Jxaz7jlwYiXd2qBeNa+
+ Bna25k8lclBAW5gjirjiO5vEX0mHxBefrB+btQHd7hA39kMiQ5pnxbTizodY/nriyM1r
+ 0GbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787281082; x=1787885882;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=zSNmTPaNindB5nxKaFCyV4uOayvfqWNLHa5LTnes58A=;
- b=QFZQIGNaNIT7o033Qpk9suWwvd0VHmxgaeMvOCzMwBEWlrYjUFc+xvByZRokIDb7Ii
- lqsv8tF2I1m70dnyIfgSfB04eJ6hb+zYoeeFlmiZCP5ACDrbg9/ypwNDdlspoNiLolZ9
- Z7ucN8fy2M458lEdUMLqI4g3RNLL9zpofA148lem+j8TH+Jg0hbt4Xy1A/V3Z1IBl6mN
- XOyCGUGmWTniZZ5YU6N37BRp0tUuK01XPrnPcaWPZr7/9F8G0YScq69TGt2ux+tisngN
- mkgb72RZihhL326xXd9U9EUkMVERV+bxThmNBcs2DoQKsng5iOhM1HJN3wcJZmdkWxd+
- yFwg==
-X-Gm-Message-State: AOJu0Yxy+g9Y6me3I/IxQNkRsumvXqBJwmZ6nJin4PA6ofpPgKy/Hzt5
- F6hiBILVcI9VCm+bAPq3RG+Sfysr4YF7NFL3H0v8PX7eA9c9U4N7y/LoCaA/fMLhZBuOz/kLTog
- 5kySraKlbCV8630IzyGanXg6eY+kBgYA=
-X-Gm-Gg: AR+sD12wYJfY1PC0ss6JoBmZ37kTmxZJ/I+RmWjQ2K9hb5CEjccgVLFzcwHyFpxc0pC
- Cj0/qwyXlk3gzAaA6J2/adByJq+CTyh7PsHQUUI5Wivo+t8CJC4ADqUQNdx7MJnugkLV9YIMSpm
- BO6rYM8+yn8Qc5O//diZuNmsRs/ij7Vhko8vumaKQf/qiI1DjA64FcMcrH894z1dO5KWVqhmH/M
- XXbn07nLtNa9ouAcN5aH8hv4Rd995F3785Dmvb7Z+0Dg/isnBCydzcy7YICPTthcPfGR4LiZj0N
- 7OPvYqLQqpmAzdMxA6v1aHLBRQ4MrQu8DmgvVxsKfC9cijpDnueMFgmFAGRpW2qUZI1IA/V206G
- kbXJEMwGW/brkwg==
-X-Received: by 2002:a05:622a:111:b0:52d:6cf5:1c01 with SMTP id
- d75a77b69052e-52df5a73d25mr28383211cf.36.1787281081993; Thu, 20 Aug 2026
- 19:58:01 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787281766; x=1787886566;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=SAI6cFjbBZZAS1lEk5hZJUsQYoUGz9d8CpDsBK5EtOw=;
+ b=ahYbH6r6CZ7jfjzzaHXuNDDH06ZxYvKuKk1eHUfyMjx7SaowaP7Xhwl6zq0mDkq3PS
+ 6umSwTgz1XMM4ukX5IlId9DAHeMp3qbsuE3tPsLkeiskJs4I94DRGS6OT6f5YkKc1FPC
+ xuVupRx2qeZMTPj61CTJJDy+i3o0H0khVmy8geYN0eXbv28fP7I+rW5JO84TU9sMWB+q
+ pBgZxaxMBdUMcNRo4f6K5pB44qkRtqXKtqTe3MhiIuae4hxU83vbdkRqI0y5bo/Uv+tP
+ JobPDd5m2Hxopxzmz4XVtHwdgSY7WYWKQTqLok2keshwIBxtNYVGYE4Coi91C2fpqoTR
+ lJBA==
+X-Gm-Message-State: AFuF++mK1mXVXORLiwZDRGHWgTVysj4mKncrPI3da9TDcq4ZKkYwGino
+ yVSq4wa+xB04qEK3MaaqLFzyo+kkeCHo+v5vxteezJ7onHcW8SXuC/IJ6bUtm4bgQQMBZ4tH41R
+ ouxoV
+X-Gm-Gg: AR+sD10g/NSrc8GIG8ovEqYvcYD3KNpVoik7DsuzIN1YBeUbZzgfx+sE7tH4NqxCjnb
+ i1qEc3K3SRLppcJbsJSsLvToHy8TesOmcdw712d+oiN2DpqnlpmCnZzTN+w+Y12H8jXkIyrrM55
+ 0CpGRiQeuAiwcOeeuNJCEbowUyj1COzvKIYy86KILuAqqpVueit/VgsexsrSVghj/pKnlzliida
+ F/Sb9gIobfubtKQgsnwRMNLXmcXpcTGlRqdG0WeMT4BWqby5At5XLOvSUWbjKr4KmlIIM04Viej
+ uWNl8OM30Uklvco1a/DVf+6fdWbJWPB8PpZmJeaOCUtyu+Inn94cyvBrBD15CPqT89lJCI8cjT1
+ p5aDx+jok7r1c5erwHY7gPMOOOnOv0Arkjgc8oz0qs/rr2mM2ZPZ9gziqGxczOb/YJo1NbtJGBv
+ 2iWOiLPd/j4b9gWgkjnz2ZXvNIjERge8iUTe1iQTyDBX5DVqkzCIP56FKMuc8L8va5DziR8/fAi
+ usR
+X-Received: by 2002:a17:90b:5846:b0:38e:49c0:75a7 with SMTP id
+ 98e67ed59e1d1-395c3718ee4mr6404157a91.8.1787281766137; 
+ Thu, 20 Aug 2026 20:09:26 -0700 (PDT)
+Received: from [172.20.6.151] ([108.174.179.84])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-395c4be445fsm1132893a91.10.2026.08.20.20.09.25
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Aug 2026 20:09:25 -0700 (PDT)
+Message-ID: <ffa3dea3-14de-4b5a-b781-483925975190@linaro.org>
+Date: Thu, 20 Aug 2026 20:09:22 -0700
 MIME-Version: 1.0
-References: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
- <20260817-vhost-user-isolated-memory-v2-7-948aae960abb@gmail.com>
- <ab5f4ec8-0ef3-49df-94c1-b7145d4153d4@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <ab5f4ec8-0ef3-49df-94c1-b7145d4153d4@rsg.ci.i.u-tokyo.ac.jp>
-From: Connor Kite <connorkite@gmail.com>
-Date: Thu, 20 Aug 2026 19:57:50 -0700
-X-Gm-Features: AcwNN1UfP1iX8bGmorWimeRMWt5bx7-t2Md_OfCGSwYi-defJG8tPospdb8vZ94
-Message-ID: <CA+spn3qk45YZC6FDMFk9FAr6aM=OziGfbeNwmScoz9DOU1rawA@mail.gmail.com>
-Subject: Re: [PATCH RFC v2 07/13] hw/virtio/vhost-user: create isolation region
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
- Mathieu Poirier <mathieu.poirier@linaro.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Raphael Norwitz <rnorwitz@nvidia.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org, 
- virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
- zhenwei pi <zhenwei.pi@linux.dev>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Jason Wang <jasowangio@gmail.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
- Alyssa Ross <hi@alyssa.is>, Demi Marie Obenour <demiobenour@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
- envelope-from=connorkite@gmail.com; helo=mail-qt1-x82f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/53] CI, Rust, target/i386 changes for 2026-08-20
+To: qemu-devel@nongnu.org
+References: <20260820164957.1895963-1-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260820164957.1895963-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -137,60 +104,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 19, 2026 at 12:36=E2=80=AFAM Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> > +/* Memory region shared with back-end when memory-isolation is active =
-*/
-> > +typedef struct {
-> > +    void *shared_mem_addr; /* mapped shared memory */
-> > +    VhostIOVATree *tree; /* controls mapping of regions into IOVA spac=
-e */
-> > +    void *vring_hva_addr; /* beginning of vring region in shared memor=
-y */
-> > +    size_t vring_region_size; /* amount of shared memory reserved for =
-vrings */
-> > +    size_t size; /* size of the mapped shared memory */
-> > +    int fd; /* descriptor of anonymous file backing shared iso region =
-*/
-> > +    Int128 iso_iova_offset; /* translation from IOVA to hva of iso reg=
-ion */
->
-> This Int128 usage is misleading. The value derived from iso_iova_offset
-> is always consumed with int128_get64(), which asserts the value fits in
-> 64-bit. But we actually need to enforce that the address before
-> translation resides in the shared memory. So making iso_iova_offset
-> Int128 is not a good way to assert the real invariant.
->
-> Furthermore, "[PATCH RFC v2 10/13] hw/virtio/vhost-user: handle data
-> movement with shadow vqs" has:
->
->      ptrdiff_t offset =3D u->iso_mem_ctx.iso_iova_offset;
->
-> If defined(CONFIG_INT128) && !defined(CONFIG_TCG_INTERPRETER), this will
-> overflow with u->iso_mem_ctx.iso_iova_offset > PTRDIFF_MAX. Otherwise,
-> Int128 will be a struct, which causes a compilation error.
->
-> uintptr_t is sufficient if the invariant is enforced in some alternative
-> way. A negative offset would be represented as wraparound, and a
-> positive one will never result in wraparound. Just always ensure the
-> address before translation resides in the shared memory.
->
-> Regards,
-> Akihiko Odaki
->
+On 8/20/26 09:49, Paolo Bonzini wrote:
+> The following changes since commit d49f87606ac1a6e15701b26c1b16c5d7e948ffcb:
+> 
+>    Merge tag 'linux-user-pull-request' ofhttps://github.com/hdeller/qemu-hppa into staging (2026-08-12 15:21:53 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/bonzini/qemu.git tags/for-upstream
+> 
+> for you to fetch changes up to 3ac34c6d25d84353c882ab0e11ea25229d4f1a48:
+> 
+>    rust: remove bilge crate (2026-08-20 09:24:57 +0200)
+> 
+> ----------------------------------------------------------------
+> * dockerfiles: cleanup, update CentOS 9 container to Python 3.11
+> * rust: fix issues in bits crate
+> * rust: replace bilge dependency with bitfield-struct
+> * rust: update build system for Meson 1.12.0
+> * serial: fix hot-unplug issue
+> * target/i386: emulate: simplify flags conversion and storage
+> * target/i386: tcg: small fixes
+> * target/i386: mshv: complete migration support
+> * target/i386: sev: add support for SEV features
+> * target/i386: whpx: bugfixes
 
-Your point is taken on the Int128!  I also got similar feedback from
-Stefan Hajnoczi and Hanna CzenCzek that it was unnecessary
-complication.  Will move it to uintptr_t and double check the
-bounds-checking on translations in the later patches to confirm that
-it didn't depend on the Int128 type.
 
-Also, I thought I had moved all cases of ptrdiff_t to Int128, but I
-apparently missed that one.  The offset must have been less than
-PTRDIFF_MAX in testing since this didn't come up.  Will fix and change
-to uintptr_t as well.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.2 as appropriate.
 
-Thank you once again!
-Connor
+r~
 
