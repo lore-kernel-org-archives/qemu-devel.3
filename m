@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0863C5DF93
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 14:12:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 417D0C5DF94
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 14:15:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxPzC-0004y3-PP; Fri, 21 Aug 2026 10:12:46 -0400
+	id 1wxQ16-0005iA-PC; Fri, 21 Aug 2026 10:14:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wxPzA-0004xv-CU
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 10:12:44 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1wxQ15-0005hS-Fk
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 10:14:43 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wxPz8-0001F7-LK
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 10:12:44 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2cf50c6f235so12950485ad.0
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 07:12:42 -0700 (PDT)
+ id 1wxQ14-0001Yn-2a
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 10:14:43 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2caf228a910so8325455ad.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 07:14:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787321561; x=1787926361; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787321680; x=1787926480; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=3r/6ghtBHucv2vu8ksKwmZ9j1U6J5MWtWjQ8RAimL1g=;
- b=eaMGz3ybum4K3Hh/lOYRi01vuXQvBvKBPf7rZu7Ui4kBiv+3wGz7j4ZgVS/zes4/Bb
- BAHu834X4MXjkaTeZrLZoV77kv7xbcLtXIRGYSAHUCPjEbPSLm+kS5UbU6TSJFG/TUHn
- zKc2+8g9wI/kzYQsrJqXkndWd1dS1XzXkRDhmEclN8t+l4QWWSuRJLT4eaYBI8kGiduc
- YC+o2f+wJAvdy8zktQErH5BVIVliXxJxs5NKTPuYdt9lWHN2aCZzRWMlumGl5HK+8uia
- GfMIPB2OfkYLOCPHCxGCbijMJ8aW2VPI5Ba/0isJ8WD4NLUopY5B1CosC15oerRgAWfP
- VYhw==
+ bh=poYKYsb+mY1xFgLOxBjJjxbz7+kn4OoCX0mfleD+IxE=;
+ b=FF+G4f04i5otpzulfdXo8XFuv9CnkO+J8n1DBChMH3tor0C14aWKfpc7duFH9bJ42w
+ osTwADaGt23GtLWP3kJsCMDfgKaX5P1TzgacpdduUgVTNAkWcpG7SYnevV/eAS2JgbvO
+ Na10xNxcDNgOc8KIGZ3qthVB4yzxA8Uy+zeJp4+6Y7BN/vIoLUdaZro4ACbBq+d8OolO
+ GRMRBti2Pa6ZvhUuFF1uY6AeYrBkmMPQZf1yf3GPPoGBQjZkkiS+f4WWPPT9XFbb5J1D
+ MtktqOuKpLjxuNcYjMI7rvy4y+T0OMzh3uJcr56aE7ni9kohOC1k0VBSuKkgKkbHZHIN
+ vRtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787321561; x=1787926361;
+ d=1e100.net; s=20251104; t=1787321680; x=1787926480;
  h=content-transfer-encoding:content-type:in-reply-to:content-language
  :from:references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=3r/6ghtBHucv2vu8ksKwmZ9j1U6J5MWtWjQ8RAimL1g=;
- b=a8zlASjw+U3zX8QIYcuf+kFJWnKEc0mRi3+HTw82eTf1rP4W6/SmVsl9U5qKe1gP/m
- BoI4dsytzp2zLPKjh+qoFdaXSJYR69m3yMMIgf3Rg/4iFCzp1jfTwxFSgbRQWbxfq4d4
- 1s/l0FpMS5l5oiiz5dX4JoAZ5R8nE7uq5eZggGpZfn1RHeplKAlRXNcgWEqRJYneHVxQ
- KPIc8otVAPeDgXgPd+XRipM00hC/Yfv7P4s72B41R5aUdFAWr6xID12DJZpOqGOHJimb
- gedhXnZdtgJd1utbhoRGi1ULdW7Nlo2BZmLJBIVmIa0H0TjwWx5NzmBdSkpPYLaXLz23
- jv1w==
-X-Gm-Message-State: AFuF++k0+Hsq0/fogi4TMQTwfFD+Q7qzhdXV5sIshfrdaarUxkyTm0Sf
- EzLR605FgUjiLdas2iE+dMa6R3r0atgiy9WRUVe7iZtYNZ/Kr7xh8URi5E4YD1ZeXjsAn0kQC44
- l7i5i
-X-Gm-Gg: AR+sD129jSspjwD0Adv/TF7CJP2KJ2i5/rRj2ddyIXIWq+nenrlETboc5HAl55ZoCG6
- EyzvL79ZjM8ho1n6l10SP2rlhytKO23QIvGGuU1pUejhM+8RJvgTtjLIPSudyGfaidGa6Y+thYB
- WcOETtbtu5k0Yap7IJIDzIqFS5tTTvlyMIEM3jA9jiBLPbKDIgUEmVue+h8mDXyfm6zP0W7VH8B
- nOPMdI3kwUV66Limy3qCrq8FLBoTnSaG33RXEArR3dA7zVfEF0fAgCxb1hR+pQvdZLP245bMpKb
- Hrz0wCpND2LtTP9b3MiBPFvCeCBr/5V1/8b2Jkxoq4lMxVxGTJma4OYJBDFx9RSxtJMQsv7hzCS
- bYnHkbIGBfXEDW+3IcEYOiELWyHBUlT3ysNxeVfYIdsMh+FmQmCx/AM1zNmo6E+sismmSDjpSPc
- JygPN9DbdyQ6rnerIRXqeKdzsGLutF5gJIsCEiMtO3OTcLzXqInTLG3hJvWacVgt19Y53J6LrMe
- RQh
-X-Received: by 2002:a17:903:2b03:b0:2c7:f4bd:91b5 with SMTP id
- d9443c01a7336-2d64a9b349bmr136063865ad.0.1787321560945; 
- Fri, 21 Aug 2026 07:12:40 -0700 (PDT)
+ bh=poYKYsb+mY1xFgLOxBjJjxbz7+kn4OoCX0mfleD+IxE=;
+ b=eWSLpEsTL5uICRIunBn6CRXGCC6cPmX5ZSMwaOcGR4I5/qRQQDTfTixZIL40SEOJlX
+ 2AytdcE5zFPQk8mUKUj6lL4D0h4WQs0W93g/WaMWQeEFaj3DdOzdzndSbnLF2e8b4iFE
+ 4HD8RHSJSUPkv1VP0I0oeoSnEzGsPCwz+7DNCQGGZ2Igr96AbMpIIqOyCe0HrKbPKGmH
+ 4eg5Qz/1IpNUjjdYbcj5k4/IwoktynVbHgtNeMWf6juqU6I8Kznq52kym0Utwj1GzlMw
+ 17GhBCaZfdsJew495O9unRhJqjqMr64bOpzYuJkUmBw+t9UUFj55e7HhYjK5BkP4b9CS
+ YpaQ==
+X-Gm-Message-State: AFuF++mKqE/JEAIxh2q7FLI5io/AcYw+QTCtjwaLset+UusJQf2BFPWb
+ m5zYmLHFCXaU1nkuXtcurGZQPeEaxbILRCnkwRfOxBHmv4uVQbRzJgpqFYiOcopXcGwIZ3gaXl+
+ lE0vE
+X-Gm-Gg: AR+sD12N4DmO0TLWUmjQyON7SRjIYm3UEnna3F0ngXF/aJeqveQeV9Dtqz2fkIxVb25
+ YZcl1KA8jBBAZLhkyaKP1u0cpCbF7ahC7UtQpYVhJMXkQcJbu0TpTvnQekIKUPo1qdXXpIq3HFS
+ hVmVzJ2EwOKjkK5wMwAaa/sqnR+IaBs8+kv8uAAy2BEyiV3PdHwcPikqza4stXd3kM9+T9FL676
+ frQE1ki1a/fzwSSnJdtJmfWK+efE+HmgdQqTrOTAv3B3SGbU62up7SgKjoTkYAENeJ1we3nm7tT
+ USoCAt7KaCwIEp1KscabBHdVsLXZvvx1LmEIKzlI4BNDkAgYqehSXp5qUy83hIQNWtQTXwvVcbt
+ J1kA3LSRko/5uZgtayphu/Rs3FXLbsVpbfmo/9e0nwsxJRLa/939QwDHpdDD+MF8Is5ut/kdsVg
+ 78hkwE6scbs7+m0dun6cTuPiu7rf8U+3f+ToF6oN+pAqrfYTiB9t8RaCScnrbkL0orKau90gRMa
+ zui
+X-Received: by 2002:a17:902:fdb0:b0:2cc:6018:f030 with SMTP id
+ d9443c01a7336-2d64b0b5652mr147404865ad.14.1787321680126; 
+ Fri, 21 Aug 2026 07:14:40 -0700 (PDT)
 Received: from [172.20.6.168] ([108.174.179.84])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d62ec88ebfsm19409935ad.84.2026.08.21.07.12.40
+ d9443c01a7336-2d62d58a897sm19753475ad.27.2026.08.21.07.14.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Aug 2026 07:12:40 -0700 (PDT)
-Message-ID: <0b9848e7-8a9b-40ff-9707-73c511b095de@linaro.org>
-Date: Fri, 21 Aug 2026 07:12:38 -0700
+ Fri, 21 Aug 2026 07:14:39 -0700 (PDT)
+Message-ID: <a84cfe03-f09d-462a-86b0-162ed2a1fb3f@linaro.org>
+Date: Fri, 21 Aug 2026 07:14:37 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Don't provide TLBTR for pre-v6 CPUs
+Subject: Re: [PATCH 1/3] target/arm: Make CBZ/CBNZ UNDEF before v6T2
 To: qemu-devel@nongnu.org
-References: <20260821120036.4161792-1-peter.maydell@linaro.org>
+References: <20260821132550.168896-1-peter.maydell@linaro.org>
+ <20260821132550.168896-2-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260821120036.4161792-1-peter.maydell@linaro.org>
+In-Reply-To: <20260821132550.168896-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,29 +105,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/21/26 05:00, Peter Maydell wrote:
-> The TLBTR register (encoding cp15, 0, c0, c0, 3) is listed in the v7A
-> Arm ARM appendix O as being present in v4 and v5 (section O.7.1,
-> diagram "Organization of CP15 registers in an ARMv4 or ARMv5 VMSA
-> implementation").  However, it isn't listed in the v5 Arm ARM, and
-> checking individual TRMs for the arm926, arm1026, sa1100, sa1110 and
-> ti925 shows that none of them implement it, so it seems much more
-> likely that TLBTR was new for v6.  It's also confirmed not to be
-> present on a real arm926.
+On 8/21/26 06:25, Peter Maydell wrote:
+> The Thumb CBZ/CBNZ encodings are only introduced in v6T2 (for
+> A-profile) and v7M (for M-profile).  We missed out the feature-check
+> in trans_CBZ(), so don't UNDEF on v5T or v6M.  Add the missing check:
+> conveniently, the ARM_FEATURE_THUMB2 feature is true for exactly the
+> cases where CBZ is implemented.
 > 
-> Gate the register on ARM_FEATURE_V6 being present; this means that on
-> pre-v6 cores the encoding will fall back to reporting the MIDR (due
-> to the CP_ANY wildcarding), matching the hardware behaviour.
-> 
-> We can also remove the "make id_tlbtr_reginfo r/w for strongarm and
-> omap" code, because those CPUs are pre-v6 so won't be using that
-> reginfo struct now.
-> 
-> Resolves:https://gitlab.com/qemu-project/qemu/-/work_items/4207
+> Cc:qemu-stable@nongnu.org
+> Fixes: 9ee6e8bb853bde ("ARMv7 support.")
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/arm/helper.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   target/arm/tcg/translate.c | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
