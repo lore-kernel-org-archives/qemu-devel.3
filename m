@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EECCC5DF87
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 13:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCB71C5DF89
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 13:35:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxPNO-0005QZ-MK; Fri, 21 Aug 2026 09:33:43 -0400
+	id 1wxPOq-0006Mq-GX; Fri, 21 Aug 2026 09:35:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wxPNN-0005QK-6b
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 09:33:41 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wxPOo-0006HN-FC
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 09:35:10 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wxPNL-0008C6-G3
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 09:33:40 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wxPOm-00009R-Pv
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 09:35:10 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id ABC043DFB;
- Fri, 21 Aug 2026 13:33:29 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id DF0A6856B2;
+ Fri, 21 Aug 2026 13:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787319213; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787319303; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=qZw1LHqSdyKWYl80Xrr9GP/dHNLwgPQiyJscAEjB6T4=;
- b=negVkr/hwy2Aavy1RRaWdgl94hR2ovYl9n9yeDtqJ+aE+urDzT0CNkSqS7dK44jRNFSSVw
- xofrx0hW0FeaJHK7LhAnpP1FefM0/jTxT2gpXcVGyf2ws8lv2mp8u2wKhLTfRAd5b4N1dw
- Zgsxqk8zz3RIKA2X3t7hCMDeW488ICU=
+ bh=vn7H2vGU5QAWOyCXJSOS0VoQ7NBJXw4HYZ/bXhJRivY=;
+ b=ExjejKAJYKn9KOwrPPsTibmRgnlhlQ/33vujKLv+NzAU/1yFCl/gAetO5ekRmbJ7IniJ3n
+ vcozH5s7pgKbtn4IXwKV8doThKB7VEk4IDLCvVdS51oI/eMf66KTNu3KFSkpyjTT0IRzhI
+ GJdYDz6hC/Co17VCp/RFsOb6xI5cMPk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787319213;
+ s=susede2_ed25519; t=1787319303;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=qZw1LHqSdyKWYl80Xrr9GP/dHNLwgPQiyJscAEjB6T4=;
- b=ebxm14+0TPejL5KtnBCNYLXYzLEkJAnAzHFr8Sf1QodQYjVpzrcvX3LYcMscTiy7IcYEo0
- UasMi3s9WzlIzlBQ==
-Authentication-Results: smtp-out2.suse.de;
+ bh=vn7H2vGU5QAWOyCXJSOS0VoQ7NBJXw4HYZ/bXhJRivY=;
+ b=Tfgza51j6eSY5tAfesVL7GGaUGhB2Qifnocp9ShM2M0LKDGyi6ein/PTbQaILFxzg8at6F
+ zpJCN720lJPFnrBw==
+Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787319209; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787319298; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=qZw1LHqSdyKWYl80Xrr9GP/dHNLwgPQiyJscAEjB6T4=;
- b=knEI63PfLKVwvlkq+SvtKhGSOxDzGX45vAS8pn6TqTKuZH0kk0l9EwpEwBWuaHlK+YCxVe
- QLP1vYA3MXFnIRd+kFKtxV6SxCy/1N1TVBHH5Cb3n1Kp7eGSSLdd+r9ZkpZEUQSp+J8XsN
- Xzb+NKrHmvBRDD58GjptsSkaptasqQI=
+ bh=vn7H2vGU5QAWOyCXJSOS0VoQ7NBJXw4HYZ/bXhJRivY=;
+ b=erXhWjVaWdvWpq0Z5Vv5WBqibWn+HBroLcyK4cncGyQGjisGvSelsOxvr+0Uv7nArbD4gy
+ i9qIUx5MUrCmHZLKaUMTXuyN0BMSSlX6sQAv4ruSB57nSbPXIGmEKqsyMufxTm0OjP6uF4
+ vPGBzYH4kUHO6bu2Nb6fQiTYc0rUhyQ=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787319209;
+ s=susede2_ed25519; t=1787319298;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=qZw1LHqSdyKWYl80Xrr9GP/dHNLwgPQiyJscAEjB6T4=;
- b=cj+91SRkEaXcRwHr2WmrUS9nwpxX/lzB94qaF4NEdm4vI+RzsvhAnlG6BI5EDcaqQl7CYp
- 3izMF8dUgpCqidAA==
+ bh=vn7H2vGU5QAWOyCXJSOS0VoQ7NBJXw4HYZ/bXhJRivY=;
+ b=SWlBQLubjKX4cktz3JtURE0AQXajT//rbWtF2MMKu3rUHTK5aBseKveQ+qYUzrCC73y4sq
+ FkYMDk/qcO/bSzCw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4DA493329;
- Fri, 21 Aug 2026 13:33:29 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 80E143329;
+ Fri, 21 Aug 2026 13:34:58 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id Nh5HCKlTiGqPGwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 21 Aug 2026 13:33:29 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id v0HGFAJUiGqCHQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 21 Aug 2026 13:34:58 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: Jack Wang <jinpu.wang@ionos.com>, Peter Xu <peterx@redhat.com>, Li
  Zhijian <lizhijian@fujitsu.com>, Juraj Marcin <jmarcin@redhat.com>, Samuel
  Zhang <guoqing.zhang@amd.com>, Yanfei Xu <yanfei.xu@bytedance.com>, Jinpu
  Wang <jinpu.wang@cloud.ionos.com>
-Subject: Re: [PATCH v2 08/10] migration/rdma: Sanity check
- RDMA_CONTROL_REGISTER_REQUEST chunks
-In-Reply-To: <20260820200322.3321036-9-peterx@redhat.com>
+Subject: Re: [PATCH v2 09/10] migration/rdma: Sanity check upper bound of
+ register MR address
+In-Reply-To: <20260820200322.3321036-10-peterx@redhat.com>
 References: <20260820200322.3321036-1-peterx@redhat.com>
- <20260820200322.3321036-9-peterx@redhat.com>
-Date: Fri, 21 Aug 2026 10:33:26 -0300
-Message-ID: <87a4qflhsp.fsf@suse.de>
+ <20260820200322.3321036-10-peterx@redhat.com>
+Date: Fri, 21 Aug 2026 10:34:52 -0300
+Message-ID: <877bljlhqb.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
@@ -93,15 +93,16 @@ X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
  FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, ionos.com:email,
- gitlab.com:url, suse.de:email, suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DBL_BLOCKED_OPENRESOLVER(0.00)[ionos.com:email, gitlab.com:url,
+ imap1.dmz-prg2.suse.org:helo, suse.de:mid, suse.de:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,49 +121,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> The value received on wire for head.chunks when registering new RDMA
-> regions is not correctly checked.  Logically the value can still make
-> ram_chunk_start() (of ram_chunk_end()) to overflow, having a result pointer
-> very small, smaller than RDMALocalBlock.local_host_addr.
->
-> Add the sanity check.
+> Before registration of RDMA ranges, QEMU destination checks for validity of
+> current_addr no less than the target ramblock's start address.  But it
+> didn't check for the upper bound to make sure the address is within the
+> size of the ramblock.  Add it.
 >
 > Reported-by: Tristan (@TristanInSec)
-> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4011
+> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4007
 > Reviewed-by: Jinpu Wang <jinpu.wang@cloud.ionos.com>
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->  migration/rdma.c | 10 +++++++++-
->  1 file changed, 9 insertions(+), 1 deletion(-)
+>  migration/rdma.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
 > diff --git a/migration/rdma.c b/migration/rdma.c
-> index f7356e759f..cf6688a4bc 100644
+> index cf6688a4bc..d8953363fe 100644
 > --- a/migration/rdma.c
 > +++ b/migration/rdma.c
-> @@ -3369,7 +3369,7 @@ int rdma_registration_handle(QEMUFile *f)
->              }
->  
->              for (int count = 0; count < head.repeat; count++) {
-> -                uint64_t chunk;
-> +                uint64_t chunk, chunk_sum;
->                  uint8_t *chunk_start, *chunk_end;
->  
->                  reg = &registers[count];
-> @@ -3399,6 +3399,14 @@ int rdma_registration_handle(QEMUFile *f)
->                  chunk = ram_chunk_index(block->local_host_addr,
->                                          (uint8_t *) host_addr);
->                  chunk_start = ram_chunk_start(block, chunk);
-> +                if (uadd64_overflow(chunk, reg->chunks, &chunk_sum) ||
-> +                    chunk_sum >= block->nb_chunks) {
-> +                    error_report("%s: head.chunks contains illegal value"
-> +                                 " (chunk=%"PRIu64", chunks=%"PRIu64", "
-> +                                 "nb_chunks=%d)", __func__, chunk,
-> +                                 reg->chunks, block->nb_chunks);
-> +                    goto err;
-> +                }
->                  chunk_end = ram_chunk_end(block, chunk + reg->chunks);
->                  /* avoid "-Waddress-of-packed-member" warning */
->                  uint32_t tmp_rkey = 0;
+> @@ -3387,7 +3387,8 @@ int rdma_registration_handle(QEMUFile *f)
+>                      goto err;
+>                  }
+>                  block = &(rdma->local_ram_blocks.block[reg->current_index]);
+> -                if (block->offset > reg->current_addr) {
+> +                if (block->offset > reg->current_addr ||
+> +                    block->offset + block->length <= reg->current_addr) {
+>                      error_report("rdma: bad register address for block %s"
+>                          " offset: %" PRIx64 " current_addr: %" PRIx64,
+>                          block->block_name, block->offset,
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
