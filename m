@@ -4,177 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92A5DC5DF92
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:18:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA069C5DF87
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:34:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxNET-0006ev-9I; Fri, 21 Aug 2026 07:16:21 -0400
+	id 1wxNUx-00087u-8A; Fri, 21 Aug 2026 07:33:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wxNER-0006dd-ET; Fri, 21 Aug 2026 07:16:19 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wxNUu-00086z-DX
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:33:20 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wxNEO-0002Bu-Rr; Fri, 21 Aug 2026 07:16:19 -0400
-Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67L9MgOU1901485; Fri, 21 Aug 2026 04:16:06 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=XbRMq8WO8dqALX1clmDnt0DDWsQAVfA6YE4mF6vhz
- UM=; b=f97S5k67qsySe5anTg6jdj234lmmrN7Hl9Zu2QNYDmTuY87/Yk55LkT4i
- jAEZBGxRkBIv348u0Hvg2QJaYCcrDYfa5vW2NzBGRO8jG3o97mdREWmu9s3TP8oO
- jVw4vDy2W0p7MO+BmJBIIP3mXllZaQTVmyP4lUXZVqDf84cpX53YPGsQh2vlb0rF
- 91C5GmQ4xT0jBBqXY0Q0LnEsX7Nahftx0xC6KI83g5JMj5rnEHazDuidsa5NoWm7
- oMJaEZu56dvYntiRVZdTajX6aTi2HX1D4DvtP2RWtt1eo+X1dtacADCLwZnWE6mn
- 4nYGr4zaE3DzHNXDdK3O2Gf5fSk5Q==
-Received: from byapr05cu005.outbound.protection.outlook.com
- (mail-westusazon11020105.outbound.protection.outlook.com [52.101.85.105])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4g6cm1s0sw-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 21 Aug 2026 04:16:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=g2qF3z11uP0/waGC/tyht15AoxaaSjz4qFjvneuV61pvx+MG8FvaoyOIgpjgmlAiEKjm8JxZ7OFX1JHXsUW1HXaBq/RUVeWdl8H14JP1mQK1ioLqDrH/RudCXty3PCQuG9w++ZPMu8R3M32fZFEGPy8bJ0qMT6yF6KPEkPC3G3lPElxy7vWGZPUzbmgPESQD2j/vbfQXO3yBzrSUCVMz3AqIGXqzisx1r+0dqkR+s3SlZPV+AenWuTucsEmuYPdtkf+/5dfXqod/7jrBepiz9npJWv+MBte1xPMfwuuLMYYnAws5dL0O2t8CHZ1SKewPjcs9GE8DMpzyaVa+WbnVGA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XbRMq8WO8dqALX1clmDnt0DDWsQAVfA6YE4mF6vhzUM=;
- b=t0uFO3k7OghXThJk3jChm2GhQjux1KVuck1A3MtxXOAa7W0oaygxMSjN4CFUQdM8u6KP8m7OZNUli7rDAnHrzx3ck+kfpTHYhAUeVfG5oQRapSmjfBxhFeGvt82IUwnKKCwGe0iaCFfFIgYTqMQSoex/nHKq4REFImci3df9/rhDhayHaFeOFC01wg1k5xB/gHs1d6JA/IV+/iFtHEGdAlNjFHbn+gG2a9zZIO0sHPGqYAuMDyRxx9ip/3eLq1kqHCCe1PgVDupgdMj2puSb4x1ylpikHytC7zktVAtCxfMbatoBSlPkF+q9YkVMZuGpkObXWJFJu6SfhI8MbnpfQA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XbRMq8WO8dqALX1clmDnt0DDWsQAVfA6YE4mF6vhzUM=;
- b=eekXyLET2+kCZyJZpz3FcwjuAHDMA4FmRNWTwRv3+b0cmw3QfOxpGlyoCkWl2atlyLHnikVoFE2KVTn8WmI/u+Oxi5d9a3Hzqa8EdX+GesUmi4HCBgw3szxLlloY/pl1LxYZuR09anYj35l/ij/DTJQZVskOM+msqgy/hOM1JVAmJfCtEcLFYxe8aMiNidMY8/egaEF3MTL8Do9DuO2kp2nEr7e6bX0+1zmPC61bC/W7OI0n3ivssx7pYou/H3FreDy7q1bcbco9cEjVyTNF/pqUuZsVGNSV0IJbElGeoyTEt532VZHM8mAWnyJtl33fIVoPWx+TSU0KyYn0TQ8M8g==
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by CY8PR02MB9524.namprd02.prod.outlook.com (2603:10b6:930:6c::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.11; Fri, 21 Aug
- 2026 11:16:03 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0339.010; Fri, 21 Aug 2026
- 11:16:03 +0000
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-To: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com, philmd@mailo.com,
- aurelien@aurel32.net, peter.maydell@linaro.org,
- richard.henderson@linaro.org, berrange@redhat.com,
- marcandre.lureau@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Subject: [PATCH v4 03/16] qom/object.c: introduce
- DEFINE_OBJECT_CLASS_PROPERTY_SCALAR_METHODS() macro
-Date: Fri, 21 Aug 2026 12:14:15 +0100
-Message-ID: <20260821111550.276011-4-mark.caveayland@nutanix.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260821111550.276011-1-mark.caveayland@nutanix.com>
-References: <20260821111550.276011-1-mark.caveayland@nutanix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SN6PR2101CA0019.namprd21.prod.outlook.com
- (2603:10b6:805:106::29) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wxNUs-00072R-HZ
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:33:20 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67L9LtoD2324786
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 11:33:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ SOJeYJSpXyGgE7VXGw+KzG0orot/jQE0gKzCsU1Wp8A=; b=VUzA5+M5OJ3dRxde
+ POqeW58cZaHvx7I2eSrQuDugJXLMvn+IlpuEhyMHr357Rtv08oWv+7A7IehwLDwp
+ H9eLaQwoj7zT3p4eM9hhcKmBz1lixgWUJ9aV7P+Q/3fI/fbD8Wpk7gZVKt8CSj+b
+ HuZRu3FKQ2MRFu241fFCEtDA6fwnHXmEj1e3geslNzJjwf0tRWeGQR/IQA/aXG9u
+ fCLXpDNbhtilqy9mO7+FMbp/Vv7fOy3l2N660mZLa1eFJLW3HBLQjXQzMKFbvQ2C
+ DNuL5nm0vQZEwH4BebR7KfpWxDB2HFWLIzJ8WPKD3hbV8o6e+npHK8yDjU7Xrsgn
+ wmoTqw==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g6gdf19qq-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 11:33:15 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8f1e4e0eac1so5895976d6.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:33:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1787311991; x=1787916791; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=SOJeYJSpXyGgE7VXGw+KzG0orot/jQE0gKzCsU1Wp8A=;
+ b=Dyl6WwRQk0B7lBi5UbRNoVeazPFUYGxsUxP2/R7G6klhkOUJiG6i09IQhL7m/ha3YV
+ lpIkE/zNU53/vEBLHqdAVU+UV3H0hElt70VNy5kvVKrUqJqrJ0hKVx+qAqkSAV8609l0
+ GVIUFgDa1zUwA1fFjZb6FTNmyrzLZ6l0aAxSYYJtH1hNGU0ZF+4HuLLQsOlcELfcvqxR
+ DRifHs7Apt6ZrCWzqh9peMNe20/TSJFNADZmjkYx+UvfzXaEPqXYWoeEn3YkG0hW4URE
+ kBLboZPjvAE/zG2RuI0xwUAtW+4BeM6GY7LnfrRuZ9Yq/jSi7oPxuY0pSMSg2N/vv1ua
+ d8Hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787311991; x=1787916791;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=SOJeYJSpXyGgE7VXGw+KzG0orot/jQE0gKzCsU1Wp8A=;
+ b=e7C4yiLXkr9PTqG0iUo8MrK9NC60KB6SCNgLZRcPpjCJqLFE222cyip3u4niitL6hX
+ AylU8ilKTZ9F7oQ3YiS/AOYKqRZkMsriQAmX2at24yKPL5tVrV5A5TUzgd25E540Pqdq
+ dPa+gk1DJiYzwtVoXv6uGLt87BdwDj3hzHS9RVosCdoAV6LFIPPz+MVHL5vMx7MH483V
+ 4in7zsajssTojj2J4i8vFOXsjIKZzXHklEWAPjXlxV+3o7wOcDSiAGArIK8u0BpBgI9Y
+ bLn5AihBG7rIFqtsatsJ/vdLeSga+7pubZnCJUx1ODQzTHqtHPiZt8GRvIrmMoTKKV2U
+ yhzQ==
+X-Gm-Message-State: AOJu0Yxu0JO6BQgYDZjgH8vRWLk15v3cparlc0BeWtonb1kt4laWzY3d
+ yxkKGFUmSX7Nhi6wKkpO8PTxY+cSgeRBZU8vj71Q+T5+j9qEOXezGW364IV1MnLfv1DeljQdRZg
+ o7VkNGOTibl3amSfU7CWA8h1xBG4IoYMIhwyyyjEE6ARxeu38omaCvRpF3MyggZz+ov94
+X-Gm-Gg: AR+sD12NHt7LITF+LVgMLlIUQ/SlIACzGtAwhA8wsIkXYSxn6ilXMoKSHYdO2R5afhB
+ dTKrDruV4UCb/qRG13gl1hfrnHWifjNG9XrH0tYCzgtJf5UZxcIBx0f7DiS7tHibZ3fuNeGOaDP
+ 3CBKWQq2OmS9aaMu+L/TNJiJAVcsX8SydWajz/EN2BxA8vqv7nbaYgNLqlYynh7dhLgb27X/eSs
+ 9GzL0GAV3Pz/Baf1irqvGV/w0O29rvg+S0rGxGpsiQMPKmVPQ49r9TMXUXBMDrd3MsB4eVVO+wt
+ mzWwMluJiLUMYUT/97l/GMh2JX6zRXxfszukbzfrNKk2PE/B73rDBl8rQDkny4DRiIHNT1SRsWZ
+ 5uLi2qUc6+QRjeDgSLXmVl3wBarqbJdVgap0=
+X-Received: by 2002:ac8:5d08:0:b0:516:d699:a99b with SMTP id
+ d75a77b69052e-52df5ba63d9mr43997791cf.40.1787311991176; 
+ Fri, 21 Aug 2026 04:33:11 -0700 (PDT)
+X-Received: by 2002:ac8:5d08:0:b0:516:d699:a99b with SMTP id
+ d75a77b69052e-52df5ba63d9mr43997141cf.40.1787311990679; 
+ Fri, 21 Aug 2026 04:33:10 -0700 (PDT)
+Received: from [192.168.69.231] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482b1441725sm15941138f8f.3.2026.08.21.04.33.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 21 Aug 2026 04:33:09 -0700 (PDT)
+Message-ID: <3c9fe944-2b51-412c-bd30-26bf013cff46@oss.qualcomm.com>
+Date: Fri, 21 Aug 2026 13:33:08 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|CY8PR02MB9524:EE_
-X-MS-Office365-Filtering-Correlation-Id: d4d0c683-0256-4364-3a38-08deff759694
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|376014|366016|1800799024|23010399003|56012099006|18002099003|10067099003|22082099003|6133799003|921020;
-X-Microsoft-Antispam-Message-Info: QrUvylJOYjSeFszrS3SxSRY8CLgkqRaM3KK/kNL7lXlXHsG7wOGK2rB+OGxQVmBj1GuW0NCaGmCFXL280h1yQBzNPsMIxPZn+46E7VoZrE+SJyiWzF7webQh5BVm0eKsRJUJWR3FRKKHehwZQwafe6yPqTKQWZ9od/wdbQmHaGoLHA2bXVtiDM9CrX14C+WSjb7VwVcGzEstr39IuID2LGMuGSnT6KigJj5MceJ6UGTxQ4ydQZ/CBeZ34ShNZRLLhfxQwNv8vV5Z1eIFOwniR5r4hdtPUpRmI/ITRdCQfLbRINCTAhaK+4qOU8WuT6Y/SQTMcNbFlHYPJy4OWBlr3H/5advqWFs01D2u1yEccLYA8bsCptA/JD2VJy0ksnxM44H333k5ZM7QeinCSdWcq5PwTMmSugOpO49wOD3EAkcgtZaBozaOX5OfCtSdGJQzKE1UJ90Co3giWDQkUguAbjPvrBP0727PQz/8XCKTbelf4jbr2aZNo5DUvACEMoVTJmlLtkcGheaDCWzhdMJzPix1NCDbjEm36NZFjJaEKvYdtN5GjjuL/UA+iCDoz21FRE/S1m4shNhGQ+KX0wLDKjvVRyEdWIYHWz70+dHpGY4yJDA4vuddS4Z77ytMr+0pq+tFk1cJDZNMEbxsIJsCabkDiKC1kKJqetBPuUNCeyrjxpnMzuc+hP1jzzre10u5dj7DOBHMzVLFp9+azktTOQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(366016)(1800799024)(23010399003)(56012099006)(18002099003)(10067099003)(22082099003)(6133799003)(921020);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SWhSQVpOa3d3eGptb3JKOU1hUC8yZW94NzZJdXlhNllQTWNyMTIyNTBKR3Ur?=
- =?utf-8?B?TUNZUW9YRnE4MnAwVWdqaGVBb0tTL0Zmb05Pbk5HekVrTUdiUEVSdDk4UE1P?=
- =?utf-8?B?RVB6dmpoWVRtU3lHNEFzLzZMajVHejc2cExwQktBQ3gwYXowSm5maXBsN1Zm?=
- =?utf-8?B?Q2NKdjUxdEEvU0ZxZ1U3cEgybGlvdVR2RS81MStpTnFRWWJrVWdiM0pmOEdh?=
- =?utf-8?B?RHRGZ1ZybzZJUjFneXQ1S3Nja1hiMk54aDFCY21FNE5zcXNRYlVMdFhWWnEv?=
- =?utf-8?B?RnBSRFdlS2JuVlR1MVNmTHRHUGdHc3RGNW9ldDFYREtldjRzN2s5WElCbUM2?=
- =?utf-8?B?N0ZLZldHVUFMWE9KZmR0dnBFZ00xbmZzT0RCdjdhSXp6TmVZVzFRQk9KUHZY?=
- =?utf-8?B?TEd6YWRkUHJDZmxoNlh0MDZkL0c5UHcxaW8raFZnNUU4d0hlUDdoRUpjQVJK?=
- =?utf-8?B?bzRZVWFZWFltMkMrSlVwZ2NTWTVtOEFSMDQwaXZYRUg2NmdNdElNMm9DYzBJ?=
- =?utf-8?B?SnNGUHEzNDdhRTk4eVMwZkNTeVR5QjMwcm1SL1JPeWRRd0MwRlVWNFgxMXZJ?=
- =?utf-8?B?S29hSzA3MllPdEl5WGJibXRtQ0xNMW9hS0V6VnJiWnBYcGtqcHBwQ0VRdVhu?=
- =?utf-8?B?ejNya2d2cmFxSm5CbWFYelR2UmxYS0JzZlpaNDVsSVJBVStKaGN6bzFrNWdx?=
- =?utf-8?B?NDU4aUdhUXlaWVZlOTZBalhjeENXTjFtRUFsbWVQOUJPaHBuZWZ2cEFOQVpq?=
- =?utf-8?B?RC9QaDQweXgzQndQVmVPMDlxRjgyV1dYOXVZeWZ6R2NVbFJMYkVDQUhXV25H?=
- =?utf-8?B?c05jVVdlRzBOR21TTG81V1cyMUZ5ZXJEaTFlYTlIemVvMjFaL2VOVFNaQzF0?=
- =?utf-8?B?YnNDbndaL3YrZldzWE1Wa1E5Zk5ibDdiMlFIUXp1QnRzV0ZCQmhTYkVZRmk2?=
- =?utf-8?B?c3F6djgrMlBEeXZNUWxoMy9DNE9wQzhhRFdtUWJzdFlEbE5KWXJQOXdkMDZZ?=
- =?utf-8?B?MWVCaGJheU1VSVk3SG9wYmNVQU1DdDBVNlpEVGZSbURoek0xclBPQ0wxbzNT?=
- =?utf-8?B?VFhNV2xSS2ZJbVdYMEI2eTc4V3Rwb1dzVVkwUCs0aWMzZVV2ekpsNVhJRkZq?=
- =?utf-8?B?enNRZ0lBSURrdWpyNG13bXFqZUExd2p2YnoySk8vWEc4bUZtMkYwYUxhZ0pj?=
- =?utf-8?B?Slh6dUNOUlBGekV5T0Y2azh6aWdwa3dlUGtTZFZYRnA4b2VoUG1PZFNseU9y?=
- =?utf-8?B?QkhCRnRzZ2NrS3hKUW05UGdINEtJaXAwMkRCd0FBMU9HMzZUZlNzTXNnNWhv?=
- =?utf-8?B?cythdEVTZG5JQzdZRzdHMXRXTmt1Z0JTcFdORUxrZGh6dHRSdmp2Q1hZclo4?=
- =?utf-8?B?KzZEQlIyczB6eS92b29GSm5yK2pQdHkzQXlWTmluVE9LV1E4Z0VrR0pIMGla?=
- =?utf-8?B?VktyMWhzN3lDOWE0a3hINVZSUm5HQjR4bFdGRUlibnQxcWRLYldXMHY4bnBU?=
- =?utf-8?B?ZTlXcFFDNVdhQzJhWklKeDlsVzRRRWFoUnlobUd2RHZuTFdaQXFZT3MwcDJk?=
- =?utf-8?B?RlpyaU9jZmFKdG1oM29wUzZ3UzdodUEyT2tOMXduaTJkd1RqcHQwZTBjNkJS?=
- =?utf-8?B?RDBhK0NKN3crTnM5dEZyc3RrYzhQS25xbUVGVUlQZzlZaUozQUNsckl6dUhV?=
- =?utf-8?B?bWwyVHA1MVlpU0hXYmI1UjBLTHR1ZkdKWGJ1aDZwNWtTS3pwOWZPSndTeFpQ?=
- =?utf-8?B?UitxVCs1blM3T1ZQQVRwS2Y2dlYxbjliajZlTWo2MkxKRUhVWnB4Z1VvaUti?=
- =?utf-8?B?d0FtMWU1QVBSZWp2RGVzSVNPSHhYaHFIUDhlU1JQSVd5Nm02dmNSZVhUVFYv?=
- =?utf-8?B?bVBUanM5OExtenlnZXJ3V085WFJXMzRYSXR5a3UrT2pSOXVreHl4SnlNcVpP?=
- =?utf-8?B?QmJzUmJVVEh0U0pGRWc0b0Fpa3JTa1I3WEYyRDR1QW12WllLUW50aUhuNmdl?=
- =?utf-8?B?WnU0ZXhIcDl3OVhPVllLZFh2UHZMZjgrdldmTkVMRUxQY1A5TmFvczVRM2Y1?=
- =?utf-8?B?amQrWmxmT2RIV3I4a2M2MzJnRlZuRUJQMldVcDNRY1ZKc0VVS3czVGQrRzZh?=
- =?utf-8?B?RXcxNlNGclVMWW1KV0JpdENhOEs0d3dRaGRiYVlIc3ppNUY2V1dRc3AzaHB1?=
- =?utf-8?B?OFR4N2ozRXp4d0RhV0JDRFNLMEZVTGFLRnh0Ym5JOWdyclRPVm5WZ2dPWlVt?=
- =?utf-8?B?eW1UMUdzSVFlaUY4eFIrYk1XY2c5bDU3ZHdaS3I2dHV4OW1lTmNuMWs2SUVL?=
- =?utf-8?B?M0lHRnBJNGNkZk93V3lVemdOMTBUWDM4YldXcldvNnlJMy9NODkvVU9DZDl1?=
- =?utf-8?Q?dUvqBLxfEG1fx+yA=3D?=
-X-Exchange-RoutingPolicyChecked: mgZr3HeEr309TiplAGo8xm+s6kI7Ok1r+dIcCok3M6iy0+rIVp62BpAkLgoigFUvh0iL5Vt29SBPq/2RyGwM8KYH9BVyI6AqFHRF89IZd/NuL7vU65e7g9yC8R3ZSMzRGk2EQcpUaNI3kpPTeBvMyqSsFrPvDsyOAJX+uZMQn6MyV5klIREe75pliDzbBOBLpdZlje9C/7kC1D0E8slfHt3d89MccLSF50/1rxaQEXByTaCnb0S/ZNu+f5PL7M2xP7mcQvHNv/DDgyOBk1WS+UyZ1wEe7FC9NBqHkBcBP5R+VvW8/Fn3ar4MBYFxWqJ/PnXUEPUhkgjTt/zOWc/MXQ==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d4d0c683-0256-4364-3a38-08deff759694
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Aug 2026 11:16:03.7253 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: hg/ZkduJ9ITVP3H0ajuuVP7M+VJcPLTtnYmXaNEV4KQuVmNC+sNjLHArRAet0DyMw8YTUUEKGqB5UGsyzsaJuwgsKOXvdcMS+vuf7Tf2qgE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR02MB9524
-X-Proofpoint-GUID: piPOummG42LqNsk7oomUlCZ2X5zo4luk
-X-Authority-Analysis: v=2.4 cv=J/qaKgnS c=1 sm=1 tr=0 ts=6a883375 cx=c_pps
- a=KI7s4FTSNOfRXFB7i9gQ4A==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=0LlEyIVc8U2lsR7dKhuH:22
- a=64Cc0HZtAAAA:8 a=20KFwNOVAAAA:8 a=UWV-rqafSl4XcmA-RNwA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: piPOummG42LqNsk7oomUlCZ2X5zo4luk
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIxMDA4NCBTYWx0ZWRfX0ABDrnW5SIkv
- cydA9GKBFmmh2gBkEGwWXzVlVZgKk+pAanQ+Ja2hedVFnYqgGo/0TPcPz6mGo27oYm3taH+DIem
- jnvtijgR0eJi+tqAZv4L60vvg+IYROYKsizExNAXhiHw/ObciQrKSpVggJx3+oJslD144UCxAdA
- lJ3a+I6It4wHPuCnOQ7NUpBFSLuVcqDSs46KLOWLrxVbwWoHNTW7NMjHP3rrjurW56RQEbOsEr2
- UILe2ex+tpC/4sGK4rxT0vx3qShIgPCkK67E7rG+HWC1kwcLV42xiuzSAdtwYOTl+X6gGh6hu+8
- stlSVj2BLSAu9tMx+TQFWUJtohAAGap7yvsFL7jdF1g+dSJ6qkHBw4Q886Zo+gkKTpv5ou2VDPJ
- OZUYgHUAStmwAD1PxwzZ5MGac2OVNyGuI/PS14vEk61gBEHoOJw4Nq5PDtsOvRqLVdaRN6/8DDt
- pxXTAS0BAjG6Y8dDStQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIxMDA4NCBTYWx0ZWRfX0FCXlNKh7S6X
- Pgp1eKSg4AKgVC45ZqmfE/e3YMWl1Y4d4CFz+qoMnK8fO4e/2zYrdsngPeovt45Se9uRStWSt5o
- X9VepiQARra8da/tp1NczSOo5CoMArY=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 02/15] cpus: Add const-qualified CPU environment
+ accessors
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Eric Blake <eblake@redhat.com>
+References: <20260821104950.32108-1-philmd@oss.qualcomm.com>
+ <20260821104950.32108-3-philmd@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260821104950.32108-3-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=CsqPtH4D c=1 sm=1 tr=0 ts=6a88377b cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=3vFRysUDMUGlTKh5RFcA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIxMDA4NyBTYWx0ZWRfX3sepWc1T0Clm
+ 8flAWUqZv7lx2VfVyvkOAdGBZA+/YKJwSI29W7Raacy7bV9yVPlimtvsasVGokgfXlftF5S0S8y
+ 9U6CbEtuf5shlspJnnWxKn+tGf4+ZoGoGqqHqsnmcLNAVHCHMWxvZ9HD5Ipa9Ziy3wv79cO5grX
+ t9+eTba4r99B04IRMOeJuF+0L2Z0Z33V1wqMbkHfmI2ee+Frqdz6DuUUhNOkeTG0VJb1V27KEDg
+ eLO6TFjxZmT0zUesY2Ifzk/OoVtq9EhfjUSuP0vCVFrCmUTC9q5UvHtlxdSXAvyIIxllOaOhBye
+ WA+SMMJjzcxiVK01PszXMmC8IMTgq6Vpw+Kgds4TsL65wwBR3CMqR97epvZuPDqcBuPO+V3UqzQ
+ miKtcPtyXAYwvLMHLUs4gzINMikMh71ZB5H5FC4C5RXPAj5/rChJzP9YwdPEmIuO59q1NVDJaHr
+ mAxb2hJ3JsODoNH4K7w==
+X-Proofpoint-ORIG-GUID: fDnRSJcCr7M1TpNSAfp1qAwnInQGVHRJ
+X-Proofpoint-GUID: fDnRSJcCr7M1TpNSAfp1qAwnInQGVHRJ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIxMDA4NyBTYWx0ZWRfX+uKo8M3mWO1v
+ druB9J8FZ8Xn24rGSZfV9kYdct9DAWdak4KOjjEOzcsJqYcdTeCZMFA4BnAUGC5I4aCNFrp4Mvm
+ HOl6ZFiQPEOxYkqNLSdidImPyNxHD8s=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-21_03,2026-08-21_01,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
+ malwarescore=0 clxscore=1015 adultscore=0 bulkscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608210087
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -191,34 +163,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This macro defines both the QOM get and set functions for the given scaler
-type.
+On 21/8/26 12:49, Philippe Mathieu-DaudÃ© wrote:
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+> Use _Generic() controlling-expression to add the const-qualified
+> variants of cpu_env(), env_cpu() and env_archcpu(). This allows to
+> safely access CPU architecture state when it should not be modified.
+> 
+> Alias env_cpu_const() which is still used.
+> 
+> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+> Following checkpatch.pl errors ignored:
+> 
+>    ERROR: spaces required around that ':' (ctx:VxE)
+>    #46: FILE: include/exec/cpu-common.h:89:
+>    +            CPUArchState: \
+>                             ^
+>    ERROR: spaces required around that ':' (ctx:VxE)
+>    #62: FILE: include/exec/cpu-common.h:101:
+>    +            CPUArchState: \
+>                             ^
+>    ERROR: spaces required around that ':' (ctx:VxE)
+>    #90: FILE: include/hw/core/cpu.h:605:
+>    +        CPUState: \
+>                     ^
+>    total: 3 errors, 0 warnings, 64 lines checked
+> ---
+>   include/exec/cpu-common.h | 30 +++++++++++-------------------
+>   include/hw/core/cpu.h     | 17 ++++++++++++-----
+>   2 files changed, 23 insertions(+), 24 deletions(-)
+> 
+> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+> index 6594f7fa1be..bffef677607 100644
+> --- a/include/exec/cpu-common.h
+> +++ b/include/exec/cpu-common.h
+> @@ -85,21 +85,11 @@ static inline bool cpu_loop_exit_requested(const CPUState *cpu)
+>    *
+>    * Return the ArchCPU associated with the environment.
+>    */
+> -static inline ArchCPU *env_archcpu(CPUArchState *env)
+> -{
+> -    return (void *)env - sizeof(CPUState);
+> -}
+> -
+> -/**
+> - * env_cpu_const(env)
+> - * @env: The architecture environment
+> - *
+> - * Return the CPUState associated with the environment.
+> - */
+> -static inline const CPUState *env_cpu_const(const CPUArchState *env)
+> -{
+> -    return (void *)env - sizeof(CPUState);
+> -}
+> +#define env_archcpu(env) _Generic(*(env), \
+> +            CPUArchState: \
+> +                (ArchCPU *)((void *)env - sizeof(CPUState)), \
+> +            const CPUArchState: \
+> +                (const ArchCPU *)((const void *)env - sizeof(CPUState)))
+I was testing with a C17-ready compiler. Apparently C11 is ambiguous in
+how it treats qualifiers inside _Generic:
 
-Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+../../target/arm/internals.h:1777:25: warning: due to lvalue conversion 
+of the controlling expression, association of type 'const CPUArchState' 
+(aka 'const struct CPUArchState') will never be selected because it is 
+qualified [-Wunreachable-code-generic-assoc]
+  1777 |     const ARMCPU *cpu = env_archcpu(env);
+       |                         ^
+include/exec/cpu-common.h:91:19: note: expanded from macro 'env_archcpu'
+    91 |             const CPUArchState: \
+       |                   ^
+
+Using typeof() makes it happier:
+
+-- >8 --
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index d67d008236f..e3a5e40899f 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -87,6 +87,6 @@ static inline bool cpu_loop_exit_requested(const 
+CPUState *cpu)
+   */
+-#define env_archcpu(env) _Generic(*(env), \
+-            CPUArchState: \
++#define env_archcpu(env) _Generic(typeof(*env), \
++            typeof(CPUArchState): \
+                  (ArchCPU *)((void *)env - sizeof(CPUState)), \
+-            const CPUArchState: \
++            typeof(const CPUArchState): \
+                  (const ArchCPU *)((const void *)env - sizeof(CPUState)))
+@@ -99,6 +99,6 @@ static inline bool cpu_loop_exit_requested(const 
+CPUState *cpu)
+   */
+-#define env_cpu(env) _Generic(*(env), \
+-            CPUArchState: \
++#define env_cpu(env) _Generic(typeof(*env), \
++            typeof(CPUArchState): \
+                  (CPUState *)((void *)env - sizeof(CPUState)), \
+-            const CPUArchState: \
++            typeof(const CPUArchState): \
+                  (const CPUState *)((const void *)env - sizeof(CPUState)))
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 372485a2e54..ee522e1e705 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -602,7 +602,7 @@ QEMU_BUILD_BUG_ON(offsetof(CPUState, neg) !=
+   */
+-#define cpu_env(cpu) _Generic(*(cpu), \
++#define cpu_env(cpu) _Generic(typeof(*cpu), \
+          /* We validate that CPUArchState follows CPUState in 
+cpu-target.c */ \
+-        CPUState: \
++        typeof(CPUState): \
+              (CPUArchState *)(cpu + 1), \
+-        const CPUState: \
++        typeof(const CPUState): \
+              (const CPUArchState *)(cpu + 1))
 ---
- qom/object.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/qom/object.c b/qom/object.c
-index fe4e552928..9cb2cae4a7 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -2738,8 +2738,13 @@ static void *object_class_prop_ptr(Object *obj, ptrdiff_t offset)
-         *field = value; \
-     }
- 
-+#define DEFINE_OBJECT_CLASS_PROPERTY_SCALAR_METHODS(type) \
-+    OBJECT_CLASS_PROPERTY_SCALAR_GETTER(type) \
-+    OBJECT_CLASS_PROPERTY_SCALAR_SETTER(type)
-+
- #undef OBJECT_CLASS_PROPERTY_SCALAR_GETTER
- #undef OBJECT_CLASS_PROPERTY_SCALAR_SETTER
-+#undef DEFINE_OBJECT_CLASS_PROPERTY_SCALAR_METHODS
- 
- 
- ObjectProperty *
--- 
-2.43.0
-
 
