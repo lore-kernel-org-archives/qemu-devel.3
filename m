@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F330C5DF87
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 227FCC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:06:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxN1K-0001Dt-4F; Fri, 21 Aug 2026 07:02:46 -0400
+	id 1wxN1K-0001Hd-Ju; Fri, 21 Aug 2026 07:02:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN13-0000gV-E3
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:30 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1wxN16-0000mU-5Y
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:32 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN10-0007Uk-9Y
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:29 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4995b0343c1so6732675e9.3
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:24 -0700 (PDT)
+ id 1wxN13-0007Vn-Gl
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:31 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-49954b88fffso7253375e9.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787310143; x=1787914943; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ARw3ZyR/JgfXTp+Bm1WywFCxNQGxhq9QIXpcrCCkoXY=;
- b=EARi5FcCn1wU7n9G0hpgReCxR/WdScDt3Op2UjQovSyvFMX3DWqNmguN64JkamKXJA
- 98yEl3gCX+2E47yXOUromnCNp448LsCFMgfB2R11hK1+b+IFbGBHSmnJwj84vqvTcWHR
- /Y6pgAt6rCYTE4oTghI/43QQnByjfeOdF1d7vgDsGokNvJvWzpUcOKJOP93AQ9AJEaTG
- TRQYjpm/Fu75gZK7VClW8eQQv3o7pEdVFfqXmySLYw6aCkcUOZcLlLaPcipWitFz+DIO
- p92Sgx9938EaB8bXMvvsvktOzRlqX02QLo2mHyEdmN1rnneJ00tjmrC9YJytp5lmnZQp
- 3ulw==
+ d=linaro.org; s=google; t=1787310148; x=1787914948; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=SIQ95ChhMBEDMeksGTqzOnHzqdHd6VFFDSZ1sW5capc=;
+ b=SYouMwDTcaukeY8eP4XUidDZJ/b40uS0bYVf2Z/Wxhc+/aJRu3Wlcc4TtRDqhGSmzI
+ KXGsJBmNboDsuFLOotn5fblmAUxQ0WwzqUAai7Uzj7Ib/VecyVapJ6ryCcd0vrXs51wU
+ 4WegKJmmta8qPPjV+TmQNoHPi/eil3w+o03qbjhE3RSyi+cYr7CIigAsCyDOubsWWi7U
+ 4ABq+yLIGb76f6yZnWAcGZ4feODdcrAilg2qhflv9twgHf2YJRkY123jCAKS3gDxO0A4
+ ShR+I4N650nJ0sYGHNMEzeHageqAf0tUE9/ruAHgG4W2zDCIw5zWpgensZ1dG7Clq2GZ
+ tz6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787310143; x=1787914943;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=ARw3ZyR/JgfXTp+Bm1WywFCxNQGxhq9QIXpcrCCkoXY=;
- b=kmyBICZzW8f9LSNMUawwnw8phbC4dBHGHVrCPh2h9MTmAmX6I8HXn9SQ9qXbMVDBU2
- aaNOr0HkBAiltRus+ebcGJ5IDsNQAEwpQ8UK3bwyaHgX/xTZSLCDzYWggTCR7mpW1HKW
- 1eTwByg+O8tXV48uISckXzskMOGkYYWpApSryk7b7NtcUpc8w8Gnx90Y53a+E2LG2fB/
- wZJ+AaRt3P1lIIQF7fK/g6M1ezCfxq7oEHiBvbR4P2weHiAFOtjaT8EMAR3aK0ETpeCf
- vXQxPsrATBJRpa+7WYaXv3nuLgbHMuziS3dgTZrG4vl4ZwaJZWycfbr2QKIYzEeI/qB2
- MB2A==
-X-Gm-Message-State: AOJu0Yw6okN6a8FJHzR7/jivcMjGnk8FJFcJJCP3Gvrw6s0qw8pMsdSA
- RF8qWrNI3UU0FkxspyKSvQ30lXrrMKcZSf4KczfXIPrTHIr/S4rK3p85hewmdRHDCSBh+L/WQid
- FfrY8
-X-Gm-Gg: AR+sD10xEBefYJ+up87DG9QGjVL81djBCA14SdIlWtXmTIpp9zL65h5hnAVUNt+TbB6
- T1UmS7dCXCK6uTvefwUT9rg65G/R6tvkXPXfcLCljDhdHHNJj8C/s2sDgtpNHXBKr0pQMPc1ale
- M68LKdfUND7BX7KzOvqfCjD22j1ubnRW8ZwG4iRa4qyMgo6U3ZPiYM/PQ0bR+yrYwFkELE4v0fA
- n+PeBlUr2+ScnZYlVUcdpTKTOaHklQtcNJLqnQKUvWuCcRm7cbCcGxE88lw1A1pSns9lykJlmvU
- h5gNQLLrRUwhpeIDQRCD1z6qrfWTqgvFMgZnXF7sHHxEzLhTienKvILT/0zUok7S/mbApD8Lc+T
- cES7kvGC/GBAuLymdBL67EW70RjJxUeTbP09Nrtou4vlJmfA2Zbrhdb/s/S5iqG9AtGC0qfBUTv
- agRfOlp4Vt2NqHGZlQySilmfF2a90QmKcpK1LyVez0wtk5lPUSxDG2UsX8rbH/mjP16j8ItBmc5
- 3N0Z3Gk1MoXqVX+7tyg3LrIJSOCjum6jJml3Mjoj/cKwXBRMMUOqWgQdPNI1DM6TsM1RA==
-X-Received: by 2002:a05:600c:a088:b0:499:7a19:408b with SMTP id
- 5b1f17b1804b1-499b83572bbmr84128515e9.11.1787310143364; 
- Fri, 21 Aug 2026 04:02:23 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787310148; x=1787914948;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=SIQ95ChhMBEDMeksGTqzOnHzqdHd6VFFDSZ1sW5capc=;
+ b=NWzEqINuFPCs9FpLm1VSTr3wSuaBdJH0/O2V5WQSmjodZ+vi8udL+HdgYPXB3VKw6F
+ +w5MlDJCMMHoOjTgkwxI4LFImNARHhK5FKIXoscnIM22NTEmzOxuF0hFOvn3esNeQJZa
+ bBxVVUe0VC30dxA95cRTVzpJVlha6HTDtNkk999tz447iky1WANIRRiamYyXmzZKHF5O
+ O255m2fSJlQgls/ZUk+CzUBPhce/xo64GToCQT27eMRThanR3UTzKSseVZwsjpVHkbQZ
+ tVMnYJjg4VjgqFRuY7vS9JXOHnTkVVbf+FUJk/T1CnSQgdWLOUel+mletK/dGzUonwN7
+ khwQ==
+X-Gm-Message-State: AOJu0YxTJnwTdkWSY2tQeKsVrXs7LzdG78oDHoVUIkeRq6UZKu0UnG1P
+ EbnJJxZuy83McvpVNhRmdDOsmnJ6q/8KWq6bdCX9es9SnRe6i07WFwHK6nn7Wvcpmd80tpBRnQE
+ ElMA1
+X-Gm-Gg: AR+sD10muUoDVC6+I64YL1EJml/JYd5gSV0dlYBrrMU2e4O1VCLzj6CutG0+jToYym8
+ N0e9bDCcflgZcyDSd0c1Kah1XiRPKPvnGC1ViPr3ZtUzCxwQbKc5CViDd4b6fvRGFMJ0nuls/Au
+ ZBHnzEAlZnDoy/BlDRW+JWV/HOxVvJzRpXde2EYKYRFZcsM+BT6EmsVKLstuD1TlOncFpoDiPgG
+ 7HAHv25Ob5cCk7VDOhf1mZxkdsc39wqJZCrTHLtxt46BzKudwST6PRq9Yk7RkwkUNqxZ8j8tct1
+ 1BQTA+ZNKzeFhgtD23b9H6TQuKnjnxLklL0FjaUWTUxjZXWQgmCridiv63V9KMcQ8hIMMwZg4uV
+ N++LQRbYyntNF7612QyssJS7U8ZPErzm9R8T4zZP3KLYOu4EJNlRrvhqZiPe3gQiMsC1C8JsWou
+ Tg8mr9oKjJLMMO4ldIy0z9VRuYapnWtgHGr6UyKSpsA19CCgR2uKGjNBBK9BkChu5IhAmcf6skK
+ bvg2eB/IlZVyys5MGmXM+UuyNztVxxotoqUXeqvjlyJ367S/LZIQD56/Icoy2hSHMuVvA4+AS9J
+ wagl
+X-Received: by 2002:a05:600c:c4a6:b0:499:726a:a017 with SMTP id
+ 5b1f17b1804b1-499b82f4090mr88635515e9.1.1787310147728; 
+ Fri, 21 Aug 2026 04:02:27 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.21
+ 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.26
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 04:02:22 -0700 (PDT)
+ Fri, 21 Aug 2026 04:02:26 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 24/43] hw/arm: aspeed: Store boot info in the machine state
-Date: Fri, 21 Aug 2026 12:00:42 +0100
-Message-ID: <20260821110101.3971391-25-peter.maydell@linaro.org>
+Subject: [PULL 27/43] hw/arm: collie: Store boot info in the machine state
+Date: Fri, 21 Aug 2026 12:00:45 +0100
+Message-ID: <20260821110101.3971391-28-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260821110101.3971391-1-peter.maydell@linaro.org>
 References: <20260821110101.3971391-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,7 +108,7 @@ arm_load_kernel() keeps a pointer to the boot info struct for the
 lifetime of the VM, so the struct logically belongs to the machine
 rather than to a file scoped static object.
 
-Move the boot info into the existing AspeedMachineState.
+Move the boot info into the existing CollieMachineState.
 
 As in the xlnx-zcu102 and raspi machines, the boot info belongs to
 the machine rather than to a static object:
@@ -118,79 +117,48 @@ the machine rather than to a static object:
 0f15c6e338 ("hw/arm/raspi: Move arm_boot_info structure to RaspiMachineState")
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260816131300.51799-2-bin.meng@processmission.com
+Message-id: 20260816131300.51799-5-bin.meng@processmission.com
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/aspeed.c         | 17 +++++++----------
- include/hw/arm/aspeed.h |  2 ++
- 2 files changed, 9 insertions(+), 10 deletions(-)
+ hw/arm/collie.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index a9238e6217d..8fa16b3831c 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -24,10 +24,6 @@
- #include "hw/core/qdev-clock.h"
- #include "system/system.h"
+diff --git a/hw/arm/collie.c b/hw/arm/collie.c
+index 91f0a94b6ff..01d74ad38cd 100644
+--- a/hw/arm/collie.c
++++ b/hw/arm/collie.c
+@@ -30,16 +30,12 @@ struct CollieMachineState {
+     MachineState parent;
  
--static struct arm_boot_info aspeed_board_binfo = {
--    .board_id = -1, /* device-tree-only board */
--};
--
- #define AST_SMP_MAILBOX_BASE            0x1e6e2180
- #define AST_SMP_MBOX_FIELD_ENTRY        (AST_SMP_MAILBOX_BASE + 0x0)
- #define AST_SMP_MBOX_FIELD_GOSIGN       (AST_SMP_MAILBOX_BASE + 0x4)
-@@ -206,13 +202,14 @@ static void aspeed_machine_init(MachineState *machine)
-         memory_region_add_subregion(get_system_memory(),
-                                     AST_SMP_MAILBOX_BASE, smpboot);
- 
--        aspeed_board_binfo.write_secondary_boot = aspeed_write_smpboot;
--        aspeed_board_binfo.secondary_cpu_reset_hook = aspeed_reset_secondary;
--        aspeed_board_binfo.smp_loader_start = AST_SMP_MBOX_CODE;
-+        bmc->bootinfo.write_secondary_boot = aspeed_write_smpboot;
-+        bmc->bootinfo.secondary_cpu_reset_hook = aspeed_reset_secondary;
-+        bmc->bootinfo.smp_loader_start = AST_SMP_MBOX_CODE;
-     }
- 
--    aspeed_board_binfo.ram_size = machine->ram_size;
--    aspeed_board_binfo.loader_start = sc->memmap[ASPEED_DEV_SDRAM];
-+    bmc->bootinfo.board_id = -1; /* device-tree-only board */
-+    bmc->bootinfo.ram_size = machine->ram_size;
-+    bmc->bootinfo.loader_start = sc->memmap[ASPEED_DEV_SDRAM];
- 
-     if (amc->i2c_init) {
-         amc->i2c_init(bmc);
-@@ -248,7 +245,7 @@ static void aspeed_machine_init(MachineState *machine)
-         aspeed_load_vbootrom(bmc->soc, bios_name, &error_abort);
-     }
- 
--    arm_load_kernel(ARM_CPU(first_cpu), machine, &aspeed_board_binfo);
-+    arm_load_kernel(ARM_CPU(first_cpu), machine, &bmc->bootinfo);
- }
- 
- void aspeed_create_pca9552(AspeedSoCState *soc, int bus_id, int addr)
-diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
-index a00238ed74a..54f0d7643d7 100644
---- a/include/hw/arm/aspeed.h
-+++ b/include/hw/arm/aspeed.h
-@@ -12,6 +12,7 @@
- #include "hw/core/boards.h"
- #include "qom/object.h"
- #include "hw/arm/aspeed_soc.h"
-+#include "hw/arm/boot.h"
- 
- typedef struct AspeedMachineState AspeedMachineState;
- 
-@@ -42,6 +43,7 @@ struct AspeedMachineState {
-     char *fmc_model;
-     char *spi_model;
-     uint32_t hw_strap1;
+     StrongARMState *sa1110;
 +    struct arm_boot_info bootinfo;
  };
  
- struct AspeedMachineClass {
+ #define TYPE_COLLIE_MACHINE MACHINE_TYPE_NAME("collie")
+ OBJECT_DECLARE_SIMPLE_TYPE(CollieMachineState, COLLIE_MACHINE)
+ 
+-static struct arm_boot_info collie_binfo = {
+-    .loader_start = SA_SDCS0,
+-    .ram_size = RAM_SIZE,
+-};
+-
+ static void collie_init(MachineState *machine)
+ {
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
+@@ -66,8 +62,10 @@ static void collie_init(MachineState *machine)
+ 
+     sysbus_create_simple("scoop", 0x40800000, NULL);
+ 
+-    collie_binfo.board_id = 0x208;
+-    arm_load_kernel(cms->sa1110->cpu, machine, &collie_binfo);
++    cms->bootinfo.loader_start = SA_SDCS0;
++    cms->bootinfo.ram_size = RAM_SIZE;
++    cms->bootinfo.board_id = 0x208;
++    arm_load_kernel(cms->sa1110->cpu, machine, &cms->bootinfo);
+ }
+ 
+ static void collie_machine_class_init(ObjectClass *oc, const void *data)
 -- 
 2.43.0
 
