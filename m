@@ -4,100 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD074C5DF87
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 09:55:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5762FC5DF87
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 09:57:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxLxx-00052I-1F; Fri, 21 Aug 2026 05:55:13 -0400
+	id 1wxM08-0005iP-8H; Fri, 21 Aug 2026 05:57:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wxLxw-000527-DB; Fri, 21 Aug 2026 05:55:12 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wxLxu-0003yT-Jl; Fri, 21 Aug 2026 05:55:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787306079; bh=AC7mTYSSoIc7v5QHL9gdgvdlNPsP+H8a6h5gHtxdeCk=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=SUUm+mmVY8ZURr5tYU87BPZmNqHAfhlxb8PNkqyKr9vJqkTIQcFL8qvxhB7qEd4sC
- driIYG3O+HSV6i0KlICrsqGdNZyuFkT2imgCYC5kvqYQV5vNoMFTo9Vo6LH+4MJSFG
- 57GBGWKJM1ewUGwGoOxxNhuqEV+h8SW02T0u+JttoBGVFTe5UjRTDof2njbyx5ZDjT
- HoFtYlREUjwSkcpddb2+tgIppFkWrYhexOhg9dK3oWappbO+7WR2BIMNOniBhg+JvX
- P3oBQhaWNhG2Q3HQbLyQgKZYZR6JhJNYug+O/W3S/s4ViL9NsQboun2Bmqo+ReagAA
- eSqXJGzl3jDZg==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F1A921CD1D7;
- Fri, 21 Aug 2026 12:54:39 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D4E49410E26;
- Fri, 21 Aug 2026 12:55:08 +0300 (MSK)
-Message-ID: <9f5b05e4-7b3c-41e7-9fb2-2a19495f32b6@tls.msk.ru>
-Date: Fri, 21 Aug 2026 12:54:39 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wxM06-0005i6-Rl
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 05:57:26 -0400
+Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wxM04-0004c7-VV
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 05:57:26 -0400
+Received: by mail-yw1-x112b.google.com with SMTP id
+ 00721157ae682-836cde02992so10057357b3.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 02:57:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787306243; cv=none;
+ d=google.com; s=arc-20260327;
+ b=g4mQp8jVtUlnLp8hl3vwwEJWZovDJ0sNzvTyETi0YuEgd6STrifAJevISogH3Y8WyI
+ l/bEq60ioVXqPcfi8BEkS0qAUzflgbjlXK8KgApwGYTXvEAQOYKvdFcdYckrfEUw5TAe
+ f5tmDZgbzmD6OM59GAISDs6DLrvrWxwAxSiYfPv7lTboid+YkVsU4UFFvlC2wQV5Y14H
+ Qb8YZlmY+U7RdC8LII/lo8V6Oo93CqFoBgcDL/uPwt3NQhx+7HmnHoTUZWuZ7/liGZ0V
+ kbXPMewJISzOvoIRPFSGVPMMoLnVBdZxQGeWy1Ke2ShH+pPCBn8/jSatY71RFLbMcOr1
+ bFRA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=QlwE2BZT0vFPaM9sreHJ6Q5FEFcI6GiSfHphOHDg26c=;
+ fh=6SBFmKFZaeQ76lZmIHB1k9Da5YCHYK8VnV94Xo5DFKs=;
+ b=RWQirhnbXhleoWAbR2BiSCmZGX2IAC2XmTUiak5n/RLKBq6GdNN01dVtHiV1OwIyrQ
+ lG7iLBYXiixzLEdsY1eKdbMEdtL4e2dUNma3J6J5L69OUhj8Jydt3rT0cVpODI+7BbKY
+ Q1/M2RV25wzVq10SzYh4upCYVOq8FpxWcY9Y1FqJleRdms0gzmzLc4KQQDxiQqu10hcP
+ 4bSCcjCvZ4qrEQ8/Mw8kY62J4eepFN22DndidyKdCD18ougGy80ji1VFtiO+SdlZ01vb
+ Y9e1nwFF64HuQYUds+P7toMj6z7voZANOrQnBDIb9fZ+yeWbMFIqH+tLmGGKYlGCLiJy
+ ivNQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787306243; x=1787911043; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=QlwE2BZT0vFPaM9sreHJ6Q5FEFcI6GiSfHphOHDg26c=;
+ b=xCW2u4Wsxe5Zotj/kBQUAVn3q4jsLfnJGTj1gIVhmdDDDHtbBMI+HBpc92hkgPqTpn
+ 7XX2z5qn9qTZMpAkVBIyL08JjW9YyVDqAfrkE7i9Nl/NjllVx4tzXwlNGUYTWM8a+azd
+ /rG6Upm5T4fC0myNsTi25vWsdkUcqsgYtER9/O7zOHcNNOULtwO21+8Qfk+ShwK6rMld
+ H0gw9T3OOVOw1xxPSOAt1LSKDGfo+hRvmOiE26rD2MGMFXTkoutxfB0Q7/OIv/zucPcf
+ dpIs/zO14qboFR0/53EHPkLp6a+4eeuveEd8Pmi7aJv3p+DaJQ5NwZ3TgQBMZY72IeCS
+ GZ0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787306243; x=1787911043;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=QlwE2BZT0vFPaM9sreHJ6Q5FEFcI6GiSfHphOHDg26c=;
+ b=ktPzC/vJZnc/QpvngWpsMc91xATdZb0EnfkbttBWrrhtSDx+gZaOfvxUtk4IswRQ8s
+ 5knQ22K6dfvjhbJPe6fX3w+DrJyx017St66QGsqeVlkkHdeChg/fualdu8tgujUPrsFY
+ CQKqYLLnF5dRiS8zJSYIs6iKHu+lZe88DBacNEOv5MGfMI1NXyZytkkmVh6sDVjSpD3n
+ HWPc+Ezm1Ik2h6rjN698rtCymRQcmHDurCbtG84vi+oeLCFln03OEIpI5FyGUx8XLs0E
+ t2MHy7Pm+Y1dzrJ7Uqhv78BN/VolN7PpSZMMWg88Cbaj+5oPZJFa5g2PVUooYBnsp9QN
+ IqoA==
+X-Gm-Message-State: AFuF++kR1IUX6PoTdGM9S6xq/yUCt152Ut2QxLnwXFAvLIU/FxJNFNTj
+ co2AgnsiKALf1gM3RbquKFs49QO2aY+vgCa00V8xqT34TG2ZSMrxDO6MsQGssfjZB07oMhNm3v2
+ KSLO5nHHixkR02DKznEXZkz429jcAZ4HX0LoyW1e8YQ==
+X-Gm-Gg: AR+sD11KEjXAfmO1slZMNIUhyCxrJS2BdbLaVCSRY2CUmk+Wdus/d9tT05leODFPBoJ
+ EQDz953sVlsYEJtwT9O+esxwFLf1A1IBvLAW87uQmMgpjtVuSsvTBEfnrYbFMaLmHhdxyeNpO8c
+ hXCzW1aGuxxePr7lokZTzGcqB2uDsrTSzNaE4OuI5naMzm3wik+f88XmUZIU+m7FX+P66dHDozA
+ vtzFBpc/i90pEe8NOqeXRwDy77hmaC3CEia6MbMXzoGb9RjbEY0AkJRC5dD/XvLgfv1d3JJ02g8
+ yjnUCcT45UwNbTDlEWGyZRwhwGrVGBD7er932AyioYkPMRAYvuIgtM8AMjEC+7UrayOV38M0rVM
+ SLaLkziw4Qi/5qVTusVQQCDCbx5Si
+X-Received: by 2002:a05:690e:1c0c:b0:66b:2f08:db1f with SMTP id
+ 956f58d0204a3-66ce4a54085mr2022772d50.19.1787306243478; Fri, 21 Aug 2026
+ 02:57:23 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: decode opcode extensions group 3 /1 as TEST
-To: Andrey Polivoda <apolivodaa433@gmail.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- QEMU Stable <qemu-stable@nongnu.org>
-References: <20260621032524.1138213-1-apolivodaa433@gmail.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
- HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
- 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
- /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
- DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
- /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
- 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
- a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
- z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
- y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
- a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
- BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
- /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
- cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
- G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
- b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
- LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
- JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
- 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
- 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
- CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
- k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
- OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
- XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
- tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
- zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
- jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
- xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
- K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
- t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
- +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
- eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
- GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
- Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
- RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
- S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
- wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
- VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
- FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
- YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
- ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
- 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260621032524.1138213-1-apolivodaa433@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260817113349.103833-1-alexander@mihalicyn.com>
+In-Reply-To: <20260817113349.103833-1-alexander@mihalicyn.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 21 Aug 2026 10:57:10 +0100
+X-Gm-Features: AcwNN1X-J4scuRABFwA-0Icsm2oGAxxK0j1_zYAKmr-eyqDSlvc_c65wnUXDd2A
+Message-ID: <CAFEAcA-BsxOCC4eM1ohcnr3_xmCabKNWQchtdsVzO91stiir-Q@mail.gmail.com>
+Subject: Re: [PATCH v3] hw/char/pl011: support backend hotswap
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,42 +123,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/21/26 06:25, Andrey Polivoda wrote:
-> According to Table A-6 in Volume 3 of AMD64 Architecture Programmer's Manual,
-> opcodes F6 and F7 (opcode extensions group 3) with ModRM's reg field values
-> of 0 and 1 can be used to encode a TEST instruction.
-> 
-> Although Intel 64 and IA-32 Architectures Software Developer's Manual leaves
-> the cell 1 of opcode extensions group 3 blank in the opcode table
-> (Table A-6, Volume 2D), the instruction in a group 3 with reg field of ModRM
-> byte set to 1 actually behaves like TEST instruction on Intel CPUs.
-> 
-> Currently, QEMU decodes group 3 instruction as TEST only if reg field of ModRM
-> byte is 0. When the reg field is 1, QEMU raises a #UD exception.
-> This behavior does not match real Intel and AMD hardware.
-> 
-> This patch fixes this issue by duplicating the existing [0x00] and [0x08]
-> X86_OP_ENTRYrr(AND, ...) entries into slots [0x01] and [0x09] in the
-> opcodes_grp3 table.
-> 
-> Fixes: d7c41a60d0c5 ("target/i386: move C0-FF opcodes to new decoder (except for x87)")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3580
-> Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
-> Cc: qemu-devel@nongnu.org
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Richard Henderson <richard.henderson@linaro.org>
+On Mon, 17 Aug 2026 at 12:33, Alexander Mikhalitsyn
+<alexander@mihalicyn.com> wrote:
+>
+> From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+>
+> Currently, when Incus issues "chardev-change" QMP command to change
+> chardev backend from ringbuf to socket it receives an error (with aarch64=
+ VM):
+> "Chardev user does not support chardev hotswap" [1], [2]
+>
+> Let's fix this by properly implementing BackendChangeHandler for pl011.
+>
+> Please, note that we have to "replay" CHR_IOCTL_SERIAL_SET_BREAK, because
+> if BRK bit was set before backend change (i.e. (s->lcr & LCR_BRK) is true=
+),
+> then after change we need to send break to a new backend too.
+>
+> Link: https://discuss.linuxcontainers.org/t/unable-to-connect-to-vm-conso=
+le-on-arm-architecture/23096/3 [1]
+> Link: https://github.com/lxc/distrobuilder/issues/892 [2]
+> Reported-by: St=C3=A9phane Graber <stgraber@stgraber.org>
+> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.i=
+o>
 > ---
-> Note: checkpatch.pl reports style errors regarding spaces after commas.
-> These are false positives, as the patch intentionally matches the formatting
-> of the surrounding macro table.
-> 
->   target/i386/tcg/decode-new.c.inc | 2 ++
->   1 file changed, 2 insertions(+)
+> v3:
+>         - introduced pl011_set_handlers()
+>           [ as suggested by Alex Benn=C3=A9e ]
+>         - introduced pl011_set_break()
+>           [ as suggested by Philippe Mathieu-Daud=C3=A9 ]
+> v2:
+>         - fixed a typo in commit author name
+>           [ I did `git format-patch` and copied this patch from my Raspbe=
+rry PI
+>             dev/test machine and it turns out that I have a stupid typo i=
+n my
+>             `git config get user.name` on that machine. ]
+>         - added RWB tag from Alex Benn=C3=A9e
+>         - adjusted a commit message
 
-This feels like another qemu-stable material, though maybe not that important.
-I'm picking it up, please let me know if I shouldn't.
+I have one review suggestion here:
 
-Thanks,
+> +static inline int pl011_set_break(PL011State *s, uint64_t lcr)
+> +{
+> +    int break_enable =3D lcr & LCR_BRK;
+> +
+> +    qemu_chr_fe_ioctl(&s->chr, CHR_IOCTL_SERIAL_SET_BREAK, &break_enable=
+);
+> +
+> +    return break_enable;
+> +}
 
-/mjt
+I think this would be better with a similar API to
+pl011_loopback_break(): make it take a bool brk_enable,
+and return void. (pl011_loopback_break() takes an int,
+but we shouldn't copy that: it uses it as a bool, so it
+ought to take a bool.)
+
+>  static void pl011_write(void *opaque, hwaddr offset,
+>                          uint64_t value, unsigned size)
+>  {
+> @@ -462,9 +471,7 @@ static void pl011_write(void *opaque, hwaddr offset,
+>              pl011_reset_tx_fifo(s);
+>          }
+>          if ((s->lcr ^ value) & LCR_BRK) {
+> -            int break_enable =3D value & LCR_BRK;
+> -            qemu_chr_fe_ioctl(&s->chr, CHR_IOCTL_SERIAL_SET_BREAK,
+> -                              &break_enable);
+> +            int break_enable =3D pl011_set_break(s, value);
+>              pl011_loopback_break(s, break_enable);
+
+Then this code becomes something like
+    bool break_enable =3D value & LCR_BRK;
+    pl011_set_break(s, break_enable);
+    pl011_loopback_break(s, break_enable);
+
+which is more straightforward than passing the raw LCR value
+to pl011_set_break and relying on it returning the "is BRK set?"
+information that we then pass to pl011_loopback_break().
+
+> +static int pl011_be_change(void *opaque);
+
+> +static inline void pl011_set_handlers(PL011State *s)
+> +{
+> +    qemu_chr_fe_set_handlers(&s->chr, pl011_can_receive, pl011_receive,
+> +                             pl011_event, pl011_be_change, s, NULL, true=
+);
+> +}
+> +
+> +static int pl011_be_change(void *opaque)
+> +{
+> +    PL011State *s =3D opaque;
+> +
+> +    pl011_set_handlers(s);
+> +    pl011_set_break(s, s->lcr);
+
+and here we would then pass in s->lcr & LCR_BRK.
+
+> +
+> +    return 0;
+> +}
+
+thanks
+-- PMM
 
