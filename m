@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38156C5DF89
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38106C5DF87
 	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:02:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxN0L-00064T-29; Fri, 21 Aug 2026 07:01:45 -0400
+	id 1wxN0k-0007fm-J8; Fri, 21 Aug 2026 07:02:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN0H-00062a-D5
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:01:43 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1wxN0h-0007Nj-Ls
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:08 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN0F-0007Fz-Mc
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:01:41 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4980fe6b3beso15554105e9.0
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:01:39 -0700 (PDT)
+ id 1wxN0f-0007L6-KQ
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:07 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4980fe6b3beso15556835e9.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787310098; x=1787914898; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=8g5mM9Q649/0dlg8XApcPPU1rZYvV51fpODLqJsuqBE=;
- b=BTckQdfgd9aUQ3JAG7fQOD8PiXbi1ClbPqDjo21DOTlLADGZMvkkIG6UjM3fS60gGp
- ZkN7gP6XwKEU45OJsRg/dUA68ApAEiSfk8lqHcdvrak9RgHVpx0SEuX3NaUsNIk3PIoZ
- 8yTxSgeCIocng4ps7/G5qN/dAQAh5Pn70gFjsLifg1vcQdK6tKTwjKj/a0inQdZyrA1x
- AjU5uW1p2yHYVnAOE1F6NZiSa/Is4+5qWR7GJQzRLTI9646kWWZ5+/dzjGwBt431gaif
- MH+HXnj+gxH0bCNTTetFQFNLgn99B1h65YAfmsrfxOl+c8cPUAMESCygC1RkEPKl0Vk1
- e9nQ==
+ d=linaro.org; s=google; t=1787310124; x=1787914924; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=A8JHAqmDcN4O81D571sT2d4dAyJDQaqEm7zYyrqJnRE=;
+ b=hNkVFvauIibw+jdXd9GIpPGGwzBt7JBvCx20fDpMTwE7YpQcbR2AFz3h+MYWfZ6Q7E
+ 8No+VlNMRnjKC7Z9fn2IumJTRWzwLck9q9lK52+Zf3qP1/r5eglx5shIA9qHF/mpH/7B
+ aqBbZqEH7Z+Dvwzhu4qR/WtF3B/JzHwbemXe3sPRoR6J/mLkFUxcwvc0k5kAoVysCnDP
+ W/8/sI3ge7NmdgPge3q93ni/LbKKeO+NjPhOcv/zLrX20ZfsGBaTEm9Wwqe37vo5Sc9k
+ c6oOoBMoC+nbVZTaPegBZ1QrVaO20zJ92LKzUhD2bg9ZtmEqwTbeiNl28Z7HmX4DkgjX
+ GeiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787310098; x=1787914898;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=8g5mM9Q649/0dlg8XApcPPU1rZYvV51fpODLqJsuqBE=;
- b=jJ6CQSGsELsWMbO3KGBrITbIypRfKDul5hvBDyxsp2hPYCtD5eSYqFV30qu+ldJQ3W
- K9E6ryP2EzbTWblduwoOkgdPCRgAGYj39RtBWuETzw/nr/jXwDlONzUPCjn5waHJ7uRe
- xCb1KUZN9DRPA+s4AOmZOGdEf76x0H8Nu6F8U9J7LezG7YaV9cimwQTTQkSzHwiqYafy
- +t9XM5DYqRtCieFnyugApp7ROoJ3Ddz0/Q6LL9a72nomwQeBLYU6G3PI1nW7nqz5b98d
- KBeeHWvOWhDH3qrpKSTdYvCIRqsFJUepEwHzVPkqPN4NEWi+O93EUz9XW2x+lPMi9RTS
- O3DQ==
-X-Gm-Message-State: AOJu0YxUGIWNKMQbcBXmY7eYZbzY7wOEdNc6duCohRWT1qKkg58viLGu
- wu3yjuhf9xHOBIjaSrFwGDtUS1QOyrqhQIVBqsqwQm8lRtX5c7NmFBdB7OBwbKVGtdqnCpxtwrz
- JSy5P
-X-Gm-Gg: AR+sD11Pp9iaj7G3mdH6bfMJY8Yf1IXn8VVGXwtTfGsH0GkW95jyyAlrLKRmW6ZAOF4
- 2UDPxJS90TCv5G+HfwoBGl3AVP2rFXs5Z9aFNTFaUGoZzqQjmsmuf63Z00c48CntxC2ZVvplCZq
- UDqnpfXFL3psg7FZeqGDc5O85i/x/Qm/sCgmjAMfVrzR0FCN0YWTGEzMG3hDwyIvN0Qt8NP5bwX
- plifNbYWsmXJSD42B4AcKO/txGBrlkTzEjmnamGLfD/0JbkK44hTDc0Kj7qK8nBVp1ISlgUbg8d
- e13EJ6y5dip5lYQDHqyCL+IH3GyLaDHmrbj1Q5kt9RanQN/aeW6amytokMs0n+DZ6RM0JV9KSfh
- dbVRGw3tl5XwQIueFUqjQSzPUZ6CgZDYFbUODgoUaLJz+9jCNuYQmz7DQoahnKrCnvdQE4GhqRb
- OLBVVUNULu+jVJ1ekxpDJmsbqlTx6deNFJf4s6EC15WgQ4UwT5ujJybYgfK10ZFS2KoD6CAJe3P
- M1vp9y7CXtGltSqQG8HcC5rlJkMSrkw5Q03WA4u/yZl9qILtaxg4yKfJOARiAIHd1DyhIKoRAP0
- BFW2Dw==
-X-Received: by 2002:a05:600c:5490:b0:499:59fd:dbfc with SMTP id
- 5b1f17b1804b1-499b913eb08mr46142275e9.1.1787310096203; 
- Fri, 21 Aug 2026 04:01:36 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787310124; x=1787914924;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=A8JHAqmDcN4O81D571sT2d4dAyJDQaqEm7zYyrqJnRE=;
+ b=SsldKHaL3RKZc/u2+0GKcWFkcFUsC29GPuOZm8LEzt427VaucH0beYudQMInI11D0J
+ 9A73vaUbCX1CMpKzB/8Txk1BOJK/4i17COy5K2QM2bN5FwVabMtzlWz/DNJk1KXQ8Gcm
+ dbJJMt5SAtFZaYk3EO7fDxAgytjtemX0N4eRiMtrh3VgD3ux0v00O30JntspuWpwfreH
+ PCfWHeDFIL3DASH6m2iTrqYUm875wy2ZU4gpWuSTRaQWgmwuRv3Zm8/qz8gXkLk45Xza
+ iZDdo2XOMlzJl2VpFHux6eDuQtXVj6l6EvL7ZX+bGPFX0LAgYBbLe4ZKJgC1OwBEklJu
+ vG5g==
+X-Gm-Message-State: AOJu0YyCd9Rh8+J2S96bLcCV5HYzJ+5zRhwirSyLx2Ug1Fkz8c59QHK7
+ Vmm72147P2lRSUkCr6FHnscKV08OjYWHtP0q7TIytNKCkYRfD/QiHIAwO8E+4jbnnCn4ndRCBaQ
+ QYUL1
+X-Gm-Gg: AR+sD10aNfcS2HBGqxLrww5g3IPd09q1Z3a/a63T+TaJN/9BnqPBHbL0QRx14YIO2K2
+ LXY+d0fZytMxz5e9l2bNAcmeKL4APq7SErO+0QYSVGwYa9fdXWZGWD64AbqrOdx8TyOjfwlxtR8
+ JM8rl5s06cqT0OX4SkP0dOEIfRx11qZMQIHNQ7JKABxC77f0AvV3smQboPmgYR1LmYkN44dOhnZ
+ N6xf3LWXz7XkKM4Yw2TzcCVePKxkIted482z84mjpqzkBMJMnHeJmNkpAENUbJpFhEMqr6U5ILK
+ CBvnIhKIi4XtiR0Yf/N8Pg3y1Trf57EjxPozIBfjDenQEi2wR+88M4RxwSrLZCDOn5meSgm3m6l
+ q8XA/AjOv7FPpV0tMXDdDKvrHr2uF4w76s3andRcU654jrJdN831hcB7id7ataFEvvIoqLTRljb
+ zcfjZTmySPLX/boFyw2vk8HlutrbUsuz3A8AT25lP6OoULrniFdTDYdzmwtT/mE1KML3B+Qu9An
+ Bm3KxpTLWryLYH3wbfAtAGoTFMssFm/BXT64hFWAaMB30wqDvagm7+zFxOCLzLpXAmb3w==
+X-Received: by 2002:a05:600c:1912:b0:499:8d9b:832c with SMTP id
+ 5b1f17b1804b1-499b9182141mr45304635e9.4.1787310123715; 
+ Fri, 21 Aug 2026 04:02:03 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.01.32
+ 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.01
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 04:01:33 -0700 (PDT)
+ Fri, 21 Aug 2026 04:02:02 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/43] target/arm: Sink aarch64_aa32_a57_init into
- aarch64_max_tcg_initfn
-Date: Fri, 21 Aug 2026 12:00:25 +0100
-Message-ID: <20260821110101.3971391-8-peter.maydell@linaro.org>
+Subject: [PULL 16/43] target/arm: Handle NSACR.NSASEDIS in CPACR accesses
+Date: Fri, 21 Aug 2026 12:00:34 +0100
+Message-ID: <20260821110101.3971391-17-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260821110101.3971391-1-peter.maydell@linaro.org>
 References: <20260821110101.3971391-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,44 +101,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+In cpacr_read() and cpacr_write() we have code that implements the
+"CPACR.{cp10,cp11} behave as RAZ/WI from NonSecure when NSACR.cp10 is
+0" behaviour.  There is a similar requirement for CPACR.ASEDIS: if
+NSACR.NSASEDIS is 1 then CPACR.ASEDIS behaves as RAO/WI in NS.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260812204435.295067-5-richard.henderson@linaro.org
+This doesn't matter to us yet because we don't currently implement
+ASEDIS or NSASEDIS. But we're about to do that, so add the handling
+to cpacr_read() and cpacr_write().
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260817123838.1578060-2-peter.maydell@linaro.org
 ---
- target/arm/cpu-max.c   | 2 +-
- target/arm/tcg/cpu64.c | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ target/arm/helper.c | 24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/target/arm/cpu-max.c b/target/arm/cpu-max.c
-index edb5b9e6c36..93f24114a52 100644
---- a/target/arm/cpu-max.c
-+++ b/target/arm/cpu-max.c
-@@ -206,8 +206,8 @@ static void cpu_max_initfn(Object *obj)
-          * '-cpu max' for TCG: we currently do this as
-          * "A57 with extra things"
-          */
--        aarch64_aa32_a57_init(cpu, aarch64_enabled);
-         if (!aarch64_enabled) {
-+            aarch64_aa32_a57_init(cpu, false);
-             aa32_max_features(cpu);
- #ifdef CONFIG_USER_ONLY
-             /*
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 24f34947eca..5649b853a7f 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1167,6 +1167,8 @@ void aarch64_max_tcg_initfn(Object *obj)
-     uint64_t t;
-     uint32_t u;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index adae2b2b8e5..6a707b80cff 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -588,11 +588,19 @@ static void cpacr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     /*
+      * For A-profile AArch32 EL3 (but not M-profile secure mode), if NSACR.CP10
+      * is 0 then CPACR.{CP11,CP10} ignore writes and read as 0b00.
++     * Similarly, if NSACR.NSASEDIS is 1 then CPACR.ASEDIS ignores writes
++     * and reads as 1.
+      */
+     if (arm_feature(env, ARM_FEATURE_EL3) && !arm_el_is_aa64(env, 3) &&
+-        !arm_is_secure(env) && !FIELD_EX32(env->cp15.nsacr, NSACR, CP10)) {
+-        mask = R_CPACR_CP11_MASK | R_CPACR_CP10_MASK;
+-        value = (value & ~mask) | (env->cp15.cpacr_el1 & mask);
++        !arm_is_secure(env)) {
++        if (!FIELD_EX32(env->cp15.nsacr, NSACR, CP10)) {
++            mask = R_CPACR_CP11_MASK | R_CPACR_CP10_MASK;
++            value = (value & ~mask) | (env->cp15.cpacr_el1 & mask);
++        }
++        if (FIELD_EX32(env->cp15.nsacr, NSACR, NSASEDIS)) {
++            mask = R_CPACR_ASEDIS_MASK;
++            value = (value & ~mask) | (env->cp15.cpacr_el1 & mask);
++        }
+     }
  
-+    aarch64_aa32_a57_init(cpu, true);
-+
-     SET_IDREG(isar, CLIDR, 0x8200123);
-     /* 64KB L1 dcache */
-     cpu->ccsidr[0] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 64, 64 * KiB, 7);
+     env->cp15.cpacr_el1 = value;
+@@ -603,12 +611,18 @@ static uint64_t cpacr_read(CPUARMState *env, const ARMCPRegInfo *ri)
+     /*
+      * For A-profile AArch32 EL3 (but not M-profile secure mode), if NSACR.CP10
+      * is 0 then CPACR.{CP11,CP10} ignore writes and read as 0b00.
++     * Similarly NSACR.NSASEDIS makes CPACR.ASEDIS read as 1.
+      */
+     uint64_t value = env->cp15.cpacr_el1;
+ 
+     if (arm_feature(env, ARM_FEATURE_EL3) && !arm_el_is_aa64(env, 3) &&
+-        !arm_is_secure(env) && !FIELD_EX32(env->cp15.nsacr, NSACR, CP10)) {
+-        value = ~(R_CPACR_CP11_MASK | R_CPACR_CP10_MASK);
++        !arm_is_secure(env)) {
++        if (!FIELD_EX32(env->cp15.nsacr, NSACR, CP10)) {
++            value = ~(R_CPACR_CP11_MASK | R_CPACR_CP10_MASK);
++        }
++        if (FIELD_EX32(env->cp15.nsacr, NSACR, NSASEDIS)) {
++            value |= R_CPACR_ASEDIS_MASK;
++        }
+     }
+     return value;
+ }
 -- 
 2.43.0
 
