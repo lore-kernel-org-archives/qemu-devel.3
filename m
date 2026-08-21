@@ -4,113 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B1AC5DF94
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 16:37:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD778C5DF94
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 16:38:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxSEZ-0004v1-4I; Fri, 21 Aug 2026 12:36:47 -0400
+	id 1wxSFj-0005YH-CL; Fri, 21 Aug 2026 12:37:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wxSEW-0004qu-H4; Fri, 21 Aug 2026 12:36:44 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wxSFh-0005Y9-G2
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 12:37:57 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wxSEU-0007WT-E4; Fri, 21 Aug 2026 12:36:44 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67LG1lJg1906972; Fri, 21 Aug 2026 16:36:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=//a5e4Icf+TDnJVxRYRQOC+2Yh7V+W4zOybV0KRLJvg=; b=ZXD1T4cJgCBt
- H9Dl/yjlhqTPUQ3oBKcrAdLMhnRS2uW1EWetqpbzveuXW6c77YbgPWNo9t2LowEg
- HPCztfTmFVCfwt+w4TJKWJh9qYJ49n07xQEfrq2ncAv8Q3DU6NU+y6Ous0kL5uTu
- zO1c9htRxlQFvKGTM9Pt/HuXhkHrhYO5P6tY/f9RPFhpYTGcmyZAQNwpAwGmS+nM
- GWzDwVS5F9DwaFAhcPXwu/gakR4WjUOTBVNZMmfBki3GRfC25fYClseerFKx0rP7
- yJHZHgw0WxgyoflyYnbhxuWgpTaadt1gP9TXNnMtd54BE+qKjMPsOWRIPrzz2r/9
- RTOgFRuybA==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu4jn6g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 21 Aug 2026 16:36:39 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67LGQH9L002938;
- Fri, 21 Aug 2026 16:36:39 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g34ngwfsh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 21 Aug 2026 16:36:39 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67LGabIG28574226
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 21 Aug 2026 16:36:38 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B98AF5805F;
- Fri, 21 Aug 2026 16:36:37 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3DDE45805D;
- Fri, 21 Aug 2026 16:36:37 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 21 Aug 2026 16:36:37 +0000 (GMT)
-Message-ID: <0652cff525cfb620198b1705ddbcb9c639faedf0.camel@linux.ibm.com>
-Subject: Re: [PATCH 19/29] target/ppc: Refactor sleep and its variants to
- use a common helper
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, harshpb@linux.ibm.com
-Cc: ojaswin@linux.ibm.com
-Date: Fri, 21 Aug 2026 11:36:31 -0500
-In-Reply-To: <2a98f24f-0af7-4778-a8f1-f813bc48139e@linux.ibm.com>
-References: <20260820140114.327023-1-rathc@linux.ibm.com>
- <20260820140114.327023-20-rathc@linux.ibm.com>
- <3fea696f5ee62656ecca7aa72118da1d458a6018.camel@linux.ibm.com>
- <2a98f24f-0af7-4778-a8f1-f813bc48139e@linux.ibm.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIxMDEzMCBTYWx0ZWRfXy3G6Q9QD0v9D
- wMCxL0UIRFUAxhPufSCR16ArAIBPwgEFvyGOoiNVNtj/ZxDnqvadYxGp8IBcxwAAQO+qUvoPHlG
- dFpEIKFI0XvrzzhCn2IB6qs0thChe8s=
-X-Proofpoint-GUID: Q9NN7KIa6mJsT0iZqNws5wuSKia5Mhl5
-X-Proofpoint-ORIG-GUID: Q9NN7KIa6mJsT0iZqNws5wuSKia5Mhl5
-X-Authority-Analysis: v=2.4 cv=RPmD2Yi+ c=1 sm=1 tr=0 ts=6a887e97 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=YUEbG25dech8SPtm_1IA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIxMDEzMCBTYWx0ZWRfXzq6K1p3iU0Mr
- N2uOqKlrk/mKaxr1sKMXl2koGqo5GbGIeOvs0B5hz5/rg4wzcaTS9a+HmGIbmxveryQP5RipPT1
- phLw623Zgjw5Q5iFPIelgltYCp0GR+uFcQ1NInM6WsDrOCvJd+zDwIYhyiypvq2FJQXWmHEObhe
- 0p89l7M5VzhV5muRUaBm1hxF4svs9yopSkOUbfhxlHB3t2ByjwnHlapTKPD/LSn4O1RxGpNWJKw
- ILiO2CUKbdMGP/DmSiQHZHwVn4Sjsqmn8y+gk9edVnP++Jix6ezfMx9j8tYzQWXhjlue9IrFIuc
- x4ZWkozcCPPbTGNJUvSS031dSYjv3mid75IcpFkvnhHYhUm2xFeaFx9FVAndO4mQYV+C1HEk24P
- IVB6jNhFgObdlb7ZxE6ebC6pZJINu3NyFclWzjCIko0+jH/odCr8wgyEw8w6fB7LPE1zAqLp2Zl
- pOfvMaqwicERgZ5W4Lw==
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wxSFf-0007jh-Ap
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 12:37:57 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67LFmLSR2323013
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 16:37:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ q0JDowejZZ3R0HAOOc86ODYbAWCWKVODMyRAdIRSwws=; b=CzYCV1gXgc/+t1bx
+ HrDrQiDCAs2dxrDqdgAveEkxyDrNlCJrJJKsq8OqgIJEBV9Xu7wzftZK8BE0Ry4F
+ aKDRD9LFPjuNRDA4h/wMh5GOz7xlnRBEI30KLyvwXTxFlXlVrM4c1MO46TQ6nDgT
+ 0o3HgXba+zeVU8vY3WOle2RMqKSSNOXVN5nf0gDwVAc1pio0gFtXWN7VwU4DKnOf
+ sN8B1RqGeJ8JtbJi5osHgutrd1wfNtEE12UG9jNsHrrW012rL3tIXUAMyIaF8NKi
+ cAxmzD93zNSkWEvx0xZDUK+PVB7R9aRsNGUcfZvbkrH4ddMYzgH5SP7c9RD739N5
+ Gr81ow==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
+ [209.85.210.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g6fbwapq9-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 16:37:53 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id
+ d2e1a72fcca58-84e3d575d6eso1936307b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 09:37:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1787330272; x=1787935072; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=q0JDowejZZ3R0HAOOc86ODYbAWCWKVODMyRAdIRSwws=;
+ b=a993nYdHOIvslxIu/Fg87l8D1RnTIVA7TKLQm47dUEXPArPFaTgpZiVlHGNzQYQOzr
+ foEI+0KBqdPfFQTwWKzINlvFSrLyv1bOFTaJPv5EGSJPkdfdYAyANhjO81vyNS6WYzuR
+ urof6dvS1junYI4Xp/m89suKVHFxHDobVycV7Pad2GMp5DGIzrhd+mUiTy7jknfRrf4F
+ VEaSDlFwvAvIOUKK35mfMu3d/9DIDjLgNUueJvKL2ElQJCPO4ZKFi/unOWhcStP6QGst
+ rYz9eNZ07a1BvRhRBqQ5clEaUpsLb7djY9ZgUKoxvP84TtH/2oNKtHBTDsraU2xJMmub
+ 7Jtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787330272; x=1787935072;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=q0JDowejZZ3R0HAOOc86ODYbAWCWKVODMyRAdIRSwws=;
+ b=qwmwQLF0XfX5By3K4WeCRmE144Lf3CWXCo46ECjPtqflYFW2u13SZzFFur+DTBc0FV
+ 9T4HjxUfoLqDEwCphhfZW5PeabY3XmM28rmkfozcxLE6W2Sh8uoHAFoyAxLeZpCTxvpu
+ h4NE7Y+0eYpnqrtu+rHVednz/ZwGmQxuWjz1/ugerIGXxqSwjCAVYD+KplreVAjggexz
+ jTe1TXemXR1+iDc5sbnJ2xCXPnB5sCjNMzSVpa7u8rUC8fMo6OxKIRbJw5OVdpsW+EBF
+ c0CGeNV3zIXpfKHs3SijLBminzKZq073t/pyglOZKECPYf79RKiqB4T5ImvNL5Ec9Nyv
+ gwcA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrBJCFjE9SiKoQRymeV4xNnl2h4EqZOeTJ1uQKgKjjTnMYnaHWI9i2tKXsB/x3tAl2S/j6w5MGcp6Jm@nongnu.org
+X-Gm-Message-State: AFuF++ldnLKnHa3Xc2KXcYqrDNGcSocwLerdTnWWJM06t1LEnxOJCYYo
+ VdvFFed7IgdmqCl32n/2aXGBPOAJX2c/ij0o/UN6BwqaXn+cmaqNOlT+3OElG/IFL8e8tJfE0U/
+ S56kpWjDP59RF9bIiblFu+E5D8W5w3s3J/XZ6xB42TGUsXaeUC8dyoT2dHg==
+X-Gm-Gg: AR+sD13yKdrw7TXCyy+rBUy/WWF2xZPg3UKryxejapKu5Rh3VnnbZhMhL6h0+g4gkkk
+ 39SXbVGM3yDbur6AlWIqeD820ijzEFCPrD4iVFNO+Aam7CVmGu/rzPVfo9A4qbHhPZcJyeXvlQS
+ lIJqqzzClNgQ+boZ6jC8aAPhDfCYfFL3SmNRuGsUNe/3IhplLx+JJRYwMW7J9en05WnvyGws3qi
+ Ft7X1Na6l9tFrrZ9jcQjEVyxKcLhyQiRjjxrDLkx3rZOKA5kZFXShlpx3nMvY5g9Zh5H8EagPdl
+ JetFmOtOnIsxnGqkWUg+uViBz8KAwTD+iUb678xkcy2qCMl4fl811RBASyHtuS5+7mId0bs6897
+ LdXI8A2srstIcBTGs+6vXo/iWKXupuoikAIdXImHSmtST0UwMIelm3UjBnSIjSOpS+75k
+X-Received: by 2002:a05:6a00:988:b0:848:6f5c:a327 with SMTP id
+ d2e1a72fcca58-851fa04cd54mr10466600b3a.15.1787330272399; 
+ Fri, 21 Aug 2026 09:37:52 -0700 (PDT)
+X-Received: by 2002:a05:6a00:988:b0:848:6f5c:a327 with SMTP id
+ d2e1a72fcca58-851fa04cd54mr10466546b3a.15.1787330271950; 
+ Fri, 21 Aug 2026 09:37:51 -0700 (PDT)
+Received: from [192.168.1.199] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-851d3389a37sm3163113b3a.15.2026.08.21.09.37.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 21 Aug 2026 09:37:51 -0700 (PDT)
+Message-ID: <dc805d66-fdf2-48be-a643-295ece2d2acf@oss.qualcomm.com>
+Date: Fri, 21 Aug 2026 09:37:52 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/11] target/hexagon: align exceptions for user/sysemu
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>
+References: <20260819013144.3264096-1-brian.cain@oss.qualcomm.com>
+ <20260819013144.3264096-2-brian.cain@oss.qualcomm.com>
+ <51289d66-1d42-4f7d-a1e0-652150f45a78@oss.qualcomm.com>
+ <6a6549ed-24b4-4e18-a3a8-0fe1239404d3@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <6a6549ed-24b4-4e18-a3a8-0fe1239404d3@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIxMDEzMCBTYWx0ZWRfXw9I7Jx98W9jH
+ zVcB4VF4V446xMhDl//xeOXs2uGwRBuE3MhkkgH7kK8ryOsHwyTE7gye0ld2Hr6JwLFxVP1uZsl
+ v8lpwcZIHcXc9bBd3TwnoIx+76kUsRc=
+X-Proofpoint-ORIG-GUID: EnhLehF572xa0CZ2wfgdTMMMBNQta9Qs
+X-Authority-Analysis: v=2.4 cv=L9AtheT8 c=1 sm=1 tr=0 ts=6a887ee1 cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=YqW66GmFy2uuvQRNjT0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=OpyuDcXvxspvyRM73sMx:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIxMDEzMCBTYWx0ZWRfX44bmR3ez11hm
+ HX+MRpJEzaDGUXL+PXHVFySmxQo7nTLOikgVmWuGwgRgIzwC0IRGAJJbMwI+4ShZglufvMCYftw
+ sE8bkNyK09LPd5ru5mi8qHKvtykMHjbWZscPoTM6Ypy5L0cx/qraLsmRgayEYpauwDOknkjLcED
+ DzqO9CsX5hHugd7pULjf4PCXQXDJj26aRhAbhtwH+jmyHjFnuYkG7JKhUHWoaorWKH0LzrxOI4D
+ lC4lLMKwzk7/mS1aFV8eKJqy+6QvuqBReXmE4ioN/5SX6QdwpF8h4/BUVjKvrAfRu/oLqv69ElY
+ rhqF3ECk5gtkFCmghWP0Oe52D4i9l/kmjwC8XXD1x5/4SKbbGjIuxD86fDm4+SSfugxYufrhKFo
+ Ts9TIHtom42gh5OBtla/Nzd9BnKtQsIMMnEdwzXeHFZ7/55fYf5a4HltkqLMSkxFeNcOtb0HcWf
+ rchDWN7T2jnuhtFrhHQ==
+X-Proofpoint-GUID: EnhLehF572xa0CZ2wfgdTMMMBNQta9Qs
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-21_05,2026-08-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 adultscore=0 spamscore=0 priorityscore=1501
- bulkscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 bulkscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ lowpriorityscore=0 malwarescore=0 phishscore=0 adultscore=0 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608210130
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,219 +154,144 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Chinmay,
-
-I was only suggesting that it might be good to add a comment to the
-commit message stating that this commit was preparatory to moving the
-sleep instructions to decodetree.  No need to squash them.
-
-On Fri, 2026-08-21 at 12:57 +0530, Chinmay Rath wrote:
-> On 8/20/26 20:45, Miles Glenn wrote:
-> > Chinmay,
-> > 
-> > This commit seems out of the scope of moving instructions to
-> > decodetree.  Was this change necessary in order to move the
-> > instructions to decodetree?  If so, it would be helpful to add that to
-> > the commit message.  Otherwise, I would submit this separately from the
-> > decodetree commits.
-> Hi Glenn,
+On 8/20/2026 12:02 PM, Brian Cain wrote:
 > 
-> It is common practice to merge helper functions in helper files and/or 
-> translation functions in the translate.c or translate directory files 
-> during instruction movement to decodetree, if they have common logic.
-> Speaking of which, ideally this commit should have been squashed along 
-> with the previous commit where those insns were actually moved. The 
-> author of the patch has instead created two separate patches. Though it 
-> is not technically wrong, since neither of the patch are incomplete 
-> functionally, let me know if you think this should be squashed with the 
-> previous commit, will do that.
+> On 8/20/2026 1:40 PM, Pierrick Bouvier wrote:
+>> On 8/18/2026 6:31 PM, Brian Cain wrote:
+>>> System mode reports an exception as cs->exception_index = HEX_EVENT_*
+>>> plus
+>>> env->cause_code = HEX_CAUSE_*, but translated code in user mode put
+>>> the cause
+>>> code straight into exception_index, so cpu_loop() was decoding both
+>>> forms.
+>>> gen_exception_decode_fail() and the misaligned-PC check used the raw
+>>> form
+>>> unconditionally, so in system mode the cause code was misread as an
+>>> event
+>>> number.
+>>>
+>>> Use the {event, cause} everywhere and drop the duplicated cases
+>>> from cpu_loop(), which fixes HEX_CAUSE_PRIV_USER_NO_SINSN and
+>>> HEX_CAUSE_PRIV_USER_NO_GINSN.  The misaligned PC is no longer zeroed
+>>> on its way out either, so it reaches the signal frame as si_addr instead
+>>> of whatever r31 held.
+>>>
+>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>>> ---
+>>>   target/hexagon/translate.h    |  2 +-
+>>>   linux-user/hexagon/cpu_loop.c | 30 +++++++++++-------------------
+>>>   target/hexagon/cpu.c          |  3 ++-
+>>>   target/hexagon/translate.c    | 27 +++++++++------------------
+>>>   4 files changed, 23 insertions(+), 39 deletions(-)
+>>>
+>>> diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
+>>> index 3c5773e2c73..00de2b0d2ec 100644
+>>> --- a/target/hexagon/translate.h
+>>> +++ b/target/hexagon/translate.h
+>>> @@ -330,7 +330,7 @@ extern TCGv_i32 hex_t_sreg[NUM_SREGS];
+>>>   #endif
+>>>     -void hex_gen_exception_end_tb(DisasContext *ctx, int excp);
+>>> +void hex_gen_exception_end_tb(DisasContext *ctx, int cause);
+>>>     void process_store(DisasContext *ctx, int slot_num);
+>>>   diff --git a/linux-user/hexagon/cpu_loop.c b/linux-user/hexagon/
+>>> cpu_loop.c
+>>> index d7f73439dbc..e4ef97a1184 100644
+>>> --- a/linux-user/hexagon/cpu_loop.c
+>>> +++ b/linux-user/hexagon/cpu_loop.c
+>>> @@ -66,21 +66,22 @@ void cpu_loop(CPUHexagonState *env)
+>>>               case HEX_CAUSE_FETCH_NO_UPAGE:
+>>>               case HEX_CAUSE_PRIV_NO_UREAD:
+>>>               case HEX_CAUSE_PRIV_NO_UWRITE:
+>>> -            force_sig_fault(TARGET_SIGSEGV, TARGET_SEGV_MAPERR,
+>>> -                    env->gpr[HEX_REG_PC]);
+>>> -
+>>> -            break;
+>>> +                force_sig_fault(TARGET_SIGSEGV, TARGET_SEGV_MAPERR,
+>>> +                                env->gpr[HEX_REG_PC]);
+>>> +                break;
+>>>               case HEX_CAUSE_PRIV_USER_NO_GINSN:
+>>>               case HEX_CAUSE_PRIV_USER_NO_SINSN:
+>>>               case HEX_CAUSE_INVALID_PACKET:
+>>> -            force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPC,
+>>> -                    env->gpr[HEX_REG_PC]);
+>>> -            break;
+>>> +            case HEX_CAUSE_REG_WRITE_CONFLICT:
+>>> +                force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPC,
+>>> +                                env->gpr[HEX_REG_PC]);
+>>> +                break;
+>>>               case HEX_CAUSE_MISALIGNED_LOAD:
+>>>               case HEX_CAUSE_MISALIGNED_STORE:
+>>> -            force_sig_fault(TARGET_SIGBUS, TARGET_BUS_ADRALN,
+>>> -                    env->gpr[HEX_REG_PC]);
+>>> -            break;
+>>> +            case HEX_CAUSE_PC_NOT_ALIGNED:
+>>> +                force_sig_fault(TARGET_SIGBUS, TARGET_BUS_ADRALN,
+>>> +                                env->gpr[HEX_REG_PC]);
+>>> +                break;
+>>>               default:
+>>>                   EXCP_DUMP(env, "\nqemu: unhandled CPU precise
+>>> exception "
+>>>                       "cause code 0x%x - aborting\n",
+>>> @@ -88,15 +89,6 @@ void cpu_loop(CPUHexagonState *env)
+>>>                   exit(EXIT_FAILURE);
+>>>               }
+>>>               break;
+>>> -        case HEX_CAUSE_PC_NOT_ALIGNED:
+>>> -            force_sig_fault(TARGET_SIGBUS, TARGET_BUS_ADRALN,
+>>> -                            env->gpr[HEX_REG_R31]);
+>>> -            break;
+>>> -        case HEX_CAUSE_INVALID_PACKET:
+>>> -        case HEX_CAUSE_REG_WRITE_CONFLICT:
+>>> -            force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPC,
+>>> -                            env->gpr[HEX_REG_PC]);
+>>> -            break;
+>>>           case EXCP_ATOMIC:
+>>>               cpu_exec_step_atomic(cs);
+>>>               break;
+>>> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+>>> index 7067e5b70f7..0bbefc2fb87 100644
+>>> --- a/target/hexagon/cpu.c
+>>> +++ b/target/hexagon/cpu.c
+>>> @@ -323,7 +323,8 @@ static TCGTBCPUState
+>>> hexagon_get_tb_cpu_state(CPUState *cs)
+>>>           hex_flags = FIELD_DP32(hex_flags, TB_FLAGS, IS_TIGHT_LOOP, 1);
+>>>       }
+>>>       if (pc & PCALIGN_MASK) {
+>>> -        hexagon_raise_exception_err(env, HEX_CAUSE_PC_NOT_ALIGNED, 0);
+>>> +        env->cause_code = HEX_CAUSE_PC_NOT_ALIGNED;
+>>> +        hexagon_raise_exception_err(env, HEX_EVENT_PRECISE, pc);
+>>>       }
+>>>     #ifndef CONFIG_USER_ONLY
+>>> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+>>> index 06a8159d283..5cfa60ca302 100644
+>>> --- a/target/hexagon/translate.c
+>>> +++ b/target/hexagon/translate.c
+>>> @@ -73,8 +73,8 @@ TCGv hex_vstore_pending[VSTORES_MAX];
+>>>   #ifndef CONFIG_USER_ONLY
+>>>   TCGv_i32 hex_greg[NUM_GREGS];
+>>>   TCGv_i32 hex_t_sreg[NUM_SREGS];
+>>> -TCGv_i32 hex_cause_code;
+>>>   #endif
+>>> +static TCGv_i32 hex_cause_code;
+>>>
+>> Shouldn't this be part of CPUState?
+>> What if multiple cpus trigger an exception at the same time?
 > 
-> PS: Please feel free to review other patches as well. It would be of 
-> great help :)
-> 
-> Regards,
-> Chinmay
+> The cause_code is part of CPUState.  This TCGv is a reference to that
+> state member for use with translation. We take advantage of the single-
+> threaded nature of translation with all of these file-global TCGv values.
+>
 
-Hi Chinmay,
+Thinking twice about it, please note that this is true only for
+qemu-user (when tb_gen_code runs with mmap_lock), or qemu-system without
+MTTCG, which is what we have at the moment.
 
-I was only suggesting that it might be good to add a comment to the
-commit message stating that this commit was preparatory to moving the
-sleep instructions to decodetree.  No need to squash the two commits.
+However, using qemu-system with MTTCG, translation can happen
+concurrently, and those variables should be part of DisasContext instead.
 
-Thanks,
-
-Glenn
-
-> > Thanks,
-> > 
-> > Glenn
-> > 
-> > On Thu, 2026-08-20 at 19:30 +0530, Chinmay Rath wrote:
-> > > From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-> > > 
-> > > Refactor sleep, doze, nap, rvwinkle and stop to use a common helper
-> > > since they share majority of the code. Also refactor gen_hlper_pminsn()
-> > > to gen_helper_PMINSN()
-> > > 
-> > > Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-> > > Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> > > ---
-> > >   target/ppc/helper.h                           |  2 +-
-> > >   target/ppc/tcg-excp_helper.c                  |  2 +-
-> > >   .../ppc/translate/processor-ctrl-impl.c.inc   | 99 +++----------------
-> > >   3 files changed, 16 insertions(+), 87 deletions(-)
-> > > 
-> > > diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-> > > index cd2a0948a3..7e15676122 100644
-> > > --- a/target/ppc/helper.h
-> > > +++ b/target/ppc/helper.h
-> > > @@ -18,7 +18,7 @@ DEF_HELPER_1(rfdi, void, env)
-> > >   DEF_HELPER_1(rfmci, void, env)
-> > >   #if defined(TARGET_PPC64)
-> > >   DEF_HELPER_2(scv, noreturn, env, i32)
-> > > -DEF_HELPER_2(pminsn, void, env, i32)
-> > > +DEF_HELPER_2(PMINSN, void, env, i32)
-> > >   DEF_HELPER_1(rfid, void, env)
-> > >   DEF_HELPER_1(rfscv, void, env)
-> > >   DEF_HELPER_1(hrfid, void, env)
-> > > diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-> > > index b04f07a637..c4ffa2dfbb 100644
-> > > --- a/target/ppc/tcg-excp_helper.c
-> > > +++ b/target/ppc/tcg-excp_helper.c
-> > > @@ -459,7 +459,7 @@ void helper_scv(CPUPPCState *env, uint32_t lev)
-> > >       }
-> > >   }
-> > >   
-> > > -void helper_pminsn(CPUPPCState *env, uint32_t insn)
-> > > +void helper_PMINSN(CPUPPCState *env, uint32_t insn)
-> > >   {
-> > >       CPUState *cs = env_cpu(env);
-> > >   
-> > > diff --git a/target/ppc/translate/processor-ctrl-impl.c.inc b/target/ppc/translate/processor-ctrl-impl.c.inc
-> > > index bdbc195294..3b3ed3019a 100644
-> > > --- a/target/ppc/translate/processor-ctrl-impl.c.inc
-> > > +++ b/target/ppc/translate/processor-ctrl-impl.c.inc
-> > > @@ -104,103 +104,32 @@ static bool trans_MSGSYNC(DisasContext *ctx, arg_MSGSYNC *a)
-> > >       return true;
-> > >   }
-> > >   
-> > > -static bool do_doze(DisasContext *ctx, arg_DOZE *a)
-> > > -{
-> > > -    REQUIRE_64BIT(ctx);
-> > > -
-> > > -#if defined(CONFIG_USER_ONLY)
-> > > -    gen_priv_opc(ctx);
-> > > -#else
-> > > -    TCGv_i32 t;
-> > > -
-> > > -    REQUIRE_HV(ctx);
-> > > -    translator_io_start(&ctx->base);
-> > > -    t = tcg_constant_i32(PPC_PM_DOZE);
-> > > -    gen_helper_pminsn(tcg_env, t);
-> > > -    /* Stop translation, as the CPU is supposed to sleep from now */
-> > > -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> > > -#endif /* defined(CONFIG_USER_ONLY) */
-> > > -
-> > > -    return true;
-> > > -}
-> > > -TRANS_FLAGS2(PM_ISA206, DOZE, do_doze);
-> > > -
-> > > -static bool do_nap(DisasContext *ctx, arg_NAP *a)
-> > > -{
-> > > -    REQUIRE_64BIT(ctx);
-> > > -
-> > > -#if defined(CONFIG_USER_ONLY)
-> > > -    gen_priv_opc(ctx);
-> > > -#else
-> > > -    TCGv_i32 t;
-> > > -
-> > > -    REQUIRE_HV(ctx);
-> > > -    translator_io_start(&ctx->base);
-> > > -    t = tcg_constant_i32(PPC_PM_NAP);
-> > > -    gen_helper_pminsn(tcg_env, t);
-> > > -    /* Stop translation, as the CPU is supposed to sleep from now */
-> > > -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> > > -#endif /* defined(CONFIG_USER_ONLY) */
-> > > -    return true;
-> > > -}
-> > > -TRANS_FLAGS2(PM_ISA206, NAP, do_nap);
-> > > -
-> > > -static bool do_sleep(DisasContext *ctx, arg_SLEEP *a)
-> > > -{
-> > > -    REQUIRE_64BIT(ctx);
-> > > -
-> > > -#if defined(CONFIG_USER_ONLY)
-> > > -    gen_priv_opc(ctx);
-> > > -#else
-> > > -    TCGv_i32 t;
-> > > -
-> > > -    REQUIRE_HV(ctx);
-> > > -    translator_io_start(&ctx->base);
-> > > -    t = tcg_constant_i32(PPC_PM_SLEEP);
-> > > -    gen_helper_pminsn(tcg_env, t);
-> > > -    /* Stop translation, as the CPU is supposed to sleep from now */
-> > > -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> > > -#endif /* defined(CONFIG_USER_ONLY) */
-> > > -    return true;
-> > > -}
-> > > -TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep);
-> > > -
-> > > -static bool do_rvwinkle(DisasContext *ctx, arg_RVWINKLE *a)
-> > > +/*
-> > > + * Helper to handle DOZE, NAP, SLEEP, RVWINKLE & STOP. Since none of them use
-> > > + * any arguments just use a placeholder arg_SLEEP.
-> > > + */
-> > > +static bool do_sleep(DisasContext *ctx, arg_SLEEP *a, powerpc_pm_insn_t type)
-> > >   {
-> > >       REQUIRE_64BIT(ctx);
-> > >   
-> > >   #if defined(CONFIG_USER_ONLY)
-> > >       gen_priv_opc(ctx);
-> > > -#else
-> > > +#elif defined(TARGET_PPC64)
-> > >       TCGv_i32 t;
-> > >   
-> > >       REQUIRE_HV(ctx);
-> > >       translator_io_start(&ctx->base);
-> > > -    t = tcg_constant_i32(PPC_PM_RVWINKLE);
-> > > -    gen_helper_pminsn(tcg_env, t);
-> > > +    t = tcg_constant_i32(type);
-> > > +    gen_helper_PMINSN(tcg_env, t);
-> > >       /* Stop translation, as the CPU is supposed to sleep from now */
-> > >       gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> > > -#endif /* defined(CONFIG_USER_ONLY) */
-> > > -    return true;
-> > > -}
-> > > -TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_rvwinkle);
-> > > -
-> > > -static bool do_stop(DisasContext *ctx, arg_STOP *a)
-> > > -{
-> > > -    REQUIRE_64BIT(ctx);
-> > > -
-> > > -#if defined(CONFIG_USER_ONLY)
-> > > -    gen_priv_opc(ctx);
-> > >   #else
-> > > -    TCGv_i32 t;
-> > > -
-> > > -    REQUIRE_HV(ctx);
-> > > -    translator_io_start(&ctx->base);
-> > > -    t = tcg_constant_i32(PPC_PM_STOP);
-> > > -    gen_helper_pminsn(tcg_env, t);
-> > > -    /* Stop translation, as the CPU is supposed to sleep from now */
-> > > -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> > > +    qemu_build_not_reached();
-> > >   #endif
-> > >       return true;
-> > >   }
-> > > -TRANS_FLAGS2(ISA300, STOP, do_stop);
-> > > +TRANS_FLAGS2(PM_ISA206, DOZE, do_sleep, PPC_PM_DOZE);
-> > > +TRANS_FLAGS2(PM_ISA206, NAP, do_sleep, PPC_PM_NAP);
-> > > +TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep, PPC_PM_SLEEP);
-> > > +TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_sleep, PPC_PM_RVWINKLE);
-> > > +TRANS_FLAGS2(ISA300, STOP, do_sleep, PPC_PM_STOP);
-
+Regards,
+Pierrick
 
