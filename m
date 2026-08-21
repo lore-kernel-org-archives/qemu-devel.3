@@ -4,114 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88852C5DF7D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACD89C5DF8C
 	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 09:50:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxLtA-0002nY-UV; Fri, 21 Aug 2026 05:50:18 -0400
+	id 1wxLsk-0002Nx-Mt; Fri, 21 Aug 2026 05:49:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxLt5-0002bp-9d
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 05:50:12 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ id 1wxLsj-0002Nf-MD
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 05:49:49 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxLt3-000269-No
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 05:50:11 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-66c67a73eb7so3037096d50.0
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 02:50:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787305808; cv=none;
+ id 1wxLsi-00021O-1X
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 05:49:49 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-66c9995ca60so3307839d50.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 02:49:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787305786; cv=none;
  d=google.com; s=arc-20260327;
- b=fTcXx1zCG718xSSY6SRd3lMyOFkZx9eC+NbszQjDTc1qRlHgm/u7TNa4DuWMqPZHlG
- qpNC8iyjhTdFz6Xu2W7i9R06DShmUnMFPHSI2ktRSKUCAYjlhWfIw2/zYr3LPMW7b4gc
- HCPDC/az2yKHps3Z28Xmn4ODufCFCmOmtz68b+1jHrCiqKgeQXbY2vUjrkTAVBUjNo9R
- YWefpVfcegjeAOvFzxHFm5lZuF83EU+HIpatCIxlqvDrLl6XQwZklAxJXSKdcY1Gk8Bj
- WHPPVW3/pgF+KvJbh+stgxWVTj9r/S4W9eyLaI6APZH4TKOK002fPQAoPX8c+oB79r5w
- b6gg==
+ b=fEm2zS8W3F+GTbL2pgxG3T8ispX6CxCQ8RHEzT/DW2nlSBb7RL1HVXTtwLfx4oui8I
+ J9j75+F1zDXUPWJ4FWCKhmmXm/JzKsqEurBb0SsFuNFCxu6TsQW7Q2UE+OzoSkLUjfDR
+ v93U17BPTaXlvXIkj2VQq9rXBZu866RrFL2fxJtXY95KN+ddBr+AKNUvmbkoyUD5hN+l
+ w9e3L0B4bfaLSTenw+gByUecieNMB0748ehK0zW7QGW4KzlK56y9eh0Ot50G0ozujZzF
+ tQxb9qGW5yYE/VC4qGMTySbw+bgGGtj8QU0Gf8KA3AzDK2fWVgXNldZRtS+/NDiPox6o
+ e2Sg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=zOIr6OQWT1TpVNleRhPlZA3/CrMUb/jLsV1bzQTDp0Y=;
- fh=7cECbk+eeZZWmhF/2Eu0ejsHx/xDt2cWDXsIVgiivgQ=;
- b=lpL/sPuaK+9OSJl51ieXot75zeaMvup+NbcHBLc9kW70G29SzkqCN4jHyGtAopY1zU
- pBxAb3oN28Xi1gJnXaCFhn00EPV8+NrxBgCV4OgmHLZJcqKZoR1A3myHhwGM0IPtqB5a
- PZjYzVzzTff+RFvyyyrXlKL+b1f3OKL5E7ZVcyd0li6iwXHd/WITExvIemDX1J8/8uRv
- Cx/HUI83aiM7R6zSUYb3Kb/O09bquz5+L0aBXZKUkA2acZpJ7elGsQWEGfAwCddUucHa
- cJrpAwDLqY6ivPTFTLaHTrHBj1TfrQDNPZjUwtWgTZBq6gEaX52Tb0ESP50opeA748qD
- SMEQ==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=tg7EuQje/tPVZdyMbR4UCbpPTRRW2oBS8zrQvxBp0pY=;
+ fh=807MsW+MsVAwrx8AAp4Z3r6QYRrLTdkjnTjLLi+vJXc=;
+ b=cuTx364mrQKZD4dUYuYHrVfj59pZN9ka2BGFDo1p0jv5dCFnc/SM2QsiHKOu/q6MeC
+ sC80uwRVdAogWMznmFU0kYbHdrtt+WnWdfIlbVyOdJOjvUCV6F2NEyOQErwkc/xBHc0/
+ bK0o68EfBGfkxzuxtj0NYdriERkfFoGdLpeho3hPniWxaVPSkJvN5oHmnr9fRYR/fBVH
+ BFD7jdEzANgpmzTmlat9ilCQX3BrbOba0CZsK3wz05oC+f6UkF5wy72psN3YCylin6wP
+ uNTHKVBL/9XQ0LjldVEomjGaBdaR4e95PKO/ic9Wq8Q0ufCtIle/HAvJbx9944kx3UdR
+ E9OA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787305808; x=1787910608; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=zOIr6OQWT1TpVNleRhPlZA3/CrMUb/jLsV1bzQTDp0Y=;
- b=JB5ayxGWWMkFcuLMtYk6rJ2qXIj0JYJM+lxrpD3no/kxiZ1l3phXizlnmm6Ut90Xbe
- xhT+7zp1ZzRUE5b9LH6Xs+gxreNBqeONzJOA8qR1vzds3Ow8RIr6tgbndeYYXsfgiZ5X
- FTg0LFys0Bzy06broqdSeTdXgnEqZZpRmZvwdsjc2nFMMhB29MameA5BzGEgfxUHVBiN
- lMAkRGNIJMzg1cqYumlXsMx+o9yW56ugwb6L58RjSVafmJJ8FbThXYEjxtTPKseXrItX
- wEPWS8cgS6NZ9mG725Z668bTBq3oEqoqLfWt3wd2PBrCS/bGDT4CFpqxf0cgOO4orgpA
- nwLA==
+ d=linaro.org; s=google; t=1787305786; x=1787910586; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=tg7EuQje/tPVZdyMbR4UCbpPTRRW2oBS8zrQvxBp0pY=;
+ b=iI6Ebnh12HVPWKGFb2osMPEEQLT4ryKvyt85zVEAnVXRfwXN/k67pHneLkZdu9nH5c
+ EFkJl6mKJUwi5A2XEwtF82wCd1Kp1LQC4uIiuRl/5eESyYxIGIAL1tfu/A1Jalqc15mE
+ ZRH3V1bbBEAUEeWzdB6JBXtmrFzZJw/8Z2WLDz90hVrNHut8vHH9M4JUHWdm9pHcXGBA
+ 9Wp+/XL76/IAyxdLtxHa2Q/5JCYlHiE+BrSi6XmI4MNkdYAzqiGpSa4ZC9vGUh45iDzQ
+ 96/WGAeRK327Rs5S76Io+ujKT/ZgkNGXr6rKMswgYju7xCb6aUyumGVZoWvxBeo+l5Ro
+ IAgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787305808; x=1787910608;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=zOIr6OQWT1TpVNleRhPlZA3/CrMUb/jLsV1bzQTDp0Y=;
- b=p4vw2TrJEO/onK8oIQ1wVT9pAJ1pZF5Zo02C5TJJBaFrsDqD4cMGc0JoaqjRvFhAqG
- AfphNTk2pC8Be2x0KXGHxQijpyWCWVtc1W8WjjXG+j1e8bozaGMPDFAmghupjYEcMQLZ
- RONRzGivOEc7YhhNekhqWlvKuKE7bnkbofKvU5k4G6WyjFhhXmy10MaD3XprlVKD8PzW
- vS9rfXe3gfiIHu4nVyGKqoGXAbpvVAb5EvVH89ngPQ2Mmlz1psHF3VP5Fpu7B747okrH
- 94EZdgobnccqKILCDH9b/JrjwypZ28/CZ+FS+kNxFf7r+pR3UMF7oygpjo92286W+iil
- 0kNw==
-X-Gm-Message-State: AFuF++lCxla6Edlgb64kAWfi7U9otyUj+VvkNEowr5Yv7iiPYxCBxf9B
- ILlm65wgiBaWp5ICPZT/gfD9tlxpo2ZYcWipx7aCWUEmlv1I/sIV3+STku/gRv59HF0EjMAKelU
- GdrDdKDElyNa6kE6vQbWt0qopiHCjuTYLXLROwRzksA==
-X-Gm-Gg: AR+sD13KygK22KLCeWuwC4hDmBewn8d79GgidLJawk8n0l5MZS7EylgnXyXrj/Wml7X
- 4eiqmrqXs4lBldaE5LgeXJj98sHzIClgMc7Qmkw7i5vZu/HM49C/SCOCnxyjOyCfXgOe07A2xBP
- 8xZXJLqW+Wu1vXiFxAqcV78MDDzjpzWkveAOFgdT304hPdiR2XgDhKVlbQVco776yV8GcNFgTGt
- jm8i1p5PWyrCxssrqMERKvY/FJHiTRKcWvZDyKZiJeFfy4lSots3YAf96ilcR8+VpHik63dvBs+
- EBtBCNQKwzk/kw6shE9p17Y8JPdFv8K4Od923qQrBGDyFL+RLb3WB3HBIHatY1BRgU8ShObb+lQ
- L8MHoaSUf9tCwjpAEbWjxnuWc+eZT
-X-Received: by 2002:a05:690e:134a:b0:66a:d7e5:fcf8 with SMTP id
- 956f58d0204a3-66cd645108bmr4542127d50.0.1787305808578; Fri, 21 Aug 2026
- 02:50:08 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787305786; x=1787910586;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=tg7EuQje/tPVZdyMbR4UCbpPTRRW2oBS8zrQvxBp0pY=;
+ b=sgwafDbpKqK8QbocwHdVhf4gK2Lpc3FcaBjoGSYPDY06Ykc5IRKoPasIjGUuGiuizN
+ XM4k/0eiqGUxybS58x90aTgWTwESdV5aENorAMpwdLEMcOIlfeGt0m5zRccNh0g6ElML
+ o/HKerPHh0EPs/Wy/uWUl0TmCJADwSylCJutCeYfb1MgqosmmrkiC87sNc/NL/T171Mg
+ bDA8nbRPYWOeMD1AP+61SK8zz/13Jwr8e2UHFGGzM9z+mxfty3lC+bo1cV9NlueD+Qpo
+ L8uOjysgLMZP6BfwVjBTTTnEmE78L64iJmwo65BIMZUqyl2uzMTB2mYjJXwT7WI8DyLF
+ C7Hw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rq+zv960pnCCGb6A91RltY+BA/iRnuqDzFbxHIT09Y44XETSIRFrIECoUCDtXXqb+OVAQ7FI8eZYBYW@nongnu.org
+X-Gm-Message-State: AFuF++m4APvMWcMeZ+OY6vd9IceyAbFYbUL+JyVilmhcluaATDUq4Bsw
+ OmrULLjijTiWC+fTlKkgEZ0YULb1UQJeAsGZgUmk5cBf+WEaCJz+UWZYGtgC1CYN7MiYMVu/sD3
+ FPpgQD+dfhKrM43OHCJaxtKmxBhpbe5bN7JePD1r7tw==
+X-Gm-Gg: AR+sD13GfHTGotnamRujRDs87+++sQRGjnczQfOGQzdEN6QTzypMNDSb/n6VvBCW0c3
+ FJI+77vQu4tyru2WLTDrOrY+MxibhMyz7GbUAReB+EgM1vPRGYX+RDVdG+4W4AvuLHJb8V/tDw6
+ 8QdQKKwRjcNzmuIEdWVn3fvtLNnKlDsvKHANh/Pth+LtQm4/JgVJtfDni0JGdrvQB/PiSfoQg8+
+ vf/9PrrvJ1Irl5sJpwqttSZH6KZePWvrGHTTd7NObrcZ/uhFiEouupLycl9gK5G2DKGBaTJW1nO
+ E1FqQdedVypISJU8nTadmCCR0vjLL4FnqmMa2665jm0WTe/XcUikuE2xKymeMwVt5tmRoL9x1Ss
+ nRLS/vb64OdUlE/bhAymoFOOrl3ox
+X-Received: by 2002:a05:690e:454c:20b0:66c:e9ae:d90 with SMTP id
+ 956f58d0204a3-66ce9ae0e82mr533447d50.18.1787305786480; Fri, 21 Aug 2026
+ 02:49:46 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260816131300.51799-1-bin.meng@processmission.com>
-In-Reply-To: <20260816131300.51799-1-bin.meng@processmission.com>
+ <20260816131300.51799-20-bin.meng@processmission.com>
+ <10643a9a-8b04-48d9-a8ad-6dd86a4f29d1@oss.qualcomm.com>
+In-Reply-To: <10643a9a-8b04-48d9-a8ad-6dd86a4f29d1@oss.qualcomm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 21 Aug 2026 10:49:57 +0100
-X-Gm-Features: AcwNN1VYDanTeIxlRvHym8KqE6usBIglnb9GQbgy3cA7GKb4c2JeCNuNJ_-NdXE
-Message-ID: <CAFEAcA9c0r_Am_14jD0TkMjmfy6Hn7H1xc1zO7bY8DDiC2n6XA@mail.gmail.com>
-Subject: Re: [PATCH v2 00/20] hw/arm: Store the ARM boot info in the machine
- state
-To: Bin Meng <bin.meng@processmission.com>
-Cc: QEMU <qemu-devel@nongnu.org>, Alistair Francis <alistair@alistair23.me>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>, 
- Hao Wu <wuhaotsh@google.com>, Jamin Lin <jamin_lin@aspeedtech.com>, 
- Jan Kiszka <jan.kiszka@web.de>, Jean-Christophe Dubois <jcd@tribudubois.net>,
- Joel Stanley <joel@jms.id.au>, Kane Chen <kane_chen@aspeedtech.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>, 
- Steven Lee <steven_lee@aspeedtech.com>, 
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Troy Lee <leetroy@gmail.com>, 
- Tyrone Ting <kfting@nuvoton.com>, qemu-arm@nongnu.org
+Date: Fri, 21 Aug 2026 10:49:35 +0100
+X-Gm-Features: AcwNN1XKI7dyak-hFl1wBBn7Epxb8hO4yMquCFY7uZoQL4qHgnRy5WIXjxXQ4lY
+Message-ID: <CAFEAcA_U9dwtJqigcaPJHWUgn5bRACG+zz4q+pDETzMfk5qXuQ@mail.gmail.com>
+Subject: Re: [PATCH v2 19/20] hw/arm: versatilepb: Store boot info in the
+ machine state
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>, 
+ qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,40 +123,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 16 Aug 2026 at 14:15, Bin Meng <bin.meng@processmission.com> wrote:
+On Sun, 16 Aug 2026 at 16:07, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
 >
+> On 16/8/26 15:12, Bin Meng wrote:
+> > arm_load_kernel() keeps a pointer to the boot info struct for the
+> > lifetime of the VM, so the struct logically belongs to the machine
+> > rather than to a file scoped static object.
+> >
+> > Give both machine types the same VersatileMachineState instance struct
+> > and store the boot info there.
+> >
+> > As in the xlnx-zcu102 and raspi machines, the boot info belongs to
+> > the machine rather than to a static object:
+> >
+> > 4d1ac883a7 ("hw/arm: xlnx-zcu102: Move arm_boot_info into XlnxZCU102")
+> > 0f15c6e338 ("hw/arm/raspi: Move arm_boot_info structure to RaspiMachine=
+State")
+> >
+> > Signed-off-by: Bin Meng <bin.meng@processmission.com>
+> > ---
+> >
+> >   hw/arm/versatilepb.c | 16 ++++++++++++----
+> >   1 file changed, 12 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/hw/arm/versatilepb.c b/hw/arm/versatilepb.c
+> > index c6991a52e6..520af79c80 100644
+> > --- a/hw/arm/versatilepb.c
+> > +++ b/hw/arm/versatilepb.c
+> > @@ -182,10 +182,16 @@ static void vpb_sic_init(Object *obj)
+> >      peripherals and expansion busses.  For now we emulate a subset of =
+the
+> >      PB peripherals and just change the board ID.  */
+> >
+> > -static struct arm_boot_info versatile_binfo;
+> > +typedef struct VersatileMachineState {
+> > +    MachineState parent;
+> > +
+> > +    struct arm_boot_info bootinfo;
+> > +} VersatileMachineState;
+> >
+> >   static void versatile_init(MachineState *machine, int board_id)
+> >   {
+> > +    /* versatilepb and versatileab embed the same state as first membe=
+r */
+> > +    VersatileMachineState *vms =3D (VersatileMachineState *)machine;
 >
-> Most ARM board files declare their struct arm_boot_info as a static
-> object at file scope (or, occasionally, as a function-local static
-> inside the machine init function). arm_load_kernel() stashes a pointer
-> to that struct in every CPU and dereferences it from do_cpu_reset() on
-> each reset, so the boot info conceptually belongs to the machine for the
-> lifetime of the VM, not to a static object whose ownership is left
-> implicit.
->
-> This is a longstanding leftover pattern: modern machines such as virt,
-> raspi and xlnx-zcu102 already keep the boot info in their MachineState
-> subclass. This series converts the remaining machines that still use
-> a static object, moving the struct into their machine state so that its
-> lifetime and ownership match how arm_load_kernel() actually uses it.
->
-> Changes in v2:
->
-> Addressed 2 review comments from Peter:
->
-> - All assignments now use individual field writes (e.g.:
->   bpms->bootinfo.loader_start = ...). This applies to: collie, cubieboard,
->   exynos4, imx8mm-evk, integratorcp, kzm, mcimx7d-sabre, musicpal, npcm7xx,
->   npcm8xx, omap_sx1, realview, sabrelite
-> - The following boards that previously used DEFINE_MACHINE_ARM/AARCH64 now
->   use the macro DEFINE_MACHINE_EXTENDED() instead: bananapi_m2u,
->   cubieboard, imx8mm-evk, integratorcp, mcimx7d-sabre, musicpal,
->   orangepi-pc
->
+> Use OBJECT_DECLARE_SIMPLE_TYPE() and the defined macro?
 
+That doesn't work, unfortunately, because in this file we define
+two machine types (versatileab and versatilepb) which are separate
+classes directly inheriting from TYPE_MACHINE but which share
+a common init function (both classes have an instance_init
+method which calls versatile_init()). OBJECT_DECLARE_SIMPLE_TYPE
+wants a 1:1 relation between the state struct and the type.
 
+I think to get this into a shape where we could use the standard
+QOM macros we would probably need to define a common abstract
+class that both the leaf machine types inherited from. That
+feels like it's probably a worthwhile cleanup, but I'm OK
+with what this patch is doing rather than making the "create
+the abstract parent" refactor a dependency for this series.
 
-Applied to target-arm.next, thanks.
+The same applies for the omap_sx1.c and realview.c patches
+in this series, which do a similar thing.
 
+thanks
 -- PMM
 
