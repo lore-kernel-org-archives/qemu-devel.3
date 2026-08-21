@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49EAEC5DF88
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27A83C5DF8E
 	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 06:41:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxIwF-0001WX-Ar; Fri, 21 Aug 2026 02:41:15 -0400
+	id 1wxIwG-0001Y9-BZ; Fri, 21 Aug 2026 02:41:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wxIwC-0001VY-Ck; Fri, 21 Aug 2026 02:41:12 -0400
-Received: from [115.124.30.97] (helo=out30-97.freemail.mail.aliyun.com)
+ id 1wxIwE-0001WZ-7T; Fri, 21 Aug 2026 02:41:14 -0400
+Received: from [115.124.30.131] (helo=out30-131.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wxIw8-00066A-VE; Fri, 21 Aug 2026 02:41:12 -0400
+ id 1wxIw9-000661-0D; Fri, 21 Aug 2026 02:41:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1787294442; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=DBulrXCYmN9obTHaPtKhQcdAYvfQQ3QKSWI0GMPC3C0=;
- b=grtLEvgbofEOsCzVSri4oZVJZnC7usgrQo7xx16zxAHP4IbLxiKIyPx3/Iyl8VFO7QCVvphW0g4fd9V9BCKd94DorXWuFYb3VvQFN3hMbHDr46KWsWG4dyFn8SpWYVqavpxmVAnbUGwpEiEgUbnnT1WkOrREy7z8hS09Bg8IYe4=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R381e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
+ t=1787294441; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=UKnM9cWdP672CNzhiWDOMhhND+Qv5p67Q8VNGPB24y0=;
+ b=dNwEUWKHiih9g2AdvMJ/A+r0aRAfwLLMk6xt5kduR34+1o352GTlyVlDFht/V3mjKPJG4Mpg+gajs+KbJL8bcnzK7SnzejvrNsMjg9G7KemkFDK+UP5SE/ZyQU4ddBdqNwZoYWS5/G/uZ2FOXyCGlu6BqMC6VBBCjb/l5ZBc6K8=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R141e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
  MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=11; SR=0;
- TI=SMTPD_---0X9LMiSs_1787294441; 
+ TI=SMTPD_---0X9LMiSM_1787294440; 
 Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0X9LMiSs_1787294441 cluster:ay36) by smtp.aliyun-inc.com;
+ fp:SMTPD_---0X9LMiSM_1787294440 cluster:ay36) by smtp.aliyun-inc.com;
  Fri, 21 Aug 2026 14:40:41 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org,
@@ -38,18 +38,19 @@ Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
  daniel.barboza@oss.qualcomm.com, chao.liu@processmission.com,
  zhiwei_liu@linux.alibaba.com, peter.maydell@linaro.org,
  richard.henderson@linaro.org
-Subject: [PATCH 3/3] target/arm: Fix barrier polarity of A32 LDA load-acquire
-Date: Fri, 21 Aug 2026 14:40:32 +0800
-Message-Id: <20260821064032.49556-4-zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH 2/3] target/arm: Fix RCsc ordering of store-release
+ instructions
+Date: Fri, 21 Aug 2026 14:40:31 +0800
+Message-Id: <20260821064032.49556-3-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 In-Reply-To: <20260821064032.49556-1-zhiwei_liu@linux.alibaba.com>
 References: <20260821064032.49556-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.97 (deferred)
-Received-SPF: pass client-ip=115.124.30.97;
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.131 (deferred)
+Received-SPF: pass client-ip=115.124.30.131;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-97.freemail.mail.aliyun.com
+ helo=out30-131.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -73,43 +74,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The A32 and T32 load-acquire instructions LDA, LDAB and LDAH must be
-ordered before the memory accesses that follow them, so their
-translator has to emit a trailing barrier.  op_lda() emits that barrier
-with TCG_BAR_STRL instead of TCG_BAR_LDAQ, inverting the polarity:
-TCG_BAR_STRL annotates a leading barrier ("previous ops will not be
-delayed") and TCG_BAR_LDAQ a trailing one ("following ops will not come
-forward"), as documented in include/tcg/tcg-mo.h.
+The Armv8 memory model has no RCpc store: every store-release in the
+architecture, including the AArch64 STLR and STLPUR and the A32/T32
+STL, STLB and STLH, carries RCsc semantics (Arm Architecture Reference
+Manual, DDI 0487, section B2.3.8 "Acquire and release semantics").
+The architecture therefore orders a Store-Release tagged RCsc before
+any subsequent Load-Acquire tagged RCsc of the same shareability
+domain, which is what forbids the [0,0] outcome of a Store Buffering
+litmus test that pairs "STLR X=1; LDAR Y" on one PE with
+"STLR Y=1; LDAR X" on another.
 
-The x86 and aarch64 backends only look at the TCG_MO_* bits, which the
-wrong annotation does not affect, so the generated host code is
-unchanged on those hosts.  The annotation is still wrong: it violates
-the TCG barrier contract, it lets the optimizer's barrier merging in
-fold_mb() combine the barriers of an "LDA; STL" pair into a weaker one
-than the correctly annotated form (STRL|STRL stays STRL instead of
-LDAQ|STRL = SC), and it diverges from every other load-acquire
-translation in the target, which all use TCG_BAR_LDAQ.
+The translators only emit a barrier before the store, which orders the
+memory operations preceding the store before the store itself (release
+semantics).  Nothing prevents the store from being reordered with the
+memory operations that follow it, so under MTTCG the host CPU may
+execute the load-acquire that immediately follows a store-release
+before the store has left its store buffer:
 
-Fix the polarity.
+  * on an x86 host (TSO), store-load is the only reordering the
+    hardware may perform, and it is exactly the ordering that is
+    missing here;
+
+  * on an aarch64 host, no dmb follows the store either.
+
+The defect is easily observed with a bare-metal Store Buffering litmus
+test on a 2 vCPU virt guest: "STLR X=1; LDAR Y" on CPU 0 and
+"STLR Y=1; LDAR X" on CPU 1 produce the architecturally forbidden [0,0]
+result in 6 to 7 out of 100000 iterations, while inserting a DMB ISH
+between the store and the load on each CPU brings the number to 0,
+which validates the harness.
+
+Fix this by emitting a full barrier after the store as well, for
+STLR/STLLR and STLPUR on the AArch64 side and STL/STLB/STLH on the
+A32/T32 side.  The TCG_MO_ST_LD bit included in TCG_MO_ALL makes the
+x86 backend emit a serializing lock-prefixed instruction after the
+store, draining the store buffer before any subsequent load executes,
+and the aarch64 backend emit dmb ish; the store therefore becomes
+globally visible before any subsequent memory operation of the same
+vCPU, and the RCsc store->load ordering is satisfied.  This is
+stronger than the architecture strictly requires, since the barrier
+also orders the store with respect to subsequent RCpc operations such
+as LDAPR, but this matches how QEMU already implements FENCE-like
+ordering and keeps the fix simple.  After the fix the litmus test no
+longer produces the forbidden outcome.
+
+The load-acquire side needs no change: the barrier emitted after an
+RCsc LDAR already orders it with all subsequent memory operations, and
+QEMU deliberately implements the RCpc LDAPR family as full load-acquire.
 
 Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 ---
- target/arm/tcg/translate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/tcg/translate-a64.c | 13 +++++++++++++
+ target/arm/tcg/translate.c     |  6 ++++++
+ 2 files changed, 19 insertions(+)
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index bddac41bf9..a81b8d3852 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -4421,7 +4421,7 @@ static bool op_lda(DisasContext *s, arg_LDA *a, MemOp mop)
-     disas_set_da_iss(s, mop, a->rt | ISSIsAcqRel);
- 
-     store_reg(s, a->rt, tmp);
--    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
-+    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ);
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 4f9a93950b..b5bf977910 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -3672,6 +3672,13 @@ static bool trans_STLR(DisasContext *s, arg_stlr *a)
+                                 true, a->rn != 31, memop);
+     do_gpr_st(s, cpu_reg(s, a->rt), clean_addr, memop, true, a->rt,
+               iss_sf, a->lasr);
++    /*
++     * STLR is an RCsc store-release: the Armv8 architecture orders it
++     * before any subsequent RCsc load-acquire, which is what forbids the
++     * store-buffering litmus test.  The barrier above only orders
++     * previous accesses before the store.
++     */
++    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
      return true;
  }
  
+@@ -4415,6 +4422,12 @@ static bool trans_STLR_i(DisasContext *s, arg_ldapr_stlr_i *a)
+     /* Store-Release semantics */
+     tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
+     do_gpr_st(s, cpu_reg(s, a->rt), clean_addr, mop, true, a->rt, iss_sf, true);
++    /*
++     * Like STLR, STLPUR is an RCsc store-release and must be ordered
++     * before any subsequent RCsc load-acquire, so it needs a barrier
++     * after the store as well.
++     */
++    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
+     return true;
+ }
+ 
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 1770428d3c..bddac41bf9 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -4259,6 +4259,12 @@ static bool op_stl(DisasContext *s, arg_STL *a, MemOp mop)
+     tmp = load_reg(s, a->rt);
+     tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
+     gen_aa32_st_i32(s, tmp, addr, get_mem_index(s), mop | MO_ALIGN);
++    /*
++     * STL has the same RCsc store-release semantics as the AArch64 STLR
++     * and must be ordered before a subsequent RCsc load-acquire (LDA).
++     * The barrier above only orders previous accesses before the store.
++     */
++    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
+     disas_set_da_iss(s, mop, a->rt | ISSIsAcqRel | ISSIsWrite);
+ 
+     return true;
 -- 
 2.43.0
 
