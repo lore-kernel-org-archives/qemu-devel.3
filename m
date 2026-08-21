@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 674BFC5DF92
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:03:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE132C5DF89
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:03:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxN1L-0001NS-Bo; Fri, 21 Aug 2026 07:02:47 -0400
+	id 1wxN1Q-0001kj-Fi; Fri, 21 Aug 2026 07:02:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN1D-0000vF-7Z
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:39 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1wxN1L-0001Pg-Jp
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:47 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN1B-0007YM-DX
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:38 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-496bb7cdf51so8319615e9.2
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:37 -0700 (PDT)
+ id 1wxN1J-0007aV-Re
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:47 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-49800c6a846so7877545e9.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787310155; x=1787914955; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787310164; x=1787914964; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=4rTL3SdYHRUqGgeIh0nHgD5mJ1eWi+Ul3pcLYk9c+W4=;
- b=GMVLzeY20zhWqh7qWUkIbJw5aIXH6WG8z2Y02rydPUAbKYNNOWKef1/Z5n5wIIbRHq
- p8RyJ/1Ym7ulusI+2Fo2YKf+uBHJ9N0fRpy6Tf//4Sjwkn6XQ+kHYNiWhw/NYS07J8z8
- CDKFyXdHvLIxPyjmXhjZY9dGwp4UqqPriiwxVnRmtEBzEHnZqeOYGT8bhTIEhQq9QGJR
- Cjfvgnw+7+aY6t0ZIMn9cJ+VbUmyF3w56c5TPDtaFb67iO0RoY63FSmIPdQ9B69pKSiO
- pGRSeTp+gk6rlOyxIHSiHh5ClwPQmKj3rI7PpJYLuJvWymyC1mFmjBKLjYiU3YfF1ZDy
- GMvg==
+ bh=cBek9kLx+MkiFoIG2V0LBP5n+4hnmWgnu83ORFPB5T0=;
+ b=AmU0R/nmSrpJxB1Gj5R9CNtgdDuMFDko/KyArXXOr+kf97cvY5La5WlQ+i5+lspDyh
+ S01DVCcvGt6Ni6R3KHXoNkH09uYYt3STazdO16mGkoHNA6bf4roXnhlyNGnvSs1cY8Us
+ 436RTsK/D2UAD3MBNzeJpBfHj4I3SCuF23z8J9HBxolg+6J20UiJVMu61prldEgucHWY
+ ZiW6wyB+BO7DPJUz4VOzDPDPQ6aAndbYhvVNXvN4Fgoch2p+t9IBUO6ptaGGgs5vRd0Z
+ 1XceuPazKiLYLVU9iLIK+qiDXAT5zdnYN+kw4Hky0x7k5WZlsj5f8u2W1mQKICQK+a/h
+ TY+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787310155; x=1787914955;
+ d=1e100.net; s=20251104; t=1787310164; x=1787914964;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=4rTL3SdYHRUqGgeIh0nHgD5mJ1eWi+Ul3pcLYk9c+W4=;
- b=EvnbGLPD5F7xGXtu6VXkAPQmDtLmfVqgKL/ikAOZVG+jjF+nXY9kjV6TrzmZQoPwD+
- 14Pe5GAmEH98jivGGJxFvPqwYAxNXxRMDQxo2hjOsgnbpwpojaD6G2SVKzFpFKcMU7m6
- Tb14bHaDJbeMWjQRm8P6uazV1scW5xCdKrmYQPDKYC4zi3PQYh7/lWIkfSJgtfqQzY6C
- IGWnlmaFkoJhPqu4EKu83kcomLM8irmPbj2+64V2glRFtWcwokpQqdO0zYVVNA86CoMn
- EMFmNltpb4Op7MmStB2aWXDBImVimqHZWenjuhceiS0yqE3ll7SCm5nYgehgRzD6Xxm0
- E4zw==
-X-Gm-Message-State: AOJu0YzPZKFXviP0d9H0SNQDr51+3hZnnroAc7kspxS/9FtLZIxQpTSa
- mYU0kbFbXnAzRyWTVUEntkk8Ly6Wt6QYjXflT/XCdodLt0Y5FxexlFjKwhWPKYT073ZLBgqGhSD
- GatNK
-X-Gm-Gg: AR+sD12eoHsrSH8w/kPVMoICMgZpts0xvcLc68bxWiNUJqt9WsMwMoqvePynzE7/Qs+
- E+aJPXbaq3QfMODAvHwG/6rnbW6rukS0P+s4EAKAVvwJN65TKtH5g22UiRDug8rmbPzI+KiTKIq
- b8OljSN2in3wSoqKgb0w5RruHlWFllFNwi+gChuNwRbm2s7OYMoBDqTfQx5YPgRVknTUlInibl6
- 6zHb/qHNlx41kwO/jaLf6WPrw5pTpbV9VHJ9fNadpOWXELePfF7kRRJReSMMqESUpOm8fIJrim2
- fg7zPXWHTT8XFqBbsy6a0hnrK6NM2urhZFZLrDzA2OyA/QSZlWzkLhLLHNNVs+xmrhlgw0HUtWy
- afdQPOGLL0BfGJktrIv/xha+XG4K1A4AqOCsYs2TuNGf4dHcNgjAI463ebvYVfKH5m+jnJzJqix
- ldweh+KURp1ApAUJR9BlFY3kJFJ02u3JxQQeZWl5tWO9E9huXvEnhXMfb0Rr8IgLtaEjdkPG8bL
- QlAGbk6UnnF+RaLYSoNlmnhdVNfMJKGBQYNafj5beoVm9CcwyPtwiRziR/9LchoUhs2Ag==
-X-Received: by 2002:a05:600c:1f8b:b0:495:6274:56c2 with SMTP id
- 5b1f17b1804b1-499b82d359dmr75802725e9.2.1787310154851; 
- Fri, 21 Aug 2026 04:02:34 -0700 (PDT)
+ bh=cBek9kLx+MkiFoIG2V0LBP5n+4hnmWgnu83ORFPB5T0=;
+ b=DJivWPWoXDsaWOObG7rI1LU4b6zqN2hEZqGSHnAc1s+XUFkCQbFpyBhlUuPC05rmAu
+ TpAGFo+keOt97wW4Dj/mRwspwwx4IkK5aUb3QLTjXHjh3LFkl9DRKAk6Rlgb/1UOFZD2
+ MzbO3XIHqbiE4jFOibTC35/0YLO5oNQQZKRYnsvjkeZOfFkcwytqDbvICVYsy/u9N67a
+ 35GCL5lu7GoPTCO8KC3AcP1sUXale1nkYMjhG350HKKnDTvJZ7twN6/akDXSqgU1PY8Y
+ XFahQ9dRmX1gnI2e6LLDrMQ4364Q1rIXHczOgXP7QAscTjycBIQkWWT+JHmLnDTBghXs
+ CAWA==
+X-Gm-Message-State: AOJu0YxJX2+iPOUT9xuj2WMnxeEU8v7w9eXqbgR3Um/X7NG7RfyIRIDl
+ 73LgVfWdOzeK3Y+4eOvzqq7tz6TgzTUHupSwjFO45zikYwwr/hSdmky81SLxM//VNhQFEsS8wzT
+ pD3xC
+X-Gm-Gg: AR+sD11wwkVmFESREF/d3ZH2eZOikJfz0KQdwd87SjVRAaRThMYuKmbZ+UbgI1okRJ9
+ zPqlXmBRIl4mFOOmDOpsJsjIzj/g2vpxOenxU2wV5NYYoI+DXyIKECSUPk54U3AAO5f9dJeq5Pk
+ x3GFPO49h3uqgDOZvRjbI35eNkCL8XuFjzJmZUzrb7g2M/GqbYp4yhd/jVKiZH+sKxI42TV47b0
+ zP/bAwwxpd+oS/LS72ApNRr4jguPaXY3VuHDzD6/iOvnewKcLAcCU9px7AS3mc8JU/FQdwacvay
+ NyTVQ1j/UTBeUD9nKPjTsjoas9Qjrxqp+Pq6D/7zFakCHuWGtkC+wVgL0KWJXdpOjD9HtGgiVq5
+ Q7RTPwPfGaquWHWVnb9tpjISPqSzLYx5QYo/hS+XN2EELIzPaooJ8zwN6jDg7N6WRHM848NcF6Q
+ yk36YSjbs0IE/J2H2RcOVVSPd6tA5Cfi4CRKFhyTFSP5TZOo3SFUeakcDXthROwADuyuhXUiTrI
+ /LQKQ4u8X0xmUlSRmPZF/Bhxwc94VTliX7Es2gLhFbPJGIJRiZRHVz2RHvst3FUROY5+Q==
+X-Received: by 2002:a05:600c:4f05:b0:499:8ff5:8ecc with SMTP id
+ 5b1f17b1804b1-499b8474e8bmr67560815e9.15.1787310164199; 
+ Fri, 21 Aug 2026 04:02:44 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.33
+ 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 04:02:34 -0700 (PDT)
+ Fri, 21 Aug 2026 04:02:43 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 33/43] hw/arm: kzm: Store boot info in the board state
-Date: Fri, 21 Aug 2026 12:00:51 +0100
-Message-ID: <20260821110101.3971391-34-peter.maydell@linaro.org>
+Subject: [PULL 42/43] hw/arm: versatilepb: Store boot info in the machine state
+Date: Fri, 21 Aug 2026 12:01:00 +0100
+Message-ID: <20260821110101.3971391-43-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260821110101.3971391-1-peter.maydell@linaro.org>
 References: <20260821110101.3971391-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,8 +107,8 @@ arm_load_kernel() keeps a pointer to the boot info struct for the
 lifetime of the VM, so the struct logically belongs to the machine
 rather than to a file scoped static object.
 
-The IMX31KZM struct is already allocated per machine instance, so
-move the boot info there.
+Give both machine types the same VersatileMachineState instance struct
+and store the boot info there.
 
 As in the xlnx-zcu102 and raspi machines, the boot info belongs to
 the machine rather than to a static object:
@@ -117,50 +117,63 @@ the machine rather than to a static object:
 0f15c6e338 ("hw/arm/raspi: Move arm_boot_info structure to RaspiMachineState")
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Message-id: 20260816131300.51799-11-bin.meng@processmission.com
+Message-id: 20260816131300.51799-20-bin.meng@processmission.com
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/kzm.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ hw/arm/versatilepb.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/hw/arm/kzm.c b/hw/arm/kzm.c
-index 168ecf35d09..1aa5b49de92 100644
---- a/hw/arm/kzm.c
-+++ b/hw/arm/kzm.c
-@@ -54,17 +54,13 @@
- typedef struct IMX31KZM {
-     FslIMX31State soc;
-     MemoryRegion ram_alias;
+diff --git a/hw/arm/versatilepb.c b/hw/arm/versatilepb.c
+index c6991a52e65..520af79c800 100644
+--- a/hw/arm/versatilepb.c
++++ b/hw/arm/versatilepb.c
+@@ -182,10 +182,16 @@ static void vpb_sic_init(Object *obj)
+    peripherals and expansion busses.  For now we emulate a subset of the
+    PB peripherals and just change the board ID.  */
+ 
+-static struct arm_boot_info versatile_binfo;
++typedef struct VersatileMachineState {
++    MachineState parent;
++
 +    struct arm_boot_info bootinfo;
- } IMX31KZM;
++} VersatileMachineState;
  
- #define KZM_RAM_ADDR            (FSL_IMX31_SDRAM0_ADDR)
- #define KZM_FPGA_ADDR           (FSL_IMX31_CS4_ADDR + 0x1040)
- #define KZM_LAN9118_ADDR        (FSL_IMX31_CS5_ADDR)
- 
--static struct arm_boot_info kzm_binfo = {
--    .loader_start = KZM_RAM_ADDR,
--    .board_id = 1722,
--};
--
- static void kzm_init(MachineState *machine)
+ static void versatile_init(MachineState *machine, int board_id)
  {
-     IMX31KZM *s = g_new0(IMX31KZM, 1);
-@@ -125,10 +121,12 @@ static void kzm_init(MachineState *machine)
-                        14745600, serial_hd(2), DEVICE_NATIVE_ENDIAN);
-     }
++    /* versatilepb and versatileab embed the same state as first member */
++    VersatileMachineState *vms = (VersatileMachineState *)machine;
+     Object *cpuobj;
+     ARMCPU *cpu;
+     MemoryRegion *sysmem = get_system_memory();
+@@ -397,9 +403,9 @@ static void versatile_init(MachineState *machine, int board_id)
+                           VERSATILE_FLASH_SECT_SIZE,
+                           4, 0x0089, 0x0018, 0x0000, 0x0, 0);
  
--    kzm_binfo.ram_size = machine->ram_size;
-+    s->bootinfo.loader_start = KZM_RAM_ADDR;
-+    s->bootinfo.board_id = 1722;
-+    s->bootinfo.ram_size = machine->ram_size;
- 
-     if (!qtest_enabled()) {
--        arm_load_kernel(&s->soc.cpu, machine, &kzm_binfo);
-+        arm_load_kernel(&s->soc.cpu, machine, &s->bootinfo);
-     }
+-    versatile_binfo.ram_size = machine->ram_size;
+-    versatile_binfo.board_id = board_id;
+-    arm_load_kernel(cpu, machine, &versatile_binfo);
++    vms->bootinfo.ram_size = machine->ram_size;
++    vms->bootinfo.board_id = board_id;
++    arm_load_kernel(cpu, machine, &vms->bootinfo);
  }
+ 
+ static void vpb_init(MachineState *machine)
+@@ -431,6 +437,7 @@ static const TypeInfo versatilepb_type = {
+     .name = MACHINE_TYPE_NAME("versatilepb"),
+     .parent = TYPE_MACHINE,
+     .class_init = versatilepb_class_init,
++    .instance_size = sizeof(VersatileMachineState),
+     .interfaces = arm_machine_interfaces,
+ };
+ 
+@@ -453,6 +460,7 @@ static const TypeInfo versatileab_type = {
+     .name = MACHINE_TYPE_NAME("versatileab"),
+     .parent = TYPE_MACHINE,
+     .class_init = versatileab_class_init,
++    .instance_size = sizeof(VersatileMachineState),
+     .interfaces = arm_machine_interfaces,
+ };
  
 -- 
 2.43.0
