@@ -4,108 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF090C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 10:00:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 916F6C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 10:02:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxM2h-0006G6-38; Fri, 21 Aug 2026 06:00:07 -0400
+	id 1wxM55-0006xy-V0; Fri, 21 Aug 2026 06:02:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wxM2e-0006Fc-FK
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 06:00:04 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wxM2c-00058F-Py
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 06:00:04 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-c15f020a223so121777666b.1
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 03:00:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787306401; cv=none;
- d=google.com; s=arc-20260327;
- b=Zlt8LBeypinI9VyAQ0ZIeMBQIpzPXYOuXwagJ+o3RVlUYswsLa5ONFSKvumL0yT6X/
- LgocpZMA8kL7jfTt7SiJkv5EnYHhMx/MQBwx5zSwWleKrpohLZN0ix3FYM/4iCDexPCz
- bhLCY4QzjchNyz7Fx3xOjtmOg1MviRXBQj1jF7JhpUeBqALmPgOeEJQMIgU4XxH5nBpp
- yuJJLC8qn0rUmLu3WMKFe/BDN9kTGcuEs7MVDyxEXM5iNORcBIEvUD9TdKoJkHIi8acA
- 1WjwVOaxs4XAw48Np7z12CkIyiEu7Bn6HHsLgBqE4y7losAFdwLO410kmiRDK0M0g3jH
- vBiw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=NLNUtHomHjuU8sla5Cg0ixnUibViM4iZdx40Y5ImEIw=;
- fh=oR6KT4T9R4DzEe393lAnUFWLAI2XD1MXqDS3E+1BJZc=;
- b=B/kNB5P4hqLvVhY53pZ8vqDzIcQcMg12IhS+hlqg5gcEUWJ0U8+lCvANgYyu4qUHSL
- LxBL0FdZQEddvzugriaZ8kYKzeZOymFWDaq7sTibVBxN3u99U4Xshu99nn5HG4/FzRWy
- /XjEapw0ZJJutIcCUAAiu6ErAt8HcjwjvEX6anB58NArc16rxK3P4ttTbKpe0Gw5kbF4
- +wQ8Qu2JRjazjdM+F9IVwdXl3VduFLNWQoYrLZ9+Hw6UlcHZsXqZwoneowNWwn3o3tDH
- VNgw5tOZQmdSy372/w+ccNyHpoS1khrCgdT5/3aASfv7eKxniN1BAbmfpHFHc2LhOnES
- w7mQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787306401; x=1787911201; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=NLNUtHomHjuU8sla5Cg0ixnUibViM4iZdx40Y5ImEIw=;
- b=J67bZdN/fpEvPe82liefb1kciqqq/kg4YBg42BhyvGpPAZULDBz6SWw7WlphDOmbfB
- QrnyyzU0xTXhQ13+rEOfo/PDLKJN0uCTjreNfhxhmW//HYORkyx9F7rpgURObRJA/dGD
- PIXYYJn5BmhxyW+trF/MO+nq1Pk3VA9zrHfwajqfhjE6IYIZPxXPgILTYziBmsLuVa3f
- hJ1LAFE4x3Qx3DtPRRi3+AixIQmjjFNwR+IxvXOVydXX4aUgAXvFcxhcSj3CEIfLZGKB
- jJ1AD+f58U3+YpUQlkSi7zZ9p8YPUupTgy98paLvytwGPcvO/1ELxN2I+llCmAC+A9e9
- YtOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787306401; x=1787911201;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=NLNUtHomHjuU8sla5Cg0ixnUibViM4iZdx40Y5ImEIw=;
- b=MMX0SBlRSRRarfqwpyEd3eWDrszTZZ0u1NzaDx//kQlPlRCUhWozD7DdvboS7u971l
- rrgcQPgW/7F52PYXJSygdkz1C5GSKXbamFTfMuRjcRrGsKoY5DCx8gsjHsSOXQl6NfoF
- zmuzrKWCZnEWvdhjbqA09xO0dxjRzclGXHSR/3gIWHX0HqNrwCIUghc9OJFB1yL3UlHe
- eLLbTmu41040aS5qK1uYPLDLKyXWNgbrO949SaY9exJmN0Fu3f6PWZ8p4To5dcbtj6V7
- izElUqepD03ih0xJxYCx7EeZ4WMH0ktqIvATA5ok21sZzgzW/QwYrW2Sv5iJhIsvDzS6
- pp9A==
-X-Gm-Message-State: AFuF++lhMKgLJKHCViFx2/GTd7Ls301k/KkIjEjsk0PpSXzG15C2c1RL
- C9I8LiEyHFx69G8ACIML8TJ0gsb7iJ/Thx+2RTg5U3y4QcR2jNHeOU8ZTHxgE1OI9N5BpE+uvIN
- 7FcWRROqn6gv8PJVlWxznnBLOjOKpYto=
-X-Gm-Gg: AR+sD12PhC3LOXwb8JdrfBBeRDk/GtrXUKio/eFvcRU6WsW5VegDVnBUmsGOXQW+SN7
- IOBwfEPdu7sDyohskPkF/7HOcAjASgV1xqJJOaFYD1uLG7j/ZvlffOtPiY4P74OpHMaEFiEfZQz
- 769bnFgOCNTJiWLpM6ABzToEJ3bgPqL4U8ya1aB6GmSp8C08XSVv9GTet3zFPuPAukGBnw07As6
- knLP/fv4Wnph+fZeH9raaf5LBirVirzkvT9IVTexEJMsTjiCM9IBFRG3e3e/gBrQt/BbvoMTNfz
- vpD80z1fsi3YY3TtXovNFKzODeLRipWIR62DsCZGsfI=
-X-Received: by 2002:a17:907:e00c:20b0:c20:23f8:99a5 with SMTP id
- a640c23a62f3a-c246a6a402cmr392704666b.15.1787306400884; Fri, 21 Aug 2026
- 03:00:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wxM53-0006xA-5h; Fri, 21 Aug 2026 06:02:33 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wxM4y-0005oO-U3; Fri, 21 Aug 2026 06:02:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1787306512; bh=G+gRAzg6v5j+cM3LoptP7fgAfzb3i3VJcVHgBBFYvPY=;
+ h=Date:Subject:To:References:Cc:From:In-Reply-To;
+ b=p5VAA5cEzjPsGJtZNHLn7TDV/9CbOssvGxtzl6hIuVYJ08TUn5rkr662flyDaInQl
+ qvTpFIud+wZtYoVpS4M5A5y1uGun4gA+D6eQdon9qV7qa8VX22rIGXUUWhZU0NRQh6
+ 9/GQNUnD48nIQGBWkZQzocHZbVhjb4F1/XclT6cdSHqXiRShtPctBRmzZDrOaBZgy6
+ PzxHn30OM40XmfANXc7xrgJQurSvL5mNv6air/7SoM+FFZ7eyTAAQCJiDZkOi4RdTA
+ EZL9q8ImngHQa5U98aNjmkcuMUx+8HKq2uiU6AFX6B7K2erKk2PQ0vC+QiTv+i5qwL
+ ELVNk072hHIcw==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 603A31CD1E2;
+ Fri, 21 Aug 2026 13:01:52 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4B3E1410E30;
+ Fri, 21 Aug 2026 13:02:21 +0300 (MSK)
+Message-ID: <fb4b895c-be7a-4f18-82b4-aaab8a587353@tls.msk.ru>
+Date: Fri, 21 Aug 2026 13:01:52 +0300
 MIME-Version: 1.0
-References: <20260814174830.1691540-1-zhangckid@gmail.com>
- <20260814174830.1691540-6-zhangckid@gmail.com>
- <20260819183157.GD222512@fedora>
-In-Reply-To: <20260819183157.GD222512@fedora>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Fri, 21 Aug 2026 17:59:23 +0800
-X-Gm-Features: AcwNN1VvnXyy4YLboT107zzu91SsRA671XSD22LFX0bdEyNIyuYYv3dVY3mhEmI
-Message-ID: <CAK3tnvK=yWL+uV=u2FCM6sg-QKOasQBeGAohq8Ahr9jysr0CyQ@mail.gmail.com>
-Subject: Re: [PATCH V12 05/15] block/export: track IOThread references
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] serial: clear transmit retry callback on unrealize
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20260818142836.1664990-1-pbonzini@redhat.com>
+Content-Language: en-US, ru-RU
+Cc: QEMU Stable <qemu-stable@nongnu.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260818142836.1664990-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,56 +112,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 20, 2026 at 2:32=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat.co=
-m> wrote:
->
-> On Sat, Aug 15, 2026 at 01:48:19AM +0800, Zhang Chen wrote:
-> > @@ -139,7 +140,16 @@ BlockExport *blk_exp_add(BlockExportOptions *expor=
-t, Error **errp)
-> >              goto fail;
-> >          }
-> >
-> > -        new_ctx =3D iothread_get_aio_context(iothread);
-> > +        holder_id =3D export->id;
-> > +        const IOThreadHolder holder =3D {
-> > +            .type =3D IO_THREAD_HOLDER_KIND_BLOCK_EXPORT,
-> > +            .u.block_export.export_id =3D holder_id,
-> > +        };
-> > +
-> > +        new_ctx =3D iothread_ref_and_get_aio_context(iothread, &holder=
-);
-> > +        multithread_count =3D 1;
->
-> This changes behavior in:
->
->   ret =3D drv->create(exp, export, multithread_ctxs, multithread_count, e=
-rrp);
->
-> Now export drivers will see drv->create(exp, export, NULL, 1, errp);
->                                                      ^^^^  ^
->
-> Before it was drv->create(exp, export, NULL, 0, errp).
->
-> fuse_export_create() has an assertion that fails now:
->
->   if (multithread) {
->       ...
->   } else {
->       /* Guaranteed by common export code */
->       assert(mt_count =3D=3D 0);
->       ...
->   }
+On 8/18/26 17:28, Paolo Bonzini wrote:
+> The GSource is removed when resetting but remains active (and can
+> cause use-after-free) on hot-unplug.  Remove it before the character
+> device is disconnected.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4125
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Good catch, it looks like the multithread_count only designed for the
-multi threads cases.
-Will introduce a new iothread_count here.
+I'm picking this up for qemu-stable.
+Please let me know if I shouldn't.
 
-Yes, iothread_holder_id is redundant because exp->id remains valid
-until after the IOThread
-references are released. I=E2=80=99ll remove it and use export->id before
-BlockExport allocation and
-exp->id afterwards.
+Thanks,
 
-Thanks
-Chen
+/mjt
+
+> diff --git a/hw/char/serial.c b/hw/char/serial.c
+> index 0729cd2ce9d..4339562ab00 100644
+> --- a/hw/char/serial.c
+> +++ b/hw/char/serial.c
+> @@ -936,6 +936,7 @@ static void serial_unrealize(DeviceState *dev)
+>   {
+>       SerialState *s = SERIAL(dev);
+>   
+> +    g_clear_handle_id(&s->watch_tag, g_source_remove);
+>       qemu_chr_fe_deinit(&s->chr, false);
+>   
+>       timer_free(s->modem_status_poll);
+
 
