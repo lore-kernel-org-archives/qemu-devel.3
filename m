@@ -4,133 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D772C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 08:05:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72F62C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 08:20:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxKEk-000409-I8; Fri, 21 Aug 2026 04:04:26 -0400
+	id 1wxKTR-0005Mg-LC; Fri, 21 Aug 2026 04:19:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wxKEe-0003zu-PT; Fri, 21 Aug 2026 04:04:21 -0400
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wxKEc-0007VH-8H; Fri, 21 Aug 2026 04:04:20 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nfV6OLTANPLCuiApTkhCxtEjyappqQ8vTf33ztFS2xwvfIu9rrZLqfF8ZP5b58I7LZu3qAf1BxpwtlgY+veH8pCipLdNAM9k+WWvN0gW7XIFIlj/jGhEgvVWxwsjbaR5MG6t0q1NvjcEGzo+H33//yXnamDviShPgXMcSxYSLfrjbVwcki2zJjdD6AbGNsVIOhHbCHLP6nwnm6doy3IJujYC5MnsrKRHBNH73kr+TqwUDkAjmHYAJ2e0rTLGqwDNOHo+gOpf94oz32eLw5+ntzez2SsEIrXML5/iZjAGYmCm31HQ6TlkPDXACiLY411kETzd6cywI7RjXb4wkpdlEw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Dc3pRXwPjCkwlqWeB7WiFUyg3Yoo5A9Q2hpqRYKv7yw=;
- b=GdgKhbPYKJYLjULAp6NsQu0POKAdMCvc/6Ydmdc1/Hy6q9YMTccJRroYDdm7x7BGDcwvXjO65d+3ImtYnFKq+398l8yTOkAFXBbBVGT5tyTNlggEhN4G646nl7OO1x3NX1envSh0HZ22Mh0RxtETrFjSD2yp9ozC+LkrFnNzXsEIaI/xIffpYRhi6j/tyaoJyl0+OdRuSswyj2r7FTzl7Xn+SXAtCj6Z1g9lvsTlqovgKASIh9JaJ7f2dWtRwTmoCBkysJQTI2A57JoefLl328dJCuVWdmZb5ZKyTEuE4C2mbEa/IWI1o8pLdmMYpVF/d+IQg1U8SjFm5fTH6hwZ8Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Dc3pRXwPjCkwlqWeB7WiFUyg3Yoo5A9Q2hpqRYKv7yw=;
- b=k/EYcAXyqf2EGha1YPfnT6MEh0hd04Ilo6+IFftB6cYPWrnx2ZF2BCXIzeUHbxW6Py/iypRhLJ5j5ZmE7RVrY+CJLykCZW7xlxU3T67VIuzjMPDecmVvEEICDWdwaVE5m4STtOJxuTAVSh/wUT9EmnlTGq0GG/ORNUntIVUMU/Ok+QdL7dDkP9v5+JPxZl7BCdjiJu1UnohzwTzzBhn7jCCT4WcXoA67Zb5e+JTjP6hDn2t1twYFgoJ5mbFEe12XmeOwKtHu+ngNMMEw9iHueZ3POmxQYceJLbaufH76a95BGlqJUPdBXgRqmcLiwwk8E0jsLdfqlc1olYRk7cHm7w==
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com (2603:1096:400:1cc::10)
- by TY0PR06MB5594.apcprd06.prod.outlook.com (2603:1096:400:32b::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.10; Fri, 21 Aug
- 2026 08:04:10 +0000
-Received: from TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3]) by TYZPR06MB4980.apcprd06.prod.outlook.com
- ([fe80::ea8a:7cb7:4822:2fb3%6]) with mapi id 15.21.0339.008; Fri, 21 Aug 2026
- 08:04:09 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Kane Chen <kane_chen@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-Subject: [PATCH v1] hw/misc/aspeed_scu: Support the second random number
- generator
-Thread-Topic: [PATCH v1] hw/misc/aspeed_scu: Support the second random number
- generator
-Thread-Index: AQHdMUOlne7pEatyg06yHRUtu8jqqw==
-Date: Fri, 21 Aug 2026 08:04:09 +0000
-Message-ID: <20260821080408.2503092-1-jamin_lin@aspeedtech.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYZPR06MB4980:EE_|TY0PR06MB5594:EE_
-x-ms-office365-filtering-correlation-id: e461567b-4a93-4adf-137c-08deff5ac7cf
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|366016|23010399003|1800799024|10067099003|56012099006|18002099003|38070700021;
-x-microsoft-antispam-message-info: eNLMEbii9MqDAenSwqqxxfzf6C+LW+vsGgHcBw9EVnXdiqTO4yWE+nk9CeMyqxB9IE0/7hqlCgc2+/MDBh7mYg/FQuP+n5Ny94q0tmEdq1/5pLogUjAkCJuRzceVNNQmfxCnLu1/TUnikZeMo+hFZgSDoVLjnSD6byR4uhwwUMzV4uPDKVSSQvAf5VDi9xgCnkjmU0qpAF3gp/3Ucli66zl57l7X0/Lyscxqnt0jeOhr5R9f0AtX4/nya2RZHUU5Eg8YsL7BMe6LfmDhIqY8N+Hg2iZKOYH4/9kkPIuThXtp2VhMWrkjmfhmthpcp3PexRs08/GzAceIblMurgAAfTlVHGGqY4OISHymAVQRHXSDJnXKIngdFO+MxbxyQKHvKA8l4n7L8cDLamhFTWqXlYNMfoAmZPbrRcntuLshI08/iVL3kZmadCqabpB+F2dMMWRN8ZwinNTFRCUMiKNV1pXdOaQnBQZs9wbPnu9/6dPTi3yXaCNVaIA0zKLyizyiNF2spq3ido1FMvRqxgmyNjjqPGqBrLPLibCMC9kI4WkO5z+SFxXF3eR2iaUumiY1UnzreUpAYEsKx2+S/J14WPi95ut5uVGvp7hTLSWVldkd5SolRbVgfIxYPc/GVOqSp18lhYjECsKvedHEw292v5F77VWPnipCNLFThznsDu1WCsLxvjnj8qVimdVHjqxIBcesNC2eYHXDgfwc715Sww==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYZPR06MB4980.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(10067099003)(56012099006)(18002099003)(38070700021);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?cdSJFogSP8SSEJjbZAwyaLCfEkqKgt/DQeAFW0uGDNUGu2PxeCPyIC6faP?=
- =?iso-8859-1?Q?GNDGnQjKRDZSBa5/fakMfy9D2XCGeLoG2q3ndSKkSGqykzjhnvQQJ6xyeA?=
- =?iso-8859-1?Q?RWXHJjQ+HnxIq+1RBT/anc3cJhwrjIGjbSGBSkBsrA9PvrNldAfJ0x7FTT?=
- =?iso-8859-1?Q?3c3+wkxcELtMPoQnc9IihK6EbaM67dN9GEEmb8ne2BQIEZ6IhdE2Vb+aIQ?=
- =?iso-8859-1?Q?X93YoLj+65tzBqnJitD72Y4IuR8H8lC/ttqWvngRgG2jUA9cidy+v4c+fa?=
- =?iso-8859-1?Q?wlK9fGWFijDIEz/vHx0g39t+ZtFvQUBt3ZZFtD72fsCsvrQIxoKUZi2jdW?=
- =?iso-8859-1?Q?li4Twem3EQKPkUoh/b/7kSI8AgpIHJFkT8WFjyO9wMcp5+v7GLbb9IFhM5?=
- =?iso-8859-1?Q?Frpqy8gMe889we+WGG4/TbnZ4ysQ8zATjmb22RWosFMUY3qNV4AJiAKI4u?=
- =?iso-8859-1?Q?B0VASe+JUjfL0z3UwJNamOQd607ovvrQbCM8JnwisdbmhnLV3ozd59rZwx?=
- =?iso-8859-1?Q?GmxuS4iEURAVtwFIzaeSJrPklKFoGlBwarqvsLk5cV5z+/I7IFo73riddf?=
- =?iso-8859-1?Q?pQCOaJ/M19rwaBT+fAvAqLzW/paVZXxJpi5YOP4Hy9JrpolcAeb5ofgNJm?=
- =?iso-8859-1?Q?E/kyIlGQwuYOROLT1JzZT1CtNDJS1wqEVT/Jt5r3oXYxUkOtz6Ip+BsHhQ?=
- =?iso-8859-1?Q?HLeoWSxwS+ppgzjDCVO9dCgzcihchveo4u/jF92c7WlkUcQpmeTsFTPxbX?=
- =?iso-8859-1?Q?/0xanCWQI//Kb9W+8XQDF2nBdaYbfaZD6zni/JhE70EfqkpfrYKF93Cgeg?=
- =?iso-8859-1?Q?AioKVsCbkqRxX9Sqkp2w86zH7P31uIeaGmTI0OaeEgrRczBw+alR+TVc55?=
- =?iso-8859-1?Q?rjoGQS4bR1ONCt2ZcCME0/HLA47VGtMwroW0u3Rn/LaUzLno3sHYxN65cn?=
- =?iso-8859-1?Q?F+TrYH1Sd1h2hkKxh2xT6Pw2gg6G7WMUqtlOyDdTWhwr/jwtDaR8KQyUsJ?=
- =?iso-8859-1?Q?Rb0e6X17rjtwljVLP1nBwVSnur1SGajILfHa7nwcn78+gtl4dwBctcOZF6?=
- =?iso-8859-1?Q?ZMZQkGwbPwP2qkdAHRNuBFU9zi/fderPVjLUyY06c72adMUveBklhQsaJ0?=
- =?iso-8859-1?Q?FZTUIn1MzG0Ocb8eok8CmjUDnRLICKS4J2Cnkp4GG4tF7v/wVLUSrA0PR/?=
- =?iso-8859-1?Q?ML0pCXX4O3+bDt1T2xYpSip02NVNb67OCa07x1hXXvJ2PNf4ZtmAUzCnRM?=
- =?iso-8859-1?Q?bEun8k+c6a3jweEnXyR7eOUAPxWfEg+k7sfgKH8TdJ9dw372qyrpFWHzfq?=
- =?iso-8859-1?Q?jdEB2YZce8Ix+biYOvCyuqegpjFCKGPYwAYGcoT6qb+VxHJwaz5U2WLOMS?=
- =?iso-8859-1?Q?6ehlMY1rl8CEgWf61yw8bnzN0TU53+RxE3NZnas5OB9FDvHKgQ43HEeMvR?=
- =?iso-8859-1?Q?/l2KTAxvbVgRmuKMyJTW64VT6p3sKX5joHHp8f7uRlqhbgUA5kphZaJx1o?=
- =?iso-8859-1?Q?3i8zfViIExQ7nqk98ZidbxVNAXqFZXaey3+I+dzUfJWF7k+1w+1wuuDYjv?=
- =?iso-8859-1?Q?sOJGxOTCSLOk4kwxtgCetkfM8rn3mv3KLDLcpF+JujmTSxGuuvkQ3m1Tlz?=
- =?iso-8859-1?Q?dl6Ege9ZXpYyD/BF5bzoDfXBUelbK7eZs3XNcsDWbHwTmg21loGiepKv7s?=
- =?iso-8859-1?Q?6aOpfEaYL/GmDIF/tB6QQ0EEBUTlKEMR+fD0aPz8zUfazxXJJIoXdx0Nsp?=
- =?iso-8859-1?Q?rF8XeG6zmxy4jtPL9Ka5tpmbgZjS+26+9vH3U57wZeIljehfE7kEi4K8wc?=
- =?iso-8859-1?Q?vnr3tVGTTA=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wxKTP-0005MW-IM
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 04:19:35 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wxKTN-0002SK-M6
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 04:19:35 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-c2074710751so133511766b.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 01:19:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=suse.com; s=google; t=1787300372; x=1787905172; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=xJgbi0Hxi0iwuDDgvhe2MiVZefgarGN88Is5Ns8OqNQ=;
+ b=CMuOQxybI7AES+fUgsT5c0s+esJlMPhhFRLHJZoN3SmJyiouETkLsK+GtOUJXlzsRh
+ FVlCVSfsociayDx7oNXHNwAxkBGequlLNlwptxTbRf2X2WBsjWljJUJiMqPd/fe81XBP
+ bXGQ/xE+FFbAm9nDzNgCS2W9RAWPoWZV/HiOjPjTtDbTxAWvbj9Uxbvm+L9IqMZwH4+4
+ s8myPvDc+KGRTk2DX6ocEef4ogpXXi3oFWOzZazJeIa+H++T3Fox+NqlHkp9kRWKYB7m
+ PIPbnxztVa4CMkLCd9xTyOWVmmB9L/zJZhWTH5yQE+Wa0lBBgH/0YTeyBIqw4qku0Uop
+ Pc4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787300372; x=1787905172;
+ h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=xJgbi0Hxi0iwuDDgvhe2MiVZefgarGN88Is5Ns8OqNQ=;
+ b=goUCv4wI4fTHUGTx/gN49Wsx1QM6WupRfpLqgYRYUOmv2WoLqDo+zbviJPVs7pY60S
+ py2yW6z/vhtFX6k07GGcwhgXFSKaAEDyRGfI0lZsq0EQkR9tQBcn45dDakp2YClRzXda
+ Um4Y6LLCxeu/X/A7NBRBKZ3nlIaw7+w7y9usHkZEDxspX2O+UTh6zKQocpWZUUpIy9iz
+ 5s8jr56A6Xc85IG0iJppVedbU0BDfSeqUOS4XgIRBQPRS8utNPWYixgHzxXAcYSUUbcu
+ 7614xkEj5EZQuM2DfNL1yiJ+BcJLT462GNiuJYJPznLJuVyUBjTFPRaOnSSHKrFLovx2
+ 2xIw==
+X-Gm-Message-State: AFuF++lAnwngI11RC0k1T8Z1yNYUmBLls12lKTwKjEN2/l9GBqfhTj8n
+ JOOIVfk7iLVvTWgu+wlUGNPhlxoYRbaamMCTBMsN5GN7YtxtvEWNG2IpTPcyEumMAQ==
+X-Gm-Gg: AR+sD12jFLrHLSLjYRkWa794gCMShq0j+dBCYOOqb+TfipaaAWGH2rucS0aJEAAVIRL
+ v98qJZeRTCWEIT5yI3/RO/dfBttP+/Z1WBJ8bX37qsyg5jQqIbVHHOSXMzdY+i6ZM4NTRdnM5Yb
+ E6YDT7lAzXuZlZL6T2svJXLoTqRQX0Tqm+4aLYEh6lXzRAWaoy9tz4rH3EFlq35BbEDws2Igur4
+ bwE5cISutqYrSirf7CHfSx8CyvAUbUPs+nkdeJDcFtsKGoNq12eX92aZD5IDnIhHhblG9x4TArz
+ KE1XnnJ/Fd7+OWB0cBILm/hFSL2ohUCgoKE9f+muVYhOOkX1JxoSMle615HSpMaLJXNdwSfP/Mp
+ ZQK5auQz8hHYDqXjr0aOEFNQOyr0ZiUPBnC3HFJGmejIYEInicQkUQMLp89CxnYVDIVGEF5iH/p
+ a6pGTnwebcpMlYIQ4eqkA8w9qt8jDrd6sOP2aOCxr38EbxoCgF43n1mavd34WWF9MD2W1XY+VvA
+ daoHPBf6MLpnQsck8riQmPT18VxCYifdyVV5SI+kfhee3DhMTa/
+X-Received: by 2002:a05:6938:a08f:10b0:c20:f871:1018 with SMTP id
+ a640c23a62f3a-c246b4bc19bmr333973866b.21.1787300371859; 
+ Fri, 21 Aug 2026 01:19:31 -0700 (PDT)
+Received: from [10.156.60.236] (ip-037-024-206-209.um08.pools.vodafone-ip.de.
+ [37.24.206.209]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c2459223816sm387149366b.57.2026.08.21.01.19.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 21 Aug 2026 01:19:31 -0700 (PDT)
+Message-ID: <069cb01d-47b2-41c5-9956-611b338964e9@suse.com>
+Date: Fri, 21 Aug 2026 10:19:30 +0200
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: q2u8Q+RcwOKEokri7HkIW9y2+nPegyZ579sZPfDZ0/Ok3+ANfKkqK8mC8w2gP3yJBnnJqPypO9vAqv3FUtmpBqBa69r6R0MegywcKnGmiDlmO1ydLcaAwUdS7tSqBW0BFg56LliDz/IpnohZ8SdocSjJdSHOF1sedESDg7Ip0qclTsnxjjmkY7HZZMwcXi67lWtyAxTIrTQfI7Y4aFSj5pC6J3KxvkWVoYfR0sK8YW2gMeoHZ4dJ+rcw4dhq74iA/VTOPbm7eyw5eDnBEbfS2kXeDSmHyaXY95yRw7Z65krKvrplFlpb0eGdnJU5fFzgae4NyvXC6SvnoS4OUFgUOA==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4980.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e461567b-4a93-4adf-137c-08deff5ac7cf
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Aug 2026 08:04:09.7431 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 4jIQmj7TfvYI0i/HG8tPVIagvKnLpDFkkw7cRHqXfNnN+sjefLk7Aj8ukw3yuvpUeCFxj/oK8hItrN2JJ6pL/CvjarGJhN7469teBgpDPbU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR06MB5594
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
+ support
+To: Chuck Zmudzinski <brchuckz@aol.com>
+Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
+ Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
+ xen-devel <xen-devel@lists.xenproject.org>
+References: <20260802050824.10554-1-brchuckz.ref@aol.com>
+ <de56c8bd-f0e8-4fe9-8cf5-f6807698176c@aol.com>
+ <02a7dc18-4184-4e86-84cb-121769187f71@suse.com>
+ <1858e8e6-73fa-4017-93e2-c733fbf0ec8d@aol.com>
+ <d6e603bf-8dc5-4ac7-842f-ff9d1f67b98f@suse.com>
+ <fdec0b6b-eddf-4a36-a755-c67963daa9ea@aol.com>
+ <6ecf80ef-2f0e-44fb-beab-dbcf065a4431@suse.com>
+ <bb44067c-6739-4e83-a0fd-cc7ea797048f@aol.com>
+ <4c58bda6-e9ed-438d-b96e-feda74a6c4c7@suse.com>
+ <31a5870f-2a4d-4dc0-af9c-f0567e0f6fb3@aol.com>
+ <db8fd04d-bbc7-41c7-8473-b821d7f77d5f@aol.com>
+ <302ed12f-40ca-405c-80ca-ac4f2785d754@suse.com>
+ <cdae1785-4d9a-4aab-929e-de55c26b7b94@aol.com>
+ <10cd9f6b-678b-407b-a51e-70e9ed7a35fd@aol.com>
+ <131b1252-b108-4b4c-8457-673ff0d20d5e@suse.com>
+ <b14969c8-9676-404e-b7cc-ce13a6d7ff94@aol.com>
+ <92022f85-9a53-4db8-b489-fc91c86b413c@suse.com>
+ <fa497825-c8f0-4caf-94f5-b37108e31952@aol.com>
+ <42521391-885c-4b96-96e9-5da2e4b5efa1@suse.com>
+ <e86404e8-9966-44ab-86d1-4bd01a551313@aol.com>
+Content-Language: en-US
+From: Jan Beulich <jbeulich@suse.com>
+Autocrypt: addr=jbeulich@suse.com; keydata=
+ xsDiBFk3nEQRBADAEaSw6zC/EJkiwGPXbWtPxl2xCdSoeepS07jW8UgcHNurfHvUzogEq5xk
+ hu507c3BarVjyWCJOylMNR98Yd8VqD9UfmX0Hb8/BrA+Hl6/DB/eqGptrf4BSRwcZQM32aZK
+ 7Pj2XbGWIUrZrd70x1eAP9QE3P79Y2oLrsCgbZJfEwCgvz9JjGmQqQkRiTVzlZVCJYcyGGsD
+ /0tbFCzD2h20ahe8rC1gbb3K3qk+LpBtvjBu1RY9drYk0NymiGbJWZgab6t1jM7sk2vuf0Py
+ O9Hf9XBmK0uE9IgMaiCpc32XV9oASz6UJebwkX+zF2jG5I1BfnO9g7KlotcA/v5ClMjgo6Gl
+ MDY4HxoSRu3i1cqqSDtVlt+AOVBJBACrZcnHAUSuCXBPy0jOlBhxPqRWv6ND4c9PH1xjQ3NP
+ nxJuMBS8rnNg22uyfAgmBKNLpLgAGVRMZGaGoJObGf72s6TeIqKJo/LtggAS9qAUiuKVnygo
+ 3wjfkS9A3DRO+SpU7JqWdsveeIQyeyEJ/8PTowmSQLakF+3fote9ybzd880fSmFuIEJldWxp
+ Y2ggPGpiZXVsaWNoQHN1c2UuY29tPsJgBBMRAgAgBQJZN5xEAhsDBgsJCAcDAgQVAggDBBYC
+ AwECHgECF4AACgkQoDSui/t3IH4J+wCfQ5jHdEjCRHj23O/5ttg9r9OIruwAn3103WUITZee
+ e7Sbg12UgcQ5lv7SzsFNBFk3nEQQCACCuTjCjFOUdi5Nm244F+78kLghRcin/awv+IrTcIWF
+ hUpSs1Y91iQQ7KItirz5uwCPlwejSJDQJLIS+QtJHaXDXeV6NI0Uef1hP20+y8qydDiVkv6l
+ IreXjTb7DvksRgJNvCkWtYnlS3mYvQ9NzS9PhyALWbXnH6sIJd2O9lKS1Mrfq+y0IXCP10eS
+ FFGg+Av3IQeFatkJAyju0PPthyTqxSI4lZYuJVPknzgaeuJv/2NccrPvmeDg6Coe7ZIeQ8Yj
+ t0ARxu2xytAkkLCel1Lz1WLmwLstV30g80nkgZf/wr+/BXJW/oIvRlonUkxv+IbBM3dX2OV8
+ AmRv1ySWPTP7AAMFB/9PQK/VtlNUJvg8GXj9ootzrteGfVZVVT4XBJkfwBcpC/XcPzldjv+3
+ HYudvpdNK3lLujXeA5fLOH+Z/G9WBc5pFVSMocI71I8bT8lIAzreg0WvkWg5V2WZsUMlnDL9
+ mpwIGFhlbM3gfDMs7MPMu8YQRFVdUvtSpaAs8OFfGQ0ia3LGZcjA6Ik2+xcqscEJzNH+qh8V
+ m5jjp28yZgaqTaRbg3M/+MTbMpicpZuqF4rnB0AQD12/3BNWDR6bmh+EkYSMcEIpQmBM51qM
+ EKYTQGybRCjpnKHGOxG0rfFY1085mBDZCH5Kx0cl0HVJuQKC+dV2ZY5AqjcKwAxpE75MLFkr
+ wkkEGBECAAkFAlk3nEQCGwwACgkQoDSui/t3IH7nnwCfcJWUDUFKdCsBH/E5d+0ZnMQi+G0A
+ nAuWpQkjM1ASeQwSHEeAWPgskBQL
+In-Reply-To: <e86404e8-9966-44ab-86d1-4bd01a551313@aol.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=jbeulich@suse.com; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -147,96 +147,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement SCU530 and SCU534, the control and data registers of the=0A=
-AST2600 second random number generator.=0A=
-=0A=
-Per the AST2600 datasheet, only SCU530[5:0] are writable and the=0A=
-read-only SCU530[31] reports that random data is valid, which is only=0A=
-meaningful while SCU530[4] is set. Report it as set whenever SCU530[4]=0A=
-is, and initialise SCU530 to its datasheet reset value.=0A=
-=0A=
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
----=0A=
- hw/misc/aspeed_scu.c | 18 +++++++++++++++++-=0A=
- 1 file changed, 17 insertions(+), 1 deletion(-)=0A=
-=0A=
-diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c=0A=
-index ca93c3699d..ca79a93b15 100644=0A=
---- a/hw/misc/aspeed_scu.c=0A=
-+++ b/hw/misc/aspeed_scu.c=0A=
-@@ -130,6 +130,10 @@=0A=
- #define AST2600_HW_STRAP2_PROT    TO_REG(0x518)=0A=
- #define AST2600_RNG_CTRL          TO_REG(0x520)=0A=
- #define AST2600_RNG_DATA          TO_REG(0x524)=0A=
-+#define AST2600_RNG2_CTRL         TO_REG(0x530)=0A=
-+#define AST2600_RNG2_CTRL_MASK    0x3F=0A=
-+#define AST2600_RNG2_CTRL_VLD     BIT(31)=0A=
-+#define AST2600_RNG2_DATA         TO_REG(0x534)=0A=
- #define AST2600_CHIP_ID0          TO_REG(0x5B0)=0A=
- #define AST2600_CHIP_ID1          TO_REG(0x5B4)=0A=
- =0A=
-@@ -679,13 +683,14 @@ static uint64_t aspeed_ast2600_scu_read(void *opaque,=
- hwaddr offset,=0A=
-         /* PLLs are always "locked" */=0A=
-         return s->regs[reg] | BIT(31);=0A=
-     case AST2600_RNG_DATA:=0A=
-+    case AST2600_RNG2_DATA:=0A=
-         /*=0A=
-          * On hardware, RNG_DATA works regardless of the state of the=0A=
-          * enable bit in RNG_CTRL=0A=
-          *=0A=
-          * TODO: Check this is true for ast2600=0A=
-          */=0A=
--        s->regs[AST2600_RNG_DATA] =3D aspeed_scu_get_random();=0A=
-+        s->regs[reg] =3D aspeed_scu_get_random();=0A=
-         break;=0A=
-     }=0A=
- =0A=
-@@ -756,6 +761,7 @@ static void aspeed_ast2600_scu_write(void *opaque, hwad=
-dr offset,=0A=
-         return;=0A=
- =0A=
-     case AST2600_RNG_DATA:=0A=
-+    case AST2600_RNG2_DATA:=0A=
-     case AST2600_SILICON_REV:=0A=
-     case AST2600_SILICON_REV2:=0A=
-     case AST2600_CHIP_ID0:=0A=
-@@ -765,6 +771,14 @@ static void aspeed_ast2600_scu_write(void *opaque, hwa=
-ddr offset,=0A=
-                       "%s: Write to read-only offset 0x%" HWADDR_PRIx "\n"=
-,=0A=
-                       __func__, offset);=0A=
-         return;=0A=
-+    case AST2600_RNG2_CTRL:=0A=
-+        data &=3D AST2600_RNG2_CTRL_MASK;=0A=
-+        if (data & BIT(4)) {=0A=
-+            data |=3D AST2600_RNG2_CTRL_VLD;=0A=
-+        } else {=0A=
-+            data &=3D ~AST2600_RNG2_CTRL_VLD;=0A=
-+        }=0A=
-+        break;=0A=
-     }=0A=
- =0A=
-     s->regs[reg] =3D data;=0A=
-@@ -803,6 +817,7 @@ static const uint32_t ast2600_a3_resets[ASPEED_AST2600_=
-SCU_NR_REGS] =3D {=0A=
-     [AST2600_HUARTCLK]          =3D 0x000145C0,=0A=
-     [AST2600_CHIP_ID0]          =3D 0x1234ABCD,=0A=
-     [AST2600_CHIP_ID1]          =3D 0x88884444,=0A=
-+    [AST2600_RNG2_CTRL]         =3D 0x8000000E,=0A=
- };=0A=
- =0A=
- static void aspeed_ast2600_scu_reset_hold(Object *obj, ResetType type)=0A=
-@@ -1122,6 +1137,7 @@ static void aspeed_ast1030_scu_reset_hold(Object *obj=
-, ResetType type)=0A=
-     s->regs[AST2600_HW_STRAP1] =3D s->hw_strap1;=0A=
-     s->regs[AST2600_HW_STRAP2] =3D s->hw_strap2;=0A=
-     s->regs[PROT_KEY] =3D s->hw_prot_key;=0A=
-+    s->regs[AST2600_RNG2_CTRL] =3D 0x8000000E;=0A=
- }=0A=
- =0A=
- static void aspeed_1030_scu_class_init(ObjectClass *klass, const void *dat=
-a)=0A=
--- =0A=
-2.43.0=0A=
+On 20.08.2026 18:53, Chuck Zmudzinski wrote:
+> On 8/20/2026 11:17 AM, Jan Beulich wrote:
+>> On 20.08.2026 13:47, Chuck Zmudzinski wrote:
+>>> On 8/20/2026 3:51 AM, Jan Beulich wrote:
+>>>> On 19.08.2026 19:13, Chuck Zmudzinski wrote:
+>>>>> On 8/19/2026 9:51 AM, Jan Beulich wrote:
+>>>>>> On 19.08.2026 14:36, Chuck Zmudzinski wrote:
+>>>>>>> On 8/19/2026 8:16 AM, Chuck Zmudzinski wrote:
+>>>>>>>> Yes, I agree that v3 of the patch to hvmloader should presume that the DM can get
+>>>>>>>> a copy of the OpRegion and read its contents so most of this can be done in the
+>>>>>>>> DM instead of in hvmloader. So from hvmloader's perspective, the patch will be more
+>>>>>>>> about avoiding the layering violation than anything else.
+>>>>>>>
+>>>>>>> However, there is one advantage, from the viewpoint of the Xen virtualization platform
+>>>>>>> as a whole, to do the patching of the OpRegion in hvmloader instead of in the DM.
+>>>>>>>
+>>>>>>> If we patch the OpRegion in hvmloader as v2 of this patch does, we provide a common
+>>>>>>> solution for extended VBT support for Intel IGD devices that would be compatible with
+>>>>>>> all DM implementations, not just with Qemu. So why not do the patching of the OpRegion
+>>>>>>> in hvmloader?
+>>>>>>
+>>>>>> As indicated before: If the OpRegion holds data that is needed to drive the
+>>>>>> device, and if the OpRegion is exposed writable to guests, then guest can
+>>>>>> screw up that data such that subsequent guests won't work anymore. Hence
+>>>>>> exposing to guests (which includes hvmloader) needs to be stopped, or at
+>>>>>> least be limited to r/o. That, in fact, includes exposing to any privilege-
+>>>>>> restricted DM as well.
+>>>>>>
+>>>>>> Exposing r/o may be entirely okay (i.e. may not be a layering violation),
+>>>>>> depending how exactly an OpRegion surfaces for a device (on the host). Aiui
+>>>>>> it's not addressed by any of the BARs, yet it looks like it needs similar
+>>>>>> treatment.
+>>>>>
+>>>>> Yes, the OpRegion is not one of the BARs as specified by the PCI specs, but
+>>>>> it functions more or less like a BAR region with the devices's ASLS register
+>>>>> at offset 0xfc in the PCI device config space of the device acting like the
+>>>>> BAR for that region.
+>>>>
+>>>> That is, on real hardware a write to that register moves the OpRegion? That
+>>>> would need following by the DM then, i.e. the DM would need to indicate the
+>>>> original position in the register, and the guest (incl hvmloader) would
+>>>> then be free to relocate it.
+>>>
+>>> Why would that "need following by the DM" when the register in the guest is
+>>> fully emulated, [1] which means that when the guest (incl hvmloader) writes to the
+>>> register, the register on the real hardware is not touched, nor is the OpRegion
+>>> in the host address space moved?
+>>
+>> You said it's BAR-like. If the guest writes to a BAR, the referenced MMIO
+>> region moves accordingly.
+> 
+> It's BAR-like, but it is not actually a BAR (and the OpRegion is not exactly
+> an MMIO region either (it is actually and ACPI thing), so that is not relevant
+> to this patch.
+> 
+> Also, it is fully emulated so when the guest writes to it, the real register on the
+> real device is not touched, as I have said multiple times in my responses to your
+> question.
+
+No matter how often you said that, I never put that under question. I was asking
+about the behavior of writes (where the behavior on bare hardware would need to
+be reflected in the behavior of the emulated register).
+
+>>> Here is how I understand how this works in the current implementation and how
+>>> this should be done:
+>>
+>> I'm sorry, but this is getting out of hand, at least as far as I'm concerned.
+>> I've been trying to help, but even just reading your replies has already been
+>> taking way more time than I would have wanted to spend here.
+> 
+> Fair enough. Thank you for the time you have spent on this patch, and also thank
+> you for clearly stating that you don't want to spend any more time on it. So
+> I consider this patch dead unless and until another maintainer shows some interest
+> in it.
+
+I didn't say I would not look at future versions of the patch. However, for me
+to (usefully) do so, things need to be presented in a way that I can understand
+without knowing all the details of IGD.
+
+Jan
 
