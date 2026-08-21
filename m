@@ -4,44 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD6BFC5DF87
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 09:47:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40A84C5DF8C
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 09:48:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxLpj-0000xq-BM; Fri, 21 Aug 2026 05:46:45 -0400
+	id 1wxLr0-0001Qg-Br; Fri, 21 Aug 2026 05:48:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wxLpa-0000xR-Sf; Fri, 21 Aug 2026 05:46:35 -0400
+ id 1wxLqx-0001Px-D5; Fri, 21 Aug 2026 05:47:59 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wxLpY-0001Qp-CC; Fri, 21 Aug 2026 05:46:34 -0400
+ id 1wxLqv-0001eP-Ii; Fri, 21 Aug 2026 05:47:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787305558; bh=lGEP1fVQGN2WUbmnpYc8WnEjoCUmX39gZo+ylgIBTTU=;
+ t=1787305646; bh=DO/WTNWeKtjmaKP0UWGPL7vSSaOhL2UFDQyv46kaKKg=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=dJ1zXsr0Zm7DYJweLACpqsrPGBagmNFInmh0PqM1nM+QtDP4CcLWZL6+Vnqv3l3op
- lKcSi+514qupo2MRldMZiG5YxdzwpVN5rYQdMnI0chnl55FDZrvO58DUqKBfAFOK3p
- gpjgezk4DH+Fd279yc2GmRGPDNvGq8e5ekXKbR1+4C0Sjo1HGgx+6x9gJ6Qy4nkOwm
- OZ0MPwYaBUNato1HNqfWVocXqD9Iq3qvufuX7GbUm3YpuQnohrg01DHtrT6WtuUwX1
- aw54t/7owH50HBWfYlvu3tQRklHA+J7UcqsWnNxC2idUKdLQJ+H+ZPNyKy8BwYGnvd
- UCnrztL9jE+oA==
+ b=HyEoyzuxIZBQolBc5w8qAZCTOeun4d/gOZB2pzNhFkz7DYejXYhxkr+9JWCUdRcPV
+ sO62ow7dC/Xw0nNq4pqjIr+A3xrPecgOTa4GZyn38nmaQRJqUF9VZ4GKZ2pz4/VSxY
+ X0vAZ5TbmzWmMUK4W/WwElE7mCO0vOSSUFKgq1iS1STJxiLXZyZo9YP8P8ojJCxchK
+ GH7SLr/RoNPLjTW0EKS6M9zN1YGEmLsFdfY+wWZFibyKYG3NIXdWZEeY9rQQ+RIzlI
+ unuK0TSQEVWFKKMTTa4zZy0+QjnvdopO5byLGvG+eee8Nypm7OLy0R48SzDyagWD2x
+ aWDUp0IiZ3UzQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7CEAD1CD1C6;
- Fri, 21 Aug 2026 12:45:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1D8DD1CD1C9;
+ Fri, 21 Aug 2026 12:47:26 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5E5FF410E16;
- Fri, 21 Aug 2026 12:46:27 +0300 (MSK)
-Message-ID: <026a13d3-9cc3-4ee0-8165-81d66c3cc5f5@tls.msk.ru>
-Date: Fri, 21 Aug 2026 12:45:58 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id EDC84410E17;
+ Fri, 21 Aug 2026 12:47:54 +0300 (MSK)
+Message-ID: <62867405-0120-4a22-ae14-c335bc4144e6@tls.msk.ru>
+Date: Fri, 21 Aug 2026 12:47:25 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: fix incorrect decoding of EXTRQ_i
-To: Simon Scherer <scherer.simon89@gmail.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org,
+Subject: Re: [PATCH] target/i386: fix long mode segment override prefix
+ decoding
+To: "Craaijo, Jos" <jos.craaijo@ou.nl>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  QEMU Stable <qemu-stable@nongnu.org>
-References: <20260625155613.192643-1-scherer.simon89@gmail.com>
+References: <20260623-fix-x86-long-mode-segment-override-decoding-v1-1-26d9d4b5804e@ou.nl>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -87,7 +92,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260625155613.192643-1-scherer.simon89@gmail.com>
+In-Reply-To: <20260623-fix-x86-long-mode-segment-override-decoding-v1-1-26d9d4b5804e@ou.nl>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -113,45 +118,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/25/26 18:56, Simon Scherer wrote:
-> The decoding of the extrq instruction with an immediate operand (EXTRQ_i) is
-> incorrect. Per the AMD manual the instruction encoding looks as follows:
+On 6/23/26 16:21, Craaijo, Jos wrote:
+> On x86, the ES/CS/SS/DS segment override prefixes are null prefixes in
+> long mode, and should be ignored. (AMD APM Volume 3, Section 1.2.4)
 > 
-> EXTRQ xmm1, imm8, imm8   66 0F 78 /0 ib ib
+> This patch fixes the prefix decoding to correctly ignore the prefixes in
+> 64-bit mode.
 > 
-> The /0 indicates that the "Reg" field of the ModR/M byte must be equal
-> to 0 and the XMM register operand is specified by the "R/M" field.
-> However, qemu incorrectly uses the "Reg" field to extract the register operand.
-> 
-> This patch instead extracts the XMM register operand from the "R/M"
-> field.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3611
-> Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3391
+> Signed-off-by: Jos Craaijo <jos.craaijo@ou.nl>
+> ---
+>   target/i386/emulate/x86_decode.c    |  6 ++++++
+>   target/i386/tcg/decode-new.c.inc    | 16 ++++++++++++----
+>   tests/tcg/x86_64/Makefile.target    |  1 +
+>   tests/tcg/x86_64/segment-prefixes.c | 25 +++++++++++++++++++++++++
+>   4 files changed, 44 insertions(+), 4 deletions(-)
 
 This feels like a qemu-stable material.
-I'm picking it up, please let me know if I should not.
+I'm picking it up, please let me know if I shouldn't.
 
 Thanks,
 
 /mjt
-
-> ---
->   target/i386/tcg/decode-new.c.inc | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-> index ac181308ca..acb300457c 100644
-> --- a/target/i386/tcg/decode-new.c.inc
-> +++ b/target/i386/tcg/decode-new.c.inc
-> @@ -605,7 +605,7 @@ static void decode_0F78(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
->   {
->       static const X86OpEntry opcodes_0F78[4] = {
->           {},
-> -        X86_OP_ENTRY3(EXTRQ_i,       V,x, None,None, I,w,  cpuid(SSE4A)), /* AMD extension */
-> +        X86_OP_ENTRY3(EXTRQ_i,       U,x, None,None, I,w,  cpuid(SSE4A)), /* AMD extension */
->           {},
->           X86_OP_ENTRY3(INSERTQ_i,     V,x, U,x, I,w,        cpuid(SSE4A)), /* AMD extension */
->       };
-
 
