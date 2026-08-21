@@ -4,97 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A88AC5DF87
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 01:40:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EF4DC5DF81
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 02:21:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxEE1-0003P8-8W; Thu, 20 Aug 2026 21:39:17 -0400
+	id 1wxEsA-00011w-Iu; Thu, 20 Aug 2026 22:20:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wxEE0-0003OK-HE
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 21:39:16 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <xiangwencheng@lanxincomputing.com>)
+ id 1wxEs8-00011o-MM
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 22:20:44 -0400
+Received: from va-2-29.ptr.blmpb.com ([209.127.231.29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wxEDz-0002ID-3W
- for qemu-devel@nongnu.org; Thu, 20 Aug 2026 21:39:16 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2cf452def93so11636005ad.1
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 18:39:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787276353; x=1787881153; darn=nongnu.org;
- h=message-id:date:references:in-reply-to:cc:to:subject
- :content-transfer-encoding:content-type:mime-version:from:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=sS5teeV0L1N5cqks17enGc8q90XbDEHWweqKaW5VI1Q=;
- b=MpqJGFjU1vwuanlhIMfoOBULRPAIM3bD1G4/Gw+xoOoaQNLAeaJ20D6+DmK7jgisx0
- 8ry5RQ9NeedpQkOxJH7icamGoLDhGuNyRS5HTBbIc1ZfpdrfIPEUNFamcEO+n3vN/b06
- RYZjrpGBUzj+VAMWkCP9aLFDaYPg6od6ee1gbOppEhz9IghCtGA5rnbJBuvAsXr8fRMv
- jht22HIyUhIJcIMWnhSd8I7SJxZ6OL0EOx5w8TU4LHWgIvEqIJ2okIo1O8oiF+Q4HHbU
- ZYG9+iDbFhYTAxco3JSrYyopl7Vqd+8Al2RFyxsrNlKhObl8HrGQ6VLf4XMe2gQlul6Z
- Go2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787276353; x=1787881153;
- h=message-id:date:references:in-reply-to:cc:to:subject
- :content-transfer-encoding:content-type:mime-version:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=sS5teeV0L1N5cqks17enGc8q90XbDEHWweqKaW5VI1Q=;
- b=WKSM9E4yn/TbPYMUzmnJNy54F/gpMRbBcdlCokyg8W8Zu4QiwPWLTlxB+tI2BtveC/
- 8MVwgefpcAAkpiD3eL1N6xtcUR2cwoJST4RySOm3uRaQLZ+S5bKA7f19sMcW9DZPxuA2
- SbYDK/Hk06PMVjYONdmfPd9oWjmYyg2OCaZU18JoidiOUPuex2djqHu5PKYYeJuDPMs3
- tgYDKLmWpxQk3As3jtZ1iZXGvDxsAkWhGutFzlmOLFaUj7QWCOyZqJT4Hmv48LcN1KkJ
- DlsNfcW5XRQGSPfUwhPIGSp5WtVLlUMrLT/lvQdm5FdpMjN26v98CXUUVWufhxr7Qzfa
- ahMQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpkwMJClLGz9GkQxmnvyr1FMLAQtJtX09lkkwAUKCfk0SicJU/xNmeKIK0dc2B2ft9kaUJLvwIVs5sa@nongnu.org
-X-Gm-Message-State: AFuF++lXXvOvc4SoZygQo22bekDKi8zgCtCv/dymQyhpCLkkJPTTlF/3
- AiCqJViNYEVVUEpsGXv3d5xC3RqILaNPxh+CiX0m/JczmWKd02l+JCgn
-X-Gm-Gg: AR+sD11Bcg5parJ1sAvgQpiGy83x0IWblxkoSMTCYvb+J8V12+kXpov1flNibeBWPqQ
- HiU7/X+za+GOH9H8EwRpJsT9nIcC5UVazgEUHQZNnuCpy6nOBex2ZD8gN63zuP7dwkxPwIZXuAb
- tU7p8/gPJqMPlw78QFwHcg9sVeOhJcV6J4lvu9jO0XM5QSvBrwUHPjdelAga2mkd2PEUoVL3ITs
- hR2a6QiRo4TAmc9F93SRwL+SYa2fYgriu6ywmeaH/QpNPfaRlBy59nUFg7ronMtbgNFTo1LHYvd
- FxxCH/k8XMjhSZUtP7M+t3eORt/GsP70T/AARKPdbFvjn+OpHFIHq+l+k/A6bLW+aBiZfq93F+F
- 2y2RPczIaTx78tCk1Vy+RFv7Tnf84y68i/i7SMNfuGmrLIPu9Z5A7kmhtxlRBHLM0SRuEUEMmpZ
- C2N2GfH+H8y9uspgntha+PSP4CNVRQQDgDVw4P+QZivHBLDX9K3b4+8R1keR4hYTOO
-X-Received: by 2002:a17:90b:57c3:b0:395:8124:ac53 with SMTP id
- 98e67ed59e1d1-395c4fa443fmr1938540a91.6.1787276353472; 
- Thu, 20 Aug 2026 18:39:13 -0700 (PDT)
-Received: from [127.0.1.1] ([211.226.54.223]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c4be666bsm981873a91.11.2026.08.20.18.39.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 18:39:12 -0700 (PDT)
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-X-Google-Original-From: Jeuk Kim <jeuk20.kim@samsung.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH v4 6/7] ufs/aspeed: Add AST2700 UFS host controller
-To: Mikail Sadic <mikail.sadic@ibm.com>
-Cc: clg@kaod.org, peter.maydell@linaro.org, pbonzini@redhat.com, 
- ninad@linux.ibm.com, titusr@google.com, jeuk20.kim@samsung.com, 
- philmd@mailo.com, steven_lee@aspeedtech.com, leetroy@gmail.com, 
- jamin_lin@aspeedtech.com, kane_chen@aspeedtech.com, 
- andrew@codeconstruct.com.au, joel@jms.id.au, calebs@linux.ibm.com, 
- milesg@linux.ibm.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- j-young.choi@samsung.com
-In-Reply-To: <20260813193040.669533-7-mikail.sadic@ibm.com>
-References: <20260813193040.669533-1-mikail.sadic@ibm.com>
- <20260813193040.669533-7-mikail.sadic@ibm.com>
-Date: Fri, 21 Aug 2026 10:38:44 +0900
-Message-Id: <178727632471.917875.628695860358940242.b4-review@b4>
-X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <xiangwencheng@lanxincomputing.com>)
+ id 1wxEs3-0002HQ-Pv
+ for qemu-devel@nongnu.org; Thu, 20 Aug 2026 22:20:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=lanxincomputing-com.20200927.dkim.feishu.cn; t=1787278827;
+ h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=J3wC1Oj2yP39aQG8a74rqxHzKDCG9roEV9f2lTU5nss=;
+ b=dApEYUB1teb9BbFBtdqFD5R7ZI/Q9Fvz2VyL08cwquMdYL3lwAzNdKWAW4fMwFpQf4na7/
+ cEtYumQjmP2sTiXsuZpiGFPU6S4u0fnjhnWh8gxo2VhTGcr6uBVZ9wCKA7V1APTDy9n4i0
+ 7bxWgrFmBqI3hcAALvE71dn9pNhbWb/0en/Mz83MyHxc0Uvy1V0+fD6ZZZq+m8HY1LvPpW
+ SA/aol1njz13nHU3HcTW0aQwZVYVZEOCLHtdSDFy74R9JI4KNM4CoKvJhzwAA+oMGfar9n
+ Hu/7OYDL84RQ7jXmtcHPoCLH9z7eYghwLX5VfVfIuFKB7/qo/7Wni2K8sqmSTQ==
+To: "Richard Henderson" <richard.henderson@linaro.org>, <mst@redhat.com>
+Cc: <pbonzini@redhat.com>, <peterx@redhat.com>, <philmd@mailo.com>, 
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] virtio: Add aligned ld/st accessors for vring
+References: <20260820094611.1767100-1-xiangwencheng@lanxincomputing.com>
+ <0ab52741-c059-4b3b-b1cd-fcf289bf820f@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+From: "BillXiang" <xiangwencheng@lanxincomputing.com>
+Message-Id: <6e417ca3-ec49-498c-8bfa-e29be60c6551@lanxincomputing.com>
+Mime-Version: 1.0
+X-Lms-Return-Path: <lba+26a87b5e9+7b11af+nongnu.org+xiangwencheng@lanxincomputing.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <0ab52741-c059-4b3b-b1cd-fcf289bf820f@linaro.org>
+Content-Language: en-US
+Date: Fri, 21 Aug 2026 10:20:20 +0800
+X-Original-From: BillXiang <xiangwencheng@lanxincomputing.com>
+Received: from [127.0.0.1] ([123.120.5.129]) by smtp.feishu.cn with ESMTPS;
+ Fri, 21 Aug 2026 10:20:24 +0800
+User-Agent: Mozilla Thunderbird
+Received-SPF: pass client-ip=209.127.231.29;
+ envelope-from=xiangwencheng@lanxincomputing.com; helo=va-2-29.ptr.blmpb.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, MSGID_FROM_MTA_HEADER=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,81 +72,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 13 Aug 2026 14:30:38 -0500, Mikail Sadic <mikail.sadic@ibm.com> wrote:
-> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-> index a9238e6217..c1052c74a8 100644
-> --- a/hw/arm/aspeed.c
-> +++ b/hw/arm/aspeed.c
-> @@ -187,6 +187,31 @@ static void aspeed_machine_init(MachineState *machine)
->      aspeed_connect_serial_hds_to_uarts(bmc);
->      qdev_realize(DEVICE(bmc->soc), NULL, &error_abort);
->  
-> +    /*
-> +     * If the SoC instantiated a UFS host controller (AST2700), attach the
-> +     * first backend drive to it as logical unit 0.  The controller and its
-> +     * UFS bus only exist once the SoC has been realized, so the ufs-lu is
-> +     * created here rather than through a controller drive property.
-> +     */
-> +    if (object_resolve_path_component(OBJECT(bmc->soc), "ufs")) {
+On 8/20/2026 10:59 PM, Richard Henderson wrote:
+> On 8/20/26 02:46, BillXiang wrote:
+>> diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
+>> index 387d65c..c23f5a2 100644
+>> --- a/include/qemu/bswap.h
+>> +++ b/include/qemu/bswap.h
+>> @@ -255,6 +255,20 @@ static inline int lduw_he_p(const void *ptr)
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return r;
+>> =C2=A0 }
+>> +static inline int lduw_he_p_aligned(const void *ptr)
+>> +{
+>> +=C2=A0=C2=A0=C2=A0 uint16_t r;
+>> +=C2=A0=C2=A0=C2=A0 __builtin_memcpy(&r, __builtin_assume_aligned(ptr, s=
+izeof(r)),=20
+>> sizeof(r));
+>> +=C2=A0=C2=A0=C2=A0 return r;
+>> +}
+>=20
+> If you know it's aligned, then you don't need anything special: just a=20
+> normal C memory access.=C2=A0 E.g.
+>=20
+>  =C2=A0=C2=A0=C2=A0 *(uint16_t *)ptr
+>=20
+> and then of course no need for a wrapper function.
 
-This appears to implicitly attach the first if=none backend to UFS LU
-0. Why is this needed?
+Noted, thanks! I=E2=80=99ll resend it with the changes.
 
-if=none backends are normally left unattached for explicit -device
-use, so this may claim a drive intended for another device.
-
-Wouldn't it be better to remove this and require users to attach
-the LU explicitly, for example:
--drive if=none,id=ufs0,file=ufs.img,format=raw \
--device ufs-lu,bus=ufs-bus.0,drive=ufs0,lun=0
-
->
-> diff --git a/hw/ufs/aspeed_ufs.c b/hw/ufs/aspeed_ufs.c
-> new file mode 100644
-> index 0000000000..bfe540b929
-> --- /dev/null
-> +++ b/hw/ufs/aspeed_ufs.c
-> @@ -0,0 +1,67 @@
-> [ ... skip 22 lines ... ]
-> +struct AspeedUfsState {
-> +    SysbusUfsState parent_obj;
-> +};
-> +
-> +struct AspeedUfsClass {
-> +    DeviceClass parent_class;
-
-The parent class layout is SysBusDeviceClass, so this should be
-`SysBusDeviceClass parent_class`
-
->
-> diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
-> index a00238ed74..dedc784926 100644
-> --- a/include/hw/arm/aspeed.h
-> +++ b/include/hw/arm/aspeed.h
-> @@ -62,6 +62,7 @@ struct AspeedMachineClass {
->      uint32_t uart_default;
->      bool sdhci_wp_inverted;
->      bool vbootrom;
-> +    uint32_t ufs_block_size;
-
-As noted on the previous patch, UFS does not permit 512-byte
-logical blocks. Please drop this field and the corresponding 512-byte
-configuration and documentation.
-
->
-> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-> index cd68c7f1ca..ae986dea12 100644
-> --- a/include/hw/arm/aspeed_soc.h
-> +++ b/include/hw/arm/aspeed_soc.h
-> @@ -118,6 +119,7 @@ struct AspeedSoCState {
->      AspeedAPB2OPBState fsi[2];
->      AspeedLTPIState ltpi_ctrl[ASPEED_IOEXP_NUM];
->      AspeedAST1700SoCState ioexp[ASPEED_IOEXP_NUM];
-> +    SysbusUfsState ufs;
-
-Since this child is initialized as TYPE_ASPEED_UFS, shouldn't this be
-AspeedUfsState rather than SysbusUfsState?
-
--- 
-Jeuk Kim <jeuk20.kim@samsung.com>
+>=20
+>> +static inline int lduw_le_p_aligned(const void *ptr)
+>> +{
+>> +=C2=A0=C2=A0=C2=A0 return (uint16_t)le_bswap(lduw_he_p_aligned(ptr), 16=
+);
+>> +}
+>=20
+> And this:=C2=A0 le16_to_cpu(*(uint16_t *)ptr)
+>=20
+>=20
+> r~
 
