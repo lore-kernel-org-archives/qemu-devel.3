@@ -4,71 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E7F4C5DF87
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 10:27:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11C9BC5DF87
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 10:29:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxMTB-0005fJ-J8; Fri, 21 Aug 2026 06:27:29 -0400
+	id 1wxMUe-0006Ee-Pq; Fri, 21 Aug 2026 06:29:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
- id 1wxMTA-0005eX-5Z; Fri, 21 Aug 2026 06:27:28 -0400
-Received: from zm-mta-out-3.u-ga.fr ([152.77.200.56])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wxMUd-0006E6-9n
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 06:28:59 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
- id 1wxMT8-0004ym-5y; Fri, 21 Aug 2026 06:27:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=univ-grenoble-alpes.fr; s=2020; t=1787308044;
- bh=Mpr49LYowtuQ5WddJh0TKsGoDVI0lhtUXA2egR/EQjA=;
- h=From:To:Cc:Subject:Date:From;
- b=KqpsexbdKfJytaejBcRL9hfY1ksb6ItZLdk907/+wQvZA4KuetHAryXOn37mwVFp7
- xdj6GnXUswnRW65ecIvdh/+6EF9KxN9SvJeQyOpmCKs2ArLMo+NiC64Dl98E9C/7Qo
- 9Hz7REQZjB934QgbrfdEw3Drxdh5nE/pDCi896ywnYnEgcFFWllMU5ijUYhcKM/TO6
- JjfwRtPDaGoLn/jssAgw2z+2NisgaOZuDbB8hkSKIO4pJH5E0g+6tXZaFHSq83JsDj
- nNAeXYtQUN8ptvC8JA0kZkk6txj42Kjq9WZfKj7d8xjvuT6XKFo/Feup8q1PxRwTqE
- k6u6G6uEo6spw==
-Received: from mailhub-2.u-ga.fr (mailhub-2.u-ga.fr [129.88.178.102])
- by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id B90B04021B;
- Fri, 21 Aug 2026 12:27:24 +0200 (CEST)
-Received: from smtps.univ-grenoble-alpes.fr (smtps2.u-ga.fr [152.77.18.2])
- by mailhub-2.u-ga.fr (Postfix) with ESMTP id B4F2AFF856;
- Fri, 21 Aug 2026 12:27:24 +0200 (CEST)
-Received: from naga.. (unknown [78.240.82.247])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- (Authenticated sender: petrotf@univ-grenoble-alpes.fr)
- by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id BB05D140046;
- Fri, 21 Aug 2026 12:27:21 +0200 (CEST)
-From: frederic.petrot@univ-grenoble-alpes.fr
-To: daniel.barboza@oss.qualcomm.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
- <frederic.petrot@univ-grenoble-alpes.fr>
-Subject: [PATCH] tests/tcg/riscv64: Add tests for rv128 [ms]status
-Date: Fri, 21 Aug 2026 12:27:29 +0200
-Message-ID: <20260821102729.997150-1-frederic.petrot@univ-grenoble-alpes.fr>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wxMUa-0005iH-FF
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 06:28:58 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67L9M3q71799934
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 10:28:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ xWCeMIeLWcjhSJ+VNhO8kr4XOU2m5CV/bJ4/7dCo2lA=; b=lCzTVCpPuFbkqmUs
+ /xBBXnZQgQPEgjGI6bXkKnZOB6GHKFDTdbfL6hsmyAdjJLkbhp/h4ceXafen6qx9
+ hDU7o8jwMgoMmNMhiz1dUoT2W1MHBcoQqeha0+WdUiM4ku/hnZ2EnoNrfnSMStTb
+ 2j9Q6oAsL7ooFK3rOzxn1fLu2MXDv13hve23PFQqTgwqsG+qOAFrXYi4gydf7SmJ
+ IfHvjy1qME39vNxPTdtiFe8ha4mh0mq7rHtrsF7Z11qdRl746B0vvBzF4/lVW7QT
+ QZdlLIouQJEtnNK6ldSGZWMYGjhJNdxVMbZ7pEehcy6jXTLK1h74oRtj+JFafJhG
+ hch+NQ==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g6ecb9gcg-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 10:28:53 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-52d28f8737eso14384681cf.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 03:28:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1787308133; x=1787912933; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=xWCeMIeLWcjhSJ+VNhO8kr4XOU2m5CV/bJ4/7dCo2lA=;
+ b=KTuu9Z0pjMF/HbHUJ7bLUizfdgfnphSjF2kQIW7ukwbn2L2So7YenogqWsPqIr2DXL
+ ZTMOpzQe/wPc+GPnGAzpHsS0ojIzSSBLb9v8G9f3seHpQsQZsH/2WENHTJutYDtUA4dH
+ IzzjROzM3QUt+0GvGsOxb/SFg2ik+lQQKVVecACzaNdwABCA0+FePf2F8Y+fjgt6Feyx
+ 3DAHlPNVVTHXkypanrcJK22KL+X8WKHphPzqO6sv4ztQoi9C+qtILNTgv3iZ8KSj1gxy
+ axtSzGejAjtVtpkLVqwRgObGmg4h92OmfBtfjExV5OkqXahI9E3eXC60qSGxJYNsbkKb
+ z9ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787308133; x=1787912933;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=xWCeMIeLWcjhSJ+VNhO8kr4XOU2m5CV/bJ4/7dCo2lA=;
+ b=PRywVynfC/GRXYuGvofoXnm4FyPVrSzhkJ+utTpPXMpRvrN4pZ07Ih6Qaj15CUztQY
+ RuTGNE4DwPOX19sZpamg5P6k47xt5aF5K1yF9/aSk+HnjLEVkkXSQTwXYKEM2SDuswFc
+ 13KPAK69+lD/jgAz73xmE3WO8GAwGS2spHdqhcji8+dSS630I9VOz7q3uzaVlYQoj3PC
+ LFvpjRHdEMa+cN64m0otic0yt0ikEf1yZIN3s+4rRjNL3Jmg8myCSYRUZk+fi/b3SuVA
+ u3I5Q7m0r+gVmQCoXEZGjXlRl3slO1SavyEGIkHumnm4BvV59adf2opA4eqmo/NTl/6W
+ 4hFw==
+X-Gm-Message-State: AOJu0YwWy6rGf/7KNEMr/QfgJiEU8CjUJCsCkK5FZU+nNichLy4Bnxy2
+ ADCiKFMWJhUiUUdv1IzgFia60Hd+AAlyndUnLPbcKcrU/t9AvmA2IdnjDbVV3P8z4ycRu4SP2l8
+ qnsCiMwYCgvLjljbxebneuCbgxeINASVHcA0qkpa8C6OS4bpoT0BQBAh9ntcHWhfRwij7
+X-Gm-Gg: AR+sD10Qxp+8/RA9YKWVLmW6PBBb9M2G0DKEkjeJN31PqUCOzj3wb5YoJiGJ7YsYjRL
+ DtR+muwVLCVhw11XAFXqhUIzXY5RKvmoSy2InCyVT80393Q4Fwc17YSpQ35GKbglNYGjFgzcHHH
+ Nih4MMmElzQhWL0QpV7phmDXZqK+pvcNXnKFeGBURtByZZaTbPFE/ayJv4q2tRs3twpvJPGRI4d
+ dUkHVIcWJXGM/wCyVZOVQp07G4/mdQKOPa+TWCTs1IQwHSeEzIgroK5LFJlDuHQcaEOQOeXeVv9
+ Ckc0zZkLGNFhkhaVO7crYUurd1unZ0g3sOxxrntoVx4Xr1UAXZKMln8JsXs7zHpFqJJkw/75qui
+ Rv5IEx2Fr0tCbNXIHuMbImRymaTwxXWL1BYk=
+X-Received: by 2002:ac8:5941:0:b0:516:e10f:7140 with SMTP id
+ d75a77b69052e-52df5a28a86mr43943181cf.35.1787308133328; 
+ Fri, 21 Aug 2026 03:28:53 -0700 (PDT)
+X-Received: by 2002:ac8:5941:0:b0:516:e10f:7140 with SMTP id
+ d75a77b69052e-52df5a28a86mr43942781cf.35.1787308132850; 
+ Fri, 21 Aug 2026 03:28:52 -0700 (PDT)
+Received: from [192.168.69.231] (pmd666.hd.free.fr. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-499b90e3855sm23501275e9.6.2026.08.21.03.28.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 21 Aug 2026 03:28:51 -0700 (PDT)
+Message-ID: <9aabdd1c-4673-4609-aaa2-f27e04d4d0ad@oss.qualcomm.com>
+Date: Fri, 21 Aug 2026 12:28:50 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/15] cpus: Constify @cpu in SysemuCPUOps::has_work()
+ handler
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-s390x@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org
+References: <20260820201356.29775-1-philmd@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260820201356.29775-1-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Greylist: Whitelist-UGA SMTP Authentifie (petrotf@univ-grenoble-alpes.fr)
- via submission-587 ACL (41)
-Received-SPF: pass client-ip=152.77.200.56;
- envelope-from=frederic.petrot@univ-grenoble-alpes.fr;
- helo=zm-mta-out-3.u-ga.fr
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIxMDA3OCBTYWx0ZWRfXyoGjBtuBeCtH
+ USnooAFQDmfS8PkawFnt5iZJFAJ0OjEj6461HyOvubfIiE4Ahjoc8SWJliLjJwpuGCY5jVQLM2z
+ 70JdtWKiUnLGywr8krboZ9u8D9zqdG7to2DvgPO5lO0Q5W56nCh7flWgBvqowQRq9NYWhn3lHqK
+ LWJL6Yy34bFbdHj9O9HXz+b3wsGdCsXNZUrC3GvhKVUc6eFIgYNptiIqLO/6qvaoLvOTMfEcBop
+ Sij/I2drdx/TgtSscWgQJrsjVFpWlS3mOwU3DEkdeezwateb3TASHQrxRRxWPy+0hOLul+TJmYj
+ BRmdZRh/lrOhH66ueD59CLboJyWFhYGWYAeQ98eQ9XD8jbIYu0BV4t5ivCErawfGJvpbrA9Zpow
+ Q8XKJqOlmVJBYB0u04QgRRYn6o4zSZ95G4fSUCHU8AiQmcMZb1UpxLYM/sGkkeh/8704i7MJmKq
+ NptKSjD2pubjb0XbsDQ==
+X-Authority-Analysis: v=2.4 cv=e/s2j6p/ c=1 sm=1 tr=0 ts=6a882865 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=ivBIR6OCMuaYdoXQm0EA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-GUID: 4oqTvQ43VO6IL57v5yflYs2HyBuQ60Zu
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIxMDA3OCBTYWx0ZWRfX939RkrFuI7YK
+ ZybowskFXYJN+ivCdmQPSwJOZd8wM11czUZkofEhjbr9HaZ2t/bNZssyYazVXqXGEd1+qSxYGIS
+ BdW9yz5q5EOdahJZ5dPIuqLPHP90qyw=
+X-Proofpoint-ORIG-GUID: 4oqTvQ43VO6IL57v5yflYs2HyBuQ60Zu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-21_03,2026-08-21_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 suspectscore=0 spamscore=0 phishscore=0
+ lowpriorityscore=0 clxscore=1015 malwarescore=0 priorityscore=1501
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608210078
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,227 +156,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
+On 20/8/26 22:13, Philippe Mathieu-DaudÃ© wrote:
+> Missing review: 2,12,14,15
+> 
+> Since v1:
+>    - use _Generic (rth)
+>    - no more RFC
+> 
+> - Patches 2-11 trivially add const qualifier for various
+>    cpu_is/has() getters
+> - Patch 12-14 add const-qualified variants of cpu_env(),
+>    env_cpu(), and env_archcpu() using _Generic() macros;
+>    consolidate the redundant env_cpu_const() alias and update
+>    linux-user to use the generic accessor
 
-Adding asm tests to check that mstatus and sstatus are updated as
-expected in an rv128 cpu.
+After reworking _Generic from v1, this patchset ordering is not
+bisectable anymore. Patches 12-14 must come first.
 
-Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
----
- tests/tcg/riscv64/Makefile.softmmu-target |   9 ++
- tests/tcg/riscv64/test-rv128-mstatus.S    |  67 ++++++++++++++
- tests/tcg/riscv64/test-rv128-sstatus.S    | 108 ++++++++++++++++++++++
- 3 files changed, 184 insertions(+)
- create mode 100644 tests/tcg/riscv64/test-rv128-mstatus.S
- create mode 100644 tests/tcg/riscv64/test-rv128-sstatus.S
+> - Patch 15 finally convert the SysemuCPUOps::has_work
+>    hook and all target implementations.
+> 
+> No functional change; purely const-correctness improvment
+> to enforce has_work() callees don't mutate CPUState.
 
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index fac0474746..83d621c5d0 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -67,5 +67,14 @@ EXTRA_RUNS += run-test-zicclsm-off
- run-test-zicclsm-off: test-zicclsm-off
- 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)v=true$(comma)zfh=true$(comma)zicclsm=false $(QEMU_OPTS)$<)
- 
-+# Test for rv128
-+EXTRA_RUNS += run-test-rv128-mstatus
-+run-test-rv128-mstatus: test-rv128-mstatus
-+	$(call run-test, $<, $(QEMU) -cpu x-rv128 $(QEMU_OPTS)$<)
-+
-+EXTRA_RUNS += run-test-rv128-sstatus
-+run-test-rv128-sstatus: test-rv128-sstatus
-+	$(call run-test, $<, $(QEMU) -cpu x-rv128 $(QEMU_OPTS)$<)
-+
- # We don't currently support the multiarch system tests
- undefine MULTIARCH_TESTS
-diff --git a/tests/tcg/riscv64/test-rv128-mstatus.S b/tests/tcg/riscv64/test-rv128-mstatus.S
-new file mode 100644
-index 0000000000..e8b5101e26
---- /dev/null
-+++ b/tests/tcg/riscv64/test-rv128-mstatus.S
-@@ -0,0 +1,67 @@
-+/*
-+ * Test rv128 mstatus update and access
-+ * Author: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#define srli(rd, rs1, imm)                .insn i  0b0010011, 0b101, rd, rs1, imm & 0b1111111
-+
-+    .option norvc
-+
-+    .text
-+    .globl _start
-+_start:
-+    csrr    s0, misa
-+    srli    (s1, s0, 126)
-+    li      s0, 3
-+    bne     s1, s0, fail
-+
-+    # Check UXL and SXL are set to RV128 too
-+    csrr    s0, mstatus
-+    srli    (s1, s0, 32)
-+    andi    s1, s1, 0xf
-+    li      s0, 0xf
-+    bne     s1, s0, fail
-+
-+    # Mark FPU dirty to check for SD
-+    .equiv  MSTATUS_FS, 0x00006000
-+    li      s0, MSTATUS_FS
-+    csrs    mstatus, s0
-+    # Do some useless computation
-+    fmadd.s f3, f2, f1, f0
-+    fmax.s  f0, f1, f2
-+    # Check SD has changed where expected
-+    csrr    s0, mstatus
-+    srli    (s1, s0, 127)
-+    li      s0, 1
-+    bne     s1, s0, fail
-+    # Mark FPU clean (2 in FS place)
-+    li      s0, ~0x00004000
-+    csrc    mstatus, s0
-+    csrr    s0, mstatus
-+    srli    (s1, s0, 13)
-+    andi    s1, s1, 3
-+    li      s0, 2
-+    bne     s1, s0, fail
-+    li      a0, 0
-+    j       _exit
-+fail:      
-+    li      a0, 1
-+_exit:     
-+    lla     a1, semiargs
-+    li      t0, 0x20026 # ADP_Stopped_ApplicationExit
-+    sd      t0, 0(a1)
-+    sd      a0, 8(a1)
-+    li      a0, 0x20    # TARGET_SYS_EXIT_EXTENDED
-+
-+    # Semihosting call sequence
-+    .balign 16
-+    slli   zero, zero, 0x1f
-+    ebreak
-+    srai   zero, zero, 0x7
-+    j      .
-+
-+    .data
-+    .balign 16
-+semiargs:
-+    .space  16
-diff --git a/tests/tcg/riscv64/test-rv128-sstatus.S b/tests/tcg/riscv64/test-rv128-sstatus.S
-new file mode 100644
-index 0000000000..32f792a6aa
---- /dev/null
-+++ b/tests/tcg/riscv64/test-rv128-sstatus.S
-@@ -0,0 +1,108 @@
-+/*
-+ * Test rv128 sstatus update and access
-+ * Author: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#define srli(rd, rs1, imm)                .insn i  0b0010011, 0b101, rd, rs1, imm & 0b1111111
-+
-+    .option norvc
-+
-+    .text
-+    .globl _start
-+_start:
-+    // Check RV128 is running
-+    csrr     s0, misa
-+    srli     (s1, s0, 126)
-+    li       s0, 3
-+    bne      s1, s0, fail
-+
-+    // Minimal pmp settings
-+#define PMP_NAPOT 0x18
-+#define PMP_R     0x01
-+#define PMP_W     0x02
-+#define PMP_X     0x04
-+
-+    li       s0, -1
-+    csrw     pmpaddr0, s0
-+    li       s0, PMP_NAPOT | PMP_R | PMP_W | PMP_X
-+    csrw     pmpcfg0, s0
-+
-+    la       s0, backm
-+    csrw     mtvec, s0
-+
-+    // Set MPP to supervisor
-+    csrr     s0, mstatus
-+    li       s1, ~0x1800 // mask
-+    and      s1, s1, s0
-+    li       s0, 0x0800  // supervisor
-+    or       s1, s1, s0
-+    csrw     mstatus, s1
-+    // Change to supervisor mode
-+    la       s0, 1f
-+    csrw     mepc, s0
-+    mret
-+1:
-+    // Check UXL is set to RV128
-+    csrr     s0, sstatus
-+    srli     (s1, s0, 32)
-+    andi     s1, s1, 0x3
-+    li       s0, 3
-+    bne      s1, s0, fail
-+    // Check SPP if is set to 1, since we
-+    // come from machine mode
-+    srli     (s1, s0, 8)
-+    andi     s1, s1, 0x1
-+    // Actually this check fails, so test 0
-+    li       s0, 0
-+    bne      s1, s0, fail
-+
-+    // Mark FPU dirty to check for SD
-+    .equiv   MSTATUS_FS, 0x00006000
-+    li       s0,  MSTATUS_FS
-+    csrs     sstatus, s0
-+    // Do some fun useless computation
-+    fmadd.s  f3, f2, f1, f0
-+    fmax.s   f0, f1, f2
-+    // Check SD has changed where expected
-+    csrr     s0, sstatus
-+    srli     (s1, s0, 127)
-+    li       s0, 1
-+    bne      s1, s0, fail
-+    // Mark FPU clean (2 in FS place)
-+    li       s0, ~0x00004000
-+    csrc     sstatus, s0
-+    csrr     s0, sstatus
-+    srli     (s1, s0, 127)
-+    li       s0, 0
-+    bne      s1, s0, fail
-+
-+    // Let's go back to machine mode to exit
-+    ecall
-+
-+    // mtvec bit 1:0 indicate mode, 00 is Direct, what
-+    // we want in this simple test
-+    .align 4
-+backm:
-+    li      a0, 0
-+    j       _exit
-+fail:      
-+    li      a0, 1
-+_exit:     
-+    lla     a1, semiargs
-+    li      t0, 0x20026 # ADP_Stopped_ApplicationExit
-+    sd      t0, 0(a1)
-+    sd      a0, 8(a1)
-+    li      a0, 0x20    # TARGET_SYS_EXIT_EXTENDED
-+
-+    # Semihosting call sequence
-+    .balign 16
-+    slli   zero, zero, 0x1f
-+    ebreak
-+    srai   zero, zero, 0x7
-+    j      .
-+
-+    .data
-+    .balign 16
-+semiargs:
-+    .space  16
--- 
-2.43.0
 
+> Philippe Mathieu-Daudé (15):
+>    target/tricore: Document architectural interrupts as not implemented
+>    system/cpus: Constify various CPUState arguments
+>    target/avr: Constify CPUAVRState for some cpu_*() getters
+>    target/hexagon: Constify CPUHexagonState in
+>      hexagon_thread_is_enabled()
+>    target/i386: Constify CPU*State for cpu_*_interrupt() getters
+>    target/loongarch: Constify CPULoongArchState for various cpu_*()
+>      getters
+>    target/mips: Constify CPUMIPSState for various cpu_*() getters
+>    target/s390x: Constify S390CPU for cpu_has_*() getters
+>    target/riscv: Constify @iprio argument in riscv_cpu_pending_to_irq()
+>    target/riscv: Constify CPURISCVState for various cpu_*() getters
+>    target/sparc: Constify CPUSPARCState for various cpu_*() getters
+>    linux-user: Uncast void pointer argument as Object in
+>      target_cpu_free()
+>    cpus: Add const-qualified CPU environment accessors
+>    linux-user: Replace env_cpu_const() by generic env_cpu() equivalent
+>    cpus: Constify @cpu in SysemuCPUOps::has_work() handler
 
