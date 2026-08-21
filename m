@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAD50C5DF8E
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:03:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3565C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:03:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxN0M-00064n-5M; Fri, 21 Aug 2026 07:01:46 -0400
+	id 1wxN1U-00020x-Nc; Fri, 21 Aug 2026 07:02:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN0F-00062P-8a
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:01:43 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1wxN1G-0000zw-Gg
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:42 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN09-0007FO-Uh
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:01:39 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-49954b88fffso7245975e9.0
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:01:33 -0700 (PDT)
+ id 1wxN1E-0007Yz-KI
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:42 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-499b0eefa61so4871395e9.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787310092; x=1787914892; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xsRT6OD4srdGJd/K1CS+c7IiUzkXHHJdkUb3E/3eSzY=;
- b=ZxYMfs8/2AYHIwT9jSjn6DZbfSD9pQEfc/8Zs5qRjF2YXBYpbNV/1OrHbzkry4q6TY
- FuGXdshmGYyfvPPtw5x/Mf+nfrC3CZoJstSKHYjzty7S4r2LX0cbPccWTwQtBg52n3w9
- 77Z65jxOOfu4sfWXyU3UCtafziDIll0QnvOmUAdjJ/YjQtK6+J0NCL2sFTPZ409bxHEV
- FjGEqFiSvYEWrz/dBupNZzEf+SgvSUtD0qjrgiwEgF/IBvYydS7EWm99glZJ5rwzVlqm
- 5OwUq1wEgNd0ue7criy4Owu1zRa7TdTXygngOVxV3L978nQKfNmFKY0JzaXYgHh3rS5k
- DNAA==
+ d=linaro.org; s=google; t=1787310159; x=1787914959; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=Mra+QSr7xL4AJufg9b5eo4WZM7PgunenWDduQ/wz9f8=;
+ b=hrfF0tnp3KvJ0h4n5HOgMkqlwHN8xerg5gdvWopn2pwkBc1G2yfIFpPbi/8ZqD6MzD
+ fjRiN4cVTjzLvPZASef0Yt4EGxBfNHqb0kEsfy7fI1xGucmFmoIXtzyBZs1TvIDC2PrH
+ YGuY1Nez46r4jvMOWGFLWwUM9Crtcl2TPZe+tDq0akgzwyWld9VrqSuKs7Sb664Y9W5Y
+ HnpCwZwXNky4Vzgav/ZREzHe2lY4JwXn/BA7f0/dOc8q72rFpaoCFl+V5CYnjq/mYen/
+ jmmvwwCaVMioZoAr3n5YrCglNvoyZI3KcY4+AYZD3mhoWm2h+uKGrLelKUr0O1s+5V8o
+ 61lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787310092; x=1787914892;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=xsRT6OD4srdGJd/K1CS+c7IiUzkXHHJdkUb3E/3eSzY=;
- b=US0hyIP6x4JHgtuAxsAHdwXautyNtq5JK1nn7iDOL68G0kWyoU137Oz2zuVcUaHwud
- WhGMfe9fpycjPZ996xR2SdETo4z4RJOw34bWxvJoAFehQGTqIyqh+egUUu7NbwrUFpPi
- DQ3lWhSO1SbCNjHh5jpici5zVgljn0nrHtCFjOc9STlOM06/FS4VuwT56pZkFWMZEEku
- 2mZAYWsMStsnWBIC4OmqQESyspAqHdt7a/zPJ3FWoJJ+GHIzIWmsXty3S3HHnkxZXqAa
- 3fBhmh+O7mk34u3NyGF0KIgj79laxn45odXa2s/YR7BMLFy9S0Ixeq4cx1iW/j89Tzzs
- pPFA==
-X-Gm-Message-State: AOJu0Yw8LZwIzRQu36fZfSawAHgB7dsHKYFRHMEWo9u0zmLV2n1kvuf5
- ilyT5yOew8JDWDKhmF+b4goW/RbIhup7FMv3ycfO/cnh0bJ/lyS7nY1bgDbcT7iHoKy9wN5Bsi4
- 3f1Oo
-X-Gm-Gg: AR+sD10KsJc8xzN/pbODTYKg9rp/cYSBDmIUOBLsYoXjAjL0DxYe7g/8iiycsBsXHc0
- akH1tqaNdfGSJ248e3z26C6v0wszjDXpSJJxMgPiue5I6kqJgDCEVJ8tsvhm5P4H0hgkw0tD+rX
- B+ZjP+0dSFFp2roB+ckKIJ8bTuMmJRbhw4rKo9DtGEj+xlq7sPRSB84HzH76eufUPgTOfdQGBo8
- viAgCZv/S6sMm5SpP5lbRYDkj/iEnhTiWizoWDh/F8GQIUhA3awIWQxf8jfbarZgsLu2kRhr7MX
- CQRV47C1ZGc09c2c6yymc/nXVLOHsRUJ0K0/B3MLDt5El9Rzcnmkxg45A0G5k5qxnYAYaiOXof0
- X8dZg+yKa2PT/slVtTPN/o2K/2s1vZRrcGxk9osh68ZLubaHplBBOW4UbOKRPub8s9oCFAhemy0
- hoYiAnAMZTWJTLdkANhnrFJKaqQt/AvzVPNkJeqFBP7NA2LXFfeVVYxFB20wmJttQBcnll4T/qa
- Zn7qfzBSHcvGl2KvWgwQ27q72O4PySqa9+uHo1mm+gb/yLTbZZTBbym00jeywwTE08l9w==
-X-Received: by 2002:a05:600c:8108:b0:493:a966:d5b5 with SMTP id
- 5b1f17b1804b1-499b82f40b6mr88299185e9.2.1787310092503; 
- Fri, 21 Aug 2026 04:01:32 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787310159; x=1787914959;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=Mra+QSr7xL4AJufg9b5eo4WZM7PgunenWDduQ/wz9f8=;
+ b=dXLxEMKO7fNxiUrMKdegakAgo0PbBvQYwJUFWEYh5P1thk2QZDOdfCehG88zDTIkI6
+ Fp5p2/h+NiLI6g+jok5KJiJtumCZ3NkmCDg7QTmL0yFMfCghx+WUGi1NNzWjJkMxLKJQ
+ nKneBUpolsXx3xGMsEayvLjWsrrbx8kjWIuE4nUmC7sfxfqmylUh4k19P7egpxqFw7R9
+ pIuTXcAMmdpwQRtVxZTjVEobu1FLaEXIR12pZN2fcT4DV5xfZ0SBkfbSnm/xEK898vKt
+ gPRX4/cuyzkAGB6wzWf8gGrN0sTKEEO7rdDDOmRU0T6hU2XERGre6ZCuvt1UrbHPh8ue
+ d5yw==
+X-Gm-Message-State: AOJu0YyaTX0WCNTSZKlGkNw5f/C3FjyRP7iSkaWZChpWZWymKESaqJjL
+ UcVtIWgoqjLFRHtWS+Zn5vWSviEME00f6nnLC9Lzw2/I6A8vKrfDCBBOeHlWFU9hC4Qhg5t25Fk
+ OGJ8A
+X-Gm-Gg: AR+sD12VHrh2olb9Srhd4UvMEiq456eePOBgYhhPUpEjllZEEzxsp/x6fl0lavu5GOy
+ CGbGJaLiSoHiQPlQFzmnNGVTDte4dNhxWKk4yr1kXpBXMvnnI0hUE628QojjDSbBHQhlwk0VCiK
+ I0FpOqvsY6ukuO950RwBVjHngqZA26bOflX/NPVFcDqWaX9UMz4rH94K3T6ASzRPWD8z/PnNIiz
+ LPvkt+NteLGN75WMHUEejYA761btwHT2b1XHN8b7EMcsduyl7bG8o8HdcSWMBVyFHbV0BN7cuJd
+ XicrcqAfgq/rksgRbx/k56MAc2/hK8krjEKEPEyflcyl0DJjSMdh4eb6k70QJoUXfoC8m36u567
+ IJJntWYuDAIqFcrDtMJJ6J66J+yQwePi1kDT9NtQqoFZTjY6lrNl9fS8g5NeDPBacztSxPrPIC+
+ QDWzWorYktc+wcelW0xxmOAygPmIQAqElRRMowyJiZ9gf+mMnXwiaP3iNrkbctNMOap1U+Culiy
+ MDgV38TE9DM1sP2GbNWqq81nU1wp6z3t24i9tCNdvQoVA9WjophsV9vBjmjcevdDSXAsw==
+X-Received: by 2002:a05:600c:1d1a:b0:499:7219:122f with SMTP id
+ 5b1f17b1804b1-499b8303b86mr76863705e9.4.1787310158862; 
+ Fri, 21 Aug 2026 04:02:38 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.01.29
+ 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 04:01:29 -0700 (PDT)
+ Fri, 21 Aug 2026 04:02:38 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/43] target/arm: Pass aarch64_enabled to aarch64_aa32_a57_init
-Date: Fri, 21 Aug 2026 12:00:24 +0100
-Message-ID: <20260821110101.3971391-7-peter.maydell@linaro.org>
+Subject: [PULL 37/43] hw/arm: npcm8xx: Store boot info in the machine state
+Date: Fri, 21 Aug 2026 12:00:55 +0100
+Message-ID: <20260821110101.3971391-38-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260821110101.3971391-1-peter.maydell@linaro.org>
 References: <20260821110101.3971391-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,81 +101,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Bin Meng <bin.meng@processmission.com>
 
-Invert aa32_only argument to what is actually used.
+arm_load_kernel() keeps a pointer to the boot info struct for the
+lifetime of the VM, so the struct logically belongs to the machine
+rather than to a file scoped static object inside
+npcm8xx_load_kernel().
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260812204435.295067-4-richard.henderson@linaro.org
+Let the caller own the boot info: the board stores it in its
+NPCM8xxMachine and passes it to npcm8xx_load_kernel(), which only
+fills in the SoC specific values.
+
+As in the xlnx-zcu102 and raspi machines, the boot info belongs to
+the machine rather than to a static object:
+
+4d1ac883a7 ("hw/arm: xlnx-zcu102: Move arm_boot_info into XlnxZCU102")
+0f15c6e338 ("hw/arm/raspi: Move arm_boot_info structure to RaspiMachineState")
+
+Signed-off-by: Bin Meng <bin.meng@processmission.com>
+Message-id: 20260816131300.51799-15-bin.meng@processmission.com
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu-max.c   | 7 +++----
- target/arm/cpu64.c     | 2 +-
- target/arm/internals.h | 2 +-
- 3 files changed, 5 insertions(+), 6 deletions(-)
+ hw/arm/npcm8xx.c         | 26 ++++++++++++--------------
+ hw/arm/npcm8xx_boards.c  |  2 +-
+ include/hw/arm/npcm8xx.h | 10 ++++++++--
+ 3 files changed, 21 insertions(+), 17 deletions(-)
 
-diff --git a/target/arm/cpu-max.c b/target/arm/cpu-max.c
-index bd858f010cd..edb5b9e6c36 100644
---- a/target/arm/cpu-max.c
-+++ b/target/arm/cpu-max.c
-@@ -16,10 +16,9 @@
- #include "target/arm/internals.h"
- #include "target/arm/cpregs.h"
+diff --git a/hw/arm/npcm8xx.c b/hw/arm/npcm8xx.c
+index 9ce6ea52d97..7d707a09b41 100644
+--- a/hw/arm/npcm8xx.c
++++ b/hw/arm/npcm8xx.c
+@@ -357,22 +357,20 @@ static const struct {
+     },
+ };
  
--void aarch64_aa32_a57_init(ARMCPU *cpu, bool aa32_only)
-+void aarch64_aa32_a57_init(ARMCPU *cpu, bool aarch64_enabled)
+-static struct arm_boot_info npcm8xx_binfo = {
+-    .loader_start           = NPCM8XX_LOADER_START,
+-    .smp_loader_start       = NPCM8XX_SMP_LOADER_START,
+-    .smp_bootreg_addr       = NPCM8XX_SMP_BOOTREG_ADDR,
+-    .gic_cpu_if_addr        = NPCM8XX_GICC_BA,
+-    .secure_boot            = false,
+-    .board_id               = -1,
+-    .board_setup_addr       = NPCM8XX_BOARD_SETUP_ADDR,
+-    .psci_conduit           = QEMU_PSCI_CONDUIT_SMC,
+-};
+-
+-void npcm8xx_load_kernel(MachineState *machine, NPCM8xxState *soc)
++void npcm8xx_load_kernel(MachineState *machine, NPCM8xxState *soc,
++                         struct arm_boot_info *binfo)
  {
-     ARMISARegisters *isar = &cpu->isar;
--    const bool aarch64_enabled = !aa32_only;
+-    npcm8xx_binfo.ram_size = machine->ram_size;
++    binfo->loader_start = NPCM8XX_LOADER_START;
++    binfo->smp_loader_start = NPCM8XX_SMP_LOADER_START;
++    binfo->smp_bootreg_addr = NPCM8XX_SMP_BOOTREG_ADDR;
++    binfo->gic_cpu_if_addr = NPCM8XX_GICC_BA;
++    binfo->secure_boot = false;
++    binfo->board_id = -1;
++    binfo->board_setup_addr = NPCM8XX_BOARD_SETUP_ADDR;
++    binfo->psci_conduit = QEMU_PSCI_CONDUIT_SMC;
++    binfo->ram_size = machine->ram_size;
  
-     cpu->dtb_compatible = "arm,cortex-a57";
-     set_feature(&cpu->env, ARM_FEATURE_V8);
-@@ -207,7 +206,7 @@ static void cpu_max_initfn(Object *obj)
-          * '-cpu max' for TCG: we currently do this as
-          * "A57 with extra things"
-          */
--        aarch64_aa32_a57_init(cpu, !aarch64_enabled);
-+        aarch64_aa32_a57_init(cpu, aarch64_enabled);
-         if (!aarch64_enabled) {
-             aa32_max_features(cpu);
- #ifdef CONFIG_USER_ONLY
-@@ -227,7 +226,7 @@ static void cpu_max_initfn(Object *obj)
- 
-     /* Ultimate fallback: -cpu max as cortex-a57. */
-     assert(qtest_enabled());
--    aarch64_aa32_a57_init(cpu, !aarch64_enabled);
-+    aarch64_aa32_a57_init(cpu, aarch64_enabled);
+-    arm_load_kernel(&soc->cpu[0], machine, &npcm8xx_binfo);
++    arm_load_kernel(&soc->cpu[0], machine, binfo);
  }
  
- static const ARMCPUInfo arm_max_cpu = {
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index e3ee0253a09..faaf3ab879d 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -688,7 +688,7 @@ void aarch64_cpu_lpa2_finalize(ARMCPU *cpu, Error **errp)
- 
- static void aarch64_a57_initfn(Object *obj)
- {
--    aarch64_aa32_a57_init(ARM_CPU(obj), false);
-+    aarch64_aa32_a57_init(ARM_CPU(obj), true);
+ static void npcm8xx_init_fuses(NPCM8xxState *s)
+diff --git a/hw/arm/npcm8xx_boards.c b/hw/arm/npcm8xx_boards.c
+index 042a928857c..f462369bea3 100644
+--- a/hw/arm/npcm8xx_boards.c
++++ b/hw/arm/npcm8xx_boards.c
+@@ -198,7 +198,7 @@ static void npcm845_evb_init(MachineState *machine)
+     npcm8xx_connect_flash(&soc->fiu[0], 0, "w25q256", drive_get(IF_MTD, 0, 0));
+     npcm845_evb_i2c_init(soc);
+     npcm845_evb_fan_init(NPCM8XX_MACHINE(machine), soc);
+-    npcm8xx_load_kernel(machine, soc);
++    npcm8xx_load_kernel(machine, soc, &NPCM8XX_MACHINE(machine)->bootinfo);
  }
  
- static void aarch64_a53_initfn(Object *obj)
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 9c9196475bd..5e7f41a50d1 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1813,7 +1813,7 @@ void aarch64_max_tcg_initfn(Object *obj);
- void aarch64_add_pauth_properties(Object *obj);
- void aarch64_add_sve_properties(Object *obj);
- void aarch64_add_sme_properties(Object *obj);
--void aarch64_aa32_a57_init(ARMCPU *cpu, bool aa32_only);
-+void aarch64_aa32_a57_init(ARMCPU *cpu, bool aa64_enabled);
- void aarch64_host_initfn(Object *obj);
+ static void npcm8xx_set_soc_type(NPCM8xxMachineClass *nmc, const char *type)
+diff --git a/include/hw/arm/npcm8xx.h b/include/hw/arm/npcm8xx.h
+index a8377db4905..676c82150db 100644
+--- a/include/hw/arm/npcm8xx.h
++++ b/include/hw/arm/npcm8xx.h
+@@ -23,6 +23,7 @@
+ #include "hw/i2c/npcm7xx_smbus.h"
+ #include "hw/intc/arm_gic_common.h"
+ #include "hw/mem/npcm7xx_mc.h"
++#include "hw/arm/boot.h"
+ #include "hw/misc/npcm_clk.h"
+ #include "hw/misc/npcm_gcr.h"
+ #include "hw/misc/npcm7xx_mft.h"
+@@ -62,6 +63,7 @@ struct NPCM8xxMachine {
+      */
+     SplitIRQ            fan_splitter[NPCM8XX_NR_PWM_MODULES *
+                                      NPCM7XX_PWM_PER_MODULE];
++    struct arm_boot_info bootinfo;
+ };
  
- /* Return true if the gdbstub is presenting an AArch64 CPU */
+ 
+@@ -122,11 +124,15 @@ OBJECT_DECLARE_TYPE(NPCM8xxState, NPCM8xxClass, NPCM8XX)
+  * npcm8xx_load_kernel - Loads memory with everything needed to boot
+  * @machine - The machine containing the SoC to be booted.
+  * @soc - The SoC containing the CPU to be booted.
++ * @binfo - Caller owned boot info structure to be filled in.
+  *
+  * This will set up the ARM boot info structure for the specific NPCM8xx
+  * derivative and call arm_load_kernel() to set up loading of the kernel, etc.
+- * into memory, if requested by the user.
++ * into memory, if requested by the user.  The boot info is owned by the
++ * caller because arm_load_kernel() keeps a pointer to it for the lifetime
++ * of the CPUs.
+  */
+-void npcm8xx_load_kernel(MachineState *machine, NPCM8xxState *soc);
++void npcm8xx_load_kernel(MachineState *machine, NPCM8xxState *soc,
++                         struct arm_boot_info *binfo);
+ 
+ #endif /* NPCM8XX_H */
 -- 
 2.43.0
 
