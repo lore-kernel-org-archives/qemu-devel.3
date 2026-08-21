@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C154C5DF88
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 04:08:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33451C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 04:08:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxGUP-00062K-L5; Fri, 21 Aug 2026 00:04:21 -0400
+	id 1wxGV1-0006TK-OM; Fri, 21 Aug 2026 00:04:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wxGUN-00061D-P6
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 00:04:19 -0400
+ id 1wxGUc-00069Z-Ne
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 00:04:36 -0400
 Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wxGUM-0003BN-4L
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 00:04:19 -0400
+ id 1wxGUZ-0003Gb-Dh
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 00:04:34 -0400
 Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-384930ca5e2so542837a91.3
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 21:04:17 -0700 (PDT)
+ 98e67ed59e1d1-3856d6fbcb3so434424a91.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 21:04:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787285056; x=1787889856; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787285069; x=1787889869; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=zWgraQC/iHNbGM9tiX/UbYCokd7ddZcoQW3LV3tut1Y=;
- b=cwqOSzB68ZApWVC/fts6+2aN5qK0BUqa34mJoXwLrsZhWakvdTWkIvprfbssFNjdws
- Ad6FtvN93M/HMEVFDPSN9pwJKIk4ytSUOjI6fTP3LCc1rvaCp1H11liJVnVf8rJxHabw
- BzaQFYsYx+Y8c/LPnTNA93rd92BqBLGed21pYTH2VeXRzmHM2Ca1br1VPBhBswN6zcuh
- ZqbOto2YdfQy8IWS/BuVMKn6VIwRz8ShruBlxW+L/XS2c4929s3vc3Zs6XXqV+u1C1Sl
- IO4WkraOY3Qi87B69zT/SE9TyF5cB/cQ2UUrDZZmpvqTLR4fn8Y7qgdTVogqlrqsX+jI
- +13Q==
+ bh=hB/TBe/tgCga7z7P0ES69Q94cYLYvjn4re5w156s5Ek=;
+ b=ek1B8wZkF3/Y+Kg5jhSy/WN+bC9LpzaTveQ5ffiz0wYnyPixl1lzHt+e0yr+YGIVcQ
+ NrWCv8133UgCpT3B9HYWD2lxPrPbLdO/vFIrPDuBnGZ+/3bU5KSiN4k1I2/LTB1a1OKU
+ pHU8O5/sUx+962bcpMUG2x5UJEBd4fAssmnrVG4rq3Jj2/l1UGj604XCFWEUNlAFzRg5
+ WvNfYC0RkgMjTZoYTi2Cm8Hw+XM3qW85HLmBHqGmvtwsGgWHfwancviNaIEAeXQ+xSMl
+ jCgPFLEa6G7w9yaOK5HSkcRbYDdHSunpMQo2D7dTs7+/E/sDtyKUAOUEnQN4pQNPXfZn
+ 5qyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787285056; x=1787889856;
+ d=1e100.net; s=20251104; t=1787285069; x=1787889869;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=zWgraQC/iHNbGM9tiX/UbYCokd7ddZcoQW3LV3tut1Y=;
- b=gC9/0o2xL5HXDHU69ycavEMLAFsrp7lr5zoYZGtv8uNdjOU58pf2aeV302yB3JIs2Z
- sx864uBugOk3IlP//k1z7htxHOMIZx44liRKyZYFkTA9uYZO7f94IDvPYaRNxf6dQxXi
- ZYTznvV+LGguD5Ap9XBlZJHwJvWlR6SXwnhh8Hfsb2shg+oNcpfBJTc0RRTSDfq+agF3
- NMu/llJ1rgViQxlkK7jqduIrCPUIgma9/ilgraYtqGtS38g/O1Ra6uTPFdhJws1ltcNA
- yfddznuOwXkJAQqCwyzlMJ1O9iK0xo1od4u1Pg6cd16ByI69M3LMBOyg13Vv3Y7F2fqQ
- 99wA==
-X-Gm-Message-State: AFuF++k+qvnJOphhxlE0rCVK6z4QtwSTgico8N86yVad0DTWFrHI1NdR
- U3TfUs1IyxwJi7yZ1dvHEhLOktKXtL2niE6pmEaSnj/316tgJ9XfprxBVFMItUxakdctRguedFq
- 1UaEg
-X-Gm-Gg: AR+sD11ecQGe1jf7ry4y5eySwDzUXaIfrXKIIAbePrktLQ4n1Mu8SX+OqT933johz/+
- j1D3Zit3tNz7ihgRetUpW0nIVstQXMIn1ZcDUFYkS0Er70fvszWWLeWuUduE4EEKXyZ6PmumIqC
- clqh+dARg77PQyOAwCn9hwzNG6xgkM26nQXsI0gqYEDE+XnQ0zI0NUZohUasu+i8sBuQAMacDfX
- sehqfQX3rCQMHEFatCttS2FarBvzuD2sMyz55X5XDsOwEb5Agj/5IRkTsiec6DBMp5MALAG8nJe
- cWjr1hvgdZyxl4OS1JZTgQPoEaRxVYUUgvtL/aIqrpAXa7eVfN4jSelSnEdKoxeXdj6YahIOIyy
- 9PzsJMriC5sEM44esRaQq/8Fdzrc25vLqs2Dw2f2LglikKIGKYmyH4IPOn0UnEAEtnp5BrqhTPo
- 4GJ71Jt+g0Y+E5pyy/8nThHWLWL2uxLLzCzNmMmvrt8PNu9lBZQLgGVHDza+F3WnMthyk=
-X-Received: by 2002:a17:90a:da87:b0:38e:2860:253f with SMTP id
- 98e67ed59e1d1-395c3731c29mr6565696a91.12.1787285056488; 
- Thu, 20 Aug 2026 21:04:16 -0700 (PDT)
+ bh=hB/TBe/tgCga7z7P0ES69Q94cYLYvjn4re5w156s5Ek=;
+ b=UScjtX3SlxzcU72qQEBGufeQXfJ579im20mwVgfszSrquV8M49Oi8/5Vd4RyUcR4YO
+ 44rKPjD2TxcEe6/MPcCoI2wkgC64YwsYW1zHtVN+OFCVIrlkDPcr/dyDZNjunaskQKr6
+ C9ChGzhtG8Dyc/f6lnFNx6PIpYfs7uIcDcbgY9aZHUJVqIjHceS9onVi7ZgBUQfoRPZp
+ HSY1u+/jSf4hzzYn/+egz6eFa3XohCgm50rJ2d2BQ+Iv8Kb0axdT9VcE8KJ2tgx3MWv9
+ CqPqS1prCGLcY4BS7LW/SY9SE+KJ/jEFKn7G92cRob8DNq1jdHrG6QyMkQZQqvS3SS5N
+ ARRg==
+X-Gm-Message-State: AFuF++lD3sF/KABbJLuTBcC6tF+VKtbYk/7mYijMaxEQ+ScD42c78n1i
+ TEp8IW1VtUXOUHkiVq8gfJBsYCZD3t9yWlA/7QCjaUEShRi7d1YquVLyxlXUNYxkWxKr/8fCLN2
+ GEPC6
+X-Gm-Gg: AR+sD12x3z6UxnmjuKaPHVQvptaK+2teAK04yfKOCtmUIB0SAl7nuJproVmVMEGTQ1h
+ ejP+SAe/rDPBd7d+B1ckyjeIDyQyFQKBhTjAjAbPX+ZD8xQKUStirq55pksgkg62eOgx3XYKJxv
+ ZZQbAjfuIq3GHsvxC/VLF/jMpOGwV/MXKYPHDBkqk3jm2Y2tTVoZcs7Fl/ffp4BNbOfzOx9O7fc
+ fFUGKL1p5NNzX04CPc9dV/srPsfoGN+OnyflQa1SSmbzuDBKubf6D67hRcPb2QHqIuaog3RvGQq
+ xeZARQAy1Kkuq/J/k2/dPZ8gq698pJlPqEdKBud7vRM0v1z3pMUHZWEF0oX1un54LRXjmqCP7RA
+ StRKNlMZ3HzQtehp3udax6NrS7aIHUGhOK+p+MrB+Ng75WCvazCCpz60hE0jXHFJ71Jk0lqlp7N
+ nNPISp6WVzB4NEixTYWBAO/Ud1CRdrG9wO2L/nOxtcL9K9dko+MxcLvLtBn8DpJJpAX6o=
+X-Received: by 2002:a17:90a:e7c3:b0:38f:efed:5448 with SMTP id
+ 98e67ed59e1d1-395c371d53amr5567107a91.8.1787285068548; 
+ Thu, 20 Aug 2026 21:04:28 -0700 (PDT)
 Received: from stoup.. ([108.174.179.84]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c4c194d2sm1298383a91.15.2026.08.20.21.04.15
+ 98e67ed59e1d1-395c4c194d2sm1298383a91.15.2026.08.20.21.04.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 21:04:16 -0700 (PDT)
+ Thu, 20 Aug 2026 21:04:28 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org
-Subject: [PATCH v2 07/23] target/riscv: Split out vext_page_ldst_us_{host, tlb}
-Date: Thu, 20 Aug 2026 21:03:48 -0700
-Message-ID: <20260821040404.268123-8-richard.henderson@linaro.org>
+Cc: qemu-riscv@nongnu.org,
+	Joel Stanley <joel@jms.id.au>
+Subject: [PATCH v2 22/23] tests/tcg/riscv64: Vector load test
+Date: Thu, 20 Aug 2026 21:04:03 -0700
+Message-ID: <20260821040404.268123-23-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260821040404.268123-1-richard.henderson@linaro.org>
 References: <20260821040404.268123-1-richard.henderson@linaro.org>
@@ -83,7 +84,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,150 +100,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split out the tail of vext_page_ldst_us, after probing.
-Merge vext_continuous_ldst_host into vext_page_ldst_us.
+From: Joel Stanley <joel@jms.id.au>
 
+A userspace program to perform vector loads and stores that cross page
+boundaries, and check the result.
+
+Signed-off-by: Joel Stanley <joel@jms.id.au>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260820130223.2762-2-joel@jms.id.au>
 ---
- target/riscv/tcg/vector_helper.c | 101 ++++++++++++++++---------------
- 1 file changed, 51 insertions(+), 50 deletions(-)
+ tests/tcg/riscv64/Makefile.target |  13 +++
+ tests/tcg/riscv64/test-rvv-ldst.S | 131 ++++++++++++++++++++++++++++++
+ 2 files changed, 144 insertions(+)
+ create mode 100644 tests/tcg/riscv64/test-rvv-ldst.S
 
-diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-index 18840336cb..505f0331f2 100644
---- a/target/riscv/tcg/vector_helper.c
-+++ b/target/riscv/tcg/vector_helper.c
-@@ -275,33 +275,6 @@ GEN_VEXT_HOST_ST_ELEM(ste_h, uint16_t, H2, stw_le)
- GEN_VEXT_HOST_ST_ELEM(ste_w, uint32_t, H4, stl_le)
- GEN_VEXT_HOST_ST_ELEM(ste_d, uint64_t, H8, stq_le)
+diff --git a/tests/tcg/riscv64/Makefile.target b/tests/tcg/riscv64/Makefile.target
+index 4da5b9a3b3..68a5ec5255 100644
+--- a/tests/tcg/riscv64/Makefile.target
++++ b/tests/tcg/riscv64/Makefile.target
+@@ -13,6 +13,19 @@ run-test-noc: QEMU_OPTS += -cpu rv64,c=false
+ TESTS += test-aes
+ run-test-aes: QEMU_OPTS += -cpu rv64,zk=on
  
--static inline QEMU_ALWAYS_INLINE void
--vext_continuous_ldst_host(CPURISCVState *env, vext_ldst_elem_fn_host *ldst_host,
--                        void *vd, uint32_t evl, uint32_t reg_start, void *host,
--                        uint32_t esz, bool is_load)
--{
--    if (HOST_BIG_ENDIAN) {
--        for (; reg_start < evl; reg_start++, host += esz) {
--            ldst_host(vd, reg_start, host);
--        }
--    } else {
--        if (esz == 1) {
--            uint32_t byte_offset = reg_start * esz;
--            uint32_t size = (evl - reg_start) * esz;
--
--            if (is_load) {
--                memcpy(vd + byte_offset, host, size);
--            } else {
--                memcpy(host, vd + byte_offset, size);
--            }
--        } else {
--            for (; reg_start < evl; reg_start++, host += esz) {
--                ldst_host(vd, reg_start, host);
--            }
--        }
--    }
--}
--
- static void vext_set_tail_elems_1s(uint32_t vl, void *vd,
-                                    uint32_t desc, uint32_t nf,
-                                    uint32_t esz, uint32_t max_elems)
-@@ -411,6 +384,52 @@ GEN_VEXT_ST_STRIDE(vsse64_v, int64_t, ste_d_tlb)
-  */
- 
- /* unmasked unit-stride load and store operation */
-+static inline QEMU_ALWAYS_INLINE void
-+vext_page_ldst_us_host(void *vd, void *host, uint32_t i, uint32_t evl,
-+                       uint32_t nf, uint32_t log2_esz, uint32_t max_elems,
-+                       vext_ldst_elem_fn_host *ldst_host, bool is_load)
-+{
-+    uint32_t esz = 1 << log2_esz;
++# Vector load test
++TESTS += test-rvv-ldst
++test-rvv-ldst: CFLAGS += -march=rv64gcv
++test-rvv-ldst: LDFLAGS = -nostdlib -static
++run-test-rvv-ldst: QEMU_OPTS += -cpu max
 +
-+    if (nf == 1) {
-+        if (!HOST_BIG_ENDIAN && esz == 1) {
-+            size_t size = evl - i;
-+            if (is_load) {
-+                memcpy(vd + i, host, size);
-+            } else {
-+                memcpy(host, vd + i, size);
-+            }
-+        } else {
-+            do {
-+                ldst_host(vd, i, host);
-+                host += esz;
-+            } while (++i < evl);
-+        }
-+    } else {
-+        uint32_t msize = nf << log2_esz;
-+        do {
-+            vext_ldst_nf_host(vd, host, i, nf, esz, max_elems, ldst_host);
-+            host += msize;
-+        } while (++i < evl);
-+    }
-+}
++# Re-run the vector tests at each supported VLEN
++TEST_RVV_VLENS = 128 256 512 1024
++EXTRA_RUNS += $(patsubst %,run-test-rvv-ldst-vlen%,$(TEST_RVV_VLENS))
++run-test-rvv-ldst-vlen%: test-rvv-ldst
++	$(call run-test, $@, env QEMU=$(QEMU) $(QEMU) $(QEMU_OPTS) -cpu max$(COMMA)vlen=$* $<, \
++		test-rvv-ldst with vlen=$*)
 +
-+static inline QEMU_ALWAYS_INLINE void
-+vext_page_ldst_us_tlb(CPURISCVState *env, void *vd, target_ulong addr,
-+                      uint32_t i, uint32_t evl, uint32_t nf,
-+                      uint32_t log2_esz, uint32_t max_elems,
-+                      vext_ldst_elem_fn_tlb *ldst_tlb,
-+                      int mmu_index, uintptr_t ra)
-+{
-+    uint32_t esz = 1 << log2_esz;
-+    uint32_t msize = nf << log2_esz;
-+    do {
-+        vext_ldst_nf_tlb(env, vd, addr, i, nf, esz, max_elems, ldst_tlb, ra);
-+        addr += msize;
-+        env->vstart = ++i;
-+    } while (i < evl);
-+}
+ # Test for fcvtmod
+ TESTS += test-fcvtmod
+ test-fcvtmod: CFLAGS += -march=rv64imafdc
+diff --git a/tests/tcg/riscv64/test-rvv-ldst.S b/tests/tcg/riscv64/test-rvv-ldst.S
+new file mode 100644
+index 0000000000..939b3f038b
+--- /dev/null
++++ b/tests/tcg/riscv64/test-rvv-ldst.S
+@@ -0,0 +1,131 @@
++/*
++ * RISC-V vector load/store page crossing test
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
- static inline QEMU_ALWAYS_INLINE void
- vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
-                   uint32_t elems, uint32_t nf, uint32_t max_elems,
-@@ -420,39 +439,21 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
- {
-     void *host;
-     int flags;
--    uint32_t esz = 1 << log2_esz;
-     uint32_t size = (elems * nf) << log2_esz;
--    uint32_t msize = nf * esz;
--    uint32_t evl = env->vstart + elems;
-+    uint32_t i = env->vstart;
-     MMUAccessType access_type = is_load ? MMU_DATA_LOAD : MMU_DATA_STORE;
- 
--    /*
--     * Maximum vector length is VLMAX == 2^16 == LMUL * VL / SEW, and
--     * occurs for LMUL == 8, SEW == 8, VL == 2^16.
--     */
--    g_assert(env->vstart < UINT16_MAX && UINT16_MAX - env->vstart >= elems);
--
-     /* Check page permission/pmp/watchpoint/etc. */
-     probe_pages(env, addr, size, ra, access_type, mmu_index, &host, &flags,
-                 true);
- 
-     if (flags == 0) {
--        if (nf == 1) {
--            vext_continuous_ldst_host(env, ldst_host, vd, evl, env->vstart,
--                                      host, esz, is_load);
--        } else {
--            for (uint32_t i = env->vstart; i < evl; ++i) {
--                vext_ldst_nf_host(vd, host, i, nf, esz, max_elems, ldst_host);
--                host += msize;
--            }
--        }
-+        vext_page_ldst_us_host(vd, host, i, i + elems, nf, log2_esz,
-+                               max_elems, ldst_host, is_load);
-         env->vstart += elems;
-     } else {
--        for (uint32_t i = env->vstart; i < evl; env->vstart = ++i) {
--            vext_ldst_nf_tlb(env, vd, addr, i, nf, esz,
--                             max_elems, ldst_tlb, ra);
--            addr += msize;
--        }
-+        vext_page_ldst_us_tlb(env, vd, addr, i, i + elems, nf, log2_esz,
-+                              max_elems, ldst_tlb, mmu_index, ra);
-     }
- }
- 
++    .section .rodata
++    // Page aligned so the within-page cases never cross a boundary
++    .set MAX_PAGE_SIZE, 65536
++    .balign MAX_PAGE_SIZE
++src_data:
++    .byte 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17
++    .byte 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F
++    .set NUM_BYTES, . - src_data
++
++    .balign MAX_PAGE_SIZE
++pageA_start:
++    // Fill the page, stopping 8 bytes short of the boundary
++    .fill MAX_PAGE_SIZE - 8, 1, 0xfa
++src_cross_data:
++    .byte 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27
++pageB_start:
++    .byte 0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F
++    .set NUM_CROSS_BYTES, . - src_cross_data
++
++    .section .bss
++    .balign MAX_PAGE_SIZE
++dst_data:
++    .space 16
++
++    .balign MAX_PAGE_SIZE
++    .space (MAX_PAGE_SIZE - 8)
++dst_cross_data:
++    .space 16
++
++.option norelax
++.option norvc
++
++    .text
++    .globl _start
++_start:
++    // Case 1: Load/store within a page. t3 is the exit code on failure
++    li      t3, 1
++    la      a0, src_data
++    li      a1, NUM_BYTES
++
++    // SEW=8, LMUL=1
++    vsetvli t0, a1, e8, m1, ta, ma
++
++    // Check the load will cover 16 bytes
++    bne     t0, a1, fail
++
++    // perform load
++    vle8.v  v1, (a0)
++
++    // Store vector content in memory
++    la      a2, dst_data
++    vse8.v  v1, (a2)
++
++    // Compare first half
++    ld      t1, 0(a0)
++    ld      t2, 0(a2)
++    bne     t1, t2, fail
++
++    // Compare second half
++    ld      t1, 8(a0)
++    ld      t2, 8(a2)
++    bne     t1, t2, fail
++
++    // Case 2: Load straddles a page boundary
++    li      t3, 2
++    la      a0, src_cross_data
++    li      a1, NUM_CROSS_BYTES
++
++    // SEW=8, LMUL=1
++    vsetvli t0, a1, e8, m1, ta, ma
++    bne     t0, a1, fail
++
++    // perform load
++    vle8.v  v1, (a0)
++
++    // Store vector content in memory
++    la      a2, dst_data
++    vse8.v  v1, (a2)
++
++    // Compare first half
++    ld      t1, 0(a0)
++    ld      t2, 0(a2)
++    bne     t1, t2, fail
++
++    // Compare second half
++    ld      t1, 8(a0)
++    ld      t2, 8(a2)
++    bne     t1, t2, fail
++
++    // Case 3: Store straddles a page boundary
++    li      t3, 3
++    la      a0, src_data
++    li      a1, NUM_BYTES
++
++    // SEW=8, LMUL=1
++    vsetvli t0, a1, e8, m1, ta, ma
++    bne     t0, a1, fail
++
++    // perform load
++    vle8.v  v1, (a0)
++
++    // Store vector content in memory
++    la      a2, dst_cross_data
++    vse8.v  v1, (a2)
++
++    // Compare first half
++    ld      t1, 0(a0)
++    ld      t2, 0(a2)
++    bne     t1, t2, fail
++
++    // Compare second half
++    ld      t1, 8(a0)
++    ld      t2, 8(a2)
++    bne     t1, t2, fail
++
++pass:
++    li      a0, 0
++    j       exit
++
++fail:
++    mv      a0, t3
++
++exit:
++    li      a7, 93        // sys_exit
++    ecall
 -- 
 2.43.0
 
