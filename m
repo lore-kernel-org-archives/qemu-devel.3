@@ -4,160 +4,171 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19905C5DF87
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:18:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60361C5DF87
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:18:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxNEc-0006jQ-Oz; Fri, 21 Aug 2026 07:16:30 -0400
+	id 1wxNEk-0006lm-8O; Fri, 21 Aug 2026 07:16:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wxNEa-0006iK-PJ; Fri, 21 Aug 2026 07:16:28 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ id 1wxNEi-0006ky-Dx; Fri, 21 Aug 2026 07:16:36 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wxNEY-0002Dy-Ur; Fri, 21 Aug 2026 07:16:28 -0400
-Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67L9PQ8E1872098; Fri, 21 Aug 2026 04:16:15 -0700
+ id 1wxNEg-0002FE-PY; Fri, 21 Aug 2026 07:16:36 -0400
+Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67L9Mll21901672; Fri, 21 Aug 2026 04:16:24 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=QKFl5ha0SmKTt8JpgZvNaEhuRK609N0Nu90aJcCTs
- Mo=; b=uZHoJbt25WBXxsyKSJWyRaEO0iZP3nLOrOc6FdlCfBmjR6K8gsCbAldaU
- LBpzMDb7zYDXW+lgjvF8xB17HxnDq635lN4E9JV+7/zmcu4OeWaoj4dY0wzJixCr
- Fun0BCaTmLiKPeYSDJ16qpWXzHFKJ44wcFrEkcmI+17FGf2ktFIuuZpzmQOysccT
- q22aqozSYnWhCL1gQsa3qCJwZWuEdWwCG6rF+XmxpLskR7tGXVHJAFgUtPrCjTPS
- k9FZhiP1Dg4PZPVY8TPa4ztPSe83J1m8huwZEWYF+632Yya9nyA6HA+aQJB/6DmW
- f/LodltTPRwhD9/hPYXKlp85yM8nA==
-Received: from byapr05cu005.outbound.protection.outlook.com
- (mail-westusazon11020137.outbound.protection.outlook.com [52.101.85.137])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4g6aw696he-1
+ proofpoint20171006; bh=MN4Y1rdrBTrVK9KqX/e3vX+Q592g6DomBOdi7xye5
+ +E=; b=a8kTu4YDLXpolno/0N8/G6SL5hDRb30mGCQpz3dshB/iConeUe/sm3dg8
+ aLGS7owa4AprfbNUJB9earrafV1MKo80cPUvQvXKVAlHuXUm0RcXBc5J31D7STjv
+ K2dzzpfa8YjTMQ050H8EFsviOr/gAc421aPqaEBUwsTXQ869shRNnLyrvaV4rB0q
+ uoj0f65D8BO9PPmm3lWQGILs7iTrnKJI0k5xWQJb/jbKflnHW6jZDFBl277z+1qD
+ ivkhx36QI/MseRoaBR6FutMA3g0WSElRlEM9DiK/fAMib+LV+0SiIt+XvJZzRnyG
+ e5swJyvHP0lxFzYK442MpbRiAMixA==
+Received: from ph0pr06cu001.outbound.protection.outlook.com
+ (mail-westus3azon11021130.outbound.protection.outlook.com [40.107.208.130])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4g6cm1s0ts-1
  (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 21 Aug 2026 04:16:15 -0700 (PDT)
+ Fri, 21 Aug 2026 04:16:24 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gkNniLDmknvGTitJ7/RJQQxdUV8NQRJcx7LDzGbe2iX4jPpsy0TTNpBtAbbL52Aoy/pRIUruJCbPIDxUFINMouHqw3U+vP42lIUU/IS0y8qY7Q/tUxfkvyvzaITv9PEHb5EvG+MK1QpiKWjnRBpHWBf3rzMzVCIvJxiFvtllYkliSB/JR5BUeI2+rK2GaZ85rEyryrLNGxFOT4B5qa12TMaJem4ymnHWJHdu1U+0OHo7uF6bPLDXyBTxkc0S7OZqu9OCXz+cDX7hPNqF3h0tvkqlcEWoOO0LAx9/GaHFFAK4ZfKlxU6CyfVCova5s6SEHik5bWKi08vZLV7NvzxuUg==
+ b=CWJPlFfqVJ8zOcn/l/DtrV+NAdaVjyyB7bJlePOcZn/dL6tdK+80cIHmx4iwB7Ysd5zkVAjT3OLWFqcvBjxpTFKL6PxXYVaVy2/+X4bVz3QSCg1C1SYzEUmmB4SjQCL0IFiRDPCDdMjksa09vFrpAlYuko8j50ShcjC9kmZmOEfIchyeag7D6XJLx/jAzbbYGMUlBpqbq20W9QIuvHROEA5zoVrxgYSdZvAfkjJRTlPH5etFMqaju2T8nw9K36YJWf+NzfNHqFvQPNW8i3fEA7Q6i9aB5arbCh4eAiwSXCICx92afnSjqtpLpQmMJ3V0eGaH2TEqN5xZwrtt7QahWw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QKFl5ha0SmKTt8JpgZvNaEhuRK609N0Nu90aJcCTsMo=;
- b=H0z0LjVnkf5rUdKwZYYqaA4H92G5TItjP9Kj5X5tAXh/uQT8scLXA1ttyng6Jt0qj2pLo1sFDVp5WekmG8swgma7NwN7NJN7uc7PFRCuaS0hSWK+aSiH0xOhiHbYgmK3QRYl+25sj3qxEWOnCQX0sBppnNK4hRm1c4CDh5C+0OcZjp066wLp1GxwxPso1dSkkxyteIq3Kcheqjqwc7pN3DH05qo8l0SoUCW4KNYO6TI3jJyEx4o7FiE8ZX4GAw94P6dHfTTj3N56IUqveHYleXWrxPCAaZ/VWZV7K4ptQh/oCBu8pFyy9ttJZ1xm7dkwLAFHxSWGrDmxILpPEeCOHQ==
+ bh=MN4Y1rdrBTrVK9KqX/e3vX+Q592g6DomBOdi7xye5+E=;
+ b=Lf+47i6doTbCSGciCyaZQPCRN8e38qbLmev9JMbCPuz4gTmofniuHYc/hbP/nQanTCBH/vkKcD7wgTqNCr9SA3MJwUfv4I/ulnNCYWLtepZFAgFGA2mwP7v6lD+3L0va+LrZJl6m0AON7dFFoj+KZ+NWKkNIhtWU6dLtJr72PI/BL17HIo8zf8ISZXdAXYkLawpYHprS7c2GZevyqNh0/zcKvsTj6jX7LTeV3AFrei+wSoZxFGs+PfzGRa0+7Y+1NKgyHgKBxVINihEBdoRHBRRwZR8rdj7V4AnYSYrLMJKgFcvGML47kuyYqt6z5h21ysfRQDU1hpNBWdwMVplG1g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QKFl5ha0SmKTt8JpgZvNaEhuRK609N0Nu90aJcCTsMo=;
- b=YK7Ek8+QO3Knre1Y+kTRJHOI3I+CeILWlmu/+SQ0zIfGplLlOaj5v07igmVtsMxMnA0/sCpZRMNMIMNG3w1udWkzLT461EeE+JYOt8pPQVEmSM1mN9FVfwhU9HfAwMQyLQckrQ42GTp1nJ4mI7yi29U9tfY/DReIGqY/pV/b2X9Eg6rzI85XMt13X1yH04OMix+orvEJKWYBAsBY95GFADaQOJ7xb+/4eaSECKLrvDUaJDVOsll87vgRJQC0Na0JjwUVkuJazKF0G8yTVRGyLnoYS446rQpVO9R40UXxlzPtNqSI1zms9V2LFSDKkSjsd1QSfkJgKKxOVNMo/6XvNg==
+ bh=MN4Y1rdrBTrVK9KqX/e3vX+Q592g6DomBOdi7xye5+E=;
+ b=Rl+q7smhH9MvlTr1xAvAa0e3wPAg/wVY12vhE92fPDigw+ezzQaDOwgF32F7elygAWIUKfFm+UXMXwwh9Jzp1OhFoU4PCggVz60UiC9REJghkL1sipBA2Kw5zkth2DuJTwCbP4IXtaF7R5+YovEFBOmC3c35DWekEkrqLNnKtPRCG+2mg+3ZcAAMNGpIw0j7uTQvc/Y/GGSZ4L0T7iFysDyIW4Jrs3UVWWQka67jDo2u1RpawuigN9yy2uCVZsVw7pUDhfNyLjydJFxRtGMeebAuI8eY+8H/Qko3XXStdXefCHebjcGIDsn1l+HQp9aUeA+py6q87qdr+MWFedU1BQ==
 Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
  by CY8PR02MB9524.namprd02.prod.outlook.com (2603:10b6:930:6c::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.11; Fri, 21 Aug
- 2026 11:16:14 +0000
+ 2026 11:16:21 +0000
 Received: from PH0PR02MB7159.namprd02.prod.outlook.com
  ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
  ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0339.010; Fri, 21 Aug 2026
- 11:16:14 +0000
+ 11:16:20 +0000
 From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 To: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com, philmd@mailo.com,
  aurelien@aurel32.net, peter.maydell@linaro.org,
  richard.henderson@linaro.org, berrange@redhat.com,
  marcandre.lureau@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Subject: [PATCH v4 06/16] hw/isa/lpc_ich9.c: convert ich9_lpc_initfn() object
- props to class props
-Date: Fri, 21 Aug 2026 12:14:18 +0100
-Message-ID: <20260821111550.276011-7-mark.caveayland@nutanix.com>
+Subject: [PATCH v4 08/16] qom/object.c: add
+ object_class_property_add_uint32_ptr()
+Date: Fri, 21 Aug 2026 12:14:20 +0100
+Message-ID: <20260821111550.276011-9-mark.caveayland@nutanix.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260821111550.276011-1-mark.caveayland@nutanix.com>
 References: <20260821111550.276011-1-mark.caveayland@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SN7PR04CA0167.namprd04.prod.outlook.com
- (2603:10b6:806:125::22) To PH0PR02MB7159.namprd02.prod.outlook.com
+X-ClientProxiedBy: SA9PR11CA0027.namprd11.prod.outlook.com
+ (2603:10b6:806:6e::32) To PH0PR02MB7159.namprd02.prod.outlook.com
  (2603:10b6:510:16::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|CY8PR02MB9524:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9c624a8a-79a5-4e01-7d0a-08deff759ca9
+X-MS-Office365-Filtering-Correlation-Id: f442cce7-cb00-4d9b-4b80-08deff75a060
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|7416014|376014|366016|1800799024|23010399003|56012099006|18002099003|10067099003|22082099003|921020;
-X-Microsoft-Antispam-Message-Info: 2/4hEwhQJgS7p2phBYY7PJki0VcWt+uMdypNpPb2CQkvu77UeJv40eBg90tpUrdn/Q+/h3Bn7C6/rYxQS0phHLGarXQ44+lo8s8ABh5sZkqkWhJ8Np7PoFfxkYsRLxyUNJymhlMNNr43jZj4T0o64I0iCOVTqOuzDRP2uWvsyB/QAko+fdUmMszt+IfhRvDDNi+1U+cp5QlZmga+eaTKQAMQKVvDKGZ2IinrgbkwTXY84QN6wUUrw8hWW3lHXrU+ZDBsvwACoAPFUfZzCjz84C+aFm5ArRBg3sFcsdlB5cmeJ1uqvGj2H2o5CVSFIme7ITidw6shxNWWCT/JtH4z1rIcjajkSfKjOYCZ14524yg5KyGaVAJyct8/09zi3kLw2uBHlaqSWakJRMckcnKJlBPEugXb+J+pCfkWfXZnIbQizsajHxa7VFaKenLlY2tgbBSSVPmM8ZvtLghTnD7bk8bNhV0N4Gpv33+jYJfuSYMlaaS9Qj5T+sKpRFhWAaMhcUvOj6r4VcpLqO3hJjsx8ncmdnegqeTqsIoYe/sgte2C3uZ0upCxLFpglTXqbGpemGd5SBQaMBjnFfYR/M0GCa29tWylnxk8eEIgxEiYhu9Wh+oK+EULr3smPVze29nQYmXRoz8pAYeafK6cK9Ar3yEeLAEARPbUFTqgkxajZHHsD+5I403ihfJCeN6siauVCv77DN81Rfk+OHj21ZjtdA==
+X-Microsoft-Antispam-Message-Info: XNe2HqnNRK4+KJ+bnJ2jWL/CvFJhdWsvxtj0LYfVHkiXNbC8cCCR3lOx9RCfRzQwhV7cJiQAKfkFeIvoBCKuYzywUtqBKrOY+QyoskuUHaUv4fYE7BD/ssI77gfU/cJFxHmSuzrnTh5ppsNVgr6NiJg6IFhFK1tBx68t7rfB7GVo0bYiBJWoCCtWmoQLTNVprz3OBdg22JvPKHtnLCH/JmYFSRFHD3YCtvogO3QF3bC99sCDthSHlf7JEmu+vJ/USIMvBP1E6gG/9uCTC2AEg2UWt5bm+as99iX4IqWD0KD15CrGXqPPTrheo0t+pYTAwbx5bU7Jf52EiQhMQf4xo7UfEPsSVItkBgeVfHeceKZt+RM/9p+lh3vlQDNx4PXvKHY6NtsSITmT45G08CZyI2o5rLpNcy1geVS08bkPN1+4G8hq+cPM0ANRBT4h9G6QyBrUw0xO6GTosGfGJDV1Q7HYkhWugTrmO8kNNt/QLKa9I2pXRtEl6nctUPHLNGGFJEg+qxkeQfYMKh+fNHaqLSg49q0weJKuJdhfUjEsbNKjp42lL26dvZ5VPV3bPGqzEhIODQoFiKbe6PAcXYV+PMFLrvS9hEoPa3cfUGEztVI/Rel+0ECmd3qRXKZUBuUdsoV2zevupI0H3hgxHZZt1QiyNtJaTUwi9t6jxxVeWlByZA+eZ2MfDPH0UJ9Mr3shqWltTk8+0vl92j4bdcbd5g==
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(7416014)(376014)(366016)(1800799024)(23010399003)(56012099006)(18002099003)(10067099003)(22082099003)(921020);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?dNF8yX+26W/FFOqlPzI6wbA4J+lesk75x6cb4rWZ4Uz22CMM0kNn9if72jIF?=
- =?us-ascii?Q?bBOwB09Htl20TsJh5BTk+kybMWqTm4Rt19TvwtEqL9iqu0T1Z7OQ+U97OC62?=
- =?us-ascii?Q?J3GTsPdSJmkcC1Q7TGrFZoNVnupZcAwkhQhjIkQVQja/cNhtrbXTrhicYZSB?=
- =?us-ascii?Q?+t2N/35xDG3uRSZFzTZAuFig3bU8u0wanHGvCZ0TOQeRP44d++J+x5zxYgBA?=
- =?us-ascii?Q?I9w13TogBcWOw6EER1qK3eJ3KJX+0JhyycFr0+whhFp5dsUZayD4LrleybzI?=
- =?us-ascii?Q?ES8a8VTjfaDCSFhAT1cz0kC1XXGO/ygW6fEFq4gZLkN7m2HX6VHrkXWQ5otf?=
- =?us-ascii?Q?USrWC6/uytQtfbqh9eKsWciD24eoGBMHBxV/qmZGYQxmlFXS7NRj5llQeK77?=
- =?us-ascii?Q?O+Fk7jrTLkm7KFzJ+sw0Fo0KN3YfbHNDrZ+S/SqH2xriVa8cr+APR3oY6+/n?=
- =?us-ascii?Q?3NkzqhWx3nHe2sFGP+XciULCY8g8T5P9eo1JLaHj1pr9XSV3F6CE6t0LW7Z8?=
- =?us-ascii?Q?NQLA1cOvYSUCcQBg5rS2Luaq9fGW542Hr8sbMbya4xmNPGEgP95wQFDbQA/x?=
- =?us-ascii?Q?Oh8ks5H/7Zv9twGl6Smch0G+C/omGc1TohDoxm33ENGrdZ3/H/NXbAx89uDl?=
- =?us-ascii?Q?njkDpCtwqoxrj0mNQegGO4pO2Ss39C5rX+76gMFNa5c/5D9D8yMJn1rHkmqb?=
- =?us-ascii?Q?Fd/9RtqbKL/8WySWR/zU+wCKgUyEjU7cNixNG1x7IklHzo9uN5m0iHW4vzmm?=
- =?us-ascii?Q?WM4b1JTp6DZ+s3VoJpo8lL7L173nYoT8HxSDBzGukmG72fK3DPFyEv9z7JOJ?=
- =?us-ascii?Q?H3PuvtDotfEBWf7IIcWfoiDrNmWF3yCNMD7Zrk4pa1iQFZAfExNJGEhznHdt?=
- =?us-ascii?Q?TqYu9CVAJuVv0WcwGqou/JgUcOCvXczlZcmmRpDqZsYJYZ8aJjZT+k5f5oXm?=
- =?us-ascii?Q?fmZbptzgFL9RL6wKJSm5vBOFCSbB3qX5FZIB1/L0gwp3hg6nyFnnkVVyrgVP?=
- =?us-ascii?Q?ifM6frZNAUWQtnoW167ccrm1gI2XWHgkUiz+h2yMLGL0HGYjdrE6vWjtXgcG?=
- =?us-ascii?Q?yoLrLsqDTYYtI9Vd5dQcoJOzYhVWWeRXpjixZE4nufkAeFtKOwEHH3LBEdqw?=
- =?us-ascii?Q?K8jm4whHA9a2v63MCD9wr2H8x+sceJYWXJDUolyK/Gz1bLl/FCR2oQgmfbqU?=
- =?us-ascii?Q?l530tk+U4V6jHRzk+nfCq+M/l3nJnvsyrgnpdpBPZi1X2whn+qN2fLUe4M3n?=
- =?us-ascii?Q?rlQWLfxxfSbsczj870rMISfmglfqXGBS9uuomoQD1SAmGk/t25bwr+Hz4M8D?=
- =?us-ascii?Q?Q9Paq5Ihf9k6MNoSGYnSswp1E5owtHVG4KrKmLyTzWkwvEwhUPbepYEtS3HI?=
- =?us-ascii?Q?4UoGkhFp3WYliTwnv4FbjhY922BSsKatL3vmQWndTxlOaaiTwDzu5CJOTaZp?=
- =?us-ascii?Q?o37OxbL31knytQF/E9S611NJnpdvpENSxnRuy3IuRE78q4G7PmPHLrZ8AYIS?=
- =?us-ascii?Q?2xZ1MIMJ0L+XuNK47B89Y+CuSE0UEZmKm9OSdYFhVPZ2fvxWk4gmW2LkoOw+?=
- =?us-ascii?Q?MqDDHRNTIpvuOL3tn+Z9o5BXE0qU5zkJm4JHiUQUs0hUsHD2uYZPisvnHz6J?=
- =?us-ascii?Q?5W8eJiEd+CiH//5wr+b6LaP3OnkMw2gCM3r2aCsbTK2NRTt4gEC4w8hC6FY3?=
- =?us-ascii?Q?60xDln6NZ5bM3WlgFf/i+OIV4J1VhF6eWOpX01wu3Zfm0GfmEPMadd0ja8ej?=
- =?us-ascii?Q?C+KBl9INT+SmOmXMT2PIs/7ZkNis7Ls=3D?=
-X-Exchange-RoutingPolicyChecked: WcpzokCsBYGmgXkvu9yG3MTmf0cshXIQV5IEJjHm3kOs9xEGuPC+4shMQ7IDxWK96Cict4jlSmsK7whtTUjn5KddkKe3kISTOedFA0LiTTLoqgMOqZQBnmBC8bTSNhGwUCgC2uSY1byXjMK8xc4McJESXl+QWFQ2A10May+r5pBVErlsdgx9bWqfPsUGTKhiVS4w87IZADrmV3H48eQpQlr0nBg3p0ELqxLqos2VJvzlqvdxIy7l/HUyjar6mEUoLvQLNRp2RpEgbnU/KMNC9zbPkeNJFngwTMY7HPauWi0c7FIiMVH7ZaGPBG1US+KV7bLRMjvKeQ1kMmYJqxaWKw==
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?S0VSRG1XU3ZqbGkvOFZGSEhWcVpBM1pxaU5SREZmZXMyT1UwanU1S0V5a1Rq?=
+ =?utf-8?B?U2I2N2VHaWovTWVMSHE0Y012aXFGbDlVSFlqeWlyb2pZaDVTcHFxK2hhR0Fu?=
+ =?utf-8?B?bFM0YlJ4b0gvdmNJNjQyZHB0U2hwQkx4NlpxNWtZR1J4cFZVeFdqUld1cmRi?=
+ =?utf-8?B?OXI3dnRkbDNvZlFRdlZMemY3aTY1TUR4WUZoSG02STZWNzlxekVScmZUcFlN?=
+ =?utf-8?B?eWU5bEY3VThEOElqcTk0WXR2NWlyM2dDbkRaN1MrVFZncmlaUkdCOFFvWlFj?=
+ =?utf-8?B?YlMwYW9VNVhHN1BUb3c4QWNhVXVGWTBKVVpBMHFGVkFja2h4WnFiYVZKM3Ru?=
+ =?utf-8?B?L3ZUQkZ2UzFmdkkzK3Y2NmhZMm4vWXUwNCtIZmdCWVFWaXdSYlNSTkpma0hZ?=
+ =?utf-8?B?MG8wSzJCV2RtUUNiK3dYNlA0ckxTZUs4WmxTMHI4R3pzc2VCSTlrVWltZEJm?=
+ =?utf-8?B?Nk00RlB6MjhDNWovSnpaSHNKaWdhSlJyeW12cEZvR0t3OElvbHlmcUdaaFVR?=
+ =?utf-8?B?UDlSZ1BNSUxkV1V2cFJYajA4STdjSkRwcXBwRUh3bDZtSlhUaEFUUCtuNUVX?=
+ =?utf-8?B?Tk9GWUpvQzA5V3FvQjY4RzMraXpJQ1hnNEkrM3NTZjhhcVVYVFFWbnJFUlhK?=
+ =?utf-8?B?ZGhRT0FlMGtObDgrUjM5eVhzSHBuNVBLcHp3a1FJZkZtL2wwRzU5Nk43Njdp?=
+ =?utf-8?B?eVNQN1BERHRZMWZZM0RzZkUxb3hzOW9zY2VpMEN5NGlFTFhYakM2K284NVZy?=
+ =?utf-8?B?MXRQaVVuVWNLTEhwODh2NXdEMHhPZ1RFaElyS1dIQlVCNzdMSWFIYmxheTYx?=
+ =?utf-8?B?Yk5CMUUxV2c5NER2d1NNQ3hoa3NDL0kwbStGRU5YMHZHaWlBOVNBQVpwMGVj?=
+ =?utf-8?B?TzZ6MHdwemFTekFFWmo2SXNkNnBoWkRTYVVpOUttSzhhM1d2eVJLbG43czJ0?=
+ =?utf-8?B?WkZPQldzSU1mbWY4TkREUUZMRWpPeVd0dWQzZ3QwaG1JVldlRElzU3NlSU9l?=
+ =?utf-8?B?NFZkVWtqZHVjcWMyKy9mbTZvWXlXcGordDlpNHRSdGtFTkJ2UmFzTU93K3c5?=
+ =?utf-8?B?OXBDUi9IQWF0OXNmVDhGUG40bmFsNjBiY2VlQWFJbUt4bzlydnJKR0huRnJy?=
+ =?utf-8?B?Mkh5Z1EwUGxCa2FtK2tYQzNDVzRST2c2V1F3THRyZGFweGE5OUd0UTR3SmIx?=
+ =?utf-8?B?NUl3aUZWNjg2RXREQ2tQekZQQW1ZVjBTeFp2cWprRWU2ZDdRMEl0SmpPNFVa?=
+ =?utf-8?B?YnBPcExsditBSUo3bVJEU1gyNEpkQzFGejB4bnlVNkJUV3Z2dVRWNkxvdFBy?=
+ =?utf-8?B?TzRlZTNIb3kzM1FPU0N2azJvbUhpdFRpQis4Mzd5VmhXMzlIeUJLRjZUSHV0?=
+ =?utf-8?B?NjhFeWpwajZ0Z3o2aWc3Sm1rU3MzMnRab1hHQndqMzdHWjBVcmhYOTdpbC9i?=
+ =?utf-8?B?UzIvZXlVL2QrMDJsam9zdXdIaVlMMU82RDQ5dWpGZHJrZUt0M21TN0NCcUhE?=
+ =?utf-8?B?ZEVYaElWYm4yRE5QLzJpQjkyaElMYkwvd3pCKzVuZ1lXcE92UHpiMDBDZ1JU?=
+ =?utf-8?B?MHM0SzcrQSs3TmFmdUx0SkhxTityQS9CRGExY2ppRktpTDVDZUJWZXMwUXlo?=
+ =?utf-8?B?TmJObzBVdUQwVEtodGYxd2RQejhtbDMxQ1pzckJpY3M4ZzQ0ajQzZWFTYVZp?=
+ =?utf-8?B?OXI3Nmh6S1poRm5tMlFuSDlzQU1tdWpCMFI2VXYySEUvMlkvVmloNGJ6YUhH?=
+ =?utf-8?B?cWo0NWh6L0RYZWJKbTdueG54QmxXaVJmclZlVm5GY1o2Yy9IaCs1TVNWR1ox?=
+ =?utf-8?B?L05NQ2ZDZythZW1rTlE0cURTOWdyNmFxaDZ1U2Q2cnIzRWRVVldlV1FkQ2RE?=
+ =?utf-8?B?TnJYaGRFeVlQWERjRXRKNmNHTktUN3FVMm1RNnJ0aG0vMHJkOEU2SjZIcXhZ?=
+ =?utf-8?B?OGhaSkphZXpoTzZENmpFdzY5YnFWNDZuV05xck1aZ29wdVhzc2t0SzVLZW9L?=
+ =?utf-8?B?aElVaFRQWVpEVlVNWEVDUitHNnJuNU1HN0pvdG41SXUzREE1ZnFsS2tsNFB4?=
+ =?utf-8?B?aHhsTnZQUmkydVZnaDFoQjA3cXcrY2w4akF2eTg0UUZkMnV2RkhDVUhpbWxl?=
+ =?utf-8?B?NmpacTB6YThFTlI0Ym45ZFNxWW96V2gvdzFzSVcxUURXN1lxUXZmaXJEQloz?=
+ =?utf-8?B?dzJsTmlDb09sV0lLTHloYm9hbmdscUFDU2pMelkwTWdMV3lpUzRsWFFKbFB6?=
+ =?utf-8?B?NG5zN3BkOWtNVUtNREJwb2NsZ0ZNQzNSSzE4TFZscWs2eGhydFNKT3NzZW4w?=
+ =?utf-8?B?cEt0aTloV0ZsWjNzMkkyY2o3YjRmVU9rZ1h4aEoyc3Q5Sk5ta3BjcVZKWVE3?=
+ =?utf-8?Q?QH9ZpA5PRF6vvnp8=3D?=
+X-Exchange-RoutingPolicyChecked: CCrkDnzHOBcGd6JsHs6mSZgFInzgvoA/joLCWojAHsQMNdMqa7mN0TwyWP7oNRze/c6Tc/cjJRePv7Mq2VD7cJuB1arkMcK0TCVBDOiE8ZqIZ9FWYim0XPw1z4lGX3BHuZG80f8leWyeLYt9V5pfeGtFhMY9S9/gmUkMaz2aZ6mR/BTHl4yff3DAA8JFc8UBtKcAppwcowdpMJI2PBqWYtCDojwUszVZDGvEq3AiwiSo+PjtQ5NxHzybDJUaWYO2h+RyJvoVjt3OfG946NxpNlk3KTAYUujsZbW5r9VCxQ90X9XHfCbc/my4TsFJ4J+Eehjf3lhyQfGBs5ttnRG8gQ==
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9c624a8a-79a5-4e01-7d0a-08deff759ca9
+X-MS-Exchange-CrossTenant-Network-Message-Id: f442cce7-cb00-4d9b-4b80-08deff75a060
 X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Aug 2026 11:16:13.9540 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Aug 2026 11:16:20.1761 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 19Yk4zOA25zC7LPkcb5fh446RlNPpPkyZyBDslm+4YzTL6fsEqtu0kt4Gjegl2FHvRHnD9mMOJXoUxhYuaM+NucCu6fTO08iJflwlUTlAuQ=
+X-MS-Exchange-CrossTenant-UserPrincipalName: RJ45GEP0GDhXNAdDwInLH82fVJUhI6R7GpaX7ANIHVgpj3aXrobUtt6kD7JHOu8tqjjoaMv1BHBF3BA3YvE/9AN0DgqDTW0B/u/xMLaBMrY=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR02MB9524
-X-Authority-Analysis: v=2.4 cv=PdDPQChd c=1 sm=1 tr=0 ts=6a88337f cx=c_pps
- a=1umFaVqrme/hcr+f+MpLMA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+X-Proofpoint-GUID: EH3a-2YsSFY-1rTWg4XTMjRXVOjnR8Ai
+X-Authority-Analysis: v=2.4 cv=J/qaKgnS c=1 sm=1 tr=0 ts=6a883388 cx=c_pps
+ a=81r77geWhBIZzI7tvg4+jA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=Sv0fKeRqtYgA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=y4UcunY2MAxhM4LwGdWI:22
- a=64Cc0HZtAAAA:8 a=oOh_xqB7XwJDYdBhmPMA:9
-X-Proofpoint-GUID: hkPkANreo5xgYvccw7f5PrXqILq1G6OL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIxMDA4NCBTYWx0ZWRfX9LTCuvthgmKZ
- YhJ2g8Xc6IwLb/JdGklvJpCMXcdU8tGY/0Vg/NoC+2mOFRK8lgslo9CAZoIsCp1PBBhDlA9v9rp
- NsPrGFC59mGesoGs3+CEzBd9QgeqYR9Pb3kkekBSeP6rhAc3pFnfVjOGyWC6GXNs7SZm+VYvrF8
- eRqY8kxIboAbpJM4NQBLmz09pWmFg70j+2uq0EKtHd+Rs4zu6CrTHp0MlKwgs11vwxeC0c993bi
- Ufvfwo9W72KV1rw8TcKQjN1ptCxLqejdI/eKRGINF0D49HtG/QBEUaMPNw0KeAp1GE2Xvj6lKXO
- I+aSoEsJ6BsKDN5KQtY0SgeIPubhQQkk4cWtD9+0a/f5YtADnuTV0fcHnQkIrGHYQ0Ofj4eu0/o
- B4vrlea8UODe4OFKu89hX/C0ZyrkYROHmEfqdP1d0KLNfVuBe9YW+Ow7AtBu7lyrBf8EOSLumhi
- h0cup9N4surT4n5BxGQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIxMDA4NCBTYWx0ZWRfXx0eUOnB3nnHY
- FKxf4XvsoPMQgl3QlWikw9Jhlg6JecHkllzW9qUJbCx6qSXVZhjGoVVuihzhK1a4nUThrdfN90X
- zlz0nNvK0da+BlmMIC5ecEbdekPXhtU=
-X-Proofpoint-ORIG-GUID: hkPkANreo5xgYvccw7f5PrXqILq1G6OL
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=0LlEyIVc8U2lsR7dKhuH:22
+ a=64Cc0HZtAAAA:8 a=20KFwNOVAAAA:8 a=4QfE8SPBBHYfMhEiUa4A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: EH3a-2YsSFY-1rTWg4XTMjRXVOjnR8Ai
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIxMDA4NCBTYWx0ZWRfX1pvKOnqpuT5W
+ tkdEcTf2CkckaMXIgDz2w8xO74MDIozdmAG7VUfCDDjajThJDoeQqU0A4XFfMIUQKNJaswwLPME
+ a/WC7n7hExZyV5DjT3KuKV5uCj8zZFojV6yISmq2pGJ+i/a6EewhFgR3ox7bZ10nDAqedIQAurF
+ OzWBGak3TeIH+EojUsnTOifGduxsYR02f1+Eo3GFItLSvugBJwB1VCWSxfRPIGa28dDRJIPdE7o
+ tSYrQPiG7E8w0l9PAMcg1zli2hgJQp1ZMWaokX8GAGjCLMIWNZx7nRylpAgqtLFFRCafMBNGmX+
+ Coewoh1nZrv3kT7mjPBGLxAqwSZEO8TkNpFPI6nTkjyJpSYSBn/A/NrOF+JIpDuYLbRC0add2kN
+ W8KVO6Nz+mtyj40Zxp8NC/84Sw7LUN5M4Cxl6N/y9Kdv3HU7MniYc94SjVd7m6vxLnDeSGLoCxi
+ ZsTfOfKizfTUFnfSuJA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIxMDA4NCBTYWx0ZWRfX3ipXM1Nxm4sW
+ 9HOm5nfggGPXdUq4ZXJdbe/tdG7f0BMJyExC7rF0ooDmzYIJ34qjyA6Q2iqqTwndey7ziyGkOlI
+ GrzoCnD6fzXQN1hdE/RgssdmGnYH9/o=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-21_03,2026-08-21_01,2025-10-01_01
 X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
 X-Spam_bar: ---
@@ -180,78 +191,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ACPI_PM_PROP_SCI_INT can be updated to use object_class_property_add_uint8_ptr()
-with OBJ_PROP_FLAG_READ, whilst ICH9_LPC_SMI_NEGOTIATED_FEAT_PROP can be updated
-to use object_class_property_add_uint64_ptr().
+This adds a class property that references a uint32_t within the object instance
+and is intended to be a replacement for object_property_add_uint32_ptr().
 
 Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/isa/lpc_ich9.c | 33 ++++++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 13 deletions(-)
+ include/qom/object.h | 18 ++++++++++++++++++
+ qom/object.c         | 21 +++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
-index edf9783ec8..07c9509cf4 100644
---- a/hw/isa/lpc_ich9.c
-+++ b/hw/isa/lpc_ich9.c
-@@ -683,24 +683,11 @@ static void ich9_lpc_initfn(Object *obj)
- {
-     ICH9LPCState *lpc = ICH9_LPC_DEVICE(obj);
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 67ccd2b08f..8dead29284 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -2129,6 +2129,24 @@ ObjectProperty *object_property_add_uint32_ptr(Object *obj, const char *name,
+                                     const uint32_t *v,
+                                     ObjectPropertyFlags flags);
  
--    static const uint8_t acpi_enable_cmd = ICH9_APM_ACPI_ENABLE;
--    static const uint8_t acpi_disable_cmd = ICH9_APM_ACPI_DISABLE;
--
-     object_initialize_child(obj, "rtc", &lpc->rtc, TYPE_MC146818_RTC);
- 
-     qdev_init_gpio_out_named(DEVICE(lpc), lpc->gsi, ICH9_GPIO_GSI,
-                              IOAPIC_NUM_PINS);
- 
--    object_property_add_uint8_ptr(obj, ACPI_PM_PROP_SCI_INT,
--                                  &lpc->sci_gsi, OBJ_PROP_FLAG_READ);
--    object_property_add_uint8_ptr(OBJECT(lpc), ACPI_PM_PROP_ACPI_ENABLE_CMD,
--                                  &acpi_enable_cmd, OBJ_PROP_FLAG_READ);
--    object_property_add_uint8_ptr(OBJECT(lpc), ACPI_PM_PROP_ACPI_DISABLE_CMD,
--                                  &acpi_disable_cmd, OBJ_PROP_FLAG_READ);
--    object_property_add_uint64_ptr(obj, ICH9_LPC_SMI_NEGOTIATED_FEAT_PROP,
--                                   &lpc->smi_negotiated_features,
--                                   OBJ_PROP_FLAG_READ);
--
-     ich9_pm_reset_properties(&lpc->pm);
-     ich9_pm_add_properties(obj, &lpc->pm);
- }
-@@ -888,6 +875,9 @@ static void ich9_lpc_class_init(ObjectClass *klass, const void *data)
-     AcpiDeviceIfClass *adevc = ACPI_DEVICE_IF_CLASS(klass);
-     AcpiDevAmlIfClass *amldevc = ACPI_DEV_AML_IF_CLASS(klass);
- 
-+    static const uint8_t acpi_enable_cmd = ICH9_APM_ACPI_ENABLE;
-+    static const uint8_t acpi_disable_cmd = ICH9_APM_ACPI_DISABLE;
++/**
++ * object_class_property_add_uint32_ptr:
++ * @klass: the object class to add a property to
++ * @name: the name of the property
++ * @offset: the offset from the object instance where the uint32 value is
++ *   stored
++ * @flags: bitwise-or'd ObjectPropertyFlags
++ *
++ * Add an integer property in memory.  This function will add a
++ * property of type 'uint32'.
++ *
++ * Returns: The newly added property on success, or %NULL on failure.
++ */
++ObjectProperty *object_class_property_add_uint32_ptr(ObjectClass *klass,
++                                    const char *name,
++                                    ptrdiff_t offset,
++                                    ObjectPropertyFlags flags);
 +
-     set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     device_class_set_legacy_reset(dc, ich9_lpc_reset);
-     k->realize = ich9_lpc_realize;
-@@ -912,6 +902,23 @@ static void ich9_lpc_class_init(ObjectClass *klass, const void *data)
-     adevc->ospm_status = ich9_pm_ospm_status;
-     adevc->send_event = ich9_send_gpe;
-     amldevc->build_dev_aml = build_ich9_isa_aml;
-+
-+    object_class_property_add_uint8_ptr(klass, ACPI_PM_PROP_SCI_INT,
-+                                        offsetof(ICH9LPCState, sci_gsi),
-+                                        OBJ_PROP_FLAG_READ);
-+    object_class_property_add_uint64_ptr(klass,
-+                                         ICH9_LPC_SMI_NEGOTIATED_FEAT_PROP,
-+                                         offsetof(ICH9LPCState,
-+                                                  smi_negotiated_features),
-+                                         OBJ_PROP_FLAG_READ);
-+    object_class_static_property_add_uint8_ptr(klass,
-+                                               ACPI_PM_PROP_ACPI_ENABLE_CMD,
-+                                               &acpi_enable_cmd,
-+                                               OBJ_PROP_FLAG_READ);
-+    object_class_static_property_add_uint8_ptr(klass,
-+                                               ACPI_PM_PROP_ACPI_DISABLE_CMD,
-+                                               &acpi_disable_cmd,
-+                                               OBJ_PROP_FLAG_READ);
+ /**
+  * object_class_static_property_add_uint32_ptr:
+  * @klass: the object class to add a static property to
+diff --git a/qom/object.c b/qom/object.c
+index 271c2916b7..f91764aaa7 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -2742,6 +2742,7 @@ static void *object_class_prop_ptr(Object *obj, ptrdiff_t offset)
+     OBJECT_CLASS_PROPERTY_SCALAR_SETTER(type)
+ 
+ DEFINE_OBJECT_CLASS_PROPERTY_SCALAR_METHODS(uint8)
++DEFINE_OBJECT_CLASS_PROPERTY_SCALAR_METHODS(uint32)
+ DEFINE_OBJECT_CLASS_PROPERTY_SCALAR_METHODS(uint64)
+ 
+ #undef OBJECT_CLASS_PROPERTY_SCALAR_GETTER
+@@ -2871,6 +2872,26 @@ object_property_add_uint32_ptr(Object *obj, const char *name,
+                                getter, setter, NULL, (void *)v);
  }
  
- static const TypeInfo ich9_lpc_info = {
++ObjectProperty *
++object_class_property_add_uint32_ptr(ObjectClass *klass, const char *name,
++                                     ptrdiff_t offset,
++                                     ObjectPropertyFlags flags)
++{
++    ObjectPropertyAccessor *getter = NULL;
++    ObjectPropertyAccessor *setter = NULL;
++
++    if ((flags & OBJ_PROP_FLAG_READ) == OBJ_PROP_FLAG_READ) {
++        getter = property_class_get_uint32_ptr;
++    }
++
++    if ((flags & OBJ_PROP_FLAG_WRITE) == OBJ_PROP_FLAG_WRITE) {
++        setter = property_class_set_uint32_ptr;
++    }
++
++    return object_class_property_add(klass, name, "uint32",
++                                     getter, setter, NULL, (void *)offset);
++}
++
+ ObjectProperty *
+ object_class_static_property_add_uint32_ptr(ObjectClass *klass,
+                                             const char *name,
 -- 
 2.43.0
 
