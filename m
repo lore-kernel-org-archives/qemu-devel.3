@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64E90C5DF87
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:05:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60A3EC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:05:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxN1M-0001QU-3i; Fri, 21 Aug 2026 07:02:48 -0400
+	id 1wxN1M-0001QM-2p; Fri, 21 Aug 2026 07:02:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN14-0000j8-TG
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:32 -0400
+ id 1wxN1E-0000xU-Ks
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:42 -0400
 Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN12-0007VL-95
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:30 -0400
+ id 1wxN1C-0007Ya-By
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:40 -0400
 Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-490cf322ed0so7648575e9.1
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:27 -0700 (PDT)
+ 5b1f17b1804b1-499ac87c92bso7074055e9.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787310147; x=1787914947; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787310157; x=1787914957; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=tdwp4aUV0FuWOV3NHOQRHCUGQ71NyoUxAiznLkuyZp4=;
- b=eYAL37Vb0p1Efp/JVEhRYFotQywEI/x7XSK88+fFxaRrP+0K8A5h0XZ15LnIws18kp
- dNrToZnnwCtsZIa9Rv74bjghEhAA8XfRU/XKXeoaRamLlfFe6xFauWi4Uk5+qei0xepZ
- tn/Z1gH4rOtwkxIrXznWpbpAZ8SByb3VsWSBc1hk1LluHXIkCxXBNdffT650XESMkycJ
- YlLMJOgd30It68ZQvf3uOw/c4wvlNEXXlD5SpoU8VdbuAZyNqcjGbCAFIC7k1F9cUhKN
- l3wc4KJrrJOf/WV/g0cUG6fyOnCLc3pO08CVc4gu2zXFbJ+KbclcXMpgom647jzTCSVQ
- AU2g==
+ bh=GawVdWQDHqb2VdR/tPStDoQ7Vl67lXfSjkdyFM0jSSE=;
+ b=CA3yVz8by3wIDI/qm1l7qNBcZghjD7QZMr+AAmuxi99DvSm1g6xCyzFOuqQSx9VCmd
+ kRrSY44b43jPIL7NGBv3QkJts4KfwO9VMBugO9TTitcPPNXXddjM3eAJBIbnEXh4OUI+
+ QaTJTimaidAQ9mRhaqIcVxc3hlglq1LfkrksTvJKJzNIqMZm4DzBAf0ZCuaeHuidnqPK
+ ry3/TE472LnH4vUPx7JhO/V26dJDcNdDjSUs5EoC5CNxQ+XkT8Hn6GrsOXnjtUQX/uU/
+ nq6o9KH+ahb1Y+6rdrVtJ8DGhGpmf8dZmFKKpd1R5h8izHSGIJs0HYwfscTqoBDFpMK/
+ BLTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787310147; x=1787914947;
+ d=1e100.net; s=20251104; t=1787310157; x=1787914957;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=tdwp4aUV0FuWOV3NHOQRHCUGQ71NyoUxAiznLkuyZp4=;
- b=KC13klx1Sy5D2b5xlq15olxF3c1frlJiv2V3QBEyMme7UAa5GqPGYO/tDbVQz7vSpU
- AL8ZfLd/VOUmomxzCrWWHmppyJpWThXMAJIGHTQQ/L5oKhThCC8cH+mtKN8N5QY6Nqhx
- YyrjAbGJnExj4QVforTnq5mqmrgZNXPLBNxvZsQNWUPVBNUJ/b3BouD/2DHqG/PyhmZ+
- 5NlvjDHIuo5/HxiNNa38eZ8546LarkTNIybhxHQwccV9rSs9HYCu1PclwSnU7FpgGa6L
- iFszazJ8b7djqPg87alc2Ds69n2crNBCCstz7USoLFXOYuN2XCWtbo1BMYWzf3ObKaZR
- Yz3A==
-X-Gm-Message-State: AOJu0YzKpHDkxpS0lvq7a6Q7gcnaeM8MK5CoGEEhOgxVGi4T4EP/iroL
- vaL5r3AVwUEyNhvcVUzIbPmcvVT6t8Xz3AcXWLjhXoUph5xw/h1Q6bvKREgxplVomglrUfQtFIk
- Syl7J
-X-Gm-Gg: AR+sD10xKvvyfwz3aB7qyIQ/9ckr8cEW5HqTNF7jK9zlnIzMAHvZxUxAHkqwqV+gmxd
- ovcCl0fFYD4x6QxBlZ69ds7fP8j0mUwWwlX6+weSrR9kURBwpFzEgYmJ1fnMv4lsjh89LR8QQzi
- T6GzYYClovzt8hsoqpBWWE92CpD8oKprIWmDzTJhr5548G0p9IMtyfFcfC6UJRp/JYjB3YAWo8T
- JBUdPNQyGa342QMPrDHbujzNRAi7kUQviyk+7DUImpkaoA+1a9GJ/3owM7KZgIhy1goDLfu76rv
- ZDU8V++NddcGTDxqI1FWaTFJHISEAKzEwaxgWjPjrzqoMxBDf1uplKwVuAdhvOxDj9MOAi71EOj
- 0LRzDHApo9WBsnJIBPR2AL/7ayZca/teuEKkRYqfBpEWRoBXxxrfeO2hvYNUb3pjoIhTPP1Vhrs
- y5KuT4QpGcjf8aqEG42jIvNdaLNZxSPoP9R261czMqBE9GPmxq8g+m9jWQFg2Oq01eoZ3PJlRf5
- +0UfMD6e1EJEYiRwIRpr/WdUCgM/+tcTi1gn3woPcDmS+hObKeqrOsP3q1MjaDTGK4IrA==
-X-Received: by 2002:a05:600c:628d:b0:499:795a:c5fc with SMTP id
- 5b1f17b1804b1-499b832643emr81034235e9.7.1787310146655; 
- Fri, 21 Aug 2026 04:02:26 -0700 (PDT)
+ bh=GawVdWQDHqb2VdR/tPStDoQ7Vl67lXfSjkdyFM0jSSE=;
+ b=JzGQ6cV28BTgHB4MsUAzYFqJL1gGy3ltcUvYUDxvQLs2C4POwXkjsQJcLbllUNbLFK
+ IZ4bXfyu0P6EuVQNlp1PjD3M2/d0pQeixxvB6/wLr2ciG/fNF5QtRnT0grAu0KYD73+i
+ RmQO0ExnOp5cPufKlrmV0iUN/zKXjh/1sQkwcBOUjymmQre/mLADCTOdv0iadaM0ykMZ
+ 2o1n1ATmHJhDy2UB3ZZo9kKntW6b+TELkWcz8FonYyJAUKeEfJj+YooHnvrhzaYsVTCk
+ Sq6b+KSMwp79yRX+gCZcZ86pn2NosGjCdmcvr3aoQfObAypDgzdC7ihi24ZiRSgUSF58
+ Np4w==
+X-Gm-Message-State: AOJu0Yyu/1lQlTRuKQlrs8qguLMVifg15bFsuPfA0pUmAMliuqMC4ZIB
+ Y+UfHlaKt+Iu9unVzIDm1io3CsBAjVXi5l/1ZUkOcfZcqFw37V3fCwEBHMOkGYdfOpa/j72PRCD
+ RU+DX
+X-Gm-Gg: AR+sD100nHFbHhLszbU7mao7oCqyuOkrcG3oG4dyUtQxCyuvNPXW9X7q2/jkEYysEWn
+ NKlOFQSzzm+tpUOfFLFGJWm0jk5lhyjMt5WIjp3NvOF8s8AcSSM8EvR0Mq3REXmek3gsPug6LBi
+ WjwI/ShS0zSebHZgRlWRpdSfQYx3Ap+LV8aqd2k26X7d8QMfanifkdBX9vVBHZqmZV/g7kGADf/
+ rVhYnhoO4t8m6C5u+EvP3xaYq++zRYwrp8JchTbzwPQ7BdE0xOVuTL64gH2AKRRx0WFkZiciZ0p
+ d+LltI85SCAgaFHaAhCnJlXut8EoWZjGUPtKdMFjyWjNIMO/xCj40ol65VaX++4dnQVkRmqDNND
+ KUKLLH57KnF5mkH8TYYsoNN5r17IV5j5zmyuXEY9f6dq2AvmdCw9zRJU09ppoOjWOJuh4oqgdkE
+ s6oTeJar++RIHj81ysOn2y53xYq/zXvJSKz7W33rnqG5kh4C4RFK54jo2Hb/EZP7cjk5GFwEo9s
+ y0W+JGqs0uyeiFPzfhE+IzMcWmGkM0kN+GtZ+6bsJA9EHL8ycuDc4qep0lvxcG2Nk93pQ==
+X-Received: by 2002:a05:600c:5294:b0:499:8ba4:8cae with SMTP id
+ 5b1f17b1804b1-499b830d665mr83867755e9.1.1787310156954; 
+ Fri, 21 Aug 2026 04:02:36 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.25
+ 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 04:02:25 -0700 (PDT)
+ Fri, 21 Aug 2026 04:02:36 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 26/43] hw/arm: bananapi_m2u: Store boot info in the machine
- state
-Date: Fri, 21 Aug 2026 12:00:44 +0100
-Message-ID: <20260821110101.3971391-27-peter.maydell@linaro.org>
+Subject: [PULL 35/43] hw/arm: musicpal: Store boot info in the machine state
+Date: Fri, 21 Aug 2026 12:00:53 +0100
+Message-ID: <20260821110101.3971391-36-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260821110101.3971391-1-peter.maydell@linaro.org>
 References: <20260821110101.3971391-1-peter.maydell@linaro.org>
@@ -108,7 +107,7 @@ arm_load_kernel() keeps a pointer to the boot info struct for the
 lifetime of the VM, so the struct logically belongs to the machine
 rather than to a file scoped static object.
 
-Move it into a new Bpim2uMachineState and register the machine type
+Move it into a new MusicPalMachineState and register the machine type
 explicitly instead of through the DEFINE_MACHINE_ARM macro.
 
 As in the xlnx-zcu102 and raspi machines, the boot info belongs to
@@ -118,63 +117,63 @@ the machine rather than to a static object:
 0f15c6e338 ("hw/arm/raspi: Move arm_boot_info structure to RaspiMachineState")
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Message-id: 20260816131300.51799-4-bin.meng@processmission.com
+Message-id: 20260816131300.51799-13-bin.meng@processmission.com
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/bananapi_m2u.c | 21 +++++++++++++++------
+ hw/arm/musicpal.c | 21 +++++++++++++++------
  1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/hw/arm/bananapi_m2u.c b/hw/arm/bananapi_m2u.c
-index 9b468cd8ac8..0079aa1dd2b 100644
---- a/hw/arm/bananapi_m2u.c
-+++ b/hw/arm/bananapi_m2u.c
-@@ -29,7 +29,14 @@
- #include "hw/arm/boot.h"
- #include "hw/arm/machines-qom.h"
+diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
+index 69e83bdd973..8a70ed7377e 100644
+--- a/hw/arm/musicpal.c
++++ b/hw/arm/musicpal.c
+@@ -1200,13 +1200,18 @@ static const TypeInfo musicpal_key_info = {
  
--static struct arm_boot_info bpim2u_binfo;
-+#define TYPE_BPIM2U_MACHINE MACHINE_TYPE_NAME("bpim2u")
-+OBJECT_DECLARE_SIMPLE_TYPE(Bpim2uMachineState, BPIM2U_MACHINE)
+ #define FLASH_SECTOR_SIZE   (64 * KiB)
+ 
+-static struct arm_boot_info musicpal_binfo = {
+-    .loader_start = 0x0,
+-    .board_id = 0x20e,
++#define TYPE_MUSICPAL_MACHINE MACHINE_TYPE_NAME("musicpal")
++OBJECT_DECLARE_SIMPLE_TYPE(MusicPalMachineState, MUSICPAL_MACHINE)
 +
-+struct Bpim2uMachineState {
++struct MusicPalMachineState {
 +    MachineState parent;
 +
 +    struct arm_boot_info bootinfo;
-+};
+ };
  
- /*
-  * R40 can boot from mmc0 and mmc2, and bpim2u has two mmc interface, one is
-@@ -62,6 +69,7 @@ static void mmc_attach_drive(AwR40State *s, AwSdHostState *mmc, int unit,
- 
- static void bpim2u_init(MachineState *machine)
+ static void musicpal_init(MachineState *machine)
  {
-+    Bpim2uMachineState *bpms = BPIM2U_MACHINE(machine);
-     bool bootroom_loaded = false;
-     AwR40State *r40;
-     I2CBus *i2c;
-@@ -120,10 +128,10 @@ static void bpim2u_init(MachineState *machine)
-     memory_region_add_subregion(get_system_memory(),
-                                 r40->memmap[AW_R40_DEV_SDRAM], machine->ram);
++    MusicPalMachineState *mpms = MUSICPAL_MACHINE(machine);
+     ARMCPU *cpu;
+     DeviceState *dev;
+     DeviceState *pic;
+@@ -1341,8 +1346,10 @@ static void musicpal_init(MachineState *machine)
+     sysbus_mmio_map(s, 0, MP_AUDIO_BASE);
+     sysbus_connect_irq(s, 0, qdev_get_gpio_in(pic, MP_AUDIO_IRQ));
  
--    bpim2u_binfo.loader_start = r40->memmap[AW_R40_DEV_SDRAM];
--    bpim2u_binfo.ram_size = machine->ram_size;
--    bpim2u_binfo.psci_conduit = QEMU_PSCI_CONDUIT_SMC;
--    arm_load_kernel(&r40->cpus[0], machine, &bpim2u_binfo);
-+    bpms->bootinfo.loader_start = r40->memmap[AW_R40_DEV_SDRAM];
-+    bpms->bootinfo.ram_size = machine->ram_size;
-+    bpms->bootinfo.psci_conduit = QEMU_PSCI_CONDUIT_SMC;
-+    arm_load_kernel(&r40->cpus[0], machine, &bpms->bootinfo);
+-    musicpal_binfo.ram_size = MP_RAM_DEFAULT_SIZE;
+-    arm_load_kernel(cpu, machine, &musicpal_binfo);
++    mpms->bootinfo.loader_start = 0x0;
++    mpms->bootinfo.board_id = 0x20e;
++    mpms->bootinfo.ram_size = MP_RAM_DEFAULT_SIZE;
++    arm_load_kernel(cpu, machine, &mpms->bootinfo);
  }
  
- static void bpim2u_machine_init(MachineClass *mc)
-@@ -145,4 +153,5 @@ static void bpim2u_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
+ static void musicpal_machine_init(MachineClass *mc)
+@@ -1357,7 +1364,9 @@ static void musicpal_machine_init(MachineClass *mc)
+     machine_add_audiodev_property(mc);
  }
  
--DEFINE_MACHINE_ARM("bpim2u", bpim2u_machine_init)
-+DEFINE_MACHINE_EXTENDED("bpim2u", MACHINE, Bpim2uMachineState,
-+                        bpim2u_machine_init, false, arm_machine_interfaces)
+-DEFINE_MACHINE_ARM("musicpal", musicpal_machine_init)
++DEFINE_MACHINE_EXTENDED("musicpal", MACHINE, MusicPalMachineState,
++                        musicpal_machine_init, false,
++                        arm_machine_interfaces)
+ 
+ static void mv88w8618_wlan_class_init(ObjectClass *klass, const void *data)
+ {
 -- 
 2.43.0
 
