@@ -4,61 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27A83C5DF8E
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 06:41:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDC29C5DF88
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 06:48:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxIwG-0001Y9-BZ; Fri, 21 Aug 2026 02:41:16 -0400
+	id 1wxJ30-0004BR-Oh; Fri, 21 Aug 2026 02:48:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wxIwE-0001WZ-7T; Fri, 21 Aug 2026 02:41:14 -0400
-Received: from [115.124.30.131] (helo=out30-131.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <asmadeus@codewreck.org>)
+ id 1wxJ2z-0004BJ-JK
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 02:48:13 -0400
+Received: from submarine.notk.org ([62.210.214.84])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1wxIw9-000661-0D; Fri, 21 Aug 2026 02:41:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1787294441; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=UKnM9cWdP672CNzhiWDOMhhND+Qv5p67Q8VNGPB24y0=;
- b=dNwEUWKHiih9g2AdvMJ/A+r0aRAfwLLMk6xt5kduR34+1o352GTlyVlDFht/V3mjKPJG4Mpg+gajs+KbJL8bcnzK7SnzejvrNsMjg9G7KemkFDK+UP5SE/ZyQU4ddBdqNwZoYWS5/G/uZ2FOXyCGlu6BqMC6VBBCjb/l5ZBc6K8=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R141e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=11; SR=0;
- TI=SMTPD_---0X9LMiSM_1787294440; 
-Received: from localhost.localdomain(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0X9LMiSM_1787294440 cluster:ay36) by smtp.aliyun-inc.com;
- Fri, 21 Aug 2026 14:40:41 +0800
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, chao.liu@processmission.com,
- zhiwei_liu@linux.alibaba.com, peter.maydell@linaro.org,
- richard.henderson@linaro.org
-Subject: [PATCH 2/3] target/arm: Fix RCsc ordering of store-release
- instructions
-Date: Fri, 21 Aug 2026 14:40:31 +0800
-Message-Id: <20260821064032.49556-3-zhiwei_liu@linux.alibaba.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-In-Reply-To: <20260821064032.49556-1-zhiwei_liu@linux.alibaba.com>
-References: <20260821064032.49556-1-zhiwei_liu@linux.alibaba.com>
+ (Exim 4.90_1) (envelope-from <asmadeus@codewreck.org>)
+ id 1wxJ2x-0006yS-PR
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 02:48:13 -0400
+Received: from gaia.codewreck.org (localhost [127.0.0.1])
+ by submarine.notk.org (Postfix) with ESMTPS id B687314C2D6;
+ Fri, 21 Aug 2026 08:48:05 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
+ s=2; t=1787294886;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=9Zj5chlGfnCQU/cpa21YKQoQRfXsJ0t56xVaih1y2ag=;
+ b=Wr5GSOrbEw6wFJH5fZeOV4K6ivjZg9qoQMW0eK0dAzlrzUV/Y4SaHK5bbsenICq9KQcyT5
+ OTo3//H7kMRzFlH1ExPyMtc0i4BL1jWyfTfZn3Da2C059JJAXB2Gmdt5vHWpTz8DHQMBf2
+ 63BKNTvwBLhXMKYO507sal8kgW4u3POJuTmrwis6Q3EkMKAIJX6RS9DEfnsh1dDnykgbCy
+ cqyvm+8jGZKL3Oip6Sfd1GHFXwHNvHt9SdtSmF36G212lNDsC79WXlcP2O2BXnmTsY4Msa
+ 3vFEN4HjyStzv4gEVuc6i3ypg+oTARAdKRbclhIw1GS+KkmkHRcPTbaKXJs03w==
+Received: from gaia.codewreck.org (localhost.lan [::1])
+ by gaia.codewreck.org (OpenSMTPD) with ESMTP id fc3d6d80;
+ Fri, 21 Aug 2026 06:48:04 +0000 (UTC)
+From: Dominique Martinet <asmadeus@codewreck.org>
+Date: Fri, 21 Aug 2026 15:47:51 +0900
+Subject: [PATCH] subprojects: re-include *.wrap files
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.131 (deferred)
-Received-SPF: pass client-ip=115.124.30.131;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-131.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260821-subprojects-ignore-v1-1-0640f7fee388@codewreck.org>
+X-B4-Tracking: v=1; b=H4sIAJj0h2oC/x3MPQqAMAxA4atIZgu1SP25ijjUNmocWklUBPHuF
+ sdveO8BQSYU6IsHGC8SSjGjKgvwq4sLKgrZYLSxujWVknPaOW3oD1G0xMSoWtfVVjsbGhcghzv
+ jTPc/Hcb3/QDAuDffZAAAAA==
+X-Change-ID: 20260821-subprojects-ignore-8a9460a6d7ad
+To: qemu-devel@nongnu.org
+Cc: Dominique Martinet <asmadeus@codewreck.org>
+X-Mailer: b4 0.17-dev-1f2f7
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1474;
+ i=asmadeus@codewreck.org; h=from:subject:message-id;
+ bh=w431d2GQblFvpzPBGZRL1Ka65GVox6UxBkp9z2FBYvU=;
+ b=owEBbQKS/ZANAwAKAatOm+xqmOZwAcsmYgBqh/SjfO6CYqqifgBATC6OH0GPsnPej9B4oEgmx
+ ATG8YN57WSJAjMEAAEKAB0WIQT8g9txgG5a3TOhiE6rTpvsapjmcAUCaof0owAKCRCrTpvsapjm
+ cL4qD/4vIhtsUChniwN2FUOlXyoPnBFLZCLJRi+Ub0uxgo1q9wP5MzupIw7CcJp0MzBxVr3Mnwi
+ 8p6PmWfm9x541T3dCaPY4r1zo2rTzoHsv+MHiVsxd6vtBBvQTfwwyuRSSaKFf0mxZ8abWhTSRxN
+ pwBoUR/lCeozAvTCbpCq9rqg2LUbuKL59eSAG+rThTCVmn3/AXLvxggQEM9ugD2Q+kWGei4HDR6
+ H8gRT3VrJL83CNpRPj2fstMw/S7Wq29JbV8QsQpM08qJFB+Hy1RQwrhmuJJN7Qk0z80c9OVxxhB
+ IFsolxe7MyhPII9/ENlsCaDo1+BIoXVPXgOfmmuJOpD/NC3PpuAR15x1NZulVSlWHeGFzdCTyRi
+ 1+cxiftFAtbf2zrCZkAm326346deV+oUcLBqsJOiFekugRZuAmaGXR0XBNWuywhpcqvRrovrXNP
+ Czj0fuq6c9vW/zfcie0ukTyR+IvseW/jvDP3HkNhrSF6aiDEJ4d1O1Z9PJwyJZQgiB4/ut+VESg
+ JMbHh4wVk+o7H3oara9P1kU08NIb/WbkhLdIZcG0qpKEJk2sSglr0L2NoDS/dd0GVtGuV9X9YLe
+ hi/hHcN5m/OcAaVMH4c+xm0IPw30W9YhOntHNCiby7PN7Hmd6jTUBzmpFS6HQGaxuLolf4JAhty
+ C4v4w3dFgRmQPaA==
+X-Developer-Key: i=asmadeus@codewreck.org; a=openpgp;
+ fpr=B894379F662089525B3FB1B9333F1F391BBBB00A
+Received-SPF: pass client-ip=62.210.214.84;
+ envelope-from=asmadeus@codewreck.org; helo=submarine.notk.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,109 +91,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Armv8 memory model has no RCpc store: every store-release in the
-architecture, including the AArch64 STLR and STLPUR and the A32/T32
-STL, STLB and STLH, carries RCsc semantics (Arm Architecture Reference
-Manual, DDI 0487, section B2.3.8 "Acquire and release semantics").
-The architecture therefore orders a Store-Release tagged RCsc before
-any subsequent Load-Acquire tagged RCsc of the same shareability
-domain, which is what forbids the [0,0] outcome of a Store Buffering
-litmus test that pairs "STLR X=1; LDAR Y" on one PE with
-"STLR Y=1; LDAR X" on another.
+The existing wrap files e.g. anyhow-1-rs.wrap are ignored because
+meson extract the sources in the subprojects directory
 
-The translators only emit a barrier before the store, which orders the
-memory operations preceding the store before the store itself (release
-semantics).  Nothing prevents the store from being reordered with the
-memory operations that follow it, so under MTTCG the host CPU may
-execute the load-acquire that immediately follows a store-release
-before the store has left its store buffer:
+This is not a problem for git itself, because files that had already
+been added are properly tracked, but tools such as fd-find blindly
+trust the ignore rules and fail to pick up the .wrap files, making
+discoverying the build system (when e.g. adding another crate or just
+curiosity) more difficult than necessary
 
-  * on an x86 host (TSO), store-load is the only reordering the
-    hardware may perform, and it is exactly the ordering that is
-    missing here;
+This added rule re-adds the wrap files so they now properly get picked
+up.
 
-  * on an aarch64 host, no dmb follows the store either.
-
-The defect is easily observed with a bare-metal Store Buffering litmus
-test on a 2 vCPU virt guest: "STLR X=1; LDAR Y" on CPU 0 and
-"STLR Y=1; LDAR X" on CPU 1 produce the architecturally forbidden [0,0]
-result in 6 to 7 out of 100000 iterations, while inserting a DMB ISH
-between the store and the load on each CPU brings the number to 0,
-which validates the harness.
-
-Fix this by emitting a full barrier after the store as well, for
-STLR/STLLR and STLPUR on the AArch64 side and STL/STLB/STLH on the
-A32/T32 side.  The TCG_MO_ST_LD bit included in TCG_MO_ALL makes the
-x86 backend emit a serializing lock-prefixed instruction after the
-store, draining the store buffer before any subsequent load executes,
-and the aarch64 backend emit dmb ish; the store therefore becomes
-globally visible before any subsequent memory operation of the same
-vCPU, and the RCsc store->load ordering is satisfied.  This is
-stronger than the architecture strictly requires, since the barrier
-also orders the store with respect to subsequent RCpc operations such
-as LDAPR, but this matches how QEMU already implements FENCE-like
-ordering and keeps the fix simple.  After the fix the litmus test no
-longer produces the forbidden outcome.
-
-The load-acquire side needs no change: the barrier emitted after an
-RCsc LDAR already orders it with all subsequent memory operations, and
-QEMU deliberately implements the RCpc LDAPR family as full load-acquire.
-
-Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 ---
- target/arm/tcg/translate-a64.c | 13 +++++++++++++
- target/arm/tcg/translate.c     |  6 ++++++
- 2 files changed, 19 insertions(+)
+Stumbled upon this when looking at the rust build system out of
+curiosity (because stsquad asked something related on IRC)
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 4f9a93950b..b5bf977910 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -3672,6 +3672,13 @@ static bool trans_STLR(DisasContext *s, arg_stlr *a)
-                                 true, a->rn != 31, memop);
-     do_gpr_st(s, cpu_reg(s, a->rt), clean_addr, memop, true, a->rt,
-               iss_sf, a->lasr);
-+    /*
-+     * STLR is an RCsc store-release: the Armv8 architecture orders it
-+     * before any subsequent RCsc load-acquire, which is what forbids the
-+     * store-buffering litmus test.  The barrier above only orders
-+     * previous accesses before the store.
-+     */
-+    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
-     return true;
- }
+It probably doesn't matter much, but took me more time than it should
+have to find the wrap files, so might as well improve this for the next
+one to look at these.
+---
+ subprojects/.gitignore | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/subprojects/.gitignore b/subprojects/.gitignore
+index 011ce4dc3b77..4bdedb081601 100644
+--- a/subprojects/.gitignore
++++ b/subprojects/.gitignore
+@@ -26,3 +26,6 @@
  
-@@ -4415,6 +4422,12 @@ static bool trans_STLR_i(DisasContext *s, arg_ldapr_stlr_i *a)
-     /* Store-Release semantics */
-     tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
-     do_gpr_st(s, cpu_reg(s, a->rt), clean_addr, mop, true, a->rt, iss_sf, true);
-+    /*
-+     * Like STLR, STLPUR is an RCsc store-release and must be ordered
-+     * before any subsequent RCsc load-acquire, so it needs a barrier
-+     * after the store as well.
-+     */
-+    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
-     return true;
- }
- 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 1770428d3c..bddac41bf9 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -4259,6 +4259,12 @@ static bool op_stl(DisasContext *s, arg_STL *a, MemOp mop)
-     tmp = load_reg(s, a->rt);
-     tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
-     gen_aa32_st_i32(s, tmp, addr, get_mem_index(s), mop | MO_ALIGN);
-+    /*
-+     * STL has the same RCsc store-release semantics as the AArch64 STLR
-+     * and must be ordered before a subsequent RCsc load-acquire (LDA).
-+     * The barrier above only orders previous accesses before the store.
-+     */
-+    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
-     disas_set_da_iss(s, mop, a->rt | ISSIsAcqRel | ISSIsWrite);
- 
-     return true;
--- 
-2.43.0
+ # Workaround for Meson v1.9.0 https://github.com/mesonbuild/meson/issues/14948
+ /.wraplock
++
++# re-include wrap files regardless of ignores above
++!/*.wrap
+
+---
+base-commit: acc271509ab015b9e064065f26d41a61e01e641b
+change-id: 20260821-subprojects-ignore-8a9460a6d7ad
+
+Best regards,
+--  
+Dominique Martinet | Asmadeus
 
 
