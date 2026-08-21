@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F79DC5DF88
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 04:05:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B21AC5DF88
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 04:05:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxGUL-0005yd-GL; Fri, 21 Aug 2026 00:04:17 -0400
+	id 1wxGUs-0006OO-SO; Fri, 21 Aug 2026 00:04:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wxGUI-0005xj-Th
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 00:04:14 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1wxGUa-00068P-0o
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 00:04:33 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wxGUH-00039f-6W
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 00:04:14 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-384930ca5e2so542805a91.3
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 21:04:12 -0700 (PDT)
+ id 1wxGUV-0003Fd-JW
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 00:04:31 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-c96b08cdd1cso485875a12.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 21:04:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787285052; x=1787889852; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787285065; x=1787889865; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=FcNFOnOL8974glwABu+kV2mxfPSi3R5uRGeROQDc4EQ=;
- b=lym96s6HCDxM/MXJMjRramhd6BsKbFyG77i8r1C4BufljHms1t34QQnLHIkvIK974h
- y38LBsE5MpDSOZg7t90vDmBsmaS8rD++MH2wEw/dY+LWdlE7afYy/U5FfSLOrcM2X9mR
- 0DwFnUTMUOhO9YJruUft+hltJKNvprs+dF2hgX7frskkzqy2F1REuOcwT8CJFhbAsdKK
- q9EYx/DEIx8l/9bHMN8BlT+rrNQKJkSNatYURgiYrmbB6D9wx4EbvbE0eF981LIwVH4u
- 0NHai0yRwhaXCUD/sxFgqHrKa4sejSfMc4xp7nLmYIPk94uUaEkrbBdwn613JgYFLNzp
- X+LQ==
+ bh=erKbFuTfEb8twlwL8KOeUQx1ZKUgJRBYtRM9xW0W6Yg=;
+ b=D7wCuV/jj3pRuUFGjoFdgDIEiggZu6JLV7DenVmi1mCMQsSQMemiBNIr/0UxlnLilg
+ gYg0AaPY9RmAdeoqgAfAjjFu3gOnGOxRdEkPc33/HM7+boTI2d2CH+MTnxuXsE1c96Ht
+ AbGK6BIkyXmWyAD+UubXfT5E1pHevDiPyr2SWzOO69LlvgJg1/djWKnNYbgQKp52ZgCr
+ TV1o+AB6HufXD4Yj8FVZcKKhAIk1aBlh/rAHQs5vEwdn2VnCD+/kSNX8+p6omkRhbrUG
+ nVA1UYAbJxW+fqgsd728OnoJ0LFRJT2kg5OaRmfHI06/fIsyo7Md3G1YFMXvj1SC4EEN
+ s0OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787285052; x=1787889852;
+ d=1e100.net; s=20251104; t=1787285065; x=1787889865;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=FcNFOnOL8974glwABu+kV2mxfPSi3R5uRGeROQDc4EQ=;
- b=glFo8BEJLyf2ZT4I3zHg4NvR+wbygTqaJX1ujh1YgUd2DAf31xHCmacaxqfARGavcp
- 4gcfUGisJxB2OF2oDhOdSmhtcuPn+5mzB06Erk0KmepvBZTcuPnFfd36v9JrF20tSFOA
- uLWEuxm+OMpfo7a/BvgCiNPFftgIjpM9SBzbIyUzWhn6av/b4Qe44HD72PE3zqRmyHjl
- 2s1CJCXq2A4nicssNZm22s4Hgg9BmBJTR0sryraFoL6H7qRhqEVlCoilnK2MDTXsTO3I
- eipZEncmQqIWLgy6wTPeFAWIwghYbWCERpbfMv3Y0q7I/Du+U3wLMV6G/7Bnuvy3eGEi
- xHig==
-X-Gm-Message-State: AFuF++mANKwjr72FkYkF9FcV5DYmwa5dH9ET1Xk+QYMPFB21z4KToDUF
- tdi+HUdf+4j3vXqEUzfs7n/RW1YihkYAGNSWthDcY5/vT9CTBSUlZDKvGZesIjEVcxOw9LswxLG
- 52mS4
-X-Gm-Gg: AR+sD12wK/aOd2LsQMgpoPVsJ8olJ9wPkFyrcbyloQpJ2eSzcClPkfZCvzi2DJvcCae
- oKef3y1lWY37GQN7K1sUh6G/SYSbmqk/ouPS9alemo6E+NIWUlyKHO2SC5mQynuNAbvmGogxpBp
- wFfqEfm3xuuOwNT9qG/OKl260+B7Y74vy7lxk8tLlbKXnJscq10oKrN6Byyf6tD97jKoZGZ88Qd
- FcYmas7FvMDPByvifF1whlV6ZpWtJuwWgcoG4QPWE53+1/kZB7RZ9ZeL3nzF5QQ4N4UWTBaFACO
- bZ+38U4DnGNgYfgQ3LiIRVyfmmCwKqU7ZZAoh4vaLx80PKRh0+F7u+h+xmPXLtdhPQhon4tk3aO
- sieU1XYEYQJQHdTglg1BdHjm0/h7LCVaNXyhZd6mCj122oKOEOO4r5ijX0nkIvlVAs6+0K+JpKR
- L1YU9boQziy+28PG+eulk4oZyYiOYYGxeMCb3THE5Wgily96Tr6al1pYj2jz61+rsF5FZx
-X-Received: by 2002:a17:90b:58ce:b0:38e:5964:97a8 with SMTP id
- 98e67ed59e1d1-395c398662amr6901770a91.16.1787285051829; 
- Thu, 20 Aug 2026 21:04:11 -0700 (PDT)
+ bh=erKbFuTfEb8twlwL8KOeUQx1ZKUgJRBYtRM9xW0W6Yg=;
+ b=NpRlHs047f6nsRjMv+ERxvAE+cMYXgsIXqJ7+7RfQ4hNkPfGrK/7yyF4tlsIiYrqHG
+ PS24V4DTgsU4vkGPWvRNbHk/ZxSw3xwXOJdwlNyalVd859nDl5bkry/n3FfW2JulCBNh
+ UUB3O+SURi7/mg7/bJdu4i/05gA3d/BUmKwAbfhyoC4DhDyIQAWr7K6hrEa0lPGx4tOI
+ REnO88mslKW7XDQpj0IngKI3jJRvnNE4xGj7uiCuYSezdq5yswY0wPTfDTq4RH2I1Gqm
+ MKhm8bBZjBiq0YSx7rzwuwUx67D0OHuGsItof0ByexTaOAPjRzPZ8HtRl4XkfHfvBOaF
+ cM3A==
+X-Gm-Message-State: AFuF++ku1y16B4LfOo/TTU9hxxFIo2z3PJ6nvBbXOlZxeUDygeQ2zm2l
+ 79rxsD5JqIQqK6z2lrRFOIwLTgsvvFcrCUTxUMq3ryHljhgTFfFlY/igxreS1D9sUjO25h0TsWL
+ mIFL7
+X-Gm-Gg: AR+sD12oirzlp8Lh8pw70RoiWmhenWha2rX0iwmkCP7dj1RwapkGWKx2R/jjNYgy5Tj
+ j6BzCdInjlB9GikpxgnprNkEBuqzz6D5154ZGExGyRVtU5EBT5HETNzZOg8ECy+SlYIfvi0q12n
+ 0qm9N9MG8Gb/TxBLfymwQ7zwh+VChf6Agw1uFARiV2zGFUAcsW7H1idW6ogd/6aIPWOSeGNO5mR
+ UYY4qvNrofG+JDcwZ3JGNaYswWGHOOXNd3KlQ+SKgAbZ+tJmzsxw93yvjvgtW4vKcn8yWqiiCOB
+ 0PEuixSIIBKGexogF86vYkGFlKK5GNZpzostQXVFtIkkRSSoJSV2qVPh1LpjhaNzb43ikD9nUA5
+ RB7eTjIo90b/PHvkoibYv4qDdkz8Hyv9k1OsMNVzNp8KtlsaFi+EB43sYu5bYQkLE0oWWK77RS8
+ YWtt05v43g3I2L5M9gg3wS4c82ZV3g6+xE2tf33YdyAfuNR6sFqx2mNLXHl+TfeMfaqRY=
+X-Received: by 2002:a17:90b:4a89:b0:38e:fea2:df53 with SMTP id
+ 98e67ed59e1d1-395c3511456mr5730420a91.4.1787285065190; 
+ Thu, 20 Aug 2026 21:04:25 -0700 (PDT)
 Received: from stoup.. ([108.174.179.84]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c4c194d2sm1298383a91.15.2026.08.20.21.04.11
+ 98e67ed59e1d1-395c4c194d2sm1298383a91.15.2026.08.20.21.04.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Aug 2026 21:04:11 -0700 (PDT)
+ Thu, 20 Aug 2026 21:04:24 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org
-Subject: [PATCH v2 01/23] target/riscv: Split out vext_set_nf_elems_1s
-Date: Thu, 20 Aug 2026 21:03:42 -0700
-Message-ID: <20260821040404.268123-2-richard.henderson@linaro.org>
+Subject: [PATCH v2 18/23] target/riscv: Use FLATTEN rather than ALWAYS_INLINE
+ for vector ldst
+Date: Thu, 20 Aug 2026 21:03:59 -0700
+Message-ID: <20260821040404.268123-19-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260821040404.268123-1-richard.henderson@linaro.org>
 References: <20260821040404.268123-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,151 +100,329 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Provide a helper that 1's element I for all NF vectors.
-For the callers, this performs the element mask test once
-instead of NF times.
+It turns out there are fewer places that need annotation if we
+just flatten from the outer helper macros instead of everything
+along the call stack.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/riscv/tcg/vector_helper.c | 69 ++++++++++++++++----------------
- 1 file changed, 34 insertions(+), 35 deletions(-)
+ target/riscv/tcg/vector_helper.c | 147 +++++++++++++++----------------
+ 1 file changed, 70 insertions(+), 77 deletions(-)
 
 diff --git a/target/riscv/tcg/vector_helper.c b/target/riscv/tcg/vector_helper.c
-index e28d8a3d9f..20a8f95efb 100644
+index f65da46144..c5b4085f9c 100644
 --- a/target/riscv/tcg/vector_helper.c
 +++ b/target/riscv/tcg/vector_helper.c
-@@ -328,6 +328,15 @@ static void vext_set_tail_elems_1s(uint32_t vl, void *vd,
-     }
+@@ -158,7 +158,7 @@ static inline void vext_set_elem_mask(void *v0, int index,
+     ((uint64_t *)v0)[idx] = deposit64(old, pos, 1, value);
  }
  
-+static void vext_set_nf_elems_1s(void *vd, uint32_t i, uint32_t nf,
-+                                 uint32_t esz, uint32_t max_elems)
-+{
-+    for (uint32_t k = 0; k < nf; ++k) {
-+        vext_set_elems_1s(vd, true, (i + k * max_elems) * esz,
-+                          (i + k * max_elems + 1) * esz);
-+    }
-+}
-+
- /*
-  * stride: access vector element from strided memory
+-static inline MemOpIdx vext_oi(uint32_t desc, MemOp memop)
++static MemOpIdx vext_oi(uint32_t desc, MemOp memop)
+ {
+     uint32_t data = simd_data(desc);
+ 
+@@ -178,20 +178,18 @@ typedef void vext_ldst_elem_fn_tlb(CPURISCVState *env, abi_ptr addr,
+ typedef void vext_ldst_elem_fn_host(void *vd, uint32_t idx, void *host);
+ 
+ #define GEN_VEXT_TLB_LD_ELEM(NAME, ETYPE, H, LDSUF)                     \
+-static inline QEMU_ALWAYS_INLINE                                        \
+-void NAME##_tlb(CPURISCVState *env, abi_ptr addr, uint32_t idx,         \
+-                void *vd, MemOpIdx oi, uintptr_t retaddr)               \
++static void NAME##_tlb(CPURISCVState *env, abi_ptr addr, uint32_t idx,  \
++                       void *vd, MemOpIdx oi, uintptr_t retaddr)        \
+ {                                                                       \
+     ETYPE *cur = ((ETYPE *)vd + H(idx));                                \
+     *cur = cpu_##LDSUF##_mmu(env, addr, oi, retaddr);                   \
+ }
+ 
+-#define GEN_VEXT_HOST_LD_ELEM(NAME, ETYPE, H, LDSUF)        \
+-static inline QEMU_ALWAYS_INLINE                            \
+-void NAME##_host(void *vd, uint32_t idx, void *host)        \
+-{                                                           \
+-    ETYPE *cur = ((ETYPE *)vd + H(idx));                    \
+-    *cur = (ETYPE)LDSUF##_p(host);                          \
++#define GEN_VEXT_HOST_LD_ELEM(NAME, ETYPE, H, LDSUF)                    \
++static void NAME##_host(void *vd, uint32_t idx, void *host)             \
++{                                                                       \
++    ETYPE *cur = ((ETYPE *)vd + H(idx));                                \
++    *cur = (ETYPE)LDSUF##_p(host);                                      \
+ }
+ 
+ GEN_VEXT_TLB_LD_ELEM(lde_b, uint8_t,  H1, ldb)
+@@ -205,20 +203,18 @@ GEN_VEXT_HOST_LD_ELEM(lde_w, uint32_t, H4, ldl_le)
+ GEN_VEXT_HOST_LD_ELEM(lde_d, uint64_t, H8, ldq_le)
+ 
+ #define GEN_VEXT_TLB_ST_ELEM(NAME, ETYPE, H, STSUF)                     \
+-static inline QEMU_ALWAYS_INLINE                                        \
+-void NAME##_tlb(CPURISCVState *env, abi_ptr addr, uint32_t idx,         \
++static void NAME##_tlb(CPURISCVState *env, abi_ptr addr, uint32_t idx,  \
+                 void *vd, MemOpIdx oi, uintptr_t retaddr)               \
+ {                                                                       \
+     ETYPE data = *((ETYPE *)vd + H(idx));                               \
+     cpu_##STSUF##_mmu(env, addr, data, oi, retaddr);                    \
+ }
+ 
+-#define GEN_VEXT_HOST_ST_ELEM(NAME, ETYPE, H, STSUF)        \
+-static inline QEMU_ALWAYS_INLINE                            \
+-void NAME##_host(void *vd, uint32_t idx, void *host)        \
+-{                                                           \
+-    ETYPE data = *((ETYPE *)vd + H(idx));                   \
+-    STSUF##_p(host, data);                                  \
++#define GEN_VEXT_HOST_ST_ELEM(NAME, ETYPE, H, STSUF)                    \
++static void NAME##_host(void *vd, uint32_t idx, void *host)             \
++{                                                                       \
++    ETYPE data = *((ETYPE *)vd + H(idx));                               \
++    STSUF##_p(host, data);                                              \
+ }
+ 
+ GEN_VEXT_TLB_ST_ELEM(ste_b, uint8_t,  H1, stb)
+@@ -308,9 +304,9 @@ vext_ldst_stride(void *vd, void *v0, target_ulong base, target_ulong stride,
+ }
+ 
+ #define GEN_VEXT_LD_STRIDE(NAME, ETYPE, LOAD_FN)                        \
+-void HELPER(NAME)(void *vd, void * v0, target_ulong base,               \
+-                  target_ulong stride, CPURISCVState *env,              \
+-                  uint32_t desc)                                        \
++QEMU_FLATTEN void HELPER(NAME)(void *vd, void * v0, target_ulong base,  \
++                               target_ulong stride, CPURISCVState *env, \
++                               uint32_t desc)                           \
+ {                                                                       \
+     uint32_t vm = vext_vm(desc);                                        \
+     vext_ldst_stride(vd, v0, base, stride, env, desc, vm, LOAD_FN,      \
+@@ -323,9 +319,9 @@ GEN_VEXT_LD_STRIDE(vlse32_v, int32_t, lde_w_tlb)
+ GEN_VEXT_LD_STRIDE(vlse64_v, int64_t, lde_d_tlb)
+ 
+ #define GEN_VEXT_ST_STRIDE(NAME, ETYPE, STORE_FN)                       \
+-void HELPER(NAME)(void *vd, void *v0, target_ulong base,                \
+-                  target_ulong stride, CPURISCVState *env,              \
+-                  uint32_t desc)                                        \
++QEMU_FLATTEN void HELPER(NAME)(void *vd, void *v0, target_ulong base,   \
++                               target_ulong stride, CPURISCVState *env, \
++                               uint32_t desc)                           \
+ {                                                                       \
+     uint32_t vm = vext_vm(desc);                                        \
+     vext_ldst_stride(vd, v0, base, stride, env, desc, vm, STORE_FN,     \
+@@ -342,7 +338,7 @@ GEN_VEXT_ST_STRIDE(vsse64_v, int64_t, ste_d_tlb)
   */
-@@ -337,7 +346,6 @@ vext_ldst_stride(void *vd, void *v0, target_ulong base, target_ulong stride,
-                  vext_ldst_elem_fn_tlb *ldst_elem, uint32_t log2_esz,
-                  uintptr_t ra)
+ 
+ /* unmasked unit-stride load and store operation */
+-static inline QEMU_ALWAYS_INLINE void
++static void
+ vext_page_ldst_us_host(void *vd, void *host, uint32_t i, uint32_t evl,
+                        uint32_t nf, uint32_t log2_esz, uint32_t max_elems,
+                        vext_ldst_elem_fn_host *ldst_host, bool is_load)
+@@ -372,7 +368,7 @@ vext_page_ldst_us_host(void *vd, void *host, uint32_t i, uint32_t evl,
+     }
+ }
+ 
+-static inline QEMU_ALWAYS_INLINE void
++static void
+ vext_page_ldst_us_tlb(CPURISCVState *env, void *vd, target_ulong addr,
+                       uint32_t i, uint32_t evl, uint32_t nf,
+                       uint32_t log2_esz, uint32_t max_elems,
+@@ -403,7 +399,7 @@ static void vext_test_alignment(CPURISCVState *env, vaddr addr, uint32_t esz,
+     }
+ }
+ 
+-static inline QEMU_ALWAYS_INLINE void
++static void
+ vext_ldst_us_notail(void *vd, target_ulong base, CPURISCVState *env,
+                     uint32_t log2_esz, uint32_t nf, uint32_t evl,
+                     uint32_t max_elems, bool vma,
+@@ -499,7 +495,7 @@ vext_ldst_us_notail(void *vd, target_ulong base, CPURISCVState *env,
+     }
+ }
+ 
+-static inline QEMU_ALWAYS_INLINE void
++static void
+ vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
+              vext_ldst_elem_fn_tlb *ldst_tlb,
+              vext_ldst_elem_fn_host *ldst_host, uint32_t log2_esz,
+@@ -521,20 +517,19 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
+  * stride, stride = NF * sizeof (ETYPE)
+  */
+ 
+-#define GEN_VEXT_LD_US(NAME, ETYPE, LOAD_FN_TLB, LOAD_FN_HOST)      \
+-void HELPER(NAME##_mask)(void *vd, void *v0, target_ulong base,     \
+-                         CPURISCVState *env, uint32_t desc)         \
+-{                                                                   \
+-    uint32_t stride = vext_nf(desc) << ctzl(sizeof(ETYPE));         \
+-    vext_ldst_stride(vd, v0, base, stride, env, desc, false,        \
+-                     LOAD_FN_TLB, ctzl(sizeof(ETYPE)), GETPC());    \
+-}                                                                   \
+-                                                                    \
+-void HELPER(NAME)(void *vd, void *v0, target_ulong base,            \
+-                  CPURISCVState *env, uint32_t desc)                \
+-{                                                                   \
+-    vext_ldst_us(vd, base, env, desc, LOAD_FN_TLB, LOAD_FN_HOST,    \
+-                 ctzl(sizeof(ETYPE)), env->vl, GETPC(), true);      \
++#define GEN_VEXT_LD_US(NAME, ETYPE, LOAD_FN_TLB, LOAD_FN_HOST)          \
++QEMU_FLATTEN void HELPER(NAME##_mask)(void *vd, void *v0,               \
++    target_ulong base, CPURISCVState *env, uint32_t desc)               \
++{                                                                       \
++    uint32_t stride = vext_nf(desc) << ctzl(sizeof(ETYPE));             \
++    vext_ldst_stride(vd, v0, base, stride, env, desc, false,            \
++                     LOAD_FN_TLB, ctzl(sizeof(ETYPE)), GETPC());        \
++}                                                                       \
++QEMU_FLATTEN void HELPER(NAME)(void *vd, void *v0, target_ulong base,   \
++                               CPURISCVState *env, uint32_t desc)       \
++{                                                                       \
++    vext_ldst_us(vd, base, env, desc, LOAD_FN_TLB, LOAD_FN_HOST,        \
++                 ctzl(sizeof(ETYPE)), env->vl, GETPC(), true);          \
+ }
+ 
+ GEN_VEXT_LD_US(vle8_v,  int8_t,  lde_b_tlb, lde_b_host)
+@@ -543,16 +538,15 @@ GEN_VEXT_LD_US(vle32_v, int32_t, lde_w_tlb, lde_w_host)
+ GEN_VEXT_LD_US(vle64_v, int64_t, lde_d_tlb, lde_d_host)
+ 
+ #define GEN_VEXT_ST_US(NAME, ETYPE, STORE_FN_TLB, STORE_FN_HOST)         \
+-void HELPER(NAME##_mask)(void *vd, void *v0, target_ulong base,          \
+-                         CPURISCVState *env, uint32_t desc)              \
++QEMU_FLATTEN void HELPER(NAME##_mask)(void *vd, void *v0,                \
++    target_ulong base, CPURISCVState *env, uint32_t desc)                \
+ {                                                                        \
+     uint32_t stride = vext_nf(desc) << ctzl(sizeof(ETYPE));              \
+     vext_ldst_stride(vd, v0, base, stride, env, desc, false,             \
+                      STORE_FN_TLB, ctzl(sizeof(ETYPE)), GETPC());        \
+ }                                                                        \
+-                                                                         \
+-void HELPER(NAME)(void *vd, void *v0, target_ulong base,                 \
+-                  CPURISCVState *env, uint32_t desc)                     \
++QEMU_FLATTEN void HELPER(NAME)(void *vd, void *v0, target_ulong base,    \
++                               CPURISCVState *env, uint32_t desc)        \
+ {                                                                        \
+     vext_ldst_us(vd, base, env, desc, STORE_FN_TLB, STORE_FN_HOST,       \
+                  ctzl(sizeof(ETYPE)), env->vl, GETPC(), false);          \
+@@ -566,8 +560,8 @@ GEN_VEXT_ST_US(vse64_v, int64_t, ste_d_tlb, ste_d_host)
+ /*
+  * unit stride mask load and store, EEW = 1
+  */
+-void HELPER(vlm_v)(void *vd, void *v0, target_ulong base,
+-                    CPURISCVState *env, uint32_t desc)
++QEMU_FLATTEN void HELPER(vlm_v)(void *vd, void *v0, target_ulong base,
++                                CPURISCVState *env, uint32_t desc)
  {
--    uint32_t i, k;
-     uint32_t nf = vext_nf(desc);
-     uint32_t max_elems = vext_max_elems(desc, log2_esz);
-     uint32_t esz = 1 << log2_esz;
-@@ -345,23 +353,21 @@ vext_ldst_stride(void *vd, void *v0, target_ulong base, target_ulong stride,
- 
-     VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
--    for (i = env->vstart; i < env->vl; env->vstart = ++i) {
--        k = 0;
--        while (k < nf) {
--            if (!vm && !vext_elem_mask(v0, i)) {
--                /* set masked-off elements to 1s */
--                vext_set_elems_1s(vd, vma, (i + k * max_elems) * esz,
--                                  (i + k * max_elems + 1) * esz);
--                k++;
--                continue;
-+    for (uint32_t i = env->vstart; i < env->vl; env->vstart = ++i) {
-+        if (!vm && !vext_elem_mask(v0, i)) {
-+            if (vma) {
-+                vext_set_nf_elems_1s(vd, i, nf, esz, max_elems);
-             }
-+            continue;
-+        }
-+
-+        for (uint32_t k = 0; k < nf; ++k) {
-             target_ulong addr = base + stride * i + (k << log2_esz);
-             ldst_elem(env, adjust_addr(env, addr), i + k * max_elems, vd, ra);
--            k++;
-         }
-     }
--    env->vstart = 0;
- 
-+    env->vstart = 0;
-     vext_set_tail_elems_1s(env->vl, vd, desc, nf, esz, max_elems);
+     /* evl = ceil(vl/8) */
+     uint8_t evl = (env->vl + 7) >> 3;
+@@ -575,8 +569,8 @@ void HELPER(vlm_v)(void *vd, void *v0, target_ulong base,
+                  0, evl, GETPC(), true);
  }
  
-@@ -632,7 +638,6 @@ vext_ldst_index(void *vd, void *v0, target_ulong base,
-                 vext_ldst_elem_fn_tlb *ldst_elem,
-                 uint32_t log2_esz, uintptr_t ra)
+-void HELPER(vsm_v)(void *vd, void *v0, target_ulong base,
+-                    CPURISCVState *env, uint32_t desc)
++QEMU_FLATTEN void HELPER(vsm_v)(void *vd, void *v0, target_ulong base,
++                                CPURISCVState *env, uint32_t desc)
  {
--    uint32_t i, k;
-     uint32_t nf = vext_nf(desc);
-     uint32_t vm = vext_vm(desc);
-     uint32_t max_elems = vext_max_elems(desc, log2_esz);
-@@ -641,24 +646,21 @@ vext_ldst_index(void *vd, void *v0, target_ulong base,
+     /* evl = ceil(vl/8) */
+     uint8_t evl = (env->vl + 7) >> 3;
+@@ -602,7 +596,7 @@ GEN_VEXT_GET_INDEX_ADDR(idx_h, uint16_t, H2)
+ GEN_VEXT_GET_INDEX_ADDR(idx_w, uint32_t, H4)
+ GEN_VEXT_GET_INDEX_ADDR(idx_d, uint64_t, H8)
  
-     VSTART_CHECK_EARLY_EXIT(env, env->vl);
- 
--    /* load bytes from guest memory */
--    for (i = env->vstart; i < env->vl; env->vstart = ++i) {
--        k = 0;
--        while (k < nf) {
--            if (!vm && !vext_elem_mask(v0, i)) {
--                /* set masked-off elements to 1s */
--                vext_set_elems_1s(vd, vma, (i + k * max_elems) * esz,
--                                  (i + k * max_elems + 1) * esz);
--                k++;
--                continue;
-+    for (uint32_t i = env->vstart; i < env->vl; env->vstart = ++i) {
-+        if (!vm && !vext_elem_mask(v0, i)) {
-+            if (vma) {
-+                vext_set_nf_elems_1s(vd, i, nf, esz, max_elems);
-             }
-+            continue;
-+        }
-+
-+        for (uint32_t k = 0; k < nf; ++k) {
-             abi_ptr addr = get_index_addr(base, i, vs2) + (k << log2_esz);
-             ldst_elem(env, adjust_addr(env, addr), i + k * max_elems, vd, ra);
--            k++;
-         }
-     }
--    env->vstart = 0;
- 
-+    env->vstart = 0;
+-static inline void
++static void
+ vext_ldst_index(void *vd, void *v0, target_ulong base,
+                 void *vs2, CPURISCVState *env, uint32_t desc,
+                 vext_get_index_addr get_index_addr,
+@@ -637,12 +631,12 @@ vext_ldst_index(void *vd, void *v0, target_ulong base,
      vext_set_tail_elems_1s(env->vl, vd, desc, nf, esz, max_elems);
  }
  
-@@ -824,25 +826,22 @@ ProbeSuccess:
-             }
-         } else {
-             for (i = env->vstart; i < env->vl; i++) {
--                k = 0;
--                while (k < nf) {
--                    if (!vext_elem_mask(v0, i)) {
--                        /* set masked-off elements to 1s */
--                        vext_set_elems_1s(vd, vma, (i + k * max_elems) * esz,
--                                          (i + k * max_elems + 1) * esz);
--                        k++;
--                        continue;
-+                if (!vext_elem_mask(v0, i)) {
-+                    if (vma) {
-+                        vext_set_nf_elems_1s(vd, i, nf, esz, max_elems);
-                     }
-+                    continue;
-+                }
-+                for (k = 0; k < nf; ++k) {
-                     addr = base + ((i * nf + k) << log2_esz);
-                     ldst_tlb(env, adjust_addr(env, addr), i + k * max_elems,
-                              vd, ra);
--                    k++;
-                 }
-             }
-         }
-     }
--    env->vstart = 0;
+-#define GEN_VEXT_LD_INDEX(NAME, ETYPE, INDEX_FN, LOAD_FN)                  \
+-void HELPER(NAME)(void *vd, void *v0, target_ulong base,                   \
+-                  void *vs2, CPURISCVState *env, uint32_t desc)            \
+-{                                                                          \
+-    vext_ldst_index(vd, v0, base, vs2, env, desc, INDEX_FN,                \
+-                    LOAD_FN, ctzl(sizeof(ETYPE)), GETPC());                \
++#define GEN_VEXT_LD_INDEX(NAME, ETYPE, INDEX_FN, LOAD_FN)               \
++QEMU_FLATTEN void HELPER(NAME)(void *vd, void *v0, target_ulong base,   \
++                               void *vs2, CPURISCVState *env, uint32_t desc) \
++{                                                                       \
++    vext_ldst_index(vd, v0, base, vs2, env, desc, INDEX_FN,             \
++                    LOAD_FN, ctzl(sizeof(ETYPE)), GETPC());             \
+ }
  
-+    env->vstart = 0;
+ GEN_VEXT_LD_INDEX(vlxei8_8_v,   int8_t,  idx_b, lde_b_tlb)
+@@ -662,13 +656,12 @@ GEN_VEXT_LD_INDEX(vlxei64_16_v, int16_t, idx_d, lde_h_tlb)
+ GEN_VEXT_LD_INDEX(vlxei64_32_v, int32_t, idx_d, lde_w_tlb)
+ GEN_VEXT_LD_INDEX(vlxei64_64_v, int64_t, idx_d, lde_d_tlb)
+ 
+-#define GEN_VEXT_ST_INDEX(NAME, ETYPE, INDEX_FN, STORE_FN)       \
+-void HELPER(NAME)(void *vd, void *v0, target_ulong base,         \
+-                  void *vs2, CPURISCVState *env, uint32_t desc)  \
+-{                                                                \
+-    vext_ldst_index(vd, v0, base, vs2, env, desc, INDEX_FN,      \
+-                    STORE_FN, ctzl(sizeof(ETYPE)),               \
+-                    GETPC());                                    \
++#define GEN_VEXT_ST_INDEX(NAME, ETYPE, INDEX_FN, STORE_FN)              \
++QEMU_FLATTEN void HELPER(NAME)(void *vd, void *v0, target_ulong base,   \
++                               void *vs2, CPURISCVState *env, uint32_t desc) \
++{                                                                       \
++    vext_ldst_index(vd, v0, base, vs2, env, desc, INDEX_FN,             \
++                    STORE_FN, ctzl(sizeof(ETYPE)), GETPC());            \
+ }
+ 
+ GEN_VEXT_ST_INDEX(vsxei8_8_v,   int8_t,  idx_b, ste_b_tlb)
+@@ -691,7 +684,7 @@ GEN_VEXT_ST_INDEX(vsxei64_64_v, int64_t, idx_d, ste_d_tlb)
+ /*
+  * unit-stride fault-only-fisrt load instructions
+  */
+-static inline void
++static void
+ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
+           uint32_t desc, vext_ldst_elem_fn_tlb *ldst_tlb,
+           vext_ldst_elem_fn_host *ldst_host, uint32_t log2_esz, uintptr_t ra)
+@@ -922,12 +915,12 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
      vext_set_tail_elems_1s(env->vl, vd, desc, nf, esz, max_elems);
  }
  
+-#define GEN_VEXT_LDFF(NAME, ETYPE, LOAD_FN_TLB, LOAD_FN_HOST)   \
+-void HELPER(NAME)(void *vd, void *v0, target_ulong base,        \
+-                  CPURISCVState *env, uint32_t desc)            \
+-{                                                               \
+-    vext_ldff(vd, v0, base, env, desc, LOAD_FN_TLB,             \
+-              LOAD_FN_HOST, ctzl(sizeof(ETYPE)), GETPC());      \
++#define GEN_VEXT_LDFF(NAME, ETYPE, LOAD_FN_TLB, LOAD_FN_HOST)           \
++QEMU_FLATTEN void HELPER(NAME)(void *vd, void *v0, target_ulong base,   \
++                               CPURISCVState *env, uint32_t desc)       \
++{                                                                       \
++    vext_ldff(vd, v0, base, env, desc, LOAD_FN_TLB,                     \
++              LOAD_FN_HOST, ctzl(sizeof(ETYPE)), GETPC());              \
+ }
+ 
+ GEN_VEXT_LDFF(vle8ff_v,  int8_t,  lde_b_tlb, lde_b_host)
+@@ -948,7 +941,7 @@ GEN_VEXT_LDFF(vle64ff_v, int64_t, lde_d_tlb, lde_d_host)
+ /*
+  * load and store whole register instructions
+  */
+-static inline QEMU_ALWAYS_INLINE void
++static void
+ vext_ldst_whole(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
+                 vext_ldst_elem_fn_tlb *ldst_tlb,
+                 vext_ldst_elem_fn_host *ldst_host, uint32_t log2_esz,
+@@ -963,8 +956,8 @@ vext_ldst_whole(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
+ }
+ 
+ #define GEN_VEXT_LD_WHOLE(NAME, ETYPE, LOAD_FN_TLB, LOAD_FN_HOST)   \
+-void HELPER(NAME)(void *vd, target_ulong base, CPURISCVState *env,  \
+-                  uint32_t desc)                                    \
++QEMU_FLATTEN void HELPER(NAME)(void *vd, target_ulong base,         \
++                               CPURISCVState *env, uint32_t desc)   \
+ {                                                                   \
+     vext_ldst_whole(vd, base, env, desc, LOAD_FN_TLB, LOAD_FN_HOST, \
+                     ctzl(sizeof(ETYPE)), GETPC(), true);            \
+@@ -988,8 +981,8 @@ GEN_VEXT_LD_WHOLE(vl8re32_v, int32_t, lde_w_tlb, lde_w_host)
+ GEN_VEXT_LD_WHOLE(vl8re64_v, int64_t, lde_d_tlb, lde_d_host)
+ 
+ #define GEN_VEXT_ST_WHOLE(NAME, ETYPE, STORE_FN_TLB, STORE_FN_HOST)     \
+-void HELPER(NAME)(void *vd, target_ulong base, CPURISCVState *env,      \
+-                  uint32_t desc)                                        \
++QEMU_FLATTEN void HELPER(NAME)(void *vd, target_ulong base,             \
++                               CPURISCVState *env, uint32_t desc)       \
+ {                                                                       \
+     vext_ldst_whole(vd, base, env, desc, STORE_FN_TLB, STORE_FN_HOST,   \
+                     ctzl(sizeof(ETYPE)), GETPC(), false);               \
 -- 
 2.43.0
 
