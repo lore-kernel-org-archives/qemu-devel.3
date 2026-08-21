@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1334C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:42:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0D5DC5DF89
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 12:01:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxNd3-00011M-MB; Fri, 21 Aug 2026 07:41:45 -0400
+	id 1wxNvi-0004Qe-24; Fri, 21 Aug 2026 08:01:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxNd1-00010u-I2
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:41:43 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1wxNvT-0004M9-69
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 08:00:49 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxNcz-0000T8-Nx
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:41:43 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4998590d392so7494995e9.0
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:41:41 -0700 (PDT)
+ id 1wxNvQ-000548-0b
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 08:00:45 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-496bb7cdf51so8734105e9.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 05:00:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787312500; x=1787917300; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=upTdKsMlqEl4z/2IvDUxBIfujT7J8Jlu0FB1+sSl9SE=;
- b=i6igQdap/kIW13ArKcsCRGVUGhPSdTyuLPTjxsBfckZsZZV5NgKZIuZXzSwbP6NNc5
- 0eykX0OfFs55oxvy2gYz8UCSIk062TPBickY0b74o3ljFg7Q2s1u7ojTIy8u1Fqd0Di2
- SEFxeWQZYFamCHrRe/z5dzGwsYokbao9nManOrXDL569R5BzOWFNYyE79vTsK5pMBjMB
- 2Jp1PCg3itdZigv9/J0K4kQfUe9FECLU5zc4QZhkWqNZkUlveS75XcdfWyg9qSJH5s8j
- zI7EM947S30p1TzHZEuAuRltZijvpYehpxA3dHLp5eMVTxXsKvD8GiidLBTZbGgcqU8N
- IgMw==
+ d=linaro.org; s=google; t=1787313640; x=1787918440; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=iDp4JFzF0yKxoajjfXO1PCWxHO5x9h0WjZDpv8t289M=;
+ b=oTIGy83SY4RmUn6iXZxTdaZRiFgGaCuOFG9cq4XNGh/pVKMJqGSSRrPDQPsd9MUBcv
+ i0tRPH1Spocg9gq8yL7vLF8zPqRCVu6h79hnh25+xySNMrH4mt7o5CCm4HuQFCB5nWkS
+ uUrzh13nT2OHaoQDIWoiuV7Qth6VfRp36kk3N73w/lnEDEjePwYw0GSxNUeFKiWANo8z
+ zbVpB9PFEAfZIIwMAEcLAGRXZEt/DwiHWzHifs7+FpWyf+WzjxhFTA1uhTwI2Bo7Cu0V
+ cEfChfIENX/nEcT3S/HYpUlEHaxfUeHq/I09Nhe/rIKWZcNhK/Er3o4sfbcW41qiaJSp
+ UPIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787312500; x=1787917300;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=upTdKsMlqEl4z/2IvDUxBIfujT7J8Jlu0FB1+sSl9SE=;
- b=KRJE63lehy6+DIfev7E0LyqSZE/pLi4gldSV70g1mB50VNtuRHZAh9wwLc2aw48AtC
- Iig5xyNcBV1Xz7+EcP1M/N4hoJNwzwx2HPFmlx6E1C8I/9p/R3WJ3TDQ+Xu/3slakW65
- JvkigB8pEglkr3sjU1AN7R6x5+4yX7UxG+dEQFIWdox33XAA4O0/DWHNQNXV7wfVwATS
- G6MGZP9WtKbIef/us3av7JKCOJ1lqMCYk7m3V+ZJISHnSkaUkAXhM6KiHf4NyhlvKqkB
- b5JKWtI7qlBtEDKE66RJ9ARIcE9VTwPFNe3YIMNSH/SBNiP62bXzjLKnA1ZwWOR3Bgi8
- G6Ew==
+ d=1e100.net; s=20251104; t=1787313640; x=1787918440;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=iDp4JFzF0yKxoajjfXO1PCWxHO5x9h0WjZDpv8t289M=;
+ b=oktBHs5GjRGmE3cG5PHhXnqGdFqF2ovfKzOjpINgYbtg2zAKo/0F6YMQ+ISPvAceYO
+ TAzdT2bgzs4I+jL6zNtevVkJNx0y/ywT63culzk8ss0wN3PIu0wJQiSCzaUtaKJQ88gv
+ Q3TYKDjD9d+RTbZKWJmvDP2GOczs70P8xONdSl5sODfZ5AQz4c3OGOdISKIL3qXbaBQk
+ f4c/siSCWQCL+onQofHI+aVGDyTE/UDP6imDu+mmMSqK6j7zMeCO0T+yWT8wC8HFa6pK
+ mzq3JWJg4QziVh6OKotjTxK6MGZk39rCa78yZDY7guaRcLoDM8n4nsf5X27CHJJXD0Qx
+ /m4A==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rr6r6N3s9fg+O3sVAKrr3c2DWkJTlgHF+Do5MQzQcuSBpzgP/00M44xsD6g1ukTNRdBvnkz4Di0ix30@nongnu.org
-X-Gm-Message-State: AOJu0Yx6VYSA7h5d/Ve9pqkeSfnhHnx82P44IClweqA1avA3HpqE9SWD
- 1qhiM3bO/SIkot9GpxxNdqqy3/K8meCwakxpjxebftNTEDHdebNwQqMynHtsFg88CbA=
-X-Gm-Gg: AR+sD10anO98zXdKQ+Xh/oqjOu/lNwf2lWPrsTrFT2airc3CtW2yZdiSaOAPVHm6Aol
- yOAvqtPTmUfueRi9xnXHxqOHkZlBqQj9BmeZx/Zx8xbr7sxg7rWQ7UC/3KeNrPT/4HptmD6Ajek
- Ocz6VKYqMTDu0xOSf714+NFy8RTzSwhv2CESZy0oETsrZZFawRcvDcQuqIgeY7c5zBuT/hc74AL
- YePQWJv+6pD9tlRE2gYsdVu2GXk8nWPaI8TASMcJLSIzv4RH13gkfYSrdnrJ1rIkoGGxNOREMRw
- TsZibZEOJU7ik1IwhVlx+jfnG2PbkXe94mmsznzCasgJNot7oxo7AbvNbOu646oiWMs7BnVAE1X
- KP37H+/1OfVa9to3OOp1Lp4HnD/dpEgLxl/GO9FGdzPYVXueQE32bPIT8gRW+p1VgxgX6uWoaps
- e+ONuKAwl8yBrrEZHAb9AedO05rh+0TO53j02OLZJuhwTdDY0TrQCsoZ1KzmYdg98PChWLfDRY8
- 6SvFQPGnOsjnm6dosxxvONPgd3zuHEuJe0wXNHgIrPRi6gbFJ00XZP1vcMRBsYC5nedjA==
-X-Received: by 2002:a05:600c:e549:20b0:499:b65e:49c9 with SMTP id
- 5b1f17b1804b1-499b8343decmr66361255e9.10.1787312499780; 
- Fri, 21 Aug 2026 04:41:39 -0700 (PDT)
+ AHgh+RpsPySKx1LkYFYeKDZ/zXy23IDexaJ0d6lXC9jgkIWnbaqX5/rHBTTXGm6ch969l/2KU0/UyxQehQvL@nongnu.org
+X-Gm-Message-State: AOJu0YwlXXOvMxjuJTxY5NAqg2LBVO7XJ9NcsgAKZjNqzItt3Vsprb/2
+ 3GdAWxUHzFjMxcBSzCx+tc8wREpSL8h7qOIsJvxlEKizlvYYr3LVUebIYl1OiNjVOexa6W/wJ5q
+ T0Os0
+X-Gm-Gg: AR+sD138N/cbjtKU67BPGO0jFfZ06AhdhnN5bppxi7kC5yn1b7h1H4/4f/cPhzapyhf
+ FCfI4up/C+fRPAInwk2dDwtp2wgcxi+/rnNeFkNBMAxPYkykDv50m3NGJcFMjPu30p1JOks2LQQ
+ pUSiTEcUoFYEl8EArnxO568uW9+eisS9xhB3s5KbNiASegNGkt4MB6Xfw5XvSXLTw58WoQ8wEqb
+ xaHpqAjYiTHzxzQ+AFfhWDoR0p7h9hcSOhrsITYZfklqBOCL7X4xLgMC+hMwXKFMOkoJ5yUfXqw
+ T+OVUYmvTFFRXwK5SqcXJlVLDMhzkB5UAZXN13SideIUYahvZWgh16H0n+58Q18iLRYJs2uOm7Z
+ Vv5zgCyUenQ0Ni27Gk9RHuVqPJdFnV2OL/fkBJ6PgH6hW9y4+GIjtP/Law1WCzUraxBmV0npeIO
+ l/H6kZ3HaDXgQqwB4i8TGixEp0dr77v99KMioFNUOAD4+q9fbTJEVAjiIcnJAFf+ImfPd8lF+LY
+ PxFWqEzUpx6rJvzQyJ7z+QAdcKIbKPWJdrIfu/euOaKZzB4fsSUXeQ18qnL19WbWvkrow==
+X-Received: by 2002:a05:600c:4f54:b0:496:bbce:fc with SMTP id
+ 5b1f17b1804b1-499b8354a65mr69967595e9.12.1787313639925; 
+ Fri, 21 Aug 2026 05:00:39 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b90d67bfsm24393725e9.3.2026.08.21.04.41.38
+ 5b1f17b1804b1-499b911724bsm24219315e9.15.2026.08.21.05.00.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 04:41:38 -0700 (PDT)
+ Fri, 21 Aug 2026 05:00:37 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2] target/arm: Correct reset value of SCTLR for arm926,
- arm1026
-Date: Fri, 21 Aug 2026 12:41:38 +0100
-Message-ID: <20260821114138.4068582-1-peter.maydell@linaro.org>
+Subject: [PATCH] target/arm: Don't provide TLBTR for pre-v6 CPUs
+Date: Fri, 21 Aug 2026 13:00:36 +0100
+Message-ID: <20260821120036.4161792-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,56 +100,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For the arm926 CPU we reset the SCTLR to 0x00090078.  This is not the
-value specified in the ARM926EJ-S TRM (ARM DDI 0198E), which states
-that bits 16 and 18 are SBO, bit 17 is SBZ, and bits [31:19] are SBZ.
-It's also not the value seen on real hardware.
+The TLBTR register (encoding cp15, 0, c0, c0, 3) is listed in the v7A
+Arm ARM appendix O as being present in v4 and v5 (section O.7.1,
+diagram "Organization of CP15 registers in an ARMv4 or ARMv5 VMSA
+implementation").  However, it isn't listed in the v5 Arm ARM, and
+checking individual TRMs for the arm926, arm1026, sa1100, sa1110 and
+ti925 shows that none of them implement it, so it seems much more
+likely that TLBTR was new for v6.  It's also confirmed not to be
+present on a real arm926.
 
-Similarly, for the arm1026 we use the same SCTLR reset value but
-the TRM says that bits 18 and 16 are the SBO ones.
+Gate the register on ARM_FEATURE_V6 being present; this means that on
+pre-v6 cores the encoding will fall back to reporting the MIDR (due
+to the CP_ANY wildcarding), matching the hardware behaviour.
 
-This has been wrong in QEMU since 2007 when we first started actively
-resetting the SCTLR to some fixed value rather than zero.
+We can also remove the "make id_tlbtr_reginfo r/w for strongarm and
+omap" code, because those CPUs are pre-v6 so won't be using that
+reginfo struct now.
 
-This wrong value didn't affect any of QEMU's behaviour, because we
-don't implement any handling of the old pre-v6 meanings of these bits
-(which were IMPDEF), and their v8 reuse is guarded by appropriate
-version checks.
-
-Correct the reset values to 0x00050078 (i.e set bit 18 and not 19).
-
-Cc: qemu-stable@nongnu.org
-Fixes: 610c3c8afd99f4f11 ("Reset ARM cp15.c1_sys to default values. Fix XScale cp15 accesses.")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4202
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4207
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
-v2: fix arm1026 as well, since RTH found its TRM
----
- target/arm/tcg/cpu32.c | 4 ++--
+ target/arm/helper.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-index 8220d785f5b..c49265e673c 100644
---- a/target/arm/tcg/cpu32.c
-+++ b/target/arm/tcg/cpu32.c
-@@ -33,7 +33,7 @@ static void arm926_initfn(Object *obj)
-     cpu->midr = 0x41069265;
-     cpu->reset_fpsid = 0x41011090;
-     cpu->ctr = 0x1dd20d2;
--    cpu->reset_sctlr = 0x00090078;
-+    cpu->reset_sctlr = 0x00050078;
- 
-     /*
-      * ARMv5 does not have the ID_ISAR registers, but we can still
-@@ -74,7 +74,7 @@ static void arm1026_initfn(Object *obj)
-     cpu->midr = 0x4106a262;
-     cpu->reset_fpsid = 0x410110a0;
-     cpu->ctr = 0x1dd20d2;
--    cpu->reset_sctlr = 0x00090078;
-+    cpu->reset_sctlr = 0x00050078;
-     cpu->reset_auxcr = 1;
- 
-     /*
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index af45234ad2a..db7a0c55380 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -7290,7 +7290,6 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+                 id_cp_reginfo[i].access = PL1_RW;
+             }
+             id_mpuir_reginfo.access = PL1_RW;
+-            id_tlbtr_reginfo.access = PL1_RW;
+         }
+         if (arm_feature(env, ARM_FEATURE_V8)) {
+             define_arm_cp_regs(cpu, id_v8_midr_cp_reginfo);
+@@ -7301,7 +7300,8 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+             define_arm_cp_regs(cpu, id_pre_v8_midr_cp_reginfo);
+         }
+         define_arm_cp_regs(cpu, id_cp_reginfo);
+-        if (!arm_feature(env, ARM_FEATURE_PMSA)) {
++        if (arm_feature(env, ARM_FEATURE_V6) &&
++            !arm_feature(env, ARM_FEATURE_PMSA)) {
+             define_one_arm_cp_reg(cpu, &id_tlbtr_reginfo);
+         } else if (arm_feature(env, ARM_FEATURE_PMSA) &&
+                    arm_feature(env, ARM_FEATURE_V8)) {
 -- 
 2.43.0
 
