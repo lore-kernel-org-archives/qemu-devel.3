@@ -4,92 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D14EC5DF87
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 10:49:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9B09C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 10:50:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxMnf-0003Fa-M7; Fri, 21 Aug 2026 06:48:39 -0400
+	id 1wxMp4-0003pn-FU; Fri, 21 Aug 2026 06:50:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wxMne-0003Es-4D
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 06:48:38 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wxMnc-0002iM-Ac
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 06:48:37 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-6a3fda88184so1550208a12.3
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 03:48:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wxMp3-0003m5-6T
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 06:50:05 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wxMp0-00035f-Mo
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 06:50:04 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67L9M1lo1895875
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 10:50:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ RXSFdJhduuq/vV0dSoh2i7hiqI/DLrn0WKuxvW2l1mE=; b=jSHD2uT9+Uu7LLDr
+ c5rFt2uITfugowPNazmZYv4w0L9T2Qczp6qzcWHvWIQ/zxhOELgmw4ttom4w0Nht
+ +UIjgjXFUgW0t9RGfK+a/Z2tAOQzflBd6vpdzq/jwOfF/eA98uMiPDOBMvZOPID0
+ qqRhxtrOS8vUB8o55F/JmXJObsWUc8sNfKdg7J0asNRLeKbXE77+D0x5qwctvi4I
+ 8tsMEqMgfbTUtH+3frundZyGm6pPLN6l/LvR5rpQ5Kb3aVZpviHA3HwHVrcpNHK2
+ E5BJNBmXpbbQs7sNGu0QkeD6RSTBzaznZN4wsoGdAQOK0ucTybO0QHpTKvlCSw+g
+ /iuGJQ==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g6gdn9720-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 10:50:01 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-51c01ff996dso10843641cf.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 03:50:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1787309314; x=1787914114; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=F+0CD52geVbAnj+JLHfj3iZ7QCvQAELc6Kfran7U1FM=;
- b=Atc3wTth7kAIqEOpzBbLsbftFuxt8CFcKcy5l+ZAyHtGlVYyJD4UDuHn3KkITU1WdR
- RJMRqphRqNg2FbKAkWY7FyLH5Ke1TrZFBg0HfXe03bh2p7euiI40GpryVt1nDbls2ab2
- DSHJvzP9b2xwFjrEFyfVZJ0a2t9gkV5dzgrIk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787309314; x=1787914114;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ d=oss.qualcomm.com; s=google; t=1787309401; x=1787914201; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=F+0CD52geVbAnj+JLHfj3iZ7QCvQAELc6Kfran7U1FM=;
- b=ZJUIqpUvYopUayXJj4fv01UQCe/GiNGFxiukDMBd5UqF2KYZYugCrWJWGpk+cugSKH
- LR9aglTf7YF5nKbF0muksgxbYtKHeHXxDMEc0TlrbQpBLwwftTZdiD6gwm7RP+EBkHXN
- OSWkCdxR6dCeVuxKUf8gd4iTwqtOc9X0wAw3h06GczMZzfIywEiFWQhIullGfHVeeYt1
- G+nZtYISCAYpMUXByIqp3ndP7sYPnFVAh2rl4b5bDMi+GSGESvkLYJNUU8XCMnSpfsVa
- d8xp8xvRu9cYrD1mWOxGhmbQ6mKvM53TRJhvhc4t6iojQlCgnUNbgX400Haqj0wBuDGo
- U2MQ==
-X-Gm-Message-State: AFuF++kQr6ufdvUSGIP7mytVS/MPQ14cK0ZB4/U5M/KVf8UBTgo0zbEG
- wO6m9B5Jxg4roHFCH75PGhIkNFSOz6gOavrOKI+uTXaPSLx79n2HkO6+b0a6ls5K23QsM7AcDMF
- ZoeFg
-X-Gm-Gg: AR+sD12ZGKPd41T00wzqsj8btRW+aOvBi63gK0ZOmjTBg83FeZtHZnAe9LZzvR8Wlrj
- oEsE6/Ed3VNXtsLZ4jQGcDAZRMOwuKk4RFqhqfej+qrEd4Oifjk4a+67hwkx4icHIR81GrzBMdK
- V6d5yzLRRKFfP+IKYRLib4H/4Osy4IcwZH+MYGgFyhfGpMm2YRncjcZTfwVM+jhewowJJlr1AjX
- lCC8miTNHx+fmWVU8O/LZRxY/Aw2ay4ToWmHIjoPIkdTEmVVN6DC8ppswl3Fj2Ch/UMrBEYMIKY
- oWh2415GNTbB9dk/W2pmdu0C6rMY/V7nqqdQ6efZUG1JPX3yl2XbRWS+wVi6p6GNN1e5YImNPNh
- thNJIjHIU2xsAzWJByYb4WuaGuWdLe4Mh0EKFmXz7v9OmiM2Usbl8uwOlUn9lJWhBoLw5bMZyhX
- F1tmUzWg4uB+6fwByljeb99iSX1ZZgpgNBDFr8Bg3CLrjonkszXx7pwx5chx9djO3Vxmnu1IpoJ
- qvuvml9BZcWex8aAoDq8bC9I5K4fR0buJnYuGi27i1FxpU+3LA24+mSxmI=
-X-Received: by 2002:a17:907:d649:b0:c19:6d4a:425b with SMTP id
- a640c23a62f3a-c246a626403mr490436766b.18.1787309314396; 
- Fri, 21 Aug 2026 03:48:34 -0700 (PDT)
-Received: from alex-laptop.lan
- (p200300cf573be100f155523960c6bbe7.dip0.t-ipconnect.de.
- [2003:cf:573b:e100:f155:5239:60c6:bbe7])
+ bh=RXSFdJhduuq/vV0dSoh2i7hiqI/DLrn0WKuxvW2l1mE=;
+ b=aAXPjyCzWBeD65U/T4aKkSXxiGQsqXAJe45QDJM/5GRtMQo+qzixl3Ra2t7Ug7ope+
+ 1d5zKVc18WSWhkwrRYL9gchCaE9OYhcRJNKXE+ZpDKVCe0/eo2wuN5Z29AUPmucypczQ
+ RcE/drW3Fioo7AHTnEuM2wwino0zLVO8fTbFXaEkGfEhUDJP2UpvRY1ibTROsJli94Qa
+ DswM7zpNglTobNc3I5c/+8O2WGo52FIc33QY+44rGbJIJO21P51U2Fj35WGupBnwTh8S
+ QwRyZF9DLoD96bkBEwIoJoaioMqj+Vn+LutciHF9iPoMG5dZWwqtJJ7u7TdpWscfJWBq
+ Tq9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787309401; x=1787914201;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=RXSFdJhduuq/vV0dSoh2i7hiqI/DLrn0WKuxvW2l1mE=;
+ b=QH31y+JBIkiwMJmp5oF93v4rjlgVhZDRQHA0AEa3REfdp3JKct+SW7ubXhCu4cRr7r
+ RJbz6LL8iUYw8mYmp8M0YLHOs2bJ3YUbGVRYgldcGEJ1+k+8pkRMaGEvw3928TCG9/mp
+ bCBiTALvPXB/pOCJIiQ0ix5h7QMdGhnbUZfVDSEOToWssBacX5uH4/2b0OJKDx0gsZsH
+ MGTVU0EthI59sAC06zINhKgDX+NyFSYFJQ/ckbGlc53oh3AfO+orWsk+9ZCeOH+Fi54E
+ fMnTqep8POxhqTcLpCVERaY4R6kl/Z20lnHr/Sx+eh9e7Mf+c6U2kYkJqgqq5p5dZBte
+ Fctw==
+X-Gm-Message-State: AOJu0Yz0lEMsKCBf1leQpI3j3xxHHkNuguCJO4UdYDOVhn4gtcXfMaRi
+ FqEdHz+qDVRKzGwxoPPfNuzpSyxbNxJ8B7GSRpnusbvQhpdQ5yec5Stf+62cyfBdOOzOedEeB+C
+ 7FbdnhVVaoinTNp11Ret423OuFtu6AaCoJB6bDUkfTpZWrms4qVynd/2bItaRRXKhvyem
+X-Gm-Gg: AR+sD12LSownXA8DLqnQVxFmSUmtKgMnVDgjSXT27dKtspON/nuCQIEbzlQ6G/doxTa
+ HaoA2vv87QkhAmY30RSC7lwcxuBzUZPBLdK8EHdcWAkE+bnRBmHYmV84v7RY/cqUsyMTzl+30bX
+ BBRVtN/zOQd9SB8sX/XksWAQhYnCepUAPskhvd2QVATUawrjc0a8UD2b8J4CrkH9KhCaetJwfwi
+ d/mOPfMKx2fKCpIzMJ+Shdj6QFYm7es13Dps0SNCmC5J9VtiIE5wvWq2gcE4cD/zpu9fJqrp+LQ
+ GzAPMpr4sn6xNHrh95U/nctxz2BNRjrhEheC9Ngd+o44VsfROMX2q4oudIIO+VegvVdkpBCC1G+
+ z1EkSPkAGJ+XA1VcXCTS7AQnih7Df2gEpUwPbq1x6mQ==
+X-Received: by 2002:a05:622a:a11:b0:52d:918b:92e2 with SMTP id
+ d75a77b69052e-52df56f1740mr49132761cf.6.1787309401033; 
+ Fri, 21 Aug 2026 03:50:01 -0700 (PDT)
+X-Received: by 2002:a05:622a:a11:b0:52d:918b:92e2 with SMTP id
+ d75a77b69052e-52df56f1740mr49131911cf.6.1787309400169; 
+ Fri, 21 Aug 2026 03:50:00 -0700 (PDT)
+Received: from localhost.localdomain (pmd666.hd.free.fr. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c2459223816sm459070266b.57.2026.08.21.03.48.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 03:48:33 -0700 (PDT)
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+ ffacd0b85a97d-482b145153fsm16798002f8f.12.2026.08.21.03.49.58
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 21 Aug 2026 03:49:59 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
- qemu-arm@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v4] hw/char/pl011: support backend hotswap
-Date: Fri, 21 Aug 2026 12:48:32 +0200
-Message-ID: <20260821104832.151452-1-alexander@mihalicyn.com>
-X-Mailer: git-send-email 2.47.3
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v3 01/15] linux-user: Uncast void pointer argument as Object
+ in target_cpu_free()
+Date: Fri, 21 Aug 2026 12:49:35 +0200
+Message-ID: <20260821104950.32108-2-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260821104950.32108-1-philmd@oss.qualcomm.com>
+References: <20260821104950.32108-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=alexander@mihalicyn.com; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIxMDA4MSBTYWx0ZWRfXwnNagSfbRLpm
+ QF0sOEsLcXzaahgwRsqg78LBuMhjBT6VcJ4L9ODoN/aIc/vH8jFPb0YktDPMDVCGMwsyySyzvm7
+ tYjFCS/IWWGsanjXfYVkjljxEwck4kZ5CRQw1wga3qbHNmd0G4nE7Ytd6koqHH67z7k+SjlITKs
+ iGvg6VtXsRWidBvsEZOb6apaaGuI2bJj14yzj3ogdCyf4qgyIvXSz1uYle3Lwo29J349SI1wJuD
+ ga8rdJN7eBzChnjO+k06xo5hHt7GIrBMGA08ZODRvgc8ioNi0c/fbfCoLZheSNiDhTtP6px3vqG
+ SDjZbdmZynHSRdlcICOkKrLtCcYn8lNusv5WnTRvXzJVB/fvAI/qTZ6akukJFzzcAqClTxnVCDa
+ F6Pdw/K4jYvFpsX9s798lUvQHPGD3iD4lolpOHD3oGvg9Rz9bR7HjtoF3PVzUK24p05lzv+gn+g
+ vKMEzsDQM8iVVuRJ94g==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIxMDA4MSBTYWx0ZWRfX5z/8cQkbz8a+
+ A5Jr46Z86KmifItGzHZc5atVSNgiK947Au4xFhvVZf3MovqUfLgiGB11JwGS4BigoxuW/Se4mJa
+ pRfHBgdv8QecdRN781kasnKgLIxsBc0=
+X-Proofpoint-ORIG-GUID: HdWzm42_lOfD4TPNwT4yY5SoZ_NVj2t9
+X-Authority-Analysis: v=2.4 cv=BJyDalQG c=1 sm=1 tr=0 ts=6a882d59 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=2RGiIWwp3e7TAFkeQGYA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: HdWzm42_lOfD4TPNwT4yY5SoZ_NVj2t9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-21_03,2026-08-21_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 malwarescore=0 bulkscore=0 clxscore=1015 impostorscore=0
+ adultscore=0 phishscore=0 priorityscore=1501 suspectscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608210081
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,104 +157,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+init_main_thread() is registered as Object::free() hook, thus
+take an Object* argument. Uncast the void pointer as such.
 
-Currently, when Incus issues "chardev-change" QMP command to change
-chardev backend from ringbuf to socket it receives an error (with aarch64 VM):
-"Chardev user does not support chardev hotswap" [1], [2]
+While now cpu_env() accept any pointer type, next commit will
+restrict it to CPUState* type. QOM-cast the Object to CPU type,
+otherwise we will get:
 
-Let's fix this by properly implementing BackendChangeHandler for pl011.
+  ../linux-user/i386/cpu_loop.c: In function ‘target_cpu_free’:
+  include/hw/core/cpu.h:604:31: error: ‘_Generic’ selector of type ‘void’ is not compatible with any association
+../linux-user/x86_64/../i386/cpu_loop.c:331:19: note: in expansion of macro ‘cpu_env’
+  331 |     target_munmap(cpu_env(obj)->gdt.base,
+      |                   ^~~~~~~
 
-Please, note that we have to "replay" CHR_IOCTL_SERIAL_SET_BREAK, because
-if BRK bit was set before backend change (i.e. (s->lcr & LCR_BRK) is true),
-then after change we need to send break to a new backend too.
-
-Link: https://discuss.linuxcontainers.org/t/unable-to-connect-to-vm-console-on-arm-architecture/23096/3 [1]
-Link: https://github.com/lxc/distrobuilder/issues/892 [2]
-Reported-by: Stéphane Graber <stgraber@stgraber.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-v4:
-	- changed pl011_set_break() signature
-	  [ as suggested by Peter Maydell ]
-v3:
-	- introduced pl011_set_handlers()
-	  [ as suggested by Alex Bennée ]
-	- introduced pl011_set_break()
-	  [ as suggested by Philippe Mathieu-Daudé ]
-v2:
-	- fixed a typo in commit author name
-	  [ I did `git format-patch` and copied this patch from my Raspberry PI
-	    dev/test machine and it turns out that I have a stupid typo in my
-	    `git config get user.name` on that machine. ]
-	- added RWB tag from Alex Bennée
-	- adjusted a commit message
----
- hw/char/pl011.c | 31 ++++++++++++++++++++++++++-----
- 1 file changed, 26 insertions(+), 5 deletions(-)
+ linux-user/i386/cpu_loop.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-index cb12c3e224f..5ad9e7358d5 100644
---- a/hw/char/pl011.c
-+++ b/hw/char/pl011.c
-@@ -425,6 +425,11 @@ static void pl011_loopback_break(PL011State *s, int brk_enable)
+diff --git a/linux-user/i386/cpu_loop.c b/linux-user/i386/cpu_loop.c
+index fe922fceb5a..2f733b0b477 100644
+--- a/linux-user/i386/cpu_loop.c
++++ b/linux-user/i386/cpu_loop.c
+@@ -326,9 +326,10 @@ void cpu_loop(CPUX86State *env)
      }
  }
  
-+static inline void pl011_set_break(PL011State *s, int brk_enable)
-+{
-+    qemu_chr_fe_ioctl(&s->chr, CHR_IOCTL_SERIAL_SET_BREAK, &brk_enable);
-+}
-+
- static void pl011_write(void *opaque, hwaddr offset,
-                         uint64_t value, unsigned size)
+-static void target_cpu_free(void *obj)
++static void target_cpu_free(void *ptr)
  {
-@@ -462,9 +467,8 @@ static void pl011_write(void *opaque, hwaddr offset,
-             pl011_reset_tx_fifo(s);
-         }
-         if ((s->lcr ^ value) & LCR_BRK) {
--            int break_enable = value & LCR_BRK;
--            qemu_chr_fe_ioctl(&s->chr, CHR_IOCTL_SERIAL_SET_BREAK,
--                              &break_enable);
-+            bool break_enable = value & LCR_BRK;
-+            pl011_set_break(s, break_enable);
-             pl011_loopback_break(s, break_enable);
-         }
-         s->lcr = value;
-@@ -660,12 +664,29 @@ static void pl011_init(Object *obj)
-     s->id = pl011_id_arm;
+-    target_munmap(cpu_env(obj)->gdt.base,
++    Object *obj = ptr;
++    target_munmap(X86_CPU(obj)->env.gdt.base,
+                   sizeof(uint64_t) * TARGET_GDT_ENTRIES);
+     g_free(obj);
  }
- 
-+static int pl011_be_change(void *opaque);
-+
-+static inline void pl011_set_handlers(PL011State *s)
-+{
-+    qemu_chr_fe_set_handlers(&s->chr, pl011_can_receive, pl011_receive,
-+                             pl011_event, pl011_be_change, s, NULL, true);
-+}
-+
-+static int pl011_be_change(void *opaque)
-+{
-+    PL011State *s = opaque;
-+
-+    pl011_set_handlers(s);
-+    pl011_set_break(s, s->lcr & LCR_BRK);
-+
-+    return 0;
-+}
-+
- static void pl011_realize(DeviceState *dev, Error **errp)
- {
-     PL011State *s = PL011(dev);
- 
--    qemu_chr_fe_set_handlers(&s->chr, pl011_can_receive, pl011_receive,
--                             pl011_event, NULL, s, NULL, true);
-+    pl011_set_handlers(s);
- }
- 
- static void pl011_reset(DeviceState *dev)
 -- 
-2.47.3
+2.53.0
 
 
