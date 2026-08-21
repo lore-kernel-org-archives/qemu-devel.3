@@ -4,95 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B274CC5DF87
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 09:53:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD074C5DF87
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 09:55:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxLvn-0004XT-9m; Fri, 21 Aug 2026 05:52:59 -0400
+	id 1wxLxx-00052I-1F; Fri, 21 Aug 2026 05:55:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wxLvj-0004Ws-I4
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 05:52:56 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wxLvh-00036G-2z
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 05:52:54 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-49557167508so6710355e9.1
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 02:52:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787305971; x=1787910771; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=AwP/yWfGPx1h2d5TCJ6y+1qxsK3YP7lopFi3pzqk8ko=;
- b=G64q80TSLA5pHgr9/qpQ9B44R78Xom1RenqQP/rU1ACXrozkXmd8EA5nE3+33IjZ6s
- Au+Q82rA7wwt9jInC74/4Ws8KWcWMS4XXAE9mkN2lPllN2oe3bPN7hCOpVlSQ4Yb5ogp
- 1bdLjS2YY4l+YVDmXmAsnPcCpsVOl2+FFTVuH1jv26X/3DKO6/k442P5kOUBCoTyknsE
- aTKjHQhRr9EDYpHVqXA4SoUEQh0pdyzWDM/ttLhImMpXP+akbkZcK20tDAVDYwr6b/pA
- edw4J49svW14mfdQHdyU1TAAFYopAcnFhwk1+7uuNkDCxeavCNdO3/vnP/pGwl3EJ6Ld
- rqAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787305971; x=1787910771;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=AwP/yWfGPx1h2d5TCJ6y+1qxsK3YP7lopFi3pzqk8ko=;
- b=mwY1fp+DtTo4NW3VAVUuV8b8RJKUdadPmtG0hzK/HowP6RbjcGk5cW/db+HVyL2YkP
- RU8eXsAh6LA++QVzKqkns7FU7yVAGw5SbVFQ7kz/PS17emLFEt3ETPqBrqz51YTdcPlQ
- AQWo23S83O5clSnR7bQXfBtsrmdXIuksOc6rNMizVPM6vANoB/z4GadK97pNJQZCNX0S
- dj6e8jpVTeUmZHnq/mG/dWu2G3leQdZLqBOxsGWyAM3cF7//xdgAub1mBH5klBcHvhUz
- MncU7e7wDjGnWZpOd/ifhZ/IC4+YbqNBaLzCCWukmUvmeODnhUE56pP6MqYBRkJx3ggn
- t24g==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqJs1VRMCiVj4RDA6JEi6clhDT37bRfdr7hbNcR6FlwVEOfpfpXsMNcTTLtNW+ZhUwWfP4TpRtX+Yyl@nongnu.org
-X-Gm-Message-State: AOJu0Yyjj11O6XyWC5nY+KUHH3AHhghNTYm9InPT+g/AOioPZXpNwQuh
- 3O3cFPozS7VscznmnoW8wIY4O/KdP/76grxRYjyljLuqImdc+PVh48eGBG4rsClj1oY=
-X-Gm-Gg: AR+sD11zmRtrsakkxcf69IvEzH7pJi+VbMfQun9WAcN68+TmRKNrvwJXeOGm62kWs+1
- S/spNHkVa1SPVCXF3cuPPhioFKaaoJoD17WHSswVx9HkZ8IDlaKfgrXMbPUX4MRDOda82mHJjLG
- tyuXvYYUU36HJ959jXX3cLDVUKxhEjqe56qCrhSCkQiwWDJLBIC3gZfv8fMCyJSM8YlA5kbVHSg
- uOQDpS6/OeWybNabPmKfWki21AvYXD/wL7doI9hybXItGP0Pud3RyPKv0xcCQS6eqF8vtJEONZB
- YCMF4TyPTSKs6wVw65f2M4DdDnYIzNAXC/Tz5YdaS2iD7xortw9n5iKIkLY6gYcjHGHTlsFNkCT
- /kuX7EZLZFM4vAZ/IXF+w8m5oVDg/KiV+112r3JIlCdPANm0GjBTOONWonHcg8YTNSih1I60YeV
- Tn9TRNybKdHkbQprnN8tzV+eOGJY5lLStV1/mD8KYBQRlVw+R93TV6qFtawPY1cQ==
-X-Received: by 2002:a05:600c:3544:b0:493:f140:c3fb with SMTP id
- 5b1f17b1804b1-499b8301874mr65796535e9.7.1787305971175; 
- Fri, 21 Aug 2026 02:52:51 -0700 (PDT)
-Received: from linaro.org ([2a10:d582:31e:0:fa47:b339:78a1:d4c6])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b90e3138sm22336665e9.4.2026.08.21.02.52.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 02:52:50 -0700 (PDT)
-Date: Fri, 21 Aug 2026 10:52:48 +0100
-From: Jim MacArthur <jim.macarthur@linaro.org>
-To: Tao Tang <tangtao1634@phytium.com.cn>
-Cc: Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
- Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>
-Subject: Re: [RFC v5 02/28] hw/arm/smmuv3: Introduce banked registers for
- SMMUv3 state
-Message-ID: <aogf8EmOJ_JEGKWl@linaro.org>
-References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162410.2805113-2-tangtao1634@phytium.com.cn>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wxLxw-000527-DB; Fri, 21 Aug 2026 05:55:12 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wxLxu-0003yT-Jl; Fri, 21 Aug 2026 05:55:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1787306079; bh=AC7mTYSSoIc7v5QHL9gdgvdlNPsP+H8a6h5gHtxdeCk=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=SUUm+mmVY8ZURr5tYU87BPZmNqHAfhlxb8PNkqyKr9vJqkTIQcFL8qvxhB7qEd4sC
+ driIYG3O+HSV6i0KlICrsqGdNZyuFkT2imgCYC5kvqYQV5vNoMFTo9Vo6LH+4MJSFG
+ 57GBGWKJM1ewUGwGoOxxNhuqEV+h8SW02T0u+JttoBGVFTe5UjRTDof2njbyx5ZDjT
+ HoFtYlREUjwSkcpddb2+tgIppFkWrYhexOhg9dK3oWappbO+7WR2BIMNOniBhg+JvX
+ P3oBQhaWNhG2Q3HQbLyQgKZYZR6JhJNYug+O/W3S/s4ViL9NsQboun2Bmqo+ReagAA
+ eSqXJGzl3jDZg==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id F1A921CD1D7;
+ Fri, 21 Aug 2026 12:54:39 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D4E49410E26;
+ Fri, 21 Aug 2026 12:55:08 +0300 (MSK)
+Message-ID: <9f5b05e4-7b3c-41e7-9fb2-2a19495f32b6@tls.msk.ru>
+Date: Fri, 21 Aug 2026 12:54:39 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260813162410.2805113-2-tangtao1634@phytium.com.cn>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386: decode opcode extensions group 3 /1 as TEST
+To: Andrey Polivoda <apolivodaa433@gmail.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ QEMU Stable <qemu-stable@nongnu.org>
+References: <20260621032524.1138213-1-apolivodaa433@gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260621032524.1138213-1-apolivodaa433@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,74 +114,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 14, 2026 at 12:24:07AM +0800, Tao Tang wrote:
-> Rework the SMMUv3 state management by introducing a banked register
-> structure. This is a purely mechanical refactoring with no functional
-> changes.
+On 6/21/26 06:25, Andrey Polivoda wrote:
+> According to Table A-6 in Volume 3 of AMD64 Architecture Programmer's Manual,
+> opcodes F6 and F7 (opcode extensions group 3) with ModRM's reg field values
+> of 0 and 1 can be used to encode a TEST instruction.
 > 
-> To support multiple security states, a new enum, SMMUSecSID, is
-> introduced to identify each state, sticking to the spec terminology.
+> Although Intel 64 and IA-32 Architectures Software Developer's Manual leaves
+> the cell 1 of opcode extensions group 3 blank in the opcode table
+> (Table A-6, Volume 2D), the instruction in a group 3 with reg field of ModRM
+> byte set to 1 actually behaves like TEST instruction on Intel CPUs.
 > 
-> A new structure, SMMUv3RegBank, is then defined to hold the state
-> for a single security context. The main SMMUv3State now contains an
-> array of these banks, indexed by SMMUSecSID. This avoids the need for
-> separate fields for non-secure and future secure registers.
+> Currently, QEMU decodes group 3 instruction as TEST only if reg field of ModRM
+> byte is 0. When the reg field is 1, QEMU raises a #UD exception.
+> This behavior does not match real Intel and AMD hardware.
 > 
-> All existing code, which handles only the Non-secure state, is updated
-> to access its state via s->bank[SMMU_SEC_SID_NS]. A local bank helper
-> pointer is used where it improves readability.
+> This patch fixes this issue by duplicating the existing [0x00] and [0x08]
+> X86_OP_ENTRYrr(AND, ...) entries into slots [0x01] and [0x09] in the
+> opcodes_grp3 table.
 > 
-> Function signatures and logic remain untouched in this commit to
-> isolate the structural changes and simplify review. This is the
-> foundational step for building multi-security-state support.
+> Fixes: d7c41a60d0c5 ("target/i386: move C0-FF opcodes to new decoder (except for x87)")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3580
+> Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
+> Cc: qemu-devel@nongnu.org
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: Richard Henderson <richard.henderson@linaro.org>
+> ---
+> Note: checkpatch.pl reports style errors regarding spaces after commas.
+> These are false positives, as the patch intentionally matches the formatting
+> of the surrounding macro table.
 > 
->  static void smmuv3_reset(SMMUv3State *s)
->  {
-> -    s->cmdq.base = deposit64(s->cmdq.base, 0, 5, SMMU_CMDQS);
-> -    s->cmdq.prod = 0;
-> -    s->cmdq.cons = 0;
-> -    s->cmdq.entry_size = sizeof(struct Cmd);
-> -    s->eventq.base = deposit64(s->eventq.base, 0, 5, SMMU_EVENTQS);
-> -    s->eventq.prod = 0;
-> -    s->eventq.cons = 0;
-> -    s->eventq.entry_size = sizeof(struct Evt);
-> -
-> -    s->features = 0;
-> -    s->sid_split = 0;
-> -    s->cr[0] = 0;
-> -    s->cr0ack = 0;
-> -    s->irq_ctrl = 0;
-> -    s->gerror = 0;
-> -    s->gerrorn = 0;
-> +    SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
-> +
-> +    bank->cmdq.base = deposit64(bank->cmdq.base, 0, 5, SMMU_CMDQS);
-> +    bank->cmdq.prod = 0;
-> +    bank->cmdq.cons = 0;
-> +    bank->cmdq.entry_size = sizeof(struct Cmd);
-> +    bank->eventq.base = deposit64(bank->eventq.base, 0, 5, SMMU_EVENTQS);
-> +    bank->eventq.prod = 0;
-> +    bank->eventq.cons = 0;
-> +    bank->eventq.entry_size = sizeof(struct Evt);
-> +
-> +    bank->features = 0;
-> +    bank->sid_split = 0;
-> +    bank->cr[0] = 0;
-> +    bank->cr0ack = 0;
-> +    bank->irq_ctrl = 0;
-> +    bank->gerror = 0;
-> +    bank->gerrorn = 0;
-> +    bank->gbpa = SMMU_GBPA_RESET_VAL;
-> +
-> +    s->aidr = 0x1;
->      s->statusr = 0;
-> -    s->gbpa = SMMU_GBPA_RESET_VAL;
->  }
+>   target/i386/tcg/decode-new.c.inc | 2 ++
+>   1 file changed, 2 insertions(+)
 
-Why reset s->aidr here? It should be read-only and set in smmuv3_init_id_regs. 
+This feels like another qemu-stable material, though maybe not that important.
+I'm picking it up, please let me know if I shouldn't.
 
-It won't do any harm and the reset of this patch looks correct, so:
+Thanks,
 
-Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
-
+/mjt
 
