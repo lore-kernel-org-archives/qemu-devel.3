@@ -4,120 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 441DDC5DF7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 05:34:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EBA4C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 05:55:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxHsf-0004BI-BZ; Fri, 21 Aug 2026 01:33:30 -0400
+	id 1wxIDE-0002X1-FF; Fri, 21 Aug 2026 01:54:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
- id 1wxHsc-0004AX-Hm
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 01:33:26 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <flamboyant.h.01@gmail.com>)
- id 1wxHsb-0001fa-1K
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 01:33:26 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-66c7a743cf8so782862d50.0
- for <qemu-devel@nongnu.org>; Thu, 20 Aug 2026 22:33:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787290404; cv=none;
- d=google.com; s=arc-20260327;
- b=ZGRy8KYl8k4eLjIA29d3+qTS6LJoggMTPrN/AWBpyu0dGAu0sDjevKXrFNphtlayfd
- IfOYtCn3zaOhBKAUfFaXG3ggRW1CnlppB4nyz4G80KoFFcLMON1DE7GSatp5rCCl7AJ0
- Nvjx9wD+kfrSYIzM8QS453eR8gvWtmibQiMs+nVKV9F5vLQXptQsO38z2ia8w8npGRkI
- XMmXhY7MK8X4s36ZIdEjC98WDq06dMmtasTt5UMZfjRZETsogMsEDiF374kXtDdhD217
- tqDn7pKfIGK3koMhxnu/6pc0UW2cqBrP3bLAwSqHKSpVDHVQdZK2oiSC05Q0fIkS5jDS
- DibQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=Hbn6DbDQGksNHikGVpR+3UUDGmghf0y1+rLu5GxTDKA=;
- fh=Wj0rygHhueyLjVs4Ur34oY4LujiunqdvnSElvB6Rr7g=;
- b=MrmojdEl/x/fc05FZKtqUm62R0Cc1JUEe5/QNM9E+UrO+L8sOEH6m56WfRBM+dsTbU
- 6W+WLHxk2pNqAJbqG72A0N5hcGMbvrJRJqCP7HdMCFbwZ1akMmJgjS35dugvAPIqghYu
- ohjP480mu+nXEeHjXfThmtmMRAYhim+IyUPEFwaIKiMx63My4rfRyjiHtVLdsWjbJiyq
- you5goPjr0cgDOax5265VyhFuXfv8WoeOhw+YQVFtdXsOFDFfhalgP3bPmU2b3ddaHoZ
- HSIfQKVH0Hg4z/Y6as+sqnNWqpMpqEdM+6NXTFH5LIdPMt/sAaT2CSWOWx1R5U9m+HAK
- vsng==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787290404; x=1787895204; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Hbn6DbDQGksNHikGVpR+3UUDGmghf0y1+rLu5GxTDKA=;
- b=Hethdn2jMEcMa0uB2KiOgZZX1ufx+2meW0dI4y6KS2FmlVO8nFbNsapLVjBYRoZKfT
- rRhQS1yoLsh/obj7h5jptLmUDjuYxmhNMKDZh7GE0Yg7qUkO8egj8teYn8akGGEc/mK9
- 6BvQ0kHlch2x6ZtsWwjXq9mjrhUc0+Km0Hv2TIqPEtriOcJrFrKYJwuXJkPcom76fm3j
- 1yviI0doB4Pt+Hvxb1LTNcQx8CJWaltJzWpSonRmZpRjSeoXMoOsneZHpsf9JSlco5t8
- j/BxhSs0YgiEaJQJ/vJAqWDqJQpZd0Tn4XzFxTJPpuhhhMlmAsIGAILTyhWA542230sV
- DkQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787290404; x=1787895204;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Hbn6DbDQGksNHikGVpR+3UUDGmghf0y1+rLu5GxTDKA=;
- b=rj1fJX5OomN+bmcxkD6F8Pkhg4ztnVybTbGXZAnkoEAYlHxxm+R5erLknvJwwQtAhI
- hACIdhd3vtbkDj74VxCPLoYPt2zgvZXQ+IL/AFPPpt+gJkIf+YeP03q+ZiNGCwRts0JO
- MxnZxV7Zc4th9WLQbfBU86WqfTl7o6UfmgNwzY8TM2d+R4HH6hO/VZublW9l0bgw8tnX
- W4QjPwzyVqmLw7xeMOawbYKWQvk1JDIOvUVrPKHplfgFc/bHImrWC+htKhRZVFYOBngq
- 0VlyXlWfQADa+f4gGTInq/T38pww2gBzQV4s40Ghn2/mtFLH7YNilhmpu8E2gC4MjMRS
- ASEQ==
-X-Gm-Message-State: AFuF++lSXdJ0WjLq4dxXbBfVjNTtN8yK5TKNLnLGc0TyqecqIv7LD9lq
- a5pfXJid61togxBQPw5WKVr89aqrjePeWnYHacQyOgKeTS+jTQhv8vntGy4Fjp5HkN0HV+8deJa
- 8BSWgIxuTvA3JGWfnSb/Hy4Z3DFNZE7Q=
-X-Gm-Gg: AR+sD13GhW4sulUC0cxc9Qih2bUJbAjdMUdTnqZW56nureafEJiIFAKK+DpvN25g8qn
- labXp3Dnzq7u1Nw9LocslbXEUYnqHGgU9SAG3HNANtPM34LPpraKxTfxJ+4kT4zGDcxKAowJmb0
- DmyAn/6fNBxIZ8rAOo1zCmrems6eyzBEPlWeH2hX+TQ2QbIjCBC5uzZs04BdSu/4zqWx67OMkAA
- 891I38p62Wjz0Xultuv5apfefS3b1rK3zMgzZ6qMeYjXeEbywONmzR1pIkrmiiEKp1vSOzFvlvz
- IL+F64BptRhWMp4agwQA/QrXKZcwKa+1GLzkk5r8CUKiAw2UEJFFTff+pKDkjkhf736GWbNkBQC
- qacQ=
-X-Received: by 2002:a53:bd41:0:b0:668:894e:4bf with SMTP id
- 956f58d0204a3-66cd69a2a2bmr3183044d50.13.1787290403849; Thu, 20 Aug 2026
- 22:33:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wxIDD-0002Wk-3q
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 01:54:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wxIDB-0006V5-CQ
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 01:54:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787291680;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IITfrQYVQZTRWeGyLUAzKTecmtJHIaQ1eqmBG4Gip/I=;
+ b=JqXUY/oWUhspe3hljER6AlRAjNkpfbGYeZGK6I4GlPa977z8rrpeP3BCMZ5V8+eEdcEYR0
+ IgZLQj6dFF8nrTqLfb1mkbu5I/IZ3Hnj5s40hHR4X6H5pw2EuxXWeHXcNiekdbCcsQgzve
+ TPqf1hCCoFLDeqxQuW6DUqnu295yj9Q=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-45-XxR4cDKLMhaZoBaEXWyhVw-1; Fri,
+ 21 Aug 2026 01:54:34 -0400
+X-MC-Unique: XxR4cDKLMhaZoBaEXWyhVw-1
+X-Mimecast-MFC-AGG-ID: XxR4cDKLMhaZoBaEXWyhVw_1787291672
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BBC3C195609D; Fri, 21 Aug 2026 05:54:30 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.12])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 56CA41955F03; Fri, 21 Aug 2026 05:54:29 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id A0A9421E6920; Fri, 21 Aug 2026 07:54:26 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Connor Kite <connorkite@gmail.com>
+Cc: qemu-devel@nongnu.org,  "Michael S. Tsirkin" <mst@redhat.com>,  Stefano
+ Garzarella <sgarzare@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  Mathieu Poirier <mathieu.poirier@linaro.org>,  Manos
+ Pitsidianakis <manos.pitsidianakis@linaro.org>,  Raphael Norwitz
+ <rnorwitz@nvidia.com>,  Kevin Wolf <kwolf@redhat.com>,  Hanna Reitz
+ <hreitz@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Fam Zheng <fam@euphon.net>,  Stefan
+ Hajnoczi <stefanha@redhat.com>,  Milan Zamazal <mzamazal@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>,  qemu-block@nongnu.org,
+ virtio-fs@lists.linux.dev,  "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Eric Blake <eblake@redhat.com>,  Jason Wang
+ <jasowangio@gmail.com>,  Peter Xu <peterx@redhat.com>,  Eugenio
+ =?utf-8?Q?P=C3=A9rez?=
+ <eperezma@redhat.com>,  Alyssa Ross <hi@alyssa.is>,  Demi Marie Obenour
+ <demiobenour@gmail.com>
+Subject: Re: [PATCH RFC v2 13/13] net/vhost-user: add memory isolation
+In-Reply-To: <CA+spn3qK+n+buANnmkT6J8Yu4ZbwS_CqRbisE1uOmNsn1835iw@mail.gmail.com>
+ (Connor Kite's message of "Thu, 20 Aug 2026 17:39:15 -0700")
+References: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
+ <20260817-vhost-user-isolated-memory-v2-13-948aae960abb@gmail.com>
+ <87lda12mhy.fsf@pond.sub.org>
+ <CA+spn3qK+n+buANnmkT6J8Yu4ZbwS_CqRbisE1uOmNsn1835iw@mail.gmail.com>
+Date: Fri, 21 Aug 2026 07:54:26 +0200
+Message-ID: <87lda010j1.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260808182956.290561-1-flamboyant.h.01@gmail.com>
- <20260808182956.290561-2-flamboyant.h.01@gmail.com>
- <3ed04624-9d4c-4c11-9d7b-4bb6568b2590@oss.tenstorrent.com>
- <CAAW0U4Z4hSpbC62xE78PJjJPQKNh+7XxF3-Q14QzymELedxhSg@mail.gmail.com>
- <7f691e05-7512-4982-a4e9-a1ba5f5bf823@oss.tenstorrent.com>
-In-Reply-To: <7f691e05-7512-4982-a4e9-a1ba5f5bf823@oss.tenstorrent.com>
-From: Kangjie Huang <flamboyant.h.01@gmail.com>
-Date: Fri, 21 Aug 2026 13:33:11 +0800
-X-Gm-Features: AcwNN1WEoi5Ej1uZ6hPdurQqz3aOtAqNmg5ZjQcp_LX5XTFpBP7uIUXd7vCqEsA
-Message-ID: <CAAW0U4YzxrDA7ukyaSzPFuAW+Bv3NPNA8hD7ApjC=mr=7S8PLA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/5] hw/ssi: Add Synopsys DWC SSI standard PIO
- controller
-To: Portia Stephens <portias@oss.tenstorrent.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Bin Meng <bmeng.cn@gmail.com>, Chao Liu <chao.liu@processmission.com>, 
- Alistair Francis <alistair.francis@wdc.com>,
- Alistair Francis <alistair@alistair23.me>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=flamboyant.h.01@gmail.com; helo=mail-yx1-xb130.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.346,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,54 +107,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Portia Stephens <portias@oss.tenstorrent.com> =E4=BA=8E2026=E5=B9=B48=E6=9C=
-=8821=E6=97=A5=E5=91=A8=E4=BA=94 12:53=E5=86=99=E9=81=93=EF=BC=9A
+Connor Kite <connorkite@gmail.com> writes:
+
+> On Thu, Aug 20, 2026 at 2:02=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>>
+>>
+>> Any guidance on when to enable it?
+>>
+> ...
 >
+>> Likewise.
+>>
 >
->
-> On 21/8/2026 1:56 PM, Kangjie Huang wrote:
-> > Portia Stephens <portias@oss.tenstorrent.com> =E4=BA=8E2026=E5=B9=B48=
-=E6=9C=8821=E6=97=A5=E5=91=A8=E4=BA=94 09:11=E5=86=99=E9=81=93=EF=BC=9A
-> >>
-> >> I don't think this will work for frame !=3D  8-bit with the m25p80 fla=
-sh
-> >> model used by k230. ssi_transfer() takes a 32-bit value but it then
-> >> calls m25p80_transfer8() which will just transfer the bottom 8-bits an=
-d
-> >> drop the rest.
-> >>
-> >> I don't know if this is an issue with your code or with the ssi_transf=
-er
-> >> function though. It seems like ssi_transfer intends to accept 32-bit
-> >> values.
-> >>
-> > Hi Portia,
-> >
-> > Thanks for the review.
-> >
-> > On SPI_FRF: you are right, the explicit clearing in dw_ssi_write() is
-> > redundant because dw_ssi_write_masked() already drops the bits that are
-> > not in the writable mask. I will remove it and add a LOG_UNIMP warning
-> > when a non-zero SPI_FRF value is written.
-> >
-> > On the frame width: ssi_transfer() takes a uint32_t word. The issue is
-> > that the DWC model uses CTRLR0.DFS (4..32 bits) to define each
-> > transmitted frame, while SPI NOR is an 8-bit consumer, so the two are
-> > aligned only when DFS is 8. The K230 SDK SPI-NOR paths use 8-bit
-> > frames, so this case is not exposed by the current K230 use case.
-> > Maybe either add a DFS !=3D 8 restriction with a LOG_UNIMP warning, or
-> > have the DWC model split byte-aligned 16/24/32-bit frames into
-> > multiple 8-bit ssi_transfer() calls=EF=BC=9F
->
->
-> I think either option is fine. If there isn't anything testing the
-> variable frame width it might make sense to just restrict the width to
-> what is tested.
-> >
-> > Thanks,
-> > Kangjie
-HI Portia
-     ok ,thanks a lot
-Thanks,
-Kangjie
+> In both cases, you would enable this for added security.  There's
+> obviously a performance hit, but it prevents a potentially misbehaving
+> vhost-user backend from reading or modifying undesired portions of
+> guest memory, since data transfer occurs wholly via bounce buffers.
+> This may be more useful in the generic netdev vhost user case than it
+> is with the passt version, but the goal is for the mode to be
+> accessible for any vhost-user device.
+
+Work this into the commit message, please.
+
+> Do you think guidance is needed here in net.json?  I was thinking
+> that, if isolation-mode gets to a point of being merged, then
+> information like this would make sense somewhere in the online
+> documentation, but I'm happy to add something here as well.  I was
+> just trying to be similarly short and to-the-point as the other option
+> descriptions for these structs.
+
+I think it needs to be somewhere in the user documentation.  We have so
+many configuration options, and so little guidance on what to do with
+them.
+
+The doc comments in the QAPI schema are reference documentation (they go
+into the "QEMU QMP Reference Manual").  Reference documentation should
+be concise and to the point.  When you have more useful things to say
+than fit there, you need to find nother place, and maybe link to it from
+the reference docs.
+
+I suggest to try adding brief guidance to the doc comment, and then we
+see how we feel about it.
+
 
