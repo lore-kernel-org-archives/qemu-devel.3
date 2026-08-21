@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60CAFC5DF93
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 16:01:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9573EC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 16:04:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxRfc-0002So-9M; Fri, 21 Aug 2026 12:00:40 -0400
+	id 1wxRj8-0004gz-11; Fri, 21 Aug 2026 12:04:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1wxRfM-0002RJ-U2; Fri, 21 Aug 2026 12:00:25 -0400
+ id 1wxRj2-0004gC-Rz; Fri, 21 Aug 2026 12:04:12 -0400
 Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1wxRfC-0007jm-F4; Fri, 21 Aug 2026 12:00:24 -0400
+ id 1wxRiz-0008AC-2D; Fri, 21 Aug 2026 12:04:12 -0400
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with UTF8SMTP id AQAAfwBXWbEGdohqDHUHAQ--.18350S2; 
- Sat, 22 Aug 2026 00:00:06 +0800 (CST)
+ by hzbj-icmmx-6 (Coremail) with UTF8SMTP id AQAAfwDXgMj0dohqVngHAQ--.18206S2; 
+ Sat, 22 Aug 2026 00:04:04 +0800 (CST)
 Received: from [192.168.2.8] (unknown [113.246.117.12])
- by mail (Coremail) with SMTP id AQAAf8DwanUBdohqo8ZhAA--.11063S2;
- Sat, 22 Aug 2026 00:00:01 +0800 (CST)
-Message-ID: <0f3cec2d-a184-4fdf-b4e1-d7d2ae4a67fb@phytium.com.cn>
-Date: Sat, 22 Aug 2026 00:00:00 +0800
+ by mail (Coremail) with SMTP id AQAAf8DwF3PvdohqOsdhAA--.12470S2;
+ Sat, 22 Aug 2026 00:03:59 +0800 (CST)
+Message-ID: <808b3330-25ac-457d-b3f8-8085a167bc53@phytium.com.cn>
+Date: Sat, 22 Aug 2026 00:03:59 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v5 15/28] hw/arm/smmu: Make CMDQ invalidation security-state
- aware
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Eric Auger <eric.auger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
+Subject: Re: [RFC v5 02/28] hw/arm/smmuv3: Introduce banked registers for
+ SMMUv3 state
+To: Jim MacArthur <jim.macarthur@linaro.org>
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>,
- Jim MacArthur <jim.macarthur@linaro.org>
+ Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>
 References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162512.2807281-5-tangtao1634@phytium.com.cn>
- <4b80bd7c-1002-4ae4-a9fe-7449c0637687@oss.qualcomm.com>
+ <20260813162410.2805113-2-tangtao1634@phytium.com.cn>
+ <aogf8EmOJ_JEGKWl@linaro.org>
 From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <4b80bd7c-1002-4ae4-a9fe-7449c0637687@oss.qualcomm.com>
+In-Reply-To: <aogf8EmOJ_JEGKWl@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID: AQAAf8DwanUBdohqo8ZhAA--.11063S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAOBWqHVcgGNAAFsN
+X-CM-TRANSID: AQAAf8DwF3PvdohqOsdhAA--.12470S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAOBWqHVcgGNAAGsO
 Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxAFyktr4kCr45XF1ktw43KFg_yoW5Zr13pa
- yrKr95K3ykGF4Ikw1fAw48ua45W397Wr1UGw13K34fZwn0yr1Yqr42kr1agFykur18Gr1U
- Za42vF4Dua4jy3DanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoWxGr4UuFyrWw4UXw4fAw4xJFb_yoW5XrWUpa
+ 9xJ3ZYkw1FqFn8XFsxAF4xAF12gaySqr17Jryaq3W3AF1Ykr1Sgw4UKrWruay7Arn8G3Wv
+ gF1Yg3yDAw4kAaDanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
 Received-SPF: pass client-ip=162.243.164.118;
@@ -77,81 +77,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Pierrick,
+Hi Jim,
 
-On 8/21/2026 6:29 AM, Pierrick Bouvier wrote:
-> On 8/13/2026 9:25 AM, Tao Tang wrote:
->> Refactor CMDQ invalidation paths to carry security state and apply cache
->> invalidation per sec_sid instead of globally. Add separate helpers for
->> invalidating all entries and for invalidating entries belonging to one
->> valid sec_sid.
+On 8/21/2026 5:52 PM, Jim MacArthur wrote:
+> On Fri, Aug 14, 2026 at 12:24:07AM +0800, Tao Tang wrote:
+>> Rework the SMMUv3 state management by introducing a banked register
+>> structure. This is a purely mechanical refactoring with no functional
+>> changes.
 >>
->> In smmuv3, propagate the command queue sec_sid and command SSec through
->> CFGI and TLBI handling, and gate VMID use on the stage-2 capability of
->> the selected command queue, including SMMU_S_IDR1.SEL2 for a Secure
->> Command queue.
+>> To support multiple security states, a new enum, SMMUSecSID, is
+>> introduced to identify each state, sticking to the spec terminology.
 >>
->> Keep acceleration and IOMMU notifier propagation Non-secure-only.
->> Commands targeting a programming interface other than Non-secure do not
->> reach the accelerated backend or Non-secure notifiers, while Non-secure
->> stage-1 CMD_TLBI_NH_ALL remains forwarded to the host.
+>> A new structure, SMMUv3RegBank, is then defined to hold the state
+>> for a single security context. The main SMMUv3State now contains an
+>> array of these banks, indexed by SMMUSecSID. This avoids the need for
+>> separate fields for non-secure and future secure registers.
 >>
->> Include the command queue SEC_SID and target SEC_SID in the relevant
->> invalidation tracepoints.
+>> All existing code, which handles only the Non-secure state, is updated
+>> to access its state via s->bank[SMMU_SEC_SID_NS]. A local bank helper
+>> pointer is used where it improves readability.
 >>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> ---
->>   hw/arm/smmu-common.c         | 100 ++++++++++++++++++++++++++++-
->>   hw/arm/smmuv3-accel-stubs.c  |   6 +-
->>   hw/arm/smmuv3-accel.c        |  30 +++++++--
->>   hw/arm/smmuv3-accel.h        |   6 +-
->>   hw/arm/smmuv3.c              | 121 ++++++++++++++++++++++++++---------
->>   hw/arm/trace-events          |  12 ++--
->>   include/hw/arm/smmu-common.h |   6 ++
->>   7 files changed, 231 insertions(+), 50 deletions(-)
+>> Function signatures and logic remain untouched in this commit to
+>> isolate the structural changes and simplify review. This is the
+>> foundational step for building multi-security-state support.
 >>
-> Given this patch, would that be simpler to have multiple iotlb hashtable
-> per sec_sid? This way, invalidation becomes trivial.
+>>   static void smmuv3_reset(SMMUv3State *s)
+>>   {
+>> -    s->cmdq.base = deposit64(s->cmdq.base, 0, 5, SMMU_CMDQS);
+>> -    s->cmdq.prod = 0;
+>> -    s->cmdq.cons = 0;
+>> -    s->cmdq.entry_size = sizeof(struct Cmd);
+>> -    s->eventq.base = deposit64(s->eventq.base, 0, 5, SMMU_EVENTQS);
+>> -    s->eventq.prod = 0;
+>> -    s->eventq.cons = 0;
+>> -    s->eventq.entry_size = sizeof(struct Evt);
+>> -
+>> -    s->features = 0;
+>> -    s->sid_split = 0;
+>> -    s->cr[0] = 0;
+>> -    s->cr0ack = 0;
+>> -    s->irq_ctrl = 0;
+>> -    s->gerror = 0;
+>> -    s->gerrorn = 0;
+>> +    SMMUv3RegBank *bank = smmuv3_bank(s, SMMU_SEC_SID_NS);
+>> +
+>> +    bank->cmdq.base = deposit64(bank->cmdq.base, 0, 5, SMMU_CMDQS);
+>> +    bank->cmdq.prod = 0;
+>> +    bank->cmdq.cons = 0;
+>> +    bank->cmdq.entry_size = sizeof(struct Cmd);
+>> +    bank->eventq.base = deposit64(bank->eventq.base, 0, 5, SMMU_EVENTQS);
+>> +    bank->eventq.prod = 0;
+>> +    bank->eventq.cons = 0;
+>> +    bank->eventq.entry_size = sizeof(struct Evt);
+>> +
+>> +    bank->features = 0;
+>> +    bank->sid_split = 0;
+>> +    bank->cr[0] = 0;
+>> +    bank->cr0ack = 0;
+>> +    bank->irq_ctrl = 0;
+>> +    bank->gerror = 0;
+>> +    bank->gerrorn = 0;
+>> +    bank->gbpa = SMMU_GBPA_RESET_VAL;
+>> +
+>> +    s->aidr = 0x1;
+>>       s->statusr = 0;
+>> -    s->gbpa = SMMU_GBPA_RESET_VAL;
+>>   }
+> Why reset s->aidr here? It should be read-only and set in smmuv3_init_id_regs.
+
+
+Good catch, this is redundant since AIDR is initialized in 
+smmuv3_init_id_regs(). I'll remove it in the next revision.
+
+
 >
-> It has been long time since last version, so I forgot if there was a
-> specific reason to keep a single table and add sec_sid to each entry.
+> It won't do any harm and the reset of this patch looks correct, so:
+>
+> Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
 
 
-I agree that separate IOTLB tables per SEC_SID would simplify the 
-namespace-wide invalidation in the current model. Mostafa made the same 
-suggestion in v4 [1], and I agreed to rework it for v5.
-
-As Eric later pointed out [2], SEC_SID is not itself the architectural 
-TLB tag. It selects the programming interface and Stream table, while 
-cached translations are identified by the effective StreamWorld and the 
-applicable ASID/VMID.
-
-My reason for retaining the single table is therefore patch scope, not 
-an architectural objection to per-SEC_SID tables. This series models one 
-StreamWorld per SEC_SID and uses SEC_SID as a temporary discriminator, 
-as described in the definition of struct SMMUIOTLBKey [3]. I would 
-prefer to keep the cache topology unchanged here and address the layout 
-together with full StreamWorld tagging and invalidation in a follow-up 
-series.
-
-Eric, would you prefer that v6 adopt the per-SEC_SID split suggested by 
-Pierrick and Mostafa, or keep the current layout and defer the topology 
-decision to the StreamWorld work? I am happy to follow the preferred 
-direction.
-
-[1] https://lore.kernel.org/qemu-devel/aaGuGuevX8HFqx0x@google.com/
-[2] 
-https://lore.kernel.org/qemu-devel/72026588-1db3-48a1-af99-e5e2aca69058@redhat.com/
-[3] 
-https://lore.kernel.org/qemu-devel/20260813162512.2807281-2-tangtao1634@phytium.com.cn/ 
-
-
-
-> Regards,
-> Pierrick
-
-
-Best regards,
+Thanks,
 
 Tao
 
