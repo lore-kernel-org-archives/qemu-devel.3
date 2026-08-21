@@ -4,134 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72F62C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 08:20:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E13C5DF87
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 08:20:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxKTR-0005Mg-LC; Fri, 21 Aug 2026 04:19:37 -0400
+	id 1wxKUK-0005cp-Tg; Fri, 21 Aug 2026 04:20:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wxKTP-0005MW-IM
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 04:19:35 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jbeulich@suse.com>) id 1wxKTN-0002SK-M6
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 04:19:35 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-c2074710751so133511766b.1
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 01:19:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
+ id 1wxKUI-0005ay-Cd; Fri, 21 Aug 2026 04:20:30 -0400
+Received: from [115.124.30.119] (helo=out30-119.freemail.mail.aliyun.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
+ id 1wxKUD-0002fv-Gr; Fri, 21 Aug 2026 04:20:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1787300372; x=1787905172; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=xJgbi0Hxi0iwuDDgvhe2MiVZefgarGN88Is5Ns8OqNQ=;
- b=CMuOQxybI7AES+fUgsT5c0s+esJlMPhhFRLHJZoN3SmJyiouETkLsK+GtOUJXlzsRh
- FVlCVSfsociayDx7oNXHNwAxkBGequlLNlwptxTbRf2X2WBsjWljJUJiMqPd/fe81XBP
- bXGQ/xE+FFbAm9nDzNgCS2W9RAWPoWZV/HiOjPjTtDbTxAWvbj9Uxbvm+L9IqMZwH4+4
- s8myPvDc+KGRTk2DX6ocEef4ogpXXi3oFWOzZazJeIa+H++T3Fox+NqlHkp9kRWKYB7m
- PIPbnxztVa4CMkLCd9xTyOWVmmB9L/zJZhWTH5yQE+Wa0lBBgH/0YTeyBIqw4qku0Uop
- Pc4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787300372; x=1787905172;
- h=content-transfer-encoding:content-type:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xJgbi0Hxi0iwuDDgvhe2MiVZefgarGN88Is5Ns8OqNQ=;
- b=goUCv4wI4fTHUGTx/gN49Wsx1QM6WupRfpLqgYRYUOmv2WoLqDo+zbviJPVs7pY60S
- py2yW6z/vhtFX6k07GGcwhgXFSKaAEDyRGfI0lZsq0EQkR9tQBcn45dDakp2YClRzXda
- Um4Y6LLCxeu/X/A7NBRBKZ3nlIaw7+w7y9usHkZEDxspX2O+UTh6zKQocpWZUUpIy9iz
- 5s8jr56A6Xc85IG0iJppVedbU0BDfSeqUOS4XgIRBQPRS8utNPWYixgHzxXAcYSUUbcu
- 7614xkEj5EZQuM2DfNL1yiJ+BcJLT462GNiuJYJPznLJuVyUBjTFPRaOnSSHKrFLovx2
- 2xIw==
-X-Gm-Message-State: AFuF++lAnwngI11RC0k1T8Z1yNYUmBLls12lKTwKjEN2/l9GBqfhTj8n
- JOOIVfk7iLVvTWgu+wlUGNPhlxoYRbaamMCTBMsN5GN7YtxtvEWNG2IpTPcyEumMAQ==
-X-Gm-Gg: AR+sD12jFLrHLSLjYRkWa794gCMShq0j+dBCYOOqb+TfipaaAWGH2rucS0aJEAAVIRL
- v98qJZeRTCWEIT5yI3/RO/dfBttP+/Z1WBJ8bX37qsyg5jQqIbVHHOSXMzdY+i6ZM4NTRdnM5Yb
- E6YDT7lAzXuZlZL6T2svJXLoTqRQX0Tqm+4aLYEh6lXzRAWaoy9tz4rH3EFlq35BbEDws2Igur4
- bwE5cISutqYrSirf7CHfSx8CyvAUbUPs+nkdeJDcFtsKGoNq12eX92aZD5IDnIhHhblG9x4TArz
- KE1XnnJ/Fd7+OWB0cBILm/hFSL2ohUCgoKE9f+muVYhOOkX1JxoSMle615HSpMaLJXNdwSfP/Mp
- ZQK5auQz8hHYDqXjr0aOEFNQOyr0ZiUPBnC3HFJGmejIYEInicQkUQMLp89CxnYVDIVGEF5iH/p
- a6pGTnwebcpMlYIQ4eqkA8w9qt8jDrd6sOP2aOCxr38EbxoCgF43n1mavd34WWF9MD2W1XY+VvA
- daoHPBf6MLpnQsck8riQmPT18VxCYifdyVV5SI+kfhee3DhMTa/
-X-Received: by 2002:a05:6938:a08f:10b0:c20:f871:1018 with SMTP id
- a640c23a62f3a-c246b4bc19bmr333973866b.21.1787300371859; 
- Fri, 21 Aug 2026 01:19:31 -0700 (PDT)
-Received: from [10.156.60.236] (ip-037-024-206-209.um08.pools.vodafone-ip.de.
- [37.24.206.209]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c2459223816sm387149366b.57.2026.08.21.01.19.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Aug 2026 01:19:31 -0700 (PDT)
-Message-ID: <069cb01d-47b2-41c5-9956-611b338964e9@suse.com>
-Date: Fri, 21 Aug 2026 10:19:30 +0200
+ d=linux.alibaba.com; s=default;
+ t=1787300405; h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
+ bh=/23PizEp50RcPDZT+s3J0RsUX/+EgorfQW0a0MUxPNo=;
+ b=cDGdWy8szQvOblSWVbDZw6fi+9olFbVs6blLcJIxoq9xw5yW5qXeiwvCtu5YLdXsBOxqy6BYtBRkiJWHZh7NmCRdYltCTV/vW27cuo62XvNy6zr8Eg3kQX19g1bAtYExMihBY4IWsMg+libWDChxa3mcPqhP1KrbV5HViD954n8=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R171e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
+ MF=cp0613@linux.alibaba.com; NM=1; PH=DS; RN=19; SR=0;
+ TI=SMTPD_---0X9LmLu9_1787300404; 
+Received: from DESKTOP-S9E58SO.localdomain(mailfrom:cp0613@linux.alibaba.com
+ fp:SMTPD_---0X9LmLu9_1787300404 cluster:ay36) by smtp.aliyun-inc.com;
+ Fri, 21 Aug 2026 16:20:04 +0800
+From: Chen Pei <cp0613@linux.alibaba.com>
+To: palmer@dabbelt.com, alistair.francis@wdc.com, mst@redhat.com,
+ imammedo@redhat.com, sunilvl@ventanamicro.com, jic23@kernel.org
+Cc: pbonzini@redhat.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ anisinha@redhat.com, dave.jiang@intel.com, alison.schofield@intel.com,
+ junjie.cao@intel.com, guoren@kernel.org, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
+Subject: [PATCH 3/4] hw/riscv/virt: Provide a 32-bit MMIO window for CXL host
+ bridges
+Date: Fri, 21 Aug 2026 16:19:53 +0800
+Message-ID: <20260821081954.1171-4-cp0613@linux.alibaba.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260821081954.1171-1-cp0613@linux.alibaba.com>
+References: <20260821081954.1171-1-cp0613@linux.alibaba.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tools/hvmloader: implement Intel IGD extended VBT
- support
-To: Chuck Zmudzinski <brchuckz@aol.com>
-Cc: qemu-devel@nongnu.org, Andrew Cooper <andrew.cooper3@citrix.com>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger@xenproject.org>,
- Teddy Astie <teddy.astie@vates.tech>, Tomita Moeko <tomitamoeko@gmail.com>,
- xen-devel <xen-devel@lists.xenproject.org>
-References: <20260802050824.10554-1-brchuckz.ref@aol.com>
- <de56c8bd-f0e8-4fe9-8cf5-f6807698176c@aol.com>
- <02a7dc18-4184-4e86-84cb-121769187f71@suse.com>
- <1858e8e6-73fa-4017-93e2-c733fbf0ec8d@aol.com>
- <d6e603bf-8dc5-4ac7-842f-ff9d1f67b98f@suse.com>
- <fdec0b6b-eddf-4a36-a755-c67963daa9ea@aol.com>
- <6ecf80ef-2f0e-44fb-beab-dbcf065a4431@suse.com>
- <bb44067c-6739-4e83-a0fd-cc7ea797048f@aol.com>
- <4c58bda6-e9ed-438d-b96e-feda74a6c4c7@suse.com>
- <31a5870f-2a4d-4dc0-af9c-f0567e0f6fb3@aol.com>
- <db8fd04d-bbc7-41c7-8473-b821d7f77d5f@aol.com>
- <302ed12f-40ca-405c-80ca-ac4f2785d754@suse.com>
- <cdae1785-4d9a-4aab-929e-de55c26b7b94@aol.com>
- <10cd9f6b-678b-407b-a51e-70e9ed7a35fd@aol.com>
- <131b1252-b108-4b4c-8457-673ff0d20d5e@suse.com>
- <b14969c8-9676-404e-b7cc-ce13a6d7ff94@aol.com>
- <92022f85-9a53-4db8-b489-fc91c86b413c@suse.com>
- <fa497825-c8f0-4caf-94f5-b37108e31952@aol.com>
- <42521391-885c-4b96-96e9-5da2e4b5efa1@suse.com>
- <e86404e8-9966-44ab-86d1-4bd01a551313@aol.com>
-Content-Language: en-US
-From: Jan Beulich <jbeulich@suse.com>
-Autocrypt: addr=jbeulich@suse.com; keydata=
- xsDiBFk3nEQRBADAEaSw6zC/EJkiwGPXbWtPxl2xCdSoeepS07jW8UgcHNurfHvUzogEq5xk
- hu507c3BarVjyWCJOylMNR98Yd8VqD9UfmX0Hb8/BrA+Hl6/DB/eqGptrf4BSRwcZQM32aZK
- 7Pj2XbGWIUrZrd70x1eAP9QE3P79Y2oLrsCgbZJfEwCgvz9JjGmQqQkRiTVzlZVCJYcyGGsD
- /0tbFCzD2h20ahe8rC1gbb3K3qk+LpBtvjBu1RY9drYk0NymiGbJWZgab6t1jM7sk2vuf0Py
- O9Hf9XBmK0uE9IgMaiCpc32XV9oASz6UJebwkX+zF2jG5I1BfnO9g7KlotcA/v5ClMjgo6Gl
- MDY4HxoSRu3i1cqqSDtVlt+AOVBJBACrZcnHAUSuCXBPy0jOlBhxPqRWv6ND4c9PH1xjQ3NP
- nxJuMBS8rnNg22uyfAgmBKNLpLgAGVRMZGaGoJObGf72s6TeIqKJo/LtggAS9qAUiuKVnygo
- 3wjfkS9A3DRO+SpU7JqWdsveeIQyeyEJ/8PTowmSQLakF+3fote9ybzd880fSmFuIEJldWxp
- Y2ggPGpiZXVsaWNoQHN1c2UuY29tPsJgBBMRAgAgBQJZN5xEAhsDBgsJCAcDAgQVAggDBBYC
- AwECHgECF4AACgkQoDSui/t3IH4J+wCfQ5jHdEjCRHj23O/5ttg9r9OIruwAn3103WUITZee
- e7Sbg12UgcQ5lv7SzsFNBFk3nEQQCACCuTjCjFOUdi5Nm244F+78kLghRcin/awv+IrTcIWF
- hUpSs1Y91iQQ7KItirz5uwCPlwejSJDQJLIS+QtJHaXDXeV6NI0Uef1hP20+y8qydDiVkv6l
- IreXjTb7DvksRgJNvCkWtYnlS3mYvQ9NzS9PhyALWbXnH6sIJd2O9lKS1Mrfq+y0IXCP10eS
- FFGg+Av3IQeFatkJAyju0PPthyTqxSI4lZYuJVPknzgaeuJv/2NccrPvmeDg6Coe7ZIeQ8Yj
- t0ARxu2xytAkkLCel1Lz1WLmwLstV30g80nkgZf/wr+/BXJW/oIvRlonUkxv+IbBM3dX2OV8
- AmRv1ySWPTP7AAMFB/9PQK/VtlNUJvg8GXj9ootzrteGfVZVVT4XBJkfwBcpC/XcPzldjv+3
- HYudvpdNK3lLujXeA5fLOH+Z/G9WBc5pFVSMocI71I8bT8lIAzreg0WvkWg5V2WZsUMlnDL9
- mpwIGFhlbM3gfDMs7MPMu8YQRFVdUvtSpaAs8OFfGQ0ia3LGZcjA6Ik2+xcqscEJzNH+qh8V
- m5jjp28yZgaqTaRbg3M/+MTbMpicpZuqF4rnB0AQD12/3BNWDR6bmh+EkYSMcEIpQmBM51qM
- EKYTQGybRCjpnKHGOxG0rfFY1085mBDZCH5Kx0cl0HVJuQKC+dV2ZY5AqjcKwAxpE75MLFkr
- wkkEGBECAAkFAlk3nEQCGwwACgkQoDSui/t3IH7nnwCfcJWUDUFKdCsBH/E5d+0ZnMQi+G0A
- nAuWpQkjM1ASeQwSHEeAWPgskBQL
-In-Reply-To: <e86404e8-9966-44ab-86d1-4bd01a551313@aol.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=jbeulich@suse.com; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.119 (deferred)
+Received-SPF: pass client-ip=115.124.30.119;
+ envelope-from=cp0613@linux.alibaba.com;
+ helo=out30-119.freemail.mail.aliyun.com
+X-Spam_score_int: -166
+X-Spam_score: -16.7
+X-Spam_bar: ----------------
+X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,84 +75,271 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20.08.2026 18:53, Chuck Zmudzinski wrote:
-> On 8/20/2026 11:17 AM, Jan Beulich wrote:
->> On 20.08.2026 13:47, Chuck Zmudzinski wrote:
->>> On 8/20/2026 3:51 AM, Jan Beulich wrote:
->>>> On 19.08.2026 19:13, Chuck Zmudzinski wrote:
->>>>> On 8/19/2026 9:51 AM, Jan Beulich wrote:
->>>>>> On 19.08.2026 14:36, Chuck Zmudzinski wrote:
->>>>>>> On 8/19/2026 8:16 AM, Chuck Zmudzinski wrote:
->>>>>>>> Yes, I agree that v3 of the patch to hvmloader should presume that the DM can get
->>>>>>>> a copy of the OpRegion and read its contents so most of this can be done in the
->>>>>>>> DM instead of in hvmloader. So from hvmloader's perspective, the patch will be more
->>>>>>>> about avoiding the layering violation than anything else.
->>>>>>>
->>>>>>> However, there is one advantage, from the viewpoint of the Xen virtualization platform
->>>>>>> as a whole, to do the patching of the OpRegion in hvmloader instead of in the DM.
->>>>>>>
->>>>>>> If we patch the OpRegion in hvmloader as v2 of this patch does, we provide a common
->>>>>>> solution for extended VBT support for Intel IGD devices that would be compatible with
->>>>>>> all DM implementations, not just with Qemu. So why not do the patching of the OpRegion
->>>>>>> in hvmloader?
->>>>>>
->>>>>> As indicated before: If the OpRegion holds data that is needed to drive the
->>>>>> device, and if the OpRegion is exposed writable to guests, then guest can
->>>>>> screw up that data such that subsequent guests won't work anymore. Hence
->>>>>> exposing to guests (which includes hvmloader) needs to be stopped, or at
->>>>>> least be limited to r/o. That, in fact, includes exposing to any privilege-
->>>>>> restricted DM as well.
->>>>>>
->>>>>> Exposing r/o may be entirely okay (i.e. may not be a layering violation),
->>>>>> depending how exactly an OpRegion surfaces for a device (on the host). Aiui
->>>>>> it's not addressed by any of the BARs, yet it looks like it needs similar
->>>>>> treatment.
->>>>>
->>>>> Yes, the OpRegion is not one of the BARs as specified by the PCI specs, but
->>>>> it functions more or less like a BAR region with the devices's ASLS register
->>>>> at offset 0xfc in the PCI device config space of the device acting like the
->>>>> BAR for that region.
->>>>
->>>> That is, on real hardware a write to that register moves the OpRegion? That
->>>> would need following by the DM then, i.e. the DM would need to indicate the
->>>> original position in the register, and the guest (incl hvmloader) would
->>>> then be free to relocate it.
->>>
->>> Why would that "need following by the DM" when the register in the guest is
->>> fully emulated, [1] which means that when the guest (incl hvmloader) writes to the
->>> register, the register on the real hardware is not touched, nor is the OpRegion
->>> in the host address space moved?
->>
->> You said it's BAR-like. If the guest writes to a BAR, the referenced MMIO
->> region moves accordingly.
-> 
-> It's BAR-like, but it is not actually a BAR (and the OpRegion is not exactly
-> an MMIO region either (it is actually and ACPI thing), so that is not relevant
-> to this patch.
-> 
-> Also, it is fully emulated so when the guest writes to it, the real register on the
-> real device is not touched, as I have said multiple times in my responses to your
-> question.
+CXL component register BAR (BAR0 on CXL Root Port and Type3 device)
+and the CXL device register BAR (BAR2 on Type3 device) are declared
+as 64-bit non-prefetchable memory.  Per the PCI-to-PCI Bridge
+Architecture Specification Rev 1.2 (PCI-SIG, 2003):
 
-No matter how often you said that, I never put that under question. I was asking
-about the behavior of writes (where the behavior on bare hardware would need to
-be reflected in the behavior of the emulated register).
+  - §3.2.5.8 (Memory Base/Limit): the non-prefetchable window covers
+    only 32-bit addresses (AD[31:20]); the Type 1 header defines no
+    upper-32-bit extension for it.
+  - §3.2.5.9 (Prefetchable Memory Base/Limit): the bottom 4 bits
+    encode 64-bit support (01h), but this applies exclusively to the
+    *prefetchable* window.
+  - §3.2.5.10 (Prefetchable Base/Limit Upper 32 Bits): optional
+    registers for AD[63:32] of the prefetchable range only.
 
->>> Here is how I understand how this works in the current implementation and how
->>> this should be done:
->>
->> I'm sorry, but this is getting out of hand, at least as far as I'm concerned.
->> I've been trying to help, but even just reading your replies has already been
->> taking way more time than I would have wanted to spend here.
-> 
-> Fair enough. Thank you for the time you have spent on this patch, and also thank
-> you for clearly stating that you don't want to spend any more time on it. So
-> I consider this patch dead unless and until another maintainer shows some interest
-> in it.
+The architecture therefore allows a 64-bit window only when it is also
+prefetchable; there is no 64-bit non-prefetchable form.  PCIe inherits
+this Type 1 header layout unchanged.  Linux thus places 64-bit
+non-prefetchable BARs in the 32-bit non-prefetchable bridge window,
+which requires the bridge to own enough address space below 4 GiB.
 
-I didn't say I would not look at future versions of the patch. However, for me
-to (usefully) do so, things need to be presented in a way that I can understand
-without knowing all the details of IGD.
+On RISC-V virt the 32-bit PCIe MMIO range (1 GiB at 0x40000000) is
+currently consumed entirely by PCI0, so CXL host bridges (ACPI0016)
+have no non-prefetchable window and Linux fails to assign these BARs.
 
-Jan
+Reserve the top 256 MiB of the 32-bit MMIO window exclusively for CXL
+host bridges, keeping all of the logic in the riscv code:
+
+- Reduce the FDT 'ranges' for PCI0 by 256 MiB so that device-tree
+  driven firmware does not hand that range to PCI0.
+- The CXL host bridge _CRS is produced by the generic build_crs()
+  path.  EDK2's PciBusDxe only recurses into PCI-to-PCI bridges, while
+  the pxb-cxl expander bridge presents as a class 0x0600 host bridge
+  with a type-0 header, so firmware never enumerates behind it and
+  leaves the CXL root port's window and bus-number registers unset;
+  build_crs() would therefore return an empty _CRS.  Simulate the
+  firmware PCI initialization in virt_cxl_init_bridge_windows(): assign
+  the reserved window to the root port's memory window, and allocate
+  primary/secondary/subordinate bus numbers depth-first.  build_crs()
+  then emits both the memory range and a correct bus-range resource
+  (without a bus range Linux only claims the host-bridge bus and cannot
+  enumerate the devices behind the root port), and the range is
+  excluded from PCI0's _CRS.  A reset handler re-applies the state, as
+  a PCI reset clears those registers.
+
+This targets a single pxb-cxl (one CXL host bridge), which matches the
+bios-tables test added later in the series.  With more than one
+pxb-cxl the single reserved window would be claimed by every ACPI0016
+bridge, so it would need to be partitioned per bridge; that is left as
+future work (see the TODO in virt_cxl_init_bridge_windows()).
+
+Verified by booting an RVA22 kernel: the CXL root port and Type3 device
+are enumerated (0000:0c:00.0 / 0000:0d:00.0) and 'cxl list' reports the
+memdev and the CFMWS root decoder.
+
+Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
+---
+ hw/riscv/virt.c | 154 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 153 insertions(+), 1 deletion(-)
+
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index e08c76af4d..af83603293 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -48,11 +48,13 @@
+ #include "chardev/char.h"
+ #include "system/device_tree.h"
+ #include "system/system.h"
++#include "system/reset.h"
+ #include "system/tcg.h"
+ #include "system/kvm.h"
+ #include "system/tpm.h"
+ #include "system/qtest.h"
+ #include "hw/pci/pci.h"
++#include "hw/pci/pci_bridge.h"
+ #include "hw/pci-host/gpex.h"
+ #include "hw/display/ramfb.h"
+ #include "hw/cxl/cxl.h"
+@@ -115,6 +117,9 @@ static const MemMapEntry virt_memmap[] = {
+ /* PCIe high mmio for RV64, size is fixed but base depends on top of RAM */
+ #define VIRT64_HIGH_PCIE_MMIO_SIZE  (16 * GiB)
+ 
++/* 32-bit MMIO range carved out of VIRT_PCIE_MMIO for CXL host bridges */
++#define VIRT_CXL_MMIO32_SIZE        (256 * MiB)
++
+ static MemMapEntry virt_high_pcie_memmap;
+ 
+ #define VIRT_FLASH_SECTOR_SIZE (256 * KiB)
+@@ -727,6 +732,18 @@ static void create_fdt_pcie(RISCVVirtState *s,
+ {
+     g_autofree char *name = NULL;
+     MachineState *ms = MACHINE(s);
++    /*
++     * When CXL is enabled, reserve the last 256 MiB of the 32-bit MMIO
++     * window for CXL host bridges and exclude it from the main PCIe host
++     * bridge's FDT 'ranges' so UEFI's PciHostBridgeDxe does not allocate
++     * that range to PCI0.  The CXL host bridge _CRS declares this range
++     * independently.
++     */
++    hwaddr mmio32_size = s->memmap[VIRT_PCIE_MMIO].size;
++
++    if (s->cxl_devices_state.is_enabled) {
++        mmio32_size -= VIRT_CXL_MMIO32_SIZE;
++    }
+ 
+     name = g_strdup_printf("/soc/pci@%"HWADDR_PRIx,
+                            s->memmap[VIRT_PCIE_ECAM].base);
+@@ -752,7 +769,7 @@ static void create_fdt_pcie(RISCVVirtState *s,
+         2, s->memmap[VIRT_PCIE_PIO].base, 2, s->memmap[VIRT_PCIE_PIO].size,
+         1, FDT_PCI_RANGE_MMIO,
+         2, s->memmap[VIRT_PCIE_MMIO].base,
+-        2, s->memmap[VIRT_PCIE_MMIO].base, 2, s->memmap[VIRT_PCIE_MMIO].size,
++        2, s->memmap[VIRT_PCIE_MMIO].base, 2, mmio32_size,
+         1, FDT_PCI_RANGE_MMIO_64BIT,
+         2, virt_high_pcie_memmap.base,
+         2, virt_high_pcie_memmap.base, 2, virt_high_pcie_memmap.size);
+@@ -1130,6 +1147,132 @@ static void cxl_host_state_init(RISCVVirtState *s)
+     cxl_fmws_update_mmio();
+ }
+ 
++/*
++ * Assign PCI bus numbers to the bridges under @bus in depth-first order,
++ * the way firmware does during enumeration.  QEMU leaves the secondary and
++ * subordinate bus registers at 0 until firmware programs them, so without
++ * this build_crs() would see an empty bus range for the CXL host bridge.
++ * @bus itself is numbered @bus_num.  Returns the highest bus number used.
++ */
++static int virt_cxl_assign_bus_numbers(PCIBus *bus, int bus_num)
++{
++    int max_bus = bus_num;
++    int next_bus = bus_num + 1;
++    int devfn;
++
++    for (devfn = 0; devfn < ARRAY_SIZE(bus->devices); devfn++) {
++        PCIDevice *dev = bus->devices[devfn];
++        PCIBus *sec_bus;
++        int subordinate;
++
++        if (!dev) {
++            continue;
++        }
++        if ((dev->config[PCI_HEADER_TYPE] &
++             ~PCI_HEADER_TYPE_MULTI_FUNCTION) != PCI_HEADER_TYPE_BRIDGE) {
++            continue;
++        }
++
++        sec_bus = pci_bridge_get_sec_bus(PCI_BRIDGE(dev));
++        subordinate = virt_cxl_assign_bus_numbers(sec_bus, next_bus);
++
++        pci_set_byte(dev->config + PCI_PRIMARY_BUS, bus_num);
++        pci_set_byte(dev->config + PCI_SECONDARY_BUS, next_bus);
++        pci_set_byte(dev->config + PCI_SUBORDINATE_BUS, subordinate);
++
++        if (subordinate > max_bus) {
++            max_bus = subordinate;
++        }
++        next_bus = subordinate + 1;
++    }
++
++    return max_bus;
++}
++
++/*
++ * Simulate the PCI resource initialization that firmware (UEFI) would
++ * normally perform for the CXL host bridge.
++ *
++ * EDK2's PciBusDxe only recurses into devices that look like PCI-to-PCI
++ * bridges, while the pxb-cxl expander bridge presents as a class 0x0600
++ * host bridge with a standard (type 0) header, so the firmware neither
++ * enumerates behind it nor assigns it a memory window or bus numbers.  As a
++ * result the generic build_crs() path would produce an empty _CRS for the
++ * CXL host bridge (ACPI0016).
++ *
++ * Program each CXL root port the way firmware would:
++ *  - assign the reserved 32-bit MMIO range (see create_fdt_pcie()) to its
++ *    memory window, so build_crs() emits that range in the host bridge _CRS
++ *    and excludes it from PCI0's _CRS;
++ *  - set the primary/secondary/subordinate bus numbers, so build_crs()
++ *    emits a correct bus-range resource.  Without a bus range Linux only
++ *    claims the single host-bridge bus and cannot enumerate the devices
++ *    behind the root port.
++ *
++ * TODO: this handles a single pxb-cxl with a single root port, which is
++ * the supported topology for now.  With multiple CXL host bridges or root
++ * ports the reserved window would need to be partitioned per bridge.
++ */
++static void virt_cxl_init_bridge_windows(RISCVVirtState *s)
++{
++    hwaddr cxl_mmio_base, cxl_mmio_limit;
++    PCIBus *bus;
++
++    if (!s->cxl_devices_state.is_enabled) {
++        return;
++    }
++
++    cxl_mmio_base = s->memmap[VIRT_PCIE_MMIO].base +
++                    s->memmap[VIRT_PCIE_MMIO].size - VIRT_CXL_MMIO32_SIZE;
++    cxl_mmio_limit = cxl_mmio_base + VIRT_CXL_MMIO32_SIZE - 1;
++
++    QLIST_FOREACH(bus, &s->pci_bus->child, sibling) {
++        int devfn;
++
++        if (!pci_bus_is_root(bus) || !pci_bus_is_cxl(bus)) {
++            continue;
++        }
++
++        /* Assign bus numbers for the whole CXL subtree (firmware would). */
++        virt_cxl_assign_bus_numbers(bus, pci_bus_num(bus));
++
++        /* Assign the reserved MMIO window to the root-port bridge. */
++        for (devfn = 0; devfn < ARRAY_SIZE(bus->devices); devfn++) {
++            PCIDevice *dev = bus->devices[devfn];
++            PCIBridge *br;
++
++            if (!dev) {
++                continue;
++            }
++            if ((dev->config[PCI_HEADER_TYPE] &
++                 ~PCI_HEADER_TYPE_MULTI_FUNCTION) != PCI_HEADER_TYPE_BRIDGE) {
++                continue;
++            }
++
++            br = PCI_BRIDGE(dev);
++
++            pci_set_word(dev->config + PCI_MEMORY_BASE,
++                         (cxl_mmio_base >> 16) & PCI_MEMORY_RANGE_MASK);
++            pci_set_word(dev->config + PCI_MEMORY_LIMIT,
++                         (cxl_mmio_limit >> 16) & PCI_MEMORY_RANGE_MASK);
++            pci_word_test_and_set_mask(dev->config + PCI_COMMAND,
++                                       PCI_COMMAND_MEMORY);
++            pci_bridge_update_mappings(br);
++            break;
++        }
++    }
++}
++
++/*
++ * A PCI reset clears the bridge window and bus-number registers programmed
++ * above, so re-apply them after every reset, the way firmware would during
++ * its PCI enumeration.
++ */
++static void virt_cxl_reset_bridge_windows(void *opaque)
++{
++    virt_cxl_init_bridge_windows(RISCV_VIRT_MACHINE(opaque));
++}
++
+ static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
+ {
+     FWCfgState *fw_cfg;
+@@ -1238,6 +1381,15 @@ static void virt_machine_done(Notifier *notifier, void *data)
+     if (s->cxl_devices_state.is_enabled) {
+         cxl_fmws_link_targets(&error_fatal);
+     }
++
++    /*
++     * Assign the CXL bridge memory window (simulating firmware) so the
++     * ACPI _CRS built for the CXL host bridge is populated.  Do it here for
++     * the initial build, and register a reset handler so the window is
++     * re-applied after any PCI reset (which clears the bridge registers).
++     */
++    virt_cxl_init_bridge_windows(s);
++    qemu_register_reset(virt_cxl_reset_bridge_windows, s);
+     hwaddr firmware_end_addr;
+     vaddr kernel_start_addr;
+     const char *firmware_name = riscv_default_firmware_name(&s->soc[0]);
+-- 
+2.50.1
+
 
