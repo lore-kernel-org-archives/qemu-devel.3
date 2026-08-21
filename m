@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89E61C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:02:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F052EC5DF7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:03:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxN1J-00019K-IG; Fri, 21 Aug 2026 07:02:45 -0400
+	id 1wxN1J-00015S-2b; Fri, 21 Aug 2026 07:02:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN16-0000mW-93
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:34 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1wxN13-0000gW-Ii
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:30 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN14-0007WO-IT
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:31 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4996f1ee4a4so5865365e9.2
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:30 -0700 (PDT)
+ id 1wxN10-0007Uv-OK
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:29 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-499840a2575so4775865e9.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787310149; x=1787914949; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=KYe/6B8tsxZ+nsgvyYwWpVH0krYt9p5V+gl6qmul/ng=;
- b=slvwWR1oNpp5VHssdy8SZq3eaOVO5QqpPzAdTib6DYWMz+bG15fDJPsP1iOZ41+JQj
- EFQF91yaq5WzuEZnZ/38N8oTnc5fp4A/T2GCw+VLUn+mwV5xUatoO20+qcYv+op2rXP0
- h8Y/srAtpcIsh0B72w9VRLFNAA2teaxu+Mcwbr1fucFtVLXhEOes30EZHa0+bdoZOhgQ
- GMtnl1VcOWavnr/TSh4s3otdt6zrkUsk0VlL1Zuu64jREwfkDHtcz8Qh+Kr0jGWymjIF
- pQLWOQcBpN8cMc8u78CW50UO9ClkGJVCH624XlxZrqhm+Bkb8c28ZFCPDKZPi5owhUDC
- +nyQ==
+ d=linaro.org; s=google; t=1787310145; x=1787914945; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ZW+43f0HNk0MlxWq71xFTJBbmIurAt5Kb0ZGOXTKsqY=;
+ b=XHhDhJMAoVxz+ZRkz4nPmy225bSXfQ98qvyP43izXJfDmPd7AyipddGs5MdN3EDOo4
+ o9yk+PXv1aUCARjy2te9kBPNwN3asHw7sv+krcqXmtuWQ0Wy4JUytqIfSMzw7HTyaReo
+ ZXYgVD3YV+az75e29lwfcw3nFKgRumgOiw2szJFbbF2zyw6U8dnf3uLrtE4TNyOVk/pn
+ gck9+anTgWtxxtp/IrkeJ+9zyNq4IBKeJx39HQ9uatrdPL0OeVlkH2DHWuGxWN6jri4r
+ Ks5h9Q8xPVjg4YKoDI8uUnF28VSMlQEXL7FZYBUz6r/uBXsaDfEfPcxBwX5DKFZCa8Uh
+ s0XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787310149; x=1787914949;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=KYe/6B8tsxZ+nsgvyYwWpVH0krYt9p5V+gl6qmul/ng=;
- b=L3xh4eh0DFjMgfdTWkGhbrJSQnns2QPCQ7ufELR5ahaRp3emIv7xB45OosOKiEUmTL
- 8kI1PGRLG8YgbXZFGHqGqWk8snWIaTCMjEDtz8XpGT434S4W0Twv7C3acITaYF/vkPI8
- SxM3fIT+81aVIBGtwgrTZsiPXXD2HK3moXUf9GQMoODXbyKf6zLkhmcKAJZlDwkB8OqT
- 1LZSa0m1ReB/CIglAOf5l5/kQ4gNCz67wJwa3c7za3WYaESi9RvPlkZbMdfaETOOiZYa
- E4BRNbY4NwLxraiPwq3Vv2tQ6OEzbrpcMYJ9m0LkBsbGik668LuXqNuFWoAVQUHTgckD
- Vt6Q==
-X-Gm-Message-State: AOJu0YwZ4tEWRar5TQjKgzZ94Scoi6EjxUvpk/LoMaRUe5SxVNnUmg+z
- jX0tisx293/9CWPQDGK/lqe+xn5somgvw07pfdOoSu2Hx7h4Nd24vzMBxLk7Qm6I9XTtjAtMs5V
- zqvxX
-X-Gm-Gg: AR+sD133iEHA1yGIWax0JxOBxN1FW625XPfbos0GKxmfZ70f7mNCMnPg85xFX/hmwCY
- 1pcrQtHC7VM/dkoqHfimR/fo/tcCra2nL5ryHlt7txO3HumUvOVKsfUmx+KTaGEKuo2B9xBxEJQ
- LxQ3EaN2HJ+Mfmz9VkJiP23K2hDqUJjryXDtH1HDh0AOijppS34DJIlfa6ivF4oeZea8N5hro0F
- yHBzCgfsF4IyROlX0SsaMXDljyjFPC4JKEEUq949S8FhBwgoES1zEgBDrSqvxKW5InUQWyzOZHh
- +QSgXstmp/Nuhg3vr38/3oRlNGxIQxVyB6olESQeph/gAXi2Y5q0rvV3H81zIBzdC+E+LNfKwHV
- Q26d91g9oJgFKGZVTX7qvNqwUIYLq1gJ7iGw7dPYpWzk0ic1xHVM7+V5JChHLHB5MOpFz9gt8XQ
- L5f+UiErwV22qS9F+jaf6nN8dVgN1IGgdftMRKKGFnmysY6iWpZj0aTeKxL75Y6eRj6cogPfeno
- L+VN0oIQ50ygf7++lMLt+2tozvWLoyrCdpYK89TtUnaacW+yWqu+DsDI99pIxkRsaWGTA==
-X-Received: by 2002:a05:600c:638d:b0:497:fecd:5b00 with SMTP id
- 5b1f17b1804b1-499b8457084mr91558445e9.9.1787310149096; 
- Fri, 21 Aug 2026 04:02:29 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787310145; x=1787914945;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=ZW+43f0HNk0MlxWq71xFTJBbmIurAt5Kb0ZGOXTKsqY=;
+ b=ApJJeFc2q4JxRH87bRZLA/w3dwc4fRK3ZIYGxNmkB2Vwb6Yo4GdX3ZY7LybBZsLoN9
+ tKT9utS9H2VBkglF050tFYQJTptvByGGcKCsBMCuvXYRswlXCxUm0QlP5sHQMPlJPHAM
+ 8xFVLpdmzd8McYWzFlBmgpa9PFDFV+XD6bz9F1R3fcALpzZKMYxPkfCP5Ca8V2MkPcHH
+ 8+lYCKIZFH59fLjOHoDWSUgetp4EOZjRjWO81KV48EGUBzfq2zceb00M1WjVmgO05bYG
+ q3rLVF8DYeTTS+sr6W++XIpCAyFvy1YhqVXn3UspiVrzsUMO5OsaRLlj/1lZwHYr+w7h
+ 3H9w==
+X-Gm-Message-State: AOJu0Yzzz+MqiwZyZ/TD+lKfWKB9DKuIpe7Hg28IUMJRVfeGTod8/8Wq
+ obs6Hy7JhJ3uucoA+al1axsmfc+5seB6vXMkSyh9jJFadkKIqR+vAzKQDdmPFnBUhsIo1Pwacmo
+ VP+rL
+X-Gm-Gg: AR+sD13vKT+OQClslTVL9Wlwb+WRpU6zt93ekYMDJdwaROjhVXrwDfj+pNYFl581XOL
+ qe7PuRBOOMZNfbxvs5O4LknLce2aK/PgkOjU05t1v53T0BFxfCIacXG40fN/9Wg4Q9o4AnAFPco
+ +mg/TG1BwlIsypVLtoRBOXTAcmJKRKEv9KReeeerHavTgqzy5KCwS5iAz+U1PxUu6CTNq4iQkUL
+ s4jl3plPIbe9b0zg3T/8RU8O/qk4NbPzyoOPmZc6BlWa75PqME5WpdHEjQWEQjCSJPxT2L3XyCL
+ 1kDhTLKDo+Blz3EfwcHHMaSLqHI9GzRkWIn6wjR29QuePz5bkz2eVmUlolLNR4vTPoZk0gdrYNV
+ xHJuq2q1Hb8J+EYHVMXKwsIFkFAILI1bFkKLlJUDibwLq5fQ/kgFwF0YgoOUUi5X3BDPgcUFlHQ
+ 8DjkxF4V4XLoA64+U9kuNCN95y7hWAgjEM9wlLClPy/HCjePSnanlnPnPTxzpO94sn7aThVJxwo
+ xmP8VLjHB1rTXstOTvR1ChDLX5HT+2dEezYs5nspny95knbPGYhKBw8T8sO1zbIDHOL+2+qV4M2
+ 5wz1
+X-Received: by 2002:a05:600c:1548:b0:495:5fdf:2075 with SMTP id
+ 5b1f17b1804b1-499b8277214mr79175265e9.0.1787310144998; 
+ Fri, 21 Aug 2026 04:02:24 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.27
+ 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.23
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 04:02:28 -0700 (PDT)
+ Fri, 21 Aug 2026 04:02:23 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 28/43] hw/arm: cubieboard: Store boot info in the machine state
-Date: Fri, 21 Aug 2026 12:00:46 +0100
-Message-ID: <20260821110101.3971391-29-peter.maydell@linaro.org>
+Subject: [PULL 25/43] hw/arm: aspeed_ast27x0-fc: Store boot info in the
+ machine state
+Date: Fri, 21 Aug 2026 12:00:43 +0100
+Message-ID: <20260821110101.3971391-26-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260821110101.3971391-1-peter.maydell@linaro.org>
 References: <20260821110101.3971391-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,8 +111,7 @@ arm_load_kernel() keeps a pointer to the boot info struct for the
 lifetime of the VM, so the struct logically belongs to the machine
 rather than to a file scoped static object.
 
-Move it into a new CubieboardMachineState and register the machine
-type explicitly instead of through the DEFINE_MACHINE_ARM macro.
+Move the boot info into the existing Ast2700FCState.
 
 As in the xlnx-zcu102 and raspi machines, the boot info belongs to
 the machine rather than to a static object:
@@ -117,60 +120,59 @@ the machine rather than to a static object:
 0f15c6e338 ("hw/arm/raspi: Move arm_boot_info structure to RaspiMachineState")
 
 Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Message-id: 20260816131300.51799-6-bin.meng@processmission.com
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-id: 20260816131300.51799-3-bin.meng@processmission.com
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/cubieboard.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ hw/arm/aspeed_ast27x0-fc.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/hw/arm/cubieboard.c b/hw/arm/cubieboard.c
-index a643ae4e27d..d59c1ebba7f 100644
---- a/hw/arm/cubieboard.c
-+++ b/hw/arm/cubieboard.c
-@@ -25,13 +25,18 @@
- #include "hw/arm/machines-qom.h"
- #include "hw/i2c/i2c.h"
+diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
+index 058cea42edc..ceeae336df1 100644
+--- a/hw/arm/aspeed_ast27x0-fc.c
++++ b/hw/arm/aspeed_ast27x0-fc.c
+@@ -27,10 +27,6 @@
+ #define TYPE_AST2700FC MACHINE_TYPE_NAME("ast2700fc")
+ OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700FC);
  
--static struct arm_boot_info cubieboard_binfo = {
--    .loader_start = AW_A10_SDRAM_BASE,
--    .board_id = 0x1008,
-+#define TYPE_CUBIEBOARD_MACHINE MACHINE_TYPE_NAME("cubieboard")
-+OBJECT_DECLARE_SIMPLE_TYPE(CubieboardMachineState, CUBIEBOARD_MACHINE)
-+
-+struct CubieboardMachineState {
-+    MachineState parent;
+-static struct arm_boot_info ast2700fc_board_info = {
+-    .board_id = -1, /* device-tree-only board */
+-};
+-
+ struct Ast2700FCState {
+     MachineState parent_obj;
+ 
+@@ -46,6 +42,8 @@ struct Ast2700FCState {
+     Aspeed27x0SoCState ca35;
+     Aspeed27x0CoprocessorState ssp;
+     Aspeed27x0CoprocessorState tsp;
 +
 +    struct arm_boot_info bootinfo;
  };
  
- static void cubieboard_init(MachineState *machine)
- {
-+    CubieboardMachineState *cbs = CUBIEBOARD_MACHINE(machine);
-     AwA10State *a10;
-     Error *err = NULL;
-     DriveInfo *di;
-@@ -103,8 +108,10 @@ static void cubieboard_init(MachineState *machine)
-     }
-     /* TODO create and connect IDE devices for ide_drive_get() */
+ #define AST2700FC_BMC_RAM_SIZE (2 * GiB)
+@@ -114,8 +112,9 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
+     aspeed_board_init_flashes(&soc->fmc, AST2700FC_FMC_MODEL, 2, 0);
+     aspeed_board_init_flashes(&soc->spi[0], AST2700FC_SPI_MODEL, 1, 2);
  
--    cubieboard_binfo.ram_size = machine->ram_size;
--    arm_load_kernel(&a10->cpu, machine, &cubieboard_binfo);
-+    cbs->bootinfo.loader_start = AW_A10_SDRAM_BASE;
-+    cbs->bootinfo.board_id = 0x1008;
-+    cbs->bootinfo.ram_size = machine->ram_size;
-+    arm_load_kernel(&a10->cpu, machine, &cbs->bootinfo);
+-    ast2700fc_board_info.ram_size = machine->ram_size;
+-    ast2700fc_board_info.loader_start = sc->memmap[ASPEED_DEV_SDRAM];
++    s->bootinfo.ram_size = machine->ram_size;
++    s->bootinfo.loader_start = sc->memmap[ASPEED_DEV_SDRAM];
++    s->bootinfo.board_id = -1; /* device-tree-only board */
+ 
+     dev = ssi_get_cs(soc->fmc.spi, 0);
+     fmc0 = dev ? m25p80_get_blk(dev) : NULL;
+@@ -129,7 +128,7 @@ static bool ast2700fc_ca35_init(MachineState *machine, Error **errp)
+     bios_name = machine->firmware ?: VBOOTROM_FILE_NAME;
+     aspeed_load_vbootrom(soc, bios_name, errp);
+ 
+-    arm_load_kernel(ARM_CPU(first_cpu), machine, &ast2700fc_board_info);
++    arm_load_kernel(ARM_CPU(first_cpu), machine, &s->bootinfo);
+ 
+     return true;
  }
- 
- static void cubieboard_machine_init(MachineClass *mc)
-@@ -126,4 +133,6 @@ static void cubieboard_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
- }
- 
--DEFINE_MACHINE_ARM("cubieboard", cubieboard_machine_init)
-+DEFINE_MACHINE_EXTENDED("cubieboard", MACHINE, CubieboardMachineState,
-+                        cubieboard_machine_init, false,
-+                        arm_machine_interfaces)
 -- 
 2.43.0
 
