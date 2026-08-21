@@ -4,113 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3952C5DF89
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 13:31:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07701C5DF89
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 13:33:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxPKi-0004PF-3F; Fri, 21 Aug 2026 09:30:56 -0400
+	id 1wxPMX-0004qX-Kb; Fri, 21 Aug 2026 09:32:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wxPKg-0004Oq-0L
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 09:30:54 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wxPKe-0007CZ-AQ
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 09:30:53 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 47C9E3E7E;
- Fri, 21 Aug 2026 13:30:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787319045; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4FAIfH9p/fy9Ay559NoIl8wm1AQWIUEcj+0Nm4yJip8=;
- b=Va/j+fNjFuWnG/UZ3kLqEaVvjKAU2ULka+vasTC4bXiJzzh19YS3d3hW23WoRWNo0U90hS
- EAsW0rsqLXNDqpOIszmUOX7fOvW24AZvqGlTn22jEo/A0e0qTo3oTOVoiZ6/n6blFr7nIy
- Q61FCoxBAIEBabo+N3f7riJkYNMUgQw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787319045;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4FAIfH9p/fy9Ay559NoIl8wm1AQWIUEcj+0Nm4yJip8=;
- b=GA0kEt8kwfe9vJIwsYzwSEKyljstRH0kTVqAwXf/kfFncL1XwwAvWpPU4RRQ+zTPNZu9tC
- CzAsaLQYdMQc0qDw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=UwEsaQm2;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=boHxDPSp
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787319041; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4FAIfH9p/fy9Ay559NoIl8wm1AQWIUEcj+0Nm4yJip8=;
- b=UwEsaQm2rEwmVeqM1fPZDgwUPKBKJp3HCZHz99CN5yRzJiSXSi5A6J0LSnAwoJagbQ1z1u
- vlQpYNVBorreB6u9SOUnlr49UrB8Svaew9JR219ND2FuoEl/L4e5C14Gf3qFDI8THqlHuk
- npyGxh/WY0g7px8c7sBGZip4H4KL5k8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787319041;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4FAIfH9p/fy9Ay559NoIl8wm1AQWIUEcj+0Nm4yJip8=;
- b=boHxDPSpXOcGj3cI8QbyaNBZc0fCgD9HzdqKfeUzmZK6zw38cKIQbHpaDfKKZ0blpBe6sK
- AhFkdZEMADU0xLDQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DCCB7351D;
- Fri, 21 Aug 2026 13:30:40 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id foofKwBTiGoxGQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 21 Aug 2026 13:30:40 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Jack Wang <jinpu.wang@ionos.com>, Peter Xu <peterx@redhat.com>, Li
- Zhijian <lizhijian@fujitsu.com>, Juraj Marcin <jmarcin@redhat.com>, Samuel
- Zhang <guoqing.zhang@amd.com>, Yanfei Xu <yanfei.xu@bytedance.com>, Jinpu
- Wang <jinpu.wang@cloud.ionos.com>
-Subject: Re: [PATCH v2 07/10] migration/rdma: Sanity check
- RDMA_CONTROL_REGISTER_REQUEST on buflen
-In-Reply-To: <20260820200322.3321036-8-peterx@redhat.com>
-References: <20260820200322.3321036-1-peterx@redhat.com>
- <20260820200322.3321036-8-peterx@redhat.com>
-Date: Fri, 21 Aug 2026 10:30:30 -0300
-Message-ID: <87cxvblhxl.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <hbathini@linux.ibm.com>)
+ id 1wxPMU-0004pm-TE; Fri, 21 Aug 2026 09:32:47 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hbathini@linux.ibm.com>)
+ id 1wxPMT-0007j9-8U; Fri, 21 Aug 2026 09:32:46 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67LD1a9w454640; Fri, 21 Aug 2026 13:32:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=I4vM9R
+ k7rwZDfOhH5yuofptCYkRws1LDFgCpihkqac4=; b=syJ12dVgHF1zfuBeeSWUZ+
+ Mz2FCTTeg8Yya1ZB9vnQ/Iq9YRmZC6SINXlERNzm/mkBHZ/4KVzAhocs2URbpxNV
+ vZB0KI6YYbZqZS2y4ZjTb4C83OdiPWT7Dxwyz13B4LZnNqns2WcDQjZGUK8p2fHx
+ cCWzdBRjPo4YUi2VDP8HG7JXe3UwxFmThO+Dghz0Wlrsh9uOPb5evaUzcdOI0bYB
+ JW5fA5yKZROGjM4Ykmxsl/3dAXxoxwvMeZb0pXIt8JPLbMaGBsAmGvYkPc/6etLr
+ p8gVgQUqJvlp88Ir7FJnsY1sTkx/VJANhiGv7DjA+lXqui/nuV8QcB8WpyY7Sk1Q
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g4yu2hk4f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 21 Aug 2026 13:32:39 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67LDBOiD000762;
+ Fri, 21 Aug 2026 13:32:38 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g32twmya5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 21 Aug 2026 13:32:38 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67LDWYnH49611108
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 21 Aug 2026 13:32:34 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 41B0520043;
+ Fri, 21 Aug 2026 13:32:34 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F059B20040;
+ Fri, 21 Aug 2026 13:32:31 +0000 (GMT)
+Received: from [9.39.16.245] (unknown [9.39.16.245])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 21 Aug 2026 13:32:31 +0000 (GMT)
+Message-ID: <043b3565-593a-41dc-87c3-08d8cd7e108d@linux.ibm.com>
+Date: Fri, 21 Aug 2026 19:02:30 +0530
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[9]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,gitlab.com:url,suse.de:email,suse.de:mid,suse.de:dkim,ionos.com:email];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- URIBL_BLOCKED(0.00)[gitlab.com:url,suse.de:email,suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,ionos.com:email];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 47C9E3E7E
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/2] MAINTAINERS: add dedicated PowerPC RAS section
+To: Shivang Upadhyay <shivangu@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: adityag@linux.ibm.com, harshpb@linux.ibm.com, mahesh@linux.ibm.com,
+ npiggin@gmail.com, rathc@linux.ibm.com, sourabhjain@linux.ibm.com,
+ vaibhav@linux.ibm.com
+References: <20260819193757.1072909-1-shivangu@linux.ibm.com>
+ <20260819193757.1072909-2-shivangu@linux.ibm.com>
+Content-Language: en-US
+From: Hari Bathini <hbathini@linux.ibm.com>
+In-Reply-To: <20260819193757.1072909-2-shivangu@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=AdqB2XXG c=1 sm=1 tr=0 ts=6a885377 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=69wJf7TsAAAA:8 a=KKAkSRfTAAAA:8 a=S56xvJB5AAAA:8 a=FRK-AdzV_e937eZvcnYA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=cvBusfyB2V15izCimMoJ:22 a=MH9Ivq0PDQRhlrFuIVvX:22
+X-Proofpoint-GUID: Lp_cCeJ7ystZ8nd79WTIObfIBPNdvHyx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIxMDEwNCBTYWx0ZWRfX+rpx8d2hUIIE
+ eULq/UvoyuRVPq+y6DNyD/c03AEkr5Dg3skmrTWsbokAzRTaV+ccNmmDydTFmX4YBeNNd+KgfY+
+ xlY1KeTRsgIFrZsvHdKhs6AP13qK0lhIavxNpiQct+2bGj7BW8CDFP4lzu8NdrXLBbNoWLzOvk8
+ QW21vL6vkVoYicz0x5Zg5fg2vY25k6o+/mb78EXT1MppYjw7A/t/pmV6senhUhfIitFh/19xaXw
+ HxKOlVpimgKGliH5fbCoH5tSRbCGcNe6L6jot9SDgrhH2rFqBRb17w3HLbKaSESX0b/aez5RmD8
+ ZJ8vHRaJ3GZJlCT1fAM0ncPCbm12G2RcpeZh5/+01Lqy5CfigbVe4pyNQ6wuupwyQH/6e8nO+9m
+ eqhUWGYtN36+FwxJaEysFvwKHEc3O5GidNUPBI4cIYAVxaWaqihmBV9QKuUIkDfoPsSvVFSR8oa
+ SDxLpcrEuvgkVryFOlg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIxMDEwNCBTYWx0ZWRfX7vwNTzqs1LGe
+ k2c/oEt6hQeYVtgSkR38OtnH68ktiVl1HXL1IPp0BNfHpkHYN4hGyrqcUXIwZHF005WuawSKzzr
+ wWqq491bj79GuJY9o+ISfo/0faOoEHc=
+X-Proofpoint-ORIG-GUID: UVt5T6L4NPRVLttKbFHEU6CrK97Sj4xP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-21_04,2026-08-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 priorityscore=1501 suspectscore=0 malwarescore=0
+ impostorscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608210104
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=hbathini@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,50 +130,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
 
-> RDMA header supports head.repeat on RDMA_CONTROL_REGISTER_REQUEST, which
-> can include >1 memory registrations.  The current code did check over
-> head.repeat to guard against RDMA_CONTROL_MAX_COMMANDS_PER_MESSAGE, however
-> it didn't further check the buffer size (head.len) to make sure the
-> received data is large enough to include the repeated entries.  Check it.
->
-> This is almost only to harden this piece of code, in reality on source side
-> QEMU never uses repeat>1..  However since it's a protocol, still keep it.
-> Check the buffer size instead.
->
-> In case it's not obvious to new RDMA readers: head.len should be the size
-> RDMA has last received, as qemu_rdma_exchange_get_response() checked on it
-> against byte_len (which was further fetched from ibv_wc.byte_len in
-> qemu_rdma_poll()).
->
-> Reported-by: Tristan (@TristanInSec)
-> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4028
-> Reviewed-by: Jinpu Wang <jinpu.wang@cloud.ionos.com>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+
+On 20/08/26 1:07 am, Shivang Upadhyay wrote:
+> Introduce a new "PowerPC RAS (Reliability, Availability and
+> Serviceability)" entry in the PowerPC Machines block, replacing the
+> existing Fadump/MPIPL sections. Retaining the maintainer and
+> reviewer entries from Fadump/MPIPL sections for this broader umbrella.
+> 
+> Currently most of RAS related code sits in spapr_rtas.c, So Adding
+> it to PowerPC RAS section. Additionally adding spapr_events.c, as it
+> implements RTAS error logging infrastructure and spapr_pci_vfio.c, since
+> its all EEH related code.
+> 
+> Acked-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+> Acked-by: Aditya Gupta <adityag@linux.ibm.com>
+> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
 > ---
->  migration/rdma.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/migration/rdma.c b/migration/rdma.c
-> index 683c24ba4d..f7356e759f 100644
-> --- a/migration/rdma.c
-> +++ b/migration/rdma.c
-> @@ -3360,6 +3360,14 @@ int rdma_registration_handle(QEMUFile *f)
->              reg_resp.repeat = head.repeat;
->              registers = (RDMARegister *) rdma->wr_data[idx].control_curr;
->  
-> +            /* Making sure the register buffers to read are valid */
-> +            if (head.len != head.repeat * sizeof(RDMARegister)) {
-> +                error_report("%s: Invalid RDMA_CONTROL_REGISTER_REQUEST "
-> +                             "(head.repeat=%"PRIu32", head.len=%"PRIu32")",
-> +                             __func__, head.repeat, head.len);
-> +                goto err;
-> +            }
-> +
->              for (int count = 0; count < head.repeat; count++) {
->                  uint64_t chunk;
->                  uint8_t *chunk_start, *chunk_end;
+>   MAINTAINERS | 32 +++++++++++++++-----------------
+>   1 file changed, 15 insertions(+), 17 deletions(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index b51f5c3e60..a2a80c789c 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1762,6 +1762,21 @@ F: include/hw/ppc/vof*
+>   F: pc-bios/vof/*
+>   F: pc-bios/vof*
+>   
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> +PowerPC RAS (Reliability, Availability and Serviceability)
+
+With the scope now expanded to include additional files, I’m not sure
+I’ll be able to review everything given my current workload. However,
+I should be able to review the FADump-specific patches.
+
+With that said:
+
+Acked-by: Hari Bathini <hbathini@linux.ibm.com>
+
+> +M: Aditya Gupta <adityag@linux.ibm.com>
+> +R: Sourabh Jain <sourabhjain@linux.ibm.com>
+> +R: Hari Bathini <hbathini@linux.ibm.com>
+
+> +L: qemu-ppc@nongnu.org
+> +S: Maintained
+> +F: hw/ppc/spapr_events.c
+> +F: hw/ppc/spapr_fadump.c
+> +F: hw/ppc/spapr_pci_vfio.c
+> +F: hw/ppc/spapr_rtas.c
+> +F: hw/ppc/pnv_mpipl.c
+> +F: include/hw/ppc/spapr_fadump.h
+> +F: include/hw/ppc/pnv_mpipl.h
+> +F: tests/functional/ppc64/test_fadump.py
+> +
+>   RISC-V Machines
+>   ---------------
+>   OpenTitan
+> @@ -3386,23 +3401,6 @@ F: scripts/coccinelle/remove_local_err.cocci
+>   F: scripts/coccinelle/use-error_fatal.cocci
+>   F: scripts/coccinelle/errp-guard.cocci
+>   
+> -Firmware Assisted Dump (fadump) for sPAPR (pseries)
+> -M: Aditya Gupta <adityag@linux.ibm.com>
+> -R: Sourabh Jain <sourabhjain@linux.ibm.com>
+> -S: Maintained
+> -F: include/hw/ppc/spapr_fadump.h
+> -F: hw/ppc/spapr_fadump.c
+> -F: tests/functional/ppc64/test_fadump.py
+> -
+> -Memory-Preserving Initial Program Load (MPIPL) for PowerNV
+> -M: Aditya Gupta <adityag@linux.ibm.com>
+> -R: Hari Bathini <hbathini@linux.ibm.com>
+> -R: Sourabh <sourabhjain@linux.ibm.com>
+> -S: Maintained
+> -F: include/hw/ppc/pnv_mpipl.h
+> -F: hw/ppc/pnv_mpipl.c
+> -F: tests/functional/ppc64/test_fadump.py
+> -
+>   GDB stub
+>   M: Alex Bennée <alex.bennee@linaro.org>
+>   R: Philippe Mathieu-Daudé <philmd@mailo.com>
+
 
