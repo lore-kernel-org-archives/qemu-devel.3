@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B782C5DF8E
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:03:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59746C5DF7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 11:03:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxN1U-0001yd-BV; Fri, 21 Aug 2026 07:02:56 -0400
+	id 1wxN11-0000O6-8P; Fri, 21 Aug 2026 07:02:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN1F-0000yE-CE
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:42 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1wxN0v-0000HJ-A7
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:21 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wxN1D-0007Yj-C2
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:41 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-499acf0fb55so4588245e9.3
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:38 -0700 (PDT)
+ id 1wxN0s-0007Rq-Ms
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 07:02:21 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-47fd4531020so510526f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 04:02:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787310158; x=1787914958; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787310137; x=1787914937; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=sk2+v2/9QdWzWPCYo+tcVu+g/i4C/qMtLjEeWY+x0ak=;
- b=PjDJOueHJYLsaZz/wzj5rIZ6qMb1rQsbHwnMRFr4E4OKsU9PDeUgMQMjeFOagea+Un
- w/7117yeoXVq02NBF5dgb0GOSuYpm1QgBgq4k+5bTu10R2sbglAG2URgr3XhmF+kmiNu
- 5MSWTBIMdg0RsKrosvOLAvMXEBsWQz5fXC7sFpDUZj+hfTScCSlh/JVdYo/1Vuijx9ho
- 22U3FkDPJR5ZiPQ3sJ7wXQYcKseQPgOvFK+7g8uValYQN43KpNMn3+TYcTPxCVhfg3iu
- v0EQN608jAjJ1MhcPmlMDN6QrRGX2BupHteFNuwjS1WEXFmHysTN79TcYC24oxB6p+7C
- TF0g==
+ bh=iFa8vLi3xDZSUcOFrJ8xg6zhIdMmM3lcYUvKuPnGc/k=;
+ b=rzJqDbOYc5odThnitrrxPdaP0iYrPQB3aGSkjsgN8M+IrtsmeDAQvXN3tSGQo29V13
+ XDDT2TeK4hFAsk+zoXfLVbyG8e3L03KLsDo0PCZIDnie/eewoaA1TEnSpcKeT1/UQKWt
+ QvYuWkK3VYObFmD9cnd3sy6x4L+m+PcIVPnvxZ3zDZinUqFXg5bsPzpLwu88S73W89CC
+ VkYELuCdQ9Y0VjnWrmR1Q5rNAPfk4OMNi5Lr5jR7WYsMxxoH0Kk43d6hHH9CW9iUZI6D
+ poI1B2SYe0JdPsvBP//fl4fsKUexap8SflDgGwr4GGPZ3MHepku2l64T1ugSrdAMuWIH
+ YkGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787310158; x=1787914958;
+ d=1e100.net; s=20251104; t=1787310137; x=1787914937;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=sk2+v2/9QdWzWPCYo+tcVu+g/i4C/qMtLjEeWY+x0ak=;
- b=ReLLY/qtv3hFlW99TE96MpPyEUDOxiw41A+4/YXS8LBgC351nkF+oxmYSWOOrbOvsW
- 80Ih7I0rvjV8pamTl3PxCHuT8jLdqGE0WQ2bax3Xbd/2+m0gROJCpxs+Hf9SmWpMSAC6
- tBF/fF1UPA0HN0JVnI14fDf/0q52xysBeh49G2MxNdRNFrmFVhpyRLy4R86VSklkRR1J
- EXJ+AeNNcalf8nX0qNN9A21m6SgAu+OxRDxGjwXRVboZHgoxXFS7U43gAlX5FdfAuihk
- N7aLYi1beQhyU/R1xdnK28bx3cxm2p1MZluh9jMFfauSvgblWOifxY/UxcLIt0L4NwWa
- 6slA==
-X-Gm-Message-State: AOJu0YzGmsc1O0lB0yS7PwRaYwWRqvFkKc+xpfw5KcHbHcdiTET5VIns
- 2fPJjyeimizkSHPpt0WGkZS3TJDVf5vb36Y0heNAa5m2zXU2VT3XODwJALhvGWpAg6gIxPDjQNt
- JzTeI
-X-Gm-Gg: AR+sD12FKxvBuAhMYCGXnrXkQzX3HeTxQnwlLwpmUEGei1GWHqATRhkiXI0pmOTTqTN
- JV7VpPGe7tTirkwxEnbGQ7ygtfjKr9Lb562BcFAj4e3+QaUX0fdezPmTZGz37moLTPpZZaVN7Wc
- BN9+12/eaFA5M/oiIAAB5XetXedS6xBKvekjsnJqBzwev09FtLmHMYXTwNaXycur1peKuU1ZuJ8
- j/G14PefU8YIZErD4KiBGsC7Q5i4Y5FN0YeyKGfhJMonEtyzty9MHWGlC4Ce2VFAHIx5ODjMewa
- fKEFNMUdIP+bbfaY9v1h+mb4M/BpkiGsVlw77/uE15A6Vu5WVM1CfSDEmdw60uYdhRDfNR2c+17
- JHXpizpjJCnQph7+Ag0zKcmwK+JJzMRL0poENcfmkQ4cv9DWxrb8SaWV2spvxoNAl4ci/2zxRs3
- ZGr5NrJdVyyYGflnYotOlQxCQq98AHFubLqB+RueeFcJGMRhkDDs3h7/TslctdkbCg9knQN26vW
- A+VF9mff9XYnp6m4nvoLHqTO761bxdZGIbNDZdwGcTL2d5876TbsXjYEUwzyjFpdQuo2Q==
-X-Received: by 2002:a05:600c:4e56:b0:499:728c:4704 with SMTP id
- 5b1f17b1804b1-499b8461b32mr82896775e9.12.1787310157941; 
- Fri, 21 Aug 2026 04:02:37 -0700 (PDT)
+ bh=iFa8vLi3xDZSUcOFrJ8xg6zhIdMmM3lcYUvKuPnGc/k=;
+ b=mZdPO3aPwYS5Faws8CSTi4YxK4BruRSJ0v4+F5spwNbDiN4tlVKiXJomGWeuaQpuby
+ TLSwVpnxR0xhsOiVBvhkWmfwR2QYqi5geEvYVv3cdPLUupiTUaFsF0HYs/J9VP/kkPyq
+ Lb7f8vhF1jGEumYQq+i6vA/zMeXPh89QRBi4zv+7fN8czMTEMUSuUA4fUsXllvn9zpTb
+ oNTs0rSyCjWN0i9os8RMhLD2GB/4RSyTGYtJ3C4cgYyI4V3KNrtsnzWRHe1iuGq0rETP
+ f9gcFeMRlZs4Yr0ISnFBhZ1ah4Dy1cnHdIrVwf1iMvhktm8ljdI0hWCVws1o6w/Tv+jQ
+ 6Xzw==
+X-Gm-Message-State: AOJu0YxHxN0Stst47xk2jD9PvhJYT6o2imU2uSR8rtbaorbFJfR4UgM6
+ Uq5BrfkHZJOYtkA8Z7MhO2+dCTcoSN5Z0PNTkqa1NryFQGXM09XxBs32+vXLdmAbg0QYg3FvXj9
+ 9fwSL
+X-Gm-Gg: AR+sD10NVThV5NYVyH2xyksTRP0pjWe12HAHumsrXyTMQxATIULEHicVRMYnzjpLTk/
+ vpJEzIA5zxphGcNgwNyprJhWv2+93zHUDDyZJ1pepxsG/A+6zGOkG/cd9Jvs5peMUO+OksZsUIq
+ uamBktETOZJa8hMNatXZD3T77TqAViJUL6GMLlp8e/9z/S/+UqgCymqwYu2op3UomQqcGpykZy9
+ hjnzIL+TW6YsfWqvbbZeJu88vxcAygpjlwJ1dest6NdS5SXKW/N3s5k+eCwr9Ix9y4Y6hOAie8Z
+ lAV9B4M+shiqb8SnAhXwm1Ih8yqLR6LkXGzIS5+vSEOvoaGMYv9IDL/0/mcFX0FyNIeQT+4G50Q
+ zTAOx8vuQERA7ozh0AIcs8P0LhVjyJ91wpgbguWuQ1PqjqNp8sFwbznJhgKOCF8UJdE/yLZLCs3
+ h6CBSmSKzJ6A4Lm6TxzkD40kPMS1RxWRd6nTvLqzECh/CHyJuW7f59b/8xxHhUHj4i0EjQ6bQJj
+ T2qed/P6LxJC39CJPi9Ewb2AHV7Nf5aX/Q+d78xQA44PKBI3LFBzNiIfg0shVFzbwOltaKzAcoX
+ GXJy
+X-Received: by 2002:a05:600c:3550:b0:499:8777:ccba with SMTP id
+ 5b1f17b1804b1-499b830156bmr79609715e9.12.1787310137158; 
+ Fri, 21 Aug 2026 04:02:17 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.37
+ 5b1f17b1804b1-499b90e7e20sm22875985e9.5.2026.08.21.04.02.15
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 04:02:37 -0700 (PDT)
+ Fri, 21 Aug 2026 04:02:15 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 36/43] hw/arm: npcm7xx: Store boot info in the machine state
-Date: Fri, 21 Aug 2026 12:00:54 +0100
-Message-ID: <20260821110101.3971391-37-peter.maydell@linaro.org>
+Subject: [PULL 20/43] target/arm: Implement CPACR.ASEDIS and HCPTR.TASE
+Date: Fri, 21 Aug 2026 12:00:38 +0100
+Message-ID: <20260821110101.3971391-21-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260821110101.3971391-1-peter.maydell@linaro.org>
 References: <20260821110101.3971391-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,159 +102,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Meng <bin.meng@processmission.com>
+When executing at AArch32, there are optional trap bits for Neon
+instructions in CPACR and HCPTR. We don't currently implement these.
 
-arm_load_kernel() keeps a pointer to the boot info struct for the
-lifetime of the VM, so the struct logically belongs to the machine
-rather than to a file scoped static object inside
-npcm7xx_load_kernel().
+Now we have a separate code path for access checks for Neon insns, we
+can straightforwardly add the check there.  We need to track the
+target EL for Neon-specific trapping in a new TB flag.
 
-Let the caller own the boot info: the boards store it in their
-NPCM7xxMachine and pass it to npcm7xx_load_kernel(), which only fills
-in the SoC specific values.
-
-As in the xlnx-zcu102 and raspi machines, the boot info belongs to
-the machine rather than to a static object:
-
-4d1ac883a7 ("hw/arm: xlnx-zcu102: Move arm_boot_info into XlnxZCU102")
-0f15c6e338 ("hw/arm/raspi: Move arm_boot_info structure to RaspiMachineState")
-
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
-Message-id: 20260816131300.51799-14-bin.meng@processmission.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1499
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260817123838.1578060-6-peter.maydell@linaro.org
 ---
- hw/arm/npcm7xx.c         | 26 ++++++++++++--------------
- hw/arm/npcm7xx_boards.c  | 10 +++++-----
- include/hw/arm/npcm7xx.h | 10 ++++++++--
- 3 files changed, 25 insertions(+), 21 deletions(-)
+ target/arm/cpu.h               |  6 +++
+ target/arm/tcg/hflags.c        | 82 ++++++++++++++++++++++++++++++++++
+ target/arm/tcg/translate-vfp.c | 16 +++++--
+ target/arm/tcg/translate.c     |  1 +
+ target/arm/tcg/translate.h     |  1 +
+ 5 files changed, 103 insertions(+), 3 deletions(-)
 
-diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
-index c27f149c04a..695f30a0dc2 100644
---- a/hw/arm/npcm7xx.c
-+++ b/hw/arm/npcm7xx.c
-@@ -364,22 +364,20 @@ static void npcm7xx_write_secondary_boot(ARMCPU *cpu,
-                        NPCM7XX_SMP_LOADER_START);
- }
- 
--static struct arm_boot_info npcm7xx_binfo = {
--    .loader_start           = NPCM7XX_LOADER_START,
--    .smp_loader_start       = NPCM7XX_SMP_LOADER_START,
--    .smp_bootreg_addr       = NPCM7XX_SMP_BOOTREG_ADDR,
--    .gic_cpu_if_addr        = NPCM7XX_GIC_CPU_IF_ADDR,
--    .write_secondary_boot   = npcm7xx_write_secondary_boot,
--    .board_id               = -1,
--    .board_setup_addr       = NPCM7XX_BOARD_SETUP_ADDR,
--    .write_board_setup      = npcm7xx_write_board_setup,
--};
--
--void npcm7xx_load_kernel(MachineState *machine, NPCM7xxState *soc)
-+void npcm7xx_load_kernel(MachineState *machine, NPCM7xxState *soc,
-+                         struct arm_boot_info *binfo)
- {
--    npcm7xx_binfo.ram_size = machine->ram_size;
-+    binfo->loader_start = NPCM7XX_LOADER_START;
-+    binfo->smp_loader_start = NPCM7XX_SMP_LOADER_START;
-+    binfo->smp_bootreg_addr = NPCM7XX_SMP_BOOTREG_ADDR;
-+    binfo->gic_cpu_if_addr = NPCM7XX_GIC_CPU_IF_ADDR;
-+    binfo->write_secondary_boot = npcm7xx_write_secondary_boot;
-+    binfo->board_id = -1;
-+    binfo->board_setup_addr = NPCM7XX_BOARD_SETUP_ADDR;
-+    binfo->write_board_setup = npcm7xx_write_board_setup;
-+    binfo->ram_size = machine->ram_size;
- 
--    arm_load_kernel(&soc->cpu[0], machine, &npcm7xx_binfo);
-+    arm_load_kernel(&soc->cpu[0], machine, binfo);
- }
- 
- static void npcm7xx_init_fuses(NPCM7xxState *s)
-diff --git a/hw/arm/npcm7xx_boards.c b/hw/arm/npcm7xx_boards.c
-index 57a8d3186e6..4f14d257465 100644
---- a/hw/arm/npcm7xx_boards.c
-+++ b/hw/arm/npcm7xx_boards.c
-@@ -374,7 +374,7 @@ static void npcm750_evb_init(MachineState *machine)
-     npcm7xx_connect_flash(&soc->fiu[0], 0, "w25q256", drive_get(IF_MTD, 0, 0));
-     npcm750_evb_i2c_init(soc);
-     npcm750_evb_fan_init(NPCM7XX_MACHINE(machine), soc);
--    npcm7xx_load_kernel(machine, soc);
-+    npcm7xx_load_kernel(machine, soc, &NPCM7XX_MACHINE(machine)->bootinfo);
- }
- 
- static void quanta_gsj_init(MachineState *machine)
-@@ -390,7 +390,7 @@ static void quanta_gsj_init(MachineState *machine)
-                           drive_get(IF_MTD, 0, 0));
-     quanta_gsj_i2c_init(soc);
-     quanta_gsj_fan_init(NPCM7XX_MACHINE(machine), soc);
--    npcm7xx_load_kernel(machine, soc);
-+    npcm7xx_load_kernel(machine, soc, &NPCM7XX_MACHINE(machine)->bootinfo);
- }
- 
- static void quanta_gbs_init(MachineState *machine)
-@@ -408,7 +408,7 @@ static void quanta_gbs_init(MachineState *machine)
- 
-     quanta_gbs_i2c_init(soc);
-     sdhci_attach_drive(&soc->mmc.sdhci, 0);
--    npcm7xx_load_kernel(machine, soc);
-+    npcm7xx_load_kernel(machine, soc, &NPCM7XX_MACHINE(machine)->bootinfo);
- }
- 
- static void kudo_bmc_init(MachineState *machine)
-@@ -427,7 +427,7 @@ static void kudo_bmc_init(MachineState *machine)
- 
-     kudo_bmc_i2c_init(soc);
-     sdhci_attach_drive(&soc->mmc.sdhci, 0);
--    npcm7xx_load_kernel(machine, soc);
-+    npcm7xx_load_kernel(machine, soc, &NPCM7XX_MACHINE(machine)->bootinfo);
- }
- 
- static void mori_bmc_init(MachineState *machine)
-@@ -442,7 +442,7 @@ static void mori_bmc_init(MachineState *machine)
-     npcm7xx_connect_flash(&soc->fiu[1], 0, "mx66u51235f",
-                           drive_get(IF_MTD, 3, 0));
- 
--    npcm7xx_load_kernel(machine, soc);
-+    npcm7xx_load_kernel(machine, soc, &NPCM7XX_MACHINE(machine)->bootinfo);
- }
- 
- static void npcm7xx_set_soc_type(NPCM7xxMachineClass *nmc, const char *type)
-diff --git a/include/hw/arm/npcm7xx.h b/include/hw/arm/npcm7xx.h
-index eef7cc5332b..9f3dd489ecd 100644
---- a/include/hw/arm/npcm7xx.h
-+++ b/include/hw/arm/npcm7xx.h
-@@ -19,6 +19,7 @@
- #include "hw/core/boards.h"
- #include "hw/adc/npcm7xx_adc.h"
- #include "hw/core/split-irq.h"
-+#include "hw/arm/boot.h"
- #include "hw/cpu/a9mpcore.h"
- #include "hw/gpio/npcm7xx_gpio.h"
- #include "hw/i2c/npcm7xx_smbus.h"
-@@ -62,6 +63,7 @@ struct NPCM7xxMachine {
-      */
-     SplitIRQ            fan_splitter[NPCM7XX_NR_PWM_MODULES *
-                                      NPCM7XX_PWM_PER_MODULE];
-+    struct arm_boot_info bootinfo;
- };
- 
- #define TYPE_NPCM7XX_MACHINE MACHINE_TYPE_NAME("npcm7xx")
-@@ -129,11 +131,15 @@ typedef struct NPCM7xxClass {
-  * npcm7xx_load_kernel - Loads memory with everything needed to boot
-  * @machine - The machine containing the SoC to be booted.
-  * @soc - The SoC containing the CPU to be booted.
-+ * @binfo - Caller owned boot info structure to be filled in.
-  *
-  * This will set up the ARM boot info structure for the specific NPCM7xx
-  * derivative and call arm_load_kernel() to set up loading of the kernel, etc.
-- * into memory, if requested by the user.
-+ * into memory, if requested by the user.  The boot info is owned by the
-+ * caller because arm_load_kernel() keeps a pointer to it for the lifetime
-+ * of the CPUs.
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 4f07332543d..afc3fda3b83 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -2506,6 +2506,12 @@ FIELD(TBFLAG_A32, NS, 10, 1)
+  * This requires an SME trap from AArch32 mode when using NEON.
   */
--void npcm7xx_load_kernel(MachineState *machine, NPCM7xxState *soc);
-+void npcm7xx_load_kernel(MachineState *machine, NPCM7xxState *soc,
-+                         struct arm_boot_info *binfo);
+ FIELD(TBFLAG_A32, SME_TRAP_NONSTREAMING, 11, 1)
++/*
++ * Target EL for a Neon-disabled exception via CPACR.ASEDIS, HCPTR.TASE.
++ * If FPEXC_EL indicates a trap to a lower EL than this, that will
++ * take precedence.
++ */
++FIELD(TBFLAG_A32, NEONEXC_EL, 12, 2)
  
- #endif /* NPCM7XX_H */
+ /*
+  * Bit usage when in AArch32 state, for M-profile only.
+diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
+index 0716ca98fd7..14824e3dff1 100644
+--- a/target/arm/tcg/hflags.c
++++ b/target/arm/tcg/hflags.c
+@@ -164,6 +164,86 @@ static bool sme_fa64(CPUARMState *env, int el)
+     return true;
+ }
+ 
++static int neon_exception_el(CPUARMState *env, int cur_el)
++{
++    /*
++     * Return the EL to trap to for A32 Neon specific traps
++     * (CPACR.ASEDIS and HCPTR.TASE). In the pseudocode these are
++     * checked in the same function as the more general trap bits that
++     * we handle in fp_exception_el(). Fortunately it is always the
++     * case that if the trap/enable bits specify taking an exception
++     * to different ELs for the Neon-specific insns and the general fp
++     * insns then the trap to the lower of the two ELs has priority,
++     * so we can calculate the two target ELs separately and pick the
++     * right destination later.  Compare AArch32_CheckAdvSIMDOrFPEnabled().
++     *
++     * CPACR doesn't exist before v6, but neither does Neon, so we can
++     * assume that if we're here testing this then the register exists.
++     * HCPTR always exists if EL2 is present.
++     */
++    uint64_t hcr_el2 = arm_hcr_el2_eff(env);
++    bool cpacr_asedis = FIELD_EX64(env->cp15.cpacr_el1, CPACR, ASEDIS);
++    bool hcptr_tase = FIELD_EX64(env->cp15.cptr_el[2], HCPTR, TASE);
++    bool have_aarch32_el3 =
++        arm_feature(env, ARM_FEATURE_EL3) && !arm_el_is_aa64(env, 3);
++
++    if (!arm_feature(env, ARM_FEATURE_NEON_TRAPS)) {
++        /* This CPU doesn't implement the trap bits (Cortex-A8) */
++        return 0;
++    }
++
++    if (arm_feature(env, ARM_FEATURE_EL2) && arm_el_is_aa64(env, 2)) {
++        /*
++         * The AArch64 CPTR_EL2 has no equivalent to HCPTR.TASE; only
++         * an AArch32 EL2 can trap Neon specifically.
++         */
++        hcptr_tase = false;
++    }
++
++    /*
++     * We know we're in AArch32, but if this is EL0 and EL1 is AArch64
++     * then CPACR_EL1 applies rather than CPACR, and it doesn't have
++     * ASEDIS (instead using the same bit for TCPAC).
++     */
++    if (cur_el == 0 && arm_el_is_aa64(env, 1)) {
++        cpacr_asedis = false;
++    }
++
++    /* CPACR is ignored if E2H+TGE are both set */
++    if ((hcr_el2 & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE)) {
++        cpacr_asedis = false;
++    }
++
++    /*
++     * NSACR.NSASEDIS makes the effective values of HCPTR.TASE and
++     * CPACR.ASEDIS be 1 in NonSecure state. NSACR has no
++     * effect unless EL3 exists and is AArch32.
++     */
++    if (have_aarch32_el3 && cur_el <= 2 && !arm_is_secure_below_el3(env)) {
++        if (FIELD_EX32(env->cp15.nsacr, NSACR, NSASEDIS)) {
++            cpacr_asedis = true;
++            hcptr_tase = true;
++        }
++    }
++
++    if (cpacr_asedis) {
++        if (have_aarch32_el3 && (cur_el == 3 || arm_is_secure_below_el3(env))) {
++            /* Trap from Secure PL0 or PL1 to Secure PL1 */
++            return 3;
++        }
++        if (cur_el <= 1) {
++            /* trap from EL0 or EL1 to EL1 */
++            return 1;
++        }
++    }
++
++    /* HCPTR.TASE traps to EL2, including for execution at EL2 */
++    if (hcptr_tase && cur_el <= 2) {
++        return 2;
++    }
++    return 0;
++}
++
+ static CPUARMTBFlags rebuild_hflags_a32(CPUARMState *env, int fp_el,
+                                         ARMMMUIdx mmu_idx)
+ {
+@@ -209,6 +289,8 @@ static CPUARMTBFlags rebuild_hflags_a32(CPUARMState *env, int fp_el,
+         DP_TBFLAG_A32(flags, SME_TRAP_NONSTREAMING, 1);
+     }
+ 
++    DP_TBFLAG_A32(flags, NEONEXC_EL, neon_exception_el(env, el));
++
+     return rebuild_hflags_common_32(env, fp_el, mmu_idx, flags);
+ }
+ 
+diff --git a/target/arm/tcg/translate-vfp.c b/target/arm/tcg/translate-vfp.c
+index 6e944a0322a..4db4b14841d 100644
+--- a/target/arm/tcg/translate-vfp.c
++++ b/target/arm/tcg/translate-vfp.c
+@@ -306,15 +306,25 @@ bool vfp_access_check(DisasContext *s)
+ 
+ /*
+  * Access check for Neon; this is for instructions which can be
+- * trapped by CPACR.ASEDIS and HCPTR.TASE. Support for those traps
+- * is optional and we currently do not implement them, so this
+- * is identical to a VFP access check for now.
++ * trapped by CPACR.ASEDIS and HCPTR.TASE.
+  */
+ bool neon_access_check(DisasContext *s)
+ {
+     if (arm_dc_feature(s, ARM_FEATURE_M)) {
+         return vfp_access_check_m(s, false);
+     } else {
++        /*
++         * If the Neon-specific trap bits request a trap to a lower EL
++         * than the general FP trap bits, the trap to the lower EL
++         * has priority.
++         */
++        if (s->neon_excp_el &&
++            (!s->fp_excp_el || s->neon_excp_el < s->fp_excp_el)) {
++            uint32_t syn = syn_a32_fp_access_trap(1, 0xe, 1, 0);
++
++            gen_exception_insn_el(s, 0, EXCP_UDEF, syn, s->neon_excp_el);
++            return false;
++        }
+         return vfp_access_check_a(s, false, true);
+     }
+ }
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 1770428d3cc..7306a1389cc 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -6403,6 +6403,7 @@ static void arm_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+         dc->vec_stride = EX_TBFLAG_A32(tb_flags, VECSTRIDE);
+         dc->sme_trap_nonstreaming =
+             EX_TBFLAG_A32(tb_flags, SME_TRAP_NONSTREAMING);
++        dc->neon_excp_el = EX_TBFLAG_A32(tb_flags, NEONEXC_EL);
+     }
+     dc->lse2 = false; /* applies only to aarch64 */
+     dc->cp_regs = cpu->cp_regs;
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index a3d03159ad9..cce84f29c46 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -88,6 +88,7 @@ typedef struct DisasContext {
+     int sve_excp_el; /* SVE exception EL or 0 if enabled */
+     int sme_excp_el; /* SME exception EL or 0 if enabled */
+     int zt0_excp_el; /* ZT0 exception EL or 0 if enabled */
++    int neon_excp_el; /* A32 Neon exception EL or 0 if enabled */
+     int vl;          /* current vector length in bytes */
+     int svl;         /* current streaming vector length in bytes */
+     int max_svl;     /* maximum implemented streaming vector length */
 -- 
 2.43.0
 
