@@ -4,107 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F238C5DF7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 08:40:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 163F1C5DF87
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Aug 2026 08:40:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxKmv-0004yH-RS; Fri, 21 Aug 2026 04:39:45 -0400
+	id 1wxKms-0004uN-Il; Fri, 21 Aug 2026 04:39:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wxKms-0004u5-15
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 04:39:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wxKmq-0004tE-Sp
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 04:39:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wxKmq-0008J2-0h
- for qemu-devel@nongnu.org; Fri, 21 Aug 2026 04:39:41 -0400
+ id 1wxKmp-0008If-6V
+ for qemu-devel@nongnu.org; Fri, 21 Aug 2026 04:39:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787301579;
+ s=mimecast20190719; t=1787301578;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pmhrxutqvfwk8kCCA5LdrLPDB71Ss207mNaYjLClR4E=;
- b=bTb5uxZY0Rvl8J2R4OhXlthg+9sYCa4tXnHmWR/0YiQjC3ffUxdde5GxbM7Weyf6Fh0cOk
- ipaUyMMInJ+SYbzThDFobNcvr0hsiZPPbAsFkmsItXWN0dmuPrFZJ9fBlFdFZaltQX9Md/
- KsYzhA9w93F+cZJHy7+BU9KNUY9b3w4=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2FiQTp7Qc/4aZI8CJqj9y3o4hGPPctMwiZp74U/qlY4=;
+ b=FH0IX1U9cLapImUoV0QFmZUqrLnhIjLOQDLAMImFHGtBqy9oL6O5aS+7t9ID2R9SzbPoDi
+ B1yH1VHTrbcTMywJGndHslSijgLm2/AWJkAxWfMBKQ2EAidQHp5HLtnfUwjcy5jYKAYl6L
+ X49b9ufU83D9C/NlDkO9hd+03nkz4rc=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-628-tuvuMnmtNMaTuoCIIn73Eg-1; Fri, 21 Aug 2026 04:39:37 -0400
-X-MC-Unique: tuvuMnmtNMaTuoCIIn73Eg-1
-X-Mimecast-MFC-AGG-ID: tuvuMnmtNMaTuoCIIn73Eg_1787301576
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-6a368c27a94so926118a12.3
- for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 01:39:37 -0700 (PDT)
+ us-mta-221-joPPH8eYNr6KFB_dBIWpXA-1; Fri, 21 Aug 2026 04:39:34 -0400
+X-MC-Unique: joPPH8eYNr6KFB_dBIWpXA-1
+X-Mimecast-MFC-AGG-ID: joPPH8eYNr6KFB_dBIWpXA_1787301573
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-698b899b53cso698895a12.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Aug 2026 01:39:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787301576; x=1787906376; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787301573; x=1787906373; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=pmhrxutqvfwk8kCCA5LdrLPDB71Ss207mNaYjLClR4E=;
- b=lOlH9T6MOUcAUbMPQ2SjRcDwMEE3SdtswBo1yhXKHHHUSnathCrs+fIaSlIuA1P3iE
- xfNiOMa+iItZwGSdfa89IL2phqDnmRzlMnBqm+GP0XSBPe5WwKCIpGUp5iNfr25iYNJY
- xF+C48zkeQXb+H6IzxDvhIZ6gxnviWj1HFiuD0LPGmJi0s8x/fG/ySguM5kBIemauSQ2
- 8j48GvvYELNlHzvGceFao+r/jJ095CBvMiaH3iI6Vz4cDkHUVOaF6ebSVxbVN3z2+5Up
- HGO2NU6QL3ewphE2nCe0WO7O6xUQ2rM5A0HsMZfdzZMNxFSjsjidjS0aJrcM4OLpWfno
- JBHQ==
+ bh=2FiQTp7Qc/4aZI8CJqj9y3o4hGPPctMwiZp74U/qlY4=;
+ b=H97O2gnFrlUUz9VsI+0oEI61Ut2sW2K6LjU+1wwnnyltby8/kdJ/OBXig81VgXxOa4
+ QJqKqpVAwOUFce1l8J1QJyu1xL0DKkcZ/NCQ1HrNoyqW2MNuiB0iAg4/04baxuOM0QWf
+ tF1MJFlMBcpdZn466PIkUf+FyMVtXzyaepYuL56N2WLKU8GJkaPE6MWUwmnszmPUBI4N
+ pB9SUO2kgsRdMX/KjwvTqplp/CpCMrwhaRdH/x3zGuo/zprs8hGPXvzX2GGFS5WtsSGg
+ hwbiWKPQtCY+5zoN5lqeaDHK/3Ku5+mB2RKyQL2FxAN5T+F1vyHan5/zUjd01GFO+Vip
+ +4kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787301576; x=1787906376;
+ d=1e100.net; s=20251104; t=1787301573; x=1787906373;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=pmhrxutqvfwk8kCCA5LdrLPDB71Ss207mNaYjLClR4E=;
- b=Bvq0AGWi+JehfvlwPEXE8Ru35TzZFqpM9XaWOHmCTLru1cytglUF0SzuITPvInDWMg
- rg912fJ3t2LdINFofhCPavAuTbgoIXH+QI11l6FddktONjeomum63GMMPtVwe9Hx818t
- eXBJJCg0GqmSHuZaiRq6/K+XtKUXLzMeRFIgL/y0rWxKepYk1uTLsKRpc3SKjeitdlvD
- LT7laJxjCBZ2afhmwFmMS/ybuq6tlzZ4OY4xJmr5JyihdC7Dh5iS05WSaV9sV6X+ApEw
- j4etMsgBM5qdaEXkE1qHhpVP3xDhPJr7rAwgW0yVm64rJPXb0yAvWH9d4eclhj4Kn78h
- H4Yg==
-X-Gm-Message-State: AFuF++lZRoHxCyPHuiMqA1MA4NQUTVoIWd95SAfMFJnehwa9UFo20f9q
- b8oNbAJcoOZC+BOuhqmZhyrVAQ9mSJqQHVh8wz1LQv2cPqsUVx4yhlxDc6YlTlY8sFUMfICHzdG
- etyNtBeSgV+feQuPRVZk1RVkLI8kSrHE/h6REk8B7MpVDWVWJJgrI4S1gXllsQ1I7rVu8xy2t4d
- bh55uOdWk1QeShSC0Xzrjwxo2+Vh42Ih7Tmi6EW+CN
-X-Gm-Gg: AR+sD10jetpWAZ6d4E4LtUNTyX0oxydngw9YBKvMOKveICdOfcF6LQFQQrXWGUOX0QS
- h71v6pz5FfvBye3SI68yPF+9FkHkq0cbOxuQ6APJ4dxpm4/2w0z4LPRKN/CukiAhpiJ7i6FEK1C
- 73my4Tij1io4Ta+3ppQo4ylJ7zAxicNBfI25+m0Z9zb71YNNwjGxjzfyLEFNPEeq4z1XkrXlVLv
- NkDDQNYvm/5rZGk2ARe6Ygr3pSqr6IPRK8KP97jqpE9PSBqnDU+pIP7rm/MVEVHcupjsqjAWm9I
- xa9A5sOmLMYpjpJtJLhJgycnpCayMBWubRbMl+IW5wbN32ANbOf4hkDGlFdt1gytfvRqYGN1F+v
- 4FiuPgucWG88XdWcnwqu4+NbDlivUm4tDQp8h3xefUmoA+acTv0UO7ZHfKsBXRoJAAs2X2Ss3rR
- mL4oU=
-X-Received: by 2002:a05:6402:1f07:b0:6a1:c908:1701 with SMTP id
- 4fb4d7f45d1cf-6a42f26dab3mr5425875a12.13.1787301576459; 
- Fri, 21 Aug 2026 01:39:36 -0700 (PDT)
-X-Received: by 2002:a05:6402:1f07:b0:6a1:c908:1701 with SMTP id
- 4fb4d7f45d1cf-6a42f26dab3mr5425827a12.13.1787301576015; 
- Fri, 21 Aug 2026 01:39:36 -0700 (PDT)
+ bh=2FiQTp7Qc/4aZI8CJqj9y3o4hGPPctMwiZp74U/qlY4=;
+ b=WYl+n3WaOTOBZGDXXGW6dNaoPk18XFgxMR42deuqrX08gFyWmGkL18ryMx7nCORpTQ
+ s8UjhuY7EA4zPEFfd2GQoCMRbL3vB9gBI/Z8EarikB+VZRwA5S0aVvqebna9C9T3Kzrz
+ A67mpyxIxy2V3jvmpj+j8K+jxznfe+DuYrbWeXTp7nV7whQE/+6zGBfdDOuUqgGJTKh1
+ JkFO4ulMxu8lauv8me2g4fqeVbBorhyia7Od86tfM70TSRpEdwiZHQ5k2XG4Rgkn8Sbe
+ oV6/HQg0+zx1BBNPZTi/8kB+mUnjJtpObzY1kquw4BYP/6CVpZ6k/0vYr2EnjMEXUIsP
+ nKYQ==
+X-Gm-Message-State: AFuF++nMAPBhSCwqwmUQltXTDnpbcZBlkBrd00dXYjW9jrC+qb4syOLz
+ GvzdNeg5ZTrsayvWAsP3ASDtn9/rL1My0/Fx9RocSVZwGdfngN+7mkDQUf5nxutWStnwWo+XgtV
+ EFtWPu1fiZcQSmxbkXi7FtRIUFbulbBsHA75MZulaENKi+6lXOQ/f7OqYH2OJOHz0tGXj6jjdXP
+ l+ycI4888BZwoj7CxJSQlMc/f7HIy/AEFRSLv+rPw6
+X-Gm-Gg: AR+sD11mwL5G9nFwLBEwk6yAREq/tpSNlYa6q65ATTXxKrN7GaGnEjD2+bZdfhCHYx9
+ W09W4qIjZ81i1h31mh8aQo7HF0nfLHYpLItjAFQbuXDeh+5N3QOc4EERKcIKWh2mgza3H0up1zD
+ SOlSFFtPv89cNFVRg3h161q2CgfOhO0XKUdTNGqDOs1b07dOVjfY1HHbhBQ7DOPfW+t6gP7vFTy
+ 3Td3lxTY1C+FHY5gBLJfbv/n7XxD8NBNplvoPFxtLCetPMpEKCI6BIEjX3Z5tQRqE7Y3Zq+4Ts0
+ AALUqbal7R/refoXWMTWctl3wpbjLxIUBv/zKn1vzU8GQqfa90ukY55Gb7Wl7bPSRCRPoJnaLpS
+ 2Ebim+2AeLn7dkCzycC1rUyvGNe9Q74sN82I4KPs540hhGWKV0DJn+cDP6qkGCXF3MxvLJR909r
+ 5FMpo=
+X-Received: by 2002:a05:6402:e09:b0:69f:fa13:ed3 with SMTP id
+ 4fb4d7f45d1cf-6a42f229682mr5353496a12.16.1787301572773; 
+ Fri, 21 Aug 2026 01:39:32 -0700 (PDT)
+X-Received: by 2002:a05:6402:e09:b0:69f:fa13:ed3 with SMTP id
+ 4fb4d7f45d1cf-6a42f229682mr5353454a12.16.1787301572319; 
+ Fri, 21 Aug 2026 01:39:32 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a3ff1567f8sm5559242a12.18.2026.08.21.01.39.32
+ 4fb4d7f45d1cf-6a3feec9d52sm5690435a12.2.2026.08.21.01.39.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Aug 2026 01:39:33 -0700 (PDT)
+ Fri, 21 Aug 2026 01:39:31 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org
-Subject: [PATCH 4/9] scripts: prepare for introduction of CrateSource class
-Date: Fri, 21 Aug 2026 10:39:19 +0200
-Message-ID: <20260821083925.2008135-5-pbonzini@redhat.com>
+Subject: [PATCH 3/9] scripts: do not assume the new version of the crate is
+ present
+Date: Fri, 21 Aug 2026 10:39:18 +0200
+Message-ID: <20260821083925.2008135-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260821083925.2008135-1-pbonzini@redhat.com>
 References: <20260821083925.2008135-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
 X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.346,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,55 +121,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Until now, the new version of the crate was always there in
+the registry.  This will be different when crates are downloaded
+from Cargo.lock, so delay the comparison of build.rs until a
+point at which both source directories have been extracted.
+
+Since the .wrap file at this point points to the new directory,
+delete the old one "by hand" with shutil.rmtree instead of asking
+Meson to do it before the .wrap file is changed.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- scripts/get-wraps-from-cargo-registry.py | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ scripts/get-wraps-from-cargo-registry.py | 19 ++++++-------------
+ 1 file changed, 6 insertions(+), 13 deletions(-)
 
 diff --git a/scripts/get-wraps-from-cargo-registry.py b/scripts/get-wraps-from-cargo-registry.py
-index 8b45c1551f5..8114f0731be 100755
+index 0095bd937ec..8b45c1551f5 100755
 --- a/scripts/get-wraps-from-cargo-registry.py
 +++ b/scripts/get-wraps-from-cargo-registry.py
-@@ -48,6 +48,14 @@ def find_installed_crate(self, namever: str) -> str | None:
-         matches = sorted(glob.glob(f"{path}.*"))
-         return os.path.basename(matches[0]) if matches else None
+@@ -15,6 +15,7 @@
+ import filecmp
+ import glob
+ import os
++import shutil
+ import subprocess
+ import sys
  
-+    def rewrite_source(self, section: configparser.SectionProxy, orig_namever: str, registry_namever: str) -> bool:
-+        # the registry already holds the extracted sources, so Meson does not
-+        # download anything: drop the source_* keys.
-+        for key in list(section.keys()):
-+            if key.startswith("source"):
-+                del section[key]
-+        return True
-+
+@@ -50,7 +51,7 @@ def find_installed_crate(self, namever: str) -> str | None:
      def compare_build_rs(self, orig_dir: str, source_namever: str) -> None:
          """Warn if the build.rs in the original directory differs from the registry version."""
          orig_build_rs = os.path.join(orig_dir, "build.rs")
-@@ -82,7 +90,8 @@ def update_subproject(self, wrap_file: str, source_namever: str) -> None:
+-        new_build_rs = os.path.join(self.cargo_registry, source_namever, "build.rs")
++        new_build_rs = os.path.join(source_namever, "build.rs")
+ 
+         msg = None
+         if os.path.isfile(orig_build_rs) != os.path.isfile(new_build_rs):
+@@ -81,10 +82,7 @@ def update_subproject(self, wrap_file: str, source_namever: str) -> None:
          if "wrap-file" not in config:
              return
  
--        orig_dir = config["wrap-file"]["directory"]
-+        section = config["wrap-file"]
-+        orig_dir = section["directory"]
+-        # do not download the wrap, always use the local copy
+         orig_dir = config["wrap-file"]["directory"]
+-        if os.path.exists(orig_dir) and orig_dir != source_namever:
+-            self.compare_build_rs(orig_dir, source_namever)
  
          if self.dry_run:
              if orig_dir == source_namever:
-@@ -92,10 +101,10 @@ def update_subproject(self, wrap_file: str, source_namever: str) -> None:
-             self.changes += 1
-             return
+@@ -99,15 +97,6 @@ def update_subproject(self, wrap_file: str, source_namever: str) -> None:
+             if key.startswith("source"):
+                 del config["wrap-file"][key]
  
--        config["wrap-file"]["directory"] = source_namever
--        for key in list(config["wrap-file"].keys()):
--            if key.startswith("source"):
--                del config["wrap-file"][key]
-+        section["directory"] = source_namever
-+        if self.rewrite_source(section, orig_dir, source_namever):
-+            with open(wrap_file, "w") as f:
-+                config.write(f)
- 
+-        # replace existing directory with installed version
+-        if os.path.exists(orig_dir):
+-            subprocess.run(
+-                ["meson", "subprojects", "purge", "--confirm", wrap_name],
+-                cwd=self.top_srcdir,
+-                env=env,
+-                check=True,
+-            )
+-
          with open(wrap_file, "w") as f:
              config.write(f)
+ 
+@@ -124,6 +113,10 @@ def update_subproject(self, wrap_file: str, source_namever: str) -> None:
+         )
+         self.changes += 1
+ 
++        if os.path.exists(orig_dir) and orig_dir != source_namever:
++            self.compare_build_rs(orig_dir, source_namever)
++            shutil.rmtree(orig_dir)
++
+     @staticmethod
+     def parse_cmdline() -> argparse.Namespace:
+         parser = argparse.ArgumentParser(
 -- 
 2.55.0
 
