@@ -4,138 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC31DC5B572
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 12:33:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7A84C5DF8C
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 12:59:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxktt-0005BN-NF; Sat, 22 Aug 2026 08:32:41 -0400
+	id 1wxlJO-0000vW-8X; Sat, 22 Aug 2026 08:59:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wxktr-0005BB-VE
- for qemu-devel@nongnu.org; Sat, 22 Aug 2026 08:32:39 -0400
-Received: from mail-japanwestazon11022083.outbound.protection.outlook.com
- ([40.107.75.83] helo=OS8PR02CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wxlJN-0000uu-3T
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 08:59:01 -0400
+Received: from smtpout2.mo536.mail-out.ovh.net ([51.210.91.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wxktp-0005Zf-VU
- for qemu-devel@nongnu.org; Sat, 22 Aug 2026 08:32:39 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=a3rcnXCqXimcKn1mFdckhLHgMqyBlAH1XbMBWEl9PvThsRCwBE58vql44qGChhqK/p666ALWmZ58H04IUmVCL18fdtTPf6Ma3SngdFY7oBTAl3WuQjz26s6FKAdlVIb+LPQCzazCdmIcB2CoNnl9BgdVl2V/HZ4gV4tpV00PfrUx+AxTCs68D1rIZnMIrsI5XTRNESmezZdhAVtqLaLPp9EkI3GQj1b0dGsTtg9bqyiVaiNnoQ6QycdVSncEjImRjkHZ9nDks0WnMmihllgSKyU0LZV+4Zfif9Q7mp51htvjAIo7WfTUNwaIuCTYTriafd6p/jq71ysXuz2rO2AL0w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uIbjOkTlEDUMUTXYO7roK3deraVIS6RYpiNnWXcvMec=;
- b=Aikr8qLzMOieKC5UNOohZfGPakljAdkmurCuokmqhwT/ko0jOG9Zjcp6R/g2uBZEHj8ifprFu//0InN59DzVVNBjMF/CEbUjtx5bYk/YJ/MEas13CjWceeBSjtC8a/xij8pET/knQJZ/QoO5ifb1Mvqq/fcf7ZEwpSP4lsMOT4z9DESeY4VydW9X1gfdG00MJIemuTSPsU+IsudirFgWDWP9EfuJ4bBC0V8zCJ3gNTl1TzQRRKQ2PCpKF2FtbaLCCviqgDKiIFMR9tpuFNFXMLhdCpgLZJhw7OQZOZrz7fN/XkqFJwdEGIy3saZLRNHq7wG6BYZVe6IxnWRC+nFtng==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uIbjOkTlEDUMUTXYO7roK3deraVIS6RYpiNnWXcvMec=;
- b=fsNXuzsd+r2mn6Q/9T/6MhHLrQKdDlWvi9EZ0LWvFIg5FgN4et5iwIoZUuTXWTpgan3RqgE8cug5sSVGYJdnRW7odxpy9SJoFn6VSOzDYjjLhAL/QnZs9COaL5ddXP1EliBlNDZBiTlLTdgpLd2lejVAbxlJxjmRJEg1l61TdaPoYZn8/o01F2LAXYpEDVWTBElH5k8xCwrzqc9wHCx8wGNrBm4yAz1bbZZpsbM17fiWdIBycNuN7ati5aMeifgATT8YNz20kaBCMgeN3zDN/k+yWj54ZC2K7bkXF/O2EunwM4d9kL2Ijq0Pgra9cY/gva2R9DBfXqwK1re2GD/xgA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
- by TYZPR02MB6504.apcprd02.prod.outlook.com (2603:1096:400:363::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.11; Sat, 22 Aug
- 2026 12:27:26 +0000
-Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
- ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0339.010; Sat, 22 Aug 2026
- 12:27:26 +0000
-From: Bin Meng <bin.meng@processmission.com>
-To: QEMU <qemu-devel@nongnu.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH v2 0/1] system/physmem: Improve guest memory allocation
- failure diagnostics
-Date: Sat, 22 Aug 2026 20:27:07 +0800
-Message-ID: <20260822122710.3731595-1-bin.meng@processmission.com>
-X-Mailer: git-send-email 2.53.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: TY4PR01CA0064.jpnprd01.prod.outlook.com
- (2603:1096:405:370::15) To KL1PR02MB4977.apcprd02.prod.outlook.com
- (2603:1096:820:71::8)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wxlJK-000449-Nv
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 08:59:00 -0400
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net [79.137.60.36])
+ by mo536.mail-out.ovh.net (Postfix) with ESMTPS id 4hRy0k72mSz87xv;
+ Sat, 22 Aug 2026 12:58:46 +0000 (UTC)
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net. [127.0.0.1])
+ by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Sat, 22 Aug 2026 12:58:46 +0000 (UTC)
+Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.0.206])
+ by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4hRy0k2B1wz1xq5; Sat, 22 Aug 2026 12:58:46 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.3])
+ (Authenticated sender: clg@kaod.org)
+ by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ C2E392403F6C; Sat, 22 Aug 2026 12:58:44 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-114S0083f942e2d-af53-4753-b6ea-97a1464eeca8,
+ E8B800FEFED6146C3308969C34F18DEAE428D2DF) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 2.10.174.70
+Message-ID: <5f045be6-b0c5-4332-b8dc-03bb25262679@kaod.org>
+Date: Sat, 22 Aug 2026 14:58:43 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYZPR02MB6504:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9f3b63c4-022d-4a2f-db1f-08df0048b9a7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|23010399003|1800799024|366016|10067099003|56012099006|18002099003;
-X-Microsoft-Antispam-Message-Info: womlSFRVs8rCjIaauzdArws+tIUk37CuKzwQa2b/K0GENH9yIzikAI2EwOJhifdQnGIpKo+cYBXFNEEF2Fzhm9uaVAVyg83mJ+9B497wCJjjKzhTcHv57II+Y63er7OKhM8GPHAwR0RkVuRw3MRKiOcWFfixsUiCLXa5bl9R7vgpLe8Lxek4DIhzKERad8vqkCJMekCfym9cx8W+ww+/xW6xAsedSBBgRSOQ4PcgCfHzqiFHo12ZS7MAdvAFjlY3/FwK1eIKwMtnVwaEN8vFnRYskU7gMQgxJtnpJUQft9vp7RRu1/52oSdGzRa84EPIaRUP0WSdwHmDQZwgBCFSJxjPHfV3Q/IX0Yx8kF1RlznJfKCeqlGKnV5HAVsOBW8JfTJhSqQDHRW+/N8yVVlhlQXdbBe4W8jI2liKqmw2LygqGfxFFIVCgnCwY2z3S+mHx7JQl8btGI/bNTUebBmi9ADo1bWFPKt0q3/zi+Bz4J4kGovpXzrxUQn+aoo5vKTVM088Y+EahaVyhoDLY1dcHuqWn3V4Gu0Jaukxb0DjzlGpSdYbfKbjMUYsCL0KHfyrtIk1seKG4n/ywhF8YvE3ASMBoVRtkPtpSRmLngxdr1D1t0WHwmkEP5s6qFiFP9BPUC+plnknWRewocBohMrsK05rZ9FCkfbcdwDqC0fHJjA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(10067099003)(56012099006)(18002099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?U2FCdWF0YXo2a2FEcWx2eHA3R0M2RDJRM2Z3TkVaMTZSYTk4aGJENXhod2RR?=
- =?utf-8?B?S09ZVVFQNHdqL1lPaHJlZ1krbU5DQk5DVFBtdVFTbnl4TFYvV1oyZEtXeVhT?=
- =?utf-8?B?V01DSVJFUHhIdzlRMlRIbkRMeldYRW1sUWY3M1NNRlpKQkg1bmw5cWZSeWIy?=
- =?utf-8?B?MVFQVW5Xcks3SDJtNmRaNzFwUmFrRlVpK0N1S3lhSkdMb2dvbHpMR1lvZnVx?=
- =?utf-8?B?R0RFU3Btd0VtWmlrbW1wa2RDejlVNzNUT2xWeDU2S1pCZUVObys1REdRcC9t?=
- =?utf-8?B?bUZJellyU0lNdmd4OUZybTRhM1BFalRYaDFwaDN1Q2MyR0E1Z1R0ajZUdGRD?=
- =?utf-8?B?OGJOUWlJZFo5TVQzbjhodkhLa05nZUhQU2ZUZU9oNUo4RjBJc0p3UTgyUmlU?=
- =?utf-8?B?MDkwbWpkaWFMOHk5K1REbUtmUk1YNG9saGVQQW5LY2plczZGTFhDRjFvL2hl?=
- =?utf-8?B?a1BOalpJT25ZYkNpS0VVZndvdmVjN1R0WXlHR3Z0K1VoQTlieS9KR2JZQmJl?=
- =?utf-8?B?TTBveng1T2FXc3ZUWGF4RFIvbWRRd0pHQ1NBUFFXQWxxQUhRQ0R3eXBWU2hR?=
- =?utf-8?B?WklFK2FDa3RMa1YyYklzWHlXdy9UZjVidTN3aDh0VWRNYWlTVmM3NVhLS3Rh?=
- =?utf-8?B?YUJiclI0THhkWThmWlZMTFlWam9oTjE5SXV3WUxzNjQvOVVCVFk3bk1ubEw2?=
- =?utf-8?B?Q0VOVzN4MnN5UlRwSTd6K1JRcXlhN3JnNzk2V1V2WXpmZkhwK3NPRzJBMVlZ?=
- =?utf-8?B?WUVTT1FBaHhYVUI5OGdRZ0RBTTF0Z1NlMGgxUzRud3BCa0RVWEdJM3dwdlV1?=
- =?utf-8?B?QkE1VHRBY1czd0k5WVkzTENCQ2dvc3B1b1JIU0owbjZlZS9ISzBBMi8rUTdo?=
- =?utf-8?B?NWR6dW1xeWhWa3RoTll1UkJWQit6anlFWHh1TWp2Y2xnYk1zL1dEbWNaQmFD?=
- =?utf-8?B?TmVxemR2bjgzTTNla2lEejRjQUlCSEg3cFZGZStYZHNwU0YvSVpDeGdLSjBS?=
- =?utf-8?B?d25iYkhTNmZaOW1mK2QxcHRtSS83bFZMblpwOEJwSEVkZGd0QnBrRlV3dWFz?=
- =?utf-8?B?RzBERm1hWjFzNWpHQ3IyaUlyekdJVjRISUM0M3lPb0gyK1BwN3NWbVAvMzFI?=
- =?utf-8?B?RFZScUs4dzRTVWs0UkJUeVhVWjQwSDNJUGNzdmhidFBTTFJWMk5IbDRxbTI1?=
- =?utf-8?B?Z2toRGJ5b28xT0o2c1prQkhHdVI5TEVYQkExMXFtSWhPUFA1V2tsLzJYc0sr?=
- =?utf-8?B?MmRsM3lxaW4vYWI1c2ljaDdCaUl3Q0xrVGJib3ZsbmZ2Zi94T3BmYkZCYytM?=
- =?utf-8?B?OXN3djNXK2F1RkZpQ2ZqUXZlaWo4dXZpNWs0QnlYcE51cG83S05BSnRnVVQ5?=
- =?utf-8?B?UjZObVAySitIYTFma2ZqMTVmVldnaGpTYWtQMHJDazFOOUl3REpFVXdmVFdv?=
- =?utf-8?B?bmdTS1BOV1RiRlc0emh5U29MejdyNzh4dE9CL0hyV2U4bXZiTXJURVBKWkhu?=
- =?utf-8?B?TWZmZ0tuRzhZelZFdmozMVRFdlRRMmNOZ2toRm5jK1RoQmQrOVdkR2xiSFFt?=
- =?utf-8?B?aHExVXZ3QldUS2V1NDRUOGZieEszZzJsTElvTmxleDRXTUwxYWczUnJicDR0?=
- =?utf-8?B?UW9vaWR6VklWV0JjWW1qQW53SG42OTdBd3M5L05oNHZJalVlWUdadW9Ib3lj?=
- =?utf-8?B?dk8rd2NLU3V4a0dOVUlsSTgwaXNxOHpPNU5lVi81VjhPWlFEZExJUCtjWGgw?=
- =?utf-8?B?bUhpSUlRVUF2WWJHQzVBSlRsdHhmNDRoT2EvekgyMnBrejFBWUNGYXgvQ1A2?=
- =?utf-8?B?Z1UyNWNVVG1OQmt0TExKSjROQ1cvNlpIQTJQK2JFNHhMc0NYdUltdnEvaGhD?=
- =?utf-8?B?Uko5eTgrRG8vdS9WbnkzMmplSXZyeUhRbEF6T0FheC8xaFFJTVplTlhJd1dI?=
- =?utf-8?B?eDIvMWtab0lQeXZQYWN6dWVVVkRPTlU1MldzdnRvc2g2bTgzY2wwTDJvZExM?=
- =?utf-8?B?Q0JSNTlPYlBRWVJVbDVzRnIxcElHSEFVOWNZRWRtWG1oVFZxZXJJNytNTVhm?=
- =?utf-8?B?N21PckRJT3Z4ak5XM2l0TCtRWGlJTzJrUEkwZWZGMG9VLzUvZzViVlhMNjVk?=
- =?utf-8?B?Rk9JOTBtdTZ2T0FHTlRuT21ib3VmTU9lekdCOUc3dzRvNFlJdnlIdlA1SHJs?=
- =?utf-8?B?K2ZpM05icDQ4Z1Q1VnpaMlUwaHJLWnRLN1YreVpFeG4zaWNKbnVmSVNjNm1C?=
- =?utf-8?B?ZjJrTG4wOEl4U3FHZU5PUS9ndXR0amF0WlJmaytXZ2l6K2NETHpWK1pOK2Yy?=
- =?utf-8?B?ZEZhZFZVZEdKWXNHcG9aMUVrNGFyV3FEUndpYkJjM01yS2tzUmgyUG9Kb3dJ?=
- =?utf-8?Q?zjnfhlxZZkEiujEA=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9f3b63c4-022d-4a2f-db1f-08df0048b9a7
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Aug 2026 12:27:26.4616 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: JbUsX01l6IMuDtRdjyCswVJMkG8eOIzJOSBC/BxMli+82s2luIHFn/KC58EfSZzP8rtCIM125OSLcMLw3xyKW2HD0rFju/eer25Ni1D0qaY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR02MB6504
-Received-SPF: pass client-ip=40.107.75.83;
- envelope-from=bin.meng@processmission.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] hw/misc/aspeed_scu: Support the second random number
+ generator
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>
+References: <20260821080408.2503092-1-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260821080408.2503092-1-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 11314731116522941451
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFiu4RMswsgExA3Kh/2FF96p2+jVnc4SCoFAiFAlY0UDYv+0WUXmDs+/2XE+1Oq9IDA5z0ddV8hjPWUdtK/yNoTeiuh61TuQtBcwloPcvk/IG+ralU9BdUORgq7NZ2mIvzCuNlNzywHwDKES7PCDZo/ABF4epWQcNWrWsRON0zmLOMVW0Sd06rRJSDptE3hVYjLlSNaE8tKel3nOfqIZDYf+aDUohufsgws2RZgEj/hkB8ooaPbaSs+/9QkkFZ9txdDlDfHCrn3D0stIzejofzbxxmPXHRKpWDuLspnt5+MxXuZKwEOtvsPWjNibgNOax5IT6CBCxArNeSga4xtnJb+XwHFBrq0EZ37n84PlwLXH1EAG0uIPVPnXQ+7qjRhYCKvuy35rQ/GsQMe5yHWyEU5GOx1Z8+SiDam2wGy4FRi/8Lwmixiv63I2E2Pgw3Z7Nxk32hokKLMOOViegM2h0IEsW78CTUQ0ff/gl0xRuRqCs1EghF+NnmECX3hLL5KZdFU6whRysVM8/eAHrd+F9zxhi1O+ymBagcRyQsppeUWCf0r4/nyzHoZcqymbZRCfS2Qx6WssRTJbYfpLG4OyVtRViyayis4XbX2a383N0gxHIBMEzqMRLpsmnnsuTFiQpf1YI4FI0vHNeQKy3LGBJ27OFnN+YP+HE0OXEoAwT3LJQ
+DKIM-Signature: a=rsa-sha256; bh=91xHvCxL6qS1hHNxOp74gV1uq2e5F9hh3DUAAhVqCrc=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1787403528; v=1;
+ b=qV8LY6R1o6Sn0k8Ryc89y9X6snb090T6ZU8oBFKslyjPHvJsyZGw2vDan7IVQbG1rXwt3NIG
+ lUCDPnfpUfKMGZJtoR0rGhwW4J2Oih31YeeHfyPsNHfRISusqypOZlukvOYarWYKWPubRY4/ey0
+ I38FDxJUIqih2+y1q7s9brl+fr/McZjUFuC8qSIA0Uzu87jHNdQKVTXWSbdi/bU4PZz7akZI8zE
+ XS+9qOnPOKh/PzONeD5CYH4M9PScN1LbiZAIkfYvql0rYFlY8RHElf7XvXYK501X0a9ev5MJ7B7
+ BywiJo6VhcWBiHAhNjtHYEZXKpJgYdgl/LA/MMbPE3edQ==
+Received-SPF: pass client-ip=51.210.91.11; envelope-from=clg@kaod.org;
+ helo=smtpout2.mo536.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,41 +135,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 8/21/26 10:04, Jamin Lin wrote:
+> Implement SCU530 and SCU534, the control and data registers of the
+> AST2600 second random number generator.
+> 
+> Per the AST2600 datasheet, only SCU530[5:0] are writable and the
+> read-only SCU530[31] reports that random data is valid, which is only
+> meaningful while SCU530[4] is set. Report it as set whenever SCU530[4]
+> is, and initialise SCU530 to its datasheet reset value.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/misc/aspeed_scu.c | 18 +++++++++++++++++-
+>   1 file changed, 17 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
+> index ca93c3699d..ca79a93b15 100644
+> --- a/hw/misc/aspeed_scu.c
+> +++ b/hw/misc/aspeed_scu.c
+> @@ -130,6 +130,10 @@
+>   #define AST2600_HW_STRAP2_PROT    TO_REG(0x518)
+>   #define AST2600_RNG_CTRL          TO_REG(0x520)
+>   #define AST2600_RNG_DATA          TO_REG(0x524)
+> +#define AST2600_RNG2_CTRL         TO_REG(0x530)
+> +#define AST2600_RNG2_CTRL_MASK    0x3F
+> +#define AST2600_RNG2_CTRL_VLD     BIT(31)
+> +#define AST2600_RNG2_DATA         TO_REG(0x534)
+>   #define AST2600_CHIP_ID0          TO_REG(0x5B0)
+>   #define AST2600_CHIP_ID1          TO_REG(0x5B4)
+>   
+> @@ -679,13 +683,14 @@ static uint64_t aspeed_ast2600_scu_read(void *opaque, hwaddr offset,
+>           /* PLLs are always "locked" */
+>           return s->regs[reg] | BIT(31);
+>       case AST2600_RNG_DATA:
+> +    case AST2600_RNG2_DATA:
+>           /*
+>            * On hardware, RNG_DATA works regardless of the state of the
+>            * enable bit in RNG_CTRL
+>            *
+>            * TODO: Check this is true for ast2600
+>            */
+> -        s->regs[AST2600_RNG_DATA] = aspeed_scu_get_random();
+> +        s->regs[reg] = aspeed_scu_get_random();
+>           break;
+>       }
+>   
+> @@ -756,6 +761,7 @@ static void aspeed_ast2600_scu_write(void *opaque, hwaddr offset,
+>           return;
+>   
+>       case AST2600_RNG_DATA:
+> +    case AST2600_RNG2_DATA:
+>       case AST2600_SILICON_REV:
+>       case AST2600_SILICON_REV2:
+>       case AST2600_CHIP_ID0:
+> @@ -765,6 +771,14 @@ static void aspeed_ast2600_scu_write(void *opaque, hwaddr offset,
+>                         "%s: Write to read-only offset 0x%" HWADDR_PRIx "\n",
+>                         __func__, offset);
+>           return;
+> +    case AST2600_RNG2_CTRL:
+> +        data &= AST2600_RNG2_CTRL_MASK;
+> +        if (data & BIT(4)) {
+> +            data |= AST2600_RNG2_CTRL_VLD;
+> +        } else {
+> +            data &= ~AST2600_RNG2_CTRL_VLD;
+> +        }
+> +        break;
+>       }
+>   
+>       s->regs[reg] = data;
+> @@ -803,6 +817,7 @@ static const uint32_t ast2600_a3_resets[ASPEED_AST2600_SCU_NR_REGS] = {
+>       [AST2600_HUARTCLK]          = 0x000145C0,
+>       [AST2600_CHIP_ID0]          = 0x1234ABCD,
+>       [AST2600_CHIP_ID1]          = 0x88884444,
+> +    [AST2600_RNG2_CTRL]         = 0x8000000E,
+>   };
+>   
+>   static void aspeed_ast2600_scu_reset_hold(Object *obj, ResetType type)
+> @@ -1122,6 +1137,7 @@ static void aspeed_ast1030_scu_reset_hold(Object *obj, ResetType type)
+>       s->regs[AST2600_HW_STRAP1] = s->hw_strap1;
+>       s->regs[AST2600_HW_STRAP2] = s->hw_strap2;
+>       s->regs[PROT_KEY] = s->hw_prot_key;
+> +    s->regs[AST2600_RNG2_CTRL] = 0x8000000E;
+>   }
+>   
+>   static void aspeed_1030_scu_class_init(ObjectClass *klass, const void *data)
 
-This revives Philippe Mathieu-Daudé's patch from 2021. The original
-posting and discussion are available at:
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
-https://lore.kernel.org/r/20210820155211.3153137-1-philmd@redhat.com
+Thanks,
 
-When host memory allocation fails, QEMU reports the affected memory
-region and host error, but not the size of the failed allocation. This
-makes accidental requests harder to spot. In particular, a bare value
-passed to '-m' is interpreted as MiB, so a user expecting bytes can
-unintentionally request tens of TiB.
+C.
 
-The patch adds the human-readable RAMBlock size to the existing error.
-This does not try to explain host-specific overcommit, cgroup, or NUMA
-policy. It provides the most useful portable fact available at the
-failure site and makes both user mistakes and support reports easier
-to diagnose.
-
-Changes in v2:
-- Rebase onto current master
-- Update the source path from softmmu/physmem.c to system/physmem.c
-- Fix a typo in the commit message
-- Collect Peter Xu's Reviewed-by and Bin Meng's Tested-by
-
-Philippe Mathieu-Daudé (1):
-  system/physmem: Improve guest memory allocation failure error message
-
- system/physmem.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
----
-base-commit: eea8fe61b8be8f3016e522e6af24924a0266ca95
-branch: virt
-
--- 
-2.53.0
 
 
