@@ -4,94 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A1C4C5DF97
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 10:45:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7021DC5B572
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 11:21:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxjD7-0006hh-2r; Sat, 22 Aug 2026 06:44:25 -0400
+	id 1wxjm1-0003IM-BH; Sat, 22 Aug 2026 07:20:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian@quante.one>)
- id 1wxjD5-0006hJ-36; Sat, 22 Aug 2026 06:44:23 -0400
-Received: from nx185.node02.secure-mailgate.com ([192.162.87.185])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wxjlx-0003EU-Ch
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 07:20:25 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian@quante.one>)
- id 1wxjD3-0006Nf-9U; Sat, 22 Aug 2026 06:44:22 -0400
-Received: from web279.dogado.net ([31.47.255.59])
- by node02.secure-mailgate.com with esmtps (TLS1.2) tls
- TLS_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <christian@quante.one>)
- id 1wxjCy-002stk-Ag; Sat, 22 Aug 2026 12:44:17 +0200
-X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quante.one;
- s=cloudpit; t=1787395456;
- bh=z2mRyBF3UQ/7ESwZSn/kr566tDe6K4JlmnRYK6D1bY8=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=VSRpuS2pci5IxqP/uNIEFAdtjHEVEz91yKSjjbUsECq77V9JF8AaBcfBIP8sDI7AF
- EYakzoOZD1HRqgcSztBqd8N6jMBGRF2vTpTItNFdYUxfCaGJjR/id2xLAtbUCujrMU
- rYPSqE9JClz2RyQ92iXsp/pnW5T5Sj5+JVOxzdts=
-Received: from Zeuss.fritz.box (p549f1e64.dip0.t-ipconnect.de [84.159.30.100])
- (Authenticated sender: christian@quante.one)
- by web279.dogado.net (Postfix) with ESMTPSA id 6ECE8281D8D;
- Sat, 22 Aug 2026 12:44:15 +0200 (CEST)
-X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
-From: Christian Quante <christian@quante.one>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, jsnow@redhat.com, farosas@suse.de,
- lvivier@redhat.com, pbonzini@redhat.com, kwolf@redhat.com,
- Christian Quante <christian@quante.one>
-Subject: [PATCH 2/3] tests/qtest/fdc-test: skip test cases when the 'pc'
- machine is missing
-Date: Sat, 22 Aug 2026 12:43:28 +0200
-Message-ID: <20260822104329.42121-3-christian@quante.one>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260822104329.42121-1-christian@quante.one>
-References: <20260822104329.42121-1-christian@quante.one>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wxjlu-0004qF-2L
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 07:20:23 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:39a2:0:640:ae2d:0])
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 40964808F3;
+ Sat, 22 Aug 2026 14:20:15 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:630::1:39] (unknown
+ [2a02:6bf:8080:630::1:39])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id DKX94E2ZbCg0-rkJBEcCX; Sat, 22 Aug 2026 14:20:14 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1787397614;
+ bh=DzhssHau7qTmINpUiaX2CzvZtpK4hAINqUf+29mUntU=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=VVWLrajzzgelhVV3dKCZZAaGub3+504m5tayvCpVbZZwTKxlo/6UaeqCn+B2u7Acv
+ c+57LQRdqmx/TET16bIx+I1NraWVx3/lSe5KAOAR7bnbaq6XfIJNKqMvJLziVuhpIu
+ L0YLdFqFjkW+V1Bx0v1D8irB4EWeEmafjwCydqzE=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <c4cb2f8f-d88d-4f2c-a747-abe7aa4312a6@yandex-team.ru>
+Date: Sat, 22 Aug 2026 14:20:13 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-PPP-Message-ID: <178739545612.2525797.6959177451074578283@web279.dogado.net>
-X-PPP-Vhost: quante.one
-X-Originating-IP: 31.47.255.59
-X-SecureMailgate-Domain: web279.dogado.net
-X-SecureMailgate-Username: 31.47.255.59
-Authentication-Results: secure-mailgate.com;
- auth=pass smtp.auth=31.47.255.59@web279.dogado.net
-X-SecureMailgate-Outgoing-Class: ham
-X-SecureMailgate-Outgoing-Evidence: Combined (0.01)
-X-Recommended-Action: accept
-X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuVwd5NJH8+8Wo0Ms5RclUSO5j5rLpdN/iLB
- 45cL/oYogCu2SmbhJN1U9FKs8X3+Nt1HOctZ5X+40a9IXddeG3M38JQYgcgjsac3uQcQdCX4ROfH
- zJ6mVE7ewsipSVIfs4ZMN4DcGJm62MyLKuJ/2zEyS5+h1uiHzk/Rfxfh461YLyu3RZI1CD15pCOE
- 1vk99ROIQSXp0prcVkrsJtqLDcOMdOtYechJ/ikE1WgRg4cS6A6B6pTstltS07kaQJ8I9sYal0h7
- 43VOpKNY+4MjijihZK0EMmf3P50Ajf/tIX00Fuu2beRqilmjgQ6jA3UwYgnsj5xBssn0tIIHA3aH
- QzCq60l8YRpcxCjc2gcMa3Btw+OTpzU5Yy8oe2B0dJEHaEkiihVil/4PKs38NtnG3PEG9vh2CZ3C
- vkagHub+zVCHrxrAiQ9LrFKjKskiGXdOYifNjAo/oI1KsSlinhiZwSTM7upkSXAQr6kxkmkxKd7E
- gmVz1j4MRe+OdlYkVJrlZi4DrT70dovxC24/X+dx3iVqmCy1HzZEftAXffblb7BEVSsx11W4Bku8
- Nj/Jz1tydce5Z/R2EzvIB0T7JlyqARh7gD7AfsXew/h928fQEfP3Kfs3HYoxZ2A8CL74A8BpRjYl
- hQTOv2jJ/maiR5x2CLV1yrn7Tl2/eGlT3vtT5Q2OCSL3g9ZGqqDl/bOPQLPC3/Z0OGzipjuCk6M8
- f274+Da2Hd4FX9oFmG2ssImpaOB9XT7WPa4F3kdskAP3L0dYRrkBIkUL/j1Y48GvmeURQjjEvx/4
- sa8yVmJ5dSGjbwA/dTyOzZbKfVh1v52vI8Y0fFWsl7iHPgL/S2wS+InL5HameBz88ZlqhzmH6uft
- 7+t7T3Ji2DeftKOAvi5/VpKfmaaulMf2xZVX1PF0jIKhEOFrbAyeTqRmo8yvsuqp7tk0ZhXEXqw0
- RKuCqvK44RrggSj3Y80OmAux3oN13+ztUzneoLdgui30GBX/jlb5Bz/vlhgZBdfUYxN1da9xu08A
- VGS8eja5zvrtH3VdRWNadC6kk6F/+BWn9gVDEmhUbvIlEHSFE+BGkBaqg7rMm0ncWoEA78u/BXBt
- xWlNUZZl2CeM9R/2gMGq0KWAzmMf+ibVDjtW4oFmrPO6qPB0S9LHBAFRJpw+dgtb/qY19tnlsdBT
- RUqLoSOUfHTfiAsjKPjs7BqXSHvjdU6ko1j7gyOKOKHJ58WhluI91Ik/GOwz9gprGRUHDfs4TpM6
- tty9Xg7woShbkJHRneTq/3E3yiGCIw8=
-X-Report-Abuse-To: spam@node04.secure-mailgate.com
-X-Complaints-To: abuse@node01.secure-mailgate.com
-Received-SPF: pass client-ip=192.162.87.185; envelope-from=christian@quante.one;
- helo=nx185.node02.secure-mailgate.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] docs/vhost-user: clarify the semantics of
+ VHOST_USER_SET_VRING_ENABLE
+To: Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
+ yc-core@yandex-team.ru
+References: <20260325113644.175108-1-d-tatianin@yandex-team.ru>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260325113644.175108-1-d-tatianin@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -103,42 +80,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-run_isolated() starts every test case in fdc_tests[] with "-machine pc".
-A QEMU built without the i440fx/pc machine fails them with "unsupported
-machine type 'pc'" rather than skipping them.
+ping. This old patch applies to master, and makes sense. Let's merge it.
 
-Check for the machine in run_isolated() and skip there.  The previous
-patch routed every table entry through that one function, so one check
-covers all of them; 4e37f749dd ("tests/qtest/drive_del-test: skip pc
-tests when 'pc' machine is unavailable") needed the same three lines
-four times over.
+On 25.03.26 14:36, Daniil Tatianin wrote:
+> Documentation didn't really make it clear that the payload contains any
+> sort of desired state field, you could only derive that by looking at
+> the QEMU implementation of this request. Add an extra note to make that
+> clear.
+> 
+> Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+> ---
+> 
+> Changes since v0:
+> - Remove 'Note that' (suggested by Vladimir)
+> 
+> ---
+>   docs/interop/vhost-user.rst | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+> index 137c9f3669d..e29eb291f11 100644
+> --- a/docs/interop/vhost-user.rst
+> +++ b/docs/interop/vhost-user.rst
+> @@ -1346,6 +1346,8 @@ Front-end message types
+>     :reply payload: N/A
+>   
+>     Signal the back-end to enable or disable corresponding vring.
+> +  The ``num`` field contains the target vring state where 0 means disabled,
+> +  and any other value means enabled.
+>   
+>     This request should be sent only when
+>     ``VHOST_USER_F_PROTOCOL_FEATURES`` has been negotiated.
 
-The two CVE test cases are left alone.  They start QEMU without
--machine and so ask for the default machine, which is a separate
-question from the one this patch answers.
 
-Signed-off-by: Christian Quante <christian@quante.one>
----
- tests/qtest/fdc-test.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/tests/qtest/fdc-test.c b/tests/qtest/fdc-test.c
-index fd38475bf7..f480f4ba09 100644
---- a/tests/qtest/fdc-test.c
-+++ b/tests/qtest/fdc-test.c
-@@ -690,6 +690,11 @@ static void run_isolated(const void *data)
- {
-     const FDCTest *test = data;
- 
-+    if (!qtest_has_machine("pc")) {
-+        g_test_skip("Machine 'pc' is not available");
-+        return;
-+    }
-+
-     qtest_start("-machine pc -device floppy,id=floppy0");
-     qtest_irq_intercept_in(global_qtest, "ioapic");
- 
 -- 
-2.53.0
-
+Best regards,
+Vladimir
 
