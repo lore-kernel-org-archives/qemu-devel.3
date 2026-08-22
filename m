@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14717C5DF98
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 19:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 834C6C5DF97
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 19:45:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxrdM-0001zu-KB; Sat, 22 Aug 2026 15:44:04 -0400
+	id 1wxrda-00027b-Pa; Sat, 22 Aug 2026 15:44:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
- id 1wxrdL-0001zL-5Y
- for qemu-devel@nongnu.org; Sat, 22 Aug 2026 15:44:03 -0400
+ id 1wxrdY-00026z-NA
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 15:44:16 -0400
 Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
- id 1wxrdJ-0007Ai-Hb
- for qemu-devel@nongnu.org; Sat, 22 Aug 2026 15:44:02 -0400
+ id 1wxrdW-0007Ce-Ru
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 15:44:16 -0400
 Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2cc7ef7ec27so32358085ad.1
- for <qemu-devel@nongnu.org>; Sat, 22 Aug 2026 12:44:01 -0700 (PDT)
+ d9443c01a7336-2caed617615so22484795ad.3
+ for <qemu-devel@nongnu.org>; Sat, 22 Aug 2026 12:44:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787427840; x=1788032640; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787427853; x=1788032653; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=8iUTYzqk/yld4kIzHN6VkkIW+lJhL3ZopkBmiNVwt70=;
- b=Ga9S84ypOt1JkfESAarV2jjqKQzsCqpRVJbeJzlBkDEqnE+qt2BDbhknlD8dowwUr/
- j4i0YnEd2dqlLObhWtI9x+DucbagA3fBMAzmPM5GpNSDmK9JzJNQffEhSHaIpg6+Nht7
- W6vzZ0KNLr8Nxp19lptJGUFTkbo8bE+9ZOfoa/Hfn4uyUw3/91Xw0yXob1l0N9YJ+964
- Wt/jqoqx9oqeMgyfuJ8gs/Qoqt6RN+34+hytu0/6o9CYmoP4/rgeXfq8nwJhJqbMADxW
- 30VO9nJ9SjM2bLhOdOlEWmStqZePXK+6m06b/aGce8eVTZ091jfPD8uD6DZSd/PEC+8J
- AXfg==
+ bh=AkJCpUVxbck+BDrRMh6MDIJQ3Xr7+eOGrUpy6ljXqrQ=;
+ b=GnTaWqFEIHgpE0UsLLXz8lYjNSoSWKKnBOkuyEhOqfoycepvSuc3hNsgVNpnEB9dvX
+ GEXHjZ+6DEpHGZqX/4lzCn05m/zL+rfSKE8klY8I0mZPIJ+O8R6l2LFcbM2nS+6nb400
+ BdJc4vS5bkJrihuz5yRhd1Lm3QkyTOlYYknwisqF4a7N4s4HrL99KiWae3YYq7xhRJpk
+ FgBR2E+8MgsR0B7lApZi4KWvBrM8SSOEu/PlcXkDg6uAjyhRemjGYwoXIoXcIE2PCKgQ
+ JtWZN+xi95ehUYKRMq2ITPGeA4FtVYCAJcWdMysaFwvQVqEJXnkhvinWbKjkeJmQng6e
+ aS6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787427840; x=1788032640;
+ d=1e100.net; s=20251104; t=1787427853; x=1788032653;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=8iUTYzqk/yld4kIzHN6VkkIW+lJhL3ZopkBmiNVwt70=;
- b=NlfaEO8Q9fmdN+6GM0eKiVPOdsAh+e28FzVFM077CX4fx0viN/Dsw7eUdyOgkYT3Rv
- cNmRDuNjj+oVwkA6vPP6cujBsYFldpC2/aILiuC9qe3hsLwMt48WsG4R0iW7ykT6lH0k
- o/m68wMb/O1NR50wcpC2zD+Et77dXAbfcsA9QUmlWPXYmndUrJeTiKpopuTok5LpYu5w
- GYGKoNZbt7Z7jGsE4dgdv7M4rhxuWGAwlAGfUYqxopRC5TfyPGG9rIrm2Wep9XU4Njjv
- 0C+06q467V/XGdpt8xPzTlI2lNZAb2H9m9LGJ5qt1HTGUv/z43aE7yTfQ9F5nuMed8hJ
- d37g==
+ bh=AkJCpUVxbck+BDrRMh6MDIJQ3Xr7+eOGrUpy6ljXqrQ=;
+ b=ss5wwK33rKSg/7sRxcmXMeopKEPMMjY2flnDFaN/V7ka6ThoW/TPsuEhv+5L7PcNGj
+ uS90ktQh2qDHclMltah47tfhR1jGN8qqZpYOWUb2OD7WN7cYgE6yc3ijwvB3mCDk2Ov7
+ OtHGssnR7mBIZRr0/TMJE7lFw1YNyk3l6J9DeM6RoerzNDxfN6E9X9E7jO+Uh6F3SFKb
+ 6wzs9mmUprU40aHhLwW4YujqsBljJzIBMGAKDCbJ3AQgJ8n4g1pn1dNhKWmv9jp3TvVU
+ WOwaSs4n/hWFLR+bnHycUYtuyZvxru98E+NyixWUS84rqs3EbXU4grxLBx6xirawLVXQ
+ raNQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RowtKtoATBqbwzjv2cpvqdyBatHXLiOQN/EejeWUPwHqNpsRMrOq5+AgZ5UjNMRrLl3eyp6ByC6qWLL@nongnu.org
-X-Gm-Message-State: AFuF++lQZSGZeOcv//nGz/5SP2UdXDeX9AOXl8ZaPdNXL4GiH0TFXeZ8
- E/1fAleAY6hlXH32Hm9I7MXu/C7kby4SSTVHf32+OQG/5mdQp0uRIl8x
-X-Gm-Gg: AR+sD13UwBt4nPmjgwrfl3fa4WXDiAJFCf8ToIpMwjeHYQsvu9k+MrSpIpyU/LmDEAJ
- IlYIu33NZWOT8BP2gL6RfZsX1O0zYVahObZvMR7g7MxVMkDakcPjJTBKPZr2GANvIYqyv8PTWXd
- Ze1CZA3ifcMcXSJaJIVLhy7A6gh2oNKwayJLb9Rrwv4z1iaMwGXTb6gRBogg61esCpJSrlpirzG
- 6uN6QLPbaX1E81+8EZErEihJZfZn5brBdl7d1UYk8XUgh+eCK4OxD7Cr3bBjoeKrArNxgnHPiHR
- ezmWSaArSFOPhWZEFtC3/7ew1IXrBi2steTtaaGV9Ki1MuafesYcp+dsfQAXavLTsVltHe/GyPp
- 9ikVAKf0DE+2snn+6FbAPSMWCjgInHat0l0EH7R8SqygiW6HF1ehMqr3otiiTGhF55My5fD3An7
- mS7KMTAYLo8bC8e4NtPFe9gHupfMNiYCkEirLN1Fy8buyv1Z5ecCJKxilrBWbq5XKXeG1O8lnwk
- 4M752DA4tHi561TtgAx5cUCIfhe3X+9JCKmyxkRu/1wGfVBGZ9xAjN5AoKFyjUd0A==
-X-Received: by 2002:a17:902:ceca:b0:2d6:6953:717b with SMTP id
- d9443c01a7336-2d670c81ef4mr121635375ad.10.1787427840251; 
- Sat, 22 Aug 2026 12:44:00 -0700 (PDT)
+ AHgh+RpJpJXrJZvBTsrIW3UiCfwn33XkBdsBr9Nju5nqns8ay46CzJktrNuS1yv+9dWA2NAFGyzyN+gDIbm4@nongnu.org
+X-Gm-Message-State: AFuF++muOkEqhoePn3lR6etuZnkoRmUZxB5gjxiVLAkfMikV6+swpwbP
+ cvVoPW5ZdfKfRuLyI8Hf3m/6hZjy2U0eAvwzCcx/9RMsndtXyKu0MjHO
+X-Gm-Gg: AR+sD133nH4whR0HelGK27M9LOpY5Ar9TER+858tXYp4py31jsda0r7Cu5JVv/fDdre
+ xnv85WOhKcg6L8MoDMiP8T80dpWY3mGViSiM4bj8jYwqQErTqpNY24Y62iAC6zMBPdJ9CLlGQzA
+ gdZA8ln1/cclZwvcSTLlvs2Nk3UHKBTALlEWnKONWbjr+E6voj1fwk9MoZFXbu9zDbuhjIg4QQu
+ IeinokJVRG+nP2FKIpvgLbT9fjH8Vlpr1W2gGvSQIqlrm3P8Cn14g2lL261J4mc6LM4PJ1LdXJC
+ jzrhAcKROmaPqsAtfUieccsAHltnedsctIbjQCl8UfobxRtyWRrN+zRuHoDFmvLtdev06J5ab7i
+ KeSZAyDtd/6Hikiyq7JBG9l8DT55ayJjca08GKCAO1qDGy4qnBrQ/Dz/iq1dHnbNMIuPUqWP4FD
+ ut4Nlq1QWifObpfnVax8nLDRl4oj+0m9LErsEs4QJRod9eceERhyeS+wydfTt5fV+hGIrk/zKTd
+ SqOL+uHBEdc+XtWzYm88eUBf7psnq/bhc67DEaQf3utx/lLkCYe6+Es47EJdqQ7nFp49S5ILEoe
+X-Received: by 2002:a17:903:3904:b0:2c7:ebfb:618f with SMTP id
+ d9443c01a7336-2d670d299bdmr132599335ad.14.1787427853457; 
+ Sat, 22 Aug 2026 12:44:13 -0700 (PDT)
 Received: from visitorckw-work01.c.googlers.com.com
  (202.176.229.35.bc.googleusercontent.com. [35.229.176.202])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d676895799sm5892715ad.38.2026.08.22.12.43.55
+ d9443c01a7336-2d676895799sm5892715ad.38.2026.08.22.12.44.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 22 Aug 2026 12:43:59 -0700 (PDT)
+ Sat, 22 Aug 2026 12:44:13 -0700 (PDT)
 From: Kuan-Wei Chiu <visitorckw@gmail.com>
 To: pierrick.bouvier@oss.qualcomm.com, almer@dabbelt.com,
  alistair.francis@wdc.com, pbonzini@redhat.com, marcandre.lureau@redhat.com,
@@ -77,9 +77,9 @@ Cc: liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
  wxchen0913@gmail.com, jserv@ccns.ncku.edu.tw, marscheng@google.com,
  eleanor15x@gmail.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  Kuan-Wei Chiu <visitorckw@gmail.com>
-Subject: [PATCH v4 5/7] tests/qtest: Add qtest for Milk-V Duo board
-Date: Sat, 22 Aug 2026 19:43:12 +0000
-Message-ID: <20260822194315.2550260-6-visitorckw@gmail.com>
+Subject: [PATCH v4 7/7] docs/system/riscv: Add Milk-V Duo board documentation
+Date: Sat, 22 Aug 2026 19:43:14 +0000
+Message-ID: <20260822194315.2550260-8-visitorckw@gmail.com>
 X-Mailer: git-send-email 2.55.0.766.g2966f0265a-goog
 In-Reply-To: <20260822194315.2550260-1-visitorckw@gmail.com>
 References: <20260822194315.2550260-1-visitorckw@gmail.com>
@@ -109,129 +109,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add minimal qtest coverage for the Milk-V Duo machine to validate basic
-MMIO mapping and register access.
-
-Currently tested:
-- Verify DW8250 UART component version and type signatures.
-- Test read/write access to CV1800B clock bypass register.
-
-Tested with:
-$ meson test -C build -v qemu:qtest-riscv64/milkv-duo-test
-[...]
-Ok:                 1
-Fail:               0
+Add documentation for the Milk-V Duo board. This includes a brief
+overview of the hardware, a list of supported devices, and practical
+instructions on how to boot the machine using OpenSBI and a Linux
+kernel with an emulated SD card.
 
 Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
 ---
- MAINTAINERS                  |  1 +
- tests/qtest/meson.build      |  3 +-
- tests/qtest/milkv-duo-test.c | 70 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 73 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/milkv-duo-test.c
+ MAINTAINERS                     |  1 +
+ docs/system/riscv/milkv-duo.rst | 49 +++++++++++++++++++++++++++++++++
+ docs/system/target-riscv.rst    |  1 +
+ 3 files changed, 51 insertions(+)
+ create mode 100644 docs/system/riscv/milkv-duo.rst
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index dde85ef420..245eb7bb58 100644
+index 3f79334c59..9750a39ca3 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1861,6 +1861,7 @@ F: hw/riscv/milkv_duo.c
- F: include/hw/char/dw8250.h
- F: include/hw/misc/cv1800b_clk.h
- F: include/hw/riscv/cv1800b.h
-+F: tests/qtest/milkv-duo-test.c
- 
- RX Machines
- -----------
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 12ed368997..d02dbf7433 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -299,7 +299,8 @@ qtests_riscv64 = ['riscv-csr-test'] + \
-   (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
-    config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
-    ['iommu-riscv-test'] : []) + \
--  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
-+  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : []) + \
-+   ['milkv-duo-test']
- 
- qtests_hexagon = ['boot-serial-test', 'l2vic-test', 'qct-qtimer-test']
- 
-diff --git a/tests/qtest/milkv-duo-test.c b/tests/qtest/milkv-duo-test.c
+@@ -1854,6 +1854,7 @@ F: tests/qtest/k230-wdt-test.c
+ Milk-V Duo
+ M: Kuan-Wei Chiu <visitorckw@gmail.com>
+ S: Maintained
++F: docs/system/riscv/milkv-duo.rst
+ F: hw/char/dw8250.c
+ F: hw/misc/cv1800b_clk.c
+ F: hw/riscv/cv1800b.c
+diff --git a/docs/system/riscv/milkv-duo.rst b/docs/system/riscv/milkv-duo.rst
 new file mode 100644
-index 0000000000..06064b8733
+index 0000000000..1758db2c1e
 --- /dev/null
-+++ b/tests/qtest/milkv-duo-test.c
-@@ -0,0 +1,70 @@
-+/*
-+ * QTest for Milk-V Duo Board
-+ *
-+ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
++++ b/docs/system/riscv/milkv-duo.rst
+@@ -0,0 +1,49 @@
++Milk-V Duo board (``milkv-duo``)
++================================
 +
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
++The ``milkv-duo`` machine is compatible with the Milk-V Duo development board.
 +
-+#define CV1800B_CLK_BASE            0x03002000
-+#define CV1800B_CLK_BYPASS          0x030
-+#define CV1800B_CLK_BYPASS_RESET    0xFFFFFFFF
-+#define TEST_PATTERN_5A             0x5A5A5A5A
-+#define TEST_PATTERN_A5             0xA5A5A5A5
++The Milk-V Duo is an ultra-compact embedded development platform based on the
++Sophgo CV1800B SoC. The CV1800B features T-Head C906 RISC-V processing cores
++along with integrated peripherals.
 +
-+#define CV1800B_UART0_BASE          0x04140000
-+#define DW_UART_UCV                 0xF8
-+#define DW_UART_CTR                 0xFC
-+#define DW_UART_VERSION_3_23A       0x3332332A
-+#define DW_UART_TYPE_SIGNATURE      0x44570110
++For more information, see <https://milkv.io/duo>
 +
-+static void test_milkv_duo_uart(void)
-+{
-+    QTestState *qts;
-+    uint32_t component_version;
-+    uint32_t component_type;
++Supported devices
++-----------------
++The ``milkv-duo`` machine supports the following devices:
 +
-+    qts = qtest_init("-M milkv-duo");
++* T-Head C906 cores
++* Core Local Interruptor (CLINT)
++* Platform-Level Interrupt Controller (PLIC)
++* DesignWare APB UART (dw8250)
++* SDHCI controller
++* CV1800B clock controller
 +
-+    component_version = qtest_readl(qts, CV1800B_UART0_BASE + DW_UART_UCV);
-+    g_assert_cmphex(component_version, ==, DW_UART_VERSION_3_23A);
++Boot options
++------------
++The ``milkv-duo`` machine supports direct boot using a generic RISC-V OpenSBI
++firmware and a Linux kernel. The root filesystem can be provided via the
++emulated SD card.
 +
-+    component_type = qtest_readl(qts, CV1800B_UART0_BASE + DW_UART_CTR);
-+    g_assert_cmphex(component_type, ==, DW_UART_TYPE_SIGNATURE);
++Running
++-------
++To boot the machine, you need a Linux kernel (built with CV1800B support), a
++device tree blob (DTB), and a root filesystem image (e.g., built via BusyBox
++or Buildroot).
 +
-+    qtest_quit(qts);
-+}
++Use the following command to boot the system directly to the Linux shell:
 +
-+static void test_milkv_duo_clk(void)
-+{
-+    QTestState *qts;
-+    uint32_t clk_bypass_val;
++.. code-block:: bash
 +
-+    qts = qtest_init("-M milkv-duo");
++   $ qemu-system-riscv64 -M milkv-duo -nographic \
++      -bios pc-bios/opensbi-riscv64-generic-fw_dynamic.bin \
++      -dtb /path/to/linux/arch/riscv/boot/dts/sophgo/cv1800b-milkv-duo.dtb \
++      -kernel /path/to/linux/arch/riscv/boot/Image \
++      -drive file=/path/to/rootfs.ext4,format=raw,id=sd-card \
++      -device sd-card,drive=sd-card \
++      -append "console=ttyS0,115200 root=/dev/mmcblk0 rootwait earlycon"
 +
-+    clk_bypass_val = qtest_readl(qts, CV1800B_CLK_BASE + CV1800B_CLK_BYPASS);
-+    g_assert_cmphex(clk_bypass_val, ==, CV1800B_CLK_BYPASS_RESET);
-+
-+    qtest_writel(qts, CV1800B_CLK_BASE + CV1800B_CLK_BYPASS, TEST_PATTERN_5A);
-+    clk_bypass_val = qtest_readl(qts, CV1800B_CLK_BASE + CV1800B_CLK_BYPASS);
-+    g_assert_cmphex(clk_bypass_val, ==, TEST_PATTERN_5A);
-+
-+    qtest_writel(qts, CV1800B_CLK_BASE + CV1800B_CLK_BYPASS, TEST_PATTERN_A5);
-+    clk_bypass_val = qtest_readl(qts, CV1800B_CLK_BASE + CV1800B_CLK_BYPASS);
-+    g_assert_cmphex(clk_bypass_val, ==, TEST_PATTERN_A5);
-+
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("/riscv/milkv-duo/uart", test_milkv_duo_uart);
-+    qtest_add_func("/riscv/milkv-duo/clk", test_milkv_duo_clk);
-+
-+    return g_test_run();
-+}
++This command boots the generic OpenSBI firmware, loads the Linux Image and the
++specified DTB, and mounts the ext4 root filesystem from the emulated SD card.
++The console output is routed to the ``ttyS0`` serial port.
+diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
+index 2639866a3e..1e49055e29 100644
+--- a/docs/system/target-riscv.rst
++++ b/docs/system/target-riscv.rst
+@@ -69,6 +69,7 @@ undocumented; you can get a complete list by running
+    riscv/k230
+    riscv/microblaze-v-generic
+    riscv/microchip-icicle-kit
++   riscv/milkv-duo
+    riscv/mips
+    riscv/shakti-c
+    riscv/sifive_u
 -- 
 2.55.0.766.g2966f0265a-goog
 
