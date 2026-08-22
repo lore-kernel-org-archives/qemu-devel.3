@@ -4,53 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A1FCC5DF97
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 10:45:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF550C5B572
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 10:45:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxjD8-0006jI-IW; Sat, 22 Aug 2026 06:44:26 -0400
+	id 1wxjD7-0006ij-OR; Sat, 22 Aug 2026 06:44:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <christian@quante.one>)
- id 1wxjD6-0006hk-Ox; Sat, 22 Aug 2026 06:44:24 -0400
-Received: from nx91.node02.secure-mailgate.com ([192.162.87.91])
+ id 1wxjD5-0006hK-5x; Sat, 22 Aug 2026 06:44:23 -0400
+Received: from nx75.node02.secure-mailgate.com ([192.162.87.75])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <christian@quante.one>)
- id 1wxjD4-0006Nn-1e; Sat, 22 Aug 2026 06:44:24 -0400
+ id 1wxjD3-0006NY-9Q; Sat, 22 Aug 2026 06:44:22 -0400
 Received: from web279.dogado.net ([31.47.255.59])
  by node02.secure-mailgate.com with esmtps (TLS1.2) tls
  TLS_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <christian@quante.one>)
- id 1wxjCz-002suc-3s; Sat, 22 Aug 2026 12:44:18 +0200
+ id 1wxjCw-002srp-UD; Sat, 22 Aug 2026 12:44:16 +0200
 X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quante.one;
- s=cloudpit; t=1787395457;
- bh=ff4gQQPTus8rZbhuZPovLC9GQG30KC3o8hXhnvHf/bo=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=m0baMlGaMUb6s0EFR8TumMYUV9wgSLEb3NBSSfyuXzUHOieZgB6leYVugr0adWGTi
- 7TXvObeH+fuCWIWazJtINQeRAI0cP+jKuMQYECt4m1f9Fp5x1J88N1R2A471Mqa69a
- NDIbhRJpuZb1ozmN+GsZoAR4CqDPEsvJzpRNJP54=
+ s=cloudpit; t=1787395454;
+ bh=4iKUzZ8DtMto5vrogY09INCc7LP7uZqA44rc3y3vTG0=;
+ h=From:To:Cc:Subject:Date:From;
+ b=yaQfAWROetSl16ZGtt+uSe7Yr4mjSWo9fcdDU143Cw5k0zRCl9k5H4C8mW3bVi9w9
+ cxhDlxVmrTM8/wxsfeRfUCCT5qg5auUEbNKBQQYnsAJTp894o0QCt+3qODUbt77rO2
+ fgnivTMKciLMOiIn58OxiR2rc8YOZR6Bf0xPXj78=
 Received: from Zeuss.fritz.box (p549f1e64.dip0.t-ipconnect.de [84.159.30.100])
  (Authenticated sender: christian@quante.one)
- by web279.dogado.net (Postfix) with ESMTPSA id 50693280E03;
- Sat, 22 Aug 2026 12:44:16 +0200 (CEST)
+ by web279.dogado.net (Postfix) with ESMTPSA id D3BB3280E03;
+ Sat, 22 Aug 2026 12:44:13 +0200 (CEST)
 X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
 From: Christian Quante <christian@quante.one>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, jsnow@redhat.com, farosas@suse.de,
  lvivier@redhat.com, pbonzini@redhat.com, kwolf@redhat.com,
  Christian Quante <christian@quante.one>
-Subject: [PATCH 3/3] tests/qtest/fdc-test: check that READ ID answers for the
- drive it names
-Date: Sat, 22 Aug 2026 12:43:29 +0200
-Message-ID: <20260822104329.42121-4-christian@quante.one>
+Subject: [PATCH 0/3] tests/qtest/fdc-test: give each test case its own instance
+Date: Sat, 22 Aug 2026 12:43:26 +0200
+Message-ID: <20260822104329.42121-1-christian@quante.one>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260822104329.42121-1-christian@quante.one>
-References: <20260822104329.42121-1-christian@quante.one>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-PPP-Message-ID: <178739545691.2525845.7908581568760227177@web279.dogado.net>
+X-PPP-Message-ID: <178739545444.2525719.1636959312943224215@web279.dogado.net>
 X-PPP-Vhost: quante.one
 X-Originating-IP: 31.47.255.59
 X-SecureMailgate-Domain: web279.dogado.net
@@ -58,30 +55,30 @@ X-SecureMailgate-Username: 31.47.255.59
 Authentication-Results: secure-mailgate.com;
  auth=pass smtp.auth=31.47.255.59@web279.dogado.net
 X-SecureMailgate-Outgoing-Class: ham
-X-SecureMailgate-Outgoing-Evidence: SB/global_tokens (0.000643674709508)
+X-SecureMailgate-Outgoing-Evidence: Combined (0.11)
 X-Recommended-Action: accept
-X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuXYbgzBHkrXCc2DSI5wDKNQLKb1KgI9lCI3
- x8s4aZNw5Cu2SmbhJN1U9FKs8X3+Nt1HOctZ5X+40a9IXddeG3M38JQYgcgjsac3uQcQdCX4ROfH
- zJ6mVE7ewsipSVIfs4Zvy7wsaZoqrn6tJ36sk4ntS5+h1uiHzk/Rfxfh461YLyu3RZI1CD15pCOE
+X-Filter-ID: 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
- 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
+ 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
+ tty9Xg7woShbkJHRneTq/3E3yiGCIw8=
 X-Report-Abuse-To: spam@node04.secure-mailgate.com
 X-Complaints-To: abuse@node01.secure-mailgate.com
-Received-SPF: pass client-ip=192.162.87.91; envelope-from=christian@quante.one;
- helo=nx91.node02.secure-mailgate.com
+Received-SPF: pass client-ip=192.162.87.75; envelope-from=christian@quante.one;
+ helo=nx75.node02.secure-mailgate.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,158 +100,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit d00567f7fb ("hw/block/fdc: select the drive named by the READ ID
-command") added the missing SET_CUR_DRV() to fdctrl_handle_readid(), but
-nothing keeps it there: the suite runs a machine with a single floppy
-drive, where answering for the wrong drive cannot be told from answering
-for the right one.  Removing the call again leaves every existing test
-case green.
+The test cases in fdc-test share one QEMU instance and, with it, the
+state of the floppy controller.  Several of them only pass in the order
+they happen to be registered in: read_no_dma_1, _18 and _19 fail when
+run on their own, and fuzz-registers leaves an unacknowledged interrupt
+behind, so it works only where it sits today.
 
-Add a test case on a machine with two drives.  Drive 0 holds a medium and
-is selected by a SEEK, the way a driver spinning up the motor would select
-it; drive 1 is empty.  READ ID is then issued for drive 1, and two
-independent properties of the answer have to hold: fdctrl_stop_transfer()
-reports the drive in ST0, and an empty drive terminates abnormally with
-ST1.MA.  Without the fix the controller answers for drive 0, which
-terminates normally with ST0 = 0x00.
+This takes up Kevin Wolf's invitation from the review of d00567f7fb and
+431f59a34d: "If you feel like addressing the wider ordering problem in
+the tests, too, you're welcome to do so."
 
-Test cases carry their own command line, so that a test can ask for
-something other than the default single drive.  Both command lines name
-the pc machine, so the check added by the previous patch still covers
-every test case.
+Patch 1 registers the test cases from a table and runs each one in a
+QEMU instance of its own.  No test function changes what it tests; the
+three read_no_dma cases insert their own medium instead of inheriting
+one, and test_read_id stops ejecting at the end.
 
-Signed-off-by: Christian Quante <christian@quante.one>
----
- tests/qtest/fdc-test.c | 81 ++++++++++++++++++++++++++++++++++--------
- 1 file changed, 66 insertions(+), 15 deletions(-)
+Patch 2 skips the test cases when the pc machine is not part of the
+build, after 4e37f749dd, 6500a6abe6 and bb98963d6d did the same for
+drive_del-test, device-plug-test and pxe-test.  Patch 1 routes every
+test case through a single function, so one check covers all of them.
 
-diff --git a/tests/qtest/fdc-test.c b/tests/qtest/fdc-test.c
-index f480f4ba09..33d1b83aeb 100644
---- a/tests/qtest/fdc-test.c
-+++ b/tests/qtest/fdc-test.c
-@@ -67,6 +67,7 @@ enum {
- enum {
-     ST0_IC_MASK  = 0xc0,    /* interrupt code */
-     ST0_IC_ABNTERM = 0x40,  /* abnormal termination */
-+    ST0_DS_MASK  = 0x03,    /* drive the answer is about */
- 
-     ST1_MA       = 0x01,    /* missing address mark */
- };
-@@ -545,6 +546,47 @@ static void test_read_id_no_media(void)
-     g_assert_cmpint(st1 & ST1_MA, ==, ST1_MA);
- }
- 
-+/*
-+ * READ ID carries the drive number in its command byte and has to latch it.
-+ * A controller that fails to do so answers for whichever drive was selected
-+ * last.  Here drive 0 holds a medium and is selected by the SEEK; drive 1 is
-+ * empty, so answering for the wrong drive terminates normally (ST0 = 0x00)
-+ * where the command has to fail, and names drive 0 rather than drive 1.
-+ */
-+static void test_read_id_other_drive(void)
-+{
-+    uint8_t drive = 1;
-+    uint8_t head = 0;
-+    uint8_t st0, st1;
-+
-+    media_insert();
-+
-+    /* SEEK latches drive 0, the way a driver spinning up the motor would */
-+    send_seek(0);
-+
-+    floppy_send(CMD_READ_ID);
-+    g_assert(!get_irq(FLOPPY_IRQ));
-+    floppy_send(head << 2 | drive);
-+
-+    while (!get_irq(FLOPPY_IRQ)) {
-+        clock_step(1000000000LL / 50);
-+    }
-+
-+    st0 = floppy_recv();
-+    st1 = floppy_recv();
-+    floppy_recv();                  /* ST2 */
-+    floppy_recv();                  /* cylinder */
-+    floppy_recv();                  /* head */
-+    floppy_recv();                  /* sector */
-+    g_assert(get_irq(FLOPPY_IRQ));
-+    floppy_recv();                  /* sector size */
-+    g_assert(!get_irq(FLOPPY_IRQ));
-+
-+    g_assert_cmpint(st0 & ST0_DS_MASK, ==, drive);
-+    g_assert_cmpint(st0 & ST0_IC_MASK, ==, ST0_IC_ABNTERM);
-+    g_assert_cmpint(st1 & ST1_MA, ==, ST1_MA);
-+}
-+
- static void test_read_no_dma_1(void)
- {
-     uint8_t ret;
-@@ -656,6 +698,11 @@ static void test_cve_2021_3507(void)
-     qtest_quit(s);
- }
- 
-+#define MACHINE_ONE_DRIVE "-machine pc -device floppy,id=floppy0"
-+#define MACHINE_TWO_DRIVES \
-+    "-machine pc -device floppy,id=floppy0,unit=0" \
-+    " -device floppy,id=floppy1,unit=1"
-+
- /*
-  * Each test gets its own QEMU instance, so that none of them depends on the
-  * state another one left behind.  Without this, several tests only pass in
-@@ -667,35 +714,39 @@ static void test_cve_2021_3507(void)
- typedef struct {
-     const char *path;
-     void (*fn)(void);
-+    const char *args;
- } FDCTest;
- 
- static const FDCTest fdc_tests[] = {
--    { "/fdc/cmos",              test_cmos },
--    { "/fdc/no_media_on_start", test_no_media_on_start },
--    { "/fdc/read_without_media", test_read_without_media },
--    { "/fdc/media_change",      test_media_change },
--    { "/fdc/sense_interrupt",   test_sense_interrupt },
--    { "/fdc/relative_seek",     test_relative_seek },
--    { "/fdc/read_id",           test_read_id },
--    { "/fdc/read_id_no_media",  test_read_id_no_media },
--    { "/fdc/verify",            test_verify },
--    { "/fdc/media_insert",      test_media_insert },
--    { "/fdc/read_no_dma_1",     test_read_no_dma_1 },
--    { "/fdc/read_no_dma_18",    test_read_no_dma_18 },
--    { "/fdc/read_no_dma_19",    test_read_no_dma_19 },
--    { "/fdc/fuzz-registers",    fuzz_registers },
-+    { "/fdc/cmos",              test_cmos,              MACHINE_ONE_DRIVE },
-+    { "/fdc/no_media_on_start", test_no_media_on_start, MACHINE_ONE_DRIVE },
-+    { "/fdc/read_without_media", test_read_without_media, MACHINE_ONE_DRIVE },
-+    { "/fdc/media_change",      test_media_change,      MACHINE_ONE_DRIVE },
-+    { "/fdc/sense_interrupt",   test_sense_interrupt,   MACHINE_ONE_DRIVE },
-+    { "/fdc/relative_seek",     test_relative_seek,     MACHINE_ONE_DRIVE },
-+    { "/fdc/read_id",           test_read_id,           MACHINE_ONE_DRIVE },
-+    { "/fdc/read_id_no_media",  test_read_id_no_media,  MACHINE_ONE_DRIVE },
-+    { "/fdc/read_id_other_drive", test_read_id_other_drive,
-+                                                        MACHINE_TWO_DRIVES },
-+    { "/fdc/verify",            test_verify,            MACHINE_ONE_DRIVE },
-+    { "/fdc/media_insert",      test_media_insert,      MACHINE_ONE_DRIVE },
-+    { "/fdc/read_no_dma_1",     test_read_no_dma_1,     MACHINE_ONE_DRIVE },
-+    { "/fdc/read_no_dma_18",    test_read_no_dma_18,    MACHINE_ONE_DRIVE },
-+    { "/fdc/read_no_dma_19",    test_read_no_dma_19,    MACHINE_ONE_DRIVE },
-+    { "/fdc/fuzz-registers",    fuzz_registers,         MACHINE_ONE_DRIVE },
- };
- 
- static void run_isolated(const void *data)
- {
-     const FDCTest *test = data;
- 
-+    /* Every command line in fdc_tests[] names the pc machine */
-     if (!qtest_has_machine("pc")) {
-         g_test_skip("Machine 'pc' is not available");
-         return;
-     }
- 
--    qtest_start("-machine pc -device floppy,id=floppy0");
-+    qtest_start(test->args);
-     qtest_irq_intercept_in(global_qtest, "ioapic");
- 
-     test->fn();
+Patch 3 adds a test case that keeps d00567f7fb ("hw/block/fdc: select
+the drive named by the READ ID command") from being lost again -- with
+one drive, answering for the wrong one cannot be told from answering
+for the right one.  It needs a machine with two drives, which is what
+the table's args field is for.
+
+Measured on this series:
+
+  * every test case passes on its own; on master three of them fail
+  * the suite passes with the registration order reversed; on master it
+    aborts in send_seek()
+  * removing SET_CUR_DRV() from fdctrl_handle_readid() again turns
+    exactly one test case red -- the new one -- and leaves the other
+    sixteen green
+  * each of the three commits builds and passes on its own
+
+The price is wall-clock time: the fifteen test cases in the table now
+start an instance each instead of sharing one, which takes the suite
+from 0.78s to 2.8s.  The qtest timeout is 60s.
+
+The pattern is not new here.  Of the 195 files in tests/qtest, 57
+register their test cases with qtest_add_data_func() and none uses glib
+fixtures; boot-serial-test.c is the closest model, with a table of test
+definitions and a shared runner that starts one instance per entry.  72
+files still include libqtest-single.h, which is why the test functions
+keep reaching their instance through global_qtest instead of carrying a
+QTestState around -- that would have touched every one of them.
+
+Christian Quante (3):
+  tests/qtest/fdc-test: give each test case its own QEMU instance
+  tests/qtest/fdc-test: skip test cases when the 'pc' machine is missing
+  tests/qtest/fdc-test: check that READ ID answers for the drive it
+    names
+
+ tests/qtest/fdc-test.c | 127 ++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 107 insertions(+), 20 deletions(-)
+
+
+base-commit: eea8fe61b8be8f3016e522e6af24924a0266ca95
 -- 
 2.53.0
 
