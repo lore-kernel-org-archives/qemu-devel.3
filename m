@@ -4,89 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8762C5DF8C
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 19:45:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BD74C5DF97
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 20:16:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxrdB-0001vk-BB; Sat, 22 Aug 2026 15:43:53 -0400
+	id 1wxs88-0002WQ-GR; Sat, 22 Aug 2026 16:15:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
- id 1wxrd9-0001vR-EE
- for qemu-devel@nongnu.org; Sat, 22 Aug 2026 15:43:51 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wxs84-0002WI-Bc
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 16:15:48 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
- id 1wxrd7-000773-CR
- for qemu-devel@nongnu.org; Sat, 22 Aug 2026 15:43:51 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2d0407aedd6so23852575ad.0
- for <qemu-devel@nongnu.org>; Sat, 22 Aug 2026 12:43:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wxs82-0004aJ-Hy
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 16:15:47 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-c197eaaab00so347699366b.0
+ for <qemu-devel@nongnu.org>; Sat, 22 Aug 2026 13:15:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787429743; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ZnP958GrBBaa8C83ctX8aRKZIgG5vkH0bEgJ2bBgwxPsnfYdVlL3duIMT/1NpWq1yo
+ faibGGQeT/VJcjhkmzPAHQdRGxF8K6HHWPpm5KG0vifeTBCram4I6M7SlPkra3c4qLMt
+ 0NXYrBoy6OVADF4cIB2aaHN9MJndKE56fAgInrim3Z5dvZRdsLkVbqYhUPJK2cMNCerM
+ pZJs3efTkApTu1LcBNz69v1hJq3D20F+PF3+vJpYC5GINzfJYKUPdX99wYpiDbkr534W
+ cAc/eSDn7q4YfMJDg7cCcxoguDsoPVXenRnyNKHb48SBBcP9wnkXuhm8n4qAZRp4ZC3P
+ 63mg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=tXfslKLhvBWZ2ZSDWUgApc3F6sNN5bHnqfFqebD475w=;
+ fh=oR6KT4T9R4DzEe393lAnUFWLAI2XD1MXqDS3E+1BJZc=;
+ b=o1nGW0ePA9w0zPlU1nYFsHQq1N+1O6HA2IHUOemM3EV4hf0+JjZZxsZcQy0D4t7neh
+ +ZPRoX8TssAx6MdNsavaAw7oEeGBo9KC4Houc1EwLHNcSviF5A60km5N81Aobcfnsdlm
+ kFAOv5wkhjMf+PCONJ0QW4qfdUZabEnDXvGGpVx0kNrU+Br6SQiAne30r+jll4boHi9w
+ LO+OSiZeHpM2OrJbxjADsRSnQT7vIOMylBe7aCMxUP+1jKDIT5sjrq3kba2/h0QkitKU
+ 0SQ6pHPlmMYlrE5gMTviD37hdjl5AUXuI1rggo0uS7FZjf9GR/3NdqDVxmuFSUr5NijG
+ 4O9w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787427828; x=1788032628; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=7YbGtFyJghBds0X81b0zsMRETgJDjhhcMH3+PLcidE8=;
- b=DvvBOnrk9Vk3O09nZtkL4hqS4N04cdl+T69gY+AuHyJJt6J1ZFwqPfNyM3/cJKfSOv
- z4GSxPpNZPKhzkMaV90SaA8bLVMZ15YoqDDjoRYVQFkFhe4r3rd/eEg4/lDA0KdeLg14
- VvGoXa4rA1H+85AifoiT7liWsvi/VkrFCdDE9dTnEXOuBrt+Y1kzZ1+Lt72Gh4rcsJHd
- fXJVQDEzAoGHRg9QY8HcORMt3mJegCDyYyI/nH2GIVj2FhznjCAgbpx4gfKw0cBcyB3y
- d0mXRX2XDTOjZIhtRo21xCuYmTslhCE2RUjfTgzgncRPlNwwdF2igK0HkrVuoCgm4jW+
- 6kmA==
+ d=gmail.com; s=20251104; t=1787429743; x=1788034543; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=tXfslKLhvBWZ2ZSDWUgApc3F6sNN5bHnqfFqebD475w=;
+ b=WPkXYr6jtVw330+TV5a94dfiyI/Mt62WSfv+J9RYyNpF2EK7yy7VToB2ryeIMsrWz6
+ KG1si30aaCOujU0QaWhnjAeQV9xaLLNY2fEaW3pl/4H/t6bNLwCyIlo9xX3IEH8xT1ZK
+ Ej6wdleV5BEZDS0N7D8Pfy8Buv1Bnzh5x/R9CgUPCDGdfEasevPf/ZcOMA25OMctu7Uw
+ C0UCz60FAcYxihf81LOQdAwohrdnFU6cz8d9Mk9Isz3sDLpXW6NOeLeiJYQRl3u2Zdz0
+ tMg6qaUIO4zhoPly8RKGNSYOp+W3uO4cw5vB0w6chdVrVf/1150MWNVIzu+EYf285HPo
+ RWmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787427828; x=1788032628;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=7YbGtFyJghBds0X81b0zsMRETgJDjhhcMH3+PLcidE8=;
- b=kCksEyx+1pu97a0JHJ9nKw04bDdB4XMd6evEjE3o08EQ+qvIHjnXClUA2fdC7Mdc62
- 5Va2oIW3PFNesi+y9TDCw71gOCmC0Xdpy4YYAFddNQch+6KYHJS6C1GVpefqJwDWRL/B
- kUOzQpdw0csILVh7R9x0GrEkEjh1rVzXb0CPagQyfbzVnmHpqSuGEHodiAOgCwh0SzY9
- bs2+4xWgRpxdakSRmc2MoPXwvNPl4ld/1oScEwReoa9t1skDdYLyjD2zbMuOdaFtRJhQ
- EW6qHIAiFSpNVzj7IZ1M2LbgqcBnqSm0sRT2lr5TyDACxiBOnnKNqlEX2jSElDyA7/L3
- v/3g==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrOtXxlUkli/mAxnimSDQz8f+eGVucnAq21sjpJFEJHkyYjaY/RC00896s3+2n2hW1GSnoiEWzbSngC@nongnu.org
-X-Gm-Message-State: AFuF++nzW+4yleSqf8ReUSVzIdoBaIQb+JJDhgzNYYlvMnATyzYxL5nA
- EoRJ0piI0YSxPAYn+VsJ0eRba2Eod9E+RNTrtQd9qkCjGcDynUYu91ee
-X-Gm-Gg: AR+sD131d+DqL98W/Dd32jLEm+YnOXvrRafBLPLLT7MGI9cIj5gub5qXO3yM2RykN2X
- /z9uOU8j8wjFhU7orua5slnt5c4rvIF6cDo2ORRTD84XV+bzPNJxKEUu9ZYoaUber6StC6Ht2lc
- b+qkIxa23iZU9zRkdRaogxZ5mihWR8pt6THJdlX4TQTPP6Mhglm3ycO7sgx/Nzdi096ZnboLa3b
- zrMRADEQEDlZMapRWkyVclGYUMuwqeaIgNLNDxC9DeCbZh6OT2jMs+U5q2mpbOzHta3Xz4/IQzO
- STOjG/l+B/apLVT2xsNKq7cB+yG7bSThq2dCvk0rrEs1AnvEgWYtLihmTiVvXvIdYHUQ1CyGeXy
- rn7jbajxD8TqqnzlciZKknlVal2qGiQJ4RLe0A8r69HSFLQwVqQg1JgaCPK8Shle0x5cKlSr+so
- jUFUlxLHLr+kSX1MdB8E3kGMEEHZVXknjV8wTfIWwfBrC/OXFRI1MFWywoPo6TYliarw8cw1WKb
- o8Xv6Isi4wdTd/xvzkSeLN7+zWEcVUPk50Zo0bGEul6Yrb0Po1AbxIpFKP92Q1THg==
-X-Received: by 2002:a17:902:cf0e:b0:2c9:aae1:a61a with SMTP id
- d9443c01a7336-2d670dd98d6mr139833495ad.14.1787427827929; 
- Sat, 22 Aug 2026 12:43:47 -0700 (PDT)
-Received: from visitorckw-work01.c.googlers.com.com
- (202.176.229.35.bc.googleusercontent.com. [35.229.176.202])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d676895799sm5892715ad.38.2026.08.22.12.43.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 22 Aug 2026 12:43:47 -0700 (PDT)
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
-To: pierrick.bouvier@oss.qualcomm.com, almer@dabbelt.com,
- alistair.francis@wdc.com, pbonzini@redhat.com, marcandre.lureau@redhat.com,
- farosas@suse.de, lvivier@redhat.com
-Cc: liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- wxchen0913@gmail.com, jserv@ccns.ncku.edu.tw, marscheng@google.com,
- eleanor15x@gmail.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Kuan-Wei Chiu <visitorckw@gmail.com>
-Subject: [PATCH v4 3/7] hw/riscv: Add Sophgo CV1800B SoC support
-Date: Sat, 22 Aug 2026 19:43:10 +0000
-Message-ID: <20260822194315.2550260-4-visitorckw@gmail.com>
-X-Mailer: git-send-email 2.55.0.766.g2966f0265a-goog
-In-Reply-To: <20260822194315.2550260-1-visitorckw@gmail.com>
-References: <20260822194315.2550260-1-visitorckw@gmail.com>
+ d=1e100.net; s=20251104; t=1787429743; x=1788034543;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=tXfslKLhvBWZ2ZSDWUgApc3F6sNN5bHnqfFqebD475w=;
+ b=FDAmu2NaY1ZsXrMsgJk8NZBzWSv+LzWxJXvDMre2tfwRDu3jbjKA6Fa3XRdZrKjuzJ
+ dwOgMMoKV6ji8qUBaOuytTCa8U5RWBseolx92+XZitpmZLX6bgALED4Hs8K+OWj37ZfL
+ GmjvoFsoEywvQEAVBcRgWDszNKBIQKfL8svmGxCHyjSfMs1YDlVS8VdIJXwKewa9yUrW
+ xGMyHy9GzWETcELC/KIVP2Ub3ZBxnuFYzigoeQgZxsRe9VSyb+3g9jHscKQFvc3QOyWZ
+ FXiCR4eOIfweqOdD+teu90eDfsUmvuGXnRo4QRsJESoiaXs2tr5U3TiNfni11OZyvBhj
+ 2dFA==
+X-Gm-Message-State: AFuF++k/W+HF6zPQvbNT7Ko4meGCKrlj6RHAJMs0zlYTL9uDSmc7d1cN
+ kFN7utDtFIcO6zpfu8sEMN6q1LsVjDCYeAZMncvdphrCbwaQbEYrdzO06ARsb2e4eAsFD1fjelc
+ PuXqNrHqwtGuJ4OGIUFC9yd7w/CJV/Tw=
+X-Gm-Gg: AR+sD13hjetkdRseCACIvXRe/QrAdYCq9e7sW1UqZdauDPPLkckWuoRCiwpPjxbRxdZ
+ B04865HTRbpraOCqjyoQRmNI3qPpHeCbmW7TCDUf1PLZ14xUcn80DDWuk8Cch3VHVx5a49C/i5B
+ tILWdmE1jsrK7k58OBgWnR1B0Rs33UJGOEPVGheX04cbHABol1uiGWncXftPfNS9FNZhcQRrYWp
+ KrIOyef20oybcQ2FFbNPqL5rw3qESf5vgLVI/h0kcfpI8GxJHGpWqfSsEBdabitheeTYxvdFyvR
+ 41vlc2UQwmMDoN3X9y06jyf1BTT6574LSyqHTXm3WxUR
+X-Received: by 2002:a17:906:9f8b:b0:c1f:c061:569a with SMTP id
+ a640c23a62f3a-c246a4c6d63mr1470929566b.7.1787429743053; Sat, 22 Aug 2026
+ 13:15:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=visitorckw@gmail.com; helo=mail-pl1-x631.google.com
+References: <20260814174830.1691540-1-zhangckid@gmail.com>
+ <20260814174830.1691540-7-zhangckid@gmail.com>
+ <20260819191217.GE222512@fedora>
+In-Reply-To: <20260819191217.GE222512@fedora>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Sun, 23 Aug 2026 04:14:41 +0800
+X-Gm-Features: AcwNN1V7C2KNx885fi8WWovGVjM80FYN74u_7nhkcXFCcyIv8ectkqhNDGEvjsg
+Message-ID: <CAK3tnvJYgzO32QYD1p8DhuYDkeeFAn9mpk+RQbikBi=1WAmeNQ@mail.gmail.com>
+Subject: Re: [PATCH V12 06/15] monitor: track IOThread users with QOM paths
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Jason Wang <jasowangio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,297 +122,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the Sophgo CV1800B SoC, which is the heart of the Milk-V Duo board.
+On Thu, Aug 20, 2026 at 3:12=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat.co=
+m> wrote:
+>
+> On Sat, Aug 15, 2026 at 01:48:20AM +0800, Zhang Chen wrote:
+> > @@ -668,6 +668,17 @@ void monitor_cleanup(void)
+> >          qemu_mutex_unlock(&monitor_lock);
+> >          monitor_flush(mon);
+> >          qemu_mutex_lock(&monitor_lock);
+> > +
+> > +        if (monitor_requires_iothread(mon)) {
+> > +            g_autofree char *path =3D object_get_canonical_path(OBJECT=
+(mon));
+> > +            const IOThreadHolder io_holder =3D {
+> > +                .type =3D IO_THREAD_HOLDER_KIND_QOM_OBJECT,
+> > +                .u.qom_object.qom_path =3D path,
+> > +            };
+> > +
+> > +            iothread_unref_and_put_aio_context(mon_iothread, &io_holde=
+r);
+> > +            mon->ctx =3D NULL;
+> > +        }
+>
+> Is it possible to move this to monitor_finalize() so it's guaranteed to
+> run when a Monitor object is deleted with object_unparent()? That would
+> avoid the code duplication in monitor_qmp_prepare_delete().
+>
+> One complication is that object_get_canonical_path() may not work inside
+> monitor_finalize(), so it may be necessary to store the IOThreadHolder
+> or at least the qom_path in Monitor.
 
-The SoC features a T-Head C906 CPU along with integrated PLIC, CLINT,
-and dw8250 UART. The memory map and interrupts are configured according
-to the CV1800B datasheet. [1]
+Yes. Since the canonical path is no longer available in monitor_finalize(),
+I=E2=80=99ll move the cleanup to the Monitor=E2=80=99s ObjectClass::unparen=
+t callback instead.
+It runs before the object is detached, avoids storing the path, and removes=
+ the
+duplication in monitor_cleanup() and monitor_qmp_prepare_delete().
 
-Several peripheral blocks are included as unimplemented devices to
-ensure that drivers can probe successfully without causing errors
-during boot.
-
-Link: https://github.com/milkv-duo/duo-files/tree/main/duo/datasheet [1]
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
----
- hw/riscv/Kconfig           |   8 ++
- hw/riscv/cv1800b.c         | 174 +++++++++++++++++++++++++++++++++++++
- hw/riscv/meson.build       |   2 +
- include/hw/riscv/cv1800b.h |  56 ++++++++++++
- 4 files changed, 240 insertions(+)
- create mode 100644 hw/riscv/cv1800b.c
- create mode 100644 include/hw/riscv/cv1800b.h
-
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index de37c08cae..5ab38f228f 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -162,3 +162,11 @@ config K230
-     select SERIAL_MM
-     select UNIMP
-     select K230_WDT
-+
-+config SOPHGO_CV1800B
-+    bool
-+    depends on RISCV64
-+    select RISCV_ACLINT
-+    select SIFIVE_PLIC
-+    select SOPHGO_CV1800B_CLK
-+    select DW8250
-diff --git a/hw/riscv/cv1800b.c b/hw/riscv/cv1800b.c
-new file mode 100644
-index 0000000000..32e46a4639
---- /dev/null
-+++ b/hw/riscv/cv1800b.c
-@@ -0,0 +1,174 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Sophgo CV1800B SoC
-+ *
-+ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "hw/riscv/cv1800b.h"
-+#include "hw/core/qdev-properties.h"
-+#include "target/riscv/cpu-qom.h"
-+#include "system/system.h"
-+#include "hw/intc/riscv_aclint.h"
-+#include "system/address-spaces.h"
-+#include "hw/intc/sifive_plic.h"
-+#include "target/riscv/cpu.h"
-+#include "hw/riscv/boot.h"
-+#include "hw/sd/sdhci.h"
-+#include "hw/misc/unimp.h"
-+
-+const MemMapEntry cv1800b_memmap[] = {
-+    [CV1800B_DEV_TOP_MISC]     = { 0x03000000,      0x1000 },
-+    [CV1800B_DEV_PINMUX]       = { 0x03001000,      0x1000 },
-+    [CV1800B_DEV_CLK]          = { 0x03002000,      0x1000 },
-+    [CV1800B_DEV_RST]          = { 0x03003000,      0x1000 },
-+    [CV1800B_DEV_WDT]          = { 0x03010000,      0x1000 },
-+    [CV1800B_DEV_GPIO]         = { 0x03020000,      0x4000 },
-+    [CV1800B_DEV_UART0]        = { 0x04140000,     0x10000 },
-+    [CV1800B_DEV_SD0]          = { 0x04310000,     0x10000 },
-+    [CV1800B_DEV_ROM]          = { 0x04400000,     0x10000 },
-+    [CV1800B_DEV_RTC_GPIO]     = { 0x05021000,      0x1000 },
-+    [CV1800B_DEV_RTC_IO]       = { 0x05027000,      0x1000 },
-+    [CV1800B_DEV_PLIC]         = { 0x70000000,   0x4000000 },
-+    [CV1800B_DEV_CLINT]        = { 0x74000000,     0x10000 },
-+    [CV1800B_DEV_DRAM]         = { 0x80000000,         0x0 },
-+};
-+
-+static void cv1800b_soc_instance_init(Object *obj)
-+{
-+    CV1800BSoCState *s = CV1800B_SOC(obj);
-+
-+    object_initialize_child(obj, "cpus", &s->cpus, TYPE_RISCV_HART_ARRAY);
-+    qdev_prop_set_uint32(DEVICE(&s->cpus), "hartid-base", 0);
-+    qdev_prop_set_string(DEVICE(&s->cpus), "cpu-type", TYPE_RISCV_CPU_THEAD_C906);
-+    qdev_prop_set_uint64(DEVICE(&s->cpus), "resetvec",
-+                         cv1800b_memmap[CV1800B_DEV_ROM].base);
-+
-+    object_initialize_child(obj, "clk", &s->clk, TYPE_CV1800B_CLK);
-+    object_initialize_child(obj, "uart", &s->uart, TYPE_DW8250);
-+    object_initialize_child(obj, "sdhci", &s->sdhci, TYPE_SYSBUS_SDHCI);
-+}
-+
-+static void cv1800b_soc_realize(DeviceState *dev, Error **errp)
-+{
-+    CV1800BSoCState *s = CV1800B_SOC(dev);
-+    MachineState *ms = MACHINE(qdev_get_machine());
-+    uint32_t num_harts = ms->smp.cpus;
-+    MemoryRegion *system_memory = get_system_memory();
-+    char *plic_hart_config;
-+
-+    qdev_prop_set_uint32(DEVICE(&s->cpus), "num-harts", num_harts);
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->cpus), errp)) {
-+        return;
-+    }
-+
-+    memory_region_init_rom(&s->rom, OBJECT(dev), "cv1800b.rom",
-+                           cv1800b_memmap[CV1800B_DEV_ROM].size, &error_fatal);
-+    memory_region_add_subregion(system_memory,
-+                                cv1800b_memmap[CV1800B_DEV_ROM].base, &s->rom);
-+
-+    riscv_aclint_swi_create(cv1800b_memmap[CV1800B_DEV_CLINT].base,
-+                            0, num_harts, false);
-+    riscv_aclint_mtimer_create(cv1800b_memmap[CV1800B_DEV_CLINT].base +
-+                               RISCV_ACLINT_SWI_SIZE,
-+                               RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
-+                               0, num_harts, RISCV_ACLINT_DEFAULT_MTIMECMP,
-+                               RISCV_ACLINT_DEFAULT_MTIME,
-+                               RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, true);
-+
-+    plic_hart_config = riscv_plic_hart_config_string(num_harts);
-+    s->plic = sifive_plic_create(
-+        cv1800b_memmap[CV1800B_DEV_PLIC].base,
-+        plic_hart_config,
-+        num_harts,
-+        0,
-+        CV1800B_PLIC_NUM_SOURCES,
-+        CV1800B_PLIC_NUM_PRIORITIES,
-+        0x0,
-+        0x1000,
-+        0x2000,
-+        0x80,
-+        0x200000,
-+        0x1000,
-+        cv1800b_memmap[CV1800B_DEV_PLIC].size);
-+
-+    g_free(plic_hart_config);
-+
-+    qdev_prop_set_uint8(DEVICE(&s->uart), "regshift", 2);
-+    qdev_prop_set_chr(DEVICE(&s->uart), "chardev", serial_hd(0));
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart), 0, cv1800b_memmap[CV1800B_DEV_UART0].base);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart), 0,
-+                    qdev_get_gpio_in(DEVICE(s->plic), CV1800B_UART0_IRQ));
-+
-+    qdev_prop_set_uint8(DEVICE(&s->sdhci), "sd-spec-version", 3);
-+    qdev_prop_set_uint64(DEVICE(&s->sdhci), "capareg", 0x056900b9);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdhci), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->sdhci), 0, cv1800b_memmap[CV1800B_DEV_SD0].base);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->sdhci), 0,
-+                       qdev_get_gpio_in(DEVICE(s->plic), CV1800B_SD0_IRQ));
-+
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->clk), errp)) {
-+        return;
-+    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->clk), 0,
-+                    cv1800b_memmap[CV1800B_DEV_CLK].base);
-+
-+    create_unimplemented_device("cv1800b.top_misc",
-+                                cv1800b_memmap[CV1800B_DEV_TOP_MISC].base,
-+                                cv1800b_memmap[CV1800B_DEV_TOP_MISC].size);
-+
-+    create_unimplemented_device("cv1800b.pinmux",
-+                                cv1800b_memmap[CV1800B_DEV_PINMUX].base,
-+                                cv1800b_memmap[CV1800B_DEV_PINMUX].size);
-+
-+    create_unimplemented_device("cv1800b.rst",
-+                                cv1800b_memmap[CV1800B_DEV_RST].base,
-+                                cv1800b_memmap[CV1800B_DEV_RST].size);
-+
-+    create_unimplemented_device("cv1800b.wdt",
-+                                cv1800b_memmap[CV1800B_DEV_WDT].base,
-+                                cv1800b_memmap[CV1800B_DEV_WDT].size);
-+
-+    create_unimplemented_device("cv1800b.gpio0_3",
-+                                cv1800b_memmap[CV1800B_DEV_GPIO].base,
-+                                cv1800b_memmap[CV1800B_DEV_GPIO].size);
-+
-+    create_unimplemented_device("cv1800b.rtc_gpio",
-+                                cv1800b_memmap[CV1800B_DEV_RTC_GPIO].base,
-+                                cv1800b_memmap[CV1800B_DEV_RTC_GPIO].size);
-+
-+    create_unimplemented_device("cv1800b.rtc_io",
-+                                cv1800b_memmap[CV1800B_DEV_RTC_IO].base,
-+                                cv1800b_memmap[CV1800B_DEV_RTC_IO].size);
-+}
-+
-+static void cv1800b_soc_class_init(ObjectClass *oc, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+
-+    dc->realize = cv1800b_soc_realize;
-+    dc->user_creatable = false;
-+}
-+
-+static const TypeInfo cv1800b_soc_type_info = {
-+    .name = TYPE_CV1800B_SOC,
-+    .parent = TYPE_DEVICE,
-+    .instance_size = sizeof(CV1800BSoCState),
-+    .instance_init = cv1800b_soc_instance_init,
-+    .class_init = cv1800b_soc_class_init,
-+};
-+
-+static void cv1800b_soc_register_types(void)
-+{
-+    type_register_static(&cv1800b_soc_type_info);
-+}
-+
-+type_init(cv1800b_soc_register_types)
-diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-index 0d82ceacc4..b278b443b6 100644
---- a/hw/riscv/meson.build
-+++ b/hw/riscv/meson.build
-@@ -21,4 +21,6 @@ riscv_ss.add(when: 'CONFIG_RISCV_MIPS_CPS', if_true: files('cps.c'))
- riscv_ss.add(when: 'CONFIG_MIPS_BOSTON_AIA', if_true: files('boston-aia.c'))
- riscv_ss.add(when: 'CONFIG_K230', if_true: files('k230.c'))
- 
-+riscv_ss.add(when: 'CONFIG_SOPHGO_CV1800B', if_true: files('cv1800b.c'))
-+
- hw_arch += {'riscv': riscv_ss}
-diff --git a/include/hw/riscv/cv1800b.h b/include/hw/riscv/cv1800b.h
-new file mode 100644
-index 0000000000..bde5eff96b
---- /dev/null
-+++ b/include/hw/riscv/cv1800b.h
-@@ -0,0 +1,56 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Sophgo CV1800B SoC
-+ *
-+ * Copyright (c) 2026 Kuan-Wei Chiu <visitorckw@gmail.com>
-+ */
-+
-+#ifndef HW_RISCV_CV1800B_H
-+#define HW_RISCV_CV1800B_H
-+
-+#include "hw/core/boards.h"
-+#include "hw/riscv/riscv_hart.h"
-+#include "hw/misc/cv1800b_clk.h"
-+#include "hw/char/dw8250.h"
-+#include "hw/sd/sdhci.h"
-+
-+#define TYPE_CV1800B_SOC "cv1800b-soc"
-+OBJECT_DECLARE_SIMPLE_TYPE(CV1800BSoCState, CV1800B_SOC)
-+
-+struct CV1800BSoCState {
-+    DeviceState parent_obj;
-+
-+    RISCVHartArrayState cpus;
-+    MemoryRegion rom;
-+    DeviceState *plic;
-+    CV1800BClkState clk;
-+    DW8250State uart;
-+    SDHCIState sdhci;
-+};
-+
-+#define CV1800B_PLIC_NUM_SOURCES 136
-+#define CV1800B_PLIC_NUM_PRIORITIES 31
-+
-+#define CV1800B_UART0_IRQ 44
-+#define CV1800B_SD0_IRQ   36
-+
-+enum {
-+    CV1800B_DEV_TOP_MISC,
-+    CV1800B_DEV_PINMUX,
-+    CV1800B_DEV_CLK,
-+    CV1800B_DEV_RST,
-+    CV1800B_DEV_WDT,
-+    CV1800B_DEV_GPIO,
-+    CV1800B_DEV_UART0,
-+    CV1800B_DEV_SD0,
-+    CV1800B_DEV_ROM,
-+    CV1800B_DEV_RTC_GPIO,
-+    CV1800B_DEV_RTC_IO,
-+    CV1800B_DEV_PLIC,
-+    CV1800B_DEV_CLINT,
-+    CV1800B_DEV_DRAM,
-+};
-+
-+extern const MemMapEntry cv1800b_memmap[];
-+
-+#endif
--- 
-2.55.0.766.g2966f0265a-goog
-
+Thanks
+Chen
 
