@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ED9BC5DF97
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 12:28:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC31DC5B572
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 12:33:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxkpT-00044r-MT; Sat, 22 Aug 2026 08:28:07 -0400
+	id 1wxktt-0005BN-NF; Sat, 22 Aug 2026 08:32:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wxkpS-00044f-0H
- for qemu-devel@nongnu.org; Sat, 22 Aug 2026 08:28:06 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ id 1wxktr-0005BB-VE
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 08:32:39 -0400
+Received: from mail-japanwestazon11022083.outbound.protection.outlook.com
+ ([40.107.75.83] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
- id 1wxkpQ-00044m-9R
- for qemu-devel@nongnu.org; Sat, 22 Aug 2026 08:28:05 -0400
+ id 1wxktp-0005Zf-VU
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 08:32:39 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=X9hSAFiN9GHgzfT87D7uVaASiH4FxboNXGWyw4Afd5bMSVV9hCUE/jOG8IcICGCIQLguNTcH1LnDIZpO871/RkXBJFq/xabcQajfQQFbMPFYMHxlgh01X2rF9E4eKjPuwL5WaM8yfIJZgujJ1PxWxGhDk3xDX4RoertM9yy971kU9pfQ0X7uElLPSH8JguX4tekIw1qNyKcopF3yiZe5EqNfpTqs0HnO3oLRgjXBxD/B5wZ+G6XrLEHUgtXCNem8WzGPSR2hrndsVDED6v1mOnK70M+Nfp7O81xr8puy+bWPvrYXdO1qQptp+sXd/7VbyBRlO+ZlKIZ3Uy536EXGFA==
+ b=a3rcnXCqXimcKn1mFdckhLHgMqyBlAH1XbMBWEl9PvThsRCwBE58vql44qGChhqK/p666ALWmZ58H04IUmVCL18fdtTPf6Ma3SngdFY7oBTAl3WuQjz26s6FKAdlVIb+LPQCzazCdmIcB2CoNnl9BgdVl2V/HZ4gV4tpV00PfrUx+AxTCs68D1rIZnMIrsI5XTRNESmezZdhAVtqLaLPp9EkI3GQj1b0dGsTtg9bqyiVaiNnoQ6QycdVSncEjImRjkHZ9nDks0WnMmihllgSKyU0LZV+4Zfif9Q7mp51htvjAIo7WfTUNwaIuCTYTriafd6p/jq71ysXuz2rO2AL0w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=V7/5W/LESB1bmfGIbvkQbJ7SWfJ9Fxco93CXbFx5pvc=;
- b=LwF7aHffYMZ3eY8+eHf4xGUmg4rJt8JYB2L7uoCjOBWdE2UIy0YiM5+YDdyj+/To2AorCfsIInh2OIyfXxkFDd5QjM3zfpUDFu2JADxOzpe0BnOEb3uY3OvYcvvUxQZu5vWvgtw21ff+7xYT4Jyh5CEp815qOHzTRhWp7lW3aXSEKSsEuuQTXpG2B3hmljI28FH4b6FffeIF4eaOPHfXWEn40CUjyLOj2QaTvj/5V5ILVwntsYcwW8zM2Bb3Q3FJjHpJEC7wOIJ2fhhrSW6ADXBkRPeqIhQxrllRb0d6nMArO8LYpJPlBEEDOs8u1Hj48DiIehDzW76i0UdUTwNA1g==
+ bh=uIbjOkTlEDUMUTXYO7roK3deraVIS6RYpiNnWXcvMec=;
+ b=Aikr8qLzMOieKC5UNOohZfGPakljAdkmurCuokmqhwT/ko0jOG9Zjcp6R/g2uBZEHj8ifprFu//0InN59DzVVNBjMF/CEbUjtx5bYk/YJ/MEas13CjWceeBSjtC8a/xij8pET/knQJZ/QoO5ifb1Mvqq/fcf7ZEwpSP4lsMOT4z9DESeY4VydW9X1gfdG00MJIemuTSPsU+IsudirFgWDWP9EfuJ4bBC0V8zCJ3gNTl1TzQRRKQ2PCpKF2FtbaLCCviqgDKiIFMR9tpuFNFXMLhdCpgLZJhw7OQZOZrz7fN/XkqFJwdEGIy3saZLRNHq7wG6BYZVe6IxnWRC+nFtng==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=processmission.com; dmarc=pass action=none
  header.from=processmission.com; dkim=pass header.d=processmission.com;
@@ -35,32 +35,28 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=V7/5W/LESB1bmfGIbvkQbJ7SWfJ9Fxco93CXbFx5pvc=;
- b=gma2SafPqYA4VBZWCLWsGA9188XQUWiMU8UdufjkzZcfikvYKbAFYL8zfB9e8XXxM34HYiE1gYpIPcObolmLWheVfkVzrhOm0zFwPVeu3VeSMf30+mGY/9oLTBnH/o+sYMeikyoh545Wvv9HJCIByAZ0nrxxwMewL0f2+CB/kZQUDoRqtg/hn/S/auiiU+qBqtkGXc/SNM97i+AWrg9Yv59XPARr4SjiWxvOQzZ88fvbzi+8rscvo3lGc6Q1QCZmkf/SG30kOOEARibVHefJfJAmSUoXIZoLW0U8jEOk+6tcjjjFCLCzJi59R8z13YazdYcAy/rrMlRcrUxSksCD3A==
+ bh=uIbjOkTlEDUMUTXYO7roK3deraVIS6RYpiNnWXcvMec=;
+ b=fsNXuzsd+r2mn6Q/9T/6MhHLrQKdDlWvi9EZ0LWvFIg5FgN4et5iwIoZUuTXWTpgan3RqgE8cug5sSVGYJdnRW7odxpy9SJoFn6VSOzDYjjLhAL/QnZs9COaL5ddXP1EliBlNDZBiTlLTdgpLd2lejVAbxlJxjmRJEg1l61TdaPoYZn8/o01F2LAXYpEDVWTBElH5k8xCwrzqc9wHCx8wGNrBm4yAz1bbZZpsbM17fiWdIBycNuN7ati5aMeifgATT8YNz20kaBCMgeN3zDN/k+yWj54ZC2K7bkXF/O2EunwM4d9kL2Ijq0Pgra9cY/gva2R9DBfXqwK1re2GD/xgA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=processmission.com;
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
  by TYZPR02MB6504.apcprd02.prod.outlook.com (2603:1096:400:363::6) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.11; Sat, 22 Aug
- 2026 12:27:28 +0000
+ 2026 12:27:26 +0000
 Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
  ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0339.010; Sat, 22 Aug 2026
- 12:27:28 +0000
+ 12:27:26 +0000
 From: Bin Meng <bin.meng@processmission.com>
 To: QEMU <qemu-devel@nongnu.org>
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@redhat.com>,
- Bin Meng <bmeng.cn@gmail.com>, Peter Xu <peterx@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH v2 1/1] system/physmem: Improve guest memory allocation
- failure error message
-Date: Sat, 22 Aug 2026 20:27:08 +0800
-Message-ID: <20260822122710.3731595-2-bin.meng@processmission.com>
+Subject: [PATCH v2 0/1] system/physmem: Improve guest memory allocation
+ failure diagnostics
+Date: Sat, 22 Aug 2026 20:27:07 +0800
+Message-ID: <20260822122710.3731595-1-bin.meng@processmission.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260822122710.3731595-1-bin.meng@processmission.com>
-References: <20260822122710.3731595-1-bin.meng@processmission.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ClientProxiedBy: TY4PR01CA0064.jpnprd01.prod.outlook.com
@@ -69,76 +65,76 @@ X-ClientProxiedBy: TY4PR01CA0064.jpnprd01.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYZPR02MB6504:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7749c11f-bc96-4e52-b61f-08df0048bb07
+X-MS-Office365-Filtering-Correlation-Id: 9f3b63c4-022d-4a2f-db1f-08df0048b9a7
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|23010399003|1800799024|366016|10067099003|56012099006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: Q+sUepdN9/O7D/IIwmx+L5o2GmcbCuSMLCFR3ul69O+iRjqeC/r2P6rjBKPeApf8+cdWluqPTYg2UOvGW4VH0xSBE6OKHfjxi2C2LlG3iSPTCt901dqbmQ3wgeebHbU9ecdiuxtHyv4Sv0zYZiSOm7f/v62y3wmz7y1gww73W6bk04RP+J2i8yBjKLHhRtFvxgw/eNxlW0s9kzhAZlGfHKLpE4Igyhp00ImQyinuOd7NcoZGJXiGvQ5KPB5eYeoGFZ7faFGzG+VLJvxQbxfMwovMKpKNDoYhEOd8o3LudmtVxdcCfJ1cnChFTMh/cbSiici6qiJIX+IaC68rYprfqhDI+CGgwJwSKrWB/Qom2oeCsUj2nq12PACeXvzSc6r8Srj1oh2UlyAb3RnsoDCWp4GbDsmcy492x2f+exuj0fU6hCkrg2gl46C2nwxAfrop46uUtbj1v0RUp7UAsb3y2JgPYV6jeOahTcvye2jzxjZk34spmV0Kvx383wxoJqnXDdXR6ScSPdfLCppsM/nSEfXHSxUa0aCSfGtyTO46ok22O1cJpznb0FuG86h5tiXw3tQxRB3EP+WsyCKO4m8/fzIhWm3kjsT9Uq1RcY67mnSiLPdXzejePP+hr+kXdwMs75nS1lSrvlS3wxxMWsDjenvgxmWuSIYYJc1fIiR95AU=
+ ARA:13230040|376014|23010399003|1800799024|366016|10067099003|56012099006|18002099003;
+X-Microsoft-Antispam-Message-Info: womlSFRVs8rCjIaauzdArws+tIUk37CuKzwQa2b/K0GENH9yIzikAI2EwOJhifdQnGIpKo+cYBXFNEEF2Fzhm9uaVAVyg83mJ+9B497wCJjjKzhTcHv57II+Y63er7OKhM8GPHAwR0RkVuRw3MRKiOcWFfixsUiCLXa5bl9R7vgpLe8Lxek4DIhzKERad8vqkCJMekCfym9cx8W+ww+/xW6xAsedSBBgRSOQ4PcgCfHzqiFHo12ZS7MAdvAFjlY3/FwK1eIKwMtnVwaEN8vFnRYskU7gMQgxJtnpJUQft9vp7RRu1/52oSdGzRa84EPIaRUP0WSdwHmDQZwgBCFSJxjPHfV3Q/IX0Yx8kF1RlznJfKCeqlGKnV5HAVsOBW8JfTJhSqQDHRW+/N8yVVlhlQXdbBe4W8jI2liKqmw2LygqGfxFFIVCgnCwY2z3S+mHx7JQl8btGI/bNTUebBmi9ADo1bWFPKt0q3/zi+Bz4J4kGovpXzrxUQn+aoo5vKTVM088Y+EahaVyhoDLY1dcHuqWn3V4Gu0Jaukxb0DjzlGpSdYbfKbjMUYsCL0KHfyrtIk1seKG4n/ywhF8YvE3ASMBoVRtkPtpSRmLngxdr1D1t0WHwmkEP5s6qFiFP9BPUC+plnknWRewocBohMrsK05rZ9FCkfbcdwDqC0fHJjA=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(10067099003)(56012099006)(22082099003)(18002099003);
+ SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(10067099003)(56012099006)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Sk5Pd1JJNlhuM2dTSHptRHhsYjQ2TnpBcVEzbjVUdW93Zi9LT3hQclBTdkxF?=
- =?utf-8?B?eEN1cktQVUFJUjJPOTN3dWZ3VnZGNnNkS0ZKaEpsdmVrQzlvYmhKKzlhZ2Nv?=
- =?utf-8?B?T2VmOWE2eXZNVjFsZEtFNXBRWUs1MTdoWXh3SytLOVhDRjBNVWV0YllQQW5i?=
- =?utf-8?B?bmZnTnEwZEMzRjZvd1ZIVFp0QVkvdVFOamZEY3gzK1IzUFlyK3BrSlZLSkQy?=
- =?utf-8?B?VnlTdmw1ekJjRmZkL2d3MFNZVFN3dGVKc0RvNkpXNC81ZFVPcEFOaTRSaXJD?=
- =?utf-8?B?cGU3bTBacTZrZ201TTJ5T0F0SUE4RzBPbmZ4d09UalhiRG5HWXVkVlNqekxt?=
- =?utf-8?B?S3ZhTVJ0R1VUZE9LTWNhOGxkeEEybXBFNURSbnNWUFZzYVJQYTVJM2RqMzhh?=
- =?utf-8?B?TkZWUjc3MDhGLzU1UWZUalZ5aEFhczBBQWsxNDVzdHlPdWJ3TERCWXBXQVZB?=
- =?utf-8?B?Q1poVnJIQUpyOWd4d0VzSGdUeWRjUi9GUHpjZGVwb24vZ0tobEtlVUVwYk5X?=
- =?utf-8?B?ajNVdzNPOW5hTnFFenFWdXJvQTRRMUJiZWc0ZllHVEFQY1prVHE1WmJ4Q29y?=
- =?utf-8?B?Q1JHUHhnSUEvZmlKbW5pVDNCZDNBTEJTZndqdkJqWU5rbkhoakVBYXh4UG9p?=
- =?utf-8?B?SXg2STljTkszYXhmRUxBV3NkbVhhQ0FTMWVBL2hIRG56K3djSStRVzNkRGpO?=
- =?utf-8?B?NGxhMmJSUkFSODNFL21XdDg3cDcxcHpXZm9pMmNkcXFBa1RKMjdSdjA1b3dF?=
- =?utf-8?B?VklYZ0lUM0RTSnRsMDFMV0dMZGE2RTV6Vm1DNHBuYTltRTNVUmpwOCs1amdV?=
- =?utf-8?B?S1daa1ptVXluMmdVcmdMUW5UTjlEVTd0ZVNOZVpwTDFaNHhEeXhIZUtFVW1m?=
- =?utf-8?B?ZXY4VlBHY1hlazE4NVU4VTlCZGZ2dWFrelQxQjg1UWpWUi9IcThXdHk3VkZI?=
- =?utf-8?B?RGl6VTg5bU9RY2JzK1lJQkVLZUhxKzN3RFhxU1hJR2o0QUVYNERVbktiTzhO?=
- =?utf-8?B?bzdyUE9jZXNrZmlqdFBteUROMGxHOFBaZjlNbWtVYjc0ME8vdVQxcGg5RG5I?=
- =?utf-8?B?bnhMck1NSzhlMXZCVzNSMURidVVkYWMreUlMMFlOOHhsMVMvNVdMQnRpcW5t?=
- =?utf-8?B?OFI1QjJPUUcvSFBXZTVSM2lpMEJ0eXhBakxnRkt4MFNSRTZkT0NRMXdmRm9X?=
- =?utf-8?B?UlMvc3l1VU5jejV4eldTaldtemh3Rk9Ra0hLeHo5aVcwVGVlNGZhTVVPdXJ5?=
- =?utf-8?B?K20xSmsvcU9pUk1KRStHMzlJRlVYZU84eTZ6aFRRanhqNk5wSzdsalJ5OGRQ?=
- =?utf-8?B?bTJ4cHNHTURUM3cwWitBYnZGTnRpSXRIWUJlcFZXTDZWT1ZKT3J4K016TnM5?=
- =?utf-8?B?NHlEWHdsaXp1M0k2UWpVRHRtZXRmc3lZSmx0NEttbXNvRkhmbmRUK3pTSlNV?=
- =?utf-8?B?YWtVU1dmVVoybTgwMUgxdi9HY1hVQmIyQ2NPSHVFMUUxUVRnVCsyNFBDMWlx?=
- =?utf-8?B?TVF1K2dwSnU5Z3k4cDR4WU93SGZvK0xQUFEwNlovclA0ZkRIczNUYVp4RUh0?=
- =?utf-8?B?Nm5lMFFYeVp1dXZQa0luRlZybmRzc2VjVzZtUGxsNmcycy9xSXhXdjlRNVZj?=
- =?utf-8?B?dlhodlhaVk8ybFBjOGs1WEtrL0oyZnM4MWFYLzRRcUdFTHZhcnNPem91OVNO?=
- =?utf-8?B?K3luYjZtZmJXNy8zS3FRYmJVOWwxMEFTY1N1WmJGaE9EcGNjVWJNRDlpY3FQ?=
- =?utf-8?B?bDBURHE1d2xPL0xDZzQreU95c3VMcEM2b2JZZWVzWVVlOXh6NkVHSCs3aGM1?=
- =?utf-8?B?SmttVm5TV3JRNXRYc3prd21uMStzTkRnc1l3SXZOOGsrbVNNdmNiWVc3eTY1?=
- =?utf-8?B?YUZ4QlVuYVFtbDBuNm5KTHcrTzJNU0R3a1ZWOXFXMHZ3NUZwWUZMaytta1pI?=
- =?utf-8?B?UnlXVlFJZ0lHcjZVNVJVL1VvVTg1Vm91UHIvVHFwWlZub2dqZDRqQmhYMmRv?=
- =?utf-8?B?blF5YWlaLzcvNnpKeUdHVEdiMHBCdFlBdTJPeDg5OHROcU50N3VqTTdNZUg5?=
- =?utf-8?B?dWFiSnBXdVJRam50TnJkOXF5aTFGaG5oS2lJREgrdVdidkRiR3pJT24yV0pk?=
- =?utf-8?B?cVIyTTdLN1NLbXpMMWxPN0labUFFOFdHWGZJQ2JBOVhKUzNMUnhrZWZKS1pW?=
- =?utf-8?B?RlV3RFVHa2kyekl2eWRyY1VRd1FXMjBBREJpeDZwdElReDF4YmtOdHhrdE5U?=
- =?utf-8?B?RU8vMjNlcmIyaFBqU2N3S3VyT0YrSDhtRTJnaWFwSHJvVGhXcDJIemlqbHA2?=
- =?utf-8?B?VjFzTFJpQVNTckh3WXVVa1J6Qm1IRGsvSGE5QmNmb2lXV3R6SjNTS0Z4bmxV?=
- =?utf-8?Q?nu9xcELE00gfc9ag=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?U2FCdWF0YXo2a2FEcWx2eHA3R0M2RDJRM2Z3TkVaMTZSYTk4aGJENXhod2RR?=
+ =?utf-8?B?S09ZVVFQNHdqL1lPaHJlZ1krbU5DQk5DVFBtdVFTbnl4TFYvV1oyZEtXeVhT?=
+ =?utf-8?B?V01DSVJFUHhIdzlRMlRIbkRMeldYRW1sUWY3M1NNRlpKQkg1bmw5cWZSeWIy?=
+ =?utf-8?B?MVFQVW5Xcks3SDJtNmRaNzFwUmFrRlVpK0N1S3lhSkdMb2dvbHpMR1lvZnVx?=
+ =?utf-8?B?R0RFU3Btd0VtWmlrbW1wa2RDejlVNzNUT2xWeDU2S1pCZUVObys1REdRcC9t?=
+ =?utf-8?B?bUZJellyU0lNdmd4OUZybTRhM1BFalRYaDFwaDN1Q2MyR0E1Z1R0ajZUdGRD?=
+ =?utf-8?B?OGJOUWlJZFo5TVQzbjhodkhLa05nZUhQU2ZUZU9oNUo4RjBJc0p3UTgyUmlU?=
+ =?utf-8?B?MDkwbWpkaWFMOHk5K1REbUtmUk1YNG9saGVQQW5LY2plczZGTFhDRjFvL2hl?=
+ =?utf-8?B?a1BOalpJT25ZYkNpS0VVZndvdmVjN1R0WXlHR3Z0K1VoQTlieS9KR2JZQmJl?=
+ =?utf-8?B?TTBveng1T2FXc3ZUWGF4RFIvbWRRd0pHQ1NBUFFXQWxxQUhRQ0R3eXBWU2hR?=
+ =?utf-8?B?WklFK2FDa3RMa1YyYklzWHlXdy9UZjVidTN3aDh0VWRNYWlTVmM3NVhLS3Rh?=
+ =?utf-8?B?YUJiclI0THhkWThmWlZMTFlWam9oTjE5SXV3WUxzNjQvOVVCVFk3bk1ubEw2?=
+ =?utf-8?B?Q0VOVzN4MnN5UlRwSTd6K1JRcXlhN3JnNzk2V1V2WXpmZkhwK3NPRzJBMVlZ?=
+ =?utf-8?B?WUVTT1FBaHhYVUI5OGdRZ0RBTTF0Z1NlMGgxUzRud3BCa0RVWEdJM3dwdlV1?=
+ =?utf-8?B?QkE1VHRBY1czd0k5WVkzTENCQ2dvc3B1b1JIU0owbjZlZS9ISzBBMi8rUTdo?=
+ =?utf-8?B?NWR6dW1xeWhWa3RoTll1UkJWQit6anlFWHh1TWp2Y2xnYk1zL1dEbWNaQmFD?=
+ =?utf-8?B?TmVxemR2bjgzTTNla2lEejRjQUlCSEg3cFZGZStYZHNwU0YvSVpDeGdLSjBS?=
+ =?utf-8?B?d25iYkhTNmZaOW1mK2QxcHRtSS83bFZMblpwOEJwSEVkZGd0QnBrRlV3dWFz?=
+ =?utf-8?B?RzBERm1hWjFzNWpHQ3IyaUlyekdJVjRISUM0M3lPb0gyK1BwN3NWbVAvMzFI?=
+ =?utf-8?B?RFZScUs4dzRTVWs0UkJUeVhVWjQwSDNJUGNzdmhidFBTTFJWMk5IbDRxbTI1?=
+ =?utf-8?B?Z2toRGJ5b28xT0o2c1prQkhHdVI5TEVYQkExMXFtSWhPUFA1V2tsLzJYc0sr?=
+ =?utf-8?B?MmRsM3lxaW4vYWI1c2ljaDdCaUl3Q0xrVGJib3ZsbmZ2Zi94T3BmYkZCYytM?=
+ =?utf-8?B?OXN3djNXK2F1RkZpQ2ZqUXZlaWo4dXZpNWs0QnlYcE51cG83S05BSnRnVVQ5?=
+ =?utf-8?B?UjZObVAySitIYTFma2ZqMTVmVldnaGpTYWtQMHJDazFOOUl3REpFVXdmVFdv?=
+ =?utf-8?B?bmdTS1BOV1RiRlc0emh5U29MejdyNzh4dE9CL0hyV2U4bXZiTXJURVBKWkhu?=
+ =?utf-8?B?TWZmZ0tuRzhZelZFdmozMVRFdlRRMmNOZ2toRm5jK1RoQmQrOVdkR2xiSFFt?=
+ =?utf-8?B?aHExVXZ3QldUS2V1NDRUOGZieEszZzJsTElvTmxleDRXTUwxYWczUnJicDR0?=
+ =?utf-8?B?UW9vaWR6VklWV0JjWW1qQW53SG42OTdBd3M5L05oNHZJalVlWUdadW9Ib3lj?=
+ =?utf-8?B?dk8rd2NLU3V4a0dOVUlsSTgwaXNxOHpPNU5lVi81VjhPWlFEZExJUCtjWGgw?=
+ =?utf-8?B?bUhpSUlRVUF2WWJHQzVBSlRsdHhmNDRoT2EvekgyMnBrejFBWUNGYXgvQ1A2?=
+ =?utf-8?B?Z1UyNWNVVG1OQmt0TExKSjROQ1cvNlpIQTJQK2JFNHhMc0NYdUltdnEvaGhD?=
+ =?utf-8?B?Uko5eTgrRG8vdS9WbnkzMmplSXZyeUhRbEF6T0FheC8xaFFJTVplTlhJd1dI?=
+ =?utf-8?B?eDIvMWtab0lQeXZQYWN6dWVVVkRPTlU1MldzdnRvc2g2bTgzY2wwTDJvZExM?=
+ =?utf-8?B?Q0JSNTlPYlBRWVJVbDVzRnIxcElHSEFVOWNZRWRtWG1oVFZxZXJJNytNTVhm?=
+ =?utf-8?B?N21PckRJT3Z4ak5XM2l0TCtRWGlJTzJrUEkwZWZGMG9VLzUvZzViVlhMNjVk?=
+ =?utf-8?B?Rk9JOTBtdTZ2T0FHTlRuT21ib3VmTU9lekdCOUc3dzRvNFlJdnlIdlA1SHJs?=
+ =?utf-8?B?K2ZpM05icDQ4Z1Q1VnpaMlUwaHJLWnRLN1YreVpFeG4zaWNKbnVmSVNjNm1C?=
+ =?utf-8?B?ZjJrTG4wOEl4U3FHZU5PUS9ndXR0amF0WlJmaytXZ2l6K2NETHpWK1pOK2Yy?=
+ =?utf-8?B?ZEZhZFZVZEdKWXNHcG9aMUVrNGFyV3FEUndpYkJjM01yS2tzUmgyUG9Kb3dJ?=
+ =?utf-8?Q?zjnfhlxZZkEiujEA=3D?=
 X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7749c11f-bc96-4e52-b61f-08df0048bb07
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9f3b63c4-022d-4a2f-db1f-08df0048b9a7
 X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Aug 2026 12:27:28.6732 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Aug 2026 12:27:26.4616 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: tOaf0QYvT99XON4N1xU3bEi49P2pXrh79K+xCzkZBJiw/i/3gwhNCOF+81bK2eJC882WhgNVXbAmt02huwgcbwkMaNabq9RMulJq9Zi8eQ0=
+X-MS-Exchange-CrossTenant-UserPrincipalName: JbUsX01l6IMuDtRdjyCswVJMkG8eOIzJOSBC/BxMli+82s2luIHFn/KC58EfSZzP8rtCIM125OSLcMLw3xyKW2HD0rFju/eer25Ni1D0qaY=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR02MB6504
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+Received-SPF: pass client-ip=40.107.75.83;
  envelope-from=bin.meng@processmission.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
+ helo=OS8PR02CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,29 +151,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@redhat.com>
 
-When Linux refuses to overcommit a seriously wild allocation we get:
+This revives Philippe Mathieu-Daudé's patch from 2021. The original
+posting and discussion are available at:
 
-  $ qemu-system-i386 -m 40000000
-  qemu-system-i386: cannot set up guest memory 'pc.ram':
-  Cannot allocate memory
+https://lore.kernel.org/r/20210820155211.3153137-1-philmd@redhat.com
 
-Slightly improve the error message, displaying the memory size
-requested (in case the user didn't expect unspecified memory size
-unit is in MiB):
+When host memory allocation fails, QEMU reports the affected memory
+region and host error, but not the size of the failed allocation. This
+makes accidental requests harder to spot. In particular, a bare value
+passed to '-m' is interpreted as MiB, so a user expecting bytes can
+unintentionally request tens of TiB.
 
-  $ qemu-system-i386 -m 40000000
-  qemu-system-i386: Cannot set up 38.1 TiB of guest memory 'pc.ram':
-  Cannot allocate memory
-
-Reported-by: Bin Meng <bmeng.cn@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Tested-by: Bin Meng <bmeng.cn@gmail.com>
-Signed-off-by: Bin Meng <bin.meng@processmission.com>
-
----
+The patch adds the human-readable RAMBlock size to the existing error.
+This does not try to explain host-specific overcommit, cgroup, or NUMA
+policy. It provides the most useful portable fact available at the
+failure site and makes both user mistakes and support reports easier
+to diagnose.
 
 Changes in v2:
 - Rebase onto current master
@@ -185,25 +175,16 @@ Changes in v2:
 - Fix a typo in the commit message
 - Collect Peter Xu's Reviewed-by and Bin Meng's Tested-by
 
+Philippe Mathieu-Daudé (1):
+  system/physmem: Improve guest memory allocation failure error message
+
  system/physmem.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 362a00f76c..89ce6479f1 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2171,8 +2171,10 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-                                                   &new_block->mr->align,
-                                                   shared, noreserve);
-             if (!new_block->host) {
-+                g_autofree char *size_s = size_to_str(new_block->max_length);
-                 error_setg_errno(errp, errno,
--                                 "cannot set up guest memory '%s'",
-+                                 "Cannot set up %s of guest memory '%s'",
-+                                 size_s,
-                                  memory_region_name(new_block->mr));
-                 qemu_mutex_unlock_ramlist();
-                 return;
+---
+base-commit: eea8fe61b8be8f3016e522e6af24924a0266ca95
+branch: virt
+
 -- 
 2.53.0
 
