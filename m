@@ -4,107 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3E0FC5DF97
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 11:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ED9BC5DF97
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 12:28:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxk9q-0002NG-PB; Sat, 22 Aug 2026 07:45:06 -0400
+	id 1wxkpT-00044r-MT; Sat, 22 Aug 2026 08:28:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wxk9p-0002MF-4g
- for qemu-devel@nongnu.org; Sat, 22 Aug 2026 07:45:05 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wxk9n-0001Le-Ju
- for qemu-devel@nongnu.org; Sat, 22 Aug 2026 07:45:04 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-7dbcb505578so23545387b3.3
- for <qemu-devel@nongnu.org>; Sat, 22 Aug 2026 04:45:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787399102; cv=none;
- d=google.com; s=arc-20260327;
- b=qfdNj7xDsdZiDkYCqFZkBqJqHQa1fWTPrqo6+wlAJwz+kdoq6NgK/LGtvbBQwlApY7
- uPshZcBzF2xYb06zCkNwLP2nveAW/UcLYnOn+fJW9CmvvtyJ/a+2go0bu8G6VvndFVC9
- /4ZRbfG6nrOH6aPXzktQ8F+hUg0O4SJlxGzmXwYeO0+kjpG0Dny01+IoeUXc7XKVgkCN
- hpJIHm3LEsxh1bl93qSoNFh0OaRkCRjOYu/rf8coxy1RSQ/0Um9v1Apc4debTajmLSRz
- 6rVTx+z/OwqkE9NbrMq3kounThdF1MngiG3mkx2e4W3QIeGqaRLXJh10JUJhd5ZniEcV
- OIGw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=jBzV9P1UTdI1U0NWqEwCZMjn3FmzBkuEn/EfV7c0WCI=;
- fh=weeZ+I/k7h7EVcDy63vo1ai172Vh7g4N1CNTsRAlT80=;
- b=eijQQ6knFeqjaOlyroKfM6jpguh8POfEnah5KHMOwhmbz9nBwESwN+kIUssRLLYOzf
- d2y9ea/8oE2qBkImzVzDE54gKGuxlgcP6cuusCTmnPZ57/ndiGZ7L4EHBwqQ6QQbGhKY
- dGNdW0eOTcf/jPaDZGZhdEkr851liDEnne876112RmBingyaj1nMNSX+p8GAYC6MPxus
- kABCUfWOC2lJO65OudNr+ORwl0tiMboPlSzIASS8ZqOLgs2M6N/MjjUCmVjI9MYuf4H0
- R33h9Bsk1m2jwNk4Z/88ZBQ8DuS4vB6aB3Dx87g52yROQLb5rbfVzQYrTrr5Q939n8YU
- U7Aw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787399102; x=1788003902; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=jBzV9P1UTdI1U0NWqEwCZMjn3FmzBkuEn/EfV7c0WCI=;
- b=o7KUGc+rRgsQkk2kPhlY7tH7VAL2DnxPZm9N9ueuBamv4ENUEpuPXE+L0hBAbWAtw8
- Fof+P6WeUo7f6jeYNsa/3D6hYMMJv2wi0Ig1EkP50eKDqA13e79XT+J8aH24fb98JBxZ
- gSsufL1FjLD7mHuG+5oi5aI8fLrq24Hqbg2WY+4F5rWQaVbLB4o/at/rVxEPE3at5B3Z
- w8vOm4H0rxd4duVFwyBwTuCs3w5KXNFKPiLWrm1yhrM9/GceT/qWyqq4XzSQiYpeR7YD
- eFYG1p14eAtETreRfSgRKhSYhJoLj6yZY5BX7O4w2EySCCwYUJkY5Mw25DJ4U/uI0XTA
- EJPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787399102; x=1788003902;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=jBzV9P1UTdI1U0NWqEwCZMjn3FmzBkuEn/EfV7c0WCI=;
- b=rviS3cOSWqv4vw5ePVz84GIF2hnCTUuLksCfLMw2zeZa6lU1jGV2JiadZUwFoPfwSh
- /4Fh+vVNQpKKY9hvJ3ldxEErEHRebSfF1rDmvJAvdS69Ihk8D/7l3QFfv7h2xb/j6CEs
- pW9MwT7kQ7QTD33ntxJMAJ/QHVH4+VKL4DF7CNH5GIwe/aLnIhFx6/4tHlY9Fs7z8phf
- akqaz0utQz4yaOMavx35zlBFYuHmMiKs3h998AVUymJTKuu/Q7Vw1s8ruI5YkngIDZ5Y
- sDWYY7IN3uig3TU5yWU/ONXdkYxHkksSv97tiV1WWZo5fR6/UdvXvFvyEj5Jc+m5uCl4
- 2mQg==
-X-Gm-Message-State: AFuF++m63Wkc1Mitcc2zr9Kat7BXiwxdw6JfQsVVmRLorPuJlWX5UMso
- YSwY3j8Ht2BpBUvsUbaF6oOaTXcAicdiESyxkuBHbUgW1IVEf3BrDyxfWTWtbb5bCgub7INcJPE
- 3vF7tToCYpyC8EKej6CBfeFRS2o8XGyQ=
-X-Gm-Gg: AR+sD10fB9gNrw2m5T+MEOmY9DDYdokPlKcrEcRCpLmbf7qaO1Pk5Js17X6J1FVOr/+
- 8CSGf4zDK1jGLnuJf87rtpbk5iVZvm5NenHiMBBF4PgeJkRSybbx+DtJbCWuq8UzkzJ7EX3HUQ5
- VbGwM2m4B0hjgXavJqyBxJWR3GZj8Dfr5ByaX/YN5SKT/hnzehkxqBpIQ/wF4L6u1FqBXBqKiFP
- 3jWLs1/SpW3BnCBHG8pPzgJZpIObf5DlwzeD7+UQzNQg/TL+WeSSmkYKxUxpq1/BsoRF1YF5hpn
- SoXYhhvTz2ij5Fy+uRqwXGZqxT6a8gjH1R3Q1vg3uWgboQPn/shd
-X-Received: by 2002:a05:690e:4183:b0:667:a0f5:345d with SMTP id
- 956f58d0204a3-66ce4a0fe73mr4585323d50.10.1787399102210; Sat, 22 Aug 2026
- 04:45:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1wxkpS-00044f-0H
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 08:28:06 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <bin.meng@processmission.com>)
+ id 1wxkpQ-00044m-9R
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 08:28:05 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=X9hSAFiN9GHgzfT87D7uVaASiH4FxboNXGWyw4Afd5bMSVV9hCUE/jOG8IcICGCIQLguNTcH1LnDIZpO871/RkXBJFq/xabcQajfQQFbMPFYMHxlgh01X2rF9E4eKjPuwL5WaM8yfIJZgujJ1PxWxGhDk3xDX4RoertM9yy971kU9pfQ0X7uElLPSH8JguX4tekIw1qNyKcopF3yiZe5EqNfpTqs0HnO3oLRgjXBxD/B5wZ+G6XrLEHUgtXCNem8WzGPSR2hrndsVDED6v1mOnK70M+Nfp7O81xr8puy+bWPvrYXdO1qQptp+sXd/7VbyBRlO+ZlKIZ3Uy536EXGFA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=V7/5W/LESB1bmfGIbvkQbJ7SWfJ9Fxco93CXbFx5pvc=;
+ b=LwF7aHffYMZ3eY8+eHf4xGUmg4rJt8JYB2L7uoCjOBWdE2UIy0YiM5+YDdyj+/To2AorCfsIInh2OIyfXxkFDd5QjM3zfpUDFu2JADxOzpe0BnOEb3uY3OvYcvvUxQZu5vWvgtw21ff+7xYT4Jyh5CEp815qOHzTRhWp7lW3aXSEKSsEuuQTXpG2B3hmljI28FH4b6FffeIF4eaOPHfXWEn40CUjyLOj2QaTvj/5V5ILVwntsYcwW8zM2Bb3Q3FJjHpJEC7wOIJ2fhhrSW6ADXBkRPeqIhQxrllRb0d6nMArO8LYpJPlBEEDOs8u1Hj48DiIehDzW76i0UdUTwNA1g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=processmission.com; dmarc=pass action=none
+ header.from=processmission.com; dkim=pass header.d=processmission.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=V7/5W/LESB1bmfGIbvkQbJ7SWfJ9Fxco93CXbFx5pvc=;
+ b=gma2SafPqYA4VBZWCLWsGA9188XQUWiMU8UdufjkzZcfikvYKbAFYL8zfB9e8XXxM34HYiE1gYpIPcObolmLWheVfkVzrhOm0zFwPVeu3VeSMf30+mGY/9oLTBnH/o+sYMeikyoh545Wvv9HJCIByAZ0nrxxwMewL0f2+CB/kZQUDoRqtg/hn/S/auiiU+qBqtkGXc/SNM97i+AWrg9Yv59XPARr4SjiWxvOQzZ88fvbzi+8rscvo3lGc6Q1QCZmkf/SG30kOOEARibVHefJfJAmSUoXIZoLW0U8jEOk+6tcjjjFCLCzJi59R8z13YazdYcAy/rrMlRcrUxSksCD3A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=processmission.com;
+Received: from KL1PR02MB4977.apcprd02.prod.outlook.com (2603:1096:820:71::8)
+ by TYZPR02MB6504.apcprd02.prod.outlook.com (2603:1096:400:363::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.11; Sat, 22 Aug
+ 2026 12:27:28 +0000
+Received: from KL1PR02MB4977.apcprd02.prod.outlook.com
+ ([fe80::9fdf:2557:8351:6c03]) by KL1PR02MB4977.apcprd02.prod.outlook.com
+ ([fe80::9fdf:2557:8351:6c03%4]) with mapi id 15.21.0339.010; Sat, 22 Aug 2026
+ 12:27:28 +0000
+From: Bin Meng <bin.meng@processmission.com>
+To: QEMU <qemu-devel@nongnu.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@redhat.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: [PATCH v2 1/1] system/physmem: Improve guest memory allocation
+ failure error message
+Date: Sat, 22 Aug 2026 20:27:08 +0800
+Message-ID: <20260822122710.3731595-2-bin.meng@processmission.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260822122710.3731595-1-bin.meng@processmission.com>
+References: <20260822122710.3731595-1-bin.meng@processmission.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: TY4PR01CA0064.jpnprd01.prod.outlook.com
+ (2603:1096:405:370::15) To KL1PR02MB4977.apcprd02.prod.outlook.com
+ (2603:1096:820:71::8)
 MIME-Version: 1.0
-References: <20260627154225.863984-1-bin.meng@processmission.com>
- <20260627154225.863984-2-bin.meng@processmission.com>
- <CAEUhbmXe=aJ+K8isdCpdFn9Y4LLTf9SARY7VaZoMo39SeYJAcQ@mail.gmail.com>
- <CAEUhbmXchynHnz1Zrh=WZC4RrmamRGcUm7uGda45kUUVSrzBjA@mail.gmail.com>
-In-Reply-To: <CAEUhbmXchynHnz1Zrh=WZC4RrmamRGcUm7uGda45kUUVSrzBjA@mail.gmail.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Sat, 22 Aug 2026 19:44:49 +0800
-X-Gm-Features: AcwNN1V0yO3IigO7wJUoT3YAbZ9Pf7lTTKlu6pI-qFkIiTsq8U8G27df-gx5uGg
-Message-ID: <CAEUhbmWrx=hJb++2KVn2kqJdKd_gDYpEygDNMri5T8cmvNkAMw@mail.gmail.com>
-Subject: Re: [PATCH 1/1] hw/arm: xlnx-zcu102: Fix up DTB for direct Linux boot
-To: Bin Meng <bin.meng@processmission.com>
-Cc: QEMU <qemu-devel@nongnu.org>, Alistair Francis <alistair@alistair23.me>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yw1-x1129.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: KL1PR02MB4977:EE_|TYZPR02MB6504:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7749c11f-bc96-4e52-b61f-08df0048bb07
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|23010399003|1800799024|366016|10067099003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: Q+sUepdN9/O7D/IIwmx+L5o2GmcbCuSMLCFR3ul69O+iRjqeC/r2P6rjBKPeApf8+cdWluqPTYg2UOvGW4VH0xSBE6OKHfjxi2C2LlG3iSPTCt901dqbmQ3wgeebHbU9ecdiuxtHyv4Sv0zYZiSOm7f/v62y3wmz7y1gww73W6bk04RP+J2i8yBjKLHhRtFvxgw/eNxlW0s9kzhAZlGfHKLpE4Igyhp00ImQyinuOd7NcoZGJXiGvQ5KPB5eYeoGFZ7faFGzG+VLJvxQbxfMwovMKpKNDoYhEOd8o3LudmtVxdcCfJ1cnChFTMh/cbSiici6qiJIX+IaC68rYprfqhDI+CGgwJwSKrWB/Qom2oeCsUj2nq12PACeXvzSc6r8Srj1oh2UlyAb3RnsoDCWp4GbDsmcy492x2f+exuj0fU6hCkrg2gl46C2nwxAfrop46uUtbj1v0RUp7UAsb3y2JgPYV6jeOahTcvye2jzxjZk34spmV0Kvx383wxoJqnXDdXR6ScSPdfLCppsM/nSEfXHSxUa0aCSfGtyTO46ok22O1cJpznb0FuG86h5tiXw3tQxRB3EP+WsyCKO4m8/fzIhWm3kjsT9Uq1RcY67mnSiLPdXzejePP+hr+kXdwMs75nS1lSrvlS3wxxMWsDjenvgxmWuSIYYJc1fIiR95AU=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:KL1PR02MB4977.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(10067099003)(56012099006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Sk5Pd1JJNlhuM2dTSHptRHhsYjQ2TnpBcVEzbjVUdW93Zi9LT3hQclBTdkxF?=
+ =?utf-8?B?eEN1cktQVUFJUjJPOTN3dWZ3VnZGNnNkS0ZKaEpsdmVrQzlvYmhKKzlhZ2Nv?=
+ =?utf-8?B?T2VmOWE2eXZNVjFsZEtFNXBRWUs1MTdoWXh3SytLOVhDRjBNVWV0YllQQW5i?=
+ =?utf-8?B?bmZnTnEwZEMzRjZvd1ZIVFp0QVkvdVFOamZEY3gzK1IzUFlyK3BrSlZLSkQy?=
+ =?utf-8?B?VnlTdmw1ekJjRmZkL2d3MFNZVFN3dGVKc0RvNkpXNC81ZFVPcEFOaTRSaXJD?=
+ =?utf-8?B?cGU3bTBacTZrZ201TTJ5T0F0SUE4RzBPbmZ4d09UalhiRG5HWXVkVlNqekxt?=
+ =?utf-8?B?S3ZhTVJ0R1VUZE9LTWNhOGxkeEEybXBFNURSbnNWUFZzYVJQYTVJM2RqMzhh?=
+ =?utf-8?B?TkZWUjc3MDhGLzU1UWZUalZ5aEFhczBBQWsxNDVzdHlPdWJ3TERCWXBXQVZB?=
+ =?utf-8?B?Q1poVnJIQUpyOWd4d0VzSGdUeWRjUi9GUHpjZGVwb24vZ0tobEtlVUVwYk5X?=
+ =?utf-8?B?ajNVdzNPOW5hTnFFenFWdXJvQTRRMUJiZWc0ZllHVEFQY1prVHE1WmJ4Q29y?=
+ =?utf-8?B?Q1JHUHhnSUEvZmlKbW5pVDNCZDNBTEJTZndqdkJqWU5rbkhoakVBYXh4UG9p?=
+ =?utf-8?B?SXg2STljTkszYXhmRUxBV3NkbVhhQ0FTMWVBL2hIRG56K3djSStRVzNkRGpO?=
+ =?utf-8?B?NGxhMmJSUkFSODNFL21XdDg3cDcxcHpXZm9pMmNkcXFBa1RKMjdSdjA1b3dF?=
+ =?utf-8?B?VklYZ0lUM0RTSnRsMDFMV0dMZGE2RTV6Vm1DNHBuYTltRTNVUmpwOCs1amdV?=
+ =?utf-8?B?S1daa1ptVXluMmdVcmdMUW5UTjlEVTd0ZVNOZVpwTDFaNHhEeXhIZUtFVW1m?=
+ =?utf-8?B?ZXY4VlBHY1hlazE4NVU4VTlCZGZ2dWFrelQxQjg1UWpWUi9IcThXdHk3VkZI?=
+ =?utf-8?B?RGl6VTg5bU9RY2JzK1lJQkVLZUhxKzN3RFhxU1hJR2o0QUVYNERVbktiTzhO?=
+ =?utf-8?B?bzdyUE9jZXNrZmlqdFBteUROMGxHOFBaZjlNbWtVYjc0ME8vdVQxcGg5RG5I?=
+ =?utf-8?B?bnhMck1NSzhlMXZCVzNSMURidVVkYWMreUlMMFlOOHhsMVMvNVdMQnRpcW5t?=
+ =?utf-8?B?OFI1QjJPUUcvSFBXZTVSM2lpMEJ0eXhBakxnRkt4MFNSRTZkT0NRMXdmRm9X?=
+ =?utf-8?B?UlMvc3l1VU5jejV4eldTaldtemh3Rk9Ra0hLeHo5aVcwVGVlNGZhTVVPdXJ5?=
+ =?utf-8?B?K20xSmsvcU9pUk1KRStHMzlJRlVYZU84eTZ6aFRRanhqNk5wSzdsalJ5OGRQ?=
+ =?utf-8?B?bTJ4cHNHTURUM3cwWitBYnZGTnRpSXRIWUJlcFZXTDZWT1ZKT3J4K016TnM5?=
+ =?utf-8?B?NHlEWHdsaXp1M0k2UWpVRHRtZXRmc3lZSmx0NEttbXNvRkhmbmRUK3pTSlNV?=
+ =?utf-8?B?YWtVU1dmVVoybTgwMUgxdi9HY1hVQmIyQ2NPSHVFMUUxUVRnVCsyNFBDMWlx?=
+ =?utf-8?B?TVF1K2dwSnU5Z3k4cDR4WU93SGZvK0xQUFEwNlovclA0ZkRIczNUYVp4RUh0?=
+ =?utf-8?B?Nm5lMFFYeVp1dXZQa0luRlZybmRzc2VjVzZtUGxsNmcycy9xSXhXdjlRNVZj?=
+ =?utf-8?B?dlhodlhaVk8ybFBjOGs1WEtrL0oyZnM4MWFYLzRRcUdFTHZhcnNPem91OVNO?=
+ =?utf-8?B?K3luYjZtZmJXNy8zS3FRYmJVOWwxMEFTY1N1WmJGaE9EcGNjVWJNRDlpY3FQ?=
+ =?utf-8?B?bDBURHE1d2xPL0xDZzQreU95c3VMcEM2b2JZZWVzWVVlOXh6NkVHSCs3aGM1?=
+ =?utf-8?B?SmttVm5TV3JRNXRYc3prd21uMStzTkRnc1l3SXZOOGsrbVNNdmNiWVc3eTY1?=
+ =?utf-8?B?YUZ4QlVuYVFtbDBuNm5KTHcrTzJNU0R3a1ZWOXFXMHZ3NUZwWUZMaytta1pI?=
+ =?utf-8?B?UnlXVlFJZ0lHcjZVNVJVL1VvVTg1Vm91UHIvVHFwWlZub2dqZDRqQmhYMmRv?=
+ =?utf-8?B?blF5YWlaLzcvNnpKeUdHVEdiMHBCdFlBdTJPeDg5OHROcU50N3VqTTdNZUg5?=
+ =?utf-8?B?dWFiSnBXdVJRam50TnJkOXF5aTFGaG5oS2lJREgrdVdidkRiR3pJT24yV0pk?=
+ =?utf-8?B?cVIyTTdLN1NLbXpMMWxPN0labUFFOFdHWGZJQ2JBOVhKUzNMUnhrZWZKS1pW?=
+ =?utf-8?B?RlV3RFVHa2kyekl2eWRyY1VRd1FXMjBBREJpeDZwdElReDF4YmtOdHhrdE5U?=
+ =?utf-8?B?RU8vMjNlcmIyaFBqU2N3S3VyT0YrSDhtRTJnaWFwSHJvVGhXcDJIemlqbHA2?=
+ =?utf-8?B?VjFzTFJpQVNTckh3WXVVa1J6Qm1IRGsvSGE5QmNmb2lXV3R6SjNTS0Z4bmxV?=
+ =?utf-8?Q?nu9xcELE00gfc9ag=3D?=
+X-OriginatorOrg: processmission.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7749c11f-bc96-4e52-b61f-08df0048bb07
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR02MB4977.apcprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Aug 2026 12:27:28.6732 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: tOaf0QYvT99XON4N1xU3bEi49P2pXrh79K+xCzkZBJiw/i/3gwhNCOF+81bK2eJC882WhgNVXbAmt02huwgcbwkMaNabq9RMulJq9Zi8eQ0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR02MB6504
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+ envelope-from=bin.meng@processmission.com;
+ helo=TYDPR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -122,44 +155,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 30, 2026 at 9:51=E2=80=AFPM Bin Meng <bmeng.cn@gmail.com> wrote=
-:
->
-> On Wed, Jul 8, 2026 at 11:50=E2=80=AFPM Bin Meng <bmeng.cn@gmail.com> wro=
-te:
-> >
-> > On Sat, Jun 27, 2026 at 11:44=E2=80=AFPM Bin Meng <bin.meng@processmiss=
-ion.com> wrote:
-> > >
-> > > Real-board ZCU102 DTBs describe the UART, SDHCI and GQSPI nodes
-> > > in terms of ZynqMP PM firmware providers for clocks, resets, power
-> > > domains and pin control. QEMU does not model those runtime firmware
-> > > providers, so using such a DTB with -kernel currently requires users
-> > > to edit the DTB before Linux can probe the boot-critical devices.
-> > >
-> > > Add a board DTB fix-up for direct kernel boot that removes those
-> > > provider-only properties from the boot-critical nodes and rewrites
-> > > their clocks to fixed reference clocks already present in the DTB.
-> > > This keeps the user command line using the Buildroot-generated DTB
-> > > while limiting the compatibility adjustment to devices modeled by
-> > > QEMU.
-> > >
-> > > Document the direct boot flow, the SD and QSPI image layout details,
-> > > and the remaining firmware and real-board peripheral limitations.
-> > >
-> > > Signed-off-by: Bin Meng <bin.meng@processmission.com>
-> > >
-> > > ---
-> > >
-> > >  docs/system/arm/xlnx-zcu102.rst | 139 ++++++++++++++++++++++++++++++=
-+-
-> > >  hw/arm/xlnx-zcu102.c            | 109 +++++++++++++++++++++++++
-> > >  2 files changed, 247 insertions(+), 1 deletion(-)
-> > >
-> >
-> > Ping?
->
-> Ping for review?
+From: Philippe Mathieu-Daudé <philmd@redhat.com>
 
-Ping?
+When Linux refuses to overcommit a seriously wild allocation we get:
+
+  $ qemu-system-i386 -m 40000000
+  qemu-system-i386: cannot set up guest memory 'pc.ram':
+  Cannot allocate memory
+
+Slightly improve the error message, displaying the memory size
+requested (in case the user didn't expect unspecified memory size
+unit is in MiB):
+
+  $ qemu-system-i386 -m 40000000
+  qemu-system-i386: Cannot set up 38.1 TiB of guest memory 'pc.ram':
+  Cannot allocate memory
+
+Reported-by: Bin Meng <bmeng.cn@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Tested-by: Bin Meng <bmeng.cn@gmail.com>
+Signed-off-by: Bin Meng <bin.meng@processmission.com>
+
+---
+
+Changes in v2:
+- Rebase onto current master
+- Update the source path from softmmu/physmem.c to system/physmem.c
+- Fix a typo in the commit message
+- Collect Peter Xu's Reviewed-by and Bin Meng's Tested-by
+
+ system/physmem.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/system/physmem.c b/system/physmem.c
+index 362a00f76c..89ce6479f1 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -2171,8 +2171,10 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+                                                   &new_block->mr->align,
+                                                   shared, noreserve);
+             if (!new_block->host) {
++                g_autofree char *size_s = size_to_str(new_block->max_length);
+                 error_setg_errno(errp, errno,
+-                                 "cannot set up guest memory '%s'",
++                                 "Cannot set up %s of guest memory '%s'",
++                                 size_s,
+                                  memory_region_name(new_block->mr));
+                 qemu_mutex_unlock_ramlist();
+                 return;
+-- 
+2.53.0
+
 
