@@ -4,90 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5185AC5DF8C
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 19:09:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8FE9C5DF98
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 19:44:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxr4y-000425-5D; Sat, 22 Aug 2026 15:08:32 -0400
+	id 1wxrcs-0001sM-GP; Sat, 22 Aug 2026 15:43:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wxr4w-00041c-Uw
- for qemu-devel@nongnu.org; Sat, 22 Aug 2026 15:08:30 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
+ id 1wxrcq-0001rz-VB
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 15:43:32 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wxr4v-0005kv-Cf
- for qemu-devel@nongnu.org; Sat, 22 Aug 2026 15:08:30 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-836eac5682bso39449467b3.0
- for <qemu-devel@nongnu.org>; Sat, 22 Aug 2026 12:08:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
+ id 1wxrcp-00070k-03
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 15:43:32 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2caced6038eso21615075ad.0
+ for <qemu-devel@nongnu.org>; Sat, 22 Aug 2026 12:43:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787425708; x=1788030508; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=j3mECKD7SIh7xN5kiEZe0QA6kTy9Z31/NtbGK372goo=;
- b=tOQVW8y1FAkWWd6b4de2d6psUUWZBfyFJN7iiGPoGG3AulobRvjqILhhJFWp3Uijl8
- YG567vdg6OufGaCfjGaYnc0ceyVfJUYBbgi5F+ocUlf0HB3j/RJ429UkprHcioXZ9p8e
- PXm7BlJcOhR11MrQ7nTR1mTAhWm4bHOf+/EQpKwBGvyzoQCILzIWrHsoSv086zEUiaW5
- NwwqNBNz00KFUfeK8vWhbt+Aum5wVaHDMs/aECGgmSLBMZJvus+YbbVmwjfZ7oDJ+rMh
- 45RTlBVe4Xw5/GAOOMAaA8tm9Onl5vCW1cdk88PqSbCHyL/OzBgPdDSDGREObh0eMLbv
- Hsuw==
+ d=gmail.com; s=20251104; t=1787427809; x=1788032609; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=REGe0WKNsuh8WHgcdC+XmOy2OmwO/TbaMT7ihI1a4qg=;
+ b=FePgqJIt8RgUrwKwjkSC2bCKLRUTplVKUsCY24Tq7cc30Qf+GFmvvlp4lVjeMYQsQx
+ I6WOdckDBkRTpwW+yx1xx+TM+sJEAJPFSs8PD0JN3+EceMmeyrFg+vDirBFYJSfIdL8q
+ Pzij7btvahEt5HQGCKnvuwyokfluYH/3/V8AreP3x0nWwrjmooc+J+/eZf5d9opD17UE
+ ccEO7exr4K6Z15Xjp1doc2nRlM+WXy/Y+X3XPaxsSPY+Z+GUUTH9JldlrBwOefeUULyu
+ S8fgcbFwwO4b1Gtaxz2kcMrdY2reVn9psgM+UOXRrhJ/IzCSrWBdczzCnL1vD4eJJeYM
+ 6Tig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787425708; x=1788030508;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=j3mECKD7SIh7xN5kiEZe0QA6kTy9Z31/NtbGK372goo=;
- b=n+wSuXcIBB0GoQM85jpw1DC8SihiqOM3n+fjrUGmEvOr6dW8/2apPTOL0kvapSAh6A
- thQzbwre1JEqOcTkVH8xdHcROI+2Oc6R4JaecPWkuJzUERNLvs1KFJNoqD4nMfT57XSt
- BdU8vIDmAhL9r7IEA3ZLiEAdLTrGjBBu7aKu4GLtGibIPgShDHxAIqytKtxl/tvlxdua
- /9p89MN2K7Hd5Xwl4XzCvz217ZjWuF5uLIzSs8PI0PdISFRgKHozTu2x08Ii1u/4KAwB
- NUUCUeG3UQTLqCQLf2znnwVwWYY1coRIv9iFsRYAAYPvYYrzJ22UdBl0n2wWAlJyTK9h
- KR2A==
-X-Gm-Message-State: AFuF++l9VJ1JSw4+sY+x0dth+4Imne/3CvZN0NreDeMkTDy051qFzujY
- fJjPdHCpArFDUScSmX8Ogj1Tfnfob4ELaoYfEgKZF5+ekOLf48CsljXD8+6JL3/zZq4=
-X-Gm-Gg: AR+sD126tFkm+S3T9b6TFje5MeVxuNtwWDh0TukKQyYxpq7RyY48+LuZ8BrtH4I0XoR
- imAG2pWh+9wkDVWelPPrpuOYEjpTfDuDrT9vervtHQK4Ljy6f303K0BDJtcpXkSwhYb9MBEKMLk
- rQ/pt2jB7JUWjBPVBROpg3RwkkKc61PIMNYkRAokF/u3FH+6t05s+i38BEwsgGs+dhvpzrA83Tw
- jlG1C72MP5mQCLAE9fg1/kumWWCk7ZQ8pM4QPoi/iwuZzr4qhIhkyvv2uz2xR/6j2ZQikw2P23d
- oIITsgZm3Mv5VUaTtWYJ42Gz2t3cpK8aIrB+RbNf2AZKAGFaB9OerQIzziRGyKbR9HvPdbtfEPw
- Z5IflO/tsynOHw/TBJXFToQI8Ed0y+TF+rg+nAZFO92NRuQQpHijyh33dHytE1RVB/W9f6/ZmuK
- oz7X/kLH10VgL3nmMYshAR9NEIf7576/r9XPC9/Br3IL4xOlX+90gIy3coyJzelq3JfUZh9xnOz
- eYGkRe+oECgdba7IWtBU2xjlebAe4Aj7qjS3zD6+4n4wQ==
-X-Received: by 2002:a05:690c:e142:10b0:7ef:9fd9:db07 with SMTP id
- 00721157ae682-84a199d646bmr39517897b3.12.1787425708068; 
- Sat, 22 Aug 2026 12:08:28 -0700 (PDT)
-Received: from localhost (107-220-129-194.lightspeed.chrlnc.sbcglobal.net.
- [107.220.129.194]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-84ca62f6ad5sm13393687b3.18.2026.08.22.12.08.25
+ d=1e100.net; s=20251104; t=1787427809; x=1788032609;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=REGe0WKNsuh8WHgcdC+XmOy2OmwO/TbaMT7ihI1a4qg=;
+ b=YQLGW+3q4RfzM1nM96IOXpF59BN4TOZqast/WqhmPR2Blk+JvZ7D8IZP7M+06n/pm+
+ cXAxFqgIvRj2kcKO5FE7Y4AnIkw1D06O2z4dYXVfmlFkcKh8AXHQyAs4TWMQ67OVzjGa
+ rx2tpm08WED1hRH1640G/2euYhJyNFTTu133QMIEf6d6K5Af17IfFWiewK0oNTZMGYEk
+ VzunYQum70ib/QCZRhqV9pX6cPSD/IAGSXHYXFWtJtk5xkuQ1xMNWWUWwRJvhgGEWnxL
+ BKtzGIVNR4V78++jiTT9m42nHVyb5MosBJUUXBqC938o15A+K4rMYh0EnELtnoNXxdu4
+ 3LsQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoMODjqu8Uh2WiKctc/g65Yp1r6R/fJ4ZcXeQ5Zt40yDTIVLK7R6xM+7UJq8ZF63rijsrdKN795O3c1@nongnu.org
+X-Gm-Message-State: AFuF++kRXq/yYfiGSagiU9KrLFTT9eG9GzICriCOXRhUz16tBQ2S3R58
+ tB42lShbucQVAHBEE8TLzv5ykxBXXrbqdZhfvs9hd+JFSpVPrfKzpbIs
+X-Gm-Gg: AR+sD11BXeW/ccVSM0vO3UtUHkXlhZSEbF8Ypf+cDFPyCHK5u7uEcwYk369ff9pWsha
+ BRuSGaMgTu+Kc1XUuGTCkmxsc99rfUSdzkcWotIo5xV5AGXC8KIVzxLAd5bl92jcwahSWbG8ZQr
+ aY0NLNvXS3pH+clcvNFpUbcGexWcDgy2pg8ASMvqt6HHU93EzYWaVc05BDJGHcG+501581RF92N
+ laK9I2zdUnGz0HucisHtAh/nDRn0pzQPGW44dm1no/tYLFufXzsUuezwOwbiY/zjfxiRCAL4HkN
+ 1khGlYSEZesQ1V/5qnpPXkqLpWWM4PXIFPvW7uxqu/3E6e8AQPiiNaf3aueGLJubD5JsoGZd+Qo
+ ZOFaU6Osog+B5JlEQr+pZ5Viiitm+FgU1sXx8VEteZUDf6uBIi99QoLdoMGj61Ba9LUCI/lnLp5
+ iSIBriVFW2VDjt1Iat+dC+4BQxGNfdSLZNvXXD5pwOE95wWOIYHkpPX+C0bzp4vqyt7lLeEtcO9
+ RRThSSLy+UcezXTcnWD4l5Tmd6EC/3TRNuEfkywFHvMyfWdakro8rbDGB0YuY6BoQ==
+X-Received: by 2002:a17:903:1965:b0:2cf:7db9:e13e with SMTP id
+ d9443c01a7336-2d64d17b076mr163234185ad.3.1787427809116; 
+ Sat, 22 Aug 2026 12:43:29 -0700 (PDT)
+Received: from visitorckw-work01.c.googlers.com.com
+ (202.176.229.35.bc.googleusercontent.com. [35.229.176.202])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2d676895799sm5892715ad.38.2026.08.22.12.43.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 22 Aug 2026 12:08:26 -0700 (PDT)
-From: Matt Turner <mattst88@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@oss.qualcomm.com,
- alex.bennee@linaro.org, zhao1.liu@intel.com,
- Matt Turner <mattst88@gmail.com>
-Subject: [PATCH v3 2/7] accel/tcg: enlarge the TB jump cache to 64K entries
-Date: Sat, 22 Aug 2026 15:08:13 -0400
-Message-ID: <20260822190818.1829249-3-mattst88@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260822190818.1829249-1-mattst88@gmail.com>
-References: <20260822190818.1829249-1-mattst88@gmail.com>
+ Sat, 22 Aug 2026 12:43:28 -0700 (PDT)
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
+To: pierrick.bouvier@oss.qualcomm.com, almer@dabbelt.com,
+ alistair.francis@wdc.com, pbonzini@redhat.com, marcandre.lureau@redhat.com,
+ farosas@suse.de, lvivier@redhat.com
+Cc: liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ wxchen0913@gmail.com, jserv@ccns.ncku.edu.tw, marscheng@google.com,
+ eleanor15x@gmail.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Kuan-Wei Chiu <visitorckw@gmail.com>
+Subject: [PATCH v4 0/7] hw/riscv: Add support for Milk-V Duo board
+Date: Sat, 22 Aug 2026 19:43:07 +0000
+Message-ID: <20260822194315.2550260-1-visitorckw@gmail.com>
+X-Mailer: git-send-email 2.55.0.766.g2966f0265a-goog
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=mattst88@gmail.com; helo=mail-yw1-x112c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=visitorckw@gmail.com; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,58 +106,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The per-CPU TB jump cache has held 4096 entries since it was introduced.
-That is too small for guests running large programs: an emulated compiler
-misses often enough that the fallback qht lookup shows up prominently in
-a profile.
+Add initial support for the Milk-V Duo board.
 
-Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling
-the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host. The
-compile performs 34.2 billion TB executions, of which 8.4 billion take
-the indirect dispatch path.
-
-Sizing curve, on top of the preceding patch, instructions retired and
-wall clock:
-
-    12 bits (  64 KiB): 1,562,204,796,597          132.58s
-    14 bits ( 256 KiB): 1,493,318,515,396  -4.41%  124.67s  -5.97%
-    16 bits (   1 MiB): 1,469,772,951,575  -5.92%  121.04s  -8.71%
-    18 bits (   4 MiB): 1,462,309,832,762  -6.39%  119.82s  -9.62%
-
-16 bits is the knee. 18 buys another 0.47% of instructions for four times
-the memory. It does show a further 1.01% of wall clock, which is outside
-the 0.70% run-to-run spread at 16 bits, so the effect is probably real --
-but paying four times the memory for it is a poor trade, and instructions
-retired does not account for the data cache pressure of a 4 MiB table.
-
-In a perf profile the mechanism is visible directly: tb_htable_lookup(),
-which is where qht_lookup_custom() lands once it is inlined in an LTO
-build, falls from 6.10% of samples to 1.66%.
-
-The cost is memory: the cache grows from 64 KiB to 1 MiB per vCPU. That
-is easy to justify for a single-vCPU linux-user process and less obvious
-for system emulation with many vCPUs, so this may want to be sized by
-target or made tunable rather than raised unconditionally.
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
+The Sophgo CV1800B SoC features T-Head C906 processing, standard PLIC
+and CLINT controllers, a dw8250 uart, and basic clock control. The
+current implementation can successfully run OpenSBI and boot Linux v7.0
+from an SD card to the Linux shell.
 ---
- accel/tcg/tb-jmp-cache.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+P.S. Apologies for the delay between v3 and v4. I'll keep the gap
+     between revisions tighter next time.
 
-diff --git ./accel/tcg/tb-jmp-cache.h ./accel/tcg/tb-jmp-cache.h
-index c3a505e394..268dacd7ba 100644
---- ./accel/tcg/tb-jmp-cache.h
-+++ ./accel/tcg/tb-jmp-cache.h
-@@ -12,7 +12,7 @@
- #include "qemu/rcu.h"
- #include "exec/cpu-common.h"
- 
--#define TB_JMP_CACHE_BITS 12
-+#define TB_JMP_CACHE_BITS 16
- #define TB_JMP_CACHE_SIZE (1 << TB_JMP_CACHE_BITS)
- 
- /*
+Changes in v4:
+- dw8250: Fix memory access sizes, handle dynamic 'regshift', log
+          unimplemented writes, and propagate errors.
+- cv1800b_clk: Replace magic numbers with macros and sizeof().
+- cv1800b: Move static properties and child device initialization to
+           instance_init and propagate errp.
+- milkv_duo: Use riscv_default_firmware_name(), riscv_load_fdt(), and
+             DEFINE_TYPES().
+- docs: Add a doc for milk-v duo board.
+- tests: Add an end to end boot test.
+
+Changes in v3:
+- Rebase on master branch.
+- Drop custom T-Head PMU CSR patch to avoid duplication.
+- Use REG_BYTE_WIDTH macro in clock controller.
+
+Changes in v2:
+- Added link for the custom T-Head PMU CSRs
+- Added qtest to validate basic for the dw8250 and clock controller.
+- Removed RFC tag.
+
+Kuan-Wei Chiu (7):
+  hw/char: Add dw8250 UART
+  hw/misc: Add Sophgo CV1800B clock controller
+  hw/riscv: Add Sophgo CV1800B SoC support
+  hw/riscv: Add Milk-V Duo board support
+  tests/qtest: Add qtest for Milk-V Duo board
+  tests/functional/riscv64:  Add boot test for Milk-V Duo board
+  docs/system/riscv: Add Milk-V Duo board documentation
+
+ MAINTAINERS                                 |  14 ++
+ configs/devices/riscv64-softmmu/default.mak |   1 +
+ docs/system/riscv/milkv-duo.rst             |  49 ++++++
+ docs/system/target-riscv.rst                |   1 +
+ hw/char/Kconfig                             |   4 +
+ hw/char/dw8250.c                            | 131 +++++++++++++++
+ hw/char/meson.build                         |   1 +
+ hw/misc/Kconfig                             |   3 +
+ hw/misc/cv1800b_clk.c                       |  90 ++++++++++
+ hw/misc/meson.build                         |   1 +
+ hw/riscv/Kconfig                            |  14 ++
+ hw/riscv/cv1800b.c                          | 174 ++++++++++++++++++++
+ hw/riscv/meson.build                        |   3 +
+ hw/riscv/milkv_duo.c                        | 120 ++++++++++++++
+ include/hw/char/dw8250.h                    |  27 +++
+ include/hw/misc/cv1800b_clk.h               |  26 +++
+ include/hw/riscv/cv1800b.h                  |  56 +++++++
+ tests/functional/riscv64/meson.build        |   1 +
+ tests/functional/riscv64/test_milkv_duo.py  |  50 ++++++
+ tests/qtest/meson.build                     |   3 +-
+ tests/qtest/milkv-duo-test.c                |  70 ++++++++
+ 21 files changed, 838 insertions(+), 1 deletion(-)
+ create mode 100644 docs/system/riscv/milkv-duo.rst
+ create mode 100644 hw/char/dw8250.c
+ create mode 100644 hw/misc/cv1800b_clk.c
+ create mode 100644 hw/riscv/cv1800b.c
+ create mode 100644 hw/riscv/milkv_duo.c
+ create mode 100644 include/hw/char/dw8250.h
+ create mode 100644 include/hw/misc/cv1800b_clk.h
+ create mode 100644 include/hw/riscv/cv1800b.h
+ create mode 100755 tests/functional/riscv64/test_milkv_duo.py
+ create mode 100644 tests/qtest/milkv-duo-test.c
+
 -- 
-2.54.0
+2.55.0.766.g2966f0265a-goog
 
 
