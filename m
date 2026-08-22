@@ -4,107 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46880C5DF97
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 21:06:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27F7CC5DF97
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 21:07:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxsuS-0008W9-FM; Sat, 22 Aug 2026 17:05:48 -0400
+	id 1wxsvP-0000X7-Ga; Sat, 22 Aug 2026 17:06:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wxsuQ-0008Vl-Ta
- for qemu-devel@nongnu.org; Sat, 22 Aug 2026 17:05:46 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wxsvO-0000Wr-4a
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 17:06:46 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wxsuP-0003Jz-Bn
- for qemu-devel@nongnu.org; Sat, 22 Aug 2026 17:05:46 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-c15d47266baso251529366b.3
- for <qemu-devel@nongnu.org>; Sat, 22 Aug 2026 14:05:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787432744; cv=none;
- d=google.com; s=arc-20260327;
- b=mAgRy7pTN6ZhADtjUebmbK97fQYmzc0hl4HbiNnrZvG9lweNpD8ZPBVR845Eyr7mLH
- M7UychTcNVxL2nskf52WHIjOM3dqTqqIDpBGeDf9XKL+HuGjAcinwh1GDX8NvRLERD/k
- ZefVVkYPah+UsevPpMRyhwL34w6YJtiw9bZvxyGdR+krHpI8bEo0oecoPSGc2DjJIgmO
- HKPRcx45TnTKEZEzMDLfyI8oSdDfxS4b1fmZEbTCJBTWHl8iD+GA5wosKxYu5SnZqWa9
- cM+NIVVYZFu+dgCv8B/to0Naydi5mEqbI0sq6tD+CBdrHqjLplE9qg8vyLSNkIsfmVeM
- CJAA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=JCz9bZnIii5gohrqJM3OwDngkVSi5tn9Qsx880bCmKE=;
- fh=wGZeUYt39FdrjiyDvngBMA/6KW8toEkLMWKs7FzaIuY=;
- b=Vk7Q7KDjpeqJw9LBk66cJN5y2ImWmBE2UtINN6du1e+nalXIk3T4jfI+2gyaaGcRqS
- 4eockbOSrSvwbH+w6927zF5MvGy3oQEr7coJeodQ4ZiYQ+ppN/6tiqtEtJWY5WDWkMGU
- WA24YcxpRMDCFQF6RxSZSkxvlRvsX5cyMLJn2xVltxWM5nScpI3IfoXqc2Lvn0csZuOx
- gVQYX/uucxVuy9oD1DtDRO5bZaYh9MaoqbGac0CC4xMVtkRKOYycX43OZBA1jc4w7lm4
- CI5gNqz20M+5l4P1YfLeQHGoSNIn0YxwawrrD2gnEnYhQmJaAQBvYHOEcWoXRjCqeOOg
- 4Sdw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <wafgo01@gmail.com>) id 1wxsvM-0003Ni-8b
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 17:06:45 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-c1600d040e4so333355666b.1
+ for <qemu-devel@nongnu.org>; Sat, 22 Aug 2026 14:06:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787432744; x=1788037544; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=JCz9bZnIii5gohrqJM3OwDngkVSi5tn9Qsx880bCmKE=;
- b=o1hchOef+iB/W+UtFf125QstlqzVbOy0zpmptbtcRo8Y/i43n5FbYIfQT2tIQ681x+
- Vt8IX3nsqvP16KC3tMUL1/1mclPw+lDdZZaF+s5vC2iHlTy6rkh6AtZ2Y5D/YIZg5ShE
- JOm0VMRMYcmk7SW2xvcDQFEpHnOka7yL2aZQAL/ioE5kUwn1r+VRKOYrerp66ZLOVhR6
- 6XpnTqQ9MqtmsVpbjePAJQcOAhWpNEWQlIXW/BV00LzcFbUHgyGSaqp8gmAoZQ5wJtPh
- h272qLl80EYMLIdeXgaO62T5yiXqMm29yItCiSfXu0ED26tZaVzDfhNsFpHMa1uGBHsR
- fKjw==
+ d=gmail.com; s=20251104; t=1787432802; x=1788037602; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=7hfdKEto3Mfut07oAlYPNJk31gEIeim99CqprSe3al8=;
+ b=PJOZR6HM8aODu5Iv/qfCqQOybL71UCP2K/X7AGHwmuHnEX8AMFm84ikFyTKIRjpQjl
+ mJuzZg7jX30Xx1vHuWxkgOQFVeaxXQi6vYbX2J75XieXxOP8jCR1Zz26XOx92jzCOG5Z
+ jIvV76FfIoJAlzIXGwy8SL9lgZB5b08/dUh/MGoSH4qh7RxQcUMY1qXiY48ShGYaITmL
+ 2lYEH8ozmsXyLnh2V8ttbG3xEHcZxOSB2QxCiLHo/GHh+Ud+xzGWvVt7Szh5n+/niaKn
+ hpdoNe7l1siW9Ela3zaJdDBbakHowU4pBZExIxrPEcRsVkPBDuQJfmX7KC+20PNan7rZ
+ yYdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787432744; x=1788037544;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
+ d=1e100.net; s=20251104; t=1787432802; x=1788037602;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=JCz9bZnIii5gohrqJM3OwDngkVSi5tn9Qsx880bCmKE=;
- b=ChAg3c4lfYQ/NnP+ENYCnpOXfm13DSShgfAQAVSxHn8AlHMTNRccu9g3fhmimZtlU6
- SBXE88m4vX7X5wNUk6Qk8qSroVAeaHArFEZsJUMDtyAjrSjz8C0+S+aUw4yn3khV+iB6
- Bu/Hqa+gTdfvJG5c+ilCaDQOKeQmJNEmkQPwtD8Cyb659ydSe1Eo1GTgftj3OKjEoTaS
- RQTGObaEglY+kK6k3BSASCCwpXeBrlVJbjjYJXaLqYKI55Rg4s71l85Zpzl80gLnBrGP
- 8zgFoCUKt3CutqnL8dulK4U6GfFxs95Iox97uCpBtyh3xIyze7ld/93ZO7/vu5KfXBF2
- gQJQ==
-X-Gm-Message-State: AFuF++mcWLLRrFA0kc52t06SFacg/rraxp32pwRDPVZztyLDML/Jf08p
- WOyuYv5Aa+721pevuIUAypYHMzdji1M4SQYh5jw/luwesZZWC8pAc+h/0Icpv/5lPyXQTIA3InP
- DG7ZNUTUl9Y2cKJ+qf1IEtbkhyuoIp0o=
-X-Gm-Gg: AR+sD10okemsfSGOtq/qMMnHs7cUHjvV0UFdm0o8iJ0niNdgShX947mlfmES9U5WQHh
- ziHzZKzXtpUfJ5AOX3HTJSzTk1EOahnvfyrGj2t+VGksA/mP4YOsY6//zncj9FTGcXuDE4LaPNf
- wOYbcYqsOnRHBkusSx8KkqrNZZPvByx5sMwQprzg3/aNFEND6YIO37jz8X6g7NHedndPel9ipIw
- zRNyEKVT9wfomHAELZD5s4sSa9mWq66rJdHpMqoh9Ba99ygOgueauOdaaw3A02hiDnz5389T2qh
- WIbNKJQKOpWSC0KKO1IQsWoe1Zzs/fMPOnJIrjykcqTRCDPQog==
-X-Received: by 2002:a17:906:ee8b:b0:c20:f6d9:d8c7 with SMTP id
- a640c23a62f3a-c246a6b0db6mr1760688766b.24.1787432743499; Sat, 22 Aug 2026
- 14:05:43 -0700 (PDT)
+ bh=7hfdKEto3Mfut07oAlYPNJk31gEIeim99CqprSe3al8=;
+ b=WPTOVLRAub++ihmnSuHA4e7NK4RrRF67iiDiHH7sP6veexNp3nKB89IxvDVB2puY5/
+ GU2sDT7v76wodhUD3hJzSO31Z+gj4nhOxWdIzpGqp38i22uVPBrm3+932oJ7ZADZuVQA
+ 8dzLpSSaSheapVIFt6PArMEmIROKIdx08K6nvlQ1kzyAZfVV2J8KMYdI9C1+24XIVOsn
+ Q9+n7U16KFWHQPVCnpqigh8PUG/HCwfy3Bt6cCVzv0k1iJV+eZ3Vl2H4WpF8LuTZXmzA
+ ZNGvSAba9U5kqmaOSP/thnEH47n+s85LsSX5t2jt7DB6wETnu7gbLak8B05QALbrBnu1
+ eI4Q==
+X-Gm-Message-State: AFuF++lOTg/mApPD8xN1ThOosjN7Ix5ZAOB2XnxGk+HkUtrHFwgNunUI
+ N18z/+6w2qgI1nGdzFc6DKQu/rGzw4gozrT1/jBtnwzyyqH4HGk7W932
+X-Gm-Gg: AR+sD11ywIsrKDGaxm4gU+HzpqU1tyjLdVGhg9vtektNho6HmYIUbDiK+iQh58cpoKN
+ OR2XjXBvQEjx84QlvkotAEeDu4f1dIXoYPdhcbFN8heRPfPEVA0Ytg52U9gMdqglPmGuhO14ibd
+ TIn3VDXb2vgmhw7GAHLaqS3pZDAhe1U6eianMGJZE1U62HSFqc65i18l+jHU6G94R1iwR5ETUx8
+ 9vIfM1nBVh0kUSq92uojoeIVaKxWXC9esjzjwpbb4ESS7pC9xpkDNMJ4IRpqdBHsMhouIYYVx9c
+ M/ituwKlfHPlrVsfbqJbFZsN/+fzaqVEVTy6kpjMIjZsv2eR6T7YAUqqXp2MSzmdG46mqMPkgEW
+ BzH/opQoWIUkrXKuPwZZbgyT6KxaIZXUFImXRz0GPT61kIgnf5DLmWaJAism9MxS1xcXEicxfb0
+ 9a1El9JAtuwvhuVAqR2ieWfuBmhrebPVBhea/BdCk4Z2PTGWC5WA==
+X-Received: by 2002:a17:907:d641:b0:c12:8a:7d7b with SMTP id
+ a640c23a62f3a-c244d45ad42mr2113491666b.1.1787432802349; 
+ Sat, 22 Aug 2026 14:06:42 -0700 (PDT)
+Received: from localhost ([2a02:8071:50c5:5c0::361b])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c2496296a46sm557817766b.21.2026.08.22.14.06.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 22 Aug 2026 14:06:41 -0700 (PDT)
+From: Wadim Mueller <wafgo01@gmail.com>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Peter Maydell
+ <peter.maydell@linaro.org>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>, Bin
+ Meng <bmeng.cn@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, Fabiano
+ Rosas <farosas@suse.de>
+Subject: Re: [RFC PATCH v2 00/14] hw/arm: add TI AM64x SoC and am64-virt
+ machine
+In-Reply-To: <87qzjrojkl.fsf@draig.linaro.org>
+References: <20260820124824.618671-1-wafgo01@gmail.com>
+ <87qzjrojkl.fsf@draig.linaro.org>
+Date: Sat, 22 Aug 2026 23:06:41 +0200
+Message-ID: <87qzjpj25a.fsf@gmail.com>
 MIME-Version: 1.0
-References: <20260814174830.1691540-1-zhangckid@gmail.com>
- <20260814174830.1691540-14-zhangckid@gmail.com>
- <87y0e12okc.fsf@pond.sub.org>
-In-Reply-To: <87y0e12okc.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Sun, 23 Aug 2026 05:04:43 +0800
-X-Gm-Features: AcwNN1VEpqhK5JcL5ylkz6JUcThsrHU1f_hWTT3YJ6c4NXaytMx9YRx-dMGRqBc
-Message-ID: <CAK3tnvL0N3AK78zwZVLP7ycujGeEHhmyuM6VG+LQd3GRg5CtbA@mail.gmail.com>
-Subject: Re: [PATCH V12 13/15] monitor/hmp: display IOThread holders
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=wafgo01@gmail.com; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -122,127 +105,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 20, 2026 at 4:17=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+On 2026-08-21 11:26, Alex Benn=C3=A9e wrote:
+
+> Wadim Mueller <wafgo01@gmail.com> writes:
 >
-> Zhang Chen <zhangckid@gmail.com> writes:
+>> Add support for the TI AM64x (Sitara AM6442) SoC and a board around it,
+>> ``am64-virt``. The model is complete enough to run the stock TI boot cha=
+in
+>> end to end:
+>>
+>>   ROM boot (tiboot3.bin) -> R5 SPL -> TF-A/OP-TEE -> U-Boot -> Linux SMP
+>>
+>> This is a resend: I posted a first RFC back in May [1] but got no feedba=
+ck
+>> on it. Since then was the series rebased onto actual master, reworked for
+>> style and split into reviewable pieces, so I send it out again in the ho=
+pe
+>> of getting some review.
+>>
+>> RFC because I would like feedback on the overall approach before polishi=
+ng
+>> further; see the open questions at the end.
+>>
+>> [1] https://lore.kernel.org/qemu-devel/20260528211210.74266-1-wafgo01@gm=
+ail.com/
+>>
+>> What is modelled
+>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> <snip>
+>> Open questions
+>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>>
+>>   * pc-bios/dtb/am64-virt.dtb: patch 13 checks in a generated DTB (with
+>>     its source) for convenience. I am not sure a machine-specific blob
+>>     belongs in pc-bios; happy to drop it and have the functional test
+>>     generate it with dtc instead, or drop the Linux-boot part of the tes=
+t.
+>>
+>>   * Splitting the DMSC: hw/misc/ti-dmsc.c is large because TI-SCI is
+>>     large. It could be split per message class (clocks / devices /
+>>     processor boot / security) if reviewers prefer, at the cost of a
+>>     non-functional intermediate state.
+>>
+>>   * Only one of the four R5F cores is modelled. mc->max_cpus reserves
+>>     room for the rest. Because the SoC realizes M4F/R5F vCPUs in addition
+>>     to the A53s and every vCPU needs a TCG context slot inside
+>>     smp.max_cpus, the machine defaults to the full vCPU budget. I would
+>>     appreciate a better idea than the actual "fail early with an
+>>     explanatory message" handling when the user passes a too-small -smp.
+>>
+>>   * The register-level stubs (DDRSS in particular) fake success rather
+>>     than modelling the hardware. That is deliberate, but tell me if you
+>>     would rather see them as plain unimplemented-device windows plus
+>>     firmware quirks elsewhere.
 >
-> > Display holder information in info iothreads to aid manual debugging.
-> > Omit the holders line when an IOThread has no holders.
-> >
-> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> > ---
-> >  monitor/hmp-cmds.c | 21 +++++++++++++++++++++
-> >  1 file changed, 21 insertions(+)
-> >
-> > diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-> > index e9fb8d827a..41a813e79f 100644
-> > --- a/monitor/hmp-cmds.c
-> > +++ b/monitor/hmp-cmds.c
-> > @@ -240,11 +240,32 @@ void hmp_info_iothreads(Monitor *mon, const QDict=
- *qdict)
-> >      IOThreadInfoList *info_list =3D qmp_query_iothreads(NULL);
-> >      IOThreadInfoList *info;
-> >      IOThreadInfo *value;
-> > +    IOThreadHolderList *h;
-> >
-> >      for (info =3D info_list; info; info =3D info->next) {
-> >          value =3D info->value;
-> >          monitor_printf(mon, "%s:\n", value->id);
-> >          monitor_printf(mon, "  thread_id=3D%" PRId64 "\n", value->thre=
-ad_id);
-> > +        monitor_printf(mon, "  holders=3D");
-> > +        for (h =3D value->holders; h; h =3D h->next) {
-> > +            IOThreadHolder *holder =3D h->value;
-> > +
-> > +            switch (holder->type) {
-> > +            case IO_THREAD_HOLDER_KIND_BLOCK_EXPORT:
-> > +                monitor_printf(mon, "[block-export: %s]",
-> > +                               holder->u.block_export.export_id);
-> > +                break;
-> > +            case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
-> > +                monitor_printf(mon, "[qom-path: %s]",
-> > +                               holder->u.qom_object.qom_path);
-> > +                break;
-> > +            default:
-> > +                monitor_printf(mon, "[unknown]");
-> > +                break;
->
-> This is unreachable.  Please use
->
->                default:
->                    g_assert_not_reached();
->
-> to make it obvious.
->
-> > +            }
-> > +        }
-> > +        monitor_printf(mon, "\n");
-> > +
-> >          monitor_printf(mon, "  poll-max-ns=3D%" PRId64 "\n", value->po=
-ll_max_ns);
-> >          monitor_printf(mon, "  poll-grow=3D%" PRId64 "\n", value->poll=
-_grow);
-> >          monitor_printf(mon, "  poll-shrink=3D%" PRId64 "\n", value->po=
-ll_shrink);
->
-> Quick test:
->
->     $ qemu-system-x86_64 -S -nodefaults -display none -chardev socket,id=
-=3Dchr-qmp,path=3Dtest-qmp,server=3Don,wait=3Doff -object monitor-qmp,id=3D=
-qmp,chardev=3Dchr-qmp -monitor stdio
->     QEMU 11.1.50 monitor - type 'help' for more information
->     (qemu) info iothreads
->     (qemu) q
->
-> Hmm, no output?  The QMP monitor should be holding the monitor I/O
-> thread.  To confirm that, I made monitor_complete() print things (patch
-> appended), and got
->
->     ### monitor qmp holding iothread mon_iothread
->     ### monitor compat_monitor0 without iothread
->
-> What's going on here?
+> I would add one more which is who is committing to maintain this model
+> if it is merged?
 >
 
-This is expected with the existing query-iothreads behavior.
-mon_iothread is created under the internal object root, while
-qmp_query_iothreads() only walks /objects, so internal IOThreads are
-intentionally not exposed through QMP/HMP.
+That would be me. The series already adds a MAINTAINERS entry with
+S: Maintained. In v3 I will make the F: patterns narrower, because
+hw/misc/ti-*.c currently claims every future TI misc device and not
+only the K3 ones.
 
-I prefer to preserve that behavior in this series, since exposing internal
-IOThreads would require additional API decisions, including handling ID
-collisions with user-created IOThreads.
+I develop and test firmware on
+real AM64x silicon (a phyCORE-AM64x SoM), and I use this model every
+day for this work, so I have both the hardware and the vendor boot
+chain here to reproduce regressions. I also intend to review patches
+which touch these files.
 
-I=E2=80=99ll also change the unreachable default case to
-g_assert_not_reached().
+The testing side of the same question I have answered in the thread of
+patch 14, where you raised it.
 
-Thanks
-Chen
+Best regards,
+Wadim
 
-
-
->
-> diff --git a/monitor/monitor.c b/monitor/monitor.c
-> index 26e7ef4d35..57672dbe0e 100644
-> --- a/monitor/monitor.c
-> +++ b/monitor/monitor.c
-> @@ -751,8 +751,13 @@ static void monitor_complete(UserCreatable *uc, Erro=
-r **errp)
->          };
->
->          mon->ctx =3D iothread_ref_and_get_aio_context(mon_iothread, &io_=
-holder);
-> +        printf("### monitor %s holding iothread %s\n",
-> +               object_get_canonical_path_component(OBJECT(mon)),
-> +               iothread_get_id(mon_iothread));
->      } else {
->          mon->ctx =3D qemu_get_aio_context();
-> +        printf("### monitor %s without iothread\n",
-> +               object_get_canonical_path_component(OBJECT(mon)));
->      }
->      mon->accept_input_bh =3D aio_bh_new(mon->ctx, monitor_accept_input, =
-mon);
->  }
->
+> --=20
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
 
