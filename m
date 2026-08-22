@@ -4,65 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24FA7C5DF8C
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 08:06:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD5B9C5DF97
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 10:45:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxgjC-0000hh-Ex; Sat, 22 Aug 2026 04:05:22 -0400
+	id 1wxjD8-0006jB-5b; Sat, 22 Aug 2026 06:44:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wxgjA-0000hU-RE; Sat, 22 Aug 2026 04:05:20 -0400
-Received: from mgamail.intel.com ([198.175.65.14])
+ (Exim 4.90_1) (envelope-from <christian@quante.one>)
+ id 1wxjD6-0006hi-Lt; Sat, 22 Aug 2026 06:44:24 -0400
+Received: from nx119.node01.secure-mailgate.com ([89.22.108.119])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wxgj8-0006Ms-Tl; Sat, 22 Aug 2026 04:05:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1787385919; x=1818921919;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=ZQTpR5m2HYemScE6+fxCLUrN5DDI2sT+aIhkpWEB6dM=;
- b=hikNDsQoN1O3elUxRLohC8RXVVOXNV4dDj8zcukS/MWpj9gF3HSPKZHo
- 0kIpeTcfvl3KbRpFiO42i1vStNlxmXAre15bTmmoYDDr3J9vzL7R6vPGl
- 7v+c0hMq/3aV1kRv2MMih7xzeyx3B1kGVThagJkPoLkThv/MhhQZJ/bbY
- j3DIk5DzAncjTv+NYQB+7eSnW1vYIjMIXWpIdox50a0SccoVkbiT4wuSf
- I+AdjU76x5Kv3YegiSehuY6pseLhDB0J3rIp/BhtG22whNb/idIj9Pzfe
- g1PtlgVajGqRPu/617p4CpwTIa5h7eg1dOOIeVeyyryyK/HuO2Ucf7EG6 w==;
-X-CSE-ConnectionGUID: Rt5fP7RZQ6uPPIHOhbzBCg==
-X-CSE-MsgGUID: lH5WOFXXR7ueEMsjAAQ7SA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11882"; a="91796015"
-X-IronPort-AV: E=Sophos;i="6.25,236,1779174000"; d="scan'208";a="91796015"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Aug 2026 01:05:15 -0700
-X-CSE-ConnectionGUID: 0ydaDvUJS3WXKU+NoTnpBw==
-X-CSE-MsgGUID: Y8FloF0nTMKA/9UkbFQ9Fw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,236,1779174000"; d="scan'208";a="265239305"
-Received: from junjie-desk-dev.bj.intel.com ([10.238.152.71])
- by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Aug 2026 01:05:13 -0700
-From: Junjie Cao <junjie.cao@intel.com>
+ (Exim 4.90_1) (envelope-from <christian@quante.one>)
+ id 1wxjD3-0006Nb-AD; Sat, 22 Aug 2026 06:44:24 -0400
+Received: from web279.dogado.net ([31.47.255.59])
+ by node01.secure-mailgate.com with esmtps (TLS1.2) tls
+ TLS_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <christian@quante.one>)
+ id 1wxjCx-001C7D-NY; Sat, 22 Aug 2026 12:44:16 +0200
+X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quante.one;
+ s=cloudpit; t=1787395455;
+ bh=8CUxlAnPB47hAsfraP5hfTpMeHjzKrOxAjlbJXLHrn4=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=A8PL1qoo9DlZl/sJOq/u5HoSOaX7zXAy6aRK1Fkefg1/ceQxrHsGBTvA0n7RyLA38
+ eo/nH4vgvFWHt5MxXYish/drSIVx9GfA9ucCTTz+2Q1k0ad32JcPDeReyDwdN9yIJZ
+ Df1LEMMKOuHgh0F4Qt9N9/VB6sBlaSGv5TgZayyQ=
+Received: from Zeuss.fritz.box (p549f1e64.dip0.t-ipconnect.de [84.159.30.100])
+ (Authenticated sender: christian@quante.one)
+ by web279.dogado.net (Postfix) with ESMTPSA id A45A4281B0E;
+ Sat, 22 Aug 2026 12:44:14 +0200 (CEST)
+X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
+From: Christian Quante <christian@quante.one>
 To: qemu-devel@nongnu.org
-Cc: Jonathan Cameron <jic23@kernel.org>, linux-cxl@vger.kernel.org,
- qemu-stable@nongnu.org
-Subject: [PATCH] hw/cxl: Fix heap buffer overflow in Set Feature cleanup path
-Date: Sat, 22 Aug 2026 16:05:08 +0800
-Message-ID: <20260822080508.300921-1-junjie.cao@intel.com>
-X-Mailer: git-send-email 2.43.0
+Cc: qemu-block@nongnu.org, jsnow@redhat.com, farosas@suse.de,
+ lvivier@redhat.com, pbonzini@redhat.com, kwolf@redhat.com,
+ Christian Quante <christian@quante.one>
+Subject: [PATCH 1/3] tests/qtest/fdc-test: give each test case its own QEMU
+ instance
+Date: Sat, 22 Aug 2026 12:43:27 +0200
+Message-ID: <20260822104329.42121-2-christian@quante.one>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260822104329.42121-1-christian@quante.one>
+References: <20260822104329.42121-1-christian@quante.one>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.14; envelope-from=junjie.cao@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.341,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-PPP-Message-ID: <178739545524.2525745.12066465853828930368@web279.dogado.net>
+X-PPP-Vhost: quante.one
+X-Originating-IP: 31.47.255.59
+X-SecureMailgate-Domain: web279.dogado.net
+X-SecureMailgate-Username: 31.47.255.59
+Authentication-Results: secure-mailgate.com;
+ auth=pass smtp.auth=31.47.255.59@web279.dogado.net
+X-SecureMailgate-Outgoing-Class: ham
+X-SecureMailgate-Outgoing-Evidence: SB/global_tokens (0.000230866402771)
+X-Recommended-Action: accept
+X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuVjvM7kvtM6EIuMk754uvuyFmG1VqY3LKzl
+ Ron6D/5esiu2SmbhJN1U9FKs8X3+Nt1HOctZ5X+40a9IXddeG3M38JQYgcgjsac3uQcQdCX4ROfH
+ zJ6mVE7ewsipSVIfs4ZyUoFWSg2XRLx9TxWU55AmS5+h1uiHzk/Rfxfh461YLyu3RZI1CD15pCOE
+ 1vk99ROIQSXp0prcVkrsJtqLDcOMdOtYechJ/ikE1WgRg4cS6K5mANmx2g/2xIniaWLUPf0al0h7
+ 43VOpKNY+4MjijihZK0EMmf3P50Ajf/tIX00Fuu2beRqilmjgQ6jA3UwYgm3QTha208ypFqQwBFb
+ xm4JX7semJdl8Weuy8+tlMSTQwhoy9D5QZ6a84vJal7pM1XhlAOd290vPXa7Loma0jth+x0iJ0NX
+ 07iZIeUSWePdS78HF9DWBc0WhbQl3RlROHMl5OjAPt7LlMbhgG9BOAmXwBM2j5REykHorDckk/GS
+ XOeJ+u+yrSHikBnwQI7OhPtOt12UKwWWu0uRyF+HHpfXfr5pxnekR5gKyX+MMXIWKOkgxlD67q1I
+ Gx5c0htKd4nZUthSv47vkSPENH+ftmELJxpLJ3Xc+Mv8qa2UQxOJ7ZnRFg37IGw7dk2dYrO1zkmH
+ CpwS2oZfMuFqjF2RVWG3hy/E+UX+2HRZAwqk+0mElDSRI7NMK5S50kjVVp4t0URWpqFpLVefeduZ
+ N+JHmMpG0x9NEum6+ayztSJ+2CI/y5AKvo1HkBEmDLlSM9m2plnfARM40/5kvSvjPlK9O7dFaIfV
+ aCHpEB6cFH6WJxE4ZtnMSo/WKlRNZzf4XVeCGimUHxj/pwGJViNmCoZa3RMN1DUsv5YmscDnaRNJ
+ o0LVnogWIjAfssmYooOojbMVMkKJo3dG96axRy+iXygDw2+Bm+JDUQg6tT9MLS0x/f6bZfTkD6Gr
+ 5MDzFdkrr3JxFjrsNjMV9Ofg1ecGMS6f0O9nWShVoZrkssanAkdYnqPukWYYHCxVMyzsJd+YpoKs
+ GdJH0Xy50uUJhMQ8Rx8ikSDci2z5PZC+7IhbNAp5pzxxYs9n5ew7JoabIXIkiO0B3a0RFhzyp4dK
+ iG0rpA0WSV5yoHDFJZLqjzsPy9CtBkGhUMOpyKA69LF1Ge2GaGfxmfrvYx9wAiRqmOW8oSbE6cLC
+ SuWjiWw7Q/zMGXa1uX3ak8AmaAdePjOfvAeIcA+vxeovAu21kK656rT9uyJ/sjgT/6bByKmsrCbi
+ xnqDMpbNOpXQ8IocMdGcSaiMqwNDMscPOKPwWY9jlVwvLaNUlXdN
+X-Report-Abuse-To: spam@node04.secure-mailgate.com
+X-Complaints-To: abuse@node01.secure-mailgate.com
+Received-SPF: pass client-ip=89.22.108.119; envelope-from=christian@quante.one;
+ helo=nx119.node01.secure-mailgate.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,73 +103,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cmd_features_set_feature() uses set_feat_info->data_size as the memset
-length when zeroing write-attribute buffers on Finish/Abort.  data_size
-accumulates bytes_to_copy across transfer parts but is only reset on
-INITIATE.  Since QEMU never returns Feature Transfer Out of Order,
-repeated transfers at the same offset grow data_size past sizeof(struct),
-and the final memset overflows the target buffer.
+The test cases share one QEMU instance and, with it, the state of the
+floppy controller.  Several of them therefore only pass in the order they
+happen to be registered in: test_read_no_dma_1, _18 and _19 read the medium
+that test_media_insert leaves in the drive, so running any of them on its
+own fails.  fuzz-registers is worse -- it writes 1000 random values to the
+eight I/O ports at FLOPPY_BASE and restores none of them, which is harmless
+only because it is the last test case to run in the shared instance; the
+two registered after it start one of their own.  Moving it anywhere else
+leaves an unacknowledged interrupt behind and the next test dies in
+send_seek().
 
-b71a179148 bounded the per-transfer memcpy against sizeof, but the
-cleanup memset still runs on the accumulated data_size, so the overflow
-survives that fix.
+Register the test cases from a table instead, through a wrapper that starts
+a QEMU instance, runs one test and stops it again.  The test functions are
+unchanged: they reach the current instance through global_qtest, which
+qtest_start() reassigns for every test.  The three read_no_dma tests now
+insert their own medium, and test_read_id no longer ejects at the end -- it
+did that only to leave the drive as the next test expected to find it.
 
-Pass sizeof() of the target struct to memset instead of data_size.
+The two CVE test cases keep qtest_add_func(); they already run a QEMU
+instance of their own and do not use global_qtest.
 
-Fixes: d88f66741410 ("hw/cxl/cxl-mailbox-utils: Add device patrol scrub control feature")
-Fixes: 2d41ce38fb9a ("hw/cxl/cxl-mailbox-utils: Add device DDR5 ECS control feature")
-Fixes: 5e5a86bab830 ("hw/cxl: Add support for Maintenance command and Post Package Repair (PPR)")
-Fixes: da5cafdc4ddd ("hw/cxl: Add emulation for memory sparing control feature")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+The same pattern is used by tests/qtest/boot-serial-test.c.
+
+Every test case now passes on its own, and the suite passes with the
+registration order reversed.
+
+Signed-off-by: Christian Quante <christian@quante.one>
 ---
- hw/cxl/cxl-mailbox-utils.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ tests/qtest/fdc-test.c | 71 ++++++++++++++++++++++++++++++------------
+ 1 file changed, 51 insertions(+), 20 deletions(-)
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index ec18338b42..f81b7b3303 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -1947,22 +1947,28 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
-         data_transfer_flag ==  CXL_SET_FEATURE_FLAG_ABORT_DATA_TRANSFER) {
-         memset(&set_feat_info->uuid, 0, sizeof(QemuUUID));
-         if (qemu_uuid_is_equal(&hdr->uuid, &patrol_scrub_uuid)) {
--            memset(&ct3d->patrol_scrub_wr_attrs, 0, set_feat_info->data_size);
-+            memset(&ct3d->patrol_scrub_wr_attrs, 0,
-+                   sizeof(ct3d->patrol_scrub_wr_attrs));
-         } else if (qemu_uuid_is_equal(&hdr->uuid, &ecs_uuid)) {
--            memset(&ct3d->ecs_wr_attrs, 0, set_feat_info->data_size);
-+            memset(&ct3d->ecs_wr_attrs, 0, sizeof(ct3d->ecs_wr_attrs));
-         } else if (qemu_uuid_is_equal(&hdr->uuid, &soft_ppr_uuid)) {
--            memset(&ct3d->soft_ppr_wr_attrs, 0, set_feat_info->data_size);
-+            memset(&ct3d->soft_ppr_wr_attrs, 0,
-+                   sizeof(ct3d->soft_ppr_wr_attrs));
-         } else if (qemu_uuid_is_equal(&hdr->uuid, &hard_ppr_uuid)) {
--            memset(&ct3d->hard_ppr_wr_attrs, 0, set_feat_info->data_size);
-+            memset(&ct3d->hard_ppr_wr_attrs, 0,
-+                   sizeof(ct3d->hard_ppr_wr_attrs));
-         } else if (qemu_uuid_is_equal(&hdr->uuid, &cacheline_sparing_uuid)) {
-             memset(&ct3d->cacheline_sparing_wr_attrs, 0,
--                   set_feat_info->data_size);
-+                   sizeof(ct3d->cacheline_sparing_wr_attrs));
-         } else if (qemu_uuid_is_equal(&hdr->uuid, &row_sparing_uuid)) {
--            memset(&ct3d->row_sparing_wr_attrs, 0, set_feat_info->data_size);
-+            memset(&ct3d->row_sparing_wr_attrs, 0,
-+                   sizeof(ct3d->row_sparing_wr_attrs));
-         } else if (qemu_uuid_is_equal(&hdr->uuid, &bank_sparing_uuid)) {
--            memset(&ct3d->bank_sparing_wr_attrs, 0, set_feat_info->data_size);
-+            memset(&ct3d->bank_sparing_wr_attrs, 0,
-+                   sizeof(ct3d->bank_sparing_wr_attrs));
-         } else if (qemu_uuid_is_equal(&hdr->uuid, &rank_sparing_uuid)) {
--            memset(&ct3d->rank_sparing_wr_attrs, 0, set_feat_info->data_size);
-+            memset(&ct3d->rank_sparing_wr_attrs, 0,
-+                   sizeof(ct3d->rank_sparing_wr_attrs));
-         }
-         set_feat_info->data_transfer_flag = 0;
-         set_feat_info->data_saved_across_reset = false;
-
-base-commit: af06b5df2610fe5de6c02d17c17bced9e9f0d47d
+diff --git a/tests/qtest/fdc-test.c b/tests/qtest/fdc-test.c
+index 1e1dd8659d..fd38475bf7 100644
+--- a/tests/qtest/fdc-test.c
++++ b/tests/qtest/fdc-test.c
+@@ -510,9 +510,6 @@ static void test_read_id(void)
+     g_assert_cmpint(cyl, ==, 8);
+     g_assert_cmpint(head, ==, 1);
+     g_assert_cmpint(st0, ==, head << 2);
+-
+-    /* Leave the drive empty, the way the machine starts up. */
+-    media_eject();
+ }
+ 
+ /*
+@@ -552,6 +549,7 @@ static void test_read_no_dma_1(void)
+ {
+     uint8_t ret;
+ 
++    media_insert();
+     outb(FLOPPY_BASE + reg_dor, inb(FLOPPY_BASE + reg_dor) & ~0x08);
+     send_seek(0);
+     ret = send_read_no_dma_command(1, 0x04);
+@@ -562,6 +560,7 @@ static void test_read_no_dma_18(void)
+ {
+     uint8_t ret;
+ 
++    media_insert();
+     outb(FLOPPY_BASE + reg_dor, inb(FLOPPY_BASE + reg_dor) & ~0x08);
+     send_seek(0);
+     ret = send_read_no_dma_command(18, 0x04);
+@@ -572,6 +571,7 @@ static void test_read_no_dma_19(void)
+ {
+     uint8_t ret;
+ 
++    media_insert();
+     outb(FLOPPY_BASE + reg_dor, inb(FLOPPY_BASE + reg_dor) & ~0x08);
+     send_seek(0);
+     ret = send_read_no_dma_command(19, 0x20);
+@@ -656,10 +656,53 @@ static void test_cve_2021_3507(void)
+     qtest_quit(s);
+ }
+ 
++/*
++ * Each test gets its own QEMU instance, so that none of them depends on the
++ * state another one left behind.  Without this, several tests only pass in
++ * the order they happen to be registered in: the read_no_dma tests need the
++ * medium that test_media_insert leaves in the drive, and fuzz-registers
++ * writes random values to the eight I/O ports at FLOPPY_BASE and restores
++ * none of them.
++ */
++typedef struct {
++    const char *path;
++    void (*fn)(void);
++} FDCTest;
++
++static const FDCTest fdc_tests[] = {
++    { "/fdc/cmos",              test_cmos },
++    { "/fdc/no_media_on_start", test_no_media_on_start },
++    { "/fdc/read_without_media", test_read_without_media },
++    { "/fdc/media_change",      test_media_change },
++    { "/fdc/sense_interrupt",   test_sense_interrupt },
++    { "/fdc/relative_seek",     test_relative_seek },
++    { "/fdc/read_id",           test_read_id },
++    { "/fdc/read_id_no_media",  test_read_id_no_media },
++    { "/fdc/verify",            test_verify },
++    { "/fdc/media_insert",      test_media_insert },
++    { "/fdc/read_no_dma_1",     test_read_no_dma_1 },
++    { "/fdc/read_no_dma_18",    test_read_no_dma_18 },
++    { "/fdc/read_no_dma_19",    test_read_no_dma_19 },
++    { "/fdc/fuzz-registers",    fuzz_registers },
++};
++
++static void run_isolated(const void *data)
++{
++    const FDCTest *test = data;
++
++    qtest_start("-machine pc -device floppy,id=floppy0");
++    qtest_irq_intercept_in(global_qtest, "ioapic");
++
++    test->fn();
++
++    qtest_end();
++}
++
+ int main(int argc, char **argv)
+ {
+     int fd;
+     int ret;
++    size_t i;
+ 
+     /* Create a temporary raw image */
+     fd = g_file_open_tmp("qtest.XXXXXX", &test_image, NULL);
+@@ -671,29 +714,17 @@ int main(int argc, char **argv)
+     /* Run the tests */
+     g_test_init(&argc, &argv, NULL);
+ 
+-    qtest_start("-machine pc -device floppy,id=floppy0");
+-    qtest_irq_intercept_in(global_qtest, "ioapic");
+-    qtest_add_func("/fdc/cmos", test_cmos);
+-    qtest_add_func("/fdc/no_media_on_start", test_no_media_on_start);
+-    qtest_add_func("/fdc/read_without_media", test_read_without_media);
+-    qtest_add_func("/fdc/media_change", test_media_change);
+-    qtest_add_func("/fdc/sense_interrupt", test_sense_interrupt);
+-    qtest_add_func("/fdc/relative_seek", test_relative_seek);
+-    qtest_add_func("/fdc/read_id", test_read_id);
+-    qtest_add_func("/fdc/read_id_no_media", test_read_id_no_media);
+-    qtest_add_func("/fdc/verify", test_verify);
+-    qtest_add_func("/fdc/media_insert", test_media_insert);
+-    qtest_add_func("/fdc/read_no_dma_1", test_read_no_dma_1);
+-    qtest_add_func("/fdc/read_no_dma_18", test_read_no_dma_18);
+-    qtest_add_func("/fdc/read_no_dma_19", test_read_no_dma_19);
+-    qtest_add_func("/fdc/fuzz-registers", fuzz_registers);
++    for (i = 0; i < ARRAY_SIZE(fdc_tests); i++) {
++        qtest_add_data_func(fdc_tests[i].path, &fdc_tests[i], run_isolated);
++    }
++
++    /* These use a QTestState of their own instead of global_qtest */
+     qtest_add_func("/fdc/fuzz/cve_2021_20196", test_cve_2021_20196);
+     qtest_add_func("/fdc/fuzz/cve_2021_3507", test_cve_2021_3507);
+ 
+     ret = g_test_run();
+ 
+     /* Cleanup */
+-    qtest_end();
+     unlink(test_image);
+     g_free(test_image);
+ 
 -- 
-2.43.0
+2.53.0
 
 
