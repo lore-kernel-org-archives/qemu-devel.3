@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E90A8C5DF97
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 19:08:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA8E2C5DF8C
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Aug 2026 19:09:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wxr4u-00040i-Ee; Sat, 22 Aug 2026 15:08:28 -0400
+	id 1wxr4v-000411-Eq; Sat, 22 Aug 2026 15:08:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wxr4s-00040L-Te
- for qemu-devel@nongnu.org; Sat, 22 Aug 2026 15:08:26 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
+ id 1wxr4u-00040j-F1
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 15:08:28 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mattst88@gmail.com>)
- id 1wxr4q-0005kC-EM
- for qemu-devel@nongnu.org; Sat, 22 Aug 2026 15:08:26 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-836c590b61eso34090587b3.0
- for <qemu-devel@nongnu.org>; Sat, 22 Aug 2026 12:08:23 -0700 (PDT)
+ id 1wxr4s-0005kQ-BO
+ for qemu-devel@nongnu.org; Sat, 22 Aug 2026 15:08:28 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-66c9995ca60so5321313d50.1
+ for <qemu-devel@nongnu.org>; Sat, 22 Aug 2026 12:08:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787425703; x=1788030503; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Z0IhsnXCljV6fjz4eVZmXpcHm+0uuEkyQyR5ZDouewM=;
- b=Jv21TC31Q1kjmwrunZjjwbOKcRNXHt0ev8cfR739dEZMdqQHJW8N3O8/Fa1sDlsOFE
- KGyRoUVjG7rK/VYn4d1LGoOsdjFzESuJFhXm542gw5wZYWMEaz+TtfkHX+CD6eXyjMBt
- +R5i1+qRZAltO4BjqLBttGgFs/vUNMXbHxEsqvnsbEHcgmm9oqoSvFouHHVQF44WtmsX
- plfb3+afX22KemXvHUqrziZ2vUm1ubuyANajFao2yUYwDPeNzY+EhbmvljLyPvuZ9kA+
- MyXpt5rCIORdks1YA8w9mHfGE/o+rMdYAwLQYW89drGfBToYwsgFdvbQAS+4fMnwEvqz
- Fajg==
+ d=gmail.com; s=20251104; t=1787425705; x=1788030505; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Il7VWeSEPUOBiY8Vlk0cJzi/A/8E9vL/OigwqXSjBD0=;
+ b=diziOCGZdnUEJU3CPHGf5H9feSrTXY6Z73Mw7Cd8g6Hfkh/broC2H7v2vMcGPFfdiX
+ bncpJftL3LCdREVPQBTprbr3muh3AQdreMzj/miYOELTH8UYaEsxBOEFjQZRbdkj1oFS
+ gmFY2gC6iOl4zOqoVEnPyXiziaHO92GFcEwR6wEFlp/FcrvTso7Ia3YFf3aLvyfvW9dJ
+ zPcB99vRD0ruu4fNfsuqfLPEyS3keDxu5FogF0dt4T5pp+O9QFxgsmRqWmVK74lZl6hi
+ vqopyIYj8V2a8fUUYFqPXECLTPXTd3S7HPmOOLvgp6zdApui8MA9tuECrbAsv8ah97N6
+ SWsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787425703; x=1788030503;
- h=content-transfer-encoding:content-type:mime-version:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Z0IhsnXCljV6fjz4eVZmXpcHm+0uuEkyQyR5ZDouewM=;
- b=J6nHQ5XkXS3rPyZZgmB8p/9InkS6/IC0Gcea54xKLUwTiBhJWGiSjkSoJaKVrdOE6M
- 9kaAZZUHdB9DtQ2MURmQrowbhFybCWcqY3dGvMpeItLtrcPMOu6Tlj8sDKKF1kk5DFA1
- 0i/NrRm26mcSOEhapAmrVW3zkAt7Q9ajjBKSafqeHRdFX2KLP+jPt+sW+kyWosVu7bFp
- wbouJnsWZbHQbvUzFyWIDXclic8WLwG4oJyauLnimQ0rlLUjVlKp2z9H0MOoNdY3NPDB
- ihsJUe/Zbgi0OuVSZK838xhT9J4TAl4ZdZ3/DhnVxqOhlWHXpJQCnHw28mEhIlBxaDCJ
- 2v4w==
-X-Gm-Message-State: AFuF++nzVlDa0xAWn9afNjWkTjWZrdn7Hz/irE2aUH/j6An6d+zhqHrY
- 58XzmGJqQjeVEXqkox7ri1AJnbEFQ2AxqewXPAySweNWM57BYc7JAF6LNSXp4GMoAWM=
-X-Gm-Gg: AR+sD10AQiRjtac3og2sqDTM2VjDmbjIRNPHRs098R7J4YbZYKh9eFK4ayH3g0NvLdO
- 19rl9tzhUpI2AE6kP9gjsBSFNogIOiTE8t6nQbNt08Gf3xLxR48spceQFrGuFZSQubnuMp2csFj
- flziTqrY33IP9mZJkEmAAW+rtnNDQao45uytHlOxyAZSNu1Ys+c/4P8bH2nkCPbwkroOGkssDeP
- 7mJY20hi3ozkf9bi0vYho8M3vEhUahSNzUYFSJhzm105O65xmo4kaBHS6jjs7XziBSe+QADjSvK
- rv/njYCuwwBu4rJAMQXOA33RJ1Y+mqS0XV2KgEFKXzt568G1YuBja9niZ1XiN4ogTUp9b46wtUL
- 0kEfxOhE5EDrLGF6LNqaLaripI9dQF42dqsQcelcaU4AZAN2juWu3U71rFEtFUGfviOGkohTvK/
- DYJCKviJr5S+PeLhFeHiaUr/9faW+oY5pxqByEWe4MBwLg6here7Dsj1H5zjk/pBeGT139TTOMC
- rfPwwhlOlMD0W5S92Z5j7fOBXXWHmL0Vqhb8Dye
-X-Received: by 2002:a05:690c:7013:b0:820:10f1:b791 with SMTP id
- 00721157ae682-84c9c96f7a0mr29071167b3.36.1787425702496; 
- Sat, 22 Aug 2026 12:08:22 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787425705; x=1788030505;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Il7VWeSEPUOBiY8Vlk0cJzi/A/8E9vL/OigwqXSjBD0=;
+ b=YhOIHBZictWqskOTpLFoA2pwiE+Ct9MuoC1cLqxaC9cR5snxb5aadzb5jUTHZ64QTE
+ hFU44Py1ONJehNqBNZ2WNcjE1ynvopHlJIox67yvp6SXLVIVHW7S7nwtQSAxyH7NWABl
+ XHpMwCdQRaaviNyT4iXcZL+39AmqQwFzG9Kz3K/2L7Z5Xdj6BvbEx6b10hWwYP3sLx0d
+ We9ki5JbRuMIvMyYvuJUy5XZkpTV5kSYzURoS0Xgi6WGv6u4rTezwEca9JNmZLwbSS+N
+ vG98JggQEzRfkUB56/Dkks3JteeIwKGiYiQEiAmxiC82dnFS98Ka4MuHZoS4omIhhfZb
+ XmnA==
+X-Gm-Message-State: AFuF++lD0+n/D5DjJGD7OWz22NdTQNI+D7Y4OUq5d668dINY9BvBdCWO
+ fqOD52NBIm7y+d+TsumpR4bgeHs5RYOoBsI7KMq/Z3QGcHjBWXrgoC1jylWJ1/Sx0d0=
+X-Gm-Gg: AR+sD12lTgRMM0TiGpf7/q9SIgWDnZkO3ZSsDlJXDy5t694rn2RJ3A4+Goo5xHiezda
+ 45QrjCKDcASnQ6zTzvmgx3Gz+CONfgVInxAxsiK0QO4javxDAUqGH5lVafsQs3maWxoL0lUlH/D
+ 7A/BVqEGLLO+86suH4aWTD5fboHv9MEoJ/1NlAKX933l+fzfyff5hNC1VQ1osccnBubEN2ZbyET
+ wB9uYoSkzKthqbHgu61uScxIWDuLgcFLlLolHBm/3SLN16sOviAvO4QzkW8XwwWMkM/OsL4Bl30
+ Tnm2fyBxZ+GS51UX3U+G07PoxGMRm5sWqkZsADdPC4OLgIILU6v+mmv+8AtFucI7jY5vJpoOzer
+ ykt0IP0fIuMqO43OpqeYFRpeoB8kDjMELpWSoxdgtveLQL3Ae0jc57mNjfmktWYiHXbgbwVilnv
+ VwRvWkQ/I/VxciTszkz6xXjleQQbUu/GHvDBeInEIJrwj96USR4AhZOXHukDqGyw9jhImB7GCOv
+ 4fHi2IRunSrg95xk8VvHi6uTUA9dy7vUXpndUbH
+X-Received: by 2002:a53:c505:0:b0:666:c4c5:7525 with SMTP id
+ 956f58d0204a3-66ce5b83b4dmr3438472d50.24.1787425704951; 
+ Sat, 22 Aug 2026 12:08:24 -0700 (PDT)
 Received: from localhost (107-220-129-194.lightspeed.chrlnc.sbcglobal.net.
  [107.220.129.194]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-84caa9cfd29sm13677667b3.26.2026.08.22.12.08.19
+ 956f58d0204a3-66cf4665056sm1205778d50.8.2026.08.22.12.08.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 22 Aug 2026 12:08:19 -0700 (PDT)
+ Sat, 22 Aug 2026 12:08:24 -0700 (PDT)
 From: Matt Turner <mattst88@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, pbonzini@redhat.com, philmd@oss.qualcomm.com,
  alex.bennee@linaro.org, zhao1.liu@intel.com,
  Matt Turner <mattst88@gmail.com>
-Subject: [PATCH v3 0/7] accel/tcg: cut per-block dispatch overhead
-Date: Sat, 22 Aug 2026 15:08:11 -0400
-Message-ID: <20260822190818.1829249-1-mattst88@gmail.com>
+Subject: [PATCH v3 1/7] accel/tcg: fold the dynamic cflags into
+ CPUState::tcg_cflags
+Date: Sat, 22 Aug 2026 15:08:12 -0400
+Message-ID: <20260822190818.1829249-2-mattst88@gmail.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260822190818.1829249-1-mattst88@gmail.com>
+References: <20260822190818.1829249-1-mattst88@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=mattst88@gmail.com; helo=mail-yw1-x112d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=mattst88@gmail.com; helo=mail-yx1-xb132.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,244 +104,275 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For guests running large amounts of code, most of what TCG executes is not
-translated guest work but the fixed overhead around it. Blocks are short and
-there are a great many of them, so the constant cost at each end of a block
-(the interrupt poll and the can_do_io stores on entry, the dispatch on exit)
-ends up dominating everything else.
+curr_cflags() is called once per TB dispatch, from helper_lookup_tb_ptr()
+and from the cpu_exec() loop. It recomputes the same value every time:
 
-The workload throughout is qemu-alpha running an emulated alpha gcc 16.2.0
-compiling the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64
-host, in a --static --enable-lto --target-list=alpha-linux-user build. It
-executes 34.2 billion TBs at 6.04 guest instructions each, and 24.6% of its
-TB exits cannot use goto_tb. That is a representative shape for any guest
-whose text is much larger than a page: indirect calls and returns
-everywhere, plus direct branches that merely crossed a page boundary.
+    uint32_t cflags = cpu->tcg_cflags;
+    if (unlikely(cpu_single_stepping(cpu))) { ... }
+    else if (qatomic_read(&one_insn_per_tb)) { ... }
+    else if (qemu_loglevel_mask(CPU_LOG_TB_NOCHAIN)) { ... }
 
-The first three patches are ordinary cleanups that stand on their own; patch
-3 picked up review tags in v2. The remaining four are marked RFC individually
-and are where the interesting questions are.
+That is three loads and three branches on the hottest path in the
+interpreter, for state that changes only when gdb enables single-step,
+when one-insn-per-tb is toggled, or when the log mask changes.
 
-  1  accel/tcg: fold the dynamic cflags into CPUState::tcg_cflags
+None of the three has to be sampled at dispatch time. Fold each into
+CPUState::tcg_cflags where it changes and curr_cflags() becomes a single
+load of a field that TB lookup has to read anyway.
 
-     curr_cflags() recomputed three unlikely tests on every one of the run's
-     8.4 billion dispatches, from state that changes only when gdb enables
-     single-step, when one-insn-per-tb is toggled, or when the log mask
-     moves. Fold each into tcg_cflags where it changes.          -5.15%
+The derived bits -- CF_COUNT_MASK, CF_NO_GOTO_TB, CF_NO_GOTO_PTR and
+CF_SINGLE_STEP -- are never set by tcg_cflags_set(), so tcg_update_cflags()
+can recompute them in place without disturbing the rest, and conversely
+tcg_cflags_set() ORs in its bits without disturbing them.
 
-  2  accel/tcg: enlarge the TB jump cache to 64K entries
+There are three places to call it:
 
-     4096 entries is too small for a guest running a large program;
-     tb_htable_lookup() is 6.10% of samples. 16 bits is the knee of the
-     sizing curve, at 1 MiB per vCPU.                   -5.92%, -8.71% wall
+  - tcg_exec_realizefn(), so that a CPU created after the command line has
+    been parsed starts out with the right value. This covers user-only,
+    where tcg_cpu_init_cflags() is not reached. linux-user's cpu_copy()
+    copies tcg_cflags wholesale, so a cloned thread inherits it.
 
-  3  accel/tcg: skip the can_do_io stores in user-only builds
+  - cpu_single_step(), which changes one CPU and runs either on that CPU's
+    thread or with it stopped.
 
-     Two stores per TB that nothing in a user-only build reads: 68 billion
-     of them over the run.                              -4.57%, -4.53% wall
+  - tcg_set_one_insn_per_tb() and qemu_set_log_internal(), which change
+    every CPU. Both can be reached from the monitor while the vCPUs are
+    running -- 'one-insn-per-tb on' and 'log nochain' -- so the update is
+    queued with async_safe_run_on_cpu() and each CPU writes its own cflags
+    with the others halted.
 
-  4  RFC: tcg: probe the TB jump cache inline instead of calling a helper
+Measured with qemu-alpha running an emulated alpha gcc 16.2.0 compiling
+the SQLite 3.45.1 amalgamation (255k lines, -O2) on an x86-64 host, in a
+build configured with --enable-lto:
 
-     95.8% of those 8.4 billion helper_lookup_tb_ptr() calls hit the jump
-     cache. Emit the probe inline (hash, four guarded loads, goto_ptr) and
-     call the helper only on a miss.                   -34.67%, -25.94% wall
+    before: 1,646,994,254,249 instructions
+    after:  1,562,204,796,597 instructions   -5.15%
 
-  5  RFC: accel/tcg: allow cross-page goto_tb chaining in user-only builds
+That workload issues 8.4 billion dispatches, so the per-call saving is
+small but the aggregate is not. The emulated compiler produces
+byte-identical output before and after.
 
-     translator_use_goto_tb() refuses to chain across a page. In user-only
-     builds the invalidation path already covers what that was protecting
-     against: every mmap/mprotect/munmap reaches page_set_flags(), which
-     invalidates and unlinks. Lift it there for runs that can never acquire
-     a breakpoint, keep it for system mode.             -2.75%, -4.84% wall
+Wall clock does not move: 133.19s to 132.58s, a 0.46% difference against a
+run-to-run spread larger than that. The removed work is a few predictable
+loads and branches that the host executes largely in parallel with the
+surrounding dispatch, so this patch is worth taking for the instruction
+count and for what it enables, not for a time saving that can be measured
+on its own.
 
-  6  RFC: accel/tcg: poison the jump cache instead of polling for indirect
-     exits
-
-     A block only needs the icount_decr poll if it can leave by goto_tb;
-     every other exit already passes through a dispatch. Give the inline
-     probe its own jump cache base pointer and point it at zeroes when an
-     exit is requested, so every dispatch misses into the helper, which
-     returns the epilogue. Emit the poll only in blocks that emitted a
-     goto_tb.                                           -2.52%, -1.96% wall
-
-  7  RFC: tcg: fold a guest displacement into the host addressing mode
-
-     tcg_gen_qemu_ld/st cannot express a based access, so a target with a
-     displacement in its encodings materializes the address with an lea
-     that the host addressing mode would have done for free. Fold a
-     preceding constant add into a new argument on the op, opt-in per
-     backend, wired up for x86_64 user-only.            -5.70%, -3.20% wall
-
-Each percentage is against the patch before it. Every stage was measured in
-one session on the same host, so end to end, from an unmodified LTO build of
-the same base to the full series:
-
-    instructions retired: 1,646,994,254,249 -> 819,262,147,022   -50.26%
-    wall clock:                     133.19s ->          77.30s   -41.96%
-
-The two figures do not track each other, and that is the interesting part:
-what the series removes is cheap, well-predicted, highly pipelined work, so
-it retires far more instructions than it saves time. Patch 4 also cuts L1
-icache load misses by 39.0%, because a dispatch no longer jumps into qemu's
-.text and evicts translated code; qemu's own .text falls from 38.8% to 5.3%
-of profile samples.
-
-Every revision was built and measured separately, so the series bisects, and
-the emulated compiler produces byte-identical assembly output at every step,
-which is the correctness check these patches most need. Three new alpha
-tests cover the hazards the series creates: tests/tcg/alpha/test-xpage-chain.c
-and tests/tcg/alpha/gdbstub/xpage-bp.py (patch 5) and test-indirect-irq.c
-(patch 6). Each fails or hangs if the mechanism it covers is removed, which
-is what makes them tests of the new behavior rather than of the old.
-
-Changes since v2
-================
-
-The biggest change is that "RFC: accel/tcg: only poll for interrupts in
-blocks that can close a cycle" is dropped. Richard pointed out that it let a
-straight-line run of arbitrary length go unchecked, since a block with no
-backward edge polled nowhere. Patch 6 now keeps the poll where a block can
-leave by goto_tb and relies on the dispatch everywhere else, which holds the
-one-block bound without any analysis of the guest's control flow graph. All
-of v2's measurements for that patch were taken with the dropped patch
-underneath and have been replaced by a fresh measurement of the series as it
-now stands.
-
-  1  Rewritten as folding the dynamic bits into CPUState::tcg_cflags where
-     they change, rather than caching curr_cflags() in a second field.
-     Monitor-side updates ('one-insn-per-tb on', 'log nochain') are queued
-     with async_safe_run_on_cpu() so each CPU writes its own cflags.
-
-  2  Sizing curve re-measured on top of the new patch 1, now with wall clock
-     alongside instructions retired.
-
-  3  Back to #ifndef CONFIG_USER_ONLY. QEMU's IS_ENABLED() is IS_EMPTY(),
-     true only for a symbol Meson defines empty, and CONFIG_USER_ONLY is
-     defined as 1, so v2's test was always false and the stores were emitted
-     after all. Review tags carried over; the numbers are from the working
-     form.
-
-  4  Folded into tcg_gen_lookup_and_goto_ptr() instead of adding a second
-     entry point beside it (Richard), which changed all 38 call sites.
-     cs_base is compared too, which is what lets the probe be enabled
-     generically rather than per target. Audited which targets may pass a
-     real PC: five do, the rest pass NULL and keep the helper call. The
-     breakpoint poison now happens in cpu_breakpoint_insert() rather than
-     only from the poisoned CPU's own main loop, since a thread dispatching
-     indirectly need never reach that loop.
-
-  5  Only take the shortcut when no gdbstub was requested: the same-page rule
-     also forces a breakpoint check on entry to every page, and without that
-     a chain established earlier runs past a breakpoint set later. Reported
-     by Richard. Changed translator_use_goto_tb() rather than
-     translator_is_same_page(), which i386, riscv and s390x use for something
-     else and which v2 perturbed as a side effect. Added the gdbstub half of
-     the test.
-
-  6  Rebased onto the removal described above, with the deferred-emission
-     machinery moved here from the dropped patch, and re-measured.
-
-  7  Unchanged in substance, re-measured on the new baseline.
-
-What I would most like reviewed
-===============================
-
-  - Patch 5 reverses a deliberate decision made in d3a2a1d803 on the
-    strength of an argument about the user-only invalidation paths, plus a
-    gate on whether gdb can ever attach.
-
-  - Patch 6's un-poison in the main loop races a concurrent poison from
-    another thread. I believe the existing barrier around
-    icount_decr.u16.high covers it, but my testing was single-threaded user
-    mode.
-
-  - Patch 4 treats cpu flags, cflags and cs_base as translation-time
-    constants in its guards, reads a jump cache entry without qatomic_read(),
-    and leaves one_insn_per_tb and -d nochain toggles visible only at the
-    next non-inline exit.
-
-  - Patch 7 only examines the immediately preceding op, refuses any access
-    with a slow path (so user-only, and no alignment check), and leaves the
-    i128 pairs alone.
-
-  - Patch 2's 1 MiB per vCPU is easy to justify for a single-vCPU
-    linux-user process and less obvious for system emulation with many
-    vCPUs. It may want to be sized per target or made tunable rather than
-    raised unconditionally.
-
-Patches 4 and 7 are wired up for alpha and x86_64 respectively; everything
-else is target-independent, and no other backend changes behavior or needs
-touching.
-
-v2: https://lore.kernel.org/qemu-devel/20260817190038.580257-1-mattst88@gmail.com/
-
-Matt Turner (7):
-  accel/tcg: fold the dynamic cflags into CPUState::tcg_cflags
-  accel/tcg: enlarge the TB jump cache to 64K entries
-  accel/tcg: skip the can_do_io stores in user-only builds
-  RFC: tcg: probe the TB jump cache inline instead of calling a helper
-  RFC: accel/tcg: allow cross-page goto_tb chaining in user-only builds
-  RFC: accel/tcg: poison the jump cache instead of polling for indirect
-    exits
-  RFC: tcg: fold a guest displacement into the host addressing mode
-
- accel/tcg/cpu-exec-common.c                   |  33 +++-
- accel/tcg/cpu-exec.c                          | 122 +++++++++++++++
- accel/tcg/internal-common.h                   |  13 +-
- accel/tcg/tb-jmp-cache.h                      |   2 +-
- accel/tcg/tcg-accel-ops.c                     |   1 +
- accel/tcg/tcg-all.c                           |   1 +
- accel/tcg/translator.c                        |  94 +++++++++++-
- cpu-common.c                                  |  11 ++
- cpu-target.c                                  |   3 +
- gdbstub/user.c                                |  14 ++
- include/gdbstub/user.h                        |  11 ++
- include/hw/core/cpu.h                         |  11 ++
- include/system/tcg.h                          |  21 +++
- include/tcg/tcg-op-common.h                   |  16 +-
- include/tcg/tcg-op.h                          |  12 ++
- include/tcg/tcg-opc.h                         |   9 +-
- include/tcg/tcg.h                             |   2 +
- stubs/meson.build                             |   1 +
- stubs/tcg-cflags.c                            |  20 +++
- target/alpha/translate.c                      |   4 +-
- target/arm/tcg/translate-a64.c                |   4 +-
- target/arm/tcg/translate.c                    |  10 +-
- target/avr/translate.c                        |   4 +-
- target/hexagon/translate.c                    |   4 +-
- target/hppa/translate.c                       |   6 +-
- target/i386/tcg/translate.c                   |   2 +-
- .../tcg/insn_trans/trans_branch.c.inc         |   2 +-
- target/loongarch/tcg/translate.c              |   4 +-
- target/m68k/translate.c                       |   2 +-
- target/microblaze/translate.c                 |   4 +-
- target/mips/tcg/nanomips_translate.c.inc      |   2 +-
- target/mips/tcg/translate.c                   |   6 +-
- target/or1k/translate.c                       |   4 +-
- target/ppc/translate.c                        |   4 +-
- target/riscv/tcg/insn_trans/trans_rvzce.c.inc |   4 +-
- target/riscv/tcg/translate.c                  |   2 +-
- target/rx/translate.c                         |   4 +-
- target/s390x/tcg/translate.c                  |   5 +-
- target/sh4/translate.c                        |   4 +-
- target/sparc/translate.c                      |   4 +-
- target/tricore/translate.c                    |   4 +-
- tcg/tcg-op-ldst.c                             |   3 +-
- tcg/tcg-op.c                                  | 101 +++++++++++-
- tcg/tcg.c                                     |  86 ++++++++++-
- tcg/x86_64/tcg-target.c.inc                   |  61 ++++++++
- tcg/x86_64/tcg-target.h                       |   3 +
- tests/tcg/alpha/Makefile.target               |  18 ++-
- tests/tcg/alpha/gdbstub/xpage-bp.py           |  34 +++++
- tests/tcg/alpha/test-indirect-irq.c           |  55 +++++++
- tests/tcg/alpha/test-xpage-chain.c            | 144 ++++++++++++++++++
- util/log.c                                    |   4 +
- 51 files changed, 932 insertions(+), 63 deletions(-)
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+---
+ accel/tcg/cpu-exec-common.c | 33 ++++++++++++++++++++++++++++++---
+ accel/tcg/cpu-exec.c        |  3 +++
+ accel/tcg/internal-common.h | 11 +++++++++--
+ accel/tcg/tcg-all.c         |  1 +
+ cpu-target.c                |  3 +++
+ include/system/tcg.h        | 12 ++++++++++++
+ stubs/meson.build           |  1 +
+ stubs/tcg-cflags.c          | 16 ++++++++++++++++
+ util/log.c                  |  4 ++++
+ 9 files changed, 79 insertions(+), 5 deletions(-)
  create mode 100644 stubs/tcg-cflags.c
- create mode 100644 tests/tcg/alpha/gdbstub/xpage-bp.py
- create mode 100644 tests/tcg/alpha/test-indirect-irq.c
- create mode 100644 tests/tcg/alpha/test-xpage-chain.c
 
+diff --git ./accel/tcg/cpu-exec-common.c ./accel/tcg/cpu-exec-common.c
+index 44e84344f3..dd2be475e2 100644
+--- ./accel/tcg/cpu-exec-common.c
++++ ./accel/tcg/cpu-exec-common.c
+@@ -36,9 +36,16 @@ void tcg_cflags_set(CPUState *cpu, uint32_t flags)
+     cpu->tcg_cflags |= flags;
+ }
+ 
+-uint32_t curr_cflags(CPUState *cpu)
++/*
++ * The bits of CPUState::tcg_cflags that tcg_cflags_set() never sets, because
++ * they are derived from gdb single-step, one-insn-per-tb and -d nochain.
++ */
++#define CF_DERIVED  (CF_COUNT_MASK | CF_NO_GOTO_TB | CF_NO_GOTO_PTR | \
++                     CF_SINGLE_STEP)
++
++void tcg_update_cflags(CPUState *cpu)
+ {
+-    uint32_t cflags = cpu->tcg_cflags;
++    uint32_t cflags = cpu->tcg_cflags & ~CF_DERIVED;
+ 
+     /*
+      * Record gdb single-step.  We should be exiting the TB by raising
+@@ -55,7 +62,27 @@ uint32_t curr_cflags(CPUState *cpu)
+         cflags |= CF_NO_GOTO_TB;
+     }
+ 
+-    return cflags;
++    cpu->tcg_cflags = cflags;
++}
++
++static void tcg_update_cflags_work(CPUState *cpu, run_on_cpu_data data)
++{
++    tcg_update_cflags(cpu);
++}
++
++void tcg_update_all_cflags(void)
++{
++    CPUState *cpu;
++
++    /*
++     * one-insn-per-tb and -d nochain can both be changed from the monitor
++     * while the vCPUs are running.  Have each CPU update its own cflags
++     * with the others halted, so that no dispatch can read a value that
++     * another thread is in the middle of writing.
++     */
++    CPU_FOREACH(cpu) {
++        async_safe_run_on_cpu(cpu, tcg_update_cflags_work, RUN_ON_CPU_NULL);
++    }
+ }
+ 
+ /* exit the current TB, but without causing any exception to be raised */
+diff --git ./accel/tcg/cpu-exec.c ./accel/tcg/cpu-exec.c
+index 257211235d..148e0f583e 100644
+--- ./accel/tcg/cpu-exec.c
++++ ./accel/tcg/cpu-exec.c
+@@ -1068,6 +1068,9 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
+         tcg_target_initialized = true;
+     }
+ 
++    /* Pick up one-insn-per-tb and -d nochain from the command line. */
++    tcg_update_cflags(cpu);
++
+     cpu->tb_jmp_cache = g_new0(CPUJumpCache, 1);
+     tlb_init(cpu);
+ #ifndef CONFIG_USER_ONLY
+diff --git ./accel/tcg/internal-common.h ./accel/tcg/internal-common.h
+index 9e7be2d78d..853d1b51ee 100644
+--- ./accel/tcg/internal-common.h
++++ ./accel/tcg/internal-common.h
+@@ -69,8 +69,15 @@ void tlb_destroy(CPUState *cpu);
+ bool tcg_exec_realizefn(CPUState *cpu, Error **errp);
+ void tcg_exec_unrealizefn(CPUState *cpu);
+ 
+-/* current cflags for hashing/comparison */
+-uint32_t curr_cflags(CPUState *cpu);
++/*
++ * Current cflags for hashing/comparison.  Everything that feeds into the
++ * value is folded into CPUState::tcg_cflags when it changes, by
++ * tcg_update_cflags(), so that TB dispatch only has to load it.
++ */
++static inline uint32_t curr_cflags(CPUState *cpu)
++{
++    return cpu->tcg_cflags;
++}
+ 
+ void tb_check_watchpoint(CPUState *cpu, uintptr_t retaddr);
+ 
+diff --git ./accel/tcg/tcg-all.c ./accel/tcg/tcg-all.c
+index 7186c10cf0..c9874a286a 100644
+--- ./accel/tcg/tcg-all.c
++++ ./accel/tcg/tcg-all.c
+@@ -254,6 +254,7 @@ static void tcg_set_one_insn_per_tb(Object *obj, bool value, Error **errp)
+     s->one_insn_per_tb = value;
+     /* Set the global also: this changes the behaviour */
+     qatomic_set(&one_insn_per_tb, value);
++    tcg_update_all_cflags();
+ }
+ 
+ static void tcg_accel_class_init(ObjectClass *oc, const void *data)
+diff --git ./cpu-target.c ./cpu-target.c
+index 4783845c9b..50be591acf 100644
+--- ./cpu-target.c
++++ ./cpu-target.c
+@@ -24,6 +24,7 @@
+ #include "exec/replay-core.h"
+ #include "exec/log.h"
+ #include "hw/core/cpu.h"
++#include "system/tcg.h"
+ #include "trace/trace-root.h"
+ 
+ /* enable or disable single step mode. EXCP_DEBUG is returned by the
+@@ -35,6 +36,8 @@ void cpu_single_step(CPUState *cpu, unsigned flags)
+                                           cpu->singlestep_flags, flags);
+         cpu->singlestep_flags = flags;
+ 
++        tcg_update_cflags(cpu);
++
+ #if !defined(CONFIG_USER_ONLY)
+         const AccelOpsClass *ops = cpus_get_accel();
+         if (ops->update_guest_debug) {
+diff --git ./include/system/tcg.h ./include/system/tcg.h
+index 7622dcea30..2c2dbc753b 100644
+--- ./include/system/tcg.h
++++ ./include/system/tcg.h
+@@ -17,6 +17,18 @@ extern bool tcg_allowed;
+ #define tcg_enabled() 0
+ #endif
+ 
++/*
++ * Recompute the parts of CPUState::tcg_cflags that TB dispatch consumes but
++ * tcg_cflags_set() does not provide: gdb single-step, one-insn-per-tb and
++ * the CPU_LOG_TB_NOCHAIN log flag.  Call whenever one of those changes.
++ *
++ * tcg_update_cflags() updates one CPU and must be called from that CPU's
++ * thread, or with it stopped.  tcg_update_all_cflags() updates every CPU
++ * and is safe to call from the monitor while the vCPUs run.
++ */
++void tcg_update_cflags(CPUState *cpu);
++void tcg_update_all_cflags(void);
++
+ /**
+  * qemu_tcg_mttcg_enabled:
+  * Check whether we are running MultiThread TCG or not.
+diff --git ./stubs/meson.build ./stubs/meson.build
+index 3b2f2680b1..0025e79226 100644
+--- ./stubs/meson.build
++++ ./stubs/meson.build
+@@ -3,6 +3,7 @@
+ # below, so that it is clear who needs the stubbed functionality.
+ 
+ stub_ss.add(files('cpu-get-clock.c'))
++stub_ss.add(files('tcg-cflags.c'))
+ stub_ss.add(files('fdset.c'))
+ stub_ss.add(files('iothread-lock.c'))
+ stub_ss.add(files('is-daemonized.c'))
+diff --git ./stubs/tcg-cflags.c ./stubs/tcg-cflags.c
+new file mode 100644
+index 0000000000..cb278e94aa
+--- /dev/null
++++ ./stubs/tcg-cflags.c
+@@ -0,0 +1,16 @@
++/*
++ * Stub for tcg_update_all_cflags(), for binaries that link util/log.c
++ * or cpu-target.c but not TCG.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include "qemu/osdep.h"
++#include "system/tcg.h"
++
++void tcg_update_cflags(CPUState *cpu)
++{
++}
++
++void tcg_update_all_cflags(void)
++{
++}
+diff --git ./util/log.c ./util/log.c
+index 7cffbc1bf8..3fa46a67fa 100644
+--- ./util/log.c
++++ ./util/log.c
+@@ -27,6 +27,7 @@
+ #include "qemu/thread.h"
+ #include "qemu/lockable.h"
+ #include "qemu/rcu.h"
++#include "system/tcg.h"
+ #ifdef CONFIG_LINUX
+ #include <sys/syscall.h>
+ #endif
+@@ -301,6 +302,9 @@ static bool qemu_set_log_internal(const char *filename, bool changed_name,
+ #endif
+     qemu_loglevel = log_flags;
+ 
++    /* CPU_LOG_TB_NOCHAIN feeds into the per-CPU cflags. */
++    tcg_update_all_cflags();
++
+     daemonized = is_daemonized();
+     need_to_open_file = false;
+     if (!daemonized) {
 -- 
 2.54.0
 
