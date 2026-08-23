@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E469BC5DF81
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Aug 2026 08:51:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92437C5DF81
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Aug 2026 08:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wy3uz-0001xx-U5; Sun, 23 Aug 2026 04:51:05 -0400
+	id 1wy3vd-0002Rd-Bg; Sun, 23 Aug 2026 04:51:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wy3uy-0001xh-88
- for qemu-devel@nongnu.org; Sun, 23 Aug 2026 04:51:04 -0400
-Received: from mgamail.intel.com ([192.198.163.8])
+ id 1wy3vb-0002RE-KM
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 04:51:43 -0400
+Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wy3uw-0003bJ-E9
- for qemu-devel@nongnu.org; Sun, 23 Aug 2026 04:51:03 -0400
+ id 1wy3va-0003jl-5P
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 04:51:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1787475062; x=1819011062;
+ t=1787475102; x=1819011102;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=kjpxf2sQ1FERHhRTBKUY+6K4RPxRhA/sRW81XFP9zpI=;
- b=R13UHqwqxealYrGpPS0RtK0ZNnALsp353Xs56k8LuXkslQ6ps1d7BddH
- brja8SRb+QEK84YFlxFkfwUOwD21KfLR6hzZQy5QCf5qxdu0XDQkb9J3L
- +TJaflaXcbRGSEISnEMzknAawEG6mshRxcXzbHxsSqCl57/Y2SYmlO/ax
- LmJ4Aw576x1rdF7L1GFZqo9ZGq1WjTSs6mko3P3uLNc4BfNAT9nTu3/H7
- jogu8VDOj5RAiNXAOEvCDiCLjiltW7lkKZXHNahWHScioSAs6tGGgT7kG
- sTVwN0qod5vd/AFj8qtMV6MdnuyqB3wKgg67VSjok5HaQLxvzbTwf/59Z Q==;
-X-CSE-ConnectionGUID: A6rJ7dH9SBCR2Bv/cqWEww==
-X-CSE-MsgGUID: Je9+W0DDQC6ZZqs7yFcjaQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11883"; a="105492012"
-X-IronPort-AV: E=Sophos;i="6.25,238,1779174000"; d="scan'208";a="105492012"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Aug 2026 01:51:00 -0700
-X-CSE-ConnectionGUID: mDwjNrNuTjanWCTPIivfVA==
-X-CSE-MsgGUID: u6Amo0LdReaPom+XTKMx6w==
+ bh=HsTvkY/tzGD7MqW7u4p4m7bQaDv0rZcBZwz9af28cQY=;
+ b=HbcN36Ep30qgKHGmkBS6Q2V8QlU0GoyHpglTySv+q0AdllZRH0cKSXIa
+ NpsyeD+h3fkcrQiQ7nLC2RIPi0puwMwBznkc6OmOXH8CQNpFVYYc8g7eb
+ +JDK/jMyApeNjswiaF7yjuG9k8VDt3FgI8jnLGBtbZsZk66c5sx7lydfz
+ Q9A9jJ3gNlXvYcZQxrp1fuUesjujZgJThyxbG/99g0RpeT4KC8WM6NVdB
+ s7xMD/NMykYrGupsdPhrt4Fv83Sf1j2OenyD5Nb+t8i4+nc0VLmfX3h+4
+ 5d4HWvcOxfSfqw98zX7vuCHEw+xoPdREOTf12SJUu2Zw9sm7vqHelC7v3 w==;
+X-CSE-ConnectionGUID: F7r2jTuqSTe8Y+gGen6dsg==
+X-CSE-MsgGUID: xZh82xf7SE+tJvate3VQ9Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11883"; a="75493388"
+X-IronPort-AV: E=Sophos;i="6.25,238,1779174000"; d="scan'208";a="75493388"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Aug 2026 01:51:40 -0700
+X-CSE-ConnectionGUID: 3+F6gzEpRwujlESadOFDJQ==
+X-CSE-MsgGUID: 9hS8K7LwR/27DfzpIIke7Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,238,1779174000"; d="scan'208";a="262469051"
+X-IronPort-AV: E=Sophos;i="6.25,238,1779174000"; d="scan'208";a="271945648"
 Received: from zhaoliu1-desk.sh.intel.com (HELO localhost) ([10.238.208.118])
- by fmviesa006.fm.intel.com with ESMTP; 23 Aug 2026 01:50:58 -0700
-Date: Sun, 23 Aug 2026 16:50:57 +0800
+ by fmviesa005.fm.intel.com with ESMTP; 23 Aug 2026 01:51:38 -0700
+Date: Sun, 23 Aug 2026 16:51:37 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Tina Zhang <zhang_wei@open-hieco.net>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  "Michael S . Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
  Yanjing Zhou <zhouyanjing@hygon.cn>
-Subject: Re: [PATCH v2 3/9] target/i386: Hide ARCH_CAPABILITIES for Hygon
-Message-ID: <aoq0cYPRcUBc88P3@intel.com>
+Subject: Re: [PATCH v2 4/9] target/i386/kvm: Use AMD MCE status encoding for
+ Hygon
+Message-ID: <aoq0mWqm44i+4qw9@intel.com>
 References: <20260810082956.1768042-1-zhang_wei@open-hieco.net>
- <20260810082956.1768042-4-zhang_wei@open-hieco.net>
+ <20260810082956.1768042-5-zhang_wei@open-hieco.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260810082956.1768042-4-zhang_wei@open-hieco.net>
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20260810082956.1768042-5-zhang_wei@open-hieco.net>
+Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -46
 X-Spam_score: -4.7
@@ -84,36 +85,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 10, 2026 at 04:29:50PM +0800, Tina Zhang wrote:
-> Date: Mon, 10 Aug 2026 16:29:50 +0800
+On Mon, Aug 10, 2026 at 04:29:51PM +0800, Tina Zhang wrote:
+> Date: Mon, 10 Aug 2026 16:29:51 +0800
 > From: Tina Zhang <zhang_wei@open-hieco.net>
-> Subject: [PATCH v2 3/9] target/i386: Hide ARCH_CAPABILITIES for Hygon
+> Subject: [PATCH v2 4/9] target/i386/kvm: Use AMD MCE status encoding for
+>  Hygon
 > X-Mailer: git-send-email 2.43.7
 > 
-> IA32_ARCH_CAPABILITIES is an Intel-defined MSR.  KVM can synthesize the
-> CPUID bit and read-only MSR for non-Intel guests, and QEMU already hides
-> that interface for AMD CPU models because Windows may not expect it on
-> AMD-compatible CPUs.
+> QEMU's KVM memory-failure injection path builds synthetic MCI_STATUS
+> records for the guest CPU.  The status encoding is vendor-specific:
+> Intel-style records use bits such as MCI_STATUS_S and MCI_STATUS_AR for
+> action-required events, while the AMD path uses the AMD memory-failure
+> encoding.
 > 
-> Hygon Dhyana uses the HygonGenuine vendor string, so it currently skips
-> that AMD filter.  If arch-capabilities=on is requested, QEMU can expose
-> CPUID.7.0.EDX[ARCH_CAPABILITIES] and the associated MSR feature word to
-> a Hygon guest.
+> Today QEMU selects the AMD status encoding only for AuthenticAMD guests.
+> Hygon guests should use the AMD status encoding as well, but currently
+> get Intel-style injected status bits, including MCI_STATUS_S and
+> MCI_STATUS_AR for action-required events, and a non-deferred
+> action-optional record.  That can prevent a guest OS running on the Hygon
+> CPU model from handling the injected MCE correctly.
 > 
-> That creates a vendor-inconsistent CPU ABI: the guest sees an
-> AMD-compatible vendor and cache/topology interface, but also sees an
-> Intel-specific architectural capabilities MSR.  Guests that choose CPU
-> mitigation or feature paths from the vendor can mis-handle that
-> combination; Windows is known to be sensitive to ARCH_CAPABILITIES on
-> AMD-compatible CPUs.
+> Use the AMD injected-memory-failure MCE status encoding for Hygon guests
+> as well.  This does not depend on Hygon exposing CPUID 0x80000007.EBX
+> recovery features such as SUCCOR, and it does not advertise any new
+> recovery capability.  The change is limited to QEMU's synthetic KVM
+> memory-failure MCE status; it does not change CPUID, MCE bank state, or
+> migrated CPU state.
 > 
-> Apply the same ARCH_CAPABILITIES hiding rule to Hygon CPUs when the vendor
-> CPU ABI compat gate is enabled.  Keep arch_cap_always_on as the migration
-> escape hatch, and keep the old Hygon CPUID/MSR output for pc-11.0 and
-> older machine types via x-hygon-vendor-abi-fixes=false.
+> Signed-off-by: Tina Zhang <zhang_wei@open-hieco.net>
+> ---
+>  target/i386/kvm/kvm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Nit: pc-11.1? Same applies to the other commit messages.
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-Thanks,
-Zhao
 
