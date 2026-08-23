@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB4B4C5DF81
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Aug 2026 09:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2C80C5DF97
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Aug 2026 09:24:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wy4Lo-0007fE-5t; Sun, 23 Aug 2026 05:18:48 -0400
+	id 1wy4R1-0000Tx-Td; Sun, 23 Aug 2026 05:24:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wy4Ll-0007bY-Sd
- for qemu-devel@nongnu.org; Sun, 23 Aug 2026 05:18:45 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
+ id 1wy4R0-0000Tp-HA
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 05:24:10 -0400
+Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wy4Lk-0000iJ-DJ
- for qemu-devel@nongnu.org; Sun, 23 Aug 2026 05:18:45 -0400
+ id 1wy4Qy-0001e5-Vh
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 05:24:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1787476724; x=1819012724;
+ t=1787477049; x=1819013049;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=6PT7rVuergyvwcyknrw1osn6+HOn5S0E1P3dvLxa5h0=;
- b=Darz2bazjkJEddspZjaC0tdwXeeHx3plYSmHbwXf0K5BH+BXszzWMBb8
- HOzE9FAon3AkGsboa06Izr+LwgUXvq4eMZZfI00GNphPXei1G6qFTD072
- F71+ecwHe4FA9EAwNwSYfvtZgxPxyDJux3nFSUI+2EeqsnWNhu0dcJ8qq
- xZlfXcCSbApno9Jep/hGqO/OdMKoR4t3bevd6oAN5pzjF/dZcnWPC/kUH
- ygqUfm/dbJPcFUgxN8sMuBisr9FqEiCjD3MSTcMJpWqj6AhPspdU2VAj4
- iACgujegJNwFU6ALUJ8kefS3ph6ZNwVEZROjniHFLjTBqE9teQyGKnarl A==;
-X-CSE-ConnectionGUID: /3kytzuBQBqnrhnks2JZKQ==
-X-CSE-MsgGUID: uGCbRn2eRPmtZOdETg6w1A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11883"; a="99309098"
-X-IronPort-AV: E=Sophos;i="6.25,238,1779174000"; d="scan'208";a="99309098"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Aug 2026 02:18:42 -0700
-X-CSE-ConnectionGUID: FDGporQuThWjmzNAJScqmw==
-X-CSE-MsgGUID: pT3IMHInR4m+vAAJQnqRMw==
+ bh=IelsqnBOvxhCL8J8K8c1AsA7S6o9JNKpAOXHCvwiBk8=;
+ b=h7Pks4CcPtVK2VNtO567NKX27P1nHF+cKaTxeYXpA6m5vDz34k/CtNL9
+ Sh6k9C2/wPGxtPUvh0lBzL9PwwKzay2zEDmOWvx0KSZvq4q7fVuFttOrF
+ OU/BQtcnoJ62RbK2OBEb3e0+F+C5477Q/BnJmJNN/QGpa8uQB6ADrdGhH
+ 4wpMPMd6MjNgj8UIhO4UAM5eabafAAc2mkWH6V40G2hsk8ErC+UzB0DnN
+ yl1bdYGk2gLgO1WoN8pJBnOmDUrDxCr3zAptMpGGy7XzEG+QV7cBu3vge
+ MAkV2iKtyYPK7nsW5xe8H/VsTY7KU+z8RHRFcdcEJFVEs74gg1WYcGRff Q==;
+X-CSE-ConnectionGUID: bdXm+JbtQOS/siXK3U5PnA==
+X-CSE-MsgGUID: hMSOW8jLQBqvfVAWF4IIFw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11883"; a="87969325"
+X-IronPort-AV: E=Sophos;i="6.25,238,1779174000"; d="scan'208";a="87969325"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Aug 2026 02:24:06 -0700
+X-CSE-ConnectionGUID: znbtUwrPQZubnGB8V1ed7g==
+X-CSE-MsgGUID: ffEmwVWmTE2LHGQLuG/Umw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,238,1779174000"; d="scan'208";a="271949254"
+X-IronPort-AV: E=Sophos;i="6.25,238,1779174000"; d="scan'208";a="266780240"
 Received: from zhaoliu1-desk.sh.intel.com (HELO localhost) ([10.238.208.118])
- by fmviesa005.fm.intel.com with ESMTP; 23 Aug 2026 02:18:40 -0700
-Date: Sun, 23 Aug 2026 17:18:40 +0800
+ by orviesa007.jf.intel.com with ESMTP; 23 Aug 2026 02:24:04 -0700
+Date: Sun, 23 Aug 2026 17:24:03 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Tina Zhang <zhang_wei@open-hieco.net>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  "Michael S . Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
  Yanjing Zhou <zhouyanjing@hygon.cn>
-Subject: Re: [PATCH v2 8/9] target/i386: Use AMD legacy cache fallback for
- Hygon
-Message-ID: <aoq68Lm82kTfEWYN@intel.com>
+Subject: Re: [PATCH v2 9/9] target/i386: Use AMD ucode-rev default for Hygon
+Message-ID: <aoq8M9lQKGywIOIu@intel.com>
 References: <20260810082956.1768042-1-zhang_wei@open-hieco.net>
- <20260810082956.1768042-9-zhang_wei@open-hieco.net>
+ <20260810082956.1768042-10-zhang_wei@open-hieco.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260810082956.1768042-9-zhang_wei@open-hieco.net>
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20260810082956.1768042-10-zhang_wei@open-hieco.net>
+Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -46
 X-Spam_score: -4.7
@@ -85,32 +84,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 10, 2026 at 04:29:55PM +0800, Tina Zhang wrote:
-> Date: Mon, 10 Aug 2026 16:29:55 +0800
+On Mon, Aug 10, 2026 at 04:29:56PM +0800, Tina Zhang wrote:
+> Date: Mon, 10 Aug 2026 16:29:56 +0800
 > From: Tina Zhang <zhang_wei@open-hieco.net>
-> Subject: [PATCH v2 8/9] target/i386: Use AMD legacy cache fallback for Hygon
+> Subject: [PATCH v2 9/9] target/i386: Use AMD ucode-rev default for Hygon
 > X-Mailer: git-send-email 2.43.7
 > 
-> When legacy-cache=on, x86_cpu_realizefn() builds a hardcoded cache
-> model.  It selected the AMD legacy cache table only for CPUs with the
-> AuthenticAMD vendor ID.  Dhyana uses the HygonGenuine vendor ID, so this
-> explicit compatibility path fell back to QEMU's old Intel legacy cache
-> table.
+> QEMU currently gives named Hygon Dhyana CPUs the non-AMD default
+> ucode-rev value, 0x100000000.  That is the Intel/KVM-VMX-shaped
+> encoding, where the visible revision is in the high 32 bits.
 > 
-> The wrong table is visible through AMD extended cache leaves.  With the
-> Intel legacy table, Dhyana reports 32 KiB, 8-way L1 caches in CPUID
-> 0x80000005 and a 4 MiB, 16-way L2 cache in CPUID 0x80000006.  Linux
-> uses the AMD/Hygon cache enumeration path for Hygon and reads these AMD
-> extended cache leaves.
+> Linux reads MSR 0x8b for Hygon CPUs through the AMD patch-level path,
+> using MSR_AMD64_PATCH_LEVEL and storing the low 32 bits as
+> cpuinfo_x86.microcode.  With the old QEMU default, a Dhyana guest sees
+> microcode revision 0.
 > 
-> Use the AMD legacy cache table for Hygon in this fallback path when the
-> new vendor CPU ABI is enabled.  Keep the old fallback for pc-11.0 and
+> Use the AMD/KVM-SVM-shaped default, 0x01000065, for Hygon on this
+> specific MSR 0x8b default path.  This does not route Hygon through AMD
+> microcode loading and does not claim that Hygon CPUs are otherwise
+> identical to AMD CPUs.
+> 
+> Preserve migration ABI through the vendor CPU ABI compatibility gate used
+> by this Hygon bug-fix group.  pc-11.0 and older machine types leave that
+> gate off, so they retain the previous ucode-rev default.  Explicit
+> user-provided ucode-rev values still override the default.
+> 
+> Add qtest coverage for the new default, the compatibility cases, and an
+> explicit user override.
+> 
+> Signed-off-by: Tina Zhang <zhang_wei@open-hieco.net>
+> ---
+>  target/i386/cpu.c                   |  8 ++++++--
+>  tests/qtest/test-x86-cpuid-compat.c | 19 +++++++++++++++++++
+>  2 files changed, 25 insertions(+), 2 deletions(-)
+> 
+> +         * Hygon uses the AMD patch-level MSR 0x8b encoding, where the visible
+> +         * microcode revision is in the low 32 bits.
 
-nit: pc-11.1.
+I feel like this description is redundant regarding the commit message
+is already self-explanatory. Adding one for each vendor might clutter
+the comments.
 
-> older machine types through x-hygon-vendor-abi-fixes=false.
+Others, LGTM,
 
-Thanks,
-Zhao
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
