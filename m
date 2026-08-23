@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3A2CC5DF81
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Aug 2026 09:36:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 045AEC5DF8C
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Aug 2026 10:34:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wy4cl-0004Ct-9k; Sun, 23 Aug 2026 05:36:19 -0400
+	id 1wy5Vy-0003mZ-93; Sun, 23 Aug 2026 06:33:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wy4cj-0004Bw-9L
- for qemu-devel@nongnu.org; Sun, 23 Aug 2026 05:36:17 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1wy5Vv-0003li-WC
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 06:33:20 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wy4ch-00041P-Ly
- for qemu-devel@nongnu.org; Sun, 23 Aug 2026 05:36:17 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2d58efc7356so27658175ad.1
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 02:36:15 -0700 (PDT)
+ id 1wy5Vu-0008Dv-Ig
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 06:33:19 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2d049069377so21276585ad.0
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 03:33:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787477774; x=1788082574; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787481197; x=1788085997; darn=nongnu.org;
  h=to:references:message-id:content-transfer-encoding:cc:date
  :in-reply-to:from:subject:mime-version:content-type:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=GrfZIkiLIPkX4zgbKoe+aL7IslYfdCWoR76dhTFDNcE=;
- b=Mc01y1u6qwnSV2VhZzITZK7pCXkogsGU7Mx1Uv7Ubh2M8yDWJQwQGDdyOF5UqQOuUG
- uQww6kGVXsdpl/rn95GAYYUaOgkveh1vrw/SdTpKWeReK4S/msE+QWvHa1SBC+MWl9aI
- aT/oBb0zcoksF+pE9yXYR38ek34nFUuDRFpLryIH656n0Z1Slia6aeuwAxDYL5Vzj3d2
- dyeBQ9W1zTCsMhAmS3SjupKzi5OME/yR82wNIcBxV4Lbku5HJ1PxNLc3EBs4vR2Qs0aO
- r6RSIk2mY0WLaoOAp9kpkoEgl3iDFQvZwGLQwuxHaEWmEw0P08jyjA1SM1au7+1A09nJ
- ebig==
+ bh=W7dhBvPAqB2MrAMT116HezpPmF/UpojLpzKdLrlciK8=;
+ b=pNy/N92aBq0br+D8MToWA9hLu3AUZ2j+UUBX3dR552Fctlr8i56BLRJXFFxQYu6nYC
+ E5r3iM1ofkz3ii41QeEzyw3/VyAcvCrVrsWwu4sSywPPk0ov+G4PFjSV7bR8STRCpK81
+ HyiASd2Lq67rxGbVT+Vx5YA8gSpX3Lb6j+e9bubOMGXfcWqIk8N9PAahF1j8Kp8EDU53
+ e0T3MtvJl08Jq+Cbip8keN+11lCiPMJLfX7iRC78ZDSsJ+fgr71u+/LkqAbEwXpAHQ9T
+ +MdPm6vdrW/952frdbSrHrbufh+iK+Z8zkS0UsI1uJpWwfXy3uDgljNoN6tHzxHwbomn
+ Xcog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787477774; x=1788082574;
+ d=1e100.net; s=20251104; t=1787481197; x=1788085997;
  h=to:references:message-id:content-transfer-encoding:cc:date
  :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=GrfZIkiLIPkX4zgbKoe+aL7IslYfdCWoR76dhTFDNcE=;
- b=Mi99DjsKvoW9nV28bJ7fjCrJFl8voXK3az/c9wEs15GzVlKn6vJ7HBP4q2r6UpaO6E
- BmSi94ql/TRflE++oDBk/Q+zvnGa3XEq32PY3bvIu44pbUZu0+PPsQbD+7oRRFYGau5M
- /grsANBSYaBGYZ/d4R6/lAx+dMXONsycVycs/y0Mm2Ydb4c69b7VSc9TU6P29Ei0mOJp
- 3eE2kyXB/l2UaoYesisb6RSdihwyFn/Wy0INlwbvgBfZKnW4AjaY5yVg32eseqzeWWka
- 0tOwMQq1jBeM/YwSaF/mqjJE3kM/A8U5olM/FE6c7SSpg8YRAVFAxOF76vmn32YjSqlr
- uStQ==
-X-Gm-Message-State: AFuF++lGJi3mkhnrYdU8bQqkD2dWqSt5uAUCOR4B1Qyb+TTbr0JHLPqT
- /2+mB4lDOhN2ezroD/I6CP5NkdN4EAMx9EyHmfMrABAV0dObEmf4pQRHySzZx9KrvENQYA==
-X-Gm-Gg: AR+sD11K+FDuaKw1gmC4uRH2mfoYgMjYnoqI1juvGNPzxrWxFrnda8yAjdPrZIuZgF6
- rPiwsVnPbJcBi5JhvxoNfHVxwt4EytibdApy3tMPbaQLagWe1bQZz4cyKVlTyn4JI96imH4iPEl
- VcLrgyx49KgSz425EwyQ/fdBHU7I5LfDs1u/uyWmCq0uX3JjXjgeLP7rrlSVLGYaBPd/Wy8PvnE
- fxbMLzY2yVUBsDmTKG9VE0wCHeaK4i7AEbcuhOIHauOTTxixnDTwF43quuaxuxKh9KgoRpiMRVt
- Q1aHphS7aRGdD2jkGAC0TyQNrLZEx79PEckIx1gmlfjVucfxMFVD/bBQaNfU0UzY5gbRgBlPwzV
- NblkbIiTxDCD6NbDeUxywyacZbXoquX6FuDgRL/oSR/FrmMpYSv18JeXRXjzChmksEmqISnDZn0
- B+VyBM4voEJ83dzUWhmdkCbLfc1X/uGoDSZAVb3baiFlYJfc2syao17sm80ZOvlDraV+cXt6hjl
- Tl9AzU=
-X-Received: by 2002:a17:902:ce0b:b0:2d5:ccb7:12c3 with SMTP id
- d9443c01a7336-2d670b83673mr204518995ad.2.1787477774111; 
- Sun, 23 Aug 2026 02:36:14 -0700 (PDT)
+ bh=W7dhBvPAqB2MrAMT116HezpPmF/UpojLpzKdLrlciK8=;
+ b=P6n87OKFKYp0VLDxlxAF9HP63ab2JktaWykqHNm0Aq6/RTD+BfEtyD4+H/6D1j+AnR
+ dzB5/H37yLaAJ6yjFApJKsDeCuxD6xsSxBkI+Fpbl4Frf8W+VOhiSDgwZurtYa2I6Cxu
+ kDCjbEFHje1QrBmyIQBSAXC0LB7CoDN8qwysM5JdvGoP/dEkkS5G7TdgxiNesC6IkaaO
+ E7d0pXUoCq3n76bbnLorHqvlZsd+Kk8JRZ3BmY3EhOUkQxvjaZZCldMX+/NFpmdq6LK/
+ ybMEmrT2Ncl2CC101QsJJ129J4exFnZi7yfrbIMHOcgFIS+RIrRpVE1x7dP0twLpTPgy
+ IM7A==
+X-Gm-Message-State: AFuF++lX1U4gq5AkG6STSrl8iIezh3aju55BnOWQ19C699B3w1VgnQs6
+ QdZ/g2Rb+p5p6E7qMFD1ZnLDr7JvA3KuyS2h6RbyGXA9SIsc0FrTRSxv
+X-Gm-Gg: AR+sD13rn2fKWOErIxA6AG26s9ANkPCslxdkdq/wYkn3v21KafhEARBMJvfKjqCB/gj
+ L2RaaF4jFP48UDJppCjR3VthWO6bX+4drHrbL3RL8mdaU2Est0uGUVcmTKp1lL4NJS2v7NFo+LL
+ W+N3q+UYKufQzW6e1POiw/ugCHnT2AIiJ/Ka7g/f9grBPW6cZmg3QlPQ6Jb8dpT2RiKNi82sYuv
+ QBmKl8jB8E1OXmDsfAFGJ3MLCnC96TQmTfp9/v+yU0Jw8yvUdh/0l141lHR8in1wAOswNT+iUti
+ EJ7jrrERt7GgUHFspGRSBRjJcTTUTBlLWHGpqEJEhEX4LvL+59K1co0VnDxCc27k9W5i7AfM55V
+ 05AkHKh4XdtfmvQPrrGFjKxfftoAIfMjVv9WF0Cp5kY8nShNLOF98v7ypxEMwJ2jjxONaC9yMJf
+ xeMBTOXjN6ib6dDY89vU70m4e2WApVFM3x9VVgipmBadqUXt48suCltbwmSs7SMkGjYoBX
+X-Received: by 2002:a17:902:e546:b0:2c8:2808:3ec9 with SMTP id
+ d9443c01a7336-2d64b0c4e5cmr280212535ad.12.1787481196594; 
+ Sun, 23 Aug 2026 03:33:16 -0700 (PDT)
 Received: from smtpclient.apple ([117.55.237.216])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-327f8e2a730sm15000783eec.0.2026.08.23.02.36.11
+ 5a478bee46e88-327f922ac7bsm14389179eec.25.2026.08.23.03.33.14
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Sun, 23 Aug 2026 02:36:13 -0700 (PDT)
+ Sun, 23 Aug 2026 03:33:16 -0700 (PDT)
 Content-Type: text/plain;
-	charset=us-ascii
+	charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
-Subject: Re: [PATCH v2 0/2] hw/riscv/k230: add the K230 Reset Management Unit
+Subject: Re: [PATCH v1 4/5] hw/arm: Add Axiado SoC AX3005
 From: Jack Wang <163wangjack@gmail.com>
-In-Reply-To: <20260719180247.8660-1-163wangjack@gmail.com>
-Date: Sun, 23 Aug 2026 17:35:58 +0800
-Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, qemu-riscv@nongnu.org
+In-Reply-To: <20260820102132.361642-5-kchiu@axiado.com>
+Date: Sun, 23 Aug 2026 18:33:01 +0800
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ Kuan-Jui Chiu <kchiu@axiado.com>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <D5866774-254F-4900-80C1-857EAD752C30@gmail.com>
-References: <20260719180247.8660-1-163wangjack@gmail.com>
-To: qemu-devel@nongnu.org
+Message-Id: <E7312F05-0DFD-4501-A59E-1DAD8C999785@gmail.com>
+References: <20260820102132.361642-5-kchiu@axiado.com>
+To: kchiu@axiado.com
 X-Mailer: Apple Mail (2.3864.600.51.1.1)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=163wangjack@gmail.com; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=163wangjack@gmail.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -13
 X-Spam_score: -1.4
 X-Spam_bar: -
@@ -105,92 +103,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Kuan-Jui
 
-Hi all,
+I tested this series with ax3005-evb machine,the initialization did not =
+complete.
+The process showed it repeatedly executing in 'ax3005_init'
+> +static const TypeInfo ax3005_soc_types[] =3D {
+> +    {
+> +        .name           =3D TYPE_AX3005_SOC,
+> +        .parent         =3D TYPE_SYS_BUS_DEVICE,
+> +        .instance_size  =3D sizeof(Ax3005SoCState),
+> +        .instance_init  =3D ax3005_init,
+> +        .class_init     =3D ax3005_class_init,
+> +    }
+> +};
 
-A polite ping for this RFC series.=20
-I fix problems raised by chao liu and Daniel.
-I apologize for previously missing the qemu-riscv
-Mailing list, it has been added to this ping mail.
-Any feedback or guidance would be greatly appreciated.
+You add instance_size here but forget to add class_size. Then qemu =
+defaultly use SysBusDeviceClass=E2=80=99s class_size cause of father-son =
+relationship.
 
-Thanks for your time,
+> +typedef struct Ax3005SoCClass {
+> +    SysBusDeviceClass   parent;
+> +
+> +    uint32_t            num_cpus;
+> +} Ax3005SoCClass;
+
+Here your struct apparently extend SysBusDeviceClass field. I think it =
+is the way why previous repeating behavior.After add class_size locally =
+and rebuild the the machine completed initialization and responded to =
+QMP commands successfully.
+
+Best regards :)
 Jack Wang
-
-> References: <20260709031237.21284-1-163wangjack@gmail.com>
->=20
-> This v2 patch reply on review of=20
-> This series models the Kendryte K230 Reset Management Unit (RMU), a =
-bank of
-> reset-control registers at 0x91101000, and wires it into the K230 SoC. =
-It
-> replaces the create_unimplemented_device("rmu") stub so guest reset =
-drivers
-> (drivers/reset/reset-k230.c) work against a real model.
->=20
-> Patch 1 adds the standalone device model; patch 2 wires it into the =
-SoC and
-> adds the qtest. The qtest is deliberately placed in patch 2 =
-accorinding to=20
-> suggestion from Daniel: it drives "-machine k230", which only
-> exists once the device is wired up.
->=20
-> Register semantics, reset values and reserved-bit masks are taken from =
-the
-> K230 TRM chapter 2.1 "Reset" (V0.3.1) and cross-checked against the =
-mainline
-> Linux driver.
->=20
-> Changes since v1:
-> - Switched to the Resettable API (phases.hold instead of the legacy
->  device_class_set_legacy_reset()), per Daniel's review.
-> - Model real reset propagation: the RMU now cold-resets the two linked
->  watchdogs via "wdt0"/"wdt1" QOM links when their PERI0 reset bits are
->  written (Cao review).
-> - CPU1 reset request is now a two-step assert/deassert (not =
-self-clearing),
->  matching the hardware (Cao review ).
-> - Filled in the documented per-register reset values and reserved-bit
->  (writable) masks from the TRM; the *_rst_done status bits reset to 0, =
-so
->  they follow the per-bit "Reset" column rather than the summarised =
-total.
-> - Added the reset-time-control (*_RST_TIM) registers as plain storage =
-with
->  their documented reset values.
-> - Fixed the storage mask so the upper half of non-write-enable =
-registers is
->  writable (surfaced by the new TIM registers).
-> - New qtests: reset values, TIM storage, reserved-bit read-only, CPU1
->  two-step, and real watchdog reset propagation.
-> - Moved the qtest from patch 1 to patch 2 for bisectability; added the
->  MAINTAINERS entries.
->=20
-> Jack Wang (2):
-> hw/misc/k230_rmu: add Kendryte K230 Reset Management Unit model
-> hw/riscv/k230: wire up the RMU device
->=20
-> MAINTAINERS                 |   3 +
-> docs/system/riscv/k230.rst  |   1 +
-> hw/misc/Kconfig             |   3 +
-> hw/misc/k230_rmu.c          | 425 ++++++++++++++++++++++++++++++++++++
-> hw/misc/meson.build         |   1 +
-> hw/misc/trace-events        |   7 +
-> hw/riscv/Kconfig            |   1 +
-> hw/riscv/k230.c             |  15 +-
-> include/hw/misc/k230_rmu.h  | 126 +++++++++++
-> include/hw/riscv/k230.h     |   2 +
-> tests/qtest/k230-rmu-test.c | 225 +++++++++++++++++++
-> tests/qtest/meson.build     |   3 +-
-> 12 files changed, 808 insertions(+), 4 deletions(-)
-> create mode 100644 hw/misc/k230_rmu.c
-> create mode 100644 include/hw/misc/k230_rmu.h
-> create mode 100644 tests/qtest/k230-rmu-test.c
->=20
-> --=20
-> 2.53.0
->=20
->=20
->=20
->=20
 
