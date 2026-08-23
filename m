@@ -4,84 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E448C5DF9C
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Aug 2026 16:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A78B3C5DF8C
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Aug 2026 16:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyBFu-0005XY-Up; Sun, 23 Aug 2026 12:41:10 -0400
+	id 1wyBUW-0000Mj-48; Sun, 23 Aug 2026 12:56:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sinxx198@gmail.com>)
- id 1wyBFt-0005X9-6Q
- for qemu-devel@nongnu.org; Sun, 23 Aug 2026 12:41:09 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wyBUU-0000MW-VA
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 12:56:14 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sinxx198@gmail.com>)
- id 1wyBFq-0003H1-Me
- for qemu-devel@nongnu.org; Sun, 23 Aug 2026 12:41:08 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-38e42560ebcso1939643a91.1
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 09:41:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wyBUS-0007Lh-PN
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 12:56:14 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-c197eaaab00so437738666b.0
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 09:56:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787503264; x=1788108064; darn=nongnu.org;
- h=mime-version:content-transfer-encoding:content-type:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=Q+WGVqvV27IodXI+eGY+twRXziciX/yYUNrdJZuWz+Q=;
- b=JrD2wGf+8ccr6DlearLCynAfiqkMQ60vMr1Z8YfucZZD9usKgfViuNbImSvf5BHNFK
- +MM28sHW1gi6GyAtNsP2PY5PfEjcSH5iEaDdHjQo1fqpnwWlXmUwlB0bXVWOSwJj/Mow
- NjDIB/a6GXacnBcGG2wtETSrHDv3F/lbIyFTA4wn0G5K2Meh87R4b7fWSDZlpE8GUzzD
- VASFAMtjEOAL2gSScPHqC3YDG5mV5S0f1uQRQe67YFjbpu4nEJ1tOZkFL7bSCLXRiliR
- 1oIrEoKh7/PHkoXPRu2KkSFlVX1pVavKGxdhm1YnOH1hKzBfTy85Hs1LjRe8RNB993CB
- YN1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787503264; x=1788108064;
- h=mime-version:content-transfer-encoding:content-type:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
+ d=gmail.com; s=20251104; t=1787504171; x=1788108971; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=Q+WGVqvV27IodXI+eGY+twRXziciX/yYUNrdJZuWz+Q=;
- b=e0Cns1FZeUxnvDlEze5yF2nnwvPBGFA6NciaevdGtw7Pgd3DIz5TM95i7geu9eVz+T
- aaqKNnJJIHuPEx2K11M3iOcEUiJgszpwVWLQz/aFElYXM4YWLYzEnLKnWQUls8YLVZB0
- OQCAjGxQFaUaq7vY2ROsWF7NsOn7625ArcK8gqj4awK75BIcZbbU2g61Qzd/kbWACfNJ
- YCgzIbh67ZjauI4o4D7vcLQ6rXKLLY3tGYH7MDC8jJimdVpbOrxArWNLlP/EQBi36EkQ
- QwcWEIM1ysipSVKMCMDOAfUGq1Gd78o+EjEHIv/N5nObf68mGpR50kswq/GFuaroEtsx
- hvcA==
-X-Gm-Message-State: AFuF++n6owsBvjdD3ZVCrVwEoWLgECMiCD5HwZo6GmYGWu7rl5gJBcbW
- t49lPnHELZjK6JbRsAlsxfTy+T6Q9ii/bZ/aiHLglolX7M24SU7GwoN9vdKlaQ==
-X-Gm-Gg: AR+sD10hYtkXIQdWqxy7IHigD8AVoElmXgrwuwMgwe0mHtZzOVfu/Ke1puQDpM7tya+
- VeXpSutaHERbUOFQOGSd12iPfteJhEJ6poFd70jWRuZKyR/cf5MChzJ+Ale/HrJE9QzX2GbnMMi
- rWjl0bUTc2xoyhZWHb4g64CL1tNpBclIuWRL06yKcIavUu+btLqz3hIybARjS2Ak2cv8bi9RUkz
- OvnVL/9odanQEQjupI/XQY0G0IpQYnUsUJxLzBz3j60AmM2qexwSeFe66B1T8MhpAj3VUjISxhD
- p0YbY6MqOf1r+aFnDXQmHI/YYW8Ed34pnAYvQJQJ2d2c2dOLSgg3TBpaxTm0ULWEnEL7UB6Rux6
- BibzsZPIt0CO0MuskP/LA+VnK8p2oKgkvB9rvJU4j0ebODzU4ZVvkoGJTjWWyCorEYvj2iF76Tz
- BEOqbBSLZSSFHlyJNafSmx8eueLs/p9j1hnAkqNf+cAQvBgGy4xvlkmItl1A==
-X-Received: by 2002:a17:90b:53c3:b0:38e:5c6:4db9 with SMTP id
- 98e67ed59e1d1-395c39cbc42mr37280881a91.11.1787503264400; 
- Sun, 23 Aug 2026 09:41:04 -0700 (PDT)
-Received: from kali.sinner ([38.240.225.76]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395e49b4060sm6540221a91.6.2026.08.23.09.41.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Aug 2026 09:41:03 -0700 (PDT)
-From: Warisjeet Singh (sin99xx) <sinxx198@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, qemu-stable@nongnu.org
-Subject: [PATCH v2] hw/display/vga: fix text-mode OOB write after a graphics
- surface switch
-Date: Sun, 23 Aug 2026 12:41:01 -0400
-Message-ID: <vga-v2-20260823.sinxx198@gmail.com>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+ bh=E3PkpzZLHXU4uuQ2YqhThC4IEBNqgSzz31m3yIWRICY=;
+ b=FabKfAXJLghCkDPk4S0cGCDUuT8tJCuGrfe+y5ixSd9fZBOyP2diWLY6XrkfeQ77qT
+ H4g74syGRbjcGNjgtLXdYDVAWvxt5wOdltigGcIi9IDNvzDdXItDT+cFPBOWJA85IoxV
+ RWxOFp9fJ2yPSa9199xEvbDqDTPWTflliQJny8qGuq5xRf9wzlMh7hU7kZiK1XvpCaPP
+ ZgKqC7Eb+gF1+4gAaJWp5eIp0iw+BnZ9OjWIKWYe3QWGWOCH15TY60D/adC77eEMc3tk
+ D+RKcMtR+Dh3zMOOBgz5JihpLHoXJbizbJAs3Sxwm13Aezij6E+zXWqPI5mkXEVVWsFl
+ aV8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787504171; x=1788108971;
+ h=content-transfer-encoding:content-type:mime-version:message-id
+ :references:in-reply-to:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=E3PkpzZLHXU4uuQ2YqhThC4IEBNqgSzz31m3yIWRICY=;
+ b=U2aPjHAqNGHcpgzXngK7/F96pZLDWkmcAGmP3xwyIHlxrxRt91qJlM8O8P8GUzRZsl
+ xJkd04QBsKkElev3fpB0IwC3LxmcBOhZgv3Rt8g7f116ICO676VuXce1/bCznv5Pkgyi
+ BBT+2IKuWy+MjWkFYblVDUBATByPKXlbPYagYtr60eTWgis60bD/ilcjhDF4L/wbjcFL
+ K6ibg3SPt4nwKHhuQATcWOry1NAjYt2DMhixad59+24aqbq0X+W/OaCr74yA/214IGfl
+ fKscefjWPALvNc/BlCGWg5AcoN9s76iHODUEIlPXV/PiFw8HLPghwAb2Knc0oohVwSxy
+ QVEA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Ro4l+aQUcM5rBjGYKjfC95m2hwSWstxbY47gsmnlDLmtBSAeCe/NOyKIxMFtc8qU0cd3aNkdplPYMUN@nongnu.org
+X-Gm-Message-State: AFuF++mue3MESkra83OAUYXbmIiOaPmn6OIp9LYKxkXy04jF17DkmpKX
+ IAOvaPIAtXUsJQ3IgFW01WecCcAKNWAddkW+wzhKOQbvovzVmxjfOqiA
+X-Gm-Gg: AR+sD10k+A3U+LiPYWaTHPuLzRA0DwWtBT0ELUAqoEIvt6SqhSElCsHlcGCNkf92SeB
+ 0QhmPQP//jSN1YwmKUASjXOpFKCp0s2GmmYjCOsuK3XyKrbJUNlK4EH8eqFry7jo8QwzTznbw2z
+ zpXLEjB81BnkQrO9ovz9+xQhzU3iig4SxEpmdiAtzI46cQjfp0YjU70ftytLl3qT6Hy+Ctnf0c+
+ XzdVkDEuWpX2TpUEH2/OF3wIod5q2QZ4giLu8xsBuTP7XGsvmV81ZmxNUVBQquY15iu8EAfWrAK
+ IA4WhvoC3/M5G/fWKgiUWXQ/gFA3E4YUxg7DxaLR8Eul7lnmKSpoHQrMlQnm0pjhRyEP154Lgz3
+ Sy8Y3JgFpkg3GI97FC+5RGOtFGFWrDlqUhkFzuAj9QUMJZH+nsDBfC+gqiv7Ek75aFT/hq4d7+5
+ l98i2e5rqxPy6FnfKUddoKbnbI2/XG8g3t2ZkyjSOggFNF9REwMkVtmJNaJZEiiwgW+GoSpWKDW
+ LG9UvjWMssVaTZAoaLXiV+yvN8W88Eqn9Sm1FYhBjwqED8dFB4=
+X-Received: by 2002:a17:907:d12:b0:c24:82b9:361c with SMTP id
+ a640c23a62f3a-c2482b93766mr2112785066b.17.1787504171023; 
+ Sun, 23 Aug 2026 09:56:11 -0700 (PDT)
+Received: from ehlo.thunderbird.net
+ (dynamic-092-224-251-016.92.224.pool.telefonica.de. [92.224.251.16])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c2496297189sm813517366b.22.2026.08.23.09.56.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 23 Aug 2026 09:56:10 -0700 (PDT)
+Date: Sun, 23 Aug 2026 16:56:07 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>
+Subject: =?US-ASCII?Q?RE=3A_=5BPATCHv2_0/7=5D_hw/arm=3A_Adding_Cortex-M7_Asym?=
+ =?US-ASCII?Q?metric_Multiprocessing_boot_support_for_i=2EMX8MP?=
+In-Reply-To: <C7FBB1C7-732B-4BFB-9073-CA8A44C41C3B@gmail.com>
+References: <20260706162859.3361063-1-gaurav.sharma_7@nxp.com>
+ <DB8PR04MB717781FAC6A65C0BE2AF1D0587CF2@DB8PR04MB7177.eurprd04.prod.outlook.com>
+ <DB8PR04MB717730147C8E5B87FF57D07D87DD2@DB8PR04MB7177.eurprd04.prod.outlook.com>
+ <C7FBB1C7-732B-4BFB-9073-CA8A44C41C3B@gmail.com>
+Message-ID: <5496592E-1B57-420F-B87B-8070A3F7D2AA@gmail.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=sinxx198@gmail.com; helo=mail-pj1-x1032.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,107 +109,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vga_draw_text() decides whether the console surface needs a resize from
-its geometry cache, but none of the cache terms observe the graphics
-renderer having replaced the console surface in between:
 
-- last_width/last_height are shared with vga_draw_graphic(), which
-  stores them in pixels while the text path stores characters;
-- last_depth stays 0 for legacy (non-VBE) graphics modes, because
-  vga_get_bpp() only reports a depth when VBE is enabled, so the
-  "s->last_depth" term that normally forces a resize after a graphics
-  frame does not fire.
 
-So a graphics frame that shrinks the console surface (e.g. 80x25
-pixels) followed by a text frame with matching character geometry
-(80x25 chars) skips the resize, and the glyph loop then paints
-width*cw x height*cheight pixels into the smaller surface, out of
-bounds, with guest-controlled (DAC palette) values, on every display
-refresh.
+Am 23=2E August 2026 12:02:22 UTC schrieb Bernhard Beschow <shentey@gmail=
+=2Ecom>:
+>
+>
+>Am 11=2E August 2026 04:47:40 UTC schrieb Gaurav Sharma <gaurav=2Esharma_=
+7@nxp=2Ecom>:
+>>ping
+>>
+>>> -----Original Message-----
+>>> From: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
+>>> Sent: 24 July 2026 09:32
+>>> To: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>; qemu-devel@nongnu=2Eo=
+rg
+>>> Cc: pbonzini@redhat=2Ecom; peter=2Emaydell@linaro=2Eorg; Bernhard Besc=
+how
+>>> <shentey@gmail=2Ecom>
+>>> Subject: RE: [PATCHv2 0/7] hw/arm: Adding Cortex-M7 Asymmetric
+>>> Multiprocessing boot support for i=2EMX8MP
+>>>=20
+>>> Ping
+>
+>Hi Gurav,
+>
+>I finally could test your series=2E I built Buildroot's freescale_imx8mpe=
+vk_defonfig (v2026=2E05) which has the required kernel options already enab=
+led and passed imx8mp-evk-rpmsg=2Edtb to QEMU=2E QEMU starts successfully=
+=2E However, when attempting to load an =2Eelf image to remoteproc0/firmwar=
+e, I get:
+>
+>    # echo zephyr=2Eelf > /sys/devices/platform/imx8mp-cm7/remoteproc/rem=
+oteproc0/firm
+>ware=20
+>    [  887=2E325597] imx-rproc imx8mp-cm7: can't change firmware while ru=
+nning
+>    sh: write error: Device or resource busy
+>
+>Checking the state results in:
+>
+>    # cat /sys/devices/platform/imx8mp-cm7/remoteproc/remoteproc0/state=
+=20
+>    attached
+>
+>I didn't dig into the Linux kernel sources to investigate this further=2E=
+ Do you have an idea of what is missing?
 
-Split the geometry cache per renderer so the units are unambiguous,
-and additionally make the text path compare the pixel size it is
-about to paint against the console surface's actual dimensions.
-The surface check is the load-bearing term: caches in either unit
-cannot see the other renderer swapping the surface, the surface can.
+Okay, I missed the -mmio change as well as the reserved regions: https://d=
+ocs=2Enxp=2Ecom/bundle/AN5317/page/topics/imx_linux_rproc_support=2Ehtml =
+=2E Fixed=2E
 
-Fixes: CVE-2026-77913
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4215
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Warisjeet Singh (sin99xx) <sinxx198@gmail.com>
----
-Changes v1 -> v2:
-- v1 (split caches only) did not fix the reported reproducer: after a
-  legacy graphics frame (depth 0) the text predicate still compared
-  equal, because nothing in it noticed the console surface had been
-  replaced.  Keep the split for clarity, and add the surface-size
-  check which actually catches it (verified with the qtest PoC and an
-  ASAN build; without this patch ASAN reports a heap-buffer-overflow
-  in vga_draw_glyph9(), with it the run is clean).
----
- hw/display/vga.c     | 13 ++++++++++---
- hw/display/vga_int.h |  3 ++-
- 2 files changed, 12 insertions(+), 4 deletions(-)
+Then I set up MCUXpresso following this guide: https://mcuxpresso=2Enxp=2E=
+com/mcuxsdk/latest/html/gsd/repo_setup=2Ehtml
 
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index da0c331486..7a349dc738 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -1241,7 +1241,10 @@ static void vga_draw_text(VGACommonState *s, int full_update)
-         return;
-     }
- 
--    if (width != s->last_width || height != s->last_height ||
-+    if (surface == NULL ||
-+        surface_width(surface) != width * cw ||
-+        surface_height(surface) != height * cheight ||
-+        width != s->last_text_width || height != s->last_text_height ||
-         cw != s->last_cw || cheight != s->last_ch || s->last_depth) {
-         s->last_scr_width = width * cw;
-         s->last_scr_height = height * cheight;
-@@ -1249,8 +1252,8 @@ static void vga_draw_text(VGACommonState *s, int full_update)
-         surface = qemu_console_surface(s->con);
-         qemu_console_text_resize(s->con, width, height);
-         s->last_depth = 0;
--        s->last_width = width;
--        s->last_height = height;
-+        s->last_text_width = width;
-+        s->last_text_height = height;
-         s->last_ch = cheight;
-         s->last_cw = cw;
-         full_update = 1;
-@@ -1845,6 +1848,8 @@ static void vga_invalidate_display(void *opaque)
- 
-     s->last_width = -1;
-     s->last_height = -1;
-+    s->last_text_width = -1;
-+    s->last_text_height = -1;
- }
- 
- void vga_common_reset(VGACommonState *s)
-@@ -1887,6 +1892,8 @@ void vga_common_reset(VGACommonState *s)
-     s->last_ch = 0;
-     s->last_width = 0;
-     s->last_height = 0;
-+    s->last_text_width = 0;
-+    s->last_text_height = 0;
-     s->last_scr_width = 0;
-     s->last_scr_height = 0;
-     s->cursor_start = 0;
-diff --git a/hw/display/vga_int.h b/hw/display/vga_int.h
-index 5664317ecd..ca69ae9815 100644
---- a/hw/display/vga_int.h
-+++ b/hw/display/vga_int.h
-@@ -122,7 +122,8 @@ typedef struct VGACommonState {
-     uint32_t plane_updated;
-     uint32_t last_line_offset;
-     uint8_t last_cw, last_ch;
--    uint32_t last_width, last_height; /* in chars or pixels */
-+    uint32_t last_width, last_height; /* in pixels (graphics renderer) */
-+    uint32_t last_text_width, last_text_height; /* in chars (text renderer) */
-     uint32_t last_scr_width, last_scr_height; /* in pixels */
-     uint32_t last_depth; /* in bits */
-     bool last_byteswap;
--- 
-2.47.3
+With an ARM eabi toolchain provided by my distrubution I created the =2Eel=
+f file:
+
+    west build -b evkmimx8mp examples/driver_examples/uart/polling/ --conf=
+ig ddr_release
+
+With the apporpriate =2Edtb I get in Buildroot guest:
+
+    # modprobe rpmsg_char
+    # echo uart_polling_cm7=2Eelf > /sys/devices/platform/imx8mp-cm7/remot=
+eproc/remoteproc0/firmware=20
+    # echo start > /sys/devices/platform/imx8mp-cm7/remoteproc/remoteproc0=
+/state=20
+    [   52=2E182388] remoteproc remoteproc0: powering up imx-rproc
+    [   52=2E195672] remoteproc remoteproc0: Direct firmware load for uart=
+_polling_cm7=2Eelf failed with error -2
+    [   52=2E195895] remoteproc remoteproc0: Falling back to sysfs fallbac=
+k for: uart_polling_cm7=2Eelf
+    [  113=2E748324] remoteproc remoteproc0: request_firmware failed: -110
+    [  113=2E755836] remoteproc remoteproc0: Boot failed: -110
+    sh: write error: Connection timed out
+
+Any ideas?
+
+Best regards,
+Bernhard
+
+>
+>Note that I built Zephyr's imx8mp_evk for the M7 [1] which produces zephy=
+r=2Eelf=2E Does the series provide everything to use Zephyr or do we need t=
+o add ITCM memory? Adding a dedicated memory map including ITCM for the M7 =
+core doesn't seem too complicated=2E Using Zephyr may allow for having a fu=
+nctional test in our CI, though of course binary images had to be provided=
+=2E
+>
+>Best regards,
+>Bernhard
+>
+>[1] https://docs=2Ezephyrproject=2Eorg/latest/boards/nxp/imx8mp_evk/doc/i=
+ndex=2Ehtml#programming-and-debugging-m7
+>
+>
+>>>=20
+>>> > -----Original Message-----
+>>> > From: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
+>>> > Sent: 06 July 2026 21:59
+>>> > To: qemu-devel@nongnu=2Eorg
+>>> > Cc: pbonzini@redhat=2Ecom; peter=2Emaydell@linaro=2Eorg; Gaurav Shar=
+ma
+>>> > <gaurav=2Esharma_7@nxp=2Ecom>
+>>> > Subject: [PATCHv2 0/7] hw/arm: Adding Cortex-M7 Asymmetric
+>>> > Multiprocessing boot support for i=2EMX8MP
+>>> >
+>>> > Changes in v1:
+>>> >
+>>> > This series adds Asymmetric Multiprocessing (AMP) boot support for t=
+he
+>>> > Cortex-M7 core on the i=2EMX8MP SoC=2E The M7 firmware can be loaded=
+ and
+>>> > started from Linux running on the Cortex-A53 cores via the remotepro=
+c
+>>> > framework=2E
+>>> >
+>>> > The series introduces the following peripheral models needed for AMP=
+:
+>>> >   - GPC (General Power Controller)
+>>> >   - GPR (General Purpose Registers)
+>>> >   - SRC (System Reset Controller) authored by Bernhard Beschow
+>>> > <shentey@gmail=2Ecom>
+>>> >   - MU (Messaging Unit)
+>>> >   - Extends the CCM with M7 clock outputs and wires into the i=2EMX8=
+MP SoC
+>>> >   - Enable Cortex-M7 boot in i=2EMX8MP EVK functional test
+>>> >
+>>> > Changes in v2:
+>>> >
+>>> > - Removed the usage of device_class_set_legacy_reset in imx8mp
+>>> > gpc,gpr,mu and
+>>> >   src=2E
+>>> > - Removed the usage of 'smp' , 'maxcpus' and 'enable-cm7' to make th=
+e
+>>> >   invocation simpler=2E
+>>> > - Cleaned up imx8mp_src by removing redundant/unused code=2E
+>>> > - Updated Maintainers and improved the imx8mp documentation
+>>> >
+>>> > Signed-off-by: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
+>>> >
+>>> > Bernhard Beschow (1):
+>>> >   hw/misc: Add SRC (System Reset Controller) to i=2EMX8MP
+>>> >
+>>> > Gaurav Sharma (6):
+>>> >   hw/misc: Add i=2EMX8MP GPC (General Power Controller) IP
+>>> >   hw/misc: Add GPR (General Purpose Register) IP to iMX8MP
+>>> >   hw/misc: Add MU (Messaging Unit) IP to i=2EMX8MP device model
+>>> >   hw/misc: Extend i=2EMX8MP CCM with Cortex-M7 clock outputs
+>>> >   hw/arm: Enable Cortex-M7 AMP boot on i=2EMX8MP
+>>> >   tests/functional: Enable Cortex-M7 boot in i=2EMX8MP EVK functiona=
+l
+>>> > test
+>>> >
+>>> >  MAINTAINERS                                 |  13 +-
+>>> >  docs/system/arm/imx8m=2Erst                   | 188 ++++++++++-
+>>> >  hw/arm/Kconfig                              |   4 +
+>>> >  hw/arm/fsl-imx8mp=2Ec                         | 220 ++++++++++++-
+>>> >  hw/arm/imx8mp-evk=2Ec                         |   3 +-
+>>> >  hw/misc/Kconfig                             |  12 +
+>>> >  hw/misc/imx8mp_ccm=2Ec                        |   9 +
+>>> >  hw/misc/imx8mp_gpc=2Ec                        | 146 +++++++++
+>>> >  hw/misc/imx8mp_gpr=2Ec                        | 153 +++++++++
+>>> >  hw/misc/imx8mp_mu=2Ec                         | 328 +++++++++++++++=
++++++
+>>> >  hw/misc/imx8mp_src=2Ec                        | 275 +++++++++++++++=
++
+>>> >  hw/misc/meson=2Ebuild                         |   4 +
+>>> >  hw/misc/trace-events                        |   5 +
+>>> >  include/hw/arm/fsl-imx8mp=2Eh                 |  29 +-
+>>> >  include/hw/misc/imx8mp_ccm=2Eh                |   3 +
+>>> >  include/hw/misc/imx8mp_gpc=2Eh                |  34 ++
+>>> >  include/hw/misc/imx8mp_gpr=2Eh                |  56 ++++
+>>> >  include/hw/misc/imx8mp_mu=2Eh                 |  53 ++++
+>>> >  include/hw/misc/imx8mp_src=2Eh                |  31 ++
+>>> >  tests/functional/aarch64/test_imx8mp_evk=2Epy |   1 -
+>>> >  20 files changed, 1539 insertions(+), 28 deletions(-)  create mode
+>>> > 100644 hw/misc/imx8mp_gpc=2Ec  create mode 100644
+>>> hw/misc/imx8mp_gpr=2Ec
+>>> > create mode 100644 hw/misc/imx8mp_mu=2Ec  create mode 100644
+>>> > hw/misc/imx8mp_src=2Ec  create mode 100644
+>>> include/hw/misc/imx8mp_gpc=2Eh
+>>> > create mode 100644 include/hw/misc/imx8mp_gpr=2Eh  create mode 10064=
+4
+>>> > include/hw/misc/imx8mp_mu=2Eh  create mode 100644
+>>> > include/hw/misc/imx8mp_src=2Eh
+>>> >
+>>> > --
+>>> > 2=2E34=2E1
+>>
 
