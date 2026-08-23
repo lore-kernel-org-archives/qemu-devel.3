@@ -4,101 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23D7FC5DF81
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6612DC5DF8C
 	for <qemu-devel@archiver.kernel.org>; Sun, 23 Aug 2026 07:36:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wy2kW-0002Y5-OH; Sun, 23 Aug 2026 03:36:12 -0400
+	id 1wy2kV-0002Wk-4B; Sun, 23 Aug 2026 03:36:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wy2kV-0002XC-BA
- for qemu-devel@nongnu.org; Sun, 23 Aug 2026 03:36:11 -0400
+ id 1wy2kT-0002WT-Mh
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 03:36:09 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wy2kT-0005q4-A0
- for qemu-devel@nongnu.org; Sun, 23 Aug 2026 03:36:11 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1wy2kR-0005ph-FO
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 03:36:09 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67N71tUC2538433; Sun, 23 Aug 2026 07:35:55 GMT
+ 67N71dPL1370470; Sun, 23 Aug 2026 07:36:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=L3BIWCfz6zsj376yj
- 7VDSMUcPh7GnnaytV9GDqhdULA=; b=Lj0ka9ePtNA/icjbNVVUX5mF9nA8DzVYF
- u1IxZ4jiZfcZ83Y8nZpEe9PYrN7UG0oBGk89ky0efqtFZaiicXd9GGcYDCJwjYeH
- PECsane0M1Mbq1aHSrHOv0zAhR4G+FDuG+M06EjdJ2htIgyT4RPaY6Ff922d96K/
- Ma0qXCTlMgN0eembB+5Y2AYSMbunYj3r/IxUzU5TU6/OVLfRRVaDBe+N3zqsciZ6
- hgxt+mhBv23kdJpQ1xIQnhdIcucE6Se7qT6WvZt+3fm+Je1N8ceU9nKIbFJm+OXp
- OVKWg/2j+q7atoxC8Nt2rNmlvzEZuj5ShhBqohpfWqiFfkAJRErxw==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dwuxw4-1
+ :mime-version:references:subject:to; s=pp1; bh=mfQTvX1xC0DqslduP
+ dQRTudd1W7SYTVO30dpxVMRI1Q=; b=tlMj1JI1qB4x7t9CS8TJHv5qTWjCmrUVi
+ c08pRGZOFXXn8Y95lrzA2ya+YYUMVS3cGIF9ZKFxNooOE4V+hBZDbo3So9btYgwy
+ b/0HdvXB4TjcT4pV7SblzgT80Yy+9etO1tTvvhscLO6t1KQ3bdbWJG18jf1AHx5Z
+ njZ9NSqFVFTqXZh1zJokdQsv+QY7I60S2Ikq097+VyuA14Mcbcf3096adAL5YEmP
+ mmaYW2QhpvW4NfeO3OQDLOdzroQABEnAU5DgmjVskvuJ3IJrgetF5qnThakSzGzm
+ a/VP/qOx8vd8MLKBltq2g30NIwSnhM9N6OPCJC9DTInDaRg96dlGA==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726e455x-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 23 Aug 2026 07:35:55 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67N7QOIt027434;
- Sun, 23 Aug 2026 07:35:55 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3jgsbu-1
+ Sun, 23 Aug 2026 07:36:04 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67N7QLlt010451;
+ Sun, 23 Aug 2026 07:36:03 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rsxrhkp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 23 Aug 2026 07:35:54 +0000 (GMT)
+ Sun, 23 Aug 2026 07:36:03 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
  [10.20.54.101])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67N7ZpUu46727530
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67N7Zxwb35127688
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 23 Aug 2026 07:35:51 GMT
+ Sun, 23 Aug 2026 07:35:59 GMT
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F332520043;
- Sun, 23 Aug 2026 07:35:50 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7F72320043;
+ Sun, 23 Aug 2026 07:35:59 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8C4A820040;
- Sun, 23 Aug 2026 07:35:49 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CD95220040;
+ Sun, 23 Aug 2026 07:35:56 +0000 (GMT)
 Received: from Mac.com (unknown [9.39.19.238])
  by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Sun, 23 Aug 2026 07:35:49 +0000 (GMT)
+ Sun, 23 Aug 2026 07:35:56 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Minhang Zhang <zhangminhang@kylinos.cn>, Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PULL 2/7] target/ppc: Validate HTABMASK and reserved bits in SDR1
- for 32-bit mode
-Date: Sun, 23 Aug 2026 13:05:28 +0530
-Message-ID: <20260823073536.40282-3-harshpb@linux.ibm.com>
+Cc: "Kirill A. Korinsky" <kirill@korins.ky>,
+ Chinmay Rath <rathc@linux.ibm.com>, Aditya Gupta <adityag@linux.ibm.com>
+Subject: [PULL 5/7] powernv: boot OpenBSD on POWER9
+Date: Sun, 23 Aug 2026 13:05:31 +0530
+Message-ID: <20260823073536.40282-6-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260823073536.40282-1-harshpb@linux.ibm.com>
 References: <20260823073536.40282-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODIzMDA2NiBTYWx0ZWRfXwgbwgpidUiEf
- 6pBQAholLhKy8s+PUapFL9GuGKh+ck8QAizleu5ncJApJ+Dn7qK/Jy3lzvEjv8aTMGCB4DKuCyA
- WAsvXuFlfP1Mv9YkpwJyTr0PbVBmnEg=
-X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a8aa2db cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8aa2e4 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=Sv0fKeRqtYgA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
- a=dZbOZ2KzAAAA:8 a=VnNF1IyMAAAA:8 a=DoTH_MmcH-Uw9oovWWsA:9
-X-Proofpoint-ORIG-GUID: EBEiX9cf6PSnf0gUu6BH8Z8YDLW6T4x7
-X-Proofpoint-GUID: EBEiX9cf6PSnf0gUu6BH8Z8YDLW6T4x7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIzMDA2NiBTYWx0ZWRfX5qGAlBeGu+Fd
- BSsfc6VB84H96X/N0s0dYx/jQS5HBCmiG101O4coL9hvRXG7DzJJrnExaXwKOYLCAyiaJeM8Z2p
- vXAxrDHacsuauIUrvjmjHwchnLlLzImD/MOeDqZojOZkeDMHASaPwyI4wT5v5wEn3cg8wQnXqz1
- Z4ctGvb92kdgJrVyqlN2ap+7hCdekIG4TniJzk8GvLwxAS5LqKkdFLf3saV1aAEX0HJvpS4fwDE
- v/dUitIgKlpOFa57povWsuEisbl38jU3QgHD0bXpFwtFnD58IHtav+fresJaL9Kd62LtXVP37cv
- Q7oNDsPw16sq6wITgnrPan31TY9ELMfTI/4hnMJmvGQ1b6z3qRBH38yp98s1TJ+/A2nUbeEue94
- 8+0/ahVR2ea8aFnc4Dwvqy6+KTWGXYVZwaLo/6nloXPqcS9wKcG99ZDx8+hoLOS0VWJitDQ35ri
- WsxDNJNrCApwfDfZyYw==
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=ZXJNRhq1AAAA:8 a=VnNF1IyMAAAA:8 a=RPfSAh3-IdAa7JDXepoA:9
+ a=v5IQ3Wrm8lavPYTLLTww:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIzMDA2NiBTYWx0ZWRfX+c7eLE48BgyY
+ ZDEOEXnpy64M8/hXG/FxRHLaWBkSBrz3eVCyAaELtbeSDw+8jjcTS48xWvnAb+TE/xpRqmxNQ+2
+ ZVg/JbZOf1DbUgdraVQcvREJQt/huGE=
+X-Proofpoint-GUID: NYGCNV7DSbxRU3nMsG94d2MOq7Iqf5ou
+X-Proofpoint-ORIG-GUID: NYGCNV7DSbxRU3nMsG94d2MOq7Iqf5ou
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIzMDA2NiBTYWx0ZWRfX4fXwLi58o+DN
+ 7460O6vya01b2VKniu1zuy30UxMu9U/nJtKU+rH1hJOddgW9Fy0hYmDjXBEOODp4Drs/KqTS8BU
+ idH0iASa2ldMGhB0abzSrlknsRBf91uYXIk/LSx8JWCGCa+l/bzEKOv9y5DB/ry3iVVjVKZ38tE
+ 9bZuzNHJdBFF7S38x/4mwI2Pa0BFqWhV/UiUEN5Rpy+3NfOigABKBAJHF82Ya9MT7gScPaZ8/cE
+ tfmgCFo1+lvIZCj/VcQDqZJuoFygAwEWis0yShBhsXCXJgpJf4opOvAgECGezH0n22/v03CGZe+
+ DgDF9jF5tER+gyCstA8aqIaQttXHGRdHI63K7R5PBkGCpbXpUtOEszggzmGB9oDFicrC5bW9XWG
+ ssIy7lhP+opZxBepRqLlxMiKZULGJhcC2QYKYQFyYUXWoQ45P75RhWh3nmFZyAgxYmI2GZwZOsW
+ QQe+v4AXwyJImPPj17Q==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-23_03,2026-08-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1011 adultscore=0 bulkscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608230066
+ suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1011 phishscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608230066
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -123,75 +123,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Minhang Zhang <zhangminhang@kylinos.cn>
+From: "Kirill A. Korinsky" <kirill@korins.ky>
 
-ppc_store_sdr1() had validation for 64-bit SDR1 values but lacked
-corresponding checks for the 32-bit case.  According to the Power ISA,
-in 32-bit mode SDR1 bits 16-22 are reserved (must be zero) and
-HTABMASK (bits 23-31) must consist of a consecutive string of
-1-bits starting from the LSB, i.e., be of the form 2^n-1.
+The POWER9 Processor User's Manual, section 4.9.4, specifies that POWER9
+ignores PTCR[PATS] and only supports a 64 KiB partition table. Use an
+effective PATS value of 4 on POWER9; other processors keep the existing
+ISA v3.0 interpretation.
 
-Add checks to reject invalid HTABMASK values and log a guest error
-for non-zero reserved bits, following the same pattern used by the
-existing 64-bit validation.
+The PSI model now exposes POWER9 IRQ level and pending status registers,
+and keeps both updated while delivering through the existing XIVE LSI
+source. This lets guests that select the POWER9 PSI LSI IRQ method
+continue to receive LPC interrupts.
 
-Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
-Signed-off-by: Minhang Zhang <zhangminhang@kylinos.cn>
-Link: https://lore.kernel.org/qemu-devel/tencent_8388D4B38DC5172F5EEE70436D3AD6D02006@qq.com
+The blast radius is probably minimal: the PTCR change is limited to
+POWER9, while the PSI change only touches POWER9 PSI state and reuses
+the existing delivery path.
+
+Acked-by: Chinmay Rath <rathc@linux.ibm.com>
+Signed-off-by: Kirill A. Korinsky <kirill@korins.ky>
+Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260719145559.94342-1-kirill@korins.ky
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- target/ppc/mmu_common.c | 25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ hw/ppc/pnv_psi.c                       | 11 ++++--
+ target/ppc/mmu-book3s-v3.c             | 21 +++++++++--
+ tests/functional/ppc64/meson.build     |  2 +
+ tests/functional/ppc64/test_openbsd.py | 52 ++++++++++++++++++++++++++
+ 4 files changed, 79 insertions(+), 7 deletions(-)
+ create mode 100755 tests/functional/ppc64/test_openbsd.py
 
-diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-index 2499e619f8..2a36817181 100644
---- a/target/ppc/mmu_common.c
-+++ b/target/ppc/mmu_common.c
-@@ -42,24 +42,39 @@ void ppc_store_sdr1(CPUPPCState *env, target_ulong value)
-     PowerPCCPU *cpu = env_archcpu(env);
-     qemu_log_mask(CPU_LOG_MMU, "%s: " TARGET_FMT_lx "\n", __func__, value);
-     assert(!cpu->env.has_hv_mode || !cpu->vhyp);
--#if defined(TARGET_PPC64)
-     if (mmu_is_64bit(env->mmu_model)) {
-+#if defined(TARGET_PPC64)
-         target_ulong sdr_mask = SDR_64_HTABORG | SDR_64_HTABSIZE;
-         target_ulong htabsize = value & SDR_64_HTABSIZE;
+diff --git a/hw/ppc/pnv_psi.c b/hw/ppc/pnv_psi.c
+index e8701c6100..39ec448f3c 100644
+--- a/hw/ppc/pnv_psi.c
++++ b/hw/ppc/pnv_psi.c
+@@ -688,6 +688,8 @@ static uint64_t pnv_psi_p9_mmio_read(void *opaque, hwaddr addr, unsigned size)
+     case PSIHB9_ESB_CI_BASE:
+     case PSIHB9_ESB_NOTIF_ADDR:
+     case PSIHB9_IVT_OFFSET:
++    case PSIHB9_IRQ_LEVEL:
++    case PSIHB9_IRQ_STAT:
+         val = psi->regs[reg];
+         break;
+     default:
+@@ -818,17 +820,20 @@ static void pnv_psi_power9_set_irq(void *opaque, int irq, int state)
+ {
+     PnvPsi *psi = opaque;
+     uint64_t irq_method = psi->regs[PSIHB_REG(PSIHB9_INTERRUPT_CONTROL)];
++    uint64_t irq_bit = PPC_BIT(irq);
  
-         if (value & ~sdr_mask) {
-             qemu_log_mask(LOG_GUEST_ERROR, "Invalid bits 0x"TARGET_FMT_lx
--                     " set in SDR1", value & ~sdr_mask);
-+                     " set in SDR1\n", value & ~sdr_mask);
-             value &= sdr_mask;
-         }
-         if (htabsize > 28) {
-             qemu_log_mask(LOG_GUEST_ERROR, "Invalid HTABSIZE 0x" TARGET_FMT_lx
--                     " stored in SDR1", htabsize);
-+                     " stored in SDR1\n", htabsize);
-             return;
-         }
--    }
- #endif /* defined(TARGET_PPC64) */
--    /* FIXME: Should check for valid HTABMASK values in 32-bit case */
-+    } else {
-+        target_ulong sdr_mask = SDR_32_HTABORG | SDR_32_HTABMASK;
-+        target_ulong htabmask = value & SDR_32_HTABMASK;
+     if (irq_method & PSIHB9_IRQ_METHOD) {
+         qemu_log_mask(LOG_GUEST_ERROR, "PSI: LSI IRQ method no supported\n");
+         return;
+     }
+ 
+-    /* Update LSI levels */
++    /* Update LSI levels and pending status */
+     if (state) {
+-        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] |= PPC_BIT(irq);
++        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] |= irq_bit;
++        psi->regs[PSIHB_REG(PSIHB9_IRQ_STAT)] |= irq_bit;
+     } else {
+-        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] &= ~PPC_BIT(irq);
++        psi->regs[PSIHB_REG(PSIHB9_IRQ_LEVEL)] &= ~irq_bit;
++        psi->regs[PSIHB_REG(PSIHB9_IRQ_STAT)] &= ~irq_bit;
+     }
+ 
+     qemu_set_irq(psi->qirqs[irq], state);
+diff --git a/target/ppc/mmu-book3s-v3.c b/target/ppc/mmu-book3s-v3.c
+index 3865556310..f329a7a0f2 100644
+--- a/target/ppc/mmu-book3s-v3.c
++++ b/target/ppc/mmu-book3s-v3.c
+@@ -23,24 +23,37 @@
+ #include "mmu-hash64.h"
+ #include "mmu-book3s-v3.h"
+ 
++#define PPC64_V3_PATE_SIZE 16 /* two 64-bit words */
 +
-+        if (value & ~sdr_mask) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "Invalid bits 0x" TARGET_FMT_lx
-+                          " set in SDR1\n", value & ~sdr_mask);
-+            value &= sdr_mask;
-+        }
-+        if ((htabmask & (htabmask + 1)) != 0) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "Invalid HTABMASK 0x" TARGET_FMT_lx
-+                          " in SDR1 (must be of form 2^n-1)\n", htabmask);
-+            return;
-+        }
+ bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lpid, ppc_v3_pate_t *entry)
+ {
+     uint64_t patb = cpu->env.spr[SPR_PTCR] & PTCR_PATB;
+     uint64_t pats = cpu->env.spr[SPR_PTCR] & PTCR_PATS;
++    uint64_t table_size;
++    uint64_t entries;
++
++    /*
++     * The POWER9 Processor User's Manual, section 4.9.4, specifies that
++     * POWER9 ignores PTCR[PATS] and only supports a 64 KiB partition table.
++     */
++    if (cpu->env.excp_model == POWERPC_EXCP_POWER9) {
++        pats = 4;
 +    }
-     env->spr[SPR_SDR1] = value;
- }
++    table_size = 1ULL << (pats + 12);
  
+     /* Check if partition table is properly aligned */
+-    if (patb & MAKE_64BIT_MASK(0, pats + 12)) {
++    if (patb & (table_size - 1)) {
+         return false;
+     }
+ 
+     /* Calculate number of entries */
+-    pats = 1ull << (pats + 12 - 4);
+-    if (pats <= lpid) {
++    entries = table_size / PPC64_V3_PATE_SIZE;
++    if (entries <= lpid) {
+         return false;
+     }
+ 
+     /* Grab entry */
+-    patb += 16 * lpid;
++    patb += PPC64_V3_PATE_SIZE * lpid;
+     entry->dw0 = ldq_phys(CPU(cpu)->as, patb);
+     entry->dw1 = ldq_phys(CPU(cpu)->as, patb + 8);
+     return true;
+diff --git a/tests/functional/ppc64/meson.build b/tests/functional/ppc64/meson.build
+index f0f8ab8f61..cb3c745624 100644
+--- a/tests/functional/ppc64/meson.build
++++ b/tests/functional/ppc64/meson.build
+@@ -4,6 +4,7 @@ test_ppc64_timeouts = {
+   'fadump' : 480,
+   'hv' : 1000,
+   'mac99' : 120,
++  'openbsd' : 240,
+   'powernv' : 480,
+   'pseries' : 480,
+   'replay' : 210,
+@@ -20,6 +21,7 @@ tests_ppc64_system_thorough = [
+   'fadump',
+   'hv',
+   'mac99',
++  'openbsd',
+   'powernv',
+   'pseries',
+   'replay',
+diff --git a/tests/functional/ppc64/test_openbsd.py b/tests/functional/ppc64/test_openbsd.py
+new file mode 100755
+index 0000000000..bdbef6bf82
+--- /dev/null
++++ b/tests/functional/ppc64/test_openbsd.py
+@@ -0,0 +1,52 @@
++#!/usr/bin/env python3
++#
++# Test that OpenBSD boots on a ppc powernv machine and reaches the installer.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import wait_for_console_pattern
++
++
++class OpenBSDPowerNV(QemuSystemTest):
++
++    ASSET_MINIROOT = Asset(
++        'https://kirill.korins.ky/pub/qemu-powerpc64-openbsd/miniroot79.img',
++        '7829e42b75d81cafd732038b9d63228b79c1f5828d8375872a4bb655e1d6b13c')
++
++    ASSET_BOOTKERNEL = Asset(
++        'https://kirill.korins.ky/pub/qemu-powerpc64-openbsd/pnor.BOOTKERNEL',
++        '397ce43ce61910e1a2c4f13d301f957e61513a9ec5371bc3e87d3095411fae7b')
++
++    def test_powernv9_openbsd_installer(self):
++        self.set_machine('powernv9')
++        self.require_accelerator('tcg')
++
++        miniroot_path = self.ASSET_MINIROOT.fetch()
++        bootkernel_path = self.ASSET_BOOTKERNEL.fetch()
++
++        self.vm.set_console()
++        self.vm.add_args('-cpu', 'power9',
++                         '-accel', 'tcg,thread=single',
++                         '-smp', '1,cores=1,threads=1',
++                         '-m', '2g',
++                         '-kernel', bootkernel_path,
++                         '-device',
++                         'ich9-ahci,id=sata0,bus=pcie.0,addr=0x0',
++                         '-drive',
++                         f'file={miniroot_path},format=raw,if=none,'
++                         'id=bootdisk,snapshot=on',
++                         '-device',
++                         'ide-hd,bus=sata0.0,unit=0,drive=bootdisk,'
++                         'bootindex=1')
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'OpenBSD 7.9 (RAMDISK)', 'panic:')
++        wait_for_console_pattern(
++            self,
++            '(I)nstall, (U)pgrade, (A)utoinstall or (S)hell?',
++            'panic:')
++
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.52.0
 
