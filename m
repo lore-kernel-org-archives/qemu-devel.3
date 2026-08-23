@@ -4,90 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85120C5DF81
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Aug 2026 07:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D27AEC5DF9A
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Aug 2026 07:36:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wy2RB-0006Qt-1V; Sun, 23 Aug 2026 03:16:13 -0400
+	id 1wy2kH-0002Rx-1S; Sun, 23 Aug 2026 03:35:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian@quante.one>)
- id 1wy2R9-0006Qi-BU
- for qemu-devel@nongnu.org; Sun, 23 Aug 2026 03:16:11 -0400
-Received: from nx38.node01.secure-mailgate.com ([89.22.108.38])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1wy2kF-0002RV-74
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 03:35:55 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian@quante.one>)
- id 1wy2R7-0000oq-5e
- for qemu-devel@nongnu.org; Sun, 23 Aug 2026 03:16:11 -0400
-Received: from web279.dogado.net ([31.47.255.59])
- by node01.secure-mailgate.com with esmtps (TLS1.2) tls
- TLS_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <christian@quante.one>)
- id 1wy2R0-00GwcC-P4; Sun, 23 Aug 2026 09:16:04 +0200
-X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quante.one;
- s=cloudpit; t=1787469359;
- bh=By1lu3n2s3L5zNsSgNA4XfMp0fx3WS4b/BVEdjo0FzU=;
- h=From:To:Cc:Subject:Date:From;
- b=ZlAUSFwChn2Br/wkHmS0jSujXUP4fxQq/GJ4w6q0soskDzzu3oGDuGCWmGqU1/8dX
- 8Gnyzumb400dg5F25k+RdzfHff44fKohKB0wW3COrbf2LnDNwjP+2Ru/gJYPlMNlpC
- 0VdJrVrWxJd+G0q93ZHla9K8RHBhgE5iljkBZwJo=
-Received: from Zeuss.fritz.box (p549f1be3.dip0.t-ipconnect.de [84.159.27.227])
- (Authenticated sender: christian@quante.one)
- by web279.dogado.net (Postfix) with ESMTPSA id 10227280652;
- Sun, 23 Aug 2026 09:15:59 +0200 (CEST)
-X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
-From: Christian Quante <christian@quante.one>
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1wy2kD-0005nt-HW
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 03:35:54 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67N72Eio1371689; Sun, 23 Aug 2026 07:35:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ylbTAX
+ GVHsCZW9MhHr/aX5zU08P390Rfgs1OZjcrb7s=; b=hZYGk4+Y1Z1GSGma9F7rwz
+ 0w/orzQuyXIW24LY3LpwjlkzzkEdDWFLQDzrGB/jVFFqcWO/SiH6iH/lUXGkwM5b
+ H6nYuflYieijCHuZH8nnZn/wnfdaXPCH9Ii4p9ky5VSVyJw44Dylyu+beeNZbhjS
+ suiQGFgEK5RuTVsl5fe/hS3fHGYDKqx1HPrJvFlOBieF18EIKHQgmRxbeZ8QnNPE
+ NAK7AzVkjKkrfEBwDEbuQx+yGWSrRBc9sw27L7+VUuSgCML9mHyXpapBhaF515hx
+ RiyrtTfqbO9zGNtOXkktjdCPGhofEPruPfgp79fPrin+xdxjAFN//TSuyEovNlXA
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726e455f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 23 Aug 2026 07:35:51 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67N7QGPD012306;
+ Sun, 23 Aug 2026 07:35:50 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rag0kue-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 23 Aug 2026 07:35:50 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67N7Zn4u32768274
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sun, 23 Aug 2026 07:35:49 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EB75F20043;
+ Sun, 23 Aug 2026 07:35:48 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2D96820040;
+ Sun, 23 Aug 2026 07:35:47 +0000 (GMT)
+Received: from Mac.com (unknown [9.39.19.238])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Sun, 23 Aug 2026 07:35:46 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Paolo Bonzini <pbonzini@redhat.com>,
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Christian Quante <christian@quante.one>
-Subject: [PATCH] hw/input/ps2: answer unknown mouse commands with a resend
-Date: Sun, 23 Aug 2026 09:15:28 +0200
-Message-ID: <20260823071529.16389-1-christian@quante.one>
-X-Mailer: git-send-email 2.53.0
+ Amit Machhiwal <amachhiw@linux.ibm.com>
+Subject: [PULL 1/7] target/ppc/cpu_init: make cpu listing deterministic
+Date: Sun, 23 Aug 2026 13:05:27 +0530
+Message-ID: <20260823073536.40282-2-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260823073536.40282-1-harshpb@linux.ibm.com>
+References: <20260823073536.40282-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-PPP-Message-ID: <178746935961.2681787.12206641510893453916@web279.dogado.net>
-X-PPP-Vhost: quante.one
-X-Originating-IP: 31.47.255.59
-X-SecureMailgate-Domain: web279.dogado.net
-X-SecureMailgate-Username: 31.47.255.59
-Authentication-Results: secure-mailgate.com;
- auth=pass smtp.auth=31.47.255.59@web279.dogado.net
-X-SecureMailgate-Outgoing-Class: ham
-X-SecureMailgate-Outgoing-Evidence: SB/global_tokens (0.00248173966136)
-X-Recommended-Action: accept
-X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuVAbghcjzCMj9agjjk9wivV3TvQP7denkvp
- tYMocagoeCu2SmbhJN1U9FKs8X3+Nt1HOctZ5X+40a9IXddeG3M38JQYgcgjsac3uQcQdCX4ROfH
- zJ6mVE7ewsipSVIfs4YBWMI0kHH6ccxxYgKRbnuyS5+h1uiHzk/Rfxfh461YLyu3RZI1CD15pCOE
- 1vk99ROIQSXp0prcVkrsJtqLDcOMdOtYechJ/ikE1WgRg4cS6K5mANmx2g/2xIniaWLUPf0al0h7
- 43VOpKNY+4MjijihZK0EMmf3P50Ajf/tIX00Fuu2beRqilmjgQ6jA3UwYgm3QTha208ypFqQwBFb
- xm4JX7semJdl8Weuy8+tlMSTQwhoy9D5QZ6a84vJal7pM1XhlAOd290vPXa7Loma0jth+x0iJ0NX
- 07iZIeUSWePdS+owFPr4kjXuZPwOU47Z9+s09nAWqoDs8zZa/KiCJd90Lk7053RUfwPXoECB9OvJ
- bEB3ZiIyIjwOoMnQjl6CrKp8EdZ8SizDtPkcGuerFSnVOYtq+HE3WG85mIDi374DW/icy5el5aWU
- /wf4ShFNzAzxuUotuUNGy5ExxW0GC5CkQjQ6zWGsvxsVC/m+yny0Rue4mmnjPFy3dPHP2FzOds3E
- 46oSR4SMslNlGoPN/ReRDyx85JvPA3M+w5jBayuCMVamoWktV59525k34keYykbMQrAIKOj+9hX4
- DXX27MdKse0EuSSr7btxBu5GkHP0MO/iDzcBQTphqKbEazY5fbVoh9VoIekQHpwUfpYnEThmBYJb
- VMG52ZGVwnbZoccL6hb/zozlfY561u9Hn4cUO1fzYYXc64pg+rLT+Ot3L8AutF7Ey5dhohH1DJe4
- xKbBicPC1/Rnj77R/+sTEK1dN5vsJ9kuQgio2RjilK0QWzDS9OQPoavkwPMV2SuvcnEWOuw2MxX0
- 5+DV5wYxLp/Q72cFKjFopoBzI+w6TKsrBBDgOPIh4HEPoN/NFnLJ6oXdnjOfbpfTHUB7Gt5iiSuf
- 1ArWb2AAC8Y+67JeaTvmY/5qnmWiS9Y/KFRQf8e9WAFIg8gdqFY8KQ9Egxp4UGe16U/eGVjath4b
- vkom8c4V/PtEw6nIoDr0sXUZ7YZoZ/GZ+g6r2+bdtWXb1z9s4uNhgHLX+AZlS2zN461BhwVoVaJE
- tlw222OyNqTeU9tH1jYC/i8C7bWQrrnqtP27In+yOBOqEi1X3qoM14sIpnfztEwQP0Uw9n8VcNp0
- 5ACBU/pi9Ze6aNYZYil6cObjel6n0jQ=
-X-Report-Abuse-To: spam@node04.secure-mailgate.com
-X-Complaints-To: abuse@node01.secure-mailgate.com
-Received-SPF: pass client-ip=89.22.108.38; envelope-from=christian@quante.one;
- helo=nx38.node01.secure-mailgate.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8aa2d7 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=VnNF1IyMAAAA:8 a=ybKMF2EBzz_YHPg-y3kA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODIzMDA2NiBTYWx0ZWRfX7P0ir22b+U9I
+ MYFidmhoIxbhlK6YioVD39igPFVdOR2p07MXmyrPI3eYRcIDu3N4491oWu2T3rRYwgcbm8OsaaB
+ 6DA8JI3cyeC6XO/Y94T+tMngDIHksqw=
+X-Proofpoint-GUID: SkUWew2-GjeZpZt3xaafVXIs_lyohfbz
+X-Proofpoint-ORIG-GUID: SkUWew2-GjeZpZt3xaafVXIs_lyohfbz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODIzMDA2NiBTYWx0ZWRfXxDhXFdf6Bgbv
+ ePLpwiYNwgYu8LOeynt/xtaT23KoxSJ6eJ8KYnkyLSlb3BcAxPzOIwv6gx/EJJDX3d6lzhyIpa8
+ SQxX0HDQOHO2TZmuOiuMGE+GZVFAgOjXlYok7kuRUl6a5z1MlDKfG967wkK52gqFZ1fw1pfmn+A
+ 9LqysMecpaG0mTiGHdRkozUJHQhMKSaRark4EIuWlOV66m9+htZLQ8ICCL8+5H8pSzTNWYx6P4j
+ 67zh5uKbMrNp0HHcut2Nh1H1vSll/UkKDm8gtA1R/laBH7Pte421BdLT5ia9Ftvxrn8GmbidcDA
+ WM8mqouw7t9d4jn8+EAsCM2yrDXJrI4Jpw/4WhcMMt5unBSlLtE82q9fgdEUkH3XkCN+up9BARF
+ zTQiw6SlOrRtf+qFdt+d4f808YpmWGnsEJ78Gq1XL/tl+y+ZAY9y9NasWWv932T5wO5wlrCPlMN
+ VwuS5WXlLYuzeJe2UlA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-23_03,2026-08-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608230066
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,67 +126,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ps2_write_mouse() ends its command switch with a bare "default: break;",
-so an unknown command draws no reply at all. A real PS/2 device answers
-every byte it is given -- ACK (0xFA) when it understood one, resend
-(0xFE) when it did not -- and a guest that gets nothing back is left
-waiting out its reply timeout. The keyboard path in the same file has
-always answered unknown commands with KBD_REPLY_RESEND.
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-Two guests were measured on this.
+The existing compare function only make sure that we list cpus with PVR
+order. However, we never compare cpu names.
+As a result, while cpus are grouped per PVR, the order within a group is
+non deterministic. Depending on QOM type initialization order, we get
+different results for -cpu help.
 
-OS/2 probes the mouse with the vendor command 0xBB, which QEMU does not
-implement, and then polls the status port until its own timeout runs
-out. On a Warp 3 guest that wait costs about 25 ms of every boot under
-TCG, and 2.1 s under KVM, where each of those polls leaves the guest.
-With this patch the wait ends on the first read: the guest takes the
-same error path an unexpected reply would, and does not retry.
+For instance, previous output could be:
+Available CPUs:
+  755_v1.0         PVR 00083100
+  745_v1.0         PVR 00083100
+  755_v1.1         PVR 00083101
+  745_v1.1         PVR 00083101
 
-Linux probes for a TrackPoint with 0xE1 and fails the same way. Timing
-the psmouse detection from a mark written to /dev/kmsg to the kernel's
-"input:" line, three boots each of a 6.18.35 kernel under TCG:
-426.7/428.8/441.6 ms without this patch, 21.4/21.6/21.2 ms with it. The
-mouse is detected identically either way; libps2 caps its retries at
-two attempts and ends in the same -EPROTO the timeout produced.
+While a sorted output should be:
+Available CPUs:
+  745_v1.0         PVR 00083100
+  755_v1.0         PVR 00083100
+  745_v1.1         PVR 00083101
+  755_v1.1         PVR 00083101
 
-The specification's second stage -- 0xFC (Error) when the byte after a
-rejected one is invalid as well -- is deliberately left out. It would
-need state that has to survive migration, no guest is known to test for
-it, and the keyboard path has answered unknown commands with a bare
-resend for twenty years.
+Fix it by comparing cpu names to have a stable result.
+This allows us to record and compare various command line results across
+versions to make sure we didn't break anything while working on
+single-binary.
 
-Signed-off-by: Christian Quante <christian@quante.one>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260720192403.66694-1-pierrick.bouvier@oss.qualcomm.com
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- hw/input/ps2.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ target/ppc/cpu_init.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/input/ps2.c b/hw/input/ps2.c
-index 5516eb262d..1e8c6d983a 100644
---- a/hw/input/ps2.c
-+++ b/hw/input/ps2.c
-@@ -73,6 +73,7 @@
- #define AUX_SET_DEFAULT     0xF6
- #define AUX_RESET           0xFF    /* Reset aux device */
- #define AUX_ACK             0xFA    /* Command byte ACK. */
-+#define AUX_RESEND          0xFE    /* Command NACK, send the cmd again */
- 
- #define MOUSE_STATUS_REMOTE     0x40
- #define MOUSE_STATUS_ENABLED    0x20
-@@ -955,6 +956,13 @@ void ps2_write_mouse(PS2MouseState *s, int val)
-                 s->mouse_type);
-             break;
-         default:
-+            /*
-+             * A PS/2 device answers every command it is given; an unknown
-+             * one draws a resend. Staying silent leaves the guest waiting
-+             * out its reply timeout. The keyboard path above answers
-+             * unknown commands with KBD_REPLY_RESEND.
-+             */
-+            ps2_queue(ps2, AUX_RESEND);
-             break;
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index e3a1075aad..e2533481d8 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7130,7 +7130,7 @@ static gint ppc_cpu_list_compare(gconstpointer a, gconstpointer b, gpointer d)
+         } else if (pcc_a->pvr > pcc_b->pvr) {
+             return 1;
+         } else {
+-            return 0;
++            return strcmp(name_a, name_b);
          }
-         break;
+     }
+ }
 -- 
-2.53.0
+2.52.0
 
 
