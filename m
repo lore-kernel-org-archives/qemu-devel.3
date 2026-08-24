@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5542BC5DF9C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 19:02:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BC32C5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 19:05:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyZvH-0002KP-PX; Mon, 24 Aug 2026 15:01:31 -0400
+	id 1wyZyL-0003vQ-Pw; Mon, 24 Aug 2026 15:04:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1wyZvF-0002Jx-BF
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 15:01:29 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1wyZyK-0003uR-21
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 15:04:40 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1wyZvC-000256-BF
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 15:01:29 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-c197e7e4e94so693264166b.2
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 12:01:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787598084; cv=none;
+ id 1wyZy9-0002zn-6m
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 15:04:31 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-c160420289bso572161766b.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 12:04:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787598266; cv=none;
  d=google.com; s=arc-20260327;
- b=p9Go5kYZEcG5wPCj3sjT5HORB4IyqeLADC69QuEorhs9AwpLdLDydpMUvxXQNqajhz
- gOOF+NT1/WnscKj+HkhsS8eAgR1QEbSeFxdnU7hwL07txoaWGmXeW+ao/O8+RwRX/0gu
- MzON4fZDoOPXqngWhQrwAhU8JZvS2olmZgV3ieuX4wxnvwCqqp7vojafa51YWq8P5nsH
- CpiwS2j89H+8acwrZNjOIbDNeuegGVzuMPICxGe1u2eVnIrcSzYKL1ENmfyMsyNzWrIg
- rG4pG6Y/2OcOz6aNvVCCT89bdrAA4K0eFSQgdl6jlYteAfbsqjZC9uPeDUlAGP+uNXLK
- ubAQ==
+ b=i54o4+LIiFjM/Slp26d/PQqfSu2JfxbHF1saZ9cghaTlCmlHf/WMX0OH+ORCC3wdZz
+ gBWMkG0SlLRH6PCBbRfpEEQrv2DT2m3Z1NWpVRCEuwZtKQMP1ZkyaXbXlFERNP0q6UKh
+ HsmgNHEhDY8Q+Qe2Y1Q0PviRo0cbhebp30N32EmD5JEeFwe8GKL9hnCKiWpzc7/e6bpe
+ ISNjQncpADXh1gyeWqP5OkM1MxHZ0Baaben4VAQDqy5mXboWPhb0XBEpI7Dttg7scuFn
+ 4yJ1/FAT+5E5HBDgn71UEW+zYFNRxN4q7FJezrJQfOckXR9z1CPEhX8xQCkycwBaqg3Y
+ UbEw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
  :mime-version:dkim-signature;
- bh=JYgmYKSBzpHjuILPXZy2t6dnqI+P7ctsDprRPK/PISw=;
+ bh=16z9UeUSeMr8MvDpTINfKr5DoOjSiqRCHnr5kWRYKAI=;
  fh=U+gPunCadylYwWuJXQyIApXFNCiyehfSfCYRAw8NMtI=;
- b=ICin3FXShzqomg+pPpBxPhl01BiQQ2aJGUZMYmeAneCbrtnm8LiR0+K32nZqhtzxAx
- +R3wBwkEWE81x1zhjPkxNV2EjAfWTClJhX7k6VsOXQ/4Zdjf4YnH5j8nfYCMlbnIY/jf
- cprQm2nVeb4/IklIurgi4BZsasG84ECgQnSziAaICbM1VqcTNXUM5qmZ9dVJDYVKUdbV
- l3HVqfXE5jFuFZyWBUCyqymHIuiW/gE7qlDuNjyO1Lsj7uLFJgiTLqovxKisMAUzoAS5
- fJloAw1gAx54Igj46RMplBGoL+D/aQPtzDE/uWX8WjhLTZCYhOxV0snIg6t1m8kYIdg2
- 2pqw==; darn=nongnu.org
+ b=UkCWtNo4Ulb/V/ELCvgoL+LDIDyj05N6bHss2P6k2BUMAgs52EDNqkVGsJJj35ai9w
+ ttksCLyeEQUCvjgy5eciOeUrQl4M8OsLpkFyJMnwUewW6jWcH40vQHibXc6TqIKiLmpW
+ JbJrSZrudBzOsYMhuhGnNUbCTnASKAnRCT66VHz+R5SipwoqAFe9v1UP4LXej0XnDQ6Q
+ w5nt5rfpccUw4yPomGKlg79buXQ2ZXczLtbnDlwpZtYqN/VqFcrdMNxDqP/VLveVIPot
+ 1E+W+RE4Ty1mfZjDY/Avf3X8lHY2GmR11tCqInJJN35WHUBCeEwwhmJvF4gynSevQOAQ
+ AthQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787598084; x=1788202884; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787598266; x=1788203066; darn=nongnu.org;
  h=content-type:cc:to:subject:message-id:date:from:reply-to
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=JYgmYKSBzpHjuILPXZy2t6dnqI+P7ctsDprRPK/PISw=;
- b=gwqCatvKgPBfpqHJjk88KEIdCRtNddjZJCYcJ/BW6uoQeDPmFrKFzbHG5KfJf8w/ab
- oxVPlbyxR2sg+P7C1HviFEoS54r98F7/RMHnf9SOW5jCUg0qWB+f8XNISHuikN4tzuUr
- w53S6IYhOC1zuu9SSNkD2MtWDjpt9iLPUG+hqipjgCkXtN+C1Sfz/LkTNoXoMB96mQEo
- WtcwEUNEhcKPOa8Ikfy9Can9p0vF+GYZrKRWPpsiT93iAqw1V89ir69PHIjZwKbzljXj
- EbIEBYmhxHQ6/z9fCw/5cogS0uiIOeW6oxtwJ3fzQhIlFp9jsaEt78a4cNMUFO1K+nxq
- amyg==
+ bh=16z9UeUSeMr8MvDpTINfKr5DoOjSiqRCHnr5kWRYKAI=;
+ b=i5IkUglTDNcfVH/m4t0ugqhQhuKKt8DgDA/yQKgqVbVj7KYGRSzPOanyo924MfbqSH
+ /SD0nIDAZaDLhJMWFMl00gDwIm4bKA39LMamE/vgYgdTlvdk3VDeeijjDHPktz/Wv/tN
+ tYVYrHD8eXDdBpOrbXehkvA8cqDV2zcIzbdStzvsO998Llh2g/haMh2WDSsrEggFbePG
+ iYOZ96FkWw0XdgBK1zNJSe2PTURP4PevEfQGVuvYmjuI7SwQ+qMYu268EAVmi/5rC7n8
+ XTUT42/hQorfiARQ56C/UyzjaVncF+H3VBRdDg7iXq2QA4cu2TKeZ1XliLaUBoArDQl9
+ JKbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787598084; x=1788202884;
+ d=1e100.net; s=20251104; t=1787598266; x=1788203066;
  h=content-type:cc:to:subject:message-id:date:from:reply-to
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=JYgmYKSBzpHjuILPXZy2t6dnqI+P7ctsDprRPK/PISw=;
- b=RSgnI+e9A4GvfAhNcmpR4Y+OIXBjZ1oGOAIN+ur+BDQhwNAA2exWMHw5i9gUmDLkxL
- C9i/hWQOk4OPvfx4iKfdblnEqoYiEdSdqo7dUX3OirhaJmv6sNEZshQiDxamRqMXebTW
- Q2zwhTHK6Mx4mVtBQUjyQdOXP3onlHhFvGspDg3yHxMXnZVlpKjExLNLo1dpS05sQV5D
- EwRs5c5SgA64RKqeVf4eORXGokguNYBvZxFbV1BQM+29WSkKc2Z3rKS9YhvWxD/NH5Dy
- zJDdy/7gaY7ijVKTwdZbKPhvoZBm6NF+jn017E8klIU7YeSdD84qLsuc3Hq+aH6KPixr
- oSUg==
-X-Gm-Message-State: AFuF++l2PFIpTIiSKWJWyIwcptRq8A1nD2hnZoiqpmMelCZUtiyQD4vE
- Ry+2c/lHPI1rIfz+aQUpEiGYNG71Xrb9YdpZ2TpATO6opJV6aspMPOL4T3kxy9M0AnAKWP/pce2
- mb1y9zNyDGIM4+eX267zv4bwSEAhkAKQ=
-X-Gm-Gg: AR+sD12Jxa5emj2YmtWo75TkLqwKousW5VT1cX4d1QzC46xbJL4rrAtm/5+NlpxXiNJ
- h7urUpDW2DvRFqKjGzmzTOKB6d+OzQGuRYEfb1sHWn5rMpcU1drMP1li7YnCxfszbdly7CBlQcp
- hGHVhkGOVloOOsP1YB//2MOVY5bbJdoB/fcBm9ot45pKS1QqAtgcLvLEVMgOPNQw19p5fWOvV5a
- abChyTL33lfSWCkfUZrOL6JqLUvK3LXAuxIjYdcchrWlNR2CLX7hzu98nxD7hzK2Tpth3kj8WBU
- nJsI2WCaB9PclW5YsA2zUGobVNoJrvkbr6qxaoS0bJ5K
-X-Received: by 2002:a17:907:a0c9:b0:c20:3402:bd35 with SMTP id
- a640c23a62f3a-c24925e3909mr1983709466b.12.1787598083923; Mon, 24 Aug 2026
- 12:01:23 -0700 (PDT)
+ bh=16z9UeUSeMr8MvDpTINfKr5DoOjSiqRCHnr5kWRYKAI=;
+ b=q3MZKHwawSJ6H9nF+HDaPgIeeFKMDIelIJsAjAzUNoV4SoYFj2QO4WwT1PLkTTV3n3
+ 1Jcbv0DxJluy7Df43igRjv5kMNxcA7CDtZfGTDOJTYZ9M1aWlA9CwKW4urklhVGJJCJT
+ MSBxIVwjz/57l/KWYSyMOqrHACkPu8zJE5iAffr7aX2wt8C+26z8+oVvfnQUz71D6brg
+ u6QLyU4TchSdtcAP475/HpLFljw3KOlIO8+k/7DfwXJ1lPvrAbMy7xSgaaftYBORU7Wd
+ WgU/25HyxLZWLmLkVPfxvyqhrf+fqSIvhKpWtmVgwNH7f2hsxYTvPNrGMcF0bM97V+2G
+ 1b0A==
+X-Gm-Message-State: AFuF++lXkzjEKs2yo5/NNn3aBfhiJ1jeMKqUskrwl6u+/iwZLA9qJBAu
+ QPpPkLoFYWWaI6BLiNW0AyHO+IsN+/imY4uIPJkCDiL5VdhKYKz4eWj7o2ufjckeUoC4/GIn/bZ
+ 6xaL3mDjL3/khXkwwRdogEHNgQ1GJ9tU=
+X-Gm-Gg: AR+sD13lX6MdITjUkaJzs6fkNQhPzxJ5SDUztvz2MJSLYbxMtWwsyAY5UvJ0VS+9Qa4
+ yBnzg6VZ0w7B3KhO1jZfcU941DNR42R3meVz1i+S+4wTBjkXB/lEwLPc63dvyMANbARVgHHFgCY
+ 4IhV8L8mPjkoEAjnmPMZ57JszTQBFlE83spBPYmRj/j1/RYIr1IxSBrDOUXTOdbbOIVhPJewKuy
+ 2/bdMxi+giHJUQwe+RwfMk2PXkDQ6SV+3uASBvTflM0a3ccyNP4+luM1+R6wR6SkbfsE2B2GcQS
+ X3mslFoftXTF1Y1Rid1nq+wJny7KQmk7yCEdoR8DCbr6z/1+20VMSu4=
+X-Received: by 2002:a17:907:a602:b0:c21:167b:47f0 with SMTP id
+ a640c23a62f3a-c246a4ae088mr3658112166b.2.1787598265837; Mon, 24 Aug 2026
+ 12:04:25 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260823150731.896-1-luoyonggang@gmail.com>
- <20260823150731.896-10-luoyonggang@gmail.com>
- <9b5a4586-be66-4d69-8d08-fc1796336b2c@oss.qualcomm.com>
-In-Reply-To: <9b5a4586-be66-4d69-8d08-fc1796336b2c@oss.qualcomm.com>
+ <20260823150731.896-13-luoyonggang@gmail.com>
+ <b9f0853b-adda-457d-94e1-add9bb2a2548@oss.qualcomm.com>
+In-Reply-To: <b9f0853b-adda-457d-94e1-add9bb2a2548@oss.qualcomm.com>
 From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Tue, 25 Aug 2026 03:01:11 +0800
-X-Gm-Features: AcwNN1U0qAGghu7cfUXwy87iQ4Gt_W5EKZ_MKmbl9dTsifq_Hfbm_BdIRLkLefI
-Message-ID: <CAE2XoE99hEfbdKEqW-kF7YLeSatPGe0v-Azb9TMXa-sm31TyWg@mail.gmail.com>
-Subject: Re: [PATCH 09/12] target-info: register le and be TargetInfo variants
+Date: Tue, 25 Aug 2026 03:04:13 +0800
+X-Gm-Features: AcwNN1VpGS6HjZVALaJtNHZsMkMqA2SZOd0xqP28cZFoeWPX1v0HRwlhxBGrdRw
+Message-ID: <CAE2XoE9GvZQdikiacN11ryM8o_WwffoUNViMLcQymZXo8+1FKw@mail.gmail.com>
+Subject: Re: [PATCH 12/12] meson: link ARM and RISC-V into qemu-system
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, Xianglai Li <lixianglai@loongson.cn>, 
  Alistair Francis <alistair.francis@wdc.com>, Chinmay Rath <rathc@linux.ibm.com>,
@@ -117,16 +117,16 @@ Cc: qemu-devel@nongnu.org, Xianglai Li <lixianglai@loongson.cn>,
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
  Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>, 
  Darren Kenny <darren.kenny@oracle.com>
-Content-Type: multipart/alternative; boundary="000000000000cb25200659cf9cf0"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=luoyonggang@gmail.com; helo=mail-ej1-x62f.google.com
+Content-Type: multipart/alternative; boundary="000000000000a2ec950659cfa7a9"
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=luoyonggang@gmail.com; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,275 +143,243 @@ Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000cb25200659cf9cf0
+--000000000000a2ec950659cfa7a9
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 25, 2026 at 12:22=E2=80=AFAM Pierrick Bouvier <
+Thanks, a lot simpler, you can pick my patches(you think is good) into your
+patch series and repost as a new version, so the review process is easier.
+
+On Tue, Aug 25, 2026 at 12:20=E2=80=AFAM Pierrick Bouvier <
 pierrick.bouvier@oss.qualcomm.com> wrote:
 >
 > On 8/23/2026 8:07 AM, Yonggang Luo wrote:
-> > - Register target-info-<name>-le and -be from one system
-> >   target-info-def.c unit, sharing arch fields.
-> > - Mark is_default from TARGET_BIG_ENDIAN so riscv/arm stay LE and
-> >   ppc/s390x stay BE when -target is omitted.
-> > - Pick the unique default in target_info_qom_set_target() when more
-> >   than one TargetInfo is registered. Leave user-mode as a single
-> >   target_info().
+> > - Build qemu-system (and qemu-systemw on Windows) from aarch64
+> >   common/system objects plus RISC-V arch objects taken from the
+> >   existing riscv64 lib.
+> > - Pull 32-bit TargetInfo and 32-only boards from the arm/riscv32
+> >   libs so hw/arm and target/riscv are not compiled twice.
+> > - Skip linking qemu-system-{arm,aarch64,riscv32,riscv64} and the
+> >   Windows *w variants; symlink those names to qemu-system so
+> >   argv[0] still selects TargetInfo.
 > >
 > > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 > > ---
-> >  include/qemu/target-info-impl.h |  6 ++++
-> >  include/qemu/target-info-init.h | 29 +++++++++++++---
-> >  target-info-def.c               | 61 +++++++++++++++++++++++++--------
-> >  target-info-qom.c               | 33 ++++++++++++++----
-> >  4 files changed, 104 insertions(+), 25 deletions(-)
+> >  meson.build | 156 +++++++++++++++++++++++++++++++++++++++++++++++++---
+> >  1 file changed, 147 insertions(+), 9 deletions(-)
 > >
-> > diff --git a/include/qemu/target-info-impl.h
-b/include/qemu/target-info-impl.h
-> > index de329ec2b86..b4222e4455e 100644
-> > --- a/include/qemu/target-info-impl.h
-> > +++ b/include/qemu/target-info-impl.h
-> > @@ -23,6 +23,12 @@ typedef struct TargetInfo {
-> >      const char *cpu_type;
-> >      /* related to TARGET_BIG_ENDIAN definition */
-> >      EndianMode endianness;
-> > +    /*
-> > +     * True on the endian variant that matches this translation unit's
-> > +     * TARGET_BIG_ENDIAN. target_info_qom_set_target() uses this when
-> > +     * more than one TargetInfo is registered and -target is omitted.
-> > +     */
-> > +    bool is_default;
-> >      /*
-> >       * runtime equivalent of
-> >       *   TARGET_PAGE_BITS_VARY ? TARGET_PAGE_BITS_LEGACY :
-TARGET_PAGE_BITS
-> > diff --git a/include/qemu/target-info-init.h
-b/include/qemu/target-info-init.h
-> > index b7024c9faef..25d00adcc66 100644
-> > --- a/include/qemu/target-info-init.h
-> > +++ b/include/qemu/target-info-init.h
-> > @@ -37,15 +37,34 @@ const TargetInfo *target_info(void)     \
-> >  #include "qemu/target-info-qom.h"
-> >  #include "qom/object.h"
+> > diff --git a/meson.build b/meson.build
+> > index 449d50f2983..b4f435f6a22 100644
+> > --- a/meson.build
+> > +++ b/meson.build
+> > @@ -4250,6 +4250,10 @@ endif
 > >
-> > -#define target_info_init(ti_var)
-     \
-> > -static const TypeInfo target_info_qom_target_type_info =3D {
-     \
-> > -    .name =3D  TYPE_TARGET_INFO"-"TARGET_NAME,
-     \
-> > +/*
-> > + * QOM type names are target-info-<TARGET_NAME>-le and -be so both
-> > + * endian variants can be registered from one system translation unit.
-> > + */
-> > +#define TARGET_INFO_QOM_SUFFIX_0 "-le"
-> > +#define TARGET_INFO_QOM_SUFFIX_1 "-be"
+> >  traceable =3D []
+> >  emulators =3D {}
+> > +target_softmmu =3D {}
+> > +combo_softmmu =3D ['aarch64-softmmu', 'arm-softmmu', 'riscv32-softmmu'=
+,
+'riscv64-softmmu']
+> > +have_qemu_system_combo =3D ('aarch64-softmmu' in target_dirs
+> > +                          and 'riscv64-softmmu' in target_dirs)
+> >  foreach target : target_dirs
+> >    config_target =3D config_target_mak[target]
+> >    target_name =3D config_target['TARGET_NAME']
+> > @@ -4399,20 +4403,37 @@ foreach target : target_dirs
+> >                   c_args: c_args,
+> >                   build_by_default: false)
+> >
+> > +  if target in combo_softmmu
+> > +    target_softmmu +=3D {target: {
+> > +      'lib': lib,
+> > +      'arch_srcs': arch_srcs,
+> > +      'arch_deps': arch_deps,
+> > +      'c_args': c_args,
+> > +      'link_args': link_args,
+> > +      'target_stubs': target_stubs,
+> > +      'main_rs': main_rs,
+> > +      'config_target': config_target,
+> > +      'target_base_arch': target_base_arch,
+> > +    }}
+> > +  endif
 > > +
-> > +#define TARGET_INFO_QOM_NAME(sel)
-      \
-> > +    TYPE_TARGET_INFO "-" TARGET_NAME glue(TARGET_INFO_QOM_SUFFIX_, sel=
+> >    if target.endswith('-softmmu')
+> > -    execs =3D [{
+> > -      'name': 'qemu-system-' + target_name,
+> > -      'win_subsystem': 'console',
+> > -      'sources': [main_rs, files('system/main.c')],
+> > -      'dependencies': [sdl, target_stubs],
+> > -    }]
+> > -    if host_os =3D=3D 'windows' and (sdl.found() or gtk.found())
+> > +    execs =3D []
+> > +    if not (have_qemu_system_combo and target in combo_softmmu)
+> >        execs +=3D [{
+> > -        'name': 'qemu-system-' + target_name + 'w',
+> > -        'win_subsystem': 'windows',
+> > +        'name': 'qemu-system-' + target_name,
+> > +        'win_subsystem': 'console',
+> >          'sources': [main_rs, files('system/main.c')],
+> >          'dependencies': [sdl, target_stubs],
+> >        }]
+> > +      if host_os =3D=3D 'windows' and (sdl.found() or gtk.found())
+> > +        execs +=3D [{
+> > +          'name': 'qemu-system-' + target_name + 'w',
+> > +          'win_subsystem': 'windows',
+> > +          'sources': [main_rs, files('system/main.c')],
+> > +          'dependencies': [sdl, target_stubs],
+> > +        }]
+> > +      endif
+> >      endif
+> >      if get_option('fuzzing')
+> >        specific_fuzz =3D specific_fuzz_ss.apply(config_target, strict:
+false)
+> > @@ -4481,6 +4502,123 @@ foreach target : target_dirs
+> >    endforeach
+> >  endforeach
+> >
+> > +# Combined ARM + RISC-V system emulator (32 and 64).
+> > +# Common/system objects come from aarch64. RISC-V arch objects come
+> > +# from the existing riscv64 lib. 32-bit TargetInfo and 32-only boards
+> > +# come from the arm/riscv32 libs. Per-target qemu-system-* names are
+> > +# symlinks to qemu-system (argv[0] selects TargetInfo).
+> > +if have_qemu_system_combo
+> > +  a64 =3D target_softmmu['aarch64-softmmu']
+> > +  rv =3D target_softmmu['riscv64-softmmu']
+> > +  extra_objs =3D []
+> > +  target_info_def =3D files('target-info-def.c')
+> > +  foreach spec : [[common_ss, common_all], [system_ss, libsystem]]
+> > +    rv_src =3D spec[0].apply(rv['config_target'], strict: false)
+> > +    a64_src =3D spec[0].apply(a64['config_target'], strict: false)
+> > +    extra =3D []
+> > +    foreach f : rv_src.sources()
+> > +      if f not in a64_src.sources() and not
+f.full_path().endswith('_stubs.c')
+> > +        extra +=3D f
+> > +      endif
+> > +    endforeach
+> > +    if extra.length() > 0
+> > +      extra_objs +=3D spec[1].extract_objects(extra)
+> > +    endif
+> > +  endforeach
+> > +  rv_base =3D rv['target_base_arch']
+> > +  if rv_base in target_common_arch_libs
+> > +    src =3D target_common_arch[rv_base].apply(rv['config_target'],
+strict: false)
+> > +    extra_objs +=3D
+target_common_arch_libs[rv_base].extract_objects(src.sources())
+> > +  endif
+> > +  if rv_base in target_common_system_arch_libs
+> > +    src =3D
+target_common_system_arch[rv_base].apply(rv['config_target'], strict: false=
 )
+> > +    extra_objs +=3D
+target_common_system_arch_libs[rv_base].extract_objects(src.sources())
+> > +  endif
+> > +  foreach pair : [['arm-softmmu', 'aarch64-softmmu'],
+['riscv32-softmmu', 'riscv64-softmmu']]
+> > +    t32 =3D pair[0]
+> > +    t64 =3D pair[1]
+> > +    if t32 in target_softmmu
+> > +      extra_objs +=3D
+target_softmmu[t32]['lib'].extract_objects(target_info_def)
+> > +      base32 =3D target_softmmu[t32]['target_base_arch']
+> > +      if base32 in hw_arch
+> > +        hw32 =3D
+hw_arch[base32].apply(target_softmmu[t32]['config_target'], strict: false)
+> > +        hw64 =3D
+hw_arch[base32].apply(target_softmmu[t64]['config_target'], strict: false)
+> > +        extra_hw =3D []
+> > +        foreach f : hw32.sources()
+> > +          if f not in hw64.sources()
+> > +            extra_hw +=3D f
+> > +          endif
+> > +        endforeach
+> > +        if extra_hw.length() > 0
+> > +          extra_objs +=3D
+target_softmmu[t32]['lib'].extract_objects(extra_hw)
+> > +        endif
+> > +      endif
+> > +    endif
+> > +  endforeach
+> > +  combo_objects =3D extra_objs
+> > +  combo_objects +=3D a64['lib'].extract_all_objects(recursive: true)
+> > +  combo_objects +=3D rv['lib'].extract_objects(rv['arch_srcs'])
+> > +  combo_deps =3D a64['arch_deps'] + rv['arch_deps'] + [sdl,
+a64['target_stubs'], rv['target_stubs']]
+> > +  if 'arm-softmmu' in target_softmmu
+> > +    combo_deps +=3D target_softmmu['arm-softmmu']['arch_deps']
+> > +  endif
+> > +  if 'riscv32-softmmu' in target_softmmu
+> > +    combo_deps +=3D target_softmmu['riscv32-softmmu']['arch_deps']
+> > +  endif
+> > +  combo_execs =3D [{
+> > +    'name': 'qemu-system',
+> > +    'win_subsystem': 'console',
+> > +  }]
+> > +  if host_os =3D=3D 'windows' and (sdl.found() or gtk.found())
+> > +    combo_execs +=3D [{
+> > +      'name': 'qemu-systemw',
+> > +      'win_subsystem': 'windows',
+> > +    }]
+> > +  endif
+> > +  combo_exe_suffix =3D host_os =3D=3D 'windows' ? '.exe' : ''
+> > +  combo_alias_py =3D 'import os, sys; src, dst =3D sys.argv[1:3];
+os.path.exists(dst) and os.remove(dst); os.symlink(os.path.basename(src),
+dst)'
+> > +  foreach exe : combo_execs
+> > +    emulator =3D executable(exe['name'], [a64['main_rs'],
+files('system/main.c')],
+> > +               install: true,
+> > +               c_args: a64['c_args'],
+> > +               dependencies: combo_deps,
+> > +               objects: combo_objects,
+> > +               link_depends: [block_syms, qemu_syms],
+> > +               link_args: a64['link_args'],
+> > +               win_subsystem: exe['win_subsystem'])
+> > +    emulators +=3D {exe['name']: emulator}
+> > +    traceable +=3D [{
+> > +      'exe': exe['name'],
+> > +      'probe-prefix': 'qemu.system.multi',
+> > +    }]
+> > +    foreach t : combo_softmmu
+> > +      if t not in target_softmmu
+> > +        continue
+> > +      endif
+> > +      tname =3D target_softmmu[t]['config_target']['TARGET_NAME']
+> > +      if exe['name'] =3D=3D 'qemu-systemw'
+> > +        alias =3D 'qemu-system-' + tname + 'w'
+> > +      else
+> > +        alias =3D 'qemu-system-' + tname
+> > +      endif
+> > +      alias_tgt =3D custom_target(alias,
+> > +                                input: emulator,
+> > +                                output: alias + combo_exe_suffix,
+> > +                                command: [python, '-c',
+combo_alias_py, '@INPUT@', '@OUTPUT@'],
+> > +                                build_by_default: true,
+> > +                                install: false)
+> > +      emulators +=3D {alias: alias_tgt}
+> > +      install_symlink(alias + combo_exe_suffix,
+> > +                      pointing_to: exe['name'] + combo_exe_suffix,
+> > +                      install_dir: get_option('bindir'))
+> > +      traceable +=3D [{
+> > +        'exe': alias,
+> > +        'probe-prefix': 'qemu.system.' + tname,
+> > +      }]
+> > +    endforeach
+> > +  endforeach
+> > +endif
 > > +
-> > +#define TARGET_INFO_QOM_TYPEINFO(ti_var, sel)
-      \
-> > +static const TypeInfo glue(target_info_qom_type_, sel) =3D {
-     \
-> > +    .name =3D TARGET_INFO_QOM_NAME(sel),
-     \
-> >      .parent =3D TYPE_TARGET_INFO,
-      \
-> >      .instance_size =3D sizeof(TargetInfoQom),
-      \
-> >      .class_size =3D sizeof(TargetInfoQomClass),
-      \
-> >      .class_data =3D &ti_var,
-     \
-> > -};
-     \
-> > -DEFINE_TARGET_INFO_TYPE(target_info_qom_target_type_info)
-> > +}
-> > +
-> > +#define target_info_init_le_be(ti_le, ti_be)
-     \
-> > +TARGET_INFO_QOM_TYPEINFO(ti_le, 0);
-      \
-> > +TARGET_INFO_QOM_TYPEINFO(ti_be, 1);
-      \
-> > +static void do_qemu_init_target_info(void)
-     \
-> > +{
-      \
-> > +    type_register_static(&target_info_qom_type_0);
-     \
-> > +    type_register_static(&target_info_qom_type_1);
-     \
-> > +}
-      \
-> > +module_init(do_qemu_init_target_info, MODULE_INIT_TARGET_INFO)
+> >  # Other build targets
 > >
-> >  #endif /* CONFIG_USER_ONLY */
-> >  #endif /* COMPILING_PER_TARGET */
-> > diff --git a/target-info-def.c b/target-info-def.c
-> > index 5d38e405735..6722c43a08f 100644
-> > --- a/target-info-def.c
-> > +++ b/target-info-def.c
-> > @@ -28,39 +28,72 @@ QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) !=3D
-sizeof(CPUState));
-> >  QEMU_BUILD_BUG_ON(TARGET_PAGE_BITS < TARGET_PAGE_BITS_MIN);
-> >  #endif
-> >
-> > -static const TargetInfo target_info_def =3D {
-> > -    .target_name =3D TARGET_NAME,
-> > -    .target_arch =3D glue(SYS_EMU_TARGET_, TARGET_ARCH),
-> > -    .long_bits =3D TARGET_LONG_BITS,
-> > -    .cpu_type =3D CPU_RESOLVING_TYPE,
-> > -    .endianness =3D TARGET_BIG_ENDIAN ? ENDIAN_MODE_BIG :
-ENDIAN_MODE_LITTLE,
-> >  #ifdef TARGET_PAGE_BITS_VARY
-> > -    .page_bits_vary =3D true,
-> >  # ifdef TARGET_PAGE_BITS_LEGACY
-> > +#  define TARGET_INFO_PAGE_BITS \
-> > +    .page_bits_vary =3D true, \
-> >      .page_bits_init =3D TARGET_PAGE_BITS_LEGACY,
-> > +# else
-> > +#  define TARGET_INFO_PAGE_BITS \
-> > +    .page_bits_vary =3D true,
-> >  # endif
-> >  #else
-> > -    .page_bits_vary =3D false,
-> > +# define TARGET_INFO_PAGE_BITS \
-> > +    .page_bits_vary =3D false, \
-> >      .page_bits_init =3D TARGET_PAGE_BITS,
-> >  #endif
-> >
-> >  #ifndef CONFIG_USER_ONLY
-> >  # ifdef CONFIG_MULTIPROCESS
-> > -    .config_multiprocess =3D true,
-> > +#  define TARGET_INFO_CONFIG_MULTIPROCESS .config_multiprocess =3D tru=
-e,
-> >  # else
-> > -    .config_multiprocess =3D false,
-> > +#  define TARGET_INFO_CONFIG_MULTIPROCESS .config_multiprocess =3D fal=
-se,
-> >  # endif
-> >  # ifdef CONFIG_NITRO
-> > -    .config_nitro =3D true,
-> > +#  define TARGET_INFO_CONFIG_NITRO .config_nitro =3D true,
-> >  # else
-> > -    .config_nitro =3D false,
-> > +#  define TARGET_INFO_CONFIG_NITRO .config_nitro =3D false,
-> >  # endif
-> >  # ifdef CONFIG_XEN
-> > -    .config_xen =3D true,
-> > +#  define TARGET_INFO_CONFIG_XEN .config_xen =3D true,
-> >  # else
-> > -    .config_xen =3D false,
-> > +#  define TARGET_INFO_CONFIG_XEN .config_xen =3D false,
-> >  # endif
-> > +# define TARGET_INFO_CONFIG \
-> > +    TARGET_INFO_CONFIG_MULTIPROCESS \
-> > +    TARGET_INFO_CONFIG_NITRO \
-> > +    TARGET_INFO_CONFIG_XEN
-> > +#else
-> > +# define TARGET_INFO_CONFIG
-> >  #endif
-> > +
-> > +#define TARGET_INFO_COMMON
-     \
-> > +    .target_name =3D TARGET_NAME,
-      \
-> > +    .target_arch =3D glue(SYS_EMU_TARGET_, TARGET_ARCH),
-     \
-> > +    .long_bits =3D TARGET_LONG_BITS,
-     \
-> > +    .cpu_type =3D CPU_RESOLVING_TYPE,
-      \
-> > +    TARGET_INFO_PAGE_BITS
-      \
-> > +    TARGET_INFO_CONFIG
-> > +
-> > +#ifdef CONFIG_USER_ONLY
-> > +static const TargetInfo target_info_def =3D {
-> > +    TARGET_INFO_COMMON
-> > +    .endianness =3D TARGET_BIG_ENDIAN ? ENDIAN_MODE_BIG :
-ENDIAN_MODE_LITTLE,
-> >  };
-> >
-> >  target_info_init(target_info_def)
-> > +#else
-> > +static const TargetInfo target_info_le =3D {
-> > +    TARGET_INFO_COMMON
-> > +    .endianness =3D ENDIAN_MODE_LITTLE,
-> > +    .is_default =3D !TARGET_BIG_ENDIAN,
-> > +};
-> > +
-> > +static const TargetInfo target_info_be =3D {
-> > +    TARGET_INFO_COMMON
-> > +    .endianness =3D ENDIAN_MODE_BIG,
-> > +    .is_default =3D TARGET_BIG_ENDIAN,
-> > +};
-> > +
-> > +target_info_init_le_be(target_info_le, target_info_be)
-> > +#endif
-> > diff --git a/target-info-qom.c b/target-info-qom.c
-> > index 68ad734049c..2c1c57b05fd 100644
-> > --- a/target-info-qom.c
-> > +++ b/target-info-qom.c
-> > @@ -90,13 +90,34 @@ const TargetInfo *target_info(void)
-> >  void target_info_qom_set_target(void)
-> >  {
-> >      g_autoptr(GSList) targets =3D
-object_class_get_list(TYPE_TARGET_INFO, false);
-> > -
-> > +    const TargetInfo *chosen =3D NULL;
-> >      size_t num_found =3D g_slist_length(targets);
-> > -    if (num_found !=3D 1) {
-> > -        error_setg(&error_fatal, num_found =3D=3D 0 ?
-> > -                                 "no target-info is available" :
-> > -                                 "more than one target-info is
-available");
-> > +    size_t num_default =3D 0;
-> > +
-> > +    if (num_found =3D=3D 0) {
-> > +        error_setg(&error_fatal, "no target-info is available");
-> > +    }
-> > +
-> > +    if (num_found =3D=3D 1) {
-> > +        target_info_ptr =3D
-TARGET_INFO_CLASS(targets->data)->target_info;
-> > +        return;
-> > +    }
-> > +
-> > +    for (GSList *l =3D targets; l; l =3D l->next) {
-> > +        const TargetInfo *ti =3D TARGET_INFO_CLASS(l->data)->target_in=
-fo;
-> > +
-> > +        if (ti->is_default) {
-> > +            num_default++;
-> > +            chosen =3D ti;
-> > +        }
-> > +    }
-> > +
-> > +    if (num_default !=3D 1) {
-> > +        error_setg(&error_fatal, num_default =3D=3D 0 ?
-> > +                                 "no default target-info is available"
-:
-> > +                                 "more than one default target-info "
-> > +                                 "is available");
-> >      }
-> >
-> > -    target_info_ptr =3D TARGET_INFO_CLASS(targets->data)->target_info;
-> > +    target_info_ptr =3D chosen;
-> >  }
+> >  if get_option('plugins')
 >
-> Is it representing existing targets, or adding new ones per endianness?
-> I'm not sure if the goal is to add new binaries, or mimic existing ones
-> with specific parameters.
+> Please find attached a much simpler implementation, which only requires
+> a single line update as we add new targets in single-binary.
+>
+> Regards,
+> Pierrick
 
-
-Is optional now, not a force requirement, this is needed when we use GDB
-debug qemu riscv-be, as gdbstub are depends on target_info
 
 
 --
@@ -422,232 +390,211 @@ Yours
     sincerely,
 Yonggang Luo
 
---000000000000cb25200659cf9cf0
+--000000000000a2ec950659cfa7a9
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><br><br>On Tue, Aug 25, 2026 at 12:22=E2=80=AFAM Pierrick =
+<div dir=3D"ltr">Thanks, a lot simpler, you can pick my patches(you think i=
+s good) into your patch series and repost as a new version, so the review p=
+rocess is easier.<br><br>On Tue, Aug 25, 2026 at 12:20=E2=80=AFAM Pierrick =
 Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@oss.qualcomm.com">pierrick.b=
 ouvier@oss.qualcomm.com</a>&gt; wrote:<br>&gt;<br>&gt; On 8/23/2026 8:07 AM=
-, Yonggang Luo wrote:<br>&gt; &gt; - Register target-info-&lt;name&gt;-le a=
-nd -be from one system<br>&gt; &gt; =C2=A0 target-info-def.c unit, sharing =
-arch fields.<br>&gt; &gt; - Mark is_default from TARGET_BIG_ENDIAN so riscv=
-/arm stay LE and<br>&gt; &gt; =C2=A0 ppc/s390x stay BE when -target is omit=
-ted.<br>&gt; &gt; - Pick the unique default in target_info_qom_set_target()=
- when more<br>&gt; &gt; =C2=A0 than one TargetInfo is registered. Leave use=
-r-mode as a single<br>&gt; &gt; =C2=A0 target_info().<br>&gt; &gt;<br>&gt; =
-&gt; Signed-off-by: Yonggang Luo &lt;<a href=3D"mailto:luoyonggang@gmail.co=
-m">luoyonggang@gmail.com</a>&gt;<br>&gt; &gt; ---<br>&gt; &gt; =C2=A0includ=
-e/qemu/target-info-impl.h | =C2=A06 ++++<br>&gt; &gt; =C2=A0include/qemu/ta=
-rget-info-init.h | 29 +++++++++++++---<br>&gt; &gt; =C2=A0target-info-def.c=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 61 ++++++++++++++++++++=
-+++++--------<br>&gt; &gt; =C2=A0target-info-qom.c =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 | 33 ++++++++++++++----<br>&gt; &gt; =C2=A04 files=
- changed, 104 insertions(+), 25 deletions(-)<br>&gt; &gt;<br>&gt; &gt; diff=
- --git a/include/qemu/target-info-impl.h b/include/qemu/target-info-impl.h<=
-br>&gt; &gt; index de329ec2b86..b4222e4455e 100644<br>&gt; &gt; --- a/inclu=
-de/qemu/target-info-impl.h<br>&gt; &gt; +++ b/include/qemu/target-info-impl=
-.h<br>&gt; &gt; @@ -23,6 +23,12 @@ typedef struct TargetInfo {<br>&gt; &gt;=
- =C2=A0 =C2=A0 =C2=A0const char *cpu_type;<br>&gt; &gt; =C2=A0 =C2=A0 =C2=
-=A0/* related to TARGET_BIG_ENDIAN definition */<br>&gt; &gt; =C2=A0 =C2=A0=
- =C2=A0EndianMode endianness;<br>&gt; &gt; + =C2=A0 =C2=A0/*<br>&gt; &gt; +=
- =C2=A0 =C2=A0 * True on the endian variant that matches this translation u=
-nit&#39;s<br>&gt; &gt; + =C2=A0 =C2=A0 * TARGET_BIG_ENDIAN. target_info_qom=
-_set_target() uses this when<br>&gt; &gt; + =C2=A0 =C2=A0 * more than one T=
-argetInfo is registered and -target is omitted.<br>&gt; &gt; + =C2=A0 =C2=
-=A0 */<br>&gt; &gt; + =C2=A0 =C2=A0bool is_default;<br>&gt; &gt; =C2=A0 =C2=
-=A0 =C2=A0/*<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 * runtime equivalent of<br>&=
-gt; &gt; =C2=A0 =C2=A0 =C2=A0 * =C2=A0 TARGET_PAGE_BITS_VARY ? TARGET_PAGE_=
-BITS_LEGACY : TARGET_PAGE_BITS<br>&gt; &gt; diff --git a/include/qemu/targe=
-t-info-init.h b/include/qemu/target-info-init.h<br>&gt; &gt; index b7024c9f=
-aef..25d00adcc66 100644<br>&gt; &gt; --- a/include/qemu/target-info-init.h<=
-br>&gt; &gt; +++ b/include/qemu/target-info-init.h<br>&gt; &gt; @@ -37,15 +=
-37,34 @@ const TargetInfo *target_info(void) =C2=A0 =C2=A0 \<br>&gt; &gt; =
-=C2=A0#include &quot;qemu/target-info-qom.h&quot;<br>&gt; &gt; =C2=A0#inclu=
-de &quot;qom/object.h&quot;<br>&gt; &gt; <br>&gt; &gt; -#define target_info=
-_init(ti_var) =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0\<br>&gt; &gt; -static const TypeInfo target_info_qom_t=
-arget_type_info =3D { =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0\<br>&gt; &gt; - =C2=A0 =C2=A0.name =3D =C2=A0TYPE_TARGET_INFO&qu=
-ot;-&quot;TARGET_NAME, =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br>&gt; &gt; +=
-/*<br>&gt; &gt; + * QOM type names are target-info-&lt;TARGET_NAME&gt;-le a=
-nd -be so both<br>&gt; &gt; + * endian variants can be registered from one =
-system translation unit.<br>&gt; &gt; + */<br>&gt; &gt; +#define TARGET_INF=
-O_QOM_SUFFIX_0 &quot;-le&quot;<br>&gt; &gt; +#define TARGET_INFO_QOM_SUFFIX=
-_1 &quot;-be&quot;<br>&gt; &gt; +<br>&gt; &gt; +#define TARGET_INFO_QOM_NAM=
-E(sel) =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 \<br>&gt; &gt; + =C2=A0 =C2=A0TYPE_TARGET_INFO &quot;-&quot; TARGET_=
-NAME glue(TARGET_INFO_QOM_SUFFIX_, sel)<br>&gt; &gt; +<br>&gt; &gt; +#defin=
-e TARGET_INFO_QOM_TYPEINFO(ti_var, sel) =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>=
-&gt; &gt; +static const TypeInfo glue(target_info_qom_type_, sel) =3D { =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br>&gt; &gt; +=
- =C2=A0 =C2=A0.name =3D TARGET_INFO_QOM_NAME(sel), =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0.paren=
-t =3D TYPE_TARGET_INFO, =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+, Yonggang Luo wrote:<br>&gt; &gt; - Build qemu-system (and qemu-systemw on=
+ Windows) from aarch64<br>&gt; &gt; =C2=A0 common/system objects plus RISC-=
+V arch objects taken from the<br>&gt; &gt; =C2=A0 existing riscv64 lib.<br>=
+&gt; &gt; - Pull 32-bit TargetInfo and 32-only boards from the arm/riscv32<=
+br>&gt; &gt; =C2=A0 libs so hw/arm and target/riscv are not compiled twice.=
+<br>&gt; &gt; - Skip linking qemu-system-{arm,aarch64,riscv32,riscv64} and =
+the<br>&gt; &gt; =C2=A0 Windows *w variants; symlink those names to qemu-sy=
+stem so<br>&gt; &gt; =C2=A0 argv[0] still selects TargetInfo.<br>&gt; &gt;<=
+br>&gt; &gt; Signed-off-by: Yonggang Luo &lt;<a href=3D"mailto:luoyonggang@=
+gmail.com">luoyonggang@gmail.com</a>&gt;<br>&gt; &gt; ---<br>&gt; &gt; =C2=
+=A0meson.build | 156 +++++++++++++++++++++++++++++++++++++++++++++++++---<b=
+r>&gt; &gt; =C2=A01 file changed, 147 insertions(+), 9 deletions(-)<br>&gt;=
+ &gt;<br>&gt; &gt; diff --git a/meson.build b/meson.build<br>&gt; &gt; inde=
+x 449d50f2983..b4f435f6a22 100644<br>&gt; &gt; --- a/meson.build<br>&gt; &g=
+t; +++ b/meson.build<br>&gt; &gt; @@ -4250,6 +4250,10 @@ endif<br>&gt; &gt;=
+<br>&gt; &gt; =C2=A0traceable =3D []<br>&gt; &gt; =C2=A0emulators =3D {}<br=
+>&gt; &gt; +target_softmmu =3D {}<br>&gt; &gt; +combo_softmmu =3D [&#39;aar=
+ch64-softmmu&#39;, &#39;arm-softmmu&#39;, &#39;riscv32-softmmu&#39;, &#39;r=
+iscv64-softmmu&#39;]<br>&gt; &gt; +have_qemu_system_combo =3D (&#39;aarch64=
+-softmmu&#39; in target_dirs<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0and &#39;riscv64=
+-softmmu&#39; in target_dirs)<br>&gt; &gt; =C2=A0foreach target : target_di=
+rs<br>&gt; &gt; =C2=A0 =C2=A0config_target =3D config_target_mak[target]<br=
+>&gt; &gt; =C2=A0 =C2=A0target_name =3D config_target[&#39;TARGET_NAME&#39;=
+]<br>&gt; &gt; @@ -4399,20 +4403,37 @@ foreach target : target_dirs<br>&gt;=
+ &gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 c_args=
+: c_args,<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 build_by_default: false)<br>&gt; &gt;<br>&gt; &gt; + =C2=A0if ta=
+rget in combo_softmmu<br>&gt; &gt; + =C2=A0 =C2=A0target_softmmu +=3D {targ=
+et: {<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0&#39;lib&#39;: lib,<br>&gt; &gt; +=
+ =C2=A0 =C2=A0 =C2=A0&#39;arch_srcs&#39;: arch_srcs,<br>&gt; &gt; + =C2=A0 =
+=C2=A0 =C2=A0&#39;arch_deps&#39;: arch_deps,<br>&gt; &gt; + =C2=A0 =C2=A0 =
+=C2=A0&#39;c_args&#39;: c_args,<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0&#39;lin=
+k_args&#39;: link_args,<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0&#39;target_stub=
+s&#39;: target_stubs,<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0&#39;main_rs&#39;:=
+ main_rs,<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0&#39;config_target&#39;: confi=
+g_target,<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0&#39;target_base_arch&#39;: ta=
+rget_base_arch,<br>&gt; &gt; + =C2=A0 =C2=A0}}<br>&gt; &gt; + =C2=A0endif<b=
+r>&gt; &gt; +<br>&gt; &gt; =C2=A0 =C2=A0if target.endswith(&#39;-softmmu&#3=
+9;)<br>&gt; &gt; - =C2=A0 =C2=A0execs =3D [{<br>&gt; &gt; - =C2=A0 =C2=A0 =
+=C2=A0&#39;name&#39;: &#39;qemu-system-&#39; + target_name,<br>&gt; &gt; - =
+=C2=A0 =C2=A0 =C2=A0&#39;win_subsystem&#39;: &#39;console&#39;,<br>&gt; &gt=
+; - =C2=A0 =C2=A0 =C2=A0&#39;sources&#39;: [main_rs, files(&#39;system/main=
+.c&#39;)],<br>&gt; &gt; - =C2=A0 =C2=A0 =C2=A0&#39;dependencies&#39;: [sdl,=
+ target_stubs],<br>&gt; &gt; - =C2=A0 =C2=A0}]<br>&gt; &gt; - =C2=A0 =C2=A0=
+if host_os =3D=3D &#39;windows&#39; and (sdl.found() or gtk.found())<br>&gt=
+; &gt; + =C2=A0 =C2=A0execs =3D []<br>&gt; &gt; + =C2=A0 =C2=A0if not (have=
+_qemu_system_combo and target in combo_softmmu)<br>&gt; &gt; =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0execs +=3D [{<br>&gt; &gt; - =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;n=
+ame&#39;: &#39;qemu-system-&#39; + target_name + &#39;w&#39;,<br>&gt; &gt; =
+- =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;win_subsystem&#39;: &#39;windows&#39;,<br=
+>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;name&#39;: &#39;qemu-system-&#=
+39; + target_name,<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;win_subsy=
+stem&#39;: &#39;console&#39;,<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0&#39;sources&#39;: [main_rs, files(&#39;system/main.c&#39;)],<br>&gt; &g=
+t; =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;dependencies&#39;: [sdl, target_s=
+tubs],<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0}]<br>&gt; &gt; + =C2=A0 =C2=
+=A0 =C2=A0if host_os =3D=3D &#39;windows&#39; and (sdl.found() or gtk.found=
+())<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0execs +=3D [{<br>&gt; &gt; + =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;name&#39;: &#39;qemu-system-&#39; + =
+target_name + &#39;w&#39;,<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0&#39;win_subsystem&#39;: &#39;windows&#39;,<br>&gt; &gt; + =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0&#39;sources&#39;: [main_rs, files(&#39;system/main.c&=
+#39;)],<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;dependencies&=
+#39;: [sdl, target_stubs],<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0}]<br>=
+&gt; &gt; + =C2=A0 =C2=A0 =C2=A0endif<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0endi=
+f<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0if get_option(&#39;fuzzing&#39;)<br>&gt;=
+ &gt; =C2=A0 =C2=A0 =C2=A0 =C2=A0specific_fuzz =3D specific_fuzz_ss.apply(c=
+onfig_target, strict: false)<br>&gt; &gt; @@ -4481,6 +4502,123 @@ foreach t=
+arget : target_dirs<br>&gt; &gt; =C2=A0 =C2=A0endforeach<br>&gt; &gt; =C2=
+=A0endforeach<br>&gt; &gt;<br>&gt; &gt; +# Combined ARM + RISC-V system emu=
+lator (32 and 64).<br>&gt; &gt; +# Common/system objects come from aarch64.=
+ RISC-V arch objects come<br>&gt; &gt; +# from the existing riscv64 lib. 32=
+-bit TargetInfo and 32-only boards<br>&gt; &gt; +# come from the arm/riscv3=
+2 libs. Per-target qemu-system-* names are<br>&gt; &gt; +# symlinks to qemu=
+-system (argv[0] selects TargetInfo).<br>&gt; &gt; +if have_qemu_system_com=
+bo<br>&gt; &gt; + =C2=A0a64 =3D target_softmmu[&#39;aarch64-softmmu&#39;]<b=
+r>&gt; &gt; + =C2=A0rv =3D target_softmmu[&#39;riscv64-softmmu&#39;]<br>&gt=
+; &gt; + =C2=A0extra_objs =3D []<br>&gt; &gt; + =C2=A0target_info_def =3D f=
+iles(&#39;target-info-def.c&#39;)<br>&gt; &gt; + =C2=A0foreach spec : [[com=
+mon_ss, common_all], [system_ss, libsystem]]<br>&gt; &gt; + =C2=A0 =C2=A0rv=
+_src =3D spec[0].apply(rv[&#39;config_target&#39;], strict: false)<br>&gt; =
+&gt; + =C2=A0 =C2=A0a64_src =3D spec[0].apply(a64[&#39;config_target&#39;],=
+ strict: false)<br>&gt; &gt; + =C2=A0 =C2=A0extra =3D []<br>&gt; &gt; + =C2=
+=A0 =C2=A0foreach f : rv_src.sources()<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0i=
+f f not in a64_src.sources() and not f.full_path().endswith(&#39;_stubs.c&#=
+39;)<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0extra +=3D f<br>&gt; &gt; + =
+=C2=A0 =C2=A0 =C2=A0endif<br>&gt; &gt; + =C2=A0 =C2=A0endforeach<br>&gt; &g=
+t; + =C2=A0 =C2=A0if extra.length() &gt; 0<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=
+=A0extra_objs +=3D spec[1].extract_objects(extra)<br>&gt; &gt; + =C2=A0 =C2=
+=A0endif<br>&gt; &gt; + =C2=A0endforeach<br>&gt; &gt; + =C2=A0rv_base =3D r=
+v[&#39;target_base_arch&#39;]<br>&gt; &gt; + =C2=A0if rv_base in target_com=
+mon_arch_libs<br>&gt; &gt; + =C2=A0 =C2=A0src =3D target_common_arch[rv_bas=
+e].apply(rv[&#39;config_target&#39;], strict: false)<br>&gt; &gt; + =C2=A0 =
+=C2=A0extra_objs +=3D target_common_arch_libs[rv_base].extract_objects(src.=
+sources())<br>&gt; &gt; + =C2=A0endif<br>&gt; &gt; + =C2=A0if rv_base in ta=
+rget_common_system_arch_libs<br>&gt; &gt; + =C2=A0 =C2=A0src =3D target_com=
+mon_system_arch[rv_base].apply(rv[&#39;config_target&#39;], strict: false)<=
+br>&gt; &gt; + =C2=A0 =C2=A0extra_objs +=3D target_common_system_arch_libs[=
+rv_base].extract_objects(src.sources())<br>&gt; &gt; + =C2=A0endif<br>&gt; =
+&gt; + =C2=A0foreach pair : [[&#39;arm-softmmu&#39;, &#39;aarch64-softmmu&#=
+39;], [&#39;riscv32-softmmu&#39;, &#39;riscv64-softmmu&#39;]]<br>&gt; &gt; =
++ =C2=A0 =C2=A0t32 =3D pair[0]<br>&gt; &gt; + =C2=A0 =C2=A0t64 =3D pair[1]<=
+br>&gt; &gt; + =C2=A0 =C2=A0if t32 in target_softmmu<br>&gt; &gt; + =C2=A0 =
+=C2=A0 =C2=A0extra_objs +=3D target_softmmu[t32][&#39;lib&#39;].extract_obj=
+ects(target_info_def)<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0base32 =3D target_=
+softmmu[t32][&#39;target_base_arch&#39;]<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=
+=A0if base32 in hw_arch<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0hw32 =3D =
+hw_arch[base32].apply(target_softmmu[t32][&#39;config_target&#39;], strict:=
+ false)<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0hw64 =3D hw_arch[base32].=
+apply(target_softmmu[t64][&#39;config_target&#39;], strict: false)<br>&gt; =
+&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0extra_hw =3D []<br>&gt; &gt; + =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0foreach f : hw32.sources()<br>&gt; &gt; + =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0if f not in hw64.sources()<br>&gt; &gt; + =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0extra_hw +=3D f<br>&gt; &gt; + =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0endif<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0endfore=
+ach<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0if extra_hw.length() &gt; 0<b=
+r>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0extra_objs +=3D target_soft=
+mmu[t32][&#39;lib&#39;].extract_objects(extra_hw)<br>&gt; &gt; + =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0endif<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0endif<br>&gt; &gt=
+; + =C2=A0 =C2=A0endif<br>&gt; &gt; + =C2=A0endforeach<br>&gt; &gt; + =C2=
+=A0combo_objects =3D extra_objs<br>&gt; &gt; + =C2=A0combo_objects +=3D a64=
+[&#39;lib&#39;].extract_all_objects(recursive: true)<br>&gt; &gt; + =C2=A0c=
+ombo_objects +=3D rv[&#39;lib&#39;].extract_objects(rv[&#39;arch_srcs&#39;]=
+)<br>&gt; &gt; + =C2=A0combo_deps =3D a64[&#39;arch_deps&#39;] + rv[&#39;ar=
+ch_deps&#39;] + [sdl, a64[&#39;target_stubs&#39;], rv[&#39;target_stubs&#39=
+;]]<br>&gt; &gt; + =C2=A0if &#39;arm-softmmu&#39; in target_softmmu<br>&gt;=
+ &gt; + =C2=A0 =C2=A0combo_deps +=3D target_softmmu[&#39;arm-softmmu&#39;][=
+&#39;arch_deps&#39;]<br>&gt; &gt; + =C2=A0endif<br>&gt; &gt; + =C2=A0if &#3=
+9;riscv32-softmmu&#39; in target_softmmu<br>&gt; &gt; + =C2=A0 =C2=A0combo_=
+deps +=3D target_softmmu[&#39;riscv32-softmmu&#39;][&#39;arch_deps&#39;]<br=
+>&gt; &gt; + =C2=A0endif<br>&gt; &gt; + =C2=A0combo_execs =3D [{<br>&gt; &g=
+t; + =C2=A0 =C2=A0&#39;name&#39;: &#39;qemu-system&#39;,<br>&gt; &gt; + =C2=
+=A0 =C2=A0&#39;win_subsystem&#39;: &#39;console&#39;,<br>&gt; &gt; + =C2=A0=
+}]<br>&gt; &gt; + =C2=A0if host_os =3D=3D &#39;windows&#39; and (sdl.found(=
+) or gtk.found())<br>&gt; &gt; + =C2=A0 =C2=A0combo_execs +=3D [{<br>&gt; &=
+gt; + =C2=A0 =C2=A0 =C2=A0&#39;name&#39;: &#39;qemu-systemw&#39;,<br>&gt; &=
+gt; + =C2=A0 =C2=A0 =C2=A0&#39;win_subsystem&#39;: &#39;windows&#39;,<br>&g=
+t; &gt; + =C2=A0 =C2=A0}]<br>&gt; &gt; + =C2=A0endif<br>&gt; &gt; + =C2=A0c=
+ombo_exe_suffix =3D host_os =3D=3D &#39;windows&#39; ? &#39;.exe&#39; : &#3=
+9;&#39;<br>&gt; &gt; + =C2=A0combo_alias_py =3D &#39;import os, sys; src, d=
+st =3D sys.argv[1:3]; os.path.exists(dst) and os.remove(dst); os.symlink(os=
+.path.basename(src), dst)&#39;<br>&gt; &gt; + =C2=A0foreach exe : combo_exe=
+cs<br>&gt; &gt; + =C2=A0 =C2=A0emulator =3D executable(exe[&#39;name&#39;],=
+ [a64[&#39;main_rs&#39;], files(&#39;system/main.c&#39;)],<br>&gt; &gt; + =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 install: true,<br>&gt; &gt=
+; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 c_args: a64[&#39;c_arg=
+s&#39;],<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 de=
+pendencies: combo_deps,<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 objects: combo_objects,<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 link_depends: [block_syms, qemu_syms],<br>&gt; =
+&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 link_args: a64[&#39=
+;link_args&#39;],<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 win_subsystem: exe[&#39;win_subsystem&#39;])<br>&gt; &gt; + =C2=A0 =
+=C2=A0emulators +=3D {exe[&#39;name&#39;]: emulator}<br>&gt; &gt; + =C2=A0 =
+=C2=A0traceable +=3D [{<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0&#39;exe&#39;: e=
+xe[&#39;name&#39;],<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0&#39;probe-prefix&#3=
+9;: &#39;qemu.system.multi&#39;,<br>&gt; &gt; + =C2=A0 =C2=A0}]<br>&gt; &gt=
+; + =C2=A0 =C2=A0foreach t : combo_softmmu<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=
+=A0if t not in target_softmmu<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0con=
+tinue<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0endif<br>&gt; &gt; + =C2=A0 =C2=A0=
+ =C2=A0tname =3D target_softmmu[t][&#39;config_target&#39;][&#39;TARGET_NAM=
+E&#39;]<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0if exe[&#39;name&#39;] =3D=3D &#=
+39;qemu-systemw&#39;<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0alias =3D &#=
+39;qemu-system-&#39; + tname + &#39;w&#39;<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=
+=A0else<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0alias =3D &#39;qemu-syste=
+m-&#39; + tname<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0endif<br>&gt; &gt; + =C2=
+=A0 =C2=A0 =C2=A0alias_tgt =3D custom_target(alias,<br>&gt; &gt; + =C2=A0 =
 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0.instanc=
-e_size =3D sizeof(TargetInfoQom), =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br=
->&gt; &gt; =C2=A0 =C2=A0 =C2=A0.class_size =3D sizeof(TargetInfoQomClass), =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0.class_d=
-ata =3D &amp;ti_var, =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0input: emulator,<br>&gt; &gt; + =C2=A0 =C2=
 =A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br>&gt; &gt; -}; =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br>&gt; &gt; -DEFINE_TARGET_INFO_TYPE(targ=
-et_info_qom_target_type_info)<br>&gt; &gt; +}<br>&gt; &gt; +<br>&gt; &gt; +=
-#define target_info_init_le_be(ti_le, ti_be) =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0\<br>&gt; &gt; +TARGET_INFO_QOM_TYPEINFO(ti_le, 0); =C2=A0 =C2=A0=
+=C2=A0 =C2=A0 =C2=A0 =C2=A0output: alias + combo_exe_suffix,<br>&gt; &gt; +=
  =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>&gt; &gt; +TARGET=
-_INFO_QOM_TYPEINFO(ti_be, 1); =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 \<br>&gt; &gt; +static void do_qemu_init_target_info(v=
-oid) =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br>&gt; &gt; +{ =C2=A0 =
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0command: [python, &#39;-c&#39;, combo=
+_alias_py, &#39;@INPUT@&#39;, &#39;@OUTPUT@&#39;],<br>&gt; &gt; + =C2=A0 =
 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0build_by_default: true,<br>&gt; &gt; + =C2=
 =A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>&gt; &gt; + =C2=A0 =C2=A0type_register=
-_static(&amp;target_info_qom_type_0); =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br>&gt; &gt; + =C2=
-=A0 =C2=A0type_register_static(&amp;target_info_qom_type_1); =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0\<br>&gt; &gt; +} =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>&gt; &gt; =
-+module_init(do_qemu_init_target_info, MODULE_INIT_TARGET_INFO)<br>&gt; &gt=
-; <br>&gt; &gt; =C2=A0#endif /* CONFIG_USER_ONLY */<br>&gt; &gt; =C2=A0#end=
-if /* COMPILING_PER_TARGET */<br>&gt; &gt; diff --git a/target-info-def.c b=
-/target-info-def.c<br>&gt; &gt; index 5d38e405735..6722c43a08f 100644<br>&g=
-t; &gt; --- a/target-info-def.c<br>&gt; &gt; +++ b/target-info-def.c<br>&gt=
-; &gt; @@ -28,39 +28,72 @@ QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) !=3D si=
-zeof(CPUState));<br>&gt; &gt; =C2=A0QEMU_BUILD_BUG_ON(TARGET_PAGE_BITS &lt;=
- TARGET_PAGE_BITS_MIN);<br>&gt; &gt; =C2=A0#endif<br>&gt; &gt; <br>&gt; &gt=
-; -static const TargetInfo target_info_def =3D {<br>&gt; &gt; - =C2=A0 =C2=
-=A0.target_name =3D TARGET_NAME,<br>&gt; &gt; - =C2=A0 =C2=A0.target_arch =
-=3D glue(SYS_EMU_TARGET_, TARGET_ARCH),<br>&gt; &gt; - =C2=A0 =C2=A0.long_b=
-its =3D TARGET_LONG_BITS,<br>&gt; &gt; - =C2=A0 =C2=A0.cpu_type =3D CPU_RES=
-OLVING_TYPE,<br>&gt; &gt; - =C2=A0 =C2=A0.endianness =3D TARGET_BIG_ENDIAN =
-? ENDIAN_MODE_BIG : ENDIAN_MODE_LITTLE,<br>&gt; &gt; =C2=A0#ifdef TARGET_PA=
-GE_BITS_VARY<br>&gt; &gt; - =C2=A0 =C2=A0.page_bits_vary =3D true,<br>&gt; =
-&gt; =C2=A0# ifdef TARGET_PAGE_BITS_LEGACY<br>&gt; &gt; +# =C2=A0define TAR=
-GET_INFO_PAGE_BITS \<br>&gt; &gt; + =C2=A0 =C2=A0.page_bits_vary =3D true, =
-\<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0.page_bits_init =3D TARGET_PAGE_BITS_LEG=
-ACY,<br>&gt; &gt; +# else<br>&gt; &gt; +# =C2=A0define TARGET_INFO_PAGE_BIT=
-S \<br>&gt; &gt; + =C2=A0 =C2=A0.page_bits_vary =3D true,<br>&gt; &gt; =C2=
-=A0# endif<br>&gt; &gt; =C2=A0#else<br>&gt; &gt; - =C2=A0 =C2=A0.page_bits_=
-vary =3D false,<br>&gt; &gt; +# define TARGET_INFO_PAGE_BITS \<br>&gt; &gt;=
- + =C2=A0 =C2=A0.page_bits_vary =3D false, \<br>&gt; &gt; =C2=A0 =C2=A0 =C2=
-=A0.page_bits_init =3D TARGET_PAGE_BITS,<br>&gt; &gt; =C2=A0#endif<br>&gt; =
-&gt; <br>&gt; &gt; =C2=A0#ifndef CONFIG_USER_ONLY<br>&gt; &gt; =C2=A0# ifde=
-f CONFIG_MULTIPROCESS<br>&gt; &gt; - =C2=A0 =C2=A0.config_multiprocess =3D =
-true,<br>&gt; &gt; +# =C2=A0define TARGET_INFO_CONFIG_MULTIPROCESS .config_=
-multiprocess =3D true,<br>&gt; &gt; =C2=A0# else<br>&gt; &gt; - =C2=A0 =C2=
-=A0.config_multiprocess =3D false,<br>&gt; &gt; +# =C2=A0define TARGET_INFO=
-_CONFIG_MULTIPROCESS .config_multiprocess =3D false,<br>&gt; &gt; =C2=A0# e=
-ndif<br>&gt; &gt; =C2=A0# ifdef CONFIG_NITRO<br>&gt; &gt; - =C2=A0 =C2=A0.c=
-onfig_nitro =3D true,<br>&gt; &gt; +# =C2=A0define TARGET_INFO_CONFIG_NITRO=
- .config_nitro =3D true,<br>&gt; &gt; =C2=A0# else<br>&gt; &gt; - =C2=A0 =
-=C2=A0.config_nitro =3D false,<br>&gt; &gt; +# =C2=A0define TARGET_INFO_CON=
-FIG_NITRO .config_nitro =3D false,<br>&gt; &gt; =C2=A0# endif<br>&gt; &gt; =
-=C2=A0# ifdef CONFIG_XEN<br>&gt; &gt; - =C2=A0 =C2=A0.config_xen =3D true,<=
-br>&gt; &gt; +# =C2=A0define TARGET_INFO_CONFIG_XEN .config_xen =3D true,<b=
-r>&gt; &gt; =C2=A0# else<br>&gt; &gt; - =C2=A0 =C2=A0.config_xen =3D false,=
-<br>&gt; &gt; +# =C2=A0define TARGET_INFO_CONFIG_XEN .config_xen =3D false,=
-<br>&gt; &gt; =C2=A0# endif<br>&gt; &gt; +# define TARGET_INFO_CONFIG \<br>=
-&gt; &gt; + =C2=A0 =C2=A0TARGET_INFO_CONFIG_MULTIPROCESS \<br>&gt; &gt; + =
-=C2=A0 =C2=A0TARGET_INFO_CONFIG_NITRO \<br>&gt; &gt; + =C2=A0 =C2=A0TARGET_=
-INFO_CONFIG_XEN<br>&gt; &gt; +#else<br>&gt; &gt; +# define TARGET_INFO_CONF=
-IG<br>&gt; &gt; =C2=A0#endif<br>&gt; &gt; +<br>&gt; &gt; +#define TARGET_IN=
-FO_COMMON =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br>&gt; &gt; + =C2=A0 =C2=A0.target=
-_name =3D TARGET_NAME, =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>&gt; &gt; + =C2=A0 =C2=A0.target_arch =3D =
-glue(SYS_EMU_TARGET_, TARGET_ARCH), =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br>&gt; &gt; + =C2=A0 =C2=A0.long_b=
-its =3D TARGET_LONG_BITS, =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0\<br>&gt; &gt; + =C2=A0 =C2=A0.cpu_type =3D CPU_RES=
-OLVING_TYPE, =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 \<br>&gt; &gt; + =C2=A0 =C2=A0TARGET_INFO_PAGE_BITS =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 \<br>&gt; &gt; + =C2=A0 =C2=A0TARGET_INFO_CONFIG<br>&gt; &gt; +<=
-br>&gt; &gt; +#ifdef CONFIG_USER_ONLY<br>&gt; &gt; +static const TargetInfo=
- target_info_def =3D {<br>&gt; &gt; + =C2=A0 =C2=A0TARGET_INFO_COMMON<br>&g=
-t; &gt; + =C2=A0 =C2=A0.endianness =3D TARGET_BIG_ENDIAN ? ENDIAN_MODE_BIG =
-: ENDIAN_MODE_LITTLE,<br>&gt; &gt; =C2=A0};<br>&gt; &gt; <br>&gt; &gt; =C2=
-=A0target_info_init(target_info_def)<br>&gt; &gt; +#else<br>&gt; &gt; +stat=
-ic const TargetInfo target_info_le =3D {<br>&gt; &gt; + =C2=A0 =C2=A0TARGET=
-_INFO_COMMON<br>&gt; &gt; + =C2=A0 =C2=A0.endianness =3D ENDIAN_MODE_LITTLE=
-,<br>&gt; &gt; + =C2=A0 =C2=A0.is_default =3D !TARGET_BIG_ENDIAN,<br>&gt; &=
-gt; +};<br>&gt; &gt; +<br>&gt; &gt; +static const TargetInfo target_info_be=
- =3D {<br>&gt; &gt; + =C2=A0 =C2=A0TARGET_INFO_COMMON<br>&gt; &gt; + =C2=A0=
- =C2=A0.endianness =3D ENDIAN_MODE_BIG,<br>&gt; &gt; + =C2=A0 =C2=A0.is_def=
-ault =3D TARGET_BIG_ENDIAN,<br>&gt; &gt; +};<br>&gt; &gt; +<br>&gt; &gt; +t=
-arget_info_init_le_be(target_info_le, target_info_be)<br>&gt; &gt; +#endif<=
-br>&gt; &gt; diff --git a/target-info-qom.c b/target-info-qom.c<br>&gt; &gt=
-; index 68ad734049c..2c1c57b05fd 100644<br>&gt; &gt; --- a/target-info-qom.=
-c<br>&gt; &gt; +++ b/target-info-qom.c<br>&gt; &gt; @@ -90,13 +90,34 @@ con=
-st TargetInfo *target_info(void)<br>&gt; &gt; =C2=A0void target_info_qom_se=
-t_target(void)<br>&gt; &gt; =C2=A0{<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0g_auto=
-ptr(GSList) targets =3D object_class_get_list(TYPE_TARGET_INFO, false);<br>=
-&gt; &gt; -<br>&gt; &gt; + =C2=A0 =C2=A0const TargetInfo *chosen =3D NULL;<=
-br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0size_t num_found =3D g_slist_length(target=
-s);<br>&gt; &gt; - =C2=A0 =C2=A0if (num_found !=3D 1) {<br>&gt; &gt; - =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0error_setg(&amp;error_fatal, num_found =3D=3D 0 ?<b=
-r>&gt; &gt; - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;no target-info i=
-s available&quot; :<br>&gt; &gt; - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &=
-quot;more than one target-info is available&quot;);<br>&gt; &gt; + =C2=A0 =
-=C2=A0size_t num_default =3D 0;<br>&gt; &gt; +<br>&gt; &gt; + =C2=A0 =C2=A0=
-if (num_found =3D=3D 0) {<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0error_s=
-etg(&amp;error_fatal, &quot;no target-info is available&quot;);<br>&gt; &gt=
-; + =C2=A0 =C2=A0}<br>&gt; &gt; +<br>&gt; &gt; + =C2=A0 =C2=A0if (num_found=
- =3D=3D 1) {<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0target_info_ptr =3D =
-TARGET_INFO_CLASS(targets-&gt;data)-&gt;target_info;<br>&gt; &gt; + =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0return;<br>&gt; &gt; + =C2=A0 =C2=A0}<br>&gt; &gt; +<br=
->&gt; &gt; + =C2=A0 =C2=A0for (GSList *l =3D targets; l; l =3D l-&gt;next) =
-{<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0const TargetInfo *ti =3D TARGET=
-_INFO_CLASS(l-&gt;data)-&gt;target_info;<br>&gt; &gt; +<br>&gt; &gt; + =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0if (ti-&gt;is_default) {<br>&gt; &gt; + =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0num_default++;<br>&gt; &gt; + =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0chosen =3D ti;<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0}<br>&gt; &gt; + =C2=A0 =C2=A0}<br>&gt; &gt; +<br>&gt; &gt; + =C2=
-=A0 =C2=A0if (num_default !=3D 1) {<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0error_setg(&amp;error_fatal, num_default =3D=3D 0 ?<br>&gt; &gt; + =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;no default target-info is availabl=
-e&quot; :<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;more t=
-han one default target-info &quot;<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 &quot;is available&quot;);<br>&gt; &gt; =C2=A0 =C2=A0 =C2=A0}=
-<br>&gt; &gt; <br>&gt; &gt; - =C2=A0 =C2=A0target_info_ptr =3D TARGET_INFO_=
-CLASS(targets-&gt;data)-&gt;target_info;<br>&gt; &gt; + =C2=A0 =C2=A0target=
-_info_ptr =3D chosen;<br>&gt; &gt; =C2=A0}<br>&gt;<br>&gt; Is it representi=
-ng existing targets, or adding new ones per endianness?<br>&gt; I&#39;m not=
- sure if the goal is to add new binaries, or mimic existing ones<br>&gt; wi=
-th specific parameters.<br><br><br>Is optional now, not a force requirement=
-, this is needed when we use GDB debug qemu riscv-be, as gdbstub are depend=
-s on target_info<br><br><br>--<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=E6=AD=
-=A4=E8=87=B4<br>=E7=A4=BC<br>=E7=BD=97=E5=8B=87=E5=88=9A<br>Yours<br>=C2=A0=
- =C2=A0 sincerely,<br>Yonggang Luo</div>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0install: false)<br>&gt; &gt; + =C2=A0 =C2=
+=A0 =C2=A0emulators +=3D {alias: alias_tgt}<br>&gt; &gt; + =C2=A0 =C2=A0 =
+=C2=A0install_symlink(alias + combo_exe_suffix,<br>&gt; &gt; + =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0pointing_=
+to: exe[&#39;name&#39;] + combo_exe_suffix,<br>&gt; &gt; + =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0install_dir: =
+get_option(&#39;bindir&#39;))<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0traceable =
++=3D [{<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;exe&#39;: alias,<br>=
+&gt; &gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;probe-prefix&#39;: &#39;qemu.sy=
+stem.&#39; + tname,<br>&gt; &gt; + =C2=A0 =C2=A0 =C2=A0}]<br>&gt; &gt; + =
+=C2=A0 =C2=A0endforeach<br>&gt; &gt; + =C2=A0endforeach<br>&gt; &gt; +endif=
+<br>&gt; &gt; +<br>&gt; &gt; =C2=A0# Other build targets<br>&gt; &gt;<br>&g=
+t; &gt; =C2=A0if get_option(&#39;plugins&#39;)<br>&gt;<br>&gt; Please find =
+attached a much simpler implementation, which only requires<br>&gt; a singl=
+e line update as we add new targets in single-binary.<br>&gt;<br>&gt; Regar=
+ds,<br>&gt; Pierrick<br><br><br><br>--<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0=E6=AD=A4=E8=87=B4<br>=E7=A4=BC<br>=E7=BD=97=E5=8B=87=E5=88=9A<br>Yours<=
+br>=C2=A0 =C2=A0 sincerely,<br>Yonggang Luo</div>
 
---000000000000cb25200659cf9cf0--
+--000000000000a2ec950659cfa7a9--
 
