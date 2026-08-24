@@ -4,98 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CFA8C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 12:34:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71A76C5DF9B
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 12:36:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyTsp-0004nV-RS; Mon, 24 Aug 2026 08:34:35 -0400
+	id 1wyTuf-0005Oo-HY; Mon, 24 Aug 2026 08:36:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wyTso-0004nC-Cn
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 08:34:34 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1wyTue-0005Od-DF
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 08:36:28 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wyTsm-0000bm-K7
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 08:34:34 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-38e08baf860so3760264a91.2
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 05:34:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787574871; cv=none;
+ id 1wyTuc-00013b-CH
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 08:36:28 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-cc1469c1b83so4512290a12.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 05:36:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787574985; cv=none;
  d=google.com; s=arc-20260327;
- b=ezGCmOgKMHyJrXXN4Cu0+ZMdtdqViRD8TDHE8ETemaIMMCnL6iuzzAetvSI0Ehl0na
- Jf2sNDclnV/asVHhy0kvhxT9o1xjGSN+chGAN9nvkwQmJsobZEFuVum06DOTvEDL5Fqf
- cSiBWa+3Dizn9fGx2zpq51NNoPyIp+qXaYJZQHG/qxakJ6vxrMCTnxcikTfDM6fku6Pi
- SsXRYHjGGt+sWygo6O2eaV8Zsx6Bqb4vKEsUMwFhHRhPkoJTYcJ2oR5DaHPZNZ3gOlnq
- H1I9xGtVSEp/Q/Sqvh1CNM5ILy2BPAIOhR8ZgJiGx5sCI5UgT596XXdNCiArONhZ0kLv
- LZ+Q==
+ b=MVo/Im06RRLtovfILZGOeRk0VDD9xNJkalyEmbf+9azeXil0pROiwmDuM+95unvC+h
+ laGU93Jeb8R5Ibzs6Iy/HlFGGlbUQr7TnpE5r/KYaUXvrdLbw13HbAKiuXKQsXXb/u6Q
+ qybPlD5JMiGLekWkCqVlztfdc1sKW0kCP955ASp3ROg5vQqdqAkqTc3zzfk9NfQMaA9I
+ X3O6l2afllKyoljF/S+f6xO98s+mcBswHOtec9Zm6hQzLdrzB4eCOxqMcCyG7s0TUOiv
+ VcoMJP9JNF+YClxu5rpRHI3pHfsMFYI7077gQNNe6qmw+jg4chGXcZPG9TPUKojn2OI+
+ 3CcA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=SB7s5elB9fI60jrTHrTu6XgC8ZhigLv3DovDMAnWATA=;
- fh=uZtXeOWea64wQW1rEejrNm3IvfSqIbbCqylHEt/o6Lk=;
- b=fg9XB6J6hMuTWwfOsilDyT3kACbNXwhbLKAwl2KSu4GzE11wUZQS/oid6+6JmSNdcB
- 5f3hwABS1DidXihu44SvZdZ2scqtq/sLXUaLylN0vJ0f3g3eLBkz2/y7mwoaTPkV0Vak
- w9mjpXFB09kof48jOPMkl6Klwmt1cajp1iJBwGBsgC/iCH/W7jqDW97dLcmY7hFlMeHk
- nPpu2uStVMmd8MNJiecR6VkidFOj8GIuTT8jiN5/EpSV8XsBq/b+ioCAZV1YzoAJXXXD
- rclXCjM09eay86n4BdqPbLQgqWw9+fOtvnbIlJleGXpitkpTFLE3viVspuKynoEcX5HC
- JqBw==; darn=nongnu.org
+ bh=gqf35q94BR5FEhFG6nsYjPRC7TRHqSIYJ/Qw6G0hK/Q=;
+ fh=2T99PgPMOlWfK2uJ+dhWpOkBVsvCbNgYg5NELY2BWtw=;
+ b=EGoF5ibU0CgxG6UNpFYsOCCrhjN4M872Tw84JD1+ecEE0VgEnyy3ZHiR09xK1eJg0n
+ XVZsMJUkog4evqSLJAvDUngdbypoBsH5Q7j7NBwyKdddTjC7zx5RbwJrhhHv9SgnTKrk
+ ql3UIq1rJKOMgUYqKQOh3+ijRFt7JJ8WLaYpPIsK8NPIljoE/zscUeqCGsH8XiriSyAu
+ JpJhBH7PL9svexBbvd8vwpt4vwRocLTarpGnknF3G8oP/WgKY1pUiQ3EsJkfIlJmqYh7
+ 4ynpe6PT+z5Sa90oscVzjBIno8KvXb5Vmw39ximjROGLnvYH8Z1XjWt9+6t+tiwzNwpa
+ yMlw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787574871; x=1788179671; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787574985; x=1788179785; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=SB7s5elB9fI60jrTHrTu6XgC8ZhigLv3DovDMAnWATA=;
- b=jdlJj3JuAKp7D0LjJJ4rhv1PvdaoFxt6G5KkLxCTgClG5UBNAyKYgfCCOW1qf8/WWw
- zuAGqd2OLozdm5DWfZk/xdiKSkwhbwQUwYyEd8nh8R+48hH0DmqMsernbkMSdAWxyc8W
- IQj4aRKKBlzvDoRYIlouaj4wSUNRv9vhsOBzYKxzI24tFb9id+LX8W453ohkgtt9bOBJ
- l7DeMQwsDlfgiwygBmsmXDhtk12aSkALeKb6wvdQDtSz0UgRv/ScNHHNA4WksSGBHK14
- sEKwzjPB9i7n+JAdNiD95C7tVM2c/g+Rd7YKQB77iO1e5rDtjEcaZWkTlUcnY4W/WSY9
- xAhw==
+ bh=gqf35q94BR5FEhFG6nsYjPRC7TRHqSIYJ/Qw6G0hK/Q=;
+ b=SpacZ+RxdXUWvXSPOZIJI0gRG4EV1QbnnIkb7C3m333TO5Sn2+tki9btHbB8OhLVhM
+ wu8Q/Uc+qGq6kfZV7CZ+uMxlVDY9lWwNOzr3EqMH7wYhSSCePvKzjjFRWrifdvE0cTjx
+ Y8fvmFTiqOjoEpUgc8ukq+jQpSzc8+1ILZ57wyr15YYi6POozHnNmc+CNZ897/id8fji
+ AOaQBD7+xA5XJGSuzWlnaI3CEHN3r2vuuoPe8fmU48b3AbaXWkWvkG1Jhht8MgFHmGgd
+ WVFa7PrK38PqtBuMp8LLH8t07pEo/Ip0Qzj0v8NOofULCWg72IwztQYHSPEUbYnIdz2u
+ BwEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787574871; x=1788179671;
+ d=1e100.net; s=20251104; t=1787574985; x=1788179785;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=SB7s5elB9fI60jrTHrTu6XgC8ZhigLv3DovDMAnWATA=;
- b=pAQd7xkrcQJzoUxL/KhvJsFeXdL6of355mBhZuCARI8sl5YkbPVKLl/WV7EDEYL1fE
- 0PJT34Y//4PiCSbd58ERWcXuapKPL3+k4woQc0r+3CGmGf0gAfKX1/DK695959uafX8q
- zLtZqoAsv5UgaJ8rM8ghmYZuYutSDl34v1IJduI4CzUZ8kIK+o5yknpXsfkBYaVTfexM
- YsEfAzWcii6aPkLPG5OK6RKB5GBLzMHpCZQwt6t48o3T3wqDB65QcFekj41CzhZElg+I
- ktBkCGQ0JAcUKU8hX32OYZgMDrBUIQII4yV/F8bqoPFrZPwniFoP87DNcxM9WBNZxUBz
- JbOg==
-X-Gm-Message-State: AFuF++nEA2Vo7p6dO71nCzWCP9kh9gQUB+zmTtwtO6ZfJZGcIrMNLLoL
- o2JD52YnXE4fFfYp950ZJ7YKgsQA+JusTfW0/UgWgQM+Op0lZ3RV1ZC7iTB7tX5DR9WIPfxLWcU
- vjZMXUszYrSVZAGF8W/+uKExYuRUGSZzc9qSv
-X-Gm-Gg: AR+sD11MzBO5RLo+DHbt3BB9usrh/yB25OOPOT+4z3952MpVDG9kZkr7VYDTRe55NJH
- 73H0Y0238lzJP+NaXh4MPMShUVdBYLZqlYJO/AMBM/wwEWfZL0h8+R7o9iLW/bgvhU0TSnVUT6f
- D5ovcARp62fiyv815+fL3GQQ7hOpORRzOpEJPLLrl9V4kJ0kRsvluGiKyb8dR3odeBSgl6cz2t+
- RgSDbVYzZUPzozT2MQMAq94Ko98rz9UDbRTozZtvYQh9DYf/YYsFELZ6ATqRUIRR1RykOsTTsoz
- AioPHWXSaYUjRJMbbhqgC2CCyRi68DK+V0vw5TtPIe7+tg==
-X-Received: by 2002:a17:90b:3911:b0:38e:2860:253f with SMTP id
- 98e67ed59e1d1-395df2926d9mr31164908a91.12.1787574870706; Mon, 24 Aug 2026
- 05:34:30 -0700 (PDT)
+ bh=gqf35q94BR5FEhFG6nsYjPRC7TRHqSIYJ/Qw6G0hK/Q=;
+ b=iTgPrR+BXQ0OaGpdTJAWsJbqXe6QN//HagepB6ZaKFKk1B+cWCmkYohLxyAzU5218d
+ D9voYPpr20K6xrMb2BlrpI0VA3MNcbg1hiy+baEDEtapiBio6/Eb18tf98tJLFEGA73p
+ 6h9QepeXYHGA9HA2Yw9B5sbIzzg3VDnU1CeNtskU+QHsNMyX0jnyZiHkzH0+ijLZRuep
+ K9zVyP4SRsI5sc2VDO8TE9DhmQPT+uwvGlsP0oAl7IFsfNtxWpAOW8HXke2VAjtt55/Z
+ teC5HJuI2bprLij/SW/ZgTLDYz05HrITjm7X+LrYK6mwPN2JE4GKt1SdL+iJNSBn9IU6
+ /VCQ==
+X-Gm-Message-State: AFuF++ngxXCe7YHQuzlP8kk8tmymL6ErJjf6IHoP1Tnz/vzDvfnRum6u
+ IVkZ++ym3J9mDpxUfZhT0gp1ZhJ2x2XfB4hoSDoSHWVt2vywaFSb5JNtlDAiO4JNvR0po0Nu9Ud
+ slCEZqeQ6oKxFaZHkhMwtbOYeXa4IenDlVmHy
+X-Gm-Gg: AR+sD10NQKz5+r1MUN64ndTkaNPj0QM763dVgiE2ljJ3X/VpUNeWO0mQdcxOYB1Vc6e
+ lY7m9YtkBPHew+Wu1lS0eF9RBZD2GGs6kBrRxrnDfxYywU2uyR7aq9E+/1Gu9ylAmezoA5wsVvy
+ kcimsBDOMXGYUTznqrUFusihW1c0zLw9XyDDX7V/o7mfAgBcDkRG4S+X2NBa35te1pSppeGyQHX
+ 4tBaNkFlluQTJTV+8xXU0BKPt42l61j+QpZ4Zxs54p/BedulNmSsSZw3B9fMmdbhbyd71iSsw5G
+ EHGZvqozDhybdiDEicFEqenjpdfM0pJXm6JAKXtjhrlCZsPiWys1ZF8zbQ==
+X-Received: by 2002:a05:6a20:394a:b0:3c3:791e:5e18 with SMTP id
+ adf61e73a8af0-3cd2fe7a34cmr45964587637.7.1787574984685; Mon, 24 Aug 2026
+ 05:36:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260707202640.2099841-1-marcandre.lureau@redhat.com>
-In-Reply-To: <20260707202640.2099841-1-marcandre.lureau@redhat.com>
+References: <20260818121413.2660786-1-lucas.kornicki@nutanix.com>
+ <20260818121413.2660786-5-lucas.kornicki@nutanix.com>
+ <CAJ+F1CKuDAzTz2iC+acOKf2j1vW3iFE6jinTKL=AwWCu3-1KGg@mail.gmail.com>
+ <43d32e1c-ae73-4863-87a5-98c2f6ee5fe0@nutanix.com>
+In-Reply-To: <43d32e1c-ae73-4863-87a5-98c2f6ee5fe0@nutanix.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 24 Aug 2026 16:34:18 +0400
-X-Gm-Features: AcwNN1W14xOx13oPg--xEopRtnum1dxVp1K4XW2dm8IFUSSNYIrP7_xNGZCZJas
-Message-ID: <CAJ+F1CKkLdzMbutap633LkU=hKWPah-zrJD3WTohZZvBUK-19Q@mail.gmail.com>
-Subject: Re: [PATCH] meson: detect bindgen and LLVM 22 incompatibility
-To: qemu-devel@nongnu.org, pbonzini@redhat.com
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Date: Mon, 24 Aug 2026 16:36:12 +0400
+X-Gm-Features: AcwNN1WNbVg4y2W1boyvilSKP6FCk6f1dsBrV5RS6Wt9jwS0OmSuDTa1JHuKUys
+Message-ID: <CAJ+F1CL_Z2C_k5_40VT9P6t80Z56YBObQ1fiQpW3t_nO0h1JWg@mail.gmail.com>
+Subject: Re: [PATCH 4/4] ui/vnc: notify client of clipboard peer status
+To: Lucas Kornicki <lucas.kornicki@nutanix.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -119,90 +120,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo
+Hi
 
-On Wed, Jul 8, 2026 at 12:27=E2=80=AFAM <marcandre.lureau@redhat.com> wrote=
-:
+On Tue, Aug 18, 2026 at 5:56=E2=80=AFPM Lucas Kornicki
+<lucas.kornicki@nutanix.com> wrote:
 >
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Hi Marc-Andre
 >
-> bindgen < 0.72.1 linked against libclang >=3D 22 generates opaque structs
-> for C types declared with "typedef struct X X;" forward declarations,
-> common in QEMU. The struct fields are missing from the generated Rust
-> bindings. For example, with bindgen 0.71.x and LLVM 22, a struct like:
+> I quickly became aware of the shortcomings of my v1 series and I've
+> already drafted a v2 where the cover is a bit more detailed and the
+> commits were fixed to remove the Change-IDs.
 >
->   typedef struct VMStateField VMStateField;
->   struct VMStateField {
->       const char *name;
->       int version_id;
->   };
+> On 8/18/26 15:33, Marc-Andr=C3=A9 Lureau wrote:
+> > !-------------------------------------------------------------------|
+> >    CAUTION: External Email
+> >
+> > |-------------------------------------------------------------------!
+> >
+> > Hi Lukasz
+> >
+> > On Tue, Aug 18, 2026 at 4:15=E2=80=AFPM Lukasz Kornicki
+> > <lucas.kornicki@nutanix.com> wrote:
+> >> Introduce a new vnc message (VNC_MSG_SERVER_QEMU_CLIPBOARD_STATUS) and
+> >> the corresponding feature/encoding.
+> >>
+> >> When a client requests this feature, the server will inform the client
+> >> whether a guest clipboard peer is present. The server will repeat the
+> >> notification each time availability of a guest clipboard peer changes.
+> >>
+> >> This change enables the VNC client to determine if a guest side
+> >> clipboard peer is available for clipboard exchange and react to
+> >> changes of its availability.
+> >>
+> >> Until now the VNC clipboard peer was only registered when
+> >> VNC_FEATURE_CLIPBOARD_EXT was enabled. With this change the VNC peer
+> >> can be registered just for the purpose of receiving peer status
+> >> updates. This requires introducing a VNC_FEATURE_CLIPBOARD_EXT guard
+> >> before the QEMU_CLIPBOARD_UPDATE_INFO handler which previously only ra=
+n
+> >> if VNC_FEATURE_CLIPBOARD_EXT was enabled.
+> >>
+> > The series looks good, but this extension is not documented afaict.
+> > Can you make a PR for it?
 >
-> produces:
->
->   pub struct VMStateField {
->       pub _address: u8,
->   }
->
-> instead of:
->
->   pub struct VMStateField {
->       pub name: *const c_char,
->       pub version_id: c_int,
->   }
->
-> The build then fails with:
->   error[E0609]: no field `version_id` on type `VMStateField`
->   error[E0609]: no field `flags` on type `VMStateField`
->   error[E0560]: struct `util_sys::Error` has no field named `msg`
->
-> Check the bindgen version against llvm-config at configure time. With
-> -Drust=3Denabled, error out; with -Drust=3Dauto, disable Rust and suggest
-> the upgrade.
->
-> Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+> Sure. I've found this repo before but was not aware that it functions in
+> any official capacity.
 
-iirc, you told me that the patch was good. Can you add a-b/r-b, should
-I take it through my tree?
+I dont think we should take the change until the rfbproto documents it.
 
-> ---
->  meson.build | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
+thanks
+
 >
-> diff --git a/meson.build b/meson.build
-> index 164328ded83..c965cef352e 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -125,6 +125,25 @@ if have_rust
->        have_rust =3D false
->      endif
->    endif
-> +
-> +  # bindgen < 0.72.1 generates opaque structs for "typedef struct X X;"
-> +  # patterns when linked against libclang >=3D 22.
-> +  if have_rust and bindgen.version().version_compare('<0.72.1')
-> +    llvm_config =3D find_program('llvm-config', required: false)
-> +    if llvm_config.found()
-> +      llvm_version =3D run_command(llvm_config, '--version',
-> +                                 check: true).stdout().strip()
-> +      if llvm_version.version_compare('>=3D22.0.0')
-> +        if get_option('rust').enabled()
-> +          error('bindgen ' + bindgen.version() + ' is incompatible with =
-LLVM ' + llvm_version + '. ' +
-> +                'Please upgrade with "cargo install --locked bindgen-cli=
-@0.72.1"')
-> +        else
-> +          warning('bindgen ' + bindgen.version() + ' is incompatible wit=
-h LLVM ' + llvm_version + ', disabling Rust.')
-> +          have_rust =3D false
-> +        endif
-> +      endif
-> +    endif
-> +  endif
->  endif
->
->  if have_rust
-> --
-> 2.55.0
->
+> >> Change-Id: Id0897a24fae103288c399f73e808ed6c07018359
+> > What is this? Is it a gerrit thing?
+> Yes, I forgot to remove the commit-msg hook and they got regenerated
+> right after I removed them :)
+> >> Signed-off-by: Lukasz Kornicki <lucas.kornicki@nutanix.com>
+> >> ---
+> >>   ui/trace-events    |  1 +
+> >>   ui/vnc-clipboard.c | 31 ++++++++++++++++++++++++++++++-
+> >>   ui/vnc.c           |  6 ++++++
+> >>   ui/vnc.h           |  8 ++++++++
+> >>   4 files changed, 45 insertions(+), 1 deletion(-)
+> >>
+> >> diff --git a/ui/trace-events b/ui/trace-events
+> >> index 917d116d90..d2fe153b7d 100644
+> >> --- a/ui/trace-events
+> >> +++ b/ui/trace-events
+> >> @@ -48,6 +48,7 @@ vnc_msg_server_ext_desktop_resize(void *state, void =
+*ioc, int width, int height,
+> >>   vnc_msg_client_audio_enable(void *state, void *ioc) "VNC client msg =
+audio enable state=3D%p ioc=3D%p"
+> >>   vnc_msg_client_audio_disable(void *state, void *ioc) "VNC client msg=
+ audio disable state=3D%p ioc=3D%p"
+> >>   vnc_msg_client_audio_format(void *state, void *ioc, int fmt, int cha=
+nnels, int freq) "VNC client msg audio format state=3D%p ioc=3D%p fmt=3D%d =
+channels=3D%d freq=3D%d"
+> >> +vnc_clipboard_peer_status_send(void *state, bool present) "VNC server=
+ clipboard peer status state=3D%p present=3D%d"
+> >>   vnc_msg_client_cut_text(void *state, void *ioc, int len) "VNC client=
+ msg cut text state=3D%p ioc=3D%p len=3D%u"
+> >>   vnc_msg_client_cut_text_ext(void *state, void *ioc, int len, int fla=
+gs) "VNC client msg cut text state=3D%p ioc=3D%p len=3D%u flags=3D%u"
+> >>   vnc_msg_client_ext_key_event(void *state, void *ioc, int down, int s=
+ym, int keycode) "VNC client msg ext key event state=3D%p ioc=3D%p down=3D%=
+u sym=3D%u keycode=3D%u"
+> >> diff --git a/ui/vnc-clipboard.c b/ui/vnc-clipboard.c
+> >> index 67f710f6ed..4ecc4489e4 100644
+> >> --- a/ui/vnc-clipboard.c
+> >> +++ b/ui/vnc-clipboard.c
+> >> @@ -26,6 +26,7 @@
+> >>   #include "qemu/error-report.h"
+> >>   #include "vnc.h"
+> >>   #include "vnc-jobs.h"
+> >> +#include "trace.h"
+> >>
+> >>   static uint8_t *inflate_buffer(uint8_t *in, uint32_t in_len, uint32_=
+t *size)
+> >>   {
+> >> @@ -224,6 +225,23 @@ static void vnc_clipboard_update_info(VncState *v=
+s, QemuClipboardInfo *info)
+> >>       }
+> >>   }
+> >>
+> >> +void vnc_clipboard_peer_status_send(VncState *vs, bool present)
+> >> +{
+> >> +    if (!vnc_has_feature(vs, VNC_FEATURE_CLIPBOARD_STATUS)) {
+> >> +        return;
+> >> +    }
+> >> +
+> >> +    trace_vnc_clipboard_peer_status_send(vs, present);
+> >> +
+> >> +    vnc_lock_output(vs);
+> >> +    vnc_write_u8(vs, VNC_MSG_SERVER_QEMU);
+> >> +    vnc_write_u8(vs, VNC_MSG_SERVER_QEMU_CLIPBOARD_STATUS);
+> >> +    vnc_write_u16(vs, present ? VNC_CLIPBOARD_PEER_PRESENT
+> >> +                              : VNC_CLIPBOARD_PEER_ABSENT);
+> >> +    vnc_unlock_output(vs);
+> >> +    vnc_flush(vs);
+> >> +}
+> >> +
+> >>   static void vnc_clipboard_notify(Notifier *notifier, void *data)
+> >>   {
+> >>       VncState *vs =3D container_of(notifier, VncState, cbpeer.notifie=
+r);
+> >> @@ -231,13 +249,24 @@ static void vnc_clipboard_notify(Notifier *notif=
+ier, void *data)
+> >>
+> >>       switch (notify->type) {
+> >>       case QEMU_CLIPBOARD_UPDATE_INFO:
+> >> +        /* ignore the update if client does not want ext messages */
+> >> +        if (!vnc_has_feature(vs, VNC_FEATURE_CLIPBOARD_EXT)) {
+> >> +            return;
+> >> +        }
+> >> +
+> >>           vnc_clipboard_update_info(vs, notify->info);
+> >>           return;
+> >>       case QEMU_CLIPBOARD_RESET_SERIAL:
+> >>           /* ignore */
+> >>           return;
+> >>       case QEMU_CLIPBOARD_PEER_UPDATE:
+> >> -        /* ignore */
+> >> +        /* only guest side peers affect the status we relay to the cl=
+ient */
+> >> +        if (!notify->peer_update.peer->guest) {
+> >> +            return;
+> >> +        }
+> >> +
+> >> +        vnc_clipboard_peer_status_send(vs,
+> >> +            qemu_clipboard_guest_peer_present());
+> >>           return;
+> >>       }
+> >>   }
+> >> diff --git a/ui/vnc.c b/ui/vnc.c
+> >> index 656768f9c9..9e44a20311 100644
+> >> --- a/ui/vnc.c
+> >> +++ b/ui/vnc.c
+> >> @@ -2191,6 +2191,12 @@ static void set_encodings(VncState *vs, int32_t=
+ *encodings, size_t n_encodings)
+> >>               vnc_set_feature(vs, VNC_FEATURE_CLIPBOARD_EXT);
+> >>               vnc_server_cut_text_caps(vs);
+> >>               break;
+> >> +        case VNC_ENCODING_CLIPBOARD_STATUS:
+> >> +            vnc_set_feature(vs, VNC_FEATURE_CLIPBOARD_STATUS);
+> >> +            vnc_clipboard_peer_register(vs);
+> >> +            vnc_clipboard_peer_status_send(vs,
+> >> +                qemu_clipboard_guest_peer_present());
+> >> +            break;
+> >>           case VNC_ENCODING_COMPRESSLEVEL0 ... VNC_ENCODING_COMPRESSLE=
+VEL0 + 9:
+> >>               vc->worker.tight.compression =3D (enc & 0x0F);
+> >>               break;
+> >> diff --git a/ui/vnc.h b/ui/vnc.h
+> >> index d8b0070396..6e8fa66e9c 100644
+> >> --- a/ui/vnc.h
+> >> +++ b/ui/vnc.h
+> >> @@ -422,6 +422,7 @@ enum {
+> >>   #define VNC_ENCODING_DESKTOP_RESIZE_EXT   0XFFFFFECC /* -308 */
+> >>   #define VNC_ENCODING_XVP                  0XFFFFFECB /* -309 */
+> >>   #define VNC_ENCODING_ALPHA_CURSOR         0XFFFFFEC6 /* -314 */
+> >> +#define VNC_ENCODING_CLIPBOARD_STATUS     0XFFFFFEC5 /* -315 */
+> >>   #define VNC_ENCODING_WMVi                 0x574D5669
+> >>   #define VNC_ENCODING_CLIPBOARD_EXT        0xc0a1e5ce
+> >>
+> >> @@ -466,6 +467,7 @@ enum VncFeatures {
+> >>       VNC_FEATURE_LED_STATE,
+> >>       VNC_FEATURE_XVP,
+> >>       VNC_FEATURE_CLIPBOARD_EXT,
+> >> +    VNC_FEATURE_CLIPBOARD_STATUS,
+> >>       VNC_FEATURE_AUDIO,
+> >>   };
+> >>
+> >> @@ -507,6 +509,7 @@ enum VncFeatures {
+> >>
+> >>   /* QEMU server -> client message IDs */
+> >>   #define VNC_MSG_SERVER_QEMU_AUDIO                 1
+> >> +#define VNC_MSG_SERVER_QEMU_CLIPBOARD_STATUS      2
+> >>
+> >>
+> >>
+> >> @@ -541,6 +544,10 @@ enum VncFeatures {
+> >>   #define VNC_CLIPBOARD_NOTIFY   (1 << 27)
+> >>   #define VNC_CLIPBOARD_PROVIDE  (1 << 28)
+> >>
+> >> +/* guest side clipboard peer status */
+> >> +#define VNC_CLIPBOARD_PEER_ABSENT  0
+> >> +#define VNC_CLIPBOARD_PEER_PRESENT 1
+> >> +
+> >>   VncDisplay *vnc_display_new(const char *id, Error **errp);
+> >>   void vnc_display_free(VncDisplay *vd);
+> >>
+> >> @@ -637,6 +644,7 @@ void vnc_zrle_clear(VncWorker *worker);
+> >>
+> >>   /* vnc-clipboard.c */
+> >>   void vnc_clipboard_peer_register(VncState *vs);
+> >> +void vnc_clipboard_peer_status_send(VncState *vs, bool present);
+> >>   void vnc_server_cut_text_caps(VncState *vs);
+> >>   void vnc_client_cut_text(VncState *vs, size_t len, uint8_t *text);
+> >>   void vnc_client_cut_text_ext(VncState *vs, int32_t len, uint32_t fla=
+gs, uint8_t *data);
+> >> --
+> >> 2.43.0
+> >>
+> >>
 >
 
