@@ -4,138 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 153ADC5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 08:55:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34AF1C5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 08:55:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyQS6-0007Ve-Oy; Mon, 24 Aug 2026 04:54:46 -0400
+	id 1wyQSX-0007gs-TM; Mon, 24 Aug 2026 04:55:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1wyQS2-0007QO-9X; Mon, 24 Aug 2026 04:54:42 -0400
+ (Exim 4.90_1) (envelope-from <joel.bueno@openchip.com>)
+ id 1wyQSV-0007eP-2a; Mon, 24 Aug 2026 04:55:12 -0400
 Received: from mail-northeuropeazlp170110003.outbound.protection.outlook.com
  ([2a01:111:f403:c200::3] helo=DU2PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1wyQRz-0000p3-SE; Mon, 24 Aug 2026 04:54:41 -0400
+ (Exim 4.90_1) (envelope-from <joel.bueno@openchip.com>)
+ id 1wyQSR-00014J-Uf; Mon, 24 Aug 2026 04:55:10 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vRv52N4dDN5PUrJScRy5FMWrkMAh4+83g8039BOQIHR2QpRJPD+QuLyOK5qoKd6DxcO8CfB81OUliPnUsoc+PydO5rqqF+s14MVOXKHCFts8wmm4jlpxwuHJ0/tHbi6d0oWBdXwCHFfcUPp5uf0f4HF3mKIfytKwcNihQGS8b5MH6kxffdtuzPdBr1B+AaF9xxxoW+gdNcJZa/Yv0Uhpu8HRaZ8X8tIUpaN0fwwRw6DqlMuFgQ1PbO+HKH9d+CmyBKtFDDxTe2t8rHwFFbl1SEc2CfvUIyseWFnSeJpds5NF1QrqNE7HuR/5jmhOOd9XAPgLX8uX0w+O/clZgYbN/g==
+ b=W3MO2maTX9clz+nrP1nz2PCbcHX+njj5vprp2/ozNPBhTL9cKJBAR/AeB6V5y4xlIb84iuUqsPVTHE75bUBEWqQDPC1Z4B80dyR+k9M/EqS/nFJrZQuBfV3n963PjevgcqMj7p/oasZbxEVXmyz98StqfyFHBv194DfAAdOAJqItfhpgWCALxCmEzyj66PtMTNKm+Zz3FnG7jy1sh1VhXbfFTHAgSxZ7GqgnyNBpsh0tREEn7rVZCJ7IKejTAyoHUP9vAYav9oLkPDTjyppIRiHweNSv5KvamylszHs2fZYtk3z9qVSY6QSvt1XR0/wwSYKJlc8XqeYWHB15r9lnjg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=O0wYrD1ScvtgwzU8V4G86773VLql6Pf+GIIlS+vsHPA=;
- b=JCkm3vb1/lGaJSif8uPMr6at2M1UctB9rCjkFp4w/iYPkEwzNgXLr2Ae4RSaGBfCvoRC8jVj7Mkrw9RbJgVwQKjsbVp/SEItk1hPR3q1XjA80uizWN7k+WUqg3wzYLSxibtm0K9LsMWM4z8oYSfiDO9iOFHhnuUksP8+F1G1DxPOtP8zH1OYh1ftxe0IEO1HKEFpMs19/QeazQhCf4wVDoKFzbH6CcvQKmkBxgvIMfP/58qdatpGPySP8KF/pl7p8efOyo73xepGCFlS+ftkN3LCWXjsDBeiMDsCkEBWLCVCOnC7KSq+C9VG6sOHbnKVzmG8Q7Po7Fx0kApJ+kV5Pg==
+ bh=J3+KbcH+1GE51/tVZ1B0rS6DO9/RB/CP/W6LkJbCjVU=;
+ b=d8r0R/D2XmVi5D5eIJGTFysa0QnJvf3zl8ZS69f/0i0eCG3a0QKxraqVqZPvIqhTtv4Yuqq6wNDCVgw8/m9+ss332m0CADo+HtvCRuHJKGSrEv70OSBruVEaQKVs57LURaDOkJTnk0FmlFmPRpClNK4jLxauxs2rNMhv0jk2I1Dy74T0uEmD8cZ+QEWKw/i+nW88AxkRbvg58baroEJscXeEVs0ioDq8enQjnqEh/k9xTmbYVQ9JooLNL0aW+MZwAVseUAQq9mb3miUHFoiv3kEaQ11imsjnMSUfzkHP/6/Up0SzcUZEoVMdCLL6mDIWgSTcuH8HyJhDGG/BUFH2kg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
+ smtp.mailfrom=openchip.com; dmarc=pass action=none header.from=openchip.com;
+ dkim=pass header.d=openchip.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openchip.com;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=O0wYrD1ScvtgwzU8V4G86773VLql6Pf+GIIlS+vsHPA=;
- b=Ldu9/1NrZfRBgFkGitIZSTU44U1E8VF5GoDsAvM6RQ+8qK6QbjvqUfUWyBz94sddVgl78HSckbBM0ywvCMP90TGsho78qnngCIfKKaye7NbSqnaOr/DkfZpm0XNZlU5u6S6ELgOyf0EXfUzFZl9SQk2le5zfdHPAV8yw+AAzjMnSbF/YiK8RFERpuvQlPvGfTux+evCnciPh+8prBuaxbnYSi+wGF3kp5kMuIuRHxOpbTaQJ6IwvDzmrKUCQtQ9wsLpe5xEJn+ehK/FNG4RsQq43eRKQ2ZUgeehLfttbLen0SGjdxmKUIdd3KSNEArW2GMrYgsWBd5o9uHwOf72+JA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by DB9PR08MB11546.eurprd08.prod.outlook.com (2603:10a6:10:60d::13)
- with Microsoft SMTP Server (version=TLS1_2,
+ bh=J3+KbcH+1GE51/tVZ1B0rS6DO9/RB/CP/W6LkJbCjVU=;
+ b=FHNq8tf/OsaFtFNHw5een7EPdp72Sm/OzUF4MX27ioRWZqeWR9mQdxzCh3mz12mDp06ZqmyjTo5iiAyeHsaVAWi7HcHzKdm5XLFFBEiT/y5etznQHvP+Prpz3H+wFYGu4xUdUXdMiStMD8s4W6r3MXpMUGIZeypu6tWd0Z6PG9r8H6PizfB4KaaBpJXF64BP/EANzOREZ3sQ6nWflzMSL2W+HN6LQynnA/8//+5EKBIpb5zkT5U0W7NHhWFHbfliYl0DS6UzgHmwuONFa+Hb/64h50aHLWzFsS1EnIJhjOglV0VZ5cJySnd1Z5cNzD5pNzCjYo6Vo+o2iRVDRssT6A==
+Received: from AS8P192MB2176.EURP192.PROD.OUTLOOK.COM (2603:10a6:20b:639::5)
+ by GV2P192MB1989.EURP192.PROD.OUTLOOK.COM (2603:10a6:150:bf::5) with
+ Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Mon, 24 Aug
- 2026 08:54:33 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0339.012; Mon, 24 Aug 2026
- 08:54:33 +0000
-Message-ID: <5ef69c53-4180-4262-96f8-d7ca0070de6e@virtuozzo.com>
-Date: Mon, 24 Aug 2026 10:54:32 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 19/25] parallels: report the stored dirty bitmaps in
- qemu-img info
-To: Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Cc: qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- qemu-devel@nongnu.org, "Denis V. Lunev" <den@openvz.org>
-References: <20260817185942.1065143-1-den@openvz.org>
- <20260817185942.1065143-20-den@openvz.org>
+ 2026 08:54:57 +0000
+Received: from AS8P192MB2176.EURP192.PROD.OUTLOOK.COM
+ ([fe80::f998:ee7f:add9:9782]) by AS8P192MB2176.EURP192.PROD.OUTLOOK.COM
+ ([fe80::f998:ee7f:add9:9782%5]) with mapi id 15.21.0339.012; Mon, 24 Aug 2026
+ 08:54:57 +0000
+From: Joel Bueno <joel.bueno@openchip.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-riscv@nongnu.org"
+ <qemu-riscv@nongnu.org>
+CC: "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, "palmer@dabbelt.com"
+ <palmer@dabbelt.com>, "alistair.francis@wdc.com" <alistair.francis@wdc.com>,
+ "liwei1518@gmail.com" <liwei1518@gmail.com>,
+ "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>,
+ "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>,
+ "chao.liu.zevorn@gmail.com" <chao.liu.zevorn@gmail.com>
+Subject: Re: [PATCH v2] tcg/riscv: raise VLEN limit to the specification's
+ maximum
+Thread-Topic: [PATCH v2] tcg/riscv: raise VLEN limit to the specification's
+ maximum
+Thread-Index: AQHdFdBbI/5EsFyGHUubwwFAkANbPLatH+gF
+Date: Mon, 24 Aug 2026 08:54:56 +0000
+Message-ID: <AS8P192MB2176436BE42E70C1AF1D09A2E2A02@AS8P192MB2176.EURP192.PROD.OUTLOOK.COM>
+References: <20260717094046.1600827-1-joel.bueno@openchip.com>
+In-Reply-To: <20260717094046.1600827-1-joel.bueno@openchip.com>
+Accept-Language: en-US
 Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <20260817185942.1065143-20-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VIUP296CA0052.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:34b::10) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|DB9PR08MB11546:EE_
-X-MS-Office365-Filtering-Correlation-Id: b1f9d446-8965-41c7-3727-08df01bd5123
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|10070799003|376014|1800799024|23010399003|366016|6133799003|3023799007|56012099006|10067099003|5023799004|4143699003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: ae2IUzpf8CufLMQEEduayukO/eaPP3w0eGj8M2ivp+xFBW8b1bvJkvBh1kyBmsP46sfnaQC75m0nycTweZRopRkrk1CCvzCXSMf2sCexBoU1WkA5m45ix1aPEyS6peqOUho+a326kg1A2FBATIfpeA9M9CRpfgxfxBH5Pafz/PbFscl6U5H9ifdy4QKOqarKW4+gKPHmNI1XRR6XdCHCkvBEHCyytCWzZcEjrnyp01Iv3ari3+o/oesJc7TFj4GZmqxRH1P4oofoTB+YAfFMHbf/FzgUm0R/e65fcIgSw+xpR0TCzsu8sMgOf29DsH/XMLfEweyC0ww3yF44yBU5FKoljbBoMZmDz8g30P9cLLijY4j2Sd8JP1kTqgSHHzwhQCQc/VCcgv2q2JP0YZ8SD0NYXmY/WnGN3itFYgpdHAA0ObcFw2CzXFdTUXqiBXcW0UQwp+SkKhreGgyYmIJ+BFhDPbZDd2ySZ3ApzVN0X2wlOMLbhP6SYWrciuLtVzvIulkb9nfPHwafaVtKV2CNbIBQHrx5dCyAzgwDkUbVVKRvI9PPd0ApWEC6SLcr7T+/mquM9I2B+cELuWfqD9WPIEJ18SH+uawlCJ3NGir55CQ3PzGfDh8SoOgyOopmwSJaazqVRe/FWKi5u911WGf+YQ/YvbBRWsXVspKUrLMdP6U=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(10070799003)(376014)(1800799024)(23010399003)(366016)(6133799003)(3023799007)(56012099006)(10067099003)(5023799004)(4143699003)(18002099003)(22082099003);
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=openchip.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AS8P192MB2176:EE_|GV2P192MB1989:EE_
+x-ms-office365-filtering-correlation-id: 04bdbb96-f75a-4459-d34d-08df01bd5f60
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|10070799003|1800799024|23010399003|7416014|376014|38070700021|6133799003|10067099003|56012099006|11063799006|8096899003|18002099003|22082099003|3023799007;
+x-microsoft-antispam-message-info: nBoHRXoVWZro5pYiFzvD3H+Lprjw3yiSO7AxZ5p7kfC+9oaLmDrUv6QasVDrhnfd8j10Xc1zy1mh92RXEcHETsCNiTXy4wypkJVBvZs5Ew7W3j+WEjjWtCax8aysuIktG95kQkP32hc1SiRnTXnBexoPO8lG7jjm3+LrCMDMRhiyuoUJP7VXGdiQdaSQrn4vKaNhoo9e8W9tRKtZjT43q2TiFPFkoTovFhXdDZUzgpkcTkRSP+PGV3HbyoVL6Wt1VOyJIbxSeOys0csvZTtjTnBBM1HmRXf5J69CAvclKA86zlVbclA4fuFkMktHVDPWWCLzVDZapUADzoOSdaLsznZ8VSrzl1xYK05H5QyEzh38xRAyb+6DHSv7SiDcWKhrHoFPjBDo5Bw/THROM3UlCBjcgoXa/2UoYLoobLzJE9mLZIVx9s7qSEwf3XvZ9//QUUqRS3yPQzEmJftrH9pgMtwupuFOumM+4uIb9n4mGiQxEnTrDzklddtITYv4lkzQUx+qxlS7Xrih22TL1A6UEgWJ7CXJfUNQVUE7Yh2j+mgZooekcsM144jsjU+guQBoGceeBKT6P+qLxxGufM2eZ3fWmbMViFpzN2b1tbKxqa6QqeAKhhoeZqzF9lvfExPg9yilpqUgpRja0kTckgUj6L6MKEzjktae2K1QyJodNC1z4OOsXNSO2wzw/flhG0gTfwkfcyxMNtgJhNVHlY3mqRpQm0TUVzv3kjIt5BG5Wd0=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AS8P192MB2176.EURP192.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(10070799003)(1800799024)(23010399003)(7416014)(376014)(38070700021)(6133799003)(10067099003)(56012099006)(11063799006)(8096899003)(18002099003)(22082099003)(3023799007);
  DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Snh3SEt0cHFUSFZqTWxTZmhVTlhObTRucUlWVDk2WU9iSDAwb0JPUGNOM0Vu?=
- =?utf-8?B?emFhenNTbGJrZnhMdStRRGlTb1g4a2FwUGZzNW5BaTh5U2gxams1RitPS0h4?=
- =?utf-8?B?dHNTOTBTeGZWb0pkMlhsTlVnNFRBRGdwVUhhdHB1d3VnT3MzbHlJTk1KbHZE?=
- =?utf-8?B?S0RqYUM1YkZUbHVhbHMyR1kxV1dXMk11Y1NyUzlQV0lCSUVac3Nuc0FWNVZW?=
- =?utf-8?B?UGV6NHNSV0dlbGN6WDh6bmdVYUJDVmhwTDN6Y1h4VEtPWERISytmTWNUbkRX?=
- =?utf-8?B?WDdqM3JFV0lOeGhVOElBNFBzcERSSTc3M0Joc1ZyMWtDY3JNWjFGb2JvVkpz?=
- =?utf-8?B?M0gzYXF6Y0Y5Vi9TbHhaK3J3bjVLZ2xMcnE1TEdZdW1hdFVSd0x5WDFVa1h0?=
- =?utf-8?B?UTQ5QmQwb1BqRzhWenhEanhHUytMQXRCNkZKUXZIQ2hvNGhkUVc1eUdkZ3dV?=
- =?utf-8?B?RUNqcmI3OUViN2QwZ1RFK0swcFdJSEV4amlVRk5qRWxiOG14VVptckhNbGJV?=
- =?utf-8?B?eGg1OTlIYXRqN1F4NHpweW94N1FQUTRGRk5YRmlwQXFMYmV0VVorUk4vNVRG?=
- =?utf-8?B?eVNLc0lvMXNlREJLV0JKbGJ4Sk93NDdrb3hNL0hjaFNDcHlkMGJlSkdXR2hy?=
- =?utf-8?B?Q2dBNVNJaXlxdDA2dVZ2NWJ5SmF2Q1A4VE0yWHpPc0paeDZ6RS8vVjlJUnla?=
- =?utf-8?B?M3ZSa21PcWY1N1BrWTdlWGcyckRKejROQkRFelMxUU16b0lFc3o2WTRrVFRM?=
- =?utf-8?B?UjRtOW1BdGtRMjF4dlh0YWZhUTFva3FkSXVkV2lCZzg1UWczbTZFRGJ5VGdv?=
- =?utf-8?B?MDJ0T2VKU1g0UE9NNjkyMXZFK1VQN3JWZVVtSWFkTnIreXNSUFE5enNtU29o?=
- =?utf-8?B?ZHNGeHNuRWhSeEYrcUl3UWI3K1c3bi8rb1g5SFQ4emZ2NnhKSWZ1VE9pNnpm?=
- =?utf-8?B?cG5ka1c0VkdRT1RLRUg5RnZPMExzQlA0SmRIdmxiVzZkektYbGNYVzBjRnB3?=
- =?utf-8?B?d2tXa2Vkb3NWSnVRWi9lVENPa0JzTWZtTENaS3VhQ2EzTWdUaWdmcHFNZUlx?=
- =?utf-8?B?eGlTcnp3Nmo3N2V6OTRVU0hEZ0J2ZnFLVUcwbHVMQWtSaFVRRUM1R3JGUmVY?=
- =?utf-8?B?U2xwNWI3M0dteXo5WUZ3OG02NnVpN3NVTWNDcDFrYUFKY2dqcTc5dXRhWGNk?=
- =?utf-8?B?L2ZrUGNMY2F4Nmp1ei9hSUJQKzVmVE9kT2cwcUpxanZWOG52cmV2RktEQ0xm?=
- =?utf-8?B?L0lrL29hM1QraGY0eDlyTmFqWHA0ckdLREFmTUUxRlRFOHRaNys2ZlAwNjc1?=
- =?utf-8?B?NXdwK3JhbnBkT0R3Q1MybVZUR09xUkJnRml5dTVGeFEyc2NwWkRERXUwSnpL?=
- =?utf-8?B?WEFKTjVlSzNvakg5NkJJbE9vWUEvV1hTSkxqbmhZaGpabGRacEt4V0JNdzhC?=
- =?utf-8?B?bURLY1oySDVlTGdnaFBvTEkraVRmdzlGMHFwai96YnZuajBIYzhBeTA2Zm5u?=
- =?utf-8?B?NGtCKzZSdExUR3NBR2RCVFNGOXEzZVFaV0pPUkd5L2U4L2d4SmFzQ2R6RkE4?=
- =?utf-8?B?ekJvaTNsbWZ6VWdtZ29Ub0szY3NKY1Exc0ZvTWIrTE9YNXphMEk5M25Ua2lZ?=
- =?utf-8?B?b2JtM3ZZOXV5ZGFVS0hudGUyZWpNZHpaTXZ3Q0Yya2YrYWFDZlRCZkx0TjF5?=
- =?utf-8?B?Vm1FMU5PZlk1YWpZb2lDNVNSaTlLVXZTRnpNbFhXcCtwbWx2Y1FZNm9pR09E?=
- =?utf-8?B?aVJUTFdoVGt0eGxhcmdleWFtYjhiSGxRb29BMXZ4bTlqR1laYlgreXdOaFk0?=
- =?utf-8?B?c0pWM0NpQllaK1FSMEdySWVOYjV4QUpxU3RKWlZnVjBSVkZwRkpzbVNVUVd2?=
- =?utf-8?B?SDh5bDB4NHJtNk45SDIyWGxmN1pLbVFXUjRXWG5XUy9wUVhHbDE3MkVpSmpr?=
- =?utf-8?B?UEZ3dlplSGZqaWcxdzNGTHlMOEhweXhrV3ExK0J4dklBcGJ3Qmw3NjdUandm?=
- =?utf-8?B?YnhiRHVST3U3VU5mU3VJYUhTMjVJeFhwU3lzY2M4MEtsRHNqZVBhL2loQUpI?=
- =?utf-8?B?cGJwa1JSYWh4Y2V4b1Bmbkc5WVM4RjdFbE5aeUY3aXA4MUJNK3cvTkhPN2lS?=
- =?utf-8?B?VWxMbDY0SlEvMU04YkdwN2dNMWFmdWhpekdRb04zNmYxUS9aUWg3NXJML1Zk?=
- =?utf-8?B?OE05cG5FQ2tZVFFZbGFzdlBncm02Yll3Znh2V0pYcWdxQnpRRnl4cHFpUTVy?=
- =?utf-8?B?L1ArTEJyOW9PRS9HbUhLMFc5bjd3V2tRVitCOWFsSSszNkNOZlN1RlJOcVE5?=
- =?utf-8?B?Yk1SYkVObFA5VmhpN1RUN2tlRHZCYVNRSGxBUjFBeG5wUjZJUVdCWVU2dUtm?=
- =?utf-8?Q?vPmRGO6nq9AQ/lLzy8IBkNtlk0OOoAv2qeIAvP4LCVsLf?=
-X-MS-Exchange-AntiSpam-MessageData-1: lc339uTJ7og/lw==
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b1f9d446-8965-41c7-3727-08df01bd5123
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+x-ms-exchange-antispam-messagedata-chunkcount: 2
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?YTWECUWc5RpNQBZCpBxeEEl0IwXiDvNY2VHVkmxyzl5w02CGFU7ArUpgaE34?=
+ =?us-ascii?Q?Bk6E+jddC2mXuo55u+oCAsMZkD1ugylCH0/uxTOiRfqP48llSKp6OMW4SSj1?=
+ =?us-ascii?Q?iifTTSrSJ84B6GHjZUK9nAPwptqBKo4qk4v2wUWZtsoIg9lUxcDawjpWMKh9?=
+ =?us-ascii?Q?r3pVuqp1gqeb8+fBYPElzIlvJbtcGC42kU6NOfTCwWkVNgswIzuOPAFjZPEz?=
+ =?us-ascii?Q?xLK83eTaO2zoAisA6Z5MvjRxxq8BF2suSzdCQfl3rOH5MWQQTywAH6MV2uPH?=
+ =?us-ascii?Q?xVftk/u0YYk/qq9jTNdZYkqT6ceh3RBaX6WTMsergiOGes/ZGBJWEHlptTpi?=
+ =?us-ascii?Q?xuW4v5yWnA1sfh1Q6EE6hSQijkSk/sQY7UXhlBoo/dh1SId1N6RDl7Qea86p?=
+ =?us-ascii?Q?d7JEjYDB2jbUe3bdLqs829gA115o66up17vyM4jlpe+h1ZaaRGCrg0zHu+/d?=
+ =?us-ascii?Q?k7RoNuKhzHfic7xFX9uM6UF+nLO4c5yPiyzTp9/n/Pho/tC1kSv55j/QOCz5?=
+ =?us-ascii?Q?qqYVBQUqI+rKXHtgDSu3Z9DEy0mD4rw9iMjQ5oAbiCgu5XuRjlx0fJwgO7FT?=
+ =?us-ascii?Q?matRWnq5Y+XyV3aYfF2FITP5E4Ju9GO8v3dZaWP/McBhWYrZIEOrxTn2ADYW?=
+ =?us-ascii?Q?NW91xWRnZNOYX2tURYS0fu7imjCGvL9y+RIyZbWxPrmNCF4p2qacrSInjOA3?=
+ =?us-ascii?Q?Dt8dQwqPeQyaL2KsU7Mastl9jQL2ihWDPowTtA2WTBYLLVsCFUiMMJeSottH?=
+ =?us-ascii?Q?oRSVwZbOvAx6YLd1fpukKNs7bkcHdeLy6a5GM6xkoaG2OFU7xZxmokJIrHhs?=
+ =?us-ascii?Q?u2fv42TPXeWVU0FeYvU8YhGkHkCOsmnlS6WdXHSKLFPz9sb3NC/+3rkB+kye?=
+ =?us-ascii?Q?nnSwsXd3U+59T4LK4l2ww8ELE4ex3LEaIxWcAS78+aSwkwFXh3S5HWhKnPvq?=
+ =?us-ascii?Q?wP+W6KNZYq5/bdK+Ij7A1eKgnC/y1KxNI9EvPuK2FUSvWJjAprxJpoa1On64?=
+ =?us-ascii?Q?icC7PFONJz/hKmPi8YwqDreSbP6mbkHj3hP4COk/wFI9vjCzC9wFStNKu6vC?=
+ =?us-ascii?Q?9o6XXiv01vJUek/+u7o+dwDzkdxl1LM9X6eWRqXoEDj0DajR/bnlFsoZYHx0?=
+ =?us-ascii?Q?E2GbaxlLwu8+1GVJafNgG6Nnm31UUCItmA6GABO9iYbqPlI5Sy5Fky3jhWHx?=
+ =?us-ascii?Q?BgucEYYsrHDfUNo5Xndj+1CIerJ2wIywvr2uLH9Swh7FcuTxciIubEvsrkm+?=
+ =?us-ascii?Q?ur7B8/E2REfSuWFnrBWtlUQRz0Noa0vkWW+6i4TIDBY5LX/SV+4bp04a0C1i?=
+ =?us-ascii?Q?v8vAcizInKSjln9jtq7sLBrnVWqhC/VXVNIOtuqVZ/8Ix4Dk6weykh66I/Jh?=
+ =?us-ascii?Q?genhmRdDS5eSCihJeY+W6e5WnNrF1oeNHS/+hYxg087i0J24r8otVlgFqyjE?=
+ =?us-ascii?Q?05rRNF3jPaENGZ8umVWNmKlKU5TfTmTHzQqNzv3PqEQ3zqAXcq2KLEZ/feBt?=
+ =?us-ascii?Q?OmcBga0HAaLR0xh+H9lG9u5dEy69P3n4cS8bT11i6woqS7zZJ0t9lpZ+27Cq?=
+ =?us-ascii?Q?BcVeWKRY3klOQOo4JH19JHnjCO+U57ue1fws18Ahvh+F+loG2QKcIgbfs1gX?=
+ =?us-ascii?Q?OMwaR/LCXrExTu2fomUEO5otPJtoVcbNOzwKVnpbsALPVe/fBRpG707F1UwW?=
+ =?us-ascii?Q?zy5v3mP7nSVsxNMoViFy6kCaFvItS5KfBOIojnVDeX/P83KvvZTQLkxH9pzL?=
+ =?us-ascii?Q?jl1atySutsrRRb+4AvOTDwWvC9a8kdMEkakyb8phbPdpNsRUy2iEItgZM9+e?=
+x-ms-exchange-antispam-messagedata-1: YeKi2BPe39QVbg==
+Content-Type: multipart/alternative;
+ boundary="_000_AS8P192MB2176436BE42E70C1AF1D09A2E2A02AS8P192MB2176EURP_"
+MIME-Version: 1.0
+X-OriginatorOrg: openchip.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Aug 2026 08:54:33.2740 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: OY96ICLWlu/sT+Vl15tYGWNdrykUJqVfl0yZDAH6bH4wSTBQvW9SGSc0n9hRnCNzkv9AE4whh0cFqc2HURzb8g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB11546
+X-MS-Exchange-CrossTenant-AuthSource: AS8P192MB2176.EURP192.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: 04bdbb96-f75a-4459-d34d-08df01bd5f60
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Aug 2026 08:54:56.9312 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: dfdd4aff-e2c9-4e1a-8642-7f6cc6bbbe6d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: uIfYa9qKLr72VIC07BAJgJbte+NpAQB0CrJciApUNmx6Cq9O9WZR7ohmDgk+Yy+wG9xCpePCKHL4Ghr4RwjhBQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2P192MB1989
 Received-SPF: pass client-ip=2a01:111:f403:c200::3;
- envelope-from=den@virtuozzo.com;
+ envelope-from=joel.bueno@openchip.com;
  helo=DU2PR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -153,241 +151,652 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/17/26 20:59, Denis V. Lunev wrote:
-> This email originated from an IP that might not be authorized by the domain it was sent from.
-> Do not click links or open attachments unless it is an email you expected to receive.
-> From: Denis V. Lunev <den@openvz.org>
->
-> Nothing tells which persistent bitmaps an image carries. qemu-img info
-> says nothing about them, and the only other way to see one is to export
-> the image over NBD and ask for a bitmap by name, which needs the name
-> beforehand.
->
-> Add ImageInfoSpecificParallels with the bitmaps and their granularity,
-> as qcow2 reports the contents of its bitmap directory:
->
->     Format specific information:
->         bitmaps:
->             [0]:
->                 name: b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45
->                 granularity: 65536
->
-> The list is built from the bitmaps loaded at open time rather than from
-> a second pass over the Format Extension, as every bitmap the extension
-> carries is loaded and marked persistent there. On a node which is open
-> that also covers a bitmap which was created but not stored yet, which is
-> what the field says: qemu-img info opens the image on its own, so there
-> the two are the same thing.
->
-> An image with no bitmaps leaves the structure empty, and
-> bdrv_image_info_specific_dump() prints nothing for an empty one, so the
-> output for such an image does not change.
->
-> Cc: Stefan Hajnoczi <stefanha@redhat.com>
-> Cc: Eric Blake <eblake@redhat.com>
-> Cc: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> ---
->  block/parallels-ext.c                         | 22 ++++++++++
->  block/parallels.c                             | 20 ++++++++++
->  block/parallels.h                             |  3 ++
->  qapi/block-core.json                          | 40 ++++++++++++++++++-
->  tests/qemu-iotests/tests/parallels-checks     |  3 ++
->  tests/qemu-iotests/tests/parallels-checks.out |  9 +++++
->  6 files changed, 95 insertions(+), 2 deletions(-)
->
-> diff --git a/block/parallels-ext.c b/block/parallels-ext.c
-> index f687f2da7c..ad87ecfbc1 100644
-> --- a/block/parallels-ext.c
-> +++ b/block/parallels-ext.c
-> @@ -736,3 +736,25 @@ parallels_co_remove_persistent_dirty_bitmap(BlockDriverState *bs,
->  
->      return ret;
->  }
-> +
-> +void parallels_get_bitmap_info_list(BlockDriverState *bs,
-> +                                    ParallelsBitmapInfoList **info_list)
-> +{
-> +    BdrvDirtyBitmap *bitmap;
-> +    ParallelsBitmapInfoList **tail = info_list;
-> +
-> +    *info_list = NULL;
-> +
-> +    FOR_EACH_DIRTY_BITMAP(bs, bitmap) {
-> +        ParallelsBitmapInfo *info;
-> +
-> +        if (!bdrv_dirty_bitmap_get_persistence(bitmap)) {
-> +            continue;
-> +        }
-> +
-> +        info = g_new0(ParallelsBitmapInfo, 1);
-> +        info->name = g_strdup(bdrv_dirty_bitmap_name(bitmap));
-> +        info->granularity = bdrv_dirty_bitmap_granularity(bitmap);
-> +        QAPI_LIST_APPEND(tail, info);
-> +    }
-> +}
-> diff --git a/block/parallels.c b/block/parallels.c
-> index 2a5ceb8978..e7d65d0458 100644
-> --- a/block/parallels.c
-> +++ b/block/parallels.c
-> @@ -1624,6 +1624,25 @@ static bool parallels_is_support_dirty_bitmaps(BlockDriverState *bs)
->      return 1;
->  }
->  
-> +static ImageInfoSpecific * GRAPH_RDLOCK
-> +parallels_get_specific_info(BlockDriverState *bs, Error **errp)
-> +{
-> +    ImageInfoSpecificParallels *parallels_info;
-> +    ImageInfoSpecific *spec_info;
-> +
-> +    parallels_info = g_new0(ImageInfoSpecificParallels, 1);
-> +    parallels_get_bitmap_info_list(bs, &parallels_info->bitmaps);
-> +    parallels_info->has_bitmaps = !!parallels_info->bitmaps;
-> +
-> +    spec_info = g_new(ImageInfoSpecific, 1);
-> +    *spec_info = (ImageInfoSpecific){
-> +        .type = IMAGE_INFO_SPECIFIC_KIND_PARALLELS,
-> +        .u.parallels.data = parallels_info,
-> +    };
-> +
-> +    return spec_info;
-> +}
-> +
->  static BlockDriver bdrv_parallels = {
->      .format_name                = "parallels",
->      .instance_size              = sizeof(BDRVParallelsState),
-> @@ -1653,6 +1672,7 @@ static BlockDriver bdrv_parallels = {
->                                    parallels_co_can_store_new_dirty_bitmap,
->      .bdrv_co_remove_persistent_dirty_bitmap =
->                                    parallels_co_remove_persistent_dirty_bitmap,
-> +    .bdrv_get_specific_info     = parallels_get_specific_info,
->  };
->  
->  static void bdrv_parallels_init(void)
-> diff --git a/block/parallels.h b/block/parallels.h
-> index 27d8c3ac83..012f47320b 100644
-> --- a/block/parallels.h
-> +++ b/block/parallels.h
-> @@ -32,6 +32,7 @@
->  #ifndef BLOCK_PARALLELS_H
->  #define BLOCK_PARALLELS_H
->  #include "qemu/coroutine.h"
-> +#include "qapi/qapi-types-block-core.h"
->  
->  #define HEADS_NUMBER 16
->  #define SEC_IN_CYL 32
-> @@ -111,5 +112,7 @@ parallels_co_can_store_new_dirty_bitmap(BlockDriverState *bs, const char *name,
->  int coroutine_fn GRAPH_RDLOCK
->  parallels_co_remove_persistent_dirty_bitmap(BlockDriverState *bs,
->                                              const char *name, Error **errp);
-> +void parallels_get_bitmap_info_list(BlockDriverState *bs,
-> +                                    ParallelsBitmapInfoList **info_list);
->  
->  #endif
-> diff --git a/qapi/block-core.json b/qapi/block-core.json
-> index 1f87b07850..4bc8b45efe 100644
-> --- a/qapi/block-core.json
-> +++ b/qapi/block-core.json
-> @@ -200,7 +200,7 @@
->  # Since: 1.7
->  ##
->  { 'enum': 'ImageInfoSpecificKind',
-> -  'data': [ 'qcow2', 'vmdk', 'luks', 'rbd', 'file' ] }
-> +  'data': [ 'qcow2', 'vmdk', 'luks', 'rbd', 'file', 'parallels' ] }
->  
->  ##
->  # @ImageInfoSpecificQCow2Wrapper:
-> @@ -255,6 +255,41 @@
->  { 'struct': 'ImageInfoSpecificFileWrapper',
->    'data': { 'data': 'ImageInfoSpecificFile' } }
->  
-> +##
-> +# @ParallelsBitmapInfo:
-> +#
-> +# Parallels dirty bitmap information.
-> +#
-> +# @name: the name of the bitmap
-> +#
-> +# @granularity: granularity of the bitmap in bytes
-> +#
-> +# Since: 11.2
-> +##
-> +{ 'struct': 'ParallelsBitmapInfo',
-> +  'data': { 'name': 'str', 'granularity': 'uint32' } }
-> +
-> +##
-> +# @ImageInfoSpecificParallels:
-> +#
-> +# @bitmaps: A list of the persistent dirty bitmaps of the image,
-> +#     including the ones which are not written out yet
-> +#
-> +# Since: 11.2
-> +##
-> +{ 'struct': 'ImageInfoSpecificParallels',
-> +  'data': { '*bitmaps': ['ParallelsBitmapInfo'] } }
-> +
-> +##
-> +# @ImageInfoSpecificParallelsWrapper:
-> +#
-> +# @data: image information specific to Parallels
-> +#
-> +# Since: 11.2
-> +##
-> +{ 'struct': 'ImageInfoSpecificParallelsWrapper',
-> +  'data': { 'data': 'ImageInfoSpecificParallels' } }
-> +
->  ##
->  # @ImageInfoSpecific:
->  #
-> @@ -273,7 +308,8 @@
->        'vmdk': 'ImageInfoSpecificVmdkWrapper',
->        'luks': 'ImageInfoSpecificLUKSWrapper',
->        'rbd': 'ImageInfoSpecificRbdWrapper',
-> -      'file': 'ImageInfoSpecificFileWrapper'
-> +      'file': 'ImageInfoSpecificFileWrapper',
-> +      'parallels': 'ImageInfoSpecificParallelsWrapper'
->    } }
->  
->  ##
-> diff --git a/tests/qemu-iotests/tests/parallels-checks b/tests/qemu-iotests/tests/parallels-checks
-> index 916d423a64..4c8fc17fa9 100755
-> --- a/tests/qemu-iotests/tests/parallels-checks
-> +++ b/tests/qemu-iotests/tests/parallels-checks
-> @@ -382,6 +382,9 @@ echo "== dirty a single granule of the bitmap =="
->  file_size=`stat --printf="%s" "$TEST_IMG"`
->  echo "file size: $file_size"
->  
-> +echo "== the bitmap is reported by qemu-img info =="
-> +_img_info --format-specific
-> +
->  echo "== the extension and its bitmap data are not a leak =="
->  _check_test_img
->  
-> diff --git a/tests/qemu-iotests/tests/parallels-checks.out b/tests/qemu-iotests/tests/parallels-checks.out
-> index 4dfadd68d6..7aaa4636d7 100644
-> --- a/tests/qemu-iotests/tests/parallels-checks.out
-> +++ b/tests/qemu-iotests/tests/parallels-checks.out
-> @@ -241,6 +241,15 @@ qemu-img: Operation add on bitmap bitmap0 failed: Bitmap name must be a UUID to
->  wrote 65536/65536 bytes at offset 0
->  64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
->  file size: 4194304
-> +== the bitmap is reported by qemu-img info ==
-> +image: TEST_DIR/t.IMGFMT
-> +file format: IMGFMT
-> +virtual size: 4 MiB (4194304 bytes)
-> +Format specific information:
-> +    bitmaps:
-> +        [0]:
-> +            name: b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45
-> +            granularity: 65536
->  == the extension and its bitmap data are not a leak ==
->  No errors were found on the image.
->  == extend image by 1 cluster ==
-Eric, Marcus,
+--_000_AS8P192MB2176436BE42E70C1AF1D09A2E2A02AS8P192MB2176EURP_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Can you pls take a look to QAPI changes? They are
-pure technical to me.
+Hello, sorry for bothering; is there anything I can improve on the patch? T=
+hanks!
+________________________________
+From: Joel Bueno <joel.bueno@openchip.com>
+Sent: Friday, July 17, 2026 11:40 AM
+To: qemu-devel@nongnu.org <qemu-devel@nongnu.org>; qemu-riscv@nongnu.org <q=
+emu-riscv@nongnu.org>
+Cc: richard.henderson@linaro.org <richard.henderson@linaro.org>; pbonzini@r=
+edhat.com <pbonzini@redhat.com>; palmer@dabbelt.com <palmer@dabbelt.com>; a=
+listair.francis@wdc.com <alistair.francis@wdc.com>; liwei1518@gmail.com <li=
+wei1518@gmail.com>; daniel.barboza@oss.qualcomm.com <daniel.barboza@oss.qua=
+lcomm.com>; zhiwei_liu@linux.alibaba.com <zhiwei_liu@linux.alibaba.com>; ch=
+ao.liu.zevorn@gmail.com <chao.liu.zevorn@gmail.com>; Joel Bueno <joel.bueno=
+@openchip.com>
+Subject: [PATCH v2] tcg/riscv: raise VLEN limit to the specification's maxi=
+mum
 
-Thank you in advance,
-    Den
+The RISC-V V(ector) extension specification allows VLEN up to 65536 bits
+(vlenb =3D 8192 bytes).
+
+3 changes are needed to support this:
+
+1. Widen simd_desc SIMD_MAXSZ_BITS from 8 to 10, raising the maxsz
+   encoding limit from 2048 to 8200 bytes. This costs 2 data bits
+   (22 to 20).
+
+2. Raise RV_VLEN_MAX from 1024 to 65536. This increases the static
+   per-CPU vector register file from 4 KB to 256 KB.
+
+3. Widen the vlen CPU property from uint16 to uint32 so that
+   vlen=3D65536 can be specified on the command line.
+
+To ensure TCG emits instructions correctly, we, clamp the vl_eq_vlmax TB fl=
+ag
+so it is never set when the total register group size (vlmax << vsew)
+exceeds the simd_desc maxsz limit. This forces the helper-based path for
+very large register groups (e.g., VLEN=3D32768 with LMUL=3D4), preventing t=
+he
+GVEC fast path from silently truncating the operation and zeroing tail
+registers.
+
+We also need to fix probe_pages() so that vector ld/st works due to larger
+vector register sizes in regards of how many memory pages they span. This
+enables larger memory operations to succeed since address calculations can
+now properly span more than 2 pages.
+
+To finish off, we add an additional check on trans_rvv.c.inc to properly
+decide when to use the helper function or not; this ensures that we never
+hit:
+
+./build/qemu-riscv64: ../accel/tcg/translate-all.c:356: tb_gen_code: Assert=
+ion `max_insns > 1' failed;
+
+On high VLEN configurations due to the amount of ld/st it generates (Where =
+TCG
+tries to halve the amount of emitted instructions so the generated machine =
+code
+fits on the buffer but fails to do so when a single vector load/store opcod=
+e fills
+the entire buffer (Or overruns it...!).
+
+Signed-off-by: joel.bueno <joel.bueno@openchip.com>
+---
+* Fix vext_ldst_us emitter. Wasn't able to trigger the wrong functionality =
+from
+within qemu-user but qemu-system with 16k VLEN crashed when context switchi=
+ng.
+
+ include/tcg/tcg-gvec-desc.h             |  7 ++++--
+ target/riscv/cpu.c                      | 12 +++++-----
+ target/riscv/cpu.h                      |  2 +-
+ target/riscv/insn_trans/trans_rvv.c.inc |  3 ++-
+ target/riscv/tcg/tcg-cpu.c              |  4 +++-
+ target/riscv/vector_helper.c            | 30 ++++++++++++++++---------
+ 6 files changed, 36 insertions(+), 22 deletions(-)
+
+diff --git a/include/tcg/tcg-gvec-desc.h b/include/tcg/tcg-gvec-desc.h
+index 704bd86454..6c277fedad 100644
+--- a/include/tcg/tcg-gvec-desc.h
++++ b/include/tcg/tcg-gvec-desc.h
+@@ -21,7 +21,7 @@
+ #define TCG_TCG_GVEC_DESC_H
+
+ /*
+- * This configuration allows MAXSZ to represent 2048 bytes, and
++ * This configuration allows MAXSZ to represent up to 8200 bytes, and
+  * OPRSZ to match MAXSZ, or represent the smaller values 8, 16, or 32.
+  *
+  * Encode this with:
+@@ -29,9 +29,12 @@
+  *   2       -> maxsz
+  *
+  * This steals the input that would otherwise map to 24 to match maxsz.
++ *
++ * MAXSZ uses 10 bits to support RISC-V VLEN up to 65536 bits
++ * (vlenb =3D 8192 bytes).  This leaves 20 DATA bits (was 22).
+  */
+ #define SIMD_MAXSZ_SHIFT   0
+-#define SIMD_MAXSZ_BITS    8
++#define SIMD_MAXSZ_BITS    10
+
+ #define SIMD_OPRSZ_SHIFT   (SIMD_MAXSZ_SHIFT + SIMD_MAXSZ_BITS)
+ #define SIMD_OPRSZ_BITS    2
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index fa497e5e8a..b5c2139810 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1637,10 +1637,10 @@ static void prop_vlen_set(Object *obj, Visitor *v, =
+const char *name,
+                          void *opaque, Error **errp)
+ {
+     RISCVCPU *cpu =3D RISCV_CPU(obj);
+-    uint16_t cpu_vlen =3D cpu->cfg.vlenb << 3;
+-    uint16_t value;
++    uint32_t cpu_vlen =3D cpu->cfg.vlenb << 3;
++    uint32_t value;
+
+-    if (!visit_type_uint16(v, name, &value, errp)) {
++    if (!visit_type_uint32(v, name, &value, errp)) {
+         return;
+     }
+
+@@ -1663,13 +1663,13 @@ static void prop_vlen_set(Object *obj, Visitor *v, =
+const char *name,
+ static void prop_vlen_get(Object *obj, Visitor *v, const char *name,
+                          void *opaque, Error **errp)
+ {
+-    uint16_t value =3D RISCV_CPU(obj)->cfg.vlenb << 3;
++    uint32_t value =3D RISCV_CPU(obj)->cfg.vlenb << 3;
+
+-    visit_type_uint16(v, name, &value, errp);
++    visit_type_uint32(v, name, &value, errp);
+ }
+
+ static const PropertyInfo prop_vlen =3D {
+-    .type =3D "uint16",
++    .type =3D "uint32",
+     .description =3D "vlen",
+     .get =3D prop_vlen_get,
+     .set =3D prop_vlen_set,
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 7582874c35..5796aaf04b 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -186,7 +186,7 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied=
+_rules[];
+ #include "pmp.h"
+ #endif
+
+-#define RV_VLEN_MAX 1024
++#define RV_VLEN_MAX 65536
+ #define RV_MAX_MHPMEVENTS 32
+ #define RV_MAX_MHPMCOUNTERS 32
+ #define RV_MAX_TRIGGERS 2
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_tr=
+ans/trans_rvv.c.inc
+index 23262b1d03..f34fea3407 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -1190,9 +1190,10 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t r=
+s1, uint32_t nf,
+      * Update vstart with the number of processed elements.
+      * Use the helper function if either:
+      * - vstart is not 0.
++     * - total transfer size potentially exceeding emittable buffer length=
+.
+      */
+
+-    bool use_helper_fn =3D !s->vstart_eq_zero;
++    bool use_helper_fn =3D !s->vstart_eq_zero || ((s->cfg_ptr->vlenb * nf)=
+ > 512);
+
+     if (!use_helper_fn) {
+         uint32_t size =3D s->cfg_ptr->vlenb * nf;
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index b73e3e9dd4..021f9c60bd 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -33,6 +33,7 @@
+ #include "accel/accel-cpu-target.h"
+ #include "accel/tcg/cpu-ops.h"
+ #include "tcg/tcg.h"
++#include "tcg/tcg-gvec-desc.h"
+ #ifndef CONFIG_USER_ONLY
+ #include "hw/core/boards.h"
+ #include "system/tcg.h"
+@@ -125,7 +126,8 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *c=
+s)
+         uint32_t vlmax =3D vext_get_vlmax(cpu->cfg.vlenb, vsew, lmul);
+         uint32_t maxsz =3D vlmax << vsew;
+         bool vl_eq_vlmax =3D (env->vstart =3D=3D 0) && (vlmax =3D=3D env->=
+vl) &&
+-                           (maxsz >=3D 8);
++                           (maxsz >=3D 8) &&
++                           (maxsz <=3D (8 << SIMD_MAXSZ_BITS));
+         flags =3D FIELD_DP32(flags, TB_FLAGS, VILL, env->vill);
+         flags =3D FIELD_DP32(flags, TB_FLAGS, SEW, vsew);
+         flags =3D FIELD_DP32(flags, TB_FLAGS, LMUL,
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index e321ca2616..1254a7b9c4 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -176,13 +176,15 @@ static void probe_pages(CPURISCVState *env, target_ul=
+ong addr, target_ulong len,
+                      mmu_index, ra);
+     }
+
+-    if (len > curlen) {
++    while (len > curlen) {
+         addr +=3D curlen;
+-        curlen =3D len - curlen;
++        len -=3D curlen;
++        curlen =3D MIN(-(addr | TARGET_PAGE_MASK), len);
+         if (flags !=3D NULL) {
++            void *page_host;
+             *flags |=3D probe_access_flags(env, adjust_addr(env, addr), cu=
+rlen,
+                                          access_type, mmu_index, nonfault,
+-                                         host, ra);
++                                         &page_host, ra);
+         } else {
+             probe_access(env, adjust_addr(env, addr), curlen, access_type,
+                          mmu_index, ra);
+@@ -480,8 +482,8 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVState=
+ *env, uint32_t desc,
+     }
+
+     /* Load/store elements in the second page */
+-    if (unlikely(env->vstart < evl)) {
+-        /* Cross page element */
++    while (unlikely(env->vstart < evl)) {
++        /* Element crossing the page boundary */
+         if (unlikely(page_split % msize)) {
+             for (k =3D 0; k < nf; k++) {
+                 addr =3D base + ((env->vstart * nf + k) << log2_esz);
+@@ -489,15 +491,21 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVSta=
+te *env, uint32_t desc,
+                         env->vstart + k * max_elems, vd, ra);
+             }
+             env->vstart++;
++            if (env->vstart >=3D evl) {
++                break;
++            }
+         }
+
+         addr =3D base + ((env->vstart * nf) << log2_esz);
+-        /* Get number of elements of second page */
+-        elems =3D evl - env->vstart;
+-
+-        /* Load/store elements in the second page */
+-        vext_page_ldst_us(env, vd, addr, elems, nf, max_elems, log2_esz,
+-                          is_load, mmu_index, ldst_tlb, ldst_host, ra);
++        page_split =3D -(addr | TARGET_PAGE_MASK);
++        elems =3D page_split / msize;
++        if (env->vstart + elems >=3D evl) {
++            elems =3D evl - env->vstart;
++        }
++        if (likely(elems)) {
++            vext_page_ldst_us(env, vd, addr, elems, nf, max_elems, log2_es=
+z,
++                              is_load, mmu_index, ldst_tlb, ldst_host, ra)=
+;
++        }
+     }
+
+     env->vstart =3D 0;
+--
+2.43.0
+
+
+--_000_AS8P192MB2176436BE42E70C1AF1D09A2E2A02AS8P192MB2176EURP_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div class=3D"elementToProof">Hello, sorry for bothering; is there anything=
+ I can improve on the patch? Thanks!</div>
+<div id=3D"appendonsend"></div>
+<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
+<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
+yle=3D"font-size:11pt" color=3D"#000000"><b>From:</b> Joel Bueno &lt;joel.b=
+ueno@openchip.com&gt;<br>
+<b>Sent:</b> Friday, July 17, 2026 11:40 AM<br>
+<b>To:</b> qemu-devel@nongnu.org &lt;qemu-devel@nongnu.org&gt;; qemu-riscv@=
+nongnu.org &lt;qemu-riscv@nongnu.org&gt;<br>
+<b>Cc:</b> richard.henderson@linaro.org &lt;richard.henderson@linaro.org&gt=
+;; pbonzini@redhat.com &lt;pbonzini@redhat.com&gt;; palmer@dabbelt.com &lt;=
+palmer@dabbelt.com&gt;; alistair.francis@wdc.com &lt;alistair.francis@wdc.c=
+om&gt;; liwei1518@gmail.com &lt;liwei1518@gmail.com&gt;; daniel.barboza@oss=
+.qualcomm.com
+ &lt;daniel.barboza@oss.qualcomm.com&gt;; zhiwei_liu@linux.alibaba.com &lt;=
+zhiwei_liu@linux.alibaba.com&gt;; chao.liu.zevorn@gmail.com &lt;chao.liu.ze=
+vorn@gmail.com&gt;; Joel Bueno &lt;joel.bueno@openchip.com&gt;<br>
+<b>Subject:</b> [PATCH v2] tcg/riscv: raise VLEN limit to the specification=
+'s maximum</font>
+<div>&nbsp;</div>
+</div>
+<div class=3D"BodyFragment"><font size=3D"2"><span style=3D"font-size:11pt;=
+">
+<div class=3D"PlainText">The RISC-V V(ector) extension specification allows=
+ VLEN up to 65536 bits<br>
+(vlenb =3D 8192 bytes).<br>
+<br>
+3 changes are needed to support this:<br>
+<br>
+1. Widen simd_desc SIMD_MAXSZ_BITS from 8 to 10, raising the maxsz<br>
+&nbsp;&nbsp; encoding limit from 2048 to 8200 bytes. This costs 2 data bits=
+<br>
+&nbsp;&nbsp; (22 to 20).<br>
+<br>
+2. Raise RV_VLEN_MAX from 1024 to 65536. This increases the static<br>
+&nbsp;&nbsp; per-CPU vector register file from 4 KB to 256 KB.<br>
+<br>
+3. Widen the vlen CPU property from uint16 to uint32 so that<br>
+&nbsp;&nbsp; vlen=3D65536 can be specified on the command line.<br>
+<br>
+To ensure TCG emits instructions correctly, we, clamp the vl_eq_vlmax TB fl=
+ag<br>
+so it is never set when the total register group size (vlmax &lt;&lt; vsew)=
+<br>
+exceeds the simd_desc maxsz limit. This forces the helper-based path for<br=
+>
+very large register groups (e.g., VLEN=3D32768 with LMUL=3D4), preventing t=
+he<br>
+GVEC fast path from silently truncating the operation and zeroing tail<br>
+registers.<br>
+<br>
+We also need to fix probe_pages() so that vector ld/st works due to larger<=
+br>
+vector register sizes in regards of how many memory pages they span. This<b=
+r>
+enables larger memory operations to succeed since address calculations can<=
+br>
+now properly span more than 2 pages.<br>
+<br>
+To finish off, we add an additional check on trans_rvv.c.inc to properly<br=
+>
+decide when to use the helper function or not; this ensures that we never<b=
+r>
+hit:<br>
+<br>
+./build/qemu-riscv64: ../accel/tcg/translate-all.c:356: tb_gen_code: Assert=
+ion `max_insns &gt; 1' failed;<br>
+<br>
+On high VLEN configurations due to the amount of ld/st it generates (Where =
+TCG<br>
+tries to halve the amount of emitted instructions so the generated machine =
+code<br>
+fits on the buffer but fails to do so when a single vector load/store opcod=
+e fills<br>
+the entire buffer (Or overruns it...!).<br>
+<br>
+Signed-off-by: joel.bueno &lt;joel.bueno@openchip.com&gt;<br>
+---<br>
+* Fix vext_ldst_us emitter. Wasn't able to trigger the wrong functionality =
+from<br>
+within qemu-user but qemu-system with 16k VLEN crashed when context switchi=
+ng.<br>
+<br>
+&nbsp;include/tcg/tcg-gvec-desc.h&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 7 ++++--<br>
+&nbsp;target/riscv/cpu.c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+ | 12 +++++-----<br>
+&nbsp;target/riscv/cpu.h&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+ |&nbsp; 2 +-<br>
+&nbsp;target/riscv/insn_trans/trans_rvv.c.inc |&nbsp; 3 ++-<br>
+&nbsp;target/riscv/tcg/tcg-cpu.c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; 4 +++-<br>
+&nbsp;target/riscv/vector_helper.c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp; | 30 ++++++++++++++++---------<br>
+&nbsp;6 files changed, 36 insertions(+), 22 deletions(-)<br>
+<br>
+diff --git a/include/tcg/tcg-gvec-desc.h b/include/tcg/tcg-gvec-desc.h<br>
+index 704bd86454..6c277fedad 100644<br>
+--- a/include/tcg/tcg-gvec-desc.h<br>
++++ b/include/tcg/tcg-gvec-desc.h<br>
+@@ -21,7 +21,7 @@<br>
+&nbsp;#define TCG_TCG_GVEC_DESC_H<br>
+&nbsp;<br>
+&nbsp;/*<br>
+- * This configuration allows MAXSZ to represent 2048 bytes, and<br>
++ * This configuration allows MAXSZ to represent up to 8200 bytes, and<br>
+&nbsp; * OPRSZ to match MAXSZ, or represent the smaller values 8, 16, or 32=
+.<br>
+&nbsp; *<br>
+&nbsp; * Encode this with:<br>
+@@ -29,9 +29,12 @@<br>
+&nbsp; *&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; maxsz<br>
+&nbsp; *<br>
+&nbsp; * This steals the input that would otherwise map to 24 to match maxs=
+z.<br>
++ *<br>
++ * MAXSZ uses 10 bits to support RISC-V VLEN up to 65536 bits<br>
++ * (vlenb =3D 8192 bytes).&nbsp; This leaves 20 DATA bits (was 22).<br>
+&nbsp; */<br>
+&nbsp;#define SIMD_MAXSZ_SHIFT&nbsp;&nbsp; 0<br>
+-#define SIMD_MAXSZ_BITS&nbsp;&nbsp;&nbsp; 8<br>
++#define SIMD_MAXSZ_BITS&nbsp;&nbsp;&nbsp; 10<br>
+&nbsp;<br>
+&nbsp;#define SIMD_OPRSZ_SHIFT&nbsp;&nbsp; (SIMD_MAXSZ_SHIFT + SIMD_MAXSZ_B=
+ITS)<br>
+&nbsp;#define SIMD_OPRSZ_BITS&nbsp;&nbsp;&nbsp; 2<br>
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c<br>
+index fa497e5e8a..b5c2139810 100644<br>
+--- a/target/riscv/cpu.c<br>
++++ b/target/riscv/cpu.c<br>
+@@ -1637,10 +1637,10 @@ static void prop_vlen_set(Object *obj, Visitor *v, =
+const char *name,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+ void *opaque, Error **errp)<br>
+&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp; RISCVCPU *cpu =3D RISCV_CPU(obj);<br>
+-&nbsp;&nbsp;&nbsp; uint16_t cpu_vlen =3D cpu-&gt;cfg.vlenb &lt;&lt; 3;<br>
+-&nbsp;&nbsp;&nbsp; uint16_t value;<br>
++&nbsp;&nbsp;&nbsp; uint32_t cpu_vlen =3D cpu-&gt;cfg.vlenb &lt;&lt; 3;<br>
++&nbsp;&nbsp;&nbsp; uint32_t value;<br>
+&nbsp;<br>
+-&nbsp;&nbsp;&nbsp; if (!visit_type_uint16(v, name, &amp;value, errp)) {<br=
+>
++&nbsp;&nbsp;&nbsp; if (!visit_type_uint32(v, name, &amp;value, errp)) {<br=
+>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br>
+&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;<br>
+@@ -1663,13 +1663,13 @@ static void prop_vlen_set(Object *obj, Visitor *v, =
+const char *name,<br>
+&nbsp;static void prop_vlen_get(Object *obj, Visitor *v, const char *name,<=
+br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+ void *opaque, Error **errp)<br>
+&nbsp;{<br>
+-&nbsp;&nbsp;&nbsp; uint16_t value =3D RISCV_CPU(obj)-&gt;cfg.vlenb &lt;&lt=
+; 3;<br>
++&nbsp;&nbsp;&nbsp; uint32_t value =3D RISCV_CPU(obj)-&gt;cfg.vlenb &lt;&lt=
+; 3;<br>
+&nbsp;<br>
+-&nbsp;&nbsp;&nbsp; visit_type_uint16(v, name, &amp;value, errp);<br>
++&nbsp;&nbsp;&nbsp; visit_type_uint32(v, name, &amp;value, errp);<br>
+&nbsp;}<br>
+&nbsp;<br>
+&nbsp;static const PropertyInfo prop_vlen =3D {<br>
+-&nbsp;&nbsp;&nbsp; .type =3D &quot;uint16&quot;,<br>
++&nbsp;&nbsp;&nbsp; .type =3D &quot;uint32&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp; .description =3D &quot;vlen&quot;,<br>
+&nbsp;&nbsp;&nbsp;&nbsp; .get =3D prop_vlen_get,<br>
+&nbsp;&nbsp;&nbsp;&nbsp; .set =3D prop_vlen_set,<br>
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h<br>
+index 7582874c35..5796aaf04b 100644<br>
+--- a/target/riscv/cpu.h<br>
++++ b/target/riscv/cpu.h<br>
+@@ -186,7 +186,7 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied=
+_rules[];<br>
+&nbsp;#include &quot;pmp.h&quot;<br>
+&nbsp;#endif<br>
+&nbsp;<br>
+-#define RV_VLEN_MAX 1024<br>
++#define RV_VLEN_MAX 65536<br>
+&nbsp;#define RV_MAX_MHPMEVENTS 32<br>
+&nbsp;#define RV_MAX_MHPMCOUNTERS 32<br>
+&nbsp;#define RV_MAX_TRIGGERS 2<br>
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_tr=
+ans/trans_rvv.c.inc<br>
+index 23262b1d03..f34fea3407 100644<br>
+--- a/target/riscv/insn_trans/trans_rvv.c.inc<br>
++++ b/target/riscv/insn_trans/trans_rvv.c.inc<br>
+@@ -1190,9 +1190,10 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t r=
+s1, uint32_t nf,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * Update vstart with the number of processed=
+ elements.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * Use the helper function if either:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * - vstart is not 0.<br>
++&nbsp;&nbsp;&nbsp;&nbsp; * - total transfer size potentially exceeding emi=
+ttable buffer length.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */<br>
+&nbsp;<br>
+-&nbsp;&nbsp;&nbsp; bool use_helper_fn =3D !s-&gt;vstart_eq_zero;<br>
++&nbsp;&nbsp;&nbsp; bool use_helper_fn =3D !s-&gt;vstart_eq_zero || ((s-&gt=
+;cfg_ptr-&gt;vlenb * nf) &gt; 512);<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp; if (!use_helper_fn) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; uint32_t size =3D s-&gt;cf=
+g_ptr-&gt;vlenb * nf;<br>
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c<br>
+index b73e3e9dd4..021f9c60bd 100644<br>
+--- a/target/riscv/tcg/tcg-cpu.c<br>
++++ b/target/riscv/tcg/tcg-cpu.c<br>
+@@ -33,6 +33,7 @@<br>
+&nbsp;#include &quot;accel/accel-cpu-target.h&quot;<br>
+&nbsp;#include &quot;accel/tcg/cpu-ops.h&quot;<br>
+&nbsp;#include &quot;tcg/tcg.h&quot;<br>
++#include &quot;tcg/tcg-gvec-desc.h&quot;<br>
+&nbsp;#ifndef CONFIG_USER_ONLY<br>
+&nbsp;#include &quot;hw/core/boards.h&quot;<br>
+&nbsp;#include &quot;system/tcg.h&quot;<br>
+@@ -125,7 +126,8 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *c=
+s)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; uint32_t vlmax =3D vext_ge=
+t_vlmax(cpu-&gt;cfg.vlenb, vsew, lmul);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; uint32_t maxsz =3D vlmax &=
+lt;&lt; vsew;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bool vl_eq_vlmax =3D (env-=
+&gt;vstart =3D=3D 0) &amp;&amp; (vlmax =3D=3D env-&gt;vl) &amp;&amp;<br>
+-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp; (maxsz &gt;=3D 8);<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp; (maxsz &gt;=3D 8) &amp;&amp;<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp; (maxsz &lt;=3D (8 &lt;&lt; SIMD_MAXSZ_BITS));<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flags =3D FIELD_DP32(flags=
+, TB_FLAGS, VILL, env-&gt;vill);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flags =3D FIELD_DP32(flags=
+, TB_FLAGS, SEW, vsew);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flags =3D FIELD_DP32(flags=
+, TB_FLAGS, LMUL,<br>
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c<br=
+>
+index e321ca2616..1254a7b9c4 100644<br>
+--- a/target/riscv/vector_helper.c<br>
++++ b/target/riscv/vector_helper.c<br>
+@@ -176,13 +176,15 @@ static void probe_pages(CPURISCVState *env, target_ul=
+ong addr, target_ulong len,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mmu_index, ra);<br>
+&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;<br>
+-&nbsp;&nbsp;&nbsp; if (len &gt; curlen) {<br>
++&nbsp;&nbsp;&nbsp; while (len &gt; curlen) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; addr +=3D curlen;<br>
+-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; curlen =3D len - curlen;<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; len -=3D curlen;<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; curlen =3D MIN(-(addr | TARGET_=
+PAGE_MASK), len);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (flags !=3D NULL) {<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void *p=
+age_host;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *f=
+lags |=3D probe_access_flags(env, adjust_addr(env, addr), curlen,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; access_type, mmu_index, nonfault,<br>
+-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp; host, ra);<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp; &amp;page_host, ra);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } else {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pr=
+obe_access(env, adjust_addr(env, addr), curlen, access_type,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+ mmu_index, ra);<br>
+@@ -480,8 +482,8 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVState=
+ *env, uint32_t desc,<br>
+&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp; /* Load/store elements in the second page */<br>
+-&nbsp;&nbsp;&nbsp; if (unlikely(env-&gt;vstart &lt; evl)) {<br>
+-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* Cross page element */<br>
++&nbsp;&nbsp;&nbsp; while (unlikely(env-&gt;vstart &lt; evl)) {<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* Element crossing the page bo=
+undary */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (unlikely(page_split % =
+msize)) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fo=
+r (k =3D 0; k &lt; nf; k++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp; addr =3D base + ((env-&gt;vstart * nf + k) &lt;&lt; l=
+og2_esz);<br>
+@@ -489,15 +491,21 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVSta=
+te *env, uint32_t desc,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; env-&=
+gt;vstart + k * max_elems, vd, ra);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<=
+br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; en=
+v-&gt;vstart++;<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (env=
+-&gt;vstart &gt;=3D evl) {<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp; break;<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; addr =3D base + ((env-&gt;=
+vstart * nf) &lt;&lt; log2_esz);<br>
+-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* Get number of elements of se=
+cond page */<br>
+-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; elems =3D evl - env-&gt;vstart;=
+<br>
+-<br>
+-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* Load/store elements in the s=
+econd page */<br>
+-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vext_page_ldst_us(env, vd, addr=
+, elems, nf, max_elems, log2_esz,<br>
+-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+; is_load, mmu_index, ldst_tlb, ldst_host, ra);<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; page_split =3D -(addr | TARGET_=
+PAGE_MASK);<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; elems =3D page_split / msize;<b=
+r>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (env-&gt;vstart + elems &gt;=
+=3D evl) {<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; elems =
+=3D evl - env-&gt;vstart;<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (likely(elems)) {<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vext_pa=
+ge_ldst_us(env, vd, addr, elems, nf, max_elems, log2_esz,<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp; is_load, mmu_index, ldst_tlb, ldst_host, ra);<br>
++&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp; env-&gt;vstart =3D 0;<br>
+-- <br>
+2.43.0<br>
+<br>
+</div>
+</span></font></div>
+</body>
+</html>
+
+--_000_AS8P192MB2176436BE42E70C1AF1D09A2E2A02AS8P192MB2176EURP_--
 
