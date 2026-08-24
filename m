@@ -4,111 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54F9CC5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 13:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 172DFC5DF9B
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 13:22:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyUYr-0004cl-1R; Mon, 24 Aug 2026 09:18:01 -0400
+	id 1wyUcb-0005c4-N4; Mon, 24 Aug 2026 09:21:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wyUYp-0004bK-UH
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:17:59 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyUcZ-0005bn-Pl
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:21:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wyUYm-0005X0-OQ
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:17:59 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyUcW-0000C4-5m
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:21:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787577476;
+ s=mimecast20190719; t=1787577706;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Oshjea8Wc8qToF3gikaj+JuwnqmJ5EWZ/BT0sqjnFlA=;
- b=CYUZMmvxhwZcbHqziYpV4eX0WkRVIwaetiBhuSFmPS/g5hhJrecX8cKdMrWLP55AzWqjNG
- eywvTCX7jr/H/z0cy0mWlsI8yGaP7Kmu8HvnqGxH4+i0Bw0r+OOGzU60Hp1+NESjt4S2XA
- po0kpbNho7jTJDdDMLFSR51ti2JT4uk=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SON+iv8/G3HwUilchkR9LKHL3XAuI8BxUwwk/uyPrVA=;
+ b=LXNufAr8EewVArkyjHsZASOfnGeUC1pTvkNRHDjtVppETigpyeAVj3POV0kUZebsOGeGrV
+ d4ORHQH/Rm/9hVnazof1H/fLsVdA6T8aonsuyIpyMtVWyV5WMS7VbltIn++Id/DXMMYTnL
+ XcaY+IbmJnW0U3i5QWOSaPmjaP4OMJQ=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-252--FBYnQVTNLGhUuxJ09LlWw-1; Mon, 24 Aug 2026 09:17:54 -0400
-X-MC-Unique: -FBYnQVTNLGhUuxJ09LlWw-1
-X-Mimecast-MFC-AGG-ID: -FBYnQVTNLGhUuxJ09LlWw_1787577473
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-c20262b5e10so421518066b.1
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 06:17:54 -0700 (PDT)
+ us-mta-612-pu2PsWT5PRudMLQe-GLQ9g-1; Mon, 24 Aug 2026 09:21:44 -0400
+X-MC-Unique: pu2PsWT5PRudMLQe-GLQ9g-1
+X-Mimecast-MFC-AGG-ID: pu2PsWT5PRudMLQe-GLQ9g_1787577704
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-820111eb28aso64966147b3.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 06:21:44 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787577704; cv=none;
+ d=google.com; s=arc-20260327;
+ b=ePEE2VzNEeE9IUORspZag/pqBw656zpYZSY3uf/SY0saHaSG9wUAzA6erMJx/FyQxI
+ 564WUdVNNf+eF2wjmeIW5WutNIv+aVO8MLky9OImhZPB2oKUb+uNBrgdsfHv+CJhpJzT
+ rccdEySB4vzpr05X6TgK+OnBf5kryqgQAEnHAuhyIFVp06CyJI0A216fRVx/izvr42Y/
+ ALY+W93qSeSzzk2QZNtnVo8tJm9fjiKgdCjsq4yaiqZ3mxLBCYlmYG0snaN5vwkZaJ/I
+ VBC4rRspaB1MMYzb4FGQ0Mdg/INA/HFIc04taod1h6oIdEvT2L+idUwD+cqGAUvWCjyj
+ lGqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=SON+iv8/G3HwUilchkR9LKHL3XAuI8BxUwwk/uyPrVA=;
+ fh=+CST0TXx71lD21Rer44p5WlsCPmiM151TXzxSuT4aVY=;
+ b=W6MQ7D+e+6tFt/SIgwdQLG9IUjlvqfpoOWepDIFgFuswtPZLpCeq8ikFZ2cRH0Qzjq
+ N5onnRhhO5Gu0rj/amPWFOsBhuM/2omZ9rBxeF5EZGf7oNLyTzTa3xW/ApK01Wlg7r6+
+ Xm8WfHJGlhWDCOZO745lOj6MzY9LfNxnkH5oDg3m99+B8gmVI5wAumcz5P9jlGIyJCMy
+ Y1mtSWfngXfq7gE9vQsDUqRW/JquIeafM0M0MD77mivl4iIzcWdVvgETWUYBw8cfkz4/
+ A8vX136chvI0QiaGYBySgevw5cUR4u9i8RyQwAWgVvcRE0FbF1BDot8z0kcxqLCg6yng
+ Yq5g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787577473; x=1788182273; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=Oshjea8Wc8qToF3gikaj+JuwnqmJ5EWZ/BT0sqjnFlA=;
- b=fArNbYJd65qmiNV2q9YZKiZZ38WZJZwDS5JEEBr11f3aEtZbtudleo5fV3azTor9YZ
- FAsA+ak4LdSJvPSE4LFMvkYNh8JGSc2B6hnbQd0lP6YvIX867hnz+7M2RSBHST4jd6d1
- +fLGujV7/JLflqacSy+elFFsWBQpbOxbRUG2y09ljPby3yZ5pjqMUqli6kaIWLZE6Zgz
- hzqNTeICPGSjQLFdmKG5/qUfeKva/N0hcNwV+jYRWk0Zx9FtVC2ecMn+XLbc2cbuBv9m
- dypdnHSfb2v2uKK0cVr5i+kjOWoFGo/H5NkHmKEYbO8R6fXJOoMGCmQcgaCPjYEFxYMu
- 3EFw==
+ d=redhat.com; s=google; t=1787577704; x=1788182504; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=SON+iv8/G3HwUilchkR9LKHL3XAuI8BxUwwk/uyPrVA=;
+ b=bv0uKFmraDxIuiJ80diCf/VRnTQIGskBQawD5xf0sAVQ5dtpOOcFrLrQq4OvgIxeYx
+ SJE0V8JfKdXBoT8Udhg64WY7v/YI7ktpOL1UfICcCy3OvrV9AJoNijxz5HisrPET8qsI
+ 8ntnuCtDe1Zq6i4VYEgSuDXGYeRIgFjMIAAvTF4VlT4OIKD9evw0CBNrUDEYHus2H/7+
+ MknJWritq8LtS6VtqJAA1Fep/7ce6HlwZJTqbgBZUH6lXYMFIzV7cgUzStGLMG02bKnt
+ 2ykuzN/7MRUyoCV71a8t6AqO17vtwSWbXzT+FiRbHmtbiaSMZydDbbOGkaC7zRS+6hBh
+ YOMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787577473; x=1788182273;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=Oshjea8Wc8qToF3gikaj+JuwnqmJ5EWZ/BT0sqjnFlA=;
- b=eacpIFMV4D5khqFTO6tq94to7uYBcYb+qo8w9kiZ2qog8nkvHdVEXNgCkfSXgYs6t1
- /VU2F4rEHOJY3FHg1eyYNMcE9PZC1S4WN+B7srBto+YEiEa/UY05Dd6lTNTXKzNwmlbp
- fxzlupNeouP+5aHTLM+aFDPcoh79qx67nQvIKifxhTDq+Q0nBSTOeN1GM38Dm5MC/Ool
- v9QDKcS7mHeXLj/0UohAyILkyvqjZCh4t1kFE/A4fU11Sbi1G2zlA90YPrbD9x5MAd9J
- vYxjmZ5N2IL2NWQYAkpGaa46YghVFn+5+zhlAZb/LHP1jChdhXLBOQ5hwhrhPVXBSxLK
- ZXBw==
-X-Gm-Message-State: AFuF++m/hKdaeW12sleVccFU5Ivm6y8hxa3x1hGH10vw6ThYLCQAK0oc
- aQTHqFFlmxC4aXj+wQwR7U4bOrnh4T9HnismAsRKtj4uZEsxDNJqxU5bJQ/9VOeIad3BN1XTczb
- xC1hm83PyP0AMLzxKjowX5aCc6iZy5dJRSdD8ACfv1h/cxTIGZybAY1ED
-X-Gm-Gg: AR+sD10pPq18CMSdknNEhII74yNkz2WORs1QhkYJc+RcMBXU8UTQvp5UOKKLzayd7mA
- QkpxCNvqZutuTcVPFkp2YiybztzB3WvXTars8LR4/Q/XRW/aDK/z6mnxFL2mrE359lv+G3suZLG
- +BL28cv1MiP1uSlaVpfzvdL+7y0lZTPPLag3ltM0Hwk8aamiotgMxl1UIVUxmRaLVQVnT+79io0
- +J7m+zba+JlmpuktmQrmpV4b4xpNlQlcfWbXIL5tGwvY7KhsYnBw+4rDfBbvj2AMoyP5VOouD/t
- yj7nW25eJ4iWzxMWr+XRzj/SGW0lzFZLnCEsn855Jr9KRuvOLq/tMznOsdqCWGXV6tfI2yi/0Rg
- /7GKHdw28B41gnbQk3J0vQY9ls6PiEmI42dl+IP0+oE9CHIm9dCLnUKeuX2g=
-X-Received: by 2002:a17:907:e14b:10b0:c19:80cf:4c75 with SMTP id
- a640c23a62f3a-c246a6ab42dmr2506110466b.20.1787577473339; 
- Mon, 24 Aug 2026 06:17:53 -0700 (PDT)
-X-Received: by 2002:a17:907:e14b:10b0:c19:80cf:4c75 with SMTP id
- a640c23a62f3a-c246a6ab42dmr2506102566b.20.1787577472896; 
- Mon, 24 Aug 2026 06:17:52 -0700 (PDT)
-Received: from x1.local
- (bras-vprn-aurron9134w-lp130-03-174-91-117-74.dsl.bell.ca. [174.91.117.74])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c249606bd05sm1204110166b.2.2026.08.24.06.17.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Aug 2026 06:17:52 -0700 (PDT)
-Date: Mon, 24 Aug 2026 09:17:48 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, jmarcin@redhat.com, david@kernel.org,
- pbonzini@redhat.com, chenyi.qiang@intel.com, farosas@suse.de,
- aik@amd.com, xiaoyao.li@intel.com,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: Re: [PATCH v4 00/12] KVM/hostmem: Support init-shared guest-memfd as
- VM backends
-Message-ID: <aoxEfKoYWtdOSwH_@x1.local>
-References: <20260812201938.198915-1-michael.roth@amd.com>
- <aoheMqE-RnH8sQ82@x1.local>
- <3fwr25hmoz7yicoh3o3x3ldeweapn2tbn4dnji67hgrnz7l5bh@rs7gqotxraef>
+ d=1e100.net; s=20251104; t=1787577704; x=1788182504;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=SON+iv8/G3HwUilchkR9LKHL3XAuI8BxUwwk/uyPrVA=;
+ b=T+DRiCAAE7jnjz9DIE9S00dgRZ2rHZ+dmVLgdmwM4gdurGGxITxfz9Uxnga6vxNBdP
+ AUBqdJUdtGp2VeN5JdAva9EbidqOV8gfKIHQCn2F49ExJlpZ2CN/j0XdF/AGwCbuJbjS
+ 43u2kGpdgwg79eIVWbEkTBU/a7Rr75zHCpxmSMh3GFZHCr5BOm5CAgsoNWY2a/OgW3Y0
+ x0+aAcGf0rtcpE9ooWdfYOfZrnzejBGfD6d8Vqahf3L3JVOdVRlB6aG+cGFkTh8mv0vl
+ LOlFPhWnnYHaeh5uUK//5BBHIPhiQcjEKZMtJjlA1TxlRWhZ1JA5MHR/xbvpCqQG+EAq
+ LGGA==
+X-Gm-Message-State: AFuF++kvay64PO0pLuvYscD+2PTCMXzz+52YopF+wGRsk38GkxMRHi5r
+ 8FPCX/VjCJE9vxe10hZl7QZhQoTvAUh/pxX29vZCA45I5Kp5Pwx0K/4qctPUywF7s4G8pAdvEQ+
+ w5fdDOwMMrp5DataOQaD2JNkByLk0OSt9PivF0+8M/39EMzRYokessmi+nqhn1BIgUKNT8eqhPM
+ 8R1f1HtE0se1V64sTyBnSypo4I9rHdcUA=
+X-Gm-Gg: AR+sD12GRaHhTL/9Qh4SuLKiaVCj9SvaMVRM0C713sMXCJOh643IBJYVNI57eH4TaoR
+ a4FWNA3KKJkJYYckdKGjCGqt3qqm0JmSE9P0PJNXH3f62f0VOUOFSTuaTxNNvRhgy/mFCvKT/Iy
+ 48spIKoydGupZIQAiTDFXJZNjr7sBKTfw529k40u353zmtkgHSYyueAtFPno58JCKY1MjsFEGdw
+ I/fOqlTPfrR1iXs
+X-Received: by 2002:a05:690e:bc7:b0:66d:506:ff4c with SMTP id
+ 956f58d0204a3-66d0507016emr2363161d50.11.1787577704260; 
+ Mon, 24 Aug 2026 06:21:44 -0700 (PDT)
+X-Received: by 2002:a05:690e:bc7:b0:66d:506:ff4c with SMTP id
+ 956f58d0204a3-66d0507016emr2363126d50.11.1787577703593; Mon, 24 Aug 2026
+ 06:21:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3fwr25hmoz7yicoh3o3x3ldeweapn2tbn4dnji67hgrnz7l5bh@rs7gqotxraef>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+References: <20260824052859.880475-1-jsnow@redhat.com>
+ <20260824052859.880475-11-jsnow@redhat.com>
+ <aoxEPn9w_DZBwVMY@redhat.com>
+In-Reply-To: <aoxEPn9w_DZBwVMY@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Mon, 24 Aug 2026 09:21:31 -0400
+X-Gm-Features: AcwNN1VGxOqJq_GbrrdtO4w3NbFXprhKVXcFOm2_Xm1EGfXbg1CsO7Kl5n765yk
+Message-ID: <CAFn=p-at3o4cRe0uD47M8_xNaasCLkN0KHCyWySCZ30nwMm4XQ@mail.gmail.com>
+Subject: Re: [PATCH 10/12] sphinx: require sphinx 7.2.6
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Kohei Tokunaga <ktokunaga.mail@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Cleber Rosa <crosa@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
+Content-Type: multipart/alternative; boundary="0000000000000822d30659cade33"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,143 +141,333 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Aug 23, 2026 at 10:52:13AM -0500, Michael Roth wrote:
-> On Fri, Aug 21, 2026 at 10:18:26AM -0400, Peter Xu wrote:
-> > On Wed, Aug 12, 2026 at 03:16:38PM -0500, Michael Roth wrote:
-> > > v1: https://lore.kernel.org/r/20251023185913.2923322-1-peterx@redhat.com
-> > > v2: https://lore.kernel.org/r/20251119172913.577392-1-peterx@redhat.com
-> > > v3: https://lore.kernel.org/r/20251215205203.1185099-1-peterx@redhat.com/
-> > > v4:
-> > > - Picked up v3 series from Peter Xu and rebased on 11.1.0
-> > > - Collected pending Reviewed-by's
-> > > - Per-patch changes:
-> > >   [01/12] Fix blank space (Xiaoyao)
-> > >           Fix commit message typos
-> > >   [02/12] Drop duplicated error-handling for capability checks
-> > >   [05/12] Fix up commit message, disambigurate "in-place" terminology (Xiaoyao)
-> > >   [07/12] Fix up commit message, disambigurate "in-place" terminology (Xiaoyao)
-> > >   [08/12] Disallow 'seal' and 'hugetlb' options based on guest-memfd=on
-> > >           Fix minor typo in comment
-> > >   [11/12] Fix up typo in g_test_skip() reason
-> > >           Pending: Move kvm_guest_memfd_init_shared_supported() to
-> > >             migration-util.c (Fabiano)
-> > > 
-> > > This patchset is also available at:
-> > > 
-> > >   https://github.com/amdese/qemu/commits/gmem-shared-mem-v4
-> > > 
-> > > and is based on top of v11.1.0
-> > 
-> > Should I just pick this up?  I'll touch up the commit log that Phil
-> > requested.  Objections welcomed before next week.
-> 
-> Hi Peter,
+--0000000000000822d30659cade33
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi, Michael,
+On Mon, Aug 24, 2026, 9:16=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@red=
+hat.com>
+wrote:
 
-> 
-> No objection here, although I'll be posting new version of the in-place
-> conversion support later this week (~Wed-ish) and was planning to an
-> updated version of this series roughly the same time so which ever way
-> is best for you.
-> 
-> If you do post one though there's also the missing 'return false' and
-> dropping the seal=off enforcement that Daniel noticed before we started
-> talking about introspection fun.
+> On Mon, Aug 24, 2026 at 01:28:56AM -0400, John Snow wrote:
+> > Make the extraordinary leap from Sphinx 3.4.3 to Sphinx
+> > 7.2.6. Simplifications and cleanup will follow in subsequent patches.
+>
+> Does this have any implications on what platforms we build docs
+> on ? If so, mention any notable impacted platforms in the commit
+> message.
+>
 
-I didn't mean to repost this series, I meant to pick it up for a pull.
-Sorry if it was confusing..
+Technically not, since Paolo already dropped 3.9 from the CentOS container.
 
-I want to make sure balls are rolling.  From our side, we weren't rush on
-this one to land, as we'll need to wait for 1G to settle anyway, but if we
-have others (like your in-place series upcoming) pending, I think we should
-just land it sooner.
+But, yes, CentOS9 will require sourcing Sphinx from PyPI and I'll update
+the python upgrade commit to mention this.
 
-You're right, we need to fix things, I noticed it right after I sent the
-email and then I found CI / unit test failing.. but I haven't got a chance
-to say..  If you repost please check migration-test with --full, otherwise
-the gmemfd test will be skipped.
-
-I have two fixups queued locally, I'll attach it here, please use it
-whatever way you like, I'll wait for your repost.  NOTE: I touched up the
-hugetlb failure message when I fixed it up myself, but since you'll repost
-you can decide; please just treat it as a comment then, I just think the
-new err message is less strong because we will support it.
-
-Thanks,
-
-===8<===
+This commit itself doesn't actually restrict any of our supported
+platforms, see the cover letter version chart.
 
 
-From 0a0dd0f808d4f668ac099945ab35a981e1a07bfb Mon Sep 17 00:00:00 2001
-From: Peter Xu <peterx@redhat.com>
-Date: Fri, 21 Aug 2026 12:16:15 -0400
-Subject: [PATCH 1/2] fixup! hostmem: Support fully shared guest memfd to back
- a VM
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  docs/conf.py             |  4 ++--
+> >  python/setup.cfg         |  2 +-
+> >  python/tests/minreqs.txt | 29 ++++++++++++++++-------------
+> >  pythondeps.toml          |  4 ++--
+> >  4 files changed, 21 insertions(+), 18 deletions(-)
+> >
+> > diff --git a/docs/conf.py b/docs/conf.py
+> > index 7e35d2158d3..cded047b539 100644
+> > --- a/docs/conf.py
+> > +++ b/docs/conf.py
+> > @@ -51,9 +51,9 @@
+> >
+> >  # If your documentation needs a minimal Sphinx version, state it here.
+> >  #
+> > -# 3.4.3 is the oldest version of Sphinx that ships on a platform we
+> > +# 7.2.6 is the oldest version of Sphinx that ships on a platform we
+> >  # pledge build support for.
+> > -needs_sphinx =3D '3.4.3'
+> > +needs_sphinx =3D '7.2.6'
+> >
+> >  # Add any Sphinx extension module names here, as strings. They can be
+> >  # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
+> > diff --git a/python/setup.cfg b/python/setup.cfg
+> > index ebb4230899c..927f72a46f6 100644
+> > --- a/python/setup.cfg
+> > +++ b/python/setup.cfg
+> > @@ -41,7 +41,7 @@ devel =3D
+> >      pylint >=3D 2.17.3
+> >      pytest >=3D 6.2.4
+> >      tox >=3D 3.18.0
+> > -    sphinx >=3D 3.4.3
+> > +    sphinx >=3D 7.2.6
+> >
+> >  # Provides qom-fuse functionality
+> >  fuse =3D
+> > diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
+> > index 85cfa08cf76..7154ad40040 100644
+> > --- a/python/tests/minreqs.txt
+> > +++ b/python/tests/minreqs.txt
+> > @@ -12,7 +12,7 @@
+> >  # on PyPI that allows the test suite to pass.
+> >
+> >  # Dependencies for qapidoc/qapi_domain et al
+> > -sphinx=3D=3D3.4.3
+> > +sphinx=3D=3D7.2.6
+> >
+> >  # Dependencies for qemu.machine
+> >  qemu.qmp=3D=3D0.0.6
+> > @@ -48,23 +48,26 @@ platformdirs=3D=3D2.2.0
+> >  tomlkit=3D=3D0.10.1
+> >
+> >  # Transitive sphinx dependencies
+> > -Jinja2=3D=3D2.7
+> > -MarkupSafe=3D=3D1.1.0
+> >  alabaster=3D=3D0.7.1
+> > -babel=3D=3D1.3
+> > -docutils=3D=3D0.12
+> > -imagesize=3D=3D0.5.0
+> > -packaging=3D=3D14.0
+> > -Pygments=3D=3D2.0
+> > -pytz=3D=3D2014.9
+> > -requests=3D=3D2.5.0
+> > -snowballstemmer=3D=3D1.1
+> > +babel=3D=3D2.9
+> > +certifi=3D=3D2023.5.7
+> > +charset-normalizer=3D=3D2.0.0
+> > +docutils=3D=3D0.18.1
+> > +idna=3D=3D2.5
+> > +imagesize=3D=3D1.3
+> > +Jinja2=3D=3D3.0.0
+> > +MarkupSafe=3D=3D2.0
+> > +packaging=3D=3D21.0
+> > +Pygments=3D=3D2.14
+> > +requests=3D=3D2.25.0
+> > +snowballstemmer=3D=3D2.0
+> >  sphinxcontrib-applehelp=3D=3D1.0.0
+> >  sphinxcontrib-devhelp=3D=3D1.0.0
+> > -sphinxcontrib-htmlhelp=3D=3D1.0.0
+> > +sphinxcontrib-htmlhelp=3D=3D2.0.0
+> >  sphinxcontrib-jsmath=3D=3D1.0.0
+> >  sphinxcontrib-qthelp=3D=3D1.0.0
+> > -sphinxcontrib-serializinghtml=3D=3D1.0.0
+> > +sphinxcontrib-serializinghtml=3D=3D1.1.9
+> > +urllib3=3D=3D1.26
+> >
+> >  # Transitive pytest dependencies
+> >  attrs=3D=3D19.2.0
+> > diff --git a/pythondeps.toml b/pythondeps.toml
+> > index b1879c1a4da..f0f3af915a1 100644
+> > --- a/pythondeps.toml
+> > +++ b/pythondeps.toml
+> > @@ -28,8 +28,8 @@ meson =3D { accepted =3D ">=3D1.12.0", installed =3D =
+"1.12.0",
+> canary =3D "meson" }
+> >
+> >  [docs]
+> >  # Please keep the installed versions in sync with docs/requirements.tx=
+t
+> > -sphinx =3D { accepted =3D ">=3D3.4.3", installed =3D "6.2.1", canary =
+=3D
+> "sphinx-build" }
+> > -sphinx_rtd_theme =3D { accepted =3D ">=3D0.5", installed =3D "1.2.2" }
+> > +sphinx =3D { accepted =3D ">=3D7.2.6", installed =3D "7.2.6", canary =
+=3D
+> "sphinx-build" }
+> > +sphinx_rtd_theme =3D { accepted =3D ">=3D1.2.2", installed =3D "1.2.2"=
+ }
+> >
+> >  # This test group is for dependencies required to run various tooling
+> >  # and tests that should always be installed at configure time. It shou=
+ld
+> > --
+> > 2.55.0
+> >
+> >
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
+>
 
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- backends/hostmem-memfd.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+--0000000000000822d30659cade33
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-index fbe65b00be..6576331441 100644
---- a/backends/hostmem-memfd.c
-+++ b/backends/hostmem-memfd.c
-@@ -57,14 +57,16 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-     }
- 
-     if (m->guest_memfd) {
-+        /*
-+         * NOTE: guest-memfd ignores seal=on/off because it always
-+         * implicitly seals the FD by definition.
-+         */
-         if (!backend->share) {
-             error_setg(errp, "guest-memfd=on must be used with share=on");
-             return false;
--        } else if (m->seal) {
--            error_setg(errp, "guest-memfd=on must be used with seal=off");
--            return false;
-         } else if (m->hugetlb) {
--            error_setg(errp, "guest-memfd=on must be used with hugetlb=off");
-+            error_setg(errp, "guest-memfd=on doesn't support hugetlb=on yet");
-+            return false;
-         }
- 
-         fd = kvm_create_guest_memfd(backend->size,
--- 
-2.54.0
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Aug 24, 2026, 9:16=E2=80=
+=AFAM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com">be=
+rrange@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
+ style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On=
+ Mon, Aug 24, 2026 at 01:28:56AM -0400, John Snow wrote:<br>
+&gt; Make the extraordinary leap from Sphinx 3.4.3 to Sphinx<br>
+&gt; 7.2.6. Simplifications and cleanup will follow in subsequent patches.<=
+br>
+<br>
+Does this have any implications on what platforms we build docs<br>
+on ? If so, mention any notable impacted platforms in the commit<br>
+message.<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">Technically not, since Paolo already dropped 3.9 from the CentOS =
+container.</div><div dir=3D"auto"><br></div><div dir=3D"auto">But, yes, Cen=
+tOS9 will require sourcing Sphinx from PyPI and I&#39;ll update the python =
+upgrade commit to mention this.</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">This commit itself doesn&#39;t actually restrict any of our suppo=
+rted platforms, see the cover letter version chart.</div><div dir=3D"auto">=
+<br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container=
+"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:=
+1px #ccc solid;padding-left:1ex">
+<br>
+&gt; <br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 docs/conf.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=
+=A0 4 ++--<br>
+&gt;=C2=A0 python/setup.cfg=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 2 +-<b=
+r>
+&gt;=C2=A0 python/tests/minreqs.txt | 29 ++++++++++++++++-------------<br>
+&gt;=C2=A0 pythondeps.toml=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 4 ++--=
+<br>
+&gt;=C2=A0 4 files changed, 21 insertions(+), 18 deletions(-)<br>
+&gt; <br>
+&gt; diff --git a/docs/conf.py b/docs/conf.py<br>
+&gt; index 7e35d2158d3..cded047b539 100644<br>
+&gt; --- a/docs/conf.py<br>
+&gt; +++ b/docs/conf.py<br>
+&gt; @@ -51,9 +51,9 @@<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 # If your documentation needs a minimal Sphinx version, state it=
+ here.<br>
+&gt;=C2=A0 #<br>
+&gt; -# 3.4.3 is the oldest version of Sphinx that ships on a platform we<b=
+r>
+&gt; +# 7.2.6 is the oldest version of Sphinx that ships on a platform we<b=
+r>
+&gt;=C2=A0 # pledge build support for.<br>
+&gt; -needs_sphinx =3D &#39;3.4.3&#39;<br>
+&gt; +needs_sphinx =3D &#39;7.2.6&#39;<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 # Add any Sphinx extension module names here, as strings. They c=
+an be<br>
+&gt;=C2=A0 # extensions coming with Sphinx (named &#39;sphinx.ext.*&#39;) o=
+r your custom<br>
+&gt; diff --git a/python/setup.cfg b/python/setup.cfg<br>
+&gt; index ebb4230899c..927f72a46f6 100644<br>
+&gt; --- a/python/setup.cfg<br>
+&gt; +++ b/python/setup.cfg<br>
+&gt; @@ -41,7 +41,7 @@ devel =3D<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 pylint &gt;=3D 2.17.3<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 pytest &gt;=3D 6.2.4<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 tox &gt;=3D 3.18.0<br>
+&gt; -=C2=A0 =C2=A0 sphinx &gt;=3D 3.4.3<br>
+&gt; +=C2=A0 =C2=A0 sphinx &gt;=3D 7.2.6<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 # Provides qom-fuse functionality<br>
+&gt;=C2=A0 fuse =3D<br>
+&gt; diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt<br>
+&gt; index 85cfa08cf76..7154ad40040 100644<br>
+&gt; --- a/python/tests/minreqs.txt<br>
+&gt; +++ b/python/tests/minreqs.txt<br>
+&gt; @@ -12,7 +12,7 @@<br>
+&gt;=C2=A0 # on PyPI that allows the test suite to pass.<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 # Dependencies for qapidoc/qapi_domain et al<br>
+&gt; -sphinx=3D=3D3.4.3<br>
+&gt; +sphinx=3D=3D7.2.6<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 # Dependencies for qemu.machine<br>
+&gt;=C2=A0 qemu.qmp=3D=3D0.0.6<br>
+&gt; @@ -48,23 +48,26 @@ platformdirs=3D=3D2.2.0<br>
+&gt;=C2=A0 tomlkit=3D=3D0.10.1<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 # Transitive sphinx dependencies<br>
+&gt; -Jinja2=3D=3D2.7<br>
+&gt; -MarkupSafe=3D=3D1.1.0<br>
+&gt;=C2=A0 alabaster=3D=3D0.7.1<br>
+&gt; -babel=3D=3D1.3<br>
+&gt; -docutils=3D=3D0.12<br>
+&gt; -imagesize=3D=3D0.5.0<br>
+&gt; -packaging=3D=3D14.0<br>
+&gt; -Pygments=3D=3D2.0<br>
+&gt; -pytz=3D=3D2014.9<br>
+&gt; -requests=3D=3D2.5.0<br>
+&gt; -snowballstemmer=3D=3D1.1<br>
+&gt; +babel=3D=3D2.9<br>
+&gt; +certifi=3D=3D2023.5.7<br>
+&gt; +charset-normalizer=3D=3D2.0.0<br>
+&gt; +docutils=3D=3D0.18.1<br>
+&gt; +idna=3D=3D2.5<br>
+&gt; +imagesize=3D=3D1.3<br>
+&gt; +Jinja2=3D=3D3.0.0<br>
+&gt; +MarkupSafe=3D=3D2.0<br>
+&gt; +packaging=3D=3D21.0<br>
+&gt; +Pygments=3D=3D2.14<br>
+&gt; +requests=3D=3D2.25.0<br>
+&gt; +snowballstemmer=3D=3D2.0<br>
+&gt;=C2=A0 sphinxcontrib-applehelp=3D=3D1.0.0<br>
+&gt;=C2=A0 sphinxcontrib-devhelp=3D=3D1.0.0<br>
+&gt; -sphinxcontrib-htmlhelp=3D=3D1.0.0<br>
+&gt; +sphinxcontrib-htmlhelp=3D=3D2.0.0<br>
+&gt;=C2=A0 sphinxcontrib-jsmath=3D=3D1.0.0<br>
+&gt;=C2=A0 sphinxcontrib-qthelp=3D=3D1.0.0<br>
+&gt; -sphinxcontrib-serializinghtml=3D=3D1.0.0<br>
+&gt; +sphinxcontrib-serializinghtml=3D=3D1.1.9<br>
+&gt; +urllib3=3D=3D1.26<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 # Transitive pytest dependencies<br>
+&gt;=C2=A0 attrs=3D=3D19.2.0<br>
+&gt; diff --git a/pythondeps.toml b/pythondeps.toml<br>
+&gt; index b1879c1a4da..f0f3af915a1 100644<br>
+&gt; --- a/pythondeps.toml<br>
+&gt; +++ b/pythondeps.toml<br>
+&gt; @@ -28,8 +28,8 @@ meson =3D { accepted =3D &quot;&gt;=3D1.12.0&quot;, =
+installed =3D &quot;1.12.0&quot;, canary =3D &quot;meson&quot; }<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 [docs]<br>
+&gt;=C2=A0 # Please keep the installed versions in sync with docs/requireme=
+nts.txt<br>
+&gt; -sphinx =3D { accepted =3D &quot;&gt;=3D3.4.3&quot;, installed =3D &qu=
+ot;6.2.1&quot;, canary =3D &quot;sphinx-build&quot; }<br>
+&gt; -sphinx_rtd_theme =3D { accepted =3D &quot;&gt;=3D0.5&quot;, installed=
+ =3D &quot;1.2.2&quot; }<br>
+&gt; +sphinx =3D { accepted =3D &quot;&gt;=3D7.2.6&quot;, installed =3D &qu=
+ot;7.2.6&quot;, canary =3D &quot;sphinx-build&quot; }<br>
+&gt; +sphinx_rtd_theme =3D { accepted =3D &quot;&gt;=3D1.2.2&quot;, install=
+ed =3D &quot;1.2.2&quot; }<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 # This test group is for dependencies required to run various to=
+oling<br>
+&gt;=C2=A0 # and tests that should always be installed at configure time. I=
+t should<br>
+&gt; -- <br>
+&gt; 2.55.0<br>
+&gt; <br>
+&gt; <br>
+<br>
+With regards,<br>
+Daniel<br>
+-- <br>
+|: <a href=3D"https://berrange.com" rel=3D"noreferrer noreferrer" target=3D=
+"_blank">https://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0~~=C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 <a href=3D"https://hachyderm.io/@berrange" rel=3D"noreferrer=
+ noreferrer" target=3D"_blank">https://hachyderm.io/@berrange</a> :|<br>
+|: <a href=3D"https://libvirt.org" rel=3D"noreferrer noreferrer" target=3D"=
+_blank">https://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ~~=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://entangle-photo.org" rel=3D"n=
+oreferrer noreferrer" target=3D"_blank">https://entangle-photo.org</a> :|<b=
+r>
+|: <a href=3D"https://pixelfed.art/berrange" rel=3D"noreferrer noreferrer" =
+target=3D"_blank">https://pixelfed.art/berrange</a>=C2=A0 =C2=A0~~=C2=A0 =
+=C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"noreferrer noreferr=
+er" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
+<br>
+</blockquote></div></div></div>
 
-
-
-From 66ac7b3f2268430106bfe8034ef8460215e9db91 Mon Sep 17 00:00:00 2001
-From: Peter Xu <peterx@redhat.com>
-Date: Fri, 21 Aug 2026 13:00:09 -0400
-Subject: [PATCH 2/2] fixup! tests/migration-test: Add a precopy test for
- guest-memfd
-
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- tests/qtest/migration/precopy-tests.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index 8146f37d61..d57ffcac23 100644
---- a/tests/qtest/migration/precopy-tests.c
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -184,7 +184,6 @@ static void test_precopy_tcp_plain(char *name, MigrateCommon *args)
- 
- static void test_precopy_tcp_plain_gmemfd(char *name, MigrateCommon *args)
- {
--    args->uri = "tcp:127.0.0.1:0";
-     args->start.mem_type = MEM_TYPE_GUEST_MEMFD;
- 
-     test_precopy_common(args);
--- 
-2.54.0
-
-
--- 
-Peter Xu
+--0000000000000822d30659cade33--
 
 
