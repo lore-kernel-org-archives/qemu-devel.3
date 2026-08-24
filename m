@@ -4,117 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAEB1C5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 15:27:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35C19C5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 15:28:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyWZu-0001BG-BF; Mon, 24 Aug 2026 11:27:14 -0400
+	id 1wyWXu-0005ON-KV; Mon, 24 Aug 2026 11:25:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wyWZo-00017y-B5; Mon, 24 Aug 2026 11:27:08 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wyWZl-0007vs-Bw; Mon, 24 Aug 2026 11:27:07 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67OD1W0s1957962; Mon, 24 Aug 2026 15:27:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=gh1Q37bljqAT1q2Kn2NVMQCtJjAAzm/m49W+R3tb3X8=; b=Qt+XAM1HVlGj
- gP7PjrRoERsvvzDI0Mttr6M99S5o8GXhbvZ8nXv1fBk5icASl/hoOQGCN4bxXMna
- YIs6qplJ8Unf2fd6Oqrvyz1fchW+x54cJW1IsgDcum/CazvDaiJEJ6QUneZjWP7R
- tEJ3uxG5R5GNeWkpEMHQiBAZqNxSPcYLE+vbAT3dFPG5n7mGWgar0T1x1XGN4vlb
- mrf0UXcc7EwaSltwElHcMESp/eWUB4HSdal3XebHw8+bReVmgqVd44o9jzL1YOYa
- HnxEKalsQFeSOsUXfMDo72sTkKALGoxRdWyXnAu3HMxs2jqqxVVfRf0pjtXO3ZhG
- YqLrNS9wLA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73g4j9kg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 15:27:02 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OFQNnY012024;
- Mon, 24 Aug 2026 15:27:01 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkgxqj1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 15:27:01 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67OFQxZs30016018
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 15:26:59 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 007A65805F;
- Mon, 24 Aug 2026 15:26:59 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3F08658055;
- Mon, 24 Aug 2026 15:26:58 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Aug 2026 15:26:58 +0000 (GMT)
-Message-ID: <9557dd3ff5190fc07cbd303c2cb83878ca3c27bb.camel@linux.ibm.com>
-Subject: Re: [PATCH 27/29] target/ppc: Move mfmsr, mtmsr[d] instructions to
- decodetree
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, harshpb@linux.ibm.com
-Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
- tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com,
- aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, sv@linux.ibm.com,
- shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
- nikhilks@linux.ibm.com
-Date: Mon, 24 Aug 2026 10:26:57 -0500
-In-Reply-To: <20260820140114.327023-28-rathc@linux.ibm.com>
-References: <20260820140114.327023-1-rathc@linux.ibm.com>
- <20260820140114.327023-28-rathc@linux.ibm.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: Jf_BbeVZx994Xgw2RorWLHe49AYchT6X
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEyNiBTYWx0ZWRfXx8Oqfm9JtXMx
- RmF4Rlv+eO7IVrdXJr3Gws/rLRfYl9jzrcnPGs75A3gmD24T3Kd9ywfswEBpBe8WWuyGb1O7Le0
- qGJU22oV0d6mOqpg1bs2SsGlnExo9FI=
-X-Proofpoint-GUID: 0Qj5GYOnitxnh7vPLN0_r5Dh_EYcsQQA
-X-Authority-Analysis: v=2.4 cv=JZyMa0KV c=1 sm=1 tr=0 ts=6a8c62c6 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=txq8zfxJ1CQN887gV8UA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEyNiBTYWx0ZWRfX05Ug1AkpNKpY
- U98KNjm6DEXlRI5gijruS4ZvQfddm43i036HpPfcXhYUYZNpTzAOzEYoNsTLKQWGLWXvqUe7X9E
- JcpoV4EM+JwAg1MDYzZRAWeDMNy2kY+tSbyzq+RsVruOYZBNBnqmL0E1afjCUlsaplAo+xIOzmu
- GCtS65h9+u3snZSxoaX6sPn03ODUsigUbFINp4TZMwdmJi/Q7nL/sdIwsnPY8enLr4HvGr+D1JY
- 5onDj90WF70kWy5osvUP9AC8j6IQGGd37b+bEZAS/+ZZ/u+A8Ecb2jT7ZTKrQ3eg3qJu/mwTcu8
- eqR80ksNYy0waHZTcqQR6WQcJrc6/qvGjgLoZ3PsEib+TWsSe4xQOI7OGJe4l1ywMiNXhFDUBD7
- y2esAZC886ZxwNOdiOJlQrM3d+N7lK27PBw/vSuiS3qMN/dop3iQ9SxyeIdGafmV56W4cnznkCG
- 5ApRhZM3qr1KHRD3MEA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-24_04,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240126
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wyWXt-0005I6-3b
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:25:09 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wyWXq-0007B2-FA
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:25:08 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-6a0a4aa99bdso6169585a12.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 08:25:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787585105; x=1788189905; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=hI/4kRcuHe18/qYKP2hOGxNnKh8pw1N2QjNp4C1E0DY=;
+ b=eF4XRC5hQXjuXVosXxgCc4iJg9LohwVTdoZdLeTmAXihJsbP6OCYOQW9KKLM5cINBy
+ a8+5hB7/qA0TxDb949hCncgtXbFqsadOwUbU5EVPQw6s7c5PbnLrn2QPlVIywYl7vVok
+ IEr8Y8dhQS27QHf2lGyj1KStFYFV7wBWmx8BhO/nwW9xX9CcBs+0gw/cNqPV7Bq36Iug
+ DUnZ+T+fhcej4RqHkbF99XrPI/NIKdpVrofSoeiW7QEyF2IEEIifdMpvJBLfYUN4FhyO
+ fq0HRZ9O6yy/4EH85iOcZTUeZr9GiWUFyJ5kXmQ8+rwD/hKVbe7zZbrg3WPDgsmiWB/t
+ tSqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787585105; x=1788189905;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=hI/4kRcuHe18/qYKP2hOGxNnKh8pw1N2QjNp4C1E0DY=;
+ b=deYvvC4AVPCs4lCvvQlQORCx4TSCgZXouFMiqwsekCDOmEEXPOB42bZ7hlrhkWwgtM
+ g0FGhDpTkyweq5bUXfCb8VrCLv4rOGaTwq3JNFdrXzmtmzlgytuK0G04Dl39ZlHwx+RM
+ sFuuqhgbWabEGBjRpJYz19fQIA12EqlA3xbGQvjcOj82CiARmbh6OKOSDs4fMpc/Qtd6
+ 6R2hGER1kZx2Zyh85zuwXB/Z6erSD3UQv9CyW/Ix04Z4B9kAUP6ubHvGp2fXJvPbNVzE
+ 0FwA1C8ZxiqRTTNczsJ8wzG1Oz5eZFOveDWIoEwaSXLI2z2PQ2CSZgB7VRGPk4QDzqZ8
+ rkuA==
+X-Gm-Message-State: AFuF++nh//o9mM/XCwq73nFxFf334SVueJlQZx6JWcUwy7l+A8zxJ1l1
+ f9UkUEONvvIcPeowc+NrAvTarQgcoj0K+AkdY8vqgN1trzsJSYvZL5+xzmESSdjMl5Q=
+X-Gm-Gg: AR+sD10WbFpCG4iPLxnod3Q5wYHEuPd7S2lbvpFqGpQ4m+6MAxfx12x7OD1HLGEOxfd
+ uoqsbiOqzSfwV+3DedsgdbYrLtt9uaDUr/dIX2eoih16RILwJtY2PwP/u4rRBMYcjJEbDTAQe1R
+ doJ/p9siqkFm2YcTxR23+53L/0ET2lWHOSIYb3e4Y3PNFRkRUIOgNd3iFM5IU47ZZcjzh/sq6nW
+ bEKP2BpsqqAwX3ccmN2FtzPSr3VokG130hmGGr6Vv1ajfmrIWmZCvM4TMIeSMhHO9JayOWc8Apy
+ dMATGfOi0zgXB419NnTToF686W57TJEjzAJRr8qVJh531V29eFhfOp2rJTJbDHT5HS7OcRT2t56
+ 0T1UhksDtsso5AlwEzeOuf8rdUf4Zts3ChxBlCvQoWgMazKxrE9aSWEhbB8cDfOQXdX/8NUnj3W
+ Dcp+qSWAaVrMxaIfFk7Am+JrhOYsAjNn8/SWdBDAZuCAcBTzyr5bIGHaXJ59Sq
+X-Received: by 2002:a05:6402:501f:b0:698:6084:db7f with SMTP id
+ 4fb4d7f45d1cf-6a582b5f1a2mr23050271a12.10.1787585104864; 
+ Mon, 24 Aug 2026 08:25:04 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6a59e1d7399sm13500683a12.26.2026.08.24.08.25.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Aug 2026 08:25:03 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 5DD405F8BB;
+ Mon, 24 Aug 2026 16:25:02 +0100 (BST)
+From: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Date: Mon, 24 Aug 2026 16:24:48 +0100
+Subject: [PATCH v2 1/8] gitlab: use .base_meson_job_template for macOS jobs
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260824-fixes-for-11-2-v2-1-352c6b890402@linaro.org>
+References: <20260824-fixes-for-11-2-v2-0-352c6b890402@linaro.org>
+In-Reply-To: <20260824-fixes-for-11-2-v2-0-352c6b890402@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
+ zhenwei pi <zhenwei.pi@linux.dev>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ qemu-block@nongnu.org, devel@lists.libvirt.org, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Fabiano Rosas <farosas@suse.de>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=700; i=alex.bennee@linaro.org; 
+ h=from:subject:message-id;
+ bh=oLQW1QjvvZodHpTsPvGLeM5B3yePRIAQ/JBnkvtdcNQ=; 
+ b=owEBbQGS/pANAwAKAfvQ2wlanipEAcsmYgBqjGJN3qf7wX053m0Vgz8GcZ4A0nHYUnlzOdQa5
+ ZawJlGLedOJATMEAAEKAB0WIQRmha6Z51FnvK/I3zX70NsJWp4qRAUCaoxiTQAKCRD70NsJWp4q
+ RAulB/wOK/vInJTDlmAf73QpENyVwLMabK2Y4tqkw9Y5nrDa99Lvloe7cSUcJSkQ8NqSlnLmzV3
+ UWmJLJAsdS83UWIdLbyaBF41rKEI7/bdlkiUAaYqb/6k+03oM/XKgbEBucCraRgcjGHzalOz0x4
+ 5mdgFZ6TuCEmV4p9Lxs2Rr/tv4UKNMTdNHt6049JYpgf7/HjI+OlwMebd4lu18V+3xfXD4N+1ZM
+ WnInEaiIdzXrKvOAG/INgqRPhFhw0PIyKBCsmXwjdXAYl1VCaYnxeYP8yOlUOg7N+Qcz5DSA3el
+ RZQEZcvDdrCPVATOSkXT4akAEDijBf1DxMMJMB9CiN/ATYuV
+X-Developer-Key: i=alex.bennee@linaro.org; a=openpgp;
+ fpr=6685AE99E75167BCAFC8DF35FBD0DB095A9E2A44
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,254 +124,32 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+This way we'll get more environmental information which will help with
+debugging.
 
-Thanks,
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260723200904.224413-2-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ .gitlab-ci.d/macos.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Glenn
+diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
+index 641a48b3832..bdb3eae18f0 100644
+--- a/.gitlab-ci.d/macos.yml
++++ b/.gitlab-ci.d/macos.yml
+@@ -1,5 +1,5 @@
+ .macos_job_template:
+-  extends: .base_job_template
++  extends: .base_meson_job_template
+   stage: build
+   tags:
+     - saas-macos-large-m2pro
 
-On Thu, 2026-08-20 at 19:30 +0530, Chinmay Rath wrote:
-> From: Vishal Chourasia <vishalc@linux.ibm.com>
-> 
-> Moving the following instructions to decodetree specification:
->             mfmsr                           : X-form
->             mtmsr[d]                        : X-form
-> 
-> The changes were verified by validating that the tcg ops generated by
-> those instructions remain the same, which were captured with the
-> `-d in_asm,op` flag.
-> 
-> This also includes improvements from review feedback:
-> - Gate MFMSR/MTMSR on PPC_MISC via TRANS_FLAGS()
-> - Use UINT32_MAX instead of 0xFFFFFFFF for clarity
-> 
-> Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->  target/ppc/insn32.decode             |  5 ++
->  target/ppc/translate.c               | 97 ----------------------------
->  target/ppc/translate/misc-impl.c.inc | 64 ++++++++++++++++++
->  3 files changed, 69 insertions(+), 97 deletions(-)
-> 
-> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> index b0fa85b93e..f7ab08704f 100644
-> --- a/target/ppc/insn32.decode
-> +++ b/target/ppc/insn32.decode
-> @@ -315,6 +315,11 @@
->  &M              ra rs sh mb me rc:bool
->  @M              ...... rs:5 ra:5 sh:5 mb:5 me:5 rc:1 &M
->  
-> +### MSR
-> +MFMSR           011111 ..... ----- ----- 0001010011 -   @X_t
-> +MTMSR           011111 ..... ---- . ----- 0010010010 -  @X_rs_l
-> +MTMSRD          011111 ..... ---- . ----- 0010110010 -  @X_rs_l
-> +
->  ### Fixed-Point Load Instructions
->  
->  LBZ             100010 ..... ..... ................     @D
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index 9db9d1e070..9d29134fa1 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -2843,13 +2843,6 @@ static void gen_mcrxrx(DisasContext *ctx)
->  }
->  #endif
->  
-> -/* mfmsr */
-> -static void gen_mfmsr(DisasContext *ctx)
-> -{
-> -    CHK_SV(ctx);
-> -    tcg_gen_mov_tl(cpu_gpr[rD(ctx->opcode)], cpu_msr);
-> -}
-> -
->  /* mfspr */
->  static inline void gen_op_mfspr(DisasContext *ctx)
->  {
-> @@ -2923,93 +2916,6 @@ static void gen_mftb(DisasContext *ctx)
->      gen_op_mfspr(ctx);
->  }
->  
-> -/* mtmsr */
-> -#if defined(TARGET_PPC64)
-> -static void gen_mtmsrd(DisasContext *ctx)
-> -{
-> -    if (unlikely(!is_book3s_arch2x(ctx))) {
-> -        gen_invalid(ctx);
-> -        return;
-> -    }
-> -
-> -    CHK_SV(ctx);
-> -
-> -#if !defined(CONFIG_USER_ONLY)
-> -    TCGv t0, t1;
-> -    target_ulong mask;
-> -
-> -    t0 = tcg_temp_new();
-> -    t1 = tcg_temp_new();
-> -
-> -    translator_io_start(&ctx->base);
-> -
-> -    if (ctx->opcode & 0x00010000) {
-> -        /* L=1 form only updates EE and RI */
-> -        mask = (1ULL << MSR_RI) | (1ULL << MSR_EE);
-> -    } else {
-> -        /* mtmsrd does not alter HV, S, ME, or LE */
-> -        mask = ~((1ULL << MSR_LE) | (1ULL << MSR_ME) | (1ULL << MSR_S) |
-> -                 (1ULL << MSR_HV));
-> -        /*
-> -         * XXX: we need to update nip before the store if we enter
-> -         *      power saving mode, we will exit the loop directly from
-> -         *      ppc_store_msr
-> -         */
-> -        gen_update_nip(ctx, ctx->base.pc_next);
-> -    }
-> -
-> -    tcg_gen_andi_tl(t0, cpu_gpr[rS(ctx->opcode)], mask);
-> -    tcg_gen_andi_tl(t1, cpu_msr, ~mask);
-> -    tcg_gen_or_tl(t0, t0, t1);
-> -
-> -    gen_helper_store_msr(tcg_env, t0);
-> -
-> -    /* Must stop the translation as machine state (may have) changed */
-> -    ctx->base.is_jmp = DISAS_EXIT_UPDATE;
-> -#endif /* !defined(CONFIG_USER_ONLY) */
-> -}
-> -#endif /* defined(TARGET_PPC64) */
-> -
-> -static void gen_mtmsr(DisasContext *ctx)
-> -{
-> -    CHK_SV(ctx);
-> -
-> -#if !defined(CONFIG_USER_ONLY)
-> -    TCGv t0, t1;
-> -    target_ulong mask = 0xFFFFFFFF;
-> -
-> -    t0 = tcg_temp_new();
-> -    t1 = tcg_temp_new();
-> -
-> -    translator_io_start(&ctx->base);
-> -    if (ctx->opcode & 0x00010000) {
-> -        /* L=1 form only updates EE and RI */
-> -        mask &= (1ULL << MSR_RI) | (1ULL << MSR_EE);
-> -    } else {
-> -        if (likely(!(ctx->insns_flags2 & PPC2_PPE42))) {
-> -            /* mtmsr does not alter S, ME, or LE */
-> -            mask &= ~((1ULL << MSR_LE) | (1ULL << MSR_ME) | (1ULL << MSR_S));
-> -        }
-> -
-> -        /*
-> -         * XXX: we need to update nip before the store if we enter
-> -         *      power saving mode, we will exit the loop directly from
-> -         *      ppc_store_msr
-> -         */
-> -        gen_update_nip(ctx, ctx->base.pc_next);
-> -    }
-> -
-> -    tcg_gen_andi_tl(t0, cpu_gpr[rS(ctx->opcode)], mask);
-> -    tcg_gen_andi_tl(t1, cpu_msr, ~mask);
-> -    tcg_gen_or_tl(t0, t0, t1);
-> -
-> -    gen_helper_store_msr(tcg_env, t0);
-> -
-> -    /* Must stop the translation as machine state (may have) changed */
-> -    ctx->base.is_jmp = DISAS_EXIT_UPDATE;
-> -#endif
-> -}
-> -
->  /* mtspr */
->  static void gen_mtspr(DisasContext *ctx)
->  {
-> @@ -4687,15 +4593,12 @@ GEN_HANDLER(hrfid, 0x13, 0x12, 0x08, 0x03FF8001, PPC_64H),
->  GEN_HANDLER(sc, 0x11, 0x11, 0xFF, 0x03FFF01D, PPC_FLOW),
->  GEN_HANDLER(sc, 0x11, 0x01, 0xFF, 0x03FFF01D, PPC_FLOW),
->  GEN_HANDLER(mcrxr, 0x1F, 0x00, 0x10, 0x007FF801, PPC_MISC),
-> -GEN_HANDLER(mfmsr, 0x1F, 0x13, 0x02, 0x001FF801, PPC_MISC),
->  GEN_HANDLER(mfspr, 0x1F, 0x13, 0x0A, 0x00000001, PPC_MISC),
->  GEN_HANDLER(mftb, 0x1F, 0x13, 0x0B, 0x00000001, PPC_MFTB),
->  #if defined(TARGET_PPC64)
-> -GEN_HANDLER(mtmsrd, 0x1F, 0x12, 0x05, 0x001EF801, PPC_64B),
->  GEN_HANDLER_E(setb, 0x1F, 0x00, 0x04, 0x0003F801, PPC_NONE, PPC2_ISA300),
->  GEN_HANDLER_E(mcrxrx, 0x1F, 0x00, 0x12, 0x007FF801, PPC_NONE, PPC2_ISA300),
->  #endif
-> -GEN_HANDLER(mtmsr, 0x1F, 0x12, 0x04, 0x001EF801, PPC_MISC),
->  GEN_HANDLER(mtspr, 0x1F, 0x13, 0x0E, 0x00000000, PPC_MISC),
->  GEN_HANDLER(mfsr, 0x1F, 0x13, 0x12, 0x0010F801, PPC_SEGMENT),
->  GEN_HANDLER(mfsrin, 0x1F, 0x13, 0x14, 0x001F0001, PPC_SEGMENT),
-> diff --git a/target/ppc/translate/misc-impl.c.inc b/target/ppc/translate/misc-impl.c.inc
-> index 890fbb209e..54712f9b73 100644
-> --- a/target/ppc/translate/misc-impl.c.inc
-> +++ b/target/ppc/translate/misc-impl.c.inc
-> @@ -161,3 +161,67 @@ static bool trans_MCRF(DisasContext *ctx, arg_MCRF *a)
->      tcg_gen_mov_i32(cpu_crf[a->bf], cpu_crf[a->bfa]);
->      return true;
->  }
-> +
-> +static bool do_mfmsr(DisasContext *ctx, arg_X_t *a)
-> +{
-> +    REQUIRE_SV(ctx);
-> +    tcg_gen_mov_tl(cpu_gpr[a->rt], cpu_msr);
-> +    return true;
-> +}
-> +TRANS_FLAGS(MISC, MFMSR, do_mfmsr)
-> +
-> +static bool do_mtmsr(DisasContext *ctx, arg_X_rs_l *a, bool is_mtmsrd)
-> +{
-> +    REQUIRE_SV(ctx);
-> +#if !defined(CONFIG_USER_ONLY)
-> +    TCGv t0, t1;
-> +    target_ulong mask;
-> +
-> +    if (is_mtmsrd) {
-> +        if (unlikely(!is_book3s_arch2x(ctx))) {
-> +            gen_invalid(ctx);
-> +            return true;
-> +        }
-> +        mask = ~(target_ulong)0;
-> +    } else {
-> +        mask = UINT32_MAX;
-> +    }
-> +
-> +    t0 = tcg_temp_new();
-> +    t1 = tcg_temp_new();
-> +    translator_io_start(&ctx->base);
-> +
-> +    if (a->l) {
-> +        /* L=1 form only updates EE and RI */
-> +        mask &= (1ULL << MSR_RI) | (1ULL << MSR_EE);
-> +    } else {
-> +        if (is_mtmsrd) {
-> +            /* mtmsrd does not alter HV, S, ME, or LE */
-> +            mask &= ~((1ULL << MSR_LE) | (1ULL << MSR_ME) |
-> +                      (1ULL << MSR_S)  | (1ULL << MSR_HV));
-> +        } else if (likely(!(ctx->insns_flags2 & PPC2_PPE42))) {
-> +            /* mtmsr does not alter S, ME, or LE */
-> +            mask &= ~((1ULL << MSR_LE) | (1ULL << MSR_ME) | (1ULL << MSR_S));
-> +        }
-> +        /*
-> +         * XXX: we need to update nip before the store if we enter
-> +         *      power saving mode, we will exit the loop directly from
-> +         *      ppc_store_msr
-> +         */
-> +        gen_update_nip(ctx, ctx->base.pc_next);
-> +    }
-> +
-> +    tcg_gen_andi_tl(t0, cpu_gpr[a->rs], mask);
-> +    tcg_gen_andi_tl(t1, cpu_msr, ~mask);
-> +    tcg_gen_or_tl(t0, t0, t1);
-> +
-> +    gen_helper_store_msr(tcg_env, t0);
-> +
-> +    /* Must stop the translation as machine state (may have) changed */
-> +    ctx->base.is_jmp = DISAS_EXIT_UPDATE;
-> +#endif /* !CONFIG_USER_ONLY */
-> +    return true;
-> +}
-> +
-> +TRANS_FLAGS(MISC, MTMSR, do_mtmsr, false)
-> +TRANS64(MTMSRD, do_mtmsr, true)
+-- 
+2.47.3
 
 
