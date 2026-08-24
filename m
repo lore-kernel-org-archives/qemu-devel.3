@@ -4,106 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F2ACC5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 08:40:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6A75C5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 08:48:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyQDb-00037F-8I; Mon, 24 Aug 2026 04:39:47 -0400
+	id 1wyQLD-0005F6-0T; Mon, 24 Aug 2026 04:47:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1wyQDZ-00036f-LR
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 04:39:45 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1wyQDX-0006R4-3H
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 04:39:45 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-c1712a04ddaso539301366b.2
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 01:39:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787560781; cv=none;
- d=google.com; s=arc-20260327;
- b=n5f4qZdGg1psdebeqmbfqSOF+WZDlA5kxDr1N4/YpdvDxzqpJWOj3pHa9Ocoo6qdMY
- EefIIsyFUN2wzbFa2q6esPxNmB7KPuwNWqx/d6xwFDdYzfiApIVa/VpGzjDnNXjaxBYH
- JVRwH9iJuhPUsspI4vjtl1xyMg09SUhoZHq1MEQx3RuQwp2c/5OO/c1dDkmCDOMKuP64
- IyZrb3ebmQ6EdZbpp/cd8T3rdrCdop1HfMo0UnDv4EpNV7TOz5YAyOAhvKQzsdONjeXv
- YR/3ZrZHB581eXXHKKIZ5yiKtc3xtHVC+RiZeg0VsnFJRdSkFoanH9bvYqsX/E9dmH/B
- ZkiQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
- :mime-version:dkim-signature;
- bh=PaYGs0mvig9qtp5L4+aiGdUi5d2gi8oX5o+LASwsPs8=;
- fh=PTtFTSd9KU+d017MulWJCIpFBanBiQh/femZ20rZPtg=;
- b=mRB10C6S/5H1AHssfoD83U2uPdpPIBE/s+S14V1P9owcwv1pZf8gPPQKoeBAiFlpJ2
- Qw7WxIZVXKzoqdr1Vv8c2HkYoqntsUt0xZ8VxDmhvwrRGNroz7/Dd+FzanG7W2Ik2al4
- WlvGeBAiY9gGavjswVokpVpkXhWexOISU7PXhOtKD6c5qqmFKyAYlyCQVXoRf2kx2Par
- g8LCl9y1cqdcPnVe9AAzcZhnQPHexuLMFvrvtuT5hmQLU2MaxJiiWFSuXbP8NkR4Ihmr
- QOF86ehrIH8tbe9d7VUeWXe9ykVoYo00pKVje0uBnxPEEqxeQ7+i59wRQyosvcSkTwuH
- rtKQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787560781; x=1788165581; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:reply-to
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=PaYGs0mvig9qtp5L4+aiGdUi5d2gi8oX5o+LASwsPs8=;
- b=Y/6KNXhEh3aFOs7pJjGGc1F98eSZPgVnrHq5AOkNNIjeTCjZ1TwDh1CRo8UKupN8qF
- 47jH5Sa/i0f3UAie5fp5dKADaj05ztoMqIqzPf37u1GrYpcxUpZ1V6f07Wcf47eTUho1
- CtQRYZ2COqp/vx4LpYocvBcCLfyYT1lKRbO0bWvun00FTXSwlZsLl1zRGoMJthVFZezo
- 0d3F2nFm5kvsmHViolSiF5Qz78qUuYeS/RoCDJy2ZlWEvJNVEu13wwGfkOS2caERHLt+
- 4/TwZ1FWyRMPEU2qL418TcTgAnVE0jpn5DLNL4hPtr2vhl2gCDrqfabagSPPZJZfqx9u
- gtqw==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wyQLB-0005Et-7L
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 04:47:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wyQL6-0007fm-9J
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 04:47:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787561249;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zqn/77undguQa3RzB3CPdGwqmBJInAYmrL3lBi7Fvlw=;
+ b=f+FFdKv2FFDqxyW3Uhwoskg3MW5F64g2UXVoPGmE7OglFrASDK8sD0yYhSUjUl+edNaqRs
+ veUX5YVIaKGrYk2NnhM8cVg9q2mqD4RIam87YoUnMyEeq+5B59m8Wskv0J6/Ydz8qj5Gxv
+ u/ux13SFDrAMyySDeUsuO/gbrOd88BE=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-33-rFzdGY4kOTS9g5okYtej4g-1; Mon, 24 Aug 2026 04:47:27 -0400
+X-MC-Unique: rFzdGY4kOTS9g5okYtej4g-1
+X-Mimecast-MFC-AGG-ID: rFzdGY4kOTS9g5okYtej4g_1787561247
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-47f6e8b5996so2643863f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 01:47:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787560781; x=1788165581;
- h=content-type:cc:to:subject:message-id:date:from:reply-to
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=PaYGs0mvig9qtp5L4+aiGdUi5d2gi8oX5o+LASwsPs8=;
- b=nmu1+lXILDnesA1wuuTUFbNPVeSRPmba5d8Dwn6Kq1MJQiQIXYS26jBUu2rpr1zT/z
- 8WBCzYr5YbockpDtGSpaaLCJKGIoChHu6P3L3zRaR2jFmqAyPzQMfsOEMZH4ZbL6dLto
- sqb2uC095cImI32F6Z0/nzGk7g3vKj6eYt7SkTC/i5xZFFcSZFKQ4mrWwfU0+NBkpGsx
- svB9rjVXcqBVf1qEm1kXsidcAczc0RJD53/P6rbUhGXt1vwuFMqflhuNyseNeWp4ZlQc
- yh+ElHlaTVvWzI+11a9SV/3Hhw5VX3sdka/ogMlTWlc3xuU8YKKXe03dFUt7inhEE8wr
- k4LQ==
+ d=1e100.net; s=20251104; t=1787561246; x=1788166046;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=zqn/77undguQa3RzB3CPdGwqmBJInAYmrL3lBi7Fvlw=;
+ b=qP99VXY/enNJd/MHhSt7CR4P/LTNAdSgkLC6j6UmtfaIzkLlLBK3DpVdWiZPWAXKv6
+ C99NK0J8RorloibVZ+P8oaw9ZAQHX8iaD2YxWBSl/MBvoYyHkA965ouSMt3AjtGI1Zlb
+ 3mDQDIXCGEBH1ZvhBsEEKu1wvgSGYZ640si+CKE6wR5HF43nxBl455CGV8+lrRIt7lHT
+ atLZ0llkyKiV/fThpXodfm0Q9KuRRULXuScfuoVjkpXo2hj5CozeLkHRYdVggs9P/ExE
+ 5Npe+hFIfeSEC7MvvCPL1YiSE13KGU9/B+9U1OqaOk4BipJEYb5URpOtS0na+byvLUyJ
+ 4mGg==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrzNtK1CHjTaSxW9cMNjPDCqtUXYcqvLRj+rdzfSlbRHHB4dF6biY3hUaPqs4pOP9tr1ld00N+HpOLi@nongnu.org
-X-Gm-Message-State: AFuF++l2fyLluTOEgkVtOda5Iz3NMr9tZ4wugAN35Yi+QjWLd4a+HVBW
- ZQPNkmkQUVCHGPedmFLrMM3n0MmENKBRJnR0Lk1aYfl1LUxrvU4j40AIWeKQut0g+Z9Dw61+fC9
- yoITxdkLP1fOMGDkW2npYuZ3+5cEI0Ig=
-X-Gm-Gg: AR+sD11LpnI+pj0+E7fus7pm+asCFAXP67/PRtsigH8vLhnQtEESkZvJeg2VS1qaP4u
- qgIQ1PyWnd1S/9fIEEBDbupIqOp9RxpGYV2uHxjTBQdrtoxt74KFpWjOz+uUnChNh3yoaNXK7YP
- PDEhmGVx2FYPbZ0e44IS3BIX28TieqWDbbU6lmwn0gvXfhwWnrGIG8y5zTwweYWm7Zy+Azg28eD
- 2qvo1Ap7uJHpLtHt6bFV0wwTwTyZWZ3vQ5pAL2nIYspJX8H4nFEA47i5B9LdxV7ZfjkBs1sc3R6
- BypLkQtDNJOfBIbniiH7CJa4SSp9CmwrlRZ7VUjwtWF6
-X-Received: by 2002:a17:906:ef06:b0:c20:768:af62 with SMTP id
- a640c23a62f3a-c24920d7131mr1843946766b.22.1787560780918; Mon, 24 Aug 2026
- 01:39:40 -0700 (PDT)
+ AHgh+RqrKOXa/TsHhZZkPAmyxlOWujOZiOZMOeNhe+t5Y9L2Y7LYVLjhumgC351pSm7TVOfhnpT2UYvp4asO@nongnu.org
+X-Gm-Message-State: AFuF++ltFywLtU9VZbR8dE8KIuq/dimErcBwosXnKCn6CDOwzHXT4Xhi
+ sEv3KbmWg0mvVGd2nIT2LckKO0ly1rEutosMQo2ilX0Q55tWJV6ZFGyxPe8VJOi8vHvSLu2oe50
+ x6ZP1Da7AlOCL0i2TFtf06J96svOfXUTWUvZuxG1iZlWPQK4ZKQoWsZmc
+X-Gm-Gg: AR+sD13wYVYnsxMc3mBuZIOYJJzVkyKB8yN/Wv1SeGkOEb5QNWFWAhXUH985QH0Z1IV
+ 76Hp25z8UxxH2iiDKes5WnUMFlEdSvOG2TSdGZxM0vy3ltO8DIBppR54vroH8QF53NQAwR9/u52
+ fO9crqCmczBQsxvn6yLFUYURWml8lR6XM5ZhjXCsJij7Sq6i22K5eLp7GFqTioJ3/BHqZhqEvxg
+ HvC9IvPktBlOtXdSP3vrDxjR6Yl8nPoUeCyI9pDeAz85aZJ8nSZJY/seagj8/KJVhRnNMLd9dJO
+ ZzmEVGR2VFOc4AeEWhh5/SNjfOV1qPB7pyjod1b3bhLJqbu2OcJ97/Ay/n1Cto0pRtX6f/bMnAm
+ Tgq7YgErXsfRRT2cc2NxQDx2ZbjtpYzApwgz/T1ruYE1Ed1eX
+X-Received: by 2002:a05:600c:3b25:b0:499:900c:9c69 with SMTP id
+ 5b1f17b1804b1-499b8454bc0mr267960675e9.9.1787561246483; 
+ Mon, 24 Aug 2026 01:47:26 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b25:b0:499:900c:9c69 with SMTP id
+ 5b1f17b1804b1-499b8454bc0mr267959945e9.9.1787561246039; 
+ Mon, 24 Aug 2026 01:47:26 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-499cfea058csm24404095e9.2.2026.08.24.01.47.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Aug 2026 01:47:25 -0700 (PDT)
+Message-ID: <7b3cfd9f-825e-46b9-82ad-09611b05135e@redhat.com>
+Date: Mon, 24 Aug 2026 10:47:24 +0200
 MIME-Version: 1.0
-References: <20260821235112.193381-1-pierrick.bouvier@oss.qualcomm.com>
- <20260821235112.193381-2-pierrick.bouvier@oss.qualcomm.com>
- <230c2fe0-94f8-46e7-a574-9d036ced67b8@linaro.org>
- <6daaa4b7-4f84-44f3-9cc7-a70935da11b2@oss.qualcomm.com>
-In-Reply-To: <6daaa4b7-4f84-44f3-9cc7-a70935da11b2@oss.qualcomm.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Mon, 24 Aug 2026 16:39:28 +0800
-X-Gm-Features: AcwNN1XzR-wu0UN0TqqhZT2A5ADyXb4DlAWXLacNT052haZq3nX9v07MW3XYRlc
-Message-ID: <CAE2XoE_feFKfLRk7_2eiAW5rmKCgx7ZQAk_uLtDY_0+rxo_PeQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] qom/object: add available_if field to TypeInfo
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000005c73f30659c6edb4"
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=luoyonggang@gmail.com; helo=mail-ej1-x633.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v7 00/18] kvm/arm: Introduce a customizable aarch64
+ KVM host model
+Content-Language: en-US
+To: Khushit Shah <khushit.shah@nutanix.com>
+Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Shaju Abraham <shaju.abraham@nutanix.com>,
+ "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
+ "cohuck@redhat.com" <cohuck@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "sebott@redhat.com" <sebott@redhat.com>,
+ "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
+ "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
+ "maz@kernel.org" <maz@kernel.org>,
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "abologna@redhat.com" <abologna@redhat.com>,
+ "jdenemar@redhat.com" <jdenemar@redhat.com>
+References: <20260726153221.24773-1-eric.auger@redhat.com>
+ <3057A3BC-2BE9-4D2B-9D04-E3B31A6D0599@nutanix.com>
+ <2C1E0EFD-7BD3-4177-90F8-14894B34F726@nutanix.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <2C1E0EFD-7BD3-4177-90F8-14894B34F726@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,231 +131,203 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005c73f30659c6edb4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Khushit,
 
-On Mon, Aug 24, 2026 at 2:54=E2=80=AFPM Pierrick Bouvier <
-pierrick.bouvier@oss.qualcomm.com> wrote:
+On 8/24/26 10:19 AM, Khushit Shah wrote:
 >
-> On 8/22/2026 7:23 AM, Richard Henderson wrote:
-> > On 8/21/26 16:51, Pierrick Bouvier wrote:
-> >> With the single-binary, we start mixing types for different targets,
-> >> that may or may not be available for current one.
-> >>
-> >> Previously, we implemented an approach based on interfaces, but it
-> >> proved to be too limited. It requires duplication between
-> >> machines/cpus/devices, and does not handle specific cases where a type
-> >> should be available based on a target configuration (Kconfig).
-> >>
-> >> To solve this, we add a new field, available_if, to TypeInfo.
-> >> It is an array containing a list of requirements for type to be
-> >> available.
-> >>
-> >> For now, we have only targets as requirements, but later we'll add
-> >> specific target config entries also.
-> >>
-> >> We also add a TARGET_REQS macro, to declare a list of requirements. Fo=
-r
-> >> sanity sake, we don't use a complex variadic macro prefixing each
-> >> parameter. It requires a lot of macro boilerplate in C, and prevent
-> >> readers to jump easily to definition for each parameter.
-> >>
-> >> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@oss.qualcomm.com>
-> >> ---
-> >>   include/qemu/target-info.h | 11 +++++++++++
-> >>   include/qom/object.h       |  5 +++++
-> >>   qom/object.c               | 10 ++++++++++
-> >>   rust/qom/src/qom.rs        |  1 +
-> >>   stubs/meson.build          |  1 +
-> >>   stubs/target-info.c        | 11 +++++++++++
-> >>   target-info.c              | 13 +++++++++++++
-> >>   7 files changed, 52 insertions(+)
-> >>   create mode 100644 stubs/target-info.c
-> >>
-> >> diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-> >> index 6c5b714288e..6379e65bbcf 100644
-> >> --- a/include/qemu/target-info.h
-> >> +++ b/include/qemu/target-info.h
-> >> @@ -50,6 +50,17 @@ const char *target_cpu_type(void);
-> >>    */
-> >>   bool target_big_endian(void);
-> >>   +typedef enum TargetReq {
-> >> +    /* 0 is reserved for end of array */
-> >> +    TARGET_REQ_BASE_ARM =3D 1,
-> >> +    TARGET_REQ_AARCH64,
-> >> +    TARGET_REQ_ARM,
-> >> +} TargetReq;
-> >> +
-> >
-> > Is there a reason you're inventing Yet Another Enum, especially when
-> > target_base_arm etc are based on SysEmuTarget, which itself is used to
-> > create bitmasks of targets?
-> >
+>> On 20 Aug 2026, at 11:57 AM, Khushit Shah <khushit.shah@nutanix.com> wrote:
+>>
+>>
+>>
+>>> On 26 Jul 2026, at 8:59 PM, Eric Auger <eric.auger@redhat.com> wrote:
+>>>
+>>> !-------------------------------------------------------------------|
+>>> CAUTION: External Email
+>>>
+>>> |-------------------------------------------------------------------!
+>>>
+>>> This series enhances the current host KVM model with capability to
+>>> set writable ID reg fields. 
+>>>
+>>> Since v6.7 kernel, KVM/arm allows the userspace to overwrite the values
+>>> of a subset of ID regs. The list of writable fields continues to grow.
+>>> The feature ID range is defined as the AArch64 System register space
+>>> with op0==3, op1=={0, 1, 3}, CRn==0, CRm=={0-7}, op2=={0-7}.
+>>>
+>>> The end goal is to get more flexibility when migrating guests
+>>> between different host hardware.
+>>>
+>>> QEMU retrieves the writable ID fields from KVM UAPI [1] and
+>>> match them against a generated description of ID regs and their
+>>> named fields that stem from AARCHMRS Registers.json file.
+>>> Current description is based on latest 2026-03 edition.
+>>> The content of the generated files was compared against kernel
+>>> linux/arch/arm64/tools/sysreg file. It is not straightforward
+>>> to have unit tests for python scripts as there are many cases for
+>>> field extraction. 
+>>>
+>>> For each writable named field a uint64 property is created
+>>> following the "SYSREG_<REG>_<FIELD>" naming convention. REG and
+>>> FIELD names are those described in ARM ARM Reference manual.
+>>>
+>>> The list of SYSREG_ID properties can be retrieved through the qmp
+>>> monitor using query-cpu-model-expansion [2].
+>>>
+>>> For the record, Jinqian was able to migrate between Hisilicon KunPeng
+>>> HIP09 and HIP12 chips with this series using this kind of command:
+>>>
+>>> -cpu host,pauth=off,pmu=off,sve=off,\
+>>> SYSREG_ID_AA64PFR1_EL1_NMI=0x0,\
+>>> SYSREG_ID_AA64ISAR1_EL1_LS64=0x0,\
+>>> SYSREG_ID_AA64ISAR1_EL1_XS=0x0,\
+>>> SYSREG_ID_AA64ISAR1_EL1_LRCPC=0x2,\
+>>> SYSREG_ID_AA64ISAR2_EL1_RPRFM=0x0,\
+>>> SYSREG_ID_AA64ISAR2_EL1_CLRBHB=0x0,\
+>>> SYSREG_ID_AA64ISAR2_EL1_PAC_frac=0x0,\
+>>> SYSREG_ID_AA64ISAR2_EL1_BC=0x0,\
+>>> SYSREG_ID_AA64ISAR2_EL1_RPRES=0x0,\
+>>> SYSREG_ID_AA64ISAR2_EL1_WFxT=0x0,\
+>>> SYSREG_ID_AA64MMFR0_EL1_FGT=0x0,\
+>>> SYSREG_ID_AA64MMFR0_EL1_BigEnd=0x0,\
+>>> SYSREG_ID_AA64MMFR1_EL1_ECBHB=0x0,\
+>>> SYSREG_ID_AA64MMFR1_EL1_CMOW=0x0,\
+>>> SYSREG_ID_AA64MMFR1_EL1_TIDCP1=0x0,\
+>>> SYSREG_ID_AA64MMFR1_EL1_nTLBPA=0x0,\
+>>> SYSREG_ID_AA64MMFR1_EL1_AFP=0x0,\
+>>> SYSREG_ID_AA64MMFR1_EL1_HCX=0x0,\
+>>> SYSREG_ID_AA64MMFR1_EL1_ETS=0x0,\
+>>> SYSREG_ID_AA64MMFR1_EL1_PAN=0x2,\
+>>> SYSREG_ID_AA64MMFR1_EL1_HAFDBS=0x2,\
+>>> SYSREG_ID_AA64MMFR2_EL1_CnP=0x0,\
+>>> SYSREG_ID_AA64MMFR3_EL1_TCRX=0x0,\
+>>> SYSREG_ID_AA64DFR0_EL1_PMUVer=0x6,\
+>>> SYSREG_ID_AA64DFR0_EL1_DebugVer=0x9,\
+>>> SYSREG_ID_AA64DFR0_EL1_DoubleLock=0xf,\
+>>> SYSREG_ID_AA64ZFR0_EL1_F64MM=0x0,\
+>>> SYSREG_ID_AA64ZFR0_EL1_F32MM=0x0,\
+>>> SYSREG_ID_AA64ZFR0_EL1_SM4=0x0,\
+>>> SYSREG_ID_AA64ZFR0_EL1_SHA3=0x0,\
+>>> SYSREG_ID_AA64ZFR0_EL1_BitPerm=0x0,\
+>>> SYSREG_ID_AA64ZFR0_EL1_AES=0x0,\
+>>> SYSREG_ID_AA64ZFR0_EL1_SVEver=0x0,\
+>>> SYSREG_CTR_EL0_L1Ip=0x2 \
+>>>
+>>> Connie & Eric
+>>>
+>>> This series can be found at:
+>>> https://urldefense.proofpoint.com/v2/url?u=https-3A__github.com_eauger_qemu_tree_arm-2Dcpu-2Dmodel-2Dv7&d=DwIDAg&c=s883GpUCOChKOHiocYtGcg&r=PGWMyignA0NiDmTlyP7vOTHozBws_VN86yrVmSMkBp0&m=xh5u7-r6auXiWQScafdj-0wW70mXB4FhClh58GryHmExkx8uZN-h9j4B2c90Lowd&s=Ro4v_mjoNaLsznyxm781lzXBcRtXTudjibmgIhoJsNM&e= 
+>>>
+>>> History:
+>>> --------
+>>> v6 -> v7:
+>>> - query-cpu-model-expansion now applies the sysreg props
+>>> onto a scratch vcpu (POC) allowing a finer validation of settings
+>>> (not perfect though as init may be revisited depending on
+>>> settings)
+>>> - Properly handle ValueRange (Khushit)
+>>> - Remove cpu parameter in get_host_cpu_idregs call chain
+>>> (Khushit)
+>>>
+>>> v5 -> v6:
+>>> v6 is mostly for Khushit to see how he may work on top
+>>> of this series. It fulfills some of his requirements:
+>>> - Upon Khushit request I added description for enum values
+>>> and reserved fields
+>>> - set_sysreg_prop checks the input value against enum values
+>>> if any
+>>> - writable_bitmap is now dispatched into the sysreg descripton
+>>> and not stored in vcpu state anymore (besides it is VM wide)
+>>> - implemented write for qmp inspection. However this is not
+>>> yet checked against KVM. That's the next step I think, ie.
+>>> instantiate a scratch vcpu to test if the field value can be
+>>> applied?
+>>> - if some inconsistencies between writable mask and idreg
+>>> field, reserved fields only produce traces
+>>> - this version does not yet fix some reported issues about host
+>>> supporting nested virt. I will further sync with Khushit.
+>>> so this is definitively not candidate to be applied, hence the
+>>> RFC tag.
+>>>
+>>> Cornelia Huck (3):
+>>> target/arm/kvm: Retrieve writable ID reg map
+>>> arm/cpu-features: document ID reg properties
+>>> arm-qmp-cmds: introspection for ID register props
+>>>
+>>> Eric Auger (14):
+>>> scripts: introduce scripts/update-aarch64-cpu-sysregs-header.py
+>>> target/arm/cpu-sysregs.h.inc: Sort by name alphabetical order
+>>> target/arm/cpu-sysregs.h.inc: Update with automatic generation
+>>> arm/cpu: Add infra to handle generated ID register definitions
+>>> scripts: Introduce scripts/aarch64_sysreg_helpers module
+>>> scripts: Introduce scripts/update-aarch64-cpu-sysreg-properties.py
+>>> target/arm/cpu-idregs.h.inc: generate with script
+>>> target/arm/cpu-idregs.h.inc: Generate enum values
+>>> arm/kvm: Initialize all writable ID registers from host
+>>> target/arm/kvm: Introduce kvm_arm_expose_idreg_properties
+>>> target/arm/cpu: Expose writable ID reg field properties on the kvm
+>>>   host vcpu model
+>>> target/arm/cpu-idregs.h.inc: Generate reserved fields
+>>> target/arm/kvm: Ignore and trace unexpected writable reserved fields
+>>> target/arm/kvm: add utility to write idregs in scratch vcpu
+>>>
+>>> Shaju Abraham (1):
+>>> target/arm/cpu_idregs: generate tables for Arm64 ID registers and
+>>>   fields
+>>>
+>>> docs/system/arm/cpu-features.rst              |  106 +-
+>>> target/arm/cpu-idregs.h                       |   41 +
+>>> target/arm/kvm_arm.h                          |   13 +
+>>> target/arm/cpu-idregs.h.inc                   | 2164 +++++++++++++++++
+>>> target/arm/cpu-sysregs.h.inc                  |   57 +-
+>>> target/arm/arm-qmp-cmds.c                     |   98 +
+>>> target/arm/cpu-idregs.c                       |   96 +
+>>> target/arm/cpu64.c                            |    5 +
+>>> target/arm/kvm-stub.c                         |    6 +
+>>> target/arm/kvm.c                              |  360 ++-
+>>> scripts/aarch64_sysreg_helpers.py             |  109 +
+>>> .../update-aarch64-cpu-sysreg-properties.py   |  290 +++
+>>> scripts/update-aarch64-cpu-sysregs-header.py  |   51 +
+>>> target/arm/meson.build                        |    1 +
+>>> target/arm/trace-events                       |    8 +
+>>> 15 files changed, 3373 insertions(+), 32 deletions(-)
+>>> create mode 100644 target/arm/cpu-idregs.h
+>>> create mode 100644 target/arm/cpu-idregs.h.inc
+>>> create mode 100644 target/arm/cpu-idregs.c
+>>> create mode 100644 scripts/aarch64_sysreg_helpers.py
+>>> create mode 100644 scripts/update-aarch64-cpu-sysreg-properties.py
+>>> create mode 100755 scripts/update-aarch64-cpu-sysregs-header.py
+>>>
+>>> -- 
+>>> 2.53.0
+>>>
+>> Hi,
+>>
+>> On my box the build is failing with:
+>> [97/2192] Linking target qemu-system-arm
+>> FAILED: qemu-system-arm
+>> cc @qemu-system-arm.rsp
+>> /usr/bin/ld: libsystem_arm.a.p/target_arm_arm-qmp-cmds.c.o: in function `qmp_query_cpu_model_expansion':
+>> /home/ahv/qemu/build/../target/arm/arm-qmp-cmds.c:144:(.text+0x4d4): undefined reference to `kvm_check_extension'
+>> /usr/bin/ld: /home/ahv/qemu/build/../target/arm/arm-qmp-cmds.c:145:(.text+0x4e4): undefined reference to `kvm_check_extension'
+>> /usr/bin/ld: /home/ahv/qemu/build/../target/arm/arm-qmp-cmds.c:151:(.text+0x514): undefined reference to `kvm_check_extension'
+>> /usr/bin/ld: /home/ahv/qemu/build/../target/arm/arm-qmp-cmds.c:168:(.text+0x554): undefined reference to `kvm_arm_create_scratch_host_vcpu'
+>> /usr/bin/ld: /home/ahv/qemu/build/../target/arm/arm-qmp-cmds.c:152:(.text+0x7d4): undefined reference to `kvm_check_extension'
+>> /usr/bin/ld: /home/ahv/qemu/build/../target/arm/arm-qmp-cmds.c:247:(.text+0x8f4): undefined reference to `kvm_arm_destroy_scratch_host_vcpu'
+>> collect2: error: ld returned 1 exit status
 >
-> Mostly because we'll have to add CONFIG as TARGET_REQ. (CONFIG_NITRO for
-> instance, please see v1), in additions to targets.
-> My original implementation was using an interface with a callback, and I
-> offered to have this callback as part of TypeInfo. Daniel insisted on
-> having a list of constraints for (future) introspection purpose. I think
-> it's solving a problem we don't have yet, but need to move on on this
-> series, and happy to implement anything that satisfy the community.
+> If I add appropriate stubs, Following test fails:
+>   30/1079 qemu:qtest+qtest-aarch64 / qtest-aarch64/device-introspect-test         ERROR            1.58s   killed by signal 6 SIGABRT
+>  126/1079 qemu:qtest+qtest-aarch64 / qtest-aarch64/qom-test                       ERROR           46.65s   killed by signal 6 SIGABRT
+>  426/1079 qemu:qtest+qtest-aarch64 / qtest-aarch64/arm-cpu-features               ERROR            0.51s   killed by signal 6 SIGABRT
+>  467/1079 qemu:qtest+qtest-arm / qtest-arm/arm-cpu-features                       ERROR            0.46s   killed by signal 6 SIGABRT
+>  966/1079 qemu:block / io-qcow2-161                                               ERROR            1.95s   exit status 1
 >
-> In all cases, I'm open to other ideas if you have something to suggest,
-> which can represent both target and config knobs, with a simple and
-> concise solution. Enum was the best compromise for me, price being
-> duplication with existing SysEmuTarget.
->
-> >
-> > r~
-> >
->
->
+Thanks. I am currently working on it. Planning to respin this week
 
-I've implement single binary for arm/riscv at
-https://patchew.org/QEMU/20260823150731.896-1-luoyonggang@gmail.com/
+Eric
 
-I do not see why this is needed yet.
-
-My patches is based on
-https://patchew.org/QEMU/20260724000948.234657-1-pierrick.bouvier@oss.qualc=
-omm.com/
-```
-+
-+static TargetCpuOps target_cpu_ops;
-+
-+void target_info_register_cpu_op(const char *cpu_type, size_t offset,
-+                                 void *impl)
-+{
-+    const TargetInfo *ti =3D target_info();
-+    void **slot;
-+
-+    g_assert(ti);
-+    g_assert(offset + sizeof(void *) <=3D sizeof(TargetCpuOps));
-+    g_assert((offset % sizeof(void *)) =3D=3D 0);
-+
-+    if (strcmp(cpu_type, ti->cpu_type)) {
-+        return;
-+    }
-+
-+    slot =3D (void **)((char *)&target_cpu_ops + offset);
-+    if (*slot) {
-+        error_report("TargetCpuOps already registered for type '%s'
-(offset %zu)",
-+                     cpu_type, offset);
-+        return;
-+    }
-+    *slot =3D impl;
-+}
-+
-+const TargetCpuOps *target_info_cpu_ops(void)
-+{
-+    return &target_cpu_ops;
-+}
-````
-
-To see different func for different arch
-
---
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
-
---0000000000005c73f30659c6edb4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><br><br>On Mon, Aug 24, 2026 at 2:54=E2=80=AFPM Pierrick B=
-ouvier &lt;<a href=3D"mailto:pierrick.bouvier@oss.qualcomm.com">pierrick.bo=
-uvier@oss.qualcomm.com</a>&gt; wrote:<br>&gt;<br>&gt; On 8/22/2026 7:23 AM,=
- Richard Henderson wrote:<br>&gt; &gt; On 8/21/26 16:51, Pierrick Bouvier w=
-rote:<br>&gt; &gt;&gt; With the single-binary, we start mixing types for di=
-fferent targets,<br>&gt; &gt;&gt; that may or may not be available for curr=
-ent one.<br>&gt; &gt;&gt;<br>&gt; &gt;&gt; Previously, we implemented an ap=
-proach based on interfaces, but it<br>&gt; &gt;&gt; proved to be too limite=
-d. It requires duplication between<br>&gt; &gt;&gt; machines/cpus/devices, =
-and does not handle specific cases where a type<br>&gt; &gt;&gt; should be =
-available based on a target configuration (Kconfig).<br>&gt; &gt;&gt;<br>&g=
-t; &gt;&gt; To solve this, we add a new field, available_if, to TypeInfo.<b=
-r>&gt; &gt;&gt; It is an array containing a list of requirements for type t=
-o be<br>&gt; &gt;&gt; available.<br>&gt; &gt;&gt;<br>&gt; &gt;&gt; For now,=
- we have only targets as requirements, but later we&#39;ll add<br>&gt; &gt;=
-&gt; specific target config entries also.<br>&gt; &gt;&gt;<br>&gt; &gt;&gt;=
- We also add a TARGET_REQS macro, to declare a list of requirements. For<br=
->&gt; &gt;&gt; sanity sake, we don&#39;t use a complex variadic macro prefi=
-xing each<br>&gt; &gt;&gt; parameter. It requires a lot of macro boilerplat=
-e in C, and prevent<br>&gt; &gt;&gt; readers to jump easily to definition f=
-or each parameter.<br>&gt; &gt;&gt;<br>&gt; &gt;&gt; Signed-off-by: Pierric=
-k Bouvier&lt;<a href=3D"mailto:pierrick.bouvier@oss.qualcomm.com">pierrick.=
-bouvier@oss.qualcomm.com</a>&gt;<br>&gt; &gt;&gt; ---<br>&gt; &gt;&gt; =C2=
-=A0 include/qemu/target-info.h | 11 +++++++++++<br>&gt; &gt;&gt; =C2=A0 inc=
-lude/qom/object.h =C2=A0 =C2=A0 =C2=A0 | =C2=A05 +++++<br>&gt; &gt;&gt; =C2=
-=A0 qom/object.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 10 ++++=
-++++++<br>&gt; &gt;&gt; =C2=A0 rust/qom/src/qom.rs =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0| =C2=A01 +<br>&gt; &gt;&gt; =C2=A0 stubs/meson.build =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0| =C2=A01 +<br>&gt; &gt;&gt; =C2=A0 stubs/target-info.c =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0| 11 +++++++++++<br>&gt; &gt;&gt; =C2=A0 target-=
-info.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 13 +++++++++++++<b=
-r>&gt; &gt;&gt; =C2=A0 7 files changed, 52 insertions(+)<br>&gt; &gt;&gt; =
-=C2=A0 create mode 100644 stubs/target-info.c<br>&gt; &gt;&gt;<br>&gt; &gt;=
-&gt; diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h<b=
-r>&gt; &gt;&gt; index 6c5b714288e..6379e65bbcf 100644<br>&gt; &gt;&gt; --- =
-a/include/qemu/target-info.h<br>&gt; &gt;&gt; +++ b/include/qemu/target-inf=
-o.h<br>&gt; &gt;&gt; @@ -50,6 +50,17 @@ const char *target_cpu_type(void);<=
-br>&gt; &gt;&gt; =C2=A0 =C2=A0*/<br>&gt; &gt;&gt; =C2=A0 bool target_big_en=
-dian(void);<br>&gt; &gt;&gt; =C2=A0 +typedef enum TargetReq {<br>&gt; &gt;&=
-gt; + =C2=A0 =C2=A0/* 0 is reserved for end of array */<br>&gt; &gt;&gt; + =
-=C2=A0 =C2=A0TARGET_REQ_BASE_ARM =3D 1,<br>&gt; &gt;&gt; + =C2=A0 =C2=A0TAR=
-GET_REQ_AARCH64,<br>&gt; &gt;&gt; + =C2=A0 =C2=A0TARGET_REQ_ARM,<br>&gt; &g=
-t;&gt; +} TargetReq;<br>&gt; &gt;&gt; +<br>&gt; &gt;<br>&gt; &gt; Is there =
-a reason you&#39;re inventing Yet Another Enum, especially when<br>&gt; &gt=
-; target_base_arm etc are based on SysEmuTarget, which itself is used to<br=
->&gt; &gt; create bitmasks of targets?<br>&gt; &gt;<br>&gt;<br>&gt; Mostly =
-because we&#39;ll have to add CONFIG as TARGET_REQ. (CONFIG_NITRO for<br>&g=
-t; instance, please see v1), in additions to targets.<br>&gt; My original i=
-mplementation was using an interface with a callback, and I<br>&gt; offered=
- to have this callback as part of TypeInfo. Daniel insisted on<br>&gt; havi=
-ng a list of constraints for (future) introspection purpose. I think<br>&gt=
-; it&#39;s solving a problem we don&#39;t have yet, but need to move on on =
-this<br>&gt; series, and happy to implement anything that satisfy the commu=
-nity.<br>&gt;<br>&gt; In all cases, I&#39;m open to other ideas if you have=
- something to suggest,<br>&gt; which can represent both target and config k=
-nobs, with a simple and<br>&gt; concise solution. Enum was the best comprom=
-ise for me, price being<br>&gt; duplication with existing SysEmuTarget.<br>=
-&gt;<br>&gt; &gt;<br>&gt; &gt; r~<br>&gt; &gt;<br>&gt;<br>&gt;<br><br>I&#39=
-;ve implement single binary for arm/riscv at <a href=3D"https://patchew.org=
-/QEMU/20260823150731.896-1-luoyonggang@gmail.com/">https://patchew.org/QEMU=
-/20260823150731.896-1-luoyonggang@gmail.com/</a><br><br>I do not see why th=
-is is needed yet.<br><br>My patches is based on =C2=A0<a href=3D"https://pa=
-tchew.org/QEMU/20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com/">=
-https://patchew.org/QEMU/20260724000948.234657-1-pierrick.bouvier@oss.qualc=
-omm.com/</a><br>```<div>+<br>+static TargetCpuOps target_cpu_ops;<br>+<br>+=
-void target_info_register_cpu_op(const char *cpu_type, size_t offset,<br>+ =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 void *impl)<br>+{<br>+ =C2=A0 =C2=A0=
-const TargetInfo *ti =3D target_info();<br>+ =C2=A0 =C2=A0void **slot;<br>+=
-<br>+ =C2=A0 =C2=A0g_assert(ti);<br>+ =C2=A0 =C2=A0g_assert(offset + sizeof=
-(void *) &lt;=3D sizeof(TargetCpuOps));<br>+ =C2=A0 =C2=A0g_assert((offset =
-% sizeof(void *)) =3D=3D 0);<br>+<br>+ =C2=A0 =C2=A0if (strcmp(cpu_type, ti=
--&gt;cpu_type)) {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>+ =C2=A0 =C2=
-=A0}<br>+<br>+ =C2=A0 =C2=A0slot =3D (void **)((char *)&amp;target_cpu_ops =
-+ offset);<br>+ =C2=A0 =C2=A0if (*slot) {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0e=
-rror_report(&quot;TargetCpuOps already registered for type &#39;%s&#39; (of=
-fset %zu)&quot;,<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 cpu_type, offset);<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0return=
-;<br>+ =C2=A0 =C2=A0}<br>+ =C2=A0 =C2=A0*slot =3D impl;<br>+}<br>+<br>+cons=
-t TargetCpuOps *target_info_cpu_ops(void)<br>+{<br>+ =C2=A0 =C2=A0return &a=
-mp;target_cpu_ops;<br>+}<br><div>````<br><br>To see different func for diff=
-erent arch<br><br>--<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=E6=AD=A4=E8=87=
-=B4<br>=E7=A4=BC<br>=E7=BD=97=E5=8B=87=E5=88=9A<br>Yours<br>=C2=A0 =C2=A0 s=
-incerely,<br>Yonggang Luo</div></div></div>
-
---0000000000005c73f30659c6edb4--
 
