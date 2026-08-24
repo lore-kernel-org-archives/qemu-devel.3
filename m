@@ -4,77 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59CC2C5DF9C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 10:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E24DC5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 10:59:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wySEU-0002pg-Dp; Mon, 24 Aug 2026 06:48:50 -0400
+	id 1wySOR-0005HE-SO; Mon, 24 Aug 2026 06:59:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wySET-0002pI-2C
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 06:48:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wySEQ-0007De-LJ
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 06:48:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787568523;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qaFLB4AJJ2Uguw4rcDY33BLUdjnMmj2Qtv/diyv5PAY=;
- b=T962ASiQdikJ0ZSieOSjdXV7wjWnaLVX5R/5mtm9brFa0HF68zp1k0iLciEARA5/JGbuaq
- KTdQSZZps/VumkgqQdWrg4xNzsel8LEGKqykvhkix87a2VxBttTVvJYot0b9zg+2HTjLzu
- kuu34j41tfduB2phxRv1LqslI3K1aPg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-497-GK1Gqn1jN6yGR1-X4qL7yg-1; Mon,
- 24 Aug 2026 06:48:40 -0400
-X-MC-Unique: GK1Gqn1jN6yGR1-X4qL7yg-1
-X-Mimecast-MFC-AGG-ID: GK1Gqn1jN6yGR1-X4qL7yg_1787568519
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 898151955D77; Mon, 24 Aug 2026 10:48:39 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.12])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2F500434; Mon, 24 Aug 2026 10:48:39 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A92EC21E6920; Mon, 24 Aug 2026 12:48:36 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  stefanha@redhat.com,  Daniel P. =?utf-8?Q?Berr?=
- =?utf-8?Q?ang=C3=A9?=
- <berrange@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>, Peter Krempa <pkrempa@redhat.com>
-Subject: Re: [PULL 35/35] docs: mark '-mon' as deprecated in favour of -object
-In-Reply-To: <CAFEAcA-tUz_YGhvqU8-o-jw-jhR4MTMFDJ3S9rA2ZG-0GpLtVw@mail.gmail.com>
- (Peter Maydell's message of "Mon, 24 Aug 2026 11:26:31 +0100")
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wySOR-0005H5-2A
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 06:59:07 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wySOP-0000kn-HR
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 06:59:06 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-66ceaade3f1so1917613d50.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 03:59:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787569144; cv=none;
+ d=google.com; s=arc-20260327;
+ b=FY1lIuxqnCLrxyKAV9vJh9UdoTBK8il7XBpdXpKdRQVAoWv2IxIFbjs522GbRo3qHQ
+ VntyuBGCcxSgbxIxRXD95UYWEDjC0nWlKFY2Y7LSZ+EQvFv3lkkJnXsI9qQGTuJ9lKX1
+ bCIvK5t2GrKDJuV94tRpV0fUppdO2qBbNOouaE4fzx1yhEqPQOqaVB4TrzPxwVUVKgML
+ tsvBE5e5tAuXe8Z/PhPxh/WgG2QZdA1wzh1eRFagtHGFpqBnv6wm8xb4iZ9KXKWSIw3x
+ Ddpd0vK8pB3fywGs2UUd53slNDx/G4AAGe92WqKA9fuwwCu1oGgDyh32PLLbJ4VuRdoB
+ bExQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=gj1pj7Aw7SevZUl5mxqOMG1++v+5MHtR55eBiUzO8tA=;
+ fh=B6STahklW9K39yksOpcsN4+yLgkd6tQAAsMtrDWs4x8=;
+ b=IrdZNb9knJrJtm0Y361LEccR4PRW3Oo3F7iK6LdCyRVfDNGUhEt0weOKEgDsyT3Ot7
+ C32w2QQ8dBcKl/WVLu6eolCG6KD/H0r0dF7rgZiT3AScx526aVTo6Pt7PxHWYDNCWpW2
+ h91qNhd8a/p54D8Ch6dSnFteyfdrFZyeYfttD3JneI8z8pfjI9QqnslRhBV++qgsFRDt
+ IivN1JJpzOgU8j7dXIo0yo23DLZ/BTCJV3rG4AZVv15L1lev44d6kMdnReWrI9Jgn/Dx
+ kae4VmT0tQQisAfFKqx6pPm7HblIvFspuAlof4g29f8cZq245yUs6N3wDJMuPy+z23jw
+ gyZQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787569144; x=1788173944; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=gj1pj7Aw7SevZUl5mxqOMG1++v+5MHtR55eBiUzO8tA=;
+ b=dTlSWOHI3Wlxp2D+JmTeTv4UhAKVlO5Qb498sHJZ4XtRqJ+hDIks7EY2JkjlZPW+d9
+ tiH5dH5XPpHnkP6i5lqkNxCVTwFUKv2EPEzZ4Kic6ApD/cfCc60JZ+b3ExRN2Z5yhMr8
+ gw979C2Gs6Nt1rZigbxdiBSbVgkOTuaSVmrBJtzXxCfdiERzv3YhLx7HZB42vdSJyLRJ
+ 2dWj8ZgggNJMwXR+/LBnmwSib/rMDTjtLpW/rIYMYKcUpgA63ga3nqGQUOGiqlDRExnZ
+ GvCIfNi1KsjvchD4pLjYrgWJS2XmNzPy2H9T/WZUsFeekBsKW9Pdb+qmmtxgPbvLa5R6
+ c6gQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787569144; x=1788173944;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=gj1pj7Aw7SevZUl5mxqOMG1++v+5MHtR55eBiUzO8tA=;
+ b=NxQdE+UFboxygJ6mAvk5jTFUjk13q/x5TIe2aaz/etOj0wHG79PpJVpQ0LBrMaZh5X
+ Kiz8sFtHKey+EtzaJs+cNPUf7jk+W46UdOK25KFbBPZmDaZCMcHBNCUAYkIYvZ1xIN1r
+ gii71YRgdw6LdZdcXpbwv1vw3ZrddqmScYLgmDBUh44swPDc/FBdnfCUckY3Eadl9nTF
+ 6sGCJP1X9QXog76CdU/V81E6AuzHkT8DUO8F8tKVWaDutn/J/fFLy8iRP4plz8q/lx2U
+ WDiaIPPtmJ6XyBRimvxOoqNAe8uMpkWiuX2Ay8p4MLeU0EdI7vv4p1lsJ2mE5RZ6ZWCD
+ jdPA==
+X-Gm-Message-State: AFuF++kt6LUA3wVbCaz7CMtuOzJZCyzBlnRTeezwbRkcHMEBdLIIgfSE
+ K9v5oEX0Ys7r5T7iFcIuE+kqWYt3DUkPQ1RLSLblHXiRwmuZkFVF4kReNqsMeIuPCwaiCupET+d
+ j5ANAVzS1HnR/G0o8ouZqUY8kSekbC79piHeIcK5pSg==
+X-Gm-Gg: AR+sD11FhnrhmFiBvgy0wLi7aWvDnpf6pisPrGCem5+ryzov/H/R/Vi99Xq4WCr5VGd
+ a2HLeTCGDqqYcfMLjznQu888XrhBLv/cQxm8APnqjVu28PnMGk6ZmoEkHeZUc/jKvkPz79oIKqX
+ 6a/lVpUFUmXzUBC3pyIUu9tQCt9pRLFjvJ75FwVW8j2JVWuxG4vAgV6GBlZB6nq7aNfpUljYv2C
+ gIy98Zr+kWORCWPjNGBTE1bxVQrjyPEa9DArjs202XavlDFC9ZGfHfDGEnphMy+0uNHYEHhz9tS
+ 0qWvF6tL6Xzz+qcAu1gcSUo7I1YZZGsvBKZQOPbAlES5pdaXB5R0AGJpPQjHzMUik7tijvLZll1
+ Y/XrMyuY6FMd9RZICGqBQ+jzZDio+Bg==
+X-Received: by 2002:a53:ef05:0:b0:667:bae0:e55e with SMTP id
+ 956f58d0204a3-66ce4a10079mr5795417d50.4.1787569143739; Mon, 24 Aug 2026
+ 03:59:03 -0700 (PDT)
+MIME-Version: 1.0
 References: <20260707110300.1918153-1-armbru@redhat.com>
  <20260707110300.1918153-36-armbru@redhat.com>
  <CAFEAcA-tUz_YGhvqU8-o-jw-jhR4MTMFDJ3S9rA2ZG-0GpLtVw@mail.gmail.com>
-Date: Mon, 24 Aug 2026 12:48:36 +0200
-Message-ID: <87o6erssjf.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ <87o6erssjf.fsf@pond.sub.org>
+In-Reply-To: <87o6erssjf.fsf@pond.sub.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 24 Aug 2026 11:58:52 +0100
+X-Gm-Features: AcwNN1V27i3RbIbv-0dp1qfm4vLjUbM980gGvewuM3PuDu2DdC9Hs4r0jdugDuo
+Message-ID: <CAFEAcA-bN5aRaZPsiZoT_zpoZkiTgUupGnCn4OaWNG_rMRw7=g@mail.gmail.com>
+Subject: Re: [PULL 35/35] docs: mark '-mon' as deprecated in favour of -object
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Peter Krempa <pkrempa@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,49 +120,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
-
-> On Tue, 7 Jul 2026 at 12:06, Markus Armbruster <armbru@redhat.com> wrote:
->>
->> From: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->>
->> The high level `-qmp` and `-monitor` options can remain as convenience
->> wrappers, but the low level `-mon` is completed obsoleted by the new
->> `-object` support with 'monitor-qmp' and 'monitor-hmp' types.
->>
+On Mon, 24 Aug 2026 at 11:48, Markus Armbruster <armbru@redhat.com> wrote:
+> Peter Maydell <peter.maydell@linaro.org> writes:
+> > Can we be more precise in deprecation messages of this kind, please?
+> > This warning is not enough for the user to be able to figure out how
+> > to change their existing command line.
+> >
+> > I had to look into deprecated.rst, check the git history to see which
+> > commit added the deprecation, then find out how this commit was adjusting
+> > the examples in the tree.
+> >
+> > Notably, "-object monitor-hmp" appears to require an "id=" despite
+> > nothing actually caring what that ID is,
 >
->> @@ -3239,6 +3239,8 @@ void qemu_init(int argc, char **argv)
->>                  default_monitor =3D 0;
->>                  break;
->>              case QEMU_OPTION_mon:
->> +                warn_report_once("'-mon' is deprecated, use '-object' w=
-ith "
->> +                                 "'monitor-hmp' or 'monitor-qmp' types =
-instead");
+> Yes, -object requires @id regardless of object type.  It calls
+> object_new_with_props_from_qdict() via user_creatable_add_qapi().
+> Together, they create the object at /objects/ID.
+
+Yes, but usually you need the ID because it's going to plug into
+some other option somewhere else; other options like -drive
+can take an id=, but don't insist on it if you don't need it, and
+some options like chardev are only useful if you connect them to
+something else by using the ID elsewhere in the command line, so
+whether they require id= or not never comes up. So the idea of an
+option requiring an ID even though it is never referenced anywhere
+else may well be new to the user.
+
+Mostly I mention it because otherwise I think the typical user is
+going to do what I did, i.e. replace "-mon" with "-object monitor-hmp"
+and then immediately get a different error from QEMU. The warning
+being more precise could save them a step.
+
+> >                                          and the warning message
+> > doesn't say how to determine whether your existing -mon option
+> > should be changed to monitor-hmp or monitor-qmp. The deprecated.rst
+> > docs do say that part, but don't mention the ID bit.
 >
-> Can we be more precise in deprecation messages of this kind, please?
-> This warning is not enough for the user to be able to figure out how
-> to change their existing command line.
+> Fair points.
 >
-> I had to look into deprecated.rst, check the git history to see which
-> commit added the deprecation, then find out how this commit was adjusting
-> the examples in the tree.
->
-> Notably, "-object monitor-hmp" appears to require an "id=3D" despite
-> nothing actually caring what that ID is,
+> Is this just "do better in the future", or are you also asking for a
+> patch to improve this warning?
 
-Yes, -object requires @id regardless of object type.  It calls
-object_new_with_props_from_qdict() via user_creatable_add_qapi().
-Together, they create the object at /objects/ID.
+Both, preferably :-)
 
->                                          and the warning message
-> doesn't say how to determine whether your existing -mon option
-> should be changed to monitor-hmp or monitor-qmp. The deprecated.rst
-> docs do say that part, but don't mention the ID bit.
+There's an argument that the deprecation warning could look at the
+option the user actually provided and emit the exact right new
+option to use instead. But I don't think that's something we've
+ever done before for deprecations.
 
-Fair points.
-
-Is this just "do better in the future", or are you also asking for a
-patch to improve this warning?
-
+-- PMM
 
