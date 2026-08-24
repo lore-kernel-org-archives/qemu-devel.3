@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E2BC5DF9D
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 04:57:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 772C6C5DF8C
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 04:57:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyMjc-00074Z-6K; Mon, 24 Aug 2026 00:56:36 -0400
+	id 1wyMje-0007Lc-GR; Mon, 24 Aug 2026 00:56:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
- id 1wyMj8-0006a9-W9
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 00:56:07 -0400
-Received: from [115.124.28.5] (helo=out28-5.mail.aliyun.com)
+ id 1wyMj9-0006av-L4
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 00:56:08 -0400
+Received: from [115.124.28.147] (helo=out28-147.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
- id 1wyMiy-00039G-Sr
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 00:56:06 -0400
-X-Alimail-AntiSpam: AC=CONTINUE; BC=0.08308789|-1; CH=green;
- DM=|CONTINUE|false|; DS=CONTINUE|ham_alarm|0.0198397-0.00211061-0.97805;
- FP=7195420937609096286|1|1|1|0|-1|-1|-1; HT=maildocker-contentspam033037021217;
+ id 1wyMiz-00039R-EZ
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 00:56:07 -0400
+X-Alimail-AntiSpam: AC=CONTINUE; BC=0.07436456|-1; CH=green;
+ DM=|CONTINUE|false|;
+ DS=CONTINUE|ham_system_inform|0.00378828-0.000704797-0.995507;
+ FP=7345161255091965258|1|1|1|0|-1|-1|-1; HT=maildocker-contentspam033023018039;
  MF=zhang_wei@open-hieco.net; NM=1; PH=DS; RN=8; RT=8; SR=0;
- TI=SMTPD_---.ivXOSti_1787547224; 
+ TI=SMTPD_---.ivXOSuN_1787547225; 
 Received: from localhost.localdomain(mailfrom:zhang_wei@open-hieco.net
- fp:SMTPD_---.ivXOSti_1787547224 cluster:ay29) by smtp.aliyun-inc.com;
- Mon, 24 Aug 2026 12:53:45 +0800
+ fp:SMTPD_---.ivXOSuN_1787547225 cluster:ay29) by smtp.aliyun-inc.com;
+ Mon, 24 Aug 2026 12:53:46 +0800
 From: Tina Zhang <zhang_wei@open-hieco.net>
 To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>
 Cc: kvm@vger.kernel.org, "Michael S . Tsirkin" <mst@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, Yanjing Zhou <zhouyanjing@hygon.cn>,
  Tina Zhang <zhang_wei@open-hieco.net>
-Subject: [PATCH v3 09/10] target/i386: Use AMD legacy cache fallback for Hygon
-Date: Mon, 24 Aug 2026 12:53:13 +0800
-Message-ID: <20260824045314.162941-10-zhang_wei@open-hieco.net>
+Subject: [PATCH v3 10/10] target/i386: Use AMD ucode-rev default for Hygon
+Date: Mon, 24 Aug 2026 12:53:14 +0800
+Message-ID: <20260824045314.162941-11-zhang_wei@open-hieco.net>
 X-Mailer: git-send-email 2.43.7
 In-Reply-To: <20260824045314.162941-1-zhang_wei@open-hieco.net>
 References: <20260824045314.162941-1-zhang_wei@open-hieco.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.5 (deferred)
-Received-SPF: pass client-ip=115.124.28.5;
- envelope-from=zhang_wei@open-hieco.net; helo=out28-5.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.147 (deferred)
+Received-SPF: pass client-ip=115.124.28.147;
+ envelope-from=zhang_wei@open-hieco.net; helo=out28-147.mail.aliyun.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -67,47 +68,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When legacy-cache=on, x86_cpu_realizefn() builds a hardcoded cache
-model.  It selected the AMD legacy cache table only for CPUs with the
-AuthenticAMD vendor ID.  Dhyana uses the HygonGenuine vendor ID, so this
-explicit compatibility path fell back to QEMU's old Intel legacy cache
-table.
+QEMU currently gives named Hygon Dhyana CPUs the non-AMD default
+ucode-rev value, 0x100000000.  That is the Intel/KVM-VMX-shaped
+encoding, where the visible revision is in the high 32 bits.
 
-The wrong table is visible through AMD extended cache leaves.  With the
-Intel legacy table, Dhyana reports 32 KiB, 8-way L1 caches in CPUID
-0x80000005 and a 4 MiB, 16-way L2 cache in CPUID 0x80000006.  Linux
-uses the AMD/Hygon cache enumeration path for Hygon and reads these AMD
-extended cache leaves.
+Linux reads MSR 0x8b for Hygon CPUs through the AMD patch-level path,
+using MSR_AMD64_PATCH_LEVEL and storing the low 32 bits as
+cpuinfo_x86.microcode.  With the old QEMU default, a Dhyana guest sees
+microcode revision 0.
 
-Use the AMD legacy cache table for Hygon in this fallback path when the
-new vendor CPU ABI is enabled.  Keep the old fallback for pc-11.1 and
-older machine types through x-hygon-vendor-abi-fixes=false.
+Use the AMD/KVM-SVM-shaped default, 0x01000065, for Hygon on this
+specific MSR 0x8b default path.  This does not route Hygon through AMD
+microcode loading and does not claim that Hygon CPUs are otherwise
+identical to AMD CPUs.
 
-The default Dhyana model is unchanged because it provides EPYC cache_info
-and therefore defaults legacy-cache to off.  The guest-visible change is
-limited to users who explicitly configure legacy-cache=on on new machine
-types.
+Preserve migration ABI through the vendor CPU ABI compatibility gate used
+by this Hygon bug-fix group.  pc-11.1 and older machine types leave that
+gate off, so they retain the previous ucode-rev default.  Explicit
+user-provided ucode-rev values still override the default.
+
+Add qtest coverage for the new default, the compatibility cases, and an
+explicit user override.
 
 Signed-off-by: Tina Zhang <zhang_wei@open-hieco.net>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ target/i386/cpu.c                   |  3 ++-
+ tests/qtest/test-x86-cpuid-compat.c | 19 +++++++++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 8666f66df8..f65a5b32bc 100644
+index f65a5b32bc..0630cfd8b2 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -10329,7 +10329,8 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-             env->enable_legacy_vendor_cache = true;
-         }
- 
+@@ -10222,7 +10222,8 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+          * needs to happen after the evenual setting of ucode_rev in
+          * accel-specific code in cpu_common_realize.
+          */
 -        if (IS_AMD_CPU(env)) {
 +        if (IS_AMD_CPU(env) ||
 +            (IS_HYGON_CPU(env) && cpu->hygon_vendor_abi_fixes)) {
-             env->cache_info = legacy_amd_cache_info;
+             cpu->ucode_rev = 0x01000065;
          } else {
-             env->cache_info = legacy_intel_cache_info;
+             cpu->ucode_rev = 0x100000000ULL;
+diff --git a/tests/qtest/test-x86-cpuid-compat.c b/tests/qtest/test-x86-cpuid-compat.c
+index 44d4631cd6..13c9ddb4db 100644
+--- a/tests/qtest/test-x86-cpuid-compat.c
++++ b/tests/qtest/test-x86-cpuid-compat.c
+@@ -404,6 +404,25 @@ static const CpuidTestArgs cpuid_tests[] = {
+         "486", "xlevel2=0xC0000002,xstore=on",
+         NULL, "xlevel2", 0xC0000002,
+     },
++    {
++        "x86/cpuid/props/dhyana/ucode-rev/default",
++        "Dhyana", NULL, NULL, "ucode-rev", 0x01000065,
++    },
++    {
++        "x86/cpuid/props/dhyana/ucode-rev/compat-off",
++        "Dhyana", "x-hygon-vendor-abi-fixes=off", NULL,
++        "ucode-rev", 0x100000000LL,
++    },
++    {
++        "x86/cpuid/props/dhyana/ucode-rev/pc-i440fx-11.1",
++        "Dhyana", NULL, "pc-i440fx-11.1",
++        "ucode-rev", 0x100000000LL,
++    },
++    {
++        "x86/cpuid/props/dhyana/ucode-rev/user",
++        "Dhyana", "ucode-rev=0x12345678", NULL,
++        "ucode-rev", 0x12345678,
++    },
+ };
+ 
+ /*
 -- 
 2.43.7
 
