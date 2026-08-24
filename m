@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F066C5DF8C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9289C61CE0
 	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:59:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNbg-0005zf-Jy; Mon, 24 Aug 2026 01:52:28 -0400
+	id 1wyNcR-0001YC-FQ; Mon, 24 Aug 2026 01:53:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNbI-00054M-Fv
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:52:04 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1wyNcP-0001PQ-Ap
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:53:13 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNbG-00031f-SN
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:52:04 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2cf452def93so28800495ad.1
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:52:02 -0700 (PDT)
+ id 1wyNcN-0003IX-CY
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:53:13 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-38dc69c74b8so3272007a91.0
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:53:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787550721; x=1788155521; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787550790; x=1788155590; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=6cxpb598ZC5YQS9pQsz8M+jshSqMrf/FVzGuyNPyanY=;
- b=JJI/0GdX0e4+Z3dLyq/3TwfGUJL69jO9V4FhcrE18dS6oCBPdOZ5nm7KkRTf+RQ+pC
- RZRBN/OwVr7ufEjw3Y0JKWV3clSMqUed2JHscZ2VpH0lZpNypNyRxB8LKBTLiggZXy/h
- ljMSFiAuaJLqQ14ZGEX/+tCOvtJN4I8/utbVCAghQCl8RIgAxHT2bnDQ0P1GmUPRobVw
- 9OhtF0C0eS8MAGzVztWLFLbUWcilAv91iRzZFIQGTd+EiW5Ffnj2xGBkctFWBm/dNz4g
- pwHXfL34MeB+XY8d9wyTsFDYQI4kEX3QFoIfXkUkmCVet/AjSfaxURu9ymzPbEN5SYlX
- 5aNw==
+ bh=E8fww6SheAAob+IWhdtbx0dCzxTAUBtVsPa0wdfQKz0=;
+ b=r1v32N6nLlq8iKCn9RX0j3ISbxNnzW0wt7TKpBRwALwF9fsWRBuWWCipIscw9OIAdF
+ lOyc/xndj5yLPVjQFXtFUaVREnhU8+3jCJb4SddvGkDdMxO0y/K+cB46zH/5QSSfDVeJ
+ CWMhEvu0AvgKJMQY2GjU/t8/dTOeFKAiMugQ+8zVU1Vq1vQbsAskfxPpjb96GtrrqfF4
+ hb60zWvf28VYLzgbwHkCplnex1foFaiYvn4y7F4MjEzJybVOOAPL6GH+tka6ku3BfCA9
+ Sg6bL099hocCY3SQ1WlLLNVQXrumFpSfAyqc3mou6LooD7Tt7X3I5t9JYOQ2T9b3mdd7
+ oDkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787550721; x=1788155521;
+ d=1e100.net; s=20251104; t=1787550790; x=1788155590;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=6cxpb598ZC5YQS9pQsz8M+jshSqMrf/FVzGuyNPyanY=;
- b=QeITLPJfhcyivD4ZnnChr+NQ71xC6KRDUwIry32zl+0aHOjVLcwJjOfbsPcDOG+h2V
- W95Uny0BEv5AiOpkvSo0ebXJxXn6efRP/xUyxYHXUfkTU8+g1duFiQADLol/OLHwdWGN
- 4dmhSi588dT2XYpQ4+QCRkGcvakacTBKgemghIqBfK/C0bH0LPw4Etpm7waSo9dSwd3u
- lJdscHIUwF5PS57m4GA+Oj8UOdZqUsJttMgLaykSjyGijZgFsS1+gxEmJs3KhHc5LvFj
- YWcfOJIofmqiGibDimui3JgEfQw0O1rIj2oTbFnA6McSq90CIBYu9wqh2fpFk0VHscTI
- I/pg==
-X-Gm-Message-State: AFuF++m19+aItW+OO51mm2rYjAXnRjG2qnvp0trFiDzJwS0pa20gdE9H
- 5/rzRaMDvxn/TAcBTVWS5tD5JMk8gUlxd83m04fCksdQVPG2RzCOFUZ04UIQ+A==
-X-Gm-Gg: AR+sD13kUrIIzEYr13Bi6uVKBEAYb+PpUT8q8GJcb7b9Ng6QM5vjSg+pxYmfZWMCrMG
- L8+vo+j0suZ9zpVB9xa8PJaqeG05d7rCUXq6yiASwXpXq1Zbt/gpb/EUuIgcYxObD/9kg+XLKyb
- hKZfoEPmpYw5y4eMBs+i5yoJoIJ/3PdJ5XYdGAvMcW0G3XHcPqn9opBZkbwwAkEOaxVIjHc7aXZ
- 7zrJV5mjuIrNQUSXUTz7M/BO36aqmDjsRzQB7jIefoOIfQdNGqd6GjqpwWQFLbHkHVTIqPD1ZEy
- ASn2nHwjidIfu0fDiAsBmEJ11zCTD+xvgSc7S+ZeM0QJr30Ow7PqC3e+G6Zj4zmJ75a1/pB/3hd
- uKPg6UCAq9Mv3Tf0SIgqucUV6sCslvmA2Akb+WvNCLuyEmjS2B1KfrEavkPvoObmd8ROl1YLYoZ
- uonJL9pLuYMGEAb7n8i/lQZwIOEjP2qTR6Gpi4liQ8pKH6rYjkABSveBpdN7+HhqGoAYmCImwT6
- 4bzQg==
-X-Received: by 2002:a17:90b:5823:b0:38e:c232:9d2c with SMTP id
- 98e67ed59e1d1-395c4bde19amr22159625a91.2.1787550721491; 
- Sun, 23 Aug 2026 22:52:01 -0700 (PDT)
+ bh=E8fww6SheAAob+IWhdtbx0dCzxTAUBtVsPa0wdfQKz0=;
+ b=oqxQtJDa6Vsvy1+ZJa9fRelawGK/AW4DAjrTjzg2DyP6APkDcgg+R/TwMovns52M6C
+ Eyx+gXxyXQ64sFWbATSglARPD0UiGRbGg7A5a9WXKUy/se5XtMNXzts2c8yf+aBPH0o0
+ rQNHzR4TV1HiCZderYkvMq+omOvsw/XfmKF8iShwyd9y6tqgFNukaGd1sONen63RpTQT
+ CHlVt/uiHTOdSTkrlc+s6jYNfeid+3qLhsqcAPgDjMK4lit7SpP7i7SFwRAZRbL9ElF+
+ 5Elw8OdZ0nKg8D6NVXJ+ey8ntTmLfg3+CRMvDGojUQ4/1uKU5xtj8+Ec880qPkNsd+Ey
+ FlPQ==
+X-Gm-Message-State: AFuF++l+Y4V9aHXUq0AwubJf3x6cABeV+SvKbaWIOINCQT1rV9R1zZlC
+ CvgOTRYKw/SoUQ8bH1jiMKVN+PUDgcIkPrTuTjM/AfWurCUf5oFhnrUT+UhHEw==
+X-Gm-Gg: AR+sD13cERLh8iRb4Si25FFRcfH/nVeY6yoJ9/2Yn5vDXq8XKAAHbdASb6HYgNFkSoS
+ bKfG3n5MT00E3PS+PU9fUn5CE6T8s8Dv738N6axCPiO03SZw9jCO2wd4u96nmzQNDUwYJyy/WHi
+ cLO66EAeY3nPUT6Wbm5qiH4iID4i4QNtmRY1Grzi4od98vmH8E/+slQ5r7mWMQtsMgvx4uXPb1X
+ Y07P4zUtI0mFfTaGXWTt0I6vRfqPclBHeX/mOMHizZ1nuXpxm1K6w/txkm3bF9T3+JMsfFBd7Hy
+ oihtT2B5G8ahQCmW6D1U57aTuBIIO066TN3I4nVCAIiQ+zsAc9II+qp4YHwZCOu/zP7H30Map+G
+ AjSeZvCDsPm3QJ5558/bdSoCmfhRbPsN+zpIX2mtJIMNoz2OQvzdz+oZiftQeO5V19ZZZLTH5nb
+ 1FyJCZFQFvMDOicuQP7wNh6eWSgmCxa0JEONkxnM+rlyGwinp4VZYqOpMvw+wblv7Re5pTGWRlI
+ DRnBA==
+X-Received: by 2002:a17:90b:560e:b0:38e:97f0:aa4b with SMTP id
+ 98e67ed59e1d1-395df617b34mr31707868a91.13.1787550789953; 
+ Sun, 23 Aug 2026 22:53:09 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.51.59
+ 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.53.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Aug 2026 22:52:01 -0700 (PDT)
+ Sun, 23 Aug 2026 22:53:08 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
+Cc: Vladimir Isaev <vvisaev@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 74/96] disas/riscv: Split ventana_opcode_data
-Date: Mon, 24 Aug 2026 15:47:44 +1000
-Message-ID: <20260824054806.2790041-75-alistair.francis@wdc.com>
+Subject: [PULL v2 94/96] tests/tcg/riscv64: add misa write test
+Date: Mon, 24 Aug 2026 15:48:04 +1000
+Message-ID: <20260824054806.2790041-95-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260824054806.2790041-1-alistair.francis@wdc.com>
 References: <20260824054806.2790041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,76 +103,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Vladimir Isaev <vvisaev@gmail.com>
 
-Move the table to riscv-xventana-op.c.inc and massage
-the lines into OP() form.  Drop vt.illegal as unused.
-Return pointers to objects directly.
-
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260812223142.349142-42-richard.henderson@linaro.org>
+Link: https://lore.kernel.org/r/20260321144554.606417-2-npiggin@gmail.com
+Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Vladimir Isaev <vvisaev@gmail.com>
+Message-ID: <20260817150653.40357-3-vvisaev@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- disas/riscv-xventana.c        | 21 ++++++---------------
- disas/riscv-xventana-op.c.inc |  2 ++
- 2 files changed, 8 insertions(+), 15 deletions(-)
- create mode 100644 disas/riscv-xventana-op.c.inc
+ tests/tcg/riscv64/Makefile.softmmu-target |  4 ++
+ tests/tcg/riscv64/test-misa-w.S           | 88 +++++++++++++++++++++++
+ 2 files changed, 92 insertions(+)
+ create mode 100644 tests/tcg/riscv64/test-misa-w.S
 
-diff --git a/disas/riscv-xventana.c b/disas/riscv-xventana.c
-index a4e59312d0..5d2e07865f 100644
---- a/disas/riscv-xventana.c
-+++ b/disas/riscv-xventana.c
-@@ -8,35 +8,26 @@
- #include "disas/riscv.h"
- #include "disas/riscv-xventana.h"
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index fac0474746..6a219c306c 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -67,5 +67,9 @@ EXTRA_RUNS += run-test-zicclsm-off
+ run-test-zicclsm-off: test-zicclsm-off
+ 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)v=true$(comma)zfh=true$(comma)zicclsm=false $(QEMU_OPTS)$<)
  
--typedef enum {
--    /* 0 is reserved for rv_op_illegal. */
--    ventana_op_vt_maskc = 1,
--    ventana_op_vt_maskcn = 2,
--} rv_ventana_op;
--
--static const rv_opcode_data ventana_opcode_data[] = {
--    { "vt.illegal", rv_codec_illegal, rv_fmt_none },
--    { "vt.maskc", rv_codec_r, rv_fmt_rd_rs1_rs2 },
--    { "vt.maskcn", rv_codec_r, rv_fmt_rd_rs1_rs2 },
--};
-+#define OP(N, ...) static const rv_opcode_data op_##N = { __VA_ARGS__ };
-+#include "riscv-xventana-op.c.inc"
-+#undef OP
- 
- const rv_opcode_data *decode_xventanacondops(rv_decode *dec, rv_isa isa)
- {
-     rv_inst inst = dec->inst;
--    rv_opcode op = rv_op_illegal;
- 
-     switch (((inst >> 0) & 0b11)) {
-     case 3:
-         switch (((inst >> 2) & 0b11111)) {
-         case 30:
-             switch (((inst >> 22) & 0b1111111000) | ((inst >> 12) & 0b0000000111)) {
--            case 6: op = ventana_op_vt_maskc; break;
--            case 7: op = ventana_op_vt_maskcn; break;
-+            case 6: return &op_vt_maskc;
-+            case 7: return &op_vt_maskcn;
-             }
-             break;
-         }
-         break;
-     }
- 
--    return op == rv_op_illegal ? NULL : &ventana_opcode_data[op];
-+    return NULL;
- }
-diff --git a/disas/riscv-xventana-op.c.inc b/disas/riscv-xventana-op.c.inc
++EXTRA_RUNS += run-test-misa-w
++run-test-misa-w: test-misa-w
++	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)x-misa-w=true$(comma)c=true$(comma)v=true $(QEMU_OPTS)$<)
++
+ # We don't currently support the multiarch system tests
+ undefine MULTIARCH_TESTS
+diff --git a/tests/tcg/riscv64/test-misa-w.S b/tests/tcg/riscv64/test-misa-w.S
 new file mode 100644
-index 0000000000..0fe4666aee
+index 0000000000..7f1eb30023
 --- /dev/null
-+++ b/disas/riscv-xventana-op.c.inc
-@@ -0,0 +1,2 @@
-+OP(vt_maskc, "vt.maskc", rv_codec_r, rv_fmt_rd_rs1_rs2)
-+OP(vt_maskcn, "vt.maskcn", rv_codec_r, rv_fmt_rd_rs1_rs2)
++++ b/tests/tcg/riscv64/test-misa-w.S
+@@ -0,0 +1,88 @@
++/*
++ * Test for MISA changing C and related IALIGN alignment cases
++ *
++ * This test verifies that the "C" extension can be cleared and set in MISA,
++ * that a branch to 2-byte aligned instructions can be executed when "C" is
++ * enabled, and that a write to MISA which would increase IALIGN and cause
++ * the next instruction to be unaligned is ignored.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#define RVC (1 << ('C'-'A'))
++#define RVV (1 << ('V'-'A'))
++
++.option norvc
++	.text
++	.global _start
++_start:
++	lla	t0, trap
++	csrw	mtvec, t0
++
++	csrr	t0, misa
++	li	t1, RVC
++	not	t1, t1
++	and	t0, t0, t1
++	csrw	misa, t0
++	csrr	t1, misa
++	li	a0, 2 # fail code
++	bne	t0, t1, _exit # Could not clear RVC in MISA
++
++	li	t1, RVC
++	or	t0, t0, t1
++	csrw	misa, t0
++	csrr	t1, misa
++	li	a0, 3 # fail code
++	bne	t0, t1, _exit # Could not set RVC in MISA
++
++	j	unalign
++. = . + 2
++unalign:
++
++	li	t1, RVC
++	not	t1, t1
++	and	t0, t0, t1
++	csrw	misa, t0
++	csrr	t1, misa
++	li	a0, 4 # fail code
++	beq	t0, t1, _exit # Was able to clear RVC in MISA
++
++	li	t0, (RVC|RVV)
++	not	t0, t0
++	and	t0, t0, t1
++	csrw	misa, t0
++	csrr	t0, misa
++	li	a0, 5 # fail code
++	bne	t0, t1, _exit # MISA write was not ignored (RVV was cleared)
++
++	j	realign
++. = . + 2
++realign:
++
++	# Success!
++	li	a0, 0
++	j	_exit
++
++trap:
++	# Any trap is a fail code 1
++	li	a0, 1
++
++# Exit code in a0
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
++
++	# Semihosting call sequence
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
 -- 
 2.54.0
 
