@@ -4,104 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4779AC5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 07:20:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC77CC5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 07:21:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyOyk-0008TR-Ix; Mon, 24 Aug 2026 03:20:22 -0400
+	id 1wyOzI-0000ej-3j; Mon, 24 Aug 2026 03:20:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wyOyj-0008TA-6X
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:20:21 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wyOyh-0000Ui-Bb
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:20:20 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-384930ca5e2so2932105a91.3
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 00:20:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787556018; cv=none;
- d=google.com; s=arc-20260327;
- b=GZz9aLgo/ZI73lVh+k5hOtyGl3CkWz+9V6FQlvp51pAIFakP3lo/YjBkhe1itVni73
- pzaTIOn/qoiazkalQYrrxHOUawQAFKpZ5e5B2ymV62hOTs2s6qyWM05Nf2YTdh4yt6nE
- 7AXxZjkB8pXX9YK7tZBtSEmaIQibjuAjr+4ZzeElIqqOCOhO0G11YdZUVHwL295oWsAd
- sHToesVntZz7p09cj7Ker8uPRDhGcBkYmp8NPBIP0VwqGbwsNfYM6FkVQDck36SuzxMu
- otDUAkgPZ8oNpDZStgsOPRvXJ/sKHw8Fe8c6jLzKFpH8hmmpOdvcAlP1kArTB6wesmgp
- oI3A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=75xUqyRKHGuQbI2RoUE9b4Vgd/cT543qUvORiCSg6bo=;
- fh=kgT19oiRK75ZQwo35VLqw0IgPa25di9Lcd0+tomWJi0=;
- b=nrmky7zauCASLfyEB4cgqiRExPlkms/yK4/FzMK62koGKUHTC/An5injc1FVYu1Rks
- lg41wCLsAfHYn7zSp3sDAFao1zfLsXgS7E7W+8NYFgU+A3DbL+p7K8G6K1c5YZJHhyzx
- oJBLUUcUOHMqmUTKa9VBAEbAHbowcsNOX84msF9VV+vaLC0GoxGcxfE67vbZ26QaXJBn
- dnMhX58yh1+tAaUMZMHLFBJDeXkCrTo+rs+blGxeNku6+H8oB6uvMBB56rtfYN4sKTGL
- F5hquaQ04ji79UEq2CrqElntgYy0Wn6+vUi8i4djJ9O+FAE03DW4RbGlURm0VajEaFRr
- 5fbg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787556018; x=1788160818; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=75xUqyRKHGuQbI2RoUE9b4Vgd/cT543qUvORiCSg6bo=;
- b=UF8Xk+YKcWuHNU3KOTgTBfjOGDD+K6J+UQ6L9mNON/2vl+iXZglNDHb1TXVhXpfCEj
- MCa66nKVZ0mYHn29goC16FHPP7L1u9Ti0eqIO7mHL78I8TIMMC22gbbSa68D7YJ24kiD
- F33x3pbAWZCezm5L1YEOG0gjqfye96a4zUwvpNHxvmcSi6ZenQJ0wRde2zOdqkB5DbOw
- QsylrdvE/a8/CikM+2HXpiOkPwiIPP9yJghJvpL6YIBGySIQPGOLb3zHWYQSWiJJ+Q8j
- 17e14rkrYGY1nRa8jxy2Rh2I8w43wkN2CMRS3yvnz+QGkfzOX+uJ6KLIf0pB1ze+5HCf
- /v3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787556018; x=1788160818;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=75xUqyRKHGuQbI2RoUE9b4Vgd/cT543qUvORiCSg6bo=;
- b=YJ14ZI1RkBEKHTmqGVH8Rh4a7ibydyXLe5SsuwpNXLJ0IYgHsiYGL5/DeQn96JAHwK
- 8EixcrIV4w822r3nWRQ6sQpBwUoQxREupNlquOS2r/Hv9xluhw2k56cmYdz7cD/eW3LI
- fkGz0oE8aaBylViVxHqXrEbltYTSjjYzu7llpdC4aD8mnb4N/YSN5jYrH4j9pupQ8Ar5
- FGCuf5/cFU/ZTCyANuDYouEmlGoASxphcGWnnsvWTXJ7FhZKMgHlgtMc70y83aWdsgNW
- wmvaoI72JCDF05bDazpOq/MGMOkOKVQZNLnw4fq0c+TNjHcJdWyHxfkd3p2ZUHfXgfHt
- jt4A==
-X-Gm-Message-State: AFuF++kks5vHQ5VIl2LTvdOdwbCaRPDFvMmo69CP11Eds4nKBwQlMOG8
- rEbSpsmMXOE0jqCo8wa8Oz7oJcJ/cwOQgk95ibHYzScmWa1JLPtM2JFJC0HZ506OeKjq+GMaKhD
- 0lBSvR7U3lnBkWHArxnzJbJKQIcV+0k8=
-X-Gm-Gg: AR+sD10i3ULEVF/0OYS+imwCJSgnuzFNJv+VgleXrXk6dYUp4HniubQSBIN3UU0aCuY
- TNuuzL82nDbQqVY/fm0oU0FX39ws8XHGRBPvzzun6iK4iIFFLIUbsqN/AxNLP574IDtcw2/sOep
- Po3qdXUgZMV4aC/LcJrJfi3GKALPbYlpU2Hi3re+H7PUhoKmEqNIvmPFtGAaWs9kQl1b39MTjoO
- 0c7eSYaN/9QI9Y3uJK6KYfXtge82chQ6rWFWhZ3mzS2cBy8fzE9msbQ6sFXGaAmRgjsp+OTl4Y7
- pdqeKRK6crPsyca6MNaXHHwKNTfsLKW5Sq/4xmYiXgBeKhpo/OwXoKtZhHIsejBljoMqFd+WX7S
- W3x8ZqxHbH9I=
-X-Received: by 2002:a17:90b:5706:b0:38f:de97:b06 with SMTP id
- 98e67ed59e1d1-395deea4a72mr31464430a91.5.1787556017744; Mon, 24 Aug 2026
- 00:20:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wyOzF-0000b8-ND
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:20:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wyOzD-0000m0-55
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:20:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787556049;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ resent-to:resent-from:resent-message-id:in-reply-to:in-reply-to:
+ references:references; bh=KFLiUGru66zP5yLGusbHQzWL4m/cLTCvziQwuP+9vSM=;
+ b=HDBow7qyr5B/5ocwVSwEaJGfyHsADkhpdBi64G1Tdze0rTpWVyNyidzkPAL+VmaI8KaEhU
+ jKK/jlRDu/UPxpB4AVY3E262PFFtlTjgPjRbxVFEud36ke4+jEwFlbShvvb7KNGQIru4cg
+ D26Abw2C3RZhoDeiLxcHEcmU6iMdeqE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-637-kzMKR4QXMomU-x0T6jQxKw-1; Mon,
+ 24 Aug 2026 03:20:47 -0400
+X-MC-Unique: kzMKR4QXMomU-x0T6jQxKw-1
+X-Mimecast-MFC-AGG-ID: kzMKR4QXMomU-x0T6jQxKw_1787556046
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F2AEF180A9FD; Mon, 24 Aug 2026 07:20:45 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.12])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 750F31800348; Mon, 24 Aug 2026 07:20:45 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id DC21F21E6920; Mon, 24 Aug 2026 09:20:42 +0200 (CEST)
+Resent-To: qemu-devel@nongnu.org, philmd@oss.qualcomm.com,
+ pierrick.bouvier@oss.qualcomm.com, anjo@rev.ng
+Resent-From: Markus Armbruster <armbru@redhat.com>
+Resent-Date: Mon, 24 Aug 2026 09:20:42 +0200
+Resent-Message-ID: <87wltgugqd.fsf@pond.sub.org>
+From: Markus Armbruster <armbru@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,
+ philmd@oss.qualcomm.com,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>, anjo@rev.ng
+Subject: Re: [PATCH v2 1/2] qom/object: add available_if field to TypeInfo
+In-Reply-To: <20260821235112.193381-2-pierrick.bouvier@oss.qualcomm.com>
+ (Pierrick Bouvier's message of "Fri, 21 Aug 2026 23:51:11 +0000")
+References: <20260821235112.193381-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260821235112.193381-2-pierrick.bouvier@oss.qualcomm.com>
+Date: Mon, 24 Aug 2026 08:01:37 +0200
+Message-ID: <87ld9wvyym.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260821-subprojects-ignore-v1-1-0640f7fee388@codewreck.org>
-In-Reply-To: <20260821-subprojects-ignore-v1-1-0640f7fee388@codewreck.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 24 Aug 2026 11:20:03 +0400
-X-Gm-Features: AcwNN1VL2Zz565nBr9gy_TG52F3q1wxjMQJfJZE9h7_GaegbNKBaW8oJfwCB2Ms
-Message-ID: <CAJ+F1CJe4x1Pne=57rUQ=HMdtzygLiWPOOsSMPXopNYDXWaO5Q@mail.gmail.com>
-Subject: Re: [PATCH] subprojects: re-include *.wrap files
-To: Dominique Martinet <asmadeus@codewreck.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pj1-x1035.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,60 +91,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 21, 2026 at 10:48=E2=80=AFAM Dominique Martinet
-<asmadeus@codewreck.org> wrote:
->
-> The existing wrap files e.g. anyhow-1-rs.wrap are ignored because
-> meson extract the sources in the subprojects directory
->
-> This is not a problem for git itself, because files that had already
-> been added are properly tracked, but tools such as fd-find blindly
-> trust the ignore rules and fail to pick up the .wrap files, making
-> discoverying the build system (when e.g. adding another crate or just
-> curiosity) more difficult than necessary
->
-> This added rule re-adds the wrap files so they now properly get picked
-> up.
->
-> Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
-> ---
-> Stumbled upon this when looking at the rust build system out of
-> curiosity (because stsquad asked something related on IRC)
->
-> It probably doesn't matter much, but took me more time than it should
-> have to find the wrap files, so might as well improve this for the next
-> one to look at these.
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
+> With the single-binary, we start mixing types for different targets,
+> that may or may not be available for current one.
+>
+> Previously, we implemented an approach based on interfaces, but it
+> proved to be too limited. It requires duplication between
+> machines/cpus/devices, and does not handle specific cases where a type
+> should be available based on a target configuration (Kconfig).
+>
+> To solve this, we add a new field, available_if, to TypeInfo.
+> It is an array containing a list of requirements for type to be
+> available.
+>
+> For now, we have only targets as requirements, but later we'll add
+> specific target config entries also.
+>
+> We also add a TARGET_REQS macro, to declare a list of requirements. For
+> sanity sake, we don't use a complex variadic macro prefixing each
+> parameter. It requires a lot of macro boilerplate in C, and prevent
+> readers to jump easily to definition for each parameter.
+>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 > ---
->  subprojects/.gitignore | 3 +++
->  1 file changed, 3 insertions(+)
+>  include/qemu/target-info.h | 11 +++++++++++
+>  include/qom/object.h       |  5 +++++
+>  qom/object.c               | 10 ++++++++++
+>  rust/qom/src/qom.rs        |  1 +
+>  stubs/meson.build          |  1 +
+>  stubs/target-info.c        | 11 +++++++++++
+>  target-info.c              | 13 +++++++++++++
+>  7 files changed, 52 insertions(+)
+>  create mode 100644 stubs/target-info.c
 >
-> diff --git a/subprojects/.gitignore b/subprojects/.gitignore
-> index 011ce4dc3b77..4bdedb081601 100644
-> --- a/subprojects/.gitignore
-> +++ b/subprojects/.gitignore
-> @@ -26,3 +26,6 @@
->
->  # Workaround for Meson v1.9.0 https://github.com/mesonbuild/meson/issues=
-/14948
->  /.wraplock
+> diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
+> index 6c5b714288e..6379e65bbcf 100644
+> --- a/include/qemu/target-info.h
+> +++ b/include/qemu/target-info.h
+> @@ -50,6 +50,17 @@ const char *target_cpu_type(void);
+>   */
+>  bool target_big_endian(void);
+>  
+> +typedef enum TargetReq {
+> +    /* 0 is reserved for end of array */
+> +    TARGET_REQ_BASE_ARM = 1,
+> +    TARGET_REQ_AARCH64,
+> +    TARGET_REQ_ARM,
+> +} TargetReq;
 > +
-> +# re-include wrap files regardless of ignores above
-> +!/*.wrap
->
-> ---
-> base-commit: acc271509ab015b9e064065f26d41a61e01e641b
-> change-id: 20260821-subprojects-ignore-8a9460a6d7ad
->
-> Best regards,
-> --
-> Dominique Martinet | Asmadeus
->
->
+> +#define TARGET_REQS(...) (const TargetReq[]){__VA_ARGS__, 0}
 
+The sentinel 0 is not a member of the enum.
 
---=20
-Marc-Andr=C3=A9 Lureau
+Is this safe?  I'm asking because the C standard is infatuated with
+undefined behavior.  Checking C99...  all I can find is Annex I "Common
+warnings"
+
+         -- A  value  is  given to an object of an enumeration type
+            other than by assignment  of  an  enumeration  constant
+            that  is  a  member  of  that  type,  or an enumeration
+            variable that has the same type,  or  the  value  of  a
+            function   that   returns  the  same  enumeration  type
+
+Looks like it's safe.
+
+[...]
+
 
