@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BDCDC5DF9C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 10:29:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C9FCC5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 10:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyRuc-00033s-Jd; Mon, 24 Aug 2026 06:28:18 -0400
+	id 1wyRud-00034v-PA; Mon, 24 Aug 2026 06:28:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wyRua-00033B-QX
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 06:28:17 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1wyRuc-00033p-AF
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 06:28:18 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wyRuY-0001pn-Ih
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 06:28:16 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-47f96c5b722so1358317f8f.0
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 03:28:11 -0700 (PDT)
+ id 1wyRuY-0001q0-JL
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 06:28:17 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4921eed3fa2so25753145e9.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 03:28:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787567290; x=1788172090; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787567292; x=1788172092; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=xag12ub1bcuK3t8iRdQzufeU8tr65Q5N7+Ogw4oNi1g=;
- b=LGxsqjTVvAVbfiRa92DKHQMX1MSzFU/Oij+LO1HPaj97sF0d6sM/Bgwc3/N+QJ/8Bv
- SrrODslmxehC40w4gmYy5QmwJat/YCnx9L0Y9xBtzFg0z4AeVwlwVSF08won9J/JTAnd
- JnE1+Q6YZ87RHR5ulX2/fo8HXoLW927/Wjh15/+qF+YHB5xwBooZlykEl9GpGtGNlOOg
- zzrs9WKmyfgBl3eAZ57gWcYLVOgajSzK6+26/9xZEmxko9KQrlc5FHyld5P4zFms1mhV
- K2opxAKtwm0v1lB1ReygMHdqkwh4qPZfCqZBU0rWrLDdOTTOi1BUsoC5oY6uSn5bQTfo
- JYEQ==
+ bh=aqKROqzH1WTtSlOfECpDIdu6BBJpY3xxMUxQ+mbxfpw=;
+ b=p1hwnrPuDW0qP7DGJ8BZ53l+ip/AvgD7HLRvtgpFmYV5HQfQ01f5DpUdqBDaCEcGZu
+ ZmSMo88R5iair6A1Rj/ttwYaZ78mR40Unz4KDy8MZP7c4dEx2AelFtCzCfvSfPyHlLEP
+ pkP2Zah28zIA/jmQQDdjteutsQROTL7dB6apGL0Y/ImwbR6yzPGQF9h62bZMOabgEEtS
+ GMI8WIh1QkAD/2CExi6aqp8nZdhQG2L0baZ5BsT1hAdVFgyC+znhW0KNaxMttQpz+In2
+ +8Zc3LRcMJlX78xpSDykBReP3QxF3zsBWrvvyorMJrN0Oj1KjHf317ZVsaZrbRkmBsJX
+ Nk8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787567290; x=1788172090;
+ d=1e100.net; s=20251104; t=1787567292; x=1788172092;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=xag12ub1bcuK3t8iRdQzufeU8tr65Q5N7+Ogw4oNi1g=;
- b=ofRU+h+IuqY8t2YjPnOCYNHOZwlFZbAnOiFWcDLCgxI9imf9kHQUCIsQAMYlFP7dj1
- t3YH4Fz2udjfRI3hGph94IMGz6g+USjJTao+W6Hzh0PwvFApVn75664c1XGSC6xP92WB
- jOFshbnHa+ggcevUeZbMO+NiF5DvMNUfKjkncTmyWSODXubWJe6YfrQmxc+u6W2CYo9v
- 3FkikrPgT9Gm0TrQaR69xtF+zqB9OcV3NNXbedfMuM6a7G7HcWZIriL2JmkDFa0AIQP4
- /ms2VUUbho5ZGhofcFO3TBhjayD+6lHx4MepV+Lwm0GyYf3rwkwGdZnSVz8M0NtEe/aA
- V8kQ==
+ bh=aqKROqzH1WTtSlOfECpDIdu6BBJpY3xxMUxQ+mbxfpw=;
+ b=SKEEDk0N9e53gSzvesL5gqnPfj83LxdbSH2xliUtZFDwPETVq8k0gtlWiJtxsfAxXn
+ 6nPIJrrfjKW1oJxknxl6+a9S2CyHttvFeol4mtz1/g/gm8IBGq1c471PLtxRn90hsaNS
+ JSwFhH4cej7L5qQ9tbMR6wyno+j7JCvbzxjGMCE9ssT5vZ6cAqYnyQ2sk6cp13HwDdUL
+ DVtBAyG6GCZFPpN+ujgue3pxIX9fs1X2rmJ0iV23kh53pPkHIwHsIPEK4tBnH3i4wF7t
+ n8tpuULBWjdUmoi6hxkRypM83FmKceI+iFEYdZ5wsbad94MUtN8GlER5uHuTW9+TCZVq
+ IZ+Q==
 X-Forwarded-Encrypted: i=1;
- AHgh+RqESdZxwOL0CXRvFVcUsDTOKCqEOnzsYAfkjc1BER6P4fH5Nqex+9rXtVZxc9RwDw9dKJv/KBfp5Z8W@nongnu.org
-X-Gm-Message-State: AFuF++kJMX/kTKdP/gbekJPkkFoLN40eeLr4WywGRUnp97OeIO913tZc
- cRkj1dzZwD5t2qlaKp8pyY9ym1NlD5O8vyqaijk0QF+Hhq4F88Fyb97KXaUjTspmBITDZWeZTwu
- HzLkXA2Q=
-X-Gm-Gg: AR+sD12kXtlpJziBmu9RM/M2uwUid88WGmwaOze8HCwp6KeiFnbB3xr7iXuqf72ozXg
- 3Dxu+DY2qvkeR8gQU0KKk6JNo+8f/snuMobh0hTtIC/e57tkIX/yj2CEsm5+tky08WzpfVEpfvq
- X3k/Yl1rRSX/bd9cCqb1t6K3SpNItUz7YX0eAza7BrCE7G+PPqCxAVcuWJVTNAJZOr6qcqaRVJP
- Iq8VW2SUQxyT0CWSFK2FIEcdZZlFYtGAZo7STaCXEJnBI7ZewXvDXy18+mlGFSO7x8Oyk1m66p8
- cGjVs00K8TD287/3trqcobGouLbRWpmzccRFKyMlLj2yOuuy1fXtnWURBhHzT9O2ahAoVjrzxZY
- mkU3vWf2PL+l0WUsj3HKtxjTtxq1h7XDVT8Oj1ZZZWW6sEoQegbLk8N9Bo8fSDIVmVIMmyxB6BS
- DJ7xRBJJ7HLQ3jiNnAmu9dCRlMk0ExRy8SYYCgFVD7SWBSM5dMeLaqKKHPzF1Y+nhazjsfTkFO+
- HgEZaic/kHb7jUMolOJFsPKOqnzM2h6UKKupnuhNappwfWaSp+1VVamazbpYHLs/zCWt9adc+I=
-X-Received: by 2002:a05:600c:4f09:b0:496:bffb:fb7b with SMTP id
- 5b1f17b1804b1-499b8457b10mr298163075e9.10.1787567290415; 
- Mon, 24 Aug 2026 03:28:10 -0700 (PDT)
+ AHgh+Rp8Q10ViXr5Urq23rbWM6IcQ4Sp0a/JXxI1TAD7TD2VTTwvHWUiu5vmCjtLir66/itRxY2XdURRtTjM@nongnu.org
+X-Gm-Message-State: AFuF++lPmNhPVLkBOWfLSt/hqat/xP4cV3lVl93SiKcznSYDRaNkXDuJ
+ M+RLGztE8b1Jcs3dWKei3CxN66//+KHzaBACSQZD6EL4eMGSgliCUsCiO0bc3Lud3Ww=
+X-Gm-Gg: AR+sD11SkP4btG5ZJXCJG+leF3fm0mPSTDdrLPYXtJP9kjF5gq6dNDSvh+U/ovDBaYx
+ gfawUK0PjzFe1GEfVE4boEv7JMZFNrglN75VHD+xEf4TqcnrVYW0sYWNiFBc5OUJ0HsFVDa+JpU
+ mvtVFjSJnsBVG90MBZZpUwImYT2WQ2fkWNEQj8yYMBp79xaAjZsd8wU+lYoVJnZPnlMxB4mRVo0
+ Eqmb/lrLMWYbmuyda3SCvsTMBC9chsQ65gaUwDk17B7PwT9ndtbLn6qKW91ge5q6nMVXvWG31p4
+ egELd699kmgSVCM9tn/UtVgJ02f1d9dcoEY4PeMmV8Yhpr9Zk5McndbqfZofA4/23ndW6zRhNLF
+ 6Im7MW1fmDBrZjl9y815ryJOfag299BLEAEfqoFabAqYbkuStMSjE49Q+WNJ1MOt8LZlgmAI9rL
+ GkjL06aaXfSrXi1z/MkwaMKJ0Mwlhgruvlz199hi0YmZ6rLLAD083f89eEpwN8kWav+FvA/rgfj
+ hzXIel2oiToJ0+ZLfpCAgE03z4KNuLWD41VY0wFDdiV064O6TgQyDa8af7Q/XWUxdQn7Q==
+X-Received: by 2002:a05:600c:1548:b0:499:841c:2016 with SMTP id
+ 5b1f17b1804b1-499b8273456mr303455385e9.0.1787567291654; 
+ Mon, 24 Aug 2026 03:28:11 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499c355e6d1sm77730095e9.6.2026.08.24.03.28.09
+ 5b1f17b1804b1-499c355e6d1sm77730095e9.6.2026.08.24.03.28.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Aug 2026 03:28:09 -0700 (PDT)
+ Mon, 24 Aug 2026 03:28:10 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 2/6] hw/intc/arm_gicv5: Ignore low bits in L1_ISTE.L2_ADDR
-Date: Mon, 24 Aug 2026 11:28:01 +0100
-Message-ID: <20260824102805.639072-3-peter.maydell@linaro.org>
+Subject: [PATCH 3/6] hw/intc/arm_gicv5: Regularize spacing in config_readl()
+ switch
+Date: Mon, 24 Aug 2026 11:28:02 +0100
+Message-ID: <20260824102805.639072-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260824102805.639072-1-peter.maydell@linaro.org>
 References: <20260824102805.639072-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,60 +103,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GICv5 spec defines that an L2 IST is always aligned to its size,
-by stating that bits [N:0] of the address are 0 where
-    N = 11 + (2 * L2SZ)
-
-We were missing this check, and only aligning by applying
-R_L1_ISTE_L2_ADDR_MASK, so we would only enforce 4K alignment even if
-the L2 IST was 16K or 64K.
-
-Add the missing masking of low bits.  We already needed to calculate
-the number of bits needed to index each byte in the L2 table, so add
-it to the GICv5ISTConfig to save having to re-calculate it later.
+In this file we don't put blank lines between cases in switches,
+except that for the switch in config_readl() we've written it half
+with blank lines and half without.  Delete the blank lines to make it
+consistent with itself and the rest of the file.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/intc/arm_gicv5.c         | 6 ++++++
- include/hw/intc/arm_gicv5.h | 1 +
- 2 files changed, 7 insertions(+)
+I figured probably better to do this before adding a bunch
+more cases to the switch, which virt support will do.
+---
+ hw/intc/arm_gicv5.c | 15 ---------------
+ 1 file changed, 15 deletions(-)
 
 diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index cdc6c9d3466..20680a5c225 100644
+index 20680a5c225..7480c12413b 100644
 --- a/hw/intc/arm_gicv5.c
 +++ b/hw/intc/arm_gicv5.c
-@@ -595,6 +595,11 @@ static bool get_l2_iste_addr(GICv5Common *cs, const GICv5ISTConfig *cfg,
-             return false;
+@@ -1468,53 +1468,41 @@ static bool config_readl(GICv5 *s, GICv5Domain domain, hwaddr offset,
+             v &= ~R_IRS_IDR0_VIRT_ONE_N_MASK;
          }
-         l2_base = l1_iste & R_L1_ISTE_L2_ADDR_MASK;
-+        /*
-+         * The effective base address of the L2 table is always
-+         * aligned to the size of the L2 table.
-+         */
-+        l2_base &= MAKE_64BIT_MASK(0, cfg->l2bits);
-         id = extract32(id, 0, cfg->l2_idx_bits);
-     } else {
-         /* 1-level table */
-@@ -1358,6 +1363,7 @@ static void irs_ist_baser_write(GICv5 *s, GICv5Domain domain, uint64_t value)
-         cfg->id_bits = id_bits;
-         cfg->istsz = 1 << istbits;
-         cfg->l2_idx_bits = l2_idx_bits;
-+        cfg->l2bits = l2bits;
-         cfg->structure = FIELD_EX64(cs->irs_ist_cfgr[domain],
-                                     IRS_IST_CFGR, STRUCTURE);
- 
-diff --git a/include/hw/intc/arm_gicv5.h b/include/hw/intc/arm_gicv5.h
-index b8baf003ad6..d763a7939c7 100644
---- a/include/hw/intc/arm_gicv5.h
-+++ b/include/hw/intc/arm_gicv5.h
-@@ -23,6 +23,7 @@ typedef struct GICv5ISTConfig {
-     uint8_t id_bits; /* number of bits in an ID for this table */
-     uint8_t l2_idx_bits; /* number of ID bits that index into L2 table */
-     uint8_t istsz; /* L2 ISTE size in bytes */
-+    uint8_t l2bits; /* bits needed to index L2 table in bytes */
-     bool structure; /* true if using 2-level table */
-     bool valid; /* true if this table is valid and usable */
-     /* This caches IST information about pending LPIs */
+         return true;
+-
+     case A_IRS_IDR1:
+         *data = cs->irs_idr1;
+         return true;
+-
+     case A_IRS_IDR2:
+         *data = cs->irs_idr2;
+         return true;
+-
+     case A_IRS_IDR3:
+         /* In EL3 IDR0.VIRT is 0 so this is RES0 */
+         *data = domain == GICV5_ID_EL3 ? 0 : cs->irs_idr3;
+         return true;
+-
+     case A_IRS_IDR4:
+         /* In EL3 IDR0.VIRT is 0 so this is RES0 */
+         *data = domain == GICV5_ID_EL3 ? 0 : cs->irs_idr4;
+         return true;
+-
+     case A_IRS_IDR5:
+         *data = cs->irs_idr5;
+         return true;
+-
+     case A_IRS_IDR6:
+         *data = cs->irs_idr6;
+         return true;
+-
+     case A_IRS_IDR7:
+         *data = cs->irs_idr7;
+         return true;
+-
+     case A_IRS_IIDR:
+         *data = cs->irs_iidr;
+         return true;
+-
+     case A_IRS_AIDR:
+         *data = cs->irs_aidr;
+         return true;
+-
+     case A_IRS_IST_BASER:
+         *data = extract64(cs->irs_ist_baser[domain], 0, 32);
+         return true;
+-
+     case A_IRS_IST_BASER + 4:
+         *data = extract64(cs->irs_ist_baser[domain], 32, 32);
+         return true;
+-
+     case A_IRS_IST_STATUSR:
+         /*
+          * For QEMU writes to IRS_IST_BASER and IRS_MAP_L2_ISTR take effect
+@@ -1522,11 +1510,9 @@ static bool config_readl(GICv5 *s, GICv5Domain domain, hwaddr offset,
+          */
+         *data = R_IRS_IST_STATUSR_IDLE_MASK;
+         return true;
+-
+     case A_IRS_IST_CFGR:
+         *data = cs->irs_ist_cfgr[domain];
+         return true;
+-
+     case A_IRS_SPI_STATUSR:
+         /*
+          * QEMU writes to IRS_SPI_{CFGR,DOMAINR,SELR,VMR} take effect
+@@ -1537,7 +1523,6 @@ static bool config_readl(GICv5 *s, GICv5Domain domain, hwaddr offset,
+         v = FIELD_DP32(v, IRS_SPI_STATUSR, IDLE, 1);
+         *data = v;
+         return true;
+-
+     case A_IRS_SPI_CFGR:
+     {
+         GICv5SPIState *spi = spi_for_selr(cs, domain);
 -- 
 2.43.0
 
