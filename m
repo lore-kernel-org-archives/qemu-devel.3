@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8EC0C5DF9C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 20:08:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77A3BC5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 20:08:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyawI-0000HB-4i; Mon, 24 Aug 2026 16:06:38 -0400
+	id 1wyawQ-0000ML-E2; Mon, 24 Aug 2026 16:06:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wyawG-0000Ga-OY
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 16:06:36 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wyawO-0000Kt-Jj
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 16:06:44 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wyawE-0004YU-RB
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 16:06:36 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-6a18840e2abso6814471a12.0
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 13:06:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wyawM-0004aM-9J
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 16:06:44 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-6a3fda88184so6175435a12.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 13:06:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1787601993; x=1788206793; darn=nongnu.org;
+ d=openvz.org; s=google; t=1787602001; x=1788206801; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=2GafQ1n/IVAdBYtDXKArCWh0nJ8a8I6SRHj3bLDtVWA=;
- b=Fy7j6d7C+coENQhqhqLbm7YBCbPq+ysykI0SnUM+DYyDQ0fKfS9W6BFAwL/sGb6WIF
- bt0UEDAYMvwM6vFdriG7a1zNV4fLGNH51zYkvhwgdp/ydLPIVFIDnSzKdDuInPvkN2/S
- U59S8Ir90HzvZGo+ZclbedxvG1xe1vbZip9hKaCAN4RJjeTh1d2nVfnMFyYk+JCRiH0J
- IAiLDWU8ZVuCTMLAKR+1lkBbVwbKXxazG0P8/cYiU5GyvsDLn6Ih2NkmY4WEwcOL7DzN
- CZI2quNm9cFMluKdBKhLaNp5oOhY2s2TQ/qdCsJk0B4xDww8QOUOtTzdzOZwBDmGy4YG
- DR/Q==
+ bh=vgZZhvbU4Cbo8ry1+snhPPTLSFgEIZHO3pUsmTEMJYs=;
+ b=e+Susn+ro0Hbpvrr3bc6bFdjW5S3rfNormViphbD7kke3RnDwDtQ2xMJuuJJs8XWAp
+ lxE04xrz+JoyF4V3fSPvMpiJyUrzl2nDv1RKnCPqhnGb0ITkj7lfHW3HkD/L6IQOk8C0
+ 2aDnQwOUkPEYHq1jshRKK13x23sJBKqYbK2WJieguzQ5wegyFKQfKV0LFyBM+dqhGlOd
+ vT9nR5psvcavK2U5qwylgyFY7amPe2rl17agzTesJoiYzasNL7MAbX4gI6wJI2jUmrok
+ 0SPlHoNSzbwmmcaAHK9Tiq9/k7RGpYQM1zqLnSrVLu9y/Yjo5rkIIRZgks7cIfD2s/tP
+ pPow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787601993; x=1788206793;
+ d=1e100.net; s=20251104; t=1787602001; x=1788206801;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=2GafQ1n/IVAdBYtDXKArCWh0nJ8a8I6SRHj3bLDtVWA=;
- b=a1ZzCuqxCufPnGHhgIO4V66Bd9/LQTlfwP7B6Ik2D8WS+YY7yVGiD/6kywG+k72uI9
- sdzrMIYeNA/jEW0oqSl/XC2J6wwWKLOeWcOGzNDAXiCeNsDY+1AJrXk4zXL/Cj9EAaxA
- 2EFMbvBw5qgtYqU6/NjHkhZRCMaX51cUnF2M6y0K3KsffBSSg5XtL3junWW6sow7iZYW
- mgD3j4UY2aGAufCn9kosGnsszliLBv+HicKSKwoHifgpAAHTdF6VB/yy/5lJ1kI4bRDd
- UKtzo8JV9i4u93WlU4wJ3PoMdFHRqba/+xB9eArkfQK9vHR5XQhgACjgawk8sW2Hkh4z
- HGyQ==
-X-Gm-Message-State: AFuF++m0bzBgplrHoPmh2QYVzUBanLR1x6cT6szwvhG9dOT3ENqtviBY
- f21ou9PxMh5nzmYWe72AevXA+mUAdnODFyl47B8/D0s8zgCbPY1slDfQj9A+4uLdzKATn/AF6fR
- vS9lL
-X-Gm-Gg: AR+sD123eeqB97Tn5Jkj/iszAE8g0Z8wSZc8Kqew8dF6p7hi7CJABvPQjN5Cq5jWLMS
- FnGlnki2esbsn+ruwJhvqgn9jM5C/jupiPGWbnns+ndXZtgeqmmtWPaRoQiqVxlPuaDM3bxYGjM
- hv6BoH54Ad3ixJtrxBrvVMro8G1Tg6UoF6M4+K1W+ZXM7Xu4Wm0LRKD45bk9jok/Hfz+3CCaR61
- HyzG3dWBAVbpX4CTdqkWRz/x5nnVpQVbOKlLiJxV5WxmAX0UzvGkJFkaMrfb5bQullslOQEoDvk
- kJdxiSqCqeQ+KLX1UaxSEpjoBUl5FSwyDzaly5UhcAOxiZ9CujITkckUuFJDSDZhpgoF8DcqvAw
- k4gb4TxsRmOsTElS2kuZ1h1Te6gM6Jg4jSGJBHHUUVLXfwN287Lje3KUtqWBPzAzusUxuvV4ku7
- oNc6v/tZzjgUVyU8JzuxjbcMzilwo8SZzWU4GynlLDtggHqZR0u+oFUUrKsQ==
-X-Received: by 2002:a05:6402:241a:b0:698:b6c8:70db with SMTP id
- 4fb4d7f45d1cf-6a582b3c303mr24487287a12.8.1787601993346; 
- Mon, 24 Aug 2026 13:06:33 -0700 (PDT)
+ bh=vgZZhvbU4Cbo8ry1+snhPPTLSFgEIZHO3pUsmTEMJYs=;
+ b=Xr2WdEL5KVqJ5c5Wg9j2kEVlkAL/Hpd7OPlOkbtSFMR3OZ/3WlkiHGJsj7gy2UipYd
+ EivllFNP57Yhj6nUHrxL+rAgjcYr289ZQ81EkEUq4HtZdbSfyPie5k4BrrsvxJhL2e3Q
+ yJX/wUKroNwH6IHCOLJfjae23n8u0AzbyU8eaopMkctffO5NaiVXhZ2RnMdr0imzCltH
+ 8RxjQg4PPCZWXT6nVAA9k1KGitLf/6IqHmGeUdKsiB9EUWpnBz5BkDDPcf9R6YsD9cVD
+ oxT7CjlXb+xDrrhfKkE2h3kyh/6eRmj7iUw7zAHMqRra7aDbpHJhm2W1eFcdt2bCP4uh
+ r9ig==
+X-Gm-Message-State: AFuF++lJpu8PX3Hf9yGg/YhBHo/ByvwDxlr9baIk9ubwdURBp+STJM06
+ 1berDRnYPSWK174Ww1WdnVL3oTONg5LmKAl1lPWBiAvqqMQy2pIbHj2R7Mnm0f1cK5K0sk33M5O
+ qhoTM
+X-Gm-Gg: AR+sD12Q5rLM9tIDniBp1D0hMz0nOo0GQVzf5q1pY5qHkv1r+B57irv/FIO4aEzy++5
+ 8+uDXLRldLUcAKd3B+uz4O8QKU52pKwP7bBPLsFglj2cUs6zaOrFdzqqhoUAkSSrIzWNLxdfwp9
+ oUU7CJSF00MqRiDgGvh1EjSxVynvP39inNCbDcyvB4niRRDn0Pv5PEYmeE8FI4zZGeC2JOKcEAs
+ qqm6luRE3xb5NqX37I2GyRLW2/s9dPBdsqXTX/mish32zEPXCVbvl9fPGqigliC5X3GweqgXMJI
+ 9UIuU28r8oB0OLy/FQVTjWnDKKqCj7EOUD3T4UvN5fqqF+xGqk0xBagqzLu4WKXZBuZfrq7epF0
+ WycFB31ULd4g3UBUuY2oFKlxDl97KU0K1DPiF96XSBq6lVx2ppbpSLGM7VAAcrDQQG5hYb3B2lg
+ jYtaRMQ2rTTUexgldlTOl1mQjPWCQyiohvIJsULt1cwTdWQD4MG2YtZzFlwQ==
+X-Received: by 2002:a05:6402:4546:b0:6a1:2400:baea with SMTP id
+ 4fb4d7f45d1cf-6a5c4147e44mr884938a12.10.1787602000857; 
+ Mon, 24 Aug 2026 13:06:40 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:9048:7bf0:d3e2:2b9e])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a59e0228f1sm6152245a12.10.2026.08.24.13.06.31
+ 4fb4d7f45d1cf-6a59e0228f1sm6152245a12.10.2026.08.24.13.06.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Aug 2026 13:06:32 -0700 (PDT)
+ Mon, 24 Aug 2026 13:06:40 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 1/7] tests/qtest/libqos: let mkqcow2() report failure
-Date: Mon, 24 Aug 2026 22:06:21 +0200
-Message-ID: <20260824200627.2180635-2-den@openvz.org>
+Subject: [PATCH 6/7] tests/qtest/ide-test: build the shared disks with qemu-img
+Date: Mon, 24 Aug 2026 22:06:26 +0200
+Message-ID: <20260824200627.2180635-7-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <CAFn=p-bCR4TvVvHwagXiK-c0wuY5dACwh92249Wv0C3odCtbOg@mail.gmail.com>
 References: <CAFn=p-bCR4TvVvHwagXiK-c0wuY5dACwh92249Wv0C3odCtbOg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=den@openvz.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=den@openvz.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,66 +101,216 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-mkqcow2() asserts that qemu-img succeeded, so a caller that has
-qemu-img but cannot use it aborts the binary rather than skipping.
-Return the result instead. virtio-scsi-test takes the skip path it
-already has for a missing qemu-img; ahci-test grows one two patches
-on.
+The two 64 MiB disks are raw and are grown with ftruncate(), which is
+free only where a sparse file is free. Build them as qcow2 when
+qemu-img is available, the way ahci-test and hd-geo-test do, keeping
+the raw ftruncate() as the fallback. Only the virtual size matters to
+their users: the CHS geometry READ NATIVE MAX ADDRESS reports and the
+end-of-disk sector the TRIM range check refuses.
+
+Three tests do care what sits below the guest and get a raw 1 MiB
+image of their own:
+
+  - the CD-ROM tests write their ATAPI pattern in with fopen()
+  - bmdma/trim_reset needs the guest TRIM to reach blkdebug, where a
+    1 ms delay lets the reset catch the request in flight. qcow2 stops
+    the discard at the format layer, the clusters never having been
+    allocated, and the test would pass while racing nothing
+  - the two flush tests trip a blkdebug event. Both pass over qcow2,
+    but on raw the event reported is the flush the guest issued
+
+Peak scratch space drops from 129 MiB to 1.6 MiB.
 
 Cc: John Snow <jsnow@redhat.com>
 Cc: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- tests/qtest/libqos/libqos.c    | 4 ++--
- tests/qtest/libqos/libqos.h    | 2 +-
- tests/qtest/virtio-scsi-test.c | 5 ++++-
- 3 files changed, 7 insertions(+), 4 deletions(-)
+ tests/qtest/ide-test.c | 69 +++++++++++++++++++++++++++++++++---------
+ 1 file changed, 54 insertions(+), 15 deletions(-)
 
-diff --git a/tests/qtest/libqos/libqos.c b/tests/qtest/libqos/libqos.c
-index 9b49d0d4dd..ff0d595346 100644
---- a/tests/qtest/libqos/libqos.c
-+++ b/tests/qtest/libqos/libqos.c
-@@ -138,9 +138,9 @@ void migrate(QOSState *from, QOSState *to, const char *uri)
-     migrate_allocator(&from->alloc, &to->alloc);
- }
+diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
+index 805afb9461..89590e66cc 100644
+--- a/tests/qtest/ide-test.c
++++ b/tests/qtest/ide-test.c
+@@ -37,6 +37,12 @@
+ /* Specified by ATA (physical) CHS geometry for ~64 MiB device.  */
+ #define TEST_IMAGE_SIZE ((130 * 16 * 63) * 512)
  
--void mkqcow2(const char *file, unsigned size_mb)
-+bool mkqcow2(const char *file, unsigned size_mb)
- {
--    g_assert_true(mkimg(file, "qcow2", size_mb));
-+    return mkimg(file, "qcow2", size_mb);
- }
++/*
++ * The tests that reach the image behind QEMU's back, or that need an
++ * event to reach blkdebug, get a raw one of their own.
++ */
++#define RAW_IMAGE_SIZE (1 * 1024 * 1024)
++
+ #define IDE_PCI_DEV     1
+ #define IDE_PCI_FUNC    1
  
- void prepare_blkdebug_script(const char *debug_fn, const char *event)
-diff --git a/tests/qtest/libqos/libqos.h b/tests/qtest/libqos/libqos.h
-index c04950e2b1..8390d4fa98 100644
---- a/tests/qtest/libqos/libqos.h
-+++ b/tests/qtest/libqos/libqos.h
-@@ -27,7 +27,7 @@ QOSState *qtest_boot(QOSOps *ops, const char *cmdline_fmt, ...)
-     G_GNUC_PRINTF(2, 3);
- void qtest_common_shutdown(QOSState *qs);
- void qtest_shutdown(QOSState *qs);
--void mkqcow2(const char *file, unsigned size_mb);
-+bool mkqcow2(const char *file, unsigned size_mb);
- void migrate(QOSState *from, QOSState *to, const char *uri);
- void prepare_blkdebug_script(const char *debug_fn, const char *event);
- void generate_pattern(void *buffer, size_t len, size_t cycle_len);
-diff --git a/tests/qtest/virtio-scsi-test.c b/tests/qtest/virtio-scsi-test.c
-index e2350c52f6..bce6c11813 100644
---- a/tests/qtest/virtio-scsi-test.c
-+++ b/tests/qtest/virtio-scsi-test.c
-@@ -292,7 +292,10 @@ static void test_iothread_attach_node(void *obj, void *data,
-         goto fail;
+@@ -131,7 +137,9 @@ static QPCIBus *pcibus = NULL;
+ static QGuestAllocator guest_malloc;
+ 
+ static char *tmp_path[2];
++static char *raw_path;
+ static char *debug_path;
++static const char *imgfmt = "raw";
+ 
+ G_GNUC_PRINTF(1, 2)
+ static QTestState *ide_test_start(const char *cmdline_fmt, ...)
+@@ -348,9 +356,9 @@ static QTestState *test_bmdma_setup(void)
+     QTestState *qts;
+ 
+     qts = ide_test_start(
+-        "-drive file=%s,if=ide,cache=writeback,format=raw "
++        "-drive file=%s,if=ide,cache=writeback,format=%s "
+         "-global ide-hd.serial=%s -global ide-hd.ver=%s",
+-        tmp_path[0], "testdisk", "version");
++        tmp_path[0], imgfmt, "testdisk", "version");
+     qtest_irq_intercept_in(qts, "ioapic");
+ 
+     return qts;
+@@ -506,7 +514,7 @@ static void test_bmdma_trim_reset(void)
+         "inject-error.0.event=none,inject-error.0.iotype=discard,"
+         "inject-error.0.errno=0,inject-error.0.delay-ns=1000000 "
+         "-device ide-hd,drive=dbg,bus=ide.0",
+-        tmp_path[0]);
++        raw_path);
+     qtest_irq_intercept_in(qts, "ioapic");
+ 
+     guest_buf = guest_alloc(&guest_malloc, len);
+@@ -664,9 +672,9 @@ static void test_specify(void)
+     uint8_t heads, spt;
+ 
+     qts = ide_test_start(
+-        "-blockdev driver=file,node-name=hda,filename=%s "
++        "-drive if=none,id=hda,format=%s,file=%s "
+         "-device ide-hd,drive=hda,bus=ide.0,unit=0 ",
+-        tmp_path[0]);
++        imgfmt, tmp_path[0]);
+ 
+     dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
+ 
+@@ -706,9 +714,9 @@ static void test_identify(void)
+     int ret;
+ 
+     qts = ide_test_start(
+-        "-drive file=%s,if=ide,cache=writeback,format=raw "
++        "-drive file=%s,if=ide,cache=writeback,format=%s "
+         "-global ide-hd.serial=%s -global ide-hd.ver=%s",
+-        tmp_path[0], "testdisk", "version");
++        tmp_path[0], imgfmt, "testdisk", "version");
+ 
+     dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
+ 
+@@ -756,11 +764,11 @@ static void test_diagnostic(void)
+     uint8_t data;
+ 
+     qts = ide_test_start(
+-        "-blockdev driver=file,node-name=hda,filename=%s "
+-        "-blockdev driver=file,node-name=hdb,filename=%s "
++        "-drive if=none,id=hda,format=%s,file=%s "
++        "-drive if=none,id=hdb,format=%s,file=%s "
+         "-device ide-hd,drive=hda,bus=ide.0,unit=0 "
+         "-device ide-hd,drive=hdb,bus=ide.0,unit=1 ",
+-        tmp_path[0], tmp_path[1]);
++        imgfmt, tmp_path[0], imgfmt, tmp_path[1]);
+ 
+     dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
+ 
+@@ -826,7 +834,7 @@ static void test_flush(void)
+ 
+     qts = ide_test_start(
+         "-drive file=blkdebug::%s,if=ide,cache=writeback,format=raw",
+-        tmp_path[0]);
++        raw_path);
+ 
+     dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
+ 
+@@ -877,7 +885,7 @@ static void test_pci_retry_flush(void)
+     qts = ide_test_start(
+         "-drive file=blkdebug:%s:%s,if=ide,cache=writeback,format=raw,"
+         "rerror=stop,werror=stop",
+-        debug_path, tmp_path[0]);
++        debug_path, raw_path);
+ 
+     dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
+ 
+@@ -1100,14 +1108,14 @@ static void cdrom_read_impl(int nblocks, unsigned flags)
+ 
+     /* Prepopulate the CDROM with an interesting pattern */
+     generate_pattern(pattern, patt_len, ATAPI_BLOCK_SIZE);
+-    fh = fopen(tmp_path[0], "wb+");
++    fh = fopen(raw_path, "wb+");
+     ret = fwrite(pattern, ATAPI_BLOCK_SIZE, patt_blocks, fh);
+     g_assert_cmpint(ret, ==, patt_blocks);
+     fclose(fh);
+ 
+     qts = ide_test_start(
+             "-drive if=none,file=%s,media=cdrom,format=raw,id=sr0,index=0 "
+-            "-device ide-cd,drive=sr0,bus=ide.0", tmp_path[0]);
++            "-device ide-cd,drive=sr0,bus=ide.0", raw_path);
+     dev = get_pci_device(qts, &bmdma_bar, &ide_bar);
+     qtest_irq_intercept_in(qts, "ioapic");
+ 
+@@ -1258,7 +1266,11 @@ int main(int argc, char **argv)
+     }
+     close(fd);
+ 
+-    /* Create a temporary raw image */
++    if (have_qemu_img()) {
++        imgfmt = "qcow2";
++    }
++
++    /* Create the disks the tests share */
+     for (i = 0; i < 2; ++i) {
+         tmp_path[i] = g_strdup_printf("%s/qtest.XXXXXX", base);
+         fd = g_mkstemp(tmp_path[i]);
+@@ -1267,6 +1279,15 @@ int main(int argc, char **argv)
+                            strerror(errno));
+             goto test_add_done;
+         }
++        if (!strcmp(imgfmt, "qcow2")) {
++            close(fd);
++            if (!mkimg_bytes(tmp_path[i], imgfmt, TEST_IMAGE_SIZE)) {
++                g_test_message("Could not create %s with qemu-img",
++                               tmp_path[i]);
++                goto test_add_done;
++            }
++            continue;
++        }
+         ret = ftruncate(fd, TEST_IMAGE_SIZE);
+         err = errno;
+         close(fd);
+@@ -1277,6 +1298,20 @@ int main(int argc, char **argv)
+         }
      }
  
--    mkqcow2(tmp_path, 64);
-+    if (!mkqcow2(tmp_path, 64)) {
-+        g_test_message("Could not create the qcow2 overlay");
-+        goto fail;
++    raw_path = g_strdup_printf("%s/qtest.XXXXXX", base);
++    fd = g_mkstemp(raw_path);
++    if (fd < 0) {
++        g_test_message("Could not create %s: %s", raw_path, strerror(errno));
++        goto test_add_done;
 +    }
++    ret = ftruncate(fd, RAW_IMAGE_SIZE);
++    err = errno;
++    close(fd);
++    if (ret < 0) {
++        g_test_message("Could not size %s: %s", raw_path, strerror(err));
++        goto test_add_done;
++    }
++
+     qtest_add_func("/ide/read_native", test_specify);
  
-     /* Attach the overlay to the null0 node */
-     qtest_qmp_assert_success(scsi_pci->pci_vdev.pdev->bus->qts,
+     qtest_add_func("/ide/identify", test_identify);
+@@ -1312,6 +1347,10 @@ test_add_done:
+         unlink(tmp_path[i]);
+         g_free(tmp_path[i]);
+     }
++    if (raw_path) {
++        unlink(raw_path);
++        g_free(raw_path);
++    }
+     unlink(debug_path);
+     g_free(debug_path);
+ 
 -- 
 2.53.0
 
