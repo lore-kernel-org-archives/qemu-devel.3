@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9150AC5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:29:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B5A5C5DF8C
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:29:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNFY-0000ta-Q4; Mon, 24 Aug 2026 01:29:36 -0400
+	id 1wyNFh-0000xw-9V; Mon, 24 Aug 2026 01:29:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFW-0000o3-3f
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:34 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFJ-0000Z1-5S
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFU-0006ld-Jd
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:33 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFH-0006kC-JK
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787549371;
+ s=mimecast20190719; t=1787549358;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ohHtIbsyCjF+i8IJpo24XrVxsgv8su0pd40YI9X52sI=;
- b=T3AHKwANdoVFUAefTzMgPd7GWMsBEQAsXMmk/XndrGT+xSqmHS1xnt1Xeb3GALOpq4JEv8
- mvlcsDORUsyN3u5T5iWWMLx3cM7PqVjkrV4+noyyB6qDTRPmzGacFHxqOh7haA3fycxlzI
- 3Jv7Gy9bwkzJi5kPGkr6KYdazx14x3Q=
+ bh=zbgFy+i/MBg6WIUZ6vfnbgcVFnDOzreG7LA3LljSXG4=;
+ b=RxCWsZmOUcxu72Ugf5ekucWhI8Qt90IUYWVRndce7YQEMYDcjf9lR9WihT5oMmZA/lJXv+
+ GBYNThPkglYusNDUcwxeQ8Yd0CoD6P92SX54u5pefyfAwwAGUqBTSz5VEMUYuPdNqZE3Sq
+ XEIpb5GiJcdu1U5iqWG4tHWH2p133KU=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-Zq-nB6KaOxO5R6TapzfRzw-1; Mon,
- 24 Aug 2026 01:29:30 -0400
-X-MC-Unique: Zq-nB6KaOxO5R6TapzfRzw-1
-X-Mimecast-MFC-AGG-ID: Zq-nB6KaOxO5R6TapzfRzw_1787549368
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-267-1K0u2OdHMZylrx2CSoy4DA-1; Mon,
+ 24 Aug 2026 01:29:13 -0400
+X-MC-Unique: 1K0u2OdHMZylrx2CSoy4DA-1
+X-Mimecast-MFC-AGG-ID: 1K0u2OdHMZylrx2CSoy4DA_1787549352
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 58A7719540D4; Mon, 24 Aug 2026 05:29:28 +0000 (UTC)
+ id 2D5721944DEA; Mon, 24 Aug 2026 05:29:12 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.29])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BE4E11800577; Mon, 24 Aug 2026 05:29:24 +0000 (UTC)
+ id 222581800348; Mon, 24 Aug 2026 05:29:09 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -57,9 +57,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Cleber Rosa <crosa@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH 06/12] python: fix license configuration
-Date: Mon, 24 Aug 2026 01:28:52 -0400
-Message-ID: <20260824052859.880475-7-jsnow@redhat.com>
+Subject: [PATCH 02/12] tests: add Python3.12 to centos9.docker
+Date: Mon, 24 Aug 2026 01:28:48 -0400
+Message-ID: <20260824052859.880475-3-jsnow@redhat.com>
 In-Reply-To: <20260824052859.880475-1-jsnow@redhat.com>
 References: <20260824052859.880475-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -89,30 +89,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-License trove identifiers were deprecated in favor of SPDX
-identifiers, correct this to stop some whining from various python
-tooling.
+While we recently upgraded to Python 3.11 for the CentOS 9 container,
+upgrade it even further to Python 3.12.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- python/setup.cfg | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/docker/dockerfiles/centos9.docker   | 12 ++++++------
+ tests/lcitool/mappings.yml                | 12 ++++++------
+ tests/lcitool/targets/centos-stream-9.yml |  4 ++--
+ 3 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/python/setup.cfg b/python/setup.cfg
-index 8f62b7c1cdb..a22abba6c36 100644
---- a/python/setup.cfg
-+++ b/python/setup.cfg
-@@ -8,9 +8,9 @@ download_url = https://www.qemu.org/download/
- description = QEMU Python Build, Debug and SDK tooling.
- long_description = file:PACKAGE.rst
- long_description_content_type = text/x-rst
-+license = GPL-2.0-or-later
- classifiers =
-     Development Status :: 3 - Alpha
--    License :: OSI Approved :: GNU General Public License v2 (GPLv2)
-     Natural Language :: English
-     Operating System :: OS Independent
-     Programming Language :: Python :: 3 :: Only
+diff --git a/tests/docker/dockerfiles/centos9.docker b/tests/docker/dockerfiles/centos9.docker
+index 6f5c400c2db..8bfce395f9d 100644
+--- a/tests/docker/dockerfiles/centos9.docker
++++ b/tests/docker/dockerfiles/centos9.docker
+@@ -96,10 +96,10 @@ RUN dnf --quiet distro-sync -y && \
+                 pkgconfig \
+                 pulseaudio-libs-devel \
+                 python3-tomli \
+-                python3.11 \
+-                python3.11-pip \
+-                python3.11-setuptools \
+-                python3.11-wheel \
++                python3.12 \
++                python3.12-pip \
++                python3.12-setuptools \
++                python3.12-wheel \
+                 rdma-core-devel \
+                 rust \
+                 rust-std-static \
+@@ -129,7 +129,7 @@ RUN dnf --quiet distro-sync -y && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/clang && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
+ 
+-RUN /usr/bin/pip3.11 install \
++RUN /usr/bin/pip3.12 install \
+                      numpy \
+                      opencv-python \
+                      sphinx \
+@@ -139,7 +139,7 @@ ENV CCACHE_WRAPPERSDIR="/usr/libexec/ccache-wrappers"
+ ENV LANG="en_US.UTF-8"
+ ENV MAKE="/usr/bin/make"
+ ENV NINJA="/usr/bin/ninja"
+-ENV PYTHON="/usr/bin/python3.11"
++ENV PYTHON="/usr/bin/python3.12"
+ # As a final step configure the user (if env is defined)
+ ARG USER
+ ARG UID
+diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
+index 2b317e0a61c..5c56e4aca1b 100644
+--- a/tests/lcitool/mappings.yml
++++ b/tests/lcitool/mappings.yml
+@@ -4,16 +4,16 @@ mappings:
+     Ubuntu2204:
+ 
+   python3:
+-    CentOSStream9: python3.11
++    CentOSStream9: python3.12
+ 
+   python3-devel:
+-    CentOSStream9: python3.11-devel
++    CentOSStream9: python3.21-devel
+ 
+   python3-pip:
+-    CentOSStream9: python3.11-pip
++    CentOSStream9: python3.12-pip
+ 
+   python3-setuptools:
+-    CentOSStream9: python3.11-setuptools
++    CentOSStream9: python3.12-setuptools
+ 
+   python3-sphinx:
+     CentOSStream9:
+@@ -28,10 +28,10 @@ mappings:
+     CentOSStream9:
+ 
+   python3-venv:
+-    CentOSStream9: python3.11
++    CentOSStream9: python3.12
+ 
+   python3-wheel:
+-    CentOSStream9: python3.11-wheel
++    CentOSStream9: python3.12-wheel
+ 
+   meson:
+     # Use Meson from PyPI wherever Rust is enabled
+diff --git a/tests/lcitool/targets/centos-stream-9.yml b/tests/lcitool/targets/centos-stream-9.yml
+index c2d87f6cb4d..0d6801fd9a3 100644
+--- a/tests/lcitool/targets/centos-stream-9.yml
++++ b/tests/lcitool/targets/centos-stream-9.yml
+@@ -1,3 +1,3 @@
+ paths:
+-  pip3: /usr/bin/pip3.11
+-  python: /usr/bin/python3.11
++  pip3: /usr/bin/pip3.12
++  python: /usr/bin/python3.12
 -- 
 2.55.0
 
