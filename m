@@ -4,138 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DC89C5DF8C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 03:18:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80782C5DF8C
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 03:28:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyLCe-0006Ep-M5; Sun, 23 Aug 2026 23:18:28 -0400
+	id 1wyLLb-0007us-U9; Sun, 23 Aug 2026 23:27:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1wyLCd-0006EQ-DW; Sun, 23 Aug 2026 23:18:27 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@processmission.com>)
- id 1wyLCa-0007ds-MY; Sun, 23 Aug 2026 23:18:26 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XDpsvTLQK2kaDsz9I9XNZfCyFyvyoWgK4iLhvn8f2jgrteRO+hOmEBb1dWg1GIY1jKF+VFpie45QN+wuDRV+RCfOh/sikh0ZbWSpGt8SV7T/t/1EsHFELLuVcMVMLb2Gh/9VUz9JOB+eBAxppk+eC7ajeogl3JPLPmDYNWtXXDlfSWF2X3E23bWRdahKgryPBw5nufUQSxa3GG2XvCJebaegqNFN7AuJsxFl3jrdBFhJgTelsBgQTPw02/lhhu65Lio/6pTEDPlVmdgsdAfVKlUUGiOgTyeJq764N5MwqC1ZHz/ufCjyDfqYfeqNTXMDNVDjrJur1TQwM1mHpd5nGg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=bmPD7Ge1Nbi0Oqii1TiVr+WPqKjW0/kUmFvAuoDhWIU=;
- b=YEAM7nYTylsaN+O8LiCuWbkG1JW3Ji468JkM6zaLYiENIbTy9u+iz3M1CU558COPIRsTJDbDPxvR0QT+UTjabdMU/DiANCRXGuqgGfHCmQx1b3DMxTLcFp26/HSKZ6yNkcLUwxQBG9tiBDPlnZgRlO7Fw1O0gcdR7Cx9DSMInUVOnst6gOd4/P2VmjR/pCHD2r2OWRB4x7GgBRgeJNZjuviM4sxZr0FpksiSGxzB6aBT0YUFP5aVyHox1F7388/c9PeAv+xNrLak+ECoSq+Q0xoVQL8zogKgybgS6hlUrAcQy+/oYh0ro0IH6eEvuwLwvMdlykP9Cvxeq3BhNXmTiw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=processmission.com; dmarc=pass action=none
- header.from=processmission.com; dkim=pass header.d=processmission.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=processmission.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=bmPD7Ge1Nbi0Oqii1TiVr+WPqKjW0/kUmFvAuoDhWIU=;
- b=O0yWkoxV+aBLBUfhQX/wWAb5NUf4wyAmLhM2PgDuCGbNThF4dT/li99Na7Xxl0dqnaxaEVWflbd4CWK9zPJ9ykgn6qv0D6xLPBPSmzSJOVd8sgBk9Z4jdAJRaGZjnVAmQhtfy887iFXGFRseTWNCS879hmhRD8AvyE5Bjelz/Jqayb4QduJtlM/cjHfpUslbel7y6ikgMxgKdBif2UfqZ39nNNzy0gVONr19V+FEw7YvoC2dJmY2FZ4FqnJIOQWbQkigXHipyiMh922AMYY54iLxzD7EHJhB9CRAMtoLMa+8MCAnbZXToL0jQiUrApfIFqScdV4SBdAmiJ6+fqG1qA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=processmission.com;
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com (2603:1096:405:3d0::15)
- by SI4PR02MB9628.apcprd02.prod.outlook.com (2603:1096:4:2ad::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Mon, 24 Aug
- 2026 03:18:15 +0000
-Received: from TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934]) by TYNPR02MB9351.apcprd02.prod.outlook.com
- ([fe80::e5f3:5fb7:3d29:5934%4]) with mapi id 15.21.0339.012; Mon, 24 Aug 2026
- 03:18:15 +0000
-Date: Mon, 24 Aug 2026 11:18:10 +0800
-From: Chao Liu <chao.liu@processmission.com>
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com
-Subject: Re: [PATCH 0/5] target/riscv: support Debug 0.13 and 1.0
-Message-ID: <aou3G0of6_RUCGrP@ChaodeMacBook-Pro.local>
-References: <20260805182506.2943757-1-daniel.barboza@oss.qualcomm.com>
- <748104a9-5917-46f9-aa99-bf86ef66e9c2@oss.qualcomm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <748104a9-5917-46f9-aa99-bf86ef66e9c2@oss.qualcomm.com>
-X-ClientProxiedBy: SJ2PR07CA0014.namprd07.prod.outlook.com
- (2603:10b6:a03:505::7) To TYNPR02MB9351.apcprd02.prod.outlook.com
- (2603:1096:405:3d0::15)
+ (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
+ id 1wyLLb-0007ub-3w
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 23:27:43 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
+ id 1wyLLY-00014A-CE
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 23:27:42 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2d01548ac96so3603515ad.3
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 20:27:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tenstorrent.com; s=google; t=1787542058; x=1788146858; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=80YaSfqcLb39nB1pHTX7a4wFwPFqJIxhfyTi+OcLQAI=;
+ b=aKsJegJ/Yh0wcmd5C73nbN10c1yxBh3IsmEd7UxTLy8lDSHWH8VCN/ubxSMxxU1ZB7
+ 0O1GIC5MvaJDHywufLn9i1mM8PQaG7dz+hKaWTuK5dx+/WJK7QOzZNMLZD7k7DpZrwPi
+ CJb84O5V+0xuSqg2+JVDdYbAgYFGwonCODRXu7AFjuIzTLgWHgl2QSdnCjRe08LFMTm3
+ FYibDaGZLICO6VBz1IyWnOrzjltU9LAfIvM5+SdFgPasolBxJcx9pPOvyrgHg7p41fal
+ ucrsc870CHvs0X9aF5UgpTd5T5bCEoVbah9wZHFjt/S7d8p+9/yLZxwiib1t4gJoXWWT
+ 8T6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787542058; x=1788146858;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=80YaSfqcLb39nB1pHTX7a4wFwPFqJIxhfyTi+OcLQAI=;
+ b=BVJEs4emB3Kwa/QfWCpadCeX65NjbfQB4jqfXMLvPFAoJlvJy2Mb9hBnv2XEls8JUr
+ 5+gbz4GsdMSE/zSrocM5jqSbAcQ9pI1VkaUxuEkY8cwYMKbHcnFBGljo9VQ2r2Jgy477
+ AUY18w9UjO4FvgcN08pl7QN0G4i8FJq7eIMp8mSoMYZ8PZ7s3o4+qpVpvWeBosi55I0h
+ C78Pua5JcnAafUoY6jD8v/bcNIbZuvB3qI2tBi8e8QveUhEJf3xH4aE6pDTGPTkw4ygS
+ 9alj4xUe2//A7+Ua7035gi4q/hENeDlvIQ2DM5qcIb11mnTngMDo2NDLEPCUTRbXfi4v
+ OHRA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqU0MKqFOqdsgfOglXVKmkyhM61ga0I/e5ki59FFHIHrfkaUDeuVcoBUskCO7quNuDpgcnrqZmPCAoM@nongnu.org
+X-Gm-Message-State: AFuF++ln+fYQJfvKGiXU0E5CTTQkl7f/wdlJ2jLEAlfFtIRnXm91OCDu
+ bVch+LqffGLfcI5kleUs02mzPY6e80eHSxHJ6lsLSVGJ6mXVPNwOw5C1aeOxkWdHkMc=
+X-Gm-Gg: AR+sD12WpAGaLi5knp4cuc9MAvfvqs7hMbvVjWec9eGaB9uhsgcjcJX20IE8PANwjVV
+ qhIwZh0YoND4Vrb08z3HY/1M5J+v6jdCycSXDCTSzGrgcF8izpZwXxpSp2AhpsBa2htFYQhpRGa
+ rgSsxsNqJlgnHjkpDB9OW30dGHKWZDFDatPCgHgMItmYVau4iNmc6fnjizUeHE5vQoCyMK6brUh
+ O1TE4/oDgSK6OjRH5av/xO4fLHeP13quEoWEN4zuvHcakaINRDOIG2ULhbZfLj1wGqTk/RuA6fQ
+ jKzZcW0fRaqhhq0lBOcrmnLJ6f6AmIlBVZW1JxrNqzGWKK0FAsEOH9wnoZ9bX7MlFvmSl6q5+vT
+ sAtZ9gNDYp5TTRimEAEcktUDab5IkaqZhWEVFX2GxrDu/ViUcsf1uEA3sLG+BoICjXF7XbTTQod
+ wMjAU1eiOWedHi56cYXKQ2I2GAltznQ+M5YCWzQJJjS6YPW4vVwXBgvXCjf0XkzunfFOJ4raV+x
+ vkO/YxWPWCyHiuT
+X-Received: by 2002:a17:902:fc4e:b0:2d3:aecd:51f7 with SMTP id
+ d9443c01a7336-2d64ae3a7c7mr203295085ad.1.1787542058346; 
+ Sun, 23 Aug 2026 20:27:38 -0700 (PDT)
+Received: from [172.16.1.33] ([159.196.41.205])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-327f909c6c9sm24523722eec.6.2026.08.23.20.27.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 23 Aug 2026 20:27:37 -0700 (PDT)
+Message-ID: <330c6826-f70d-4dbf-ac04-c045f6f62386@oss.tenstorrent.com>
+Date: Mon, 24 Aug 2026 13:27:31 +1000
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYNPR02MB9351:EE_|SI4PR02MB9628:EE_
-X-MS-Office365-Filtering-Correlation-Id: ce23b2dc-1114-4d47-e5f3-08df018e5635
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|376014|366016|1800799024|10067099003|4143699003|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: jMFI0SoAzIXGr9qjyhc7cTDpZSWJvuVelHQ3U3pSAMaBZjHv5a4PmOMJdYgdfuMMLBH2VXDz0hbi4jJLJkbXrJB8QLCl0GyjMHkAfplF90L9sJZygfx/KJwxUUQbnVihnoPA+vbk8T8AxVCIFM3Bv8W1Rn78jqZneN12QIG//5GibITY8wliQ+557gyipzcR6z4eQI09TQ4kFCeCYLzzsF8LZaknSiDEaKjv2MroV/z5oS4atNY8H5ryPHFzUiA0xiicYgto1+PD+m6qA5JHDr+c8ntB/bkExM779jZpN/H/ZWQmCoT5h2gu6tsNv7Icqp0DnPq7AoqydXP/UXaZathOW6yrUdHoLU61bIz+QbbKdzBCiRUxBLJgsZ/cwmRcHjFwb2gFlr28eX0y3/hiyXlxbtWIqmfLFmnNReCN0UooRESKR7P+9J3WO24iX1YDphbBkGyclY8xgnxY86z9ujsJU5OIDkFTqkTVGtDoAy8KP7MCNlWpEB+1ZcfJ2NSzB5NuHd835sNogdobDr4sOBGfTF7JKpbNHcK3CRWeZ08a1Z1pn/yM+eEP3LzuagpHzPOkmRdkVr1ZBD1FrCX1Kevd+HM4keu6CheU6QIc8mI=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TYNPR02MB9351.apcprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(376014)(366016)(1800799024)(10067099003)(4143699003)(56012099006)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?KzhZUCtNcDNRRk5uWjNnRUV0UEdrcVdPdWx5MWYrMnAxMjNVcjcvTjZ2WEJO?=
- =?utf-8?B?WURVSmpIOUpLQ0xWU1NuRU9CMklKYmVBc29CZEpCaE52VTVtQ1U4VVJLdnhr?=
- =?utf-8?B?a1NBemQzUWVSN3hRalQ4cldNRkV2eW5WTDB1NXNycHpLdlRZY2xycW9GS3hM?=
- =?utf-8?B?cThDeXpYMHhxVnhKMXAwVUhzdFY1RUd4d2tpUmRIUkFqYWYzTlM5WEZHM0Ru?=
- =?utf-8?B?RTY0UFBuNzZGMCtHTFlqaFAzS0xoRmVPeTRPRTVHMmtUTXRxV2k0Zk5KeEEv?=
- =?utf-8?B?YVM3YWEvVmRpVjlKcjF5SVh0U001TGptYmtpbGM3WU5OSk9xakVPYzF6V3JZ?=
- =?utf-8?B?VmhNSE9Bc2ZVenJUS2F3bml2VU1MVWRQRFBmZTVVcXZzbFZyeXBaaS9QVEI5?=
- =?utf-8?B?eFB5WWNhVWNoM01vQ2J3bTdFblpkenRjNlQrNFIzV09md1ZKQitFTGdzQVhX?=
- =?utf-8?B?aVN2SlNvbVpDbVdVRzhsa2JkMVJIWUIwZkJOSnQ3MnVod3NFamx4V2lBNEdC?=
- =?utf-8?B?akl1aTN0dlFkNzg2alFlbkdvMTFIN09Gc1Y2TVZHMENMajNudGJhLzJTWnFI?=
- =?utf-8?B?ZDJydWwvUjdZbXNvajZPTmFoVTVONXpMR2t0NTVxazNQbHZxcEhqMnQxeWVp?=
- =?utf-8?B?cWt0aW5CLzJXMjJJWDU1RW1LOVNlVms5ZUF5SFY0U2pReng2ZHlFY2NOdnRU?=
- =?utf-8?B?Q242MGpRcGtxVWRDWjVtcXc1YTlISUl4a09ydlNCUFNvOFR0MkpHUFpjOFhI?=
- =?utf-8?B?TkNRSlFpZWJZMXBxMnh0blpINzBFSElnWkpZZFdnalcvemlxQWZWRjAyWFRU?=
- =?utf-8?B?VCtkeU5qUGVKcDZEYnFVcXNkblc5Q1g3dWxJS2NLcTVEVkk4MHExcWlRaldD?=
- =?utf-8?B?Y2tET1duc2V3c0xOdjByLzgrSmcySE1BVURsYWllSmpvRWNEMkxXK1lwU0k1?=
- =?utf-8?B?bGFRMFBIdmoxWkhtYVM0UGFqOWdZaVUwTlVlS3ZPMzVUelQxcmtFeFpuTGRO?=
- =?utf-8?B?NjBsaUZtK2FvWTdEWFg1SnRJby9GNXRUZlV3M1dVbmFlcjF4akdOVGVTZ05l?=
- =?utf-8?B?V0I5RlZ0cEQreSt0NHllZ0lETGVQeVlLaEl4RW5VRWxmelhGUEVhTGQ2SEIv?=
- =?utf-8?B?TWRYVG50Q2pmWm5taEFEZnJuR29oeE11aDJ5VUNQSk5aM21rNkRDVDdIanNQ?=
- =?utf-8?B?Sk04MmJJSitvTFRNamVwdlVuKzBZdGhMYnlBS3dUbTlzUktDU0EwWFA4OFpu?=
- =?utf-8?B?anFCUy9Xc3VhNW52R1k4YkVheGd1QjN0a1NlcDgwUDUybVU2N1JuN3RiRDg1?=
- =?utf-8?B?VFAzMWsrYnVVSmNrczcwUko1RFJ5ZUtkbGlIdlkyME01Z2FvQWxKVGpxUjF2?=
- =?utf-8?B?SFBWb3pEZG9BUDlNU2I0RGZ6KzQzd3BHOVp5dGF0UHY4L2EvMTRXYjNjdXVP?=
- =?utf-8?B?VXRIOUVxcUMvMFI5T2RZVmNyVXFPaDJFNTk5eGhKaXJ5SmV4RzVaNkVONmZz?=
- =?utf-8?B?QWNQQkFFeVgydDdMeVRwS3p1QnI1ZWNrdzdkSXNxbll6d1lVdWd1cUw3ei9t?=
- =?utf-8?B?YUl6eW9iU2hhYU1zL2YybUpNK3F5Sk1HOHJtNmViSHo5VmM1RC82alBKUXJ2?=
- =?utf-8?B?cUxONG9EUFlvMjJ0OWhzUTN3U3dIZEF3ZFhHd3JSZmNmTXNoTWtsNDhnY1hW?=
- =?utf-8?B?L09UOExZZUhkTkR2dFVEYndsK3dyYUl5TXFoRFdvMTA1bkljMzZIR1NuVFhX?=
- =?utf-8?B?TWJYSVl2dG02bnEyKzFDajA4SzhabFhWaGlhSU1RcGVkbEtNSjllS0RPOWxC?=
- =?utf-8?B?Z1kvOTJteUdnbGtzV3cvVWxVeS9sWS9Jck5IZ0NKK2RkWW1ENGl0czliZkxV?=
- =?utf-8?B?RDBYRkZmWkEyNmZvNWoyOHYrZnYrN2IwdjFyaTMyRWIyNi9NZXVWVkxtcUI5?=
- =?utf-8?B?VUFndWxkekd6REw0VEpiajh2TURvamhld3FYTDNSWmN3a2N6YTBSY0U2Vlhw?=
- =?utf-8?B?bEtNREVIZGptY2tuVTA1bU1TbmxYQllEZ2t2eG5pTy94cWpUR3NyRWpOc0hE?=
- =?utf-8?B?VGNhVGJIb0JXbmppbUhPcDI0THUyWitjQnd5SkpnS0YvYXRiYXFWZlpqdnVs?=
- =?utf-8?B?clJnK013d1hTeUVBa0l0M0hiZHMxeXpPcDdEcXJvY1hCNDN2L01wQTNoTXFt?=
- =?utf-8?B?YkVUaU9MRDJjWjRzbllEVVNrYXo3MlNKMUFFdXhQcm1jWS9Hb3U2QUpPUW9Y?=
- =?utf-8?B?VzJEeUJTY3NmazI0ejNwRm9DLzZsZitSS2NVeXB0c0Q4UjdrbGo4MG1lMHE2?=
- =?utf-8?B?Tkk5TEdEancrY29lelZRWkxjL2EwQkwzQWZvVnRpZjhZSEdoZHlGaUpSV1B0?=
- =?utf-8?Q?eW6WjbOzRe4ZlUYY=3D?=
-X-OriginatorOrg: processmission.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ce23b2dc-1114-4d47-e5f3-08df018e5635
-X-MS-Exchange-CrossTenant-AuthSource: TYNPR02MB9351.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Aug 2026 03:18:15.5380 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e0544bf7-9765-4630-ab69-0b266dc2169c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ssurXswu5hJvxDJaAO8wgeF0o2iH7qScU+0Iwx23wEkbF6vcmLVxDPXSh8OPb5pqqGuP8z2oLKVL/R+bA5wTvSM6zNjOX8INF20V/o1YfqI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI4PR02MB9628
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
- envelope-from=chao.liu@processmission.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] hw/riscv: Make s-mode IMSIC stride explicit
+To: Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Chao Liu <chao.liu@processmission.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Michael Ellerman <mpe@kernel.org>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260824030509.18078-1-joel@jms.id.au>
+ <20260824030509.18078-2-joel@jms.id.au>
+Content-Language: en-US
+From: Portia Stephens <portias@oss.tenstorrent.com>
+In-Reply-To: <20260824030509.18078-2-joel@jms.id.au>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=portias@tenstorrent.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,76 +111,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel,
 
-On Thu, Aug 20, 2026 at 08:01:39AM +0800, Daniel Henrique Barboza wrote:
-> Ping
-> 
-> 
-> This is the series I talked about in our call last night/earlier today.
-> 
-> The v9 of the riscv-server-ref work was rebased on top of it, along with Chao's
-> sdext patches.  As soon as we get this queued I think I'll re-send Chao's
-> work next.
-Thanks for continuing to drive the sdext work. I don’t have much time to dedicate
-to it at the moment, but I’ll do my best to help with the review.
+On 24/8/2026 1:05 PM, Joel Stanley wrote:
+> Existing machines tightly coupled s-mode IMSIC stride with the guest
+> bits value. There need to be enough bits to describe the guest in
+> GEILEN, but that's a minimum bound and machines may choose to use a
+> larger stride. This change decouples the two and updates Atlantis and
+> Virt to use the new API.
+>
+> AIA guest count used by the Atlantis machine was not correct. It looks
+> like a placeholder value was chosen in order to size the stride to
+> 0x40000, but this gives the wrong guest count. From the (currently
+> internal) docs, the guest count is 5:
+>
+>> |NUM_GEILEN|5 (0 - 64)|Number of supported guest index from the S-mode interrupt domain|
+> Add that value to a define, and add a separate define for the stride, to
+> reduce the opportunity for future confusion.
+>
+> Fixes: 7778f4b27bb1 ("hw/riscv: Add Tenstorrent Atlantis machine")
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> ---
+>   hw/riscv/aia.h         |  1 +
+>   hw/riscv/aia.c         |  5 ++---
+>   hw/riscv/tt_atlantis.c | 19 +++++++++++--------
+>   hw/riscv/virt.c        |  2 ++
+>   4 files changed, 16 insertions(+), 11 deletions(-)
+>
+> diff --git a/hw/riscv/aia.h b/hw/riscv/aia.h
+> index 565f91accc09..3b6d7f962506 100644
+> --- a/hw/riscv/aia.h
+> +++ b/hw/riscv/aia.h
+> @@ -15,6 +15,7 @@ uint32_t imsic_num_bits(uint32_t count);
+>   
+>   DeviceState *riscv_create_aia(bool msimode, int aia_guests,
+>                                uint32_t m_imsic_stride,
+> +                             uint32_t s_imsic_stride,
+>                                uint16_t num_sources,
+>                                const MemMapEntry *aplic_m,
+>                                const MemMapEntry *aplic_s,
+> diff --git a/hw/riscv/aia.c b/hw/riscv/aia.c
+> index ed8916002945..c33a3b32bd45 100644
+> --- a/hw/riscv/aia.c
+> +++ b/hw/riscv/aia.c
+> @@ -26,6 +26,7 @@ uint32_t imsic_num_bits(uint32_t count)
+>   
+>   DeviceState *riscv_create_aia(bool msimode, int aia_guests,
+>                                uint32_t m_imsic_stride,
+> +                             uint32_t s_imsic_stride,
+>                                uint16_t num_sources,
+>                                const MemMapEntry *aplic_m,
+>                                const MemMapEntry *aplic_s,
+> @@ -36,7 +37,6 @@ DeviceState *riscv_create_aia(bool msimode, int aia_guests,
+>   {
+>       int i;
+>       hwaddr addr = 0;
+> -    uint32_t guest_bits;
+>       DeviceState *aplic_s_dev = NULL;
+>       DeviceState *aplic_m_dev = NULL;
+>   
+> @@ -55,10 +55,9 @@ DeviceState *riscv_create_aia(bool msimode, int aia_guests,
+>           }
+>   
+>           /* Per-socket S-level IMSICs */
+> -        guest_bits = imsic_num_bits(aia_guests + 1);
+>           addr = imsic_s->base + socket * (1U << IMSIC_MMIO_GROUP_MIN_SHIFT);
+>           for (i = 0; i < hart_count; i++) {
+> -            riscv_imsic_create(addr + i * IMSIC_HART_SIZE(guest_bits),
+> +            riscv_imsic_create(addr + i * s_imsic_stride,
+>                                  base_hartid + i, false, 1 + aia_guests,
+>                                  num_msis);
+>           }
+> diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+> index d808bcc11c34..88c375684412 100644
+> --- a/hw/riscv/tt_atlantis.c
+> +++ b/hw/riscv/tt_atlantis.c
+> @@ -37,8 +37,12 @@
+>   #define TT_IRQCHIP_NUM_MSIS       255
+>   #define TT_IRQCHIP_NUM_SOURCES    128
+>   #define TT_IRQCHIP_NUM_PRIO_BITS  3
+> -#define TT_IRQCHIP_GUESTS         63 /* aia_guests, gives guest_index_bits=6 */
+> -#define TT_IRQCHIP_MIMSIC_STRIDE  0x40000
+> +#define TT_IMSIC_GUESTS           5
+> +#define TT_IMSIC_STRIDE           0x40000 /* Same stride for M and S */
+> +#define TT_IMSIC_GUEST_BITS       6
+> +
+> +/* Stride is fixed by hardware, check it's consistent with guest bits. */
+> +QEMU_BUILD_BUG_ON(TT_IMSIC_STRIDE != (0x1000 << TT_IMSIC_GUEST_BITS));
+>   
+>   #define TT_ACLINT_MTIME_SIZE    0x8050
+>   #define TT_ACLINT_MTIME         0x0
+> @@ -231,18 +235,16 @@ static void create_fdt_cpu(TTAtlantisState *s, const MemMapEntry *memmap,
+>   
+>       create_fdt_aclint(s, intc_phandles);
+>   
+> -    uint32_t imsic_guest_bits = imsic_num_bits(TT_IRQCHIP_GUESTS + 1);
+> -
+>       /* M-level IMSIC node */
+>       uint32_t msi_m_phandle = next_phandle();
+>       create_fdt_one_imsic(fdt, &s->memmap[TT_ATL_MIMSIC], ms->smp.cpus,
+>                            intc_phandles, msi_m_phandle,
+> -                         IRQ_M_EXT, imsic_guest_bits);
+> +                         IRQ_M_EXT, TT_IMSIC_GUEST_BITS);
+>   
+>       /* S-level IMSIC node */
+>       create_fdt_one_imsic(fdt, &s->memmap[TT_ATL_SIMSIC], ms->smp.cpus,
+>                            intc_phandles, imsic_s_phandle,
+> -                         IRQ_S_EXT, imsic_guest_bits);
+> +                         IRQ_S_EXT, TT_IMSIC_GUEST_BITS);
+>   
+>       uint32_t aplic_m_phandle = next_phandle();
+>   
+> @@ -493,8 +495,9 @@ static void tt_atlantis_machine_init(MachineState *machine)
+>                               &error_abort);
+>       sysbus_realize(SYS_BUS_DEVICE(&s->soc), &error_fatal);
+>   
+> -    s->irqchip = riscv_create_aia(true, TT_IRQCHIP_GUESTS,
+> -                                  TT_IRQCHIP_MIMSIC_STRIDE,
+> +    s->irqchip = riscv_create_aia(true, TT_IMSIC_GUESTS,
+> +                                  TT_IMSIC_STRIDE,
+> +                                  TT_IMSIC_STRIDE,
+>                                     TT_IRQCHIP_NUM_SOURCES,
+>                                     &s->memmap[TT_ATL_MAPLIC],
+>                                     &s->memmap[TT_ATL_SAPLIC],
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index d58656f70d1b..42d28f4f5a02 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -1410,9 +1410,11 @@ static void virt_machine_init(MachineState *machine)
+>               s->irqchip[i] = virt_create_plic(s->memmap, i,
+>                                                base_hartid, hart_count);
+>           } else {
+> +            int imsic_bits = imsic_num_bits(s->aia_guests + 1);
+>               s->irqchip[i] = riscv_create_aia(s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC,
+>                                                s->aia_guests,
+>                                                IMSIC_HART_SIZE(0),
+> +                                             IMSIC_HART_SIZE(imsic_bits),
+>                                                s->num_sources,
+>                                                &s->memmap[VIRT_APLIC_M],
+>                                                &s->memmap[VIRT_APLIC_S],
 
-Cheers,
-Chao
-> 
-> 
-> Cheers,
-> Daniel
-> 
-> On 8/5/2026 3:25 PM, Daniel Henrique Barboza wrote:
-> > Hi,
-> > 
-> > This short series adds support for Debug 0.13 and Debug 1.0.  The
-> > motivation is simple: we need Debug 1.0 to complete tue upstreaming of
-> > sdext, which is already fully reviewed and acked for awhile [1], and
-> > then proceed with the upstreaming of the RISC-V Server Ref board
-> > (currently on v8: [2]).
-> > 
-> > The work is based in section 1.2.1.2 "Incompatible Changes from 0.13 to
-> > 1.0" of the ratified 1.0 spec [3].  It ended being simpler than
-> > anticipated because we don't implement most of the registers/bits that
-> > are backwards incompatible.  I added doc changes to explain the
-> > rationale used.
-> > 
-> > After this series:
-> > 
-> > - 'ext_sdtrig' refers to Debug 1.0.  The legacy 'debug' flag refers to
-> >    Debug 0.13;
-> > - setting both flags enables Debug 1.0, i.e. 'ext_sdtrig' takes
-> >    precedence.
-> > 
-> > My hope is that this split will make it easier to to move away from
-> > Debug 0.13 in the future once there's no more demand for it.
-> > 
-> > Patches based on master.
-> > 
-> > [1] https://lore.kernel.org/qemu-devel/cover.1775959096.git.chao.liu.zevorn@gmail.com/
-> > [2] https://lore.kernel.org/qemu-devel/20260610214133.1882563-1-daniel.barboza@oss.qualcomm.com/
-> > [3] https://docs.riscv.org/reference/debug/v1.0/_attachments/riscv-debug-specification.pdf
-> > 
-> > Daniel Henrique Barboza (5):
-> >    target/riscv: split 'debug' and 'sdtrig' flags
-> >    target/riscv/tcg/debug.c: add Debug 1.0 'pending' bit
-> >    target/riscv/tcg/debug: adjust 'timing' bit for Debug 1.0
-> >    target/riscv/tcg/debug: set tinfo version if sdtrig enabled
-> >    docs/specs: add RISC-V CPU Debug support info
-> > 
-> >   docs/specs/index.rst              |  1 +
-> >   docs/specs/riscv-debug.rst        | 68 +++++++++++++++++++++++++++++++
-> >   target/riscv/cpu.c                | 21 +++++++---
-> >   target/riscv/cpu_cfg_fields.h.inc |  1 +
-> >   target/riscv/machine.c            |  2 +-
-> >   target/riscv/tcg/csr.c            |  2 +-
-> >   target/riscv/tcg/debug.c          | 51 +++++++++++++++++++++--
-> >   target/riscv/tcg/debug.h          |  6 ++-
-> >   target/riscv/tcg/tcg-cpu.c        |  3 +-
-> >   9 files changed, 142 insertions(+), 13 deletions(-)
-> >   create mode 100644 docs/specs/riscv-debug.rst
-> > 
-> 
+
+Reviewed-by: Portia Stephens <portias@oss.tenstorrent.com>
+
+
 
