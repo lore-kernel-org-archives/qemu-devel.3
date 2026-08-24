@@ -4,118 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B47A3C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 15:42:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1FFDC5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 15:54:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyWo7-0000NN-Hg; Mon, 24 Aug 2026 11:41:55 -0400
+	id 1wyWzM-0003CY-2r; Mon, 24 Aug 2026 11:53:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wyWo5-0000Mf-Rh; Mon, 24 Aug 2026 11:41:53 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wyWo3-0004yF-SG; Mon, 24 Aug 2026 11:41:53 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67OD1eMH2004320; Mon, 24 Aug 2026 15:41:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=z1QC8kj5qm4uzstwfhjWjQ1BtsYTo97q5lDg8cNpe7Q=; b=gq8bwKVRado3
- Ee8JUSC0QfdP5mBbLmCsmVBRA8VQSpsbK727UE8bo+cjmbqfoKPBEh4m+xV2do+C
- UE5/nEYJGlb6wOUW3makoI8Tg0ryRdo7NxkvezDEK6rUp80PjxZUTd+tXGsgeDdj
- zovLbhTkUMIpw+EwwzwqB5sIRFlSvzO3x+wHvmFnOMHyPoGe+/OQ6CPXd1TfHmFv
- 2AhxT7DMETb8GWZvXQh4JbnsXXvYFmSwxsVmtzeXnhR+cTF9WBsog8J0+pS+o835
- d63faXj/wzb5X8nOPGG+ipRq52Lac2BDyPBUpLZC7nUKS3WbMhq3wPVcPIVc4+A4
- MvHloLt+IQ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dx26jp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 15:41:49 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OFfL7s030510;
- Mon, 24 Aug 2026 15:41:48 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3jpvcw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 15:41:48 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67OFfkwF22151890
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 15:41:47 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D2CEE5803F;
- Mon, 24 Aug 2026 15:41:46 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8C11058055;
- Mon, 24 Aug 2026 15:41:45 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Aug 2026 15:41:45 +0000 (GMT)
-Message-ID: <4fdbe85d9ce0610984be3c28a86077fee3b69d11.camel@linux.ibm.com>
-Subject: Re: [PATCH 28/29] target/ppc: Move byte-reverse instructions to
- decodetree
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, harshpb@linux.ibm.com
-Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
- tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com,
- aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, sv@linux.ibm.com,
- shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
- nikhilks@linux.ibm.com
-Date: Mon, 24 Aug 2026 10:41:45 -0500
-In-Reply-To: <20260820140114.327023-29-rathc@linux.ibm.com>
-References: <20260820140114.327023-1-rathc@linux.ibm.com>
- <20260820140114.327023-29-rathc@linux.ibm.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEzMSBTYWx0ZWRfX4XZBl0KAErAU
- WAqXO7PHSX6eIqV8wI/ZReZs2hJpgm7Kmtez6AjlmVp+Kn5f1MhPuK4C1uHoWiBnD61ZLRAovRg
- BMQpt27g8/wKN/7XkzLJQ/XCyE6cZP4=
-X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a8c663d cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=mDV3o1hIAAAA:8
- a=VnNF1IyMAAAA:8 a=Z3Pe7eb-piHrGaCcTuUA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: RLbW7Zh2khdWgEJ3Jpn808raGgK1Zitt
-X-Proofpoint-GUID: rLTnwpRf_s5Yu93df7EJVlFKM6x1SyZ0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEzMSBTYWx0ZWRfX9//BkOn1P8fJ
- yLB9AdeCUpt4Wh7cbpPlXzXIL2j0u/J36qhllqvaeoloQtfkkRr0Ym+6aHSYVct8/T+47EZ4cCD
- 6ErjwcZPnA9tBytu8dr9B26aCIe4sgFwPhc233InHEuXW742W+FwdeGTLKu5w8y5hooCWw3oG/W
- LmOEauJ/UD+BRyQxyRiUUf/qNR/5Zlb0m+s8YLUw+rUvkHR+8h6XsXCKv/i5VP9SfMXOtfdWlxx
- hV3+TBe6LPAIl4xBe6HzDCd482S7JpAhH2Q3Nhh+JY/ERa8MAfGet7rlh9cK2oKZ22HUEjS9XR7
- Sb3hZdzP1C5m3FtJQVHZFLevOg1fLAntnCXu3TmrzEOM2taOs4DET4ZtS8a03rBBv44QMOjdv4m
- nPdrvckkfrYAIjgXpI/DFpQA/9N1LwOQVaq0BhYxZnoyDQKtoreG0ApnlNsgoB1S0K6fx8qhpBf
- DiExhRlFbaF0e44qLlg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-24_04,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 bulkscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608240131
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wyWzK-0003Bp-Dl
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:53:30 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wyWzH-0000Y1-KT
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:53:30 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-6a144c8eea2so6708720a12.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 08:53:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787586806; x=1788191606; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=86xh+S/ZKc9aeRZHKG5S4+38sEi0XNLBzt4Trs+dF1k=;
+ b=z8v5djszKTyE+svjCz6+umfO9UN5s2I2e2nUOCcQMZz4+tj4QyJsrzLe0c4TqCQQa3
+ w9Pf8TLAwecWlcllYJPdrMQHARuELrju3uKj2/iAfgse+M1fDr+BuH6iqz1+C01KRdOQ
+ PixTDU4xGXx5tHSLs+yy5bFA4aySysO6JQ9hAJ0UuTsuS6JB8w84YO/lw2cbV/GkUBG0
+ xMa2vy2Bfxuv5tVTOvGYfN+DZOqt8dXgu91X/JpgT9p/l9t2ZEvYtQ6NoLsH73UOdEIi
+ yD2rVodoXEgzAjQAuHpQTpHpe1LZ7g9nujg2AUaXcEM9LKgWLkUPYlxOA2V6T6qDwYnQ
+ GDug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787586806; x=1788191606;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=86xh+S/ZKc9aeRZHKG5S4+38sEi0XNLBzt4Trs+dF1k=;
+ b=UqR36t3qYQACEIVLWt5hDpqut6Q1SG08y1yNlt5bQHT8BgKj7/ORSnpg9qNh4GXjTP
+ Z3YcTdNJfkJjBP9C+2jalxXJZlfTnKgyNOUMnMV9cVnXTLfqAWYd0mMQdrRMVJl+ueTC
+ 7/iPzQb6dLZKcXt1KGBZnkCz6yUIb7HD8511zVu+9MB0G6MdZj6EJGYrcSqkN54Mpxi/
+ RcN7jnu7XL3XnRHzJoCiIT7bu370ABL6oIwl1gUWZLprbj1owaa2nmJuEZZScCrjehvT
+ UvGRPJiyi2KuNR9ysR8WKXPv5y/GDX/KzF2I4tgTEHvqiy7Rz2bfhIo9+UgkdRWKy/Z5
+ rGWw==
+X-Gm-Message-State: AFuF++mPWxZ4MFreqeL7xRfG4gSsXkBDemSSVUJGOeIYUH5TsuapihR+
+ PQRBj2zMvbGzL7OHMXcXbKJfL82gI7WNB1F7bDzs7jTpcuKnBuxHriFiCagunpVPjE0=
+X-Gm-Gg: AR+sD126SHsCi7dPev0rkdk+0JbY+QXgx46WXKHcjDyq6RlBaZLlFaSUSCS03xCo1TR
+ fMxXBLdvJNcgnkQjjEfkRLQ6CfrOrLVhbnOKiPOJJuHXDBbmHI1X1Ro+aeZpETT23XSHKJ7lS7f
+ gc8WTbq4ih04z7B1UXw24Lyu2TAS3SplLvA0MgqPbez+TcQctnClQeEISr/CfAUklITyxWZriIZ
+ pTol1x/vvQ5AFBDhD5d8rlkGUdi/tWr+wYyap0GmvrApD9NnG7trapSKO9FnXMrVQC++x94BZ+g
+ 1AU0U45K62pwaRbR1w/FHWqVAzaa++pldhN+qh4CSCQhTdN9Cc6/CcyvM5k1tomnhMATpBIHU94
+ cHIH1/VWPzqy5KDc1QgP74CSZetISDH8VyuYyXOdH/QsDzyRLIVg7s4NNJdZglv4BLMwnWbQi1w
+ RWgMJSnQrr02uygJxUuYjSfi9CtRmP0yi+CZWKsG3OTxyYaT1MnZVVx/heaubn
+X-Received: by 2002:a05:6402:2402:b0:6a1:854:e75e with SMTP id
+ 4fb4d7f45d1cf-6a582b8ebc4mr23841554a12.15.1787586805706; 
+ Mon, 24 Aug 2026 08:53:25 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6a59e2e2826sm9264063a12.31.2026.08.24.08.53.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Aug 2026 08:53:24 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B23E45F7F5;
+ Mon, 24 Aug 2026 16:53:23 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Wadim Mueller <wafgo01@gmail.com>
+Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Peter Maydell
+ <peter.maydell@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>,
+ Bin Meng <bmeng.cn@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [RFC PATCH v2 03/14] hw/sd/sdhci: complete non-interrupt ADMA
+ descriptor chains in one pass
+In-Reply-To: <20260820124824.618671-4-wafgo01@gmail.com> (Wadim Mueller's
+ message of "Thu, 20 Aug 2026 14:48:03 +0200")
+References: <20260820124824.618671-1-wafgo01@gmail.com>
+ <20260820124824.618671-4-wafgo01@gmail.com>
+User-Agent: mu4e 1.14.4-pre1; emacs 30.1
+Date: Mon, 24 Aug 2026 16:53:23 +0100
+Message-ID: <87v78zqzv0.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,150 +107,123 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Wadim Mueller <wafgo01@gmail.com> writes:
 
-Thanks,
-
-Glenn
-
-On Thu, 2026-08-20 at 19:30 +0530, Chinmay Rath wrote:
-> From: Vishal Chourasia <vishalc@linux.ibm.com>
-> 
-> Moving the following instructions to decodetree specification:
->             brd, brw, brh                   : X-form
-> 
-> The changes were verified by validating that the tcg ops generated by
-> those instructions remain the same, which were captured with the
-> `-d in_asm,op` flag.
-> 
-> This also includes improvements from review feedback:
-> - Add TARGET_PPC64 guards with qemu_build_not_reached() for 32-bit builds
-> 
-> Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> sdhci_do_adma() returns to the main loop after every descriptor and relies
+> on a timer re-entry to pick up the next one. For a descriptor chain whose
+> entries do not request an interrupt this makes the transfer rate depend
+> from the virtual clock rather than on the guest's programming, which
+> significantly slows down large transfers and makes guest-visible timing
+> depend on host timer behaviour.
+>
+> Keep processing the chain in the same invocation while no descriptor asks
+> for an interrupt and the transfer has not finished, and only fall back to
+> the deferred path when the guest actually requested a notification.
+>
+> A qtest reproducer is added later in this series.
+>
+> Signed-off-by: Wadim Mueller <wafgo01@gmail.com>
 > ---
->  target/ppc/insn32.decode                   |  5 +++
->  target/ppc/translate.c                     | 35 -------------------
->  target/ppc/translate/fixedpoint-impl.c.inc | 40 ++++++++++++++++++++++
->  3 files changed, 45 insertions(+), 35 deletions(-)
-> 
-> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> index f7ab08704f..7614655f72 100644
-> --- a/target/ppc/insn32.decode
-> +++ b/target/ppc/insn32.decode
-> @@ -320,6 +320,11 @@ MFMSR           011111 ..... ----- ----- 0001010011 -   @X_t
->  MTMSR           011111 ..... ---- . ----- 0010010010 -  @X_rs_l
->  MTMSRD          011111 ..... ---- . ----- 0010110010 -  @X_rs_l
->  
-> +### Fixed-Point Byte-Reverse Instructions
-> +BRW             011111 ..... ..... ----- 0010011011 -   @X_sa
-> +BRD             011111 ..... ..... ----- 0010111011 -   @X_sa
-> +BRH             011111 ..... ..... ----- 0011011011 -   @X_sa
-> +
->  ### Fixed-Point Load Instructions
->  
->  LBZ             100010 ..... ..... ................     @D
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index 9d29134fa1..8950476be7 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -4532,42 +4532,7 @@ static void gen_dform3D(DisasContext *ctx)
->      return gen_invalid(ctx);
->  }
->  
-> -#if defined(TARGET_PPC64)
-> -/* brd */
-> -static void gen_brd(DisasContext *ctx)
-> -{
-> -    tcg_gen_bswap64_i64(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)]);
-> -}
-> -
-> -/* brw */
-> -static void gen_brw(DisasContext *ctx)
-> -{
-> -    tcg_gen_bswap64_i64(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rS(ctx->opcode)]);
-> -    tcg_gen_rotli_i64(cpu_gpr[rA(ctx->opcode)], cpu_gpr[rA(ctx->opcode)], 32);
-> -
-> -}
-> -
-> -/* brh */
-> -static void gen_brh(DisasContext *ctx)
-> -{
-> -    TCGv_i64 mask = tcg_constant_i64(0x00ff00ff00ff00ffull);
-> -    TCGv_i64 t1 = tcg_temp_new_i64();
-> -    TCGv_i64 t2 = tcg_temp_new_i64();
-> -
-> -    tcg_gen_shri_i64(t1, cpu_gpr[rS(ctx->opcode)], 8);
-> -    tcg_gen_and_i64(t2, t1, mask);
-> -    tcg_gen_and_i64(t1, cpu_gpr[rS(ctx->opcode)], mask);
-> -    tcg_gen_shli_i64(t1, t1, 8);
-> -    tcg_gen_or_i64(cpu_gpr[rA(ctx->opcode)], t1, t2);
-> -}
-> -#endif
-> -
->  static opcode_t opcodes[] = {
-> -#if defined(TARGET_PPC64)
-> -GEN_HANDLER_E(brd, 0x1F, 0x1B, 0x05, 0x0000F801, PPC_NONE, PPC2_ISA310),
-> -GEN_HANDLER_E(brw, 0x1F, 0x1B, 0x04, 0x0000F801, PPC_NONE, PPC2_ISA310),
-> -GEN_HANDLER_E(brh, 0x1F, 0x1B, 0x06, 0x0000F801, PPC_NONE, PPC2_ISA310),
-> -#endif
->  GEN_HANDLER(invalid, 0x00, 0x00, 0x00, 0xFFFFFFFF, PPC_NONE),
->  GEN_HANDLER_E(copy, 0x1F, 0x06, 0x18, 0x03C00001, PPC_NONE, PPC2_ISA300),
->  GEN_HANDLER_E(cp_abort, 0x1F, 0x06, 0x1A, 0x03FFF801, PPC_NONE, PPC2_ISA300),
-> diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-> index a75279022c..cef67d6431 100644
-> --- a/target/ppc/translate/fixedpoint-impl.c.inc
-> +++ b/target/ppc/translate/fixedpoint-impl.c.inc
-> @@ -17,6 +17,46 @@
->   * License along with this library; if not, see <http://www.gnu.org/licenses/>.
->   */
->  
+> This patch can be dropped once Bin Meng's SDHCI series
+> https://patchwork.ozlabs.org/project/qemu-devel/list/?series=3D515264
+> (which needs series=3D513930 applied first) is merged - it covers the
+> same AM64x failure, see
+> https://lore.kernel.org/qemu-devel/20260810124519.34501-1-wafgo01@gmail.c=
+om/
+> It is included here only so that the series works on actual master.
+>
+>  hw/sd/sdhci-internal.h |  9 +++++++++
+>  hw/sd/sdhci.c          | 23 +++++++++++++++++++++--
+>  2 files changed, 30 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/sd/sdhci-internal.h b/hw/sd/sdhci-internal.h
+> index 4aeed120bf..e6ce12617e 100644
+> --- a/hw/sd/sdhci-internal.h
+> +++ b/hw/sd/sdhci-internal.h
+> @@ -277,6 +277,15 @@ FIELD(SDHC_MAXCURR, V18_VDD2,         32, 8); /* sin=
+ce v4.20 */
+>  #define SDHC_INSERTION_DELAY            (NANOSECONDS_PER_SECOND)
+>  #define SDHC_TRANSFER_DELAY             100
+>  #define SDHC_ADMA_DESCS_PER_DELAY       5
 > +/*
-> + * Byte-Reverse Instructions
+> + * Upper bound on ADMA2 descriptors handled in a single sdhci_do_adma()
+> + * call, as a safety valve against a malformed or circular descriptor
+> + * list. A well-formed transfer terminates far below this via END or
+> + * blkcnt =3D=3D 0 (even a 4 GiB transfer built from 64 KiB TRAN descrip=
+tors
+> + * is only ~64K descriptors); the bound merely guarantees the loop makes
+> + * a decision instead of spinning forever.
 > + */
-> +static bool do_byte_reverse_X_sa(DisasContext *ctx, arg_X_sa *a, int kind)
-> +{
-> +#if defined(TARGET_PPC64)
-> +    switch (kind) {
-> +    case 0: /* brd */
-> +        tcg_gen_bswap64_i64(cpu_gpr[a->ra], cpu_gpr[a->rs]);
-> +        break;
-> +    case 1: /* brw */
-> +        tcg_gen_bswap64_i64(cpu_gpr[a->ra], cpu_gpr[a->rs]);
-> +        tcg_gen_rotli_i64(cpu_gpr[a->ra], cpu_gpr[a->ra], 32);
-> +        break;
-> +    case 2: /* brh */
-> +    {
-> +        TCGv_i64 mask = tcg_constant_i64(0x00ff00ff00ff00ffull);
-> +        TCGv_i64 t1 = tcg_temp_new_i64();
-> +        TCGv_i64 t2 = tcg_temp_new_i64();
-> +
-> +        tcg_gen_shri_i64(t1, cpu_gpr[a->rs], 8);
-> +        tcg_gen_and_i64(t2, t1, mask);
-> +        tcg_gen_and_i64(t1, cpu_gpr[a->rs], mask);
-> +        tcg_gen_shli_i64(t1, t1, 8);
-> +        tcg_gen_or_i64(cpu_gpr[a->ra], t1, t2);
-> +        break;
-> +    }
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +#else
-> +    qemu_build_not_reached();
-> +#endif
-> +    return true;
-> +}
-> +
-> +TRANS64_FLAGS2(ISA310, BRD, do_byte_reverse_X_sa, 0)
-> +TRANS64_FLAGS2(ISA310, BRW, do_byte_reverse_X_sa, 1)
-> +TRANS64_FLAGS2(ISA310, BRH, do_byte_reverse_X_sa, 2)
-> +
->  /*
->   * Fixed-Point Load/Store Instructions
->   */
+> +#define SDHC_ADMA_MAX_DESCRIPTORS       (1 << 20)
+>  #define SDHC_CMD_RESPONSE               (3 << 0)
+>=20=20
+>  enum {
+> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+> index e58a610397..9a5dd1d93f 100644
+> --- a/hw/sd/sdhci.c
+> +++ b/hw/sd/sdhci.c
+> @@ -780,7 +780,6 @@ static void sdhci_do_adma(SDHCIState *s)
+>      const MemTxAttrs attrs =3D { .memory =3D true };
+>      ADMADescr dscr =3D {};
+>      MemTxResult res =3D MEMTX_ERROR;
+> -    int i;
+>=20=20
+>      if (s->trnmod & SDHC_TRNS_BLK_CNT_EN && !s->blkcnt) {
+>          /* Stop Multiple Transfer */
+> @@ -788,7 +787,27 @@ static void sdhci_do_adma(SDHCIState *s)
+>          return;
+>      }
+>=20=20
+> -    for (i =3D 0; i < SDHC_ADMA_DESCS_PER_DELAY; ++i) {
+> +    /*
+> +     * Process the descriptor chain to completion (END or blkcnt =3D=3D =
+0),
+> +     * yielding to the guest only for a descriptor carrying the INT
+> +     * attribute (a DMA-boundary interrupt, handled at the end of the lo=
+op).
+> +     *
+> +     * Historically at most SDHC_ADMA_DESCS_PER_DELAY descriptors were
+> +     * handled per call before rescheduling SDHC_TRANSFER_DELAY ns later=
+ on
+> +     * QEMU_CLOCK_VIRTUAL. That pacing is only needed so a guest can obs=
+erve
+> +     * the intermediate DMA-interrupt state; a bulk transfer that reques=
+ts
+> +     * no interrupt does not need slicing, and throttling it across many
+> +     * virtual-clock round-trips can make it race a guest-side transfer
+> +     * timeout. Run such chains to completion in one call instead.
+> +     *
+> +     * SDHC_ADMA_MAX_DESCRIPTORS bounds the loop so a malformed or circu=
+lar
+> +     * chain cannot spin here forever; on overflow, break to the resched=
+ule
+> +     * path so the main loop stays responsive.
 
+Hmm SDHC_ADMA_MAX_DESCRIPTORS is (1 << 20) which seems an awful lot to
+handle in dma session especially if this is a guest controlled thing.
+
+> +     */
+> +    for (unsigned int adma_descs =3D 0; ; adma_descs++) {
+> +        if (adma_descs >=3D SDHC_ADMA_MAX_DESCRIPTORS) {
+> +            break;
+> +        }
+
+Seems an odd formulation when you have the for loop construct already.
+Although I see sdhci_do_adma already has multiple exit paths that skip
+the final timer reset so it is hard to follow the control flow anyway.
+
+I wonder if there is a better way to structure this logic so its easier
+to see where irq's are set, transfers ended and timers scheduled for
+continuation?
+
+>          s->admaerr &=3D ~SDHC_ADMAERR_LENGTH_MISMATCH;
+>=20=20
+>          get_adma_description(s, &dscr);
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
