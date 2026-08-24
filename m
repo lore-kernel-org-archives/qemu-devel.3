@@ -4,74 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E785C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 13:38:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D548C5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 13:38:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyUri-0003lN-Sk; Mon, 24 Aug 2026 09:37:30 -0400
+	id 1wyUrr-0003nF-Cq; Mon, 24 Aug 2026 09:37:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1wyUre-0003kp-5R; Mon, 24 Aug 2026 09:37:26 -0400
-Received: from out162-62-57-49.mail.qq.com ([162.62.57.49])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1wyUrb-0002WP-30; Mon, 24 Aug 2026 09:37:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1787578624; bh=jg5CUouK14mGBzp2YS5Y1LwEzxHi24z/ZhdmNEMp0hc=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References;
- b=Eme2I/VKspRALP5GLILryimykDXyvAQWrOkV9X4w8+bv8upeZee5ejZ/gI12ERtk0
- A3bB+d9fSYLwDKYfKIaVihF0pimyXvrRlrSGSd1AhaQ3hfHmL8OJ6wjM4hut1iFa8j
- 6uXhELk7o7plE7SNwufy1s9yZe71c14rLL/D1NEw=
-Received: from [192.168.1.10] ([118.116.33.165])
- by newxmesmtplogicsvrszb51-0.qq.com (NewEsmtp) with SMTP
- id 9412AAF3; Mon, 24 Aug 2026 21:37:01 +0800
-X-QQ-mid: xmsmtpt1787578621tniu2lfd9
-Message-ID: <tencent_2F7940BF03327177E3876829A8B51724AF07@qq.com>
-X-QQ-XMAILINFO: MZtEYADUG4AgoH4elKpmsrrmNxWHUL/alUL1TyMJVEn6qHBecDELiTF5plk7EQ
- ezPdmiZJ/0KBZp6UrN0k8W31Qc2LmMgrvHfRwoW5I8Iz361TSGTMpg+BG17O2UAVtZWAsBB6MoUe
- vPY3nPlHO6oTBrrc096mFUtPQV43ajuD2+dhX9S/QshtJRZIIGqfdo2vdMioyQR8j0YFMpYYVzpH
- QuT55q+x34Lbfa7BTdepgd367xQgiP4dWOjzHFv3S+ujGs/85apHr6VtMHctCtP019jaSAsze2KC
- 41pyTVzBAZmHt/sQ5nxpSOTugNMwuJirOHrGJfodANM8hORkQguiPQMsxi58ltYlq7Ssp7JHHNSX
- LS8UJv/OtoEKdOgiID69DaesJHil+o+e39W9PqafWM5rgXOIohJx/FUkgpNZb3/Zn7png6dIRHqR
- Ye7aTu4jGgTEx/+PaTTH/8p1OuVHM8ek/Tadsd9q10Cfgt4kaykNDzOJYAnTCW5JXYP4uS2KuHV3
- Yy9c85vQGPMynbsqB3FeDy/S612A+bwozvLAhryX9T+U4znneATYOX76lhx2fvjRTEYGiCQfy4Cp
- nsg5t2CRt/5DCaYz4nkInvSr0q40VYshii6bUugE+VEWBeEUmoqjwqD2ee/iHvX6qXWGW90niSP2
- TX2kufplP7c8kgFzyrMGeE/9OrZw0Es+UQRmobu7wvojkLMAZ0JBQYuC9vqsojBaKimX3OJVlPrd
- 97hVPtLIS8RhToRINVLjCW9Yr7K5sw83b9G5KUonb9Pef9qndnsrjKqXUcRDrsamJfA+RxDwtx8U
- RQz6kUcgfCRlOzlZH143/8nDTRu5VKgM7H9k8mGAI7C+MAfrqXZey8oHWJAiAFA78DunlW1jqKUP
- NVy2JZiUE0oJLvYKYKDZVhOZlX4UjBYEuiNB+FzKP8amAPD6xs+GQLRgUxfiaLBGCP+kBtWLrAbh
- 7g7TKlUvP1zVR4uxVXxzUKeX+vqbaERLH1qyuVAEoY8yNHPDdcFXYZ/4g7m/nSjbrdqj1cPcG91M
- isyeoWySBblkHQdrtoNTgLsZzG4whJa7YSI8kvxI3yBnllySoc
-X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
-X-OQ-MSGID: <81571843d9c1e13c682bc494d287fd7d9bd79946.camel@qq.com>
-Subject: Re: [PATCH v3] riscv/virt: Add optional UART1
-From: Yanfeng Liu <yfliu2008@qq.com>
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com, 
- pierrick.bouvier@oss.qualcomm.com, sunilvl@ventanamicro.com,
- palmer@dabbelt.com,  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com
-Date: Mon, 24 Aug 2026 21:37:00 +0800
-In-Reply-To: <75d038af-a1a0-460c-9fea-7cca0423a54c@oss.qualcomm.com>
-References: <tencent_4EEBFC805F3E59863BEDC38094EF5A109206@qq.com>
- <75d038af-a1a0-460c-9fea-7cca0423a54c@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-User-Agent: Evolution 3.44.4-0ubuntu2.1 
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wyUrq-0003ms-JK
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:37:38 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wyUrn-0002Zv-4C
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:37:38 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-c2022323c37so544721566b.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 06:37:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=openvz.org; s=google; t=1787578653; x=1788183453; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=LAZ86AdpZN3Y5ffaea1LfKyxm73tAAgoLdLPN+YrP+k=;
+ b=aV3hbd3BJQgtsqBDnWPSfdumMxhMD1NLaYAmYiWSBEZS6tDhvhD30QSh1tznZ5rr/v
+ 0C2UMLXKj5RhcvdxcUWmCeBN/F9wdZFabODtP/nQBf0w1wU2cOXlQHWywEBxefEC0ZSc
+ p29RyKG7vGN8KdxV+TI9IH6vZLDWEDkTBVHy7EscmLNYwJA07g8y4ug8R347J+0Pr37i
+ oYMCW7EODojQXeT+9iIM+0uQzXSszyu2xV05NzLdj0+C/YDJE0J5HmK2gcO0dpv/U6Fj
+ S18OcljgCXKqdzID6StPunoRFjNKjq7k1a6cHcAK5u6CvWy5zHCukEgHZ8pXuqrK3wpp
+ RHNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787578653; x=1788183453;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=LAZ86AdpZN3Y5ffaea1LfKyxm73tAAgoLdLPN+YrP+k=;
+ b=tLmj8kUCj+sLn8CSdC0k8C32QUjOvdixo+0Vfeqs2GZxEJc355VS8WCGRzW7sAjBmR
+ eJPUWjV7rLarnfpNNyQw1bAUWX4Ajwb2+dgfQgQ7FI1Lw8J0WxW4m4zVy2kjJlwfUxmk
+ 9CCgwDCeipU96Gvx+kdusp7P6trXTu3Az/BdnoE3Din6du1QE/8qSo40gfCgT0jkwcxW
+ QEYlJY+W4iYUcoqMxQmXBjJyMfB3D94WkMSaPlZ2xZvIB8bSvo64/e3AnlG2NqjWxtD6
+ 8/MH/TwvMGNBVqaxMeNNKhwGXtA0PJM0T2KbHCblWW7ND8pC8f8WVXlN8iDYjMvYYYng
+ uLOA==
+X-Gm-Message-State: AFuF++mO4uK324YWHft9uPgAWtFnsG9OpPgLFx8zoM1hDtCdfOEQaXiI
+ TeNFlvRjvP/Xhy66AL3COTKQt7NMMKlyZqtQm3l1lC4SY0yEdBemku5EPyLPeauCqs5+jzLxiLV
+ N4LUl
+X-Gm-Gg: AR+sD13aZSnPOapmVqttaqQkCShk5/g+CGJ3BfDxKKhPhpIZcw7wrtqoEKSvUrOsHE1
+ ne3g5zM3vWVlvsPtv/X1t/jGt/kS1d+/ZRafedcIC/Jp82F8Rxz1AGKbpaRQVPqC02NL36LQS9t
+ 5Pg3sLzU6pxtGX4KQfqFNYUrnI3GRbcAramxw+u2MTUMdOEVmyWUy4021bfS0513Ia4I5AZ4Z5L
+ 50xA4GpWaHOa0RF+hRkuEkjGbO6Om6il/8DZZ5I2/C5ON87ynIQ3lufq299ad483ySjvH1nO7FK
+ f/lI0q/srdHLOBS0DUWow/VcortfSGO3/7cAtpsNdq6+Xw+jD69Rdj3VBJmInkvQTLEUGxVTqZS
+ +XJNUNnP0UAXRHAU63/45tvGUvqfUiBG4z4FPbp3K6OhFA95si2w5vREfNT0HksM5tYjeeOh/hQ
+ mQy3Bkx9LJ43+lop1RGNGn6ccSnDvAsqOfpj5UaxqXczgKffBSRl1BVGTAhAGZS7MUeK3C
+X-Received: by 2002:a17:907:d78b:b0:c24:d6f0:a53 with SMTP id
+ a640c23a62f3a-c24d6f078dcmr379987766b.23.1787578652498; 
+ Mon, 24 Aug 2026 06:37:32 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:9048:7bf0:d3e2:2b9e])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c24966f58dfsm1236658166b.38.2026.08.24.06.37.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Aug 2026 06:37:32 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ qemu-stable@nongnu.org
+Subject: [PATCH v4 0/5] qcow2: silent corruption when a dirty image becomes
+ writable
+Date: Mon, 24 Aug 2026 15:37:24 +0200
+Message-ID: <20260824133729.1141990-1-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Received-SPF: pass client-ip=162.62.57.49; envelope-from=yfliu2008@qq.com;
- helo=out162-62-57-49.mail.qq.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=den@openvz.org; helo=mail-ej1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HELO_STATIC_HOST=-0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,191 +100,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gU3VuLCAyMDI2LTA4LTIzIGF0IDE4OjU1IC0wMzAwLCBEYW5pZWwgSGVucmlxdWUgQmFyYm96
-YSB3cm90ZToKPiAKPiAKPiBPbiA3LzE3LzIwMjYgMTE6MTYgUE0sIFlhbmZlbmcgTGl1IHdyb3Rl
-Ogo+ID4gVGhpcyBhZGRzIG9wdGlvbmFsIFVBUlQxIHRvIFJpc2NWIHZpcnQgYm9hcmQgaWYgcmVx
-dWlyZWQgYXQKPiA+IHJ1bnRpbWUgdG8gc2ltcGxpZnkgbXVsdGljb3JlIGRldmVsb3BtZW50Lgo+
-IAo+IENhbiB5b3UgcGxlYXNlIGVsYWJvcmF0ZSBvbiB0aGUgdXNlIGNhc2U/wqAgV2UgY2FuIGFk
-ZCBtdWx0aXBsZSBzZXJpYWwKPiBkZXZpY2VzIGFscmVhZHkuwqAgRS5nLiB0aGlzIHdpbGwgYWRk
-IDQgc2VyaWFsczoKPiAKSSB3YXMgcGxheWluZyBCYW8gaHlwZXJ2aXNvciBhbmQgZm91bmQgdGhh
-dCBoYXZpbmcgYSAybmQgTk1JTyBVQVJUIGNhbgpiYSBoYW5keS4gIFByZXZpb291c2x5IHdoZW4g
-dHJ5aW5nIEFNUCBJIGFkZGVkIDJuZCBNTUlPIFVBUlQgdG8gYWlkCmRlYnVnZ2luZy7CoAoKU2lu
-Y2UgdGhpcyBoYXBwZW5lZCB0byBtZSBhdCBsZWFzdCB0d2ljZSwgSSBhbSB3b25kZXJpbmcgc29t
-ZW9uZSBlbHNlCm1pZ2h0IGFsc28gbmVlZCBpdC4gQmVzaWRlcyBtYW55IHJlYWwgZGV2aWNlcyBo
-YXZlIG11aXRscGxlIFVBUlRzLgoKPiAKPiAKPiAkIC4vYnVpbGQvcWVtdS1zeXN0ZW0tcmlzY3Y2
-NCAtTSB2aXJ0IC0tbm9kZWZhdWx0cyBcCj4gwqDCoMKgwqDCoMKgwqDCoMKgIC1zZXJpYWwgc3Rk
-aW8gXAo+IMKgwqDCoMKgwqDCoMKgwqDCoCAtc2VyaWFsIHRjcDo6NDQ0NCxzZXJ2ZXIsbm93YWl0
-IFwKPiDCoMKgwqDCoMKgwqDCoMKgwqAgLXNlcmlhbCBwdHnCoCBcCj4gwqDCoMKgwqDCoMKgwqDC
-oMKgIC1zZXJpYWwgZmlsZTp1YXJ0NC5sb2cgXAo+IMKgwqDCoMKgwqDCoMKgwqDCoCAtLW5vZ3Jh
-cGhpYwo+IAo+IAo+IFRoZSBkaWZmZXJlbmNlIGhlcmUgaXMgdGhhdCB0aGUgYWRkaXRpb25hbCBz
-ZXJpYWxzIHdvbid0IGhhdmUgbWVtb3J5Cj4gbWFwcGluZ3MKPiBhbmQgZmR0IG5vZGVzLgo+IAoK
-aG93IHRoZXNlIGFkZGl0aW9uYWwgVUFSVHMgY2FuIGJlIHVzZWQgYnkgZ3Vlc3RzIGlmIHRoZXkg
-ZG9udCBoYXZlCk1NSU8/CgoKUmVnYXJkcywKWWFuZmVuZwoKCj4gCj4gVGhhbmtzLAo+IERhbmll
-bAo+IAo+ID4gCj4gPiBOb3RlIHRoYXQgVUFSVDAgcmVtYWlucyBkZWZhdWx0IHNlcmlhbF9oZCgw
-KSBhbmQgaXQgaXM6Cj4gPiAKPiA+IC0gdGhlIGxvd2VzdCBhZGRyZXNzIFVBUlQKPiA+IC0gZmly
-c3Qgc2VyaWFsIGluIERUQgo+ID4gLSBiZWhpbmQgL2FsaWFzZXMvc2VyaWFsMCBpbiBEVEIKPiA+
-IC0gdGhlIC9jaG9zZW4vc3Rkb3V0LXBhdGggaW4gRFRCCj4gPiAKPiA+IE5vdGUgdGhhdCBVQVJU
-MSBpcyBwbGFjZWQgYXQgZGlmZmVyZW50IHBhZ2UgZnJvbSBVQVJUMCB0bwo+ID4gc3VwcG9ydCBw
-YWdlIGxldmVsIGlzb2xhdGlvbi4KPiA+IAo+ID4gU2lnbmVkLW9mZi1ieTogWWFuZmVuZyBMaXUg
-PHlmbGl1MjAwOEBxcS5jb20+Cj4gPiAtLS0KPiA+IMKgIGRvY3Mvc3lzdGVtL3Jpc2N2L3ZpcnQu
-cnN0IHzCoCA1ICsrKystCj4gPiDCoCBody9yaXNjdi92aXJ0LWFjcGktYnVpbGQuYyB8IDEyICsr
-KysrKysrLS0tLQo+ID4gwqAgaHcvcmlzY3YvdmlydC5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8
-IDQwICsrKysrKysrKysrKysrKysrKysrKysrKysrKystLS0tLQo+ID4gLS0tLS0KPiA+IMKgIGlu
-Y2x1ZGUvaHcvcmlzY3YvdmlydC5owqDCoMKgIHzCoCAzICsrKwo+ID4gwqAgNCBmaWxlcyBjaGFu
-Z2VkLCA0NSBpbnNlcnRpb25zKCspLCAxNSBkZWxldGlvbnMoLSkKPiA+IAo+ID4gZGlmZiAtLWdp
-dCBhL2RvY3Mvc3lzdGVtL3Jpc2N2L3ZpcnQucnN0Cj4gPiBiL2RvY3Mvc3lzdGVtL3Jpc2N2L3Zp
-cnQucnN0Cj4gPiBpbmRleCA2MDg1MDk3MGNlLi40NWFjNjNhYzc3IDEwMDY0NAo+ID4gLS0tIGEv
-ZG9jcy9zeXN0ZW0vcmlzY3YvdmlydC5yc3QKPiA+ICsrKyBiL2RvY3Mvc3lzdGVtL3Jpc2N2L3Zp
-cnQucnN0Cj4gPiBAQCAtMTYsNyArMTYsNyBAQCBUaGUgYGB2aXJ0YGAgbWFjaGluZSBzdXBwb3J0
-cyB0aGUgZm9sbG93aW5nCj4gPiBkZXZpY2VzOgo+ID4gwqAgKiBDb3JlIExvY2FsIEludGVycnVw
-dG9yIChDTElOVCkKPiA+IMKgICogUGxhdGZvcm0tTGV2ZWwgSW50ZXJydXB0IENvbnRyb2xsZXIg
-KFBMSUMpCj4gPiDCoCAqIENGSSBwYXJhbGxlbCBOT1IgZmxhc2ggbWVtb3J5Cj4gPiAtKiAxIE5T
-MTY1NTAgY29tcGF0aWJsZSBVQVJUCj4gPiArKiBFaXRoZXIgMSBvciAyIE5TMTY1NTAgY29tcGF0
-aWJsZSBVQVJUcwo+ID4gwqAgKiAxIEdvb2dsZSBHb2xkZmlzaCBSVEMKPiA+IMKgICogMSBTaUZp
-dmUgVGVzdCBkZXZpY2UKPiA+IMKgICogOCB2aXJ0aW8tbW1pbyB0cmFuc3BvcnQgZGV2aWNlcwo+
-ID4gQEAgLTI3LDYgKzI3LDkgQEAgVGhlIGh5cGVydmlzb3IgZXh0ZW5zaW9uIGhhcyBiZWVuIGVu
-YWJsZWQgZm9yIHRoZQo+ID4gZGVmYXVsdCBDUFUsIHNvIHZpcnR1YWwKPiA+IMKgIG1hY2hpbmVz
-IHdpdGggaHlwZXJ2aXNvciBleHRlbnNpb24gY2FuIHNpbXBseSBiZSB1c2VkIHdpdGhvdXQKPiA+
-IGV4cGxpY2l0bHkKPiA+IMKgIGRlY2xhcmluZy4KPiA+IMKgIAo+ID4gK1RoZSBzZWNvbmQgVUFS
-VCBvbmx5IGV4aXN0cyBpZiBhIGJhY2tlbmQgaXMgY29uZmlndXJlZCBleHBsaWNpdGx5Cj4gPiAo
-ZS5nLgo+ID4gK3dpdGggYSBzZWNvbmQgYC1zZXJpYWxgIGNvbW1hbmQgbGluZSBvcHRpb24pLgo+
-ID4gKwo+ID4gwqAgSGFyZHdhcmUgY29uZmlndXJhdGlvbiBpbmZvcm1hdGlvbgo+ID4gwqAgLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQo+ID4gwqAgCj4gPiBkaWZmIC0tZ2l0IGEv
-aHcvcmlzY3YvdmlydC1hY3BpLWJ1aWxkLmMgYi9ody9yaXNjdi92aXJ0LWFjcGktCj4gPiBidWls
-ZC5jCj4gPiBpbmRleCA0MTNkNDdkNzBlLi41OTc3NTFjODRhIDEwMDY0NAo+ID4gLS0tIGEvaHcv
-cmlzY3YvdmlydC1hY3BpLWJ1aWxkLmMKPiA+ICsrKyBiL2h3L3Jpc2N2L3ZpcnQtYWNwaS1idWls
-ZC5jCj4gPiBAQCAtMTY5LDExICsxNjksMTEgQEAgc3RhdGljIHZvaWQgYWNwaV9kc2R0X2FkZF9w
-bGljX2FwbGljKEFtbAo+ID4gKnNjb3BlLCB1aW50OF90IHNvY2tldF9jb3VudCwKPiA+IMKgIAo+
-ID4gwqAgc3RhdGljIHZvaWQKPiA+IMKgIGFjcGlfZHNkdF9hZGRfdWFydChBbWwgKnNjb3BlLCBj
-b25zdCBNZW1NYXBFbnRyeSAqdWFydF9tZW1tYXAsCj4gPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqAgdWludDMyX3QgdWFydF9pcnEpCj4gPiArwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdWludDMyX3QgdWFydF9pcnEsIGludCB1YXJ0aWR4KQo+
-ID4gwqAgewo+ID4gLcKgwqDCoCBBbWwgKmRldiA9IGFtbF9kZXZpY2UoIkNPTTAiKTsKPiA+ICvC
-oMKgwqAgQW1sICpkZXYgPSBhbWxfZGV2aWNlKCJDT00lZCIsIHVhcnRpZHgpOwo+ID4gwqDCoMKg
-wqDCoCBhbWxfYXBwZW5kKGRldiwgYW1sX25hbWVfZGVjbCgiX0hJRCIsCj4gPiBhbWxfc3RyaW5n
-KCJSU0NWMDAwMyIpKSk7Cj4gPiAtwqDCoMKgIGFtbF9hcHBlbmQoZGV2LCBhbWxfbmFtZV9kZWNs
-KCJfVUlEIiwgYW1sX2ludCgwKSkpOwo+ID4gK8KgwqDCoCBhbWxfYXBwZW5kKGRldiwgYW1sX25h
-bWVfZGVjbCgiX1VJRCIsIGFtbF9pbnQodWFydGlkeCkpKTsKPiA+IMKgIAo+ID4gwqDCoMKgwqDC
-oCBBbWwgKmNycyA9IGFtbF9yZXNvdXJjZV90ZW1wbGF0ZSgpOwo+ID4gwqDCoMKgwqDCoCBhbWxf
-YXBwZW5kKGNycywgYW1sX21lbW9yeTMyX2ZpeGVkKHVhcnRfbWVtbWFwLT5iYXNlLAo+ID4gQEAg
-LTQ3OSw3ICs0NzksMTEgQEAgc3RhdGljIHZvaWQgYnVpbGRfZHNkdChHQXJyYXkgKnRhYmxlX2Rh
-dGEsCj4gPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoCBtZW1tYXBbVklSVF9BUExJQ19TXS5zaXplLAo+ID4gIlJTQ1Yw
-MDAyIik7Cj4gPiDCoMKgwqDCoMKgIH0KPiA+IMKgIAo+ID4gLcKgwqDCoCBhY3BpX2RzZHRfYWRk
-X3VhcnQoc2NvcGUsICZtZW1tYXBbVklSVF9VQVJUMF0sIFVBUlQwX0lSUSk7Cj4gPiArwqDCoMKg
-IGFjcGlfZHNkdF9hZGRfdWFydChzY29wZSwgJm1lbW1hcFtWSVJUX1VBUlQwXSwgVUFSVDBfSVJR
-LCAwKTsKPiA+ICvCoMKgwqAgaWYgKHMtPnVhcnQxX3ByZXNlbnQpIHsKPiA+ICvCoMKgwqDCoMKg
-wqDCoCBhY3BpX2RzZHRfYWRkX3VhcnQoc2NvcGUsICZtZW1tYXBbVklSVF9VQVJUMV0sIFVBUlQx
-X0lSUSwKPiA+IDEpOwo+ID4gK8KgwqDCoCB9Cj4gPiArCj4gPiDCoMKgwqDCoMKgIGlmICh2aXJ0
-X2lzX2lvbW11X3N5c19lbmFibGVkKHMpKSB7Cj4gPiDCoMKgwqDCoMKgwqDCoMKgwqAgYWNwaV9k
-c2R0X2FkZF9pb21tdV9zeXMoc2NvcGUsICZtZW1tYXBbVklSVF9JT01NVV9TWVNdLAo+ID4gSU9N
-TVVfU1lTX0lSUSk7Cj4gPiDCoMKgwqDCoMKgIH0KPiA+IGRpZmYgLS1naXQgYS9ody9yaXNjdi92
-aXJ0LmMgYi9ody9yaXNjdi92aXJ0LmMKPiA+IGluZGV4IDMzNzc1YTYxZmQuLjQ3MDNhYzU4Zjgg
-MTAwNjQ0Cj4gPiAtLS0gYS9ody9yaXNjdi92aXJ0LmMKPiA+ICsrKyBiL2h3L3Jpc2N2L3ZpcnQu
-Ywo+ID4gQEAgLTk2LDYgKzk2LDggQEAgc3RhdGljIGNvbnN0IE1lbU1hcEVudHJ5IHZpcnRfbWVt
-bWFwW10gPSB7Cj4gPiDCoMKgwqDCoMKgIFtWSVJUX0FQTElDX1NdID3CoMKgwqDCoMKgIHvCoCAw
-eGQwMDAwMDAsIEFQTElDX1NJWkUoVklSVF9DUFVTX01BWCkKPiA+IH0sCj4gPiDCoMKgwqDCoMKg
-IFtWSVJUX1VBUlQwXSA9wqDCoMKgwqDCoMKgwqAgeyAweDEwMDAwMDAwLMKgwqDCoMKgwqDCoMKg
-wqAgMHgxMDAgfSwKPiA+IMKgwqDCoMKgwqAgW1ZJUlRfVklSVElPXSA9wqDCoMKgwqDCoMKgIHsg
-MHgxMDAwMTAwMCzCoMKgwqDCoMKgwqDCoCAweDEwMDAgfSwKPiA+ICvCoMKgwqAgLyogVUFSVDEg
-c3VwcG9ydHMgcGFnZSBpc29sYXRpb24gZnJvbSBVQVJUMCAqLwo+ID4gK8KgwqDCoCBbVklSVF9V
-QVJUMV0gPcKgwqDCoMKgwqDCoMKgIHsgMHgxMDAwYTAwMCzCoMKgwqDCoMKgwqDCoMKgIDB4MTAw
-IH0sCj4gPiDCoMKgwqDCoMKgIFtWSVJUX0ZXX0NGR10gPcKgwqDCoMKgwqDCoCB7IDB4MTAxMDAw
-MDAswqDCoMKgwqDCoMKgwqDCoMKgIDB4MTggfSwKPiA+IMKgwqDCoMKgwqAgW1ZJUlRfRkxBU0hd
-ID3CoMKgwqDCoMKgwqDCoCB7IDB4MjAwMDAwMDAswqDCoMKgwqAgMHg0MDAwMDAwIH0sCj4gPiDC
-oMKgwqDCoMKgIFtWSVJUX0lNU0lDX01dID3CoMKgwqDCoMKgIHsgMHgyNDAwMDAwMCwgVklSVF9J
-TVNJQ19NQVhfU0laRSB9LAo+ID4gQEAgLTE4Niw3ICsxODgsOCBAQCBzdGF0aWMgdm9pZCBjcmVh
-dGVfcGNpZV9pcnFfbWFwKFJJU0NWVmlydFN0YXRlCj4gPiAqcywgdm9pZCAqZmR0LCBjaGFyICpu
-b2RlbmFtZSwKPiA+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoCBGRFRfTUFYX0lOVF9NQVBfV0lEVEhdID0ge307Cj4gPiDCoMKgwqDCoMKgIHVp
-bnQzMl90ICppcnFfbWFwID0gZnVsbF9pcnFfbWFwOwo+ID4gwqAgCj4gPiAtwqDCoMKgIC8qIFRo
-aXMgY29kZSBjcmVhdGVzIGEgc3RhbmRhcmQgc3dpenpsZSBvZiBpbnRlcnJ1cHRzIHN1Y2gKPiA+
-IHRoYXQKPiA+ICvCoMKgwqAgLyoKPiA+ICvCoMKgwqDCoCAqIFRoaXMgY29kZSBjcmVhdGVzIGEg
-c3RhbmRhcmQgc3dpenpsZSBvZiBpbnRlcnJ1cHRzIHN1Y2gKPiA+IHRoYXQKPiA+IMKgwqDCoMKg
-wqDCoCAqIGVhY2ggZGV2aWNlJ3MgZmlyc3QgaW50ZXJydXB0IGlzIGJhc2VkIG9uIGl0J3MgUENJ
-X1NMT1QKPiA+IG51bWJlci4KPiA+IMKgwqDCoMKgwqDCoCAqIChTZWUgcGNpX3N3aXp6bGVfbWFw
-X2lycV9mbigpKQo+ID4gwqDCoMKgwqDCoMKgICoKPiA+IEBAIC04MzIsMjggKzgzNSwzOCBAQCBz
-dGF0aWMgdm9pZCBjcmVhdGVfZmR0X3Jlc2V0KFJJU0NWVmlydFN0YXRlCj4gPiAqcywgdWludDMy
-X3QgKnBoYW5kbGUpCj4gPiDCoCB9Cj4gPiDCoCAKPiA+IMKgIHN0YXRpYyB2b2lkIGNyZWF0ZV9m
-ZHRfdWFydChSSVNDVlZpcnRTdGF0ZSAqcywKPiA+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdWludDMyX3QgaXJxX21taW9fcGhhbmRsZSkK
-PiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgdWludDMyX3QgaXJxX21taW9fcGhhbmRsZSwgaW50IG1lbUlkLAo+ID4gaW50IGlycU5vKQo+
-ID4gwqAgewo+ID4gwqDCoMKgwqDCoCBnX2F1dG9mcmVlIGNoYXIgKm5hbWUgPSBOVUxMOwo+ID4g
-wqDCoMKgwqDCoCBNYWNoaW5lU3RhdGUgKm1zID0gTUFDSElORShzKTsKPiA+IMKgIAo+ID4gwqDC
-oMKgwqDCoCBuYW1lID0gZ19zdHJkdXBfcHJpbnRmKCIvc29jL3NlcmlhbEAlIkhXQUREUl9QUkl4
-LAo+ID4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgcy0+bWVtbWFwW1ZJUlRfVUFSVDBdLmJhc2UpOwo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcy0+bWVtbWFwW21lbUlkXS5iYXNlKTsK
-PiA+IMKgwqDCoMKgwqAgcWVtdV9mZHRfYWRkX3N1Ym5vZGUobXMtPmZkdCwgbmFtZSk7Cj4gPiDC
-oMKgwqDCoMKgIHFlbXVfZmR0X3NldHByb3Bfc3RyaW5nKG1zLT5mZHQsIG5hbWUsICJjb21wYXRp
-YmxlIiwKPiA+ICJuczE2NTUwYSIpOwo+ID4gwqDCoMKgwqDCoCBxZW11X2ZkdF9zZXRwcm9wX3Np
-emVkX2NlbGxzKG1zLT5mZHQsIG5hbWUsICJyZWciLAo+ID4gLcKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgMiwgcy0+bWVtbWFw
-W1ZJUlRfVUFSVDBdLmJhc2UsCj4gPiAtwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAyLCBzLT5tZW1tYXBbVklSVF9VQVJUMF0u
-c2l6ZSk7Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoCAyLCBzLT5tZW1tYXBbbWVtSWRdLmJhc2UsCj4gPiArwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oCAyLCBzLT5tZW1tYXBbbWVtSWRdLnNpemUpOwo+ID4gwqDCoMKgwqDCoCBxZW11X2ZkdF9zZXRw
-cm9wX2NlbGwobXMtPmZkdCwgbmFtZSwgImNsb2NrLWZyZXF1ZW5jeSIsCj4gPiAzNjg2NDAwKTsK
-PiA+IMKgwqDCoMKgwqAgcWVtdV9mZHRfc2V0cHJvcF9jZWxsKG1zLT5mZHQsIG5hbWUsICJpbnRl
-cnJ1cHQtcGFyZW50IiwKPiA+IGlycV9tbWlvX3BoYW5kbGUpOwo+ID4gwqDCoMKgwqDCoCBpZiAo
-cy0+YWlhX3R5cGUgPT0gVklSVF9BSUFfVFlQRV9OT05FKSB7Cj4gPiAtwqDCoMKgwqDCoMKgwqAg
-cWVtdV9mZHRfc2V0cHJvcF9jZWxsKG1zLT5mZHQsIG5hbWUsICJpbnRlcnJ1cHRzIiwKPiA+IFVB
-UlQwX0lSUSk7Cj4gPiArwqDCoMKgwqDCoMKgwqAgcWVtdV9mZHRfc2V0cHJvcF9jZWxsKG1zLT5m
-ZHQsIG5hbWUsICJpbnRlcnJ1cHRzIiwgaXJxTm8pOwo+ID4gwqDCoMKgwqDCoCB9IGVsc2Ugewo+
-ID4gLcKgwqDCoMKgwqDCoMKgIHFlbXVfZmR0X3NldHByb3BfY2VsbHMobXMtPmZkdCwgbmFtZSwg
-ImludGVycnVwdHMiLAo+ID4gVUFSVDBfSVJRLCAweDQpOwo+ID4gK8KgwqDCoMKgwqDCoMKgIHFl
-bXVfZmR0X3NldHByb3BfY2VsbHMobXMtPmZkdCwgbmFtZSwgImludGVycnVwdHMiLCBpcnFObywK
-PiA+IDB4NCk7Cj4gPiArwqDCoMKgIH0KPiA+ICsKPiA+ICvCoMKgwqAgaWYgKFZJUlRfVUFSVDAg
-PT0gbWVtSWQpIHsKPiA+ICvCoMKgwqDCoMKgwqDCoCBxZW11X2ZkdF9zZXRwcm9wX3N0cmluZyht
-cy0+ZmR0LCAiL2Nob3NlbiIsICJzdGRvdXQtcGF0aCIsCj4gPiBuYW1lKTsKPiA+ICvCoMKgwqDC
-oMKgwqDCoCBxZW11X2ZkdF9zZXRwcm9wX3N0cmluZyhtcy0+ZmR0LCAiL2FsaWFzZXMiLCAic2Vy
-aWFsMCIsCj4gPiBuYW1lKTsKPiA+IMKgwqDCoMKgwqAgfQo+ID4gK30KPiA+IMKgIAo+ID4gLcKg
-wqDCoCBxZW11X2ZkdF9zZXRwcm9wX3N0cmluZyhtcy0+ZmR0LCAiL2Nob3NlbiIsICJzdGRvdXQt
-cGF0aCIsCj4gPiBuYW1lKTsKPiA+IC3CoMKgwqAgcWVtdV9mZHRfc2V0cHJvcF9zdHJpbmcobXMt
-PmZkdCwgIi9hbGlhc2VzIiwgInNlcmlhbDAiLCBuYW1lKTsKPiA+ICtzdGF0aWMgdm9pZCBjcmVh
-dGVfZmR0X3VhcnRzKFJJU0NWVmlydFN0YXRlICpzLCB1aW50MzJfdAo+ID4gaXJxX21taW9fcGhh
-bmRsZSkKPiA+ICt7Cj4gPiArwqDCoMKgIGlmIChzLT51YXJ0MV9wcmVzZW50KSB7Cj4gPiArwqDC
-oMKgwqDCoMKgwqAgY3JlYXRlX2ZkdF91YXJ0KHMsIGlycV9tbWlvX3BoYW5kbGUsIFZJUlRfVUFS
-VDEsCj4gPiBVQVJUMV9JUlEpOwo+ID4gK8KgwqDCoCB9Cj4gPiArwqDCoMKgIGNyZWF0ZV9mZHRf
-dWFydChzLCBpcnFfbW1pb19waGFuZGxlLCBWSVJUX1VBUlQwLCBVQVJUMF9JUlEpOwo+ID4gwqAg
-fQo+ID4gwqAgCj4gPiDCoCBzdGF0aWMgdm9pZCBjcmVhdGVfZmR0X3J0YyhSSVNDVlZpcnRTdGF0
-ZSAqcywKPiA+IEBAIC0xMDIzLDcgKzEwMzYsNyBAQCBzdGF0aWMgdm9pZCBmaW5hbGl6ZV9mZHQo
-UklTQ1ZWaXJ0U3RhdGUgKnMpCj4gPiDCoCAKPiA+IMKgwqDCoMKgwqAgY3JlYXRlX2ZkdF9yZXNl
-dChzLCAmcGhhbmRsZSk7Cj4gPiDCoCAKPiA+IC3CoMKgwqAgY3JlYXRlX2ZkdF91YXJ0KHMsIGly
-cV9tbWlvX3BoYW5kbGUpOwo+ID4gK8KgwqDCoCBjcmVhdGVfZmR0X3VhcnRzKHMsIGlycV9tbWlv
-X3BoYW5kbGUpOwo+ID4gwqAgCj4gPiDCoMKgwqDCoMKgIGNyZWF0ZV9mZHRfcnRjKHMsIGlycV9t
-bWlvX3BoYW5kbGUpOwo+ID4gwqAgfQo+ID4gQEAgLTE1NjcsNiArMTU4MCwxMyBAQCBzdGF0aWMg
-dm9pZCB2aXJ0X21hY2hpbmVfaW5pdChNYWNoaW5lU3RhdGUKPiA+ICptYWNoaW5lKQo+ID4gwqDC
-oMKgwqDCoMKgwqDCoMKgIDAsIHFkZXZfZ2V0X2dwaW9faW4obW1pb19pcnFjaGlwLCBVQVJUMF9J
-UlEpLCAzOTkxOTMsCj4gPiDCoMKgwqDCoMKgwqDCoMKgwqAgc2VyaWFsX2hkKDApLCBERVZJQ0Vf
-TElUVExFX0VORElBTik7Cj4gPiDCoCAKPiA+ICvCoMKgwqAgaWYgKHNlcmlhbF9oZCgxKSkgewo+
-ID4gK8KgwqDCoMKgwqDCoMKgIHNlcmlhbF9tbV9pbml0KHN5c3RlbV9tZW1vcnksIHMtPm1lbW1h
-cFtWSVJUX1VBUlQxXS5iYXNlLAo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgMCwgcWRldl9n
-ZXRfZ3Bpb19pbihtbWlvX2lycWNoaXAsIFVBUlQxX0lSUSksIDM5OTE5MywKPiA+ICvCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIHNlcmlhbF9oZCgxKSwgREVWSUNFX0xJVFRMRV9FTkRJQU4pOwo+ID4g
-K8KgwqDCoMKgwqDCoMKgIHMtPnVhcnQxX3ByZXNlbnQgPSB0cnVlOwo+ID4gK8KgwqDCoCB9Cj4g
-PiArCj4gPiDCoMKgwqDCoMKgIHN5c2J1c19jcmVhdGVfc2ltcGxlKCJnb2xkZmlzaF9ydGMiLCBz
-LQo+ID4gPm1lbW1hcFtWSVJUX1JUQ10uYmFzZSwKPiA+IMKgwqDCoMKgwqDCoMKgwqDCoCBxZGV2
-X2dldF9ncGlvX2luKG1taW9faXJxY2hpcCwgUlRDX0lSUSkpOwo+ID4gwqAgCj4gPiBkaWZmIC0t
-Z2l0IGEvaW5jbHVkZS9ody9yaXNjdi92aXJ0LmggYi9pbmNsdWRlL2h3L3Jpc2N2L3ZpcnQuaAo+
-ID4gaW5kZXggMThhMmEzMjNhMy4uN2Q1N2M4MjkyZSAxMDA2NDQKPiA+IC0tLSBhL2luY2x1ZGUv
-aHcvcmlzY3YvdmlydC5oCj4gPiArKysgYi9pbmNsdWRlL2h3L3Jpc2N2L3ZpcnQuaAo+ID4gQEAg
-LTU5LDYgKzU5LDcgQEAgc3RydWN0IFJJU0NWVmlydFN0YXRlIHsKPiA+IMKgwqDCoMKgwqAgaW50
-IGFpYV9ndWVzdHM7Cj4gPiDCoMKgwqDCoMKgIGNoYXIgKm9lbV9pZDsKPiA+IMKgwqDCoMKgwqAg
-Y2hhciAqb2VtX3RhYmxlX2lkOwo+ID4gK8KgwqDCoCBib29sIHVhcnQxX3ByZXNlbnQ7Cj4gPiDC
-oMKgwqDCoMKgIE9uT2ZmQXV0byBhY3BpOwo+ID4gwqDCoMKgwqDCoCBjb25zdCBNZW1NYXBFbnRy
-eSAqbWVtbWFwOwo+ID4gwqDCoMKgwqDCoCBzdHJ1Y3QgR1BFWEhvc3QgKmdwZXhfaG9zdDsKPiA+
-IEBAIC03OCw2ICs3OSw3IEBAIGVudW0gewo+ID4gwqDCoMKgwqDCoCBWSVJUX0FQTElDX1MsCj4g
-PiDCoMKgwqDCoMKgIFZJUlRfVUFSVDAsCj4gPiDCoMKgwqDCoMKgIFZJUlRfVklSVElPLAo+ID4g
-K8KgwqDCoCBWSVJUX1VBUlQxLAo+ID4gwqDCoMKgwqDCoCBWSVJUX0ZXX0NGRywKPiA+IMKgwqDC
-oMKgwqAgVklSVF9JTVNJQ19NLAo+ID4gwqDCoMKgwqDCoCBWSVJUX0lNU0lDX1MsCj4gPiBAQCAt
-OTMsNiArOTUsNyBAQCBlbnVtIHsKPiA+IMKgIGVudW0gewo+ID4gwqDCoMKgwqDCoCBVQVJUMF9J
-UlEgPSAxMCwKPiA+IMKgwqDCoMKgwqAgUlRDX0lSUSA9IDExLAo+ID4gK8KgwqDCoCBVQVJUMV9J
-UlEgPSAxMiwKPiA+IMKgwqDCoMKgwqAgVklSVElPX0lSUSA9IDEsIC8qIDEgdG8gOCAqLwo+ID4g
-wqDCoMKgwqDCoCBWSVJUSU9fQ09VTlQgPSA4LAo+ID4gwqDCoMKgwqDCoCBQQ0lFX0lSUSA9IDB4
-MjAsIC8qIDMyIHRvIDM1ICovCgo=
+Today I have faced real data corrupt from our customer with the
+situation very close to the one addressed in the patch
+"qcow2: do not try to clear the dirty bit on a read-only node" and
+that is interesting. I was really unsure that design is correct
+but with today case I can say that correct thing was done.
+
+The problem
+-----------
+
+qcow2_do_open() repairs an image carrying QCOW2_INCOMPAT_DIRTY, but only
+for a node that is writable from the start:
+
+    if (!(flags & BDRV_O_CHECK) && bdrv_is_writable(bs) &&
+        (s->incompatible_features & QCOW2_INCOMPAT_DIRTY)) {
+
+A node opened read-only skips it, correctly, since it resolves nothing
+and writes nothing. Nothing revisits the question when that same node
+later becomes writable, and bdrv_reopen() is not an exotic way to get
+there: commit_active_start() and commit_start() both reopen the base
+read-write for the duration of the job, so an ordinary block-commit onto
+a read-only backing file is enough.
+
+With lazy refcounts the refcount blocks are not written again once the
+dirty bit is set, so an image left behind by a killed QEMU has an
+on-disk refcount block that accounts for the metadata clusters and
+nothing else. Every data cluster reads as free. s->free_cluster_index
+starts at 0, so the first allocation after such a reopen starts at the
+front of the image and hands out clusters that L2 entries still point
+at.
+
+The result is aliasing: two guest offsets mapped onto one host cluster,
+so the guest reads back data belonging to some other offset. Nothing
+about this fails. No I/O error is reported, the corrupt bit stays clear,
+and a clean close clears the dirty bit as well, so no later open will
+repair the image either. Afterwards qemu-img check reports
+
+    ERROR cluster N refcount=1 reference=2
+    ERROR cluster N refcount=0 reference=1
+    ERROR OFLAG_COPIED data cluster: l2_entry=<host>|COPIED refcount=0
+
+and the only runtime witness, if something eventually frees one of those
+clusters, is a bare
+
+    qcow2_free_clusters failed: Invalid argument
+
+on stderr, with the guest none the wiser.
+
+How it looked in production
+---------------------------
+
+A VM was killed while its storage was unavailable, leaving a 100 GiB
+volume dirty. It came back with a snapshot-revert overlay on top, so the
+volume itself was now the read-only backing file, and the overlay was
+committed into it two and a half hours later. 8082 host clusters ended
+up referenced by two L2 entries each, roughly 8 GiB of guest data
+cross-mapped. The guest filesystem began failing metadata verification
+on buffers holding fragments of unrelated files.
+
+Two properties of the damage are worth recording, because they are what
+told us this was not a race:
+
+ - aliasing is exactly two-way, never three or more, which is a single
+   monotonic sweep of the allocator rather than a window hit repeatedly;
+
+ - it stops dead at the host cluster that was the image end at the
+   moment the volume was made writable. Everything allocated after that
+   point is intact.
+
+qemu-img check -r all makes the metadata self-consistent again, and then
+honestly reports no errors, but it cannot un-alias anything. The guest
+data stays wrong.
+
+Reproducer
+----------
+
+Under a second, no guest and no block job required:
+
+  qemu-img create -f qcow2 -o compat=1.1,lazy_refcounts=on base.qcow2 1G
+  qemu-io -f qcow2 -c "write -P 0xaa 0 100M" -c flush \
+          -c "sigraise 9" base.qcow2
+
+  qemu-io -r -f qcow2 base.qcow2 \
+      <<< $'reopen -w\nwrite -P 0xbb 900M 100M\nquit'
+
+  qemu-io -r -f qcow2 -c "read -v 0 16" base.qcow2
+  # 00000000:  bb bb bb bb bb bb bb bb bb bb bb bb bb bb bb bb
+
+The flush is load-bearing: it writes out the L2 cache but not the
+refcount blocks, which is exactly the asymmetry the bug needs. Guest
+fsyncs supply it in production, so a long-running VM is the ideal
+victim. qemu-img commit of an overlay reaches the same state through
+commit_active_start().
+v1:
+https://lore.kernel.org/qemu-devel/20260731220039.1765584-1-den@openvz.org/
+v2:
+https://lore.kernel.org/qemu-devel/20260811173857.396571-1-den@openvz.org/
+v3:
+https://lore.kernel.org/qemu-devel/20260819120558.3870413-1-den@openvz.org/
+
+Notes for review
+----------------
+
+ - The repair still runs under bdrv_drain_all(), so a block-commit onto
+   a large dirty base stalls guest I/O for the length of a full metadata
+   scan. Rejecting the reopen instead would be cheap, but block-commit
+   depends on it succeeding, so repairing in place is the only option.
+
+ - .bdrv_reopen_commit_post() runs after the transaction is committed
+   and cannot roll anything back, so a negative return value reports an
+   unusable node rather than rejecting the reopen. That is unusual, and
+   it is the only channel available: there is no failable hook once the
+   node holds BLK_PERM_WRITE.
+
+Changes in v4
+-------------
+
+ - patch 5: block-stream and change-backing-file document the repair as
+   well, they reopen read-write too. (Andrey)
+ - patch 5: the message says why a failed repair does not mark the image
+   corrupt. (Andrey)
+ - patch 5: each of those notes is one or two lines now.
+ - Cc: qemu-stable restored, QAPI maintainers added to patch 5.
+
+Changes in v3
+-------------
+
+ - patch 1: the same bug aborts QEMU, not only fails a reopen, when the
+   file node below is writable; the message says so and iotests 039
+   covers the read-write to read-only direction as well. (Andrey)
+ - patch 2: new, a reopen of a node whose driver is gone segfaults in
+   bdrv_reopen_queue_child() and asserts in bdrv_reopen_prepare(), which
+   is the crash a failed repair would reach through commit_clean();
+   bdrv_reopen_prepare() reports it instead, iotests 060 covers it.
+   (Andrey)
+ - patch 3: bdrv_reopen_multiple() documents that a failure means either
+   nothing changed or the reopen went through and left an unusable tree;
+   no caller changes. (Andrey)
+ - patch 3: an implementation which fails must set an error, asserted,
+   and the loop skips a node whose driver is already gone.
+ - patch 4: the pre-reopen flags are recorded as int old_flags rather
+   than a bool, with a bdrv_reopen_was_writable() accessor for drivers.
+   (Andrey)
+ - patch 5: the failure names the node and keeps the errno of the check.
+   (Andrey)
+ - patch 5: a failed repair drops the driver instead of calling
+   qcow2_signal_corruption(), which would write the corrupt bit into the
+   header for what may be a transient ENOSPC.
+ - patch 5: blockdev-reopen and block-commit document the failure and the
+   state it leaves. (Andrey)
+ - patch 5: iotests 040 covers a commit onto a dirty base through both
+   commit_start() and commit_active_start(), and the failed repair.
+   (Andrey)
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+CC: Eric Blake <eblake@redhat.com>
+CC: Markus Armbruster <armbru@redhat.com>
+CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: qemu-stable@nongnu.org
+
+Denis V. Lunev (5):
+  qcow2: do not clear the dirty bit when reopening a read-only node
+  block: reject a reopen of an unusable node instead of crashing
+  block: let bdrv_reopen_commit_post() report a failure
+  block: remember the flags a reopen starts from
+  qcow2: repair a dirty image when it becomes writable
+
+ block.c                          |  55 ++++++++++++--
+ block/qcow2.c                    |  33 ++++++++-
+ include/block/block-common.h     |   1 +
+ include/block/block_int-common.h |  11 ++-
+ qapi/block-core.json             |  19 +++++
+ tests/qemu-iotests/039           | 110 ++++++++++++++++++++++++++++
+ tests/qemu-iotests/039.out       |  56 ++++++++++++++
+ tests/qemu-iotests/040           | 122 +++++++++++++++++++++++++++++++
+ tests/qemu-iotests/040.out       |   4 +-
+ tests/qemu-iotests/060           |  30 ++++++++
+ tests/qemu-iotests/060.out       |  13 ++++
+ 11 files changed, 439 insertions(+), 15 deletions(-)
+
+
+base-commit: fa19879df1658f96ac07365fca8835b7decd6995
+-- 
+2.53.0
 
 
