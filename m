@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9400BC5DF98
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:52:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0999C5DF8C
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:52:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNaB-0003uJ-2b; Mon, 24 Aug 2026 01:50:57 -0400
+	id 1wyNYP-0001Jn-PO; Mon, 24 Aug 2026 01:49:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNZE-00020y-2x
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:49:59 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1wyNY6-0001EU-Vu
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:48:48 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNZB-000270-3u
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:49:54 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-38ec1402b05so2252591a91.2
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:49:52 -0700 (PDT)
+ id 1wyNY5-0001kx-8p
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:48:46 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-38e347638adso2729383a91.0
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:48:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787550591; x=1788155391; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787550523; x=1788155323; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=UxYkvzeEyEowcGzylLSarORZJmNgzBitvz+9ePz3P9w=;
- b=o1oulswleiefbXo7/m0QvHa8Hg/StH1L7v3FuntUt2b2+Y6L/Xmu1b5a1FGH4RVSj/
- DqBkeXpCr1rcSDpO6Txz7oh26MLNtqdgYe3rxtNHfjWsdqZB8T0VDZGKOcSUs5m5o5x7
- k37IvClgbCNXP+d3FlF+ou/Sc+qRf1PAiG7oU8MAfRgGxWIw7BnHYeK4hcO78Yw+/s4c
- 9Ka+qLgvlGC7slfsm/GtTQoUIAj/cWszFpAsoOkqcsM3MPhZNT4+Up/AYu4nq/dQZepm
- jGmbrHmR99s8QMWXsHa78ZX0zZABXxT1ywx2rMQLqvfs0W7kcqQzGhhTm+MgWUhwseX5
- wFuQ==
+ bh=qZOFXhGNRxNOm5KFMFQUurJQSlkP1SuCKksgxHQSBBc=;
+ b=oDvZzr/nDIJ+EzZu6ViZuUztaXwqfQv4ZYCzL2IvXtns6oa52cFxKW/vMPVCga/QGg
+ yVmIQE8AcQBYjE/SH79onF4JMTB3/nlG+i98R2OJEANurO5fzXv3Gq7uK0dvEbU3ocjU
+ R76VnTwLUoBqG7fWWXgBbjxRxvnmqvuIyO/p0zW0zKouIC3OSNOX4QZLwvisrzv9SWjU
+ G4CdFkjtSwInouuviYRgUzkLzQlmhP+6KLZu/ng4h3c16trVc5eZqkw9l4G9I90S43Cn
+ XT3cVixV+Gg0r1qynhZPFSKQmWGIYiaNkw9zj+Fi3zxCG42ikZceZNNAoVnK1QBHcYY+
+ IwVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787550591; x=1788155391;
+ d=1e100.net; s=20251104; t=1787550523; x=1788155323;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=UxYkvzeEyEowcGzylLSarORZJmNgzBitvz+9ePz3P9w=;
- b=TF3uq1b9YjS5kL+0rZVUoIjJZrVf1AA3NhgSzr//b+XugitDpaQiWm4yEquH9Z3thp
- CfR19enwWKQxEbtd2G52cbeQ/5+20nIuJ6TrbSVsa/lpUkaAY+lcYgZXPRk88g3fPv6+
- A7K9LnbNCG+eqgludZNe0TtLwwTFSx3W3I0zMzZTHnYnNmomFCYDKxe+XwQDU3p7p3qy
- qsGxs1X2GZECVFZWoeKXiYtbOuq2kI8VuxWYN/U3BVUHyD+XPk0bcQJB9c4HHYDaJ6ut
- qdC6gYroYMmisZKD2uJVjH9o2kTNZg8HhzRw+MYLLpUxEgFkrfuLJhjyNhXEuDUN4UCv
- SP5A==
-X-Gm-Message-State: AFuF++njsrt+08rdR4lBEbYuyM/9lAMroH03CEpBwOBid8WzudxOcDRx
- TtdO/8YQMAALcOIa5c/3CCRWRNi0T+z6UMquOfhB5ZIa/Emki2JZEaQJY5LrnQ==
-X-Gm-Gg: AR+sD11VixPGnn7Jm5pysVnWXThCDJ8DtyfbXtMYcNmhABbovXEefFx2/dy4yEnb3cS
- AbYKUh2/nFelwLbUu7SznKiVeClIqL6MHN/OqlHl2tC3BfoqyHt8NfgHtB9pjpxaWAyroneUUw3
- TaoKQhNCXfPDY9g5479KejHGfB0d/wr2hWAf6LepIK9sulHDGI6BYRcrMFF93LppNVkGOqetNwl
- cV2iZyyMUTzj0BL+V5H9CTD0qB75pk6pe+l+AGmBYKx7C0W9QYYcjiZMM1d5WP3Og259FvInu5m
- cNHMD5ZB9uf682DiwpX/tWegLFRL/JqiFJtiGhBSxKxgoKruv52C1v0WqTE0he363luSwH30vHh
- rP9QjGg5g3HmnCE49psNlXiwIT2b39hCNX79q+vNP1VbXbnqC9xRjHxDZ3xgQAKmuoULNIA1TKT
- U1D+K5v4vtxVH2H6itiAVoFcwQrM61ax4N6GoqDtPcJ0USasxDBiQzkxJqf1VwO+okv6vn7MiKg
- uLBHg==
-X-Received: by 2002:a17:90b:3ec4:b0:381:528a:808c with SMTP id
- 98e67ed59e1d1-395c397c6ccmr38190116a91.12.1787550591160; 
- Sun, 23 Aug 2026 22:49:51 -0700 (PDT)
+ bh=qZOFXhGNRxNOm5KFMFQUurJQSlkP1SuCKksgxHQSBBc=;
+ b=NDjwMJPVjId0PfngpSIFO2Lm/7Yy1eMDZ5+r1MdjQhDEZPCLc0y1PvIQUNkOLbYB3h
+ hLiRc8lyCBHHotGDFwZLgXVdmn6O+cy0W40TaTAt5DX5W5nd6sQvnWX0l/flavqtmWZx
+ LNvhDIO37shBtgYXOtVhWW0HgR510afvKt7+nO2M3ETZg7/O0BWMIZPSTUelZTXKcvFc
+ sR1uskphEjw0pAQGIBzrNnTTnUts2tIvgXEjGhHleJ+CBnn/1KL4Pjt72eCrzZtLfs2B
+ r0WpRZAaYXkqCsSMCLicwLxM+2sB4SDKPNUocisF7gcJ+5Ttlb3KSCpVS1SXtjHp+aMT
+ og1A==
+X-Gm-Message-State: AFuF++nR2TukHneIQLVeNyIWhXF/9SwA9C4IwnIyzky7Y7v8Gz0CNpXT
+ 1CRRhrFHZ7MW83sZ21DXKZ26M+eoi7zy0g81zhZ9y431f2WFBQhk7Atl60p8Pw==
+X-Gm-Gg: AR+sD121CZUmKefX3AhHmeAP4wdlpG/EcsbNe0WWKrXxpCZuY68SdNSfZQoc3XaCxeZ
+ +nH8e4u8INrA4k/MHpe8YzhMn9jWNmaOw+vMplRm1OMfTfrvzm1MfOhTWqRR+oAbU7Yx4Uh2Xy9
+ B8PLZYMP4MpPG+BsobGYw5cS2JQP4bcPrvmdX2D2yagAvJ4cjyldXdsoq3W0nwDjISoLMjZauVs
+ ETdvpxrDTDX0h+tVdVnwm8jm8m0b6Qf8VGv3lg4OkVvtU9J7/SNDa0wbqjnHbgDyG9t07gqOWdw
+ AVcVS5xhGV7AHVZrQLwJg8lARBu6Z36BMQ+XY7EqSJVKKai2h/xM9aVAdkphbA+eEWhT8VeSw58
+ CO7zdYh6pww+NsvmpgFE2i+noTkmfRnSQN7FbUK/l8/q7wW618jkejnPF2e63hV/rkKNHwW7mP4
+ xrbIor1mvSef8rV/MkZxZIKiWScziWlbP6Z14COvXxj6CUyNrsStY+++1KM0FQ68IOHjqQpu2MG
+ zxYPQ==
+X-Received: by 2002:a17:90b:5790:b0:38e:9045:babe with SMTP id
+ 98e67ed59e1d1-395deecf08fmr30815803a91.7.1787550523503; 
+ Sun, 23 Aug 2026 22:48:43 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.49.48
+ 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.48.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Aug 2026 22:49:50 -0700 (PDT)
+ Sun, 23 Aug 2026 22:48:42 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: TANG Tiancheng <lyndra@linux.alibaba.com>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+Cc: Tao Ding <dingtao0430@163.com>, Junze Cao <caojunze424@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 29/96] disas/riscv: Decode unsigned vector immediates as
- unsigned
-Date: Mon, 24 Aug 2026 15:46:59 +1000
-Message-ID: <20260824054806.2790041-30-alistair.francis@wdc.com>
+Subject: [PULL v2 08/96] hw/riscv: k230: add decomp gzip in K230 board
+Date: Mon, 24 Aug 2026 15:46:38 +1000
+Message-ID: <20260824054806.2790041-9-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260824054806.2790041-1-alistair.francis@wdc.com>
 References: <20260824054806.2790041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,166 +104,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: TANG Tiancheng <lyndra@linux.alibaba.com>
+From: Tao Ding <dingtao0430@163.com>
 
-rv_codec_v_i decodes all .vi operands with operand_vimm(), which
-sign-extends bits 19:15. That matches spec operands named imm, but not the
-.vi forms whose operand is uimm; uimm=31 is decoded as -1 and printed by
-the shared 6-bit 'u' formatter as 63.
+This commit replaces the unimplemented part of Decomp_gzip in K230.
+Connect to the handshake interface of GSDMA.
 
-Add rv_codec_v_i_u/operand_vuimm() for the 5-bit uimm forms: vsll.vi,
-vsrl.vi, vsra.vi, vnsrl.wi, vnsra.wi, vssrl.vi, vssra.vi, vnclipu.wi,
-vnclip.wi, vslideup.vi, vslidedown.vi, vrgather.vi, vaeskf1.vi,
-vaeskf2.vi, vsm3c.vi, vsm4k.vi and vwsll.vi. The remaining rv_codec_v_i
-entries are the signed imm forms.
-
-Fixes: 07f4964d1785 ("disas/riscv.c: rvv: Add disas support for vector instructions")
-Fixes: 9d92f56d4a44 ("disas/riscv: Add support for vector crypto extensions")
-Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260703-b4-disas-xthead-fix-riscv-next-v4-4-84c566330bc7@linux.alibaba.com>
+Signed-off-by: Tao Ding <dingtao0430@163.com>
+Reviewed-by: Junze Cao <caojunze424@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260808062227.66961-6-dingtao0430@163.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- disas/riscv.h |  1 +
- disas/riscv.c | 45 ++++++++++++++++++++++++++++-----------------
- 2 files changed, 29 insertions(+), 17 deletions(-)
+ include/hw/riscv/k230.h |  2 ++
+ hw/riscv/k230.c         | 23 +++++++++++++++++++----
+ hw/riscv/Kconfig        |  1 +
+ 3 files changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/disas/riscv.h b/disas/riscv.h
-index 379e642ec8..91ada8b531 100644
---- a/disas/riscv.h
-+++ b/disas/riscv.h
-@@ -149,6 +149,7 @@ typedef enum {
-     rv_codec_v_r,
-     rv_codec_v_ldst,
-     rv_codec_v_i,
-+    rv_codec_v_i_u,
-     rv_codec_vsetvli,
-     rv_codec_vsetivli,
-     rv_codec_vror_vi,
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 967739bdbb..82b962dc71 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -1803,19 +1803,19 @@ const rv_opcode_data rvi_opcode_data[] = {
-     { "vxor.vi", rv_codec_v_i, rv_fmt_vd_vs2_imm_vm, NULL, 0, 0, 0 },
-     { "vsll.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
-     { "vsll.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
--    { "vsll.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-+    { "vsll.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-     { "vsrl.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
-     { "vsrl.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
--    { "vsrl.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-+    { "vsrl.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-     { "vsra.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
-     { "vsra.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
--    { "vsra.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-+    { "vsra.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-     { "vnsrl.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
-     { "vnsrl.wx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
--    { "vnsrl.wi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-+    { "vnsrl.wi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-     { "vnsra.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
-     { "vnsra.wx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
--    { "vnsra.wi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-+    { "vnsra.wi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-     { "vmseq.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
-     { "vmseq.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
-     { "vmseq.vi", rv_codec_v_i, rv_fmt_vd_vs2_imm_vm, NULL, 0, 0, 0 },
-@@ -1909,16 +1909,16 @@ const rv_opcode_data rvi_opcode_data[] = {
-     { "vsmul.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
-     { "vssrl.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
-     { "vssrl.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
--    { "vssrl.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-+    { "vssrl.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-     { "vssra.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
-     { "vssra.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
--    { "vssra.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-+    { "vssra.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-     { "vnclipu.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
-     { "vnclipu.wx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
--    { "vnclipu.wi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-+    { "vnclipu.wi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-     { "vnclip.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
-     { "vnclip.wx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
--    { "vnclip.wi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-+    { "vnclip.wi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-     { "vfadd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
-     { "vfadd.vf", rv_codec_v_r, rv_fmt_vd_vs2_fs1_vm, NULL, 0, 0, 0 },
-     { "vfsub.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
-@@ -2048,15 +2048,15 @@ const rv_opcode_data rvi_opcode_data[] = {
-     { "vfmv.f.s", rv_codec_v_r, rv_fmt_fd_vs2, NULL, 0, 0, 0 },
-     { "vfmv.s.f", rv_codec_v_r, rv_fmt_vd_fs1, NULL, 0, 0, 0 },
-     { "vslideup.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
--    { "vslideup.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-+    { "vslideup.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-     { "vslide1up.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
-     { "vslidedown.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
--    { "vslidedown.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-+    { "vslidedown.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-     { "vslide1down.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
-     { "vrgather.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
-     { "vrgatherei16.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
-     { "vrgather.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
--    { "vrgather.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-+    { "vrgather.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-     { "vcompress.vm", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
-     { "vmv1r.v", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
-     { "vmv2r.v", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
-@@ -2144,8 +2144,8 @@ const rv_opcode_data rvi_opcode_data[] = {
-     { "vaesef.vs", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
-     { "vaesem.vv", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
-     { "vaesem.vs", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
--    { "vaeskf1.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
--    { "vaeskf2.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
-+    { "vaeskf1.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
-+    { "vaeskf2.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
-     { "vaesz.vs", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
-     { "vandn.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
-     { "vandn.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
-@@ -2169,14 +2169,14 @@ const rv_opcode_data rvi_opcode_data[] = {
-     { "vsha2ch.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
-     { "vsha2cl.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
-     { "vsha2ms.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
--    { "vsm3c.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
-+    { "vsm3c.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
-     { "vsm3me.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
--    { "vsm4k.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
-+    { "vsm4k.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
-     { "vsm4r.vv", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
-     { "vsm4r.vs", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
-     { "vwsll.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
-     { "vwsll.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
--    { "vwsll.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-+    { "vwsll.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
-     { "amocas.w", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
-     { "amocas.d", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
-     { "amocas.q", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
-@@ -4492,6 +4492,11 @@ static int32_t operand_vimm(rv_inst inst)
-     return (int64_t)(inst << 44) >> 59;
- }
+diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
+index 8879d56d98..8679d09891 100644
+--- a/include/hw/riscv/k230.h
++++ b/include/hw/riscv/k230.h
+@@ -20,6 +20,7 @@
+ #include "hw/riscv/riscv_hart.h"
+ #include "hw/watchdog/k230_wdt.h"
+ #include "hw/dma/k230_gsdma.h"
++#include "hw/misc/k230_decomp_gzip.h"
  
-+static uint32_t operand_vuimm(rv_inst inst)
-+{
-+    return extract32(inst, 15, 5);
-+}
+ #define C908_CPU_HARTID   (0)
+ 
+@@ -38,6 +39,7 @@ typedef struct K230SoCState {
+     K230DDRPhyState ddr_phy;
+     K230WdtState wdt[2];
+     K230GSDMAState gsdma;
++    K230DecompGzipState decomp_gzip;
+     MemoryRegion sram;
+     MemoryRegion bootrom;
+ 
+diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
+index 49c3b50c57..5163eaa7ef 100644
+--- a/hw/riscv/k230.c
++++ b/hw/riscv/k230.c
+@@ -117,6 +117,8 @@ static void k230_soc_init(Object *obj)
+     object_initialize_child(obj, "k230-wdt0", &s->wdt[0], TYPE_K230_WDT);
+     object_initialize_child(obj, "k230-wdt1", &s->wdt[1], TYPE_K230_WDT);
+     object_initialize_child(obj, "k230-gsdma", &s->gsdma, TYPE_K230_GSDMA);
++    object_initialize_child(obj, "k230-decomp-gzip", &s->decomp_gzip,
++                            TYPE_K230_DECOMP_GZIP);
+ 
+     qdev_prop_set_uint32(DEVICE(cpu0), "hartid-base", 0);
+     qdev_prop_set_string(DEVICE(cpu0), "cpu-type", TYPE_RISCV_CPU_THEAD_C908);
+@@ -231,6 +233,23 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->gsdma), 0,
+                        qdev_get_gpio_in(DEVICE(s->c908_plic), K230_GSDMA_IRQ));
+ 
++    /* Decomp gzip */
++    qdev_prop_set_uint64(DEVICE(&s->decomp_gzip), "sram-base",
++                         memmap[K230_DEV_SRAM].base);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->decomp_gzip), errp)) {
++        return;
++    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->decomp_gzip), 0,
++                    memmap[K230_DEV_DECOMP_GZIP].base);
++    for (int i = 0; i < K230_DECOMP_GZIP_NUM_GPIOS_OUT; i++) {
++        qdev_connect_gpio_out(DEVICE(&s->decomp_gzip), i,
++                              qdev_get_gpio_in(DEVICE(&s->gsdma), i));
++    }
++    for (int i = 0; i < K230_DECOMP_GZIP_NUM_GPIOS_IN; i++) {
++        qdev_connect_gpio_out(DEVICE(&s->gsdma), i,
++                              qdev_get_gpio_in(DEVICE(&s->decomp_gzip), i));
++    }
 +
- static uint32_t operand_vzimm11(rv_inst inst)
- {
-     return (inst << 33) >> 53;
-@@ -4895,6 +4900,12 @@ static void decode_inst_operands(rv_decode *dec, rv_isa isa)
-         dec->imm = operand_vimm(inst);
-         dec->vm = operand_vm(inst);
-         break;
-+    case rv_codec_v_i_u:
-+        dec->rd = operand_rd(inst);
-+        dec->rs2 = operand_rs2(inst);
-+        dec->imm = operand_vuimm(inst);
-+        dec->vm = operand_vm(inst);
-+        break;
-     case rv_codec_vror_vi:
-         dec->rd = operand_rd(inst);
-         dec->rs2 = operand_rs2(inst);
+     /* unimplemented devices */
+     create_unimplemented_device("kpu.l2-cache",
+                                 memmap[K230_DEV_KPU_L2_CACHE].base,
+@@ -249,10 +268,6 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
+     create_unimplemented_device("dma", memmap[K230_DEV_DMA].base,
+                                 memmap[K230_DEV_DMA].size);
+ 
+-    create_unimplemented_device("decomp-gzip",
+-                                memmap[K230_DEV_DECOMP_GZIP].base,
+-                                memmap[K230_DEV_DECOMP_GZIP].size);
+-
+     create_unimplemented_device("2d-engine.non-ai",
+                                 memmap[K230_DEV_NON_AI_2D].base,
+                                 memmap[K230_DEV_NON_AI_2D].size);
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index d28ac06043..d06ac26648 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -163,3 +163,4 @@ config K230
+     select UNIMP
+     select K230_WDT
+     select K230_GSDMA
++    select K230_DECOMP_GZIP
 -- 
 2.54.0
 
