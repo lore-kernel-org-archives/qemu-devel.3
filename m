@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88309C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:55:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E8E1C5DF8C
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:55:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNbE-0004zg-Q5; Mon, 24 Aug 2026 01:52:01 -0400
+	id 1wyNbH-00052b-3r; Mon, 24 Aug 2026 01:52:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNZ6-0001yB-2r
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:49:51 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1wyNZY-0002Z3-0g
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:50:16 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNZ4-00025p-Hn
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:49:47 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-38dfe910e9dso3368443a91.3
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:49:46 -0700 (PDT)
+ id 1wyNZW-0002Ok-JP
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:50:15 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-38e08baf860so3372986a91.2
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:50:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787550585; x=1788155385; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787550613; x=1788155413; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=pvkNgzPBnkClRwc9O5eyz1kkZLDtZhEMJDHTwwC8vGY=;
- b=cGl6RNZqLuVHSZH/mdC1/3A7qFO6geNUFCxUykeO0zk2E4+gQE1gzzi4kEw2MFQecs
- /7x2Dr3y7Aq0iBz+6/H9zGN3pTkbgYZUYYYLPF2HSR4Wh1UuYAdebVYmOp34vRd44PtF
- mBQOstUkXQxoUTbfvSAwrBED8suBU/41RSF6Zwi2tC6R7nVIHLF4BhHs7kLcq5AHLHEc
- ojBa6B5Tw5abJjV+HE4fZUysx6uHysKs7WVgDNFZnULBflEg5wjq7F86DhVn8Z01+AZD
- Jx7xAE6tN0+5drSCZ8+Q9YDy2JV2m1mvMOqQCQzIOZDVwO0W9EkfNKS66k3cwkowI7eS
- VNtw==
+ bh=2/TGr75vkp0br2SHR4F1+UQxBkhDhZrz6IHZEj1QXJE=;
+ b=o+th2Xz/xn5Sf7+MFfSePex/VOAovszK6oYjrfg8hYG+/LaBhJH5lD1DKURHlqjKcT
+ 6LrcM/J2xajg6QTSgt3Hk0W8aNaGm5/SeWtjDzxIc/b16JucBfwqO4yjKgnJ5+6sEJHf
+ jr4UqafVgh3b8CfGHyDggvzvpRMxv8YC8NMvu64TIfiZclxJQ/jl4umb1ZMpvx0py9JA
+ 1y5rR6XI8uGMJ1xXdS2EWRzv2AfKe5Jh2FB/3itdhLBZ7ac58jwnBkiqP93Ms2l1jsgA
+ q0SDokQ6jz9aHRSc3PHHbp2s4D+/eh2a+nXKwe+1MBljfL7tm+JelSjFxd1KkHdK/G7L
+ fHVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787550585; x=1788155385;
+ d=1e100.net; s=20251104; t=1787550613; x=1788155413;
  h=content-transfer-encoding:content-type:mime-version:references
  :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=pvkNgzPBnkClRwc9O5eyz1kkZLDtZhEMJDHTwwC8vGY=;
- b=QO8CcCeAu94CEET5nF9MlltYKwKr64ehAOH5ODU940DQdLYVYOdIlvf+uf2qNZv9dR
- AaDsAOpz+lh3e42EvJm8zc+ZreOCg6n+8oEbodZ/QrLTo4i2WHm29qRglgkfD6UxaYKa
- 9oab3oA0EYG0D3b003v9nuMBlRCg0cHedgEj7sBT3G5ix+4Q9toR33D510OKjeWeOLeP
- b1EGpWiKBpPA+lEKOMHrZyOtCangKlBIeWxxYkCbwJB+7qUI+ejQ8InU9n99GRlQTcEW
- gj9HLJBQ6bB09JdV/eLpAkt6aWG/PKaseJ36OGngu8dn56A52qqgJNHL0+5Fut9ukOBo
- amrw==
-X-Gm-Message-State: AFuF++kvqvSLDDUH5ADOVzppfvZLWnpKXsHKbwl4KTZWI0kRWbfvvSpM
- 7OInxRgDb6vLPqszjtnTVUkXXZfsMPFb70acuLxoFRxvzrIbKjJoJhh72VViJQ==
-X-Gm-Gg: AR+sD13jN4PPWTx6Qp+KIFW2rY1zb9H5I+QxPhlCpC+5f6SamLPl1fBX9q0EKkFerAe
- X4lAgdv6nKIqua7gBjz458LjhoeYuWP1knIaaGt4ClF7SLWTT/mJSmgkOXUs493okwLtoL8+AXi
- /AVUs7sjDg0FGkmXvxqHNXG3JAcP2NM0mGR8H3NogdpAma7VmvR4koXzbDg8Z44ezQJoJlQxtuW
- d/H7J0SR5YSuhCvyn2C3dyzOAUIKW9r5I+176an/30J7CHv0824NkwJlVkk2ViK6J0daRxs0tap
- y+HYVmivMJYO2MhW9TFQgB8VEpqr8H5lNo5SHCsNK456Um6Yy/sStggnfvPf9KMsCqOjj2sZekA
- gwQqYvW1h5J1IkXtNpN8pXPtYI1V8uswMWLQvy/zaTJ0RV16VWDqCoGFScdDnN39MxD3kzohOGl
- Os/Ucv1nqXuoPFlWLjPOhnqRTZdUDmXN0S3vO9F8lB1akiCuXYq3nifnTdNOtiV1C2K1wAcnjUu
- xWaoQ==
-X-Received: by 2002:a17:90b:4a89:b0:390:8361:a532 with SMTP id
- 98e67ed59e1d1-395c33bd6d1mr41672629a91.7.1787550585057; 
- Sun, 23 Aug 2026 22:49:45 -0700 (PDT)
+ bh=2/TGr75vkp0br2SHR4F1+UQxBkhDhZrz6IHZEj1QXJE=;
+ b=V7r3cx/WZgM7X7JbCbodSps4HhpojjKrA9pkJg0Lf4Tm8nZcht3WlLTdUvfBgKSZL1
+ /6v4PmxJjRD4xw7TxtaZh7m1mnF6NSRJ1UAopv7RdT91/1RjS51QH7tmM4xQi56C2LtP
+ 58t864JDC6URJXSVCHVuJKMmXvvZuJ+QM57vzgf4RcpuSF8KccGnXpoarUoA+Q59ox0I
+ VdGm2rG9uFPA+mwjKr1f8yHCaVeNueahouDsGqrqmOiE7anxN3l0P6RVqqnGWUwa3FGw
+ cKmvRS0bGOU9f5UWCO306MtSUMbF8K8njjCfpY2ulwBNLPEIx3nNEqPrNHpAcN75ILzk
+ 1qnA==
+X-Gm-Message-State: AFuF++m5x8WBYssgtImiEQqdPvuLl6g+8VfyEBxQSBlkpSVsi1iFnhZs
+ w7kJ3vg6S2WbwT2kMoxSpawpFKs9HqmXxR5Dhm68rUg0zczlBSLFi2/kP/hgTw==
+X-Gm-Gg: AR+sD13+0OWttxw8ox9RJihAY/pdmklIcmQd0YplhtseGW81+Ku2qHy5pMHgFoqVgG8
+ P7Gog1BM8jxfBw00sduppPxWN4CyW4KnhyDT+jfUz90E3i2EjrIr2ITRyiWW70d7+DbFqRqp8Qt
+ pery2u4KFuU/1/JaZyfQqsAo1mRR5+zVt6cKpQM0YzFJx63tEi0hRh5c2UR4HS6YD/GFuOZgQVd
+ 4wgppS55F65ylxqQWhDa92fG726t7wpw2qLkNQx/ZSYp1R8n+W6mQvvWZdvrDPKozC9mzwsopJ3
+ F+NoaujjW2uHceKftgsaUxQtcHPj6/JALqgKZS2VjwsKJRKamO2wE8J1x+InE5TknFdL3QxP862
+ MvwTtVu31zTrWqonNlG7WG+SCFDMyTWq+/7262cixkZMeIDwaGho1B39z0ce2N4eSZop0CCCM7S
+ rZZta2aB5iE2VVRyXsBAAa7YZYjU1tNiNHLjI0OEO7n0gHGj80t+EozMkdqi31rCSZwq5bEVa5X
+ 5iglw==
+X-Received: by 2002:a17:90b:4b89:b0:38e:67e1:15b with SMTP id
+ 98e67ed59e1d1-395deeae6e3mr27425563a91.6.1787550613076; 
+ Sun, 23 Aug 2026 22:50:13 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.49.41
+ 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.50.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Aug 2026 22:49:44 -0700 (PDT)
+ Sun, 23 Aug 2026 22:50:12 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: TANG Tiancheng <lyndra@linux.alibaba.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 27/96] disas/riscv: Fix 6-bit immediate extraction
-Date: Mon, 24 Aug 2026 15:46:57 +1000
-Message-ID: <20260824054806.2790041-28-alistair.francis@wdc.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PULL v2 36/96] disas/riscv: Tidy dec initialization in disasm_inst
+Date: Mon, 24 Aug 2026 15:47:06 +1000
+Message-ID: <20260824054806.2790041-37-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260824054806.2790041-1-alistair.francis@wdc.com>
 References: <20260824054806.2790041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -108,41 +106,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: TANG Tiancheng <lyndra@linux.alibaba.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-rv_codec_r2_imm6 is used for XThead instructions whose 6-bit
-immediate field is encoded in bits 25:20. The old expression
-left-shifted by 38 and then right-shifted by 60, so it kept only
-bits 25:22.
-
-Use extract32() to decode bits 25:20 directly. This fixes the
-immediate printed for th.srri and th.tst.
-
-Fixes: 318df7238b9f ("disas/riscv: Add support for XThead* instructions")
-Suggested-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260703-b4-disas-xthead-fix-riscv-next-v4-2-84c566330bc7@linux.alibaba.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260812223142.349142-4-richard.henderson@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- disas/riscv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ disas/riscv.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/disas/riscv.c b/disas/riscv.c
-index 7f1b262773..fdf75a12ef 100644
+index 012f90fce6..986dc6b752 100644
 --- a/disas/riscv.c
 +++ b/disas/riscv.c
-@@ -4546,7 +4546,7 @@ static uint32_t operand_zcmp_rlist(rv_inst inst)
- 
- static uint32_t operand_imm6(rv_inst inst)
+@@ -5441,10 +5441,11 @@ static void decode_inst_decompress(rv_decode *dec, rv_isa isa)
+ static GString *disasm_inst(rv_isa isa, uint64_t pc, rv_inst inst,
+                             const RISCVCPUConfig *cfg)
  {
--    return (inst << 38) >> 60;
-+    return extract32(inst, 20, 6);
- }
+-    rv_decode dec = { 0 };
+-    dec.pc = pc;
+-    dec.inst = inst;
+-    dec.cfg = cfg;
++    rv_decode dec = {
++        .pc = pc,
++        .inst = inst,
++        .cfg = cfg,
++    };
  
- static uint32_t operand_imm2(rv_inst inst)
+     static const struct {
+         bool (*guard_func)(const RISCVCPUConfig *);
 -- 
 2.54.0
 
