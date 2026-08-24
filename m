@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96389C5DF94
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE5E6C5DF9B
 	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:30:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNFn-0001Fm-Nr; Mon, 24 Aug 2026 01:29:53 -0400
+	id 1wyNFv-0001S7-Sy; Mon, 24 Aug 2026 01:29:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFL-0000bP-K5
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:25 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFS-0000jy-F7
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFK-0006kZ-8C
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:23 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFP-0006lB-TV
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787549361;
+ s=mimecast20190719; t=1787549367;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TH4c6HnowuFu5CvbgBQlykOA2IkGVA+5wBP1z2lgd+g=;
- b=Be99MTuJp1NWfDLr8ZIK+k5OHLux6v+ZVt+56g6sgaHtfAKaWNx797CQAyzgECpq0PTfoQ
- vwh3Jd+DXxCwsQqwFHoMim+vyjb0GKnJ0LkXzZhPV8rI3VSRVJboIXxgx3jiRq3QfY+vMj
- QdNQ0YQxsSjMu8aElhZXTOqAKoA9JoA=
+ bh=mVoAGbNQywFOBd+C8tyDnKKdu/uXzrAWuWyd+vClfEs=;
+ b=M4qabpDozEYkqoS8topb0HfibQU0aelAMDZhDFlKfwr9vDhafBaIMcl1IHuzlRhlR24Ggm
+ MZXSD5fxEIxs5boBy7+4uOFT0W6/Gkk4SBbZM7LKPolv/XBF5Ko6IVA7qpkgS9YZ5XBDQd
+ gxS/r0BkiGAk/GWYYWMHqHySb5VVPbY=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-513-BO47UyY7Ouuw_YZnyq5aAg-1; Mon,
- 24 Aug 2026 01:29:17 -0400
-X-MC-Unique: BO47UyY7Ouuw_YZnyq5aAg-1
-X-Mimecast-MFC-AGG-ID: BO47UyY7Ouuw_YZnyq5aAg_1787549355
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-247-OJf7oA4rMbOhDdGzOYuteA-1; Mon,
+ 24 Aug 2026 01:29:20 -0400
+X-MC-Unique: OJf7oA4rMbOhDdGzOYuteA-1
+X-Mimecast-MFC-AGG-ID: OJf7oA4rMbOhDdGzOYuteA_1787549359
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6CBC3180ABE7; Mon, 24 Aug 2026 05:29:15 +0000 (UTC)
+ id 6F5E6180ACC6; Mon, 24 Aug 2026 05:29:19 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.29])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 664861800577; Mon, 24 Aug 2026 05:29:12 +0000 (UTC)
+ id 0976E1800577; Mon, 24 Aug 2026 05:29:15 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -57,9 +57,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Cleber Rosa <crosa@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH 03/12] tests: update emsdk-wasm64-cross
-Date: Mon, 24 Aug 2026 01:28:49 -0400
-Message-ID: <20260824052859.880475-4-jsnow@redhat.com>
+Subject: [PATCH 04/12] qapi: update type hint for types_seen
+Date: Mon, 24 Aug 2026 01:28:50 -0400
+Message-ID: <20260824052859.880475-5-jsnow@redhat.com>
 In-Reply-To: <20260824052859.880475-1-jsnow@redhat.com>
 References: <20260824052859.880475-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -89,36 +89,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This container currently uses Ubuntu 22.04 as a base, which is no
-longer supported by QEMU as a build platform. Upgrade to a newer
-version of the image which will provide Python3.12+.
+In preparation for upgrading Python to 3.12+, adjust the type hint on
+types_seen to prevent mypy from chirping about an unknown type for
+this variable.
+
+Why didn't this trigger earlier? A mystery for the ages.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- tests/docker/dockerfiles/emsdk-wasm64-cross.docker | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ scripts/qapi/types.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
-index c04a741b0e5..f11a9f34244 100644
---- a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
-+++ b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
-@@ -1,6 +1,6 @@
- # syntax = docker/dockerfile:1.5
+diff --git a/scripts/qapi/types.py b/scripts/qapi/types.py
+index 2bf75338283..b87377c6474 100644
+--- a/scripts/qapi/types.py
++++ b/scripts/qapi/types.py
+@@ -34,7 +34,7 @@
  
--ARG EMSDK_VERSION_QEMU=4.0.10
-+ARG EMSDK_VERSION_QEMU=5.0.2
- ARG ZLIB_VERSION=1.3.2
- ARG GLIB_MINOR_VERSION=2.84
- ARG GLIB_VERSION=${GLIB_MINOR_VERSION}.0
-@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y \
-     pkgconf \
-     ninja-build \
-     python3-pip
--RUN pip3 install meson==${MESON_VERSION} tomli
-+RUN pip3 install --break-system-packages meson==${MESON_VERSION} tomli
- RUN mkdir /build
- WORKDIR /build
- RUN mkdir -p $TARGET
+ # variants must be emitted before their container; track what has already
+ # been output
+-objects_seen = set()
++objects_seen: set[str] = set()
+ 
+ 
+ def gen_enum_lookup(name: str,
 -- 
 2.55.0
 
