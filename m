@@ -4,124 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E6C7C5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 09:15:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A381C5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 09:21:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyQlQ-0004ss-JE; Mon, 24 Aug 2026 05:14:44 -0400
+	id 1wyQr2-0006Qh-2c; Mon, 24 Aug 2026 05:20:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wyQlN-0004sW-Cx
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 05:14:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wyQlK-0004h7-RL
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 05:14:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787562871;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=T/ALitoBbFy8z4IezdOIagA907yJRPr1JzeDhq5Do8U=;
- b=AF35+/cxg1OVWkh0J/3McnIxv5SvPT0EvwbvdP0b0/XOBuDVsDsY+DcT66jA5TsFcobsrg
- dzJ6+e8kD3BnWg+xO/8w1XCapNWgOK90T6C+UsGSJqjSSNrpf9rVa7bk+xL2oWERL4TtWT
- AYbGGwqWUR6zmEAS7V+OHc+uH30UDwA=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-567-IOoHxFCJN5ClOchiZsJteQ-1; Mon, 24 Aug 2026 05:14:28 -0400
-X-MC-Unique: IOoHxFCJN5ClOchiZsJteQ-1
-X-Mimecast-MFC-AGG-ID: IOoHxFCJN5ClOchiZsJteQ_1787562867
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-cbedb8673ceso2975293a12.0
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 02:14:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787562867; cv=none;
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wyQr0-0006QQ-I9
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 05:20:30 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wyQqy-0006NS-O1
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 05:20:30 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-c1671ec8692so459361166b.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 02:20:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787563226; cv=none;
  d=google.com; s=arc-20260327;
- b=J+SX6T1Sks8eP/pC6on25vyk1ckfnQpSmmnRRfRVUZMkmgNNa47x9n8hnu4jUspc0C
- 4o91lbXu/MgrAnwTzd8YthkKIzf05FWLUwtJ4aJItlSmsOXg+dRiXgJJNZVSFxCxYzSi
- hSgxAlxafwlWPR16Hfamyw1C3bI2QiGpePtjnMSHw/tioolQoHUC9ML2Z0YkXVOHmNEZ
- qeW+Qy49IWimDJHxM8q4tDhEQGGx+GWwRMgXBPteqlZ7I7hgu+/81tv6x8pmYELdYrx8
- r5u19CkuZcoENRXdPhsDrw6SEbeP6O+WxKaIcmbPH29GHlMhERiJgIrZcA5sDSezvg+T
- yvKA==
+ b=QTbimpBCyBpKMgaXsBdBOAX/Urg0DlYPwFQQUhpLTd3P0t+fzYH1AdOLfDVMoMWuzj
+ 5bzEsrdBoUZG20QqXJtcEYDzexx4m4Mz0H/xsxapWTdJ0cD/ipcklbmTVElaQKIPNtCH
+ OY8P8zz/3Bfs2nAYrgVb+3abfNfSn1begwB/x2+iNSzamqveOZvmfiwYTuQHdtyJox3Q
+ 0pPIUbNk499Oc7b4ySxbPSbJGUXZishwHTHn9QcAqa9nxtvJ2a9zqCzrH9kB4XkYuRYA
+ gZEP0ZproPrRz4iU/mXwfXU9DBhs6YocAyESgABHl/eDFCIPnyZO7TX1rzTdMEtWfzlf
+ aO6g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=T/ALitoBbFy8z4IezdOIagA907yJRPr1JzeDhq5Do8U=;
- fh=ql45W2LQjIeaZ/xZ4+VidjmDW/ISdwhCg0IQSuz3z5Q=;
- b=bZyk2QgrvF7cKG6rKx1XZqJIEOVa612bIOpa6e4UZVIB91xG5NvvdOGigVKcnfgGM8
- 0Rt1s+UcSFHuLZFg8JJTQi22mxjsSSbJvMGC1C/LniCOeoFi5w3qYfJeiONUzJfNv9k8
- Of6Rpi/xz5mTQ47L/pQjoI+yV3agldpqq/wRCswDnRnFzuKTXkHyPrq5bopHflx1x8yG
- OTWwdKmREf7502XJpGOZCvG5XbTlItdnQDCSUwBovyBD9vF7uJ+nsByRR9bWs1WG4H0a
- 6/Rwpx/CTxif2xqzbVOuecJRD8mUsYAYMH6YUnNXZ6LFabTeeZOuXbx/CVE+J/dZmltd
- hLSA==; darn=nongnu.org
+ bh=6EJLXJQcuhaVWby2f6a7kpaCGepaAPvmxfqVt7Jkb2o=;
+ fh=wGZeUYt39FdrjiyDvngBMA/6KW8toEkLMWKs7FzaIuY=;
+ b=jutVAxTgq8hMSS5XqSW43h8qRIOfaE8RMVhnEkqUiQt12KvX4+wqBcMmDCNyP3pyBT
+ p68J/quyA4B+Lpk6fpG+Gqqq5xzu9Q4v2vKOhtqZQFb34lOoWM53BIGKzGF3fkWaMh3g
+ L4SAL6X6YnuyiRJRWIg01LXWuAnxUBHqJUbakvFCz6GIhFYpO2Hi0m9yhQDQghndXqB3
+ 7M17cFXGIZIeLupRygUwmcgBoCmJQOIYE188JLlXHUHT3NacYi3ccjoR+uokndtJPNKl
+ B5qNy5jUKuOB6sig73wLGunwkOxQHZFlKmDasDHDjTnh2uKmkzcrEXVe1UqEUAuT4BeH
+ otcw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787562867; x=1788167667; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787563226; x=1788168026; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=T/ALitoBbFy8z4IezdOIagA907yJRPr1JzeDhq5Do8U=;
- b=S1a9Xx+6X+uQ25xeqz9x+C0wg+IlL+UxPfJ6CpsL7iP8spE6rupXh4yakDKJPR7xqQ
- B5dWPfnyXvT049Uu3/3cXlQzww+rcIIbkryL+TGqcG0L50FY3vVc28j9HIlBONyHPfRF
- Hnwz/3OLYIBRpnhBpi+HDTbcWhQHgGWfYwv4b+jSZs2VWao1ONYnq5aHar1Ek1tcPuxx
- HZg/xzpLeF9P8DbWHQq9w/BehGyVn6u5ahRi817nsxIwU1c/A1SW1AGbX4zzQOt2NWlT
- lEUoyyEp9RAYbsdDL2m2bMDs/byg8h40L5QDTb5t16wgsTsTMLjxLfAQeIEbHVKW02p7
- lzPA==
+ bh=6EJLXJQcuhaVWby2f6a7kpaCGepaAPvmxfqVt7Jkb2o=;
+ b=mckWmG2OS0zFLxBLsyuXKEEz2uskGgsYR2KZ5GwFWufaZCxTuEdZWhM1CD3IxXEKmv
+ mTRac9Wj6rJ1TCb6xmlfnzS97NajUH+ijkqYe5Msf0xlP5dsreky/lRXXsbE53xTHXE5
+ ZQRsD+Owifr0HKXa3IS9L0k7SundHRs8akaXnaAIn17Y0/kmF6VoVAOxNF+X25u+J9Wj
+ bFvbyp70NfbtJ9hliHgEbMgxrntZAanh3YIBDtsmArH1pjVhfq+MJBj8q++kEEzrJ21g
+ v2A2kGCqriRFBII5vRTJ14mRHIliYmsdSWgS2ur3n86R+h5alRZ5RfoYGIHPugPRJlBw
+ KP3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787562867; x=1788167667;
+ d=1e100.net; s=20251104; t=1787563226; x=1788168026;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=T/ALitoBbFy8z4IezdOIagA907yJRPr1JzeDhq5Do8U=;
- b=QA257/CblncBLwboiPRw1KZg2AcqIPgEUcVv7L1P0ThO+fU23G6mdGR5gcz6sG80A8
- D2fW225BUOuvF792rTqg5AeHtkFzrc41yeDAMQHFLoQ7ZkKr5jNx5KZRo7VDVUqdxPtj
- gN14+NCEw87r0NtCWlMDfyv3plmOnd7GdtIsjSFiTQxBXa0jesqh6VR784wz4iiWv0bu
- tLVEIDTuAj75qPeuxKmMtB++7u2GjnMyGdzyg3i/XzNq8jxBaewRv73fKcLUQDtQZNdu
- ITsfe/zi9OW0DI1Fge1P43QhwSwMIVyC18AuTe353M9zAnIBExAP5oZl9e+y/KQRsqbK
- WYpw==
-X-Gm-Message-State: AFuF++m+ora8c1U41m8+lvzIGKqUejCcQO4a7U1t0q1Ev1Y9qX5iKtxl
- mevNJj0Vkhet3BUNRfGdboDcvV2zsbZ0odFDlMr67Y6KSNc6hKJNRVybebvUOZ4w6uxcrmnPrn8
- Ymd9m/5lUXKv7XCsA3qvAC0/gjBjnHJWC6EugfEJC2Eb591om9Xu84t/N62YfBqqfUje9M/UR+B
- P6L46hQct2k5Tv73yfYpI7UmC29DZK0qbUFY9ryZc=
-X-Gm-Gg: AR+sD10n+BphlE7WIlyPr79AdM22yl6qzuGZYDmm7ztMGnlRaQCq8cfCxdjxCvwYPK5
- bv7bnBDCnWi9uk3jQrvwkqngdQMYx1aTQc+SQYtgt2iMW8fuekiIUasnS21QgttopmC7caLTwh+
- 4EZohRsVMfeMXOjjWpNkY9ecBvzcnGp+Xm9qG8uF16iP1eJSrSiqTxS5Lb3+P2BvPyia0ZmEW1t
- MJJEkAjkV/xgDYHmyn7UlL5O9w46o2ue0dYL6Ni6cwo66cNStSm2KF6Y0/2E2VKzyp+iNw317oj
- wA==
-X-Received: by 2002:a05:6a21:e584:b0:3cc:c7cf:5a44 with SMTP id
- adf61e73a8af0-3cd2fd4d78amr50711487637.2.1787562867358; 
- Mon, 24 Aug 2026 02:14:27 -0700 (PDT)
-X-Received: by 2002:a05:6a21:e584:b0:3cc:c7cf:5a44 with SMTP id
- adf61e73a8af0-3cd2fd4d78amr50711405637.2.1787562866933; Mon, 24 Aug 2026
- 02:14:26 -0700 (PDT)
+ bh=6EJLXJQcuhaVWby2f6a7kpaCGepaAPvmxfqVt7Jkb2o=;
+ b=eWl9n7lxpsofE9nPJ7giDkCquRtIMFmNmSuAvBqx0n3XBX9DJ0QLgUe9HcNeN/GRsR
+ otlEcNtL0qcr7OnzBFaoe6sGpduUyqLrEINtLK9MUYfJksR3YZufMEQP8CUEUeOIAJ7X
+ wEAl6zCC/9XVNHlPn/Fo3McRx/xi1HjeqK8VtOaHNAswqyaZEBfndtqsumF6TlA0XHrT
+ TgQHV8g9s4/nTFuxTcGHZJnHGCsie37gDs45lQ0NSEdYx8VD0tzICaa/NrpCHl0OMlam
+ HH6ZQJS8kVwj8vTWEYPvA3CJN/cF1GjJkHHfwbGyMTn0g519T6jz5lLAQXg7AjEOwys9
+ ZEgA==
+X-Gm-Message-State: AFuF++n4XG9GKRFBqLuueeaRgXoP8decw5r7NyjOKbI/TT5z/IvK5+UE
+ Zxk2orx3v4GJN/Bh4J+mPyMD7KED84txYJJ5Ihb0apTXMMX3zpnWBGosaGMaqWib6IA90/WCw7Q
+ HXynsLKziFF/bRx/loFZGgIi/FMGa6CI=
+X-Gm-Gg: AR+sD12ayLLxf57nnu1KVcdSlSIi+zBiuEDnUzXgoZQLhPB5vv1hQ7EDAHU3GNhK27F
+ D5mUg26LRhskFGShf64ui9Ftdu7qdUGeEx8be5f3dIpK30JQIIaxjCpgdj69QlQQWiJBmV/Qawo
+ DtGSVbC+dmu3T7i+KS74E56EcG6Wp4fEHL+CxZpIRab4DCBd28aJpBGSW0yLQi3bsgeZ1tFeluj
+ JINuCd1EdkiQqZcLYPn4yU5k2rQxlSgxP22qGOs+eR+A622Offs4uGonXgMUkqZhGLqARdRs0RW
+ 1NAilCjWkRTfcAOk+2Vxi4i4adFPGw7EuIQXY7LUdX6XkQ==
+X-Received: by 2002:a17:907:3e20:b0:c15:f005:63fb with SMTP id
+ a640c23a62f3a-c2491c28536mr2208300666b.3.1787563225992; Mon, 24 Aug 2026
+ 02:20:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <vga-v2-20260823.sinxx198@gmail.com>
-In-Reply-To: <vga-v2-20260823.sinxx198@gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 24 Aug 2026 13:14:14 +0400
-X-Gm-Features: AcwNN1WBR4lL6GZ6aL35tVSVGjqVsW962dnjrVOXk8pafNKzHaiFqEH-dR8drPw
-Message-ID: <CAMxuvaySFoRqkz2UpWNeooBaqouyMLaZy9N38UbykQ38j3NWgQ@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/display/vga: fix text-mode OOB write after a
- graphics surface switch
-To: Warisjeet Singh <sinxx198@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+References: <20260814174830.1691540-1-zhangckid@gmail.com>
+ <20260814174830.1691540-14-zhangckid@gmail.com>
+ <87y0e12okc.fsf@pond.sub.org>
+ <CAK3tnvL0N3AK78zwZVLP7ycujGeEHhmyuM6VG+LQd3GRg5CtbA@mail.gmail.com>
+ <878q5wvwh6.fsf@pond.sub.org>
+In-Reply-To: <878q5wvwh6.fsf@pond.sub.org>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Mon, 24 Aug 2026 17:19:49 +0800
+X-Gm-Features: AcwNN1X4koTfhjqjE_VbHYDOiFldHxLUNdC8U-pL5VVckccIqRTnPQPeulonSbk
+Message-ID: <CAK3tnvLAcR9j5UkMFE7f+Kc09eGaWG5v4feHMxqTfM8=jFmcbA@mail.gmail.com>
+Subject: Re: [PATCH V12 13/15] monitor/hmp: display IOThread holders
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Jason Wang <jasowangio@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,126 +124,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Sun, Aug 23, 2026 at 8:41=E2=80=AFPM Warisjeet Singh <sinxx198@gmail.com=
-> wrote:
+On Mon, Aug 24, 2026 at 3:24=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 >
-> vga_draw_text() decides whether the console surface needs a resize from
-> its geometry cache, but none of the cache terms observe the graphics
-> renderer having replaced the console surface in between:
+> Zhang Chen <zhangckid@gmail.com> writes:
 >
-> - last_width/last_height are shared with vga_draw_graphic(), which
->   stores them in pixels while the text path stores characters;
-> - last_depth stays 0 for legacy (non-VBE) graphics modes, because
->   vga_get_bpp() only reports a depth when VBE is enabled, so the
->   "s->last_depth" term that normally forces a resize after a graphics
->   frame does not fire.
+> > On Thu, Aug 20, 2026 at 4:17=E2=80=AFPM Markus Armbruster <armbru@redha=
+t.com> wrote:
+> >>
+> >> Zhang Chen <zhangckid@gmail.com> writes:
+> >>
+> >> > Display holder information in info iothreads to aid manual debugging=
+.
+> >> > Omit the holders line when an IOThread has no holders.
+> >> >
+> >> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> >> > ---
+> >> >  monitor/hmp-cmds.c | 21 +++++++++++++++++++++
+> >> >  1 file changed, 21 insertions(+)
+> >> >
+> >> > diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+> >> > index e9fb8d827a..41a813e79f 100644
+> >> > --- a/monitor/hmp-cmds.c
+> >> > +++ b/monitor/hmp-cmds.c
+> >> > @@ -240,11 +240,32 @@ void hmp_info_iothreads(Monitor *mon, const QD=
+ict *qdict)
+> >> >      IOThreadInfoList *info_list =3D qmp_query_iothreads(NULL);
+> >> >      IOThreadInfoList *info;
+> >> >      IOThreadInfo *value;
+> >> > +    IOThreadHolderList *h;
+> >> >
+> >> >      for (info =3D info_list; info; info =3D info->next) {
+> >> >          value =3D info->value;
+> >> >          monitor_printf(mon, "%s:\n", value->id);
+> >> >          monitor_printf(mon, "  thread_id=3D%" PRId64 "\n", value->t=
+hread_id);
+> >> > +        monitor_printf(mon, "  holders=3D");
+> >> > +        for (h =3D value->holders; h; h =3D h->next) {
+> >> > +            IOThreadHolder *holder =3D h->value;
+> >> > +
+> >> > +            switch (holder->type) {
+> >> > +            case IO_THREAD_HOLDER_KIND_BLOCK_EXPORT:
+> >> > +                monitor_printf(mon, "[block-export: %s]",
+> >> > +                               holder->u.block_export.export_id);
+> >> > +                break;
+> >> > +            case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
+> >> > +                monitor_printf(mon, "[qom-path: %s]",
+> >> > +                               holder->u.qom_object.qom_path);
+> >> > +                break;
+> >> > +            default:
+> >> > +                monitor_printf(mon, "[unknown]");
+> >> > +                break;
+> >>
+> >> This is unreachable.  Please use
+> >>
+> >>                default:
+> >>                    g_assert_not_reached();
+> >>
+> >> to make it obvious.
+> >>
+> >> > +            }
+> >> > +        }
+> >> > +        monitor_printf(mon, "\n");
+> >> > +
+> >> >          monitor_printf(mon, "  poll-max-ns=3D%" PRId64 "\n", value-=
+>poll_max_ns);
+> >> >          monitor_printf(mon, "  poll-grow=3D%" PRId64 "\n", value->p=
+oll_grow);
+> >> >          monitor_printf(mon, "  poll-shrink=3D%" PRId64 "\n", value-=
+>poll_shrink);
+> >>
+> >> Quick test:
+> >>
+> >>     $ qemu-system-x86_64 -S -nodefaults -display none -chardev socket,=
+id=3Dchr-qmp,path=3Dtest-qmp,server=3Don,wait=3Doff -object monitor-qmp,id=
+=3Dqmp,chardev=3Dchr-qmp -monitor stdio
+> >>     QEMU 11.1.50 monitor - type 'help' for more information
+> >>     (qemu) info iothreads
+> >>     (qemu) q
+> >>
+> >> Hmm, no output?  The QMP monitor should be holding the monitor I/O
+> >> thread.  To confirm that, I made monitor_complete() print things (patc=
+h
+> >> appended), and got
+> >>
+> >>     ### monitor qmp holding iothread mon_iothread
+> >>     ### monitor compat_monitor0 without iothread
+> >>
+> >> What's going on here?
+> >>
+> >
+> > This is expected with the existing query-iothreads behavior.
+> > mon_iothread is created under the internal object root, while
+> > qmp_query_iothreads() only walks /objects, so internal IOThreads are
+> > intentionally not exposed through QMP/HMP.
 >
-> So a graphics frame that shrinks the console surface (e.g. 80x25
-> pixels) followed by a text frame with matching character geometry
-> (80x25 chars) skips the resize, and the glyph loop then paints
-> width*cw x height*cheight pixels into the smaller surface, out of
-> bounds, with guest-controlled (DAC palette) values, on every display
-> refresh.
+> TIL about the internal object root.  It's the root of a *second* QOM
+> composition tree.  I have been operating under the assumnption there is
+> just one.
 >
-> Split the geometry cache per renderer so the units are unambiguous,
-> and additionally make the text path compare the pixel size it is
-> about to paint against the console surface's actual dimensions.
-> The surface check is the load-bearing term: caches in either unit
-> cannot see the other renderer swapping the surface, the surface can.
+> Your series adds holder tracking for any I/O thread, whether it's in the
+> externally visible QOM composition tree (the one returned by
+> object_get_root()) or the internal one (the one returned by
+> object_get_internal_root()).  Makes sense, because at the place where we
+> track we don't want to know / make assumptions about which tree it is.
 >
-> Fixes: CVE-2026-77913
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4215
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Warisjeet Singh (sin99xx) <sinxx198@gmail.com>
-> ---
-> Changes v1 -> v2:
-> - v1 (split caches only) did not fix the reported reproducer: after a
->   legacy graphics frame (depth 0) the text predicate still compared
->   equal, because nothing in it noticed the console surface had been
->   replaced.  Keep the split for clarity, and add the surface-size
->   check which actually catches it (verified with the qtest PoC and an
->   ASAN build; without this patch ASAN reports a heap-buffer-overflow
->   in vga_draw_glyph9(), with it the run is clean).
-> ---
->  hw/display/vga.c     | 13 ++++++++++---
->  hw/display/vga_int.h |  3 ++-
->  2 files changed, 12 insertions(+), 4 deletions(-)
+> query-iothreads shows only the I/O threads in the externally visible QOM
+> composition tree.  Makes sense.
 >
-> diff --git a/hw/display/vga.c b/hw/display/vga.c
-> index da0c331486..7a349dc738 100644
-> --- a/hw/display/vga.c
-> +++ b/hw/display/vga.c
-> @@ -1241,7 +1241,10 @@ static void vga_draw_text(VGACommonState *s, int f=
-ull_update)
->          return;
->      }
+> Fortunately, you were able to eliminate the special case for monitors.
+> If it was still there, the query-iothreads code to show it would be
+> dead.
 >
-> -    if (width !=3D s->last_width || height !=3D s->last_height ||
-> +    if (surface =3D=3D NULL ||
-> +        surface_width(surface) !=3D width * cw ||
-> +        surface_height(surface) !=3D height * cheight ||
-> +        width !=3D s->last_text_width || height !=3D s->last_text_height=
- ||
->          cw !=3D s->last_cw || cheight !=3D s->last_ch || s->last_depth) =
-{
->          s->last_scr_width =3D width * cw;
->          s->last_scr_height =3D height * cheight;
-> @@ -1249,8 +1252,8 @@ static void vga_draw_text(VGACommonState *s, int fu=
-ll_update)
->          surface =3D qemu_console_surface(s->con);
->          qemu_console_text_resize(s->con, width, height);
->          s->last_depth =3D 0;
-> -        s->last_width =3D width;
-> -        s->last_height =3D height;
-> +        s->last_text_width =3D width;
-> +        s->last_text_height =3D height;
->          s->last_ch =3D cheight;
->          s->last_cw =3D cw;
->          full_update =3D 1;
-> @@ -1845,6 +1848,8 @@ static void vga_invalidate_display(void *opaque)
->
->      s->last_width =3D -1;
->      s->last_height =3D -1;
-> +    s->last_text_width =3D -1;
-> +    s->last_text_height =3D -1;
->  }
->
->  void vga_common_reset(VGACommonState *s)
-> @@ -1887,6 +1892,8 @@ void vga_common_reset(VGACommonState *s)
->      s->last_ch =3D 0;
->      s->last_width =3D 0;
->      s->last_height =3D 0;
-> +    s->last_text_width =3D 0;
-> +    s->last_text_height =3D 0;
->      s->last_scr_width =3D 0;
->      s->last_scr_height =3D 0;
->      s->cursor_start =3D 0;
-> diff --git a/hw/display/vga_int.h b/hw/display/vga_int.h
-> index 5664317ecd..ca69ae9815 100644
-> --- a/hw/display/vga_int.h
-> +++ b/hw/display/vga_int.h
-> @@ -122,7 +122,8 @@ typedef struct VGACommonState {
->      uint32_t plane_updated;
->      uint32_t last_line_offset;
->      uint8_t last_cw, last_ch;
-> -    uint32_t last_width, last_height; /* in chars or pixels */
-> +    uint32_t last_width, last_height; /* in pixels (graphics renderer) *=
-/
-> +    uint32_t last_text_width, last_text_height; /* in chars (text render=
-er) */
-
-We should finish separating gfx and text state.
-The text functions and paths should only manipulate
-last_text_{width,height} (in vga_draw_text/update_text, and text path
-in invalidate_display/common_reset)
-
->      uint32_t last_scr_width, last_scr_height; /* in pixels */
->      uint32_t last_depth; /* in bits */
->      bool last_byteswap;
-> --
-> 2.47.3
+> Back to what got us there.  My attempt to test query-iothreads showing
+> holders failed, because monitors are not usable for this test.  Please
+> show me how to test this.  Ideally, a simple command line and a few
+> simple monitor commands ending with a query-iothreads that shows
+> holders.
 >
 
+Thanks. Here is a reproducer that also exercises holder removal and
+registration by another device type:
+
+$ qemu-system-x86_64 \
+    -S -nodefaults -display none \
+    -object iothread,id=3Diothread0 \
+    -blockdev driver=3Dnull-co,node-name=3Dnull0 \
+    -qmp stdio
+
+First, hotplug a virtio-scsi device and query the IOThread:
+{"execute":"qmp_capabilities"}
+{"execute":"query-iothreads"}
+
+{"return": [{"poll-shrink": 2, "thread-id": 4002255, "poll-weight": 3,
+"aio-max-batch": 0, "poll-grow": 2, "holders": [], "poll-max-ns":
+32768, "id": "iothread0"}]}
+
+{"execute":"device_add","arguments":{"driver":"virtio-scsi-pci","id":"scsi0=
+","iothread":"iothread0"}}
+{"execute":"query-iothreads"}
+
+{"return": [{"poll-shrink": 2, "thread-id": 4002255, "poll-weight": 3,
+"aio-max-batch": 0, "poll-grow": 2, "holders": [{"qom-path":
+"/machine/peripheral/scsi0/virtio-backend", "type": "qom-object"}],
+"poll-max-ns": 32768, "id": "iothread0"}]}
+
+ The result contains:
+  > "holders": [
+
+Remove the device:
+
+{"execute":"device_del","arguments":{"id":"scsi0"}}
+{"return": {}}
+
+{"execute":"query-iothreads"}
+{"return": [{"poll-shrink": 2, "thread-id": 4002255, "poll-weight": 3,
+"aio-max-batch": 0, "poll-grow": 2, "holders": [], "poll-max-ns":
+32768, "id": "iothread0"}]}
+
+And use the HMP is the same logic, just need change the "-qmp" to "-monitor=
+":
+$ qemu-system-x86_64 \
+    -S -nodefaults -display none \
+    -object iothread,id=3Diothread0 \
+    -blockdev driver=3Dnull-co,node-name=3Dnull0 \
+    -monitor stdio
+
+(qemu) info iothreads
+iothread0:
+  thread_id=3D4005900
+  holders=3D
+  poll-max-ns=3D32768
+  poll-grow=3D2
+  poll-shrink=3D2
+  poll-weight=3D3
+  aio-max-batch=3D0
+
+.......
+
+
+Thanks
+Chen
+
+> > I prefer to preserve that behavior in this series, since exposing inter=
+nal
+> > IOThreads would require additional API decisions, including handling ID
+> > collisions with user-created IOThreads.
+>
+> Okay!
+>
+> > I=E2=80=99ll also change the unreachable default case to
+> > g_assert_not_reached().
+> >
+> > Thanks
+> > Chen
+>
+> [...]
+>
 
