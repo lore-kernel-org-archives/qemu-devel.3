@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CCB9C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 13:39:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C53ECC5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 13:39:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyUru-0003qa-Hi; Mon, 24 Aug 2026 09:37:42 -0400
+	id 1wyUru-0003pb-1A; Mon, 24 Aug 2026 09:37:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wyUrs-0003oD-9P
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:37:40 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wyUrq-0003mK-9O
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:37:38 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wyUrp-0002ax-HO
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:37:39 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-c15cd3fd760so416124866b.2
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 06:37:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wyUrn-0002aD-5x
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:37:38 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-c15cf78d1a2so394268766b.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 06:37:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1787578656; x=1788183456; darn=nongnu.org;
+ d=openvz.org; s=google; t=1787578654; x=1788183454; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=3aZMmyQcXUw8u2baSyqRnIYWSMubnlt40sgnbbIDHKE=;
- b=RzTieUe9jF2ZEXgQLiowbAu/ae22NExkAcVnEqMoj+nzSRGjroWpc2XV9q7NV9mtcz
- hM5lRJ8vSbeDf0Sh+/I+55gag1WAmf9TaZHLAvATXGabGohmYA/mYZEDTggwGG7ZcnWw
- yje7adlRo60+/B77IqJedR6SWEoWLMHKilecYleOH6FT0VuusRU7NHSfEycBGQA8YodV
- tdkKW+dOjgKqvHmKlj0XBbEu3eLnXOwNPRFKlLQVw9zD5soR91EkrpnIAtdxxFZ00664
- y66d0wsc54zIFewsq1M0ZohRDvENFs5A3jujotdxq4HOTy4ew4YWDGU/pwgAqiYF/zGx
- wk+A==
+ bh=DEtOnidl3ou2oeXSipGVMeNr8jrN0dWWhLCJjPRUG+M=;
+ b=t5xqf9ohc3T81fZ8kR5NL4EV6cmBQ8ielBV0/ppefeyJ45ElMJVCWJk73mIqScZHT5
+ rNW1EO+mHxVZfrTmQrlTgs1Yk+m+bEqInou21zAXqk3/S6NKhTp90ipOtUegV0vQ4guW
+ uSUdl8ejL00HPYOdYdNphMJF6gmGV7qStbExj8WfdnNHZauKvOjSET01qZtwe9vPhZhG
+ fYEhFZ1M3cEv9EYQjGCFLtqMlUrDPe5XSMTxn9y43FOqshbu5i+rdbsxnlQvazio07p5
+ iUaBxi2kTBVuaojkqF10GrEbA3ufaTf5uOgAZy/O9j0vxlfHRQNK6IyK+JILgDPlWBR2
+ FBrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787578656; x=1788183456;
+ d=1e100.net; s=20251104; t=1787578654; x=1788183454;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=3aZMmyQcXUw8u2baSyqRnIYWSMubnlt40sgnbbIDHKE=;
- b=pWonIvfEEEMTNs+A/VFDGqH+k0mVZoJPjyDISvfShu0A5YQ0m3tD/8nnS47pGfzjnE
- Dhi2/8wehJY8Rbh9HWZOWea/kINQguYrKfSmGdrkCh3oBDn97cQKhK8vmvvUC6FphGqP
- rYV6UUqlMpxHPRoc4lBz8PZyzdscHulhunRtG05djhLlZ9VDtA/KCbuvq/l4GmWDnahM
- BeeIKekYdObzYZiEYOXk0+mHUPoLRfBFDe+GXH+6vmR752bI9YHAEl/InjFjXlv6xVZC
- DcvPTtIDGbweyUTt1pL+RLrzHxzPHEjjX3CkKXvRMZ1Au2B7pSlfuuoi776R6u9QQkDR
- BzZQ==
-X-Gm-Message-State: AFuF++nUPuqa8SFsYxgTStFPOK0fyBzGjkVP+ro4r19czH/HmSu4UoWj
- 2sOwY8uaKicGduZTH8CoFPhfHwBN2naWS6osaFpK6o0ahjBiZcA3LqpliGxVLGSyvP4+EEOzMEB
- Qa1/e
-X-Gm-Gg: AR+sD1377Hzu2hEH9yahGq0GOWGi49z+p+4KNPwa6J8Z8fxUp1lRKMyCJUXcw1IS3+M
- zfF9pHmRh7bjQIoShOXhF4Oz8aYo/WgkIvMWcGhf+kJAba26d2p4A4mCKzsP4/s6HLwYPwHzCQk
- mpIck4wBxC4vIpjhf18Ye2w+WXZGos24y/lnn29oErh0NUNS+mUETN3cmh5hb6ZE/69LXy0/TS9
- g6H2Ve/U+fVeuwQ3yumUgRkJtujLoXNiF4ZG0CsMUu1u7IHehfpfgRS8/Yp0F6aKnr01shWnA2w
- nwQP2lKxSioN0BJLLBH9uTA6BSbOmNjvb2XGB/mV2dI8Y77OwnTTp0+DO0ZvQWCB5fxOAqXppGB
- AY2WmA2TsYsQAQw7kw38eDrWV7jeFMlL79p+2WqI30iT/86hv1JTPFyoTskqLFBA5hDlC+Q1xVX
- 4Zz/4GWpou6HLD2rnNCKxg/bcZWj1+UXNWnTEZ9dzgYZeP3ZIFUZ4pWT+W/xwhB8h2Ol4+
-X-Received: by 2002:a17:907:845:b0:c20:fed2:898b with SMTP id
- a640c23a62f3a-c2492782dbemr1777435966b.23.1787578655928; 
- Mon, 24 Aug 2026 06:37:35 -0700 (PDT)
+ bh=DEtOnidl3ou2oeXSipGVMeNr8jrN0dWWhLCJjPRUG+M=;
+ b=FTh3o0THrCf1SpaXOBl5rr5YjC92mIWRoaFsqhSYmJB0FukMkaMh3UVPby8LgKhxQN
+ IW5yTjEkHpV9bKSzKgEQ0IG7uvSZIgEXcX73CktxD1KYdzUN0psmOeBfwYSUgKByYIqE
+ hPdXlkHhaXyO8EURDP5MWMAv7alfQeZTOn5GxZTVQsWub9eJp8RJnyKyDiR/4U5R5BL9
+ IWVUuoghwHBVQ0HXfHTPVpJ4QBj9sUUTXWMLU+xZzRJxZUMJ8gg7SrXJvz2Rcn63spkY
+ j57DVsPwSkXtzSGLRhTqAVT8laJ3OQsE9mJ1/RxLD8xI5Jf2IgZRf6du2ty0GclIYpB0
+ SrJg==
+X-Gm-Message-State: AFuF++kRnm7TIMvIfmMGDEbuuRYAU7miBTKXcEJIL3wIJfmUQCuHyOur
+ AiDwsdJ096vAF2djPQcHFGXnpQwwEoMuI1AY37ni3FGhaYugLPQgL1GQVNYsYVpjpXw7KgIb+1c
+ yEIb+
+X-Gm-Gg: AR+sD13IqX8ZnEFTKJ5r/wuCEhzxrAG1ygNFYUrLpE2as6kKd1WUHJsBCJg+Q0oOZCK
+ ZX9OYDTwvXvY308K5g1/TZ7hATi7WXvHbyNGqVzha36ii1UVqlCfPEHGJtkFt839QEa8vSjuRlJ
+ GkxxvD0luWBYTS6sMQjKzQaUQklT8CpY7FQpAV2r0ocCAID+ZHltu+f+uaGOF05lNVgQ47jas8M
+ IIFRrfGZnPVYnUPxJ1F3pTTRB/fRcrUKI0S/n2JcjELkEN67LqhxuaSHBpbhz2Eu6zDoDXnJ2ZS
+ tMv+wg7XFysYpLxRG8lfFlSrhC/J+k6S/g/j3XdYwphNExvMsCmnJinahfQi6HWtBFPzcqEzcNA
+ IRyFbaEmNJ5bTz/AY5d8hSOzqydFyw9RtbqfPqpJPklXT2d/9WFfsuh235mVHh5bdVMiARQZ+Lr
+ ACUuVXwfYopb3cgMAusGotMjOsHWvAlIzGsXUpS1DRQ1CAAn0HW3fwfNmF2w==
+X-Received: by 2002:a17:907:6d15:b0:c24:4128:c19d with SMTP id
+ a640c23a62f3a-c246a2e9378mr2726316666b.4.1787578653591; 
+ Mon, 24 Aug 2026 06:37:33 -0700 (PDT)
 Received: from athena.sw.ru ([2a06:5b06:b600:300:9048:7bf0:d3e2:2b9e])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c24966f58dfsm1236658166b.38.2026.08.24.06.37.34
+ a640c23a62f3a-c24966f58dfsm1236658166b.38.2026.08.24.06.37.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Aug 2026 06:37:35 -0700 (PDT)
+ Mon, 24 Aug 2026 06:37:33 -0700 (PDT)
 From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-stable@nongnu.org
-Subject: [PATCH v4 3/5] block: let bdrv_reopen_commit_post() report a failure
-Date: Mon, 24 Aug 2026 15:37:27 +0200
-Message-ID: <20260824133729.1141990-4-den@openvz.org>
+Subject: [PATCH v4 1/5] qcow2: do not clear the dirty bit when reopening a
+ read-only node
+Date: Mon, 24 Aug 2026 15:37:25 +0200
+Message-ID: <20260824133729.1141990-2-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260824133729.1141990-1-den@openvz.org>
 References: <20260824133729.1141990-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=den@openvz.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=den@openvz.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,25 +104,22 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Denis V. Lunev <den@openvz.org>
 
-The callback runs after bdrv_reopen_multiple() has committed the
-transaction, so it cannot reject the reopen. It can still find that
-the node it has just made writable is unusable, and has no way to say
-so: bdrv_reopen() returns success and the caller carries on.
+qcow2_reopen_prepare() clears the dirty bit whenever the node is
+reopened read-only, with an unguarded header write. A read-only node
+can still be dirty, inherited from an earlier writable session, and it
+holds no BLK_PERM_WRITE to resolve that. A read-only to read-only
+reopen of a dirty image therefore fails outright:
 
-Give it a return value and an Error argument. The reopen stays
-committed, the error only reports that the node is gone. Every queued
-node still gets its callback, the first error is the one reported. A
-callback may leave its node without a driver, and so may the I/O of a
-later bdrv_reopen_prepare(), so do not assume that the nodes still
-ahead of it in the queue have one. qcow2 is the only implementation and
-does not fail yet.
+  $ qemu-io -r -f qcow2 dirty.qcow2 <<< $'reopen -r\nquit'
+  qemu-io: failed while preparing to reopen image 'dirty.qcow2'
 
-An error therefore means one of two things now, either that the reopen
-was denied and nothing changed, or that it went through and left a tree
-which cannot be used. Nothing is undone in the second case: the node is
-beyond repair by another reopen, and a caller which reacts to the error
-by reopening anything is making it worse. bdrv_reopen_multiple() says
-so, nothing else changes.
+Where the file node below is writable the write is not refused early,
+and bdrv_co_write_req_prepare() aborts on its BLK_PERM_WRITE assertion
+instead.
+
+Clear it only for a node that is writable now, the predicate
+qcow2_do_open() already uses for the repair. bdrv_is_writable() also
+excludes an inactive node, whose header must not be touched either.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
@@ -130,101 +128,136 @@ CC: Hanna Reitz <hreitz@redhat.com>
 CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Cc: qemu-stable@nongnu.org
 ---
- block.c                          | 24 +++++++++++++++++++++---
- block/qcow2.c                    |  4 +++-
- include/block/block_int-common.h |  9 +++++++--
- 3 files changed, 31 insertions(+), 6 deletions(-)
+ block/qcow2.c              |  8 +++---
+ tests/qemu-iotests/039     | 50 ++++++++++++++++++++++++++++++++++++++
+ tests/qemu-iotests/039.out | 20 +++++++++++++++
+ 3 files changed, 75 insertions(+), 3 deletions(-)
 
-diff --git a/block.c b/block.c
-index e39f15816a..b29202c8d5 100644
---- a/block.c
-+++ b/block.c
-@@ -4582,6 +4582,10 @@ void bdrv_reopen_queue_free(BlockReopenQueue *bs_queue)
-  * If all devices prepare successfully, then the changes are committed
-  * to all devices.
-  *
-+ * A failure means either that the reopen was denied and nothing changed,
-+ * or that it went through and a driver then found the node unusable. In
-+ * the second case nothing is undone and the tree is no longer usable.
-+ *
-  * All affected nodes must be drained between bdrv_reopen_queue() and
-  * bdrv_reopen_multiple().
-  *
-@@ -4658,15 +4662,29 @@ int bdrv_reopen_multiple(BlockReopenQueue *bs_queue, Error **errp)
-     tran_commit(tran);
-     bdrv_graph_wrunlock();
- 
-+    ret = 0;
-     QTAILQ_FOREACH_REVERSE(bs_entry, bs_queue, entry) {
-         BlockDriverState *bs = bs_entry->state.bs;
-+        Error *local_err = NULL;
-+        int commit_ret;
- 
--        if (bs->drv->bdrv_reopen_commit_post) {
--            bs->drv->bdrv_reopen_commit_post(&bs_entry->state);
-+        if (!bs->drv || !bs->drv->bdrv_reopen_commit_post) {
-+            continue;
-+        }
-+
-+        commit_ret = bs->drv->bdrv_reopen_commit_post(&bs_entry->state,
-+                                                      &local_err);
-+        assert(commit_ret >= 0 || local_err);
-+
-+        if (commit_ret < 0 && ret == 0) {
-+            /* Committed already, so report the first failure and go on */
-+            error_propagate(errp, local_err);
-+            ret = commit_ret;
-+        } else {
-+            error_free(local_err);
-         }
-     }
- 
--    ret = 0;
-     goto cleanup;
- 
- abort:
 diff --git a/block/qcow2.c b/block/qcow2.c
-index 1543255eba..553a94d003 100644
+index 7292dd036c..1543255eba 100644
 --- a/block/qcow2.c
 +++ b/block/qcow2.c
-@@ -2145,7 +2145,7 @@ static void qcow2_reopen_commit(BDRVReopenState *state)
-     g_free(state->opaque);
- }
+@@ -2102,9 +2102,11 @@ qcow2_reopen_prepare(BDRVReopenState *state,BlockReopenQueue *queue,
+             goto fail;
+         }
  
--static void qcow2_reopen_commit_post(BDRVReopenState *state)
-+static int qcow2_reopen_commit_post(BDRVReopenState *state, Error **errp)
- {
-     GRAPH_RDLOCK_GUARD_MAINLOOP();
- 
-@@ -2163,6 +2163,8 @@ static void qcow2_reopen_commit_post(BDRVReopenState *state)
-                               bdrv_get_node_name(state->bs));
+-        ret = qcow2_mark_clean(state->bs);
+-        if (ret < 0) {
+-            goto fail;
++        if (bdrv_is_writable(state->bs)) {
++            ret = qcow2_mark_clean(state->bs);
++            if (ret < 0) {
++                goto fail;
++            }
          }
      }
-+
-+    return 0;
- }
  
- static void qcow2_reopen_abort(BDRVReopenState *state)
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index 147c08155f..035e54d434 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -239,8 +239,13 @@ struct BlockDriver {
-         BDRVReopenState *reopen_state, BlockReopenQueue *queue, Error **errp);
-     void GRAPH_UNLOCKED_PTR (*bdrv_reopen_commit)(
-         BDRVReopenState *reopen_state);
--    void GRAPH_UNLOCKED_PTR (*bdrv_reopen_commit_post)(
--        BDRVReopenState *reopen_state);
-+    /*
-+     * Runs once the reopen is committed, so it cannot reject it. Returns 0,
-+     * or a negative errno with @errp set to report that the node it has
-+     * just reopened is unusable, which it may leave without a driver.
-+     */
-+    int GRAPH_UNLOCKED_PTR (*bdrv_reopen_commit_post)(
-+        BDRVReopenState *reopen_state, Error **errp);
-     void GRAPH_UNLOCKED_PTR (*bdrv_reopen_abort)(
-         BDRVReopenState *reopen_state);
-     void (*bdrv_join_options)(QDict *options, QDict *old_options);
+diff --git a/tests/qemu-iotests/039 b/tests/qemu-iotests/039
+index 94a8bfe754..3d0c073d65 100755
+--- a/tests/qemu-iotests/039
++++ b/tests/qemu-iotests/039
+@@ -95,6 +95,40 @@ $QEMU_IMG info --image-opts \
+ # The dirty bit must still be set: this open never wrote any guest data
+ _qcow2_dump_header | grep incompatible_features
+ 
++echo
++echo "== Read-only reopen must not clear the dirty bit =="
++
++# A read-only node cannot write the header, and must keep the dirty bit
++$QEMU_IO -r -c "reopen -r" -c "read -P 0x5a 0 512" "$TEST_IMG" \
++    | _filter_qemu_io
++
++# The dirty bit must still be set
++_qcow2_dump_header | grep incompatible_features
++
++echo
++echo "== Read-only reopen must not write through a writable file node =="
++
++# The write the header update needs is refused by the permission system
++echo "{'execute': 'qmp_capabilities'}
++      {'execute': 'blockdev-reopen',
++       'arguments': {'options': [{'node-name': 'drive',
++                                  'driver': 'qcow2',
++                                  'read-only': true,
++                                  'file': 'prot'}]}}
++      {'execute': 'quit'}" \
++    | $QEMU -qmp stdio -nographic -nodefaults \
++            -blockdev "{'node-name': 'prot',
++                        'driver': 'file',
++                        'filename': '$TEST_IMG'}" \
++            -blockdev "{'node-name': 'drive',
++                        'driver': 'qcow2',
++                        'file': 'prot',
++                        'read-only': true}" \
++    | _filter_qmp
++
++# The dirty bit must still be set
++_qcow2_dump_header | grep incompatible_features
++
+ echo
+ echo "== Repairing the image file must succeed =="
+ 
+@@ -108,6 +142,22 @@ echo "== Data should still be accessible after repair =="
+ 
+ $QEMU_IO -c "read -P 0x5a 0 512" "$TEST_IMG" | _filter_qemu_io
+ 
++echo
++echo "== A read-write to read-only reopen must clear the dirty bit =="
++
++_make_test_img -o "compat=1.1,lazy_refcounts=on" $size
++
++# The kill keeps the close from clearing the bit, so the header shows what
++# the reopen did with it
++_NO_VALGRIND \
++$QEMU_IO -c "write -P 0x5a 0 512" \
++         -c "reopen -r" \
++         -c "sigraise $(kill -l KILL)" "$TEST_IMG" 2>&1 \
++    | _filter_qemu_io
++
++# The dirty bit must not be set
++_qcow2_dump_header | grep incompatible_features
++
+ echo
+ echo "== Opening a dirty image read/write should repair it =="
+ 
+diff --git a/tests/qemu-iotests/039.out b/tests/qemu-iotests/039.out
+index c66361128f..ce8ee57721 100644
+--- a/tests/qemu-iotests/039.out
++++ b/tests/qemu-iotests/039.out
+@@ -27,6 +27,19 @@ incompatible_features     [0]
+ == Read-only open must not crash on close ==
+ incompatible_features     [0]
+ 
++== Read-only reopen must not clear the dirty bit ==
++read 512/512 bytes at offset 0
++512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++incompatible_features     [0]
++
++== Read-only reopen must not write through a writable file node ==
++QMP_VERSION
++{"return": {}}
++{"return": {}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
++{"return": {}}
++incompatible_features     [0]
++
+ == Repairing the image file must succeed ==
+ ERROR cluster 5 refcount=0 reference=1
+ Rebuilding refcount structure
+@@ -45,6 +58,13 @@ incompatible_features     []
+ read 512/512 bytes at offset 0
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
++== A read-write to read-only reopen must clear the dirty bit ==
++Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
++wrote 512/512 bytes at offset 0
++512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++./common.rc: Killed ( VALGRIND_QEMU="${VALGRIND_QEMU_IO}" _qemu_proc_exec "${VALGRIND_LOGFILE}" "$QEMU_IO_PROG" $QEMU_IO_ARGS "$@" )
++incompatible_features     []
++
+ == Opening a dirty image read/write should repair it ==
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
+ wrote 512/512 bytes at offset 0
 -- 
 2.53.0
 
