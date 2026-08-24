@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 971ACC5DF9B
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 04:57:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8E2BC5DF9D
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 04:57:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyMje-0007Le-Gi; Mon, 24 Aug 2026 00:56:38 -0400
+	id 1wyMjc-00074Z-6K; Mon, 24 Aug 2026 00:56:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
- id 1wyMj9-0006au-GL
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 00:56:08 -0400
-Received: from [115.124.28.50] (helo=out28-50.mail.aliyun.com)
+ id 1wyMj8-0006a9-W9
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 00:56:07 -0400
+Received: from [115.124.28.5] (helo=out28-5.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhang_wei@open-hieco.net>)
- id 1wyMiy-00038q-VZ
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 00:56:07 -0400
-X-Alimail-AntiSpam: AC=CONTINUE; BC=0.07436259|-1; CH=green;
- DM=|CONTINUE|false|;
- DS=CONTINUE|ham_regular_dialog|0.00957263-0.000683732-0.989744;
- FP=7745995268663411031|1|1|1|0|-1|-1|-1; HT=maildocker-contentspam033045213054;
+ id 1wyMiy-00039G-Sr
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 00:56:06 -0400
+X-Alimail-AntiSpam: AC=CONTINUE; BC=0.08308789|-1; CH=green;
+ DM=|CONTINUE|false|; DS=CONTINUE|ham_alarm|0.0198397-0.00211061-0.97805;
+ FP=7195420937609096286|1|1|1|0|-1|-1|-1; HT=maildocker-contentspam033037021217;
  MF=zhang_wei@open-hieco.net; NM=1; PH=DS; RN=8; RT=8; SR=0;
- TI=SMTPD_---.ivXOSqU_1787547222; 
+ TI=SMTPD_---.ivXOSti_1787547224; 
 Received: from localhost.localdomain(mailfrom:zhang_wei@open-hieco.net
- fp:SMTPD_---.ivXOSqU_1787547222 cluster:ay29) by smtp.aliyun-inc.com;
- Mon, 24 Aug 2026 12:53:42 +0800
+ fp:SMTPD_---.ivXOSti_1787547224 cluster:ay29) by smtp.aliyun-inc.com;
+ Mon, 24 Aug 2026 12:53:45 +0800
 From: Tina Zhang <zhang_wei@open-hieco.net>
 To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>
 Cc: kvm@vger.kernel.org, "Michael S . Tsirkin" <mst@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, Yanjing Zhou <zhouyanjing@hygon.cn>,
  Tina Zhang <zhang_wei@open-hieco.net>
-Subject: [PATCH v3 05/10] target/i386/kvm: Classify PMU vendor families
-Date: Mon, 24 Aug 2026 12:53:09 +0800
-Message-ID: <20260824045314.162941-6-zhang_wei@open-hieco.net>
+Subject: [PATCH v3 09/10] target/i386: Use AMD legacy cache fallback for Hygon
+Date: Mon, 24 Aug 2026 12:53:13 +0800
+Message-ID: <20260824045314.162941-10-zhang_wei@open-hieco.net>
 X-Mailer: git-send-email 2.43.7
 In-Reply-To: <20260824045314.162941-1-zhang_wei@open-hieco.net>
 References: <20260824045314.162941-1-zhang_wei@open-hieco.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.50 (deferred)
-Received-SPF: pass client-ip=115.124.28.50;
- envelope-from=zhang_wei@open-hieco.net; helo=out28-50.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.5 (deferred)
+Received-SPF: pass client-ip=115.124.28.5;
+ envelope-from=zhang_wei@open-hieco.net; helo=out28-5.mail.aliyun.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -68,149 +67,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Intel and Zhaoxin PMU architectures are compatible, while AMD uses
-a separate PMU CPUID/MSR layout.  KVM's PMU initialization, host/guest
-compatibility, and MSR save/restore paths open-code these vendor checks
-in several places.
+When legacy-cache=on, x86_cpu_realizefn() builds a hardcoded cache
+model.  It selected the AMD legacy cache table only for CPUs with the
+AuthenticAMD vendor ID.  Dhyana uses the HygonGenuine vendor ID, so this
+explicit compatibility path fell back to QEMU's old Intel legacy cache
+table.
 
-Introduce X86PMUVendor and helpers that classify the existing CPU and
-host vendors by PMU architecture.  Use the classification consistently
-for the compatibility check, PMU initialization, and PMU MSR paths.
+The wrong table is visible through AMD extended cache leaves.  With the
+Intel legacy table, Dhyana reports 32 KiB, 8-way L1 caches in CPUID
+0x80000005 and a 4 MiB, 16-way L2 cache in CPUID 0x80000006.  Linux
+uses the AMD/Hygon cache enumeration path for Hygon and reads these AMD
+extended cache leaves.
 
-This is a refactoring with no functional change.
+Use the AMD legacy cache table for Hygon in this fallback path when the
+new vendor CPU ABI is enabled.  Keep the old fallback for pc-11.1 and
+older machine types through x-hygon-vendor-abi-fixes=false.
+
+The default Dhyana model is unchanged because it provides EPYC cache_info
+and therefore defaults legacy-cache to off.  The guest-visible change is
+limited to users who explicitly configure legacy-cache=on on new machine
+types.
 
 Signed-off-by: Tina Zhang <zhang_wei@open-hieco.net>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/kvm/kvm.c | 72 +++++++++++++++++++++++++++++++++----------
- 1 file changed, 55 insertions(+), 17 deletions(-)
+ target/i386/cpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index d1c6dbe636..01fc1d0674 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2166,24 +2166,53 @@ static void kvm_init_pmu_info_amd(struct kvm_cpuid2 *cpuid, X86CPU *cpu)
-     }
- }
- 
--static bool is_host_compat_vendor(CPUX86State *env)
-+typedef enum X86PMUVendor {
-+    X86_PMU_VENDOR_UNKNOWN,
-+    X86_PMU_VENDOR_INTEL,
-+    X86_PMU_VENDOR_AMD,
-+} X86PMUVendor;
-+
-+static X86PMUVendor x86_cpu_pmu_vendor(const CPUX86State *env)
-+{
-+    if (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env)) {
-+        return X86_PMU_VENDOR_INTEL;
-+    }
-+
-+    if (IS_AMD_CPU(env)) {
-+        return X86_PMU_VENDOR_AMD;
-+    }
-+
-+    return X86_PMU_VENDOR_UNKNOWN;
-+}
-+
-+static X86PMUVendor x86_host_pmu_vendor(void)
- {
-     char host_vendor[CPUID_VENDOR_SZ + 1];
- 
-     host_cpu_vendor_fms(host_vendor, NULL, NULL, NULL);
- 
--    /*
--     * Intel and Zhaoxin are compatible.
--     */
--    if ((g_str_equal(host_vendor, CPUID_VENDOR_INTEL) ||
--         g_str_equal(host_vendor, CPUID_VENDOR_ZHAOXIN1) ||
--         g_str_equal(host_vendor, CPUID_VENDOR_ZHAOXIN2)) &&
--        (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
--        return true;
-+    if (g_str_equal(host_vendor, CPUID_VENDOR_INTEL) ||
-+        g_str_equal(host_vendor, CPUID_VENDOR_ZHAOXIN1) ||
-+        g_str_equal(host_vendor, CPUID_VENDOR_ZHAOXIN2)) {
-+        return X86_PMU_VENDOR_INTEL;
-     }
- 
--    return g_str_equal(host_vendor, CPUID_VENDOR_AMD) &&
--           IS_AMD_CPU(env);
-+    if (g_str_equal(host_vendor, CPUID_VENDOR_AMD)) {
-+        return X86_PMU_VENDOR_AMD;
-+    }
-+
-+    return X86_PMU_VENDOR_UNKNOWN;
-+}
-+
-+/*
-+ * The guest vPMU can be virtualized only when the host and guest PMU
-+ * architectures are compatible.
-+ */
-+static bool is_host_compat_vendor(CPUX86State *env)
-+{
-+    X86PMUVendor guest = x86_cpu_pmu_vendor(env);
-+
-+    return guest != X86_PMU_VENDOR_UNKNOWN && guest == x86_host_pmu_vendor();
- }
- 
- static void kvm_init_pmu_info(struct kvm_cpuid2 *cpuid, X86CPU *cpu)
-@@ -2211,10 +2240,15 @@ static void kvm_init_pmu_info(struct kvm_cpuid2 *cpuid, X86CPU *cpu)
-         return;
-     }
- 
--    if (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env)) {
-+    switch (x86_cpu_pmu_vendor(env)) {
-+    case X86_PMU_VENDOR_INTEL:
-         kvm_init_pmu_info_intel(cpuid);
--    } else if (IS_AMD_CPU(env)) {
-+        break;
-+    case X86_PMU_VENDOR_AMD:
-         kvm_init_pmu_info_amd(cpuid, cpu);
-+        break;
-+    case X86_PMU_VENDOR_UNKNOWN:
-+        break;
-     }
- }
- 
-@@ -4268,7 +4302,8 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
-             kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, env->poll_control_msr);
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 8666f66df8..f65a5b32bc 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -10329,7 +10329,8 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+             env->enable_legacy_vendor_cache = true;
          }
  
--        if ((IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env)) && pmu_version > 0) {
-+        if (x86_cpu_pmu_vendor(env) == X86_PMU_VENDOR_INTEL &&
-+            pmu_version > 0) {
-             if (pmu_version > 1) {
-                 /* Stop the counter.  */
-                 kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
-@@ -4300,7 +4335,8 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
-             }
-         }
- 
--        if (IS_AMD_CPU(env) && pmu_version > 0) {
-+        if (x86_cpu_pmu_vendor(env) == X86_PMU_VENDOR_AMD &&
-+            pmu_version > 0) {
-             uint32_t sel_base = MSR_K7_EVNTSEL0;
-             uint32_t ctr_base = MSR_K7_PERFCTR0;
-             /*
-@@ -4846,7 +4882,8 @@ static int kvm_get_msrs(X86CPU *cpu)
-         kvm_msr_entry_add(cpu, MSR_KVM_POLL_CONTROL, 1);
-     }
- 
--    if ((IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env)) && pmu_version > 0) {
-+    if (x86_cpu_pmu_vendor(env) == X86_PMU_VENDOR_INTEL &&
-+        pmu_version > 0) {
-         if (pmu_version > 1) {
-             kvm_msr_entry_add(cpu, MSR_CORE_PERF_FIXED_CTR_CTRL, 0);
-             kvm_msr_entry_add(cpu, MSR_CORE_PERF_GLOBAL_CTRL, 0);
-@@ -4862,7 +4899,8 @@ static int kvm_get_msrs(X86CPU *cpu)
-         }
-     }
- 
--    if (IS_AMD_CPU(env) && pmu_version > 0) {
-+    if (x86_cpu_pmu_vendor(env) == X86_PMU_VENDOR_AMD &&
-+        pmu_version > 0) {
-         uint32_t sel_base = MSR_K7_EVNTSEL0;
-         uint32_t ctr_base = MSR_K7_PERFCTR0;
-         /*
+-        if (IS_AMD_CPU(env)) {
++        if (IS_AMD_CPU(env) ||
++            (IS_HYGON_CPU(env) && cpu->hygon_vendor_abi_fixes)) {
+             env->cache_info = legacy_amd_cache_info;
+         } else {
+             env->cache_info = legacy_intel_cache_info;
 -- 
 2.43.7
 
