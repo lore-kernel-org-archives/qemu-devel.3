@@ -4,104 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F3C9C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:58:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C61E6C5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:59:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNhD-0000Rn-16; Mon, 24 Aug 2026 01:58:11 -0400
+	id 1wyNaI-00045U-UJ; Mon, 24 Aug 2026 01:51:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wyNgW-0008WM-1e
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:57:32 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wyNZ9-0001ys-1V
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:49:53 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wyNgR-0004GY-Hp
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:57:26 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-84e0688b859so489257b3a.0
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:57:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wyNZ7-00026W-K9
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:49:50 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-ca80d708489so1947303a12.1
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:49:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787551040; x=1788155840; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:sender:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=0trJunRyXAgIv25VNMRcfKRxyzdPShngFatEy4Vfc4c=;
- b=iD5Nx+ZxOescJHnz63y9To8zBmR6tw+frduSqRyaj1mrpISOeUp0HBTjEcrHSRPfH8
- CulY+/gK5arTwLfenJ9Y9WB8aR1NNAX3K5yUKivPjHzkfx7SNwfZmhoCBuiIKSo8QcEz
- k2qNiB/Zr0NdRXECfwGMIUPgr21FXY+8sBtyF719zOEjOhChJysOCGVZL/64N1YSKWfo
- ILRn2wA5c/tnMmhwhjTDrz3z8mdXANwyQxW7e0B9sRzPkcLosnaN9mUX5hpFSIxARgSt
- qkQacv1XdSMfgoQcEtp7gokCN7aVereq3TQoEE6/3c4yP1otHKgdVmkQqPNCluzhDEkx
- BAtQ==
+ d=gmail.com; s=20251104; t=1787550588; x=1788155388; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=uqnXWGuDLvEfhlq4w5r6kD4ZoGnJTkkdca1i+GCVCbs=;
+ b=sj0twRGaPZq6xRiBmpdYPh5EUo+AR5tjIALHEe8/zF9rFG97cqf8iYwqYq0LYY3R70
+ l2zibRrJPlkQCGVZXMs4D4HYUgntsLG6QXkuO6I1oiSp+P8Pp3g+FFhGrGwpCLAGmsJG
+ a1816Yr6rlVYsAMiuQY1vcU/8dvNxKU7TEiNBRzdU0CCpb7kXbNjbOv68DDDliBGMXkW
+ 1EiRqEUll+5WKUo5N/lhbZejsFcx29gLnK/xl1Wtqn1JcbhkjXue4HpoJVOXfrXKjoJM
+ O28xsUtsnCmD4BddR+YMe3Vx7GfaZjv4ictlI41C5tgNe9FuLIgkz465ysWDykpV2kM2
+ YX3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787551040; x=1788155840;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:sender:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=0trJunRyXAgIv25VNMRcfKRxyzdPShngFatEy4Vfc4c=;
- b=a9DqvStEBKX158Og3akovnr0QVgAAFidbZ2w80CLr3adLQmmaC2gTUPxber7L5YWhL
- D/03pF1+1IGIo4RQ/MqoMNQz5vBtOHI/+wraaZxFxQyycvk9pEJ8SdFpmZbu7/+Grubh
- jTh4z9T/SLCzqcD/VmoP+ReDW3p86nNC2Ujab2QTraD/vGiECduCblLqk1fGQfI1v7iy
- ZX/oxZroRBMhqMqwBWRigaBmUGkoGr9cKS9A2g/j8OJRjGmnf76/3I4WW5ExDvKTmKn1
- ZLuX5KJSLovVNxG3sXUXni+EcdejNCEAqjB3n1ox1Gwuaqtm9QU1qnxboe4x0ijCaKZF
- DHyg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrKn/H4pwRZh+lMbwB4x8og/Dkg8PqIFo98Po8/zmkOxQ2eRRQ7wxheI2agSlhnwMRHageqv08ljWLC@nongnu.org
-X-Gm-Message-State: AFuF++nblBnCC1QzBA9p7+j8H4Y31UxvC0sLrxbc0US173DsnpBbQbkV
- YS035w09BTr4EycBtMkwIl1Ciu+Hc0GIvQrPDcMMEURWaX7ZgAR0x9PT
-X-Gm-Gg: AR+sD12GalrA3j3SZf+FChCtcvepZ5DQqfppJ1ys4kESx2BNQyh2TDeavodOCzjZI04
- 4DlEoQFNFAgjncynKs5HHvxmBbjM36sEfb8kx3StcsTjrBhPwJgi7BZewW1aCXj+RoydikvDH38
- xdom+IBEfSfsX6lTpA+BIoUdnxxalPOMLz8z5n9Wv3NMELu6libM/HylHCz3GZ0s8JaQ106YuFg
- sH/FFTepz64nA4GxIMsA2ALqmwmmaDcG4NHRg344an5PJNEtGXhZPG0kwVkZ473UAnADLeBkS+o
- 7YtC/NqyQCCTDyKDZqOxlP02XCSL1iQqPciJIMEJuP85u5YvFMA1QnIrbiTixqzEQdbGZAEfOAt
- ryW9LjimJfL0i7MtK440SBGPbGWnfFaE176TAzSWkMB+v34Bnn/iz10dwFNQzcY7L/xhqbgEQ9y
- /q2I+WA+g19+9LLqnkq474R5Z3t2cqZmDDtbYW6AcuZ34Og0cAm4Bdq/ZvQ8SEd50aY7znxgJgs
- AvLIENRl6L0CFUBBkZoWy++vmDsJvJ522dALYlfj7eu4bBrFgITUpP1EExI0UWv9xLOKzzb15wS
- ao6qOyZPfP/mUosOa/SuPw==
-X-Received: by 2002:a05:6a00:4098:b0:847:8449:2bb6 with SMTP id
- d2e1a72fcca58-8520b9460c1mr25940893b3a.4.1787551040279; 
- Sun, 23 Aug 2026 22:57:20 -0700 (PDT)
-Received: from donnager-debian.. ([180.150.112.50])
+ d=1e100.net; s=20251104; t=1787550588; x=1788155388;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=uqnXWGuDLvEfhlq4w5r6kD4ZoGnJTkkdca1i+GCVCbs=;
+ b=jVVYUcssfYC/V8NtQFz/Cp8rBCr0PxYV95q/O8RE/ehrf23aA41U8z4Ng9/FTQSgVl
+ XBltjhesAthDxPBHiaL2/jgBsjgMgB+3aW4UccRSA9EU+rjiSQWfQyJmyJDhOYadNscb
+ mZErtpDZ+Uuqn9vZ/tfoktCDNkWYL3y1G5yMfXBh5DotfEdIcoNWXfdeM3NrD3Gq997z
+ qNMJVS2+FKc3vjkary95d2NXxgzUlCCezmRlmZQ1ckFP0ieNU9athXVAszt64/iChVJe
+ Pf08jYyF3c9GVykbxvu6J1X8xsRs/SACj8YXdg6KqVe0YQHvpbromcgBADanqocibg1O
+ JIKA==
+X-Gm-Message-State: AFuF++nN5aeDw1vY4uCfTXv5CbJXLkczS61q1/50rII0JFtoGbCjkpm2
+ UjlD+9bnj37JnqGv1jRmV3Tm/6qgllaV2GZW9qn390SOFmw4voNfQj6wJy7wiQ==
+X-Gm-Gg: AR+sD11rdIwcIJ7vbyUOXHSic3xr+KGk3CGFGFepJ+jPOEPZSmrSPG6UuMsaUq8L13a
+ QYXW9PdtMm8s444moP7MVgXzfnHC7iglMikLMy4GvhXQVoxBmvx4hxo2N93qYoKsMU9sVxFrTad
+ BTDG3NE31Qf3Z+utB6UvbMbn2D0Io7tqxZeLjOjBuBJM/XEESA6wPuj7dDLq3N8RnzW2QKkJCso
+ PXq7ehg2GAzfGKJpfCY6b33nRyR5xgWpx04xVna67tajkE/Pct7NmS2DuTm448NkMZCu7BoxTRv
+ dsnVOehV4cWEasXvDoiOegnXjxtQGyjc44PqgTAWVp24KTf6UYrl8WPIljxhTdKGfgjk+BYJAhD
+ TWoAzWxbEQpY5Hnxe9ZXPmny6x6Btc9JeFJm+AmY1Q+CKyukCXyYTfZZf/LYm4Z2iM6hLaS94yo
+ 8OsM+ZS5q5apaL5ABoOxNgoX2nokSxkBuexaBacTIG32pFhOCPhVsB9OZJSFoPHyIOO09IrNIDF
+ 1vIs99vE0nIXmH+
+X-Received: by 2002:a17:90b:2e4b:b0:38f:de94:bf34 with SMTP id
+ 98e67ed59e1d1-395c514b5cbmr22294819a91.10.1787550588146; 
+ Sun, 23 Aug 2026 22:49:48 -0700 (PDT)
+Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8520f03b494sm1583474b3a.33.2026.08.23.22.57.15
+ 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.49.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Aug 2026 22:57:19 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Michael Ellerman <mpe@kernel.org>,
- Portia Stephens <portias@oss.tenstorrent.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH 3/4] tests/functional: Avoid unnecessary removal of scratch
- files
-Date: Mon, 24 Aug 2026 15:26:39 +0930
-Message-ID: <20260824055642.41098-4-joel@jms.id.au>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260824055642.41098-1-joel@jms.id.au>
-References: <20260824055642.41098-1-joel@jms.id.au>
+ Sun, 23 Aug 2026 22:49:47 -0700 (PDT)
+From: alistair23@gmail.com
+X-Google-Original-From: alistair.francis@wdc.com
+To: qemu-devel@nongnu.org
+Cc: TANG Tiancheng <lyndra@linux.alibaba.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL v2 28/96] disas/riscv: Use signed type for vector immediates
+Date: Mon, 24 Aug 2026 15:46:58 +1000
+Message-ID: <20260824054806.2790041-29-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260824054806.2790041-1-alistair.francis@wdc.com>
+References: <20260824054806.2790041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=joel.stan@gmail.com; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x534.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,132 +104,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Files written by uncompress() and archive_extract() are placed in a
-temporary directory that is cleaned up when the test exits, making
-os.remove() redundant. Drop it and the unused os import.
+From: TANG Tiancheng <lyndra@linux.alibaba.com>
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
+operand_vimm() sign-extends the 5-bit vector immediate field in bits
+19:15, but returns uint32_t. This sends negative immediates through an
+unsigned type before they are assigned to rv_decode.imm.
+
+Return int32_t to match the signed value extracted by the helper.
+
+Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260703-b4-disas-xthead-fix-riscv-next-v4-3-84c566330bc7@linux.alibaba.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- tests/functional/arm/test_bpim2u.py       | 11 -----------
- tests/functional/arm/test_orangepi.py     |  9 ---------
- tests/functional/riscv64/test_sifive_u.py |  4 ----
- 3 files changed, 24 deletions(-)
+ disas/riscv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/functional/arm/test_bpim2u.py b/tests/functional/arm/test_bpim2u.py
-index 8bed64b702fe..9192a2fbec45 100755
---- a/tests/functional/arm/test_bpim2u.py
-+++ b/tests/functional/arm/test_bpim2u.py
-@@ -5,8 +5,6 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/disas/riscv.c b/disas/riscv.c
+index fdf75a12ef..967739bdbb 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -4487,7 +4487,7 @@ static uint32_t operand_cimmq(rv_inst inst)
+         ((inst << 57) >> 62) << 6;
+ }
  
--import os
--
- from qemu_test import LinuxKernelTest, exec_command_and_wait_for_pattern
- from qemu_test import Asset, interrupt_interactive_console_until_pattern
- from qemu_test import skipBigDataTest
-@@ -54,8 +52,6 @@ def test_arm_bpim2u(self):
-         self.vm.launch()
-         console_pattern = 'Kernel command line: %s' % kernel_command_line
-         self.wait_for_console_pattern(console_pattern)
--        os.remove(kernel_path)
--        os.remove(dtb_path)
- 
-     def test_arm_bpim2u_initrd(self):
-         self.set_machine('bpim2u')
-@@ -86,9 +82,6 @@ def test_arm_bpim2u_initrd(self):
-                                                 'reboot: Restarting system')
-         # Wait for VM to shut down gracefully
-         self.vm.wait()
--        os.remove(kernel_path)
--        os.remove(dtb_path)
--        os.remove(initrd_path)
- 
-     def test_arm_bpim2u_gmac(self):
-         self.set_machine('bpim2u')
-@@ -133,9 +126,6 @@ def test_arm_bpim2u_gmac(self):
-                                                 'reboot: Restarting system')
-         # Wait for VM to shut down gracefully
-         self.vm.wait()
--        os.remove(kernel_path)
--        os.remove(dtb_path)
--        os.remove(rootfs_path)
- 
-     @skipBigDataTest()
-     def test_arm_bpim2u_openwrt_22_03_3(self):
-@@ -174,7 +164,6 @@ def test_arm_bpim2u_openwrt_22_03_3(self):
-                                                 'Allwinner sun8i Family')
-         exec_command_and_wait_for_pattern(self, 'cat /proc/iomem',
-                                                 'system-control@1c00000')
--        os.remove(image_path)
- 
- if __name__ == '__main__':
-     LinuxKernelTest.main()
-diff --git a/tests/functional/arm/test_orangepi.py b/tests/functional/arm/test_orangepi.py
-index f9bfa8c78d99..09780236553f 100755
---- a/tests/functional/arm/test_orangepi.py
-+++ b/tests/functional/arm/test_orangepi.py
-@@ -5,7 +5,6 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
--import os
- import shutil
- 
- from qemu_test import LinuxKernelTest, exec_command_and_wait_for_pattern
-@@ -65,8 +64,6 @@ def test_arm_orangepi(self):
-         self.vm.launch()
-         console_pattern = 'Kernel command line: %s' % kernel_command_line
-         self.wait_for_console_pattern(console_pattern)
--        os.remove(kernel_path)
--        os.remove(dtb_path)
- 
-     def test_arm_orangepi_initrd(self):
-         self.set_machine('orangepi-pc')
-@@ -97,9 +94,6 @@ def test_arm_orangepi_initrd(self):
-                                                 'reboot: Restarting system')
-         # Wait for VM to shut down gracefully
-         self.vm.wait()
--        os.remove(kernel_path)
--        os.remove(dtb_path)
--        os.remove(initrd_path)
- 
-     def test_arm_orangepi_sd(self):
-         self.set_machine('orangepi-pc')
-@@ -140,9 +134,6 @@ def test_arm_orangepi_sd(self):
-                                                 'reboot: Restarting system')
-         # Wait for VM to shut down gracefully
-         self.vm.wait()
--        os.remove(kernel_path)
--        os.remove(dtb_path)
--        os.remove(rootfs_path)
- 
-     @skipBigDataTest()
-     def test_arm_orangepi_armbian(self):
-diff --git a/tests/functional/riscv64/test_sifive_u.py b/tests/functional/riscv64/test_sifive_u.py
-index 54a0f9c64845..6bf5be15f93a 100755
---- a/tests/functional/riscv64/test_sifive_u.py
-+++ b/tests/functional/riscv64/test_sifive_u.py
-@@ -10,8 +10,6 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
--import os
--
- from qemu_test import Asset, LinuxKernelTest
- 
- 
-@@ -49,8 +47,6 @@ def do_test_riscv64_sifive_u_mmc_spi(self, connect_card):
-         self.vm.launch()
-         self.wait_for_console_pattern(pattern)
- 
--        os.remove(rootfs_path)
--
-     def test_riscv64_sifive_u_nommc_spi(self):
-         self.do_test_riscv64_sifive_u_mmc_spi(False)
- 
+-static uint32_t operand_vimm(rv_inst inst)
++static int32_t operand_vimm(rv_inst inst)
+ {
+     return (int64_t)(inst << 44) >> 59;
+ }
 -- 
-2.47.3
+2.54.0
 
 
