@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68986C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C337C5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:58:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNc5-0007ge-Lb; Mon, 24 Aug 2026 01:52:53 -0400
+	id 1wyNaq-0004WL-W7; Mon, 24 Aug 2026 01:51:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNbw-0007Ag-Gz
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:52:45 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1wyNaF-00048W-W6
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:51:02 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNbu-0003Aw-PX
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:52:44 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-c9b373d5af0so2336502a12.2
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:52:42 -0700 (PDT)
+ id 1wyNaE-0002YR-0V
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:50:59 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2d560775ca2so24630725ad.1
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:50:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787550761; x=1788155561; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787550656; x=1788155456; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=SdRM7x1qzPNyHLcBH9MizyM4AFSQfbw/UNmU055a3dE=;
- b=XbIJdFBf1wgDZ1FBPhgfpScGq6pVWVsbgflxdL9FtKBKE06+ou3tMxmJQXjKRgI2nJ
- PoS5ODnQ3sVofqrBlP6NtTfpz3IDCZquotf3W1hy/yZFVtPuTare8/WTkhvE2k1B//qY
- B/+81r3M2lKBO6aAFCFC4wpEIr9xEmDfyM8GliiXFjaY92Is0io11BtuegGLsIGRlpQ6
- hfoXdx9qSttyCg5gFK9xrW/Tp+uYKN2ZqxZkZ1EzPKcPGqcqVsuMfB9sUpmVydTNMfqM
- wiK2wlMvIwUmJbmUHsDlqGb7fVS30gWgRSOZowOecHzk+CFA+HwjhfUIRLf5lzl+On7c
- 3H7g==
+ bh=3+CQdeS4ZDd2cPsyFQmittENkduVaoRgr67sy9mGB6w=;
+ b=mNwyBWXKfF8yREt1GxwpTuTfakK2RarG+nwqHKC5noqTYJpnt3z45s4fjZcktCC/Bp
+ E17jWGg70IxhSc3nixVw3cn3hnA/XJbKTsrz6ZC4N1IGjs4EkQ8FaSBNmJCj2Wcy+JX+
+ hd0C7pqALYAGFGQac0Jf/YrlpT2WaHLRX62QKKDGk8hdve/RdBhzbWlrsFi3oZ3lrTBW
+ yRwzOJ8l6CR92/yo3s/JILmnvVEBiR3HcdY6Hg7jnyoTG3sh7sxNNyfWpyaieyN09nhe
+ V/r+F8WhVhoEKdbDHMqTSxQvjcwHR3iHwmEz+7SyXrVrq+e8pYm2w9SDSaiyHnMudDFS
+ AICA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787550761; x=1788155561;
+ d=1e100.net; s=20251104; t=1787550656; x=1788155456;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=SdRM7x1qzPNyHLcBH9MizyM4AFSQfbw/UNmU055a3dE=;
- b=f04HRGvn5eQy0JJlDwswvVRM9y0V/iPho5JMuDaqgrcCP57tjbkHA2elEl2JTvU9YK
- xcrjEMhkhdPhBArAc54AKZqtCpssPw4MIaw3OF4A0EmjumgEHN90xCywHoq37iC0tkx1
- RHKKdEp7D4mXMtcOFeSlUmM1YTtQRiLlXVCMOBiMumfWgxO5+DxRi95oegrJ91mniQE2
- jZiu8piEpyRQZGcRM6HvDBENkpMUeV65mpxp1xwDBeN5fptrkftXwbanMYICi3sQefe+
- pGE46wpg0nCcndt90Kqs+u1goAfnRHkvhV7ZKJeakqVMyXRZXwkKbD6NqMZ2mbfQ07XW
- zgaA==
-X-Gm-Message-State: AFuF++kFXvOlYIF1ty/fKhVOxtBmuEOZeuqGKXmvxSmNvq/51aLFCmNw
- 2lJwOhlAegGjoLyBGoqD1ENKLCxeVaA5eA17ePcubgaVrF6JI35NdenPZo44Rg==
-X-Gm-Gg: AR+sD13gchJAv+JZBzwFqsrrhpfY19jECtyMxn4t70ayDd9b3HPBfjF5HcDFCOrVb9D
- spLfQxO47UgOST+BHxoTWqJ6tTrEgH3z6SAdnO6qH+Beh6XbYhrP+wR1ShQobYQVbU+S3jvCt1q
- SOTNJ2UOyOPJL+Y8s1EMaf84WJyemrSFPXAAR2te5PlszPMiaUUWlaH1uxEYQ0IPao6ht9FA79x
- LLVRxnuaX3UVDmBumO5GkWmExVbUF6imIFt58F0z+WH5KDPe7N2oe68MlwUj/MCsLBASoY6aYtw
- zrM2sLJ8Ku4jjhM/ZAaXgFi/nJkyjMtHYp8UgmUgbT5Y/ys+a+ogBlKYS3V966Vfgar3g1ow0EJ
- a/SlfOL4V+NfK0ONJqXM0R2cXlRns3b5G2YfN46iZpmk8ul2tuHOfJdvV2cy4sASfxOfwW0qXnA
- uohZzdExz+qR1Xk/1Kmdv4ALj3VkanNHKt8VAyBLysm149zAromGy2mFT5ouhF+IwMAwJ7w3xW8
- WiwgMOLYcpJ7lFl
-X-Received: by 2002:a17:90b:4c4d:b0:380:7688:fbe9 with SMTP id
- 98e67ed59e1d1-395deffbb5amr27126609a91.8.1787550761341; 
- Sun, 23 Aug 2026 22:52:41 -0700 (PDT)
+ bh=3+CQdeS4ZDd2cPsyFQmittENkduVaoRgr67sy9mGB6w=;
+ b=PZpU9g7nHSHp5cxvo9pyTV36ZqU8TretTEJFSpTL5qGZ4cPOqfMYKrk2emaB8vWNn8
+ 8pbasmsHDiyN3sjngc7w3XECQcpPz+zWE/YDsxZPNAc/JYh4krESV5NieXgQ+TxYZior
+ P8xJ2IehtDNsDbEvYerD0VMrV4fv4yjF4JycgqsnjowuApLIVkt9lnesDiCRzHH6fOWQ
+ yuJuIvecgLq+9QAfFu66sQH/KOx7gL+ywgEq0wIJIwOSdsj8+4mIJs+RZ/W42ffs+lTA
+ pgeTUNlA8xJjyZhqNjKhkvKFtAGJedgXm7XE2Xy1zXXK6YtVWQOAaTYtYeIHm1flIwNA
+ GGYg==
+X-Gm-Message-State: AFuF++lrKtddfCqljBtGPU+GWqvdInVq/Qpow1gwVRUrpgFdKtYj4miy
+ yahwcfo8ryFP1sYSp4e0JhT4oE2+6lx9FDo6JYFADf+b1PuVzrCwBRiP8cRgYA==
+X-Gm-Gg: AR+sD13NYWToUuCCvaHFMiMXQzZjb8aWm+eIBgGtW3mL/hIExOpx/OXuOdD8l+RvrTE
+ E+O0OdIZFGcBTLsVJXq8JzNjGdzuPohiPqZxI17L/oPkl1gb0zB0ei9So6IK0EwasLNkiHeh1Qo
+ zvA+WSrm0mMykpRSNRQGKsp/atx7j4+kqydo4f4kWR2PbujtiDuAbosx22fZuE76otP2xIqbUqb
+ RuJe53NgWdL8au1YyBVHYEGWHxRIFcHMrWdKXuY6iDch8bEbosiOK7RUWWMmdUGkvOT1b33Noo5
+ xOubORBDmmSzYZWFwr/YBSIpe/7vmAyr79RvMiKbEUC+PzKTsvAeDO1qYr82P3VcEtBGIvEsq63
+ uN1PNAqvj9oeg6nxpfODq/rttyLgV6J8RocxaHn+ig7yA3O20GvpPYKCmu6kQ/OX1ABqh5d5bR2
+ Gw1Y077iE4pA5RKBwA2RP8Vsd3VfqFLIK+32GZKb2c3nYbc0prtr+leQFhr26Lf9I5kcFkmfxZu
+ Ukx2A==
+X-Received: by 2002:a17:90b:524b:b0:38f:7f60:ba35 with SMTP id
+ 98e67ed59e1d1-395deec4953mr30451578a91.5.1787550656544; 
+ Sun, 23 Aug 2026 22:50:56 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.52.38
+ 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.50.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Aug 2026 22:52:40 -0700 (PDT)
+ Sun, 23 Aug 2026 22:50:56 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: wangyang <wangyang25@otcaix.iscas.ac.cn>,
+Cc: Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 86/96] target/riscv: honor zicbo* envcfg gating in
- linux-user mode
-Date: Mon, 24 Aug 2026 15:47:56 +1000
-Message-ID: <20260824054806.2790041-87-alistair.francis@wdc.com>
+Subject: [PULL v2 51/96] disas/riscv: Do not recognize c.{addw, subw} with rv32
+Date: Mon, 24 Aug 2026 15:47:21 +1000
+Message-ID: <20260824054806.2790041-52-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260824054806.2790041-1-alistair.francis@wdc.com>
 References: <20260824054806.2790041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,68 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: wangyang <wangyang25@otcaix.iscas.ac.cn>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-In user-only builds check_zicbo_envcfg() skipped the envcfg check
-entirely (#if !defined(CONFIG_USER_ONLY)), so cbo.inval/cbo.flush/
-cbo.zero retired unconditionally in linux-user even though the
-machine-level envcfg fields are never initialized.  Give the
-user-mode build a senvcfg-based gate, and initialize SENVCFG_CBZE at
-reset when ext_zicboz is enabled so cbo.zero stays usable while
-cbo.inval/cbo.flush remain illegal, matching the user-mode view of a
-typical firmware/kernel setup.
+These code points are reserved with RV32.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4107
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
-Message-ID: <9b2f22fc402b48b8ba81f72be8ed04bc@wangyang25.otcaix.iscas.ac.cn>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260812223142.349142-19-richard.henderson@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.c           |  8 ++++++++
- target/riscv/tcg/op_helper.c | 11 ++++++++++-
- 2 files changed, 18 insertions(+), 1 deletion(-)
+ disas/riscv.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index d8f239e41d..79ddde419a 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1062,6 +1062,14 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
- #else
-     env->priv = PRV_U;
-     env->senvcfg = 0;
-+    /*
-+     * Match the user-mode view of a typical firmware/kernel setup where
-+     * cbo.zero is enabled for user mode; the CBCFE/CBIE bits stay zero,
-+     * so the cache-management operations remain illegal in user mode.
-+     */
-+    if (riscv_cpu_cfg(env)->ext_zicboz) {
-+        env->senvcfg |= SENVCFG_CBZE;
-+    }
-     env->menvcfg = 0;
- #endif /* !CONFIG_USER_ONLY */
- 
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index acdccd1a97..a7bd42d2c6 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -152,7 +152,16 @@ target_ulong helper_csrrw_i128(CPURISCVState *env, int csr,
- static void check_zicbo_envcfg(CPURISCVState *env, target_ulong envbits,
-                                 uintptr_t ra)
- {
--#ifndef CONFIG_USER_ONLY
-+#if defined(CONFIG_USER_ONLY)
-+    /*
-+     * linux-user: the machine-level envcfg fields are not part of the
-+     * user-mode environment; only the user-mode view of the enabling
-+     * bits (senvcfg, as initialized for the guest) applies.
-+     */
-+    if (!get_field(env->senvcfg, envbits)) {
-+        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, ra);
-+    }
-+#else
-     if ((env->priv < PRV_M) && !get_field(env->menvcfg, envbits)) {
-         riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, ra);
-     }
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 77347b557d..ddc2f73eae 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -3060,8 +3060,16 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+                 case 1: op = rv_op_c_xor; break;
+                 case 2: op = rv_op_c_or; break;
+                 case 3: op = rv_op_c_and; break;
+-                case 4: op = rv_op_c_subw; break;
+-                case 5: op = rv_op_c_addw; break;
++                case 4:
++                    if (isa != rv32) {
++                        op = rv_op_c_subw;
++                    }
++                    break;
++                case 5:
++                    if (isa != rv32) {
++                        op = rv_op_c_addw;
++                    }
++                    break;
+                 case 6: op = rv_op_c_mul; break;
+                 case 7:
+                     switch ((inst >> 2) & 0b111) {
 -- 
 2.54.0
 
