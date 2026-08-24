@@ -4,110 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A381C5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 09:21:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02917C5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 09:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyQr2-0006Qh-2c; Mon, 24 Aug 2026 05:20:32 -0400
+	id 1wyR17-0008UG-Op; Mon, 24 Aug 2026 05:30:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wyQr0-0006QQ-I9
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 05:20:30 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wyQqy-0006NS-O1
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 05:20:30 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-c1671ec8692so459361166b.0
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 02:20:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787563226; cv=none;
- d=google.com; s=arc-20260327;
- b=QTbimpBCyBpKMgaXsBdBOAX/Urg0DlYPwFQQUhpLTd3P0t+fzYH1AdOLfDVMoMWuzj
- 5bzEsrdBoUZG20QqXJtcEYDzexx4m4Mz0H/xsxapWTdJ0cD/ipcklbmTVElaQKIPNtCH
- OY8P8zz/3Bfs2nAYrgVb+3abfNfSn1begwB/x2+iNSzamqveOZvmfiwYTuQHdtyJox3Q
- 0pPIUbNk499Oc7b4ySxbPSbJGUXZishwHTHn9QcAqa9nxtvJ2a9zqCzrH9kB4XkYuRYA
- gZEP0ZproPrRz4iU/mXwfXU9DBhs6YocAyESgABHl/eDFCIPnyZO7TX1rzTdMEtWfzlf
- aO6g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=6EJLXJQcuhaVWby2f6a7kpaCGepaAPvmxfqVt7Jkb2o=;
- fh=wGZeUYt39FdrjiyDvngBMA/6KW8toEkLMWKs7FzaIuY=;
- b=jutVAxTgq8hMSS5XqSW43h8qRIOfaE8RMVhnEkqUiQt12KvX4+wqBcMmDCNyP3pyBT
- p68J/quyA4B+Lpk6fpG+Gqqq5xzu9Q4v2vKOhtqZQFb34lOoWM53BIGKzGF3fkWaMh3g
- L4SAL6X6YnuyiRJRWIg01LXWuAnxUBHqJUbakvFCz6GIhFYpO2Hi0m9yhQDQghndXqB3
- 7M17cFXGIZIeLupRygUwmcgBoCmJQOIYE188JLlXHUHT3NacYi3ccjoR+uokndtJPNKl
- B5qNy5jUKuOB6sig73wLGunwkOxQHZFlKmDasDHDjTnh2uKmkzcrEXVe1UqEUAuT4BeH
- otcw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wyR15-0008U0-La
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 05:30:55 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wyR13-0000Z4-EC
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 05:30:55 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67O992O63109933
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 09:30:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ jzrv6+K8BJy4w7h6kOzkKh3Ln9OQeMPysdnhZl73jlw=; b=f+kXXgBRvap8QfZx
+ 6AEEGuPd/ZV/9dW2rWq7vx+rVjRmoAJ5wJSADJUBNkWc5Wyc+y1Mt3JMUQ0RfGoT
+ 9oOlyjEoqTTanN1pSPVzzhnFxvoOmSrj+sc9gdYuhCjiRfJrhnibEBnjNXKmXacD
+ 1Xdr0EBEezqmrJJ1yluPz8LAQAZmd6mGltYRL+HWxDFbv3OsNZU4i9i6YX7HD8LY
+ vRbVgzJRldhS/+vRPLcwiRUluXS1nUECwIn5VhjN0OfMmH1M1V5uR9z5wQX5oqIM
+ vvL3C33ZW4j3Z42rHpml7e1ElYyYwig0iM+FikHbcIV3VPMCjd/Tll5n0Odt1/dw
+ T6/TSQ==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g8jgk0bpv-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 09:30:50 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-51bf321d786so26586841cf.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 02:30:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787563226; x=1788168026; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=6EJLXJQcuhaVWby2f6a7kpaCGepaAPvmxfqVt7Jkb2o=;
- b=mckWmG2OS0zFLxBLsyuXKEEz2uskGgsYR2KZ5GwFWufaZCxTuEdZWhM1CD3IxXEKmv
- mTRac9Wj6rJ1TCb6xmlfnzS97NajUH+ijkqYe5Msf0xlP5dsreky/lRXXsbE53xTHXE5
- ZQRsD+Owifr0HKXa3IS9L0k7SundHRs8akaXnaAIn17Y0/kmF6VoVAOxNF+X25u+J9Wj
- bFvbyp70NfbtJ9hliHgEbMgxrntZAanh3YIBDtsmArH1pjVhfq+MJBj8q++kEEzrJ21g
- v2A2kGCqriRFBII5vRTJ14mRHIliYmsdSWgS2ur3n86R+h5alRZ5RfoYGIHPugPRJlBw
- KP3Q==
+ d=oss.qualcomm.com; s=google; t=1787563850; x=1788168650; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=jzrv6+K8BJy4w7h6kOzkKh3Ln9OQeMPysdnhZl73jlw=;
+ b=AgWT8n4v04fZOlZWWc0HJxxb1aM/Bwb2T2K0p9Sz6AtElXM6HeSIm96UVX9/zVuwMm
+ E9bjcf99wDRK1bHr6CbYNb4VrqJsJjy6CTO+lfmVBFvrMmKgZDVnriZDFZnHzALr+73g
+ xH5Ls4XquyNyDmCBpD5cO6/dgfc7JuB6L8/nRmmjChU8K61adQCKd6UB5lyO9pr4Evss
+ E308TbDuk7i+zRrhbtFMp4Jl8eGwf8ndB5Y0DYm9jCPM4ftpjCYk/xasGpo9y6OmN8RU
+ MZfb7mt83v9M/Bt3DveNJBQ2kL1sZ+iNzB5whl7YD4Aon618DlbgmDr+OXuQM+ocrywA
+ STIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787563226; x=1788168026;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=6EJLXJQcuhaVWby2f6a7kpaCGepaAPvmxfqVt7Jkb2o=;
- b=eWl9n7lxpsofE9nPJ7giDkCquRtIMFmNmSuAvBqx0n3XBX9DJ0QLgUe9HcNeN/GRsR
- otlEcNtL0qcr7OnzBFaoe6sGpduUyqLrEINtLK9MUYfJksR3YZufMEQP8CUEUeOIAJ7X
- wEAl6zCC/9XVNHlPn/Fo3McRx/xi1HjeqK8VtOaHNAswqyaZEBfndtqsumF6TlA0XHrT
- TgQHV8g9s4/nTFuxTcGHZJnHGCsie37gDs45lQ0NSEdYx8VD0tzICaa/NrpCHl0OMlam
- HH6ZQJS8kVwj8vTWEYPvA3CJN/cF1GjJkHHfwbGyMTn0g519T6jz5lLAQXg7AjEOwys9
- ZEgA==
-X-Gm-Message-State: AFuF++n4XG9GKRFBqLuueeaRgXoP8decw5r7NyjOKbI/TT5z/IvK5+UE
- Zxk2orx3v4GJN/Bh4J+mPyMD7KED84txYJJ5Ihb0apTXMMX3zpnWBGosaGMaqWib6IA90/WCw7Q
- HXynsLKziFF/bRx/loFZGgIi/FMGa6CI=
-X-Gm-Gg: AR+sD12ayLLxf57nnu1KVcdSlSIi+zBiuEDnUzXgoZQLhPB5vv1hQ7EDAHU3GNhK27F
- D5mUg26LRhskFGShf64ui9Ftdu7qdUGeEx8be5f3dIpK30JQIIaxjCpgdj69QlQQWiJBmV/Qawo
- DtGSVbC+dmu3T7i+KS74E56EcG6Wp4fEHL+CxZpIRab4DCBd28aJpBGSW0yLQi3bsgeZ1tFeluj
- JINuCd1EdkiQqZcLYPn4yU5k2rQxlSgxP22qGOs+eR+A622Offs4uGonXgMUkqZhGLqARdRs0RW
- 1NAilCjWkRTfcAOk+2Vxi4i4adFPGw7EuIQXY7LUdX6XkQ==
-X-Received: by 2002:a17:907:3e20:b0:c15:f005:63fb with SMTP id
- a640c23a62f3a-c2491c28536mr2208300666b.3.1787563225992; Mon, 24 Aug 2026
- 02:20:25 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787563850; x=1788168650;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=jzrv6+K8BJy4w7h6kOzkKh3Ln9OQeMPysdnhZl73jlw=;
+ b=Ixz4OypxoKw2v/fZdpHDRZVLZ8h6ackiBpGrMAks8fsdLGf9aAWPgVQXnEzACUTe4Q
+ b+aSz5RYgmnSGNnLjQmlq25Pw5RgcVZBxhiTQZ6k4XH/80ZlKazRaqejcmEid8578bwD
+ hqG6p2qYmKS2DIBBUhVjufUPKtFMHbpOVlDA6Rv8pbO9fGNFCUv7OV2AsD+PaIW6FWxc
+ 6yi9TI1bWxweF6CpCVyjC5nEOEMArseMo+NT4E/VQsiIHL9jqo+ZJENF7hUWyYPTU1au
+ IYplL9cy5rpKOYFhLS++/Fe8mRJZn3kj4ALYvv4hXK11L889wE9cISTvoX2DN6roAVIp
+ w4hw==
+X-Gm-Message-State: AFuF++knXzi2AucBYv+Zzog+ZcCBYkrGzahmB45aJ3ir6HPxGEpXA1nX
+ 2qZJzTCZe97OEmDxtVSbqnvvgieeBuSSs29FytOmIp1Kxd0NdS6SE5ZHtY2msvu6Qe5n4fdbj4y
+ ziK5R7J6XkyZrJV0dirDeKx31KJOSZs8Ukf+L8uqyIeuze9afaszVOQi2jw==
+X-Gm-Gg: AR+sD12RwnZNvDtadq1AH0SIkbJv+4OueZPY63ylQsxAQ1JzpIVglz356m87w52kMsv
+ 41H38JUwSNQL4r906h8zSs3vy4x4ffNkNlAFOan5KPtn5wHpyE8YMO8u3aerM31ChndH54YGRtN
+ lW+qU5477E+rhNRpyrVmu7etyzC2pi1RTiKSFaxvTxnx7/c3QxQNkLpgFljYZJ5kpnCqb3KK6mf
+ rWNU8571JOCwYIZxbvus6iE8Au4HN1+agU9eERo0i42a2FIocKk7N011s+kICoov8vbRTo6S8Zd
+ vveInM5Hsqgx6C75qxzw6GPho3p5b1Cpel7l8xvWQLC1+i+c1A2oSpHOEtvyzB+QGvm0MCRmZsx
+ yxlcaHS4HpjM63UKS17YMT9VAuI8saGJbw9U/rPUsyQ==
+X-Received: by 2002:a05:622a:8c8:b0:50b:4491:a2cf with SMTP id
+ d75a77b69052e-52df5a07b28mr269944351cf.27.1787563849557; 
+ Mon, 24 Aug 2026 02:30:49 -0700 (PDT)
+X-Received: by 2002:a05:622a:8c8:b0:50b:4491:a2cf with SMTP id
+ d75a77b69052e-52df5a07b28mr269943671cf.27.1787563848976; 
+ Mon, 24 Aug 2026 02:30:48 -0700 (PDT)
+Received: from [10.254.188.74] (44.170.88.92.rev.sfr.net. [92.88.170.44])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c249685ef7bsm1320196666b.52.2026.08.24.02.30.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Aug 2026 02:30:48 -0700 (PDT)
+Message-ID: <b8381fc7-e1f9-4b76-8794-cf9cfb15cdb0@oss.qualcomm.com>
+Date: Mon, 24 Aug 2026 11:30:46 +0200
 MIME-Version: 1.0
-References: <20260814174830.1691540-1-zhangckid@gmail.com>
- <20260814174830.1691540-14-zhangckid@gmail.com>
- <87y0e12okc.fsf@pond.sub.org>
- <CAK3tnvL0N3AK78zwZVLP7ycujGeEHhmyuM6VG+LQd3GRg5CtbA@mail.gmail.com>
- <878q5wvwh6.fsf@pond.sub.org>
-In-Reply-To: <878q5wvwh6.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Mon, 24 Aug 2026 17:19:49 +0800
-X-Gm-Features: AcwNN1X4koTfhjqjE_VbHYDOiFldHxLUNdC8U-pL5VVckccIqRTnPQPeulonSbk
-Message-ID: <CAK3tnvLAcR9j5UkMFE7f+Kc09eGaWG5v4feHMxqTfM8=jFmcbA@mail.gmail.com>
-Subject: Re: [PATCH V12 13/15] monitor/hmp: display IOThread holders
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 09/38] tcg: Simplify bswap/hswap expansion using bitswap
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20260818170155.1907006-1-richard.henderson@linaro.org>
+ <20260818170155.1907006-10-richard.henderson@linaro.org>
+ <CAFEAcA8pSuhgPAoM0VbEsZUyVrw8NqVrtKjmpg0-dhM1y9r96A@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA8pSuhgPAoM0VbEsZUyVrw8NqVrtKjmpg0-dhM1y9r96A@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: 7dqrNIWwaJfLVujEEDCeyiV2TMknN5dh
+X-Proofpoint-GUID: 7dqrNIWwaJfLVujEEDCeyiV2TMknN5dh
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDA4MiBTYWx0ZWRfX9f1jhzET/Fmu
+ ydw40HSleuPpdnGYPrsJFUDmFEPxFBSZegqX/aVLhyIOejWWn+3bEhEmfcpdDdqP1XSfkwmn88Z
+ cXGSK15r6QCqnBCKqGwKxL+eEg5oBX0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDA4MiBTYWx0ZWRfX3rT894Ib4WeO
+ gjMICU6gDZIfy9YfkpoluiW+JLKwaJrKr8Hf3iM1wKli1zf80ZxnFjntGGObHRIRlW2vKzM8Oum
+ JEkUuhypCgUoyXjpA3Iw7BDhbhDvjgYMHvpGwIjdLH0AnJ8jTrF1DfoKSwAiObvCMG5XZE/9sup
+ 6mMV3/jtN1cfOM2PmpWStgE6UFRvm4QDWf6Kl+qHqvo5wzslx/fyD228xwC3cu+Mp/9Xj+69xYe
+ YjldeNbfRXsMpTZliPI6j6esvvmEUoqrNT/esN39DpkB78HraDlpc8npzFgJOuQReO4a4b7lvZL
+ wwj2WF6KFkod2hbUIPh2JbVIm4allSbrOH0Elb61R5ozNyy6+jql/ubKhgDB/OQRejENtZmoVy0
+ jA4726mZFFofZ8ET1NsRXOa2wCHVY0SA9aH+a8cUidCb9SpbExPuYHJ02nHe8Oe4BOXWcyZb1SY
+ cALwzAJRN1pNrtzGVwQ==
+X-Authority-Analysis: v=2.4 cv=KcvidwYD c=1 sm=1 tr=0 ts=6a8c0f4a cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=s1NLoHz9uzatdv2VNqxUSg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=p0WdMEafAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=YelGcSiot1SMLvslgbIA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-24_03,2026-08-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0 adultscore=0 spamscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240082
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,201 +155,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 24, 2026 at 3:24=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> Zhang Chen <zhangckid@gmail.com> writes:
->
-> > On Thu, Aug 20, 2026 at 4:17=E2=80=AFPM Markus Armbruster <armbru@redha=
-t.com> wrote:
-> >>
-> >> Zhang Chen <zhangckid@gmail.com> writes:
-> >>
-> >> > Display holder information in info iothreads to aid manual debugging=
-.
-> >> > Omit the holders line when an IOThread has no holders.
-> >> >
-> >> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> >> > ---
-> >> >  monitor/hmp-cmds.c | 21 +++++++++++++++++++++
-> >> >  1 file changed, 21 insertions(+)
-> >> >
-> >> > diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-> >> > index e9fb8d827a..41a813e79f 100644
-> >> > --- a/monitor/hmp-cmds.c
-> >> > +++ b/monitor/hmp-cmds.c
-> >> > @@ -240,11 +240,32 @@ void hmp_info_iothreads(Monitor *mon, const QD=
-ict *qdict)
-> >> >      IOThreadInfoList *info_list =3D qmp_query_iothreads(NULL);
-> >> >      IOThreadInfoList *info;
-> >> >      IOThreadInfo *value;
-> >> > +    IOThreadHolderList *h;
-> >> >
-> >> >      for (info =3D info_list; info; info =3D info->next) {
-> >> >          value =3D info->value;
-> >> >          monitor_printf(mon, "%s:\n", value->id);
-> >> >          monitor_printf(mon, "  thread_id=3D%" PRId64 "\n", value->t=
-hread_id);
-> >> > +        monitor_printf(mon, "  holders=3D");
-> >> > +        for (h =3D value->holders; h; h =3D h->next) {
-> >> > +            IOThreadHolder *holder =3D h->value;
-> >> > +
-> >> > +            switch (holder->type) {
-> >> > +            case IO_THREAD_HOLDER_KIND_BLOCK_EXPORT:
-> >> > +                monitor_printf(mon, "[block-export: %s]",
-> >> > +                               holder->u.block_export.export_id);
-> >> > +                break;
-> >> > +            case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
-> >> > +                monitor_printf(mon, "[qom-path: %s]",
-> >> > +                               holder->u.qom_object.qom_path);
-> >> > +                break;
-> >> > +            default:
-> >> > +                monitor_printf(mon, "[unknown]");
-> >> > +                break;
-> >>
-> >> This is unreachable.  Please use
-> >>
-> >>                default:
-> >>                    g_assert_not_reached();
-> >>
-> >> to make it obvious.
-> >>
-> >> > +            }
-> >> > +        }
-> >> > +        monitor_printf(mon, "\n");
-> >> > +
-> >> >          monitor_printf(mon, "  poll-max-ns=3D%" PRId64 "\n", value-=
->poll_max_ns);
-> >> >          monitor_printf(mon, "  poll-grow=3D%" PRId64 "\n", value->p=
-oll_grow);
-> >> >          monitor_printf(mon, "  poll-shrink=3D%" PRId64 "\n", value-=
->poll_shrink);
-> >>
-> >> Quick test:
-> >>
-> >>     $ qemu-system-x86_64 -S -nodefaults -display none -chardev socket,=
-id=3Dchr-qmp,path=3Dtest-qmp,server=3Don,wait=3Doff -object monitor-qmp,id=
-=3Dqmp,chardev=3Dchr-qmp -monitor stdio
-> >>     QEMU 11.1.50 monitor - type 'help' for more information
-> >>     (qemu) info iothreads
-> >>     (qemu) q
-> >>
-> >> Hmm, no output?  The QMP monitor should be holding the monitor I/O
-> >> thread.  To confirm that, I made monitor_complete() print things (patc=
-h
-> >> appended), and got
-> >>
-> >>     ### monitor qmp holding iothread mon_iothread
-> >>     ### monitor compat_monitor0 without iothread
-> >>
-> >> What's going on here?
-> >>
-> >
-> > This is expected with the existing query-iothreads behavior.
-> > mon_iothread is created under the internal object root, while
-> > qmp_query_iothreads() only walks /objects, so internal IOThreads are
-> > intentionally not exposed through QMP/HMP.
->
-> TIL about the internal object root.  It's the root of a *second* QOM
-> composition tree.  I have been operating under the assumnption there is
-> just one.
->
-> Your series adds holder tracking for any I/O thread, whether it's in the
-> externally visible QOM composition tree (the one returned by
-> object_get_root()) or the internal one (the one returned by
-> object_get_internal_root()).  Makes sense, because at the place where we
-> track we don't want to know / make assumptions about which tree it is.
->
-> query-iothreads shows only the I/O threads in the externally visible QOM
-> composition tree.  Makes sense.
->
-> Fortunately, you were able to eliminate the special case for monitors.
-> If it was still there, the query-iothreads code to show it would be
-> dead.
->
-> Back to what got us there.  My attempt to test query-iothreads showing
-> holders failed, because monitors are not usable for this test.  Please
-> show me how to test this.  Ideally, a simple command line and a few
-> simple monitor commands ending with a query-iothreads that shows
-> holders.
->
+On 24/8/26 11:05, Peter Maydell wrote:
+> On Tue, 18 Aug 2026 at 18:07, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> Hi -- this commit is reported to cause a regression where an
+> aarch64 rev64 can now trigger a TCG assertion:
+> https://gitlab.com/qemu-project/qemu/-/work_items/4229
+> 
+> Could you have a look at that, please?
 
-Thanks. Here is a reproducer that also exercises holder removal and
-registration by another device type:
+If so I'd expect the culprit to be either the previous one,
+"tcg: Add tcg_gen_revbit{8,32,64}" or later "tcg/aarch64:
+Implement revbit{32,64}".
+Richard you'll likely beat me at finding the issue, otherwise
+I can have a look in 3 days.
 
-$ qemu-system-x86_64 \
-    -S -nodefaults -display none \
-    -object iothread,id=3Diothread0 \
-    -blockdev driver=3Dnull-co,node-name=3Dnull0 \
-    -qmp stdio
-
-First, hotplug a virtio-scsi device and query the IOThread:
-{"execute":"qmp_capabilities"}
-{"execute":"query-iothreads"}
-
-{"return": [{"poll-shrink": 2, "thread-id": 4002255, "poll-weight": 3,
-"aio-max-batch": 0, "poll-grow": 2, "holders": [], "poll-max-ns":
-32768, "id": "iothread0"}]}
-
-{"execute":"device_add","arguments":{"driver":"virtio-scsi-pci","id":"scsi0=
-","iothread":"iothread0"}}
-{"execute":"query-iothreads"}
-
-{"return": [{"poll-shrink": 2, "thread-id": 4002255, "poll-weight": 3,
-"aio-max-batch": 0, "poll-grow": 2, "holders": [{"qom-path":
-"/machine/peripheral/scsi0/virtio-backend", "type": "qom-object"}],
-"poll-max-ns": 32768, "id": "iothread0"}]}
-
- The result contains:
-  > "holders": [
-
-Remove the device:
-
-{"execute":"device_del","arguments":{"id":"scsi0"}}
-{"return": {}}
-
-{"execute":"query-iothreads"}
-{"return": [{"poll-shrink": 2, "thread-id": 4002255, "poll-weight": 3,
-"aio-max-batch": 0, "poll-grow": 2, "holders": [], "poll-max-ns":
-32768, "id": "iothread0"}]}
-
-And use the HMP is the same logic, just need change the "-qmp" to "-monitor=
-":
-$ qemu-system-x86_64 \
-    -S -nodefaults -display none \
-    -object iothread,id=3Diothread0 \
-    -blockdev driver=3Dnull-co,node-name=3Dnull0 \
-    -monitor stdio
-
-(qemu) info iothreads
-iothread0:
-  thread_id=3D4005900
-  holders=3D
-  poll-max-ns=3D32768
-  poll-grow=3D2
-  poll-shrink=3D2
-  poll-weight=3D3
-  aio-max-batch=3D0
-
-.......
-
-
-Thanks
-Chen
-
-> > I prefer to preserve that behavior in this series, since exposing inter=
-nal
-> > IOThreads would require additional API decisions, including handling ID
-> > collisions with user-created IOThreads.
->
-> Okay!
->
-> > I=E2=80=99ll also change the unreachable default case to
-> > g_assert_not_reached().
-> >
-> > Thanks
-> > Chen
->
-> [...]
->
 
