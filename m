@@ -4,106 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80EF8C61CE2
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 09:05:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05339C5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 09:07:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyQcH-0001jx-QF; Mon, 24 Aug 2026 05:05:17 -0400
+	id 1wyQeM-0002jg-LX; Mon, 24 Aug 2026 05:07:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wyQcG-0001jm-05
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 05:05:16 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wyQcE-0002vK-Dz
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 05:05:15 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-66d06b5f023so1136488d50.2
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 02:05:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787562312; cv=none;
- d=google.com; s=arc-20260327;
- b=pU0Sd+VITX2/MVu0qeA8hpH8mkpcP8SLkABk3x+78fopLCTKXBAMUZbr7y6Ysc5TBj
- XVHfi5pPbWTZ0y6eXuNEjPvD8hbjYnmhN8n55byiwAy+Hjsj+c8vd/3Td4wAiPTcmi2x
- KQc4hzsTLIIAOOlN7v+Dzt9p52R1WudW0e+j1Ls1bHHWRF97DGYXc8JuAsf6RYF8d3XC
- 2H7BOFh7iJCV3O3jXaH1JRUc7XpTOyVTMVGNWnz30dNBi5pt7GKQddaqkgr51wZgcqc8
- NbkKaR8yH2Du2Yv5PhBqE/cR3oxB8a22cVyAFzb1UQ8StOZSi8rdcQZpjchP7AlehUYG
- 9E6A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=5d/KCjOomgKDhEvM1T3lormN8XRkwxtrm/74Hy1Ljno=;
- fh=fMfr6U9vqZWyCHK3rqr7ZLaoP9Sdvf4Q6WFrB1e877c=;
- b=Ds81EH2aLh1CKSkqRk1rIwZjFhUvfH5MXp3s/TvwykOnqxyzfJopOZfKXOaEyKdEq1
- Sw1saL88a9A3GE5vdijkcl+qPAPh60WcrkuSUUT/2NB/cGTJFuXtkMRV83FFzT0BTOE5
- MOq7Ocvgo+nq9fNFJ54rjDo+YN8eOmJvbFIR6xsubBLqmoJevessAwBFnlmYt72vFqa0
- k2DPBS5DtLtbFgwVPYgKd22z22oPQjdK64bfENlPIPJ/KqUKynvq6eNxVfX/TdSTWdX4
- Du1ifUtU8l2tC8mNtla9ySGE+V9lKUuezEIjH1+OdIyq9xo44XvDQ4q5oI7N8iyE1NL5
- QNHA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787562312; x=1788167112; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=5d/KCjOomgKDhEvM1T3lormN8XRkwxtrm/74Hy1Ljno=;
- b=bSJLwajJ/JzdpFYRYbdgrEoA506wxktDzf3NXHcwXU5oB8HGAR6NhjRPrqqfUtR5cR
- ubJclHnPaVLXcRoF5/sH2IiqZe2ORmhm4bCVBVM7mt1YPbn+Fi7R0rLdLMwVdjUKcm7K
- 5F+fn7oj5P5RWhwYHP58s2lfM/fC20kzS7WugIwZMA+SHbO3WL8ffm1s1pgjkE7Dn+11
- KyAZcxblKP/VFjTZheX5HHVODCz+hXCa9w8y3Rpd53HDrEP7Xj8bO17Xp7SlvS1aGPkj
- PDTCQOKMW7YMeYtu1+kH2dhW3DjkzQzf+APFVo3+se0n+VGH/U0RrbfTPiSVN0WXbYU9
- CG6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787562312; x=1788167112;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=5d/KCjOomgKDhEvM1T3lormN8XRkwxtrm/74Hy1Ljno=;
- b=Kv1T+6ZcKUDM4CPBYz9wjpqmmvB60LtTJFUNcK8dzVzhpZJ8ck5ih2gW/1kqzTkYvM
- NOnVUdVH5scpfP4RXFYm/TIuewD8sSY00vA0DRn8nSeyBQ9sm/f9UhnKARSlepATLbPE
- CHyzV3FgJjnKkuuIRyREsa2xWaM7eYilMkwWhRsmZ9u4wQDMbDueI3S+7b2YJNHxRjJj
- IILjlihsmHgJnuDC7thrkBmfne7JiF4BpS3lEJ/9NI+nXTeiZPfozU2atDHJI7qen70f
- QgEcKUSUYv70czwcFdfxEef4gU6X8DswOO+dByUYA+Jmeo7vMvGADwJ+ZAHfF9++mNtE
- UtBw==
-X-Gm-Message-State: AFuF++kp4d6LopLeVOLbEYnlEHpyfztyWR3n7mmgO9lwmriveJvUwSgL
- TSyUYME4X466YKJ0DGBHLxwjQ0LMjOSdkaluLPFz5DWi2usaNGtDGUVCa73kXKzi4SCWjPzXTlV
- kLU10krCFkPu0nXhlcUXMe6ElVIfJSWhd/WYXCtSqow==
-X-Gm-Gg: AR+sD13v1A5AJWhn3tqtwwtE45TFMKiV+YI3vB4bxcTzKV+sCyzIc6yyCOHAPomD5TV
- Ou8Xp3tHgjLN2Vh6JeCjBNd2xehtDDcBRCRoMWdPSnOMge+k68m7JdiuCfR3O5ChU57rKETwIzT
- ixG87zM7Ldf3VaX9U6uwsKWgyqXe+OaSebASqIvR8UzjuLvBsaIWj29snysI6sq+29jx4sfsZ1O
- kkM3ZJIsiI4KEA7j8hOITgiUq3xXzFvBy3oYdpKsME8/gK7aZbQMoNCKrFpTO8oBA4IrJFPxuc3
- R/KmQ1GMEr4bYkrhOpbaqLFakiVXdxWustUTUTuKxJAKZFHG3bG8kHUGAmFUqD+xWoBKMNwnFh2
- Ge/2at9G0UOG+hfg/UeT6aQAqIwGq
-X-Received: by 2002:a05:690e:12ce:b0:66c:6167:92b5 with SMTP id
- 956f58d0204a3-66ce4b5a4b4mr8050769d50.49.1787562311911; Mon, 24 Aug 2026
- 02:05:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
+ id 1wyQeK-0002jK-G5
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 05:07:24 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lpieralisi@kernel.org>)
+ id 1wyQeH-000377-Q0
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 05:07:24 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by tor.source.kernel.org (Postfix) with ESMTP id 215B4601DE;
+ Mon, 24 Aug 2026 09:07:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846921F00A3A;
+ Mon, 24 Aug 2026 09:07:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1787562438;
+ bh=Gupcxk5JRbY/GWjgh11gUuJuL94pNqxOxmGLSaShLy8=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=AFJf1v+mvpCMMjPaVPOTCewKz0p8Cw9Dl8w+/nVRmnNMXCiizOa2lFPNIJN7QAKp5
+ Yblv0OZQBW9nkajLFp7VCDKByxce6Hhmgn/wQgENYaVAHYHKlmRmbxw7X+9V8lQEOO
+ pkxOrqrhaC48x/HT3LTkIIFk8ZjloTPcOvd8KmpNn8hrkWprR0Z/svUW9PlPJO1+Xm
+ I01e58yqnbHHCVGN0PMEnqFg2hOPXukx7JeAO2PQjHdsWtT9LhKbBXrpf/9xgP6gQ4
+ /onG1nUWmkTqU3MeHyFqdNZaoiYqs2zTt1K8eqkYq6q89dgY35mRBatgXrswaKIK+s
+ zciB6UxAWHZFg==
+Date: Mon, 24 Aug 2026 11:07:12 +0200
+From: Lorenzo Pieralisi <lpieralisi@kernel.org>
+To: Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
+ berrange@redhat.com, armbru@redhat.com, pankaj.gupta@amd.com,
+ isaku.yamahata@intel.com, xiaoyao.li@intel.com,
+ chao.p.peng@linux.intel.com, david@kernel.org, ashish.kalra@amd.com,
+ ackerleytng@google.com
+Subject: Re: [PATCH RFC 00/12] guest_memfd: support in-place memory conversion
+Message-ID: <aowJwOeI9skIOp-p@lpieralisi>
+References: <20260528000416.8161-1-michael.roth@amd.com>
+ <ajkrWSfmODM8NTZ5@lpieralisi>
+ <bdg5gb5m4tnm5pmq54vafyykbegefsrz4qupn44ofwfiwkpwk4@zwg7e35l5zps>
 MIME-Version: 1.0
-References: <20260818170155.1907006-1-richard.henderson@linaro.org>
- <20260818170155.1907006-10-richard.henderson@linaro.org>
-In-Reply-To: <20260818170155.1907006-10-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 24 Aug 2026 10:05:00 +0100
-X-Gm-Features: AcwNN1UZ_TS2PDAtPNp1h1rOQU2PLKHL9VSnFXrf9G_HNYoFa4uM5n-QCYaxo4w
-Message-ID: <CAFEAcA8pSuhgPAoM0VbEsZUyVrw8NqVrtKjmpg0-dhM1y9r96A@mail.gmail.com>
-Subject: Re: [PULL 09/38] tcg: Simplify bswap/hswap expansion using bitswap
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bdg5gb5m4tnm5pmq54vafyykbegefsrz4qupn44ofwfiwkpwk4@zwg7e35l5zps>
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=lpieralisi@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,18 +75,266 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 18 Aug 2026 at 18:07, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On Thu, Jun 25, 2026 at 04:21:52PM -0500, Michael Roth wrote:
 
-Hi -- this commit is reported to cause a regression where an
-aarch64 rev64 can now trigger a TCG assertion:
-https://gitlab.com/qemu-project/qemu/-/work_items/4229
+[...]
 
-Could you have a look at that, please?
+> > When convert-in-place is switched on I think that the post conversion
+> > hook should not trigger discard+hole-punch since now guest-memfd _is_
+> > the memory back-end but it looks like there is no guard in place against
+> > that (I noticed that ram_block_discard_range() triggers a hole-punch in
+> > kvm_post_convert_section() - when the CCA guest first requests a
+> > KVM_EXIT_MEMORY_FAULT to convert to private).
+> > 
+> > It is a question really.
+> 
+> Yes, I agree that it does not make much sense to try to hole-punch for
+> in-place conversion, it's just uncessary churn on the gmem side. In my
+> internal branches I generally disabled this path but for some reason
+> left that out of this series. I've tested with the below change and it
+> should do the trick though; I'll roll something similar into v2 of the
+> series.
 
-thanks
--- PMM
+Hi Michael,
+
+have you planned posting a v2 rebased against a more recent codebase ?
+
+Thanks,
+Lorenzo
+
+> 
+>   diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+>   index 5840daa7c8..2faec929b5 100644
+>   --- a/accel/kvm/kvm-all.c
+>   +++ b/accel/kvm/kvm-all.c
+>   @@ -3619,17 +3619,19 @@ static int kvm_post_convert_section(MemoryRegionSection *section, bool to_privat
+>            }
+>        }
+>    
+>   -    if (to_private) {
+>   -        if (rb->page_size != qemu_real_host_page_size()) {
+>   -            /*
+>   -             * shared memory is backed by hugetlb, which is supposed to be
+>   -             * pre-allocated and doesn't need to be discarded
+>   -             */
+>   -            return 0;
+>   +    if (current_machine->cgs && current_machine->cgs->convert_in_place) {
+>   +        if (to_private) {
+>   +            if (rb->page_size != qemu_real_host_page_size()) {
+>   +                /*
+>   +                 * shared memory is backed by hugetlb, which is supposed to be
+>   +                 * pre-allocated and doesn't need to be discarded
+>   +                 */
+>   +                return 0;
+>   +            }
+>   +            ret = ram_block_discard_range(rb, offset, size);
+>   +        } else {
+>   +            ret = ram_block_discard_guest_memfd_range(rb, offset, size);
+>            }
+>   -        ret = ram_block_discard_range(rb, offset, size);
+>   -    } else {
+>   -        ret = ram_block_discard_guest_memfd_range(rb, offset, size);
+>        }
+>    
+>        return 0;
+> 
+> Thanks!
+> 
+> -Mike
+> 
+> > 
+> > Thanks,
+> > Lorenzo
+> > 
+> > > That model works, but has a number of downsides that impact certain
+> > > use-cases:
+> > > 
+> > >   - Each conversion involves discarding pages on one side and faulting
+> > >     them in on the other, which incurs allocation overheads in the
+> > >     host kernel for every conversion.
+> > > 
+> > >   - Some use-cases, like pKVM[3], rely on memory isolation rather than
+> > >     encryption and rely on in-place conversion to pass through things
+> > >     like secured framebuffer memory without needing to bounce data
+> > >     through separate shared/private HPAs, which would introduce
+> > >     unacceptable latency for that sort of workload.
+> > > 
+> > >   - Hugetlb support[4] for guest_memfd will rely on it, since things like
+> > >     1GB hugepages with a mix of shared/private sub-ranges would generally
+> > >     require 2 1GB hugetlb pages to remain available to handle shared vs.
+> > >     private accesses, which quickly causes doubling of guest memory usage.
+> > > 
+> > > Recent kernel work[2] makes guest_memfd mmap()-able and lets the *same*
+> > > physical pages be used for both shared and private states for a given
+> > > GPA range, allowing the above pitfalls to be naturally avoided.
+> > > 
+> > > This series wires that support up in QEMU.
+> > > 
+> > > 
+> > > DESIGN
+> > > ------
+> > > 
+> > > A new dedicated memory backend, memory-backend-guest-memfd, allocates
+> > > its memory via a guest_memfd file descriptor obtained from KVM with
+> > > the GUEST_MEMFD_FLAG_MMAP | GUEST_MEMFD_FLAG_INIT_SHARED flags. The fd
+> > > is mmap()ed so userspace can access pages directly while they are in
+> > > the shared state. For a normal/non-confidential VM, this backend can
+> > > be used in a similar fashion as the existing memory-backend-memfd.
+> > > 
+> > > For confidential VMs, a new 'convert-in-place' flag is added to switch
+> > > on in-place conversion support. When running in this mode, the user
+> > > *MUST* use memory-backend-guest-memfd for backing guest RAM. A new
+> > > RAM_GUEST_MEMFD_SHARED RAMBlock flag is added to track/enforce the
+> > > dependency. Additionally, QEMU is modified to use mmap()-able
+> > > guest_memfd and set this flag for other cases where it allocates RAM
+> > > internally. As a result, block->fd will generally always a guest_memfd,
+> > > and when RAM_GUEST_MEMFD_SHARED is set then that block->fd will be
+> > > qemu_dup()'d as the FD handle for private memory is well (which is
+> > > currently what block->guest_memfd point to). This allows the prior
+> > > non-in-place handling around block->guest_memfd to be kept mostly
+> > > unchanged.
+> > > 
+> > > When running with convert-in-place=true, shared/private conversions
+> > > are no longer handled directly by KVM, but instead by a new guest_memfd
+> > > ioctl, KVM_SET_MEMORY_ATTRIBUTES2, which purposely provides similar
+> > > naming/implementation to the KVM_SET_MEMORY_ATTRIBUTES KVM ioctl that
+> > > it replaces. This series adds handling to route conversion requests to
+> > > the appropriate ioctls based on whether or not in-place conversion is
+> > > enabled.
+> > > 
+> > > Since guest_memfd ioctls need to be called against the specific
+> > > guest_memfd inode associated with each memory slot/region, some
+> > > refactoring is needed to handle conversions on a per-section. Much of
+> > > that is inherited from the bugfix series this patchset is based on top
+> > > of, which adds the initial logic for handling multiple sections within
+> > > a range that gets heavily re-used here.
+> > > 
+> > > 
+> > > USAGE
+> > > -----
+> > > 
+> > > After applying this series against a kernel with the RFC patches above
+> > > present, an SEV-SNP guest can be started with in-place conversion via:
+> > > 
+> > >     qemu-system-x86_64 \
+> > >         -machine q35,confidential-guest-support=sev0,memory-backend=ram0 \
+> > >         -object memory-backend-guest-memfd,id=ram0,size=8G,share=on \
+> > >         -object sev-snp-guest,id=sev0,cbitpos=51,reduced-phys-bits=1,\
+> > >                 convert-in-place=on \
+> > >         ...
+> > > 
+> > > The new memory-backend-guest-memfd can also be used by normal VMs:
+> > > 
+> > >     qemu-system-x86_64 \
+> > >         -machine q35,memory-backend=ram0 \
+> > >         -object memory-backend-guest-memfd,id=ram0,size=8G,share=on \
+> > >         ...
+> > > 
+> > > This is mainly only useful atm for testing, but in the future there may
+> > > be more use-cases around using guest_memfd as a general-purpose backend
+> > > for non-confidential VMs, so it is intended to work in this manner as
+> > > well.
+> > > 
+> > > 
+> > > NOTES/TODO
+> > > ----------
+> > > 
+> > >   - the CPR handling to support resetting of confidential VMs is
+> > >     currently disabled when in-place conversion is enabled.
+> > >   - TDX testing would be great, in theory it can be enabled with this
+> > >     series (similarly to the top patch) but I'm not sure if there are
+> > >     other special requirements before we can switch it on.
+> > >   - kernel patches are still in-flight, but fairly mature at this point
+> > >     and nearing upstream
+> > > 
+> > > 
+> > > REFERENCES
+> > > ----------
+> > > 
+> > > [1] https://lore.kernel.org/kvm/20250729225455.670324-1-seanjc@google.com/
+> > > [2] https://lore.kernel.org/kvm/20260522-gmem-inplace-conversion-v7-0-2f0fae496530@google.com/
+> > > [3] https://www.youtube.com/watch?v=MMfAGNW9RVg
+> > > [4] 1GB hugetlb v2
+> > > 
+> > > 
+> > > Thoughts, feedback, and testing are very much appreciated.
+> > > 
+> > > Thanks,
+> > > 
+> > > Mike
+> > > 
+> > > 
+> > > ----------------------------------------------------------------
+> > > Michael Roth (12):
+> > >       accel/kvm: Decouple guest_memfd checks from memory attribute checks
+> > >       hostmem: Introduce dedicated memory backend for guest_memfd
+> > >       linux-headers: Update headers for v7 of in-place conversion kernel support
+> > >       accel/kvm: Add CGS option to control in-place conversion support
+> > >       system/memory: Re-use memory-backend-guest-memfd inode for private memory
+> > >       system/memory: Default to guest_memfd for RAM for in-place conversion
+> > >       accel/kvm: Move post-conversion updates to a separate helper
+> > >       accel/kvm: Re-order attribute notifications for in-place conversion
+> > >       accel/kvm: Support shared/private conversions via guest_memfd ioctls
+> > >       accel/kvm: Don't default to private attributes for in-place conversion
+> > >       i386/sev: Update SNP_LAUNCH_UPDATE for in-place conversion
+> > >       i386/sev: Allow in-place conversion for SEV-SNP guests
+> > > 
+> > >  accel/kvm/kvm-all.c                                | 286 +++++++++++--
+> > >  accel/stubs/kvm-stub.c                             |   9 +-
+> > >  backends/confidential-guest-support.c              |  25 ++
+> > >  backends/hostmem-guest-memfd.c                     |  93 +++++
+> > >  backends/meson.build                               |   1 +
+> > >  include/standard-headers/drm/drm_fourcc.h          |  28 +-
+> > >  include/standard-headers/linux/const.h             |  18 +
+> > >  include/standard-headers/linux/ethtool.h           |  28 +-
+> > >  include/standard-headers/linux/input-event-codes.h |  13 +
+> > >  include/standard-headers/linux/pci_regs.h          |  71 +++-
+> > >  include/standard-headers/linux/typelimits.h        |   8 +
+> > >  include/standard-headers/linux/virtio_ring.h       |   5 +-
+> > >  include/standard-headers/linux/virtio_rtc.h        | 237 +++++++++++
+> > >  include/standard-headers/linux/vmclock-abi.h       |  20 +
+> > >  include/system/confidential-guest-support.h        |  14 +
+> > >  include/system/hostmem.h                           |   1 +
+> > >  include/system/kvm.h                               |   3 +-
+> > >  include/system/memory.h                            |   8 +-
+> > >  linux-headers/asm-arm64/kvm.h                      |   1 +
+> > >  linux-headers/asm-arm64/unistd_64.h                |   1 +
+> > >  linux-headers/asm-generic/unistd.h                 |   5 +-
+> > >  linux-headers/asm-loongarch/kvm.h                  |   5 +
+> > >  linux-headers/asm-loongarch/kvm_para.h             |   1 +
+> > >  linux-headers/asm-loongarch/unistd_64.h            |   2 +
+> > >  linux-headers/asm-mips/unistd_n32.h                |   1 +
+> > >  linux-headers/asm-mips/unistd_n64.h                |   1 +
+> > >  linux-headers/asm-mips/unistd_o32.h                |   1 +
+> > >  linux-headers/asm-powerpc/unistd_32.h              |   1 +
+> > >  linux-headers/asm-powerpc/unistd_64.h              |   1 +
+> > >  linux-headers/asm-riscv/kvm.h                      |  11 +-
+> > >  linux-headers/asm-riscv/ptrace.h                   |  37 ++
+> > >  linux-headers/asm-riscv/unistd_32.h                |   1 +
+> > >  linux-headers/asm-riscv/unistd_64.h                |   1 +
+> > >  linux-headers/asm-s390/unistd_32.h                 | 446 ---------------------
+> > >  linux-headers/asm-s390/unistd_64.h                 |   1 +
+> > >  linux-headers/asm-x86/kvm.h                        |  21 +-
+> > >  linux-headers/asm-x86/unistd_32.h                  |   1 +
+> > >  linux-headers/asm-x86/unistd_64.h                  |   1 +
+> > >  linux-headers/asm-x86/unistd_x32.h                 |   1 +
+> > >  linux-headers/linux/const.h                        |  18 +
+> > >  linux-headers/linux/iommufd.h                      |  48 +++
+> > >  linux-headers/linux/kvm.h                          |  62 ++-
+> > >  linux-headers/linux/mshv.h                         |   4 +-
+> > >  linux-headers/linux/psp-sev.h                      |   2 +-
+> > >  linux-headers/linux/stddef.h                       |   4 +
+> > >  linux-headers/linux/vduse.h                        |  85 +++-
+> > >  linux-headers/linux/vfio.h                         |  30 +-
+> > >  qapi/qom.json                                      |  35 +-
+> > >  qemu-options.hx                                    |   5 +
+> > >  system/memory.c                                    |  22 +-
+> > >  system/physmem.c                                   |  50 ++-
+> > >  target/i386/sev.c                                  |  12 +-
+> > >  52 files changed, 1253 insertions(+), 533 deletions(-)
+> > >  create mode 100644 backends/hostmem-guest-memfd.c
+> > >  create mode 100644 include/standard-headers/linux/typelimits.h
+> > >  create mode 100644 include/standard-headers/linux/virtio_rtc.h
+> > >  delete mode 100644 linux-headers/asm-s390/unistd_32.h
+> > > 
 
