@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8575BC5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 14:47:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8533C5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 14:49:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyVx9-0003Ow-58; Mon, 24 Aug 2026 10:47:11 -0400
+	id 1wyVz8-0003y8-94; Mon, 24 Aug 2026 10:49:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wyVx7-0003Nu-4o; Mon, 24 Aug 2026 10:47:09 -0400
+ id 1wyVz6-0003xm-O5; Mon, 24 Aug 2026 10:49:12 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wyVx4-0000MX-PR; Mon, 24 Aug 2026 10:47:08 -0400
+ id 1wyVz4-0001l6-GQ; Mon, 24 Aug 2026 10:49:12 -0400
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67OD1WU01935730; Mon, 24 Aug 2026 14:47:04 GMT
+ 67OD1WiY1935729; Mon, 24 Aug 2026 14:49:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=bDjMsUZpE8GrnUMxHs13mv0dzo7IYKkpya0RG2VU/bQ=; b=IgBFXbdKpIqE
- MLMq6wq6cIUz2t5k74xv18uq/dfyAzRMUcFY5+R9eLUYDri8Lhe0KlAX2ByrP1Q6
- xXW9fQTeLhNo+OywOD0us06UcBBaOEMQLgzSDK24cPQOCEC86tcS42s+x3eXuCAA
- nWek5YfyNQb7ewXTj88Q66sXWG8HJYqGlhWDE0/q/bj24ELc1K2prkVCKgetjrmG
- VI+CgP36Ks/SElZoFI5Rlf+nc8hkiptCXX7hVETH3TuKuyvoxJ2lAGa6Hilv/jCd
- id2ZQj48y3XGzvFt/iJJXSbUsWyA+q63nxZVWdSzJdCUbMTg/nI9FOJw0kxOCvJR
- p1SgsDTKkA==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g7393t3gb-1
+ bh=y1Y+ydIAp3GwpNuBcqxgedeXDnj7DeoffdZQQlLd8t4=; b=U1W1Q6Z6XDdC
+ cp0lSvk0OUsZAG9oAJrDlV1Ybbg3Y+GRs40kxJ2svzV+lxa8fMDzkLiNraR9bcS9
+ 0D+O2o5aDjF/J8Jcct+/kBXHmiQZXxCudtd52GzC4ekVfbaYhOpTlj1jesTxsMdX
+ 2CTxp3SYSYTk5hVbp+jhYv4+m7+Y98DCnkj3+5F934vBNdi8IAnA6dW73fmDnQlZ
+ HHwwZ2AHSZ44Wzs9zgMv4o4cx7x5i1CWAj+uPMN/sV7F6IRvpp12Zrdq0mtuz0kn
+ vNXKeHiZ/ukcN5QI02dJ07BJ7ojqLfvmhnT9EpsECBKKVayfXfWvGEPcg4AtQpIW
+ sAkobIK0lw==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g7393t3wf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 14:47:03 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OEfL9O016711;
- Mon, 24 Aug 2026 14:47:02 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3jpm21-1
+ Mon, 24 Aug 2026 14:49:06 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OEfJou030273;
+ Mon, 24 Aug 2026 14:49:06 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rag6epa-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 14:47:02 +0000 (GMT)
+ Mon, 24 Aug 2026 14:49:06 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67OEl0xe6620034
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67OEn3jf30212732
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 14:47:00 GMT
+ Mon, 24 Aug 2026 14:49:03 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7F7F95805A;
- Mon, 24 Aug 2026 14:47:00 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A78BF5805D;
+ Mon, 24 Aug 2026 14:49:03 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2D70A58054;
- Mon, 24 Aug 2026 14:46:59 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 54E885805C;
+ Mon, 24 Aug 2026 14:49:02 +0000 (GMT)
 Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Aug 2026 14:46:59 +0000 (GMT)
-Message-ID: <beb52495a541ff3c70da84d196ef4c17e1a81d8f.camel@linux.ibm.com>
-Subject: Re: [PATCH 17/29] target/ppc: Move wait instruction to decodetree
+ Mon, 24 Aug 2026 14:49:02 +0000 (GMT)
+Message-ID: <30e5c527ac0ef1fc6de9cfd93a82a5d526d6edd2.camel@linux.ibm.com>
+Subject: Re: [PATCH 18/29] target/ppc: Move sleep & friends to decodetree
 From: Miles Glenn <milesg@linux.ibm.com>
 To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-ppc@nongnu.org, harshpb@linux.ibm.com
@@ -68,10 +68,10 @@ Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
  aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, sv@linux.ibm.com,
  shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
  nikhilks@linux.ibm.com
-Date: Mon, 24 Aug 2026 09:46:58 -0500
-In-Reply-To: <20260820140114.327023-18-rathc@linux.ibm.com>
+Date: Mon, 24 Aug 2026 09:49:01 -0500
+In-Reply-To: <20260820140114.327023-19-rathc@linux.ibm.com>
 References: <20260820140114.327023-1-rathc@linux.ibm.com>
- <20260820140114.327023-18-rathc@linux.ibm.com>
+ <20260820140114.327023-19-rathc@linux.ibm.com>
 Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
@@ -79,24 +79,24 @@ Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: Di9ClkfjGQunO-SsxeBFJDHuzVshphaG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEyMiBTYWx0ZWRfXzykuwyrCRnZs
- xqNCYm4rzWSq7x/bmoxtc7r6vcWKlVSyA+OOcflAB6riLn76xZbMjwANzLxSXgNwPnhQaIXToZr
- w1dUyRZ4sWV8zoGx5Y5W2wZy6leRWgma/5eMRwdyV1Cp9kLlpXXCPHdbFwx9vwDwhgSbKddQlT/
- WJGsSwOxNlPYGCwHxRVIWpn1M/vKmn5NpDMY9v3j4ivhi1IHDfuwynZ7pWaIksSV9SVNvmGs0h6
- Ys9DRDX8gt+kFZsNFAq//fEP4XrNBY2yUTWhFYqyOdd8ToyeFsXgudb0yBHbjcDeR4i2oDG/6n9
- YKXgQ/60DjEajFYzAz6ToNofrEU1MqV91D4vGyUL0bQ2A93BZuPwsHxHwEFiFE2T/O3262TZ0kV
- iOUwes3Vt3QA7vMR0t2CqaicWPUBHkqfc/UnAeddtCthrXUwmAMjT5ENsOV2xd0W/7Z/AH/DQDa
- LuEpPCXgNoDlE0zod1g==
-X-Authority-Analysis: v=2.4 cv=Y/nIdBeN c=1 sm=1 tr=0 ts=6a8c5968 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Proofpoint-GUID: RERKlkARh99Y-sCW6tAXVybFG6JBF8A_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEyMiBTYWx0ZWRfX4ZrByz4uR7w/
+ bA2hvXgitNS94Zda5TwCuzbR96fqrlwHf+nyV2h5GCViIKStyg0d09zsM6ihS45DRlq5JZRhU8G
+ /+UoEq7kOYivsfVdMnEd8Yp9PKZcLJBKeYHlY2yIGXZjt/LDFDltTsDETLoKn0wnf+uOzzMewWm
+ oQ89QFOnYpsC8vTuIeHwE3MVZIGeQtwlEa6DI3rMMTgmhbsPTutDthDr58N1NseJPhgEBW+JTz/
+ d6vb7rvqQvQYZ+8oBi+q+XhpZ85pq8yF63jZYVBauNgyZpncLMh81SDttUgMetQHS/tpSCnpfrm
+ rJ4YejUDFjbh7Fd/MBDQcXaMQKlTCI9SZb5kDtJc1cUjWbw3GyQt84E1B7+DpKsVT/xs3jJNNBs
+ LmXT/qyPUAST9Qm7Wl/R8mIde3kzLSU6huHfQVff1dsC4t651k0lrPsR01pzBcHeNpeUyP3gLm8
+ txDuJYzet5k49vNWdgA==
+X-Authority-Analysis: v=2.4 cv=Y/nIdBeN c=1 sm=1 tr=0 ts=6a8c59e3 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
  a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=cZRAMAzoDBRNjgz5moMA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEyMiBTYWx0ZWRfXwF4k8Hxq6iSr
- JZRC4po7KpOjY9ZmXAPGP06U/wfgChat/ymusPSG2DwKKL5Hg4GJ95j2a6p9V8urnJpEtDs9PWN
- 3Wa7rB2Gg3TrFZ1bAPHK9PQSLVyD5Mo=
-X-Proofpoint-ORIG-GUID: XlVe_4a1dZcDA0DAILCO0kFE_HZX5pSH
+ a=sNU4IewoFw3Vy9snC_4A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEyMiBTYWx0ZWRfX7gkSLzC9ZhDh
+ xC/qkGIYdwVcyGkTeuk3w3SIUy4SdqukjO4KRhSZXU+X8iKXUhCtu0gbR2bmJwlqIUMfp3UaE7n
+ jBj/BaZAmDqICNFf/RTXPxSOrin89eQ=
+X-Proofpoint-ORIG-GUID: MtDzvlpD6JSZoh4M9-VTAyUbs6-hRSZq
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-24_04,2026-08-24_01,2025-10-01_01
@@ -139,273 +139,257 @@ Glenn
 On Thu, 2026-08-20 at 19:30 +0530, Chinmay Rath wrote:
 > From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 > 
-> Implement wait instruction using decodetree with
-> proper handling of WC and PL fields across different ISA
-> versions. Since the opcode changed between ISA 2.x and 3.x
-> we have defined 2 different decodetree instructions that
-> are handled by the same helper.
+> Convert the following instructions to decode tree specification:
 > 
-> The changes have been tested by comparing the tcg generated
-> before and after the change for wait instruction. The test
-> was repeated for 2 types of machines:
+> doze
+> nap
+> sleep
+> rvwinkle
+> stop
 > 
-> Power10 - which should use the newer wait implementation
-> e500mc - which should use older PPC_WAIT implementation
-> 
-> Both generated the same tcg ops with and without the change.
-> Further, with the changes we were able to boot into Fedora
-> distro as well.
+> The functionality was tested by comparing the qemu -D log -d op,in_asm
+> output as well as single stepping gdb to confirm behavior was not
+> changed for ISA3.x (stop) as well as ISA206 (doze, nap, sleep,
+> rvwinkle).
 > 
 > Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 > Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 > ---
->  target/ppc/insn32.decode                     |  15 +++
->  target/ppc/translate.c                       |  91 -----------------
->  target/ppc/translate/storage-ctrl-impl.c.inc | 100 +++++++++++++++++++
->  3 files changed, 115 insertions(+), 91 deletions(-)
+>  target/ppc/insn32.decode                      |   8 ++
+>  target/ppc/translate.c                        |  85 ---------------
+>  .../ppc/translate/processor-ctrl-impl.c.inc   | 101 ++++++++++++++++++
+>  3 files changed, 109 insertions(+), 85 deletions(-)
 > 
 > diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> index 67fb181542..3b8387b60c 100644
+> index 3b8387b60c..d23168a303 100644
 > --- a/target/ppc/insn32.decode
 > +++ b/target/ppc/insn32.decode
-> @@ -1480,6 +1480,21 @@ ISYNC           010011 ----- ----- ----- 0010010110 -
->  @XL_bfa         ...... bf:3 .. bfa:3 .. ..... ..... ..... .
->  MCRF            010011 ... -- ... -- ----- 00000 00000 -       @XL_bfa
+> @@ -913,6 +913,14 @@ VPERMR          000100 ..... ..... ..... ..... 111011   @VA
 >  
-> +# Wait Instructions
-> +
-> +# We can use the same X_wait argument set for both WAIT and older ISA2.x
-> +# compliant WAIT_2_x. Depending on the version, we may or may not use the
-> +# arguments. For more information, check do_wait() helper.
-> +
-> +&X_wait         wc pl
-> +@X_wait         ...... ..- wc:2 --- pl:2 ----- .......... -  &X_wait
-> +
-> +# According to ISA v3.1, bit 6 and 7 are implementation dependent and "unless
-> +# the intention is to use the implementation-dependent field, these bits must be
-> +# coded zero". Hence, we code them to 0.
-> +WAIT            011111 00-.. ---.. ----- 0000011110 -  @X_wait
-> +WAIT_ISA_2_X    011111 ---.. ---.. ----- 0000111110 -  @X_wait
-> +
->  # Branch History Rolling Buffer (BHRB) Instructions
+>  VSEL            000100 ..... ..... ..... ..... 101010   @VA
 >  
->  &XFX_bhrbe      rt bhrbe
+> +## Power Management Instructions
+> +
+> +DOZE            010011 ----- ----- ----- 0110010010 -
+> +NAP             010011 ----- ----- ----- 0110110010 -
+> +SLEEP           010011 ----- ----- ----- 0111010010 -
+> +RVWINKLE        010011 ----- ----- ----- 0111110010 -
+> +STOP            010011 ----- ----- ----- 0101110010 -
+> +
+>  ## Vector Integer Shift Instruction
+>  
+>  VSLB            000100 ..... ..... ..... 00100000100    @VX
 > diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index f7c7f53d82..2d5157080c 100644
+> index 2d5157080c..f6f7bb4e6b 100644
 > --- a/target/ppc/translate.c
 > +++ b/target/ppc/translate.c
-> @@ -2727,95 +2727,6 @@ static inline void gen_check_tlb_flush(DisasContext *ctx, bool global)
->  static inline void gen_check_tlb_flush(DisasContext *ctx, bool global) { }
+> @@ -2728,86 +2728,6 @@ static inline void gen_check_tlb_flush(DisasContext *ctx, bool global) { }
 >  #endif
 >  
-> -/* wait */
-> -static void gen_wait(DisasContext *ctx)
+>  #if defined(TARGET_PPC64)
+> -static void gen_doze(DisasContext *ctx)
 > -{
-> -    uint32_t wc;
+> -#if defined(CONFIG_USER_ONLY)
+> -    GEN_PRIV(ctx);
+> -#else
+> -    TCGv_i32 t;
 > -
-> -    if (ctx->insns_flags & PPC_WAIT) {
-> -        /* v2.03-v2.07 define an older incompatible 'wait' encoding. */
-> -
-> -        if (ctx->insns_flags2 & PPC2_PM_ISA206) {
-> -            /* v2.06 introduced the WC field. WC > 0 may be treated as no-op. */
-> -            wc = WC(ctx->opcode);
-> -        } else {
-> -            wc = 0;
-> -        }
-> -
-> -    } else if (ctx->insns_flags2 & PPC2_ISA300) {
-> -        /* v3.0 defines a new 'wait' encoding. */
-> -        wc = WC(ctx->opcode);
-> -        if (ctx->insns_flags2 & PPC2_ISA310) {
-> -            uint32_t pl = PL(ctx->opcode);
-> -
-> -            /* WC 1,2 may be treated as no-op. WC 3 is reserved. */
-> -            if (wc == 3) {
-> -                gen_invalid(ctx);
-> -                return;
-> -            }
-> -
-> -            /* PL 1-3 are reserved. If WC=2 then the insn is treated as noop. */
-> -            if (pl > 0 && wc != 2) {
-> -                gen_invalid(ctx);
-> -                return;
-> -            }
-> -
-> -        } else { /* ISA300 */
-> -            /* WC 1-3 are reserved */
-> -            if (wc > 0) {
-> -                gen_invalid(ctx);
-> -                return;
-> -            }
-> -        }
-> -
-> -    } else {
-> -        warn_report("wait instruction decoded with wrong ISA flags.");
-> -        gen_invalid(ctx);
-> -        return;
-> -    }
-> -
-> -    /*
-> -     * wait without WC field or with WC=0 waits for an exception / interrupt
-> -     * to occur.
-> -     */
-> -    if (wc == 0) {
-> -        TCGv_i32 t0 = tcg_constant_i32(1);
-> -        tcg_gen_st_i32(t0, tcg_env,
-> -                       -offsetof(PowerPCCPU, env) + offsetof(CPUState, halted));
-> -        /* Stop translation, as the CPU is supposed to sleep from now */
-> -        gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -    }
-> -
-> -    /*
-> -     * Other wait types must not just wait until an exception occurs because
-> -     * ignoring their other wake-up conditions could cause a hang.
-> -     *
-> -     * For v2.06 and 2.07, wc=1,2,3 are architected but may be implemented as
-> -     * no-ops.
-> -     *
-> -     * wc=1 and wc=3 explicitly allow the instruction to be treated as a no-op.
-> -     *
-> -     * wc=2 waits for an implementation-specific condition, such could be
-> -     * always true, so it can be implemented as a no-op.
-> -     *
-> -     * For v3.1, wc=1,2 are architected but may be implemented as no-ops.
-> -     *
-> -     * wc=1 (waitrsv) waits for an exception or a reservation to be lost.
-> -     * Reservation-loss may have implementation-specific conditions, so it
-> -     * can be implemented as a no-op.
-> -     *
-> -     * wc=2 waits for an exception or an amount of time to pass. This
-> -     * amount is implementation-specific so it can be implemented as a
-> -     * no-op.
-> -     *
-> -     * ISA v3.1 allows for execution to resume "in the rare case of
-> -     * an implementation-dependent event", so in any case software must
-> -     * not depend on the architected resumption condition to become
-> -     * true, so no-op implementations should be architecturally correct
-> -     * (if suboptimal).
-> -     */
+> -    CHK_HV(ctx);
+> -    translator_io_start(&ctx->base);
+> -    t = tcg_constant_i32(PPC_PM_DOZE);
+> -    gen_helper_pminsn(tcg_env, t);
+> -    /* Stop translation, as the CPU is supposed to sleep from now */
+> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+> -#endif /* defined(CONFIG_USER_ONLY) */
 > -}
 > -
->  #if defined(TARGET_PPC64)
->  static void gen_doze(DisasContext *ctx)
+> -static void gen_nap(DisasContext *ctx)
+> -{
+> -#if defined(CONFIG_USER_ONLY)
+> -    GEN_PRIV(ctx);
+> -#else
+> -    TCGv_i32 t;
+> -
+> -    CHK_HV(ctx);
+> -    translator_io_start(&ctx->base);
+> -    t = tcg_constant_i32(PPC_PM_NAP);
+> -    gen_helper_pminsn(tcg_env, t);
+> -    /* Stop translation, as the CPU is supposed to sleep from now */
+> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+> -#endif /* defined(CONFIG_USER_ONLY) */
+> -}
+> -
+> -static void gen_stop(DisasContext *ctx)
+> -{
+> -#if defined(CONFIG_USER_ONLY)
+> -    GEN_PRIV(ctx);
+> -#else
+> -    TCGv_i32 t;
+> -
+> -    CHK_HV(ctx);
+> -    translator_io_start(&ctx->base);
+> -    t = tcg_constant_i32(PPC_PM_STOP);
+> -    gen_helper_pminsn(tcg_env, t);
+> -    /* Stop translation, as the CPU is supposed to sleep from now */
+> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+> -#endif /* defined(CONFIG_USER_ONLY) */
+> -}
+> -
+> -static void gen_sleep(DisasContext *ctx)
+> -{
+> -#if defined(CONFIG_USER_ONLY)
+> -    GEN_PRIV(ctx);
+> -#else
+> -    TCGv_i32 t;
+> -
+> -    CHK_HV(ctx);
+> -    translator_io_start(&ctx->base);
+> -    t = tcg_constant_i32(PPC_PM_SLEEP);
+> -    gen_helper_pminsn(tcg_env, t);
+> -    /* Stop translation, as the CPU is supposed to sleep from now */
+> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+> -#endif /* defined(CONFIG_USER_ONLY) */
+> -}
+> -
+> -static void gen_rvwinkle(DisasContext *ctx)
+> -{
+> -#if defined(CONFIG_USER_ONLY)
+> -    GEN_PRIV(ctx);
+> -#else
+> -    TCGv_i32 t;
+> -
+> -    CHK_HV(ctx);
+> -    translator_io_start(&ctx->base);
+> -    t = tcg_constant_i32(PPC_PM_RVWINKLE);
+> -    gen_helper_pminsn(tcg_env, t);
+> -    /* Stop translation, as the CPU is supposed to sleep from now */
+> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+> -#endif /* defined(CONFIG_USER_ONLY) */
+> -}
+> -
+>  static inline TCGv gen_write_bhrb(TCGv_ptr base, TCGv offset, TCGv mask, TCGv value)
 >  {
-> @@ -5197,8 +5108,6 @@ GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
->  GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
->  GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
->  /* ISA v3.0 changed the extended opcode from 62 to 30 */
-> -GEN_HANDLER(wait, 0x1F, 0x1E, 0x01, 0x039FF801, PPC_WAIT),
-> -GEN_HANDLER_E(wait, 0x1F, 0x1E, 0x00, 0x039CF801, PPC_NONE, PPC2_ISA300),
->  GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
->  #if defined(TARGET_PPC64)
->  GEN_HANDLER(rfid, 0x13, 0x12, 0x00, 0x03FF8001, PPC_64B),
-> diff --git a/target/ppc/translate/storage-ctrl-impl.c.inc b/target/ppc/translate/storage-ctrl-impl.c.inc
-> index 943229c438..21c7999d5d 100644
-> --- a/target/ppc/translate/storage-ctrl-impl.c.inc
-> +++ b/target/ppc/translate/storage-ctrl-impl.c.inc
-> @@ -270,3 +270,103 @@ static bool do_tlbie(DisasContext *ctx, arg_X_tlbie *a, bool local)
->  
->  TRANS_FLAGS(MEM_TLBIE, TLBIE, do_tlbie, false)
->  TRANS_FLAGS(MEM_TLBIE, TLBIEL, do_tlbie, true)
+>      TCGv_ptr tmp = tcg_temp_new_ptr();
+> @@ -5117,11 +5037,6 @@ GEN_HANDLER_E(scv, 0x11, 0x10, 0xFF, 0x03FFF01E, PPC_NONE, PPC2_ISA300),
+>  GEN_HANDLER_E(scv, 0x11, 0x00, 0xFF, 0x03FFF01E, PPC_NONE, PPC2_ISA300),
+>  GEN_HANDLER_E(rfscv, 0x13, 0x12, 0x02, 0x03FF8001, PPC_NONE, PPC2_ISA300),
+>  #endif
+> -GEN_HANDLER_E(stop, 0x13, 0x12, 0x0b, 0x03FFF801, PPC_NONE, PPC2_ISA300),
+> -GEN_HANDLER_E(doze, 0x13, 0x12, 0x0c, 0x03FFF801, PPC_NONE, PPC2_PM_ISA206),
+> -GEN_HANDLER_E(nap, 0x13, 0x12, 0x0d, 0x03FFF801, PPC_NONE, PPC2_PM_ISA206),
+> -GEN_HANDLER_E(sleep, 0x13, 0x12, 0x0e, 0x03FFF801, PPC_NONE, PPC2_PM_ISA206),
+> -GEN_HANDLER_E(rvwinkle, 0x13, 0x12, 0x0f, 0x03FFF801, PPC_NONE, PPC2_PM_ISA206),
+>  GEN_HANDLER(hrfid, 0x13, 0x12, 0x08, 0x03FF8001, PPC_64H),
+>  #endif
+>  /* Top bit of opc2 corresponds with low bit of LEV, so use two handlers */
+> diff --git a/target/ppc/translate/processor-ctrl-impl.c.inc b/target/ppc/translate/processor-ctrl-impl.c.inc
+> index 8abbb89630..bdbc195294 100644
+> --- a/target/ppc/translate/processor-ctrl-impl.c.inc
+> +++ b/target/ppc/translate/processor-ctrl-impl.c.inc
+> @@ -103,3 +103,104 @@ static bool trans_MSGSYNC(DisasContext *ctx, arg_MSGSYNC *a)
+>      /* interpreted as no-op */
+>      return true;
+>  }
 > +
-> +/*
-> + * Decodetree populates a->wc and a->pl based on ISA v3.1, however they may
-> + * or may not be used based on the ISA:
-> + *   For ISA < 2.06 - both wc and pl are ignored
-> + *   For ISA == 2.06, 2.07, 3.0 - wc is used and pl is ignored
-> + *   For ISA 3.1 - both wc and pl are used
-> + */
-> +static bool do_wait(DisasContext *ctx, arg_X_wait *a)
+> +static bool do_doze(DisasContext *ctx, arg_DOZE *a)
 > +{
-> +    uint32_t wc;
+> +    REQUIRE_64BIT(ctx);
 > +
-> +    if (ctx->insns_flags & PPC_WAIT) {
-> +        /* v2.03-v2.07 define an older incompatible 'wait' encoding. */
+> +#if defined(CONFIG_USER_ONLY)
+> +    gen_priv_opc(ctx);
+> +#else
+> +    TCGv_i32 t;
 > +
-> +        if (ctx->insns_flags2 & PPC2_PM_ISA206) {
-> +            /* v2.06 introduced the WC field. WC > 0 may be treated as no-op. */
-> +            wc = a->wc;
-> +        } else {
-> +            wc = 0;
-> +        }
+> +    REQUIRE_HV(ctx);
+> +    translator_io_start(&ctx->base);
+> +    t = tcg_constant_i32(PPC_PM_DOZE);
+> +    gen_helper_pminsn(tcg_env, t);
+> +    /* Stop translation, as the CPU is supposed to sleep from now */
+> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+> +#endif /* defined(CONFIG_USER_ONLY) */
 > +
-> +    } else if (ctx->insns_flags2 & PPC2_ISA300) {
-> +        /* v3.0 defines a new 'wait' encoding. */
-> +        wc = a->wc;
-> +        if (ctx->insns_flags2 & PPC2_ISA310) {
-> +            uint32_t pl = a->pl;
-> +
-> +            /* WC 1,2 may be treated as no-op. WC 3 is reserved. */
-> +            if (wc == 3) {
-> +                gen_invalid(ctx);
-> +                return true;
-> +            }
-> +
-> +            /* PL 1-3 are reserved. If WC=2 then the insn is treated as noop. */
-> +            if (pl > 0 && wc != 2) {
-> +                gen_invalid(ctx);
-> +                return true;
-> +            }
-> +
-> +        } else { /* ISA300 */
-> +            /* WC 1-3 are reserved */
-> +            if (wc > 0) {
-> +                gen_invalid(ctx);
-> +                return true;
-> +            }
-> +        }
-> +
-> +    } else {
-> +        warn_report("wait instruction decoded with wrong ISA flags.");
-> +        gen_invalid(ctx);
-> +        return true;
-> +    }
-> +
-> +    /*
-> +     * wait without WC field or with WC=0 waits for an exception / interrupt
-> +     * to occur.
-> +     */
-> +    if (wc == 0) {
-> +        TCGv_i32 t0 = tcg_constant_i32(1);
-> +        tcg_gen_st_i32(t0, tcg_env,
-> +                       -offsetof(PowerPCCPU, env) + offsetof(CPUState, halted));
-> +        /* Stop translation, as the CPU is supposed to sleep from now */
-> +        gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> +    }
-> +
-> +    /*
-> +     * Other wait types must not just wait until an exception occurs because
-> +     * ignoring their other wake-up conditions could cause a hang.
-> +     *
-> +     * For v2.06 and 2.07, wc=1,2,3 are architected but may be implemented as
-> +     * no-ops.
-> +     *
-> +     * wc=1 and wc=3 explicitly allow the instruction to be treated as a no-op.
-> +     *
-> +     * wc=2 waits for an implementation-specific condition, such could be
-> +     * always true, so it can be implemented as a no-op.
-> +     *
-> +     * For v3.1, wc=1,2 are architected but may be implemented as no-ops.
-> +     *
-> +     * wc=1 (waitrsv) waits for an exception or a reservation to be lost.
-> +     * Reservation-loss may have implementation-specific conditions, so it
-> +     * can be implemented as a no-op.
-> +     *
-> +     * wc=2 waits for an exception or an amount of time to pass. This
-> +     * amount is implementation-specific so it can be implemented as a
-> +     * no-op.
-> +     *
-> +     * ISA v3.1 allows for execution to resume "in the rare case of
-> +     * an implementation-dependent event", so in any case software must
-> +     * not depend on the architected resumption condition to become
-> +     * true, so no-op implementations should be architecturally correct
-> +     * (if suboptimal).
-> +     */
-> +     return true;
+> +    return true;
 > +}
+> +TRANS_FLAGS2(PM_ISA206, DOZE, do_doze);
 > +
-> +TRANS_FLAGS(WAIT, WAIT_ISA_2_X, do_wait)
-> +TRANS_FLAGS2(ISA300, WAIT, do_wait)
+> +static bool do_nap(DisasContext *ctx, arg_NAP *a)
+> +{
+> +    REQUIRE_64BIT(ctx);
 > +
+> +#if defined(CONFIG_USER_ONLY)
+> +    gen_priv_opc(ctx);
+> +#else
+> +    TCGv_i32 t;
+> +
+> +    REQUIRE_HV(ctx);
+> +    translator_io_start(&ctx->base);
+> +    t = tcg_constant_i32(PPC_PM_NAP);
+> +    gen_helper_pminsn(tcg_env, t);
+> +    /* Stop translation, as the CPU is supposed to sleep from now */
+> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+> +#endif /* defined(CONFIG_USER_ONLY) */
+> +    return true;
+> +}
+> +TRANS_FLAGS2(PM_ISA206, NAP, do_nap);
+> +
+> +static bool do_sleep(DisasContext *ctx, arg_SLEEP *a)
+> +{
+> +    REQUIRE_64BIT(ctx);
+> +
+> +#if defined(CONFIG_USER_ONLY)
+> +    gen_priv_opc(ctx);
+> +#else
+> +    TCGv_i32 t;
+> +
+> +    REQUIRE_HV(ctx);
+> +    translator_io_start(&ctx->base);
+> +    t = tcg_constant_i32(PPC_PM_SLEEP);
+> +    gen_helper_pminsn(tcg_env, t);
+> +    /* Stop translation, as the CPU is supposed to sleep from now */
+> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+> +#endif /* defined(CONFIG_USER_ONLY) */
+> +    return true;
+> +}
+> +TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep);
+> +
+> +static bool do_rvwinkle(DisasContext *ctx, arg_RVWINKLE *a)
+> +{
+> +    REQUIRE_64BIT(ctx);
+> +
+> +#if defined(CONFIG_USER_ONLY)
+> +    gen_priv_opc(ctx);
+> +#else
+> +    TCGv_i32 t;
+> +
+> +    REQUIRE_HV(ctx);
+> +    translator_io_start(&ctx->base);
+> +    t = tcg_constant_i32(PPC_PM_RVWINKLE);
+> +    gen_helper_pminsn(tcg_env, t);
+> +    /* Stop translation, as the CPU is supposed to sleep from now */
+> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+> +#endif /* defined(CONFIG_USER_ONLY) */
+> +    return true;
+> +}
+> +TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_rvwinkle);
+> +
+> +static bool do_stop(DisasContext *ctx, arg_STOP *a)
+> +{
+> +    REQUIRE_64BIT(ctx);
+> +
+> +#if defined(CONFIG_USER_ONLY)
+> +    gen_priv_opc(ctx);
+> +#else
+> +    TCGv_i32 t;
+> +
+> +    REQUIRE_HV(ctx);
+> +    translator_io_start(&ctx->base);
+> +    t = tcg_constant_i32(PPC_PM_STOP);
+> +    gen_helper_pminsn(tcg_env, t);
+> +    /* Stop translation, as the CPU is supposed to sleep from now */
+> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+> +#endif
+> +    return true;
+> +}
+> +TRANS_FLAGS2(ISA300, STOP, do_stop);
 
 
