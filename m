@@ -4,173 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E58B0C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 07:19:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4779AC5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 07:20:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyOxt-0007c4-2J; Mon, 24 Aug 2026 03:19:29 -0400
+	id 1wyOyk-0008TR-Ix; Mon, 24 Aug 2026 03:20:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wyOxr-0007aq-6R
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:19:27 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wyOxp-00006Q-DC
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:19:26 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67O5R3br2041328
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 07:19:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- rvD4kbR4BOxXs/bYTdT22LMJM1/PuQlBnVz0osNgaHM=; b=klCGbBFIFGAVFjUA
- /A0GTC2IJQ+FFXM5qexENa2i3zB51x36yNP58DT9cwA+Dhws2CvlekeiTA9MtdPM
- FC1DiWCk8ar2GR3Y5oKD6HalcM0/gjfzFATyM7J3fEg/DOXRltdcTgtb1AjXu64o
- 72NIHFtjKLtGA+bnlGPXT9sLuctplWX/vkXWCwmee3aSKJUPoaimTQ6rcUKVxFmA
- 4VvZte0CxOnSBa6raji3yydwALVOlxOeYxEpjLJvA7DBYo3Ajz1NvNuYaonUvLU1
- pKmzHokHTvuVw8rry826M9K60QBwoGL43KsfD2ZZBPUuyt6D47p7HI0Jzams1C/h
- Jdg+IA==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g88k7hd1m-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 07:19:23 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-52de40127adso34528891cf.3
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 00:19:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wyOyj-0008TA-6X
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:20:21 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wyOyh-0000Ui-Bb
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:20:20 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-384930ca5e2so2932105a91.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 00:20:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787556018; cv=none;
+ d=google.com; s=arc-20260327;
+ b=GZz9aLgo/ZI73lVh+k5hOtyGl3CkWz+9V6FQlvp51pAIFakP3lo/YjBkhe1itVni73
+ pzaTIOn/qoiazkalQYrrxHOUawQAFKpZ5e5B2ymV62hOTs2s6qyWM05Nf2YTdh4yt6nE
+ 7AXxZjkB8pXX9YK7tZBtSEmaIQibjuAjr+4ZzeElIqqOCOhO0G11YdZUVHwL295oWsAd
+ sHToesVntZz7p09cj7Ker8uPRDhGcBkYmp8NPBIP0VwqGbwsNfYM6FkVQDck36SuzxMu
+ otDUAkgPZ8oNpDZStgsOPRvXJ/sKHw8Fe8c6jLzKFpH8hmmpOdvcAlP1kArTB6wesmgp
+ oI3A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=75xUqyRKHGuQbI2RoUE9b4Vgd/cT543qUvORiCSg6bo=;
+ fh=kgT19oiRK75ZQwo35VLqw0IgPa25di9Lcd0+tomWJi0=;
+ b=nrmky7zauCASLfyEB4cgqiRExPlkms/yK4/FzMK62koGKUHTC/An5injc1FVYu1Rks
+ lg41wCLsAfHYn7zSp3sDAFao1zfLsXgS7E7W+8NYFgU+A3DbL+p7K8G6K1c5YZJHhyzx
+ oJBLUUcUOHMqmUTKa9VBAEbAHbowcsNOX84msF9VV+vaLC0GoxGcxfE67vbZ26QaXJBn
+ dnMhX58yh1+tAaUMZMHLFBJDeXkCrTo+rs+blGxeNku6+H8oB6uvMBB56rtfYN4sKTGL
+ F5hquaQ04ji79UEq2CrqElntgYy0Wn6+vUi8i4djJ9O+FAE03DW4RbGlURm0VajEaFRr
+ 5fbg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787555962; x=1788160762; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=rvD4kbR4BOxXs/bYTdT22LMJM1/PuQlBnVz0osNgaHM=;
- b=NwvJ/wEu1MeHgbCG7SV/IVy6K0sYhN2dfC6h9fn2hJLoykJbpJiGB9HFFTwAJ4vIq1
- DlgFNvIR+S9OXQNiEsuXK/5R+wgL1RFMSZWKRHoGWCKbpbkIgLFUDyYBovIpbYfwM+sv
- O/VQ0BlbQk32aEZ1dAtaliF1B7iOyFfuVDhi1zZq0MsdMUS/xrh5oZ/aqFZQmj0JHDUd
- U2/G2zXEU7KWmVMb8EYOdE9Ji5aX3EIlXUh8WkgDlIlH8pt5DRGodenpmjmoqKD+2pVq
- 0QFDPXpfR7tPIIxOTVH/ISwoW97UltFqzu8uavIgmQk9CBhdpud+WjDbiR3aq1uRVcHN
- eylg==
+ d=gmail.com; s=20251104; t=1787556018; x=1788160818; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=75xUqyRKHGuQbI2RoUE9b4Vgd/cT543qUvORiCSg6bo=;
+ b=UF8Xk+YKcWuHNU3KOTgTBfjOGDD+K6J+UQ6L9mNON/2vl+iXZglNDHb1TXVhXpfCEj
+ MCa66nKVZ0mYHn29goC16FHPP7L1u9Ti0eqIO7mHL78I8TIMMC22gbbSa68D7YJ24kiD
+ F33x3pbAWZCezm5L1YEOG0gjqfye96a4zUwvpNHxvmcSi6ZenQJ0wRde2zOdqkB5DbOw
+ QsylrdvE/a8/CikM+2HXpiOkPwiIPP9yJghJvpL6YIBGySIQPGOLb3zHWYQSWiJJ+Q8j
+ 17e14rkrYGY1nRa8jxy2Rh2I8w43wkN2CMRS3yvnz+QGkfzOX+uJ6KLIf0pB1ze+5HCf
+ /v3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787555962; x=1788160762;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=rvD4kbR4BOxXs/bYTdT22LMJM1/PuQlBnVz0osNgaHM=;
- b=hpUa9nD5usPcK/0F6vfQ+gGvMEILBrQZq/rvDP+iIFGQTdwhhEyfgKS5oPC+ERhrel
- jfRB1K9IOkC4tWPbftQ1lmemHFnq21YybB2E8n+1/IxpySLyU1cBKmJ/nRn9rb1EIHEI
- qVL9BhvamXVxBhKTIJxw23sEe7QEUMNSOpGMQ8FtV6WXI52Tn2jbOzv9XkQjS+5TdM3o
- 8PE+EsVTuI5jsGSk2wD3IFAnUsQxr1Ny+GOXUj/Fq0WdDiucdBChtx2jqjGL+QyNF/EK
- 5sDCBtKvS+7izlgiAl8ORs9RPabAU44c/68hNSqi+iQ6JzkBY9cHfC7Blaj+9jmMhXxk
- 0nyQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpA+vDGpJyvHl67JjChiS4uxBtcezlIy4NkLfu8kLnUWBHMHQi6ggeS1mXD0r4U9x7VIHgCggrLyaj5@nongnu.org
-X-Gm-Message-State: AFuF++kHqFn982BtMA/nxK8M/AmhtlU9yiedmPKg2szzw8vHGcu8/SzU
- z2zdMYDZZSwGNR0iCOhGOVr0z6yVoc8bj4RtScb4oMCAAoDUqYDy1xK6PAH4Dw0EBwB5G399WMq
- sFYwq1bxKX4mKI2c89Da1b86h/3PX9RKGqCvFd0skFPdsIAtTGR6dkXXQZQ==
-X-Gm-Gg: AR+sD107/qpOtc2prYNK4YpYg7jQzfkT1iDhlWBDMryKLGvpEbDc9icPVbRBUdZuhOH
- ywPT8/xbMtQwujjS/llPnJ2fQrBRyoglKYQ7sEzjEcntRgcFP2PrRpcMdcjNyvL5KVphvD/+x0S
- qCnJ2x8dEgYbSbYlJWLxk3M1PM+JsNvSzTe0Sx4iQPbnnrgm4siLOvj5566zBzsKt070Y1ACXdS
- Oc8fc7k/ZhaGDAXpobVnUbZhzzsnn1Z6wWD4Ns2xEpy42gbmvR2iiqqkU5zAtTwQ4BuPUlenAP9
- Mmq/AO0tz0sea+lAH7X/dO0rVrmW4ofj8qsGj++xgWM+MeBa4PEfpl90dKPjX6CegMYaF8VJn5X
- +ScZgA+0FCgv6Gp6coLwgVr8K9EptaruGdXYkRls9ZgqC
-X-Received: by 2002:ac8:5845:0:b0:52d:771a:23c5 with SMTP id
- d75a77b69052e-52e09bb317amr155710231cf.15.1787555962456; 
- Mon, 24 Aug 2026 00:19:22 -0700 (PDT)
-X-Received: by 2002:ac8:5845:0:b0:52d:771a:23c5 with SMTP id
- d75a77b69052e-52e09bb317amr155709571cf.15.1787555962020; 
- Mon, 24 Aug 2026 00:19:22 -0700 (PDT)
-Received: from [10.254.188.74] (132.170.88.92.rev.sfr.net. [92.88.170.132])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c249606b208sm1051565966b.10.2026.08.24.00.19.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Aug 2026 00:19:21 -0700 (PDT)
-Message-ID: <d5ce0fa2-fc40-4882-a08e-6c6e73e486b3@oss.qualcomm.com>
-Date: Mon, 24 Aug 2026 09:19:17 +0200
+ d=1e100.net; s=20251104; t=1787556018; x=1788160818;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=75xUqyRKHGuQbI2RoUE9b4Vgd/cT543qUvORiCSg6bo=;
+ b=YJ14ZI1RkBEKHTmqGVH8Rh4a7ibydyXLe5SsuwpNXLJ0IYgHsiYGL5/DeQn96JAHwK
+ 8EixcrIV4w822r3nWRQ6sQpBwUoQxREupNlquOS2r/Hv9xluhw2k56cmYdz7cD/eW3LI
+ fkGz0oE8aaBylViVxHqXrEbltYTSjjYzu7llpdC4aD8mnb4N/YSN5jYrH4j9pupQ8Ar5
+ FGCuf5/cFU/ZTCyANuDYouEmlGoASxphcGWnnsvWTXJ7FhZKMgHlgtMc70y83aWdsgNW
+ wmvaoI72JCDF05bDazpOq/MGMOkOKVQZNLnw4fq0c+TNjHcJdWyHxfkd3p2ZUHfXgfHt
+ jt4A==
+X-Gm-Message-State: AFuF++kks5vHQ5VIl2LTvdOdwbCaRPDFvMmo69CP11Eds4nKBwQlMOG8
+ rEbSpsmMXOE0jqCo8wa8Oz7oJcJ/cwOQgk95ibHYzScmWa1JLPtM2JFJC0HZ506OeKjq+GMaKhD
+ 0lBSvR7U3lnBkWHArxnzJbJKQIcV+0k8=
+X-Gm-Gg: AR+sD10i3ULEVF/0OYS+imwCJSgnuzFNJv+VgleXrXk6dYUp4HniubQSBIN3UU0aCuY
+ TNuuzL82nDbQqVY/fm0oU0FX39ws8XHGRBPvzzun6iK4iIFFLIUbsqN/AxNLP574IDtcw2/sOep
+ Po3qdXUgZMV4aC/LcJrJfi3GKALPbYlpU2Hi3re+H7PUhoKmEqNIvmPFtGAaWs9kQl1b39MTjoO
+ 0c7eSYaN/9QI9Y3uJK6KYfXtge82chQ6rWFWhZ3mzS2cBy8fzE9msbQ6sFXGaAmRgjsp+OTl4Y7
+ pdqeKRK6crPsyca6MNaXHHwKNTfsLKW5Sq/4xmYiXgBeKhpo/OwXoKtZhHIsejBljoMqFd+WX7S
+ W3x8ZqxHbH9I=
+X-Received: by 2002:a17:90b:5706:b0:38f:de97:b06 with SMTP id
+ 98e67ed59e1d1-395deea4a72mr31464430a91.5.1787556017744; Mon, 24 Aug 2026
+ 00:20:17 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/12] hw/riscv/virt: prefix ACPI helpers with riscv_virt_
-Content-Language: en-US
-To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
-Cc: Xianglai Li <lixianglai@loongson.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chinmay Rath <rathc@linux.ibm.com>,
- Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org,
- Alexander Bulekov <alxndr@bu.edu>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Farman <farman@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Chao Liu <chao.liu@processmission.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <17746591750@163.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Stefan Hajnoczi
- <stefanha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- David Hildenbrand <david@kernel.org>, qemu-ppc@nongnu.org,
- qemu-arm@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, Cornelia Huck <cohuck@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Bibo Mao <maobibo@loongson.cn>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
- Darren Kenny <darren.kenny@oracle.com>
-References: <20260823150731.896-1-luoyonggang@gmail.com>
- <20260823150731.896-6-luoyonggang@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260823150731.896-6-luoyonggang@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=b4iCJNGx c=1 sm=1 tr=0 ts=6a8bf07b cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=k3i2zbviP8V9/5wfVjyM+Q==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=WBReKDAIcjdK1pW09f0A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDA2MyBTYWx0ZWRfX0gK3zw5888Wx
- nyAeueSJ3lPDEfRE6Ei0yjTN2Db//Z2VauJfd2VTxFIBKdtDFgJPdInDYnv5qrSnvXvtkwZFL9Z
- /E+8Wv6snwTkbjo1ARkhIfmqwepYf9Y=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDA2MyBTYWx0ZWRfXyUQaBXzV41bZ
- wzm4+kwHT+TzpmLSJYjWGCNMOLWgnUemJznG/jh8+55lvzflVnWt1LRVqNIvxSGA9Z2wr/zzrMH
- 7mLa4dz9aaE0xyTOMZvROVW6kA2g0W65Tens5Tjg2tr8A0ZjqJp4edH7tUkIXNJkX+UIQeb0v4S
- kmNVUlcWJF27NxQ/LFgSM5gswBzUttYQQItmkENGO+BU+WYHn3ksJN5PeJod4nrIwwUuN68pcaG
- ds7nmPMN2+DRsnnwbDvpcsPZf2jNK3bofTyMiFPQaytnvjWEACy5QlM47B6DjVt8zwPPTscqt5n
- EVt2Dohe+BwqLbOOA54SDGQm6S/lg+8fg+gZK/7WUSBYLI9A42+pEsG+gcCrx8PfEiIlVv8BcQ3
- p1eP8EWAK5SMltHRts8lAxolq3/v9nnWZioF9vcha7nhJ9OztXM8ekseDLQElxI/sxvXISE2gSN
- TjYLD6C4eZwHd7dkJNw==
-X-Proofpoint-ORIG-GUID: bgqOAK9LD_8WwPQcLAXlWsDCRzW6LAe8
-X-Proofpoint-GUID: bgqOAK9LD_8WwPQcLAXlWsDCRzW6LAe8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-24_02,2026-08-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 phishscore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 impostorscore=0 adultscore=0 priorityscore=1501
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608240063
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260821-subprojects-ignore-v1-1-0640f7fee388@codewreck.org>
+In-Reply-To: <20260821-subprojects-ignore-v1-1-0640f7fee388@codewreck.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 24 Aug 2026 11:20:03 +0400
+X-Gm-Features: AcwNN1VL2Zz565nBr9gy_TG52F3q1wxjMQJfJZE9h7_GaegbNKBaW8oJfwCB2Ms
+Message-ID: <CAJ+F1CJe4x1Pne=57rUQ=HMdtzygLiWPOOsSMPXopNYDXWaO5Q@mail.gmail.com>
+Subject: Re: [PATCH] subprojects: re-include *.wrap files
+To: Dominique Martinet <asmadeus@codewreck.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -186,19 +118,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/8/26 17:07, Yonggang Luo wrote:
-> - virt_acpi_setup and virt_is_acpi_enabled collide with ARM virt when
->    both architectures are linked into one qemu-system binary.
-> - Rename the RISC-V helpers to riscv_virt_acpi_setup and
->    riscv_virt_is_acpi_enabled. Leave file-local virt_acpi_build* names
->    unchanged.
-> 
-> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+On Fri, Aug 21, 2026 at 10:48=E2=80=AFAM Dominique Martinet
+<asmadeus@codewreck.org> wrote:
+>
+> The existing wrap files e.g. anyhow-1-rs.wrap are ignored because
+> meson extract the sources in the subprojects directory
+>
+> This is not a problem for git itself, because files that had already
+> been added are properly tracked, but tools such as fd-find blindly
+> trust the ignore rules and fail to pick up the .wrap files, making
+> discoverying the build system (when e.g. adding another crate or just
+> curiosity) more difficult than necessary
+>
+> This added rule re-adds the wrap files so they now properly get picked
+> up.
+>
+> Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 > ---
->   hw/riscv/virt-acpi-build.c | 2 +-
->   hw/riscv/virt.c            | 6 +++---
->   include/hw/riscv/virt.h    | 4 ++--
->   3 files changed, 6 insertions(+), 6 deletions(-)
+> Stumbled upon this when looking at the rust build system out of
+> curiosity (because stsquad asked something related on IRC)
+>
+> It probably doesn't matter much, but took me more time than it should
+> have to find the wrap files, so might as well improve this for the next
+> one to look at these.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+> ---
+>  subprojects/.gitignore | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/subprojects/.gitignore b/subprojects/.gitignore
+> index 011ce4dc3b77..4bdedb081601 100644
+> --- a/subprojects/.gitignore
+> +++ b/subprojects/.gitignore
+> @@ -26,3 +26,6 @@
+>
+>  # Workaround for Meson v1.9.0 https://github.com/mesonbuild/meson/issues=
+/14948
+>  /.wraplock
+> +
+> +# re-include wrap files regardless of ignores above
+> +!/*.wrap
+>
+> ---
+> base-commit: acc271509ab015b9e064065f26d41a61e01e641b
+> change-id: 20260821-subprojects-ignore-8a9460a6d7ad
+>
+> Best regards,
+> --
+> Dominique Martinet | Asmadeus
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
