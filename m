@@ -4,54 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 705AEC5DF8C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7391AC5DF97
 	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 01:21:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyJMS-0001K1-Ok; Sun, 23 Aug 2026 21:20:28 -0400
+	id 1wyJMW-0001Oh-Ks; Sun, 23 Aug 2026 21:20:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wyJMO-0001Hm-8m; Sun, 23 Aug 2026 21:20:24 -0400
+ id 1wyJMO-0001Hl-8k; Sun, 23 Aug 2026 21:20:24 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wyJMG-0003To-Q7; Sun, 23 Aug 2026 21:20:21 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ id 1wyJMG-0003Tg-Pp; Sun, 23 Aug 2026 21:20:21 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67NKeTTk080588; Mon, 24 Aug 2026 01:19:56 GMT
+ 67NNp0ps4046632; Mon, 24 Aug 2026 01:19:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=rUdN0
- aeKDSMQqE11yR1hJ7bU2ydRSC3JxdFwpQzV/nk=; b=NCFIEJvt2ZBHnB8T0AxWy
- ZOXACdKzmXfuTtW7FEFMm2K/ZuyzrInrJZtGHsH7ihoGH993WKuow1razVzq4Wr4
- GdZMQTv2ZU8JMNoYeLOzc2HCz1aTyKLjGSFmJtmYYWpLXxSOO7JfYRAbGlVIBNAo
- 0+HgW2Yf6X/lVDZLclcGl+JazsEtnaPCAkhTcS7/iVtjnA/5HAqh/c1AcS3Y7lko
- +PKjIk3G3d6qbxEHZZuMzIbznhEIPfyIFDHUSmTAgk0RJvRKuN4qWwp2Ago+JpDl
- H7Jsta9rkcevTSxQaqoC3UYr1LTLI14RrQ7uqm798paKocIlh1TfjjKFeCcZVx/7
- w==
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=corp-2025-04-25; bh=47lJmUqdv0eBZXC4QoeOtUFhB877q
+ P3XUHgjRFnI1cE=; b=V9brxdzYqf9FuhxInQiANy4S+nNJs0abuLiAncz75vGiS
+ fEFLGOcWiXZrOlQyAl5v//Ch77VGQDwngnxXgSqHYniJJLIFfMRRy3i7A7nGetXf
+ lQodCD7eSAYPW/kjGRLyiJM6FkeXuLuNVYURsc4rps5dU/KZpfUKneukljI9PtPL
+ lQ1udgjEGgrHPOtFwV+B2/tiztJSKOtt+r/jXzekkSpWbsJxnIsYO38Xotd5mier
+ vh49zeuBUon9cmBlaZZPbRADDa3995yM+hz+78mika5nw2Qc0ou1fAwJw6ucFjPP
+ wcQLzp1zQZJcbhlneyeMy5pxyLur3ZktvQcfWAaeA==
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4g72p9sd8k-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4g72by1cvh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 01:19:56 +0000 (GMT)
+ Mon, 24 Aug 2026 01:19:50 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 67O1FUex013276; Mon, 24 Aug 2026 01:19:55 GMT
+ with ESMTP id 67O1FTpG013204; Mon, 24 Aug 2026 01:19:49 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4g84kh6xkr-1
+ 4g84kh6xhy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 01:19:54 +0000 (GMT)
+ Mon, 24 Aug 2026 01:19:48 +0000 (GMT)
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 67O1JmVt024683;
- Mon, 24 Aug 2026 01:19:54 GMT
+ by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 67O1JmVp024683;
+ Mon, 24 Aug 2026 01:19:48 GMT
 Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 4g84kh6xgy-3; Mon, 24 Aug 2026 01:19:54 +0000 (GMT)
+ 4g84kh6xgy-1; Mon, 24 Aug 2026 01:19:47 +0000 (GMT)
 From: Dongli Zhang <dongli.zhang@oracle.com>
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
  xen-devel@lists.xenproject.org
@@ -64,40 +63,39 @@ Cc: dave@treblig.org, mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
  jjherne@linux.ibm.com, sstabellini@kernel.org, anthony@xenproject.org,
  edgar.iglesias@gmail.com, pbonzini@redhat.com, berrange@redhat.com,
  eblake@redhat.com, armbru@redhat.com, joe.jin@oracle.com
-Subject: [PATCH 2/8] qdev: hotplug: Add force_unplug handler callback
-Date: Sun, 23 Aug 2026 18:13:32 -0700
-Message-ID: <20260824011420.752806-3-dongli.zhang@oracle.com>
+Subject: [PATCH 0/8] Force detach PCI devices for ACPI-based and PCIe native
+ hot-unplug
+Date: Sun, 23 Aug 2026 18:13:30 -0700
+Message-ID: <20260824011420.752806-1-dongli.zhang@oracle.com>
 X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20260824011420.752806-1-dongli.zhang@oracle.com>
-References: <20260824011420.752806-1-dongli.zhang@oracle.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-24_01,2026-08-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- suspectscore=0 mlxlogscore=999 spamscore=0 adultscore=0 malwarescore=0
+ suspectscore=0 mlxlogscore=904 spamscore=0 adultscore=0 malwarescore=0
  lowpriorityscore=0 mlxscore=0 phishscore=0 classifier=spam adjust=0
  reason=mlx scancount=1 engine=8.19.0-2606160000 definitions=main-2608240009
-X-Proofpoint-ORIG-GUID: G6ZUnmDnatOdqyyPUSBLTMwgv6ngryTY
-X-Authority-Analysis: v=2.4 cv=EqfiaycA c=1 sm=1 tr=0 ts=6a8b9c3c b=1 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDAwOSBTYWx0ZWRfX3BF2TB91yoxr
+ J4S8XZdgPFf9o24g9LQzGnntjof/oDB/7xKrKOlQ4S6p8Znos6VamXoOeTjImw+KOkSntrkBO3L
+ V7B43TV4RNO0beNfNjKnSzpHEVUg6F5GgdsmkrhyTDAT7omFFEf5oKZC+rVNjL/3H0fl0zZ+jo6
+ c4FjufpmUrDCx0twHW0VxntMzS0lDSOKjBrRAuyK9gRvmlJJPzHci3vnbrCVSjM744/aBMCrekv
+ C+TOfcpl2eFbJICIsjNGyVlO/YE430FWCBh5lM47cYUUo5HGdzyCFe2bpZ/nmMN8+i7USfIbtdJ
+ 9ddUY68T4GfjERKl7CkFUx7SqIYBpIzPQWPKApZ2bbLI5Ns2f71C8uSXbwpkQ1U+AFSlmnQwNLQ
+ XiAU1VLcO9aj+r2/67qtRqMYLkaTPIAadcJ3e8Whj46Krz7YNCdZnCHx/3LQkX1QIpBGnH9Cryq
+ LK30Cq6M5p9LqXahnrkaIuPhfKRT1+xqVow1XT/4=
+X-Proofpoint-GUID: kXNlk9faoRWpNtS_08ftUnZQijJ94D1Q
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDAwOSBTYWx0ZWRfX1Ad5XuEgQrKe
+ wbBpPbFVxeMEar49WkGuCY0fGdIwGy8qO8VFQ4HFr3CL//K+Wfgk0XypouAesePDkd+1BM6iTCK
+ XDOuSWlSbVu4OujNRbFAWa0z9kS/sZ0mno3sk0q9Wx5vhIET7vKW
+X-Authority-Analysis: v=2.4 cv=fqTsol4f c=1 sm=1 tr=0 ts=6a8b9c36 b=1 cx=c_pps
  a=e1sVV491RgrpLwSTMOnk8w==:117
  a=e1sVV491RgrpLwSTMOnk8w==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=x0eKOSpe3m1H3M0S9YoZ:22 a=yPCof4ZbAAAA:8 a=R0-9NCqHhopK7IinchQA:9
+ a=RD47p0oAkeU5bO7t-o6f:22 a=p0WdMEafAAAA:8 a=bvKi9n43um0Dy7nFDjwA:9
  a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:13521
-X-Proofpoint-GUID: G6ZUnmDnatOdqyyPUSBLTMwgv6ngryTY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDAwOSBTYWx0ZWRfXxWgLRDFowCsU
- 5e+mNH+Ar5z8qIYae8wTu+DgxKud9tTIHDzx9xOtBiNas0QiqJSgvtZzng1XokCXEUwPevvItpS
- K15PQn51jTzyad8GpI1IKHED71M/ZeFSv+jrrATnaDM2jPU9u1Ah54zHBhbApL7cEwKjuyvBn6E
- K2ZZUaVNyfYte5gyB6dUGYpG+CoHNBn071ncpSUkZFtQCduuiObJwyUrhizr6a7PTB0XyR/DL3H
- nS/diGOxLEDmdx7RJ9h3VBnI3bQAneooxjI1SXLFgR8O8SdHCP5fVu69LyrSls07OCp4bihD5gy
- QEzQjCyPwAynUB1TSuLXGsLCrx5wRKrUI9CR3Px39+5h3sy3KrVed6E7ECr2DCSv9CWzvAi8j9g
- 0/cK1B07edIJHRDcz7b3/Lg2wqo9h930FRrCNKUt7Uusf3x3+iFb6R45W/chExfJdnUk57y1yjR
- tfOhubkfOiUMtv+GNcp6gCZ4CWxKtQtxiP2IoMBU=
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDAwOSBTYWx0ZWRfXwd+CFlCS9IfR
- 8VEsTphbiUSSvdZcRBkpKBOm9QlsVre4/GuUwmpUFQGlHeoPCXtj7lqH35E6Ca9CP+cRvz4DASN
- 0F1r2h/E3xz7o8pAfFRkpEnKv5rnZihU+DSLydPiOvnYvvHfZZZJ
+X-Proofpoint-ORIG-GUID: kXNlk9faoRWpNtS_08ftUnZQijJ94D1Q
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -122,100 +120,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a HotplugHandlerClass force_unplug callback and a wrapper used by the
-generic qdev unplug path.
+Hot-unplugging a PCI device can require cooperation from the guest. For
+ACPI PCI hotplug, QEMU notifies the guest through ACPI and the guest
+eventually writes the ACPI PCI eject register. For PCIe native hotplug,
+QEMU notifies the guest through the PCIe hotplug mechanism and waits for
+the slot unplug flow to complete. Only after that completion does QEMU
+unrealize the device and emit DEVICE_DELETED.
 
-When qdev_unplug() is called with force=true, delegate to the hotplug
-controller if it implements force_unplug. Controllers without the callback
-return a normal error. This makes forced removal available only for
-controllers that explicitly implement the operation.
+This can leave a device stuck in the unplug pending state when the guest
+does not cooperate. Examples include:
 
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
----
- hw/core/hotplug.c         | 11 +++++++++++
- include/hw/core/hotplug.h | 12 ++++++++++++
- system/qdev-monitor.c     | 10 +++++++++-
- 3 files changed, 32 insertions(+), 1 deletion(-)
+1. The guest has panicked, or the relevant ACPI/PCI hotplug driver is
+unavailable.
 
-diff --git a/hw/core/hotplug.c b/hw/core/hotplug.c
-index 68aabad8ae..0e44d98cf7 100644
---- a/hw/core/hotplug.c
-+++ b/hw/core/hotplug.c
-@@ -57,6 +57,17 @@ void hotplug_handler_unplug(HotplugHandler *plug_handler,
-     }
- }
- 
-+void hotplug_handler_force_unplug(HotplugHandler *plug_handler,
-+                                  DeviceState *plugged_dev,
-+                                  Error **errp)
-+{
-+    HotplugHandlerClass *hdc = HOTPLUG_HANDLER_GET_CLASS(plug_handler);
-+
-+    if (hdc->force_unplug) {
-+        hdc->force_unplug(plug_handler, plugged_dev, errp);
-+    }
-+}
-+
- static const TypeInfo hotplug_handler_info = {
-     .name          = TYPE_HOTPLUG_HANDLER,
-     .parent        = TYPE_INTERFACE,
-diff --git a/include/hw/core/hotplug.h b/include/hw/core/hotplug.h
-index a9840ed485..300ac4fa8f 100644
---- a/include/hw/core/hotplug.h
-+++ b/include/hw/core/hotplug.h
-@@ -48,6 +48,8 @@ typedef void (*hotplug_fn)(HotplugHandler *plug_handler,
-  * @unplug: unplug callback.
-  *          Used for device removal with devices that implement
-  *          asynchronous and synchronous (surprise) removal.
-+ * @force_unplug: force unplug callback.
-+ *                Used to complete enforced removal without guest cooperation.
-  * @is_hotpluggable_bus: called to check if bus/its parent allow hotplug on bus
-  */
- struct HotplugHandlerClass {
-@@ -59,6 +61,7 @@ struct HotplugHandlerClass {
-     hotplug_fn plug;
-     hotplug_fn unplug_request;
-     hotplug_fn unplug;
-+    hotplug_fn force_unplug;
-     bool (*is_hotpluggable_bus)(HotplugHandler *plug_handler, BusState *bus);
- };
- 
-@@ -96,4 +99,13 @@ void hotplug_handler_unplug_request(HotplugHandler *plug_handler,
- void hotplug_handler_unplug(HotplugHandler *plug_handler,
-                             DeviceState *plugged_dev,
-                             Error **errp);
-+
-+/**
-+ * hotplug_handler_force_unplug:
-+ *
-+ * Calls #HotplugHandlerClass.force_unplug callback of @plug_handler.
-+ */
-+void hotplug_handler_force_unplug(HotplugHandler *plug_handler,
-+                                  DeviceState *plugged_dev,
-+                                  Error **errp);
- #endif
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 3606a347a0..fa3cae246b 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -937,7 +937,15 @@ void qdev_unplug(DeviceState *dev, bool force, Error **errp)
-     /* If device supports async unplug just request it to be done,
-      * otherwise just remove it synchronously */
-     hdc = HOTPLUG_HANDLER_GET_CLASS(hotplug_ctrl);
--    if (hdc->unplug_request) {
-+
-+    if (force) {
-+        if (!hdc->force_unplug) {
-+            error_setg(&local_err, "Device '%s' does not support forced unplug",
-+                       dev->id ? dev->id : object_get_typename(OBJECT(dev)));
-+        } else {
-+            hotplug_handler_force_unplug(hotplug_ctrl, dev, &local_err);
-+        }
-+    } else if (hdc->unplug_request) {
-         hotplug_handler_unplug_request(hotplug_ctrl, dev, &local_err);
-     } else {
-         hotplug_handler_unplug(hotplug_ctrl, dev, &local_err);
--- 
-2.43.5
+2. The guest is stalled and cannot handle the hot-unplug event. For
+example, stalling the Linux [irq/9-acpi] kernel thread can reproduce this
+for ACPI-based hot-unplug.
+
+3. The device was attached to a slot that the guest cannot use. For
+example, a pcie-root-port only supports slot 0. If a device is added to a
+non-zero slot below a pcie-root-port, the guest may never discover the
+device and therefore may never complete the unplug request.
+
+The non-zero slot case has also been discussed in:
+
+hw/pci: warn when PCIe device is plugged into non-zero slot of downstream port
+https://gitlab.com/qemu-project/qemu/-/commit/ca92eb5defcf9d1c2106341744a73a03cf26e824
+
+hw/pci: add comment to explain checking for available function 0 in pci hotplug
+https://gitlab.com/qemu-project/qemu/-/commit/67d045a0ef5b9c5f871c3a1d87325a8a42d2b9d5
+
+pci: don't skip function 0 occupancy verification for devfn auto assign
+https://gitlab.com/qemu-project/qemu/-/commit/e228d62b4af29bca698ec57efdceb46f392f5444
+
+For example, if root-port.1 is a pcie-root-port, the following command adds
+a vhost-scsi-pci device to an invalid slot:
+
+(qemu) device_add vhost-scsi-pci,id=scsi01,wwpn=naa.5001405324af0985,bus=root-port.1,addr=01.0
+warning: PCI: slot 1 is not valid for vhost-scsi-pci, parent device only allows plugging into slot 0.
+
+In this situation, the device may be impossible to remove through normal
+guest-cooperative hot-unplug. Production environments also need a host side
+recovery option when the guest kernel is the reason that unplug does not
+complete.
+
+This series adds a force option to QMP device_del and HMP device_del. When
+requested, QEMU asks the selected hotplug controller to complete the unplug
+through a new force_unplug callback.
+
+This series implements forced unplug for ACPI PCI hotplug and PCIe native
+hotplug, which cover common pc/q35/virt cases. SHPC is not implemented by
+this series.
+
+
+Dongli Zhang (8):
+  qdev: Add force argument to qdev_unplug
+  qdev: hotplug: Add force_unplug handler callback
+  qdev: Support forced device_del in QMP and HMP
+  hw/acpi/pcihp: acpi/pcihp: Add forced slot unplug helper
+  hw/acpi/piix4: Support forced PCI unplug
+  hw/acpi/ich9: Support forced PCI unplug
+  hw/acpi/ged: Support forced PCI unplug
+  hw/pci/pcie: Support forced PCIe native unplug
+
+ hmp-commands.hx                 | 11 ++++++-----
+ hw/acpi/acpi-pci-hotplug-stub.c |  6 ++++++
+ hw/acpi/generic_event_device.c  | 15 +++++++++++++++
+ hw/acpi/ich9.c                  | 15 +++++++++++++++
+ hw/acpi/pcihp.c                 | 17 +++++++++++++++++
+ hw/acpi/piix4.c                 | 15 +++++++++++++++
+ hw/core/hotplug.c               | 11 +++++++++++
+ hw/isa/lpc_ich9.c               |  1 +
+ hw/pci/pcie.c                   | 20 ++++++++++++++++++++
+ hw/pci/pcie_port.c              |  1 +
+ hw/s390x/s390-pci-bus.c         |  4 ++--
+ hw/vfio/ap.c                    |  2 +-
+ hw/vfio/ccw.c                   |  2 +-
+ hw/vfio/pci.c                   |  2 +-
+ hw/xen/xen-legacy-backend.c     |  2 +-
+ hw/xen/xen_pvdev.c              |  2 +-
+ include/hw/acpi/ich9.h          |  2 ++
+ include/hw/acpi/pcihp.h         |  3 +++
+ include/hw/core/hotplug.h       | 12 ++++++++++++
+ include/hw/core/qdev.h          |  2 +-
+ include/hw/pci/pcie.h           |  2 ++
+ qapi/qdev.json                  | 11 +++++++++--
+ system/qdev-monitor.c           | 23 +++++++++++++++++------
+ 23 files changed, 160 insertions(+), 21 deletions(-)
+
+base-commit: eea8fe61b8be8f3016e522e6af24924a0266ca95
+
+Thank you very much!
+
+Dongli Zhang
 
 
