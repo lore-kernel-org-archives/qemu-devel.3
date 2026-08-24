@@ -4,115 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8533C5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 14:49:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A323BC5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 14:56:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyVz8-0003y8-94; Mon, 24 Aug 2026 10:49:14 -0400
+	id 1wyW5K-0005oJ-CO; Mon, 24 Aug 2026 10:55:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wyVz6-0003xm-O5; Mon, 24 Aug 2026 10:49:12 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wyW5H-0005o5-KE
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:55:35 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wyVz4-0001l6-GQ; Mon, 24 Aug 2026 10:49:12 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67OD1WiY1935729; Mon, 24 Aug 2026 14:49:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=y1Y+ydIAp3GwpNuBcqxgedeXDnj7DeoffdZQQlLd8t4=; b=U1W1Q6Z6XDdC
- cp0lSvk0OUsZAG9oAJrDlV1Ybbg3Y+GRs40kxJ2svzV+lxa8fMDzkLiNraR9bcS9
- 0D+O2o5aDjF/J8Jcct+/kBXHmiQZXxCudtd52GzC4ekVfbaYhOpTlj1jesTxsMdX
- 2CTxp3SYSYTk5hVbp+jhYv4+m7+Y98DCnkj3+5F934vBNdi8IAnA6dW73fmDnQlZ
- HHwwZ2AHSZ44Wzs9zgMv4o4cx7x5i1CWAj+uPMN/sV7F6IRvpp12Zrdq0mtuz0kn
- vNXKeHiZ/ukcN5QI02dJ07BJ7ojqLfvmhnT9EpsECBKKVayfXfWvGEPcg4AtQpIW
- sAkobIK0lw==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g7393t3wf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 14:49:06 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OEfJou030273;
- Mon, 24 Aug 2026 14:49:06 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rag6epa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 14:49:06 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67OEn3jf30212732
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 14:49:03 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A78BF5805D;
- Mon, 24 Aug 2026 14:49:03 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 54E885805C;
- Mon, 24 Aug 2026 14:49:02 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Aug 2026 14:49:02 +0000 (GMT)
-Message-ID: <30e5c527ac0ef1fc6de9cfd93a82a5d526d6edd2.camel@linux.ibm.com>
-Subject: Re: [PATCH 18/29] target/ppc: Move sleep & friends to decodetree
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, harshpb@linux.ibm.com
-Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
- tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com,
- aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, sv@linux.ibm.com,
- shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
- nikhilks@linux.ibm.com
-Date: Mon, 24 Aug 2026 09:49:01 -0500
-In-Reply-To: <20260820140114.327023-19-rathc@linux.ibm.com>
-References: <20260820140114.327023-1-rathc@linux.ibm.com>
- <20260820140114.327023-19-rathc@linux.ibm.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: RERKlkARh99Y-sCW6tAXVybFG6JBF8A_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEyMiBTYWx0ZWRfX4ZrByz4uR7w/
- bA2hvXgitNS94Zda5TwCuzbR96fqrlwHf+nyV2h5GCViIKStyg0d09zsM6ihS45DRlq5JZRhU8G
- /+UoEq7kOYivsfVdMnEd8Yp9PKZcLJBKeYHlY2yIGXZjt/LDFDltTsDETLoKn0wnf+uOzzMewWm
- oQ89QFOnYpsC8vTuIeHwE3MVZIGeQtwlEa6DI3rMMTgmhbsPTutDthDr58N1NseJPhgEBW+JTz/
- d6vb7rvqQvQYZ+8oBi+q+XhpZ85pq8yF63jZYVBauNgyZpncLMh81SDttUgMetQHS/tpSCnpfrm
- rJ4YejUDFjbh7Fd/MBDQcXaMQKlTCI9SZb5kDtJc1cUjWbw3GyQt84E1B7+DpKsVT/xs3jJNNBs
- LmXT/qyPUAST9Qm7Wl/R8mIde3kzLSU6huHfQVff1dsC4t651k0lrPsR01pzBcHeNpeUyP3gLm8
- txDuJYzet5k49vNWdgA==
-X-Authority-Analysis: v=2.4 cv=Y/nIdBeN c=1 sm=1 tr=0 ts=6a8c59e3 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=sNU4IewoFw3Vy9snC_4A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEyMiBTYWx0ZWRfX7gkSLzC9ZhDh
- xC/qkGIYdwVcyGkTeuk3w3SIUy4SdqukjO4KRhSZXU+X8iKXUhCtu0gbR2bmJwlqIUMfp3UaE7n
- jBj/BaZAmDqICNFf/RTXPxSOrin89eQ=
-X-Proofpoint-ORIG-GUID: MtDzvlpD6JSZoh4M9-VTAyUbs6-hRSZq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-24_04,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- suspectscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240122
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wyW5E-0004BJ-Bd
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:55:35 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 67OEt8G7071227
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 24 Aug 2026 23:55:09 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=TzcOczWhyiYpZE1NBdSSj+ggN2OirvNGMMKxHGUauRA=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1787583309; v=1;
+ b=Ye29Y4WTVO+FwcMT36QRvlZ3g1s6hGd1nm2bCarNE6AWbGbrgufRyrbEKKi4VEuT
+ y10rgTm+LRi+KFKUeU7tkyIkOb+csA/ullR9RiCaVwXfSPuipk5Qv2f8C/sDKdK4
+ XUMf7+t/CkpbOHDDFO4K42oeZdUG4d5jtHGbMu8Y1xYmYEbxUwpj4Hx7Et6Y+XSs
+ mWYb+OTgocvKEVUape1JElZEjOpdV6faZ0l1VUmSxYGKRgVjV4hXgVSl6t+yQqjg
+ tqeQMCeANFfD7XuJXgGUBM5uS2YepbqoaC6FejujW6W5pwSHmX68Z31TfysHOkQ9
+ nMUxaa+lIolsHNtEeUmoqQ==
+Message-ID: <faae365f-db1f-43f5-95eb-fcadc7e41773@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 24 Aug 2026 23:55:08 +0900
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/1] hw/display/xenfb: always register vfb and
+ allocate console early
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+To: Dario Faggioli <dfaggioli@suse.com>, qemu-devel@nongnu.org
+Cc: xen-devel@lists.xenproject.org, sstabellini@kernel.org,
+ anthony@xenproject.org, edgar.iglesias@gmail.com, philmd@mailo.com
+References: <20260824071116.935828-1-dfaggioli@suse.com>
+ <20260824071116.935828-2-dfaggioli@suse.com>
+ <c0e3c9af-f3e7-469c-8621-4b797ff8e518@rsg.ci.i.u-tokyo.ac.jp>
+Content-Language: en-US
+In-Reply-To: <c0e3c9af-f3e7-469c-8621-4b797ff8e518@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,270 +73,131 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+On 2026/08/24 22:59, Akihiko Odaki wrote:
+> On 2026/08/24 16:11, Dario Faggioli wrote:
+>> This commit addresses a black console issues for Xen PV and PVH guests.
+>>
+>> In fact, commit 6ece1df966 ("hw/xen: Register framebuffer backend via
+>> xen_backend_init()") introduced a check before registering the vfb
+>> backend. Problem is that the '-vga' agrument may not be present (e.g.,
+>> for PV/PVH guests started with 'xl') and this causes the backend to be
+>> silently ignored.
+>>
+>> This commit restores the unconditional registration of the vfb backend.
+> 
+> This part looks correct.
+> 
+>>
+>> Furthermore, even with the backend always being registered, the fact
+>> that xenfb allocates the QemuConsole asynchronously in fb_initialise()
+>> looks problematic. In fact, when the UI initializes, it finds 0 active
+>> consoles and it permanently allocates a dummy surface showing the
+>> message "This VM has no graphic display device". And since the removal
+>> of console_select() there's no way to dynamically switch to the xenfb
+>> console, when it is finally up and running.
+>>
+>> This commit works around the issue by moving console creation to
+>> fb_init(), so that VNC attaches to it immediately. The surface is then
+>> updated normally via qemu_console_set_surface() once the guest 
+>> framebuffer
+>> is mapped.
+> 
+> Moving console creation to fb_init() does not look sufficient. fb_init() 
+> is driven by the Xenstore backend state machine, so it is not guaranteed 
+> to run before display initialization. If the vfb backend instance is 
+> discovered later, fb_init() will run later in response to a Xenstore event.
+> 
+> fb_init() is also a per-connection hook. If the frontend closes and 
+> reconnects while the backend object remains, fb_init() runs again on the 
+> same XenFB object. The unconditional assignment then creates another 
+> QemuConsole and overwrites fb->con, leaving the previous console 
+> registered.
+> 
+> There is also no matching teardown. When the backend Xenstore node 
+> disappears, xen_pv_del_xendev() invokes ops->free before unplugging the 
+> XenFB object, but xen_framebuffer_ops has no .free callback. The 
+> QemuConsole can therefore retain a pointer to the freed XenFB as its 
+> opaque value.
+> 
+> Could the QemuConsole instead be created by xen_framebuffer_ops.alloc 
+> and closed with qemu_graphic_console_close() from 
+> xen_framebuffer_ops.free? The .alloc hook runs once per XenLegacyDevice, 
+> so the console would remain stable across frontend reconnects, 
+> while .free would close it when the backend object is removed.
+> 
+> The .alloc hook is the earliest per-device point. However, it still
+> cannot make the console visible before display initialization if the vfb
+> backend instance itself is created later.
+> 
+>>
+>> Fixes: 6ece1df966 ("hw/xen: Register framebuffer backend via 
+>> xen_backend_init()")
+> 
+> The unconditional-registration hunk fixes 6ece1df96629. The console 
+> creation hunk addresses a separate regression introduced by 
+> e99441a3793b. Please split the changes and give each patch its 
+> corresponding Fixes tag, using at least 12 hexadecimal digits:
+> 
+> Fixes: 6ece1df96629 ("hw/xen: Register framebuffer backend via 
+> xen_backend_init()")
+> Fixes: e99441a3793b ("ui/curses: Do not use console_select()")
+> 
+> These commits first appeared in v9.1 and v9.0, respectively. The 
+> registration change is not needed in v9.0, so combining the fixes 
+> complicates backporting the console fix to that release.
 
-Thanks,
+Also probably it is a good idea to have Cc: qemu-stable@nongnu.org
 
-Glenn
-
-On Thu, 2026-08-20 at 19:30 +0530, Chinmay Rath wrote:
-> From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 > 
-> Convert the following instructions to decode tree specification:
+> Regards,
+> Akihiko Odaki
 > 
-> doze
-> nap
-> sleep
-> rvwinkle
-> stop
+>> Signed-off-by: Dario Faggioli <dfaggioli@suse.com>
+>> ---
+>>   hw/display/xenfb.c | 12 ++++++------
+>>   1 file changed, 6 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/hw/display/xenfb.c b/hw/display/xenfb.c
+>> index ae302b217f..3a0cdc0578 100644
+>> --- a/hw/display/xenfb.c
+>> +++ b/hw/display/xenfb.c
+>> @@ -851,9 +851,14 @@ static void xenfb_handle_events(struct XenFB *xenfb)
+>>   static int fb_init(struct XenLegacyDevice *xendev)
+>>   {
+>> +    struct XenFB *fb = container_of(xendev, struct XenFB, c.xendev);
+>> +
+>>   #ifdef XENFB_TYPE_RESIZE
+>>       xenstore_write_be_int(xendev, "feature-resize", 1);
+>>   #endif
+>> +
+>> +    fb->con = qemu_graphic_console_create(NULL, 0, &xenfb_ops, fb);
+>> +
+>>       return 0;
+>>   }
+>> @@ -882,8 +887,6 @@ static int fb_initialise(struct XenLegacyDevice 
+>> *xendev)
+>>       if (rc != 0)
+>>           return rc;
+>> -    fb->con = qemu_graphic_console_create(NULL, 0, &xenfb_ops, fb);
+>> -
+>>       if (xenstore_read_fe_int(xendev, "feature-update", &fb- 
+>> >feature_update) == -1)
+>>           fb->feature_update = 0;
+>>       if (fb->feature_update)
+>> @@ -973,9 +976,6 @@ static const GraphicHwOps xenfb_ops = {
+>>   static void xen_ui_register_backend(void)
+>>   {
+>>       xen_be_register("vkbd", &xen_kbdmouse_ops);
+>> -
+>> -    if (vga_interface_type == VGA_XENFB) {
+>> -        xen_be_register("vfb", &xen_framebuffer_ops);
+>> -    }
+>> +    xen_be_register("vfb", &xen_framebuffer_ops);
+>>   }
+>>   xen_backend_init(xen_ui_register_backend);
 > 
-> The functionality was tested by comparing the qemu -D log -d op,in_asm
-> output as well as single stepping gdb to confirm behavior was not
-> changed for ISA3.x (stop) as well as ISA206 (doze, nap, sleep,
-> rvwinkle).
-> 
-> Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->  target/ppc/insn32.decode                      |   8 ++
->  target/ppc/translate.c                        |  85 ---------------
->  .../ppc/translate/processor-ctrl-impl.c.inc   | 101 ++++++++++++++++++
->  3 files changed, 109 insertions(+), 85 deletions(-)
-> 
-> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> index 3b8387b60c..d23168a303 100644
-> --- a/target/ppc/insn32.decode
-> +++ b/target/ppc/insn32.decode
-> @@ -913,6 +913,14 @@ VPERMR          000100 ..... ..... ..... ..... 111011   @VA
->  
->  VSEL            000100 ..... ..... ..... ..... 101010   @VA
->  
-> +## Power Management Instructions
-> +
-> +DOZE            010011 ----- ----- ----- 0110010010 -
-> +NAP             010011 ----- ----- ----- 0110110010 -
-> +SLEEP           010011 ----- ----- ----- 0111010010 -
-> +RVWINKLE        010011 ----- ----- ----- 0111110010 -
-> +STOP            010011 ----- ----- ----- 0101110010 -
-> +
->  ## Vector Integer Shift Instruction
->  
->  VSLB            000100 ..... ..... ..... 00100000100    @VX
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index 2d5157080c..f6f7bb4e6b 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -2728,86 +2728,6 @@ static inline void gen_check_tlb_flush(DisasContext *ctx, bool global) { }
->  #endif
->  
->  #if defined(TARGET_PPC64)
-> -static void gen_doze(DisasContext *ctx)
-> -{
-> -#if defined(CONFIG_USER_ONLY)
-> -    GEN_PRIV(ctx);
-> -#else
-> -    TCGv_i32 t;
-> -
-> -    CHK_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_DOZE);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -}
-> -
-> -static void gen_nap(DisasContext *ctx)
-> -{
-> -#if defined(CONFIG_USER_ONLY)
-> -    GEN_PRIV(ctx);
-> -#else
-> -    TCGv_i32 t;
-> -
-> -    CHK_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_NAP);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -}
-> -
-> -static void gen_stop(DisasContext *ctx)
-> -{
-> -#if defined(CONFIG_USER_ONLY)
-> -    GEN_PRIV(ctx);
-> -#else
-> -    TCGv_i32 t;
-> -
-> -    CHK_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_STOP);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -}
-> -
-> -static void gen_sleep(DisasContext *ctx)
-> -{
-> -#if defined(CONFIG_USER_ONLY)
-> -    GEN_PRIV(ctx);
-> -#else
-> -    TCGv_i32 t;
-> -
-> -    CHK_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_SLEEP);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -}
-> -
-> -static void gen_rvwinkle(DisasContext *ctx)
-> -{
-> -#if defined(CONFIG_USER_ONLY)
-> -    GEN_PRIV(ctx);
-> -#else
-> -    TCGv_i32 t;
-> -
-> -    CHK_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_RVWINKLE);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -}
-> -
->  static inline TCGv gen_write_bhrb(TCGv_ptr base, TCGv offset, TCGv mask, TCGv value)
->  {
->      TCGv_ptr tmp = tcg_temp_new_ptr();
-> @@ -5117,11 +5037,6 @@ GEN_HANDLER_E(scv, 0x11, 0x10, 0xFF, 0x03FFF01E, PPC_NONE, PPC2_ISA300),
->  GEN_HANDLER_E(scv, 0x11, 0x00, 0xFF, 0x03FFF01E, PPC_NONE, PPC2_ISA300),
->  GEN_HANDLER_E(rfscv, 0x13, 0x12, 0x02, 0x03FF8001, PPC_NONE, PPC2_ISA300),
->  #endif
-> -GEN_HANDLER_E(stop, 0x13, 0x12, 0x0b, 0x03FFF801, PPC_NONE, PPC2_ISA300),
-> -GEN_HANDLER_E(doze, 0x13, 0x12, 0x0c, 0x03FFF801, PPC_NONE, PPC2_PM_ISA206),
-> -GEN_HANDLER_E(nap, 0x13, 0x12, 0x0d, 0x03FFF801, PPC_NONE, PPC2_PM_ISA206),
-> -GEN_HANDLER_E(sleep, 0x13, 0x12, 0x0e, 0x03FFF801, PPC_NONE, PPC2_PM_ISA206),
-> -GEN_HANDLER_E(rvwinkle, 0x13, 0x12, 0x0f, 0x03FFF801, PPC_NONE, PPC2_PM_ISA206),
->  GEN_HANDLER(hrfid, 0x13, 0x12, 0x08, 0x03FF8001, PPC_64H),
->  #endif
->  /* Top bit of opc2 corresponds with low bit of LEV, so use two handlers */
-> diff --git a/target/ppc/translate/processor-ctrl-impl.c.inc b/target/ppc/translate/processor-ctrl-impl.c.inc
-> index 8abbb89630..bdbc195294 100644
-> --- a/target/ppc/translate/processor-ctrl-impl.c.inc
-> +++ b/target/ppc/translate/processor-ctrl-impl.c.inc
-> @@ -103,3 +103,104 @@ static bool trans_MSGSYNC(DisasContext *ctx, arg_MSGSYNC *a)
->      /* interpreted as no-op */
->      return true;
->  }
-> +
-> +static bool do_doze(DisasContext *ctx, arg_DOZE *a)
-> +{
-> +    REQUIRE_64BIT(ctx);
-> +
-> +#if defined(CONFIG_USER_ONLY)
-> +    gen_priv_opc(ctx);
-> +#else
-> +    TCGv_i32 t;
-> +
-> +    REQUIRE_HV(ctx);
-> +    translator_io_start(&ctx->base);
-> +    t = tcg_constant_i32(PPC_PM_DOZE);
-> +    gen_helper_pminsn(tcg_env, t);
-> +    /* Stop translation, as the CPU is supposed to sleep from now */
-> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> +#endif /* defined(CONFIG_USER_ONLY) */
-> +
-> +    return true;
-> +}
-> +TRANS_FLAGS2(PM_ISA206, DOZE, do_doze);
-> +
-> +static bool do_nap(DisasContext *ctx, arg_NAP *a)
-> +{
-> +    REQUIRE_64BIT(ctx);
-> +
-> +#if defined(CONFIG_USER_ONLY)
-> +    gen_priv_opc(ctx);
-> +#else
-> +    TCGv_i32 t;
-> +
-> +    REQUIRE_HV(ctx);
-> +    translator_io_start(&ctx->base);
-> +    t = tcg_constant_i32(PPC_PM_NAP);
-> +    gen_helper_pminsn(tcg_env, t);
-> +    /* Stop translation, as the CPU is supposed to sleep from now */
-> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> +#endif /* defined(CONFIG_USER_ONLY) */
-> +    return true;
-> +}
-> +TRANS_FLAGS2(PM_ISA206, NAP, do_nap);
-> +
-> +static bool do_sleep(DisasContext *ctx, arg_SLEEP *a)
-> +{
-> +    REQUIRE_64BIT(ctx);
-> +
-> +#if defined(CONFIG_USER_ONLY)
-> +    gen_priv_opc(ctx);
-> +#else
-> +    TCGv_i32 t;
-> +
-> +    REQUIRE_HV(ctx);
-> +    translator_io_start(&ctx->base);
-> +    t = tcg_constant_i32(PPC_PM_SLEEP);
-> +    gen_helper_pminsn(tcg_env, t);
-> +    /* Stop translation, as the CPU is supposed to sleep from now */
-> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> +#endif /* defined(CONFIG_USER_ONLY) */
-> +    return true;
-> +}
-> +TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep);
-> +
-> +static bool do_rvwinkle(DisasContext *ctx, arg_RVWINKLE *a)
-> +{
-> +    REQUIRE_64BIT(ctx);
-> +
-> +#if defined(CONFIG_USER_ONLY)
-> +    gen_priv_opc(ctx);
-> +#else
-> +    TCGv_i32 t;
-> +
-> +    REQUIRE_HV(ctx);
-> +    translator_io_start(&ctx->base);
-> +    t = tcg_constant_i32(PPC_PM_RVWINKLE);
-> +    gen_helper_pminsn(tcg_env, t);
-> +    /* Stop translation, as the CPU is supposed to sleep from now */
-> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> +#endif /* defined(CONFIG_USER_ONLY) */
-> +    return true;
-> +}
-> +TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_rvwinkle);
-> +
-> +static bool do_stop(DisasContext *ctx, arg_STOP *a)
-> +{
-> +    REQUIRE_64BIT(ctx);
-> +
-> +#if defined(CONFIG_USER_ONLY)
-> +    gen_priv_opc(ctx);
-> +#else
-> +    TCGv_i32 t;
-> +
-> +    REQUIRE_HV(ctx);
-> +    translator_io_start(&ctx->base);
-> +    t = tcg_constant_i32(PPC_PM_STOP);
-> +    gen_helper_pminsn(tcg_env, t);
-> +    /* Stop translation, as the CPU is supposed to sleep from now */
-> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> +#endif
-> +    return true;
-> +}
-> +TRANS_FLAGS2(ISA300, STOP, do_stop);
 
 
