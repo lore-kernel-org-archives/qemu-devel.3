@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7AE6C5DF8C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:30:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE0C1C5DF8C
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:30:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNG3-0002JA-LW; Mon, 24 Aug 2026 01:30:07 -0400
+	id 1wyNFw-0001YH-LC; Mon, 24 Aug 2026 01:30:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFy-0001tT-Sz
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:30:03 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFY-0000sm-8y
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFw-0006qU-7e
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:30:02 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFV-0006lk-0z
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787549398;
+ s=mimecast20190719; t=1787549372;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6Uh/V3Gx/CSvxWKpNQHBzUVmP5bklH9HA16RHbr+33A=;
- b=cV6Zn64pYkl/gQu1J7VU5nPEGr9LA437L2h4tOIYPwhAuHWFeHoPSEGFrA2qDbKP3ZFDMB
- kNaD0jsSK/gdGsDc8wIsMPIR9IGv6BSQz1seanoz9mNJNe/6qt4DvbAMLHncO6dZKtJEx6
- FpC0mDDorBmaDCCRE7fun/X4zsd6fiI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=g3XbYUZgnbchzQXP9HZa6yXxYah/vFREvl8Yw5CQ6l8=;
+ b=Qz2G79NBYhIs6EzxeTWlw6wx6U0qFTtRIJflfowl5ZoN1jJ5YT2JaU9TSpPQBGKsffOdUZ
+ TFKrrUk4qWVKopx7Hf9na2eVJ28RWrCi61V2c417LZRPaSSzPvkQ+a+lL+N+i5WoRpALrB
+ 5lnbeQg0rfZeVaGmVPH278n/XfpO+1w=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-49-kVxoD1zfMjm79aomkoTQZw-1; Mon,
- 24 Aug 2026 01:29:52 -0400
-X-MC-Unique: kVxoD1zfMjm79aomkoTQZw-1
-X-Mimecast-MFC-AGG-ID: kVxoD1zfMjm79aomkoTQZw_1787549391
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-_4MvdEwUMi-UjGNstlALkw-1; Mon,
+ 24 Aug 2026 01:29:25 -0400
+X-MC-Unique: _4MvdEwUMi-UjGNstlALkw-1
+X-Mimecast-MFC-AGG-ID: _4MvdEwUMi-UjGNstlALkw_1787549364
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 14FB3195DBAE; Mon, 24 Aug 2026 05:29:51 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0E17D1945CA7; Mon, 24 Aug 2026 05:29:24 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.29])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E61461800348; Mon, 24 Aug 2026 05:29:47 +0000 (UTC)
+ id 090ED1800348; Mon, 24 Aug 2026 05:29:19 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -57,10 +57,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Cleber Rosa <crosa@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH 12/12] sphinx: drop qapidoc back-compat overboiled spaghetti
- dinner
-Date: Mon, 24 Aug 2026 01:28:58 -0400
-Message-ID: <20260824052859.880475-13-jsnow@redhat.com>
+Subject: [PATCH 05/12] python: upgrade to Python3.12+
+Date: Mon, 24 Aug 2026 01:28:51 -0400
+Message-ID: <20260824052859.880475-6-jsnow@redhat.com>
 In-Reply-To: <20260824052859.880475-1-jsnow@redhat.com>
 References: <20260824052859.880475-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -90,407 +89,399 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Drop the disgusting amount of hacks required to keep qapidoc working
-on older Sphinx versions, enjoying the cutting edge technology of
-2023.
+With Python3.9 EOL and Python3.10 soon to be EOL (October 2026), and
+with ... no other supported build platform actually using Python 3.11,
+require the use of Python3.12 or later.
 
-This felt like an achievement to have written, and equally feels an
-achievement to have deleted.
+Additionally, as part of this upgrade, remove the use of tomllib from
+mkvenv as it is now standard in the Python stdlib: leaving this
+transitional code in causes a regression with mypy which becomes
+confused about the overloaded use of 'tomllib'.
+
+Our current minimum requirements as determined by standard repository
+packages on supported distributions is as follows:
+
+distro            EOS         python3  pip     setuptools  sphinx  wheel
+-------------------------------------------------------------------------
+centos_stream_9   2026-12-12  3.9.25   21.3.1  53.0.0      3.4.3   0.36.2
+centos_stream_9+  2026-12-12  3.12.13  23.2.1  68.2.2      ---     0.41.2
+freebsd           --          3.12.14  23.3.2  63.1.0      9.0.4   0.48.0
+ubuntu_24_04      2028-04-23  3.12.3   24.0    68.1.2      7.2.6   0.42.0
+centos_stream_10  2030-01-01  3.12.13  23.3.2  69.0.3      7.2.6   0.41.2
+alpine_3_21       2026-11-01  3.12.14  24.3.1  70.3.0      8.1.3   0.43.0
+debian_13         2028-08-09  3.13.5   25.1.1  78.1.1      8.1.3   0.46.1
+fedora_43         2026-12-09  3.14.7   25.1.1  78.1.1      8.2.3   0.45.1
+ubuntu_26_04      2031-05-29  3.14.4   25.1.1  78.1.1      8.2.3   0.46.3
+fedora_44         2027-06-02  3.14.7   26.0.1  80.10.2     8.2.3   0.45.1
+macports          --          3.14.7   26.0.1  80.10.2     9.1.0   0.48.0
+alpine_3_22       2027-05-01  3.12.14  25.1.1  80.9.0      8.2.3   0.46.3
+alpine_3_23       2027-11-01  3.12.14  25.1.1  80.9.0      8.2.3   0.46.3
+openbsd           --          3.14.6   26.2.1  80.9.0      9.1.0   0.48.0
+alpine_3_24       2028-06-01  3.14.7   26.1.2  82.0.1      9.1.0   0.47.0
+pkgsrc_current    --          3.13.15  26.2.1  84.0.0      9.1.0   0.48.0
+
+CentOS stream 9 note: python3.12, python3.12-pip,
+python3.12-setuptools and python3.12-wheel are available as optional
+packages in the standard repository. Sphinx is not available, but can
+be side-loaded from PyPI using pip3.12.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/compat.py      | 230 -------------------------------------
- docs/sphinx/qapi_domain.py |  47 ++++----
- 2 files changed, 22 insertions(+), 255 deletions(-)
- delete mode 100644 docs/sphinx/compat.py
+ configure                | 11 ++++----
+ python/Makefile          | 10 +++----
+ python/scripts/mkvenv.py | 58 +++-------------------------------------
+ python/setup.cfg         | 17 +++++-------
+ python/tests/minreqs.txt | 41 +++++++++++++---------------
+ pythondeps.toml          |  9 +++----
+ 6 files changed, 42 insertions(+), 104 deletions(-)
 
-diff --git a/docs/sphinx/compat.py b/docs/sphinx/compat.py
-deleted file mode 100644
-index 9cf7fe006e4..00000000000
---- a/docs/sphinx/compat.py
-+++ /dev/null
-@@ -1,230 +0,0 @@
--"""
--Sphinx cross-version compatibility goop
--"""
--
--import re
--from typing import (
--    TYPE_CHECKING,
--    Any,
--    Callable,
--    Optional,
--    Type,
--)
--
--from docutils import nodes
--from docutils.nodes import Element, Node, Text
--from docutils.statemachine import StringList
--
--import sphinx
--from sphinx import addnodes, util
--from sphinx.directives import ObjectDescription
--from sphinx.environment import BuildEnvironment
--from sphinx.roles import XRefRole
--from sphinx.util import docfields
--from sphinx.util.docutils import (
--    ReferenceRole,
--    SphinxDirective,
--    switch_source_input,
--)
--from sphinx.util.typing import TextlikeNode
--
--
--MAKE_XREF_WORKAROUND = sphinx.version_info[:3] < (4, 1, 0)
--
--
--SpaceNode: Callable[[str], Node]
--KeywordNode: Callable[[str, str], Node]
--
--if sphinx.version_info[:3] >= (4, 0, 0):
--    SpaceNode = addnodes.desc_sig_space
--    KeywordNode = addnodes.desc_sig_keyword
--else:
--    SpaceNode = Text
--    KeywordNode = addnodes.desc_annotation
--
--
--def nested_parse_with_titles(
--    directive: SphinxDirective, content_node: Element
--) -> None:
--    """
--    This helper preserves error parsing context across sphinx versions.
--    """
--
--    # necessary so that the child nodes get the right source/line set
--    content_node.document = directive.state.document
--
+diff --git a/configure b/configure
+index 56158cd95f7..46cbcc085b3 100755
+--- a/configure
++++ b/configure
+@@ -503,17 +503,16 @@ if test -n "$linux_arch" && ! test -d "$source_path/linux-headers/asm-$linux_arc
+ fi
+ 
+ check_py_version() {
+-    # We require python >= 3.9.
++    # We require python >= 3.12.
+     # NB: a True python conditional creates a non-zero return code (Failure)
+-    "$1" -c 'import sys; sys.exit(sys.version_info < (3,9))'
++    "$1" -c 'import sys; sys.exit(sys.version_info < (3,12))'
+ }
+ 
+ first_python=
+ if test -z "${PYTHON}"; then
+     # A bare 'python' is traditionally python 2.x, but some distros
+     # have it as python 3.x, so check in both places.
+-    for binary in python3 python python3.14 python3.13 python3.12 \
+-                          python3.11 python3.10 python3.9 ; do
++    for binary in python3 python python3.14 python3.13 python3.12; do
+         if has "$binary"; then
+             python=$(command -v "$binary")
+             if check_py_version "$python"; then
+@@ -902,7 +901,7 @@ then
+     # If first_python is set, there was a binary somewhere even though
+     # it was not suitable.  Use it for the error message.
+     if test -n "$first_python"; then
+-        error_exit "Cannot use '$first_python', Python >= 3.9 is required." \
++        error_exit "Cannot use '$first_python', Python >= 3.12 is required." \
+             "Use --python=/path/to/python to specify a supported Python."
+     else
+         error_exit "Python not found. Use --python=/path/to/python"
+@@ -910,7 +909,7 @@ then
+ fi
+ 
+ if ! check_py_version "$python"; then
+-  error_exit "Cannot use '$python', Python >= 3.9 is required." \
++  error_exit "Cannot use '$python', Python >= 3.12 is required." \
+              "Use --python=/path/to/python to specify a supported Python." \
+              "Maybe try:" \
+              "  CentOS: dnf install python3.12"
+diff --git a/python/Makefile b/python/Makefile
+index 42994d39618..7868a48a232 100644
+--- a/python/Makefile
++++ b/python/Makefile
+@@ -9,14 +9,14 @@ help:
+ 	@echo "make check-minreqs:"
+ 	@echo "    Run tests in the minreqs virtual environment."
+ 	@echo "    These tests use the oldest dependencies."
+-	@echo "    Requires: Python 3.9"
+-	@echo "    Hint (Fedora): 'sudo dnf install python3.9'"
++	@echo "    Requires: Python 3.12"
++	@echo "    Hint (Fedora): 'sudo dnf install python3.12'"
+ 	@echo ""
+ 	@echo "make check-tox:"
+ 	@echo "    Run tests against multiple python versions."
+ 	@echo "    These tests use the newest dependencies."
+-	@echo "    Requires: Python 3.9 - 3.11, and tox."
+-	@echo "    Hint (Fedora): 'sudo dnf install python3-tox python3.11'"
++	@echo "    Requires: Python 3.12 - 3.14, and tox."
++	@echo "    Hint (Fedora): 'sudo dnf install python3-tox python3.14'"
+ 	@echo "    The variable QEMU_TOX_EXTRA_ARGS can be use to pass extra"
+ 	@echo "    arguments to tox".
+ 	@echo ""
+@@ -59,7 +59,7 @@ PIP_INSTALL = pip install --disable-pip-version-check
+ min-venv: $(QEMU_MINVENV_DIR) $(QEMU_MINVENV_DIR)/bin/activate
+ $(QEMU_MINVENV_DIR) $(QEMU_MINVENV_DIR)/bin/activate: setup.cfg tests/minreqs.txt
+ 	@echo "VENV $(QEMU_MINVENV_DIR)"
+-	@python3.9 -m venv $(QEMU_MINVENV_DIR)
++	@python3.12 -m venv $(QEMU_MINVENV_DIR)
+ 	@(								\
+ 		echo "ACTIVATE $(QEMU_MINVENV_DIR)";			\
+ 		. $(QEMU_MINVENV_DIR)/bin/activate;			\
+diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
+index 8ed6a354505..d95eeee3d23 100644
+--- a/python/scripts/mkvenv.py
++++ b/python/scripts/mkvenv.py
+@@ -75,6 +75,7 @@
+ import subprocess
+ import sys
+ import sysconfig
++import tomllib
+ from types import SimpleNamespace
+ from typing import (
+     Any,
+@@ -134,20 +135,6 @@
+ HAVE_PACKAGING_VERSION = _import_ok
+ 
+ 
+-# Try to load tomllib, with a fallback to tomli.
+-# HAVE_TOMLLIB is checked below, just-in-time, so that mkvenv does not fail
+-# outside the venv or before a potential call to ensurepip in checkpip().
+-_import_ok = True
+-try:
+-    import tomllib
+-except ImportError:
 -    try:
--        # Modern sphinx (6.2.0+) supports proper offsetting for
--        # nested parse error context management
--        util.nodes.nested_parse_with_titles(
--            directive.state,
--            directive.content,
--            content_node,
--            content_offset=directive.content_offset,
+-        import tomli as tomllib
+-    except ImportError:
+-        _import_ok = False
+-
+-HAVE_TOMLLIB = _import_ok
+-
+ # Do not add any mandatory dependencies from outside the stdlib:
+ # This script *must* be usable standalone!
+ 
+@@ -261,36 +248,6 @@ def get_parent_libpath(self) -> Optional[str]:
+             return sysconfig.get_path("purelib")
+         return None
+ 
+-    @staticmethod
+-    def compute_venv_libpath(context: SimpleNamespace) -> str:
+-        """
+-        Compatibility wrapper for context.lib_path for Python < 3.12
+-        """
+-        # Python 3.12+, not strictly necessary because it's documented
+-        # to be the same as 3.10 code below:
+-        if sys.version_info >= (3, 12):
+-            return context.lib_path
+-
+-        # Python 3.10+
+-        if "venv" in sysconfig.get_scheme_names():
+-            lib_path = sysconfig.get_path(
+-                "purelib", scheme="venv", vars={"base": context.env_dir}
+-            )
+-            assert lib_path is not None
+-            return lib_path
+-
+-        # For Python <= 3.9 we need to hardcode this. Fortunately the
+-        # code below was the same in Python 3.6-3.10, so there is only
+-        # one case.
+-        if sys.platform == "win32":
+-            return os.path.join(context.env_dir, "Lib", "site-packages")
+-        return os.path.join(
+-            context.env_dir,
+-            "lib",
+-            "python%d.%d" % sys.version_info[:2],
+-            "site-packages",
 -        )
--    except TypeError:
--        # No content_offset argument. Fall back to SSI method.
--        with switch_source_input(directive.state, directive.content):
--            util.nodes.nested_parse_with_titles(
--                directive.state, directive.content, content_node
--            )
 -
--
--# ###########################################
--# xref compatibility hacks for Sphinx < 4.1 #
--# ###########################################
--
--# When we require >= Sphinx 4.1, the following function and the
--# subsequent 3 compatibility classes can be removed. Anywhere in
--# qapi_domain that uses one of these Compat* types can be switched to
--# using the garden-variety lib-provided classes with no trickery.
--
--
--def _compat_make_xref(  # pylint: disable=unused-argument
--    self: sphinx.util.docfields.Field,
--    rolename: str,
--    domain: str,
--    target: str,
--    innernode: Type[TextlikeNode] = addnodes.literal_emphasis,
--    contnode: Optional[Node] = None,
--    env: Optional[BuildEnvironment] = None,
--    inliner: Any = None,
--    location: Any = None,
--) -> Node:
--    """
--    Compatibility workaround for Sphinx versions prior to 4.1.0.
--
--    Older sphinx versions do not use the domain's XRefRole for parsing
--    and formatting cross-references, so we need to perform this magick
--    ourselves to avoid needing to write the parser/formatter in two
--    separate places.
--
--    This workaround isn't brick-for-brick compatible with modern Sphinx
--    versions, because we do not have access to the parent directive's
--    state during this parsing like we do in more modern versions.
--
--    It's no worse than what pre-Sphinx 4.1.0 does, so... oh well!
--    """
--
--    # Yes, this function is gross. Pre-4.1 support is a miracle.
--    # pylint: disable=too-many-locals
--
--    assert env
--    # Note: Sphinx's own code ignores the type warning here, too.
--    if not rolename:
--        return contnode or innernode(target, target)  # type: ignore[call-arg]
--
--    # Get the role instance, but don't *execute it* - we lack the
--    # correct state to do so. Instead, we'll just use its public
--    # methods to do our reference formatting, and emulate the rest.
--    role = env.get_domain(domain).roles[rolename]
--    assert isinstance(role, XRefRole)
--
--    # XRefRole features not supported by this compatibility shim;
--    # these were not supported in Sphinx 3.x either, so nothing of
--    # value is really lost.
--    assert not target.startswith("!")
--    assert not re.match(ReferenceRole.explicit_title_re, target)
--    assert not role.lowercase
--    assert not role.fix_parens
--
--    # Code below based mostly on sphinx.roles.XRefRole; run() and
--    # create_xref_node()
--    options = {
--        "refdoc": env.docname,
--        "refdomain": domain,
--        "reftype": rolename,
--        "refexplicit": False,
--        "refwarn": role.warn_dangling,
--    }
--    refnode = role.nodeclass(target, **options)
--    title, target = role.process_link(env, refnode, False, target, target)
--    refnode["reftarget"] = target
--    classes = ["xref", domain, f"{domain}-{rolename}"]
--    refnode += role.innernodeclass(target, title, classes=classes)
--
--    # This is the very gross part of the hack. Normally,
--    # result_nodes takes a document object to which we would pass
--    # self.inliner.document. Prior to Sphinx 4.1, we don't *have* an
--    # inliner to pass, so we have nothing to pass here. However, the
--    # actual implementation of role.result_nodes in this case
--    # doesn't actually use that argument, so this winds up being
--    # ... fine. Rest easy at night knowing this code only runs under
--    # old versions of Sphinx, so at least it won't change in the
--    # future on us and lead to surprising new failures.
--    # Gross, I know.
--    result_nodes, _messages = role.result_nodes(
--        None,  # type: ignore
--        env,
--        refnode,
--        is_ref=True,
--    )
--    return nodes.inline(target, "", *result_nodes)
--
--
--class CompatField(docfields.Field):
--    if MAKE_XREF_WORKAROUND:
--        make_xref = _compat_make_xref
--
--
--class CompatGroupedField(docfields.GroupedField):
--    if MAKE_XREF_WORKAROUND:
--        make_xref = _compat_make_xref
--
--
--class CompatTypedField(docfields.TypedField):
--    if MAKE_XREF_WORKAROUND:
--        make_xref = _compat_make_xref
--
--
--# ################################################################
--# Nested parsing error location fix for Sphinx 5.3.0 < x < 6.2.0 #
--# ################################################################
--
--# When we require Sphinx 4.x, the TYPE_CHECKING hack where we avoid
--# subscripting ObjectDescription at runtime can be removed in favor of
--# just always subscripting the class.
--
--# When we require Sphinx > 6.2.0, the rest of this compatibility hack
--# can be dropped and QAPIObject can just inherit directly from
--# ObjectDescription[Signature].
--
--SOURCE_LOCATION_FIX = (5, 3, 0) <= sphinx.version_info[:3] < (6, 2, 0)
--
--Signature = str
--
--
--if TYPE_CHECKING:
--    _BaseClass = ObjectDescription[Signature]
--else:
--    _BaseClass = ObjectDescription
--
--
--class ParserFix(_BaseClass):
--
--    _temp_content: StringList
--    _temp_offset: int
--    _temp_node: Optional[addnodes.desc_content]
--
--    def before_content(self) -> None:
--        # Work around a sphinx bug and parse the content ourselves.
--        self._temp_content = self.content
--        self._temp_offset = self.content_offset
--        self._temp_node = None
--
--        if SOURCE_LOCATION_FIX:
--            self._temp_node = addnodes.desc_content()
--            self.state.nested_parse(
--                self.content, self.content_offset, self._temp_node
--            )
--            # Sphinx will try to parse the content block itself,
--            # Give it nothingness to parse instead.
--            self.content = StringList()
--            self.content_offset = 0
--
--    def transform_content(self, content_node: addnodes.desc_content) -> None:
--        # Sphinx workaround: Inject our parsed content and restore state.
--        if self._temp_node:
--            content_node += self._temp_node.children
--            self.content = self._temp_content
--            self.content_offset = self._temp_offset
-diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index f561dc465f8..e8bae5587fb 100644
---- a/docs/sphinx/qapi_domain.py
-+++ b/docs/sphinx/qapi_domain.py
-@@ -30,20 +30,10 @@
- )
- from sphinx.locale import _, __
- from sphinx.roles import XRefRole
--from sphinx.util import logging
-+from sphinx.util import docfields, logging
- from sphinx.util.docutils import SphinxDirective
- from sphinx.util.nodes import make_id, make_refnode
+     def ensure_directories(self, env_dir: DirType) -> SimpleNamespace:
+         logger.debug("ensure_directories(env_dir=%s)", env_dir)
+         self._context = super().ensure_directories(env_dir)
+@@ -313,7 +270,8 @@ def post_post_setup(self, context: SimpleNamespace) -> None:
+             assert parent_libpath is not None
+             logger.debug("parent_libpath: %s", parent_libpath)
  
--from compat import (
--    CompatField,
--    CompatGroupedField,
--    CompatTypedField,
--    KeywordNode,
--    ParserFix,
--    Signature,
--    SpaceNode,
--)
--
+-            our_libpath = self.compute_venv_libpath(context)
++            assert isinstance(context.lib_path, str)
++            our_libpath = context.lib_path
+             logger.debug("our_libpath: %s", our_libpath)
  
- if TYPE_CHECKING:
-     from typing import (
-@@ -157,7 +147,10 @@ def result_nodes(
-         return results, []
+             pth_file = os.path.join(our_libpath, "nested.pth")
+@@ -810,19 +768,11 @@ def _do_ensure(
  
  
--class QAPIDescription(ParserFix):
-+Signature = str
+ def _parse_groups(file: str) -> Dict[str, Dict[str, Any]]:
+-    if not HAVE_TOMLLIB:
+-        if sys.version_info < (3, 11):
+-            raise Ouch("found no usable tomli, please install it")
+-
+-        raise Ouch(
+-            "Python >=3.11 does not have tomllib... what have you done!?"
+-        )
+-
+     # Use loads() to support both tomli v1.2.x (Ubuntu 22.04,
+     # Debian bullseye-backports) and v2.0.x
+     with open(file, "r", encoding="ascii") as depfile:
+         contents = depfile.read()
+-        return tomllib.loads(contents)  # type: ignore
++        return tomllib.loads(contents)
+ 
+ 
+ def ensure_group(
+diff --git a/python/setup.cfg b/python/setup.cfg
+index ad4121a58d8..8f62b7c1cdb 100644
+--- a/python/setup.cfg
++++ b/python/setup.cfg
+@@ -14,16 +14,13 @@ classifiers =
+     Natural Language :: English
+     Operating System :: OS Independent
+     Programming Language :: Python :: 3 :: Only
+-    Programming Language :: Python :: 3.9
+-    Programming Language :: Python :: 3.10
+-    Programming Language :: Python :: 3.11
+     Programming Language :: Python :: 3.12
+     Programming Language :: Python :: 3.13
+     Programming Language :: Python :: 3.14
+     Typing :: Typed
+ 
+ [options]
+-python_requires = >= 3.9
++python_requires = >= 3.12
+ packages =
+     qemu.machine
+     qemu.utils
+@@ -39,12 +36,10 @@ devel =
+     distlib >= 0.3.6
+     flake8 >= 5.0.4
+     fusepy >= 2.0.4
+-    isort >= 5.6.0
+-    # Max ver is temporary until we drop 3.9
+-    mypy >= 1.4.0, <2.0.0
++    isort >= 5.11.3
++    mypy >= 1.4.0
+     pylint >= 2.17.3
+-    pylint != 3.2.4; python_version<"3.9"
+-    pytest >= 6.0.2
++    pytest >= 6.2.4
+     tox >= 3.18.0
+     sphinx >= 3.4.3
+ 
+@@ -69,7 +64,7 @@ exclude = __pycache__,
+ 
+ [mypy]
+ strict = True
+-python_version = 3.9
++python_version = 3.12
+ namespace_packages = True
+ warn_unused_ignores = False
+ 
+@@ -164,7 +159,7 @@ multi_line_output=3
+ # of python available on your system to run this test.
+ 
+ [tox:tox]
+-envlist = py39, py310, py311, py312, py313, py314
++envlist = py312, py313, py314
+ skip_missing_interpreters = true
+ 
+ [testenv]
+diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
+index 05c3bdb89f8..85cfa08cf76 100644
+--- a/python/tests/minreqs.txt
++++ b/python/tests/minreqs.txt
+@@ -1,5 +1,5 @@
+ # This file lists the ***oldest possible dependencies*** needed to run
+-# "make check" successfully under ***Python 3.9***. It is used primarily
++# "make check" successfully under ***Python 3.12***. It is used primarily
+ # by GitLab CI to ensure that our stated minimum versions in setup.cfg
+ # are truthful and regularly validated.
+ #
+@@ -11,18 +11,11 @@
+ # When adding new dependencies, pin the very oldest non-yanked version
+ # on PyPI that allows the test suite to pass.
+ 
+-# For some reason, the presence of packaging==14.0 below requires us to
+-# also pin setuptools to version 70 or below. Otherwise, the
+-# installation of the QEMU package itself fails, failing to find
+-# setuptools.
+-setuptools<=70
+-wheel==0.34.2
+-
+ # Dependencies for qapidoc/qapi_domain et al
+ sphinx==3.4.3
+ 
+ # Dependencies for qemu.machine
+-qemu.qmp==0.0.5
++qemu.qmp==0.0.6
+ 
+ # Dependencies for mkvenv
+ distlib==0.3.6
+@@ -31,32 +24,28 @@ distlib==0.3.6
+ fusepy==2.0.4
+ 
+ # Test-runners, utilities, etc.
+-pytest==6.0.2
++pytest==6.2.4
+ 
+ # Linters
+-flake8==5.0.4
+-isort==5.6.0
++flake8==6.1.0
++isort==5.11.3
+ mypy==1.4.0
+-pylint==2.17.3
++pylint==3.0.0
+ 
+ # Transitive flake8 dependencies
+ mccabe==0.7.0
+-pycodestyle==2.9.1
+-pyflakes==2.5.0
++pycodestyle==2.11.0
++pyflakes==3.1.0
+ 
+ # Transitive mypy dependencies
+ mypy-extensions==1.0.0
+-tomli==1.1.0
+ typing-extensions==4.7.1
+ 
+ # Transitive pylint dependencies
+-astroid==2.15.4
+-dill==0.2
+-lazy-object-proxy==1.4.0
++astroid==3.0.0
++dill==0.3.7
+ platformdirs==2.2.0
+-toml==0.10.0
+ tomlkit==0.10.1
+-wrapt==1.14.0
+ 
+ # Transitive sphinx dependencies
+ Jinja2==2.7
+@@ -66,7 +55,8 @@ babel==1.3
+ docutils==0.12
+ imagesize==0.5.0
+ packaging==14.0
+-pytz==2011b0
++Pygments==2.0
++pytz==2014.9
+ requests==2.5.0
+ snowballstemmer==1.1
+ sphinxcontrib-applehelp==1.0.0
+@@ -75,3 +65,10 @@ sphinxcontrib-htmlhelp==1.0.0
+ sphinxcontrib-jsmath==1.0.0
+ sphinxcontrib-qthelp==1.0.0
+ sphinxcontrib-serializinghtml==1.0.0
 +
-+
-+class QAPIDescription(ObjectDescription[Signature]):
-     """
-     Generic QAPI description.
++# Transitive pytest dependencies
++attrs==19.2.0
++iniconfig==1.0.0
++pluggy==0.13
++py==1.11.0
++toml==0.10.0
+diff --git a/pythondeps.toml b/pythondeps.toml
+index 061f0cff0c4..b1879c1a4da 100644
+--- a/pythondeps.toml
++++ b/pythondeps.toml
+@@ -38,14 +38,11 @@ sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
+ [tooling]
+ "qemu.qmp" = { accepted = ">=0.0.5", installed = "0.0.6" }
+ "qemu" = { path = "python/" }
+-# NB: The following dependencies should be a little bit more modern than
+-# the versions listed here, but we are still using Debian 11 for several
+-# GitLab CI tests, so we are further restricted.
+-"setuptools" = { accepted = ">=44.1.1" }
+-"wheel" = { accepted = ">=0.34.2" }
++"setuptools" = { accepted = ">=63.1.0" }
++"wheel" = { accepted = ">=0.41.2" }
+ # pip should be guaranteed by mkvenv, this is merely a sanity check for
+ # which version we are counting on being present.
+-"pip" = { accepted = ">=20.3.4" }
++"pip" = { accepted = ">=23.2.1" }
  
-@@ -315,7 +308,7 @@ class QAPIObject(QAPIDescription):
- 
-     doc_field_types = [
-         # :feat name: descr
--        CompatGroupedField(
-+        docfields.GroupedField(
-             "feature",
-             label=_("Features"),
-             names=("feat",),
-@@ -327,8 +320,8 @@ def get_signature_prefix(self) -> List[nodes.Node]:
-         """Return a prefix to put before the object name in the signature."""
-         assert self.objtype
-         return [
--            KeywordNode("", self.objtype.title()),
--            SpaceNode(" "),
-+            addnodes.desc_sig_keyword("", self.objtype.title()),
-+            addnodes.desc_sig_space(" "),
-         ]
- 
-     def get_signature_suffix(self) -> List[nodes.Node]:
-@@ -337,7 +330,7 @@ def get_signature_suffix(self) -> List[nodes.Node]:
- 
-         if "since" in self.options:
-             ret += [
--                SpaceNode(" "),
-+                addnodes.desc_sig_space(" "),
-                 addnodes.desc_sig_element(
-                     "", f"(Since: {self.options['since']})"
-                 ),
-@@ -376,7 +369,7 @@ def handle_signature(self, sig: str, signode: desc_signature) -> Signature:
- 
-         return sig
- 
--    def _add_infopips(self, contentnode: addnodes.desc_content) -> None:
-+    def _add_infopips(self, content_node: addnodes.desc_content) -> None:
-         # Add various eye-catches and things that go below the signature
-         # bar, but precede the user-defined content.
-         infopips = nodes.container()
-@@ -420,7 +413,7 @@ def _add_pip(
-             )
- 
-         if infopips.children:
--            contentnode.insert(0, infopips)
-+            content_node.insert(0, infopips)
- 
-     def _validate_field(self, field: nodes.field) -> None:
-         """Validate field lists in this QAPI Object Description."""
-@@ -470,7 +463,11 @@ def _validate_field(self, field: nodes.field) -> None:
-             )
-             logger.warning(msg, location=field)
- 
--    def transform_content(self, content_node: addnodes.desc_content) -> None:
-+    def transform_content(
-+        self,
-+        # pylint: disable=arguments-renamed
-+        content_node: addnodes.desc_content
-+    ) -> None:
-         # This hook runs after before_content and the nested parse, but
-         # before the DocFieldTransformer is executed.
-         super().transform_content(content_node)
-@@ -485,7 +482,7 @@ def transform_content(self, content_node: addnodes.desc_content) -> None:
-                     self._validate_field(field)
- 
- 
--class SpecialTypedField(CompatTypedField):
-+class SpecialTypedField(docfields.TypedField):
-     def make_field(self, *args: Any, **kwargs: Any) -> nodes.field:
-         ret = super().make_field(*args, **kwargs)
- 
-@@ -518,14 +515,14 @@ class QAPICommand(QAPIObject):
-                 can_collapse=False,
-             ),
-             # :error: descr
--            CompatField(
-+            docfields.Field(
-                 "error",
-                 label=_("Errors"),
-                 names=("error", "errors"),
-                 has_arg=False,
-             ),
-             # :return TypeName: descr
--            CompatGroupedField(
-+            docfields.GroupedField(
-                 "returnvalue",
-                 label=_("Return"),
-                 rolename="type",
-@@ -533,7 +530,7 @@ class QAPICommand(QAPIObject):
-                 can_collapse=True,
-             ),
-             # :return-nodesc: TypeName
--            CompatField(
-+            docfields.Field(
-                 "returnvalue",
-                 label=_("Return"),
-                 names=("return-nodesc",),
-@@ -551,7 +548,7 @@ class QAPIEnum(QAPIObject):
-     doc_field_types.extend(
-         [
-             # :value name: descr
--            CompatGroupedField(
-+            docfields.GroupedField(
-                 "value",
-                 label=_("Values"),
-                 names=("value",),
-@@ -568,7 +565,7 @@ class QAPIAlternate(QAPIObject):
-     doc_field_types.extend(
-         [
-             # :alt type name: descr
--            CompatTypedField(
-+            docfields.TypedField(
-                 "alternative",
-                 label=_("Alternatives"),
-                 names=("alt",),
+ # This test group is for functional tests, and can include dependencies
+ # fetched from PyPI.
 -- 
 2.55.0
 
