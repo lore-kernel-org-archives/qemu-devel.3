@@ -4,90 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8652FC5DF8C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 06:00:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83921C5DF8C
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 06:00:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNbU-0005Om-3w; Mon, 24 Aug 2026 01:52:16 -0400
+	id 1wyNhN-0000fM-HA; Mon, 24 Aug 2026 01:58:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNav-0004hh-SN
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:51:42 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wyNgT-0008Vx-2F
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:57:30 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNaq-0002o4-Hu
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:51:41 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-381c51fde6bso3590006a91.2
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:51:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wyNgK-0004Eo-57
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:57:20 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-c966b9ee9cbso2157805a12.1
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:57:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787550695; x=1788155495; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=jbYaKFBvGXXY2CnicUYZq7lQqnHJQFU/m+HVMKAtotE=;
- b=lYCiS3E6HE8L2tjjF8vpFtuDq6qgDmWbpUfym552t4vak4GsOIRFK8l6fLNGaJPHdr
- 4RQCr7xe7mnepG9g01Kzgu4L2cf4vPmOla74ZxgrDhvgB3oI5t8DXY37Cn3rw9tpUatt
- +a0nBZtt9r0YNCBoZ08s1IO4J/oLU5IUB0MGeT2hNZC8EyiKBEAIbUPlQraXA/CW6IPy
- H9ycBDaIxfFGu3ts2FGhB2quu3TLlyyTdWM/2aQ6UHgoZ6yR+vl5zK9lQubFLZUt2N58
- d1Isb7kjmNKeiHFCN0jKt6pgY7wISn0afJ621KggAazDnqB26iPYgc4SbNSJI5IJqBPs
- XaCg==
+ d=gmail.com; s=20251104; t=1787551029; x=1788155829; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:sender:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=SAnDMWJL1YbwFQMDLM1WCNCMfPxewQfgUk+BYKKeXhQ=;
+ b=sOeG/Hmlz0CBBFAAy1xbmmfSivvkYNkJeKN5+i+mbwaOVfHFMtSNUF0BIMeAlKquQ1
+ VCDf1/gHbtZzsBUoxnMSRnkuoosl2VaSOFwuH8/lI/P6or2tMWpSy1EQdYbcCxwXM1Js
+ hy0QUWOXFowcafYKMja++vUvAuwNcXfjGuhuI/tOqtC5X56CHZek8GwXM08QF4Jvp/HO
+ olZde+kVeeDlqV5jIJn9FRrBaIO1yUvoxdkGhRoH2PgxTi4qU/7tzpYLx//LJFm2AtTq
+ n35at8X/t9c+6bxtIVH1AoIqkxIaHeFg4xTCPg9hJz3zXWUIJ2/Ar5xApwFueiNq0lNn
+ SrjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787550695; x=1788155495;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=jbYaKFBvGXXY2CnicUYZq7lQqnHJQFU/m+HVMKAtotE=;
- b=rXL7bcH/U5y2qzoGkTDAymdOPpo2uHEkrULOQ7JQsKk7Yex2sKTc1hO7aG5ayN7Osd
- lXT0bfCLyyBj+yR7lGapT3rHqKp3OGXhlgMJ1pMnsvBvyhrC8gPRMO1IbB2pSAO9Rfjp
- YI448pLqmo/zupg2u7+JuqDZ/5bNLQCVyo/xc1QSyCkefwpB0rtxJcZwW5xOFINxpDqc
- scB6o8ef6GmfJLlBzLqGBWnVnhrXubTe5xVag94wyTluRG2bmXWJWM/JbUAV55D+B6wX
- Pes/vZk1DDWfJNRryWxhnRepfs7TNpudrkvE+nSkUR5fXImuxdqtg/KW3SNFHUxnOdxh
- YdPg==
-X-Gm-Message-State: AFuF++mq7pIundFMJnG+Xvh8gJSH8+2BR/Ps7TXi/JCwEgCWBcSeijoi
- Y/xQznic6Ubt6+AslokHFA26a2gZIX04Bouz3NvtN0EKGYygaR/KBiqjDW2TcA==
-X-Gm-Gg: AR+sD12WR2giwHK3iHFm0k1Au7n3W1yt/2VRXGp4euzRgUBcEoBMFy4CHIVhWGn/4U0
- eisbvcPMJqcxvLJTQ/VNp5TABRME1qSx+LJLV84+G8LJ1aM47DhSa7roye5RzgfrI6tU9XtzDxx
- 3N+cD4ZgAe241yZNYdnzSOdNK83xNSuwXIlsasWLAwQlxzBzXZkpCzdGh+WKR5Ul94ucRf9LUFL
- 2wbk5F8DC87QS+J/GQZRDlGapa4OUC8rDYkO2nWyEay6VuBRo095p4Nq4rGzGm9/O8J6msGnJtQ
- sKYJJTOHCnDlCDZ6xZhBzCLnd9SWMrvchExiCFtZ74TcxN4kus20FTC4Vc0aa2Jr8EYyb+63DaT
- gza60yMcVPglbqsstKUMmGcgbmJ1e77z+9GyjU3CIYELBnFsROdlg1HJIZU/unpyu0KCBIRt3N2
- Z5KM6JlJE8QHVOtiP2NDRDLTDJhSRU7HphMhaofPDXLe04XaG+wtBe4RKnr/wRR01QV93XaAMs+
- Akiew==
-X-Received: by 2002:a17:90b:560d:b0:38e:9045:bac0 with SMTP id
- 98e67ed59e1d1-395deea6acbmr31183483a91.5.1787550695108; 
- Sun, 23 Aug 2026 22:51:35 -0700 (PDT)
-Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
+ d=1e100.net; s=20251104; t=1787551029; x=1788155829;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:sender:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=SAnDMWJL1YbwFQMDLM1WCNCMfPxewQfgUk+BYKKeXhQ=;
+ b=g2tiLc9g85OdJ7ywcq6MR4nHNFqB405n9bljKwKkBRsj+PEVVRCyLy7ib3DQ0hSnYl
+ rfhFqIIbAkbWI7tjRDjgoqBwsxB8rl8UuTXc2wJeDnuuSWF8n338GE27ClbZEGgS73jn
+ zzkSmowz7VB/v955ABWBlW9QDZuGMedb753Qd3PR498YhZPBLPqpq0np6CLHmPzrINr+
+ pi10gS15VX9PVuW3K0DZ2RQK4cHaZY6eQyARSSMv77jKIsvfPzd6mcJgYAu9uCDmwDNR
+ VRZRl2+OMcdIi4mgWN1Rg5pcrC4IuZeEBspFsLCrb37Ss+D1qF5qRdDpb+pomNqF+1IR
+ RetA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rp15U5WJ/DXCqE4dQd6nQOHyAiGvqKC2Q53P365+j3TVgRQSO3Srx2hOYGr7EBg7tTOIrkQuTdsJz8P@nongnu.org
+X-Gm-Message-State: AFuF++kNse9za3/EJX8ftq+cg4obHXx5eyFEA2zbSGcnOiFiZHXpnZ6N
+ Um0lJm4GPIGKsDg+roYgwnbpF1TZfjnp03Bjo13TsOI6zdBIK51BLB3O
+X-Gm-Gg: AR+sD10Jat2W4GSHY/IlYs5OO91JOZ9cVcWWH22CgJdcPv8FzXl5WnAPtuUYXGLEdDP
+ mZow2Xyz+gDCT1Jkn9xKHTws+3jDIUAsVbKoknRJZnLvGJHiQhxfgD7yWWxAIZnHPLWsNYe4rFQ
+ lV0O+CspFNK1GAt9FlL/K1U8A1cgIIbmuCRt5xOwudhYaiwCFaCxLKWRX3YdKIAmfm73xVNFIbc
+ c40tNv/tM/QhfiGCA9HrnX73c8YVK87f581D7dMfXgNTph0Oxyk8m0Df4Lm9AfAszrVQRTeTJRi
+ OAyg932WsSBDKi4krBcJd14lhhUvhkU3Hs+NGvBJQmK6mhfaVXhDCEQQSi7kUhclPgGnSJyrUOz
+ KN63pHALt8mvF/UWuEjBdX9OuAbuqBKLTViiPvMvnxiDiQz6YltxT1+1dJbi/vRdLuhxqNXkHEk
+ DO7L6dDv1q5ULoDQaFA/rxoVyoif4BOeEiEKZGzaHTwTJNbSpDcqh6hy18PkNuCwQiirEEo85y7
+ mANZZPVM0iXtEykPQTAjqNHTmreUGFLDKni13VAbPDyhiv7KcX3sIgoXAxqih0qGsPJM+mR036p
+ 9NzUuYHxoqPpbZPhoAHgGA==
+X-Received: by 2002:a05:6a00:8014:b0:84c:4b58:2cec with SMTP id
+ d2e1a72fcca58-8520ba2fd59mr29263795b3a.15.1787551029064; 
+ Sun, 23 Aug 2026 22:57:09 -0700 (PDT)
+Received: from donnager-debian.. ([180.150.112.50])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.51.32
+ d2e1a72fcca58-8520f03b494sm1583474b3a.33.2026.08.23.22.57.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Aug 2026 22:51:34 -0700 (PDT)
-From: alistair23@gmail.com
-X-Google-Original-From: alistair.francis@wdc.com
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 65/96] disas/riscv: Use rv_codec_illegal for pseudos
-Date: Mon, 24 Aug 2026 15:47:35 +1000
-Message-ID: <20260824054806.2790041-66-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260824054806.2790041-1-alistair.francis@wdc.com>
-References: <20260824054806.2790041-1-alistair.francis@wdc.com>
+ Sun, 23 Aug 2026 22:57:08 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Michael Ellerman <mpe@kernel.org>,
+ Portia Stephens <portias@oss.tenstorrent.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH 1/4] hw/riscv/boot: Make RISCVBootInfo const where possible
+Date: Mon, 24 Aug 2026 15:26:37 +0930
+Message-ID: <20260824055642.41098-2-joel@jms.id.au>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260824055642.41098-1-joel@jms.id.au>
+References: <20260824055642.41098-1-joel@jms.id.au>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=joel.stan@gmail.com; helo=mail-pg1-x533.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,124 +116,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+As with riscv_load_firmware, take a const pointer in functions that
+reads the structure without writing.
 
-The codec is never used, since we arrive into pseudos
-from a decoding of another opcode.
-Assert that rv_codec_illegal is never decoded.
-Use rv_codec_none for rv_op_illegal.
-
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260812223142.349142-33-richard.henderson@linaro.org>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- disas/riscv.c | 68 +++++++++++++++++++++++++--------------------------
- 1 file changed, 34 insertions(+), 34 deletions(-)
+ include/hw/riscv/boot.h | 6 +++---
+ hw/riscv/boot.c         | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 7fa76b2d15..dedd925077 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -1599,7 +1599,7 @@ static uint32_t operand_lpl(rv_inst inst)
- /* instruction metadata */
- 
- static const rv_opcode_data rvi_opcode_data[] = {
--    { "illegal", rv_codec_illegal, rv_fmt_none },
-+    { "illegal", rv_codec_none, rv_fmt_none },
-     { "lui", rv_codec_u, rv_fmt_rd_uimm },
-     { "auipc", rv_codec_u, rv_fmt_rd_uoffset },
-     { "jal", rv_codec_uj, rv_fmt_rd_offset, rvcp_jal },
-@@ -1872,38 +1872,38 @@ static const rv_opcode_data rvi_opcode_data[] = {
-     { "c.sq", rv_codec_cs_sq, NULL, DECOMP(rv_op_sq) },
-     { "c.lqsp", rv_codec_ci_lqsp, NULL, DECOMP(rv_op_lq) },
-     { "c.sqsp", rv_codec_css_sqsp, NULL, DECOMP(rv_op_sq) },
--    { "nop", rv_codec_i, rv_fmt_none },
--    { "mv", rv_codec_i, rv_fmt_rd_rs1, rvcp_mv },
--    { "not", rv_codec_i, rv_fmt_rd_rs1 },
--    { "neg", rv_codec_r, rv_fmt_rd_rs2 },
--    { "negw", rv_codec_r, rv_fmt_rd_rs2 },
--    { "sext.w", rv_codec_i, rv_fmt_rd_rs1 },
--    { "seqz", rv_codec_i, rv_fmt_rd_rs1 },
--    { "snez", rv_codec_r, rv_fmt_rd_rs2 },
--    { "sltz", rv_codec_r, rv_fmt_rd_rs1 },
--    { "sgtz", rv_codec_r, rv_fmt_rd_rs2 },
--    { "fmv.s", rv_codec_r, rv_fmt_frd_frs1 },
--    { "fabs.s", rv_codec_r, rv_fmt_frd_frs1 },
--    { "fneg.s", rv_codec_r, rv_fmt_frd_frs1 },
--    { "fmv.d", rv_codec_r, rv_fmt_frd_frs1 },
--    { "fabs.d", rv_codec_r, rv_fmt_frd_frs1 },
--    { "fneg.d", rv_codec_r, rv_fmt_frd_frs1 },
--    { "fmv.q", rv_codec_r, rv_fmt_frd_frs1 },
--    { "fabs.q", rv_codec_r, rv_fmt_frd_frs1 },
--    { "fneg.q", rv_codec_r, rv_fmt_frd_frs1 },
--    { "beqz", rv_codec_sb, rv_fmt_rs1_offset },
--    { "bnez", rv_codec_sb, rv_fmt_rs1_offset },
--    { "blez", rv_codec_sb, rv_fmt_rs2_offset },
--    { "bgez", rv_codec_sb, rv_fmt_rs1_offset },
--    { "bltz", rv_codec_sb, rv_fmt_rs1_offset },
--    { "bgtz", rv_codec_sb, rv_fmt_rs2_offset },
--    { "jal", rv_codec_none, rv_fmt_offset }, /* rv_op_jal_ra */
--    { "jalr", rv_codec_none, rv_fmt_rs1 }, /* rv_op_jalr_ra */
-+    { "nop", rv_codec_illegal, rv_fmt_none },
-+    { "mv", rv_codec_illegal, rv_fmt_rd_rs1, rvcp_mv },
-+    { "not", rv_codec_illegal, rv_fmt_rd_rs1 },
-+    { "neg", rv_codec_illegal, rv_fmt_rd_rs2 },
-+    { "negw", rv_codec_illegal, rv_fmt_rd_rs2 },
-+    { "sext.w", rv_codec_illegal, rv_fmt_rd_rs1 },
-+    { "seqz", rv_codec_illegal, rv_fmt_rd_rs1 },
-+    { "snez", rv_codec_illegal, rv_fmt_rd_rs2 },
-+    { "sltz", rv_codec_illegal, rv_fmt_rd_rs1 },
-+    { "sgtz", rv_codec_illegal, rv_fmt_rd_rs2 },
-+    { "fmv.s", rv_codec_illegal, rv_fmt_frd_frs1 },
-+    { "fabs.s", rv_codec_illegal, rv_fmt_frd_frs1 },
-+    { "fneg.s", rv_codec_illegal, rv_fmt_frd_frs1 },
-+    { "fmv.d", rv_codec_illegal, rv_fmt_frd_frs1 },
-+    { "fabs.d", rv_codec_illegal, rv_fmt_frd_frs1 },
-+    { "fneg.d", rv_codec_illegal, rv_fmt_frd_frs1 },
-+    { "fmv.q", rv_codec_illegal, rv_fmt_frd_frs1 },
-+    { "fabs.q", rv_codec_illegal, rv_fmt_frd_frs1 },
-+    { "fneg.q", rv_codec_illegal, rv_fmt_frd_frs1 },
-+    { "beqz", rv_codec_illegal, rv_fmt_rs1_offset },
-+    { "bnez", rv_codec_illegal, rv_fmt_rs1_offset },
-+    { "blez", rv_codec_illegal, rv_fmt_rs2_offset },
-+    { "bgez", rv_codec_illegal, rv_fmt_rs1_offset },
-+    { "bltz", rv_codec_illegal, rv_fmt_rs1_offset },
-+    { "bgtz", rv_codec_illegal, rv_fmt_rs2_offset },
-+    { "jal", rv_codec_illegal, rv_fmt_offset }, /* rv_op_jal_ra */
-+    { "jalr", rv_codec_illegal, rv_fmt_rs1 }, /* rv_op_jalr_ra */
-     { },
-     { },
--    { "j", rv_codec_uj, rv_fmt_offset },
--    { "ret", rv_codec_i, rv_fmt_none },
--    { "jr", rv_codec_i, rv_fmt_rs1, rvcp_jr },
-+    { "j", rv_codec_illegal, rv_fmt_offset },
-+    { "ret", rv_codec_illegal, rv_fmt_none },
-+    { "jr", rv_codec_illegal, rv_fmt_rs1, rvcp_jr },
-     { "rdcycle", rv_codec_i_csr, rv_fmt_rd },
-     { "rdtime", rv_codec_i_csr, rv_fmt_rd },
-     { "rdinstret", rv_codec_i_csr, rv_fmt_rd },
-@@ -4551,8 +4551,6 @@ static void decode_inst_operands(rv_decode *dec, rv_isa isa,
-     rv_inst inst = dec->inst;
- 
-     switch (op->codec) {
--    case rv_codec_illegal:
--        break;
-     case rv_codec_none:
-         dec->rd = dec->rs1 = dec->rs2 = rv_ireg_zero;
-         dec->imm = 0;
-@@ -4946,7 +4944,9 @@ static void decode_inst_operands(rv_decode *dec, rv_isa isa,
-         dec->rs1 = dec->rs2 = operand_crs1(inst);
-         dec->imm = 0;
-         break;
--    };
-+    default:
-+        g_assert_not_reached();
-+    }
+diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+index 4e7bd9a225ef..d23f45d78077 100644
+--- a/include/hw/riscv/boot.h
++++ b/include/hw/riscv/boot.h
+@@ -50,10 +50,10 @@ void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts);
+ void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
+                                         RISCVHartArrayState *harts,
+                                         hwaddr low_start, hwaddr low_size);
+-vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
++vaddr riscv_calc_kernel_start_addr(const RISCVBootInfo *info,
+                                    hwaddr firmware_end_addr);
+ hwaddr riscv_find_and_load_firmware(MachineState *machine,
+-                                    RISCVBootInfo *info,
++                                    const RISCVBootInfo *info,
+                                     const char *default_machine_firmware,
+                                     hwaddr *firmware_load_addr,
+                                     symbol_fn_t sym_cb);
+@@ -71,7 +71,7 @@ void riscv_load_kernel(MachineState *machine,
+                        bool load_initrd,
+                        symbol_fn_t sym_cb);
+ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
+-                                MachineState *ms, RISCVBootInfo *info);
++                                MachineState *ms, const RISCVBootInfo *info);
+ void riscv_load_fdt(hwaddr fdt_addr, void *fdt);
+ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts,
+                                hwaddr saddr,
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index 5e2dfa091a13..4ac0b8ef6581 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -91,7 +91,7 @@ void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
+     info->ram_low_size = low_size;
  }
  
- /* check constraint */
+-vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
++vaddr riscv_calc_kernel_start_addr(const RISCVBootInfo *info,
+                                    hwaddr firmware_end_addr) {
+     if (info->is_32bit) {
+         return QEMU_ALIGN_UP(firmware_end_addr, 4 * MiB);
+@@ -151,7 +151,7 @@ char *riscv_find_firmware(const char *firmware_filename,
+ }
+ 
+ hwaddr riscv_find_and_load_firmware(MachineState *machine,
+-                                    RISCVBootInfo *info,
++                                    const RISCVBootInfo *info,
+                                     const char *default_machine_firmware,
+                                     hwaddr *firmware_load_addr,
+                                     symbol_fn_t sym_cb)
+@@ -348,7 +348,7 @@ out:
+  * The FDT is fdt_packed() during the calculation.
+  */
+ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
+-                                MachineState *ms, RISCVBootInfo *info)
++                                MachineState *ms, const RISCVBootInfo *info)
+ {
+     int ret = fdt_pack(ms->fdt);
+     hwaddr dram_end, temp;
 -- 
-2.54.0
+2.47.3
 
 
