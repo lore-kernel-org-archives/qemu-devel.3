@@ -4,91 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 504BAC5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 06:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79E01C5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 06:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNmK-0004TJ-1n; Mon, 24 Aug 2026 02:03:28 -0400
+	id 1wyNmv-0004rH-SY; Mon, 24 Aug 2026 02:04:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wyNmG-0004Su-9W
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 02:03:25 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wyNmD-0005jY-Ra
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 02:03:23 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-3811f512167so4232302a91.3
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 23:03:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wyNmt-0004qm-FK
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 02:04:03 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wyNmq-0005vu-Kv
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 02:04:03 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67O5RMDG1574481
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 06:03:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Pwlf4GvdjN1EWQEQlDiy0bNjLgPXY9sg9hStWXQKkPc=; b=Dwpd4pxRDVG/ll8g
+ 91QqDhL2FEZdMNAfnwSeeaK7tfWoZBOf1oMqA4j4N+peVyaNVjQRQrfNWMkLS+vV
+ xDCaYtbEXLEmUNiQHoHqBo7BuMY0ApUSipuRz01Gh3Q4gVoj1Yn7q3gzUx6xaZRK
+ S+HxGou5/a736aJ4zTQ13XcTWyQcRjJO5THnpFQY9zlHajQoxWlXo42BnKGskZdo
+ wdOXVuaCMxYJNygI6qMQ2XtFf7FAodHwkfsIfWCZQ2HHKfZlpF39K4lMIO7EMam6
+ z2M/smTnnlGmG30e/21KmFByA33eSaJovMhkVfXwgz1fpeE4D2CeOJorfTGBIlyn
+ /vaIxg==
+Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
+ [209.85.217.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g7456wnxb-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 06:03:57 +0000 (GMT)
+Received: by mail-vs1-f69.google.com with SMTP id
+ ada2fe7eead31-77cc8fbe356so53744137.3
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 23:03:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787551398; x=1788156198; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ZnosYV9fBX0MrYj+g4xU0hjD+hBe4GG2oxX4u/74ANg=;
- b=Xbb1SzK7PeDLAsH4GnrYWouN7szMYpe5QUSDsDx8UQoi+1V2hn1tpHOV0DebrTjyxh
- oD+fDSWs3r4nfdpx3wkH3wN+EGUrcj1fgHCVOkL7VQTROzUQCxR9p6VhWujynL5o3YDd
- WOVOrX0ZUGfm/FH6uyfQ1WbjtwUce6sL/fYPKKDhjZlXsAZ/rACvFnxifpw/1q1LikCB
- a/a533AJGYzkv9FxRpuua1C7jiMzI2Ojdywq/Z5ydB9k5pm07mW72QbvRaoMx+lobsR0
- 2fsHJVYdUQ6b7maK3HdrcxYPTl71WuGD3+hvKkLd/T6B3K56HPafOUws5jaOzlBSJCz8
- q6Gw==
+ d=oss.qualcomm.com; s=google; t=1787551437; x=1788156237; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Pwlf4GvdjN1EWQEQlDiy0bNjLgPXY9sg9hStWXQKkPc=;
+ b=juKfRgYqOsalACLXtPfOy5UCLfRd3VCBzS0THQw4+JIOscf2P3ZE13i3YJo0Q4Emhs
+ NU3CNlpgKtglkPzAkIyevMKkzdHWIq6UWnAXkPAL5wS22n2BHsstt/bXKh5/EsabqRZf
+ 7L7dlGpaoQ97fK2XE6G1/JhXBnlQm4r7dhYTN8iVLe2wCSF27mXA51JQ8VdqVsIiZat1
+ Zgz2nryIwFoGhUGQBp4JUDXTwNXWP1B68YSpEln4n6FuJHV42rprMBvqfdzJiI2rYvVO
+ Czc7EHETDNHT0eCUCcVWt9gK5q+USkhzvQS3ctaePlyGVC9mZqsCI9f8vKZ4na98UnCM
+ Ribw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787551398; x=1788156198;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=ZnosYV9fBX0MrYj+g4xU0hjD+hBe4GG2oxX4u/74ANg=;
- b=KwvTuS26XkKzXgRd6TMZZYIT1Fy07YX2h/5hf2KNIsDHpbnY+ZSMqdEgE7yXrAO28R
- 8IY76Qo8Wu2sXrwE5GunYkmnYEWa/woXZ+uDZtH2HmZbw9DOVU/msG9qi5reaO0Ap6ck
- ZwtyNZzAyCxnkzo6tUrqc2iL2Kq3apM4GviEahbH07o/aO3VRwXaP+SJ70o8xIIzqw4g
- Qc0CikGFl5hamDnv1YKa37/wDM4XqkGYLKjV38o1aDjQh0cf3Mt70b2+z2a+OSe68Xup
- 9pERLCevoShRIabCFJikrSiaup/Uu6UXEf9lNDexiVcPz+Y2x7wnB64+z86cbbpjzEty
- 0mQQ==
+ d=1e100.net; s=20251104; t=1787551437; x=1788156237;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Pwlf4GvdjN1EWQEQlDiy0bNjLgPXY9sg9hStWXQKkPc=;
+ b=im4y2+a3NQYrwvvcQp65fR0X9iXbaThlj7NxYN5GbgKwAlO2ytgScKEActk1k9NNbV
+ 67Fz6LwLpJr9L9rJuvA8UrE2KYWO2mDfspPgfXS7Auk7BfMt3eazlm16fj0rqyvn3N03
+ AS9sa7yRuLR07xyF5woYBI7PN5MYhTDfemFfh+Qdc1P7AGR4cxSOVF5F+mCYfYYFE3iE
+ 8yY99ifZknhMRVhzBrxdzvp5euJLisfvHX1sq9AwM0axjrWmrHIkCEBC6rnNHqXqzJkn
+ D0miv8MyKLP73LZSBhxNs00gcFW8rd57ExxgYj0/DDkjLT8K4DgGume+p6J4WT/YR9oG
+ pG7Q==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rox0bDsrI5fdHC1IYBlls3OU0VY3FlJ/pIhSkYaGoT4lnaToNXmCm0Twa2/aB60zi3IwFpR4Cs+3Xr0@nongnu.org
-X-Gm-Message-State: AFuF++kw1ARGnFcEI0piG0vjkAyoosJUDPEpOkNLm2ajc7r9JYxxPGRQ
- mE7fVVJNGlVxkQuG2nbU7o6pqhJ+u0rnj78waq++8GN6Dr91Z5uoD2PdGNqWtBgMpGlYERF3IXA
- MbM0n
-X-Gm-Gg: AR+sD11qFNjxXw9y4gJ77j5hRua5t6aNSXQxrir5pg/Tv6kd9fDNCYJDejOp9NhpX23
- 10Ze5+uu5WJO0AI+y1wYSjslWGfyw1/CS2fXIiCvELoveaQ0PpESpGx5ZoZY7AaJqHS19azIpX0
- DjV1pykCkpT9unAT3mBfBzrCt62uN42AlOc9lUmoSis5sQ/MMDHwQRMy0nlX47jSuEoS5oQOsWk
- Zxg23SD98n6cRdU/Uf2K5kgn5A40mt1T81NI1Cc4cDMVBVv3OIWfkGflciNwcOk6XMpllOAZXvT
- QQ0x9lbqs9RhA0F/id+JKhUj8FXhlQQnIaLyXCJQGXksQGObsz4nFPo/yPzwj1NCf9XBo+3l0nq
- nI8MLWM0wKAjRYN+CP5v9H5ZCkLvWeOEBBCkSc4qk63H1tNUbcyHQa0UdIySxdEfH6erD3ChPFk
- PEJE/JCWg0QSFUAqC08zJRoJHTXf72BUNP9yat50xzJ1gykIhc4Pk6Xkc3QTDkuDm98bxvEURH1
- ttYej6Uw/EzYaz8iA==
-X-Received: by 2002:a17:90b:3142:b0:37f:e177:f58 with SMTP id
- 98e67ed59e1d1-395c35e27c2mr40877133a91.9.1787551398100; 
- Sun, 23 Aug 2026 23:03:18 -0700 (PDT)
-Received: from [192.168.72.187] ([50.200.230.211])
+ AHgh+Rqi7AMY6jIwq2o+aSw+woqaBF8QKXgXL3IfllrPWyoIW0CoQwWSWM7VeBa5CvZEIONl9VouKL319v7d@nongnu.org
+X-Gm-Message-State: AFuF++k1lKItTOXjHn7hn6MPVS1ZEK7JBdK9//j2dcMqehUJu5yrdWuq
+ UWXvL0e78BmphgwFJ4u1ZdYSZ7s2CniE00CugvOns21GahETn85omZBWhoSqAen8RGYXAa2P3bJ
+ JiMTsRRCMqBEvIMoz6NQXyNTUAq/ZOaVKJoREGcj9jbFhoYrhi/9jUnZ8hw==
+X-Gm-Gg: AR+sD12eGihdSLWM7MZfJOz9RGrp6bPm/k00V+zDgScK/DT3gfJoR4Fsk5fPJvEhvC+
+ by8Oo95BUznzyktiJNOqL3sbR5YHjAuLZotWHgf2U+ikCqlQMdBCkhjBk1pjc5CU2uzQGUOvKVC
+ 5PfuVDLfWNVeE//u7X1co0PTY4+KUY0NCtSbNpmqSB9p3iAVJ3FNl7A06nf785zNlCKrx0vn+fF
+ rg8KoARMKuP2BSAqpIYwsoKU74zESzgLPjQgjgWvqHLH/Lc15q+fKu/0IUCMExbzz6vG9FePDYf
+ 5ZNPyzkhDcBQl/FrmkNRV75GTnlDcCkkbW/dLNJedilrMJkXsy6Ozqx7waR+EQrSRizzCptw+BW
+ RkNutCIqa9b9BHrIhGIi42uUsNs17HMQhC/vFxFFYW0TdQPfhcg==
+X-Received: by 2002:a05:6102:442a:b0:779:78ae:9a94 with SMTP id
+ ada2fe7eead31-77bd0ab7564mr4440969137.2.1787551436918; 
+ Sun, 23 Aug 2026 23:03:56 -0700 (PDT)
+X-Received: by 2002:a05:6102:442a:b0:779:78ae:9a94 with SMTP id
+ ada2fe7eead31-77bd0ab7564mr4440959137.2.1787551436494; 
+ Sun, 23 Aug 2026 23:03:56 -0700 (PDT)
+Received: from [10.254.188.74] (241.170.88.92.rev.sfr.net. [92.88.170.241])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395e49b4094sm9504550a91.5.2026.08.23.23.03.17
+ 4fb4d7f45d1cf-6a59e1d741asm6512681a12.27.2026.08.23.23.03.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Aug 2026 23:03:17 -0700 (PDT)
-Message-ID: <7144766f-4c2a-4bc1-b3f3-d1022a43780d@linaro.org>
-Date: Sun, 23 Aug 2026 23:03:14 -0700
+ Sun, 23 Aug 2026 23:03:55 -0700 (PDT)
+Message-ID: <9327fe97-1a04-4542-aa3c-2caafdceac9b@oss.qualcomm.com>
+Date: Mon, 24 Aug 2026 08:03:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/7] ppc-for-11.2 queue
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-References: <20260823073536.40282-1-harshpb@linux.ibm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 3/4] tests/functional: Avoid unnecessary removal of
+ scratch files
 Content-Language: en-US
-In-Reply-To: <20260823073536.40282-1-harshpb@linux.ibm.com>
+To: Joel Stanley <joel@jms.id.au>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Michael Ellerman <mpe@kernel.org>,
+ Portia Stephens <portias@oss.tenstorrent.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260824055642.41098-1-joel@jms.id.au>
+ <20260824055642.41098-4-joel@jms.id.au>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260824055642.41098-4-joel@jms.id.au>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDA1MSBTYWx0ZWRfX5oa0mPbDvhmq
+ JtTsXtQv7y/SNWFLEZ8egb3gR2pf4ZTjL+CYhdfkzxYpKORWgR5+aQeGSrYzXtiJIcO75MDLF5T
+ 5HoUa9xEIqltek6yUQufoU8qozPbk2o=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDA1MSBTYWx0ZWRfX1gIlov/lFcSo
+ v6fjz65PVSos3rRTJM78KQJwVPf5E5QyCgog2STxVNSxVwrFGnMI+NII9W1yOQumJPXubesh0NC
+ swL3SPNCyyHTWTpqGXIx6hfEzNpk/f9rOy1PSo2Vor8fOnDaUXVRBYcqqM+E9HoylVj3sNm2koY
+ Trq+7CVqlRhFVGqmGxCo5ApJMTnyQAi9uRpvHXM9fc1UblyjTky3zgofiim7a6fR/qVKU+KCXqo
+ Q1yMdPBWFHQQBJG9MuyZERTYdAoDh2xHyMWHAkFEtnyIiKIMrbA3kEcDxPjknqBTSGIKT2tYD2f
+ g735wx/A/uo4U9DAiXG66dmk6GSFuBbW/QDvXEUJ8fc9+j0EX62cjUXHwm/ed73EI7mOeOoGusV
+ V5ge7xrMoeLkQeYoNszclReyt0qhozWa9G+rE/Zsf54BTRIaumtZXxVIxSXkZwyfPDpXcBJL58f
+ YU+sNol1x1jV27Q/RmA==
+X-Authority-Analysis: v=2.4 cv=RtL16imK c=1 sm=1 tr=0 ts=6a8bdecd cx=c_pps
+ a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=+Tg70iCNDwYGP/1Xem9bLg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=_42GJx7MB-dApGGGqoEA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=gYDTvv6II1OnSo0itH1n:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: e-mVJMQjPxk-aL26b2KYtscDKePdTrUf
+X-Proofpoint-GUID: e-mVJMQjPxk-aL26b2KYtscDKePdTrUf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-24_02,2026-08-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 lowpriorityscore=0 adultscore=0 malwarescore=0 phishscore=0
+ impostorscore=0 priorityscore=1501 suspectscore=0 bulkscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240051
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,28 +165,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/23/26 00:35, Harsh Prateek Bora wrote:
-> The following changes since commit eea8fe61b8be8f3016e522e6af24924a0266ca95:
+On 24/8/26 07:56, Joel Stanley wrote:
+> Files written by uncompress() and archive_extract() are placed in a
+> temporary directory that is cleaned up when the test exits, making
+> os.remove() redundant. Drop it and the unused os import.
 > 
->    Merge tag 'igvm-20260821-pull-request' ofhttps://gitlab.com/kraxel/qemu into staging (2026-08-21 10:39:31 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/harshpb/qemu.git tags/pull-ppc-for-11.2-20260823
-> 
-> for you to fetch changes up to 45caf67b9a6a446629e1c133b76a3d9a3cebdcf1:
-> 
->    MAINTAINERS: add self as reviewer for PowerPC RAS (2026-08-23 11:42:57 +0530)
-> 
-> ----------------------------------------------------------------
-> PPC PR for 11.2 - 20260823
-> 
-> * powernv: boot OpenBSD on POWER9
-> * Misc fixes in target/ppc and spapr_watchdog
-> * MAINTAINERS: adding reviewers - Amit (PPC KVM, sPAPR) and Shivang (PPC RAS)
+> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> ---
+>   tests/functional/arm/test_bpim2u.py       | 11 -----------
+>   tests/functional/arm/test_orangepi.py     |  9 ---------
+>   tests/functional/riscv64/test_sifive_u.py |  4 ----
+>   3 files changed, 24 deletions(-)
 
-
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/11.2 as appropriate.
-
-r~
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
