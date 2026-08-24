@@ -4,113 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9AFAC5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 21:32:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D246AC5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 21:33:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wycHR-0003B2-4G; Mon, 24 Aug 2026 17:32:33 -0400
+	id 1wycIL-000449-2k; Mon, 24 Aug 2026 17:33:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wycHN-00039N-Rv; Mon, 24 Aug 2026 17:32:31 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wycIJ-00043c-61
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 17:33:27 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wycHL-00008A-41; Mon, 24 Aug 2026 17:32:28 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67OJVkkI2744492; Mon, 24 Aug 2026 21:32:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=n7EJQ3
- /dB+uboMfq7HAkM69dHRvN2zAHZaQ1BIFR/4s=; b=pH2UAR98AbR9xFs7WFfPmi
- kMOj7/z6sbMsPwymRsXWS/Tv3clznvZ4yyEBBVv9BrHHsvFa/foYlRsDRU4df0iZ
- /v8VtBSwcPu2uhoP158Aa45s8G05Cc84XikZfZ7T8X+reNHUNtQk9GqEIO6cmoWD
- DqKy5TJetzOIGlU9g8Uyf/+/x1D5xtIE0pBB+V58Jt+9Xo1kk5gbM+hETRFMCUKS
- qS17Fv+StmBUjZ0jD51eWKcmFFiQOkq9WFPRkKTLV1eHTkBgqKhECZ3RndCPGglm
- YzNBQ0ZxecFf3P/8P3mxZVTuAUMiuC1SFMBpPvJY1zOZ//fwYCTdob+fv4okueSA
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g716hmg7g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 21:32:22 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OLQHdj004309;
- Mon, 24 Aug 2026 21:32:21 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3jrmbu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 21:32:21 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67OLWKJ565077538
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 21:32:20 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 242065805A;
- Mon, 24 Aug 2026 21:32:20 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 62E0A58052;
- Mon, 24 Aug 2026 21:32:19 +0000 (GMT)
-Received: from [9.61.21.147] (unknown [9.61.21.147])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Aug 2026 21:32:19 +0000 (GMT)
-Message-ID: <911fbd9b-d335-4d6e-96e8-2a1e2e9622e4@linux.ibm.com>
-Date: Mon, 24 Aug 2026 17:32:19 -0400
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wycIH-0000Ei-Jl
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 17:33:26 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67OJH3MF3320743
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 21:33:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ WhPc3VkRhRzyZ0MLYLTycQp/V7Wwg4XGSmMUQ3ehIE4=; b=o96MYyW9RGk6fZcB
+ ZrFprSIICBPLQUXlwdoy/SRYMoBNTOOzfXvR64yTqesO0z39Js/YlfLXJya0ldp8
+ VhN1rbd4Z6NAM+Q2PDO4Ll4XxJ1VUji1XNRldmnGdNu+Z0M57ie8EWklVQtf1Lqi
+ S3dgvvV4s5/HjBPiV8VIcfYFJNhd0mw4Svcfep5ToWEoc9I0WmTN6s1Tqd+gROyW
+ icDIiba9SVvET9IAvegD67XmfIc79qH4Yw2+jMWulH3BqEioF8ePLiy5JMGqRB98
+ 05f4zVPZ/qDcuKs4HgCycDzzXGt+iD3NzTfMG58j+kANKSeuA0L8beuvSYQhjtwD
+ 3/yH1w==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g8kdsjy98-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 21:33:23 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-51bfe3fa93bso42163661cf.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 14:33:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1787607203; x=1788212003; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=WhPc3VkRhRzyZ0MLYLTycQp/V7Wwg4XGSmMUQ3ehIE4=;
+ b=bHxu8cBOluXCywPKEz1rKONTktKNehQS6ZLt42UPpjSEAapZaGj7AWzM0wLoVQwHKJ
+ Mmd2K2BSP2FtfaxLAdqwXIqGSa2IYo7/6LlMF3dejpJhmE8EajHE9dy70CC7NIb+97qT
+ XIag3O10T0MyRybnWsh9cGyr4bU6k0YuU8wAgZCXY7sWkrXpFrKzSaWIdDhHxz4sRNqw
+ DqjAFhWRj2crZ/EoEdg0BBgWvmvj6Con6IBcbXJhjRJAj3/oPR2IY52mDAey3BN7IOsG
+ BbXLogI24I7yQz8RHRW4IKZN7KmBMftGzk9zjDHcn0RKVyg5KdKvV04Vq9hwxxZSXrOM
+ gCjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787607203; x=1788212003;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=WhPc3VkRhRzyZ0MLYLTycQp/V7Wwg4XGSmMUQ3ehIE4=;
+ b=Kgu4cvQYdivBFxHc7ZN1NpboNZEBAADJV4nlNFukW6wI6/F7PEnsvZsNVzQamsC7UI
+ wl85wXEEd/29w75xjH0YExX6kmWjedbrauqpe9zfBzilo/4QaDu+mqfELBdg2dIrdpG3
+ FMudL7cUB7aogx0rPrYhg1MaOU6DcFnCvpZH47kFAiZrpRd/XaRjb6MABVtKGYvpYOYl
+ p6a4fMIf9/bSyMFxbjHhLk+Eyz+tEBpZDf+Xoc3wJUbePi0Epd8gzCjUoKkOZA5NBGnb
+ 7mZsBxwhu5xrOGYqiDKQho+Z9g/gLpjMJH47JTRNTaxk7XjrT+Tiv3c7CHogJ4ofHH/W
+ Vd1w==
+X-Gm-Message-State: AFuF++nNoCB02TyCtRvvk1WYQnuQx1wk3I5eIn1GA09JW7AeWCIlBuKN
+ Q+jC6wzp56JbCNG9s0V0Bxnpr7AIBEJPhA4CfYKl7jSg7DbTWfEnYrhcoMIEEvgfQqa2oMb5Wqs
+ fEVXRCNEuTFsrSMSxwdnfMWQo7lXjE3PLr+eZNxhe+yoQXTAUaKgv1pijD6fjvghC89d6
+X-Gm-Gg: AR+sD10xqUMoXXjkxgz7NqXwNxyN5Dr0MrUuekaM+4nhzpeayqhyYBGJcCPee9pQ2ea
+ jIVzE8m0JQvSpQOIGfc8pPkpTvplbZnGnenTXe9LdGIN2d4CKHugovoGbm2CA3MQd2YH7Sy5gHD
+ 3MH78jQNm8lBzn7rK/mEY15YkDnZMhHpl040F3uqfhtpK+wqs9esr+J5QUhWfs5WTfVMEvf8Z8y
+ ZKd+STykdSxUlm/IhPjim7COCDBAA9L7+UjKO9lWNEztCUk0S3lYFWn6MR/v20GZyLGZskqgECW
+ EIRK1WZluk52CMhuZ62cGuap/iR9KIuYiBqJ3f3fBf2tN12Y6ZCynM+XWq5mUdMoMB2RckmGSEM
+ eQB/ZJoAiqMLP5QkhxLyDofMVoAYl0dnI02uGD40ZsoeVy9Cy9Oc=
+X-Received: by 2002:a05:622a:244a:b0:52e:2e04:44f2 with SMTP id
+ d75a77b69052e-52e2e04477cmr44280051cf.20.1787607202804; 
+ Mon, 24 Aug 2026 14:33:22 -0700 (PDT)
+X-Received: by 2002:a05:622a:244a:b0:52e:2e04:44f2 with SMTP id
+ d75a77b69052e-52e2e04477cmr44279461cf.20.1787607202271; 
+ Mon, 24 Aug 2026 14:33:22 -0700 (PDT)
+Received: from [192.168.20.232] (82-66-243-121.subs.proxad.net.
+ [82.66.243.121]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482c9b69a6esm9292305f8f.5.2026.08.24.14.33.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Aug 2026 14:33:21 -0700 (PDT)
+Message-ID: <e5a133f4-6c7a-4db0-8cab-090e112a5940@oss.qualcomm.com>
+Date: Mon, 24 Aug 2026 23:33:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 09/15] s390x/pci: Move g_iota from S390PCIIOMMU to
- S390PCIBusDevice
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Cc: alifm@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
- iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260818172521.223460-1-kshk@linux.ibm.com>
- <20260818172521.223460-10-kshk@linux.ibm.com>
+Subject: Re: [PATCH] disas: Replace straggling CS_ARCH_SYSZ
 Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260818172521.223460-10-kshk@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDE4MiBTYWx0ZWRfXx4TEVX/KRqzI
- t0kwbvTuFsfmZHlPv6mkY+7Yb/Z6zGRLUmkikt8b1dXLssPOt8vpXd7pPAvxyr1BSMLI6Ba+8J4
- MabNG0UbNwAth6ElqkTy52UnFmhnJ7A=
-X-Proofpoint-GUID: OjWEgDBrUFhl973A5-wBjR1ZF4Sc_G7w
-X-Proofpoint-ORIG-GUID: OjWEgDBrUFhl973A5-wBjR1ZF4Sc_G7w
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDE4MiBTYWx0ZWRfX7Yd9PvKVD0aR
- n94MPed1acPIc/SmL1iRPcndMQnVtJ6ODTs2RLZ2Y96vqLS4ZdFx0ALBpxDZsMr8YvMUxK5nkpI
- 6kSJ5ywNkqJdDMIezHbaWTxOSX+dtMmuPSjzfYA06grnVbZJ8vxlkVtQEiY+3aiJa4lDx4qZPak
- DWxkFcoCKVmU8JctmfFnQk/5c3vLV/HZW8H8BqOSFsFUq3Rtx3gg+CtcN+zJrIs+N92158Rf79g
- Oo6TQzXvhXpSMRv2DLPJVvWGCSjAFSNMFrQXybCqMGD7QY5Ljy0G2UznPSIKbWvYCwmLE9TEYS2
- yLte55cw2/Bcq47hcLrbVMh0MKBGKsJrVq9/+gmnHM+CZyJOfS4MHxvuXciII4zK/+0PS1pmxiz
- T0eo0kkGIeyAWX3nu4U43ig6Jl13jhceBLKN8smukB5p/heavSXhVOxBYkxecczIIZBNJTjXB/2
- k+A6d89CnjR55tPLQsA==
-X-Authority-Analysis: v=2.4 cv=H7brBeYi c=1 sm=1 tr=0 ts=6a8cb866 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=K5RFVuYA7s4pMnEJfqwA:9 a=QEXdDO2ut3YA:10
+To: Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20260824143033.306201-1-farman@linux.ibm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260824143033.306201-1-farman@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDE4MiBTYWx0ZWRfX2EjPMKZxmq6J
+ pePDGhqRML+DwIAhl51l/jG7iDV58/hVo82AynhgsrtTCDnZuRZD3kmcYQMUtatxXKM7r0+LdNF
+ F3BtW7PUdfcu3oYZWGHf36Rp9NKJtKk=
+X-Proofpoint-ORIG-GUID: UNG4bhjHlAcuuUuorDUgTtPsm_a_N7Q0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDE4MiBTYWx0ZWRfX1As5oQQlISa5
+ fjVV8rule4WZv+Hv/tA44ZhyHTgEEmYFsQIr5EavlE86A4epXRPwDnNS3fVZAw/I7pTw0bT6xvk
+ RoD0fSuPK+y3J2/jexjeyxL0OWrtU+wv+nbYinY9rPeXnmHcYyq3XTdOrG7WSPwUL3cBQq5FBqQ
+ rRcnL28xZHI36DUTTJO5xvfUw3M3Y/u/0aqRogePSPG4f3M8sl/G/hlqBC+ONF4j9hhzcrM9ggc
+ q8/RNeNP+oZwNaEwTYjk1i5uEICcR9BE/0FZ7PLw+yDwmlINqIs8tL8FZCSzX2fjxdWVkKsMlnC
+ FHGqHdOOLY7AfFnxvIS6yRl2++ZnqgWIMsYbFBOunViTypac7ImaBnwMaAo30SgR3uzFbohsVhY
+ G5yau5zJZuZGidlN/OAx4VbXtHml3NukDFiLbIkol90yqYPjqdDDk2ciNlIf9uKJRGbHRQhpv23
+ PRa2TXdPxFs+zdo2A/w==
+X-Proofpoint-GUID: UNG4bhjHlAcuuUuorDUgTtPsm_a_N7Q0
+X-Authority-Analysis: v=2.4 cv=d8DFDxjE c=1 sm=1 tr=0 ts=6a8cb8a4 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=lbskcjEx90pOFJH4cTSgiA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=VnNF1IyMAAAA:8 a=EUspDBNiAAAA:8 a=-DuG6ggHnZLhH3crdFAA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-24_06,2026-08-24_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
- bulkscore=0 adultscore=0 priorityscore=1501 clxscore=1015 phishscore=0
+ suspectscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0 priorityscore=1501
+ malwarescore=0 spamscore=0 phishscore=0 clxscore=1015 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240182
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,16 +153,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/18/26 1:25 PM, Konstantin Shkolnyy wrote:
-> This field is only used when S390PCIBusDevice exists, so it can be moved
-> there to simplify S390PCIIOMMU which purpose is just to store the "root"
-> AddressSpace.
+On 24/8/26 16:30, Eric Farman wrote:
+> When updating to capstone v6, the define CS_ARCH_SYSZ was replaced
+> with CS_ARCH_SYSTEMZ, except here. On systems without capstone-devel
+> installed, this causes a compile error:
 > 
-> This also allows to save/restore this field during migration.
+>    ../disas/disas-host.c: In function ‘initialize_debug_host’:
+>    ../disas/disas-host.c:78:24: error: ‘CS_ARCH_SYSZ’ undeclared (first use in this function); did you mean ‘CS_ARCH_SH’?
+>       78 |     s->info.cap_arch = CS_ARCH_SYSZ;
+>          |                        ^~~~~~~~~~~~
+>          |                        CS_ARCH_SH
+>    ../disas/disas-host.c:78:24: note: each undeclared identifier is reported only once for each function it appears in
 > 
-> Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
-> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-With commit message fixed as described in patch 3:
+> Rather than making capstone required, replace the constant
+> with the same one used elsewhere after that change.
+> 
+> Fixes: c8220a096f ("target/s390x: Update capstone disassembly to v6")
+> Signed-off-by: Eric Farman <farman@linux.ibm.com>
+> ---
+>   disas/disas-host.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
