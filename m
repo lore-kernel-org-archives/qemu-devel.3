@@ -4,89 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 359C5C5DF9D
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 16:48:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 253F9C5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 16:48:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyXpk-0000Fg-Sr; Mon, 24 Aug 2026 12:47:40 -0400
+	id 1wyXqH-0000JL-OH; Mon, 24 Aug 2026 12:48:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sinxx198@gmail.com>)
- id 1wyXpi-0000FA-Uc
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 12:47:38 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sinxx198@gmail.com>)
- id 1wyXpc-00016g-J4
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 12:47:35 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2d5cad1a6baso34785025ad.3
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 09:47:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787590051; x=1788194851; darn=nongnu.org;
- h=mime-version:content-transfer-encoding:content-type:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=tMlYqhJMbZiPC7gUT8G48tTW7xJKfzGAYPtkNaRLyKc=;
- b=qmhpvgAvvB4MAsOFx8cBvAEQlpm9TypF99VUEPDPJrgmUYVltj7Uv4936Wii0bUmwq
- G1SlImw3cGYAjOFuJQ27UcjyLkwOn6bN3n/hdBteq3RuBLC9IOdB2CVF6WJ632DjrvYQ
- ZNUDqUaQcxpB/EQNsBXjMGXAC6i7qFuJD1jK8W7c7K3KDza4X226pUy1QU2A6RBNGxTs
- LL3783U/GDBY+zDNIiXEazilZgAvnYikL5MSiTwmCPEhwaN8jue1cKMyVn33E35lVAj8
- Li/Mr22WoY4rYiW8gjYYQI+rWte3WcuJaF9jkxIn4arkpASdOoQXZFXyQYfVu8Z1awkB
- ZovQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787590051; x=1788194851;
- h=mime-version:content-transfer-encoding:content-type:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=tMlYqhJMbZiPC7gUT8G48tTW7xJKfzGAYPtkNaRLyKc=;
- b=MiJgJ0bSb60YlD+K8ca+SLOifvmOTLVf7OeMm52yIn5mrU1kAgHLKVO01i2ZPLzgxG
- CDXr2FDIbapeNLdzqEMD27iuTh3awCGE/yBh3Bk21OoLVZo5euhTEFp52zn5O4iyOD7t
- fbs3rBdCh+m3dYqrD6YuTlebqRLjmU4l1QQ9nZcAzwqKzhJFFFVGGEJ2XcF00/O5PmY3
- LSsd8euUbefm7av+auozkl+l3x9MstTmJr03yKaYtjzRXFjPnvAZaPe20M0yvZVKgiGa
- O2GeIciB8m3PTc2Pbl8S8auW5vwDd3Gsjvv9hhLEuo3QlopbhLKZdyRzvO0voS+gHRUU
- FRYw==
-X-Gm-Message-State: AFuF++ny5FNzirDkZSTHXD74BfcRfdgFbSxjQh2s/EOdvRroKdGxNn8b
- VVkbL5GGg2loYxcaLtrSHGvn7w3nb6JT4Ea6vkzloOdOvBbVbT9qWS8w+NO7ANiHaz8=
-X-Gm-Gg: AR+sD11yXIWFkwJvgomRFoLBdTJmbpbtJcwJkiYJXiXHwm+hyq+/1D6htS3w6/yA/2b
- H7nJEn1u2I8XwvligDAfoQUlEem+QiyDfTHIsrFJUxwMfIdKqZg+kH7C9+KaY2rHC0ezwRS2che
- pIA+nkY4ILNaO5HUvzRBRxgyPEyUvh/3vio+c7eaL48aeZZSemo02I86wnJe+pPoZ9rwYOiLMOw
- ok/zuuBE+8NMpZ/xR4Z/5FTPkkpyw0Lgoti63xbSQCDwwmsfcP8bO029XhwTknJCPE4raplMDkP
- sLq2z3rJO15pRiH5rLX9XJ4DdLfg+s9jPcr9FBkvNq+2OluM4ugmf+oD7HlBRINHvI99JUQD/od
- KME22auO49xqCxiYm/fuHsIBa0fRC3+DfkDgPgs7J4ZzDH3Mve5y9YsbejFjnZ7pVCvlhcXQjtM
- ReL4gVgupmAdVBbMaxFoeYAhjWITbgeZkUOXLW/ywZSiezsdVy+xLhrT6MiA==
-X-Received: by 2002:a17:902:ebc3:b0:2ca:1479:d9dc with SMTP id
- d9443c01a7336-2d64b0427fdmr556391425ad.12.1787590051200; 
- Mon, 24 Aug 2026 09:47:31 -0700 (PDT)
-Received: from kali.sinner ([38.240.225.76]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d6768dad15sm19664295ad.72.2026.08.24.09.47.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Aug 2026 09:47:30 -0700 (PDT)
-From: Warisjeet Singh (sin99xx) <sinxx198@gmail.com>
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wyXq7-0000H9-DZ
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 12:48:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wyXq5-0001FV-Gf
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 12:48:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787590080;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Y78VORzZ/sOGh12mpZS6A+EC3pQEI0G1K4bCloJqqc0=;
+ b=UyNxIC1dTaHeyyqUZxuz5zypErNFTz0DR2uV5xwvQ1YJ3AHQJm70wS/UzED8geLY8zS5Dp
+ yLXaTBJgL62JPomQjMP+3O7h3O9U425hPTSNry+KcoR16cY16ugeBA2xToZUtsEPQBjsdx
+ mFLm38IGqg9XKWqhOC/kgO7tZNuFHBw=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-230-CZtv17hmNoecTUaSqv4JbQ-1; Mon,
+ 24 Aug 2026 12:47:56 -0400
+X-MC-Unique: CZtv17hmNoecTUaSqv4JbQ-1
+X-Mimecast-MFC-AGG-ID: CZtv17hmNoecTUaSqv4JbQ_1787590075
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F0736195FDD1; Mon, 24 Aug 2026 16:47:54 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.48.9])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C635B1800644; Mon, 24 Aug 2026 16:47:52 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id BE632182A84B; Mon, 24 Aug 2026 18:47:51 +0200 (CEST)
+From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com
-Subject: Re: [PATCH v2] hw/display/vga: fix text-mode OOB write after a
- graphics surface switch
-Date: Mon, 24 Aug 2026 12:47:26 -0400
-Message-ID: <vga-v3-reply-20260824.sinxx198@gmail.com>
-In-Reply-To: <CAMxuvaySFoRqkz2UpWNeooBaqouyMLaZy9N38UbykQ38j3NWgQ@mail.gmail.com>
-References: <vga-v2-20260823.sinxx198@gmail.com>
- <CAMxuvaySFoRqkz2UpWNeooBaqouyMLaZy9N38UbykQ38j3NWgQ@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, qemu-arm@nongnu.org,
+ Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 01/12] tests/acpi: enable updates
+Date: Mon, 24 Aug 2026 18:47:33 +0200
+Message-ID: <20260824164751.1700783-2-kraxel@redhat.com>
+In-Reply-To: <20260824164751.1700783-1-kraxel@redhat.com>
+References: <20260824164751.1700783-1-kraxel@redhat.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=sinxx198@gmail.com; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,28 +87,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ tests/qtest/bios-tables-test-allowed-diff.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Hi Marc-André,
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8bf4..8c982848d47e 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,4 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/aarch64/virt/HEST",
++"tests/data/acpi/aarch64/virt/SSDT.memhp",
++"tests/data/acpi/loongarch64/virt/FPDT",
+-- 
+2.55.0
 
-On Mon, Aug 24, 2026, Marc-André Lureau wrote:
-> We should finish separating gfx and text state.
-> The text functions and paths should only manipulate
-> last_text_{width,height} (in vga_draw_text/update_text, and text path
-> in invalidate_display/common_reset)
-
-Done in v3: vga_update_text() (predicate, cache stores, the -1
-invalidate handshake, and the mode-message box) now uses
-last_text_{width,height} too, so the text paths never touch the
-graphics cache fields.  last_{width,height} are written by
-vga_draw_graphic() and the shared reset/invalidate points only.
-
-Re-verified on master @ eea8fe61b8: the qtest PoC (graphics 80x25 px
--> text 80x25 chars) is caught by the surface check, QEMU survives;
-SeaBIOS text boot screendump still gives a clean 720x400 frame.
-
-v3 sent as a new thread: [PATCH v3] hw/display/vga: fix text-mode OOB
-write after a graphics surface switch.
-
-Regards,
-Warisjeet
 
