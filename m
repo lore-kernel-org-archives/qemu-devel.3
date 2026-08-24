@@ -4,104 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13111C5DF98
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 184E4C5DF9D
 	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:59:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNgu-0000IV-08; Mon, 24 Aug 2026 01:57:59 -0400
+	id 1wyNcL-0001EO-1T; Mon, 24 Aug 2026 01:53:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wyNgT-0008W0-K1
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:57:30 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wyNcI-00018b-8W
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:53:06 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wyNgN-0004FX-2Z
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:57:24 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-8487214ad2bso4104827b3a.1
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:57:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wyNcG-0003Gs-Gq
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:53:05 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2d5cad1a6baso28259085ad.3
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:53:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787551035; x=1788155835; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787550783; x=1788155583; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:sender:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=5w0zTlYONzeGW1r7MUxxRRSGYvKItq3LTMlmC3GgUzc=;
- b=Q9jPr5EOuwGgJibDBM5PDQoIdz8V2XWd443tlg9jROeAyfpP2ZY3unu7+N29dyJ17Q
- ntqdV/DGql5zr3lx/cp/WXCXr9GZPCDAwVbGeI01b98A7BP22JtjD83Hqphtv1GeclS2
- wVjM9pkNX3u3vrL/TlGPwokholV7NtyFzQl3w3lilG48xTqX7O3ViBVjkCRH+RcJBfPV
- yjNDLJfNb2Qw02Fq6axGyWtnyIWCTmNQG7slz+HH0g9pz/B88/2rpkVkLqNhHLyMjdHI
- MXTrd9ZBB2u7TrGXfvFi3nQ/IfJ24pxSCu1tfV0x4tEVSn4tMvy6P+iPBMaqDPchOiQs
- iNKQ==
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=oecC5ZHB+mDg+64qzcXgOyLmh0fryebbjbeCqefnTnc=;
+ b=HmnlcrQ7kz/3WDouMqeh7oZ8n0+Ppt6oddEjynfuTPw2ISNikc3+q4kz2fp6RbpsQS
+ eTu+4c8EjOQnIpq9i0xg13ghYVhRVpEoFkuU1YExG0tSZXWW5rE5y/TTg8nizRRsGXz0
+ wa8BoLBWi6Pvs2c2O3KG7zyKxj7X6KWcXIqWzXtXixcJMenCCAT8rVGsNYFXa2OBS6P9
+ G/VlSeYvdCo8qhanCAkDYwqKePZ7oqqylUAqBu3D4L1N0ec3wJGHdqvNGVv4WMhpxsD/
+ LBSSB8twN6QE1jvTfrMN+teBdhkrStqow9MIM79/7hzVeW2xlBZEVGmdEDF4QpxIjhkv
+ HNAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787551035; x=1788155835;
+ d=1e100.net; s=20251104; t=1787550783; x=1788155583;
  h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:sender:x-gm-gg
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=5w0zTlYONzeGW1r7MUxxRRSGYvKItq3LTMlmC3GgUzc=;
- b=cL0CXMsEDhetJmFQ1xLDCLp2kPFbcyL1QEhFkH+vTMmclwMcq7dI7QiF58vNPmdQjt
- KvcIsOftXp0fzqmodxRPDlgynk++pyi6wo7kZ0zjPYd7IwHcITLMcjuRiicK/C/QRf4B
- O5es+YORk/MJz/3N+ZKmwem6i3f/gOFfY5Sf1sae7aki2nC1PZlIuI8e96BD7G+2MF09
- etYRhQsHg8jxaVruadpeBSVDcNiPs/RWM2xJh9dZRCxzbyhO0skoH3uNoXHcDtl4QX9u
- /vVti/SlO+Z8ar2RPAc9gzyn5RrAXUltZZcbAJDfSx8fSM+O0aj5EeIEnFCLAaBHeXoZ
- NsYQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpV6ytVjXBYnqj1HY/gtM/iLqY4yKLj5XlVP/Tj1hd13wtS+ZnxkijWtkz/6awR7908OIXQTQOi0DOu@nongnu.org
-X-Gm-Message-State: AFuF++n4uq4zMSr16XFEZgdb8ACbW2G6xtH9HVu8Ng0QwjfuJ1YbDh9k
- 9bscgA2J1d/wXGXZj4hyQpQ+47Er0qnH8+sGpihZliSF2LEtU3VQ12AK
-X-Gm-Gg: AR+sD12P4tBdOtKXhIKyfgQo+B2Cz/g9Zp1H0smo8v9SdZALWOD4kjWkf0fFh4wnIef
- 7VC4XRdMuBfgpLw9Z/fDOVhaBqje6mMho9qbNUhRUVlQZXE4fDirzrDUEYcVCQO6hPjuoRvp6BT
- RxMhKDh0bGaTHVRm4k4VwZkzeyN+fPARFli9grRmQCHn46dQmJWsyhM8ukYtkCtDArLak4Wyxql
- +8WEoWUs0M8r1mzSDCbv+BttUCcvV1dGX+RFyv09E40WzrrFDsTK13xRMX9vvmcwqDLFBCPZhhH
- oDQ+f4zR3OE7QFLByHylhOcGRDuK3hhdoxi10+E7mm4j4wg71VJtOlCOYFfYPeimMWf3ZEzXwTy
- 9YmhTbdpLlxo+8mdIBXOfmjeinmdso2kkiUGg+ZRm+4Ztxtw8/0HC2s9HWYcxU/VWo3eV6vS1Bj
- 4v3W57utQUsh4yN9B2JLGu+mA/TJYHmQJ6DnShZfFvpC200zkrQLemDGaON5ZYX2NpwnmA4COsq
- 4NJZV8U+FUxrs1GkYI8l36fJdAiObT2S8Etpx1VbCy6ACr0AQ2C+NcraF2WY82xptdfrDh8mj8d
- ERv3r8wIrz1mL8yVs2+MqQ==
-X-Received: by 2002:a05:6a00:7497:b0:851:fb36:a702 with SMTP id
- d2e1a72fcca58-851fb36a9f2mr34795777b3a.9.1787551034897; 
- Sun, 23 Aug 2026 22:57:14 -0700 (PDT)
-Received: from donnager-debian.. ([180.150.112.50])
+ bh=oecC5ZHB+mDg+64qzcXgOyLmh0fryebbjbeCqefnTnc=;
+ b=iahTPM1F8Kjq1PeCtq5Z3ANCxo6pV3EyROyvnv95C5E+1VRVDZQ6WicdDLubf5UqOV
+ zfJDv+/JTaJYP1Gd0n9TXdRE4VblUk1yNUrvFAKtv6vMj8T+Xe783rRwpjtWsexBcZnW
+ Tf6gdquz0cLaYVbaSLJ6pH4rsqHIKQHzRja538AtoiOlZgXUlaDzIMJIyvsv0QeaVqr0
+ tk8hhU8WKIYg8umen2JlmGcF/y9rBY19Cg62n+YIpqEfQ8NfO4p3k78w/45+/tJC7Qt4
+ WduZR+4FwN/LmqrQFg8KPvd3oTTozR7KU1YthfGt1GvrsbTP0K0c3eMRJ6DfZOFLwOQ2
+ yuGQ==
+X-Gm-Message-State: AFuF++li8EfTiXPpqH3xR3gRrRC+vGM9hRXzEh8qbj8o9H1/rZr1QQIH
+ zFyrhWaX2uE3atjmbZS4qikFcP0neV28MNFtf5XKJml27onrnAQ4RxfI0wHulg==
+X-Gm-Gg: AR+sD11biu3H9MXuTMUnvvUtGOJ7bufauPM8TM0e/ghhcb00YFsqsovu+gE7obF/6Mj
+ o95Btef0WSzDpt+50/g9XzycXbkaY/PYBA0AkbT89ZtLUFAJul8+2iciPcMsBom5TA3+X4JirmI
+ RNk0ODlhUXVnksmCSd6t2bevXBp/AgjN736lufLD5zkFHOKD0AqPr0NFG2RDEV9tvShUNn2ti6X
+ zlcrh7BpOb1mthOe73oVuBlkvlQwJ6wj1VYDuNefBptj7fJBO9xYsdogormtZuePyzcBIfK5HMx
+ c2rHYm/IFljg0iQrvBJy4nZmtzoY9tKY50HqiMXvesEj1OZhxUtXWdPAah4SMoaScBifioVFIi+
+ GjT7R3V8USxbr3M18iYr8Mc4zjG5/dr5AV1o2cn+elWapLmk5nH43LdJObqBtZgy6m5aBg663Bw
+ mv/L31pVybNcT8JOtRPjEp5tP1+Y4iZD7vepe4udPFkkrRtN7KtSYkvR8vr6lpPBygOe6FaSOyy
+ MUaVvVLcM8=
+X-Received: by 2002:a17:90b:5646:b0:38d:f5bb:e0f4 with SMTP id
+ 98e67ed59e1d1-395c33367ebmr44746567a91.1.1787550783020; 
+ Sun, 23 Aug 2026 22:53:03 -0700 (PDT)
+Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8520f03b494sm1583474b3a.33.2026.08.23.22.57.09
+ 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.52.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Aug 2026 22:57:14 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Sun, 23 Aug 2026 22:53:01 -0700 (PDT)
+From: alistair23@gmail.com
+X-Google-Original-From: alistair.francis@wdc.com
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
+ <frederic.petrot@univ-grenoble-alpes.fr>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Chao Liu <chao.liu@processmission.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Michael Ellerman <mpe@kernel.org>,
- Portia Stephens <portias@oss.tenstorrent.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH 2/4] hw/riscv/virt: Use hwaddr for IMSIC device tree address
-Date: Mon, 24 Aug 2026 15:26:38 +0930
-Message-ID: <20260824055642.41098-3-joel@jms.id.au>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260824055642.41098-1-joel@jms.id.au>
-References: <20260824055642.41098-1-joel@jms.id.au>
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL v2 92/96] target/riscv: Allow UXL to be 3 in mstatus on rv128
+Date: Mon, 24 Aug 2026 15:48:02 +1000
+Message-ID: <20260824054806.2790041-93-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260824054806.2790041-1-alistair.francis@wdc.com>
+References: <20260824054806.2790041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=joel.stan@gmail.com; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,39 +108,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-create_fdt_one_imsic() hard codes the top 32 bits to zero. Instead take
-a hwaddr and populate both the high and low cell.
+From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@mailo.com>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
+Valid UXL field values for mstatus were restricted to fix a
+reported issue, but this inadvertently broke the experimental
+rv128 support where a value of 3 validly represents 128-bit
+execution.
+
+Update the mstatus write logic to permit UXL=3 when running on
+an rv128 CPU.
+
+Fixes: dcd028517749 ("target/riscv: Apply UXL WARL handling to vsstatus")
+Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu@processmission.com>
+Message-ID: <20260819105655.33391-3-frederic.petrot@univ-grenoble-alpes.fr>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/virt.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ target/riscv/tcg/csr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index d58656f70d1b..b91d5066d8ad 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -383,7 +383,8 @@ static void create_fdt_one_imsic(RISCVVirtState *s, hwaddr base_addr,
-     g_autofree char *imsic_name = NULL;
-     MachineState *ms = MACHINE(s);
-     int socket_count = riscv_socket_count(ms);
--    uint32_t imsic_max_hart_per_socket, imsic_addr, imsic_size;
-+    uint32_t imsic_max_hart_per_socket, imsic_size;
-+    hwaddr imsic_addr;
-     g_autofree uint32_t *imsic_cells = NULL;
-     g_autofree uint32_t *imsic_regs = NULL;
-     static const char * const imsic_compat[2] = {
-@@ -403,7 +404,7 @@ static void create_fdt_one_imsic(RISCVVirtState *s, hwaddr base_addr,
-         imsic_addr = base_addr + socket * VIRT_IMSIC_GROUP_MAX_SIZE;
-         imsic_size = IMSIC_HART_SIZE(imsic_guest_bits) *
-                      s->soc[socket].num_harts;
--        imsic_regs[socket * 4 + 0] = 0;
-+        imsic_regs[socket * 4 + 0] = cpu_to_be32(imsic_addr >> 32);
-         imsic_regs[socket * 4 + 1] = cpu_to_be32(imsic_addr);
-         imsic_regs[socket * 4 + 2] = 0;
-         imsic_regs[socket * 4 + 3] = cpu_to_be32(imsic_size);
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index 9cc6297328..4c8959a33d 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -2014,8 +2014,8 @@ static uint64_t riscv_write_uxl(CPURISCVState *env, uint64_t val,
+     RISCVMXL xl = riscv_cpu_mxl(env);
+     uint64_t uxl = get_field(val, field);
+ 
+-    if (uxl == MXL_RV128) {
+-        uxl = xl == MXL_RV128 ? MXL_RV64 : xl;
++    if (xl != MXL_RV128 && uxl == MXL_RV128) {
++        uxl = xl;
+         val = set_field(val, field, uxl);
+     }
+ 
 -- 
-2.47.3
+2.54.0
 
 
