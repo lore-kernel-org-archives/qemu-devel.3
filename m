@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35C19C5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 15:28:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7380CC5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 15:28:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyWXu-0005ON-KV; Mon, 24 Aug 2026 11:25:10 -0400
+	id 1wyWXx-0005a4-Lc; Mon, 24 Aug 2026 11:25:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wyWXt-0005I6-3b
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:25:09 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1wyWXu-0005Os-PQ
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:25:10 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wyWXq-0007B2-FA
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:25:08 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-6a0a4aa99bdso6169585a12.1
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 08:25:06 -0700 (PDT)
+ id 1wyWXr-0007BJ-Ui
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:25:10 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-6a20319d030so5447646a12.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 08:25:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787585105; x=1788189905; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=hI/4kRcuHe18/qYKP2hOGxNnKh8pw1N2QjNp4C1E0DY=;
- b=eF4XRC5hQXjuXVosXxgCc4iJg9LohwVTdoZdLeTmAXihJsbP6OCYOQW9KKLM5cINBy
- a8+5hB7/qA0TxDb949hCncgtXbFqsadOwUbU5EVPQw6s7c5PbnLrn2QPlVIywYl7vVok
- IEr8Y8dhQS27QHf2lGyj1KStFYFV7wBWmx8BhO/nwW9xX9CcBs+0gw/cNqPV7Bq36Iug
- DUnZ+T+fhcej4RqHkbF99XrPI/NIKdpVrofSoeiW7QEyF2IEEIifdMpvJBLfYUN4FhyO
- fq0HRZ9O6yy/4EH85iOcZTUeZr9GiWUFyJ5kXmQ8+rwD/hKVbe7zZbrg3WPDgsmiWB/t
- tSqw==
+ d=linaro.org; s=google; t=1787585106; x=1788189906; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=pbxWYcsvgblTzeogtzkOWcZE1+KyDnULKMrmEfQ7zSc=;
+ b=yAwF86AXLc6WIaRlzujC3G7/KpowoSaeOAhBn5d6BgVbNOyGtez3aXwi3Nm7TC+xj4
+ tk3LIdAyPZj73Hc08KfUdETicyExiR1BuP1KBib8bqVxA2/ZIHJA2TmvliuaE5xoPJju
+ IypioCt8vLVYsvbTQXqbJBafPUiQGB5a63VX0Dh5cwAuQF7xDotBMYbRPNKpcQg2PInh
+ 6kvufxW3H/4RZs/weZKD7NvprcghJrehsVSBrvRvSYiBAoUx6zEePu2gnvC7CpZlMwLR
+ J1hoHUVKS3v4Rm6HpllABWDfpKnITm4A2CsZFVqQqHNRHbj/Z2uIw+5rkTAxtS4tdyM4
+ eyhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787585105; x=1788189905;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :content-type:mime-version:subject:date:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=hI/4kRcuHe18/qYKP2hOGxNnKh8pw1N2QjNp4C1E0DY=;
- b=deYvvC4AVPCs4lCvvQlQORCx4TSCgZXouFMiqwsekCDOmEEXPOB42bZ7hlrhkWwgtM
- g0FGhDpTkyweq5bUXfCb8VrCLv4rOGaTwq3JNFdrXzmtmzlgytuK0G04Dl39ZlHwx+RM
- sFuuqhgbWabEGBjRpJYz19fQIA12EqlA3xbGQvjcOj82CiARmbh6OKOSDs4fMpc/Qtd6
- 6R2hGER1kZx2Zyh85zuwXB/Z6erSD3UQv9CyW/Ix04Z4B9kAUP6ubHvGp2fXJvPbNVzE
- 0FwA1C8ZxiqRTTNczsJ8wzG1Oz5eZFOveDWIoEwaSXLI2z2PQ2CSZgB7VRGPk4QDzqZ8
- rkuA==
-X-Gm-Message-State: AFuF++nh//o9mM/XCwq73nFxFf334SVueJlQZx6JWcUwy7l+A8zxJ1l1
- f9UkUEONvvIcPeowc+NrAvTarQgcoj0K+AkdY8vqgN1trzsJSYvZL5+xzmESSdjMl5Q=
-X-Gm-Gg: AR+sD10WbFpCG4iPLxnod3Q5wYHEuPd7S2lbvpFqGpQ4m+6MAxfx12x7OD1HLGEOxfd
- uoqsbiOqzSfwV+3DedsgdbYrLtt9uaDUr/dIX2eoih16RILwJtY2PwP/u4rRBMYcjJEbDTAQe1R
- doJ/p9siqkFm2YcTxR23+53L/0ET2lWHOSIYb3e4Y3PNFRkRUIOgNd3iFM5IU47ZZcjzh/sq6nW
- bEKP2BpsqqAwX3ccmN2FtzPSr3VokG130hmGGr6Vv1ajfmrIWmZCvM4TMIeSMhHO9JayOWc8Apy
- dMATGfOi0zgXB419NnTToF686W57TJEjzAJRr8qVJh531V29eFhfOp2rJTJbDHT5HS7OcRT2t56
- 0T1UhksDtsso5AlwEzeOuf8rdUf4Zts3ChxBlCvQoWgMazKxrE9aSWEhbB8cDfOQXdX/8NUnj3W
- Dcp+qSWAaVrMxaIfFk7Am+JrhOYsAjNn8/SWdBDAZuCAcBTzyr5bIGHaXJ59Sq
-X-Received: by 2002:a05:6402:501f:b0:698:6084:db7f with SMTP id
- 4fb4d7f45d1cf-6a582b5f1a2mr23050271a12.10.1787585104864; 
- Mon, 24 Aug 2026 08:25:04 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787585106; x=1788189906;
+ h=cc:to:content-transfer-encoding:content-type:mime-version
+ :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=pbxWYcsvgblTzeogtzkOWcZE1+KyDnULKMrmEfQ7zSc=;
+ b=sEVZ5A8e1BKPpSyf+GHQgsU3MtHzQSUIsp3tCdk6NK1dieUGZMG5/rIobx+vlv9qYP
+ PddeyjQHzc8OBxgwOzWOPIQWml9EEh8zIbsuB6vno0u4R1MZRaZSJt3uNIBc1aiUAqJw
+ U83CZzWk+mcMmAeK19w/2yTDLY31AYI7NIXGj0dH4sqc4/NM4NkTvmyZx1LXdEQvGwvj
+ xG6nmZMLzI5aE2tf40Y+e1iFWtWOdpdGiZ81gC+TJVtVqJ+dc3X+kAP53+QKZhOkgwkz
+ ZDtrUZT2FVLgDlXpzTYe3s0HO12idKlNggplz9rn9zYEVorXblTKI4lwkqXJnDg62qAy
+ +T4Q==
+X-Gm-Message-State: AFuF++mDHoPB7zmsuW6GWJAyGfOWqFPpYpaQHwfEzdcAVUU+/7pPjc+4
+ nbIWe6qPDwj0vRKm2g8oWTARCnW9wAzTqT5JyfXQ753oJBmjIVZMHf1oVANUSVT1mRs=
+X-Gm-Gg: AR+sD10roFzPDB/bcGC0pYxAZVGMpvH81rUiZ4coIfaOMyUIDpboGupy0/3G+M4941S
+ rYC6c5TI0Hh5BhMWmkwYArXq2iLpTL5KJ/yT6G95D6izmDnwoC67foRyZ4jbIVM84rtRZcfV2ZO
+ EDTwaIFZkSPUGbCjrHBmW6sbbVkfIjB9OihcXvB5i5Ja+nC9kJmsl2qtpal/LjFgKaVPEVw/1fy
+ bnM6P460VkPcQ9vAPS69ry1h9hGIEqnIrh+MwLU9SYNKA2e2qD0xhNwzAGJzhv0A5qoLfi00Q1r
+ 0QZ6z0Z73UrwKD1RNZjftrhNPvplJvpKrAkBnFFUR+ZPra+i3za9chy5AVXzkCqsiCmsEpyQOl3
+ WCrX2Z6Bs8rKf+Qd27xLTOPn+BVjN9LnU5Z2DmoxVdUFO8J+7kVM47izRaoKOj9YAoOke2Jw6Ce
+ qoxKKe4QqYgOqaPcq+gx3msZfaJGij1qnaIC5GlrrMi/tJPQPXL7wz1oR7xDGj
+X-Received: by 2002:a05:6402:24c8:b0:6a1:4458:7f2d with SMTP id
+ 4fb4d7f45d1cf-6a42f172088mr22922012a12.5.1787585106021; 
+ Mon, 24 Aug 2026 08:25:06 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a59e1d7399sm13500683a12.26.2026.08.24.08.25.03
+ 4fb4d7f45d1cf-6a59e00108asm13698150a12.2.2026.08.24.08.25.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 24 Aug 2026 08:25:03 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5DD405F8BB;
+ by draig.lan (Postfix) with ESMTP id 58B825F7F5;
  Mon, 24 Aug 2026 16:25:02 +0100 (BST)
 From: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Date: Mon, 24 Aug 2026 16:24:48 +0100
-Subject: [PATCH v2 1/8] gitlab: use .base_meson_job_template for macOS jobs
+Subject: [PATCH v2 0/8] various fixes for 11.2 (gitlab, tests, char-fe,
+ fdc, mailmap, deprecations) pre-PR
+Date: Mon, 24 Aug 2026 16:24:47 +0100
+Message-Id: <20260824-fixes-for-11-2-v2-0-352c6b890402@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260824-fixes-for-11-2-v2-1-352c6b890402@linaro.org>
-References: <20260824-fixes-for-11-2-v2-0-352c6b890402@linaro.org>
-In-Reply-To: <20260824-fixes-for-11-2-v2-0-352c6b890402@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAD9ijGoC/3WNQQ6CQAxFr2K6toZWIoMr72FYwFigxjCmg0RDu
+ LsDrl2+5P33Z4hiKhHOuxlMJo0ahgS834Hv66ET1Fti4IxPmaMSW31LxDYYEiFjW7oizxvHnhj
+ S6GmyGWlzrX4cX81d/LhWVqPXOAb7bI8Trd7f+ESYYVOUjjx7fyzo8tChtnAI1kG1LMsX8ASzo
+ r8AAAA=
+X-Change-ID: 20260819-fixes-for-11-2-f98744b82c12
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
@@ -89,22 +92,25 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
  qemu-block@nongnu.org, devel@lists.libvirt.org, 
  =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Fabiano Rosas <farosas@suse.de>
+ Fabiano Rosas <farosas@suse.de>, 
+ Mohamed Mediouni <mohamed@unpredictable.fr>, Thomas Huth <thuth@redhat.com>, 
+ "Denis V. Lunev" <den@openvz.org>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=700; i=alex.bennee@linaro.org; 
- h=from:subject:message-id;
- bh=oLQW1QjvvZodHpTsPvGLeM5B3yePRIAQ/JBnkvtdcNQ=; 
- b=owEBbQGS/pANAwAKAfvQ2wlanipEAcsmYgBqjGJN3qf7wX053m0Vgz8GcZ4A0nHYUnlzOdQa5
- ZawJlGLedOJATMEAAEKAB0WIQRmha6Z51FnvK/I3zX70NsJWp4qRAUCaoxiTQAKCRD70NsJWp4q
- RAulB/wOK/vInJTDlmAf73QpENyVwLMabK2Y4tqkw9Y5nrDa99Lvloe7cSUcJSkQ8NqSlnLmzV3
- UWmJLJAsdS83UWIdLbyaBF41rKEI7/bdlkiUAaYqb/6k+03oM/XKgbEBucCraRgcjGHzalOz0x4
- 5mdgFZ6TuCEmV4p9Lxs2Rr/tv4UKNMTdNHt6049JYpgf7/HjI+OlwMebd4lu18V+3xfXD4N+1ZM
- WnInEaiIdzXrKvOAG/INgqRPhFhw0PIyKBCsmXwjdXAYl1VCaYnxeYP8yOlUOg7N+Qcz5DSA3el
- RZQEZcvDdrCPVATOSkXT4akAEDijBf1DxMMJMB9CiN/ATYuV
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3473;
+ i=alex.bennee@linaro.org; h=from:subject:message-id;
+ bh=YWLx7CtssMhsgQfoBOs1HU5QvB7IKjJN8urBi8lcFgU=;
+ b=owEBbQGS/pANAwAKAfvQ2wlanipEAcsmYgBqjGJN155EE9Znh3CcEgY4XqBLyysi5roj8BRzP
+ W4t5zzEniaJATMEAAEKAB0WIQRmha6Z51FnvK/I3zX70NsJWp4qRAUCaoxiTQAKCRD70NsJWp4q
+ RDg1B/9hNd03Ktdb1k4mBY64l4ztjT7VTtP5N63LiKhy9CkOKJzKKrnYg4dv8EU3zlk+dt6P0Gn
+ BbgiZUk4cZz6Y5+AiC8tk5hTm8HTTlhrntDUXIgUCVqvhyHBh92wfLBRGh6IDJji0bHBYIhS0z6
+ EtBhBa8kOqeh2cNeYW6ecR0pfV1RXdZCV7a87iFtkIllDcGRoDAPqG6hMS0YoF/E45oBGghS3Em
+ rvUWRYi0PiH6f7tsSKKQinatk0qzCvU/+m3vV0Fh5gjCYwdUO7YKNELwoBvpSTZX+GfijLibRN2
+ eVQ0/9Y0qG3VUntXi8WFJlXZQzcedFeUeojOA6/PnFgQbSeJ
 X-Developer-Key: i=alex.bennee@linaro.org; a=openpgp;
  fpr=6685AE99E75167BCAFC8DF35FBD0DB095A9E2A44
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,29 +133,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This way we'll get more environmental information which will help with
-debugging.
+This is a rather random selection of fixes that didn't quite make it
+to 11.1 although we have some qemu-stable material in here.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260723200904.224413-2-alex.bennee@linaro.org>
+The CFLAGS tweak allow another target to be built and tested on MacOS.
+There are also riscv64 compilers which could be enabled via brew but I
+don't have time to look at those. The CFLAGS changes are also subsumed
+into Pierrick's check-tcg meson updates which might hit first.
+
+The char-fe clean-up removes a code smell of device models reaching
+into qemu_chr_fe_get_driver which is poor practice.
+
+The fdc fix resolves one of the many security reports for those that
+still care about floppy controllers in VMs.
+
+In my brief excursion into our confidential bugs I did look at fixing
+virtio-crypto but found it needs some serious love. Therefor I'm
+taking the other option of deprecating the module.
+
+Finally I'm experimenting with using b4's patch series handling so
+forgive any finger trouble on this series.
+
+I'll roll the PR on Wednesday.
+
+Alex.
+
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- .gitlab-ci.d/macos.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Changes in v2:
+- added mailmap patch
+- added fcd test case at review request (AI-used-for trailer)
+- tweaked virtio-crypto deprecation and commit message
+- Link to v1: https://lore.kernel.org/qemu-devel/20260819-fixes-for-11-2-v1-0-b7981c2cc371@linaro.org
 
-diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
-index 641a48b3832..bdb3eae18f0 100644
---- a/.gitlab-ci.d/macos.yml
-+++ b/.gitlab-ci.d/macos.yml
-@@ -1,5 +1,5 @@
- .macos_job_template:
--  extends: .base_job_template
-+  extends: .base_meson_job_template
-   stage: build
-   tags:
-     - saas-macos-large-m2pro
+To: qemu-devel@nongnu.org
+Cc: Philippe Mathieu-Daudé <philmd@mailo.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Cc: zhenwei pi <zhenwei.pi@linux.dev>
+Cc: Laurent Vivier <lvivier@redhat.com>
+Cc: Amit Shah <amit@kernel.org>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: John Snow <jsnow@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Cc: Hanna Reitz <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>
+Cc: devel@lists.libvirt.org
 
--- 
-2.47.3
+---
+Alex Bennée (7):
+      gitlab: use .base_meson_job_template for macOS jobs
+      tests/arm: add explicit CFLAGS for system build
+      gitlab: add arm-softmmu tests to the macOS build
+      char-fe: implement qemu_chr_fe_backend_name
+      hw/block: validate the fdc sector position fits within bounds
+      tests/qtest: add test case for fdc sector overflow
+      docs: deprecate virtio-crypto
+
+Denis V. Lunev (1):
+      mailmap: map the last From-munged author back to a real identity
+
+ docs/about/deprecated.rst             |  18 +++
+ hw/block/fdc-internal.h               |   1 +
+ include/chardev/char-fe.h             |  13 +-
+ backends/cryptodev-vhost-user.c       |   8 +-
+ backends/rng-egd.c                    |   8 +-
+ backends/vhost-user.c                 |   8 +-
+ hw/block/fdc.c                        |  30 ++++-
+ hw/char/imx_serial.c                  |   4 +-
+ tests/qtest/fdc-test.c                | 246 +++++++++++++++++++++++++++++++++-
+ .gitlab-ci.d/macos.yml                |   7 +-
+ .mailmap                              |   1 +
+ tests/tcg/arm/Makefile.softmmu-target |   2 +-
+ 12 files changed, 307 insertions(+), 39 deletions(-)
+---
+base-commit: 3375621e78660838b862d411c43f90e905d0b985
+change-id: 20260819-fixes-for-11-2-f98744b82c12
+
+Best regards,
+--  
+Alex Bennée <alex.bennee@linaro.org>
 
 
