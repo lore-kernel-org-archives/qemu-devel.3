@@ -4,130 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46D50C61CE2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF698C61CE3
 	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 11:19:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyShi-0003Ex-2k; Mon, 24 Aug 2026 07:19:02 -0400
+	id 1wyShk-0003Qs-DE; Mon, 24 Aug 2026 07:19:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wyShP-0002s2-Gz
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 07:18:47 -0400
+ id 1wyShW-0002wa-N4
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 07:18:51 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wyShL-0005IO-8P
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 07:18:41 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ id 1wyShU-0005NY-Pe
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 07:18:50 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67O997Im2547757
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 11:18:28 GMT
+ 67O99JJl3575594
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 11:18:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- kGHByDKQuY3POaihd297d/JJPaqDlUjCYBd0RkGfmA8=; b=Ic28IGpGUOx7Xug5
- 2OEyrJ5W6/pCJzYiAYskSGfpecjoQ+YX/WUGJvXUwwr+hIJC+551ADzcKnrBrimt
- I0QLk9o7dyMFPJZMxCvk6n1VI6ykPtlFVyQ16G8Wa25x74gQWZToTJMKQtrfRBTw
- bkViRHtTVCsB+wZuEf2pwcuO2mgtfCtp0DeWn/8Lu4nbZe+8DCemqIyJbfEiO6qT
- tM90pOUWvghHbBAQ01t8lnIo4bUZhvaGvdrD/xHFBKZp5RkZna3S1hUrK7KqZ8x7
- ksndVkpVyOdX1gVI6zm5oQTX+HDFlUoKGGtwkg7+ymuL0TtkGta7o+NnRsB8aLs3
- L4wtqw==
+ FYs3uPH5Pb8hS6ZkgeHaIaSrfIoM0pZKlpLy0wB+Gps=; b=govYam+VTdPd9xnV
+ MEA9jzo2DoLyRJd6GUqtX+JC99dfTX+ZFT1nWtonpzFlhYpSzs7Vj8KAD0z9f/lM
+ FYF/43u2RFCEGFSxpGtNM8yxOZAVPHYDW3mIFzGXs8IoCJkxcWVUjXAzO3a8es7M
+ ctwyb34YTQPndId/P21udf5YhTzjlrJ9k2zH9l91I/3vOBqGBuWukcHjWuSLy6QK
+ HXUiSxfdS+fMGRaInVFe+0RD9Sc0ocuZ6rfpV3sRThUzc5u6GO8ZEUYxLaoMhzlp
+ fMsn1jtxUI6FjNR/KV9SmsEC0dqqJwEm4mqJgoRUbxp3P5Ep1le4MQEFMYOla89K
+ OnIKVw==
 Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
  [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g88k7jcvx-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g88jpjd1y-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 11:18:27 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 11:18:37 +0000 (GMT)
 Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51c0e702df8so44843501cf.2
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 04:18:27 -0700 (PDT)
+ d75a77b69052e-51c01ff996dso37027881cf.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 04:18:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787570307; x=1788175107; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=kGHByDKQuY3POaihd297d/JJPaqDlUjCYBd0RkGfmA8=;
- b=kJf1UK6bJDDAstD9h1Eh4CT7EvBAcq8vtm2uj6Uqi0sexUXlI+gmVngPae3Agghf15
- 3I5Lya1C5lt8mu+LSeHGjX4By8X0BMkhRWLWlJreztG4ZxLsnHyuf2svjJIpLs2cg8i8
- DTFQAznl11xVDTTOCHSdfbPKBUVP1RyGpcBCFLP5qVSHhioz1qnI8Kz9bVLN707Q9N19
- chhhiAmCNYPTY9tN5WckDysYXIfHjLj2rP8xJ+HzUeJFy2jLZGMERsZ80wZu+ZWlUohS
- 3u3y5c9RuzZmsARvKRmA5+BloyRUmGqExEPwDEbOwJHwHoN5RhvHnEBPZxbaDQpjC1/3
- 7kRQ==
+ d=oss.qualcomm.com; s=google; t=1787570316; x=1788175116; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=FYs3uPH5Pb8hS6ZkgeHaIaSrfIoM0pZKlpLy0wB+Gps=;
+ b=fnbTpTGnBRtgdjnRDwOlS9UeZbddYcwehXV4xofts23s7mK6BHnhl5Npe9eXNfeX6v
+ Q5NNCFRoSFdOgsedymXPQ3dtZWztjKk/qroSRUOrM30EPzShXior9q4w+eAAl/EaltNJ
+ c0MmzsRJvXiCsP9j9WEX26mMRiNg1yyVs5EEhIUXNI3pbsAGoCfTKWoND/N3hV94Z0IF
+ xh7X8MpdOmCdh+kXl5MoHtkBBf5HytUmHdBcgjtyKY9SywVOi11/Z5zmOomcHtBNXPDt
+ EXoDmT4UpvbPvrHx7kSgFreBXohrku8qgxh8YHupuU13WVx111Te+j8SqW1hKHbhLp2E
+ WJKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787570307; x=1788175107;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=kGHByDKQuY3POaihd297d/JJPaqDlUjCYBd0RkGfmA8=;
- b=IV9H2t2wIeD0AMSQWeoEVRRLj3qMEcRG99BD4RfF1WwKC/RzIw1d5WPnkIT1e+k4p9
- eGHVmRiXuUta9VW9WXEzUsP+9C3UDsoEivMYPzqB28zkOnBvouKs3HELGNuP0vxmNSlO
- 8DBkRSZjOUqfzmERwDjzEr286T9eRwLJAxOBaS1LBMKvbCkm9P/jTFDegrCNIb1lTSUI
- QbJ9x07wcFm+2qBd/KXxsvIATmIUO9tYsUZZOprECndcf+W5l026vhP2++0vcXVZDYIK
- 3LSfnFcW8YhRrN1JsqD45+9Uy5f+I5kHTwG14H9fOTVnSQlljAJmid6b56n4bmX9Tvhp
- JrTg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqGY7bwLui4N+HrjC1y2ZxumLzy8ZS/dw22sv04O1M4F7xQ3CzhnvsknHLl7S1l1KJevCECY9Cevmb0@nongnu.org
-X-Gm-Message-State: AFuF++luFcLCwD9yTFvvFKgCVd+HsIQnKnJArD4VMg9zph59NfF7iYba
- 1RRM4xA5KeKEWBg84B5SgT0n0nZPnQwinGbh6tRT66Ak5NHx2hxOh5hEQFaPdZfItS9+aZRwMYL
- mNM+eeKt+JfALKXZNsw6zexl9flEN3InURHOqN4YRw/bF811/LkhHc1VLUw==
-X-Gm-Gg: AR+sD12HEtR32DVZG61MeafawoO9VV5rKbRjSvacaW2DwSiBxzjoySSWL8Vool77Mf2
- DW8o+k7p/g7juqJzZAfE2zdYST2ofBJvKuE3Pgv3cN8/sH32pV9BbENTMj4dZlwEeQSqtVWpU0m
- 50j7P/9mOrlDkT3Hx7bDiF9DEGhBEq6idzLwyZSZA9ddCcaAZj3Gdril8wtMsFkAUMORwyAqI+V
- S0YEQr9Mw/VGXvHBF25kP20rY4ppYn5ST9uXb/qkC9lCP1/P9le9iv/8gAJBnkMJGZKlLEoKWyN
- EHINiu2SKIrq8THiFLpXdL5zeHQcXJueC/Re0kAljEoQEzlyF1wIon/ynvildvAr3KpTnnwuHtr
- d6YWQGgjJrdqTNp9LHu+AW+ahhKQQOph9HhyoYo0lug==
-X-Received: by 2002:a05:622a:859c:b0:52e:1e8:220c with SMTP id
- d75a77b69052e-52e01e82465mr180687781cf.24.1787570306663; 
- Mon, 24 Aug 2026 04:18:26 -0700 (PDT)
-X-Received: by 2002:a05:622a:859c:b0:52e:1e8:220c with SMTP id
- d75a77b69052e-52e01e82465mr180687401cf.24.1787570306217; 
- Mon, 24 Aug 2026 04:18:26 -0700 (PDT)
-Received: from [10.254.188.74] (44.170.88.92.rev.sfr.net. [92.88.170.44])
+ d=1e100.net; s=20251104; t=1787570316; x=1788175116;
+ h=content-transfer-encoding:content-type:mime-version:references
+ :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=FYs3uPH5Pb8hS6ZkgeHaIaSrfIoM0pZKlpLy0wB+Gps=;
+ b=Og2ysJFwPd7Hz9aFiQH3DXnPouuM3s4VS56eMfL1DrtJvFsaEAaoPUeSpa0GG9p65W
+ 2+3JXKP/M3Q9eAZN0DTQ44GOKIl2vcGCjtCCmHNW/zyMJuJpqT60HyiGV5ADmW07RMoV
+ iAQhJ6HsWpUqgb0cjoaprWwPQQU+VJ3XrQzrrEta2kTeXrB/dkA2PRF1n7+5SpTU63mz
+ ENA+RlN9mLLDQV/nMcKr1VMyFWfbR7bsNpkQZmdHAs+wyAxDo1WnseL7xOn3rJRHHkC/
+ jjv01Qo1lmpwh5mk/mjCMmRczfVN23KFKq+sjZuC9MYwWVSVt82Bm/kxKJeD5dd0ij5k
+ CiPQ==
+X-Gm-Message-State: AFuF++lfk9v54QxtFE3oRWma7wP3pkF5nw8UeHsfSbKqUOBsZUUZmvSy
+ cjv5fydpTVJzP46v2tz2twWGaWrCnKwAYkIP7J9LjK4ELUkyJatJGMElGBiGgBKFiBX8fipgBrZ
+ oMMoCUhCy7hUFPegYT8nYKGKD62rWERgFa/0D5JmUb5yy6jvy6vM0BMeNy9FgEP2x2w==
+X-Gm-Gg: AR+sD12atlIsAhUs7SQEWL3hjMyrC2TZXvTlmhM7jxkWdOTdIVEkIJd/75nafNHwY53
+ NCLTr5QlAl0/h1sWu+nH43v9rSd3SBa/0M6RbbpVqGGDCxW43yPvTA3ueXZQhOAAaUkcjvyety0
+ czgf9nhXsHeYpUD+K8Od3l6h8EINwvxgoaKMBFvGyUxsnGTHsKwee+QcI1Dk+JpIgTKP7/yl2ZP
+ XpU5vMr/az7CF7MeLA7mLyecbGMgIKS1UR0wl7STU9cezlJmFqpXXwinERFTF0dMU+iTAV5vu3/
+ W4gllSaJvGyMB0KIyQQkH4FXLGhUrf21Q0BYmzK3sMwZp3DrMJgjql5lKyJ/nrCeWCs/fHY8zaM
+ jl978csMayRSxRU9vpX99xhWOuD+bB08nfJKIpb5oLYvCRCyzvg==
+X-Received: by 2002:a05:622a:244e:b0:528:3216:b802 with SMTP id
+ d75a77b69052e-52df5740d84mr248409621cf.15.1787570316048; 
+ Mon, 24 Aug 2026 04:18:36 -0700 (PDT)
+X-Received: by 2002:a05:622a:244e:b0:528:3216:b802 with SMTP id
+ d75a77b69052e-52df5740d84mr248409211cf.15.1787570315621; 
+ Mon, 24 Aug 2026 04:18:35 -0700 (PDT)
+Received: from localhost.localdomain (44.170.88.92.rev.sfr.net. [92.88.170.44])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c24966f64f6sm1287481666b.40.2026.08.24.04.18.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Aug 2026 04:18:25 -0700 (PDT)
-Message-ID: <d2610851-5222-4bc0-92f6-f88601ee3589@oss.qualcomm.com>
-Date: Mon, 24 Aug 2026 13:18:23 +0200
+ a640c23a62f3a-c2496296a46sm1339004066b.21.2026.08.24.04.18.32
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 24 Aug 2026 04:18:34 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
+ qemu-s390x@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v4 08/20] target/hexagon: Constify CPUHexagonState in
+ hexagon_thread_is_enabled()
+Date: Mon, 24 Aug 2026 13:16:57 +0200
+Message-ID: <20260824111711.26297-9-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260824111711.26297-1-philmd@oss.qualcomm.com>
+References: <20260824111711.26297-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/i386/isapc.c: reject modern x86 CPU models
-Content-Language: en-US
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, pbonzini@redhat.com,
- richard.henderson@linaro.org, mst@redhat.com, qemu-devel@nongnu.org
-References: <20260824111054.575149-1-mark.caveayland@nutanix.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260824111054.575149-1-mark.caveayland@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=b4iCJNGx c=1 sm=1 tr=0 ts=6a8c2883 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDA5NCBTYWx0ZWRfX6L/1evlzBq2r
+ HFC16tcfd4jnDT3ufU+3EAtBASFjThcxBzKMAIWlomJk23VM6tn7GgJQCaWhD5e4oM7QPsEiDw4
+ Urr0O5iV6HDS060Ffl3skX3zQQNdmVwuqPrTyXyIth/bsd/Ujo9xz4qHcfKSGq3ikFJbTQA4lwK
+ DoA/M9aGlc9loegAyjT6nB36NfWSI0+NSj6dv/NmrhvG6afl/cH3jPMSnX9ep3l/tlj6+P8BI+S
+ X34y8KzKnqWPcuHQLvTBgz0FqIqg9cYkrFwP9JRooJF+ZxyxhUDtgQBz0USsGJwVlmdrk8w3Nj/
+ z8Z1JGUsmmXdBR7uPIB9KCeco9f/J5ALgNltdGpPsFPRtD7tBWn2KaCSqU5uHnwNH2dfp8gdfoq
+ O82G0XoC6lvVGlWonaNb0o+3abGoXs8AA5oGePBKH6ot5YfLb7XwKuJe1v8AzmQlG8J7N+lL7pN
+ Nocz9r56s0gfG3CDsHw==
+X-Proofpoint-GUID: vkS-qDJRYZ4WHU2u3qL7i5U2GwfBX5HE
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDA5NCBTYWx0ZWRfXxfCp3LVprw15
+ YjSSj6CfIWgBPmlx7jd1o1RmIJwj5CQ4bBJG1ORqmCANiWh87rmMIdCQoxsXzTx13UgFkVLSQ1m
+ GCZZu1dAghkHPKuRSDRNMCUXep51drk=
+X-Authority-Analysis: v=2.4 cv=Xey5Co55 c=1 sm=1 tr=0 ts=6a8c288d cx=c_pps
  a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=s1NLoHz9uzatdv2VNqxUSg==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=64Cc0HZtAAAA:8 a=EUspDBNiAAAA:8 a=catcoup4RJIRKdDdaWIA:9 a=3ZKOabzyN94A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=XxrlQHdRtCO5bKJNttYA:9 a=3ZKOabzyN94A:10
  a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDA5NCBTYWx0ZWRfX3mtvLFviI6mp
- XCPNWx5iOm2Up2qQcsZyt6o/nVhPkfVzXHvwdmqilyKO6c4QU2h6aYuZites0P57N38luA+G9MW
- EFokV0aMnMvr3BYdJpZ6NMZxw02DlF8=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDA5NCBTYWx0ZWRfX0Yfqu2fOcyWv
- P5ClmV4viAbZe8zLkqovdYyGBbmKThNzu7rtJpZ7+HDykDjY0cbWSceDhq33ScYBr9VsYQHuEm0
- 02X6itDDO0Ib43f5hdgrmH+CSDcUwoooN/jUnDCOxfn89wqSgIqfYVg6S0GIOBzO5SpwyuZlunZ
- MwifnIv5qZwpWsE2u8XPZvof+5kGH+PlTB1PnWTZn/IhPO/pthzKiZd+DpZQxx1ENrjOaeC30Us
- UVk4+okrASgYdZheKyqkFHQ0kRpOCUCiyJmcQm0SlnyhvV+onxyeHUOfOKLNfZ2Wge0wIhbialR
- n9RRDZ1fRHDRwP22mbgOjUrXgu9tsJnoOPTOL3NYVAQwsaWsPj2U/XeFIIcOdmz4XyfOxMKYhPX
- pGcJVncu5R3f5+L+HzBEHzss0OH4/xsYuHopqypi96NTae8bFX6aTCQ1uqLYhm0OY1Mm/M4y4Kf
- T4eK5k3wCLN31gYabsw==
-X-Proofpoint-ORIG-GUID: PRQcpr0QgyKQ6w9MBmmVANu734sX-Rkv
-X-Proofpoint-GUID: PRQcpr0QgyKQ6w9MBmmVANu734sX-Rkv
+X-Proofpoint-ORIG-GUID: vkS-qDJRYZ4WHU2u3qL7i5U2GwfBX5HE
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-24_03,2026-08-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 phishscore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 impostorscore=0 adultscore=0 priorityscore=1501
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ priorityscore=1501 adultscore=0 impostorscore=0 spamscore=0
+ lowpriorityscore=0 malwarescore=0 phishscore=0 clxscore=1015 bulkscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
  definitions=main-2608240094
 Received-SPF: pass client-ip=205.220.168.131;
@@ -154,22 +158,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/8/26 13:10, Mark Cave-Ayland wrote:
-> It was originally intended as part of the work to split out the isapc machine
-> from the pc machine to restrict the isapc machine to using only 32-bit CPUs.
-> Before the 10.2 release it was decided in commit 329e36af94 ("hw/i386/isapc.c:
-> warn rather than reject modern x86 CPU models") to follow the official
-> deprecation process due to concerns this would have an adverse effect on users.
-> 
-> Now that the deprecation period has expired and there have been no reported
-> problems, update the isapc machine to reject modern x86 CPUs by reverting
-> commit 329e36af94 ("hw/i386/isapc.c: warn rather than reject modern x86 CPU
-> models").
-> 
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> ---
->   hw/i386/isapc.c | 53 +++++++++++++++++++++++++++++--------------------
->   1 file changed, 32 insertions(+), 21 deletions(-)
+@env argument is accessed without modification in
+hexagon_thread_is_enabled(), qualify it as const.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+---
+ target/hexagon/cpu.h        | 2 +-
+ target/hexagon/cpu_helper.h | 4 ++--
+ target/hexagon/cpu.c        | 4 ++--
+ target/hexagon/cpu_helper.c | 6 +++---
+ 4 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
+index c50fbb3f72a..e4f120eda17 100644
+--- a/target/hexagon/cpu.h
++++ b/target/hexagon/cpu.h
+@@ -216,7 +216,7 @@ G_NORETURN void hexagon_raise_exception_err(CPUHexagonState *env,
+  * @return true if the @a thread_env hardware thread is
+  * not stopped.
+  */
+-bool hexagon_thread_is_enabled(CPUHexagonState *thread_env);
++bool hexagon_thread_is_enabled(const CPUHexagonState *thread_env);
+ uint32_t hexagon_greg_read(CPUHexagonState *env, uint32_t reg);
+ void hexagon_cpu_soft_reset(CPUHexagonState *env);
+ #endif
+diff --git a/target/hexagon/cpu_helper.h b/target/hexagon/cpu_helper.h
+index d1767503156..a669091a89d 100644
+--- a/target/hexagon/cpu_helper.h
++++ b/target/hexagon/cpu_helper.h
+@@ -9,8 +9,8 @@
+ 
+ uint32_t hexagon_get_pmu_counter(CPUHexagonState *cur_env, int index);
+ void hexagon_modify_ssr(CPUHexagonState *env, uint32_t new, uint32_t old);
+-int get_cpu_mode(CPUHexagonState *env);
+-int get_exe_mode(CPUHexagonState *env);
++int get_cpu_mode(const CPUHexagonState *env);
++int get_exe_mode(const CPUHexagonState *env);
+ void clear_wait_mode(CPUHexagonState *env);
+ void hexagon_ssr_set_cause(CPUHexagonState *env, uint32_t cause);
+ void hexagon_start_threads(CPUHexagonState *env, uint32_t mask);
+diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+index 9765716b516..4cc6bd67c28 100644
+--- a/target/hexagon/cpu.c
++++ b/target/hexagon/cpu.c
+@@ -345,9 +345,9 @@ static void hexagon_cpu_synchronize_from_tb(CPUState *cs,
+ }
+ 
+ #ifndef CONFIG_USER_ONLY
+-bool hexagon_thread_is_enabled(CPUHexagonState *env)
++bool hexagon_thread_is_enabled(const CPUHexagonState *env)
+ {
+-    HexagonCPU *cpu = env_archcpu(env);
++    const HexagonCPU *cpu = env_archcpu(env);
+     uint32_t modectl;
+     uint32_t thread_enabled_mask;
+     bool E_bit;
+diff --git a/target/hexagon/cpu_helper.c b/target/hexagon/cpu_helper.c
+index 64c5746c6d9..610e29a0503 100644
+--- a/target/hexagon/cpu_helper.c
++++ b/target/hexagon/cpu_helper.c
+@@ -212,9 +212,9 @@ void hexagon_ssr_set_cause(CPUHexagonState *env, uint32_t cause)
+ }
+ 
+ 
+-int get_exe_mode(CPUHexagonState *env)
++int get_exe_mode(const CPUHexagonState *env)
+ {
+-    HexagonCPU *cpu;
++    const HexagonCPU *cpu;
+     uint32_t modectl, thread_enabled_mask, thread_wait_mask;
+     uint32_t isdbst, debugmode;
+     bool E_bit, W_bit, D_bit;
+@@ -384,7 +384,7 @@ static int sys_in_user_mode_ssr(uint32_t ssr)
+     return 0;
+ }
+ 
+-int get_cpu_mode(CPUHexagonState *env)
++int get_cpu_mode(const CPUHexagonState *env)
+ {
+     uint32_t ssr = env->t_sreg[HEX_SREG_SSR];
+ 
+-- 
+2.53.0
+
 
