@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EEADC5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:30:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 890CAC5DF9B
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:30:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNFW-0000ni-8a; Mon, 24 Aug 2026 01:29:34 -0400
+	id 1wyNFz-0001xM-Ml; Mon, 24 Aug 2026 01:30:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFG-0000Yg-Pc
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:22 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFo-0001IZ-3b
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFE-0006jm-B0
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:18 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFm-0006nj-FH
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787549353;
+ s=mimecast20190719; t=1787549389;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=qnZQav1tmipN+8goBZndK40lBPyFBoxcH3kKAmtoivI=;
- b=S+EYGAS9O7v7lKahjVi7JnoKsLyw3U/SBSrOId9BGovAZwI6Y12z31sgxDAxU4Uhgh9sQL
- F4Dlq7FrcRdhvFzzfPwTNmC3sZGb+kMCXyR2RQd/38ZLtsoLmRqE/fv/zRv+pywIP67o5P
- Ifrj7ecO4Jj5pXQfTk+Yk6uEWQhyQBY=
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xQBxgguTk8og/3EgPgo+BeQOhwuulR6uouJ3UXzYXxA=;
+ b=dahFpsIxi4jYyNbwi8z7IXRkHReW9Mt/7cSMryv4nkut6Cubwra+57hJ1YUQ1gP1l0vKH7
+ HbSEjFmkq1KkQzEvTlGhrtFGvk714yBUgB3hm25ybqxo08xn+n/7pq275UgrOy4831pQSA
+ 7CG8Osetjkn0qgmBxal5A7XzN17ZEqw=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-685-u4MFZy7oMoaWIWRVWnqdkQ-1; Mon,
- 24 Aug 2026 01:29:07 -0400
-X-MC-Unique: u4MFZy7oMoaWIWRVWnqdkQ-1
-X-Mimecast-MFC-AGG-ID: u4MFZy7oMoaWIWRVWnqdkQ_1787549345
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-223-TKI1udwUOyCrHbVGEk_ZEw-1; Mon,
+ 24 Aug 2026 01:29:45 -0400
+X-MC-Unique: TKI1udwUOyCrHbVGEk_ZEw-1
+X-Mimecast-MFC-AGG-ID: TKI1udwUOyCrHbVGEk_ZEw_1787549383
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 551031944F0E; Mon, 24 Aug 2026 05:29:05 +0000 (UTC)
+ id A2B2B1964CC5; Mon, 24 Aug 2026 05:29:43 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.29])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7DF5A1800348; Mon, 24 Aug 2026 05:29:01 +0000 (UTC)
+ id E07571800577; Mon, 24 Aug 2026 05:29:40 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -56,12 +57,13 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Cleber Rosa <crosa@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH 00/12] python: require python3.12+
-Date: Mon, 24 Aug 2026 01:28:46 -0400
-Message-ID: <20260824052859.880475-1-jsnow@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH 10/12] sphinx: require sphinx 7.2.6
+Date: Mon, 24 Aug 2026 01:28:56 -0400
+Message-ID: <20260824052859.880475-11-jsnow@redhat.com>
+In-Reply-To: <20260824052859.880475-1-jsnow@redhat.com>
+References: <20260824052859.880475-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -87,139 +89,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The stars have aligned, and we can jump all the way from Python3.9 to=0D
-Python3.12.=0D
-=0D
-GitLab CI: https://gitlab.com/jsnow/qemu/-/pipelines/2781408192=0D
-=0D
-Python 3.9 is EOL, and Python 3.10 will be EOL in about two months=0D
-(October 2026). Python 3.11 is, to be blunt, perfectly serviceable -=0D
-but when investigating our actual minimum dependency requirements, I=0D
-realized none of our supported platforms used anything older than=0D
-Python 3.12, so we may as well build and test with the version that=0D
-all of our build platforms are actually using.=0D
-=0D
-This reduces the Python compat test matrix by quite a lot and allows=0D
-us a few nice things. From memory, the highlights are:=0D
-=0D
-- Pattern matching syntax (fancy case statements). I am not dying to=0D
-  use these anywhere, but they're nice!=0D
-- Vastly improved error reporting from CPython=0D
-- Ability to annotate exceptions with "notes", which allows us augment=0D
-  the default reporting behavior for unhandled exceptions - this can=0D
-  be used in e.g. iotests to help give additional information on tool=0D
-  crashes that is sometimes hard to discover otherwise=0D
-- The ability to use standard library types for typing syntax instead=0D
-  of importing from Typing (Technically, valid since 3.9, but...)=0D
-- The ability to use "x | y" instead of Union[x, y] in type hint=0D
-  syntax. Combined with the above, it's a good time to clean up the=0D
-  typing in qapi to make it read much more nicely.=0D
-- ExceptionGroups - the ability to capture and report multiple=0D
-  exceptions simultaneously. This is extremely useful for async QMP=0D
-  and managing multiple VMs from a single python context. Async QMP=0D
-  will be able to get a few nice QOL improvements with this.=0D
-=0D
-My personal favorite:=0D
-=0D
-- We can move to a much newer Sphinx, which gets rid of an awful lot=0D
-  of very ugly compat code. This is the *actual* motivation of this=0D
-  series.=0D
-=0D
-Anyway, here's the version chart for our supported build platforms and=0D
-why this is safe to do:=0D
-=0D
-distro            EOS         python3  pip     setuptools  sphinx  wheel=0D
--------------------------------------------------------------------------=0D
-centos_stream_9   2026-12-12  3.9.25   21.3.1  53.0.0      3.4.3   0.36.2=0D
-centos_stream_9+  2026-12-12  3.12.13  23.2.1  68.2.2      ---     0.41.2=0D
-freebsd           --          3.12.14  23.3.2  63.1.0      9.0.4   0.48.0=0D
-ubuntu_24_04      2028-04-23  3.12.3   24.0    68.1.2      7.2.6   0.42.0=0D
-centos_stream_10  2030-01-01  3.12.13  23.3.2  69.0.3      7.2.6   0.41.2=0D
-alpine_3_21       2026-11-01  3.12.14  24.3.1  70.3.0      8.1.3   0.43.0=0D
-debian_13         2028-08-09  3.13.5   25.1.1  78.1.1      8.1.3   0.46.1=0D
-fedora_43         2026-12-09  3.14.7   25.1.1  78.1.1      8.2.3   0.45.1=0D
-ubuntu_26_04      2031-05-29  3.14.4   25.1.1  78.1.1      8.2.3   0.46.3=0D
-fedora_44         2027-06-02  3.14.7   26.0.1  80.10.2     8.2.3   0.45.1=0D
-macports          --          3.14.7   26.0.1  80.10.2     9.1.0   0.48.0=0D
-alpine_3_22       2027-05-01  3.12.14  25.1.1  80.9.0      8.2.3   0.46.3=0D
-alpine_3_23       2027-11-01  3.12.14  25.1.1  80.9.0      8.2.3   0.46.3=0D
-openbsd           --          3.14.6   26.2.1  80.9.0      9.1.0   0.48.0=0D
-alpine_3_24       2028-06-01  3.14.7   26.1.2  82.0.1      9.1.0   0.47.0=0D
-pkgsrc_current    --          3.13.15  26.2.1  84.0.0      9.1.0   0.48.0=0D
-=0D
-CentOS stream 9 note: python3.12, python3.12-pip,=0D
-python3.12-setuptools and python3.12-wheel are available as optional=0D
-packages in the standard repository. Sphinx is not available, but can=0D
-be side-loaded from PyPI using pip3.12.=0D
-=0D
-More cleanups to follow: we may have the chance to upgrade to=0D
-pyproject.toml packaging once and for all now that FreeBSD has moved=0D
-to Python3.12, which will get us off the legacy packaging we've been=0D
-using. This isn't a problem *currently*, but it has been the cause of=0D
-a lot of pain in the past, and the sooner we can ditch it the better.=0D
-=0D
-toodles,=0D
---js=0D
-=0D
-John Snow (12):=0D
-  tests: re-add opencv2 and numpy dependencies=0D
-  tests: add Python3.12 to centos9.docker=0D
-  tests: update emsdk-wasm64-cross=0D
-  qapi: update type hint for types_seen=0D
-  python: upgrade to Python3.12+=0D
-  python: fix license configuration=0D
-  python: allow mypy to run as the current python version=0D
-  python: remove distutils workarounds=0D
-  python: remove stale setup.cfg options=0D
-  sphinx: require sphinx 7.2.6=0D
-  sphinx: drop fakedbusdoc=0D
-  sphinx: drop qapidoc back-compat overboiled spaghetti dinner=0D
-=0D
- docs/conf.py                                  |  11 +-=0D
- docs/interop/dbus-display.rst                 |  14 +-=0D
- docs/interop/dbus-vmstate.rst                 |  14 +-=0D
- docs/interop/dbus-vnc.rst                     |  14 +-=0D
- docs/sphinx/compat.py                         | 230 ------------------=0D
- docs/sphinx/fakedbusdoc.py                    |  30 ---=0D
- docs/sphinx/qapi_domain.py                    |  47 ++--=0D
- configure                                     |  11 +-=0D
- tests/docker/dockerfiles/alpine.docker        |   1 +=0D
- tests/docker/dockerfiles/centos9.docker       |  14 +-=0D
- .../dockerfiles/debian-amd64-cross.docker     |   2 +=0D
- .../dockerfiles/debian-arm64-cross.docker     |   2 +=0D
- .../dockerfiles/debian-armhf-cross.docker     |   2 +=0D
- .../dockerfiles/debian-i686-cross.docker      |   2 +=0D
- .../dockerfiles/debian-ppc64el-cross.docker   |   2 +=0D
- .../dockerfiles/debian-riscv64-cross.docker   |   2 +=0D
- .../dockerfiles/debian-s390x-cross.docker     |   2 +=0D
- tests/docker/dockerfiles/debian.docker        |   2 +=0D
- .../dockerfiles/emsdk-wasm64-cross.docker     |   4 +-=0D
- .../dockerfiles/fedora-rust-nightly.docker    |   2 +=0D
- .../dockerfiles/fedora-win64-cross.docker     |   2 +=0D
- tests/docker/dockerfiles/fedora.docker        |   2 +=0D
- tests/docker/dockerfiles/opensuse-leap.docker |   2 +=0D
- tests/docker/dockerfiles/ubuntu2404.docker    |   2 +=0D
- .gitlab-ci.d/macos-14.vars                    |   2 +-=0D
- python/Makefile                               |  10 +-=0D
- python/scripts/mkvenv.py                      |  58 +----=0D
- python/setup.cfg                              |  33 +--=0D
- python/tests/linters.py                       |  11 -=0D
- python/tests/minreqs.txt                      |  66 ++---=0D
- pythondeps.toml                               |  13 +-=0D
- .../ci/setup/debian/debian-13-ppc64le.yaml    |   2 +=0D
- .../ci/setup/ubuntu/ubuntu-2404-aarch64.yaml  |   2 +=0D
- .../ci/setup/ubuntu/ubuntu-2404-s390x.yaml    |   2 +=0D
- scripts/qapi/types.py                         |   2 +-=0D
- tests/lcitool/mappings.yml                    |  24 +-=0D
- tests/lcitool/projects/qemu.yml               |   2 +=0D
- tests/lcitool/targets/centos-stream-9.yml     |   4 +-=0D
- tests/vm/generated/freebsd.json               |   2 +=0D
- 39 files changed, 156 insertions(+), 493 deletions(-)=0D
- delete mode 100644 docs/sphinx/compat.py=0D
- delete mode 100644 docs/sphinx/fakedbusdoc.py=0D
-=0D
--- =0D
-2.55.0=0D
-=0D
+Make the extraordinary leap from Sphinx 3.4.3 to Sphinx
+7.2.6. Simplifications and cleanup will follow in subsequent patches.
+
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ docs/conf.py             |  4 ++--
+ python/setup.cfg         |  2 +-
+ python/tests/minreqs.txt | 29 ++++++++++++++++-------------
+ pythondeps.toml          |  4 ++--
+ 4 files changed, 21 insertions(+), 18 deletions(-)
+
+diff --git a/docs/conf.py b/docs/conf.py
+index 7e35d2158d3..cded047b539 100644
+--- a/docs/conf.py
++++ b/docs/conf.py
+@@ -51,9 +51,9 @@
+ 
+ # If your documentation needs a minimal Sphinx version, state it here.
+ #
+-# 3.4.3 is the oldest version of Sphinx that ships on a platform we
++# 7.2.6 is the oldest version of Sphinx that ships on a platform we
+ # pledge build support for.
+-needs_sphinx = '3.4.3'
++needs_sphinx = '7.2.6'
+ 
+ # Add any Sphinx extension module names here, as strings. They can be
+ # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
+diff --git a/python/setup.cfg b/python/setup.cfg
+index ebb4230899c..927f72a46f6 100644
+--- a/python/setup.cfg
++++ b/python/setup.cfg
+@@ -41,7 +41,7 @@ devel =
+     pylint >= 2.17.3
+     pytest >= 6.2.4
+     tox >= 3.18.0
+-    sphinx >= 3.4.3
++    sphinx >= 7.2.6
+ 
+ # Provides qom-fuse functionality
+ fuse =
+diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
+index 85cfa08cf76..7154ad40040 100644
+--- a/python/tests/minreqs.txt
++++ b/python/tests/minreqs.txt
+@@ -12,7 +12,7 @@
+ # on PyPI that allows the test suite to pass.
+ 
+ # Dependencies for qapidoc/qapi_domain et al
+-sphinx==3.4.3
++sphinx==7.2.6
+ 
+ # Dependencies for qemu.machine
+ qemu.qmp==0.0.6
+@@ -48,23 +48,26 @@ platformdirs==2.2.0
+ tomlkit==0.10.1
+ 
+ # Transitive sphinx dependencies
+-Jinja2==2.7
+-MarkupSafe==1.1.0
+ alabaster==0.7.1
+-babel==1.3
+-docutils==0.12
+-imagesize==0.5.0
+-packaging==14.0
+-Pygments==2.0
+-pytz==2014.9
+-requests==2.5.0
+-snowballstemmer==1.1
++babel==2.9
++certifi==2023.5.7
++charset-normalizer==2.0.0
++docutils==0.18.1
++idna==2.5
++imagesize==1.3
++Jinja2==3.0.0
++MarkupSafe==2.0
++packaging==21.0
++Pygments==2.14
++requests==2.25.0
++snowballstemmer==2.0
+ sphinxcontrib-applehelp==1.0.0
+ sphinxcontrib-devhelp==1.0.0
+-sphinxcontrib-htmlhelp==1.0.0
++sphinxcontrib-htmlhelp==2.0.0
+ sphinxcontrib-jsmath==1.0.0
+ sphinxcontrib-qthelp==1.0.0
+-sphinxcontrib-serializinghtml==1.0.0
++sphinxcontrib-serializinghtml==1.1.9
++urllib3==1.26
+ 
+ # Transitive pytest dependencies
+ attrs==19.2.0
+diff --git a/pythondeps.toml b/pythondeps.toml
+index b1879c1a4da..f0f3af915a1 100644
+--- a/pythondeps.toml
++++ b/pythondeps.toml
+@@ -28,8 +28,8 @@ meson = { accepted = ">=1.12.0", installed = "1.12.0", canary = "meson" }
+ 
+ [docs]
+ # Please keep the installed versions in sync with docs/requirements.txt
+-sphinx = { accepted = ">=3.4.3", installed = "6.2.1", canary = "sphinx-build" }
+-sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
++sphinx = { accepted = ">=7.2.6", installed = "7.2.6", canary = "sphinx-build" }
++sphinx_rtd_theme = { accepted = ">=1.2.2", installed = "1.2.2" }
+ 
+ # This test group is for dependencies required to run various tooling
+ # and tests that should always be installed at configure time. It should
+-- 
+2.55.0
 
 
