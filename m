@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AB71C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8455EC5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:39:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNMd-0007Ko-8r; Mon, 24 Aug 2026 01:36:55 -0400
+	id 1wyNOl-0007sF-Ba; Mon, 24 Aug 2026 01:39:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wyNMb-0007KC-Bh
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:36:53 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
+ id 1wyNOj-0007s6-8L
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:39:05 -0400
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wyNMX-00082m-Do
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:36:53 -0400
+ id 1wyNOh-0008Jx-K7
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:39:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1787549809; x=1819085809;
+ t=1787549944; x=1819085944;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=OzBmje/LGNWvTvM0XPtRiX5VSU/TrOMTu/DYVMxTT4Y=;
- b=aDUzCFZunNnqGFeZs7LSgOm6B5Jjcpch2PZC03Zbwz3tQF0FiOKQyoCZ
- X29WcUmeZUzWmXGnhr3MeCtnG7g/5BIfb82E6qg3QvxW9+T9Kr3ozBLow
- U3On3TY3s7/YtujYtg/y98BCiRplqiIP0VwOCFifdM6AjOgFTZU8LMSAt
- 6tpqM4dl7KUF44b+COG6oby7UDdRYPHw/t55XVLEgZcU6tYfwateA020p
- DIegKSXTCxMLyJJorQ1E12nG5PB9yyjtRgtpvvaEfJuUmudwVz/IvUz6e
- x86w4kJ+jprXp9Z58qzYuflZlr5c+OitaYfN0de+ASayxew3iqTOZXJIw g==;
-X-CSE-ConnectionGUID: 7y5v2hNiT06XmGe1aFk/1A==
-X-CSE-MsgGUID: O0YX8cpDSiyoAIx9UeWrcg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11884"; a="98581932"
-X-IronPort-AV: E=Sophos;i="6.25,240,1779174000"; d="scan'208";a="98581932"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Aug 2026 22:36:46 -0700
-X-CSE-ConnectionGUID: WlY4WI9aQhmHFBNRoZgxyg==
-X-CSE-MsgGUID: +z5jhLCXR2y83XkgdxlNag==
+ bh=0Bsfa3a2i4uHH9RVZ07JPgXdXR2aVjd8JE0KUFLgrrg=;
+ b=cnm87EdjjmzzZZphi8T+94kQ6dgw7EvjvZHkVix02Ye5K9Bepl00Z4Xn
+ MUePVhN8L+AAsukAri37DX2BtzcGC3Dz0W6vow8fHLYXQF+xlvqhWNkF/
+ Xaetfp7f7a7tweFwuNXuxwYlc2LvNcsJICjGmF4EWnWIcSeJwKqpeU4Yg
+ nVGhC53VIsXS9kbaDbvbAu0osvJm/yxLnwwLN/y5y+KBrFixORDVMCMtY
+ se3FnyD8gML/2W/a9VPRhXJNwXOLO6r/xNbS0vaiyrZD6d1i9HqRuViOz
+ mCeHnw6XLquadK1s4BoyC3G3DK37LJRweBYlh1nucMngwsN4jZ5vAgcx+ A==;
+X-CSE-ConnectionGUID: ZQos1k9WTDm2ubsoPxpEcA==
+X-CSE-MsgGUID: ElevogmLRUmJSD7GbKlPUw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11884"; a="91667737"
+X-IronPort-AV: E=Sophos;i="6.25,240,1779174000"; d="scan'208";a="91667737"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Aug 2026 22:39:02 -0700
+X-CSE-ConnectionGUID: /IxB/yekRSCZz7oMUwbGDg==
+X-CSE-MsgGUID: cxQixFWGQ0S44HasKyWaxg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,240,1779174000"; d="scan'208";a="265119094"
+X-IronPort-AV: E=Sophos;i="6.25,240,1779174000"; d="scan'208";a="290429884"
 Received: from zhaoliu1-desk.sh.intel.com (HELO localhost) ([10.238.208.118])
- by orviesa006.jf.intel.com with ESMTP; 23 Aug 2026 22:36:44 -0700
-Date: Mon, 24 Aug 2026 13:36:43 +0800
+ by fmviesa002.fm.intel.com with ESMTP; 23 Aug 2026 22:38:59 -0700
+Date: Mon, 24 Aug 2026 13:38:59 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Tina Zhang <zhang_wei@open-hieco.net>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  kvm@vger.kernel.org, "Michael S . Tsirkin" <mst@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Yanjing Zhou <zhouyanjing@hygon.cn>,
- Yongwei Xu <xuyongwei@open-hieco.net>
-Subject: Re: [PATCH v3 01/10] target/i386: Sync AMD CPUID aliases for Hygon
-Message-ID: <aovYayjaps1GBb7H@intel.com>
+ Marcelo Tosatti <mtosatti@redhat.com>, Yanjing Zhou <zhouyanjing@hygon.cn>
+Subject: Re: [PATCH v3 05/10] target/i386/kvm: Classify PMU vendor families
+Message-ID: <aovY88W/XD0fQeTH@intel.com>
 References: <20260824045314.162941-1-zhang_wei@open-hieco.net>
- <20260824045314.162941-2-zhang_wei@open-hieco.net>
+ <20260824045314.162941-6-zhang_wei@open-hieco.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260824045314.162941-2-zhang_wei@open-hieco.net>
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20260824045314.162941-6-zhang_wei@open-hieco.net>
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -84,37 +83,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 24, 2026 at 12:53:05PM +0800, Tina Zhang wrote:
-> Date: Mon, 24 Aug 2026 12:53:05 +0800
+On Mon, Aug 24, 2026 at 12:53:09PM +0800, Tina Zhang wrote:
+> Date: Mon, 24 Aug 2026 12:53:09 +0800
 > From: Tina Zhang <zhang_wei@open-hieco.net>
-> Subject: [PATCH v3 01/10] target/i386: Sync AMD CPUID aliases for Hygon
+> Subject: [PATCH v3 05/10] target/i386/kvm: Classify PMU vendor families
 > X-Mailer: git-send-email 2.43.7
 > 
-> AMD defines CPUID[0x80000001].EDX bits as aliases for a subset of
-> CPUID[1].EDX.  QEMU currently synchronizes those aliases only when the
-> guest CPU vendor is AuthenticAMD.
+> The Intel and Zhaoxin PMU architectures are compatible, while AMD uses
+> a separate PMU CPUID/MSR layout.  KVM's PMU initialization, host/guest
+> compatibility, and MSR save/restore paths open-code these vendor checks
+> in several places.
 > 
-> Hygon Dhyana uses the HygonGenuine vendor string, but implements the
-> same AMD-compatible extended CPUID feature aliases.  This can leave QEMU
-> advertising a feature in CPUID[1].EDX while the matching extended alias
-> in CPUID[0x80000001].EDX stays clear.  This inconsistent CPUID state can
-> confuse guest OS feature detection.
+> Introduce X86PMUVendor and helpers that classify the existing CPU and
+> host vendors by PMU architecture.  Use the classification consistently
+> for the compatibility check, PMU initialization, and PMU MSR paths.
 > 
-> Apply the alias synchronization to Hygon CPUs as well.  Gate the new
-> behavior with x-hygon-vendor-abi-fixes and disable it for pc-11.1 and
-> older machine types, because the CPUID result is guest-visible ABI and
-> must remain migration-compatible.
-> 
-> Add qtest coverage for the Dhyana model, including the compat property.
+> This is a refactoring with no functional change.
 > 
 > Signed-off-by: Tina Zhang <zhang_wei@open-hieco.net>
-> Tested-by: Yongwei Xu <xuyongwei@open-hieco.net>
 > ---
->  hw/i386/pc.c                        |  4 +-
->  target/i386/cpu.c                   | 10 ++--
->  target/i386/cpu.h                   | 12 +++++
->  tests/qtest/test-x86-cpuid-compat.c | 76 +++++++++++++++++++++++++++++
->  4 files changed, 98 insertions(+), 4 deletions(-)
+>  target/i386/kvm/kvm.c | 72 +++++++++++++++++++++++++++++++++----------
+>  1 file changed, 55 insertions(+), 17 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
