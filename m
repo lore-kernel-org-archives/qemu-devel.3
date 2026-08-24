@@ -4,105 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70383C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 12:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7311C5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 12:50:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyU7c-0004zM-1h; Mon, 24 Aug 2026 08:49:52 -0400
+	id 1wyU8A-0005Oe-UX; Mon, 24 Aug 2026 08:50:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wyU7a-0004z1-2e
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 08:49:50 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wyU7Y-00043x-5n
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 08:49:49 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-84830c774a0so3801791b3a.1
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 05:49:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787575787; cv=none;
- d=google.com; s=arc-20260327;
- b=GubkkZv8vz87Lo2BsiiZp/DanHzgD5GMUKaHgHcViwGoLaTklMFQD0ozMbd3AZLBCv
- j7pIenymU/tlGPlP85Z+GbNEoAOl1MPHmFNoJa71htoS3W+rKnSft+af3aEXkYmK4lcE
- k3px356xwFs4axSpHLD5iGhQ6qpw+HGsfLG/jxdDGLxWV4PkktmAHO0vujOPmT+YeJ3B
- MwYc7RFn4g0vzTqNbcICCFfTC0cqfKLT1Iyw/drUz7rVn3iO2464EuDLfeth+LQTDxr3
- bupQzfUJmcmmeOOM/yosnlC/Cg9GLoq0vVSFRwjiAq649Eawvf5n44M1VtmU8nNvtZ4g
- Z+LA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=uuCFvVO59hNBXjUOxVf/JWQCtMf1ijmbBv8e8/SQQTk=;
- fh=wNIBB09whFX4aqH2z8BcDR9CesbTcDsK1XevePNeRLw=;
- b=PTYR22Lzm1dL4gpR0tl/ku9oFORqpGacqUoDuAnD+8nMcpxqa9uEXnTexc3TOefJHe
- 2yqDbA6ZfcE999x8P9NC51HvwGi0poGuZ0zsnXocS+g066vSxjDiragp9bt7EP6QpzEL
- 3yP+1KryAw7x+ZIK1tJmhaP4/dKfGDX2+V5GlNIhgsUKbxLE7DG/RYEgUP5jdddnVXX2
- tZVYn0D4LmiAFPr6oJRwYwtBcgWWPSJZ6j0r2VpauuWFiJ8Hutdd9suITsJUsKb8TXz8
- HyI8Wl4xIGgUxY3MXQm0xc4IQiGhBRmLMGD5E+9LQzajHlK1NflNyZAv6+hbUsv/KRCb
- InHQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787575787; x=1788180587; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=uuCFvVO59hNBXjUOxVf/JWQCtMf1ijmbBv8e8/SQQTk=;
- b=JqS3XSleVJbNxqo017LCloPvy2PbRfGmIQ448OeVWm9XjHEdGrdL8AWt/k6P3uC3BX
- YqjIzIqwepc4zdb6OB44QlnkiVHjws1HRshTkON5ucESoAmScgQwan/WLOU/kZ6Sz1W8
- hoLZzgOxE6u5PKWazWAloSP+gtwv2S6U5uFfIyQgN83+8VAKC0JiIlzMb30qofwBNsdT
- gSSjz4nj67sLFR73dwrCtpQ7B/Ry03sK3C/m6uP1+jkxr9RXLuccF0EFpJvqg3BD3lO3
- Pnwm9gojezF68udQCgORVZAp2V2/Lrrzav6G3nrgpmStlM/BtC07OugueM163eYLIGSI
- 6LNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787575787; x=1788180587;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=uuCFvVO59hNBXjUOxVf/JWQCtMf1ijmbBv8e8/SQQTk=;
- b=pIdQYymEy4PcINUKVLaqNUbM8NXzWHOaYGbc2LMqUAd3aYWaSepnOTkPYyTSGHZ6ip
- X0UcvggeyIT2q8ELHPlsIAp1WoU4+OgfBA8P4u0bVbfdMhEobp9UnknWt1MWeBSmodX6
- nxJ5uc/CVHpXwtvSU06A0bPl9X0D3pwYjkrDWj+L1ykcTir2O2mUSCJ7rZubDL2wP62v
- rYjLKrTKi+7lSqGMjAOTEofJBR2RiL963pRY7k/q79XNzLLaig6rXp2ySS45caJK3Kcy
- cDqrd6GkNJxOEvPLnGYSNr3xkS2B4Rd/SBCB1yhTXy3kEPXBP/TosJx7wWXcdms4WO4V
- aZtg==
-X-Gm-Message-State: AFuF++mJ31bi/hT9XeDC5P7e+9s2SX2E2pkvdJj28rwjdsmmgi/trsoG
- 47p+RkksrlyTmItxsoODZgxvuzXneZRpSkRNt7WkIFgFiKfZYgSvImUX5Md9bSYczl4gwthK9ba
- MkVtD8mld5kPEFWteKeJoArljwGFgZXA=
-X-Gm-Gg: AR+sD12Sc2NJ9d0PohI+Wmz4eMudbazxMKtNM+LQPRCnVF4kp162b4OSrWzm9vXwpGd
- uVhzV2OcT8WB01OvFFzXSzCV70/LeFtGSfmaTCHEv+xKBJgE1kXtS3efO1KdlKTN8k3LK9iJe6/
- X7xmO6co8T6uarlJ4eop9x/n8XXxWbRrwJCaRlOe0ZP3iCY3bDuHGeVw0eKavWugBHyQKJEntEQ
- Jv4lCa6rAaCV+3/c/w/M3d3PetU1Z/mt7AjkrtzKJJTRaatRNKx3I7cwdVO3v3TnEvNxc/f0Yu4
- VSmhtUDs+rCmAF5EZXG341/iDl4GO/c754OUA1HmZR2yVA==
-X-Received: by 2002:a05:6a20:450c:b0:3bf:6d96:ac40 with SMTP id
- adf61e73a8af0-3cd3007ce9bmr50756547637.12.1787575786739; Mon, 24 Aug 2026
- 05:49:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Stewart.Hildebrand@amd.com>)
+ id 1wyU89-0005OD-FX
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 08:50:25 -0400
+Received: from mail-eastusazon11012048.outbound.protection.outlook.com
+ ([52.101.53.48] helo=BL0PR03CU003.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Stewart.Hildebrand@amd.com>)
+ id 1wyU87-00048F-B0
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 08:50:25 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=WPdpcIQuygFSxM0G2BiE3bP3Gb3vHj+Dz10tiL+h15DoXHFa0AXEy5k9VIqvwEOoOvFb/eiQDK8Hw95hSuRRRWQf2K1vedFxD6ChuNMqb9rO2SRb6laJeAGIRX+42o/WOUAMVpx4uNxd9lweRoxtUBSKUp/ukL470wINRqXZrevdWKcevNuesnRiVyb/SX0yU5ml3/yiir3yx6zH3I92/JlhimBsvxL07awKExfEZeDlBcu6fA1U80cg3oGohFiFsfdlY6cAmWQwyenOH17QezFXvoLCg/EVMtk/3LtLTf5CTkqY97ZxYiyPIBxHM3X/ZFhHu/FggzXCpHRDDEjLWA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=GqXGEAPZorVAQCgilMyaltjUKRO43w8nx6VC8NlkFSg=;
+ b=bxn3cUBot41OryiqRBFd3aRNpfKxUEMrDEcZarxqHPa6Ef0vfvYzhKCu3zlwZMSpI58jckI4h2M22NKv9CL5kdhO7xbZmTyiOsM+71PcIThzVs/VM0v2TEjARQJtFeTL0jqQN8LplqQPoot6jNYp4LxFGMqRQBqNUQ1cUpvRzNltGR5siNRrMiyJ4qOCf++bx3bZwQug8BisPQIQF7A5LCHIHrxtg1qPk4DCB5apjhz8oTnReHhrl/YBSrT6ymF82WKSOXvRa0KXLlE0FWbnyMbv9Yjn//upGNx+eRIWwuypK43LF9m8DLs6iTrN3UiyinU9jy10fs1EUdS34u+5sg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GqXGEAPZorVAQCgilMyaltjUKRO43w8nx6VC8NlkFSg=;
+ b=mHgIWnz3luXhDIk5GpgFdSmIYNVFChZa7Srqjj/OhNWMrC9OHgSC0oyHa/+aQln2fuwbJk5ed7m+q171ZSvXFTFE9+ZHtsQ5i6c0mLdCaowr1HyMwPx0KtU25g06oS0RVU5Eah6PXpnVxtAno5iGevbXjSZ/+TWxhu92GcXl3ZA=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DM4PR12MB6472.namprd12.prod.outlook.com (2603:10b6:8:bc::7) by
+ IA1PR12MB6019.namprd12.prod.outlook.com (2603:10b6:208:3d5::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.8; Mon, 24 Aug
+ 2026 12:45:15 +0000
+Received: from DM4PR12MB6472.namprd12.prod.outlook.com
+ ([fe80::4a4d:4208:3862:fb7a]) by DM4PR12MB6472.namprd12.prod.outlook.com
+ ([fe80::4a4d:4208:3862:fb7a%6]) with mapi id 15.21.0339.012; Mon, 24 Aug 2026
+ 12:45:15 +0000
+Message-ID: <2383a98d-d88d-415d-9de1-aa68a5d215fe@amd.com>
+Date: Mon, 24 Aug 2026 14:45:11 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/1] include/hw/xen/xen_native.h: downgrade
+ include-order assertion to warning
+To: Neal Frager <neal.frager@amd.com>, qemu-devel@nongnu.org
+Cc: sstabellini@kernel.org, anthony@xenproject.org, edgar.iglesias@gmail.com, 
+ xen-devel@lists.xenproject.org, stefano.stabellini@amd.com,
+ micheal.saleab@amd.com, john.ernberg@actia.se, matthew.l.weber3@boeing.com,
+ vincent.stehle@arm.com
+References: <20260805052723.2823538-1-neal.frager@amd.com>
+Content-Language: en-US
+From: Stewart Hildebrand <stewart.hildebrand@amd.com>
+In-Reply-To: <20260805052723.2823538-1-neal.frager@amd.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: FR0P281CA0080.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:1e::14) To DM4PR12MB6472.namprd12.prod.outlook.com
+ (2603:10b6:8:bc::7)
 MIME-Version: 1.0
-References: <20260818134543.654949-1-colazcyg@gmail.com>
- <20260818134543.654949-2-colazcyg@gmail.com>
-In-Reply-To: <20260818134543.654949-2-colazcyg@gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 24 Aug 2026 16:49:34 +0400
-X-Gm-Features: AcwNN1UVQqWW0DxNHy5r61XlBeOJs3nL1SVsucsJaT10bySNwncQPtiSiTA6Ezk
-Message-ID: <CAJ+F1CJA_rL2mCn5yjenvJtxKav7A1jXxwTdoQzNHPFinVsHXg@mail.gmail.com>
-Subject: Re: [PATCH RFC v3 1/1] ui/dbus: add org.qemu.Display1.UIInfo interface
-To: Chengyang Zhu <colazcyg@gmail.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM4PR12MB6472:EE_|IA1PR12MB6019:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8e2cdfb6-db75-4db4-4a71-08df01dd8b6b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|1800799024|23010399003|376014|56012099006|10067099003|6133799003|22082099003|18002099003|11063799006;
+X-Microsoft-Antispam-Message-Info: R6F/Kk4sikH4CKAH488XnS2/cMI03+Cx1ML21gmDpNigllhtMU0Tvo5FqRhERxAZcXKa2H0Wm4PSwxCxn96lC0OXZFjjX/arsacLqLxwCHkzP1CyD07wKPVjCrbaay2kfj3ox/ss2AWm1ZILEpu/FxPB0vfitrUsaLQQNVS9t90rihr7hqJs1Aedj2haySHz5eLw1Vq4IEtpkxZzbHKhm55/5XzMJXXiGaToXrPhbzQc9W8hktKYd355ps2tIq7PbOsC7ec4XqBMBp0coLkZ3/UrtO/UbQwQShw11f5e4lgayNjiUCh5nSlETVdeWch36oS16ZsXvkzmQuU7JGASxSaEsjDENzZxE9f/wIwnEV28STD+WruixkgJdqSa6lYXTg/lj8whV9RxIKZnvVlP4uEsf2WTDjsTkrcbRCn44OOjAQ9b6WNKMDVfXTaiP1r/d/qAIB0SrIPro27J2mCe4WPm69T8Ewrq2OV9n9fDAjkTNBmOy0NR2A8i1WzbykBuZi6FDSAyZA2fSgzm0bgm8rBWdkpSeqv8BQL9ajJ+x3rPoZGWZGbSDpg3kPF+JXShbvOjUbUrAmhxDx3UZq8UrJGDZcAEePFXEUC4/xl4Bbvy9MZ4PjMmVcGA1XrUpmC95T28JoDE8caFxJgAroz4DSaGfcvsU2I+lQebB446NXw=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM4PR12MB6472.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(23010399003)(376014)(56012099006)(10067099003)(6133799003)(22082099003)(18002099003)(11063799006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?d3JHd05SRFp0ZGRqVmFVNVhDZWtGbk52ZEFjQmUvY0Z4Uy94eW9Sd1J5Yjl3?=
+ =?utf-8?B?aW5BSWVyR0xQT1BmdFErejhqckk3MHFLRFV1UHd3dzdQaHdIOGpocHB6NEF3?=
+ =?utf-8?B?VnFDSERHU0xYOE1ROXFxb1VUS1JtSGFMbm01TU1Gek1QMERhL2l5NEdvWHJD?=
+ =?utf-8?B?OFBvMUJaWndGMUJkNTczY3NJdlJ6TGJDa0xzNWdHSXl0YzVvZ2lZSmlhRjlq?=
+ =?utf-8?B?WG9VcDYrSFI3Y0xPZTAzZE8wbnBvMFV6UXhDRVJxc1liQWFaTjBVMnMyTklI?=
+ =?utf-8?B?MU5ORjF0R2dQSmVkaFV5TnZ5STdWWnhSWWFTb2cxblY1RGx4T3lsQ2VPeE5V?=
+ =?utf-8?B?Mk05RzlJbS9BWjN5eXBja3FLeTBSaW5VbUZGREJSUWZFN2VYbHUyVUVXTXEv?=
+ =?utf-8?B?cHFiRXhRakZFQmYzSzhBVVFBTm9FbzIra3lCS01YeE5rWXk1bmpYdzdVdDRn?=
+ =?utf-8?B?Vi9RQnZocm56OHlrd0cvQzRSQkdYR2JvcnNTT1NBU0JrWitFbjNueW1lQ1VZ?=
+ =?utf-8?B?NWsvR3RDbEtZMlE4VnJVd294U2FjTlpWQmpBQjNqd0tDKzNRK2NGNWVZTHda?=
+ =?utf-8?B?MzVoc2lHSndxb0lobTQybkk1OEpIb0dNMEphZWZBa3hQRnFSZnV1MllSaVJ0?=
+ =?utf-8?B?dmFQbUJEa281Zk1qRkRkWkk2MDBiZTVLMUtlUUtMWWNCeGdWZW0rbThPM3NH?=
+ =?utf-8?B?K1ZlSHpwWDFUakJjTTJmdmJ5THl5L3pNS05JWFlGOEVwcnUrMVdVbjVSaVlu?=
+ =?utf-8?B?akJBY1J3amQ0UXVsNytWSVY0a3hZRk5lcnFteGVlVnBhVjFMQjRGa3RqWkhV?=
+ =?utf-8?B?aDNTYlJCVzlrVFVEMmFuQndjdEhzakQwK3BOZ3ZCVktuYkpqMGFubGZPV3ZS?=
+ =?utf-8?B?Q0c2Y3BJeE0xdG4vOTVSUDFhQjdSdERjUUZYS2g3dFVIU1dydzQzU2d2dXVZ?=
+ =?utf-8?B?bHArTTJYbkhhS0JKMkJkVnhvS3N6ZkJ0ZURwUHZ4RkVuNVNXc01TZkR6S3ph?=
+ =?utf-8?B?SUlWVzBFbSswSld1VXpnV0QxclFSbjA3dFFpdjhKQkVmRWhVdlg2M3ViN1kz?=
+ =?utf-8?B?MWpuYzdMMGpJUjk5aWlRQ0dSWHgvM3BjVHg2c3VWUkUvOGdMTHBhckUwV3o3?=
+ =?utf-8?B?WEUrRkxkcU1MUlQ3TjF6UktsS2xmM0NVbkFLNkxKKzdiVS9Eb1dnTFZYVU1O?=
+ =?utf-8?B?d05oM3FobVVIYVFkQ1lZU2x1akUwN0kvMnppbWtTN3V6dXJPQ0k3cWJwdEtr?=
+ =?utf-8?B?WWUrSlN1b3dzWFM3eWo1eU8zdm05VFRncklDemVSVTBrSldmUWxUNTlhV1ZC?=
+ =?utf-8?B?WUloeXZxVXo3amxsUmhqSnZic1EyTkhTb09kc0t0eFFQVzlYeENNek1HVCs1?=
+ =?utf-8?B?VjRDdy85VytYc1V3S1E0R3E5ZXVZRHM3VURzQWNvUmFPQVRvUlZzNXBWRXps?=
+ =?utf-8?B?bDhjRlNWZEdLUWRHNGo0Ry9KcDcwd2d4bkZtTnhCUjVRN004MFVWTGhPVStK?=
+ =?utf-8?B?emJuQVR3TzhSR2FSTHBsRFpSVzZGM21FUm04UmJ2a0NWdy9hNXpwcWs5ejJ5?=
+ =?utf-8?B?dVYwSVJCM2ZnaTZiME5rVTgwR3h0d1ZWSDloMnFMTFIxWVMvYVh6WEFpNHFR?=
+ =?utf-8?B?VnVKQ2kzL1hKZ1BhWFUxY29wRVJFZFN5YXJQVGc3bW9XVG1LdE1nckUybzhZ?=
+ =?utf-8?B?WnVnUWtzZ3hjTnZ1cS9lUWJuM0hYakVremdQQU5RNFVaNldhZUtBdy9od29W?=
+ =?utf-8?B?WENtRXcrK2t3N0hnSEZxQWV2VDVkc2tuTVVuT0RhdzFYOTR1djk5UmR3NkZv?=
+ =?utf-8?B?K29vbFB2WDZHUkJKMll4QmoxQkRsRG5nRWFXdEVXZnJQSEhkVC9VdkJFZ0h6?=
+ =?utf-8?B?dnZqUE4wZnRvMWh3cjY4QmFNcVNoUnpCUVF5NHArU3lJYjI3OG9VMDBURzBa?=
+ =?utf-8?B?M212RFJmL0UwN3B5VEM3anhrL3hLcjg2Q1RlRVhjengzcGpJTmhSbXBteGoy?=
+ =?utf-8?B?cER1dldQRm1MaUNqR1BWS2RYVDRXKzd0MmdxeWZDSEtjeWFkaTZzYStkUDkx?=
+ =?utf-8?B?akl2MDQyUFRZazYvQjFqTHlPRTJ3VVJiRUFZcWV3SkI2Z1ZYaXc5MkUwNFha?=
+ =?utf-8?B?dTJwdGZ1cThiNkJIYS9wMTdRVlVOc2NtNUY3MVZIaWI2MFJiUng4U2E1ZU50?=
+ =?utf-8?B?ZTh6NW1yK0hiUDhjT2JTMi9tNGV5NEkrdFMzZlhMVmtSQUNqWnNZd1JJakhv?=
+ =?utf-8?B?NmFIYUh1UHZxc2piTzU1SDFHRVZucC9jUkVaZk9KbjlHejZsSnJOcVQxRkx1?=
+ =?utf-8?Q?GvFtCs6hpLwIjMPzor?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8e2cdfb6-db75-4db4-4a71-08df01dd8b6b
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB6472.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Aug 2026 12:45:15.1137 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0zUykAnEZR3KllfoZ2h8hZN68DD2o2qY2sAbkxB+WVrKpF/nLUHLRAwXzz/ZJKS9GUwqtjZ1oRqJ/npY+2X9mQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6019
+Received-SPF: permerror client-ip=52.101.53.48;
+ envelope-from=Stewart.Hildebrand@amd.com;
+ helo=BL0PR03CU003.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,260 +153,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Chengyang Zhu
-
-On Tue, Aug 18, 2026 at 5:48=E2=80=AFPM Chengyang Zhu <colazcyg@gmail.com> =
-wrote:
->
-> Currently, the SetUIInfo method cannot set a refresh rate.
-> Simply adding a refresh_rate argument would break the method signature.
->
-> This patch adds the UIInfo interface containing
->   * properties as staged display settings.
->   * property `Supported` indicating whether console UI info is supported.
->   * the method `Apply` applying staged settings.
->   * the method `Reload` reloading settings from the console.
-
-Sorry for the back and forth, based on discussion with Christian, we
-should go back to a dictionary approach.
-
-Let's keep the extra interface, keep "supported" property and add
-Get() & Apply() with extensible dictionaries. Sounds good?
-
-Apply() should merge with existing values, I suppose.
-
-Later on, we may want to also have a Updated/Changed signal with the
-new values..
-
-thanks
-
->
-> Signed-off-by: Chengyang Zhu <colazcyg@gmail.com>
+On 8/5/26 07:27, Neal Frager wrote:
+> The -I$(XEN_ROOT)/tools/include added to QEMU's extra-cflags causes
+> __XEN_INTERFACE_VERSION__ to be defined before xen_native.h is included,
+> triggering an include-order assertion. Downgrade to a warning since the
+> version is consistent in cross-compile.
+> Ref: https://github.com/qemu/qemu/commit/e2abfe5ec6
+> 
+> Signed-off-by: Neal Frager <neal.frager@amd.com>
+> Signed-off-by: Vincent Stehlé <vincent.stehle@arm.com>
 > ---
->  ui/dbus-console.c    | 71 ++++++++++++++++++++++++++++++++++++++
->  ui/dbus-display1.xml | 81 ++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 152 insertions(+)
->
-> diff --git a/ui/dbus-console.c b/ui/dbus-console.c
-> index e1ac06814b..2c71272a1c 100644
-> --- a/ui/dbus-console.c
-> +++ b/ui/dbus-console.c
-> @@ -55,6 +55,8 @@ struct _DBusDisplayConsole {
->      guint last_x;
->      guint last_y;
->      Notifier mouse_mode_notifier;
-> +
-> +    QemuDBusDisplay1UIInfo *iface_ui_info;
->  };
->
->  G_DEFINE_TYPE(DBusDisplayConsole,
-> @@ -155,6 +157,7 @@ dbus_display_console_dispose(GObject *object)
->      qemu_input_led_notifier_remove(&ddc->led_notifier);
->      qemu_console_unregister_listener(&ddc->dcl);
->      qemu_remove_mouse_mode_change_notifier(&ddc->mouse_mode_notifier);
-> +    g_clear_object(&ddc->iface_ui_info);
->      g_clear_object(&ddc->iface_touch);
->      g_clear_object(&ddc->iface_mouse);
->      g_clear_object(&ddc->iface_kbd);
-> @@ -528,6 +531,63 @@ dbus_mouse_mode_change(Notifier *notify, void *data)
->      dbus_mouse_update_is_absolute(ddc);
->  }
->
-> +static gboolean
-> +dbus_ui_info_reload(DBusDisplayConsole *ddc,
-> +                    GDBusMethodInvocation *invocation)
-> +{
-> +    if (!qemu_console_ui_info_supported(ddc->dcl.con)) {
-> +        g_dbus_method_invocation_return_error(invocation,
-> +                                              DBUS_DISPLAY_ERROR,
-> +                                              DBUS_DISPLAY_ERROR_UNSUPPO=
-RTED,
-> +                                              "UIInfo is not supported")=
-;
-> +        return DBUS_METHOD_INVOCATION_HANDLED;
-> +    }
-> +
-> +    QemuUIInfo ui_info =3D *qemu_console_get_ui_info(ddc->dcl.con);
-> +
-> +    qemu_dbus_display1_uiinfo_set_width_mm(ddc->iface_ui_info,
-> +                                           ui_info.width_mm);
-> +    qemu_dbus_display1_uiinfo_set_height_mm(ddc->iface_ui_info,
-> +                                            ui_info.height_mm);
-> +    qemu_dbus_display1_uiinfo_set_xoff(ddc->iface_ui_info, ui_info.xoff)=
-;
-> +    qemu_dbus_display1_uiinfo_set_yoff(ddc->iface_ui_info, ui_info.yoff)=
-;
-> +    qemu_dbus_display1_uiinfo_set_width(ddc->iface_ui_info, ui_info.widt=
-h);
-> +    qemu_dbus_display1_uiinfo_set_height(ddc->iface_ui_info, ui_info.hei=
-ght);
-> +    qemu_dbus_display1_uiinfo_set_refresh_rate(ddc->iface_ui_info,
-> +                                               ui_info.refresh_rate);
-> +
-> +    qemu_dbus_display1_uiinfo_complete_reload(ddc->iface_ui_info, invoca=
-tion);
-> +    return DBUS_METHOD_INVOCATION_HANDLED;
-> +}
-> +
-> +static gboolean
-> +dbus_ui_info_apply(DBusDisplayConsole *ddc,
-> +                   GDBusMethodInvocation *invocation)
-> +{
-> +    if (!qemu_console_ui_info_supported(ddc->dcl.con)) {
-> +        g_dbus_method_invocation_return_error(invocation,
-> +                                              DBUS_DISPLAY_ERROR,
-> +                                              DBUS_DISPLAY_ERROR_UNSUPPO=
-RTED,
-> +                                              "UIInfo is not supported")=
-;
-> +        return DBUS_METHOD_INVOCATION_HANDLED;
-> +    }
-> +
-> +    QemuUIInfo ui_info =3D {
-> +        .width_mm =3D qemu_dbus_display1_uiinfo_get_width_mm(ddc->iface_=
-ui_info),
-> +        .height_mm =3D qemu_dbus_display1_uiinfo_get_height_mm(ddc->ifac=
-e_ui_info),
-> +        .xoff =3D qemu_dbus_display1_uiinfo_get_xoff(ddc->iface_ui_info)=
-,
-> +        .yoff =3D qemu_dbus_display1_uiinfo_get_yoff(ddc->iface_ui_info)=
-,
-> +        .width =3D qemu_dbus_display1_uiinfo_get_width(ddc->iface_ui_inf=
-o),
-> +        .height =3D qemu_dbus_display1_uiinfo_get_height(ddc->iface_ui_i=
-nfo),
-> +        .refresh_rate =3D qemu_dbus_display1_uiinfo_get_refresh_rate(ddc=
-->iface_ui_info)
-> +    };
-> +
-> +    qemu_console_set_ui_info(ddc->dcl.con, &ui_info, false);
-> +    qemu_dbus_display1_uiinfo_complete_apply(ddc->iface_ui_info, invocat=
-ion);
-> +
-> +    return DBUS_METHOD_INVOCATION_HANDLED;
-> +}
-> +
->  int dbus_display_console_get_index(DBusDisplayConsole *ddc)
->  {
->      return qemu_console_get_index(ddc->dcl.con);
-> @@ -550,6 +610,7 @@ dbus_display_console_new(DBusDisplay *display, QemuCo=
-nsole *con)
->          "org.qemu.Display1.Keyboard",
->          "org.qemu.Display1.Mouse",
->          "org.qemu.Display1.MultiTouch",
-> +        "org.qemu.Display1.UIInfo",
->          NULL
->      };
->
-> @@ -626,5 +687,15 @@ dbus_display_console_new(DBusDisplay *display, QemuC=
-onsole *con)
->      qemu_add_mouse_mode_change_notifier(&ddc->mouse_mode_notifier);
->      dbus_mouse_update_is_absolute(ddc);
->
-> +    ddc->iface_ui_info =3D qemu_dbus_display1_uiinfo_skeleton_new();
-> +    qemu_dbus_display1_uiinfo_set_supported(ddc->iface_ui_info,
-> +        qemu_console_ui_info_supported(ddc->dcl.con));
-> +    g_object_connect(ddc->iface_ui_info,
-> +        "swapped-signal::handle-reload", dbus_ui_info_reload, ddc,
-> +        "swapped-signal::handle-apply", dbus_ui_info_apply, ddc,
-> +        NULL);
-> +    g_dbus_object_skeleton_add_interface(G_DBUS_OBJECT_SKELETON(ddc),
-> +        G_DBUS_INTERFACE_SKELETON(ddc->iface_ui_info));
-> +
->      return ddc;
->  }
-> diff --git a/ui/dbus-display1.xml b/ui/dbus-display1.xml
-> index d96bae2ed6..2a8a8563ee 100644
-> --- a/ui/dbus-display1.xml
-> +++ b/ui/dbus-display1.xml
-> @@ -1159,4 +1159,85 @@
->      -->
->      <property name=3D"Encoding" type=3D"s" access=3D"read"/>
->    </interface>
-> +
-> +  <!--
-> +      org.qemu.Display1.UIInfo:
-> +
-> +      This interface is implemented on
-> +      ``/org/qemu/Display1/Console_$id`` (see
-> +      :dbus:iface:`~org.qemu.Display1.Console`).
-> +  -->
-> +  <interface name=3D"org.qemu.Display1.UIInfo">
-> +    <!--
-> +        Supported:
-> +
-> +        Whether console UI info is supported.
-> +    -->
-> +    <property name=3D"Supported" type=3D"b" access=3D"read"/>
-> +
-> +    <!--
-> +        WidthMm:
-> +
-> +        The physical display width in millimeters.
-> +    -->
-> +    <property name=3D"WidthMm" type=3D"q" access=3D"readwrite"/>
-> +
-> +    <!--
-> +        HeightMm:
-> +
-> +        The physical display height in millimeters.
-> +    -->
-> +    <property name=3D"HeightMm" type=3D"q" access=3D"readwrite"/>
-> +
-> +    <!--
-> +        XOff:
-> +
-> +        The horizontal offset in pixels.
-> +    -->
-> +    <property name=3D"XOff" type=3D"i" access=3D"readwrite"/>
-> +
-> +    <!--
-> +        YOff:
-> +
-> +        The vertical offset in pixels.
-> +    -->
-> +    <property name=3D"YOff" type=3D"i" access=3D"readwrite"/>
-> +
-> +    <!--
-> +        Width:
-> +
-> +        The console width in pixels.
-> +    -->
-> +    <property name=3D"Width" type=3D"u" access=3D"readwrite"/>
-> +
-> +    <!--
-> +        Height:
-> +
-> +        The console height in pixels.
-> +    -->
-> +    <property name=3D"Height" type=3D"u" access=3D"readwrite"/>
-> +
-> +    <!--
-> +        RefreshRate:
-> +
-> +        The display refresh rate in millihertz.
-> +    -->
-> +    <property name=3D"RefreshRate" type=3D"u" access=3D"readwrite"/>
-> +
-> +    <!--
-> +        Reload:
-> +
-> +        Set the staged properties to the state of the console display.
-> +    -->
-> +    <method name=3D"Reload">
-> +    </method>
-> +
-> +    <!--
-> +        Apply:
-> +
-> +        Apply the staged properties to the console display.
-> +    -->
-> +    <method name=3D"Apply">
-> +    </method>
-> +  </interface>
->  </node>
-> --
-> 2.55.0
->
->
+>  include/hw/xen/xen_native.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/include/hw/xen/xen_native.h b/include/hw/xen/xen_native.h
+> index 5caf91a616..3e1137efc1 100644
+> --- a/include/hw/xen/xen_native.h
+> +++ b/include/hw/xen/xen_native.h
+> @@ -2,7 +2,7 @@
+>  #define QEMU_HW_XEN_NATIVE_H
+>  
+>  #ifdef __XEN_INTERFACE_VERSION__
+> -#error In Xen native files, include xen_native.h before other Xen headers
+> +#warning In Xen native files, include xen_native.h before other Xen headers
+>  #endif
+>  
+>  /*
+
+
+This is a buildroot issue, so I don't believe it's necessary to fix from the
+qemu side.
 
