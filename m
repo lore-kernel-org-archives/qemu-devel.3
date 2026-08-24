@@ -4,109 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A6D5C5DF9C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 16:40:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 806ADC5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 16:40:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyXiM-0006oL-4Z; Mon, 24 Aug 2026 12:40:02 -0400
+	id 1wyXj1-0007KH-2k; Mon, 24 Aug 2026 12:40:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wyXiK-0006ng-H2; Mon, 24 Aug 2026 12:40:00 -0400
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wyXiz-0007Jm-0X; Mon, 24 Aug 2026 12:40:41 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wyXiI-0007yt-Gi; Mon, 24 Aug 2026 12:40:00 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wyXix-0008O3-8b; Mon, 24 Aug 2026 12:40:40 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67OG1a28500978; Mon, 24 Aug 2026 16:39:54 GMT
+ 67OG1btr2373315; Mon, 24 Aug 2026 16:40:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=sOuPtm
- TEu7zxiukE8pTzttVceDbyWwERbfRwzeZ28Hk=; b=QSG+uonkM2E2hbfnCIyEi8
- o1uiovXOQfK26oXaf6wMMCMlk9PbrTVchcffjYQlWhIzWGUsD96R8luJ88GkhtO9
- thJAxlwDgZ+J4YvyONEu+f6+L/7JH1uCXDvOffSlyLjpVBtjkBPRj8uR+TXF4TZS
- 7X64QssJQRdNFenX/qwwDJaN+CIBjD8T2ixggYry79aZeyFFShIBMvuT53QX5cLJ
- GufDmZSw5niZubcy/zD7tYkhH9psAri3Srp+8CoHtEanswyxR8VIDiATGsiDT5hh
- V5K+PE57V1RF0A0Z9NoAR6bcdfKGPIcFznIW4IIxCm6TmnrfyqXtvf5eCbUAJz3A
+ :message-id:mime-version:references:subject:to; s=pp1; bh=eWmd3K
+ sr+eYcwBBmT95QKVUstPjl7rCJ/2At2iDkc4c=; b=oLsATe/R5WVuIFKmZDSzTM
+ wn5lq6PkW+vkGF4CaBlnBTREeh5IwC9d7uHR6B6xmnFQGCx5iBk0DOV7uikKvubZ
+ vLNPgtYrTWQtX9ET4DSSIFoyJOIob6pnYuDN2s6uTXvMdopfu6mZCiaq9bWdB9zV
+ S0YoPU/aSKHV1lDA8S8vkjQMhQeIDPo12oOmj22dsvTUEu5hOBQ7w6sr+cQ9wqLe
+ CMeR45ToAoXSCpUwigr2rp8Wup2wYIY9RN7b0EWsDYH0TLXVKYB7QFsZ3PoDnYRP
+ gM+hWL/CStbMAkn3R3nLBqLfmGDrBR0cTeE4KD20RGdb9yp9XiiQZl3T6X1R4BkA
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eqjq5k-1
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73g4jqwa-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 16:39:54 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OGQKCe028220;
- Mon, 24 Aug 2026 16:39:53 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkgy3he-1
+ Mon, 24 Aug 2026 16:40:33 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OGQKLD032555;
+ Mon, 24 Aug 2026 16:40:32 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7pfvya40-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 16:39:53 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67OGdpJo29295212
+ Mon, 24 Aug 2026 16:40:32 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67OGeVfh31064760
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 16:39:52 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B0E1F58056;
- Mon, 24 Aug 2026 16:39:51 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DAB5E58052;
- Mon, 24 Aug 2026 16:39:50 +0000 (GMT)
-Received: from [9.61.21.147] (unknown [9.61.21.147])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Aug 2026 16:39:50 +0000 (GMT)
-Message-ID: <21439612-9d8a-4e95-8ed2-7e74822aef10@linux.ibm.com>
-Date: Mon, 24 Aug 2026 12:39:50 -0400
+ Mon, 24 Aug 2026 16:40:31 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4851158045;
+ Mon, 24 Aug 2026 16:40:31 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2242158052;
+ Mon, 24 Aug 2026 16:40:30 +0000 (GMT)
+Received: from [9.61.26.206] (unknown [9.61.26.206])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 24 Aug 2026 16:40:30 +0000 (GMT)
+Message-ID: <0e55b6cf-6953-42c8-9102-932aeaf3661c@linux.ibm.com>
+Date: Mon, 24 Aug 2026 12:40:29 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] tests/functional/s390x/test_secure_ipl: Add
- virtio-blk-pci boot dev case
+Subject: Re: [PATCH v1 2/3] tests/functional/s390x/test_secure_ipl: Skip test
+ if SIPL not supported by hypervisor
 To: Joshua Daley <jdaley@linux.ibm.com>, qemu-s390x@nongnu.org
-Cc: qemu-devel@nongnu.org, jrossi@linux.ibm.com, zycai@linux.ibm.com,
- borntraeger@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- farman@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
- david@kernel.org, cohuck@redhat.com
+Cc: qemu-devel@nongnu.org, jrossi@linux.ibm.com, borntraeger@linux.ibm.com,
+ jjherne@linux.ibm.com, pasic@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, richard.henderson@linaro.org,
+ iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com
 References: <20260812152112.3330493-1-jdaley@linux.ibm.com>
- <20260812152112.3330493-4-jdaley@linux.ibm.com>
- <f2f3b5de-e1de-4e8c-82c8-2379b78e9ff9@linux.ibm.com>
- <2c98040b-f6c7-43cf-a768-5089258e723e@linux.ibm.com>
+ <20260812152112.3330493-3-jdaley@linux.ibm.com>
 Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <2c98040b-f6c7-43cf-a768-5089258e723e@linux.ibm.com>
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <20260812152112.3330493-3-jdaley@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: VShwJQ97JkdgfcaSC2k42aTV7U7mgJN6
-X-Proofpoint-ORIG-GUID: VShwJQ97JkdgfcaSC2k42aTV7U7mgJN6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEzOSBTYWx0ZWRfXxQXqF/Fy1VXh
- 9LK68h6tXoZRv/7ft85MS97ej7ha47KJDWD9HfUY8WhLGeJJc47BZaTeSDKaLczO8V9rKEGTmrg
- 9Cj6pAkJQL27rjSD+mDvZE58DARozR1AisWeZcduD0bpDzh78WRn/xkYlqVx+VUDAaMgke4LPDL
- CEGOLsRJAvjfEybT0D5McEvLS5zk8yY+5phWmkxPPtI5ScnT8WgfGZySzxuSijWEawnnkdvJAmo
- 8pIB6fqxB+u0lcLONjKOt7JUnMg7D//yS81f6m5cts18HRENNthRv1I1xSBfARqAJ5Th1ZUk7Lu
- 3QZlQsX74NC/b457xkhUI0cIQObMmK/WGFTOgUQmbTjS9gTNyLnKX8RliPdTdVyl2CePFM6orGw
- sV0Bpb6tvyiVTfw8LRoDiNDP7Do8Nf1mdjdtdacGutzxOKcuI8DuoA6j5fygNBFXB3+YHb1mNra
- /ijObgto1YX4bd/X3oA==
-X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8c73da cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-ORIG-GUID: OFqxIe3BToX-aRJj3lDxO0oOXwkU4Dec
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEzOSBTYWx0ZWRfX0wLNgFhF3W5t
+ cy3GICT9OzxU1wg11NdoNq5nELI3Mh4q69Q43v9jmRaiRp+FOQFb6I0VIgzOrbRh/OOZf9AUHWA
+ 6gObCMOQTUhzLZGdQqMvT9La0z+r6ow=
+X-Proofpoint-GUID: OFqxIe3BToX-aRJj3lDxO0oOXwkU4Dec
+X-Authority-Analysis: v=2.4 cv=JZyMa0KV c=1 sm=1 tr=0 ts=6a8c7401 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=AVNu2gD-8LlSp6Ms5TcA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEzOSBTYWx0ZWRfXwhujNN38Bfza
- V7/yB53EiT5Luxfu5VvP4DRBmgV8Kb0vW5Vupkm8nc56hq/stGKEfVMyz2gzg6azKJ8OGf5jQ9r
- lrBi/+m/htQkBNmnFogzzzdBihDb5nU=
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=KwKIQBDO4BPv--znDUcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEzOSBTYWx0ZWRfXz2unmGVCqdZ8
+ xGW6DiTuEk9zEdOnwLjHEgoeChYH7Zj4BCg+aK3JF+y8JLMaRDqquQ7yAlsGYzB8WyRpnIFE/Fh
+ IIAXNCl8sYKnr+kImbY43TKDJJxgAYWNJmND2v5LZFmcSAL0uO8V0TOPvqST5pejYWJsU4nohXZ
+ rEw76pJFnnQsag4OoUoTZFyJekimsLghojZeaoHQRoXSLHdZ288fCMQi8e8uTa1JK1RkM6N/uaH
+ KVorc2ek73W+LUHx3MfYBfPm04RUI8FB0ffqhKGpFYVrhDaCdAH1YqXLTAQ6uU01dbZCgdK1F2i
+ /YoMqfbuuZVrr0MJC/gTXXe7/jHtfaiSIFXczxdiSPgtLQrjCSsljJrjZmfyw6Y9BaUSVaOdPbm
+ Ri9ba5TpS2VCp7IRF9xNfx5e7H6aw2wxXpxQlyeEbmJKbfaxkCDQeMY+Y8GdyKrk9yokBGXeWpA
+ FCtKHwgKG5cw12hz3ZQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-24_05,2026-08-24_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
- spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ spamscore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240139
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -129,35 +127,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Reviewed-by: Zhuoying Cai <zycai@linux.ibm.com>
 
->> Unless this is really time consuming, I think the simple answer is to
->> just let the setup run twice and don't try to share between the 2
->> instances?
->>
->> Thanks,
->> Matt
->>
-> The setup is time consuming compared to the verification step. On my
-> machine, the entire test takes about 120s, and about 90% of that is setup.
-
-Bleh.  OK, that seems worth the extra complexity.
-
+On 8/12/26 11:21 AM, Joshua Daley wrote:
+> Currently, if secure IPL is not supported by the hypervisor, the test
+> will fail because "Verified component" never appears. One must inspect
+> the console log to observe the cause of the failure.
 > 
-> A simple solution is to scrap the subtest idea and just have:
+> Add a check that skips the test if the host CPU model is missing the
+> secure IPL facilities.
 > 
-> @skipBigDataTest()
-> def test_s390x_secure_ipl(self):
->     self.require_accelerator('kvm')
->     self.setup_s390x_secure_ipl()
->     self.verify_s390x_secure_ipl('ccw')
->     self.verify_s390x_secure_ipl('pci')
+> Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
+> ---
+>  tests/functional/s390x/test_secure_ipl.py | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
 > 
-> But if we value separating the ccw and pci cases into separate subtests,
-> I have a solution using setUpClass() and class-level vars to run the
-> setup only once. It just makes the code a bit uglier. I'll proceed with
-> it for v2, unless other opinions arise.
-Sounds good.
+> diff --git a/tests/functional/s390x/test_secure_ipl.py b/tests/functional/s390x/test_secure_ipl.py
+> index 06fc93e404..5af36b91d8 100755
+> --- a/tests/functional/s390x/test_secure_ipl.py
+> +++ b/tests/functional/s390x/test_secure_ipl.py
+> @@ -29,6 +29,22 @@ def __init__(self, *args, **kwargs):
+>          self.cert_path = None
+>          self.prompt = None
+>  
+> +    def _require_host_secure_ipl_support(self, vm):
+> +        """
+> +        Skip the test if the host CPU model does not expose the Secure IPL
+> +        facilities (sipl, sclaf, cstore).
+> +        """
+> +        props = vm.cmd('query-cpu-model-expansion',
+> +                       model={'name': 'host'},
+> +                       type='full')['model']['props']
+> +        missing = [f for f in ('sipl', 'sclaf', 'cstore')
+> +                   if not props.get(f)]
+> +        if missing:
+> +            self.skipTest(
+> +                f"Host CPU does not support Secure IPL: "
+> +                f"missing feature(s): {', '.join(missing)}. "
+> +                f"Secure IPL requires a z16+ host.")
+> +
+>      def _create_certificate(self, vm):
+>          """Generate x509 certificate"""
+>          exec_command_and_wait_for_pattern(self,
+> @@ -107,6 +123,8 @@ def setup_s390x_secure_ipl(self):
+>                           '-device', 'virtio-blk-ccw,drive=drive0,bootindex=1')
+>          temp_vm.launch()
+>  
+> +        self._require_host_secure_ipl_support(temp_vm)
+> +
+>          # Initial root account setup (Fedora first boot screen)
+>          self.root_password = 'fedora40password'
+>          wait_for_console_pattern(self, 'Please make a selection from the above',
 
-Thanks,
-Matt
 
