@@ -4,104 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05C47C5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 19:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCB10C5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 20:07:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyaJD-0007pe-PZ; Mon, 24 Aug 2026 15:26:15 -0400
+	id 1wyawG-0000GZ-L7; Mon, 24 Aug 2026 16:06:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wyaJB-0007p7-G7
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 15:26:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wyaJ9-00071Z-Vb
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 15:26:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787599571;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=szFVNRz9EVpTtHVynfbuGdiNRmMrnEhadaDH6fzf/xQ=;
- b=CsgeqKgtSGuOHpdEp7hdMMXHPoBqWxyUqK8TlGISebv/DXQn2amAitE4k64X70ncbZatb/
- sQeBUjCB2ZGNXwAa9E4fVY0xKnDv88MDGXvhWKs9x3NnsPneHbsW25LI7fdRmYkBV8Y9F1
- +YIqs13VDCtob+Wdy2BkAQ/SFQHwBFk=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-zqS27ZOTMMq3RsYspzx5Kg-1; Mon, 24 Aug 2026 15:26:09 -0400
-X-MC-Unique: zqS27ZOTMMq3RsYspzx5Kg-1
-X-Mimecast-MFC-AGG-ID: zqS27ZOTMMq3RsYspzx5Kg_1787599569
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-8e934385db1so44802346d6.0
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 12:26:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wyawF-0000G2-DI
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 16:06:35 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wyawD-0004Y6-ED
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 16:06:34 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-c2074710751so719115466b.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 13:06:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787599569; x=1788204369; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=szFVNRz9EVpTtHVynfbuGdiNRmMrnEhadaDH6fzf/xQ=;
- b=a03pfUxjE9vZqVuErs7hH3bl0a6MWme7BjckRqBEIYNk1Fruj5r86Ml7wQEn66iyKy
- VSm+X6OhVHTjVC1FJCfgy//l+691qqzj0rSANGz1fljQ/GD1Sfn7VRmy/Ain77jucSEe
- cibIuC7x9um6UnWxvoBQkKPwsie+wKDW8JFNWtd75tB3/+QQSEJj55mF7uTg+VmS5jYH
- MIvhlYDiMYoynIPEKW2KnQU+bxrpuz8VNUL1IrJ5QXzCesZ+IQztZWEZ09I4t5qP7+yp
- F7Zg66qghrt9GzT2R76spmp38AhtfWLpqAtVwKP4ruu1r7wTRphAw2rJ0At6r+EUzAAI
- xybg==
+ d=openvz.org; s=google; t=1787601991; x=1788206791; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=2IF4AhQdIxhmiPhNCA+Ag/JbiutgCbP7ow1QdY3dmbw=;
+ b=rBpGUM1oFY0xThmtJ5xNefSH12eBET229u0cqbtJ8GNM/4vbvlkBuMz11A/+6RAjNg
+ uztikSoghz1xKMRF8BpsXzW3JaWzVu/13SM3S/7Iw7Xelb1xA1BnRzvf6+tdgZyaDSr6
+ SnRPLYeCuUd4IgM2AZgdOTbz+obOglRZMeqOWMogiibdWBKo5BB2LbBPgwrTDdyrRHMX
+ 4devGSf3KquetlIUnNSviLJCjmasYUrvAWRVX9MljE3scwg/6iXUFotPoZ8uZ8zN0KiJ
+ JccaDMNVK5DCYvxVrnu7At4CdVyP1Qwu9z3XS1nBYT10GjwEN+B6bgzuiOYOYBYeVT7c
+ YqpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787599569; x=1788204369;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=szFVNRz9EVpTtHVynfbuGdiNRmMrnEhadaDH6fzf/xQ=;
- b=DkRCVFSxrV/t1vw4HKnURivRZf36Ypp2/3E6CWPF8rP9SYQTxFtH/fz8G0y8QpuuqR
- E+8hrIJX/m2NL4bjhzQcwN5NVxmcSQMqrlnKSdxBpv5m9blYmmDWW9ly0pC7fr2exZfm
- yhwqai0oxmJPHs2pUepLJW8yzJ0CdWwjG+b+uP/gaQu7msKqEbJNZH3LGnsA/kQGi3ER
- G7FrTcm5Ww9NuGV721VkoUmNmcziJR2hM3TNnrS48oqw80JLf/Gv15SdT4GflYZrK098
- 90tf8AhBqPC468zn9Dptt6SnWmjlJq62BopY5NeaTdgV45WzI79fBhv2/vHPUlCerD+h
- fwYg==
-X-Gm-Message-State: AFuF++kvAJfoo2CzEoFEcfd48OLcocEuGb4QELqVudsG4VXoBquM9A6k
- KVo1y7AsyRAJO1XYI+JsTaYZHV9U57q/RiCF9al8XXM553lAnDoz9qS/PGoZ1v1pxo9pUOXjsMB
- cf4LYTmM3deDwKsbuejHBAMYq6gpDTTJwjK4I+1jMVkFpfz0tAGPW6K8krY9qMNF3Zx4hmRIdhb
- WzgwuWLw9WbW5YJdDn9alSRJPWTDWO0c2vGFpjsQ==
-X-Gm-Gg: AR+sD105s+GJA7FDvDgoSuhHVYMvnhd6S4EPKBhGaENzunXlWqQcsZ4NQGOp+6UNEpA
- uj3Lz75qBsRhJoC6YT3eZy3g/OoKTnrHWL8SIPvkjUpDoxMs2C9bqdhcM6X8E2/foRyJ8ifbwst
- MaIKmJqkqm/hKKPJsAW8vjvUr44iOUVbCr/MboMJTYXgI5/HEVNOki433BNgZOTutKutiAxabCn
- mwKGHOmg8lwjRUg3d1zLqAhqpd8h97GVl8yxYSWaplQSUPQ/a7OHAv2adS79aHDw71jZPbAvt+j
- 6zFm0fRx20sKEdPn+KHiWWU1ZOI3m9ZlUZH0qBZqpDwxlF+bX/pOb/fndsfNA8RLZUWG
-X-Received: by 2002:a05:6214:3912:b0:907:5516:3d61 with SMTP id
- 6a1803df08f44-90c80e00654mr311674186d6.21.1787599566556; 
- Mon, 24 Aug 2026 12:26:06 -0700 (PDT)
-X-Received: by 2002:a05:6214:3912:b0:907:5516:3d61 with SMTP id
- 6a1803df08f44-90c80e00654mr311667936d6.21.1787599561277; 
- Mon, 24 Aug 2026 12:26:01 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90c93a7fe90sm69236186d6.43.2026.08.24.12.25.59
+ d=1e100.net; s=20251104; t=1787601991; x=1788206791;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=2IF4AhQdIxhmiPhNCA+Ag/JbiutgCbP7ow1QdY3dmbw=;
+ b=eY0g7nWPZzN99DrZ7sLoG3nidmWOaRgDxyyatKNP5lf78J6tUOxozyENJTn9DU7uUp
+ UfOu4CT26mAXKgBPIvQXquvRdBvWkYgM2/JEZHZoEl2BCP8/44haNgv+q8OUodL/z1df
+ PUvBNlquTNbDFu1xci7/mVdwu+NqPVJgEhwDlQQiwRYhtf/iXAOa/izwBOWWNXDvpEqs
+ U6iWpP1S41Rj//8fR2uAG7saPRvaqN2kesiiRdmQkh9f3cFoKhSJMkvNXUZr/YgdFONB
+ pHBwwl/ncc+RRevtr2JbzP0fyowmwJPwYAuUKySfIZ5LM3IHB/iEKZF2oje9wpAvSRZt
+ Ou6g==
+X-Gm-Message-State: AFuF++lTNturQKwOfa0hMJVwKiffiSq6pCO6m7JdUpTMGZPnsoye7/VU
+ PveiO1YeUHzqZGbN88dBg7jJxyTLQ1RwWV934tIBIbJB3DQ/EhXojflefPikOwSZnoSYPWBKGyK
+ g7LPn
+X-Gm-Gg: AR+sD10IKXXdDHjiCEL19HkMxfQxjGPuD4C7/TMW/3/i/pYz5uvUhS3D6PEvBPty3bG
+ Sy0PNu5Bp8CpuEyRDOvBysIeF6+BW9i4ViXRMQkOVjrqgCrTcWs6PKcJARzJ890qe2Xp3CLd3q5
+ Bd2eja4UYB7o8tbbZzPOIUX3M3UxCxDxxXYnBNV3hjhRw1EImyhY5CAO13HVJNPZZaPtBl+4+/9
+ pf/C7y+oYSzWQqDx3WFGpvXX0Zg2fEJwrS2RadW0r+rzafqZF8XhYP7xA4mlsLHSDzSBBpJFCp0
+ DghuJHH/xfJ/15VgdnMjuyCvpcWobCoGf23P75sfGYbwMbkuP8Y5WMAYdUlE6y80pucW0lV1qn7
+ VQCuEUflQhf85xo7Hcbmbo63SJVefhJs0vxCacMPF3o9fVSvY6jjR4ae0Kf3+25cIktln9QjOnG
+ SAwdOe1EboNCop5ntnhSne4wyxP2NY9gF0+yOZ1yfI8qkMbLdlN6g/nG1tzjvkvnd17TPV
+X-Received: by 2002:a17:907:1c27:b0:c21:382e:9a38 with SMTP id
+ a640c23a62f3a-c2491c2a110mr2264004166b.2.1787601991480; 
+ Mon, 24 Aug 2026 13:06:31 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:9048:7bf0:d3e2:2b9e])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6a59e0228f1sm6152245a12.10.2026.08.24.13.06.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Aug 2026 12:26:00 -0700 (PDT)
-Date: Mon, 24 Aug 2026 15:25:57 -0400
-From: Peter Xu <peterx@redhat.com>
+ Mon, 24 Aug 2026 13:06:30 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: Re: [PATCH v2 0/9] Remove 32bit support on system/user emulations
-Message-ID: <aoyaxQhwn1OjuynW@x1.local>
-References: <20260818172012.3052821-1-peterx@redhat.com>
+Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ John Snow <jsnow@redhat.com>, Thomas Huth <thuth@redhat.com>
+Subject: [PATCH 0/7] tests/qtest: fix the disk tests on a host with a small
+ /tmp
+Date: Mon, 24 Aug 2026 22:06:20 +0200
+Message-ID: <20260824200627.2180635-1-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <CAFn=p-bCR4TvVvHwagXiK-c0wuY5dACwh92249Wv0C3odCtbOg@mail.gmail.com>
+References: <CAFn=p-bCR4TvVvHwagXiK-c0wuY5dACwh92249Wv0C3odCtbOg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260818172012.3052821-1-peterx@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=den@openvz.org; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,30 +100,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 18, 2026 at 01:20:03PM -0400, Peter Xu wrote:
-> v1: https://lore.kernel.org/r/20260814134035.2733355-1-peterx@redhat.com
-> 
-> In v2, I touched up the original patch per suggested.  Then I added some
-> more patches, almost quickly looking at references of HOST_LONG_BITS and
-> clean up those I feel confident about over 32bits.  I still left some there
-> (dev-properties, qht, etc.) which smells like tools may still use them.
-> 
-> Please have a look, thanks.
-> 
-> Peter Xu (9):
->   system: Define ram_addr_t to be always uint64_t
->   hw/vexpress.c: Remove forced cast to u64
->   arm/mps: Remove 32bit define for MPS3_DDR_SIZE
->   xen-mapcache: Remove 32bit support
->   bsd-user: Remove 32bit host support in thunk_convert|print()
->   linux-user: Remove 32bit host support in thunk_convert|print()
->   arm/aspeed: Drop ASPEED_RAM_SIZE
->   hw/arm/raspi4b: Drop board_rev for 32bit hosts
->   machine: Remove 32bit limitation on ram size
+John reported ide-test dying at startup in the NetBSD VM:
 
-queued.
+  ERROR:../src/tests/qtest/ide-test.c:1260:main: assertion failed:
+  (ret == 0)
+
+The hypothesys is that the ftruncate() of a 64 MiB scratch image. NetBSD
+mounts /tmp as a tmpfs sized at 25% of RAM and charges a file its full
+length themoment it is extended, so a sparse image is not free there and
+the call returns ENOSPC. The assert dates to 2013, nothing regressed.
+
+The series is designed to do two things:
+* reduce the amount of space needed switching to QCOW2
+* tolerate the failure skipping the test if there is not enough space
+
+Patches 1-4 skip instead of aborting, the way hd-geo-test has since
+a0d6d7454a. Patches 5-7 build the images with qemu-img where only the
+virtual size matters: peak scratch space goes from 129 MiB to 1.6 MiB
+for ide-test and from 4126 MiB to 1.5 MiB for hd-geo-test.
+
+Hope this should help. John, can you give a try to this in the test?
+I do not have NetBSD handy and will start with this tomorrow if you
+will share guest config.
+
+Cc: John Snow <jsnow@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+
+Denis V. Lunev (7):
+  tests/qtest/libqos: let mkqcow2() report failure
+  tests/qtest/ide-test: skip when the scratch files cannot be created
+  tests/qtest/ahci-test: skip when the scratch files cannot be created
+  tests/qtest/hd-geo-test: skip when the scratch file cannot be created
+  tests/qtest/libqtest: create images with a byte-precise size
+  tests/qtest/ide-test: build the shared disks with qemu-img
+  tests/qtest/hd-geo-test: build the test images with qemu-img
+
+ tests/qtest/ahci-test.c        |  48 ++++++++---
+ tests/qtest/hd-geo-test.c      | 145 ++++++++++++++++++++++-----------
+ tests/qtest/ide-test.c         |  96 +++++++++++++++++-----
+ tests/qtest/libqos/libqos.c    |   4 +-
+ tests/qtest/libqos/libqos.h    |   2 +-
+ tests/qtest/libqtest.c         |   9 +-
+ tests/qtest/libqtest.h         |  12 +++
+ tests/qtest/virtio-scsi-test.c |   5 +-
+ 8 files changed, 237 insertions(+), 84 deletions(-)
 
 -- 
-Peter Xu
+2.53.0
 
 
