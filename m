@@ -4,124 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BBA3C5DF9C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 15:59:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BD58C5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 15:59:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyX4a-0005F2-H1; Mon, 24 Aug 2026 11:58:56 -0400
+	id 1wyX4O-00058u-1G; Mon, 24 Aug 2026 11:58:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wyX4X-0005EJ-Qk
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:58:53 -0400
+ id 1wyX4J-00057m-D0
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:58:39 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matheus.bernardino@oss.qualcomm.com>)
- id 1wyX4U-0001mm-4w
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:58:52 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1wyX4G-0001l3-6t
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:58:39 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67OFn4hB3235077
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 15:58:39 GMT
+ 67OFnBtL3329769
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 15:58:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=5Q3vSgaRBAr
- gnEpEaaVnRHY3RuijklXgIkOH4pqcrtk=; b=ePcsD1Vl73CrqndNzk3gn9OupDv
- DtPY5aT1CGKQfnElmoacHzP+OnoK2TZTOMhdcg4/juo1aaCfBHlZ1Yo7UEmSWykK
- fqWp/vNuAcDxOoDpBP9+sxUHOmdhPx1Uk97wF6B2wBCiQUuTu+NS0DLBUFUnsgKj
- ONfOj7cZYPH0klKdOTSFIgpjORnmkc6incomsHK4pAuwwJvnNjzMDVjuOJiQKpiG
- ztK9JLA1W2P5YC+QSpglGmJmXiivqvunwKVuSClUIKZ0UEXHrSo+Xm+aUYH6bBZW
- uVE9KYNKTUoiMRvtveWc2Nwu7Hlsz1jdsdnqZHVqrUXH2FmqBsVW7JE1JWg==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g8gqnab1g-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=nnFxmkUXSdu
+ WUIyum6POa3vyphYaCWoT2qAoNMjzXm0=; b=kvGaP3sBbR86PNlWtGtYwS8JyeG
+ 81aPe7lUINkqDI4YPMfJo4NHvcVfyg8qLlnLDAQcOkDE4LR18HATbERk/dBFe7It
+ YlddhXM8cViEWaMheHsf7cZUVkjIIZlwKSl8KPieC1Gl2wNpOn1kqo0TcGMlrnpe
+ wDPEsRu2Mvu8e0NZP1hJEI5nuX9E8uafgbn/GTLfAyLnTUIxLE3w53M+ovtpKs8l
+ 5Kk/1Z4gJzhP2NjQCbzYbreRq6KtrLdagZw8mCMIVvi7Lw5M+WcQTa2ONMIFa7Dj
+ 5p1ny3o+9BQA6SsICKLfXeOo6l7pV9vUV0LvlsMhydzD9SNZ+Qdj7re3g7Q==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g8j7r1xy8-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 15:58:38 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-388b404eaa4so5723332a91.0
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 08:58:38 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 15:58:35 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2ccb6823efcso29703495ad.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 08:58:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787587118; x=1788191918; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787587114; x=1788191914; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=5Q3vSgaRBArgnEpEaaVnRHY3RuijklXgIkOH4pqcrtk=;
- b=RwOjJXMiAGFpHR8N3aR48YDZaF2cL+zY0RzyGnrfhXI5g3r+QDZvMSzqicX5hy9xHL
- /rR+GCn2mOTYCG9jpfygaIgGhMHtwPd6P0Kp/9AG20GTYcEnQ3UEpDGqv2wCYhvgPycG
- htI7YMrqjV2WT32WrT14Dmh2LjK2YJPjTegi3nlpbwn7AFPf1/X9paXnuaGVoDeam2Tf
- L1E07A5TDq3z5gWCg9yOZs0iVXbDPlIdpdhbkw8YxSP1lFeSrXAc04gMDfIbyov2HhCg
- 1/LMCs48oGgtyg/uanWZkDbpIv9Y9cAMwnBQRwFEWtnSzoqczrZP6wXoqVNqGs056jTB
- SfCA==
+ bh=nnFxmkUXSduWUIyum6POa3vyphYaCWoT2qAoNMjzXm0=;
+ b=LeoI487j+lVMkgBBbgwx9x/25tNvAmVjrFAAmgHy+asqWGoTNiaTv0OZdO2oO7vB/V
+ wdBKpG7GO6smG0Z9MuLy5dPsF0ZQceM7xlez+4n5lnC/uci9oNh3P06gjnyvhxfTHE2j
+ OLDEW7HicYYMjfjAx7zG7s0arPq3JJIFz1j8d+VeXBgrOtr0t4BbMZsPA27OzAytpXca
+ 1vBa7WrXPeV52OqDnxZtU/oizy9oThYOoKwkMbvjdu8VXwfmImKbuLAaSQtJZ/zkiNJd
+ 2OCDVBd01x++Ieh8CAeBXhKhELQtGVXc+Oj61s92R605Gcccym0WgQKcltBc9SZ5xYAx
+ wr2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787587118; x=1788191918;
+ d=1e100.net; s=20251104; t=1787587114; x=1788191914;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=5Q3vSgaRBArgnEpEaaVnRHY3RuijklXgIkOH4pqcrtk=;
- b=tSM5qqepKrSMa4DqzhThND/2K7wbt6Q6en1j8kd5ZIQ5Ha4BNgLJXza2WHksPhgCr1
- eqCf8EKRhrWtkM/8b5YOYdzns0Jr8rSHjDP+EK+yJeR2Z+jv4q4q60wd7HIpjFDXTxqW
- LQy2PTFXHiQEzColGNwoOPI/RZ+414jVtI5FgTHlrpH5htXZTKsxX8gS7vX+QoU9Lc3K
- REURYWdsp0Q6HaRYEj6gd3ypFyNMqvZJ80c51GKCXG99sv1bSXyfMbdMTAjluSYx6gQ0
- lO0gw6RirZ38Msw83NC9xrjpSrxpTKhusgCF4NkdmMlNqUKm+nE43TcTm63CPnbNgQgj
- Herw==
-X-Gm-Message-State: AFuF++mE/4EsgyWrNujY4TlIvOFx9vtDK+EmtkSSTATmB2tPD3AWkq7y
- JTHxvSciOEcaOaDKssN5HxRWAYcimBdHFT2yJMXdkifwCkQlPPxyfzmZn10e280A2SCPtRDCLCR
- 92AxjB6FHdlHp8+vYkbi8vIniEgCjOkka0RWROyn1uSICT9HD8ad1j4LYrFtFd8IgOAx7
-X-Gm-Gg: AR+sD133Ua0+6L4q/d1xTgnAm1fX+ZLb8VePQBULpRizoYHCHvJZMgajmOELxc2crBn
- PNaiGb+IsfX/iH+zpK5/bzR1ge4E839nCv5tJtIOQmnmZ1aqa6d8VL6r8kusA+J/TRYJn97L0GA
- /a1SkMGrBqtSfvwamOEPdodHVKNU5xJGkkGf57OtYXucFXjka1g84q6jqQRvJDacK+J8KBoabh5
- SgTjiw22odizYovAS//e8tmVqBuNAK7hbQF01nyeVPjalHLI6zRG3j00hMavIQLWAWEAuQbYiAs
- 8xWvtY5F4XaQigL+96s1FNUHZQbnZJerhB4y3KyL5iuR3yFuiqaHzj+1X5xtCNjVIH0jBIfHz4S
- 7z7bcd6jemdqFbIg00ff+MYQcT/RAl3GMaiXlUtOG44qo9AJ6dYWBWIkXhki7xMY=
-X-Received: by 2002:a17:90b:3911:b0:38e:2860:253f with SMTP id
- 98e67ed59e1d1-395df2926d9mr33657376a91.12.1787587117925; 
- Mon, 24 Aug 2026 08:58:37 -0700 (PDT)
-X-Received: by 2002:a17:90b:3911:b0:38e:2860:253f with SMTP id
- 98e67ed59e1d1-395df2926d9mr33657262a91.12.1787587117423; 
- Mon, 24 Aug 2026 08:58:37 -0700 (PDT)
+ bh=nnFxmkUXSduWUIyum6POa3vyphYaCWoT2qAoNMjzXm0=;
+ b=btTSH+GE0hei7ODNCO45sPbDZezyXHjhliqUjP/kEVE6agc+I6iQeIXIkISESSSNuA
+ hBPHw9erWxJOaODOFDu2wAmSn9qm5+LqngwjGrhhfm5dT8d80rvWRPE617/W39mqhA3G
+ N3L/bJYs9VsQA9wyRnYz+XlTQ7iQH9wWxF0kFZwf24jA2IQO8X8lR7bMTBM7HrI+H7A7
+ fXo037F6XtezDc8pgPHN4OxZecro4kINJmcFAIMRl3mLggCMRQtT3YTkcxx3iy9sr8mX
+ DSZD8keGevIKmLWEEAa6t4pxkKWXUoColFaCc/mCokTV1P04DxD5KIk3VHmuoPcEYonA
+ LUDQ==
+X-Gm-Message-State: AFuF++n1YkjPJ8LGMADQxinXXy/ZKtP/hKnlx0eFhAVyB18wCuhmkjfg
+ DaIZiV1Vtm7JF+GmVYs/Qi+ifmkeNCnRuzYgy/sBW923T2QiHL0SqBAtEwuhyqWVcpSUDNcUsHb
+ pwvHdf27bgw5JEev4Mdvy29CD3fByn+0mfEABOj5y8k3wJ8kaQUvKOefleyXZaspPvY81
+X-Gm-Gg: AR+sD122MdL8x0hz2xFr4/ZSXvRd+iD/87lgPIQofpTPaG0dcnW2pQXojWzPC4s5dpS
+ RUgCbeZ1442IE2/X8fg1PI9RPNb7l5uCtr1sGq+6424oHUyrsyk3dpEto5c3UyjpxJ6a848ATMt
+ PniC9pSQ74JEaDgF71Oc102cny0glOvh5vjR4qwNKnKD4ZI4kU9+4SabbDnXZqSdb3al9exY/xb
+ C3WNA9hQdoeU4VMGO23BMrnK4Q62wH1oQm1Y1Iv2qDmwLuecUz8D6zUtB/UdZ6EZAGIpgboTkIG
+ 9EJE/d1PBFqMSGUuVZ69nCmZ8XBKnVXX115OrmwDPJi3/LMuhTFvMNcWDuS9jpNzNW0/ReziOmH
+ XMzYrQQ6r1/iUwnDdP0sBWzVtQkeFSbABARFJft9vYSafj3JbQzDDsYpynNAdHKo=
+X-Received: by 2002:a05:6a20:2d0b:b0:3cc:51ff:c2e7 with SMTP id
+ adf61e73a8af0-3cd4bbdbd2emr37029127637.10.1787587114256; 
+ Mon, 24 Aug 2026 08:58:34 -0700 (PDT)
+X-Received: by 2002:a05:6a20:2d0b:b0:3cc:51ff:c2e7 with SMTP id
+ adf61e73a8af0-3cd4bbdbd2emr37029028637.10.1787587113852; 
+ Mon, 24 Aug 2026 08:58:33 -0700 (PDT)
 Received: from hu-mathbern-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-14186183c0esm41152935c88.12.2026.08.24.08.58.36
+ a92af1059eb24-14186183c0esm41152935c88.12.2026.08.24.08.58.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Aug 2026 08:58:36 -0700 (PDT)
+ Mon, 24 Aug 2026 08:58:33 -0700 (PDT)
 From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: ale@rev.ng, anjo@rev.ng, brian.cain@oss.qualcomm.com,
  marco.liebel@oss.qualcomm.com, philmd@oss.qualcomm.com,
- pierrick.bouvier@oss.qualcomm.com
-Subject: [PATCH v4 11/14] target/hexagon: add COREDUMP semihosting operation
-Date: Mon, 24 Aug 2026 08:58:20 -0700
-Message-Id: <0664a4a5a9f85a4d61a03f5159f0a76bd2c9e0f3.1787586642.git.matheus.bernardino@oss.qualcomm.com>
+ pierrick.bouvier@oss.qualcomm.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH v4 07/14] semihosting: add callback to set error
+Date: Mon, 24 Aug 2026 08:58:16 -0700
+Message-Id: <a37971603c4704876c6f34c0377fc88a427e8f6b.1787586642.git.matheus.bernardino@oss.qualcomm.com>
 X-Mailer: git-send-email 2.37.2
 In-Reply-To: <cover.1787586642.git.matheus.bernardino@oss.qualcomm.com>
 References: <cover.1787586642.git.matheus.bernardino@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEzNCBTYWx0ZWRfX2B3F15iBcQjJ
- 8DeTuKXPP7WcGmxX2lA/XuAOQnMRKxuPkVR/98rUcjUnGMbOSNL1Ks9jth7RKcXMLURWCgiO6fK
- 2PQlWQU6EImxLmoSxAAzBospLdfB54I=
-X-Proofpoint-GUID: K7ISaOc_vWkH1vrpcwroAWbj_kjyCrI0
-X-Authority-Analysis: v=2.4 cv=fqXsol4f c=1 sm=1 tr=0 ts=6a8c6a2e cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEzNCBTYWx0ZWRfX6KpYXHaZhc0k
+ QbJZg1pXrWAQOrMFbwjoZ3EgSQn5OhMjRteaUIA0cXcceBu3ZrvxmeBm+DOCqZ4myOVugcDUZZi
+ 17ovIXKChgXKHJ3fv2Ffke6KxSBDdc8jv22yBpjUfGvnX0ZDEgVA1i4geh1Sjh84FYpmPqEi+Mi
+ fEJzldHz5EZhEK+SQsSEqFQkoN4iHJFxr6TyxCBs3SX1gmqkkG1vS/pH86rMCymgLpVRwpgDvc9
+ pJFDdaZvzlgNmcy24aVyKghMXIgo5WZntJw1jG3owIH8B4r0QNDPwJ1H0hFhAq9dxnXuMYKjJ1U
+ 7Q9BK98Az/7ZPJ0YkkMkdRq7VDD043sgIG0fIcuyn5A6YnZLXcoaoWUO1H94poES15xlRSDFo23
+ /bPYOeE+MI//2+GJEM7rP83Ot7HcvsDJOWKq2NRuGU0AGiuimpNdll5a/xZmRj1P41eq3uIeGB2
+ 47cVUdB2TI8pip/nzEQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEzNCBTYWx0ZWRfXzjnHRk+Rd04z
+ zEPgQDhXW1/JlP/kZTNswu4Eyk070VVENpveKCChFmRWmWV74rN/XcEKa4Tgq1Fvzy0R6wvOjVe
+ Z3x6nJEDkBsYZuK6jQmRlJsZWTgUhU8=
+X-Proofpoint-GUID: slCNRGvfEn_rWOpiS10XSrQe_evIdYhu
+X-Authority-Analysis: v=2.4 cv=IL8yzAvG c=1 sm=1 tr=0 ts=6a8c6a2b cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=EUspDBNiAAAA:8
- a=BE4lvaXKYeXNScGiURoA:9 a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEzNCBTYWx0ZWRfX/VU6Q+KAVgI6
- MhG6l471eKXhAAR9Uxhd+bOalY+VwtSt++Smw3YBGKSCJTiEadQAsQ9Q8juabq89TEmQscP9dwK
- 3+JvLrn9sT256x/FAPFPq6uNuIyc2/8/PhcnFfJ+U9XZeIbwc9jb60Us2Cvb3JpifU6v/zQ3Rna
- eHfy7mm9kTBBFMLaA1FNKFt1CwlJLi8iEc7ZTBt8MNmvbofpwb9XMYg11noQMM+2H4VhZBvmMAJ
- avBcW34suBrtyqNfEqHvLd4VpSOVXkcM47jcc8HF2VYR2/9kwY7o4xnqg7CJJeorfMx2Asc2Ue4
- X1sUMLcZV7YWjQgRoTauaSsbwz8qTvhFeD6Ab346n5sMTXLeirtN8gi4kSXyUL+KFCSKjG8KW9m
- SQbRbTy2WGCKrwqSR9aC0ZyJmcNNM4V4BvAWOb+yyme7SCRNkSs6qsl1uwG3eyLUBAx+5ifMjfp
- vXvj/UNI3ENudR6nA/A==
-X-Proofpoint-ORIG-GUID: K7ISaOc_vWkH1vrpcwroAWbj_kjyCrI0
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8
+ a=8ndNYmkutmpv_8xOvXsA:9 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-ORIG-GUID: slCNRGvfEn_rWOpiS10XSrQe_evIdYhu
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-24_05,2026-08-24_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 impostorscore=0 phishscore=0 clxscore=1015
- spamscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0 adultscore=0
+ adultscore=0 malwarescore=0 phishscore=0 priorityscore=1501 suspectscore=0
+ spamscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240134
 Received-SPF: pass client-ip=205.220.180.131;
@@ -149,199 +150,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Baremetal Hexagon programs invoke SYS_COREDUMP (0xCD)
-through semihosting to dump CPU state on a fatal exception.
-Implement the handler to decode the SSR cause field and
-print the full register file, matching hexagon-sim behavior.
+This is currently unused by existing semihosting targets, but it will be
+used by hexagon in the following commit.
 
 Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 ---
- target/hexagon/cpu.c      |   2 +-
- target/hexagon/hexswi.c   | 136 ++++++++++++++++++++++++++++++++++++++
- target/hexagon/internal.h |   1 +
- 3 files changed, 138 insertions(+), 1 deletion(-)
+ include/semihosting/common-semi.h | 1 +
+ semihosting/arm-compat-semi.c     | 1 +
+ target/arm/common-semi-target.c   | 4 ++++
+ target/riscv/common-semi-target.c | 4 ++++
+ 4 files changed, 10 insertions(+)
 
-diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index 134fbb2cfa..acb1715a4d 100644
---- a/target/hexagon/cpu.c
-+++ b/target/hexagon/cpu.c
-@@ -235,7 +235,7 @@ void hexagon_debug_qreg(CPUHexagonState *env, int regnum)
-     print_qreg(stdout, env, regnum, false);
+diff --git a/include/semihosting/common-semi.h b/include/semihosting/common-semi.h
+index aa511a46f4..a11905ef4e 100644
+--- a/include/semihosting/common-semi.h
++++ b/include/semihosting/common-semi.h
+@@ -37,6 +37,7 @@
+ void do_common_semihosting(CPUState *cs);
+ uint64_t common_semi_arg(CPUState *cs, int argno);
+ void common_semi_set_ret(CPUState *cs, uint64_t ret);
++void common_semi_set_err(CPUState *cs, int err);
+ bool is_64bit_semihosting(CPUArchState *env);
+ bool common_semi_sys_exit_is_extended(CPUState *cs);
+ uint64_t common_semi_stack_bottom(CPUState *cs);
+diff --git a/semihosting/arm-compat-semi.c b/semihosting/arm-compat-semi.c
+index 5e5f181b90..c54753f696 100644
+--- a/semihosting/arm-compat-semi.c
++++ b/semihosting/arm-compat-semi.c
+@@ -237,6 +237,7 @@ static void common_semi_cb(CPUState *cs, uint64_t ret, int err)
+         ts->swi_errno = err;
+ #else
+         syscall_err = err;
++        common_semi_set_err(cs, err);
+ #endif
+     }
+     common_semi_set_ret(cs, ret);
+diff --git a/target/arm/common-semi-target.c b/target/arm/common-semi-target.c
+index 2b77ce9c17..38d52deb3d 100644
+--- a/target/arm/common-semi-target.c
++++ b/target/arm/common-semi-target.c
+@@ -34,6 +34,10 @@ void common_semi_set_ret(CPUState *cs, uint64_t ret)
+     }
  }
  
--static void hexagon_dump(CPUHexagonState *env, FILE *f, int flags)
-+void hexagon_dump(CPUHexagonState *env, FILE *f, int flags)
- {
-     HexagonCPU *cpu = env_archcpu(env);
- 
-diff --git a/target/hexagon/hexswi.c b/target/hexagon/hexswi.c
-index fe588d9489..5e7f655a41 100644
---- a/target/hexagon/hexswi.c
-+++ b/target/hexagon/hexswi.c
-@@ -162,6 +162,138 @@ static void common_semi_ftell_cb(CPUState *cs, uint64_t ret, int err)
-     common_semi_cb(cs, ret, err);
- }
- 
-+static void coredump(CPUHexagonState *env)
++void common_semi_set_err(CPUState *cs, int err)
 +{
-+    uint32_t ssr = env->t_sreg[HEX_SREG_SSR];
-+    FILE *f = qemu_log_trylock();
-+
-+    if (!f) {
-+        return;
-+    }
-+
-+    fprintf(f, "CRASH!\n");
-+    fprintf(f, "I think the exception was: ");
-+    switch (GET_SSR_FIELD(SSR_CAUSE, ssr)) {
-+    case 0x43:
-+        fprintf(f, "0x43, NMI");
-+        break;
-+    case 0x42:
-+        fprintf(f, "0x42, Data abort");
-+        break;
-+    case 0x44:
-+        fprintf(f, "0x44, Multi TLB match");
-+        break;
-+    case HEX_CAUSE_BIU_PRECISE:
-+        fprintf(f, "0x%x, Bus Error (Precise BIU error)",
-+                HEX_CAUSE_BIU_PRECISE);
-+        break;
-+    case HEX_CAUSE_DOUBLE_EXCEPT:
-+        fprintf(f, "0x%x, Exception observed when EX = 1"
-+                " (double exception)",
-+                HEX_CAUSE_DOUBLE_EXCEPT);
-+        break;
-+    case HEX_CAUSE_FETCH_NO_XPAGE:
-+        fprintf(f, "0x%x, Privilege violation: User/Guest mode execute"
-+                " to page with no execute permissions",
-+                HEX_CAUSE_FETCH_NO_XPAGE);
-+        break;
-+    case HEX_CAUSE_FETCH_NO_UPAGE:
-+        fprintf(f, "0x%x, Privilege violation: "
-+                "User mode execute to page with no user permissions",
-+                HEX_CAUSE_FETCH_NO_UPAGE);
-+        break;
-+    case HEX_CAUSE_INVALID_PACKET:
-+        fprintf(f, "0x%x, Invalid packet",
-+                HEX_CAUSE_INVALID_PACKET);
-+        break;
-+    case HEX_CAUSE_PRIV_USER_NO_GINSN:
-+        fprintf(f, "0x%x, Privilege violation:"
-+                " guest mode insn in user mode",
-+                HEX_CAUSE_PRIV_USER_NO_GINSN);
-+        break;
-+    case HEX_CAUSE_PRIV_USER_NO_SINSN:
-+        fprintf(f, "0x%x, Privilege violation: "
-+                "monitor mode insn in user/guest mode",
-+                HEX_CAUSE_PRIV_USER_NO_SINSN);
-+        break;
-+    case HEX_CAUSE_REG_WRITE_CONFLICT:
-+        fprintf(f, "0x%x, Multiple writes to same register",
-+                HEX_CAUSE_REG_WRITE_CONFLICT);
-+        break;
-+    case HEX_CAUSE_PC_NOT_ALIGNED:
-+        fprintf(f, "0x%x, PC not aligned",
-+                HEX_CAUSE_PC_NOT_ALIGNED);
-+        break;
-+    case HEX_CAUSE_MISALIGNED_LOAD:
-+        fprintf(f, "0x%x, Misaligned Load @ 0x%" PRIx32,
-+                HEX_CAUSE_MISALIGNED_LOAD, env->t_sreg[HEX_SREG_BADVA]);
-+        break;
-+    case HEX_CAUSE_MISALIGNED_STORE:
-+        fprintf(f, "0x%x, Misaligned Store @ 0x%" PRIx32,
-+                HEX_CAUSE_MISALIGNED_STORE, env->t_sreg[HEX_SREG_BADVA]);
-+        break;
-+    case HEX_CAUSE_PRIV_NO_READ:
-+        fprintf(f, "0x%x, Privilege violation: "
-+                "user/guest read permission @ 0x%" PRIx32,
-+                HEX_CAUSE_PRIV_NO_READ, env->t_sreg[HEX_SREG_BADVA]);
-+        break;
-+    case HEX_CAUSE_PRIV_NO_WRITE:
-+        fprintf(f, "0x%x, Privilege violation: "
-+                "user/guest write permission @ 0x%" PRIx32,
-+                HEX_CAUSE_PRIV_NO_WRITE, env->t_sreg[HEX_SREG_BADVA]);
-+        break;
-+    case HEX_CAUSE_PRIV_NO_UREAD:
-+        fprintf(f, "0x%x, Privilege violation:"
-+                " user read permission @ 0x%" PRIx32,
-+                HEX_CAUSE_PRIV_NO_UREAD, env->t_sreg[HEX_SREG_BADVA]);
-+        break;
-+    case HEX_CAUSE_PRIV_NO_UWRITE:
-+        fprintf(f, "0x%x, Privilege violation:"
-+                " user write permission @ 0x%" PRIx32,
-+                HEX_CAUSE_PRIV_NO_UWRITE, env->t_sreg[HEX_SREG_BADVA]);
-+        break;
-+    case HEX_CAUSE_COPROC_LDST:
-+        fprintf(f, "0x%x, Coprocessor VMEM address error @ 0x%" PRIx32,
-+                HEX_CAUSE_COPROC_LDST, env->t_sreg[HEX_SREG_BADVA]);
-+        break;
-+    case HEX_CAUSE_STACK_LIMIT:
-+        fprintf(f, "0x%x, Stack limit check error",
-+                HEX_CAUSE_STACK_LIMIT);
-+        break;
-+    case HEX_CAUSE_FPTRAP_CAUSE_BADFLOAT:
-+        fprintf(f, "0x%x, Floating-Point: Execution of Floating-Point "
-+                "instruction resulted in exception",
-+                HEX_CAUSE_FPTRAP_CAUSE_BADFLOAT);
-+        break;
-+    case HEX_CAUSE_NO_COPROC_ENABLE:
-+        fprintf(f, "0x%x, Illegal Execution of Coprocessor Instruction",
-+                HEX_CAUSE_NO_COPROC_ENABLE);
-+        break;
-+    case HEX_CAUSE_NO_COPROC2_ENABLE:
-+        fprintf(f, "0x%x, Illegal Execution of Secondary"
-+                " Coprocessor Instruction",
-+                HEX_CAUSE_NO_COPROC2_ENABLE);
-+        break;
-+    case HEX_CAUSE_UNSUPPORTED_HVX_64B:
-+        fprintf(f, "0x%x, Unsupported Execution of"
-+                " Coprocessor Instruction with 64bits Mode On",
-+                HEX_CAUSE_UNSUPPORTED_HVX_64B);
-+        break;
-+    case HEX_CAUSE_VWCTRL_WINDOW_MISS:
-+        fprintf(f, "0x%x, Thread accessing a region"
-+                " outside VWCTRL window",
-+                HEX_CAUSE_VWCTRL_WINDOW_MISS);
-+        break;
-+    default:
-+        fprintf(f, "unknown cause 0x%" PRIx32,
-+                GET_SSR_FIELD(SSR_CAUSE, ssr));
-+        break;
-+    }
-+    fprintf(f, "\nRegister Dump:\n");
-+    hexagon_dump(env, f, 0);
-+    qemu_log_unlock(f);
 +}
 +
- static void sim_handle_trap0(CPUHexagonState *env)
+ bool common_semi_sys_exit_is_extended(CPUState *cs)
  {
-     target_ulong what_swi, swi_info;
-@@ -431,6 +563,10 @@ static void sim_handle_trap0(CPUHexagonState *env)
-     }
-     break;
+     return is_a64(cpu_env(cs));
+diff --git a/target/riscv/common-semi-target.c b/target/riscv/common-semi-target.c
+index aeaeb88d53..38a00e160c 100644
+--- a/target/riscv/common-semi-target.c
++++ b/target/riscv/common-semi-target.c
+@@ -26,6 +26,10 @@ void common_semi_set_ret(CPUState *cs, uint64_t ret)
+     env->gpr[xA0] = ret;
+ }
  
-+    case HEX_SYS_COREDUMP:
-+        coredump(env);
-+        break;
++void common_semi_set_err(CPUState *cs, int err)
++{
++}
 +
-     case HEX_SYS_FTELL:
-     {
-         int fd;
-diff --git a/target/hexagon/internal.h b/target/hexagon/internal.h
-index 00b37aea7a..05d1129916 100644
---- a/target/hexagon/internal.h
-+++ b/target/hexagon/internal.h
-@@ -28,6 +28,7 @@ int hexagon_hvx_gdb_write_register(CPUState *env, uint8_t *mem_buf, int n);
- void hexagon_debug_vreg(CPUHexagonState *env, int regnum);
- void hexagon_debug_qreg(CPUHexagonState *env, int regnum);
- void hexagon_debug(CPUHexagonState *env);
-+void hexagon_dump(CPUHexagonState *env, FILE *f, int flags);
- 
- extern const char * const hexagon_regnames[TOTAL_PER_THREAD_REGS];
- #ifndef CONFIG_USER_ONLY
+ bool is_64bit_semihosting(CPUArchState *env)
+ {
+     return riscv_cpu_mxl(env) != MXL_RV32;
 -- 
 2.37.2
 
