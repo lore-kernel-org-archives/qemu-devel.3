@@ -4,114 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AE19C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 13:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC51C5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 13:56:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyV4y-0003md-4g; Mon, 24 Aug 2026 09:51:14 -0400
+	id 1wyV96-0005ct-74; Mon, 24 Aug 2026 09:55:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wyV4r-0003li-JC; Mon, 24 Aug 2026 09:51:05 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wyV94-0005cc-SY
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:55:27 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wyV4n-0006vr-G8; Mon, 24 Aug 2026 09:51:05 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67OD1kjR827102; Mon, 24 Aug 2026 13:50:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=kX9ITE
- iB6ngJenI+5uyyGG+eM09WzTpCZxw1mDKJ7GA=; b=UNME/NXQG87eRv/ZTe3zOY
- mZ/2MvGDIPf6kw0mzvtyH+M1MyFPluzCrbS6U6XgQBoPozZunGlB/9Cz40JOWCna
- ZFaAgJ2EKKBGSSRlMutTad88ODUyqdC7vHNqKtPyP2dZ+m+sbihUVrufchjhsPtA
- HoM3cO+f2FL559fdBFanQ1qfNtl0TvZeoY1TFHLDqch9AGGzXbf7CL1tf/KPcwbR
- 3eWITxCZVbVUCcN/06oQ6Ol+S2aRLBXtaoF25++KgN7V0AVJ10+dl/1LPmOnUT+d
- UqzQfHu58QcyHN9cTES+GAavbkngmmvRXjp7zKTdhVxJ230NAXLLAn7u4JRvM41A
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726e9q9b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 13:50:57 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67ODfI7P012520;
- Mon, 24 Aug 2026 13:50:56 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rag6285-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 13:50:56 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67ODouro24707778
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 13:50:56 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E769A58056;
- Mon, 24 Aug 2026 13:50:55 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 160265805A;
- Mon, 24 Aug 2026 13:50:55 +0000 (GMT)
-Received: from [9.61.21.147] (unknown [9.61.21.147])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Aug 2026 13:50:54 +0000 (GMT)
-Message-ID: <b3ee53d8-1fca-4023-be3d-a312d485d7f7@linux.ibm.com>
-Date: Mon, 24 Aug 2026 09:50:54 -0400
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wyV92-0000Lc-Tt
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:55:26 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67OCuwR63613498
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 13:55:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ XUZAo6GcuLKPk2CoJqT164QTpYs/mih0dgLVX2ex7Ts=; b=OLASpdWA85RXKJ6/
+ sc+4mcMWiiDI1fB7uS6kZLMGHQtKkyuQ6nKDS5/nfaEUuYtXFQLd5THJAZILTn6x
+ JJEU3hFiHY1omhm9cWhYPrEl9RYMiwbfPb+zD9dKpRTUF9nWBaTI3LEn0EVaFy7S
+ /5J5Wo1kPzquY8MyWy5mesB9AqTEGdyaDKnx/nMMwzUnrcGeQvqTVv5yVWkyJHxd
+ OVHkxHnKx6X4M/EsufgcQwSmdSS3+68+gV6cWyGJ+CUAhAHSY9dDYwtXFx1OY2A9
+ I91j16ogVHyIEQd4YQLAZAmOzrAypRQ4lJ1f3usUgsGgiOoVYyM+koQGXXHNkH+T
+ CmQ7Lg==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g8jgk1dnm-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 13:55:22 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-52ce64c41efso71389661cf.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 06:55:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1787579722; x=1788184522; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=XUZAo6GcuLKPk2CoJqT164QTpYs/mih0dgLVX2ex7Ts=;
+ b=Kc0A8+msIi/U0ZJUY++MljawlSWioJaAQqf6tFuW2qkolRLoWQkAbqmvucb+r2LTiU
+ F0YRsFFFrO5o9enKQLixMrAGktZAILkM9B/GfAi9Gm/nTnEM4gFqvV4d6BrOd7i/SKTc
+ qt/VBJncN2Z3FfCDeBYx9pvNMnF9Y/2EtPh8yJV7oRgtl1ghCYuZFutmN9yrsmhWaFbe
+ tUnpyRIItuJACXvTrqMBEsJV4sPzGF9O3jlbEetsXkr7BZa64d84zSa4tIYs8a71efjV
+ tutviTWS7zzdxjhkABWWig2xeQcvSbT8bn4S0LwW1Y/EjrknhQGZGDXaB77vhF+XAOis
+ tDOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787579722; x=1788184522;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=XUZAo6GcuLKPk2CoJqT164QTpYs/mih0dgLVX2ex7Ts=;
+ b=a73u64uCAf0TD/UMYmBvxFX2OTn0f9fDSRm8i3I7ZfrVHmGcnv9fu9mv6DAZUasLV6
+ i73e9jnlt42F+C7cOm1/++immiaD0VuG0pF+O4qpEcBsZBrxi/nBYMK7zgk/EusyTfJj
+ LXzzKnlbQNuhuwQB3XWgSBk026V3LodYHA1ACIlAjNcI39yzWTwqqIywIPDwEJ2/dG8X
+ VetuuqE8Qp6D72d58SVypj15BpzDQhNlLgwQ+kN0kyLE8QNfWkT/DDxxt+DVcH18+dDu
+ 7dzpQ86Bm0MQr1J6pi3E1ZrXwUXoOiNMpF1WmYkZW5Y2R8KcF0hb+1NQ4b12af9XDDdq
+ j+rQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rp927jkwOkNdiguf+kWbgbN3FLxO9txSYiwdwM0IB3JZJ3c5NWdCjisbpxflhF9qMEWoNMTWnC5CaTM@nongnu.org
+X-Gm-Message-State: AFuF++n2AjMY/p+e160Vy/RlqiRRA0eWnGqFbwviZNSLY31dUcjk2xEq
+ MimfQJ8O462ZVzQvwgccV+1laPxhOTSj9Lhsp3A1lmN9yEb7S004V5M8fpP8tiyuHmB8qBOyUIn
+ MK+d3M2ts+CuHiVl8XjkwRu0digyWS0dNP3MJ/g85ixfqVhMQSBztYAdKlw==
+X-Gm-Gg: AR+sD12MHMZofpyR8gBLM86HymzSF4F9cW3lEjhglYAz+TOD6ql4MFvyQTF6DIfIXep
+ 7A/KZqhgmQoXlv4l+W98IrDTV/JQQVzJNQPGJchIOZbNGLsZzur9yffx0PXkyTHAr2K7xOYGv/F
+ M8K5+NLQ1+VuhTYUDuqsLaRv4hvyxKP7ZXMPRWD3AVL8zX0T+Q346TXpTEBhfblUxMEEp9Me6SI
+ w7itv9Jx7I+x63bxBM7FkpbixQ+KegLbRPjNnxeNg7r/xXoMIIrKohhbTdgKvvoXVFqXvNr8Sbp
+ 6etdVyBZzZCEDqfGEqio/3gG5QGbIgfvUnm7n2viNXzrf5AO6Dfkvi8CxUBx/H1rfTJuWsgPGAe
+ KxSJIzhi11pf8tfu1uU2P+nUnlWhkgOS+MhmSXUCXXHSwcaLmCw==
+X-Received: by 2002:a05:622a:1352:b0:52d:8679:ba94 with SMTP id
+ d75a77b69052e-52e09aa1528mr176619151cf.0.1787579721730; 
+ Mon, 24 Aug 2026 06:55:21 -0700 (PDT)
+X-Received: by 2002:a05:622a:1352:b0:52d:8679:ba94 with SMTP id
+ d75a77b69052e-52e09aa1528mr176618621cf.0.1787579721306; 
+ Mon, 24 Aug 2026 06:55:21 -0700 (PDT)
+Received: from [10.254.188.74] (102.19.205.77.rev.sfr.net. [77.205.19.102])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-482c9c0acaesm8357253f8f.29.2026.08.24.06.55.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Aug 2026 06:55:20 -0700 (PDT)
+Message-ID: <03dfa51a-64c2-4b79-b524-2bac3e53335c@oss.qualcomm.com>
+Date: Mon, 24 Aug 2026 15:55:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/3] tests/functional/s390x/test_secure_ipl: Skip test
- if SIPL not supported by hypervisor
-To: Joshua Daley <jdaley@linux.ibm.com>, qemu-s390x@nongnu.org
-Cc: qemu-devel@nongnu.org, jrossi@linux.ibm.com, zycai@linux.ibm.com,
- borntraeger@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
- farman@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
- david@kernel.org, cohuck@redhat.com
-References: <20260812152112.3330493-1-jdaley@linux.ibm.com>
- <20260812152112.3330493-3-jdaley@linux.ibm.com>
-From: Matthew Rosato <mjrosato@linux.ibm.com>
+Subject: Re: [PATCH 5/6] hw/intc/arm_gicv5: Free memory in finalize
 Content-Language: en-US
-In-Reply-To: <20260812152112.3330493-3-jdaley@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260824102805.639072-1-peter.maydell@linaro.org>
+ <20260824102805.639072-6-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260824102805.639072-6-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8c4c41 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=tjU8C3MUQQN9MwWinqsA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDExNCBTYWx0ZWRfX55GdpxdDEBl7
- tMFMK7vS8zKHXZr/UxwvuDf8ODv4UZLZEiihORKrFymYIo26dlQsam+e56KYzzmuSyppcbFkeXP
- qayuCbwnc+rFaekSvxHAs5irXsbVVlc=
-X-Proofpoint-GUID: LjvitC6RrHD8GSdlx4XyBy93H6W67UtZ
-X-Proofpoint-ORIG-GUID: LjvitC6RrHD8GSdlx4XyBy93H6W67UtZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDExNCBTYWx0ZWRfX2kklK7W7a18r
- nBEZ049AjvTwMJ/Ea6NeUeAesSukFNdiqwSFHUK5RMdXPmfjf7o/xozOKCoTPXOylL64d/xXQFZ
- OJsEz9RHHFd2qUJMFU9DF+4uZe6DQzcEpwA2Ck93A+JiuYdB9d2EkouO/6i5ydwSQMM7lav6W8M
- rJbkLz61o2kXcHKAyzUya7HQbq/akS2I/2hkGLsCHvnTs/af84cAqJgDHuSwM4eMBOAdrnsKiFL
- KSVOWrClWZtIWHsK8DCQIGLPRU8LPpiq2umZ2KmE3/aPwlx/JaKrGU8HrEY4HLHYS9guoJRQgBR
- u/w8u2SI873D3rn+O3UGRXGSX14M1xeJxGQEYd2PU8SBp2Sux6Afe6gBOXTMp7eHqpYWtJrPWMn
- E+56yrPqq5OndPRgDQFJ6sxquRlTiBVsafZJIbsvufBnD8M7vD16vEOhj/1a2+7gPqINPeApM4H
- nQGqe73k02QymZ9Uzdw==
+X-Proofpoint-ORIG-GUID: 3j0ui2uqHToUOEgD5k6xiy67rvpkBJ_S
+X-Proofpoint-GUID: 3j0ui2uqHToUOEgD5k6xiy67rvpkBJ_S
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDExNiBTYWx0ZWRfX1gxbdgvKO8EY
+ 3JIAnCFj0vOgE8l/vSM49WU5sLg0OTsBR+NrfKkqowa9ww3o8Nw0vf3QQkJJAsHzH7/2HffvYgb
+ 82CTPeaBFj7ysfOql3KVHvRhwfkolXc=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDExNiBTYWx0ZWRfX2PsKu0hRUV4x
+ KVZyyupoOAG1iEExIN0pQc23NkL5+j3VA3UtXSACMyC/QkfqX6BGiNevjPHHFgv6gitcw7Jycw4
+ snuIA/n+LuA5W2JnjpO3YdvFlsHdqoVicn4YK5tt/Y1BWwQ9/M3/PJORy9gVpJ15sIlbDUcWu6j
+ EAFKhNlIcVX+Y6iBF5+As9YDd8ZZlGETELB7BshR1najVUBcnJzdDW3yufzKeCdQQZbh3rfRLJB
+ x1MWFCG8zqXwLvOtHbTWwlbfcnD4I1FIhY0xya98bDuihIcfqisiwLuvDVYoM5BerdR8MINHu/3
+ qgMorI1tzauA9Zf2zpefBaI54c9DCQQaZDCocQCYlqbfGR5dsPXnfPqGKfdPNSnSaq/PYRb9GXJ
+ rlcltN1/EdsCkb4uOWg2Ob2IRYIfp7NhI68bDow7JHf2msCiRgzD4wP5AKRh5H/TcwTpNwQUAkG
+ IyVGav1mxUdGM4QIvpQ==
+X-Authority-Analysis: v=2.4 cv=KcvidwYD c=1 sm=1 tr=0 ts=6a8c4d4a cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=3Njm2NGJn2tjTLCKQaqOdg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=KKAkSRfTAAAA:8 a=9DJ1f-wVD1Wiv6ShGPwA:9 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-24_04,2026-08-24_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
+ phishscore=0 impostorscore=0 adultscore=0 spamscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 suspectscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240114
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240116
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,17 +154,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/12/26 11:21 AM, Joshua Daley wrote:
-> Currently, if secure IPL is not supported by the hypervisor, the test
-> will fail because "Verified component" never appears. One must inspect
-> the console log to observe the cause of the failure.
-> 
-> Add a check that skips the test if the host CPU model is missing the
-> secure IPL facilities.
-> 
-> Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
+Hi Peter,
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+On 24/8/26 12:28, Peter Maydell wrote:
+> The GICv5 allocates memory and creates hashtables during realize and
+> as part of its operation.  Free those resources in finalize.
 
+Why not in unrealize() path?
+
+> Since the GICv5 is created at QEMU startup and remains in existence
+> for the lifetime of the process, this isn't an in-practice leak,
+> only a theoretical one.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/intc/arm_gicv5.c        | 11 +++++++++++
+>   hw/intc/arm_gicv5_common.c |  3 +++
+>   2 files changed, 14 insertions(+)
 
 
