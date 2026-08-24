@@ -4,117 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4C9DC5DF9B
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 15:24:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74CADC5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 15:24:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyWXC-0004HZ-SQ; Mon, 24 Aug 2026 11:24:26 -0400
+	id 1wyWWz-0003ye-3X; Mon, 24 Aug 2026 11:24:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wyWXB-0004FB-Aq; Mon, 24 Aug 2026 11:24:25 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wyWWt-0003mY-NS
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:24:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wyWX9-00072E-BF; Mon, 24 Aug 2026 11:24:25 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67OD1sS51846220; Mon, 24 Aug 2026 15:24:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=QelWI0vQK9zHeMyBPIaOPywWhHg0+l778PwrYLhJK2k=; b=pRs+pBR1Mthp
- bhXIWCHAUidYTgET9lSG+wUZJrT2LAazgCt210U1YENrCdps15Bq46ft1N9P3+BH
- 2gODrY2WdQxztsFuR0ejkSiQn2kFXp0xa+r/P0yHBRvRGfDG/b3wIHEIhQWGfUPE
- iopk1I6vcLlym1rkgUM6hgai4dYwvVpCZya7zueiCtN+rGtT+4Ojoz5zFv4TMf3W
- zIh0XuVC4mhYmVfTEHoQG6cT1XVwDOVLRnnOASZc3okIAncb0ZggovEU6aL7v++1
- WnU2wu/XmSjylCC2xGPilM8R6u4gHFZyid58HVxG+NeCLx8gqdi3F0iyhTBnqpDV
- JUI6pTnepg==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g716hjfwc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 15:24:21 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OFBHTw005993;
- Mon, 24 Aug 2026 15:24:20 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rag6m28-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 15:24:20 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67OFOIoj19858132
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 15:24:18 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 86B5C58051;
- Mon, 24 Aug 2026 15:24:18 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BD1445805A;
- Mon, 24 Aug 2026 15:24:17 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Aug 2026 15:24:17 +0000 (GMT)
-Message-ID: <15ce490abc64c1b5ad4e5ca4dea97aafe1a599fb.camel@linux.ibm.com>
-Subject: Re: [PATCH 26/29] target/ppc: Move lmw, stmw instructions to
- decodetree
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, harshpb@linux.ibm.com
-Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
- tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com,
- aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, sv@linux.ibm.com,
- shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
- nikhilks@linux.ibm.com
-Date: Mon, 24 Aug 2026 10:24:17 -0500
-In-Reply-To: <20260820140114.327023-27-rathc@linux.ibm.com>
-References: <20260820140114.327023-1-rathc@linux.ibm.com>
- <20260820140114.327023-27-rathc@linux.ibm.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEyNiBTYWx0ZWRfX/61kUtkDzJzV
- USEBVDWdjHaJqgvBBjxp7uktOPAw5rWgds6Uw55wpkYO+vWwg1xJEDp8iypCoAha7GNOpxjY8QO
- SMNHot6IYZ3BuOxxA1uEbJye0xj6QUM=
-X-Proofpoint-GUID: MxO9AM7buEmkZIvuZfmK4PWdJhQKRGN2
-X-Proofpoint-ORIG-GUID: zEjtMtyrWrgI0mPmwunTjHLGTpm32n2S
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEyNiBTYWx0ZWRfX4P5q8NfBtGm1
- r+3khoWGOaELjBJSOuZ3KkN1E1GN+oCkaO1Pj211650ugjIa0n0160CT1++Zx9eiYoDHgLqLPMx
- HFsimugxpiRuP5gBa2A3R/FChv07HNC7embBeIQIc+llG3t76hAdZ7z/ng3ESlPJh84UN0ZRmP3
- dJYxDQUMSZI55hKIstPjhjx8u1/hEq6t9qlrm7ijRZFTrr7V2Yrp5gVYE83HxxMoRHrbjQlQj+d
- cakKtpTPPPTrN2u2GsuO+SZ9kS8mb65B/lcieS6KvkkZJqztUNiv9xQ6abJ1GISe9Gwha+SWd6P
- tHauKX3ztvS5oCDXkCd7s/Djkyu6V8/LlUDCzJkuMrZkPuAwBkCoharLz3mLXlPcaWc6dMtedU9
- +7dNPJnZZbebSAvVJ6aWbs1nPvrAf5l59u9KiDaWRiTfdtkCsOcroBRJbwN0Xc2npvfLjOS/Q3+
- brt5hTpQ//TqRrE0Krg==
-X-Authority-Analysis: v=2.4 cv=H7brBeYi c=1 sm=1 tr=0 ts=6a8c6225 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=FzJZKgG2hrrCiWZZ3LgA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-24_04,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
- bulkscore=0 adultscore=0 priorityscore=1501 clxscore=1015 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240126
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wyWWr-0006uH-Mh
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:24:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787585044;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=mq0VL5IOt0OWrfZWdj1Tq3ZXi0CqelrWqpmzxUIR4s0=;
+ b=OaGtdFfsXuU3UFB9z5fVySXy/+5AfE/qpTsVEsZK1AisR07ehdr6oBnbKH8bnpFdFYEyp5
+ cYoSODhvs49YBaBRmRojGN8C3tk0eWN69F6sSGOtUYpTD+Fniwf+Dg11KeWML4QQpGWDjB
+ P8k2+h0E7eINovE7urywVzt1Jg83dkU=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-54-ovQLp8CuMkONUwMrW4M2QQ-1; Mon, 24 Aug 2026 11:23:54 -0400
+X-MC-Unique: ovQLp8CuMkONUwMrW4M2QQ-1
+X-Mimecast-MFC-AGG-ID: ovQLp8CuMkONUwMrW4M2QQ_1787585034
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-52d7b3b6aa2so46292661cf.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 08:23:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1787585034; x=1788189834; darn=nongnu.org;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=mq0VL5IOt0OWrfZWdj1Tq3ZXi0CqelrWqpmzxUIR4s0=;
+ b=qy9iWq8KDtQ9VegOoIXajp156gLfCNwRZvIm3XbBEnBtsN3Ofcyco+m/99wRvR4oiH
+ kr+Ov6/Wf10Tvm9msxTezPYEpdrm1C59HwHoWJVwyVqHK5Mu0t5LbJoDlX/lloxXx/Jj
+ eoN+Ix6VFxs9G0bcUuxLibhn3MGr4BCPw8zBTpUPPawJgiQZSOmMNaPAh8WEEoYg39Qd
+ m+fPQeb1M0FDlKAAUHpc9J8dypqNUWLcCW6gMTeDvS340LuHLamBNx+GpEnqy+k4frPI
+ +D3JPwfqqtiq/aDbCfinIUBYZGSNiUAVzsrrTYEqr1z+hSoz8tbjRfTar3hZv1XcIZIE
+ 1Kpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787585034; x=1788189834;
+ h=in-reply-to:content-disposition:content-type:mime-version
+ :references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=mq0VL5IOt0OWrfZWdj1Tq3ZXi0CqelrWqpmzxUIR4s0=;
+ b=jCwGS0j5ccT0Opc3Try2PfTIs2nYkUHDCJV1hNALkE4uV7LOCJalibTYNVbh+YqcSX
+ Cq2198jFpaD3gMQpg4muW2056fdqGmWpMqGEgLauuZctIpdhGMu7ofpT9LYV2xsyL49D
+ 4aVECnZIhB7mSE/UBdY8QbCgwvvppmqD8aPyQ65Jjj1wHkmlPygXbqIDvS1m/nt+SjnJ
+ 7v1PLbJ5rFqiJViKKJSMp/uDVScNuU2UFqHRxwrfSlBur2V1t0d16vSq0aPGnHvkGVlv
+ F2FlQNScF4oetqDPXyRf4TU/sB2zX7BrIDUVe2fgVt594mT4JIy+K16kbD2mRffhki90
+ /xfw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpnM4yNVtJO0EwC/Hbzyf0KrSUJD7JwfmOKojFgVy4hcDoskVHEdeKNtRqd2c8VTZMtIH2oX3QhZI4/@nongnu.org
+X-Gm-Message-State: AFuF++lp/aQSaGwKjGeTweKiikGVhJzV6Cezf6ZO9+UluPmw0UD5ylM1
+ il+EjjKNyUa9tyzgb7HWSPUMJngvfnZOtbRuaGGr47V+pZtV0PbqCcT0Isci6QG70tHE9OjoRWy
+ awCPhP64kk30bAn9vKOI2brqBhBMLf33ExT/SYo7UDRVAX8lzZj9sYBZ0
+X-Gm-Gg: AR+sD13y4czBd9K+YP/L+0DDHr6Z4kEMwAlFbuS7EYpCIE1yrzK+tSlRPKhhti6BPwC
+ kgATe3dAOEDfUMoAkEOi9BSJ2z4Y5fk9Le9MnHVULANYc6vW8h4vQmU5Ad80mEXqm9xgcEN+R9n
+ 8xsOpBpW3ceik4WWo68YQ80ZVcM41BM1M+tUjgm6FyAhJFfmiEESMtI+4r2gcFFZ4+JihO9j9oj
+ 5EJik8w/XhUm/eMSAw13l8QtHht8hdGK2cBasXQGOLBgvRnGTLC4kTfSkXyeaMmslNWNKshQoQM
+ Ka9uze4EP/cJBHfOXWy93KNDgPZOebPD78mkp6Z761nhJ7Rf0tcXZb4j6LW7EPaIWeUq
+X-Received: by 2002:a05:622a:a12:b0:52d:f12c:59ba with SMTP id
+ d75a77b69052e-52df5a3d5b1mr261870671cf.33.1787585033703; 
+ Mon, 24 Aug 2026 08:23:53 -0700 (PDT)
+X-Received: by 2002:a05:622a:a12:b0:52d:f12c:59ba with SMTP id
+ d75a77b69052e-52df5a3d5b1mr261869541cf.33.1787585032987; 
+ Mon, 24 Aug 2026 08:23:52 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-52e09975f5asm50691141cf.2.2026.08.24.08.23.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Aug 2026 08:23:51 -0700 (PDT)
+Date: Mon, 24 Aug 2026 11:23:48 -0400
+From: Peter Xu <peterx@redhat.com>
+To: BillXiang <xiangwencheng@lanxincomputing.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, mst@redhat.com,
+ pbonzini@redhat.com, philmd@mailo.com, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Subject: Re: [PATCH v2] virtio: Add aligned ld/st accessors for vring
+Message-ID: <aoxiBB2Wn8NiL5s6@x1.local>
+References: <20260821100856.1794011-1-xiangwencheng@lanxincomputing.com>
+ <CAFEAcA_kLpaz0UQi3Q315kLVqvDtxKh77kU2meN9G1_evfKBeQ@mail.gmail.com>
+ <bad5c8b3-668f-4893-974f-9dbca8dc6893@linaro.org>
+ <02da9676-febf-4389-b09b-5e5d41c1084e@lanxincomputing.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <02da9676-febf-4389-b09b-5e5d41c1084e@lanxincomputing.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,198 +119,141 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+On Mon, Aug 24, 2026 at 12:19:15PM +0800, BillXiang wrote:
+> Hi Richard, I've read your code in accel/tcg/ldst_atomicity.c.inc. Do 
+> you think it would be better to make the load/store_atomic* public?
+
+They do not fit by default, as we need to still process unaligned cases?
+
+I wished we can use qemu_mem_move() directly that just got introduced.. but
+it does slightly more than wanted.  Maybe something like this?  Below diff
+dropped ldsw_he_p() alone the way as it's never used.
 
 Thanks,
 
-Glenn
+===8<===
 
-On Thu, 2026-08-20 at 19:30 +0530, Chinmay Rath wrote:
-> From: Tanushree Shah <tshah@linux.ibm.com>
-> 
-> Moving the following instructions to decodetree specification:
->  lmw  : D-form
->  stmw : D-form
-> 
-> The changes were verified by validating that the tcg ops generated by
-> those instructions remain the same, which were captured with the
-> "-d in_asm,op" flag.
-> 
-> Additionally, validated using small assembly tests confirming the
-> the correct register store/load behavior. Also, confirmed the
-> register values are same before and after the change.
-> 
-> Signed-off-by: Tanushree Shah <tshah@linux.ibm.com>
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->  target/ppc/helper.h                        |  4 +--
->  target/ppc/insn32.decode                   |  3 ++
->  target/ppc/mem_helper.c                    |  4 +--
->  target/ppc/translate.c                     | 39 ----------------------
->  target/ppc/translate/fixedpoint-impl.c.inc | 32 ++++++++++++++++++
->  5 files changed, 39 insertions(+), 43 deletions(-)
-> 
-> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-> index 8425eceeb3..3659408c46 100644
-> --- a/target/ppc/helper.h
-> +++ b/target/ppc/helper.h
-> @@ -43,8 +43,8 @@ DEF_HELPER_1(check_tlb_flush_local, void, env)
->  DEF_HELPER_1(check_tlb_flush_global, void, env)
->  #endif
->  
-> -DEF_HELPER_3(lmw, void, env, tl, i32)
-> -DEF_HELPER_FLAGS_3(stmw, TCG_CALL_NO_WG, void, env, tl, i32)
-> +DEF_HELPER_3(LMW, void, env, tl, i32)
-> +DEF_HELPER_FLAGS_3(STMW, TCG_CALL_NO_WG, void, env, tl, i32)
->  DEF_HELPER_4(LSW, void, env, tl, i32, i32)
->  DEF_HELPER_5(LSWX, void, env, tl, i32, i32, i32)
->  DEF_HELPER_FLAGS_4(STSW, TCG_CALL_NO_WG, void, env, tl, i32, i32)
-> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> index 8f027e7ff5..b0fa85b93e 100644
-> --- a/target/ppc/insn32.decode
-> +++ b/target/ppc/insn32.decode
-> @@ -354,6 +354,7 @@ LVDX            011111 ..... ..... ..... 0000010001 -   @X
->  LSKU            111010 ..... ..... ............. 0 11   @DD
->  LCXU            111010 ..... ..... ............. 1 11   @DD
->  
-> +LMW             101110 ..... ..... ................     @D
->  
->  ### Fixed-Point Atomic Load/Store Instructions
->  
-> @@ -399,6 +400,8 @@ STBCIX          011111 ..... ..... ..... 1111010101 -   @X
->  STHBRX          011111 ..... ..... ..... 1110010110 -   @X
->  STWBRX          011111 ..... ..... ..... 1010010110 -   @X
->  
-> +STMW            101111 ..... ..... ................     @D
-> +
->  ### Fixed-Point Compare Instructions
->  
->  CMP             011111 ... - . ..... ..... 0000000000 - @X_bfl
-> diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
-> index 582180cf88..7517b3954b 100644
-> --- a/target/ppc/mem_helper.c
-> +++ b/target/ppc/mem_helper.c
-> @@ -73,7 +73,7 @@ static void *probe_contiguous(CPUPPCState *env, target_ulong addr, uint32_t nb,
->      return NULL;
->  }
->  
-> -void helper_lmw(CPUPPCState *env, target_ulong addr, uint32_t reg)
-> +void helper_LMW(CPUPPCState *env, target_ulong addr, uint32_t reg)
->  {
->      uintptr_t raddr = GETPC();
->      int mmu_idx = ppc_env_mmu_index(env, false);
-> @@ -98,7 +98,7 @@ void helper_lmw(CPUPPCState *env, target_ulong addr, uint32_t reg)
->      }
->  }
->  
-> -void helper_stmw(CPUPPCState *env, target_ulong addr, uint32_t reg)
-> +void helper_STMW(CPUPPCState *env, target_ulong addr, uint32_t reg)
->  {
->      uintptr_t raddr = GETPC();
->      int mmu_idx = ppc_env_mmu_index(env, false);
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index d2c51b4d59..9db9d1e070 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -2455,43 +2455,6 @@ GEN_LDX(lwbr, ld32ur, 0x16, 0x10, PPC_INTEGER);
->  GEN_LDX_E(ldbr, ld64ur_i64, 0x14, 0x10, PPC_NONE, PPC2_DBRX, CHK_NONE);
->  #endif  /* TARGET_PPC64 */
->  
-> -/***                    Integer load and store multiple                    ***/
-> -
-> -/* lmw */
-> -static void gen_lmw(DisasContext *ctx)
-> -{
-> -    TCGv t0;
-> -    TCGv_i32 t1;
-> -
-> -    if (ctx->le_mode) {
-> -        gen_align_no_le(ctx);
-> -        return;
-> -    }
-> -    gen_set_access_type(ctx, ACCESS_INT);
-> -    t0 = tcg_temp_new();
-> -    t1 = tcg_constant_i32(rD(ctx->opcode));
-> -    gen_addr_imm_index(ctx, t0, 0);
-> -    gen_helper_lmw(tcg_env, t0, t1);
-> -}
-> -
-> -/* stmw */
-> -static void gen_stmw(DisasContext *ctx)
-> -{
-> -    TCGv t0;
-> -    TCGv_i32 t1;
-> -
-> -    if (ctx->le_mode) {
-> -        gen_align_no_le(ctx);
-> -        return;
-> -    }
-> -    gen_set_access_type(ctx, ACCESS_INT);
-> -    t0 = tcg_temp_new();
-> -    t1 = tcg_constant_i32(rS(ctx->opcode));
-> -    gen_addr_imm_index(ctx, t0, 0);
-> -    gen_helper_stmw(tcg_env, t0, t1);
-> -}
-> -
-> -
->  #if !defined(CONFIG_USER_ONLY)
->  static inline void gen_check_tlb_flush(DisasContext *ctx, bool global)
->  {
-> @@ -4708,8 +4671,6 @@ GEN_HANDLER(rlwnm, 0x17, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
->  GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
->  /* handles stfdp, stxsd, stxssp */
->  GEN_HANDLER_E(dform3D, 0x3D, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
-> -GEN_HANDLER(lmw, 0x2E, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
-> -GEN_HANDLER(stmw, 0x2F, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
->  /* ISA v3.0 changed the extended opcode from 62 to 30 */
->  GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
->  #if defined(TARGET_PPC64)
-> diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-> index 8fcee7a89d..a75279022c 100644
-> --- a/target/ppc/translate/fixedpoint-impl.c.inc
-> +++ b/target/ppc/translate/fixedpoint-impl.c.inc
-> @@ -288,6 +288,38 @@ static bool trans_STQCX(DisasContext *ctx, arg_STQCX *a)
->      return true;
->  }
->  
-> +/* Load/Store Multiple Word */
-> +static bool do_ldst_multiple(DisasContext *ctx, arg_D *a, bool store)
-> +{
-> +    TCGv ea;
-> +    TCGv_i32 reg;
-> +
-> +    REQUIRE_INSNS_FLAGS(ctx, INTEGER);
-> +
-> +    /* Little-endian mode is not supported for multiple word operations */
-> +    if (ctx->le_mode) {
-> +        gen_align_no_le(ctx);
-> +        return true;
-> +    }
-> +
-> +    gen_set_access_type(ctx, ACCESS_INT);
-> +
-> +    reg = tcg_constant_i32(a->rt);
-> +    ea = do_ea_calc(ctx, a->ra, tcg_constant_tl(a->si));
-> +
-> +    /* Call the appropriate helper function */
-> +    if (store) {
-> +        gen_helper_STMW(tcg_env, ea, reg);
-> +    } else {
-> +        gen_helper_LMW(tcg_env, ea, reg);
-> +    }
-> +
-> +    return true;
-> +}
-> +
-> +TRANS(LMW, do_ldst_multiple, false)
-> +TRANS(STMW, do_ldst_multiple, true)
-> +
->  /*
->   * Fixed-Point Compare Instructions
->   */
+diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
+index 387d65c0b0..04a0f63612 100644
+--- a/include/qemu/bswap.h
++++ b/include/qemu/bswap.h
+@@ -1,6 +1,7 @@
+ #ifndef BSWAP_H
+ #define BSWAP_H
+ 
++#include "qemu/atomic.h"
+ #include "qemu/target-info.h"
+ #include "exec/memop.h"
+ 
+@@ -238,62 +239,52 @@ static inline void stb_p(void *ptr, uint8_t v)
+     *(uint8_t *)ptr = v;
+ }
+ 
+-/*
+- * Any compiler worth its salt will turn these memcpy into native unaligned
+- * operations.  Thus we don't need to play games with packed attributes, or
+- * inline byte-by-byte stores.
+- * Some compilation environments (eg some fortify-source implementations)
+- * may intercept memcpy() in a way that defeats the compiler optimization,
+- * though, so we use __builtin_memcpy() to give ourselves the best chance
+- * of good performance.
+- */
+-
+-static inline int lduw_he_p(const void *ptr)
+-{
+-    uint16_t r;
+-    __builtin_memcpy(&r, ptr, sizeof(r));
+-    return r;
+-}
+-
+-static inline int ldsw_he_p(const void *ptr)
+-{
+-    int16_t r;
+-    __builtin_memcpy(&r, ptr, sizeof(r));
+-    return r;
+-}
++#define  LD_HE_P(type, size)                                \
++    static inline type                                      \
++    glue(glue(ld, size), _he_p)(const void *ptr)            \
++    {                                                       \
++        type v;                                             \
++        if (unlikely((uintptr_t)ptr & (sizeof(v) - 1))) {   \
++            __builtin_memcpy(&v, ptr, sizeof(v));           \
++        } else {                                            \
++            v = qatomic_read((type *)ptr);                  \
++        }                                                   \
++        return v;                                           \
++    }
+ 
+-static inline void stw_he_p(void *ptr, uint16_t v)
+-{
+-    __builtin_memcpy(ptr, &v, sizeof(v));
+-}
++#define  ST_HE_P(type, size)                                \
++    static inline void                                      \
++    glue(glue(st, size), _he_p)(void *ptr, type v)          \
++    {                                                       \
++        if (unlikely((uintptr_t)ptr & (sizeof(v) - 1))) {   \
++            __builtin_memcpy(ptr, &v, sizeof(v));           \
++        } else {                                            \
++            qatomic_set((type *)ptr, v);                    \
++        }                                                   \
++    }
+ 
+-static inline void st24_he_p(void *ptr, uint32_t v)
+-{
+-    __builtin_memcpy(ptr, &v, 3);
+-}
++LD_HE_P(uint16_t, 16)
++LD_HE_P(uint32_t, 32)
++LD_HE_P(uint64_t, 64)
++ST_HE_P(uint16_t, 16)
++ST_HE_P(uint32_t, 32)
++ST_HE_P(uint64_t, 64)
+ 
+-static inline int ldl_he_p(const void *ptr)
+-{
+-    int32_t r;
+-    __builtin_memcpy(&r, ptr, sizeof(r));
+-    return r;
+-}
++#undef LD_HE_P
++#undef ST_HE_P
++#undef ADDR_ALIGNED
+ 
+-static inline void stl_he_p(void *ptr, uint32_t v)
+-{
+-    __builtin_memcpy(ptr, &v, sizeof(v));
+-}
++#define  lduw_he_p  ld16_he_p
++#define  ldl_he_p  ld32_he_p
++#define  ldq_he_p  ld64_he_p
+ 
+-static inline uint64_t ldq_he_p(const void *ptr)
+-{
+-    uint64_t r;
+-    __builtin_memcpy(&r, ptr, sizeof(r));
+-    return r;
+-}
++#define  stw_he_p  st16_he_p
++#define  stl_he_p  st32_he_p
++#define  stq_he_p  st64_he_p
+ 
+-static inline void stq_he_p(void *ptr, uint64_t v)
++static inline void st24_he_p(void *ptr, uint32_t v)
+ {
+-    __builtin_memcpy(ptr, &v, sizeof(v));
++    __builtin_memcpy(ptr, &v, 3);
+ }
+ 
+ static inline int lduw_le_p(const void *ptr)
+-- 
+2.54.0
+
+-- 
+Peter Xu
 
 
