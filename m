@@ -4,121 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6A75C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 08:48:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82311C5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 08:51:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyQLD-0005F6-0T; Mon, 24 Aug 2026 04:47:39 -0400
+	id 1wyQOL-0006BI-K6; Mon, 24 Aug 2026 04:50:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wyQLB-0005Et-7L
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 04:47:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wyQL6-0007fm-9J
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 04:47:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787561249;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zqn/77undguQa3RzB3CPdGwqmBJInAYmrL3lBi7Fvlw=;
- b=f+FFdKv2FFDqxyW3Uhwoskg3MW5F64g2UXVoPGmE7OglFrASDK8sD0yYhSUjUl+edNaqRs
- veUX5YVIaKGrYk2NnhM8cVg9q2mqD4RIam87YoUnMyEeq+5B59m8Wskv0J6/Ydz8qj5Gxv
- u/ux13SFDrAMyySDeUsuO/gbrOd88BE=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-33-rFzdGY4kOTS9g5okYtej4g-1; Mon, 24 Aug 2026 04:47:27 -0400
-X-MC-Unique: rFzdGY4kOTS9g5okYtej4g-1
-X-Mimecast-MFC-AGG-ID: rFzdGY4kOTS9g5okYtej4g_1787561247
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-47f6e8b5996so2643863f8f.2
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 01:47:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wyQOJ-0006Ai-Du
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 04:50:51 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wyQOH-00006P-Re
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 04:50:51 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-c1600d040e4so476808966b.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 01:50:49 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787561448; cv=none;
+ d=google.com; s=arc-20260327;
+ b=QNd16xpdZ2eGi+sry4B8LGECM692gPvt4XObTaax+v17AH0aA0vRMYokM+UbV2XkVN
+ B+Rpwf+4Ap8bfxrpc/KD8Fv5jCA9MrfcctWSAL37PS9Z9JqkLr7tK7RurkcuPWln7Wt9
+ 2iGqOkTHNL/S4bBUQcwnO5279YRQaM2eIzaKuw/LlbRuBy6yVpxS44l8I4B0OiW8LKTi
+ CNveDjMMhXTSOZdNkc4jSsEwr1Kfl17zv5W1AnEPZ8Nc+C9wdTiIYRWqc21ag53fGQWv
+ ehWPevzkLyH9t/Bbs5LJ78CJRHmjqlKiyMoT0fp2fui1A4RfwarkUVJbNY+fm+VK9NmE
+ TVSQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=zwhcyUW1Sp6BMgEVJLmc15bHBVj20vYqBmUjwHa8H80=;
+ fh=wGZeUYt39FdrjiyDvngBMA/6KW8toEkLMWKs7FzaIuY=;
+ b=NH9KDugeJEYxFP1V/D2xtND4RavyyJFRrF5Ve8PpH6l74pij674rTR4Ve8sGwaBZaA
+ ZVUBt3ha2EvqxhxPFhGocYW19FXjEV3biL7SiHaLDCK3LYDMf5xOx1cp6DVRLaagjvL7
+ 8kiuR7M+SnuZk4Ks9VAMDlgr5q/ekLU5uDh4m7vBbg3BtAx8VoXbU8JL47udVeuVCy5L
+ Vq+lNVrtKbjcXcHnkYvuxOLYaFgLS88LZVI4Ujf4TG64UCRXJGmxzuwxASJIp+YWALeR
+ 3ncgCRnRNqp6eKjgJwkO/Xe9lItOnUmeyYJufMIcbkUPhufxmkKYLYer4eoPGq8+iN/B
+ TvsQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1787561448; x=1788166248; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=zwhcyUW1Sp6BMgEVJLmc15bHBVj20vYqBmUjwHa8H80=;
+ b=eA5CDzJTFEQyUdxK7KF4mi1HZboAkKd9dDr8hwyoEgGwPZYy77FoapHgTZKrITQwgR
+ SdpanAoPTiPhBoqGyWRSGSuCOwqLoGOGYgH9GFKRHtV6gJJPdhHaoIsp3K/gD9OWaPVq
+ 01RCQrWyNlIL19NKkNWOIHV1oC71dJuaxleoRj6etYIeeSfXF+3YrZXwAkx6t1p3BwPV
+ LNlGjzxkLyNBKgHeRw+o0Vtye+SuoId+GF3fcbkzaKQOs6Azezq7VvIkUu0Qz/DnJc3L
+ WmqfHJW+rjgBsbEnRahmjCTV3Mn1y1/r5xf16iD9tgaC+y0tLB4zldw+I+0NAZKcBhnC
+ XrSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787561246; x=1788166046;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:reply-to:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=zqn/77undguQa3RzB3CPdGwqmBJInAYmrL3lBi7Fvlw=;
- b=qP99VXY/enNJd/MHhSt7CR4P/LTNAdSgkLC6j6UmtfaIzkLlLBK3DpVdWiZPWAXKv6
- C99NK0J8RorloibVZ+P8oaw9ZAQHX8iaD2YxWBSl/MBvoYyHkA965ouSMt3AjtGI1Zlb
- 3mDQDIXCGEBH1ZvhBsEEKu1wvgSGYZ640si+CKE6wR5HF43nxBl455CGV8+lrRIt7lHT
- atLZ0llkyKiV/fThpXodfm0Q9KuRRULXuScfuoVjkpXo2hj5CozeLkHRYdVggs9P/ExE
- 5Npe+hFIfeSEC7MvvCPL1YiSE13KGU9/B+9U1OqaOk4BipJEYb5URpOtS0na+byvLUyJ
- 4mGg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqrKOXa/TsHhZZkPAmyxlOWujOZiOZMOeNhe+t5Y9L2Y7LYVLjhumgC351pSm7TVOfhnpT2UYvp4asO@nongnu.org
-X-Gm-Message-State: AFuF++ltFywLtU9VZbR8dE8KIuq/dimErcBwosXnKCn6CDOwzHXT4Xhi
- sEv3KbmWg0mvVGd2nIT2LckKO0ly1rEutosMQo2ilX0Q55tWJV6ZFGyxPe8VJOi8vHvSLu2oe50
- x6ZP1Da7AlOCL0i2TFtf06J96svOfXUTWUvZuxG1iZlWPQK4ZKQoWsZmc
-X-Gm-Gg: AR+sD13wYVYnsxMc3mBuZIOYJJzVkyKB8yN/Wv1SeGkOEb5QNWFWAhXUH985QH0Z1IV
- 76Hp25z8UxxH2iiDKes5WnUMFlEdSvOG2TSdGZxM0vy3ltO8DIBppR54vroH8QF53NQAwR9/u52
- fO9crqCmczBQsxvn6yLFUYURWml8lR6XM5ZhjXCsJij7Sq6i22K5eLp7GFqTioJ3/BHqZhqEvxg
- HvC9IvPktBlOtXdSP3vrDxjR6Yl8nPoUeCyI9pDeAz85aZJ8nSZJY/seagj8/KJVhRnNMLd9dJO
- ZzmEVGR2VFOc4AeEWhh5/SNjfOV1qPB7pyjod1b3bhLJqbu2OcJ97/Ay/n1Cto0pRtX6f/bMnAm
- Tgq7YgErXsfRRT2cc2NxQDx2ZbjtpYzApwgz/T1ruYE1Ed1eX
-X-Received: by 2002:a05:600c:3b25:b0:499:900c:9c69 with SMTP id
- 5b1f17b1804b1-499b8454bc0mr267960675e9.9.1787561246483; 
- Mon, 24 Aug 2026 01:47:26 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b25:b0:499:900c:9c69 with SMTP id
- 5b1f17b1804b1-499b8454bc0mr267959945e9.9.1787561246039; 
- Mon, 24 Aug 2026 01:47:26 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499cfea058csm24404095e9.2.2026.08.24.01.47.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Aug 2026 01:47:25 -0700 (PDT)
-Message-ID: <7b3cfd9f-825e-46b9-82ad-09611b05135e@redhat.com>
-Date: Mon, 24 Aug 2026 10:47:24 +0200
+ d=1e100.net; s=20251104; t=1787561448; x=1788166248;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=zwhcyUW1Sp6BMgEVJLmc15bHBVj20vYqBmUjwHa8H80=;
+ b=srICpIogo0sL0JvyQ+1x31Qg0XzIMjyy4NMlmkxwmXgUtmnRO6dP7sxsuZbH/V9g9N
+ Pz9S5xXVtqZ7fmASpeVbBhkJ9rDdDMpbOCt75qacXG7Cei7U5n2VaZDBNt1EnJeXbXsx
+ 1DLLuDqzKJOVPJbkwKeyA4MfIi2qCpg8+2njMW1cP3ZGfe7oQpDSDKASWzi9o2KeVoGP
+ Fb5Sh/9O120kzpwtX/D5KB51cgUmBo7CVJQ1W5Xnk3Y0uxZAyziGV7QK1yu59qvlDViC
+ tfQkDQYdqGHhEi92eg7qKXJTtHAtAWiXBG2D+SHyGwpsPIOSlcXkarLUwQ79pbZGTkjI
+ R8kQ==
+X-Gm-Message-State: AFuF++nCByF3k1iPufXy39kakeCMnJQbkLbQnV+uG1cBF+FU0w44Y9NN
+ Boo1G2/E/cxmHIwjA/6/gR6B4FlYyQWE8qfpUuE+uEsDqJ/md0GmJDqIRfOMHzZikYF7kNBm4nw
+ vgPyNyMNdoUNhv2bmfDR61WYEPQpAQXs=
+X-Gm-Gg: AR+sD1269gQRi3AAlSVGYbkMmeouy9aQoHmDpR6BLSIg76JQnhsi9kmVAcfjXk97jzn
+ Uai6b7bVzo3KhYlMQNdsptMZMVsBgFMNoqWEYGV4Rft33GJbHPbJfVkhUY9idnCHEalp28989LA
+ 3jigELGhRc/UFk2/3NMkcgbpNbFAu+4qgc05FzRAaAmfhb5diIjIJtBZC51WlJ1dW/7cYAz5fgR
+ 5EzW53Pfc4Zvx4HjElnmmmlr8ymOfJIULPqQrDOETr0mZDa65DlHya+9ob0bZ9/EtDVw4+T2JXF
+ RV1vAxDTGwCMCYYTBDMeSKFPA0bS3Q+RNS/EJL7zT/lfzg==
+X-Received: by 2002:a17:907:a01:b0:c20:7cb0:f33c with SMTP id
+ a640c23a62f3a-c244d86d229mr2688152566b.16.1787561447712; Mon, 24 Aug 2026
+ 01:50:47 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v7 00/18] kvm/arm: Introduce a customizable aarch64
- KVM host model
-Content-Language: en-US
-To: Khushit Shah <khushit.shah@nutanix.com>
-Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Shaju Abraham <shaju.abraham@nutanix.com>,
- "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
- "cohuck@redhat.com" <cohuck@redhat.com>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "sebott@redhat.com" <sebott@redhat.com>,
- "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
- "maz@kernel.org" <maz@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-References: <20260726153221.24773-1-eric.auger@redhat.com>
- <3057A3BC-2BE9-4D2B-9D04-E3B31A6D0599@nutanix.com>
- <2C1E0EFD-7BD3-4177-90F8-14894B34F726@nutanix.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <2C1E0EFD-7BD3-4177-90F8-14894B34F726@nutanix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+References: <20260814174830.1691540-1-zhangckid@gmail.com>
+ <20260814174830.1691540-4-zhangckid@gmail.com>
+ <87a4qcvx3w.fsf@pond.sub.org>
+In-Reply-To: <87a4qcvx3w.fsf@pond.sub.org>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Mon, 24 Aug 2026 16:50:10 +0800
+X-Gm-Features: AcwNN1XvcviFFhecgYweD_a7l5gDhG6awqPvocWGyhrp4wglGXIt6OixwuUTx2o
+Message-ID: <CAK3tnvJSbGyZ0ryU-3AdoNpgkrE1-D=JyTiCbb98Ngjn-q-8rw@mail.gmail.com>
+Subject: Re: [PATCH V12 03/15] iothread: track users with holder name
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Jason Wang <jasowangio@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,203 +119,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Khushit,
-
-On 8/24/26 10:19 AM, Khushit Shah wrote:
+On Mon, Aug 24, 2026 at 3:24=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 >
->> On 20 Aug 2026, at 11:57 AM, Khushit Shah <khushit.shah@nutanix.com> wrote:
->>
->>
->>
->>> On 26 Jul 2026, at 8:59 PM, Eric Auger <eric.auger@redhat.com> wrote:
->>>
->>> !-------------------------------------------------------------------|
->>> CAUTION: External Email
->>>
->>> |-------------------------------------------------------------------!
->>>
->>> This series enhances the current host KVM model with capability to
->>> set writable ID reg fields. 
->>>
->>> Since v6.7 kernel, KVM/arm allows the userspace to overwrite the values
->>> of a subset of ID regs. The list of writable fields continues to grow.
->>> The feature ID range is defined as the AArch64 System register space
->>> with op0==3, op1=={0, 1, 3}, CRn==0, CRm=={0-7}, op2=={0-7}.
->>>
->>> The end goal is to get more flexibility when migrating guests
->>> between different host hardware.
->>>
->>> QEMU retrieves the writable ID fields from KVM UAPI [1] and
->>> match them against a generated description of ID regs and their
->>> named fields that stem from AARCHMRS Registers.json file.
->>> Current description is based on latest 2026-03 edition.
->>> The content of the generated files was compared against kernel
->>> linux/arch/arm64/tools/sysreg file. It is not straightforward
->>> to have unit tests for python scripts as there are many cases for
->>> field extraction. 
->>>
->>> For each writable named field a uint64 property is created
->>> following the "SYSREG_<REG>_<FIELD>" naming convention. REG and
->>> FIELD names are those described in ARM ARM Reference manual.
->>>
->>> The list of SYSREG_ID properties can be retrieved through the qmp
->>> monitor using query-cpu-model-expansion [2].
->>>
->>> For the record, Jinqian was able to migrate between Hisilicon KunPeng
->>> HIP09 and HIP12 chips with this series using this kind of command:
->>>
->>> -cpu host,pauth=off,pmu=off,sve=off,\
->>> SYSREG_ID_AA64PFR1_EL1_NMI=0x0,\
->>> SYSREG_ID_AA64ISAR1_EL1_LS64=0x0,\
->>> SYSREG_ID_AA64ISAR1_EL1_XS=0x0,\
->>> SYSREG_ID_AA64ISAR1_EL1_LRCPC=0x2,\
->>> SYSREG_ID_AA64ISAR2_EL1_RPRFM=0x0,\
->>> SYSREG_ID_AA64ISAR2_EL1_CLRBHB=0x0,\
->>> SYSREG_ID_AA64ISAR2_EL1_PAC_frac=0x0,\
->>> SYSREG_ID_AA64ISAR2_EL1_BC=0x0,\
->>> SYSREG_ID_AA64ISAR2_EL1_RPRES=0x0,\
->>> SYSREG_ID_AA64ISAR2_EL1_WFxT=0x0,\
->>> SYSREG_ID_AA64MMFR0_EL1_FGT=0x0,\
->>> SYSREG_ID_AA64MMFR0_EL1_BigEnd=0x0,\
->>> SYSREG_ID_AA64MMFR1_EL1_ECBHB=0x0,\
->>> SYSREG_ID_AA64MMFR1_EL1_CMOW=0x0,\
->>> SYSREG_ID_AA64MMFR1_EL1_TIDCP1=0x0,\
->>> SYSREG_ID_AA64MMFR1_EL1_nTLBPA=0x0,\
->>> SYSREG_ID_AA64MMFR1_EL1_AFP=0x0,\
->>> SYSREG_ID_AA64MMFR1_EL1_HCX=0x0,\
->>> SYSREG_ID_AA64MMFR1_EL1_ETS=0x0,\
->>> SYSREG_ID_AA64MMFR1_EL1_PAN=0x2,\
->>> SYSREG_ID_AA64MMFR1_EL1_HAFDBS=0x2,\
->>> SYSREG_ID_AA64MMFR2_EL1_CnP=0x0,\
->>> SYSREG_ID_AA64MMFR3_EL1_TCRX=0x0,\
->>> SYSREG_ID_AA64DFR0_EL1_PMUVer=0x6,\
->>> SYSREG_ID_AA64DFR0_EL1_DebugVer=0x9,\
->>> SYSREG_ID_AA64DFR0_EL1_DoubleLock=0xf,\
->>> SYSREG_ID_AA64ZFR0_EL1_F64MM=0x0,\
->>> SYSREG_ID_AA64ZFR0_EL1_F32MM=0x0,\
->>> SYSREG_ID_AA64ZFR0_EL1_SM4=0x0,\
->>> SYSREG_ID_AA64ZFR0_EL1_SHA3=0x0,\
->>> SYSREG_ID_AA64ZFR0_EL1_BitPerm=0x0,\
->>> SYSREG_ID_AA64ZFR0_EL1_AES=0x0,\
->>> SYSREG_ID_AA64ZFR0_EL1_SVEver=0x0,\
->>> SYSREG_CTR_EL0_L1Ip=0x2 \
->>>
->>> Connie & Eric
->>>
->>> This series can be found at:
->>> https://urldefense.proofpoint.com/v2/url?u=https-3A__github.com_eauger_qemu_tree_arm-2Dcpu-2Dmodel-2Dv7&d=DwIDAg&c=s883GpUCOChKOHiocYtGcg&r=PGWMyignA0NiDmTlyP7vOTHozBws_VN86yrVmSMkBp0&m=xh5u7-r6auXiWQScafdj-0wW70mXB4FhClh58GryHmExkx8uZN-h9j4B2c90Lowd&s=Ro4v_mjoNaLsznyxm781lzXBcRtXTudjibmgIhoJsNM&e= 
->>>
->>> History:
->>> --------
->>> v6 -> v7:
->>> - query-cpu-model-expansion now applies the sysreg props
->>> onto a scratch vcpu (POC) allowing a finer validation of settings
->>> (not perfect though as init may be revisited depending on
->>> settings)
->>> - Properly handle ValueRange (Khushit)
->>> - Remove cpu parameter in get_host_cpu_idregs call chain
->>> (Khushit)
->>>
->>> v5 -> v6:
->>> v6 is mostly for Khushit to see how he may work on top
->>> of this series. It fulfills some of his requirements:
->>> - Upon Khushit request I added description for enum values
->>> and reserved fields
->>> - set_sysreg_prop checks the input value against enum values
->>> if any
->>> - writable_bitmap is now dispatched into the sysreg descripton
->>> and not stored in vcpu state anymore (besides it is VM wide)
->>> - implemented write for qmp inspection. However this is not
->>> yet checked against KVM. That's the next step I think, ie.
->>> instantiate a scratch vcpu to test if the field value can be
->>> applied?
->>> - if some inconsistencies between writable mask and idreg
->>> field, reserved fields only produce traces
->>> - this version does not yet fix some reported issues about host
->>> supporting nested virt. I will further sync with Khushit.
->>> so this is definitively not candidate to be applied, hence the
->>> RFC tag.
->>>
->>> Cornelia Huck (3):
->>> target/arm/kvm: Retrieve writable ID reg map
->>> arm/cpu-features: document ID reg properties
->>> arm-qmp-cmds: introspection for ID register props
->>>
->>> Eric Auger (14):
->>> scripts: introduce scripts/update-aarch64-cpu-sysregs-header.py
->>> target/arm/cpu-sysregs.h.inc: Sort by name alphabetical order
->>> target/arm/cpu-sysregs.h.inc: Update with automatic generation
->>> arm/cpu: Add infra to handle generated ID register definitions
->>> scripts: Introduce scripts/aarch64_sysreg_helpers module
->>> scripts: Introduce scripts/update-aarch64-cpu-sysreg-properties.py
->>> target/arm/cpu-idregs.h.inc: generate with script
->>> target/arm/cpu-idregs.h.inc: Generate enum values
->>> arm/kvm: Initialize all writable ID registers from host
->>> target/arm/kvm: Introduce kvm_arm_expose_idreg_properties
->>> target/arm/cpu: Expose writable ID reg field properties on the kvm
->>>   host vcpu model
->>> target/arm/cpu-idregs.h.inc: Generate reserved fields
->>> target/arm/kvm: Ignore and trace unexpected writable reserved fields
->>> target/arm/kvm: add utility to write idregs in scratch vcpu
->>>
->>> Shaju Abraham (1):
->>> target/arm/cpu_idregs: generate tables for Arm64 ID registers and
->>>   fields
->>>
->>> docs/system/arm/cpu-features.rst              |  106 +-
->>> target/arm/cpu-idregs.h                       |   41 +
->>> target/arm/kvm_arm.h                          |   13 +
->>> target/arm/cpu-idregs.h.inc                   | 2164 +++++++++++++++++
->>> target/arm/cpu-sysregs.h.inc                  |   57 +-
->>> target/arm/arm-qmp-cmds.c                     |   98 +
->>> target/arm/cpu-idregs.c                       |   96 +
->>> target/arm/cpu64.c                            |    5 +
->>> target/arm/kvm-stub.c                         |    6 +
->>> target/arm/kvm.c                              |  360 ++-
->>> scripts/aarch64_sysreg_helpers.py             |  109 +
->>> .../update-aarch64-cpu-sysreg-properties.py   |  290 +++
->>> scripts/update-aarch64-cpu-sysregs-header.py  |   51 +
->>> target/arm/meson.build                        |    1 +
->>> target/arm/trace-events                       |    8 +
->>> 15 files changed, 3373 insertions(+), 32 deletions(-)
->>> create mode 100644 target/arm/cpu-idregs.h
->>> create mode 100644 target/arm/cpu-idregs.h.inc
->>> create mode 100644 target/arm/cpu-idregs.c
->>> create mode 100644 scripts/aarch64_sysreg_helpers.py
->>> create mode 100644 scripts/update-aarch64-cpu-sysreg-properties.py
->>> create mode 100755 scripts/update-aarch64-cpu-sysregs-header.py
->>>
->>> -- 
->>> 2.53.0
->>>
->> Hi,
->>
->> On my box the build is failing with:
->> [97/2192] Linking target qemu-system-arm
->> FAILED: qemu-system-arm
->> cc @qemu-system-arm.rsp
->> /usr/bin/ld: libsystem_arm.a.p/target_arm_arm-qmp-cmds.c.o: in function `qmp_query_cpu_model_expansion':
->> /home/ahv/qemu/build/../target/arm/arm-qmp-cmds.c:144:(.text+0x4d4): undefined reference to `kvm_check_extension'
->> /usr/bin/ld: /home/ahv/qemu/build/../target/arm/arm-qmp-cmds.c:145:(.text+0x4e4): undefined reference to `kvm_check_extension'
->> /usr/bin/ld: /home/ahv/qemu/build/../target/arm/arm-qmp-cmds.c:151:(.text+0x514): undefined reference to `kvm_check_extension'
->> /usr/bin/ld: /home/ahv/qemu/build/../target/arm/arm-qmp-cmds.c:168:(.text+0x554): undefined reference to `kvm_arm_create_scratch_host_vcpu'
->> /usr/bin/ld: /home/ahv/qemu/build/../target/arm/arm-qmp-cmds.c:152:(.text+0x7d4): undefined reference to `kvm_check_extension'
->> /usr/bin/ld: /home/ahv/qemu/build/../target/arm/arm-qmp-cmds.c:247:(.text+0x8f4): undefined reference to `kvm_arm_destroy_scratch_host_vcpu'
->> collect2: error: ld returned 1 exit status
+> Zhang Chen <zhangckid@gmail.com> writes:
 >
-> If I add appropriate stubs, Following test fails:
->   30/1079 qemu:qtest+qtest-aarch64 / qtest-aarch64/device-introspect-test         ERROR            1.58s   killed by signal 6 SIGABRT
->  126/1079 qemu:qtest+qtest-aarch64 / qtest-aarch64/qom-test                       ERROR           46.65s   killed by signal 6 SIGABRT
->  426/1079 qemu:qtest+qtest-aarch64 / qtest-aarch64/arm-cpu-features               ERROR            0.51s   killed by signal 6 SIGABRT
->  467/1079 qemu:qtest+qtest-arm / qtest-arm/arm-cpu-features                       ERROR            0.46s   killed by signal 6 SIGABRT
->  966/1079 qemu:block / io-qcow2-161                                               ERROR            1.95s   exit status 1
+> > Introduce iothread_ref_and_get_aio_context() with a holder argument
+> > and its counterpart iothread_unref_and_put_aio_context().
+> >
+> > Previously, users of an IOThread AioContext did not explicitly record
+> > their identity, making it difficult to debug which devices or
+> > subsystems were pinning an IOThread.
+> >
+> > Registering a holder takes an IOThread object reference so that the
+> > IOThread and its AioContext stay alive until the matching put
+> > operation. Document the ownership and BQL requirements.
+> >
+> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 >
-Thanks. I am currently working on it. Planning to respin this week
+> Does this add tracking, or just the tracking infrastructure?
+>
+> If the latter, the subject is misleading.
 
-Eric
+You're right. I'll change the subject to:
+=E2=80=9Ciothread: add holder-aware AioContext accessors=E2=80=9D
 
+and clarify this in the commit message.
+
+By the way, the V13 series has been sent, please comments it here:
+https://lists.gnu.org/archive/html/qemu-devel/2026-08/msg05327.html
+
+Thanks
+Chen
+
+>
 
