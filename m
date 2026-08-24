@@ -4,60 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05D6EC5DF9C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 16:59:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13372C5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 17:22:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyY0j-0001hh-2Z; Mon, 24 Aug 2026 12:59:02 -0400
+	id 1wyYMr-0006VJ-Iw; Mon, 24 Aug 2026 13:21:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wyY0g-0001h6-WA
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 12:58:59 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wyYMo-0006V0-Ib
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 13:21:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wyY0d-0003mY-OC
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 12:58:58 -0400
-Received: from [192.168.10.145] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 67OGwmt9005848
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 25 Aug 2026 01:58:48 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=LIi+CKn2t/ndjlBYBShhFk3/gzHUpow7EImpkksNfkI=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1787590728; v=1;
- b=WCmafKnpJw2y9cTgriehqRnMIFurBkev8BezTlEuMt1qftWvpjO56Xr+UlnJhwcg
- PORx18aNG5jG0iVkZZ9RDrQ7R5wfAolao8xG8j7IeuqnKYWbaJM3vh7CFlza9g0j
- usw8+It3831taUOMzN5QpZrT1iCNjSsCu9Fe/Abl46plwg8DtfOlRtkk2FXlrDiO
- 8c59/PVH4mIgdUFe5A4//ZXYPROOIqSoc/Q55MFeH5QBCEz7RkXMFzKRX68qX/OT
- sT1qMou2JxGJWDkMdrwh4bGFMLp0CsWlV462zC+MjVWL8JkgTRK+xRnxRoawo4XG
- YtAko2FnkjmIstlc0Tvj0Q==
-Message-ID: <d8529087-6950-45c1-b7a6-74ab80a10e25@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 25 Aug 2026 01:58:48 +0900
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wyYMm-0000ph-Lp
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 13:21:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787592105;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GbUK19ldvIBWtcuD0oTMHA2hFkXjZn0gQlWJ+k3b3+E=;
+ b=dk1eKWACHdEppSowQwPw8lHTNu77IpXOi5UXo3aXDoLgsnGsMkD1OcMj7jc9Xu1b0N8+8l
+ 7pVR/LfPLfpbL/HFIF4lYRQPm18wA0oA6FXr1d3q/lSmgEuTdQ9c/EZ2JEo9qxw0uh3E33
+ V+mB4K7Jvk7Yl9WThIkcean1n9EIFLw=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-481-FvHhUkoCO_KW-2Itg0qFgg-1; Mon, 24 Aug 2026 13:21:43 -0400
+X-MC-Unique: FvHhUkoCO_KW-2Itg0qFgg-1
+X-Mimecast-MFC-AGG-ID: FvHhUkoCO_KW-2Itg0qFgg_1787592102
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-c160b9c0676so280469266b.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 10:21:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787592102; x=1788196902;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:cc:to:reply-to:subject:from:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=GbUK19ldvIBWtcuD0oTMHA2hFkXjZn0gQlWJ+k3b3+E=;
+ b=lbEUZTOhBSQmsAN+Xmgn/aqTWuU3xZTWYqSOe1O3P/0BBpKHETVoURPFqdfPZaQJ+R
+ lcCVLPcxet9G3L3sBFHdrpgtA3a4MXsfZWbi1RzJ1Tzu1jeeHWaLJmX5M4eevY8S9xi1
+ DigTjXFI+SOJ8LaOjZ4GNlG+S3Ab/bdirbJ9n7rDk2sxNb8UGd/mesBHILsNTNKj+31F
+ fnGrXj7jph8dUA/6XnGg+YyVt9ltvUduFNGN7u0pY3gPvjUYYIF6Eguxia9HfMbBdPLt
+ SB+Kw1FtDtLf2YBZqeG57uSIn4V5FaOiYEzjFRsf5RCMaNa5GaeQvIFDMzTGDDzl8pGf
+ AAmA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpySif+j1qQTn46o8gTeS9R2hFjEntjv8THyee2lgN2RGaPR0HE/8ccZrehyE65RdE0oqaZ0NLFiimw@nongnu.org
+X-Gm-Message-State: AFuF++lT2oEJmuigsbN+INsyw1/mS9hT09pS97A0lV3qzskC92QpnGmh
+ zxEX1ulH7GGG/iV5fBoF4A5kXjwlEhXIHmQCh8s8qUMVMxpNIIVDtH8ZomB7tDazU4+5irfGWB4
+ ag/K+DYC9s9B+yA7E1OZByvROT6BkVTQKnAnUSFHrOk+AO0PfnMKSg6Mf
+X-Gm-Gg: AR+sD12J1kWlTBHii0fACgndhot86KKmifxKpw/xMq1RkZh/TzjW18uZZpVeOMRow13
+ c5Im1qwjJB0FZpU68mEf221mvCRvwxenJskb1LGdXYHeGx/7CDO0NyADbogJfak3hhPZqYypfNM
+ 252nysFv2CWXI2Rh5NoPaWl+l3PsCO/MyH0Gh3yFfG7rNWGU8Cobd+w7gbFSvKXJnRxMUxulmG/
+ oYTQuDca0XttbViPdibni1Y3k3ZP1Dq+ZPqKx3TMvcp+ASDcOvbp6Z7+HVVNX0kyo5n0MVI+bde
+ 2Yq/x+gfEU44vl23mdqC5KbVnxo+jtD31G9xrf7h52vTPJvYnoUZhxJ0i7WhKQ2r6fNP2vemhCh
+ 3hm/jtXLyXYXeWdnzf+HFcKuK9xANyqj5FmEeY1AjsF/2iHgh
+X-Received: by 2002:a17:907:940f:b0:c21:74ad:8b7a with SMTP id
+ a640c23a62f3a-c24e5a5243amr4844366b.9.1787592101829; 
+ Mon, 24 Aug 2026 10:21:41 -0700 (PDT)
+X-Received: by 2002:a17:907:940f:b0:c21:74ad:8b7a with SMTP id
+ a640c23a62f3a-c24e5a5243amr4840866b.9.1787592101419; 
+ Mon, 24 Aug 2026 10:21:41 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c249629563dsm1407710366b.17.2026.08.24.10.21.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Aug 2026 10:21:40 -0700 (PDT)
+Message-ID: <e2fbfb8a-b3e5-4e27-b938-d92d3ccfe83f@redhat.com>
+Date: Mon, 24 Aug 2026 19:21:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: Re: [PATCH] hw/input/ps2: answer unknown mouse commands with a resend
-To: Christian Quante <christian@quante.one>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-References: <20260823071529.16389-1-christian@quante.one>
+From: Eric Auger <eric.auger@redhat.com>
+Subject: Re: [RFC PATCH v7 12/18] target/arm/kvm: Introduce
+ kvm_arm_expose_idreg_properties
+To: Markus Armbruster <armbru@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ kvmarm@lists.linux.dev, peter.maydell@linaro.org, shaju.abraham@nutanix.com,
+ khushit.shah@nutanix.com, yangjinqian1@huawei.com, cohuck@redhat.com,
+ richard.henderson@linaro.org, sebott@redhat.com, skolothumtho@nvidia.com,
+ philmd@oss.qualcomm.com, maz@kernel.org, oliver.upton@linux.dev,
+ pbonzini@redhat.com, berrange@redhat.com, abologna@redhat.com,
+ jdenemar@redhat.com
+References: <20260726153221.24773-1-eric.auger@redhat.com>
+ <20260726153221.24773-13-eric.auger@redhat.com> <87a4qh3tbn.fsf@pond.sub.org>
 Content-Language: en-US
-In-Reply-To: <20260823071529.16389-1-christian@quante.one>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <87a4qh3tbn.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,92 +118,87 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/23 16:15, Christian Quante wrote:
-> ps2_write_mouse() ends its command switch with a bare "default: break;",
-> so an unknown command draws no reply at all. A real PS/2 device answers
-> every byte it is given -- ACK (0xFA) when it understood one, resend
-> (0xFE) when it did not -- and a guest that gets nothing back is left
-> waiting out its reply timeout. The keyboard path in the same file has
-> always answered unknown commands with KBD_REPLY_RESEND.
-> 
-> Two guests were measured on this.
-> 
-> OS/2 probes the mouse with the vendor command 0xBB, which QEMU does not
-> implement, and then polls the status port until its own timeout runs
-> out. On a Warp 3 guest that wait costs about 25 ms of every boot under
-> TCG, and 2.1 s under KVM, where each of those polls leaves the guest.
-> With this patch the wait ends on the first read: the guest takes the
-> same error path an unexpected reply would, and does not retry.
-> 
-> Linux probes for a TrackPoint with 0xE1 and fails the same way. Timing
-> the psmouse detection from a mark written to /dev/kmsg to the kernel's
-> "input:" line, three boots each of a 6.18.35 kernel under TCG:
-> 426.7/428.8/441.6 ms without this patch, 21.4/21.6/21.2 ms with it. The
-> mouse is detected identically either way; libps2 caps its retries at
-> two attempts and ends in the same -EPROTO the timeout produced.
+Hi Markus,
+On 8/20/26 1:49 PM, Markus Armbruster wrote:
+> Eric Auger <eric.auger@redhat.com> writes:
+>
+>> This helper decode the ID reg writable mask, matches it against
+>> ID reg fields defined in target/arm/cpu-idregs.h.inc and
+>> for each writable named field, generates a uint64 property.
+>>
+>> REVIDR_EL1 and AIDR_EL1 are writable but they do not expose any
+>> field. They will be handled separately.
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> [...]
+>
+>> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+>> index 4f9b0a559d..1a78893f87 100644
+>> --- a/target/arm/kvm.c
+>> +++ b/target/arm/kvm.c
+> [...]
+>
+>> +static void set_sysreg_prop(Object *obj, Visitor *v,
+>> +                            const char *name, void *opaque,
+>> +                            Error **errp)
+>> +{
+>> +    ARM64SysRegField *field = (ARM64SysRegField *)opaque;
+>> +    ARMCPU *cpu = ARM_CPU(obj);
+>> +    uint64_t *idregs = cpu->isar.idregs;
+>> +    uint64_t old, value, mask;
+>> +    int lower = field->shift;
+>> +    int length = field->length;
+>> +    int index = field->index;
+>> +
+>> +    if (!visit_type_uint64(v, name, &value, errp)) {
+>> +        return;
+>> +    }
+>> +
+>> +    if (length < 64 && value > ((1 << length) - 1)) {
+>> +        error_setg(errp,
+>> +                   "idreg %s set value (0x%lx) exceeds length of field (%d)!",
+>> +                   name, value, length);
+>> +        return;
+>> +    }
+>> +
+>> +    if (field->arch_vals) {
+>> +        /* this field has some enum values */
+>> +        for (int i = 0; i < field->arch_vals_count; i++) {
+>> +            if (value == field->arch_vals[i].value) {
+>> +                goto valid;
+>> +            }
+>> +        }
+>> +        error_setg(errp,
+>> +                   "idreg %s set value (0x%lx) does not match any "
+>> +                   "arch valid enum value!", name, value);
+> Scratch the !
+>
+> From error_setg()'s contract:
+>
+>  * The resulting message should be a single phrase, with no newline or
+>  * trailing punctuation.
 
-With no response, __ps2_command() in libps2 returns -EIO. With this 
-patch, two 0xfe responses instead make it return -EPROTO. The two cases 
-therefore do not return the same error.
+done. Thank you for the reminder!
 
-> 
-> The specification's second stage -- 0xFC (Error) when the byte after a
-> rejected one is invalid as well -- is deliberately left out. It would
-> need state that has to survive migration, no guest is known to test for
-> it, and the keyboard path has answered unknown commands with a bare
-> resend for twenty years.
-
-Commit 06b3611fc2a3 ("ps2: reject unknown commands, instead of
-blindly accepting them") changed unknown keyboard commands from ACK
-to Resend in 2016, so this behavior is ten years old, not twenty.
-
-> 
-> Signed-off-by: Christian Quante <christian@quante.one>
-> ---
->   hw/input/ps2.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
-> 
-> diff --git a/hw/input/ps2.c b/hw/input/ps2.c
-> index 5516eb262d..1e8c6d983a 100644
-> --- a/hw/input/ps2.c
-> +++ b/hw/input/ps2.c
-> @@ -73,6 +73,7 @@
->   #define AUX_SET_DEFAULT     0xF6
->   #define AUX_RESET           0xFF    /* Reset aux device */
->   #define AUX_ACK             0xFA    /* Command byte ACK. */
-> +#define AUX_RESEND          0xFE    /* Command NACK, send the cmd again */
->   
->   #define MOUSE_STATUS_REMOTE     0x40
->   #define MOUSE_STATUS_ENABLED    0x20
-> @@ -955,6 +956,13 @@ void ps2_write_mouse(PS2MouseState *s, int val)
->                   s->mouse_type);
->               break;
->           default:
-> +            /*
-> +             * A PS/2 device answers every command it is given; an unknown
-> +             * one draws a resend. Staying silent leaves the guest waiting
-> +             * out its reply timeout. The keyboard path above answers
-> +             * unknown commands with KBD_REPLY_RESEND.
-> +             */
-
-Mentioning the mismatch with the keyboard path in the patch message 
-makes sense, but keeping it in the inline comment is somewhat extraneous 
-since consistent behavior across both paths is an obvious expectation. I 
-suggest dropping the final sentence.
-
-Additionally, it would be better to ensure the inline rationale is 
-documented consistently across both the mouse and keyboard paths.
-
-Otherwise, the patch looks solid to me.
-
-Regards,
-Akihiko Odaki
-> +            ps2_queue(ps2, AUX_RESEND);
->               break;
->           }
->           break;
+Eric
+>
+>> +        return;
+>> +    }
+>> +
+>> +valid:
+>> +
+>> +    mask = MAKE_64BIT_MASK(lower, length);
+>> +    value = value << lower;
+>> +    old = idregs[index];
+>> +    idregs[index] = old & ~mask;
+>> +    idregs[index] |= value;
+>> +    trace_set_sysreg_prop(name, old, mask, value, idregs[index]);
+>> +}
+> [...]
+>
 
 
