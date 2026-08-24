@@ -4,111 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AE34C5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 17:36:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 702F7C5DF9D
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 17:44:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyYZg-0001Eb-Km; Mon, 24 Aug 2026 13:35:08 -0400
+	id 1wyYhN-0003BI-9v; Mon, 24 Aug 2026 13:43:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wyYZe-0001CA-C9; Mon, 24 Aug 2026 13:35:06 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1wyYhL-0003Ap-R1; Mon, 24 Aug 2026 13:43:04 -0400
+Received: from zm-mta-out-3.u-ga.fr ([152.77.200.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wyYZc-0006iQ-Cp; Mon, 24 Aug 2026 13:35:06 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67OG1aEP500883; Mon, 24 Aug 2026 17:35:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=aF/IQN
- /A8gy0rrieVy3fPOITSXLweYQF15B/wnnysxI=; b=QqXofjnf2hqahMCUNgni7x
- iphHVtu0j5+g+muzqOftCbJLk1Iwhw5Mn7g4/AHtPXHU8t03UrV5grJYjc7pTl81
- o0jdDbr0Pn7ezgIwWO0qttFCK3px8QImGo3CeOtypgIqQJC7keLUTv+v+HQXlSvm
- P7M5/aXd7eJgLXJVt7vMgotCZMa2EGYYO0EX0/TqlG1dqqHysrVXJlZpiLeJrMFA
- 86eu904jrAOv1itvBJ7GydGTxN2hx6pdRyysNlXvgU6AfG9UEs9QmOcLPLuSneiI
- X479z200fvwuneiftjko4fk5NNr5pLNpRBG7JorPtJ21qtCSvWjD1T2l1EqEwgFg
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eqk1rw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 17:35:01 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OHQJti027439;
- Mon, 24 Aug 2026 17:35:00 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rag7amk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 17:35:00 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67OHYxpV39387636
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 17:34:59 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7F0EA58056;
- Mon, 24 Aug 2026 17:34:59 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D910E5805E;
- Mon, 24 Aug 2026 17:34:58 +0000 (GMT)
-Received: from [9.61.26.206] (unknown [9.61.26.206])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Aug 2026 17:34:58 +0000 (GMT)
-Message-ID: <6ee092fa-ac88-415c-820b-e1fb99e2d0d2@linux.ibm.com>
-Date: Mon, 24 Aug 2026 13:34:58 -0400
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1wyYhJ-0000Z6-Jl; Mon, 24 Aug 2026 13:43:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=univ-grenoble-alpes.fr; s=2020; t=1787593376;
+ bh=HjDQ6eJ+7RdVUGTg+kk0qj0ipShSqilDz1VxZisT4hw=;
+ h=From:To:Cc:Subject:Date:From;
+ b=CeU5PzVi8zp+LNO/lNV3813fj8DKKuFR3OnfwgRtIG8DL189orO0IJBuTMFraI5eD
+ +bYfj2vxgJJlL7EKSzlyqZiYLW8w7LPpkeHneEpIM0bRAyOqik4VWfdbjnae4SQyE6
+ p48m31/i7A1swnSxK0iHueSfDMMFl5UBRi+uw3P/G4cij3/p7TFGy8mrZPra8+j1lj
+ exUjNPxv7QVYe7yagzHdv7IfSxNnvVj/yAm5P9GE5UCTY9f0N8VV0WX1lAqnqfg6v4
+ A8Ui6fIUQZ+FFr2IJRT9CydFk0gNBg7oyfzv868vcxvRQil8EZ56O/dgiXogGltFNO
+ YB3PwRyqWrbdA==
+Received: from mailhub-2.u-ga.fr (mailhub-2.u-ga.fr [129.88.178.102])
+ by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id D4DFD40230;
+ Mon, 24 Aug 2026 19:42:56 +0200 (CEST)
+Received: from smtps.univ-grenoble-alpes.fr (smtps2.u-ga.fr [152.77.18.2])
+ by mailhub-2.u-ga.fr (Postfix) with ESMTP id D0DDAFF859;
+ Mon, 24 Aug 2026 19:42:56 +0200 (CEST)
+Received: from naga.. (pers-165-50.vpn.u-ga.fr [147.171.165.50])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: petrotf@univ-grenoble-alpes.fr)
+ by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 4BC3F14004C;
+ Mon, 24 Aug 2026 19:42:55 +0200 (CEST)
+From: frederic.petrot@univ-grenoble-alpes.fr
+To: daniel.barboza@oss.qualcomm.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
+ <frederic.petrot@univ-grenoble-alpes.fr>
+Subject: [PATCH v2] tests/tcg/riscv64: Add tests for rv128 [ms]status
+Date: Mon, 24 Aug 2026 19:42:46 +0200
+Message-ID: <20260824174246.202150-1-frederic.petrot@univ-grenoble-alpes.fr>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] pc-bios/s390-ccw: Check if a PCI function is
- already enabled before trying to enable it
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- cohuck@redhat.com, mjrosato@linux.ibm.com
-Cc: farman@linux.ibm.com
-References: <20260811144629.866641-1-jrossi@linux.ibm.com>
- <20260811144629.866641-2-jrossi@linux.ibm.com>
-Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <20260811144629.866641-2-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 10GNmR8NO6v0iz-WZLbUhX_nnix2SzKR
-X-Proofpoint-ORIG-GUID: 10GNmR8NO6v0iz-WZLbUhX_nnix2SzKR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDE0OCBTYWx0ZWRfX+DY853YMVr0n
- yphELtwU5K4HmpDG5h554AIdTGmaQItNlYFCtDmvLukYp/P28oxkNmDa1KQi4+MwnvaQEEnGm4u
- ZMdbFU1B+tqP26ov/F+mjqv7AjPGOHqcOafZ01LG8bgY38UwKRzpuk+R4Xo6id9+d+HHZpDdqM3
- 2TKZN/+IoUKKtgcFz+WJIowuoz1mP4jEvFbc5NPfA/GKRk5xvpUTlwVoxVq+8ImdgIhroeSQV5p
- G6oIdKAoIFo/NUsOqHQBhOvKWQ63JZ1FyHBdM0S0tOJoR4nLf6hR2FEMulgizKNh8jWs8sfkupw
- Fkt+7CLVR7kehesCPNiqBv9DfQ44xdO8SX1xaaFP3V7RJVoYFb7xrL9lxY/kGbOcopDBcFdyO27
- 8pceGDSXFqzsNwtH6tJs00SqsYSaREzwSXCTEFgzPHkp+VtnNDysAZwYzDztmGVzaiVjLik1flW
- f9cSUYjPoikXJWlTx3Q==
-X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8c80c5 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=rOHUGBc37_MNbdIC:21 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22
- a=VnNF1IyMAAAA:8 a=HYvq9ckTOeKvRyG_iYoA:9 a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDE0OCBTYWx0ZWRfXz99DxxskMCii
- UpZGrWitGKlwtHvomFMAp/9pn4ho1WfkN4uzR0AgLg0Wz3SqExGCEi0DA0suE7B32szviTwFjwR
- JnShB/4XWXhXfTlIGdZTrdjJ/agry5Q=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-24_05,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
- spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240148
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-Greylist: Whitelist-UGA SMTP Authentifie (petrotf@univ-grenoble-alpes.fr)
+ via submission-587 ACL (41)
+Received-SPF: pass client-ip=152.77.200.56;
+ envelope-from=frederic.petrot@univ-grenoble-alpes.fr;
+ helo=zm-mta-out-3.u-ga.fr
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,50 +84,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Zhuoying Cai <zycai@linux.ibm.com>
+From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 
-On 8/11/26 10:46 AM, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
-> 
-> Enabling a PCI function that is already configured will result in an error.
-> Simply check if the device has already been enabled, and if so, return
-> without doing anything further; otherwise, enable it as usual.
-> 
-> Also, because enable_pci_function() prints its own message, let's remove
-> the duplicate message emitted during the virtio PCI setup steps.
-> 
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->  pc-bios/s390-ccw/clp.c        | 4 ++++
->  pc-bios/s390-ccw/virtio-pci.c | 1 -
->  2 files changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/pc-bios/s390-ccw/clp.c b/pc-bios/s390-ccw/clp.c
-> index ca9565d8de..7917f13345 100644
-> --- a/pc-bios/s390-ccw/clp.c
-> +++ b/pc-bios/s390-ccw/clp.c
-> @@ -82,6 +82,10 @@ int enable_pci_function(uint32_t *fhandle)
->  {
->      ClpReqRspSetPci rrb;
->  
-> +    if (*fhandle & CLP_FHLIST_MASK_CONFIG) {
-> +        return 0;   /* already enabled */
-> +    }
-> +
->      rrb.request.hdr.len = sizeof(ClpReqSetPci);
->      rrb.request.hdr.cmd = 0x05;
->      rrb.request.fh = *fhandle;
-> diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
-> index f501252c81..231ab6e04d 100644
-> --- a/pc-bios/s390-ccw/virtio-pci.c
-> +++ b/pc-bios/s390-ccw/virtio-pci.c
-> @@ -452,7 +452,6 @@ int virtio_pci_setup_device(void)
->      VDev *vdev = virtio_get_device();
->  
->      if (enable_pci_function(&vdev->pci_fh)) {
-> -        puts("Failed to enable PCI function");
->          return -ENODEV;
->      }
->  
+Adding asm tests to check that mstatus and sstatus are updated as
+expected in an rv128 cpu.
+
+Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+---
+ tests/tcg/riscv64/Makefile.softmmu-target |   9 ++
+ tests/tcg/riscv64/test-rv128-mstatus.S    |  67 ++++++++++++++
+ tests/tcg/riscv64/test-rv128-sstatus.S    | 108 ++++++++++++++++++++++
+ 3 files changed, 184 insertions(+)
+ create mode 100644 tests/tcg/riscv64/test-rv128-mstatus.S
+ create mode 100644 tests/tcg/riscv64/test-rv128-sstatus.S
+
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index 6a219c306c..575571de90 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -71,5 +71,14 @@ EXTRA_RUNS += run-test-misa-w
+ run-test-misa-w: test-misa-w
+ 	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)x-misa-w=true$(comma)c=true$(comma)v=true $(QEMU_OPTS)$<)
+ 
++# Test for rv128
++EXTRA_RUNS += run-test-rv128-mstatus
++run-test-rv128-mstatus: test-rv128-mstatus
++	$(call run-test, $<, $(QEMU) -cpu x-rv128 $(QEMU_OPTS)$<)
++
++EXTRA_RUNS += run-test-rv128-sstatus
++run-test-rv128-sstatus: test-rv128-sstatus
++	$(call run-test, $<, $(QEMU) -cpu x-rv128 $(QEMU_OPTS)$<)
++
+ # We don't currently support the multiarch system tests
+ undefine MULTIARCH_TESTS
+diff --git a/tests/tcg/riscv64/test-rv128-mstatus.S b/tests/tcg/riscv64/test-rv128-mstatus.S
+new file mode 100644
+index 0000000000..323f65ef90
+--- /dev/null
++++ b/tests/tcg/riscv64/test-rv128-mstatus.S
+@@ -0,0 +1,67 @@
++/*
++ * Test rv128 mstatus update and access
++ * Author: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#define srli(rd, rs1, imm)                .insn i  0b0010011, 0b101, rd, rs1, imm & 0b1111111
++
++    .option norvc
++
++    .text
++    .globl _start
++_start:
++    csrr    s0, misa
++    srli    (s1, s0, 126)
++    li      s0, 3
++    bne     s1, s0, fail
++
++    # Check UXL and SXL are set to RV128 too
++    csrr    s0, mstatus
++    srli    (s1, s0, 32)
++    andi    s1, s1, 0xf
++    li      s0, 0xf
++    bne     s1, s0, fail
++
++    # Mark FPU dirty to check for SD
++    .equiv  MSTATUS_FS, 0x00006000
++    li      s0, MSTATUS_FS
++    csrs    mstatus, s0
++    # Do some useless computation
++    fmadd.s f3, f2, f1, f0
++    fmax.s  f0, f1, f2
++    # Check SD has changed where expected
++    csrr    s0, mstatus
++    srli    (s1, s0, 127)
++    li      s0, 1
++    bne     s1, s0, fail
++    # Mark FPU clean (2 in FS place)
++    li      s0, ~0x00004000
++    csrc    mstatus, s0
++    csrr    s0, mstatus
++    srli    (s1, s0, 13)
++    andi    s1, s1, 3
++    li      s0, 2
++    bne     s1, s0, fail
++    li      a0, 0
++    j       _exit
++fail:
++    li      a0, 1
++_exit:
++    lla     a1, semiargs
++    li      t0, 0x20026 # ADP_Stopped_ApplicationExit
++    sd      t0, 0(a1)
++    sd      a0, 8(a1)
++    li      a0, 0x20    # TARGET_SYS_EXIT_EXTENDED
++
++    # Semihosting call sequence
++    .balign 16
++    slli   zero, zero, 0x1f
++    ebreak
++    srai   zero, zero, 0x7
++    j      .
++
++    .data
++    .balign 16
++semiargs:
++    .space  16
+diff --git a/tests/tcg/riscv64/test-rv128-sstatus.S b/tests/tcg/riscv64/test-rv128-sstatus.S
+new file mode 100644
+index 0000000000..af118e355a
+--- /dev/null
++++ b/tests/tcg/riscv64/test-rv128-sstatus.S
+@@ -0,0 +1,108 @@
++/*
++ * Test rv128 sstatus update and access
++ * Author: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#define srli(rd, rs1, imm)                .insn i  0b0010011, 0b101, rd, rs1, imm & 0b1111111
++
++    .option norvc
++
++    .text
++    .globl _start
++_start:
++    // Check RV128 is running
++    csrr     s0, misa
++    srli     (s1, s0, 126)
++    li       s0, 3
++    bne      s1, s0, fail
++
++    // Minimal pmp settings
++#define PMP_NAPOT 0x18
++#define PMP_R     0x01
++#define PMP_W     0x02
++#define PMP_X     0x04
++
++    li       s0, -1
++    csrw     pmpaddr0, s0
++    li       s0, PMP_NAPOT | PMP_R | PMP_W | PMP_X
++    csrw     pmpcfg0, s0
++
++    la       s0, backm
++    csrw     mtvec, s0
++
++    // Set MPP to supervisor
++    csrr     s0, mstatus
++    li       s1, ~0x1800 // mask
++    and      s1, s1, s0
++    li       s0, 0x0800  // supervisor
++    or       s1, s1, s0
++    csrw     mstatus, s1
++    // Change to supervisor mode
++    la       s0, 1f
++    csrw     mepc, s0
++    mret
++1:
++    // Check UXL is set to RV128
++    csrr     s0, sstatus
++    srli     (s1, s0, 32)
++    andi     s1, s1, 0x3
++    li       s0, 3
++    bne      s1, s0, fail
++    // Check SPP if is set to 1, since we
++    // come from machine mode
++    srli     (s1, s0, 8)
++    andi     s1, s1, 0x1
++    // Actually this check fails, so test 0
++    li       s0, 0
++    bne      s1, s0, fail
++
++    // Mark FPU dirty to check for SD
++    .equiv   MSTATUS_FS, 0x00006000
++    li       s0,  MSTATUS_FS
++    csrs     sstatus, s0
++    // Do some fun useless computation
++    fmadd.s  f3, f2, f1, f0
++    fmax.s   f0, f1, f2
++    // Check SD has changed where expected
++    csrr     s0, sstatus
++    srli     (s1, s0, 127)
++    li       s0, 1
++    bne      s1, s0, fail
++    // Mark FPU clean (2 in FS place)
++    li       s0, ~0x00004000
++    csrc     sstatus, s0
++    csrr     s0, sstatus
++    srli     (s1, s0, 127)
++    li       s0, 0
++    bne      s1, s0, fail
++
++    // Let's go back to machine mode to exit
++    ecall
++
++    // mtvec bit 1:0 indicate mode, 00 is Direct, what
++    // we want in this simple test
++    .align 4
++backm:
++    li      a0, 0
++    j       _exit
++fail:
++    li      a0, 1
++_exit:
++    lla     a1, semiargs
++    li      t0, 0x20026 # ADP_Stopped_ApplicationExit
++    sd      t0, 0(a1)
++    sd      a0, 8(a1)
++    li      a0, 0x20    # TARGET_SYS_EXIT_EXTENDED
++
++    # Semihosting call sequence
++    .balign 16
++    slli   zero, zero, 0x1f
++    ebreak
++    srai   zero, zero, 0x7
++    j      .
++
++    .data
++    .balign 16
++semiargs:
++    .space  16
+-- 
+2.43.0
 
 
