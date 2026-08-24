@@ -4,110 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B49DC5DF97
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 01:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EDAFC5DF97
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 01:56:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyJMX-0001PL-4E; Sun, 23 Aug 2026 21:20:33 -0400
+	id 1wyJuN-0002ss-0o; Sun, 23 Aug 2026 21:55:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wyJMQ-0001IW-Bn; Sun, 23 Aug 2026 21:20:27 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wyJuL-0002sj-Us
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 21:55:29 -0400
+Received: from mail-eastus2azon11020139.outbound.protection.outlook.com
+ ([52.101.56.139] helo=BN1PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wyJMM-0003WF-EV; Sun, 23 Aug 2026 21:20:25 -0400
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67NNoaSp184913; Mon, 24 Aug 2026 01:19:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=R5A5r
- X8ZNolp5d6iXru1bTvNH5HsxNPxzQWKsW5ngQk=; b=gexwkAxCTCU2CTSujcgAK
- 3b40guQVoS/q1ESM3aJSUtXJBCg0qBsResRkB2M8et1OZhAYd5AfOADKiZFK/9yW
- zVTXzoIVmND4T2DxKG9/n6yY3sd6MDElh4006CGkkrG8EClIyT5DdXKmC0RZK6tW
- izvuAndZ5I01MA1cV2Bo3edh3sCIW2taWutahqRAej+Ae7l07omLFWsyPqtb7xFX
- MNFS3Dj147awOAezMukwigAmo90TekjjY+Xb7tOEs/85+dkNd4kALHnZINMyfr2R
- wpC8fIDrSxc5/sEeNjMUPitQmxWEu0ofbLNa3VSH1NudrD7PTAoDilxeG9w32iEP
- Q==
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4g73n79bq9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 01:19:53 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 67O1FUFU013327; Mon, 24 Aug 2026 01:19:52 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4g84kh6xjv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 01:19:51 +0000 (GMT)
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 67O1JmVr024683;
- Mon, 24 Aug 2026 01:19:51 GMT
-Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 4g84kh6xgy-2; Mon, 24 Aug 2026 01:19:51 +0000 (GMT)
-From: Dongli Zhang <dongli.zhang@oracle.com>
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- xen-devel@lists.xenproject.org
-Cc: dave@treblig.org, mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
- philmd@mailo.com, aurelien@aurel32.net, mjrosato@linux.ibm.com,
- alifm@linux.ibm.com, farman@linux.ibm.com,
- richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, cohuck@redhat.com,
- alex@shazbot.org, clg@redhat.com, akrowiak@linux.ibm.com,
- jjherne@linux.ibm.com, sstabellini@kernel.org, anthony@xenproject.org,
- edgar.iglesias@gmail.com, pbonzini@redhat.com, berrange@redhat.com,
- eblake@redhat.com, armbru@redhat.com, joe.jin@oracle.com
-Subject: [PATCH 1/8] qdev: Add force argument to qdev_unplug
-Date: Sun, 23 Aug 2026 18:13:31 -0700
-Message-ID: <20260824011420.752806-2-dongli.zhang@oracle.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20260824011420.752806-1-dongli.zhang@oracle.com>
-References: <20260824011420.752806-1-dongli.zhang@oracle.com>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wyJuK-0005Jp-5M
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 21:55:29 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=POGGtps1sG8s6SsvdcGw7oSZQWrYn267qsMy3RTRfldya3x3S9ZG9EUmKH/spZo7PW5OtG03mLxQx0DlQ0WzCZWTg9pvAInHPuf3tD/t+X6a55+MhYYS749HqtOuP2tCdpwkemYRzRQUhf3iO0VPbWFBz4KxZ0sspcVeCW9TolGcsjMBgaoN7qPbQCKWUVP5HrEZquUGYq9px8kBrnmnXD+5mkdgLrT7V4BkbkEHxz1DjtdNU9j7GKG2V26UyfnAKvTcG2eaFjroD8c0SGW8tzMFVJDoteWfDYYfyjY93lZir0UIBlC4wOjOS0j2Q7F1EzCmbgW6z01kbTq72LIacw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OiELZ9DHRGl3Zq4meI9LtziV9sSgM3qxtis109r5/Lw=;
+ b=pVZwiEgUX5xVBYRo22CUTfeay+qMQgs4nC5Knp+V0dkBKJczSpM8lpha/yzq+baFtYtabDV4RtGaPS+rD+TCbWlss5shFsAOCGtMWpBrJWF+h3lQ9cou5epzt9vXhXpco2j3E3ZRyW2WfNFYzs5iYh/XeJH8f4T/kOk/zAp0IZeK7YA9pbroHxuq3oCwiHuSf65CwbkCcBS2IY2OGNW+CfQarI+P2+R800Hbc4cM3BAEZf3amfcuwj4h2lv0Tacf3A9dyPQUvyVARdu38hvqBcSVAIyqfLydjwZ2t/rJQb1jCRdGeBDtW18l7wxzLaCYlVH9+A2c+dXywMAOnxQ0Ew==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=axiado.com; dmarc=pass action=none header.from=axiado.com;
+ dkim=pass header.d=axiado.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OiELZ9DHRGl3Zq4meI9LtziV9sSgM3qxtis109r5/Lw=;
+ b=pt6Hnp+54OqZToXpp/ARo8/8KMqtrU8IlFVWkebO13OWCcNDpuQ2Gvfrg/iYvil3rUV85hEW1QnCCG8UPMY1ee8oYXBsnrtOmUBlwv4NhVPFa/mSIp8kqdXxfshNYrWV4RJBEZ5QJdlijYSQzk+RZeyWcyz8nplFPgw6xBdHlD4tdEIOBsq+Xoq3zMF9SzJUid4mz0URxuneSx7BfKYGRVcw+1LFIyhQ1wTnlq5r+oRc0Dmch4fbGkSjYBNF+iPvCHS1sobhS3Y1j452JI8lLNmK7+gqyitTNPCN0b1YbE7msauKA6BYbJC88VS2weWJMqjwii9wKLweprFsH6FwUQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axiado.com;
+Received: from SJ0PR18MB4479.namprd18.prod.outlook.com (2603:10b6:a03:37f::19)
+ by LV3PR18MB6351.namprd18.prod.outlook.com (2603:10b6:408:274::6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Mon, 24 Aug
+ 2026 01:50:12 +0000
+Received: from SJ0PR18MB4479.namprd18.prod.outlook.com
+ ([fe80::eaf4:3aec:73e:d5ba]) by SJ0PR18MB4479.namprd18.prod.outlook.com
+ ([fe80::eaf4:3aec:73e:d5ba%3]) with mapi id 15.21.0339.012; Mon, 24 Aug 2026
+ 01:50:12 +0000
+Message-ID: <64edab19-b14b-4b9b-902b-a72f742faeae@axiado.com>
+Date: Mon, 24 Aug 2026 09:50:09 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 4/5] hw/arm: Add Axiado SoC AX3005
+To: Jack Wang <163wangjack@gmail.com>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org
+References: <20260820102132.361642-5-kchiu@axiado.com>
+ <E7312F05-0DFD-4501-A59E-1DAD8C999785@gmail.com>
+Content-Language: en-US
+From: Kuan-Jui Chiu <kchiu@axiado.com>
+In-Reply-To: <E7312F05-0DFD-4501-A59E-1DAD8C999785@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-24_01,2026-08-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- suspectscore=0 mlxlogscore=999 spamscore=0 adultscore=0 malwarescore=0
- lowpriorityscore=0 mlxscore=0 phishscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.19.0-2606160000 definitions=main-2608240009
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDAwOSBTYWx0ZWRfX0pZHNniCXxvo
- +jYK89Xqx9BAiviF5TDhspqHIW99mm31IX6CyflKwUVl4yjJq97il/iY4iuqP+Z806+R1k78DX/
- RxzPoZv4I7SqKF9v8pJNyZhIlIjIVFRzLIAWKgpf02BgLC+kXyjx9tRGvIVwLyJb0l1ZDyOVi6l
- g2z7npr3VTEALBmvYct58QWhdGTGDJhN8cYem57Em8MJQV5CR+5+ZNCxdAZahWF/ORj0pWtmAup
- dmZtx/b2/QIOIFvM99diCzYM90nMqW1xPNw/aUMN9sCvlo67oovCYRzHYxXwFfFotrARKhgQ7ms
- vE6ReUgiewTyerpp1V5QkaaBTdetvJr1lK2UsvF7Qh4u+6nMZak5n2p7OTZCYuWfJSF5cNsF87j
- xptUB80Gg09hbRA4BHVmANBGETue9A/ma014LFXodMcjHj7fCV1C+xT8VQl2qWU8lm7pdWGvkqH
- zMpM8usZTyeSOAYkE0mTcCEhmKWF+X9vCUL0ZZsw=
-X-Proofpoint-ORIG-GUID: zjVPwpTg9rN1xiA-29n-6Ur4p4ty26Y7
-X-Authority-Analysis: v=2.4 cv=Os9/DS/t c=1 sm=1 tr=0 ts=6a8b9c39 b=1 cx=c_pps
- a=e1sVV491RgrpLwSTMOnk8w==:117
- a=e1sVV491RgrpLwSTMOnk8w==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=EIcjfB9IiI4px24ztqRk:22 a=yPCof4ZbAAAA:8 a=DmdIBfvRwVG_7NqPh9cA:9
- a=O8hF6Hzn-FEA:10 a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf
- awl=host:13521
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDAwOSBTYWx0ZWRfX3/8k42mkVOnG
- 5hfcO/Qymt00VmDX9zzro68WRF+zuLyRDXj2XcOGiqF+VWdd+i0MFvP0zFX7BGXvg3jSzWxnFG8
- CDp5NJP1zNEOhZlN0rwLTfGnn4OPrTlR9V8HciqVOSkAtTMww6yK
-X-Proofpoint-GUID: zjVPwpTg9rN1xiA-29n-6Ur4p4ty26Y7
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-ClientProxiedBy: SE2P216CA0161.KORP216.PROD.OUTLOOK.COM
+ (2603:1096:101:2cb::15) To SJ0PR18MB4479.namprd18.prod.outlook.com
+ (2603:10b6:a03:37f::19)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ0PR18MB4479:EE_|LV3PR18MB6351:EE_
+X-MS-Office365-Filtering-Correlation-Id: a8937920-ccb2-4ca7-7008-08df0182093b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|366016|1800799024|376014|10067099003|56012099006|6133799003|3023799007|22082099003|18002099003|4143699003;
+X-Microsoft-Antispam-Message-Info: LKMzubA7Ps8gQ6Yq8DDFn8r6mIUl5pJZLIkESsd4nbdeEFrpgGLExtTX0o92dTffbXHAjO/Pk/fbvoGZIpPq/kLH3aKJAhVo8JbXkXsfMsYgZDMMn/6YAdyIEGfBm/3R3eSiz2mxahrU0EuYtprlULNiA2Eg2un5YcH/HczpV2U/AnmHUy/HJMIrmYCw7tEKClr0R/ojNSYfxXllE9oJupd0i77ocwVlSP19L6w32vjjB5cyxqQhtDbXQ6B/WagNwbdRcNHhZwIxRdaEFYtyk9MJUQJUyds81D/F8UFeFjlsfw1fXAFXJ2tI4W8dvKz+vkS8Ey+yBAPqYGgjWhnrFMlbsc5IC3YeO6sB2SuxSdTq5VlNNPFsgZQY20ddAFjYB7ytsyfhwSK7BzZk3v99s+LLzK9epCuo/Lrl4aL/+4kxAnM+AS/o1mJ5x2IgxorHa/yYJFNmEjrPj2eP8rvNOfeVf4B59mc4dLmD6QlW3qhBsPUurwj20kREMcomHhA4qdjtGjOwDD5wbqAHWN/pMV6UBBAL5Sp6DDaCTh8wo7gPpjZihhxIv4rDS2kkeMPr155ytcB/JdaVFI7ge3qCf1XWBM7p0yKN1+Escrz5ieraWbFoTWKfUTS/eUivYZBT3SuevccOnO0gN+XQ4baOFNlXa1mUrqNfx93C30ZKnso=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR18MB4479.namprd18.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(10067099003)(56012099006)(6133799003)(3023799007)(22082099003)(18002099003)(4143699003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NjZJVmJEMk5YbFVTSk4vWXVOaS81OUFzTlZubFQ3b1dudEJ1NFF1bXNwMG9o?=
+ =?utf-8?B?ZWFrMTRzbDlpS1ZkUTd2cGVRUUdmWVYwRXJNK2F2U3FoeTJhcWhVK3ZjSVhW?=
+ =?utf-8?B?TlFCODgvaW1CK3ljMW1Jc0RjdzlBdWRVR3g4eUhaVWl4Q1lwU1NZYXFEZ1dY?=
+ =?utf-8?B?dVlLa2dsUThJUW5QZ2N1a2FtRFM0dUZHRGJlR3luWHdaYWcrVnVkaExOTEli?=
+ =?utf-8?B?TmFuYkR1Z3UxaDN2TURPZ0dqRTlLSFlEaXNUMTJISlpsRlVjT2ZITHNib0xF?=
+ =?utf-8?B?ZjhlQUgzYmxsa2xtRGNEZlJXWDc1WGZrYlhCSUdlVlBpZjRPR1hHYUlsV0Zx?=
+ =?utf-8?B?Vlg1emkxMENXb3U4OStnSFd4OWk2aUVoekQrajlHM1dqRkJoL0VhQ3hHR094?=
+ =?utf-8?B?emp5WmFpYXJsdFZZZmQ1dVZ5S1JGRklsSWttYkZtNGlQK0xnY2RmclFmR3FO?=
+ =?utf-8?B?VWx5eXdMd1VadmJTVDBMZ3hRVEZ6TDBMWXIvK29ubGt1V290NkJlaUZQR0dU?=
+ =?utf-8?B?R1VWTmxLWjd2ZVRJSDdFbkVrMGV3d3lwcHJzSVhvQ210aVdaVWx0SHdRZ2Ey?=
+ =?utf-8?B?Mjh6R1NsaXZ1M25HU08zVDVkS1QzYVk4bUJ1WEQyTEFwQlhLYlM3WXU2K0F0?=
+ =?utf-8?B?N1FtZFFQYUl4cDAzTlVNOVFIUTVyS0V0WWtYWDdVcGdDUm1vMjhIN0ZVYjc3?=
+ =?utf-8?B?MEQrVkU3OEJNSlFTRWpiNUdTQW4vY1gzT3N1V2tuWnptbUpPU1AwM2U3bkpq?=
+ =?utf-8?B?dWlzMy80N1FveUQvY1lIUGR3NGdldzIwMTdUL2pqTEwvdEJNL2JGN0pBOHVu?=
+ =?utf-8?B?aDlPTVZNdXRLVWFDZWt3dEF6VUc5SlRuVVl1c0NaREhwWFJxaXZyS3VVS0xS?=
+ =?utf-8?B?TVdXWnNETWRJejNsWWI0ZmRYYS9zcTQ3TjU3anpZTEs5aW5sQUhJeGp1bTh4?=
+ =?utf-8?B?VndUQjgrTWZmdlcyWVdORlVGRDVMVjY3WHk0M1BLSEQ1MUkwNndITmxjSUpz?=
+ =?utf-8?B?UTFFWVNhV0x4R2JRdjNGd0lMVjRxcjQrOThpZ0dyWDFHaVRnZkViUWlpaHdu?=
+ =?utf-8?B?RkovdkNQcVBMTk51TWRib1hISkUwMFdCcllKQlhlYS9QUnlZdjU0TCtLWGs0?=
+ =?utf-8?B?aEVDSmxidGdFdEJOWHpSazZySElrNUFXK1hPRlVKWVIxcDAzalNoalQvdmha?=
+ =?utf-8?B?ZlRza2lLTmpBUW00ZDVWWTJMczEyTWF5dDhZdXZoYWFmUGN6YURrUVdMYUlM?=
+ =?utf-8?B?K1p1Z0RqS3VENjJ0SEtpYUVyc0FjQWwwUU5rTW5IUC9LTGZqWFFwdXpSSFZj?=
+ =?utf-8?B?dGNTcEVtOVZIbXBUVkxlY2ZzLzFKd1BndGh6V3Qxb3h5STlRTTVCUWR1dGxV?=
+ =?utf-8?B?VkdGTW1ZUGo5UUlFN0k4aXc2aGxKWnNhMlN2WVhpS2tLMWd1M1FMWWhOTi9t?=
+ =?utf-8?B?MGRpMzRzZ3hleG4rVllwQkN2czRva28zWnRRY214YUxEWnZZZllHV3hsRmlQ?=
+ =?utf-8?B?R2pYL3I2OVNtK2wwcTVjbkFmNkRPYVVaeFVJNXYxbFZ4aCtMZnMwaE1vS04w?=
+ =?utf-8?B?QmJDMlNTaHVyZUFSbEhrVjNkR3BXRlI4Wk5UVGkrMi9LeTNQeVlMcXJHVkI1?=
+ =?utf-8?B?eDR6Y1FKOHEwdzBWbkRVQ0pRSmhLcHViTVBQdnFPSkJFazlmY2ljdlpkRmpQ?=
+ =?utf-8?B?UDNKcTBvMi9sYUJVakc1ZFB6WDhyckVRemMva2I1OWFWU0NIMlUrSVJnNGhL?=
+ =?utf-8?B?cWNpL1VwQlhTRmpRV3BmeDhGMjFsOWM4RmxCdkxyY2EvRnhYdkxibllrWlIr?=
+ =?utf-8?B?Y3E4NStrR0lsRDN2WjlybWpYL2I1U1JjdFdNbU13TTJmRjN1bWNsQVBia3Q1?=
+ =?utf-8?B?a2xScFJhbUU1NUZZellHOGRKTENDOGpSdWVrelExdzhic3Z1Z2xXLzQ5OWtC?=
+ =?utf-8?B?ZlBMbW5PMWppdFlrQ0NxMWdiUUVvK2JSWEZIV2dLb3VkL01DMHN3RThLa1BK?=
+ =?utf-8?B?bEJKRkFXUTU3WVBuUVVpYnpvUTM4cmFWODJNcU9IcStSZVJ4ZzdCcFJzWTRT?=
+ =?utf-8?B?dmpGdzBGSllmM0lxREJEVVJXRVdPRjBaNDlnVjRYTVpRZGpjQ3ZYNGhJSlNl?=
+ =?utf-8?B?UEJQWkVPaUEwNUxhcXV4TVBDM3NiamJpeHF3d0FMVEhFSHJ3TVdnbUV0cTBp?=
+ =?utf-8?B?bityZW1BaFNaZm1vdk9MQktjdWZiRzVKRGpnUFR0NnE3dm9UVHh1Y0NjOU1V?=
+ =?utf-8?B?MHNhbzRaNXUyODU2cGJSN1BQaUdJMDVub1hYRDlkdmloU0F5SzFXOHpKNW5H?=
+ =?utf-8?B?VWhsTXF6LzNJN2xDSWdYbVJXTDNiOHZQSGJvNFFCOHBQdnE0STViZz09?=
+X-OriginatorOrg: axiado.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a8937920-ccb2-4ca7-7008-08df0182093b
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR18MB4479.namprd18.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Aug 2026 01:50:12.5505 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 52kYAl6vY8LW5/kqDUzP+1uy/OG+lfrYwOAH5XHoTaMiohO6tK5DE0d2YUL+a2gqzwe7t6KD+iErP4NVa4XCQw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR18MB6351
+Received-SPF: pass client-ip=52.101.56.139; envelope-from=kchiu@axiado.com;
+ helo=BN1PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,149 +148,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a force argument to qdev_unplug() and update all existing callers to
-pass false.
+Hi Jack
 
-No functional change.
+Thanks for the test, could you share how you built and what the command 
+was you used to test?
 
-The upcoming patches will add the hotplug controller callback used to
-implement it to force detach a PCI device.
+I did not see this issue on my side, maybe I missed something
 
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
----
- hw/s390x/s390-pci-bus.c     | 4 ++--
- hw/vfio/ap.c                | 2 +-
- hw/vfio/ccw.c               | 2 +-
- hw/vfio/pci.c               | 2 +-
- hw/xen/xen-legacy-backend.c | 2 +-
- hw/xen/xen_pvdev.c          | 2 +-
- include/hw/core/qdev.h      | 2 +-
- system/qdev-monitor.c       | 4 ++--
- 8 files changed, 10 insertions(+), 10 deletions(-)
+B.R.
+Howard
 
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index eff980fdfe..11ff9bcce5 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -1276,7 +1276,7 @@ static void s390_pcihost_unplug_request(HotplugHandler *hotplug_dev,
-         }
- 
-         pbdev->pci_unplug_request_processed = true;
--        qdev_unplug(DEVICE(pbdev), errp);
-+        qdev_unplug(DEVICE(pbdev), false, errp);
-     } else if (object_dynamic_cast(OBJECT(dev), TYPE_S390_PCI_DEVICE)) {
-         pbdev = S390_PCI_DEVICE(dev);
- 
-@@ -1287,7 +1287,7 @@ static void s390_pcihost_unplug_request(HotplugHandler *hotplug_dev,
-          * is not blocked, e.g. because it's a PCI bridge).
-          */
-         if (pbdev->pdev && !pbdev->pci_unplug_request_processed) {
--            qdev_unplug(DEVICE(pbdev->pdev), errp);
-+            qdev_unplug(DEVICE(pbdev->pdev), false, errp);
-             return;
-         }
-         pbdev->pci_unplug_request_processed = false;
-diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-index 6e2a1223ea..8e7c72dc8b 100644
---- a/hw/vfio/ap.c
-+++ b/hw/vfio/ap.c
-@@ -79,7 +79,7 @@ static void vfio_ap_req_notifier_handler(void *opaque)
-         return;
-     }
- 
--    qdev_unplug(DEVICE(vapdev), &err);
-+    qdev_unplug(DEVICE(vapdev), false, &err);
- 
-     if (err) {
-         warn_reportf_err(err, VFIO_MSG_PREFIX, vapdev->vdev.name);
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index c3dc7c1962..c7d48966dc 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -282,7 +282,7 @@ static void vfio_ccw_req_notifier_handler(void *opaque)
-         return;
-     }
- 
--    qdev_unplug(DEVICE(vcdev), &err);
-+    qdev_unplug(DEVICE(vcdev), false, &err);
-     if (err) {
-         warn_reportf_err(err, VFIO_MSG_PREFIX, vcdev->vdev.name);
-     }
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 428ab2f069..aafa841241 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3328,7 +3328,7 @@ static void vfio_req_notifier_handler(void *opaque)
-         return;
-     }
- 
--    qdev_unplug(DEVICE(vdev), &err);
-+    qdev_unplug(DEVICE(vdev), false, &err);
-     if (err) {
-         warn_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-     }
-diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
-index 7977b52712..4aa0339887 100644
---- a/hw/xen/xen-legacy-backend.c
-+++ b/hw/xen/xen-legacy-backend.c
-@@ -186,7 +186,7 @@ static struct XenLegacyDevice *xen_be_get_xendev(const char *type, int dom,
-     xendev->evtchndev = qemu_xen_evtchn_open();
-     if (xendev->evtchndev == NULL) {
-         xen_pv_printf(NULL, 0, "can't open evtchn device\n");
--        qdev_unplug(DEVICE(xendev), NULL);
-+        qdev_unplug(DEVICE(xendev), false, NULL);
-         return NULL;
-     }
-     qemu_set_cloexec(qemu_xen_evtchn_fd(xendev->evtchndev));
-diff --git a/hw/xen/xen_pvdev.c b/hw/xen/xen_pvdev.c
-index e36370e2ee..9518f5b3b5 100644
---- a/hw/xen/xen_pvdev.c
-+++ b/hw/xen/xen_pvdev.c
-@@ -273,7 +273,7 @@ void xen_pv_del_xendev(struct XenLegacyDevice *xendev)
- 
-     QTAILQ_REMOVE(&xendevs, xendev, next);
- 
--    qdev_unplug(DEVICE(xendev), NULL);
-+    qdev_unplug(DEVICE(xendev), false, NULL);
- }
- 
- void xen_pv_insert_xendev(struct XenLegacyDevice *xendev)
-diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index 37f7d33551..c1daa74914 100644
---- a/include/hw/core/qdev.h
-+++ b/include/hw/core/qdev.h
-@@ -527,7 +527,7 @@ bool qdev_hotunplug_allowed(DeviceState *dev, Error **errp);
-  * or NULL if there aren't any.
-  */
- HotplugHandler *qdev_get_hotplug_handler(DeviceState *dev);
--void qdev_unplug(DeviceState *dev, Error **errp);
-+void qdev_unplug(DeviceState *dev, bool force, Error **errp);
- int qdev_sync_config(DeviceState *dev, Error **errp);
- void qdev_simple_device_unplug_cb(HotplugHandler *hotplug_dev,
-                                   DeviceState *dev, Error **errp);
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 00fed791cc..3606a347a0 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -912,7 +912,7 @@ static DeviceState *find_device_state(const char *id, bool use_generic_error,
-     return dev;
- }
- 
--void qdev_unplug(DeviceState *dev, Error **errp)
-+void qdev_unplug(DeviceState *dev, bool force, Error **errp)
- {
-     HotplugHandler *hotplug_ctrl;
-     HotplugHandlerClass *hdc;
-@@ -960,7 +960,7 @@ void qmp_device_del(const char *id, Error **errp)
-             return;
-         }
- 
--        qdev_unplug(dev, errp);
-+        qdev_unplug(dev, false, errp);
-     }
- }
- 
--- 
-2.43.5
-
+Jack Wang 於 2026/8/23 下午 06:33 寫道:
+> CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you recognize the sender and know the content is safe.
+>
+>
+> Hi Kuan-Jui
+>
+> I tested this series with ax3005-evb machine,the initialization did not complete.
+> The process showed it repeatedly executing in 'ax3005_init'
+>> +static const TypeInfo ax3005_soc_types[] = {
+>> +    {
+>> +        .name           = TYPE_AX3005_SOC,
+>> +        .parent         = TYPE_SYS_BUS_DEVICE,
+>> +        .instance_size  = sizeof(Ax3005SoCState),
+>> +        .instance_init  = ax3005_init,
+>> +        .class_init     = ax3005_class_init,
+>> +    }
+>> +};
+> You add instance_size here but forget to add class_size. Then qemu defaultly use SysBusDeviceClass’s class_size cause of father-son relationship.
+>
+>> +typedef struct Ax3005SoCClass {
+>> +    SysBusDeviceClass   parent;
+>> +
+>> +    uint32_t            num_cpus;
+>> +} Ax3005SoCClass;
+> Here your struct apparently extend SysBusDeviceClass field. I think it is the way why previous repeating behavior.After add class_size locally and rebuild the the machine completed initialization and responded to QMP commands successfully.
+>
+> Best regards :)
+> Jack Wang
 
