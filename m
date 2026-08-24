@@ -4,53 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B2F5C5DF9B
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 12:27:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CC11C5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 12:30:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyTm4-00025A-Um; Mon, 24 Aug 2026 08:27:36 -0400
+	id 1wyToJ-0002k5-Pm; Mon, 24 Aug 2026 08:29:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
- id 1wyTm2-00024Y-2p
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 08:27:34 -0400
-Received: from va-2-114.ptr.blmpb.com ([209.127.231.114])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
- id 1wyTly-0007mC-1h
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 08:27:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1787574432; h=from:subject:
- mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
- mime-version:in-reply-to:message-id;
- bh=5e28Y5s6epPrp4ARipdNeMVPNC+1pKrudq/1/HJ+wZA=;
- b=encuA2T7hUOGUis2NkaLkdFFevd/4vsSe4UMPnleAWVp1xu7dvOrIWCS+qWZse0pNHSQed
- NcJId4n4hNJ9u2eB7FrYwR6glbsXn0Hgta1zRM/xictldGGFxndcWY6DZu044sUPI3zzx2
- cNR4j8hasxgVdAltJAnz3SwzlHtSDmQBYvh89HqZ5S+5nnKkNQbdDwtTSFQrDAL6qX1uK0
- ccYWwzYjLUAQyPR4ODsZBMdzC50gVB77nXBCy2yuZpKEWctkaNC+Tca5r434Bz2MMQe0Tq
- QGrrUddf06JFyCKHOaAmBmuJkpGLo1q7WJOcxx4RBXADSoWISs5rVbG/ZftiSw==
-To: <qemu-devel@nongnu.org>
-Cc: <peterx@redhat.com>, <farosas@suse.de>, <caixiangfeng@bytedance.com>, 
- <yanfei.xu@bytedance.com>, "hongmianquan" <hongmianquan@bytedance.com>
-From: "hongmianquan" <hongmianquan@bytedance.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.50.1
-Content-Transfer-Encoding: 7bit
-X-Original-From: hongmianquan <hongmianquan@bytedance.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wyToF-0002jg-6f
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 08:29:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wyToD-00085q-2X
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 08:29:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787574587;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=3VS2pApWnBkJEsMscWMtxcLwcpoqnmQb83+v0SFbax4=;
+ b=i9fIM4XcZQqoDCLQF7aExJ8qAkY9hy94SZLkIMpz54M4rUiY2YmNaQ11vxXPri4y8QgByY
+ h+UvSULfkWnIC4rfy7SNtWRC+jcj5P8IobwZXm/GRKw7oi+ie0ZdyLeUFhF73XDMXw/27G
+ XP+6vf44PHWJozrNODc409HM8imJKn8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-ksab-2LVNs2c0czJsmj7zQ-1; Mon,
+ 24 Aug 2026 08:29:45 -0400
+X-MC-Unique: ksab-2LVNs2c0czJsmj7zQ-1
+X-Mimecast-MFC-AGG-ID: ksab-2LVNs2c0czJsmj7zQ_1787574585
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F042A1830768; Mon, 24 Aug 2026 12:29:44 +0000 (UTC)
+Received: from berrange.fritz.box (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9A4C018001CF; Mon, 24 Aug 2026 12:29:43 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] system: improve -mon deprecation warning
+Date: Mon, 24 Aug 2026 13:29:42 +0100
+Message-ID: <20260824122942.85863-1-berrange@redhat.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 24 Aug 2026 20:26:56 +0800
-Message-Id: <20260824122655.63646-2-hongmianquan@bytedance.com>
-X-Lms-Return-Path: <lba+26a8c389e+1cf892+nongnu.org+hongmianquan@bytedance.com>
-Subject: [RFC v1] migration/postcopy: fix page_requested leak for vhost-user
- shared pages
-Received-SPF: pass client-ip=209.127.231.114;
- envelope-from=hongmianquan@bytedance.com; helo=va-2-114.ptr.blmpb.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,74 +84,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With postcopy-preempt enabled, a postcopy migration of a guest with a
-vhost-user device can hang at the very end on the destination, after all
-pages are transferred (query-migrate: status=postcopy-active, remaining=0).
+Expand the text a bit to make the new syntax more explicit and point
+users to the man page for further info.
 
-Root cause is an add/del key mismatch on mis->page_requested:
-
-- add: a backend fault goes through postcopy_request_shared_page() ->
-  postcopy_request_page() -> migrate_send_rp_req_pages(), which inserts
-  the request and bumps page_requested_count keyed by client_addr.
-- del: qemu_ufd_copy_ioctl() removes the entry and drops the counter
-  keyed by this QEMU process's host address for the page.
-
-client_addr is a VA in the external vhost-user backend's address space and
-never equals QEMU's host address, so the removal misses and the counter
-leaks. postcopy_ram_incoming_cleanup() then waits for it to reach zero
-forever, which also stalls the source (it waits for the return path).
-
-Racing threads:
-  dst: postcopy_ram_listen_thread -> postcopy_ram_incoming_cleanup ->
-       qemu_cond_wait_impl              (waits for page_requested_count==0)
-       (postcopy_preempt_thread already placed/woke the pages)
-  src: migration_thread -> migration_completion ->
-       await_return_path_close_on_source -> qemu_thread_join
-       (source_return_path_thread blocked in recvmsg)
-
-The leak is only triggered when the vhost-user backend faults on a page
-that has not been received yet: only then does the request take the
-shared-fault slow path and register an entry in page_requested. If that
-page is subsequently delivered while the request is still outstanding,
-its entry is never removed. (Pages already present when the backend
-faults just take the wake path and never register.) So a run may leak
-only a few entries (9 of ~244k requests in our repro) yet still hang.
-
-Fix: key the request with the same host address the removal uses
-(rb->host + aligned_rbo) instead of client_addr. The backend wake still
-happens at placement time via postcopy_wake_shared().
-
-Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- migration/postcopy-ram.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ system/vl.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index a3314d3180..98268b3c55 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -992,7 +992,20 @@ int postcopy_request_shared_page(struct PostCopyFD *pcfd, RAMBlock *rb,
-         return postcopy_wake_shared(pcfd, client_addr, rb);
-     }
-     /* TODO: support blocktime tracking */
--    postcopy_request_page(mis, rb, aligned_rbo, client_addr, 0);
-+
-+    /*
-+     * The page will be placed by qemu_ufd_copy_ioctl(), which removes the
-+     * matching entry from mis->page_requested (and drops
-+     * page_requested_count) using this QEMU process's host address for the
-+     * page. Register the request with the same key, rb->host + aligned_rbo,
-+     * not client_addr: client_addr is a VA in the external vhost-user
-+     * backend's address space and can never equal that host address, so the
-+     * removal would miss forever, leaking page_requested_count and hanging
-+     * postcopy teardown.
-+     */
-+    postcopy_request_page(mis, rb, aligned_rbo,
-+                          (uint64_t)(uintptr_t)qemu_ram_get_host_addr(rb) +
-+                          aligned_rbo, 0);
-     return 0;
- }
- 
+diff --git a/system/vl.c b/system/vl.c
+index 061cbdf860..d5b5392569 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -3239,8 +3239,11 @@ void qemu_init(int argc, char **argv)
+                 default_monitor = 0;
+                 break;
+             case QEMU_OPTION_mon:
+-                warn_report_once("'-mon' is deprecated, use '-object' with "
+-                                 "'monitor-hmp' or 'monitor-qmp' types instead");
++                warn_report_once("'-mon' is deprecated. Switch to either "
++                                 "'-object monitor-hmp,id=ID,chardev=CHR-ID' "
++                                 "or '-object monitor-qmp,id=qmpNN,chardev=CHR-ID' "
++                                 "instead. See '-object' docs in 'qemu(1)' for further "
++                                 "configuration guidance.");
+                 if (!qemu_opts_parse_noisily(qemu_find_opts("mon"), optarg,
+                                              true)) {
+                     exit(1);
 -- 
-2.50.1 (Apple Git-155)
+2.55.0
+
 
