@@ -4,117 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01075C5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 14:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A7AFC5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 14:45:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyVtn-0002B6-VC; Mon, 24 Aug 2026 10:43:44 -0400
+	id 1wyVvJ-0002qD-FZ; Mon, 24 Aug 2026 10:45:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wyVtm-0002Ac-8r; Mon, 24 Aug 2026 10:43:42 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wyVvH-0002pg-Il
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:45:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wyVtj-0007mM-Bp; Mon, 24 Aug 2026 10:43:40 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67OD1g4h826856; Mon, 24 Aug 2026 14:43:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=wea+D3URXOMjpwCeWiHu1E5QdX+jNshXMsI5ZCcbZyE=; b=ZdS45mZ4bqzU
- GbidEKU8iKZ55LfFhIwnutUGUJVmmGP1fFU4YAZy7AGduZbjeX1EdU2Wg600m2DL
- hOYOJ2z6PGCbre0ry1cYVdWtA7u4l/6xWIR2u0NdubPf0O6Cl73Qj8auEgyq3wcZ
- 89JpjEeIwK5Ts5xezhN1JRQDkZ2tNCgRCnVvYMNuEquzbXgrLOR9OMO2IjO78Wra
- wCX7dHS1orAgamnFhjlCeX8bZOBPrfq/dKhQz3wYVSnoT40wibdDqdiNhG1f39yN
- rC8wDswkOHcxWEQQhQjf3byqweNGZP08b7P1U4rltFWW8CgD2QjYNs/9PtVYoRGh
- IqVe0XuDOQ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726ea2cp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 14:43:36 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OEfMov017394;
- Mon, 24 Aug 2026 14:43:36 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkgxgf3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 14:43:36 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67OEhY5C29884988
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 14:43:34 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 10B6358059;
- Mon, 24 Aug 2026 14:43:34 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 412B15805D;
- Mon, 24 Aug 2026 14:43:33 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Aug 2026 14:43:33 +0000 (GMT)
-Message-ID: <6cd6cb4df044fa2298334aa65afbc0df033ffac7.camel@linux.ibm.com>
-Subject: Re: [PATCH 16/29] target/ppc: Fix TRANS* macro variadic arguments
- handling
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, harshpb@linux.ibm.com
-Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
- tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com,
- aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, sv@linux.ibm.com,
- shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
- nikhilks@linux.ibm.com
-Date: Mon, 24 Aug 2026 09:43:32 -0500
-In-Reply-To: <20260820140114.327023-17-rathc@linux.ibm.com>
-References: <20260820140114.327023-1-rathc@linux.ibm.com>
- <20260820140114.327023-17-rathc@linux.ibm.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8c5899 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=MMZzG85PMr-jjKs7zPEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEyMiBTYWx0ZWRfX6EP2WJQyIql+
- WmhI/py2kMLgIqz89DvtYWVG4jmDvx0ZnQhj7eNgb3CqWAxa7wI+QkvvBL2EL1vKaGYL4qGAeX2
- AxVUV5zcYGMVpjplKeHGhOzU2X2W/MU=
-X-Proofpoint-GUID: FUNWTblyxS2tEhd9AGZK2k18H_fEZY7T
-X-Proofpoint-ORIG-GUID: QSe-GS4batqhWhvZR2pWdLJc3Cxy4H_M
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEyMiBTYWx0ZWRfXwQnHYqS9nRRM
- pvGoHeWEcsnuyBCuq3TofdslBbzu6U2tcf6pl1P1WEpGNjx6zuBF4v6qJg+rbMsWRoJeKI8tiOj
- fSKb+X4WEY5PoSls9W3d3guOTdIl/KDzuDCD4zi2RzNUbmcwfoiVdN3u6Vv4pleFSd4jAUuQPdQ
- CMXJB/LE8a/vtwYXdsr8LQC/ShNp6vsCGC6BT7EVuyIsxVIxiH6etvXaCaFuofOr9/Y8XkqrSQJ
- jd3kIBj82bEHn2/w5vfpB+pIS84dIc0OpRJHSGyR1bbX1btZmBKg858WPl8TIxkWNHG4gQATzUB
- h6hNNS/KgKHFO4tEzsYfcAZaIKciXCeCSrQxSNkbb9eHz0emETB+51mDHMQAt2Y064pLC6mlDkh
- 1Xv+OUF71DzZpV8W9Z0B3ppnChHZhZRNxXCN6j5aZE6It0aI/QBB9eR2EfS7zLf0mR3UrhVNnR1
- JxKGDc/YzC3IZ3ezVwA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-24_04,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240122
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wyVvE-0008Gc-N1
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:45:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787582712;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=EPOW8a1Tm5zdmBXLIQzgCEl2lsjK7trOWqEpSuUEMD8=;
+ b=GaTOasgASI8NB6b2oraNJ7VEkrA5q3JppR9c1+ptSPRmvsx8r+lMXhGmOPy9yjGZQrZ/zG
+ c3XTCsVI0SPKTlj9RrvfFnApJdu1bY2niMoms3nGGrYTEyJJuPzro01TALZlo8QEMQYyPM
+ CSUFzt4VHZCLddj/foamxEAQWtSSw8Y=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-0lVCBpGIPpa5qIn8mlZKmw-1; Mon,
+ 24 Aug 2026 10:45:06 -0400
+X-MC-Unique: 0lVCBpGIPpa5qIn8mlZKmw-1
+X-Mimecast-MFC-AGG-ID: 0lVCBpGIPpa5qIn8mlZKmw_1787582700
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9C75018608D3; Mon, 24 Aug 2026 14:44:59 +0000 (UTC)
+Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.117])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6758230002EF; Mon, 24 Aug 2026 14:44:52 +0000 (UTC)
+Date: Mon, 24 Aug 2026 15:44:49 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Dongli Zhang <dongli.zhang@oracle.com>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ xen-devel@lists.xenproject.org, dave@treblig.org, mst@redhat.com,
+ imammedo@redhat.com, anisinha@redhat.com, philmd@mailo.com,
+ aurelien@aurel32.net, mjrosato@linux.ibm.com, alifm@linux.ibm.com,
+ farman@linux.ibm.com, richard.henderson@linaro.org,
+ iii@linux.ibm.com, david@kernel.org, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, cohuck@redhat.com, alex@shazbot.org,
+ clg@redhat.com, akrowiak@linux.ibm.com, jjherne@linux.ibm.com,
+ sstabellini@kernel.org, anthony@xenproject.org,
+ edgar.iglesias@gmail.com, pbonzini@redhat.com, eblake@redhat.com,
+ armbru@redhat.com, joe.jin@oracle.com
+Subject: Re: [PATCH 0/8] Force detach PCI devices for ACPI-based and PCIe
+ native hot-unplug
+Message-ID: <aoxY4Rxst2qAyn5z@redhat.com>
+References: <20260824011420.752806-1-dongli.zhang@oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260824011420.752806-1-dongli.zhang@oracle.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,82 +92,122 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+On Sun, Aug 23, 2026 at 06:13:30PM -0700, Dongli Zhang wrote:
+> Hot-unplugging a PCI device can require cooperation from the guest. For
+> ACPI PCI hotplug, QEMU notifies the guest through ACPI and the guest
+> eventually writes the ACPI PCI eject register. For PCIe native hotplug,
+> QEMU notifies the guest through the PCIe hotplug mechanism and waits for
+> the slot unplug flow to complete. Only after that completion does QEMU
+> unrealize the device and emit DEVICE_DELETED.
+> 
+> This can leave a device stuck in the unplug pending state when the guest
+> does not cooperate. Examples include:
+> 
+> 1. The guest has panicked, or the relevant ACPI/PCI hotplug driver is
+> unavailable.
+> 
+> 2. The guest is stalled and cannot handle the hot-unplug event. For
+> example, stalling the Linux [irq/9-acpi] kernel thread can reproduce this
+> for ACPI-based hot-unplug.
+> 
+> 3. The device was attached to a slot that the guest cannot use. For
+> example, a pcie-root-port only supports slot 0. If a device is added to a
+> non-zero slot below a pcie-root-port, the guest may never discover the
+> device and therefore may never complete the unplug request.
+> 
+> The non-zero slot case has also been discussed in:
+> 
+> hw/pci: warn when PCIe device is plugged into non-zero slot of downstream port
+> https://gitlab.com/qemu-project/qemu/-/commit/ca92eb5defcf9d1c2106341744a73a03cf26e824
+> 
+> hw/pci: add comment to explain checking for available function 0 in pci hotplug
+> https://gitlab.com/qemu-project/qemu/-/commit/67d045a0ef5b9c5f871c3a1d87325a8a42d2b9d5
+> 
+> pci: don't skip function 0 occupancy verification for devfn auto assign
+> https://gitlab.com/qemu-project/qemu/-/commit/e228d62b4af29bca698ec57efdceb46f392f5444
+> 
+> For example, if root-port.1 is a pcie-root-port, the following command adds
+> a vhost-scsi-pci device to an invalid slot:
+> 
+> (qemu) device_add vhost-scsi-pci,id=scsi01,wwpn=naa.5001405324af0985,bus=root-port.1,addr=01.0
+> warning: PCI: slot 1 is not valid for vhost-scsi-pci, parent device only allows plugging into slot 0.
 
-Thanks,
+This rather looks like it should be a fatal error, not a mere warning.
 
-Glenn
+If I follow the commit ca92eb5def it links to https://bugzilla.redhat.com/show_bug.cgi?id=2128929
+which states that this configuration is going to lead to a crash in
+QEMU on guest OS shutdown. IMHO that crash is sufficient to justify
+making this a fatal error.
 
-On Thu, 2026-08-20 at 19:30 +0530, Chinmay Rath wrote:
-> From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+If we actually wanted this to remain a warning, then that shutdown
+crash would need to be fixed.
+
 > 
-> Use ##__VA_ARGS__ in TRANS* macros to allow variadic arguments to be
-> optional instead of mandatory. "##" removes the preceding comma when
-> __VA_ARGS__ is empty, enabling macros to work with functions that don't
-> need extra parameters.
+> In this situation, the device may be impossible to remove through normal
+> guest-cooperative hot-unplug. Production environments also need a host side
+> recovery option when the guest kernel is the reason that unplug does not
+> complete.
 > 
-> This avoid compilation errors when using a pattern like below:
+> This series adds a force option to QMP device_del and HMP device_del. When
+> requested, QEMU asks the selected hotplug controller to complete the unplug
+> through a new force_unplug callback.
 > 
->   static bool do_wait(DisasContext *ctx, arg_X_wait *a)
->   {...}
+> This series implements forced unplug for ACPI PCI hotplug and PCIe native
+> hotplug, which cover common pc/q35/virt cases. SHPC is not implemented by
+> this series.
 > 
->   TRANS_FLAGS(WAIT, WAIT_ISA_2_X, do_wait)
 > 
-> Compilation Error:
-> ../target/ppc/translate.c:5526:40: error: expected expression before ‘)’ token
->  5526 |         return FUNC(ctx, a, __VA_ARGS__);                      \
->       |                                        ^
-> ../target/ppc/translate/storage-ctrl-impl.c.inc:368:1: note: in expansion of macro ‘TRANS_FLAGS’
->   368 | TRANS_FLAGS(WAIT, WAIT_ISA_2_X, do_wait)
+> Dongli Zhang (8):
+>   qdev: Add force argument to qdev_unplug
+>   qdev: hotplug: Add force_unplug handler callback
+>   qdev: Support forced device_del in QMP and HMP
+>   hw/acpi/pcihp: acpi/pcihp: Add forced slot unplug helper
+>   hw/acpi/piix4: Support forced PCI unplug
+>   hw/acpi/ich9: Support forced PCI unplug
+>   hw/acpi/ged: Support forced PCI unplug
+>   hw/pci/pcie: Support forced PCIe native unplug
 > 
-> Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->  target/ppc/translate.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+>  hmp-commands.hx                 | 11 ++++++-----
+>  hw/acpi/acpi-pci-hotplug-stub.c |  6 ++++++
+>  hw/acpi/generic_event_device.c  | 15 +++++++++++++++
+>  hw/acpi/ich9.c                  | 15 +++++++++++++++
+>  hw/acpi/pcihp.c                 | 17 +++++++++++++++++
+>  hw/acpi/piix4.c                 | 15 +++++++++++++++
+>  hw/core/hotplug.c               | 11 +++++++++++
+>  hw/isa/lpc_ich9.c               |  1 +
+>  hw/pci/pcie.c                   | 20 ++++++++++++++++++++
+>  hw/pci/pcie_port.c              |  1 +
+>  hw/s390x/s390-pci-bus.c         |  4 ++--
+>  hw/vfio/ap.c                    |  2 +-
+>  hw/vfio/ccw.c                   |  2 +-
+>  hw/vfio/pci.c                   |  2 +-
+>  hw/xen/xen-legacy-backend.c     |  2 +-
+>  hw/xen/xen_pvdev.c              |  2 +-
+>  include/hw/acpi/ich9.h          |  2 ++
+>  include/hw/acpi/pcihp.h         |  3 +++
+>  include/hw/core/hotplug.h       | 12 ++++++++++++
+>  include/hw/core/qdev.h          |  2 +-
+>  include/hw/pci/pcie.h           |  2 ++
+>  qapi/qdev.json                  | 11 +++++++++--
+>  system/qdev-monitor.c           | 23 +++++++++++++++++------
+>  23 files changed, 160 insertions(+), 21 deletions(-)
 > 
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index 7100787a25..f7c7f53d82 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -4719,29 +4719,29 @@ static int64_t dw_compose_ea(DisasContext *ctx, int x)
->   */
->  #define TRANS(NAME, FUNC, ...) \
->      static bool trans_##NAME(DisasContext *ctx, arg_##NAME *a) \
-> -    { return FUNC(ctx, a, __VA_ARGS__); }
-> +    { return FUNC(ctx, a, ##__VA_ARGS__); }
->  #define TRANS_FLAGS(FLAGS, NAME, FUNC, ...) \
->      static bool trans_##NAME(DisasContext *ctx, arg_##NAME *a) \
->      {                                                          \
->          REQUIRE_INSNS_FLAGS(ctx, FLAGS);                       \
-> -        return FUNC(ctx, a, __VA_ARGS__);                      \
-> +        return FUNC(ctx, a, ##__VA_ARGS__);                    \
->      }
->  #define TRANS_FLAGS2(FLAGS2, NAME, FUNC, ...) \
->      static bool trans_##NAME(DisasContext *ctx, arg_##NAME *a) \
->      {                                                          \
->          REQUIRE_INSNS_FLAGS2(ctx, FLAGS2);                     \
-> -        return FUNC(ctx, a, __VA_ARGS__);                      \
-> +        return FUNC(ctx, a, ##__VA_ARGS__);                    \
->      }
->  
->  #define TRANS64(NAME, FUNC, ...) \
->      static bool trans_##NAME(DisasContext *ctx, arg_##NAME *a) \
-> -    { REQUIRE_64BIT(ctx); return FUNC(ctx, a, __VA_ARGS__); }
-> +    { REQUIRE_64BIT(ctx); return FUNC(ctx, a, ##__VA_ARGS__); }
->  #define TRANS64_FLAGS2(FLAGS2, NAME, FUNC, ...) \
->      static bool trans_##NAME(DisasContext *ctx, arg_##NAME *a) \
->      {                                                          \
->          REQUIRE_64BIT(ctx);                                    \
->          REQUIRE_INSNS_FLAGS2(ctx, FLAGS2);                     \
-> -        return FUNC(ctx, a, __VA_ARGS__);                      \
-> +        return FUNC(ctx, a, ##__VA_ARGS__);                    \
->      }
->  
->  /* TODO: More TRANS* helpers for extra insn_flags checks. */
+> base-commit: eea8fe61b8be8f3016e522e6af24924a0266ca95
+> 
+> Thank you very much!
+> 
+> Dongli Zhang
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
