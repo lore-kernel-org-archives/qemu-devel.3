@@ -4,108 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B524AC5DF9C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 10:27:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BDCDC5DF9C
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 10:29:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyRt9-0002aY-3K; Mon, 24 Aug 2026 06:26:47 -0400
+	id 1wyRuc-00033s-Jd; Mon, 24 Aug 2026 06:28:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wyRt7-0002aQ-Rd
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 06:26:45 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ id 1wyRua-00033B-QX
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 06:28:17 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wyRt6-0001iQ-Ai
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 06:26:45 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-66d06b5f023so1229454d50.2
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 03:26:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787567202; cv=none;
- d=google.com; s=arc-20260327;
- b=lm6yJzbM9kqjRP1U/0sBC2GG7cSJdltMo4PCjFO38aHI+TKv/IvgwfmvApAlsrtd8q
- QqSS3unV8z4ht3tLRrzjsZPS5KPyJgGwtesW2JI+TpO3Zjme2pKhmAB47Pkhw33XxaQM
- Z5SayY+++7uqm5fNqcVBbES5QaBa6L3GPiPikPXulZVft3dw5TKHlRtGDvahgoQReti/
- 9vLqSM78CSggG3pD9apsbq4DW+F4u1fXvNGbXYFrE1uXX+JuhIg0kJdSw9RlHKGWbleR
- yd3STqvVL0eqAadBBbvlQiYGeWVFjXbP6Jr5CFTRuHF67aeCFu+8gkMnJfyDZ1l1vtLl
- GbGg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=c/v3aBrd8S38Bcnwtdh2wQ0met9M5bH+aTIJmS3sE8I=;
- fh=B6STahklW9K39yksOpcsN4+yLgkd6tQAAsMtrDWs4x8=;
- b=TAzqeNll0saf8dEa+VU6bAk3WLnJBp8kVtq9NJxBJVQ483Zz5mxzTvhQ+mOl7m75Mu
- RwzLx1Ib6XP8xleraOPpsaHmzQqrhArAYuOMDMMiGL/yKCnqh3zMt5py4ctcABtr1WxY
- OwC7iZj2wG2+94vrmoLuW2ndNuPiQXCNxd05Z9LB7JQvNfIKsbMwel6WsobMpuNTVKW6
- ZeXwhPlnfEd7XvQTAjVC191f6OnIoLOOdcg3/QFPqUKO8RhJTRQD5JSdd50bQF2Nwta9
- vVJNhn98dPnSoBtgdMKd9BEBaQUWRMk4iFWuQ7hmdWJf3YFJFHkRFktS1tCPYXVsqAen
- K2Hg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ id 1wyRuY-0001pn-Ih
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 06:28:16 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-47f96c5b722so1358317f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 03:28:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787567202; x=1788172002; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=c/v3aBrd8S38Bcnwtdh2wQ0met9M5bH+aTIJmS3sE8I=;
- b=obTd3N+h3AiNujglF2ZOdCbQjaFBnPpHkWlnSYwCH8u/jc0x0oPq+qDZtm+vV2hSmq
- G9qX4/dqXG6L2V0Hbr/RYB2Ldj7Jt8y7VXdosQEwvWVRy/cyRNoicxfZ1q5FsUTBhKmU
- 0IkOZSGQbNl2cPH2xvjTuA6TtRpfA67OjcERCI6tykuJCPR8q7TpuvDoY6/032qqEbmc
- BLwtEhCqXASnLta6vgxCy/8oQSYj37+i7q4TT5CRfUa6Zo5O3OKjbHW+nzHsSFuO2D7R
- gPIdrvLg9gzxN1xmPo9pdgfl5kf/4wk77AXJ187hOnpj0x2TIk/opAZ0BIC20fI29Izd
- luOA==
+ d=linaro.org; s=google; t=1787567290; x=1788172090; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=xag12ub1bcuK3t8iRdQzufeU8tr65Q5N7+Ogw4oNi1g=;
+ b=LGxsqjTVvAVbfiRa92DKHQMX1MSzFU/Oij+LO1HPaj97sF0d6sM/Bgwc3/N+QJ/8Bv
+ SrrODslmxehC40w4gmYy5QmwJat/YCnx9L0Y9xBtzFg0z4AeVwlwVSF08won9J/JTAnd
+ JnE1+Q6YZ87RHR5ulX2/fo8HXoLW927/Wjh15/+qF+YHB5xwBooZlykEl9GpGtGNlOOg
+ zzrs9WKmyfgBl3eAZ57gWcYLVOgajSzK6+26/9xZEmxko9KQrlc5FHyld5P4zFms1mhV
+ K2opxAKtwm0v1lB1ReygMHdqkwh4qPZfCqZBU0rWrLDdOTTOi1BUsoC5oY6uSn5bQTfo
+ JYEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787567202; x=1788172002;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=c/v3aBrd8S38Bcnwtdh2wQ0met9M5bH+aTIJmS3sE8I=;
- b=XxJPmn8gAwGp+UjfaaiIdFMdBHGxu4K336tJ4HgalfhekBJA3hzAqVckRhzm+JSKNG
- 7+whOnYVZ9OrptADSIXPNs6LMSHzE0YlC1FwCZftzcLSWs8uyDwwDwhUCSoUlKfNEo8A
- eFz81NLEZM31WCJQwfguaD/1l/7RfL5f7kboNUTq9N5JCA1WDWv9/eFocCFLDFcw8ukc
- 2WxF+wDVMf2ybyFusVJdAQjtK7gL/jy/c/Nxxuw1Kuv+20250Vp39wPIGwyIlVmkyOBy
- aMYY2a29o5c94Fw+GEyqyGcLLW3j3J97OdgKpslgpszUJF8ADhBw5NniBmGxhA5oIG2E
- e8pw==
-X-Gm-Message-State: AFuF++ka/oFYgYpbapA3g0x5zO/EehC+rzcopU4DlY620bqGlKnwQCqL
- 7PxTzjGJ/5fPiqE5R99lP75jzaNTqYwmEwrBL/vUA+vI29zqFID3jQsquM2NqlajdbMnQCNcLCB
- yUFUILJkPpMga7wZLuncS+qIHrmYZfNjNoX1u/5iiWw==
-X-Gm-Gg: AR+sD115eU50+SOqz3GBfaEsuO7j9HNO64Waq0YURVQLrjGk+wC26A2tDlVfHApx9A6
- b1i5fPwQtiJi9jT6aJvzFs93PfCXgkyNdisFXZRNzfm/e4u5OBmNveEf8z6AJ1qHyyuZTICUlNj
- 11uzm/5kkcuM2jSiS4lnvLfegaaahuLcxIMJ1SfXji3NtrilKI5ldCdMPvf1zVfzyp+cCg0n/eo
- m2faEWtVfIBXXxxwJU+83OyU52L7puxZZ0LBpSeewHuEm6L6nCESX3mcLTBw02FA2qH+lmkGo5/
- ys6KbjvKAbCrrXI6fIkS65LuS840PPFhCf3WwyAiRDvHg8xASdxuStXhkfScNc2Gxn0YteNHSRG
- QV7lRahnUy/3ESLA+XyTRr8zhn7pB
-X-Received: by 2002:a05:690e:2282:b0:66c:e21d:9ac8 with SMTP id
- 956f58d0204a3-66ce4ab0c6bmr6640958d50.28.1787567202444; Mon, 24 Aug 2026
- 03:26:42 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260707110300.1918153-1-armbru@redhat.com>
- <20260707110300.1918153-36-armbru@redhat.com>
-In-Reply-To: <20260707110300.1918153-36-armbru@redhat.com>
+ d=1e100.net; s=20251104; t=1787567290; x=1788172090;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to:content-type;
+ bh=xag12ub1bcuK3t8iRdQzufeU8tr65Q5N7+Ogw4oNi1g=;
+ b=ofRU+h+IuqY8t2YjPnOCYNHOZwlFZbAnOiFWcDLCgxI9imf9kHQUCIsQAMYlFP7dj1
+ t3YH4Fz2udjfRI3hGph94IMGz6g+USjJTao+W6Hzh0PwvFApVn75664c1XGSC6xP92WB
+ jOFshbnHa+ggcevUeZbMO+NiF5DvMNUfKjkncTmyWSODXubWJe6YfrQmxc+u6W2CYo9v
+ 3FkikrPgT9Gm0TrQaR69xtF+zqB9OcV3NNXbedfMuM6a7G7HcWZIriL2JmkDFa0AIQP4
+ /ms2VUUbho5ZGhofcFO3TBhjayD+6lHx4MepV+Lwm0GyYf3rwkwGdZnSVz8M0NtEe/aA
+ V8kQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqESdZxwOL0CXRvFVcUsDTOKCqEOnzsYAfkjc1BER6P4fH5Nqex+9rXtVZxc9RwDw9dKJv/KBfp5Z8W@nongnu.org
+X-Gm-Message-State: AFuF++kJMX/kTKdP/gbekJPkkFoLN40eeLr4WywGRUnp97OeIO913tZc
+ cRkj1dzZwD5t2qlaKp8pyY9ym1NlD5O8vyqaijk0QF+Hhq4F88Fyb97KXaUjTspmBITDZWeZTwu
+ HzLkXA2Q=
+X-Gm-Gg: AR+sD12kXtlpJziBmu9RM/M2uwUid88WGmwaOze8HCwp6KeiFnbB3xr7iXuqf72ozXg
+ 3Dxu+DY2qvkeR8gQU0KKk6JNo+8f/snuMobh0hTtIC/e57tkIX/yj2CEsm5+tky08WzpfVEpfvq
+ X3k/Yl1rRSX/bd9cCqb1t6K3SpNItUz7YX0eAza7BrCE7G+PPqCxAVcuWJVTNAJZOr6qcqaRVJP
+ Iq8VW2SUQxyT0CWSFK2FIEcdZZlFYtGAZo7STaCXEJnBI7ZewXvDXy18+mlGFSO7x8Oyk1m66p8
+ cGjVs00K8TD287/3trqcobGouLbRWpmzccRFKyMlLj2yOuuy1fXtnWURBhHzT9O2ahAoVjrzxZY
+ mkU3vWf2PL+l0WUsj3HKtxjTtxq1h7XDVT8Oj1ZZZWW6sEoQegbLk8N9Bo8fSDIVmVIMmyxB6BS
+ DJ7xRBJJ7HLQ3jiNnAmu9dCRlMk0ExRy8SYYCgFVD7SWBSM5dMeLaqKKHPzF1Y+nhazjsfTkFO+
+ HgEZaic/kHb7jUMolOJFsPKOqnzM2h6UKKupnuhNappwfWaSp+1VVamazbpYHLs/zCWt9adc+I=
+X-Received: by 2002:a05:600c:4f09:b0:496:bffb:fb7b with SMTP id
+ 5b1f17b1804b1-499b8457b10mr298163075e9.10.1787567290415; 
+ Mon, 24 Aug 2026 03:28:10 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-499c355e6d1sm77730095e9.6.2026.08.24.03.28.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Aug 2026 03:28:09 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 24 Aug 2026 11:26:31 +0100
-X-Gm-Features: AcwNN1W-IGbpQiguKzhSaKnNrfqAn5YrL-o1okc6pHHaLVN-_Y9fgG6MbQyNLpY
-Message-ID: <CAFEAcA-tUz_YGhvqU8-o-jw-jhR4MTMFDJ3S9rA2ZG-0GpLtVw@mail.gmail.com>
-Subject: Re: [PULL 35/35] docs: mark '-mon' as deprecated in favour of -object
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Peter Krempa <pkrempa@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH 2/6] hw/intc/arm_gicv5: Ignore low bits in L1_ISTE.L2_ADDR
+Date: Mon, 24 Aug 2026 11:28:01 +0100
+Message-ID: <20260824102805.639072-3-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260824102805.639072-1-peter.maydell@linaro.org>
+References: <20260824102805.639072-1-peter.maydell@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,38 +103,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 7 Jul 2026 at 12:06, Markus Armbruster <armbru@redhat.com> wrote:
->
-> From: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->
-> The high level `-qmp` and `-monitor` options can remain as convenience
-> wrappers, but the low level `-mon` is completed obsoleted by the new
-> `-object` support with 'monitor-qmp' and 'monitor-hmp' types.
->
+The GICv5 spec defines that an L2 IST is always aligned to its size,
+by stating that bits [N:0] of the address are 0 where
+    N = 11 + (2 * L2SZ)
 
-> @@ -3239,6 +3239,8 @@ void qemu_init(int argc, char **argv)
->                  default_monitor =3D 0;
->                  break;
->              case QEMU_OPTION_mon:
-> +                warn_report_once("'-mon' is deprecated, use '-object' wi=
-th "
-> +                                 "'monitor-hmp' or 'monitor-qmp' types i=
-nstead");
+We were missing this check, and only aligning by applying
+R_L1_ISTE_L2_ADDR_MASK, so we would only enforce 4K alignment even if
+the L2 IST was 16K or 64K.
 
-Can we be more precise in deprecation messages of this kind, please?
-This warning is not enough for the user to be able to figure out how
-to change their existing command line.
+Add the missing masking of low bits.  We already needed to calculate
+the number of bits needed to index each byte in the L2 table, so add
+it to the GICv5ISTConfig to save having to re-calculate it later.
 
-I had to look into deprecated.rst, check the git history to see which
-commit added the deprecation, then find out how this commit was adjusting
-the examples in the tree.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/intc/arm_gicv5.c         | 6 ++++++
+ include/hw/intc/arm_gicv5.h | 1 +
+ 2 files changed, 7 insertions(+)
 
-Notably, "-object monitor-hmp" appears to require an "id=3D" despite
-nothing actually caring what that ID is, and the warning message
-doesn't say how to determine whether your existing -mon option
-should be changed to monitor-hmp or monitor-qmp. The deprecated.rst
-docs do say that part, but don't mention the ID bit.
+diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+index cdc6c9d3466..20680a5c225 100644
+--- a/hw/intc/arm_gicv5.c
++++ b/hw/intc/arm_gicv5.c
+@@ -595,6 +595,11 @@ static bool get_l2_iste_addr(GICv5Common *cs, const GICv5ISTConfig *cfg,
+             return false;
+         }
+         l2_base = l1_iste & R_L1_ISTE_L2_ADDR_MASK;
++        /*
++         * The effective base address of the L2 table is always
++         * aligned to the size of the L2 table.
++         */
++        l2_base &= MAKE_64BIT_MASK(0, cfg->l2bits);
+         id = extract32(id, 0, cfg->l2_idx_bits);
+     } else {
+         /* 1-level table */
+@@ -1358,6 +1363,7 @@ static void irs_ist_baser_write(GICv5 *s, GICv5Domain domain, uint64_t value)
+         cfg->id_bits = id_bits;
+         cfg->istsz = 1 << istbits;
+         cfg->l2_idx_bits = l2_idx_bits;
++        cfg->l2bits = l2bits;
+         cfg->structure = FIELD_EX64(cs->irs_ist_cfgr[domain],
+                                     IRS_IST_CFGR, STRUCTURE);
+ 
+diff --git a/include/hw/intc/arm_gicv5.h b/include/hw/intc/arm_gicv5.h
+index b8baf003ad6..d763a7939c7 100644
+--- a/include/hw/intc/arm_gicv5.h
++++ b/include/hw/intc/arm_gicv5.h
+@@ -23,6 +23,7 @@ typedef struct GICv5ISTConfig {
+     uint8_t id_bits; /* number of bits in an ID for this table */
+     uint8_t l2_idx_bits; /* number of ID bits that index into L2 table */
+     uint8_t istsz; /* L2 ISTE size in bytes */
++    uint8_t l2bits; /* bits needed to index L2 table in bytes */
+     bool structure; /* true if using 2-level table */
+     bool valid; /* true if this table is valid and usable */
+     /* This caches IST information about pending LPIs */
+-- 
+2.43.0
 
-thanks
--- PMM
 
