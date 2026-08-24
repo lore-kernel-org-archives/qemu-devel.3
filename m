@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EC01C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F8BBC5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:54:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNZT-0002JP-Jx; Mon, 24 Aug 2026 01:50:12 -0400
+	id 1wyNbA-0004p6-3U; Mon, 24 Aug 2026 01:51:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNYy-0001qC-Ul
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:49:42 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1wyNZm-00031W-Eg
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:50:31 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNYx-00023m-C7
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:49:40 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-cbedda4c154so1805536a12.1
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:49:38 -0700 (PDT)
+ id 1wyNZk-0002S3-7b
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:50:30 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-cc147d86bebso2503117a12.0
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:50:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787550578; x=1788155378; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787550627; x=1788155427; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=xN0xQN5mdER04LVt6luBkNx814GvD/i+FtKZY4I0s/E=;
- b=EXdGEMuaGghiZjQ9+i2Wu9eTmYswbIm0yv/sxt8Ka51CPHBbN560VcAvm7CX5NYJ3f
- 94wj/oa+eXjyuoJ8VBYiCqpkmjrBy7fUuiJQWFPLeWlujwqV7yXmEJzcnW6BjYO3Z+Tg
- IsHR2/2i5zTO1uB8G6Ws9c5jocJP2grYDF/dNsaaQSDVcZWsaKGkmJ9FP5EnEVwN4ZHR
- 1eFQEUPayy431sqXk+KxwwMlwkxQ8yQKiUrzD/e/Hn/PmFoTLtrplTwLMw7qgMkf8d32
- eyL77RU0zMqXw0yXkdBhujeVdchxsSmdAfyb1pbmqvjxW8/NGnRHTw7Z9sgYpIPv80Hc
- Kseg==
+ bh=HiY1OdOtBijExrR7AqCE72zrQVCis7QsYpBlu+X6Ymk=;
+ b=NKXJt7tGJ5dLKxTh5Q91TLXa8lBbcwsewsVlkl3UYvtMJR3cbGcdMTz4z8PV+bGU2u
+ 794/ld4ybIssKRTP1CvK8XBJMIbjRRJRAYRYo0ibx80YiFJ8bvXh6pA0r3b1PjYcWflA
+ PkUjmsZ5BCntCBnjHibqnTZqq7QtaVK2V9RGuiR/dfNb3d8EMZKRPRF593Vw6W4cDSkR
+ iwOSKGkskqQv+76UFOAkBS2MFbUZ088+ckSrcHYJVKIL3h7DzGdidUfBV9zUs4GAOtXO
+ 03N/kU/xMFB0V6hruPoZDr50+j0xP96ULBuABJF3YLxLc+3GGpdxLHKs8aMGUejChBFi
+ kjKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787550578; x=1788155378;
+ d=1e100.net; s=20251104; t=1787550627; x=1788155427;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=xN0xQN5mdER04LVt6luBkNx814GvD/i+FtKZY4I0s/E=;
- b=rFBI8RxRIuNzbbLmGolJ775ROscRkrsANH/EkBXsj5SZyxgEpoqOkUNTvADO4Sc9lG
- mr5wCevOvlnNYdaWeYJSPOyImL0L2ADgqStaJw8tfjTTi9kZTAWNsO5O5f4Du+mGyteQ
- j7B71WBbKVnPwwAOABcHj7nFIuKymqBFD+F7eIZG5nKl/8o2v/ZdPRW97dmeBO+klAFW
- ZDqu83V9qHbhZUjLdcKVjjpAs0rU+8XyGmsYkG/ktDUzAV74ezI53A2Ib3jfUkSAbl8K
- ejnVKUNqPDKfmmHY4scFuCrZnjsMISqg3NMlGRYwP3qUMzIWiKhjKqwspiE5QfjnoSIV
- qOcQ==
-X-Gm-Message-State: AFuF++mwNa8lTJqiPbCKGumuCBmwp26VkP51JBetbRUQ5UGuVckNZGyj
- MMOQuWYGAkUv/nH040pEOKxJxz3J+36vldoNYxCqtlz2bWcQ47g2+rWwDg0p2g==
-X-Gm-Gg: AR+sD105g6LYD1IS8d3wQKL0G/HnFVDHjftqm4UpHuH4Bw1b9oRgQBp6U/D880JZIvQ
- nB7VC+FTDrKxrWFKedfiHzN8GNSzZRli6JJAaOEvSX+ctqKQXmE2qcdJTU8TowoAQB8gBpFLTak
- ApCz2+bKTze5Ur/OSsDgaS2t9hXFYqmum7i44/exhdDZ9Fj1+fHLkR53XWUJzaMzYGJheD7OU0Z
- B6tU8BCKj+tnjAIS+5RtDUj0jaVUR6YUVT9yXSZy6ItkwddVbl6FKIFyG2Dws0hH53chZw08z7D
- o31ANrGFVPmf/Gr5OHCmLvDFygccvF6m9zh8Txe+oxFEAuyxhWKb7PjlZpDTJNo0WhNYchWGURJ
- l8w9wV35mha2Nep2jLyr1Bxs9RjGomMFfyrMY6ZBexwF9QQY8Tq1gQaNaaAECmQXKHM3l8rnFha
- vuuWRED/qPaxbiS9SXJ8yZ4qwnDeIQHOPCkHZknzrI+tZ6gkI7W5kOCwJic0I0YkApwD8VBxhsy
- cUBZg==
-X-Received: by 2002:a17:90b:5646:b0:381:28e0:6259 with SMTP id
- 98e67ed59e1d1-395c36fb278mr45522695a91.9.1787550577873; 
- Sun, 23 Aug 2026 22:49:37 -0700 (PDT)
+ bh=HiY1OdOtBijExrR7AqCE72zrQVCis7QsYpBlu+X6Ymk=;
+ b=QFHVj6OIprCZ7aoHqAFJq1z0Nas02vYFC6vNZ+74nqU5TAL6Ik6OBI4WsIp4IPza1A
+ wQK1Q5rME8gYfH2q7cBza0MKXcIGNubWw5nzHlgxtMDWUOFjFv6w5lNbAy2wqGlBMTsa
+ EDbVN4/zLpQG1nseIQmJ0yRSujek53jIv0vthM88EAVkNqwWL+80oz5l2lbgdsAA+jV6
+ F59wveJPrQtedncouTxh6kh3oU11qJxl6ePqMNcVxJcZsih6OkfbnXV3AQjAfbFZ1XU/
+ S6VeLp4qq0gc6jBQOLF6PXh2lyxY18h06tRyQKnGW6+z+rPXqolXgerkRyrRmOcjdgh4
+ DttA==
+X-Gm-Message-State: AFuF++kvr28TugGh6OuAAoxMz2gER1fcecJxpis/ai9SPQwm+lKUWpfH
+ xu08juxElx9v7XVSUCHrQ/Lhjyk0nIATkTSvbSorqSAWaYxVLeOAFoPVrGW41w==
+X-Gm-Gg: AR+sD12eMQzXmZPGjUpc9A+/nUZ8SrzgZd1+a1iIpSVMIgDNMdxT55j1X8okw3JUIsH
+ UIyC1Gn+G48HEMtrpvrzrDfbv8geE4qG+RFrNSufssLjKkz60wxJy5rR8xjcIw3j7C04HHsSohc
+ FYBR3iy6J3b7bUhHOS0XnJi1cI4EsSiQZ9s8COpzWH2ERQzfxoKSfQOQJhfZK7lFUnrGI+MKB/q
+ kfoyxr5nflWbtviKx1+bBhynEn+QGwqPcF5lIUhtfGfkuxlHLpPgHLX+9jOiocDlhXkByVyTO3J
+ ddyBKPCg+LidtQnHWXP8pNOD6MIFtgP1QF2yiS2BgCJ15AuE8/9w9hDnMsai6FcAO7vk5PABTV3
+ qg1vcWqIEJzReT3uDSnjDxgog5gkSQr8lzG5NC205Jms+NiINscfAQUWnJFevzw1lm31xK9uthw
+ 9bC6p+KIks4xxL6QrL568zX+IM4gb2zB5Us1je1gq1BHEqlvGoVP7mjga5oJYELmN8V8nVryL4x
+ NqTcA==
+X-Received: by 2002:a17:90b:3e8d:b0:38e:9ca8:e99 with SMTP id
+ 98e67ed59e1d1-395c4fa444bmr14521579a91.5.1787550626649; 
+ Sun, 23 Aug 2026 22:50:26 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.49.34
+ 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.50.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Aug 2026 22:49:36 -0700 (PDT)
+ Sun, 23 Aug 2026 22:50:26 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Ivan Efremov <nendensu@ispras.ru>,
+Cc: Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 25/96] tests/qtest: Add seed CSR zero extension test
-Date: Mon, 24 Aug 2026 15:46:55 +1000
-Message-ID: <20260824054806.2790041-26-alistair.francis@wdc.com>
+Subject: [PULL v2 41/96] disas/riscv: Tidy disasm_inst main loop
+Date: Mon, 24 Aug 2026 15:47:11 +1000
+Message-ID: <20260824054806.2790041-42-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260824054806.2790041-1-alistair.francis@wdc.com>
 References: <20260824054806.2790041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,69 +103,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ivan Efremov <nendensu@ispras.ru>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Add a qtest that reads the seed CSR on RV64 machine with Zkr support
-and verifies that the upper 32 bits are clear.
+Unroll first iteration, so that always_true_p is not used,
+Drop some local variables and use 'decoders' directly.
 
-Signed-off-by: Ivan Efremov <nendensu@ispras.ru>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260802113130.7818-3-nendensu@ispras.ru>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260812223142.349142-9-richard.henderson@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- tests/qtest/riscv-csr-test.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ disas/riscv.c | 65 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 32 insertions(+), 33 deletions(-)
 
-diff --git a/tests/qtest/riscv-csr-test.c b/tests/qtest/riscv-csr-test.c
-index bb1b0ffed3..7479a5c5bc 100644
---- a/tests/qtest/riscv-csr-test.c
-+++ b/tests/qtest/riscv-csr-test.c
-@@ -20,6 +20,12 @@
- #define CSR_MVENDORID       0xf11
- #define CSR_MISELECT        0x350
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 70ea41f125..9880b8de20 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -5419,41 +5419,40 @@ static GString *disasm_inst(rv_isa isa, uint64_t pc, rv_inst inst,
+         .inst = inst,
+         .cfg = cfg,
+     };
+-
+-    static const struct {
+-        bool (*guard_func)(const RISCVCPUConfig *);
+-        const rv_opcode_data *opcode_data;
+-        void (*decode_func)(rv_decode *, rv_isa);
+-    } decoders[] = {
+-        { always_true_p, rvi_opcode_data, decode_inst_opcode },
+-        { has_xtheadba_p, xthead_opcode_data, decode_xtheadba },
+-        { has_xtheadbb_p, xthead_opcode_data, decode_xtheadbb },
+-        { has_xtheadbs_p, xthead_opcode_data, decode_xtheadbs },
+-        { has_xtheadcmo_p, xthead_opcode_data, decode_xtheadcmo },
+-        { has_xtheadcondmov_p, xthead_opcode_data, decode_xtheadcondmov },
+-        { has_xtheadfmemidx_p, xthead_opcode_data, decode_xtheadfmemidx },
+-        { has_xtheadfmv_p, xthead_opcode_data, decode_xtheadfmv },
+-        { has_xtheadmac_p, xthead_opcode_data, decode_xtheadmac },
+-        { has_xtheadmemidx_p, xthead_opcode_data, decode_xtheadmemidx },
+-        { has_xtheadmempair_p, xthead_opcode_data, decode_xtheadmempair },
+-        { has_xtheadsync_p, xthead_opcode_data, decode_xtheadsync },
+-        { has_XVentanaCondOps_p, ventana_opcode_data, decode_xventanacondops },
+-        { has_xlrbr_p, rv_xlrbr_opcode_data, decode_xlrbr },
+-    };
+-
+     const rv_opcode_data *op;
  
-+#define CSR_SEED           0x015
+-    for (size_t i = 0; i < ARRAY_SIZE(decoders); i++) {
+-        bool (*guard_func)(const RISCVCPUConfig *) = decoders[i].guard_func;
+-        const rv_opcode_data *opcode_data = decoders[i].opcode_data;
+-        void (*decode_func)(rv_decode *, rv_isa) = decoders[i].decode_func;
+-
+-        /* always_true_p don't dereference cfg */
+-        if (((i == 0) || cfg) && guard_func(cfg)) {
+-            dec.opcode_data = opcode_data;
+-            decode_func(&dec, isa);
+-            if (dec.op != rv_op_illegal)
+-                break;
++    dec.opcode_data = rvi_opcode_data;
++    decode_inst_opcode(&dec, isa);
 +
-+#define SEED_OPST_MASK     (UINT64_C(0x3) << 30)
-+#define SEED_OPST_ES16     (UINT64_C(0x2) << 30)
-+#define SEED_OPST_DEAD     (UINT64_C(0x3) << 30)
++    if (dec.op == rv_op_illegal && cfg) {
++        static const struct {
++            bool (*guard_func)(const RISCVCPUConfig *);
++            const rv_opcode_data *opcode_data;
++            void (*decode_func)(rv_decode *, rv_isa);
++        } decoders[] = {
++            { has_xtheadba_p, xthead_opcode_data, decode_xtheadba },
++            { has_xtheadbb_p, xthead_opcode_data, decode_xtheadbb },
++            { has_xtheadbs_p, xthead_opcode_data, decode_xtheadbs },
++            { has_xtheadcmo_p, xthead_opcode_data, decode_xtheadcmo },
++            { has_xtheadcondmov_p, xthead_opcode_data, decode_xtheadcondmov },
++            { has_xtheadfmemidx_p, xthead_opcode_data, decode_xtheadfmemidx },
++            { has_xtheadfmv_p, xthead_opcode_data, decode_xtheadfmv },
++            { has_xtheadmac_p, xthead_opcode_data, decode_xtheadmac },
++            { has_xtheadmemidx_p, xthead_opcode_data, decode_xtheadmemidx },
++            { has_xtheadmempair_p, xthead_opcode_data, decode_xtheadmempair },
++            { has_xtheadsync_p, xthead_opcode_data, decode_xtheadsync },
++            { has_XVentanaCondOps_p, ventana_opcode_data, decode_xventanacondops },
++            { has_xlrbr_p, rv_xlrbr_opcode_data, decode_xlrbr },
++        };
 +
- static void run_test_csr(void)
- {
-     uint64_t res;
-@@ -46,12 +52,32 @@ static void run_test_csr(void)
-     qtest_quit(qts);
- }
- 
-+static void run_test_seed_csr(void)
-+{
-+    uint64_t val = 0;
-+    uint64_t opst;
-+    QTestState *qts;
-+
-+    qts = qtest_init("-machine virt -cpu tt-ascalon");
-+
-+    qtest_csr_call(qts, "get_csr", 0, CSR_SEED, &val);
-+
-+    opst = val & SEED_OPST_MASK;
-+    g_assert_true(opst == SEED_OPST_ES16 ||
-+                  opst == SEED_OPST_DEAD);
-+
-+    g_assert_cmphex(val >> 32, ==, 0);
-+
-+    qtest_quit(qts);
-+}
-+
- int main(int argc, char **argv)
- {
-     g_test_init(&argc, &argv, NULL);
- 
-     if (qtest_has_machine("virt")) {
-         qtest_add_func("/cpu/csr", run_test_csr);
-+        qtest_add_func("/cpu/csr/seed", run_test_seed_csr);
++        for (size_t i = 0; i < ARRAY_SIZE(decoders); i++) {
++            if (decoders[i].guard_func(cfg)) {
++                dec.opcode_data = decoders[i].opcode_data;
++                decoders[i].decode_func(&dec, isa);
++                if (dec.op != rv_op_illegal) {
++                    break;
++                }
++            }
+         }
      }
  
-     return g_test_run();
 -- 
 2.54.0
 
