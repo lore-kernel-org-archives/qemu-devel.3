@@ -4,100 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12FC8C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 22:12:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBCBEC61CE2
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 22:20:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyctv-0003QJ-Gv; Mon, 24 Aug 2026 18:12:19 -0400
+	id 1wyd0w-0004Bw-G7; Mon, 24 Aug 2026 18:19:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
- id 1wyctt-0003QB-Rt
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 18:12:17 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1wyd0v-0004Bg-8Z
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 18:19:33 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
- id 1wycts-00088U-7y
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 18:12:17 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-cb2513ec378so296354a12.3
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 15:11:49 -0700 (PDT)
+ id 1wyd0t-0000SO-DT
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 18:19:33 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-384422b05b5so398445a91.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 15:19:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1787609508; x=1788214308; darn=nongnu.org;
+ d=tenstorrent.com; s=google; t=1787609970; x=1788214770; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=YfPAJrzh23k5bf6NYHNz6je6+xhKQtygq0qvA9+KJck=;
- b=DVq6FEF81+1sYAh0vlmoYOCxcNVwXkgdlGrexjLGcz/8xFwCLCE1qZtNsHspQtUye4
- l4PvKx2JKi6xODAv6b9bpjUZf1LAKdtoXrNkJ5deUcEhNXrMwfT3AfDuO0aVKlEJDe7F
- 6P1KkZCaH0Rzd1MoLuEeYKJHUBcmRdPlz026eCsNNQUO8bLhv9rLX5if1TXoCBQ0Mogd
- 3zpuDMtiQlOELwJgsErsSMN+xf0zFIQ6ftsXgeBiS7nlG9PirKfPEoTrjYj0K4VXiuTk
- imzERjpArrbxLdeFOFEaTHVPGHLXJdBZx471ccD0Z4+1Y647RYo/J4WqdAxlXmfzSwxv
- MIUQ==
+ :content-type; bh=8LR/AzYacYUAVCZRRgXI27j9+RnZQ7HCQTn2EGohg8M=;
+ b=eIGY7TMgZR9Dy9AamYXfIp3Odf7gTPy++dPQpczfSXWoR0wAdYwloLZvTyf6zg805q
+ 6u9Ln6t7oU/5GCF4H0I9dTiI8I0dRT3Q9BqDTlwzRlQ9TpVT3YJ25sQXq0hZ8dGri4o8
+ ZR0ZowU1TbfD5sOqKP/g65aOHGGIFk+HwvgigUi8UYh8RpfracZu03dpX8sI+PD/0CCb
+ k+2M4je2N+++f7QWq6V1stUk+B0THSmtCavfdCjEEeME5stDFbol6Eyn8g/DP/0T8FDe
+ 60IgIiCvKhSJhNtvipxlIZ2/p3/ymz/TQiV4pHDvWWCyDu8RaeDIjaFsskDBj7kRLdY9
+ SH9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787609508; x=1788214308;
+ d=1e100.net; s=20251104; t=1787609970; x=1788214770;
  h=content-transfer-encoding:content-type:in-reply-to:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=YfPAJrzh23k5bf6NYHNz6je6+xhKQtygq0qvA9+KJck=;
- b=S8nwwbUMnEHx/eaHY9fVRBGaQx/AZQQYvE6f3J+RmmidXbbV6y5t51qdmYEIbcAdgn
- vncj6LQ25cF+6McnwaMLbincFt6ooI2XBI5RQK2teh6v5RsvgeyvkPUSNOVxavDihtEq
- vSzpVz0bkyNCyIdXs6rVfpTbgH9vW3dzLhg8fl3KD3FhgsNIq5vrb6gCS4U+M1DKsC5A
- GMZ980eyJmBXp9cxmd1UGINV1183l3dpNakEeTaZaJklc7OafXmxjEz3n0NRfVmAjL34
- 4GP22g2/RYNqX/YZFzxKPP7XcDu0FNild9RRH7zSRYIiVZ9//w+Oayr6F+hEt12ZJKGK
- 8Hwg==
+ bh=8LR/AzYacYUAVCZRRgXI27j9+RnZQ7HCQTn2EGohg8M=;
+ b=igoTbk2c45/Bv0w5Igl+fpSi/2T5LFDsmiaDdnKfl0zZnINK6SY3s8HK4cctknMBZk
+ tzrdGcK82okKYy9kzciYRdgTnr0YcpyIFR4XwhI98ds6sjuKz8VhBrdd1JWIlw+EP28a
+ 37aGIrbj4r9hr/aZQXl18j/ifFoxpVZ38WxQFb3DDuF3utkWeVv4R0XKAuDehdofQNWV
+ I/5nH2pQR7MBJK+DvBvmTU2YoeWIEyASI+sNJfGkTznglJciIBoa3keNEZVfDuWi2b8K
+ p2yaWqv8bRks9OhyjOXc+lH7zRuR5emI2xBMG/I4c25coH4CrqtW9T7CdqtW89tEMLyG
+ zN3A==
 X-Forwarded-Encrypted: i=1;
- AHgh+RqY7YecwAWM2uNbRlZKd1kvhY8Vy2PYkTxKSZsUuQbzyg0FTOaWCDPKGUGyHBsWkSs5mzlt1TI1IP7w@nongnu.org
-X-Gm-Message-State: AFuF++n1uaShvyQf6yJt80w0YXnlrmoTYW3bzOqUhkjFO25zVWdqMOD3
- rIq/+h6zP+EkeVkJrTBFgIm9Og4ATGdVQ12uhPuTmGz3pmyYj14uKm/WjaL793ix7i4=
-X-Gm-Gg: AR+sD12tWiqZbKtXLTXkLuU3KD/jlvu6tlfdnpKxv7vey6fyQwjv0/O8NyfcEg8HxuH
- epvxK2zIb3VcCCxCKJGfuq/TrMpzNU1qLKKIySgxk/9O66suvWKwok5e4vG8vHAwMYYzPiXoFjw
- uFR+0UjNDTLZr3lHbndAypE+BVWtPcDRyQ1/Fcfs3FwzpbFAclN8LFjI4WGoVPdWKXTo/gGEnzr
- jGq50Wig1ssASmZkuv6tP5VK2bNZu46Dsa5TNebMevclm6WCGaXA5CmBmye66Onzo4M/j7/OUEF
- kKx89BJftk7eEPX/dnAivGVJ+Z7iCI2KURoKn6SPEnRztWcV4S8ve2Vz9Uq57PZN0d3IsyiRdpr
- fQPoi351CKJhDEI0DmfVpJKKAY4+mnDYo3jGVaY7bYdo8qhi4gOh0slNXNz/0GgXvLn71xw2aaS
- /GqI4gJohuO093T128bmNaY//Nd1aDoWKwXOHXuYXjutPLTyIVEa61JbcXHsoPAmgmA5GyEOB2g
- wilZvleKqRY6mLc
-X-Received: by 2002:a05:6a00:7183:b0:848:4d4f:d481 with SMTP id
- d2e1a72fcca58-851f9fa9f18mr16205259b3a.2.1787609508252; 
- Mon, 24 Aug 2026 15:11:48 -0700 (PDT)
+ AHgh+Rpdb0eeqD73kzzg9vH2cGiNr3x61y1q4TRQIUYlzDaqzeNAQTbACUgSG7iKcVaMkACU3EV/qg9xau44@nongnu.org
+X-Gm-Message-State: AFuF++kKFzgXTtsbmys0ZpWCKbuR13fdZIK5EQ2rSVEgPnTHZ8CbAjzw
+ H4kCyWQ05WvEjos3yTTsbdwKFeek3DUNUJigw03xSwpAZ0XFaGKwAbeI2fL9wOmzGgE=
+X-Gm-Gg: AR+sD10b+u6SEL/+/3SMAwTxuIWn90k2q+BpVSDH0sq43WwB4NQvsPqsmBKrZtC0MWs
+ VAw9p7eT9Tvamjyvx6kcwzmpgkfdOvqkQpbOr3+p8rHFVRlKBR3st45C960YlDF0w4igMesMK79
+ KToUu/1Lg8TniwYrBRSjvUqFwYbRxdbfC1VocJ10ABlRnLLLivEpMPRSBhyCujuudDM77u1h5FM
+ ehEXax6qy7hv6Hp5+14kqHGHlLpU4HRMW4/pjmLWyv9qs5AxS1wHT8bxM9+Z4rQZXLD85bpbeXK
+ jCkoQY2hCOqnjdeRK9IVIPBqYoLfUcbMQmvXGVUDdg60KyBF2RXbRO4iLPGTqHk3KLVAakImheb
+ KsA2yUe3vZcX0SY0iIQMzEUYPTrjDzn7N7kOrhIYQ3Cu+9lwTsyzj2ndTOCQjiBwViVbRK6FENy
+ YQWpxJq5KJDz32ysBvZmpzZ/RHXqWSnwNSIOAofoi8ECSt8TLwq3XO0n+0PwzmamPy+dqCupzJy
+ H3nU4ezeXctwKIK
+X-Received: by 2002:a17:90b:2648:b0:38e:6a7c:abbc with SMTP id
+ 98e67ed59e1d1-39647bfad3emr1127785a91.3.1787609969703; 
+ Mon, 24 Aug 2026 15:19:29 -0700 (PDT)
 Received: from [172.16.1.33] ([159.196.41.205])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8520eed2293sm2262821b3a.2.2026.08.24.15.11.42
+ 98e67ed59e1d1-39645b3ab63sm1137844a91.7.2026.08.24.15.19.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Aug 2026 15:11:47 -0700 (PDT)
-Message-ID: <6dd03d71-b0e5-4039-bce9-37c1cff4b108@oss.tenstorrent.com>
-Date: Tue, 25 Aug 2026 08:11:40 +1000
+ Mon, 24 Aug 2026 15:19:29 -0700 (PDT)
+Message-ID: <ab3dba22-8ba4-479e-ad4a-1877335bb2dd@oss.tenstorrent.com>
+Date: Tue, 25 Aug 2026 08:19:21 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] hw/riscv/boot: Make RISCVBootInfo const where possible
-To: Joel Stanley <joel@jms.id.au>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: Re: [PATCH 2/4] hw/riscv/virt: Use hwaddr for IMSIC device tree
+ address
+To: Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ philmd@oss.qualcomm.com
 Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei
  <zhiwei_liu@linux.alibaba.com>, Chao Liu <chao.liu@processmission.com>,
  Nicholas Piggin <npiggin@gmail.com>,
  Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
  Michael Ellerman <mpe@kernel.org>, Niek Linnenbank
  <nieklinnenbank@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
 References: <20260824055642.41098-1-joel@jms.id.au>
- <20260824055642.41098-2-joel@jms.id.au>
+ <20260824055642.41098-3-joel@jms.id.au>
 Content-Language: en-US
 From: Portia Stephens <portias@oss.tenstorrent.com>
-In-Reply-To: <20260824055642.41098-2-joel@jms.id.au>
+In-Reply-To: <20260824055642.41098-3-joel@jms.id.au>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=portias@tenstorrent.com; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=portias@tenstorrent.com; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
 X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,76 +117,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 24/8/2026 3:56 PM, Joel Stanley wrote:
-> As with riscv_load_firmware, take a const pointer in functions that
-> reads the structure without writing.
+> create_fdt_one_imsic() hard codes the top 32 bits to zero. Instead take
+> a hwaddr and populate both the high and low cell.
 >
-> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Suggested-by: Philippe Mathieu-Daudé <philmd@mailo.com>
 > Signed-off-by: Joel Stanley <joel@jms.id.au>
 > ---
->   include/hw/riscv/boot.h | 6 +++---
->   hw/riscv/boot.c         | 6 +++---
->   2 files changed, 6 insertions(+), 6 deletions(-)
-
+>   hw/riscv/virt.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
 
 Reviewed-by: Portia Stephens <portias@oss.tenstorrent.com>
 
 
 >
-> diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-> index 4e7bd9a225ef..d23f45d78077 100644
-> --- a/include/hw/riscv/boot.h
-> +++ b/include/hw/riscv/boot.h
-> @@ -50,10 +50,10 @@ void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts);
->   void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
->                                           RISCVHartArrayState *harts,
->                                           hwaddr low_start, hwaddr low_size);
-> -vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
-> +vaddr riscv_calc_kernel_start_addr(const RISCVBootInfo *info,
->                                      hwaddr firmware_end_addr);
->   hwaddr riscv_find_and_load_firmware(MachineState *machine,
-> -                                    RISCVBootInfo *info,
-> +                                    const RISCVBootInfo *info,
->                                       const char *default_machine_firmware,
->                                       hwaddr *firmware_load_addr,
->                                       symbol_fn_t sym_cb);
-> @@ -71,7 +71,7 @@ void riscv_load_kernel(MachineState *machine,
->                          bool load_initrd,
->                          symbol_fn_t sym_cb);
->   uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
-> -                                MachineState *ms, RISCVBootInfo *info);
-> +                                MachineState *ms, const RISCVBootInfo *info);
->   void riscv_load_fdt(hwaddr fdt_addr, void *fdt);
->   void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts,
->                                  hwaddr saddr,
-> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-> index 5e2dfa091a13..4ac0b8ef6581 100644
-> --- a/hw/riscv/boot.c
-> +++ b/hw/riscv/boot.c
-> @@ -91,7 +91,7 @@ void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
->       info->ram_low_size = low_size;
->   }
->   
-> -vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
-> +vaddr riscv_calc_kernel_start_addr(const RISCVBootInfo *info,
->                                      hwaddr firmware_end_addr) {
->       if (info->is_32bit) {
->           return QEMU_ALIGN_UP(firmware_end_addr, 4 * MiB);
-> @@ -151,7 +151,7 @@ char *riscv_find_firmware(const char *firmware_filename,
->   }
->   
->   hwaddr riscv_find_and_load_firmware(MachineState *machine,
-> -                                    RISCVBootInfo *info,
-> +                                    const RISCVBootInfo *info,
->                                       const char *default_machine_firmware,
->                                       hwaddr *firmware_load_addr,
->                                       symbol_fn_t sym_cb)
-> @@ -348,7 +348,7 @@ out:
->    * The FDT is fdt_packed() during the calculation.
->    */
->   uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
-> -                                MachineState *ms, RISCVBootInfo *info)
-> +                                MachineState *ms, const RISCVBootInfo *info)
->   {
->       int ret = fdt_pack(ms->fdt);
->       hwaddr dram_end, temp;
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index d58656f70d1b..b91d5066d8ad 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -383,7 +383,8 @@ static void create_fdt_one_imsic(RISCVVirtState *s, hwaddr base_addr,
+>       g_autofree char *imsic_name = NULL;
+>       MachineState *ms = MACHINE(s);
+>       int socket_count = riscv_socket_count(ms);
+> -    uint32_t imsic_max_hart_per_socket, imsic_addr, imsic_size;
+> +    uint32_t imsic_max_hart_per_socket, imsic_size;
+> +    hwaddr imsic_addr;
+>       g_autofree uint32_t *imsic_cells = NULL;
+>       g_autofree uint32_t *imsic_regs = NULL;
+>       static const char * const imsic_compat[2] = {
+> @@ -403,7 +404,7 @@ static void create_fdt_one_imsic(RISCVVirtState *s, hwaddr base_addr,
+>           imsic_addr = base_addr + socket * VIRT_IMSIC_GROUP_MAX_SIZE;
+>           imsic_size = IMSIC_HART_SIZE(imsic_guest_bits) *
+>                        s->soc[socket].num_harts;
+> -        imsic_regs[socket * 4 + 0] = 0;
+> +        imsic_regs[socket * 4 + 0] = cpu_to_be32(imsic_addr >> 32);
+>           imsic_regs[socket * 4 + 1] = cpu_to_be32(imsic_addr);
+>           imsic_regs[socket * 4 + 2] = 0;
+
+
+I assume the imsic size cannot be greater than 32-bits.
+
+
+>           imsic_regs[socket * 4 + 3] = cpu_to_be32(imsic_size);
 
