@@ -4,112 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 786EBC5DF9C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 20:32:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1B53C5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 20:44:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wybL4-00069T-FC; Mon, 24 Aug 2026 16:32:14 -0400
+	id 1wybWe-0007jR-0T; Mon, 24 Aug 2026 16:44:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
- id 1wybL2-00068w-Hf; Mon, 24 Aug 2026 16:32:12 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wybWc-0007j3-DO
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 16:44:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anushree.mathur@linux.ibm.com>)
- id 1wybL0-00025b-Mr; Mon, 24 Aug 2026 16:32:12 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67OJVtBS2904887; Mon, 24 Aug 2026 20:31:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=lwBhCI
- 9QwPUf6FOSfQx7er/f1CCF82vIBT8GEo8YkVs=; b=chVJSGPVm7zODxT8SdEXg2
- QWn/6i+53hRQRkqsAGmaOwupdON/ht7sHeICah4ew8Fpq+wMJM8sq1AaedgsPhXV
- 5W2kHEFDITNWuSA2HixjNz37vbJL8VRrv1aI7NS9L4Xk4+y9sZD/kK7Vby347bgU
- rh0E6eAPNRjGce2UO1fy4EUi7YIGjewZeMkTWpRlNEpH1mFeqnyk5DcUM6ojGJTY
- U2poOIOyVQQO02LotEa6OWdcIWJCA6Loz6qXudvCy1MVhTiKseUXcFsNvAZ3GpYw
- fZipz+ZqdITl6GDphwujNTh7ZiwkE5Nzmm4iolu6guXKEpzORlBnLc9L5ESVNDzw
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dx3ujy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 20:31:58 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OKQOQY025223;
- Mon, 24 Aug 2026 20:31:57 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7p3q0k0p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 20:31:57 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67OKVuj362521692
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 20:31:56 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9280758066;
- Mon, 24 Aug 2026 20:31:56 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9A98158064;
- Mon, 24 Aug 2026 20:31:54 +0000 (GMT)
-Received: from [9.61.242.67] (unknown [9.61.242.67])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Aug 2026 20:31:54 +0000 (GMT)
-Message-ID: <e5951a59-6d63-4086-b2a3-8eb2d9381dbc@linux.ibm.com>
-Date: Tue, 25 Aug 2026 02:01:53 +0530
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wybWa-0003qT-84
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 16:44:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787604247;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KnOCsJI8Jv6vpNmzJLrS3L20EABR40qbaOv87xE830g=;
+ b=SYx1sE1xfPxHTyTWsojyEDNAm3ISTo3yBvCws5EHtTPg1/9nlUGsz3fbmLCVYfVLMJFZp1
+ +lMQlfmfHUMx3wCiRoddlT+bhTjnLs+j+geb6WZWer0Us/3vDDssatPSTC5wAWv2nmwLUA
+ ybDkrZx5EtGGTxQYEvnORKT+3U8Bo8E=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-474-27YKaCcONqOMjsWBpw-dEQ-1; Mon, 24 Aug 2026 16:44:04 -0400
+X-MC-Unique: 27YKaCcONqOMjsWBpw-dEQ-1
+X-Mimecast-MFC-AGG-ID: 27YKaCcONqOMjsWBpw-dEQ_1787604244
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-cbbb9c9bfc3so2829032a12.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 13:44:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787604244; cv=none;
+ d=google.com; s=arc-20260327;
+ b=XsqOzQrjxMDyhz9XYryhsLEmb4TL+Pg7SYHkcLcG5j3NyEw4Bmak3hR3VkmmYQyveU
+ 8EdwGZBd3fQTv/7jkqqqrw8NtNXErPk6rWzN5kFajKFY2vvPg6zyBNHmNeSajdjT0fDa
+ x8f/tHZJEOEF/uXVXrgS6fBShpF3OlW8wby+yaqwACna5DAdy9iLhW1dlnajQsa7BjJI
+ Ix68s83BnxI3FCJrokL0SyAxyu95dseml+IN1NkNyyPRkn4z/aUB9py0JvfcTLlBmrp6
+ +l/kS1JNU6ortt+WF1uRytjfAAHv7oxFElbgBvOW5LihZRydlrfE1ue4Y82MUuGoTu3B
+ YAgw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=KnOCsJI8Jv6vpNmzJLrS3L20EABR40qbaOv87xE830g=;
+ fh=ql45W2LQjIeaZ/xZ4+VidjmDW/ISdwhCg0IQSuz3z5Q=;
+ b=YsT8ITEDthsiteBJCyloe8rc4IEVY7cb/iPZRQ4890WaHUckxT5KbsvqwcHXeqUSGn
+ OSEvf7NsxwUiITqLpDSPMNubbA8h0SqEb4rw4xaGuJJJ2q5E07nSVHRUQ4qK4xAELPAa
+ PwVMhEmIqazIVOClCd7vgg/SJnMzGqWhO9sPbedRPlc6ZklKCXw5ZU/P89/ToostjJ1O
+ +60BSkrdn0+jLRh8blNOYmgE7jsmcI3gjYgU+lkbAAqDeBtBEeI0BLckhhm54iluxLW+
+ LlTph+fJ+W4qt0Alr3XErrvm7Iv7Cy0LBfidnwU3+mGDF2KDaUan0ebwCIMC1KUNOqJ3
+ MmCg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1787604244; x=1788209044; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=KnOCsJI8Jv6vpNmzJLrS3L20EABR40qbaOv87xE830g=;
+ b=Mn1OaUZmrjoLHKjD2sD1dM6k32OVVPbGmTrdOVNmfQgLdNiTujmgO/bjmVqU6fxwHi
+ 2yGoN7tt1WldUUnNlYytziWXtCdeeLQ6X758PcBcRVOJSrmpGT1+K8tvPSoqRX41kHbV
+ 5/Qio0Da/G3UaUDr77Zuj5Emdp5eig5XD5WSvxOuBQmymQxUPYeyLJABCY8FzAuMXT/V
+ Izebd1nctblOndV98HXZ7pT67j88R6EuEp0/fK0ubn1fxZk3QaIW2qrxftEwtCIO+sz1
+ Vkrbg6TdOKjqBrGTbRFLz8l0M6t+Aeb18oUqpSaquyEhixvG5OmkO0j678JMo+rBy53l
+ KY0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787604244; x=1788209044;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=KnOCsJI8Jv6vpNmzJLrS3L20EABR40qbaOv87xE830g=;
+ b=Qwhjizyx/sVzsPUUTpeXLsk7Cz71YHJtIaABeZEvLWhv0/26QMin1GUHSOWbBTC5U6
+ 60asUeAWBjm8HGYdM7xWUuABORv+slo3XTpEaSE2fxeQ+mMGAHVMDtdHkIJSMaAENQZg
+ qDOYYN2ZPYHsWjS3BnWDPth8SfLxnk0b5fS0IAD5nR3YCi7S4V6o32Aag1XZdZ/UQH0X
+ TekfS4TsUTPiE+W0AT/Q0tcWUGZXya6jvEXpd695fIbbpXGNvx4DdsTXj7tg1IlTdg2V
+ 6PUQtvd/+AyWcMULVevv4W4w3eJ1DzT1RvFZHe4yBY33lXJOiO58ZradYgDOfvomXTew
+ QoRw==
+X-Gm-Message-State: AFuF++nnhbfLG7ZDmOX7PIvuv16DndnhvQlaniWmwjhu6+zbpEx+za0U
+ 54g5AJkAVM6uNWcs7UNIRRERaOPTuOQHcMu0xwRdjPGkvv5knxNasUOgpdZZwpkp0H7Lu4O2d8a
+ HRee6DHVjfGWXNIo5qtAGr2piG0iJY1ya2dUkowZR84aar6q4ov9I4hwxbjDH8GzVKPJ8GRvPew
+ avLn1UhlQUN1BdJVyzbDFVpdR5L5qLBVY=
+X-Gm-Gg: AR+sD11jEzOQJQLXeu0YqXEmjBhAieHAyoVQf+Hmed1J9OrrA01gHnNI/fJaSb1Kydv
+ 7q2jxv4QofdZLr7HHFUB5onINsVeMhau2kVIoPjY89pFD/LdDoKDDQ8Kr3wXu+n7+NdUuTFCykU
+ skJbvdl++1Q/sroO4lbHdaEtxWOx6mi024zNwJu7JveOt7mmp6uuXw1fJiMmXhHy0cVsxVkm4py
+ BYVBTUD07CE0zB5fpx0QX8e6h5ar2fxZc8JnMREgOYwMUDwrjQzRE+zYrl/1k9k4mPaq1jeoBAv
+ VA==
+X-Received: by 2002:a05:6a20:cc9a:b0:3cd:f6c:6cdd with SMTP id
+ adf61e73a8af0-3cd913262bemr2909073637.16.1787604243608; 
+ Mon, 24 Aug 2026 13:44:03 -0700 (PDT)
+X-Received: by 2002:a05:6a20:cc9a:b0:3cd:f6c:6cdd with SMTP id
+ adf61e73a8af0-3cd913262bemr2908969637.16.1787604243090; Mon, 24 Aug 2026
+ 13:44:03 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ppc/xive: Trigger the pending interrupt for a guest after
- migration
-To: Gautam Menghani <gautam@linux.ibm.com>, milesg@linux.ibm.com, clg@kaod.org,
- harshpb@linux.ibm.com
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, anushree.mathur@linux.ibm.com
-References: <20260824070353.40016-1-gautam@linux.ibm.com>
-Content-Language: en-US
-From: Anushree Mathur <anushree.mathur@linux.ibm.com>
-In-Reply-To: <20260824070353.40016-1-gautam@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDE3MyBTYWx0ZWRfXzKz21CBeJU0F
- o3U2aW0M/Zj8YQGKuMTZPOQZhFYsgKXkeCiP6e4BBB81wl+UPg/IP71Se7CJ5Y69m/HQnrffXyQ
- F+VlxTHicuKXyXmGDygioxHQWgsXS4Q=
-X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a8caa3e cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=NIZVsFSOM9wEDLQ2xvwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: Z5OuP0oCZ7Higp38yTRYeg66sQFA0ZmS
-X-Proofpoint-GUID: Z5OuP0oCZ7Higp38yTRYeg66sQFA0ZmS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDE3MyBTYWx0ZWRfXykHxy6X8cwXN
- 7KI5toXM2le4CLuobfyntDICW4BBv+wLAb+o4wGd8bSDDS5Ou3/AqG+iWExmyIUckVp6feL6DiC
- Q6WYnRgDacCJjY4DPJzOS7BqfJii05QnoudKgHuYaXnEgTpWkWbWSZOdSgpbTJB2hwgk2c7yhaR
- 92WgYvqcslCvvv3zfIBqa0EBe3HkgpNqaZQwSVB0B1RyMS0yEitAaORdU+iyZWuRrq26R/XhM35
- CTGWlueU1Jp5ePaWyj9IUywpkSLRw4nlkNsQaYjTFuB4KQQt6xK+69TfIoYHHf1ATR8D9fJkmNc
- bMGAYSfHEUnepF8pxT+vfM6UCgEGv4lKWDuxR83FHMtCoxLiCgXjiSktPnrdZKQTi5Ib98tXxHr
- LNjYEyU3AV7aR6TAvSfKLMaSZtfZK5xS4pYRQQpIbEdZILZG/WnQAoA5zMDnaIwTG7epkociFDu
- G2s5Y1GdzH8FnmaiBAw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-24_06,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1011 adultscore=0 bulkscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608240173
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=anushree.mathur@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <vga-v3-20260824.sinxx198@gmail.com>
+In-Reply-To: <vga-v3-20260824.sinxx198@gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 25 Aug 2026 00:43:51 +0400
+X-Gm-Features: AcwNN1XqARXEHlhC2fBlPq6G_K2xZwcYsUlj6IcpjMjMIYcYoG1QN5_z9yReS7E
+Message-ID: <CAMxuvaxj4utrBXpE8HGk7zX1TmnTB3iCz68CwSKK4+LgyD20fA@mail.gmail.com>
+Subject: Re: [PATCH v3] hw/display/vga: fix text-mode OOB write after a
+ graphics surface switch
+To: Warisjeet Singh <sinxx198@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,138 +137,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 24/08/26 12:33 PM, Gautam Menghani wrote:
-> When a KVM guest is migrated to another LPAR while a stress-ng workload
-> is running, lockups are seen when the guest resumes on the destination
-> LPAR. This root cause is that if there was a pending interrupt for a cpu
-> on the source machine but it was not presented yet when the migration
-> started, the interrupt is not retriggered on the destination LPAR. This
-> is evident when running 'info pic' on the destination LPAR:
+On Mon, Aug 24, 2026 at 8:47=E2=80=AFPM Warisjeet Singh <sinxx198@gmail.com=
+> wrote:
 >
-> $ virsh qemu-monitor-command --hmp migrate 'info pic' | grep -e OS -e MSI
-> CPU[0000]:   OS    00   ff  00    ff   ff  00  ff   ff  80000400
-> CPU[0001]:   OS    00   ff  00    ff   ff  00  ff   ff  80000401
-> CPU[0002]:   OS    00   ff  00    ff   ff  00  ff   ff  80000402
-> CPU[0003]:   OS    00   ff  00    ff   ff  00  ff   ff  80000403
-> CPU[0004]:   OS    00   ff  00    ff   ff  00  ff   ff  80000404
-> CPU[0005]:   OS    00   ff  00    ff   ff  00  ff   ff  80000405
-> CPU[0006]:   OS    80   ff  02    ff   ff  00  ff   06  80000406
-> CPU[0007]:   OS    00   ff  00    ff   ff  00  ff   ff  80000407
->    00000000 MSI --    00000010   0/6   3071/16384 @3710000 ^1 [ 80000010 80000010 80000010 80000010 80000010 ^00000000 ]
->    00000001 MSI --    00000010   1/6   1852/16384 @3980000 ^1 [ 80000010 80000033 80000033 80000033 80000033 ^00000000 ]
->    00000002 MSI --    00000010   2/6   4424/16384 @40c0000 ^1 [ 80000020 80000020 80000020 80000010 80000010 ^00000000 ]
->    00000003 MSI --    00000010   3/6   1913/16384 @4220000 ^1 [ 80000010 80000032 80000010 80000010 80000010 ^00000000 ]
->    00000004 MSI --    00000010   4/6   2946/16384 @4360000 ^1 [ 80000010 80000010 80000010 80000010 80000010 ^00000000 ]
->    00000005 MSI --    00000010   5/6   2313/16384 @44a0000 ^1 [ 80000010 80000010 80000010 80000010 80000010 ^00000000 ]
->    00000006 MSI P-    00000010   6/6   5825/16384 @45f0000 ^1 [ 80000024 80000024 80000024 80000010 80000016 ^00000000 ]
->    00000007 MSI --    00000010   7/6   2346/16384 @4760000 ^1 [ 80000032 80000032 80000010 80000032 80000032 ^00000000 ]
+> vga_draw_text() decides whether the console surface needs a resize from
+> its geometry cache, but none of the cache terms observe the graphics
+> renderer having replaced the console surface in between:
 >
-> Fix this by calling xive_tctx_pipr_set() in
-> vmstate_xive_tctx_post_load(), which ends up calling qemu_irq_raise() to
-> present the interrupt.
+> - last_width/last_height are shared with vga_draw_graphic(), which
+>   stores them in pixels while the text path stores characters;
+> - last_depth stays 0 for legacy (non-VBE) graphics modes, because
+>   vga_get_bpp() only reports a depth when VBE is enabled, so the
+>   "s->last_depth" term that normally forces a resize after a graphics
+>   frame does not fire.
 >
-> Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+> So a graphics frame that shrinks the console surface (e.g. 80x25
+> pixels) followed by a text frame with matching character geometry
+> (80x25 chars) skips the resize, and the glyph loop then paints
+> width*cw x height*cheight pixels into the smaller surface, out of
+> bounds, with guest-controlled (DAC palette) values, on every display
+> refresh.
+>
+> Separate the geometry cache per renderer: text paths (vga_draw_text,
+> vga_update_text, and the text handling in vga_invalidate_display /
+> vga_common_reset) now only manipulate last_text_{width,height}, in
+> characters; last_{width,height} become graphics-only, in pixels.
+> Additionally, make the text path compare the pixel size it is about
+> to paint against the console surface's actual dimensions.  The
+> surface check is the load-bearing term: caches in either unit cannot
+> see the other renderer swapping the surface, the surface can.
+>
+> Fixes: CVE-2026-77913
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4215
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Warisjeet Singh (sin99xx) <sinxx198@gmail.com>
 > ---
->   hw/intc/xive.c | 3 +++
->   1 file changed, 3 insertions(+)
+> Changes v2 -> v3:
+> - Finish the gfx/text state separation, as requested: vga_update_text()
+>   (predicate, cache stores, and the mode-message box) and the
+>   last_width =3D=3D -1 invalidate handshake now use last_text_{width,heig=
+ht}
+>   too, so the text paths never touch the graphics cache fields.
 >
-> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-> index f473e6ac77..712498d4af 100644
-> --- a/hw/intc/xive.c
-> +++ b/hw/intc/xive.c
-> @@ -1080,6 +1080,9 @@ static int vmstate_xive_tctx_post_load(void *opaque, int version_id)
->               error_report_err(local_err);
->               return ret;
->           }
-> +    } else {
-> +        uint8_t pipr = tctx->regs[TM_QW1_OS + TM_PIPR];
-> +        xive_tctx_pipr_set(tctx, TM_QW1_OS, pipr, 0);
->       }
->   
->       return 0;
-Hi Gautam,
-I have tested this patch and it has been fixing the issue which I 
-reported. Here is my analysis:
+> Changes v1 -> v2:
+> - v1 (split caches only) did not fix the reported reproducer: after a
+>   legacy graphics frame (depth 0) the text predicate still compared
+>   equal, because nothing in it noticed the console surface had been
+>   replaced.  Keep the split for clarity, and add the surface-size
+>   check which actually catches it (verified with the qtest PoC and an
+>   ASAN build; without this patch ASAN reports a heap-buffer-overflow
+>   in vga_draw_glyph9(), with it the run is clean).
+> ---
+>  hw/display/vga.c     | 37 ++++++++++++++++++++++---------------
+>  hw/display/vga_int.h |  3 ++-
+>  2 files changed, 24 insertions(+), 16 deletions(-)
 
-a) Without applying the patch :
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-1) Start the guest and run stress-ng as below for sometime
-localhost:~ # stress-ng --cpu 4 --vm 2 --vm-bytes 1G --hdd 2 --hdd-bytes 1G
---sched other --timeout 3600000s
-stress-ng: info:  [1464] setting to a 41 days, 16 hours, 0 secs run per
-stressor
-stress-ng: info:  [1464] dispatching hogs: 4 cpu, 2 vm, 2 hdd
+>
+> diff --git a/hw/display/vga.c b/hw/display/vga.c
+> index da0c331486..cb0e28b79b 100644
+> --- a/hw/display/vga.c
+> +++ b/hw/display/vga.c
+> @@ -1241,7 +1241,10 @@ static void vga_draw_text(VGACommonState *s, int f=
+ull_update)
+>          return;
+>      }
+>
+> -    if (width !=3D s->last_width || height !=3D s->last_height ||
+> +    if (surface =3D=3D NULL ||
+> +        surface_width(surface) !=3D width * cw ||
+> +        surface_height(surface) !=3D height * cheight ||
+> +        width !=3D s->last_text_width || height !=3D s->last_text_height=
+ ||
+>          cw !=3D s->last_cw || cheight !=3D s->last_ch || s->last_depth) =
+{
+>          s->last_scr_width =3D width * cw;
+>          s->last_scr_height =3D height * cheight;
+> @@ -1249,8 +1252,8 @@ static void vga_draw_text(VGACommonState *s, int fu=
+ll_update)
+>          surface =3D qemu_console_surface(s->con);
+>          qemu_console_text_resize(s->con, width, height);
+>          s->last_depth =3D 0;
+> -        s->last_width =3D width;
+> -        s->last_height =3D height;
+> +        s->last_text_width =3D width;
+> +        s->last_text_height =3D height;
+>          s->last_ch =3D cheight;
+>          s->last_cw =3D cw;
+>          full_update =3D 1;
+> @@ -1845,6 +1848,8 @@ static void vga_invalidate_display(void *opaque)
+>
+>      s->last_width =3D -1;
+>      s->last_height =3D -1;
+> +    s->last_text_width =3D -1;
+> +    s->last_text_height =3D -1;
+>  }
+>
+>  void vga_common_reset(VGACommonState *s)
+> @@ -1887,6 +1892,8 @@ void vga_common_reset(VGACommonState *s)
+>      s->last_ch =3D 0;
+>      s->last_width =3D 0;
+>      s->last_height =3D 0;
+> +    s->last_text_width =3D 0;
+> +    s->last_text_height =3D 0;
+>      s->last_scr_width =3D 0;
+>      s->last_scr_height =3D 0;
+>      s->cursor_start =3D 0;
+> @@ -1938,8 +1945,8 @@ static void vga_update_text(void *opaque, uint32_t =
+*chardata)
+>          s->graphic_mode =3D graphic_mode;
+>          full_update =3D 1;
+>      }
+> -    if (s->last_width =3D=3D -1) {
+> -        s->last_width =3D 0;
+> +    if (s->last_text_width =3D=3D -1) {
+> +        s->last_text_width =3D 0;
+>          full_update =3D 1;
+>      }
+>
+> @@ -1978,15 +1985,15 @@ static void vga_update_text(void *opaque, uint32_=
+t *chardata)
+>              break;
+>          }
+>
+> -        if (width !=3D s->last_width || height !=3D s->last_height ||
+> +        if (width !=3D s->last_text_width || height !=3D s->last_text_he=
+ight ||
+>              cw !=3D s->last_cw || cheight !=3D s->last_ch) {
+>              s->last_scr_width =3D width * cw;
+>              s->last_scr_height =3D height * cheight;
+>              qemu_console_resize(s->con, s->last_scr_width, s->last_scr_h=
+eight);
+>              qemu_console_text_resize(s->con, width, height);
+>              s->last_depth =3D 0;
+> -            s->last_width =3D width;
+> -            s->last_height =3D height;
+> +            s->last_text_width =3D width;
+> +            s->last_text_height =3D height;
+>              s->last_ch =3D cheight;
+>              s->last_cw =3D cw;
+>              full_update =3D 1;
+> @@ -2071,22 +2078,22 @@ static void vga_update_text(void *opaque, uint32_=
+t *chardata)
+>      }
+>
+>      /* Display a message */
+> -    s->last_width =3D 60;
+> -    s->last_height =3D height =3D 3;
+> +    s->last_text_width =3D 60;
+> +    s->last_text_height =3D height =3D 3;
+>      qemu_console_text_set_cursor(s->con, -1, -1);
+> -    qemu_console_text_resize(s->con, s->last_width, height);
+> +    qemu_console_text_resize(s->con, s->last_text_width, height);
+>
+> -    for (dst =3D chardata, i =3D 0; i < s->last_width * height; i ++)
+> +    for (dst =3D chardata, i =3D 0; i < s->last_text_width * height; i +=
++)
+>          *dst++ =3D ' ';
+>
+>      size =3D strlen(msg_buffer);
+> -    width =3D (s->last_width - size) / 2;
+> -    dst =3D chardata + s->last_width + width;
+> +    width =3D (s->last_text_width - size) / 2;
+> +    dst =3D chardata + s->last_text_width + width;
+>      for (i =3D 0; i < size; i ++)
+>          *dst++ =3D ATTR2CHTYPE(msg_buffer[i], QEMU_COLOR_BLUE,
+>                               QEMU_COLOR_BLACK, 1);
+>
+> -    qemu_console_text_update(s->con, 0, 0, s->last_width, height);
+> +    qemu_console_text_update(s->con, 0, 0, s->last_text_width, height);
+>  }
+>
+>  static uint64_t vga_mem_read(void *opaque, hwaddr addr,
+> diff --git a/hw/display/vga_int.h b/hw/display/vga_int.h
+> index 5664317ecd..ca69ae9815 100644
+> --- a/hw/display/vga_int.h
+> +++ b/hw/display/vga_int.h
+> @@ -122,7 +122,8 @@ typedef struct VGACommonState {
+>      uint32_t plane_updated;
+>      uint32_t last_line_offset;
+>      uint8_t last_cw, last_ch;
+> -    uint32_t last_width, last_height; /* in chars or pixels */
+> +    uint32_t last_width, last_height; /* in pixels (graphics renderer) *=
+/
+> +    uint32_t last_text_width, last_text_height; /* in chars (text render=
+er) */
+>      uint32_t last_scr_width, last_scr_height; /* in pixels */
+>      uint32_t last_depth; /* in bits */
+>      bool last_byteswap;
+> --
+> 2.47.3
+>
 
-
-
-2) Start the migration from H1 to H2:
-
-ltc-lp7:~ # virsh migrate --live --domain sles16_anu
-qemu+ssh://10.xx.xx.xx/system --verbose --undefinesource --persistent
---auto-converge --postcopy
-Migration: [100.00 %]
-
-3) Migration got completed but guest is not getting recovered from
-continuous softlockups even while having ample number of vcpus and
-amount of memory free on host and guest both -
-
-[ 1336.003836][    C1] watchdog: BUG: soft lockup - CPU#1 stuck for 977s!
-[htxd_monitor:1337]
-[ 1336.006834][    C4] watchdog: BUG: soft lockup - CPU#4 stuck for 1002s!
-[rcu_exp_par_gp_:19]
-[ 1346.015839][    C0] BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0
-nice=0 stuck for 1090s!
-[ 1346.016355][    C0] BUG: workqueue lockup - pool cpus=3 node=0 flags=0x0
-nice=0 stuck for 1107s!
-[ 1346.016874][    C0] BUG: workqueue lockup - pool cpus=7 node=0 flags=0x0
-nice=0 stuck for 1093s!
-[ 1356.007835][    C6] watchdog: BUG: soft lockup - CPU#6 stuck for 912s!
-[systemd:1353]
-[ 1356.008835][    C7] watchdog: BUG: soft lockup - CPU#7 stuck for 998s!
-[systemd-journal:570]
-[ 1360.003836][    C1] watchdog: BUG: soft lockup - CPU#1 stuck for 999s!
-[htxd_monitor:1337]
-[ 1360.006834][    C4] watchdog: BUG: soft lockup - CPU#4 stuck for 1024s!
-[rcu_exp_par_gp_:19]
-[ 1368.933835][    C4] rcu: INFO: rcu_preempt self-detected stall on CPU
-[ 1368.933973][    C4] rcu:     4-....: (1129830 ticks this GP)
-idle=afc4/1/0x4000000000000002 softirq=3694/428556 fqs=259639
-[ 1368.934106][    C4] rcu:              hardirqs   softirqs  csw/system
-[ 1368.934188][    C4] rcu:      number:        1     444039 0
-[ 1368.934271][    C4] rcu:     cputime:        3          8 1096165   ==>
-1110021(ms)
-[ 1368.934373][    C4] rcu:     (t=1140022 jiffies g=6177 q=1684 ncpus=8)
-[ 1376.224839][    C0] BUG: workqueue lockup - pool cpus=1 node=0 flags=0x0
-nice=0 stuck for 1120s!
-[ 1376.225307][    C0] BUG: workqueue lockup - pool cpus=3 node=0 flags=0x0
-nice=0 stuck for 1138s!
-[ 1376.225428][    C0] BUG: workqueue lockup - pool cpus=5 node=0 flags=0x0
-nice=0 stuck for 715s!
-[ 1376.225548][    C0] BUG: workqueue lockup - pool cpus=6 node=0 flags=0x0
-nice=0 stuck for 1027s!
-[ 1376.225667][    C0] BUG: workqueue lockup - pool cpus=7 node=0 flags=0x0
-nice=0 stuck for 1123s!
-[ 1444.006835][    C4] watchdog: BUG: soft lockup - CPU#4 stuck for 1100s!
-[rcu_exp_par_gp_:19]
-
-
-
-b) After using the patch applied qemu this issue has been fixed. I tried multiple
-migration instances between both the hosts and this issue is not getting seen.
-Even I did try this same scenario with threads as 1/2/4/8 and for everything it worked fine.
-Thanks for working on the fix.
-
-
-Please feel free to add my tested-by:
-
-Tested-by: Anushree Mathur<anushree.mathur@linux.ibm.com>
-
-and please add my reported-by too:
-
-Reported-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-
-Thank you,
-Anushree Mathur
 
