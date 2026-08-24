@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E84CC5DF9B
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:29:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96389C5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:30:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNFU-0000jz-6v; Mon, 24 Aug 2026 01:29:32 -0400
+	id 1wyNFn-0001Fm-Nr; Mon, 24 Aug 2026 01:29:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFH-0000Yl-91
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFL-0000bP-K5
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFE-0006js-B0
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:18 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyNFK-0006kZ-8C
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:29:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787549354;
+ s=mimecast20190719; t=1787549361;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8UVXxzKZQ+ePZ6mQ2Ukb+XaR6nuv8x8hDeCBA0D4Gog=;
- b=K+WmcF8yJ8EGxsTAxH4910fU4XIr9usljuR8jwt/Y6Y0e74T5bKSvaIuEzWR5tCX85VnW7
- WO5JehUETw9xxI6gam4PRxUOpacKQopAcFPJOU6vlZYAKB9vLJpLYYQ1kRT3IxnZIYt0bD
- YD6sn6MAQqbelgcM1NznFAAK5yFhTjU=
+ bh=TH4c6HnowuFu5CvbgBQlykOA2IkGVA+5wBP1z2lgd+g=;
+ b=Be99MTuJp1NWfDLr8ZIK+k5OHLux6v+ZVt+56g6sgaHtfAKaWNx797CQAyzgECpq0PTfoQ
+ vwh3Jd+DXxCwsQqwFHoMim+vyjb0GKnJ0LkXzZhPV8rI3VSRVJboIXxgx3jiRq3QfY+vMj
+ QdNQ0YQxsSjMu8aElhZXTOqAKoA9JoA=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-u0g4Y2wYNeSGtQ0Bp0pxIw-1; Mon,
- 24 Aug 2026 01:29:10 -0400
-X-MC-Unique: u0g4Y2wYNeSGtQ0Bp0pxIw-1
-X-Mimecast-MFC-AGG-ID: u0g4Y2wYNeSGtQ0Bp0pxIw_1787549349
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-513-BO47UyY7Ouuw_YZnyq5aAg-1; Mon,
+ 24 Aug 2026 01:29:17 -0400
+X-MC-Unique: BO47UyY7Ouuw_YZnyq5aAg-1
+X-Mimecast-MFC-AGG-ID: BO47UyY7Ouuw_YZnyq5aAg_1787549355
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DC7C2180ACD2; Mon, 24 Aug 2026 05:29:08 +0000 (UTC)
+ id 6CBC3180ABE7; Mon, 24 Aug 2026 05:29:15 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.29])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C88EA1800348; Mon, 24 Aug 2026 05:29:05 +0000 (UTC)
+ id 664861800577; Mon, 24 Aug 2026 05:29:12 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -57,23 +57,23 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Cleber Rosa <crosa@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PATCH 01/12] tests: re-add opencv2 and numpy dependencies
-Date: Mon, 24 Aug 2026 01:28:47 -0400
-Message-ID: <20260824052859.880475-2-jsnow@redhat.com>
+Subject: [PATCH 03/12] tests: update emsdk-wasm64-cross
+Date: Mon, 24 Aug 2026 01:28:49 -0400
+Message-ID: <20260824052859.880475-4-jsnow@redhat.com>
 In-Reply-To: <20260824052859.880475-1-jsnow@redhat.com>
 References: <20260824052859.880475-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,339 +89,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fixes: 2a428c8541ec5e9be54aad5f0a446ec8172226c9
-
-Some of the dependencies identified as avocado dependencies were in
-fact still being used, and should be re-added to our lcitool
-configuration to ensure that these tests are being executed in the CI
-environment.
+This container currently uses Ubuntu 22.04 as a base, which is no
+longer supported by QEMU as a build platform. Upgrade to a newer
+version of the image which will provide Python3.12+.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- tests/docker/dockerfiles/alpine.docker               |  1 +
- tests/docker/dockerfiles/centos9.docker              |  2 ++
- tests/docker/dockerfiles/debian-amd64-cross.docker   |  2 ++
- tests/docker/dockerfiles/debian-arm64-cross.docker   |  2 ++
- tests/docker/dockerfiles/debian-armhf-cross.docker   |  2 ++
- tests/docker/dockerfiles/debian-i686-cross.docker    |  2 ++
- tests/docker/dockerfiles/debian-ppc64el-cross.docker |  2 ++
- tests/docker/dockerfiles/debian-riscv64-cross.docker |  2 ++
- tests/docker/dockerfiles/debian-s390x-cross.docker   |  2 ++
- tests/docker/dockerfiles/debian.docker               |  2 ++
- tests/docker/dockerfiles/fedora-rust-nightly.docker  |  2 ++
- tests/docker/dockerfiles/fedora-win64-cross.docker   |  2 ++
- tests/docker/dockerfiles/fedora.docker               |  2 ++
- tests/docker/dockerfiles/opensuse-leap.docker        |  2 ++
- tests/docker/dockerfiles/ubuntu2404.docker           |  2 ++
- .gitlab-ci.d/macos-14.vars                           |  2 +-
- scripts/ci/setup/debian/debian-13-ppc64le.yaml       |  2 ++
- scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml     |  2 ++
- scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml       |  2 ++
- tests/lcitool/mappings.yml                           | 12 ++++++++++++
- tests/lcitool/projects/qemu.yml                      |  2 ++
- tests/vm/generated/freebsd.json                      |  2 ++
- 22 files changed, 52 insertions(+), 1 deletion(-)
+ tests/docker/dockerfiles/emsdk-wasm64-cross.docker | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tests/docker/dockerfiles/alpine.docker b/tests/docker/dockerfiles/alpine.docker
-index 8a5a355e89a..7c342e801c5 100644
---- a/tests/docker/dockerfiles/alpine.docker
-+++ b/tests/docker/dockerfiles/alpine.docker
-@@ -83,6 +83,7 @@ RUN apk update && \
-         pixman-dev \
-         pkgconf \
-         pulseaudio-dev \
-+        py3-numpy \
-         py3-pip \
-         py3-setuptools \
-         py3-sphinx \
-diff --git a/tests/docker/dockerfiles/centos9.docker b/tests/docker/dockerfiles/centos9.docker
-index 8101370a2db..6f5c400c2db 100644
---- a/tests/docker/dockerfiles/centos9.docker
-+++ b/tests/docker/dockerfiles/centos9.docker
-@@ -130,6 +130,8 @@ RUN dnf --quiet distro-sync -y && \
-     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
+diff --git a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+index c04a741b0e5..f11a9f34244 100644
+--- a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
++++ b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+@@ -1,6 +1,6 @@
+ # syntax = docker/dockerfile:1.5
  
- RUN /usr/bin/pip3.11 install \
-+                     numpy \
-+                     opencv-python \
-                      sphinx \
-                      sphinx-rtd-theme
- 
-diff --git a/tests/docker/dockerfiles/debian-amd64-cross.docker b/tests/docker/dockerfiles/debian-amd64-cross.docker
-index 9e30457ca79..9b446a480b1 100644
---- a/tests/docker/dockerfiles/debian-amd64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-amd64-cross.docker
-@@ -41,6 +41,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/tests/docker/dockerfiles/debian-arm64-cross.docker b/tests/docker/dockerfiles/debian-arm64-cross.docker
-index b9b94e5e6fa..95c757edb7c 100644
---- a/tests/docker/dockerfiles/debian-arm64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-arm64-cross.docker
-@@ -41,6 +41,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/tests/docker/dockerfiles/debian-armhf-cross.docker b/tests/docker/dockerfiles/debian-armhf-cross.docker
-index aa412ff66f5..0c6287408ac 100644
---- a/tests/docker/dockerfiles/debian-armhf-cross.docker
-+++ b/tests/docker/dockerfiles/debian-armhf-cross.docker
-@@ -41,6 +41,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
-index d07eac84fe8..99447e2e79b 100644
---- a/tests/docker/dockerfiles/debian-i686-cross.docker
-+++ b/tests/docker/dockerfiles/debian-i686-cross.docker
-@@ -41,6 +41,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/tests/docker/dockerfiles/debian-ppc64el-cross.docker b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-index 7302c8236e4..534c9b55836 100644
---- a/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-@@ -41,6 +41,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/tests/docker/dockerfiles/debian-riscv64-cross.docker b/tests/docker/dockerfiles/debian-riscv64-cross.docker
-index aa5a881cab2..0df92c80c05 100644
---- a/tests/docker/dockerfiles/debian-riscv64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-riscv64-cross.docker
-@@ -41,6 +41,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/tests/docker/dockerfiles/debian-s390x-cross.docker b/tests/docker/dockerfiles/debian-s390x-cross.docker
-index 82eae4fc2c2..12c94a40ec7 100644
---- a/tests/docker/dockerfiles/debian-s390x-cross.docker
-+++ b/tests/docker/dockerfiles/debian-s390x-cross.docker
-@@ -41,6 +41,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/tests/docker/dockerfiles/debian.docker b/tests/docker/dockerfiles/debian.docker
-index 3a4f208ccf6..d808c945f46 100644
---- a/tests/docker/dockerfiles/debian.docker
-+++ b/tests/docker/dockerfiles/debian.docker
-@@ -113,6 +113,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/tests/docker/dockerfiles/fedora-rust-nightly.docker b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-index 0f3dc370a4f..0f7b4c13388 100644
---- a/tests/docker/dockerfiles/fedora-rust-nightly.docker
-+++ b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-@@ -104,6 +104,8 @@ exec "$@"\n' > /usr/bin/nosync && \
-                        pkgconfig \
-                        pulseaudio-libs-devel \
-                        python3 \
-+                       python3-numpy \
-+                       python3-opencv \
-                        python3-pip \
-                        python3-setuptools \
-                        python3-sphinx \
-diff --git a/tests/docker/dockerfiles/fedora-win64-cross.docker b/tests/docker/dockerfiles/fedora-win64-cross.docker
-index 6f972f61738..3ed3e15df33 100644
---- a/tests/docker/dockerfiles/fedora-win64-cross.docker
-+++ b/tests/docker/dockerfiles/fedora-win64-cross.docker
-@@ -44,6 +44,8 @@ exec "$@"\n' > /usr/bin/nosync && \
-                        ninja-build \
-                        openssh-clients \
-                        python3 \
-+                       python3-numpy \
-+                       python3-opencv \
-                        python3-pip \
-                        python3-setuptools \
-                        python3-sphinx \
-diff --git a/tests/docker/dockerfiles/fedora.docker b/tests/docker/dockerfiles/fedora.docker
-index 99bb38a3665..8fa8bea1abf 100644
---- a/tests/docker/dockerfiles/fedora.docker
-+++ b/tests/docker/dockerfiles/fedora.docker
-@@ -104,6 +104,8 @@ exec "$@"\n' > /usr/bin/nosync && \
-                        pkgconfig \
-                        pulseaudio-libs-devel \
-                        python3 \
-+                       python3-numpy \
-+                       python3-opencv \
-                        python3-pip \
-                        python3-setuptools \
-                        python3-sphinx \
-diff --git a/tests/docker/dockerfiles/opensuse-leap.docker b/tests/docker/dockerfiles/opensuse-leap.docker
-index 8d8631bbcf0..3174c2e3cc2 100644
---- a/tests/docker/dockerfiles/opensuse-leap.docker
-+++ b/tests/docker/dockerfiles/opensuse-leap.docker
-@@ -95,6 +95,8 @@ RUN zypper update -y && \
-            pkgconfig \
-            python3-Sphinx \
-            python3-base \
-+           python3-numpy \
-+           python3-opencv \
-            python3-pip \
-            python3-setuptools \
-            python3-sphinx_rtd_theme \
-diff --git a/tests/docker/dockerfiles/ubuntu2404.docker b/tests/docker/dockerfiles/ubuntu2404.docker
-index a5c22231f98..0918622e53d 100644
---- a/tests/docker/dockerfiles/ubuntu2404.docker
-+++ b/tests/docker/dockerfiles/ubuntu2404.docker
-@@ -113,6 +113,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/.gitlab-ci.d/macos-14.vars b/.gitlab-ci.d/macos-14.vars
-index 0c187624dd0..f96e173f663 100644
---- a/.gitlab-ci.d/macos-14.vars
-+++ b/.gitlab-ci.d/macos-14.vars
-@@ -12,5 +12,5 @@ NINJA='/opt/homebrew/bin/ninja'
- PACKAGING_COMMAND='brew'
- PIP3='/opt/homebrew/bin/pip3'
- PKGS='bash bc bindgen bison bzip2 capstone ccache cmocka coreutils ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libcbor libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python-setuptools python3 rpm2cpio rust sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 vulkan-tools xorriso zlib zstd'
--PYPI_PKGS='sphinx sphinx-rtd-theme tomli'
-+PYPI_PKGS='numpy sphinx sphinx-rtd-theme tomli'
- PYTHON='/opt/homebrew/bin/python3'
-diff --git a/scripts/ci/setup/debian/debian-13-ppc64le.yaml b/scripts/ci/setup/debian/debian-13-ppc64le.yaml
-index 9acd99a7433..918deeb6ad7 100644
---- a/scripts/ci/setup/debian/debian-13-ppc64le.yaml
-+++ b/scripts/ci/setup/debian/debian-13-ppc64le.yaml
-@@ -105,6 +105,8 @@ packages:
-   - openssh-client
-   - pkgconf
-   - python3
-+  - python3-numpy
-+  - python3-opencv
-   - python3-pip
-   - python3-setuptools
-   - python3-sphinx
-diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml b/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
-index 5c948109df8..38da57519d6 100644
---- a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
-+++ b/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
-@@ -106,6 +106,8 @@ packages:
-   - openssh-client
-   - pkgconf
-   - python3
-+  - python3-numpy
-+  - python3-opencv
-   - python3-pip
-   - python3-setuptools
-   - python3-sphinx
-diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml b/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
-index 010b7f86aab..bae71c1cbc6 100644
---- a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
-+++ b/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
-@@ -104,6 +104,8 @@ packages:
-   - openssh-client
-   - pkgconf
-   - python3
-+  - python3-numpy
-+  - python3-opencv
-   - python3-pip
-   - python3-setuptools
-   - python3-sphinx
-diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
-index 1816556dde4..2b317e0a61c 100644
---- a/tests/lcitool/mappings.yml
-+++ b/tests/lcitool/mappings.yml
-@@ -21,6 +21,12 @@ mappings:
-   python3-sphinx-rtd-theme:
-     CentOSStream9:
- 
-+  python3-numpy:
-+    CentOSStream9:
-+
-+  python3-opencv:
-+    CentOSStream9:
-+
-   python3-venv:
-     CentOSStream9: python3.11
- 
-@@ -54,3 +60,9 @@ pypi_mappings:
-     apk:
-     Fedora:
-     Debian12:
-+
-+  python3-numpy:
-+    CentOSStream9: numpy
-+
-+  python3-opencv:
-+    CentOSStream9: opencv-python
-diff --git a/tests/lcitool/projects/qemu.yml b/tests/lcitool/projects/qemu.yml
-index b3c99936723..abbd3e3f0b8 100644
---- a/tests/lcitool/projects/qemu.yml
-+++ b/tests/lcitool/projects/qemu.yml
-@@ -91,6 +91,8 @@ packages:
-  - pkg-config
-  - pulseaudio
-  - python3
-+ - python3-numpy
-+ - python3-opencv
-  - python3-pip
-  - python3-setuptools
-  - python3-sphinx
-diff --git a/tests/vm/generated/freebsd.json b/tests/vm/generated/freebsd.json
-index dfa8b41a524..3beec924e8f 100644
---- a/tests/vm/generated/freebsd.json
-+++ b/tests/vm/generated/freebsd.json
-@@ -49,9 +49,11 @@
-     "ncurses",
-     "nettle",
-     "ninja",
-+    "opencv",
-     "pixman",
-     "pkgconf",
-     "png",
-+    "py311-numpy",
-     "py311-pip",
-     "py311-setuptools",
-     "py311-sphinx",
+-ARG EMSDK_VERSION_QEMU=4.0.10
++ARG EMSDK_VERSION_QEMU=5.0.2
+ ARG ZLIB_VERSION=1.3.2
+ ARG GLIB_MINOR_VERSION=2.84
+ ARG GLIB_VERSION=${GLIB_MINOR_VERSION}.0
+@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y \
+     pkgconf \
+     ninja-build \
+     python3-pip
+-RUN pip3 install meson==${MESON_VERSION} tomli
++RUN pip3 install --break-system-packages meson==${MESON_VERSION} tomli
+ RUN mkdir /build
+ WORKDIR /build
+ RUN mkdir -p $TARGET
 -- 
 2.55.0
 
