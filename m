@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 422F8C5DF9D
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 06:01:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12F5BC5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 06:01:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNbO-0005Ep-TJ; Mon, 24 Aug 2026 01:52:11 -0400
+	id 1wyNao-0004UA-VI; Mon, 24 Aug 2026 01:51:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNar-0004Xv-A4
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:51:37 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1wyNZT-0002MO-BP
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:50:11 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNah-0002iN-TF
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:51:37 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-38dcbade417so3536427a91.1
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:51:27 -0700 (PDT)
+ id 1wyNZQ-0002Co-FS
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:50:11 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-39266382df6so2397771a91.3
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:50:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787550686; x=1788155486; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787550607; x=1788155407; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=msTYxKrfEGozy/cQf2TaV3I4p9p1A05eh8KT3o9m9rM=;
- b=CEPTsFhGEppk16B4QPjEguA6jNDDQQ2EgBdyGv4MN/RYBD1AzYm28UJZQ3giLlF1+A
- IeD3CENF+FuIRNd9RYzgssdgfYr1Lzwoy5ruvgo8ZHindU3Aniy/hkWNqEsZvPDWKU2y
- YIsTKIY1XoavS2KWb76R6EWeI+ACUcfgZ8Tw+pIMcPnDladNroSpsfPoPoEhyiCZvpin
- TG637TrZ9GxfFzZmK4SL6QA55Z0O4lF7CRgVlzyP0yK9UnEfUcbuXdzHOHCZcDC/lAXL
- zRTOMcS5JGZodcb71LVd13934ga+IHecQPW7fwXFYt8Y65dK7KDYeiPht2JcdmwFxJB7
- 3C1g==
+ bh=YDe9QslZfKvhuINTOB9JrcuDeFDRZ6aQd6kbXZ9uq/w=;
+ b=Q0/ntjh+yOnBxvxFVfjH3YLk1iaXD/Nh85KVc3DY0nWrC4wXIwpdtVQFMMwZl1QbSr
+ jw/WhtV7R+zYqOGrxUvibORa6oc03BmCpa6dTaSV+cJWBLLv0at2f2SVnIQZJW8AnqvO
+ esgNnaCug5gENMSJOsfOIQ1UUUuOp/o4gvctLDcZA5CrxhQZtTrUoHkm5vnePkCgiwnG
+ kfsZ3hqyqWsNaow8rxcN76NwtV7yRzbd2zSC7pNm2kKQfvrb9hPi2xKVF+VfHIs8MjuN
+ DeSbAsZjj8IC8/wRyDvgheNlUO2Ki5Yv4HlFoXoU3OphhAGJ5mczneUOVCQ5BjZohXqn
+ fE4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787550686; x=1788155486;
+ d=1e100.net; s=20251104; t=1787550607; x=1788155407;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=msTYxKrfEGozy/cQf2TaV3I4p9p1A05eh8KT3o9m9rM=;
- b=IczGXWmHhxFVasWYAwC1fW9h5Ixxs3PI30W9NvnbREgv2x79T32mg9XnAmlGq0Dkpw
- z4hBIih+e8myjvjo0Ewy3jBBsdAdhoU6UYQX4zfNg1mS2xXhjzSVqVhxNQBOfL64X/V8
- AT41l+UT0vIEqoiVaI/abRw8ohy4OrNyz1Ci7rtlEcussESrtP8D5kOVFgGDDyHFHw+8
- vUhqHoWUUP1ZcYJvwIv/AkqMOKZMeO/AIMHZhQU/KJRCAecPExg8t0n7XzgC/LlTktPm
- 3RyrPiJ4cKnK5YwNynJ06mO1XF8rUUAM6hTs3wqcQnKYgLjkIVnmlLvA99Q5KYWLpNEw
- cHmw==
-X-Gm-Message-State: AFuF++nH7thvGvTkwdxZQ75L29eJLOq1HD+Hm1TH6d94bKVRPhT6yqCG
- DIT2SuSLC7Vkg9AkQBCiVgsUgAXJqU0hT5iyrJQ5QyBPWf/MYg/H4KMew5OTEA==
-X-Gm-Gg: AR+sD13SwSXg0a8uosEEnrTPx1hvLpLvpKOIcfq8nlqn8BffEfyX2RfwzMaGTCxJiDC
- C4Sdfao0VchqkMe9TmNXVYKJ52fDVnJHje13SxhFrcautZaI0dGPUF8hAIVXp6VREbJI8qUcICR
- kFTBB3COK0B37e+uxmGGvbdbDd02Zge770/mSV7XvC1ZtUtNtqdoQfrggqQhSoiOHAhkONqeFUW
- 2AtWoXw41SD2RteAEYBlftFUr4ieHzGpb0soi/9SHpMKY+QrPplkopj/F907WZ422jF2EiyRM6P
- h5l9UC1PP682oawxsTVYyNcflcyHxnc+YdHmsuuYQYTRRYPyfh4emiBh5iQ2LrbNsh7HvlveHNx
- fe1ZG2LbB+zQ3lEqox/NgmF9gRmDOq/cSBf6FFoOyquoolMLFNBME+taTtnjyn+aXs9LUCScive
- pVhIFQINDSQuFzFN/ZD8TiGzUNa0mInDyiwyT1JEBYQ4LP4BmzU+WcOzmLdq1/1ExVbVFPTaSdS
- 27+qfFWp594Ntsb
-X-Received: by 2002:a17:90b:1b04:b0:38d:dfd1:7c1 with SMTP id
- 98e67ed59e1d1-395c33406e0mr40085082a91.2.1787550686434; 
- Sun, 23 Aug 2026 22:51:26 -0700 (PDT)
+ bh=YDe9QslZfKvhuINTOB9JrcuDeFDRZ6aQd6kbXZ9uq/w=;
+ b=DWvzYTS9BE/Zx/A271qqrXPzIH94ZEBsE3P57qZBPePqjPCBgfYKEFbGqLsFXwbt8F
+ Q3eLUkDuS3Th97/TGnge/8sBQFfirExzp48hS0j0viWghtH7E9E2g5/NAdKGhUQ2JOyh
+ Cjtc2RImGtAfSnN0geKqbe1B99sUCxQo910JeNTdcAa7gjg7EmR8gcnNLbxvKROMeqtB
+ BUysSrvMxRfQLggG3JmW75cm61jSF0iDdEMBO6MiV6pP9qszU8WGZDukIdEi2pMq/yNX
+ UYcI2JumVDNrXI5XiZIvjPP3CPVm3FKKqdWKdH75bIhQCqvMQF5YongLKQ+kTSLBWl3u
+ y0lg==
+X-Gm-Message-State: AFuF++km3mUgSfbL8Fxz8OpwazeGGm/QFsXrMLVp1QXmkapEF0i1+/xu
+ 7ZyGhSSeQsjCgJysog3xIzJhFDq+MCjMUwDPz8YoNqmjJY0gQZD0cdvspT+g8g==
+X-Gm-Gg: AR+sD12v/Gv6WKwrnk/dAJhns9dZx55jbGxjKxKlsCVt9+Mk3FU8Z8dk8z9NG86Ol+c
+ kigfVv4kwsKhl9H1IoJo787sa1y7mC7cRCpC017hJ6Y5MWB1R7OGBvgOW3Jspggy5ig7w9XzZG5
+ mtgHy/ViyB/oQ20E/ezTp8ndTOp0Wer5LPFTY6rNbZgOjaB6OF0Uj7TuYKjCXggnBljLhUCwUTh
+ FU0Cob6gtfDM0KywfBqevAU8Ih2LPtntrzKlw4mRpPLrxiWSDwU6CEuQSknol84oA4AaglALlZC
+ OAShjujD/SGLovp0VEXiajbgO1woQFyg2uJn1jyD8SSIT9tX4dFv5UJU57/oo4iBJdkS6ZSF74U
+ 0ja0DlnJWG8tv467ugT2ZaL6uiUWYxcdoyYaz3qLORd19AYRPUIv6uqGA1kNtxbtrsZa3JIURVF
+ GL04QNiDtsQTnCq16zweEh4N82NCvM2E7wapgWvVQQ0szGt/OzriWQ7OdDw1YzZjXRk+0NR5Clz
+ AyZ96EbCHVAjJXF
+X-Received: by 2002:a17:90b:3d85:b0:392:c80b:8eff with SMTP id
+ 98e67ed59e1d1-395c3573af2mr42011934a91.11.1787550606879; 
+ Sun, 23 Aug 2026 22:50:06 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.51.24
+ 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.50.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Aug 2026 22:51:25 -0700 (PDT)
+ Sun, 23 Aug 2026 22:50:06 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 62/96] disas/riscv: Tidy rv_comp_data terminators
-Date: Mon, 24 Aug 2026 15:47:32 +1000
-Message-ID: <20260824054806.2790041-63-alistair.francis@wdc.com>
+Subject: [PULL v2 34/96] disas/riscv: Move operand extractors earlier in file
+Date: Mon, 24 Aug 2026 15:47:04 +1000
+Message-ID: <20260824054806.2790041-35-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260824054806.2790041-1-alistair.francis@wdc.com>
 References: <20260824054806.2790041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,167 +105,903 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Use { } instead of two zeros.
-
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260812223142.349142-30-richard.henderson@linaro.org>
+Message-ID: <20260812223142.349142-2-richard.henderson@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- disas/riscv.c | 46 +++++++++++++++++++++++-----------------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ disas/riscv.c | 870 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 435 insertions(+), 435 deletions(-)
 
 diff --git a/disas/riscv.c b/disas/riscv.c
-index e0b3d22031..f3c9213fd1 100644
+index 2ba0a6a73a..e3fbc26626 100644
 --- a/disas/riscv.c
 +++ b/disas/riscv.c
-@@ -1072,123 +1072,123 @@ static const rvc_constraint rvcc_true[] = { rvc_end };
- static const rv_comp_data rvcp_jal[] = {
-     { rv_op_j, rvcc_j },
-     { rv_op_jal_ra, rvcc_jal_ra },
--    { rv_op_illegal, NULL }
-+    { },
+@@ -1259,6 +1259,401 @@ static const rv_comp_data rvcp_fsgnjx_q[] = {
+     { rv_op_illegal, NULL }
  };
  
- static const rv_comp_data rvcp_jalr[] = {
-     { rv_op_ret, rvcc_ret },
-     { rv_op_jr, rvcc_jr },
-     { rv_op_jalr_ra, rvcc_jalr_ra },
--    { rv_op_illegal, NULL }
-+    { },
- };
++/* operand extractors */
++
++static uint32_t operand_rd(rv_inst inst)
++{
++    return extract32(inst, 7, 5);
++}
++
++static uint32_t operand_rs1(rv_inst inst)
++{
++    return extract32(inst, 15, 5);
++}
++
++static uint32_t operand_rs2(rv_inst inst)
++{
++    return extract32(inst, 20, 5);
++}
++
++static uint32_t operand_rs3(rv_inst inst)
++{
++    return extract32(inst, 27, 5);
++}
++
++static uint32_t operand_aq(rv_inst inst)
++{
++    return extract32(inst, 26, 1);
++}
++
++static uint32_t operand_rl(rv_inst inst)
++{
++    return extract32(inst, 25, 1);
++}
++
++static uint32_t operand_pred(rv_inst inst)
++{
++    return extract32(inst, 24, 4);
++}
++
++static uint32_t operand_succ(rv_inst inst)
++{
++    return extract32(inst, 20, 4);
++}
++
++static uint32_t operand_rm(rv_inst inst)
++{
++    return extract32(inst, 12, 3);
++}
++
++static uint32_t operand_shamt5(rv_inst inst)
++{
++    return extract32(inst, 20, 5);
++}
++
++static uint32_t operand_shamt6(rv_inst inst)
++{
++    return extract32(inst, 20, 6);
++}
++
++static uint32_t operand_shamt7(rv_inst inst)
++{
++    return extract32(inst, 20, 7);
++}
++
++static uint32_t operand_crdq(rv_inst inst)
++{
++    return extract32(inst, 2, 3);
++}
++
++static uint32_t operand_crs1q(rv_inst inst)
++{
++    return extract32(inst, 7, 3);
++}
++
++static uint32_t operand_crs1rdq(rv_inst inst)
++{
++    return extract32(inst, 7, 3);
++}
++
++static uint32_t operand_crs2q(rv_inst inst)
++{
++    return extract32(inst, 2, 3);
++}
++
++static uint32_t calculate_xreg(uint32_t sreg)
++{
++    return sreg < 2 ? sreg + 8 : sreg + 16;
++}
++
++static uint32_t operand_sreg1(rv_inst inst)
++{
++    return calculate_xreg(extract32(inst, 7, 3));
++}
++
++static uint32_t operand_sreg2(rv_inst inst)
++{
++    return calculate_xreg(extract32(inst, 2, 3));
++}
++
++static uint32_t operand_crd(rv_inst inst)
++{
++    return extract32(inst, 7, 5);
++}
++
++static uint32_t operand_crs1(rv_inst inst)
++{
++    return extract32(inst, 7, 5);
++}
++
++static uint32_t operand_crs1rd(rv_inst inst)
++{
++    return extract32(inst, 7, 5);
++}
++
++static uint32_t operand_crs2(rv_inst inst)
++{
++    return extract32(inst, 2, 5);
++}
++
++static uint32_t operand_cimmsh5(rv_inst inst)
++{
++    return extract32(inst, 2, 5);
++}
++
++static uint32_t operand_csr12(rv_inst inst)
++{
++    return extract32(inst, 20, 12);
++}
++
++static int32_t operand_imm12(rv_inst inst)
++{
++    return sextract32(inst, 20, 12);
++}
++
++static int32_t operand_imm20(rv_inst inst)
++{
++    return sextract32(inst, 12, 20) << 12;
++}
++
++static int32_t operand_jimm20(rv_inst inst)
++{
++    return sextract32(inst, 31, 1) << 20 |
++        extract32(inst, 21, 10) << 1 |
++        extract32(inst, 20, 1) << 11 |
++        extract32(inst, 12, 8) << 12;
++}
++
++static int32_t operand_simm12(rv_inst inst)
++{
++    return sextract32(inst, 25, 7) << 5 |
++        extract32(inst, 7, 5);
++}
++
++static int32_t operand_sbimm12(rv_inst inst)
++{
++    return sextract32(inst, 31, 1) << 12 |
++        extract32(inst, 25, 6) << 5 |
++        extract32(inst, 8, 4) << 1 |
++        extract32(inst, 7, 1) << 11;
++}
++
++static uint32_t operand_cimmshl6(rv_inst inst, rv_isa isa)
++{
++    int imm = extract32(inst, 12, 1) << 5 |
++        extract32(inst, 2, 5);
++    if (isa == rv128) {
++        imm = imm ? imm : 64;
++    }
++    return imm;
++}
++
++static uint32_t operand_cimmshr6(rv_inst inst, rv_isa isa)
++{
++    int imm = extract32(inst, 12, 1) << 5 |
++        extract32(inst, 2, 5);
++    if (isa == rv128) {
++        imm = imm | (imm & 32) << 1;
++        imm = imm ? imm : 64;
++    }
++    return imm;
++}
++
++static int32_t operand_cimmi(rv_inst inst)
++{
++    return sextract32(inst, 12, 1) << 5 |
++        extract32(inst, 2, 5);
++}
++
++static int32_t operand_cimmui(rv_inst inst)
++{
++    return sextract32(inst, 12, 1) << 17 |
++        extract32(inst, 2, 5) << 12;
++}
++
++static uint32_t operand_cimmlwsp(rv_inst inst)
++{
++    return extract32(inst, 12, 1) << 5 |
++        extract32(inst, 4, 3) << 2 |
++        extract32(inst, 2, 2) << 6;
++}
++
++static uint32_t operand_cimmldsp(rv_inst inst)
++{
++    return extract32(inst, 12, 1) << 5 |
++        extract32(inst, 5, 2) << 3 |
++        extract32(inst, 2, 3) << 6;
++}
++
++static uint32_t operand_cimmlqsp(rv_inst inst)
++{
++    return extract32(inst, 12, 1) << 5 |
++        extract32(inst, 6, 1) << 4 |
++        extract32(inst, 2, 4) << 6;
++}
++
++static int32_t operand_cimm16sp(rv_inst inst)
++{
++    return sextract32(inst, 12, 1) << 9 |
++        extract32(inst, 6, 1) << 4 |
++        extract32(inst, 5, 1) << 6 |
++        extract32(inst, 3, 2) << 7 |
++        extract32(inst, 2, 1) << 5;
++}
++
++static int32_t operand_cimmj(rv_inst inst)
++{
++    return sextract32(inst, 12, 1) << 11 |
++        extract32(inst, 11, 1) << 4 |
++        extract32(inst, 9, 2) << 8 |
++        extract32(inst, 8, 1) << 10 |
++        extract32(inst, 7, 1) << 6 |
++        extract32(inst, 6, 1) << 7 |
++        extract32(inst, 3, 3) << 1 |
++        extract32(inst, 2, 1) << 5;
++}
++
++static int32_t operand_cimmb(rv_inst inst)
++{
++    return sextract32(inst, 12, 1) << 8 |
++        extract32(inst, 10, 2) << 3 |
++        extract32(inst, 5, 2) << 6 |
++        extract32(inst, 3, 2) << 1 |
++        extract32(inst, 2, 1) << 5;
++}
++
++static uint32_t operand_cimmswsp(rv_inst inst)
++{
++    return extract32(inst, 9, 4) << 2 |
++        extract32(inst, 7, 2) << 6;
++}
++
++static uint32_t operand_cimmsdsp(rv_inst inst)
++{
++    return extract32(inst, 10, 3) << 3 |
++        extract32(inst, 7, 3) << 6;
++}
++
++static uint32_t operand_cimmsqsp(rv_inst inst)
++{
++    return extract32(inst, 11, 2) << 4 |
++        extract32(inst, 7, 4) << 6;
++}
++
++static uint32_t operand_cimm4spn(rv_inst inst)
++{
++    return extract32(inst, 11, 2) << 4 |
++        extract32(inst, 7, 4) << 6 |
++        extract32(inst, 6, 1) << 2 |
++        extract32(inst, 5, 1) << 3;
++}
++
++static uint32_t operand_cimmw(rv_inst inst)
++{
++    return extract32(inst, 10, 3) << 3 |
++        extract32(inst, 6, 1) << 2 |
++        extract32(inst, 5, 1) << 6;
++}
++
++static uint32_t operand_cimmd(rv_inst inst)
++{
++    return extract32(inst, 10, 3) << 3 |
++        extract32(inst, 5, 2) << 6;
++}
++
++static uint32_t operand_cimmq(rv_inst inst)
++{
++    return extract32(inst, 11, 2) << 4 |
++        extract32(inst, 10, 1) << 8 |
++        extract32(inst, 5, 2) << 6;
++}
++
++static int32_t operand_vimm(rv_inst inst)
++{
++    return sextract32(inst, 15, 5);
++}
++
++static uint32_t operand_vuimm(rv_inst inst)
++{
++    return extract32(inst, 15, 5);
++}
++
++static uint32_t operand_vzimm11(rv_inst inst)
++{
++    return extract32(inst, 20, 11);
++}
++
++static uint32_t operand_vzimm10(rv_inst inst)
++{
++    return extract32(inst, 20, 10);
++}
++
++static uint32_t operand_vzimm6(rv_inst inst)
++{
++    return extract32(inst, 26, 1) << 5 |
++        extract32(inst, 15, 5);
++}
++
++static uint32_t operand_bs(rv_inst inst)
++{
++    return extract32(inst, 30, 2);
++}
++
++static uint32_t operand_rnum(rv_inst inst)
++{
++    return extract32(inst, 20, 4);
++}
++
++static uint32_t operand_vm(rv_inst inst)
++{
++    return extract32(inst, 25, 1);
++}
++
++static uint32_t operand_uimm_c_lb(rv_inst inst)
++{
++    return extract32(inst, 5, 1) << 1 |
++        extract32(inst, 6, 1);
++}
++
++static uint32_t operand_uimm_c_lh(rv_inst inst)
++{
++    return extract32(inst, 5, 1) << 1;
++}
++
++static uint32_t operand_zcmp_spimm(rv_inst inst)
++{
++    return extract32(inst, 2, 2) << 4;
++}
++
++static uint32_t operand_zcmp_rlist(rv_inst inst)
++{
++    return extract32(inst, 4, 4);
++}
++
++static uint32_t operand_imm6(rv_inst inst)
++{
++    return extract32(inst, 20, 6);
++}
++
++static uint32_t operand_imm2(rv_inst inst)
++{
++    return extract32(inst, 25, 2);
++}
++
++static uint32_t operand_immh(rv_inst inst)
++{
++    return extract32(inst, 26, 6);
++}
++
++static uint32_t operand_imml(rv_inst inst)
++{
++    return extract32(inst, 20, 6);
++}
++
++static uint32_t calculate_stack_adj(rv_isa isa, uint32_t rlist, uint32_t spimm)
++{
++    int xlen_bytes_log2 = isa == rv64 ? 3 : 2;
++    int regs = rlist == 15 ? 13 : rlist - 3;
++    uint32_t stack_adj_base = ROUND_UP(regs << xlen_bytes_log2, 16);
++    return stack_adj_base + spimm;
++}
++
++static uint32_t operand_zcmp_stack_adj(rv_inst inst, rv_isa isa)
++{
++    return calculate_stack_adj(isa, operand_zcmp_rlist(inst),
++                               operand_zcmp_spimm(inst));
++}
++
++static uint32_t operand_tbl_index(rv_inst inst)
++{
++    return extract32(inst, 2, 8);
++}
++
++static uint32_t operand_lpl(rv_inst inst)
++{
++    return extract32(inst, 12, 20);
++}
++
+ /* instruction metadata */
  
- static const rv_comp_data rvcp_beq[] = {
-     { rv_op_beqz, rvcc_beqz },
--    { rv_op_illegal, NULL }
-+    { },
- };
+ const rv_opcode_data rvi_opcode_data[] = {
+@@ -4155,442 +4550,47 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+                     case 2: op = rv_op_vaesem_vv; break;
+                     case 3: op = rv_op_vaesef_vv; break;
+                     case 16: op = rv_op_vsm4r_vv; break;
+-                    case 17: op = rv_op_vgmul_vv; break;
+-                    }
+-                    break;
+-                case 41:
+-                    switch ((inst >> 15) & 0b11111) {
+-                    case 0: op = rv_op_vaesdm_vs; break;
+-                    case 1: op = rv_op_vaesdf_vs; break;
+-                    case 2: op = rv_op_vaesem_vs; break;
+-                    case 3: op = rv_op_vaesef_vs; break;
+-                    case 7: op = rv_op_vaesz_vs; break;
+-                    case 16: op = rv_op_vsm4r_vs; break;
+-                    }
+-                    break;
+-                case 42: op = rv_op_vaeskf2_vi; break;
+-                case 43: op = rv_op_vsm3c_vi; break;
+-                case 44: op = rv_op_vghsh_vv; break;
+-                case 45: op = rv_op_vsha2ms_vv; break;
+-                case 46: op = rv_op_vsha2ch_vv; break;
+-                case 47: op = rv_op_vsha2cl_vv; break;
+-                }
+-            }
+-            break;
+-        case 30:
+-            switch (((inst >> 22) & 0b1111111000) |
+-                    ((inst >> 12) & 0b0000000111)) {
+-            case 0: op = rv_op_addd; break;
+-            case 1: op = rv_op_slld; break;
+-            case 5: op = rv_op_srld; break;
+-            case 8: op = rv_op_muld; break;
+-            case 12: op = rv_op_divd; break;
+-            case 13: op = rv_op_divud; break;
+-            case 14: op = rv_op_remd; break;
+-            case 15: op = rv_op_remud; break;
+-            case 256: op = rv_op_subd; break;
+-            case 261: op = rv_op_srad; break;
+-            }
+-            break;
+-        }
+-        break;
+-    }
+-    dec->op = op;
+-}
+-
+-/* operand extractors */
+-
+-static uint32_t operand_rd(rv_inst inst)
+-{
+-    return extract32(inst, 7, 5);
+-}
+-
+-static uint32_t operand_rs1(rv_inst inst)
+-{
+-    return extract32(inst, 15, 5);
+-}
+-
+-static uint32_t operand_rs2(rv_inst inst)
+-{
+-    return extract32(inst, 20, 5);
+-}
+-
+-static uint32_t operand_rs3(rv_inst inst)
+-{
+-    return extract32(inst, 27, 5);
+-}
+-
+-static uint32_t operand_aq(rv_inst inst)
+-{
+-    return extract32(inst, 26, 1);
+-}
+-
+-static uint32_t operand_rl(rv_inst inst)
+-{
+-    return extract32(inst, 25, 1);
+-}
+-
+-static uint32_t operand_pred(rv_inst inst)
+-{
+-    return extract32(inst, 24, 4);
+-}
+-
+-static uint32_t operand_succ(rv_inst inst)
+-{
+-    return extract32(inst, 20, 4);
+-}
+-
+-static uint32_t operand_rm(rv_inst inst)
+-{
+-    return extract32(inst, 12, 3);
+-}
+-
+-static uint32_t operand_shamt5(rv_inst inst)
+-{
+-    return extract32(inst, 20, 5);
+-}
+-
+-static uint32_t operand_shamt6(rv_inst inst)
+-{
+-    return extract32(inst, 20, 6);
+-}
+-
+-static uint32_t operand_shamt7(rv_inst inst)
+-{
+-    return extract32(inst, 20, 7);
+-}
+-
+-static uint32_t operand_crdq(rv_inst inst)
+-{
+-    return extract32(inst, 2, 3);
+-}
+-
+-static uint32_t operand_crs1q(rv_inst inst)
+-{
+-    return extract32(inst, 7, 3);
+-}
+-
+-static uint32_t operand_crs1rdq(rv_inst inst)
+-{
+-    return extract32(inst, 7, 3);
+-}
+-
+-static uint32_t operand_crs2q(rv_inst inst)
+-{
+-    return extract32(inst, 2, 3);
+-}
+-
+-static uint32_t calculate_xreg(uint32_t sreg)
+-{
+-    return sreg < 2 ? sreg + 8 : sreg + 16;
+-}
+-
+-static uint32_t operand_sreg1(rv_inst inst)
+-{
+-    return calculate_xreg(extract32(inst, 7, 3));
+-}
+-
+-static uint32_t operand_sreg2(rv_inst inst)
+-{
+-    return calculate_xreg(extract32(inst, 2, 3));
+-}
+-
+-static uint32_t operand_crd(rv_inst inst)
+-{
+-    return extract32(inst, 7, 5);
+-}
+-
+-static uint32_t operand_crs1(rv_inst inst)
+-{
+-    return extract32(inst, 7, 5);
+-}
+-
+-static uint32_t operand_crs1rd(rv_inst inst)
+-{
+-    return extract32(inst, 7, 5);
+-}
+-
+-static uint32_t operand_crs2(rv_inst inst)
+-{
+-    return extract32(inst, 2, 5);
+-}
+-
+-static uint32_t operand_cimmsh5(rv_inst inst)
+-{
+-    return extract32(inst, 2, 5);
+-}
+-
+-static uint32_t operand_csr12(rv_inst inst)
+-{
+-    return extract32(inst, 20, 12);
+-}
+-
+-static int32_t operand_imm12(rv_inst inst)
+-{
+-    return sextract32(inst, 20, 12);
+-}
+-
+-static int32_t operand_imm20(rv_inst inst)
+-{
+-    return sextract32(inst, 12, 20) << 12;
+-}
+-
+-static int32_t operand_jimm20(rv_inst inst)
+-{
+-    return sextract32(inst, 31, 1) << 20 |
+-        extract32(inst, 21, 10) << 1 |
+-        extract32(inst, 20, 1) << 11 |
+-        extract32(inst, 12, 8) << 12;
+-}
+-
+-static int32_t operand_simm12(rv_inst inst)
+-{
+-    return sextract32(inst, 25, 7) << 5 |
+-        extract32(inst, 7, 5);
+-}
+-
+-static int32_t operand_sbimm12(rv_inst inst)
+-{
+-    return sextract32(inst, 31, 1) << 12 |
+-        extract32(inst, 25, 6) << 5 |
+-        extract32(inst, 8, 4) << 1 |
+-        extract32(inst, 7, 1) << 11;
+-}
+-
+-static uint32_t operand_cimmshl6(rv_inst inst, rv_isa isa)
+-{
+-    int imm = extract32(inst, 12, 1) << 5 |
+-        extract32(inst, 2, 5);
+-    if (isa == rv128) {
+-        imm = imm ? imm : 64;
+-    }
+-    return imm;
+-}
+-
+-static uint32_t operand_cimmshr6(rv_inst inst, rv_isa isa)
+-{
+-    int imm = extract32(inst, 12, 1) << 5 |
+-        extract32(inst, 2, 5);
+-    if (isa == rv128) {
+-        imm = imm | (imm & 32) << 1;
+-        imm = imm ? imm : 64;
++                    case 17: op = rv_op_vgmul_vv; break;
++                    }
++                    break;
++                case 41:
++                    switch ((inst >> 15) & 0b11111) {
++                    case 0: op = rv_op_vaesdm_vs; break;
++                    case 1: op = rv_op_vaesdf_vs; break;
++                    case 2: op = rv_op_vaesem_vs; break;
++                    case 3: op = rv_op_vaesef_vs; break;
++                    case 7: op = rv_op_vaesz_vs; break;
++                    case 16: op = rv_op_vsm4r_vs; break;
++                    }
++                    break;
++                case 42: op = rv_op_vaeskf2_vi; break;
++                case 43: op = rv_op_vsm3c_vi; break;
++                case 44: op = rv_op_vghsh_vv; break;
++                case 45: op = rv_op_vsha2ms_vv; break;
++                case 46: op = rv_op_vsha2ch_vv; break;
++                case 47: op = rv_op_vsha2cl_vv; break;
++                }
++            }
++            break;
++        case 30:
++            switch (((inst >> 22) & 0b1111111000) |
++                    ((inst >> 12) & 0b0000000111)) {
++            case 0: op = rv_op_addd; break;
++            case 1: op = rv_op_slld; break;
++            case 5: op = rv_op_srld; break;
++            case 8: op = rv_op_muld; break;
++            case 12: op = rv_op_divd; break;
++            case 13: op = rv_op_divud; break;
++            case 14: op = rv_op_remd; break;
++            case 15: op = rv_op_remud; break;
++            case 256: op = rv_op_subd; break;
++            case 261: op = rv_op_srad; break;
++            }
++            break;
++        }
++        break;
+     }
+-    return imm;
+-}
+-
+-static int32_t operand_cimmi(rv_inst inst)
+-{
+-    return sextract32(inst, 12, 1) << 5 |
+-        extract32(inst, 2, 5);
+-}
+-
+-static int32_t operand_cimmui(rv_inst inst)
+-{
+-    return sextract32(inst, 12, 1) << 17 |
+-        extract32(inst, 2, 5) << 12;
+-}
+-
+-static uint32_t operand_cimmlwsp(rv_inst inst)
+-{
+-    return extract32(inst, 12, 1) << 5 |
+-        extract32(inst, 4, 3) << 2 |
+-        extract32(inst, 2, 2) << 6;
+-}
+-
+-static uint32_t operand_cimmldsp(rv_inst inst)
+-{
+-    return extract32(inst, 12, 1) << 5 |
+-        extract32(inst, 5, 2) << 3 |
+-        extract32(inst, 2, 3) << 6;
+-}
+-
+-static uint32_t operand_cimmlqsp(rv_inst inst)
+-{
+-    return extract32(inst, 12, 1) << 5 |
+-        extract32(inst, 6, 1) << 4 |
+-        extract32(inst, 2, 4) << 6;
+-}
+-
+-static int32_t operand_cimm16sp(rv_inst inst)
+-{
+-    return sextract32(inst, 12, 1) << 9 |
+-        extract32(inst, 6, 1) << 4 |
+-        extract32(inst, 5, 1) << 6 |
+-        extract32(inst, 3, 2) << 7 |
+-        extract32(inst, 2, 1) << 5;
+-}
+-
+-static int32_t operand_cimmj(rv_inst inst)
+-{
+-    return sextract32(inst, 12, 1) << 11 |
+-        extract32(inst, 11, 1) << 4 |
+-        extract32(inst, 9, 2) << 8 |
+-        extract32(inst, 8, 1) << 10 |
+-        extract32(inst, 7, 1) << 6 |
+-        extract32(inst, 6, 1) << 7 |
+-        extract32(inst, 3, 3) << 1 |
+-        extract32(inst, 2, 1) << 5;
+-}
+-
+-static int32_t operand_cimmb(rv_inst inst)
+-{
+-    return sextract32(inst, 12, 1) << 8 |
+-        extract32(inst, 10, 2) << 3 |
+-        extract32(inst, 5, 2) << 6 |
+-        extract32(inst, 3, 2) << 1 |
+-        extract32(inst, 2, 1) << 5;
+-}
+-
+-static uint32_t operand_cimmswsp(rv_inst inst)
+-{
+-    return extract32(inst, 9, 4) << 2 |
+-        extract32(inst, 7, 2) << 6;
+-}
+-
+-static uint32_t operand_cimmsdsp(rv_inst inst)
+-{
+-    return extract32(inst, 10, 3) << 3 |
+-        extract32(inst, 7, 3) << 6;
+-}
+-
+-static uint32_t operand_cimmsqsp(rv_inst inst)
+-{
+-    return extract32(inst, 11, 2) << 4 |
+-        extract32(inst, 7, 4) << 6;
+-}
+-
+-static uint32_t operand_cimm4spn(rv_inst inst)
+-{
+-    return extract32(inst, 11, 2) << 4 |
+-        extract32(inst, 7, 4) << 6 |
+-        extract32(inst, 6, 1) << 2 |
+-        extract32(inst, 5, 1) << 3;
+-}
+-
+-static uint32_t operand_cimmw(rv_inst inst)
+-{
+-    return extract32(inst, 10, 3) << 3 |
+-        extract32(inst, 6, 1) << 2 |
+-        extract32(inst, 5, 1) << 6;
+-}
+-
+-static uint32_t operand_cimmd(rv_inst inst)
+-{
+-    return extract32(inst, 10, 3) << 3 |
+-        extract32(inst, 5, 2) << 6;
+-}
+-
+-static uint32_t operand_cimmq(rv_inst inst)
+-{
+-    return extract32(inst, 11, 2) << 4 |
+-        extract32(inst, 10, 1) << 8 |
+-        extract32(inst, 5, 2) << 6;
+-}
+-
+-static int32_t operand_vimm(rv_inst inst)
+-{
+-    return sextract32(inst, 15, 5);
+-}
+-
+-static uint32_t operand_vuimm(rv_inst inst)
+-{
+-    return extract32(inst, 15, 5);
+-}
+-
+-static uint32_t operand_vzimm11(rv_inst inst)
+-{
+-    return extract32(inst, 20, 11);
+-}
+-
+-static uint32_t operand_vzimm10(rv_inst inst)
+-{
+-    return extract32(inst, 20, 10);
+-}
+-
+-static uint32_t operand_vzimm6(rv_inst inst)
+-{
+-    return extract32(inst, 26, 1) << 5 |
+-        extract32(inst, 15, 5);
+-}
+-
+-static uint32_t operand_bs(rv_inst inst)
+-{
+-    return extract32(inst, 30, 2);
+-}
+-
+-static uint32_t operand_rnum(rv_inst inst)
+-{
+-    return extract32(inst, 20, 4);
+-}
+-
+-static uint32_t operand_vm(rv_inst inst)
+-{
+-    return extract32(inst, 25, 1);
+-}
+-
+-static uint32_t operand_uimm_c_lb(rv_inst inst)
+-{
+-    return extract32(inst, 5, 1) << 1 |
+-        extract32(inst, 6, 1);
+-}
+-
+-static uint32_t operand_uimm_c_lh(rv_inst inst)
+-{
+-    return extract32(inst, 5, 1) << 1;
+-}
+-
+-static uint32_t operand_zcmp_spimm(rv_inst inst)
+-{
+-    return extract32(inst, 2, 2) << 4;
+-}
+-
+-static uint32_t operand_zcmp_rlist(rv_inst inst)
+-{
+-    return extract32(inst, 4, 4);
+-}
+-
+-static uint32_t operand_imm6(rv_inst inst)
+-{
+-    return extract32(inst, 20, 6);
+-}
+-
+-static uint32_t operand_imm2(rv_inst inst)
+-{
+-    return extract32(inst, 25, 2);
+-}
+-
+-static uint32_t operand_immh(rv_inst inst)
+-{
+-    return extract32(inst, 26, 6);
+-}
+-
+-static uint32_t operand_imml(rv_inst inst)
+-{
+-    return extract32(inst, 20, 6);
+-}
+-
+-static uint32_t calculate_stack_adj(rv_isa isa, uint32_t rlist, uint32_t spimm)
+-{
+-    int xlen_bytes_log2 = isa == rv64 ? 3 : 2;
+-    int regs = rlist == 15 ? 13 : rlist - 3;
+-    uint32_t stack_adj_base = ROUND_UP(regs << xlen_bytes_log2, 16);
+-    return stack_adj_base + spimm;
+-}
+-
+-static uint32_t operand_zcmp_stack_adj(rv_inst inst, rv_isa isa)
+-{
+-    return calculate_stack_adj(isa, operand_zcmp_rlist(inst),
+-                               operand_zcmp_spimm(inst));
+-}
+-
+-static uint32_t operand_tbl_index(rv_inst inst)
+-{
+-    return extract32(inst, 2, 8);
+-}
+-
+-static uint32_t operand_lpl(rv_inst inst)
+-{
+-    return extract32(inst, 12, 20);
++    dec->op = op;
+ }
  
- static const rv_comp_data rvcp_bne[] = {
-     { rv_op_bnez, rvcc_bnez },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_blt[] = {
-     { rv_op_bltz, rvcc_bltz },
-     { rv_op_bgtz, rvcc_bgtz },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_bge[] = {
-     { rv_op_blez, rvcc_blez },
-     { rv_op_bgez, rvcc_bgez },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_addi[] = {
-     { rv_op_nop, rvcc_nop },
-     { rv_op_mv, rvcc_mv },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_sltiu[] = {
-     { rv_op_seqz, rvcc_seqz },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_xori[] = {
-     { rv_op_not, rvcc_not },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_sub[] = {
-     { rv_op_neg, rvcc_neg },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_slt[] = {
-     { rv_op_sltz, rvcc_sltz },
-     { rv_op_sgtz, rvcc_sgtz },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_sltu[] = {
-     { rv_op_snez, rvcc_snez },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_addiw[] = {
-     { rv_op_sext_w, rvcc_sext_w },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_subw[] = {
-     { rv_op_negw, rvcc_negw },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_fsgnj_s[] = {
-     { rv_op_fmv_s, rvcc_fmv_s },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_fsgnjn_s[] = {
-     { rv_op_fneg_s, rvcc_fneg_s },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_fsgnjx_s[] = {
-     { rv_op_fabs_s, rvcc_fabs_s },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_fsgnj_d[] = {
-     { rv_op_fmv_d, rvcc_fmv_d },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_fsgnjn_d[] = {
-     { rv_op_fneg_d, rvcc_fneg_d },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_fsgnjx_d[] = {
-     { rv_op_fabs_d, rvcc_fabs_d },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_fsgnj_q[] = {
-     { rv_op_fmv_q, rvcc_fmv_q },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_fsgnjn_q[] = {
-     { rv_op_fneg_q, rvcc_fneg_q },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- static const rv_comp_data rvcp_fsgnjx_q[] = {
-     { rv_op_fabs_q, rvcc_fabs_q },
--    { rv_op_illegal, NULL }
-+    { },
- };
- 
- /* Convert compressed insns into normal insns via pseudo expansion. */
+ /* decode operands */
 -- 
 2.54.0
 
