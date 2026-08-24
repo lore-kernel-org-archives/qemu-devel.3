@@ -4,114 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95748C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 22:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12FC8C5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 22:12:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wycie-00021j-Kb; Mon, 24 Aug 2026 18:00:40 -0400
+	id 1wyctv-0003QJ-Gv; Mon, 24 Aug 2026 18:12:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wycic-00021T-1H; Mon, 24 Aug 2026 18:00:38 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wyciY-0006Wn-7B; Mon, 24 Aug 2026 18:00:37 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67OJVsCG1725734; Mon, 24 Aug 2026 22:00:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=qHaVCM
- zSZsIc+ZuZPGRA+RegFCacm3mtVCXU6hZmMt4=; b=g8QapnO7qZpkeuqkcHSwvb
- zPuw5cFXYYOShLc7JHWOPuw0n+dcJw4LSJKtG8RdOZO1EU5JWaMJjIrqsRQGPZRz
- cVQFvnyyu5L8KzrYFdpE+LBlYannoMGWem5AQay1n1Kv6CoqXHG4mkFXM8Wm7YB0
- Idm0zlJOJkMXFxTQQIyUSAacbAWsHamz7SQPCCiN8ufaAnIP/d7+xcPZ7QjM64Fu
- bZoanWZV9+b2Tp2zz+AD9DIbRzLaqP/b3841iYtPQLdcZDuLwQfE1NCLUY4c3O4N
- de6pAUSdQj2MM3B7TLaR9MQCHz1o5iU4f7g1xigXI2fJ5AWgIHHxmpPiH7jf1Ayw
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726ecduw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 22:00:17 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OLuHXC019561;
- Mon, 24 Aug 2026 22:00:16 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rsy0fqf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 22:00:16 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67OLxY7j28705504
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 21:59:35 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 86F5A5805A;
- Mon, 24 Aug 2026 22:00:14 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C1F7E58052;
- Mon, 24 Aug 2026 22:00:13 +0000 (GMT)
-Received: from [9.61.21.147] (unknown [9.61.21.147])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Aug 2026 22:00:13 +0000 (GMT)
-Message-ID: <31f8a6a3-073e-4d84-b743-906e0a6f85f1@linux.ibm.com>
-Date: Mon, 24 Aug 2026 18:00:13 -0400
+ (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
+ id 1wyctt-0003QB-Rt
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 18:12:17 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
+ id 1wycts-00088U-7y
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 18:12:17 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-cb2513ec378so296354a12.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 15:11:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tenstorrent.com; s=google; t=1787609508; x=1788214308; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=YfPAJrzh23k5bf6NYHNz6je6+xhKQtygq0qvA9+KJck=;
+ b=DVq6FEF81+1sYAh0vlmoYOCxcNVwXkgdlGrexjLGcz/8xFwCLCE1qZtNsHspQtUye4
+ l4PvKx2JKi6xODAv6b9bpjUZf1LAKdtoXrNkJ5deUcEhNXrMwfT3AfDuO0aVKlEJDe7F
+ 6P1KkZCaH0Rzd1MoLuEeYKJHUBcmRdPlz026eCsNNQUO8bLhv9rLX5if1TXoCBQ0Mogd
+ 3zpuDMtiQlOELwJgsErsSMN+xf0zFIQ6ftsXgeBiS7nlG9PirKfPEoTrjYj0K4VXiuTk
+ imzERjpArrbxLdeFOFEaTHVPGHLXJdBZx471ccD0Z4+1Y647RYo/J4WqdAxlXmfzSwxv
+ MIUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787609508; x=1788214308;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=YfPAJrzh23k5bf6NYHNz6je6+xhKQtygq0qvA9+KJck=;
+ b=S8nwwbUMnEHx/eaHY9fVRBGaQx/AZQQYvE6f3J+RmmidXbbV6y5t51qdmYEIbcAdgn
+ vncj6LQ25cF+6McnwaMLbincFt6ooI2XBI5RQK2teh6v5RsvgeyvkPUSNOVxavDihtEq
+ vSzpVz0bkyNCyIdXs6rVfpTbgH9vW3dzLhg8fl3KD3FhgsNIq5vrb6gCS4U+M1DKsC5A
+ GMZ980eyJmBXp9cxmd1UGINV1183l3dpNakEeTaZaJklc7OafXmxjEz3n0NRfVmAjL34
+ 4GP22g2/RYNqX/YZFzxKPP7XcDu0FNild9RRH7zSRYIiVZ9//w+Oayr6F+hEt12ZJKGK
+ 8Hwg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqY7YecwAWM2uNbRlZKd1kvhY8Vy2PYkTxKSZsUuQbzyg0FTOaWCDPKGUGyHBsWkSs5mzlt1TI1IP7w@nongnu.org
+X-Gm-Message-State: AFuF++n1uaShvyQf6yJt80w0YXnlrmoTYW3bzOqUhkjFO25zVWdqMOD3
+ rIq/+h6zP+EkeVkJrTBFgIm9Og4ATGdVQ12uhPuTmGz3pmyYj14uKm/WjaL793ix7i4=
+X-Gm-Gg: AR+sD12tWiqZbKtXLTXkLuU3KD/jlvu6tlfdnpKxv7vey6fyQwjv0/O8NyfcEg8HxuH
+ epvxK2zIb3VcCCxCKJGfuq/TrMpzNU1qLKKIySgxk/9O66suvWKwok5e4vG8vHAwMYYzPiXoFjw
+ uFR+0UjNDTLZr3lHbndAypE+BVWtPcDRyQ1/Fcfs3FwzpbFAclN8LFjI4WGoVPdWKXTo/gGEnzr
+ jGq50Wig1ssASmZkuv6tP5VK2bNZu46Dsa5TNebMevclm6WCGaXA5CmBmye66Onzo4M/j7/OUEF
+ kKx89BJftk7eEPX/dnAivGVJ+Z7iCI2KURoKn6SPEnRztWcV4S8ve2Vz9Uq57PZN0d3IsyiRdpr
+ fQPoi351CKJhDEI0DmfVpJKKAY4+mnDYo3jGVaY7bYdo8qhi4gOh0slNXNz/0GgXvLn71xw2aaS
+ /GqI4gJohuO093T128bmNaY//Nd1aDoWKwXOHXuYXjutPLTyIVEa61JbcXHsoPAmgmA5GyEOB2g
+ wilZvleKqRY6mLc
+X-Received: by 2002:a05:6a00:7183:b0:848:4d4f:d481 with SMTP id
+ d2e1a72fcca58-851f9fa9f18mr16205259b3a.2.1787609508252; 
+ Mon, 24 Aug 2026 15:11:48 -0700 (PDT)
+Received: from [172.16.1.33] ([159.196.41.205])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-8520eed2293sm2262821b3a.2.2026.08.24.15.11.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Aug 2026 15:11:47 -0700 (PDT)
+Message-ID: <6dd03d71-b0e5-4039-bce9-37c1cff4b108@oss.tenstorrent.com>
+Date: Tue, 25 Aug 2026 08:11:40 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 13/15] s390x/pci: Add a comment explaining S390PCIIOMMU
- purpose
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Cc: alifm@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
- iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260818172521.223460-1-kshk@linux.ibm.com>
- <20260818172521.223460-14-kshk@linux.ibm.com>
+Subject: Re: [PATCH 1/4] hw/riscv/boot: Make RISCVBootInfo const where possible
+To: Joel Stanley <joel@jms.id.au>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Chao Liu <chao.liu@processmission.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Michael Ellerman <mpe@kernel.org>, Niek Linnenbank
+ <nieklinnenbank@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+References: <20260824055642.41098-1-joel@jms.id.au>
+ <20260824055642.41098-2-joel@jms.id.au>
 Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260818172521.223460-14-kshk@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8cbef1 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=yGonlt_J30laUZWCZlEA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDE4MiBTYWx0ZWRfXxa/q7Gb63VDU
- V51jWbdLx2qQGaTjGDMmuECqw3MjuzeLeP1nFHWAoxWURZWF6S6L3tmcvUKx5tilTEVMu+RxRkp
- V2KMdXVHxQpRniVzPNnG+rkI1wEcY9c=
-X-Proofpoint-GUID: f2Lxumf1qvXKpUMz5UTLVySpCHcsMgQD
-X-Proofpoint-ORIG-GUID: f2Lxumf1qvXKpUMz5UTLVySpCHcsMgQD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDE4MiBTYWx0ZWRfXxVd67y0x+CEC
- ldi7MJXEMqyFwGTcfWWr0jaGVFFJhC7FxZma2R/5PV0aLDbXmegNJldJVbzCEsiDHMKuY/8vH42
- kQEk9/g1dETfUa8pe45VvH5c+LKsWtdPmkQCwK6EvVuV0mZFzjtl48fcoXQUSHOyGMYMfUdCPeZ
- AmhqjlS+xk8/AO2GRENpGofuU20DE+1i8qOT7k3daBy6fUk2us92YlW69znhvWflwxYU4WZlSqv
- TihojLmefsEApf60Osob+jIhIV5GeEolwRe7lfQhRJx/RmPIK69Dm9A+89YXjjxL/KCUfevkvXY
- gTJVCToz660qiSGQvkUbHvN+LsL1ctwpxYnHRuKbLrJv4nSR8uUnydiTMaVif/CCwrFuO3buL/K
- KX89JcKJsl2iNqUyDD8fW2nub7uW4KNeI1mXcoY4sKMqzkfH4bD/GkTR2GeKiEZ66Nx9PgjPesE
- Zzv87Cw4psOPrp/9BDg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-24_06,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240182
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+From: Portia Stephens <portias@oss.tenstorrent.com>
+In-Reply-To: <20260824055642.41098-2-joel@jms.id.au>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=portias@tenstorrent.com; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,58 +113,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/18/26 1:25 PM, Konstantin Shkolnyy wrote:
-> Because S390PCIIOMMU has just been cleaned up of fields it didn't have to
-> carry, add a comment explaining why it exists in the first place and
-> discouraging adding more fields to it in the future.
 
-In following the theme with the other patches, how about a re-word to
-something like:
-
-Now that S390PCIIOMMU had been reduced to only the IOMMU container
-information needed by the PCI layer for the associated slot, add a
-comment explaining the purpose of the structure.
-
-> 
-> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+On 24/8/2026 3:56 PM, Joel Stanley wrote:
+> As with riscv_load_firmware, take a const pointer in functions that
+> reads the structure without writing.
+>
+> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
 > ---
->  include/hw/s390x/s390-pci-bus.h | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
-> index e3cbee2695..17ecf3e0da 100644
-> --- a/include/hw/s390x/s390-pci-bus.h
-> +++ b/include/hw/s390x/s390-pci-bus.h
-> @@ -271,6 +271,17 @@ typedef struct S390PCIDMACount {
->      QTAILQ_ENTRY(S390PCIDMACount) link;
->  } S390PCIDMACount;
->  
-> +/*
-> + * This structure holds the PCI device AddressSpace that QEMU needs to link
-> + * into its internal structures before the zPCI and PCI devices are fully
-> + * initialized. QEMU wants to have this "root" AddressSpace before the PCI
-> + * device is plugged in. It's only actually used for I/O while the PCI
-> + * device is plugged in and configured by the guest, at which time it has
-> + * additional memory subregions from zPCI device, that can do real work.
-> + * In other words, S390PCIIOMMU holds fields that logically belong to
-> + * S390PCIBusDevice but need to exist before S390PCIBusDevice exists.
-> + * Therefore, no other kind of fields should be placed in S390PCIIOMMU.
-> + */
+>   include/hw/riscv/boot.h | 6 +++---
+>   hw/riscv/boot.c         | 6 +++---
+>   2 files changed, 6 insertions(+), 6 deletions(-)
 
 
-Starting from "In other words," your comment gets inaccurate.  We will
-actually ensure that a S390PCIBusDevice is either 1) already created
-prior to the PCIDevice or 2) will create it on-demand during
-s390_pcihost_plug() for TYPE_PCI_DEVICE if it didn't already exist.
+Reviewed-by: Portia Stephens <portias@oss.tenstorrent.com>
 
-This nuance goes back to my comment earlier about the lifecycle being a
-bit odd.
 
-For now I would suggest to just drop the last 3 lines starting with "In
-other words, ..."
-
-With those 3 lines removed and the commit message re-worded:
-
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-
+>
+> diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+> index 4e7bd9a225ef..d23f45d78077 100644
+> --- a/include/hw/riscv/boot.h
+> +++ b/include/hw/riscv/boot.h
+> @@ -50,10 +50,10 @@ void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts);
+>   void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
+>                                           RISCVHartArrayState *harts,
+>                                           hwaddr low_start, hwaddr low_size);
+> -vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
+> +vaddr riscv_calc_kernel_start_addr(const RISCVBootInfo *info,
+>                                      hwaddr firmware_end_addr);
+>   hwaddr riscv_find_and_load_firmware(MachineState *machine,
+> -                                    RISCVBootInfo *info,
+> +                                    const RISCVBootInfo *info,
+>                                       const char *default_machine_firmware,
+>                                       hwaddr *firmware_load_addr,
+>                                       symbol_fn_t sym_cb);
+> @@ -71,7 +71,7 @@ void riscv_load_kernel(MachineState *machine,
+>                          bool load_initrd,
+>                          symbol_fn_t sym_cb);
+>   uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
+> -                                MachineState *ms, RISCVBootInfo *info);
+> +                                MachineState *ms, const RISCVBootInfo *info);
+>   void riscv_load_fdt(hwaddr fdt_addr, void *fdt);
+>   void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts,
+>                                  hwaddr saddr,
+> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+> index 5e2dfa091a13..4ac0b8ef6581 100644
+> --- a/hw/riscv/boot.c
+> +++ b/hw/riscv/boot.c
+> @@ -91,7 +91,7 @@ void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
+>       info->ram_low_size = low_size;
+>   }
+>   
+> -vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
+> +vaddr riscv_calc_kernel_start_addr(const RISCVBootInfo *info,
+>                                      hwaddr firmware_end_addr) {
+>       if (info->is_32bit) {
+>           return QEMU_ALIGN_UP(firmware_end_addr, 4 * MiB);
+> @@ -151,7 +151,7 @@ char *riscv_find_firmware(const char *firmware_filename,
+>   }
+>   
+>   hwaddr riscv_find_and_load_firmware(MachineState *machine,
+> -                                    RISCVBootInfo *info,
+> +                                    const RISCVBootInfo *info,
+>                                       const char *default_machine_firmware,
+>                                       hwaddr *firmware_load_addr,
+>                                       symbol_fn_t sym_cb)
+> @@ -348,7 +348,7 @@ out:
+>    * The FDT is fdt_packed() during the calculation.
+>    */
+>   uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
+> -                                MachineState *ms, RISCVBootInfo *info)
+> +                                MachineState *ms, const RISCVBootInfo *info)
+>   {
+>       int ret = fdt_pack(ms->fdt);
+>       hwaddr dram_end, temp;
 
