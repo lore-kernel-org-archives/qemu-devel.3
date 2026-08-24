@@ -4,125 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45B6DC5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 14:09:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B7F8C5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 14:09:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyVML-00031j-4s; Mon, 24 Aug 2026 10:09:09 -0400
+	id 1wyVMd-000380-W4; Mon, 24 Aug 2026 10:09:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1wyVMJ-00030d-36
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:09:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1wyVMc-00037L-Pf; Mon, 24 Aug 2026 10:09:26 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1wyVMH-0004W4-Be
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:09:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787580543;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EaEEmJBAu+Kb2shHjmcuUYIYY3+qVjHPapvxAraAKfo=;
- b=eyXRNAcaNxpSChb/VTSJElruvQ1BRIcONufCab8C0Rl4U05hWlMEYQPo1fz0meWqT7GHSg
- /QQZ8qZmtWFKol0VKJ7ZhjNDH/6o/QjzOvaKRgLuOzdmGUp5COG+T+l+3pme+9Ex5KMb7Y
- zZhP9NePgYG3zH3TW/t/rNzEloo/a8M=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-AAaAJwIuM3OHGJNdsBaPQg-1; Mon, 24 Aug 2026 10:09:02 -0400
-X-MC-Unique: AAaAJwIuM3OHGJNdsBaPQg-1
-X-Mimecast-MFC-AGG-ID: AAaAJwIuM3OHGJNdsBaPQg_1787580541
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-7fe835353acso63025567b3.2
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 07:09:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787580541; cv=none;
- d=google.com; s=arc-20260327;
- b=oBoNM8H5cIJHSgYfeBoMsx4U/c9u50Y5y12hUYeJg31fpLofaut8M/3wMlAzHvehZw
- Gccsrxotg/mN6Q7xG04UJg01EKEcR6mIHg+ASAP5fPo3DkyZ7CuJu499uN7AFdnPe+PN
- X2ZoYkz8yKovwVEkg3PpCrs038EwaIiKsN3JxrhGEfzclrC45pZqDpJm8ZOEvzghUtIC
- 0pjCOuq/HQp1jsRvwryNwu9u7SOfAmV+8EeOJPQJx5V8iZ43TLHclU8cWa/qGZ+V5Orv
- glmhSI+e293ie7bHbz0HA6FIzB/nlnTD3hG7teV3LvBcRjytmz4BaxEjUfChlQbjBwg7
- WjgA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=EaEEmJBAu+Kb2shHjmcuUYIYY3+qVjHPapvxAraAKfo=;
- fh=U+maFRf278azDLQbrKAGogscHVKhGWX+3xQ+8zXzxjQ=;
- b=qYmYoGfzejMQikwo9hkpOl6qbvcKMirBE3GHtIun6ifx6MlzeN/tp7eQfgwXrqXDmy
- ZwJTF/DO2Q/5zp0sk2N5Wyiq9VyWPFh46FWktAUH+jQ+zNiFMeE2RvORipRjPwiPvI9p
- MXjxUYJWP2RVRfmX8DoMPp4YI1HhNIShUL1gAqzNvbgAJjFdnrrB6xUuxdQfUF6YzByb
- 2CYjpJB/JfUIuIUN/uUGEdjndk4JpFvKfb3rqROwkPvZin0crBgkYgvG/AoDS3cIGpjO
- B9ggkkjBfMmPFwE4hGgFBnAnxlhlZcX+SIco3vJcRuwfLbwxckWHJYJXcri0HpYqyjd1
- j8HQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787580541; x=1788185341; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=EaEEmJBAu+Kb2shHjmcuUYIYY3+qVjHPapvxAraAKfo=;
- b=H21ZfK8ahQ5YIYngtWdGvx5mE76pYCr10QI3DP4URkLmmZ/jR8gAefrH2Wr4vHt5uh
- BVzakdCucr34Jpc20x8YBZCfj9sTDwI+pDQg916J4W8YMJtrMp9vNO7+C27BjBaRHEst
- oCmzb3HljUskCX1r3xyugNyTxkC5oQ3Wdt03VuKEwa0Cb5toA5+w/VTBBPUB/9sz/upD
- 3R8Acuf8UejCYluccOQ9tGKuA36ntuOX+iqwOUb6Kq6pzBEWKfhAjARx4sg3F3sDjVnk
- AHDXxIBLCCOY1zvJFfOSgSlT3XdGR9jJ4q1NrvoE9ChNhbNF1QWuaDQ0JmoPgQ+Z1ksI
- jnbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787580541; x=1788185341;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=EaEEmJBAu+Kb2shHjmcuUYIYY3+qVjHPapvxAraAKfo=;
- b=gfL0u17NukBv+YM9p9U/DNx42jRlL4rUP5ohqD+cNH/vD88C9C4Syd5AgikxmkoAYs
- n3+CX9iawmS87fIW7nd4g556umN6yWjeS2+twnqZISYAGgTMHYuhTYpwHYtBk5RBqizA
- nmgEuascYqk09xWw/I9fCao+o+3kqCBH6lmb8vBbm97VSZFYNdHSWRF4omfipK1pqLr9
- SK4cP4rTxXWAAFFR8p2bIdo9eCi1it2O4qqk2kp6uJbdE05QaI4QuvnLkRUMIr/Vweui
- d5il/T5uL9vICQureNh7bu73xlSuNtmoFo78MBI7oyA5YpU9YYJTF+pht1BVzsssG5Cr
- 6U8A==
-X-Gm-Message-State: AFuF++lYcXBMUBtCZJiKmzQmPCkrTsWin4MeEup9sJ/E3IVl1UlGjYyB
- iSmogZRxwArjM4UdJ9unSEicDIw0qUQz+IbLMxGRgIL2mrdiTqCGehjKQgv7kXcuTKTZoUDZZ+M
- qNcjcWP9phze7OWP5XpFBxHkO5G5MMvUbA7mhmK2/iaQtopitu9bV/S7va/b4j28cx+KgO+7p9r
- JiQ15fudG4t2mCA1PbXNTuH1LzJkvWsDU=
-X-Gm-Gg: AR+sD13Ptmf7gP8FJGq1I3gty19odpWj112By5MCGwWt6tYiHPX/aEV4zc7a11mSk0v
- QXIstvOAUgxDN/EsR8Seu6LhVCHPzBiIURv4Xk9G0aqw001lkj4noZ/ShqYIgj1AJdZMaKrHzwT
- ZYI76PJCvmBS1SGIHyLgV7wOMTWHH0BazaUs2yaE9NPgymeudLiKwKePRA72M9fMdgITS+SlLki
- g1OZiqYvvNsCH0KmUI91LVKwNGGirHu4SP8eNWd5UgKWS0doO4HohT5Z1g=
-X-Received: by 2002:a53:a3d1:0:b0:66c:bbc4:9fb0 with SMTP id
- 956f58d0204a3-66ce49d5549mr7283729d50.2.1787580541318; 
- Mon, 24 Aug 2026 07:09:01 -0700 (PDT)
-X-Received: by 2002:a53:a3d1:0:b0:66c:bbc4:9fb0 with SMTP id
- 956f58d0204a3-66ce49d5549mr7283703d50.2.1787580540868; Mon, 24 Aug 2026
- 07:09:00 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260817233147.2867623-1-connorkite@gmail.com>
-In-Reply-To: <20260817233147.2867623-1-connorkite@gmail.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Mon, 24 Aug 2026 16:08:23 +0200
-X-Gm-Features: AcwNN1WkXTeP8AndaKnDFMUSC6amiGfdmDwqFMcXJ7oCnfo_O61OXR2b1NzcuKI
-Message-ID: <CAJaqyWc=Ge0P=J0W6mrt56kFuG-iceCpPo4=5M1xFC5cWzNOhw@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/virtio/vhost-shadow-virtqueue: range boundary in
- translation
-To: Connor Kite <connorkite@gmail.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Hanna Czenczek <hreitz@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Stefano Garzarella <sgarzare@redhat.com>
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1wyVMa-0004Z6-IE; Mon, 24 Aug 2026 10:09:26 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67OD1dpQ2004250; Mon, 24 Aug 2026 14:09:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=qYrmkRui31jE+Qz4ayaTFBk5aP997WZ5MyD5yyURuIU=; b=h4snXmysR6W1
+ ZUUXn1tUOPDkokYcyHDjSndUYltIZ8x2lcn8sXbKLGNR8wac1Z8J5u0YB7bLVIkV
+ +sedSKzHbhr4iRt7Q/JqkbjvSkbG2lS/iu9T5mEUHMGTDThKD4tANlBg1Rm0NoD6
+ P0JF23NssPibzN47RWNxQBKhoLlvEy4IW7IfcEby5e9yZLjHROJdJY4zIM/fZ0zy
+ fGysv/MjwHELp3xrBqyKStSlTFfzgJYVa0wGSounLgQuif9QEEcJTlLGv4W2J38S
+ ZCvyyIjonJqzykV/LHj35gPeKRgWTD+tNMlJs+ZewNx9HgSKR7yHWDjimW1MFWDO
+ DA3k1r/riA==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dx1n70-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Aug 2026 14:09:22 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67ODuYOE017316;
+ Mon, 24 Aug 2026 14:09:21 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3jpcbf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Aug 2026 14:09:21 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67OE9JH041091526
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 24 Aug 2026 14:09:19 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6EB8058053;
+ Mon, 24 Aug 2026 14:09:19 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 172FC58043;
+ Mon, 24 Aug 2026 14:09:18 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 24 Aug 2026 14:09:17 +0000 (GMT)
+Message-ID: <4793220b1ba368a7a36de5d51215b630ebc5e564.camel@linux.ibm.com>
+Subject: Re: [PATCH 02/29] target/ppc: Migrate atomic loads to decodetree
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, harshpb@linux.ibm.com
+Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
+ tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com,
+ aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, sv@linux.ibm.com,
+ shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
+ nikhilks@linux.ibm.com
+Date: Mon, 24 Aug 2026 09:09:17 -0500
+In-Reply-To: <20260820140114.327023-3-rathc@linux.ibm.com>
+References: <20260820140114.327023-1-rathc@linux.ibm.com>
+ <20260820140114.327023-3-rathc@linux.ibm.com>
+Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDExOCBTYWx0ZWRfX7ug1teKw9Tm3
+ xpwNxEh+p854Oit5boi0bC/IHfqPPeDTWtov26FLFc8qyS+3WOeJ4tX9ocrQx4clmHEfR7XX2MG
+ eayBaGY6KkXbLJ2KbuouCyrVrlnbJpI=
+X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a8c5092 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=MCnIianJWhgdr52yIC4A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 5N4t34Sj7R3Q1Swe2jRXM2A-CZ40qaZg
+X-Proofpoint-GUID: cGkE-z1lmfrJkzDRJcYb--jYJ321ojik
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDExOCBTYWx0ZWRfX738khzF94NTw
+ xM9RlETdQY9K4rAKHLhTj7McXwsCQAoVPSdA3GcvftT/RW/afFQq1SQYL7rA5XTyu/l/FPyXUnT
+ Yw2gLsgz30RFKD3u2eaWpsKD2tUbMBQYoOV5anIz7o7d5j0CflLh5Lr54Vos8ju6fBSFcm7lysj
+ GypdDg2vWvwLQSdhB9sgiSBSioCGcmtIlC9goKJtU2ygIvv0WFs8QPH915a5Sg8WdqNR9UE+zxJ
+ NmRnbxl8wWCbUUG1fN5xrI3JyzjVzN1gWfzgnc9K2dYKAIxY78/fHMpVotNhgmsb2O/EFJIvLKN
+ 8/EyuIZXSZOB9rVKRUO5YuXB/2DWPVQhwCH7qgpR9kYe5TpApriLUs5hMZQWdb5mJBS+2uD8Iib
+ F5UjhSfco8aFcSna5ct/86GVHS2l/RuCoADpExPbF9+9vgeK89UPVOOO3Bulc5yyVMvYsCDCbHo
+ 0ls2jYv4vTr8hySYvdw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-24_04,2026-08-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 bulkscore=0
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608240118
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -136,90 +127,224 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 18, 2026 at 1:32=E2=80=AFAM Connor Kite <connorkite@gmail.com> =
-wrote:
->
-> iova-tree expects inclusive range sizing when maps are allocated or searc=
-hed.
-> Currently, svqs use exclusive sizing when searching their
-> vhost-iova-tree for a match to the region to be translated.  This could
-> lead to errors if the region to be translated is at the edge of an iova
-> region.
->
-> Fix this by reducing `needle.size` by 1 in
-> vhost_svq_translate_addr to bring it in line with DMAMap and iova-tree
-> convention.
->
-> The only current user of svq->iova_tree is hw/virtio/vhost-vdpa.c, which
-> also treats size as inclusive when using the tree API.  In progress work
-> on vhost-user isolation mode in hw/virtio.vhost-vdpa.c also uses
-> inclusive sizing when interacting with the tree.
->
-> This patch is an updated version of one from the patch series "vhost-user=
-:
-> isolated memory".  The patch has been isolated from the series as it
-> is not tightly coupled with the rest of the series.
->
-> Signed-off-by: Connor Kite <connorkite@gmail.com>
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
-I'd like to improve the patch subject by adding a verb and the object.
-Something like (*add* range boundary in *vhost svq* translation).
+Thanks,
 
-Also, adding the Fixes tag,
+Glenn
 
-Reviewed-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-
-Thank you very much for the catch!
-
+On Thu, 2026-08-20 at 19:30 +0530, Chinmay Rath wrote:
+> From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+> 
+> Migrate load-and-reserve instructions (lbarx, lharx, lwarx, ldarx,
+> lqarx) to decodetree using the X-form layout.
+> 
+> A shared helper (do_load_locked) is introduced for standard-width
+> variants, while LQARX is handled separately due to its 128-bit
+> semantics and register pairing constraints.
+> 
+> The implementation preserves legacy behavior, including:
+>   - Reservation granularity and overwrite semantics
+>   - Alignment requirements
+>   - Invalid instruction cases for LQARX
+> 
+> Testing:
+>   - Verified TCG equivalence with legacy implementation
+> 
+> Signed-off-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 > ---
-> V2 Differences:
-> - Context added about users of svq->iova_tree and their adoption of
->   inclusive sizing
->
->  hw/virtio/vhost-shadow-virtqueue.c | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-=
-virtqueue.c
-> index bcb7f2ffc7..c8831d52be 100644
-> --- a/hw/virtio/vhost-shadow-virtqueue.c
-> +++ b/hw/virtio/vhost-shadow-virtqueue.c
-> @@ -99,19 +99,25 @@ static bool vhost_svq_translate_addr(const VhostShado=
-wVirtqueue *svq,
->          const DMAMap *map;
->          DMAMap needle;
->
-> +        if (unlikely(iovec[i].iov_len =3D=3D 0)) {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "Zero-sized buffer made available by guest");
-> +            return false;
-> +        }
+>  target/ppc/insn32.decode |   7 +++
+>  target/ppc/translate.c   | 124 +++++++++++++++++++--------------------
+>  2 files changed, 69 insertions(+), 62 deletions(-)
+> 
+> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+> index 342e65dadf..26948e08a7 100644
+> --- a/target/ppc/insn32.decode
+> +++ b/target/ppc/insn32.decode
+> @@ -1309,6 +1309,13 @@ XVF64GERNN      111011 ... -- .... 0 ..... 11111010 ..-  @XX3_at xa=%xx_xa_pair
+>  ##Extend Sign Word and Shift Left Immediate XS-form
+>  EXTSWSLI         011111 ..... ..... ..... 110111101 . .         @XS
+>  
+> +## Load and Reserve Instructions
+> +LBARX           011111 ..... ..... ..... 0000110100 .   @X_rc
+> +LHARX           011111 ..... ..... ..... 0001110100 .   @X_rc
+> +LWARX           011111 ..... ..... ..... 0000010100 .   @X_rc
+> +LDARX           011111 ..... ..... ..... 0001010100 .   @X_rc
+> +LQARX           011111 ..... ..... ..... 0100010100 .   @X_rc
 > +
->          /* Check if the descriptor is backed by guest memory  */
->          if (gpas) {
->              /* Search the GPA->IOVA tree */
->              needle =3D (DMAMap) {
->                  .translated_addr =3D gpas[i],
-> -                .size =3D iovec[i].iov_len,
-> +                .size =3D iovec[i].iov_len - 1,  /* Inclusive */
->              };
->              map =3D vhost_iova_tree_find_gpa(svq->iova_tree, &needle);
->          } else {
->              /* Search the IOVA->HVA tree */
->              needle =3D (DMAMap) {
->                  .translated_addr =3D (hwaddr)(uintptr_t)iovec[i].iov_bas=
-e,
-> -                .size =3D iovec[i].iov_len,
-> +                .size =3D iovec[i].iov_len - 1, /* Inclusive */
->              };
->              map =3D vhost_iova_tree_find_iova(svq->iova_tree, &needle);
->          }
-> --
-> 2.43.0
->
+>  ## Vector Division Instructions
+>  
+>  VDIVSW          000100 ..... ..... ..... 00110001011    @VX
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index e627f48f9e..cc9287dcc5 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -2947,30 +2947,6 @@ static void gen_isync(DisasContext *ctx)
+>      ctx->base.is_jmp = DISAS_EXIT_UPDATE;
+>  }
+>  
+> -static void gen_load_locked(DisasContext *ctx, MemOp memop)
+> -{
+> -    TCGv gpr = cpu_gpr[rD(ctx->opcode)];
+> -    TCGv t0 = tcg_temp_new();
+> -
+> -    gen_set_access_type(ctx, ACCESS_RES);
+> -    gen_addr_reg_index(ctx, t0);
+> -    tcg_gen_qemu_ld_tl(gpr, t0, ctx->mem_idx, DEF_MEMOP(memop) | MO_ALIGN);
+> -    tcg_gen_mov_tl(cpu_reserve, t0);
+> -    tcg_gen_movi_tl(cpu_reserve_length, memop_size(memop));
+> -    tcg_gen_mov_tl(cpu_reserve_val, gpr);
+> -}
+> -
+> -#define LARX(name, memop)                  \
+> -static void gen_##name(DisasContext *ctx)  \
+> -{                                          \
+> -    gen_load_locked(ctx, memop);           \
+> -}
+> -
+> -/* lwarx */
+> -LARX(lbarx, MO_UB)
+> -LARX(lharx, MO_UW)
+> -LARX(lwarx, MO_UL)
+> -
+>  static void gen_fetch_inc_conditional(DisasContext *ctx, MemOp memop,
+>                                        TCGv EA, TCGCond cond, int addend)
+>  {
+> @@ -3219,42 +3195,9 @@ STCX(sthcx_, MO_UW)
+>  STCX(stwcx_, MO_UL)
+>  
+>  #if defined(TARGET_PPC64)
+> -/* ldarx */
+> -LARX(ldarx, MO_UQ)
+>  /* stdcx. */
+>  STCX(stdcx_, MO_UQ)
+>  
+> -/* lqarx */
+> -static void gen_lqarx(DisasContext *ctx)
+> -{
+> -    int rd = rD(ctx->opcode);
+> -    TCGv EA, hi, lo;
+> -    TCGv_i128 t16;
+> -
+> -    if (unlikely((rd & 1) || (rd == rA(ctx->opcode)) ||
+> -                 (rd == rB(ctx->opcode)))) {
+> -        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+> -        return;
+> -    }
+> -
+> -    gen_set_access_type(ctx, ACCESS_RES);
+> -    EA = tcg_temp_new();
+> -    gen_addr_reg_index(ctx, EA);
+> -
+> -    /* Note that the low part is always in RD+1, even in LE mode.  */
+> -    lo = cpu_gpr[rd + 1];
+> -    hi = cpu_gpr[rd];
+> -
+> -    t16 = tcg_temp_new_i128();
+> -    tcg_gen_qemu_ld_i128(t16, EA, ctx->mem_idx, DEF_MEMOP(MO_128 | MO_ALIGN));
+> -    tcg_gen_extr_i128_i64(lo, hi, t16);
+> -
+> -    tcg_gen_mov_tl(cpu_reserve, EA);
+> -    tcg_gen_movi_tl(cpu_reserve_length, 16);
+> -    tcg_gen_st_tl(hi, tcg_env, offsetof(CPUPPCState, reserve_val));
+> -    tcg_gen_st_tl(lo, tcg_env, offsetof(CPUPPCState, reserve_val2));
+> -}
+> -
+>  /* stqcx. */
+>  static void gen_stqcx_(DisasContext *ctx)
+>  {
+> @@ -5741,6 +5684,68 @@ static bool trans_EXTSWSLI(DisasContext *ctx, arg_XS *a)
+>      return true;
+>  }
+>  
+> +/*
+> + * Load-and-reserve core
+> + */
+> +static bool do_load_locked(DisasContext *ctx, arg_X_rc *a, MemOp memop)
+> +{
+> +    TCGv EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+> +    TCGv gpr = cpu_gpr[a->rt];
+> +
+> +    gen_set_access_type(ctx, ACCESS_RES);
+> +
+> +    tcg_gen_qemu_ld_tl(gpr, EA, ctx->mem_idx, memop | MO_ALIGN);
+> +
+> +    tcg_gen_mov_tl(cpu_reserve, EA);
+> +    tcg_gen_movi_tl(cpu_reserve_length, memop_size(memop));
+> +
+> +    tcg_gen_mov_tl(cpu_reserve_val, gpr);
+> +
+> +    return true;
+> +}
+> +
+> +TRANS_FLAGS2(ATOMIC_ISA206, LBARX, do_load_locked, DEF_MEMOP(MO_UB))
+> +TRANS_FLAGS2(ATOMIC_ISA206, LHARX, do_load_locked, DEF_MEMOP(MO_UW))
+> +TRANS(LWARX, do_load_locked, DEF_MEMOP(MO_UL))
+> +TRANS64(LDARX, do_load_locked, DEF_MEMOP(MO_UQ))
+> +
+> +static bool trans_LQARX(DisasContext *ctx, arg_LQARX *a)
+> +{
+> +    REQUIRE_64BIT(ctx);
+> +    REQUIRE_INSNS_FLAGS2(ctx, ISA207S);
+> +#if defined(TARGET_PPC64)
+> +    TCGv EA;
+> +    TCGv_i128 t16;
+> +    /* Must use even register and avoid overlap */
+> +    if (unlikely((a->rt & 1) || (a->rt == a->ra) || (a->rt == a->rb))) {
+> +        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+> +        return true;
+> +    }
+> +
+> +    gen_set_access_type(ctx, ACCESS_RES);
+> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+> +    t16 = tcg_temp_new_i128();
+> +
+> +    tcg_gen_qemu_ld_i128(t16, EA, ctx->mem_idx,
+> +                         DEF_MEMOP(MO_128 | MO_ALIGN));
+> +
+> +    tcg_gen_extr_i128_i64(cpu_gpr[a->rt + 1],
+> +                         cpu_gpr[a->rt],
+> +                         t16);
+> +
+> +    tcg_gen_mov_tl(cpu_reserve, EA);
+> +    tcg_gen_movi_tl(cpu_reserve_length, 16);
+> +
+> +    tcg_gen_st_i64(cpu_gpr[a->rt],
+> +                   tcg_env, offsetof(CPUPPCState, reserve_val));
+> +    tcg_gen_st_i64(cpu_gpr[a->rt + 1],
+> +                   tcg_env, offsetof(CPUPPCState, reserve_val2));
+> +#else
+> +    qemu_build_not_reached();
+> +#endif
+> +    return true;
+> +}
+> +
+>  #include "translate/fixedpoint-impl.c.inc"
+>  
+>  #include "translate/fp-impl.c.inc"
+> @@ -5853,9 +5858,6 @@ GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
+>  GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
+>  GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
+>  GEN_HANDLER(isync, 0x13, 0x16, 0x04, 0x03FFF801, PPC_MEM),
+> -GEN_HANDLER_E(lbarx, 0x1F, 0x14, 0x01, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+> -GEN_HANDLER_E(lharx, 0x1F, 0x14, 0x03, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+> -GEN_HANDLER(lwarx, 0x1F, 0x14, 0x00, 0x00000000, PPC_RES),
+>  GEN_HANDLER_E(lwat, 0x1F, 0x06, 0x12, 0x00000001, PPC_NONE, PPC2_ISA300),
+>  GEN_HANDLER_E(stwat, 0x1F, 0x06, 0x16, 0x00000001, PPC_NONE, PPC2_ISA300),
+>  GEN_HANDLER_E(stbcx_, 0x1F, 0x16, 0x15, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+> @@ -5864,8 +5866,6 @@ GEN_HANDLER2(stwcx_, "stwcx.", 0x1F, 0x16, 0x04, 0x00000000, PPC_RES),
+>  #if defined(TARGET_PPC64)
+>  GEN_HANDLER_E(ldat, 0x1F, 0x06, 0x13, 0x00000001, PPC_NONE, PPC2_ISA300),
+>  GEN_HANDLER_E(stdat, 0x1F, 0x06, 0x17, 0x00000001, PPC_NONE, PPC2_ISA300),
+> -GEN_HANDLER(ldarx, 0x1F, 0x14, 0x02, 0x00000000, PPC_64B),
+> -GEN_HANDLER_E(lqarx, 0x1F, 0x14, 0x08, 0, PPC_NONE, PPC2_LSQ_ISA207),
+>  GEN_HANDLER2(stdcx_, "stdcx.", 0x1F, 0x16, 0x06, 0x00000000, PPC_64B),
+>  GEN_HANDLER_E(stqcx_, 0x1F, 0x16, 0x05, 0, PPC_NONE, PPC2_LSQ_ISA207),
+>  #endif
 
 
