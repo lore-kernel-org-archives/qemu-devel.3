@@ -4,192 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A39D9C5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 08:26:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E951C5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 08:33:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyPzh-0000yU-Cj; Mon, 24 Aug 2026 04:25:25 -0400
+	id 1wyQ6a-0002iA-2m; Mon, 24 Aug 2026 04:32:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1wyPzf-0000wl-3r; Mon, 24 Aug 2026 04:25:23 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1wyQ6T-0002Zq-24; Mon, 24 Aug 2026 04:32:25 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1wyPzb-0003MX-Bx; Mon, 24 Aug 2026 04:25:22 -0400
-Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67O5RwJ82069766; Mon, 24 Aug 2026 01:19:59 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-id:content-transfer-encoding:content-type:date:from
- :in-reply-to:message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=62PI1uqfjnsOQ4AiSLvopx0yBqkgyAhh4Kr0QHqAh
- CU=; b=jeCgqW7lAtOVntjlzRLcLc4EWyp9e/RIyqLB5sj3jf0YGXQTShVwXxS8k
- XFhNK1Zry5e4Q0yCYWbvVnoDJ94On4S9mybPi8x6cfjpD/uvfCNbje35Zc3NXA60
- 46J5nk2Jw2yFdnTg6T5vep4RCKsW/dm6P0aQjsY6M9BjmgtYI0rrGaQ1S4PWJmhY
- xjhJLXg5PGL/0uSEXWPmfxNkqSaDmGHR2nTOfDWmqNNiqUS+cwkl8gOB5u2vhGoz
- 3gI70dRfaKAyZbTm8R2MzDDh8DIO0QfQTbya+a7j2zluO7vbfh4lwai9yS13CWlA
- L7TMEdrfAD58w4FLg9mcEWvytzRMA==
-Received: from ph8pr06cu001.outbound.protection.outlook.com
- (mail-westus3azon11022137.outbound.protection.outlook.com [40.107.209.137])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4g7b9y2mtj-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 01:19:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bFMmcP9jfvOtmPpSW8U2Hb6gMeHUSdY5Aah2r5NIazasGAphXnJcj/TEXNNrK5S5cNq/mL32nVavApeYGAGuuvGNPsrpOAyIKxkwsC16QbyfPrOKgXz/UNeKnhJ+mabZfA++CZrC5h94Tq966Ml85C7gyamz3djryo/+B4M7bZ2bFFpX5JjYaH+fWd2WwsgJckn+nW77JpM8c2ZgIcmm8lLvVmDHezxzRxDta1guDLuUZ/dW4rMm2kSkBYA+fuF0WmgiPhE7evw1H5I0fsQVf/vzQQKmbJjan4KbtASrwdD5ceTNMEeExWODGOMC6HRp6RjGvv+pZl2SNymoTI70Bw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=62PI1uqfjnsOQ4AiSLvopx0yBqkgyAhh4Kr0QHqAhCU=;
- b=lVqtSjRnHvrcMRotTcqpEY0jEXdzXLH/KOU3s9StAx4gEuVMj2UxIwv/jwibO6QVHFlJ5/xfJQniZwkpfbjQjqlQ/5lmBtP/i1Cs2iGwV6aIGLzjMlXcXh8XNij+g4jkZBbR6t+p6hkkguk8GlR4b1Nu+cqzQxdqyONH81QAByUcsvjz8JnD01yvdx3Z+U0mfpufXn/xAVM8yD67cSQ5wljnYmFOwo5go+SOwi/MNC+CDzGhHoEnaBheMto1VRuSOHuao3I0c53sThzclfms3MobrTQ81X+/6CJXF+pxTJWjVWnRMf3WwORA1XicansitvnKeFSCUsD1H80hIpBcew==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=62PI1uqfjnsOQ4AiSLvopx0yBqkgyAhh4Kr0QHqAhCU=;
- b=sEAQVcBfYrPG/QlwoD4ASS35PsBin4Mh7iyEGBhX/IFCcsqvhI1PNbOdLkYj+9bIEuUULzUwNY8Z0jSwaWCYrFyFDsFjYPkXR5KMBrQ9VwVat0T1J3GZGWm5sPMXgpXg835nq4GWuyLKqqH6lZ0kDdbzvCRv3nTKh41IENeQfX+4M6y1hdmu6d1jv+jm32IbwpU6WyTVhf2k1KKJMuNKwuIu0YKIUh934U6xWGwyK5oQYUN2SDWxRpuQX5TZb12MycId9lXRYbMDpHx9WPxsV/fFsWL9oxRCTOYRakLcKCqjGXOOjSax1QFG42srMELL3+8bshBLAnvo1comej9ETQ==
-Received: from SA2PR02MB7564.namprd02.prod.outlook.com (2603:10b6:806:146::23)
- by SJ2PR02MB9883.namprd02.prod.outlook.com (2603:10b6:a03:544::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Mon, 24 Aug
- 2026 08:19:57 +0000
-Received: from SA2PR02MB7564.namprd02.prod.outlook.com
- ([fe80::1ea5:acb6:ebe1:e1c4]) by SA2PR02MB7564.namprd02.prod.outlook.com
- ([fe80::1ea5:acb6:ebe1:e1c4%5]) with mapi id 15.21.0339.010; Mon, 24 Aug 2026
- 08:19:57 +0000
-From: Khushit Shah <khushit.shah@nutanix.com>
-To: Eric Auger <eric.auger@redhat.com>
-CC: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Shaju Abraham
- <shaju.abraham@nutanix.com>, "yangjinqian1@huawei.com"
- <yangjinqian1@huawei.com>, "cohuck@redhat.com" <cohuck@redhat.com>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "sebott@redhat.com" <sebott@redhat.com>, "skolothumtho@nvidia.com"
- <skolothumtho@nvidia.com>, "philmd@oss.qualcomm.com"
- <philmd@oss.qualcomm.com>, "maz@kernel.org" <maz@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>, "pbonzini@redhat.com"
- <pbonzini@redhat.com>, "armbru@redhat.com" <armbru@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, "abologna@redhat.com"
- <abologna@redhat.com>, "jdenemar@redhat.com" <jdenemar@redhat.com>
-Subject: Re: [RFC PATCH v7 00/18] kvm/arm: Introduce a customizable aarch64
- KVM host model
-Thread-Topic: [RFC PATCH v7 00/18] kvm/arm: Introduce a customizable aarch64
- KVM host model
-Thread-Index: AQHdMGzyo1FvPV9HFUq/Vgw1esAzvbas4csA
-Date: Mon, 24 Aug 2026 08:19:56 +0000
-Message-ID: <2C1E0EFD-7BD3-4177-90F8-14894B34F726@nutanix.com>
-References: <20260726153221.24773-1-eric.auger@redhat.com>
- <3057A3BC-2BE9-4D2B-9D04-E3B31A6D0599@nutanix.com>
-In-Reply-To: <3057A3BC-2BE9-4D2B-9D04-E3B31A6D0599@nutanix.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SA2PR02MB7564:EE_|SJ2PR02MB9883:EE_
-x-ms-office365-filtering-correlation-id: 1ce5e791-f123-471c-c811-08df01b87b9e
-x-proofpoint-crosstenant: true
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|23010399003|366016|38070700021|6133799003|10067099003|56012099006|4143699003|22082099003|18002099003;
-x-microsoft-antispam-message-info: 6BH3cmcg9GLi4KWdKfuJ9nXYYxTBqyktq6pAjkkd6dWt2kZ0ftzwwe9CGgwe5KlRzoOBtrP7z1tMAXpPFObMO9w1OFhcgUb8oGUBgMMfX3rKN9Ba6vM/x1MQOGrJPz8JjPPGrvxaFQ/JWCNULrBzNe0Xdz0jYYw2jJxtNkYdsZ+O2PhbsxCasLsZShb+b7rBYsNg/f9TPWW9dWYD1XkBwaty2l7blt3OD/1VFIrbQkrcuEJhapQm+33MVlpjlBVmXW2NOUPjBqOmi6quvsVJxPZXLC4pRWXpgS0OPf4gyS62ja+yM7XzDrsbC3J1JUuEPHDvQqyY7yThV1pX39OI5GWoVvanGEJUJRSfon2UbHIdmNbyFIQydh6S/B0L8QZKd251N5K6c2KxQRH+xB8zBZL4z1TGA2HMcXHnAA1FbNIpJEnAjGfE0Fy7drUydy7AGMHOa9UHzPrZ1ZJPoCcIPjw4vTOnddVH/GSkF9Jj/AZAE/KIUA/r9Z+3TwA54bJBIcmyRP/iokrBrArnFlvpva+7DGRcVrmRktreDbwIroaTYX5C5+El8f5TuJbH2YK+TKbA1w98vHyrB7+pKlRxrb2q9Jd/h0XyVLk43aHwB5LavuL2aKRq4GqEX4yKgjW1DZuCWLd22sYZJGragUFT4acz7AeOVEnFThPN5KuYt+OeQHBUmzaGBBuEoHBEtSQnCE+1YQ/TB1ad6f6BRBNEA4HS2Gv+kyKJElTy+v0RpJU=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SA2PR02MB7564.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(23010399003)(366016)(38070700021)(6133799003)(10067099003)(56012099006)(4143699003)(22082099003)(18002099003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?ckFXSTV5eVFvN053UnVvL0p3RXBOMzkyVFRSVFlvVUVMT29CTFYzS2RPQ0tI?=
- =?utf-8?B?YlI2a0dRQlZORSt2TXpBYS9LQllWVC90L2JEWUtXZGo3RnpnazJlSE9yTjRF?=
- =?utf-8?B?MGVibmJRYmFwSUlmbmx5WXNvbE56d1hzcjFNdCtpdThxV3RDd0cvOXdtNk9K?=
- =?utf-8?B?RXRKT2YrdzUvMXp5L0pTd3NhcFVhRGs5SjR1a212KzlSYUlndjVZOTVwZWVk?=
- =?utf-8?B?aUYxT3E4MWNuckFySHpjL0U4aE9ZMzYvQnZkOUlIcUNINTBIeVhNbm91R1hQ?=
- =?utf-8?B?Y0hmZkxwNEJTKytvL2Z2ODdLSEdMdlNXSUVpa2RpMXE1SWFhREFrZGYvbXNj?=
- =?utf-8?B?ODNNa2tWbnJ1Qit2a2cvaG1CNGxQK2swRkhFbzN2N1JEK3NZQ0oxYk04cHpN?=
- =?utf-8?B?YnZZWGxsWTZIdktYRW9HRmJxY25NeVRxRFV1dVlQc0Fra1RkYlBma1dnMG4w?=
- =?utf-8?B?cEtEK3NGdCswT1BUZWtMOVdwU2hiQ3BUeHBkMGY1ODM0K1NxcUhIZzZSRTlu?=
- =?utf-8?B?ZDYvRWxUaElTOWRLSXFYaFNkUVZkZk0yZmZLVzBjeXdjV3NYV1F2eEx3U2tB?=
- =?utf-8?B?cEdZMXFCVmY3VnVjRzRWYTlYQXdtT0s3VUpDd0s2cTJBOGxEeXMzN2FuTVhB?=
- =?utf-8?B?all4OHhVVGVjWENNdGo3SnlTMXVmNlNxd3BKMTJ4bFRNZEp6UkY3RkE1TGdp?=
- =?utf-8?B?TDNJd3NKMStVTllEU3pKT3RieUZsZzNLSTFOS2Q0QkdLSi9wT3drR20xZ1ds?=
- =?utf-8?B?ZStzMjJJZDdCRHBsOVBUOGhWZUE2eWJkTk5IaytRc1dQY1ByWVpLS2Q3eDRi?=
- =?utf-8?B?eUg3bmQ4SEFocjIxTjh6NCtIcEtjM3RPbVZRZm13UUhhRTYwZ2pRMGo4WURm?=
- =?utf-8?B?STJyaUZNclZra2ViQ2VXSnovZm8vUjczZlhZamlHTHFtREJnenY5WVpZSE5M?=
- =?utf-8?B?NnVoN3A1M2RxdTJiYnQybWN2UWVJQ0E4VVNJU2s1MldXZ2IrNHdBUzlSckRo?=
- =?utf-8?B?dVFEalhPc3UydWRpOEZhZE5SY1NJSXhlckdFVW44UklFOVBWMGNENVdpcTJY?=
- =?utf-8?B?Smkzakt4S2pJWVhMWDY2Si9SM3c4N2JzWFBTelVtcGJlNUhoaGpyVDZTRE5I?=
- =?utf-8?B?SWVBUUxGK1owbjh2dHY2cTRLTjB1SUNhQldkcGl0dEszVjYxdmY0NFhnU0RK?=
- =?utf-8?B?NDg0MFkxLzlqZ2pvRzJsQVkyeGFaZDFlaUZzZEFicmVIeUd5MEIyWG1WQk1s?=
- =?utf-8?B?K3V5YVAyRHFrVG00Ymx2YmNRcGNrS2Y4ejJHZTBEVDVIc21KNEMwNkhRZUh0?=
- =?utf-8?B?MHNaV1lxUmUyclFpSmo1d1pPZG1oUWZqOWwxQWdlN1dXN0Q4YWJPMEwwOWMx?=
- =?utf-8?B?eGNqR0N1cUN1WFJPZEpRT2VQSGxqc1doSXVMUWdPcHBJb1JIRnV1U2VQelA1?=
- =?utf-8?B?bXpNVEZxSVlmL2IvdWwvZXBzYjJjWWN6MGtXcHB2bmhlREUrcjJQOGhncXF2?=
- =?utf-8?B?eXNkdGpuN0FYUUh4WmovTExaZ2U0WjNBUDBnYVhhdkhZc0FZMkxxWWQ0Nmw3?=
- =?utf-8?B?MUtPLzJkMkZOUUdhWUVGcmp4QXNFcVRZcDFEZ0lYNDEreGc1ZzczazdQeDJV?=
- =?utf-8?B?QVZXaWVVNGgwRXhvd1k5b1B2U3FjMDExN1F4QVVsY1UwL2k0c3ZyR0JUOTd5?=
- =?utf-8?B?TW0xSjBDRndMT3VzVGxjaUF3M1czTUFVanoxbHRTUXB5Y01kbE5RaEZXcExH?=
- =?utf-8?B?Nzdwb0ozWUR1WXZQVjdkK1g3ZVptU05NdW1GeTcrNFJ4dzFjOU9vdzZ4cTJO?=
- =?utf-8?B?dExCazZvMFRxMGk0a0tlNHBnSkRWQ1BkUW9DQU5EQnRZTE4xbkJYM0duQjQx?=
- =?utf-8?B?bVJkVG90azlJUlh5V1J3cEJ3NUFaSHIwUnUzcW91Q0xuaTZPdGpXUnA1Y1hZ?=
- =?utf-8?B?MGlQUWVkSUZzbkkyZWYyQk9TSkxMU21xeDJERkdpSUhhUFYrWDJURERqQW5Z?=
- =?utf-8?B?K3gwc1lGV0Q1RFlaaGh4eGdRY1NIekZVUXh1TGlwZW9ua0xHTklCcWl2b2l2?=
- =?utf-8?B?RkJOZnJwM2VZZ0VzVTkxNk9zd0tTZVlpdklvVi8ySTZZQ0Z5VGZQbWdZRktr?=
- =?utf-8?B?bU04SzhJVlErWXhhSUxUQW9UWWJFVzdwbDlpTlM4d1hQTE04UVRzMjFCUHg4?=
- =?utf-8?B?VVZHdXV0bUtDMEN1VFVnbGU2Und2VUFnQ2g5T1BzbE1QSmVwQ3hsNkxSZUpr?=
- =?utf-8?B?dGxkb3pjT2lOdy9CMkM2Y0w5OFpvdUZEWVpXSER4NmJuc2JZNld2M3cxcytj?=
- =?utf-8?B?K3dXbU82Z3FHRGRLbGUxOTFQM1pWMFVNNXFxaTl4Y0JUMGxVMWxSMCt4Z2Jj?=
- =?utf-8?Q?TOpGGHcESBe/gs6w=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <77BB42E5F5CC3343A26A40BE0184E3CA@namprd02.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
+ id 1wyQ6O-0005B8-Gr; Mon, 24 Aug 2026 04:32:24 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67O5VY4Z3283705; Mon, 24 Aug 2026 08:32:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=4OIQIWLfpx82Yj08h
+ 2Cd9jytVzxj3ZZdmw4v/J/jI8Q=; b=YrQVTDOuwt2sLf85WnBwFBiVc9rPJm+gF
+ ELKBE2Q5WCT1rSR1RkfOBKeS/9l4MfGTRS/mBqpKfz1UMQBW57nC+zEn1n/+L57H
+ 65LHNca0RPF52TkgqDggfBwXrVdS1Tg95Pg2fMS//xKiDGK4fIZg37YO7NumjVB4
+ tjRAX3HQu0lndJQPzjhITfC1QPvaX34N1KKq2uf5Pr5P1KHbJ5+lFMs/7SnC+LM8
+ BvkOeSPcwnQhoWpIZAqP226Y7s2ohTYtWsNb5Y00Bk8BQzNuUA/sPNsdgSjeklqX
+ swlUgzIrBu0QljDtryGOLN2Diab1wv/IdJYo60VrhWSTKyIeNYcAQ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eqg1wx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Aug 2026 08:32:12 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67O8QONZ018160;
+ Mon, 24 Aug 2026 08:32:10 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkgvr3e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Aug 2026 08:32:10 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67O8W61P35586458
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 24 Aug 2026 08:32:06 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9272C20040;
+ Mon, 24 Aug 2026 08:32:06 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 53CB520043;
+ Mon, 24 Aug 2026 08:32:06 +0000 (GMT)
+Received: from funtu2.ibm.com (unknown [9.111.131.174])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 24 Aug 2026 08:32:06 +0000 (GMT)
+From: Harald Freudenberger <freude@linux.ibm.com>
+To: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ thuth@redhat.com, berrange@redhat.com
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, linux-s390@vger.kernel.org, 
+ dengler@linux.ibm.com, borntraeger@linux.ibm.com,
+ fcallies@linux.ibm.com, cohuck@redhat.com
+Subject: [PATCH v16 05/20] target/s390x: Add helper functions for copy memory
+ to and from guest
+Date: Mon, 24 Aug 2026 10:31:49 +0200
+Message-ID: <20260824083204.40877-6-freude@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260824083204.40877-1-freude@linux.ibm.com>
+References: <20260824083204.40877-1-freude@linux.ibm.com>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: v589jN39JQtqYZdFiKwBsDdxNqIx9N6z453PQa1gUCfPGy5avMC6RTK6HLltYHiUZiZ6+1+rgYjttEF0lcJfN26dzsHSopPqQB0vJtDRRsri166G2/ahAe8VXe/siN9FyL/umg3jEOoXk04aiHrIBDWQowtty7TrOdkNRBP3TCWPp6EqxHlrgX9uXqyzN92v9ouoj4Zt5hRo7XsgD2oa/yIFWpmsOPCmcUSsF7sBJVYe+1p9ixgaEQy+hoSX9J5LzYIU9svSVqzc6isJidOrUk3ZJ/iNDpilkxI8qzNZZWI+/Jeq95gmd8d8YK34vfnI2rjdv3eNGDKwSyEx+KxwLg==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SA2PR02MB7564.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1ce5e791-f123-471c-c811-08df01b87b9e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Aug 2026 08:19:56.9092 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: YM9tVeJwPjfXMgnoAbO9MPVNtmHTuKxx4h2IpYRJQN2jqGD6AljYIKH5oYIEZ9eGvgyy8gfCtGXMD8cMIab1K6M83l9DKT2J1Am366xBXic=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR02MB9883
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDA3MiBTYWx0ZWRfX8A2soumVLs0H
- 4LBqSujnrB6BI06U0YlMlZgi+ftCdXUATFmP823a6Q1xiTfm/d25GcJC1+/a//MPCtNE6HHXJMN
- z9bp+V+mRsXxHKv3pXRckjjmTHRS68Ialj00651YfkycIOytRU1476mw5v9O2J9cEFDmR+uSuTO
- SY9ymAeDikqeHzETog3D5LSMlpO+PMAt7Un8uhgCpv+j4IqKS2TK6CF5v0V43mThUUkMHrk34Mf
- 62VbxubCvfwuqgs6xqHaPYqTVMug2U6mFhlTHHdBstvnPAJGP9oMQRGyGuewYMLBO86exnoJ4rN
- LQd/7Z/rChZfzOKJShrANHhiCPqfUG7rzHX47w6KNc0PMvIsTirFcHBOIjyBSYWcoQV6jwgKT+r
- jArzDJmRGhuYCwDH4MIxnUDO27ov7M0ytenf5XErqirL1cIXjZg/uGmsttO+tgzTWI3KEfyvbRl
- wT9+By7QjloJM9C93Ag==
-X-Proofpoint-ORIG-GUID: v0cGbXEPPkZ4hbcp4I4bYRnbSDDb28hn
-X-Authority-Analysis: v=2.4 cv=YrI/gYYX c=1 sm=1 tr=0 ts=6a8bfeaf cx=c_pps
- a=wX8BO1TzPc5cEc2XX+F04Q==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Sv0fKeRqtYgA:10 a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VofLwUrZ8Iiv6rRUPXIb:22 a=0LlEyIVc8U2lsR7dKhuH:22 a=NEAV23lmAAAA:8
- a=64Cc0HZtAAAA:8 a=20KFwNOVAAAA:8 a=oOnrLNp0j6QjB8WRQx8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: v0cGbXEPPkZ4hbcp4I4bYRnbSDDb28hn
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDA3MiBTYWx0ZWRfXy40fA0ZQq+TK
- +FGjB7N5uHcs1mnReQi8exQjtUdkv/5ilkqbc2uv2si8c+iB/KkcdFEeZT4LtfOH/u2xNJTJ5Mq
- YtYoU6GUJ9EnrtSSNjuHos3KcrgEBQQ=
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: SngIAamiCVhW1xfpw21-Lbxl8Po49s9v
+X-Proofpoint-ORIG-GUID: SngIAamiCVhW1xfpw21-Lbxl8Po49s9v
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDA3NCBTYWx0ZWRfXwfRhldsJgB+A
+ 2bcs4nd55RXmkmlt3zpBLy4DC3gzYt5JxWU+BoUogPTYVHa6SxZ8rFOOqzUFcdsK4JGbRTOWGZA
+ W2CQCC0Y12yHZOK9CczmwoRl+HKTNBvpuauZOTAPSZzp3WW93JhXFPxcn9OEIvVnqx2G1zFNkCc
+ 2uKYZC5IQ2y10hMSmvOmOa+qmIiGRDVtYovJ0ofcTecVqYcqj52co/MDmoRwrO5bK/VOmJXfSGa
+ LxinvL7lpDuWcBgdH1yhqcnIoawXoKIbZdjNpMAIN5E6zDVRXbWd8XRVZPReApTuAgE9RWCcPMg
+ usIzzu12hsFH2r3kPm1jNyRIJd2nSiTcifaZN96slVeJhS5THll2QSZbOiDC8Vg1Bm068/XZ15G
+ bM3JG/QJNR8hcweFSRc7fizBgMYPAQJz09NEoPHClv5O0I8YVamJzzCXeh8tafXTvjGEhNyz0we
+ M4HvYddR236yOmIRHbA==
+X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8c018c cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=FyORFv3Am_Wt7j1hYGwA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDA3NCBTYWx0ZWRfX5GMMsyONR3j5
+ oj9FnggNuNySe9T9wH4CJ6KZZDiC+d1fllMf7KEftOZ84vjIf71KqStyHgH058+M/snQMn+IMiI
+ RvVL5S+cn31RytUxMLH78WA8y05Eifk=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-24_02,2026-08-21_02,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=khushit.shah@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240074
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=freude@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -206,168 +122,411 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gT24gMjAgQXVnIDIwMjYsIGF0IDExOjU34oCvQU0sIEtodXNoaXQgU2hhaCA8a2h1c2hp
-dC5zaGFoQG51dGFuaXguY29tPiB3cm90ZToNCj4gDQo+IA0KPiANCj4+IE9uIDI2IEp1bCAyMDI2
-LCBhdCA4OjU54oCvUE0sIEVyaWMgQXVnZXIgPGVyaWMuYXVnZXJAcmVkaGF0LmNvbT4gd3JvdGU6
-DQo+PiANCj4+ICEtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tfA0KPj4gQ0FVVElPTjogRXh0ZXJuYWwgRW1haWwNCj4+IA0K
-Pj4gfC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0hDQo+PiANCj4+IFRoaXMgc2VyaWVzIGVuaGFuY2VzIHRoZSBjdXJyZW50
-IGhvc3QgS1ZNIG1vZGVsIHdpdGggY2FwYWJpbGl0eSB0bw0KPj4gc2V0IHdyaXRhYmxlIElEIHJl
-ZyBmaWVsZHMuIA0KPj4gDQo+PiBTaW5jZSB2Ni43IGtlcm5lbCwgS1ZNL2FybSBhbGxvd3MgdGhl
-IHVzZXJzcGFjZSB0byBvdmVyd3JpdGUgdGhlIHZhbHVlcw0KPj4gb2YgYSBzdWJzZXQgb2YgSUQg
-cmVncy4gVGhlIGxpc3Qgb2Ygd3JpdGFibGUgZmllbGRzIGNvbnRpbnVlcyB0byBncm93Lg0KPj4g
-VGhlIGZlYXR1cmUgSUQgcmFuZ2UgaXMgZGVmaW5lZCBhcyB0aGUgQUFyY2g2NCBTeXN0ZW0gcmVn
-aXN0ZXIgc3BhY2UNCj4+IHdpdGggb3AwPT0zLCBvcDE9PXswLCAxLCAzfSwgQ1JuPT0wLCBDUm09
-PXswLTd9LCBvcDI9PXswLTd9Lg0KPj4gDQo+PiBUaGUgZW5kIGdvYWwgaXMgdG8gZ2V0IG1vcmUg
-ZmxleGliaWxpdHkgd2hlbiBtaWdyYXRpbmcgZ3Vlc3RzDQo+PiBiZXR3ZWVuIGRpZmZlcmVudCBo
-b3N0IGhhcmR3YXJlLg0KPj4gDQo+PiBRRU1VIHJldHJpZXZlcyB0aGUgd3JpdGFibGUgSUQgZmll
-bGRzIGZyb20gS1ZNIFVBUEkgWzFdIGFuZA0KPj4gbWF0Y2ggdGhlbSBhZ2FpbnN0IGEgZ2VuZXJh
-dGVkIGRlc2NyaXB0aW9uIG9mIElEIHJlZ3MgYW5kIHRoZWlyDQo+PiBuYW1lZCBmaWVsZHMgdGhh
-dCBzdGVtIGZyb20gQUFSQ0hNUlMgUmVnaXN0ZXJzLmpzb24gZmlsZS4NCj4+IEN1cnJlbnQgZGVz
-Y3JpcHRpb24gaXMgYmFzZWQgb24gbGF0ZXN0IDIwMjYtMDMgZWRpdGlvbi4NCj4+IFRoZSBjb250
-ZW50IG9mIHRoZSBnZW5lcmF0ZWQgZmlsZXMgd2FzIGNvbXBhcmVkIGFnYWluc3Qga2VybmVsDQo+
-PiBsaW51eC9hcmNoL2FybTY0L3Rvb2xzL3N5c3JlZyBmaWxlLiBJdCBpcyBub3Qgc3RyYWlnaHRm
-b3J3YXJkDQo+PiB0byBoYXZlIHVuaXQgdGVzdHMgZm9yIHB5dGhvbiBzY3JpcHRzIGFzIHRoZXJl
-IGFyZSBtYW55IGNhc2VzIGZvcg0KPj4gZmllbGQgZXh0cmFjdGlvbi4gDQo+PiANCj4+IEZvciBl
-YWNoIHdyaXRhYmxlIG5hbWVkIGZpZWxkIGEgdWludDY0IHByb3BlcnR5IGlzIGNyZWF0ZWQNCj4+
-IGZvbGxvd2luZyB0aGUgIlNZU1JFR188UkVHPl88RklFTEQ+IiBuYW1pbmcgY29udmVudGlvbi4g
-UkVHIGFuZA0KPj4gRklFTEQgbmFtZXMgYXJlIHRob3NlIGRlc2NyaWJlZCBpbiBBUk0gQVJNIFJl
-ZmVyZW5jZSBtYW51YWwuDQo+PiANCj4+IFRoZSBsaXN0IG9mIFNZU1JFR19JRCBwcm9wZXJ0aWVz
-IGNhbiBiZSByZXRyaWV2ZWQgdGhyb3VnaCB0aGUgcW1wDQo+PiBtb25pdG9yIHVzaW5nIHF1ZXJ5
-LWNwdS1tb2RlbC1leHBhbnNpb24gWzJdLg0KPj4gDQo+PiBGb3IgdGhlIHJlY29yZCwgSmlucWlh
-biB3YXMgYWJsZSB0byBtaWdyYXRlIGJldHdlZW4gSGlzaWxpY29uIEt1blBlbmcNCj4+IEhJUDA5
-IGFuZCBISVAxMiBjaGlwcyB3aXRoIHRoaXMgc2VyaWVzIHVzaW5nIHRoaXMga2luZCBvZiBjb21t
-YW5kOg0KPj4gDQo+PiAtY3B1IGhvc3QscGF1dGg9b2ZmLHBtdT1vZmYsc3ZlPW9mZixcDQo+PiBT
-WVNSRUdfSURfQUE2NFBGUjFfRUwxX05NST0weDAsXA0KPj4gU1lTUkVHX0lEX0FBNjRJU0FSMV9F
-TDFfTFM2ND0weDAsXA0KPj4gU1lTUkVHX0lEX0FBNjRJU0FSMV9FTDFfWFM9MHgwLFwNCj4+IFNZ
-U1JFR19JRF9BQTY0SVNBUjFfRUwxX0xSQ1BDPTB4MixcDQo+PiBTWVNSRUdfSURfQUE2NElTQVIy
-X0VMMV9SUFJGTT0weDAsXA0KPj4gU1lTUkVHX0lEX0FBNjRJU0FSMl9FTDFfQ0xSQkhCPTB4MCxc
-DQo+PiBTWVNSRUdfSURfQUE2NElTQVIyX0VMMV9QQUNfZnJhYz0weDAsXA0KPj4gU1lTUkVHX0lE
-X0FBNjRJU0FSMl9FTDFfQkM9MHgwLFwNCj4+IFNZU1JFR19JRF9BQTY0SVNBUjJfRUwxX1JQUkVT
-PTB4MCxcDQo+PiBTWVNSRUdfSURfQUE2NElTQVIyX0VMMV9XRnhUPTB4MCxcDQo+PiBTWVNSRUdf
-SURfQUE2NE1NRlIwX0VMMV9GR1Q9MHgwLFwNCj4+IFNZU1JFR19JRF9BQTY0TU1GUjBfRUwxX0Jp
-Z0VuZD0weDAsXA0KPj4gU1lTUkVHX0lEX0FBNjRNTUZSMV9FTDFfRUNCSEI9MHgwLFwNCj4+IFNZ
-U1JFR19JRF9BQTY0TU1GUjFfRUwxX0NNT1c9MHgwLFwNCj4+IFNZU1JFR19JRF9BQTY0TU1GUjFf
-RUwxX1RJRENQMT0weDAsXA0KPj4gU1lTUkVHX0lEX0FBNjRNTUZSMV9FTDFfblRMQlBBPTB4MCxc
-DQo+PiBTWVNSRUdfSURfQUE2NE1NRlIxX0VMMV9BRlA9MHgwLFwNCj4+IFNZU1JFR19JRF9BQTY0
-TU1GUjFfRUwxX0hDWD0weDAsXA0KPj4gU1lTUkVHX0lEX0FBNjRNTUZSMV9FTDFfRVRTPTB4MCxc
-DQo+PiBTWVNSRUdfSURfQUE2NE1NRlIxX0VMMV9QQU49MHgyLFwNCj4+IFNZU1JFR19JRF9BQTY0
-TU1GUjFfRUwxX0hBRkRCUz0weDIsXA0KPj4gU1lTUkVHX0lEX0FBNjRNTUZSMl9FTDFfQ25QPTB4
-MCxcDQo+PiBTWVNSRUdfSURfQUE2NE1NRlIzX0VMMV9UQ1JYPTB4MCxcDQo+PiBTWVNSRUdfSURf
-QUE2NERGUjBfRUwxX1BNVVZlcj0weDYsXA0KPj4gU1lTUkVHX0lEX0FBNjRERlIwX0VMMV9EZWJ1
-Z1Zlcj0weDksXA0KPj4gU1lTUkVHX0lEX0FBNjRERlIwX0VMMV9Eb3VibGVMb2NrPTB4ZixcDQo+
-PiBTWVNSRUdfSURfQUE2NFpGUjBfRUwxX0Y2NE1NPTB4MCxcDQo+PiBTWVNSRUdfSURfQUE2NFpG
-UjBfRUwxX0YzMk1NPTB4MCxcDQo+PiBTWVNSRUdfSURfQUE2NFpGUjBfRUwxX1NNND0weDAsXA0K
-Pj4gU1lTUkVHX0lEX0FBNjRaRlIwX0VMMV9TSEEzPTB4MCxcDQo+PiBTWVNSRUdfSURfQUE2NFpG
-UjBfRUwxX0JpdFBlcm09MHgwLFwNCj4+IFNZU1JFR19JRF9BQTY0WkZSMF9FTDFfQUVTPTB4MCxc
-DQo+PiBTWVNSRUdfSURfQUE2NFpGUjBfRUwxX1NWRXZlcj0weDAsXA0KPj4gU1lTUkVHX0NUUl9F
-TDBfTDFJcD0weDIgXA0KPj4gDQo+PiBDb25uaWUgJiBFcmljDQo+PiANCj4+IFRoaXMgc2VyaWVz
-IGNhbiBiZSBmb3VuZCBhdDoNCj4+IGh0dHBzOi8vdXJsZGVmZW5zZS5wcm9vZnBvaW50LmNvbS92
-Mi91cmw/dT1odHRwcy0zQV9fZ2l0aHViLmNvbV9lYXVnZXJfcWVtdV90cmVlX2FybS0yRGNwdS0y
-RG1vZGVsLTJEdjcmZD1Ed0lEQWcmYz1zODgzR3BVQ09DaEtPSGlvY1l0R2NnJnI9UEdXTXlpZ25B
-ME5pRG1UbHlQN3ZPVEhvekJ3c19WTjg2eXJWbVNNa0JwMCZtPXhoNXU3LXI2YXVYaVdRU2NhZmRq
-LTB3VzcwbVhCNEZoQ2xoNThHcnlIbUV4a3g4dVpOLWg5ajRCMmM5MExvd2Qmcz1SbzR2X21qb05h
-THN6bnl4bTc4MWx6WEJjUnRYVHVkamlibWdJaG9Kc05NJmU9IA0KPj4gDQo+PiBIaXN0b3J5Og0K
-Pj4gLS0tLS0tLS0NCj4+IHY2IC0+IHY3Og0KPj4gLSBxdWVyeS1jcHUtbW9kZWwtZXhwYW5zaW9u
-IG5vdyBhcHBsaWVzIHRoZSBzeXNyZWcgcHJvcHMNCj4+IG9udG8gYSBzY3JhdGNoIHZjcHUgKFBP
-QykgYWxsb3dpbmcgYSBmaW5lciB2YWxpZGF0aW9uIG9mIHNldHRpbmdzDQo+PiAobm90IHBlcmZl
-Y3QgdGhvdWdoIGFzIGluaXQgbWF5IGJlIHJldmlzaXRlZCBkZXBlbmRpbmcgb24NCj4+IHNldHRp
-bmdzKQ0KPj4gLSBQcm9wZXJseSBoYW5kbGUgVmFsdWVSYW5nZSAoS2h1c2hpdCkNCj4+IC0gUmVt
-b3ZlIGNwdSBwYXJhbWV0ZXIgaW4gZ2V0X2hvc3RfY3B1X2lkcmVncyBjYWxsIGNoYWluDQo+PiAo
-S2h1c2hpdCkNCj4+IA0KPj4gdjUgLT4gdjY6DQo+PiB2NiBpcyBtb3N0bHkgZm9yIEtodXNoaXQg
-dG8gc2VlIGhvdyBoZSBtYXkgd29yayBvbiB0b3ANCj4+IG9mIHRoaXMgc2VyaWVzLiBJdCBmdWxm
-aWxscyBzb21lIG9mIGhpcyByZXF1aXJlbWVudHM6DQo+PiAtIFVwb24gS2h1c2hpdCByZXF1ZXN0
-IEkgYWRkZWQgZGVzY3JpcHRpb24gZm9yIGVudW0gdmFsdWVzDQo+PiBhbmQgcmVzZXJ2ZWQgZmll
-bGRzDQo+PiAtIHNldF9zeXNyZWdfcHJvcCBjaGVja3MgdGhlIGlucHV0IHZhbHVlIGFnYWluc3Qg
-ZW51bSB2YWx1ZXMNCj4+IGlmIGFueQ0KPj4gLSB3cml0YWJsZV9iaXRtYXAgaXMgbm93IGRpc3Bh
-dGNoZWQgaW50byB0aGUgc3lzcmVnIGRlc2NyaXB0b24NCj4+IGFuZCBub3Qgc3RvcmVkIGluIHZj
-cHUgc3RhdGUgYW55bW9yZSAoYmVzaWRlcyBpdCBpcyBWTSB3aWRlKQ0KPj4gLSBpbXBsZW1lbnRl
-ZCB3cml0ZSBmb3IgcW1wIGluc3BlY3Rpb24uIEhvd2V2ZXIgdGhpcyBpcyBub3QNCj4+IHlldCBj
-aGVja2VkIGFnYWluc3QgS1ZNLiBUaGF0J3MgdGhlIG5leHQgc3RlcCBJIHRoaW5rLCBpZS4NCj4+
-IGluc3RhbnRpYXRlIGEgc2NyYXRjaCB2Y3B1IHRvIHRlc3QgaWYgdGhlIGZpZWxkIHZhbHVlIGNh
-biBiZQ0KPj4gYXBwbGllZD8NCj4+IC0gaWYgc29tZSBpbmNvbnNpc3RlbmNpZXMgYmV0d2VlbiB3
-cml0YWJsZSBtYXNrIGFuZCBpZHJlZw0KPj4gZmllbGQsIHJlc2VydmVkIGZpZWxkcyBvbmx5IHBy
-b2R1Y2UgdHJhY2VzDQo+PiAtIHRoaXMgdmVyc2lvbiBkb2VzIG5vdCB5ZXQgZml4IHNvbWUgcmVw
-b3J0ZWQgaXNzdWVzIGFib3V0IGhvc3QNCj4+IHN1cHBvcnRpbmcgbmVzdGVkIHZpcnQuIEkgd2ls
-bCBmdXJ0aGVyIHN5bmMgd2l0aCBLaHVzaGl0Lg0KPj4gc28gdGhpcyBpcyBkZWZpbml0aXZlbHkg
-bm90IGNhbmRpZGF0ZSB0byBiZSBhcHBsaWVkLCBoZW5jZSB0aGUNCj4+IFJGQyB0YWcuDQo+PiAN
-Cj4+IENvcm5lbGlhIEh1Y2sgKDMpOg0KPj4gdGFyZ2V0L2FybS9rdm06IFJldHJpZXZlIHdyaXRh
-YmxlIElEIHJlZyBtYXANCj4+IGFybS9jcHUtZmVhdHVyZXM6IGRvY3VtZW50IElEIHJlZyBwcm9w
-ZXJ0aWVzDQo+PiBhcm0tcW1wLWNtZHM6IGludHJvc3BlY3Rpb24gZm9yIElEIHJlZ2lzdGVyIHBy
-b3BzDQo+PiANCj4+IEVyaWMgQXVnZXIgKDE0KToNCj4+IHNjcmlwdHM6IGludHJvZHVjZSBzY3Jp
-cHRzL3VwZGF0ZS1hYXJjaDY0LWNwdS1zeXNyZWdzLWhlYWRlci5weQ0KPj4gdGFyZ2V0L2FybS9j
-cHUtc3lzcmVncy5oLmluYzogU29ydCBieSBuYW1lIGFscGhhYmV0aWNhbCBvcmRlcg0KPj4gdGFy
-Z2V0L2FybS9jcHUtc3lzcmVncy5oLmluYzogVXBkYXRlIHdpdGggYXV0b21hdGljIGdlbmVyYXRp
-b24NCj4+IGFybS9jcHU6IEFkZCBpbmZyYSB0byBoYW5kbGUgZ2VuZXJhdGVkIElEIHJlZ2lzdGVy
-IGRlZmluaXRpb25zDQo+PiBzY3JpcHRzOiBJbnRyb2R1Y2Ugc2NyaXB0cy9hYXJjaDY0X3N5c3Jl
-Z19oZWxwZXJzIG1vZHVsZQ0KPj4gc2NyaXB0czogSW50cm9kdWNlIHNjcmlwdHMvdXBkYXRlLWFh
-cmNoNjQtY3B1LXN5c3JlZy1wcm9wZXJ0aWVzLnB5DQo+PiB0YXJnZXQvYXJtL2NwdS1pZHJlZ3Mu
-aC5pbmM6IGdlbmVyYXRlIHdpdGggc2NyaXB0DQo+PiB0YXJnZXQvYXJtL2NwdS1pZHJlZ3MuaC5p
-bmM6IEdlbmVyYXRlIGVudW0gdmFsdWVzDQo+PiBhcm0va3ZtOiBJbml0aWFsaXplIGFsbCB3cml0
-YWJsZSBJRCByZWdpc3RlcnMgZnJvbSBob3N0DQo+PiB0YXJnZXQvYXJtL2t2bTogSW50cm9kdWNl
-IGt2bV9hcm1fZXhwb3NlX2lkcmVnX3Byb3BlcnRpZXMNCj4+IHRhcmdldC9hcm0vY3B1OiBFeHBv
-c2Ugd3JpdGFibGUgSUQgcmVnIGZpZWxkIHByb3BlcnRpZXMgb24gdGhlIGt2bQ0KPj4gICBob3N0
-IHZjcHUgbW9kZWwNCj4+IHRhcmdldC9hcm0vY3B1LWlkcmVncy5oLmluYzogR2VuZXJhdGUgcmVz
-ZXJ2ZWQgZmllbGRzDQo+PiB0YXJnZXQvYXJtL2t2bTogSWdub3JlIGFuZCB0cmFjZSB1bmV4cGVj
-dGVkIHdyaXRhYmxlIHJlc2VydmVkIGZpZWxkcw0KPj4gdGFyZ2V0L2FybS9rdm06IGFkZCB1dGls
-aXR5IHRvIHdyaXRlIGlkcmVncyBpbiBzY3JhdGNoIHZjcHUNCj4+IA0KPj4gU2hhanUgQWJyYWhh
-bSAoMSk6DQo+PiB0YXJnZXQvYXJtL2NwdV9pZHJlZ3M6IGdlbmVyYXRlIHRhYmxlcyBmb3IgQXJt
-NjQgSUQgcmVnaXN0ZXJzIGFuZA0KPj4gICBmaWVsZHMNCj4+IA0KPj4gZG9jcy9zeXN0ZW0vYXJt
-L2NwdS1mZWF0dXJlcy5yc3QgICAgICAgICAgICAgIHwgIDEwNiArLQ0KPj4gdGFyZ2V0L2FybS9j
-cHUtaWRyZWdzLmggICAgICAgICAgICAgICAgICAgICAgIHwgICA0MSArDQo+PiB0YXJnZXQvYXJt
-L2t2bV9hcm0uaCAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgIDEzICsNCj4+IHRhcmdldC9h
-cm0vY3B1LWlkcmVncy5oLmluYyAgICAgICAgICAgICAgICAgICB8IDIxNjQgKysrKysrKysrKysr
-KysrKysNCj4+IHRhcmdldC9hcm0vY3B1LXN5c3JlZ3MuaC5pbmMgICAgICAgICAgICAgICAgICB8
-ICAgNTcgKy0NCj4+IHRhcmdldC9hcm0vYXJtLXFtcC1jbWRzLmMgICAgICAgICAgICAgICAgICAg
-ICB8ICAgOTggKw0KPj4gdGFyZ2V0L2FybS9jcHUtaWRyZWdzLmMgICAgICAgICAgICAgICAgICAg
-ICAgIHwgICA5NiArDQo+PiB0YXJnZXQvYXJtL2NwdTY0LmMgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgfCAgICA1ICsNCj4+IHRhcmdldC9hcm0va3ZtLXN0dWIuYyAgICAgICAgICAgICAgICAg
-ICAgICAgICB8ICAgIDYgKw0KPj4gdGFyZ2V0L2FybS9rdm0uYyAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgIHwgIDM2MCArKy0NCj4+IHNjcmlwdHMvYWFyY2g2NF9zeXNyZWdfaGVscGVycy5w
-eSAgICAgICAgICAgICB8ICAxMDkgKw0KPj4gLi4uL3VwZGF0ZS1hYXJjaDY0LWNwdS1zeXNyZWct
-cHJvcGVydGllcy5weSAgIHwgIDI5MCArKysNCj4+IHNjcmlwdHMvdXBkYXRlLWFhcmNoNjQtY3B1
-LXN5c3JlZ3MtaGVhZGVyLnB5ICB8ICAgNTEgKw0KPj4gdGFyZ2V0L2FybS9tZXNvbi5idWlsZCAg
-ICAgICAgICAgICAgICAgICAgICAgIHwgICAgMSArDQo+PiB0YXJnZXQvYXJtL3RyYWNlLWV2ZW50
-cyAgICAgICAgICAgICAgICAgICAgICAgfCAgICA4ICsNCj4+IDE1IGZpbGVzIGNoYW5nZWQsIDMz
-NzMgaW5zZXJ0aW9ucygrKSwgMzIgZGVsZXRpb25zKC0pDQo+PiBjcmVhdGUgbW9kZSAxMDA2NDQg
-dGFyZ2V0L2FybS9jcHUtaWRyZWdzLmgNCj4+IGNyZWF0ZSBtb2RlIDEwMDY0NCB0YXJnZXQvYXJt
-L2NwdS1pZHJlZ3MuaC5pbmMNCj4+IGNyZWF0ZSBtb2RlIDEwMDY0NCB0YXJnZXQvYXJtL2NwdS1p
-ZHJlZ3MuYw0KPj4gY3JlYXRlIG1vZGUgMTAwNjQ0IHNjcmlwdHMvYWFyY2g2NF9zeXNyZWdfaGVs
-cGVycy5weQ0KPj4gY3JlYXRlIG1vZGUgMTAwNjQ0IHNjcmlwdHMvdXBkYXRlLWFhcmNoNjQtY3B1
-LXN5c3JlZy1wcm9wZXJ0aWVzLnB5DQo+PiBjcmVhdGUgbW9kZSAxMDA3NTUgc2NyaXB0cy91cGRh
-dGUtYWFyY2g2NC1jcHUtc3lzcmVncy1oZWFkZXIucHkNCj4+IA0KPj4gLS0gDQo+PiAyLjUzLjAN
-Cj4+IA0KPiANCj4gSGksDQo+IA0KPiBPbiBteSBib3ggdGhlIGJ1aWxkIGlzIGZhaWxpbmcgd2l0
-aDoNCj4gWzk3LzIxOTJdIExpbmtpbmcgdGFyZ2V0IHFlbXUtc3lzdGVtLWFybQ0KPiBGQUlMRUQ6
-IHFlbXUtc3lzdGVtLWFybQ0KPiBjYyBAcWVtdS1zeXN0ZW0tYXJtLnJzcA0KPiAvdXNyL2Jpbi9s
-ZDogbGlic3lzdGVtX2FybS5hLnAvdGFyZ2V0X2FybV9hcm0tcW1wLWNtZHMuYy5vOiBpbiBmdW5j
-dGlvbiBgcW1wX3F1ZXJ5X2NwdV9tb2RlbF9leHBhbnNpb24nOg0KPiAvaG9tZS9haHYvcWVtdS9i
-dWlsZC8uLi90YXJnZXQvYXJtL2FybS1xbXAtY21kcy5jOjE0NDooLnRleHQrMHg0ZDQpOiB1bmRl
-ZmluZWQgcmVmZXJlbmNlIHRvIGBrdm1fY2hlY2tfZXh0ZW5zaW9uJw0KPiAvdXNyL2Jpbi9sZDog
-L2hvbWUvYWh2L3FlbXUvYnVpbGQvLi4vdGFyZ2V0L2FybS9hcm0tcW1wLWNtZHMuYzoxNDU6KC50
-ZXh0KzB4NGU0KTogdW5kZWZpbmVkIHJlZmVyZW5jZSB0byBga3ZtX2NoZWNrX2V4dGVuc2lvbicN
-Cj4gL3Vzci9iaW4vbGQ6IC9ob21lL2Fodi9xZW11L2J1aWxkLy4uL3RhcmdldC9hcm0vYXJtLXFt
-cC1jbWRzLmM6MTUxOigudGV4dCsweDUxNCk6IHVuZGVmaW5lZCByZWZlcmVuY2UgdG8gYGt2bV9j
-aGVja19leHRlbnNpb24nDQo+IC91c3IvYmluL2xkOiAvaG9tZS9haHYvcWVtdS9idWlsZC8uLi90
-YXJnZXQvYXJtL2FybS1xbXAtY21kcy5jOjE2ODooLnRleHQrMHg1NTQpOiB1bmRlZmluZWQgcmVm
-ZXJlbmNlIHRvIGBrdm1fYXJtX2NyZWF0ZV9zY3JhdGNoX2hvc3RfdmNwdScNCj4gL3Vzci9iaW4v
-bGQ6IC9ob21lL2Fodi9xZW11L2J1aWxkLy4uL3RhcmdldC9hcm0vYXJtLXFtcC1jbWRzLmM6MTUy
-OigudGV4dCsweDdkNCk6IHVuZGVmaW5lZCByZWZlcmVuY2UgdG8gYGt2bV9jaGVja19leHRlbnNp
-b24nDQo+IC91c3IvYmluL2xkOiAvaG9tZS9haHYvcWVtdS9idWlsZC8uLi90YXJnZXQvYXJtL2Fy
-bS1xbXAtY21kcy5jOjI0NzooLnRleHQrMHg4ZjQpOiB1bmRlZmluZWQgcmVmZXJlbmNlIHRvIGBr
-dm1fYXJtX2Rlc3Ryb3lfc2NyYXRjaF9ob3N0X3ZjcHUnDQo+IGNvbGxlY3QyOiBlcnJvcjogbGQg
-cmV0dXJuZWQgMSBleGl0IHN0YXR1cw0KDQoNCklmIEkgYWRkIGFwcHJvcHJpYXRlIHN0dWJzLCBG
-b2xsb3dpbmcgdGVzdCBmYWlsczoNCiAgMzAvMTA3OSBxZW11OnF0ZXN0K3F0ZXN0LWFhcmNoNjQg
-LyBxdGVzdC1hYXJjaDY0L2RldmljZS1pbnRyb3NwZWN0LXRlc3QgICAgICAgICBFUlJPUiAgICAg
-ICAgICAgIDEuNThzICAga2lsbGVkIGJ5IHNpZ25hbCA2IFNJR0FCUlQNCiAxMjYvMTA3OSBxZW11
-OnF0ZXN0K3F0ZXN0LWFhcmNoNjQgLyBxdGVzdC1hYXJjaDY0L3FvbS10ZXN0ICAgICAgICAgICAg
-ICAgICAgICAgICBFUlJPUiAgICAgICAgICAgNDYuNjVzICAga2lsbGVkIGJ5IHNpZ25hbCA2IFNJ
-R0FCUlQNCiA0MjYvMTA3OSBxZW11OnF0ZXN0K3F0ZXN0LWFhcmNoNjQgLyBxdGVzdC1hYXJjaDY0
-L2FybS1jcHUtZmVhdHVyZXMgICAgICAgICAgICAgICBFUlJPUiAgICAgICAgICAgIDAuNTFzICAg
-a2lsbGVkIGJ5IHNpZ25hbCA2IFNJR0FCUlQNCiA0NjcvMTA3OSBxZW11OnF0ZXN0K3F0ZXN0LWFy
-bSAvIHF0ZXN0LWFybS9hcm0tY3B1LWZlYXR1cmVzICAgICAgICAgICAgICAgICAgICAgICBFUlJP
-UiAgICAgICAgICAgIDAuNDZzICAga2lsbGVkIGJ5IHNpZ25hbCA2IFNJR0FCUlQNCiA5NjYvMTA3
-OSBxZW11OmJsb2NrIC8gaW8tcWNvdzItMTYxICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICBFUlJPUiAgICAgICAgICAgIDEuOTVzICAgZXhpdCBzdGF0dXMgMQ0K
-DQo=
+Add some simple helper functions to copy memory from guest to a local
+buffer and the other way around:
+
+- read_guest_wrap_u8()
+- write_guest_wrap_u8()
+- read_guest_wrap_u32()
+- write_guest_wrap_u32()
+- read_guest_wrap_u64()
+- write_guest_wrap_u64()
+
+The reader functions read from guest memory into an array of
+u8/u32/u64 with BE conversion. Similar the writer functions write an
+array of u8/u32/u64 into guest memory with BE conversion.
+
+All these functions are intended to be used for the crypto
+implementations thus are located in crypto_helper.h.
+
+Rework and simplify the sha 256 and sha 512 implementations to use
+these helper functions.
+
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ target/s390x/tcg/cpacf_sha256.c  |  63 ++++---------------
+ target/s390x/tcg/cpacf_sha512.c  |  63 ++++---------------
+ target/s390x/tcg/crypto_helper.c |   1 +
+ target/s390x/tcg/crypto_helper.h | 100 +++++++++++++++++++++++++++++++
+ 4 files changed, 123 insertions(+), 104 deletions(-)
+ create mode 100644 target/s390x/tcg/crypto_helper.h
+
+diff --git a/target/s390x/tcg/cpacf_sha256.c b/target/s390x/tcg/cpacf_sha256.c
+index 30754dbdd4..67321b565c 100644
+--- a/target/s390x/tcg/cpacf_sha256.c
++++ b/target/s390x/tcg/cpacf_sha256.c
+@@ -19,6 +19,7 @@
+ #include "accel/tcg/cpu-mmu-index.h"
+ #include "target/s390x/tcg/cpacf-arch.h"
+ #include "target/s390x/tcg/cpacf.h"
++#include "target/s390x/tcg/crypto_helper.h"
+ 
+ static uint32_t R(uint32_t x, int c)
+ {
+@@ -104,53 +105,13 @@ static void sha256_bda_be32(uint32_t a[8], uint32_t w[16])
+     sha256_bda(a, t);
+ }
+ 
+-static void sha256_read_icv(CPUS390XState *env, const int mmu_idx,
+-                            uint64_t addr, uint32_t a[8], uintptr_t ra)
+-{
+-    const MemOpIdx oi = make_memop_idx(MO_BE | MO_32 | MO_UNALN, mmu_idx);
+-
+-    for (int i = 0; i < 8; i++, addr += 4) {
+-        a[i] = cpu_ldl_mmu(env, wrap_address(env, addr), oi, ra);
+-    }
+-}
+-
+-static void sha256_write_ocv(CPUS390XState *env, const int mmu_idx,
+-                             uint64_t addr, uint32_t a[8], uintptr_t ra)
+-{
+-    const MemOpIdx oi = make_memop_idx(MO_BE | MO_32 | MO_UNALN, mmu_idx);
+-
+-    for (int i = 0; i < 8; i++, addr += 4) {
+-        cpu_stl_mmu(env, wrap_address(env, addr), a[i], oi, ra);
+-    }
+-}
+-
+-static void sha256_read_block(CPUS390XState *env, const int mmu_idx,
+-                              uint64_t addr, uint32_t a[16], uintptr_t ra)
+-{
+-    const MemOpIdx oi = make_memop_idx(MO_BE | MO_32 | MO_UNALN, mmu_idx);
+-
+-    for (int i = 0; i < 16; i++, addr += 4) {
+-        a[i] = cpu_ldl_mmu(env, wrap_address(env, addr), oi, ra);
+-    }
+-}
+-
+-static void sha256_read_mbl_be32(CPUS390XState *env, const int mmu_idx,
+-                                 uint64_t addr, uint8_t a[8], uintptr_t ra)
+-{
+-    const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
+-
+-    for (int i = 0; i < 8; i++, addr += 1) {
+-        a[i] = cpu_ldb_mmu(env, wrap_address(env, addr), oi, ra);
+-    }
+-}
+-
+ int cpacf_sha256(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+                  uint64_t param_addr, uint64_t *message_reg, uint64_t *len_reg,
+                  uint32_t type)
+ {
+     enum { MAX_BLOCKS_PER_RUN = 128 }; /* 128 * 64 = 8K */
+     uint64_t len = *len_reg, processed = 0;
+-    int i, message_reg_len = 64;
++    int message_reg_len = 64;
+     uint32_t a[8];
+ 
+     g_assert(type == S390_FEAT_TYPE_KIMD || type == S390_FEAT_TYPE_KLMD);
+@@ -165,7 +126,8 @@ int cpacf_sha256(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+     }
+ 
+-    sha256_read_icv(env, mmu_idx, param_addr, a, ra);
++    /* read icv (8 * u32) */
++    read_guest_wrap_u32(env, mmu_idx, ra, param_addr, a, 8);
+ 
+     /* Process full blocks first. */
+     for (; len >= 64; len -= 64, processed += 64) {
+@@ -175,21 +137,18 @@ int cpacf_sha256(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+             break;
+         }
+ 
+-        sha256_read_block(env, mmu_idx, *message_reg + processed, w, ra);
++        /* read sha256 block (16 * u32) */
++        read_guest_wrap_u32(env, mmu_idx, ra, *message_reg + processed, w, 16);
+         sha256_bda(a, w);
+     }
+ 
+     /* KLMD: Process partial/empty block last. */
+     if (type == S390_FEAT_TYPE_KLMD && len < 64) {
+-        const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
+         uint8_t x[64];
+ 
+-        /* Read the remainder of the message byte-per-byte. */
+-        for (i = 0; i < len; i++) {
+-            uint64_t addr = wrap_address(env, *message_reg + processed + i);
++        /* Read the remainder of the message. */
++        read_guest_wrap_u8(env, mmu_idx, ra, *message_reg + processed, x, len);
+ 
+-            x[i] = cpu_ldb_mmu(env, addr, oi, ra);
+-        }
+         /* Pad the remainder with zero and set the top bit. */
+         memset(x + len, 0, 64 - len);
+         x[len] = 0x80;
+@@ -199,13 +158,13 @@ int cpacf_sha256(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+          * or use an additional one.
+          */
+         if (len < 56) {
+-            sha256_read_mbl_be32(env, mmu_idx, param_addr + 32, x + 56, ra);
++            read_guest_wrap_u8(env, mmu_idx, ra, param_addr + 32, x + 56, 8);
+         }
+         sha256_bda_be32(a, (uint32_t *)x);
+ 
+         if (len >= 56) {
+             memset(x, 0, 56);
+-            sha256_read_mbl_be32(env, mmu_idx, param_addr + 32, x + 56, ra);
++            read_guest_wrap_u8(env, mmu_idx, ra, param_addr + 32, x + 56, 8);
+             sha256_bda_be32(a, (uint32_t *)x);
+         }
+ 
+@@ -220,7 +179,7 @@ int cpacf_sha256(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+      * TODO: if writing fails halfway through (e.g., when crossing page
+      * boundaries), we're in trouble. We'd need something like access_prepare().
+      */
+-    sha256_write_ocv(env, mmu_idx, param_addr, a, ra);
++    write_guest_wrap_u32(env, mmu_idx, ra, param_addr, a, 8);
+     *message_reg = deposit64(*message_reg, 0, message_reg_len,
+                              *message_reg + processed);
+     *len_reg -= processed;
+diff --git a/target/s390x/tcg/cpacf_sha512.c b/target/s390x/tcg/cpacf_sha512.c
+index 2a1ff38c58..edd8dae78f 100644
+--- a/target/s390x/tcg/cpacf_sha512.c
++++ b/target/s390x/tcg/cpacf_sha512.c
+@@ -18,6 +18,7 @@
+ #include "accel/tcg/cpu-mmu-index.h"
+ #include "target/s390x/tcg/cpacf-arch.h"
+ #include "target/s390x/tcg/cpacf.h"
++#include "target/s390x/tcg/crypto_helper.h"
+ 
+ static uint64_t R(uint64_t x, int c)
+ {
+@@ -119,53 +120,13 @@ static void sha512_bda_be64(uint64_t a[8], uint64_t w[16])
+     sha512_bda(a, t);
+ }
+ 
+-static void sha512_read_icv(CPUS390XState *env, const int mmu_idx,
+-                            uint64_t addr, uint64_t a[8], uintptr_t ra)
+-{
+-    const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
+-
+-    for (int i = 0; i < 8; i++, addr += 8) {
+-        a[i] = cpu_ldq_mmu(env, wrap_address(env, addr), oi, ra);
+-    }
+-}
+-
+-static void sha512_write_ocv(CPUS390XState *env, const int mmu_idx,
+-                             uint64_t addr, uint64_t a[8], uintptr_t ra)
+-{
+-    const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
+-
+-    for (int i = 0; i < 8; i++, addr += 8) {
+-        cpu_stq_mmu(env, wrap_address(env, addr), a[i], oi, ra);
+-    }
+-}
+-
+-static void sha512_read_block(CPUS390XState *env, const int mmu_idx,
+-                              uint64_t addr, uint64_t a[16], uintptr_t ra)
+-{
+-    const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
+-
+-    for (int i = 0; i < 16; i++, addr += 8) {
+-        a[i] = cpu_ldq_mmu(env, wrap_address(env, addr), oi, ra);
+-    }
+-}
+-
+-static void sha512_read_mbl_be64(CPUS390XState *env, const int mmu_idx,
+-                                 uint64_t addr, uint8_t a[16], uintptr_t ra)
+-{
+-    const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
+-
+-    for (int i = 0; i < 16; i++, addr += 1) {
+-        a[i] = cpu_ldb_mmu(env, wrap_address(env, addr), oi, ra);
+-    }
+-}
+-
+ int cpacf_sha512(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+                  uint64_t param_addr, uint64_t *message_reg, uint64_t *len_reg,
+                  uint32_t type)
+ {
+     enum { MAX_BLOCKS_PER_RUN = 64 }; /* Arbitrary: keep interactivity. */
+     uint64_t len = *len_reg, a[8], processed = 0;
+-    int i, message_reg_len = 64;
++    int message_reg_len = 64;
+ 
+     g_assert(type == S390_FEAT_TYPE_KIMD || type == S390_FEAT_TYPE_KLMD);
+ 
+@@ -179,7 +140,8 @@ int cpacf_sha512(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+     }
+ 
+-    sha512_read_icv(env, mmu_idx, param_addr, a, ra);
++    /* read icv (8 * u64) */
++    read_guest_wrap_u64(env, mmu_idx, ra, param_addr, a, 8);
+ 
+     /* Process full blocks first. */
+     for (; len >= 128; len -= 128, processed += 128) {
+@@ -189,21 +151,18 @@ int cpacf_sha512(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+             break;
+         }
+ 
+-        sha512_read_block(env, mmu_idx, *message_reg + processed, w, ra);
++        /* read sha512 block (16 * u64) */
++        read_guest_wrap_u64(env, mmu_idx, ra, *message_reg + processed, w, 16);
+         sha512_bda(a, w);
+     }
+ 
+     /* KLMD: Process partial/empty block last. */
+     if (type == S390_FEAT_TYPE_KLMD && len < 128) {
+-        const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
+         uint8_t x[128];
+ 
+-        /* Read the remainder of the message byte-per-byte. */
+-        for (i = 0; i < len; i++) {
+-            uint64_t addr = wrap_address(env, *message_reg + processed + i);
++        /* Read the remainder of the message. */
++        read_guest_wrap_u8(env, mmu_idx, ra, *message_reg + processed, x, len);
+ 
+-            x[i] = cpu_ldb_mmu(env, addr, oi, ra);
+-        }
+         /* Pad the remainder with zero and set the top bit. */
+         memset(x + len, 0, 128 - len);
+         x[len] = 128;
+@@ -213,13 +172,13 @@ int cpacf_sha512(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+          * or use an additional one.
+          */
+         if (len < 112) {
+-            sha512_read_mbl_be64(env, mmu_idx, param_addr + 64, x + 112, ra);
++            read_guest_wrap_u8(env, mmu_idx, ra, param_addr + 64, x + 112, 16);
+         }
+         sha512_bda_be64(a, (uint64_t *)x);
+ 
+         if (len >= 112) {
+             memset(x, 0, 112);
+-            sha512_read_mbl_be64(env, mmu_idx, param_addr + 64, x + 112, ra);
++            read_guest_wrap_u8(env, mmu_idx, ra, param_addr + 64, x + 112, 16);
+             sha512_bda_be64(a, (uint64_t *)x);
+         }
+ 
+@@ -234,7 +193,7 @@ int cpacf_sha512(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+      * TODO: if writing fails halfway through (e.g., when crossing page
+      * boundaries), we're in trouble. We'd need something like access_prepare().
+      */
+-    sha512_write_ocv(env, mmu_idx, param_addr, a, ra);
++    write_guest_wrap_u64(env, mmu_idx, ra, param_addr, a, 8);
+     *message_reg = deposit64(*message_reg, 0, message_reg_len,
+                              *message_reg + processed);
+     *len_reg -= processed;
+diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/crypto_helper.c
+index 4d1b9a54f2..27decdda63 100644
+--- a/target/s390x/tcg/crypto_helper.c
++++ b/target/s390x/tcg/crypto_helper.c
+@@ -22,6 +22,7 @@
+ #include "accel/tcg/cpu-mmu-index.h"
+ #include "target/s390x/tcg/cpacf-arch.h"
+ #include "target/s390x/tcg/cpacf.h"
++#include "target/s390x/tcg/crypto_helper.h"
+ 
+ static int fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+                            uint64_t *buf_reg, uint64_t *len_reg)
+diff --git a/target/s390x/tcg/crypto_helper.h b/target/s390x/tcg/crypto_helper.h
+new file mode 100644
+index 0000000000..2364e46029
+--- /dev/null
++++ b/target/s390x/tcg/crypto_helper.h
+@@ -0,0 +1,100 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Crypto helper functions
++ */
++
++#ifndef TARGET_S390_CRYPTO_HELPER_H
++#define TARGET_S390_CRYPTO_HELPER_H
++
++/*
++ * helper function to read len * u8 from guest to local buffer
++ */
++static inline void read_guest_wrap_u8(CPUS390XState *env, const int mmu_idx,
++                                      const uintptr_t ra, uint64_t guest_addr,
++                                      uint8_t *dest, size_t len)
++{
++    const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
++
++    for (size_t i = 0; i < len; i++, guest_addr++) {
++        uint64_t waddr = wrap_address(env, guest_addr);
++        dest[i] = cpu_ldb_mmu(env, waddr, oi, ra);
++    }
++}
++
++/*
++ * helper function to write len * u8 from local buffer to guest
++ */
++static inline void write_guest_wrap_u8(CPUS390XState *env, const int mmu_idx,
++                                       const uintptr_t ra, uint64_t guest_addr,
++                                       const uint8_t *src, size_t len)
++{
++    const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
++
++    for (size_t i = 0; i < len; i++, guest_addr++) {
++        uint64_t waddr = wrap_address(env, guest_addr);
++        cpu_stb_mmu(env, waddr, src[i], oi, ra);
++    }
++}
++
++/*
++ * helper function to read len * u32 from guest to local buffer
++ */
++static inline void read_guest_wrap_u32(CPUS390XState *env, const int mmu_idx,
++                                      const uintptr_t ra, uint64_t guest_addr,
++                                      uint32_t *dest, size_t len)
++{
++    const MemOpIdx oi = make_memop_idx(MO_BE | MO_32 | MO_UNALN, mmu_idx);
++
++    for (size_t i = 0; i < len; i++, guest_addr += 4) {
++        uint64_t waddr = wrap_address(env, guest_addr);
++        dest[i] = cpu_ldl_mmu(env, waddr, oi, ra);
++    }
++}
++
++/*
++ * helper function to write len * u32 from local buffer to guest
++ */
++static inline void write_guest_wrap_u32(CPUS390XState *env, const int mmu_idx,
++                                        const uintptr_t ra, uint64_t guest_addr,
++                                        const uint32_t *src, size_t len)
++{
++    const MemOpIdx oi = make_memop_idx(MO_BE | MO_32 | MO_UNALN, mmu_idx);
++
++    for (size_t i = 0; i < len; i++, guest_addr += 4) {
++        uint64_t waddr = wrap_address(env, guest_addr);
++        cpu_stl_mmu(env, waddr, src[i], oi, ra);
++    }
++}
++
++/*
++ * helper function to read len * u64 from guest to local buffer
++ */
++static inline void read_guest_wrap_u64(CPUS390XState *env, const int mmu_idx,
++                                      const uintptr_t ra, uint64_t guest_addr,
++                                      uint64_t *dest, size_t len)
++{
++    const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
++
++    for (size_t i = 0; i < len; i++, guest_addr += 8) {
++        uint64_t waddr = wrap_address(env, guest_addr);
++        dest[i] = cpu_ldq_mmu(env, waddr, oi, ra);
++    }
++}
++
++/*
++ * helper function to write len * u64 from local buffer to guest
++ */
++static inline void write_guest_wrap_u64(CPUS390XState *env, const int mmu_idx,
++                                        const uintptr_t ra, uint64_t guest_addr,
++                                        const uint64_t *src, size_t len)
++{
++    const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
++
++    for (size_t i = 0; i < len; i++, guest_addr += 8) {
++        uint64_t waddr = wrap_address(env, guest_addr);
++        cpu_stq_mmu(env, waddr, src[i], oi, ra);
++    }
++}
++
++#endif /* TARGET_S390_CRYPTO_HELPER_H */
+-- 
+2.43.0
+
 
