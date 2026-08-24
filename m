@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31ACBC5DF8C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4FECC5DF98
 	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:53:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNbJ-00055F-H4; Mon, 24 Aug 2026 01:52:05 -0400
+	id 1wyNbc-0005gw-Oo; Mon, 24 Aug 2026 01:52:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNat-0004b6-AH
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:51:39 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1wyNbC-0004xc-Ra
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:51:58 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNak-0002jw-R7
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:51:38 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-38e7109321dso2069017a91.3
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:51:30 -0700 (PDT)
+ id 1wyNb9-0002wQ-Ot
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:51:58 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2cc61541f8cso42953385ad.0
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:51:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787550689; x=1788155489; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787550713; x=1788155513; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=1FqkdWKLgfc+vRbBEL6zlKNDsJP//dgcnuZl45GUXZM=;
- b=HOmgf2IIAV4HZRxuAdY/qpuJ+h3qoQxoRFwvFNUXLxrpGoY4CRdd52F4NBmwWDQPpY
- wxrQLvFOVCIQOQ+mbs0E1c8KK9FtdI0uao+XFs+622mBGbMKpo8a/SHhokOViwG6I512
- oi3vMMj8BHnRdw/fk5dycWbX8wg9TBWzKr0+wkQz7LMlz2j0xYxA4vIxSl4ilDtWrNXd
- Y84vXdPON+zNNOJ9iKb5NmoyhA67iIvitm18v5ZXU7IBI2TnrrFEu3lLXxbNbs2h2BNr
- vD7e9uSjuUPSQ3b1WPOq5r+orNSpX/dQ8u5UULsqz2wnzvI2qhByq7lkEAgIPS73YRYL
- YfZw==
+ bh=b2F4kXj+XlomzI5ywD3BSgCQbVAV2xTdDpSTO+oa8Tk=;
+ b=qn4oWTALeop4eARopPQziG62FbtppHV0eSXm0rrFOACj/gLGiPFd+1phCEO3HNWSNm
+ kKMYlMfhJjCXSR86IXVUwuSbLOhVenc93weqUWGR899XGDlGfus2RKSLS9texUEe0ui8
+ yetUe5ChtCKbwFWfBSTNFjvVMq8ojFFr0XJtFYOCdFksbsnkY8t6iCcXdrcCtp02U5FK
+ HSTKlGM6YkeFXt4ft237Xo7lvgEsEq9vOX3EGdIc5bI1GkRX1TgRbKLctRo9jMFZx5KC
+ dTmBFTUraQLen4moc3HGv1VBR9vscepVX0IOHTNZCZKSLVWWBBfvf2M/b8ZP7m2IAlvk
+ 8y4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787550689; x=1788155489;
+ d=1e100.net; s=20251104; t=1787550713; x=1788155513;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=1FqkdWKLgfc+vRbBEL6zlKNDsJP//dgcnuZl45GUXZM=;
- b=Cxtfa39osD+/inUvEDjLcN424zFD4FudJQ3MIEX5yVHEKND54aft1cRUOYKbdfwjVp
- zESiYyaJwl9HFC2LRFj77uw/K1eN8U9ZGFurgB8YSap004BklpcHeLVKMl9OjyYcHpBs
- NqPqTnxQu0ri+jhdiSVXFx//p2fSdsu7FqfZg/9xbAkvvixl2W+CRyc8aJ5awH9dGfug
- kUbwJl7OuCmzE+Pw7bEEHfln3+78hHCfXBSJn/u/ivaZaR23tJSCQ4xIK99oz1hFICmk
- hbRzbErqVQ4D8gXs6W0pjkHtc6W3VVqwQ2nHfRcNv2PpPju+DLMhnHNYV28FB+9FezPb
- rKOA==
-X-Gm-Message-State: AFuF++lS7W3tak4QBqa6sn5cZTm7m5lpX36KwxQJ+wrZXlNEBx3EGQoK
- FehgWIcrwR1HemVjzP3tBqL7/APYcPn0hlufJZY+aeK/T7QSiATa+ZuhuvDuoQ==
-X-Gm-Gg: AR+sD11AzVCeugi5Khhah04prQgrpy7NkzO7Wp3CaIP5pDwcAiUEpGmcDIQMnLVCGDJ
- Hwa1w2qVMxZ3ScHeTxbY1YjCODyv4FgbHEbC4qFke8jaif56C9xglOhg0yhrkd7IPD9fPt/5u/G
- dygJBQlg5mEmnPkV5KA7hKdGJAovFwchkCDNPRoG8y+3OfNplvf77WCl3eiyVCmncREExh7/iLg
- gkXivbU+nZ2CSL0GJm/6fE+G5jJkxs96imwy8POtKt369UkXsd45CRObuOS6aGNi7GWQVPcooSN
- M4uFsSY7dmBCScg+I51PYrmxd1tM+S2cZs2YIqwe+at+XxYN0IQ78iEMrzu0goGRfzNSnKlP8pl
- JAxyIX+dPgAPwzqzpt7x6twdFTAwoQJqFIyn77gnE2Z+EOWLwPO1OjHbRJKg4Dd33OuVxIeison
- 24rdv3Rd2R4EhESWIkU8VHTvXt+rDb+FoBJ6gGaHX8QaZms+BglBgfgwdg8Xv0pRZCrAbxX2NFp
- m8pug==
-X-Received: by 2002:a17:90b:1b42:b0:37f:fd1f:d30f with SMTP id
- 98e67ed59e1d1-395c3a06ffcmr39932225a91.12.1787550689280; 
- Sun, 23 Aug 2026 22:51:29 -0700 (PDT)
+ bh=b2F4kXj+XlomzI5ywD3BSgCQbVAV2xTdDpSTO+oa8Tk=;
+ b=BlsWz79kYgCE+bTrYDqtRT9agOBPeqZLIT3YZnzOC5Bg4c14UfIZ7i1uwFbq8Z8c7c
+ mPAV850h0yy++Gxb3owm3f44iKgN99gC+cp1XvowShxho9H4Bhl+CGCumnQFfNgxk/rU
+ 5D5F5casaJ/n9DNLgtvYyJya3zPUkbf6Yu/fV+DBjbJCRNmPlRD+ARQwIe4koQchPw4o
+ /SKyp6dhuo/7YDLuuSj88izZACovcbmzB9qcy3M7LdjmVv9bW/5QrPHk1uPz0R8VyX0D
+ StPcJ+TYFHU+E2SUV6cHithXklEfeA2ZKzWHlEGg+5W15k2VZcw3aBSGc0yER6guAF1e
+ atLg==
+X-Gm-Message-State: AFuF++lGH9NcQ3DPmEO5ZSXSw2w5fspC0aLBnCXEUcycyuagif8uXyJR
+ shW+FDgQpVnLI5kpCSOAM8rmGw1TnYNpNW8zcC1ddAXwtGYy15JC7NOfgyl2lw==
+X-Gm-Gg: AR+sD13GxHmcQrMYzwO1TQ8bHwi6BkAZKs/pNp+XyUMfKy6T521WxMrhcVI56hI+2uN
+ ohNmjl46EdtWD/DjyQeVtTqUrPGi2xRj0hJiEI0dyDi3LYQwGyp24c9NV8oWkzYx3ej0v0KFslJ
+ eHtuWQaAWkGXfeMNCGaeuyJBNhIF8NTtxPnQJeMgi78VXblve7+d8nH5U199d7AvQhl+7r84rys
+ /NoWg3U0Gkw2/BFrjtS/dokU+Lh0oPfExvwEFZin88vRgu+G2hkLS6tmz6D2aI3H0N0MpJQNmaZ
+ r/jJhRfgEZqxlZjLxjkDDYoKwApZ0LXI5Xb8q9Gv4sA4QpPn+jPG2p9NoRraIv0nuxZxwEiol7S
+ OFd9oHSBlkhlmhaTn6nTnppFPtAMwzOtMTx0uYxOnPhiDsmJpHTc46kG+zGQIkxenb+0H4MyLPo
+ UNeIFUSk4LBbxjWqkiYSSHjrZb6eGrMTMDxudqNOZ0l6sCsU40rHQ2/BRHf3dQMt/RE+SGskW/L
+ ojtTMykpjSpwZ7u
+X-Received: by 2002:a17:90b:3e8d:b0:38e:9ca8:e99 with SMTP id
+ 98e67ed59e1d1-395c4fa444bmr14527042a91.5.1787550712677; 
+ Sun, 23 Aug 2026 22:51:52 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.51.26
+ 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.51.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Aug 2026 22:51:28 -0700 (PDT)
+ Sun, 23 Aug 2026 22:51:52 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-stable@nongnu.org,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 63/96] disas/riscv: Chain "ret" pseudo off "jr" pseudo
-Date: Mon, 24 Aug 2026 15:47:33 +1000
-Message-ID: <20260824054806.2790041-64-alistair.francis@wdc.com>
+Subject: [PULL v2 71/96] disas/riscv: Fix rv32 encoding of zext.h
+Date: Mon, 24 Aug 2026 15:47:41 +1000
+Message-ID: <20260824054806.2790041-72-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260824054806.2790041-1-alistair.francis@wdc.com>
 References: <20260824054806.2790041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,57 +105,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-"jr" has already checked two conditions that apply to "ret".
+For rv64, pack with rs2 = 0 does not encode zext.h.
 
+Cc: qemu-stable@nongnu.org
+Fixes: 02c1b569a15 ("disas/riscv: Add Zb[abcs] instructions")
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260812223142.349142-31-richard.henderson@linaro.org>
+Message-ID: <20260812223142.349142-39-richard.henderson@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- disas/riscv.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ disas/riscv.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/disas/riscv.c b/disas/riscv.c
-index f3c9213fd1..91f6d9e4af 100644
+index e650ad7688..5624e7f60a 100644
 --- a/disas/riscv.c
 +++ b/disas/riscv.c
-@@ -1061,8 +1061,7 @@ static const rvc_constraint rvcc_bgez[] = { rvc_rs2_eq_x0, rvc_end };
- static const rvc_constraint rvcc_bltz[] = { rvc_rs2_eq_x0, rvc_end };
- static const rvc_constraint rvcc_bgtz[] = { rvc_rs1_eq_x0, rvc_end };
- static const rvc_constraint rvcc_j[] = { rvc_rd_eq_x0, rvc_end };
--static const rvc_constraint rvcc_ret[] = { rvc_rd_eq_x0, rvc_rs1_eq_ra,
--                                           rvc_end };
-+static const rvc_constraint rvcc_ret[] = { rvc_rs1_eq_ra, rvc_end };
- static const rvc_constraint rvcc_jr[] = { rvc_rd_eq_x0, rvc_imm_eq_zero,
-                                           rvc_end };
- static const rvc_constraint rvcc_true[] = { rvc_end };
-@@ -1076,12 +1075,16 @@ static const rv_comp_data rvcp_jal[] = {
- };
- 
- static const rv_comp_data rvcp_jalr[] = {
--    { rv_op_ret, rvcc_ret },
-     { rv_op_jr, rvcc_jr },
-     { rv_op_jalr_ra, rvcc_jalr_ra },
-     { },
- };
- 
-+static const rv_comp_data rvcp_jr[] = {
-+    { rv_op_ret, rvcc_ret },
-+    { },
-+};
-+
- static const rv_comp_data rvcp_beq[] = {
-     { rv_op_beqz, rvcc_beqz },
-     { },
-@@ -1896,7 +1899,7 @@ static const rv_opcode_data rvi_opcode_data[] = {
-     { },
-     { "j", rv_codec_uj, rv_fmt_offset },
-     { "ret", rv_codec_i, rv_fmt_none },
--    { "jr", rv_codec_i, rv_fmt_rs1 },
-+    { "jr", rv_codec_i, rv_fmt_rs1, rvcp_jr },
-     { "rdcycle", rv_codec_i_csr, rv_fmt_rd },
-     { "rdtime", rv_codec_i_csr, rv_fmt_rd },
-     { "rdinstret", rv_codec_i_csr, rv_fmt_rd },
+@@ -3506,9 +3506,10 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
+             case 14: op = rv_op_rem; break;
+             case 15: op = rv_op_remu; break;
+             case 36:
+-                switch ((inst >> 20) & 0b11111) {
+-                case 0: op = rv_op_zext_h; break;
+-                default: op = rv_op_pack; break;
++                if (isa == rv32 && !((inst >> 20) & 0b11111)) {
++                    op = rv_op_zext_h;
++                } else {
++                    op = rv_op_pack;
+                 }
+                 break;
+             case 39: op = rv_op_packh; break;
 -- 
 2.54.0
 
