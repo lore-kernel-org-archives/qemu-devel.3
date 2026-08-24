@@ -4,114 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F4234C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 13:11:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FE06C5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 13:14:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyURn-0000Io-Li; Mon, 24 Aug 2026 09:10:44 -0400
+	id 1wyUV3-0002lP-Ff; Mon, 24 Aug 2026 09:14:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wyURL-00005F-FE; Mon, 24 Aug 2026 09:10:17 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <neal.frager@amd.com>)
+ id 1wyUV1-0002l6-GK
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:14:03 -0400
+Received: from mail-westus2azon11012005.outbound.protection.outlook.com
+ ([52.101.48.5] helo=MW6PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wyURI-0002lW-HC; Mon, 24 Aug 2026 09:10:15 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67OD1iPZ2004569; Mon, 24 Aug 2026 13:10:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=+0FNdK
- gA1f372ZHDx1SjkzjZvsByxdqqc3t52em86cc=; b=Oajwsc8vg75I8DlvIE3Z5W
- FWXIIIIhIaxY4aPntQeFtNErjxMf9XjUVrr2e2/3XvHBMy5lkZoJ4HCOcnSlsP7V
- q6DDsS5vOOqMLAv1/71akRfrX+1tHGEav3u6Fos+rxW1g1xPOlY/CCFsSDkS1gw5
- SQnI1pcGb1UXypdLakczzyFrUf6/Sm4yEZpXOH1GzzETKxNp1sVrTzzCjAwIMyvr
- teiijlYQ98LDExb/efR7j/By+ezhnbhT2XnmVE037n5wkeM1oJ8HEfflO+O7F/My
- pH/cUJvTGn4UIoZuRreG9apL2iAXUxxV6JO5akyqDSdD+vjjvQP18mlZklXWQpdA
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dx19vg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 13:10:09 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OCv9jI003490;
- Mon, 24 Aug 2026 13:10:09 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7p3px7cg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 13:10:09 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67ODA7On29884960
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 13:10:07 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 36F9558056;
- Mon, 24 Aug 2026 13:10:07 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ABAFA58052;
- Mon, 24 Aug 2026 13:10:03 +0000 (GMT)
-Received: from [9.124.213.171] (unknown [9.124.213.171])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Aug 2026 13:10:03 +0000 (GMT)
-Message-ID: <874ba27e-c4bd-49d7-948b-abb211ffcd5e@linux.ibm.com>
-Date: Mon, 24 Aug 2026 18:40:01 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 19/29] target/ppc: Refactor sleep and its variants to use
- a common helper
-To: milesg@linux.ibm.com, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- harshpb@linux.ibm.com
-References: <20260820140114.327023-1-rathc@linux.ibm.com>
- <20260820140114.327023-20-rathc@linux.ibm.com>
- <3fea696f5ee62656ecca7aa72118da1d458a6018.camel@linux.ibm.com>
- <2a98f24f-0af7-4778-a8f1-f813bc48139e@linux.ibm.com>
- <0652cff525cfb620198b1705ddbcb9c639faedf0.camel@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <neal.frager@amd.com>)
+ id 1wyUUz-00047j-GJ
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:14:03 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=c8DKpipjr9ITkDMQfyaV5WVEbXQQorIytSjhCp57IL9O5pLWRb/3/bIcINUHkMezbx6YcV797JbxMdw8QwHax4Mfn/M0MKHVRyP9MhO0B2NCe3ZQt3g/50ZvSWVPcvSJoj+G8SFGO0Rs7rjpNiU/i1HecjPixao1cRyndI9E53VSbkib27p8/2Hv5aKIouW76ZlKIIv0h86YMAgk4VfiHTIf7w7qxMpzdUK2nKmzhhrpXw5u+BPTd4IoMPkfeIa9oFgieGEpmj7Z8EUjkSAFww5aYXd1B8OX3e6AYbMObErM/Jqbx6IBj5EC8crhEl2AHK54LorRN8YTOQ4WU4h4jg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=j3VJliHozSau3hHOQin8nch2veQW2FHnOwtfxdqPtCg=;
+ b=amT58ksDUYrBFpsR3mtrdeHWXd9wkN0pa+xdJpXkVoCrOqKF1dpRyI5NyDSrJXuy4SGc3LDq6wxFY+qLMmZE6UdOqcRaTa2502ULkpbbXDvsMEF/51Qvx10GZh7XW+twb94goXyjT/AukbRZK2jFx5rFyKQQseZBKjhv3sNKxmH9TdfYbYgmGdtkFLxFxr9AyfkapqldokLC91pfruEXCZJg++WxEAGGeDt/W/34+RqFGqm5JoegOKOX+IKku7QTgsxnghDyAL3xUk9SpF6FqxpnJYCv+bbyuZ4zNAXV1ylskVydzpyjq3vD9QxQFPz/BCnhXeFhU6Ru4w20Nm2/pA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=j3VJliHozSau3hHOQin8nch2veQW2FHnOwtfxdqPtCg=;
+ b=QL1Rww/uT0b3dkzCBS/zbs7PrKyZaCgujn3EcqW4J4rWQnXPire1uXS6t4znc5ZISEY+v/sB78KhcUdEEwsC0q8eKXivj4p7muYhRqumos+/XyFFbctS8E4jSfhWJ4mlnA+EPXwalvwwjoEYeUL9vk7UOAb3Eo6V/nwlFydbOtY=
+Received: from BL1PR12MB5032.namprd12.prod.outlook.com (2603:10b6:208:30a::12)
+ by CH3PR12MB8658.namprd12.prod.outlook.com (2603:10b6:610:175::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Mon, 24 Aug
+ 2026 13:08:53 +0000
+Received: from BL1PR12MB5032.namprd12.prod.outlook.com
+ ([fe80::3c13:eeb6:d9ef:c95d]) by BL1PR12MB5032.namprd12.prod.outlook.com
+ ([fe80::3c13:eeb6:d9ef:c95d%6]) with mapi id 15.21.0339.012; Mon, 24 Aug 2026
+ 13:08:53 +0000
+From: "Frager, Neal" <neal.frager@amd.com>
+To: "Hildebrand, Stewart" <Stewart.Hildebrand@amd.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "sstabellini@kernel.org" <sstabellini@kernel.org>,
+ "anthony@xenproject.org" <anthony@xenproject.org>, "edgar.iglesias@gmail.com"
+ <edgar.iglesias@gmail.com>, "xen-devel@lists.xenproject.org"
+ <xen-devel@lists.xenproject.org>, "Stabellini, Stefano"
+ <stefano.stabellini@amd.com>, "Saleab, Micheal" <Micheal.Saleab@amd.com>,
+ "john.ernberg@actia.se" <john.ernberg@actia.se>,
+ "matthew.l.weber3@boeing.com" <matthew.l.weber3@boeing.com>,
+ "vincent.stehle@arm.com" <vincent.stehle@arm.com>
+Subject: RE: [PATCH v1 1/1] include/hw/xen/xen_native.h: downgrade
+ include-order assertion to warning
+Thread-Topic: [PATCH v1 1/1] include/hw/xen/xen_native.h: downgrade
+ include-order assertion to warning
+Thread-Index: AQHdJJsckvnz/cO5N0ySs3v4A11/7LatQ5eAgAAFmcA=
+Date: Mon, 24 Aug 2026 13:08:53 +0000
+Message-ID: <BL1PR12MB5032F21E0E2A6F17398B6D76F0A02@BL1PR12MB5032.namprd12.prod.outlook.com>
+References: <20260805052723.2823538-1-neal.frager@amd.com>
+ <2383a98d-d88d-415d-9de1-aa68a5d215fe@amd.com>
+In-Reply-To: <2383a98d-d88d-415d-9de1-aa68a5d215fe@amd.com>
+Accept-Language: en-US
 Content-Language: en-US
-From: Chinmay Rath <rathc@linux.ibm.com>
-In-Reply-To: <0652cff525cfb620198b1705ddbcb9c639faedf0.camel@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEwOSBTYWx0ZWRfX+ydEDa3atlio
- XDSWH5OyDMSdXu9ASru3me39KH6Oilkoo8Ha92X3JzF4hKNEJCdmj4aqi4f6z3CnNUvxhiDwsqz
- uW6ZGYX1K7ximAeTYleKWkdCchWdHHo=
-X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a8c42b2 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=r64Nd-2NEfs6lehV-CwA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: qOlXmLI-srSsfzvbAkAjTE6psz1fETVJ
-X-Proofpoint-GUID: qOlXmLI-srSsfzvbAkAjTE6psz1fETVJ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEwOSBTYWx0ZWRfX7fDIQ7o3Kyir
- XmaghaPOCVyQoT4o+DhBGJ/vx/wZkSsvBuLBBOmIhMMpdgfL4kkymvjeyDt9g16fkmPe4X29VoJ
- qgTZCnmiXdizFIwdZJ1JKsbjDE5LJ2V3yO9U7Vhugfc/B4jPfwl/K+qpej3JX1dijHzlkP3wXe9
- 72qOIE6hnKi9XlUjSU4bDEOGV0wjUv1Oler4V6ZScv9Q743ynnGdj2AQJJFo9UkAocFgwiHyFFp
- QEezA61MLPa+twBsMqJACiO8HT1JnHrY0Vs22Vbqmxad7ZJssQAy2XGnTFyo4g8Fof5X+8B/DJp
- WsFythX70cAPD9p23rmx/bysNSG+tXCJXmqCo4twxOiKzJHjA/6r186pLKa1HKOrWRZJWH5eY3Y
- N1ce+t7mI31bJdg4oxWOZcN3HEbew/VVwbrsiz1jOahITTZ+KgH1In+63c/xP28b/QM8rtmy+Fh
- bXF3t9kCej06ch3knCw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-24_04,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 bulkscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608240109
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_Enabled=True;
+ MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_SiteId=3dd8961f-e488-4e60-8e11-a82d994e183d;
+ MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_SetDate=2026-08-24T13:05:13.0000000Z;
+ MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_Name=AMD General
+ v26; MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_ContentBits=3;
+ MSIP_Label_198e8dea-a4f3-4850-b16a-fd6d2b1302b4_Method=Standard
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BL1PR12MB5032:EE_|CH3PR12MB8658:EE_
+x-ms-office365-filtering-correlation-id: 6ff080b7-9c08-43b3-40da-08df01e0d8f4
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|23010399003|366016|1800799024|376014|56012099006|10067099003|6133799003|18002099003|22082099003|11063799006|4143699003|38070700021;
+x-microsoft-antispam-message-info: 3DTaVbQKrtK7rlXjQXJq/wVnLxXAhyHOsjAsTKprslkGwBGS0BofYUGVqYb+pItLkMSpoN/gF5Ukjd0mKixfm47K3eb5LBu6iNIVQnE0eLGtaTkFSE3CHmvZf1mg8hL1mXmcAEFi7YyCpIB0IkR+rcPhDkqkaMne+XaxdwZNoRoggy2DfUWgiX8cfATswThax5fngNPcBdxb2rdMCnVFJHZ9lcXhcZhOp/7eg9YNm/VIGtcj3dhTpJr0uMFL4ANDo99BdoCX99mYKdCdQSOgxosNFKlWD1HYeCBQlJLgmRtg6bivfbJ1lIEv4WO6vjqss/Lner9tySOzTpLGsbjtR0UVdcf7bJSUagQ8ey2W2X/G5ghWAQ0Dytc9CcqdndgUaXugsHXTlacS3gXVCoqf7MoOygE8530ZczNgHSjqSNXlWGuOlTnpJYbzd/bbdR7QTIlLLQWb6jMyk+/3PuQP7znygftKN5F+FS/nbgUa98yqIgRqWJUueXlfbpMsiCUqMsjAuJo0YCFaeRWatseo90Twf4l6xvgJKwXyW9g0+uJuLtdJZX8+P7fht9z827eW00AZo+Qbp9PWKDjVAuR8ThMJlwBmsz+XB1L+2fkLNj45jR4cJbovXyUBDUkJgfi9JxjxxwzsxindLsIWDqoy2t6HMmCT7Ez52IJ+tq12KRdR8vguqnYamYzIxble0UZhtiNyv53FIQRvERWOv8KsyciBW76AHcQpjeSs+WNUiu4=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BL1PR12MB5032.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(56012099006)(10067099003)(6133799003)(18002099003)(22082099003)(11063799006)(4143699003)(38070700021);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?TnI1bzJEMC90YitqUzN6QnJTc3pDelFucXNrYUNsSm5HTkhGM1VNcVFUenk2?=
+ =?utf-8?B?S3FLTUM1VWxJZml5ZHhwdkhpaHpaMEFXMXNyeHA4QjhUYjFiSnVhM2JsaGxz?=
+ =?utf-8?B?U0lyYUZwWlYvQmFpL2F6L3Q3bS9NOE0xNkZiRVBaSzdRdWhLbGNLQ3ptL01E?=
+ =?utf-8?B?R0FBR0d1TjNZTk1QTnpMS0tDR1h5Z0luV0tVOCtKc21nTDVVZ0tjNjkzSW43?=
+ =?utf-8?B?cC9rNnpkak9UTHhvTWdNRVNONkxWRVYwYlJLUkFSWG82R2ZuZml0clFtVDdP?=
+ =?utf-8?B?cVRSS2FKZXduTW1qK0lvQnRWbVNXYm9NNHpEOVh4dENFeWJacTI1Ry8wUHRt?=
+ =?utf-8?B?djhUaWRBdXkzWitwaFE1aEtJNGpzT084TEU5bDdzN0dCZzFDajJ6a3d5MUhX?=
+ =?utf-8?B?U0tyRlVrdmdCTzhINXZYNTBkOEZVNEp6RldpUlgwSHRzY3BLZHBITi9NM1lR?=
+ =?utf-8?B?S3VXbEdKNWhCNy93THFkMk5SeDc1bmFhUjc4SjlQdTRydVRSZEFRUElnWHhw?=
+ =?utf-8?B?LzVER3M3OWIrMS9oR0hkM2NVUjhSd2FyRWtIOWl4Nm9LelIrcjBlZXVvaFJx?=
+ =?utf-8?B?ZjJtWVRnRnlxRlVxbDVSNnV3c3Y3NytqMnd5d3ZZbzBTRFh3UW9TQi9UYmlX?=
+ =?utf-8?B?emM4UXBibmxZbEV2eVVSWnJkbkpPSi8zaFZUdTV1cThvNzV2RE1kKzZnQTda?=
+ =?utf-8?B?QUxuNTZJWGprOHYzTTBBS1ROWFN2UVB1U29vdnF2MWRkTy9zUzg2RVA0ZHd2?=
+ =?utf-8?B?ZDZuQklJZ0NqWlRyaWtDZENTandpV3FWVjFLcmZ6bHlxVEUxRmoxRis1cGlU?=
+ =?utf-8?B?QU5nWTJZUnhhLzdWVG8vUHU2NEJvZHNiOHJtU3hNbEpXUFFjUzJ4bnF6dGl3?=
+ =?utf-8?B?NHhCNmp4ZkZkWm51YVJiZ1BuNmphYWc1UGpTK0Y3cFN5Sm5XOXU3WU5tZ3JH?=
+ =?utf-8?B?Mm9zNDdvbWlWVWtLWEFteHRicitiYjFNWjRzTVRiV3phNmxMSncwcVJ0R2xV?=
+ =?utf-8?B?VnhGd3BrMUxVazZHeElVV2pZMVB6dzR1dGN4TTY1RUlaYUs3blQ3enoxTm9E?=
+ =?utf-8?B?T1JuNXNvWm9FWWVtcjNtdi84NkdzZVJWTEh5MXp6ZFJGUVUyZjNmVC9mc0k0?=
+ =?utf-8?B?bmM0OGt1S2V1dWE1MUJLekpPSWRjU3JiOE81cUpRNTlDU2dKRmNKKzNBOE02?=
+ =?utf-8?B?ckdPbWpkKzBqc0YwQ0NRRHQvblI4RGlPTlNzajFMRkZuRXN6ekJSU3NGQW9S?=
+ =?utf-8?B?ZXR6SHFITEtQMmJVUXZwNkF2ejh0Uy95SGNZM0hhTUxnYTloVXYwQ2dJTUt2?=
+ =?utf-8?B?THV3b2QvSEZBZDloY2dnZjI2S1dFVnpCdWsxZXcwdmhPTzJzWmZ3TXI4eFdT?=
+ =?utf-8?B?b0FmbmphYTFFbTIzb3JKNDJYYWlRWmZ1KysyWllyazBsT2t5TFNQeHB6QnRD?=
+ =?utf-8?B?MHltUHU3MEU2SkV4bVB0NUd4N3pCdklaUzBrOFVQVjlFL0pJRXludXdxS2ZX?=
+ =?utf-8?B?OWxHS3c2U3UvQ0phMU5nb21wVVp4Mk01ci84SXZMRXRGUTVhdzd2RFJGSFVk?=
+ =?utf-8?B?VHZ1Nm9xbTlZUUFTbDJBTEJaTlhqeUtGUUhBaWsvL1VGbDBKcU1GbkZuU1V1?=
+ =?utf-8?B?dU4yWkZhbDAvV0trWjhFT2VxQUp4ZDdvMVdJK1MwZjRMUDdhcm0rYnFTblhZ?=
+ =?utf-8?B?MWZnK1NoSHI4VnpjUWtaQnNDWElYN1ZwdTluYWtSODd6RHp5Sm5EOGdTbmF4?=
+ =?utf-8?B?WVpQd0dTc3dvQUp5WU9BZnYwS0FUWUl6d2hCTnRTRGorUmJmeElaRnR3MTl6?=
+ =?utf-8?B?MlVnVUtOdDU5OXp3Ri9WVGNYQkd0OGE1WEdYRzhyYTlsbm1DM2x4ME8xRHF0?=
+ =?utf-8?B?Vzg3YU9mOS9OYjdQVVFQY3lUOUl3VWlPOXZaRmM4MXdmR2FCVlRJZngrTkF2?=
+ =?utf-8?B?b1ZCRnNHTWhGUm9IZThTelZBREJOSmRmY0VXa3l6VTVaazIrK2xSTEgvVTdK?=
+ =?utf-8?B?U1IwU0RIc01tUmZvZURxWHE0YUhkMVBHWitPclFjL0VlTC9uUHZBY0s2aGpL?=
+ =?utf-8?B?VnZFNXEzZThPQm1yQ1BRZXNCY2llRFlubktPUnlqalJWTUFFZ3J6cFJLbWhF?=
+ =?utf-8?B?MkJRV3ovcmMyVjhuY3dLWnhlSU1kOW8yRmVscU0ycHFZVVAxYzJabk51VmRp?=
+ =?utf-8?B?bkk3NVJETVhiOWpBaWVoNENsLzg1MC9lRDZFdjlDNEdRTE9yd0NQK21WWEFR?=
+ =?utf-8?B?Rk56aHozVDk2OGJKaXJEOWtGUVJIRk9WTVE4clc5eVMvSUJiV05UUEN3cmxK?=
+ =?utf-8?Q?seemUFq6gtmtEXzpvS?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5032.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6ff080b7-9c08-43b3-40da-08df01e0d8f4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Aug 2026 13:08:53.4055 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: CVJhnlGn896gmItvqMU9vFgi57J9GOvYVD8se10QoHVDZQPpWuH7mtX0Bq4lcz3z
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8658
+Received-SPF: permerror client-ip=52.101.48.5;
+ envelope-from=neal.frager@amd.com;
+ helo=MW6PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,216 +167,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 8/21/26 22:06, Miles Glenn wrote:
-> Hi Chinmay,
->
-> I was only suggesting that it might be good to add a comment to the
-> commit message stating that this commit was preparatory to moving the
-> sleep instructions to decodetree.  No need to squash them.
->
-> On Fri, 2026-08-21 at 12:57 +0530, Chinmay Rath wrote:
->> On 8/20/26 20:45, Miles Glenn wrote:
->>> Chinmay,
->>>
->>> This commit seems out of the scope of moving instructions to
->>> decodetree.  Was this change necessary in order to move the
->>> instructions to decodetree?  If so, it would be helpful to add that to
->>> the commit message.  Otherwise, I would submit this separately from the
->>> decodetree commits.
->> Hi Glenn,
->>
->> It is common practice to merge helper functions in helper files and/or
->> translation functions in the translate.c or translate directory files
->> during instruction movement to decodetree, if they have common logic.
->> Speaking of which, ideally this commit should have been squashed along
->> with the previous commit where those insns were actually moved. The
->> author of the patch has instead created two separate patches. Though it
->> is not technically wrong, since neither of the patch are incomplete
->> functionally, let me know if you think this should be squashed with the
->> previous commit, will do that.
->>
->> PS: Please feel free to review other patches as well. It would be of
->> great help :)
->>
->> Regards,
->> Chinmay
-> Hi Chinmay,
->
-> I was only suggesting that it might be good to add a comment to the
-> commit message stating that this commit was preparatory to moving the
-> sleep instructions to decodetree.  No need to squash the two commits.
-Sure Glenn, will do in v2 !
-> Thanks,
->
-> Glenn
->
->>> Thanks,
->>>
->>> Glenn
->>>
->>> On Thu, 2026-08-20 at 19:30 +0530, Chinmay Rath wrote:
->>>> From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
->>>>
->>>> Refactor sleep, doze, nap, rvwinkle and stop to use a common helper
->>>> since they share majority of the code. Also refactor gen_hlper_pminsn()
->>>> to gen_helper_PMINSN()
->>>>
->>>> Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
->>>> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
->>>> ---
->>>>    target/ppc/helper.h                           |  2 +-
->>>>    target/ppc/tcg-excp_helper.c                  |  2 +-
->>>>    .../ppc/translate/processor-ctrl-impl.c.inc   | 99 +++----------------
->>>>    3 files changed, 16 insertions(+), 87 deletions(-)
->>>>
->>>> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
->>>> index cd2a0948a3..7e15676122 100644
->>>> --- a/target/ppc/helper.h
->>>> +++ b/target/ppc/helper.h
->>>> @@ -18,7 +18,7 @@ DEF_HELPER_1(rfdi, void, env)
->>>>    DEF_HELPER_1(rfmci, void, env)
->>>>    #if defined(TARGET_PPC64)
->>>>    DEF_HELPER_2(scv, noreturn, env, i32)
->>>> -DEF_HELPER_2(pminsn, void, env, i32)
->>>> +DEF_HELPER_2(PMINSN, void, env, i32)
->>>>    DEF_HELPER_1(rfid, void, env)
->>>>    DEF_HELPER_1(rfscv, void, env)
->>>>    DEF_HELPER_1(hrfid, void, env)
->>>> diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
->>>> index b04f07a637..c4ffa2dfbb 100644
->>>> --- a/target/ppc/tcg-excp_helper.c
->>>> +++ b/target/ppc/tcg-excp_helper.c
->>>> @@ -459,7 +459,7 @@ void helper_scv(CPUPPCState *env, uint32_t lev)
->>>>        }
->>>>    }
->>>>    
->>>> -void helper_pminsn(CPUPPCState *env, uint32_t insn)
->>>> +void helper_PMINSN(CPUPPCState *env, uint32_t insn)
->>>>    {
->>>>        CPUState *cs = env_cpu(env);
->>>>    
->>>> diff --git a/target/ppc/translate/processor-ctrl-impl.c.inc b/target/ppc/translate/processor-ctrl-impl.c.inc
->>>> index bdbc195294..3b3ed3019a 100644
->>>> --- a/target/ppc/translate/processor-ctrl-impl.c.inc
->>>> +++ b/target/ppc/translate/processor-ctrl-impl.c.inc
->>>> @@ -104,103 +104,32 @@ static bool trans_MSGSYNC(DisasContext *ctx, arg_MSGSYNC *a)
->>>>        return true;
->>>>    }
->>>>    
->>>> -static bool do_doze(DisasContext *ctx, arg_DOZE *a)
->>>> -{
->>>> -    REQUIRE_64BIT(ctx);
->>>> -
->>>> -#if defined(CONFIG_USER_ONLY)
->>>> -    gen_priv_opc(ctx);
->>>> -#else
->>>> -    TCGv_i32 t;
->>>> -
->>>> -    REQUIRE_HV(ctx);
->>>> -    translator_io_start(&ctx->base);
->>>> -    t = tcg_constant_i32(PPC_PM_DOZE);
->>>> -    gen_helper_pminsn(tcg_env, t);
->>>> -    /* Stop translation, as the CPU is supposed to sleep from now */
->>>> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
->>>> -#endif /* defined(CONFIG_USER_ONLY) */
->>>> -
->>>> -    return true;
->>>> -}
->>>> -TRANS_FLAGS2(PM_ISA206, DOZE, do_doze);
->>>> -
->>>> -static bool do_nap(DisasContext *ctx, arg_NAP *a)
->>>> -{
->>>> -    REQUIRE_64BIT(ctx);
->>>> -
->>>> -#if defined(CONFIG_USER_ONLY)
->>>> -    gen_priv_opc(ctx);
->>>> -#else
->>>> -    TCGv_i32 t;
->>>> -
->>>> -    REQUIRE_HV(ctx);
->>>> -    translator_io_start(&ctx->base);
->>>> -    t = tcg_constant_i32(PPC_PM_NAP);
->>>> -    gen_helper_pminsn(tcg_env, t);
->>>> -    /* Stop translation, as the CPU is supposed to sleep from now */
->>>> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
->>>> -#endif /* defined(CONFIG_USER_ONLY) */
->>>> -    return true;
->>>> -}
->>>> -TRANS_FLAGS2(PM_ISA206, NAP, do_nap);
->>>> -
->>>> -static bool do_sleep(DisasContext *ctx, arg_SLEEP *a)
->>>> -{
->>>> -    REQUIRE_64BIT(ctx);
->>>> -
->>>> -#if defined(CONFIG_USER_ONLY)
->>>> -    gen_priv_opc(ctx);
->>>> -#else
->>>> -    TCGv_i32 t;
->>>> -
->>>> -    REQUIRE_HV(ctx);
->>>> -    translator_io_start(&ctx->base);
->>>> -    t = tcg_constant_i32(PPC_PM_SLEEP);
->>>> -    gen_helper_pminsn(tcg_env, t);
->>>> -    /* Stop translation, as the CPU is supposed to sleep from now */
->>>> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
->>>> -#endif /* defined(CONFIG_USER_ONLY) */
->>>> -    return true;
->>>> -}
->>>> -TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep);
->>>> -
->>>> -static bool do_rvwinkle(DisasContext *ctx, arg_RVWINKLE *a)
->>>> +/*
->>>> + * Helper to handle DOZE, NAP, SLEEP, RVWINKLE & STOP. Since none of them use
->>>> + * any arguments just use a placeholder arg_SLEEP.
->>>> + */
->>>> +static bool do_sleep(DisasContext *ctx, arg_SLEEP *a, powerpc_pm_insn_t type)
->>>>    {
->>>>        REQUIRE_64BIT(ctx);
->>>>    
->>>>    #if defined(CONFIG_USER_ONLY)
->>>>        gen_priv_opc(ctx);
->>>> -#else
->>>> +#elif defined(TARGET_PPC64)
->>>>        TCGv_i32 t;
->>>>    
->>>>        REQUIRE_HV(ctx);
->>>>        translator_io_start(&ctx->base);
->>>> -    t = tcg_constant_i32(PPC_PM_RVWINKLE);
->>>> -    gen_helper_pminsn(tcg_env, t);
->>>> +    t = tcg_constant_i32(type);
->>>> +    gen_helper_PMINSN(tcg_env, t);
->>>>        /* Stop translation, as the CPU is supposed to sleep from now */
->>>>        gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
->>>> -#endif /* defined(CONFIG_USER_ONLY) */
->>>> -    return true;
->>>> -}
->>>> -TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_rvwinkle);
->>>> -
->>>> -static bool do_stop(DisasContext *ctx, arg_STOP *a)
->>>> -{
->>>> -    REQUIRE_64BIT(ctx);
->>>> -
->>>> -#if defined(CONFIG_USER_ONLY)
->>>> -    gen_priv_opc(ctx);
->>>>    #else
->>>> -    TCGv_i32 t;
->>>> -
->>>> -    REQUIRE_HV(ctx);
->>>> -    translator_io_start(&ctx->base);
->>>> -    t = tcg_constant_i32(PPC_PM_STOP);
->>>> -    gen_helper_pminsn(tcg_env, t);
->>>> -    /* Stop translation, as the CPU is supposed to sleep from now */
->>>> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
->>>> +    qemu_build_not_reached();
->>>>    #endif
->>>>        return true;
->>>>    }
->>>> -TRANS_FLAGS2(ISA300, STOP, do_stop);
->>>> +TRANS_FLAGS2(PM_ISA206, DOZE, do_sleep, PPC_PM_DOZE);
->>>> +TRANS_FLAGS2(PM_ISA206, NAP, do_sleep, PPC_PM_NAP);
->>>> +TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep, PPC_PM_SLEEP);
->>>> +TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_sleep, PPC_PM_RVWINKLE);
->>>> +TRANS_FLAGS2(ISA300, STOP, do_sleep, PPC_PM_STOP);
->
+QU1EIEdlbmVyYWwNCg0KSGkgU3Rld2FydCwNCg0KPiBUaGUgLUkkKFhFTl9ST09UKS90b29scy9p
+bmNsdWRlIGFkZGVkIHRvIFFFTVUncyBleHRyYS1jZmxhZ3MgY2F1c2VzDQo+IF9fWEVOX0lOVEVS
+RkFDRV9WRVJTSU9OX18gdG8gYmUgZGVmaW5lZCBiZWZvcmUgeGVuX25hdGl2ZS5oIGlzIGluY2x1
+ZGVkLA0KPiB0cmlnZ2VyaW5nIGFuIGluY2x1ZGUtb3JkZXIgYXNzZXJ0aW9uLiBEb3duZ3JhZGUg
+dG8gYSB3YXJuaW5nIHNpbmNlIHRoZQ0KPiB2ZXJzaW9uIGlzIGNvbnNpc3RlbnQgaW4gY3Jvc3Mt
+Y29tcGlsZS4NCj4gUmVmOiBodHRwczovL2dpdGh1Yi5jb20vcWVtdS9xZW11L2NvbW1pdC9lMmFi
+ZmU1ZWM2DQo+DQo+IFNpZ25lZC1vZmYtYnk6IE5lYWwgRnJhZ2VyIDxuZWFsLmZyYWdlckBhbWQu
+Y29tPg0KPiBTaWduZWQtb2ZmLWJ5OiBWaW5jZW50IFN0ZWhsw6kgPHZpbmNlbnQuc3RlaGxlQGFy
+bS5jb20+DQo+IC0tLQ0KPiAgaW5jbHVkZS9ody94ZW4veGVuX25hdGl2ZS5oIHwgMiArLQ0KPiAg
+MSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCAxIGRlbGV0aW9uKC0pDQo+DQo+IGRpZmYg
+LS1naXQgYS9pbmNsdWRlL2h3L3hlbi94ZW5fbmF0aXZlLmggYi9pbmNsdWRlL2h3L3hlbi94ZW5f
+bmF0aXZlLmgNCj4gaW5kZXggNWNhZjkxYTYxNi4uM2UxMTM3ZWZjMSAxMDA2NDQNCj4gLS0tIGEv
+aW5jbHVkZS9ody94ZW4veGVuX25hdGl2ZS5oDQo+ICsrKyBiL2luY2x1ZGUvaHcveGVuL3hlbl9u
+YXRpdmUuaA0KPiBAQCAtMiw3ICsyLDcgQEANCj4gICNkZWZpbmUgUUVNVV9IV19YRU5fTkFUSVZF
+X0gNCj4NCj4gICNpZmRlZiBfX1hFTl9JTlRFUkZBQ0VfVkVSU0lPTl9fDQo+IC0jZXJyb3IgSW4g
+WGVuIG5hdGl2ZSBmaWxlcywgaW5jbHVkZSB4ZW5fbmF0aXZlLmggYmVmb3JlIG90aGVyIFhlbiBo
+ZWFkZXJzDQo+ICsjd2FybmluZyBJbiBYZW4gbmF0aXZlIGZpbGVzLCBpbmNsdWRlIHhlbl9uYXRp
+dmUuaCBiZWZvcmUgb3RoZXIgWGVuIGhlYWRlcnMNCj4gICNlbmRpZg0KPg0KPiAgLyoNCg0KDQo+
+IFRoaXMgaXMgYSBidWlsZHJvb3QgaXNzdWUsIHNvIEkgZG9uJ3QgYmVsaWV2ZSBpdCdzIG5lY2Vz
+c2FyeSB0byBmaXggZnJvbSB0aGUNCj4gcWVtdSBzaWRlLg0KDQpJIGFtIG5vdCBzdXJlIEkgZnVs
+bHkgYWdyZWUgaGVyZS4gV2hpbGUgdGhpcyBpcyBhIGJ1aWxkcm9vdCBpZGVudGlmaWVkIGlzc3Vl
+LA0KdGhlcmUgY291bGQgYmUgb3RoZXIgdXNlIGNhc2VzIGZvciBfX1hFTl9JTlRFUkZBQ0VfVkVS
+U0lPTl9fIHRvIGJlIGRlZmluZWQNCmJlZm9yZSB4ZW5fbmF0aXZlLmggaXMgaW5jbHVkZWQuIEFu
+ZCB3aGF0IHdlIGhhdmUgZm91bmQgaXMgdGhhdCBpZg0KX19YRU5fSU5URVJGQUNFX1ZFUlNJT05f
+XyB0byBiZSBkZWZpbmVkIGJlZm9yZSB4ZW5fbmF0aXZlLmggaXMgaW5jbHVkZWQsIGl0DQppcyBu
+b3QgYSBoYXJkIGVycm9yLiAgRm9yIGJ1aWxkcm9vdCwgdGhlIHFlbXUgd29ya3MganVzdCBmaW5l
+IGluIHNwaXRlIG9mDQp0aGlzLg0KDQpTaW5jZSBpdCBpcyBub3QgYSBoYXJkIGVycm9yIGNvbmRp
+dGlvbiwgSSBzdGlsbCBiZWxpZXZlIGl0IHNob3VsZCBiZQ0KZG93bmdyYWRlZCB0byBhIHdhcm5p
+bmcgaW5zdGVhZCBvZiBhbiBlcnJvci4NCg0KQW5kIHRodXMsIEkgd291bGQgc3RpbGwgbGlrZSB0
+aGlzIHBhdGNoIHRvIGJlIGNvbnNpZGVyZWQgZm9yIHRoZSB1cHN0cmVhbQ0KcWVtdS4NCg0KQmVz
+dCByZWdhcmRzLA0KTmVhbCBGcmFnZXINCkFNRA0K
 
