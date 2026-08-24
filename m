@@ -4,150 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB23FC5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 07:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CF86C5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 07:17:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyOvk-0006Qi-At; Mon, 24 Aug 2026 03:17:16 -0400
+	id 1wyOwD-0006nA-UH; Mon, 24 Aug 2026 03:17:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wyOvi-0006QA-AD
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:17:14 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wyOvg-00082R-SJ
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:17:14 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67O5RM812058379
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 07:17:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ZGp99OvpJrv0rkSxZyGICzr4wc0xJi8H2s7w3KhPu7Q=; b=j/Yi+ZnPjKrKydRh
- DdxX3c46m3NuMgUe+5hoO8qyu21qeoV7eE5MCThmGpJfSDRvlnIFRh5reCIOKj1o
- ecaXMkgTGsjlUf4kuPbCRSLLmGt6YOkaJ9ztMlGRhcC+OFEvUEqpeWS5iueGyhOB
- fDC7zrE6FN1XqGzlGF/mTsKLLRITigYEvyRH4Ed4qLVBtIHYtpVpVbboklnThiVN
- kXLM/ChUUoWuAaxmJgpBtCPuuImvjXsnPsWgVJtEbt9GGUqNUcHw9zwoiIHA6Xov
- xJO592MSVYfavud6WeBpMgBcsx1awbUjGFki7f9pvr+mEkVn+9H7D+8/i5GA1wv3
- jELCbw==
-Received: from mail-vk1-f198.google.com (mail-vk1-f198.google.com
- [209.85.221.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g8bdr151g-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 07:17:11 +0000 (GMT)
-Received: by mail-vk1-f198.google.com with SMTP id
- 71dfb90a1353d-5c59f5dbc9eso955699e0c.0
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 00:17:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wyOwC-0006mT-CQ
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:17:44 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wyOw8-00085U-4a
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:17:44 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-cc11a30a259so3199714a12.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 00:17:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787555858; cv=none;
+ d=google.com; s=arc-20260327;
+ b=oMF+6KXJOHJ/AZ3/Q8nMsxYHbnnWzcluEc5EcBPtrie4lCgy4lu8t/9otALCIe4BFP
+ VYHFb5ItV/0PtQz5J1ujDF7BRXR+iMah7qaOdXzzLaZlQlrwImZOuK7j8M81GSi96fj2
+ zvY7efl5AOmPjSI88Mrb+LXSvcHyLAc0Lx82NJVnzBpvMEUrSSHfHFWdymXUFpryMBng
+ +yFe9NUK5YLW9cpCejOE1fGTFb5mfxmsN1rNnXSLy4W7D+cV1ODflk5c2HyjQZV+ZC+V
+ EjiU1V+M+GZimttGBdEQmbQ0fTm366OUxfbrtjQ6UNHgmo6sXBPgM4qQ2sZJMTzNyUne
+ 1DHg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=mpPEEbA9UdYrgd5wh14VBht3tJdhjuUSena60ew66w8=;
+ fh=S+TFf4RlsShEBsiqu+cL9TbfUJ/AMqpSjImLM4CJ5CA=;
+ b=S0c2wbVdapgiE4AjsUrXiIMkD3tx99XcsR0EEXCkQefhD3t2vzs50DwqhgP+A6HHp6
+ ParPBUBT+tpvnfevfZLvnxs6Aca7FpiU5sYVNI/P4bY2Xr7jNkuZeQCDxP5FHPX9n8gV
+ 4vqg7swFe8Z0Ns/95kLRN6IhDGWtKijmYbugaBZD1ADlI0cePm5nI0Xqh64AFXb/K5TO
+ tTwpx21a75RjZibFRRXtnJvN8FDoVEYeuz0/g8w7XhyFh6Wx8yT1mORTreE6l+MHm9jc
+ jEf1CLpx2TI1jYorOOS2xo4rj2aJmoBXpG74+KtuwwTOrzCVLnbjX6sY8hvfGzbxc2py
+ xDIQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787555831; x=1788160631; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ZGp99OvpJrv0rkSxZyGICzr4wc0xJi8H2s7w3KhPu7Q=;
- b=VxHyyl3GWYhedDM5xWoWbHk0ojUVCrZALyCcp+DwuVNZK0wfYBkCNsB0PZQFdMDaML
- 1zX02Mj5+oLjgPWc0lsymX99MF7/XXUlpwLqXjyH9EyLQjprdQsCkz+xTghZoIdAYfUy
- p9ERtWEGaJ7pueLOhrrUNv7N2onkijz+3o6yMzOPqn+2b9piNSd+Gkj2e18FCCg7YGbC
- tWmERWWc4dvyLijVaeljqEUUiJbHvIX5nm032ZfaACovSU3XOIidrhoyLyOSGE0yVTPt
- EKsxy8z8BXgzM2gsy0nLW6ECd3Zho8DrZZP9+EX0tJEGHriwUf8AYy3tS4z060nFGwPI
- UpBg==
+ d=gmail.com; s=20251104; t=1787555858; x=1788160658; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=mpPEEbA9UdYrgd5wh14VBht3tJdhjuUSena60ew66w8=;
+ b=Heowsogq5Z9GJ5uvvvkj9ktwfM1mhCfdtY9KGP+qSD+HGNWgH2EWVYT28oTnZNdDZV
+ IwRGkJhafOEZx0TI2fn9mMxC+gJvJMZQWVMyWO716u3Ht1AHnLXNqLhtgActjv9qP4pZ
+ fQ2/KbY9gX2SAwU4/IC6cp5bRhZ2UhDD7A6naVU7thkpbDoHx5dzU6UUWe23e5pQdTqC
+ 9r0MFc5qUuBdpmVqI4x68phggYHtS14jGAh7n2+zos1lWPJ/2ZA15WQD6p37z5gJDqpU
+ 341S2f1gU71C88cm4hJT6M7jv2IYyP9hDfW4A9pCOqKO5umemTYOSCyklz2WTWEORVjU
+ TIxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787555831; x=1788160631;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ZGp99OvpJrv0rkSxZyGICzr4wc0xJi8H2s7w3KhPu7Q=;
- b=cfW+gK7MM4a4RaSzVVAcuqJTLJdhSZ3HLICk+dfhBhAnuvgiYtSDTJg3stwYJoGjjf
- 1Lw6rjhLADfSO/npuzI2vjJZJUps4PwbInIq6WaAR2ZOJUKZ6alY0UupLzSBcQVVLheP
- uU3C2PiGRIJXHjKXnqcWpxOBfuX3SihHzY9vNOf2nPh20bTCnHUGi1nAyPPahkktyVhY
- QBFEkMD/MIvvQX8329oEed9QP8rDvdJdDzMqczYwd1+J3JtBQ1B3IS6x9Yd3f360l7rU
- cBXb9tnW8+FyI2FJYeUZE4fGrzI9+voe7FHPhUuk6zrSFEsnS2oah9rZNewlgRWApokn
- y7GA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpJT0/8D0p+C2JkjqRYxMoTZXEIX0c2fIt0aQxKEA/SHMA7SGpzL8y56c5wu4823mG6ljwjgdbpJ2Vj@nongnu.org
-X-Gm-Message-State: AFuF++lIT79rwmOLGqCAd/mOcTMJ+px7JS9fdvtkxi9ArYLPQK9WN1mm
- JSzSMxuYSQHUrsm6KGTtIs/szEb6MFRTbLVtSMqhsMXh/yE+KItv2CJt1/GVcOWQMn1u7glpw5Z
- 6NDJ9xFhXZnXOW+2VW4Qwfqdf2FdLPXRlRfxFGJ/Ecsd3Jyda13SmNKcITA==
-X-Gm-Gg: AR+sD121nW60wa0keFdmDDhnF+rYuV3PEl9PzCl8s7nvQjnplmbH8SGqx040uHWuT37
- AP2zuBV9KX9hSRaNGAfpTgCkhaWaISMaSgca+SAyojLOU3d1H7jMbUHN732w2olGpFlZ7sEmUCl
- sAJ1TY+eMxPLfaoWCt2OCgK5tAzeQzNQ3SXCpSJyU19OgnSi98oYEcxDdBlDTm907hMLeATy2I3
- cQTdicl2mhMKhB4nOo8C5omjIT2uYB7cB33iKAWkjXNwMRaFu5WLLdtyR+rp6c2camVOgzUZCIm
- jnwFIXEhQ7X6ms60qQZGogwlmst28jbxAqbmwK3h0u2UYIRP1MKYqb+/mRHWvdrrcP0jtBfy4rG
- qyRiIM0KC0UXnZA7w4ccCghdvEC9eX5o58p9p02uleNCV
-X-Received: by 2002:a05:6102:304f:b0:777:ab3c:b88c with SMTP id
- ada2fe7eead31-77bd1e98b20mr5122212137.8.1787555831019; 
- Mon, 24 Aug 2026 00:17:11 -0700 (PDT)
-X-Received: by 2002:a05:6102:304f:b0:777:ab3c:b88c with SMTP id
- ada2fe7eead31-77bd1e98b20mr5122195137.8.1787555830633; 
- Mon, 24 Aug 2026 00:17:10 -0700 (PDT)
-Received: from [10.254.188.74] (132.170.88.92.rev.sfr.net. [92.88.170.132])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a59e199ad5sm7081590a12.18.2026.08.24.00.17.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Aug 2026 00:17:09 -0700 (PDT)
-Message-ID: <9312c014-7c10-4fc4-87b2-4e3daf42fa52@oss.qualcomm.com>
-Date: Mon, 24 Aug 2026 09:17:07 +0200
+ d=1e100.net; s=20251104; t=1787555858; x=1788160658;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=mpPEEbA9UdYrgd5wh14VBht3tJdhjuUSena60ew66w8=;
+ b=PdP66erNVHNtM/I8HeKN5b7quZkZJ3Ik+Qi/XLttsgtbu+OhtfLycKakuxUa4WNzuJ
+ yn3lmZkoAazi3s9FBgASfDCsAiVhR7PgMBqaPPVk4NPCZw9czjmnKeMGoSjcWr/kNTx5
+ EdurgsVWvQtQK5GaVI3lv3eM+xA+a8Ba3y7Lpxr4zcBv3R0+C0B9bc9FIFqe1rxK8RDs
+ 9Ov5f6MV9MDCkDmscSPRpKZr0pTRIVGo50gDOMMXyBVYKK+jOjvg5oTT4vqDqShXG3/F
+ Bdm+jQG7uJ4XwECoMOf6E8QTSo+Vu9GjfSiHFZ+vGIL1Dq+cNgPrZcUsBkKS480LKZws
+ UcYw==
+X-Gm-Message-State: AFuF++lramrZFYNjR31QXa0tFvz0a70+oD2aHXijjukdTJMsIXYNPFBp
+ wKTxsBGOXo0ckLsnaatN/zixIBSrxf/ZwH9pEEBeiUNSThaoyXQ+MtMLP28JThURjaUtUyrjm5a
+ KBfKaKIt/q6gGRZxcmhmVAnJIYfoE9tQ=
+X-Gm-Gg: AR+sD11sUl5axHl5hXkQtuPQgXVWRPOoNBikc75sLjI4XUSFpwXh635nEH6QQnmB4hb
+ /vpKIfVyZXQgyotj3hubaGCXYHxXL3RU0BQPpcJkDs8/RodWX7Jwnyf7FSIxtL5XtPCVp/TPQnW
+ JMe0GxDNi1i4Nhtd9az9uRM+vwHv/MUN4EeG1L2FxMh7WNMAAklhUznXlLQYt+efvYB9aYL5ITB
+ IvVRiA5ngay+BpXUseoKWpyY5OsgvTLooEkMeoZ8MKyfs2iZ1to4RKGf3AXKMT/8uD9ab40sGpm
+ ttVvj1rk2NyHMmltCLUVnjpOGQKmMl0qYRQhTG1iIK3E5kkKxLpUUvPYgXImlN5DTojT4vi/ynD
+ IhZ8QTlHRijoe
+X-Received: by 2002:a05:6372:a744:b0:3cd:7bb1:1183 with SMTP id
+ adf61e73a8af0-3cd7bb11219mr5903728637.18.1787555858014; Mon, 24 Aug 2026
+ 00:17:38 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/12] qapi: update type hint for types_seen
-Content-Language: en-US
-To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Kohei Tokunaga <ktokunaga.mail@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Roth
- <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Cleber Rosa <crosa@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-References: <20260824052859.880475-1-jsnow@redhat.com>
- <20260824052859.880475-5-jsnow@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260824052859.880475-5-jsnow@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDA2MyBTYWx0ZWRfX49KuPPXO4qvw
- ShKoIIxj5oLgNTuMBS9xi0g4EDNFRBMrW+pydTLMiXJwbDs/odYGvO67ZgW0H/Ug6Tv+Cwim4LC
- ruVXnMap/VmUAGNynqaQNAL3NGpGogWdSlev+dQFB7XfswSm1Ax8ges/PykDxEBbtCCTnk9n5Y4
- OeSw8s6iUdzAGcnAgc6RqIPtS1bV0BadZ50SyxYz3uPQ70zUWA5+BtVLyNz4X7s4VnGeft5JJqy
- tGdCVNjopvc3vs1u8Q0Pc2ZZD2V3yp/aOPtYZ9F4fu8esLZpacLL/HVmDqpif7thsxRDUWIq1T1
- lAnc2lu+/32T37JrRjKyKobvCKOiRWS1agHViMOtMyeF/dYV2KwI11Mbhn85+p6xYJUS4R1Kdjw
- jIcePP0NrllNSuYcx/6Q1i1WpqieZKzVmJAsb+ySkCEA2JVIG/6xHTqjZkSlARVzo+OqMQKTeiz
- +Xb5AR0KTIqxVEYfD/w==
-X-Proofpoint-GUID: qTBrJeyNyC_2CEr-GE4wQaBnvBVXjbf5
-X-Proofpoint-ORIG-GUID: qTBrJeyNyC_2CEr-GE4wQaBnvBVXjbf5
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDA2MyBTYWx0ZWRfX9N5DQ3yGAaXL
- axRz2XqiPOVZ3CO+NIlNNKVy2vvCeJ/z0HwGJzMlfzKv51ACceirsDP1uUaiqu4RwcaUBK93Yac
- e2OFDKyWgKEIYhaezZ2QK0V+xDfEdIo=
-X-Authority-Analysis: v=2.4 cv=W8cIkxWk c=1 sm=1 tr=0 ts=6a8beff7 cx=c_pps
- a=1Os3MKEOqt8YzSjcPV0cFA==:117 a=k3i2zbviP8V9/5wfVjyM+Q==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=hhpmQAJR8DioWGSBphRh:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-24_02,2026-08-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0
- priorityscore=1501 clxscore=1015 bulkscore=0 malwarescore=0 adultscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608240063
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260821083925.2008135-1-pbonzini@redhat.com>
+In-Reply-To: <20260821083925.2008135-1-pbonzini@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 24 Aug 2026 11:17:25 +0400
+X-Gm-Features: AcwNN1XJ_SV97XWkkJXgMQZF6DMMxth-kS_V5mkqVwxBA2bSWrUQCGUJeZTNRJc
+Message-ID: <CAJ+F1CKyUghQ3r3aOm6zPdHNLUCCsmJWrf18qs4zuf8FfjnYHA@mail.gmail.com>
+Subject: Re: [PATCH 0/9] scripts: introduce script to update cargo .wrap files
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pg1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -164,17 +117,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/8/26 07:28, John Snow wrote:
-> In preparation for upgrading Python to 3.12+, adjust the type hint on
-> types_seen to prevent mypy from chirping about an unknown type for
-> this variable.
-> 
-> Why didn't this trigger earlier? A mystery for the ages.
-> 
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->   scripts/qapi/types.py | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+Hi
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+On Fri, Aug 21, 2026 at 12:40=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com=
+> wrote:
+>
+> Another small piece of the usability puzzle for Rust, this time
+> tackling dependency updates.
+>
+> Extend the existing scripts/get-wraps-from-cargo-registry.py so
+> that it is also able to use the versions in Cargo.lock.  This
+> makes it much easier to update .wrap files after running
+> "cargo update", though manual work is (intentionally) still
+> needed when the semver of a crate changes.
+>
+> It's possible that this functionality will be moved to Meson either
+> wholly or in part.  As usual, introduce the prototype in QEMU so that
+> it's clear what is needed.
+>
+
+Series lgtm, but I wasn't able to apply on master (patchew neither)
+
+thanks
+
+> Paolo
+>
+>
+> Paolo Bonzini (9):
+>   scripts: print build.rs diff
+>   scripts: rename variable in scripts/get-wraps-from-cargo-registry.py
+>   scripts: do not assume the new version of the crate is present
+>   scripts: prepare for introduction of CrateSource class
+>   scripts: introduce CrateSource abstract class
+>   scripts: add functionality to update wrap files from Cargo.lock
+>   scripts: add the possibility of a quick update of the pacakge
+>   scripts: rename get-wraps-from-cargo-registry.py
+>   rust: update crates
+>
+>  Cargo.lock                                    |  48 ++---
+>  Cargo.toml                                    |   2 +-
+>  ...argo-registry.py =3D> update-cargo-wraps.py} | 198 +++++++++++++-----
+>  subprojects/attrs-0.2-rs.wrap                 |   9 +-
+>  subprojects/foreign-0.3-rs.wrap               |   9 +-
+>  ...sys-0.21-rs.wrap =3D> glib-sys-0.22-rs.wrap} |   9 +-
+>  subprojects/libc-0.2-rs.wrap                  |  10 +-
+>  .../libc-0.2-rs/meson/meson.build             |  20 +-
+>  subprojects/quote-1-rs.wrap                   |  10 +-
+>  subprojects/unicode-ident-1-rs.wrap           |  10 +-
+>  10 files changed, 207 insertions(+), 118 deletions(-)
+>  rename scripts/{get-wraps-from-cargo-registry.py =3D> update-cargo-wraps=
+.py} (38%)
+>  rename subprojects/{glib-sys-0.21-rs.wrap =3D> glib-sys-0.22-rs.wrap} (1=
+3%)
+>
+> --
+> 2.55.0
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
