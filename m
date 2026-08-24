@@ -4,93 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04AA6C5DF8C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C95AAC5DF98
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:59:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNcN-0001Jp-6a; Mon, 24 Aug 2026 01:53:11 -0400
+	id 1wyNh0-0000JM-Vt; Mon, 24 Aug 2026 01:57:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNcL-0001GK-LE
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:53:09 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wyNgX-0008WQ-Kp
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:57:32 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNcJ-0003Hm-Us
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:53:09 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-cbedda4c154so1807379a12.1
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:53:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wyNgV-0004HZ-9i
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:57:28 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-84e507b079dso1794502b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:57:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787550786; x=1788155586; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787551046; x=1788155846; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=g7vCLZFyzm937jgIhV3Z2Vex0I/08uZ3yWQtzgoRbwM=;
- b=kniknyZnFJTwyOonVlmK6mR/XXPBozNp7oVJLo0CyN02Paq8l3OiXDbQL3viWuqzky
- T5aOZCoMmQoePA0jzsktkd+YVA6FJ4u2Bzf7DF2rObP9G6wfFqkh3z9HvNBKKp9U4YWz
- Bu/Pr1ijg063tdWocnlQJUgK7clG2qOzmWs1hTFvfKLZLk9nRkCU5Y8eJgES9uEnNU21
- WxH/FLuc+Cjw/j/QT7ayCl/Jh7c1hgks334BF7ud1S5Izz8iPyBI5biYSIYNG6lISJpg
- v5F2daP3E4dcfSn9OwWdFE4I7tZgYNehd/T39GkvTF/PiaaOJ4adSJIIBmbzPmahjqeu
- Uxpg==
+ :in-reply-to:message-id:date:subject:cc:to:from:sender:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=xOKtZQG0hnTTR9GYt3EONXbWo75FyZ9WOPDuoAjiEYU=;
+ b=lUIqycGs/vL2DIKJdH5FGo0KYOM8JRJNJGCIYA2Vsectedvz9az727j4uOWVcZJW0+
+ uo/7XJMEdktyCaLyno08MxC+nZ4KeTqXncIkn2/kgK20jSONDZxbr0zlr82+UkeXMup6
+ JbalU3Rhcpf0rQ+3+BYhoOC0mWlbOr0aThSVkJbkjBpeIPI4V4KuvAEvbLlr8ht7EssO
+ Y3Zc5Yxo6m/ngjhe9Shx0HOxt9WEH/QoB8xKc0IudaLG4cs+yn0Wx7FDYpGQ9tk57v9Q
+ VAGS2ita89/X8hNZtZQvI0I3tcKAGVgnrQnwONlRKeEM4BlfdKDumk8srjOLOVpz1uDM
+ v8VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787550786; x=1788155586;
+ d=1e100.net; s=20251104; t=1787551046; x=1788155846;
  h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
+ :in-reply-to:message-id:date:subject:cc:to:from:sender:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=g7vCLZFyzm937jgIhV3Z2Vex0I/08uZ3yWQtzgoRbwM=;
- b=Mcy4FUDu2xn8/UKPArItJhUsOcyDGbrPy2f3yvjWoDXHi8SLrklUCoaGi87JwnNKAD
- XDlqr7kUDzg0g98tgWPjWashetv6Kl/YPOPFT/UlKcjlVxs2GVZV3jjioAU4MymO7OO2
- LQg+2fiicIEohxuAZXmJWvN1+Wkc75G/Ka8nnEobUHwwtzoxeHihOPZYt5GfXooAbdxD
- VBVy1fca3hMxkY/veNFxyODPklLRp8E6A8oM/O6qy1fK3P2rN0qF2SBpNTMOdlAOt3Lq
- HfnxEVVetVPtJCwD/8GwMDsXZaI1dBy8sSfWFqeLMxuCr97ExfyJTba+cqxfUWxBO9W2
- xjhw==
-X-Gm-Message-State: AFuF++lToGrSCglLGQ8/4Ek388O6/6N2BQVKRN1tcq6aNP0KttH6uW6U
- pOcr3/SU7QkkRfMbpAEy4IC/VLKR7B0TozTNSoEJirWKOZxmwuPC4HNBexjvtw==
-X-Gm-Gg: AR+sD11uWtDEdrq1HB8wsP/SyaGmx0UWo2tDP6Q3GmSQe9Q560MgKzwEFSBE0eeEfq1
- e/9i5TkG8tu6q9tZxfUMFAczYBo3myYWB+QErU4ASgUhyAt+vl0f97LcXBlxgbzMkMYacj8obSA
- xCfL2/33Nj8N14YtwWRDD/cNl+03TOTbzienJHlZyeZ4xjzrpXesnDX1z+hZ/fPcH6u7OnpYjPr
- PJet2x7zafgjJPvzzdyc30p3v4IG7LNe7DIqmzdgWM6QCP13rBxmoq0tYnuOjSD2y1SB2/JX/5p
- o0UlIx6eQT1DkRd1hTuo6N0mE5pCDcM4IJbPdxOWdezFGWne/Uf+u89np2MEHZC2n76Tvk7I371
- P8TzxQ4uzb8/KZHnuJJjo210NQ45s3ZpgBy2s/0+mTiqDMIoG9eB/CizCMUmCwKxEPKJRWmLtVp
- IJARl0LrowYvW+cONgGIGxo5k4Cl9aQyeSiivAe/LuA4/E322AChiRGz8JkooztwpV9qNua7+iw
- 2ysww==
-X-Received: by 2002:a17:90b:580f:b0:380:f389:447b with SMTP id
- 98e67ed59e1d1-395c386d163mr47850617a91.11.1787550786502; 
- Sun, 23 Aug 2026 22:53:06 -0700 (PDT)
-Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
+ bh=xOKtZQG0hnTTR9GYt3EONXbWo75FyZ9WOPDuoAjiEYU=;
+ b=fgxPpTVRBPgQLqa7ge4ebTiwSBOfGSbvVnQWFK9yHvfBdDG6BvxCAAope8pAQJFYJB
+ N1R0uBPylczB3/7ObCiTZGPyOO3wKmeIiJSgf2PdfVrV/3GXyTTLsM4limS5I2ejmiS3
+ 4QpkGR7B+ita1w8ckKaM5b2AT0AYeL+Amjr9NOUPOnpqfYiggQBkd/WZykddVEQPCVHA
+ OaDDAnJYFDNHKr7jfcYk9Tj5NxeebSL+GXKRg0w/Kf/MJVTZfBPAkqckLSbG+Bmiuo+U
+ sg+yRkd6XWUTFO8gGkIje/J27el+oNoVo4uKF05wUtPNeMVo4FwGwnI/QQqqCmrl0gz8
+ fccQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpO3K3E8IKEJUw0C5zdVpj8vwvfVC8wOIiCkCwBG5PVm+WLuvWQyisS/sFrZ0fLybpSAPr+ghgL20Ko@nongnu.org
+X-Gm-Message-State: AFuF++lWlhTtMkvYy4YY9B/8GOKrECoRiaREeAg0h+8WIWlpThhGnhAY
+ ZpfN2CpUh7UtQ1vX/w9NPbHa5Z5mdr+tzk5Pd5bNWKExvKzq287bN/eI
+X-Gm-Gg: AR+sD10VnhA3G6PaIuTNDcMn9G3YILnX8KyT+N3cFV5V2nYpjMCk7TQYgQR1qycXnva
+ DY/1fbwrpHUEdIexAevF5eusTDoLtOmPIAwz/k0vsOASl+l7b/X589VjNw9+IDZjMWrT24k9wHq
+ TrJMTdP9elo3ySGyW7W/Vqu+S2s1DWzNYRrFLo6Dj4EUcKvuYPfatJQPuxUujEF0J+t03rTzjPH
+ UhmWPYzDzgpdUTnnnIYOyi/rl7fV15aaoVIhp/2cIP8v3ZgKi0F1JEKOrgDTANYtMtpamboOO8U
+ kqD4+XimOd98MIyXQ4Rr3oOQc05jKjEvTZGhjQgwqmQWoUT2xr0T+uszAf10uXdqU9Qm0PCfkp8
+ bSc3ufqIgghW1SJL16krRG5Ax6Ovh/50s18IjuleKN8l94vz+uddHxqYi75O0048E/iiKdI+ep7
+ etEeTM6+6nXTnMUOdQo16c9NXiDQKmrYcKhwOHB8fGZejZZXNq0fNnNJJDYGNa51M7d9POFswyc
+ inib9cVbi6C1uIyZC8MdZIOlAxGwBDlJXW31n39bUC2tJFumKsFEEb7Gqsfy2QDdeQyNsfazB+1
+ hjKsJ0SJGWHCgbgcqjjRrA==
+X-Received: by 2002:a05:6a00:6ca2:b0:845:e7ee:eae7 with SMTP id
+ d2e1a72fcca58-851f9a2f1edmr43185672b3a.5.1787551045688; 
+ Sun, 23 Aug 2026 22:57:25 -0700 (PDT)
+Received: from donnager-debian.. ([180.150.112.50])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.53.03
+ d2e1a72fcca58-8520f03b494sm1583474b3a.33.2026.08.23.22.57.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Aug 2026 22:53:05 -0700 (PDT)
-From: alistair23@gmail.com
-X-Google-Original-From: alistair.francis@wdc.com
-To: qemu-devel@nongnu.org
-Cc: Vladimir Isaev <vvisaev@gmail.com>,
+ Sun, 23 Aug 2026 22:57:25 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu@processmission.com>
-Subject: [PULL v2 93/96] riscv: csr: do not drop C bit on misa write
-Date: Mon, 24 Aug 2026 15:48:03 +1000
-Message-ID: <20260824054806.2790041-94-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260824054806.2790041-1-alistair.francis@wdc.com>
-References: <20260824054806.2790041-1-alistair.francis@wdc.com>
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Michael Ellerman <mpe@kernel.org>,
+ Portia Stephens <portias@oss.tenstorrent.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH 4/4] hw/riscv/atlantis: Document QEMU-only I2C device tree
+ nodes
+Date: Mon, 24 Aug 2026 15:26:40 +0930
+Message-ID: <20260824055642.41098-5-joel@jms.id.au>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260824055642.41098-1-joel@jms.id.au>
+References: <20260824055642.41098-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x52a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=joel.stan@gmail.com; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,48 +117,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Isaev <vvisaev@gmail.com>
+The QEMU only I2C devices have a comment next to them, do the same for
+the corresponding device tree entries.
 
-According to spec:
-> Writing misa may increase IALIGN, e.g., by disabling the "C" extension.
-> If an instruction that would write misa increases IALIGN, and the
-> subsequent instruction’s address is not IALIGN-bit aligned, the
-> write to misa is suppressed, leaving misa unchanged.
-
-So attempt to disable C extension if next instruction is not aligned should not
-change the misa.
-
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Vladimir Isaev <vvisaev@gmail.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
-Message-ID: <20260817150653.40357-2-vvisaev@gmail.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- target/riscv/tcg/csr.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ hw/riscv/tt_atlantis.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index 4c8959a33d..002f7e69c1 100644
---- a/target/riscv/tcg/csr.c
-+++ b/target/riscv/tcg/csr.c
-@@ -2187,9 +2187,13 @@ static RISCVException write_misa(CPURISCVState *env, int csrno,
-     /* Mask extensions that are not supported by this hart */
-     val &= env->misa_ext_mask;
- 
--    /* Suppress 'C' if next instruction is not aligned. */
--    if ((val & RVC) && (get_next_pc(env, ra) & 3) != 0) {
--        val &= ~RVC;
-+    /* drop write if RVC is cleared and next instruction is not aligned */
-+    if ((env->misa_ext & RVC) && !(val & RVC) &&
-+         (get_next_pc(env, ra) & 3) != 0) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "Unable to write MISA ext value "
-+                      "0x%x, MISA.C disable failed\n", env->misa_ext);
-+
-+        return RISCV_EXCP_NONE;
+diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+index d808bcc11c34..82f087c836da 100644
+--- a/hw/riscv/tt_atlantis.c
++++ b/hw/riscv/tt_atlantis.c
+@@ -356,6 +356,7 @@ static void finalize_fdt(TTAtlantisState *s)
+                        aplic_s_phandle, periph_clk_phandle);
      }
  
-     /* Disable RVG if any of its dependencies are disabled */
++    /* I2C peripherals: qemu specific */
+     create_fdt_i2c_device(s, 0, "dallas,ds1338", 0x6f);
+     create_fdt_i2c_device(s, 4, "ti,tmp105", 0x48);
+ }
 -- 
-2.54.0
+2.47.3
 
 
