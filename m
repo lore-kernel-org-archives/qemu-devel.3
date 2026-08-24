@@ -4,62 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A323BC5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 14:56:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E685DC5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 14:56:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyW5K-0005oJ-CO; Mon, 24 Aug 2026 10:55:39 -0400
+	id 1wyW5N-0005p3-38; Mon, 24 Aug 2026 10:55:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wyW5H-0005o5-KE
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:55:35 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wyW5L-0005on-Oh; Mon, 24 Aug 2026 10:55:39 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wyW5E-0004BJ-Bd
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:55:35 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 67OEt8G7071227
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 24 Aug 2026 23:55:09 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=TzcOczWhyiYpZE1NBdSSj+ggN2OirvNGMMKxHGUauRA=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1787583309; v=1;
- b=Ye29Y4WTVO+FwcMT36QRvlZ3g1s6hGd1nm2bCarNE6AWbGbrgufRyrbEKKi4VEuT
- y10rgTm+LRi+KFKUeU7tkyIkOb+csA/ullR9RiCaVwXfSPuipk5Qv2f8C/sDKdK4
- XUMf7+t/CkpbOHDDFO4K42oeZdUG4d5jtHGbMu8Y1xYmYEbxUwpj4Hx7Et6Y+XSs
- mWYb+OTgocvKEVUape1JElZEjOpdV6faZ0l1VUmSxYGKRgVjV4hXgVSl6t+yQqjg
- tqeQMCeANFfD7XuJXgGUBM5uS2YepbqoaC6FejujW6W5pwSHmX68Z31TfysHOkQ9
- nMUxaa+lIolsHNtEeUmoqQ==
-Message-ID: <faae365f-db1f-43f5-95eb-fcadc7e41773@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 24 Aug 2026 23:55:08 +0900
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wyW5K-0004P2-4g; Mon, 24 Aug 2026 10:55:39 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67OD1aAX1958015; Mon, 24 Aug 2026 14:55:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=DBkB2V
+ imlQcY2+9UBAO8htSM0c1BNcWM/31fWYzuLI8=; b=CkcUg9wQUnlp2JDMpbd4XB
+ shdGE8+AmfYcix4jsM7gRlyPrAVaFxwJtvN2Uu+Vtji/arhSVOmDOmHTn/KGlS8n
+ lP5TelioaPbu8+6f6f3H0S3bYERzpEmv9Kx4UG+K9Z8kaAYdOjhHUUWt4tiCZvVZ
+ 6rWvYMFOg2pYx5PW/kRL+Ee+rhAaSOjH0o/QtJ7xrrwUbzKBBx73PDqasjiqmfrv
+ Sd13U1/c3YFQ7ouCXFGzmnHPM3zAcXTDGxzA8hmLCm9cNu5JI2Ssdn4wEo+t01kz
+ /yoOLzjpCiyN98MUSxiRLCrCU8QqOfTAQD2yO4E4gG53WcaHQqEqmciYitr/TOrw
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73g4j3qt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Aug 2026 14:55:33 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OEfNYT020577;
+ Mon, 24 Aug 2026 14:55:32 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7pfvxrxc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Aug 2026 14:55:32 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67OEtVEV9569010
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 24 Aug 2026 14:55:31 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3FBEC5805C;
+ Mon, 24 Aug 2026 14:55:31 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F36B35805A;
+ Mon, 24 Aug 2026 14:55:29 +0000 (GMT)
+Received: from [9.61.21.147] (unknown [9.61.21.147])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 24 Aug 2026 14:55:29 +0000 (GMT)
+Message-ID: <f2f3b5de-e1de-4e8c-82c8-2379b78e9ff9@linux.ibm.com>
+Date: Mon, 24 Aug 2026 10:55:29 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/1] hw/display/xenfb: always register vfb and
- allocate console early
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-To: Dario Faggioli <dfaggioli@suse.com>, qemu-devel@nongnu.org
-Cc: xen-devel@lists.xenproject.org, sstabellini@kernel.org,
- anthony@xenproject.org, edgar.iglesias@gmail.com, philmd@mailo.com
-References: <20260824071116.935828-1-dfaggioli@suse.com>
- <20260824071116.935828-2-dfaggioli@suse.com>
- <c0e3c9af-f3e7-469c-8621-4b797ff8e518@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [PATCH v1 3/3] tests/functional/s390x/test_secure_ipl: Add
+ virtio-blk-pci boot dev case
+To: Joshua Daley <jdaley@linux.ibm.com>, qemu-s390x@nongnu.org
+Cc: qemu-devel@nongnu.org, jrossi@linux.ibm.com, zycai@linux.ibm.com,
+ borntraeger@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ farman@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
+ david@kernel.org, cohuck@redhat.com
+References: <20260812152112.3330493-1-jdaley@linux.ibm.com>
+ <20260812152112.3330493-4-jdaley@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <c0e3c9af-f3e7-469c-8621-4b797ff8e518@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20260812152112.3330493-4-jdaley@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: F7XajmPqJh-p0s2YbfQOEF2irvgDw5YO
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEyMiBTYWx0ZWRfX05Yydt/FKRTF
+ b2jfP0/M9yiiXSCdqTZsOVpzNuRNXk1Uu/jDVI4Z9vlUmpzllieJwpHXx2OnYZt1/UmPYTgiq0/
+ +qBekqeX6g1HmqlYwdyyn4Dn+bPkPVw=
+X-Proofpoint-GUID: F7XajmPqJh-p0s2YbfQOEF2irvgDw5YO
+X-Authority-Analysis: v=2.4 cv=JZyMa0KV c=1 sm=1 tr=0 ts=6a8c5b65 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=YaG0G0OC3Pa_izDdi3AA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEyMiBTYWx0ZWRfXw7VY+crEiNmB
+ 6nI/gTPDYjFPUzdF3iSddTvijrx5T1Q3KpxqzPpI1Thdz6AzslRazN2hMM+ZdTCMKp/1eu7NLTe
+ 8dInIv2lpMc8YhHSWbzL2jblDTrI6giy7NZAves7Oig+nupT5/2MOtPVd/OXtJocIlWADqRW50x
+ xONnHltU76Df/TAtbe7Mm8NPe2RyPxltD8iA6crRYkThRMX1viFWGX9l2oz+IKW1v+S1a20evFh
+ T76HdB06HUUf7vL9rUjOUR+WwHWiFnSB/cmUuapo1xTERneaW2PjVU3/YG/OFJxjvbRYuuIneab
+ 3rC8DGN4zRaqKgmWMamk162pKUeXWbNrecc6HUqrNA+V7vdEq4PYNd9CHtSRPgRvV4OEICBTSRs
+ kks4E38OYaw8LfYenHZ+hFSMRErQdVKdc7ZkzqPMiCVhZPb0YvQvQUpwACbf7HfD6Wdc9qmwR15
+ Xe2dxdbMhgqGbrqAklg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-24_04,2026-08-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240122
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,128 +127,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/24 22:59, Akihiko Odaki wrote:
-> On 2026/08/24 16:11, Dario Faggioli wrote:
->> This commit addresses a black console issues for Xen PV and PVH guests.
->>
->> In fact, commit 6ece1df966 ("hw/xen: Register framebuffer backend via
->> xen_backend_init()") introduced a check before registering the vfb
->> backend. Problem is that the '-vga' agrument may not be present (e.g.,
->> for PV/PVH guests started with 'xl') and this causes the backend to be
->> silently ignored.
->>
->> This commit restores the unconditional registration of the vfb backend.
-> 
-> This part looks correct.
-> 
->>
->> Furthermore, even with the backend always being registered, the fact
->> that xenfb allocates the QemuConsole asynchronously in fb_initialise()
->> looks problematic. In fact, when the UI initializes, it finds 0 active
->> consoles and it permanently allocates a dummy surface showing the
->> message "This VM has no graphic display device". And since the removal
->> of console_select() there's no way to dynamically switch to the xenfb
->> console, when it is finally up and running.
->>
->> This commit works around the issue by moving console creation to
->> fb_init(), so that VNC attaches to it immediately. The surface is then
->> updated normally via qemu_console_set_surface() once the guest 
->> framebuffer
->> is mapped.
-> 
-> Moving console creation to fb_init() does not look sufficient. fb_init() 
-> is driven by the Xenstore backend state machine, so it is not guaranteed 
-> to run before display initialization. If the vfb backend instance is 
-> discovered later, fb_init() will run later in response to a Xenstore event.
-> 
-> fb_init() is also a per-connection hook. If the frontend closes and 
-> reconnects while the backend object remains, fb_init() runs again on the 
-> same XenFB object. The unconditional assignment then creates another 
-> QemuConsole and overwrites fb->con, leaving the previous console 
-> registered.
-> 
-> There is also no matching teardown. When the backend Xenstore node 
-> disappears, xen_pv_del_xendev() invokes ops->free before unplugging the 
-> XenFB object, but xen_framebuffer_ops has no .free callback. The 
-> QemuConsole can therefore retain a pointer to the freed XenFB as its 
-> opaque value.
-> 
-> Could the QemuConsole instead be created by xen_framebuffer_ops.alloc 
-> and closed with qemu_graphic_console_close() from 
-> xen_framebuffer_ops.free? The .alloc hook runs once per XenLegacyDevice, 
-> so the console would remain stable across frontend reconnects, 
-> while .free would close it when the backend object is removed.
-> 
-> The .alloc hook is the earliest per-device point. However, it still
-> cannot make the console visible before display initialization if the vfb
-> backend instance itself is created later.
-> 
->>
->> Fixes: 6ece1df966 ("hw/xen: Register framebuffer backend via 
->> xen_backend_init()")
-> 
-> The unconditional-registration hunk fixes 6ece1df96629. The console 
-> creation hunk addresses a separate regression introduced by 
-> e99441a3793b. Please split the changes and give each patch its 
-> corresponding Fixes tag, using at least 12 hexadecimal digits:
-> 
-> Fixes: 6ece1df96629 ("hw/xen: Register framebuffer backend via 
-> xen_backend_init()")
-> Fixes: e99441a3793b ("ui/curses: Do not use console_select()")
-> 
-> These commits first appeared in v9.1 and v9.0, respectively. The 
-> registration change is not needed in v9.0, so combining the fixes 
-> complicates backporting the console fix to that release.
+On 8/12/26 11:21 AM, Joshua Daley wrote:
+> Split test_s390x_secure_ipl() into two subtests. Each tests with a
+> different boot device: virtio-blk-ccw or virtio-blk-pci. Use a state var
+> such that the setup is run only once.
 
-Also probably it is a good idea to have Cc: qemu-stable@nongnu.org
+[...]
 
-> 
-> Regards,
-> Akihiko Odaki
-> 
->> Signed-off-by: Dario Faggioli <dfaggioli@suse.com>
->> ---
->>   hw/display/xenfb.c | 12 ++++++------
->>   1 file changed, 6 insertions(+), 6 deletions(-)
->>
->> diff --git a/hw/display/xenfb.c b/hw/display/xenfb.c
->> index ae302b217f..3a0cdc0578 100644
->> --- a/hw/display/xenfb.c
->> +++ b/hw/display/xenfb.c
->> @@ -851,9 +851,14 @@ static void xenfb_handle_events(struct XenFB *xenfb)
->>   static int fb_init(struct XenLegacyDevice *xendev)
->>   {
->> +    struct XenFB *fb = container_of(xendev, struct XenFB, c.xendev);
->> +
->>   #ifdef XENFB_TYPE_RESIZE
->>       xenstore_write_be_int(xendev, "feature-resize", 1);
->>   #endif
->> +
->> +    fb->con = qemu_graphic_console_create(NULL, 0, &xenfb_ops, fb);
->> +
->>       return 0;
->>   }
->> @@ -882,8 +887,6 @@ static int fb_initialise(struct XenLegacyDevice 
->> *xendev)
->>       if (rc != 0)
->>           return rc;
->> -    fb->con = qemu_graphic_console_create(NULL, 0, &xenfb_ops, fb);
->> -
->>       if (xenstore_read_fe_int(xendev, "feature-update", &fb- 
->> >feature_update) == -1)
->>           fb->feature_update = 0;
->>       if (fb->feature_update)
->> @@ -973,9 +976,6 @@ static const GraphicHwOps xenfb_ops = {
->>   static void xen_ui_register_backend(void)
->>   {
->>       xen_be_register("vkbd", &xen_kbdmouse_ops);
->> -
->> -    if (vga_interface_type == VGA_XENFB) {
->> -        xen_be_register("vfb", &xen_framebuffer_ops);
->> -    }
->> +    xen_be_register("vfb", &xen_framebuffer_ops);
->>   }
->>   xen_backend_init(xen_ui_register_backend);
-> 
+> +
+> +    @skipBigDataTest()
+> +    def test_s390x_secure_ipl_ccw(self):
+> +        """Test secure IPL with a virtio-blk-ccw boot device."""
+> +        self.require_accelerator('kvm')
+> +        if not self.setup_done:
+> +            self.setup_s390x_secure_ipl()
+
+AFAICT this setup_done check won't do anything.
+
+If I run this file I will enter setup twice, once for
+test_secure_ipl.S390xSecureIpl.test_s390x_secure_ipl_ccw
+and again for
+test_secure_ipl.S390xSecureIpl.test_s390x_secure_ipl_pci
+
+I think it's because each test will run with it's own instance of the class.
+
+> +        self.verify_s390x_secure_ipl('ccw')
+> +
+> +    @skipBigDataTest()
+> +    def test_s390x_secure_ipl_pci(self):
+> +        """Test secure IPL with a virtio-blk-pci boot device."""
+> +        self.require_accelerator('kvm')
+> +        if not self.setup_done:
+> +            self.setup_s390x_secure_ipl()
+
+Same
+
+Unless this is really time consuming, I think the simple answer is to
+just let the setup run twice and don't try to share between the 2 instances?
+
+Thanks,
+Matt
 
 
