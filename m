@@ -4,74 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 234BCC5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 07:23:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F2FC5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 07:24:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyP1T-0002e2-Im; Mon, 24 Aug 2026 03:23:11 -0400
+	id 1wyP2M-0003Jg-Bc; Mon, 24 Aug 2026 03:24:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wyP1R-0002bL-9I
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:23:09 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wyP2K-0003J5-DA
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:24:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wyP1P-0001gB-9h
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:23:09 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wyP2I-0001v4-PX
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:24:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787556186;
+ s=mimecast20190719; t=1787556242;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  resent-to:resent-from:resent-message-id:in-reply-to:in-reply-to:
- references:references; bh=P7yUEloMZb4stposY86CiIlPWN9A0ZvHR+9+jsGqBKY=;
- b=YqxD90BxvRfKnSXxESLMbu6QqUlqd1O+sbbjit+W/mLaBJzi99cNS7ScI/WfZlxieNL6q/
- AUwUMcdPtqXhNJYm36Gee4nhgeNg6u7yEnkIBGhEM19q7v51dKZ0AOXw15wbCxId8WTBn0
- AB/mGXxFZobnBY8BJXBqBpwoZ5TzEMo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ references:references; bh=FEcRtZYhAS8OkqDEIRzJhwujdOXmMSZACdppFhJjhFI=;
+ b=BRIdPaqEnSOZGhI1u46921yzy6NJmBrUS7xdmukaYx6p7G0bjxaAtyHFWvFIINWIDmnWFy
+ xYtH8HhH61wUl76nIkkqpReTjAn52KYaPlE4Hq+RHIOdWgnlfv9my+lhryo1wZ4ZKwrlo3
+ R6tRx4nqr9kH+8lwD5QY8b4lCUGsw0g=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-205-F2wgDI1WNlq1UAo_1un3aA-1; Mon,
- 24 Aug 2026 03:23:02 -0400
-X-MC-Unique: F2wgDI1WNlq1UAo_1un3aA-1
-X-Mimecast-MFC-AGG-ID: F2wgDI1WNlq1UAo_1un3aA_1787556181
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-35-Xeq9gCfqNlmfFWXwYur2gg-1; Mon,
+ 24 Aug 2026 03:23:58 -0400
+X-MC-Unique: Xeq9gCfqNlmfFWXwYur2gg-1
+X-Mimecast-MFC-AGG-ID: Xeq9gCfqNlmfFWXwYur2gg_1787556237
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BD5A8195DE35; Mon, 24 Aug 2026 07:23:00 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 81FA01945CB8; Mon, 24 Aug 2026 07:23:57 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.12])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D9CC9180034C; Mon, 24 Aug 2026 07:22:59 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3C2481955F09; Mon, 24 Aug 2026 07:23:57 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 52E7A21E6920; Mon, 24 Aug 2026 09:22:57 +0200 (CEST)
-Resent-To: bchaney@akamai.com, qemu-devel@nongnu.org,
- dongli.zhang@oracle.com, joe.jin@oracle.com, maciej.szmigiero@oracle.com,
- mark.kanda@oracle.com, pierrick.bouvier@oss.qualcomm.com, farosas@suse.de
+ id BC00921E6920; Mon, 24 Aug 2026 09:23:54 +0200 (CEST)
+Resent-To: jasowangio@gmail.com, zhangckid@gmail.com, qemu-devel@nongnu.org
 Resent-From: Markus Armbruster <armbru@redhat.com>
-Resent-Date: Mon, 24 Aug 2026 09:22:57 +0200
-Resent-Message-ID: <87mrucugmm.fsf@pond.sub.org>
+Resent-Date: Mon, 24 Aug 2026 09:23:54 +0200
+Resent-Message-ID: <87ik50ugl1.fsf@pond.sub.org>
 From: Markus Armbruster <armbru@redhat.com>
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: qemu-devel@nongnu.org,  peterx@redhat.com,  farosas@suse.de,
- eblake@redhat.com,  maciej.szmigiero@oracle.com,  mark.kanda@oracle.com,
- bchaney@akamai.com,  pierrick.bouvier@oss.qualcomm.com, joe.jin@oracle.com
-Subject: Re: [PATCH 1/5] migration/qapi: Add memfd migration transport
-In-Reply-To: <a23d9e5b-d0ed-4e9d-95ae-e0fda4bb0453@oracle.com> (Dongli Zhang's
- message of "Fri, 21 Aug 2026 13:11:23 -0700")
-References: <20260812232842.470225-1-dongli.zhang@oracle.com>
- <20260812232842.470225-2-dongli.zhang@oracle.com>
- <87a4qh46ao.fsf@pond.sub.org>
- <614160f2-2f3e-4489-ac4b-758f162be553@oracle.com>
- <87a4qg0wv9.fsf@pond.sub.org>
- <a23d9e5b-d0ed-4e9d-95ae-e0fda4bb0453@oracle.com>
-Date: Mon, 24 Aug 2026 08:29:53 +0200
-Message-ID: <87h5kkvxni.fsf@pond.sub.org>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  Eric Blake <eblake@redhat.com>,
+ "'Michael S . Tsirkin'" <mst@redhat.com>,  Stefan Hajnoczi
+ <stefanha@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  'Daniel P .
+ =?utf-8?Q?Berrang=C3=A9'?= <berrange@redhat.com>,  Jason Wang
+ <jasowangio@gmail.com>
+Subject: Re: [PATCH V12 03/15] iothread: track users with holder name
+In-Reply-To: <20260814174830.1691540-4-zhangckid@gmail.com> (Zhang Chen's
+ message of "Sat, 15 Aug 2026 01:48:17 +0800")
+References: <20260814174830.1691540-1-zhangckid@gmail.com>
+ <20260814174830.1691540-4-zhangckid@gmail.com>
+Date: Mon, 24 Aug 2026 08:41:39 +0200
+Message-ID: <87a4qcvx3w.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -96,143 +92,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dongli Zhang <dongli.zhang@oracle.com> writes:
+Zhang Chen <zhangckid@gmail.com> writes:
 
-> On Fri, Aug 21, 2026 12:13:30AM -0700, Markus Armbruster wrote:
->> Dongli Zhang <dongli.zhang@oracle.com> writes:
->> 
->>> On Thu, Aug 20, 2026 12:09:19AM -0700, Markus Armbruster wrote:
->>>> Dongli Zhang <dongli.zhang@oracle.com> writes:
->>>> 
->>>>> Add a memfd migration transport to the MigrationAddress QAPI schema. The
->>>>> new transport has no user-supplied arguments because QEMU creates and
->>>>> passes the backing memfd internally.
->>>>>
->>>>> The initial user is cpr-exec, where the main VM/device migration stream can
->>>>> be stored in an inherited memfd instead of an external file.
->>>>>
->>>>> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
->>>>> ---
->>>>>  qapi/migration.json | 32 +++++++++++++++++++++++++++-----
->>>>>  1 file changed, 27 insertions(+), 5 deletions(-)
->>>>>
->>>>> diff --git a/qapi/migration.json b/qapi/migration.json
->>>>> index b1eaf7b054..1505c201ca 100644
->>>>> --- a/qapi/migration.json
->>>>> +++ b/qapi/migration.json
->>>>> @@ -702,9 +702,11 @@
->>>>>  # @cpr-exec: The migrate command stops the VM, saves state to the
->>>>>  #     migration channel, directly exec's a new version of QEMU on the
->>>>>  #     same host, replacing the original process while retaining its
->>>>> -#     PID, and loads state from the channel.  Guest RAM is preserved
->>>>> -#     in place.  Devices and their pinned pages are also preserved for
->>>>> -#     VFIO and IOMMUFD.
->>>>> +#     PID, and loads state from the channel.  With the @memfd
->>>>> +#     migration transport, QEMU saves VM/device state to an internal
->>>>> +#     memfd instead of an external main migration channel.  Guest RAM
->>>>> +#     is preserved in place.  Devices and their pinned pages are also
->>>>> +#     preserved for VFIO and IOMMUFD.
->>>>>  #
->>>>>  #     Old QEMU starts new QEMU by exec'ing the command specified by
->>>>>  #     the @cpr-exec-command parameter.  The command may be a direct
->>>>> @@ -716,6 +718,13 @@
->>>>>  #     as a file, that accepts all data before old QEMU exits.
->>>>>  #     Otherwise, old QEMU may quietly block writing to the channel.
->>>>>  #
->>>>> +#     Alternatively, use the @memfd migration transport to save
->>>>> +#     VM/device state to an internal memfd inherited by new QEMU.
->>>>> +#
->>>> 
->>>> Any guidance on when to use @memfd?
->>>
->>> My objective is to avoid using disks, or running QEMU with writable storage.
->>>
->>> Both guest I/O and networking can go through VFIO, and everything remains in memory.
->>>
->>> When I was testing these CPR features, my favorite was cpr-exec because it does
->>> not require creating an additional QEMU instance.
->>>
->>> Based on my understanding, the best approach to live update a running binary is
->>> to replace only the code section while keeping everything else in memory, i.e.
->>> guest memory, device fds, and device state.
->>>
->>> Unfortunately, device state cannot simply remain in memory across exec(), so we
->>> need to migrate it from the old instance to the new instance. I was thinking:
->>> why not use memory instead of storage?
->>>
->>> Initially, I added the change only for cpr-exec. Later, I reworked the change to
->>> make memfd a new migration transport. As a side benefit for me, I also practiced
->>> how to add a new transport to the QEMU migration code :)
->> 
->> This is why you wrote the feature.  Please work it into the commit
->> message.
+> Introduce iothread_ref_and_get_aio_context() with a holder argument
+> and its counterpart iothread_unref_and_put_aio_context().
 >
-> Sure.
+> Previously, users of an IOThread AioContext did not explicitly record
+> their identity, making it difficult to debug which devices or
+> subsystems were pinning an IOThread.
 >
->> 
->> We should also help users decide whether to use the feature.  I gather
->> it's useful with migration mode cpr-exec.  Any other use cases?  Does it
->> even work with other migration modes?  If yes, which ones, and what
->> happens when you try with another one?
+> Registering a holder takes an IOThread object reference so that the
+> IOThread and its AioContext stay alive until the matching put
+> operation. Document the ownership and BQL requirements.
 >
-> So far I only added support for cpr-exec. I have not tried othe modes.
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 
-What happens when you try to use it with other migration modes?
+Does this add tracking, or just the tracking infrastructure?
 
-> In my opinion, cpr-transfer could also use a memfd-backed channel, but I am not
-> sure it is necessary.
->
-> For cpr-transfer, the source and destination are separate QEMU processes. If we
-> want to pass a memfd between them, we still need an IPC mechanism that can
-> transfer file descriptors, such as a Unix domain socket with SCM_RIGHTS. That
-> reduces the value of using memfd as the migration channel, because we need at
-> least one Unix domain socket anyway to pass the memfd fd and coordinate the handoff.
->
-> If a Unix domain socket is already required, the main benefit of memfd would
-> likely be performance, especially when the device state is large.
-
-We'd want to measure the performance impact to see whether it's worth
-complicating configuration and code.
-
-> cpr-exec is different. The new QEMU is started via exec(), so the memfd fd can
-> be preserved across exec by clearing CLOEXEC and passing the fd number through
-> an environment variable. This allows us to add a memfd-backed migration channel
-> without needing an external file or socket for the device state.
-
-What are the actual user-visible benefits?
-
-Performance?  Provide measurements, please.
-
-Simpler configuration?  Not sure that would be worth the special case.
-
-Anything else?
-
-> One potential future use case is LUO/KHO support for QEMU. In that case, device
-> state could be preserved in memory as a memfd and potentially survive across a
-> KHO kexec. We won't need to preserve anything on storage. Indeed, I did some
-> internal tests using memfd to preserve device state across kexec although using
-> different implementation, and it worked.
->
-> For other live migration modes, or even local migration, I do not think this is
-> useful. For example, saving to and loading from a file won't use memfd, as the
-> QEMU processes are terminated during the this process.
-
-User documentation should spell out when memfd can be used.  I recommend
-to make it usable only when it's known to improve things in at least
-some scenario that matters.  Code should cleanly reject attempts to use
-memfd when it's not usable.
-
-User documentation should help users decide whether to use it.
-
-The commit message(s) may need to provide additional detail on how
-things improve.
-
-> Thank you very much!
->
-> Dongli Zhang
-
-You're welcome!
-
-[...]
+If the latter, the subject is misleading.
 
 
