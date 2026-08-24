@@ -4,78 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2102C5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 11:40:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8736FC5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 11:43:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyT2C-00013P-Up; Mon, 24 Aug 2026 07:40:12 -0400
+	id 1wyT4l-0001ew-Km; Mon, 24 Aug 2026 07:42:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wyT2B-00013E-HD
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 07:40:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <christian@quante.one>)
+ id 1wyT4j-0001ea-Uf; Mon, 24 Aug 2026 07:42:49 -0400
+Received: from nx188.node01.secure-mailgate.com ([89.22.108.188])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wyT29-0005Cu-Jq
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 07:40:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787571607;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=sEgIZGttgOq7mFv/7aiZMcfV+Gtlf53VGT1MdomH8wc=;
- b=iFdWaOMQVosUCIZaOifXPn4DY5rAe2+6btgkfa6+qnuUeSswqC4pmEWxYWkfwC5IRzuNey
- UCLtm7SP+fZysFH680e7EVClW1Mk2d6QZ7/1NP9rohh0QW4ZXL3SBH2aeU5d6I0WNh7aMd
- zRuoyEuv7V6gFRPULU2i+nEeK4lMzfQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-328-WP72HqCDOLGxjpUDSKvZhg-1; Mon,
- 24 Aug 2026 07:40:04 -0400
-X-MC-Unique: WP72HqCDOLGxjpUDSKvZhg-1
-X-Mimecast-MFC-AGG-ID: WP72HqCDOLGxjpUDSKvZhg_1787571603
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2C4E91801F09; Mon, 24 Aug 2026 11:40:03 +0000 (UTC)
-Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2E4793000239; Mon, 24 Aug 2026 11:40:01 +0000 (UTC)
-Date: Mon, 24 Aug 2026 12:39:58 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- stefanha@redhat.com,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Peter Krempa <pkrempa@redhat.com>
-Subject: Re: [PULL 35/35] docs: mark '-mon' as deprecated in favour of -object
-Message-ID: <aowtji-323FFQ5AH@redhat.com>
-References: <20260707110300.1918153-1-armbru@redhat.com>
- <20260707110300.1918153-36-armbru@redhat.com>
- <CAFEAcA-tUz_YGhvqU8-o-jw-jhR4MTMFDJ3S9rA2ZG-0GpLtVw@mail.gmail.com>
- <87o6erssjf.fsf@pond.sub.org>
- <CAFEAcA-bN5aRaZPsiZoT_zpoZkiTgUupGnCn4OaWNG_rMRw7=g@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <christian@quante.one>)
+ id 1wyT4h-00082E-KZ; Mon, 24 Aug 2026 07:42:49 -0400
+Received: from web279.dogado.net ([31.47.255.59])
+ by node01.secure-mailgate.com with esmtps (TLS1.2) tls
+ TLS_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <christian@quante.one>)
+ id 1wyT4c-002jae-L7; Mon, 24 Aug 2026 13:42:43 +0200
+X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quante.one;
+ s=cloudpit; t=1787571762;
+ bh=b4eXQXNtUOY+c1r1uBYQyT6GFguFOidjzzsbSW01HKI=;
+ h=From:To:Cc:Subject:Date:From;
+ b=Sw0zN+oxr8H8jxE80n6DXwth80xQWhhSnkZiCjVqvXG5e5ZeZIDnxRVD1aECf5Ymq
+ YguKKDebVqg2O+EECYR6oLSLdhYN3CXVh32TuD7j3nNgUl6Z7Na9TMeQAmycRaNB8h
+ IeEghS8Xw4j59E/LXgN98ppHpI5pmrNQRK3lja0E=
+Received: from Zeuss.fritz.box (p549f1b6c.dip0.t-ipconnect.de [84.159.27.108])
+ (Authenticated sender: christian@quante.one)
+ by web279.dogado.net (Postfix) with ESMTPSA id AEB55280C4A;
+ Mon, 24 Aug 2026 13:42:41 +0200 (CEST)
+X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
+From: Christian Quante <christian@quante.one>
+To: John Snow <jsnow@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH] hw/block/fdc: account for read and write requests
+Date: Mon, 24 Aug 2026 13:41:50 +0200
+Message-ID: <20260824114216.231916-1-christian@quante.one>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA-bN5aRaZPsiZoT_zpoZkiTgUupGnCn4OaWNG_rMRw7=g@mail.gmail.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+X-PPP-Message-ID: <178757176222.4186173.10335620556201042371@web279.dogado.net>
+X-PPP-Vhost: quante.one
+X-Originating-IP: 31.47.255.59
+X-SecureMailgate-Domain: web279.dogado.net
+X-SecureMailgate-Username: 31.47.255.59
+Authentication-Results: secure-mailgate.com;
+ auth=pass smtp.auth=31.47.255.59@web279.dogado.net
+X-SecureMailgate-Outgoing-Class: ham
+X-SecureMailgate-Outgoing-Evidence: SB/global_tokens (0.00290444316647)
+X-Recommended-Action: accept
+X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuXOPZNYmQB9qz85cm7H/8AE29nSP6L7h/rn
+ f0iUZFJLFiu2SmbhJN1U9FKs8X3+Nt1HOctZ5X+40a9IXddeG3M38JQYgcgjsac3uQcQdCX4ROfH
+ zJ6mVE7ewsipSVIfs4bMT5zeh0i09FUzsOwd7xvTS5+h1uiHzk/Rfxfh461YLyu3RZI1CD15pCOE
+ 1vk99ROIQSXp0prcVkrsJtqLDcOMdOtYechJ/ikE1WgRg4cS6K5mANmx2g/2xIniaWLUPf0al0h7
+ 43VOpKNY+4MjijihZK0EMmf3P50Ajf/tIX00Fuu2beRqilmjgQ6jA3UwYgm3QTha208ypFqQwBFb
+ xm4JX7semJdl8Weuy8+tlMSTQwhoy9D5QZ6a84vJal7pM1XhlAOd290vPXa7Loma0jth+x0iJ0NX
+ 07iZIeUSWePdS78HF9DWBc0WhbQl3RlROHMl5OjAPt7LlMbhgG9BOAmXwBM2j5REykHorDckk/GS
+ XMyjmcTOVEFl0KPc6uJqilaCXufEjWR3z+AWvVFWQY81MMXgHqsZsdeRNOsJiUZKcasaKInSW7KX
+ 2AnOCtteaCsWYoesNJcqmEE+fwKo/lk5DedlPOKWD0S2eE7vgplPkeWBOXp8nHKe0R+FkIqN7hnE
+ owzMXpUnBxhMOdnGdpbVECj18Ndet5rC5wJSqHnrPDijix7jwdgfBvQbrDY6GMxN8PpzGx0UoNdj
+ kgBB8gz10F07v8zCSKG3aIolMAnTlhB8b6AQ3op/S4fepr1yX9+qSca1H9GjtnlugvPS0vcnp8wl
+ 1zNSBea0aUdNQBObVdGN0rcm1s5jhXm7hKo2tt3djUVYA77R3b1kItDSDDxTxkteeabgDmWf+475
+ NoptWdwTbsdixLWEv2vv1rY1tjz1n8/f8aNnFmVULNDWJF08z6wf2qinlvjTqpxpoHPYDmreKSUb
+ Fkw5HnzX+AWWNI8VxF6sNESrgqryuOEa4IEoSa58oc+gAHbR5wq+CwfeGTQmy/tvPgT7E9gJ2OcT
+ tXs8CVsONrMJuGzuoGnKTKcyLG3k9CjEUe77QPIKKJMzjf5GNGrszVg5Rg3lpE4ppCkqdj+sC6eO
+ d+/vCp0aBVA//tAYpPJnWlEYadG+MBZP1cVh3wqd91kuGA2+IpHA5YMowAOZKBM6e/bYB566DxuD
+ EK0zMbaaLtnxQMLD/YWtJZ6MkyNr9MQThDzE406gJL3sNjMV9Ofg1ecGMS6f0O9nqL0TsSeRgb8R
+ OVf8R/Vmmw==
+X-Report-Abuse-To: spam@node04.secure-mailgate.com
+X-Complaints-To: abuse@node01.secure-mailgate.com
+Received-SPF: pass client-ip=89.22.108.188; envelope-from=christian@quante.one;
+ helo=nx188.node01.secure-mailgate.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,81 +97,140 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 24, 2026 at 11:58:52AM +0100, Peter Maydell wrote:
-> On Mon, 24 Aug 2026 at 11:48, Markus Armbruster <armbru@redhat.com> wrote:
-> > Peter Maydell <peter.maydell@linaro.org> writes:
-> > > Can we be more precise in deprecation messages of this kind, please?
-> > > This warning is not enough for the user to be able to figure out how
-> > > to change their existing command line.
-> > >
-> > > I had to look into deprecated.rst, check the git history to see which
-> > > commit added the deprecation, then find out how this commit was adjusting
-> > > the examples in the tree.
-> > >
-> > > Notably, "-object monitor-hmp" appears to require an "id=" despite
-> > > nothing actually caring what that ID is,
-> >
-> > Yes, -object requires @id regardless of object type.  It calls
-> > object_new_with_props_from_qdict() via user_creatable_add_qapi().
-> > Together, they create the object at /objects/ID.
-> 
-> Yes, but usually you need the ID because it's going to plug into
-> some other option somewhere else; other options like -drive
-> can take an id=, but don't insist on it if you don't need it, and
-> some options like chardev are only useful if you connect them to
-> something else by using the ID elsewhere in the command line, so
-> whether they require id= or not never comes up. So the idea of an
-> option requiring an ID even though it is never referenced anywhere
-> else may well be new to the user.
+hw/block/fdc.c never calls block_acct_*, so a floppy drive stays at
+zero in query-blockstats and "info blockstats" while IDE, ATAPI, SCSI,
+virtio-blk, NVMe and xen-block all report their traffic. That is the
+only interface through which QEMU reports drive activity, so a
+front-end that shows per-drive activity LEDs -- the way 86Box does --
+can light up every bus except the floppy.
 
-FYI, the ID for the monitor can be used with  object-del  QMP/HMP
-commands. 
+The accounting is already set up for the drive: floppy_drive_realize()
+reaches block_acct_setup() through blkconf_apply_backend_options(), and
+-device floppy carries account-invalid, account-failed and
+stats-intervals through DEFINE_BLOCK_PROPERTIES. The properties can be
+set today, they just have nothing to act on.
 
-> Mostly I mention it because otherwise I think the typical user is
-> going to do what I did, i.e. replace "-mon" with "-object monitor-hmp"
-> and then immediately get a different error from QEMU. The warning
-> being more precise could save them a step.
+Wrap the five blk_pread()/blk_pwrite() calls in two helpers that
+account for the transfer. The cookie lives on the stack: floppy I/O is
+synchronous throughout, so it never outlives the call and there is no
+device state to migrate, unlike IDE where the cookie sits in the device
+because the transfer is asynchronous -- scsi-disk, nvme, ahci and
+xen-block all keep it in their request state for the same reason.
 
-I was thinking that the user would do 'man qemu' where we have
-docs for "-object", for each object type including "monitor-hmp/qmp",
-which are shown taking an ID parameter.
+Measured with a boot sector that reads 18 sectors from A: and 16 from
+C: and writes two back to each. The disk backend reports rd_ops=16
+rd_bytes=8192 wr_ops=2 wr_bytes=1024 either way, so the guest did the
+same work in both runs; the floppy went from rd_ops=0 wr_ops=0 to
+rd_ops=19 rd_bytes=9728 wr_ops=2 wr_bytes=1024 -- 19 reads being the
+boot sector the BIOS pulls in plus the 18 the guest asks for.
 
-> 
-> > >                                          and the warning message
-> > > doesn't say how to determine whether your existing -mon option
-> > > should be changed to monitor-hmp or monitor-qmp. The deprecated.rst
-> > > docs do say that part, but don't mention the ID bit.
-> >
-> > Fair points.
-> >
-> > Is this just "do better in the future", or are you also asking for a
-> > patch to improve this warning?
-> 
-> Both, preferably :-)
-> 
-> There's an argument that the deprecation warning could look at the
-> option the user actually provided and emit the exact right new
-> option to use instead. But I don't think that's something we've
-> ever done before for deprecations.
+Signed-off-by: Christian Quante <christian@quante.one>
+---
+ hw/block/fdc.c | 52 +++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 41 insertions(+), 11 deletions(-)
 
-Essentially we have three distinct places with info - the deprecation
-message at runtime, the deprecated.rst docs, and the qemu.1 manual
-page. It is a trade off between how much effort we want to put into
-each area.
-
-For humans I anticipated they'd be mostly using -monitor / -qmp
-convenience options, with -mon mostly used by machines which are
-already familiar with -object usage already.
-
-With regards,
-Daniel
+diff --git a/hw/block/fdc.c b/hw/block/fdc.c
+index 1178b959a6..41776af6a0 100644
+--- a/hw/block/fdc.c
++++ b/hw/block/fdc.c
+@@ -222,6 +222,42 @@ static int fd_offset(FDrive *drv)
+     return fd_sector(drv) << BDRV_SECTOR_BITS;
+ }
+ 
++/* Reads the sector at the current position and accounts for the request */
++static int fd_read_sector(FDrive *drv, uint8_t *buf)
++{
++    BlockAcctStats *stats = blk_get_stats(drv->blk);
++    BlockAcctCookie acct;
++    int ret;
++
++    block_acct_start(stats, &acct, BDRV_SECTOR_SIZE, BLOCK_ACCT_READ);
++    ret = blk_pread(drv->blk, fd_offset(drv), BDRV_SECTOR_SIZE, buf, 0);
++    if (ret < 0) {
++        block_acct_failed(stats, &acct);
++    } else {
++        block_acct_done(stats, &acct);
++    }
++
++    return ret;
++}
++
++/* Writes the sector at the current position and accounts for the request */
++static int fd_write_sector(FDrive *drv, const uint8_t *buf)
++{
++    BlockAcctStats *stats = blk_get_stats(drv->blk);
++    BlockAcctCookie acct;
++    int ret;
++
++    block_acct_start(stats, &acct, BDRV_SECTOR_SIZE, BLOCK_ACCT_WRITE);
++    ret = blk_pwrite(drv->blk, fd_offset(drv), BDRV_SECTOR_SIZE, buf, 0);
++    if (ret < 0) {
++        block_acct_failed(stats, &acct);
++    } else {
++        block_acct_done(stats, &acct);
++    }
++
++    return ret;
++}
++
+ /* Seek to a new position:
+  * returns 0 if already on right track
+  * returns 1 if track changed
+@@ -1644,8 +1680,7 @@ int fdctrl_transfer_handler(void *opaque, int nchan, int dma_pos, int dma_len)
+         if (fdctrl->data_dir != FD_DIR_WRITE ||
+             len < FD_SECTOR_LEN || rel_pos != 0) {
+             /* READ & SCAN commands and realign to a sector for WRITE */
+-            if (blk_pread(cur_drv->blk, fd_offset(cur_drv), BDRV_SECTOR_SIZE,
+-                          fdctrl->fifo, 0) < 0) {
++            if (fd_read_sector(cur_drv, fdctrl->fifo) < 0) {
+                 FLOPPY_DPRINTF("Floppy: error getting sector %d\n",
+                                fd_sector(cur_drv));
+                 /* Sure, image size is too small... */
+@@ -1672,8 +1707,7 @@ int fdctrl_transfer_handler(void *opaque, int nchan, int dma_pos, int dma_len)
+ 
+             k->read_memory(fdctrl->dma, nchan, fdctrl->fifo + rel_pos,
+                            fdctrl->data_pos, len);
+-            if (blk_pwrite(cur_drv->blk, fd_offset(cur_drv), BDRV_SECTOR_SIZE,
+-                           fdctrl->fifo, 0) < 0) {
++            if (fd_write_sector(cur_drv, fdctrl->fifo) < 0) {
+                 FLOPPY_DPRINTF("error writing sector %d\n",
+                                fd_sector(cur_drv));
+                 fdctrl_stop_transfer(fdctrl, FD_SR0_ABNTERM | FD_SR0_SEEK, 0x00, 0x00);
+@@ -1756,9 +1790,7 @@ static uint32_t fdctrl_read_data(FDCtrl *fdctrl)
+                                    fd_sector(cur_drv));
+                     return 0;
+                 }
+-            if (blk_pread(cur_drv->blk, fd_offset(cur_drv), BDRV_SECTOR_SIZE,
+-                          fdctrl->fifo, 0)
+-                < 0) {
++            if (fd_read_sector(cur_drv, fdctrl->fifo) < 0) {
+                 FLOPPY_DPRINTF("error getting sector %d\n",
+                                fd_sector(cur_drv));
+                 /* Sure, image size is too small... */
+@@ -1843,8 +1875,7 @@ static void fdctrl_format_sector(FDCtrl *fdctrl)
+     }
+     memset(fdctrl->fifo, 0, FD_SECTOR_LEN);
+     if (cur_drv->blk == NULL ||
+-        blk_pwrite(cur_drv->blk, fd_offset(cur_drv), BDRV_SECTOR_SIZE,
+-                   fdctrl->fifo, 0) < 0) {
++        fd_write_sector(cur_drv, fdctrl->fifo) < 0) {
+         FLOPPY_DPRINTF("error formatting sector %d\n", fd_sector(cur_drv));
+         fdctrl_stop_transfer(fdctrl, FD_SR0_ABNTERM | FD_SR0_SEEK, 0x00, 0x00);
+     } else {
+@@ -2270,8 +2301,7 @@ static void fdctrl_write_data(FDCtrl *fdctrl, uint32_t value)
+         if (pos == FD_SECTOR_LEN - 1 ||
+             fdctrl->data_pos == fdctrl->data_len) {
+             cur_drv = get_cur_drv(fdctrl);
+-            if (blk_pwrite(cur_drv->blk, fd_offset(cur_drv), BDRV_SECTOR_SIZE,
+-                           fdctrl->fifo, 0) < 0) {
++            if (fd_write_sector(cur_drv, fdctrl->fifo) < 0) {
+                 FLOPPY_DPRINTF("error writing sector %d\n",
+                                fd_sector(cur_drv));
+                 break;
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.53.0
 
 
