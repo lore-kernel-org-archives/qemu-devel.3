@@ -4,79 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C25C6C5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 13:25:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24932C5DF9B
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 13:26:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyUfa-0006O2-Vo; Mon, 24 Aug 2026 09:24:59 -0400
+	id 1wyUgt-00076j-Qu; Mon, 24 Aug 2026 09:26:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wyUfa-0006Ne-3W
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:24:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wyUfY-0001am-Be
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:24:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787577894;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SKjOvZoicChKphtxD3A+94WjTWxBlxp8zJtMRodc/YE=;
- b=SmfAnxlgZrz8hwiwFW1JQODAG24TyTb0URw1VmNSMjaKNntQIe3DhR9bg5fM1NPYKiNBR3
- gADWQWzBbXOZ75Lx4m0Gk4qphzEFJTF513ScmCX2yiz6dPQMbfERFWPMJTC+8dVv70l1it
- QFoLOpLgODdKxmJiJDLh2GW4DRTA6Cs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-224-1-Mhse9yMZKC0rOaUPSPKA-1; Mon,
- 24 Aug 2026 09:24:50 -0400
-X-MC-Unique: 1-Mhse9yMZKC0rOaUPSPKA-1
-X-Mimecast-MFC-AGG-ID: 1-Mhse9yMZKC0rOaUPSPKA_1787577889
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 041E018301BE; Mon, 24 Aug 2026 13:24:49 +0000 (UTC)
-Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 12E0C26C; Mon, 24 Aug 2026 13:24:46 +0000 (UTC)
-Date: Mon, 24 Aug 2026 14:24:43 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Markus Armbruster <armbru@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH v3 08/49] monitor: move HMP-only fields from Monitor to
- MonitorHMP
-Message-ID: <aoxGG6MZUBaUrY4r@redhat.com>
-References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
- <20260816-qemu-no-hmp-v3-8-e53fc35bc550@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wyUgt-00076a-84
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:26:19 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wyUgr-0002Ho-Ke
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 09:26:19 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-c207cb16cf5so543826066b.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 06:26:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787577976; cv=none;
+ d=google.com; s=arc-20260327;
+ b=IY+CPZ+o33pZvdL1yM4faCYJyjHXNnanfTtbM3Z6eqkAThBaTZ8f1z9d3qN2Gdtsga
+ 4mCl7RKxs8Fz4Z5woKiK1BQMKG0BLbrUIMjDvXpsAoxR+GkslAnzQc/cVOJDufCMa9J4
+ myvBjg6Vw2aqV0wMktZ8MYm/FR8NFjgIDuOw499skf4J6L8gTIkt0Qc+wZR2te52CCF/
+ rLO/f1sZPD+PHPIzagpIhRMFzIK+Aro1eJTOyCwHS5VFR17T19TZDAuZgD9Xvf5GyrFO
+ q/PzXuO6ZpOmnLqYFT+KajCwFcE4toNJYpRpTjMFNcqT0mnc6z2Lmn/pdLmCUcfyG4G3
+ 2IMw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=WJOQloOIABkgH6V3JAdZSvG6I3xZcRSyyak3uFeJFGk=;
+ fh=oVB4dXWOC2zGMKj6GsTOfH2DfYaTxhIfJh/He7qPgLk=;
+ b=R5kwxD9g8UwUeJb0+uINlMCKfDU98+EKr4/EDehAK3g+1ES4ZPckD0102LObBiRkOd
+ QfsFyCtrMrOGSRAEkkoD62V6KfW+JU3DIWGz9oZBdrPSUKybjBuZMrqVX4SOBPQGdGk7
+ Ni9XSOGbBhELSpTgjJ28M9WTx/MOKHONas3cdfFOu6ZK4bS5U70UqpyRYRAhlB1sa+Pd
+ 6Alvwm/X6NdSHrwCHqh9djrx2hGWfbsJFJs+Gi0DMaO4GRPj0A6IV8n+mG3x6C4ZN+m0
+ 2MaeWIYLy8oRSfRmgQENI7/EVAu7m19gVIrjgpQgvBKKU99Vt75cR3L0qsrbVJzU9SW7
+ NRmg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787577976; x=1788182776; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=WJOQloOIABkgH6V3JAdZSvG6I3xZcRSyyak3uFeJFGk=;
+ b=LhEXhjRYVE/EwAZwt/b/stWxXkOuEs2R+blJaqt/JiVQx0vHqUACoKCZXNFBFnfCUM
+ ST+1h40rUWlu9vreW2T4e+T687ALsB66nAAy7oiNxq5+RqkXM0kM3j9XkYptwp2E4/Q3
+ gQhLSqxz4JQuDxj8ZK3iDhC9d5tgbIRBI8Qe4drGB8LMyGFGvB9ayXGv20BQFr80DFKP
+ x3Kw8DgmzId2rOoBaaoQ+StqJMfxh80RY1m0MKQtgxBSfaGsqr1SH9fz5VLCXY5GorW/
+ LObdneQDOhiCeN0QVxqgO6aFl+QtGFwhTTHmWDae8C0fPPe7zV68Q+O9kDl8GgPV6GFN
+ AjlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787577976; x=1788182776;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=WJOQloOIABkgH6V3JAdZSvG6I3xZcRSyyak3uFeJFGk=;
+ b=j/BOtCnL2SeaYASzykViy1ZTgH1l3Wu9quDFEqZ8qDjvVX6vjkSiBbpYo/3+PC0IEn
+ 3ByztkOoblAUFvsBVKJlQAPNidWDqnEOl5TKPx8EdhiX2clgKKM1qChhhb8HEkkE+KCU
+ eEoxACFgPRRKFsboKIa5A8XqRNkmBXsbWv7ge5UqVuAB+wG3yu6NVNpExil23zkFrIfJ
+ Q/YhcD+5gV5h1xvK9//SRWuFvR/TOEWleozlSsl50zqkLv6vinFF2axVHUJJCo9fBdiK
+ 1/e0YWegYspHBFZle9AimmZBm94snxKsLdYLgF0Dvm8W7WSqswcbJYyJJG6NfUvM1lzA
+ WNeQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqmnnRvEBUjeUvMG6u6wMvs4ykY1pAblsv34fDQF/QFI6GCpXfPoxjQst9FE2C+oC6JlRqzS+LERXYE@nongnu.org
+X-Gm-Message-State: AFuF++nFGWWUDaL+GVyKGCQT670u+4Fp1KVeXt4YYNRcwbYoBFs+ZIx6
+ 7xkpDRlXEIehVewM2vo1aS7ijqJns0WQw9zeSVvI0bKUUIkMgHP8n3G7YLo5YmPw5h0IGPVJN1p
+ Ca6u7pYcjIqnzp/KRqlL/GdeV7Q8etA9v1olhAHIxJg==
+X-Gm-Gg: AR+sD132A99jgJDsQ/EN+KOYAiVEcj2KBsCCaElLUS41znuRHkfZetTRSmMNmdVhkhI
+ ycof71RFdFvjF4dq9qppGAFlug9p80R3MBx6PoJb9oaDEB5+3Y9vFPk1A9kPCdzUUNwZnkndfrs
+ MhXFnnu/o7N4ZoFJCxbIPjEGxpJmp+wn9pjMsw3DBjroAvokwB2SLKNFVfkXlveu93MwbGRTK8b
+ SK1ke318wW0t383+bpm0pkka+E9CFv9yDwbtL2Vd8PYp3SnRQ7JndANe6nTjJtVvZqlXrxkk9Ey
+ iayS3ozCSmVurVRswA9uEzqSmDPQAYNOyS23g9rZ85jSfbQwS1cCR7OF/ElJ/EC5af7+btALc9K
+ zsvFmucUGnhKRLFVIJ+1RoyC/lOen
+X-Received: by 2002:a17:907:7b93:b0:c20:5213:56f1 with SMTP id
+ a640c23a62f3a-c246a60348emr2829725766b.13.1787577975945; Mon, 24 Aug 2026
+ 06:26:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260816-qemu-no-hmp-v3-8-e53fc35bc550@redhat.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260805052723.2823538-1-neal.frager@amd.com>
+ <2383a98d-d88d-415d-9de1-aa68a5d215fe@amd.com>
+ <BL1PR12MB5032F21E0E2A6F17398B6D76F0A02@BL1PR12MB5032.namprd12.prod.outlook.com>
+In-Reply-To: <BL1PR12MB5032F21E0E2A6F17398B6D76F0A02@BL1PR12MB5032.namprd12.prod.outlook.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 24 Aug 2026 14:26:00 +0100
+X-Gm-Features: AcwNN1VvxlRRRHvnKb0O7rD1SVWHvRL8XBQeDCQKBO42isGO3VyXT47Xz83_lqU
+Message-ID: <CAFEAcA8sWn1vjm+OFYzwA-jko2vYkFcWPwT6g9=0AeO+JQo-JQ@mail.gmail.com>
+Subject: Re: [PATCH v1 1/1] include/hw/xen/xen_native.h: downgrade
+ include-order assertion to warning
+To: "Frager, Neal" <neal.frager@amd.com>
+Cc: "Hildebrand, Stewart" <Stewart.Hildebrand@amd.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "sstabellini@kernel.org" <sstabellini@kernel.org>, 
+ "anthony@xenproject.org" <anthony@xenproject.org>, 
+ "edgar.iglesias@gmail.com" <edgar.iglesias@gmail.com>, 
+ "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>, 
+ "Stabellini, Stefano" <stefano.stabellini@amd.com>, "Saleab,
+ Micheal" <Micheal.Saleab@amd.com>, 
+ "john.ernberg@actia.se" <john.ernberg@actia.se>, 
+ "matthew.l.weber3@boeing.com" <matthew.l.weber3@boeing.com>, 
+ "vincent.stehle@arm.com" <vincent.stehle@arm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,60 +126,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Aug 16, 2026 at 11:12:35PM +0400, Marc-André Lureau wrote:
-> mon_cpu_path and reset_seen are only used by HMP monitors; move them
-> from the base Monitor struct into MonitorHMP to properly encapsulate
-> HMP-specific state.
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->  monitor/hmp-cmds.c         | 16 +++++++++-------
->  monitor/hmp.c              |  9 +++++----
->  monitor/monitor-internal.h |  4 ++--
->  monitor/monitor.c          |  1 -
->  4 files changed, 16 insertions(+), 14 deletions(-)
-> 
-> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-> index 6b1114fdaf13..6718fec97047 100644
-> --- a/monitor/hmp-cmds.c
-> +++ b/monitor/hmp-cmds.c
-> @@ -499,31 +499,33 @@ void hmp_dumpdtb(Monitor *mon, const QDict *qdict)
->  /* Set the current CPU defined by the user. Callers must hold BQL. */
->  int monitor_set_cpu(Monitor *mon, int cpu_index)
->  {
-> +    MonitorHMP *hmp_mon = MONITOR_HMP(mon);
+On Mon, 24 Aug 2026 at 14:14, Frager, Neal <neal.frager@amd.com> wrote:
+>
+> AMD General
+>
+> Hi Stewart,
+>
+> > The -I$(XEN_ROOT)/tools/include added to QEMU's extra-cflags causes
+> > __XEN_INTERFACE_VERSION__ to be defined before xen_native.h is included,
+> > triggering an include-order assertion. Downgrade to a warning since the
+> > version is consistent in cross-compile.
+> > Ref: https://github.com/qemu/qemu/commit/e2abfe5ec6
 
-Nitpicking,  'hmp_mon' is redundant IMHO - 'hmp' is sufficient and
-used elsewhere in monitor/ code.
+> > This is a buildroot issue, so I don't believe it's necessary to fix from the
+> > qemu side.
+>
+> I am not sure I fully agree here. While this is a buildroot identified issue,
+> there could be other use cases for __XEN_INTERFACE_VERSION__ to be defined
+> before xen_native.h is included.
 
->      CPUState *cpu;
->  
->      cpu = qemu_get_cpu(cpu_index);
->      if (cpu == NULL) {
->          return -1;
->      }
-> -    g_free(mon->mon_cpu_path);
-> -    mon->mon_cpu_path = object_get_canonical_path(OBJECT(cpu));
-> +    g_free(hmp_mon->mon_cpu_path);
-> +    hmp_mon->mon_cpu_path = object_get_canonical_path(OBJECT(cpu));
->      return 0;
->  }
+But what, though?
 
-None the less
+> And what we have found is that if
+> __XEN_INTERFACE_VERSION__ to be defined before xen_native.h is included, it
+> is not a hard error.  For buildroot, the qemu works just fine in spite of
+> this.
 
-  Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+I think that just means you got lucky. Either there is a hard requirement
+for one header to be included before the other (in which case it must
+be a #error, and whatever is causing the mis-ordering to happen must be
+fixed), or it's fine for the ordering to be either way (in which case it
+doesn't even need to be a #warning).
 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+thanks
+-- PMM
 
