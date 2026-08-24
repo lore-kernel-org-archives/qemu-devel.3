@@ -4,87 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 184E4C5DF9D
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:59:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 089B3C5DF8C
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:59:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNcL-0001EO-1T; Mon, 24 Aug 2026 01:53:09 -0400
+	id 1wyNap-0004UW-Nb; Mon, 24 Aug 2026 01:51:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNcI-00018b-8W
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:53:06 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1wyNZy-0003Tt-Ou
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:50:43 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNcG-0003Gs-Gq
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:53:05 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2d5cad1a6baso28259085ad.3
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:53:04 -0700 (PDT)
+ id 1wyNZx-0002Uu-8G
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:50:42 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-3856d6fbcb3so2516640a91.2
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:50:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787550783; x=1788155583; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=oecC5ZHB+mDg+64qzcXgOyLmh0fryebbjbeCqefnTnc=;
- b=HmnlcrQ7kz/3WDouMqeh7oZ8n0+Ppt6oddEjynfuTPw2ISNikc3+q4kz2fp6RbpsQS
- eTu+4c8EjOQnIpq9i0xg13ghYVhRVpEoFkuU1YExG0tSZXWW5rE5y/TTg8nizRRsGXz0
- wa8BoLBWi6Pvs2c2O3KG7zyKxj7X6KWcXIqWzXtXixcJMenCCAT8rVGsNYFXa2OBS6P9
- G/VlSeYvdCo8qhanCAkDYwqKePZ7oqqylUAqBu3D4L1N0ec3wJGHdqvNGVv4WMhpxsD/
- LBSSB8twN6QE1jvTfrMN+teBdhkrStqow9MIM79/7hzVeW2xlBZEVGmdEDF4QpxIjhkv
- HNAQ==
+ d=gmail.com; s=20251104; t=1787550640; x=1788155440; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=p2ERpv2R5tDGDX/CspojpX8vl9OuHWWYGhdlr3yYFXI=;
+ b=ii9ZKtTZNzKfFKsMGCgW1+ty7gPRsyoLv5W2E8sAp0KWmUqqBQ0WF4W6nJulpIr+hj
+ EUtEn3l4Riv5zuoBcPRldKNySWKF07nrhoiYle4fxDNSBJLSy3zgETj8vsPPt4orGlJN
+ 1DPUlNjZyqJq60b+gR8AnZIvEwrg+78SRsXlexOdPOfsourdPTWJK8zEt4QgVtX3dUw6
+ Y6hgOB1poZYYQzbFJpPe85lNc2Ysgm2axe380s4xZMrQHe6+dSt54najXJE+3O7qapRe
+ 7sYqYVCpRNjtcoWeLy17cdqZldMlZc5cQx9JpcvKn0pf1CmiSqmhiPshq7/II754+eSs
+ 6uaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787550783; x=1788155583;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=oecC5ZHB+mDg+64qzcXgOyLmh0fryebbjbeCqefnTnc=;
- b=iahTPM1F8Kjq1PeCtq5Z3ANCxo6pV3EyROyvnv95C5E+1VRVDZQ6WicdDLubf5UqOV
- zfJDv+/JTaJYP1Gd0n9TXdRE4VblUk1yNUrvFAKtv6vMj8T+Xe783rRwpjtWsexBcZnW
- Tf6gdquz0cLaYVbaSLJ6pH4rsqHIKQHzRja538AtoiOlZgXUlaDzIMJIyvsv0QeaVqr0
- tk8hhU8WKIYg8umen2JlmGcF/y9rBY19Cg62n+YIpqEfQ8NfO4p3k78w/45+/tJC7Qt4
- WduZR+4FwN/LmqrQFg8KPvd3oTTozR7KU1YthfGt1GvrsbTP0K0c3eMRJ6DfZOFLwOQ2
- yuGQ==
-X-Gm-Message-State: AFuF++li8EfTiXPpqH3xR3gRrRC+vGM9hRXzEh8qbj8o9H1/rZr1QQIH
- zFyrhWaX2uE3atjmbZS4qikFcP0neV28MNFtf5XKJml27onrnAQ4RxfI0wHulg==
-X-Gm-Gg: AR+sD11biu3H9MXuTMUnvvUtGOJ7bufauPM8TM0e/ghhcb00YFsqsovu+gE7obF/6Mj
- o95Btef0WSzDpt+50/g9XzycXbkaY/PYBA0AkbT89ZtLUFAJul8+2iciPcMsBom5TA3+X4JirmI
- RNk0ODlhUXVnksmCSd6t2bevXBp/AgjN736lufLD5zkFHOKD0AqPr0NFG2RDEV9tvShUNn2ti6X
- zlcrh7BpOb1mthOe73oVuBlkvlQwJ6wj1VYDuNefBptj7fJBO9xYsdogormtZuePyzcBIfK5HMx
- c2rHYm/IFljg0iQrvBJy4nZmtzoY9tKY50HqiMXvesEj1OZhxUtXWdPAah4SMoaScBifioVFIi+
- GjT7R3V8USxbr3M18iYr8Mc4zjG5/dr5AV1o2cn+elWapLmk5nH43LdJObqBtZgy6m5aBg663Bw
- mv/L31pVybNcT8JOtRPjEp5tP1+Y4iZD7vepe4udPFkkrRtN7KtSYkvR8vr6lpPBygOe6FaSOyy
- MUaVvVLcM8=
-X-Received: by 2002:a17:90b:5646:b0:38d:f5bb:e0f4 with SMTP id
- 98e67ed59e1d1-395c33367ebmr44746567a91.1.1787550783020; 
- Sun, 23 Aug 2026 22:53:03 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787550640; x=1788155440;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=p2ERpv2R5tDGDX/CspojpX8vl9OuHWWYGhdlr3yYFXI=;
+ b=PWpQH1ViGucUpJ2wQ6Z9i/AOC7Av+YXNGv7GMR6sejqLOyfLZV1/FPV6TvnffbCtr2
+ ZED8HEXECaohpiqFdesnTMPNBho/8tRVJVAXv6eN5Isdy3RDPPBQ74Nuy5OEFnRRD1HJ
+ Z+TBtD+U3Nw+4aX7lytsYYESET1U9pUJFsdm+oo6l5M67qVYJ17M1X9FE6ZF1Rws7Sro
+ 0yeS3e6UFjbwSRo89FManSlO8FwMYnug/nWlAvgaLBiEeL7nrOuQohz3GYLIkBztPlQf
+ wR7Wg6K29XM/dotlu2d3ODJACfWaPcuFeRrmzrPelnicF7cIuL3zcrbcfeZyEh2Q1Chh
+ 57DA==
+X-Gm-Message-State: AFuF++k0Cdl+rmV2h3f4kVFAR+u02zy5jkmt+JldAxhqe+l4Tzt7ouzP
+ x9T9AilfsWPR5vU6wohoflxvwTLcfMHmQTWF0BbOQuF2ZpROv0THfCXKRGghoA==
+X-Gm-Gg: AR+sD12v+SHXv5a/OS59JwF2PnfOtP49NecRxK/y2hpyHwIR55iTsZ0rOFo63uEgmdU
+ rrYr+hFYKlqFbfpiSN8fRTgOkMhTlaq62bbMLUsC9K9gqimy15yoPQp5vuS4uqqfJ0GUaGfbxx5
+ VDM4/wHBimmZ0RozrxEfAAqDgVLLKki2JtymF7qDnknQ8/JTaROL9EYEeU9E15AVW5/52UiofHx
+ ZkyEqwTvhBRPUFxYDTPMHwL9H/AOsi7R+4l7eb4hi15DOlH3gS8e1vhqhKKwIJRPtHvkFenz5vO
+ WbqEW1SM29mKT15Eyn35t481GWQWF7A94ceUC4P730q6ifOJOC/kmWuJeqrmLoPxuy1yyE9WBfi
+ Zj1tVP+U/dwc/5+45Jbh9E4CcqXWjtX2G6Y7d5HEQCiHUeP91PB/PQDz4j9MmNGNQKx0ZBiYum2
+ x5JHhTXFL+l8hqZyya2YBGqcWIa2qoQ7CrbRyL7Z5dwtf0R7LgOy1pOXJxW8q3X/SW4F+ewAYVi
+ zc5yw==
+X-Received: by 2002:a17:90b:4c11:b0:38e:7168:281 with SMTP id
+ 98e67ed59e1d1-395c3878304mr38373287a91.10.1787550639904; 
+ Sun, 23 Aug 2026 22:50:39 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.52.59
+ 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.50.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Aug 2026 22:53:01 -0700 (PDT)
+ Sun, 23 Aug 2026 22:50:39 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
- <frederic.petrot@univ-grenoble-alpes.fr>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu@processmission.com>,
+Cc: Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 92/96] target/riscv: Allow UXL to be 3 in mstatus on rv128
-Date: Mon, 24 Aug 2026 15:48:02 +1000
-Message-ID: <20260824054806.2790041-93-alistair.francis@wdc.com>
+Subject: [PULL v2 45/96] disas/riscv: Drop codec from rv_decode
+Date: Mon, 24 Aug 2026 15:47:15 +1000
+Message-ID: <20260824054806.2790041-46-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260824054806.2790041-1-alistair.francis@wdc.com>
 References: <20260824054806.2790041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -108,41 +103,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Valid UXL field values for mstatus were restricted to fix a
-reported issue, but this inadvertently broke the experimental
-rv128 support where a value of 3 validly represents 128-bit
-execution.
+This is mostly write-only, only used in one place;
+other updates are ignored.
 
-Update the mstatus write logic to permit UXL=3 when running on
-an rv128 CPU.
-
-Fixes: dcd028517749 ("target/riscv: Apply UXL WARL handling to vsstatus")
-Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Chao Liu <chao.liu@processmission.com>
-Message-ID: <20260819105655.33391-3-frederic.petrot@univ-grenoble-alpes.fr>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260812223142.349142-13-richard.henderson@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/csr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ disas/riscv.h | 1 -
+ disas/riscv.c | 7 +++----
+ 2 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index 9cc6297328..4c8959a33d 100644
---- a/target/riscv/tcg/csr.c
-+++ b/target/riscv/tcg/csr.c
-@@ -2014,8 +2014,8 @@ static uint64_t riscv_write_uxl(CPURISCVState *env, uint64_t val,
-     RISCVMXL xl = riscv_cpu_mxl(env);
-     uint64_t uxl = get_field(val, field);
+diff --git a/disas/riscv.h b/disas/riscv.h
+index 3325b7b4ef..31bb0db86c 100644
+--- a/disas/riscv.h
++++ b/disas/riscv.h
+@@ -197,7 +197,6 @@ typedef struct {
+     int32_t   imm;
+     int32_t   imm1;
+     uint16_t  op;
+-    uint8_t   codec;
+     uint8_t   rd;
+     uint8_t   rs1;
+     uint8_t   rs2;
+diff --git a/disas/riscv.c b/disas/riscv.c
+index ec40abb618..9813d75feb 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -4603,8 +4603,9 @@ static void decode_inst_operands(rv_decode *dec, rv_isa isa,
+ {
+     rv_inst inst = dec->inst;
  
--    if (uxl == MXL_RV128) {
--        uxl = xl == MXL_RV128 ? MXL_RV64 : xl;
-+    if (xl != MXL_RV128 && uxl == MXL_RV128) {
-+        uxl = xl;
-         val = set_field(val, field, uxl);
+-    dec->codec = op->codec;
+-    switch (dec->codec) {
++    switch (op->codec) {
++    case rv_codec_illegal:
++        break;
+     case rv_codec_none:
+         dec->rd = dec->rs1 = dec->rs2 = rv_ireg_zero;
+         dec->imm = 0;
+@@ -5369,7 +5370,6 @@ static const rv_opcode_data *decode_inst_lift_pseudo(rv_decode *dec,
+             if (check_constraints(dec, comp_data->constraints)) {
+                 dec->op = comp_data->op;
+                 op = &dec->opcode_data[dec->op];
+-                dec->codec = op->codec;
+                 break;
+             }
+             comp_data++;
+@@ -5407,7 +5407,6 @@ static const rv_opcode_data *decode_inst_decompress(rv_decode *dec, rv_isa isa,
+             dec->op = decomp_op;
+         }
+         op = &dec->opcode_data[decomp_op];
+-        dec->codec = op->codec;
      }
- 
+     return op;
+ }
 -- 
 2.54.0
 
