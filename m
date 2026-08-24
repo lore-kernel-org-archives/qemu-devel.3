@@ -4,173 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDA21C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 07:23:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 234BCC5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 07:23:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyP0s-000242-04; Mon, 24 Aug 2026 03:22:34 -0400
+	id 1wyP1T-0002e2-Im; Mon, 24 Aug 2026 03:23:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wyP0o-00022P-KD
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:22:31 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wyP1R-0002bL-9I
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:23:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wyP0l-0001Rp-Ot
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:22:30 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67O5R5NA2392067
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 07:22:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 3hiVGH+fvNIawtlBzDnMnII7Cia2g2ObuQbvc7IiBXo=; b=hK57FsN/JUFwPKzJ
- S2b57K4YhMgomfLXbMpYXcwJZ2ryfFzFE7dvTvs2lhnEccwR1PZMERsZc0y8VSrN
- dmH2Ut+MoKA0TZdF2LlD8ykI4VCrG6RyG3x1mhurbBaZ/s58VbN1ppZ4gp7JEvnI
- NFQI32sWR35oGsypxkww1UIwxhh/ZlqZ70GvA/lPMKzqpIw8pRpFDja5TxTAsEgQ
- 0fXpfswHQI8tayN5qzmUwvKDi7QQpJ0a0DKKJkkTbhrxcdZIvbfnBstxKKNxxNxM
- wzI82u7ai4VgboSfQPUxQkk5Czt8HQjPwOmh4TuVGRpe9j9pEAy08EN9GE5Tkof0
- ZaeL4A==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g740a612c-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 07:22:26 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-52d9cef8d15so59078041cf.0
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 00:22:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787556146; x=1788160946; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=3hiVGH+fvNIawtlBzDnMnII7Cia2g2ObuQbvc7IiBXo=;
- b=e84zSpogH0+wQwPHCHuj8PWcUsx4XAlm83tdJ01iwtEs6IRlkDE9Cxs1AembuXTjtg
- DpLAJD8IgHnTGmDvtjDMDf5DHXd7YS+/SiyUuL6+I+mm/uPV1HC+bGoRMBsFEgtqx2Rz
- oR2Rdb1xsYFN6nmdO4Hr3zJZC133ijUOubHmB+51W/e091/GR//btMS4ap112d9H+Whi
- LW54/WbrcLdduJQWbMHsSjl8S3necFahn6jslHseZ0MJLXBCSgeE/WX5Hw7dJm77as2y
- YZlhX4HxFT2RypQzTlFJFMYesxlVGqGQMaSIzvSEitfxHDalXfhubJ5a+q5WnsFr680C
- O/gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787556146; x=1788160946;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=3hiVGH+fvNIawtlBzDnMnII7Cia2g2ObuQbvc7IiBXo=;
- b=bwFUrIZau8YlfOt2xTLrYBQFV+Q252B8OmjAH5Ky4tj4zyAWw+KgHiJEECmPzaODWA
- psX+0oVDk6x5sMO5Gqecv8++kEO7BPQMTjEojlWAc2cB/VUWyACJMpbIqtTZ+KSLzxAA
- 33LzoCGFxNQ1JCVb8qgj7Uv//Tc3JL/Y5IKM2xlz1jXanW91+Dd/YPbsQYpMdln55xYR
- U0E6F8oWncclyBcGgifO/WapCXfxwm80akLHQSZLJeggZ4ysvPorvHJ/Hk/VSCrk7+Lw
- VDRxCv60lOcI+xb8Lp3HPUdbBzzy4nCjYorpLo2mYUbl/ywsneaRJvLuw/1ewzUWw+GL
- zb3g==
-X-Forwarded-Encrypted: i=1;
- AHgh+RokGSd9hLSM2MP+oTCWS0vZcFC/MYYI/60QyQ5m5o8QhscmPDv0W3lbJptS0sGxfbMvP1HmaU4DZWdU@nongnu.org
-X-Gm-Message-State: AFuF++ktsy7hWIcZlYjbnXyHBNCXuvnWnTYqW7MrNPxOvZDEfmfBdbgI
- 905LzE1Icpr91iDZYfu2gv5+Uj2GoPwmbxCiPNfuR1DS8i+XQ7m8Dk0qtG33I9fhSuZvIB/yBme
- c2QwquII1bQ2QiHXXNSZv3jfvps0aYd9near3bQ54z0voPhU8tdWb6LjHew==
-X-Gm-Gg: AR+sD11nLlxv+oZa/Xl6jokndxxSw7PUfXJiW3L8KTCgRrXyynhjd+0Q1+cYZpKZjtZ
- FAi3gYOFuVows2vTVIt/cBWlbKoGis9p24vMv0M4vURX3eBuTTXNG5iedzmJslP1Yx3kqKs/Moc
- 2kaRqZBCDJXJ4R8EWNOglyDDFSPU7bOifS6UKCvAxgbQFqAXi/66loHUYr6z/rJNbwrsjVoB+Bn
- ssgzsW0qM66zjaqODfliG6FqmrcMEvBG1T9Fw6BHmhKOwW6asI7CG60Iq5uMRmbs7yRDm6449ws
- sP++S5W/DEpbGAuzs6+Z+lSVQzftv4ZDTuebv0YZUtOguQ3llAdgUsAk9v2B337TNcJVnL6lWdj
- 2WXJhtxN02dTCQ5oAVWka1yYlVMvZKB6Ge7c72EvLfKQs
-X-Received: by 2002:a05:622a:1188:b0:52d:f001:5c4f with SMTP id
- d75a77b69052e-52e09cac8a3mr144160331cf.20.1787556146094; 
- Mon, 24 Aug 2026 00:22:26 -0700 (PDT)
-X-Received: by 2002:a05:622a:1188:b0:52d:f001:5c4f with SMTP id
- d75a77b69052e-52e09cac8a3mr144159881cf.20.1787556145561; 
- Mon, 24 Aug 2026 00:22:25 -0700 (PDT)
-Received: from [10.254.188.74] (132.170.88.92.rev.sfr.net. [92.88.170.132])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c249606b431sm923607266b.1.2026.08.24.00.22.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Aug 2026 00:22:24 -0700 (PDT)
-Message-ID: <955a7999-0cb3-47f9-9ea4-1ad33d955285@oss.qualcomm.com>
-Date: Mon, 24 Aug 2026 09:22:20 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wyP1P-0001gB-9h
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 03:23:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787556186;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ resent-to:resent-from:resent-message-id:in-reply-to:in-reply-to:
+ references:references; bh=P7yUEloMZb4stposY86CiIlPWN9A0ZvHR+9+jsGqBKY=;
+ b=YqxD90BxvRfKnSXxESLMbu6QqUlqd1O+sbbjit+W/mLaBJzi99cNS7ScI/WfZlxieNL6q/
+ AUwUMcdPtqXhNJYm36Gee4nhgeNg6u7yEnkIBGhEM19q7v51dKZ0AOXw15wbCxId8WTBn0
+ AB/mGXxFZobnBY8BJXBqBpwoZ5TzEMo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-205-F2wgDI1WNlq1UAo_1un3aA-1; Mon,
+ 24 Aug 2026 03:23:02 -0400
+X-MC-Unique: F2wgDI1WNlq1UAo_1un3aA-1
+X-Mimecast-MFC-AGG-ID: F2wgDI1WNlq1UAo_1un3aA_1787556181
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BD5A8195DE35; Mon, 24 Aug 2026 07:23:00 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.12])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D9CC9180034C; Mon, 24 Aug 2026 07:22:59 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 52E7A21E6920; Mon, 24 Aug 2026 09:22:57 +0200 (CEST)
+Resent-To: bchaney@akamai.com, qemu-devel@nongnu.org,
+ dongli.zhang@oracle.com, joe.jin@oracle.com, maciej.szmigiero@oracle.com,
+ mark.kanda@oracle.com, pierrick.bouvier@oss.qualcomm.com, farosas@suse.de
+Resent-From: Markus Armbruster <armbru@redhat.com>
+Resent-Date: Mon, 24 Aug 2026 09:22:57 +0200
+Resent-Message-ID: <87mrucugmm.fsf@pond.sub.org>
+From: Markus Armbruster <armbru@redhat.com>
+To: Dongli Zhang <dongli.zhang@oracle.com>
+Cc: qemu-devel@nongnu.org,  peterx@redhat.com,  farosas@suse.de,
+ eblake@redhat.com,  maciej.szmigiero@oracle.com,  mark.kanda@oracle.com,
+ bchaney@akamai.com,  pierrick.bouvier@oss.qualcomm.com, joe.jin@oracle.com
+Subject: Re: [PATCH 1/5] migration/qapi: Add memfd migration transport
+In-Reply-To: <a23d9e5b-d0ed-4e9d-95ae-e0fda4bb0453@oracle.com> (Dongli Zhang's
+ message of "Fri, 21 Aug 2026 13:11:23 -0700")
+References: <20260812232842.470225-1-dongli.zhang@oracle.com>
+ <20260812232842.470225-2-dongli.zhang@oracle.com>
+ <87a4qh46ao.fsf@pond.sub.org>
+ <614160f2-2f3e-4489-ac4b-758f162be553@oracle.com>
+ <87a4qg0wv9.fsf@pond.sub.org>
+ <a23d9e5b-d0ed-4e9d-95ae-e0fda4bb0453@oracle.com>
+Date: Mon, 24 Aug 2026 08:29:53 +0200
+Message-ID: <87h5kkvxni.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/12] target/riscv: uniquify TCG crc32, crc32c, and wfi
- helper names
-Content-Language: en-US
-To: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org
-Cc: Xianglai Li <lixianglai@loongson.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chinmay Rath <rathc@linux.ibm.com>,
- Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org,
- Alexander Bulekov <alxndr@bu.edu>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Farman <farman@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Chao Liu <chao.liu@processmission.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <17746591750@163.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Stefan Hajnoczi
- <stefanha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- David Hildenbrand <david@kernel.org>, qemu-ppc@nongnu.org,
- qemu-arm@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>, Cornelia Huck <cohuck@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Bibo Mao <maobibo@loongson.cn>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
- Darren Kenny <darren.kenny@oracle.com>
-References: <20260823150731.896-1-luoyonggang@gmail.com>
- <20260823150731.896-8-luoyonggang@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260823150731.896-8-luoyonggang@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDA2MyBTYWx0ZWRfX5+xmCqpuy/IV
- 2bn6mNU08SLhB04D9Oq72V4rM2W6BPk7cXBKkiaJ2F7E/DazxFluLTStMdUZE8VlJxMETHLBPNc
- 2H91zPq9GkwRuR520ld7S+2kJKgIZZZc/cpxAleVQ8k6TEEqoz+58CdpockUa8snrRTVe8JhKzr
- sgRjQQdRNge1cTdrOuXkz1S6PhPs5GhphJfbOPNLPe/iGBzoufUU3CQ/wQ7fOuXEpkoRsS6H9BB
- FT6ZtrVmHtUmbW8VGjJejjnt+1B0ZD3pioKXejjQOwTyrY+1lGpR5FMVlbUQszxagZoekDPxCT+
- kRhFwzL1XsOjlSC9Ix5dO5lIv2aGOug0yEupEYMYEh2OWWpemyb5YD5kYIsAeq099rwetV8LpPh
- 2JL7jdNNWuEYTeHdGfIPnZKSNPplDkKNiMbTd+zSKaqcw16yFcw0b7w9nZSX6UcH/oOBGvfGffr
- ZTeCUOurcsPJ0+BSEYQ==
-X-Authority-Analysis: v=2.4 cv=HZgkiCE8 c=1 sm=1 tr=0 ts=6a8bf132 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=k3i2zbviP8V9/5wfVjyM+Q==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=4BOaLOaMdzIDGvCjThcA:9
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-ORIG-GUID: u4OfKRj0Ql9DspVcoZZzC7k4M500X0ym
-X-Proofpoint-GUID: u4OfKRj0Ql9DspVcoZZzC7k4M500X0ym
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDA2MyBTYWx0ZWRfX7snb/D9YNZzR
- FXmhuLavmV2C7jWoRD6ZYbgLINbUCegK8eu4c5TzQV8N1Gy+kIxnvjy/QZeAx/mF22yNXo4hBfS
- 0KMS8sQv6kiY+diyYewpwAn+4UIsinA=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-24_02,2026-08-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0
- phishscore=0 malwarescore=0 priorityscore=1501 clxscore=1015 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240063
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -186,22 +96,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/8/26 17:07, Yonggang Luo wrote:
-> - ARM already exports helper_crc32, helper_crc32c, helper_wfi, and the
->    matching helper_info_* objects. RISC-V used the same DEF_HELPER names,
->    which collide in a combined qemu-system link.
-> - Rename the RISC-V helpers to riscv_crc32, riscv_crc32c, and riscv_wfi
->    so the generated C symbols are unique without meson -D prefixes.
-> 
-> Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-> ---
->   target/riscv/helper.h                              | 6 +++---
->   target/riscv/tcg/bitmanip_helper.c                 | 4 ++--
->   target/riscv/tcg/insn_trans/trans_privileged.c.inc | 2 +-
->   target/riscv/tcg/insn_trans/trans_xlrbr.c.inc      | 4 ++--
->   target/riscv/tcg/op_helper.c                       | 2 +-
->   5 files changed, 9 insertions(+), 9 deletions(-)
+Dongli Zhang <dongli.zhang@oracle.com> writes:
 
-https://lore.kernel.org/qemu-devel/20260623110209.26861-1-philmd@oss.qualcomm.com/
-;)
+> On Fri, Aug 21, 2026 12:13:30AM -0700, Markus Armbruster wrote:
+>> Dongli Zhang <dongli.zhang@oracle.com> writes:
+>> 
+>>> On Thu, Aug 20, 2026 12:09:19AM -0700, Markus Armbruster wrote:
+>>>> Dongli Zhang <dongli.zhang@oracle.com> writes:
+>>>> 
+>>>>> Add a memfd migration transport to the MigrationAddress QAPI schema. The
+>>>>> new transport has no user-supplied arguments because QEMU creates and
+>>>>> passes the backing memfd internally.
+>>>>>
+>>>>> The initial user is cpr-exec, where the main VM/device migration stream can
+>>>>> be stored in an inherited memfd instead of an external file.
+>>>>>
+>>>>> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+>>>>> ---
+>>>>>  qapi/migration.json | 32 +++++++++++++++++++++++++++-----
+>>>>>  1 file changed, 27 insertions(+), 5 deletions(-)
+>>>>>
+>>>>> diff --git a/qapi/migration.json b/qapi/migration.json
+>>>>> index b1eaf7b054..1505c201ca 100644
+>>>>> --- a/qapi/migration.json
+>>>>> +++ b/qapi/migration.json
+>>>>> @@ -702,9 +702,11 @@
+>>>>>  # @cpr-exec: The migrate command stops the VM, saves state to the
+>>>>>  #     migration channel, directly exec's a new version of QEMU on the
+>>>>>  #     same host, replacing the original process while retaining its
+>>>>> -#     PID, and loads state from the channel.  Guest RAM is preserved
+>>>>> -#     in place.  Devices and their pinned pages are also preserved for
+>>>>> -#     VFIO and IOMMUFD.
+>>>>> +#     PID, and loads state from the channel.  With the @memfd
+>>>>> +#     migration transport, QEMU saves VM/device state to an internal
+>>>>> +#     memfd instead of an external main migration channel.  Guest RAM
+>>>>> +#     is preserved in place.  Devices and their pinned pages are also
+>>>>> +#     preserved for VFIO and IOMMUFD.
+>>>>>  #
+>>>>>  #     Old QEMU starts new QEMU by exec'ing the command specified by
+>>>>>  #     the @cpr-exec-command parameter.  The command may be a direct
+>>>>> @@ -716,6 +718,13 @@
+>>>>>  #     as a file, that accepts all data before old QEMU exits.
+>>>>>  #     Otherwise, old QEMU may quietly block writing to the channel.
+>>>>>  #
+>>>>> +#     Alternatively, use the @memfd migration transport to save
+>>>>> +#     VM/device state to an internal memfd inherited by new QEMU.
+>>>>> +#
+>>>> 
+>>>> Any guidance on when to use @memfd?
+>>>
+>>> My objective is to avoid using disks, or running QEMU with writable storage.
+>>>
+>>> Both guest I/O and networking can go through VFIO, and everything remains in memory.
+>>>
+>>> When I was testing these CPR features, my favorite was cpr-exec because it does
+>>> not require creating an additional QEMU instance.
+>>>
+>>> Based on my understanding, the best approach to live update a running binary is
+>>> to replace only the code section while keeping everything else in memory, i.e.
+>>> guest memory, device fds, and device state.
+>>>
+>>> Unfortunately, device state cannot simply remain in memory across exec(), so we
+>>> need to migrate it from the old instance to the new instance. I was thinking:
+>>> why not use memory instead of storage?
+>>>
+>>> Initially, I added the change only for cpr-exec. Later, I reworked the change to
+>>> make memfd a new migration transport. As a side benefit for me, I also practiced
+>>> how to add a new transport to the QEMU migration code :)
+>> 
+>> This is why you wrote the feature.  Please work it into the commit
+>> message.
+>
+> Sure.
+>
+>> 
+>> We should also help users decide whether to use the feature.  I gather
+>> it's useful with migration mode cpr-exec.  Any other use cases?  Does it
+>> even work with other migration modes?  If yes, which ones, and what
+>> happens when you try with another one?
+>
+> So far I only added support for cpr-exec. I have not tried othe modes.
+
+What happens when you try to use it with other migration modes?
+
+> In my opinion, cpr-transfer could also use a memfd-backed channel, but I am not
+> sure it is necessary.
+>
+> For cpr-transfer, the source and destination are separate QEMU processes. If we
+> want to pass a memfd between them, we still need an IPC mechanism that can
+> transfer file descriptors, such as a Unix domain socket with SCM_RIGHTS. That
+> reduces the value of using memfd as the migration channel, because we need at
+> least one Unix domain socket anyway to pass the memfd fd and coordinate the handoff.
+>
+> If a Unix domain socket is already required, the main benefit of memfd would
+> likely be performance, especially when the device state is large.
+
+We'd want to measure the performance impact to see whether it's worth
+complicating configuration and code.
+
+> cpr-exec is different. The new QEMU is started via exec(), so the memfd fd can
+> be preserved across exec by clearing CLOEXEC and passing the fd number through
+> an environment variable. This allows us to add a memfd-backed migration channel
+> without needing an external file or socket for the device state.
+
+What are the actual user-visible benefits?
+
+Performance?  Provide measurements, please.
+
+Simpler configuration?  Not sure that would be worth the special case.
+
+Anything else?
+
+> One potential future use case is LUO/KHO support for QEMU. In that case, device
+> state could be preserved in memory as a memfd and potentially survive across a
+> KHO kexec. We won't need to preserve anything on storage. Indeed, I did some
+> internal tests using memfd to preserve device state across kexec although using
+> different implementation, and it worked.
+>
+> For other live migration modes, or even local migration, I do not think this is
+> useful. For example, saving to and loading from a file won't use memfd, as the
+> QEMU processes are terminated during the this process.
+
+User documentation should spell out when memfd can be used.  I recommend
+to make it usable only when it's known to improve things in at least
+some scenario that matters.  Code should cleanly reject attempts to use
+memfd when it's not usable.
+
+User documentation should help users decide whether to use it.
+
+The commit message(s) may need to provide additional detail on how
+things improve.
+
+> Thank you very much!
+>
+> Dongli Zhang
+
+You're welcome!
+
+[...]
+
 
