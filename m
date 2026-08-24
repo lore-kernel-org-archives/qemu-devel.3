@@ -4,132 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A70AEC5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 14:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AED3BC5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 14:35:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyVlO-0006BW-8V; Mon, 24 Aug 2026 10:35:02 -0400
+	id 1wyVlq-0006Y0-0u; Mon, 24 Aug 2026 10:35:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyVlM-0006B2-B3
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:35:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1wyVlj-0006Uq-QK; Mon, 24 Aug 2026 10:35:25 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyVlJ-0004XJ-MH
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:35:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787582096;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vShCxNmNZl2ixTeVJG9CCDE9KJKhvzNqsRyL4bLqO1Y=;
- b=Vu8hUk1+exdyQVJRCQSxbyKRCQXRTLw1Ekvy6claTVamx6HSK1/E7RjpAQsRaUCHZeX1Qj
- O1rZjEI7EhIKggvgHb2Kt1Hj1o8RBQecTTTOikIDPSKzLi/HqFPp4yPB9WH529s4Mm70WV
- 1RObfjbM+0IJIncsQ0KGoVPR/b7tobQ=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-488-lYqv_eZCMnCX3MHzs21A0Q-1; Mon, 24 Aug 2026 10:34:54 -0400
-X-MC-Unique: lYqv_eZCMnCX3MHzs21A0Q-1
-X-Mimecast-MFC-AGG-ID: lYqv_eZCMnCX3MHzs21A0Q_1787582094
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-845cc1ab48eso138275727b3.0
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 07:34:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787582094; cv=none;
- d=google.com; s=arc-20260327;
- b=YTgqK/71ZBpQcMDXS//nx+AYmoUimpnUGpol/+kNmmyDp6t631LQJnMfcc03HYdalg
- vvUv2uN6qpFqXHyugel4xhO75AGbyGEGbgE8nBB+T5KIzkA+K+SJMJuKKuz8B73FXDKc
- bC9vMCTRrYtCLaZH18EgeBmMkZu5paqcP4Q1kD4lJWLUos+NjYL9ooM3hAkYF3y3cKJ1
- VchDufjb9nsOzzF+PNY2c4AZhZDVTSr/yLi4cWyzcsWxUSXsXwwAd8vAzwBi4Y58xxYd
- i3H/lSBPkyd/L99Cbt49gtwGP/kIziccz+G2W01NQcJa57jMwg9KM1+gyQcbZW+d7xfJ
- 12XA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=vShCxNmNZl2ixTeVJG9CCDE9KJKhvzNqsRyL4bLqO1Y=;
- fh=u+TktI8dnQS4/uy62FkWRsYn3WbFn3ONp+4InT/4YY4=;
- b=dhPIKe2Oa8AixkmSTj2IrZaDRVcPXSorY9m8mo0iaSFzfPo/IpMb0bnaNkUEm43TOX
- 7OccdJMiwrycSC4M7Bi2t9v+bcv7YZk99xT8aRWZt9b4kiePU2oh3el9bfhnu0Aiq+ac
- mjABe4WD7oU7s5IqZ64RzInEm7YXlbyXS9+mgvDlulHe4TAy5UbAlvwtHneWdemnEuaZ
- X47gCADZXhdAh07AxSWFvsYAKnCg8BSXQ+yovEUPadns6JDx31Hvkd9p9rKS0TDxUrZf
- 5QRW3lnInOFsERsRoiACvS7jqXy1aw1oXQ4rMmtOWdt/m6MB3pF+pnd31zkQBIRJdgVx
- hh9A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787582094; x=1788186894; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=vShCxNmNZl2ixTeVJG9CCDE9KJKhvzNqsRyL4bLqO1Y=;
- b=aFzVjxRqTIKgJpoY07BvLYNMQVUJYGug/eAyxlIqghQPMqbWY7p59vA8x6uUZeou/R
- d7coWYGOARfw+PwMHj6CqWrG6AitHitFkCdxvNzlsFHq4HrUFRan9zTbT2gHw1B6JWsD
- HkxPtHEIj+jA2nxXU1970ymGOZp+LW5znzzRjHH2vbQlCfLbKSLCFeouz28O1P52amWB
- 62WxIMf9JZiMQiBJZR7c6WTfCROxMiFIf1TKtsNaOwLcGQekxVcn/CcN2BPkyDSio03U
- ghiR+i7iI+LAoRzKpdmouWs2+caJ4m/oOG19cPJNnbran/WoqRQIlT8Lg/JyNNYG/To4
- 9NMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787582094; x=1788186894;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=vShCxNmNZl2ixTeVJG9CCDE9KJKhvzNqsRyL4bLqO1Y=;
- b=IjKG1O4jlMMYulJpvHfVwp01/16eyUmGxmqPlNT5AmdmN3UGrggjbeEhenwUataBXe
- 2IqOZYjJjJqFODTSkkEx5P5q2SXxL5hb8+6mYCS9zpPFMalUGdWd4JWtb123ooEJWeDC
- KQPFE274PeRZt0PEGpRa+KLpJjBmVw08amaYOs+pMeAXUgRo4Zi1Z2qZJMDQem88Vxyj
- EyKc4z6mRG++0MnDZhP8a/PcNwSGAz2cIdiywOwX7eRMiV8yXHbZkZkBV72sZ5jhiO+j
- 846xElp3owoq0jHuHZLqSQ3OlYnky/kANEF7+pl3DJxHvkS1OW5q+jCc+C0c61WBdoeQ
- HI6g==
-X-Gm-Message-State: AFuF++mMY850HYTRVIRJA36cZTr8EergG82Q//9DKCp6N9CYrrq5lg+E
- WJy5+wCMlooDsRP2xM8cGQi72E9K+s60mEQoiLe+iuzRBRR8YihNFiUaYiYCIvovZx6y/Msvm8U
- 5O8pB7TvJbQmStC0eOoxLaDYFqx5P0RYxnupwDRjhg2BBIlnnVFIpdHsIhfDHd8Xdq+ohtWpbB1
- 1xejhxFgkbxzZgtvM16aG4yEBKYGJihjw=
-X-Gm-Gg: AR+sD12fELlnnbe/ZKCh+bCEu4FjyAtjACQmjfs+dsaydl4XZEzX+fnxUH/wEEwzwLO
- fWiGzQrePj0oSi25IftUJCbTm9DaLGv/BIfadVMTaDcbNrcT06o2Gt3RWl5Lwl4wyBqWAZ5Q3xm
- 1+6rmwbqklEbe2uQDTCcg1TdDi3sDBbz8QhlWHbnTjSLtm2zUNervkaDle7mHWvb155KYW4ITIa
- QhLbEQfVBJMFcHG
-X-Received: by 2002:a53:b885:0:b0:66c:85e3:7f30 with SMTP id
- 956f58d0204a3-66ce4b01154mr7360604d50.37.1787582093622; 
- Mon, 24 Aug 2026 07:34:53 -0700 (PDT)
-X-Received: by 2002:a53:b885:0:b0:66c:85e3:7f30 with SMTP id
- 956f58d0204a3-66ce4b01154mr7360578d50.37.1787582093015; Mon, 24 Aug 2026
- 07:34:53 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260824052859.880475-1-jsnow@redhat.com>
- <20260824052859.880475-13-jsnow@redhat.com>
- <87h5kjuaa8.fsf@pond.sub.org>
-In-Reply-To: <87h5kjuaa8.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Mon, 24 Aug 2026 10:34:40 -0400
-X-Gm-Features: AcwNN1Uu24Um54ZO_9TPULjBwcTJbF0E8ol9eFNmukZLu7-NNjJPLvDLS-ee2yo
-Message-ID: <CAFn=p-YwVQi0Hh7HPNMz82VS4QuujSv_u4yvWWP6tsoXx+=zAg@mail.gmail.com>
-Subject: Re: [PATCH 12/12] sphinx: drop qapidoc back-compat overboiled
- spaghetti dinner
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Kohei Tokunaga <ktokunaga.mail@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Michael Roth <michael.roth@amd.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Cleber Rosa <crosa@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1wyVlg-0004qL-CV; Mon, 24 Aug 2026 10:35:22 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67OD1ZEl085360; Mon, 24 Aug 2026 14:35:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=3GOCpmd2yQbWbAAzogvlYdM4V/lWEQxJ7yoyhNG8fvQ=; b=tAiOuRBfOh5o
+ 4kMJo7fVlcF4neZR3Zh/LWT5PhLpLSGhGuh1j8rHCbJ3mjaQiKGGhQegTrrehwaO
+ L+0/XHBB6jgUd1QuowHhwpHOhsctFLxz6Yxrw1/cZ9+7JTzKsmyqqi8zGi8ihaT5
+ jjLJKFaSizrJd8CCXTHY2PSdqA39KH9yiF39WH8d4d1Os1f3rDKmi0xokRCmsb1s
+ WpBOf6mMo4QMr4yiH+p4DK4vi4ErUUdJqtkcyE2VuuLGBA9Vd7Vc05krvu/TlRgL
+ DIiAQP0u8a9s03MbjQIwAqsN9vP3pk/UOUONfWddK02GLP4Dd+U2i8u8LxRjC1MO
+ NSr8NChMhg==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eqhyb0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Aug 2026 14:35:17 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OEQJsi001439;
+ Mon, 24 Aug 2026 14:35:16 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7pfvxncd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Aug 2026 14:35:16 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67OEZExU50987286
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 24 Aug 2026 14:35:14 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E0D3A5805D;
+ Mon, 24 Aug 2026 14:35:13 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1DCDE58057;
+ Mon, 24 Aug 2026 14:35:13 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 24 Aug 2026 14:35:13 +0000 (GMT)
+Message-ID: <1112755a21f50fdfb196eba9f5eb697c33ca0ae0.camel@linux.ibm.com>
+Subject: Re: [PATCH 10/29] target/ppc: Move fixed-point Shift insns to
+ decodetree
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, harshpb@linux.ibm.com
+Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
+ tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com,
+ aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, sv@linux.ibm.com,
+ shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
+ nikhilks@linux.ibm.com
+Date: Mon, 24 Aug 2026 09:35:12 -0500
+In-Reply-To: <20260820140114.327023-11-rathc@linux.ibm.com>
+References: <20260820140114.327023-1-rathc@linux.ibm.com>
+ <20260820140114.327023-11-rathc@linux.ibm.com>
+Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: dYrQnjDXeD4xkxbtS0smSj0X8wwSufoU
+X-Proofpoint-ORIG-GUID: AJqKfTWsUwhdLGXP9CB61XdASugtKKK_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEyMiBTYWx0ZWRfXwy/ZtNf+X8Ff
+ RO+xWgVC78o90TjtOSHGdWxGV6t/xBP+/sY00bViXt7VTsBkI1nTq0jrknmJ0oBAg8pbsSv3fuj
+ kDFt978hwOwUqnNkSbOG7KOG/Gwn5dNiqoF9Upte/fq1j/ArDRCsGESmTInWQoIs4sjltUFoSZb
+ DTo/ZPC5rlHYi0g8gVCFd3H9mc7AzS4o6GqOvhv5Sx8u/AdbD9kHPw0citf9YY59XdDkUgJja3I
+ VqIIvENX8we+OgkDq5kk3Co0n32RQ6pxN28+MX9RgNMN3nlkraw4F0JlrG5RDOsfhN/aw3+adki
+ /0/Pj8oPo9+5v5aQu7aG1io1m+J3+nNkwISU9+b721Kz5qnEsYNfShIYtPoqXuuj2wnMF1CrZAB
+ PNn7+O06YDEmdxk5alp2KyNOVA1wmy2uRu6vj2DDZ7r0V5XUyMyc8lgLlUuh/4Ryq+iaXSL8Wxx
+ WPW/u4ZORh+aPHYhSSA==
+X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8c56a5 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=nS5i6hYCZiJu3-3QlJkA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEyMiBTYWx0ZWRfX4xm8oYRowvm/
+ fL4AMdn69U/drMAFDLOPk61X38Jbx/hZ3RhT6nIH3WReiKIGuAToOgYV35XLSNeRYWHIwJOPXrd
+ g86PkJiP/dUd5NE/10TGXwaSeYvLUIQ=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-24_04,2026-08-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240122
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,456 +127,305 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 24, 2026 at 5:40=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> John Snow <jsnow@redhat.com> writes:
->
-> > Drop the disgusting amount of hacks required to keep qapidoc working
-> > on older Sphinx versions, enjoying the cutting edge technology of
-> > 2023.
-> >
-> > This felt like an achievement to have written, and equally feels an
-> > achievement to have deleted.
->
-> It was, and it is.
->
-> docs/sphinx/compat.py is black magic.  It was difficult and expensive to
-> write, and it would be difficult and expensive to modify.  More so (much
-> more so) for anybody not John Snow.  Since it can go now, it must.
->
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  docs/sphinx/compat.py      | 230 -------------------------------------
-> >  docs/sphinx/qapi_domain.py |  47 ++++----
-> >  2 files changed, 22 insertions(+), 255 deletions(-)
-> >  delete mode 100644 docs/sphinx/compat.py
-> >
-> > diff --git a/docs/sphinx/compat.py b/docs/sphinx/compat.py
-> > deleted file mode 100644
-> > index 9cf7fe006e4..00000000000
-> > --- a/docs/sphinx/compat.py
-> > +++ /dev/null
-> > @@ -1,230 +0,0 @@
-> > -"""
-> > -Sphinx cross-version compatibility goop
-> > -"""
-> > -
-> > -import re
-> > -from typing import (
-> > -    TYPE_CHECKING,
-> > -    Any,
-> > -    Callable,
-> > -    Optional,
-> > -    Type,
-> > -)
-> > -
-> > -from docutils import nodes
-> > -from docutils.nodes import Element, Node, Text
-> > -from docutils.statemachine import StringList
-> > -
-> > -import sphinx
-> > -from sphinx import addnodes, util
-> > -from sphinx.directives import ObjectDescription
-> > -from sphinx.environment import BuildEnvironment
-> > -from sphinx.roles import XRefRole
-> > -from sphinx.util import docfields
-> > -from sphinx.util.docutils import (
-> > -    ReferenceRole,
-> > -    SphinxDirective,
-> > -    switch_source_input,
-> > -)
-> > -from sphinx.util.typing import TextlikeNode
-> > -
-> > -
-> > -MAKE_XREF_WORKAROUND =3D sphinx.version_info[:3] < (4, 1, 0)
-> > -
-> > -
-> > -SpaceNode: Callable[[str], Node]
-> > -KeywordNode: Callable[[str, str], Node]
-> > -
-> > -if sphinx.version_info[:3] >=3D (4, 0, 0):
-> > -    SpaceNode =3D addnodes.desc_sig_space
-> > -    KeywordNode =3D addnodes.desc_sig_keyword
-> > -else:
-> > -    SpaceNode =3D Text
-> > -    KeywordNode =3D addnodes.desc_annotation
-> > -
-> > -
-> > -def nested_parse_with_titles(
-> > -    directive: SphinxDirective, content_node: Element
-> > -) -> None:
-> > -    """
-> > -    This helper preserves error parsing context across sphinx versions=
-.
-> > -    """
-> > -
-> > -    # necessary so that the child nodes get the right source/line set
-> > -    content_node.document =3D directive.state.document
-> > -
-> > -    try:
-> > -        # Modern sphinx (6.2.0+) supports proper offsetting for
-> > -        # nested parse error context management
-> > -        util.nodes.nested_parse_with_titles(
-> > -            directive.state,
-> > -            directive.content,
-> > -            content_node,
-> > -            content_offset=3Ddirective.content_offset,
-> > -        )
-> > -    except TypeError:
-> > -        # No content_offset argument. Fall back to SSI method.
-> > -        with switch_source_input(directive.state, directive.content):
-> > -            util.nodes.nested_parse_with_titles(
-> > -                directive.state, directive.content, content_node
-> > -            )
-> > -
-> > -
-> > -# ###########################################
-> > -# xref compatibility hacks for Sphinx < 4.1 #
-> > -# ###########################################
-> > -
-> > -# When we require >=3D Sphinx 4.1, the following function and the
-> > -# subsequent 3 compatibility classes can be removed. Anywhere in
-> > -# qapi_domain that uses one of these Compat* types can be switched to
-> > -# using the garden-variety lib-provided classes with no trickery.
-> > -
-> > -
-> > -def _compat_make_xref(  # pylint: disable=3Dunused-argument
-> > -    self: sphinx.util.docfields.Field,
-> > -    rolename: str,
-> > -    domain: str,
-> > -    target: str,
-> > -    innernode: Type[TextlikeNode] =3D addnodes.literal_emphasis,
-> > -    contnode: Optional[Node] =3D None,
-> > -    env: Optional[BuildEnvironment] =3D None,
-> > -    inliner: Any =3D None,
-> > -    location: Any =3D None,
-> > -) -> Node:
-> > -    """
-> > -    Compatibility workaround for Sphinx versions prior to 4.1.0.
-> > -
-> > -    Older sphinx versions do not use the domain's XRefRole for parsing
-> > -    and formatting cross-references, so we need to perform this magick
-> > -    ourselves to avoid needing to write the parser/formatter in two
-> > -    separate places.
-> > -
-> > -    This workaround isn't brick-for-brick compatible with modern Sphin=
-x
-> > -    versions, because we do not have access to the parent directive's
-> > -    state during this parsing like we do in more modern versions.
-> > -
-> > -    It's no worse than what pre-Sphinx 4.1.0 does, so... oh well!
-> > -    """
-> > -
-> > -    # Yes, this function is gross. Pre-4.1 support is a miracle.
-> > -    # pylint: disable=3Dtoo-many-locals
-> > -
-> > -    assert env
-> > -    # Note: Sphinx's own code ignores the type warning here, too.
-> > -    if not rolename:
-> > -        return contnode or innernode(target, target)  # type: ignore[c=
-all-arg]
-> > -
-> > -    # Get the role instance, but don't *execute it* - we lack the
-> > -    # correct state to do so. Instead, we'll just use its public
-> > -    # methods to do our reference formatting, and emulate the rest.
-> > -    role =3D env.get_domain(domain).roles[rolename]
-> > -    assert isinstance(role, XRefRole)
-> > -
-> > -    # XRefRole features not supported by this compatibility shim;
-> > -    # these were not supported in Sphinx 3.x either, so nothing of
-> > -    # value is really lost.
-> > -    assert not target.startswith("!")
-> > -    assert not re.match(ReferenceRole.explicit_title_re, target)
-> > -    assert not role.lowercase
-> > -    assert not role.fix_parens
-> > -
-> > -    # Code below based mostly on sphinx.roles.XRefRole; run() and
-> > -    # create_xref_node()
-> > -    options =3D {
-> > -        "refdoc": env.docname,
-> > -        "refdomain": domain,
-> > -        "reftype": rolename,
-> > -        "refexplicit": False,
-> > -        "refwarn": role.warn_dangling,
-> > -    }
-> > -    refnode =3D role.nodeclass(target, **options)
-> > -    title, target =3D role.process_link(env, refnode, False, target, t=
-arget)
-> > -    refnode["reftarget"] =3D target
-> > -    classes =3D ["xref", domain, f"{domain}-{rolename}"]
-> > -    refnode +=3D role.innernodeclass(target, title, classes=3Dclasses)
-> > -
-> > -    # This is the very gross part of the hack. Normally,
-> > -    # result_nodes takes a document object to which we would pass
-> > -    # self.inliner.document. Prior to Sphinx 4.1, we don't *have* an
-> > -    # inliner to pass, so we have nothing to pass here. However, the
-> > -    # actual implementation of role.result_nodes in this case
-> > -    # doesn't actually use that argument, so this winds up being
-> > -    # ... fine. Rest easy at night knowing this code only runs under
-> > -    # old versions of Sphinx, so at least it won't change in the
-> > -    # future on us and lead to surprising new failures.
-> > -    # Gross, I know.
-> > -    result_nodes, _messages =3D role.result_nodes(
-> > -        None,  # type: ignore
-> > -        env,
-> > -        refnode,
-> > -        is_ref=3DTrue,
-> > -    )
-> > -    return nodes.inline(target, "", *result_nodes)
-> > -
-> > -
-> > -class CompatField(docfields.Field):
-> > -    if MAKE_XREF_WORKAROUND:
-> > -        make_xref =3D _compat_make_xref
-> > -
-> > -
-> > -class CompatGroupedField(docfields.GroupedField):
-> > -    if MAKE_XREF_WORKAROUND:
-> > -        make_xref =3D _compat_make_xref
-> > -
-> > -
-> > -class CompatTypedField(docfields.TypedField):
-> > -    if MAKE_XREF_WORKAROUND:
-> > -        make_xref =3D _compat_make_xref
-> > -
-> > -
-> > -# ################################################################
-> > -# Nested parsing error location fix for Sphinx 5.3.0 < x < 6.2.0 #
-> > -# ################################################################
-> > -
-> > -# When we require Sphinx 4.x, the TYPE_CHECKING hack where we avoid
-> > -# subscripting ObjectDescription at runtime can be removed in favor of
-> > -# just always subscripting the class.
-> > -
-> > -# When we require Sphinx > 6.2.0, the rest of this compatibility hack
-> > -# can be dropped and QAPIObject can just inherit directly from
-> > -# ObjectDescription[Signature].
-> > -
-> > -SOURCE_LOCATION_FIX =3D (5, 3, 0) <=3D sphinx.version_info[:3] < (6, 2=
-, 0)
-> > -
-> > -Signature =3D str
-> > -
-> > -
-> > -if TYPE_CHECKING:
-> > -    _BaseClass =3D ObjectDescription[Signature]
-> > -else:
-> > -    _BaseClass =3D ObjectDescription
-> > -
-> > -
-> > -class ParserFix(_BaseClass):
-> > -
-> > -    _temp_content: StringList
-> > -    _temp_offset: int
-> > -    _temp_node: Optional[addnodes.desc_content]
-> > -
-> > -    def before_content(self) -> None:
-> > -        # Work around a sphinx bug and parse the content ourselves.
-> > -        self._temp_content =3D self.content
-> > -        self._temp_offset =3D self.content_offset
-> > -        self._temp_node =3D None
-> > -
-> > -        if SOURCE_LOCATION_FIX:
-> > -            self._temp_node =3D addnodes.desc_content()
-> > -            self.state.nested_parse(
-> > -                self.content, self.content_offset, self._temp_node
-> > -            )
-> > -            # Sphinx will try to parse the content block itself,
-> > -            # Give it nothingness to parse instead.
-> > -            self.content =3D StringList()
-> > -            self.content_offset =3D 0
-> > -
-> > -    def transform_content(self, content_node: addnodes.desc_content) -=
-> None:
-> > -        # Sphinx workaround: Inject our parsed content and restore sta=
-te.
-> > -        if self._temp_node:
-> > -            content_node +=3D self._temp_node.children
-> > -            self.content =3D self._temp_content
-> > -            self.content_offset =3D self._temp_offset
-> > diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-> > index f561dc465f8..e8bae5587fb 100644
-> > --- a/docs/sphinx/qapi_domain.py
-> > +++ b/docs/sphinx/qapi_domain.py
-> > @@ -30,20 +30,10 @@
-> >  )
-> >  from sphinx.locale import _, __
-> >  from sphinx.roles import XRefRole
-> > -from sphinx.util import logging
-> > +from sphinx.util import docfields, logging
-> >  from sphinx.util.docutils import SphinxDirective
-> >  from sphinx.util.nodes import make_id, make_refnode
-> >
-> > -from compat import (
-> > -    CompatField,
-> > -    CompatGroupedField,
-> > -    CompatTypedField,
-> > -    KeywordNode,
-> > -    ParserFix,
-> > -    Signature,
-> > -    SpaceNode,
-> > -)
-> > -
-> >
-> >  if TYPE_CHECKING:
-> >      from typing import (
-> > @@ -157,7 +147,10 @@ def result_nodes(
-> >          return results, []
-> >
-> >
-> > -class QAPIDescription(ParserFix):
-> > +Signature =3D str
-> > +
-> > +
-> > +class QAPIDescription(ObjectDescription[Signature]):
-> >      """
-> >      Generic QAPI description.
-> >
-> > @@ -315,7 +308,7 @@ class QAPIObject(QAPIDescription):
-> >
-> >      doc_field_types =3D [
-> >          # :feat name: descr
-> > -        CompatGroupedField(
-> > +        docfields.GroupedField(
-> >              "feature",
-> >              label=3D_("Features"),
-> >              names=3D("feat",),
-> > @@ -327,8 +320,8 @@ def get_signature_prefix(self) -> List[nodes.Node]:
-> >          """Return a prefix to put before the object name in the signat=
-ure."""
-> >          assert self.objtype
-> >          return [
-> > -            KeywordNode("", self.objtype.title()),
-> > -            SpaceNode(" "),
-> > +            addnodes.desc_sig_keyword("", self.objtype.title()),
-> > +            addnodes.desc_sig_space(" "),
-> >          ]
-> >
-> >      def get_signature_suffix(self) -> List[nodes.Node]:
-> > @@ -337,7 +330,7 @@ def get_signature_suffix(self) -> List[nodes.Node]:
-> >
-> >          if "since" in self.options:
-> >              ret +=3D [
-> > -                SpaceNode(" "),
-> > +                addnodes.desc_sig_space(" "),
-> >                  addnodes.desc_sig_element(
-> >                      "", f"(Since: {self.options['since']})"
-> >                  ),
-> > @@ -376,7 +369,7 @@ def handle_signature(self, sig: str, signode: desc_=
-signature) -> Signature:
-> >
-> >          return sig
-> >
-> > -    def _add_infopips(self, contentnode: addnodes.desc_content) -> Non=
-e:
-> > +    def _add_infopips(self, content_node: addnodes.desc_content) -> No=
-ne:
-> >          # Add various eye-catches and things that go below the signatu=
-re
-> >          # bar, but precede the user-defined content.
-> >          infopips =3D nodes.container()
->
-> Are this hunk and the next one necessary parts of the patch, or have
-> they crept in?
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
-Necessary. The newer Sphinx version changes these parameter names, so
-type checking and linters begin to complain about us changing the
-parameter name. This block is fairly straightforward, ...
+Thanks,
 
->
-> > @@ -420,7 +413,7 @@ def _add_pip(
-> >              )
-> >
-> >          if infopips.children:
-> > -            contentnode.insert(0, infopips)
-> > +            content_node.insert(0, infopips)
-> >
-> >      def _validate_field(self, field: nodes.field) -> None:
-> >          """Validate field lists in this QAPI Object Description."""
-> > @@ -470,7 +463,11 @@ def _validate_field(self, field: nodes.field) -> N=
-one:
-> >              )
-> >              logger.warning(msg, location=3Dfield)
-> >
-> > -    def transform_content(self, content_node: addnodes.desc_content) -=
-> None:
-> > +    def transform_content(
-> > +        self,
-> > +        # pylint: disable=3Darguments-renamed
-> > +        content_node: addnodes.desc_content
-> > +    ) -> None:
-> >          # This hook runs after before_content and the nested parse, bu=
-t
-> >          # before the DocFieldTransformer is executed.
-> >          super().transform_content(content_node)
->
-> Likewise.
+Glenn
 
-This block is less straightforward: the argument/parameter name here
-was changed in the versions we still support, so either name I choose
-for it causes errors on either the older or newer end of the tests.
-Adopt the eventual name, and silence the error on the minreqs test.
-
->
-> > @@ -485,7 +482,7 @@ def transform_content(self, content_node: addnodes.=
-desc_content) -> None:
-> >                      self._validate_field(field)
-> >
-> >
-> > -class SpecialTypedField(CompatTypedField):
-> > +class SpecialTypedField(docfields.TypedField):
-> >      def make_field(self, *args: Any, **kwargs: Any) -> nodes.field:
-> >          ret =3D super().make_field(*args, **kwargs)
-> >
-> > @@ -518,14 +515,14 @@ class QAPICommand(QAPIObject):
-> >                  can_collapse=3DFalse,
-> >              ),
-> >              # :error: descr
-> > -            CompatField(
-> > +            docfields.Field(
-> >                  "error",
-> >                  label=3D_("Errors"),
-> >                  names=3D("error", "errors"),
-> >                  has_arg=3DFalse,
-> >              ),
-> >              # :return TypeName: descr
-> > -            CompatGroupedField(
-> > +            docfields.GroupedField(
-> >                  "returnvalue",
-> >                  label=3D_("Return"),
-> >                  rolename=3D"type",
-> > @@ -533,7 +530,7 @@ class QAPICommand(QAPIObject):
-> >                  can_collapse=3DTrue,
-> >              ),
-> >              # :return-nodesc: TypeName
-> > -            CompatField(
-> > +            docfields.Field(
-> >                  "returnvalue",
-> >                  label=3D_("Return"),
-> >                  names=3D("return-nodesc",),
-> > @@ -551,7 +548,7 @@ class QAPIEnum(QAPIObject):
-> >      doc_field_types.extend(
-> >          [
-> >              # :value name: descr
-> > -            CompatGroupedField(
-> > +            docfields.GroupedField(
-> >                  "value",
-> >                  label=3D_("Values"),
-> >                  names=3D("value",),
-> > @@ -568,7 +565,7 @@ class QAPIAlternate(QAPIObject):
-> >      doc_field_types.extend(
-> >          [
-> >              # :alt type name: descr
-> > -            CompatTypedField(
-> > +            docfields.TypedField(
-> >                  "alternative",
-> >                  label=3D_("Alternatives"),
-> >                  names=3D("alt",),
->
+On Thu, 2026-08-20 at 19:30 +0530, Chinmay Rath wrote:
+> From: Amit Machhiwal <amachhiw@linux.ibm.com>
+> 
+> Move the below instructions to decodetree specification:
+> 
+>   s{r,l}d, and srad[i]					: X-form
+> 
+> The changes were verified by validating that the TCG ops generated by
+> these instructions remain the same after these changes. The TCG
+> micro-ops were captured with the '-d op,in_asm' QEMU flag.
+> 
+> Move all shift insntructions to one place in insn32.decode
+> 
+> Signed-off-by: Sathvika Vasireddy <sv@linux.ibm.com>
+> Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> ---
+>  target/ppc/helper.h                        |  2 +-
+>  target/ppc/insn32.decode                   | 11 ++-
+>  target/ppc/int_helper.c                    |  2 +-
+>  target/ppc/translate.c                     | 96 ----------------------
+>  target/ppc/translate/fixedpoint-impl.c.inc | 72 ++++++++++++++++
+>  5 files changed, 81 insertions(+), 102 deletions(-)
+> 
+> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+> index 3aff559504..cd2a0948a3 100644
+> --- a/target/ppc/helper.h
+> +++ b/target/ppc/helper.h
+> @@ -74,7 +74,7 @@ DEF_HELPER_FLAGS_1(CBCDTD, TCG_CALL_NO_RWG_SE, tl, tl)
+>  DEF_HELPER_FLAGS_2(CMPEQB, TCG_CALL_NO_RWG_SE, i32, tl, tl)
+>  DEF_HELPER_FLAGS_1(POPCNTW, TCG_CALL_NO_RWG_SE, tl, tl)
+>  DEF_HELPER_FLAGS_2(BPERMD, TCG_CALL_NO_RWG_SE, i64, i64, i64)
+> -DEF_HELPER_3(srad, tl, env, tl, tl)
+> +DEF_HELPER_3(SRAD, tl, env, tl, tl)
+>  DEF_HELPER_FLAGS_0(DARN32, TCG_CALL_NO_RWG, tl)
+>  DEF_HELPER_FLAGS_0(DARN64, TCG_CALL_NO_RWG, tl)
+>  #endif
+> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+> index 7d792d2318..d34094d717 100644
+> --- a/target/ppc/insn32.decode
+> +++ b/target/ppc/insn32.decode
+> @@ -119,7 +119,7 @@
+>  
+>  # XS-form with fractured shift amount
+>  %xs_sh           1:1 11:5
+> -&XS              rs ra sh rc
+> +&XS              rs ra sh rc:bool
+>  @XS              ...... rs:5 ra:5 ..... ......... . rc:1        &XS sh=%xs_sh
+>  
+>  %x_frtp         22:4 !function=times_2
+> @@ -512,6 +512,12 @@ SRAW            011111 ..... ..... ..... 1100011000 .   @X_rc
+>  SRAWI           011111 ..... ..... ..... 1100111000 .   @X_rc
+>  SRW             011111 ..... ..... ..... 1000011000 .   @X_rc
+>  
+> +SLD             011111 ..... ..... ..... 0000011011 .   @X_rc
+> +SRD             011111 ..... ..... ..... 1000011011 .   @X_rc
+> +SRAD            011111 ..... ..... ..... 1100011010 .   @X_rc
+> +SRADI           011111 ..... ..... ..... 110011101 . .  @XS
+> +
+> +EXTSWSLI        011111 ..... ..... ..... 110111101 . .  @XS
+>  
+>  ## BCD Assist
+>  
+> @@ -1382,9 +1388,6 @@ DST             011111 ----- ..... ..... 0101010110 -   @X_ea
+>  DSTST           011111 ----- ..... ..... 0101110110 -   @X_ea
+>  DSS             011111 ----- ..... ..... 1100110110 -   @X_ea
+>  
+> -##Extend Sign Word and Shift Left Immediate XS-form
+> -EXTSWSLI         011111 ..... ..... ..... 110111101 . .         @XS
+> -
+>  ## Load and Reserve Instructions
+>  LBARX           011111 ..... ..... ..... 0000110100 .   @X_rc
+>  LHARX           011111 ..... ..... ..... 0001110100 .   @X_rc
+> diff --git a/target/ppc/int_helper.c b/target/ppc/int_helper.c
+> index b161f930ec..8e8076a92c 100644
+> --- a/target/ppc/int_helper.c
+> +++ b/target/ppc/int_helper.c
+> @@ -261,7 +261,7 @@ target_ulong helper_SRAW(CPUPPCState *env, target_ulong value,
+>  }
+>  
+>  #if defined(TARGET_PPC64)
+> -target_ulong helper_srad(CPUPPCState *env, target_ulong value,
+> +target_ulong helper_SRAD(CPUPPCState *env, target_ulong value,
+>                           target_ulong shift)
+>  {
+>      int64_t ret;
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index 55b515cec7..09a461dd63 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -2313,95 +2313,6 @@ static void gen_rldimi(DisasContext *ctx, int mbn, int shn)
+>  GEN_PPC64_R4(rldimi, 0x1E, 0x06);
+>  #endif
+>  
+> -/***                             Integer shift                             ***/
+> -
+> -
+> -#if defined(TARGET_PPC64)
+> -/* sld & sld. */
+> -static void gen_sld(DisasContext *ctx)
+> -{
+> -    TCGv t0, t1;
+> -
+> -    t0 = tcg_temp_new();
+> -    /* AND rS with a mask that is 0 when rB >= 0x40 */
+> -    tcg_gen_shli_tl(t0, cpu_gpr[rB(ctx->opcode)], 0x39);
+> -    tcg_gen_sari_tl(t0, t0, 0x3f);
+> -    tcg_gen_andc_tl(t0, cpu_gpr[rS(ctx->opcode)], t0);
+> -    t1 = tcg_temp_new();
+> -    tcg_gen_andi_tl(t1, cpu_gpr[rB(ctx->opcode)], 0x3f);
+> -    tcg_gen_shl_tl(cpu_gpr[rA(ctx->opcode)], t0, t1);
+> -    if (unlikely(Rc(ctx->opcode) != 0)) {
+> -        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
+> -    }
+> -}
+> -
+> -/* srad & srad. */
+> -static void gen_srad(DisasContext *ctx)
+> -{
+> -    gen_helper_srad(cpu_gpr[rA(ctx->opcode)], tcg_env,
+> -                    cpu_gpr[rS(ctx->opcode)], cpu_gpr[rB(ctx->opcode)]);
+> -    if (unlikely(Rc(ctx->opcode) != 0)) {
+> -        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
+> -    }
+> -}
+> -/* sradi & sradi. */
+> -static inline void gen_sradi(DisasContext *ctx, int n)
+> -{
+> -    int sh = SH(ctx->opcode) + (n << 5);
+> -    TCGv dst = cpu_gpr[rA(ctx->opcode)];
+> -    TCGv src = cpu_gpr[rS(ctx->opcode)];
+> -    if (sh == 0) {
+> -        tcg_gen_mov_tl(dst, src);
+> -        tcg_gen_movi_tl(cpu_ca, 0);
+> -        if (is_isa300(ctx)) {
+> -            tcg_gen_movi_tl(cpu_ca32, 0);
+> -        }
+> -    } else {
+> -        TCGv t0;
+> -        tcg_gen_andi_tl(cpu_ca, src, (1ULL << sh) - 1);
+> -        t0 = tcg_temp_new();
+> -        tcg_gen_sari_tl(t0, src, TARGET_LONG_BITS - 1);
+> -        tcg_gen_and_tl(cpu_ca, cpu_ca, t0);
+> -        tcg_gen_setcondi_tl(TCG_COND_NE, cpu_ca, cpu_ca, 0);
+> -        if (is_isa300(ctx)) {
+> -            tcg_gen_mov_tl(cpu_ca32, cpu_ca);
+> -        }
+> -        tcg_gen_sari_tl(dst, src, sh);
+> -    }
+> -    if (unlikely(Rc(ctx->opcode) != 0)) {
+> -        gen_set_Rc0(ctx, dst);
+> -    }
+> -}
+> -
+> -static void gen_sradi0(DisasContext *ctx)
+> -{
+> -    gen_sradi(ctx, 0);
+> -}
+> -
+> -static void gen_sradi1(DisasContext *ctx)
+> -{
+> -    gen_sradi(ctx, 1);
+> -}
+> -
+> -/* srd & srd. */
+> -static void gen_srd(DisasContext *ctx)
+> -{
+> -    TCGv t0, t1;
+> -
+> -    t0 = tcg_temp_new();
+> -    /* AND rS with a mask that is 0 when rB >= 0x40 */
+> -    tcg_gen_shli_tl(t0, cpu_gpr[rB(ctx->opcode)], 0x39);
+> -    tcg_gen_sari_tl(t0, t0, 0x3f);
+> -    tcg_gen_andc_tl(t0, cpu_gpr[rS(ctx->opcode)], t0);
+> -    t1 = tcg_temp_new();
+> -    tcg_gen_andi_tl(t1, cpu_gpr[rB(ctx->opcode)], 0x3f);
+> -    tcg_gen_shr_tl(cpu_gpr[rA(ctx->opcode)], t0, t1);
+> -    if (unlikely(Rc(ctx->opcode) != 0)) {
+> -        gen_set_Rc0(ctx, cpu_gpr[rA(ctx->opcode)]);
+> -    }
+> -}
+> -#endif
+> -
+>  /***                           Addressing modes                            ***/
+>  /* Register indirect with immediate index : EA = (rA|0) + SIMM */
+>  static inline void gen_addr_imm_index(DisasContext *ctx, TCGv EA,
+> @@ -5684,13 +5595,6 @@ GEN_HANDLER_E(paste, 0x1F, 0x06, 0x1C, 0x03C00000, PPC_NONE, PPC2_ISA300),
+>  GEN_HANDLER(rlwimi, 0x14, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+>  GEN_HANDLER(rlwinm, 0x15, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+>  GEN_HANDLER(rlwnm, 0x17, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+> -#if defined(TARGET_PPC64)
+> -GEN_HANDLER(sld, 0x1F, 0x1B, 0x00, 0x00000000, PPC_64B),
+> -GEN_HANDLER(srad, 0x1F, 0x1A, 0x18, 0x00000000, PPC_64B),
+> -GEN_HANDLER2(sradi0, "sradi", 0x1F, 0x1A, 0x19, 0x00000000, PPC_64B),
+> -GEN_HANDLER2(sradi1, "sradi", 0x1F, 0x1B, 0x19, 0x00000000, PPC_64B),
+> -GEN_HANDLER(srd, 0x1F, 0x1B, 0x10, 0x00000000, PPC_64B),
+> -#endif
+>  /* handles lfdp, lxsd, lxssp */
+>  GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
+>  /* handles stfdp, stxsd, stxssp */
+> diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
+> index 234404e459..9f669894a3 100644
+> --- a/target/ppc/translate/fixedpoint-impl.c.inc
+> +++ b/target/ppc/translate/fixedpoint-impl.c.inc
+> @@ -486,6 +486,76 @@ static bool do_add_const_XO(DisasContext *ctx, arg_XO_ta *a, TCGv const_val,
+>      return true;
+>  }
+>  
+> +static bool do_shift_X_rc(DisasContext *ctx, arg_X_rc *a,
+> +                                void(*op)(TCGv, TCGv, TCGv))
+> +{
+> +    REQUIRE_64BIT(ctx);
+> +#if defined(TARGET_PPC64)
+> +    TCGv t0 = tcg_temp_new();
+> +    TCGv t1 = tcg_temp_new();
+> +
+> +    /* AND rt with a mask that is 0 when rb >= 0x40 */
+> +    tcg_gen_shli_tl(t0, cpu_gpr[a->rb], 0x39);
+> +    tcg_gen_sari_tl(t0, t0, 0x3f);
+> +    tcg_gen_andc_tl(t0, cpu_gpr[a->rt], t0);
+> +    tcg_gen_andi_tl(t1, cpu_gpr[a->rb], 0x3f);
+> +    op(cpu_gpr[a->ra], t0, t1);
+> +    if (unlikely(a->rc)) {
+> +        gen_set_Rc0(ctx, cpu_gpr[a->ra]);
+> +    }
+> +#else
+> +    qemu_build_not_reached();
+> +#endif
+> +    return true;
+> +}
+> +
+> +static bool trans_SRAD(DisasContext *ctx, arg_SRAD *a)
+> +{
+> +    REQUIRE_64BIT(ctx);
+> +#if defined(TARGET_PPC64)
+> +    gen_helper_SRAD(cpu_gpr[a->ra], tcg_env, cpu_gpr[a->rt], cpu_gpr[a->rb]);
+> +    if (unlikely(a->rc)) {
+> +        gen_set_Rc0(ctx, cpu_gpr[a->ra]);
+> +    }
+> +#else
+> +    qemu_build_not_reached();
+> +#endif
+> +    return true;
+> +}
+> +
+> +static bool trans_SRADI(DisasContext *ctx, arg_SRADI *a)
+> +{
+> +    REQUIRE_64BIT(ctx);
+> +#if defined(TARGET_PPC64)
+> +    int sh = a->sh;
+> +    TCGv dst = cpu_gpr[a->ra];
+> +    TCGv src = cpu_gpr[a->rs];
+> +    if (sh == 0) {
+> +        tcg_gen_mov_tl(dst, src);
+> +        tcg_gen_movi_tl(cpu_ca, 0);
+> +        if (is_isa300(ctx)) {
+> +            tcg_gen_movi_tl(cpu_ca32, 0);
+> +        }
+> +    } else {
+> +        TCGv t0 = tcg_temp_new();
+> +        tcg_gen_andi_tl(cpu_ca, src, (1ULL << sh) - 1);
+> +        tcg_gen_sari_tl(t0, src, TARGET_LONG_BITS - 1);
+> +        tcg_gen_and_tl(cpu_ca, cpu_ca, t0);
+> +        tcg_gen_setcondi_tl(TCG_COND_NE, cpu_ca, cpu_ca, 0);
+> +        if (is_isa300(ctx)) {
+> +            tcg_gen_mov_tl(cpu_ca32, cpu_ca);
+> +        }
+> +        tcg_gen_sari_tl(dst, src, sh);
+> +    }
+> +    if (unlikely(a->rc)) {
+> +        gen_set_Rc0(ctx, dst);
+> +    }
+> +#else
+> +    qemu_build_not_reached();
+> +#endif
+> +    return true;
+> +}
+> +
+>  TRANS(ADD, do_add_XO, false, false);
+>  TRANS(ADDC, do_add_XO, false, true);
+>  TRANS(ADDE, do_add_XO, true, true);
+> @@ -493,6 +563,8 @@ TRANS(ADDME, do_add_const_XO, tcg_constant_tl(-1LL), true, true);
+>  TRANS(ADDZE, do_add_const_XO, tcg_constant_tl(0), true, true);
+>  TRANS(ADDIC, do_add_D, false, true, false, false);
+>  TRANS(ADDIC_, do_add_D, false, true, false, true);
+> +TRANS(SLD, do_shift_X_rc, tcg_gen_shl_tl);
+> +TRANS(SRD, do_shift_X_rc, tcg_gen_shr_tl);
+>  
+>  static bool trans_SUBFIC(DisasContext *ctx, arg_D *a)
+>  {
 
 
