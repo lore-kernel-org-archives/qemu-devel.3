@@ -4,99 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42B76C5DF97
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 03:07:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1520CC5DF8C
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 03:07:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyL15-0006qe-Ez; Sun, 23 Aug 2026 23:06:31 -0400
+	id 1wyL0N-0006ck-0H; Sun, 23 Aug 2026 23:05:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wyL10-0006mK-O2
- for qemu-devel@nongnu.org; Sun, 23 Aug 2026 23:06:26 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wyL0y-00045q-IH
- for qemu-devel@nongnu.org; Sun, 23 Aug 2026 23:06:26 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-3900e39d935so2948123a91.0
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 20:06:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787540783; x=1788145583; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=rgL955tZ3JpF8EMdLyYe38cem/51/AaFnMyxcri4t04=;
- b=AWsVZEBBOK4NedWW3SMucQCooDWott/j58HSI3kRWOL++f6A6ipn2JUQNx86CNHtm6
- 0LkycKuTbad1ToyEmr8fUzVCR6jAwNH1Y+ZY1UC77FdwVNjYlt27SlwVUvg1G33hVady
- Jx6Aa5+6bFScM9idVungl03bh5nwLcauwFnlEluDDbSLuOEGug2usIURHoRgiHVojxH6
- c/ykRTWpL8o1fk+rYYm8YLdYlGyrpzPgPOhH5bS1PA1evWhl1kHc502t2UWJrK61noIl
- kqdOpbQaD+Y+WB2pr5T7wvXIInSbms5xNpm1uI506tT9gtkbX4EyWsahe9GR4eU2jH7u
- Umug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787540783; x=1788145583;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=rgL955tZ3JpF8EMdLyYe38cem/51/AaFnMyxcri4t04=;
- b=eFsQii++nPFu9XMTu1ojI4I1wHWE9X14RwDIm8HvoROZdYbYIqCAkODf6/bGYVFhL4
- WIcN4yXl0OSNDS2SoVp4A4Dn5kgs3zkNkoL0lYYpBAlYZJ2mK/J5wjkmjcc9VMA8R6j/
- kWEiRTBMQcifFIhy0IOGx4jIErYmbDnt91Ebh8PllukEgW6JX8F9RRW6SRs+x/4UnfUO
- ddhsXucX7PeLCiTELWatGcoRQ9HyJaJ//8FyVBLYXykJeoSK0PVFTBVGeSA1GlVBbIk2
- EfzDt3t3C12tJuqGx8vtvmO3U6J2nvp+wN7Dt/MwCopX1jpKj++bvRdpjV271XHmqZ1g
- d7kA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrP+zronnNTjbSgRykrUubelNRgSklETSwGtSUMMKZL082McCZqbGpzyms90yVrGTCmzFDShTpH3t6s@nongnu.org
-X-Gm-Message-State: AFuF++kUpO3W9Zxijl42iDd2vBV56aI0+hcB534nVxKcLtpF0+NJ2HyI
- wZX/vDUFkSs8/UALSTl7fHq5Bh/gUcDhjmffkWSwb9JJ/8OFBFXSczfjt8+IqTVt
-X-Gm-Gg: AR+sD12OIhMPj+pwcYuJa/9fXcMmK4IQdY4A87rtIHQ2jLkn/qY0nEkWR2mkG8aP69A
- LT4Dxqfryooqp94a0qhoPpJIKjurgo8VHOUErJZb33N9l3PQH88IFeu+gV0YKgCotlPJOW40rhk
- PYaTOynWJkuLv5dva0Oz0UWUODOteJWLujNRUYuNQJl+zw6TRryx4JR9ZLTG38pfsivai4aGMtv
- zfK7YybC+bkMKO7HF3BhgDehaB+QiDfipblMLxfnShvJqZpelMO9BCRL303P0Ycw720fAprePFD
- UM4PMmcXZir5H0aswB8asAQau+vhgGonGphjyzYslKPW0yE2nqsqv5IEcBWi5nsP8A+T77YOYv2
- Advj5d0CcOB8SxkYHBhFtwBlEdpan3sIM5wJU4+Vb+vDqsc8JirCEeEeUvl20fDA31ngg2zXB1R
- JmuG2U5U7UufbY66UYkDPUlTeiT8rzsFgdVMKJYrCVCefOEqlGj3jqwi6hPNN2q8Onk5/fJ8uRI
- 8E5PRH4+mDxfeHfSlwPLVnfZcBK2DTykObmAdG2L/TAqz6DDi/6JIge+OpMg/I5zLfvNMz/BaME
- 6A0wV387Orsv5MuoaHFNbg==
-X-Received: by 2002:a17:90b:1b0e:b0:381:a766:efc9 with SMTP id
- 98e67ed59e1d1-395deec7930mr25772572a91.7.1787540782663; 
- Sun, 23 Aug 2026 20:06:22 -0700 (PDT)
-Received: from donnager-debian.. ([180.150.112.50])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395e4a4e5ecsm8299699a91.16.2026.08.23.20.06.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Aug 2026 20:06:22 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Michael Ellerman <mpe@kernel.org>,
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH 2/2] hw/riscv/aia: Check for invalid IMSIC configs
-Date: Mon, 24 Aug 2026 12:35:07 +0930
-Message-ID: <20260824030509.18078-3-joel@jms.id.au>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260824030509.18078-1-joel@jms.id.au>
-References: <20260824030509.18078-1-joel@jms.id.au>
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wyL0K-0006bk-Te
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 23:05:44 -0400
+Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wyL0I-00040X-He
+ for qemu-devel@nongnu.org; Sun, 23 Aug 2026 23:05:44 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LaYXomX+3y3ZirhZPJitz0dB9F8yWpfTgaHEsMuY0hmf8AQL4IjEvBsuxQ9hqoTgf1MqLBSJE0fHwhFtPMQja8EjwCmjCeT3UKrUSGkuwFKKpePrJvi3t+zjvQAgCk8pyRCBE5BRAclNDNtQYW4LxmXTODLoWToACNyU89jrlx03bDz/ES0ZQJ0XMFE2/8X1EJeW40djqa/kbG/Jl23jLlfUIu7P5fScEOfG8vPCLkgLkmXCPMN0FjfLjhpbiKrbdH1bboQ+aRdAmBw2VtWkur6Lsa5E/jB2J9WjRVfOrBNbikRzsLwmqC+kupr7AQZV+HEYgaeojdyn1AYMmVJCCw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=R7V79brhkW0AiQU7uvP7VTz1/7IHhMJHUqSlPVxqwqE=;
+ b=R0AEvUVfvrnfIKMzYbhWg+Lj46msEU7473alRbeeYDmlCunQbZiWJ/KQBWwquZa9ayZirfpkH3Y2NlpvfbEQ8YUkSKZ0S6iqqc0V4P5vrowEMZDD7AA34gpFA/+mNnoMchsvKO9Gr1cYsZm2L8TnEfenl42S8Z/HAYYVX6n6ymSwSfO8Bv5lIwgo2Iv2MLjfsm5EN5apvi5WJvi8Hdp7wdZoO4H4otQFmZtbxFKopSLcNq7hTvr68s4tXx99A9L2OEJDeN4CisSx2ZRSHFrhrLwFtNBUBwKwgM+soganVfTnKRBiOHKUBcfNbglVyuohxJWsQyq4+HwFxIW/lzaRJg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
+ dmarc=none action=none header.from=axiado.com; dkim=none (message not
+ signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=R7V79brhkW0AiQU7uvP7VTz1/7IHhMJHUqSlPVxqwqE=;
+ b=e6EpzaoQNkOr7RaXdfBxjl096uaGp/kHg7LyO/svMTHj1TW7vmZr2jEQiwdiAV6dGykwlwrWK94ZsbvS1emxwNWzoBPRO2/fVMtNiY970G4wLB/pU2ji1jBWlVBTRJxfYK1PDLgTJSY5GjPamRbBJbADxMaT1QldMxe54wkI6BfJzgi3Ctsh31uWaJCMi5f3pWWCG6Xu1M2MoOSx57BBI8ELdzoMFLfC9VhGHwP8BbqEd3Bdk6fdl2EG7JWEk6icvxk2ZZZxev9oAhVbzgnKh2xfez8RH3CjVZT+MRuCnt15bUKLMIt9ChwIIykHU/npOebhjeIN3g3EQn64ynuHEA==
+Received: from PH7P220CA0039.NAMP220.PROD.OUTLOOK.COM (2603:10b6:510:32b::26)
+ by MW4PR18MB5133.namprd18.prod.outlook.com (2603:10b6:303:1b4::5)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.8; Mon, 24 Aug
+ 2026 03:05:36 +0000
+Received: from CY4PEPF0000FCC4.namprd03.prod.outlook.com
+ (2603:10b6:510:32b:cafe::d) by PH7P220CA0039.outlook.office365.com
+ (2603:10b6:510:32b::26) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.339.12 via Frontend Transport; Mon,
+ 24 Aug 2026 03:05:36 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
+ smtp.mailfrom=axiado.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axiado.com;
+Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
+ designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
+ client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
+Received: from smtp.corp.axiado.com (64.62.143.114) by
+ CY4PEPF0000FCC4.mail.protection.outlook.com (10.167.242.106) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.360.3
+ via Frontend Transport; Mon, 24 Aug 2026 03:05:35 +0000
+Received: from axiado.com (unknown [10.4.1.181])
+ by smtp.corp.axiado.com (Postfix) with ESMTP id 02B0740BFE0D;
+ Sun, 23 Aug 2026 20:05:35 -0700 (PDT)
+From: Kuan-Jui Chiu <kchiu@axiado.com>
+To: 163wangjack@gmail.com,
+	qemu-devel@nongnu.org,
+	peter.maydell@linaro.org
+Cc: Kuan-Jui Chiu <kchiu@axiado.com>
+Subject: [PATCH v2 5/6] hw/arm: Add Axiado SoC AX3005
+Date: Sun, 23 Aug 2026 20:05:04 -0700
+Message-Id: <20260824030505.1969726-6-kchiu@axiado.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260824030505.1969726-1-kchiu@axiado.com>
+References: <20260824030505.1969726-1-kchiu@axiado.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=joel.stan@gmail.com; helo=mail-pj1-x1033.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000FCC4:EE_|MW4PR18MB5133:EE_
+Content-Type: text/plain
+X-MS-Office365-Filtering-Correlation-Id: cc64dd93-7000-40a4-94a3-08df018c9199
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|376014|1800799024|23010399003|82310400026|6133799003|5023799004|10067099003|56012099006|18002099003|22082099003|3023799007;
+X-Microsoft-Antispam-Message-Info: EJfyjMtDdSbRWw0Rp77e7Kcrpk9jU+HdJUGRCthnjgzNRhSd6M8GqhYgjAzED3yDtTqiz/QtWcKy/tPXYzdnzUu8bRYH8N+YnmATAqpZIEQhg/rlobABuwbf+RUXp76GE3Lj+Nb2ECc7wqX9tYkJJlJ5kLaRGHnc2Te+seX/L2E6Ovin19yT7lyKGg4m9CLyfdSGgPzqktp5Gx3jy5tquuz5BHoVP/0p0TxBlo5+fqeIWN5wBMva1PaiH8CGL2SCDtacASPnXWfmfpbxgmYCPgTSEcBWsW440jozJAvpFSre9OBctje3XWLx4PxvULt4x0OI18lojLrfC2g1g0mmM1yapCb69xYCaG50mMYLW6EXt0iE2b9KIvGJkjKoFE+QpsoFLVEfxeD8PMujNJ97z4CRbrZn5aFLd5a0YfrwLI11Fv3QxRhTWo23oOI3+mt7Y5rPrq0FUQx11PAaXna77z9uX2fMGJzQslCO9hH6vCBYP9R/yrgunXELnAtKcNYF+1V+mSbvCRHaKa4ckpK7K+AWK71fmFDdRCvDCa+/fdZFKBXys7+t9sCMS8M06FXhi4alP6VuVg/CaPC/kBqtm6/y3r6iMjo/wtVMfJDc9gKVtZDWXyBqSildJn3+5j8bi3BhT2Rvm5K0h9WVtu8Fgr6f3qfjxQOkgc82Kkq52Xgd91NjMJlXNUK+ruDwZpvrDxyv4VXkJrP61/NRWnFG0w==
+X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700016)(376014)(1800799024)(23010399003)(82310400026)(6133799003)(5023799004)(10067099003)(56012099006)(18002099003)(22082099003)(3023799007);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: lHUBwKgNE+8ViTTqTk/gEXqfw+c9taIVg9PzkOQ6NBQwP08oIkvhp+yZFeJVOA+eSB4brguS++5GkIr9s8Xg1vyM7CTXvJVaYoky4oXCHyexo4sf1drF7jppqD3SPaERqvYac0u2GEt6OUN9Sz/NpFYzlOu0b2tT2nD1oC13sZUmcl9/NByc3YgrfMB8I2iQI6zvN2hqLvZ7vUCigyUTuWvBhT4gMyipI0chHbFfUZOugfok+JNYY8T1C9+fL2tmrEF07DjpuG7xonLMwhsub06NMomozlWmbEJPkKh9KMmPHoqDs2SnC67egQEt9XEYJjCaQlUuM8fhW8VQ4iJZcEeWf66VJZXURj5E8aZDzdhQQYjpLyZMStDOoKMFde4XFskTxQmnJ81YSGT9eJtaNK8rQG6ygSxsZ2mPhz93iZCYantxqZctQDnhcQP3J/FT
+X-OriginatorOrg: axiado.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Aug 2026 03:05:35.8787 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: cc64dd93-7000-40a4-94a3-08df018c9199
+X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
+ Helo=[smtp.corp.axiado.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000FCC4.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR18MB5133
+Received-SPF: pass client-ip=2a01:111:f403:c112::5;
+ envelope-from=kchiu@axiado.com;
+ helo=CY7PR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,34 +122,392 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Assert that the IMSIC layout will be valid before creating the devices.
+This patch adds new model for Axiado SoC AX3005 which supports
+    4 Cortex-A53 ARM64 CPUs
+    Arm Generic Interrupt Controller v3
+    9 Cadence UARTs
+    1 SDHCI controller with PHY
+    8 Cadence GPIOs
 
-aia_guests is a command line parameter but the machines that allows it
-to be set (currently only virt) should be passing the correct stride for
-a given number of guests. The assert helps catch bugs in future changes
-and shouldn't be triggerable by an invalid user config.
-
-Signed-off-by: Joel Stanley <joel@jms.id.au>
+Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
 ---
- hw/riscv/aia.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ MAINTAINERS                 |   2 +
+ hw/arm/ax3005-soc.c         | 225 ++++++++++++++++++++++++++++++++++++
+ hw/arm/meson.build          |   3 +-
+ include/hw/arm/ax3005-soc.h | 102 ++++++++++++++++
+ 4 files changed, 331 insertions(+), 1 deletion(-)
+ create mode 100644 hw/arm/ax3005-soc.c
+ create mode 100644 include/hw/arm/ax3005-soc.h
 
-diff --git a/hw/riscv/aia.c b/hw/riscv/aia.c
-index c33a3b32bd45..c1a5982856c5 100644
---- a/hw/riscv/aia.c
-+++ b/hw/riscv/aia.c
-@@ -43,6 +43,10 @@ DeviceState *riscv_create_aia(bool msimode, int aia_guests,
-     /* The RISC-V Advanced Interrupt Architecture, Chapter 1.2. Limits */
-     g_assert(num_sources <= 1023);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b51f5c3e60..cb542ad591 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1312,8 +1312,10 @@ M: Kuan-Jui Chiu <kchiu@axiado.com>
+ L: qemu-arm@nongnu.org
+ S: Maintained
+ F: hw/arm/ax3000*.c
++F: hw/arm/ax3005*.c
+ F: hw/*/axiado*.c
+ F: include/hw/arm/ax3000*.h
++F: include/hw/arm/ax3005*.h
+ F: include/hw/*/axiado*.h
  
-+    /* Prevent IMSIC MMIO regions from silently overlapping */
-+    g_assert(s_imsic_stride >= IMSIC_HART_SIZE(imsic_num_bits(1 + aia_guests)));
-+    g_assert(m_imsic_stride >= IMSIC_HART_SIZE(0));
+ AVR Machines
+diff --git a/hw/arm/ax3005-soc.c b/hw/arm/ax3005-soc.c
+new file mode 100644
+index 0000000000..c4abac17d0
+--- /dev/null
++++ b/hw/arm/ax3005-soc.c
+@@ -0,0 +1,225 @@
++/*
++ * Axiado SoC AX3005
++ *
++ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-     if (msimode) {
-         if (!kvm_enabled()) {
-             /* Per-socket M-level IMSICs */
++#include "qemu/osdep.h"
++#include "system/address-spaces.h"
++#include "hw/arm/bsa.h"
++#include "hw/arm/ax3005-soc.h"
++#include "hw/misc/unimp.h"
++#include "system/system.h"
++#include "qobject/qlist.h"
++#include "qom/object.h"
++#include "hw/core/boards.h"
++
++static void ax3005_init(Object *obj)
++{
++    Ax3005SoCState *s = AX3005_SOC(obj);
++    Ax3005SoCClass *sc = AX3005_SOC_GET_CLASS(s);
++
++    for (int i = 0; i < sc->num_cpus; i++) {
++        g_autofree char *name = g_strdup_printf("cpu%d", i);
++        object_initialize_child(obj, name, &s->cpu[i],
++                                ARM_CPU_TYPE_NAME("cortex-a53"));
++    }
++
++    object_initialize_child(obj, "gic", &s->gic, gicv3_class_name());
++
++    for (int i = 0; i < AX3005_NUM_UARTS; i++) {
++        g_autofree char *name = g_strdup_printf("uart%d", i);
++        object_initialize_child(obj, name, &s->uart[i], TYPE_CADENCE_UART);
++    }
++
++    object_initialize_child(obj, "sdhci0", &s->sdhci0, TYPE_AXIADO_SDHCI);
++
++    for (int i = 0; i < AX3005_NUM_GPIOS; i++) {
++        g_autofree char *name = g_strdup_printf("gpio%d", i);
++        object_initialize_child(obj, name, &s->gpio[i], TYPE_CADENCE_GPIO);
++    }
++}
++
++static void ax3005_realize(DeviceState *dev, Error **errp)
++{
++    Ax3005SoCState *s = AX3005_SOC(dev);
++    Ax3005SoCClass *sc = AX3005_SOC_GET_CLASS(s);
++    SysBusDevice *gic_sbd = SYS_BUS_DEVICE(&s->gic);
++    DeviceState *gic_dev = DEVICE(&s->gic);
++    QList *redist_region_count;
++    SysBusDevice *sdhci0_sbd;
++    DeviceState *card;
++    DriveInfo *dinfo;
++
++    /* CPUs */
++    for (int i = 0; i < sc->num_cpus; i++) {
++        object_property_set_int(OBJECT(&s->cpu[i]), "cntfrq", 1000000000,
++                                &error_abort);
++
++        if (!qdev_realize(DEVICE(&s->cpu[i]), NULL, errp)) {
++            return;
++        }
++    }
++
++    /* GIC */
++    qdev_prop_set_uint32(gic_dev, "num-cpu", sc->num_cpus);
++    qdev_prop_set_uint32(gic_dev, "num-irq",
++                         AX3005_NUM_IRQS + GIC_INTERNAL);
++
++    redist_region_count = qlist_new();
++    qlist_append_int(redist_region_count, sc->num_cpus);
++    qdev_prop_set_array(gic_dev, "redist-region-count", redist_region_count);
++
++    if (!sysbus_realize(gic_sbd, errp)) {
++        return;
++    }
++
++    sysbus_mmio_map(gic_sbd, 0, AX3005_GIC_DIST_BASE);
++    sysbus_mmio_map(gic_sbd, 1, AX3005_GIC_REDIST_BASE);
++
++    /*
++     * Mapping from the output timer irq lines from the CPU to the
++     * GIC PPI inputs.
++     */
++    const int timer_irqs[] = {
++        [GTIMER_PHYS] = ARCH_TIMER_NS_EL1_IRQ,
++        [GTIMER_VIRT] = ARCH_TIMER_VIRT_IRQ,
++        [GTIMER_HYP]  = ARCH_TIMER_NS_EL2_IRQ,
++        [GTIMER_SEC]  = ARCH_TIMER_S_EL1_IRQ
++    };
++
++    /*
++     * Wire the outputs from each CPU's generic timer and the GICv3
++     * maintenance interrupt signal to the appropriate GIC PPI inputs, and
++     * the GIC's IRQ/FIQ interrupt outputs to the CPU's inputs.
++     */
++    for (int i = 0; i < sc->num_cpus; i++) {
++        DeviceState *cpu_dev = DEVICE(&s->cpu[i]);
++        int intidbase = AX3005_NUM_IRQS + i * GIC_INTERNAL;
++        qemu_irq irq;
++
++        for (int j = 0; j < ARRAY_SIZE(timer_irqs); j++) {
++            irq = qdev_get_gpio_in(gic_dev, intidbase + timer_irqs[j]);
++            qdev_connect_gpio_out(cpu_dev, j, irq);
++        }
++
++        irq = qdev_get_gpio_in(gic_dev, intidbase + ARCH_GIC_MAINT_IRQ);
++        qdev_connect_gpio_out_named(cpu_dev, "gicv3-maintenance-interrupt",
++                                        0, irq);
++
++        sysbus_connect_irq(gic_sbd, i,
++                           qdev_get_gpio_in(cpu_dev, ARM_CPU_IRQ));
++        sysbus_connect_irq(gic_sbd, i + sc->num_cpus,
++                           qdev_get_gpio_in(cpu_dev, ARM_CPU_FIQ));
++        sysbus_connect_irq(gic_sbd, i + 2 * sc->num_cpus,
++                           qdev_get_gpio_in(cpu_dev, ARM_CPU_VIRQ));
++        sysbus_connect_irq(gic_sbd, i + 3 * sc->num_cpus,
++                           qdev_get_gpio_in(cpu_dev, ARM_CPU_VFIQ));
++    }
++
++    /* DRAM */
++    memory_region_init_ram(&s->dram, OBJECT(s), "dram", AX3005_DRAM_SIZE,
++                           &error_fatal);
++    memory_region_add_subregion(get_system_memory(), AX3005_DRAM_BASE,
++                                &s->dram);
++
++    /* UARTs */
++    const struct {
++        hwaddr addr;
++        unsigned int irq;
++    } serial_table[] = {
++        { AX3005_UART0_BASE, AX3005_UART0_IRQ },
++        { AX3005_UART1_BASE, AX3005_UART1_IRQ },
++        { AX3005_UART2_BASE, AX3005_UART2_IRQ },
++        { AX3005_UART3_BASE, AX3005_UART3_IRQ },
++        { AX3005_UART4_BASE, AX3005_UART4_IRQ },
++        { AX3005_UART5_BASE, AX3005_UART5_IRQ },
++        { AX3005_UART6_BASE, AX3005_UART6_IRQ },
++        { AX3005_UART7_BASE, AX3005_UART7_IRQ },
++        { AX3005_UART8_BASE, AX3005_UART8_IRQ }
++    };
++
++    for (int i = 0; i < AX3005_NUM_UARTS; i++) {
++        qdev_prop_set_chr(DEVICE(&s->uart[i]), "chardev", serial_hd(i));
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart[i]), errp)) {
++            return;
++        }
++
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 0, serial_table[i].addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart[i]), 0,
++                           qdev_get_gpio_in(gic_dev, serial_table[i].irq));
++    }
++
++    /* Timer control */
++    create_unimplemented_device("ax3005.timerctrl", AX3005_TIMER_CTRL, 32);
++
++    /* SDHCI */
++    sdhci0_sbd = SYS_BUS_DEVICE(&s->sdhci0);
++    if (!sysbus_realize(sdhci0_sbd, errp)) {
++        return;
++    }
++
++    sysbus_mmio_map(sdhci0_sbd, 0, AX3005_SDHCI0_BASE);
++    sysbus_mmio_map(sdhci0_sbd, 1, AX3005_EMMC_PHY_BASE);
++    sysbus_connect_irq(sdhci0_sbd, 0,
++                       qdev_get_gpio_in(gic_dev, AX3005_SDHCI0_IRQ));
++
++    dinfo = drive_get(IF_SD, 0, 0);
++    if (dinfo) {
++        card = qdev_new(TYPE_SD_CARD);
++        qdev_prop_set_drive_err(card, "drive",
++                                blk_by_legacy_dinfo(dinfo),
++                                &error_fatal);
++        qdev_realize_and_unref(card, s->sdhci0.sd_bus, &error_fatal);
++    }
++
++    /* GPIOs */
++    const struct {
++        hwaddr addr;
++        unsigned int irq;
++    } gpio_table[] = {
++        { AX3005_GPIO0_BASE, AX3005_GPIO0_IRQ },
++        { AX3005_GPIO1_BASE, AX3005_GPIO1_IRQ },
++        { AX3005_GPIO2_BASE, AX3005_GPIO2_IRQ },
++        { AX3005_GPIO3_BASE, AX3005_GPIO3_IRQ },
++        { AX3005_GPIO4_BASE, AX3005_GPIO4_IRQ },
++        { AX3005_GPIO5_BASE, AX3005_GPIO5_IRQ },
++        { AX3005_GPIO6_BASE, AX3005_GPIO6_IRQ },
++        { AX3005_GPIO7_BASE, AX3005_GPIO7_IRQ }
++    };
++
++    for (int i = 0; i < AX3005_NUM_GPIOS; i++) {
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio[i]), errp)) {
++            return;
++        }
++
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpio[i]), 0, gpio_table[i].addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[i]), 0,
++                           qdev_get_gpio_in(gic_dev, gpio_table[i].irq));
++    }
++}
++
++static void ax3005_class_init(ObjectClass *oc, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++    Ax3005SoCClass *sc = AX3005_SOC_CLASS(oc);
++
++    dc->desc = "Axiado SoC AX3005";
++    dc->realize = ax3005_realize;
++    sc->num_cpus = AX3005_NUM_CPUS;
++}
++
++static const TypeInfo ax3005_soc_types[] = {
++    {
++        .name           = TYPE_AX3005_SOC,
++        .parent         = TYPE_SYS_BUS_DEVICE,
++        .instance_size  = sizeof(Ax3005SoCState),
++        .instance_init  = ax3005_init,
++        .class_size     = sizeof(Ax3005SoCClass),
++        .class_init     = ax3005_class_init,
++    }
++};
++
++DEFINE_TYPES(ax3005_soc_types)
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 8ee5307a91..9fceb8d2e7 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -111,7 +111,8 @@ arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
+ arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
+ 
+ arm_common_ss.add(when: ['CONFIG_AXIADO_SOC', 'TARGET_AARCH64'], if_true: files(
+-  'ax3000-soc.c'))
++  'ax3000-soc.c',
++  'ax3005-soc.c'))
+ arm_common_ss.add(when: ['CONFIG_AXIADO_EVK', 'TARGET_AARCH64'], if_true: files(
+   'ax3000-boards.c',
+   'ax3000-evk.c'))
+diff --git a/include/hw/arm/ax3005-soc.h b/include/hw/arm/ax3005-soc.h
+new file mode 100644
+index 0000000000..2a383a8084
+--- /dev/null
++++ b/include/hw/arm/ax3005-soc.h
+@@ -0,0 +1,102 @@
++/*
++ * Axiado SoC AX3005
++ *
++ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef AXIADO_AX3005_H
++#define AXIADO_AX3005_H
++
++#include "cpu.h"
++#include "hw/intc/arm_gicv3_common.h"
++#include "hw/char/cadence_uart.h"
++#include "hw/gpio/cadence_gpio.h"
++#include "hw/sd/axiado_sdhci.h"
++#include "hw/core/sysbus.h"
++#include "qemu/units.h"
++
++#define TYPE_AX3005_SOC "ax3005"
++OBJECT_DECLARE_TYPE(Ax3005SoCState, Ax3005SoCClass, AX3005_SOC)
++
++#define AX3005_DRAM_BASE        0x80000000
++#define AX3005_DRAM_SIZE        (2 * GiB)
++
++#define AX3005_GIC_DIST_BASE    0x40400000
++#define AX3005_GIC_DIST_SIZE    (64 * KiB)
++#define AX3005_GIC_REDIST_BASE  0x40500000
++#define AX3005_GIC_REDIST_SIZE  (768 * KiB)
++
++#define AX3005_UART0_BASE       0x33020000
++#define AX3005_UART1_BASE       0x330A0000
++#define AX3005_UART2_BASE       0x33120000
++#define AX3005_UART3_BASE       0x33020800
++#define AX3005_UART4_BASE       0x331A0400
++#define AX3005_UART5_BASE       0x33381D00
++#define AX3005_UART6_BASE       0x33381E00
++#define AX3005_UART7_BASE       0x33381F00
++#define AX3005_UART8_BASE       0x330C0000
++
++#define AX3005_SDHCI0_BASE      0x46000000
++#define AX3005_EMMC_PHY_BASE    0x33301C00
++
++#define AX3005_GPIO0_BASE       0x33000000
++#define AX3005_GPIO1_BASE       0x33080000
++#define AX3005_GPIO2_BASE       0x33100000
++#define AX3005_GPIO3_BASE       0x33180000
++#define AX3005_GPIO4_BASE       0x33200000
++#define AX3005_GPIO5_BASE       0x33280000
++#define AX3005_GPIO6_BASE       0x33300000
++#define AX3005_GPIO7_BASE       0x33380000
++
++#define AX3005_TIMER_CTRL       0x48016000
++
++enum Ax3005Configuration {
++    AX3005_NUM_CPUS     = 4,
++    AX3005_NUM_IRQS     = 224,
++    AX3005_NUM_UARTS    = 9,
++    AX3005_NUM_GPIOS    = 8,
++};
++
++typedef struct Ax3005SoCState {
++    SysBusDevice        parent;
++
++    ARMCPU              cpu[AX3005_NUM_CPUS];
++    GICv3State          gic;
++    MemoryRegion        dram;
++    CadenceUARTState    uart[AX3005_NUM_UARTS];
++    CadenceGPIOState    gpio[AX3005_NUM_GPIOS];
++    AxiadoSDHCIState    sdhci0;
++} Ax3005SoCState;
++
++typedef struct Ax3005SoCClass {
++    SysBusDeviceClass   parent;
++
++    uint32_t            num_cpus;
++} Ax3005SoCClass;
++
++enum Ax3005Irqs {
++    AX3005_UART0_IRQ    = 112,
++    AX3005_UART1_IRQ    = 113,
++    AX3005_UART2_IRQ    = 114,
++    AX3005_UART3_IRQ    = 170,
++    AX3005_UART4_IRQ    = 208,
++    AX3005_UART5_IRQ    = 209,
++    AX3005_UART6_IRQ    = 210,
++    AX3005_UART7_IRQ    = 211,
++    AX3005_UART8_IRQ    = 212,
++
++    AX3005_SDHCI0_IRQ   = 123,
++
++    AX3005_GPIO0_IRQ    = 183,
++    AX3005_GPIO1_IRQ    = 184,
++    AX3005_GPIO2_IRQ    = 185,
++    AX3005_GPIO3_IRQ    = 186,
++    AX3005_GPIO4_IRQ    = 187,
++    AX3005_GPIO5_IRQ    = 188,
++    AX3005_GPIO6_IRQ    = 189,
++    AX3005_GPIO7_IRQ    = 190,
++};
++
++#endif /* AXIADO_AX3005_H */
 -- 
-2.47.3
+2.34.1
 
 
