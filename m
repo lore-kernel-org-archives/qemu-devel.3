@@ -4,78 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FA4EC5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 14:11:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CDB4C5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 14:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyVOS-0004jq-5r; Mon, 24 Aug 2026 10:11:20 -0400
+	id 1wyVQQ-0005Ez-4j; Mon, 24 Aug 2026 10:13:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wyVOQ-0004jW-9f
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:11:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wyVOO-0005Cl-6K
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:11:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787580675;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7+29W/EbgAFyoJ1/UIG4RJKBj3qpFCY1W8KixD+XNhw=;
- b=bJiLFmlMEBk5ldVh1nWV83HSHqRC/Y5oWROZreV0g8SZv5OftZeBWYiiFeZAWamsJ0tgeG
- +NNK9dnAOmvcSBdrTK9O4zuB673YOvH+ysgfKpFCahnBEfuRGjhkMtbXP3/M062rpY3v9C
- hoRcwzpnQSsp8N6GIlaHZzXc3awNGu4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-256-9P8P1CEZMmuhy3wswUzFiw-1; Mon,
- 24 Aug 2026 10:11:13 -0400
-X-MC-Unique: 9P8P1CEZMmuhy3wswUzFiw-1
-X-Mimecast-MFC-AGG-ID: 9P8P1CEZMmuhy3wswUzFiw_1787580672
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E35B818600D3; Mon, 24 Aug 2026 14:11:11 +0000 (UTC)
-Received: from redhat.com (headnet05.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.117])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 408C030002EA; Mon, 24 Aug 2026 14:11:10 +0000 (UTC)
-Date: Mon, 24 Aug 2026 15:11:07 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Markus Armbruster <armbru@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH v3 34/49] qemu-print: switch to use monitor_cur_hmp()
-Message-ID: <aoxQ--22A82pLhIf@redhat.com>
-References: <20260816-qemu-no-hmp-v3-0-e53fc35bc550@redhat.com>
- <20260816-qemu-no-hmp-v3-34-e53fc35bc550@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wyVQO-0005EG-9e
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:13:20 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wyVQM-0005ze-Gn
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:13:20 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-66c82b32121so5144875d50.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 07:13:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787580797; cv=none;
+ d=google.com; s=arc-20260327;
+ b=sEMMirZqDjc6c4fG3/7oJ8rVbn75fACEGL0h+gorzBSE8stv7KbxbZhlbpk3ZWolje
+ gC9PqoRUWmxnCGKDcHX34oyuYrzLA+MwVlG+KEVRwlpgRHdX8yqF3wFz/B2XfiPikfiW
+ 5+RbPPG+gvwOaN6PKGvlAbE4mg05q+gvqLP2PJfg8WoP2rTfmKAae7Yj03cglOymXFf0
+ 7e800uSkqwgZkIUzH2X3RLetevx7+sxLqB0zUzqkXh6dnGZHkNkqHcP6ScimRUFUZCHX
+ CoI/skeytryKoDdUA1h/cWxAyV7bcourfwoZEQl8g8YnM9Duie+f5GfXY4qLr5CX9hCN
+ 15Xw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=i90qMMZqov8wxYQ380J3TeVkiRq0NLJOwuvPuDjyrj0=;
+ fh=3rXYw5eioHC98TukW+HyGGPWtUDkJdl48TX1VVqGITM=;
+ b=O4Jh6T+ONnvGX+ICkVuotzPyhIqQ8YPA6yLU1aNCpCj8ZloXT3dnU6c5Rz1Kh3C634
+ 838TT+jk2NP49HBiP1E31gg5rAy1P5ykWCit7al133DHWmDzEwICPrUkXboMZOLNFJl9
+ TPHDNwPwDwLYeMQH6z2Y/W4skMvnSFBq4SLJitAYPFlqymEdcx8klXuhhSDvG0NLP1JE
+ vPVj/s026F4KjD/h1CvLLRBNWH2ghRZuUZtjXNzEG5KwDfoZXVsScsu/kKeDtJBIN1JN
+ bXU5iFa38d2RY+pxmnys1OLb+eYBcEn9hwJjscnbA7FXHKT1ohPesET5AEF+tzWvd3/e
+ Xffw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787580797; x=1788185597; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=i90qMMZqov8wxYQ380J3TeVkiRq0NLJOwuvPuDjyrj0=;
+ b=MYSej5dM+4rXFsM3SccwTSQNXP/WH8xcymqJBUC/Nqiletom3Vi6/277P2cw5aD6Ei
+ h640YfoMBVcb3jvUdEvr1FWOInYtsEE4bqIy4XTOneHzQqyu7/ZYSAq/iI//Q6onbZ3n
+ 4v6fEN4iDv3qbF4HT+GiifaMf25ctLlaI2LEgd+pg/uKExhxxOr9XaypChgzayoJtPJm
+ XR1m832vo9huwGGNJ3T3+m4+ftkDU1aiFfhN7X91kETn4YZFjAoWq3G5lZPyABybJAAY
+ Cx0b9MZBQhR6es1dLPotRwWvTPpc3/De9WJRqgk/b0WmJKWt7q1mzgAMjVitolvkRo7d
+ Ef/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787580797; x=1788185597;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=i90qMMZqov8wxYQ380J3TeVkiRq0NLJOwuvPuDjyrj0=;
+ b=CLvNcshNv30zpvruLKfc2sqa3uQK4tbCouMKK96yX3O5kEz4exA7En7yRzKb7xnGZl
+ KUC/kt5mVlfipNLXZQPSb1JLuxrYvfwdQcu46k9gUhhFdrDkxdcSnYrBdCl6Kdakn+nf
+ rm7gsRUDXczpUTDtp/oN92QHwx6/5kwO4cTuWIWLNL2gXsTzr+WMeFs0aYpJeOVKR4M5
+ f/YHN3Rs8AyCQPJD/CMQIRwH1A5Jes89D2Hi55jmhVG/t0anduhqOrrRWG11TQ39Ip5k
+ jZjV/pr29Xcqd0Pk/JX70H0n7eKz/vtlJ3YrcYgkVDuSu6r5p6gw201llAoqaIo1Q5M/
+ KXRA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrH3DBXA+eDFKwxARBuQHr4BBaU9TaGpdLrN/ruFFsYuQmIq86tJ+I43mb0gCNvxk8BCUE+NijctlQB@nongnu.org
+X-Gm-Message-State: AFuF++kQZQ91HrOYUK3GrQX20RMNoe0N/b5fMC24slu6JH4WaTYI6AVU
+ HhXvpFGY9UAL0UyRUp/ifMaU4i8dveO5uM+O/YXNsUlS1MIW54AM8u5uBEkEV8/WQP0sFu5RbTy
+ 4/mI4ckpH4zqgueHazRlP4PKM6aaboN2OLFE4XWMrwQ==
+X-Gm-Gg: AR+sD11pEsOsauZYvqQ6Kozxuay8oH6A4MmCZsuPAhoWOobZKQmSNpITQpHyqUx6Rmt
+ jzCclRoHKL5eXQTtLMKkAOS6zkuTodYDa+hKBy0ahglMCe/t0+LXueQPfkcU7m3AEd/jQ3soCgR
+ xFRyRsruv6+wGGWbmbMB0h+6te+8bFfyQHH7L/qvbk7sAYTJcGXKY0/5AanOCNK+VyCjyZ4Uf0o
+ wMpfnPIKjNzYkjLqDB+oYlUdPudC9kWcndXYEt/VD0a0z5xx9nB2XzJmQi8xjt4KGljOlCPv9Ub
+ 5gO/r7615kh+aU9x4OyGjrkZMHDICyf7LepXNEsiWKphgebLqs/4aFIB06vZlMjosmD0aKVLsWv
+ 7X8d2EvEl5/WGR9T6tzUXMwrOjIrl
+X-Received: by 2002:a53:ac9d:0:b0:66c:9f99:9133 with SMTP id
+ 956f58d0204a3-66cf21bc69cmr6817963d50.29.1787580796530; Mon, 24 Aug 2026
+ 07:13:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260816-qemu-no-hmp-v3-34-e53fc35bc550@redhat.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260805052723.2823538-1-neal.frager@amd.com>
+ <2383a98d-d88d-415d-9de1-aa68a5d215fe@amd.com>
+ <BL1PR12MB5032F21E0E2A6F17398B6D76F0A02@BL1PR12MB5032.namprd12.prod.outlook.com>
+ <CAFEAcA8sWn1vjm+OFYzwA-jko2vYkFcWPwT6g9=0AeO+JQo-JQ@mail.gmail.com>
+ <BL1PR12MB50322B1D97569B5CADEC8E55F0A02@BL1PR12MB5032.namprd12.prod.outlook.com>
+In-Reply-To: <BL1PR12MB50322B1D97569B5CADEC8E55F0A02@BL1PR12MB5032.namprd12.prod.outlook.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 24 Aug 2026 15:13:04 +0100
+X-Gm-Features: AcwNN1VxiYK2jXYCrQnBcioJAtVp2kRV-_L71rBTzoEWsRsEjGV3LGfW0swuAp0
+Message-ID: <CAFEAcA9rWqo92nt1StDuBwUjbV0eqdAA921nozpjQHDF_ARJyg@mail.gmail.com>
+Subject: Re: [PATCH v1 1/1] include/hw/xen/xen_native.h: downgrade
+ include-order assertion to warning
+To: "Frager, Neal" <neal.frager@amd.com>
+Cc: "Hildebrand, Stewart" <Stewart.Hildebrand@amd.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "sstabellini@kernel.org" <sstabellini@kernel.org>, 
+ "anthony@xenproject.org" <anthony@xenproject.org>, 
+ "edgar.iglesias@gmail.com" <edgar.iglesias@gmail.com>, 
+ "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>, 
+ "Stabellini, Stefano" <stefano.stabellini@amd.com>, "Saleab,
+ Micheal" <Micheal.Saleab@amd.com>, 
+ "john.ernberg@actia.se" <john.ernberg@actia.se>, 
+ "matthew.l.weber3@boeing.com" <matthew.l.weber3@boeing.com>, 
+ "vincent.stehle@arm.com" <vincent.stehle@arm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,71 +128,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Aug 16, 2026 at 11:13:01PM +0400, Marc-André Lureau wrote:
-> Note that this fixes qemu_vprintf() (and thus qemu_printf) to do as said
-> in the code comment: print to current HMP if we have one, else to
-> stdout, instead of trying to print to the current monitor (which may not
-> actually have hmp-only print capability/callback and fail silently).
+On Mon, 24 Aug 2026 at 14:31, Frager, Neal <neal.frager@amd.com> wrote:
+>
+> AMD General
+>
+> Hi Peter,
+>
+> >
+> > Hi Stewart,
+> >
+> > > The -I$(XEN_ROOT)/tools/include added to QEMU's extra-cflags causes
+> > > __XEN_INTERFACE_VERSION__ to be defined before xen_native.h is included,
+> > > triggering an include-order assertion. Downgrade to a warning since the
+> > > version is consistent in cross-compile.
+> > > Ref: https://github.com/qemu/qemu/commit/e2abfe5ec6
+>
+> > > This is a buildroot issue, so I don't believe it's necessary to fix from the
+> > > qemu side.
+> >
+> > I am not sure I fully agree here. While this is a buildroot identified issue,
+> > there could be other use cases for __XEN_INTERFACE_VERSION__ to be defined
+> > before xen_native.h is included.
+>
+> > But what, though?
+>
+> > And what we have found is that if
+> > __XEN_INTERFACE_VERSION__ to be defined before xen_native.h is included, it
+> > is not a hard error.  For buildroot, the qemu works just fine in spite of
+> > this.
+>
+>
+> > I think that just means you got lucky. Either there is a hard requirement
+> > for one header to be included before the other (in which case it must
+> > be a #error, and whatever is causing the mis-ordering to happen must be
+> > fixed), or it's fine for the ordering to be either way (in which case it
+> > doesn't even need to be a #warning).
+>
+> From my view, the order the header files are included does not matter, and
+> this should not be an error.  I agree with removing the warning as well, if
+> that is what we all agree on in the end.
 
-The question is whether that commented behaviour is actually
-what we want ? AFAICT, the comment has been wrong since day
-one - it always printed to HMP, and /dev/nulled for QMP,
-and stdout thus only in non-monitor context.
+The rationale for the header ordering is in the comment in include/hw/xen/xen.h:
 
-I'm not convinced that qemu_printf family should do anything
-in QMP context - /dev/null feels like the right behaviour.
+/*
+ * C files using Xen toolstack libraries will have included those headers
+ * already via xen_native.h, and having __XEM_TOOLS__ defined will have
+ * automatically set __XEN_INTERFACE_VERSION__ to the latest supported
+ * by the *system* Xen headers which were transitively included.
+ *
+ * C files which are part of the internal emulation, and which did not
+ * include xen_native.h, may need this defined so that the Xen headers
+ * imported to include/hw/xen/interface/ will expose the appropriate API
+ * version.
+ *
+ * This is why there's a rule that xen_native.h must be included first.
+ */
 
-We have warn_report/error_report which go to stderr in QMP
-context which is right.  I don't see a use case for
-qemu_printf to stderr in QMP context.
+...basically, if something doesn't include xen_native.h before xen.h
+then __XEN_INTERFACE_VERSION__ can end up defined to the wrong thing.
+(Disclaimer: I'm not a Xen expert, I'm just applying Chesterton's Fence.)
 
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->  util/qemu-print.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
-> 
-> diff --git a/util/qemu-print.c b/util/qemu-print.c
-> index a2d1f0244168..0eecc05b0330 100644
-> --- a/util/qemu-print.c
-> +++ b/util/qemu-print.c
-> @@ -21,9 +21,9 @@
->   */
->  int qemu_vprintf(const char *fmt, va_list ap)
->  {
-> -    Monitor *cur_mon = monitor_cur();
-> -    if (cur_mon) {
-> -        return monitor_vprintf(cur_mon, fmt, ap);
-> +    MonitorHMP *hmp = monitor_cur_hmp();
-> +    if (hmp) {
-> +        return monitor_vprintf(MONITOR(hmp), fmt, ap);
->      }
->      return vprintf(fmt, ap);
->  }
-> @@ -53,7 +53,8 @@ int qemu_printf(const char *fmt, ...)
->  int qemu_vfprintf(FILE *stream, const char *fmt, va_list ap)
->  {
->      if (!stream) {
-> -        return monitor_vprintf(monitor_cur(), fmt, ap);
-> +        MonitorHMP *hmp = monitor_cur_hmp();
-> +        return hmp ? monitor_vprintf(MONITOR(hmp), fmt, ap) : -1;
->      }
->      return vfprintf(stream, fmt, ap);
->  }
-> 
-> -- 
-> 2.55.0.543.g5ebe2ebe4ea8
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+thanks
+-- PMM
 
