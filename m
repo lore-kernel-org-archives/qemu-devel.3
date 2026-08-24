@@ -4,102 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBCBEC61CE2
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 22:20:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9AB7C5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 22:36:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyd0w-0004Bw-G7; Mon, 24 Aug 2026 18:19:34 -0400
+	id 1wydGp-0006DG-T9; Mon, 24 Aug 2026 18:35:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
- id 1wyd0v-0004Bg-8Z
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 18:19:33 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <portias@tenstorrent.com>)
- id 1wyd0t-0000SO-DT
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 18:19:33 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-384422b05b5so398445a91.2
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 15:19:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tenstorrent.com; s=google; t=1787609970; x=1788214770; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=8LR/AzYacYUAVCZRRgXI27j9+RnZQ7HCQTn2EGohg8M=;
- b=eIGY7TMgZR9Dy9AamYXfIp3Odf7gTPy++dPQpczfSXWoR0wAdYwloLZvTyf6zg805q
- 6u9Ln6t7oU/5GCF4H0I9dTiI8I0dRT3Q9BqDTlwzRlQ9TpVT3YJ25sQXq0hZ8dGri4o8
- ZR0ZowU1TbfD5sOqKP/g65aOHGGIFk+HwvgigUi8UYh8RpfracZu03dpX8sI+PD/0CCb
- k+2M4je2N+++f7QWq6V1stUk+B0THSmtCavfdCjEEeME5stDFbol6Eyn8g/DP/0T8FDe
- 60IgIiCvKhSJhNtvipxlIZ2/p3/ymz/TQiV4pHDvWWCyDu8RaeDIjaFsskDBj7kRLdY9
- SH9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787609970; x=1788214770;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=8LR/AzYacYUAVCZRRgXI27j9+RnZQ7HCQTn2EGohg8M=;
- b=igoTbk2c45/Bv0w5Igl+fpSi/2T5LFDsmiaDdnKfl0zZnINK6SY3s8HK4cctknMBZk
- tzrdGcK82okKYy9kzciYRdgTnr0YcpyIFR4XwhI98ds6sjuKz8VhBrdd1JWIlw+EP28a
- 37aGIrbj4r9hr/aZQXl18j/ifFoxpVZ38WxQFb3DDuF3utkWeVv4R0XKAuDehdofQNWV
- I/5nH2pQR7MBJK+DvBvmTU2YoeWIEyASI+sNJfGkTznglJciIBoa3keNEZVfDuWi2b8K
- p2yaWqv8bRks9OhyjOXc+lH7zRuR5emI2xBMG/I4c25coH4CrqtW9T7CdqtW89tEMLyG
- zN3A==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rpdb0eeqD73kzzg9vH2cGiNr3x61y1q4TRQIUYlzDaqzeNAQTbACUgSG7iKcVaMkACU3EV/qg9xau44@nongnu.org
-X-Gm-Message-State: AFuF++kKFzgXTtsbmys0ZpWCKbuR13fdZIK5EQ2rSVEgPnTHZ8CbAjzw
- H4kCyWQ05WvEjos3yTTsbdwKFeek3DUNUJigw03xSwpAZ0XFaGKwAbeI2fL9wOmzGgE=
-X-Gm-Gg: AR+sD10b+u6SEL/+/3SMAwTxuIWn90k2q+BpVSDH0sq43WwB4NQvsPqsmBKrZtC0MWs
- VAw9p7eT9Tvamjyvx6kcwzmpgkfdOvqkQpbOr3+p8rHFVRlKBR3st45C960YlDF0w4igMesMK79
- KToUu/1Lg8TniwYrBRSjvUqFwYbRxdbfC1VocJ10ABlRnLLLivEpMPRSBhyCujuudDM77u1h5FM
- ehEXax6qy7hv6Hp5+14kqHGHlLpU4HRMW4/pjmLWyv9qs5AxS1wHT8bxM9+Z4rQZXLD85bpbeXK
- jCkoQY2hCOqnjdeRK9IVIPBqYoLfUcbMQmvXGVUDdg60KyBF2RXbRO4iLPGTqHk3KLVAakImheb
- KsA2yUe3vZcX0SY0iIQMzEUYPTrjDzn7N7kOrhIYQ3Cu+9lwTsyzj2ndTOCQjiBwViVbRK6FENy
- YQWpxJq5KJDz32ysBvZmpzZ/RHXqWSnwNSIOAofoi8ECSt8TLwq3XO0n+0PwzmamPy+dqCupzJy
- H3nU4ezeXctwKIK
-X-Received: by 2002:a17:90b:2648:b0:38e:6a7c:abbc with SMTP id
- 98e67ed59e1d1-39647bfad3emr1127785a91.3.1787609969703; 
- Mon, 24 Aug 2026 15:19:29 -0700 (PDT)
-Received: from [172.16.1.33] ([159.196.41.205])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39645b3ab63sm1137844a91.7.2026.08.24.15.19.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Aug 2026 15:19:29 -0700 (PDT)
-Message-ID: <ab3dba22-8ba4-479e-ad4a-1877335bb2dd@oss.tenstorrent.com>
-Date: Tue, 25 Aug 2026 08:19:21 +1000
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wydGp-0006D4-4C; Mon, 24 Aug 2026 18:35:59 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wydGn-0002mf-7D; Mon, 24 Aug 2026 18:35:58 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67OJVU9S2857990; Mon, 24 Aug 2026 22:35:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ILfmid
+ 0SNPAY+ezbdylZmwPFxy+gYAw6CM7fsWIzAEw=; b=IuWSfv+bbTU/ZanP/3T9jj
+ xvcdP/BgplTP4d9iwWqszURSl4ssbBFZqDXXQSWjmmna2c6sdQ5dInokUJbG0sbM
+ gBYEtJDLgmK6JLLShQSWL2mbICrmmHZk3cj2iqhF1J0psnk/8k7jJH76tDvwSXO2
+ AMjWMErhyJmgaMesr5usKlunN5XRxF6UhTWARdFVTEgplD22bRot/kQlsYPS2X3d
+ VI0jnZfEsDNmlwydJyh8DyotKVsGZirGJ/d0KvbcUBzsly8fuWg0QOhB+IVyYffx
+ shwwLPjiB6gVMh2bW+Nvhbd1XcPSMg5eJ+Naon34QfMpRPfbFLCczCTKxDNfsBgQ
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73g4mm78-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Aug 2026 22:35:52 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OMQO4q026908;
+ Mon, 24 Aug 2026 22:35:51 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rsy0njr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Aug 2026 22:35:51 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67OMZnEx30212668
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 24 Aug 2026 22:35:50 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BF8A05805A;
+ Mon, 24 Aug 2026 22:35:49 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0BB3858056;
+ Mon, 24 Aug 2026 22:35:49 +0000 (GMT)
+Received: from [9.61.21.147] (unknown [9.61.21.147])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 24 Aug 2026 22:35:48 +0000 (GMT)
+Message-ID: <e4520f30-6176-498e-840e-a5407aa68004@linux.ibm.com>
+Date: Mon, 24 Aug 2026 18:35:48 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] hw/riscv/virt: Use hwaddr for IMSIC device tree
- address
-To: Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- philmd@oss.qualcomm.com
-Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>, Chao Liu <chao.liu@processmission.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Michael Ellerman <mpe@kernel.org>, Niek Linnenbank
- <nieklinnenbank@gmail.com>, Peter Maydell <peter.maydell@linaro.org>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-References: <20260824055642.41098-1-joel@jms.id.au>
- <20260824055642.41098-3-joel@jms.id.au>
+Subject: Re: [PATCH v7 14/15] s390x/pci: Implement migration for emulated
+ devices
+To: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Cc: alifm@linux.ibm.com, farman@linux.ibm.com, richard.henderson@linaro.org,
+ iii@linux.ibm.com, david@kernel.org, cohuck@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260818172521.223460-1-kshk@linux.ibm.com>
+ <20260818172521.223460-15-kshk@linux.ibm.com>
 Content-Language: en-US
-From: Portia Stephens <portias@oss.tenstorrent.com>
-In-Reply-To: <20260824055642.41098-3-joel@jms.id.au>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=portias@tenstorrent.com; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20260818172521.223460-15-kshk@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: qSvB_sGf4zVshjwhG_TOkEwtClVVmiTR
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDE5MSBTYWx0ZWRfX5QPOlCG/UOLj
+ 9sOC9R57Z3r/q0NjLPg4N8k1+UxuQs7UZd3UQLgasb8ahYcY5Pg3N6cM0kaX3Bgz13OgPtnTy2D
+ B37BQNwGfypgf7rGxKSWd8XxlNWa6QI=
+X-Proofpoint-GUID: qSvB_sGf4zVshjwhG_TOkEwtClVVmiTR
+X-Authority-Analysis: v=2.4 cv=JZyMa0KV c=1 sm=1 tr=0 ts=6a8cc748 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=UDfE9F3vlcjxGpvxn6gA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDE5MSBTYWx0ZWRfXxnz73Zsk5C6d
+ 410e8Y7ji+J1zbgN4ZIozG49qm8JlMhkOtRnplEjEdycKEFzhZtHRq+FV2kNExx3zf2Kl5TZXKG
+ EMU9wYE03CmH0/04RhC5M/X0Bcs2m7i3XLq1+0o6UpG9gYkY75Mr8jWvvnlfzWmDbV8PuoYRk9k
+ Sz18XQkKZJfKQTV71I/G17eS0dvDbQc3lzlLF31UP0n7NoluRHDrCYPxbHJ3sw/ow3RHVdqBoux
+ rjeUsUhZHxmVJAIoE6KFX9GjtZSK4BP744lxXfKRUkCkafyDeJoFyvCEL/eS5neUslyPVSiJSB8
+ Elf8aBKdRIlRjM3xQA5WyBq+Jc43vtGbaPPW2I4mHQmi8rmbPgj/TbUnRGzRXJvkP7UuH8jEzV0
+ TjHAar6hRPD8wMe1jdDffjVBZ5YrkVi7EL+NKHGntCifmBuDf14iant1j3L2AY1XYitVClhfz5e
+ wPyMZ5omgaImxKRxBsg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-24_06,2026-08-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240191
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,47 +127,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 24/8/2026 3:56 PM, Joel Stanley wrote:
-> create_fdt_one_imsic() hard codes the top 32 bits to zero. Instead take
-> a hwaddr and populate both the high and low cell.
->
-> Suggested-by: Philippe Mathieu-Daudé <philmd@mailo.com>
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
+On 8/18/26 1:25 PM, Konstantin Shkolnyy wrote:
+> Implement zPCI device state migration, consequently enabling migration
+> of VMs that have emulated PCI devices, whether virtio or not.
+> Migration is allowed for devices whose function handle has the
+> FH_SHM_EMUL bit set. For these devices QEMU will save and restore the
+> state of its zPCI emulator.
+> 
+> This will enable emulated PCI migration starting with s390-ccw-virtio-11.2.
+> 
+> Passthrough devices will continue to block migration.
+> 
+> Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
+> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
 > ---
->   hw/riscv/virt.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
+>  hw/s390x/s390-pci-bus.c         | 195 +++++++++++++++++++++++++++++++-
+>  hw/s390x/s390-pci-inst.c        |   2 +-
+>  hw/s390x/s390-virtio-ccw.c      |   4 +
+>  include/hw/s390x/s390-pci-bus.h |   4 +
+>  4 files changed, 199 insertions(+), 6 deletions(-)
+> 
 
-Reviewed-by: Portia Stephens <portias@oss.tenstorrent.com>
+One high level comment is that S390pciState has some fields in it that
+need consideration.
+
+pending_sei seems like it needs to be handled for sure.
+
+Migrating next_idx would probably only be an optimization; it should get
+re-calculated the next time a device is plugged if we don't migrate it.
+
+I think we are OK with zpci_groups because we are only migrating
+emulated devices, they should get recreated as-expected on the target.
+If we were to ever change the default CLP payload, it would need to be
+on a qemu machine boundary.
+That would need to be re-visited for vfio-pci migration.  Basically, a
+guest does not expect the CLP payload to change.
+
+And then same for next_sim_grp, this is only used for vfio-pci devices
+that disable interpretation support.
+Not necessary now but would need to be re-visited for vfio-pci migration.
+
+zpci_dma_limit is going to be null without vfio-pci; if/when vfio-pci is
+supported I think the list will need to be re-populated (not migrated)
+as part of updating the max_dma_limit and replaying the IOMMU.
+
+bus_no, bus, zpci_table, iommu_table and zpci_devs all need to be
+reconstructed on the target + fixed up during load for zpci_devs and
+zpci_table.
+
+[...]
+>  static const TypeInfo s390_pcibus_info = {
+>      .name = TYPE_S390_PCI_BUS,
+>      .parent = TYPE_BUS,
+>      .instance_size = sizeof(S390PCIBus),
+> +    /*
+> +     * Implement get_dev_path() to provide each zpci device with a unique
+> +     * stable UID-based bus "path". The "path" is used as part of idstr in the
+> +     * migration stream, making idstr unique and instance_id always 0.
+> +     * For migration to succeed, (idstr+instance_id) must match those generated
+> +     * during QEMU start. Without unique idstr, QEMU will generate variable
+> +     * instance_id to distinquish devices, and that instance_id can change
+
+Typo 's/distinquish/distinguish/' (replace the Q with a G)
+
+[...]
+
+> +        VMSTATE_BOOL(iommu_enabled, S390PCIBusDevice),
+> +        VMSTATE_UINT64(g_iota, S390PCIBusDevice),
+> +        VMSTATE_UINT64(pba, S390PCIBusDevice),
+> +        VMSTATE_UINT64(pal, S390PCIBusDevice),
+> +        VMSTATE_UINT64(max_dma_limit, S390PCIBusDevice),
+
+As mentioned in an earlier patch, let's not migrate this value.
+
+Since you are only migrating emulated devices for now and fencing
+vfio-pci, it will always be 0.  Set it to 0 unconditionally during load,
+before the iommu replay.
+
+If we enable migration of vfio-pci in the future, we would have to
+acquire the new DMA limit on the target side prior to the iommu replay
+for those devices (while emulated devices remain a 0).
 
 
->
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index d58656f70d1b..b91d5066d8ad 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -383,7 +383,8 @@ static void create_fdt_one_imsic(RISCVVirtState *s, hwaddr base_addr,
->       g_autofree char *imsic_name = NULL;
->       MachineState *ms = MACHINE(s);
->       int socket_count = riscv_socket_count(ms);
-> -    uint32_t imsic_max_hart_per_socket, imsic_addr, imsic_size;
-> +    uint32_t imsic_max_hart_per_socket, imsic_size;
-> +    hwaddr imsic_addr;
->       g_autofree uint32_t *imsic_cells = NULL;
->       g_autofree uint32_t *imsic_regs = NULL;
->       static const char * const imsic_compat[2] = {
-> @@ -403,7 +404,7 @@ static void create_fdt_one_imsic(RISCVVirtState *s, hwaddr base_addr,
->           imsic_addr = base_addr + socket * VIRT_IMSIC_GROUP_MAX_SIZE;
->           imsic_size = IMSIC_HART_SIZE(imsic_guest_bits) *
->                        s->soc[socket].num_harts;
-> -        imsic_regs[socket * 4 + 0] = 0;
-> +        imsic_regs[socket * 4 + 0] = cpu_to_be32(imsic_addr >> 32);
->           imsic_regs[socket * 4 + 1] = cpu_to_be32(imsic_addr);
->           imsic_regs[socket * 4 + 2] = 0;
-
-
-I assume the imsic size cannot be greater than 32-bits.
-
-
->           imsic_regs[socket * 4 + 3] = cpu_to_be32(imsic_size);
 
