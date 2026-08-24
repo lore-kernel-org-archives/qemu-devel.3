@@ -4,111 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CDB4C5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 14:13:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67FACC5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 14:16:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyVQQ-0005Ez-4j; Mon, 24 Aug 2026 10:13:22 -0400
+	id 1wyVSz-0005ya-N9; Mon, 24 Aug 2026 10:16:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wyVQO-0005EG-9e
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:13:20 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ id 1wyVSw-0005xz-Br
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:15:58 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wyVQM-0005ze-Gn
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:13:20 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-66c82b32121so5144875d50.1
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 07:13:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787580797; cv=none;
+ id 1wyVSt-0006rK-HR
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 10:15:58 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-66d06b5f023so1573396d50.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 07:15:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787580953; cv=none;
  d=google.com; s=arc-20260327;
- b=sEMMirZqDjc6c4fG3/7oJ8rVbn75fACEGL0h+gorzBSE8stv7KbxbZhlbpk3ZWolje
- gC9PqoRUWmxnCGKDcHX34oyuYrzLA+MwVlG+KEVRwlpgRHdX8yqF3wFz/B2XfiPikfiW
- 5+RbPPG+gvwOaN6PKGvlAbE4mg05q+gvqLP2PJfg8WoP2rTfmKAae7Yj03cglOymXFf0
- 7e800uSkqwgZkIUzH2X3RLetevx7+sxLqB0zUzqkXh6dnGZHkNkqHcP6ScimRUFUZCHX
- CoI/skeytryKoDdUA1h/cWxAyV7bcourfwoZEQl8g8YnM9Duie+f5GfXY4qLr5CX9hCN
- 15Xw==
+ b=qFVDfLFSMYs8VNzSNK5Yr4aqgY9ZYeDoU9MFrljIEJT6ONGS3ULxOPKYljGzIGlkCv
+ XCZPcR/o8YIkglBHXmxEZgKvF/vsYs5kLa+CjpvgTN4TKnUmYHaWPFrANx8UMjpZziO2
+ BhZI0QbR4mX8hG9MvDcxM/tvGy6yyQJ4ihk1dtLFLU4go+TSHdYqurTFBM4FC2weonwJ
+ jfDQrtfT+e5L4XV5YQ3nECTswkxIzDWfwsuYsGQ90uCf70BQEKh+h76oznuYt6qOOv0F
+ N0yGuZte+6qXD8x+aHbYtlheWoPpaszriTEhK7s1yndJtUyhi8RjhVyqmU8TLDAHmbso
+ YFbQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=i90qMMZqov8wxYQ380J3TeVkiRq0NLJOwuvPuDjyrj0=;
- fh=3rXYw5eioHC98TukW+HyGGPWtUDkJdl48TX1VVqGITM=;
- b=O4Jh6T+ONnvGX+ICkVuotzPyhIqQ8YPA6yLU1aNCpCj8ZloXT3dnU6c5Rz1Kh3C634
- 838TT+jk2NP49HBiP1E31gg5rAy1P5ykWCit7al133DHWmDzEwICPrUkXboMZOLNFJl9
- TPHDNwPwDwLYeMQH6z2Y/W4skMvnSFBq4SLJitAYPFlqymEdcx8klXuhhSDvG0NLP1JE
- vPVj/s026F4KjD/h1CvLLRBNWH2ghRZuUZtjXNzEG5KwDfoZXVsScsu/kKeDtJBIN1JN
- bXU5iFa38d2RY+pxmnys1OLb+eYBcEn9hwJjscnbA7FXHKT1ohPesET5AEF+tzWvd3/e
- Xffw==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=bOE19ddvt3OiBdu36MUo3HBusa8hq0RDUQcKaDJOVPg=;
+ fh=RFUZr2g0Shx/zBEdYDZ12ZgHpKgJjBHF53h2Dsal6O8=;
+ b=ZlCOHCXNT01Xw4509QvXWJWkRhhNj4VDL09Wj0HB8jR7gbbc2NrM/MNsR+5xRYMx/v
+ 2R/uWDKtUS7rYi5SW4n2lILeGFydRpiZNxO9lQ1VsGAjt3BzvaP9iYF5lWM9eWYKZ4LF
+ Fhsat3I5awtXfKqIQHeDUVAbG8eGiRSOIgqq3m1zhiusdYJ4e31V6knzEYXaIPUxAeGW
+ pSoA6sT7XmiXJ/rquGbMzp23voVm8bGedfwKc/rPu00aTUpbgfWBB30lVp+TPZgy9PLZ
+ XRxaaDThEiUt3m5IghZxOTzOLs6gnSVoQLoUru8Ws+BdQi6dqH1O/ommXRE4/Ei8MQ/b
+ MHzw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787580797; x=1788185597; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=i90qMMZqov8wxYQ380J3TeVkiRq0NLJOwuvPuDjyrj0=;
- b=MYSej5dM+4rXFsM3SccwTSQNXP/WH8xcymqJBUC/Nqiletom3Vi6/277P2cw5aD6Ei
- h640YfoMBVcb3jvUdEvr1FWOInYtsEE4bqIy4XTOneHzQqyu7/ZYSAq/iI//Q6onbZ3n
- 4v6fEN4iDv3qbF4HT+GiifaMf25ctLlaI2LEgd+pg/uKExhxxOr9XaypChgzayoJtPJm
- XR1m832vo9huwGGNJ3T3+m4+ftkDU1aiFfhN7X91kETn4YZFjAoWq3G5lZPyABybJAAY
- Cx0b9MZBQhR6es1dLPotRwWvTPpc3/De9WJRqgk/b0WmJKWt7q1mzgAMjVitolvkRo7d
- Ef/w==
+ d=linaro.org; s=google; t=1787580953; x=1788185753; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=bOE19ddvt3OiBdu36MUo3HBusa8hq0RDUQcKaDJOVPg=;
+ b=nGSs81BxnkggcsP8tpD4VcmDSzwCJ/2mb8cZjwGUKuA4PlxydZc0EA/eoerFpUSOj6
+ 3MlJrFOkIDUzDrARdwRjBdQWI4L6IrkNLIpJ1svLNFnzkLSSkUkSVuHzj/KsxmY0Y3Jz
+ ytnpXbjT+uvCgoC9k7xk0IXtdfG2X79kF2tBos3TfZxDnN6e2Q0K4Mez1JF0ccqRcpJU
+ VGXjtX8GxbwvQyOH7pas4VlzZrQWyOPHSp7eaNmzHCpwuN9TIfePb1yC00d946PlAcO8
+ 1r5UbWVaX7OXGmuHy54kBEmZveZbJd1ac2STinfSefL3vOcAlSAaFeVYG7SIkWLn/NJh
+ wyRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787580797; x=1788185597;
- h=content-type:cc:to:subject:message-id:date:from:in-reply-to
- :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=i90qMMZqov8wxYQ380J3TeVkiRq0NLJOwuvPuDjyrj0=;
- b=CLvNcshNv30zpvruLKfc2sqa3uQK4tbCouMKK96yX3O5kEz4exA7En7yRzKb7xnGZl
- KUC/kt5mVlfipNLXZQPSb1JLuxrYvfwdQcu46k9gUhhFdrDkxdcSnYrBdCl6Kdakn+nf
- rm7gsRUDXczpUTDtp/oN92QHwx6/5kwO4cTuWIWLNL2gXsTzr+WMeFs0aYpJeOVKR4M5
- f/YHN3Rs8AyCQPJD/CMQIRwH1A5Jes89D2Hi55jmhVG/t0anduhqOrrRWG11TQ39Ip5k
- jZjV/pr29Xcqd0Pk/JX70H0n7eKz/vtlJ3YrcYgkVDuSu6r5p6gw201llAoqaIo1Q5M/
- KXRA==
+ d=1e100.net; s=20251104; t=1787580953; x=1788185753;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=bOE19ddvt3OiBdu36MUo3HBusa8hq0RDUQcKaDJOVPg=;
+ b=UKQeDDH5iYPcv/H13vQdVmjkq0LszESAJkkvfo7tQB5oCyT2/BcrOZCDtv+ACXS/au
+ LxjLpnSDSEaMig5NcMEz0HfNBi0vbtD+1AEfP1ekgF5Z6aJG4pfLbsffdb8ALzKm3uKk
+ 7y+vqIynKHun6Flo+DKOzKOZE8olHtFv2LTIbHsnmAEoUXnzog5cPY3WDwJPiSwBHdVj
+ i/DhqqvT5uNYirUWAQp1og9Frk13pKdXkhlYQLw9p2u7Eg57f/SZXdX4+nArEysw0u9m
+ vz17PjMgjtw5lKmCGdZVx4+wBSSxzDlNbyYpd6TIb5MVDMm8ATPatFXqTrlJhhVoKimo
+ K+Sw==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrH3DBXA+eDFKwxARBuQHr4BBaU9TaGpdLrN/ruFFsYuQmIq86tJ+I43mb0gCNvxk8BCUE+NijctlQB@nongnu.org
-X-Gm-Message-State: AFuF++kQZQ91HrOYUK3GrQX20RMNoe0N/b5fMC24slu6JH4WaTYI6AVU
- HhXvpFGY9UAL0UyRUp/ifMaU4i8dveO5uM+O/YXNsUlS1MIW54AM8u5uBEkEV8/WQP0sFu5RbTy
- 4/mI4ckpH4zqgueHazRlP4PKM6aaboN2OLFE4XWMrwQ==
-X-Gm-Gg: AR+sD11pEsOsauZYvqQ6Kozxuay8oH6A4MmCZsuPAhoWOobZKQmSNpITQpHyqUx6Rmt
- jzCclRoHKL5eXQTtLMKkAOS6zkuTodYDa+hKBy0ahglMCe/t0+LXueQPfkcU7m3AEd/jQ3soCgR
- xFRyRsruv6+wGGWbmbMB0h+6te+8bFfyQHH7L/qvbk7sAYTJcGXKY0/5AanOCNK+VyCjyZ4Uf0o
- wMpfnPIKjNzYkjLqDB+oYlUdPudC9kWcndXYEt/VD0a0z5xx9nB2XzJmQi8xjt4KGljOlCPv9Ub
- 5gO/r7615kh+aU9x4OyGjrkZMHDICyf7LepXNEsiWKphgebLqs/4aFIB06vZlMjosmD0aKVLsWv
- 7X8d2EvEl5/WGR9T6tzUXMwrOjIrl
-X-Received: by 2002:a53:ac9d:0:b0:66c:9f99:9133 with SMTP id
- 956f58d0204a3-66cf21bc69cmr6817963d50.29.1787580796530; Mon, 24 Aug 2026
- 07:13:16 -0700 (PDT)
+ AHgh+RrNG8HAhwC8KR5FD2rVPAvs4WOEPYEW/ybETBpyD9DYbpzbCgTxjQ+3/4Lo7BXkQrVPEmoYcmY4EWRz@nongnu.org
+X-Gm-Message-State: AFuF++n/8u7/yvo07oymjsn1gTdVDSNfqtBaAOaIWuWUm5CJjPd7yq5I
+ z4M/zC8Yc54ue3PWT9WwIW4bzKgLQgi0yV1Ik6cqAYYPVxDXp3YdHeF8kMJovTu025FOe8J6/fm
+ sv1oe2HRpaHQSu5N2VtrCYbSHTBSowPuIg1PFlcmTPA==
+X-Gm-Gg: AR+sD124rwHZZfNjYzAZOn6AmkpfIYAjStbg2lpSgSI/oIlQm/kLgbN3XjTEW4FmU0X
+ KhTCt0EwK2FHD7yyYOIiS7ZdqtRWtr/B7Ux5nuLvtHzw8d7kxiN87aIttl7h8N7ptxpISGQB59n
+ p3h6p2vso1NZk7afRUgmUZafMKm6Z6QU6KqVi7awefGIeVcMm2cV8Yp5WA8/jZBPGzDxPwy9o3m
+ 3SyBnMmlauceVoDWhAWpp6cuXGbhzjwI2LhPvlePFW/WIcAHmDmdJWLhQi4viNlOeTXlFD4ia6N
+ CWxkVANd3goPewJ3zsii4boKdOq3X/Dg7pF1v2qQgjiIz6SF86o2zFlU+ooqTplSrQnVwQtMFVq
+ dApvklNes0w1hgAbBHB3+WMyGRTsD
+X-Received: by 2002:a53:bbcb:0:b0:668:8acd:14df with SMTP id
+ 956f58d0204a3-66ce4b8d8femr6465718d50.54.1787580953113; Mon, 24 Aug 2026
+ 07:15:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260805052723.2823538-1-neal.frager@amd.com>
- <2383a98d-d88d-415d-9de1-aa68a5d215fe@amd.com>
- <BL1PR12MB5032F21E0E2A6F17398B6D76F0A02@BL1PR12MB5032.namprd12.prod.outlook.com>
- <CAFEAcA8sWn1vjm+OFYzwA-jko2vYkFcWPwT6g9=0AeO+JQo-JQ@mail.gmail.com>
- <BL1PR12MB50322B1D97569B5CADEC8E55F0A02@BL1PR12MB5032.namprd12.prod.outlook.com>
-In-Reply-To: <BL1PR12MB50322B1D97569B5CADEC8E55F0A02@BL1PR12MB5032.namprd12.prod.outlook.com>
+References: <20260824102805.639072-1-peter.maydell@linaro.org>
+ <20260824102805.639072-6-peter.maydell@linaro.org>
+ <03dfa51a-64c2-4b79-b524-2bac3e53335c@oss.qualcomm.com>
+In-Reply-To: <03dfa51a-64c2-4b79-b524-2bac3e53335c@oss.qualcomm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 24 Aug 2026 15:13:04 +0100
-X-Gm-Features: AcwNN1VxiYK2jXYCrQnBcioJAtVp2kRV-_L71rBTzoEWsRsEjGV3LGfW0swuAp0
-Message-ID: <CAFEAcA9rWqo92nt1StDuBwUjbV0eqdAA921nozpjQHDF_ARJyg@mail.gmail.com>
-Subject: Re: [PATCH v1 1/1] include/hw/xen/xen_native.h: downgrade
- include-order assertion to warning
-To: "Frager, Neal" <neal.frager@amd.com>
-Cc: "Hildebrand, Stewart" <Stewart.Hildebrand@amd.com>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "sstabellini@kernel.org" <sstabellini@kernel.org>, 
- "anthony@xenproject.org" <anthony@xenproject.org>, 
- "edgar.iglesias@gmail.com" <edgar.iglesias@gmail.com>, 
- "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>, 
- "Stabellini, Stefano" <stefano.stabellini@amd.com>, "Saleab,
- Micheal" <Micheal.Saleab@amd.com>, 
- "john.ernberg@actia.se" <john.ernberg@actia.se>, 
- "matthew.l.weber3@boeing.com" <matthew.l.weber3@boeing.com>, 
- "vincent.stehle@arm.com" <vincent.stehle@arm.com>
+Date: Mon, 24 Aug 2026 15:15:40 +0100
+X-Gm-Features: AcwNN1XIdjJmFRvIiK6phJWJ4XpuAWCRNEG52YayHrDMB-K21_FpubgxphzL82A
+Message-ID: <CAFEAcA8HOx3nQN00LTtqRVLqBGuQTT8bu7gaSntJyeot=hzcHQ@mail.gmail.com>
+Subject: Re: [PATCH 5/6] hw/intc/arm_gicv5: Free memory in finalize
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -131,66 +121,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 24 Aug 2026 at 14:31, Frager, Neal <neal.frager@amd.com> wrote:
->
-> AMD General
+On Mon, 24 Aug 2026 at 14:55, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
 >
 > Hi Peter,
 >
-> >
-> > Hi Stewart,
-> >
-> > > The -I$(XEN_ROOT)/tools/include added to QEMU's extra-cflags causes
-> > > __XEN_INTERFACE_VERSION__ to be defined before xen_native.h is included,
-> > > triggering an include-order assertion. Downgrade to a warning since the
-> > > version is consistent in cross-compile.
-> > > Ref: https://github.com/qemu/qemu/commit/e2abfe5ec6
+> On 24/8/26 12:28, Peter Maydell wrote:
+> > The GICv5 allocates memory and creates hashtables during realize and
+> > as part of its operation.  Free those resources in finalize.
 >
-> > > This is a buildroot issue, so I don't believe it's necessary to fix from the
-> > > qemu side.
-> >
-> > I am not sure I fully agree here. While this is a buildroot identified issue,
-> > there could be other use cases for __XEN_INTERFACE_VERSION__ to be defined
-> > before xen_native.h is included.
->
-> > But what, though?
->
-> > And what we have found is that if
-> > __XEN_INTERFACE_VERSION__ to be defined before xen_native.h is included, it
-> > is not a hard error.  For buildroot, the qemu works just fine in spite of
-> > this.
->
->
-> > I think that just means you got lucky. Either there is a hard requirement
-> > for one header to be included before the other (in which case it must
-> > be a #error, and whatever is causing the mis-ordering to happen must be
-> > fixed), or it's fine for the ordering to be either way (in which case it
-> > doesn't even need to be a #warning).
->
-> From my view, the order the header files are included does not matter, and
-> this should not be an error.  I agree with removing the warning as well, if
-> that is what we all agree on in the end.
+> Why not in unrealize() path?
 
-The rationale for the header ordering is in the comment in include/hw/xen/xen.h:
+No particular strong reason. Do we have some life-cycle/style
+guidance on when we should put things in unrealize vs finalize ?
 
-/*
- * C files using Xen toolstack libraries will have included those headers
- * already via xen_native.h, and having __XEM_TOOLS__ defined will have
- * automatically set __XEN_INTERFACE_VERSION__ to the latest supported
- * by the *system* Xen headers which were transitively included.
- *
- * C files which are part of the internal emulation, and which did not
- * include xen_native.h, may need this defined so that the Xen headers
- * imported to include/hw/xen/interface/ will expose the appropriate API
- * version.
- *
- * This is why there's a rule that xen_native.h must be included first.
- */
-
-...basically, if something doesn't include xen_native.h before xen.h
-then __XEN_INTERFACE_VERSION__ can end up defined to the wrong thing.
-(Disclaimer: I'm not a Xen expert, I'm just applying Chesterton's Fence.)
-
-thanks
 -- PMM
 
