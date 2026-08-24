@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDBF1C5DF9B
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 15:25:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EABF4C5DF9B
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 15:25:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyWXy-0005bT-7e; Mon, 24 Aug 2026 11:25:14 -0400
+	id 1wyWXy-0005bY-83; Mon, 24 Aug 2026 11:25:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wyWXw-0005Xq-F5
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:25:12 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ id 1wyWXv-0005Sb-It
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:25:11 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wyWXt-0007C5-EO
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:25:12 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-c214321dc32so711258166b.0
+ id 1wyWXs-0007Bh-Of
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 11:25:11 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-6a0a4a28cbdso6397323a12.3
  for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 08:25:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787585108; x=1788189908; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787585107; x=1788189907; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=WJwqaddlExuj8k565K3Q7CEWlxwfLdXIcKUzKJqIN0Y=;
- b=SyFPXMnoDnR53e1dyUkanUcvDnbelCFvh3uwYlZ2E0rGUfHd1jnGGD/8zxRHDEShz0
- iCTWtFrUc4JgT8KRA0wpzeHxQQgFv+mEEVv1f4YjTVhht9hIKwDIv0fpH+OKVhGixrE8
- 8LTgBaA8Bom/nmwtq4P11OkA+E2LkWaIdmqzSrXzHhpj9cVqnNobMGobD82mfhQy1KrD
- qI+FwvX3vWO25KR1XnD6jwS0ru+ewDQckVPK2aKMsGAUji+T0dxztzgR8iDWC19488Tw
- kXnUfaoOHolitmx/OtXXOoLIg7ZwkmDIJpw/j5srSB8r7NFVtjywtPrOT/eP8BUkXK4y
- 3qzw==
+ bh=zEBSWmDHcpbyAT5+oxLyqv+4C5kL0TnHpRS3uvgoVbI=;
+ b=jwtvpKCrwpYLN+4FtoeNfNykkRmFg6x/SUepBuNNRu80ibLt+YxhGPQ8/f86e0IMT2
+ Gv7PspdC5YTgpwZOP/QsOhqsQ9VygvCOuE6WUp2kmwRzKWRhcXj5x0xkG/gBe6w6h5Nv
+ 0siaL2Nlvo8BlBT87/Wz3xpauVTtzTCGgHG/lSLlLd3vtOcPnnm3UEPQPJ/2bet0sXRx
+ uWb0/iMGdkmLVx5eoOhaYxehjA5kHhDAMqWzbuQ3l7F1M7WSTFk7EkQD+dEWol49hROd
+ MIYKHaUWXzfUm6gTrwMA4oRExntuPdAW09zibOUSSo4OS34k7tBYnZmr/FCwpT7437H9
+ JCPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787585108; x=1788189908;
+ d=1e100.net; s=20251104; t=1787585107; x=1788189907;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=WJwqaddlExuj8k565K3Q7CEWlxwfLdXIcKUzKJqIN0Y=;
- b=brw38iaWFBjswmU6Lfsv2ZOBNbMdjWbXxVKYPGZaM9O5yobIniPpWNdhDNzsQJz8AQ
- p2S7qkxnc9pwbcyunoK3ioax7ecps8/qhb7yIg5hRTW4cPywrKJbIVhc0PYWYXN+VyMF
- 6d8qEoFPFj4Ekhc42V4WV34YdsSjiNj6jhfpmynEKXcu/S0KUxShasSljKPtb50FvNMC
- f3Qh+Rm0M+Y6uKsv9yslsf1qCzQjETtMnjlxCVR5He0JBAe58SfxRq+DKjcpkWgQLN8W
- ppcpcDLjM87cnswwHHgBHrVFjonp+9zT8TGAy0Lt2UkB6nXaxMTk5isNUwhUfKyPhSTY
- 4Fkw==
-X-Gm-Message-State: AFuF++nYvgDSEvmnxg+5RkXhXuL+uEBFgvn4s8jXSRHvE4eiw4nWDHXh
- A6/U+0h7hVvKKbQJ4agZGyO61MNA6z0lQaM3Vqd6B6w/pJncPV/P+OcRrecY0H790h8=
-X-Gm-Gg: AR+sD13KyGjspsUsP2rbLdeJZ3WBpExtBNOiWtOet5Ga1GzbAVS9bXkXljFKhcEdFu8
- qApo8Xj1i/U1bbJyU4+H+GB7RA7PsVwXslZQNe7uMxmr0kxxua2+5p1U6wMjY2UeHaTDJQ1avUD
- 13CLQ9RrjUKjPJa5Kopv1g7ay36kxiKM40ZVc1+WNDRLXwwA0tOhd3bPi2jCMXN6we0ZYZXG8M+
- uHu6ZuIrQeYlj/uloxO9lDWDvBFHtDF4+q/KyAR3XRaeoRqC8BolrfNYDVmLMb8BfN5xthM840P
- fiXAtm6E/07jtvIyQLiOqO9Og5aj7+ylofKDZRoCy9oOUrIyNrKcWtSrfLKEYm8Si5sJdOvw6RV
- b89ccxBqgHWcPoJITUBvhvRjfOewYFLrszqFWPAs6zZXPQ8I/tednsbFXvDCCaZoa/ebHk3yXlU
- dQh3AEMdJ/UaZu28lQoJVNjJPxl8x2IqS5NyXnSQtwWbeG6r2BxauO2GJsCX84
-X-Received: by 2002:a17:906:b286:b0:c21:752f:c44e with SMTP id
- a640c23a62f3a-c246a67492cmr2450696566b.16.1787585107685; 
- Mon, 24 Aug 2026 08:25:07 -0700 (PDT)
+ bh=zEBSWmDHcpbyAT5+oxLyqv+4C5kL0TnHpRS3uvgoVbI=;
+ b=FXKh/bENUsGjfSdibcEA4IVIUr8HIuA7yIrb3jCcAKtqFI46Zgjdf44u7cYv8j4bMn
+ QPqpfrv8iNCjoU5vduaODDNdMlnWdHAI34jIWh4pzuJiWKmZG5DQipWw7fb5y7mUngy9
+ bBGvV7m0b6J/rQe4dCNxmSCuD3iYhi8u3oaLlKxWhqZTg/O9Dcme81hwwW9qsOIFUl6s
+ l0v+D2b7BTwa6kCxuz1fwpXasm0IP/og7XwvnbVwbVYZkgDQdUuOWD1MS3lmxwpLboaJ
+ OLlAn7VfcfgpMdFpTIE0O3rv7OSgTLuKv387qbaA1sMTeqXIjRKsSRX1UJRaUKLAwSVX
+ 1V9A==
+X-Gm-Message-State: AFuF++kibfD3vvZq1Pac2l00ip/QT9yY4BIugEg9coxCM8/rjHmrsONc
+ 3s1vMKG/AxCiyvqZdIGqMMrPCDV+lKWNDnipdEfenuQdNjLf+F8asNpgq8Wq8Y/rCBg=
+X-Gm-Gg: AR+sD12P6+Cod0qi6zn1ZnePYbU0GtIHFcR5aWGdIDPVfl6jj39ZuMczOxbZtK5SILU
+ suYjAhkcS8f7I2GkcmCNpEZkEIArE0MMbq8obplgULbTX3ZiSdLTRrezCOeGPjCZZy6t2I9zDSf
+ fqeRWQ/YupoD1569ST47uv5brioIx25/ydDWuU/098a1RrspVHymI/AE+JOq+3wsg66vICSwJXo
+ 81q3LK9yZmhVKtaCer28eBLZJV3iIQaDAIZ01xr6LnHekOuyj4AiL6fCBYLf4nai+79Uwcco7+5
+ ScH2B7kizQkgxofsM2nP7xMqdoVcxLdX0WWJ4dP7leTgblDrEm/LUkZHfPWXGvooJQOpSdwceMF
+ tscXq/FOR3yx51+F7cRqAyk4RzyGRUVVROLaQkfBc3lPjP8nO8t9T2CRg9N5rjTqLIIaiKyvn+z
+ cdnK36/f+b9V8HwYMAMxRB6lOhZXJZkPz7F3psxGPObVKAUUf3NQ3KCrKheLHN
+X-Received: by 2002:a05:6402:1f4f:b0:6a0:6978:bee0 with SMTP id
+ 4fb4d7f45d1cf-6a582b62783mr24037052a12.9.1787585106912; 
+ Mon, 24 Aug 2026 08:25:06 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c24d6f203acsm290790166b.24.2026.08.24.08.25.03
+ 4fb4d7f45d1cf-6a59e001095sm9806117a12.6.2026.08.24.08.25.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 24 Aug 2026 08:25:03 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 65CBD5FAE2;
+ by draig.lan (Postfix) with ESMTP id 630795FA11;
  Mon, 24 Aug 2026 16:25:02 +0100 (BST)
 From: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Date: Mon, 24 Aug 2026 16:24:51 +0100
-Subject: [PATCH v2 4/8] char-fe: implement qemu_chr_fe_backend_name
+Date: Mon, 24 Aug 2026 16:24:50 +0100
+Subject: [PATCH v2 3/8] gitlab: add arm-softmmu tests to the macOS build
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260824-fixes-for-11-2-v2-4-352c6b890402@linaro.org>
+Message-Id: <20260824-fixes-for-11-2-v2-3-352c6b890402@linaro.org>
 References: <20260824-fixes-for-11-2-v2-0-352c6b890402@linaro.org>
 In-Reply-To: <20260824-fixes-for-11-2-v2-0-352c6b890402@linaro.org>
 To: qemu-devel@nongnu.org
@@ -91,20 +91,20 @@ Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
  Fabiano Rosas <farosas@suse.de>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4652;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1596;
  i=alex.bennee@linaro.org; h=from:subject:message-id;
- bh=16o9aOALfN4xkFpmwmkWkdn+kTLD6/M+CAi326lKzSg=;
- b=owEBbQGS/pANAwAKAfvQ2wlanipEAcsmYgBqjGJNe6mH5ki8B16GAGABc2EqP9oIVS4aNDGSy
- nc9Kp0JtAyJATMEAAEKAB0WIQRmha6Z51FnvK/I3zX70NsJWp4qRAUCaoxiTQAKCRD70NsJWp4q
- RB3RB/4uLlgFy8NoIadYwryQpj1CzM+lWTx/wjpGU6SCyP/Y9PROSjqeVEpqtK/swiqZGGkwglG
- 6tb4qmDsfPU3+e1Hsl9XyjobW4ZODOLYlDyo/ja0RcoBbwDE02NgFt1Ub4dlf2X9Tlq+KulyYrD
- Fzvnp+7VVhew4VlBB4J3YhsoCVVV6vKq81K6H1rGuEtGt5xa0fdePb5MdouZTDihC2w0YqAJDCQ
- 39BaJtoOqFnuGCr6Psr3P/gFBOuboM03t1RqURLUzzFsGictFIXs4oLeZlo8Xq7joIet7hQflEU
- iNl8e56VoZV0bv/OxAuhk98cceJ9lizeHCwdHNm5kVE4+5uQ
+ bh=B9ZSx+meoWvdNqJq36oJBwbjPxCumeybg4Iya8CkY5Q=;
+ b=owEBbQGS/pANAwAKAfvQ2wlanipEAcsmYgBqjGJNnu7NhMoxC7BsjB9Zi+XIJSWsI3a7ytnwa
+ j94NjxmHuOJATMEAAEKAB0WIQRmha6Z51FnvK/I3zX70NsJWp4qRAUCaoxiTQAKCRD70NsJWp4q
+ RHjcB/wNGlY9qSB9kIBU3maa+79vGLdbJ2bOgAlw7VnFCdkASaXJsmK1+gE4nIrqak+Ah+f3Vfn
+ Ki/UrABJsC2/EVzzPOD0Jx21xwdzwYT4mMcJUuWhwUpLE6A4zMPZNFs0G2LsQEA99z2E770Sc3p
+ igV7R4ldS3BzjSIvy9mnB4hI/Z/pMXhm7YsmiMtM/8Rz8HhS21wbnxnkl+Kd0oOgAFlsWiK8Q8K
+ TAonKqYIfe177YT2A0c6qpuxq3Q3JbsVKvjtn4G97TpFybCtya2qnWT902uq7fgoOCUyfxibcYf
+ HOk8uvBJoCfeaVd1rgEFAwQeVl4mswo411ZqHR652ohbR0Se
 X-Developer-Key: i=alex.bennee@linaro.org; a=openpgp;
  fpr=6685AE99E75167BCAFC8DF35FBD0DB095A9E2A44
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -127,134 +127,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A number of chardev users where calling qemu_chr_fe_get_driver() which
-is discouraged as it blocks backend hotswap. As the pattern is common
-and need for the string is transitory add a helper and keep
-qemu_chr_fe_get_driver() for those that really need the funkiness of
-poking around the backend setup.
+Now we have fixed the compiler issues lets have at it.
 
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260810153503.2652324-1-alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260723200904.224413-4-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
-v2
-  - checkpatch fixes
-  - r-b
----
- include/chardev/char-fe.h       | 13 ++++++++++++-
- backends/cryptodev-vhost-user.c |  8 +-------
- backends/rng-egd.c              |  8 +-------
- backends/vhost-user.c           |  8 +-------
- hw/char/imx_serial.c            |  4 ++--
- 5 files changed, 17 insertions(+), 24 deletions(-)
+ .gitlab-ci.d/macos.yml | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/chardev/char-fe.h b/include/chardev/char-fe.h
-index 5f8a6df17dc..a82894e1d51 100644
---- a/include/chardev/char-fe.h
-+++ b/include/chardev/char-fe.h
-@@ -52,7 +52,8 @@ void qemu_chr_fe_deinit(CharFrontend *c, bool del);
-  * associated Chardev.
-  * Note: avoid this function as the driver should never be accessed directly,
-  *       especially by the frontends that support chardevice hotswap.
-- *       Consider qemu_chr_fe_backend_connected() to check for driver existence
-+ *       Consider qemu_chr_fe_backend_connected() to check for driver
-+ *       existence or qemu_chr_fe_backend_name() if you need the name.
-  */
- Chardev *qemu_chr_fe_get_driver(CharFrontend *c);
- 
-@@ -70,6 +71,16 @@ bool qemu_chr_fe_backend_connected(CharFrontend *c);
-  */
- bool qemu_chr_fe_backend_open(CharFrontend *c);
- 
-+/**
-+ * qemu_chr_fe_backend_name:
-+ *
-+ * Returns: caller freeable string or NULL
-+ */
-+static inline char *qemu_chr_fe_backend_name(CharFrontend *c)
-+{
-+    return (c->chr && c->chr->label) ? g_strdup(c->chr->label) : NULL;
-+}
-+
- /**
-  * qemu_chr_fe_set_handlers_full:
-  * @c: a CharFrontend
-diff --git a/backends/cryptodev-vhost-user.c b/backends/cryptodev-vhost-user.c
-index cc478d9902d..3334e280a27 100644
---- a/backends/cryptodev-vhost-user.c
-+++ b/backends/cryptodev-vhost-user.c
-@@ -373,13 +373,7 @@ cryptodev_vhost_user_get_chardev(Object *obj, Error **errp)
- {
-     CryptoDevBackendVhostUser *s =
-                       CRYPTODEV_BACKEND_VHOST_USER(obj);
--    Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
--
--    if (chr && chr->label) {
--        return g_strdup(chr->label);
--    }
--
--    return NULL;
-+    return qemu_chr_fe_backend_name(&s->chr);
- }
- 
- static void cryptodev_vhost_user_finalize(Object *obj)
-diff --git a/backends/rng-egd.c b/backends/rng-egd.c
-index 1d92bd71cf7..c2207f40c5c 100644
---- a/backends/rng-egd.c
-+++ b/backends/rng-egd.c
-@@ -126,13 +126,7 @@ static void rng_egd_set_chardev(Object *obj, const char *value, Error **errp)
- static char *rng_egd_get_chardev(Object *obj, Error **errp)
- {
-     RngEgd *s = RNG_EGD(obj);
--    Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
--
--    if (chr && chr->label) {
--        return g_strdup(chr->label);
--    }
--
--    return NULL;
-+    return qemu_chr_fe_backend_name(&s->chr);
- }
- 
- static void rng_egd_finalize(Object *obj)
-diff --git a/backends/vhost-user.c b/backends/vhost-user.c
-index 380d8250233..46dadb74800 100644
---- a/backends/vhost-user.c
-+++ b/backends/vhost-user.c
-@@ -152,13 +152,7 @@ static void set_chardev(Object *obj, const char *value, Error **errp)
- static char *get_chardev(Object *obj, Error **errp)
- {
-     VhostUserBackend *b = VHOST_USER_BACKEND(obj);
--    Chardev *chr = qemu_chr_fe_get_driver(&b->chr);
--
--    if (chr && chr->label) {
--        return g_strdup(chr->label);
--    }
--
--    return NULL;
-+    return qemu_chr_fe_backend_name(&b->chr);
- }
- 
- static void vhost_user_backend_class_init(ObjectClass *oc, const void *data)
-diff --git a/hw/char/imx_serial.c b/hw/char/imx_serial.c
-index fb41ee2ac50..8ac4efbb5e9 100644
---- a/hw/char/imx_serial.c
-+++ b/hw/char/imx_serial.c
-@@ -278,10 +278,10 @@ static void imx_serial_write(void *opaque, hwaddr offset,
-                              uint64_t value, unsigned size)
- {
-     IMXSerialState *s = (IMXSerialState *)opaque;
--    Chardev *chr = qemu_chr_fe_get_driver(&s->chr);
-+    g_autofree char *label = qemu_chr_fe_backend_name(&s->chr);
-     unsigned char ch;
- 
--    trace_imx_serial_write(chr ? chr->label : "NODEV", offset, value);
-+    trace_imx_serial_write(label ? label : "NODEV", offset, value);
- 
-     switch (offset >> 2) {
-     case 0x10: /* UTXD */
+diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
+index bdb3eae18f0..40b9b637b3b 100644
+--- a/.gitlab-ci.d/macos.yml
++++ b/.gitlab-ci.d/macos.yml
+@@ -22,7 +22,7 @@
+     - export PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
+     - brew update
+     - brew install $PKGS
+-    - brew install aarch64-elf-gcc i686-elf-gcc x86_64-elf-gcc
++    - brew install arm-none-eabi-gcc aarch64-elf-gcc i686-elf-gcc x86_64-elf-gcc
+     - if test -n "$PYPI_PKGS" ; then PYLIB=$($PYTHON -c 'import sysconfig; print(sysconfig.get_path("stdlib"))'); rm -f $PYLIB/EXTERNALLY-MANAGED; $PIP3 install --break-system-packages $PYPI_PKGS ; fi
+   script:
+     - mkdir build
+@@ -40,8 +40,9 @@ aarch64-macos-15-build:
+     PATH_EXTRA: /opt/homebrew/gettext/bin
+     PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
+     CONFIGURE_ARGS:
+-        --target-list=aarch64-softmmu,i386-softmmu,x86_64-softmmu
++        --target-list=aarch64-softmmu,arm-softmmu,i386-softmmu,x86_64-softmmu
+         --cross-prefix-aarch64=aarch64-elf-
++        --cross-prefix-arm=arm-none-eabi-
+         --cross-prefix-i386=i686-elf-
+         --cross-prefix-x86_64=x86_64-elf-
+         --disable-plugins
 
 -- 
 2.47.3
