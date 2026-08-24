@@ -4,110 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E7F5C5DF81
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 19:20:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6E61C5DF9C
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 19:25:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyaD1-0006NI-3j; Mon, 24 Aug 2026 15:19:51 -0400
+	id 1wyaHw-00079L-O3; Mon, 24 Aug 2026 15:24:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wyaCx-0006MW-Jb; Mon, 24 Aug 2026 15:19:47 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wyaHv-00079A-DC
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 15:24:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wyaCv-0005UD-LJ; Mon, 24 Aug 2026 15:19:47 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67OG1p8a2260570; Mon, 24 Aug 2026 19:19:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=5EFOqh
- mQwn+vW2Ws3PclB4K25BhWcXhzLTc/REQ9WCE=; b=mhHWZ+ycYnOcBJ7dtbCOSP
- 6wg5tiRM9z7UeyREr36b6y7qKHAmAXs4vpKH6yiNqptEBOIxootVgsCevvh2jv/P
- TGZCmF3eR0/W09JF/xMiKSJGQyn2EikWg+gKwQqDYBrUbC0EdFJIW/vQzJrO4oR0
- N6ht94/mV35L3ixYxCiFi1S6FQZP1O3wtP/MwXzW2WCKR/KOjIXO0R6TJdjSQICJ
- THul3wFRdeIVTEtuCTB3X3xA4LRZ/LpS6wdSWGDyS4eJvIVMRnA0KOaQ5hsueFVg
- 004NeCa5LEi9K7HXuvHZl9Tx87mSf0/t6ZUpw2jLUcVBe8wq26KlbxAhGxmaIASw
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g716hkv0y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 19:19:42 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OJBKfY025499;
- Mon, 24 Aug 2026 19:19:42 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkgyy12-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 19:19:42 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67OJJemU22151906
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 19:19:40 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8A70558056;
- Mon, 24 Aug 2026 19:19:40 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2580A58064;
- Mon, 24 Aug 2026 19:19:40 +0000 (GMT)
-Received: from [9.61.21.147] (unknown [9.61.21.147])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Aug 2026 19:19:40 +0000 (GMT)
-Message-ID: <0875272c-0095-47bc-b7d2-d5793f270816@linux.ibm.com>
-Date: Mon, 24 Aug 2026 15:19:39 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wyaHt-0006VD-Nt
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 15:24:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787599491;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zDasYKY8q1bY5LYEDYETHKu/urM0LmqWOEDAQpQBf+8=;
+ b=QehXsDXzj5wGEgIDXOodIEM7sxQ5OkNgjLWA3Yx3s56Cdegvyv4N6zKfgLPbGr2R95izAe
+ L8EZtxDiNgSCUYI+HXTAu4pyvgv4ezguW/KPXWpSD5bZDWJonCIV+vj/TTbN8cIondeUTY
+ h2Xh09C+laRmMjLSSN3nwJmONX5UqBg=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-403-AVT1-_8EMUSMEP1SDnB39g-1; Mon, 24 Aug 2026 15:24:50 -0400
+X-MC-Unique: AVT1-_8EMUSMEP1SDnB39g-1
+X-Mimecast-MFC-AGG-ID: AVT1-_8EMUSMEP1SDnB39g_1787599489
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8efad04d884so71384466d6.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 12:24:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1787599489; x=1788204289; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=zDasYKY8q1bY5LYEDYETHKu/urM0LmqWOEDAQpQBf+8=;
+ b=tTX+M1uBHiHCL6bmumwSWTdm3doKdiL9uiXry5Pb25VgTGDe5jMpqxqbACmcoiLdib
+ C2n5qZ6owxTDu2e87q4oe94p3RFKowRaM/obNCTcYDlWvn773xTHIoO1aUksrmKCo5HU
+ WJM7QpUKL1wrhqZfuUieBCtkzFTB6Yco0W0I9O9N7SVCuHyf5o+qHfsibUpH2enAsgQ/
+ 8IVH1kx34QAdBFJpytFo3+27rSLrpmMrzitmimYutnLY1B9+4GxtO8E4TGiFCPDGWFDV
+ fS8ictjDZpXUWh9od7Jlj7GTfzPJnzP6ddpYqfgMhbB8ogK2pkLGkGGRBSWqOb3Un2ez
+ BXog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787599489; x=1788204289;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :content-type:mime-version:references:message-id:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=zDasYKY8q1bY5LYEDYETHKu/urM0LmqWOEDAQpQBf+8=;
+ b=BGEUb0M0Gm/sF7A0VoNpJZtALHdO3Bw1CWUM3wp/p9yYGnxn+PbWoNX8cV/9NtJG+u
+ ZWh+WBJ2aXhBz0nZP6Yq7sKJpyJl6nAPCr0/pK3MJyETr7KRGU5wcdO0DClSITHel5Xc
+ 6eFDR03p5LEjs97fy1kzetLIQtwWxZTdQiaACDM/gjiNp207VgZ2mTH5OsXT9yO5n8XZ
+ ppeyJ6zmwfCCEZlj8pUcLQoQIr69/lKs6GC1WofIkDXnRh8nyCLqYElCbqIfUjSlTL+6
+ +CDk7jO9hjxL7DI2JkKUo/9/NzmK2Du8Nj/SPUHs6qwv8Jr37/i7GrlHoqB/5+XRwdil
+ eTMQ==
+X-Gm-Message-State: AFuF++m0ExZ4lB713redPW/5o0WSoa8LtR2OT0sc3lFf8SmZ/THRPp+B
+ 5m3mTBXoKEbp3LxV6bMVrOadsh59nelmhlNgZZuEwge93Zq4tInRaHFhY1W1C7FO2dRQJAea/+6
+ /vee74CHSuioMIJW47VZrae3oGZAdYvbg2/NnmBu7LX8BKoQxUIlYSx+3
+X-Gm-Gg: AR+sD10utno1HGI9odDJyH/UAYXViwCc1vT+Jo1Vdw02ErrVoJ+cZ+dwxfgIGbul0vs
+ iVUc8/BJ2s3TULC+eTOJCBNr1UUuAJ8K6D7f9M6xKxdW8ymlJgH9ZzrvaLMTO2y1ELFbs3e384a
+ kMnzYL7btpu+iMyhI1FM6Zi+vQn6Iih2GRTsJs9u2qeQlrCVO9yzoIhtSBhT2uzQ7K97dsmxXXc
+ dFL7jS2zVGFOJUvJedYMPY8yqqw/5LHCZirWDhPRWCrfOpMWwVhb62FzeHBI8bN4dt3jNpFFug5
+ dnrnLXkNoRA+nfwevCAC2Tentj0F/2HghU50bTAWESQIRxP/S2qB6IBTt+wcpp/jpEFy
+X-Received: by 2002:a05:6214:3207:b0:90c:8fdf:5641 with SMTP id
+ 6a1803df08f44-90cb790f1demr11682776d6.21.1787599489375; 
+ Mon, 24 Aug 2026 12:24:49 -0700 (PDT)
+X-Received: by 2002:a05:6214:3207:b0:90c:8fdf:5641 with SMTP id
+ 6a1803df08f44-90cb790f1demr11682156d6.21.1787599488796; 
+ Mon, 24 Aug 2026 12:24:48 -0700 (PDT)
+Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-90c939332cbsm68616576d6.32.2026.08.24.12.24.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Aug 2026 12:24:48 -0700 (PDT)
+Date: Mon, 24 Aug 2026 15:24:44 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Bin Meng <bin.meng@processmission.com>
+Cc: QEMU <qemu-devel@nongnu.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@redhat.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: Re: [PATCH v2 1/1] system/physmem: Improve guest memory allocation
+ failure error message
+Message-ID: <aoyafAJi1iLQu2Ou@x1.local>
+References: <20260822122710.3731595-1-bin.meng@processmission.com>
+ <20260822122710.3731595-2-bin.meng@processmission.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] disas: Replace straggling CS_ARCH_SYSZ
-To: Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-References: <20260824143033.306201-1-farman@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260824143033.306201-1-farman@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDE2MSBTYWx0ZWRfX/qBdxp02fW1a
- 7TXELaalN60dSy0guH28LLeXMJ9tUfKrWwdQt2qoxU65tY5By4UY0JrIIdiLCAZFuTzczSXKE8k
- GL+d3sQCJuvA2oUq9dCF8ugVgjYqZA8=
-X-Proofpoint-GUID: DxXPpwlYUVgFWyMKjaafqo4c63Yud6Kx
-X-Proofpoint-ORIG-GUID: DxXPpwlYUVgFWyMKjaafqo4c63Yud6Kx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDE2MSBTYWx0ZWRfXxd+oEIcR0BR6
- grhfoiwB2RPtQlMWFtj4uPhV9Ny7vJN2p3V90Z709Uff8B1O5BBnIMEP5L96aM5yc8YsGTIzSrO
- dtDrIarHstU8QX0xvOFtblk1AKAwyEENhn7iMr9l1T1G4igYaLd6WvzYWok6n2f30SD9W/Lq4sU
- U4qOmYFJkoKzmInTqLoxNsGdsPRdu5hgPNlkQbFAot36QD1l6AmpGZYryCN8q76uJk0vcxC/lct
- HJpV3vEpkqhSEjU9mwxOQTfz7QctlAHk9N3eoiNxuHA5yCpxtU5cTe6TwL29JKnRt92jWkRVicF
- xtExMxgB6lztY7rM7XZZU0c4srQe5eRqz8i8ucsQ8O5ZodtAW7NT8sCP0jVkWieEykaTAB5BGgb
- MQKDNMPTY2fyZbwjuYkm4/qQ0oqBICbzGq1TTGGeGT5T2flkctOLXJ4DFGkug+i0oIS+icgbJEZ
- GBkrOaAhEIhcbuKXZzw==
-X-Authority-Analysis: v=2.4 cv=H7brBeYi c=1 sm=1 tr=0 ts=6a8c994e cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=-DuG6ggHnZLhH3crdFAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-24_05,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
- bulkscore=0 adultscore=0 priorityscore=1501 clxscore=1011 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240161
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+In-Reply-To: <20260822122710.3731595-2-bin.meng@processmission.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,27 +121,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/24/26 10:30 AM, Eric Farman wrote:
-> When updating to capstone v6, the define CS_ARCH_SYSZ was replaced
-> with CS_ARCH_SYSTEMZ, except here. On systems without capstone-devel
-> installed, this causes a compile error:
+On Sat, Aug 22, 2026 at 08:27:08PM +0800, Bin Meng wrote:
+> From: Philippe Mathieu-Daudé <philmd@redhat.com>
 > 
->   ../disas/disas-host.c: In function ‘initialize_debug_host’:
->   ../disas/disas-host.c:78:24: error: ‘CS_ARCH_SYSZ’ undeclared (first use in this function); did you mean ‘CS_ARCH_SH’?
->      78 |     s->info.cap_arch = CS_ARCH_SYSZ;
->         |                        ^~~~~~~~~~~~
->         |                        CS_ARCH_SH
->   ../disas/disas-host.c:78:24: note: each undeclared identifier is reported only once for each function it appears in
+> When Linux refuses to overcommit a seriously wild allocation we get:
 > 
-> Rather than making capstone required, replace the constant
-> with the same one used elsewhere after that change.
+>   $ qemu-system-i386 -m 40000000
+>   qemu-system-i386: cannot set up guest memory 'pc.ram':
+>   Cannot allocate memory
 > 
-> Fixes: c8220a096f ("target/s390x: Update capstone disassembly to v6")
-> Signed-off-by: Eric Farman <farman@linux.ibm.com>
+> Slightly improve the error message, displaying the memory size
+> requested (in case the user didn't expect unspecified memory size
+> unit is in MiB):
+> 
+>   $ qemu-system-i386 -m 40000000
+>   qemu-system-i386: Cannot set up 38.1 TiB of guest memory 'pc.ram':
+>   Cannot allocate memory
+> 
+> Reported-by: Bin Meng <bmeng.cn@gmail.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@redhat.com>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> Tested-by: Bin Meng <bmeng.cn@gmail.com>
+> Signed-off-by: Bin Meng <bin.meng@processmission.com>
+> 
+> ---
+> 
+> Changes in v2:
+> - Rebase onto current master
+> - Update the source path from softmmu/physmem.c to system/physmem.c
+> - Fix a typo in the commit message
+> - Collect Peter Xu's Reviewed-by and Bin Meng's Tested-by
 
-Thanks Eric, I just noticed the same compile error and this resolved it
-for me.
+queued, thanks.
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+-- 
+Peter Xu
 
 
