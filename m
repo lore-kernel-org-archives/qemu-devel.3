@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF901C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 15:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 370B2C5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 15:22:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyWTW-0002OO-Hv; Mon, 24 Aug 2026 11:20:38 -0400
+	id 1wyWV6-00033H-Nn; Mon, 24 Aug 2026 11:22:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wyWTU-0002Nm-Fi; Mon, 24 Aug 2026 11:20:36 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wyWV4-00032T-PQ; Mon, 24 Aug 2026 11:22:14 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wyWTS-0005bQ-C7; Mon, 24 Aug 2026 11:20:36 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1wyWV1-0006ME-6Z; Mon, 24 Aug 2026 11:22:14 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67OD1dea2004232; Mon, 24 Aug 2026 15:20:32 GMT
+ 67OD1Xf8085114; Mon, 24 Aug 2026 15:22:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=d1Iz/N9P2hJqGNI1uLn5TgXKh4FEKgpY+Z+Ln6y3T1w=; b=fzxNjReJHmfW
- sC6Rplo6Q3lspEW/2k7J0LY3q50Or9nbVsVjRrQGmprg//vxbMYuUovm2JeBA/OG
- f05v9kpMuNOf+8cnkweD3XKEmSZRMdsk67IbX2bTnn0EaI3cFnmYKIm4YbpfZFCb
- j911Xlz+eUhfOEbm/2eLTuRozGwm3nuAUNIQwWxMPzmYIIQi+Pu/Q+WBBoag84zD
- zvoxDYLIjeGfbW2fEjeMvgy3mmqWrfZXsF0suH0d4kS9SZxK4P8DPAxG/aK3bKB+
- 9IbceG/nAuQDy8s55j/1Fmn9vSH2e0cfsK5ZQD10JHriCZtaOTSVzNJlNys2w57Z
- pnnECt3pkg==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dx2313-1
+ bh=LWl7u/50mTIQVYG3ryvRxft5Yd5Vcz43+ZtkjIWLlkU=; b=JBlzAEC0HZso
+ URHayi0pVKBCyv1fLTQG+w3+i2F74d/jzvEDJ4eIKJBSfqliMVS0KdCkQkDni9jj
+ 3Zt9vndH6nj06aG6ua9uTE9vkVQLxVskfiscGvy2QJZ312duIMM3dQrcux67TIvj
+ BdAf77pGcMWM/P+A72GiQaWGCrfF1hwRyLazHzHvLW8zzbFcG9U4dMGf3s8wls+z
+ Y4AJfPIB5WkPXONqn6UpdZvXtXoiYE6g/TdJQTuMq9lpiK9oBqOLjoZ/JAf1DkQb
+ trnu6V3gQJ8ZeqjQydFHOX0lwdkCY75UX/sUizJcyexrnf9rfvsIRz6sitqPEc+p
+ aW2CDUH2qg==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eqj890-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 15:20:31 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OFBMe9025050;
- Mon, 24 Aug 2026 15:20:31 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7p3pxy56-1
+ Mon, 24 Aug 2026 15:22:07 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OFBMFT006041;
+ Mon, 24 Aug 2026 15:22:06 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rag6ks1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2026 15:20:30 +0000 (GMT)
+ Mon, 24 Aug 2026 15:22:06 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
  [10.39.53.230])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67OFKSq92884098
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67OFM41M20578904
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2026 15:20:28 GMT
+ Mon, 24 Aug 2026 15:22:05 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AE07D5805A;
- Mon, 24 Aug 2026 15:20:28 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A67B95805D;
+ Mon, 24 Aug 2026 15:22:04 +0000 (GMT)
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6012C58054;
- Mon, 24 Aug 2026 15:20:27 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4251B58054;
+ Mon, 24 Aug 2026 15:22:03 +0000 (GMT)
 Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
  by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 24 Aug 2026 15:20:27 +0000 (GMT)
-Message-ID: <fd5f9eaf6b5cda7418bea9b437ef0af6260f4c2d.camel@linux.ibm.com>
-Subject: Re: [PATCH 23/29] target/ppc: Move Fixed-Point Load/Store String
+ Mon, 24 Aug 2026 15:22:03 +0000 (GMT)
+Message-ID: <81b0bc6f0db54ddb40a1330a50fefd8124d1236c.camel@linux.ibm.com>
+Subject: Re: [PATCH 24/29] target/ppc: Move VMX integer arithmetic and BCD
  instructions to decodetree.
 From: Miles Glenn <milesg@linux.ibm.com>
 To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
@@ -69,10 +69,10 @@ Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
  aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, sv@linux.ibm.com,
  shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
  nikhilks@linux.ibm.com
-Date: Mon, 24 Aug 2026 10:20:26 -0500
-In-Reply-To: <20260820140114.327023-24-rathc@linux.ibm.com>
+Date: Mon, 24 Aug 2026 10:22:02 -0500
+In-Reply-To: <20260820140114.327023-25-rathc@linux.ibm.com>
 References: <20260820140114.327023-1-rathc@linux.ibm.com>
- <20260820140114.327023-24-rathc@linux.ibm.com>
+ <20260820140114.327023-25-rathc@linux.ibm.com>
 Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
@@ -80,41 +80,40 @@ Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEyNiBTYWx0ZWRfX4Uu4qx4VrTvX
- qrQRtpPo0AE3G4hekYgkzaVSrUIimlOU2gfMi2N69DRrbi2ufC1CXj4qv4QScKHXgNjP2Oq27V2
- oeXO6YYKqhEIBCdC1vSyH5ewfKWK0Tc=
-X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a8c6140 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Proofpoint-GUID: _84Cu9NLp2_cDBSnknc6FPDwmurCsUad
+X-Proofpoint-ORIG-GUID: av_CD8F7z3gxsz46FhCThEREJT_OEmGy
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEyNiBTYWx0ZWRfX8r6xV3A6MYXj
+ VrZ9Jctyz4fbMQcAFnZW6WS1fVe0z3OJb5mOrYpYxzI/h5DRcG9nu9SE4jNGmaPXOKJkte9iR8R
+ LcLK2dtsiMKBRT0HI6acwp5VUosaZJMPaep97xLCZ6pV8YpqFJ48Br58ERc619ouXbGpZAR64j7
+ qOumaBmBOA7q6lfsN2ngYPi3IxwA0qzkQgVm0KMN+C6oABWBooC+t54Dxf3joNWRjLKqG9gy9VY
+ mxqXR5fxb5IzAIZ86HdrpSPPa5MOnCPDSK32bdWNk1+uJs1mqfZB6Q4z/FDewPFQBQFu7GQo6wF
+ jXjueAiWXzBo61wwjQ0OaFCTcg8EQUdOxrwmy4j236Z6O9wzEZL2HKUpTyWNpjWgVTSxkb7+i/Q
+ bw4XLPfQfPSYa06cE4kF4sehX9w5anFM3LHK3VqmFZ/53xHljnLNj++6rBgG1xUk1E48dj0J7Rp
+ Dwg9Lz4wANZr+uYA4dg==
+X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8c61a0 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=paC7c6kxKwQgFw3nImoA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: krL2EVGLOj32a6ibVkbQL5Hg6XUGL-M7
-X-Proofpoint-GUID: ZhCa87xGE7yPlqYnFW_kVuZyhxMEbhAY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEyNiBTYWx0ZWRfX8yoZl7QhGidz
- xRAgOM9e5DAgH7TJvYqzb7zGg7hsYMszSNsjiggLH/7dJumAtENjDI26J/Eopr9nJgY1fi0G0Qp
- dL7Sq93XcJ6PoBCp9xbfCEkfMVHUWB/9I+4e4w0Y2ST3ONiz0uJXxFjPDrkL0+a+h+s8AJhFnM4
- Ouw6ECK4U0EP92sk68yMZCBTM/7oRZJijC0OTO7orkVxXCSTvXsglS82KsmKdWIVQdS9YKj4jXd
- jooys1rd768RxP6Sxa9UWSg+V6I9+OkXr0Ji8W17FmBV5wpJfTnkKOiLqOfWXqRwI2FEgARMX95
- cuDk1oWZ9OPBDC6YVJ2oBUUOVPEIQwwoIwaGMoGAwqqThi6suyHgNg0wXBhXpLoghwlByh20NrL
- 5hYugDNMjy4jvgPT5YCkNKOTneH9+/Y5KlFmx7EGJnCFxAgH3guHlgHxl4wDvsCiRWjqMyWHLdg
- 8fXkWiLtBduuBh0s47g==
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=pW4XwJMhgj2wpHQbM6gA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEyNiBTYWx0ZWRfX153hiqC+25l5
+ em7NcGRLgpMfSXqq2qW8CBHiwNBryg2gAXSFEgl0mgMkH0Ujd7NDdNtrorFkXxmlztgNK6MTHAb
+ iMTT2s1OyGje2mqCz1B0E+gcPTFPQnQ=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-24_04,2026-08-24_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 bulkscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608240126
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240126
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -143,8 +142,20 @@ On Thu, 2026-08-20 at 19:30 +0530, Chinmay Rath wrote:
 > 
 > Move below instructions to decodetree specification :
 > 
->         lsw{i, x},
->         stsw{i, x}                       : X-form
+>         vadd{u, s}{b, h, w, d}m[.],
+>         vsub{u, s}{b, h, w, d}m[.],
+>         vmuluwm[.],
+>         vmul10{u, eu, ecu, cu}q[.]       : VX-form
+> 
+>         bcd{add, sub}[.],
+>         bcd{s, us}[.],
+>         bcdcpsgn[.],
+>         bcdct{sq, n}[.],
+>         bcdcf{sq, z, n}[.],
+>         bcdctz[.],
+>         bcdsetsgn[.],
+>         bcdsr[.],
+>         bcd{u,}trunc[.]                  : VX-form
 > 
 > The changes were verified by validating that the tcg ops generated by
 > those instructions remain the same, which were captured with the '-d
@@ -153,312 +164,700 @@ On Thu, 2026-08-20 at 19:30 +0530, Chinmay Rath wrote:
 > Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
 > Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 > ---
->  target/ppc/helper.h                        |   6 +-
->  target/ppc/insn32.decode                   |   7 ++
->  target/ppc/mem_helper.c                    |   6 +-
->  target/ppc/translate.c                     | 102 --------------------
->  target/ppc/translate/fixedpoint-impl.c.inc | 103 +++++++++++++++++++++
->  5 files changed, 116 insertions(+), 108 deletions(-)
+>  target/ppc/helper.h                 |  30 +--
+>  target/ppc/insn32.decode            |  39 ++++
+>  target/ppc/int_helper.c             |  32 +--
+>  target/ppc/translate/vmx-impl.c.inc | 299 ++++++++++++----------------
+>  target/ppc/translate/vmx-ops.c.inc  |  22 --
+>  5 files changed, 199 insertions(+), 223 deletions(-)
 > 
 > diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-> index 7e15676122..0e8b96d0ec 100644
+> index 0e8b96d0ec..8425eceeb3 100644
 > --- a/target/ppc/helper.h
 > +++ b/target/ppc/helper.h
-> @@ -45,9 +45,9 @@ DEF_HELPER_1(check_tlb_flush_global, void, env)
+> @@ -349,21 +349,21 @@ DEF_HELPER_FLAGS_3(vshasigmaw, TCG_CALL_NO_RWG, void, avr, avr, i32)
+>  DEF_HELPER_FLAGS_3(vshasigmad, TCG_CALL_NO_RWG, void, avr, avr, i32)
+>  DEF_HELPER_FLAGS_4(vpermxor, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
 >  
->  DEF_HELPER_3(lmw, void, env, tl, i32)
->  DEF_HELPER_FLAGS_3(stmw, TCG_CALL_NO_WG, void, env, tl, i32)
-> -DEF_HELPER_4(lsw, void, env, tl, i32, i32)
-> -DEF_HELPER_5(lswx, void, env, tl, i32, i32, i32)
-> -DEF_HELPER_FLAGS_4(stsw, TCG_CALL_NO_WG, void, env, tl, i32, i32)
-> +DEF_HELPER_4(LSW, void, env, tl, i32, i32)
-> +DEF_HELPER_5(LSWX, void, env, tl, i32, i32, i32)
-> +DEF_HELPER_FLAGS_4(STSW, TCG_CALL_NO_WG, void, env, tl, i32, i32)
->  DEF_HELPER_FLAGS_3(DCBZ, TCG_CALL_NO_WG, void, env, tl, int)
->  #ifdef TARGET_PPC64
->  DEF_HELPER_FLAGS_2(DCBZL, TCG_CALL_NO_WG, void, env, tl)
+> -DEF_HELPER_FLAGS_4(bcdadd, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> -DEF_HELPER_FLAGS_4(bcdsub, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> -DEF_HELPER_FLAGS_3(bcdcfn, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> -DEF_HELPER_FLAGS_3(bcdctn, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> -DEF_HELPER_FLAGS_3(bcdcfz, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> -DEF_HELPER_FLAGS_3(bcdctz, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> -DEF_HELPER_FLAGS_3(bcdcfsq, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> -DEF_HELPER_FLAGS_3(bcdctsq, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> -DEF_HELPER_FLAGS_4(bcdcpsgn, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> -DEF_HELPER_FLAGS_3(bcdsetsgn, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> -DEF_HELPER_FLAGS_4(bcds, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> -DEF_HELPER_FLAGS_4(bcdus, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> -DEF_HELPER_FLAGS_4(bcdsr, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> -DEF_HELPER_FLAGS_4(bcdtrunc, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> -DEF_HELPER_FLAGS_4(bcdutrunc, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> +DEF_HELPER_FLAGS_4(BCDADD, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> +DEF_HELPER_FLAGS_4(BCDSUB, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> +DEF_HELPER_FLAGS_3(BCDCFN, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> +DEF_HELPER_FLAGS_3(BCDCTN, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> +DEF_HELPER_FLAGS_3(BCDCFZ, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> +DEF_HELPER_FLAGS_3(BCDCTZ, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> +DEF_HELPER_FLAGS_3(BCDCFSQ, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> +DEF_HELPER_FLAGS_3(BCDCTSQ, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> +DEF_HELPER_FLAGS_4(BCDCPSGN, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> +DEF_HELPER_FLAGS_3(BCDSETSGN, TCG_CALL_NO_RWG, i32, avr, avr, i32)
+> +DEF_HELPER_FLAGS_4(BCDS, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> +DEF_HELPER_FLAGS_4(BCDUS, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> +DEF_HELPER_FLAGS_4(BCDSR, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> +DEF_HELPER_FLAGS_4(BCDTRUNC, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+> +DEF_HELPER_FLAGS_4(BCDUTRUNC, TCG_CALL_NO_RWG, i32, avr, avr, avr, i32)
+>  
+>  DEF_HELPER_4(XSADDDP, void, env, vsr, vsr, vsr)
+>  DEF_HELPER_5(xsaddqp, void, env, i32, vsr, vsr, vsr)
 > diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> index a3973e042d..e7b5d19cde 100644
+> index e7b5d19cde..eed963bd71 100644
 > --- a/target/ppc/insn32.decode
 > +++ b/target/ppc/insn32.decode
-> @@ -527,6 +527,13 @@ CREQV           010011 ..... ..... ..... 0100100001 -  @X
->  CRANDC          010011 ..... ..... ..... 0010000001 -  @X
->  CRORC           010011 ..... ..... ..... 0110100001 -  @X
+> @@ -90,6 +90,9 @@
+>  &VX             vrt vra vrb
+>  @VX             ...... vrt:5 vra:5 vrb:5 .......... .           &VX
 >  
-> +# Fixed Point Move Assist Instructions
+> +&VX_ps             vrt vra vrb ps
+> +@VX_ps             ...... vrt:5 vra:5 vrb:5 . ps:1 ........ .           &VX_ps
 > +
-> +LSWI            011111 ..... ..... ..... 1 001010101 -  @X
-> +LSWX            011111 ..... ..... ..... 1 000010101 -  @X
-> +STSWI           011111 ..... ..... ..... 1 011010101 -  @X
-> +STSWX           011111 ..... ..... ..... 1 010010101 -  @X
-> +
->  # Fixed-Point Hash Instructions
+>  &VX_bf          bf vra vrb
+>  @VX_bf          ...... bf:3 .. vra:5 vrb:5 ...........          &VX_bf
 >  
->  HASHST          011111 ..... ..... ..... 1011010010 .   @X_DW
-> diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
-> index 95a224e74c..582180cf88 100644
-> --- a/target/ppc/mem_helper.c
-> +++ b/target/ppc/mem_helper.c
-> @@ -190,7 +190,7 @@ static void do_lsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
->      env->gpr[reg] = val;
+> @@ -108,6 +111,9 @@
+>  &VX_tb          vrt vrb
+>  @VX_tb          ...... vrt:5 ..... vrb:5 ...........            &VX_tb
+>  
+> +&VX_tb_ps       vrt vrb ps
+> +@VX_tb_ps       ...... vrt:5 ..... vrb:5 . ps:1 .........            &VX_tb_ps
+> +
+>  &X              rt ra rb
+>  @X              ...... rt:5 ra:5 rb:5 .......... .              &X
+>  
+> @@ -991,6 +997,10 @@ VADDSBS         000100 ..... ..... ..... 01100000000    @VX
+>  VADDSHS         000100 ..... ..... ..... 01101000000    @VX
+>  VADDSWS         000100 ..... ..... ..... 01110000000    @VX
+>  
+> +VADDUBM         000100 ..... ..... ..... 00000000000    @VX
+> +VADDUHM         000100 ..... ..... ..... 00001000000    @VX
+> +VADDUWM         000100 ..... ..... ..... 00010000000    @VX
+> +VADDUDM         000100 ..... ..... ..... 00011000000    @VX
+>  VADDUBS         000100 ..... ..... ..... 01000000000    @VX
+>  VADDUHS         000100 ..... ..... ..... 01001000000    @VX
+>  VADDUWS         000100 ..... ..... ..... 01010000000    @VX
+> @@ -1006,6 +1016,10 @@ VSUBSBS         000100 ..... ..... ..... 11100000000    @VX
+>  VSUBSHS         000100 ..... ..... ..... 11101000000    @VX
+>  VSUBSWS         000100 ..... ..... ..... 11110000000    @VX
+>  
+> +VSUBUBM         000100 ..... ..... ..... 10000000000    @VX
+> +VSUBUHM         000100 ..... ..... ..... 10001000000    @VX
+> +VSUBUWM         000100 ..... ..... ..... 10010000000    @VX
+> +VSUBUDM         000100 ..... ..... ..... 10011000000    @VX
+>  VSUBUBS         000100 ..... ..... ..... 11000000000    @VX
+>  VSUBUHS         000100 ..... ..... ..... 11001000000    @VX
+>  VSUBUWS         000100 ..... ..... ..... 11010000000    @VX
+> @@ -1099,6 +1113,13 @@ VMULHSD         000100 ..... ..... ..... 01111001001    @VX
+>  VMULHUD         000100 ..... ..... ..... 01011001001    @VX
+>  VMULLD          000100 ..... ..... ..... 00111001001    @VX
+>  
+> +VMULUWM         000100 ..... ..... ..... 00010001001    @VX
+> +
+> +VMUL10UQ        000100 ..... ..... ..... 01000000001    @VX
+> +VMUL10EUQ       000100 ..... ..... ..... 01001000001    @VX
+> +VMUL10ECUQ      000100 ..... ..... ..... 00001000001    @VX
+> +VMUL10CUQ       000100 ..... ..... ..... 00000000001    @VX
+> +
+>  ## Vector Multiply-Sum Instructions
+>  
+>  VMSUMUBM        000100 ..... ..... ..... ..... 100100   @VA
+> @@ -1141,6 +1162,24 @@ VPKSWSS         000100 ..... ..... ..... 0011100111 0    @VX
+>  VPKSDSS         000100 ..... ..... ..... 1011100111 0    @VX
+>  VPKPX           000100 ..... ..... ..... 0110000111 0    @VX
+>  
+> +## Decimal Integer Arithmetic Instructions
+> +
+> +BCDADD          000100 ..... ..... ..... 1.000000001    @VX_ps
+> +BCDSUB          000100 ..... ..... ..... 1.001000001    @VX_ps
+> +BCDUS           000100 ..... ..... ..... 10010000001    @VX
+> +BCDS            000100 ..... ..... ..... 1.011000001    @VX_ps
+> +BCDCTSQ         000100 ..... 00000 ..... 10110000001    @VX_tb
+> +BCDCTN          000100 ..... 00101 ..... 10110000001    @VX_tb
+> +BCDCFSQ         000100 ..... 00010 ..... 1.110000001    @VX_tb_ps
+> +BCDCTZ          000100 ..... 00100 ..... 1.110000001    @VX_tb_ps
+> +BCDCFZ          000100 ..... 00110 ..... 1.110000001    @VX_tb_ps
+> +BCDCFN          000100 ..... 00111 ..... 1.110000001    @VX_tb_ps
+> +BCDSETSGN       000100 ..... 11111 ..... 1.110000001    @VX_tb_ps
+> +BCDCPSGN        000100 ..... ..... ..... 01101000001    @VX
+> +BCDSR           000100 ..... ..... ..... 1.111000001    @VX_ps
+> +BCDTRUNC        000100 ..... ..... ..... 1.100000001    @VX_ps
+> +BCDUTRUNC       000100 ..... ..... ..... 10101000001    @VX
+> +
+>  # VSX Load/Store Instructions
+>  
+>  LXSD            111001 ..... ..... .............. 10    @DS
+> diff --git a/target/ppc/int_helper.c b/target/ppc/int_helper.c
+> index 8e8076a92c..86346f5b9a 100644
+> --- a/target/ppc/int_helper.c
+> +++ b/target/ppc/int_helper.c
+> @@ -2348,7 +2348,7 @@ static void bcd_sub_mag(ppc_avr_t *t, ppc_avr_t *a, ppc_avr_t *b, int *invalid,
+>      *overflow = carry;
 >  }
 >  
-> -void helper_lsw(CPUPPCState *env, target_ulong addr,
-> +void helper_LSW(CPUPPCState *env, target_ulong addr,
->                  uint32_t nb, uint32_t reg)
+> -uint32_t helper_bcdadd(ppc_avr_t *r,  ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDADD(ppc_avr_t *r,  ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
 >  {
->      do_lsw(env, addr, nb, reg, GETPC());
-> @@ -202,7 +202,7 @@ void helper_lsw(CPUPPCState *env, target_ulong addr,
->   * this is valid, but rA won't be loaded.  For now, I'll follow the
->   * spec...
->   */
-> -void helper_lswx(CPUPPCState *env, target_ulong addr, uint32_t reg,
-> +void helper_LSWX(CPUPPCState *env, target_ulong addr, uint32_t reg,
->                   uint32_t ra, uint32_t rb)
+>  
+>      int sgna = bcd_get_sgn(a);
+> @@ -2395,7 +2395,7 @@ uint32_t helper_bcdadd(ppc_avr_t *r,  ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>      return cr;
+>  }
+>  
+> -uint32_t helper_bcdsub(ppc_avr_t *r,  ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDSUB(ppc_avr_t *r,  ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
 >  {
->      if (likely(xer_bc != 0)) {
-> @@ -218,7 +218,7 @@ void helper_lswx(CPUPPCState *env, target_ulong addr, uint32_t reg,
+>      ppc_avr_t bcopy = *b;
+>      int sgnb = bcd_get_sgn(b);
+> @@ -2406,10 +2406,10 @@ uint32_t helper_bcdsub(ppc_avr_t *r,  ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
 >      }
+>      /* else invalid ... defer to bcdadd code for proper handling */
+>  
+> -    return helper_bcdadd(r, a, &bcopy, ps);
+> +    return helper_BCDADD(r, a, &bcopy, ps);
 >  }
 >  
-> -void helper_stsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
-> +void helper_STSW(CPUPPCState *env, target_ulong addr, uint32_t nb,
->                   uint32_t reg)
+> -uint32_t helper_bcdcfn(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDCFN(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
 >  {
->      uintptr_t raddr = GETPC();
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index e40841b68e..712990cf2d 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -2595,104 +2595,6 @@ static void gen_stmw(DisasContext *ctx)
->      gen_helper_stmw(tcg_env, t0, t1);
+>      int i;
+>      int cr = 0;
+> @@ -2445,7 +2445,7 @@ uint32_t helper_bcdcfn(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>      return cr;
 >  }
 >  
-> -/***                    Integer load and store strings                     ***/
-> -
-> -/* lswi */
-> -/*
-> - * PowerPC32 specification says we must generate an exception if rA is
-> - * in the range of registers to be loaded.  In an other hand, IBM says
-> - * this is valid, but rA won't be loaded.  For now, I'll follow the
-> - * spec...
-> - */
-> -static void gen_lswi(DisasContext *ctx)
-> -{
-> -    TCGv t0;
-> -    TCGv_i32 t1, t2;
-> -    int nb = NB(ctx->opcode);
-> -    int start = rD(ctx->opcode);
-> -    int ra = rA(ctx->opcode);
-> -    int nr;
-> -
-> -    if (ctx->le_mode) {
-> -        gen_align_no_le(ctx);
-> -        return;
-> -    }
-> -    if (nb == 0) {
-> -        nb = 32;
-> -    }
-> -    nr = DIV_ROUND_UP(nb, 4);
-> -    if (unlikely(lsw_reg_in_range(start, nr, ra))) {
-> -        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_LSWX);
-> -        return;
-> -    }
-> -    gen_set_access_type(ctx, ACCESS_INT);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_register(ctx, t0);
-> -    t1 = tcg_constant_i32(nb);
-> -    t2 = tcg_constant_i32(start);
-> -    gen_helper_lsw(tcg_env, t0, t1, t2);
-> -}
-> -
-> -/* lswx */
-> -static void gen_lswx(DisasContext *ctx)
-> -{
-> -    TCGv t0;
-> -    TCGv_i32 t1, t2, t3;
-> -
-> -    if (ctx->le_mode) {
-> -        gen_align_no_le(ctx);
-> -        return;
-> -    }
-> -    gen_set_access_type(ctx, ACCESS_INT);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_reg_index(ctx, t0);
-> -    t1 = tcg_constant_i32(rD(ctx->opcode));
-> -    t2 = tcg_constant_i32(rA(ctx->opcode));
-> -    t3 = tcg_constant_i32(rB(ctx->opcode));
-> -    gen_helper_lswx(tcg_env, t0, t1, t2, t3);
-> -}
-> -
-> -/* stswi */
-> -static void gen_stswi(DisasContext *ctx)
-> -{
-> -    TCGv t0;
-> -    TCGv_i32 t1, t2;
-> -    int nb = NB(ctx->opcode);
-> -
-> -    if (ctx->le_mode) {
-> -        gen_align_no_le(ctx);
-> -        return;
-> -    }
-> -    gen_set_access_type(ctx, ACCESS_INT);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_register(ctx, t0);
-> -    if (nb == 0) {
-> -        nb = 32;
-> -    }
-> -    t1 = tcg_constant_i32(nb);
-> -    t2 = tcg_constant_i32(rS(ctx->opcode));
-> -    gen_helper_stsw(tcg_env, t0, t1, t2);
-> -}
-> -
-> -/* stswx */
-> -static void gen_stswx(DisasContext *ctx)
-> -{
-> -    TCGv t0;
-> -    TCGv_i32 t1, t2;
-> -
-> -    if (ctx->le_mode) {
-> -        gen_align_no_le(ctx);
-> -        return;
-> -    }
-> -    gen_set_access_type(ctx, ACCESS_INT);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_reg_index(ctx, t0);
-> -    t1 = tcg_temp_new_i32();
-> -    tcg_gen_trunc_tl_i32(t1, cpu_xer);
-> -    tcg_gen_andi_i32(t1, t1, 0x7F);
-> -    t2 = tcg_constant_i32(rS(ctx->opcode));
-> -    gen_helper_stsw(tcg_env, t0, t1, t2);
-> -}
->  
->  #if !defined(CONFIG_USER_ONLY)
->  static inline void gen_check_tlb_flush(DisasContext *ctx, bool global)
-> @@ -4914,10 +4816,6 @@ GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
->  GEN_HANDLER_E(dform3D, 0x3D, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
->  GEN_HANDLER(lmw, 0x2E, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
->  GEN_HANDLER(stmw, 0x2F, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
-> -GEN_HANDLER(lswi, 0x1F, 0x15, 0x12, 0x00000001, PPC_STRING),
-> -GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
-> -GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
-> -GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
->  /* ISA v3.0 changed the extended opcode from 62 to 30 */
->  GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
->  #if defined(TARGET_PPC64)
-> diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-> index 26b308e435..82fb645279 100644
-> --- a/target/ppc/translate/fixedpoint-impl.c.inc
-> +++ b/target/ppc/translate/fixedpoint-impl.c.inc
-> @@ -585,6 +585,109 @@ TRANS(CRANDC, cr_logic_common, tcg_gen_andc_i32);
->  TRANS(CREQV, cr_logic_common, tcg_gen_eqv_i32);
->  TRANS(CRORC, cr_logic_common, tcg_gen_orc_i32);
->  
-> +
-> +/***                    Integer load and store strings                     ***/
-> +
-> +/* lswi */
-> +static bool trans_LSWI(DisasContext *ctx, arg_LSWI *a)
-> +{
-> +    TCGv t0;
-> +    TCGv_i32 t1, t2;
-> +    int nb = a->rb;
-> +    int start = a->rt;
-> +    int ra = a->ra;
-> +    int nr;
-> +
-> +    REQUIRE_INSNS_FLAGS(ctx, STRING);
-> +    if (ctx->le_mode) {
-> +        gen_align_no_le(ctx);
-> +        return true;
-> +    }
-> +    if (nb == 0) {
-> +        nb = 32;
-> +    }
-> +    nr = DIV_ROUND_UP(nb, 4);
-> +    if (unlikely(lsw_reg_in_range(start, nr, ra))) {
-> +        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_LSWX);
-> +        return true;
-> +    }
-> +    gen_set_access_type(ctx, ACCESS_INT);
-> +    t0 = do_ea_calc_ra(ctx, ra);
-> +    t1 = tcg_constant_i32(nb);
-> +    t2 = tcg_constant_i32(start);
-> +    gen_helper_LSW(tcg_env, t0, t1, t2);
-> +
-> +    return true;
-> +}
-> +
-> +/* lswx */
-> +static bool trans_LSWX(DisasContext *ctx, arg_LSWX *a)
-> +{
-> +    TCGv t0;
-> +    TCGv_i32 t1, t2, t3;
-> +
-> +    REQUIRE_INSNS_FLAGS(ctx, STRING);
-> +    if (ctx->le_mode) {
-> +        gen_align_no_le(ctx);
-> +        return true;
-> +    }
-> +
-> +    gen_set_access_type(ctx, ACCESS_INT);
-> +    t0 = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-> +    t1 = tcg_constant_i32(a->rt);
-> +    t2 = tcg_constant_i32(a->ra);
-> +    t3 = tcg_constant_i32(a->rb);
-> +    gen_helper_LSWX(tcg_env, t0, t1, t2, t3);
-> +
-> +    return true;
-> +}
-> +
-> +/* stswi */
-> +static bool trans_STSWI(DisasContext *ctx, arg_STSWI *a)
-> +{
-> +    TCGv t0;
-> +    TCGv_i32 t1, t2;
-> +    int nb = a->rb;
-> +
-> +    REQUIRE_INSNS_FLAGS(ctx, STRING);
-> +    if (ctx->le_mode) {
-> +        gen_align_no_le(ctx);
-> +        return true;
-> +    }
-> +    gen_set_access_type(ctx, ACCESS_INT);
-> +    t0 = do_ea_calc_ra(ctx, a->ra);
-> +    if (nb == 0) {
-> +        nb = 32;
-> +    }
-> +    t1 = tcg_constant_i32(nb);
-> +    t2 = tcg_constant_i32(a->rt);
-> +    gen_helper_STSW(tcg_env, t0, t1, t2);
-> +
-> +    return true;
-> +}
-> +
-> +/* stswx */
-> +static bool trans_STSWX(DisasContext *ctx, arg_STSWX *a)
-> +{
-> +    TCGv t0;
-> +    TCGv_i32 t1, t2;
-> +
-> +    REQUIRE_INSNS_FLAGS(ctx, STRING);
-> +    if (ctx->le_mode) {
-> +        gen_align_no_le(ctx);
-> +        return true;
-> +    }
-> +    gen_set_access_type(ctx, ACCESS_INT);
-> +    t0 = do_ea_calc_ra(ctx, a->ra);
-> +    t1 = tcg_temp_new_i32();
-> +    tcg_gen_trunc_tl_i32(t1, cpu_xer);
-> +    tcg_gen_andi_i32(t1, t1, 0x7F);
-> +    t2 = tcg_constant_i32(a->rt);
-> +    gen_helper_STSW(tcg_env, t0, t1, t2);
-> +
-> +    return true;
-> +}
-> +
->  static bool do_add_D(DisasContext *ctx, arg_D *a, bool add_ca, bool compute_ca,
->                       bool compute_ov, bool compute_rc0)
+> -uint32_t helper_bcdctn(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDCTN(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
 >  {
+>      int i;
+>      int cr = 0;
+> @@ -2479,7 +2479,7 @@ uint32_t helper_bcdctn(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>      return cr;
+>  }
+>  
+> -uint32_t helper_bcdcfz(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDCFZ(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int i;
+>      int cr = 0;
+> @@ -2523,7 +2523,7 @@ uint32_t helper_bcdcfz(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>      return cr;
+>  }
+>  
+> -uint32_t helper_bcdctz(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDCTZ(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int i;
+>      int cr = 0;
+> @@ -2582,7 +2582,7 @@ static inline int ucmp128(uint64_t alo, uint64_t ahi,
+>          (ahi > bhi ? 1 : -1);
+>  }
+>  
+> -uint32_t helper_bcdcfsq(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDCFSQ(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int i;
+>      int cr;
+> @@ -2640,7 +2640,7 @@ uint32_t helper_bcdcfsq(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>      return cr;
+>  }
+>  
+> -uint32_t helper_bcdctsq(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDCTSQ(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>  {
+>      uint8_t i;
+>      int cr;
+> @@ -2680,7 +2680,7 @@ uint32_t helper_bcdctsq(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>      return cr;
+>  }
+>  
+> -uint32_t helper_bcdcpsgn(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDCPSGN(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int i;
+>      int invalid = 0;
+> @@ -2703,7 +2703,7 @@ uint32_t helper_bcdcpsgn(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>      return bcd_cmp_zero(r);
+>  }
+>  
+> -uint32_t helper_bcdsetsgn(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDSETSGN(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int sgnb = bcd_get_sgn(b);
+>  
+> @@ -2717,7 +2717,7 @@ uint32_t helper_bcdsetsgn(ppc_avr_t *r, ppc_avr_t *b, uint32_t ps)
+>      return bcd_cmp_zero(r);
+>  }
+>  
+> -uint32_t helper_bcds(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDS(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int cr;
+>      int i = a->VsrSB(7);
+> @@ -2753,7 +2753,7 @@ uint32_t helper_bcds(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>      return cr;
+>  }
+>  
+> -uint32_t helper_bcdus(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDUS(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int cr;
+>      int i;
+> @@ -2790,7 +2790,7 @@ uint32_t helper_bcdus(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>      return cr;
+>  }
+>  
+> -uint32_t helper_bcdsr(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDSR(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int cr;
+>      int unused = 0;
+> @@ -2836,7 +2836,7 @@ uint32_t helper_bcdsr(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>      return cr;
+>  }
+>  
+> -uint32_t helper_bcdtrunc(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDTRUNC(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>  {
+>      uint64_t mask;
+>      uint32_t ox_flag = 0;
+> @@ -2869,7 +2869,7 @@ uint32_t helper_bcdtrunc(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>      return bcd_cmp_zero(&ret) | ox_flag;
+>  }
+>  
+> -uint32_t helper_bcdutrunc(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+> +uint32_t helper_BCDUTRUNC(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b, uint32_t ps)
+>  {
+>      int i;
+>      uint64_t mask;
+> diff --git a/target/ppc/translate/vmx-impl.c.inc b/target/ppc/translate/vmx-impl.c.inc
+> index 65230f3461..4e7fe22156 100644
+> --- a/target/ppc/translate/vmx-impl.c.inc
+> +++ b/target/ppc/translate/vmx-impl.c.inc
+> @@ -142,7 +142,8 @@ static void gen_mtvscr(DisasContext *ctx)
+>      gen_helper_mtvscr(tcg_env, val);
+>  }
+>  
+> -static void gen_vx_vmul10(DisasContext *ctx, bool add_cin, bool ret_carry)
+> +static bool do_vx_vmul10(DisasContext *ctx, arg_VX *a,
+> +                         bool add_cin, bool ret_carry)
+>  {
+>      TCGv_i64 t0;
+>      TCGv_i64 t1;
+> @@ -150,10 +151,7 @@ static void gen_vx_vmul10(DisasContext *ctx, bool add_cin, bool ret_carry)
+>      TCGv_i64 avr;
+>      TCGv_i64 ten, z;
+>  
+> -    if (unlikely(!ctx->altivec_enabled)) {
+> -        gen_exception(ctx, POWERPC_EXCP_VPU);
+> -        return;
+> -    }
+> +    REQUIRE_VECTOR(ctx);
+>  
+>      t0 = tcg_temp_new_i64();
+>      t1 = tcg_temp_new_i64();
+> @@ -163,54 +161,32 @@ static void gen_vx_vmul10(DisasContext *ctx, bool add_cin, bool ret_carry)
+>      z = tcg_constant_i64(0);
+>  
+>      if (add_cin) {
+> -        get_avr64(avr, rA(ctx->opcode), false);
+> +        get_avr64(avr, a->vra, false);
+>          tcg_gen_mulu2_i64(t0, t1, avr, ten);
+> -        get_avr64(avr, rB(ctx->opcode), false);
+> +        get_avr64(avr, a->vrb, false);
+>          tcg_gen_andi_i64(t2, avr, 0xF);
+>          tcg_gen_add2_i64(avr, t2, t0, t1, t2, z);
+> -        set_avr64(rD(ctx->opcode), avr, false);
+> +        set_avr64(a->vrt, avr, false);
+>      } else {
+> -        get_avr64(avr, rA(ctx->opcode), false);
+> +        get_avr64(avr, a->vra, false);
+>          tcg_gen_mulu2_i64(avr, t2, avr, ten);
+> -        set_avr64(rD(ctx->opcode), avr, false);
+> +        set_avr64(a->vrt, avr, false);
+>      }
+>  
+>      if (ret_carry) {
+> -        get_avr64(avr, rA(ctx->opcode), true);
+> +        get_avr64(avr, a->vra, true);
+>          tcg_gen_mulu2_i64(t0, t1, avr, ten);
+>          tcg_gen_add2_i64(t0, avr, t0, t1, t2, z);
+> -        set_avr64(rD(ctx->opcode), avr, false);
+> -        set_avr64(rD(ctx->opcode), z, true);
+> +        set_avr64(a->vrt, avr, false);
+> +        set_avr64(a->vrt, z, true);
+>      } else {
+> -        get_avr64(avr, rA(ctx->opcode), true);
+> +        get_avr64(avr, a->vra, true);
+>          tcg_gen_mul_i64(t0, avr, ten);
+>          tcg_gen_add_i64(avr, t0, t2);
+> -        set_avr64(rD(ctx->opcode), avr, true);
+> +        set_avr64(a->vrt, avr, true);
+>      }
+> -}
+> -
+> -#define GEN_VX_VMUL10(name, add_cin, ret_carry)                         \
+> -    static void glue(gen_, name)(DisasContext *ctx)                     \
+> -    { gen_vx_vmul10(ctx, add_cin, ret_carry); }
+> -
+> -GEN_VX_VMUL10(vmul10uq, 0, 0);
+> -GEN_VX_VMUL10(vmul10euq, 1, 0);
+> -GEN_VX_VMUL10(vmul10cuq, 0, 1);
+> -GEN_VX_VMUL10(vmul10ecuq, 1, 1);
+>  
+> -#define GEN_VXFORM_V(name, vece, tcg_op, opc2, opc3)                    \
+> -static void glue(gen_, name)(DisasContext *ctx)                         \
+> -{                                                                       \
+> -    if (unlikely(!ctx->altivec_enabled)) {                              \
+> -        gen_exception(ctx, POWERPC_EXCP_VPU);                           \
+> -        return;                                                         \
+> -    }                                                                   \
+> -                                                                        \
+> -    tcg_op(vece,                                                        \
+> -           avr_full_offset(rD(ctx->opcode)),                            \
+> -           avr_full_offset(rA(ctx->opcode)),                            \
+> -           avr_full_offset(rB(ctx->opcode)),                            \
+> -           16, 16);                                                     \
+> +    return true;
+>  }
+>  
+>  #define GEN_VXFORM(name, opc2, opc3)                                    \
+> @@ -338,19 +314,6 @@ static void glue(gen_, name)(DisasContext *ctx)                         \
+>      gen_helper_##name(cpu_gpr[rD(ctx->opcode)], cpu_gpr[rA(ctx->opcode)], rb); \
+>  }
+>  
+> -GEN_VXFORM_V(vaddubm, MO_8, tcg_gen_gvec_add, 0, 0);
+> -GEN_VXFORM_DUAL_EXT(vaddubm, PPC_ALTIVEC, PPC_NONE, 0,       \
+> -                    vmul10cuq, PPC_NONE, PPC2_ISA300, 0x0000F800)
+> -GEN_VXFORM_V(vadduhm, MO_16, tcg_gen_gvec_add, 0, 1);
+> -GEN_VXFORM_DUAL(vadduhm, PPC_ALTIVEC, PPC_NONE,  \
+> -                vmul10ecuq, PPC_NONE, PPC2_ISA300)
+> -GEN_VXFORM_V(vadduwm, MO_32, tcg_gen_gvec_add, 0, 2);
+> -GEN_VXFORM_V(vaddudm, MO_64, tcg_gen_gvec_add, 0, 3);
+> -GEN_VXFORM_V(vsububm, MO_8, tcg_gen_gvec_sub, 0, 16);
+> -GEN_VXFORM_V(vsubuhm, MO_16, tcg_gen_gvec_sub, 0, 17);
+> -GEN_VXFORM_V(vsubuwm, MO_32, tcg_gen_gvec_sub, 0, 18);
+> -GEN_VXFORM_V(vsubudm, MO_64, tcg_gen_gvec_sub, 0, 19);
+> -
+>  static bool do_vmrg(DisasContext *ctx, arg_VX *a,
+>                      void (*helper)(TCGv_ptr, TCGv_ptr, TCGv_ptr))
+>  {
+> @@ -370,6 +333,38 @@ TRANS_FLAGS(ALTIVEC, VMRGLB, do_vmrg, gen_helper_VMRGLB);
+>  TRANS_FLAGS(ALTIVEC, VMRGLH, do_vmrg, gen_helper_VMRGLH);
+>  TRANS_FLAGS(ALTIVEC, VMRGLW, do_vmrg, gen_helper_VMRGLW);
+>  
+> +static bool do_vx_vaddsubm(DisasContext *ctx, arg_VX *a, MemOp vece,
+> +                           void (*gen_op)(unsigned, uint32_t, uint32_t,
+> +                                          uint32_t, uint32_t, uint32_t))
+> +{
+> +    REQUIRE_VECTOR(ctx);
+> +
+> +    gen_op(vece,
+> +           avr_full_offset(a->vrt),
+> +           avr_full_offset(a->vra),
+> +           avr_full_offset(a->vrb),
+> +           16, 16);
+> +
+> +    return true;
+> +}
+> +
+> +TRANS_FLAGS(ALTIVEC, VADDUBM, do_vx_vaddsubm, MO_8, tcg_gen_gvec_add)
+> +TRANS_FLAGS(ALTIVEC, VADDUHM, do_vx_vaddsubm, MO_16, tcg_gen_gvec_add)
+> +TRANS_FLAGS(ALTIVEC, VADDUWM, do_vx_vaddsubm, MO_32, tcg_gen_gvec_add)
+> +TRANS_FLAGS2(ALTIVEC_207, VADDUDM, do_vx_vaddsubm, MO_64, tcg_gen_gvec_add)
+> +
+> +TRANS_FLAGS(ALTIVEC, VSUBUBM, do_vx_vaddsubm, MO_8, tcg_gen_gvec_sub)
+> +TRANS_FLAGS(ALTIVEC, VSUBUHM, do_vx_vaddsubm, MO_16, tcg_gen_gvec_sub)
+> +TRANS_FLAGS(ALTIVEC, VSUBUWM, do_vx_vaddsubm, MO_32, tcg_gen_gvec_sub)
+> +TRANS_FLAGS2(ALTIVEC_207, VSUBUDM, do_vx_vaddsubm, MO_64, tcg_gen_gvec_sub)
+> +
+> +TRANS_FLAGS2(ALTIVEC_207, VMULUWM, do_vx_vaddsubm, MO_32, tcg_gen_gvec_mul)
+> +
+> +TRANS_FLAGS2(ISA300, VMUL10CUQ, do_vx_vmul10, false, true)
+> +TRANS_FLAGS2(ISA300, VMUL10ECUQ, do_vx_vmul10, true, true)
+> +TRANS_FLAGS2(ISA300, VMUL10UQ, do_vx_vmul10, false, false)
+> +TRANS_FLAGS2(ISA300, VMUL10EUQ, do_vx_vmul10, true, false)
+> +
+>  static void trans_vmrgew(DisasContext *ctx)
+>  {
+>      int VT = rD(ctx->opcode);
+> @@ -684,7 +679,6 @@ static void trans_vclzd(DisasContext *ctx)
+>      set_avr64(VT, avr, false);
+>  }
+>  
+> -GEN_VXFORM_V(vmuluwm, MO_32, tcg_gen_gvec_mul, 4, 2);
+>  GEN_VXFORM(vsrv, 2, 28);
+>  GEN_VXFORM(vslv, 2, 29);
+>  GEN_VXFORM(vslo, 6, 16);
+> @@ -2523,126 +2517,93 @@ GEN_VXFORM(vpmsumb, 4, 16)
+>  GEN_VXFORM(vpmsumh, 4, 17)
+>  GEN_VXFORM(vpmsumw, 4, 18)
+>  
+> -#define GEN_BCD(op)                                 \
+> -static void gen_##op(DisasContext *ctx)             \
+> -{                                                   \
+> -    TCGv_ptr ra, rb, rd;                            \
+> -    TCGv_i32 ps;                                    \
+> -                                                    \
+> -    if (unlikely(!ctx->altivec_enabled)) {          \
+> -        gen_exception(ctx, POWERPC_EXCP_VPU);       \
+> -        return;                                     \
+> -    }                                               \
+> -                                                    \
+> -    ra = gen_avr_ptr(rA(ctx->opcode));              \
+> -    rb = gen_avr_ptr(rB(ctx->opcode));              \
+> -    rd = gen_avr_ptr(rD(ctx->opcode));              \
+> -                                                    \
+> -    ps = tcg_constant_i32((ctx->opcode & 0x200) != 0); \
+> -                                                    \
+> -    gen_helper_##op(cpu_crf[6], rd, ra, rb, ps);    \
+> -}
+> -
+> -#define GEN_BCD2(op)                                \
+> -static void gen_##op(DisasContext *ctx)             \
+> -{                                                   \
+> -    TCGv_ptr rd, rb;                                \
+> -    TCGv_i32 ps;                                    \
+> -                                                    \
+> -    if (unlikely(!ctx->altivec_enabled)) {          \
+> -        gen_exception(ctx, POWERPC_EXCP_VPU);       \
+> -        return;                                     \
+> -    }                                               \
+> -                                                    \
+> -    rb = gen_avr_ptr(rB(ctx->opcode));              \
+> -    rd = gen_avr_ptr(rD(ctx->opcode));              \
+> -                                                    \
+> -    ps = tcg_constant_i32((ctx->opcode & 0x200) != 0); \
+> -                                                    \
+> -    gen_helper_##op(cpu_crf[6], rd, rb, ps);        \
+> -}
+> -
+> -GEN_BCD(bcdadd)
+> -GEN_BCD(bcdsub)
+> -GEN_BCD2(bcdcfn)
+> -GEN_BCD2(bcdctn)
+> -GEN_BCD2(bcdcfz)
+> -GEN_BCD2(bcdctz)
+> -GEN_BCD2(bcdcfsq)
+> -GEN_BCD2(bcdctsq)
+> -GEN_BCD2(bcdsetsgn)
+> -GEN_BCD(bcdcpsgn);
+> -GEN_BCD(bcds);
+> -GEN_BCD(bcdus);
+> -GEN_BCD(bcdsr);
+> -GEN_BCD(bcdtrunc);
+> -GEN_BCD(bcdutrunc);
+> -
+> -static void gen_xpnd04_1(DisasContext *ctx)
+> -{
+> -    switch (opc4(ctx->opcode)) {
+> -    case 0:
+> -        gen_bcdctsq(ctx);
+> -        break;
+> -    case 2:
+> -        gen_bcdcfsq(ctx);
+> -        break;
+> -    case 4:
+> -        gen_bcdctz(ctx);
+> -        break;
+> -    case 5:
+> -        gen_bcdctn(ctx);
+> -        break;
+> -    case 6:
+> -        gen_bcdcfz(ctx);
+> -        break;
+> -    case 7:
+> -        gen_bcdcfn(ctx);
+> -        break;
+> -    case 31:
+> -        gen_bcdsetsgn(ctx);
+> -        break;
+> -    default:
+> -        gen_invalid(ctx);
+> -        break;
+> -    }
+> +static bool do_bcd_ps(DisasContext *ctx, arg_VX_ps *a,
+> +                   void (*helper)(TCGv_i32, TCGv_ptr, TCGv_ptr,
+> +                                  TCGv_ptr, TCGv_i32))
+> +{
+> +    TCGv_ptr ra, rb, rd;
+> +    TCGv_i32 ps;
+> +
+> +    REQUIRE_VECTOR(ctx);
+> +
+> +    ra = gen_avr_ptr(a->vra);
+> +    rb = gen_avr_ptr(a->vrb);
+> +    rd = gen_avr_ptr(a->vrt);
+> +    ps = tcg_constant_i32(a->ps);
+> +
+> +    helper(cpu_crf[6], rd, ra, rb, ps);
+> +    return true;
+>  }
+>  
+> -static void gen_xpnd04_2(DisasContext *ctx)
+> -{
+> -    switch (opc4(ctx->opcode)) {
+> -    case 0:
+> -        gen_bcdctsq(ctx);
+> -        break;
+> -    case 2:
+> -        gen_bcdcfsq(ctx);
+> -        break;
+> -    case 4:
+> -        gen_bcdctz(ctx);
+> -        break;
+> -    case 6:
+> -        gen_bcdcfz(ctx);
+> -        break;
+> -    case 7:
+> -        gen_bcdcfn(ctx);
+> -        break;
+> -    case 31:
+> -        gen_bcdsetsgn(ctx);
+> -        break;
+> -    default:
+> -        gen_invalid(ctx);
+> -        break;
+> -    }
+> +static bool do_bcd(DisasContext *ctx, arg_VX *a,
+> +                   void (*helper)(TCGv_i32, TCGv_ptr, TCGv_ptr,
+> +                                  TCGv_ptr, TCGv_i32))
+> +{
+> +    TCGv_ptr ra, rb, rd;
+> +    TCGv_i32 ps;
+> +
+> +    REQUIRE_VECTOR(ctx);
+> +
+> +    ra = gen_avr_ptr(a->vra);
+> +    rb = gen_avr_ptr(a->vrb);
+> +    rd = gen_avr_ptr(a->vrt);
+> +    ps = tcg_constant_i32(0);
+> +
+> +    helper(cpu_crf[6], rd, ra, rb, ps);
+> +    return true;
+>  }
+>  
+> -GEN_VXFORM_DUAL(vsububm, PPC_ALTIVEC, PPC_NONE, \
+> -                bcdadd, PPC_NONE, PPC2_ALTIVEC_207)
+> -GEN_VXFORM_DUAL(vsubuhm, PPC_ALTIVEC, PPC_NONE, \
+> -                bcdsub, PPC_NONE, PPC2_ALTIVEC_207)
+> -GEN_VXFORM_DUAL(vsubudm, PPC2_ALTIVEC_207, PPC_NONE, \
+> -                bcds, PPC_NONE, PPC2_ISA300)
+> -GEN_VXFORM_DUAL(vsubuwm, PPC_ALTIVEC, PPC_NONE, \
+> -                bcdus, PPC_NONE, PPC2_ISA300)
+> +static bool do_bcd_tb(DisasContext *ctx, arg_VX_tb *a,
+> +                    void (*helper)(TCGv_i32, TCGv_ptr, TCGv_ptr, TCGv_i32))
+> +{
+> +    TCGv_ptr rd, rb;
+> +    TCGv_i32 ps;
+> +
+> +    REQUIRE_VECTOR(ctx);
+> +
+> +    rb = gen_avr_ptr(a->vrb);
+> +    rd = gen_avr_ptr(a->vrt);
+> +
+> +    ps = tcg_constant_i32(0);
+> +
+> +    helper(cpu_crf[6], rd, rb, ps);
+> +
+> +    return true;
+> +}
+> +
+> +static bool do_bcd_tb_ps(DisasContext *ctx, arg_VX_tb_ps *a,
+> +                    void (*helper)(TCGv_i32, TCGv_ptr, TCGv_ptr, TCGv_i32))
+> +{
+> +    TCGv_ptr rd, rb;
+> +    TCGv_i32 ps;
+> +
+> +    REQUIRE_VECTOR(ctx);
+> +
+> +    rb = gen_avr_ptr(a->vrb);
+> +    rd = gen_avr_ptr(a->vrt);
+> +
+> +    ps = tcg_constant_i32(a->ps);
+> +
+> +    helper(cpu_crf[6], rd, rb, ps);
+> +
+> +    return true;
+> +}
+> +
+> +TRANS_FLAGS2(ALTIVEC_207, BCDADD, do_bcd_ps, gen_helper_BCDADD)
+> +TRANS_FLAGS2(ALTIVEC_207, BCDSUB, do_bcd_ps, gen_helper_BCDSUB)
+> +TRANS_FLAGS2(ISA300, BCDUS, do_bcd, gen_helper_BCDUS)
+> +TRANS_FLAGS2(ISA300, BCDS, do_bcd_ps, gen_helper_BCDS)
+> +TRANS_FLAGS2(ISA300, BCDCFN, do_bcd_tb_ps, gen_helper_BCDCFN)
+> +TRANS_FLAGS2(ISA300, BCDCTN, do_bcd_tb, gen_helper_BCDCTN)
+> +TRANS_FLAGS2(ISA300, BCDCFZ, do_bcd_tb_ps, gen_helper_BCDCFZ)
+> +TRANS_FLAGS2(ISA300, BCDCTZ, do_bcd_tb_ps, gen_helper_BCDCTZ)
+> +TRANS_FLAGS2(ISA300, BCDCFSQ, do_bcd_tb_ps, gen_helper_BCDCFSQ)
+> +TRANS_FLAGS2(ISA300, BCDCTSQ, do_bcd_tb, gen_helper_BCDCTSQ)
+> +TRANS_FLAGS2(ISA300, BCDSETSGN, do_bcd_tb_ps, gen_helper_BCDSETSGN)
+> +TRANS_FLAGS2(ISA300, BCDCPSGN, do_bcd, gen_helper_BCDCPSGN)
+> +TRANS_FLAGS2(ISA300, BCDTRUNC, do_bcd_ps, gen_helper_BCDTRUNC)
+> +TRANS_FLAGS2(ISA300, BCDUTRUNC, do_bcd, gen_helper_BCDUTRUNC)
+> +TRANS_FLAGS2(ISA300, BCDSR, do_bcd_ps, gen_helper_BCDSR)
+>  
+>  static void gen_vsbox(DisasContext *ctx)
+>  {
+> @@ -3502,5 +3463,3 @@ TRANS_FLAGS2(ISA310, VMODUQ, do_vx_helper, gen_helper_VMODUQ)
+>  #undef GEN_VXFORM_NOA
+>  #undef GEN_VXFORM_UIMM
+>  #undef GEN_VAFORM_PAIRED
+> -
+> -#undef GEN_BCD2
+> diff --git a/target/ppc/translate/vmx-ops.c.inc b/target/ppc/translate/vmx-ops.c.inc
+> index 2820976c0f..c1951c6975 100644
+> --- a/target/ppc/translate/vmx-ops.c.inc
+> +++ b/target/ppc/translate/vmx-ops.c.inc
+> @@ -24,39 +24,17 @@ GEN_HANDLER_E(name0##_##name1, 0x4, opc2, opc3, 0x00000000, type0, type1)
+>  GEN_HANDLER_E(name0##_##name1, 0x4, opc2, opc3, 0x00000000, tp0, tp1), \
+>  GEN_HANDLER_E(name0##_##name1, 0x4, opc2, (opc3 | 0x10), 0x00000000, tp0, tp1),
+>  
+> -GEN_VXFORM_DUAL(vaddubm, vmul10cuq, 0, 0, PPC_ALTIVEC, PPC_NONE),
+> -GEN_VXFORM_DUAL(vadduhm, vmul10ecuq, 0, 1, PPC_ALTIVEC, PPC_NONE),
+> -GEN_VXFORM(vadduwm, 0, 2),
+> -GEN_VXFORM_207(vaddudm, 0, 3),
+> -GEN_VXFORM_DUAL(vsububm, bcdadd, 0, 16, PPC_ALTIVEC, PPC_NONE),
+> -GEN_VXFORM_DUAL(vsubuhm, bcdsub, 0, 17, PPC_ALTIVEC, PPC_NONE),
+> -GEN_VXFORM_DUAL(vsubuwm, bcdus, 0, 18, PPC_ALTIVEC, PPC2_ISA300),
+> -GEN_VXFORM_DUAL(vsubudm, bcds, 0, 19, PPC2_ALTIVEC_207, PPC2_ISA300),
+> -GEN_VXFORM_300(bcds, 0, 27),
+>  GEN_VXFORM_300(vextublx, 6, 24),
+>  GEN_VXFORM_300(vextuhlx, 6, 25),
+>  GEN_VXFORM_DUAL(vmrgow, vextuwlx, 6, 26, PPC_NONE, PPC2_ALTIVEC_207),
+>  GEN_VXFORM_300(vextubrx, 6, 28),
+>  GEN_VXFORM_300(vextuhrx, 6, 29),
+>  GEN_VXFORM_DUAL(vmrgew, vextuwrx, 6, 30, PPC_NONE, PPC2_ALTIVEC_207),
+> -GEN_VXFORM_207(vmuluwm, 4, 2),
+>  GEN_VXFORM_300(vsrv, 2, 28),
+>  GEN_VXFORM_300(vslv, 2, 29),
+>  GEN_VXFORM(vslo, 6, 16),
+>  GEN_VXFORM(vsro, 6, 17),
+>  
+> -GEN_VXFORM(xpnd04_1, 0, 22),
+> -GEN_VXFORM_300(bcdsr, 0, 23),
+> -GEN_VXFORM_300(bcdsr, 0, 31),
+> -GEN_VXFORM_300_EXT(vmul10uq, 0, 8, 0x0000F800),
+> -GEN_VXFORM_300(vmul10euq, 0, 9),
+> -GEN_VXFORM_300(bcdcpsgn, 0, 13),
+> -GEN_VXFORM_207(bcdadd, 0, 24),
+> -GEN_VXFORM_207(bcdsub, 0, 25),
+> -GEN_VXFORM_300(bcdtrunc, 0, 28),
+> -GEN_VXFORM_300(xpnd04_2, 0, 30),
+> -GEN_VXFORM_300(bcdtrunc, 0, 20),
+> -GEN_VXFORM_300(bcdutrunc, 0, 21),
+>  GEN_VXFORM(vsl, 2, 7),
+>  GEN_VXFORM(vsr, 2, 11),
+>  GEN_VXFORM(vsum4ubs, 4, 24),
 
 
