@@ -4,90 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73099C5DF94
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 11:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E517C5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 11:16:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wySas-0007uN-3R; Mon, 24 Aug 2026 07:11:58 -0400
+	id 1wySem-0000ed-B2; Mon, 24 Aug 2026 07:16:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
- id 1wySaq-0007rT-4T
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 07:11:56 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
- id 1wySao-0003KM-Hu
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 07:11:55 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-8518b3ff3e9so2725829b3a.2
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 04:11:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787569912; x=1788174712; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xd3N29ucPDdQ04y6/Np/nMQdUe0G5J4exYP1S+Xq1pQ=;
- b=m+BCNa77Rz1Qy1dOH0e0/ENNkN+zJY+GOyfc4SjZZ5z2qjxCkEFjcMnM8nNu2vzYdB
- Aho/mptrFDVzEES0DqQ3FnJyld/+HFF2XgDPFzzVW0S2spMNshaKSmgj2qmnwReQ7cr7
- 9Rv3JNfHJCPGVoUQ/5A8UTydgZG+I8ra9RulkbWdSsVeNlPhmAaWWZ5xd5F/A7IAd5a5
- ojZm/qTmOfLdHbpKnoGyS2nk3cDMgps/elzn43ogvStm181sK+FB1cAGNr4niZLvTOpk
- EhwLdbM+QowineAErXwsMIBUPABMismyQhPjU6gFUEqCfP7yRJWgmGrUC8DF8tAiaQRq
- a0+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787569912; x=1788174712;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=xd3N29ucPDdQ04y6/Np/nMQdUe0G5J4exYP1S+Xq1pQ=;
- b=sj0JJ2QTL0QR63CLBNB06wzxb0Ol8OTmf2lnPlE+fUT0YdT1eQ7jj1bGdCGZFIIy0J
- ULYBS+yNldWkqvF4FZrGlizIwYmraunlR597ONhLUd6cZN08A3diumMIAP80Wuc7LDWT
- ZWuHiDdlG12Mm66kgniPveOmEShIgtBHEsCQgXP+/JSHmq03QpiLm9kYo5plRpYGmIj4
- 98oIoJ2JWkjfst3Ni2Dh/B7zcNinJw5L4s3K5TouFyh+1D4h9/O7XUDYYNNQQxpDSNPE
- DLptTc/xkKkdAk8WQJkpUAxSHr3KcmjYcxfXBjS1AnTbaCHWHubKBYOKj0WVUiX6mNYD
- t/3A==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqbJo5jCJ/bbwkZk2mWTc8J7oHUOMtONlOtCtr1RwaLoClj7u859Rk2QXK/GULoq2RcLy0HWxlxSf/Z@nongnu.org
-X-Gm-Message-State: AFuF++kddpWRIXlmjTuoTELuWUp1eq4euKVV4TZ57KD08KJj7IOGN8nV
- vcFxyDrj8NnsB13pRE3cSeXauRuSaZP/WwbMhs+c2+epE3ghxf0olsQA
-X-Gm-Gg: AR+sD11e8A4c/5/59XjDr8aLUPnjznD4WpLQfpfVzQGE50yaPS7QBLtXI7Zw4CGjGxY
- 84I1RDG/9Qzvnbh8TlbBvHKYnQGLqWIckeZEccKWu1KZ+BRS+3TCjmtnrkZsByO5HjgLkR7Xild
- YPrcdC0yf2dy1/r4HjWa1MakitiRzmkjyIhwVRjgCRr2StM6zRjIRqBuCz++RWBxLddd76acJ1z
- 7cQIEE8ck0iMMMoDV3QqyH0JTT5R7hPNuJXD4KOq4frZ9hWmCKTxVmoOxDDmTRxtkT6nA6gtkLU
- DsQCefQ/04X8MNxhOzt0cd5fHutkPAFNZvON1oNfcVCKyUv41b238v5woG5E/K722jiea1blM4a
- +H56Ce5eXpM5+LmO/RfP+CCfbDxpfrTYuLwXT1O4DdiDFUAx9fMMw9xRIJCTO8XabmQwSTVl7f4
- Kr8m7zJ9FsbQh05cP5u0X/bn7N2typjzI+t24BicvPF5bwG8I8yOXRSAAAcGTfBv534dtiWFOl4
- q75JoTG51WncUcRl91pW+uQWA==
-X-Received: by 2002:a05:6300:6d8c:10b0:3cd:4fa5:1b88 with SMTP id
- adf61e73a8af0-3cd4fa51bcbmr21595735637.0.1787569912462; 
- Mon, 24 Aug 2026 04:11:52 -0700 (PDT)
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp. [133.11.54.183])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-cc19f39d4b5sm630042a12.8.2026.08.24.04.11.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Aug 2026 04:11:51 -0700 (PDT)
-Message-ID: <72b510cb-a3bc-4885-a87a-6c5dcda21f7b@gmail.com>
-Date: Mon, 24 Aug 2026 20:11:50 +0900
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wySek-0000e8-Ex
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 07:15:58 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wySei-0004hg-LB
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 07:15:58 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67O9WBvr1536243; Mon, 24 Aug 2026 11:15:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=7fE0EvgkG89C1fNDvBI0IaQBaDJSj+
+ jQhlRX+ZYlK4M=; b=l+yVc8RUphVULjNgyGNLbmUpNv3ceNL4GRBuCygKFG684D
+ vXpn9ahEvDOfDNlmqQdZwO0pjTIWn9/4qrkRMTdTWRcR0x/Ie+oERlgBOtp+NIXz
+ +tGz0VTDhUtmBvFrqUSdvEYbiZVoIukavt6aryNilFWZtUL9eRBWuFZmcwmI3QCH
+ pYuApX8i7GW/h7LyFz2YFpbMLGkXlObVPA+ZDggfJpX1YyCHNX79lD1c1kyb5+jt
+ qDK3B7+I0ER8UynU6wJiIeqSNfIhb5CT4TqWO1KsTIA056rbXdAmb0FhJm0LHhcC
+ QwVAC3WJ9G+qXcmAgCZoc6165Ez82wUAi4XVOFKA==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dx0p7t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Aug 2026 11:15:53 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67OBBIqZ031600;
+ Mon, 24 Aug 2026 11:15:53 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkgwe37-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Aug 2026 11:15:53 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67OBFnat51249426
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 24 Aug 2026 11:15:49 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2202320049;
+ Mon, 24 Aug 2026 11:15:49 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5C2EC20040;
+ Mon, 24 Aug 2026 11:15:46 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 24 Aug 2026 11:15:46 +0000 (GMT)
+Date: Mon, 24 Aug 2026 16:45:43 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>
+Cc: Amit Machhiwal <amachhiw@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>
+Subject: Re: [PATCH] linux-headers: Update to include KVM_CAP_PPC_COMPAT_CAPS
+Message-ID: <20260824164442.c2943bd9-7e-amachhiw@linux.ibm.com>
+Mail-Followup-To: qemu-devel@nongnu.org, kvm@vger.kernel.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>
+References: <20260819045924.11732-1-amachhiw@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ui/egl: fix qemu_egl_display type
-To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-References: <20260820131933.2729240-1-marcandre.lureau@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@gmail.com>
-In-Reply-To: <20260820131933.2729240-1-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=akihiko.odaki@gmail.com; helo=mail-pf1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260819045924.11732-1-amachhiw@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDA5MiBTYWx0ZWRfX6W1Y27d4MsjJ
+ wyJuFjh/locVd9PcLPOt9TiAPl82GmztCgE4JHax/c6XtxGid5AVDOgegRHXZNWNAH/PEBF44Y/
+ x969mML+clgnUGRv8vySapgTUMvqB+Y=
+X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a8c27e9 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=p0WdMEafAAAA:8 a=7XnC1fpkjExzw9auK74A:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: qcnxhUkGFSfH1SH601jki6madvvgIFXL
+X-Proofpoint-GUID: qcnxhUkGFSfH1SH601jki6madvvgIFXL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDA5MiBTYWx0ZWRfX/G4bDefC99tC
+ 4XUsoRAe44BLdV5LNDe813Gsz3KmCq0x+s3HZ5o2QeTMzsurQbmEiGcly6GtZ7NaLSOvKsf4+jV
+ VDQuYqksMvbg2hX6qnGt3JLcJaIdhV4Aih5KE9h8gOhO7xVGdo5ScIaj4pIkVHmSvnn3jqs7ie9
+ iCRu0kYr+4DlIHdSjrySXJTAighNrWGdB1Qqa6uCMW/3jbYZ2XoK6fOiv6ppI4gRCa1ILfh4ymA
+ Nb23GXvvtPw5uYTF4yThZAeO8tS8okmcoy88i6Pvt2gaD2RikwbNqbRFQQRCVhXRRgHQzt1Nks4
+ nR/eL5WMs9h74WOH6HRO//iYkAZvgiXupCAvrzuDenwZy3KGddaEYwhVCmS+7fSSE3GNdWKcNKT
+ aptH46WIVOb2kwrT2+arK32XikEZMfGk6gBJjVIz80lxzbi/zhkOTsWteGh++UC334U5WnwqV8p
+ SUgTFcFO4NXgVyiFXvA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-24_03,2026-08-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 bulkscore=0
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608240092
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,18 +128,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/20 22:19, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On 2026/08/19 10:29 AM, Amit Machhiwal wrote:
+> Sync linux headers from Linux kernel commit 1200d84f4c0a
+> ("Merge tag 'powerpc-7.3-1' of git://git.kernel.org/pub/scm/linux/kernel/git/powerpc/linux").
 > 
-> EGLDisplay is already a pointer type (void *), so declaring
-> qemu_egl_display as EGLDisplay * makes it void **, which
-> doesn't match any of its usages.
+> This picks up the new KVM_CAP_PPC_COMPAT_CAPS capability for powerpc,
+> which introduces:
+> - struct kvm_ppc_compat_caps: reports processor compatibility modes
+>   supported by the host (POWER9, POWER10, POWER11)
+> - KVM_PPC_GET_COMPAT_CAPS ioctl (KVMIO 0xb8)
+> - KVM_CAP_PPC_COMPAT_CAPS (cap #250) in linux/kvm.h
 > 
-> Fixes: 7ced9e9f6da2 ("ui: add egl-helpers")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> The sync is needed to get the corresponding Qemu series[1] merged.
+> 
+> [1]: https://lore.kernel.org/all/20260812170854.58709-1-amachhiw@linux.ibm.com/
+> 
+> Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+> ---
+>  include/standard-headers/linux/const.h  |  4 ++--
+>  linux-headers/asm-arm64/unistd_64.h     |  1 +
+>  linux-headers/asm-generic/unistd.h      |  6 +++++-
+>  linux-headers/asm-loongarch/unistd_64.h |  1 +
+>  linux-headers/asm-mips/unistd_n32.h     |  1 +
+>  linux-headers/asm-mips/unistd_n64.h     |  1 +
+>  linux-headers/asm-mips/unistd_o32.h     |  1 +
+>  linux-headers/asm-powerpc/kvm.h         | 18 ++++++++++++++++++
+>  linux-headers/asm-powerpc/unistd_32.h   |  1 +
+>  linux-headers/asm-powerpc/unistd_64.h   |  1 +
+>  linux-headers/asm-riscv/unistd_32.h     |  1 +
+>  linux-headers/asm-riscv/unistd_64.h     |  1 +
+>  linux-headers/asm-s390/unistd_64.h      |  1 +
+>  linux-headers/asm-x86/unistd_32.h       |  1 +
+>  linux-headers/asm-x86/unistd_64.h       |  1 +
+>  linux-headers/asm-x86/unistd_x32.h      |  1 +
+>  linux-headers/linux/const.h             |  4 ++--
+>  linux-headers/linux/kvm.h               |  3 +++
+>  18 files changed, 43 insertions(+), 5 deletions(-)
+> 
 
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+CI link: https://gitlab.com/amachhiw/qemu/-/pipelines/2784536213 (Passed)
 
-Regards,
-Akihiko Odaki
+Thanks,
+Amit
 
