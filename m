@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92E56C5DF8C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:52:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98536C5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:52:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNal-0004SX-CD; Mon, 24 Aug 2026 01:51:31 -0400
+	id 1wyNZj-0002ox-Pk; Mon, 24 Aug 2026 01:50:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNZp-00037N-Eg
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:50:35 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1wyNYv-0001gv-4e
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:49:40 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNZn-0002Sl-CF
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:50:33 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-38fdeaed181so4234146a91.1
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:50:30 -0700 (PDT)
+ id 1wyNYr-00021y-Bb
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:49:35 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-384930ca5e2so2861860a91.3
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:49:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787550630; x=1788155430; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787550572; x=1788155372; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=V3fM4y2C472xM9X4uqOcufwfeVn3Wu1NX6yZjjnlfQ0=;
- b=sWAy3um4uk2SQU23G6tQGdn1UzBn0lu6KcebXqIyV/tAUdnQcQDt5OE+KxPM3KR9YE
- mR+1Gesgyab3VMqKYxQ4BHWc0qKZJDP43diHJdBFkGOCFxRv4QMY3/Evuo/g0HMDpuy3
- AWhduLPfqXBLje4CrRaAxRtZEUgdYm7MeEdtQpvFMZiUqDbciGScTpM5XRBL6e/Ft1m+
- +EhoAFSl06OHMWyG4HgsSa20r83P/8CV+KjvgqoeFhuNkt4j8E9ESXFNzJjfqCXaY8Hv
- 3U5uV13Z1apXDM+XWpvMULuEc/vyPYVszgH9hWnK6rnIi920AyigVkKI2bF4Jh2vVoDP
- vQnw==
+ bh=U9hvvtE/mLZxSo9keqAsE4vQdBL311za+hiZdp6fz9g=;
+ b=eUFVlbPzeXRLLiUonwX7TqjYUREV6aynTriebYZo+gjeW3guTlcNji0JblEyQWEYy2
+ p/DW0RWUTydjgdhNsT+lvGCVaW5DyqcgCNClPtSRP3Gn79Cmpdtx6xPxBEUm6COmD7jr
+ VFy34dS2H7M+tUQNnrrrSJnBJX9Af86KRq6qIF2vVkM1VDJhojBlnGaTN1rjuXNUqsN0
+ P6wMsJVE9yVD187J1khbnp5G/lK2EPc7gJZlnyM+RtLgAbmie5JtT5pvwJZeZMo8zq5b
+ GjXpGbVc0ocH9CXbMxZma3LDKLQJfrzY+lZjvN6Od1cWX/EU6r6NGyHBPNTwMhl+/fDA
+ xTsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787550630; x=1788155430;
+ d=1e100.net; s=20251104; t=1787550572; x=1788155372;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=V3fM4y2C472xM9X4uqOcufwfeVn3Wu1NX6yZjjnlfQ0=;
- b=T6h/e1dsu60Q6g+Ga+EbajED7qGnvvOZ7x2QukL/uM+Rp2sO38jOzg3Zu2Ft8Pxg0A
- VjnCCHWewAZiPaJyNBDpryU80Nw4gWTrHMqIQmQ+mswaCpTxjvR4AQOdhhi7DYkI9qD1
- WC6kxO4sdjl3eCxa3KzFrRTVkWw4z8Ah1aPJLWgPEKisTtxC8u4eVjKgMDyOs84Q24Mn
- javOWiJ/wb6T34RDlg+b7H84/PsVAeeF11VDtJZLpdscx1RO/Q1no+lp3r0VVBqdgjao
- Qdq5lphGxNQ13atzsZbk4nayyLcy0YCcCzczGaYN3D0jynbj/zwUj1LKhPapZ+IdpYAC
- s0jw==
-X-Gm-Message-State: AFuF++lepxZeM1YX8+bTzpNWs5ioIB9KEIm1YCu2Nf9UXzc40rXRJc1a
- 7GIGf8F1tyv/7dNGvUkiXbMa4srYum05zwQ8aYdztuy8xeV8WH71mE84J666/g==
-X-Gm-Gg: AR+sD10foyJwJRlXK1fHldeYWikMks8VJmYfBAj6dlXrBaXfMW1YiANEsDoa4/krvi4
- EbvKtM2mRfdno7tHKIFVp3UChGt6+oNSq0/YYw1rMRfiJs9znwTyr4CtSIzWsSZmAtKN2wIZobo
- 3eioP58X7sRdkdHUkNtWYIck0rTZofJfSen8iEFQbv67obf/12skPiUEoeakiyajotmA8fowcrC
- 6xRKoSE+EcgWEMtXpMT5jXoWOD4FaCD8bu9Eb3bMzBx5vTJFS0ldsVhE8ydMWPRzGwBsyaeGUpE
- 9Cfbu7FNwel39tvCmOW71AAc0osqq+BF7DqqKWQ8u+S1gKrleYV3GiZ5EPtDf6qD7tnh8dB0lO6
- 5gmSSyg/1Lj1es/PSbQ0nr/Sgc3xN3DBnsJBwI+ReSNBLhW+bceOxr1c5IEJA4O0RrO0y2Cqm9O
- rYr/UPOqTwAEQ5Kq9QPGeNJsa8PIe3lPGP2+hyrF26YbJeEiGqEtnUFr8I+wxXsv/owydi5VTbG
- XnHNXSpjS8SwBkF
-X-Received: by 2002:a17:90b:520c:b0:37f:ed7e:7e42 with SMTP id
- 98e67ed59e1d1-395c3867ac5mr44826268a91.14.1787550629724; 
- Sun, 23 Aug 2026 22:50:29 -0700 (PDT)
+ bh=U9hvvtE/mLZxSo9keqAsE4vQdBL311za+hiZdp6fz9g=;
+ b=G4gYpBV18yScOc/w8pIbyWErUiBINq4BLDTlx9atws1PLmloHGQWiHxXqimFzRvQXL
+ irsUvsdFF34eVYkLFlOVB4eUUJgrwCq/q9v9XUwzhKW90Q+1vpkFPzr2VHoT40eISB0a
+ TBkpdba00P15osiYR2WsL1/XVyfV0UWQPoJKSWtG7RLz0KY54x7HzvquVFW3Rx0JpvHQ
+ MJ6EsdEksTMYdxun54YuFqBdsxBtLzZcvhkTYQp4+Z7hqr1XGyR2G3oE7JWkETBKYmLY
+ 1E3uFMdLZKXqZ0bEKRVYbq3WPkE+PEENZWiYC9k2OXup7wF4uv1C4elvv62UkVpjBpzL
+ eibw==
+X-Gm-Message-State: AFuF++lYP3smG/l1ebi/0m/OxuE2uxa3u45sFVKk0Ser5rl4evFA1Lxf
+ X3eKz0+AlZnUI2zTLbZuW50gFs066Dtv1E+5DsXxozBXJtasQEbh+JJuCoRj9Q==
+X-Gm-Gg: AR+sD12tOmIaUhewKfvzc4626XplNo/2XAGlx/lUkuMOnhy2ecWZ9+25HNDLhPeiBOl
+ e0+DKJIP39IT9e7X122IGY0f2Iv+4uNb6BoZzlPgzXsDeI5KjHDZ6JiNh2+aZaTaka1QeN3CU1w
+ 5rKIvUpwY1h9U28Lt5kvqfWt4ItaXAuwwwxpLmrpMUK7JaM/QiKIpRYgm14VyjDIl3VnxZfPZGw
+ fRbM6NtfKE4x1WDuvLeBiBEd5rdLn9C5l2X/aTFgPaphFrJmUe5gsTx/jDpC3VUgmXAvE1LKVS+
+ fmpEkWn/ActPm2SxotT1EpogehrhoRPRtX+TOSv0ZhbO1YpuOktWWo8ZlUl5VCx7yfHIHDJJ/BK
+ HJFDeX4CnjZE9JyxdVuZ4k1W8a6ztzOYRkjqGrvb/OZkxWr/1L4VQZMUxAn7KdxTIGYpDjELdPJ
+ kRWxPAGsTZbyH1rdvpjqoyxjRb+6ZIUe3AU/3XlLXSmr0MWrR9XwJ/UbcI7PPX59MXn7MozGAGv
+ NkFKA==
+X-Received: by 2002:a17:90a:d404:b0:38e:ad9d:1161 with SMTP id
+ 98e67ed59e1d1-395decde369mr29780501a91.0.1787550571741; 
+ Sun, 23 Aug 2026 22:49:31 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.50.27
+ 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.49.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Aug 2026 22:50:29 -0700 (PDT)
+ Sun, 23 Aug 2026 22:49:31 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
+Cc: Zephyr Li <fritchleybohrer@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 42/96] disas/riscv: Set dec->opcode_data in decode function
-Date: Mon, 24 Aug 2026 15:47:12 +1000
-Message-ID: <20260824054806.2790041-43-alistair.francis@wdc.com>
+Subject: [PULL v2 23/96] target/riscv: do not count ECALL in minstret
+Date: Mon, 24 Aug 2026 15:46:53 +1000
+Message-ID: <20260824054806.2790041-24-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260824054806.2790041-1-alistair.francis@wdc.com>
 References: <20260824054806.2790041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,281 +104,219 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Zephyr Li <fritchleybohrer@gmail.com>
 
-This allows each opcode table to be private to the decode file.
+With icount enabled, helper_raise_exception() leaves ECALL in
+icount_get_raw() because it exits without restoring the current TB
+state. This makes minstret count an instruction that does not retire.
 
+Adjust only the fixed minstret baseline so that mcycle accounting
+remains unchanged.
+
+Add an RV64 softmmu regression test for the issue.
+
+Fixes: 4fe8ae09062d ("target/riscv: Combine mhpmcounter and mhpmcounterh")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4087
+Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260812223142.349142-10-richard.henderson@linaro.org>
+Message-ID: <20260730032122.2564190-1-fritchleybohrer@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- disas/riscv-xlrbr.h    |  2 --
- disas/riscv-xthead.h   |  2 --
- disas/riscv-xventana.h |  2 --
- disas/riscv-xlrbr.c    |  4 +++-
- disas/riscv-xthead.c   | 13 ++++++++++++-
- disas/riscv-xventana.c |  3 ++-
- disas/riscv.c          | 34 +++++++++++++++++-----------------
- 7 files changed, 34 insertions(+), 26 deletions(-)
+ target/riscv/tcg/pmu.h                    |  1 +
+ target/riscv/tcg/op_helper.c              |  6 +++
+ target/riscv/tcg/pmu.c                    | 44 +++++++++++++-----
+ tests/tcg/riscv64/Makefile.softmmu-target |  4 ++
+ tests/tcg/riscv64/test-minstret-ecall.S   | 55 +++++++++++++++++++++++
+ 5 files changed, 98 insertions(+), 12 deletions(-)
+ create mode 100644 tests/tcg/riscv64/test-minstret-ecall.S
 
-diff --git a/disas/riscv-xlrbr.h b/disas/riscv-xlrbr.h
-index 939a69ea6d..ebf3d4c133 100644
---- a/disas/riscv-xlrbr.h
-+++ b/disas/riscv-xlrbr.h
-@@ -12,8 +12,6 @@
+diff --git a/target/riscv/tcg/pmu.h b/target/riscv/tcg/pmu.h
+index b4f1e469a2..2429c01b77 100644
+--- a/target/riscv/tcg/pmu.h
++++ b/target/riscv/tcg/pmu.h
+@@ -36,6 +36,7 @@ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
+                           uint32_t ctr_idx);
+ void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, privilege_mode_t newpriv,
+                                  bool new_virt);
++void riscv_pmu_decr_instret(CPURISCVState *env);
+ RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
+                                   bool upper_half, uint32_t ctr_idx);
  
- #include "disas/riscv.h"
+diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
+index ba3c7da375..acdccd1a97 100644
+--- a/target/riscv/tcg/op_helper.c
++++ b/target/riscv/tcg/op_helper.c
+@@ -21,6 +21,9 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "target/riscv/tcg/csr.h"
++#ifndef CONFIG_USER_ONLY
++#include "pmu.h"
++#endif
+ #include "internals.h"
+ #include "exec/cputlb.h"
+ #include "accel/tcg/cpu-ldst.h"
+@@ -47,6 +50,9 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
  
--extern const rv_opcode_data rv_xlrbr_opcode_data[];
--
- void decode_xlrbr(rv_decode *, rv_isa);
- 
- #endif /* DISAS_RISCV_XLRBR_H */
-diff --git a/disas/riscv-xthead.h b/disas/riscv-xthead.h
-index fcd42746e7..0c65c8e0af 100644
---- a/disas/riscv-xthead.h
-+++ b/disas/riscv-xthead.h
-@@ -11,8 +11,6 @@
- 
- #include "disas/riscv.h"
- 
--extern const rv_opcode_data xthead_opcode_data[];
--
- void decode_xtheadba(rv_decode *, rv_isa);
- void decode_xtheadbb(rv_decode *, rv_isa);
- void decode_xtheadbs(rv_decode *, rv_isa);
-diff --git a/disas/riscv-xventana.h b/disas/riscv-xventana.h
-index 72be9ffa16..1006c3be00 100644
---- a/disas/riscv-xventana.h
-+++ b/disas/riscv-xventana.h
-@@ -11,8 +11,6 @@
- 
- #include "disas/riscv.h"
- 
--extern const rv_opcode_data ventana_opcode_data[];
--
- void decode_xventanacondops(rv_decode*, rv_isa);
- 
- #endif /* DISAS_RISCV_XVENTANA_H */
-diff --git a/disas/riscv-xlrbr.c b/disas/riscv-xlrbr.c
-index 57cb434523..f61028fce9 100644
---- a/disas/riscv-xlrbr.c
-+++ b/disas/riscv-xlrbr.c
-@@ -24,7 +24,7 @@ typedef enum {
-     rv_op_crc32c_d = 8,
- } rv_xlrbr_op;
- 
--const rv_opcode_data rv_xlrbr_opcode_data[] = {
-+static const rv_opcode_data xlrbr_opcode_data[] = {
-     { "illegal", rv_codec_illegal, rv_fmt_none, NULL, 0, 0, 0 },
-     { "crc32.b", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
-     { "crc32.h", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
-@@ -75,5 +75,7 @@ void decode_xlrbr(rv_decode *dec, rv_isa isa)
-         }
-         break;
-     }
-+
-+    dec->opcode_data = xlrbr_opcode_data;
-     dec->op = op;
- }
-diff --git a/disas/riscv-xthead.c b/disas/riscv-xthead.c
-index 2f2ddb8dd9..96f80bc8e5 100644
---- a/disas/riscv-xthead.c
-+++ b/disas/riscv-xthead.c
-@@ -127,7 +127,7 @@ typedef enum {
-     rv_op_th_sync_s,
- } rv_xthead_op;
- 
--const rv_opcode_data xthead_opcode_data[] = {
-+static const rv_opcode_data xthead_opcode_data[] = {
-     { "th.illegal", rv_codec_illegal, rv_fmt_none, NULL, 0, 0, 0 },
-     /* XTheadBa */
-     { "th.addsl", rv_codec_r_imm2, rv_fmt_rd_rs1_rs2_imm, NULL, 0, 0, 0 },
-@@ -272,6 +272,7 @@ void decode_xtheadba(rv_decode *dec, rv_isa isa)
-         break;
-     }
- 
-+    dec->opcode_data = xthead_opcode_data;
-     dec->op = op;
- }
- 
-@@ -330,6 +331,7 @@ void decode_xtheadbb(rv_decode *dec, rv_isa isa)
-         break;
-     }
- 
-+    dec->opcode_data = xthead_opcode_data;
-     dec->op = op;
- }
- 
-@@ -356,6 +358,7 @@ void decode_xtheadbs(rv_decode *dec, rv_isa isa)
-         break;
-     }
- 
-+    dec->opcode_data = xthead_opcode_data;
-     dec->op = op;
- }
- 
-@@ -434,6 +437,7 @@ void decode_xtheadcmo(rv_decode *dec, rv_isa isa)
-         break;
-     }
- 
-+    dec->opcode_data = xthead_opcode_data;
-     dec->op = op;
- }
- 
-@@ -461,6 +465,7 @@ void decode_xtheadcondmov(rv_decode *dec, rv_isa isa)
-         break;
-     }
- 
-+    dec->opcode_data = xthead_opcode_data;
-     dec->op = op;
- }
- 
-@@ -498,6 +503,7 @@ void decode_xtheadfmemidx(rv_decode *dec, rv_isa isa)
-         break;
-     }
- 
-+    dec->opcode_data = xthead_opcode_data;
-     dec->op = op;
- }
- 
-@@ -533,6 +539,7 @@ void decode_xtheadfmv(rv_decode *dec, rv_isa isa)
-         break;
-     }
- 
-+    dec->opcode_data = xthead_opcode_data;
-     dec->op = op;
- }
- 
-@@ -564,6 +571,7 @@ void decode_xtheadmac(rv_decode *dec, rv_isa isa)
-         break;
-     }
- 
-+    dec->opcode_data = xthead_opcode_data;
-     dec->op = op;
- }
- 
-@@ -638,6 +646,7 @@ void decode_xtheadmemidx(rv_decode *dec, rv_isa isa)
-         break;
-     }
- 
-+    dec->opcode_data = xthead_opcode_data;
-     dec->op = op;
- }
- 
-@@ -672,6 +681,7 @@ void decode_xtheadmempair(rv_decode *dec, rv_isa isa)
-         break;
-     }
- 
-+    dec->opcode_data = xthead_opcode_data;
-     dec->op = op;
- }
- 
-@@ -706,5 +716,6 @@ void decode_xtheadsync(rv_decode *dec, rv_isa isa)
-         break;
-     }
- 
-+    dec->opcode_data = xthead_opcode_data;
-     dec->op = op;
- }
-diff --git a/disas/riscv-xventana.c b/disas/riscv-xventana.c
-index cd694f15f3..4539173d95 100644
---- a/disas/riscv-xventana.c
-+++ b/disas/riscv-xventana.c
-@@ -14,7 +14,7 @@ typedef enum {
-     ventana_op_vt_maskcn = 2,
- } rv_ventana_op;
- 
--const rv_opcode_data ventana_opcode_data[] = {
-+static const rv_opcode_data ventana_opcode_data[] = {
-     { "vt.illegal", rv_codec_illegal, rv_fmt_none, NULL, 0, 0, 0 },
-     { "vt.maskc", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-     { "vt.maskcn", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-@@ -38,5 +38,6 @@ void decode_xventanacondops(rv_decode *dec, rv_isa isa)
-         break;
-     }
- 
-+    dec->opcode_data = ventana_opcode_data;
-     dec->op = op;
- }
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 9880b8de20..eb6d132a2c 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -1656,7 +1656,7 @@ static uint32_t operand_lpl(rv_inst inst)
- 
- /* instruction metadata */
- 
--const rv_opcode_data rvi_opcode_data[] = {
-+static const rv_opcode_data rvi_opcode_data[] = {
-     { "illegal", rv_codec_illegal, rv_fmt_none, NULL, 0, 0, 0 },
-     { "lui", rv_codec_u, rv_fmt_rd_uimm, NULL, 0, 0, 0 },
-     { "auipc", rv_codec_u, rv_fmt_rd_uoffset, NULL, 0, 0, 0 },
-@@ -2948,6 +2948,7 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+ void helper_raise_exception(CPURISCVState *env, uint32_t exception)
  {
-     rv_inst inst = dec->inst;
-     rv_opcode op = rv_op_illegal;
-+
-     switch ((inst >> 0) & 0b11) {
-     case 0:
-         switch ((inst >> 13) & 0b111) {
-@@ -4590,6 +4591,8 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
-         }
-         break;
-     }
-+
-+    dec->opcode_data = rvi_opcode_data;
-     dec->op = op;
++#ifndef CONFIG_USER_ONLY
++    riscv_pmu_decr_instret(env);
++#endif
+     riscv_raise_exception(env, exception, 0);
  }
  
-@@ -5421,33 +5424,30 @@ static GString *disasm_inst(rv_isa isa, uint64_t pc, rv_inst inst,
-     };
-     const rv_opcode_data *op;
+diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
+index 38ad2737e1..1a4658319b 100644
+--- a/target/riscv/tcg/pmu.c
++++ b/target/riscv/tcg/pmu.c
+@@ -49,6 +49,21 @@ static bool riscv_pmu_counter_enabled(RISCVCPU *cpu, uint32_t ctr_idx)
+     }
+ }
  
--    dec.opcode_data = rvi_opcode_data;
-     decode_inst_opcode(&dec, isa);
++static bool riscv_pmu_counter_filtered(CPURISCVState *env, uint64_t cfg)
++{
++    bool virt_on = env->virt_enabled;
++
++    return (env->priv == PRV_M && (cfg & MHPMEVENT_BIT_MINH)) ||
++           (env->priv == PRV_S && virt_on &&
++            (cfg & MHPMEVENT_BIT_VSINH)) ||
++           (env->priv == PRV_U && virt_on &&
++            (cfg & MHPMEVENT_BIT_VUINH)) ||
++           (env->priv == PRV_S && !virt_on &&
++            (cfg & MHPMEVENT_BIT_SINH)) ||
++           (env->priv == PRV_U && !virt_on &&
++            (cfg & MHPMEVENT_BIT_UINH));
++}
++
+ /*
+  * Information needed to update counters:
+  *  new_priv, new_virt: To correctly save starting snapshot for the newly
+@@ -147,12 +162,27 @@ void riscv_pmu_update_fixed_ctrs(CPURISCVState *env,
+     riscv_pmu_icount_update_priv(env, newpriv, new_virt);
+ }
  
-     if (dec.op == rv_op_illegal && cfg) {
-         static const struct {
-             bool (*guard_func)(const RISCVCPUConfig *);
--            const rv_opcode_data *opcode_data;
-             void (*decode_func)(rv_decode *, rv_isa);
-         } decoders[] = {
--            { has_xtheadba_p, xthead_opcode_data, decode_xtheadba },
--            { has_xtheadbb_p, xthead_opcode_data, decode_xtheadbb },
--            { has_xtheadbs_p, xthead_opcode_data, decode_xtheadbs },
--            { has_xtheadcmo_p, xthead_opcode_data, decode_xtheadcmo },
--            { has_xtheadcondmov_p, xthead_opcode_data, decode_xtheadcondmov },
--            { has_xtheadfmemidx_p, xthead_opcode_data, decode_xtheadfmemidx },
--            { has_xtheadfmv_p, xthead_opcode_data, decode_xtheadfmv },
--            { has_xtheadmac_p, xthead_opcode_data, decode_xtheadmac },
--            { has_xtheadmemidx_p, xthead_opcode_data, decode_xtheadmemidx },
--            { has_xtheadmempair_p, xthead_opcode_data, decode_xtheadmempair },
--            { has_xtheadsync_p, xthead_opcode_data, decode_xtheadsync },
--            { has_XVentanaCondOps_p, ventana_opcode_data, decode_xventanacondops },
--            { has_xlrbr_p, rv_xlrbr_opcode_data, decode_xlrbr },
-+            { has_xtheadba_p, decode_xtheadba },
-+            { has_xtheadbb_p, decode_xtheadbb },
-+            { has_xtheadbs_p, decode_xtheadbs },
-+            { has_xtheadcmo_p, decode_xtheadcmo },
-+            { has_xtheadcondmov_p, decode_xtheadcondmov },
-+            { has_xtheadfmemidx_p, decode_xtheadfmemidx },
-+            { has_xtheadfmv_p, decode_xtheadfmv },
-+            { has_xtheadmac_p, decode_xtheadmac },
-+            { has_xtheadmemidx_p, decode_xtheadmemidx },
-+            { has_xtheadmempair_p, decode_xtheadmempair },
-+            { has_xtheadsync_p, decode_xtheadsync },
-+            { has_XVentanaCondOps_p, decode_xventanacondops },
-+            { has_xlrbr_p, decode_xlrbr },
-         };
++void riscv_pmu_decr_instret(CPURISCVState *env)
++{
++    if (!icount_enabled() ||
++        (env->mcountinhibit & COUNTEREN_IR) ||
++        riscv_pmu_counter_filtered(env, env->minstretcfg)) {
++        return;
++    }
++
++    /*
++     * minstret is derived from icount, which includes the current
++     * instruction.  Move the baseline forward to exclude an instruction
++     * that raises an exception and therefore does not retire.
++     */
++    env->pmu_ctrs[2].mhpmcounter_prev++;
++}
++
+ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
+ {
+     uint32_t ctr_idx;
+     CPURISCVState *env = &cpu->env;
+     uint64_t max_val = UINT64_MAX;
+-    bool virt_on = env->virt_enabled;
+     PMUCTRState *counter;
+     gpointer value;
  
-         for (size_t i = 0; i < ARRAY_SIZE(decoders); i++) {
-             if (decoders[i].guard_func(cfg)) {
--                dec.opcode_data = decoders[i].opcode_data;
-                 decoders[i].decode_func(&dec, isa);
-                 if (dec.op != rv_op_illegal) {
-                     break;
+@@ -170,17 +200,7 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
+         return -1;
+     }
+ 
+-    /* Privilege mode filtering */
+-    if ((env->priv == PRV_M &&
+-        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_MINH)) ||
+-        (env->priv == PRV_S && virt_on &&
+-        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_VSINH)) ||
+-        (env->priv == PRV_U && virt_on &&
+-        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_VUINH)) ||
+-        (env->priv == PRV_S && !virt_on &&
+-        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_SINH)) ||
+-        (env->priv == PRV_U && !virt_on &&
+-        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_UINH))) {
++    if (riscv_pmu_counter_filtered(env, env->mhpmevent_val[ctr_idx])) {
+         return 0;
+     }
+ 
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index 908fd008e4..fac0474746 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -24,6 +24,10 @@ EXTRA_RUNS += run-test-mepc-masking
+ run-test-mepc-masking: test-mepc-masking
+ 	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
+ 
++EXTRA_RUNS += run-test-minstret-ecall
++run-test-minstret-ecall: test-minstret-ecall
++	$(call run-test, $<, $(QEMU) -icount shift=1 $(QEMU_OPTS)$<)
++
+ EXTRA_RUNS += run-plugin-doubletrap
+ run-plugin-doubletrap: doubletrap
+ 	$(call run-test, $<, \
+diff --git a/tests/tcg/riscv64/test-minstret-ecall.S b/tests/tcg/riscv64/test-minstret-ecall.S
+new file mode 100644
+index 0000000000..ab268f7f22
+--- /dev/null
++++ b/tests/tcg/riscv64/test-minstret-ecall.S
+@@ -0,0 +1,55 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++	.option	norvc
++
++	.text
++	.global	_start
++_start:
++	lla	t0, trap
++	csrw	mtvec, t0
++
++	/*
++	 * The first CSR read retires after obtaining s0.  The ecall does not
++	 * retire, so the trap handler must observe a difference of one.
++	 */
++	csrr	s0, minstret
++	ecall
++	sub	t0, s1, s0
++	li	t1, 1
++	bne	t0, t1, fail
++
++	li	a0, 0
++	j	_exit
++
++trap:
++	csrr	s1, minstret
++	csrr	t0, mcause
++	li	t1, 11		/* Environment call from M-mode */
++	bne	t0, t1, fail
++
++	csrr	t0, mepc
++	addi	t0, t0, 4
++	csrw	mepc, t0
++	mret
++
++fail:
++	li	a0, 1
++
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
++
++	/* Semihosting call sequence */
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
 -- 
 2.54.0
 
