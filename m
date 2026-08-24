@@ -4,84 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 179A1C5DF9C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 16:48:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8804AC5DF81
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 16:48:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyXpi-0000Ez-PO; Mon, 24 Aug 2026 12:47:38 -0400
+	id 1wyXqL-0000LK-Fv; Mon, 24 Aug 2026 12:48:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sinxx198@gmail.com>)
- id 1wyXpe-0000EB-5Y
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 12:47:34 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sinxx198@gmail.com>)
- id 1wyXpb-00016A-TD
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 12:47:33 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2ce7d2adef4so48378865ad.3
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 09:47:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787590050; x=1788194850; darn=nongnu.org;
- h=mime-version:content-transfer-encoding:content-type:message-id:date
- :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=jLYHayblO98DosR6rr/G0R7/3PqhDPIOsy5xCqupFyQ=;
- b=c2iDJ1IY1wgnCm7T9D2ggeFJI6zeiEjzdM5WgNDBRPdF0Xc50Mqrnj7sJLYTllRfmE
- DhYIuLZPgygwQa7NHtUzntj8EbrOvVWxHhPev/LTBADwDlfrpYb8S72iopnxO/JeBoBu
- /y89afabR4dI2eT/Y5suVCRyw7M7BYpB+zzwk1YcNd6Lyn/w+uxnuF+TXxPvNPLajTTv
- cuId2piIM58uqY9xCYiJWkyE8gR/VEd+EFD0XukebE+j+NCcM1EmkQZCS58Yb+9Bicc3
- qKxbqq6V8j1DwkyvrspqBhZclH21e943ndO/7jVsmYSAk2Ah1sHto9uCE2OU/TBpTw7V
- +5Xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787590050; x=1788194850;
- h=mime-version:content-transfer-encoding:content-type:message-id:date
- :subject:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=jLYHayblO98DosR6rr/G0R7/3PqhDPIOsy5xCqupFyQ=;
- b=QiipqK8/WW+OIIWPjYpvtsZcrX7g/oenAduEEspLIMj01xJMr8+jhitqGEgfmmXH4F
- QCVB6Qimg6s0AuOoJreioktrzvgjip2Yicv37aYRnX9qYUZFc4A73eWWb6NtdBJKPXS+
- SsB0RTbvZFKWTizfSvfj+EztXZouJ3wRGMs/lYka6UJiUrda6Ixx0jU0PKyhUFlcW3NP
- QaaDXqAX91+cksJOmHzbe6gB4vcRfYW3I9OJHBRDuKfN9/p1bMLb/AJb+Y23GuF3rtIo
- xfUTIms/oUpyuNDuJO4ufyKQfK7anfMhR2BUpRbncniD7ilfHM8xD4WvhODWtZyLHqnh
- szgA==
-X-Gm-Message-State: AFuF++la7mvmz2o02ObsR9T/LjwDIpt1h9vP2ECYnkeLXT76e6UeBVfr
- TM5pO1y7omqB+O/iTXxOvvpESMcZptszgA5tJC7o9gJtjyqhBz9SPZMl4uaLgo4rico=
-X-Gm-Gg: AR+sD11K2sSbO+RTpDmj2K1obZjisswO7Sy6oDFWp8cFsp0usJkG2nFkmIcGguTsmIY
- VYPYzvtuHiY3oVjbMfxF3GhPnQSrrDf+/GmMofyIdWheoJTpvMSEsh2Mx/chFkze6xE1InvRH5O
- rLilPmJt7NPDjKpD/fof9QC8P7J4EQAqLdEV080n6++YPopHIMCRZfZA5lDNsgNeDUtecXsC3Ba
- NrGEiGDhRNwAnytYwci2vUb69OMVLlxaXi7Eu6sSB/VNsWMsaVeVuVnUwqaC7wTClin5lzfU3DU
- Ada4nW5/b2FFZl7RQHfOoARnKDLB41ISIiJunN0hP3TQ5Rk16dLQR2dUHQyvylYKeTyWcPrvko7
- /ijgewcrfZMOpnZ4u0Ge3pka3pOwor5ZSHOoxX0RFL8mC5OvG7AskRTmZlUERsE+7bxv9q9kbP1
- On5OjhsXSjEe7DGQ4yNxWrExqCJrjyxRekU/WUBUg+ISmFQq7Xd3F++3+aTw==
-X-Received: by 2002:a17:902:f546:b0:2bf:dd0:c8b1 with SMTP id
- d9443c01a7336-2d6dc655395mr10624265ad.0.1787590049856; 
- Mon, 24 Aug 2026 09:47:29 -0700 (PDT)
-Received: from kali.sinner ([38.240.225.76]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2d6768dad15sm19664295ad.72.2026.08.24.09.47.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Aug 2026 09:47:29 -0700 (PDT)
-From: Warisjeet Singh (sin99xx) <sinxx198@gmail.com>
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wyXqA-0000I2-TS
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 12:48:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wyXq6-0001Fi-0L
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 12:48:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787590081;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uRtBSpfxLaAzIBPDqBOqsb4w7Akij1KQHrfUu81Ih4Q=;
+ b=Qw6nb8YpZzfcrSHDWpicNOTNDupxasBos2G9hsGWvQpGJhmeh3mr5QbY5LgDrWfd8q76C/
+ jkhPvxFKifjFvBDl5WAibhY/CqWaBhIJdKIgv/h75U2QiUkBRkx1upO8vdg7VrD2GivBMH
+ rjLul6jwil4pPQIztQIDROWVdINdy54=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-Ea5LC3zIMKCHwkX4dC8-oA-1; Mon,
+ 24 Aug 2026 12:47:57 -0400
+X-MC-Unique: Ea5LC3zIMKCHwkX4dC8-oA-1
+X-Mimecast-MFC-AGG-ID: Ea5LC3zIMKCHwkX4dC8-oA_1787590076
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A5BC818345A9; Mon, 24 Aug 2026 16:47:56 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.48.9])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 235F71955F09; Mon, 24 Aug 2026 16:47:56 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 0E6C91831899; Mon, 24 Aug 2026 18:47:52 +0200 (CEST)
+From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, qemu-stable@nongnu.org
-Subject: [PATCH v3] hw/display/vga: fix text-mode OOB write after a graphics
- surface switch
-Date: Mon, 24 Aug 2026 12:47:26 -0400
-Message-ID: <vga-v3-20260824.sinxx198@gmail.com>
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, qemu-arm@nongnu.org,
+ Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 04/12] edk2: drop 32-bit build config (ia32 and arm),
+ update aarch64 vars
+Date: Mon, 24 Aug 2026 18:47:36 +0200
+Message-ID: <20260824164751.1700783-5-kraxel@redhat.com>
+In-Reply-To: <20260824164751.1700783-1-kraxel@redhat.com>
+References: <20260824164751.1700783-1-kraxel@redhat.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=sinxx198@gmail.com; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,176 +87,436 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vga_draw_text() decides whether the console surface needs a resize from
-its geometry cache, but none of the cache terms observe the graphics
-renderer having replaced the console surface in between:
+Upstream edk2 has dropped support for 32-bit architectures.
+Remove the build config for these builds.
 
-- last_width/last_height are shared with vga_draw_graphic(), which
-  stores them in pixels while the text path stores characters;
-- last_depth stays 0 for legacy (non-VBE) graphics modes, because
-  vga_get_bpp() only reports a depth when VBE is enabled, so the
-  "s->last_depth" term that normally forces a resize after a graphics
-  frame does not fire.
+Update aarch64 config and test cases, aarch64 used to share
+the 'vars' image with arm.
 
-So a graphics frame that shrinks the console surface (e.g. 80x25
-pixels) followed by a text frame with matching character geometry
-(80x25 chars) skips the resize, and the glyph loop then paints
-width*cw x height*cheight pixels into the smaller surface, out of
-bounds, with guest-controlled (DAC palette) values, on every display
-refresh.
+Drop references to the 32-bit builds in a number of places.
 
-Separate the geometry cache per renderer: text paths (vga_draw_text,
-vga_update_text, and the text handling in vga_invalidate_display /
-vga_common_reset) now only manipulate last_text_{width,height}, in
-characters; last_{width,height} become graphics-only, in pixels.
-Additionally, make the text path compare the pixel size it is about
-to paint against the console surface's actual dimensions.  The
-surface check is the load-bearing term: caches in either unit cannot
-see the other renderer swapping the surface, the surface can.
-
-Fixes: CVE-2026-77913
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4215
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Warisjeet Singh (sin99xx) <sinxx198@gmail.com>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
-Changes v2 -> v3:
-- Finish the gfx/text state separation, as requested: vga_update_text()
-  (predicate, cache stores, and the mode-message box) and the
-  last_width == -1 invalidate handshake now use last_text_{width,height}
-  too, so the text paths never touch the graphics cache fields.
+ tests/functional/aarch64/test_virt_vbsa.py   |  2 +-
+ tests/qtest/bios-tables-test.c               | 34 +++++++--------
+ pc-bios/descriptors/50-edk2-i386-secure.json | 34 ---------------
+ pc-bios/descriptors/60-edk2-aarch64.json     |  2 +-
+ pc-bios/descriptors/60-edk2-arm.json         | 31 --------------
+ pc-bios/descriptors/60-edk2-i386.json        | 33 ---------------
+ pc-bios/descriptors/meson.build              |  3 --
+ pc-bios/meson.build                          |  6 +--
+ roms/edk2-build.config                       | 44 ++------------------
+ 9 files changed, 23 insertions(+), 166 deletions(-)
+ delete mode 100644 pc-bios/descriptors/50-edk2-i386-secure.json
+ delete mode 100644 pc-bios/descriptors/60-edk2-arm.json
+ delete mode 100644 pc-bios/descriptors/60-edk2-i386.json
 
-Changes v1 -> v2:
-- v1 (split caches only) did not fix the reported reproducer: after a
-  legacy graphics frame (depth 0) the text predicate still compared
-  equal, because nothing in it noticed the console surface had been
-  replaced.  Keep the split for clarity, and add the surface-size
-  check which actually catches it (verified with the qtest PoC and an
-  ASAN build; without this patch ASAN reports a heap-buffer-overflow
-  in vga_draw_glyph9(), with it the run is clean).
----
- hw/display/vga.c     | 37 ++++++++++++++++++++++---------------
- hw/display/vga_int.h |  3 ++-
- 2 files changed, 24 insertions(+), 16 deletions(-)
-
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index da0c331486..cb0e28b79b 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -1241,7 +1241,10 @@ static void vga_draw_text(VGACommonState *s, int full_update)
-         return;
-     }
+diff --git a/tests/functional/aarch64/test_virt_vbsa.py b/tests/functional/aarch64/test_virt_vbsa.py
+index 04b5ff0f9e8d..97293fb7883d 100755
+--- a/tests/functional/aarch64/test_virt_vbsa.py
++++ b/tests/functional/aarch64/test_virt_vbsa.py
+@@ -35,7 +35,7 @@ def append_firmware_blobs(self):
+         Setup QEMU firmware blobs for boot.
+         """
+         code_path = self.build_file('pc-bios', 'edk2-aarch64-code.fd')
+-        vars_source = self.build_file('pc-bios', 'edk2-arm-vars.fd')
++        vars_source = self.build_file('pc-bios', 'edk2-aarch64-vars.fd')
+         vars_path = self.scratch_file('vars.fd')
+         shutil.copy(vars_source, vars_path)
  
--    if (width != s->last_width || height != s->last_height ||
-+    if (surface == NULL ||
-+        surface_width(surface) != width * cw ||
-+        surface_height(surface) != height * cheight ||
-+        width != s->last_text_width || height != s->last_text_height ||
-         cw != s->last_cw || cheight != s->last_ch || s->last_depth) {
-         s->last_scr_width = width * cw;
-         s->last_scr_height = height * cheight;
-@@ -1249,8 +1252,8 @@ static void vga_draw_text(VGACommonState *s, int full_update)
-         surface = qemu_console_surface(s->con);
-         qemu_console_text_resize(s->con, width, height);
-         s->last_depth = 0;
--        s->last_width = width;
--        s->last_height = height;
-+        s->last_text_width = width;
-+        s->last_text_height = height;
-         s->last_ch = cheight;
-         s->last_cw = cw;
-         full_update = 1;
-@@ -1845,6 +1848,8 @@ static void vga_invalidate_display(void *opaque)
- 
-     s->last_width = -1;
-     s->last_height = -1;
-+    s->last_text_width = -1;
-+    s->last_text_height = -1;
- }
- 
- void vga_common_reset(VGACommonState *s)
-@@ -1887,6 +1892,8 @@ void vga_common_reset(VGACommonState *s)
-     s->last_ch = 0;
-     s->last_width = 0;
-     s->last_height = 0;
-+    s->last_text_width = 0;
-+    s->last_text_height = 0;
-     s->last_scr_width = 0;
-     s->last_scr_height = 0;
-     s->cursor_start = 0;
-@@ -1938,8 +1945,8 @@ static void vga_update_text(void *opaque, uint32_t *chardata)
-         s->graphic_mode = graphic_mode;
-         full_update = 1;
-     }
--    if (s->last_width == -1) {
--        s->last_width = 0;
-+    if (s->last_text_width == -1) {
-+        s->last_text_width = 0;
-         full_update = 1;
-     }
- 
-@@ -1978,15 +1985,15 @@ static void vga_update_text(void *opaque, uint32_t *chardata)
-             break;
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index 5cc526510ac1..9aadc1a1f6c3 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -1640,7 +1640,7 @@ static void test_acpi_aarch64_virt_tcg_memhp(void)
+         .arch = "aarch64",
+         .tcg_only = true,
+         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+-        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .uefi_fl2 = "pc-bios/edk2-aarch64-vars.fd",
+         .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+         .ram_start = 0x40000000ULL,
+         .scan_len = 256ULL * MiB,
+@@ -1671,7 +1671,7 @@ static void test_acpi_aarch64_virt_acpi_pci_hotplug(void)
+         .arch = "aarch64",
+         .tcg_only = true,
+         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+-        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .uefi_fl2 = "pc-bios/edk2-aarch64-vars.fd",
+         .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+         .ram_start = 0x40000000ULL,
+         .scan_len = 256ULL * MiB,
+@@ -1695,7 +1695,7 @@ static void test_acpi_aarch64_virt_pcie_root_port_hpoff(void)
+         .arch = "aarch64",
+         .tcg_only = true,
+         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+-        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .uefi_fl2 = "pc-bios/edk2-aarch64-vars.fd",
+         .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+         .ram_start = 0x40000000ULL,
+         .scan_len = 256ULL * MiB,
+@@ -1809,7 +1809,7 @@ static void test_acpi_aarch64_virt_tcg_numamem(void)
+         .arch = "aarch64",
+         .tcg_only = true,
+         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+-        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .uefi_fl2 = "pc-bios/edk2-aarch64-vars.fd",
+         .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+         .ram_start = 0x40000000ULL,
+         .scan_len = 128ULL * MiB,
+@@ -1832,7 +1832,7 @@ static void test_acpi_aarch64_virt_tcg_pxb(void)
+         .arch = "aarch64",
+         .tcg_only = true,
+         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+-        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .uefi_fl2 = "pc-bios/edk2-aarch64-vars.fd",
+         .ram_start = 0x40000000ULL,
+         .scan_len = 128ULL * MiB,
+     };
+@@ -1865,7 +1865,7 @@ static void test_acpi_aarch64_virt_tcg_acpi_spcr(void)
+         .arch = "aarch64",
+         .tcg_only = true,
+         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+-        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .uefi_fl2 = "pc-bios/edk2-aarch64-vars.fd",
+         .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+         .ram_start = 0x40000000ULL,
+         .scan_len = 128ULL * 1024 * 1024,
+@@ -1945,7 +1945,7 @@ static void test_acpi_aarch64_virt_tcg_acpi_hmat(void)
+         .arch = "aarch64",
+         .tcg_only = true,
+         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+-        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .uefi_fl2 = "pc-bios/edk2-aarch64-vars.fd",
+         .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+         .ram_start = 0x40000000ULL,
+         .scan_len = 128ULL * MiB,
+@@ -2221,7 +2221,7 @@ static void test_acpi_aarch64_virt_tcg(void)
+         .arch = "aarch64",
+         .tcg_only = true,
+         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+-        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .uefi_fl2 = "pc-bios/edk2-aarch64-vars.fd",
+         .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+         .ram_start = 0x40000000ULL,
+         .scan_len = 128ULL * MiB,
+@@ -2242,7 +2242,7 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
+         .variant = ".topology",
+         .tcg_only = true,
+         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+-        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .uefi_fl2 = "pc-bios/edk2-aarch64-vars.fd",
+         .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+         .ram_start = 0x40000000ULL,
+         .scan_len = 128ULL * MiB,
+@@ -2265,7 +2265,7 @@ static void test_acpi_aarch64_virt_tcg_its_off(void)
+         .variant = ".its_off",
+         .tcg_only = true,
+         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+-        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .uefi_fl2 = "pc-bios/edk2-aarch64-vars.fd",
+         .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+         .ram_start = 0x40000000ULL,
+         .scan_len = 128ULL * 1024 * 1024,
+@@ -2284,7 +2284,7 @@ static void test_acpi_aarch64_virt_tcg_msi_gicv2m(void)
+         .variant = ".msi_gicv2m",
+         .tcg_only = true,
+         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+-        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .uefi_fl2 = "pc-bios/edk2-aarch64-vars.fd",
+         .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+         .ram_start = 0x40000000ULL,
+         .scan_len = 128ULL * 1024 * 1024,
+@@ -2303,7 +2303,7 @@ static void test_acpi_aarch64_virt_tcg_wdat(void)
+         .variant = ".wdat",
+         .tcg_only = true,
+         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+-        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .uefi_fl2 = "pc-bios/edk2-aarch64-vars.fd",
+         .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+         .ram_start = 0x40000000ULL,
+         .scan_len = 128ULL * MiB,
+@@ -2322,7 +2322,7 @@ static void test_acpi_aarch64_virt_tcg_gtdt_wd(void)
+         .variant = ".gwdt",
+         .tcg_only = true,
+         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+-        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .uefi_fl2 = "pc-bios/edk2-aarch64-vars.fd",
+         .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+         .ram_start = 0x40000000ULL,
+         .scan_len = 128ULL * MiB,
+@@ -2407,7 +2407,7 @@ static void test_acpi_aarch64_virt_viot(void)
+         .variant = ".viot",
+         .tcg_only = true,
+         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+-        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .uefi_fl2 = "pc-bios/edk2-aarch64-vars.fd",
+         .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+         .ram_start = 0x40000000ULL,
+         .scan_len = 128ULL * MiB,
+@@ -2425,7 +2425,7 @@ static void test_acpi_aarch64_virt_smmuv3_legacy(void)
+         .arch = "aarch64",
+         .tcg_only = true,
+         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+-        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .uefi_fl2 = "pc-bios/edk2-aarch64-vars.fd",
+         .ram_start = 0x40000000ULL,
+         .scan_len = 128ULL * MiB,
+     };
+@@ -2464,7 +2464,7 @@ static void test_acpi_aarch64_virt_smmuv3_dev(void)
+         .arch = "aarch64",
+         .tcg_only = true,
+         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+-        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .uefi_fl2 = "pc-bios/edk2-aarch64-vars.fd",
+         .ram_start = 0x40000000ULL,
+         .scan_len = 128ULL * MiB,
+     };
+@@ -2683,7 +2683,7 @@ static void test_acpi_aarch64_virt_oem_fields(void)
+         .arch = "aarch64",
+         .tcg_only = true,
+         .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+-        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
++        .uefi_fl2 = "pc-bios/edk2-aarch64-vars.fd",
+         .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+         .ram_start = 0x40000000ULL,
+         .scan_len = 128ULL * MiB,
+diff --git a/pc-bios/descriptors/50-edk2-i386-secure.json b/pc-bios/descriptors/50-edk2-i386-secure.json
+deleted file mode 100644
+index d7108c1da05a..000000000000
+--- a/pc-bios/descriptors/50-edk2-i386-secure.json
++++ /dev/null
+@@ -1,34 +0,0 @@
+-{
+-    "description": "UEFI firmware for i386, with Secure Boot and SMM",
+-    "interface-types": [
+-        "uefi"
+-    ],
+-    "mapping": {
+-        "device": "flash",
+-        "executable": {
+-            "filename": "@DATADIR@/edk2-i386-secure-code.fd",
+-            "format": "raw"
+-        },
+-        "nvram-template": {
+-            "filename": "@DATADIR@/edk2-i386-vars.fd",
+-            "format": "raw"
+-        }
+-    },
+-    "targets": [
+-        {
+-            "architecture": "i386",
+-            "machines": [
+-                "pc-q35-*"
+-            ]
+-        }
+-    ],
+-    "features": [
+-        "acpi-s3",
+-        "requires-smm",
+-        "secure-boot",
+-        "verbose-dynamic"
+-    ],
+-    "tags": [
+-
+-    ]
+-}
+diff --git a/pc-bios/descriptors/60-edk2-aarch64.json b/pc-bios/descriptors/60-edk2-aarch64.json
+index 800a21bda691..94926172959c 100644
+--- a/pc-bios/descriptors/60-edk2-aarch64.json
++++ b/pc-bios/descriptors/60-edk2-aarch64.json
+@@ -10,7 +10,7 @@
+             "format": "raw"
+         },
+         "nvram-template": {
+-            "filename": "@DATADIR@/edk2-arm-vars.fd",
++            "filename": "@DATADIR@/edk2-aarch64-vars.fd",
+             "format": "raw"
          }
+     },
+diff --git a/pc-bios/descriptors/60-edk2-arm.json b/pc-bios/descriptors/60-edk2-arm.json
+deleted file mode 100644
+index d5f1bba6cc82..000000000000
+--- a/pc-bios/descriptors/60-edk2-arm.json
++++ /dev/null
+@@ -1,31 +0,0 @@
+-{
+-    "description": "UEFI firmware for arm",
+-    "interface-types": [
+-        "uefi"
+-    ],
+-    "mapping": {
+-        "device": "flash",
+-        "executable": {
+-            "filename": "@DATADIR@/edk2-arm-code.fd",
+-            "format": "raw"
+-        },
+-        "nvram-template": {
+-            "filename": "@DATADIR@/edk2-arm-vars.fd",
+-            "format": "raw"
+-        }
+-    },
+-    "targets": [
+-        {
+-            "architecture": "arm",
+-            "machines": [
+-                "virt-*"
+-            ]
+-        }
+-    ],
+-    "features": [
+-        "verbose-static"
+-    ],
+-    "tags": [
+-
+-    ]
+-}
+diff --git a/pc-bios/descriptors/60-edk2-i386.json b/pc-bios/descriptors/60-edk2-i386.json
+deleted file mode 100644
+index 2f8dec74fecb..000000000000
+--- a/pc-bios/descriptors/60-edk2-i386.json
++++ /dev/null
+@@ -1,33 +0,0 @@
+-{
+-    "description": "UEFI firmware for i386",
+-    "interface-types": [
+-        "uefi"
+-    ],
+-    "mapping": {
+-        "device": "flash",
+-        "executable": {
+-            "filename": "@DATADIR@/edk2-i386-code.fd",
+-            "format": "raw"
+-        },
+-        "nvram-template": {
+-            "filename": "@DATADIR@/edk2-i386-vars.fd",
+-            "format": "raw"
+-        }
+-    },
+-    "targets": [
+-        {
+-            "architecture": "i386",
+-            "machines": [
+-                "pc-i440fx-*",
+-                "pc-q35-*"
+-            ]
+-        }
+-    ],
+-    "features": [
+-        "acpi-s3",
+-        "verbose-dynamic"
+-    ],
+-    "tags": [
+-
+-    ]
+-}
+diff --git a/pc-bios/descriptors/meson.build b/pc-bios/descriptors/meson.build
+index cdd0be01a356..63f1c00b6406 100644
+--- a/pc-bios/descriptors/meson.build
++++ b/pc-bios/descriptors/meson.build
+@@ -1,10 +1,7 @@
+ if unpack_edk2_blobs and get_option('install_blobs')
+   foreach f: [
+-    '50-edk2-i386-secure.json',
+     '50-edk2-x86_64-secure.json',
+     '60-edk2-aarch64.json',
+-    '60-edk2-arm.json',
+-    '60-edk2-i386.json',
+     '60-edk2-x86_64.json',
+     '60-edk2-loongarch64.json',
+     '60-edk2-riscv64.json'
+diff --git a/pc-bios/meson.build b/pc-bios/meson.build
+index 2f470ed12942..f7412bf53e69 100644
+--- a/pc-bios/meson.build
++++ b/pc-bios/meson.build
+@@ -2,13 +2,9 @@ roms = []
+ if unpack_edk2_blobs
+   fds = [
+     'edk2-aarch64-code.fd',
+-    'edk2-arm-code.fd',
+-    'edk2-arm-vars.fd',
++    'edk2-aarch64-vars.fd',
+     'edk2-riscv-code.fd',
+     'edk2-riscv-vars.fd',
+-    'edk2-i386-code.fd',
+-    'edk2-i386-secure-code.fd',
+-    'edk2-i386-vars.fd',
+     'edk2-x86_64-code.fd',
+     'edk2-x86_64-secure-code.fd',
+     'edk2-loongarch64-code.fd',
+diff --git a/roms/edk2-build.config b/roms/edk2-build.config
+index 9e45361fb445..fcf9da8c7681 100644
+--- a/roms/edk2-build.config
++++ b/roms/edk2-build.config
+@@ -33,29 +33,6 @@ PcdDxeNxMemoryProtectionPolicy = 0xC000000000007FD1
+ # shim.efi has broken MemAttr code
+ PcdUninstallMemAttrProtocol    = TRUE
  
--        if (width != s->last_width || height != s->last_height ||
-+        if (width != s->last_text_width || height != s->last_text_height ||
-             cw != s->last_cw || cheight != s->last_ch) {
-             s->last_scr_width = width * cw;
-             s->last_scr_height = height * cheight;
-             qemu_console_resize(s->con, s->last_scr_width, s->last_scr_height);
-             qemu_console_text_resize(s->con, width, height);
-             s->last_depth = 0;
--            s->last_width = width;
--            s->last_height = height;
-+            s->last_text_width = width;
-+            s->last_text_height = height;
-             s->last_ch = cheight;
-             s->last_cw = cw;
-             full_update = 1;
-@@ -2071,22 +2078,22 @@ static void vga_update_text(void *opaque, uint32_t *chardata)
-     }
+-####################################################################################
+-# i386
+-
+-[build.ovmf.i386]
+-desc = ovmf build (32-bit)
+-conf = OvmfPkg/OvmfPkgIa32.dsc
+-arch = IA32
+-opts = common
+-plat = OvmfIa32
+-dest = ../pc-bios
+-cpy1 = FV/OVMF_CODE.fd edk2-i386-code.fd
+-cpy2 = FV/OVMF_VARS.fd edk2-i386-vars.fd
+-
+-[build.ovmf.i386.secure]
+-desc = ovmf build (32-bit, secure boot)
+-conf = OvmfPkg/OvmfPkgIa32.dsc
+-arch = IA32
+-opts = common
+-       ovmf.sb.smm
+-plat = OvmfIa32
+-dest = ../pc-bios
+-cpy1 = FV/OVMF_CODE.fd edk2-i386-secure-code.fd
+-
+ ####################################################################################
+ # x86_64
  
-     /* Display a message */
--    s->last_width = 60;
--    s->last_height = height = 3;
-+    s->last_text_width = 60;
-+    s->last_text_height = height = 3;
-     qemu_console_text_set_cursor(s->con, -1, -1);
--    qemu_console_text_resize(s->con, s->last_width, height);
-+    qemu_console_text_resize(s->con, s->last_text_width, height);
+@@ -87,23 +64,6 @@ plat = MicrovmX64
+ dest = ../pc-bios
+ cpy1 = FV/MICROVM.fd  edk2-x86_64-microvm.fd
  
--    for (dst = chardata, i = 0; i < s->last_width * height; i ++)
-+    for (dst = chardata, i = 0; i < s->last_text_width * height; i ++)
-         *dst++ = ' ';
+-####################################################################################
+-# arm
+-
+-[build.armvirt.arm]
+-desc = ArmVirt build, 32-bit (arm v7)
+-conf = ArmVirtPkg/ArmVirtQemu.dsc
+-arch = ARM
+-opts = common
+-       armvirt.silent
+-pcds = nx.broken.shim.grub
+-plat = ArmVirtQemu-ARM
+-dest = ../pc-bios
+-cpy1 = FV/QEMU_EFI.fd    edk2-arm-code.fd
+-cpy2 = FV/QEMU_VARS.fd   edk2-arm-vars.fd
+-pad1 = edk2-arm-code.fd  64m
+-pad2 = edk2-arm-vars.fd  64m
+-
+ ####################################################################################
+ # aarch64
  
-     size = strlen(msg_buffer);
--    width = (s->last_width - size) / 2;
--    dst = chardata + s->last_width + width;
-+    width = (s->last_text_width - size) / 2;
-+    dst = chardata + s->last_text_width + width;
-     for (i = 0; i < size; i ++)
-         *dst++ = ATTR2CHTYPE(msg_buffer[i], QEMU_COLOR_BLUE,
-                              QEMU_COLOR_BLACK, 1);
+@@ -114,10 +74,12 @@ arch = AARCH64
+ opts = common
+        armvirt.silent
+ pcds = nx.broken.shim.grub
+-plat = ArmVirtQemu-AARCH64
++plat = ArmVirtQemu-AArch64
+ dest = ../pc-bios
+ cpy1 = FV/QEMU_EFI.fd  edk2-aarch64-code.fd
++cpy2 = FV/QEMU_VARS.fd edk2-aarch64-vars.fd
+ pad1 = edk2-aarch64-code.fd  64m
++pad2 = edk2-aarch64-vars.fd  64m
  
--    qemu_console_text_update(s->con, 0, 0, s->last_width, height);
-+    qemu_console_text_update(s->con, 0, 0, s->last_text_width, height);
- }
- 
- static uint64_t vga_mem_read(void *opaque, hwaddr addr,
-diff --git a/hw/display/vga_int.h b/hw/display/vga_int.h
-index 5664317ecd..ca69ae9815 100644
---- a/hw/display/vga_int.h
-+++ b/hw/display/vga_int.h
-@@ -122,7 +122,8 @@ typedef struct VGACommonState {
-     uint32_t plane_updated;
-     uint32_t last_line_offset;
-     uint8_t last_cw, last_ch;
--    uint32_t last_width, last_height; /* in chars or pixels */
-+    uint32_t last_width, last_height; /* in pixels (graphics renderer) */
-+    uint32_t last_text_width, last_text_height; /* in chars (text renderer) */
-     uint32_t last_scr_width, last_scr_height; /* in pixels */
-     uint32_t last_depth; /* in bits */
-     bool last_byteswap;
+ ####################################################################################
+ # riscv64
 -- 
-2.47.3
+2.55.0
+
 
