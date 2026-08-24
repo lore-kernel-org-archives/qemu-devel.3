@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ED68C5DF9D
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:53:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E714C5DF94
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 05:53:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyNYV-0001Nl-KA; Mon, 24 Aug 2026 01:49:12 -0400
+	id 1wyNbr-0006pE-QA; Mon, 24 Aug 2026 01:52:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNYN-0001Jv-L7
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:49:04 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1wyNbR-0005Ke-Ji
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:52:13 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wyNYL-0001px-SM
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:49:03 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-382ef647e20so3148828a91.1
- for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:49:01 -0700 (PDT)
+ id 1wyNbQ-00035I-0I
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 01:52:13 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-38d489b6b71so3408768a91.0
+ for <qemu-devel@nongnu.org>; Sun, 23 Aug 2026 22:52:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787550540; x=1788155340; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787550730; x=1788155530; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=pmOBYgqrw3RiSWM58XHjxeAyd3bF4nHvgyQYSsEFwig=;
- b=elvvM5scIVSL8BslERBm+bYPcJ5+DxId/z1ZuWpRI1U90qSdOuMf2zrhRtFM6Dvpzc
- 2qiCqhTu6q41HRjGkda5PGECj+3GRcVPf+vMpPS0ZUoih/23/PkklLYseCU/BPGTz/qD
- we6EpONPqvai+8z4qvTSYfIaWvudOa06XTI5/WVWAt2rUwMexnIo8bjNCvu5yD/gu2+b
- HAdLzPO5SBSLxeDZmVrIIOVZDe8ROOOXkvSRMIc3QyN1XieATxURFbN3GCWlnJcFw6k7
- BBNzm/XV1aK1EmEo3E8etZMm4lf1D/FSuE2akQJFMksVJKX2M4Uk55TTpdmw8cSzUZ2S
- /gIw==
+ bh=ulC44i9a3xhjyvxxC0pEa6jbGi+BnZcRf4JICqyq4rw=;
+ b=iIaFAMPOEZLPgOPToy2LU4AdD+IzS730gxv5IauOaW0bK/gPxTxAEsbKLahCgEy6uo
+ al7dAnYq0d+v15F3HdR3W4yeAzv+WTH/Q+XPwZAWLcvSLFNn2r0+18rp5fD+Jsll8CnU
+ TJldrZm60I7RKDVK4GPWukyg0qaiDnjkedR3Q89rl+dqkUrxnXD1joB7XelxzR4vsqRD
+ ZUjZzYCvQ5stxYOI/bVzZuh2fCGyqN+MSIFHWiOxZIG9KdnVJ44TkO/w/4A974daq5/D
+ pcq30gUsYcITiFOGyzb2M/0sqaapt8AOMcB0v4ImLOmeJEJfhnpYDJcxVf4Pi364XD4h
+ Gvkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787550540; x=1788155340;
+ d=1e100.net; s=20251104; t=1787550730; x=1788155530;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=pmOBYgqrw3RiSWM58XHjxeAyd3bF4nHvgyQYSsEFwig=;
- b=mrLmpbpIf8FSSAKV7L4bWNerkgm44tQKY9mJ9EfZP6q5cduas7SCf127DHbc+79Xmx
- 1cpIuYeDKtYbXVWtU0LSH1jxkVzrHBY6iodOTe6xCWkPv29NLb5YNMFJ1FBnvUK7Dwmc
- Ydbqxu5M5Cl2ZBiLP6Y4mEpkL+Wfsm2N2oaUQCxdglncNKrzqJvqgQ3UeUC9iLlqL5YT
- nI+PEiV8ZnjOv9PZjiFkOzST7eiw9GBfvKpTHwhhyKh/fmKYgtlWD3aT3WMfKSMAPLJC
- aXJwY/NuMIhnoh/2PXhIZqxckRgZRie1D58h9pXmyWtMCO+A+Yc3OBQ69zZ7P0zMbNfW
- Hkcw==
-X-Gm-Message-State: AFuF++kNc+eewcU0tL2Ul3m5y9juVqTErAwusY453CB8bDNYFDUI5f6u
- ZWw6Aaf7YPp6pJH0OF9Dh01VTqkHa9gKMfZykasf+T3MjpP/wPzw1iUMeOVXOg==
-X-Gm-Gg: AR+sD115gxpp9vrE12Tn/Ln3YsJ5wrREXvep8hnhNFmXgWqI+1sIADK7Sx5qqIKFo7b
- Tmlijws1QfoiAYYf0gX33DS2ULkVtN1vs59nlh6sYiFMpMn6VJ90ZCDjM94Jr92lZ/9uSGN2iSV
- xerFpb6MpzXq0ohaMT/zc4fJh6N9bH6MlcOt77ISuYvur5IF2BPJ4enpmU8N2xiH4EqVHgv1d8P
- odaBZXJzUHhZUIMvx6qW+28rxy80gVOqhiV8Reqn1IXX+9mKPrz5yhaS3FP+YDYK/3r6jUVQPLy
- CV26vlI5g+e5aPp5SzCLPcd4w9ULGICbT/wJnQDoov4rSFsH/Ve5dTAI1d3+XR7NFy0Et5lBEVO
- JMPdat2LfuY/DdURaDSkSBAHtycviSPNmp9Hvvnybvbh5i2Gbb6U+R1jV/V6Nlke06LX5fmSArx
- UJgMe5zea+ZiPeyf3k/wfQSHtN5ApNQaESKiooEXxaWhgZKqNT20aRDxBxKCF/JEhxpnLLqxIe1
- 4b/iA==
-X-Received: by 2002:a17:90a:d605:b0:38e:5964:97a8 with SMTP id
- 98e67ed59e1d1-395df5e8fefmr29822405a91.16.1787550540401; 
- Sun, 23 Aug 2026 22:49:00 -0700 (PDT)
+ bh=ulC44i9a3xhjyvxxC0pEa6jbGi+BnZcRf4JICqyq4rw=;
+ b=AtbvLHc8Qvch/7/UX/1wKv5J71cJngjq8Qnix5udzvB/4oXj7VE6lojIwia6yM8R3A
+ VBiTVVAlBarrAf09v1agZiIp9+c9xGHd0VEkZFFTLnYBKlXMKs27Qvn/fXYBF5M+yNdF
+ r2LVXpzjn1DxzwKWWkO2pd+s1uvCnLQcBs/tKxO1zCGRyxnKqOXV5evLGD7AVdBgb9TG
+ IIjIJvkfLdGF62z6BhhQi438vOix0+tIPYtokbyueGksxJyExo+bWhlf9bJvsYnEav4F
+ FrgIyX2kU4NRzCZx/mfVeGjy4nqCqttnKyYN2hpkW5VeqOWylj0LA1WBBheG6NQdFbsh
+ xmDg==
+X-Gm-Message-State: AFuF++lXc/U+dVxVLxgca2WSriIdOGrZikMqRWu1Q4obedDSPcXUV52s
+ a4AuxHZZx/S/5naEIWRzmbnQlswj2Pj/F3byxKqbSXfu4StWkDhlA/4AcmZGiA==
+X-Gm-Gg: AR+sD10F+I9PIgqwBPJE7ho8JOzx3VPswJ/clnE01i0wkopMoKamBIi+2REa7fgPPE3
+ Kqo10F6TRF0I48ahS8TUf8g7HYJFrDcYtAKsw0wVi+jW3vDRQ+4skkQUxApTx6d5iqwPBFW+WvJ
+ UIu2gQvzGy33xuAY06DTrWNQ2KAGwt5T2zw/2PyAcl9jpCPDt8B3tqCkbPvAyRhSCJrkwyeprnH
+ WOcyexPpHRE0zja1I/F9eGgjGQV1MXEcqS4x/XNZMo0/R5dbywztOAhRL4TvEcrIkEFTqG9p/mO
+ alXRw9wWF6cEl14QLXDYW2alCQ4pyBX31VPbwupv3t7ePtb0cqYqrlXIDfH7LxrVYk1IH7/3dcW
+ 6H1SmoU6tBtZOIXDOGtA4E1X+HvZlAusZl8OAvOmXbA2TXBaUOMzrnzVNRxJ5dxy4K7cr4wcJ15
+ kcVz5Xw4MPYf9fugneR7LRPkOFygOdk3G+qLdxDJMc31yho6laFk7qLekq/joYDYgmExx8VpZk2
+ z7CVg==
+X-Received: by 2002:a17:90b:4c8e:b0:38d:fda6:4873 with SMTP id
+ 98e67ed59e1d1-395c352aee9mr40874783a91.10.1787550730488; 
+ Sun, 23 Aug 2026 22:52:10 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.48.57
+ 98e67ed59e1d1-395c917d2f2sm4046005a91.3.2026.08.23.22.52.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Aug 2026 22:48:59 -0700 (PDT)
+ Sun, 23 Aug 2026 22:52:09 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: Max Chou <max.chou@sifive.com>, A-Shehab <ahshehab24@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+Cc: Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 13/96] target/riscv: Fix PC sync in trans_sspopchk for CFI
- exception handling
-Date: Mon, 24 Aug 2026 15:46:43 +1000
-Message-ID: <20260824054806.2790041-14-alistair.francis@wdc.com>
+Subject: [PULL v2 77/96] disas/riscv: Move rv_op_illegal to riscv.c
+Date: Mon, 24 Aug 2026 15:47:47 +1000
+Message-ID: <20260824054806.2790041-78-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260824054806.2790041-1-alistair.francis@wdc.com>
 References: <20260824054806.2790041-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,56 +103,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Move gen_update_pc call before conditional logic to ensure consistent
-PC state regardless of execution path.
+illegal is no longer used in other files.
 
-Previously, the host instructions generated to update the cpu_pc were
-only executed in the failure path when shadow stack validation failed.
-This created inconsistent PC synchronization.
-
-This inconsistency caused issues in CF_PCREL mode where subsequent
-instructions calculated wrong relative offsets from stale pc_save
-values, and could lead to incorrect exception return addresses.
-
-This fix ensures PC is always synchronized before any helper that
-might raise an exception, maintaining consistent translator state
-across all execution paths.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4118
-Signed-off-by: Max Chou <max.chou@sifive.com>
-[ahshehab: rebased on current master; file moved to
- target/riscv/tcg/insn_trans/ and the ssp load is now 64-bit wide]
-Tested-by: A-Shehab <ahshehab24@gmail.com>
-Signed-off-by: A-Shehab <ahshehab24@gmail.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260730181852.1622-1-ahshehab24@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260812223142.349142-45-richard.henderson@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ disas/riscv.h | 4 ----
+ disas/riscv.c | 2 +-
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
-index a813232887..d47a9f9c7d 100644
---- a/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
-@@ -32,6 +32,7 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-     TCGLabel *skip = gen_new_label();
-     uint32_t tmp = (get_xl(ctx) == MXL_RV64) ? 8 : 4;
-     TCGv data = tcg_temp_new();
-+    gen_update_pc(ctx, 0);
-     TCGv_i64 wide_addr = tcg_temp_new_i64();
-     tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-     tcg_gen_trunc_i64_tl(addr, wide_addr);
-@@ -42,7 +43,6 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-     tcg_gen_brcond_tl(TCG_COND_EQ, data, rs1, skip);
-     tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
-                     tcg_env, offsetof(CPURISCVState, sw_check_code));
--    gen_update_pc(ctx, 0);
-     gen_helper_raise_exception(tcg_env,
-                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-     gen_set_label(skip);
+diff --git a/disas/riscv.h b/disas/riscv.h
+index 241dd47d7f..5ac8c41616 100644
+--- a/disas/riscv.h
++++ b/disas/riscv.h
+@@ -200,10 +200,6 @@ typedef struct {
+     uint8_t   rlist;
+ } rv_decode;
+ 
+-enum {
+-    rv_op_illegal = 0
+-};
+-
+ /* instruction formats */
+ 
+ #define rv_fmt_none                   "O\t"
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 787340e811..c3a8cde37d 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -29,7 +29,7 @@
+ #include "disas/riscv-xlrbr.h"
+ 
+ typedef enum {
+-    /* 0 is reserved for rv_op_illegal. */
++    rv_op_illegal = 0,
+     rv_op_lui = 1,
+     rv_op_auipc = 2,
+     rv_op_jal = 3,
 -- 
 2.54.0
 
