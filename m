@@ -4,144 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F0C6C5DF9B
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 12:07:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03F5EC5DF9B
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Aug 2026 12:08:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyTS2-0001nR-46; Mon, 24 Aug 2026 08:06:54 -0400
+	id 1wyTSk-00025c-5v; Mon, 24 Aug 2026 08:07:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wyTS0-0001nI-NK
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 08:06:52 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wyTRy-0003oG-VD
- for qemu-devel@nongnu.org; Mon, 24 Aug 2026 08:06:52 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67OBMeTr3195004
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 12:06:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xKgEiWiffeZ2KZXRG9zjUKMLyv8x/cjnXuQv8nvpJSc=; b=IHDNyJ7zgJT63fzD
- gT/+jnDEVkr6xdI6919ORCv9VqxYWblAw9sbvwjCwvV4GNZ3DSHbjcStcNM4Scqg
- HLX9855BOzZcWTU5go15LK1AtmbSDAJN5enFmdgMP11633goOhpWkL8t9GI5lugQ
- 6FelThYOp7x1m/gTswdBJFVIHXoy0o/qtOAT2ajfd20+YVmfVKShza3F6tJpTUMv
- relOmlwpTbrCOSS4vOP5jRtPuNazOgr1wpQ8BYAhPqFCGNwB60TXv7HErcxXrqV3
- SHS1S5FhUr6ySoSteaaZxbH81jlPpB/anvncXjotRZiotUKkwiYB2CLfI8yN16xy
- 6HeMfQ==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g8hjgs4vh-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 12:06:49 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-8eeba1d9e47so18222236d6.2
- for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 05:06:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
+ id 1wyTSc-00024B-EG
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 08:07:31 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
+ id 1wyTSZ-0003tQ-6r
+ for qemu-devel@nongnu.org; Mon, 24 Aug 2026 08:07:30 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-84874b52eabso4391628b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 05:07:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787573209; x=1788178009; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=xKgEiWiffeZ2KZXRG9zjUKMLyv8x/cjnXuQv8nvpJSc=;
- b=aA1X/uu5RukObaNrt0WcPM927aEiKuSUZw2AhIPJ5/txAufccqAXkwMWG5YDEsNjHt
- EaCT/jmyQqWNRtSnriEZiqiFHretrgs9TGNW9QoXcJP3zAKOyzkuVI75XaDGpEL3I+vA
- MHQ2XLUf9G5HudZGCpcThUGAuSizNxrktP7ANlBBjkEgWxADMjHPZNfmEk8EDPhv/VJk
- ZqgjEzGjhyFCrcDzwLIG8b/QiI7ppERm2PgS484gO0cgrBc5s5YTgkV3R6ueHeU0bBHk
- SGkIosfK5CbyTXpl+m7EcDw0tc1AH9rvT+3XC701SJTzeKecO2+CuQ2RMVZ3JbBDEE+X
- 7cJw==
+ d=gmail.com; s=20251104; t=1787573245; x=1788178045; darn=nongnu.org;
+ h=references:to:cc:in-reply-to:date:subject:mime-version:content-type
+ :message-id:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=sMCjqzSGHDt+RHNQnbw8IsTbs/06Ev3KfBlOsRd8qbo=;
+ b=Syx7SEMWYDejFdcyzn60eIdXNLoKJZkYPtaxXUuXShQOTfxihZDzUrP9Yk2ZAbbn3U
+ 4uvFKqLNQ1VqAXY+Xd385ijRSUqqdEm+LIWkaGf62M9zhghhShrGRj4KNFZ/kB5MpfYw
+ mgrVHtEQTIkLxDhN6kmc/IYceji5Nnwjd4TEjMN5dPhYc/Nw1JlKyevP2fGyn/IyYfev
+ IYWyDiMOCnfHCQcXs8pDrXthWw06Nqk5rELEXrwsTYEYB4dICNxV6iSJZ+Yd2RStblVd
+ 1lFEGdUT6yXV3GgPH89AW/uGCmXIdlAK/kyJLVURQzzxmeq4A7pf61RRaBroOPsQJ2Oi
+ WEzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787573209; x=1788178009;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1787573245; x=1788178045;
+ h=references:to:cc:in-reply-to:date:subject:mime-version:content-type
+ :message-id:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=xKgEiWiffeZ2KZXRG9zjUKMLyv8x/cjnXuQv8nvpJSc=;
- b=a9jR8rb+ezq3Wlploy76aJgByWcYnSNcCE47N62dVnFr0SSIuob+S3qe89C/v6jQm9
- ApzE1Mbq9/yd0rYn82CJjcANhfia73tIE8yiG8UdAhfGvk+E81Zxcyekot04qxo4WEJC
- Lo7tEtssmJRTTqLVWpnuGg3LXX1z0FFZrIm/aGAlYG0/5YSXF/2sSy8XDCFtccoQ1wJO
- 3eKL3wnshen2s/fmDIdfMA4wWffAGo0ak9uKz9PRhODYCfDy5oh214poAkS8lAjNkAc+
- yAKBdbuY5J8xCiXGe6m4YiNPUP/QFlyBBqOLgESImxFT2LWJsrrlk32IVXvJbeo0UfAY
- NXCg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rr+UwUFvY6080+fcDuMbt58ar/hNmhq8jgzdZ41ijsexZz7b6z0N/+TM0g8Kq5KXtQvY2EACp/Gt9bB@nongnu.org
-X-Gm-Message-State: AFuF++mq8vbZhuz++FwcMT8Stc4naesy44otu7NMhl1EyuMwAn2m2s00
- TOWff4bixSIP0QzdhZReUpMKYYlu+wx8nf39qBWhDn4ovAWRqmYH0qhNSAd9/keEVOHE23evnFo
- AMnvF96Z6NViTed3BwHZX8eL+A7kSt0ENiulcGB4g0NOMiIuunrgUWFPpAQ==
-X-Gm-Gg: AR+sD123Q9z0UAR4r/bgQimueb88VhvV80Ldf7J+49S0PQqiFO6Cvo3XA6JBNeukC5n
- dNWwaaJ0b8VFF9i88TF+RvgC/pz+PHvQ9eHCTyqv7DpHL0ULlgSiVHRo865hY4zb5us3vGa+zJD
- BZwQxW12npVt3V6zJkEVrqWqTBUvCR5SZQJM2dI6jmZ7ndi/JJrMCUUEHUnMJRKEl9ISHUkQveh
- vRmt+JkFGwL3BrBgNHskwkKnDHNFAd8pnlym5/bcZwNwJw3nc97honatYoyJAcTVPPSNl2ymI4X
- MPqDIoy7l7XcMqv8NdR8Q/yf4z56BQBLLFNh3AS6a1e/bPY/YofsLSLjseIjdK32GNgy7W3BOmC
- 8qDB57gxecX4Vb1kSl1741cu217TFBLaVQget
-X-Received: by 2002:a05:6214:d6b:b0:907:bf2a:481f with SMTP id
- 6a1803df08f44-90c809430dfmr263412806d6.1.1787573208700; 
- Mon, 24 Aug 2026 05:06:48 -0700 (PDT)
-X-Received: by 2002:a05:6214:d6b:b0:907:bf2a:481f with SMTP id
- 6a1803df08f44-90c809430dfmr263411746d6.1.1787573208173; 
- Mon, 24 Aug 2026 05:06:48 -0700 (PDT)
-Received: from [192.168.68.100] ([189.38.141.232])
+ bh=sMCjqzSGHDt+RHNQnbw8IsTbs/06Ev3KfBlOsRd8qbo=;
+ b=OIcW0IV91Fp9HiT2NUdj45Y7YZ61ZwqM/lPmJKTID9FIuec+qSGhHMg4ZSydkxxbpW
+ R9nJduHh3NoDWUpdHGWuZPw8Y4kLJE2mTaT62WbZmgoh4xXr+F/gcKr8AyCDBKuaZyUV
+ 6ohuWDi1ot0ODcnlhjQ9I68DUNSQmsi50TCy3byzj4X15MdKSgfiZ8THcVHadBbv/AxR
+ 1BSaefgGsb4PdqrcFoFphqftMLipprVKvRB4+ytEJoWKfIE91ulCHq24eF97F+q/8ewH
+ 8WPFc4XZbka6sAZNX1vlCrsYJ4RFbFGZIem8wTXrfq9pZOFqo9juurPNFOBkg0RbCkpn
+ g3eA==
+X-Gm-Message-State: AFuF++lvYPj5y/A9WioUQQyj5T8PG/Nt6p2hYIZKsfsVL7kRQgfK1uFs
+ r2uiiJGHl5yXFXAxFGVsYVeLzcRYECCEYle/OYG3A56vIeqt2dfTVBSE
+X-Gm-Gg: AR+sD11xlcHE66nTLV6ehC+5Ltah3Iyg0W5FilrNK1uGusqxWXXpuRxuOMViEuwthTt
+ P0rnKwRnG10Gu163l6p2wi79yAWq8U27NWeuPyJ1Q5fxeDSk72GkxWLo3Zd6w0V5Hby+U6Goixg
+ Nmhcn61GR3g8e9iMI6JamAzSJYKm7Oa3aT/Vrsw7JbmEbvRz/r8TO0L8qKWH4+nOCn1ifNFvveC
+ 9UL8wROGOgXZDzA864dXVQpvvXw4OHTh503oFSG+xQPQo+GH4ErdINSu//T031E+ZheYYnI6r8N
+ 12ds6pGK6gp1l5HUMMR6bxrbb+ywIOAtZAfBMM50LvtHZKRrnLU5CAOq2Vp47QFDft0Buqe3NUi
+ 9ZI3i3zve+2FQDiOpgqugmvOqT/gfGHPAVpPOmt84QEfZl42kxCycZ8NL7nIYAAKmsTIhsYklTb
+ 5cgEyo9yTNy/HF3+WCg8nC2nzxv0N1y/L7h1FrUWt/XqZ6FsNFlgiqh23y0U7AD22NGZ6N
+X-Received: by 2002:a05:6a00:32c4:b0:848:4faa:480b with SMTP id
+ d2e1a72fcca58-851fa01061bmr43609591b3a.12.1787573245215; 
+ Mon, 24 Aug 2026 05:07:25 -0700 (PDT)
+Received: from smtpclient.apple ([117.55.237.216])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90c93a90735sm59628836d6.47.2026.08.24.05.06.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Aug 2026 05:06:47 -0700 (PDT)
-Message-ID: <faa2fb8a-063f-41c9-a1b2-e2c64b8e1809@oss.qualcomm.com>
-Date: Mon, 24 Aug 2026 09:06:44 -0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Fix LCOFI masking in sie/sip/mvip
-To: Mayuresh Chitale <mayuresh.chitale@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-References: <20260813134002.862578-1-mayuresh.chitale@oss.qualcomm.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260813134002.862578-1-mayuresh.chitale@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI0MDEwMSBTYWx0ZWRfXxAVCnxYB27y7
- bQ9qooSd3avtPdrOFASxE45QMUQ8wWJOYFeqBbsQz304qyeORMFr72ZT2OI+pFQcOQtaFh+yaaB
- 7rqb5NbVfwK7zIcpPwEDGrc41Vv8vlY=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI0MDEwMSBTYWx0ZWRfXzLzAM89qsxHP
- +epp7cNzcsKQm5O0rCNUrDKbt4fspoTW1ntRuTdcXJ6NLqxn1sl0uYARDubICAKCWn11IhxC2/H
- /xFbUeJdXI3mgY9ENLg0+cLYFeJEelt6PBjfT5wBJqfPo1gH7aIX+xor3D1/krknX3DDWN4AQwC
- /7750pKOLv8+vhE2kl29RLByxlZHMcEvzlaYLN6lAHfZuTYiru1pCwAPMR3NC5BoyT0EMJ4VUJ4
- bbizNrxx1gQfNpYTSsJ0Oiaq4YqDhJst1h0LIK2cU/MAXZvPQqz5+dwHvzIPv7c6YHWBDelJSuc
- cL3dRRgrXH8COUKTPNYZn9syOKE4refWmM4y2ujMIv1MPN/iqa+IDff1au0GP4ZtNuL8t/LFsBi
- QiR86HxDzfqZSGc9YE41lkrFIkpv+C+gHt4L9rjayRY6apuKGKmaXZ3cW4Xd9sYcteVJ1XzuwQ1
- iyEIycqwFja/Z3mjkkQ==
-X-Proofpoint-ORIG-GUID: HyW4tp3Mt22u5ufYco-DRrIMAFIIK8Hq
-X-Authority-Analysis: v=2.4 cv=CoCPtH4D c=1 sm=1 tr=0 ts=6a8c33d9 cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=MCIxunHWmQOg/5OnbzXZaw==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=WmrVEKmstOSfcGThU8YA:9 a=QEXdDO2ut3YA:10
- a=OIgjcC2v60KrkQgK7BGD:22
-X-Proofpoint-GUID: HyW4tp3Mt22u5ufYco-DRrIMAFIIK8Hq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-24_03,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 priorityscore=1501 malwarescore=0 phishscore=0 bulkscore=0
- adultscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608240101
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ d2e1a72fcca58-8520ef07a12sm1920789b3a.16.2026.08.24.05.07.22
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 24 Aug 2026 05:07:24 -0700 (PDT)
+From: Jack Wang <163wangjack@gmail.com>
+Message-Id: <3B4705C2-B85A-4A27-96F9-C1AB5B304139@gmail.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_DF3AE4CD-F231-4070-AF05-B6488B5BDF6B"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
+Subject: Re: [PATCH v1 4/5] hw/arm: Add Axiado SoC AX3005
+Date: Mon, 24 Aug 2026 20:07:09 +0800
+In-Reply-To: <64edab19-b14b-4b9b-902b-a72f742faeae@axiado.com>
+Cc: qemu-devel@nongnu.org,
+ peter.maydell@linaro.org,
+ qemu-arm@nongnu.org
+To: kchiu@axiado.com
+References: <64edab19-b14b-4b9b-902b-a72f742faeae@axiado.com>
+X-Mailer: Apple Mail (2.3864.600.51.1.1)
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=163wangjack@gmail.com; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_STARTS_WITH_NUMS=0.738, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,79 +102,362 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+--Apple-Mail=_DF3AE4CD-F231-4070-AF05-B6488B5BDF6B
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-On 8/13/2026 10:40 AM, Mayuresh Chitale wrote:
-> Commit 27f9566dcd98 ("target/riscv: Update the local interrupt mask")
-> dropped bit 13 (MIP_LCOFIP) from the supervisor-visible interrupt masks.
-> As a result, with Sscofpmf enabled and LCOFIP delegated to S-mode, the
-> overflow interrupt would be raised in mip but never delivered and hence
-> perf sampling stopped receiving overflow interrupts.
-> 
-> Re-add MIP_LCOFIP to all_ints, sip_writable_mask, mvip_writable_mask
-> to allow it to be writable again.
-> 
-> Fixes: 27f9566dcd98 ("target/riscv: Update the local interrupt mask")
-> Signed-off-by: Mayuresh Chitale <mayuresh.chitale@oss.qualcomm.com>
-> ---
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Hi Kuan_Jui
 
->   target/riscv/tcg/csr.c | 17 ++++++++++-------
->   1 file changed, 10 insertions(+), 7 deletions(-)
-> 
-> diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-> index c05c8ee076..ca68c1f5f1 100644
-> --- a/target/riscv/tcg/csr.c
-> +++ b/target/riscv/tcg/csr.c
-> @@ -1890,7 +1890,8 @@ static const uint64_t delegable_ints =
->   static const uint64_t vs_delegable_ints =
->       (VS_MODE_INTERRUPTS | LOCAL_INTERRUPTS) & ~MIP_LCOFIP;
->   static const uint64_t all_ints = M_MODE_INTERRUPTS | S_MODE_INTERRUPTS |
-> -                                     HS_MODE_INTERRUPTS | LOCAL_INTERRUPTS;
-> +                                     HS_MODE_INTERRUPTS | MIP_LCOFIP |
-> +                                     LOCAL_INTERRUPTS;
->   #define DELEGABLE_EXCPS ((1ULL << (RISCV_EXCP_INST_ADDR_MIS)) | \
->                            (1ULL << (RISCV_EXCP_INST_ACCESS_FAULT)) | \
->                            (1ULL << (RISCV_EXCP_ILLEGAL_INST)) | \
-> @@ -1936,11 +1937,12 @@ static const target_ulong sstatus_v1_10_mask = SSTATUS_SIE | SSTATUS_SPIE |
->   
->   /* Bit STIP can be an alias of mip.STIP that's why it's writable in mvip. */
->   static const uint64_t mvip_writable_mask = MIP_SSIP | MIP_STIP | MIP_SEIP |
-> -                                    LOCAL_INTERRUPTS;
-> +                                    MIP_LCOFIP | LOCAL_INTERRUPTS;
->   static const uint64_t mvien_writable_mask = MIP_SSIP | MIP_SEIP |
->                                       LOCAL_INTERRUPTS;
->   
-> -static const uint64_t sip_writable_mask = SIP_SSIP | LOCAL_INTERRUPTS;
-> +static const uint64_t sip_writable_mask = SIP_SSIP | SIP_LCOFIP |
-> +                                          LOCAL_INTERRUPTS;
->   static const uint64_t hip_writable_mask = MIP_VSSIP;
->   static const uint64_t hvip_writable_mask = MIP_VSSIP | MIP_VSTIP |
->                                       MIP_VSEIP | LOCAL_INTERRUPTS;
-> @@ -3953,9 +3955,9 @@ static RISCVException rmw_mvip64(CPURISCVState *env, int csrno,
->        *  alias_mask denotes the bits that come from mip nalias_mask denotes bits
->        *  that come from hvip.
->        */
-> -    uint64_t alias_mask = ((S_MODE_INTERRUPTS | LOCAL_INTERRUPTS) &
-> +    uint64_t alias_mask = ((S_MODE_INTERRUPTS | MIP_LCOFIP | LOCAL_INTERRUPTS) &
->           (env->mideleg | ~env->mvien)) | MIP_STIP;
-> -    uint64_t nalias_mask = (S_MODE_INTERRUPTS | LOCAL_INTERRUPTS) &
-> +    uint64_t nalias_mask = (S_MODE_INTERRUPTS | MIP_LCOFIP | LOCAL_INTERRUPTS) &
->           (~env->mideleg & env->mvien);
->       uint64_t wr_mask_mvip;
->       uint64_t wr_mask_mip;
-> @@ -4188,9 +4190,10 @@ static RISCVException rmw_sie64(CPURISCVState *env, int csrno,
->                                   uint64_t *ret_val,
->                                   uint64_t new_val, uint64_t wr_mask)
->   {
-> -    uint64_t nalias_mask = (S_MODE_INTERRUPTS | LOCAL_INTERRUPTS) &
-> +    uint64_t nalias_mask = (S_MODE_INTERRUPTS | MIP_LCOFIP | LOCAL_INTERRUPTS) &
->           (~env->mideleg & env->mvien);
-> -    uint64_t alias_mask = (S_MODE_INTERRUPTS | LOCAL_INTERRUPTS) & env->mideleg;
-> +    uint64_t alias_mask = (S_MODE_INTERRUPTS | MIP_LCOFIP | LOCAL_INTERRUPTS) &
-> +        env->mideleg;
->       uint64_t sie_mask = wr_mask & nalias_mask;
->       RISCVException ret;
->   
+Sorry that my previous message was not clear enough.The build is not =
+hang,but the machine initialization did not return of ax3005-evb. This =
+is the reason why I said 'initialization did not complete=E2=80=99. If =
+you want to reproduce the mistake,commands below will help you
 
+../qemu/configure --target-list=3Daarch64-softmmu --enable-debug =
+--enable-werror --disable-rust
+
+ninja qemu-system-aarch64
+
+After the build completes, start the emulator with:
+
+printf '%s\n''{"execute":"qmp_capabilities"}' =
+'{"execute":"query-status"}' =
+'{"execute":"query-memory-size-summary=E2=80=9D}'{"execute":"quit=E2=80=9D=
+}=E2=80=99 | build/qemu-system-aarch64 -M ax3005-evb -m 2G -display none =
+-serial none -qmp stdio -S
+
+QEMU printed the QMP greeting, but no response to the`qmp_capabilities` =
+command was received. The process did not complete machine =
+initialization and remained in the initialization path around =
+`ax3005_init()`
+
+And i noticed that you deliver new version. Cheer for this,maybe we =
+could discuss more in new series.
+
+Best regards : )
+Jack Wang=20
+> On Mon, 24 Aug 2026 09:50:09 +0800, Kuan-Jui Chiu <kchiu@axiado.com> =
+wrote:
+> Hi Jack
+>=20
+> Thanks for the test, could you share how you built and what the =
+command=20
+> was you used to test?
+>=20
+> I did not see this issue on my side, maybe I missed something
+>=20
+> B.R.
+> Howard
+>=20
+> Jack Wang =E6=96=BC 2026/8/23 =E4=B8=8B=E5=8D=88 06:33 =E5=AF=AB=E9=81=93=
+:
+>=20
+>=20
+
+>> On Sun, 23 Aug 2026 18:33:01 +0800, Jack Wang <163wangjack@gmail.com =
+<mailto:163wangjack@gmail.com>> wrote:
+>> Hi Kuan-Jui
+>>=20
+>> I tested this series with ax3005-evb machine,the initialization did =
+not complete.
+>> The process showed it repeatedly executing in 'ax3005_init'
+>>=20
+>>> +static const TypeInfo ax3005_soc_types[] =3D {
+>>> +    {
+>>> +        .name           =3D TYPE_AX3005_SOC,
+>>> +        .parent         =3D TYPE_SYS_BUS_DEVICE,
+>>> +        .instance_size  =3D sizeof(Ax3005SoCState),
+>>> +        .instance_init  =3D ax3005_init,
+>>> +        .class_init     =3D ax3005_class_init,
+>>> +    }
+>>> +};
+>>=20
+>> You add instance_size here but forget to add class_size. Then qemu =
+defaultly use SysBusDeviceClass=E2=80=99s class_size cause of father-son =
+relationship.
+>>=20
+>>> +typedef struct Ax3005SoCClass {
+>>> +    SysBusDeviceClass   parent;
+>>> +
+>>> +    uint32_t            num_cpus;
+>>> +} Ax3005SoCClass;
+>>=20
+>> Here your struct apparently extend SysBusDeviceClass field. I think =
+it is the way why previous repeating behavior.After add class_size =
+locally and rebuild the the machine completed initialization and =
+responded to QMP commands successfully.
+>>=20
+>> Best regards :)
+>> Jack Wang
+
+--Apple-Mail=_DF3AE4CD-F231-4070-AF05-B6488B5BDF6B
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta charset=3D"UTF-8"><meta http-equiv=3D"content-type" =
+content=3D"text/html; charset=3Dutf-8"></head><body =
+style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;"><br style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; display: inline !important; float: none;">Hi =
+Kuan_Jui</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; display: inline =
+!important; float: none;">Sorry that my previous message was not clear =
+enough.The build is not hang,but the machine initialization did not =
+return of ax3005-evb. This is the reason why I said 'initialization did =
+not complete=E2=80=99. If you want to reproduce the mistake,commands =
+below will help you</span><br style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
+normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; display: inline =
+!important; float: none;">../qemu/configure =
+--target-list=3Daarch64-softmmu --enable-debug --enable-werror =
+--disable-rust</span><br style=3D"caret-color: rgb(0, 0, 0); color: =
+rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
+normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; display: inline =
+!important; float: none;">ninja qemu-system-aarch64</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><br style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; display: inline !important; float: none;">After =
+the build completes, start the emulator with:</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><br style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; display: inline !important; float: none;">printf =
+'%s\n''{"execute":"qmp_capabilities"}' '{"execute":"query-status"}' =
+'{"execute":"query-memory-size-summary=E2=80=9D}'{"execute":"quit=E2=80=9D=
+}=E2=80=99 | build/qemu-system-aarch64 -M ax3005-evb -m 2G -display none =
+-serial none -qmp stdio -S</span><br style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; display: inline =
+!important; float: none;">QEMU printed the QMP greeting, but no response =
+to the`qmp_capabilities` command was received. The process did not =
+complete machine initialization and remained in the initialization path =
+around `ax3005_init()`</span><br style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; display: inline =
+!important; float: none;">And i noticed that you deliver new version. =
+Cheer for this,maybe we could discuss more in new series.</span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><br style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; display: inline !important; float: none;">Best =
+regards : )</span><br style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, =
+0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; display: inline !important; float: none;">Jack =
+Wang<span class=3D"Apple-converted-space">&nbsp;</span></span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><blockquote type=3D"cite" =
+style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;">On Mon, =
+24 Aug 2026 09:50:09 +0800, Kuan-Jui Chiu &lt;kchiu@axiado.com&gt; =
+wrote:<br>Hi Jack<br><br>Thanks for the test, could you share how you =
+built and what the command<span =
+class=3D"Apple-converted-space">&nbsp;</span><br>was you used to =
+test?<br><br>I did not see this issue on my side, maybe I missed =
+something<br><br>B.R.<br>Howard<br><br>Jack Wang =E6=96=BC 2026/8/23 =
+=E4=B8=8B=E5=8D=88 06:33 =E5=AF=AB=E9=81=93:<br><br><br></blockquote><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><blockquote type=3D"cite" =
+style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: =
+solid;"><blockquote type=3D"cite">On Sun, 23 Aug 2026 18:33:01 +0800, =
+Jack Wang &lt;<a =
+href=3D"mailto:163wangjack@gmail.com">163wangjack@gmail.com</a>&gt; =
+wrote:<br>Hi Kuan-Jui<br><br>I tested this series with ax3005-evb =
+machine,the initialization did not complete.<br>The process showed it =
+repeatedly executing in 'ax3005_init'<br><br><blockquote =
+type=3D"cite">+static const TypeInfo ax3005_soc_types[] =3D {<br>+ =
+&nbsp;&nbsp;&nbsp;{<br>+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.name =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=3D =
+TYPE_AX3005_SOC,<br>+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.parent =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=3D =
+TYPE_SYS_BUS_DEVICE,<br>+ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.instance_size &nbsp;=3D =
+sizeof(Ax3005SoCState),<br>+ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.instance_init &nbsp;=3D =
+ax3005_init,<br>+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.class_init =
+&nbsp;&nbsp;&nbsp;&nbsp;=3D ax3005_class_init,<br>+ =
+&nbsp;&nbsp;&nbsp;}<br>+};<br></blockquote><br>You add instance_size =
+here but forget to add class_size. Then qemu defaultly use =
+SysBusDeviceClass=E2=80=99s class_size cause of father-son =
+relationship.<br><br><blockquote type=3D"cite">+typedef struct =
+Ax3005SoCClass {<br>+ &nbsp;&nbsp;&nbsp;SysBusDeviceClass =
+&nbsp;&nbsp;parent;<br>+<br>+ &nbsp;&nbsp;&nbsp;uint32_t =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;num_cpus=
+;<br>+} Ax3005SoCClass;<br></blockquote><br>Here your struct apparently =
+extend SysBusDeviceClass field. I think it is the way why previous =
+repeating behavior.After add class_size locally and rebuild the the =
+machine completed initialization and responded to QMP commands =
+successfully.<br><br>Best regards :)<br>Jack =
+Wang</blockquote></blockquote></body></html>=
+
+--Apple-Mail=_DF3AE4CD-F231-4070-AF05-B6488B5BDF6B--
 
