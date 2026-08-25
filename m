@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38CE0C61DBE
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 14:49:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 418AEC61DB9
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 14:49:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wysR1-0000ih-01; Tue, 25 Aug 2026 10:47:31 -0400
+	id 1wysR0-0000id-SH; Tue, 25 Aug 2026 10:47:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <antikostya2@gmail.com>)
- id 1wys2r-0002rw-L2
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 10:22:33 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ id 1wys2t-0002sh-5B
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 10:22:35 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <antikostya2@gmail.com>)
- id 1wys2p-0002A6-OA
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 10:22:33 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-39c7ef2b1e2so43386631fa.1
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 07:22:30 -0700 (PDT)
+ id 1wys2q-0002AX-Nv
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 10:22:34 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-3a115c08b0bso37721521fa.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 07:22:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787667749; x=1788272549; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=QlOL6w11SZqN4zPs4FHlz73H2V+m5Boo07QxnEbVRXo=;
- b=Btlgx5+JR8STvt9s0JGNHcJ8mc7Q9kop3riwOnwZoqzicWrp9MeG8ZvCj6DA2YrEv/
- KNfeACssGSFeHCod0TH2ycBIUPJ0e5Y4Gv0Ck4R5pH2yYaYEmPPwbhlIHDF1L0hRII4n
- m7kr1LTmo+7TmI8pJRsQKUnMGkW7+qMHHyxBfamL1gOMnzDZwNzL4sIHMMMlx09t/Gzl
- RnDcLycOwSONpqXY096CPo13q4hcPmKV7ZHjes1S/s2SQX3HJNjE8KSk8ySkrXcKBEfU
- aCTOLTOC//h2mT5U/VqI2wcHk0xBdheMMkQC0ub/Kl17TUk7eG2IDpuOIgzD0eeyduQ2
- V4ew==
+ d=gmail.com; s=20251104; t=1787667751; x=1788272551; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=44lRTpz8iB0AVFJbeBxFTF9DSmyurvrQH0SNXPQReOs=;
+ b=m+xYoWWARG3wf61oBkyAK4dajDHMP6xgSKbK+v63QLareWkfaRMWl8DwEIPfSlkDq6
+ zVH0J8326ivs9esOqsC3vUQ6zvlUxNzE8OBgWKwWMo5YUtN2qU/tqTv3bSkvuxqOnzQI
+ XSGViwrNUgN6bu8wvF5nq03tK1v1+y+4Cl/+0QGA6DBzw0ScS69G5C11MTi2Cf8eyuc8
+ +h7c9CormtWp/WT8ld4ClWd1dJGsPRZxsQiMGe/2e6Lx+3gRnuYkDrq2ZltBmDpxhw2p
+ smEv7Em9ZY5DksAMHm+yJyimAsyNkiDaE287g1xeyo5/lVcQLb6DfxJD8pzwfGnkqlpn
+ tQcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787667749; x=1788272549;
- h=cc:to:content-transfer-encoding:content-type:mime-version
- :message-id:date:subject:from:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to:content-type;
- bh=QlOL6w11SZqN4zPs4FHlz73H2V+m5Boo07QxnEbVRXo=;
- b=gD6Cy7WfpH6AbBU6ZyZq00RKiGcQpn9Oj4XQvVnc0131guKzd6f9w6n1LF/ICoL1oH
- sbk2curSvZWmGYkuvF+sJGqlgWY5QtSaOCmAaWyBf9jmFhwXpKw/thIqxNtOBAZGQmsw
- LWnATrUVXskwoeEktF49c3DNX/cVpPZfy+OwvxLLYWLIqI4CWDCm3fgCjerlYSouyOm+
- SB2v4AxBoY5fg7wGpWF8lPi88/m2NWVWsifdp6a1jwLm09sBxaNas4dL6c3m0Xgtm004
- Z5F0+SOZakSDela2x46N6vyJNFycfB8PGoqkaYPXd3ggnMoG8xOCucW67CZ2gps/lfPT
- 57Sg==
-X-Gm-Message-State: AFuF++m47oTccNc8Uj2Qx04PgY1kLu7fltjmtuEZuqrW1RT/NGQpWnYb
- 8zobi2mXhPQEQTiklLZYNhNi1PpTEZJEHVp3m39PLxw0qJXhP6JYQOpf
-X-Gm-Gg: AR+sD10G0SI9m9qpnLZWbuVBmY/3+aqXUFlvNUz/nOpNvx6SUUsgAsHaITsCdpB2ZWu
- Lq6+dmFg9+J6FCN2osEzHqXT7ynATHiNuU4IR2JomFiAs15qZahb8H02K480/23fcDeBGA+TtR5
- V3GH9DYz+g4DeFfrqpKv/c6pR9PPCzuoLe/apKXTWi/FmJlarZK3niauijdYtdN7I7XYIDNm1iO
- GGAt0IEfbQetUkMT9KTGeZE3gU931bBPQtM9Mrm7ruCUKrmEvmE8HDX1pDaYhp8zo21rWqZLPBO
- V54goMmlu34dNU/7NyLlzmAwlllgAf1JO3uqlYadDyJhLItZC/XChRvN8YhiH8mWBlgvhKYp6G7
- CS99h817u5Z+7hUM0XbN/rAjwe/gOdli/bj7aO/qw7upiAqC1HuKcf8cL9Tuk0pgbeL2Img2+uE
- v+52+EFM6dLPlvPY+QKEI4CV/sOhRm/YHHCOmwdzzuf76kR0sxb/4OKtdxCWW/NaCTB+ewfUnoN
- XmQFSozVxD7BVUu7HFqXZ25w7lZ/A==
-X-Received: by 2002:a05:651c:19a8:b0:39b:2ff8:64ae with SMTP id
- 38308e7fff4ca-3a1aec1ab67mr82044231fa.9.1787667749123; 
- Tue, 25 Aug 2026 07:22:29 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787667751; x=1788272551;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :content-type:mime-version:subject:date:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=44lRTpz8iB0AVFJbeBxFTF9DSmyurvrQH0SNXPQReOs=;
+ b=YCtdVKlFAtRcZr5lpTDCaWo8eDGGuORZ5WScTp1axd7YW1B1g26XyeZuWa58Dl1QND
+ huMdvhMKGbPSmQVJAO9L3gYa21M88kDJxZ9pn+T0xUSN3Pwv4aA+ai79fczM4o3KHLaK
+ CQe5mxXtbtfo61LfctuAeEwO3nxRDKoajQOwlU/QT4lVIJxwFU1oDxlD3gEZIp+LAzX2
+ Lm56j41VTUAToBcQeOG/mwPHl+b80n1ohyzN94mBveUpqsr+ASJ8L0xRFF2G/Fvz6R2/
+ 0LPDTkpChF+FohRHox80ANuOIyAuH2oG0eWxWGwzTmCkyeM9ZLqAzd1oynj7Ct3g1KMl
+ mErQ==
+X-Gm-Message-State: AFuF++lZ7/ttsh9Ry0ASLT+T94QltMsHy+rVCNFuBccWYcRAkVq2Wkod
+ gj7YxxZ97u7niYJgMH1iFJN92LROJVh8qjMem6BU3EUkiQb2mZoj6FS1
+X-Gm-Gg: AR+sD106JA8e6wEDRzBTUS3WU4ozQOBKaRtGubJ9ax782ojwKpbbwnuLIoFTTA6bf+I
+ 2Za/34JjcdI3viMYISsz/TI+1ChsdYfbCILi03e99PoraU5QEv+6LSdCbMKgkhxFixlrUOiybYV
+ XSgjlOnbiAqLRERrMVSUHzqlhCriJnkMFo4Qy6B6HzVfdQqbmIDqDacBvIEfhVUdmvv4izLS6F7
+ +X1LkyZ7NNKI6ukIJJp5KTMfBfCZay6mduq5Shtb6I7ZrCXUaMk5KZX7ePzvVxKw6pHbO2500aw
+ a6wZXoIYR1ic7r6RkOj9G26Ed4mJFh0dvtep2MpWYuDZ7IEwi4pZkK8oS/8s1ln9Wa9I8umgKf4
+ z++7rYSccKytfMbMmU5e85ZuHNQLSUvXwUFGwH84KW2OgXnHtEXEu7AVn354MFHDrNODRndt8Ym
+ BmO9hRK+W+LDgjW39VdOXq/vS3ZlSIyGiFzagIDYjq+KenFHz1OV659oZZbhCAEjfcBEPudf3Vy
+ drZduwHzrHAU/UMzQd8Ll/NEpW/kdy/qfS0q63tRA==
+X-Received: by 2002:a05:651c:43dc:20b0:3a1:7c1c:9fab with SMTP id
+ 38308e7fff4ca-3a1aebdf04emr59621431fa.8.1787667750777; 
+ Tue, 25 Aug 2026 07:22:30 -0700 (PDT)
 Received: from [127.0.1.1] (broadband-90-154-73-22.ip.moscow.rt.ru.
  [90.154.73.22]) by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-3a1c82f6b02sm22457551fa.41.2026.08.25.07.22.27
+ 38308e7fff4ca-3a1c82f6b02sm22457551fa.41.2026.08.25.07.22.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Aug 2026 07:22:28 -0700 (PDT)
+ Tue, 25 Aug 2026 07:22:29 -0700 (PDT)
 From: Konstantin Semichastnov <antikostya2@gmail.com>
-Subject: [PATCH 00/13] hw/riscv, target/riscv: initial n-trace support
-Date: Tue, 25 Aug 2026 17:22:24 +0300
-Message-Id: <20260825-upstream-ntrace_core-v1-0-f8be2f40d2fd@gmail.com>
+Date: Tue, 25 Aug 2026 17:22:25 +0300
+Subject: [PATCH 01/13] hw/riscv/trace-encoder: add ntrace enable flag
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIACCljWoC/yXMQQ6CMBBG4auQWdukViTiVQwxpfzVMbGQmUJIC
- He36vJbvLeRQhhK12ojwcLKYyo4HioKT58eMDwUk7OusRd3NvOkWeDfJmXxAfcwCkzd9jG29ck
- 2bqCSToLI62976/7WuX8h5O+L9v0DgISuUHgAAAA=
-X-Change-ID: 20260825-upstream-ntrace_core-49bff943062d
+Message-Id: <20260825-upstream-ntrace_core-v1-1-f8be2f40d2fd@gmail.com>
+References: <20260825-upstream-ntrace_core-v1-0-f8be2f40d2fd@gmail.com>
+In-Reply-To: <20260825-upstream-ntrace_core-v1-0-f8be2f40d2fd@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
  Alistair Francis <alistair.francis@wdc.com>, 
@@ -86,25 +85,25 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Alexei Filippov <halip0503@gmail.com>, 
  Konstantin Semichastnov <antikostya2@gmail.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3379; i=antikostya2@gmail.com; 
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4404; i=antikostya2@gmail.com; 
  h=from:subject:message-id;
- bh=AcsZmDfc3j2UIKqFGJFppydqsh1KdxDGDa+3aNV2TF4=; 
- b=owEBbQKS/ZANAwAKAUiKpW6lUN52AcsmYgBqjaUiSo5cC3UIZp1To/bn2hGmWWDql6ME63Eoe
- 0LbbsEPgFaJAjMEAAEKAB0WIQRMBWLx2o+linEPEBhIiqVupVDedgUCao2lIgAKCRBIiqVupVDe
- dsq5D/4yzPsSOISALQZckF2LPvUcuo5qU0TKTyMwifP3KA4F9T6/r526amufgC0bdpJpKYZiIfn
- S2fhAdjtffurHJScnPVwvHq27z5rR0hmw6aUcrIfCU9bFq4eV4RmynlPOgiBViCMDnP616bnx2b
- 2A5MUd6VjHfxW1Q3xXUqcVujTfXlFbdhLoMBm4VoIsLIHVn8/cewX2itX27Y4zAecHbJ/H4eRPu
- WaUdR37WP7NqGhDRlTSMRIfs4UaU6lJzy2AuTa2BUH7+noAx+MADD+sSVuj/bQQ+oLfi9R8bYTg
- l+mHbZUJ7bfVENXlC2GDFA4PsrS72A3tiPwXHCfyL+kafoY8oZVN45rjoMuZTvzlnqhaXOpaPcL
- 7cjFJMUlf/id4uNibx1i3xP+q4XzXfCErRjCrSYMG9I6MwnlDyxPjV5oCsHXir1wES/6OaSaURs
- OgqIrzcNbRdxTp+Goh6QUivJhUY/BYSMgQdfaxTlW0GJba+GqAXFMNDk9hXUIsY7vh6QKTPdJkr
- avg84WQcfHHapS3zo1jOoiStx2IltXfMvXV/CYIm8fYiNlNym+9Far6UqvCpgME+roKYic+ycIX
- PUcrklV0S09v5Xq1vbosBcTOJdE19QDa/JzZwdx9JqVIn1EnyX+J1Upc2DCmO7xcXAujvzLZxiE
- YANzzAYFuSjlPmA==
+ bh=UFIBq4OXYLwpRLUSsWgnfrok8avlyztAbJkS9Yp8lhM=; 
+ b=owEBbQKS/ZANAwAKAUiKpW6lUN52AcsmYgBqjaUixEcWCTvX3jB6AsB7xL+uhsl71ME0igMy5
+ Bhq1YR2pamJAjMEAAEKAB0WIQRMBWLx2o+linEPEBhIiqVupVDedgUCao2lIgAKCRBIiqVupVDe
+ dpM8EACa9Ct/z3roUHRCTC3BxflLcOWesjBzaB0qR9CVTyiIWfmmj95BDsp0cSoTM1wCZujJymC
+ IFt2yERJ+V1U/+3W7J8kRqcoQfAg0uiXmIpBi9oVNmBNAUfe/7TKWzlYC69u8frFlv4X7Dy12j3
+ 0kvuQe18wh/shLeX6fIP7Wm/Vq3HADg2WCkGE2lJGDk3p1VuZK9LW0UmiThl+qXjnmOwk+xVEJ3
+ QwP0T3Wi7rKALbaL/+XKKyDxPYDWKc209Bg6HyM/j7MsDIYDGvOu8CULgWQn7QAbLbtqzj/K/T2
+ qMa6VAya8mx/+V23jsY8GNFDWTRLLGIYEF8m1c0querbgGeRtVEgdjbkNPqaZ5C6450+p7JJ0nz
+ +lT4Jrztt4xEnAJOPKHs4+BSBVpeQ9mWVXl7ayQkg/QrNTSkg/uHecZvicDRZT4+RqTIg3Lg4CY
+ G7O1jHRaDm+XsJzxazsQELV2U8WKjtIroKjCFI3R+0ubSkE/nzV2Ru2Za1aoOZ01ehcmBr4RwMm
+ urJHLxgF3Y/mSmQFZCAWggOivBBZVlrALCe0igwEwKvpClR7MobE/4jrC2LEF3ceAzj5c5HjXUZ
+ KNv5A7F4fPcdLOOo/bGMyU45UP/ZjljmslDlzKD60+J5qWtJ8qFbG3J0JCxEp+dS4j3gPtPGQGF
+ fA507PfAkd7qKAQ==
 X-Developer-Key: i=antikostya2@gmail.com; a=openpgp;
  fpr=4C0562F1DA8FA58A710F1018488AA56EA550DE76
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=antikostya2@gmail.com; helo=mail-lj1-x22e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=antikostya2@gmail.com; helo=mail-lj1-x231.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -112,7 +111,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Tue, 25 Aug 2026 10:47:29 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,75 +128,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Initial commit of N-Trace support patch series based on "RISC-V n-trace
+(Nexus-based Trace) Specification" Version 1.0.
+With Trace control devices based on "RISC-V Trace Control Interface
+Specification" Version 1.0.
 
-This series continues to implement RISC-V tracing subsystem.
-This work implements RISC-V N-Trace (Nexus-based Trace) [1].
+Selecting trace message format rely on trTeFormat bit of trTeControl
+trace encoder register.
 
-N-Trace is a different format for tracing (compared to E-Trace [2]),
-and it is based on same underlying interface: RISC-V Trace Control
-Interface Specification [3].
+We will mirror trTeFormat value in trace encoder in `ntrace` field to
+simplify checking of current format in trace encoder logic.
 
-This is the first patchset of several upcoming patchset series,
-that will ultimately provide full support for N-Trace HTM tracing.
-
-A design decision was chosen to make the most of the existing
-infrastructure of the trace subsystem.
-
-Linux kernel driver support is available here:
-
-https://lore.kernel.org/linux-riscv/20251002060732.100213-1-apatel@ventanamicro.com/
-
-Patches based on Daniel's Efficient Trace patchset [4],
-which provides support for Trace Control Interface and E-Trace messages
-implementation.
-
-[1] https://docs.riscv.org/reference/nexus-trace/_attachments/RISC-V-N-Trace.pdf
-[2] https://docs.riscv.org/reference/e-trace/_attachments/riscv-trace-spec.pdf
-[3] https://docs.riscv.org/reference/trace-control-interface/_attachments/RISC-V-Trace-Control-Interface.pdf
-[4] https://lore.kernel.org/qemu-riscv/20251111114656.2285048-1-dbarboza@ventanamicro.com
-
-Based-on: <20251111114656.2285048-1-dbarboza@ventanamicro.com>
+This commit only mirrors register value in field, logic based on this
+field value is added in next commit.
 
 Signed-off-by: Konstantin Semichastnov <antikostya2@gmail.com>
 ---
-Konstantin Semichastnov (13):
-      hw/riscv/trace-encoder: add ntrace enable flag
-      hw/riscv/trace-encoder.c: add trace ntrace/etrace selection logic
-      hw/riscv: add n-trace encoder with ProgTraceSync message
-      hw/riscv/trace-encoder.c: align ntrace messages with ones
-      hw/riscv/trace_encoder, target/riscv: add trace pc history logic
-      hw/riscv: add n-trace IndirectBranchHist rv-trace-message
-      hw/riscv/trace-encoder: add interrupt support to N-Trace encoder
-      hw/riscv: add n-trace ResourceFull rv-trace-message
-      hw/riscv: add n-trace ProgTraceCorrelation rv-trace-message
-      test/qtest/riscv-trace-test: add test-ntrace-simple qtest
-      hw/riscv/trace-encoder.c: add remaining fields to trace-encoder
-      hw/riscv/trace-encoder.c: remaining fields to ram-sink as RO values
-      hw/riscv/trace-encoder: refactor register accesses
+ hw/riscv/trace-encoder.c | 22 +++++++++++++++++++++-
+ hw/riscv/trace-encoder.h |  2 ++
+ 2 files changed, 23 insertions(+), 1 deletion(-)
 
- disas/riscv.c                                  |   2 +-
- disas/riscv.h                                  |   2 +
- hw/riscv/rv-trace-messages.c                   | 265 ++++++++++++++++++++
- hw/riscv/rv-trace-messages.h                   |  10 +
- hw/riscv/trace-encoder.c                       | 332 +++++++++++++++++++++----
- hw/riscv/trace-encoder.h                       |  49 +++-
- hw/riscv/trace-ram-sink.c                      |  22 +-
- hw/riscv/trace-ram-sink.h                      |   1 +
- target/riscv/cpu_helper.c                      |  21 +-
- target/riscv/helper.h                          |   4 +-
- target/riscv/insn_trans/trans_privileged.c.inc |  10 +-
- target/riscv/insn_trans/trans_rvi.c.inc        |  15 +-
- target/riscv/trace_helper.c                    |  23 +-
- target/riscv/translate.c                       |  19 +-
- tests/qtest/riscv-trace-test.c                 |  59 ++++-
- 15 files changed, 734 insertions(+), 100 deletions(-)
----
-base-commit: 6cedd046f606f155e054375c369bd606313e5f6c
-change-id: 20260825-upstream-ntrace_core-49bff943062d
+diff --git a/hw/riscv/trace-encoder.c b/hw/riscv/trace-encoder.c
+index 55acb1f2ae..53345a478c 100644
+--- a/hw/riscv/trace-encoder.c
++++ b/hw/riscv/trace-encoder.c
+@@ -84,6 +84,9 @@ REG32(TR_TE_CONTROL, 0x0)
+ #define R_TR_TE_CONTROL_RESET R_TR_TE_CONTROL_EMPTY_MASK
+ #define R_TR_TE_CONTROL_RO_BITS R_TR_TE_CONTROL_EMPTY_MASK
+ 
++#define TR_TE_CONTROL_FORMAT_ETRACE 0
++#define TR_TE_CONTROL_FORMAT_NTRACE 1
++
+ /*
+  * trTeImpl register fields
+  */
+@@ -153,7 +156,6 @@ static uint64_t trencoder_te_ctrl_set_hardwire_vals(uint64_t input)
+     input = FIELD_DP32(input, TR_TE_CONTROL, CONTEXT, 0);
+     input = FIELD_DP32(input, TR_TE_CONTROL, INST_STALL_ENA, 0);
+     input = FIELD_DP32(input, TR_TE_CONTROL, INHIBIT_SRC, 1);
+-    input = FIELD_DP32(input, TR_TE_CONTROL, FORMAT, 0);
+ 
+     /* SYNC_MODE and SYNC_MAX will be revisited */
+     input = FIELD_DP32(input, TR_TE_CONTROL, INST_SYNC_MODE, 0);
+@@ -168,6 +170,7 @@ static uint64_t trencoder_te_ctrl_prew(RegisterInfo *reg, uint64_t val)
+     uint32_t trTeActive = ARRAY_FIELD_EX32(te->regs, TR_TE_CONTROL, ACTIVE);
+     uint32_t trTeInstTracing = ARRAY_FIELD_EX32(te->regs, TR_TE_CONTROL,
+                                                 INST_TRACING);
++    uint32_t trTeFormat = ARRAY_FIELD_EX32(te->regs, TR_TE_CONTROL, FORMAT);
+     uint32_t temp;
+ 
+     val = trencoder_te_ctrl_set_hardwire_vals(val);
+@@ -205,6 +208,19 @@ static uint64_t trencoder_te_ctrl_prew(RegisterInfo *reg, uint64_t val)
+         val = FIELD_DP32(val, TR_TE_CONTROL, INST_TRACING, 0);
+     }
+ 
++    temp = FIELD_EX32(val, TR_TE_CONTROL, FORMAT);
++    if (te->trace_running) {
++        /* Do not allow to change tracing format while tracing is enabled. */
++        val = FIELD_DP32(val, TR_TE_CONTROL, FORMAT, trTeFormat);
++    } else if (temp != TR_TE_CONTROL_FORMAT_ETRACE &&
++               temp != TR_TE_CONTROL_FORMAT_NTRACE) {
++        /*
++         * Do not change format, if requested format is not supported
++         * (only E-Trace and N-Trace formats are supported for now)
++         */
++        val = FIELD_DP32(val, TR_TE_CONTROL, FORMAT, trTeFormat);
++    }
++
+     return val;
+ }
+ 
+@@ -215,6 +231,7 @@ static void trencoder_te_ctrl_postw(RegisterInfo *reg, uint64_t val)
+     uint32_t trTeEnable = ARRAY_FIELD_EX32(te->regs, TR_TE_CONTROL, ENABLE);
+     uint32_t trTeInstTracing = ARRAY_FIELD_EX32(te->regs, TR_TE_CONTROL,
+                                                 INST_TRACING);
++    uint32_t trTeFormat = ARRAY_FIELD_EX32(te->regs, TR_TE_CONTROL, FORMAT);
+     RISCVCPU *cpu = te->cpu;
+     CPURISCVState *env = &cpu->env;
+ 
+@@ -233,6 +250,8 @@ static void trencoder_te_ctrl_postw(RegisterInfo *reg, uint64_t val)
+ 
+     te->enabled = trTeEnable ? true : false;
+ 
++    te->ntrace = (trTeFormat == TR_TE_CONTROL_FORMAT_NTRACE);
++
+     if (!te->trace_running && trTeInstTracing) {
+         /* Starting trace. Ask the CPU for the first trace insn */
+         te->trace_next_insn = true;
+@@ -314,6 +333,7 @@ static void trencoder_reset(DeviceState *dev)
+     te->enabled = false;
+     te->trace_running = false;
+     te->trace_next_insn = false;
++    te->ntrace = false;
+     env->trace_running = false;
+ 
+     te->branch_map = 0;
+diff --git a/hw/riscv/trace-encoder.h b/hw/riscv/trace-encoder.h
+index 48cf8366ee..fed0ef9a48 100644
+--- a/hw/riscv/trace-encoder.h
++++ b/hw/riscv/trace-encoder.h
+@@ -44,6 +44,8 @@ struct TraceEncoder {
+     bool enabled;
+     bool trace_running;
+     bool trace_next_insn;
++
++    bool ntrace;
+ };
+ 
+ #define TYPE_TRACE_ENCODER "trace-encoder"
 
-Best regards,
---  
-Konstantin Semichastnov <antikostya2@gmail.com>
+-- 
+2.43.0
 
 
