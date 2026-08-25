@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2F5AC61CE2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 10:23:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B27EC61CE2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 10:23:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyoJ9-0006lH-QI; Tue, 25 Aug 2026 06:23:07 -0400
+	id 1wyoIx-0006LV-3x; Tue, 25 Aug 2026 06:22:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wyoJ3-0006Xw-FG
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 06:23:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wyoIn-0006A9-Tz
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 06:22:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wyoJ2-0005mH-5C
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 06:23:01 -0400
+ id 1wyoIl-0005im-37
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 06:22:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787653379;
+ s=mimecast20190719; t=1787653361;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=s3jdVHOIZg28x5tTLfcSDchrSqvF3pRSYXnZWucboy8=;
- b=Y7bTqmF/VepSXyusW6Dj4Ec05Dno2wP66g2b86fayYfjyIjCMBLKFZFuL5cqlPM8KVKwPn
- /d7/kaMcp/X8yP9DVoIoXznMfj/Dl74/GA+MsgkiB7vvg2eA3nSpigd0XzZsoQApZP2PGK
- obec5lJgHx/yC3mHekFEL7Ci17uEMSs=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=C/kbWGkD8OclQC6Wy3+TEi46VsHGuj2Fi8YKSYeaCxM=;
+ b=Zgm+isBLRvqtpIGggRYXIw3KDszW1prJbNbnozMajqIHCHsqyOp4vs6y+XZF4libwJHfqy
+ kRAQhi85J1jYxdg+C/Ez7TuqgATINZgLZaY9/GjkiKdxXYHoQdbmiC2th5/+zp3tyCTVlJ
+ oNfWxh4Zx+nS1+1Wl7JlNL6r93yuN1s=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-kEOA9o1XM4y96zvWJdIOgw-1; Tue,
- 25 Aug 2026 06:22:56 -0400
-X-MC-Unique: kEOA9o1XM4y96zvWJdIOgw-1
-X-Mimecast-MFC-AGG-ID: kEOA9o1XM4y96zvWJdIOgw_1787653375
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-8-u-lUgWKWMk2IQqRTGYpXaA-1; Tue,
+ 25 Aug 2026 06:22:38 -0400
+X-MC-Unique: u-lUgWKWMk2IQqRTGYpXaA-1
+X-Mimecast-MFC-AGG-ID: u-lUgWKWMk2IQqRTGYpXaA_1787653357
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8999A187E5C2; Tue, 25 Aug 2026 10:22:54 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1A8CA19539BB; Tue, 25 Aug 2026 10:22:37 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 824D430002EE; Tue, 25 Aug 2026 10:22:46 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D732718005B6; Tue, 25 Aug 2026 10:22:29 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 25 Aug 2026 14:20:41 +0400
-Subject: [PATCH 04/18] ui/console: disable GL scanout when dmabuf is the
- active one
+Date: Tue, 25 Aug 2026 14:20:40 +0400
+Subject: [PATCH 03/18] virtio-gpu: store the scanout DMABUF in
+ virtio_gpu_scanout
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260825-virtio-gpu-cleanup-v1-4-d3bb612b9975@redhat.com>
+Message-Id: <20260825-virtio-gpu-cleanup-v1-3-d3bb612b9975@redhat.com>
 References: <20260825-virtio-gpu-cleanup-v1-0-d3bb612b9975@redhat.com>
 In-Reply-To: <20260825-virtio-gpu-cleanup-v1-0-d3bb612b9975@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,34 +67,35 @@ Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Alex Williamson <alex@shazbot.org>, 
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=760;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6500;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=fVbPh6f+y71tIi92bbLnTHXtgYVyIThG/fKNesPGhOU=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjWyXdtrhiW4XBGLz6cbvMMzA8tuxLmMytHQJ8
- Cw3BW9j/q6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao1slwAKCRDa6OEJdZac
- 5UgJD/9Q1fiWFu6X3vEcVgbwPI9Plm1RCeBoKdP8zP8p8TI2ki3rohKZlkAeIcClipNce36v1sS
- 0IrY3yy1T1kgF5YPyVUzFXuCqSH1H3DuWFL6yIFIRboGsntijWN9ljJYwDmclORZgVngzIb8wls
- tBc/+0+q//DFgaWzMFvmOd9A9G30a6GvBUG055TPAANBN7wkDiqMDHLgvFqHKg7tSB6Vd9jE+4U
- DIAfzyM0/hU+wG5xcFoByynL2ywrkwQw2t/4DGCK28EFXLsHVKIACIBFpi46mYHYm5jSVrBvDkg
- XbhOzNRjIA34Kn/DqXgprBev0tBr3Uk5zBTuMJwWvTUteTpA9dsCOXsduWIsTMJ9ugFsQZPTiYy
- eXphQB/sFsKczH/JI30tWA9h/9r7H9SyXp4Fl/veb9/b7ASSEyRzXv+Np0+jcemDKPZ9kAhAMCV
- peG7RIBd8uzwvn3ohUzPYSSIoR64nnh6YU255fcDaZXciqUl7JPP8aKS8qwXlpVFiktwBBsNzqS
- uJP6yZ0B0e8mILGraD2Kk1n2M20hBaV99TK3E82cHe+MIrznt4nBJOsxsqY0K4PFfOjc2f4I8Xt
- HnPi0+5fVjiiULag1UW+LcbXuO9wZfoRLmKhoHFmZkgD7pSIWGcNws9IAOh+GV6vz3+Rb3PC+cL
- Kl5m4Dff46sFyjg==
+ bh=v5VqcSoCRr5hkc9VZnbhixvj5fVuV6rQTOm52ZE4T68=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjWyX182QW9SXjqOHgbamGZ3cyTtB/CrfXELQH
+ 4dfT9Y0NmGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao1slwAKCRDa6OEJdZac
+ 5f77D/9H42hKCZYMZHxEiZfuhe4pjJyeYaEdW16mHEdaLN8NBhX9LCpqkvWZu1l8wwD8FgnQ9Zq
+ rty+g6GGrpZPge7tDdUg9smOlsmpioOXIlvIuoQUMA5WfbZcAhKjyV2glB1Kzv+O3enuE2MpiB5
+ g9JRdgBV2npXYOdo07mczd9OoI1YV6bx6BBRfMsMfRFQ2kIFS6+cORmKa6TLM8d+yEtTsoucqa4
+ /ih7prVwOla0UdShVgNbe2MSC/tG6W4J7W36+w+eFz9fgj8Jkb7veM1SRy6o3W2tbHzyM0/wbcT
+ rcoJjkB6Gk3T4nL4ogS81SjRkyB32nhjj6tZa6V2QXa7uiYerTxPnhaUWCCJG7069XGvBDSIFrc
+ CD/3A407WwxCHXwsDNoIGlCP6c9r0P2RRugRq4tOuLzZ6NcFy77d9aqqtFBCYJ4F2rCnphQhCjK
+ IPHcwMwgkYSw0KsE35DsWMAnk8Fa2pLndEBpwdGnGmk1H1ndQOpTGL/+o0Ic4M1W1/rkNH2Uhh6
+ 5R7v+FKkF2vN98p6z3WrvIqJcc7T4SQU8EZfx4RMO459alVMqwatqfwVQu0AQtN/n6i1ITYe7af
+ EPXmMQ/5N/93JwLpTHI6pbJthqSDSc78F1hD6HWQF4ZkIuu6jYwuyLuvvwlLfK1bEFu6XAGrYUm
+ E2b7pbC1qPcIBEg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,28 +111,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Disable the GL scanout when the actively-displayed dmabuf is released,
-so the console does not retain a stale reference.
+VirtIOGPU tracks presented dmabufs both through a per-scanout primary
+pointer and a device-wide list of VGPUDMABuf wrappers. Only the current
+DMA-BUF for a scanout can ever be presented, so the list and the wrapper
+struct are redundant bookkeeping.
+
+Store the QemuDmaBuf directly in virtio_gpu_scanout and drop VGPUDMABuf
+and the device-wide list. The wrapper only carried the buffer and its
+scanout id; the id is now implicit in the owning scanout.
+
+No functional change intended.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/console.c | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/display/virtio-gpu-udmabuf.c | 68 +++++++++++++++--------------------------
+ include/hw/virtio/virtio-gpu.h  | 12 +-------
+ 2 files changed, 25 insertions(+), 55 deletions(-)
 
-diff --git a/ui/console.c b/ui/console.c
-index a8a2a247d8f4..14f148118e37 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -1049,6 +1049,9 @@ void qemu_console_gl_release_dmabuf(QemuConsole *con,
-             dcl->ops->dpy_gl_release_dmabuf(dcl, dmabuf);
-         }
-     }
-+    if (con->scanout.kind == SCANOUT_DMABUF && dmabuf == con->scanout.dmabuf) {
-+        qemu_console_gl_scanout_disable(con);
-+    }
+diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
+index 5f08c855dde1..fd47028a1189 100644
+--- a/hw/display/virtio-gpu-udmabuf.c
++++ b/hw/display/virtio-gpu-udmabuf.c
+@@ -152,30 +152,19 @@ void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
+     res->blob = pdata;
  }
  
- void qemu_console_gl_update(QemuConsole *con,
+-static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPUDMABuf *dmabuf)
+-{
+-    struct virtio_gpu_scanout *scanout;
+-
+-    scanout = &g->parent_obj.scanout[dmabuf->scanout_id];
+-    qemu_console_gl_release_dmabuf(scanout->con, dmabuf->buf);
+-    g_clear_pointer(&dmabuf->buf, qemu_dmabuf_free);
+-    QTAILQ_REMOVE(&g->dmabuf.bufs, dmabuf, next);
+-    g_free(dmabuf);
+-}
+-
+ void virtio_gpu_fini_udmabuf(VirtIOGPU *g, struct virtio_gpu_simple_resource *res)
+ {
+     int max_outputs = g->parent_obj.conf.max_outputs;
+     int i;
+ 
+     for (i = 0; i < max_outputs; i++) {
+-        VGPUDMABuf *dmabuf = g->dmabuf.primary[i];
++        struct virtio_gpu_scanout *scanout = &g->parent_obj.scanout[i];
+ 
+-        if (dmabuf &&
+-            qemu_dmabuf_get_num_planes(dmabuf->buf) > 0 &&
+-            qemu_dmabuf_get_fds(dmabuf->buf, NULL)[0] == res->dmabuf_fd &&
++        if (scanout->dmabuf &&
++            qemu_dmabuf_get_num_planes(scanout->dmabuf) > 0 &&
++            qemu_dmabuf_get_fds(scanout->dmabuf, NULL)[0] == res->dmabuf_fd &&
+             res->dmabuf_fd != -1) {
+-            qemu_dmabuf_close(dmabuf->buf);
++            qemu_dmabuf_close(scanout->dmabuf);
+             res->dmabuf_fd = -1;
+         }
+     }
+@@ -183,31 +172,23 @@ void virtio_gpu_fini_udmabuf(VirtIOGPU *g, struct virtio_gpu_simple_resource *re
+     virtio_gpu_destroy_udmabuf(res);
+ }
+ 
+-static VGPUDMABuf
+-*virtio_gpu_create_dmabuf(VirtIOGPU *g,
+-                          uint32_t scanout_id,
+-                          struct virtio_gpu_simple_resource *res,
+-                          struct virtio_gpu_framebuffer *fb,
+-                          struct virtio_gpu_rect *r)
++static QemuDmaBuf *
++virtio_gpu_create_dmabuf(struct virtio_gpu_simple_resource *res,
++                         struct virtio_gpu_framebuffer *fb,
++                         struct virtio_gpu_rect *r)
+ {
+-    VGPUDMABuf *dmabuf;
+     uint32_t offset = 0;
+ 
+     if (res->dmabuf_fd < 0) {
+         return NULL;
+     }
+ 
+-    dmabuf = g_new0(VGPUDMABuf, 1);
+-    dmabuf->buf = qemu_dmabuf_new(r->width, r->height,
+-                                  &offset, &fb->stride,
+-                                  r->x, r->y, fb->width, fb->height,
+-                                  qemu_pixman_to_drm_format(fb->format),
+-                                  DRM_FORMAT_MOD_INVALID, &res->dmabuf_fd,
+-                                  1, true, false);
+-    dmabuf->scanout_id = scanout_id;
+-    QTAILQ_INSERT_HEAD(&g->dmabuf.bufs, dmabuf, next);
+-
+-    return dmabuf;
++    return qemu_dmabuf_new(r->width, r->height,
++                           &offset, &fb->stride,
++                           r->x, r->y, fb->width, fb->height,
++                           qemu_pixman_to_drm_format(fb->format),
++                           DRM_FORMAT_MOD_INVALID, &res->dmabuf_fd,
++                           1, true, false);
+ }
+ 
+ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
+@@ -217,26 +198,25 @@ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
+                              struct virtio_gpu_rect *r)
+ {
+     struct virtio_gpu_scanout *scanout = &g->parent_obj.scanout[scanout_id];
+-    VGPUDMABuf *new_primary, *old_primary = NULL;
++    QemuDmaBuf *new_primary, *old_primary;
+     uint32_t width, height;
+ 
+-    new_primary = virtio_gpu_create_dmabuf(g, scanout_id, res, fb, r);
++    new_primary = virtio_gpu_create_dmabuf(res, fb, r);
+     if (!new_primary) {
+         return -EINVAL;
+     }
+ 
+-    if (g->dmabuf.primary[scanout_id]) {
+-        old_primary = g->dmabuf.primary[scanout_id];
+-    }
++    old_primary = scanout->dmabuf;
+ 
+-    width = qemu_dmabuf_get_width(new_primary->buf);
+-    height = qemu_dmabuf_get_height(new_primary->buf);
+-    g->dmabuf.primary[scanout_id] = new_primary;
++    width = qemu_dmabuf_get_width(new_primary);
++    height = qemu_dmabuf_get_height(new_primary);
++    scanout->dmabuf = new_primary;
+     qemu_console_resize(scanout->con, width, height);
+-    qemu_console_gl_scanout_dmabuf(scanout->con, new_primary->buf);
++    qemu_console_gl_scanout_dmabuf(scanout->con, new_primary);
+ 
+     if (old_primary) {
+-        virtio_gpu_free_dmabuf(g, old_primary);
++        qemu_console_gl_release_dmabuf(scanout->con, old_primary);
++        qemu_dmabuf_free(old_primary);
+     }
+ 
+     return 0;
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 220231ec9d43..79eb4b1b8cec 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -74,6 +74,7 @@ struct virtio_gpu_framebuffer {
+ struct virtio_gpu_scanout {
+     QemuConsole *con;
+     DisplaySurface *ds;
++    QemuDmaBuf *dmabuf;
+     uint32_t width, height;
+     int x, y;
+     int invalidate;
+@@ -178,12 +179,6 @@ struct VirtIOGPUBaseClass {
+     DEFINE_PROP_UINT32("xres", _state, _conf.xres, 1280), \
+     DEFINE_PROP_UINT32("yres", _state, _conf.yres, 800)
+ 
+-typedef struct VGPUDMABuf {
+-    QemuDmaBuf *buf;
+-    uint32_t scanout_id;
+-    QTAILQ_ENTRY(VGPUDMABuf) next;
+-} VGPUDMABuf;
+-
+ struct VirtIOGPU {
+     VirtIOGPUBase parent_obj;
+ 
+@@ -215,11 +210,6 @@ struct VirtIOGPU {
+         uint32_t bytes_3d;
+     } stats;
+ 
+-    struct {
+-        QTAILQ_HEAD(, VGPUDMABuf) bufs;
+-        VGPUDMABuf *primary[VIRTIO_GPU_MAX_SCANOUTS];
+-    } dmabuf;
+-
+     GArray *capset_ids;
+ };
+ 
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
