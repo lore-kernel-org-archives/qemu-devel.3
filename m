@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 177CFC5DF94
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49ED7C61DBC
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:11:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylGo-0000hQ-1E; Tue, 25 Aug 2026 03:08:30 -0400
+	id 1wylId-0005gJ-QS; Tue, 25 Aug 2026 03:10:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylGl-0000YT-Uw; Tue, 25 Aug 2026 03:08:27 -0400
+ id 1wylIc-0005fI-O6; Tue, 25 Aug 2026 03:10:22 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylGj-00067B-Uy; Tue, 25 Aug 2026 03:08:27 -0400
+ id 1wylIa-0006R6-CZ; Tue, 25 Aug 2026 03:10:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641596; bh=yrrijrnwunNDwQh5hfF71cJhOlBmDqO0AWTi9q39R5M=;
+ t=1787641596; bh=pVm6UM1iL5nQf8qRJsuRV51gRwjpBvjEwdQxJABaqdQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AVAJfZt32ng6OFlDlGSNz2NSrW5qtZWwpuLROV1Tlk5QW3TSFmjJiscolguOYGg7X
- iLIDtBU/JMDx3HMlq+AJStDJIfRjhCIh13TgBsTxZE4tVXy8J7medlHpzD1OvGRSbY
- rZ3dnc4qR5/JIKgarFQ+y6ore8f07TaWDlK/LY/0N2jsmdxpvfYgjE/+I9d7m7aEmn
- sXxGxjir2s7qqfnzXGAfimAUKquZF5vBv9L0yvq5IZm3T+gjdWqnv+vQjcymW8qMHw
- kjKm9uX+oBeLMaH9P0RcmnPZirhFIBg3/U0k+3ZVbVDUoXp/XMX47nEL/jC7WRGkzV
- 45XQ8t42xNHGg==
+ b=R6rYKewAADVYBb/ahC/q9SLl0puJGS612v6MIAsDpm475+5W0PxA4vQ4GgyOSW0uR
+ IJE84t2nuPlIbroQPza67/QRHZsRamI8bR5xrX6MDEyhZ24Nw7cae7+n45cMycgKNQ
+ CI5tv7nZDQ2sf0OCwbbmM6M6YzWAEe+sBlOrNniZlfC56YIJ3Vi0Yv/ourJ4y4oIqL
+ xQr+Vl5Y98Jo1bgUMVhvdDngF5rieLSfixn2NWABNEAZ1Ng3kJb69EsOPtzmWRZQ9J
+ 0KD4otr4bZtLKH57LY6hEoh+j7m9od5QNYVi8A4/95npy9w6ZzWidZCX6I3bAUwMBT
+ o8RF/d+88aWRA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3B0D61CE220;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9DCCB1CE233;
  Tue, 25 Aug 2026 10:06:36 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id F3B84415F9B;
- Tue, 25 Aug 2026 10:07:12 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 61286415FAE;
+ Tue, 25 Aug 2026 10:07:13 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 9480732420; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ id CD8CC32446; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, TANG Tiancheng <lyndra@linux.alibaba.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 59/91] tcg: Export tcg_gen_ussub_i{32,64,tl}
-Date: Tue, 25 Aug 2026 10:05:31 +0300
-Message-ID: <20260825070619.174584-17-mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 v2 78/91] disas/riscv: Decode unsigned vector
+ immediates as unsigned
+Date: Tue, 25 Aug 2026 10:05:50 +0300
+Message-ID: <20260825070619.174584-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,126 +73,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: TANG Tiancheng <lyndra@linux.alibaba.com>
 
-Move from tcg-op-gvec.c to tcg-op.c.
-Use a temporary, to cover the possibility of operand overlap.
+rv_codec_v_i decodes all .vi operands with operand_vimm(), which
+sign-extends bits 19:15. That matches spec operands named imm, but not the
+.vi forms whose operand is uimm; uimm=31 is decoded as -1 and printed by
+the shared 6-bit 'u' formatter as 63.
 
-(Cc for stable as this is a prerequisite for the bug fix
-in the next commit.)
+Add rv_codec_v_i_u/operand_vuimm() for the 5-bit uimm forms: vsll.vi,
+vsrl.vi, vsra.vi, vnsrl.wi, vnsra.wi, vssrl.vi, vssra.vi, vnclipu.wi,
+vnclip.wi, vslideup.vi, vslidedown.vi, vrgather.vi, vaeskf1.vi,
+vaeskf2.vi, vsm3c.vi, vsm4k.vi and vwsll.vi. The remaining rv_codec_v_i
+entries are the signed imm forms.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260811191540.79882-2-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit b4f6f672a3e100706ddc249c26c2c149cdac1636)
+Fixes: 07f4964d1785 ("disas/riscv.c: rvv: Add disas support for vector instructions")
+Fixes: 9d92f56d4a44 ("disas/riscv: Add support for vector crypto extensions")
+Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260703-b4-disas-xthead-fix-riscv-next-v4-4-84c566330bc7@linux.alibaba.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 00cec77a7f9f80eb6dc8f0c27009403729e3641e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
-index 1fe342db0d4..c7d1529c4f5 100644
---- a/include/tcg/tcg-op-common.h
-+++ b/include/tcg/tcg-op-common.h
-@@ -163,6 +163,7 @@ void tcg_gen_smin_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
- void tcg_gen_smax_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
- void tcg_gen_umin_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
- void tcg_gen_umax_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
-+void tcg_gen_ussub_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
- void tcg_gen_abs_i32(TCGv_i32, TCGv_i32);
- 
- /* Replicate a value of size @vece from @in to all the lanes in @out */
-@@ -274,6 +275,7 @@ void tcg_gen_smin_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
- void tcg_gen_smax_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
- void tcg_gen_umin_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
- void tcg_gen_umax_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
-+void tcg_gen_ussub_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
- void tcg_gen_abs_i64(TCGv_i64, TCGv_i64);
- 
- /* Replicate a value of size @vece from @in to all the lanes in @out */
-diff --git a/include/tcg/tcg-op.h b/include/tcg/tcg-op.h
-index 96a5af1a298..40ce17eed2a 100644
---- a/include/tcg/tcg-op.h
-+++ b/include/tcg/tcg-op.h
-@@ -149,6 +149,7 @@ typedef TCGv_i64 TCGv;
- #define tcg_gen_umin_tl tcg_gen_umin_i64
- #define tcg_gen_smax_tl tcg_gen_smax_i64
- #define tcg_gen_umax_tl tcg_gen_umax_i64
-+#define tcg_gen_ussub_tl tcg_gen_ussub_i64
- #define tcg_gen_atomic_cmpxchg_tl tcg_gen_atomic_cmpxchg_i64
- #define tcg_gen_atomic_xchg_tl tcg_gen_atomic_xchg_i64
- #define tcg_gen_atomic_fetch_add_tl tcg_gen_atomic_fetch_add_i64
-@@ -268,6 +269,7 @@ typedef TCGv_i64 TCGv;
- #define tcg_gen_umin_tl tcg_gen_umin_i32
- #define tcg_gen_smax_tl tcg_gen_smax_i32
- #define tcg_gen_umax_tl tcg_gen_umax_i32
-+#define tcg_gen_ussub_tl tcg_gen_ussub_i32
- #define tcg_gen_atomic_cmpxchg_tl tcg_gen_atomic_cmpxchg_i32
- #define tcg_gen_atomic_xchg_tl tcg_gen_atomic_xchg_i32
- #define tcg_gen_atomic_fetch_add_tl tcg_gen_atomic_fetch_add_i32
-diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
-index bc323e25009..27f3807b004 100644
---- a/tcg/tcg-op-gvec.c
-+++ b/tcg/tcg-op-gvec.c
-@@ -2399,20 +2399,6 @@ void tcg_gen_gvec_usadd(unsigned vece, uint32_t dofs, uint32_t aofs,
-     tcg_gen_gvec_3(dofs, aofs, bofs, oprsz, maxsz, &g[vece]);
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 967739bdbbf..82b962dc71f 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -1803,19 +1803,19 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "vxor.vi", rv_codec_v_i, rv_fmt_vd_vs2_imm_vm, NULL, 0, 0, 0 },
+     { "vsll.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vsll.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vsll.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vsll.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vsrl.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vsrl.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vsrl.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vsrl.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vsra.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vsra.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vsra.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vsra.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vnsrl.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vnsrl.wx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vnsrl.wi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vnsrl.wi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vnsra.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vnsra.wx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vnsra.wi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vnsra.wi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vmseq.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vmseq.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+     { "vmseq.vi", rv_codec_v_i, rv_fmt_vd_vs2_imm_vm, NULL, 0, 0, 0 },
+@@ -1909,16 +1909,16 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "vsmul.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+     { "vssrl.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vssrl.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vssrl.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vssrl.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vssra.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vssra.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vssra.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vssra.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vnclipu.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vnclipu.wx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vnclipu.wi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vnclipu.wi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vnclip.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vnclip.wx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vnclip.wi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vnclip.wi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vfadd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vfadd.vf", rv_codec_v_r, rv_fmt_vd_vs2_fs1_vm, NULL, 0, 0, 0 },
+     { "vfsub.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+@@ -2048,15 +2048,15 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "vfmv.f.s", rv_codec_v_r, rv_fmt_fd_vs2, NULL, 0, 0, 0 },
+     { "vfmv.s.f", rv_codec_v_r, rv_fmt_vd_fs1, NULL, 0, 0, 0 },
+     { "vslideup.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vslideup.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vslideup.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vslide1up.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+     { "vslidedown.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vslidedown.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vslidedown.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vslide1down.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+     { "vrgather.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vrgatherei16.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vrgather.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vrgather.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vrgather.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vcompress.vm", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
+     { "vmv1r.v", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vmv2r.v", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+@@ -2144,8 +2144,8 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "vaesef.vs", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vaesem.vv", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vaesem.vs", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+-    { "vaeskf1.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
+-    { "vaeskf2.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
++    { "vaeskf1.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
++    { "vaeskf2.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
+     { "vaesz.vs", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vandn.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vandn.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+@@ -2169,14 +2169,14 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "vsha2ch.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
+     { "vsha2cl.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
+     { "vsha2ms.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
+-    { "vsm3c.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
++    { "vsm3c.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
+     { "vsm3me.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
+-    { "vsm4k.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
++    { "vsm4k.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
+     { "vsm4r.vv", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vsm4r.vs", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vwsll.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vwsll.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vwsll.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vwsll.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "amocas.w", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+     { "amocas.d", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+     { "amocas.q", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+@@ -4492,6 +4492,11 @@ static int32_t operand_vimm(rv_inst inst)
+     return (int64_t)(inst << 44) >> 59;
  }
  
--static void tcg_gen_ussub_i32(TCGv_i32 d, TCGv_i32 a, TCGv_i32 b)
--{
--    TCGv_i32 min = tcg_constant_i32(0);
--    tcg_gen_sub_i32(d, a, b);
--    tcg_gen_movcond_i32(TCG_COND_LTU, d, a, b, min, d);
--}
--
--static void tcg_gen_ussub_i64(TCGv_i64 d, TCGv_i64 a, TCGv_i64 b)
--{
--    TCGv_i64 min = tcg_constant_i64(0);
--    tcg_gen_sub_i64(d, a, b);
--    tcg_gen_movcond_i64(TCG_COND_LTU, d, a, b, min, d);
--}
--
- void tcg_gen_gvec_ussub(unsigned vece, uint32_t dofs, uint32_t aofs,
-                         uint32_t bofs, uint32_t oprsz, uint32_t maxsz)
- {
-diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index bbcb510c764..4d15d1abbd4 100644
---- a/tcg/tcg-op.c
-+++ b/tcg/tcg-op.c
-@@ -1264,6 +1264,16 @@ void tcg_gen_umax_i32(TCGv_i32 ret, TCGv_i32 a, TCGv_i32 b)
-     tcg_gen_movcond_i32(TCG_COND_LTU, ret, a, b, b, a);
- }
- 
-+void tcg_gen_ussub_i32(TCGv_i32 ret, TCGv_i32 a, TCGv_i32 b)
++static uint32_t operand_vuimm(rv_inst inst)
 +{
-+    TCGv_i32 t = tcg_temp_ebb_new_i32();
-+    TCGv_i32 z = tcg_constant_i32(0);
-+
-+    tcg_gen_sub_i32(t, a, b);
-+    tcg_gen_movcond_i32(TCG_COND_LTU, ret, a, b, z, t);
-+    tcg_temp_free_i32(t);
++    return extract32(inst, 15, 5);
 +}
 +
- void tcg_gen_abs_i32(TCGv_i32 ret, TCGv_i32 a)
+ static uint32_t operand_vzimm11(rv_inst inst)
  {
-     TCGv_i32 t = tcg_temp_ebb_new_i32();
-@@ -2433,6 +2443,16 @@ void tcg_gen_umax_i64(TCGv_i64 ret, TCGv_i64 a, TCGv_i64 b)
-     tcg_gen_movcond_i64(TCG_COND_LTU, ret, a, b, b, a);
- }
- 
-+void tcg_gen_ussub_i64(TCGv_i64 ret, TCGv_i64 a, TCGv_i64 b)
-+{
-+    TCGv_i64 t = tcg_temp_ebb_new_i64();
-+    TCGv_i64 z = tcg_constant_i64(0);
-+
-+    tcg_gen_sub_i64(t, a, b);
-+    tcg_gen_movcond_i64(TCG_COND_LTU, ret, a, b, z, t);
-+    tcg_temp_free_i64(t);
-+}
-+
- void tcg_gen_abs_i64(TCGv_i64 ret, TCGv_i64 a)
- {
-     TCGv_i64 t = tcg_temp_ebb_new_i64();
+     return (inst << 33) >> 53;
+@@ -4895,6 +4900,12 @@ static void decode_inst_operands(rv_decode *dec, rv_isa isa)
+         dec->imm = operand_vimm(inst);
+         dec->vm = operand_vm(inst);
+         break;
++    case rv_codec_v_i_u:
++        dec->rd = operand_rd(inst);
++        dec->rs2 = operand_rs2(inst);
++        dec->imm = operand_vuimm(inst);
++        dec->vm = operand_vm(inst);
++        break;
+     case rv_codec_vror_vi:
+         dec->rd = operand_rd(inst);
+         dec->rs2 = operand_rs2(inst);
+diff --git a/disas/riscv.h b/disas/riscv.h
+index 379e642ec84..91ada8b531e 100644
+--- a/disas/riscv.h
++++ b/disas/riscv.h
+@@ -149,6 +149,7 @@ typedef enum {
+     rv_codec_v_r,
+     rv_codec_v_ldst,
+     rv_codec_v_i,
++    rv_codec_v_i_u,
+     rv_codec_vsetvli,
+     rv_codec_vsetivli,
+     rv_codec_vror_vi,
 -- 
 2.47.3
 
