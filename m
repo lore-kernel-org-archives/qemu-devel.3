@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84E0BC61DC2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 12:31:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F84BC61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 12:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyqHg-0004hM-St; Tue, 25 Aug 2026 08:29:45 -0400
+	id 1wyqHo-0004jM-8V; Tue, 25 Aug 2026 08:29:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wyqHd-0004gl-Ec
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 08:29:42 -0400
+ id 1wyqHl-0004iN-98
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 08:29:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wyqHb-0000JK-BL
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 08:29:41 -0400
+ id 1wyqHh-0000LM-UJ
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 08:29:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787660978;
+ s=mimecast20190719; t=1787660985;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CctPaz35SpkBvSVYmSA+dpAk+d3UWmMos9BA4/wjDdk=;
- b=L+VlyfXDgOU5rtag1DE6PDwX1X/6dPC4PaHewLI9pO7sRwWGeCjiKoQLPf33JkSYLhjWTl
- ck0atYWzKnovdKsiEDGH0HCoY8Akj4InC8Y8w6VHwEhwcBxXPhOmwAN7U14BMM4uLi6BjV
- YRQw+0a6r7pqf8Poe2OO2k8KGTRCtZM=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KmvF/j/A1GG/fGBSSgcyXowpztKEbwaQjCcPtJOE5Wo=;
+ b=NFMz6xKd6dMV3vhyr5S17cr0XGtJj3Mt1C3w/Y3suIa7ZobEqcLKXSMcEXLOOjwQKJjjqn
+ 03VJY/57oqCHR1cxz3clzEBO0HvH9jEvA02drg6Dv6m29KkrhLcgdDfg1vF86YTiuLdO03
+ FZYPEOl2hmjZQ5ieNjxUUFKWD6ECnbE=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-447-3h1wvTaaMIm43hLR0pVCrg-1; Tue, 25 Aug 2026 08:29:36 -0400
-X-MC-Unique: 3h1wvTaaMIm43hLR0pVCrg-1
-X-Mimecast-MFC-AGG-ID: 3h1wvTaaMIm43hLR0pVCrg_1787660975
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-c1686e23b9cso400415466b.0
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 05:29:36 -0700 (PDT)
+ us-mta-571-tpyu7capPC-BticxU5uy_g-1; Tue, 25 Aug 2026 08:29:43 -0400
+X-MC-Unique: tpyu7capPC-BticxU5uy_g-1
+X-Mimecast-MFC-AGG-ID: tpyu7capPC-BticxU5uy_g_1787660983
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-c20e5890680so229706566b.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 05:29:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787660975; x=1788265775; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787660982; x=1788265782; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=CctPaz35SpkBvSVYmSA+dpAk+d3UWmMos9BA4/wjDdk=;
- b=XygYgt0HMl3DhkPy8rDncTAcSOPu3fepg1xoNnowzNiV1e6YYEj/Mkp9DpKcHkgczj
- 7hw+i9NOoDcXaJpPmiKP149SGB1jjV/PS0piUvJpqI7wzwD0x8iw0UuZ9qFjD2puuMQH
- HP3JPxmqZ5D2QgYGfngLyOwaTTpMVoNObmktoLwLOvF7/zoV3ahYDDI1BSzsjflidBj4
- /sXYCI1k7lrkHUefLhHPN/gVFphxUBVLtHZMr2TBvx+UFVbSRGByCjUtE30WvFBdWECD
- bFaiA255mApyCXkGkrM66EBcb7H0PEtTpU6LUuJ7uQbQ/pwNaQWxw6Xn8Gu6phaiPTyt
- XEug==
+ bh=KmvF/j/A1GG/fGBSSgcyXowpztKEbwaQjCcPtJOE5Wo=;
+ b=t/ZxWO5tHFpw2cB1GSZIfN/bHG/4kem5DtfAOlmqDeZBXE4cfbkr+EZnheBDdxuqxR
+ fZTusefQqynYpGqdS5CGdTk/yVzBNrJWGyxKA32mqBgG1NG37NtxRXE2wQ9b3+CVFu9B
+ PBYw+5TOGmliywMiyuoSSRkFeI5hknkU0DfT9LCIWcQlsEWtAcDmBFQTLtDiEvZuhqgV
+ 8GEKEF6AlGjR3Z03ka/UNrxVTWa+rRD6Up1P93AiBXci2t8g1LJAOOabR7y15ZxkADsP
+ YqyVIgnT+Fg/Ulo+aR7dIpb7smHNo51EJahKVC/crpUjZ0q9UMo/6nvM4CvxnTZUVVXj
+ g9mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787660975; x=1788265775;
+ d=1e100.net; s=20251104; t=1787660982; x=1788265782;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=CctPaz35SpkBvSVYmSA+dpAk+d3UWmMos9BA4/wjDdk=;
- b=BwL3yO8spw6gK33efBCIHL7RhiqlagXt0evhR4GVC67SODcnXe7rGOYggiCsfaTt+q
- b5U+f2SEYxXdL8iuh3xCaeR46XR/9tMTYsfn9XUOUbaJ4yXnYvG2MnbM6NefPE/H7HH9
- kqIKFLztkrhT7cH954NBzkhm1kCfqeEGqTliIXsAKYCynUmn9HWyjS39HPzyhYPbU0Kl
- MmBOdLDwQ+/xwl2L1Tr9plLLzKHGE19FYTaOk2vW1DOn6iOdvfxq5aeyj82256LTceOE
- YE4tNu+tnGX64pIPD4eXn/zbSICDlWn8vUvqkyj8J+Pkjp3BJfk+giZWFS5TnlPP3o0n
- 9Cqw==
-X-Gm-Message-State: AFuF++mISwSKeAE+80aqbD2sj0IiKrHIUIbWK9USfdddC99rcDENkpRk
- 0FKXm4AuNqVVIswlykO0bCEUSf2qr64XEMLtsTlNwtcAjWw59u7sTeoKHOVZgzYCEllHidIasOI
- jpZ6TlOn/UKZZDQo9anfPTQCQDEbwhuG2Rthdfs92bSOXzBx7D3qtqokT8Dzyon0iO95YLRQa9c
- h+0WcYUVMP3LQeyzHBuGgzUcy3vnU8j10zLQJxRYfp
-X-Gm-Gg: AR+sD12eEKqVO/PguVM5SGtq+NeMauSTwN3Ur6mh15KLcwRfyJnKqacpRynZYmgzrLw
- ncDP7w92U5CFs/xmW8Lt3T5/9a9BDceMD+pSaj6IYOSzcSE+2JCLGL7tDDAccNnx7889lNrZg6L
- JTR2domDAsewP7Ho75/gy+BXeBtHMRN8ZqIdnprPQeKUJZq4Kd00jHQahhYs+LHhpdUnlcBpxgW
- +rIHoG5nOCNFbO6UITEBF2wfxmcQO4KjjJieYXsshRwdj9Q/GEYz/apBo3KrtOzlgnxNpg77iS+
- 79E/yyb+Vp8ENu+9bTcZAhuGmXMdwXJDRhskAOCFz6muGi4/CAUektrFp6wnx8wH/XmXBfzxOOn
- C1+67j2EAyt0lDYu5MvBiaaXIRCB+Pls9EOWQ2lhwpyqwWx0SGE8Wziw9gaYj7vDE2mVcEplXDT
- dJslA=
-X-Received: by 2002:a17:907:60cd:b0:c24:c22c:6372 with SMTP id
- a640c23a62f3a-c24c22c6490mr1559742566b.5.1787660975259; 
- Tue, 25 Aug 2026 05:29:35 -0700 (PDT)
-X-Received: by 2002:a17:907:60cd:b0:c24:c22c:6372 with SMTP id
- a640c23a62f3a-c24c22c6490mr1559726966b.5.1787660974430; 
- Tue, 25 Aug 2026 05:29:34 -0700 (PDT)
+ bh=KmvF/j/A1GG/fGBSSgcyXowpztKEbwaQjCcPtJOE5Wo=;
+ b=X/Abn4VR9mQGZ79sdlX1UCKn2La/xPkuj12yUMfxJ8o5Gx8a5+pch4BmeV2Pexk3ki
+ c068TJDBKRrxzX8NqTT2PvClZuzi6xr61S/pA7WpokztPxEVWyLGuRuG8RALnaouMqq2
+ zCWF5apwt10/uk1TUX6TejfsRr8G0nmaFh6vyB4ey8mqr/ArL7LuBux1Z9Rh2VEnMEk8
+ YLc+TYPCRT1giX3tXbaR+NBHOdBdPoajXAPNbQEHnmqJYovwEDVCiCITauQf5Ax6Dvkq
+ HtsabD7QeRILMIyHqNSsKms2so071EM4EdjiNUZP4Z+uP+ZQmnakEjf8NgTynWhr8k2G
+ mTjA==
+X-Gm-Message-State: AFuF++mUZAISJ/s70nouoJerJIHu9JK5gXCEYB5HVg0cMSh3tA+IDDui
+ ag1qMU1FQWq/V0TlZfQrzTVBkcR4lpG+a5KyLfVZWlVaD9KwUVOsbjuSBfPvKwd/Dse3auUFZ3n
+ Cf09vdweFbAVXoOdItVLgUkBkIhhqnnEzc8Q+HSbfw5A9cAAH2QRwzxStKFmTb/T5AeWSaYnV/W
+ b8ikbPPHVBIMeJ11RkwbSZIccF1zZkzEru8LlnI/fZ
+X-Gm-Gg: AR+sD123Dlom0aPgpoDal6YV0GmsVerV2/r3MJx74MK44jZt98bZu/cbRRMghOIk+/a
+ WByHbv8xpFt6v3h+QAjxP9BAwWerc9eba88e5y871ytxjCblJnYgYrL5LblPXdcg4dzxsbyoojv
+ TUGQ2WyOEai48pXJJduGkAOVnylPWdqPuInhFJx6XHxooLDj3bziMkfX1+YJvN0WtYdZCRaAlM3
+ By9CBfOsnZtzVTVKpU7f9JBh2KVVrNBm7BkXeFbe38Chd+XDaNCi/v8HsbYgeXDjvJ3cKQZ1vUu
+ BJFH0/ud/HKMUNYXnV+nb7zkM8c9+jt+G1r+xF5xBJFneZqrQAMpXREWxzLXByxhSxwBEI7alrC
+ EGuz5KoCCifHfLlGNlb8OAPLMB5NAQDAiOZAw62p3uHdvLA94M8Tq+ZP5XSxKhOc62RvO3GQzEo
+ bic/M=
+X-Received: by 2002:a17:907:c8c6:b0:c1f:1520:4de5 with SMTP id
+ a640c23a62f3a-c249257c128mr2955001166b.1.1787660982596; 
+ Tue, 25 Aug 2026 05:29:42 -0700 (PDT)
+X-Received: by 2002:a17:907:c8c6:b0:c1f:1520:4de5 with SMTP id
+ a640c23a62f3a-c249257c128mr2954991566b.1.1787660982106; 
+ Tue, 25 Aug 2026 05:29:42 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c24dfd91dd4sm467031366b.16.2026.08.25.05.29.32
+ a640c23a62f3a-c249606b59fsm1995590966b.12.2026.08.25.05.29.41
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Aug 2026 05:29:33 -0700 (PDT)
+ Tue, 25 Aug 2026 05:29:41 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 05/20] target/i386/tcg: add APX support to XSAVE/XRSTOR
-Date: Tue, 25 Aug 2026 14:29:06 +0200
-Message-ID: <20260825122921.431739-6-pbonzini@redhat.com>
+Subject: [PATCH 08/20] target/i386/tcg: mark XSAVE* as not allowing REX2
+Date: Tue, 25 Aug 2026 14:29:09 +0200
+Message-ID: <20260825122921.431739-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825122921.431739-1-pbonzini@redhat.com>
 References: <20260825122921.431739-1-pbonzini@redhat.com>
@@ -120,247 +120,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With it, add a new hidden flag that will be used to enable the REX2 prefix
-and EVEX map4.
-
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.h            |  3 ++
- target/i386/tcg/tcg-cpu.h    | 16 +++++++---
- target/i386/helper.c         | 11 +++++++
- target/i386/tcg/fpu_helper.c | 59 +++++++++++++++++++++++++++++++++---
- target/i386/tcg/tcg-cpu.c    |  5 +--
- 5 files changed, 83 insertions(+), 11 deletions(-)
+ target/i386/tcg/decode-new.h     |  3 +++
+ target/i386/tcg/decode-new.c.inc | 21 ++++++++++-----------
+ 2 files changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 641f3ee5c2f..dc5d48aceea 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -191,6 +191,7 @@ typedef enum X86Seg {
- #define HF_MPX_IU_SHIFT     26 /* BND registers in-use */
- #define HF_UMIP_SHIFT       27 /* CR4.UMIP */
- #define HF_AVX_EN_SHIFT     28 /* AVX Enabled (CR4+XCR0) */
-+#define HF_APX_EN_SHIFT     29 /* APX Enabled (CR4+XCR0) */
- 
- #define HF_CPL_MASK          (3 << HF_CPL_SHIFT)
- #define HF_INHIBIT_IRQ_MASK  (1 << HF_INHIBIT_IRQ_SHIFT)
-@@ -218,6 +219,7 @@ typedef enum X86Seg {
- #define HF_MPX_IU_MASK       (1 << HF_MPX_IU_SHIFT)
- #define HF_UMIP_MASK         (1 << HF_UMIP_SHIFT)
- #define HF_AVX_EN_MASK       (1 << HF_AVX_EN_SHIFT)
-+#define HF_APX_EN_MASK       (1 << HF_APX_EN_SHIFT)
- 
- /* hflags2 */
- 
-@@ -2759,6 +2761,7 @@ static inline bool x86_has_cpuid_0x1f(X86CPU *cpu)
- /* helper.c */
- void x86_cpu_set_a20(X86CPU *cpu, int a20_state);
- void cpu_sync_avx_hflag(CPUX86State *env);
-+void cpu_sync_apx_hflag(CPUX86State *env);
- 
- typedef enum X86ASIdx {
-     X86ASIdx_MEM = 0,
-diff --git a/target/i386/tcg/tcg-cpu.h b/target/i386/tcg/tcg-cpu.h
-index 85bcd61678f..451f61e2043 100644
---- a/target/i386/tcg/tcg-cpu.h
-+++ b/target/i386/tcg/tcg-cpu.h
-@@ -52,9 +52,15 @@ typedef struct X86XSaveArea {
-                     - sizeof(X86XSaveHeader)
-                     - sizeof(XSaveAVX)];
- 
--    /* MPX State: */
--    XSaveBNDREG bndreg_state;
--    XSaveBNDCSR bndcsr_state;
-+    /* Overlapping MPX and APX States: */
-+    union {
-+        struct {
-+            XSaveBNDREG bndreg;
-+            XSaveBNDCSR bndcsr;
-+        } mpx_state;
-+        XSaveAPX apx_state;
-+    };
+diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
+index 92822969003..c974ca9d7c5 100644
+--- a/target/i386/tcg/decode-new.h
++++ b/target/i386/tcg/decode-new.h
+@@ -181,6 +181,9 @@ typedef enum X86InsnCheck {
+     /* Vendor-specific checks for Intel/AMD differences */
+     X86_CHECK_i64_amd = 2048,
+     X86_CHECK_o64_intel = 4096,
 +
-     /* AVX-512 State: */
-     XSaveOpmask opmask_state;
-     XSaveZMM_Hi256 zmm_hi256_state;
-@@ -71,8 +77,8 @@ QEMU_BUILD_BUG_ON(offsetof(X86XSaveArea, legacy.mxcsr) != XSAVE_MXCSR_OFFSET);
- QEMU_BUILD_BUG_ON(offsetof(X86XSaveArea, legacy.fpregs) != XSAVE_ST_SPACE_OFFSET);
- QEMU_BUILD_BUG_ON(offsetof(X86XSaveArea, legacy.xmm_regs) != XSAVE_XMM_SPACE_OFFSET);
- QEMU_BUILD_BUG_ON(offsetof(X86XSaveArea, avx_state) != XSAVE_AVX_OFFSET);
--QEMU_BUILD_BUG_ON(offsetof(X86XSaveArea, bndreg_state) != XSAVE_BNDREG_OFFSET);
--QEMU_BUILD_BUG_ON(offsetof(X86XSaveArea, bndcsr_state) != XSAVE_BNDCSR_OFFSET);
-+QEMU_BUILD_BUG_ON(offsetof(X86XSaveArea, mpx_state.bndreg) != XSAVE_BNDREG_OFFSET);
-+QEMU_BUILD_BUG_ON(offsetof(X86XSaveArea, mpx_state.bndcsr) != XSAVE_BNDCSR_OFFSET);
- QEMU_BUILD_BUG_ON(offsetof(X86XSaveArea, opmask_state) != XSAVE_OPMASK_OFFSET);
- QEMU_BUILD_BUG_ON(offsetof(X86XSaveArea, zmm_hi256_state) != XSAVE_ZMM_HI256_OFFSET);
- QEMU_BUILD_BUG_ON(offsetof(X86XSaveArea, hi16_zmm_state) != XSAVE_HI16_ZMM_OFFSET);
-diff --git a/target/i386/helper.c b/target/i386/helper.c
-index 68362141621..22d205bed66 100644
---- a/target/i386/helper.c
-+++ b/target/i386/helper.c
-@@ -36,6 +36,16 @@
- #include "tcg/insn-start-words.h"
- #endif
++    /* No REX2 prefix allowed */
++    X86_CHECK_no_rex2 = 8192,
+ } X86InsnCheck;
  
-+void cpu_sync_apx_hflag(CPUX86State *env)
-+{
-+    if ((env->cr[4] & CR4_OSXSAVE_MASK)
-+        && (env->xcr0 & XSTATE_APX_MASK) == XSTATE_APX_MASK) {
-+        env->hflags |= HF_APX_EN_MASK;
-+    } else{
-+        env->hflags &= ~HF_APX_EN_MASK;
-+    }
-+}
-+
- void cpu_sync_avx_hflag(CPUX86State *env)
- {
-     if ((env->cr[4] & CR4_OSXSAVE_MASK)
-@@ -250,6 +260,7 @@ void cpu_x86_update_cr4(CPUX86State *env, uint32_t new_cr4)
+ typedef enum X86InsnSpecial {
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 47bc30a22fc..a7e3ecec8a2 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -481,9 +481,9 @@ static void decode_group15(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+         [1] = X86_OP_ENTRYr(FXRSTOR,    M,y, cpuid(FXSR) p_00),
+         [2] = X86_OP_ENTRYr(LDMXCSR,    E,d, vex5 chk(VEX128) p_00),
+         [3] = X86_OP_ENTRYw(STMXCSR,    E,d, vex5 chk(VEX128) p_00),
+-        [4] = X86_OP_ENTRYw(XSAVE,      M,y, cpuid(XSAVE) p_00),
+-        [5] = X86_OP_ENTRYr(XRSTOR,     M,y, cpuid(XSAVE) p_00),
+-        [6] = X86_OP_ENTRYw(XSAVEOPT,   M,b, cpuid(XSAVEOPT) p_00),
++        [4] = X86_OP_ENTRYw(XSAVE,      M,y, cpuid(XSAVE) p_00 chk(no_rex2)),
++        [5] = X86_OP_ENTRYr(XRSTOR,     M,y, cpuid(XSAVE) p_00 chk(no_rex2)),
++        [6] = X86_OP_ENTRYw(XSAVEOPT,   M,b, cpuid(XSAVEOPT) p_00 chk(no_rex2)),
+         [7] = X86_OP_ENTRYw(NOP,        M,b, cpuid(CLFLUSH) p_00),
+     };
  
-     cpu_sync_bndcs_hflags(env);
-     cpu_sync_avx_hflag(env);
-+    cpu_sync_apx_hflag(env);
- }
- 
- #if !defined(CONFIG_USER_ONLY)
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index b812125efa1..e341aefb9f0 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -2690,6 +2690,19 @@ static void do_xsave_pkru(X86Access *ac, target_ulong ptr)
-     access_stq(ac, ptr, ac->env->pkru);
- }
- 
-+#ifdef TARGET_X86_64
-+static void do_xsave_apx(X86Access *ac, target_ulong ptr)
-+{
-+    CPUX86State *env = ac->env;
-+    int i;
-+
-+    for (i = 16; i < 32; i++) {
-+        access_stq(ac, ptr, env->regs[i]);
-+        ptr += 8;
-+    }
-+}
-+#endif
-+
- static void do_fxsave(X86Access *ac, target_ulong ptr)
- {
-     CPUX86State *env = ac->env;
-@@ -2754,14 +2767,19 @@ static void do_xsave_access(X86Access *ac, target_ulong ptr, uint64_t rfbm,
-         do_xsave_ymmh(ac, ptr + XO(avx_state));
-     }
-     if (opt & XSTATE_BNDREGS_MASK) {
--        do_xsave_bndregs(ac, ptr + XO(bndreg_state));
-+        do_xsave_bndregs(ac, ptr + XO(mpx_state.bndreg));
-     }
-     if (opt & XSTATE_BNDCSR_MASK) {
--        do_xsave_bndcsr(ac, ptr + XO(bndcsr_state));
-+        do_xsave_bndcsr(ac, ptr + XO(mpx_state.bndcsr));
-     }
-     if (opt & XSTATE_PKRU_MASK) {
-         do_xsave_pkru(ac, ptr + XO(pkru_state));
-     }
-+#ifdef TARGET_X86_64
-+    if (opt & XSTATE_APX_MASK) {
-+        do_xsave_apx(ac, ptr + XO(apx_state));
-+    }
-+#endif
- 
-     /* Update the XSTATE_BV field.  */
-     old_bv = access_ldq(ac, ptr + XO(header.xstate_bv));
-@@ -2955,6 +2973,29 @@ static void do_fxrstor(X86Access *ac, target_ulong ptr)
-     }
- }
- 
-+#ifdef TARGET_X86_64
-+static void do_xrstor_apx(X86Access *ac, target_ulong ptr)
-+{
-+    CPUX86State *env = ac->env;
-+    int i;
-+
-+    for (i = 16; i < 32; i++) {
-+        env->regs[i] = access_ldq(ac, ptr);
-+        ptr += 8;
-+    }
-+}
-+
-+static void do_clear_apx(X86Access *ac)
-+{
-+    CPUX86State *env = ac->env;
-+    int i;
-+
-+    for (i = 16; i < 32; i++) {
-+        env->regs[i] = 0;
-+    }
-+}
-+#endif
-+
- void helper_fxrstor(CPUX86State *env, target_ulong ptr)
- {
-     uintptr_t ra = GETPC();
-@@ -3026,7 +3067,7 @@ static void do_xrstor(X86Access *ac, target_ulong ptr,
-     }
-     if (rfbm & XSTATE_BNDREGS_MASK) {
-         if (xstate_bv & XSTATE_BNDREGS_MASK) {
--            do_xrstor_bndregs(ac, ptr + XO(bndreg_state));
-+            do_xrstor_bndregs(ac, ptr + XO(mpx_state.bndreg));
-             env->hflags |= HF_MPX_IU_MASK;
-         } else {
-             memset(env->bnd_regs, 0, sizeof(env->bnd_regs));
-@@ -3035,7 +3076,7 @@ static void do_xrstor(X86Access *ac, target_ulong ptr,
-     }
-     if (rfbm & XSTATE_BNDCSR_MASK) {
-         if (xstate_bv & XSTATE_BNDCSR_MASK) {
--            do_xrstor_bndcsr(ac, ptr + XO(bndcsr_state));
-+            do_xrstor_bndcsr(ac, ptr + XO(mpx_state.bndcsr));
-         } else {
-             memset(&env->bndcs_regs, 0, sizeof(env->bndcs_regs));
+@@ -2972,15 +2972,14 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+                 goto illegal_op;
+             }
          }
-@@ -3053,6 +3094,15 @@ static void do_xrstor(X86Access *ac, target_ulong ptr,
-             tlb_flush(cs);
+-        if (decode.e.check & X86_CHECK_prot_or_vm86) {
+-            if (!PE(s)) {
+-                goto illegal_op;
+-            }
++        if ((decode.e.check & X86_CHECK_prot_or_vm86) && !PE(s)) {
++            goto illegal_op;
          }
-     }
-+#ifdef TARGET_X86_64
-+    if (rfbm & XSTATE_APX_MASK) {
-+        if (xstate_bv & XSTATE_APX_MASK) {
-+            do_xrstor_apx(ac, ptr + XO(apx_state));
-+        } else {
-+            do_clear_apx(ac);
+-        if (decode.e.check & X86_CHECK_no_vm86) {
+-            if (VM86(s)) {
+-                goto illegal_op;
+-            }
++        if ((decode.e.check & X86_CHECK_no_vm86) && VM86(s)) {
++            goto illegal_op;
 +        }
-+    }
-+#endif
- }
- 
- #undef XO
-@@ -3228,6 +3278,7 @@ void helper_xsetbv(CPUX86State *env, uint32_t ecx, uint64_t mask)
-     env->xcr0 = mask;
-     cpu_sync_bndcs_hflags(env);
-     cpu_sync_avx_hflag(env);
-+    cpu_sync_apx_hflag(env);
-     return;
- 
-  do_gpf:
-diff --git a/target/i386/tcg/tcg-cpu.c b/target/i386/tcg/tcg-cpu.c
-index 6f5dc06b3b9..2965c304e57 100644
---- a/target/i386/tcg/tcg-cpu.c
-+++ b/target/i386/tcg/tcg-cpu.c
-@@ -198,12 +198,13 @@ static void x86_tcg_cpu_xsave_init(void)
-     XO(XSTATE_FP_BIT, legacy);
-     XO(XSTATE_SSE_BIT, legacy);
-     XO(XSTATE_YMM_BIT, avx_state);
--    XO(XSTATE_BNDREGS_BIT, bndreg_state);
--    XO(XSTATE_BNDCSR_BIT, bndcsr_state);
-+    XO(XSTATE_BNDREGS_BIT, mpx_state.bndreg);
-+    XO(XSTATE_BNDCSR_BIT, mpx_state.bndcsr);
-     XO(XSTATE_OPMASK_BIT, opmask_state);
-     XO(XSTATE_ZMM_Hi256_BIT, zmm_hi256_state);
-     XO(XSTATE_Hi16_ZMM_BIT, hi16_zmm_state);
-     XO(XSTATE_PKRU_BIT, pkru_state);
-+    XO(XSTATE_APX_BIT, apx_state);
- 
- #undef XO
- }
++        if ((decode.e.check & X86_CHECK_no_rex2) && (s->prefix & PREFIX_REX2)) {
++            goto illegal_op;
+         }
+         if ((decode.e.check & X86_CHECK_VEX128) && s->vex_l) {
+             goto illegal_op;
 -- 
 2.55.0
 
