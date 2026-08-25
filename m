@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9B8DC61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:15:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF877C61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:16:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyp6b-0000hA-5v; Tue, 25 Aug 2026 07:14:13 -0400
+	id 1wyp6N-0000Ox-Dk; Tue, 25 Aug 2026 07:13:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp6Y-0000Xx-EQ; Tue, 25 Aug 2026 07:14:10 -0400
+ id 1wyp6K-0000Nx-U0; Tue, 25 Aug 2026 07:13:56 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp6W-0008G0-HO; Tue, 25 Aug 2026 07:14:10 -0400
+ id 1wyp6J-0008Cm-CL; Tue, 25 Aug 2026 07:13:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787656396; bh=cFngtj+JIc/dFLPHR4zyrbPPRyixG5oF+UGC6j1Mm5k=;
+ t=1787656395; bh=YDBmE+Ss8Tj0goodTURvX5uHHCAWDc0xm5dtYHEnSPI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=hpwyxzYN27peiX37EafX3OPDWy2qsm/drJJdnQ8huGcFa4gUZUVn9qrlu1J0PPCI2
- XcKugfrMT4iMlivMIrIxVIPP6/WP1EzrTRC/Xm0M140xyiVmabaBPkZSN3RGcXTwES
- qBGee6iIEkCqG+aTMMhojCvYmrYRbN0qLH5TM+Z90UcZ/FSnhXIcXXavbdTYKy/1uO
- NR56PU3cXbCE5fYzC18AbwfUUrk3UoVPQRPPmiVyIscd5pGGF/MxG+7XTZDaJrrwcM
- OzwCjyKzrCB5dfgWfBML7ujprZ1zF20Z0c2ItyjFt4a0RyIeBqJQ0N9sNnTHat7yGO
- wOVAIDhMviDug==
+ b=KdywXH1WQMULZbuaYPO8iVIROIL2i3BepONgnSOAuDnJJ3hKCqIjgbpUNRU71z14x
+ 0cUitrmSOrtJeO/RzY/Uh/FcaZWRWdwMrazfNUSFYhlTqRyZEJaU/H9vofNkUsBwLU
+ v+ktCXNbRnjk2B68Wmy3NKS1otdE0BMmKEYt3X0guYogs28U5qoTHDe60x3QQaFIQp
+ EfrXuwWYllZ1VVduYZ4zAfzKTTITDUqZnZdD7WGfnagqQAmOFmkTWiNvSwb2NaP2wu
+ JvdAKu1fr2C8Xe4qLGGPJ9y8dnqPM5ZgC0UMxjwUmkEQ63J6iifwlg9AJRFrA+f3dv
+ 23IXgD8tH9aww==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 289A81CE4AB;
- Tue, 25 Aug 2026 14:13:16 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id F1C041CE4A4;
+ Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 40AFC416277;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 15E73416270;
  Tue, 25 Aug 2026 14:13:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 78CA232599; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
+ id 630C23258B; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v3 143/166] serial: clear transmit retry callback on
- unrealize
-Date: Tue, 25 Aug 2026 14:11:39 +0300
-Message-ID: <20260825111206.482723-9-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Jacob Young <jacobly@ziglang.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v3 136/166] tcg/optimize: Fix s_mask computation for
+ shifts
+Date: Tue, 25 Aug 2026 14:11:32 +0300
+Message-ID: <20260825111206.482723-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,31 +71,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The GSource is removed when resetting but remains active (and can
-cause use-after-free) on hot-unplug.  Remove it before the character
-device is disconnected.
+Skip s_mask computation for logical right shift.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4125
-
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit eb3f7fe382babbab44419603e81da56abb91d11a)
+Cc: qemu-stable@nongnu.org
+Fixes: 93a967fbb57 ("tcg/optimize: Propagate sign info for shifting")
+Reported-by: Jacob Young <jacobly@ziglang.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 5fe51606146cbf04dac07bf27256febbe56881e7)
+(Mjt: back-port to 10.0 across v10.0.0-1791-g03329e3ce460
+ "tcg/optimize: Build and use o_bits in fold_shift"
+ and v10.0.0-425-g74dbd36f1f87 "tcg: Merge INDEX_op_shr_{i32,i64}")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/char/serial.c b/hw/char/serial.c
-index 70044e14a0f..350cd56cd87 100644
---- a/hw/char/serial.c
-+++ b/hw/char/serial.c
-@@ -939,6 +939,7 @@ static void serial_unrealize(DeviceState *dev)
- {
-     SerialState *s = SERIAL(dev);
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index 1b9553737e2..c7c16518f08 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2602,8 +2602,17 @@ static bool fold_shift(OptContext *ctx, TCGOp *op)
+         int sh = ti_const_val(t2);
  
-+    g_clear_handle_id(&s->watch_tag, g_source_remove);
-     qemu_chr_fe_deinit(&s->chr, false);
+         z_mask = do_constant_folding(op->opc, ctx->type, z_mask, sh);
+-        s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
  
-     timer_free(s->modem_status_poll);
++        if (op->opc == INDEX_op_shr_i32 || op->opc == INDEX_op_shr_i64) {
++            /*
++             * Logical right shift will force the sign bit zero.
++             * Don't bother computing s_mask and let fold_masks
++             * recompute from z_mask.
++             */
++            return fold_masks_z(ctx, op, z_mask);
++        }
++
++        s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
+         return fold_masks_zs(ctx, op, z_mask, s_mask);
+     }
+ 
+diff --git a/tests/tcg/i386/test-i386-opt-shr.c b/tests/tcg/i386/test-i386-opt-shr.c
+new file mode 100644
+index 00000000000..9fb8d420223
+--- /dev/null
++++ b/tests/tcg/i386/test-i386-opt-shr.c
+@@ -0,0 +1,21 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* Regression test for tcg optimize vs sign bit repetition counting. */
++
++#include <assert.h>
++
++int main()
++{
++#ifndef __x86_64__
++    char test;
++
++    asm("movw $0x4000, %%ax\n\t"
++        "addw %%ax, %%ax\n\t"
++        "cwtl\n\t"
++        "shrl %%eax\n\t"
++        "cmpw $-0x3fff, %%ax\n\t"
++        "setnl %%al"
++        : "=a"(test));
++    assert(!test);
++#endif
++    return 0;
++}
 -- 
 2.47.3
 
