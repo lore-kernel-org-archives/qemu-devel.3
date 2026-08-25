@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10EA1C61DBE
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 12:07:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53451C61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 12:19:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wypvB-00080Y-3F; Tue, 25 Aug 2026 08:06:29 -0400
+	id 1wyq6q-00020t-WD; Tue, 25 Aug 2026 08:18:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wypv0-0007zm-5I
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 08:06:19 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1wyq6o-00020Y-JE
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 08:18:30 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wypuy-0008L1-3c
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 08:06:17 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4956869750eso26815305e9.2
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 05:06:14 -0700 (PDT)
+ id 1wyq6n-000563-0X
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 08:18:30 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-4815bce4652so2416526f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 05:18:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787659573; x=1788264373; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787660307; x=1788265107; darn=nongnu.org;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=k2i5vU1W42aXUk2NAHduwOU7V4+cTMnTETM9dlai+r4=;
- b=CyrUadvu4RBbRPszatWAilILa5cRgdjUrfG/bCP4ltri0bIitQa/n9GdWxe2HxYaC9
- CyBYgfCddyQ1sY8bmq2hsHfo7ARt4QmvRe/MWBcEFxf2rlE66Epsx/GREiY2ZWRjchxL
- tBmzsFJqE3vGfs0dJdiUYdhBTo2sGMZOt8FFITj96JhJdhQELEYa2n7rSlATU8gciste
- EWOVXdiWq5igZXmldC0VdL+ArkZqV9ED9trkfEYR70qQdcDx3kfp0AnA+V+miHD/Pyjj
- tY1RcTVVWKPk5bZCmz3Cyy9t7XGj086fH68HSz2ShHvhw/SZzMK0A74zoRBXccGszUCk
- klgg==
+ bh=DT4QrbFI3IsncY1zCuQdV9ZdCP1rmNgzkzyyROTMyFU=;
+ b=Dayewew+q3ou4qPKILef6LqtzHEdWYjCfIuMyAJYMCit4uit5QS7QkbmMtctNGdM4n
+ NJJ0s4pERhBSqz9uhQODGDL3A6VAxXCg1cvjauggRmCnNT7x+7cBMFbJwxb8QHXJGk6K
+ cc6jH0kU8u8Rce9YhRrGWhkXuIwQdfZW5rj4lBrwMLUSaFpwEeU74Bol//HotvfIOO4L
+ NnNnAmAwkDAUKSwcrpsDClozY+OZgGeQYdku4gaKFXVcLuiXWLpijFKx8N2bTQmcodSU
+ j13Zsvh4k/gKxz3xYlEh2EETBUYLaMevCnT8FWYIyvu42P/NJ9cytnizdoRDSwmBj+3B
+ dSxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787659573; x=1788264373;
+ d=1e100.net; s=20251104; t=1787660307; x=1788265107;
  h=in-reply-to:content-disposition:content-type:mime-version
  :references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=k2i5vU1W42aXUk2NAHduwOU7V4+cTMnTETM9dlai+r4=;
- b=LYvieSFL6VgEIE4oaj2OdrkIj9UI8KACfJV22whebfgh/RilDkPLpXPLYzeDye2K1D
- AjRPWoxf4UMENy1DaaHykRTho31GaStrKf7ICjBsZZ15tAVpr5VhJ/dQIRDWrfhRulnx
- NH9siel31xLmbRKpRDySp+Bco60q5mDRmvrPuDehcedzJn7yZpsDODcCbM1Lxa01Vfwa
- Koqn3ufex3DZcwyvLULFkxu941OVrlY4l/99hlS6by8BgpYYF09KIMpx88XVrlSOuwjt
- 85KLpJK0QfQCvRMDAevsHaMTQzsAZ3SKXYDHsdHhS8B1bT0oR3Dzv+HSNx7ZFeibdtX3
- CPsQ==
+ bh=DT4QrbFI3IsncY1zCuQdV9ZdCP1rmNgzkzyyROTMyFU=;
+ b=aU5Si+h+MBMcpg76FJ7JhuQTRAP8iO4zSaY28qax8upF6xrVZ58SbEX/B9kQnGE0ZJ
+ Lqyimu/wD2mj5dKta/gHXueRL2+nYaKa6tuRWFUq23+iIA7k5/8YA9w0Sitamt1qPDMq
+ X4VzQB/tFXEBH9tOdYB0Mu3uirIx/FH/N62uRmdFAkVgEyUqCkFQgm0JyWKm3y6vzn7t
+ R+8WN1iVoPx9LGQ8KGrWU6ZZxp+/5oEjOFqpfut6afCNfZWnvJG1jFuYUosw/+GR8uMt
+ nkcOTYAIKCe5ML3kofQ5mpRt53/5y1r0N+cXgXQrTUR8vhNdTzk5r6gtut2VxUzQ4fIP
+ 1LEA==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrdB9D4ByZmfvRZgIq5j2IrLhAnFexSct1qjCosW9EXCezpbmLEB7oa08qDMhGAwgjcFoUMwCIR+sc/@nongnu.org
-X-Gm-Message-State: AFuF++mIpvvS0cjzStkU7PPGNzTdypZ6zW0uhPi3AneUFaLO4gjtSatP
- 2wVXtT3WMXb82G3Fa1kOBnIkzf3V4i9rAepKOofE/aQ8LC3gayepKt/9bo44ypDD+iM=
-X-Gm-Gg: AR+sD12q/ntRsVn6IJs/4nsLALls0CvFe/qzifrYOvQYUpVVWXNabqL2WP+x/mDNc5z
- R0hz/apo5KR9CYqzF7ggP1cgIiZqTP5aFJs/vNyokV/PcN00qfuICaFNF+MSEXGJgpUW2SYgskH
- 24fi7hqnLxtOyfSuyNLVFlicWHmOWAD0tyrnBI1nFNyDzALJOQKsHh8Y6x8VMXNhq6lDpH/JjMu
- vjKNIMkxFFZTNCB5/sFEmK8A+AvH39HZl1l0OpJh6xvBDxzFziBcjoCZvTYVnn2ujWx5D9IVVYt
- qtIKPLpsMRk+gAg4tiwziMdeXuzETAcMRI7CHRC9rn6A9gIE8WPEDgwTtTda8dd6Pk2hs6htjwQ
- 0891DUQEjs85NTQAUegIgJf1f8Hnq9BQgUP3OkDIitP24vFxNeMFijRV8/G0r7YMQCoi19sP+8p
- W6wanJwyucZSkwsSZv7AHb7vSYa1TPAyODVqnJMyskUy8LWxuTfShH8qZ5qhZsyQE=
-X-Received: by 2002:a05:600d:7:b0:499:db6e:40a5 with SMTP id
- 5b1f17b1804b1-499db6e4107mr8120205e9.4.1787659572701; 
- Tue, 25 Aug 2026 05:06:12 -0700 (PDT)
+ AHgh+RplMpsmnZHQ4oZucvPk4YOXchxt3QdOt0XDyLnat0mpUWyTQb9j1aOowziI5tXXWsvc1MzIr6qlIWpd@nongnu.org
+X-Gm-Message-State: AFuF++nUxsMRcKw/A90mxYMGX56mB/4rudGtUlkGDyKYDNTALDN4JV9U
+ bPVWnUt6q9R/IsUAk2S8bN2OkfaX3yoanRSmw49s9mCJXMhjZ2SdSZ1AGSsOiQLrNuA=
+X-Gm-Gg: AR+sD10sOuCWEPw8Hd4rj8CHSq/E1VI486nBAC8kER/GcXX+93wzsXQHQWGD2J1oRF0
+ RBePm7ReWU0SNgVtBlTQ2P6YT41cV5kr2AnWzCylxkeRpk8Utu/bNbsTlzBKP5YHeaqkarOKGCg
+ 6aiITq5lJOOnpyyiemw3UlxmBTp/KrGBsKoau2fQTBlQdqMaiV51fMA8fJTRw6SE5rJiYwaLL9Y
+ +svH7VzvIdNe32qDmum4c9k9tgIX62qvDdRIMXW6F8Ujzq9CWew+CObgPuZJUyv4Hg47lk1VTcl
+ +/QQd3iTCsRIWrraph4ROFuDypr0VVeC5LgFYioLJ0OAJTJY6c6G/+n791D8Cc0Dt61cYrGx+x+
+ 2Ts8J4Wp3eKHSYBJyOi9+9EtvVLkPgKRdoGceJ7ZWCw8IA2jjWauMSevF0DMcqPQIOn0VXhe4cx
+ FQLLWr2UzDTJIbZsl2a1p897NDj2xleRMEJIRrZWmvkdfdj2Othvyb+Tr19H0FNJ4wDfnQkH/W
+X-Received: by 2002:a05:600c:3e0b:b0:499:84fe:5f3e with SMTP id
+ 5b1f17b1804b1-499d656bb33mr70263465e9.9.1787660306775; 
+ Tue, 25 Aug 2026 05:18:26 -0700 (PDT)
 Received: from linaro.org ([2a10:d582:31e:0:8679:ff59:1b3a:5e93])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499d6349e2dsm28228315e9.5.2026.08.25.05.06.11
+ 5b1f17b1804b1-499d5d64ffdsm21677175e9.2.2026.08.25.05.18.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Aug 2026 05:06:12 -0700 (PDT)
-Date: Tue, 25 Aug 2026 13:06:09 +0100
+ Tue, 25 Aug 2026 05:18:26 -0700 (PDT)
+Date: Tue, 25 Aug 2026 13:18:23 +0100
 From: Jim MacArthur <jim.macarthur@linaro.org>
 To: Tao Tang <tangtao1634@phytium.com.cn>
 Cc: Eric Auger <eric.auger@redhat.com>,
@@ -76,23 +76,24 @@ Cc: Eric Auger <eric.auger@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
  Mostafa Saleh <smostafa@google.com>, Chao Liu <chao.liu@processmission.com>
-Subject: Re: [RFC v5 21/28] hw/arm/smmuv3: Implement SMMU_S_INIT register
-Message-ID: <ao2FMdD7kbdZGiWW@linaro.org>
+Subject: Re: [RFC v5 22/28] hw/arm/smmuv3: Harden security checks in MMIO
+ handlers
+Message-ID: <ao2ID_3urG4gejDH@linaro.org>
 References: <20260813161515.2788900-1-tangtao1634@phytium.com.cn>
- <20260813162624.2809349-1-tangtao1634@phytium.com.cn>
+ <20260813162624.2809349-2-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260813162624.2809349-1-tangtao1634@phytium.com.cn>
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x336.google.com
+In-Reply-To: <20260813162624.2809349-2-tangtao1634@phytium.com.cn>
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,28 +109,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 14, 2026 at 12:26:20AM +0800, Tao Tang wrote:
-> Implement read/write handlers for the SMMU_S_INIT secure-only register.
+On Fri, Aug 14, 2026 at 12:26:21AM +0800, Tao Tang wrote:
+> This patch hardens the security validation within the main MMIO
+> dispatcher functions (smmu_read_mmio and smmu_write_mmio).
 > 
-> Writing INV_ALL provides a mechanism for software to perform a global
-> invalidation of ALL caches within the SMMU, including IOTLBs and
-> configuration caches across all security states.
+> First, accesses to the Secure register space are gated by whether
+> SECURE_IMPL is enabled. When it is disabled, all SMMU_S_* registers are
+> read-as-zero and write-ignored.
 > 
-> The MMIO dispatcher decodes the target register bank from the offset and
-> normalizes Secure-window offsets by subtracting SMMU_SECURE_REG_START
-> before switching on the bank-local offset. S_INIT is a Secure-only
-> register and its A_S_INIT constant is an absolute Secure-window offset,
-> so the handler matches it using A_S_INIT - SMMU_SECURE_REG_START and
-> rejects accesses through Non-secure banks.
+> Second, the check for the input stream's security is made more robust.
+> It now validates not only the legacy MemTxAttrs.secure bit, but also
+> the .space field. This improves compatibility with Arm security space
+> handling.
 > 
 > Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->  hw/arm/smmuv3.c     | 43 +++++++++++++++++++++++++++++++++++++++++++
->  hw/arm/trace-events |  1 +
->  2 files changed, 44 insertions(+)
+>  hw/arm/smmuv3.c | 55 +++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 55 insertions(+)
 > 
 
 Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
-
 
