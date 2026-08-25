@@ -4,95 +4,172 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1620C5B572
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 04:21:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BB2BC5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 04:26:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyiem-0006D6-Nq; Tue, 25 Aug 2026 00:21:04 -0400
+	id 1wyijh-00071n-21; Tue, 25 Aug 2026 00:26:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wyiek-0006Ce-PT; Tue, 25 Aug 2026 00:21:02 -0400
-Received: from fout-b6-smtp.messagingengine.com ([202.12.124.149])
+ (Exim 4.90_1)
+ (envelope-from <prvs=690dc056c=Alistair.Francis@wdc.com>)
+ id 1wyijf-000717-0h; Tue, 25 Aug 2026 00:26:07 -0400
+Received: from esa2.hgst.iphmx.com ([68.232.143.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair@alistair23.me>)
- id 1wyiei-0003ii-1R; Tue, 25 Aug 2026 00:21:02 -0400
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfout.stl.internal (Postfix) with ESMTP id 712681D00144;
- Tue, 25 Aug 2026 00:20:56 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Tue, 25 Aug 2026 00:20:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alistair23.me;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1787631656; x=1787718056; bh=b+781eN3zL1DV+j8WdVUkBGQWppDyygz
- KeAJXlJZWWg=; b=gmYfH5qPu2yYbNP3hWLuP9/X6CuZBgwTgQeB3p5FG+SvbGDA
- IcOq/CPs52wEgIKGIa7b0MqDaceALCKRrVwiNYIbGC7CxmiHKMTu04bjZ5Asc7qN
- fbwpjIKuLkDbQCqOyRzxZd1itUYw7oeWNSbX/wz0Kipdrx8avY/E3W4Jrn++pj6l
- RLi9XZNZc2nvIdwyEggowRvRIG7IJdT7ZbyjmvaJgaFE9SQfoKnvzquuBKx2ECeu
- wBPtF9aDVsYF0O71Dzh6xISfkcBW8dqiGerfqlHREURgTUOLs5PVRve3pJy0FMv4
- hSedqaUQ9vyijUsnZqdBorG8xESoIAxR8xZ6PA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1787631656; x=
- 1787718056; bh=b+781eN3zL1DV+j8WdVUkBGQWppDyygzKeAJXlJZWWg=; b=T
- /y6M4AauSXYvlO6WgOMnH4MOPy3lfDkvU9G8ZeDyxvQU281+HV/B2kvESYbdU0sG
- wk/PJKdmaS75IGXKkvyiALkwrGot567WdDokbKVOL1ktmqSeC9qm0g4MvXhy568B
- fYO4fhliOGrM5WLae3lCNBMZ+GnZSLHhSHyxcApykMsslntu8aGyhTgwonbqaUMf
- 9bpYUVbKkViFH0EffRAZs0xhblMKQqEyArmyskRP+TCBkm0vM0PLPuTo1JxDfVlX
- eNOOary6SAUa4+oIWzT1TuqNMpIAS0CeMuaKrKL5Tro5SeUJNQ1xueAsXt+P7aMa
- wWuFtCP/nI4XBc1sV8gzw==
-X-ME-Sender: <xms:JxiNakkIg5w01XvrI1gh8pslNd7PXw-WxXfxn8ZDCQBNjye8oxAjWg>
- <xme:JxiNanhe-UUNfcjS56SQjxcRj0GmC78uS83AAWhw6-lRcZaV19vvsRUSqiS-qUTFg
- 22fA4b4hKYrojedX0R8ks1-2n14IZx36VFq1Q5wu0vmKSwGU-HURaM>
-X-ME-Received: <xmr:JxiNasdjcEUWK1fSxz0TxFAgXfZUX4r_sAEgcZj23Y3ifujSPDICgoOs_Xajn6ud4EYbji0wqUFu7LP7hyR4x34jabM>
-X-ME-Proxy-Cause: dmFkZTELm/yGqF/abJz4HJTB3Nxaack2JE5Mm+wLDqZSH6byP1nesleUbdtFA+Zp0ZzsFU
- SJBBS4saJkaiOSvvIAL2A/9bz+xLN8b31x7xFXP0si2seNfMp3UjcJ9c1jfmcqslLvp7Ou
- Fygu/boAmBT7stUV7ssOLyZ+VmdVo1ksuQFazlREGItSI6nCCK4W/yEbMl+XETlZTfGKIH
- vZwa3OmFMcWHH8zIkQDlBN4rmQAp5ZyTI2JLgpVkbVwLRmGFxpiZe9sPUlb2RUqfGAWrX7
- N/LOAl5pn/5Ry1OHYkHHfVyuKhcGODb4/WC/KxgbHZnjkRXXw9QVfNHf5Rx/qYjgOla9tY
- gVLFYMo87nvfq0iN5FKGLO6KAj4i2E1VuIgc9c8/MOT1MUSc5Z3KqEHomRwlOj5EXL14Vr
- +Vc18MdVRRUUWIZ5gBJ8y43mnBlAfO9XLmilzO6ehC+W3Ibs6+jBLuEWMerwCYW8RfDPkP
- xjNR34wgjlEexloVn14+wJK4hTtP1jI2p5JBq9ywAtBNCvM9HkMYqVMy90H2Xkhu042r3w
- mOA0VRFrmaRnIC7xJ5u0QgkuJbhdXyIwlJbzCx47T+ImLOhtJki34bc0GE2UO6wMS9n4RP
- FONrYDk0B3SYxCs9fy0h4brevCct38uBFWxU8bMc113UYJEmTjzrNbqIP2ww
-X-ME-Proxy: <xmx:KBiNani14Pspn64a4eOzcMeQCiiyXT8MCb_du4FoRtuRiaRLAeGRWA>
- <xmx:KBiNakzjzOIKJvz0LQTT32iKlewgv74OFu52JCMhDb3Lopy7e5873g>
- <xmx:KBiNajMus6ZDNi4OHH63LdjXAVXXFMTg0qtkH271BzzYQBbA6t16sA>
- <xmx:KBiNalX02NTGkT_o2GArDdhddbDzm2_xnk5WZ2Ar9AQJJOVvsu75CQ>
- <xmx:KBiNap5YhfZTiButj3M_PgQdIX8jsF3WIGAS9HEloKk4-UB0GkC3TLYS>
-Feedback-ID: ifd214418:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Aug 2026 00:20:53 -0400 (EDT)
-Message-ID: <4c1c01709d9e903fbe93fbce5b901ff959a5a01f.camel@alistair23.me>
-Subject: Re: [PATCH 1/1] hw/arm: xlnx-zcu102: Fix up DTB for direct Linux boot
-From: Alistair <alistair@alistair23.me>
-To: Bin Meng <bin.meng@processmission.com>, QEMU <qemu-devel@nongnu.org>
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Peter Maydell	
- <peter.maydell@linaro.org>, Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>, 	qemu-arm@nongnu.org
-Date: Tue, 25 Aug 2026 14:20:51 +1000
-In-Reply-To: <20260627154225.863984-2-bin.meng@processmission.com>
-References: <20260627154225.863984-1-bin.meng@processmission.com>
- <20260627154225.863984-2-bin.meng@processmission.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.60.2 (by Flathub.org) 
+ (Exim 4.90_1)
+ (envelope-from <prvs=690dc056c=Alistair.Francis@wdc.com>)
+ id 1wyijc-0004e9-LS; Tue, 25 Aug 2026 00:26:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
+ t=1787631964; x=1819167964;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=65q8CMYoEymtUy96xUbVikAIeA3rFixBi71aONj+7D0=;
+ b=bmF3ZRa0yPfnaj7q+bK3Dxabf1CHPJJ9u6fnQAImpJx/2PdFlQm2U6Qs
+ J/Po7p+N3RBzPm9/VQufJvvVEQuOk/tU2sGc9LQnk1ur3o70Ga1LohuZ5
+ QG66GiVXZEP8DMad2HdFEoCCv3JOnxGSQUqwEya1jtIPiFuvgstKubk/7
+ xZQasFFCiq/SbLZE5xwvXcjqpevF7rqAj6L6uOb32kC9ZkVnsujGuE0jp
+ vKUdAGWAzSB7fWJAev74td9b5G09rVbGzHfPsSHdZUiSqCuFFeR/NoeMo
+ mrfS7XxDvIVPCQd3OpoYSGq9XAgwHGLZVznPTUx6mQsUWRPranPvjQW1W A==;
+X-CSE-ConnectionGUID: RdbB/OXtQsifyUhbgOz3FQ==
+X-CSE-MsgGUID: woT/KLChQCiTxdTZ95D/Fw==
+X-IronPort-AV: E=Sophos;i="6.25,242,1779120000"; d="scan'208";a="155117237"
+Received: from mail-northcentralusazon11013044.outbound.protection.outlook.com
+ (HELO CH4PR04CU002.outbound.protection.outlook.com) ([40.107.201.44])
+ by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
+ 25 Aug 2026 12:26:01 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=OBmJMljtJ+KJPucHiz8HpJoDZLKaIFeurxRjT/CYxRQeKc1G7/iMtTs00gy8UOgHCACvWwLNjGV8Ejn82NESYz+yTor6docFk/iFsG8suwwixTKB9BsgFvESl1Jd1mHb70aCLJy/wE4q2cZTY+lQncWc45VXKKbky6G647MzzxR52dmkMQCTd9wMCSGwThx+DqoWJKy7StxwLHbzrjhgww5sUhvhG23GDVCWMiSNgdN6Ql/kuvF0EEAQsAw3jlNZ7SR3FwIiAua9VVBmC8wVzUonwggOhiow3r2Rw27HaqCqiZt70glcmC94a28un2GIwFaiwsrWKCRf17mwyRWgWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=65q8CMYoEymtUy96xUbVikAIeA3rFixBi71aONj+7D0=;
+ b=ngr2AWov78rRr1Tsjk6kXYIDiFxXigj02+Mi72vGi29e9hBh81tNEj0bKwI3IPPvTtHeuER8omR6TV8AONUaslOukD2gBc7ZGM1ClFUJeANuMtJSTBvbn2GdlH8Bg3hzPPs3C+WxxRam9Vb7MP5nO9Fm+IwRn1HV1fH80qaGtoVe2oJs6N9zVkbrkrg6LBzltdle/2U/E7iha+Azv53vQwgELtNQo8BasuTuectyZMmqDD4Q/HvFVE/iRkHJU2YUaZt7Xb8bOWU+33VnOhsprc+zIMR4lLJm55XK5Cj+Tf/fRqrz2iZsMmFeu4DpkH63gGcxM8PXYtuOecj4YSSTnA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
+ header.d=wdc.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=65q8CMYoEymtUy96xUbVikAIeA3rFixBi71aONj+7D0=;
+ b=aF0YN7jS5vmbweL+m/aBusy3+GfQhGcjaxh5HNCu1Cez+SOPbqtf5AlA+O6K5ydUEeb3sqAgsmKzXRG0AxWCHI70A3MtWcHNeCn8Owl2IGD30++TdvBgV0wTKEyQ5e+qPrBUmkARksdc7QkrwnhQ6v3dOYUrOGEDdYFK3IV7zyY=
+Received: from BY1PR04MB9561.namprd04.prod.outlook.com (2603:10b6:a03:5b6::11)
+ by MW4PR04MB7203.namprd04.prod.outlook.com (2603:10b6:303:7a::24)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.6; Tue, 25 Aug
+ 2026 04:25:59 +0000
+Received: from BY1PR04MB9561.namprd04.prod.outlook.com
+ ([fe80::3869:e494:2fa8:9888]) by BY1PR04MB9561.namprd04.prod.outlook.com
+ ([fe80::3869:e494:2fa8:9888%5]) with mapi id 15.21.0360.005; Tue, 25 Aug 2026
+ 04:25:58 +0000
+From: Alistair Francis <Alistair.Francis@wdc.com>
+To: "max.chou@sifive.com" <max.chou@sifive.com>, "qemu-riscv@nongnu.org"
+ <qemu-riscv@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "palmer@dabbelt.com" <palmer@dabbelt.com>,
+ "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>,
+ "chao.liu@processmission.com" <chao.liu@processmission.com>,
+ "liwei1518@gmail.com" <liwei1518@gmail.com>, "zhiwei_liu@linux.alibaba.com"
+ <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH v2 2/6] target/riscv/cpu: List one implied-ext rule per
+ line
+Thread-Topic: [PATCH v2 2/6] target/riscv/cpu: List one implied-ext rule per
+ line
+Thread-Index: AQHdKoI97I7o191T8UGevqHQAQMIJLauPqIA
+Date: Tue, 25 Aug 2026 04:25:58 +0000
+Message-ID: <d8bd978c0eee62e9f7654c2bb1699dca09bb664f.camel@wdc.com>
+References: <20260812174417.2468981-1-max.chou@sifive.com>
+ <20260812174417.2468981-3-max.chou@sifive.com>
+In-Reply-To: <20260812174417.2468981-3-max.chou@sifive.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Evolution 3.60.2 (by Flathub.org) 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wdc.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BY1PR04MB9561:EE_|MW4PR04MB7203:EE_
+x-ms-office365-filtering-correlation-id: db02d120-fbaa-4a2a-7f06-08df0260f6b7
+wdcipoutbound: EOP-TRUE
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|19092799006|10070799003|1800799024|23010399003|366016|376014|56012099006|10067099003|18002099003|22082099003|11063799006|4143699003|38070700021;
+x-microsoft-antispam-message-info: XAFbCMXYgbMlJxxnPrpK44kf3Uw5SwNG5F80Q6gb7CSztsJQ6eRkwcmwQ21CAG9vuKNw+ATxRmbrQMK5nLi7GYF/AXQKZHpRKKRxKK4FtHaFmmCBCdBcNjQ9lHtwPmDykJuKjtVA64toC83O99FjiqwYGyXOWKzo+7Ik5AMdD9oUdc2cEgaJFd7brsCQEJZu7iYfAMV3qUHaGxxPGht8st9nZH05CjPNvirhwJkhbi+i1xqRtN0Est0RY5Zj/qJhDXkBaZXpDaiV9/tiZZxFDpqdubd5W7j/DFri80BrSrpPEb1zOFheNPUZQTPt2xtvqcH0UA6atjHpvBhepSDgzJL35EA/AdgtxuEPnvTRm9sFQkFbJZgOjWzvIby1HDiE48JH9kZQZAMdiIEukJ+RUKfcmjIoUz+ClBeDR059PSluWoKkPu6PtTIVNzMsZ6fevEqe6I5hNKzO7d3s+j7H36E0wD9q9qu8MDNG+gbnjvpc2tjN3rUYjMQJCLTMdz2TFRWIcjRwG4hOTCcDyDwg2S6TvyMzOv7gucJ+KYEhUUXuc1JFlN9RkVzMjVaDjyBbL8mtZesN70JrRtO69Xrs6451SdkiFGChxIO38CDczuylo3HV88zoTxfsOyJk7M+WdbKB9BnZalye+/3rbFfm2vUfaPu854c6uC5K6UW5Z1g0zbhuv3Zt8/LWNqHY2DzrL8E3FYFT70EJ+ucLVjcNcj0MRn12lQFOCH7mGoBMrLo=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BY1PR04MB9561.namprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(19092799006)(10070799003)(1800799024)(23010399003)(366016)(376014)(56012099006)(10067099003)(18002099003)(22082099003)(11063799006)(4143699003)(38070700021);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 2
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?VDB5dUhQTnBSdktaSFZ0bXdwZFhscE50SWJKR0dKZ294SVhGR3JaaVp5VnNP?=
+ =?utf-8?B?SUUxZlQ1d3dYTWRoWGJmaDdXSHN4cUZKa1VzaFEwbmRCU29NNXRLVmxvQThE?=
+ =?utf-8?B?RWxaUG9MSitTK2J0U0RzNzdXUWIycXU0eGs3YSt4MnhweDNSQkRldmd1YWsy?=
+ =?utf-8?B?M3lNRWFyMWtIMVFmLzNCTWhUMkZLRk1neDlFSXNlUm5kMHcvYVRCL1NPNWV0?=
+ =?utf-8?B?b3ZEc2JBczFIWXpKL0xqN3J0a3c1M0hKd3REb1JGeUdVOHFDWE5GYzBlaUpD?=
+ =?utf-8?B?dEtmMjUxTGcxNGVDZWtPblVlMk5jSlNhYTZ3bkVIUmVyRFIxZ05kMVRtSC9y?=
+ =?utf-8?B?REZOVms1UjAwMkgzNUw0QUZ5RUxMZWlzRU1jdWhkYkN6QmYxYWhtci9pYnpM?=
+ =?utf-8?B?Y3IvREh2ZXhmdU5UeWkyaGZnQVpMcWRITmFIQzcxc3VCdWtTN3B2Vk5WSUs0?=
+ =?utf-8?B?OC9MdFpOU0RvNU91TFNrbmsvSGhWODlzbWwvUVR0Njl5VGdUVkYxUkpRRWt2?=
+ =?utf-8?B?Y1hBSnlranR6SWxPUlYwVm44L2d1dGVvVmwvUldLNDJESDkvUTVkSTllaTV2?=
+ =?utf-8?B?TXVWbjdLVlNGVi93WEdTZjJLN2NzYkNyMjNtaG9oalkzYjNOak9vSE4zWDBv?=
+ =?utf-8?B?b0RBN2UrVUxDY1lsNi9DOTZpd1RDbnFINmhMc2JmQ2VBWmVVSFpEb0lEM2xM?=
+ =?utf-8?B?VjB5SDA0Slk5TmhWam04QTVXVXZ6bGp1L294a1BiRVZ6UWluSjhRbWsxMGsy?=
+ =?utf-8?B?clVnUzkvN0szQjBMT1FORHRZa2VjL002VFVobTVLdDEzTm54T0kvWWVoYVdT?=
+ =?utf-8?B?ZENYbFc1SkhvQ2QzVFRPcVJDeDcwYnl5Z0ZMbG1BZXd0Z0sraDRrOHpkdDhK?=
+ =?utf-8?B?WWdJOWNxbFdiQVg3OUpwN1Z4OVNsdjZZY2Q1SEJQQ0N4djlMNGwrT0RXdEFQ?=
+ =?utf-8?B?WGtvZHZRZ3lkNmdVdHdTVG5HSW14YUlRbHVncXRLdG9IM3hFV21hOTRlN2xT?=
+ =?utf-8?B?bW9EdUQrajFGRnpnS1hJbzJMUTd5WFlMTTlFMXdWdXp0bzJaaE1uZmdSS0pR?=
+ =?utf-8?B?enQ5cmZ3NktvMWVHZGZkM096a096dWxZNGFEQndXNk5TZ0N4MHIzVVNieDN6?=
+ =?utf-8?B?cy9WMHp2NjB2Q1NRVklCVzJiTDJFNkZnSitZWGhXVDRtb2FhL3dRY21aZC80?=
+ =?utf-8?B?dDhDZGFtTi91QkFuZjRHUHhpRmJpbThqQ1h1WVc3NWpINngyNktVbjdlSGZq?=
+ =?utf-8?B?ZHgrWk5HWHhLWUFPcHkvTzFUVFZOaC9rMFJ0N2VzRWRaUDZjQkdCTENIRi9r?=
+ =?utf-8?B?S05tSjR1VkJTNWtCK0dkNjhaeVZVRWR6R3pmYzBzMndNeEJZMDFSM1JJQi9L?=
+ =?utf-8?B?dlJ0Z0ppTTdSK1JCV3hITGZYWE5JK2pFbGdzazEvb3lZcXJpdjMrVzUwN3F4?=
+ =?utf-8?B?N0lnWDNET213LzFVWHFLL0ZxZ3dWQno4elgzdFZ3UC9HemI4MU9DYUNqQnRh?=
+ =?utf-8?B?aks0TmkvV2tQbndWbENnRVZTaDBqczY1MVdEVHdTWDBUTUhzK3NTTXhldmxS?=
+ =?utf-8?B?aUlmSmc3U1l1OGlTTWRId2YrbHRSbUxIT2RUM3RQOHdFZ2VqL1hsakwrekZx?=
+ =?utf-8?B?UmhwcXhDUUJqOWkwODlMMEEwNHNSUkVyRFY3bUlTK1UvdGw5SUJTb2dHV0pE?=
+ =?utf-8?B?bkorekRQR09OQ0J5RGNRL2F3VXFVNTc4bGgrL3NHcTI2djJkeHNXN3RUVlNO?=
+ =?utf-8?B?elRnc2VUOEsrTkhldmdJQ3hINUR5MzV6NkVyQVZPQW1nSzV1YlNicTFoR0Ra?=
+ =?utf-8?B?SXltWGEvNTZ3YTlxYkVYODQ0UUdNSzJ3MmV3N1IwYWM3TlVsVVRyTzgyNUV5?=
+ =?utf-8?B?VUhOWS81WUp5Q0t0T3NMQVlvL3pQN01TYXBmcFdqWU94ejRTVzdWTFlEWHU4?=
+ =?utf-8?B?U1J0cm9ZTUlhdTlRVDhOaittRHY1OHNLU295cmZKcW9iQU95TFFRSldLMDND?=
+ =?utf-8?B?WDVrYXpOSU9qaFlHbDJRanpBL1h1RTN3dGtCK2IxNFJHNU81WlI1amRaajdX?=
+ =?utf-8?B?LzJWMStTU0w0U3hxTGZhaXFyOTk4aFliMG1QRVRsMlBkZXdtWHFGalF6NTFK?=
+ =?utf-8?B?ZG51aWJtck8xUk5ablRnWmg3djR3WGhPMWU0Q0I3TWs5ekJrZGlITmdWdTVV?=
+ =?utf-8?B?eXpOSHErbS9wN1pVZzZtSlBMQjdHUDgyakRBNStKNFZrQnBMSzR0MjJmWDhK?=
+ =?utf-8?B?SzV1K2pEb09Qa01BQk9teWZacHZ0d1lkcFk5RnE0aWd4a0lBZnUwci90clFH?=
+ =?utf-8?B?V0poRGpOaEtCckRnWHY4aUUrNWkvclJWK2pER2xhTkV5NXdoeEdCYXJnTVI3?=
+ =?utf-8?Q?eT3CzBwEWtn85ZGemiEPkL2RaaTcs13kTFh1E4x1SG78v?=
+x-ms-exchange-antispam-messagedata-1: bA6EBA5RJkY0GXBiitNIsNmnOyYq8K/yUGw=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <5B9005ECE9AE564EBA814DD92129180C@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Received-SPF: pass client-ip=202.12.124.149;
- envelope-from=alistair@alistair23.me; helo=fout-b6-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Exchange-RoutingPolicyChecked: o6/k5k/WsLwRX/eQPU8Dk2juU77Gz6ZXMeU0gggE3xhGe+GGtmZb7HtQS9SG+hBhTKxgAJAsCouhSCaD89+4YoYJtaWx/ECn+WwN+kD1/1+6dut3uK5ioadiBnrfxkbv1gz7GfRKObhUff07/kA+DzWHACR4o3+bZYXKgsCjit5u14BCf/1rR3ScIidRSRlKAI0ZLuj9SbsvEmpQ5IilvhDibQWDAXrAqjP12qfaD/dwU48hP0Oa3e590DwnPb/vMW5MyovzilbAqCCi820JlwpSov8Lw4lMrAtF+wZ34y1XsUK6rIAfbLPsLniYaIar/ZY9q7NBAbnqIymiXmkgtA==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 0c/hHkKnlAFjq0no+OgAWFiK0X+eKfogl6QY+j8bU+wZsPX2Wc+bBCZiRXKrAdkvddR0C0AoGIjmCs6Q7i5gh2ToTqIRmLoU6LNLfnSUxMRhn1auTfd2tUE4pX2OkZmG133Y4zVUofXQ3jmfWLVMF6Lml9cQ6AsOA/Z7NJv9WETkdX6ZWw0QVk40rLbEmCMCjCNp/a0R6A4HuWQsaSpnGV6Grr86r1h66kGPos0/shl8ACm2vQqWDZ22cY5kpXVJxLk76qm3XPLdWNeIaZBdaSsGcQ6d/+REET78RNcLNBrxXISNZIW4/7a9GWhhOVs/OQtrYPczrtzMDa9HkGlfCQLBwrEHQHq7GthSps2o13lcTjCMbC1OROxdImr3RMRxd2qzHU0rRO9WJfUooTWRHBq0o3Ixfg+O0VsdKrWsja4WjYXp2YqJ5EsPKfr05qdqBhpFmg2M+VvYRSRAXSjpBq7qK26cdqAzsbPzd9DywWDngm6BWyPFkd0itap4I/TnpTiKLqOO6xXIHkvnl4CKyCrlNvsJ4Kdf2w5UtkwYAWgkGAdjGT4h16Yb9i4vLiNH5LtkQTt5JcBl7BTtwlBIDcsxpekIRrA0Z05bkuXeFUw09A+53NAAeJxHhuv4wdOc
+X-OriginatorOrg: wdc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BY1PR04MB9561.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: db02d120-fbaa-4a2a-7f06-08df0260f6b7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Aug 2026 04:25:58.9127 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: u518a3i90RbCx522ZsFTKls96jeNbZMh1hPnPs8PlgkEHQolRDHMSDrH5oTIaNNbxfusMw2jXCzuG7RETV7r6v/tQkyKKpg1Pe43J5S5S5E=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR04MB7203
+Received-SPF: pass client-ip=68.232.143.124;
+ envelope-from=prvs=690dc056c=Alistair.Francis@wdc.com;
+ helo=esa2.hgst.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,413 +185,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 2026-06-27 at 23:42 +0800, Bin Meng wrote:
-> Real-board ZCU102 DTBs describe the UART, SDHCI and GQSPI nodes
-> in terms of ZynqMP PM firmware providers for clocks, resets, power
-> domains and pin control. QEMU does not model those runtime firmware
-> providers, so using such a DTB with -kernel currently requires users
-> to edit the DTB before Linux can probe the boot-critical devices.
->=20
-> Add a board DTB fix-up for direct kernel boot that removes those
-> provider-only properties from the boot-critical nodes and rewrites
-> their clocks to fixed reference clocks already present in the DTB.
-> This keeps the user command line using the Buildroot-generated DTB
-> while limiting the compatibility adjustment to devices modeled by
-> QEMU.
->=20
-> Document the direct boot flow, the SD and QSPI image layout details,
-> and the remaining firmware and real-board peripheral limitations.
->=20
-> Signed-off-by: Bin Meng <bin.meng@processmission.com>
->=20
-> ---
->=20
-> =C2=A0docs/system/arm/xlnx-zcu102.rst | 139
-> +++++++++++++++++++++++++++++++-
-> =C2=A0hw/arm/xlnx-zcu102.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 | 109 +++++++++++++++++++++++++
-> =C2=A02 files changed, 247 insertions(+), 1 deletion(-)
->=20
-> diff --git a/docs/system/arm/xlnx-zcu102.rst b/docs/system/arm/xlnx-
-> zcu102.rst
-> index 534cd1dc88..41ddd15592 100644
-> --- a/docs/system/arm/xlnx-zcu102.rst
-> +++ b/docs/system/arm/xlnx-zcu102.rst
-> @@ -4,8 +4,30 @@ Xilinx ZynqMP ZCU102 (``xlnx-zcu102``)
-> =C2=A0The ``xlnx-zcu102`` board models the Xilinx ZynqMP ZCU102 board.
-> =C2=A0This board has 4 Cortex-A53 CPUs and 2 Cortex-R5F CPUs.
-> =C2=A0
-> +Supported devices
-> +-----------------
-> +
-> +The machine is based on QEMU's Xilinx ZynqMP SoC model and includes
-> +the following Processing System devices:
-> +
-> + * Cortex-A53 APU and Cortex-R5F RPU CPU cores
-> + * Generic Interrupt Controller
-> + * DDR memory
-> + * On-chip memory
-> + * Cadence UARTs
-> + * Cadence GEM Ethernet controllers
-> + * SDHCI controllers
-> + * SPI controllers
-> + * GQSPI controller
-> + * RTC
-> + * CAN controllers
-> + * USB controllers
-> + * SATA controller
-> + * DMA controllers
-> + * BBRAM and eFUSE devices
-> +
-> =C2=A0Machine-specific options
-> -""""""""""""""""""""""""
-> +------------------------
-> =C2=A0
-> =C2=A0The following machine-specific options are supported:
-> =C2=A0
-> @@ -17,3 +39,118 @@ virtualization
-> =C2=A0=C2=A0 Set ``on``/``off`` to enable/disable emulating a guest CPU w=
-hich
-> implements the
-> =C2=A0=C2=A0 Arm Virtualization Extensions. The default is ``off``.
-> =C2=A0
-> +Boot options
-> +------------
-> +
-> +The ``xlnx-zcu102`` machine can start a Linux kernel directly with
-> +``-kernel``. It does not provide a ZynqMP BootROM flow for loading a
-> +Xilinx boot image from SD or QSPI flash, so images such as
-> ``boot.bin``
-> +or ``qspi.bin`` cannot be passed alone and expected to boot like
-> they
-> +would on real hardware.
-> +
-> +QEMU does not generate a built-in device tree for this machine. Pass
-> a DTB
-> +with ``-dtb``. For direct Linux boot with a real-board ZCU102 DTB,
-> QEMU
-> +applies compatibility adjustments for the boot-critical UART, SDHCI
-> and
-> +GQSPI nodes so that Linux can use the devices modeled by QEMU
-> without
-> +requiring user-side DTB edits.
-> +
-> +This is not the same as emulating the complete ZynqMP firmware
-> stack. The
-> +DTB can still contain non-boot devices that depend on board
-> peripherals,
-> +external clock chips, power domains, pin control, or firmware
-> services
-> +that QEMU does not model.
-> +
-> +Direct Linux boot with Buildroot
-> +--------------------------------
-> +
-> +Buildroot has a ZCU102 defconfig. Buildroot 2026.05 release is
-> tested at the
-> +time of writing. From the Buildroot source tree:
-> +
-> +.. code-block:: bash
-> +
-> +=C2=A0 $ make zynqmp_zcu102_defconfig
-> +=C2=A0 $ make
-> +
-> +The generated files are in ``output/images/``. The examples below
-> use:
-> +
-> + * ``Image``
-> + * ``zynqmp-zcu102-rev1.0.dtb``
-> + * ``sdcard.img``
-> + * ``qspi.bin`` if QSPI flash probing is desired
-> +
-> +QEMU's SD card model requires a power-of-two image size. Work on a
-> copy
-> +of the Buildroot SD image and resize the copy, not the original
-> output:
-> +
-> +.. code-block:: bash
-> +
-> +=C2=A0 $ cp output/images/sdcard.img sdcard-qemu.img
-> +=C2=A0 $ qemu-img resize -f raw sdcard-qemu.img 128M
-> +
-> +The real-board DTB enables the SDHCI controller at ``mmc@ff170000``.
-> +In QEMU this is SD index 1, so attach the SD card with
-> +``if=3Dsd,index=3D1``.
-> +
-> +Boot Linux with the Buildroot kernel and the native Buildroot DTB:
-> +
-> +.. code-block:: bash
-> +
-> +=C2=A0 $ qemu-system-aarch64 -M xlnx-zcu102 -m 2G -nographic \
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -kernel output/images/Image \
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -dtb output/images/zynqmp-zcu102-rev1.0.d=
-tb \
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -append "earlycon=3Dcdns,mmio,0xff000000,=
-115200n8 \
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 console=3DttyPS0,115200 root=3D/dev/mmcblk0p2 rw
-> rootwait" \
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -drive file=3Dsdcard-qemu.img,if=3Dsd,ind=
-ex=3D1,format=3Draw
-> +
-> +This should get the kernel booting all the way to the Buildroot
-> login
-> +prompt on ``ttyPS0``.
-> +
-> +QSPI flash
-> +----------
-> +
-> +The board creates two PS SPI NOR flashes first and the ZynqMP GQSPI
-> +flashes after them. Therefore the first GQSPI flash is
-> +``if=3Dmtd,index=3D2``. The remaining GQSPI flash backends use indices
-> 3, 4
-> +and 5.
-> +
-> +The Buildroot ``qspi.bin`` image is smaller than the 64 MiB
-> +``n25q512a11`` flash model. To attach it as the first GQSPI flash,
-> +place it in a 64 MiB raw backing file:
-> +
-> +.. code-block:: bash
-> +
-> +=C2=A0 $ qemu-img create -f raw qspi-cs0.img 64M
-> +=C2=A0 $ dd if=3Doutput/images/qspi.bin of=3Dqspi-cs0.img bs=3D1M conv=
-=3Dnotrunc
-> +
-> +Add the following drive to the direct Linux boot command above:
-> +
-> +.. code-block:: bash
-> +
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -drive file=3Dqspi-cs0.img,if=3Dmtd,index=
-=3D2,format=3Draw
-> +
-> +With this drive attached, Linux should probe the ZynqMP GQSPI
-> +controller and register the SPI NOR partitions from the DTB, for
-> +example ``qspi-fsbl-uboot``, ``qspi-linux``, ``qspi-device-tree``
-> and
-> +``qspi-rootfs``.
-> +
-> +The default Buildroot ``qspi.bin`` is a boot image, not a root
-> +filesystem image. The default DTB's ``qspi-rootfs`` partition is
-> also
-> +too small for Buildroot's ``rootfs.ext2``. Booting with the root
-> +filesystem in QSPI flash therefore requires a custom image layout
-> and
-> +matching DTB changes.
-> +
-> +Known limitations
-> +-----------------
-> +
-> +The machine does not emulate the complete real-board firmware stack.
-> +In particular:
-> +
-> + * ZynqMP BootROM boot-mode selection is not modeled.
-> + * Passing the Buildroot ``boot.bin`` with ``-bios`` does not boot
-> Linux.
-> + * Attaching ``qspi.bin`` as an MTD drive without ``-kernel`` does
-> not
-> +=C2=A0=C2=A0 boot from QSPI flash.
-> + * ZynqMP PM firmware services are not modeled. For direct Linux
-> boot,
-> +=C2=A0=C2=A0 QEMU adjusts the supplied DTB only for the boot-critical UA=
-RT,
-> SDHCI
-> +=C2=A0=C2=A0 and GQSPI nodes.
-> + * Other real-board DTB nodes can still defer or fail probing when
-> they
-> +=C2=A0=C2=A0 depend on devices that are not present in the QEMU model, s=
-uch as
-> +=C2=A0=C2=A0 external I2C clock generators, board sensors, some GPIO
-> consumers,
-> +=C2=A0=C2=A0 PHYs, or non-boot DMA/display paths.
-> diff --git a/hw/arm/xlnx-zcu102.c b/hw/arm/xlnx-zcu102.c
-> index 4e48970274..839e4e90d5 100644
-> --- a/hw/arm/xlnx-zcu102.c
-> +++ b/hw/arm/xlnx-zcu102.c
-> @@ -26,6 +26,7 @@
-> =C2=A0#include "system/device_tree.h"
-> =C2=A0#include "qom/object.h"
-> =C2=A0#include "net/can_emu.h"
-> +#include <libfdt.h>
-> =C2=A0
-> =C2=A0struct XlnxZCU102 {
-> =C2=A0=C2=A0=C2=A0=C2=A0 MachineState parent_obj;
-> @@ -43,6 +44,112 @@ struct XlnxZCU102 {
-> =C2=A0#define TYPE_ZCU102_MACHINE=C2=A0=C2=A0 MACHINE_TYPE_NAME("xlnx-zcu=
-102")
-> =C2=A0OBJECT_DECLARE_SIMPLE_TYPE(XlnxZCU102, ZCU102_MACHINE)
-> =C2=A0
-> +static bool zcu102_fdt_get_phandle(void *fdt, const char *node_path,
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint32_t *phandle=
-)
-> +{
-> +=C2=A0=C2=A0=C2=A0 int offset;
-> +
-> +=C2=A0=C2=A0=C2=A0 offset =3D fdt_path_offset(fdt, node_path);
-> +=C2=A0=C2=A0=C2=A0 if (offset < 0) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false;
-> +=C2=A0=C2=A0=C2=A0 }
-> +
-> +=C2=A0=C2=A0=C2=A0 *phandle =3D fdt_get_phandle(fdt, offset);
-> +=C2=A0=C2=A0=C2=A0 return *phandle !=3D 0;
-> +}
-> +
-> +static void zcu102_fdt_nop_prop(void *fdt, const char *node_path,
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 const char *prop)
-> +{
-> +=C2=A0=C2=A0=C2=A0 int ret;
-> +=C2=A0=C2=A0=C2=A0 int offset;
-> +
-> +=C2=A0=C2=A0=C2=A0 offset =3D fdt_path_offset(fdt, node_path);
-> +=C2=A0=C2=A0=C2=A0 if (offset < 0) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
-> +=C2=A0=C2=A0=C2=A0 }
-> +
-> +=C2=A0=C2=A0=C2=A0 ret =3D fdt_nop_property(fdt, offset, prop);
-> +=C2=A0=C2=A0=C2=A0 if (ret < 0 && ret !=3D -FDT_ERR_NOTFOUND) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 error_report("%s: Couldn't no=
-p %s/%s: %s", __func__,
-> node_path,
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 prop, fdt_strerror(ret));
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 exit(1);
-> +=C2=A0=C2=A0=C2=A0 }
-> +}
-> +
-> +static void zcu102_fdt_fixup_clocks(void *fdt, const char
-> *node_path,
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint32_t ph=
-andle)
-> +{
-> +=C2=A0=C2=A0=C2=A0 if (fdt_path_offset(fdt, node_path) < 0) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
-> +=C2=A0=C2=A0=C2=A0 }
-> +
-> +=C2=A0=C2=A0=C2=A0 qemu_fdt_setprop_cells(fdt, node_path, "clocks", phan=
-dle,
-> phandle);
-> +}
-> +
-> +static void zcu102_fdt_fixup_qemu_direct_boot_nodes(void *fdt)
-> +{
-> +=C2=A0=C2=A0=C2=A0 uint32_t pss_ref_clk;
-> +=C2=A0=C2=A0=C2=A0 int i, j;
-> +
-> +=C2=A0=C2=A0=C2=A0 static const char * const provider_props[] =3D {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "power-domains",
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "resets",
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "assigned-clocks",
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "assigned-clock-rates",
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "assigned-clock-parents",
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "pinctrl-names",
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "pinctrl-0",
-> +=C2=A0=C2=A0=C2=A0 };
-> +=C2=A0=C2=A0=C2=A0 static const char * const direct_boot_nodes[] =3D {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "/axi/serial@ff000000",
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "/axi/serial@ff010000",
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "/axi/mmc@ff170000",
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "/axi/spi@ff0f0000",
-> +=C2=A0=C2=A0=C2=A0 };
-> +
-> +=C2=A0=C2=A0=C2=A0 /*
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * The Linux ZCU102 DTB inherits these boot-crit=
-ical nodes from
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * arch/arm64/boot/dts/xilinx/zynqmp.dtsi:
-> +=C2=A0=C2=A0=C2=A0=C2=A0 *
-> +=C2=A0=C2=A0=C2=A0=C2=A0 *=C2=A0=C2=A0 uart0: serial@ff000000
-> +=C2=A0=C2=A0=C2=A0=C2=A0 *=C2=A0=C2=A0 uart1: serial@ff010000
-> +=C2=A0=C2=A0=C2=A0=C2=A0 *=C2=A0=C2=A0 sdhci1: mmc@ff170000
-> +=C2=A0=C2=A0=C2=A0=C2=A0 *=C2=A0=C2=A0 qspi: spi@ff0f0000
-> +=C2=A0=C2=A0=C2=A0=C2=A0 *
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * zynqmp.dtsi, zynqmp-clk-ccf.dtsi and zynqmp-z=
-cu102-revA.dts
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * wire them to PM firmware-backed clock, reset =
-and pinctrl
-> providers.
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * Linux reaches that firmware through zynqmp_pm=
-_invoke_fn() in
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * drivers/firmware/xilinx/zynqmp-core.c; exampl=
-es include
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * zynqmp_pm_query_data() for drivers/clk/zynqmp=
-/clkc.c,
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * zynqmp_pm_reset_assert() for drivers/reset/re=
-set-zynqmp.c,
-> and
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * zynqmp_pm_pinctrl_request() for drivers/pinct=
-rl/pinctrl-
-> zynqmp.c.
-> +=C2=A0=C2=A0=C2=A0=C2=A0 *
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * Direct kernel boot has no PM firmware stage f=
-or those calls.
-> Bypass the
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * firmware-backed providers for just these node=
-s and describe
-> their clocks
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * as fixed inputs, avoiding a QEMU model of the=
- runtime PM
-> firmware.
-> +=C2=A0=C2=A0=C2=A0=C2=A0 *
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * The Linux ZynqMP clock description defines ps=
-s-ref-clk as a
-> 33.333333 MHz
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * fixed clock with #clock-cells =3D <0>. Use it=
- as a conservative
-> direct-boot
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * fallback for both clock inputs of these devic=
-es. That
-> satisfies the
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * existing two clock-names entries while keepin=
-g the DTB
-> independent from
-> +=C2=A0=C2=A0=C2=A0=C2=A0 * the firmware-backed ZynqMP clock controller.
-> +=C2=A0=C2=A0=C2=A0=C2=A0 */
-> +=C2=A0=C2=A0=C2=A0 if (!zcu102_fdt_get_phandle(fdt, "/pss-ref-clk", &pss=
-_ref_clk))
-> {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return;
-> +=C2=A0=C2=A0=C2=A0 }
-> +
-> +=C2=A0=C2=A0=C2=A0 for (i =3D 0; i < ARRAY_SIZE(direct_boot_nodes); i++)=
- {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 for (j =3D 0; j < ARRAY_SIZE(=
-provider_props); j++) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 zcu10=
-2_fdt_nop_prop(fdt, direct_boot_nodes[i],
-> provider_props[j]);
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> +=C2=A0=C2=A0=C2=A0 }
-> +
-> +=C2=A0=C2=A0=C2=A0 zcu102_fdt_fixup_clocks(fdt, "/axi/serial@ff000000",
-> pss_ref_clk);
-> +=C2=A0=C2=A0=C2=A0 zcu102_fdt_fixup_clocks(fdt, "/axi/serial@ff010000",
-> pss_ref_clk);
-> +=C2=A0=C2=A0=C2=A0 zcu102_fdt_fixup_clocks(fdt, "/axi/mmc@ff170000", pss=
-_ref_clk);
-> +=C2=A0=C2=A0=C2=A0 zcu102_fdt_fixup_clocks(fdt, "/axi/spi@ff0f0000", pss=
-_ref_clk);
-
-I don't think this is something QEMU should be doing. Modifying the DTB
-on the fly just seems very brittle and prone to breakage and confusion.
-
-Alistair
-
-> +}
-> =C2=A0
-> =C2=A0static bool zcu102_get_secure(Object *obj, Error **errp)
-> =C2=A0{
-> @@ -98,6 +205,8 @@ static void zcu102_modify_dtb(const struct
-> arm_boot_info *binfo, void *fdt)
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 g_strfreev(node_path);
-> =C2=A0=C2=A0=C2=A0=C2=A0 }
-> +
-> +=C2=A0=C2=A0=C2=A0 zcu102_fdt_fixup_qemu_direct_boot_nodes(fdt);
-> =C2=A0}
-> =C2=A0
-> =C2=A0static void bbram_attach_drive(XlnxBBRam *dev)
+T24gVGh1LCAyMDI2LTA4LTEzIGF0IDAxOjQ0ICswODAwLCBNYXggQ2hvdSB3cm90ZToNCj4gRXZl
+cnkgZW50cnkgYWRkZWQgdG8gcmlzY3ZfbXVsdGlfZXh0X2ltcGxpZWRfcnVsZXNbXSBjdXJyZW50
+bHkgaGFzIHRvDQo+IHJlZmxvdyB3aGF0ZXZlciBsaW5lIGl0IGxhbmRzIG9uLCBzaW5jZSBlbnRy
+aWVzIGFyZSBwYWNrZWQgc2V2ZXJhbA0KPiBwZXIgbGluZS4gTGlzdCBvbmUgcnVsZSBwZXIgbGlu
+ZSBpbnN0ZWFkIHNvIGZ1dHVyZSBhZGRpdGlvbnMgYXJlIGENCj4gcHVyZSBhcHBlbmQuDQo+IA0K
+PiBTdWdnZXN0ZWQtYnk6IERhbmllbCBIZW5yaXF1ZSBCYXJib3phDQo+IDxkYW5pZWwuYmFyYm96
+YUBvc3MucXVhbGNvbW0uY29tPg0KPiBTaWduZWQtb2ZmLWJ5OiBNYXggQ2hvdSA8bWF4LmNob3VA
+c2lmaXZlLmNvbT4NCg0KUmV2aWV3ZWQtYnk6IEFsaXN0YWlyIEZyYW5jaXMgPGFsaXN0YWlyLmZy
+YW5jaXNAd2RjLmNvbT4NCg0KQWxpc3RhaXINCg0KPiAtLS0NCj4gwqB0YXJnZXQvcmlzY3YvY3B1
+LmMgfCA1OCArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0tLS0tLQ0KPiAt
+LQ0KPiDCoDEgZmlsZSBjaGFuZ2VkLCA0NCBpbnNlcnRpb25zKCspLCAxNCBkZWxldGlvbnMoLSkN
+Cj4gDQo+IGRpZmYgLS1naXQgYS90YXJnZXQvcmlzY3YvY3B1LmMgYi90YXJnZXQvcmlzY3YvY3B1
+LmMNCj4gaW5kZXggZTY0M2Q3YzdhZjcuLmZmZmI5MmZmMTEwIDEwMDY0NA0KPiAtLS0gYS90YXJn
+ZXQvcmlzY3YvY3B1LmMNCj4gKysrIGIvdGFyZ2V0L3Jpc2N2L2NwdS5jDQo+IEBAIC0yODE4LDIw
+ICsyODE4LDUwIEBAIFJJU0NWQ1BVSW1wbGllZEV4dHNSdWxlDQo+ICpyaXNjdl9taXNhX2V4dF9p
+bXBsaWVkX3J1bGVzW10gPSB7DQo+IMKgfTsNCj4gwqANCj4gwqBSSVNDVkNQVUltcGxpZWRFeHRz
+UnVsZSAqcmlzY3ZfbXVsdGlfZXh0X2ltcGxpZWRfcnVsZXNbXSA9IHsNCj4gLcKgwqDCoCAmWkNC
+X0lNUExJRUQsICZaQ0RfSU1QTElFRCwgJlpDRV9JTVBMSUVELA0KPiAtwqDCoMKgICZaQ0ZfSU1Q
+TElFRCwgJlpDTVBfSU1QTElFRCwgJlpDTVRfSU1QTElFRCwNCj4gLcKgwqDCoCAmWkRJTlhfSU1Q
+TElFRCwgJlpGQV9JTVBMSUVELCAmWkZCRk1JTl9JTVBMSUVELA0KPiAtwqDCoMKgICZaRkhfSU1Q
+TElFRCwgJlpGSE1JTl9JTVBMSUVELCAmWkZJTlhfSU1QTElFRCwNCj4gLcKgwqDCoCAmWkhJTlhf
+SU1QTElFRCwgJlpISU5YTUlOX0lNUExJRUQsICZaSUNOVFJfSU1QTElFRCwNCj4gLcKgwqDCoCAm
+WklIUE1fSU1QTElFRCwgJlpLX0lNUExJRUQsICZaS05fSU1QTElFRCwNCj4gLcKgwqDCoCAmWktT
+X0lNUExJRUQsICZaVkJCX0lNUExJRUQsICZaVkUzMkZfSU1QTElFRCwNCj4gLcKgwqDCoCAmWlZF
+MzJYX0lNUExJRUQsICZaVkU2NERfSU1QTElFRCwgJlpWRTY0Rl9JTVBMSUVELA0KPiAmWlZFNjRY
+X0lNUExJRUQsDQo+IC3CoMKgwqAgJlpWRkJGQV9JTVBMSUVELCAmWlZGQkZNSU5fSU1QTElFRCwg
+JlpWRkJGV01BX0lNUExJRUQsDQo+IC3CoMKgwqAgJlpWRkhfSU1QTElFRCwgJlpWRkhNSU5fSU1Q
+TElFRCwgJlpWS05fSU1QTElFRCwNCj4gLcKgwqDCoCAmWlZLTkNfSU1QTElFRCwgJlpWS05HX0lN
+UExJRUQsICZaVktOSEJfSU1QTElFRCwNCj4gLcKgwqDCoCAmWlZLU19JTVBMSUVELMKgICZaVktT
+Q19JTVBMSUVELCAmWlZLU0dfSU1QTElFRCwgJlNIQV9JTVBMSUVELA0KPiAtwqDCoMKgICZTU0NG
+R19JTVBMSUVELCAmU1VQTV9JTVBMSUVELCAmU1NQTV9JTVBMSUVELCAmU01DVFJfSU1QTElFRCwN
+Cj4gLcKgwqDCoCAmU1NDVFJfSU1QTElFRCwgJlNTU1RBVEVFTl9JTVBMSUVELA0KPiArwqDCoMKg
+ICZaQ0JfSU1QTElFRCwNCj4gK8KgwqDCoCAmWkNEX0lNUExJRUQsDQo+ICvCoMKgwqAgJlpDRV9J
+TVBMSUVELA0KPiArwqDCoMKgICZaQ0ZfSU1QTElFRCwNCj4gK8KgwqDCoCAmWkNNUF9JTVBMSUVE
+LA0KPiArwqDCoMKgICZaQ01UX0lNUExJRUQsDQo+ICvCoMKgwqAgJlpESU5YX0lNUExJRUQsDQo+
+ICvCoMKgwqAgJlpGQV9JTVBMSUVELA0KPiArwqDCoMKgICZaRkJGTUlOX0lNUExJRUQsDQo+ICvC
+oMKgwqAgJlpGSF9JTVBMSUVELA0KPiArwqDCoMKgICZaRkhNSU5fSU1QTElFRCwNCj4gK8KgwqDC
+oCAmWkZJTlhfSU1QTElFRCwNCj4gK8KgwqDCoCAmWkhJTlhfSU1QTElFRCwNCj4gK8KgwqDCoCAm
+WkhJTlhNSU5fSU1QTElFRCwNCj4gK8KgwqDCoCAmWklDTlRSX0lNUExJRUQsDQo+ICvCoMKgwqAg
+JlpJSFBNX0lNUExJRUQsDQo+ICvCoMKgwqAgJlpLX0lNUExJRUQsDQo+ICvCoMKgwqAgJlpLTl9J
+TVBMSUVELA0KPiArwqDCoMKgICZaS1NfSU1QTElFRCwNCj4gK8KgwqDCoCAmWlZCQl9JTVBMSUVE
+LA0KPiArwqDCoMKgICZaVkUzMkZfSU1QTElFRCwNCj4gK8KgwqDCoCAmWlZFMzJYX0lNUExJRUQs
+DQo+ICvCoMKgwqAgJlpWRTY0RF9JTVBMSUVELA0KPiArwqDCoMKgICZaVkU2NEZfSU1QTElFRCwN
+Cj4gK8KgwqDCoCAmWlZFNjRYX0lNUExJRUQsDQo+ICvCoMKgwqAgJlpWRkJGQV9JTVBMSUVELA0K
+PiArwqDCoMKgICZaVkZCRk1JTl9JTVBMSUVELA0KPiArwqDCoMKgICZaVkZCRldNQV9JTVBMSUVE
+LA0KPiArwqDCoMKgICZaVkZIX0lNUExJRUQsDQo+ICvCoMKgwqAgJlpWRkhNSU5fSU1QTElFRCwN
+Cj4gK8KgwqDCoCAmWlZLTl9JTVBMSUVELA0KPiArwqDCoMKgICZaVktOQ19JTVBMSUVELA0KPiAr
+wqDCoMKgICZaVktOR19JTVBMSUVELA0KPiArwqDCoMKgICZaVktOSEJfSU1QTElFRCwNCj4gK8Kg
+wqDCoCAmWlZLU19JTVBMSUVELA0KPiArwqDCoMKgICZaVktTQ19JTVBMSUVELA0KPiArwqDCoMKg
+ICZaVktTR19JTVBMSUVELA0KPiArwqDCoMKgICZTSEFfSU1QTElFRCwNCj4gK8KgwqDCoCAmU1ND
+RkdfSU1QTElFRCwNCj4gK8KgwqDCoCAmU1VQTV9JTVBMSUVELA0KPiArwqDCoMKgICZTU1BNX0lN
+UExJRUQsDQo+ICvCoMKgwqAgJlNNQ1RSX0lNUExJRUQsDQo+ICvCoMKgwqAgJlNTQ1RSX0lNUExJ
+RUQsDQo+ICvCoMKgwqAgJlNTU1RBVEVFTl9JTVBMSUVELA0KPiDCoMKgwqDCoCBOVUxMDQo+IMKg
+fTsNCj4gwqANCg==
 
