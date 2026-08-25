@@ -4,132 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12A4DC61DB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 14:37:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71F5BC61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 14:43:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wysGu-0006Aw-46; Tue, 25 Aug 2026 10:37:04 -0400
+	id 1wysMp-00087t-2J; Tue, 25 Aug 2026 10:43:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wysGt-0006Ab-AL
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 10:37:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1wysMm-00087K-Ix; Tue, 25 Aug 2026 10:43:08 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wysGr-0006OQ-4s
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 10:37:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787668620;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4Y6U34bGx3veeh8PYVBNu/tfNq9cvpQ+I7J9hPo13VE=;
- b=Au+0Mm1k/jpqjkjT3KCUhDaauXk6C6pGvmTOLO512ggZlUoQlCwyhcistCIhW8yhJZh54p
- 6vxKkpLlmT4PBBvDkYSJxUEvT99PWd/WHw40O93eMyoNAPkkpGlt8tcbYR3p6SMliCVDan
- 2uTmWu1vHtF46yejwKdyO0KhQlHbvpg=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-534-xr5HyPi_N7WimR4hgi7eqQ-1; Tue, 25 Aug 2026 10:36:58 -0400
-X-MC-Unique: xr5HyPi_N7WimR4hgi7eqQ-1
-X-Mimecast-MFC-AGG-ID: xr5HyPi_N7WimR4hgi7eqQ_1787668617
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-69c20d1d150so4034418a12.0
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 07:36:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787668617; x=1788273417; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to
- :content-type; bh=4Y6U34bGx3veeh8PYVBNu/tfNq9cvpQ+I7J9hPo13VE=;
- b=pdnB5YRefRkhn/oTtki8gnP5G0DNfcZnbvEYrkrvNtlMz3zs0BieWnye2KtQARZAQI
- qWIBxd+TznwBuByEP6zF1/z+YMPzcsOc1KUrAOaMnbCKEcqvAyR0EvtZUtDsq0ixcFuf
- UUT5QHNZ09y9+6+ObCeHj9CdfAKllpsPF38pqfFUeJvnP5JIJ+RN68+kDq5b2qaeAzqI
- aTzBzQfg3b3lzN/OpOiKunrImD50u55ALKxt956dLKVvNZhrfIlm/4gJJgnuHEo9AlZ8
- /5aB4XTT6+NUnX7228hXC5bHFDcztBN0n3dTinn3Y349zDocsvBg1BGoyFcYdFyMJJ79
- PcIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787668617; x=1788273417;
- h=content-transfer-encoding:content-type:in-reply-to:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=4Y6U34bGx3veeh8PYVBNu/tfNq9cvpQ+I7J9hPo13VE=;
- b=F9ks5FUtFrMwoH4JKwCQSxj747r/sVUmcvfIeXeJZSOJlXvLNwMWPox9AaxGhdNbCj
- lfsAOyS3LSpgpSnesBZ6T8tNUpfyDYXqxArAcTrvj2gI95QYFAZfTPIKw8yujrXknP75
- lJ2C5oCHcyglVh32EEn09kffIXdsfjYELzW3THHBEpQ8tPr0SkjH/jK0rJ7l/9BvfTOH
- 1twlvKKB7W8BI/Au4IEhkSme6+7NdXkCUQNfFy8os4iSQlPC9MOP+0WkRuiG8X3P6UQQ
- hNTc3m16ng044mW3v6872idUs1kVJ1iYara+hu4M23QHeyEe1hlo4gzvgAgZFY3E+yzs
- ELhw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RpzuBEg3+ZUM+tCtrjYMOOpr/MNBl5rXL8d+3zLcfzXcXXXvMZ6UJnNE5ORfaSQkUBolkiXzsJ3lIpa@nongnu.org
-X-Gm-Message-State: AFuF++lpG5fduwho4V6e1KapW/fs88uXll0OMM+PzgGQ7GG9VAbPGPcg
- Ox8yQRfCnPzxkFAdavCSYBDmceUtUZAZEEQj9SxfqWPBpex940yz2w9U96aIzlJhvkvoMlg8P7K
- dOMdlp0NiMHZ0iTG4L+ItYwb/9zFaOYhjn+OfzeHt7cEDkTkGX9GHjEBJ
-X-Gm-Gg: AR+sD11bF+kz7GOEECObQtzuTqeUr/XIhX/GwYsN3GFXm/COaheAAcrLZAu6N1JL/KS
- 5wI7CDYCMcJjRZ+O+EM39vnpPWROXH+88Z4w0xa2pNDimvt7+2aSAcVW3xCbbFDs/6SKfghEBNP
- hgvyolC7wP0fufk9iptc6L1sSF0fk/WXbf7vqSCtohQ2+hEAlAR8CH1DFMRhPVCzJxv8NWCZtNs
- WRUw/Py5sRYHfhFQ4rhGrJIAffge6HVupjV7rOXZ5IKxIld93+f2Qe5apl+K8ayVZbsAk2XxRLQ
- R3lSlM4GKbzyUYmp+OFfW3BrUQ5qz9VZ2F9e4iON1kQYvb7D3oMNevPEEZdtN4u/rzQpMmN4v5Z
- +2qpaDHfFluQc4hR+JEp5JsHtINJzUFcgL2D6D8j9ChW4TMe95CkCHH0u9qTpwnFp8AHoYi6ArO
- 7Qi08nSmErC9NSRxhtCJTBG+FIJGESNw==
-X-Received: by 2002:a05:6402:2411:b0:6a3:fee5:adcf with SMTP id
- 4fb4d7f45d1cf-6a5c409f463mr9032325a12.1.1787668617204; 
- Tue, 25 Aug 2026 07:36:57 -0700 (PDT)
-X-Received: by 2002:a05:6402:2411:b0:6a3:fee5:adcf with SMTP id
- 4fb4d7f45d1cf-6a5c409f463mr9032231a12.1.1787668616631; 
- Tue, 25 Aug 2026 07:36:56 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d70a:12bf:c327:80a0:6d65:31e3?
- (p200300cfd70a12bfc32780a06d6531e3.dip0.t-ipconnect.de.
- [2003:cf:d70a:12bf:c327:80a0:6d65:31e3])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a5de8d21f8sm27422a12.11.2026.08.25.07.36.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Aug 2026 07:36:55 -0700 (PDT)
-Message-ID: <f543b2a9-46ed-4dcc-ba3c-650c2a7ca10d@redhat.com>
-Date: Tue, 25 Aug 2026 16:36:53 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 08/13] hw/virtio/vhost-user: send isolation regions
- to device
-To: Connor Kite <connorkite@gmail.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Viresh Kumar <viresh.kumar@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Raphael Norwitz <rnorwitz@nvidia.com>, Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Stefan Hajnoczi <stefanha@redhat.com>, Milan Zamazal <mzamazal@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-block@nongnu.org,
- virtio-fs@lists.linux.dev, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Jason Wang <jasowangio@gmail.com>,
- Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
- <eperezma@redhat.com>, Alyssa Ross <hi@alyssa.is>,
- Demi Marie Obenour <demiobenour@gmail.com>,
- 20260817233147.2867623-1-connorkite@gmail.com
-References: <20260817-vhost-user-isolated-memory-v2-0-948aae960abb@gmail.com>
- <20260817-vhost-user-isolated-memory-v2-8-948aae960abb@gmail.com>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <20260817-vhost-user-isolated-memory-v2-8-948aae960abb@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1wysMk-0007Ry-V9; Tue, 25 Aug 2026 10:43:08 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67PEYopl010470; Tue, 25 Aug 2026 14:42:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=JOMyEm4A8T4pJ5QWwzf7b65G9MXajgnhlLLD4+cVeOc=; b=GUvqfSBQDc+O
+ R+Ot9y0fGswJDzg+h4Gl+lHiSdNI9amtp5hJ3xLkGjDGEBffPyuXPtXN1gxicLrQ
+ /WjAaWjurXuFzEPYY3wbE6HxnSsE6lSj/+ksC1M8NA3EatgzdYmD5kK/S1NRmqa1
+ 01IO3SCJTWgK8fEykFVG0Dxc0yFq4sAazakDAXB4UeJUGShnX8OgsKoNYBcr40yk
+ nJtdjQWjhtywMgvwHnQTLkA9uEurWaQceDHYXpJImJdGPKDqfkQVli4k6iLICkrb
+ ySB25Ql9hOvr9Os4JokZDPoN3a8HlhNkfDm0rz/i7qj/sb+PcBfIjYMK9cXkUmvE
+ 7Gj9m8ztxg==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726egr92-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 25 Aug 2026 14:42:57 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67PEfllb015801;
+ Tue, 25 Aug 2026 14:42:56 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7ragcjrx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 25 Aug 2026 14:42:56 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67PEgs9857737478
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 25 Aug 2026 14:42:54 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5B32458053;
+ Tue, 25 Aug 2026 14:42:54 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B4DEA58059;
+ Tue, 25 Aug 2026 14:42:53 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 25 Aug 2026 14:42:53 +0000 (GMT)
+Message-ID: <7a5a04d4524d64a0768ed57486da20cec62cafc4.camel@linux.ibm.com>
+Subject: Re: [PATCH] ppc/xive: Trigger the pending interrupt for a guest
+ after migration
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Gautam Menghani <gautam@linux.ibm.com>, clg@kaod.org,
+ harshpb@linux.ibm.com, kowal@linux.ibm.com
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Date: Tue, 25 Aug 2026 09:42:53 -0500
+In-Reply-To: <20260824070353.40016-1-gautam@linux.ibm.com>
+References: <20260824070353.40016-1-gautam@linux.ibm.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8da9f1 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=cJ0tejSf9BN8paWhmWQA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDEyMyBTYWx0ZWRfX1ma/E7lzU4OC
+ OOU8Q0q1kR0cO2MjCRJy7C/A/UWmTiKmbZYTnZkqAisS0J0Jmoh+Ux1IfCnY4Ie1bGf5VQDt6mX
+ 1sXDxegnoihGowRRYnbZTAVtqdmIk9U=
+X-Proofpoint-GUID: R5J0oXUK_thqXHILZiN_A13Cm7bEeyKO
+X-Proofpoint-ORIG-GUID: R5J0oXUK_thqXHILZiN_A13Cm7bEeyKO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDEyMyBTYWx0ZWRfXzgKRSlqQ+6WA
+ uZvMkuw2fARcQBcMrRhOO+Te9qX6GIw+yjyb10Hjx9hnvkQK/qlh+htDgbObPbnwZIky3WUe+Fl
+ qmMvBRNq/1XxE28UZwzmrA09vNFoLnow26w6G+fUADhthmvW6O8fyAJDAneUGUiO6lUCPFbJnQx
+ J6zj3b6bKON/56/Uo1qA6DcLQOyAhFAi4ohmESm+icahLd1qvInmyxMLJkCW62KLojYqox1XZiu
+ 7HZOGQo53wjxIOPfV0kIMGb9aksE1SSSDhWJqF3hHgBaQgd7MsJyaLVGyoXuLCZKZXnE2he3sii
+ tlImkUMhfg/tDrWhrFYde5Cnwu8VJ1GO6HMF6h6E/i/qX+R2W0SkeAwbUCa1/ZinrtpjZbYj+mB
+ CzmVNbdPFYePOxtwr3pgKT2edV9ik6KMOWh6ZWMxgC9Cx3+45HkK+3fyT60943Ph5YsjGTd+vMN
+ lUaxFo91f9FoolcB3Rg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-25_04,2026-08-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608250123
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,193 +121,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18.08.26 07:12, Connor Kite wrote:
-> Adds features to fill a vhost_user_set_mem_table message with the
-> addresses of isolation memory regions corresponding to bounce buffers
-> and vrings.
->
-> Signed-off-by: Connor Kite <connorkite@gmail.com>
+Mike Kowal, can you please review this?
+
+Thanks,
+
+Glenn
+
+On Mon, 2026-08-24 at 12:33 +0530, Gautam Menghani wrote:
+> When a KVM guest is migrated to another LPAR while a stress-ng workload
+> is running, lockups are seen when the guest resumes on the destination
+> LPAR. This root cause is that if there was a pending interrupt for a cpu
+> on the source machine but it was not presented yet when the migration
+> started, the interrupt is not retriggered on the destination LPAR. This
+> is evident when running 'info pic' on the destination LPAR:
+> 
+> $ virsh qemu-monitor-command --hmp migrate 'info pic' | grep -e OS -e MSI
+> CPU[0000]:   OS    00   ff  00    ff   ff  00  ff   ff  80000400
+> CPU[0001]:   OS    00   ff  00    ff   ff  00  ff   ff  80000401
+> CPU[0002]:   OS    00   ff  00    ff   ff  00  ff   ff  80000402
+> CPU[0003]:   OS    00   ff  00    ff   ff  00  ff   ff  80000403
+> CPU[0004]:   OS    00   ff  00    ff   ff  00  ff   ff  80000404
+> CPU[0005]:   OS    00   ff  00    ff   ff  00  ff   ff  80000405
+> CPU[0006]:   OS    80   ff  02    ff   ff  00  ff   06  80000406
+> CPU[0007]:   OS    00   ff  00    ff   ff  00  ff   ff  80000407
+>   00000000 MSI --    00000010   0/6   3071/16384 @3710000 ^1 [ 80000010 80000010 80000010 80000010 80000010 ^00000000 ]
+>   00000001 MSI --    00000010   1/6   1852/16384 @3980000 ^1 [ 80000010 80000033 80000033 80000033 80000033 ^00000000 ]
+>   00000002 MSI --    00000010   2/6   4424/16384 @40c0000 ^1 [ 80000020 80000020 80000020 80000010 80000010 ^00000000 ]
+>   00000003 MSI --    00000010   3/6   1913/16384 @4220000 ^1 [ 80000010 80000032 80000010 80000010 80000010 ^00000000 ]
+>   00000004 MSI --    00000010   4/6   2946/16384 @4360000 ^1 [ 80000010 80000010 80000010 80000010 80000010 ^00000000 ]
+>   00000005 MSI --    00000010   5/6   2313/16384 @44a0000 ^1 [ 80000010 80000010 80000010 80000010 80000010 ^00000000 ]
+>   00000006 MSI P-    00000010   6/6   5825/16384 @45f0000 ^1 [ 80000024 80000024 80000024 80000010 80000016 ^00000000 ]
+>   00000007 MSI --    00000010   7/6   2346/16384 @4760000 ^1 [ 80000032 80000032 80000010 80000032 80000032 ^00000000 ]
+> 
+> Fix this by calling xive_tctx_pipr_set() in
+> vmstate_xive_tctx_post_load(), which ends up calling qemu_irq_raise() to
+> present the interrupt.
+> 
+> Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
 > ---
->   hw/virtio/vhost-user.c | 118 ++++++++++++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 117 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index 7e9233e174..e1e5cba53d 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -1140,7 +1140,77 @@ static void cleanup_isolation_regions(struct vhost_dev *dev)
->       }
->   }
->   
-> -__attribute__((unused))
-> +typedef struct {
-> +    VhostUserMsg *msg;
-> +    struct vhost_user *u;
-> +    int *fds;
-> +    size_t fds_size;
-> +    uint64_t vring_iova;
-> +    size_t vring_size;
-> +    bool vring_node_visited;
-> +    size_t *idx;
-> +} IOVATreeTraversalArgs;
-> +
-> +static gboolean vhost_user_fill_msg_reg_from_tree(gpointer key,
-> +                                                  gpointer value,
-> +                                                  gpointer data)
-> +{
-> +    IOVATreeTraversalArgs *args = data;
-> +    struct vhost_user *u;
-> +    VhostUserMsg *msg = args->msg;
-> +    DMAMap *map = key;
-> +    uint64_t offset;
-> +
-> +    assert(args && key && value);
-> +    if (!args->vring_node_visited) {
-> +        args->vring_node_visited = true;
-> +        return false;
-> +    }
-> +
-> +    u = args->u;
-> +    assert(*args->idx < args->fds_size);
-> +
-> +    args->fds[*args->idx] = args->u->iso_mem_ctx.fd;
-> +
-> +    /*
-> +     * If the number of regions is fixed, it would be wasteful to use one for
-> +     * only the vrings. The first vhost_iova_tree element is always
-> +     * reserved for the vrings, so we can simply combine the first and second
-> +     * elements, which are contiguous in IOVA space, when sending regions to
-> +     * the backend.
-> +     */
-
-I am not sure it makes sense to optimize here if it makes the code more 
-complicated and the eventual goal would rather be to have a dedicated 
-memory area for the device I/O memory rather than a full mirror of guest 
-memory. Specifically because that full mirror already is quite wasteful, 
-so… it was my understanding that the full mirror is mostly for testing 
-anyway.
-
-Hanna
-
-> +    if (*args->idx == 0) {
-> +        offset = u->iso_mem_ctx.vring_hva_addr - u->iso_mem_ctx.shared_mem_addr;
-> +        msg->payload.memory.regions[*args->idx].userspace_addr =
-> +            args->vring_iova;
-> +        /*
-> +         * The size from the iova tree is inclusive, so 1 is added to it.
-> +         * args->vring_size is exclusive, so no addition is required.
-> +         */
-> +        msg->payload.memory.regions[*args->idx].memory_size =
-> +            args->vring_size + map->size + 1;
-> +        msg->payload.memory.regions[*args->idx].guest_phys_addr =
-> +            args->vring_iova;
-> +        msg->payload.memory.regions[*args->idx].mmap_offset = offset;
+>  hw/intc/xive.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+> index f473e6ac77..712498d4af 100644
+> --- a/hw/intc/xive.c
+> +++ b/hw/intc/xive.c
+> @@ -1080,6 +1080,9 @@ static int vmstate_xive_tctx_post_load(void *opaque, int version_id)
+>              error_report_err(local_err);
+>              return ret;
+>          }
 > +    } else {
-> +        /* Use 128 bit operation in unlikely case of negative iso_iova_offset */
-> +        offset = int128_get64(int128_add(int128_make64(map->iova),
-> +                                        u->iso_mem_ctx.iso_iova_offset)) -
-> +                (uint64_t)u->iso_mem_ctx.shared_mem_addr;
-> +
-> +        msg->payload.memory.regions[*args->idx].userspace_addr = map->iova;
-> +        msg->payload.memory.regions[*args->idx].memory_size = map->size + 1;
-> +        msg->payload.memory.regions[*args->idx].guest_phys_addr = map->iova;
-> +        msg->payload.memory.regions[*args->idx].mmap_offset = offset;
-> +    }
-> +
-> +    assert(offset + msg->payload.memory.regions[*args->idx].memory_size <=
-> +        u->iso_mem_ctx.size);
-> +    (*args->idx)++;
-> +
-> +    return false;
-> +}
-> +
->   static int init_isolation_regions(struct vhost_dev *dev,
->                                     VhostUserMsg *msg,
->                                     int *fds, size_t *fd_num)
-> @@ -1159,6 +1229,7 @@ static int init_isolation_regions(struct vhost_dev *dev,
->       DMAMap *map;
->       DMAMap vring_map;
->       int r;
-> +    IOVATreeTraversalArgs trav_args;
->   
->       msg->hdr.request = VHOST_USER_SET_MEM_TABLE;
->   
-> @@ -1244,6 +1315,27 @@ static int init_isolation_regions(struct vhost_dev *dev,
->           }
->       }
->   
-> +    *fd_num = 0;
-> +    trav_args.idx = fd_num;
-> +    trav_args.fds = fds;
-> +    trav_args.msg = msg;
-> +    trav_args.u = u;
-> +    trav_args.vring_iova = vring_map.iova;
-> +    trav_args.vring_size = total_vring_size;
-> +    trav_args.fds_size = nregions;
-> +    trav_args.vring_node_visited = false;
-> +
-> +    vhost_iova_tree_foreach(u->iso_mem_ctx.tree,
-> +                            vhost_user_fill_msg_reg_from_tree, &trav_args);
-> +
-> +    msg->payload.memory.nregions = *fd_num;
-> +
-> +    assert(*fd_num == nregions);
-> +
-> +    msg->hdr.size = sizeof(msg->payload.memory.nregions);
-> +    msg->hdr.size += sizeof(msg->payload.memory.padding);
-> +    msg->hdr.size += *fd_num * sizeof(VhostUserMemoryRegion);
-> +
->       return 0;
->   }
->   
-> @@ -1251,6 +1343,7 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
->                                       struct vhost_memory *mem)
->   {
->       struct vhost_user *u = dev->opaque;
-> +    bool memory_isolation = u->user->memory_isolation;
->       int fds[VHOST_MEMORY_BASELINE_NREGIONS];
->       size_t fd_num = 0;
->       bool do_postcopy = u->postcopy_listen && u->postcopy_fd.handler;
-> @@ -1262,6 +1355,11 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
->       int ret;
->   
->       if (do_postcopy) {
-> +        /* Postcopy is not supported with memory isolation yet */
-> +        if (memory_isolation) {
-> +            return -1;
-> +        }
-> +
->           /*
->            * Postcopy has enough differences that it's best done in it's own
->            * version
-> @@ -1278,6 +1376,24 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
->           msg.hdr.flags |= VHOST_USER_NEED_REPLY_MASK;
->       }
->   
-> +    if (memory_isolation) {
-> +        ret = init_isolation_regions(dev, &msg, fds, &fd_num);
-> +        if (ret < 0) {
-> +            return ret;
-> +        }
-> +
-> +        ret = vhost_user_write(dev, &msg, fds, fd_num);
-> +        if (ret < 0) {
-> +            return ret;
-> +        }
-> +
-> +        if (reply_supported) {
-> +            return process_message_reply(dev, &msg);
-> +        }
-> +
-> +        return 0;
-> +    }
-> +
->       if (config_mem_slots) {
->           ret = vhost_user_add_remove_regions(dev, &msg, reply_supported, false);
->           if (ret < 0) {
->
+> +        uint8_t pipr = tctx->regs[TM_QW1_OS + TM_PIPR];
+> +        xive_tctx_pipr_set(tctx, TM_QW1_OS, pipr, 0);
+>      }
+>  
+>      return 0;
 
 
