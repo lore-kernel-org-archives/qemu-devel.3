@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12693C61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:11:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A15F9C61DB9
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:11:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wywXy-0004Up-E9; Tue, 25 Aug 2026 15:10:58 -0400
+	id 1wywYB-0004qs-3M; Tue, 25 Aug 2026 15:11:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywXx-0004UU-50
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:10:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wywY2-0004a4-Fo
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:11:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywXv-0003wa-MC
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:10:56 -0400
+ id 1wywXz-0003wy-0C
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:11:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787685055;
+ s=mimecast20190719; t=1787685058;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SopzVZmki+Hnpy0NQ2yaF9P+Y9MMP6qFbH7RSqmwlo0=;
- b=VRljj0XLSmZaO6md2PcoO3g/7kne5tZ0h0AV/I+lODkP1BXNSlVo68BSL05hQANhATYcDI
- TASGl+JoNRdNMsENO7yVKvkoVcQJnRBrPLhhZsBLZb57FOtZTp43fYNFZEerzryLJWWsyd
- dKQLvSsrcbWdjfuo5/027ScsDIdg5z0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=awsGiKws/Oc72EBonW3yVf4RQnkpQdBbgtMuliluxhg=;
+ b=QR9Pkfv9FuCpRRVSddVMVzPdSHFuyaodxm8YBcmv09T5Ma52AAAkNigE6pY/XKx2xxC4uv
+ f89Kq7U/rzMB/x/WQtSR5TiAdK8HhtiKVmhijGygDXwMDcsDkgaJ+Udyn3KDI7UbTm8vyx
+ /spv+BOViLMgl+C+7jL0eNk/H7BpVkM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-220-_Z5OCpKUMoSjcOoonvj1jw-1; Tue,
- 25 Aug 2026 15:10:51 -0400
-X-MC-Unique: _Z5OCpKUMoSjcOoonvj1jw-1
-X-Mimecast-MFC-AGG-ID: _Z5OCpKUMoSjcOoonvj1jw_1787685049
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-659-bFGl94X-OoK8jtqsNk29AQ-1; Tue,
+ 25 Aug 2026 15:10:54 -0400
+X-MC-Unique: bFGl94X-OoK8jtqsNk29AQ-1
+X-Mimecast-MFC-AGG-ID: bFGl94X-OoK8jtqsNk29AQ_1787685053
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6ABFD195DE21; Tue, 25 Aug 2026 19:10:49 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DF5C6184B3AE; Tue, 25 Aug 2026 19:10:52 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 761E21955F0C; Tue, 25 Aug 2026 19:10:48 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 00FFC1944B2A; Tue, 25 Aug 2026 19:10:51 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 25 Aug 2026 23:09:19 +0400
-Subject: [PATCH v4 12/49] tests/qtest/pnv: drop unnecessary -serial mon:stdio
+Date: Tue, 25 Aug 2026 23:09:20 +0400
+Subject: [PATCH v4 13/49] tests/qtest/qmp-test: don't depend on
+ human-monitor-command
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260825-qemu-no-hmp-v4-12-af60857c2fbe@redhat.com>
+Message-Id: <20260825-qemu-no-hmp-v4-13-af60857c2fbe@redhat.com>
 References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 In-Reply-To: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 To: qemu-devel@nongnu.org
@@ -62,41 +63,36 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  dave@treblig.org, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Nicholas Piggin <npiggin@gmail.com>, 
- Aditya Gupta <adityag@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Gautam Menghani <gautam@linux.ibm.com>, qemu-ppc@nongnu.org, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1774;
+ Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2187;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=VqG8CcLp6vBSBhgsb7VgD9sJ4gnMAM/5MArloE3n1GI=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiHBN7NzbXzZ+dRsm7YtWyV+JpVVzBUF9KyZ
- 1+MNJg8oviJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3ohwAKCRDa6OEJdZac
- 5eNUD/kBaOxTMPz91+m2SqFj2UIAIqpWEPwOHOI10NRbHOFL4UwzcYx+Nvtz4muNZPI5suvmkvH
- MxzpRcbkRSqywgrgaObQoYVfq0PKmrU5vV0Zt1WxNBNrcDhd2r9Fa6b8i0rGGyw9NzYNGQiMO10
- 4NSeCRZYuMT7HCBASgosT5RnKdM5gJ5tJLkTz8WtVJIwzZjkLjyUT9t/uFTSzflIdlEBEYI5K4q
- IN8eO9AS1TtYYIw4OaAFU0UIfDAyfWImF4E1IwDLihVVPiYEGA0IxPhX98sxqrUQPVloVM6ZdJp
- FbansqzQeiJYtBTDB/GC9K2hMpebizpHPaXVXKkxlW6Lvotd0iwzpEy6OZpvxMpA+TqgoT/ac74
- 2GyFHQIkC1u967er/UVpa/qT4m85rZLRT/fdly1w70E8tJ7JwEy2/6JJ327CGYoF9AhSQ5bH6ub
- BrNdqDRXWXIFgs+Ti//Yeg/L91K023UadIHVKP6sJhsDThkb4QijdOsqsa42RNmuet4Xs5Z5V+0
- HBtK4u2O46rokKGyMTddVCfMr4/EDdV/R65ZpyHK6wZeJgTUeHcS27gOWCjd5HFkc6HZIIfZfc1
- IG9v/hSZJAAC5r5+V0j1PTdD6ERZJxDvhauG7dhMsRUlyy5LBfkPB8utcRfNrV74UnFtjny5lMP
- DYV6MdQ6uAopfJg==
+ bh=LYlALLNnLGBmvLJkUw/CVWFy33xbwEoBffB+2rz9Cl0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiHBJXrrO8hT9LJImCxzq/rvNFPv2J4yLP+7
+ OR/SYaNr3uJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3ohwAKCRDa6OEJdZac
+ 5bdsD/0bEu+4Z/zgvGSZYEEi6qhH2oAtfw+Hba0KPRRrRcir9I2HtCTf/L2XI3V35pWlmbtfjrr
+ eZBhp12TpM6keXXOWBVY8eJ3aax9gZ5gt57GJlhkkUlVoAu3mCS8SF2NQHxue04th001WkfKUs7
+ g8q7uHKlWjgCEip7+qq2eKRDMjflN67EV7uJ4vEYFZKNzXWsvJDGKVsXdTOXx8qLN22xfltCakz
+ q5M/1ozWx+u524c3KL9SyNOKm6di/7yRPfO9WpOkcasl7Uk2BbMBvaxHXx4R/LyfdDhns3B3VRB
+ 2B8FcTM6uCOTGGccYkqHJ7N1xTRLt9jKM5rgTxEdPzF2cGVn6ulSmnf/GP6pfz/5g1O18T1k53X
+ kDzrrCvTbI+KPa8JNByJJYTV4X+I1tRlBT55KccdQHjG8WV4FwB/Iu/9Qfoas5DZYp/yI9NBOBN
+ MIX0T71rClJgLXcRkbW92FsuxysHGja4+pn115M/hOls4RBhZVTDUOAgjea/jXDVBA+qVe7qbmO
+ xp35WyoyBuwqi4mosG6FcLpDRPAkz+7CMUchvNxr/6iy3vBovxpb/bbnbhqhjiNDoYTMttdocSz
+ 4J54OFKAWJjquAjLSAYkx/Mf6PwYiA86OIWaRu3pAQnzpu+GJFrEC7FadnuOkbRE90lYUTlNTqf
+ 5/2qIV7aZ7PZC/Q==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,47 +108,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The pnv-xive2-test and pnv-host-i2c-test pass "-serial mon:stdio"
-but never use HMP commands. The "mon:" chardev prefix creates an
-HMP monitor mux, which fails when HMP is disabled. Other pnv tests
-(e.g. pnv-spi-seeprom-test) don't specify -serial at all.
+The test was using 'human-monitor-command' (which requires HMP) to
+verify that an integer 'id' is echoed back on failure. Replace with
+'query-name' for the success case and 'block_resize' (missing
+required args) for the failure case, so the test works regardless of
+HMP availability.
 
-Drop the unnecessary -serial mon:stdio option.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/qtest/pnv-host-i2c-test.c | 2 +-
- tests/qtest/pnv-xive2-test.c    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ tests/qtest/qmp-test.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qtest/pnv-host-i2c-test.c b/tests/qtest/pnv-host-i2c-test.c
-index 5fd54f9de771..f97f6f65eed3 100644
---- a/tests/qtest/pnv-host-i2c-test.c
-+++ b/tests/qtest/pnv-host-i2c-test.c
-@@ -414,7 +414,7 @@ static void test_host_i2c(const void *data)
-     }
+diff --git a/tests/qtest/qmp-test.c b/tests/qtest/qmp-test.c
+index 3a325a04e07b..927ab053f8ab 100644
+--- a/tests/qtest/qmp-test.c
++++ b/tests/qtest/qmp-test.c
+@@ -151,9 +151,14 @@ static void test_qmp_protocol(void)
+     g_assert_cmpstr(qdict_get_try_str(resp, "id"), ==, "cookie#1");
+     qobject_unref(resp);
  
-     qts = qtest_initf("-M %s -smp %d,cores=1,threads=%d -nographic "
--                      "-nodefaults -serial mon:stdio -S "
-+                      "-nodefaults -S "
-                       "-d guest_errors",
-                       machine, SMT, SMT);
+-    /* Test command failure with 'id' */
+-    resp = qtest_qmp(qts, "{ 'execute': 'human-monitor-command', 'id': 2 }");
++    /* Test integer 'id' is echoed back on success */
++    resp = qtest_qmp(qts, "{ 'execute': 'query-name', 'id': 2 }");
+     g_assert_cmpint(qdict_get_int(resp, "id"), ==, 2);
++    qobject_unref(resp);
++
++    /* Test integer 'id' is echoed back on failure */
++    resp = qtest_qmp(qts, "{ 'execute': 'block_resize', 'id': 3 }");
++    g_assert_cmpint(qdict_get_int(resp, "id"), ==, 3);
+     qmp_expect_error_and_unref(resp, "GenericError");
  
-diff --git a/tests/qtest/pnv-xive2-test.c b/tests/qtest/pnv-xive2-test.c
-index 9f67a0066864..a0892c0f8e89 100644
---- a/tests/qtest/pnv-xive2-test.c
-+++ b/tests/qtest/pnv-xive2-test.c
-@@ -552,7 +552,7 @@ static void test_xive(const void *data)
+     qtest_quit(qts);
+@@ -487,6 +492,7 @@ static void test_qmp_monitor_remove_cli(void)
+     qtest_quit(qts);
+ }
+ 
++#ifdef CONFIG_HMP
+ static void test_qmp_monitor_remove_hmp(void)
+ {
      QTestState *qts;
+@@ -504,6 +510,7 @@ static void test_qmp_monitor_remove_hmp(void)
  
-     qts = qtest_initf("-M %s -smp %d,cores=1,threads=%d -nographic "
--                      "-nodefaults -serial mon:stdio -S "
-+                      "-nodefaults -S "
-                       "-d guest_errors -trace '*xive*'",
-                       machine, SMT, SMT);
-     init_xive(qts);
+     qtest_quit(qts);
+ }
++#endif
+ 
+ int main(int argc, char *argv[])
+ {
+@@ -521,7 +528,9 @@ int main(int argc, char *argv[])
+     qtest_add_func("qmp/monitor-chardev-in-use",
+                     test_qmp_monitor_chardev_in_use);
+     qtest_add_func("qmp/monitor-remove-cli", test_qmp_monitor_remove_cli);
++#ifdef CONFIG_HMP
+     qtest_add_func("qmp/monitor-remove-hmp", test_qmp_monitor_remove_hmp);
++#endif
+ 
+     return g_test_run();
+ }
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
