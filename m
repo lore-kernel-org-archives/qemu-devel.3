@@ -4,172 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE506C5B572
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 04:27:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CF70C5B572
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 04:28:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyikr-0008HC-IO; Tue, 25 Aug 2026 00:27:21 -0400
+	id 1wyim0-0000Ib-Jk; Tue, 25 Aug 2026 00:28:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=690dc056c=Alistair.Francis@wdc.com>)
- id 1wyikp-0008Gt-Dl; Tue, 25 Aug 2026 00:27:19 -0400
-Received: from esa4.hgst.iphmx.com ([216.71.154.42])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1wyily-0000Hv-92
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 00:28:30 -0400
+Received: from mail-eastusazon11011014.outbound.protection.outlook.com
+ ([52.101.52.14] helo=BL2PR02CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=690dc056c=Alistair.Francis@wdc.com>)
- id 1wyikn-0004i3-TA; Tue, 25 Aug 2026 00:27:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
- t=1787632038; x=1819168038;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=RhBXMNo3b3OJIrvphpSG8bLbhebR66lZAcCe9NPcR80=;
- b=IrSnu7KEXcIqmMT+NmoXOTiDG9233xr8UARpD0ICpIsaBwLQg46eiv+8
- Gk3EOfNB3zLeDse7/rIFt+jKNAlShWgl3GVhgEHd0DwciAfhEpPjejED9
- GHfnp/+GyI+HMaLtQI/sOHuaA4mit0x2XcMjjrIsj16tFo51vVS3NThWX
- 5HxL2Huim5HTyhyhYXRTGlCRnId1cYroNWQCbfC9hQJqnZ2ULDB8J1fuu
- PKKl3dUdB7doJAotD7xNyrOKCEU/uLaKbwpGE+PB2az1o2AleKX9zyZxq
- kb/FyTxXZC4Mvbxq/HUCD/jbxvCb+pdyFdIUP18PnCn2OnLzape/VtnZR w==;
-X-CSE-ConnectionGUID: C0RZfS08QuWecQAHoAoJ0Q==
-X-CSE-MsgGUID: F6nAhqXhTIWfYPxaLPmIeQ==
-X-IronPort-AV: E=Sophos;i="6.25,242,1779120000"; d="scan'208";a="150005026"
-Received: from mail-centralusazon11011016.outbound.protection.outlook.com
- (HELO DM5PR21CU001.outbound.protection.outlook.com) ([52.101.62.16])
- by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
- 25 Aug 2026 12:27:15 +0800
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1wyilv-0004wU-P3
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 00:28:30 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SYAC2LX+mXCxsq0uQogbiYnFZph0WmMGd9mXABqCL/16v3ww3zBH33daZMAZ2CqeUICsd53MSq96hCOAAYAUzCLzAuJLiY+W/zGg1Cb1sYP6whBzK1ugWxFx8VxRJHOxTJeFRc/lzHwWKypjPhUZ76ybvOui3K9YRLKq+zfLv/bVitox+IdNH8t9TOFkoDtsQF/g9ocs2bJqihju6yirI7Xe/UDgjsEDnBrS8ZTlcTAgfdRwJOfRjI96O806ooP1BjDa60GbGFs6Ca3MQw0GTxZBybJYNPk6z+hze9lraKQAHBNxyHgBJkZMZXDJRfo1hbRBA9JI55JuT2c1r9X9Jw==
+ b=aAbkLN56jBMBmxqNETWwbKjOozPwjswhinu/yP/NwaWudWm46tctxICJeNvqHk41jHwHoxVQx3AopSxDI8DzotwDlArEbo9yPtouSjxCU6oALh0GU8vu7G6/dRByC55T6FTXdwBbwFbtmhpjqRcvwnHVQTjS4Xp7/beWyEMMFrPM48Aab/KozxSLMRTq3ihRAZJz+ttKCuPF+9hhhBvQ5FEtaTU9ZDorqkOOUNJ5oKp767xJDvRZJAanFrnO48t/7L3r2Bik/f6MvoV10tTAItYEGJfqowIrBY4hhhuJPIzV1tejS2sKgYcDafbGHyjrhic39NDXE2JRRuA/o15L6Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RhBXMNo3b3OJIrvphpSG8bLbhebR66lZAcCe9NPcR80=;
- b=Sd9zqDD6L6NW1AVQaZc66yMYVsQckj5RPKn39x0BK3qh1fbFBMMxNlFohUlbU+mc2mSorfgFBNy3oLL1JBE7IViqp3jfLI8MpoUZyrfrHcQP6n1px0MDRcQlo/EwYDOgFJPyjHF3I6ib1kmQtQOF5Dj15ShCLOmGbS0ngXVgzUcsK6Nk+le33K0p2J7SKr8JIuyp+hhUu/X630Vipd9xU11xkL77nXsRF3bDs1hmAg/FOPScR6VSnxyK/yDKHt9b3jhsL3ywT5Hsx3+GnPX8l2h/E8z3GVIof9tNQR+8IJw1pVtLj4DqfKUDwQ1wHpOLHUrXSOkgeFN1ZySkSi8F1g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
- header.d=wdc.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ bh=2ZusMZMR1qKVMl4/RdpTVCmYovRRUDMh6DX762OPWqg=;
+ b=RXouUPjNEfZNLwiHVf4f92jYID5zSf/vfnvU4Fj2I4vJGDJgH4YrKrC58MXok2v0rWdMonJ6evItmWUE71utkIiNGM65WZNU603XM1u1EJCzAngDEte9I7dcytkVNRmraAYq5LD5rfnAoGEnj04o7VUcjXjcKfOUeyuG6pOVmBoQH8w4/HJnpAy8myAY/RkdviPqWXX29QLBK+UjI0dUbbP5kNybMsdkLFdIdqnDN+eMppV3FJ3VtmNbG30GttcxzQq1jn/jXHAiY327yNebcgWAMOvkTz9H3F4YrHpjYdrnVqA/KJ+gsJ1tp1h3k/phgi5Mt44x0gqBAMFpaSaFlA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
+ is 149.199.90.133) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com;
+ dmarc=fail (p=quarantine sp=quarantine pct=100) action=quarantine
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RhBXMNo3b3OJIrvphpSG8bLbhebR66lZAcCe9NPcR80=;
- b=g8pYl/mnkkPVv6djDU9gjOcvNhkd2XHu3lJJDuHy4dB1IA6Ldu9tfocoZj52kEZHlZG4CW5nRqBmndfzvhjaedb1Cm9nW3hDsFcCFC3x15sDv2lky4/yemFt0dW2caAsfHWCP/qeQZaiZE2quLzwma6LH4iD9NDsUPBFbiBLXZE=
-Received: from BY1PR04MB9561.namprd04.prod.outlook.com (2603:10b6:a03:5b6::11)
- by MW4PR04MB7203.namprd04.prod.outlook.com (2603:10b6:303:7a::24)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.6; Tue, 25 Aug
- 2026 04:27:13 +0000
-Received: from BY1PR04MB9561.namprd04.prod.outlook.com
- ([fe80::3869:e494:2fa8:9888]) by BY1PR04MB9561.namprd04.prod.outlook.com
- ([fe80::3869:e494:2fa8:9888%5]) with mapi id 15.21.0360.005; Tue, 25 Aug 2026
- 04:27:13 +0000
-From: Alistair Francis <Alistair.Francis@wdc.com>
-To: "max.chou@sifive.com" <max.chou@sifive.com>, "qemu-riscv@nongnu.org"
- <qemu-riscv@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "palmer@dabbelt.com" <palmer@dabbelt.com>,
- "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>,
- "chao.liu@processmission.com" <chao.liu@processmission.com>,
- "frank.chang@sifive.com" <frank.chang@sifive.com>, "liwei1518@gmail.com"
- <liwei1518@gmail.com>, "zhiwei_liu@linux.alibaba.com"
- <zhiwei_liu@linux.alibaba.com>
-Subject: Re: [PATCH v2 3/6] target/riscv/cpu: Add SiFive custom int8 matmul
- extension implied rules
-Thread-Topic: [PATCH v2 3/6] target/riscv/cpu: Add SiFive custom int8 matmul
- extension implied rules
-Thread-Index: AQHdKoJHmBEnHzURM0e0NlZPadgb8LauPvsA
-Date: Tue, 25 Aug 2026 04:27:12 +0000
-Message-ID: <d3357e11c9495df27ad956908383a212eaea4def.camel@wdc.com>
-References: <20260812174417.2468981-1-max.chou@sifive.com>
- <20260812174417.2468981-4-max.chou@sifive.com>
-In-Reply-To: <20260812174417.2468981-4-max.chou@sifive.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Evolution 3.60.2 (by Flathub.org) 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=wdc.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BY1PR04MB9561:EE_|MW4PR04MB7203:EE_
-x-ms-office365-filtering-correlation-id: 3eed4bac-fbdb-4c33-621a-08df026122dd
-wdcipoutbound: EOP-TRUE
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|19092799006|10070799003|1800799024|23010399003|366016|376014|56012099006|10067099003|18002099003|22082099003|11063799006|4143699003|38070700021;
-x-microsoft-antispam-message-info: 8KojcutDBy/oJlmPaIUKdkWzHlyw+WHLuQV7PHdO7hyWdfCCFgxip04L11j97GyQvpTkUMR43BLKIHMbk1t186In6CJHZZr+Hpu+naK6x+oezTs73wYSmyAbH6ou4i0vf232c9pDxTrKdoLKzNImU3OQK+ekW0gCQJw05i4v9TCyhVKkXj3sPPibQ4x1MyNmZppsK7J1x8UHRhzbat0CrG+wbES/Jgtxu6QUx9BKkuRbK/2jTnCNXOCx6POl69usTVV6sf+YwRAMwaHQH/6UCxOc6Gh0N4/h49jk4fTANxTOvhvYH1kMbXWCf57iDgS6UgPODDRhRKKXyDZVPiLeAibv/mHYvjUQJEj9gx1UUsLclor7Ku0kA7OCKThgAeuS0CFxTOZWG+S8UAouArg0Zdv4KJ+c9nGHhJqX5j1p102U3ZV/ComOeZ3WCZxdXl8wKQuYQbE5t818dIzTu9ZYi3hhrJDQaiwuAy24IuxibE62rVoXR0qdzMo3K9piRxsbRkBFokcVH2UzZCVLcVQQUsJ+Wpm/fbna+6NN2vwb7+H+ysL/PUe3Zp17MGgKeuAqPbA8mlfcWWazhDvdlVCKDmTn5csTavFPh9SnsZdHp0laiBxOvUIJpN7+L4QA5LccAnwX38nvRt8gVVv9EL1oWiJBAr7lUmFA35okcDLInT8LzVVSjJL5N17KzbyY/SYFacPO6YuHq7Q9ckYJWnqn6lTWP5kUp9hJQ2FIL8Hcifk=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BY1PR04MB9561.namprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(19092799006)(10070799003)(1800799024)(23010399003)(366016)(376014)(56012099006)(10067099003)(18002099003)(22082099003)(11063799006)(4143699003)(38070700021);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 2
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?aXZ5a1JQN241bEI0TjhtTlkxK0w0OUtudHhUS2tuSXozNEt4eEEyOTArM1dL?=
- =?utf-8?B?b2cyVkRwaHUyOFZhRHM0KzVqY0tTWXRtelhYRXBGQTlib09xWTBUVm5lVHBR?=
- =?utf-8?B?T2x5bGdNWkYwWEplT3hLT2Rtd3JsTkRraVBEZDhsS0dSNXg1NU9KR2FXb092?=
- =?utf-8?B?MzdsZk5rNUVjRFpkWjhieWFXU0xweW41aEc1andVMHdmS0RJUW5OUFlJYnc0?=
- =?utf-8?B?aS8wS0t3OG41RGNIU0d1MXRocjRaa1VYTktLSjZyN3dWMy94VkFFRy9yNGJQ?=
- =?utf-8?B?MVRneDZQajdtdURMclQ1VzAzQm85SXJBYVQzSXgzRlE1akFZNUdmMmx5eUV2?=
- =?utf-8?B?d296S3RQTHJBVEJHQVo4Uy9yekxSckZzcG9tRllLVExYZ2g1d3RGcG85TEJx?=
- =?utf-8?B?VUY3S3QxTDhCcDJDZGwwVFFyZkZ2SEY0UFhteXdkQkpmR084dmVwdUZscDdl?=
- =?utf-8?B?S3Jkd295SkZZYnFCZ0l1Z2xWRDZCMHRoNnAxUnVVVWZ4cDU5RHZ1K3JEU2NS?=
- =?utf-8?B?Z2t5QmNlTDEyRVB0UUpWRGFnSGc0eWNtUjZhb1VMSzV6Yit2MkdyaFI1ZGw1?=
- =?utf-8?B?R1F5TTlMV1d6WVg4UjE4YksyYURVVUFuS3I2cHlBVnpRZEl5QldYdWF0dlk3?=
- =?utf-8?B?VVg3RWRac2xtK2poeG12aERCdWI0YURWbTQ3dE9iZCtBSkF0cDBwRmZOeVpU?=
- =?utf-8?B?eFNuZnFZdGpreC9BQXJ4eVVNcGJTRlN2N3NkTW52ZmtoTm91cHhDSkFXZW5x?=
- =?utf-8?B?S3Z5QVovc0gyaHcvL1JtdWJkTUJ2RjY2ZVhPd0ZTcGwvTE1XNHZFZkMyNzlx?=
- =?utf-8?B?UHlYRzV4enNyTDRWc3Z2dUl5dmNZMDYwZ2h5VWxrZG03NXhKUUNtRlFsby9x?=
- =?utf-8?B?S1plaUFjdmFHM3BHYnJab0tkS2ZZYi9KVUZOVWhMbXJEWmg1VVFXS3dKMC8v?=
- =?utf-8?B?a0U2UkpJMWdEQ01pSkZLMkZxdE13VVBXWFFWdGhnVzJ4N01hVnhRNlV1WUI3?=
- =?utf-8?B?UkM3bW96ODJDc2NYSzAvSVR6emlucjF3bVVnYjgvTVFMb0VFMjUxT3hDUXpL?=
- =?utf-8?B?N2J3bmhBcXNYWmsrcmliT3VFazNEOWNlOVFZSEgxak4zVVlhb096MW91dFUw?=
- =?utf-8?B?QUlQVlNRUkpkZUxPVTM4NjBIMjZVYUduWXFSZG1rZUVYVmdyZVkzdkhwejJm?=
- =?utf-8?B?T3E3dlR6TmovL2QyZnpLRmdHbTlnb0h6eUpVV1JKaWpJL1h1VHBaZnhwZ250?=
- =?utf-8?B?dlZMckZWdElFOGY2dE81c2x5V1NDOGl4YkZpcCt2emNPNVUxNG1FTGN3aEJm?=
- =?utf-8?B?em5iY000TnhTK2toUmh5ZDJ6TzlVbnp6SWxuZ3FyeHkxakR6ZGZ1YlNXUm1S?=
- =?utf-8?B?aGo5cFhEeDNmTWs4THFVWnNuSHBDcmtBSzhrc2VFaDAyRm93N01MVitVZits?=
- =?utf-8?B?QTFJNHduWURkSjRuZW80N09OVFJsQ3lQMlJoUmpNbXpMWWRyeEdhd0FZZVFv?=
- =?utf-8?B?NUpndjUvYllkVUkvSW14WEdOdUM0Zi9ySkk5b1A3aDRlZDFmUVR1dmMwYmNs?=
- =?utf-8?B?UVhXek8rZ2hnSzU5a0dIM1BHbFl1eWs1VDE5RUxsYjBpbWRkNnZDWGV4bGo1?=
- =?utf-8?B?ZlQ2RFp5WDAwMXJEK2FNNTVKb2hIMlJ2K0xyT0N1NDZraEpKYm13RHVJTGhl?=
- =?utf-8?B?N3ErN3ZCd0R0Y2FGcGIxQ3AxVXFuS2gvaG5LYkpmQkZLL2xBQVpBNTB5YXJD?=
- =?utf-8?B?OUpBVE8yaDhlOXdReFh3RTZjRmRSRWZnM2dmZmRCV0ZmR1cxTVF5Y2dxYlhW?=
- =?utf-8?B?SmZEemxDRnp5dVFPMzZLdnN2UXIwZTNQYXFWL3dDaE16K0lmanJZTHhnOFBX?=
- =?utf-8?B?amNHM3dUSk1hNDhITGhzcU00d21ObmZRcnVmdjRqaUZZUnZoMFE3dkUxc3Fz?=
- =?utf-8?B?T3A3SG5WRCtlSUI0Z1g5MXRpc3U2dCtQRlEzNjRNZmljYVViK3daSW9wSVRx?=
- =?utf-8?B?b3lWTWdhVnNXTzJ3S0EveHpOb0V4YVVJemR4VGQ4Sm41TEs5QXRFUUxUVlFi?=
- =?utf-8?B?VXRxL3pCQlJpMEZBTUozVFV5bFFNVU9WRW9UUlhaQnlweTdjK0NNS0dmbFpB?=
- =?utf-8?B?OE9tRExLWmtoUEhJSTlKYW14UFVhSmRncGlyS2J1Wk5CRWJkbWp3NXhHcUFq?=
- =?utf-8?B?QmpzWHVzQjltT0tDdnZSTkRuaCtBUVltVGFvQ2p6emh5d1VCVEhWQ2ZyV2t4?=
- =?utf-8?B?Z3l6QlBEZm4vSnVSeEI3Y0E0ZkJKMWhHN1V1UjdaMTUrRkhIRW1tSlFEaERE?=
- =?utf-8?B?ZDQ5R0IxenJmZitxSDBpN0hrVDNnaVR1djNXQTdLUkxaUkhKSUVrTU4veXZ2?=
- =?utf-8?Q?b6+rkFmewPj1cwZqXtiNp5eDZHxMU3a5b2961DT7FhmDy?=
-x-ms-exchange-antispam-messagedata-1: UUWrTLZrCj62qls9hisnPG9vDfsV3Yusag8=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <D218E0DC6290DE4BA73B21C7D74D2691@namprd04.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ bh=2ZusMZMR1qKVMl4/RdpTVCmYovRRUDMh6DX762OPWqg=;
+ b=xvmI3To4ROA90teDK/DG2dSNA83DWlDY0yfNhtqBLEfdnZC7WD2eqhjJvTn0uA2YTw+oNnbGfwT46gOhEYZMRYMsDBo8ey5h9t/yVD/49WDc0uHUa4eCKIoaEbkeh6BFfSoz3iP7cIKDFW6idxudOE6FINW4u9Xb0gT/SPwmVig=
+Received: from CYZPR17CA0012.namprd17.prod.outlook.com (2603:10b6:930:8c::16)
+ by DM4PR12MB6326.namprd12.prod.outlook.com (2603:10b6:8:a3::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Tue, 25 Aug
+ 2026 04:23:18 +0000
+Received: from CY4PEPF0000EE32.namprd05.prod.outlook.com
+ (2603:10b6:930:8c:cafe::88) by CYZPR17CA0012.outlook.office365.com
+ (2603:10b6:930:8c::16) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.360.7 via Frontend Transport; Tue, 25
+ Aug 2026 04:23:17 +0000
+X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is
+ 149.199.90.133) smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=quarantine header.from=amd.com;
+Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
+ amd.com discourages use of 149.199.90.133 as permitted sender)
+Received: from satlexmb07.amd.com (149.199.90.133) by
+ CY4PEPF0000EE32.mail.protection.outlook.com (10.167.242.38) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.360.3 via Frontend Transport; Tue, 25 Aug 2026 04:23:17 +0000
+Received: from localhost (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Mon, 24 Aug
+ 2026 21:21:30 -0500
+Date: Mon, 24 Aug 2026 21:20:53 -0500
+From: Michael Roth <michael.roth@amd.com>
+To: Peter Xu <peterx@redhat.com>
+CC: <qemu-devel@nongnu.org>, <jmarcin@redhat.com>, <david@kernel.org>,
+ <pbonzini@redhat.com>, <chenyi.qiang@intel.com>, <farosas@suse.de>,
+ <aik@amd.com>, <xiaoyao.li@intel.com>, Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?=
+ <berrange@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>
+Subject: Re: [PATCH v4 00/12] KVM/hostmem: Support init-shared guest-memfd as
+ VM backends
+Message-ID: <mjoftyyoki5ho7qwh5g2rlbizybf2yrumcjdrb2ycy3hgglqsx@4nphsdgorlc7>
+References: <20260812201938.198915-1-michael.roth@amd.com>
+ <aoheMqE-RnH8sQ82@x1.local>
+ <3fwr25hmoz7yicoh3o3x3ldeweapn2tbn4dnji67hgrnz7l5bh@rs7gqotxraef>
+ <aoxEfKoYWtdOSwH_@x1.local>
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: FLpu5/hNTUrGrcepc3TBt00TX+9c7EV+3SZXRSfH8UAzrZFjuoepJjMRF1kppKzfZD4M9zoQQr0ugAB5g3z+eRJYGYMMQCJH8Vu6rsU2D4Uu8tdSJm5Qb2xiLwdP3Rh1vkz11qUAY1iSx9MoraKvfJcvtOdg+PLbMWU7TBLKiPWbtHooL2xVw/k0pA28AMulRL9QzWjtVSBOnZ95NlrX50scARazNzZH8iGBGkmuF5uLIizelJEEXlOemJoWv2Ezd+LjRSN5rsqN8Vpd08z6Au2O6VNv8Zvjp6SisswIy39i5xeX1sXw3ykw8XdiGbEYx0Z8IqTqd8+bwn8rVqynlQ==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 6KPyrKkbOVUmwOTxgrPT2en4/ccU6Khkzi2KP9VLxYs8m/gSkLdoMzuQgU2m0RbjlWVv8CJJDFJ3rHjzlR4Lta/7pcf1xzUXY1XMQEW3OHccZGIDTXNh2949YlI6zckmSFuCQI60Saa/n4lriwnUof09IcLSMQiDGwG7LQJ7VlF6fTw/NCxMbKO/FLtIlqC+wj3OWTT38jkdH6CqeeecGpWAlV2bfhRq4DhjqjDgBLdDNCeiDFkkB+fnLV6Q9RjR4oz046q4UV06Q8AkcS9pZVvvHfkdNJ5WnJJxVqCvBbK0NAuhbLiHj2o3volwgnGRMtbNln2BkOV1z9tzD+OaJZqu1EpeQix4Zv+fU1NODGMxWZSnkVWeBexxM+cxGtuUaS46Xn5Uf7w2Dnoz9LiUT7OChPDQFmlkhXGAiwJIYD/vSwwQTpVPvYuugEn42JzIyWEdZwKU0yrSNxTaE4QaEVWHJ8GENspBLn7f0ZD+bGzLwHJwLlZ9Ge+S3C6DP1jChCq6JrVbde1vR5j6EHT8fiP6CYfBmqJb6qie4z6EpKxc9U/Zdyha5nnKP7ndewsDjVhAxKwwFWtHWVnqfY3xbOsCfq9QyTscSS0C/4rSINWmGmvElvN4z181Y4hOZ4J7
-X-OriginatorOrg: wdc.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BY1PR04MB9561.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3eed4bac-fbdb-4c33-621a-08df026122dd
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Aug 2026 04:27:12.9775 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: j2AfaU7/3i1zGFRLWTs8flBR95Md6CxV8HiGhDz6k0i8G/4khp7W4sBmgpZq4ayUhsWn/rH0Donibk7Cyk8iPunsCJoyN9MScx7iAhf7v1E=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR04MB7203
-Received-SPF: pass client-ip=216.71.154.42;
- envelope-from=prvs=690dc056c=Alistair.Francis@wdc.com;
- helo=esa4.hgst.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <aoxEfKoYWtdOSwH_@x1.local>
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE32:EE_|DM4PR12MB6326:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6475fac0-7265-4414-71fa-08df026096c7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|30052699003|36860700016|23010399003|7416014|376014|1800799024|10067099003|4143699003|18002099003|22082099003|11063799006|56012099006|13003099007;
+X-Microsoft-Antispam-Message-Info: q8SV3fFUL2pSsCxvcYlR5cw1Ae9OPIPhWxve6TEV5ePHXJooMWDdvO0TjnknaJW/FjsBahePOdtEEbUKnkKxQBXu1k9RbkwBJ2pUFdjdK+PzFvBZBjcHIW8qxxJZEK9Atx0bhzZwg0Dc9AsG3AE16KLLwrVcZieg5TteGneWdLmeBrm1/3ZvJVYyCO2PEZmqi2ZP20lJpeC6kHXwF82oAsCStfPHNTBHlXZHTePpZvOteOAyUfjhXbuoWRlUu/dcr9OR//JJ8VY21fIbsE3LcTCEBQQZG15jhCgGWl1LdrQ2+RmpYyQ+f+mPy+l3wPRRjnmz0F181JKpMJmmAmvwebMbBwtqaoUPI1W9ioT5S2V4hGo3oAKIgTkL66N7clhd4An88szF9kZy9WgABJOWlWSbsV79oQB4JKbFUHu8TqhqEKfHhNzm63m38A5n57r2X0leuLtR9AoRad901a0KKc0ir42ICPlomFcUxFiqwMusKR6GAkJfn0KbI450JDenUmYK/jgqovhfOoMitRjf8A81HsPwafO0KAOfz/leou0eYwoKaRtz1430S5dobbMFQr476MUIE4GNsRJFT6lbHTq90jQmE1rV3XPszFtOgEYF/t+NuZmJIdbLvewZd/aXWIYMxq4NrTIPPVIskzGjJwx2TTBvigRkstte0oi2Oco5Anv/KGPMp4FB+T5aVD24hrZkXFdLPw8cqoFtX3esig==
+X-Forefront-Antispam-Report: CIP:149.199.90.133; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:unknown-90-133.xilinx.com;
+ CAT:NONE;
+ SFS:(13230040)(82310400026)(30052699003)(36860700016)(23010399003)(7416014)(376014)(1800799024)(10067099003)(4143699003)(18002099003)(22082099003)(11063799006)(56012099006)(13003099007);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: yDu86C1FXBF0MxZJvBOSQy73tGixX5XHOtGXdEaA8kOF5SMFxWDnaSbM9fZNuR2HUdIsTd+Pyh8vAdITWVT2GUumEC31H9YlVcQb003zG+NakYH6xFfVaVNI1XYULPx3YRrz2ue3MNMp3yp3aQh9JZ0f3Qfin0+wxUNrfyxs91Uqwltl6TaGauu72LN+ejJSvVUIT/qQla7ZlIRO8RLfsqesdLx2roCaiTuA6ZTEghJ9mqnHoTjrHAi7n4bPjR8eFMGtFk/rSRZVS/2nuMCOs3vQt1mAXzjPeYL5QMM2jX8Azz3qxIbUeWKMfQwhcCJpRr5UvpK3cL00XcAa6f0uztrwjM59Mo3nkScoF2tbJTzVguBi+FjDjh5Iz8evZu46jhCSVAnaN0ATzCAoqziuOVuxJRGKOryhouSJ3EQn7f31ygG8dGCkKxwcFp+MS2dA
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 04:23:17.8763 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6475fac0-7265-4414-71fa-08df026096c7
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[149.199.90.133];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EE32.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6326
+Received-SPF: permerror client-ip=52.101.52.14;
+ envelope-from=Michael.Roth@amd.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -186,36 +132,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gVGh1LCAyMDI2LTA4LTEzIGF0IDAxOjQ0ICswODAwLCBNYXggQ2hvdSB3cm90ZToNCj4gRnJv
-bTogRnJhbmsgQ2hhbmcgPGZyYW5rLmNoYW5nQHNpZml2ZS5jb20+DQo+IA0KPiBBZGQgU2lGaXZl
-IGN1c3RvbSBpbnQ4IG1hdG11bCBleHRlbnNpb24gaW1wbGllZCBydWxlcyB0byBlbmFibGUgdGhl
-DQo+IGltcGxpZWQgZXh0ZW5zaW9ucyBvZiBTaUZpdmUgY3VzdG9tIGludDggbWF0bXVsIGV4dGVu
-c2lvbg0KPiByZWN1cnNpdmVseS4NCj4gDQo+IFNpZ25lZC1vZmYtYnk6IEZyYW5rIENoYW5nIDxm
-cmFuay5jaGFuZ0BzaWZpdmUuY29tPg0KPiBTaWduZWQtb2ZmLWJ5OiBNYXggQ2hvdSA8bWF4LmNo
-b3VAc2lmaXZlLmNvbT4NCg0KUmV2aWV3ZWQtYnk6IEFsaXN0YWlyIEZyYW5jaXMgPGFsaXN0YWly
-LmZyYW5jaXNAd2RjLmNvbT4NCg0KQWxpc3RhaXINCg0KPiAtLS0NCj4gwqB0YXJnZXQvcmlzY3Yv
-Y3B1LmMgfCAyMCArKysrKysrKysrKysrKysrKysrKw0KPiDCoDEgZmlsZSBjaGFuZ2VkLCAyMCBp
-bnNlcnRpb25zKCspDQo+IA0KPiBkaWZmIC0tZ2l0IGEvdGFyZ2V0L3Jpc2N2L2NwdS5jIGIvdGFy
-Z2V0L3Jpc2N2L2NwdS5jDQo+IGluZGV4IGZmZmI5MmZmMTEwLi4yNjVhOTJhOGI3ZiAxMDA2NDQN
-Cj4gLS0tIGEvdGFyZ2V0L3Jpc2N2L2NwdS5jDQo+ICsrKyBiL3RhcmdldC9yaXNjdi9jcHUuYw0K
-PiBAQCAtMjgxMSw2ICsyODExLDI0IEBAIHN0YXRpYyBSSVNDVkNQVUltcGxpZWRFeHRzUnVsZSBa
-VkZCRkFfSU1QTElFRA0KPiA9IHsNCj4gwqDCoMKgwqAgfSwNCj4gwqB9Ow0KPiDCoA0KPiArc3Rh
-dGljIFJJU0NWQ1BVSW1wbGllZEV4dHNSdWxlIFhTRlZRTUFDQ0RPRF9JTVBMSUVEID0gew0KPiAr
-wqDCoMKgIC5leHQgPSBDUFVfQ0ZHX09GRlNFVChleHRfeHNmdnFtYWNjZG9kKSwNCj4gK8KgwqDC
-oCAuaW1wbGllZF9tdWx0aV9leHRzID0gew0KPiArwqDCoMKgwqDCoMKgwqAgQ1BVX0NGR19PRkZT
-RVQoZXh0X3p2ZTMyeCksDQo+ICsNCj4gK8KgwqDCoMKgwqDCoMKgIFJJU0NWX0lNUExJRURfRVhU
-U19SVUxFX0VORA0KPiArwqDCoMKgIH0sDQo+ICt9Ow0KPiArDQo+ICtzdGF0aWMgUklTQ1ZDUFVJ
-bXBsaWVkRXh0c1J1bGUgWFNGVlFNQUNDUU9RX0lNUExJRUQgPSB7DQo+ICvCoMKgwqAgLmV4dCA9
-IENQVV9DRkdfT0ZGU0VUKGV4dF94c2Z2cW1hY2Nxb3EpLA0KPiArwqDCoMKgIC5pbXBsaWVkX211
-bHRpX2V4dHMgPSB7DQo+ICvCoMKgwqDCoMKgwqDCoCBDUFVfQ0ZHX09GRlNFVChleHRfenZlMzJ4
-KSwNCj4gKw0KPiArwqDCoMKgwqDCoMKgwqAgUklTQ1ZfSU1QTElFRF9FWFRTX1JVTEVfRU5EDQo+
-ICvCoMKgwqAgfSwNCj4gK307DQo+ICsNCj4gwqBSSVNDVkNQVUltcGxpZWRFeHRzUnVsZSAqcmlz
-Y3ZfbWlzYV9leHRfaW1wbGllZF9ydWxlc1tdID0gew0KPiDCoMKgwqDCoCAmUlZBX0lNUExJRUQs
-ICZSVkRfSU1QTElFRCwgJlJWRl9JTVBMSUVELA0KPiDCoMKgwqDCoCAmUlZNX0lNUExJRUQsICZS
-VlZfSU1QTElFRCwgJlJWR19JTVBMSUVELA0KPiBAQCAtMjg2Miw2ICsyODgwLDggQEAgUklTQ1ZD
-UFVJbXBsaWVkRXh0c1J1bGUNCj4gKnJpc2N2X211bHRpX2V4dF9pbXBsaWVkX3J1bGVzW10gPSB7
-DQo+IMKgwqDCoMKgICZTTUNUUl9JTVBMSUVELA0KPiDCoMKgwqDCoCAmU1NDVFJfSU1QTElFRCwN
-Cj4gwqDCoMKgwqAgJlNTU1RBVEVFTl9JTVBMSUVELA0KPiArwqDCoMKgICZYU0ZWUU1BQ0NET0Rf
-SU1QTElFRCwNCj4gK8KgwqDCoCAmWFNGVlFNQUNDUU9RX0lNUExJRUQsDQo+IMKgwqDCoMKgIE5V
-TEwNCj4gwqB9Ow0KPiDCoA0K
+On Mon, Aug 24, 2026 at 09:17:48AM -0400, Peter Xu wrote:
+> On Sun, Aug 23, 2026 at 10:52:13AM -0500, Michael Roth wrote:
+> > On Fri, Aug 21, 2026 at 10:18:26AM -0400, Peter Xu wrote:
+> > > On Wed, Aug 12, 2026 at 03:16:38PM -0500, Michael Roth wrote:
+> > > > v1: https://lore.kernel.org/r/20251023185913.2923322-1-peterx@redhat.com
+> > > > v2: https://lore.kernel.org/r/20251119172913.577392-1-peterx@redhat.com
+> > > > v3: https://lore.kernel.org/r/20251215205203.1185099-1-peterx@redhat.com/
+> > > > v4:
+> > > > - Picked up v3 series from Peter Xu and rebased on 11.1.0
+> > > > - Collected pending Reviewed-by's
+> > > > - Per-patch changes:
+> > > >   [01/12] Fix blank space (Xiaoyao)
+> > > >           Fix commit message typos
+> > > >   [02/12] Drop duplicated error-handling for capability checks
+> > > >   [05/12] Fix up commit message, disambigurate "in-place" terminology (Xiaoyao)
+> > > >   [07/12] Fix up commit message, disambigurate "in-place" terminology (Xiaoyao)
+> > > >   [08/12] Disallow 'seal' and 'hugetlb' options based on guest-memfd=on
+> > > >           Fix minor typo in comment
+> > > >   [11/12] Fix up typo in g_test_skip() reason
+> > > >           Pending: Move kvm_guest_memfd_init_shared_supported() to
+> > > >             migration-util.c (Fabiano)
+> > > > 
+> > > > This patchset is also available at:
+> > > > 
+> > > >   https://github.com/amdese/qemu/commits/gmem-shared-mem-v4
+> > > > 
+> > > > and is based on top of v11.1.0
+> > > 
+> > > Should I just pick this up?  I'll touch up the commit log that Phil
+> > > requested.  Objections welcomed before next week.
+> > 
+> > Hi Peter,
+> 
+> Hi, Michael,
+> 
+> > 
+> > No objection here, although I'll be posting new version of the in-place
+> > conversion support later this week (~Wed-ish) and was planning to an
+> > updated version of this series roughly the same time so which ever way
+> > is best for you.
+> > 
+> > If you do post one though there's also the missing 'return false' and
+> > dropping the seal=off enforcement that Daniel noticed before we started
+> > talking about introspection fun.
+> 
+> I didn't mean to repost this series, I meant to pick it up for a pull.
+> Sorry if it was confusing..
+
+Ahh ok :) No problem!
+
+> 
+> I want to make sure balls are rolling.  From our side, we weren't rush on
+> this one to land, as we'll need to wait for 1G to settle anyway, but if we
+> have others (like your in-place series upcoming) pending, I think we should
+> just land it sooner.
+
+Agreed, LGTM!
+
+> 
+> You're right, we need to fix things, I noticed it right after I sent the
+> email and then I found CI / unit test failing.. but I haven't got a chance
+> to say..  If you repost please check migration-test with --full, otherwise
+> the gmemfd test will be skipped.
+
+Ok, I had seen migration-test passing but I didn't run it with full so
+I'll look into what's going on there.
+
+> 
+> I have two fixups queued locally, I'll attach it here, please use it
+> whatever way you like, I'll wait for your repost.  NOTE: I touched up the
+> hugetlb failure message when I fixed it up myself, but since you'll repost
+> you can decide; please just treat it as a comment then, I just think the
+> new err message is less strong because we will support it.
+
+Ok, I'll get these rolled in as well.
+
+Thanks!
+
+-Mike
+
+> 
+> Thanks,
+> 
+> ===8<===
+> 
+> 
+> From 0a0dd0f808d4f668ac099945ab35a981e1a07bfb Mon Sep 17 00:00:00 2001
+> From: Peter Xu <peterx@redhat.com>
+> Date: Fri, 21 Aug 2026 12:16:15 -0400
+> Subject: [PATCH 1/2] fixup! hostmem: Support fully shared guest memfd to back
+>  a VM
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  backends/hostmem-memfd.c | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
+> 
+> diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+> index fbe65b00be..6576331441 100644
+> --- a/backends/hostmem-memfd.c
+> +++ b/backends/hostmem-memfd.c
+> @@ -57,14 +57,16 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+>      }
+>  
+>      if (m->guest_memfd) {
+> +        /*
+> +         * NOTE: guest-memfd ignores seal=on/off because it always
+> +         * implicitly seals the FD by definition.
+> +         */
+>          if (!backend->share) {
+>              error_setg(errp, "guest-memfd=on must be used with share=on");
+>              return false;
+> -        } else if (m->seal) {
+> -            error_setg(errp, "guest-memfd=on must be used with seal=off");
+> -            return false;
+>          } else if (m->hugetlb) {
+> -            error_setg(errp, "guest-memfd=on must be used with hugetlb=off");
+> +            error_setg(errp, "guest-memfd=on doesn't support hugetlb=on yet");
+> +            return false;
+>          }
+>  
+>          fd = kvm_create_guest_memfd(backend->size,
+> -- 
+> 2.54.0
+> 
+> 
+> 
+> From 66ac7b3f2268430106bfe8034ef8460215e9db91 Mon Sep 17 00:00:00 2001
+> From: Peter Xu <peterx@redhat.com>
+> Date: Fri, 21 Aug 2026 13:00:09 -0400
+> Subject: [PATCH 2/2] fixup! tests/migration-test: Add a precopy test for
+>  guest-memfd
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  tests/qtest/migration/precopy-tests.c | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+> index 8146f37d61..d57ffcac23 100644
+> --- a/tests/qtest/migration/precopy-tests.c
+> +++ b/tests/qtest/migration/precopy-tests.c
+> @@ -184,7 +184,6 @@ static void test_precopy_tcp_plain(char *name, MigrateCommon *args)
+>  
+>  static void test_precopy_tcp_plain_gmemfd(char *name, MigrateCommon *args)
+>  {
+> -    args->uri = "tcp:127.0.0.1:0";
+>      args->start.mem_type = MEM_TYPE_GUEST_MEMFD;
+>  
+>      test_precopy_common(args);
+> -- 
+> 2.54.0
+> 
+> 
+> -- 
+> Peter Xu
+> 
 
