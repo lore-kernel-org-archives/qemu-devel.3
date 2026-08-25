@@ -4,48 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4095EC5DF94
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 08:19:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76183C5DF94
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 08:19:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wymNA-0001tc-Ui; Tue, 25 Aug 2026 04:19:08 -0400
+	id 1wymN1-0001pc-U4; Tue, 25 Aug 2026 04:19:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wymN9-0001so-5n
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 04:19:07 -0400
+ id 1wymMx-0001lH-8R; Tue, 25 Aug 2026 04:18:55 -0400
 Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wymN7-0002XE-MQ
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 04:19:06 -0400
+ id 1wymMv-0002R3-Ci; Tue, 25 Aug 2026 04:18:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1787645945; x=1819181945;
+ t=1787645933; x=1819181933;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=pgdIyd5J34fLWX6J1GaZWxfrxDzEGK6trvux06Hr2pM=;
- b=WxPCI3Fq/7FTGUVJhard8oZ/ZxzDstlorRCtX5kvmwlcUurtDbgauPfj
- TtQlihw0tY05V6SndablhsZYP3cREDHgqxD8A4156OjVQg6sy+QuLsSLu
- 8y6LJ7wOmvt1nOnnyBGNocKAPcMisAkOqHPFghi+szWIxQJooEMSygySV
- +kguPkEwthfdOjMeoLk/BA4cOh3vsyJdqSEYUyRRK0gy6DXzW8k5hK7sF
- KOgkFBS9QjrkI/OeoBjQDHiHtQACvSEBqwdTHJUCzbQA4R/naXXOUW2j7
- h10lFF0f/BycfHfj+aCO7ESi48H2Y103mVUM04Bcv9g7/4o1GwtciF91L Q==;
-X-CSE-ConnectionGUID: KQhVyG9yR9i68FhuJ4BUKA==
-X-CSE-MsgGUID: sE3a4/9VQK6LmdKrqUv8uQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11885"; a="87967108"
-X-IronPort-AV: E=Sophos;i="6.25,242,1779174000"; d="scan'208";a="87967108"
+ bh=ANljbMPtLm3wIof2Yd4tWH9Bd4Cq/LlVMNDGpCgwtbA=;
+ b=bB1Hk+J+vL7rwhk+3mimh225yASpO0kZtLDtH4Hsmarqd88D/hsyJbf2
+ 2goCIQZ8rmWNd5MnIIsWlU6L5H5AW+vTULK/DTcIXxfT0K6+eJmjvd4dQ
+ iB+qgNHkQxb437f01X0244XTAqs/atapx021TCfc6EPKM/HDObsmfRMbY
+ 1Ym9qJNVigFIDXnZisn28QHGyRJlJWqRkf/GA4EAdZU1gBE5YPNyqFEm+
+ OOyncCYHbbG1YBTquULWz/D1pu+wI+4MD0ra2TgODxgK1M0EtLxMHlFtz
+ buYDTZOvumLC5u7zD/L5btRi3GvWDY0e/6vy/RZNfqgcRRm6vA2AGRxzY Q==;
+X-CSE-ConnectionGUID: nJPxkfyUSVKSzCNcopgJiw==
+X-CSE-MsgGUID: a4JeN/moRaGRwysJh9/btQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11885"; a="87967078"
+X-IronPort-AV: E=Sophos;i="6.25,242,1779174000"; d="scan'208";a="87967078"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Aug 2026 01:19:04 -0700
-X-CSE-ConnectionGUID: hLi1km3MRFyfkZgeZeGJCA==
-X-CSE-MsgGUID: WmInU7XoQkSYeQ0Lv0eS+w==
+ 25 Aug 2026 01:18:52 -0700
+X-CSE-ConnectionGUID: o9ieZpMxQYeN7uEh05k+Hw==
+X-CSE-MsgGUID: mCat/iqsQwSur4E7A1tKlw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,242,1779174000"; d="scan'208";a="265905429"
+X-IronPort-AV: E=Sophos;i="6.25,242,1779174000"; d="scan'208";a="265905340"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.229.148])
  by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Aug 2026 01:19:01 -0700
+ 25 Aug 2026 01:18:49 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -53,11 +51,11 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Xudong Hao <xudong.hao@intel.com>
-Subject: [PATCH v4 6/6] intel_iommu_accel: teardown FAULTQ resources in bottom
- half
-Date: Tue, 25 Aug 2026 16:18:13 +0800
-Message-ID: <20260825081814.138140-7-zhenzhong.duan@intel.com>
+ Xudong Hao <xudong.hao@intel.com>, qemu-arm@nongnu.org
+Subject: [PATCH v4 3/6] backends/iommufd: Extend iommufd_backend_alloc_hwpt()
+ with fault_id
+Date: Tue, 25 Aug 2026 16:18:10 +0800
+Message-ID: <20260825081814.138140-4-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260825081814.138140-1-zhenzhong.duan@intel.com>
 References: <20260825081814.138140-1-zhenzhong.duan@intel.com>
@@ -87,74 +85,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a pasid entry becomes invalid, we need to release all resources
-allocated for that entry including FAULTQ object and fault_fd.
+We should set flags IOMMU_HWPT_FAULT_ID_VALID when pass in a fault
+object id in the caller.
 
-We call qemu_set_fd_handler() to detach fault_fd's io_read handler and
-wakes up main thread from poll(), but there could still be a small
-window we call iommufd_backend_free_id(fault_id) before poll() exit
-and release fault_id file reference. In this rare case, FAULTQ object
-free return -EBUSY because opened fault_id file keeps reference of
-FAULTQ object.
-
-Teardown FAULTQ resources in bottom half to ensure poll() has released
-fault_id file reference.
-
-Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
 Tested-by: Xudong Hao <xudong.hao@intel.com>
 ---
- hw/i386/intel_iommu_accel.c | 31 ++++++++++++++++++++++++++++---
- 1 file changed, 28 insertions(+), 3 deletions(-)
+ include/system/iommufd.h    | 4 ++--
+ backends/iommufd.c          | 7 ++++---
+ hw/arm/smmuv3-accel.c       | 6 +++---
+ hw/i386/intel_iommu_accel.c | 2 +-
+ hw/vfio/iommufd.c           | 2 +-
+ backends/trace-events       | 2 +-
+ 6 files changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-index e0bf0fbe60..373d7f175f 100644
---- a/hw/i386/intel_iommu_accel.c
-+++ b/hw/i386/intel_iommu_accel.c
-@@ -253,15 +253,40 @@ free_faultq:
-     return false;
- }
- 
-+typedef struct IOMMUFaultQueue {
-+    IOMMUFDBackend *iommufd;
-+    uint32_t id;
-+    int fd;
-+} IOMMUFaultQueue;
-+
-+static void faultq_teardown_bh(void *opaque)
-+{
-+    IOMMUFaultQueue *fq = opaque;
-+
-+    qemu_set_fd_handler(fq->fd, NULL, NULL, NULL);
-+    close(fq->fd);
-+    iommufd_backend_free_id(fq->iommufd, fq->id);
-+
-+    g_free(fq);
-+}
-+
- static void vtd_destroy_old_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce)
+diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+index 36b34b4899..79b8dabfb6 100644
+--- a/include/system/iommufd.h
++++ b/include/system/iommufd.h
+@@ -90,8 +90,8 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
+                                 uint32_t pt_id, uint32_t flags,
+                                 uint32_t data_type, uint32_t data_len,
+-                                void *data_ptr, uint32_t *out_hwpt,
+-                                Error **errp);
++                                void *data_ptr, uint32_t fault_id,
++                                uint32_t *out_hwpt, Error **errp);
+ bool iommufd_backend_alloc_viommu(IOMMUFDBackend *be, uint32_t dev_id,
+                                   uint32_t viommu_type, uint32_t hwpt_id,
+                                   void *data_ptr, uint32_t data_len,
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 2775eef741..f46b3bfa7e 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -315,8 +315,8 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
+                                 uint32_t pt_id, uint32_t flags,
+                                 uint32_t data_type, uint32_t data_len,
+-                                void *data_ptr, uint32_t *out_hwpt,
+-                                Error **errp)
++                                void *data_ptr, uint32_t fault_id,
++                                uint32_t *out_hwpt, Error **errp)
  {
-+    HostIOMMUDeviceIOMMUFD *idev =
-+        HOST_IOMMU_DEVICE_IOMMUFD(vtd_pce->vtd_hiod->hiod);
-+
-     if (vtd_pce->fault_fd < 0) {
-         return;
+     int ret, fd = be->fd;
+     struct iommu_hwpt_alloc alloc_hwpt = {
+@@ -327,11 +327,12 @@ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
+         .data_type = data_type,
+         .data_len = data_len,
+         .data_uptr = (uintptr_t)data_ptr,
++        .fault_id = fault_id,
+     };
+ 
+     ret = ioctl(fd, IOMMU_HWPT_ALLOC, &alloc_hwpt);
+     trace_iommufd_backend_alloc_hwpt(fd, dev_id, pt_id, flags, data_type,
+-                                     data_len, (uintptr_t)data_ptr,
++                                     data_len, (uintptr_t)data_ptr, fault_id,
+                                      alloc_hwpt.out_hwpt_id, ret);
+     if (ret) {
+         error_setg_errno(errp, errno, "Failed to allocate hwpt");
+diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+index 91aca1aa14..66e6a5011a 100644
+--- a/hw/arm/smmuv3-accel.c
++++ b/hw/arm/smmuv3-accel.c
+@@ -268,7 +268,7 @@ smmuv3_accel_dev_alloc_translate(SMMUv3AccelDevice *accel_dev, STE *ste,
+                                     accel->viommu->viommu_id, flags,
+                                     IOMMU_HWPT_DATA_ARM_SMMUV3,
+                                     sizeof(nested_data), &nested_data,
+-                                    &hwpt_id, errp)) {
++                                    0, &hwpt_id, errp)) {
+             return NULL;
      }
  
--    qemu_set_fd_handler(vtd_pce->fault_fd, NULL, NULL, NULL);
--    vtd_destroy_fs_faultq(vtd_pce->vtd_hiod, vtd_pce->fault_id,
--                          vtd_pce->fault_fd);
-+    IOMMUFaultQueue *fq = g_malloc(sizeof(IOMMUFaultQueue));
-+    fq->iommufd = idev->iommufd;
-+    fq->fd = vtd_pce->fault_fd;
-+    fq->id = vtd_pce->fault_id;
-+
-+    aio_bh_schedule_oneshot(iohandler_get_aio_context(),
-+                            faultq_teardown_bh, fq);
-+
-     vtd_pce->fault_id = 0;
-     vtd_pce->fault_fd = -1;
+@@ -632,14 +632,14 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *hiodi,
+     if (!iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid, viommu_id,
+                                     0, IOMMU_HWPT_DATA_ARM_SMMUV3,
+                                     sizeof(abort_data), &abort_data,
+-                                    &accel->abort_hwpt_id, errp)) {
++                                    0, &accel->abort_hwpt_id, errp)) {
+         goto free_viommu;
+     }
+ 
+     if (!iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid, viommu_id,
+                                     0, IOMMU_HWPT_DATA_ARM_SMMUV3,
+                                     sizeof(bypass_data), &bypass_data,
+-                                    &accel->bypass_hwpt_id, errp)) {
++                                    0, &accel->bypass_hwpt_id, errp)) {
+         goto free_abort_hwpt;
+     }
+ 
+diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+index c03435f8a2..d2f41f18f1 100644
+--- a/hw/i386/intel_iommu_accel.c
++++ b/hw/i386/intel_iommu_accel.c
+@@ -94,7 +94,7 @@ static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
+     return iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid,
+                                       hiodi->hwpt_id, flags,
+                                       IOMMU_HWPT_DATA_VTD_S1, sizeof(vtd), &vtd,
+-                                      fs_hwpt_id, errp);
++                                      0, fs_hwpt_id, errp);
  }
+ 
+ static void vtd_destroy_old_fs_hwpt(VTDAccelPASIDCacheEntry *vtd_pce)
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 242644aa00..74a5d77dcc 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -476,7 +476,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+     if (!iommufd_backend_alloc_hwpt(iommufd, vbasedev->devid,
+                                     container->ioas_id, flags,
+                                     IOMMU_HWPT_DATA_NONE, 0, NULL,
+-                                    &hwpt_id, errp)) {
++                                    0, &hwpt_id, errp)) {
+         return false;
+     }
+ 
+diff --git a/backends/trace-events b/backends/trace-events
+index b1c1d89dd8..2f242feb78 100644
+--- a/backends/trace-events
++++ b/backends/trace-events
+@@ -16,7 +16,7 @@ iommufd_backend_map_file_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t
+ iommufd_backend_unmap_dma_non_exist(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " Unmap nonexistent mapping: iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
+ iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
+ iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
+-iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
++iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t fault_id, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" fault_id=%u out_hwpt=%u (%d)"
+ iommufd_backend_alloc_faultq(int iommufd, uint32_t fault_id, uint32_t fault_fd, int ret) " iommufd=%d fault_id=%u fault_fd=%u (%d)"
+ iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
+ iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
 -- 
 2.52.0
 
