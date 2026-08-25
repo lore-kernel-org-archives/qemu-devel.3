@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53E36C61DB4
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 10:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEBAEC61CE2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 10:22:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyoIH-0005rn-Ol; Tue, 25 Aug 2026 06:22:13 -0400
+	id 1wyoIZ-0005xa-OI; Tue, 25 Aug 2026 06:22:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wyoIG-0005rb-Ji
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 06:22:12 -0400
+ id 1wyoIY-0005tI-8z
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 06:22:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wyoIE-0005dQ-K1
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 06:22:12 -0400
+ id 1wyoIW-0005gb-Mq
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 06:22:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787653329;
+ s=mimecast20190719; t=1787653348;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=m+xgntv80vPWN2sXFMW9Q2X+T+pL6meD9PD/ScowyWs=;
- b=ZygmIrYIAkbne7fcF4qSnE5C58J4uv0YmepjQKjkI/Uf9d/haCWHuiSnoFG2DZBcxlNTF8
- FDGzc6M16fRq2aI5wEWk7Z6+q+fbAw9lxu4sUO1nTTWTeEhlMIfA8rB0cA/Tg4I0qK8VA7
- W3+uAd3M46WKaWFv7xo0H8vxs7x1drw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=KRInEMHq3qCYs27hdoMN+FKb7VskfV2CZFNqIBjNKpE=;
+ b=EKi6ZFERznOfNeQQTIdqeCHnyTqVacThgV6cydxLjp1LKJ1TX2rZzHOX/pvJzehB8fu2lF
+ JnGAHmJvb2JsPaTBHjB153flxFdm7KqzKa2WsXw1nEkByBqNuhpEeNpexf9AwwtByCQHOS
+ H/JW+8d0qga81sCQcd+nl22QZRbtrKk=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-646-wf5infppOayN8zflzJ1EKA-1; Tue,
- 25 Aug 2026 06:22:06 -0400
-X-MC-Unique: wf5infppOayN8zflzJ1EKA-1
-X-Mimecast-MFC-AGG-ID: wf5infppOayN8zflzJ1EKA_1787653325
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-u5dyWZAHNP6OArLb5Kx6fA-1; Tue,
+ 25 Aug 2026 06:22:24 -0400
+X-MC-Unique: u5dyWZAHNP6OArLb5Kx6fA-1
+X-Mimecast-MFC-AGG-ID: u5dyWZAHNP6OArLb5Kx6fA_1787653343
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BE742191FCE6; Tue, 25 Aug 2026 10:22:04 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 95F51195422D; Tue, 25 Aug 2026 10:22:23 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 70B9F30002EE; Tue, 25 Aug 2026 10:21:33 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D5CDB1800642; Tue, 25 Aug 2026 10:22:18 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 25 Aug 2026 14:20:38 +0400
-Subject: [PATCH 01/18] ui/gtk: move GL fence tracking from QemuDmaBuf to
- VirtualGfxConsole
+Date: Tue, 25 Aug 2026 14:20:39 +0400
+Subject: [PATCH 02/18] ui/dbus: disable scanout iff dmabuf is current
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260825-virtio-gpu-cleanup-v1-1-d3bb612b9975@redhat.com>
+Message-Id: <20260825-virtio-gpu-cleanup-v1-2-d3bb612b9975@redhat.com>
 References: <20260825-virtio-gpu-cleanup-v1-0-d3bb612b9975@redhat.com>
 In-Reply-To: <20260825-virtio-gpu-cleanup-v1-0-d3bb612b9975@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,24 +66,24 @@ Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Alex Williamson <alex@shazbot.org>, 
  =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=12691;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5990;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=bqrKK0ekdQuah4t//r7lwritNgUHmLjRXaltcOjXTdg=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjWyXuaTvqz3z+SEuiHP3leqYBes/n+R1XYs7h
- 6BtO4z8HPCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao1slwAKCRDa6OEJdZac
- 5dkPD/4hrzd5XP/9e1Am4jXjkL7jgmY+GswxZ/qixIiTwOKuu7fqswzNnk/L8A4ncD1FcQLol//
- D6RBYriN+c/K5icWplofoOyJtnaqBzpLf0PPVLzgytbNdSOFeAuc4iy678X7Wpi4Hu7awrjofVe
- WE1tPaR8tnygdmMfRyM7s2JxMyWaXei2UTNwznMKW81XY13p9fZzu4oueckFCWm/uRcBuADznwL
- Nu7QMc8crWaBpwuMsGOjQLVAiuHj7zwjz/LJsv0JM82Dt3fDP/fD0YjrF7yseO0iNThSE24QimB
- SWWlc8//1JjJUN/cnLvgIRn+D/i9Pt8A8sfx/an9aSO1/UVUMLW8Mtrcpufcb3UFoVYDXgL1PUd
- 3JNxFGAu19zXhNmwwoSYLTFFSUqFNJj6+mtBHlbbFsIav0GH9EUyiq2nPg43oLJnnrtouaMkwOV
- 0YG2memTUDMoA4kB1Lqf1WINxKr+DL2c1QG4n21LLGv2SjCiUcIMqJbCljjHHAYV8wFlBT6A9uJ
- k81N/w1RhDC37PS6dIyVSQBnQYL2GG/WNX1k3HRoZrNRIPuUt3F6S9fOnFaQHymRs540duHLUfu
- ljenG1Ofkh8yAjt5SoY7KoTMvMaJ/1uiLmMfjvGsfUAvtXf0KZqa0gVuWtJnIdvFg/3GDkvigB2
- qHmsh6xpLP4hsTQ==
+ bh=SewAVNZd0/0MR4x3m27bnrbQErWKCD9bWw9XzyE3Keg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjWyXXCrjm+Uoai3uc5vCvAoUlO+yxGUvdFiOL
+ 3/krmwu0LOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao1slwAKCRDa6OEJdZac
+ 5Td9EACSOpaRk0Cc/cGtc5/f/hbr0E9XUstmKEyJapQRFtJkwpEbu5oq4YV37jLmu+nVnYyGl9r
+ n2iZ5HQ/ONlvcnEradHNPvj2grcv3RTRf6hS3VPsL4bM9B39osFqq+9fsZ/TfNnTS3SWIoO1m2p
+ KZL4D8NSqhj8owZuSek2Ul/3Tw0E6sJQut20MLmeKvP2jI6p3C/nae2eX4j8notK9TawdjOPxmX
+ ziwYpFh5ABRbz6Ujf3HE8bcKFYNvXdruOVDS7C9L+HNxM9RcuWicFmebVC6+Kfdn1W1MWOb1ghR
+ kL/3jZ/Jl0F9mTTk3h7RQO00/WJ4rRb/BvoQFvRE9O6qy4vFib9WLPZqPhXM288SjEqlAcZe7yu
+ TyMzT0lTtEgx5RoQnEje9esPTzPhGQGxCYTwju31g+M7YFpNuvaLz5O0mFvlPlbhNeTVGfsQTaV
+ iz/CEzQdMmOi7O/JdlXUZCdhb+doYSfO0pYu2JatHPqSOQQSu0zTZI5aN26dw3Tz0Xq5pQfv3bP
+ Ra6Hc0WQ+7kWy9BazEwCiIZe2+w0uieHp0fJ8JFZic7FL+9AJSsP6JrC3O8xnCNhaPAw9dMge4k
+ hKjm1USwU066oUVht7r+oqdHvMbLA/LQlcUl0nVZ3hf8z6gVIAisq/BJd1MlMKDUZr/huinsPxa
+ 8LpUSfrCJ18mgOg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -111,382 +110,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The sync and fence_fd fields on QemuDmaBuf are only used by the GTK
-display backend for GPU fence synchronization during draw. They are not
-intrinsic properties of the DMA-BUF itself but transient GL state tied
-to the display listener.
-
-Move fence_fd to VirtualGfxConsole and keep the EGL sync local to the
-draw operation. Change egl_dmabuf_create_sync() and
-egl_dmabuf_create_fence() to return values instead of storing them on the
-dmabuf. This makes the fence lifecycle independent of the dmabuf
-lifetime.
+Narrows release_dmabuf to the active scanout, as the device & console
+may interleave new scanouts before releasing old ones.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/ui/dmabuf.h      |  4 ----
- include/ui/egl-helpers.h |  4 ++--
- include/ui/gtk.h         |  8 +++++---
- ui/dmabuf.c              | 29 -----------------------------
- ui/egl-helpers.c         | 15 ++++++++-------
- ui/gtk-egl.c             | 30 ++++++++++++++++--------------
- ui/gtk-gl-area.c         | 12 +++---------
- ui/gtk.c                 | 31 +++++++++++++++++++++++--------
- 8 files changed, 57 insertions(+), 76 deletions(-)
+ ui/dbus-listener.c | 68 ++++++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 48 insertions(+), 20 deletions(-)
 
-diff --git a/include/ui/dmabuf.h b/include/ui/dmabuf.h
-index 3decdca4979c..381583bd536c 100644
---- a/include/ui/dmabuf.h
-+++ b/include/ui/dmabuf.h
-@@ -41,13 +41,9 @@ uint32_t qemu_dmabuf_get_y(QemuDmaBuf *dmabuf);
- uint32_t qemu_dmabuf_get_backing_width(QemuDmaBuf *dmabuf);
- uint32_t qemu_dmabuf_get_backing_height(QemuDmaBuf *dmabuf);
- bool qemu_dmabuf_get_y0_top(QemuDmaBuf *dmabuf);
--void *qemu_dmabuf_get_sync(QemuDmaBuf *dmabuf);
--int32_t qemu_dmabuf_get_fence_fd(QemuDmaBuf *dmabuf);
- bool qemu_dmabuf_get_allow_fences(QemuDmaBuf *dmabuf);
- bool qemu_dmabuf_get_draw_submitted(QemuDmaBuf *dmabuf);
- void qemu_dmabuf_set_texture(QemuDmaBuf *dmabuf, uint32_t texture);
--void qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd);
--void qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync);
- void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_submitted);
- 
- #endif
-diff --git a/include/ui/egl-helpers.h b/include/ui/egl-helpers.h
-index 405ddd912591..023427b505ed 100644
---- a/include/ui/egl-helpers.h
-+++ b/include/ui/egl-helpers.h
-@@ -54,8 +54,8 @@ bool egl_dmabuf_export_texture(uint32_t tex_id, int *fd, EGLint *offset,
- 
- void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf);
- void egl_dmabuf_release_texture(QemuDmaBuf *dmabuf);
--void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf);
--void egl_dmabuf_create_fence(QemuDmaBuf *dmabuf);
-+EGLSyncKHR egl_create_sync(void);
-+int egl_create_fence(EGLSyncKHR sync);
- 
- #endif
- 
-diff --git a/include/ui/gtk.h b/include/ui/gtk.h
-index 5c9c34a069ea..4b4ef50e3701 100644
---- a/include/ui/gtk.h
-+++ b/include/ui/gtk.h
-@@ -58,6 +58,7 @@ typedef struct VirtualGfxConsole {
-     bool y0_top;
-     bool scanout_mode;
-     bool has_dmabuf;
-+    int gl_fence_fd;
- #endif
- } VirtualGfxConsole;
- 
-@@ -160,7 +161,7 @@ extern bool gtk_use_gl_area;
- /* ui/gtk.c */
- void gd_update_windowsize(VirtualConsole *vc);
- void gd_update_monitor_refresh_rate(VirtualConsole *vc, GtkWidget *widget);
--void gd_hw_gl_flushed(void *vc);
-+void gd_gl_wait_sync(VirtualConsole *vc, void *sync);
- 
- /* ui/gtk-egl.c */
- void gd_egl_init(VirtualConsole *vc);
-@@ -190,8 +191,9 @@ void gd_egl_cursor_position(DisplayChangeListener *dcl,
-                             uint32_t pos_x, uint32_t pos_y);
- void gd_egl_flush(DisplayChangeListener *dcl,
-                   uint32_t x, uint32_t y, uint32_t w, uint32_t h);
--void gd_egl_scanout_flush(DisplayChangeListener *dcl,
--                          uint32_t x, uint32_t y, uint32_t w, uint32_t h);
-+void *gd_egl_scanout_flush(DisplayChangeListener *dcl,
-+                           uint32_t x, uint32_t y,
-+                           uint32_t w, uint32_t h);
- void gtk_egl_init(DisplayGLMode mode);
- int gd_egl_make_current(DisplayGLCtx *dgc,
-                         QEMUGLContext ctx);
-diff --git a/ui/dmabuf.c b/ui/dmabuf.c
-index 7433a268f0df..b61dc7ad2783 100644
---- a/ui/dmabuf.c
-+++ b/ui/dmabuf.c
-@@ -25,8 +25,6 @@ struct QemuDmaBuf {
-     uint32_t  backing_width;
-     uint32_t  backing_height;
-     bool      y0_top;
--    void      *sync;
--    int       fence_fd;
-     bool      allow_fences;
-     bool      draw_submitted;
+diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
+index 2e2f6ba4183a..5a72c7eeae59 100644
+--- a/ui/dbus-listener.c
++++ b/ui/dbus-listener.c
+@@ -91,6 +91,8 @@ struct _DBusDisplayListener {
+     guint dbus_filter;
+     guint32 display_serial_to_discard;
+     guint32 cursor_serial_to_discard;
++
++    QemuDmaBuf *scanout_dmabuf;
  };
-@@ -57,7 +55,6 @@ QemuDmaBuf *qemu_dmabuf_new(uint32_t width, uint32_t height,
-     memcpy(dmabuf->fd, dmabuf_fd, num_planes * sizeof(*dmabuf_fd));
-     dmabuf->allow_fences = allow_fences;
-     dmabuf->y0_top = y0_top;
--    dmabuf->fence_fd = -1;
-     dmabuf->num_planes = num_planes;
  
-     return dmabuf;
-@@ -208,20 +205,6 @@ bool qemu_dmabuf_get_y0_top(QemuDmaBuf *dmabuf)
-     return dmabuf->y0_top;
+ G_DEFINE_TYPE(DBusDisplayListener, dbus_display_listener, G_TYPE_OBJECT)
+@@ -119,6 +121,7 @@ static void dbus_scanout_disable(DisplayChangeListener *dcl)
+ {
+     DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
+ 
++    ddl->scanout_dmabuf = NULL;
+     ddl_discard_display_messages(ddl);
+ 
+     qemu_dbus_display1_listener_call_disable(
+@@ -298,9 +301,9 @@ static void dbus_call_update_gl(DisplayChangeListener *dcl,
+ 
+ #ifdef CONFIG_GBM
+ static void dbus_scanout_dmabuf_v1(DBusDisplayListener *ddl,
+-                                   QemuDmaBuf *dmabuf)
++                                   QemuDmaBuf *dmabuf,
++                                   GError **err)
+ {
+-    g_autoptr(GError) err = NULL;
+     g_autoptr(GUnixFDList) fd_list = NULL;
+     int fd;
+     uint32_t width, height, stride, fourcc;
+@@ -309,8 +312,7 @@ static void dbus_scanout_dmabuf_v1(DBusDisplayListener *ddl,
+ 
+     fd = qemu_dmabuf_get_fds(dmabuf, NULL)[0];
+     fd_list = g_unix_fd_list_new();
+-    if (g_unix_fd_list_append(fd_list, fd, &err) != 0) {
+-        error_report("Failed to setup dmabuf fdlist: %s", err->message);
++    if (g_unix_fd_list_append(fd_list, fd, err) != 0) {
+         return;
+     }
+ 
+@@ -332,9 +334,9 @@ static void dbus_scanout_dmabuf_v1(DBusDisplayListener *ddl,
  }
  
--void *qemu_dmabuf_get_sync(QemuDmaBuf *dmabuf)
--{
--    assert(dmabuf != NULL);
--
--    return dmabuf->sync;
--}
--
--int32_t qemu_dmabuf_get_fence_fd(QemuDmaBuf *dmabuf)
--{
--    assert(dmabuf != NULL);
--
--    return dmabuf->fence_fd;
--}
--
- bool qemu_dmabuf_get_allow_fences(QemuDmaBuf *dmabuf)
+ static void dbus_scanout_dmabuf_v2(DBusDisplayListener *ddl,
+-                                   QemuDmaBuf *dmabuf)
++                                   QemuDmaBuf *dmabuf,
++                                   GError **err)
  {
-     assert(dmabuf != NULL);
-@@ -242,18 +225,6 @@ void qemu_dmabuf_set_texture(QemuDmaBuf *dmabuf, uint32_t texture)
-     dmabuf->texture = texture;
- }
+-    g_autoptr(GError) err = NULL;
+     g_autoptr(GUnixFDList) fd_list = NULL;
+     int i, fd_index[DMABUF_MAX_PLANES], num_fds;
+     uint32_t x, y, width, height, fourcc, backing_width, backing_height;
+@@ -360,9 +362,8 @@ static void dbus_scanout_dmabuf_v2(DBusDisplayListener *ddl,
+             break;
+         }
  
--void qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd)
--{
--    assert(dmabuf != NULL);
--    dmabuf->fence_fd = fence_fd;
--}
--
--void qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync)
--{
--    assert(dmabuf != NULL);
--    dmabuf->sync = sync;
--}
--
- void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_submitted)
- {
-     assert(dmabuf != NULL);
-diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
-index d689f187c4e5..54b4aa6e9fcb 100644
---- a/ui/egl-helpers.c
-+++ b/ui/egl-helpers.c
-@@ -432,7 +432,7 @@ void egl_dmabuf_release_texture(QemuDmaBuf *dmabuf)
-     qemu_dmabuf_set_texture(dmabuf, 0);
- }
- 
--void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf)
-+EGLSyncKHR egl_create_sync(void)
- {
-     EGLSyncKHR sync;
- 
-@@ -443,23 +443,24 @@ void egl_dmabuf_create_sync(QemuDmaBuf *dmabuf)
-         sync = eglCreateSyncKHR(qemu_egl_display,
-                                 EGL_SYNC_NATIVE_FENCE_ANDROID, NULL);
-         if (sync != EGL_NO_SYNC_KHR) {
--            qemu_dmabuf_set_sync(dmabuf, sync);
-+            return sync;
+-        fd_index[num_fds] = g_unix_fd_list_append(fd_list, plane_fd, &err);
++        fd_index[num_fds] = g_unix_fd_list_append(fd_list, plane_fd, err);
+         if (fd_index[num_fds] < 0) {
+-            error_report("Failed to setup dmabuf fdlist: %s", err->message);
+             return;
          }
      }
-+
-+    return NULL;
+@@ -395,20 +396,36 @@ static void dbus_scanout_dmabuf_v2(DBusDisplayListener *ddl,
+         G_DBUS_CALL_FLAGS_NONE, -1, fd_list, NULL, NULL, NULL);
  }
  
--void egl_dmabuf_create_fence(QemuDmaBuf *dmabuf)
-+int egl_create_fence(EGLSyncKHR sync)
- {
--    void *sync = qemu_dmabuf_get_sync(dmabuf);
--    int fence_fd;
-+    int fence_fd = -1;
- 
-     if (sync) {
-         fence_fd = eglDupNativeFenceFDANDROID(qemu_egl_display,
-                                               sync);
--        qemu_dmabuf_set_fence_fd(dmabuf, fence_fd);
-         eglDestroySyncKHR(qemu_egl_display, sync);
--        qemu_dmabuf_set_sync(dmabuf, NULL);
-     }
-+
-+    return fence_fd;
- }
- 
- #endif /* CONFIG_GBM */
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index adc81f34b1c8..c671aabd11b3 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -68,7 +68,7 @@ void gd_egl_draw(VirtualConsole *vc)
-     GdkWindow *window;
- #ifdef CONFIG_GBM
-     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
--    int fence_fd;
-+    EGLSyncKHR sync;
- #endif
-     int ww, wh, pw, ph, gs;
- 
-@@ -94,7 +94,11 @@ void gd_egl_draw(VirtualConsole *vc)
-             qemu_console_hw_gl_block(vc->gfx.dcl.con, true);
-         }
- #endif
--        gd_egl_scanout_flush(&vc->gfx.dcl, 0, 0, vc->gfx.w, vc->gfx.h);
-+#ifdef CONFIG_GBM
-+        sync =
-+#endif
-+            gd_egl_scanout_flush(&vc->gfx.dcl, 0, 0,
-+                                 vc->gfx.w, vc->gfx.h);
- 
-         gd_update_scale(vc, ww, wh,
-                         surface_width(vc->gfx.ds),
-@@ -103,13 +107,7 @@ void gd_egl_draw(VirtualConsole *vc)
-         glFlush();
- #ifdef CONFIG_GBM
-         if (dmabuf) {
--            egl_dmabuf_create_fence(dmabuf);
--            fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
--            if (fence_fd >= 0) {
--                qemu_set_fd_handler(fence_fd, gd_hw_gl_flushed, NULL, vc);
--                return;
--            }
--            qemu_console_hw_gl_block(vc->gfx.dcl.con, false);
-+            gd_gl_wait_sync(vc, sync);
-         }
- #endif
-     } else {
-@@ -330,10 +328,12 @@ void gd_egl_cursor_position(DisplayChangeListener *dcl,
-     vc->gfx.cursor_y = pos_y * vc->gfx.scale_y;
- }
- 
--void gd_egl_scanout_flush(DisplayChangeListener *dcl,
--                          uint32_t x, uint32_t y, uint32_t w, uint32_t h)
-+EGLSyncKHR gd_egl_scanout_flush(DisplayChangeListener *dcl,
-+                                uint32_t x, uint32_t y,
-+                                uint32_t w, uint32_t h)
- {
-     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
-+    EGLSyncKHR sync = EGL_NO_SYNC_KHR;
-     GdkWindow *window;
-     int px_offset, py_offset;
-     int gs;
-@@ -342,10 +342,10 @@ void gd_egl_scanout_flush(DisplayChangeListener *dcl,
-     int fbw, fbh;
- 
-     if (!vc->gfx.scanout_mode) {
--        return;
-+        return sync;
-     }
-     if (!vc->gfx.guest_fb.framebuffer) {
--        return;
-+        return sync;
-     }
- 
-     eglMakeCurrent(qemu_egl_display, vc->gfx.esurface,
-@@ -391,11 +391,13 @@ void gd_egl_scanout_flush(DisplayChangeListener *dcl,
- 
- #ifdef CONFIG_GBM
-     if (vc->gfx.guest_fb.dmabuf) {
--        egl_dmabuf_create_sync(vc->gfx.guest_fb.dmabuf);
-+        sync = egl_create_sync();
-     }
- #endif
- 
-     eglSwapBuffers(qemu_egl_display, vc->gfx.esurface);
-+
-+    return sync;
- }
- 
- void gd_egl_flush(DisplayChangeListener *dcl,
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index 29497019ee46..29d1b1e4116f 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -41,6 +41,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
- {
- #ifdef CONFIG_GBM
-     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
-+    EGLSyncKHR sync = EGL_NO_SYNC_KHR;
- #endif
-     int pw, ph, gs, y1, y2;
-     int ww, wh;
-@@ -119,20 +120,13 @@ void gd_gl_area_draw(VirtualConsole *vc)
-                           GL_COLOR_BUFFER_BIT, GL_NEAREST);
- #ifdef CONFIG_GBM
-         if (dmabuf) {
--            egl_dmabuf_create_sync(dmabuf);
-+            sync = egl_create_sync();
-         }
- #endif
-         glFlush();
- #ifdef CONFIG_GBM
-         if (dmabuf) {
--            int fence_fd;
--            egl_dmabuf_create_fence(dmabuf);
--            fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
--            if (fence_fd >= 0) {
--                qemu_set_fd_handler(fence_fd, gd_hw_gl_flushed, NULL, vc);
--                return;
--            }
--            qemu_console_hw_gl_block(vc->gfx.dcl.con, false);
-+            gd_gl_wait_sync(vc, sync);
-         }
- #endif
-     } else {
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 7078d89d6797..1c75b9ea3c4d 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -597,21 +597,32 @@ static void gd_gl_release_dmabuf(DisplayChangeListener *dcl,
- #endif
- }
- 
--void gd_hw_gl_flushed(void *vcon)
-+#ifdef CONFIG_GBM
-+static void gd_gl_fence_cb(void *vcon)
- {
-     VirtualConsole *vc = vcon;
--    QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
--    int fence_fd;
- 
--    fence_fd = qemu_dmabuf_get_fence_fd(dmabuf);
--    if (fence_fd >= 0) {
--        qemu_set_fd_handler(fence_fd, NULL, NULL, NULL);
--        close(fence_fd);
--        qemu_dmabuf_set_fence_fd(dmabuf, -1);
-+    if (vc->gfx.gl_fence_fd >= 0) {
-+        qemu_set_fd_handler(vc->gfx.gl_fence_fd, NULL, NULL, NULL);
-+        g_clear_fd(&vc->gfx.gl_fence_fd, NULL);
-         qemu_console_hw_gl_block(vc->gfx.dcl.con, false);
-     }
- }
- 
-+void gd_gl_wait_sync(VirtualConsole *vc, EGLSyncKHR sync)
++static bool dbus_call_scanout_dmabuf(DBusDisplayListener *ddl,
++                                     QemuDmaBuf *dmabuf)
 +{
-+    assert(vc->gfx.gl_fence_fd < 0);
++    g_autoptr(GError) err = NULL;
 +
-+    vc->gfx.gl_fence_fd = egl_create_fence(sync);
-+    if (vc->gfx.gl_fence_fd >= 0) {
-+        qemu_set_fd_handler(vc->gfx.gl_fence_fd,
-+                            gd_gl_fence_cb, NULL, vc);
++    if (ddl->scanout_dmabuf_v2_proxy) {
++        dbus_scanout_dmabuf_v2(ddl, dmabuf, &err);
 +    } else {
-+        qemu_console_hw_gl_block(vc->gfx.dcl.con, false);
++        if (qemu_dmabuf_get_num_planes(dmabuf) > 1) {
++            error_report("Peer does not support multi plane dmabuf");
++            return false;
++        }
++        dbus_scanout_dmabuf_v1(ddl, dmabuf, &err);
 +    }
++
++    if (err) {
++        error_report("Failed to scanout dmabuf: %s", err->message);
++        return false;
++    }
++
++    return true;
 +}
++
+ static void dbus_scanout_dmabuf(DisplayChangeListener *dcl,
+                                 QemuDmaBuf *dmabuf)
+ {
+     DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
+ 
+-    if (ddl->scanout_dmabuf_v2_proxy) {
+-        dbus_scanout_dmabuf_v2(ddl, dmabuf);
+-    } else {
+-        if (qemu_dmabuf_get_num_planes(dmabuf) > 1) {
+-            g_debug("org.qemu.Display1.Listener.ScanoutDMABUF "
+-                    "does not support mutli plane");
+-            return;
+-        }
+-        dbus_scanout_dmabuf_v1(ddl, dmabuf);
++    if (dbus_call_scanout_dmabuf(ddl, dmabuf)) {
++        ddl->scanout_dmabuf = dmabuf;
+     }
+ }
+ #endif /* GBM */
+@@ -589,6 +606,10 @@ static void dbus_scanout_texture(DisplayChangeListener *dcl,
+                                  uint32_t w, uint32_t h,
+                                  void *d3d_tex2d)
+ {
++#if defined(CONFIG_GBM) || defined(WIN32)
++    DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
 +#endif
 +
- /** DisplayState Callbacks (opengl version) **/
+     trace_dbus_scanout_texture(tex_id, backing_y_0_top,
+                                backing_width, backing_height, x, y, w, h);
+ #ifdef CONFIG_GBM
+@@ -607,13 +628,13 @@ static void dbus_scanout_texture(DisplayChangeListener *dcl,
+                              backing_height, fourcc, modifier, fd, num_planes,
+                              false, backing_y_0_top);
  
- static const DisplayChangeListenerOps dcl_gl_area_ops = {
-@@ -2355,6 +2366,7 @@ add_gfx_console(GtkDisplayState *s, QemuConsole *con)
-     vc->gfx.scale_y = vc->gfx.preferred_scale;
+-    dbus_scanout_dmabuf(dcl, dmabuf);
++    if (dbus_call_scanout_dmabuf(ddl, dmabuf)) {
++        ddl->scanout_dmabuf = NULL;
++    }
+     qemu_dmabuf_close(dmabuf);
+ #endif
  
- #if defined(CONFIG_OPENGL)
-+    vc->gfx.gl_fence_fd = -1;
-     if (display_opengl) {
-         if (gtk_use_gl_area) {
-             vc->gfx.drawing_area = gtk_gl_area_new();
-@@ -2647,6 +2659,9 @@ static void gd_vc_free(void *p)
+ #ifdef WIN32
+-    DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
+-
+     /* there must be a matching gfx_switch before */
+     assert(surface_width(ddl->ds) == w);
+     assert(surface_height(ddl->ds) == h);
+@@ -686,7 +707,14 @@ static void dbus_cursor_dmabuf(DisplayChangeListener *dcl,
+ static void dbus_release_dmabuf(DisplayChangeListener *dcl,
+                                 QemuDmaBuf *dmabuf)
+ {
++    DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
++
++    if (ddl->scanout_dmabuf != dmabuf) {
++        return;
++    }
++
+     dbus_scanout_disable(dcl);
++    ddl->scanout_dmabuf = NULL;
+ }
+ #endif /* GBM */
  
-     switch (vc->type) {
-     case GD_VC_GFX:
-+#if defined(CONFIG_OPENGL) && defined(CONFIG_GBM)
-+        gd_gl_fence_cb(vc);
-+#endif
-         qemu_console_unregister_listener(&vc->gfx.dcl);
- #if defined(CONFIG_OPENGL)
-         if (display_opengl) {
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
