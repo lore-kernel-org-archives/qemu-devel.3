@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AD57C61DC4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0C17C61DBE
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:19:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyp75-0001UN-7o; Tue, 25 Aug 2026 07:14:43 -0400
+	id 1wyp8W-0004eU-FV; Tue, 25 Aug 2026 07:16:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp72-0001No-K9; Tue, 25 Aug 2026 07:14:40 -0400
+ id 1wyp8P-0004YH-IP; Tue, 25 Aug 2026 07:16:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp70-0000FS-JX; Tue, 25 Aug 2026 07:14:40 -0400
+ id 1wyp8N-0000mm-KZ; Tue, 25 Aug 2026 07:16:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787656396; bh=xWft4FHoOlZE5dZ+ceiOsF5nkpYFKpDqd+HNMlkqs2A=;
+ t=1787656396; bh=9virRQQ19oZIiBUGfkfJEirwYq3490kgkUOfInWJh68=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ceyWm8khpvfggmvBdv+l13fhsr31tI+SwbKl6ziAEpQMe4GG+i/I4QCzKj64mphkI
- a/Y17VzjI3N1syp1wDjOnhJA6z5Pqe/hi0Se3Ugn6Tt/F30zP6I6KXzIMBtD8v7yMi
- phoMp28g6fmET7dkI5LoNzie4mq57AKgJI7kjZx9HAXTDbdnqHMgIph9e0bvI8bOX5
- 0viHksQegKhT8uJaazSD347Uq4b0JFngMYN6WyTRCu/vpc3g5fSG1MXO6t7AnAsoSF
- NmQ+ldcd3n1S2RPI+z50dWsLtBPq5hXeFJyuZsTPLgfd2qM3EBr63N6tW/RbkiNbtn
- oAX6v3YjH6c+w==
+ b=Q/yhb+ZFjG4ZbqeIhQCrUPhVTq143uunW9Q+AehdCbFxpJJNt6qohVvx+lnbGSPum
+ BYiEkQUF1dHFaBXjCPUb/K337bxRMaKnr/yeyFqkslfmnBWK+FWhNNlV/2oDNCnVnA
+ S25Bdz0G7+pqlQj8DkgQxtfa+DWSGDiswZPuWLY8GEEercze4XPTE+ErXGEW3FFR59
+ OKqaRWFkg9TKilLq61jBKcAbAca/ePnENFEsvAhbNk8LGxBfixEBt8SBl/Yu0+xTw2
+ CLOpS3l6IqpAByJOKDBOdo07tTS1Ihg8PnwvedTwSoq0BMqCLV356/kyP7PKRSNPp7
+ UxsdXlTKA3hew==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 46D9F1CE4B1;
+ by isrv.corpit.ru (Postfix) with ESMTP id 8AD981CE4BF;
  Tue, 25 Aug 2026 14:13:16 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5D96141627D;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A3B9D41628B;
  Tue, 25 Aug 2026 14:13:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8BE2B325A5; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
+ id B6C4F325C1; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, wangyang <wangyang25@otcaix.iscas.ac.cn>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v3 149/166] tcg: Export tcg_gen_ussub_i{32,64,tl}
-Date: Tue, 25 Aug 2026 14:11:45 +0300
-Message-ID: <20260825111206.482723-15-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v3 163/166] target/riscv: honor zicbo* envcfg gating
+ in linux-user mode
+Date: Tue, 25 Aug 2026 14:11:59 +0300
+Message-ID: <20260825111206.482723-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,126 +72,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: wangyang <wangyang25@otcaix.iscas.ac.cn>
 
-Move from tcg-op-gvec.c to tcg-op.c.
-Use a temporary, to cover the possibility of operand overlap.
+In user-only builds check_zicbo_envcfg() skipped the envcfg check
+entirely (#if !defined(CONFIG_USER_ONLY)), so cbo.inval/cbo.flush/
+cbo.zero retired unconditionally in linux-user even though the
+machine-level envcfg fields are never initialized.  Give the
+user-mode build a senvcfg-based gate, and initialize SENVCFG_CBZE at
+reset when ext_zicboz is enabled so cbo.zero stays usable while
+cbo.inval/cbo.flush remain illegal, matching the user-mode view of a
+typical firmware/kernel setup.
 
-(Cc for stable as this is a prerequisite for the bug fix
-in the next commit.)
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260811191540.79882-2-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit b4f6f672a3e100706ddc249c26c2c149cdac1636)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4107
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
+Message-ID: <9b2f22fc402b48b8ba81f72be8ed04bc@wangyang25.otcaix.iscas.ac.cn>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 12289f2f9a0f1ffa6a75c2b189a0273dc455dfb0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
-index 009e2778c5f..01d2ac71181 100644
---- a/include/tcg/tcg-op-common.h
-+++ b/include/tcg/tcg-op-common.h
-@@ -150,6 +150,7 @@ void tcg_gen_smin_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
- void tcg_gen_smax_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
- void tcg_gen_umin_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
- void tcg_gen_umax_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
-+void tcg_gen_ussub_i32(TCGv_i32, TCGv_i32 arg1, TCGv_i32 arg2);
- void tcg_gen_abs_i32(TCGv_i32, TCGv_i32);
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 9e4f54d250f..bf4855ec02d 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1116,6 +1116,14 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+ #else
+     env->priv = PRV_U;
+     env->senvcfg = 0;
++    /*
++     * Match the user-mode view of a typical firmware/kernel setup where
++     * cbo.zero is enabled for user mode; the CBCFE/CBIE bits stay zero,
++     * so the cache-management operations remain illegal in user mode.
++     */
++    if (riscv_cpu_cfg(env)->ext_zicboz) {
++        env->senvcfg |= SENVCFG_CBZE;
++    }
+     env->menvcfg = 0;
+ #endif
  
- /* Replicate a value of size @vece from @in to all the lanes in @out */
-@@ -258,6 +259,7 @@ void tcg_gen_smin_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
- void tcg_gen_smax_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
- void tcg_gen_umin_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
- void tcg_gen_umax_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
-+void tcg_gen_ussub_i64(TCGv_i64, TCGv_i64 arg1, TCGv_i64 arg2);
- void tcg_gen_abs_i64(TCGv_i64, TCGv_i64);
- 
- /* Replicate a value of size @vece from @in to all the lanes in @out */
-diff --git a/include/tcg/tcg-op.h b/include/tcg/tcg-op.h
-index a02850583bd..389b8545d64 100644
---- a/include/tcg/tcg-op.h
-+++ b/include/tcg/tcg-op.h
-@@ -259,6 +259,7 @@ DEF_ATOMIC2(tcg_gen_atomic_umax_fetch, i64)
- #define tcg_gen_umin_tl tcg_gen_umin_i64
- #define tcg_gen_smax_tl tcg_gen_smax_i64
- #define tcg_gen_umax_tl tcg_gen_umax_i64
-+#define tcg_gen_ussub_tl tcg_gen_ussub_i64
- #define tcg_gen_atomic_cmpxchg_tl tcg_gen_atomic_cmpxchg_i64
- #define tcg_gen_atomic_xchg_tl tcg_gen_atomic_xchg_i64
- #define tcg_gen_atomic_fetch_add_tl tcg_gen_atomic_fetch_add_i64
-@@ -377,6 +378,7 @@ DEF_ATOMIC2(tcg_gen_atomic_umax_fetch, i64)
- #define tcg_gen_umin_tl tcg_gen_umin_i32
- #define tcg_gen_smax_tl tcg_gen_smax_i32
- #define tcg_gen_umax_tl tcg_gen_umax_i32
-+#define tcg_gen_ussub_tl tcg_gen_ussub_i32
- #define tcg_gen_atomic_cmpxchg_tl tcg_gen_atomic_cmpxchg_i32
- #define tcg_gen_atomic_xchg_tl tcg_gen_atomic_xchg_i32
- #define tcg_gen_atomic_fetch_add_tl tcg_gen_atomic_fetch_add_i32
-diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
-index d32a4f146dc..bd750509ada 100644
---- a/tcg/tcg-op-gvec.c
-+++ b/tcg/tcg-op-gvec.c
-@@ -2304,20 +2304,6 @@ void tcg_gen_gvec_usadd(unsigned vece, uint32_t dofs, uint32_t aofs,
-     tcg_gen_gvec_3(dofs, aofs, bofs, oprsz, maxsz, &g[vece]);
- }
- 
--static void tcg_gen_ussub_i32(TCGv_i32 d, TCGv_i32 a, TCGv_i32 b)
--{
--    TCGv_i32 min = tcg_constant_i32(0);
--    tcg_gen_sub_i32(d, a, b);
--    tcg_gen_movcond_i32(TCG_COND_LTU, d, a, b, min, d);
--}
--
--static void tcg_gen_ussub_i64(TCGv_i64 d, TCGv_i64 a, TCGv_i64 b)
--{
--    TCGv_i64 min = tcg_constant_i64(0);
--    tcg_gen_sub_i64(d, a, b);
--    tcg_gen_movcond_i64(TCG_COND_LTU, d, a, b, min, d);
--}
--
- void tcg_gen_gvec_ussub(unsigned vece, uint32_t dofs, uint32_t aofs,
-                         uint32_t bofs, uint32_t oprsz, uint32_t maxsz)
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 0cdbb0138c6..c5dc18a27b9 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -142,7 +142,16 @@ target_ulong helper_csrrw_i128(CPURISCVState *env, int csr,
+ static void check_zicbo_envcfg(CPURISCVState *env, target_ulong envbits,
+                                 uintptr_t ra)
  {
-diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index fec6d678a29..29aa59429fd 100644
---- a/tcg/tcg-op.c
-+++ b/tcg/tcg-op.c
-@@ -1421,6 +1421,16 @@ void tcg_gen_umax_i32(TCGv_i32 ret, TCGv_i32 a, TCGv_i32 b)
-     tcg_gen_movcond_i32(TCG_COND_LTU, ret, a, b, b, a);
- }
- 
-+void tcg_gen_ussub_i32(TCGv_i32 ret, TCGv_i32 a, TCGv_i32 b)
-+{
-+    TCGv_i32 t = tcg_temp_ebb_new_i32();
-+    TCGv_i32 z = tcg_constant_i32(0);
-+
-+    tcg_gen_sub_i32(t, a, b);
-+    tcg_gen_movcond_i32(TCG_COND_LTU, ret, a, b, z, t);
-+    tcg_temp_free_i32(t);
-+}
-+
- void tcg_gen_abs_i32(TCGv_i32 ret, TCGv_i32 a)
- {
-     TCGv_i32 t = tcg_temp_ebb_new_i32();
-@@ -3148,6 +3158,16 @@ void tcg_gen_umax_i64(TCGv_i64 ret, TCGv_i64 a, TCGv_i64 b)
-     tcg_gen_movcond_i64(TCG_COND_LTU, ret, a, b, b, a);
- }
- 
-+void tcg_gen_ussub_i64(TCGv_i64 ret, TCGv_i64 a, TCGv_i64 b)
-+{
-+    TCGv_i64 t = tcg_temp_ebb_new_i64();
-+    TCGv_i64 z = tcg_constant_i64(0);
-+
-+    tcg_gen_sub_i64(t, a, b);
-+    tcg_gen_movcond_i64(TCG_COND_LTU, ret, a, b, z, t);
-+    tcg_temp_free_i64(t);
-+}
-+
- void tcg_gen_abs_i64(TCGv_i64 ret, TCGv_i64 a)
- {
-     TCGv_i64 t = tcg_temp_ebb_new_i64();
+-#ifndef CONFIG_USER_ONLY
++#if defined(CONFIG_USER_ONLY)
++    /*
++     * linux-user: the machine-level envcfg fields are not part of the
++     * user-mode environment; only the user-mode view of the enabling
++     * bits (senvcfg, as initialized for the guest) applies.
++     */
++    if (!get_field(env->senvcfg, envbits)) {
++        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, ra);
++    }
++#else
+     if ((env->priv < PRV_M) && !get_field(env->menvcfg, envbits)) {
+         riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, ra);
+     }
 -- 
 2.47.3
 
