@@ -4,157 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D808BC61CE2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 10:16:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57281C61DB6
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 10:22:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyoCI-0004qg-1u; Tue, 25 Aug 2026 06:16:02 -0400
+	id 1wyoHo-0005qF-PW; Tue, 25 Aug 2026 06:21:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wyoCC-0004qS-Ef; Tue, 25 Aug 2026 06:15:56 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wyoHn-0005q0-Ho
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 06:21:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wyoCA-0004SZ-Nh; Tue, 25 Aug 2026 06:15:56 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67P8VeAA3390556; Tue, 25 Aug 2026 10:15:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=bL7pKJ
- ToSzONcUCVfWgloHCdzknQ/Bt1Z+kffOYYohQ=; b=pVdO5a+nNc5UVx1d6LgPM8
- 7FLFGGScR3LWkjlaA2nXmeKlYKv9GPVb3c4QxVbXtr5I1veqaSezbtU2w7Z1BfYE
- bDXFpC1pWso2ss7m7xJzDg/p3iEbkNTMTobAPLQupKWZhKKYiAiO2zoLwPErnuFw
- kC+CYO9C4bg1Cg1CpJK8xjGXCZlRJ4/icXh8l+Lz7tpaZz9+ELPLWxergLynvs2v
- UvUTwi/WL5a9afvKu6UVpcVIWLXgSlaOkmVJaZxu+/WuqPy2cBf1J3zVm0GfI8Se
- TnSGhqd1OAKA9lDJ0NkbmQGT1Y8LLvaZpdtlj6J5/RF7WYFVP5zypqsqkNwkv2UQ
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726efe0j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 25 Aug 2026 10:15:44 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67PABPvq000844;
- Tue, 25 Aug 2026 10:15:44 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rsy3cnx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 25 Aug 2026 10:15:43 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67PAFgjo24248956
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 25 Aug 2026 10:15:42 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6A9CC58059;
- Tue, 25 Aug 2026 10:15:42 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1669B5805B;
- Tue, 25 Aug 2026 10:15:41 +0000 (GMT)
-Received: from [9.61.78.161] (unknown [9.61.78.161])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 25 Aug 2026 10:15:40 +0000 (GMT)
-Message-ID: <09380eca-8da0-4342-9a49-f86842d1a0a0@linux.ibm.com>
-Date: Tue, 25 Aug 2026 06:15:40 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wyoHk-0005ZR-Iw
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 06:21:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787653299;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=+XRGIOTxVcrVwebvEkYKAMRouqsc52yuiDdr0MSuFZU=;
+ b=eTrFU1zIfW1FUMx/0L/fn1rwTSaOnwY5F0Fc/HDSU7scczxEPZNg93LB3bWRCCTzX/jAvY
+ 5y/QcmyPcCQGwvI8Zm+42cpjl+Gsf3GgtfroDDiS4Wc3ptbr15invpE7v7jLpWamYBQylr
+ 4bXUcOoMH78mGy0ZauXgzb/bcbD1QAA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-79-oATCl09WP7OTjEBWP_olYg-1; Tue,
+ 25 Aug 2026 06:21:26 -0400
+X-MC-Unique: oATCl09WP7OTjEBWP_olYg-1
+X-Mimecast-MFC-AGG-ID: oATCl09WP7OTjEBWP_olYg_1787653285
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 41569184B3B6; Tue, 25 Aug 2026 10:21:24 +0000 (UTC)
+Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0B41430002EE; Tue, 25 Aug 2026 10:21:19 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH 00/18] RFC: various virtio-gpu/dmabuf related fixes
+Date: Tue, 25 Aug 2026 14:20:37 +0400
+Message-Id: <20260825-virtio-gpu-cleanup-v1-0-d3bb612b9975@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 06/20] target/s390x: Adjust addressing mode checks for
- sha512 and sha256
-To: Harald Freudenberger <freude@linux.ibm.com>, richard.henderson@linaro.org, 
- iii@linux.ibm.com, david@kernel.org, thuth@redhat.com, berrange@redhat.com
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, linux-s390@vger.kernel.org, 
- dengler@linux.ibm.com, borntraeger@linux.ibm.com,
- fcallies@linux.ibm.com, cohuck@redhat.com
-References: <20260824083204.40877-1-freude@linux.ibm.com>
- <20260824083204.40877-7-freude@linux.ibm.com>
-Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260824083204.40877-7-freude@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8d6b50 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=XS7WEkP-FYxO3f8Vb7EA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDA4NSBTYWx0ZWRfX3PzTXbGohIvr
- jV7I4Qn3OT/p0wHPvaipKZczMzmypuhF4ZY40EoAC7bNU1jnsME2Q50PnvpAoLNlEOSmqkBl8u6
- ZYfx48ZTmZuxihVsuHuF1+4T02Cjh4Y=
-X-Proofpoint-GUID: eNPxap9JMdGDmLWk9LBYyioQ5gxOOgR9
-X-Proofpoint-ORIG-GUID: eNPxap9JMdGDmLWk9LBYyioQ5gxOOgR9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDA4NSBTYWx0ZWRfX4tnwEgUhfiGF
- aYO4ivssRCBTmjXFndF2vKb4ZM40ANYYoIB/KiQL/xvh66diEpQa7s6M1s+qA9t1XlU6rdyYQ0W
- vOhMzxmAUK1CfOTdN2lOX9WAgPByiy9AwS6bQZMnOjQV1VZXCknT+HcYk+smxSU6rLJfpMRsgHv
- igWL+F/kS7gvdbY7qgexga6nowZ8/pGgbqxj0mehvR3glbBaCKNiCsSuj3xngel/BzsvjALebQn
- 3Rjl82Niyi2uvUDQmzTpPD8yj2KFIg8sKGp6JkuDCGWE8h44JmeQHpG5rSouIXknjHN1rzkRx17
- so6Dhouxj3fuePBKSBmNB5X2KSQBZyGdyjSgCqg9T8dlGr6x0ckvXLp6j4U9rvAwJtt/PMW4rmu
- NS7PxuECJoAr51FV+qwUx25LxVHse7s2YxmqQH1fbrfirj9nkzwbUWlxnQV25LHDvWiuHv0/RgY
- lD441LdDr3nseuTUyAQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-25_02,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608250085
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQ5AMBBA0avIrE1CheAqYtHWYESqaVUk4u6K5
+ Vv8f4Enx+ShTS5wdLDnzUTkaQJ6lmYi5CEaRCaqrBYlHux23nCyAfVK0gSLw6iEknldNkUFMbS
+ ORj6/adf/9kEtpPf3BPf9AFiRe7F2AAAA
+X-Change-ID: 20260825-virtio-gpu-cleanup-dfb2ba185936
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, 
+ Alex Williamson <alex@shazbot.org>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ swing <swing@mail.exp.sh>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3501;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=psObioel+J552nBCVodghbTSbcKnDXiNptNHPE6p8ok=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjWyX0GV8J8QtYDng6mXs0Aogp9C1Ex/d47BTq
+ 1K59oiXDIiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao1slwAKCRDa6OEJdZac
+ 5amzEACaXcOi6RuUgD4pb8iV7Tyujsaub2MdY5JIb3aIE+/zQcI0b5Ql1R17wp8hVOZRxh/FwNc
+ V7NIxFK73MmVgeZa3eEqKOyWg2sB0rKQsgdehhMIwgaXEpdQm8vhX0mW7sxAqSMgXS5WkQuGgPV
+ UwfMXIh3+tG8ZByEm1iyHyczNH1xtx8ynUCXhjnPxVi2djvr9NRn2xffoy1diiAKoozDkt/OC89
+ 5Ge1kUcyNtiVuu/BO+rSMIXf7wLuNSh1xdDG1XwVrnPvDc+EcKKF4RfQuwjgJEtfeJwvNY3a3ne
+ j4lt41Lz2nLakTFfYl3hyZ8PVYZ/okhYlKSEHz/C3P68nDV1ajXS13z4AZB355+l1EqhbDT0/W7
+ MyuCxz6RYJyw2OBtK6o6M27IGPmGZtyQZyAsxjhhyCe9mr1/jGgKYrx+oBxDKIlZXROiW/i85t6
+ Q7RqJTtgJgsnIebFuuSu1pgZtxjzN+0RxmdruyuX6EkmGA8UQU8kDvc5Qg+HzACizreT4RJpMPM
+ rjyZdWya6qSnyqvskk7EBNCu4CG2cVRK5RZ/c14NfpXWCdZUc9Z5V1uPurkg8RgcXkxwWoaKJRJ
+ j5bk2sjLUbU6ZTQLxY5KL3KKwYFILIjA4zyQfOyLx77phAN7NnSlQyOHNYNBNhjAKbj6loKcHZ+
+ I96M7wUtqqAU0rQ==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -171,91 +111,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi,
 
+While working on CVE-2026-66020 (which had a few revision on list), I
+kept finding several places where virtio-gpu scanout and dmabuf
+ownership was unclear.
 
-On 8/24/26 4:31 AM, Harald Freudenberger wrote:
-> The handling for different addressing modes in the both sha
-> implementations cpacf sha256 and sha512 was incomplete. Rework this
-> addressing checking to clearly have support for s390 64 bit and 32 bit
-> addressing mode but raise an exception otherwise.
-> 
-> Also bail out early (for KIMD only) if length is 0.
-> 
-> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-> Suggested-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> ---
->   target/s390x/tcg/cpacf_sha256.c | 16 +++++++++++++---
->   target/s390x/tcg/cpacf_sha512.c | 16 +++++++++++++---
->   2 files changed, 26 insertions(+), 6 deletions(-)
+The CVE comes from using a blob after RESOURCE_DETACH_BACKING has
+unmapped its memory. Following that path also found stale dmabuf
+references, duplicated scanout bookkeeping, and inconsistent cleanup
+between display backends.
 
-I was going to ask why this wasn't just included in the first place, but 
-I see that sha512 is pre-existing. So, makes sense this way...
+This series makes each virtio_gpu_scanout own its current dmabuf and
+uses resource_id to track which resource it displays. It also makes
+QemuDmaBuf own its file descriptors and moves GTK fence state out of the
+dmabuf.
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Those changes touch a lot of area and I have done basic testing with the
+various backends. I would not recommend backporting them to stable:
+there is a high risk of introducing regressions. Yet, I don't know how
+to address all the problems uncovered by CVE-2026-66020 in a simple
+patch series. Help welcome!
 
-> 
-> diff --git a/target/s390x/tcg/cpacf_sha256.c b/target/s390x/tcg/cpacf_sha256.c
-> index 67321b565c..de305b6838 100644
-> --- a/target/s390x/tcg/cpacf_sha256.c
-> +++ b/target/s390x/tcg/cpacf_sha256.c
-> @@ -111,14 +111,24 @@ int cpacf_sha256(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
->   {
->       enum { MAX_BLOCKS_PER_RUN = 128 }; /* 128 * 64 = 8K */
->       uint64_t len = *len_reg, processed = 0;
-> -    int message_reg_len = 64;
-> +    int message_reg_len;
->       uint32_t a[8];
->   
->       g_assert(type == S390_FEAT_TYPE_KIMD || type == S390_FEAT_TYPE_KLMD);
->   
-> -    if (!(env->psw.mask & PSW_MASK_64)) {
-> +    /* check addressing mode, raise exception if not supported here */
-> +    if (env->psw.mask & PSW_MASK_64) {
-> +        message_reg_len = 64;
-> +    } else if (env->psw.mask & PSW_MASK_32) {
-> +        message_reg_len = 32;
->           len = (uint32_t)len;
-> -        message_reg_len = (env->psw.mask & PSW_MASK_32) ? 32 : 24;
-> +    } else {
-> +        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-> +    }
-> +
-> +    /* for KIMD only: early bail out if length is zero */
-> +    if (type == S390_FEAT_TYPE_KIMD && !len) {
-> +        return 0;
->       }
->   
->       /* KIMD: length has to be properly aligned. */
-> diff --git a/target/s390x/tcg/cpacf_sha512.c b/target/s390x/tcg/cpacf_sha512.c
-> index edd8dae78f..cad8e0e1bd 100644
-> --- a/target/s390x/tcg/cpacf_sha512.c
-> +++ b/target/s390x/tcg/cpacf_sha512.c
-> @@ -126,13 +126,23 @@ int cpacf_sha512(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
->   {
->       enum { MAX_BLOCKS_PER_RUN = 64 }; /* Arbitrary: keep interactivity. */
->       uint64_t len = *len_reg, a[8], processed = 0;
-> -    int message_reg_len = 64;
-> +    int message_reg_len;
->   
->       g_assert(type == S390_FEAT_TYPE_KIMD || type == S390_FEAT_TYPE_KLMD);
->   
-> -    if (!(env->psw.mask & PSW_MASK_64)) {
-> +    /* check addressing mode, raise exception if not supported here */
-> +    if (env->psw.mask & PSW_MASK_64) {
-> +        message_reg_len = 64;
-> +    } else if (env->psw.mask & PSW_MASK_32) {
-> +        message_reg_len = 32;
->           len = (uint32_t)len;
-> -        message_reg_len = (env->psw.mask & PSW_MASK_32) ? 32 : 24;
-> +    } else {
-> +        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-> +    }
-> +
-> +    /* for KIMD only: early bail out if length is zero */
-> +    if (type == S390_FEAT_TYPE_KIMD && !len) {
-> +        return 0;
->       }
->   
->       /* KIMD: length has to be properly aligned. */
+thanks 
+
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+Marc-André Lureau (18):
+      ui/gtk: move GL fence tracking from QemuDmaBuf to VirtualGfxConsole
+      ui/dbus: disable scanout iff dmabuf is current
+      virtio-gpu: store the scanout DMABUF in virtio_gpu_scanout
+      ui/console: disable GL scanout when dmabuf is the active one
+      ui/sdl2: clear guest_fb.dmabuf on release
+      ui/dmabuf: own and close fds on free
+      virtio-gpu: release the dmabuf when a scanout is disabled
+      contrib/vhost-user-gpu: drop scanout_bitmask bookkeeping
+      virtio-gpu-rutabaga: fix scanout handling
+      virtio-gpu: disable blob scanouts on mapping cleanup
+      virtio-gpu: drop scanout_bitmask bookkeeping
+      virtio-gpu: release dmabuf when switching to a surface
+      virtio-gpu/virgl: release dmabuf when a texture replaces a scanout
+      virtio-gpu: consolidate disabling scanout
+      virtio-gpu: minor refactoring
+      virtio-gpu/virgl: disable scanouts on resource unref
+      virtio-gpu: initialize dmabuf_fd to -1
+      virtio-gpu: fix use-after-free on blob cursor after detach
+
+ contrib/vhost-user-gpu/vhost-user-gpu.c | 28 +++-------
+ hw/display/vhost-user-gpu.c             |  1 -
+ hw/display/virtio-gpu-rutabaga.c        | 26 +++++++---
+ hw/display/virtio-gpu-udmabuf-stubs.c   |  2 +-
+ hw/display/virtio-gpu-udmabuf.c         | 90 +++++++++++----------------------
+ hw/display/virtio-gpu-virgl.c           | 75 +++++++++++++++------------
+ hw/display/virtio-gpu.c                 | 82 +++++++++++++++++++-----------
+ hw/vfio/display.c                       |  1 -
+ include/hw/virtio/virtio-gpu.h          | 18 ++-----
+ include/ui/dmabuf.h                     |  5 --
+ include/ui/egl-helpers.h                |  4 +-
+ include/ui/gtk.h                        |  8 +--
+ ui/console.c                            |  3 ++
+ ui/dbus-listener.c                      | 69 +++++++++++++++++--------
+ ui/dmabuf.c                             | 51 +++----------------
+ ui/egl-helpers.c                        | 15 +++---
+ ui/gtk-egl.c                            | 30 ++++++-----
+ ui/gtk-gl-area.c                        | 12 ++---
+ ui/gtk.c                                | 31 +++++++++---
+ ui/sdl2-gl.c                            |  5 ++
+ 20 files changed, 277 insertions(+), 279 deletions(-)
+---
+base-commit: 82706188517bd102ed25f1931c4cb041ecf3ef50
+change-id: 20260825-virtio-gpu-cleanup-dfb2ba185936
+
+Best regards,
+--  
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
 
