@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA565C61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:19:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8545FC61DBD
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:19:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyp7U-00027W-Fa; Tue, 25 Aug 2026 07:15:08 -0400
+	id 1wyp7R-00024z-8r; Tue, 25 Aug 2026 07:15:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp7T-00026Y-8E; Tue, 25 Aug 2026 07:15:07 -0400
+ id 1wyp7P-000248-W3; Tue, 25 Aug 2026 07:15:04 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp7R-0000Wq-Jv; Tue, 25 Aug 2026 07:15:06 -0400
+ id 1wyp7O-0000Gd-45; Tue, 25 Aug 2026 07:15:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787656396; bh=DGgHuOLpM+2S6J0lMOn4pyinhKq03RNiD3E5qqUkehA=;
+ t=1787656396; bh=ki00NNJjWyNtohHPZCYG5y2QqeJ5IIkuYaEqXkqmKJo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=eJS+tW/nx22dIES0BQPjUR9RR7ylt7AtdY9chxb+rSNTtgRCsfMvZn5vW69kp0YRJ
- F1Or0RxWUfPH7u7c/14w2gs5KVZQOdOpOwF3iF76zKQmryOJxJB12bCwlepbJ8o3+v
- wvZPPvzEG7GtBnLDvJHFzgP6NrgWZAD1iugxDadOec0kCi8U+uxdcRrKUJgZKsOw3W
- RN/wNKRLsEYeu/IrQZ2or6oR9bLSb4Jlo107AtQ6jbvw7vnGYiuIEJ8GfJmFYwBwWJ
- Ehw4n86fJmDhvXfR2H9iayGp+7tQz/qqm9dpqQffh63UFTI3rU/hYGaqF1ytaKAX4C
- jHEFJJg5MIuAA==
+ b=I7YbZf23GwCFJ+jeGs8o0/eT7xPyVgliqPcBJOwBchsPPjgX93zK8px8BS4ByKrQ3
+ Adjfac7IHVuw8ID+QHkgFTpDncXwdpW3K+GKhDPMZ0/ahH1b8+N4RhVea7IMhTbhrd
+ UZUdMN//Xiw7P8O9L8WrtYkTQ1HCxG7ZLwFQ/uO0wUztBDhsFeMpfHXILn8ZmHuUZt
+ BLWay2zDf8/A3eDgl23r4SYd5SyKNq8eo34jimWPZ0Biisa/Wa8hfqZ6X02/xeh1pG
+ blvuSvjLolVbjZOK1kjT7f+rjg1LEZp5+MPxhuz2Nf8iKe9jUoIcDk/VikmaEuDtlC
+ H34UJ8gKtgADA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 585131CE4B5;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4EE091CE4B3;
  Tue, 25 Aug 2026 14:13:16 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 71018416281;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 677AA41627F;
  Tue, 25 Aug 2026 14:13:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 982BB325AD; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
+ id 92044325A9; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, TANG Tiancheng <lyndra@linux.alibaba.com>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
+ A-Shehab <ahshehab24@gmail.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v3 153/166] disas/riscv: Fix th.srri decoding
-Date: Tue, 25 Aug 2026 14:11:49 +0300
-Message-ID: <20260825111206.482723-19-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v3 151/166] target/riscv: Fix PC sync in
+ trans_sspopchk for CFI exception handling
+Date: Tue, 25 Aug 2026 14:11:47 +0300
+Message-ID: <20260825111206.482723-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
@@ -73,45 +74,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: TANG Tiancheng <lyndra@linux.alibaba.com>
+From: Max Chou <max.chou@sifive.com>
 
-target/riscv/xthead.decode defines th.srri as funct6=000100 in
-bits 31:26, with the 6-bit immediate in bits 25:20.
+Move gen_update_pc call before conditional logic to ensure consistent
+PC state regardless of execution path.
 
-decode_xtheadbb() switches on bits 31:25, i.e. funct6 plus imm[5].
-Therefore valid th.srri encodings are 0001000 and 0001001. The
-current 0000100 and 0000101 cases use the wrong funct6 value and
-decode valid th.srri instructions as illegal.
+Previously, the host instructions generated to update the cpu_pc were
+only executed in the failure path when shadow stack validation failed.
+This created inconsistent PC synchronization.
 
-Fix the cases to match funct6=000100 with both imm[5] values.
+This inconsistency caused issues in CF_PCREL mode where subsequent
+instructions calculated wrong relative offsets from stale pc_save
+values, and could lead to incorrect exception return addresses.
 
-Fixes: 318df7238b9f ("disas/riscv: Add support for XThead* instructions")
-Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+This fix ensures PC is always synchronized before any helper that
+might raise an exception, maintaining consistent translator state
+across all execution paths.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4118
+Signed-off-by: Max Chou <max.chou@sifive.com>
+[ahshehab: rebased on current master; file moved to
+ target/riscv/tcg/insn_trans/ and the ssp load is now 64-bit wide]
+Tested-by: A-Shehab <ahshehab24@gmail.com>
+Signed-off-by: A-Shehab <ahshehab24@gmail.com>
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260703-b4-disas-xthead-fix-riscv-next-v4-1-84c566330bc7@linux.alibaba.com>
+Message-ID: <20260730181852.1622-1-ahshehab24@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 6985cfc87512e96c0abfa7fffc836e7bd3889048)
+(cherry picked from commit 4a884ba94b43f5b2a640f4ea882655503f9ae954)
+(Mjt: back-port the changes back to 11.0.x, to the original patch state)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/disas/riscv-xthead.c b/disas/riscv-xthead.c
-index fcca326d1c3..2f2ddb8dd9a 100644
---- a/disas/riscv-xthead.c
-+++ b/disas/riscv-xthead.c
-@@ -315,8 +315,10 @@ void decode_xtheadbb(rv_decode *dec, rv_isa isa)
-                         op = rv_op_th_revw;
-                     }
-                     break;
--                case 0b0000100:
--                case 0b0000101: op = rv_op_th_srri; break;
-+                case 0b0001000:
-+                case 0b0001001:
-+                    op = rv_op_th_srri;
-+                    break;
-                 }
-                 break;
-             case 2: op = rv_op_th_ext; break;
+diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
+index f4a1c12ca0b..4cf14d2a37a 100644
+--- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
++++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
+@@ -32,6 +32,7 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
+     TCGLabel *skip = gen_new_label();
+     uint32_t tmp = (get_xl(ctx) == MXL_RV64) ? 8 : 4;
+     TCGv data = tcg_temp_new();
++    gen_update_pc(ctx, 0);
+     tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
+     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
+     tcg_gen_qemu_ld_tl(data, addr, SS_MMU_INDEX(ctx),
+@@ -40,7 +41,6 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
+     tcg_gen_brcond_tl(TCG_COND_EQ, data, rs1, skip);
+     tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
+                   tcg_env, offsetof(CPURISCVState, sw_check_code));
+-    gen_update_pc(ctx, 0);
+     gen_helper_raise_exception(tcg_env,
+                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
+     gen_set_label(skip);
 -- 
 2.47.3
 
