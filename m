@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80684C5DF94
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:07:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79F76C61DB6
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:08:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylFh-0006Jd-Iv; Tue, 25 Aug 2026 03:07:22 -0400
+	id 1wylFw-0006rL-Lc; Tue, 25 Aug 2026 03:07:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylFc-00069G-O7; Tue, 25 Aug 2026 03:07:16 -0400
+ id 1wylFk-0006Ny-S4; Tue, 25 Aug 2026 03:07:24 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylFa-0005un-UM; Tue, 25 Aug 2026 03:07:16 -0400
+ id 1wylFi-0005x3-Pe; Tue, 25 Aug 2026 03:07:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641595; bh=xDDttFT9b5qAQBWVIg87UGnCVZsDwyGJuL62wAwmp5I=;
+ t=1787641596; bh=UdUI4J4L1mRYbJHpMsQWnLLIVh9APbD33THjbflNDno=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=angdWhs2pCBvAkSkr7/ifF2KgWrBumNeDTs4jPT+DaaLneWbZ4qWPdSXk0BYE3dzH
- Uyib2BQlQ92PVkfMqCdZK9fPtHHZ5bTl99gypakGbgI5AdBq1W30d/MwQmDchyGQUT
- HgGHlTQHD1CYN/uDwevcAW6CbX7eepb5uQjKdxP1T394ivKKuRO8azqhM1eo9rTHIP
- RFsovJfRYk9YTB7QliZwAQG+VPouSAZO+6/ygON6X8of03xO0Eub33XOKEW/9PQotx
- 7EKDGmOrPWyeQsImauSDMVxgIJvYX0pIm8wUd7CZjE0OlKTkS0WVD+YfLRS9dphWHr
- H+3iTz+ttVmEg==
+ b=xxkUMk+f1tbGzqycLieExBSFF/etukjtUCwF0gOtxJb5uYIprRGRGpMzKrSnoF4yf
+ 3OpV315QzvHEN/4gFnApCpSrtlwCp9BkZLcBORNvsNizyeXjctu7+DLomONyYOHSRC
+ 1jYxAmZI/o3EwfRH5ynPYJrd1UcCtuj0WRcObhMrmKcOpltIKyfjWBLhIDFSxIyPNl
+ GdBnhWScTuXacH6OgM0S3C9X5FGAcoYYCMdII4lpaMR4ya4ER/xrlj46cn3hf4Ofyn
+ wHX7lB8fQ5E7ssLmssQenDxosCRAzDm+cv4HrYR3UvS69HDnv+R8DqMIUWk2Kkvl2z
+ J+kfJVNWkeKHQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D86AF1CE210;
- Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 043DE1CE215;
+ Tue, 25 Aug 2026 10:06:36 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9CFCB415F8B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B9AC7415F90;
  Tue, 25 Aug 2026 10:07:12 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 63E8F32400; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ id 732913240A; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 43/91] tcg/optimize: INDEX_op_mul is commutative
-Date: Tue, 25 Aug 2026 10:05:15 +0300
-Message-ID: <20260825070619.174584-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Craaijo, Jos" <jos.craaijo@ou.nl>,
+ Yudistira Putra <pyudistira519@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 v2 48/91] target/i386: fix long mode segment override
+ prefix decoding
+Date: Tue, 25 Aug 2026 10:05:20 +0300
+Message-ID: <20260825070619.174584-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,28 +72,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: "Craaijo, Jos" <jos.craaijo@ou.nl>
 
-Cc: qemu-stable@nongnu.org
-Fixes: 7a2f7084525 ("tcg/optimize: Sink commutative operand swapping into fold functions")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 3181e53c13a1a68e2b54c94b1766f8e384c01b4c)
+On x86, the ES/CS/SS/DS segment override prefixes are null prefixes in
+long mode, and should be ignored. (AMD APM Volume 3, Section 1.2.4)
+
+This patch fixes the prefix decoding to correctly ignore the prefixes in
+64-bit mode.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3391
+Signed-off-by: Jos Craaijo <jos.craaijo@ou.nl>
+Tested-by: Yudistira Putra <pyudistira519@gmail.com>
+Link: https://lore.kernel.org/r/20260623-fix-x86-long-mode-segment-override-decoding-v1-1-26d9d4b5804e@ou.nl
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 3589cd995b4facf34071e944fd8ec2294524e25a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index fcdef25beed..ed2ff32ed2f 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -2152,7 +2152,7 @@ static bool fold_movcond(OptContext *ctx, TCGOp *op)
- 
- static bool fold_mul(OptContext *ctx, TCGOp *op)
- {
--    if (fold_const2(ctx, op) ||
-+    if (fold_const2_commutative(ctx, op) ||
-         fold_xi_to_i(ctx, op, 0) ||
-         fold_xi_to_x(ctx, op, 1)) {
-         return true;
+diff --git a/target/i386/emulate/x86_decode.c b/target/i386/emulate/x86_decode.c
+index bae1dd4d6f8..34dcac155aa 100644
+--- a/target/i386/emulate/x86_decode.c
++++ b/target/i386/emulate/x86_decode.c
+@@ -1851,6 +1851,12 @@ static void decode_prefix(CPUX86State *env, struct x86_decode *decode)
+         case PREFIX_SS_SEG_OVERRIDE:
+         case PREFIX_DS_SEG_OVERRIDE:
+         case PREFIX_ES_SEG_OVERRIDE:
++            if (x86_is_long_mode(env_cpu(env))) {
++                /* ES/CS/SS/DS segment overrides are ignored in long mode */
++                decode->rex.rex = 0;
++                break;
++            }
++            /* fall through when not in long mode */
+         case PREFIX_FS_SEG_OVERRIDE:
+         case PREFIX_GS_SEG_OVERRIDE:
+             decode->segment_override = byte;
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index ac5964b95de..faf74b00bbd 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -2816,16 +2816,24 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+         s->prefix |= PREFIX_LOCK;
+         goto next_byte;
+     case 0x2e:
+-        s->override = R_CS;
++        if (!CODE64(s)) {
++            s->override = R_CS;
++        }
+         goto next_byte;
+     case 0x36:
+-        s->override = R_SS;
++        if (!CODE64(s)) {
++            s->override = R_SS;
++        }
+         goto next_byte;
+     case 0x3e:
+-        s->override = R_DS;
++        if (!CODE64(s)) {
++            s->override = R_DS;
++        }
+         goto next_byte;
+     case 0x26:
+-        s->override = R_ES;
++        if (!CODE64(s)) {
++            s->override = R_ES;
++        }
+         goto next_byte;
+     case 0x64:
+         s->override = R_FS;
+diff --git a/tests/tcg/x86_64/Makefile.target b/tests/tcg/x86_64/Makefile.target
+index be20fc64e88..c48767fef85 100644
+--- a/tests/tcg/x86_64/Makefile.target
++++ b/tests/tcg/x86_64/Makefile.target
+@@ -15,6 +15,7 @@ X86_64_TESTS += vsyscall
+ X86_64_TESTS += noexec
+ X86_64_TESTS += cmpxchg
+ X86_64_TESTS += adox
++X86_64_TESTS += segment-prefixes
+ X86_64_TESTS += test-1648
+ X86_64_TESTS += test-2175
+ X86_64_TESTS += cross-modifying-code
+diff --git a/tests/tcg/x86_64/segment-prefixes.c b/tests/tcg/x86_64/segment-prefixes.c
+new file mode 100644
+index 00000000000..a7e6e285b2c
+--- /dev/null
++++ b/tests/tcg/x86_64/segment-prefixes.c
+@@ -0,0 +1,25 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* See https://gitlab.com/qemu-project/qemu/-/work_items/3391 */
++
++int main()
++{
++    int data = 0;
++
++    /* Ensure that ignored segment override prefixes are actually ignored */
++    asm volatile (
++        "wrgsbase %0\n\t"
++        ".byte 0x65, 0x26\n\t" /* prefixes: GS + ES */
++        "movb $0, 0\n\t"
++        ".byte 0x65, 0x2E\n\t" /* prefixes: GS + CS */
++        "movb $0, 0\n\t"
++        ".byte 0x65, 0x36\n\t" /* prefixes: GS + SS */
++        "movb $0, 0\n\t"
++        ".byte 0x65, 0x3E\n\t" /* prefixes: GS + DS */
++        "movb $0, 0\n\t"
++        :
++        : "r" (&data)
++        : "memory"
++    );
++
++    return 0;
++}
 -- 
 2.47.3
 
