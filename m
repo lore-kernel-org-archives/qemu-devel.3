@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA55CC61DC2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E35CC61DB9
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:39:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyyrF-0005wd-Qa; Tue, 25 Aug 2026 17:39:01 -0400
+	id 1wyyr9-0005t4-6D; Tue, 25 Aug 2026 17:38:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyrE-0005wA-Sx; Tue, 25 Aug 2026 17:39:00 -0400
+ id 1wyyr7-0005sE-KF
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:53 -0400
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyrC-000580-R7; Tue, 25 Aug 2026 17:39:00 -0400
+ id 1wyyr5-00056E-Sh
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:53 -0400
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:39a2:0:640:ae2d:0])
- by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 446FF80900;
- Wed, 26 Aug 2026 00:38:57 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 9609F80BF4;
+ Wed, 26 Aug 2026 00:38:50 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:630::1:39])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id QckKa93ZVmI0-ivIrbZkj; Wed, 26 Aug 2026 00:38:56 +0300
+ id QckKa93ZVmI0-5rYjpZ4y; Wed, 26 Aug 2026 00:38:49 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1787693936;
- bh=OTcaoVL0jFQJye1RDa6kfEsVtuP3AO7ZE+Bi7QLZWuc=;
+ s=default; t=1787693929;
+ bh=ruTE9n4bIPwJtg+8yoYt/Cw2K0p82HwIULvvyww/7i4=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=jUBX6XD81CfXyN1M4tuoMvwgHYLdC0E3OLPrcTL6HYnWVdTc7Du+z12+7DLkRGHA6
- xo7x+4nABDaUI8hoyuIC96U5FQsJXwbQjG0DxlwTEUVxRpbovInZABwRZXgpfsOyGA
- bnRBtO1NH8fd+YFs8rbiUQ+o0m8yKVmSu+esZNZk=
+ b=HPxw759vuaCFwsyxK6V6YAUlrRaXqZ76gq4Oaq4omRdZTFtxMSZWcnwYTHRGjR3uC
+ jP8Rz+lRDJYFaGNKE67sp2uzUCkDdtqgAyVrAZaRRS9AvbOWI2Te0L9jXPiYqGT/lM
+ /BFQv5hEwpyKsLdEzyTKPG0AhTSVtJm26eMitrVU=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: peterx@redhat.com
 Cc: farosas@suse.de, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
- Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [PATCH 27/30] arm/machine: move to new migration APIs
-Date: Wed, 26 Aug 2026 00:38:07 +0300
-Message-ID: <20260825213811.3725682-28-vsementsov@yandex-team.ru>
+ Michael Rolnik <mrolnik@gmail.com>
+Subject: [PATCH 20/30] avr/machine: move to new migration APIs
+Date: Wed, 26 Aug 2026 00:38:00 +0300
+Message-ID: <20260825213811.3725682-21-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
 References: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
@@ -75,271 +76,118 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- target/arm/machine.c | 107 ++++++++++++++++++++++---------------------
- 1 file changed, 56 insertions(+), 51 deletions(-)
+ target/avr/machine.c | 50 +++++++++++++++++++++++---------------------
+ 1 file changed, 26 insertions(+), 24 deletions(-)
 
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index 89127e5d83c..159a1f0e930 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -51,8 +51,8 @@ static bool vfp_fpcr_fpsr_needed(void *opaque)
-         (vfp_get_fpsr(env) & ~FPSCR_FPSR_MASK);
- }
+diff --git a/target/avr/machine.c b/target/avr/machine.c
+index 8064a7214a3..2f6283743c7 100644
+--- a/target/avr/machine.c
++++ b/target/avr/machine.c
+@@ -23,78 +23,80 @@
+ #include "migration/qemu-file-types.h"
+ #include "migration/vmstate.h"
  
--static int get_fpscr(QEMUFile *f, void *opaque, size_t size,
--                     const VMStateField *field)
-+static bool load_fpscr(QEMUFile *f, void *opaque, size_t size,
-+                     const VMStateField *field, Error **errp)
- {
-     ARMCPU *cpu = opaque;
-     CPUARMState *env = &cpu->env;
-@@ -62,78 +62,81 @@ static int get_fpscr(QEMUFile *f, void *opaque, size_t size,
-         /* 0 means we might have the data in the fpcr_fpsr subsection */
-         vfp_set_fpscr(env, val);
-     }
--    return 0;
-+    return true;
- }
- 
--static int put_fpscr(QEMUFile *f, void *opaque, size_t size,
--                     const VMStateField *field, JSONWriter *vmdesc)
-+static bool save_fpscr(QEMUFile *f, void *opaque, size_t size,
-+                      const VMStateField *field,
-+                      JSONWriter *vmdesc, Error **errp)
- {
-     ARMCPU *cpu = opaque;
-     CPUARMState *env = &cpu->env;
-     uint32_t fpscr = vfp_fpcr_fpsr_needed(opaque) ? 0 : vfp_get_fpscr(env);
- 
-     qemu_put_be32(f, fpscr);
--    return 0;
-+    return true;
- }
- 
- static const VMStateInfo vmstate_fpscr = {
-     .name = "fpscr",
--    .get = get_fpscr,
--    .put = put_fpscr,
-+    .load = load_fpscr,
-+    .save = save_fpscr,
- };
- 
--static int get_fpcr(QEMUFile *f, void *opaque, size_t size,
--                     const VMStateField *field)
-+static bool load_fpcr(QEMUFile *f, void *opaque, size_t size,
-+                     const VMStateField *field, Error **errp)
- {
-     ARMCPU *cpu = opaque;
-     CPUARMState *env = &cpu->env;
-     uint64_t val = qemu_get_be64(f);
- 
-     vfp_set_fpcr(env, val);
--    return 0;
-+    return true;
- }
- 
--static int put_fpcr(QEMUFile *f, void *opaque, size_t size,
--                     const VMStateField *field, JSONWriter *vmdesc)
-+static bool save_fpcr(QEMUFile *f, void *opaque, size_t size,
-+                    const VMStateField *field,
-+                    JSONWriter *vmdesc, Error **errp)
- {
-     ARMCPU *cpu = opaque;
-     CPUARMState *env = &cpu->env;
- 
-     qemu_put_be64(f, vfp_get_fpcr(env));
--    return 0;
-+    return true;
- }
- 
- static const VMStateInfo vmstate_fpcr = {
-     .name = "fpcr",
--    .get = get_fpcr,
--    .put = put_fpcr,
-+    .load = load_fpcr,
-+    .save = save_fpcr,
- };
- 
--static int get_fpsr(QEMUFile *f, void *opaque, size_t size,
--                     const VMStateField *field)
-+static bool load_fpsr(QEMUFile *f, void *opaque, size_t size,
-+                     const VMStateField *field, Error **errp)
- {
-     ARMCPU *cpu = opaque;
-     CPUARMState *env = &cpu->env;
-     uint64_t val = qemu_get_be64(f);
- 
-     vfp_set_fpsr(env, val);
--    return 0;
-+    return true;
- }
- 
--static int put_fpsr(QEMUFile *f, void *opaque, size_t size,
--                     const VMStateField *field, JSONWriter *vmdesc)
-+static bool save_fpsr(QEMUFile *f, void *opaque, size_t size,
-+                    const VMStateField *field,
-+                    JSONWriter *vmdesc, Error **errp)
- {
-     ARMCPU *cpu = opaque;
-     CPUARMState *env = &cpu->env;
- 
-     qemu_put_be64(f, vfp_get_fpsr(env));
--    return 0;
-+    return true;
- }
- 
- static const VMStateInfo vmstate_fpsr = {
-     .name = "fpsr",
--    .get = get_fpsr,
--    .put = put_fpsr,
-+    .load = load_fpsr,
-+    .save = save_fpsr,
- };
- 
- static const VMStateDescription vmstate_vfp_fpcr_fpsr = {
-@@ -755,8 +758,8 @@ static const VMStateDescription vmstate_m_security = {
-     }
- };
- 
--static int get_cpsr(QEMUFile *f, void *opaque, size_t size,
+-static int get_sreg(QEMUFile *f, void *opaque, size_t size,
 -                    const VMStateField *field)
-+static bool load_cpsr(QEMUFile *f, void *opaque, size_t size,
-+                    const VMStateField *field, Error **errp)
++static bool load_sreg(QEMUFile *f, void *opaque, size_t size,
++                     const VMStateField *field, Error **errp)
  {
-     ARMCPU *cpu = opaque;
-     CPUARMState *env = &cpu->env;
-@@ -797,22 +800,22 @@ static int get_cpsr(QEMUFile *f, void *opaque, size_t size,
-         }
-         /* Ignore the low bits, they are handled by vmstate_m. */
-         xpsr_write(env, val, ~XPSR_EXCP);
--        return 0;
-+        return true;
-     }
+     CPUAVRState *env = opaque;
+     uint8_t sreg;
  
-     env->aarch64 = ((val & PSTATE_nRW) == 0);
- 
-     if (is_a64(env)) {
-         pstate_write(env, val);
--        return 0;
-+        return true;
-     }
- 
-     cpsr_write(env, val, 0xffffffff, CPSRWriteRaw);
+     sreg = qemu_get_byte(f);
+     cpu_set_sreg(env, sreg);
 -    return 0;
 +    return true;
  }
  
--static int put_cpsr(QEMUFile *f, void *opaque, size_t size,
+-static int put_sreg(QEMUFile *f, void *opaque, size_t size,
 -                    const VMStateField *field, JSONWriter *vmdesc)
-+static bool save_cpsr(QEMUFile *f, void *opaque, size_t size,
-+                    const VMStateField *field, JSONWriter *vmdesc, Error **errp)
++static bool save_sreg(QEMUFile *f, void *opaque, size_t size,
++                     const VMStateField *field, JSONWriter *vmdesc,
++                     Error **errp)
  {
-     ARMCPU *cpu = opaque;
-     CPUARMState *env = &cpu->env;
-@@ -828,17 +831,17 @@ static int put_cpsr(QEMUFile *f, void *opaque, size_t size,
-     }
+     CPUAVRState *env = opaque;
+     uint8_t sreg = cpu_get_sreg(env);
  
-     qemu_put_be32(f, val);
+     qemu_put_byte(f, sreg);
 -    return 0;
 +    return true;
  }
  
- static const VMStateInfo vmstate_cpsr = {
-     .name = "cpsr",
--    .get = get_cpsr,
--    .put = put_cpsr,
-+    .load = load_cpsr,
-+    .save = save_cpsr,
+ static const VMStateInfo vms_sreg = {
+     .name = "sreg",
+-    .get = get_sreg,
+-    .put = put_sreg,
++    .load = load_sreg,
++    .save = save_sreg,
  };
  
--static int get_pstate64(QEMUFile *f, void *opaque, size_t size,
--                        const VMStateField *field)
-+static bool load_pstate64(QEMUFile *f, void *opaque, size_t size,
+-static int get_segment(QEMUFile *f, void *opaque, size_t size,
+-                       const VMStateField *field)
++static bool load_segment(QEMUFile *f, void *opaque, size_t size,
 +                        const VMStateField *field, Error **errp)
  {
-     ARMCPU *cpu = opaque;
-     CPUARMState *env = &cpu->env;
-@@ -850,11 +853,12 @@ static int get_pstate64(QEMUFile *f, void *opaque, size_t size,
-     } else {
-         cpsr_write_from_spsr_elx(env, val);
-     }
+     uint32_t *ramp = opaque;
+     uint8_t temp;
+ 
+     temp = qemu_get_byte(f);
+     *ramp = ((uint32_t)temp) << 16;
 -    return 0;
 +    return true;
  }
  
--static int put_pstate64(QEMUFile *f, void *opaque, size_t size,
--                        const VMStateField *field, JSONWriter *vmdesc)
-+static bool save_pstate64(QEMUFile *f, void *opaque, size_t size,
-+                         const VMStateField *field,
-+                         JSONWriter *vmdesc, Error **errp)
+-static int put_segment(QEMUFile *f, void *opaque, size_t size,
+-                       const VMStateField *field, JSONWriter *vmdesc)
++static bool save_segment(QEMUFile *f, void *opaque, size_t size,
++                        const VMStateField *field, JSONWriter *vmdesc,
++                        Error **errp)
  {
-     ARMCPU *cpu = opaque;
-     CPUARMState *env = &cpu->env;
-@@ -866,7 +870,7 @@ static int put_pstate64(QEMUFile *f, void *opaque, size_t size,
-         val = cpsr_read_for_spsr_elx(env);
-     }
-     qemu_put_be64(f, val);
+     uint32_t *ramp = opaque;
+     uint8_t temp = *ramp >> 16;
+ 
+     qemu_put_byte(f, temp);
 -    return 0;
 +    return true;
  }
  
- static bool pstate64_needed(void *opaque)
-@@ -901,8 +905,8 @@ static const VMStateDescription vmstate_pstate64 = {
-             .size = sizeof(uint64_t),
-             .info = &(const VMStateInfo) {
-                 .name = "pstate64",
--                .get = get_pstate64,
--                .put = put_pstate64,
-+                .load = load_pstate64,
-+                .save = save_pstate64,
-             },
-             .flags = VMS_SINGLE,
-             .offset = 0,
-@@ -911,17 +915,17 @@ static const VMStateDescription vmstate_pstate64 = {
-     },
+ static const VMStateInfo vms_rampD = {
+     .name = "rampD",
+-    .get = get_segment,
+-    .put = put_segment,
++    .load = load_segment,
++    .save = save_segment,
+ };
+ static const VMStateInfo vms_rampX = {
+     .name = "rampX",
+-    .get = get_segment,
+-    .put = put_segment,
++    .load = load_segment,
++    .save = save_segment,
+ };
+ static const VMStateInfo vms_rampY = {
+     .name = "rampY",
+-    .get = get_segment,
+-    .put = put_segment,
++    .load = load_segment,
++    .save = save_segment,
+ };
+ static const VMStateInfo vms_rampZ = {
+     .name = "rampZ",
+-    .get = get_segment,
+-    .put = put_segment,
++    .load = load_segment,
++    .save = save_segment,
+ };
+ static const VMStateInfo vms_eind = {
+     .name = "eind",
+-    .get = get_segment,
+-    .put = put_segment,
++    .load = load_segment,
++    .save = save_segment,
  };
  
--static int get_power(QEMUFile *f, void *opaque, size_t size,
--                    const VMStateField *field)
-+static bool load_power(QEMUFile *f, void *opaque, size_t size,
-+                    const VMStateField *field, Error **errp)
- {
-     ARMCPU *cpu = opaque;
-     bool powered_off = qemu_get_byte(f);
-     arm_set_cpu_power_state(cpu, powered_off ? PSCI_OFF : PSCI_ON);
--    return 0;
-+    return true;
- }
- 
--static int put_power(QEMUFile *f, void *opaque, size_t size,
--                    const VMStateField *field, JSONWriter *vmdesc)
-+static bool save_power(QEMUFile *f, void *opaque, size_t size,
-+                    const VMStateField *field, JSONWriter *vmdesc, Error **errp)
- {
-     ARMCPU *cpu = opaque;
- 
-@@ -931,16 +935,17 @@ static int put_power(QEMUFile *f, void *opaque, size_t size,
-         cpu->power_state == PSCI_OFF) {
-         bool powered_off = (cpu->power_state == PSCI_OFF) ? true : false;
-         qemu_put_byte(f, powered_off);
--        return 0;
-+        return true;
-     } else {
--        return 1;
-+        error_setg(errp, "Migration should not happen during power transition");
-+        return false;
-     }
- }
- 
- static const VMStateInfo vmstate_powered_off = {
-     .name = "powered_off",
--    .get = get_power,
--    .put = put_power,
-+    .load = load_power,
-+    .save = save_power,
- };
- 
- static bool syndrome64_needed(void *opaque)
+ const VMStateDescription vms_avr_cpu = {
 -- 
 2.43.0
 
