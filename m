@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60AFAC61DBD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC480C61DC2
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:12:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wywXt-0004U7-Po; Tue, 25 Aug 2026 15:10:53 -0400
+	id 1wywYO-0005YH-Cu; Tue, 25 Aug 2026 15:11:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywXt-0004Tw-3j
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:10:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wywYL-0005VA-01
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:11:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywXr-0003wK-ER
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:10:52 -0400
+ id 1wywYI-00045H-Fm
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:11:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787685050;
+ s=mimecast20190719; t=1787685077;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qCX+g+9B5pUAIu9lN6dO+J/k9b2ZyYTzjJYZl5J/LV0=;
- b=iknVVJjSKYWw1rObTAjSeMcwUe/Us44txK49Ai8vOQMBstPfEXlAaufExw2J4fHVkZjaun
- o98xU/DYoRiRcA+mCsHJorJSo6E0Os+9c+mOHks7jD0QsHCOXWzvXityZru/+b73504mw5
- Fg4LRheaWM7CeRbiBZ6L835uPIZL+0E=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=5me9IKB/1eEE3FMoQ1tv4Jcm7F9fMPCSAmLmmud3nJs=;
+ b=E/T2/fnbj1y0HrMKIP6L1VK9IO8zYBeS+LCY4P4o3YrQLNJP0N60C6ymbPEJnhXhZEQyys
+ 5N71+S8tyBpc8eiTCpiwCVVIWaHc6Lx9WCmK4c5d0Ik0H0YwOzucfTlTVsGvWUyVO2qelV
+ dmtr3V4nFaZK5H6T9PDaeE3CRl8gHHc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-530-usZe_UFGO4y1Xrde9V_0ww-1; Tue,
- 25 Aug 2026 15:10:47 -0400
-X-MC-Unique: usZe_UFGO4y1Xrde9V_0ww-1
-X-Mimecast-MFC-AGG-ID: usZe_UFGO4y1Xrde9V_0ww_1787685046
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-139-wYypShFhPwaGU8NiiWZ5fQ-1; Tue,
+ 25 Aug 2026 15:11:15 -0400
+X-MC-Unique: wYypShFhPwaGU8NiiWZ5fQ-1
+X-Mimecast-MFC-AGG-ID: wYypShFhPwaGU8NiiWZ5fQ_1787685074
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B90C718C0FA9; Tue, 25 Aug 2026 19:10:45 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1AE26183F9F7; Tue, 25 Aug 2026 19:11:14 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7983D1801AEA; Tue, 25 Aug 2026 19:10:44 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4AB2430002F7; Tue, 25 Aug 2026 19:11:12 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 25 Aug 2026 23:09:18 +0400
-Subject: [PATCH v4 11/49] python, tests: switch usernet queries from HMP to QMP
+Date: Tue, 25 Aug 2026 23:09:26 +0400
+Subject: [PATCH v4 19/49] tests/qtest/netdev-socket: replace HMP with
+ x-query-network QMP
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260825-qemu-no-hmp-v4-11-af60857c2fbe@redhat.com>
+Message-Id: <20260825-qemu-no-hmp-v4-19-af60857c2fbe@redhat.com>
 References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 In-Reply-To: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 To: qemu-devel@nongnu.org
@@ -62,29 +63,27 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  dave@treblig.org, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, John Snow <jsnow@redhat.com>, 
- Cleber Rosa <crosa@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3487;
+ Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=12768;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=BGr4jMtvHXTYjpFsBnp2mkhw2E82vBePeQYIs1jgUAU=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiHWFR7cweUSv8fefB4HX6uotB+3xCDpl4SU
- ptAzMYrRtOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3ohwAKCRDa6OEJdZac
- 5Z5hD/97xRbQDBVsRd/TZ2o/PGLTQQUDc++QpMbSXCTm0INqqE37XZ0xPUKOHznV9Vd7in2mZYS
- 6NYKQ2ICR6+r251D1kgywgzQaRUzyDPLk2XHGtJjELLgG2MpgQiZMTpJuA0JAcDOQae8yTC1Txh
- ZvyFUFi9Yz5lFrCa4ZNn4/5LCV2QxgawnPbm5Yj79xx73LKrT+mwFUhSZ7+AgxjqIg7PwjQW4Lc
- ECLk75oy2ZpcQy6i1W9LDTm0GeO8md2NSHwvqslfQdY65lYLpq6ddLvp0cSP1zfxN9YBZeaVmmz
- MuISFUv4bh+apZEFx/2FkVIChgqky9B3DPrpLjxRPQ/6xbHbYSS02GRWDjnx5ODTWm/a+k+KNU8
- 9TbIcAYqFoPe/iUTkcaHaLIGSVLMY2og1G2rgJcbSFjFKxCszXS4biTBohJBz8A6+NWghC81Pjj
- C0duy+VwISAtyKy17JVN9hMzIg7WZfhMsdvqmdK/vRr5OrHVCFeXrBfPM/fjlkHklmlO+BGApVh
- 7wvqr3nY1AnPKR0MxtScyGTmnOEsoDeGw981P8QAKmQ4HRyZMK15B6Yr5ON0yT54xpAH+oiRKhW
- oqJnVYvSo1zmjVMc/I8C+eHODivLQVzdgXBDbcs71efBfucVkxzaUxwvBsHuM3jfXr14XtgF1lm
- fcOIOXk9oEl/3kg==
+ bh=YA9IeNRf5eE0PbcbZTc2CKcxjqnSRjTaO3sj+6MVCNQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiHzxRs70jYlX+EdBXXa1//+3eIvH7uIAOEJ
+ sC8TbtIbBqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3ohwAKCRDa6OEJdZac
+ 5TuRD/9Ez7vRUTD7Nf0hf+zArWWEcj/5ILO2OWrRk0ygf9QQbjjdLEIQPaYaQW+UlLVnz1Q4jUW
+ y/E7Tfbj2ZvWjg58c/6WwKyqCF7JW5HRdwjzCGinAodATexHrPfGE0pdIu3MhQpNUXl61P6jVJX
+ 5iMYBN9FekEIeB1ir+oYkxOpmPpPlU8vlVD61Cjr0lg4tVr9rx7oj94Y7oEtZtMwV0Z3mrd02Nz
+ 4eVEQbyOpZW9QgVdVAWiLwOpD5897+LtdLIEo430/Hex5GUcYLBTe17ZogmUmkQ1h0IFXkO97Op
+ SPNOK2dIQTaWd9XtbVjM1WSDA0AdQBxRitEXBk7awOpZFRgpIHaKm+/7+xxbyLoHI7CkzR6lCgc
+ hkt2MkK85inW+ppKxLObmAzb8LDeer4u0IPJQcrmh/ENeaTamErO5NS4fKpIAYIihArD3NVdedJ
+ 8vTJOeIH0V1lqvFKJwyhGvZrQcy5DW+s6r3W8Gh4vpwdffCGEFkdcbZvFTC4JxO6i25FjBpsc8O
+ 9sy0D1vMuQ3F9NhGncSUcXZnpbAK9MGb12x5bnIyF4sUsU2ogg3VcZH9LFN9suNhWLX9fZ0So7g
+ 8zQdrqQOOFk/OH3nPeNDRhhruXkeUZKABDcACmau4qWe9M5zEEb3bShr0EJvTTDidbbEq9uuiMN
+ +zsbVhbK0FbqVZQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -92,8 +91,8 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,86 +108,313 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace human-monitor-command "info usernet" calls with the structured
-x-query-usernet QMP command in get_usernet_hostfwd_port() and the VM
-test runner boot path.
+Replace the HMP "info network" text parsing with the structured
+x-query-network QMP command. This makes the test assertions more robust
+by matching individual fields (info-str) instead of parsing the full HMP
+line format.
 
-Since x-query-usernet returns a list of UsernetInfo entries, callers
-now iterate over the result and extract the port from each entry's
-"info" field. Also switch get_info_usernet_hostfwd_port() from
-split('\r\n') to splitlines(), since QMP strings use \n rather than
-the HMP monitor's \r\n line endings.
+The EXPECT_STATE macro now takes an explicit netdev id argument to look
+up the client by name in the QMP response. The strrchr truncation is
+made NULL-safe: if the truncation character is not found, the full
+string is compared (and the final g_assert_cmpstr will catch
+mismatches).
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+While at it, fix the pre-existing duplicate "qemu/sockets.h" include,
+and reorder includes.
+
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- python/qemu/utils/__init__.py       |  5 +++--
- tests/functional/qemu_test/utils.py |  8 ++++++--
- tests/vm/basevm.py                  | 13 ++++++++-----
- 3 files changed, 17 insertions(+), 9 deletions(-)
+ tests/qtest/netdev-socket.c | 143 +++++++++++++++++++++++++-------------------
+ 1 file changed, 82 insertions(+), 61 deletions(-)
 
-diff --git a/python/qemu/utils/__init__.py b/python/qemu/utils/__init__.py
-index be5daa836340..e32911d4c6df 100644
---- a/python/qemu/utils/__init__.py
-+++ b/python/qemu/utils/__init__.py
-@@ -46,10 +46,11 @@ def get_info_usernet_hostfwd_port(info_usernet_output: str) -> Optional[int]:
-     """
-     Returns the port given to the hostfwd parameter via info usernet
+diff --git a/tests/qtest/netdev-socket.c b/tests/qtest/netdev-socket.c
+index b731af0ad959..30005c2e0015 100644
+--- a/tests/qtest/netdev-socket.c
++++ b/tests/qtest/netdev-socket.c
+@@ -7,33 +7,62 @@
+  */
  
--    :param info_usernet_output: output generated by hmp command "info usernet"
-+    :param info_usernet_output: output generated by "info usernet" or
-+        the "info" field from x-query-usernet
-     :return: the port number allocated by the hostfwd option
-     """
--    for line in info_usernet_output.split('\r\n'):
-+    for line in info_usernet_output.splitlines():
-         regex = r'TCP.HOST_FORWARD.*127\.0\.0\.1\s+(\d+)\s+10\.'
-         match = re.search(regex, line)
-         if match is not None:
-diff --git a/tests/functional/qemu_test/utils.py b/tests/functional/qemu_test/utils.py
-index 826c267785bd..0992db49ab28 100644
---- a/tests/functional/qemu_test/utils.py
-+++ b/tests/functional/qemu_test/utils.py
-@@ -14,8 +14,12 @@
+ #include "qemu/osdep.h"
+-#include "qemu/sockets.h"
+ #include <glib/gstdio.h>
+ #include "../unit/socket-helpers.h"
+ #include "libqtest.h"
+-#include "qobject/qstring.h"
+-#include "qemu/sockets.h"
+-#include "qapi/qobject-input-visitor.h"
+ #include "qapi/qapi-visit-sockets.h"
++#include "qapi/qobject-input-visitor.h"
++#include "qemu/sockets.h"
++#include "qobject/qdict.h"
++#include "qobject/qlist.h"
++#include "qobject/qstring.h"
  
+ #define CONNECTION_TIMEOUT    60
  
- def get_usernet_hostfwd_port(vm):
--    res = vm.cmd('human-monitor-command', command_line='info usernet')
--    return get_info_usernet_hostfwd_port(res)
-+    res = vm.cmd('x-query-usernet')
-+    for entry in res:
-+        port = get_info_usernet_hostfwd_port(entry['info'])
-+        if port is not None:
-+            return port
-+    return None
+-#define EXPECT_STATE(q, e, t)                             \
+-do {                                                      \
+-    char *resp = NULL;                                    \
+-    g_test_timer_start();                                 \
+-    do {                                                  \
+-        g_free(resp);                                     \
+-        resp = qtest_hmp(q, "info network");              \
+-        if (t) {                                          \
+-            strrchr(resp, t)[0] = 0;                      \
+-        }                                                 \
+-        if (g_str_equal(resp, e)) {                       \
+-            break;                                        \
+-        }                                                 \
+-    } while (g_test_timer_elapsed() < CONNECTION_TIMEOUT); \
+-    g_assert_cmpstr(resp, ==, e);                         \
+-    g_free(resp);                                         \
++/*
++ * Only checks info-str; type is implicit from the netdev created by each test
++ */
++static char *query_net_info_str(QTestState *q, const char *name)
++{
++    QDict *ret;
++    QList *clients;
++    QListEntry *entry;
++
++    ret = qtest_qmp_assert_success_ref(q, "{'execute': 'x-query-network'}");
++    clients = qdict_get_qlist(ret, "clients");
++    g_assert_nonnull(clients);
++
++    QLIST_FOREACH_ENTRY(clients, entry) {
++        QDict *client = qobject_to(QDict, qlist_entry_obj(entry));
++        if (g_str_equal(qdict_get_str(client, "name"), name)) {
++            char *info = g_strdup(qdict_get_str(client, "info-str"));
++            qobject_unref(ret);
++            return info;
++        }
++    }
++
++    g_assert_not_reached();
++}
++
++#define EXPECT_STATE(q, id, e, t)                           \
++do {                                                        \
++    char *info = NULL;                                      \
++    g_test_timer_start();                                   \
++    do {                                                    \
++        g_free(info);                                       \
++        info = query_net_info_str(q, id);                   \
++        if (t) {                                            \
++            char *p = strrchr(info, t);                     \
++            if (p) {                                        \
++                p[0] = 0;                                   \
++            }                                               \
++        }                                                   \
++        if (g_str_equal(info, e)) {                         \
++            break;                                          \
++        }                                                   \
++    } while (g_test_timer_elapsed() < CONNECTION_TIMEOUT);  \
++    g_assert_cmpstr(info, ==, e);                           \
++    g_free(info);                                           \
+ } while (0)
  
- def pow2ceil(x):
-     """
-diff --git a/tests/vm/basevm.py b/tests/vm/basevm.py
-index 9e879e966a36..198b04e8c375 100644
---- a/tests/vm/basevm.py
-+++ b/tests/vm/basevm.py
-@@ -312,12 +312,15 @@ def boot(self, img, extra_args=[]):
-         self._guest = guest
-         # Init console so we can start consuming the chars.
-         self.console_init()
--        usernet_info = guest.cmd("human-monitor-command",
--                                 command_line="info usernet")
--        self.ssh_port = get_info_usernet_hostfwd_port(usernet_info)
-+        res = guest.cmd("x-query-usernet")
-+        for entry in res:
-+            port = get_info_usernet_hostfwd_port(entry['info'])
-+            if port is not None:
-+                self.ssh_port = port
-+                break
-         if not self.ssh_port:
--            raise Exception("Cannot find ssh port from 'info usernet':\n%s" % \
--                            usernet_info)
-+            raise Exception("Cannot find ssh port from"
-+                            " 'x-query-usernet': %s" % res)
+ static gchar *tmpdir;
+@@ -127,20 +156,19 @@ static void test_stream_inet_ipv4(void)
+                        "addr.ipv4=on,addr.ipv6=off,"
+                        "addr.host=127.0.0.1,addr.port=%d", port);
  
-     def console_init(self, timeout = None):
-         if timeout == None:
+-    EXPECT_STATE(qts0, "st0: index=0,type=stream,listening\r\n", 0);
++    EXPECT_STATE(qts0, "st0", "listening", 0);
+ 
+     qts1 = qtest_initf("-nodefaults -M none "
+                        "-netdev stream,server=false,id=st0,addr.type=inet,"
+                        "addr.ipv4=on,addr.ipv6=off,"
+                        "addr.host=127.0.0.1,addr.port=%d", port);
+ 
+-    expect = g_strdup_printf("st0: index=0,type=stream,tcp:127.0.0.1:%d\r\n",
+-                             port);
+-    EXPECT_STATE(qts1, expect, 0);
++    expect = g_strdup_printf("tcp:127.0.0.1:%d", port);
++    EXPECT_STATE(qts1, "st0", expect, 0);
+     g_free(expect);
+ 
+     /* the port is unknown, check only the address */
+-    EXPECT_STATE(qts0, "st0: index=0,type=stream,tcp:127.0.0.1", ':');
++    EXPECT_STATE(qts0, "st0", "tcp:127.0.0.1", ':');
+ 
+     qtest_quit(qts1);
+     qtest_quit(qts0);
+@@ -200,7 +228,7 @@ static void test_stream_unix_reconnect(void)
+                        "-netdev stream,id=st0,server=true,addr.type=unix,"
+                        "addr.path=%s", path);
+ 
+-    EXPECT_STATE(qts0, "st0: index=0,type=stream,listening\r\n", 0);
++    EXPECT_STATE(qts0, "st0", "listening", 0);
+ 
+     qts1 = qtest_initf("-nodefaults -M none "
+                        "-netdev stream,server=false,id=st0,addr.type=unix,"
+@@ -250,20 +278,19 @@ static void test_stream_inet_ipv6(void)
+                        "addr.ipv4=off,addr.ipv6=on,"
+                        "addr.host=::1,addr.port=%d", port);
+ 
+-    EXPECT_STATE(qts0, "st0: index=0,type=stream,listening\r\n", 0);
++    EXPECT_STATE(qts0, "st0", "listening", 0);
+ 
+     qts1 = qtest_initf("-nodefaults -M none "
+                        "-netdev stream,server=false,id=st0,addr.type=inet,"
+                        "addr.ipv4=off,addr.ipv6=on,"
+                        "addr.host=::1,addr.port=%d", port);
+ 
+-    expect = g_strdup_printf("st0: index=0,type=stream,tcp:::1:%d\r\n",
+-                             port);
+-    EXPECT_STATE(qts1, expect, 0);
++    expect = g_strdup_printf("tcp:::1:%d", port);
++    EXPECT_STATE(qts1, "st0", expect, 0);
+     g_free(expect);
+ 
+     /* the port is unknown, check only the address */
+-    EXPECT_STATE(qts0, "st0: index=0,type=stream,tcp:::1", ':');
++    EXPECT_STATE(qts0, "st0", "tcp:::1", ':');
+ 
+     qtest_quit(qts1);
+     qtest_quit(qts0);
+@@ -282,16 +309,16 @@ static void test_stream_unix(void)
+                        "addr.type=unix,addr.path=%s,",
+                        path);
+ 
+-    EXPECT_STATE(qts0, "st0: index=0,type=stream,listening\r\n", 0);
++    EXPECT_STATE(qts0, "st0", "listening", 0);
+ 
+     qts1 = qtest_initf("-nodefaults -M none "
+                        "-netdev stream,id=st0,server=false,"
+                        "addr.type=unix,addr.path=%s",
+                        path);
+ 
+-    expect = g_strdup_printf("st0: index=0,type=stream,unix:%s\r\n", path);
+-    EXPECT_STATE(qts1, expect, 0);
+-    EXPECT_STATE(qts0, expect, 0);
++    expect = g_strdup_printf("unix:%s", path);
++    EXPECT_STATE(qts1, "st0", expect, 0);
++    EXPECT_STATE(qts0, "st0", expect, 0);
+     g_free(expect);
+     g_free(path);
+ 
+@@ -314,16 +341,16 @@ static void test_stream_unix_abstract(void)
+                        "addr.abstract=on",
+                        path);
+ 
+-    EXPECT_STATE(qts0, "st0: index=0,type=stream,listening\r\n", 0);
++    EXPECT_STATE(qts0, "st0", "listening", 0);
+ 
+     qts1 = qtest_initf("-nodefaults -M none "
+                        "-netdev stream,id=st0,server=false,"
+                        "addr.type=unix,addr.path=%s,addr.abstract=on",
+                        path);
+ 
+-    expect = g_strdup_printf("st0: index=0,type=stream,unix:%s\r\n", path);
+-    EXPECT_STATE(qts1, expect, 0);
+-    EXPECT_STATE(qts0, expect, 0);
++    expect = g_strdup_printf("unix:%s", path);
++    EXPECT_STATE(qts1, "st0", expect, 0);
++    EXPECT_STATE(qts0, "st0", expect, 0);
+     g_free(expect);
+     g_free(path);
+ 
+@@ -346,14 +373,14 @@ static void test_stream_fd(void)
+                        "-netdev stream,id=st0,addr.type=fd,addr.str=%d",
+                        sock[0]);
+ 
+-    EXPECT_STATE(qts0, "st0: index=0,type=stream,unix:\r\n", 0);
++    EXPECT_STATE(qts0, "st0", "unix:", 0);
+ 
+     qts1 = qtest_initf("-nodefaults -M none "
+                        "-netdev stream,id=st0,addr.type=fd,addr.str=%d",
+                        sock[1]);
+ 
+-    EXPECT_STATE(qts1, "st0: index=0,type=stream,unix:\r\n", 0);
+-    EXPECT_STATE(qts0, "st0: index=0,type=stream,unix:\r\n", 0);
++    EXPECT_STATE(qts1, "st0", "unix:", 0);
++    EXPECT_STATE(qts0, "st0", "unix:", 0);
+ 
+     qtest_quit(qts1);
+     qtest_quit(qts0);
+@@ -379,10 +406,9 @@ static void test_dgram_inet(void)
+                        "remote.type=inet,remote.host=127.0.0.1,remote.port=%d",
+                         port[0], port[1]);
+ 
+-    expect = g_strdup_printf("st0: index=0,type=dgram,"
+-                             "udp=127.0.0.1:%d/127.0.0.1:%d\r\n",
++    expect = g_strdup_printf("udp=127.0.0.1:%d/127.0.0.1:%d",
+                              port[0], port[1]);
+-    EXPECT_STATE(qts0, expect, 0);
++    EXPECT_STATE(qts0, "st0", expect, 0);
+     g_free(expect);
+ 
+     qts1 = qtest_initf("-nodefaults -M none "
+@@ -391,10 +417,9 @@ static void test_dgram_inet(void)
+                        "remote.type=inet,remote.host=127.0.0.1,remote.port=%d",
+                         port[1], port[0]);
+ 
+-    expect = g_strdup_printf("st0: index=0,type=dgram,"
+-                             "udp=127.0.0.1:%d/127.0.0.1:%d\r\n",
++    expect = g_strdup_printf("udp=127.0.0.1:%d/127.0.0.1:%d",
+                              port[1], port[0]);
+-    EXPECT_STATE(qts1, expect, 0);
++    EXPECT_STATE(qts1, "st0", expect, 0);
+     g_free(expect);
+ 
+     qtest_quit(qts1);
+@@ -410,7 +435,7 @@ static void test_dgram_mcast(void)
+                       "-netdev dgram,id=st0,"
+                       "remote.type=inet,remote.host=230.0.0.1,remote.port=1234");
+ 
+-    EXPECT_STATE(qts, "st0: index=0,type=dgram,mcast=230.0.0.1:1234\r\n", 0);
++    EXPECT_STATE(qts, "st0", "mcast=230.0.0.1:1234", 0);
+ 
+     qtest_quit(qts);
+ }
+@@ -431,9 +456,8 @@ static void test_dgram_unix(void)
+                        "remote.type=unix,remote.path=%s",
+                        path0, path1);
+ 
+-    expect = g_strdup_printf("st0: index=0,type=dgram,udp=%s:%s\r\n",
+-                             path0, path1);
+-    EXPECT_STATE(qts0, expect, 0);
++    expect = g_strdup_printf("udp=%s:%s", path0, path1);
++    EXPECT_STATE(qts0, "st0", expect, 0);
+     g_free(expect);
+ 
+     qts1 = qtest_initf("-nodefaults -M none "
+@@ -441,10 +465,8 @@ static void test_dgram_unix(void)
+                        "remote.type=unix,remote.path=%s",
+                        path1, path0);
+ 
+-
+-    expect = g_strdup_printf("st0: index=0,type=dgram,udp=%s:%s\r\n",
+-                             path1, path0);
+-    EXPECT_STATE(qts1, expect, 0);
++    expect = g_strdup_printf("udp=%s:%s", path1, path0);
++    EXPECT_STATE(qts1, "st0", expect, 0);
+     g_free(expect);
+ 
+     unlink(path0);
+@@ -470,17 +492,16 @@ static void test_dgram_fd(void)
+                        "-netdev dgram,id=st0,local.type=fd,local.str=%d",
+                        sv[0]);
+ 
+-    expect = g_strdup_printf("st0: index=0,type=dgram,fd=%d unix\r\n", sv[0]);
+-    EXPECT_STATE(qts0, expect, 0);
++    expect = g_strdup_printf("fd=%d unix", sv[0]);
++    EXPECT_STATE(qts0, "st0", expect, 0);
+     g_free(expect);
+ 
+     qts1 = qtest_initf("-nodefaults -M none "
+                        "-netdev dgram,id=st0,local.type=fd,local.str=%d",
+                        sv[1]);
+ 
+-
+-    expect = g_strdup_printf("st0: index=0,type=dgram,fd=%d unix\r\n", sv[1]);
+-    EXPECT_STATE(qts1, expect, 0);
++    expect = g_strdup_printf("fd=%d unix", sv[1]);
++    EXPECT_STATE(qts1, "st0", expect, 0);
+     g_free(expect);
+ 
+     qtest_quit(qts1);
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
