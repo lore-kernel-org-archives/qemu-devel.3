@@ -4,49 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF877C61DBE
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:16:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FF6EC61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:17:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyp6N-0000Ox-Dk; Tue, 25 Aug 2026 07:13:59 -0400
+	id 1wyp6a-0000fK-KE; Tue, 25 Aug 2026 07:14:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp6K-0000Nx-U0; Tue, 25 Aug 2026 07:13:56 -0400
+ id 1wyp6Z-0000ar-AY; Tue, 25 Aug 2026 07:14:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp6J-0008Cm-CL; Tue, 25 Aug 2026 07:13:56 -0400
+ id 1wyp6X-0008GM-KK; Tue, 25 Aug 2026 07:14:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787656395; bh=YDBmE+Ss8Tj0goodTURvX5uHHCAWDc0xm5dtYHEnSPI=;
+ t=1787656396; bh=8jW0uobWqgGMEEAWxQjaGDT7qpTehZlHMBF0QdRKTN4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=KdywXH1WQMULZbuaYPO8iVIROIL2i3BepONgnSOAuDnJJ3hKCqIjgbpUNRU71z14x
- 0cUitrmSOrtJeO/RzY/Uh/FcaZWRWdwMrazfNUSFYhlTqRyZEJaU/H9vofNkUsBwLU
- v+ktCXNbRnjk2B68Wmy3NKS1otdE0BMmKEYt3X0guYogs28U5qoTHDe60x3QQaFIQp
- EfrXuwWYllZ1VVduYZ4zAfzKTTITDUqZnZdD7WGfnagqQAmOFmkTWiNvSwb2NaP2wu
- JvdAKu1fr2C8Xe4qLGGPJ9y8dnqPM5ZgC0UMxjwUmkEQ63J6iifwlg9AJRFrA+f3dv
- 23IXgD8tH9aww==
+ b=gfxAEKzLk0Iz1z9w8c1P8IEZBj0+MMzgoG06LWG8JlpmSBOsfXWuumT3XcRxCe56S
+ 6ShhXESljMfxWfJOcJ+0PaIr/hi1cHBVEoeZ14tJTB0IRcxpyypOcmWcjQEwmuoV9E
+ 9r+rYnuwjjBqxvNRLwp1H3MInEt/16hwi8OhbyGv/rtH6MVP2BSCvFFekywRbFp/yu
+ uYyOU0aq/Jekq0DKg6iIvhKNS3UXhICMj8Uc2+U3g8/E1SBsl3YlivlGfo5OTdc1qc
+ z+BX/EdqIR4ryXrLM3eJC1yDhmSBfsQQuTyLHeP8w85GpsEpSdNPUDIZVvz+IOU/W6
+ QucqAjyEDWYjQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F1C041CE4A4;
- Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2C1C41CE4AC;
+ Tue, 25 Aug 2026 14:13:16 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 15E73416270;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 452BF416278;
  Tue, 25 Aug 2026 14:13:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 630C23258B; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
+ id 7BEFF3259B; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Jacob Young <jacobly@ziglang.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v3 136/166] tcg/optimize: Fix s_mask computation for
- shifts
-Date: Tue, 25 Aug 2026 14:11:32 +0300
-Message-ID: <20260825111206.482723-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v3 144/166] meson: make linker warnings non-fatal on
+ Linux
+Date: Tue, 25 Aug 2026 14:11:40 +0300
+Message-ID: <20260825111206.482723-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,70 +73,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Skip s_mask computation for logical right shift.
+These cause a werror=true build to fail with Meson 1.12.0, as it now
+makes linker warnings fatal as well.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 93a967fbb57 ("tcg/optimize: Propagate sign info for shifting")
-Reported-by: Jacob Young <jacobly@ziglang.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 5fe51606146cbf04dac07bf27256febbe56881e7)
-(Mjt: back-port to 10.0 across v10.0.0-1791-g03329e3ce460
- "tcg/optimize: Build and use o_bits in fold_shift"
- and v10.0.0-425-g74dbd36f1f87 "tcg: Merge INDEX_op_shr_{i32,i64}")
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 501187d0bc62a46628acc25e0ea0187094f04246)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index 1b9553737e2..c7c16518f08 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -2602,8 +2602,17 @@ static bool fold_shift(OptContext *ctx, TCGOp *op)
-         int sh = ti_const_val(t2);
+diff --git a/meson.build b/meson.build
+index f94d84e2d31..9cadd636f74 100644
+--- a/meson.build
++++ b/meson.build
+@@ -612,6 +612,11 @@ if host_os == 'windows'
+   qemu_ldflags += cc.get_supported_link_arguments('-Wl,--no-seh', '-Wl,--nxcompat')
+   qemu_ldflags += cc.get_supported_link_arguments('-Wl,--dynamicbase', '-Wl,--high-entropy-va')
+ endif
++if host_os == 'linux' and get_option('werror') and get_option('prefer_static')
++  # On glibc systems, glib causes warnings about getpwuid, getpwuid_r
++  # and getpwnam_r not being supported with static linking
++  qemu_ldflags += cc.get_supported_link_arguments('-Wl,--no-fatal-warnings')
++endif
  
-         z_mask = do_constant_folding(op->opc, ctx->type, z_mask, sh);
--        s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
- 
-+        if (op->opc == INDEX_op_shr_i32 || op->opc == INDEX_op_shr_i64) {
-+            /*
-+             * Logical right shift will force the sign bit zero.
-+             * Don't bother computing s_mask and let fold_masks
-+             * recompute from z_mask.
-+             */
-+            return fold_masks_z(ctx, op, z_mask);
-+        }
-+
-+        s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
-         return fold_masks_zs(ctx, op, z_mask, s_mask);
-     }
- 
-diff --git a/tests/tcg/i386/test-i386-opt-shr.c b/tests/tcg/i386/test-i386-opt-shr.c
-new file mode 100644
-index 00000000000..9fb8d420223
---- /dev/null
-+++ b/tests/tcg/i386/test-i386-opt-shr.c
-@@ -0,0 +1,21 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* Regression test for tcg optimize vs sign bit repetition counting. */
-+
-+#include <assert.h>
-+
-+int main()
-+{
-+#ifndef __x86_64__
-+    char test;
-+
-+    asm("movw $0x4000, %%ax\n\t"
-+        "addw %%ax, %%ax\n\t"
-+        "cwtl\n\t"
-+        "shrl %%eax\n\t"
-+        "cmpw $-0x3fff, %%ax\n\t"
-+        "setnl %%al"
-+        : "=a"(test));
-+    assert(!test);
-+#endif
-+    return 0;
-+}
+ if get_option('fuzzing')
+   # Specify a filter to only instrument code that is directly related to
 -- 
 2.47.3
 
