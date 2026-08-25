@@ -4,52 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2CD1C61DC4
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:14:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF138C61DBD
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:15:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyp6y-0000yO-BP; Tue, 25 Aug 2026 07:14:36 -0400
+	id 1wyp6P-0000Q0-Ly; Tue, 25 Aug 2026 07:14:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp6w-0000xM-Ha; Tue, 25 Aug 2026 07:14:34 -0400
+ id 1wyp6O-0000PP-9N; Tue, 25 Aug 2026 07:14:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp6u-0008L5-Tm; Tue, 25 Aug 2026 07:14:34 -0400
+ id 1wyp6M-0008DZ-GQ; Tue, 25 Aug 2026 07:14:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787656396; bh=DQhgwN4ppBdWGtbjuU6iyGc+oFbrl/6YwmkGNUHdtCs=;
+ t=1787656396; bh=lwjuQx3EXI/g13Td3L9R+9Xx4ZUuCRX8Ufdv6wujEms=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=eKPgVUrvJME2uWmMLPOMFTltBsdMlzbvLmfjiTj/+JsmJB/DaBV+Ei86wL89oUvcf
- 9rUIyOperR1YATvyhY3nFUb3mbgmYC/nEcOCEJHS6YLHIWdj6PKmOLjIKznREaKeE+
- KcsG+fZxsSh9piQ9b9q9o9Z8Q7AkmZTUl8cRo8Kvq/n4A0FZMw+jx7c69mD6y9xP27
- efv+GGOljwd6hM1lJBhGKgEbMBXx8Q6d6Zmbi1auFaCzCtryEuG2oEw6DkhbMT7wmQ
- CPl7CeKjIRzHXWutmuTOVx06huiyHWDJalljXilzrKWtFsmpfCafifhQ04bqRPwB+T
- Gs8ZLLLaSbBCA==
+ b=AarzaRsWxPhc4Braw8HzNi5qamkX4mFs3S0qIBmxl83RZ92AiIObV6rOfuwsxV+MH
+ T4XPJs8552ogeqef5vxRQ3kMGvJCKmC+TdGGNa5FjrF2s7cckmEemDlZQt9f70+HYY
+ k/9f29ihq2oFJ+nJRtdmOJSWPnVbB+hC/8lwRcGgbyAACee0uFQOsRqXqcAdK8LClL
+ 1cqPEFwKEinNfOGRbf2jVZsoksRwYPyeMaV2uuE96t/sUX684RRnJ21aOUCieYqLFH
+ er83MZbVKSg7pOUYII04cwVyZfBMMibRrdjaHBkaa4VouP38fj1qePzCiU2npQrytC
+ ZhPpHIPIzZSmw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 35C541CE4AE;
+ by isrv.corpit.ru (Postfix) with ESMTP id 0D52B1CE4A6;
  Tue, 25 Aug 2026 14:13:16 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4E48041627A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 254A9416272;
  Tue, 25 Aug 2026 14:13:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 823103259F; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
+ id 696203258F; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Yogesh Vyas <yvyas1991@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v3 146/166] tcg: Return success from
- tcg_region_alloc__locked
-Date: Tue, 25 Aug 2026 14:11:42 +0300
-Message-ID: <20260825111206.482723-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v3 138/166] target/i386: Clear OF, SF,
+ and AF for fcomi/fucomi
+Date: Tue, 25 Aug 2026 14:11:34 +0300
+Message-ID: <20260825111206.482723-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,68 +71,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Simon Scherer <scherer.simon89@gmail.com>
 
-Invert the sense of the boolean result from 'error' to 'success'.
+helper_fcomi_ST0_FT0() and helper_fucomi_ST0_FT0() only cleared
+CC_Z, CC_P, and CC_C before merging in the comparison result,
+leaving CC_O, CC_S, and CC_A untouched from whatever they were
+set to beforehand.
 
-Tested-by: Yogesh Vyas <yvyas1991@gmail.com>
-Reviewed-by: Yogesh Vyas <yvyas1991@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit e131c28b6eb24c0b7f7f21591b2b2c7568267337)
+The Intel SDM documents FCOMI/FCOMIP/FUCOMI/FUCOMIP as setting OF,
+SF, and AF to 0 unconditionally. The AMD manual doesn't mention them
+at all. However, testing on multiple real Intel and AMD systems confirms
+all three are unconditionally cleared regardless of the comparison
+result or their prior value.
+
+Since fcomi_ccval[] only ever contains CC_C, CC_Z, 0, or CC_Z|CC_P|CC_C,
+and CC_O|CC_S|CC_Z|CC_A|CC_P|CC_C already covers every flag bit, CC_SRC
+can be assigned from fcomi_ccval[ret + 1] directly instead of ORing it
+into a masked cpu_cc_compute_all() result.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4133
+Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+Link: https://lore.kernel.org/r/20260807062831.19618-1-scherer.simon89@gmail.com
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 0924d9d3db3617f49ba9282acc6d85b349404ce6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/region.c b/tcg/region.c
-index 478ec051c4b..3721a7a7e16 100644
---- a/tcg/region.c
-+++ b/tcg/region.c
-@@ -360,11 +360,11 @@ static void tcg_region_assign(TCGContext *s, size_t curr_region)
- static bool tcg_region_alloc__locked(TCGContext *s)
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index 56d456860fc..128f16dc951 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -550,12 +550,11 @@ static const int fcomi_ccval[4] = {CC_C, CC_Z, 0, CC_Z | CC_P | CC_C};
+ void helper_fcomi_ST0_FT0(CPUX86State *env)
  {
-     if (region.current == region.n) {
--        return true;
-+        return false;
-     }
-     tcg_region_assign(s, region.current);
-     region.current++;
--    return false;
-+    return true;
- }
+     int old_flags = save_exception_flags(env);
+-    int eflags;
+     FloatRelation ret;
  
- /*
-@@ -373,17 +373,17 @@ static bool tcg_region_alloc__locked(TCGContext *s)
-  */
- bool tcg_region_alloc(TCGContext *s)
+     ret = floatx80_compare(ST0, FT0, &env->fp_status);
+-    eflags = cpu_cc_compute_all(env) & ~(CC_Z | CC_P | CC_C);
+-    CC_SRC = eflags | fcomi_ccval[ret + 1];
++    /* OF, SF, and AF are unconditionally cleared to 0 */
++    CC_SRC = fcomi_ccval[ret + 1];
+     CC_OP = CC_OP_EFLAGS;
+     merge_exception_flags(env, old_flags);
+ }
+@@ -563,12 +562,11 @@ void helper_fcomi_ST0_FT0(CPUX86State *env)
+ void helper_fucomi_ST0_FT0(CPUX86State *env)
  {
--    bool err;
-+    bool ok;
-     /* read the region size now; alloc__locked will overwrite it on success */
-     size_t size_full = s->code_gen_buffer_size;
+     int old_flags = save_exception_flags(env);
+-    int eflags;
+     FloatRelation ret;
  
-     qemu_mutex_lock(&region.lock);
--    err = tcg_region_alloc__locked(s);
--    if (!err) {
-+    ok = tcg_region_alloc__locked(s);
-+    if (ok) {
-         region.agg_size_full += size_full - TCG_HIGHWATER;
-     }
-     qemu_mutex_unlock(&region.lock);
--    return err;
-+    return !ok;
+     ret = floatx80_compare_quiet(ST0, FT0, &env->fp_status);
+-    eflags = cpu_cc_compute_all(env) & ~(CC_Z | CC_P | CC_C);
+-    CC_SRC = eflags | fcomi_ccval[ret + 1];
++    /* OF, SF, and AF are unconditionally cleared to 0 */
++    CC_SRC = fcomi_ccval[ret + 1];
+     CC_OP = CC_OP_EFLAGS;
+     merge_exception_flags(env, old_flags);
  }
- 
- /*
-@@ -392,8 +392,8 @@ bool tcg_region_alloc(TCGContext *s)
-  */
- static void tcg_region_initial_alloc__locked(TCGContext *s)
- {
--    bool err = tcg_region_alloc__locked(s);
--    g_assert(!err);
-+    bool ok = tcg_region_alloc__locked(s);
-+    g_assert(ok);
- }
- 
- void tcg_region_initial_alloc(TCGContext *s)
 -- 
 2.47.3
 
