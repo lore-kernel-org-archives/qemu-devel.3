@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A588C5DF94
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71C85C61DBC
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:08:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylGU-000808-Dr; Tue, 25 Aug 2026 03:08:10 -0400
+	id 1wylGP-0007nd-Kf; Tue, 25 Aug 2026 03:08:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylGI-0007ku-3b; Tue, 25 Aug 2026 03:07:59 -0400
+ id 1wylGG-0007hl-5a; Tue, 25 Aug 2026 03:07:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylGF-000617-B2; Tue, 25 Aug 2026 03:07:57 -0400
+ id 1wylGC-00060L-U2; Tue, 25 Aug 2026 03:07:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641596; bh=VZbNm3a+XEEI8COKqcvS2I2yh9dTbWtLQ1s1bRzk+ug=;
+ t=1787641596; bh=oAdFlTdHGmfLnIpJ/Q3sjwmZB5CCL70Rv0f6oSGohxk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bqsMrQcXfh0IqRTg8n4eyCe4T1Y1QPspBeK+dQ3wPGUFm5ISLtrTrZKxJg89BouCb
- 0dVG2TjZbsCBO3BiuEYr9Q9w/u7vBNtxSU1DRXLgg/q8x4dBRn5jy+97rW27Do7rJZ
- DZsXj+Qchnu74qUcZuNQes0Mkv0uWWQMo3UQMjRDEmI6Ol2CUsURTkM8TvYErte08w
- M8lvKxEdlRFbA27OdLFD3vG9PbiTvLRznvBs+6kiviVvmBhhqXnKCpnw83rUci2y4B
- 4szrsychxJn7B41twE0HF+d7fGwrmJCKZjz5zFDjhjDyN/7uMRT1sB01bJHSlIb0Bx
- N+e3jm/LoVEOw==
+ b=m+fulfzmfpK1D7uE5oZBW/WLv9/9KeLXP9E2THG5shAmCwWL/h7O1FmwiTHjb3MTv
+ fSse+2EzaNS+THlLbtuuY61eGzPkHN4wMAmjl61KW9+n5CPOWSKTQ+Oi1GQyAoBrbq
+ 7QOsh5ULWwwBLCyC7OZd9vk/aE4aXE9UKlPniLY39xfdY8Y5LvDBWCzN0XwftP4r1t
+ xF6eaGNO2jQN5rJJHNQ+1YV1z3E2Hv0U0gxu7p5LyPF4+tldPhcyRhfjYzlaEbLLdQ
+ yFA9ysNQReI0t+BdTY/SEvEf8ekMtj8m6TcQZz+Ds1E6NZaML1wFMm+n9sN7TEoxIv
+ pHuwi2AI7ihKQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 252641CE21C;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1F7971CE21B;
  Tue, 25 Aug 2026 10:06:36 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id DD5C4415F97;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D7F87415F96;
  Tue, 25 Aug 2026 10:07:12 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8810432418; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ id 84EBA32416; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Yogesh Vyas <yvyas1991@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 55/91] tcg: Return success from tcg_region_alloc
-Date: Tue, 25 Aug 2026 10:05:27 +0300
-Message-ID: <20260825070619.174584-13-mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 v2 54/91] tcg: Return success from
+ tcg_region_alloc__locked
+Date: Tue, 25 Aug 2026 10:05:26 +0300
+Message-ID: <20260825070619.174584-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
@@ -81,44 +82,60 @@ Tested-by: Yogesh Vyas <yvyas1991@gmail.com>
 Reviewed-by: Yogesh Vyas <yvyas1991@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit fcdbc78ad4dea4b6baac581be5f7350ce47dc218)
+(cherry picked from commit e131c28b6eb24c0b7f7f21591b2b2c7568267337)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/tcg/region.c b/tcg/region.c
-index 2161d961d98..57ca7423570 100644
+index 5d4be1453b0..2161d961d98 100644
 --- a/tcg/region.c
 +++ b/tcg/region.c
-@@ -369,7 +369,7 @@ static bool tcg_region_alloc__locked(TCGContext *s)
- 
- /*
-  * Request a new region once the one in use has filled up.
-- * Returns true on error.
-+ * Returns true on success.
-  */
- bool tcg_region_alloc(TCGContext *s)
+@@ -360,11 +360,11 @@ static void tcg_region_assign(TCGContext *s, size_t curr_region)
+ static bool tcg_region_alloc__locked(TCGContext *s)
  {
-@@ -383,7 +383,7 @@ bool tcg_region_alloc(TCGContext *s)
-         region.agg_size_full += size_full - TCG_HIGHWATER;
+     if (region.current == region.n) {
+-        return true;
++        return false;
      }
-     qemu_mutex_unlock(&region.lock);
--    return !ok;
-+    return ok;
+     tcg_region_assign(s, region.current);
+     region.current++;
+-    return false;
++    return true;
  }
  
  /*
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 1e77f2365a8..af15c3d63e4 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -1835,7 +1835,7 @@ TranslationBlock *tcg_tb_alloc(TCGContext *s)
-     next = (void *)ROUND_UP((uintptr_t)(tb + 1), align);
+@@ -373,17 +373,17 @@ static bool tcg_region_alloc__locked(TCGContext *s)
+  */
+ bool tcg_region_alloc(TCGContext *s)
+ {
+-    bool err;
++    bool ok;
+     /* read the region size now; alloc__locked will overwrite it on success */
+     size_t size_full = s->code_gen_buffer_size;
  
-     if (unlikely(next > s->code_gen_highwater)) {
--        if (tcg_region_alloc(s)) {
-+        if (!tcg_region_alloc(s)) {
-             return NULL;
-         }
-         goto retry;
+     qemu_mutex_lock(&region.lock);
+-    err = tcg_region_alloc__locked(s);
+-    if (!err) {
++    ok = tcg_region_alloc__locked(s);
++    if (ok) {
+         region.agg_size_full += size_full - TCG_HIGHWATER;
+     }
+     qemu_mutex_unlock(&region.lock);
+-    return err;
++    return !ok;
+ }
+ 
+ /*
+@@ -392,8 +392,8 @@ bool tcg_region_alloc(TCGContext *s)
+  */
+ static void tcg_region_initial_alloc__locked(TCGContext *s)
+ {
+-    bool err = tcg_region_alloc__locked(s);
+-    g_assert(!err);
++    bool ok = tcg_region_alloc__locked(s);
++    g_assert(ok);
+ }
+ 
+ void tcg_region_initial_alloc(TCGContext *s)
 -- 
 2.47.3
 
