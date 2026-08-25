@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88BA9C61DB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 14:49:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E86FC61DB9
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 14:49:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wysR0-0000he-1r; Tue, 25 Aug 2026 10:47:30 -0400
+	id 1wysR1-0000im-OO; Tue, 25 Aug 2026 10:47:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <antikostya2@gmail.com>)
- id 1wys31-0002xp-OX
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 10:22:44 -0400
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
+ id 1wys3I-00039I-Il
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 10:23:00 -0400
+Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <antikostya2@gmail.com>)
- id 1wys2z-0002Cv-Qz
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 10:22:43 -0400
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-39c8ee87f7eso50341301fa.3
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 07:22:41 -0700 (PDT)
+ id 1wys3G-0002Ho-LM
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 10:23:00 -0400
+Received: by mail-lj1-x230.google.com with SMTP id
+ 38308e7fff4ca-39c9a3acd40so37102601fa.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 07:22:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787667760; x=1788272560; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787667777; x=1788272577; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=X1ShuPzo9HjlF0LASxGXhgjJp4my/PBrBzxPZau8+fc=;
- b=lH/0Hcdr1ExnGfVNdZ96KH5hU27Ha1MYXqRhTTmpU7A9ff1OpUzPMvKPEtmPQCvf3Z
- 4SEczx9I4lbkXPMNZnMOhWh1pZHrrPkG8pR5thKf9TIALNuQTo8k3N7HhZch+RIYMAa+
- RvpNZmm4Z+Xu53UvQ+y8+J82Y927S7hufCtn8eC8xhXpoqAFKHwyzYr2fZQsJFGGnNfb
- xrPuCbGs6TtEsIGxok2fGrBMip4syJGa5ZKYDDjyodVreeFFUaBlqsYtfByRP3+6hOwG
- bUOe61jGztj4eungp6cy5/4kI/veSUqXxUr63WASoB/yO45Rn+O0Hk2cXyhZwzr6pLps
- UG7w==
+ bh=OlODc9nuQVDAW70OI4oGX5kt5O8t1mabSFu826OaUbs=;
+ b=KNeH4+mCTiiUUjsQcwlYauWU9p4ow655Q7ATmWIBndgLzZE6f8RWLlCFtbcHyKc2CK
+ OoawDf2thC2gQg3J1v5ew3fB8cLhVgnof37iphFiXvLfLulAdCjja5vmANFeS441WrWd
+ WwjyBHmHx0YAlZL/RYeHCips/7HjOY86Od+uIjgucWmzugqGoCuUWyeZ4cOuiJI9S4DZ
+ vIDkStfvosYDN7IW7KsCvh2dUctdovK5cUAN+D1musAWc20tCMvvBfw+DPTrBTmirRlk
+ E60qL+aQhFECT7VXDOqYMQX5AvMuOv+CiyGyOSApAhD/qXPYx8chfasEVYUV64XS4KTY
+ Hkxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787667760; x=1788272560;
+ d=1e100.net; s=20251104; t=1787667777; x=1788272577;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :content-type:mime-version:subject:date:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=X1ShuPzo9HjlF0LASxGXhgjJp4my/PBrBzxPZau8+fc=;
- b=UyKmEakUPNHSe6bQTvLa/JfjvzjDeVaJfmHnduvxkbbxLPRNzEgzZ+YThqZCzgCE7c
- WJz1K7U3FkkSeJehf8q/tI6enTWHVb42BFYHpBvokI+SPk6GkJHNJlUriRey+/mJ7GZs
- ggi/ayTylAsbkmwmJIfp1waY5c6IyMZuFspX3Fz3cgRpErjR9alu5aqdOScevCcEDN01
- jWcbbD2cVXzcn6WjlxmvF3Ed6Ei0z609E3MYE0Qi4VwQtFyEQio6cgmw2EVZifWEoSzY
- NHA4b57Hng9YU9LiYnCOHOT/qzOZMypMFj57/BSSt0rAINoFC+uMWbBdLm7RDkvttgxq
- O2XA==
-X-Gm-Message-State: AFuF++kljjwLviBmg6bV7ipbSQCrKW3E+QFKGK+BpqSAoT/kZ+n5aG3q
- Uu2d3FPUb2zWnVT6zqjnjXsb2ub/EP7Q0uzW7s4iheVfdIoyQPVeuxLI0fykJa3k
-X-Gm-Gg: AR+sD12001ppFtT4hOERyg+pwoTD7ACL1YCA99CZRGmsOHC/SZTdoJcyBfQt9vg/4qf
- y0+1c9x4oUp1fMKyrjt24EtX4UvGqe2/OOVShHE0HpYOpRqW86mTwR0epRX0dAwghR7jvcvyyZD
- peN8Y1M/w6c9Kk7+OId+XLJJfjCl8+vAqC5qLCTdfSbAy9qmn1TwJEMaIVTKZMVhM++/jQE/CDk
- AYcasxB79jziVClyRVvhiEphE0fj2P9pEbpiDOAUUhnSRMim85ZTdT/sksuBXM4cYFBFxhN9Eep
- s2ZdrMSEYDfOFO7icMSl5fOG+EXQcamGazS/Zd2bl+ku19Rd7Q/oe4kaWIqOm6ulF6OR/ttnyzC
- U7eYj0CWBOOsUvoIIrdkENzOAXpka2smT5sEQGfog8zw1lIwG+JpvNkksqRl+kGcsbMIlScBVzf
- xdj30VT+DXPQEN3+0h/P87AxiZINuqhi4T6AnvEsNPyCmUS45cAe+OVEk+D+9xjO9hm2BN30+YP
- PUq46208XlIPfKHBvMYo/RNLkBrwQ==
-X-Received: by 2002:a05:651c:a10c:20b0:3a1:476:74b3 with SMTP id
- 38308e7fff4ca-3a1ef5d54f3mr11709671fa.9.1787667759955; 
- Tue, 25 Aug 2026 07:22:39 -0700 (PDT)
+ bh=OlODc9nuQVDAW70OI4oGX5kt5O8t1mabSFu826OaUbs=;
+ b=AQDqxb8K+mWY1rdN3kxWWNoO0PkF+HS6N7QI69OEFFR16Bo3oHigR6+ZizCyAJzMCh
+ TRVhS54p9Be2lPI8NaxMqb52VrjtOpml2idPX1dzwu64+3dgMY2CLv54velFy9hjIjMc
+ 9S/WlJ11PMhFV4UeK8GyMGkSLYP++XpWMOL9BeUBkIAtWbluSS7eVuEbDQBhQowjxIzD
+ TyEb6GHCLqaIG5oB3VarOGzH0PRvNRAF+wFVVJLgr8bNQFAjTxAELDiiW+zqmHVJraeg
+ eCEnTiqwTU3x6XqJ1R46RSr7BfeuFFAgt9PUETWrf3G1QYjSy3MQof1gzURbVLh83ltj
+ lC7g==
+X-Gm-Message-State: AFuF++kAvQ1KB6uYDOHREW9zQdMvKyL9hxhbyBTkpgz9W0lKF3DZjYcu
+ q3az1ECU6IuOQFdWxZYfwl9lCCoFWTdPvN1wcWUW+EPOH0nX0n3FB2auHMbu6n03
+X-Gm-Gg: AR+sD13njW7pyKweJdQVoTZouhG7mUXlpMldTm89hnT89ehYG+5+bCCmOywr9+3R7n/
+ 8e0LWcci8TuInjkaSwxYZrnThjgKy6oGcA7EdUnVJ8w7iQjGaAjjIvSndh1w57pp9w/f3+7L9mg
+ NpC4cv59tvm1VVTXwMmoxGUvi8ygXhxTHAeuysWpAZgl7t22FpvqKMi+NMZ4Wj9mPP4JTHpvPlM
+ BaYBNtGIsChDQM9UJTfk0OsKO+OA37nXqDd8xqGa1TJ5E7QmPvoBCuZSQR6XWSSowo4soHmmdv8
+ fdXHuH4wp6lW3edtR3SlAIucAUxEaFjMmpbFgYJJ3hfm6TvdkQDkCrnioMOt1nWATFZOAB/SWug
+ DEX2JktkVPTufyANjWO1ddeIBF+ZDHg483zv8tjcCy+fijNlUoyIjTdOp3D2uskMt2zWD4eQRjV
+ 3rBXFCFsa6WOX2Vi2Xy7y9pkPVZI5iAolltmds6bD3VXFhUz+QLBpIFZ88jf/7lTy2bsGtO4x3Q
+ KmgpDa29gxBAkmptUJEkhS+BVroDA==
+X-Received: by 2002:a2e:bea8:0:b0:3a1:ba8b:1e03 with SMTP id
+ 38308e7fff4ca-3a1ba8b2167mr75376731fa.13.1787667776786; 
+ Tue, 25 Aug 2026 07:22:56 -0700 (PDT)
 Received: from [127.0.1.1] (broadband-90-154-73-22.ip.moscow.rt.ru.
  [90.154.73.22]) by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-3a1c82f6b02sm22457551fa.41.2026.08.25.07.22.38
+ 38308e7fff4ca-3a1c82f6b02sm22457551fa.41.2026.08.25.07.22.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Aug 2026 07:22:38 -0700 (PDT)
+ Tue, 25 Aug 2026 07:22:47 -0700 (PDT)
 From: Konstantin Semichastnov <antikostya2@gmail.com>
-Date: Tue, 25 Aug 2026 17:22:31 +0300
-Subject: [PATCH 07/13] hw/riscv/trace-encoder: add interrupt support to
- N-Trace encoder
+Date: Tue, 25 Aug 2026 17:22:36 +0300
+Subject: [PATCH 12/13] hw/riscv/trace-encoder.c: remaining fields to
+ ram-sink as RO values
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260825-upstream-ntrace_core-v1-7-f8be2f40d2fd@gmail.com>
+Message-Id: <20260825-upstream-ntrace_core-v1-12-f8be2f40d2fd@gmail.com>
 References: <20260825-upstream-ntrace_core-v1-0-f8be2f40d2fd@gmail.com>
 In-Reply-To: <20260825-upstream-ntrace_core-v1-0-f8be2f40d2fd@gmail.com>
 To: qemu-devel@nongnu.org
@@ -86,33 +86,33 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Alexei Filippov <halip0503@gmail.com>, 
  Konstantin Semichastnov <antikostya2@gmail.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6840; i=antikostya2@gmail.com; 
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2587; i=antikostya2@gmail.com; 
  h=from:subject:message-id;
- bh=Ukz5rO4kftJNVrzk2svX+D1y5ayKYJclAQ/Alkbj5bY=; 
- b=owEBbQKS/ZANAwAKAUiKpW6lUN52AcsmYgBqjaUjnhy1lMxBT9QoVd4Lm8IvUTtTcGNiOIiDb
- BmwEYqA5bCJAjMEAAEKAB0WIQRMBWLx2o+linEPEBhIiqVupVDedgUCao2lIwAKCRBIiqVupVDe
- drqED/0ZjAmU/TOK2TRatFw2qkrrpIVjmn/IbERQrSYwzMxEZMPCHPy1C99y0qEzZt1JyGUTP73
- wqEi20vmh/2EN1cn1jI4tjIWGBrgvPKRXEj8Q0SkU/ttCucMMrVUl2c7tXgQwpCSejndELnRuee
- +xb15nS+DCP48ZVJ+LIgi1Uh18YUJNVo7B0R+qM/l8jYtkCkL5wyKrsaebzaT0piLKbLGxxiuBF
- c6txsYkGf0gy7Ergcc7gweZCOV8X2IsoFUy2BDU95Vehterett96VK9Tpi/Ark4wZM9UsIVZK1J
- a3EvJc3djwgCjWFHj78L7Gk/WAZaOfndNPYviN1NPmWyrU4RhkDmhikj0wpHFxJFS/Lwv+nTzQK
- vwPTMBxPNpJPEJvwJApaaGd8U0rfxuIbwKOnKuX6jE9RBSWdKzm0zpbSHda1tP5BonECi9SO/F8
- V4+IKVLawNd4bR/nghc9Wr+xJnJX72mOJcGCx+hJtoLAIdkiWi9qJGoNuV2ykAV9+REhJdj9oMm
- YVLfPpRBF3HitCIMSDx8Ie8FiCGpNYA7E7I7zFh8NxsCy+EDHdRnZXEDJMVuQFr86oc/EU4wFRr
- LOtJAtk9mbXIH7NtTocrFckuWoiHtjz2sRGQhLUFkqvc92AAdC31BhJCT12MbxfX3g4l9mKq2Hf
- mHIstLgJCvHCvJw==
+ bh=nChScbCmlZpsS/dciRJfDHDLa0YqwUCXTFFwrp2ZijI=; 
+ b=owEBbQKS/ZANAwAKAUiKpW6lUN52AcsmYgBqjaUj6HcUndJfplk/LTo0FbeXVuCR6RnY5n3LY
+ Kk3f+59+yKJAjMEAAEKAB0WIQRMBWLx2o+linEPEBhIiqVupVDedgUCao2lIwAKCRBIiqVupVDe
+ dhYgEACTt3kqi2YsFVkLO0ZE9FQGRlLHyIVX7a4viLh6UAcYxNboclk/Oc2lhSmWIkz7R1ELUem
+ FpiFaMA0Mbkn6awRoDQQjfkHt/WEzLX2s8DzaMO47OkV1r/7sFetzZZbrgIcv5KU75NDze8rUyc
+ J2MtqGNYkzhUrvyKazlJL3ODTLtzFtTQx3zyzCdRqnKe7702eIXjYvDrwm+5M0GzIeKUUEEgPta
+ /2lNysUQxEdfJwkCZM4UfJAVWHZajTe+o5Ry6mNgJlbVuQi2fPOLo0riFOfPzBD+Nv3ESfZDD68
+ TB+IsXpD2iP8U6ZPKHudsVo3nUAgAFjZPh8+J/Vfw7y3GsCCeVplXN2pGNW22U64jt7vMc0nJB0
+ JAyn9adaEd3e0W8xZG3E19Ng5oWzR0us/SP1HxYZkoVZA6QZLLNsMo0/derHaDChSrhCGgbsc4c
+ YEB5LakquEytaQy3PtG15G2Nm4LiWprNgmUJYgsM9jQn0vDz/Q7cat0ky1Ce88jfIsLz/ub7q/y
+ lHJ+HlpaD5Z8iECor83WTO9hIEBNZzxEnuKFVAUjOhutzj9aDkf8RNXZQySi+9BAwMO3msyKKq2
+ w/dYdwx6P/BwAerQWlUGELWtVvZN4GiP9CcSfkfqNvg5qCFYlA7CgqdT+Fq9JuOlCuXAafja98G
+ GPr/wgWATQSK0tg==
 X-Developer-Key: i=antikostya2@gmail.com; a=openpgp;
  fpr=4C0562F1DA8FA58A710F1018488AA56EA550DE76
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=antikostya2@gmail.com; helo=mail-lj1-x22d.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::230;
+ envelope-from=antikostya2@gmail.com; helo=mail-lj1-x230.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Tue, 25 Aug 2026 10:47:29 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,180 +129,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now IndirectBranchHist messages sent not only when branch executed,
-but also when exceptino or trap happen.
+ - set trRamActive RO = 1 (always active)
+ - set trRamEnable RO = 1 (always enabled)
+ - set trRamMode RO = 1 (only SMEM mode)
+ - set trRamStopOnWrap RO = 0 (not supported)
+ - set trRamMemFormat RO = 0 (memory formatted as plain bytes)
+ - set trRamAsyncFreq RO = 0 (alignment synchronization packets disabled)
+ - set trRamHasSMEM = 1 (RAM sink supports SMEM)
 
 Signed-off-by: Konstantin Semichastnov <antikostya2@gmail.com>
 ---
- disas/riscv.c             |  2 +-
- disas/riscv.h             |  2 ++
- hw/riscv/trace-encoder.c  | 36 +++++++++++++++++++++++++++++-------
- hw/riscv/trace-encoder.h  |  7 +++----
- target/riscv/cpu_helper.c | 21 ++++++++++++---------
- 5 files changed, 47 insertions(+), 21 deletions(-)
+ hw/riscv/trace-ram-sink.c | 22 +++++++++++++++++++++-
+ hw/riscv/trace-ram-sink.h |  1 +
+ 2 files changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 85cd2a9c2a..541fc93e0a 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -5058,7 +5058,7 @@ static bool check_constraints(rv_decode *dec, const rvc_constraint *c)
+diff --git a/hw/riscv/trace-ram-sink.c b/hw/riscv/trace-ram-sink.c
+index c273335fec..03ffa9caae 100644
+--- a/hw/riscv/trace-ram-sink.c
++++ b/hw/riscv/trace-ram-sink.c
+@@ -40,13 +40,33 @@
+                                R_TR_RAM_IMPL_HAS_SRAM_MASK | \
+                                R_TR_RAM_IMPL_HAS_SMEM_MASK)
  
- /* instruction length */
- 
--static size_t inst_length(rv_inst inst)
-+size_t inst_length(rv_inst inst)
- {
-     /* NOTE: supports maximum instruction size of 64-bits */
- 
-diff --git a/disas/riscv.h b/disas/riscv.h
-index d211700cb2..c14c159103 100644
---- a/disas/riscv.h
-+++ b/disas/riscv.h
-@@ -306,4 +306,6 @@ enum {
- #define rv_fmt_rd2_imm                "O\t0,2,(1),i"
- #define rv_fmt_fli                    "O\t3,h"
- 
-+size_t inst_length(rv_inst inst);
+-#define R_TR_RAM_IMPL_RESET (BIT(0) | 0x9 << 8)
++#define R_TR_RAM_IMPL_RESET (BIT(0) | 0x9 << 8 | R_TR_RAM_IMPL_HAS_SMEM_MASK)
 +
- #endif /* DISAS_RISCV_H */
-diff --git a/hw/riscv/trace-encoder.c b/hw/riscv/trace-encoder.c
-index fafafb7b9b..face6f83b7 100644
---- a/hw/riscv/trace-encoder.c
-+++ b/hw/riscv/trace-encoder.c
-@@ -22,6 +22,8 @@
- #include "cpu.h"
- #include "hw/riscv/trace-ram-sink.h"
- #include "rv-trace-messages.h"
-+#include "system/dma.h"
-+#include "disas/riscv.h"
- 
- /*
-  * Size of header + payload since we're not sending
-@@ -229,6 +231,23 @@ static uint64_t trencoder_te_ctrl_prew(RegisterInfo *reg, uint64_t val)
-     return val;
- }
- 
-+static uint32_t get_inst_len_at(uint64_t pc)
++static uint64_t tr_ramsink_ctrl_set_hardwire_vals(uint64_t input)
 +{
-+    bfd_byte packet[2];
-+    uint16_t opcode;
-+    MemTxResult status;
++    input = FIELD_DP32(input, TR_RAM_CONTROL, ACTIVE, 1);
++    input = FIELD_DP32(input, TR_RAM_CONTROL, ENABLE, 1);
++    input = FIELD_DP32(input, TR_RAM_CONTROL, MODE, 1);
++    input = FIELD_DP32(input, TR_RAM_CONTROL, STOP_ON_WRAP, 0);
++    input = FIELD_DP32(input, TR_RAM_CONTROL, MEM_FORMAT, 0);
++    input = FIELD_DP32(input, TR_RAM_CONTROL, ASYNC_FREQ, 0);
 +
-+    status = dma_memory_read(&address_space_memory, pc, packet, 2,
-+                             MEMTXATTRS_UNSPECIFIED);
-+    if (status != MEMTX_OK) {
-+        error_setg(&error_fatal, "failed to read instruction during trace operation");
-+    }
-+
-+    opcode = bfd_getl16(packet);
-+
-+    return inst_length(opcode);
++    return input;
 +}
 +
- static void trencoder_te_ctrl_postw(RegisterInfo *reg, uint64_t val)
- {
-     TraceEncoder *te = TRACE_ENCODER(reg->opaque);
-@@ -639,10 +658,9 @@ static uint32_t rv_ntrace_get_and_reset_icnt(TraceEncoder *trencoder,
-     return icnt;
- }
- 
--void trencoder_trace_trap_insn(Object *trencoder_obj,
--                               uint64_t pc, uint32_t ecause,
--                               bool is_interrupt,
--                               uint64_t tval)
-+void trencoder_trace_trap_insn(Object *trencoder_obj, uint64_t curr_pc,
-+                               uint64_t target_pc, uint32_t ecause,
-+                               bool is_interrupt, uint64_t tval)
- {
-     TraceEncoder *trencoder = TRACE_ENCODER(trencoder_obj);
-     TracePrivLevel priv = trencoder_get_curr_priv_level(trencoder);
-@@ -650,15 +668,19 @@ void trencoder_trace_trap_insn(Object *trencoder_obj,
-     uint8_t msg_size;
- 
-     if (trencoder->ntrace) {
--        /* send IndirectBranchHist message */
-+        uint32_t curr_inst_len = get_inst_len_at(curr_pc);
-+        uint32_t btype = is_interrupt ? BTYPE_INTERRUPT : BTYPE_EXCEPTION;
++static uint64_t tr_ramsink_ctrl_prew(RegisterInfo *reg, uint64_t val)
++{
++    val = tr_ramsink_ctrl_set_hardwire_vals(val);
 +
-+        trencoder_send_indirect_branch_hist(trencoder, curr_pc, curr_inst_len,
-+                                            target_pc, btype);
-         return;
-     }
++    return val;
++}
  
-     if (trencoder->updiscon_pending) {
--        trencoder_send_updiscon(trencoder, pc);
-+        trencoder_send_updiscon(trencoder, curr_pc);
-     }
- 
--    msg_size = rv_etrace_gen_encoded_trap_msg(msg, pc, priv,
-+    msg_size = rv_etrace_gen_encoded_trap_msg(msg, curr_pc, priv,
-                                               ecause, is_interrupt,
-                                               tval);
- 
-diff --git a/hw/riscv/trace-encoder.h b/hw/riscv/trace-encoder.h
-index f8a6a254dc..d1ff813035 100644
---- a/hw/riscv/trace-encoder.h
-+++ b/hw/riscv/trace-encoder.h
-@@ -74,10 +74,9 @@ void trencoder_send_indirect_branch_hist(TraceEncoder *trencoder,
-                                          uint32_t curr_inst_len,
-                                          uint64_t target_pc,
-                                          TraceBranchType btype);
--void trencoder_trace_trap_insn(Object *trencoder_obj,
--                               uint64_t pc, uint32_t ecause,
--                               bool is_interrupt,
--                               uint64_t tval);
-+void trencoder_trace_trap_insn(Object *trencoder_obj, uint64_t curr_pc,
-+                               uint64_t target_pc, uint32_t ecause,
-+                               bool is_interrupt, uint64_t tval);
- void trencoder_trace_ppccd(Object *trencoder_obj, uint64_t pc);
- void trencoder_report_updiscon(Object *trencoder_obj);
- void trencoder_report_branch(Object *trencoder_obj, uint64_t pc,
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 665aad6dea..9b7df4d4fd 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -2300,15 +2300,6 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-                   __func__, env->mhartid, async, cause, env->pc, tval,
-                   riscv_cpu_get_trap_name(cause, async));
- 
--    if (cpu->trencoder) {
--        TraceEncoder *te = TRACE_ENCODER(cpu->trencoder);
--
--        if (te->trace_running) {
--            trencoder_trace_trap_insn(cpu->trencoder, env->pc,
--                                      cause, async, tval);
--        }
--    }
--
-     mode = env->priv <= PRV_S && cause < 64 &&
-         (((deleg >> cause) & 1) || s_injected || vs_injected) ? PRV_S : PRV_M;
- 
-@@ -2391,6 +2382,12 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-         env->htinst = tinst;
-         env->pc = (env->stvec >> 2 << 2) +
-                   ((async && (env->stvec & 3) == 1) ? cause * 4 : 0);
-+
-+        if (cpu->trencoder && TRACE_ENCODER(cpu->trencoder)->trace_running) {
-+            trencoder_trace_trap_insn(cpu->trencoder, env->sepc, env->pc,
-+                                      env->scause, async, env->stval);
-+        }
-+
-         riscv_cpu_set_mode(env, PRV_S, virt);
- 
-         src = env->sepc;
-@@ -2477,6 +2474,12 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-             env->pc = (env->mtvec >> 2 << 2) +
-                       ((async && (env->mtvec & 3) == 1) ? cause * 4 : 0);
-         }
-+
-+        if (cpu->trencoder && TRACE_ENCODER(cpu->trencoder)->trace_running) {
-+            trencoder_trace_trap_insn(cpu->trencoder, env->mepc, env->pc,
-+                                      env->mcause, async, env->mtval);
-+        }
-+
-         riscv_cpu_set_mode(env, PRV_M, virt);
-         src = env->mepc;
-     }
+ static RegisterAccessInfo tr_ramsink_regs_info[] = {
+     {   .name = "TR_RAM_CONTROL", .addr = A_TR_RAM_CONTROL,
+         .rsvd = R_TR_RAM_CONTROL_RSVP_BITS,
+         .reset = R_TR_RAM_CONTROL_RESET,
+         .ro = R_TR_RAM_CONTROL_RO_BITS,
++        .pre_write = tr_ramsink_ctrl_prew,
+     },
+     {   .name = "TR_RAM_IMPL", .addr = A_TR_RAM_IMPL,
+         .rsvd = R_TR_RAM_IMPL_RSVP_BITS,
+diff --git a/hw/riscv/trace-ram-sink.h b/hw/riscv/trace-ram-sink.h
+index 0a7225642c..e516b73e00 100644
+--- a/hw/riscv/trace-ram-sink.h
++++ b/hw/riscv/trace-ram-sink.h
+@@ -28,6 +28,7 @@ REG32(TR_RAM_CONTROL, 0x0)
+     FIELD(TR_RAM_CONTROL, MODE, 4, 1)
+     FIELD(TR_RAM_CONTROL, STOP_ON_WRAP, 8, 1)
+     FIELD(TR_RAM_CONTROL, MEM_FORMAT, 9, 2)
++    FIELD(TR_RAM_CONTROL, ASYNC_FREQ, 12, 3)
+     /* reserved bits */
+     FIELD(TR_RAM_CONTROL, RSVP1, 2, 1)
+     FIELD(TR_RAM_CONTROL, RSVP2, 5, 3)
 
 -- 
 2.43.0
