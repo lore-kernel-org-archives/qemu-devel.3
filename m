@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EF86C5DF94
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 05:16:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03C37C5DF9C
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 05:17:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyjVX-0002eB-IO; Tue, 25 Aug 2026 01:15:35 -0400
+	id 1wyjVq-00034j-Ib; Tue, 25 Aug 2026 01:15:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyjVU-0002bQ-2Z
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 01:15:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyjVn-0002vr-0Z
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 01:15:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyjVS-0004q9-Jc
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 01:15:31 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyjVl-000587-9w
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 01:15:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787634929;
+ s=mimecast20190719; t=1787634948;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VEcAaD4igYl3AN0+OokAtDZS17KO2yD95G3hSBkxlyg=;
- b=b6Q0h7znotavAYe4Dy9lUFhpcr8bWc+SejsvqEDggD6Ke/ksyHDea0XTOj7vBDdbNn0vxn
- RftKJ1taIgvakeQBYn6TvGp8v4lzE766/sRp2OgsnHcbfKjGSJgBeUmoVj2epU3UucafJT
- F4Ub9qUMPC1QCwD+yu3fAJlepYe6Q0I=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=A16i+Q089qOF+B9+OwHpvzilqiyRJD+CauoNwEsH7SU=;
+ b=eRio4Y4K2s7n6PdDOIY++111ZJlUJRuiF2PCIzZycv3Pi2K417JxfWydLEWqxSmssRbuI5
+ mnnR77u0ugt0bQeQEeO4btzTgiP64zD1OPzy45yTYbbh/vxl5G1je6edsQ+iyqXMkULkQU
+ MnLhboXMmElj2JK42nO4vmNvhMci6j4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-168-scpFb84DOdaf-dTtVJu2GQ-1; Tue,
- 25 Aug 2026 01:15:26 -0400
-X-MC-Unique: scpFb84DOdaf-dTtVJu2GQ-1
-X-Mimecast-MFC-AGG-ID: scpFb84DOdaf-dTtVJu2GQ_1787634924
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-519-5mlAsEmBPtGJoF_pyfS_gw-1; Tue,
+ 25 Aug 2026 01:15:43 -0400
+X-MC-Unique: 5mlAsEmBPtGJoF_pyfS_gw-1
+X-Mimecast-MFC-AGG-ID: 5mlAsEmBPtGJoF_pyfS_gw_1787634942
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 25DCF180AD66; Tue, 25 Aug 2026 05:15:24 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F37A81955DC5; Tue, 25 Aug 2026 05:15:41 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.56])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 205CA1955F76; Tue, 25 Aug 2026 05:15:19 +0000 (UTC)
+ id 863251955F76; Tue, 25 Aug 2026 05:15:37 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>,
@@ -58,26 +58,25 @@ Cc: John Snow <jsnow@redhat.com>,
  Michael Roth <michael.roth@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 08/16] qapi: update type hint for objects_seen
-Date: Tue, 25 Aug 2026 01:14:33 -0400
-Message-ID: <20260825051441.1562454-9-jsnow@redhat.com>
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH v2 12/16] python: remove distutils workarounds
+Date: Tue, 25 Aug 2026 01:14:37 -0400
+Message-ID: <20260825051441.1562454-13-jsnow@redhat.com>
 In-Reply-To: <20260825051441.1562454-1-jsnow@redhat.com>
 References: <20260825051441.1562454-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,33 +92,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation for upgrading Python to 3.12+, adjust the type hint on
-objects_seen to prevent mypy from chirping about an unknown type for
-this variable.
-
-Why didn't this trigger earlier? A mystery for the ages.
+These are no longer necessary now that we are using Python3.12+.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- scripts/qapi/types.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ python/tests/linters.py | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-diff --git a/scripts/qapi/types.py b/scripts/qapi/types.py
-index 2bf75338283..b87377c6474 100644
---- a/scripts/qapi/types.py
-+++ b/scripts/qapi/types.py
-@@ -34,7 +34,7 @@
+diff --git a/python/tests/linters.py b/python/tests/linters.py
+index 82b88aebb20..dd89fb00ba8 100644
+--- a/python/tests/linters.py
++++ b/python/tests/linters.py
+@@ -83,23 +83,13 @@ def test_mypy_iotests(self):
+             cwd="../tests/qemu-iotests/",
+         )
  
- # variants must be emitted before their container; track what has already
- # been output
--objects_seen = set()
-+objects_seen: set[str] = set()
+-    # Setuptools v60 introduced the SETUPTOOLS_USE_DISTUTILS=stdlib
+-    # workaround; stdlib distutils was fully removed in Python
+-    # 3.12+. Once we are on >=3.12+ exclusively, this workaround can be
+-    # dropped safely. Until then, it is needed for some versions on
+-    # Fedora/Debian distributions which relied upon distro-patched
+-    # setuptools present in CPython, but not within setuptools itself.
+-
+     def test_pylint_pkg(self):
+-        os.environ["SETUPTOOLS_USE_DISTUTILS"] = "stdlib"
+         check_call([sys.executable, "-m", "pylint", "qemu/"])
  
+     def test_pylint_scripts(self):
+-        os.environ["SETUPTOOLS_USE_DISTUTILS"] = "stdlib"
+         check_call([sys.executable, "-m", "pylint", "scripts/"])
  
- def gen_enum_lookup(name: str,
+     def test_pylint_qapi(self):
+-        os.environ["SETUPTOOLS_USE_DISTUTILS"] = "stdlib"
+         check_call(
+             [
+                 sys.executable,
+@@ -113,7 +103,6 @@ def test_pylint_qapi(self):
+         )
+ 
+     def test_pylint_iotests(self):
+-        os.environ["SETUPTOOLS_USE_DISTUTILS"] = "stdlib"
+         check_call(
+             [sys.executable, "-m", "linters", "--pylint"],
+             cwd="../tests/qemu-iotests/",
 -- 
 2.55.0
 
