@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D71D6C61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:14:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47B3AC61DBD
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:14:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wywaM-0004iS-1O; Tue, 25 Aug 2026 15:13:26 -0400
+	id 1wywZe-0001yZ-Ov; Tue, 25 Aug 2026 15:12:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywaJ-0004SU-2X
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:13:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wywZY-0001R0-9j
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:12:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywaG-0004bQ-QQ
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:13:21 -0400
+ id 1wywZW-0004RP-EY
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:12:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787685200;
+ s=mimecast20190719; t=1787685153;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YAFwmbIv/8Iz1PvzfVdH8TCC2X8FuwRSRiP92lMbPeE=;
- b=gs4NzuIjvtqbIgzsbXeTxI3h+Rh3MvG5LwPe84fcQ6PSdMalE7UI5xD48gbjir+bvesMxI
- TUHYCL1O2ck/2nq3ab60O20ITO6x4Wj/ok81drJf83XFfU2bC3HZjFimPqjsbO8jkOxB0j
- ib2ro3xwBj8eDx2u00ksH1ZRdxSSIP0=
+ bh=GiBkNiJCWkhLudqYCox+TEE808yd/DMUw1XGeC8PWto=;
+ b=ECjrhVihfbWDfi6MM2HCO1s8HewSBJqnPpueVNniVjs/AaL6b6WXDysygEKmxdnth3FDam
+ 0k1h9H+FP0Sh51YN0EhQIOrho3PxPvQiTSWlfnUlVz92Dl+PTwe2a2+W+O07H47CRgoKJr
+ BgOSQafnswg4JxufccyjlC8v2lfOOK4=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-133-SbUMpSz3Mtuc_-v47zVIhA-1; Tue,
- 25 Aug 2026 15:13:18 -0400
-X-MC-Unique: SbUMpSz3Mtuc_-v47zVIhA-1
-X-Mimecast-MFC-AGG-ID: SbUMpSz3Mtuc_-v47zVIhA_1787685197
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-690-4gGFBSTBP9OOcHizqCEm0w-1; Tue,
+ 25 Aug 2026 15:12:30 -0400
+X-MC-Unique: 4gGFBSTBP9OOcHizqCEm0w-1
+X-Mimecast-MFC-AGG-ID: 4gGFBSTBP9OOcHizqCEm0w_1787685149
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EBA9D18C1067; Tue, 25 Aug 2026 19:13:16 +0000 (UTC)
+ id 09BD318C0FF6; Tue, 25 Aug 2026 19:12:29 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 23FDF18005B4; Tue, 25 Aug 2026 19:13:15 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3996230002F9; Tue, 25 Aug 2026 19:12:27 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 25 Aug 2026 23:09:56 +0400
-Subject: [PATCH v4 49/49] gitlab: --disable-hmp in build-without-defaults
+Date: Tue, 25 Aug 2026 23:09:44 +0400
+Subject: [PATCH v4 37/49] hexagon: make dump_mmu() take MonitorHMP
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260825-qemu-no-hmp-v4-49-af60857c2fbe@redhat.com>
+Message-Id: <20260825-qemu-no-hmp-v4-37-af60857c2fbe@redhat.com>
 References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 In-Reply-To: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 To: qemu-devel@nongnu.org
@@ -63,27 +63,29 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Markus Armbruster <armbru@redhat.com>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Brian Cain <brian.cain@oss.qualcomm.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
+ Brian Cain <brian.cain@oss.qualcomm.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=664;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4101;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=2PfBfGSrrAVwhOfSkL4rieqVo4dBCVB2xaPbnEs7CSI=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiID6zGtV1rO2ksPWC737V9d9qlxEtQC7DJb
- iGlTibu/AuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3oiAAKCRDa6OEJdZac
- 5W+cEACY1gB5UA4WuuEAXON28T+ZnEC2kHwUBDiYB0hINUKq12auycmMI0Fwv/1rxCh3kQAev+q
- TFlNYeYyzAaxGJZEXzh/1L3x7pYK9nZH55Bh7vDtu63kvzNBlVA6AD1rvxFd/gXb1Xu7DeX0ihX
- isPapYZnrdEO/DFaGkyYtelzfJbuB74CxXlq6/u7gFt5+WftBRXwifhFFpDKlzPgHwjWjg35tI/
- YvEyBBlszkIZEOOSEBgFzgRl/EsSUP/QHOWmLE94PVLpHwWZaXp+aT2ul33VPtX8Uhxub6DSRJ4
- jEVK02s2B+cGiClqdjJ5g7JkAyMOMHOy7M8LcXx9WpRYtEXvnx7ucIEcr68FuV4MLFAeF/xe1p2
- Qc61GkZCkK91d8QffiyoC0eOzzNTBVrPew2xo40Ul/HlhBS/k6v7gusREitxKXDc3oqV59DAbuR
- g108N/RQjcdJDOYD3QCRM34Hhu/khh+2meWGROpaUr3IwjZrG3MWt4H7bwz5TQmTARh/dbAy0gw
- 0Q9e6uZFVM7w0/0nlDuOQDDIDB6ERWQie1ZduS4FVB6HHurrV07x8oZDn1eH2ioswGkYWRhvV/U
- EIKJ7XvnSVu0aObEsupBlTLllgpRj8qZqR0skTiERM+LUQv9qglU0kGSy5ClNQQtWG8lHG+cX9l
- uxtMf2p24kPP8Ww==
+ bh=m0TAD9vj/bYDPy4FtEhvqyEw85alOnUDGy3Cn4My1AE=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiIGZUf+m44tD0q21Fho+jCB2HEsr+qxjm7x
+ i3qrSb3C8uJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3oiAAKCRDa6OEJdZac
+ 5azUEACGwxOlXyknhncnwrrCqTOVu8RGE9BDZu+nkt2I0mi7b/UohMsBKN6+oyKAaDSRYzxkWV2
+ y0WJ2KTdCkpY2EoLBCH3U2Ab6gr8gwuicqYQ1rkJgNYNy0V2LnUOKWvB9I+dvywhdOs8Y5hr5Rh
+ M16CZ38gkNTQe/qn/rNXlXitoWBPsZjqWVKGosFgYiDLCRqnvoH3haGYT8JfmcwTnZylwiC+7YW
+ fZHJWbfkTs/+EmLleFGoqZmuvD/eTu5xU77J3Oksyk/rrQwB31DUgRitOp1KF2jhE6rjKeEdlll
+ /SJ7AAVQk/ZylPf2vuABdZnxD/x3mc+uk0F1pQJ7UmblrYneMqAG/peH+12Ezh6v0I4Wxr1ODbh
+ 0ojBzt5M/wz3+rmWLojNC3BIoV535MR/CXymqfcS/ubruHlepy3L3svdK3zS6/xUn3ZydHnQ3wk
+ nQDS0rIlUoB+8kgOTwrGTd9a4Kx0yindIzRKndqJc947uNqOr4VgRwj/uM6wwqax6P7rZO3jI+k
+ AdqL95H+0gWBH8BTHEq4NUE9B+OXw1EzKuivF+ChALzj9Xac4UGF+9UGTQittW/eFTRCMFV2K1d
+ cIwQA7dIAoa1Dl8oQTELl8IQH2Nif+uVLMDNnaR3Y+RommeubLeXaeRD6cijrp3fa3QcxYZrc28
+ 44Hk2pclRIuTLxg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -91,8 +93,8 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,23 +110,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Avoid unsafe MONITOR_HMP() casts.
+
+The function has no caller since its introduction and could
+be dropped if it is not wired to a HMP command.
+
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- .gitlab-ci.d/buildtest.yml | 1 +
- 1 file changed, 1 insertion(+)
+ hw/hexagon/hexagon_tlb.c         | 8 +++-----
+ include/hw/hexagon/hexagon_tlb.h | 5 +++--
+ target/hexagon/hex_mmu.c         | 4 ++--
+ target/hexagon/hex_mmu.h         | 3 ++-
+ 4 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 831d9a267425..5f21703645b3 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -673,6 +673,7 @@ build-without-defaults:
-       --disable-pie
-       --disable-qom-cast-debug
-       --disable-strip
-+      --disable-hmp
-       --target-list-exclude=aarch64-softmmu,mips64-softmmu,mipsel-softmmu,ppc64-softmmu,sh4el-softmmu,xtensa-softmmu,x86_64-softmmu
-     MAKE_CHECK_ARGS: check
+diff --git a/hw/hexagon/hexagon_tlb.c b/hw/hexagon/hexagon_tlb.c
+index 576929ff224b..584c606a22c5 100644
+--- a/hw/hexagon/hexagon_tlb.c
++++ b/hw/hexagon/hexagon_tlb.c
+@@ -122,10 +122,8 @@ static inline uint64_t hex_tlb_virt_addr(uint64_t entry)
+     return (uint64_t)GET_PTE_VPN(entry) << qemu_target_page_bits();
+ }
  
+-bool hexagon_tlb_dump_entry(Monitor *mon, uint64_t entry)
++bool hexagon_tlb_dump_entry(MonitorHMP *hmp, uint64_t entry)
+ {
+-    MonitorHMP *hmp = MONITOR_HMP(mon);
+-
+     if (GET_PTE_V(entry)) {
+         uint64_t PA = hex_tlb_phys_addr(entry);
+         uint64_t VA = hex_tlb_virt_addr(entry);
+@@ -379,10 +377,10 @@ int hexagon_tlb_check_overlap(HexagonTLBState *tlb, uint64_t entry,
+     return -1;
+ }
+ 
+-void hexagon_tlb_dump(Monitor *mon, HexagonTLBState *tlb)
++void hexagon_tlb_dump(MonitorHMP *hmp, HexagonTLBState *tlb)
+ {
+     for (uint32_t i = 0; i < tlb->num_entries; i++) {
+-        hexagon_tlb_dump_entry(mon, tlb->entries[i]);
++        hexagon_tlb_dump_entry(hmp, tlb->entries[i]);
+     }
+ }
+ 
+diff --git a/include/hw/hexagon/hexagon_tlb.h b/include/hw/hexagon/hexagon_tlb.h
+index 760dc1ea811b..c3f0fc599fdd 100644
+--- a/include/hw/hexagon/hexagon_tlb.h
++++ b/include/hw/hexagon/hexagon_tlb.h
+@@ -12,6 +12,7 @@
+ #include "qom/object.h"
+ #include "exec/hwaddr.h"
+ #include "exec/mmu-access-type.h"
++#include "monitor/hmp.h"
+ 
+ #define TYPE_HEXAGON_TLB "hexagon-tlb"
+ OBJECT_DECLARE_SIMPLE_TYPE(HexagonTLBState, HEXAGON_TLB)
+@@ -37,9 +38,9 @@ uint32_t hexagon_tlb_lookup(HexagonTLBState *tlb, uint32_t asid,
+ int hexagon_tlb_check_overlap(HexagonTLBState *tlb, uint64_t entry,
+                               uint64_t index);
+ 
+-void hexagon_tlb_dump(Monitor *mon, HexagonTLBState *tlb);
++void hexagon_tlb_dump(MonitorHMP *hmp, HexagonTLBState *tlb);
+ 
+-bool hexagon_tlb_dump_entry(Monitor *mon, uint64_t entry);
++bool hexagon_tlb_dump_entry(MonitorHMP *hmp, uint64_t entry);
+ 
+ uint32_t hexagon_tlb_get_num_entries(HexagonTLBState *tlb);
+ 
+diff --git a/target/hexagon/hex_mmu.c b/target/hexagon/hex_mmu.c
+index 81d64a6146cc..242de06eaad2 100644
+--- a/target/hexagon/hex_mmu.c
++++ b/target/hexagon/hex_mmu.c
+@@ -107,10 +107,10 @@ int hex_tlb_check_overlap(CPUHexagonState *env, uint64_t entry, uint64_t index)
+     return hexagon_tlb_check_overlap(cpu->tlb, entry, index);
+ }
+ 
+-void dump_mmu(Monitor *mon, CPUHexagonState *env)
++void dump_mmu(MonitorHMP *hmp, CPUHexagonState *env)
+ {
+     HexagonCPU *cpu = env_archcpu(env);
+-    hexagon_tlb_dump(mon, cpu->tlb);
++    hexagon_tlb_dump(hmp, cpu->tlb);
+ }
+ 
+ static inline void print_thread(const char *str, CPUState *cs)
+diff --git a/target/hexagon/hex_mmu.h b/target/hexagon/hex_mmu.h
+index 6aa450b94136..56b2c4a89d0c 100644
+--- a/target/hexagon/hex_mmu.h
++++ b/target/hexagon/hex_mmu.h
+@@ -10,6 +10,7 @@
+ #include "exec/hwaddr.h"
+ #include "exec/mmu-access-type.h"
+ #include "cpu.h"
++#include "monitor/hmp.h"
+ 
+ extern void hex_tlbw(CPUHexagonState *env, uint32_t index, uint64_t value);
+ extern uint32_t hex_tlb_lookup(CPUHexagonState *env, uint32_t ssr, uint32_t VA);
+@@ -23,5 +24,5 @@ extern int hex_tlb_check_overlap(CPUHexagonState *env, uint64_t entry,
+                                  uint64_t index);
+ extern void hex_tlb_lock(CPUHexagonState *env);
+ extern void hex_tlb_unlock(CPUHexagonState *env);
+-void dump_mmu(Monitor *mon, CPUHexagonState *env);
++void dump_mmu(MonitorHMP *hmp, CPUHexagonState *env);
+ #endif
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
