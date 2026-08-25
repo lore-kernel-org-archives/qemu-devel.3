@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D957BC61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:17:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AB9FC61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:18:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyp7z-00037I-DG; Tue, 25 Aug 2026 07:15:39 -0400
+	id 1wyp7v-0002su-Js; Tue, 25 Aug 2026 07:15:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp7u-0002pc-QH; Tue, 25 Aug 2026 07:15:34 -0400
+ id 1wyp7q-0002iM-OV; Tue, 25 Aug 2026 07:15:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp7s-0000e0-M9; Tue, 25 Aug 2026 07:15:34 -0400
+ id 1wyp7o-0000Xp-Of; Tue, 25 Aug 2026 07:15:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787656396; bh=7tS0T7ohpOUS01vN/A0aumFfmUogl9jZ5oUyz0vY9fo=;
+ t=1787656396; bh=0UiKEWDi6JPgrzNIjXPWTLNzupeul3+CwdgywxsrxtA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=iP1TIlWZmMGiaxTgAXS61fuCYtYBuBvpida0TU0OU3/9390UpFJau8n4cgb92BUwH
- YV3rITEE9Mrlzp2zJDxTgdSG/QGtISTEL48k3gyNqa34tVdgLhdumElCPGeFLioA7n
- jsuyUDlx6A2WLN7CxHQAJ1vC/3U7wctdCbOXQuFk9cud4t9kAqquIpOtsbAmB3gxVe
- PlUIh3/EcBXBtI11b49Ggad2iw5sYqZxyIyJTqrgrPFXUkP1LzR3W+/PDV5wzHM3kf
- Vie9CVIHtZff6pxqVz5oDr6x9PWjGMdoWNtUB2A9eSOB8ishuV/yT+BWgIVPLbWwUH
- H8452i54o0SvQ==
+ b=Qkx7A+NT0tKewsq4w/CswpLWfRRaVySa+2rDw5ePPmfASSNyfFXbzWI6XIRdliLiL
+ /mw+bYYgtXb19fPlohLrdflR8yegd1McD7KEWAGxlnuKath0hGh8pqALUtwkC9afsf
+ jNcF3xiPqWkdT0RBZUIAcxiDwwFcr99wEhUZGHv35VDjd61CDWdP4r1sxrihPojEHu
+ 6WJ388NtXOB8VnNwyu2LjW+osgMPiFGCSK+7DcW5kM9luxhL+vJNYHT60ZTmXSS4/5
+ UzA7IIlTZK2PCuT1dUOB+AELGa8p/OSL6m3pP6GgVZNmRt/PzeJ7B9WNPoAPBTtrsu
+ AEdTEg+Mw1jBQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6EB061CE4B9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 657711CE4B7;
  Tue, 25 Aug 2026 14:13:16 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 87803416285;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7DE69416283;
  Tue, 25 Aug 2026 14:13:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A4861325B5; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
+ id 9E43E325B1; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Nutty Liu <nutty.liu@hotmail.com>,
+Cc: qemu-stable@nongnu.org, TANG Tiancheng <lyndra@linux.alibaba.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v3 157/166] hw/riscv/riscv-iommu: fix U-bit check to
- apply only to leaf S/VS-stage PTEs
-Date: Tue, 25 Aug 2026 14:11:53 +0300
-Message-ID: <20260825111206.482723-23-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v3 155/166] disas/riscv: Use signed type for vector
+ immediates
+Date: Tue, 25 Aug 2026 14:11:51 +0300
+Message-ID: <20260825111206.482723-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
@@ -74,64 +73,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Jones <andrew.jones@oss.qualcomm.com>
+From: TANG Tiancheng <lyndra@linux.alibaba.com>
 
-Commit b795ea0ba471 ("hw/riscv/riscv-iommu.c: fault when !PTE_U and
-no priv access") placed its check ahead of the leaf-vs-non-leaf
-branch in riscv_iommu_spa_fetch(), so it fires on every PTE walked,
-including non-leaf/table entries. Per the RISC-V privileged spec's
-address translation algorithm (Sv39/Sv48/etc., the "leaf PTE has
-been reached" step, followed separately by the U-bit permission
-check), the U bit is only defined and checked for the leaf PTE
-reached at the end of the walk -- non-leaf PTEs don't carry a
-meaningful U bit at all.
+operand_vimm() sign-extends the 5-bit vector immediate field in bits
+19:15, but returns uint32_t. This sends negative immediates through an
+unsigned type before they are assigned to rv_decode.imm.
 
-Move the check after the leaf/non-leaf branch, alongside the other
-leaf-only checks, mirroring how the G_STAGE U-bit check (added in
-9158c900ab30) is already correctly placed.
+Return int32_t to match the signed value extracted by the helper.
 
-Fixes: b795ea0ba471 ("hw/riscv/riscv-iommu.c: fault when !PTE_U and no priv access")
-Fixes: 5952919d777c in 10.0.x
-Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20260717112340.1071148-1-andrew.jones@oss.qualcomm.com>
+Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260703-b4-disas-xthead-fix-riscv-next-v4-3-84c566330bc7@linux.alibaba.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit f16fd27b3fe3c305d95c61d3516e458c45c6e8c9)
+(cherry picked from commit 7899d3c6bdb008dd301b474f3524bad5f37a411e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 9c725027aa5..97796a414ff 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -473,13 +473,6 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-             break;                /* Invalid PTE */
-         } else if (pte & PTE_RESERVED) {
-             break;                /* Reserved PTE bits set */
--        } else if (!(pte & PTE_U) && !pv) {
--            /*
--             * All accesses are assumed to be User mode unless
--             * process_id is valid (pv).  In case we have a
--             * non-user mode PTE and !pv we need to fault.
--             */
--            break;
-         } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
-             base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
-         } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
-@@ -488,6 +481,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-             break;                /* Reserved leaf PTE flags: PTE_W + PTE_X */
-         } else if (ppn & ((1ULL << (va_skip - TARGET_PAGE_BITS)) - 1)) {
-             break;                /* Misaligned PPN */
-+        } else if (!(pte & PTE_U) && !pv) {
-+            /*
-+             * All accesses are assumed to be User mode unless
-+             * process_id is valid (pv).  In case we have a
-+             * non-user mode leaf PTE and !pv we need to fault.
-+             */
-+            break;
-         } else if ((iotlb->perm & IOMMU_RO) && !(pte & PTE_R)) {
-             break;                /* Read access check failed */
-         } else if ((iotlb->perm & IOMMU_WO) && !(pte & PTE_W)) {
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 692765cd32f..99d7474aff2 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -4479,7 +4479,7 @@ static uint32_t operand_cimmq(rv_inst inst)
+         ((inst << 57) >> 62) << 6;
+ }
+ 
+-static uint32_t operand_vimm(rv_inst inst)
++static int32_t operand_vimm(rv_inst inst)
+ {
+     return (int64_t)(inst << 44) >> 59;
+ }
 -- 
 2.47.3
 
