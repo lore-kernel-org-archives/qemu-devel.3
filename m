@@ -4,60 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BD0FC61DC2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:19:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D29F8C61DBD
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:19:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyp80-0003Gq-RK; Tue, 25 Aug 2026 07:15:41 -0400
+	id 1wyp6n-0000pe-Qe; Tue, 25 Aug 2026 07:14:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp7w-0002y9-Fq; Tue, 25 Aug 2026 07:15:36 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wyp6m-0000p8-DY
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 07:14:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp7u-0000ek-DV; Tue, 25 Aug 2026 07:15:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787656396; bh=N/ExKRInfzeAOKkR7Ewp1aPGREzUzH8K1NQMEMsBBhw=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=aRqosoCbzsVEO4gaKBpDxcK3TKkszIt3RJPHXESLqZpAeCvFN4W7rQSUSq2FDkj40
- H2R9InQKVftDMIUfqmgZyEeVAQ6hs9TQ/Na3GmznGNpqk1V1lUltiEwDH0Zs9cKQb8
- 5jJbPzAYMKK8Bw/cSrmxlpfofnL5BPJoXF7SSeDznLbIiNHaGG+P0jxVhhQ0dyfJSx
- Io6OgZAOtujB3XNMkHnew8SCPxRYAjpjAm1lhK43huo+TZ3+nAMLWWnqSio/9snRvw
- ATAFsyjOOiBYJIsp4xstSPbLBklgL7vJS/+ehGYUhb+/gokJlqdXmiiGJH4uuNo2b/
- D/U2VAc7ulQOQ==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 745D71CE4BA;
- Tue, 25 Aug 2026 14:13:16 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8C58A416286;
- Tue, 25 Aug 2026 14:13:53 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A78AF325B7; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v3 158/166] hw/riscv/riscv-iommu: preserve requested
- perm in spa_fetch()
-Date: Tue, 25 Aug 2026 14:11:54 +0300
-Message-ID: <20260825111206.482723-24-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
-References: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wyp6k-00007P-Pr
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 07:14:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787656461;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=i8cTuUI/M3NLP2OCEpciGBQHnvW9S1hBngiHqUklPR4=;
+ b=XZA/vlc7SyF45vXhI0R856s0VI29hATg/58qEueTiuHZlEE/uH/hjwwUfLRa/xb8S0ywp2
+ nCp4GlBdF7AKsQhUh6jJKKHugEz4swR/rJPmi//YQX4HSVLBrSm6R6Tl680T3nQMEHb8lp
+ pccn0eAm0ULVioSQOXBhm97N/FUup3Q=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-554-cleveUJUMuanqX9Y8l5bwQ-1; Tue,
+ 25 Aug 2026 07:14:18 -0400
+X-MC-Unique: cleveUJUMuanqX9Y8l5bwQ-1
+X-Mimecast-MFC-AGG-ID: cleveUJUMuanqX9Y8l5bwQ_1787656456
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 86CEF195DE60; Tue, 25 Aug 2026 11:14:16 +0000 (UTC)
+Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4E26D1955F08; Tue, 25 Aug 2026 11:14:12 +0000 (UTC)
+Date: Tue, 25 Aug 2026 12:14:09 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Warner Losh <imp@bsdimp.com>, Kohei Tokunaga <ktokunaga.mail@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Reinoud Zandijk <reinoud@netbsd.org>, Kyle Evans <kevans@freebsd.org>,
+ Michael Roth <michael.roth@amd.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: Re: [PATCH v2 09/16] python: upgrade to Python3.12+
+Message-ID: <ao15Aa0wdf6PVAYR@redhat.com>
+References: <20260825051441.1562454-1-jsnow@redhat.com>
+ <20260825051441.1562454-10-jsnow@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260825051441.1562454-10-jsnow@redhat.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,169 +97,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Jones <andrew.jones@oss.qualcomm.com>
+On Tue, Aug 25, 2026 at 01:14:34AM -0400, John Snow wrote:
+> With Python3.9 EOL and Python3.10 soon to be EOL (October 2026), and
+> with ... no other supported build platform actually using Python 3.11,
+> require the use of Python3.12 or later.
+> 
+> Additionally, as part of this upgrade, remove the use of tomllib from
+> mkvenv as it is now standard in the Python stdlib: leaving this
+> transitional code in causes a regression with mypy which becomes
+> confused about the overloaded use of 'tomllib'.
+> 
+> Our current minimum requirements as determined by standard repository
+> packages on supported distributions is as follows:
+> 
+> distro            EOS         python3  pip     setuptools  sphinx  wheel
+> -------------------------------------------------------------------------
+> centos_stream_9   2026-12-12  3.9.25   21.3.1  53.0.0      3.4.3   0.36.2
+> centos_stream_9+  2026-12-12  3.12.13  23.2.1  68.2.2      ---     0.41.2
+> freebsd           --          3.12.14  23.3.2  63.1.0      9.0.4   0.48.0
+> ubuntu_24_04      2028-04-23  3.12.3   24.0    68.1.2      7.2.6   0.42.0
+> centos_stream_10  2030-01-01  3.12.13  23.3.2  69.0.3      7.2.6   0.41.2
+> alpine_3_21       2026-11-01  3.12.14  24.3.1  70.3.0      8.1.3   0.43.0
+> debian_13         2028-08-09  3.13.5   25.1.1  78.1.1      8.1.3   0.46.1
+> fedora_43         2026-12-09  3.14.7   25.1.1  78.1.1      8.2.3   0.45.1
+> ubuntu_26_04      2031-05-29  3.14.4   25.1.1  78.1.1      8.2.3   0.46.3
+> fedora_44         2027-06-02  3.14.7   26.0.1  80.10.2     8.2.3   0.45.1
+> macports          --          3.14.7   26.0.1  80.10.2     9.1.0   0.48.0
+> alpine_3_22       2027-05-01  3.12.14  25.1.1  80.9.0      8.2.3   0.46.3
+> alpine_3_23       2027-11-01  3.12.14  25.1.1  80.9.0      8.2.3   0.46.3
+> openbsd           --          3.14.6   26.2.1  80.9.0      9.1.0   0.48.0
+> alpine_3_24       2028-06-01  3.14.7   26.1.2  82.0.1      9.1.0   0.47.0
+> pkgsrc_current    --          3.13.15  26.2.1  84.0.0      9.1.0   0.48.0
+> 
+> CentOS stream 9 note: python3.12, python3.12-pip,
+> python3.12-setuptools and python3.12-wheel are available as optional
+> packages in the standard repository. Sphinx is not available, but can
+> be side-loaded from PyPI using pip3.12.
+> 
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>  configure                | 11 ++++---
+>  python/Makefile          | 10 +++----
+>  python/scripts/mkvenv.py | 63 ++++------------------------------------
+>  python/setup.cfg         | 17 ++++-------
+>  python/tests/minreqs.txt | 41 ++++++++++++--------------
+>  pythondeps.toml          |  9 ++----
+>  6 files changed, 43 insertions(+), 108 deletions(-)
 
-b18e3f0e2d0f fixed spa_fetch() faults whose TTYP used the leaf PTE
-permission instead of the original request permission.  However, it kept
-that request-narrowed value in iotlb->perm after a successful walk, and
-riscv_iommu_translate() caches iotlb->perm for later accesses to the same
-IOVA.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-That means a write to an RW mapping can cache the entry as write-only.
-A later read then hits the cache and faults even though the mapping allows
-it, which showed up in NVMe testing as bogus completions and controller
-timeouts.
 
-Keep the requested permission in a separate req_perm and use it for all
-permission checks and fault-type decisions.  Accumulate the leaf
-permissions separately and copy them to iotlb->perm only after the full
-walk succeeds, so cached entries describe the mapping rather than the
-current request.  Since faults leave iotlb->perm as the original request,
-the S-stage and G-stage TTYP fixes remain intact.
-
-Fixes: b18e3f0e2d0f ("hw/riscv/riscv-iommu.c: fix fault type for spa_fetch() faults")
-Fixes: 12422e1f4493 in 10.0.x
-Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260717144525.1154204-1-andrew.jones@oss.qualcomm.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit aa51eec004461f671f878145d3fc921c6cabee48)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 97796a414ff..715e5d760b4 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -278,7 +278,7 @@ static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr, hwaddr *out)
- static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-     IOMMUTLBEntry *iotlb)
- {
--    IOMMUAccessFlags pte_perm;
-+    IOMMUAccessFlags trans_perm = IOMMU_NONE;
-     dma_addr_t addr, base;
-     uint64_t satp, gatp, pte;
-     bool en_s, en_g;
-@@ -295,6 +295,14 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-     } pass;
-     MemTxResult ret;
-     bool pv = !!ctx->process_id;
-+    /*
-+     * Keep the request permission separate from iotlb->perm.  G-stage
-+     * walks translate S-stage PTE addresses before the real leaf is
-+     * reached, but permission checks and fault types must still use the
-+     * original request.  A successful walk leaves iotlb->perm with the
-+     * effective leaf permission for the translation cache.
-+     */
-+    const IOMMUAccessFlags req_perm = iotlb->perm;
- 
-     satp = get_field(ctx->satp, RISCV_IOMMU_ATP_MODE_FIELD);
-     gatp = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
-@@ -313,7 +321,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-      * means we can't do an early MSI check unless we have
-      * strictly !en_s.
-      */
--    if (!en_s && (iotlb->perm & IOMMU_WO) &&
-+    if (!en_s && (req_perm & IOMMU_WO) &&
-         riscv_iommu_msi_check(s, ctx, iotlb->iova)) {
-         iotlb->target_as = &s->trap_as;
-         iotlb->translated_addr = iotlb->iova;
-@@ -431,13 +439,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-                 masked_msbs = (addr >> (va_len - 1)) & mask;
- 
-                 if (masked_msbs != 0 && masked_msbs != mask) {
--                    return (iotlb->perm & IOMMU_WO) ?
-+                    return (req_perm & IOMMU_WO) ?
-                                 RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S :
-                                 RISCV_IOMMU_FQ_CAUSE_RD_FAULT_S;
-                 }
-             } else {
-                 if ((addr & va_mask) != addr) {
--                    return (iotlb->perm & IOMMU_WO) ?
-+                    return (req_perm & IOMMU_WO) ?
-                                 RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
-                                 RISCV_IOMMU_FQ_CAUSE_RD_FAULT_VS;
-                 }
-@@ -462,8 +470,8 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-                              MEMTXATTRS_UNSPECIFIED);
-         }
-         if (ret != MEMTX_OK) {
--            return (iotlb->perm & IOMMU_WO) ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT
--                                            : RISCV_IOMMU_FQ_CAUSE_RD_FAULT;
-+            return (req_perm & IOMMU_WO) ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT
-+                                         : RISCV_IOMMU_FQ_CAUSE_RD_FAULT;
-         }
- 
-         sc[pass].step++;
-@@ -488,13 +496,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-              * non-user mode leaf PTE and !pv we need to fault.
-              */
-             break;
--        } else if ((iotlb->perm & IOMMU_RO) && !(pte & PTE_R)) {
-+        } else if ((req_perm & IOMMU_RO) && !(pte & PTE_R)) {
-             break;                /* Read access check failed */
--        } else if ((iotlb->perm & IOMMU_WO) && !(pte & PTE_W)) {
-+        } else if ((req_perm & IOMMU_WO) && !(pte & PTE_W)) {
-             break;                /* Write access check failed */
-         } else if (!ade && !(pte & PTE_A)) {
-             break;                /* Access bit not set */
--        } else if ((iotlb->perm & IOMMU_WO) && !ade && !(pte & PTE_D)) {
-+        } else if ((req_perm & IOMMU_WO) && !ade && !(pte & PTE_D)) {
-             break;                /* Dirty bit not set */
-         } else if (pass == G_STAGE && !(pte & PTE_U)) {
-             /*
-@@ -529,21 +537,20 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-                 addr = iotlb->iova;
-                 continue;
-             }
-+
-+            /* Cache the effective permission, not this request's subset. */
-+            IOMMUAccessFlags leaf_perm = (pte & PTE_W) ?
-+                                         ((pte & PTE_R) ? IOMMU_RW : IOMMU_WO) :
-+                                         IOMMU_RO;
-+
-+            trans_perm = trans_perm == IOMMU_NONE ?
-+                         leaf_perm : trans_perm & leaf_perm;
-+
-             /* Translation phase completed (GPA or SPA) */
-             iotlb->translated_addr = base;
- 
--            /*
--             * Do a bit_and between the PTE bits and the original
--             * request flags to determine the exact permission we
--             * need, i.e. if the original request is RO and the
--             * PTE has RW flags the actual perm is RO.
--             */
--            pte_perm = (pte & PTE_W) ? ((pte & PTE_R) ? IOMMU_RW : IOMMU_WO)
--                                     : IOMMU_RO;
--            iotlb->perm &= pte_perm;
--
-             /* Check MSI GPA address match */
--            if (pass == S_STAGE && (iotlb->perm & IOMMU_WO) &&
-+            if (pass == S_STAGE && (req_perm & IOMMU_WO) &&
-                 riscv_iommu_msi_check(s, ctx, base)) {
-                 /* Trap MSI writes and return GPA address. */
-                 iotlb->target_as = &s->trap_as;
-@@ -560,6 +567,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-                 continue;
-             }
- 
-+            iotlb->perm = trans_perm;
-             return 0;
-         }
- 
-@@ -584,7 +592,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-      */
-     iotlb->translated_addr = addr;
- 
--    return (iotlb->perm & IOMMU_WO) ?
-+    return (req_perm & IOMMU_WO) ?
-                 (pass ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
-                         RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S) :
-                 (pass ? RISCV_IOMMU_FQ_CAUSE_RD_FAULT_VS :
+With regards,
+Daniel
 -- 
-2.47.3
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
