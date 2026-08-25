@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79F76C61DB6
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 381E5C61DBC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:08:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylFw-0006rL-Lc; Tue, 25 Aug 2026 03:07:36 -0400
+	id 1wylFs-0006Zv-LF; Tue, 25 Aug 2026 03:07:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylFk-0006Ny-S4; Tue, 25 Aug 2026 03:07:24 -0400
+ id 1wylFo-0006R6-4x; Tue, 25 Aug 2026 03:07:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylFi-0005x3-Pe; Tue, 25 Aug 2026 03:07:24 -0400
+ id 1wylFm-0005y9-8d; Tue, 25 Aug 2026 03:07:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641596; bh=UdUI4J4L1mRYbJHpMsQWnLLIVh9APbD33THjbflNDno=;
+ t=1787641596; bh=rc/UuXMu2rKfZA7XORSoQghEPR6X3TcTiSNAxujo3Vo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=xxkUMk+f1tbGzqycLieExBSFF/etukjtUCwF0gOtxJb5uYIprRGRGpMzKrSnoF4yf
- 3OpV315QzvHEN/4gFnApCpSrtlwCp9BkZLcBORNvsNizyeXjctu7+DLomONyYOHSRC
- 1jYxAmZI/o3EwfRH5ynPYJrd1UcCtuj0WRcObhMrmKcOpltIKyfjWBLhIDFSxIyPNl
- GdBnhWScTuXacH6OgM0S3C9X5FGAcoYYCMdII4lpaMR4ya4ER/xrlj46cn3hf4Ofyn
- wHX7lB8fQ5E7ssLmssQenDxosCRAzDm+cv4HrYR3UvS69HDnv+R8DqMIUWk2Kkvl2z
- J+kfJVNWkeKHQ==
+ b=m53KuQrPtHz/tlYQrXUNEKH+9pFLZO5bgd6tCsD2WZu9BvTx+kEPjkjKvCM7FMFp9
+ shCtc+N1xq0aRd2cXENa8nnMjBdN86VBE0vUg0sgJnSNyt9dVU3rlg1pm5ZuysAYse
+ opEoDAEgnTpDxWb4HJmoyVpgJGRUNXnYgF8RIMNusw3rxTdyrCLzHuCfomLlRPJ5V3
+ pkOLdqfUKyISz1LiqVBP0RoC+pa6PR2vxefsMzBtIKgXZ/LRY96omcSpelXsq/FmkO
+ urnNS/NfWgrCGYOi3JdY2Im0Y+K++swcZK/b6SXf34TYMMe6YbJnod0d/bMJ/A5ZFN
+ ddNuWvL2sFWOA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 043DE1CE215;
+ by isrv.corpit.ru (Postfix) with ESMTP id 0BB2F1CE217;
  Tue, 25 Aug 2026 10:06:36 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B9AC7415F90;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C2E6E415F92;
  Tue, 25 Aug 2026 10:07:12 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 732913240A; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ id 791A03240E; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Craaijo, Jos" <jos.craaijo@ou.nl>,
- Yudistira Putra <pyudistira519@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 48/91] target/i386: fix long mode segment override
- prefix decoding
-Date: Tue, 25 Aug 2026 10:05:20 +0300
-Message-ID: <20260825070619.174584-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Andrey Polivoda <apolivodaa433@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 v2 50/91] target/i386: decode opcode extensions group
+ 3 /1 as TEST
+Date: Tue, 25 Aug 2026 10:05:22 +0300
+Message-ID: <20260825070619.174584-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
@@ -72,115 +73,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Craaijo, Jos" <jos.craaijo@ou.nl>
+From: Andrey Polivoda <apolivodaa433@gmail.com>
 
-On x86, the ES/CS/SS/DS segment override prefixes are null prefixes in
-long mode, and should be ignored. (AMD APM Volume 3, Section 1.2.4)
+According to Table A-6 in Volume 3 of AMD64 Architecture Programmer's Manual,
+opcodes F6 and F7 (opcode extensions group 3) with ModRM's reg field values
+of 0 and 1 can be used to encode a TEST instruction.
 
-This patch fixes the prefix decoding to correctly ignore the prefixes in
-64-bit mode.
+Although Intel 64 and IA-32 Architectures Software Developer's Manual leaves
+the cell 1 of opcode extensions group 3 blank in the opcode table
+(Table A-6, Volume 2D), the instruction in a group 3 with reg field of ModRM
+byte set to 1 actually behaves like TEST instruction on Intel CPUs.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3391
-Signed-off-by: Jos Craaijo <jos.craaijo@ou.nl>
-Tested-by: Yudistira Putra <pyudistira519@gmail.com>
-Link: https://lore.kernel.org/r/20260623-fix-x86-long-mode-segment-override-decoding-v1-1-26d9d4b5804e@ou.nl
+Currently, QEMU decodes group 3 instruction as TEST only if reg field of ModRM
+byte is 0. When the reg field is 1, QEMU raises a #UD exception.
+This behavior does not match real Intel and AMD hardware.
+
+This patch fixes this issue by duplicating the existing [0x00] and [0x08]
+X86_OP_ENTRYrr(AND, ...) entries into slots [0x01] and [0x09] in the
+opcodes_grp3 table.
+
+Fixes: d7c41a60d0c5 ("target/i386: move C0-FF opcodes to new decoder (except for x87)")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3580
+Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
+Cc: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/r/20260621032524.1138213-1-apolivodaa433@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 3589cd995b4facf34071e944fd8ec2294524e25a)
+(cherry picked from commit 380b9596181760f371713604ea3472c56c19deb9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/emulate/x86_decode.c b/target/i386/emulate/x86_decode.c
-index bae1dd4d6f8..34dcac155aa 100644
---- a/target/i386/emulate/x86_decode.c
-+++ b/target/i386/emulate/x86_decode.c
-@@ -1851,6 +1851,12 @@ static void decode_prefix(CPUX86State *env, struct x86_decode *decode)
-         case PREFIX_SS_SEG_OVERRIDE:
-         case PREFIX_DS_SEG_OVERRIDE:
-         case PREFIX_ES_SEG_OVERRIDE:
-+            if (x86_is_long_mode(env_cpu(env))) {
-+                /* ES/CS/SS/DS segment overrides are ignored in long mode */
-+                decode->rex.rex = 0;
-+                break;
-+            }
-+            /* fall through when not in long mode */
-         case PREFIX_FS_SEG_OVERRIDE:
-         case PREFIX_GS_SEG_OVERRIDE:
-             decode->segment_override = byte;
 diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index ac5964b95de..faf74b00bbd 100644
+index faf74b00bbd..9c429e113de 100644
 --- a/target/i386/tcg/decode-new.c.inc
 +++ b/target/i386/tcg/decode-new.c.inc
-@@ -2816,16 +2816,24 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-         s->prefix |= PREFIX_LOCK;
-         goto next_byte;
-     case 0x2e:
--        s->override = R_CS;
-+        if (!CODE64(s)) {
-+            s->override = R_CS;
-+        }
-         goto next_byte;
-     case 0x36:
--        s->override = R_SS;
-+        if (!CODE64(s)) {
-+            s->override = R_SS;
-+        }
-         goto next_byte;
-     case 0x3e:
--        s->override = R_DS;
-+        if (!CODE64(s)) {
-+            s->override = R_DS;
-+        }
-         goto next_byte;
-     case 0x26:
--        s->override = R_ES;
-+        if (!CODE64(s)) {
-+            s->override = R_ES;
-+        }
-         goto next_byte;
-     case 0x64:
-         s->override = R_FS;
-diff --git a/tests/tcg/x86_64/Makefile.target b/tests/tcg/x86_64/Makefile.target
-index be20fc64e88..c48767fef85 100644
---- a/tests/tcg/x86_64/Makefile.target
-+++ b/tests/tcg/x86_64/Makefile.target
-@@ -15,6 +15,7 @@ X86_64_TESTS += vsyscall
- X86_64_TESTS += noexec
- X86_64_TESTS += cmpxchg
- X86_64_TESTS += adox
-+X86_64_TESTS += segment-prefixes
- X86_64_TESTS += test-1648
- X86_64_TESTS += test-2175
- X86_64_TESTS += cross-modifying-code
-diff --git a/tests/tcg/x86_64/segment-prefixes.c b/tests/tcg/x86_64/segment-prefixes.c
-new file mode 100644
-index 00000000000..a7e6e285b2c
---- /dev/null
-+++ b/tests/tcg/x86_64/segment-prefixes.c
-@@ -0,0 +1,25 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* See https://gitlab.com/qemu-project/qemu/-/work_items/3391 */
-+
-+int main()
-+{
-+    int data = 0;
-+
-+    /* Ensure that ignored segment override prefixes are actually ignored */
-+    asm volatile (
-+        "wrgsbase %0\n\t"
-+        ".byte 0x65, 0x26\n\t" /* prefixes: GS + ES */
-+        "movb $0, 0\n\t"
-+        ".byte 0x65, 0x2E\n\t" /* prefixes: GS + CS */
-+        "movb $0, 0\n\t"
-+        ".byte 0x65, 0x36\n\t" /* prefixes: GS + SS */
-+        "movb $0, 0\n\t"
-+        ".byte 0x65, 0x3E\n\t" /* prefixes: GS + DS */
-+        "movb $0, 0\n\t"
-+        :
-+        : "r" (&data)
-+        : "memory"
-+    );
-+
-+    return 0;
-+}
+@@ -1624,6 +1624,7 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+     static const X86OpEntry opcodes_grp3[16] = {
+         /* 0xf6 */
+         [0x00] = X86_OP_ENTRYrr(AND, E,b, I,b),
++        [0x01] = X86_OP_ENTRYrr(AND, E,b, I,b),
+         [0x02] = X86_OP_ENTRY1(NOT,  E,b,      lock),
+         [0x03] = X86_OP_ENTRY1(NEG,  E,b,      lock),
+         [0x04] = X86_OP_ENTRYrr(MUL, E,b, 0,b, zextT0),
+@@ -1633,6 +1634,7 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+ 
+         /* 0xf7 */
+         [0x08] = X86_OP_ENTRYrr(AND, E,v, I,z),
++        [0x09] = X86_OP_ENTRYrr(AND, E,v, I,z),
+         [0x0a] = X86_OP_ENTRY1(NOT,  E,v,      lock),
+         [0x0b] = X86_OP_ENTRY1(NEG,  E,v,      lock),
+         [0x0c] = X86_OP_ENTRYrr(MUL, E,v, 0,v, zextT0),
 -- 
 2.47.3
 
