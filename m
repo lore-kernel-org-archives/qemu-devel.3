@@ -4,55 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 134CFC61DB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:40:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08888C61DBD
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:40:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyyrD-0005vP-UI; Tue, 25 Aug 2026 17:38:59 -0400
+	id 1wyyqy-0005na-Hg; Tue, 25 Aug 2026 17:38:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyrC-0005uO-Jf; Tue, 25 Aug 2026 17:38:58 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ id 1wyyqw-0005lu-Pu; Tue, 25 Aug 2026 17:38:42 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyrA-00057c-Ky; Tue, 25 Aug 2026 17:38:58 -0400
+ id 1wyyqu-00051F-TD; Tue, 25 Aug 2026 17:38:42 -0400
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:39a2:0:640:ae2d:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 0C70B80DF6;
- Wed, 26 Aug 2026 00:38:55 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 42A5A80BF4;
+ Wed, 26 Aug 2026 00:38:39 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:630::1:39])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id QckKa93ZVmI0-xFsvWXu9; Wed, 26 Aug 2026 00:38:54 +0300
+ id QckKa93ZVmI0-eBmCp7Dr; Wed, 26 Aug 2026 00:38:38 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1787693934;
- bh=ZAjRQ7+ZcxdP4rti3FBRDE5ZLsq5+OnsKkCcaL7Cqo0=;
+ s=default; t=1787693918;
+ bh=YrgMToP0NRwk8bp8EDG1ZziGYNNhT9TPc5zyFCqWwD0=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=dFf4i+xprma/WWGm8Th6yV8pAhksPdZyjJdSCuHG3kcX3CbuXfgZ3XDLUSscsK3Qw
- eLIMEpymzQaSjfsk7II8tOZW6r+vEbd4Ehg/wsaqudg9cK1YUXDt+wUlCWpUg8JaQt
- Q6qSvoaUxRLMwkvg58RfYlYX6mbjR9J3jn/Dc7m4=
+ b=Vkp25B/AJo1qsMOBsxh8HviI8XL5H7is+gIXR8n9p1YmMD0ycPaHPVdVtm2f2X5cF
+ iPEdyJ34CXBFtqjlB1WFdxGSW47m1Z9YSA8JBXo460AUMecIDJOU2bitI/CrUVqoZF
+ hM6F05z2A83akZ09U6Hu3CHLqkIj4ZF1yJIH1IoQ=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: peterx@redhat.com
 Cc: farosas@suse.de, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
- Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Nicholas Piggin <npiggin@gmail.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
- qemu-ppc@nongnu.org (open list:PowerPC TCG CPUs)
-Subject: [PATCH 25/30] ppc/machine: move to new migration APIs
-Date: Wed, 26 Aug 2026 00:38:05 +0300
-Message-ID: <20260825213811.3725682-26-vsementsov@yandex-team.ru>
+ Amit Machhiwal <amachhiw@linux.ibm.com>,
+ qemu-ppc@nongnu.org (open list:sPAPR (pseries))
+Subject: [PATCH 08/30] hw/scsi/spapr_vscsi: move to new migration APIs
+Date: Wed, 26 Aug 2026 00:37:48 +0300
+Message-ID: <20260825213811.3725682-9-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
 References: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -76,204 +78,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- target/ppc/machine.c | 80 ++++++++++++++++++++++----------------------
- 1 file changed, 40 insertions(+), 40 deletions(-)
+ hw/scsi/spapr_vscsi.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/target/ppc/machine.c b/target/ppc/machine.c
-index 569536bd02d..f188bb9f5ea 100644
---- a/target/ppc/machine.c
-+++ b/target/ppc/machine.c
-@@ -23,31 +23,31 @@ static void post_load_update_msr(CPUPPCState *env)
-     ppc_store_msr(env, msr);
- }
- 
--static int get_avr(QEMUFile *f, void *pv, size_t size,
--                   const VMStateField *field)
-+static bool load_avr(QEMUFile *f, void *pv, size_t size,
-+                   const VMStateField *field, Error **errp)
+diff --git a/hw/scsi/spapr_vscsi.c b/hw/scsi/spapr_vscsi.c
+index b4c8f94d22a..5938a392b95 100644
+--- a/hw/scsi/spapr_vscsi.c
++++ b/hw/scsi/spapr_vscsi.c
+@@ -629,12 +629,11 @@ static void vscsi_save_request(QEMUFile *f, SCSIRequest *sreq)
  {
-     ppc_avr_t *v = pv;
+     vscsi_req *req = sreq->hba_private;
+     Error *local_err = NULL;
+-    int rc;
  
-     v->u64[0] = qemu_get_be64(f);
-     v->u64[1] = qemu_get_be64(f);
+     assert(req->active);
  
--    return 0;
-+    return true;
- }
+-    rc = vmstate_save_state(f, &vmstate_spapr_vscsi_req, req, NULL, &local_err);
+-    if (rc < 0) {
++    if (!vmstate_save_vmsd(f, &vmstate_spapr_vscsi_req, req, NULL,
++                           &local_err)) {
+         error_report_err(local_err);
+         return;
+     }
+@@ -647,7 +646,6 @@ static void *vscsi_load_request(QEMUFile *f, SCSIRequest *sreq)
+     SCSIBus *bus = sreq->bus;
+     VSCSIState *s = VIO_SPAPR_VSCSI_DEVICE(bus->qbus.parent);
+     vscsi_req *req;
+-    int rc;
+     Error *local_err = NULL;
  
--static int put_avr(QEMUFile *f, void *pv, size_t size,
--                   const VMStateField *field, JSONWriter *vmdesc)
-+static bool save_avr(QEMUFile *f, void *pv, size_t size,
-+                   const VMStateField *field, JSONWriter *vmdesc, Error **errp)
- {
-     ppc_avr_t *v = pv;
+     assert(sreq->tag < VSCSI_REQ_LIMIT);
+@@ -655,8 +653,7 @@ static void *vscsi_load_request(QEMUFile *f, SCSIRequest *sreq)
+     assert(!req->active);
  
-     qemu_put_be64(f, v->u64[0]);
-     qemu_put_be64(f, v->u64[1]);
--    return 0;
-+    return true;
- }
- 
- static const VMStateInfo vmstate_info_avr = {
-     .name = "avr",
--    .get  = get_avr,
--    .put  = put_avr,
-+    .load = load_avr,
-+    .save = save_avr,
- };
- 
- #define VMSTATE_AVR_ARRAY_V(_f, _s, _n, _v)                       \
-@@ -56,29 +56,29 @@ static const VMStateInfo vmstate_info_avr = {
- #define VMSTATE_AVR_ARRAY(_f, _s, _n)                             \
-     VMSTATE_AVR_ARRAY_V(_f, _s, _n, 0)
- 
--static int get_fpr(QEMUFile *f, void *pv, size_t size,
--                   const VMStateField *field)
-+static bool load_fpr(QEMUFile *f, void *pv, size_t size,
-+                   const VMStateField *field, Error **errp)
- {
-     ppc_vsr_t *v = pv;
- 
-     v->VsrD(0) = qemu_get_be64(f);
- 
--    return 0;
-+    return true;
- }
- 
--static int put_fpr(QEMUFile *f, void *pv, size_t size,
--                   const VMStateField *field, JSONWriter *vmdesc)
-+static bool save_fpr(QEMUFile *f, void *pv, size_t size,
-+                   const VMStateField *field, JSONWriter *vmdesc, Error **errp)
- {
-     ppc_vsr_t *v = pv;
- 
-     qemu_put_be64(f, v->VsrD(0));
--    return 0;
-+    return true;
- }
- 
- static const VMStateInfo vmstate_info_fpr = {
-     .name = "fpr",
--    .get  = get_fpr,
--    .put  = put_fpr,
-+    .load = load_fpr,
-+    .save = save_fpr,
- };
- 
- #define VMSTATE_FPR_ARRAY_V(_f, _s, _n, _v)                       \
-@@ -87,29 +87,29 @@ static const VMStateInfo vmstate_info_fpr = {
- #define VMSTATE_FPR_ARRAY(_f, _s, _n)                             \
-     VMSTATE_FPR_ARRAY_V(_f, _s, _n, 0)
- 
--static int get_vsr(QEMUFile *f, void *pv, size_t size,
--                   const VMStateField *field)
-+static bool load_vsr(QEMUFile *f, void *pv, size_t size,
-+                   const VMStateField *field, Error **errp)
- {
-     ppc_vsr_t *v = pv;
- 
-     v->VsrD(1) = qemu_get_be64(f);
- 
--    return 0;
-+    return true;
- }
- 
--static int put_vsr(QEMUFile *f, void *pv, size_t size,
--                   const VMStateField *field, JSONWriter *vmdesc)
-+static bool save_vsr(QEMUFile *f, void *pv, size_t size,
-+                   const VMStateField *field, JSONWriter *vmdesc, Error **errp)
- {
-     ppc_vsr_t *v = pv;
- 
-     qemu_put_be64(f, v->VsrD(1));
--    return 0;
-+    return true;
- }
- 
- static const VMStateInfo vmstate_info_vsr = {
-     .name = "vsr",
--    .get  = get_vsr,
--    .put  = put_vsr,
-+    .load = load_vsr,
-+    .save = save_vsr,
- };
- 
- #define VMSTATE_VSR_ARRAY_V(_f, _s, _n, _v)                       \
-@@ -344,26 +344,26 @@ static bool altivec_needed(void *opaque)
-     return cpu->env.insns_flags & PPC_ALTIVEC;
- }
- 
--static int get_vscr(QEMUFile *f, void *opaque, size_t size,
--                    const VMStateField *field)
-+static bool load_vscr(QEMUFile *f, void *opaque, size_t size,
-+                    const VMStateField *field, Error **errp)
- {
-     PowerPCCPU *cpu = opaque;
-     ppc_store_vscr(&cpu->env, qemu_get_be32(f));
--    return 0;
-+    return true;
- }
- 
--static int put_vscr(QEMUFile *f, void *opaque, size_t size,
--                    const VMStateField *field, JSONWriter *vmdesc)
-+static bool save_vscr(QEMUFile *f, void *opaque, size_t size,
-+                    const VMStateField *field, JSONWriter *vmdesc, Error **errp)
- {
-     PowerPCCPU *cpu = opaque;
-     qemu_put_be32(f, ppc_get_vscr(&cpu->env));
--    return 0;
-+    return true;
- }
- 
- static const VMStateInfo vmstate_vscr = {
-     .name = "cpu/altivec/vscr",
--    .get = get_vscr,
--    .put = put_vscr,
-+    .load = load_vscr,
-+    .save = save_vscr,
- };
- 
- static const VMStateDescription vmstate_altivec = {
-@@ -465,31 +465,31 @@ static const VMStateDescription vmstate_sr = {
- };
- 
- #ifdef TARGET_PPC64
--static int get_slbe(QEMUFile *f, void *pv, size_t size,
--                    const VMStateField *field)
-+static bool load_slbe(QEMUFile *f, void *pv, size_t size,
-+                    const VMStateField *field, Error **errp)
- {
-     ppc_slb_t *v = pv;
- 
-     v->esid = qemu_get_be64(f);
-     v->vsid = qemu_get_be64(f);
- 
--    return 0;
-+    return true;
- }
- 
--static int put_slbe(QEMUFile *f, void *pv, size_t size,
--                    const VMStateField *field, JSONWriter *vmdesc)
-+static bool save_slbe(QEMUFile *f, void *pv, size_t size,
-+                    const VMStateField *field, JSONWriter *vmdesc, Error **errp)
- {
-     ppc_slb_t *v = pv;
- 
-     qemu_put_be64(f, v->esid);
-     qemu_put_be64(f, v->vsid);
--    return 0;
-+    return true;
- }
- 
- static const VMStateInfo vmstate_info_slbe = {
-     .name = "slbe",
--    .get  = get_slbe,
--    .put  = put_slbe,
-+    .load = load_slbe,
-+    .save = save_slbe,
- };
- 
- #define VMSTATE_SLB_ARRAY_V(_f, _s, _n, _v)                       \
+     memset(req, 0, sizeof(*req));
+-    rc = vmstate_load_state(f, &vmstate_spapr_vscsi_req, req, 1, &local_err);
+-    if (rc) {
++    if (!vmstate_load_vmsd(f, &vmstate_spapr_vscsi_req, req, 1, &local_err)) {
+         fprintf(stderr, "VSCSI: failed loading request tag#%u\n", sreq->tag);
+         error_report_err(local_err);
+         return NULL;
 -- 
 2.43.0
 
