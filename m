@@ -4,45 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC948C61DB6
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:09:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68DD2C61DB6
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:10:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylHM-0002qe-3C; Tue, 25 Aug 2026 03:09:04 -0400
+	id 1wylHz-0003wx-98; Tue, 25 Aug 2026 03:09:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylHJ-0002ZU-39; Tue, 25 Aug 2026 03:09:01 -0400
+ id 1wylHl-0003eO-21; Tue, 25 Aug 2026 03:09:34 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylHH-0006H9-6A; Tue, 25 Aug 2026 03:09:00 -0400
+ id 1wylHj-0006NA-E1; Tue, 25 Aug 2026 03:09:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641596; bh=rbu2vL/fF+DyfC6Wec7TxjKGDNnEQ1sNZUklNT7j2rY=;
+ t=1787641596; bh=HylImVf5O3yABFUdDyg00AniJpaClFN0tXyXYQo5IbE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tEzQ32U9HB5GZ+DuLpYqKtvr7Vx1Ygs9lv82nkExJsjqY2AYAsWUeFOTM98Z86iau
- 0EiTY1Fv9yj8p080JyBegjVFlqarYTHAzMduQ9gsL6XXpVPWmVH34LD9PLC/Ar+fTE
- jnb7tUT7XnxuMlJqRctpE8v+RzDZDZMtlrGUglDrSAwRLXd86kFeiCavo7cZqk5L3i
- keppiaoViHft+QQ0QQAKU7YX1q8L3G0WbiG3IHWc+F5czdg/9da7rJYS7FtZl9clkT
- RMX+9kAkWuLuMtDDUZU0DzLWXOIkB4jOltDzuzynWfmDqAZMVW06ppmWixI1qqubZ+
- w7X0MzajILHfA==
+ b=ZKPl2f6iu8qwsjgcXvvhCjn6jG+dQp1dUJC+FpFS5J4rGmaG1tJ12ghLEVFmnUBEE
+ QyaxyuPHjuvfyuMGrDLcj4vPUVyCCsylM5vlUrK8MjObLLYrhSK8xoq1I3VGS3AkyE
+ AxcCXezsLmPtycLkwoL4xUpnNnm8Bqap8HvG8wYVTf4i4trBzizmx0xq4IKgHntMrZ
+ FL4rgqeOC+l/iBwm0X7lgVSerHERkbIQQm2O0wbDcDo2PWHVIIVuIAG+MXBib6OGwH
+ ZLF6vCFsQER9UfnFdlyKDrkyYt6TIB8Lf0uk9QnQOhkNm5sFCtvwMrHT/0KJv7gIEp
+ 9uVhHqyrPd8hg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 617341CE227;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7A1361CE22C;
  Tue, 25 Aug 2026 10:06:36 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 26256415FA2;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3ED97415FA7;
  Tue, 25 Aug 2026 10:07:13 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A94113242E; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ id B820432438; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
+Cc: qemu-stable@nongnu.org, Zeng Chi <zengchi@kylinos.cn>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 66/91] whpx: i386: synchronise PAT too
-Date: Tue, 25 Aug 2026 10:05:38 +0300
-Message-ID: <20260825070619.174584-24-mjt@tls.msk.ru>
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 v2 71/91] target/riscv: Fix memory leak in
+ riscv_trigger_unrealize()
+Date: Tue, 25 Aug 2026 10:05:43 +0300
+Message-ID: <20260825070619.174584-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
@@ -72,60 +75,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+From: Zeng Chi <zengchi@kylinos.cn>
 
-https://github.com/cmspam/winq-emu hints that this might be wanted for
-some use-cases and it's a step towards full state sync:
+In riscv_trigger_unrealize(), the per-trigger QEMUTimer objects are
+created in riscv_trigger_realize() using timer_new_ns().  However,
+unrealize only calls timer_del() to cancel them, but never frees the
+timer objects themselves. This results in a memory leak every time a
+CPU instance is unrealized (e.g., during hot-unplug or machine teardown).
 
-> Linux uses PAT to mark virtio-gpu / Venus shared memory as
-> Write-Combining. Previously the partition's PAT was not
-> synchronised with the guest, so the guest's MTRR/PAT cache-type
-> computation could fall back to UC for memory that should be WC.
+Fix it by replacing timer_del() with timer_free(), which internally
+cancels the timer and frees its memory.  The separate timer_del() call
+is no longer needed.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Fixes: 820552a92e32 ("target/riscv: dynamic alloc of debug trigger arrays")
+Signed-off-by: Zeng Chi <zengchi@kylinos.cn>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260812082814.27217-5-mohamed@unpredictable.fr
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 7b0516912e44e73ba0859e91aed848d5be26f05e)
+Message-ID: <20260724063927.3360599-1-zeng_chi911@163.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit d5ab0bdefe418593a744fd0c625add607117c972)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 1800ba8eb19..2739a80da36 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -115,7 +115,7 @@ static const WHV_REGISTER_NAME whpx_register_names[] = {
- #ifdef TARGET_X86_64
-     WHvX64RegisterKernelGsBase,
- #endif
--    /* WHvX64RegisterPat, */
-+    WHvX64RegisterPat,
-     WHvX64RegisterSysenterCs,
-     WHvX64RegisterSysenterEip,
-     WHvX64RegisterSysenterEsp,
-@@ -624,9 +624,8 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
-         assert(whpx_register_names[idx] == WHvX64RegisterKernelGsBase);
-         vcxt.values[idx++].Reg64 = env->kernelgsbase;
- #endif
--
--        /* WHvX64RegisterPat - Skipped */
--
-+        assert(whpx_register_names[idx] == WHvX64RegisterPat);
-+        vcxt.values[idx++].Reg64 = env->pat;
-         assert(whpx_register_names[idx] == WHvX64RegisterSysenterCs);
-         vcxt.values[idx++].Reg64 = env->sysenter_cs;
-         assert(whpx_register_names[idx] == WHvX64RegisterSysenterEip);
-@@ -962,9 +961,8 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
-     assert(whpx_register_names[idx] == WHvX64RegisterKernelGsBase);
-     env->kernelgsbase = vcxt.values[idx++].Reg64;
- #endif
--
--    /* WHvX64RegisterPat - Skipped */
--
-+    assert(whpx_register_names[idx] == WHvX64RegisterPat);
-+    env->pat = vcxt.values[idx++].Reg64;
-     assert(whpx_register_names[idx] == WHvX64RegisterSysenterCs);
-     env->sysenter_cs = vcxt.values[idx++].Reg64;
-     assert(whpx_register_names[idx] == WHvX64RegisterSysenterEip);
+diff --git a/target/riscv/tcg/debug.c b/target/riscv/tcg/debug.c
+index 3c0fe701010..5ab29f6945b 100644
+--- a/target/riscv/tcg/debug.c
++++ b/target/riscv/tcg/debug.c
+@@ -1080,7 +1080,7 @@ void riscv_trigger_unrealize(CPURISCVState *env)
+     g_free(env->cpu_watchpoint);
+ 
+     for (int i = 0; i < env->num_triggers; i++) {
+-        timer_del(env->itrigger_timer[i]);
++        timer_free(env->itrigger_timer[i]);
+     }
+     g_free(env->itrigger_timer);
+ }
 -- 
 2.47.3
 
