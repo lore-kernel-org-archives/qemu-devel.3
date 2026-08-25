@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEB0AC61DB6
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:06:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C932C61DBD
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:06:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyn4i-0006Qm-Jb; Tue, 25 Aug 2026 05:04:08 -0400
+	id 1wyn6v-0003aE-CM; Tue, 25 Aug 2026 05:06:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn4h-0006N4-DG; Tue, 25 Aug 2026 05:04:07 -0400
+ id 1wyn6u-0003Zd-A5; Tue, 25 Aug 2026 05:06:24 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn4f-0003G0-DB; Tue, 25 Aug 2026 05:04:07 -0400
+ id 1wyn6s-0003t0-IQ; Tue, 25 Aug 2026 05:06:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787648560; bh=/o7/278/xcpcm05kArNsfWr64peOSCE1E0K+8wmfdH8=;
+ t=1787648560; bh=DIt1ONs+QNdCyTuajRNes8DO8mI5jBcrhgVvTyYnOF8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AMudl6VXkPn224ZDK2XUXYyNW8VFlY25BJqGRJ6Pj9dn4pbU5KpqlmJwm+hVYmgxd
- FZUB1ypSz2tcxSsRzgWyaxbEX8nYnKU4PXUCnKaArCu+iq5jRVITYGyRFfG1UDKlu5
- vqrTl9xPk+39mIASktIRDoUSW7pYveqqkIP/S/OI7moixlEy8CTptZaBBctBf5FxUv
- MEv05IfnI8D5EVAW7A8CVS6NKxePXu6TgTG4CHbiPMlhZSd6NU/Hiaag01KuQ8aWEH
- CnF9v9blSAkw5U6WvClX4uh4MhFog/b0vRMhbegvW+mMKHiHLFEvc3OK2HFAtbSnuo
- BBzFwHGTOkIrg==
+ b=BiEUafjG4i3TgSXGlYbsj5Qh0THi2j4tlRJ9mniAxdg3Uey0TZeAmlyR39gGL0VBI
+ pUHwivCJjaEZU05p2syVLKsctqNBNkmHAErApijd6pM58z+g2BieWqGwzELrEF/8VI
+ knkX0F4a6aFmsv4AtxCwS1GsbLcwuRYqZy+ZwNvwHI8x+T9rSMgwFwdR56jX6SIAA3
+ vxp6iXgqI6ZY1+auZ48hIy6FG4Kcinl8loqjYvpyweSeStgISSa4os8wH1vv4xLjsv
+ W67k9Rm+/Q4Z9uDEEdVDq94IRnhvUSsQDkDoK2zmhlOfnh7yQxhliNou3w/w2UQ5U6
+ uGdr4QXqUremg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 738991CE3B9;
+ by isrv.corpit.ru (Postfix) with ESMTP id DC1491CE3CE;
  Tue, 25 Aug 2026 12:02:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5F17E41617B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C8F0E416190;
  Tue, 25 Aug 2026 12:03:17 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D042C3255B; Tue, 25 Aug 2026 12:02:39 +0300 (MSK)
+ id 241B832585; Tue, 25 Aug 2026 12:02:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Yogesh Vyas <yvyas1991@gmail.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
+Cc: qemu-stable@nongnu.org, "Christian S. Lima" <christianslima@proton.me>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v3 175/196] tcg: Defer tb_flush when initial thread
- region alloc fails
-Date: Tue, 25 Aug 2026 12:01:32 +0300
-Message-ID: <20260825090157.471948-14-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v3 196/196] target/riscv/tcg: sret in virtual user
+ mode raises virtual instruction exception
+Date: Tue, 25 Aug 2026 12:01:53 +0300
+Message-ID: <20260825090157.471948-35-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
@@ -73,122 +72,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: "Christian S. Lima" <christianslima@proton.me>
 
-A vCPU hotplug may happen at any time.  When the new thread is
-started, the region pool may be exhausted.  Do not abort.
+Currently, when a `sret` is executed in virtual user mode, qemu
+raise an `illegal instruction exception`, but in this case the correct
+behavior is to raise a `virtual instruction exception` and the code
+already contains a check to it, but it's not enough to catch. This
+patch is useful to improve the correctness of the virtualization of
+the risc v architecture.
 
-Rename tcg_region_thread_initial_alloc to differentiate it
-from tcg_region_initial_alloc__locked.  The renamed function
-now uses tcg_region_alloc__locked and is prepared for failure.
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3622
 
-In tcg_tb_alloc, allow code_gen_ptr to be NULL.  Treat that as
-any other region exhaustion.  Reorg with while instead of goto.
-
-Tested-by: Yogesh Vyas <yvyas1991@gmail.com>
-Reviewed-by: Yogesh Vyas <yvyas1991@gmail.com>
-Reported-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2984
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit f5d2d8532f3c3cefb644fe9c1866a21b75f76faf)
+Signed-off-by: Christian S. Lima <christianslima@proton.me>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260808031849.59726-1-christianslima@proton.me>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 85d38315fd19cda7fcfec5350f27cdfa15742600)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/region.c b/tcg/region.c
-index 57ca7423570..1145f35085c 100644
---- a/tcg/region.c
-+++ b/tcg/region.c
-@@ -396,11 +396,31 @@ static void tcg_region_initial_alloc__locked(TCGContext *s)
-     g_assert(ok);
- }
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 83d7023d075..be62690d52d 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -319,6 +319,11 @@ target_ulong helper_sret(CPURISCVState *env)
+     const target_ulong src_priv = env->priv;
+     const bool src_virt = env->virt_enabled;
  
--void tcg_region_initial_alloc(TCGContext *s)
-+void tcg_region_thread_initial_alloc(TCGContext *s)
- {
-+    bool ok;
-+
-     qemu_mutex_lock(&region.lock);
--    tcg_region_initial_alloc__locked(s);
-+    ok = tcg_region_alloc__locked(s);
-     qemu_mutex_unlock(&region.lock);
-+
-+    /*
-+     * A vCPU hotplug may happen at any time.  When the new thread is
-+     * started, the region pool may be exhausted.  At this point in
-+     * the new thread call stack, we are not in a position to fix this.
-+     * Leave code_gen_ptr NULL, so that this thread's first call to
-+     * tcg_tb_alloc() returns NULL, so that the translator performs
-+     * a tb_flush() and retry.
-+     *
-+     * During the tb_flush(), tcg_region_reset_all() will assign a
-+     * new region to all contexts, including this one.
-+     */
-+    if (!ok) {
-+        s->code_gen_buffer = NULL;
-+        s->code_gen_ptr = NULL;
-+        s->code_gen_buffer_size = 0;
-+        s->code_gen_highwater = NULL;
++    if ((env->virt_enabled && env->priv < PRV_S) ||
++        (env->virt_enabled && get_field(env->hstatus, HSTATUS_VTSR))) {
++        riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GETPC());
 +    }
- }
- 
- /* Call from a safe-work context */
-diff --git a/tcg/tcg-internal.h b/tcg/tcg-internal.h
-index c0997ab2243..e35440dc8c0 100644
---- a/tcg/tcg-internal.h
-+++ b/tcg/tcg-internal.h
-@@ -42,7 +42,7 @@ extern unsigned int tcg_max_ctxs;
- 
- void tcg_region_init(size_t tb_size, int splitwx, unsigned max_threads);
- bool tcg_region_alloc(TCGContext *s);
--void tcg_region_initial_alloc(TCGContext *s);
-+void tcg_region_thread_initial_alloc(TCGContext *s);
- void tcg_region_prologue_set(TCGContext *s);
- 
- static inline void *tcg_call_func(TCGOp *op)
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 64e596c0d4c..855560747ec 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -1279,7 +1279,7 @@ void tcg_register_thread(void)
-     qatomic_set(&tcg_ctxs[n], s);
- 
-     if (n > 0) {
--        tcg_region_initial_alloc(s);
-+        tcg_region_thread_initial_alloc(s);
++
+     if (!(env->priv >= PRV_S)) {
+         riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
+     }
+@@ -334,10 +339,6 @@ target_ulong helper_sret(CPURISCVState *env)
+         riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
      }
  
-     tcg_ctx = s;
-@@ -1830,18 +1830,24 @@ TranslationBlock *tcg_tb_alloc(TCGContext *s)
-     TranslationBlock *tb;
-     void *next;
- 
-- retry:
--    tb = (void *)ROUND_UP((uintptr_t)s->code_gen_ptr, align);
--    next = (void *)ROUND_UP((uintptr_t)(tb + 1), align);
-+    while (1) {
-+        tb = (void *)ROUND_UP((uintptr_t)s->code_gen_ptr, align);
- 
--    if (unlikely(next > s->code_gen_highwater)) {
-+        /*
-+         * Note that code_gen_ptr can be NULL after vCPU hotplug.
-+         * See tcg_region_thread_initial_alloc.
-+         */
-+        if (tb) {
-+            next = (void *)ROUND_UP((uintptr_t)(tb + 1), align);
-+            if (next <= s->code_gen_highwater) {
-+                qatomic_set(&s->code_gen_ptr, next);
-+                return tb;
-+            }
-+        }
-         if (!tcg_region_alloc(s)) {
-             return NULL;
-         }
--        goto retry;
-     }
--    qatomic_set(&s->code_gen_ptr, next);
--    return tb;
- }
- 
- void tcg_prologue_init(void)
+-    if (env->virt_enabled && get_field(env->hstatus, HSTATUS_VTSR)) {
+-        riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GETPC());
+-    }
+-
+     mstatus = env->mstatus;
+     prev_priv = get_field(mstatus, MSTATUS_SPP);
+     mstatus = set_field(mstatus, MSTATUS_SIE,
 -- 
 2.47.3
 
