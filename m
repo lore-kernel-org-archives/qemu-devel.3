@@ -4,48 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68E10C61DBC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:10:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3986AC5DF94
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:10:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylHx-0003hc-C3; Tue, 25 Aug 2026 03:09:41 -0400
+	id 1wylHt-0003bC-2g; Tue, 25 Aug 2026 03:09:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylHg-0003XJ-Eq; Tue, 25 Aug 2026 03:09:25 -0400
+ id 1wylHg-0003XK-HT; Tue, 25 Aug 2026 03:09:25 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylHe-0006IR-LT; Tue, 25 Aug 2026 03:09:24 -0400
+ id 1wylHe-0006IP-MQ; Tue, 25 Aug 2026 03:09:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641596; bh=C0KuZVIq/l0wfUwoyJy6HIvojnpcf1VCsTlIEr97dyc=;
+ t=1787641596; bh=TZn4mSBaGo2qVweLqyPzjZ9z8Rbb2T/s3N+hTqM7zkk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=vrD3lEqd7maWsS775t9L8NmebZjj1k6/dD2MCwjAE21Xezc/U+/S4LuLcEowF86Dl
- rHpW28jTr95D0B1zsr7WRHnzZ+QTAuetH3DWHeyMiWJWMPD6V6MjfExoUfGWisEiam
- nhtXdG5tAlEwbrdsuxWwQszGYexkH1GU+je8h0nosbnRREpyWFWqdIzZ3g9ZcvnKGN
- phGidXDUFU041w6rbUCcldypBZ9XPrVFWwlTWfRIOpQmKiZjIOunzaEwF4PDeXnao4
- dGqOliI5D6GhWcGvlFo24/VkMXuY37WN6yQjCawG2a3vF1GWYwmo6sJYqi5pIJ8JLg
- lvS0Myy8Qm6ZA==
+ b=hTnfwMet5jBdBp3E6SyuSBQ88vx6yllW4UfvJB8UYPXq6juGxf8XzzSJYNSl5lH1C
+ MXdjRZkH49OmJybkbwBhxOT19+WDiexBQMjQQSEfCW2LR5XpxKPYDPSycYEE2W0568
+ +LydxJngxrQ08EW0LMgnYzU00HcOCTd+JClAyOvI5GQI3FKKGxUO0CPv0LY5/ju88W
+ AMNQ2O2qDXlYegNs74gDz3kiu6YUfFj/ZndajNO4eTAlaxtaajB02hLjPwCyfSpTWG
+ 9ePC3pxSI1HNrWLGbZ3ypcQ+K5tha7w4uCR+5PGSUk0siNI40LNVymqa5GXVfyIzoC
+ zBMwQfxCIHm3w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 703BA1CE22A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6B3471CE229;
  Tue, 25 Aug 2026 10:06:36 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 34D1B415FA5;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2FD68415FA4;
  Tue, 25 Aug 2026 10:07:13 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B1FE232434; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ id AEECB32432; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
- A-Shehab <ahshehab24@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 69/91] target/riscv: Fix PC sync in trans_sspopchk
- for CFI exception handling
-Date: Tue, 25 Aug 2026 10:05:41 +0300
-Message-ID: <20260825070619.174584-27-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 v2 68/91] whpx: i386: inject back db
+Date: Tue, 25 Aug 2026 10:05:40 +0300
+Message-ID: <20260825070619.174584-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
@@ -74,55 +70,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Move gen_update_pc call before conditional logic to ensure consistent
-PC state regardless of execution path.
+When we get a debug exception other than int1,
+inject it back to the guest.
 
-Previously, the host instructions generated to update the cpu_pc were
-only executed in the failure path when shadow stack validation failed.
-This created inconsistent PC synchronization.
-
-This inconsistency caused issues in CF_PCREL mode where subsequent
-instructions calculated wrong relative offsets from stale pc_save
-values, and could lead to incorrect exception return addresses.
-
-This fix ensures PC is always synchronized before any helper that
-might raise an exception, maintaining consistent translator state
-across all execution paths.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4118
-Signed-off-by: Max Chou <max.chou@sifive.com>
-[ahshehab: rebased on current master; file moved to
- target/riscv/tcg/insn_trans/ and the ssp load is now 64-bit wide]
-Tested-by: A-Shehab <ahshehab24@gmail.com>
-Signed-off-by: A-Shehab <ahshehab24@gmail.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260730181852.1622-1-ahshehab24@gmail.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 4a884ba94b43f5b2a640f4ea882655503f9ae954)
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Link: https://lore.kernel.org/r/20260812082814.27217-7-mohamed@unpredictable.fr
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 93f38b6e8817280e1a51102d2dfd21115b8d4e88)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
-index a8132328870..d47a9f9c7d2 100644
---- a/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
-@@ -32,6 +32,7 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-     TCGLabel *skip = gen_new_label();
-     uint32_t tmp = (get_xl(ctx) == MXL_RV64) ? 8 : 4;
-     TCGv data = tcg_temp_new();
-+    gen_update_pc(ctx, 0);
-     TCGv_i64 wide_addr = tcg_temp_new_i64();
-     tcg_gen_ld_i64(wide_addr, tcg_env, offsetof(CPURISCVState, ssp));
-     tcg_gen_trunc_i64_tl(addr, wide_addr);
-@@ -42,7 +43,6 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-     tcg_gen_brcond_tl(TCG_COND_EQ, data, rs1, skip);
-     tcg_gen_st8_i32(tcg_constant_i32(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
-                     tcg_env, offsetof(CPURISCVState, sw_check_code));
--    gen_update_pc(ctx, 0);
-     gen_helper_raise_exception(tcg_env,
-                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-     gen_set_label(skip);
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index 56a8b167497..113f79afb9a 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -1079,6 +1079,31 @@ static void whpx_inject_back_gpf(CPUState *cpu)
+     whpx_set_reg(cpu, WHvRegisterPendingEvent, reg);
+ }
+ 
++static void whpx_inject_back_db(CPUState *cpu)
++{
++    WHV_VP_EXCEPTION_CONTEXT *ctx = &cpu->accel->exit_ctx.VpException;
++    WHV_REGISTER_VALUE reg = {};
++
++    if (ctx->ExceptionInfo.SoftwareException) {
++        /* TODO */
++        warn_report("Was asked to inject software exception.");
++        return;
++    }
++
++    if (ctx->ExceptionType != EXCP01_DB) {
++        warn_report("Was asked to inject exception other than debug.");
++        return;
++    }
++
++    reg.ExceptionEvent.EventPending = 1;
++    reg.ExceptionEvent.EventType = WHvX64PendingEventException;
++    reg.ExceptionEvent.DeliverErrorCode = ctx->ExceptionInfo.ErrorCodeValid;
++    reg.ExceptionEvent.Vector = ctx->ExceptionType;
++    reg.ExceptionEvent.ErrorCode = ctx->ErrorCode;
++    reg.ExceptionEvent.ExceptionParameter = ctx->ExceptionParameter;
++    whpx_set_reg(cpu, WHvRegisterPendingEvent, reg);
++}
++
+ static void handle_io(CPUState *env, uint16_t port, void *buffer,
+                   int direction, int size, int count)
+ {
+@@ -2646,11 +2671,7 @@ int whpx_vcpu_run(CPUState *cpu)
+             } else if ((vcpu->exit_ctx.VpException.ExceptionType ==
+                         WHvX64ExceptionTypeDebugTrapOrFault) &&
+                        !cpu_single_stepping(cpu)) {
+-                /*
+-                 * Just finished stepping over a breakpoint, but the
+-                 * gdb does not expect us to do single-stepping.
+-                 * Don't do anything special.
+-                 */
++                whpx_inject_back_db(cpu);
+                 cpu->exception_index = EXCP_INTERRUPT;
+             } else {
+                 /* Another exception or debug event. Report it to GDB. */
 -- 
 2.47.3
 
