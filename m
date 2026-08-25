@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF138C61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:15:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFC04C61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:15:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyp6P-0000Q0-Ly; Tue, 25 Aug 2026 07:14:01 -0400
+	id 1wyp6Y-0000Xl-Fj; Tue, 25 Aug 2026 07:14:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp6O-0000PP-9N; Tue, 25 Aug 2026 07:14:00 -0400
+ id 1wyp6V-0000Tb-Uu; Tue, 25 Aug 2026 07:14:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp6M-0008DZ-GQ; Tue, 25 Aug 2026 07:14:00 -0400
+ id 1wyp6T-0008FF-UU; Tue, 25 Aug 2026 07:14:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787656396; bh=lwjuQx3EXI/g13Td3L9R+9Xx4ZUuCRX8Ufdv6wujEms=;
+ t=1787656396; bh=4avyXc31qlXvT4rHH63pVW1gkjxWi6TD3EuD6ZGJIKI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AarzaRsWxPhc4Braw8HzNi5qamkX4mFs3S0qIBmxl83RZ92AiIObV6rOfuwsxV+MH
- T4XPJs8552ogeqef5vxRQ3kMGvJCKmC+TdGGNa5FjrF2s7cckmEemDlZQt9f70+HYY
- k/9f29ihq2oFJ+nJRtdmOJSWPnVbB+hC/8lwRcGgbyAACee0uFQOsRqXqcAdK8LClL
- 1cqPEFwKEinNfOGRbf2jVZsoksRwYPyeMaV2uuE96t/sUX684RRnJ21aOUCieYqLFH
- er83MZbVKSg7pOUYII04cwVyZfBMMibRrdjaHBkaa4VouP38fj1qePzCiU2npQrytC
- ZhPpHIPIzZSmw==
+ b=R3axLAOQV4Ed2hJd7teElmXBjmrsHdtQYbZWR2wD0CpdcrnI6kJ+BFWXTQo7mNiLW
+ oRaCeUhfd8h/y/K5mDCuLXx4RFEr/4xrSniDtG5OYIqmzQYCBUFqIKKT2gIPQ4/NWO
+ mvJ8Eb/PpaAZ5loDfH+JD3JzcOwi3+mObXgOVTCpZ0xE14dnmhe0a1PawSg8L5Ywc/
+ Xm5SR0eQHr3vNtx0OG/XgzeN1nsiSa1GAcyytMOHXs4306Z2CjSF+qE1YQTq2tDSSE
+ HYDEvi26WPsRlILN+GaTvVbRlEM7ViY8HRzrPlmMs+OB5YFd6okIwze1c+DttYgfMm
+ T+qsjajXIV9yg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0D52B1CE4A6;
+ by isrv.corpit.ru (Postfix) with ESMTP id 256801CE4AA;
  Tue, 25 Aug 2026 14:13:16 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 254A9416272;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3C278416276;
  Tue, 25 Aug 2026 14:13:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 696203258F; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
+ id 75EDD32597; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v3 138/166] target/i386: Clear OF, SF,
- and AF for fcomi/fucomi
-Date: Tue, 25 Aug 2026 14:11:34 +0300
-Message-ID: <20260825111206.482723-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Andrey Polivoda <apolivodaa433@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v3 142/166] target/i386: decode opcode extensions
+ group 3 /1 as TEST
+Date: Tue, 25 Aug 2026 14:11:38 +0300
+Message-ID: <20260825111206.482723-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
@@ -71,66 +73,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Simon Scherer <scherer.simon89@gmail.com>
+From: Andrey Polivoda <apolivodaa433@gmail.com>
 
-helper_fcomi_ST0_FT0() and helper_fucomi_ST0_FT0() only cleared
-CC_Z, CC_P, and CC_C before merging in the comparison result,
-leaving CC_O, CC_S, and CC_A untouched from whatever they were
-set to beforehand.
+According to Table A-6 in Volume 3 of AMD64 Architecture Programmer's Manual,
+opcodes F6 and F7 (opcode extensions group 3) with ModRM's reg field values
+of 0 and 1 can be used to encode a TEST instruction.
 
-The Intel SDM documents FCOMI/FCOMIP/FUCOMI/FUCOMIP as setting OF,
-SF, and AF to 0 unconditionally. The AMD manual doesn't mention them
-at all. However, testing on multiple real Intel and AMD systems confirms
-all three are unconditionally cleared regardless of the comparison
-result or their prior value.
+Although Intel 64 and IA-32 Architectures Software Developer's Manual leaves
+the cell 1 of opcode extensions group 3 blank in the opcode table
+(Table A-6, Volume 2D), the instruction in a group 3 with reg field of ModRM
+byte set to 1 actually behaves like TEST instruction on Intel CPUs.
 
-Since fcomi_ccval[] only ever contains CC_C, CC_Z, 0, or CC_Z|CC_P|CC_C,
-and CC_O|CC_S|CC_Z|CC_A|CC_P|CC_C already covers every flag bit, CC_SRC
-can be assigned from fcomi_ccval[ret + 1] directly instead of ORing it
-into a masked cpu_cc_compute_all() result.
+Currently, QEMU decodes group 3 instruction as TEST only if reg field of ModRM
+byte is 0. When the reg field is 1, QEMU raises a #UD exception.
+This behavior does not match real Intel and AMD hardware.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4133
-Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-Link: https://lore.kernel.org/r/20260807062831.19618-1-scherer.simon89@gmail.com
-Cc: qemu-stable@nongnu.org
+This patch fixes this issue by duplicating the existing [0x00] and [0x08]
+X86_OP_ENTRYrr(AND, ...) entries into slots [0x01] and [0x09] in the
+opcodes_grp3 table.
+
+Fixes: d7c41a60d0c5 ("target/i386: move C0-FF opcodes to new decoder (except for x87)")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3580
+Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
+Cc: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/r/20260621032524.1138213-1-apolivodaa433@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 0924d9d3db3617f49ba9282acc6d85b349404ce6)
+(cherry picked from commit 380b9596181760f371713604ea3472c56c19deb9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index 56d456860fc..128f16dc951 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -550,12 +550,11 @@ static const int fcomi_ccval[4] = {CC_C, CC_Z, 0, CC_Z | CC_P | CC_C};
- void helper_fcomi_ST0_FT0(CPUX86State *env)
- {
-     int old_flags = save_exception_flags(env);
--    int eflags;
-     FloatRelation ret;
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 93d2b2c8121..16ea52e9d5c 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1520,6 +1520,7 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+     static const X86OpEntry opcodes_grp3[16] = {
+         /* 0xf6 */
+         [0x00] = X86_OP_ENTRYrr(AND, E,b, I,b),
++        [0x01] = X86_OP_ENTRYrr(AND, E,b, I,b),
+         [0x02] = X86_OP_ENTRY1(NOT,  E,b,      lock),
+         [0x03] = X86_OP_ENTRY1(NEG,  E,b,      lock),
+         [0x04] = X86_OP_ENTRYrr(MUL, E,b, 0,b, zextT0),
+@@ -1529,6 +1530,7 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
  
-     ret = floatx80_compare(ST0, FT0, &env->fp_status);
--    eflags = cpu_cc_compute_all(env) & ~(CC_Z | CC_P | CC_C);
--    CC_SRC = eflags | fcomi_ccval[ret + 1];
-+    /* OF, SF, and AF are unconditionally cleared to 0 */
-+    CC_SRC = fcomi_ccval[ret + 1];
-     CC_OP = CC_OP_EFLAGS;
-     merge_exception_flags(env, old_flags);
- }
-@@ -563,12 +562,11 @@ void helper_fcomi_ST0_FT0(CPUX86State *env)
- void helper_fucomi_ST0_FT0(CPUX86State *env)
- {
-     int old_flags = save_exception_flags(env);
--    int eflags;
-     FloatRelation ret;
- 
-     ret = floatx80_compare_quiet(ST0, FT0, &env->fp_status);
--    eflags = cpu_cc_compute_all(env) & ~(CC_Z | CC_P | CC_C);
--    CC_SRC = eflags | fcomi_ccval[ret + 1];
-+    /* OF, SF, and AF are unconditionally cleared to 0 */
-+    CC_SRC = fcomi_ccval[ret + 1];
-     CC_OP = CC_OP_EFLAGS;
-     merge_exception_flags(env, old_flags);
- }
+         /* 0xf7 */
+         [0x08] = X86_OP_ENTRYrr(AND, E,v, I,z),
++        [0x09] = X86_OP_ENTRYrr(AND, E,v, I,z),
+         [0x0a] = X86_OP_ENTRY1(NOT,  E,v,      lock),
+         [0x0b] = X86_OP_ENTRY1(NEG,  E,v,      lock),
+         [0x0c] = X86_OP_ENTRYrr(MUL, E,v, 0,v, zextT0),
 -- 
 2.47.3
 
