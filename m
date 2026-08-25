@@ -4,55 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB7EC61DC2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 870EFC61DBD
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:40:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyyr1-0005pw-RM; Tue, 25 Aug 2026 17:38:47 -0400
+	id 1wyyqx-0005n2-Sd; Tue, 25 Aug 2026 17:38:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyqz-0005oN-IR
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:45 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1wyyqw-0005lq-J9; Tue, 25 Aug 2026 17:38:42 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyqx-000531-Ua
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:45 -0400
+ id 1wyyqu-00050f-Le; Tue, 25 Aug 2026 17:38:42 -0400
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:39a2:0:640:ae2d:0])
- by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id A608380BF2;
- Wed, 26 Aug 2026 00:38:42 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id 17329C0964;
+ Wed, 26 Aug 2026 00:38:38 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:630::1:39])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id QckKa93ZVmI0-C6uiMCf3; Wed, 26 Aug 2026 00:38:42 +0300
+ id QckKa93ZVmI0-Pj3kW4Mt; Wed, 26 Aug 2026 00:38:37 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1787693922;
- bh=vLlNeGxhkaOTLOWrbu3++IHaogXUp5T7e/JCST20a08=;
+ s=default; t=1787693917;
+ bh=3TucEDGYL4Tz/5ZHt31+D7e0DrG/4eNWyU9JDjFDsno=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=KC5SoRNXONrzfgPgM3+Ingp3C+U4kMq9QBF2eTfslIn3/gd3I7N/5WA6GH3yP1Ui+
- Vf2yMpWMmRh/TTPPNQakJ93zegUCnYAeMMyhg2kYniH6oTYYkgkxLdX7yo5y7iN7mo
- AofC8xQz4h1VaFmj/C82bKD0vlYnn+Nh6wFxWwjA=
+ b=P+afU7QVgxFvREe4e6YFpA/G146cx8gSKNf9q1KazLpcrJZ1m8H3bgLFfkEOpUfCp
+ c3x334nywV15dvMeU7Z/w5VyuWEfnv0hlq2HVud2/7OBEnwRnwC4x4896DUKL4ePNE
+ ZqK0eLABSU6VDiOyDmi0m65sF56BzU0lB+kg7uUE=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: peterx@redhat.com
 Cc: farosas@suse.de, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 12/30] hw/pci/msix.c: use new migration APIs
-Date: Wed, 26 Aug 2026 00:37:52 +0300
-Message-ID: <20260825213811.3725682-13-vsementsov@yandex-team.ru>
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ qemu-s390x@nongnu.org (open list:virtio-ccw)
+Subject: [PATCH 07/30] hw/s390x/virtio-ccw.c: move to new migration APIs
+Date: Wed, 26 Aug 2026 00:37:47 +0300
+Message-ID: <20260825213811.3725682-8-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
 References: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -76,48 +79,88 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/pci/msix.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ hw/s390x/virtio-ccw.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/hw/pci/msix.c b/hw/pci/msix.c
-index 1b23eaf1007..4dcb7c36770 100644
---- a/hw/pci/msix.c
-+++ b/hw/pci/msix.c
-@@ -685,25 +685,26 @@ void msix_unset_vector_notifiers(PCIDevice *dev)
-     dev->msix_vector_poll_notifier = NULL;
+diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
+index 848ed09e94b..6bc901a64ec 100644
+--- a/hw/s390x/virtio-ccw.c
++++ b/hw/s390x/virtio-ccw.c
+@@ -40,7 +40,7 @@
+ 
+ bool have_virtio_ccw = true;
+ 
+-static int virtio_ccw_dev_post_load(void *opaque, int version_id)
++static bool virtio_ccw_dev_post_load(void *opaque, int version_id, Error **errp)
+ {
+     VirtioCcwDevice *dev = VIRTIO_CCW_DEVICE(opaque);
+     CcwDevice *ccw_dev = CCW_DEVICE(dev);
+@@ -56,7 +56,7 @@ static int virtio_ccw_dev_post_load(void *opaque, int version_id)
+     if (ck->refill_ids) {
+         ck->refill_ids(ccw_dev);
+     }
+-    return 0;
++    return true;
  }
  
--static int put_msix_state(QEMUFile *f, void *pv, size_t size,
--                          const VMStateField *field, JSONWriter *vmdesc)
-+static bool put_msix_state(QEMUFile *f, void *pv, size_t size,
-+                           const VMStateField *field, JSONWriter *vmdesc,
-+                           Error **errp)
+ typedef struct VirtioCcwDeviceTmp {
+@@ -64,7 +64,7 @@ typedef struct VirtioCcwDeviceTmp {
+     uint16_t config_vector;
+ } VirtioCcwDeviceTmp;
+ 
+-static int virtio_ccw_dev_tmp_pre_save(void *opaque)
++static bool virtio_ccw_dev_tmp_pre_save(void *opaque, Error **errp)
  {
-     msix_save(pv, f);
+     VirtioCcwDeviceTmp *tmp = opaque;
+     VirtioCcwDevice *dev = tmp->parent;
+@@ -72,23 +72,24 @@ static int virtio_ccw_dev_tmp_pre_save(void *opaque)
+ 
+     tmp->config_vector = vdev->config_vector;
  
 -    return 0;
 +    return true;
  }
  
--static int get_msix_state(QEMUFile *f, void *pv, size_t size,
--                          const VMStateField *field)
-+static bool get_msix_state(QEMUFile *f, void *pv, size_t size,
-+                           const VMStateField *field, Error **errp)
+-static int virtio_ccw_dev_tmp_post_load(void *opaque, int version_id)
++static bool virtio_ccw_dev_tmp_post_load(void *opaque, int version_id,
++                                         Error **errp)
  {
-     msix_load(pv, f);
+     VirtioCcwDeviceTmp *tmp = opaque;
+     VirtioCcwDevice *dev = tmp->parent;
+     VirtIODevice *vdev = virtio_bus_get_device(&dev->bus);
+ 
+     vdev->config_vector = tmp->config_vector;
 -    return 0;
 +    return true;
  }
  
- static const VMStateInfo vmstate_info_msix = {
-     .name = "msix state",
--    .get  = get_msix_state,
--    .put  = put_msix_state,
-+    .load = get_msix_state,
-+    .save = put_msix_state,
- };
- 
- const VMStateDescription vmstate_msix = {
+ const VMStateDescription vmstate_virtio_ccw_dev_tmp = {
+     .name = "s390_virtio_ccw_dev_tmp",
+-    .pre_save = virtio_ccw_dev_tmp_pre_save,
+-    .post_load = virtio_ccw_dev_tmp_post_load,
++    .pre_save_errp = virtio_ccw_dev_tmp_pre_save,
++    .post_load_errp = virtio_ccw_dev_tmp_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT16(config_vector, VirtioCcwDeviceTmp),
+         VMSTATE_END_OF_LIST()
+@@ -99,7 +100,7 @@ const VMStateDescription vmstate_virtio_ccw_dev = {
+     .name = "s390_virtio_ccw_dev",
+     .version_id = 1,
+     .minimum_version_id = 1,
+-    .post_load = virtio_ccw_dev_post_load,
++    .post_load_errp = virtio_ccw_dev_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_CCW_DEVICE(parent_obj, VirtioCcwDevice),
+         VMSTATE_PTR_TO_IND_ADDR(indicators, VirtioCcwDevice),
+@@ -107,7 +108,7 @@ const VMStateDescription vmstate_virtio_ccw_dev = {
+         VMSTATE_PTR_TO_IND_ADDR(summary_indicator, VirtioCcwDevice),
+         /*
+          * Ugly hack because VirtIODevice does not migrate itself.
+-         * This also makes legacy via vmstate_save_state possible.
++         * This also makes legacy via vmstate_save_vmsd possible.
+          */
+         VMSTATE_WITH_TMP(VirtioCcwDevice, VirtioCcwDeviceTmp,
+                          vmstate_virtio_ccw_dev_tmp),
 -- 
 2.43.0
 
