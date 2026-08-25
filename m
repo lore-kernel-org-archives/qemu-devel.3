@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E462FC61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:14:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74E8FC61DC6
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:14:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wywYD-00056j-HL; Tue, 25 Aug 2026 15:11:13 -0400
+	id 1wywaL-0004eT-9n; Tue, 25 Aug 2026 15:13:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywYB-0004zK-V0
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:11:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wywaH-0004KC-02
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:13:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywY9-00043F-Ik
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:11:11 -0400
+ id 1wywaC-0004aK-M6
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:13:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787685068;
+ s=mimecast20190719; t=1787685195;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UZRz3EkbKUI26MlQnyuxQXcUyNkJElc5W8Guw6Tk6gI=;
- b=aNAN+9MOsRsbuivHl19z0vdrsKCeIxRN+Q8+qklJi3EoBPN6et86cx4sp6GiPA/tmGHlOR
- 7BOztK/0EjQXzNZDaDWze5sNhZp1UUhfxNQyi4miHdY5pTImhQXwJSwvXoF6NLPQfNY8O+
- 5VbEWXjvGeyDNpMsGvTCqOeOXi3mtEY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=psCBHhahy7mWTT2IZmj2GdxJeX38kxxc3eYiT9dQSKM=;
+ b=b0Lqnsg934M347z6AW1hEooHhplEKwSC0aBOptyDbpF8sK5oubEgpjfAoQdMxxDdRsUBIs
+ Hs6FZjPCcMbrVGszkrAik+MJAqPmS0Jw1FfUsB08X5wrfqEIGrwhJDO1Tz95WA/WU2ndnx
+ yXEu3KfieNDjK/UM3Rsut/rnsHFoheM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-189-rfsv6LM_Oeqa_a84bzHM0w-1; Tue,
- 25 Aug 2026 15:11:05 -0400
-X-MC-Unique: rfsv6LM_Oeqa_a84bzHM0w-1
-X-Mimecast-MFC-AGG-ID: rfsv6LM_Oeqa_a84bzHM0w_1787685063
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-KG61LDSOO2uXebRNMp7zUg-1; Tue,
+ 25 Aug 2026 15:13:10 -0400
+X-MC-Unique: KG61LDSOO2uXebRNMp7zUg-1
+X-Mimecast-MFC-AGG-ID: KG61LDSOO2uXebRNMp7zUg_1787685189
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BAFF91978F71; Tue, 25 Aug 2026 19:11:03 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 21988188FEFC; Tue, 25 Aug 2026 19:13:09 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D6A951801AFF; Tue, 25 Aug 2026 19:11:02 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1A8CE1955F0F; Tue, 25 Aug 2026 19:13:07 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 25 Aug 2026 23:09:23 +0400
-Subject: [PATCH v4 16/49] tests/qtest/device-introspect-test: fix test
- without HMP
+Date: Tue, 25 Aug 2026 23:09:54 +0400
+Subject: [PATCH v4 47/49] monitor: move HMP-specific to monitor-hmp-internal.h
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260825-qemu-no-hmp-v4-16-af60857c2fbe@redhat.com>
+Message-Id: <20260825-qemu-no-hmp-v4-47-af60857c2fbe@redhat.com>
 References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 In-Reply-To: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 To: qemu-devel@nongnu.org
@@ -63,36 +62,36 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  dave@treblig.org, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7518;
+ Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=15397;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=9Kj/FtbaZbFHg5LizU23usl5iX+58YVJ4JW3Ey5xlPk=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiHttP4NPgADoH/r/V42nwM4tqcNyqPHy5QK
- JRtoi6r9E2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3ohwAKCRDa6OEJdZac
- 5UylD/9AaYT6Gq8uf3trP91rdXeMUCy/k51BtTOkDGokGts+KIiGmQpiZHzbYq98pQu6bPrIlJL
- eQcpFwyAAD1a2B9k08H4cXRGGOyQ18qLFI9GIUVrXPSqyT6Y/osblfqkUHMNRTc+RO3iPpH4Z2/
- BduBQ3eqMdjyoZcLruUIcfhJdqClaL4CeTCfImZAjvSKRk6AF+Fh4jyWigqFPqy+Ybm4WTkVcY8
- f2t8tLaAzYBL2Z+yKScFG9lgCQmBmTIwOKyHDQPlg9YfvaI8tputUnGVtj20kxyLFBwqEVYRd7Q
- B6zfRs3A9F/nPnwuwiNJT7WoIuZVe3a+EbEw40YRRtg0ugPeLSaJAkpg1PczV1t0FOyTeUYyR56
- Wjh8y3QGtyS+ts6ogDGkppxSfLTxw8a4L+LSW0YUzbf9SSNLHGJcZjzATdLzeUdgoWGjOFLcaQd
- nbAYeIKZPNq57DIR5vk2T9Q27dAx166KsKY1UJ6ExaQ5YOb17gXDXHdCOFoczd8cMr0E0JdCpc1
- LWV+OH6xqRyMf/0cZxZgb8zdOvjWiiH9wd9GZEjyKGZeW5D+x/7w2t5SvaREVmTBE9DHjY8pSFg
- YqJY9ZU0ao1qswGze63GxxO8GU9e36JmCsGbZl172WJ+CKLpwnRC2Gz25Xa26g6Un1ng+6LJ1CF
- GM6q+/qyMYy2Xow==
+ bh=ZAA8THWMw6NBBtIdSrYLHCe+efXZ90gkzXafw65rFsk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiIGqi6ElohycCsvlIefFHNYhd0mE1eKjIY4
+ 1BMhccWAnyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3oiAAKCRDa6OEJdZac
+ 5ac4D/9slC4hhk07YZ5B+9GvppWZmjRisAS+qPr3NBv9yoHwKxCxsHOVcXUnvBIcwStO70OeiQm
+ 7f/oBFKsmmMBPu30wMa7AyuQ84lvTy1js7nvJw/kqipHYp7DpmYY6m3EgM7NG8i2dErMcfdFPxs
+ 4rrmapo5EqUOVukMpmMmCeW2+ELFGSW1fkeR44KfeV1p4a4/+H6+QptcB5Gqr3ZRYetTb6XyeWL
+ 8e2umkP47avwmUENqTiopfvydcMNiNivAYmLMSOKJtscNo3wWA7DWv7vdzSMSzUlDoMiM44Y12i
+ 5VbDCwo9yTW7uUW2dVFRkSVkwDgzNzAA4yfHLHyRwP7lnPbgoKNffoZzzhAVQESnQi26Dez9n6g
+ 2vu+WCErWYikIjBMiw2he8briru35nACictbZ5CaLjrRxz0NlorvD/+JMCqpijuUyP0YlcEK/mH
+ woRMT67/y4+He9Qs9iWs+knYC769YY48Wt03Ty6FGGm7nkl663dNzJ0K3Nb/JE3Jqeg1gfvFCvR
+ bVlwCj0xxMYhk/reTGujIvElHIHopAl5NqzD7c5dLkV+vNWVM/MAAjg5ou/wBb+QDwJExbF5xaF
+ 4I2c1sYjBpnEjhD6j+XOUmyhH9IkYm/c1kZCwwYbfarPMtrvqVSWvi0ZgSBL+rOSdFsMH1H5MDd
+ HYbK2PdHX73fdYg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,222 +107,439 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace "info qom-tree" with recursive qom-list walk.
-Disable HMP-only code paths, info qtree, kinda duplicating the test.
+Move HMP-specific declarations to its own CONFIG_HMP guarded header.
 
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/qtest/device-introspect-test.c | 111 +++++++++++++++++++++++++++--------
- 1 file changed, 88 insertions(+), 23 deletions(-)
+ include/monitor/hmp.h          |   8 +++-
+ migration/migration-hmp-cmds.c |   1 +
+ monitor/hmp-cmds.c             |   1 +
+ monitor/hmp.c                  |   1 +
+ monitor/monitor-hmp-internal.h | 106 +++++++++++++++++++++++++++++++++++++++++
+ monitor/monitor-internal.h     |  99 --------------------------------------
+ monitor/monitor.c              |   1 +
+ monitor/qmp-cmds.c             |   1 +
+ stubs/monitor-core.c           |   2 +
+ stubs/monitor-internal.c       |   2 +
+ tests/unit/test-util-sockets.c |   2 -
+ tools/qemu-vnc/stubs.c         |   6 ---
+ 12 files changed, 121 insertions(+), 109 deletions(-)
 
-diff --git a/tests/qtest/device-introspect-test.c b/tests/qtest/device-introspect-test.c
-index f84cec51dc2e..f6eca2c8eb7e 100644
---- a/tests/qtest/device-introspect-test.c
-+++ b/tests/qtest/device-introspect-test.c
-@@ -11,10 +11,10 @@
-  */
+diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+index f10bf83df86d..ef53e87f7608 100644
+--- a/include/monitor/hmp.h
++++ b/include/monitor/hmp.h
+@@ -21,6 +21,10 @@
+ #define TYPE_MONITOR_HMP "monitor-hmp"
+ OBJECT_DECLARE_TYPE(MonitorHMP, MonitorHMPClass, MONITOR_HMP);
  
- /*
-- * Covers QMP device-list-properties and HMP device_add help.  We
-- * currently don't check that their output makes sense, only that QEMU
-- * survives.  Useful since we've had an astounding number of crash
-- * bugs around here.
-+ * Covers QMP device-list-properties and HMP device_add help (if
-+ * CONFIG_HMP).  We currently don't check that the output makes sense,
-+ * only that QEMU survives.  Useful since we've had an astounding
-+ * number of crash bugs around here.
-  */
++MonitorHMP *monitor_cur_hmp(void);
++
++#ifdef CONFIG_HMP
++
+ #define HMP_STUB(cmd) \
+     void hmp_##cmd(MonitorHMP *hmp, const QDict *qdict) \
+     { \
+@@ -36,8 +40,6 @@ struct MonitorDef {
+ void monitor_new_hmp(const char *id, const char *chardev_id,
+                      bool use_readline, Error **errp);
+ 
+-MonitorHMP *monitor_cur_hmp(void);
+-
+ int monitor_hmp_vprintf(MonitorHMP *mon, const char *fmt, va_list ap)
+     G_GNUC_PRINTF(2, 0);
+ int monitor_hmp_printf(MonitorHMP *mon, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
+@@ -218,4 +220,6 @@ void hmp_info_skeys(MonitorHMP *hmp, const QDict *qdict);
+ void hmp_info_cmma(MonitorHMP *hmp, const QDict *qdict);
+ void hmp_migrationmode(MonitorHMP *hmp, const QDict *qdict);
+ 
++#endif /* CONFIG_HMP */
++
+ #endif
+diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+index 6fe189471899..27b38d0e5f85 100644
+--- a/migration/migration-hmp-cmds.c
++++ b/migration/migration-hmp-cmds.c
+@@ -21,6 +21,7 @@
+ #include "monitor/hmp-completion.h"
+ #include "monitor/monitor.h"
+ #include "monitor/monitor-internal.h"
++#include "monitor/monitor-hmp-internal.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-migration.h"
+ #include "qapi/qapi-visit-migration.h"
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index 3ac70c3f1123..91701ddf331b 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -25,6 +25,7 @@
+ #include "monitor/hmp.h"
+ #include "monitor/hmp-completion.h"
+ #include "monitor/monitor-internal.h"
++#include "monitor/monitor-hmp-internal.h"
+ #include "monitor/qdev.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-control.h"
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index e3fc05f521a8..488ec23937df 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -27,6 +27,7 @@
+ #include "hw/core/qdev.h"
+ #include "hw/core/sysemu-cpu-ops.h"
+ #include "monitor-internal.h"
++#include "monitor-hmp-internal.h"
+ #include "monitor/hmp.h"
+ #include "qobject/qdict.h"
+ #include "qobject/qnum.h"
+diff --git a/monitor/monitor-hmp-internal.h b/monitor/monitor-hmp-internal.h
+new file mode 100644
+index 000000000000..4e2430551abf
+--- /dev/null
++++ b/monitor/monitor-hmp-internal.h
+@@ -0,0 +1,106 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#ifndef MONITOR_HMP_INTERNAL_H
++#define MONITOR_HMP_INTERNAL_H
++
++#ifdef CONFIG_HMP
++#include "monitor/hmp.h"
++/*
++ * Supported types:
++ *
++ * 'F'          filename
++ * 'B'          block device name
++ * 's'          string (accept optional quote)
++ * 'S'          it just appends the rest of the string (accept optional quote)
++ * 'O'          option string of the form NAME=VALUE,...
++ *              parsed according to QemuOptsList given by its name
++ *              Example: 'device:O' uses qemu_device_opts.
++ *              Restriction: only lists with empty desc are supported
++ *              TODO lift the restriction
++ * 'i'          32 bit integer
++ * 'l'          target long (32 or 64 bit)
++ * 'M'          Non-negative target long (32 or 64 bit), in user mode the
++ *              value is multiplied by 2^20 (think Mebibyte)
++ * 'o'          octets (aka bytes)
++ *              user mode accepts an optional E, e, P, p, T, t, G, g, M, m,
++ *              K, k suffix, which multiplies the value by 2^60 for suffixes E
++ *              and e, 2^50 for suffixes P and p, 2^40 for suffixes T and t,
++ *              2^30 for suffixes G and g, 2^20 for M and m, 2^10 for K and k
++ * 'T'          double
++ *              user mode accepts an optional ms, us, ns suffix,
++ *              which divides the value by 1e3, 1e6, 1e9, respectively
++ * '/'          optional gdb-like print format (like "/10x")
++ *
++ * '?'          optional type (for all types, except '/')
++ * '.'          other form of optional type (for 'i' and 'l')
++ * 'b'          boolean
++ *              user mode accepts "on" or "off"
++ * '-'          optional parameter (eg. '-f'); if followed by a 's', it
++ *              specifies an optional string param (e.g. '-fs' allows '-f foo')
++ *
++ */
++
++typedef struct HMPCommand {
++    const char *name;
++    const char *args_type;
++    const char *params;
++    const char *help;
++    const char *flags; /* p=preconfig */
++    void (*cmd)(MonitorHMP *hmp, const QDict *qdict);
++    /*
++     * If implementing a command that takes no arguments and simply
++     * prints formatted data, then leave @cmd NULL, and then set
++     * @cmd_info_hrt to the corresponding QMP handler that returns
++     * the formatted text.
++     */
++    HumanReadableText *(*cmd_info_hrt)(Error **errp);
++    /*
++     * @sub_table is a list of 2nd level of commands. If it does not exist,
++     * cmd should be used. If it exists, sub_table[?].cmd should be
++     * used, and cmd of 1st level plays the role of help function.
++     */
++    struct HMPCommand *sub_table;
++    void (*command_completion)(ReadLineState *rs, int nb_args, const char *str);
++
++    /* Keep non-pointer data at the end to minimize holes. */
++
++    /**
++     * @arch_bitmask: bitmask of QEMU_ARCH_* constants
++     *     Allow to restrict the command for a particular set of
++     *     target architectures.
++     */
++    uint32_t arch_bitmask;
++    bool coroutine;
++} HMPCommand;
++
++struct MonitorHMPClass {
++    MonitorClass parent_class;
++};
++
++struct MonitorHMP {
++    Monitor parent_obj;
++    bool use_readline;
++    /*
++     * State used only in the thread "owning" the monitor.
++     * This is currently always the main thread, since
++     * HMP does not allow use of the I/O thread at this time.
++     * These members can be safely accessed without locks.
++     */
++    ReadLineState *rs;
++    char *mon_cpu_path;
++    int reset_seen;
++};
++
++int monitor_hmp_set_cpu(MonitorHMP *hmp, int cpu_index);
++void handle_hmp_command(MonitorHMP *hmp, const char *cmdline);
++int hmp_compare_cmd(const char *name, const char *list);
++
++/*
++ * hmp_cmds_for_target: Return array of HMPCommand entries
++ *
++ * If @info_command is true, return the particular 'info foo' commands array.
++ */
++HMPCommand *hmp_cmds_for_target(bool info_command);
++
++#endif /* CONFIG_HMP */
++#endif
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index c198c12eaa00..822a66d06d00 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -27,7 +27,6 @@
+ 
+ #include "chardev/char-fe.h"
+ #include "monitor/monitor.h"
+-#include "monitor/hmp.h"
+ #include "qapi/qapi-emit-events.h"
+ #include "qapi/qapi-types-control.h"
+ #include "qapi/qapi-types-qom.h"
+@@ -36,75 +35,6 @@
+ #include "qemu/readline.h"
+ #include "system/iothread.h"
+ 
+-/*
+- * Supported types:
+- *
+- * 'F'          filename
+- * 'B'          block device name
+- * 's'          string (accept optional quote)
+- * 'S'          it just appends the rest of the string (accept optional quote)
+- * 'O'          option string of the form NAME=VALUE,...
+- *              parsed according to QemuOptsList given by its name
+- *              Example: 'device:O' uses qemu_device_opts.
+- *              Restriction: only lists with empty desc are supported
+- *              TODO lift the restriction
+- * 'i'          32 bit integer
+- * 'l'          target long (32 or 64 bit)
+- * 'M'          Non-negative target long (32 or 64 bit), in user mode the
+- *              value is multiplied by 2^20 (think Mebibyte)
+- * 'o'          octets (aka bytes)
+- *              user mode accepts an optional E, e, P, p, T, t, G, g, M, m,
+- *              K, k suffix, which multiplies the value by 2^60 for suffixes E
+- *              and e, 2^50 for suffixes P and p, 2^40 for suffixes T and t,
+- *              2^30 for suffixes G and g, 2^20 for M and m, 2^10 for K and k
+- * 'T'          double
+- *              user mode accepts an optional ms, us, ns suffix,
+- *              which divides the value by 1e3, 1e6, 1e9, respectively
+- * '/'          optional gdb-like print format (like "/10x")
+- *
+- * '?'          optional type (for all types, except '/')
+- * '.'          other form of optional type (for 'i' and 'l')
+- * 'b'          boolean
+- *              user mode accepts "on" or "off"
+- * '-'          optional parameter (eg. '-f'); if followed by a 's', it
+- *              specifies an optional string param (e.g. '-fs' allows '-f foo')
+- *
+- */
+-
+-typedef struct HMPCommand {
+-    const char *name;
+-    const char *args_type;
+-    const char *params;
+-    const char *help;
+-    const char *flags; /* p=preconfig */
+-    void (*cmd)(MonitorHMP *mon, const QDict *qdict);
+-    /*
+-     * If implementing a command that takes no arguments and simply
+-     * prints formatted data, then leave @cmd NULL, and then set
+-     * @cmd_info_hrt to the corresponding QMP handler that returns
+-     * the formatted text.
+-     */
+-    HumanReadableText *(*cmd_info_hrt)(Error **errp);
+-    /*
+-     * @sub_table is a list of 2nd level of commands. If it does not exist,
+-     * cmd should be used. If it exists, sub_table[?].cmd should be
+-     * used, and cmd of 1st level plays the role of help function.
+-     */
+-    struct HMPCommand *sub_table;
+-    void (*command_completion)(ReadLineState *rs, int nb_args, const char *str);
+-
+-    /* Keep non-pointer data at the end to minimize holes. */
+-
+-    /**
+-     * @arch_bitmask: bitmask of QEMU_ARCH_* constants
+-     *     Allow to restrict the command for a particular set of
+-     *     target architectures.
+-     */
+-    uint32_t arch_bitmask;
+-    bool coroutine;
+-} HMPCommand;
+-
+-
+ struct MonitorClass {
+     ObjectClass parent_class;
+ 
+@@ -149,24 +79,6 @@ struct Monitor {
+     int mux_out;
+ };
+ 
+-struct MonitorHMPClass {
+-    MonitorClass parent_class;
+-};
+-
+-struct MonitorHMP {
+-    Monitor parent_obj;
+-    bool use_readline;
+-    /*
+-     * State used only in the thread "owning" the monitor.
+-     * This is currently always the main thread, since
+-     * HMP does not allow use of the I/O thread at this time.
+-     * These members can be safely accessed without locks.
+-     */
+-    ReadLineState *rs;
+-    char *mon_cpu_path;
+-    int reset_seen;
+-};
+-
+ struct MonitorQMPClass {
+     MonitorClass parent_class;
+ };
+@@ -209,21 +121,10 @@ int monitor_can_read(void *opaque);
+ void monitor_cancel_out_watch(Monitor *mon);
+ void monitor_list_append(Monitor *mon);
+ void monitor_fdsets_cleanup(void);
+-int monitor_hmp_set_cpu(MonitorHMP *mon, int cpu_index);
+ 
+ void qmp_send_response(MonitorQMP *mon, const QDict *rsp);
+ void monitor_data_destroy_qmp(MonitorQMP *mon);
+ void coroutine_fn monitor_qmp_dispatcher_co(void *data);
+ void qmp_dispatcher_co_wake(void);
+ 
+-void handle_hmp_command(MonitorHMP *hmp, const char *cmdline);
+-int hmp_compare_cmd(const char *name, const char *list);
+-
+-/*
+- * hmp_cmds_for_target: Return array of HMPCommand entries
+- *
+- * If @info_command is true, return the particular 'info foo' commands array.
+- */
+-HMPCommand *hmp_cmds_for_target(bool info_command);
+-
+ #endif
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index 7979cd1cbcfd..6ba06280e023 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -24,6 +24,7 @@
  
  #include "qemu/osdep.h"
-@@ -100,11 +100,60 @@ static QList *device_type_list(QTestState *qts, bool abstract)
-     return qom_list_types(qts, "device", abstract);
- }
+ #include "monitor-internal.h"
++#include "monitor-hmp-internal.h"
+ #include "qapi/error.h"
+ #include "qapi/opts-visitor.h"
+ #include "qapi/qapi-emit-events.h"
+diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
+index c9f24febdc96..7525a88e0494 100644
+--- a/monitor/qmp-cmds.c
++++ b/monitor/qmp-cmds.c
+@@ -16,6 +16,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/sockets.h"
+ #include "monitor-internal.h"
++#include "monitor-hmp-internal.h"
+ #include "monitor/qdev.h"
+ #include "monitor/qmp-helpers.h"
+ #include "system/system.h"
+diff --git a/stubs/monitor-core.c b/stubs/monitor-core.c
+index 0e74d78d52e4..8dfd46d2a8a3 100644
+--- a/stubs/monitor-core.c
++++ b/stubs/monitor-core.c
+@@ -1,6 +1,7 @@
+ #include "qemu/osdep.h"
+ #include "monitor/hmp.h"
  
-+/*
-+ * Recursively walk the QOM composition tree via qom-list and build a
-+ * string representation.  This serves two purposes: detecting dangling
-+ * pointers (qom-list would crash QEMU) and detecting leaked objects
-+ * (by comparing the output before and after device introspection).
-+ */
-+static void qom_tree_walk(QTestState *qts, const char *path, GString *result)
-+{
-+    QDict *resp;
-+    QList *list;
-+    QListEntry *e;
-+    GList *children = NULL;
-+
-+    resp = qtest_qmp(qts, "{'execute': 'qom-list',"
-+                     " 'arguments': {'path': %s}}", path);
-+    g_assert(qdict_haskey(resp, "return"));
-+    list = qdict_get_qlist(resp, "return");
-+
-+    QLIST_FOREACH_ENTRY(list, e) {
-+        QDict *prop = qobject_to(QDict, qlist_entry_obj(e));
-+        const char *type = qdict_get_str(prop, "type");
-+        if (g_str_has_prefix(type, "child<")) {
-+            const char *name = qdict_get_str(prop, "name");
-+            children = g_list_prepend(children, g_strdup(name));
-+        }
-+    }
-+
-+    children = g_list_sort_with_data(children, (GCompareDataFunc)g_strcmp0,
-+                                     NULL);
-+
-+    for (GList *l = children; l; l = l->next) {
-+        const char *name = l->data;
-+        g_autofree char *child_path = (!strcmp(path, "/"))
-+            ? g_strdup_printf("/%s", name)
-+            : g_strdup_printf("%s/%s", path, name);
-+
-+        g_string_append_printf(result, "%s\n", child_path);
-+        qom_tree_walk(qts, child_path, result);
-+    }
-+
-+    g_list_free_full(children, g_free);
-+    qobject_unref(resp);
-+}
-+
-+static char *qom_tree_str(QTestState *qts)
-+{
-+    GString *result = g_string_new("");
-+    qom_tree_walk(qts, "/", result);
-+    return g_string_free(result, FALSE);
-+}
-+
- static void test_one_device(QTestState *qts, const char *type)
++#ifdef CONFIG_HMP
+ int monitor_hmp_vprintf(MonitorHMP *mon, const char *fmt, va_list ap)
  {
-     QDict *resp;
--    char *help, *escaped;
--    GRegex *comma;
- 
-     g_test_message("Testing device '%s'", type);
- 
-@@ -113,19 +162,21 @@ static void test_one_device(QTestState *qts, const char *type)
-                type);
-     qobject_unref(resp);
- 
--    comma = g_regex_new(",", 0, 0, NULL);
--    escaped = g_regex_replace_literal(comma, type, -1, 0, ",,", 0, NULL);
--    g_regex_unref(comma);
-+#ifdef CONFIG_HMP
-+    {
-+        g_autofree char *escaped = NULL;
-+        g_autoptr(GRegex) comma = NULL;
- 
--    help = qtest_hmp(qts, "device_add \"%s,help\"", escaped);
--    g_free(help);
--    g_free(escaped);
-+        comma = g_regex_new(",", 0, 0, NULL);
-+        escaped = g_regex_replace_literal(comma, type, -1, 0, ",,", 0, NULL);
-+        g_free(qtest_hmp(qts, "device_add \"%s,help\"", escaped));
-+    }
-+#endif
- }
- 
- static void test_device_intro_list(void)
- {
-     QList *types;
--    char *help;
-     QTestState *qts;
- 
-     qts = qtest_init(common_args);
-@@ -133,8 +184,11 @@ static void test_device_intro_list(void)
-     types = device_type_list(qts, true);
-     qobject_unref(types);
- 
--    help = qtest_hmp(qts, "device_add help");
--    g_free(help);
-+#ifdef CONFIG_HMP
-+    {
-+        g_free(qtest_hmp(qts, "device_add help"));
-+    }
-+#endif
- 
-     qtest_quit(qts);
- }
-@@ -198,18 +252,22 @@ static void test_qom_list_fields(void)
- static void test_device_intro_none(void)
- {
-     QTestState *qts = qtest_init(common_args);
--    g_autofree char *qom_tree_start = qtest_hmp(qts, "info qom-tree");
-+    g_autofree char *qom_tree_start = qom_tree_str(qts);
-     g_autofree char *qom_tree_end = NULL;
-+#ifdef CONFIG_HMP
-     g_autofree char *qtree_start = qtest_hmp(qts, "info qtree");
-     g_autofree char *qtree_end = NULL;
-+#endif
- 
-     test_one_device(qts, "nonexistent");
- 
-     /* Make sure that really nothing changed in the trees */
--    qom_tree_end = qtest_hmp(qts, "info qom-tree");
-+    qom_tree_end = qom_tree_str(qts);
-     g_assert_cmpstr(qom_tree_start, ==, qom_tree_end);
-+#ifdef CONFIG_HMP
-     qtree_end = qtest_hmp(qts, "info qtree");
-     g_assert_cmpstr(qtree_start, ==, qtree_end);
-+#endif
- 
-     qtest_quit(qts);
- }
-@@ -217,18 +275,22 @@ static void test_device_intro_none(void)
- static void test_device_intro_abstract(void)
- {
-     QTestState *qts = qtest_init(common_args);
--    g_autofree char *qom_tree_start = qtest_hmp(qts, "info qom-tree");
-+    g_autofree char *qom_tree_start = qom_tree_str(qts);
-     g_autofree char *qom_tree_end = NULL;
-+#ifdef CONFIG_HMP
-     g_autofree char *qtree_start = qtest_hmp(qts, "info qtree");
-     g_autofree char *qtree_end = NULL;
-+#endif
- 
-     test_one_device(qts, "device");
- 
-     /* Make sure that really nothing changed in the trees */
--    qom_tree_end = qtest_hmp(qts, "info qom-tree");
-+    qom_tree_end = qom_tree_str(qts);
-     g_assert_cmpstr(qom_tree_start, ==, qom_tree_end);
-+#ifdef CONFIG_HMP
-     qtree_end = qtest_hmp(qts, "info qtree");
-     g_assert_cmpstr(qtree_start, ==, qtree_end);
-+#endif
- 
-     qtest_quit(qts);
- }
-@@ -239,10 +301,12 @@ static void test_device_intro_concrete(const void *args)
-     QListEntry *entry;
-     const char *type;
-     QTestState *qts = qtest_init(args);
--    g_autofree char *qom_tree_start = qtest_hmp(qts, "info qom-tree");
-+    g_autofree char *qom_tree_start = qom_tree_str(qts);
-     g_autofree char *qom_tree_end = NULL;
-+#ifdef CONFIG_HMP
-     g_autofree char *qtree_start = qtest_hmp(qts, "info qtree");
-     g_autofree char *qtree_end = NULL;
-+#endif
- 
-     types = device_type_list(qts, false);
- 
-@@ -255,14 +319,15 @@ static void test_device_intro_concrete(const void *args)
- 
      /*
-      * Some devices leave dangling pointers in QOM behind.
--     * "info qom-tree" or "info qtree" have a good chance at crashing then.
-+     * Walking the QOM tree via qom-list has a good chance at crashing then.
-      * Also make sure that the tree did not change.
-      */
--    qom_tree_end = qtest_hmp(qts, "info qom-tree");
-+    qom_tree_end = qom_tree_str(qts);
-     g_assert_cmpstr(qom_tree_start, ==, qom_tree_end);
--
-+#ifdef CONFIG_HMP
-     qtree_end = qtest_hmp(qts, "info qtree");
-     g_assert_cmpstr(qtree_start, ==, qtree_end);
+@@ -17,3 +18,4 @@ int monitor_hmp_vprintf(MonitorHMP *mon, const char *fmt, va_list ap)
+     }
+     return -1;
+ }
 +#endif
+diff --git a/stubs/monitor-internal.c b/stubs/monitor-internal.c
+index 6f69f1f14ae4..4483ca25557f 100644
+--- a/stubs/monitor-internal.c
++++ b/stubs/monitor-internal.c
+@@ -8,8 +8,10 @@ int monitor_get_fd(Monitor *mon, const char *name, Error **errp)
+     return -1;
+ }
  
-     qobject_unref(types);
-     qtest_quit(qts);
++#ifdef CONFIG_HMP
+ void monitor_new_hmp(const char *id, const char *chardev_id,
+                      bool use_readline, Error **errp)
+ {
+     g_assert_not_reached();
+ }
++#endif
+diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-sockets.c
+index 530a3fee3c13..006f5e579c6b 100644
+--- a/tests/unit/test-util-sockets.c
++++ b/tests/unit/test-util-sockets.c
+@@ -24,7 +24,6 @@
+ #include "qapi/error.h"
+ #include "socket-helpers.h"
+ #include "monitor/monitor.h"
+-#include "monitor/hmp.h"
+ 
+ static void test_fd_is_socket_bad(void)
+ {
+@@ -75,7 +74,6 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
+  */
+ Monitor *monitor_cur(void) { return cur_mon; }
+ Monitor *monitor_set_cur(Coroutine *co, Monitor *mon) { abort(); }
+-int monitor_hmp_vprintf(MonitorHMP *mon, const char *fmt, va_list ap) { abort(); }
+ 
+ #ifndef _WIN32
+ static void test_socket_fd_pass_name_good(void)
+diff --git a/tools/qemu-vnc/stubs.c b/tools/qemu-vnc/stubs.c
+index 0aa50a901d37..1e4c14913b56 100644
+--- a/tools/qemu-vnc/stubs.c
++++ b/tools/qemu-vnc/stubs.c
+@@ -9,7 +9,6 @@
+ #include "system/runstate.h"
+ #include "hw/core/qdev.h"
+ #include "monitor/monitor.h"
+-#include "monitor/hmp.h"
+ #include "migration/vmstate.h"
+ 
+ bool runstate_is_running(void)
+@@ -42,11 +41,6 @@ Monitor *monitor_set_cur(Coroutine *co, Monitor *mon)
+     return NULL;
+ }
+ 
+-int monitor_hmp_vprintf(MonitorHMP *mon, const char *fmt, va_list ap)
+-{
+-    return -1;
+-}
+-
+ /*
+  * Link-time stubs for VMState symbols referenced by VNC code.
+  * The standalone binary never performs migration, so these are
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
