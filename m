@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1047C61DC2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 12:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A1DBC61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 12:31:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyqHr-0004jh-P2; Tue, 25 Aug 2026 08:29:56 -0400
+	id 1wyqI1-0004mJ-9r; Tue, 25 Aug 2026 08:30:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wyqHo-0004jQ-Bx
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 08:29:52 -0400
+ id 1wyqHw-0004kn-3R
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 08:30:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wyqHm-0000Me-2l
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 08:29:52 -0400
+ id 1wyqHu-0000PP-1F
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 08:29:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787660989;
+ s=mimecast20190719; t=1787660996;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XYNcIbotW5hwOefjX9E5TD5oRoLH0CWSyIOYzEQ2hQY=;
- b=SLRGLQ68Zekic/HAN69HNqkzIgrVBHHZ7g0EDzv+JKkEz1nnKt0OfUI6ft2IZNZkjsJIa/
- yzH6mVGyZ2MfhAVHjYxFxk7rwfa5BYQQ/txqjQsOUNvSbdcLLPZGP4PGSJt0HJHzeSTbgD
- L0TAs5iTaTsp85sU9N1BWdxpZ5MT+BA=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=eXafqi5leop9xl+L0588iutqTCj7yUSlxdRFeScICqs=;
+ b=E1+cVc6Svzw2SOoq770g4iNE3/3ubhUFbqw5Ck3BibslqpJqAnZSFRXE14/jsbJFK6G8/p
+ 626B8osyXDpUlOxgjFNnLGzpfl9M8BhFO0YvKl8zkQ25ANUMGj3frfNK8AVgEdvKhtKu3H
+ QJbLR3zm2CS/+5qBkPQbxyij9YnK0sM=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-_FS-NlgkNJqP3mlIqF6eow-1; Tue, 25 Aug 2026 08:29:48 -0400
-X-MC-Unique: _FS-NlgkNJqP3mlIqF6eow-1
-X-Mimecast-MFC-AGG-ID: _FS-NlgkNJqP3mlIqF6eow_1787660987
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-6a178080182so3215044a12.2
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 05:29:47 -0700 (PDT)
+ us-mta-308-1V3y8L8RMmSBX-C1Xjp6mw-1; Tue, 25 Aug 2026 08:29:55 -0400
+X-MC-Unique: 1V3y8L8RMmSBX-C1Xjp6mw-1
+X-Mimecast-MFC-AGG-ID: 1V3y8L8RMmSBX-C1Xjp6mw_1787660994
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-c1670dd0f5dso157103666b.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 05:29:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787660987; x=1788265787; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787660993; x=1788265793; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=XYNcIbotW5hwOefjX9E5TD5oRoLH0CWSyIOYzEQ2hQY=;
- b=UgZS14AYBOC+Jf7m6brZgOB1b6MDLwVjd6C1oPT3sKYd5FBQayTGSuMbH+EgV/guOr
- kdKsX8C3XAKCd9Ohhe/yAYdTGnH5oXjf5YDzj4AceMFjMi9tMhqxc3G8JI10MtflLGok
- elBfgYxjpjz6LHrJwPF5WzaGHLt3+PUvRSqFbQqcn4Nt93XMgZ7sl5+mjvtIPq7wApYC
- OCINreV4nblPdsRrj0rHVhM4ZKTbPUbVdhIZnx5wXjxGLFJzlmAHhc3xugV5KACzSIa/
- mvU664niqGoPo2okpfyLTSyhpFMGrA9yGNSUUdnETDi7otzXDTGUzJBc0FbaROVEaHFj
- h0cA==
+ bh=eXafqi5leop9xl+L0588iutqTCj7yUSlxdRFeScICqs=;
+ b=d0P54WlLMVYoTHIAUyqrlAjGLpZe9uHJU6y7zGqMwGtvCySRZgUGgV4Z7//9ZmTxDF
+ mcBFDxKDViEBOIHk0WtF0DWXmDU6O2mgLffln+xvYgqRh5wax5Fkoy3cOAJ84YAOY21V
+ 5bUJbCwGdRijvXgJPcnIPSV9G1X6AnARJK6YhcIB2WjwOJWitNzZ5HMIz6cnrERD3TqQ
+ 7vskYY51waHyZ6TTSq29OyRfklZp4kCWoi5H+upauJcYOQBw6FfreJvnFcdAhM0esKQo
+ G3hTzB2LJm63B9LGELHXx+XtqVfDQPUVVtnj3SEUF6fVhDRXC4jd/L0AdnRs0ApNrtkY
+ XOsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787660987; x=1788265787;
+ d=1e100.net; s=20251104; t=1787660993; x=1788265793;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=XYNcIbotW5hwOefjX9E5TD5oRoLH0CWSyIOYzEQ2hQY=;
- b=onJwFz1zGov1io2TiZ/kjjw6FRDfvwPPCWLb6SlPIm0F+lWNbu0oahx421hKdvIaco
- Tet4R8k3vmdLq54E0r/wz0H7Zav02Fc0ytev2LXf1E9/0JpbFSRSlXpPTUkUPVG1bENR
- MbzoVoV4LqZ8Lx/vELU3WddYO+tDSHqhLfHwnKVTt1tC6PbIXXn4CizvSakAFFC0k/8q
- Xu2Y0ccU1RFofodeheKAfCVZAo7/vzpytyV4h4YFqO6upWyVS4PMhjOa+2c+vmEuRbaG
- M5NHBoLMhlWGQZRuyL4XzRs+g7qLThKrDvykUtcdRd0R6QtxJOYDYvvcc7TbiksI3xYz
- qLig==
-X-Gm-Message-State: AFuF++nveEl58BOCuIUIssUMD3j98NUURmdL7ylhFlgCcjic2RWIV6hw
- x6OuifFzVJGAV1tMa1PGIFAiIqV/rbebDAVMAeL2s/W8qEfgGlfLziTEOHzdv0yfnzTktlEx/xW
- JJ9C3f0NQqaoWeiZ8gv0VXPXFCo34tyr7C++gI/eJVYQH0okNWYlQciJmdZnhTUBgyiJpjoCsxJ
- PR9z0BuuoPo5GJ8/nqy9SxBM0cFHwRqbNJZtbbZ2W8
-X-Gm-Gg: AR+sD13tkfP4KJGYCREcDNMf/3uZxoAXwn8ZYPZDkLMh1pOmh90dHlFfvISoy3Q5gbH
- CXzaRTXUnpAQ0Q6SSLap69gjeKIjQri6YI8RqwrMxDc1K2KekWQfO2vENXggq1Ii0MXdwguFYEf
- H0O7+M30xUkTLb861WtU6ePfiyN1MEPiCfpwWVXA2C90zMGWtdKG2M1bk1kOFF9CrubvScXIXQ0
- Fj8mVydKntYay16WHgLSi2Y9fZvNIy2mYzxT84oomlfrqCmXCv74lqAADy3GBQIwZftOZVPnt9U
- ufz6ZXKMl6kcVJzjWhOLkULeuQ/rETBQ+3CnSOroFsoccyE36n8A5d1dzynPXxmp3V1MXTfxSGs
- QalxkEV5REUojfFL++KAKOeUxl/wZxGPFf2HjE4KPG0pGvaWtILoLgwypzk0o+ot4yfEubX6F7H
- LqN+A=
-X-Received: by 2002:a05:6402:52d0:b0:6a1:f895:1ba with SMTP id
- 4fb4d7f45d1cf-6a582b93d5cmr25805301a12.12.1787660986824; 
- Tue, 25 Aug 2026 05:29:46 -0700 (PDT)
-X-Received: by 2002:a05:6402:52d0:b0:6a1:f895:1ba with SMTP id
- 4fb4d7f45d1cf-6a582b93d5cmr25805231a12.12.1787660986384; 
- Tue, 25 Aug 2026 05:29:46 -0700 (PDT)
+ bh=eXafqi5leop9xl+L0588iutqTCj7yUSlxdRFeScICqs=;
+ b=DTk/u1Eww8SHBRsb5m6T9iQl9kS1SCBriPNSwpFubfwDGEIvadRJyKi0SHAbhjUuTj
+ ppFLrhF4d7uSxXBAqQf3+/EMAGNsJr6q+5y1QvZY3J4SRQx9qivYxFkDT5+4jgDPZFUy
+ NHvFBnxz9K3fw/N7unbk/VFmAs1rHbkrVv/GCBd0D+ntCf4b1vPGFUq+tBhpo/k1NZcb
+ NrMVQW/a9ZM5RM6Hl7ZLKvngUn2q4huN0CgTovKKFuqVHLJ4oVBVemBbIqB9wtjcC18z
+ gWo9dPo4ro9VDVTTukSag/Zx+OInPV/CSGFIIN7ZrDJTdk7bkFqkFnDdLAdehDxcGvK6
+ it8w==
+X-Gm-Message-State: AFuF++lGp+wYro6ilRKxirPKaeoInZgM7kLS9uelRydju6PxvwjIw7zu
+ WdghLpp2ZRguUqdx6Yg1wSXQRmUp5hVzCktJmVvxDxoAn2b0enWadjOxHYU1jCvWlE4H3CcCFtw
+ HBVjITkphk0idnXkUTJd4S4db3cbBbV7FCkMKSYhEqwPi3ehrDWQB0uGic9QmiTwKcQUKzZv7xr
+ EpHguEkphZFn6yDZGZk0hgP5qoQRjq8ULDLvKyUkXd
+X-Gm-Gg: AR+sD12tQRlM866dTkbrIk1w50RsVZ0xNkpJRD2rBBvHd55INAKwqS918NWpgb0ckUh
+ abKkJeKsyqbvemj5PVCLZvJ9tmDfPSB/qvH6Nx2fxP4nv741OXEeN+1EttswbOHgYyTZyCztnSd
+ tbc5gFANN+70xqV22LOY7sXObysnaY01aEL3F30sGJvPvB8V6wIZETWIoOo9wlEY/mWIycZyybg
+ 0FCIyQyXFlrtqwxsNKqUtU8Sw2m4CD87eR3LDyGTA89Yjv55EgS8XwCscDxlmPNFfQggoJvLs/N
+ H5Gfw8TVTqXvK65z9cJnxvURr6AvLQvX4Pz4l435Ng361dcKdglaXOW+6zzd0owfXNvOOQbOBU8
+ 42/3l1RNAD870mlLH1v0KF87RfW0L6P140SoIlXJXNmTVdhq5sZkSHl0FQrc0mAK0pqqqctV6Uc
+ j06as=
+X-Received: by 2002:a17:906:f5a8:b0:c16:4df6:176b with SMTP id
+ a640c23a62f3a-c24920d3c7fmr2853023966b.20.1787660993590; 
+ Tue, 25 Aug 2026 05:29:53 -0700 (PDT)
+X-Received: by 2002:a17:906:f5a8:b0:c16:4df6:176b with SMTP id
+ a640c23a62f3a-c24920d3c7fmr2853014966b.20.1787660993108; 
+ Tue, 25 Aug 2026 05:29:53 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a59e1c3003sm13410696a12.23.2026.08.25.05.29.45
+ a640c23a62f3a-c249606a8fasm1932591066b.8.2026.08.25.05.29.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Aug 2026 05:29:45 -0700 (PDT)
+ Tue, 25 Aug 2026 05:29:51 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 10/20] target/i386/tcg: implement JMPABS instruction
-Date: Tue, 25 Aug 2026 14:29:11 +0200
-Message-ID: <20260825122921.431739-11-pbonzini@redhat.com>
+Subject: [PATCH 13/20] target/i386/tcg: extend VEX.vvvv parsing for APX
+Date: Tue, 25 Aug 2026 14:29:14 +0200
+Message-ID: <20260825122921.431739-14-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825122921.431739-1-pbonzini@redhat.com>
 References: <20260825122921.431739-1-pbonzini@redhat.com>
@@ -120,51 +120,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is the same as an indirect jump, just with immediate operand.
-The requirement of W=0 and 0x67 are already available in the decoder.
+BMI uses operand type B when VEX.vvvv provides one of the register indices
+of three-operand instructions.  However, APX needs to use it even for
+two-operand instructions, similar to how SSE and AVX share destination
+but use the modrm operand when there is no VEX prefix.
+
+To do this , operand type B can mostly reuse the code for operand type H
+but there are two extra possibilities:
+
+- instructions with VEX/EVEX prefix but no new data destination.  To handle
+  this, use a new field s->vex_ndd to retrieve whether the B (or H) operand
+  comes from VEX.vvvv or from modrm.  For now, this uses the same existing
+  logic from validate_vex(), but later it will be extended to read EVEX.NDD.
+
+- instructions with operands "m,r" that NDD extends to "r,m,r".
+  In this case, in the non-NDD format "m,r" the B operand corresponds to
+  a memory location; when this happens, it is incorrect to parse again
+  op1 as a memory location, because that would read the displacement again
+  from the instruction stream.  Instead, transform op1 into X86_TYPE_2op
+  if VEX.vvvv is the destination operand.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.h     | 3 +++
- target/i386/tcg/decode-new.c.inc | 4 ++++
- 2 files changed, 7 insertions(+)
+ target/i386/tcg/translate.c      |  1 +
+ target/i386/tcg/decode-new.c.inc | 38 +++++++++++++++++++++-----------
+ 2 files changed, 26 insertions(+), 13 deletions(-)
 
-diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
-index c974ca9d7c5..4998712e86d 100644
---- a/target/i386/tcg/decode-new.h
-+++ b/target/i386/tcg/decode-new.h
-@@ -184,6 +184,9 @@ typedef enum X86InsnCheck {
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index ea70e9a5568..7e50cf2355f 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -105,6 +105,7 @@ typedef struct DisasContext {
+ #endif
+     uint8_t vex_l;  /* vex vector length */
+     uint8_t vex_v;  /* vex vvvv register, without 1's complement.  */
++    bool vex_ndd; /* is this a 3-operand instruction? */
+     uint8_t popl_esp_hack; /* for correct popl with esp base handling */
+     uint8_t rip_offset; /* only used in x86_64, but left for simplicity */
  
-     /* No REX2 prefix allowed */
-     X86_CHECK_no_rex2 = 8192,
-+
-+    /* No 0x67 prefix allowed */
-+    X86_CHECK_no_adr = 16384,
- } X86InsnCheck;
- 
- typedef enum X86InsnSpecial {
 diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 1f59fd665f7..d215d28cec5 100644
+index d49f467cc84..08f1fdddf16 100644
 --- a/target/i386/tcg/decode-new.c.inc
 +++ b/target/i386/tcg/decode-new.c.inc
-@@ -1991,6 +1991,7 @@ static const X86OpEntry opcodes_root[256] = {
+@@ -2331,10 +2331,9 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
+     case X86_TYPE_Y:  /* string destination */
+         break;
  
- #ifdef TARGET_X86_64
- static const X86OpEntry opcodes_rex2_map0_A0toAF[16] = {
-+    [1] = X86_OP_ENTRY1(JMP_m,   I,q, p_00 chk2(W0, no_adr)),
- };
+-    case X86_TYPE_B:  /* VEX.vvvv selects a GPR */
++    case X86_TYPE_B:  /* VEX.vvvv selects a GPR, else use modrm */
+         op->unit = X86_OP_INT;
+-        op->n = s->vex_v;
+-        break;
++        goto get_vex_v;
  
- static void decode_REX2(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b,
-@@ -3081,6 +3082,9 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-         if ((decode.e.check & X86_CHECK_no_rex2) && (s->prefix & PREFIX_REX2)) {
-             goto illegal_op;
+     case X86_TYPE_C:  /* REG in the modrm byte selects a control register */
+         op->unit = X86_OP_CR;
+@@ -2464,18 +2463,25 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
+         };
+         break;
+ 
+-    case X86_TYPE_H:  /* For AVX, VEX.vvvv selects an XMM/YMM register */
+-        if ((s->prefix & PREFIX_VEX)) {
+-            op->unit = X86_OP_SSE;
++    case X86_TYPE_H:  /* VEX.vvvv selects an XMM/YMM register, else use modrm */
++        op->unit = X86_OP_SSE;
++    get_vex_v:
++        if (s->vex_ndd) {
++            assert(s->prefix & PREFIX_VEX);
+             op->n = s->vex_v;
+             break;
          }
-+        if ((decode.e.check & X86_CHECK_no_adr) && (s->prefix & PREFIX_ADR)) {
-+            goto illegal_op;
++        /* Two-operand form: the other one of op0 and op1 is a modrm operand, use it. */
++        assert(decode->e.s1 == decode->e.s0);
+         if (op == &decode->op[0]) {
+-            /* shifts place the destination in VEX.vvvv, use modrm */
+-            return decode_op(s, env, decode, op, decode->e.op1, b);
++            if (!decode_op(s, env, decode, op, decode->e.op1, b)) {
++                return false;
++            }
++            decode->e.op1 = X86_TYPE_2op;
+         } else {
+-            return decode_op(s, env, decode, op, decode->e.op0, b);
++            *op = decode->op[0];
+         }
++        break;
+ 
+     case X86_TYPE_I:  /* Immediate */
+     case X86_TYPE_J:  /* Relative offset for a jump */
+@@ -2718,6 +2724,14 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
+ {
+     X86OpEntry *e = &decode->e;
+ 
++    if (s->prefix & PREFIX_VEX) {
++        if (e->op0 == X86_TYPE_H || e->op0 == X86_TYPE_B ||
++            e->op1 == X86_TYPE_H || e->op1 == X86_TYPE_B ||
++            e->op2 == X86_TYPE_H || e->op2 == X86_TYPE_B) {
++            s->vex_ndd = true;
 +        }
-         if ((decode.e.check & X86_CHECK_VEX128) && s->vex_l) {
-             goto illegal_op;
-         }
++    }
++
+     switch (e->vex_special) {
+     case X86_VEX_None:
+         break;
+@@ -2805,10 +2819,7 @@ static bool validate_vex(DisasContext *s, X86DecodedInsn *decode)
+         return true;
+     }
+ 
+-    if (s->vex_v != 0 &&
+-        e->op0 != X86_TYPE_H && e->op0 != X86_TYPE_B &&
+-        e->op1 != X86_TYPE_H && e->op1 != X86_TYPE_B &&
+-        e->op2 != X86_TYPE_H && e->op2 != X86_TYPE_B) {
++    if (s->vex_v != 0 && !s->vex_ndd) {
+         goto illegal;
+     }
+ 
+@@ -2887,6 +2898,7 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+     s->vex_l = 0;
+     s->vex_v = 0;
+     s->vex_w = false;
++    s->vex_ndd = false;
+     s->has_modrm = false;
+     s->prefix = 0;
+ 
 -- 
 2.55.0
 
