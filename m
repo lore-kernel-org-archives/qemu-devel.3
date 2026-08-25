@@ -4,48 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5657C5DF94
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC948C61DB6
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:09:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylGV-00087K-MV; Tue, 25 Aug 2026 03:08:11 -0400
+	id 1wylHM-0002qe-3C; Tue, 25 Aug 2026 03:09:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylGN-0007o9-TO; Tue, 25 Aug 2026 03:08:05 -0400
+ id 1wylHJ-0002ZU-39; Tue, 25 Aug 2026 03:09:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylGK-00065A-1O; Tue, 25 Aug 2026 03:08:02 -0400
+ id 1wylHH-0006H9-6A; Tue, 25 Aug 2026 03:09:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641596; bh=yHrG77sfZzykqdg7S5TyFA/LZdBQ3h8clje9ze1KiLU=;
+ t=1787641596; bh=rbu2vL/fF+DyfC6Wec7TxjKGDNnEQ1sNZUklNT7j2rY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=DG9st5+F9QsWiv/XP7UueKfe9E2pRLVBH4oIHOTrFBp71uYZ6BZaJf+CcIhS9xcYO
- qbc6ih4Jtrd77KRPop4fRIq3KHQgbZFx4qKVNP6ZIC86esyYDx2GHwN28+93rwM34B
- ZJVAzQQC6VjDaJyuorcS0kuYrQ4rCYF2NW0zIUb/vV/7GHx7odZwvRxQYaHX1Z6QK5
- 9oQlqjpBI/TB7mYuBGcHsE6uUMkuG80CwTEuIA41TOqGI4DgsH5dImanhwfa3rnP8k
- 9qDmGWqL85NkeTHOUl3D0ZvkB5NzyFknj+hVo8YTAWQYf6dCUWXsgWAGJrNfWq/Zcu
- ze4yNo6KHckEg==
+ b=tEzQ32U9HB5GZ+DuLpYqKtvr7Vx1Ygs9lv82nkExJsjqY2AYAsWUeFOTM98Z86iau
+ 0EiTY1Fv9yj8p080JyBegjVFlqarYTHAzMduQ9gsL6XXpVPWmVH34LD9PLC/Ar+fTE
+ jnb7tUT7XnxuMlJqRctpE8v+RzDZDZMtlrGUglDrSAwRLXd86kFeiCavo7cZqk5L3i
+ keppiaoViHft+QQ0QQAKU7YX1q8L3G0WbiG3IHWc+F5czdg/9da7rJYS7FtZl9clkT
+ RMX+9kAkWuLuMtDDUZU0DzLWXOIkB4jOltDzuzynWfmDqAZMVW06ppmWixI1qqubZ+
+ w7X0MzajILHfA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 318EF1CE21E;
+ by isrv.corpit.ru (Postfix) with ESMTP id 617341CE227;
  Tue, 25 Aug 2026 10:06:36 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E9636415F99;
- Tue, 25 Aug 2026 10:07:12 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 26256415FA2;
+ Tue, 25 Aug 2026 10:07:13 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 8E22D3241C; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ id A94113242E; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 57/91] hw/intc: Fix arm kvm gicv3 selection
-Date: Tue, 25 Aug 2026 10:05:29 +0300
-Message-ID: <20260825070619.174584-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 v2 66/91] whpx: i386: synchronise PAT too
+Date: Tue, 25 Aug 2026 10:05:38 +0300
+Message-ID: <20260825070619.174584-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,39 +72,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-While 39a8c3941e may have fixed WHPX, it certainly didn't help KVM:
+https://github.com/cmspam/winq-emu hints that this might be wanted for
+some use-cases and it's a step towards full state sync:
 
-  $ QTEST_QEMU_BINARY=./qemu-system-aarch64 ./tests/qtest/arm-cpu-features
-  ...
-  qemu-system-aarch64: unknown type 'kvm-arm-gicv3'
+> Linux uses PAT to mark virtio-gpu / Venus shared memory as
+> Write-Combining. Previously the partition's PAT was not
+> synchronised with the guest, so the guest's MTRR/PAT cache-type
+> computation could fall back to UC for memory that should be WC.
 
-That patch did remove a test for TARGET_AARCH64, which is fine because
-it has been a long time since we supported KVM for AArch32.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 39a8c3941e ("hw/intc/arm_gicv3: Fix ARM_GICV3 dependency for KVM / WHPX")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260812200308.289238-1-richard.henderson@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit d05febdd32cc6d6a0700994d25ae3ffccdc97e76)
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260812082814.27217-5-mohamed@unpredictable.fr
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 7b0516912e44e73ba0859e91aed848d5be26f05e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index 377de78bb41..f6c7f08ccee 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -48,7 +48,7 @@ specific_ss.add(when: 'CONFIG_ARM_GIC_KVM', if_true: files('arm_gic_kvm.c'))
- specific_ss.add(when: ['CONFIG_WHPX', 'CONFIG_ARM_GICV3'], if_true: files('arm_gicv3_whpx.c'))
- specific_ss.add(when: ['CONFIG_HVF', 'CONFIG_ARM_GICV3'], if_true: files('arm_gicv3_hvf.c'))
- stub_ss.add(files('arm_gicv3_hvf_stub.c'))
--specific_ss.add(when: ['CONFIG_ARM_GIC_KVM', 'CONFIG_ARM_GICV3'], if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
-+specific_ss.add(when: 'CONFIG_ARM_GIC_KVM', if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
- arm_common_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_nvic.c'))
- specific_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_irqmp.c'))
- specific_ss.add(when: 'CONFIG_IOAPIC', if_true: files('ioapic.c'))
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index 1800ba8eb19..2739a80da36 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -115,7 +115,7 @@ static const WHV_REGISTER_NAME whpx_register_names[] = {
+ #ifdef TARGET_X86_64
+     WHvX64RegisterKernelGsBase,
+ #endif
+-    /* WHvX64RegisterPat, */
++    WHvX64RegisterPat,
+     WHvX64RegisterSysenterCs,
+     WHvX64RegisterSysenterEip,
+     WHvX64RegisterSysenterEsp,
+@@ -624,9 +624,8 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
+         assert(whpx_register_names[idx] == WHvX64RegisterKernelGsBase);
+         vcxt.values[idx++].Reg64 = env->kernelgsbase;
+ #endif
+-
+-        /* WHvX64RegisterPat - Skipped */
+-
++        assert(whpx_register_names[idx] == WHvX64RegisterPat);
++        vcxt.values[idx++].Reg64 = env->pat;
+         assert(whpx_register_names[idx] == WHvX64RegisterSysenterCs);
+         vcxt.values[idx++].Reg64 = env->sysenter_cs;
+         assert(whpx_register_names[idx] == WHvX64RegisterSysenterEip);
+@@ -962,9 +961,8 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
+     assert(whpx_register_names[idx] == WHvX64RegisterKernelGsBase);
+     env->kernelgsbase = vcxt.values[idx++].Reg64;
+ #endif
+-
+-    /* WHvX64RegisterPat - Skipped */
+-
++    assert(whpx_register_names[idx] == WHvX64RegisterPat);
++    env->pat = vcxt.values[idx++].Reg64;
+     assert(whpx_register_names[idx] == WHvX64RegisterSysenterCs);
+     env->sysenter_cs = vcxt.values[idx++].Reg64;
+     assert(whpx_register_names[idx] == WHvX64RegisterSysenterEip);
 -- 
 2.47.3
 
