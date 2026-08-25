@@ -4,95 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 482F6C61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 22:52:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA589C61DB9
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 22:56:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyzzy-0005up-5a; Tue, 25 Aug 2026 18:52:06 -0400
+	id 1wz04S-0006X4-HM; Tue, 25 Aug 2026 18:56:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wyzzx-0005ug-7V
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 18:52:05 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wyzzv-0004KZ-I0
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 18:52:04 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-c9d1fff21edso10634a12.1
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 15:52:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787698322; x=1788303122; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=/CAMK9mBMD35BZVe8X61+1Yo4AFTJOmj8251U50RM4s=;
- b=EPY1+jRHLjLVnrugS7fhA/UYgExvg/hXx0WXpwi341y6x4paVCxBvMJlvndYyC5YIu
- VuVXx72cvohff2GG9kAuVyGMokFaVXWzTM6Va+pVztTSdwi5Z8xdgcvu96fqdie8kd5e
- GuCN84/O2u75xDMc5fTEYAglYyoAHcniO9oXD9iN49SnU+TIC92Q4q2gku4O4yroD+Fe
- TwuqiXamJRMO0XK7+qmAG31oO/8V3o/vB3R0zBRA3ovRCa/QzvoH5285ZJdnY1JXu0oJ
- ojaaQRSKKhim0wJmOjtkHo+94yiMCzDCs+08SEqgmIMyHlyS8d0MKLs6c/ze7QAERmHM
- SfnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787698322; x=1788303122;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=/CAMK9mBMD35BZVe8X61+1Yo4AFTJOmj8251U50RM4s=;
- b=Gsp7DlHilx5MH7Uc4lciMkBp8aqW+jTO99zHzcMR7qCPbWpPXBqZxGop0MkiToijV5
- +cEqAK4Xn+fdI9gL5nu/F4pUTgcujrQ1nSoe7e5d9ZzBJIY2O7RCmg/idqUROuzh+bKK
- nUEPdJblw4+aU1mlfkLhZgM4EDXkb4Gx8c5Sw80h/4KZ98sg+C/BhkyrSNDLf+kg1ZxN
- X7LB/lJQk0tIQPtPvzRx/pA5T5iq1W8TqiYsj9KU3V7o5r+OsHoTcSzxmdRmFInRfuBI
- jMoGITlQOtq98NRR8eurJYgBLmC8xcH8gTNDqqdfN7PkdZlyY58vOjuTLFCh7iQd2YHO
- UciA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rq1D1RMo4+AYHwTYmK5MV7Tbh+kwIbJsHLY48E46FodO6s6Jcn0EuBYfnLmi3BrI6LQ6gfGbwTB/cl8@nongnu.org
-X-Gm-Message-State: AFuF++mZtx7XNHphkefa37MXt4WgCuXPe1QI5/fkaut9Ba4xQcrJWHYI
- fBlrj99loDU2ggUJ3dKLZEU/QmzKxBhgQKPEGtU6gmWw7HZWkJc40e3qviBWXdPOw2k=
-X-Gm-Gg: AR+sD106w1K6N/6V05LL8Np+GtMBMHuqIl7T71HKlzwV27zVgzOQ8SSUnlZ50Dvy1PO
- ATkLHs8abKoH+228EkRwq43BOmUwYhkS72rOmi7i+KdUWraPEf9w5pSTcIkyP0PdcLwmoYgZBV/
- ZSwzPzUt8g2uw/D/ikJYgxCjoD3kMyIZhHZxBXnco/iEmRadl/5++L3YHtp4ymDjJqnRnwww/ey
- Q/ILlOLHCLNa877yLtY0+ogBWqA2bKjA5DBF1pdgxE99U31arsT7g9kMokn6tW236Iw4goNYTqk
- MNcbNEiIfvgjd435IvoxXHydUTUoUEnFlkkG+c8d3kce1VpQC6c++0ViYJGlTJAuzO+U3cY4jMJ
- liHMJkmLPX6gvD9wDdZYplt17RR8LvG+u3z/ghO9mBVpeaT7VZMgbvW7BZcQKZlfWTKsg0uRiph
- Ihw0kYlSr+vTjQh0x4pAPLiJCjerXmKAsyeq6/NOyCYgN5MKsZt9FSlHheoQPwsTmYSM56L4Hse
- ME0deecVUfLYSMIUCNZsnPTSBha
-X-Received: by 2002:a17:90a:dfd0:b0:37c:6130:7a5b with SMTP id
- 98e67ed59e1d1-3966d3a8f3amr5156251a91.8.1787698321580; 
- Tue, 25 Aug 2026 15:52:01 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39662c80d6csm2405143a91.1.2026.08.25.15.52.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Aug 2026 15:52:00 -0700 (PDT)
-Message-ID: <4645e775-b0c9-45a2-a064-17fabc3db431@linaro.org>
-Date: Tue, 25 Aug 2026 15:52:00 -0700
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1wz04Q-0006Wm-Q5
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 18:56:42 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1wz04O-0004w7-Ib
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 18:56:42 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67PFtsjb3987883; Tue, 25 Aug 2026 22:56:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=f/D5z
+ oLd8scxkyf15CeOt3e/AMKPkcqJH3KtMw8u0hI=; b=kgfhGP7AmbAOoUkS8yt/0
+ FGZKtMbW5Z4ZdVkLdIF0/T8RdAtbTlstpM0D7BJiqVmjcTA3BCeC15Y1oq5kdXfj
+ USm3KqottRBTPBUsVl8yzQZ2ME4vil+qXcpwgWdO6Jt6dtXAmMXcrB1+GeqQxNDS
+ JUjhu2sRweEhYA4jv5L7L+gT7SERiqDmgywTD+ujDmL0nBpg2jxINsl/pX8wwo9x
+ /twcwcvFAp1G5VQ0C0El7/ZWla/2znKXd/EHS7UNLZFDoKu45fRDnk2Fzo4Di2vo
+ MFK8pLS6q3Y18pttHSNjdP6bCguwczgT24/x4dQWvNoGTGdQKYohQNdOe2lHEftc
+ Q==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4g72by55c7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 25 Aug 2026 22:56:36 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
+ with ESMTP id 67PMo8Z4016683; Tue, 25 Aug 2026 22:56:36 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 4g850vdmdr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 25 Aug 2026 22:56:35 +0000 (GMT)
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 67PMuY4F034200;
+ Tue, 25 Aug 2026 22:56:35 GMT
+Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
+ 4g850vdmdc-2; Tue, 25 Aug 2026 22:56:35 +0000 (GMT)
+From: Dongli Zhang <dongli.zhang@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: alex@shazbot.org, clg@redhat.com, peterx@redhat.com, farosas@suse.de,
+ maciej.szmigiero@oracle.com, mark.kanda@oracle.com, bchaney@akamai.com,
+ joe.jin@oracle.com
+Subject: [PATCH 1/2] vfio/migration: Avoid savevm_vfio_handlers for cpr-exec
+ and cpr-transfer
+Date: Tue, 25 Aug 2026 15:49:40 -0700
+Message-ID: <20260825225054.807116-2-dongli.zhang@oracle.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20260825225054.807116-1-dongli.zhang@oracle.com>
+References: <20260825225054.807116-1-dongli.zhang@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 7/7] RFC: tcg: fold a guest displacement into the host
- addressing mode
-To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, philmd@oss.qualcomm.com, alex.bennee@linaro.org,
- zhao1.liu@intel.com
-References: <20260822190818.1829249-1-mattst88@gmail.com>
- <20260822190818.1829249-8-mattst88@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260822190818.1829249-8-mattst88@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-25_06,2026-08-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ mlxlogscore=999 malwarescore=0 mlxscore=0 adultscore=0 suspectscore=0
+ spamscore=0 lowpriorityscore=0 bulkscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2606160000 definitions=main-2608250195
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDE5NSBTYWx0ZWRfX7k59G0Pq5RU+
+ B8sEOV0bUWBvM3AYFsWZghlHWGYCRqVWJJcJO7Dv9XsM+7PitH9CBDCebcXivmS+B9QxLpGMHvz
+ gNaQy5le32LLg6wADGjV4tQpU3iB1UipkxXAr9d94jhdcz8hTR+vXmVr2ZYPwPITq48me7faUZl
+ tRyZS2dp8JCEC5eY3wt3pDZFou/+wr7l1kMhZp672NI7gBp6+zTY5dFwPhZis8AKwtpL79WPLiF
+ +1RorCRZzs9q8YNgPfIVfmvd73XpqH1aunSl7KFgIv/hZKuDz1PcG6hwdv7Bqn/XRIcNCjz1ATg
+ 2+QBdFcJHcDKIsihK68BWCABMR3w/KNHbhNB2JlRXQ3FH6WILellvvQY4oTdfUI1KDw0NTrS+ch
+ E6vyj3nOMcaC55VTxylYYXy2qMb0ID51G1diYwwuFjoaEAUHL4B07BjSa4OJiKzNQhIuMUdbdtb
+ mEeU+iipk45FCs7HXYg==
+X-Proofpoint-GUID: L3WQQL5B0Eu4FTKW9o-n2V8TfgaRkRBL
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDE5NSBTYWx0ZWRfX9AkWvcE0Awe0
+ DSyioWncCkkAze2Y9AMrX99UqlaCznggCtJMbzaBeMg+HYZ+fwE+fXVz61gQtQ6NsdrrQABCwUJ
+ R7LLCCACT4bNPKZaWAuPwCRg7itUavpHiVZ6sGbvUOk7dzBBtfsI
+X-Authority-Analysis: v=2.4 cv=fqTsol4f c=1 sm=1 tr=0 ts=6a8e1da4 cx=c_pps
+ a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
+ a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
+ a=RD47p0oAkeU5bO7t-o6f:22 a=yPCof4ZbAAAA:8 a=pylPGa1hoqjualF2eaIA:9
+X-Proofpoint-ORIG-GUID: L3WQQL5B0Eu4FTKW9o-n2V8TfgaRkRBL
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,70 +116,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/22/26 12:08, Matt Turner wrote:
-> RFC because:
->
-> - Only wired up for x86_64, and only for qemu_ld and qemu_st; the i128
->    qemu_ld2 and qemu_st2 pairs are left alone.
-> - Requiring that no slow path exists is stricter than necessary. Recording
->    the displacement in TCGLabelQemuLdst and emitting one lea on the slow
->    path would cover alignment-checked accesses too, at no fast path cost.
-> - Softmmu wants the displacement folded into the TLB comparison as well,
->    which is a bigger change than this one.
-> - A one op window catches everything the frontends emit today but is
->    trivially defeated by anything scheduled in between.
+When the VFIO driver is vfio-pci, vfio_migration_query_flags() returns
+-ENOTTY, so savevm_vfio_handlers is not registered or involved.
 
-Plausible.  Several times I've considered exposing complex addressing 
-modes to the translators so that things that do LEA are kept intact for 
-awhile.  There are plenty of host-specific code sequences for x << s + y 
-+ c, even before we fold that into the memory access.  Then expose the 
-host memory path to tcg ops, somehow, and finally implement a simple CSE 
-pass.  But yeah, hand waving is as far as I've ever gone.
+However, VFIO drivers that support live migration, such as mlx5_vfio_pci,
+do support vfio_migration_query_flags(). In that case, savevm_vfio_handlers
+is registered and may be used to save and load the VFIO migration stream.
+This is expected for VFIO live migration, but not for cpr-exec or
+cpr-transfer.
 
-On the second point, I guess you also assuming the offset is also 
-aligned?  I.e. for X + 8*N, you can test X for 8-byte alignment without 
-constructing the complete address.
+Even after migration converges with
+"migrate_set_parameter downtime-limit 1000000", the target still reports
+the following error:
 
+failed (load of migration failed: Invalid argument: Failed to load vmstate version_id: 1, ret: -22)
 
-> +static bool tcg_target_ldst_disp_ok(TCGContext *s, MemOpIdx oi, int64_t disp)
-> +{
-> +#ifdef CONFIG_USER_ONLY
-> +    MemOp opc = get_memop(oi);
-> +    TCGAtomAlign aa;
-> +    int64_t ofs;
-> +
-> +    if (tcg_use_softmmu || s->addr_type != TCG_TYPE_I64) {
-> +        return false;
-> +    }
-> +    aa = atom_and_align_for_opc(s, opc, MO_ATOM_WITHIN16,
-> +                                (opc & MO_SIZE) == MO_128);
-> +    if (aa.align) {
-> +        return false;
-> +    }
-> +    ofs = (int64_t)x86_guest_base.ofs + disp;
-> +    return ofs == (int32_t)ofs;
-> +#else
-> +    return false;
-> +#endif
-> +}
-These compilation mode tests belong...
+Skip savevm_vfio_handlers for cpr-exec and cpr-transfer.
 
-> +static void __attribute__((noinline))
-> +fold_ldst_disp(TCGContext *s)
-> +{
-> +    TCGOp *op;
-> +
-> +    if (!TCG_TARGET_HAS_ldst_disp) {
-> +        return;
-> +    }
-... here, before we step over the loop.  You might as well pass MemOp to 
-the target function and not MemOpIdx -- nothing about the mmu_idx is 
-relevant.
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+---
+ hw/vfio/migration.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Ideally, the atom_and_align test would also be done generically, not 
-requiring each target to replicate that boilerplate.
-
-
-r~
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 73c49d8c24..49aeaad516 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -723,6 +723,13 @@ static bool vfio_is_active_iterate(void *opaque)
+     return vfio_device_state_is_precopy(vbasedev);
+ }
+ 
++static bool vfio_is_active(void *opaque)
++{
++    MigMode mode = migrate_mode();
++
++    return mode != MIG_MODE_CPR_EXEC && mode != MIG_MODE_CPR_TRANSFER;
++}
++
+ /*
+  * Note about migration rate limiting: VFIO migration buffer size is currently
+  * limited to 1MB, so there is no need to check if migration rate exceeded (as
+@@ -951,6 +958,7 @@ static const SaveVMHandlers savevm_vfio_handlers = {
+     .save_cleanup = vfio_save_cleanup,
+     .save_query_pending = vfio_state_pending,
+     .is_active_iterate = vfio_is_active_iterate,
++    .is_active = vfio_is_active,
+     .save_live_iterate = vfio_save_iterate,
+     .save_complete = vfio_save_complete_precopy,
+     .save_state = vfio_save_state,
+-- 
+2.43.5
 
 
