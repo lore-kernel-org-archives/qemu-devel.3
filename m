@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64FDCC61DB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:12:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2F57C61DBD
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:12:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wywXi-0004Pa-SA; Tue, 25 Aug 2026 15:10:42 -0400
+	id 1wywZ2-0008Ln-JS; Tue, 25 Aug 2026 15:12:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywXf-0004Ok-9E
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:10:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wywZ0-000839-MX
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:12:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywXd-0003uJ-Mq
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:10:39 -0400
+ id 1wywYx-0004Je-Oh
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:12:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787685037;
+ s=mimecast20190719; t=1787685119;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l6kUigrlIhW5lDQflJBIlNr7RimcAGbj2MbyqJLdEI4=;
- b=a5SnSAQb4pO8M8zp3XrEJ1g+VhiRSzMMwcLtkdUqo64cOhycOxv2w+MzQ/yBHqYEhfPt6t
- Nr28JMxpg+6weGtyNfj/f5kH8kVqjn6AIiWzN5djggRE664DuwVSxpI/Ih7HR+6F0MsnCq
- OcRI4S+lX1YNzX+Nx7uNBfo5XBi9hqM=
+ bh=UAVq8jQ2W8GQMPKZh9lwo20fWbzMAGBwvQIsMg5/FCI=;
+ b=VX29oic96WR8jxeuIxgAExmA+o/Je8YK8Bg+rnAi4CiLHJnbwHyy9DxcxZ8bH/97eHSQCK
+ 0nLK6ozmImysBcBIJRnEjDGoYEHHZrZVzWlcaWdrx4GP6gfJbC+yIws7B+2ZYMJOmU0GQX
+ L/OD5BWXbYS8sLsy1XAPjLa7RMG/PWc=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-421-MaHNTi_8PueaNe6LAMHkTw-1; Tue,
- 25 Aug 2026 15:10:32 -0400
-X-MC-Unique: MaHNTi_8PueaNe6LAMHkTw-1
-X-Mimecast-MFC-AGG-ID: MaHNTi_8PueaNe6LAMHkTw_1787685031
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-418-9fDIjUJcONS6cFtfvgj5hQ-1; Tue,
+ 25 Aug 2026 15:11:55 -0400
+X-MC-Unique: 9fDIjUJcONS6cFtfvgj5hQ-1
+X-Mimecast-MFC-AGG-ID: 9fDIjUJcONS6cFtfvgj5hQ_1787685112
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 26993185BE9D; Tue, 25 Aug 2026 19:10:31 +0000 (UTC)
+ id C513618C104B; Tue, 25 Aug 2026 19:11:51 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 261451800765; Tue, 25 Aug 2026 19:10:29 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2869930002F7; Tue, 25 Aug 2026 19:11:49 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 25 Aug 2026 23:09:14 +0400
-Subject: [PATCH v4 07/49] system: move gpa2hva() to system memory unit
+Date: Tue, 25 Aug 2026 23:09:36 +0400
+Subject: [PATCH v4 29/49] monitor: isolate HMP declarations in hmp.h
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260825-qemu-no-hmp-v4-7-af60857c2fbe@redhat.com>
+Message-Id: <20260825-qemu-no-hmp-v4-29-af60857c2fbe@redhat.com>
 References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 In-Reply-To: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 To: qemu-devel@nongnu.org
@@ -62,28 +62,39 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  dave@treblig.org, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Peter Xu <peterx@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4376;
+ Markus Armbruster <armbru@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
+ Amit Shah <amit@kernel.org>, Brian Cain <brian.cain@oss.qualcomm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>, 
+ Anthony PERARD <anthony@xenproject.org>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Samuel Thibault <samuel.thibault@ens-lyon.org>, 
+ Jason Wang <jasowangio@gmail.com>, 
+ Yoshinori Sato <yoshinori.sato@nifty.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, xen-devel@lists.xenproject.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=15816;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=UkN1HvNZWl3MPBsr0N0lhRKtt1UrsfqkUkLxVSggBA4=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiGDhSgs9WvVU9QwMxjtJ2OPOetzjB4Mkpd4
- RZ7Ch57z2SJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3ohgAKCRDa6OEJdZac
- 5YLkD/9lQ6ISIAGHD9o3tZ307nVL7lN7gOZWGZNQ2vgtYhm7HIsDKmDOFIl4mM0etjAOPCbSfji
- zMl5EsiE+eBsPQh7XzmnQHrYZejtOY4OEsZ3/9amTGiwOm2WSec8Wm/vpii+U4vJrH4WNspwSdb
- bU+FqM91cwAkS1PPE9+E22rPinpChgmyq2g0kopNPf2QBAkE3lFsWolaGOiVhlI84NgpsCdPDjf
- kIbScp2MHkLBWPSpvwGT3gmtrhDkGvD5cWgD1FZVvr3F7WCYWxJdZpicoZu7lcHyp2Adc7NY0O9
- KyX02Nq890VaKfIdZuw519mhcs7C7lA2fsqi0uGs4AtM+eUdYfna7Ahtf9aOo3R2dINIwY03T5S
- XYHl8FNOir7B3ctaw3axL0UeFmPAOlBmjvEyLE5GvtLCO7k1zUrQZXMhh4ZeWdGm7+HIIlEaruw
- 2YHXmsIw0/Q+iivDkU78YtZwYFdwL8x0u6SObi0yVbIiuBQ+xesKZMEyOKl5hJP1JKLeVSAxiLu
- 1zEt6YXSMLv74CZwKtl/R1KUbXxSJYHf1r9ItkVTm+AGWTO/NMM2iZCE82xTcJzWWcwsFE2q/E4
- X20+UimoYmCTDhd5HIeOZ0IAIja4KOSyC/4rQEukX+k2vc5DEC62zhddTIfvTB/pmAA5fteKnAe
- e59sMNTS0wo17ww==
+ bh=n8fT+96oEvudRuUgQ/dnx3uxsW6aOGEO6iYpiyOTIXQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiHMbeCsIaocGDO9Y0JrkRvOQPBT9wWDsX/i
+ T+t9yX7FG2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3ohwAKCRDa6OEJdZac
+ 5SqyD/98pXJ+2rTVWhJDv2+W7vZXwaDhugqM+eSZowAaTap8SXdKf2vpneqGF7szUuSGA0REczp
+ MdqmCmM0X1hYudkxOpb26I/4iLgK7fjPhoJw/M0vyX3OAQ7KN1mlSP2Qq0MOyX4jpHPowArR9rb
+ h5dM8tLSTanHBXmgVYZhDPgW5dsVyCyYtuqakjaUZ/qBVOpmiC/L3welEVYy8qecIGsnPSsCXr8
+ 91aHPwh9ooMgss3EuOtXr87uB8ZmCfZ5meMmTm7+m/6qnldX1FSPvSq8U0Kx59yheL+/YgwtABb
+ 5XaLGuEjOmtlqT5OgUn9T+byv783I07iXgX6PUIfx1BE88rpjKDTurL9ELtS+dGgeqAef2ChOBg
+ 3E9cJq3bo+YvA0X9TTmZdl1CR0rewG3ZgxuZaJIs5piygPJQt6C5P4hWPCOow3WIT1gSSAIkU8R
+ AJmXk9aZhnxKJHpa2m5QD8iZftNQ3WJ3LQhBlqESWFsE7fArMzBQUpd8/iMAJ3IY3FAL1bZJ6HH
+ TIPzmE+Y1s4k3mbsntGRAlpEQXTV/P891U6X353m0EVBgj/V/TzjJmsipfyg4Oc537x6NXQENs1
+ R4CQjD72G/Exl5kZnNMfYwffMaQTN8D/TXGU0NQEMySYAR4cJDNRTqM8++8HlZ+8kABEhWKOHlA
+ XmxijGls1xjmuGA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -91,8 +102,8 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,124 +119,465 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The function is now used by SEV code path. Move it to physmem.c rather
-than hmp-cmds.c.
+Also rename password & commands with hmp in the name, while at it.
+Other functions need larger changes which we will take care of next.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/monitor/monitor.h |  2 --
- include/system/memory.h   |  2 ++
- monitor/hmp-cmds.c        | 31 -------------------------------
- system/physmem.c          | 31 +++++++++++++++++++++++++++++++
- 4 files changed, 33 insertions(+), 33 deletions(-)
+ accel/accel-system.c           |  1 +
+ accel/tcg/monitor.c            |  1 +
+ chardev/char.c                 |  2 +-
+ disas/disas-mon.c              |  1 +
+ gdbstub/system.c               |  2 +-
+ hw/char/virtio-serial-bus.c    |  1 +
+ hw/core/machine-hmp-cmds.c     |  1 -
+ hw/core/sysbus.c               |  1 +
+ hw/hexagon/hexagon_tlb.c       |  1 +
+ hw/misc/auxbus.c               |  1 +
+ hw/usb/bus.c                   |  1 +
+ hw/usb/host-libusb.c           |  1 +
+ hw/xen/xen-bus.c               |  1 +
+ include/monitor/hmp.h          | 21 +++++++++++++++++++++
+ include/monitor/monitor.h      | 18 ------------------
+ monitor/hmp.c                  |  8 ++++----
+ monitor/monitor-internal.h     |  1 +
+ net/slirp.c                    |  1 +
+ stubs/monitor-core.c           |  1 +
+ stubs/monitor-internal.c       |  2 +-
+ target/rx/disas.c              |  1 +
+ tests/unit/test-util-sockets.c |  1 +
+ tools/qemu-vnc/stubs.c         |  1 +
+ trace/trace-hmp-cmds.c         |  1 -
+ ui/ui-hmp-cmds.c               |  4 ++--
+ util/error-report.c            |  2 +-
+ util/qemu-print.c              |  1 +
+ 27 files changed, 48 insertions(+), 30 deletions(-)
 
+diff --git a/accel/accel-system.c b/accel/accel-system.c
+index 9176665202d2..977804c4048a 100644
+--- a/accel/accel-system.c
++++ b/accel/accel-system.c
+@@ -28,6 +28,7 @@
+ #include "qom/compat-properties.h"
+ #include "qapi/qapi-commands-accelerator.h"
+ #include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "hw/core/boards.h"
+ #include "hw/core/cpu.h"
+ #include "accel/accel-ops.h"
+diff --git a/accel/tcg/monitor.c b/accel/tcg/monitor.c
+index be5c1950177c..74170ddef708 100644
+--- a/accel/tcg/monitor.c
++++ b/accel/tcg/monitor.c
+@@ -11,6 +11,7 @@
+ #include "qapi/type-helpers.h"
+ #include "qapi/qapi-commands-machine.h"
+ #include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "system/tcg.h"
+ #include "tcg/tcg.h"
+ #include "internal-common.h"
+diff --git a/chardev/char.c b/chardev/char.c
+index c6c8133f5c1d..9da0911e503c 100644
+--- a/chardev/char.c
++++ b/chardev/char.c
+@@ -24,7 +24,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/cutils.h"
+-#include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "monitor/qmp-helpers.h"
+ #include "qemu/config-file.h"
+ #include "qemu/error-report.h"
+diff --git a/disas/disas-mon.c b/disas/disas-mon.c
+index 9c693618c277..bc9dec3a7761 100644
+--- a/disas/disas-mon.c
++++ b/disas/disas-mon.c
+@@ -10,6 +10,7 @@
+ #include "system/memory.h"
+ #include "hw/core/cpu.h"
+ #include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ 
+ /*
+  * Get LENGTH bytes from info's buffer, at target address memaddr.
+diff --git a/gdbstub/system.c b/gdbstub/system.c
+index 070bc26f416c..8a1cdb11db36 100644
+--- a/gdbstub/system.c
++++ b/gdbstub/system.c
+@@ -29,7 +29,7 @@
+ #include "hw/core/boards.h"
+ #include "chardev/char.h"
+ #include "chardev/char-fe.h"
+-#include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "trace.h"
+ #include "internals.h"
+ 
+diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
+index c1973f0248fc..02604740f86a 100644
+--- a/hw/char/virtio-serial-bus.c
++++ b/hw/char/virtio-serial-bus.c
+@@ -25,6 +25,7 @@
+ #include "qemu/module.h"
+ #include "migration/qemu-file-types.h"
+ #include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "qemu/error-report.h"
+ #include "qemu/queue.h"
+ #include "hw/core/qdev-properties.h"
+diff --git a/hw/core/machine-hmp-cmds.c b/hw/core/machine-hmp-cmds.c
+index 686304bafab5..1c700aad3587 100644
+--- a/hw/core/machine-hmp-cmds.c
++++ b/hw/core/machine-hmp-cmds.c
+@@ -15,7 +15,6 @@
+ 
+ #include "qemu/osdep.h"
+ #include "monitor/hmp.h"
+-#include "monitor/monitor.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-builtin-visit.h"
+ #include "qapi/qapi-commands-accelerator.h"
+diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
+index 3e1160ee921d..13df7cbafe10 100644
+--- a/hw/core/sysbus.c
++++ b/hw/core/sysbus.c
+@@ -21,6 +21,7 @@
+ #include "qapi/error.h"
+ #include "hw/core/sysbus.h"
+ #include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "system/address-spaces.h"
+ 
+ static void sysbus_dev_print(Monitor *mon, DeviceState *dev, int indent);
+diff --git a/hw/hexagon/hexagon_tlb.c b/hw/hexagon/hexagon_tlb.c
+index b6d4aff389e5..2d878cee736d 100644
+--- a/hw/hexagon/hexagon_tlb.c
++++ b/hw/hexagon/hexagon_tlb.c
+@@ -12,6 +12,7 @@
+ #include "hw/core/resettable.h"
+ #include "migration/vmstate.h"
+ #include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "qapi/error.h"
+ #include "exec/page-protection.h"
+ #include "exec/target_page.h"
+diff --git a/hw/misc/auxbus.c b/hw/misc/auxbus.c
+index 877f34560626..ac2525b90fec 100644
+--- a/hw/misc/auxbus.c
++++ b/hw/misc/auxbus.c
+@@ -33,6 +33,7 @@
+ #include "hw/misc/auxbus.h"
+ #include "hw/i2c/i2c.h"
+ #include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "qapi/error.h"
+ 
+ #ifndef DEBUG_AUX
+diff --git a/hw/usb/bus.c b/hw/usb/bus.c
+index 3b6fbd46ac3f..9b9b2e7c2f8f 100644
+--- a/hw/usb/bus.c
++++ b/hw/usb/bus.c
+@@ -9,6 +9,7 @@
+ #include "system/system.h"
+ #include "migration/vmstate.h"
+ #include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "trace.h"
+ #include "qemu/cutils.h"
+ 
+diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
+index b9f3ad3f66dd..af67d5dfeb10 100644
+--- a/hw/usb/host-libusb.c
++++ b/hw/usb/host-libusb.c
+@@ -48,6 +48,7 @@
+ #include "qapi/error.h"
+ #include "migration/vmstate.h"
+ #include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "qemu/error-report.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/module.h"
+diff --git a/hw/xen/xen-bus.c b/hw/xen/xen-bus.c
+index dfad2bc5085f..a563f6066bb4 100644
+--- a/hw/xen/xen-bus.c
++++ b/hw/xen/xen-bus.c
+@@ -17,6 +17,7 @@
+ #include "hw/xen/xen-bus.h"
+ #include "hw/xen/xen-bus-helper.h"
+ #include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "qapi/error.h"
+ #include "qobject/qdict.h"
+ #include "system/system.h"
+diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+index 9258a049bffb..166cd4100c63 100644
+--- a/include/monitor/hmp.h
++++ b/include/monitor/hmp.h
+@@ -18,6 +18,9 @@
+ #include "qapi/qapi-types-common.h"
+ #include "monitor/monitor.h"
+ 
++#define TYPE_MONITOR_HMP "monitor-hmp"
++OBJECT_DECLARE_TYPE(MonitorHMP, MonitorHMPClass, MONITOR_HMP);
++
+ #define HMP_STUB(cmd) \
+     void hmp_##cmd(Monitor *mon, const QDict *qdict) \
+     { \
+@@ -30,6 +33,24 @@ struct MonitorDef {
+     int64_t (*get_value)(Monitor *mon, const MonitorDef *md, int offset);
+ };
+ 
++void monitor_new_hmp(const char *id, const char *chardev_id,
++                     bool use_readline, Error **errp);
++
++int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap)
++    G_GNUC_PRINTF(2, 0);
++int monitor_printf(Monitor *mon, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
++void monitor_printc(Monitor *mon, int ch);
++
++void monitor_hmp_read_command(MonitorHMP *hmp, int show_prompt);
++int monitor_hmp_read_password(MonitorHMP *hmp, ReadLineFunc *readline_func,
++                              void *opaque);
++
++void monitor_register_hmp(const char *name, bool info,
++                          void (*cmd)(Monitor *mon, const QDict *qdict));
++void monitor_register_hmp_info_hrt(const char *name,
++                                   HumanReadableText *(*handler)(Error **errp));
++
++
+ CPUArchState *mon_get_cpu_env(Monitor *mon);
+ CPUState *mon_get_cpu(Monitor *mon);
+ 
 diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-index 54134f2aa4fc..9f048ba103b5 100644
+index 9f048ba103b5..72a8f6ea5b4f 100644
 --- a/include/monitor/monitor.h
 +++ b/include/monitor/monitor.h
-@@ -53,8 +53,6 @@ int monitor_get_cpu_index(Monitor *mon);
+@@ -10,9 +10,6 @@
+ #define TYPE_MONITOR "monitor"
+ OBJECT_DECLARE_TYPE(Monitor, MonitorClass, MONITOR);
+ 
+-#define TYPE_MONITOR_HMP "monitor-hmp"
+-OBJECT_DECLARE_TYPE(MonitorHMP, MonitorHMPClass, MONITOR_HMP);
+-
+ #define TYPE_MONITOR_QMP "monitor-qmp"
+ OBJECT_DECLARE_TYPE(MonitorQMP, MonitorQMPClass, MONITOR_QMP);
+ 
+@@ -30,8 +27,6 @@ void monitor_init_globals_core(void);
+ char *monitor_compat_id(void);
+ void monitor_new_qmp(const char *id, const char *chardev_id,
+                      bool pretty, Error **errp);
+-void monitor_new_hmp(const char *id, const char *chardev_id,
+-                     bool use_readline, Error **errp);
+ int monitor_new(MonitorOptions *opts, bool allow_hmp, Error **errp);
+ int monitor_new_opts(QemuOpts *opts, Error **errp);
+ void monitor_cleanup(void);
+@@ -43,28 +38,15 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp);
+ int monitor_fd_param(Monitor *mon, const char *fdname, Error **errp);
+ 
+ int monitor_puts(Monitor *mon, const char *str);
+-int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap)
+-    G_GNUC_PRINTF(2, 0);
+-int monitor_printf(Monitor *mon, const char *fmt, ...) G_GNUC_PRINTF(2, 3);
+-void monitor_printc(Monitor *mon, int ch);
+ void monitor_flush(Monitor *mon);
+ int monitor_get_cpu_index(Monitor *mon);
+ 
  int monitor_puts_locked(Monitor *mon, const char *str);
  void monitor_flush_locked(Monitor *mon);
  
--void *gpa2hva(MemoryRegion **p_mr, hwaddr addr, uint64_t size, Error **errp);
+-void monitor_read_command(MonitorHMP *hmp, int show_prompt);
+-int monitor_read_password(MonitorHMP *hmp, ReadLineFunc *readline_func,
+-                          void *opaque);
 -
- void monitor_read_command(MonitorHMP *hmp, int show_prompt);
- int monitor_read_password(MonitorHMP *hmp, ReadLineFunc *readline_func,
-                           void *opaque);
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 1dc761058f52..a7e03fc3e7c3 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -2860,4 +2860,6 @@ bool ram_block_discard_is_required(void);
- void ram_block_add_cpr_blocker(RAMBlock *rb, Error **errp);
- void ram_block_del_cpr_blocker(RAMBlock *rb);
+ AddfdInfo *monitor_fdset_add_fd(int fd, bool has_fdset_id, int64_t fdset_id,
+                                 const char *opaque, Error **errp);
+ int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags, Error **errp);
+ void monitor_fdset_dup_fd_remove(int dup_fd);
  
-+void *gpa2hva(MemoryRegion **p_mr, hwaddr addr, uint64_t size, Error **errp);
-+
- #endif
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index 4e8d996dbb5b..6b1114fdaf13 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -712,37 +712,6 @@ void hmp_physical_memory_dump(Monitor *mon, const QDict *qdict)
-     memory_dump(mon, count, format, size, addr, true);
+-void monitor_register_hmp(const char *name, bool info,
+-                          void (*cmd)(Monitor *mon, const QDict *qdict));
+-void monitor_register_hmp_info_hrt(const char *name,
+-                                   HumanReadableText *(*handler)(Error **errp));
+-
+ #endif /* MONITOR_H */
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index 8134dfaad4bb..b4d05d47c4bf 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -136,7 +136,7 @@ static void monitor_command_cb(void *opaque, const char *cmdline,
+     monitor_resume(&hmp->parent_obj);
  }
  
--void *gpa2hva(MemoryRegion **p_mr, hwaddr addr, uint64_t size, Error **errp)
--{
--    Int128 gpa_region_size;
--    MemoryRegionSection mrs = memory_region_find(get_system_memory(),
--                                                 addr, size);
--
--    if (!mrs.mr) {
--        error_setg(errp,
--                   "No memory is mapped at address 0x%" HWADDR_PRIx, addr);
--        return NULL;
--    }
--
--    if (!memory_region_is_ram(mrs.mr) && !memory_region_is_romd(mrs.mr)) {
--        error_setg(errp,
--                   "Memory at address 0x%" HWADDR_PRIx " is not RAM", addr);
--        memory_region_unref(mrs.mr);
--        return NULL;
--    }
--
--    gpa_region_size = int128_make64(size);
--    if (int128_lt(mrs.size, gpa_region_size)) {
--        error_setg(errp, "Size of memory region at 0x%" HWADDR_PRIx
--                   " exceeded.", addr);
--        memory_region_unref(mrs.mr);
--        return NULL;
--    }
--
--    *p_mr = mrs.mr;
--    return qemu_map_ram_ptr(mrs.mr->ram_block, mrs.offset_within_region);
--}
--
- void hmp_gpa2hva(Monitor *mon, const QDict *qdict)
+-void monitor_read_command(MonitorHMP *hmp, int show_prompt)
++void monitor_hmp_read_command(MonitorHMP *hmp, int show_prompt)
  {
-     hwaddr addr = qdict_get_int(qdict, "addr");
-diff --git a/system/physmem.c b/system/physmem.c
-index 362a00f76c03..a4a6a4710c64 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -4534,3 +4534,34 @@ void ram_block_del_cpr_blocker(RAMBlock *rb)
- {
-     migrate_del_blocker(&rb->cpr_blocker);
+     if (!hmp->rs) {
+         return;
+@@ -148,8 +148,8 @@ void monitor_read_command(MonitorHMP *hmp, int show_prompt)
+     }
  }
-+
-+void *gpa2hva(MemoryRegion **p_mr, hwaddr addr, uint64_t size, Error **errp)
-+{
-+    Int128 gpa_region_size;
-+    MemoryRegionSection mrs = memory_region_find(get_system_memory(),
-+                                                 addr, size);
-+
-+    if (!mrs.mr) {
-+        error_setg(errp,
-+                   "No memory is mapped at address 0x%" HWADDR_PRIx, addr);
-+        return NULL;
-+    }
-+
-+    if (!memory_region_is_ram(mrs.mr) && !memory_region_is_romd(mrs.mr)) {
-+        error_setg(errp,
-+                   "Memory at address 0x%" HWADDR_PRIx " is not RAM", addr);
-+        memory_region_unref(mrs.mr);
-+        return NULL;
-+    }
-+
-+    gpa_region_size = int128_make64(size);
-+    if (int128_lt(mrs.size, gpa_region_size)) {
-+        error_setg(errp, "Size of memory region at 0x%" HWADDR_PRIx
-+                   " exceeded.", addr);
-+        memory_region_unref(mrs.mr);
-+        return NULL;
-+    }
-+
-+    *p_mr = mrs.mr;
-+    return qemu_map_ram_ptr(mrs.mr->ram_block, mrs.offset_within_region);
-+}
+ 
+-int monitor_read_password(MonitorHMP *hmp, ReadLineFunc *readline_func,
+-                          void *opaque)
++int monitor_hmp_read_password(MonitorHMP *hmp, ReadLineFunc *readline_func,
++                              void *opaque)
+ {
+     if (hmp->rs) {
+         readline_start(hmp->rs, "Password: ", 1, readline_func, opaque);
+@@ -1647,7 +1647,7 @@ static void monitor_hmp_complete(UserCreatable *uc, Error **errp)
+                                     monitor_readline_flush,
+                                     hmp,
+                                     monitor_find_completion);
+-            monitor_read_command(hmp, 0);
++            monitor_hmp_read_command(hmp, 0);
+         }
+ 
+         qemu_chr_fe_set_handlers(&hmp->parent_obj.chr,
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index fdeeeb853636..ee9ba0c8231e 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -27,6 +27,7 @@
+ 
+ #include "chardev/char-fe.h"
+ #include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "qapi/qapi-emit-events.h"
+ #include "qapi/qapi-types-control.h"
+ #include "qapi/qapi-types-qom.h"
+diff --git a/net/slirp.c b/net/slirp.c
+index 517dd23be14b..9bf09a2c8bc9 100644
+--- a/net/slirp.c
++++ b/net/slirp.c
+@@ -36,6 +36,7 @@
+ #include "clients.h"
+ #include "hub.h"
+ #include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "qemu/error-report.h"
+ #include "qemu/sockets.h"
+ #include <libslirp.h>
+diff --git a/stubs/monitor-core.c b/stubs/monitor-core.c
+index a7c32297c90a..b0c7002bd406 100644
+--- a/stubs/monitor-core.c
++++ b/stubs/monitor-core.c
+@@ -1,5 +1,6 @@
+ #include "qemu/osdep.h"
+ #include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "qapi/qapi-emit-events.h"
+ 
+ Monitor *monitor_cur(void)
+diff --git a/stubs/monitor-internal.c b/stubs/monitor-internal.c
+index 731fad221ecc..6f69f1f14ae4 100644
+--- a/stubs/monitor-internal.c
++++ b/stubs/monitor-internal.c
+@@ -1,6 +1,6 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+-#include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ 
+ int monitor_get_fd(Monitor *mon, const char *name, Error **errp)
+ {
+diff --git a/target/rx/disas.c b/target/rx/disas.c
+index 67b932882914..0eb2ee6f4507 100644
+--- a/target/rx/disas.c
++++ b/target/rx/disas.c
+@@ -19,6 +19,7 @@
+ #include "qemu/osdep.h"
+ #include "disas/dis-asm.h"
+ #include "qemu/bitops.h"
++#include "monitor/hmp.h"
+ #include "cpu.h"
+ 
+ typedef struct DisasContext {
+diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-sockets.c
+index ab3f39c3efb5..b2a884529598 100644
+--- a/tests/unit/test-util-sockets.c
++++ b/tests/unit/test-util-sockets.c
+@@ -24,6 +24,7 @@
+ #include "qapi/error.h"
+ #include "socket-helpers.h"
+ #include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ 
+ static void test_fd_is_socket_bad(void)
+ {
+diff --git a/tools/qemu-vnc/stubs.c b/tools/qemu-vnc/stubs.c
+index 1c82d8cff430..26597fefaa99 100644
+--- a/tools/qemu-vnc/stubs.c
++++ b/tools/qemu-vnc/stubs.c
+@@ -9,6 +9,7 @@
+ #include "system/runstate.h"
+ #include "hw/core/qdev.h"
+ #include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "migration/vmstate.h"
+ 
+ bool runstate_is_running(void)
+diff --git a/trace/trace-hmp-cmds.c b/trace/trace-hmp-cmds.c
+index 390173095cff..c8f0133abecf 100644
+--- a/trace/trace-hmp-cmds.c
++++ b/trace/trace-hmp-cmds.c
+@@ -25,7 +25,6 @@
+ #include "qemu/osdep.h"
+ #include "monitor/hmp.h"
+ #include "monitor/hmp-completion.h"
+-#include "monitor/monitor.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-trace.h"
+ #include "qobject/qdict.h"
+diff --git a/ui/ui-hmp-cmds.c b/ui/ui-hmp-cmds.c
+index 806a7bece7cb..4ef459490ba2 100644
+--- a/ui/ui-hmp-cmds.c
++++ b/ui/ui-hmp-cmds.c
+@@ -327,7 +327,7 @@ static void hmp_change_read_arg(void *opaque, const char *password,
+                                 void *readline_opaque)
+ {
+     qmp_change_vnc_password(password, NULL);
+-    monitor_read_command(opaque, 1);
++    monitor_hmp_read_command(opaque, 1);
+ }
+ 
+ void hmp_change_vnc(Monitor *mon, const char *device, const char *target,
+@@ -344,7 +344,7 @@ void hmp_change_vnc(Monitor *mon, const char *device, const char *target,
+     }
+     if (!arg) {
+         MonitorHMP *hmp = MONITOR_HMP(mon);
+-        monitor_read_password(hmp, hmp_change_read_arg, NULL);
++        monitor_hmp_read_password(hmp, hmp_change_read_arg, NULL);
+     } else {
+         qmp_change_vnc_password(arg, errp);
+     }
+diff --git a/util/error-report.c b/util/error-report.c
+index f333af9249b9..aaa15bc79827 100644
+--- a/util/error-report.c
++++ b/util/error-report.c
+@@ -11,7 +11,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "qemu/error-report.h"
+ 
+ /*
+diff --git a/util/qemu-print.c b/util/qemu-print.c
+index 7b9591035e57..a2d1f0244168 100644
+--- a/util/qemu-print.c
++++ b/util/qemu-print.c
+@@ -12,6 +12,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "monitor/monitor.h"
++#include "monitor/hmp.h"
+ #include "qemu/qemu-print.h"
+ 
+ /*
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
