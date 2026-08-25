@@ -4,119 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC629C61DB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:25:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5B41C61DC6
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:25:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyydH-0003z1-33; Tue, 25 Aug 2026 17:24:35 -0400
+	id 1wyycf-0003VH-IZ; Tue, 25 Aug 2026 17:23:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wyydF-0003tf-G0
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:24:33 -0400
+ id 1wyycd-0003Tf-DL
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:23:55 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wyydD-0002NV-Fs
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:24:33 -0400
+ id 1wyycb-0002Gj-K7
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:23:55 -0400
 Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67PLA17i2499408
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 21:24:20 GMT
+ 67PL9hl82498720
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 21:23:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=zik9fMnwPW+
- cjZ1etBvvnJ0/y9M6axxZ9bmNknOgDGA=; b=PWdSrIAuJDQgM96F3IXQIJ4TQL8
- Z8FFBN5Zf/Ro4o80k3n04VzE0mrzkv7i5XaOaA2qcnMTrrhxJ81XojTK7e3tVViI
- N7hX10bh6/im46AUsOoo8jQFy6amTW716HpgTfNoTxC8mZ122PA1vlmPMmEVhz1w
- Dc/GMwuxe8lYL27JDcIIHc60uUAy4fTsG4HfuuTvOu+SYnV7X9io7MbHpBEkK/xQ
- GsS9dKjkMztVWyycYeVLaPj/zB7MosXaCsWUpA3x3cYMeMbaijJb6NO9vX8tcxqZ
- GNOAvbRjFdwrLXxjEAaIJ3VBjaBoRfiz6NmCXgE5bRiNjgMl+LY4BjdK3aw==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g9fjn0tfp-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=O9DGexoTufl
+ 6srH88MZz/5wXHHGKrgy2EfMWxzyd2nY=; b=m/nvxvLfG2fx+h6X54haKdLdmrr
+ pO7jvbKEqJtdzYq7xUr93OFjnwLQgKlMjqUBKSBobO0b8geIaQ0N8JReCtRRfBMZ
+ aKiRFnfXq9yKmYUHLaZQnfys1LVXZcdL7tmP1y1aCk3LrQ4K+vl3R6x+aVyD+BQR
+ bQgxCbjNPtpNd7CDuTlV95S/q3XbWcOwWCS/FVlgL+/89j5CsEAwZ8zeNiPjgyjK
+ 1mho6DFgZdNWca8prPM/JHRH6E+myyf4T6Czd6mwo/dZG0ln3BvWE9O3f6s1iVLX
+ qY7BDTo9dHE/a2SpmlRYmLhVviRGgG4ec05D01jwPwkEALZD4ndTliptLsw==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g9fjn0tef-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 21:24:20 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-52769fc3f2eso4359071cf.0
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 14:24:19 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 21:23:52 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-90c8d271ac9so5852096d6.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 14:23:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787693059; x=1788297859; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787693031; x=1788297831; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=zik9fMnwPW+cjZ1etBvvnJ0/y9M6axxZ9bmNknOgDGA=;
- b=IQV1SkNi5tE5lq1Hv4at+2z+rWgM0mlxaTj6NmOgQCeGY3Z2UQ4OWbdavkEcFF5DCK
- Tc4UirLqTxm25GbRCYS2G61WwdnikY6ofxtIw3GKQRCacFkq2bb1FVsdoGxO1+vtvR//
- 590nOs74iPdOvTJ6DEkkJXZDXoDoAzu6QvZFZfUI+tL/Cz/GA4a591gv7K9NvXXpsRLm
- JvcN6k5Vc03gDr3+HmgD4rWHffmz33isRSnWPNKnPg7xY+++o8RaYBQf0eWxAVtk/WZ/
- M2FmeUCRXaL9lePR4eqcf3xm7KEQITIeHCzcl1/oWmAMdiRFNHwze/yJ29zTjNz09bBr
- ZoXA==
+ bh=O9DGexoTufl6srH88MZz/5wXHHGKrgy2EfMWxzyd2nY=;
+ b=UsTfGZ8U32cQSkTkfupnCKPFT8aaW1TeGBA2FmBLNEQXT5pQ2NfvJ1VvCarZ/maLlZ
+ 5g7LN0zd6NGYBN2uhHAToHxS/hFZcPtwprYO/dm6f9UjGZohWHPG8e6shZvC/SatNoxl
+ dKDoF9ZCs+bheCgWjNsfCjwT9ImMy/BmS4GouH3k9mVw+IamFKHQN/q234XL4Ql6Zt0+
+ VCuJy+psYXZoybups2ru5eFEDOH+DUryd3wJ9Zh2JjODaK9XVwjU6AsKTNJN7SVq95OG
+ ArkjHKBS9LGCNiG2fVIuuBdL7t+V8Q/ezG3wa3g4m6m2Zpp6xApCJrg1pbGhhgUby3lx
+ Ce8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787693059; x=1788297859;
+ d=1e100.net; s=20251104; t=1787693031; x=1788297831;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=zik9fMnwPW+cjZ1etBvvnJ0/y9M6axxZ9bmNknOgDGA=;
- b=iyLsVHP2y4fIjuiincOtHrEUzOyVBe0b23LudxBJUKE9jwJHzbVtlZIF7nFtC+k7TA
- e1V9ivtL6FLuqnyGmbnDJNpj44oWjiNfA67b7adO2ugwfrVShmcWp+K2sAKjVBqZUVH2
- giDhuxWTwalTd5jfPq87EHpMOBK/2zFf0ZQ0qGvlljpiFNIHlL4L7tgH2BMGk+6HgFjq
- CdQlDe+IWOEyXW/6/dfVp1s+qC/8FOqHwKlmuQQhOobaW1cY2hMZUjVhabv8Oy2OQW/I
- UG5rkMAy+AORsEfdlG1/aeArI878zh7lnDTQL6AjhsERXExCkcNnaAbzj4ANU/C74isB
- UFVw==
-X-Gm-Message-State: AFuF++lsyeUHZkNTPfkqnpp5HSSoSqb2tLRC6CCJ2zMKScL/yeauvkcs
- 3lQDz42dx+Vzky/sNP96rCeoMqQii0gXT4Ay0CzahIFz65wymhcv1ZobGZvv8QUnz7FALBlEsDh
- Nbs/CPJjEJbUlO50VEtoURS42u391pBUrmbSUjhLCnewyJ4CdGvsUEKlvtx405RSZjg==
-X-Gm-Gg: AR+sD10/jvywgfIQgeyWGEcW8+Tfyb6CeLBUvroKhTs5jgzbJUJgwE/JLeiU8GKZ7/o
- xP8Kw3uPrVkPPhqAb7UoiWKsmudXR0oD5XKWQ/Q4Hcr1cW6F0NFMLxQ/ChcfBN4ALPDRRnzrupG
- vsHZFwAhNwrez4fNj6yYtNkruBpjCc0mKGESfIyTZDB1x+whFaPrLFBvevQoTi08pHMswPnOVp6
- yBus5Sn8H/FkuEdraD6IPbyH72KC417nr0Z7spWdFytXA7WjllNz/o4nsM5h/Zq41I61NMNqhqw
- s/rAy7kg5WjJZ+kUhV7BXSgkPnkvprGd2PLvQqYzEignaHgxaMgcheax8/3e6cTPt+++3IR0Lv7
- mix8mg41OOHmoFlnnTbgicGvL9Ufw/j2sHPiiBw==
-X-Received: by 2002:a05:622a:1903:b0:528:3882:3869 with SMTP id
- d75a77b69052e-52e4228dd23mr22908971cf.13.1787693054122; 
- Tue, 25 Aug 2026 14:24:14 -0700 (PDT)
-X-Received: by 2002:a05:622a:1903:b0:528:3882:3869 with SMTP id
- d75a77b69052e-52e4228dd23mr22907721cf.13.1787693053142; 
- Tue, 25 Aug 2026 14:24:13 -0700 (PDT)
+ bh=O9DGexoTufl6srH88MZz/5wXHHGKrgy2EfMWxzyd2nY=;
+ b=nJ39I5OUBy8PpVmMyF/2uV3DoFB8sY6FHMt7NiK9vB5OhUayi+qcX6IBuusuxsTEDR
+ NRMrGpL2FQcdk+GAI5reIVwRv9n++P/SPF7glxD0wSLIP1dVF/zIWqLsffsIKSL1PDnE
+ MpnSSd4rRdZ1m/3KOIOqbjRW74/PN0P0cIysfTMWcmblfJYQFXiRLdRDm50s9EBPRrpE
+ itWkjd14wSXiFr0Gyb6K2sYjlYHDwzidzcyux4E6f1/BHzh4qfXXoEdH1+qauF3Jjbol
+ lt7Azf1umpXyKXUakwRKJf4HPgejRF/lr85lbBNj/rnCI05BDeQXHzzSJyXDk3cjhr4a
+ r8kQ==
+X-Gm-Message-State: AFuF++njZQiyMUeRvRN+O6TTOFAHyHORqbUKVls4chV+q52K+ljEbJEB
+ 9jiltFT0CJx6DpVYWOagKtAyQaUNzmr+iBbjvukqTQhX0eNx6Aw2imUPrKhITSyCeDUdSxz+K+L
+ Pg2L/10NOQBohCeEEgdO3dSoPALl44/0nQJ35Fite6K5a5tAhwNDaT4VrnmYssKuGoQ==
+X-Gm-Gg: AR+sD12LSM8+wE4896d72klSqMO/0U84pMg1tUqElkzHtT42/7lsX3UEPiD/lo3zadF
+ 6QHL2kT/B3NOynQm3Nf7gzXmxKlZ0JNG+06aObUrqXvoSRtPT3W7oBGvGoLR1I+ncAzfWqHoQYt
+ PMxW3KfmsnSPkFQWuAdipA4RksCd8bQ95PGl5VE+gpqA6eim49139le8C1mH1xFo427pO4mArKr
+ uahy7AVd318bJropQ56Gi/P18Z4u2m3ZI00h1EvZV8hflTo+3NWkmInL15QRzhCLkIgq8QWTyTk
+ iD8is6cp8+VmIcqQhMms2n7voRyVATK1W+mESH+I3bCrCGfFZP9gQcBwix+jQHy+qeiMtBeiuyN
+ q/J6TQZ+XvxsQtxSiYiwi3gnz5YObWI9pSxDHPQ==
+X-Received: by 2002:a05:6214:4605:b0:8ee:d9e7:be2d with SMTP id
+ 6a1803df08f44-90cc79308d8mr18698076d6.7.1787693031255; 
+ Tue, 25 Aug 2026 14:23:51 -0700 (PDT)
+X-Received: by 2002:a05:6214:4605:b0:8ee:d9e7:be2d with SMTP id
+ 6a1803df08f44-90cc79308d8mr18697606d6.7.1787693030841; 
+ Tue, 25 Aug 2026 14:23:50 -0700 (PDT)
 Received: from QCOM-UWl2o8bcGT.qualcomm.com ([189.38.141.232])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-90cc65299f0sm8646386d6.41.2026.08.25.14.24.11
+ 6a1803df08f44-90cc65299f0sm8646386d6.41.2026.08.25.14.23.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Aug 2026 14:24:12 -0700 (PDT)
+ Tue, 25 Aug 2026 14:23:50 -0700 (PDT)
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH 12/13] hw/riscv/device-common, virt.c: add gpex_pcie_init()
-Date: Tue, 25 Aug 2026 18:23:24 -0300
-Message-ID: <20260825212326.1907-13-daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH 03/13] hw/riscv/fdt-common,
+ virt.c: add create_fdt_riscv_iommu_sys()
+Date: Tue, 25 Aug 2026 18:23:15 -0300
+Message-ID: <20260825212326.1907-4-daniel.barboza@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260825212326.1907-1-daniel.barboza@oss.qualcomm.com>
 References: <20260825212326.1907-1-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: lXuaUSO6g6voLRwU-fNO-cbpFDkCdU2k
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDE4MiBTYWx0ZWRfXyZGTir35W+xM
- A7Y6JIcFdqWuLbE9JEEpZFz3q1nDQAMM96edvqGdxgeZL98Ensy3cgBZqUuLq91j3fHKjMme+Oa
- BHSm2467E0mT8K1AGW8t7c+nIRIpilg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDE4MiBTYWx0ZWRfX/WNYc/RhfkF1
- Z7xZe4GyrDTJVj6cctMxw7Kaie/WZepH/tiw/dD/s17ul3Ah1UqLXsSm1Rwo8VuxUBMMbAaSlcy
- 4GJq2rPVGocFSFqB5GVgy5kHZzFMnWrJwuCocEj0yLk4JvTT+vf6AazlcUNwLAWxrMYM44g4Kp2
- igfzKMBvk5ccKi/f77o9VZpC9gVQ0Xz3yPVa3qzBRnXzp3SaJ5rJ5NGegBLDKXAK/6GUV/aJgMo
- 08O4tA77fMxIDzl/FsyHsZtcPX/FfxPSIvWhf3VEXUaDuRfnW4TbFS9VQfI/e09S43QYIudg7YV
- IgbW1iE45FRd5wMDsy0v/RFqMaW5JYdl891DWfNEDe8rtdzrflM0RwO7NFKDtCaVMCm+teMOvGL
- yH0Rof4/JnVa9T9PTUFi9HGZwSX32bYYTySRdwtUuqo1lkJhy3e861VpBFQNcSYPNXa0dZjveM6
- T6Knibjp6/8NLITeApw==
-X-Authority-Analysis: v=2.4 cv=ccziaHDM c=1 sm=1 tr=0 ts=6a8e0804 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=MCIxunHWmQOg/5OnbzXZaw==:17
+X-Proofpoint-GUID: l87-TPpvTjx_ggZwYB1WlZulhb5eUBYm
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDE4MiBTYWx0ZWRfXzH2PqvKICY9E
+ x2vA6uKyeIv7OQ1kM6+8yEy6HaGBeIVmGj0SC80M9XAAih16+1t1pCWvKBVy/jb2dzxptPqAkZS
+ Itvx9BL+ChAj8Jj+Y2+HtnxyyOBfLDc=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDE4MiBTYWx0ZWRfX6jcynybjbMjt
+ 8orC+HpZydyqi4OCp4Tu7oM17sUUN4XEbdjUCMVTAXEbq7+6Ag+bufbvj1efuoSqxnH4YvkO+yK
+ 8PHUG63/tc45T63siDcUdWJmOMwC5RyY4GldbEiGsX1ozA4QXRgH37sULkRYJTw9801Nmt3mbe4
+ M97+YdLnjs0zwhA8+umMBeS5i/gBUITYXQd7HAUddEK11jgrq7gcNS/iH89N083dYqH+dYBeCx5
+ BgxDgf9aDlX/rGl+hKUKvqRxqYN6Pkou2sx5lACWUKdSDENelAhaYAz04Qj7LnXfb8FL+LmIOeh
+ vCnhkUdbedkVMjBcCvBxUq5B0Jd9N3hmGytMyZeedlVS1/ZSRZp4QnQGuXYPGidX7WFl4jZqyE8
+ cG5Xvt2NQdINf2wUJcDjmFBYMhNp7fc7+8WJsue1QcgkcOQXvWCQQ22UmSuGbn6KvPw5TYDMgZw
+ yG6Z/6irAjG26Sx9uLg==
+X-Authority-Analysis: v=2.4 cv=ccziaHDM c=1 sm=1 tr=0 ts=6a8e07e8 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=MCIxunHWmQOg/5OnbzXZaw==:17
  a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
  a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8
- a=i57S3HUJNi793Ni1t6cA:9 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-ORIG-GUID: lXuaUSO6g6voLRwU-fNO-cbpFDkCdU2k
+ a=-lP9cGLPB0zaG0B-UEoA:9 a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-ORIG-GUID: l87-TPpvTjx_ggZwYB1WlZulhb5eUBYm
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-25_06,2026-08-24_01,2025-10-01_01
@@ -133,7 +134,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,218 +150,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GPEX_HOST initialization in 'virt' can be moved to device-common.c
-and be re-used later for other boards, namely the future
-'riscv-server-ref' emulation.
+Both the 'virt' board and the future 'riscv-server-ref' boards uses an
+iommu-sys device that is declared in the DT.
+
+Create a helper to encapsulate the logic and avoid copy/pasting stuff
+between boards.
+
+No FDT changes intended.
 
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- hw/riscv/device-common.c         | 76 +++++++++++++++++++++++++++++++
- hw/riscv/virt.c                  | 77 ++------------------------------
- include/hw/riscv/device-common.h |  7 +++
- 3 files changed, 87 insertions(+), 73 deletions(-)
+ hw/riscv/fdt-common.c         | 40 +++++++++++++++++++++++++++++
+ hw/riscv/virt.c               | 47 ++++-------------------------------
+ include/hw/riscv/fdt-common.h |  5 ++++
+ 3 files changed, 50 insertions(+), 42 deletions(-)
 
-diff --git a/hw/riscv/device-common.c b/hw/riscv/device-common.c
-index 03e85a7c86..49f6fb8dd2 100644
---- a/hw/riscv/device-common.c
-+++ b/hw/riscv/device-common.c
-@@ -15,6 +15,8 @@
- #include "hw/core/qdev.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/sysbus.h"
-+#include "hw/pci/pci.h"
-+#include "hw/pci-host/gpex.h"
- #include "qapi/error.h"
- #include "qom/object.h"
- #include "system/address-spaces.h"
-@@ -90,3 +92,77 @@ void riscv_init_flash_map(PFlashCFI01 *flash, hwaddr base, hwaddr size,
-     memory_region_add_subregion(sysmem, base,
-                             sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
+diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
+index a2168c09ec..ddc56821d3 100644
+--- a/hw/riscv/fdt-common.c
++++ b/hw/riscv/fdt-common.c
+@@ -13,6 +13,8 @@
+ #include "hw/core/boards.h"
+ #include "hw/riscv/fdt-common.h"
+ #include "target/riscv/cpu_bits.h"
++#include "hw/riscv/riscv-iommu-bits.h"
++#include "hw/riscv/iommu.h"
+ 
+ void *create_board_device_tree(const char *model, const char *compatible,
+                                int *fdt_size)
+@@ -347,3 +349,41 @@ void create_fdt_syscon(void *fdt, uint32_t *phandle,
+     qemu_fdt_setprop_cell(fdt, name, "value", poweroff);
+     g_free(name);
  }
 +
-+DeviceState *gpex_pcie_init(MemoryRegion *sys_mem,
-+                            DeviceState *irqchip,
-+                            const MemMapEntry *pcie_ecam_mem,
-+                            const MemMapEntry *pcie_mmio_mem,
-+                            const MemMapEntry *high_pcie_mmio_mem,
-+                            const MemMapEntry *pcie_pio_mem,
-+                            int pcie_irq)
++void create_fdt_riscv_iommu_sys(void *fdt, hwaddr addr, hwaddr size,
++                                uint32_t irq_chip,
++                                uint32_t msi_phandle,
++                                uint32_t *iommu_sys_phandle,
++                                uint32_t iommu_sys_irq)
 +{
-+    DeviceState *dev;
-+    MemoryRegion *ecam_alias, *ecam_reg;
-+    MemoryRegion *mmio_alias, *high_mmio_alias, *mmio_reg;
-+    hwaddr ecam_base = pcie_ecam_mem->base;
-+    hwaddr ecam_size = pcie_ecam_mem->size;
-+    hwaddr mmio_base = pcie_mmio_mem->base;
-+    hwaddr mmio_size = pcie_mmio_mem->size;
-+    hwaddr high_mmio_base = high_pcie_mmio_mem->base;
-+    hwaddr high_mmio_size = high_pcie_mmio_mem->size;
-+    hwaddr pio_base = pcie_pio_mem->base;
-+    hwaddr pio_size = pcie_pio_mem->size;
++    const char comp[] = "riscv,iommu";
++    uint32_t iommu_phandle;
++    g_autofree char *iommu_node = NULL;
++    uint32_t iommu_irq_map[RISCV_IOMMU_INTR_COUNT] = {
++        iommu_sys_irq + RISCV_IOMMU_INTR_CQ,
++        iommu_sys_irq + RISCV_IOMMU_INTR_FQ,
++        iommu_sys_irq + RISCV_IOMMU_INTR_PM,
++        iommu_sys_irq + RISCV_IOMMU_INTR_PQ,
++    };
 +
-+    dev = qdev_new(TYPE_GPEX_HOST);
++    iommu_node = g_strdup_printf("/soc/iommu@%"HWADDR_PRIx, addr);
++    iommu_phandle = qemu_fdt_alloc_phandle(fdt);
++    qemu_fdt_add_subnode(fdt, iommu_node);
 +
-+    /* Set GPEX object properties for the virt machine */
-+    object_property_set_uint(OBJECT(dev), PCI_HOST_ECAM_BASE,
-+                            ecam_base, NULL);
-+    object_property_set_int(OBJECT(dev), PCI_HOST_ECAM_SIZE,
-+                            ecam_size, NULL);
-+    object_property_set_uint(OBJECT(dev), PCI_HOST_BELOW_4G_MMIO_BASE,
-+                             mmio_base, NULL);
-+    object_property_set_int(OBJECT(dev), PCI_HOST_BELOW_4G_MMIO_SIZE,
-+                            mmio_size, NULL);
-+    object_property_set_uint(OBJECT(dev), PCI_HOST_ABOVE_4G_MMIO_BASE,
-+                             high_mmio_base, NULL);
-+    object_property_set_int(OBJECT(dev), PCI_HOST_ABOVE_4G_MMIO_SIZE,
-+                            high_mmio_size, NULL);
-+    object_property_set_uint(OBJECT(dev), PCI_HOST_PIO_BASE,
-+                            pio_base, NULL);
-+    object_property_set_int(OBJECT(dev), PCI_HOST_PIO_SIZE,
-+                            pio_size, NULL);
++    qemu_fdt_setprop(fdt, iommu_node, "compatible", comp, sizeof(comp));
++    qemu_fdt_setprop_cell(fdt, iommu_node, "#iommu-cells", 1);
++    qemu_fdt_setprop_cell(fdt, iommu_node, "phandle", iommu_phandle);
 +
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    qemu_fdt_setprop_sized_cells(fdt, iommu_node, "reg", 2, addr, 2, size);
++    qemu_fdt_setprop_cell(fdt, iommu_node, "interrupt-parent", irq_chip);
 +
-+    ecam_alias = g_new0(MemoryRegion, 1);
-+    ecam_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
-+    memory_region_init_alias(ecam_alias, OBJECT(dev), "pcie-ecam",
-+                             ecam_reg, 0, ecam_size);
-+    memory_region_add_subregion(get_system_memory(), ecam_base, ecam_alias);
++    qemu_fdt_setprop_cells(fdt, iommu_node, "interrupts",
++        iommu_irq_map[0], FDT_IRQ_TYPE_EDGE_LOW,
++        iommu_irq_map[1], FDT_IRQ_TYPE_EDGE_LOW,
++        iommu_irq_map[2], FDT_IRQ_TYPE_EDGE_LOW,
++        iommu_irq_map[3], FDT_IRQ_TYPE_EDGE_LOW);
 +
-+    mmio_alias = g_new0(MemoryRegion, 1);
-+    mmio_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
-+    memory_region_init_alias(mmio_alias, OBJECT(dev), "pcie-mmio",
-+                             mmio_reg, mmio_base, mmio_size);
-+    memory_region_add_subregion(get_system_memory(), mmio_base, mmio_alias);
++    qemu_fdt_setprop_cell(fdt, iommu_node, "msi-parent", msi_phandle);
 +
-+    /* Map high MMIO space */
-+    high_mmio_alias = g_new0(MemoryRegion, 1);
-+    memory_region_init_alias(high_mmio_alias, OBJECT(dev), "pcie-mmio-high",
-+                             mmio_reg, high_mmio_base, high_mmio_size);
-+    memory_region_add_subregion(get_system_memory(), high_mmio_base,
-+                                high_mmio_alias);
-+
-+    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 2, pio_base);
-+
-+    for (int i = 0; i < PCI_NUM_PINS; i++) {
-+        qemu_irq irq = qdev_get_gpio_in(irqchip, pcie_irq + i);
-+
-+        sysbus_connect_irq(SYS_BUS_DEVICE(dev), i, irq);
-+        gpex_set_irq_num(GPEX_HOST(dev), i, pcie_irq + i);
-+    }
-+
-+    GPEX_HOST(dev)->gpex_cfg.bus = PCI_HOST_BRIDGE(dev)->bus;
-+    return dev;
++    *iommu_sys_phandle = iommu_phandle;
 +}
 diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 6ffafae46d..af9de36726 100644
+index acbbe458fa..9417aa7a06 100644
 --- a/hw/riscv/virt.c
 +++ b/hw/riscv/virt.c
-@@ -518,78 +518,6 @@ static void create_fdt(RISCVVirtState *s)
-     create_fdt_pmu(s);
+@@ -867,46 +867,6 @@ static void create_fdt_virtio_iommu(RISCVVirtState *s, uint16_t bdf)
+                            bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
  }
  
--static inline DeviceState *gpex_pcie_init(MemoryRegion *sys_mem,
--                                          DeviceState *irqchip,
--                                          RISCVVirtState *s)
+-static void create_fdt_iommu_sys(RISCVVirtState *s, uint32_t irq_chip,
+-                                 uint32_t msi_phandle,
+-                                 uint32_t *iommu_sys_phandle)
 -{
--    DeviceState *dev;
--    MemoryRegion *ecam_alias, *ecam_reg;
--    MemoryRegion *mmio_alias, *high_mmio_alias, *mmio_reg;
--    hwaddr ecam_base = s->memmap[VIRT_PCIE_ECAM].base;
--    hwaddr ecam_size = s->memmap[VIRT_PCIE_ECAM].size;
--    hwaddr mmio_base = s->memmap[VIRT_PCIE_MMIO].base;
--    hwaddr mmio_size = s->memmap[VIRT_PCIE_MMIO].size;
--    hwaddr high_mmio_base = virt_high_pcie_memmap.base;
--    hwaddr high_mmio_size = virt_high_pcie_memmap.size;
--    hwaddr pio_base = s->memmap[VIRT_PCIE_PIO].base;
--    hwaddr pio_size = s->memmap[VIRT_PCIE_PIO].size;
--    qemu_irq irq;
--    int i;
+-    const char comp[] = "riscv,iommu";
+-    void *fdt = MACHINE(s)->fdt;
+-    uint32_t iommu_phandle;
+-    g_autofree char *iommu_node = NULL;
+-    hwaddr addr = s->memmap[VIRT_IOMMU_SYS].base;
+-    hwaddr size = s->memmap[VIRT_IOMMU_SYS].size;
+-    uint32_t iommu_irq_map[RISCV_IOMMU_INTR_COUNT] = {
+-        IOMMU_SYS_IRQ + RISCV_IOMMU_INTR_CQ,
+-        IOMMU_SYS_IRQ + RISCV_IOMMU_INTR_FQ,
+-        IOMMU_SYS_IRQ + RISCV_IOMMU_INTR_PM,
+-        IOMMU_SYS_IRQ + RISCV_IOMMU_INTR_PQ,
+-    };
 -
--    dev = qdev_new(TYPE_GPEX_HOST);
+-    iommu_node = g_strdup_printf("/soc/iommu@%x",
+-                               (unsigned int) s->memmap[VIRT_IOMMU_SYS].base);
+-    iommu_phandle = qemu_fdt_alloc_phandle(fdt);
+-    qemu_fdt_add_subnode(fdt, iommu_node);
 -
--    /* Set GPEX object properties for the virt machine */
--    object_property_set_uint(OBJECT(dev), PCI_HOST_ECAM_BASE,
--                            ecam_base, NULL);
--    object_property_set_int(OBJECT(dev), PCI_HOST_ECAM_SIZE,
--                            ecam_size, NULL);
--    object_property_set_uint(OBJECT(dev), PCI_HOST_BELOW_4G_MMIO_BASE,
--                             mmio_base, NULL);
--    object_property_set_int(OBJECT(dev), PCI_HOST_BELOW_4G_MMIO_SIZE,
--                            mmio_size, NULL);
--    object_property_set_uint(OBJECT(dev), PCI_HOST_ABOVE_4G_MMIO_BASE,
--                             high_mmio_base, NULL);
--    object_property_set_int(OBJECT(dev), PCI_HOST_ABOVE_4G_MMIO_SIZE,
--                            high_mmio_size, NULL);
--    object_property_set_uint(OBJECT(dev), PCI_HOST_PIO_BASE,
--                            pio_base, NULL);
--    object_property_set_int(OBJECT(dev), PCI_HOST_PIO_SIZE,
--                            pio_size, NULL);
+-    qemu_fdt_setprop(fdt, iommu_node, "compatible", comp, sizeof(comp));
+-    qemu_fdt_setprop_cell(fdt, iommu_node, "#iommu-cells", 1);
+-    qemu_fdt_setprop_cell(fdt, iommu_node, "phandle", iommu_phandle);
 -
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+-    qemu_fdt_setprop_sized_cells(fdt, iommu_node, "reg", 2, addr, 2, size);
+-    qemu_fdt_setprop_cell(fdt, iommu_node, "interrupt-parent", irq_chip);
 -
--    ecam_alias = g_new0(MemoryRegion, 1);
--    ecam_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
--    memory_region_init_alias(ecam_alias, OBJECT(dev), "pcie-ecam",
--                             ecam_reg, 0, ecam_size);
--    memory_region_add_subregion(get_system_memory(), ecam_base, ecam_alias);
+-    qemu_fdt_setprop_cells(fdt, iommu_node, "interrupts",
+-        iommu_irq_map[0], FDT_IRQ_TYPE_EDGE_LOW,
+-        iommu_irq_map[1], FDT_IRQ_TYPE_EDGE_LOW,
+-        iommu_irq_map[2], FDT_IRQ_TYPE_EDGE_LOW,
+-        iommu_irq_map[3], FDT_IRQ_TYPE_EDGE_LOW);
 -
--    mmio_alias = g_new0(MemoryRegion, 1);
--    mmio_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
--    memory_region_init_alias(mmio_alias, OBJECT(dev), "pcie-mmio",
--                             mmio_reg, mmio_base, mmio_size);
--    memory_region_add_subregion(get_system_memory(), mmio_base, mmio_alias);
+-    qemu_fdt_setprop_cell(fdt, iommu_node, "msi-parent", msi_phandle);
 -
--    /* Map high MMIO space */
--    high_mmio_alias = g_new0(MemoryRegion, 1);
--    memory_region_init_alias(high_mmio_alias, OBJECT(dev), "pcie-mmio-high",
--                             mmio_reg, high_mmio_base, high_mmio_size);
--    memory_region_add_subregion(get_system_memory(), high_mmio_base,
--                                high_mmio_alias);
--
--    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 2, pio_base);
--
--    for (i = 0; i < PCI_NUM_PINS; i++) {
--        irq = qdev_get_gpio_in(irqchip, PCIE_IRQ + i);
--
--        sysbus_connect_irq(SYS_BUS_DEVICE(dev), i, irq);
--        gpex_set_irq_num(GPEX_HOST(dev), i, PCIE_IRQ + i);
--    }
--
--    GPEX_HOST(dev)->gpex_cfg.bus = PCI_HOST_BRIDGE(dev)->bus;
--    return dev;
+-    *iommu_sys_phandle = iommu_phandle;
 -}
 -
- static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
+ static void create_fdt_iommu(RISCVVirtState *s, uint16_t bdf)
  {
-     FWCfgState *fw_cfg;
-@@ -939,7 +867,10 @@ static void virt_machine_init(MachineState *machine)
-             qdev_get_gpio_in(virtio_irqchip, VIRTIO_IRQ + i));
+     const char comp[] = "riscv,pci-iommu";
+@@ -945,8 +905,11 @@ static void finalize_fdt(RISCVVirtState *s)
+     create_fdt_virtio(s, irq_virtio_phandle);
+ 
+     if (virt_is_iommu_sys_enabled(s)) {
+-        create_fdt_iommu_sys(s, irq_mmio_phandle, msi_pcie_phandle,
+-                             &iommu_sys_phandle);
++        create_fdt_riscv_iommu_sys(MACHINE(s)->fdt,
++                                   s->memmap[VIRT_IOMMU_SYS].base,
++                                   s->memmap[VIRT_IOMMU_SYS].size,
++                                   irq_mmio_phandle, msi_pcie_phandle,
++                                   &iommu_sys_phandle, IOMMU_SYS_IRQ);
      }
- 
--    gpex_pcie_init(system_memory, pcie_irqchip, s);
-+    gpex_pcie_init(system_memory, pcie_irqchip,
-+                   &s->memmap[VIRT_PCIE_ECAM], &s->memmap[VIRT_PCIE_MMIO],
-+                   &virt_high_pcie_memmap, &s->memmap[VIRT_PCIE_PIO],
-+                   PCIE_IRQ);
- 
-     s->platform_bus_dev = create_platform_bus(mmio_irqchip,
-                                               &s->memmap[VIRT_PLATFORM_BUS],
-diff --git a/include/hw/riscv/device-common.h b/include/hw/riscv/device-common.h
-index 1cdb8ab5cc..77760e082c 100644
---- a/include/hw/riscv/device-common.h
-+++ b/include/hw/riscv/device-common.h
-@@ -22,4 +22,11 @@ PFlashCFI01 *riscv_flash_create(Object *parent, const char *name,
-                                 int flash_sector_size);
- void riscv_init_flash_map(PFlashCFI01 *flash, hwaddr base, hwaddr size,
-                           MemoryRegion *sysmem, int flash_sector_size);
-+DeviceState *gpex_pcie_init(MemoryRegion *sys_mem,
-+                            DeviceState *irqchip,
-+                            const MemMapEntry *pcie_ecam_mem,
-+                            const MemMapEntry *pcie_mmio_mem,
-+                            const MemMapEntry *high_pcie_mmio_mem,
-+                            const MemMapEntry *pcie_pio_mem,
-+                            int pcie_irq);
+     create_fdt_pcie(s, irq_pcie_phandle, msi_pcie_phandle,
+                     iommu_sys_phandle);
+diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.h
+index 31203df517..37a1544706 100644
+--- a/include/hw/riscv/fdt-common.h
++++ b/include/hw/riscv/fdt-common.h
+@@ -41,4 +41,9 @@ void create_fdt_syscon(void *fdt, uint32_t *phandle,
+                        hwaddr addr, hwaddr size,
+                        uint32_t reboot, uint32_t poweroff,
+                        bool sifive_test_compat);
++void create_fdt_riscv_iommu_sys(void *fdt, hwaddr addr, hwaddr size,
++                                uint32_t irq_chip,
++                                uint32_t msi_phandle,
++                                uint32_t *iommu_sys_phandle,
++                                uint32_t iommu_sys_irq);
  #endif
 -- 
 2.43.0
