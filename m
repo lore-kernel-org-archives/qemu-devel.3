@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 379A0C61DB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:14:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA153C61DC2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:14:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wywXj-0004Ps-No; Tue, 25 Aug 2026 15:10:43 -0400
+	id 1wywXs-0004TV-8I; Tue, 25 Aug 2026 15:10:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywXh-0004PB-Mn
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:10:41 -0400
+ id 1wywXq-0004SA-2b
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:10:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywXf-0003ur-2O
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:10:40 -0400
+ id 1wywXo-0003w3-C5
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:10:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787685038;
+ s=mimecast20190719; t=1787685047;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZJQnMGT3qPvOFeMDZSH+QYBFaicXbP9+52KZazx/GNM=;
- b=BqqgedndZhsGSVSl5KCt7r+Lfzy4Es1B4S5yOOy60Pw43qGyeRVlsIeUTqJQl+DcIh2twj
- Neu9J8+yvukB0IHuta0SzAOihuVCzg2Vrr6ijKAYpmScr+o9ZCijhBFstoyKpXsU06hfB7
- oRJ0d5F/OuaZkj2pmOX28A9TRz7BSMw=
+ bh=A5rJL39r60/35LZLysmBCrpC68JHwhbcZtjRUJEvMqk=;
+ b=OBs3G7HdoBK5ptBKT6k5MbPtC23BnKMik+ns1eOZyoAzX2N16Hzh73easR1Fg/O45TIGex
+ GrNaVTNyfgVfZk0Rw0828oVwirTxxOBlfrNqxnYcmppRG1J95MucujXvJWiCdEaDMS/zBk
+ I2Gji8G6BabtTrEDp24Io2lRLuBUaRY=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-177-M7Tt8VRkMp6u_Zz3kGL2gw-1; Tue,
- 25 Aug 2026 15:10:36 -0400
-X-MC-Unique: M7Tt8VRkMp6u_Zz3kGL2gw-1
-X-Mimecast-MFC-AGG-ID: M7Tt8VRkMp6u_Zz3kGL2gw_1787685035
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-w0zfAu-aOKqMuVGjfgSuig-1; Tue,
+ 25 Aug 2026 15:10:44 -0400
+X-MC-Unique: w0zfAu-aOKqMuVGjfgSuig-1
+X-Mimecast-MFC-AGG-ID: w0zfAu-aOKqMuVGjfgSuig_1787685042
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0CEA4180ABF2; Tue, 25 Aug 2026 19:10:35 +0000 (UTC)
+ id 125E4185BE9D; Tue, 25 Aug 2026 19:10:42 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3D9111955F0C; Tue, 25 Aug 2026 19:10:33 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3528F1800765; Tue, 25 Aug 2026 19:10:40 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 25 Aug 2026 23:09:15 +0400
-Subject: [PATCH v4 08/49] monitor: move HMP-only fields from Monitor to
- MonitorHMP
+Date: Tue, 25 Aug 2026 23:09:17 +0400
+Subject: [PATCH v4 10/49] net/qapi: add x-query-usernet command
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260825-qemu-no-hmp-v4-8-af60857c2fbe@redhat.com>
+Message-Id: <20260825-qemu-no-hmp-v4-10-af60857c2fbe@redhat.com>
 References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 In-Reply-To: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 To: qemu-devel@nongnu.org
@@ -64,25 +63,26 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Markus Armbruster <armbru@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5135;
+ Samuel Thibault <samuel.thibault@ens-lyon.org>, 
+ Jason Wang <jasowangio@gmail.com>, Eric Blake <eblake@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3816;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=wkR8gnQD/9TIbnh3sLfGrwv66uEiNuUKUoUzahWjols=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiHW9bgozZOKp658cep5S+/NfAISYTuSvzkh
- NkkKi260a6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3ohwAKCRDa6OEJdZac
- 5RnfEACgOPNYrywtU0V/PgMB1PvpluQageznAjjGEo3qpfrdyOAWqS7WYkaDi+DP5NCtqzW/yuF
- AjrxjeTzUNydEnBqzBwksoaRmXErinBrcj+uUjqWtdyVXrYxvRGAB+0AyDvA8cyZ1ZWbDb0eHg3
- 4vCaBmZHZ/uY4P+OwnP/kbktDm8IefMiQ8BacS+PE+uVPgiVH0xHESZEWGLlW6GLQPk8POGWjS5
- 8+BS3Tm4xCnzAMcajLyMfOC0OsGuT5yVXyqQmEL/WJoft5W1qeBaWsoaUEPyKhP73+1gB5L2mlm
- QWS/NrPe5laRVTMNM4Pn/+m/CQSsSpgRxrFOf40dW02hUxzEPchZRwx/Tn2d4SFrKIL0aw7WJGP
- AiEpw+dzOg38EWTza31t+yyPQZKajFivQVwqRk13c7XqtI+THKSNnYwT1EUH4SPMlEoMYLsBea1
- 5IPDptbuTJRfLJqfcdU4Inzw+cMKp+iHFyL2AOjVvM3m5oHm0OtatBTsvt3czKmrjDcR0HBC2jz
- 67Zi4MhWhsLxHp8Me8784vqrfOUYYcJyr+zqNMGuars0j61TXqCX1iquTi8WAf/Llv7Izp3wlNO
- NTN+m7+znIr9BhuwR+cDEOe1OTLQH+z6b5r8EGM6yZXcMW4UZQkIiQMGJwt2tBsB384j6T8lWDZ
- z8IINld/7m99KdA==
+ bh=f+pBY7K9E3HdtzS9Ahsq3e8j7aQZanCIxcPzFBfxZu8=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiHnCN1wUPqmnc7z9wgYcRi2LRujCzQvgaLo
+ JbwUpNZQmaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3ohwAKCRDa6OEJdZac
+ 5WQXEACbciJfEAFrFqIaVnpvFE8QHje/J/3X4UPjMVd+5wO66KSLf2os+3BfW74Pb5xvYmliSbJ
+ w9clKeqrEqx0MwoLprxmACk73jYPaGKD3UIR5P3T8oySz2iHpctAg6hDTWMR4mCaHNtp51/6DtZ
+ 79xOxF9HNj9S7Mkui96TsbSD8SwmPvaNSg31YLB3WsX9AHJZQVvfsC6BAVGVq9stiVNF1XHxe2K
+ 4t9Yq4ijyvjK88e01O+JlSPEle0tdr+WFaHtw34A8JRIo4SkFQb92Ny9lHxc2qC+1SsZQeVqRQ5
+ OxP9ONLZ/KA4TXk3O9Wsf2jpckhwQGVQZZ4sDjguWG6cApmrNGbb6ItTYSNy92W1/rpAMYUxl0P
+ WsvWg9mCH31TygaWhHSli7c9iaQ8DX4bSktUAevId/KXimMED6I5wfhNQY3uupZxK3UPNNCbAfH
+ A7oNwM/yHj/WRpyl5xDwr9X/K/v+1BzgpKdLVOKJnK/aJWHebgIP2GbgjBgRZFGGPWyGDqp5cFI
+ Dt9QGw3tOoEhF/IfbnneJNQ2AlfpWl+GOp5BDgXBtdbB5rJQsL3Du3TnEutUHS7Wdhefs00Rc5b
+ NRDq047aTs/6rLczvZHbQKxH8r/iZAR50NXRouREnko0DEMAaXOSuMXomfuWGGYr4Lm8mazewSD
+ IIWjPN/UxICbgHQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -108,146 +108,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-mon_cpu_path and reset_seen are only used by HMP monitors; move them
-from the base Monitor struct into MonitorHMP to properly encapsulate
-HMP-specific state.
+Add a QMP command to query user-mode network stack (slirp) connection
+states, providing a structured alternative to "info usernet" HMP.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+The new command returns a list of UsernetInfo, with hub-id, hub-name,
+and connection info for each slirp stack. It is marked unstable as it
+is meant for debugging.
+
+Rewrite hmp_info_usernet() as a thin wrapper over qmp_x_query_usernet()
+so the HMP and QMP paths share the same implementation.
+
+This is part of the effort to decouple HMP from QEMU core.
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
 ---
- monitor/hmp-cmds.c         | 16 +++++++++-------
- monitor/hmp.c              |  9 +++++----
- monitor/monitor-internal.h |  4 ++--
- monitor/monitor.c          |  1 -
- 4 files changed, 16 insertions(+), 14 deletions(-)
+ net/slirp.c   | 34 ++++++++++++++++++++++++++++------
+ qapi/net.json | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 72 insertions(+), 6 deletions(-)
 
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index 6b1114fdaf13..6718fec97047 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -499,31 +499,33 @@ void hmp_dumpdtb(Monitor *mon, const QDict *qdict)
- /* Set the current CPU defined by the user. Callers must hold BQL. */
- int monitor_set_cpu(Monitor *mon, int cpu_index)
- {
-+    MonitorHMP *hmp_mon = MONITOR_HMP(mon);
-     CPUState *cpu;
- 
-     cpu = qemu_get_cpu(cpu_index);
-     if (cpu == NULL) {
-         return -1;
-     }
--    g_free(mon->mon_cpu_path);
--    mon->mon_cpu_path = object_get_canonical_path(OBJECT(cpu));
-+    g_free(hmp_mon->mon_cpu_path);
-+    hmp_mon->mon_cpu_path = object_get_canonical_path(OBJECT(cpu));
-     return 0;
+diff --git a/net/slirp.c b/net/slirp.c
+index 9e9941fe73e7..517dd23be14b 100644
+--- a/net/slirp.c
++++ b/net/slirp.c
+@@ -43,6 +43,7 @@
+ #include "system/system.h"
+ #include "qemu/cutils.h"
+ #include "qapi/error.h"
++#include "qapi/qapi-commands-net.h"
+ #include "qobject/qdict.h"
+ #include "util.h"
+ #include "migration/register.h"
+@@ -1200,18 +1201,39 @@ static int slirp_guestfwd(SlirpState *s, const char *config_str, Error **errp)
+     return -1;
  }
  
- /* Callers must hold BQL. */
- static CPUState *mon_get_cpu_sync(Monitor *mon, bool synchronize)
+-void hmp_info_usernet(Monitor *mon, const QDict *qdict)
++UsernetInfoList *qmp_x_query_usernet(Error **errp)
  {
-+    MonitorHMP *hmp_mon = MONITOR_HMP(mon);
-     CPUState *cpu = NULL;
++    UsernetInfoList *head = NULL, **tail = &head;
+     SlirpState *s;
  
--    if (mon->mon_cpu_path) {
--        cpu = (CPUState *) object_resolve_path_type(mon->mon_cpu_path,
-+    if (hmp_mon->mon_cpu_path) {
-+        cpu = (CPUState *) object_resolve_path_type(hmp_mon->mon_cpu_path,
-                                                     TYPE_CPU, NULL);
-         if (!cpu) {
--            g_free(mon->mon_cpu_path);
--            mon->mon_cpu_path = NULL;
-+            g_free(hmp_mon->mon_cpu_path);
-+            hmp_mon->mon_cpu_path = NULL;
-         }
+     QTAILQ_FOREACH(s, &slirp_stacks, entry) {
++        UsernetInfo *ui = g_new0(UsernetInfo, 1);
+         int id;
+-        bool got_hub_id = net_hub_id_for_client(&s->nc, &id) == 0;
+-        char *info = slirp_connection_info(s->slirp);
++
++        if (net_hub_id_for_client(&s->nc, &id) == 0) {
++            ui->has_hub_id = true;
++            ui->hub_id = id;
++        }
++        ui->hub_name = g_strdup(s->nc.name);
++        ui->info = slirp_connection_info(s->slirp);
++
++        QAPI_LIST_APPEND(tail, ui);
++    }
++
++    return head;
++}
++
++void hmp_info_usernet(Monitor *mon, const QDict *qdict)
++{
++    g_autoptr(UsernetInfoList) list = NULL;
++    UsernetInfoList *entry;
++
++    list = qmp_x_query_usernet(&error_abort);
++    for (entry = list; entry; entry = entry->next) {
++        UsernetInfo *ui = entry->value;
+         monitor_printf(mon, "Hub %d (%s):\n%s",
+-                       got_hub_id ? id : -1,
+-                       s->nc.name, info);
+-        g_free(info);
++                       ui->has_hub_id ? (int)ui->hub_id : -1,
++                       ui->hub_name, ui->info);
      }
--    if (!mon->mon_cpu_path) {
-+    if (!hmp_mon->mon_cpu_path) {
-         if (!first_cpu) {
-             return NULL;
-         }
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 22b1972d346a..8134dfaad4bb 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -50,6 +50,7 @@ OBJECT_DEFINE_TYPE(MonitorHMP, monitor_hmp, MONITOR_HMP, MONITOR);
- static void monitor_hmp_finalize(Object *obj)
- {
-     MonitorHMP *hmp = MONITOR_HMP(obj);
-+    g_free(hmp->mon_cpu_path);
-     if (hmp->rs) {
-         readline_free(hmp->rs);
-     }
-@@ -112,8 +113,8 @@ int monitor_hmp_vprintf(Monitor *mon, const char *fmt, va_list ap)
- static void monitor_hmp_accept_input(Monitor *mon)
- {
-     qemu_mutex_lock(&mon->mon_lock);
--    if (mon->reset_seen) {
--        MonitorHMP *hmp = MONITOR_HMP(mon);
-+    MonitorHMP *hmp = MONITOR_HMP(mon);
-+    if (hmp->reset_seen) {
-         assert(hmp->rs);
-         readline_restart(hmp->rs);
-         qemu_chr_fe_accept_input(&mon->chr);
-@@ -1556,7 +1557,7 @@ static void monitor_event(void *opaque, QEMUChrEvent event)
-     case CHR_EVENT_MUX_OUT:
-         qemu_mutex_lock(&mon->mon_lock);
-         if (!mon->mux_out) {
--            if (mon->reset_seen && !mon->suspend_cnt) {
-+            if (hmp->reset_seen && !mon->suspend_cnt) {
-                 monitor_puts_locked(mon, "\n");
-             } else {
-                 monitor_flush_locked(mon);
-@@ -1573,7 +1574,7 @@ static void monitor_event(void *opaque, QEMUChrEvent event)
-         monitor_printf(mon, "QEMU %s monitor - type 'help' for more "
-                        "information\n", QEMU_VERSION);
-         qemu_mutex_lock(&mon->mon_lock);
--        mon->reset_seen = 1;
-+        hmp->reset_seen = 1;
-         if (!mon->mux_out && hmp->use_readline) {
-             /* Suspend-resume forces the prompt to be printed.  */
-             monitor_suspend(mon);
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index e0a124a317a5..fdeeeb853636 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -137,7 +137,6 @@ struct Monitor {
-     CharFrontend chr;
-     int suspend_cnt;            /* Needs to be accessed atomically */
-     QEMUBH *accept_input_bh;    /* persistent BH for monitor_accept_input */
--    char *mon_cpu_path;
-     QTAILQ_ENTRY(Monitor) entry;
+ }
  
-     /*
-@@ -153,7 +152,6 @@ struct Monitor {
-     GString *outbuf;
-     guint out_watch;
-     int mux_out;
--    int reset_seen;
- };
- 
- struct MonitorHMPClass {
-@@ -170,6 +168,8 @@ struct MonitorHMP {
-      * These members can be safely accessed without locks.
-      */
-     ReadLineState *rs;
-+    char *mon_cpu_path;
-+    int reset_seen;
- };
- 
- struct MonitorQMPClass {
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 6af09f2f6eac..6d6ffbb0f78a 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -89,7 +89,6 @@ static void monitor_finalize(Object *obj)
-         qemu_bh_delete(mon->accept_input_bh);
-     }
-     g_free(mon->chardev_id);
--    g_free(mon->mon_cpu_path);
-     qemu_chr_fe_deinit(&mon->chr, false);
-     g_string_free(mon->outbuf, true);
-     qemu_mutex_destroy(&mon->mon_lock);
+diff --git a/qapi/net.json b/qapi/net.json
+index 1a6382825c5e..5d3342fba23b 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -1261,3 +1261,47 @@
+ ##
+ { 'event': 'NETDEV_VHOST_USER_DISCONNECTED',
+   'data': { 'netdev-id': 'str' } }
++
++##
++# @UsernetInfo:
++#
++# Information about a user-mode network stack (slirp).
++#
++# @hub-id: The hub id, if available.
++#
++# @hub-name: The name of the hub.
++#
++# @info: Network information from slirp.
++#
++# Since: 11.2
++##
++{ 'struct': 'UsernetInfo',
++  'data': {
++    '*hub-id': 'int',
++    'hub-name': 'str',
++    'info': 'str' },
++  'if': 'CONFIG_SLIRP' }
++
++##
++# @x-query-usernet:
++#
++# Query user-mode network stack connection states.
++#
++# Features:
++#
++# @unstable: This command is meant for debugging.
++#
++# Returns: list of user-mode network stack information.
++#
++# Since: 11.2
++#
++# .. qmp-example::
++#
++#     -> { "execute": "x-query-usernet" }
++#     <- { "return": [ { "hub-id": 0, "hub-name": "vnet",
++#                        "info": "..." } ] }
++##
++{ 'command': 'x-query-usernet',
++  'returns': ['UsernetInfo'],
++  'if': 'CONFIG_SLIRP',
++  'features': [ 'unstable' ] }
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
