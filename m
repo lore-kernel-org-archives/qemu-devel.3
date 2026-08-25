@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 381E5C61DBC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CFE8C61DB6
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:08:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylFs-0006Zv-LF; Tue, 25 Aug 2026 03:07:32 -0400
+	id 1wylFt-0006eP-E1; Tue, 25 Aug 2026 03:07:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylFo-0006R6-4x; Tue, 25 Aug 2026 03:07:28 -0400
+ id 1wylFn-0006Qi-2b; Tue, 25 Aug 2026 03:07:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylFm-0005y9-8d; Tue, 25 Aug 2026 03:07:27 -0400
+ id 1wylFl-0005xn-9b; Tue, 25 Aug 2026 03:07:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641596; bh=rc/UuXMu2rKfZA7XORSoQghEPR6X3TcTiSNAxujo3Vo=;
+ t=1787641596; bh=deDr1mBzy3GEFmOMQZa8En/k6SYYhLXH/eqmFuwvhWY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=m53KuQrPtHz/tlYQrXUNEKH+9pFLZO5bgd6tCsD2WZu9BvTx+kEPjkjKvCM7FMFp9
- shCtc+N1xq0aRd2cXENa8nnMjBdN86VBE0vUg0sgJnSNyt9dVU3rlg1pm5ZuysAYse
- opEoDAEgnTpDxWb4HJmoyVpgJGRUNXnYgF8RIMNusw3rxTdyrCLzHuCfomLlRPJ5V3
- pkOLdqfUKyISz1LiqVBP0RoC+pa6PR2vxefsMzBtIKgXZ/LRY96omcSpelXsq/FmkO
- urnNS/NfWgrCGYOi3JdY2Im0Y+K++swcZK/b6SXf34TYMMe6YbJnod0d/bMJ/A5ZFN
- ddNuWvL2sFWOA==
+ b=YvbQtgOUxMs8oP3auCN6/g27nxVsplUJE2zHYgytrUQ7rg70DQMVLF0RyjB1ndj/m
+ 8l5OIyonS+TJiWCFkoubgU9do83bz9/X/lmYOGLpDUiKErLW574nxjjAOh7HiKxGEs
+ IAEfgncwJJrsCBkpG5bfKz8EGEBoCJkJJVeV7UY9CQAOGKrElwrd7i6HP+2/1dWOUT
+ 01O2GZxSE4HVHbIxPYmDoar8Z3SWdKQjCbTXvEPeBi6sygtSR1aIOnI5zCZf4H0o29
+ wVwrk6kQ7YiEwm8aDdRPK5zwcFn3bkCHTq7PhBGiZs/iUsuGxpVNa0EIRVWqGCCSc4
+ qpCakeW/dPvnQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0BB2F1CE217;
+ by isrv.corpit.ru (Postfix) with ESMTP id 08C531CE216;
  Tue, 25 Aug 2026 10:06:36 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id C2E6E415F92;
+ by tsrv.corpit.ru (Postfix) with ESMTP id BE3A8415F91;
  Tue, 25 Aug 2026 10:07:12 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 791A03240E; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ id 7616A3240C; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Andrey Polivoda <apolivodaa433@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 50/91] target/i386: decode opcode extensions group
- 3 /1 as TEST
-Date: Tue, 25 Aug 2026 10:05:22 +0300
-Message-ID: <20260825070619.174584-8-mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 v2 49/91] target/i386: allow transition to
+ virtual-8086 mode only if CPL == 0 and CPU is not in long mode
+Date: Tue, 25 Aug 2026 10:05:21 +0300
+Message-ID: <20260825070619.174584-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
@@ -75,55 +75,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Andrey Polivoda <apolivodaa433@gmail.com>
 
-According to Table A-6 in Volume 3 of AMD64 Architecture Programmer's Manual,
-opcodes F6 and F7 (opcode extensions group 3) with ModRM's reg field values
-of 0 and 1 can be used to encode a TEST instruction.
+According to the pseudocode for the IRET instruction in both the Intel 64
+and IA-32 Architectures Software Developer's Manual and the AMD64 Architecture
+Programmer's Manual, a transition to virtual-8086 mode is allowed only if all
+of the following conditions are met:
 
-Although Intel 64 and IA-32 Architectures Software Developer's Manual leaves
-the cell 1 of opcode extensions group 3 blank in the opcode table
-(Table A-6, Volume 2D), the instruction in a group 3 with reg field of ModRM
-byte set to 1 actually behaves like TEST instruction on Intel CPUs.
+1. The new EFLAGS.VM bit is set to 1.
+2. The Current Privilege Level (CPL) is 0.
+3. The CPU is in protected mode (and not in long mode).
 
-Currently, QEMU decodes group 3 instruction as TEST only if reg field of ModRM
-byte is 0. When the reg field is 1, QEMU raises a #UD exception.
-This behavior does not match real Intel and AMD hardware.
+Currently, QEMU performs only the first check. This omission allows a
+transition to virtual-8086 mode from long mode, and also enables the guest's
+userspace to trigger this switch.
 
-This patch fixes this issue by duplicating the existing [0x00] and [0x08]
-X86_OP_ENTRYrr(AND, ...) entries into slots [0x01] and [0x09] in the
-opcodes_grp3 table.
+During a legitimate transition, the EFLAGS register is updated in a way that
+allows modification of sensitive fields, such as IOPL and IF (which is expected,
+as only privileged code should be able to initiate this transition).
 
-Fixes: d7c41a60d0c5 ("target/i386: move C0-FF opcodes to new decoder (except for x87)")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3580
+However, due to the lack of appropriate checks, an unprivileged guest userspace
+process can now force this transition and freely modify these fields.
+This allows the userspace to:
+
+1. Disable interrupts, preventing other processes from running on the CPU.
+2. Gain direct hardware I/O access by elevating EFLAGS.IOPL to 3.
+3. Crash the guest kernel by setting CS and SS to resemble segments with RPL = 0
+   and triggering an exception. Since the kernel is unaware that the process
+   entered virtual-8086 mode, it will misinterpret the exception as originating
+   from kernel space.
+
+This patch fixes this bug by adding the missing CPL and long mode checks before
+jumping to the `return_to_vm86` label.
+
+Fixes: 90a9fdae1f1a ("more ring 0 operations")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3583
 Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
 Cc: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20260621032524.1138213-1-apolivodaa433@gmail.com
+Link: https://lore.kernel.org/r/20260622082119.11903-1-apolivodaa433@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 380b9596181760f371713604ea3472c56c19deb9)
+(cherry picked from commit 36f634fe4ab6b266031164ab8d1160e6d11addda)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index faf74b00bbd..9c429e113de 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1624,6 +1624,7 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
-     static const X86OpEntry opcodes_grp3[16] = {
-         /* 0xf6 */
-         [0x00] = X86_OP_ENTRYrr(AND, E,b, I,b),
-+        [0x01] = X86_OP_ENTRYrr(AND, E,b, I,b),
-         [0x02] = X86_OP_ENTRY1(NOT,  E,b,      lock),
-         [0x03] = X86_OP_ENTRY1(NEG,  E,b,      lock),
-         [0x04] = X86_OP_ENTRYrr(MUL, E,b, 0,b, zextT0),
-@@ -1633,6 +1634,7 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
- 
-         /* 0xf7 */
-         [0x08] = X86_OP_ENTRYrr(AND, E,v, I,z),
-+        [0x09] = X86_OP_ENTRYrr(AND, E,v, I,z),
-         [0x0a] = X86_OP_ENTRY1(NOT,  E,v,      lock),
-         [0x0b] = X86_OP_ENTRY1(NEG,  E,v,      lock),
-         [0x0c] = X86_OP_ENTRYrr(MUL, E,v, 0,v, zextT0),
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index d5c174b7fd7..6d424349a58 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -2077,7 +2077,8 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
+             new_cs = popl(&sa) & 0xffff;
+             if (is_iret) {
+                 new_eflags = popl(&sa);
+-                if (new_eflags & VM_MASK) {
++                bool allow_vm86 = (cpl == 0) && !(env->hflags & HF_LMA_MASK);
++                if ((new_eflags & VM_MASK) && allow_vm86) {
+                     goto return_to_vm86;
+                 }
+             }
 -- 
 2.47.3
 
