@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2E65C61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:18:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B7F2C61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:18:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyp6U-0000Sg-Cb; Tue, 25 Aug 2026 07:14:06 -0400
+	id 1wyp8c-0004rN-3B; Tue, 25 Aug 2026 07:16:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp6S-0000Rt-CG; Tue, 25 Aug 2026 07:14:04 -0400
+ id 1wyp8R-0004cX-1G; Tue, 25 Aug 2026 07:16:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp6Q-0008Eb-ID; Tue, 25 Aug 2026 07:14:04 -0400
+ id 1wyp8O-0000nJ-VN; Tue, 25 Aug 2026 07:16:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787656396; bh=UxCU+6aEO245aQ2r2VQqOug3q7k1Gx/VK8nHa0MBeeQ=;
+ t=1787656396; bh=mRiq3NPS0RE6h7wAtDUf657HfK0sPiM5nb2sjbo7Wkw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZG+LBb4DStQZXzohd6+a8wESzEGB3fQO6QyIG9xC9iBxQJMFh8cQNqdlzdFByXf9V
- 4x9OAf8A1VWvfBqvb5sxUnUFcTVwuorqooUmEMHaQ73R8O+CLmVKvk5KS0hV7LfQSP
- E77JcGAcjcA33GqxCJNzxe7XQdK8H2EdJixyEg5X6HaEmz4q2EniPoPbU40Mqb/HPM
- /3OYEYUFShl90LXoxWxPeCR3g0O3vuSR1eqGRzqEpg3cOWGOOrfJDN7p5yuRNG2q8K
- DNgoQcFbWd5yYt+HAnsJjB5ag7R/43l/g3OkshuBo5KpKk6b10qgIrvH1oF6sB1arB
- q7vFLoDfHVoEg==
+ b=N4gUy0VlxAkoohAdXWFp4vUNszQG4XrMmhlZnx2VR+OXsEzAJCh8P6sb+xcgNFI8A
+ PMVLWxEIILyTX1cYiUsq8Xjh+0rJCOEmjL/GsLUVpT9G6qsVKISFsKuCu9bhrH4fe+
+ qunBPLXDPWjAIimzj/ApU8DowDamA6KA0PQ5kvxphBTOgYQdW/Tsax4vAVjsTVWK/Y
+ ufxAFf/kxpO916FStX6DMPiTXdHa68vy57Zfe6n4KpY3C8EwXM3bvazoTytK4lExJC
+ Mu3fLjAJmFfvg4T8kgbWafcmrzmnoapqrJLaB4AHkbl8UiT95A1/7pavJeeXZ0Nx60
+ nT7R0VsVDOKAA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 195D91CE4A8;
+ by isrv.corpit.ru (Postfix) with ESMTP id 903161CE4C0;
  Tue, 25 Aug 2026 14:13:16 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 31EB6416274;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A8EFA41628C;
  Tue, 25 Aug 2026 14:13:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 6F99D32593; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
+ id B9C2F325C3; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Craaijo, Jos" <jos.craaijo@ou.nl>,
- Yudistira Putra <pyudistira519@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v3 140/166] target/i386: fix long mode segment
- override prefix decoding
-Date: Tue, 25 Aug 2026 14:11:36 +0300
-Message-ID: <20260825111206.482723-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, wangyang <wangyang25@otcaix.iscas.ac.cn>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v3 164/166] target/riscv: reject FMV.X.W/FMV.W.X
+ under Zfinx
+Date: Tue, 25 Aug 2026 14:12:00 +0300
+Message-ID: <20260825111206.482723-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
@@ -72,115 +72,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Craaijo, Jos" <jos.craaijo@ou.nl>
+From: wangyang <wangyang25@otcaix.iscas.ac.cn>
 
-On x86, the ES/CS/SS/DS segment override prefixes are null prefixes in
-long mode, and should be ignored. (AMD APM Volume 3, Section 1.2.4)
+Zfinx explicitly excludes the FMV transfer instructions, but
+trans_fmv_x_w/trans_fmv_w_x used REQUIRE_ZFINX_OR_F so a Zfinx-only
+CPU accepted them.  Require RVF instead so the transfers trap with
+an illegal instruction when only Zfinx is present.
 
-This patch fixes the prefix decoding to correctly ignore the prefixes in
-64-bit mode.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3391
-Signed-off-by: Jos Craaijo <jos.craaijo@ou.nl>
-Tested-by: Yudistira Putra <pyudistira519@gmail.com>
-Link: https://lore.kernel.org/r/20260623-fix-x86-long-mode-segment-override-decoding-v1-1-26d9d4b5804e@ou.nl
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 3589cd995b4facf34071e944fd8ec2294524e25a)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4108
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
+Message-ID: <36c7cfebd27b4b6e8bcdd00e09e9dda0@wangyang25.otcaix.iscas.ac.cn>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit af1e669cef162e8d9b5f2f176e8b909d61c4b530)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/hvf/x86_decode.c b/target/i386/hvf/x86_decode.c
-index 5fea2dd3cc0..c8820fd163f 100644
---- a/target/i386/hvf/x86_decode.c
-+++ b/target/i386/hvf/x86_decode.c
-@@ -1867,6 +1867,12 @@ static void decode_prefix(CPUX86State *env, struct x86_decode *decode)
-         case PREFIX_SS_SEG_OVERRIDE:
-         case PREFIX_DS_SEG_OVERRIDE:
-         case PREFIX_ES_SEG_OVERRIDE:
-+            if (x86_is_long_mode(env_cpu(env))) {
-+                /* ES/CS/SS/DS segment overrides are ignored in long mode */
-+                decode->rex.rex = 0;
-+                break;
-+            }
-+            /* fall through when not in long mode */
-         case PREFIX_FS_SEG_OVERRIDE:
-         case PREFIX_GS_SEG_OVERRIDE:
-             decode->segment_override = byte;
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index b12fb77559a..93d2b2c8121 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -2583,16 +2583,24 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-         s->prefix |= PREFIX_LOCK;
-         goto next_byte;
-     case 0x2e:
--        s->override = R_CS;
-+        if (!CODE64(s)) {
-+            s->override = R_CS;
-+        }
-         goto next_byte;
-     case 0x36:
--        s->override = R_SS;
-+        if (!CODE64(s)) {
-+            s->override = R_SS;
-+        }
-         goto next_byte;
-     case 0x3e:
--        s->override = R_DS;
-+        if (!CODE64(s)) {
-+            s->override = R_DS;
-+        }
-         goto next_byte;
-     case 0x26:
--        s->override = R_ES;
-+        if (!CODE64(s)) {
-+            s->override = R_ES;
-+        }
-         goto next_byte;
-     case 0x64:
-         s->override = R_FS;
-diff --git a/tests/tcg/x86_64/Makefile.target b/tests/tcg/x86_64/Makefile.target
-index be20fc64e88..c48767fef85 100644
---- a/tests/tcg/x86_64/Makefile.target
-+++ b/tests/tcg/x86_64/Makefile.target
-@@ -15,6 +15,7 @@ X86_64_TESTS += vsyscall
- X86_64_TESTS += noexec
- X86_64_TESTS += cmpxchg
- X86_64_TESTS += adox
-+X86_64_TESTS += segment-prefixes
- X86_64_TESTS += test-1648
- X86_64_TESTS += test-2175
- X86_64_TESTS += cross-modifying-code
-diff --git a/tests/tcg/x86_64/segment-prefixes.c b/tests/tcg/x86_64/segment-prefixes.c
-new file mode 100644
-index 00000000000..a7e6e285b2c
---- /dev/null
-+++ b/tests/tcg/x86_64/segment-prefixes.c
-@@ -0,0 +1,25 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* See https://gitlab.com/qemu-project/qemu/-/work_items/3391 */
-+
-+int main()
-+{
-+    int data = 0;
-+
-+    /* Ensure that ignored segment override prefixes are actually ignored */
-+    asm volatile (
-+        "wrgsbase %0\n\t"
-+        ".byte 0x65, 0x26\n\t" /* prefixes: GS + ES */
-+        "movb $0, 0\n\t"
-+        ".byte 0x65, 0x2E\n\t" /* prefixes: GS + CS */
-+        "movb $0, 0\n\t"
-+        ".byte 0x65, 0x36\n\t" /* prefixes: GS + SS */
-+        "movb $0, 0\n\t"
-+        ".byte 0x65, 0x3E\n\t" /* prefixes: GS + DS */
-+        "movb $0, 0\n\t"
-+        :
-+        : "r" (&data)
-+        : "memory"
-+    );
-+
-+    return 0;
-+}
+diff --git a/target/riscv/insn_trans/trans_rvf.c.inc b/target/riscv/insn_trans/trans_rvf.c.inc
+index ed73afe0894..3977c513c56 100644
+--- a/target/riscv/insn_trans/trans_rvf.c.inc
++++ b/target/riscv/insn_trans/trans_rvf.c.inc
+@@ -426,7 +426,8 @@ static bool trans_fmv_x_w(DisasContext *ctx, arg_fmv_x_w *a)
+ {
+     /* NOTE: This was FMV.X.S in an earlier version of the ISA spec! */
+     REQUIRE_FPU;
+-    REQUIRE_ZFINX_OR_F(ctx);
++    /* Zfinx explicitly excludes the FMV transfer instructions. */
++    REQUIRE_EXT(ctx, RVF);
+ 
+     TCGv dest = dest_gpr(ctx, a->rd);
+     TCGv_i64 src1 = get_fpr_hs(ctx, a->rs1);
+@@ -529,7 +530,8 @@ static bool trans_fmv_w_x(DisasContext *ctx, arg_fmv_w_x *a)
+ {
+     /* NOTE: This was FMV.S.X in an earlier version of the ISA spec! */
+     REQUIRE_FPU;
+-    REQUIRE_ZFINX_OR_F(ctx);
++    /* Zfinx explicitly excludes the FMV transfer instructions. */
++    REQUIRE_EXT(ctx, RVF);
+ 
+     TCGv_i64 dest = dest_fpr(ctx, a->rd);
+     TCGv src = get_gpr(ctx, a->rs1, EXT_ZERO);
 -- 
 2.47.3
 
