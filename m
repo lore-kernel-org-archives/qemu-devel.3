@@ -4,94 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E644C5DF94
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84A33C61DBD
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 08:01:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylyD-0003hQ-C0; Tue, 25 Aug 2026 03:53:21 -0400
+	id 1wym5N-0005ft-1E; Tue, 25 Aug 2026 04:00:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian@quante.one>)
- id 1wylyC-0003hI-L8
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 03:53:20 -0400
-Received: from nx84.node01.secure-mailgate.com ([89.22.108.84])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian@quante.one>)
- id 1wylyB-0001dw-3B
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 03:53:20 -0400
-Received: from web279.dogado.net ([31.47.255.59])
- by node01.secure-mailgate.com with esmtps (TLS1.2) tls
- TLS_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <christian@quante.one>)
- id 1wyly7-00BwLV-ON; Tue, 25 Aug 2026 09:53:16 +0200
-X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quante.one;
- s=cloudpit; t=1787644395;
- bh=oI5oob7mOO8n7M2C0ZtKlrcQtvvRSCypxTY7UignYO4=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=MpDsFJDW3ixX9IsgQOX8unMTHVCNeoUaqg5tYy49JoCauIgSGslsGOGQ3jyCFwwIc
- mFMSUsSe4eKQFEn1ECjXCQ7IgqwTIK45rtEZJuwzE2AV5+Oiwt5nBtctoQ7Lh02GkE
- nJoRvXKJKrKCDj94J0ty9d6Sl+Wqz3KjS9l9B6Ok=
-Received: from Zeuss.fritz.box (p57b2f393.dip0.t-ipconnect.de [87.178.243.147])
- (Authenticated sender: christian@quante.one)
- by web279.dogado.net (Postfix) with ESMTPSA id 8F8B8280D5C;
- Tue, 25 Aug 2026 09:53:14 +0200 (CEST)
-X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
-From: Christian Quante <christian@quante.one>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Christian Quante <christian@quante.one>, qemu-devel@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] hw/input/ps2: answer unknown mouse commands with a resend
-Date: Tue, 25 Aug 2026 09:52:50 +0200
-Message-ID: <20260825075254.34963-1-christian@quante.one>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <919f33b8-5bb5-4d52-a616-05446ba0c2fb@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260823071529.16389-1-christian@quante.one>
- <d8529087-6950-45c1-b7a6-74ab80a10e25@rsg.ci.i.u-tokyo.ac.jp>
- <919f33b8-5bb5-4d52-a616-05446ba0c2fb@rsg.ci.i.u-tokyo.ac.jp>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-PPP-Message-ID: <178764439524.4158589.9134735991233237785@web279.dogado.net>
-X-PPP-Vhost: quante.one
-X-Originating-IP: 31.47.255.59
-X-SecureMailgate-Domain: web279.dogado.net
-X-SecureMailgate-Username: 31.47.255.59
-Authentication-Results: secure-mailgate.com;
- auth=pass smtp.auth=31.47.255.59@web279.dogado.net
-X-SecureMailgate-Outgoing-Class: ham
-X-SecureMailgate-Outgoing-Evidence: Combined (0.11)
-X-Recommended-Action: accept
-X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuV+hGCGUAP/IHwgbnhkxISr8/hYATUsAuBi
- Ss2+r+Yc1Cu2SmbhJN1U9FKs8X3+Nt1HOctZ5X+40a9IXddeG3M38JQYgcgjsac3uQcQdCX4ROfH
- zJ6mVE7ewsipSVIfs4aNTXTMlluPLo4Fm6X4hPWkS5+h1uiHzk/Rfxfh461YLyu3RZI1CD15pCOE
- 1vk99RMxqKIdDR6RVaf4xWSq5/wwdOtYechJ/ikE1WgRg4cS6K5mANmx2g/2xIniaWLUPf0al0h7
- 43VOpKNY+4MjijihZK0EMmf3P50Ajf/tIX00Fuu2beRqilmjgQ6jA3UwYgnsj5xBssn0tIIHA3aH
- QzCq60l8YRpcxCjc2gcMa3Btw+OTpzU5Yy8oe2B0dJEHaEkiihVil/4PKs38NtnG3PEGvDsoH6Px
- tvFZEJq1ao2KNy9exdvhLPuiw2USEENU6UB8GnZ/gfHrn7QVmGVHZvj/CQeAzNbFDwG/GCY70jyw
- jDnWVUDR+c6ihbT+Pmkgu8dKTnmZuN/XgpugWxfxnwJ/qtmELPnFuzvKMLz+iUfCtfJQrpttlz3e
- aTvSxT28zqN6ApSDP9fLIJcrwFeou+Cx+zcdijFnYDwIvvgDwGlGNltqz//gVodr2Bbrpa11KQ1X
- 60pfttRUJPEpY+dD8D1vIveD1kaqoOX9s49As8Lf9rIL5hu6PBBmQVXJOgy40oaNgxLGDo2IfSff
- yLpMY4GiERnEqbM7eXcjjx1NgqwoSQEiRQv+PVjjwa+Z5RFCOMSo3Wzle3zs24yfrwncN9jnrJpR
- 1fkgawBqrJAecnrgmBTWM43Zy6rUJ+XPVw5rQN3HYZi/RQSVvjLZ9073r2ThsSxXvtcBnutXV2hR
- cyZeMt5qC3RC37WOfcNnA2gZY0tsDJ5OpGajzK+y6qnu2TRmCgWkeniwaIPiNK/dtWTwcPdjzQ6Y
- C7Heg3Xf7O1TOd4AR3bnyxZNhM1OcgqdW/wVtHH2Jl8eCsKWVs21EHNFpMlWjZB6knaS17WqHqbx
- /jMW8tb2W587s0xiEnMbqDovxKrS24UQEiEcX0sIf20P9Z24W5FAMBlV4QRE+Zyl9in1H/aAwarQ
- pYDOYx/6JtUO0Mqlhs6pmFPCFjhhN7CA6xKgoHAnJs1I5c9E1S43mq3kM3Qwxv7D9C3QH5nA6BrC
- GpdIe+N1TqSjWPuDI4o4oSgbUYstBS2wVr+z782L/itpmtBVV8AcwDEGcp3bMIDG5wlpy6uLmsAa
- TUOwBUuWxQ==
-X-Report-Abuse-To: spam@node04.secure-mailgate.com
-X-Complaints-To: abuse@node01.secure-mailgate.com
-Received-SPF: pass client-ip=89.22.108.84; envelope-from=christian@quante.one;
- helo=nx84.node01.secure-mailgate.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
+ id 1wym5J-0005fB-7m
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 04:00:41 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
+ id 1wym5H-0004tk-6K
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 04:00:40 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-38d489b6b71so5335158a91.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 01:00:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1787644837; x=1788249637; darn=nongnu.org;
+ h=references:to:cc:in-reply-to:date:subject:mime-version:content-type
+ :message-id:from:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=euFmNfAinSIbXgk5B0RB8xWWect/SKNPPu9ORlgFI+M=;
+ b=dPsDKKRSw+Aw7qT90b6UaA2LPmx2KdQAsD4abrA27CfI6gu0+M1lSmizkBsAGBPHmF
+ dc11Z0jSalztt7BMCoHUVQHPcWINTcXQHKnwIju2uXuYjaG475Jh3IlRI0qRVCeZfrtc
+ j56NOZs/c4ZWgnzAT+Zwg4Ls55qdIp9K8N2Y42GWRnmong3YHhV7c9Ots6gg8IiTvOE3
+ /ORbxsd+LYN2wbWFYZ4tMmQmACeHO+zXxLwlKsex/hBVaqaJFzz3k7qxxXIremVygMCq
+ XMTCmrYB43TwHelE5Kn7cAvR4lZ6/dHl7C4gqsnhvwSWkn2liZ9nNmUvHJ41HBNdJV2T
+ zQvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787644837; x=1788249637;
+ h=references:to:cc:in-reply-to:date:subject:mime-version:content-type
+ :message-id:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=euFmNfAinSIbXgk5B0RB8xWWect/SKNPPu9ORlgFI+M=;
+ b=bOCHGDeHsJwW0V2OrS7fUDTWbM9pSeXS1suF9DHMnzi/T3z+Quv7ySigfCX+o7srfT
+ hclao9C/z5q5AwBBeDq/apevXt9hWb8d2d25xED5Gpng3akC7shZSfBxCtmUPJ6rWj1j
+ HROfqzyanDHhlunzqiN4pJ2BSiallRMxRJoEnlOu47s4PMnvtUrLXZ5JnZ2S79+Q4Sqx
+ y+8JIXkkyP7QIBCuzRPtI/9LLONd87wEPvoeiw0tWjHYyw+tL8WqKbbFOG2KTls6w5MX
+ N8SGAKnmDL2qAzanTdFXPw537A8ctA6Zl2t4Vz1Sh6zh5P9lCa/1m+sVabQxea3iIXhE
+ cIXg==
+X-Gm-Message-State: AFuF++mqSDvR0OKTgTIk00c2dkr9iQIok5e+e+jJR1qC8N39G2wnC0vw
+ ZWTCLRHAblRCLinKZqmGNEGNV6MiL4DuH1rfhMGDzHBE4THCNoXB5e1C
+X-Gm-Gg: AR+sD11ErCCp86VC9XF9wKzgUeBWaLu3nhsjNO43hIgdT9THZ7VCsS0q7iFyY832nlc
+ RHnsu/NX933y/hV8f0YNbrrImLx8cP/0SEQAblgtjuGZYBJ9Yq5KwLnhbFobPTTswMrGde4OKSZ
+ usTSuugY1xdMS2jCXHuNuJBmPvzwA+36RggS7cO8+sLTrlOYWhArpU5GLDAHyllQSDBxVm1CHYv
+ Ga1Try5wki3K2E0OdSzyZ4GstHQHp/+bfQQ8eSMGVOIWgOHMCaMMd/fUw2Tg3qBnV6tvq5SLAoZ
+ IYTG1zy/JywAIN7vR8jaO4CpdwsUml66AH1ZTqeUmLieFLW0k936b+acdjPM8fn08tcDpHd//Kh
+ GM6ASDLBTGTgD87TesCOZRyOMsOyO+T6JrzNZi4Cq+9YE2Ly9T5UhS+We3MNlhxQnbU6xNDGOyc
+ cZMd8+jFL3+b8lKSoToa8oaN1Ftap8MUB+N/PVlOnjKrvaMXFq5j5T/cCILBrXnj1zP7OZ
+X-Received: by 2002:a17:90a:ec8e:b0:38e:c7b0:84ad with SMTP id
+ 98e67ed59e1d1-395c2f2a10bmr59474917a91.0.1787644834970; 
+ Tue, 25 Aug 2026 01:00:34 -0700 (PDT)
+Received: from smtpclient.apple ([117.55.237.216])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-39645b4d52asm2954576a91.8.2026.08.25.01.00.32
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 25 Aug 2026 01:00:34 -0700 (PDT)
+From: Jack Wang <163wangjack@gmail.com>
+Message-Id: <5783F0B2-CF7F-450D-82DA-93A6BB0CFA38@gmail.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_89A7ACB3-A0DD-4BA4-9A66-588A552C91FB"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
+Subject: Re: [PATCH v3 0/5] Add Axiado SoC AX3005 and EVB
+Date: Tue, 25 Aug 2026 16:00:17 +0800
+In-Reply-To: <9eb76bbd-be48-4095-85ab-7097a7a94a09@axiado.com>
+Cc: qemu-devel@nongnu.org,
+ peter.maydell@linaro.org,
+ qemu-arm@nongnu.org
+To: kchiu@axiado.com
+References: <9eb76bbd-be48-4095-85ab-7097a7a94a09@axiado.com>
+X-Mailer: Apple Mail (2.3864.600.51.1.1)
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=163wangjack@gmail.com; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_STARTS_WITH_NUMS=0.738, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,55 +101,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Akihiko,
 
-thanks for reading it that closely.
+--Apple-Mail=_89A7ACB3-A0DD-4BA4-9A66-588A552C91FB
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
-> With no response, __ps2_command() in libps2 returns -EIO. With this
-> patch, two 0xfe responses instead make it return -EPROTO. The two cases
-> therefore do not return the same error.
+Understand.
+I still need some basic info for confirmation.What the is mmio window =
+size for each uart? Is it designed to be overlapped.Do all UART =
+instances use the same register layout and window size?
 
-Correct, and the sentence claiming otherwise was wrong. ps2_do_sendbyte()
-stops at -EAGAIN once the resends have used up max_attempts, and
-__ps2_command() maps that to -EPROTO on its way out so the resend does
-not leak to callers.
+Thanks=20
+JW..
+> On Tue, 25 Aug 2026 14:07:07 +0800, Kuan-Jui Chiu <kchiu@axiado.com> =
+wrote:
+> Hi Jack
+>=20
+> Sorry that I can't provide the datasheet due to the company policy
+>=20
+> I can only share about the SoC specification in cover letter and use =
+the=20
+> existing QEMU models like Axiado SDHCI and Cadence GPIO
+>=20
+>=20
+> I never enabled QMP before but you are right on this missing class=20
+> problem. I am studying for how to use QMP right now.
+>=20
+>=20
+> B.R.
+>=20
+> Howard
+>=20
+> Jack Wang =E6=96=BC 2026/8/25 =E4=B8=8B=E5=8D=88 01:52 =E5=AF=AB=E9=81=93=
+:
+>=20
+>=20
 
-The traces show the same split from the device side: without the patch
-each unknown command is written once -- nothing comes back, ps2dev->nak
-stays 1, -EIO -- and with it twice, because 0xFE makes libps2 retry once
-before it gives up.
+>> On Tue, 25 Aug 2026 13:52:51 +0800, Jack Wang <163wangjack@gmail.com =
+<mailto:163wangjack@gmail.com>> wrote:
+>> Hi Kuan-Jui,
+>>=20
+>> Cheers for the v3, that was a really quick update!
+>>=20
+>> The basic tests passed on my local machine, and I will look through =
+each patch carefully next. I'm not sure if I'm qualified enough to give =
+Reviewed-by or Tested-by tags yet. Anyway, if anything I do during the =
+review is inappropriate, please just let me know.
+>>=20
+>> I checked the https://axiado.com/products/ link you mentioned, but =
+didn't find the critical info I needed. I googled for the AX3005 =
+datasheet but not much useful infomation. AI tell me it's not =
+public.emmm.. If you could offer me some key hardware information for =
+the QEMU modeling, that would be much better.
+>>=20
+>> Also, since you asked for my commands before, if I find any problems, =
+I will attach the exact commands I used in the email to help identify =
+the bug. I am testing on my Mac now, so please contact me if you have =
+any trouble reproducing the issues.
+>>=20
+>> Best regards, : )
+>>=20
+>> JW..
 
-v2 says -EIO -> -EPROTO and drops the "same error" claim.
+--Apple-Mail=_89A7ACB3-A0DD-4BA4-9A66-588A552C91FB
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
 
-> Commit 06b3611fc2a3 ("ps2: reject unknown commands, instead of
-> blindly accepting them") changed unknown keyboard commands from ACK
-> to Resend in 2016, so this behavior is ten years old, not twenty.
+<html><head><meta charset=3D"UTF-8"><meta http-equiv=3D"content-type" =
+content=3D"text/html; charset=3Dutf-8"></head><body =
+style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;"><span style=3D"caret-color: rgb(0, 0, =
+0); color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; display: inline =
+!important; float: none;">Understand.</span><br style=3D"caret-color: =
+rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; display: inline !important; float: none;">I still =
+need some basic info for confirmation.What the is mmio window size for =
+each uart? Is it designed to be overlapped.Do all UART instances use the =
+same register layout and window size?</span><br style=3D"caret-color: =
+rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; display: inline =
+!important; float: none;">Thanks<span =
+class=3D"Apple-converted-space">&nbsp;</span></span><br =
+style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; display: inline =
+!important; float: none;">JW..</span><br style=3D"caret-color: rgb(0, 0, =
+0); color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: =
+solid;"><blockquote type=3D"cite" style=3D"font-family: Helvetica; =
+font-size: 12px; font-style: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-line: =
+none; text-decoration-thickness: auto; text-decoration-style: solid;">On =
+Tue, 25 Aug 2026 14:07:07 +0800, Kuan-Jui Chiu &lt;kchiu@axiado.com&gt; =
+wrote:<br>Hi Jack<br><br>Sorry that I can't provide the datasheet due to =
+the company policy<br><br>I can only share about the SoC specification =
+in cover letter and use the<span =
+class=3D"Apple-converted-space">&nbsp;</span><br>existing QEMU models =
+like Axiado SDHCI and Cadence GPIO<br><br><br>I never enabled QMP before =
+but you are right on this missing class<span =
+class=3D"Apple-converted-space">&nbsp;</span><br>problem. I am studying =
+for how to use QMP right now.<br><br><br>B.R.<br><br>Howard<br><br>Jack =
+Wang =E6=96=BC 2026/8/25 =E4=B8=8B=E5=8D=88 01:52 =
+=E5=AF=AB=E9=81=93:<br><br><br></blockquote><br style=3D"caret-color: =
+rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: =
+solid;"><blockquote type=3D"cite" style=3D"font-family: Helvetica; =
+font-size: 12px; font-style: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-line: =
+none; text-decoration-thickness: auto; text-decoration-style: =
+solid;"><blockquote type=3D"cite">On Tue, 25 Aug 2026 13:52:51 +0800, =
+Jack Wang &lt;<a =
+href=3D"mailto:163wangjack@gmail.com">163wangjack@gmail.com</a>&gt; =
+wrote:<br>Hi Kuan-Jui,<br><br>Cheers for the v3, that was a really quick =
+update!<br><br>The basic tests passed on my local machine, and I will =
+look through each patch carefully next. I'm not sure if I'm qualified =
+enough to give Reviewed-by or Tested-by tags yet. Anyway, if anything I =
+do during the review is inappropriate, please just let me know.<br><br>I =
+checked the<span class=3D"Apple-converted-space">&nbsp;</span><a =
+href=3D"https://axiado.com/products/">https://axiado.com/products/</a><spa=
+n class=3D"Apple-converted-space">&nbsp;</span>link you mentioned, but =
+didn't find the critical info I needed. I googled for the AX3005 =
+datasheet but not much useful infomation. AI tell me it's not =
+public.emmm.. If you could offer me some key hardware information for =
+the QEMU modeling, that would be much better.<br><br>Also, since you =
+asked for my commands before, if I find any problems, I will attach the =
+exact commands I used in the email to help identify the bug. I am =
+testing on my Mac now, so please contact me if you have any trouble =
+reproducing the issues.<br><br>Best regards, : =
+)<br><br>JW..</blockquote></blockquote></body></html>=
 
-Corrected, and v2 cites the commit instead of counting decades.
-
-> I suggest dropping the final sentence.
->
-> Additionally, it would be better to ensure the inline rationale is
-> documented consistently across both the mouse and keyboard paths.
-
-Dropped -- and the sentence before it as well. It described the silence
-this patch removes, which reads oddly right next to the code that no
-longer produces it, and the commit message makes that point already.
-What is left is the sentence that says why a resend rather than an ACK,
-which is the part a reader cannot derive from the line below it. The
-keyboard path gets that same comment as patch 2 of v2, which keeps
-patch 1 a pure fix for stable.
-
-> Also, let's add Cc: qemu-stable@nongnu.org
-
-Added.
-
-One thing the re-measuring turned up: Linux runs into two unknown
-commands during mouse detection, not one. The ALPS probe sends 0xEC,
-which ps2_write_mouse() only answers while the mouse is in wrap mode,
-and the TrackPoint probe sends 0xE1. Each costs a 200 ms reply timeout,
-which is what the ~430 ms consist of. v2 says so.
-
-Christian
+--Apple-Mail=_89A7ACB3-A0DD-4BA4-9A66-588A552C91FB--
 
