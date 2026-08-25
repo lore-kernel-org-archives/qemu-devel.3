@@ -4,69 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8DE3C61DB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 15:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7A11C61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 15:54:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wytPb-0001LC-Li; Tue, 25 Aug 2026 11:50:07 -0400
+	id 1wytSx-0002uj-QQ; Tue, 25 Aug 2026 11:53:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wytPa-0001KL-4q
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 11:50:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wytPY-0006br-F1
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 11:50:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787673002;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=QFiP7cYJs6osMWTZPzSxL6YtBHQtAPVaGS3ZceAg6zI=;
- b=hVLuMZPWx8wC78gC4Tis0J65x3QaN5s+skCRVL6fUQBpeSj0gF2gncQcB7c+xm7CRbpnBP
- 0xg2DyWwy6W3XaCaR616vBlwkao3awafg4lu4NWE+ZBSyf9skOoHvNKac2hCjDZrcbTQdm
- tkHRAyOky/a89GphcECLNJUPyGMttTA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-414-TSyV5UPpNcyNko7SFHzezQ-1; Tue,
- 25 Aug 2026 11:49:32 -0400
-X-MC-Unique: TSyV5UPpNcyNko7SFHzezQ-1
-X-Mimecast-MFC-AGG-ID: TSyV5UPpNcyNko7SFHzezQ_1787672952
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0012D195604C; Tue, 25 Aug 2026 15:49:00 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9B3AB434; Tue, 25 Aug 2026 15:48:58 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Fam Zheng <fam@euphon.net>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH] virtio-scsi: set dataplane_started to false upon failure
-Date: Tue, 25 Aug 2026 11:48:54 -0400
-Message-ID: <20260825154854.263819-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wytSw-0002uX-Nq
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 11:53:34 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wytSv-0001Ya-9H
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 11:53:34 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2d5cad1a6baso46184205ad.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 08:53:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787673211; x=1788278011; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=ijOUq3E1AqgH0rZW+CrBeTX5q3V53nWudqXLZTiTPEQ=;
+ b=Q5un02r9IOtl86EKLQA5kFID1fTbF3NoTtgpqck4ydpsvNEUjEocrL080S7/k8Bfyu
+ A5stswt8TWEZ2HEr6tYcCevKOauQ0dEqbztazcE2gaqrx9mS1Ez3DvlDeDmnjt70e/jU
+ Z2a6+Tum0YzcHHpeRrA6kWQ8h6/Fzl8+FAze7bj4kahTXbTIvYQf0iUeu7gCdhao/Cl0
+ UhKIk71gR/qVrVq+5m+2KYRE/NMvqyAUVjVQkVZhfviYViNOkQ69s56ggsGUkJx/hdFX
+ U2kEfxuFIXEQ+XHq8fjdW7yHm48XLuvrl/ozmensKTk1BRPWTHFn0FOX25QQArc2yqVq
+ Ag0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787673211; x=1788278011;
+ h=content-transfer-encoding:content-type:in-reply-to:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ijOUq3E1AqgH0rZW+CrBeTX5q3V53nWudqXLZTiTPEQ=;
+ b=Dm4Mb27NOcxaH3090jtnclKHfg7MBHeuxnQmA3zNTDHOdh2M1iYzs+HirB+w8UHYp/
+ x3c0CBF3ElpuyTeIQD6IBFSOnB8UgsvTQBFT+e9pGIgvx8tuhbua6udRKopeCBU4vHhs
+ Qsc7Wka3jgAsHMhulMYGafzQc6FG6J7c5LjNMghqp3p75IB4YllXZO28pyAhKA+dNjgx
+ 5CM/9buvmzGSq/oz5rKmHJzz8TchA8RrvWNQCQ9Tgi7oq9FLDoao3KpFEPNXaL6zSq5w
+ 1e3hEBfrTlpP/0Qs8UQAazWT6vLt6EOErYE9Pq9u0MT0gOHZBXt+q4OZDQ0yH1TWd/Q+
+ Tc8w==
+X-Gm-Message-State: AFuF++kELiHdvqoQbfhLP/7JyyYmyB39zCRKzGPfth38nS8TNR/nD2k0
+ 0t6Ws5GAFVfGQx6v/g95/j3B5kmTnLCATQVDs8ipWERXdlVpEKvaKmTUHr7QyAoOxf0=
+X-Gm-Gg: AR+sD120P/zifCMhv9SQshnlSdnjkLJHqhaw06zW1ABjXUMy6GZyEiNJ151hRFW1Qsz
+ gDWvLOsdHsPyMphNX9k7zuU96xz0+HV0/1RtLEZEdaxStfk8ky4KMlLuCRmEZtvMBV0G7SjTWxA
+ A/GboiiMLac1RxUb6pqRzxRMVUWzazkBE1xXxsUhdecy4gu1/9Df131aM0T5tiGQz7RFCyunx4L
+ MpwtZ/LzHOkwkMdt+xruy7X5fMbcicRpL4c5U+zlumu4YY7DWtPuy8gAuLFkFAygXSl9oyLekDL
+ +/ZfYablEcWDCn3b8OojR7nZ39B1DxgMJcVRr4PtfZ9GNrb2k4E0j0mCoHdbaioI358yYT8T5KU
+ wR8pgTNoEgG0aoRPtbSIOdIXlS0vN+PpYFzxhj+N/dlC2vt4BZ5IywfJwe48ZEKK6/e10pGMsL9
+ Yd1S0+9O3o9NjEgE6vbhpCLy+57ZzB0QfZX16q38fNOx3pPpQFJiJcJ0FRBzQRpT+13+FaoHiyS
+ 5gxZhIQrTQnHEJE5zzpRzCZsCUi
+X-Received: by 2002:a17:902:ec87:b0:2cf:8131:75e8 with SMTP id
+ d9443c01a7336-2d64b11893amr556708205ad.13.1787673211041; 
+ Tue, 25 Aug 2026 08:53:31 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2d704c11616sm216945ad.67.2026.08.25.08.53.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Aug 2026 08:53:30 -0700 (PDT)
+Message-ID: <684092af-4fc9-466b-a185-2ff4ddece732@linaro.org>
+Date: Tue, 25 Aug 2026 08:53:24 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] disas: Replace straggling CS_ARCH_SYSZ
+To: Eric Farman <farman@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+References: <20260824143033.306201-1-farman@linux.ibm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20260824143033.306201-1-farman@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,50 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit e24a47c5b73e ("virtio-scsi: do not use vring in dataplane") set
-dataplane_started to true when virtio_scsi_dataplane_start() fails. This
-is likely a typo since dataplane is not functional after failure.
+On 8/24/26 07:30, Eric Farman wrote:
+> When updating to capstone v6, the define CS_ARCH_SYSZ was replaced
+> with CS_ARCH_SYSTEMZ, except here. On systems without capstone-devel
+> installed, this causes a compile error:
+> 
+>    ../disas/disas-host.c: In function ‘initialize_debug_host’:
+>    ../disas/disas-host.c:78:24: error: ‘CS_ARCH_SYSZ’ undeclared (first use in this function); did you mean ‘CS_ARCH_SH’?
+>       78 |     s->info.cap_arch = CS_ARCH_SYSZ;
+>          |                        ^~~~~~~~~~~~
+>          |                        CS_ARCH_SH
+>    ../disas/disas-host.c:78:24: note: each undeclared identifier is reported only once for each function it appears in
+> 
+> Rather than making capstone required, replace the constant
+> with the same one used elsewhere after that change.
+> 
+> Fixes: c8220a096f ("target/s390x: Update capstone disassembly to v6")
+> Signed-off-by: Eric Farman<farman@linux.ibm.com>
+> ---
+>   disas/disas-host.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-The non-ioeventfd fallback is broken because dataplane_started is true
-after virtio_scsi_dataplane_start() failure. As a result, the following
-assertion failure occurs when a virtio-scsi device exceeds the open file
-descriptor ulimit when setting up notifiers (eventfds):
+Whoops, sorry about that.
 
-  $ ulimit -n 104 # exact number can vary based on QEMU version
-  $ qemu-system-x86_64 -M q35,accel=kvm -m 1G -cpu host -smp 14 \
-         --blockdev file,node-name=drive0,filename=test.img,cache.direct=on,aio=native \
-         --blockdev file,node-name=drive1,filename=data01.img,cache.direct=on,aio=native \
-         --device virtio-scsi-pci,id=virtio-scsi-pci0 \
-         --device scsi-hd,drive=drive0,bus=virtio-scsi-pci0.0 \
-         --device virtio-scsi-pci,id=virtio-scsi-pci1 \
-         --device scsi-hd,drive=drive1,bus=virtio-scsi-pci1.0
-  qemu: virtio-scsi: Failed to set guest notifiers (-24), ensure -accel kvm is set.
-  qemu: virtio_bus_start_ioeventfd: failed. Fallback to userspace (slower).
-  qemu-system-x86_64: ../hw/scsi/virtio-scsi.c:1017: virtio_scsi_reset: Assertion `!s->dataplane_started' failed.
-  Aborted                    (core dumped)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Fixes: e24a47c5b73e ("virtio-scsi: do not use vring in dataplane")
-Buglink: https://redhat.atlassian.net/browse/RHEL-193328
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- hw/scsi/virtio-scsi-dataplane.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-dataplane.c
-index 95f13fb7c28..bcb6e441335 100644
---- a/hw/scsi/virtio-scsi-dataplane.c
-+++ b/hw/scsi/virtio-scsi-dataplane.c
-@@ -230,7 +230,7 @@ fail_host_notifiers:
- fail_guest_notifiers:
-     s->dataplane_fenced = true;
-     s->dataplane_starting = false;
--    s->dataplane_started = true;
-+    s->dataplane_started = false;
-     return -ENOSYS;
- }
- 
--- 
-2.55.0
-
+r~
 
