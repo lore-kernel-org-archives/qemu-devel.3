@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFC04C61DBE
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:15:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11E48C61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:15:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyp6Y-0000Xl-Fj; Tue, 25 Aug 2026 07:14:10 -0400
+	id 1wyp7w-0002yH-Mf; Tue, 25 Aug 2026 07:15:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp6V-0000Tb-Uu; Tue, 25 Aug 2026 07:14:07 -0400
+ id 1wyp7s-0002ip-S0; Tue, 25 Aug 2026 07:15:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp6T-0008FF-UU; Tue, 25 Aug 2026 07:14:07 -0400
+ id 1wyp7q-0000YB-6J; Tue, 25 Aug 2026 07:15:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787656396; bh=4avyXc31qlXvT4rHH63pVW1gkjxWi6TD3EuD6ZGJIKI=;
+ t=1787656396; bh=9BOrZsaYURfZM2YijYKjrrBqnHc/RMnHuXvFEe+Tito=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=R3axLAOQV4Ed2hJd7teElmXBjmrsHdtQYbZWR2wD0CpdcrnI6kJ+BFWXTQo7mNiLW
- oRaCeUhfd8h/y/K5mDCuLXx4RFEr/4xrSniDtG5OYIqmzQYCBUFqIKKT2gIPQ4/NWO
- mvJ8Eb/PpaAZ5loDfH+JD3JzcOwi3+mObXgOVTCpZ0xE14dnmhe0a1PawSg8L5Ywc/
- Xm5SR0eQHr3vNtx0OG/XgzeN1nsiSa1GAcyytMOHXs4306Z2CjSF+qE1YQTq2tDSSE
- HYDEvi26WPsRlILN+GaTvVbRlEM7ViY8HRzrPlmMs+OB5YFd6okIwze1c+DttYgfMm
- T+qsjajXIV9yg==
+ b=T/sXP0pa9hZReRNEwqWTzUTyJWoJcREBNL9T9vDYmQPDlT42sHZFwHl9vQEjZUupL
+ FsHkyylpSgKUfX0U8xHCGEp6uvJdpYElxxkk/4J91heyYQQAeES0KcOj7Xg+nFVuf5
+ pHW+P3SK96aWq1RLhoBzZzOmZ/9/9Yc/nPZwFU3hFreiYO6eVsHYamGB3euR+cAX70
+ 9gtJMiVJOIZq17/y4p07yu5fxeiPkly6zE/FXNibux2N+NUZRZTesbLqhtyaCVesMM
+ 9IBR4B1ivrbgPyuWaTlIarumuumL6umz+7rkn3aDshiCv2vrpCCjUPVCS2uqVctvaa
+ yD+rpBweLeWNQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 256801CE4AA;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6A05D1CE4B8;
  Tue, 25 Aug 2026 14:13:16 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3C278416276;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 82CC6416284;
  Tue, 25 Aug 2026 14:13:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 75EDD32597; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
+ id A173A325B3; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrey Polivoda <apolivodaa433@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, TANG Tiancheng <lyndra@linux.alibaba.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v3 142/166] target/i386: decode opcode extensions
- group 3 /1 as TEST
-Date: Tue, 25 Aug 2026 14:11:38 +0300
-Message-ID: <20260825111206.482723-8-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v3 156/166] disas/riscv: Decode unsigned vector
+ immediates as unsigned
+Date: Tue, 25 Aug 2026 14:11:52 +0300
+Message-ID: <20260825111206.482723-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
@@ -73,57 +73,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Polivoda <apolivodaa433@gmail.com>
+From: TANG Tiancheng <lyndra@linux.alibaba.com>
 
-According to Table A-6 in Volume 3 of AMD64 Architecture Programmer's Manual,
-opcodes F6 and F7 (opcode extensions group 3) with ModRM's reg field values
-of 0 and 1 can be used to encode a TEST instruction.
+rv_codec_v_i decodes all .vi operands with operand_vimm(), which
+sign-extends bits 19:15. That matches spec operands named imm, but not the
+.vi forms whose operand is uimm; uimm=31 is decoded as -1 and printed by
+the shared 6-bit 'u' formatter as 63.
 
-Although Intel 64 and IA-32 Architectures Software Developer's Manual leaves
-the cell 1 of opcode extensions group 3 blank in the opcode table
-(Table A-6, Volume 2D), the instruction in a group 3 with reg field of ModRM
-byte set to 1 actually behaves like TEST instruction on Intel CPUs.
+Add rv_codec_v_i_u/operand_vuimm() for the 5-bit uimm forms: vsll.vi,
+vsrl.vi, vsra.vi, vnsrl.wi, vnsra.wi, vssrl.vi, vssra.vi, vnclipu.wi,
+vnclip.wi, vslideup.vi, vslidedown.vi, vrgather.vi, vaeskf1.vi,
+vaeskf2.vi, vsm3c.vi, vsm4k.vi and vwsll.vi. The remaining rv_codec_v_i
+entries are the signed imm forms.
 
-Currently, QEMU decodes group 3 instruction as TEST only if reg field of ModRM
-byte is 0. When the reg field is 1, QEMU raises a #UD exception.
-This behavior does not match real Intel and AMD hardware.
-
-This patch fixes this issue by duplicating the existing [0x00] and [0x08]
-X86_OP_ENTRYrr(AND, ...) entries into slots [0x01] and [0x09] in the
-opcodes_grp3 table.
-
-Fixes: d7c41a60d0c5 ("target/i386: move C0-FF opcodes to new decoder (except for x87)")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3580
-Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
-Cc: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20260621032524.1138213-1-apolivodaa433@gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 380b9596181760f371713604ea3472c56c19deb9)
+Fixes: 07f4964d1785 ("disas/riscv.c: rvv: Add disas support for vector instructions")
+Fixes: 9d92f56d4a44 ("disas/riscv: Add support for vector crypto extensions")
+Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260703-b4-disas-xthead-fix-riscv-next-v4-4-84c566330bc7@linux.alibaba.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 00cec77a7f9f80eb6dc8f0c27009403729e3641e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 93d2b2c8121..16ea52e9d5c 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1520,6 +1520,7 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
-     static const X86OpEntry opcodes_grp3[16] = {
-         /* 0xf6 */
-         [0x00] = X86_OP_ENTRYrr(AND, E,b, I,b),
-+        [0x01] = X86_OP_ENTRYrr(AND, E,b, I,b),
-         [0x02] = X86_OP_ENTRY1(NOT,  E,b,      lock),
-         [0x03] = X86_OP_ENTRY1(NEG,  E,b,      lock),
-         [0x04] = X86_OP_ENTRYrr(MUL, E,b, 0,b, zextT0),
-@@ -1529,6 +1530,7 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 99d7474aff2..5cb9fdaa044 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -1801,19 +1801,19 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "vxor.vi", rv_codec_v_i, rv_fmt_vd_vs2_imm_vm, NULL, 0, 0, 0 },
+     { "vsll.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vsll.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vsll.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vsll.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vsrl.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vsrl.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vsrl.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vsrl.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vsra.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vsra.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vsra.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vsra.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vnsrl.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vnsrl.wx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vnsrl.wi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vnsrl.wi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vnsra.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vnsra.wx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vnsra.wi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vnsra.wi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vmseq.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vmseq.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+     { "vmseq.vi", rv_codec_v_i, rv_fmt_vd_vs2_imm_vm, NULL, 0, 0, 0 },
+@@ -1907,16 +1907,16 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "vsmul.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+     { "vssrl.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vssrl.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vssrl.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vssrl.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vssra.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vssra.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vssra.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vssra.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vnclipu.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vnclipu.wx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vnclipu.wi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vnclipu.wi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vnclip.wv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vnclip.wx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vnclip.wi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vnclip.wi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vfadd.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vfadd.vf", rv_codec_v_r, rv_fmt_vd_vs2_fs1_vm, NULL, 0, 0, 0 },
+     { "vfsub.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+@@ -2046,15 +2046,15 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "vfmv.f.s", rv_codec_v_r, rv_fmt_fd_vs2, NULL, 0, 0, 0 },
+     { "vfmv.s.f", rv_codec_v_r, rv_fmt_vd_fs1, NULL, 0, 0, 0 },
+     { "vslideup.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vslideup.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vslideup.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vslide1up.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+     { "vslidedown.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vslidedown.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vslidedown.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vslide1down.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+     { "vrgather.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vrgatherei16.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vrgather.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vrgather.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vrgather.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "vcompress.vm", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
+     { "vmv1r.v", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vmv2r.v", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+@@ -2142,8 +2142,8 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "vaesef.vs", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vaesem.vv", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vaesem.vs", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+-    { "vaeskf1.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
+-    { "vaeskf2.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
++    { "vaeskf1.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
++    { "vaeskf2.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
+     { "vaesz.vs", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vandn.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vandn.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+@@ -2167,14 +2167,14 @@ const rv_opcode_data rvi_opcode_data[] = {
+     { "vsha2ch.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
+     { "vsha2cl.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
+     { "vsha2ms.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
+-    { "vsm3c.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
++    { "vsm3c.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
+     { "vsm3me.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1, NULL, 0, 0, 0 },
+-    { "vsm4k.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
++    { "vsm4k.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm, NULL, 0, 0, 0 },
+     { "vsm4r.vv", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vsm4r.vs", rv_codec_v_r, rv_fmt_vd_vs2, NULL, 0, 0, 0 },
+     { "vwsll.vv", rv_codec_v_r, rv_fmt_vd_vs2_vs1_vm, NULL, 0, 0, 0 },
+     { "vwsll.vx", rv_codec_v_r, rv_fmt_vd_vs2_rs1_vm, NULL, 0, 0, 0 },
+-    { "vwsll.vi", rv_codec_v_i, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
++    { "vwsll.vi", rv_codec_v_i_u, rv_fmt_vd_vs2_uimm_vm, NULL, 0, 0, 0 },
+     { "amocas.w", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+     { "amocas.d", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+     { "amocas.q", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+@@ -4484,6 +4484,11 @@ static int32_t operand_vimm(rv_inst inst)
+     return (int64_t)(inst << 44) >> 59;
+ }
  
-         /* 0xf7 */
-         [0x08] = X86_OP_ENTRYrr(AND, E,v, I,z),
-+        [0x09] = X86_OP_ENTRYrr(AND, E,v, I,z),
-         [0x0a] = X86_OP_ENTRY1(NOT,  E,v,      lock),
-         [0x0b] = X86_OP_ENTRY1(NEG,  E,v,      lock),
-         [0x0c] = X86_OP_ENTRYrr(MUL, E,v, 0,v, zextT0),
++static uint32_t operand_vuimm(rv_inst inst)
++{
++    return extract32(inst, 15, 5);
++}
++
+ static uint32_t operand_vzimm11(rv_inst inst)
+ {
+     return (inst << 33) >> 53;
+@@ -4887,6 +4892,12 @@ static void decode_inst_operands(rv_decode *dec, rv_isa isa)
+         dec->imm = operand_vimm(inst);
+         dec->vm = operand_vm(inst);
+         break;
++    case rv_codec_v_i_u:
++        dec->rd = operand_rd(inst);
++        dec->rs2 = operand_rs2(inst);
++        dec->imm = operand_vuimm(inst);
++        dec->vm = operand_vm(inst);
++        break;
+     case rv_codec_vror_vi:
+         dec->rd = operand_rd(inst);
+         dec->rs2 = operand_rs2(inst);
+diff --git a/disas/riscv.h b/disas/riscv.h
+index d211700cb2f..36baf5a9880 100644
+--- a/disas/riscv.h
++++ b/disas/riscv.h
+@@ -149,6 +149,7 @@ typedef enum {
+     rv_codec_v_r,
+     rv_codec_v_ldst,
+     rv_codec_v_i,
++    rv_codec_v_i_u,
+     rv_codec_vsetvli,
+     rv_codec_vsetivli,
+     rv_codec_vror_vi,
 -- 
 2.47.3
 
