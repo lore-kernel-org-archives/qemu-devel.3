@@ -4,60 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B922C61DB6
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D57DC5DF94
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:09:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyn4O-0005WO-HV; Tue, 25 Aug 2026 05:03:48 -0400
+	id 1wynAB-00038l-9P; Tue, 25 Aug 2026 05:09:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn49-0005F0-N5; Tue, 25 Aug 2026 05:03:33 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn47-0003AD-ON; Tue, 25 Aug 2026 05:03:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787648560; bh=deDr1mBzy3GEFmOMQZa8En/k6SYYhLXH/eqmFuwvhWY=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=H5okDzF+7K4h7WQoODkGmRLC6Be3fH1B9zNOBC2p9LjYv1WQ4XSiVD5qZyUF9C+ho
- rxn71kHOFRxRN/2EltoDm1wckgU8SVaTZpkpJByoPLKiEM4TrlZgE8cIvHIzo66n0D
- MpG0au+e0gNhfC0X4jfJnooJZSX7ReOgSrQGUZjTWrRkK0tjXPzMwbu/HjGLCDnOIP
- r1Nb0NEIds/RizUv2TTvzRR31blBnRcsny/8tpnmArhz+M/nRXK2CZGlbLE4i4w/As
- 54jBRI+8SfKJrBPAW62dtYfx2mU5VEiPBlml74yub07W6X4RQtv0BmY7/+vmA9zTN4
- Jyi+gdnxY82WA==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5115D1CE3B2;
- Tue, 25 Aug 2026 12:02:40 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3CB46416174;
- Tue, 25 Aug 2026 12:03:17 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B93A03254D; Tue, 25 Aug 2026 12:02:39 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrey Polivoda <apolivodaa433@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v3 168/196] target/i386: allow transition to
- virtual-8086 mode only if CPL == 0 and CPU is not in long mode
-Date: Tue, 25 Aug 2026 12:01:25 +0300
-Message-ID: <20260825090157.471948-7-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
-References: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wynA9-00037j-WC
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 05:09:46 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wynA7-0004iR-1g
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 05:09:45 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-6a3819e8be8so1259944a12.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 02:09:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787648981; x=1788253781; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=fL8XwWEUt2XqCFR9h3EPj7YOpktrz+Uvr5FCS9wX/Vo=;
+ b=pO2TtLmIV4k/jqC/tlEtWis0cwn6XDCcd5NKVIfC6OSMHg2E6KZDfR17UKk+JXC3e1
+ ZPwEv1s8JGnsq29lB91GfDx0p2BJ9WQs2eA19grTmdn6g+xVeiTsxyQFIwAWRbT8RROh
+ 87hWWHFzZ/rU0wMCHE6iWL+IuTLjEZpY+GxA9w9XHMVbGS2FdnVtHXzXXkf7S+i5v8L9
+ CUh5PvORx5GQfkbv7xAgadivTAeD0Vqu4aKANP0Msa4YC3Ts4ahclflsy5ldaw2YvxLx
+ S1sH4c9306JCsyIHf7DRXwN+e3ERtoXdQDO9oNSPOytJedcVe8p7gZif/qrTfR6VeXtB
+ SNuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787648981; x=1788253781;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=fL8XwWEUt2XqCFR9h3EPj7YOpktrz+Uvr5FCS9wX/Vo=;
+ b=qszUFoxBJgdqWuT9vUsO4EpAkc0i3XoyTYjeF+JbBvJ1xHK+8VsplDrOiKyQho0+J6
+ GlUCZin6CDiXBYQaaOF77w89EAqJ3z4bXkPLKwGUCcXIL98jGzxU7+iWHyFsfeXYCDFj
+ IfxsnAZVqbmMJoQbQQtUvr46istwOphIEZpYR3as37et0MSTcM2eLfaR9qOBhoD6YG8L
+ M51TValmWUHxhqiu1kuEgHEtZFcMIzh6C1MZJZZYr2li9JKK9rx2t7T4lu6ygqZ8QTCu
+ oaPcPSRIzfRtc/QCV7+Brft1L8HdP2y8lPm8mHLv4gmwkM3qOgpiXKK1Q9lYleQUnOXt
+ OSbQ==
+X-Gm-Message-State: AFuF++luqkhDHGfMlEmBhZ7B66/T4JFVPbOkNzhuFDoSdgCl4PiqDssA
+ U09E/a54DaIlSHoyODgGXOrZMQv7wWAb1GC0pexIYs+l4W07I53hxIw67z6WNfJmWbM=
+X-Gm-Gg: AR+sD10wdXSM1r8hQvubgJcs45MrmW5HXASAfbDqcQioTwBbia9AqQLFlaEQtmt4Ivi
+ kN5a1dRc5ePss4OeUHWbQuJ6YgrQdGi6xVhhNaVv6qYO22QwTm2FiEFR4Vdc6/4gWpmsRqP7i8A
+ hG6vZaOUhzoP0hqWR9lWp13lS2i00NwtpxwJ5V6lg2n8DmM6ZVb8BVucoqnG0Vop7v3UE5HZJ75
+ Ik6bxbLqpwRms8kiDQDUjjjimjD56/1oR15dgLXdM0HaQBqGquVnk+rMTeR4fSbBUELrio3cEdl
+ NOCKEMRyFkeyCZNOyuXEgbe3rUYG8Qjlw56LZ476uJ7KLhdRMGuABitaYUSA1rDTbhD3bAJVs2V
+ gUq8do4r9+tJM45KeLpposwpAgjaHUQhiufjVc+tGh64Qo1kgw9zl0LVJk1p0VMi1AQbf1KN7f6
+ N/b0isidX8kRZBWSLh80XWL3UA9rBej+0HM4PBw0kegcU7rhRZVTdrl8MQBPCt
+X-Received: by 2002:a05:6402:4288:b0:6a3:eb3c:4142 with SMTP id
+ 4fb4d7f45d1cf-6a5c3f0fed4mr5653555a12.8.1787648981090; 
+ Tue, 25 Aug 2026 02:09:41 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6a59e2da49bsm14554142a12.29.2026.08.25.02.09.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 25 Aug 2026 02:09:40 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id EB2275F7DF;
+ Tue, 25 Aug 2026 10:09:38 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  qemu-arm@nongnu.org,  "Gonglei (Arei)"
+ <arei.gonglei@huawei.com>,  zhenwei pi <zhenwei.pi@linux.dev>,  "Michael
+ S. Tsirkin" <mst@redhat.com>,  Stefano Garzarella <sgarzare@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,  Amit Shah <amit@kernel.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  John Snow <jsnow@redhat.com>,  Kevin Wolf
+ <kwolf@redhat.com>,  Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org,  devel@lists.libvirt.org,  Fabiano Rosas
+ <farosas@suse.de>
+Subject: Re: [PATCH v2 3/8] gitlab: add arm-softmmu tests to the macOS build
+In-Reply-To: <1a491e92-d7e7-446a-9b08-53b12a930be3@oss.qualcomm.com>
+ ("Philippe =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 24 Aug 2026
+ 23:28:28 +0200")
+References: <20260824-fixes-for-11-2-v2-0-352c6b890402@linaro.org>
+ <20260824-fixes-for-11-2-v2-3-352c6b890402@linaro.org>
+ <1a491e92-d7e7-446a-9b08-53b12a930be3@oss.qualcomm.com>
+User-Agent: mu4e 1.14.4-pre1; emacs 30.1
+Date: Tue, 25 Aug 2026 10:09:38 +0100
+Message-ID: <87jyper2gd.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,65 +118,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Polivoda <apolivodaa433@gmail.com>
+Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> writes:
 
-According to the pseudocode for the IRET instruction in both the Intel 64
-and IA-32 Architectures Software Developer's Manual and the AMD64 Architecture
-Programmer's Manual, a transition to virtual-8086 mode is allowed only if all
-of the following conditions are met:
+> On 24/8/26 17:24, Alex Benn=C3=83=C2=A9e wrote:
+>> Now we have fixed the compiler issues lets have at it.
+>
+> The rational isn't clear about the benefit of adding this target.
+> 32-bit is already covered by i686, ARM by aarch64.
 
-1. The new EFLAGS.VM bit is set to 1.
-2. The Current Privilege Level (CPL) is 0.
-3. The CPU is in protected mode (and not in long mode).
+The MacOS coverage is pretty woeful for all guests given the paucity of
+compilers available. I haven't done any in-depth measurement of how
+much extra coverage this gets but it will be some.
 
-Currently, QEMU performs only the first check. This omission allows a
-transition to virtual-8086 mode from long mode, and also enables the guest's
-userspace to trigger this switch.
+>
+>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>> Message-ID: <20260723200904.224413-4-alex.bennee@linaro.org>
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>>   .gitlab-ci.d/macos.yml | 5 +++--
+>>   1 file changed, 3 insertions(+), 2 deletions(-)
+>> diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
+>> index bdb3eae18f0..40b9b637b3b 100644
+>> --- a/.gitlab-ci.d/macos.yml
+>> +++ b/.gitlab-ci.d/macos.yml
+>> @@ -22,7 +22,7 @@
+>>       - export PKG_CONFIG_PATH=3D"$PKG_CONFIG_PATH"
+>>       - brew update
+>>       - brew install $PKGS
+>> -    - brew install aarch64-elf-gcc i686-elf-gcc x86_64-elf-gcc
+>> +    - brew install arm-none-eabi-gcc aarch64-elf-gcc i686-elf-gcc x86_6=
+4-elf-gcc
+>>       - if test -n "$PYPI_PKGS" ; then PYLIB=3D$($PYTHON -c 'import sysc=
+onfig; print(sysconfig.get_path("stdlib"))'); rm -f $PYLIB/EXTERNALLY-MANAG=
+ED; $PIP3 install --break-system-packages $PYPI_PKGS ; fi
+>>     script:
+>>       - mkdir build
+>> @@ -40,8 +40,9 @@ aarch64-macos-15-build:
+>>       PATH_EXTRA: /opt/homebrew/gettext/bin
+>>       PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/nc=
+urses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
+>>       CONFIGURE_ARGS:
+>> -        --target-list=3Daarch64-softmmu,i386-softmmu,x86_64-softmmu
+>> +        --target-list=3Daarch64-softmmu,arm-softmmu,i386-softmmu,x86_64=
+-softmmu
+>>           --cross-prefix-aarch64=3Daarch64-elf-
+>> +        --cross-prefix-arm=3Darm-none-eabi-
+>>           --cross-prefix-i386=3Di686-elf-
+>>           --cross-prefix-x86_64=3Dx86_64-elf-
+>>           --disable-plugins
+>>=20
 
-During a legitimate transition, the EFLAGS register is updated in a way that
-allows modification of sensitive fields, such as IOPL and IF (which is expected,
-as only privileged code should be able to initiate this transition).
-
-However, due to the lack of appropriate checks, an unprivileged guest userspace
-process can now force this transition and freely modify these fields.
-This allows the userspace to:
-
-1. Disable interrupts, preventing other processes from running on the CPU.
-2. Gain direct hardware I/O access by elevating EFLAGS.IOPL to 3.
-3. Crash the guest kernel by setting CS and SS to resemble segments with RPL = 0
-   and triggering an exception. Since the kernel is unaware that the process
-   entered virtual-8086 mode, it will misinterpret the exception as originating
-   from kernel space.
-
-This patch fixes this bug by adding the missing CPL and long mode checks before
-jumping to the `return_to_vm86` label.
-
-Fixes: 90a9fdae1f1a ("more ring 0 operations")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3583
-Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
-Cc: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20260622082119.11903-1-apolivodaa433@gmail.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 36f634fe4ab6b266031164ab8d1160e6d11addda)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index d5c174b7fd7..6d424349a58 100644
---- a/target/i386/tcg/seg_helper.c
-+++ b/target/i386/tcg/seg_helper.c
-@@ -2077,7 +2077,8 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
-             new_cs = popl(&sa) & 0xffff;
-             if (is_iret) {
-                 new_eflags = popl(&sa);
--                if (new_eflags & VM_MASK) {
-+                bool allow_vm86 = (cpl == 0) && !(env->hflags & HF_LMA_MASK);
-+                if ((new_eflags & VM_MASK) && allow_vm86) {
-                     goto return_to_vm86;
-                 }
-             }
--- 
-2.47.3
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
