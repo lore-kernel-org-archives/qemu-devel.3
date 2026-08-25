@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4101C61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:17:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7BABC61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:17:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyp8O-0004QG-84; Tue, 25 Aug 2026 07:16:04 -0400
+	id 1wyp6e-0000mo-7q; Tue, 25 Aug 2026 07:14:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp8J-0004Fa-LH; Tue, 25 Aug 2026 07:16:02 -0400
+ id 1wyp6b-0000kj-UV; Tue, 25 Aug 2026 07:14:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp8I-0000gO-0O; Tue, 25 Aug 2026 07:15:59 -0400
+ id 1wyp6Z-0008JZ-T4; Tue, 25 Aug 2026 07:14:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787656396; bh=kslGV8mjAHxC6kO7E6po/BihyTkS9w4Cqj5pstfFdEo=;
+ t=1787656396; bh=0lMt0gvBpbHy0um5ucjXz5h82q6okqzkNTgVA7k7Jmo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=oGuMNTrAJ3n0sentxNZeNC5cESVUaFkgpFPfm40UsvEfz52sboiFvIqH16UKZ8RH3
- CXT2YULBEAN9b5SXHiY7+dGbwUMRqpMOW0wM7j+8u+UUV1FWwSOduW4gcwdoeeLhVA
- LnaNaQA6XE/qMsuwlo8giilqyzD2eP/CeP0XeHYWoTVH86BjDBwW8RnWRlEBBhM5c0
- wYCNs+QgKG9leuAeOuJgyyDd6qL/CTXH1e4skQ8NNzu3P1N0P4avSZkzSx/Y6DEzTw
- yX54qyqlp5FGHGW73QowNtBr8R/+X1aKAqfiiOLjF78N8vDUfQ5lEbd4j23DjBh+ZX
- obUZV7Tguq3Zg==
+ b=vZbO6qJvwrpyubcAwQMbo0Hh3G6q1DWCTM8Zg1eNDr/0luaoNuK/e6Ue17Xe7cLAS
+ hof72QxEW9ZlXEQ+tDLODIquUB+1f0DauGgvFH9x10M/wshrks+150RabniP/2fg5n
+ zo0kj1QjgGAMhg2KX3oTlE6Qk0WO0MnB5t5R1otlrSpQwOdBsEtSHaylqfHB0pHy3Z
+ 95fPBO3+8o+eshBTx10UpN/jpSyugVJfpj7N8fgcyvhw8E3ZeOG9f+mPQ2pxSNqPfq
+ nw9DYO9zU5ykZbPrveiASlcsOSWfu11enunHc/9Xug1hIbQei+6NTqi5RaHO9gZtrV
+ 21UAW5dnUH1gQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7CEFC1CE4BC;
+ by isrv.corpit.ru (Postfix) with ESMTP id 30D6B1CE4AD;
  Tue, 25 Aug 2026 14:13:16 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9598F416288;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 49B9E416279;
  Tue, 25 Aug 2026 14:13:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id ADB09325BB; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
+ id 7F1513259D; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v3 160/166] disas/riscv: Fix rv32 encoding of zext.h
-Date: Tue, 25 Aug 2026 14:11:56 +0300
-Message-ID: <20260825111206.482723-26-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jan Mercl <0xjnml@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Song Gao <17746591750@163.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v3 145/166] target/loongarch: check FPE before
+ reading fcc in bceqz/bcnez
+Date: Tue, 25 Aug 2026 14:11:41 +0300
+Message-ID: <20260825111206.482723-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
@@ -71,37 +72,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Jan Mercl <0xjnml@gmail.com>
 
-For rv64, pack with rs2 = 0 does not encode zext.h.
+gen_cz_bc() loads env->cf[cj] without CHECK_FPE, unlike every other
+translator that touches an fcc register (trans_fcmp.c.inc and
+trans_fmov.c.inc, for movcf2gr/movgr2cf/movcf2fr/movfr2cf/fsel).
 
+A guest that manages the FPU lazily -- Linux clears CSR.EUEN.FPE in
+lose_fpu() on every context switch -- relies on the next fcc access
+raising a Floating-Point-Disabled exception so the kernel can restore
+that task's fcc.  Because bceqz and bcnez never raise it, they branch on
+the condition flag left behind by whichever task last owned the FPU.
+
+Real Loongson hardware does raise the exception, so this is TCG-only.
+It surfaces as Go binaries dying at startup in runtime.check() with
+"fatal error: float64nan1" -- roughly one process start in a thousand
+once the guest has more runnable tasks than vCPUs -- and in general as a
+conditional branch silently taking the wrong path.
+
+With four tasks each executing 5M bcnez on a 2-vCPU guest, master
+mispredicts 89 of 20000000.  With this patch, 0 of 100000000 over five
+runs; a Loongson-3C5000 is likewise 0 of 600000000.
+
+CHECK_FPE is defined in trans_farith.c.inc, which translate.c includes
+before trans_branch.c.inc, so it is already in scope.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4209
 Cc: qemu-stable@nongnu.org
-Fixes: 02c1b569a15 ("disas/riscv: Add Zb[abcs] instructions")
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260812223142.349142-39-richard.henderson@linaro.org>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit d4151cf2675124e26b3383ae06f7352a23f17399)
+Signed-off-by: Jan Mercl <0xjnml@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260819132422.5164-1-0xjnml@gmail.com>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+(cherry picked from commit 215a4fc08f2aafce54c168cf41c64c79187430c1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 5cb9fdaa044..491896d4a09 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -3182,9 +3182,10 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
-             case 14: op = rv_op_rem; break;
-             case 15: op = rv_op_remu; break;
-             case 36:
--                switch ((inst >> 20) & 0b11111) {
--                case 0: op = rv_op_zext_h; break;
--                default: op = rv_op_pack; break;
-+                if (isa == rv32 && !((inst >> 20) & 0b11111)) {
-+                    op = rv_op_zext_h;
-+                } else {
-+                    op = rv_op_pack;
-                 }
-                 break;
-             case 39: op = rv_op_packh; break;
+diff --git a/target/loongarch/tcg/insn_trans/trans_branch.c.inc b/target/loongarch/tcg/insn_trans/trans_branch.c.inc
+index 221e5159dba..a8f0174b237 100644
+--- a/target/loongarch/tcg/insn_trans/trans_branch.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_branch.c.inc
+@@ -66,6 +66,8 @@ static bool gen_cz_bc(DisasContext *ctx, arg_c_offs *a, TCGCond cond)
+     TCGv src1 = tcg_temp_new();
+     TCGv src2 = tcg_constant_tl(0);
+ 
++    CHECK_FPE;
++
+     tcg_gen_ld8u_tl(src1, tcg_env,
+                     offsetof(CPULoongArchState, cf[a->cj]));
+     gen_bc(ctx, src1, src2, a->offs, cond);
 -- 
 2.47.3
 
