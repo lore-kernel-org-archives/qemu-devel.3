@@ -4,88 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE1B0C61DB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:09:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 619F6C61DB9
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:14:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyyOZ-00089h-QP; Tue, 25 Aug 2026 17:09:23 -0400
+	id 1wyyT2-0000jo-95; Tue, 25 Aug 2026 17:14:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1wyyOY-000897-Db
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:09:22 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wyySz-0000jY-1k
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:13:57 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1wyyOW-0008NC-GP
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:09:22 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-38a0c7e841fso492382a91.2
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 14:09:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wyySx-0000ae-EC
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:13:56 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-84e84a6c4bfso260297b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 14:13:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787692158; x=1788296958; darn=nongnu.org;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=XEWwzwm0+KgrrqKho7ClIK9G3IzWKnm2/x3cuuIS4Ro=;
- b=FgWrcXNP2echO/7Bpmafr9VL4p9WQW6AckI+7Znvf+Z1HM8tmnuy0JIJeZjtARh0xP
- QSn4HBH1StlVE3zGJnPrU4YUFVjsbHNQuNE+1UFBZE6RaI3wKCA1azazMUGJsBc4Pfmo
- yqRYKak+SEBshgimzAeY/UQjUqzFbla00MTuekeb9/vibOcfwTuSsaU0NPWZA6/QY550
- 6uus//hvlA8XfgTu2JVo1FgC+vQyfp9xM0cuWjlub2VD4Nyax5Zx4qFD+ZGWvVbrpZba
- E96mcOqS4ej6pHJ1v2we/nmEnBPyhzLwnJxNtFw9yhCUZzHQ8CtQZ5ZZPu/ht/92G3TW
- HU4g==
+ d=linaro.org; s=google; t=1787692433; x=1788297233; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Jc2y7OVVyMb5aAYVOmJj5Nt78V7OMToArcvk4Xxvn/k=;
+ b=d3i86Y/wPvIVUfCg4IXJ8GH5hfZAukua0y5aNNzRhq3FQEoLMXWAZTcO4D2u8kixIs
+ iSdkWAHjoyJv7hgTZRpr7DDIwaNdqvU9xhnULy8wzlSeeavn9PCvSWxpra91dTPjue5L
+ 7cc2rHnYC1rWOvpXp6Bk1R/PY3MPA78oYr97lRCOn3+xrJq/333FQB8k5LMXqEYfSW9+
+ ZeXuyRnHlYx3yvuL+FpLUTTGcjK19d+nrWHVzO0johhIMeI8NvBuS4mhFKlBJqljaTEn
+ 4dj9SIjXHGv/kv8bt2UA9Cysy3DHXt0jM14AMkTLf0HxCbcLPu6jb8xM2uccCpaVxbjh
+ Q9VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787692158; x=1788296958;
- h=in-reply-to:content-disposition:content-type:mime-version
- :references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=XEWwzwm0+KgrrqKho7ClIK9G3IzWKnm2/x3cuuIS4Ro=;
- b=VLuwgAQgrw3JArMl0T39EOLqQHrobAnTDTL9GdV9KqoZ9VKiU+14OV0kzej+7O288y
- gcbixWncmnsalBEwbEDYIvCqN/PFtSyyzp/oQSqFxx8SBfzXYUyzJjHV2RP3H7IDg2XN
- 3ixRwhaYLX1wwIcURB913QUVQ42y293ATQ8CLuiVKsr4W1/zGq9ZIZIQmqxEx+754iB2
- yVsZ42qr+eYXggzGCa6SGWHstVYS2Ayu0Z73dnKWzyEj00tsNVZQR3bSdykQQ3tTD9bo
- 3mtzNpBoIrPsRVWK7tf6kAMbTseTJZZs8V8YiVLDprHUOeIIsz1JnXMyuG0nny3Aqr7F
- yaYg==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rp83Uo6bMsW89a2FmjlT7w/NRHv+3HM+Ucin6nb7mtWf3cAQeAX1mLILAcE5KdXS3h9V9049rsSn0hy@nongnu.org
-X-Gm-Message-State: AFuF++mTxEn9cQ2cMzrD8aWfDQxFIpjBubeUAOlkN0vkDPZ9DNeRAMax
- xLqcxoPfRF//iC34D8goF6UirUjrVepMzHEkVUJ0OqOFXCO7GU+cjmjX6KDtUBn7w0U=
-X-Gm-Gg: AR+sD12XO8xwG6YM1h33neXu3gw1x5iq2HrZtqvPDZt4mhlfKM9eMDMFZTyNVDmGA5i
- mZIESAfuDY20efAYE/AoXHUMdnL40vFvYHNVXMN0ox78NClOGFzGtbmQR/HEUSg27gMBC/4lqXN
- vxLsEcppd97X5FmI+KN5tsbTCRZN8sTG+O1NQ6cxtnucSYlSPg2PBoRu1bMNo0n80ncGLbjvYpL
- IEfqCNsRGlEAA4BV+sTH0sW22zBA0VJBZTH7uyQs/hq6Cg7vX5b5HdNybtLYpq6P+BWQny/a1qa
- lXSWiQ7y/2/NjoI4hmKvI1RyYPxmyf09S/I1mgBXKXJldDUfoYDcIL1AiNpUvEMZe9mdeR2TGNN
- zgmdb2hWW9r2bPDuwg21E2Vfrp6VBdFZ+v0QQsvoRzpRzMwRTpbE33aKs82LNKFZLBXOXzc4MbQ
- wdhlWZ9r/Bm/Us4OenxBKIwMVWlJTW7TPcRw22jgtX7vRjWtaBED72wKunfnR2sJ1g
-X-Received: by 2002:a17:90b:2791:b0:395:7fff:a08f with SMTP id
- 98e67ed59e1d1-3966cffb1c7mr4401126a91.0.1787692158304; 
- Tue, 25 Aug 2026 14:09:18 -0700 (PDT)
-Received: from p14s ([2604:3d09:148c:c800:a37a:292f:1363:c0af])
+ d=1e100.net; s=20251104; t=1787692433; x=1788297233;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Jc2y7OVVyMb5aAYVOmJj5Nt78V7OMToArcvk4Xxvn/k=;
+ b=ia9klSiwTSHbwQqX11ZOcJ7z3FQVXvz6u+cRhnrjn1Gq5XgpglR4XrNLaSv4IlZt/y
+ zx8invuLKQEq4B+WVvofcom7/9F/xBdO+G4dXg5BeqqW78YfFomex1KXKVDsTvH2WKzZ
+ 7EoruEzoJMRqhvJdcClYD+9030XTJ8fwinGnnbt84KEWAz8XlC63jdHfA+DgijGo628g
+ 8+pX9AqNlE/wrueYgosW6BlmEFluY0r/igxi08dfrTaW70UJN2S9iZc2z0G5WtxcoLep
+ ovlRn0njlG+z6rAM47swHfXDz3gD88y4XI6mXJ59mCdbNpgcFQqFtybG14dYRH0AKfmv
+ s/jQ==
+X-Gm-Message-State: AFuF++kYPNZ4tLiKlQG1zwc58hi7hOAxZg7G/KAhamh6wFRJ7uHyUcwz
+ RpX3SDpRKCdGbo0eMVoNmiZA7iZLTGNo4rjD9ySjAOxheAGCXb+aQ3U+lOnN61MDoz9M6vo2Rur
+ h/D+/+V8=
+X-Gm-Gg: AR+sD11NYuEpszIMy2CWfQPHA21n56j/wIP99P7Ipd7shyWu7yti7lRuPwljxvelonD
+ UYt7MQ0Na1nw2L5KN05oGpLnTryowomHqAPEeZe5BX46VtCmg6ABtTD7zKDZc9cBJ8AAwglK92R
+ 6YS8OsEIY+f9ak7Y6msg6shq97FwWIms/KfxR4DY1al7EXd8ANEMOgG0Bb2AEIT1r1EMA03Ecso
+ 2Kq+uzp3dDyctSoQa2vJPozZJPBfWALA0Njg3sD2GT1FsLFZAT5Q/nVZbQ38qsCCb726JSqzS+R
+ pxDGl3bNMOf4K1U8CE+B46UF5VH+YLp7475nYwXp78mhffmzJst6VlIc/GtvjvC3axny17wpMVf
+ GeaE8a7yR72+6ZgkW4aT70Vf+kev8tyaRe5XIViiXwmdQzNJFULV1wBuLXpXVyEOqRUjBov46ex
+ DGpha9ev6rwi7krwO0K2nitbbm/n7dZSBYiQHTLTS3s0Gjfq7/HTbohmTht9Zy8feYPj6baU0nV
+ Zd+73BZaRh2872mk7aZ81qhx7vL
+X-Received: by 2002:a05:6a00:12ce:b0:848:48d0:934 with SMTP id
+ d2e1a72fcca58-8523bc595a2mr10533458b3a.18.1787692433435; 
+ Tue, 25 Aug 2026 14:13:53 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39668a5a55esm1158770a91.16.2026.08.25.14.09.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Aug 2026 14:09:17 -0700 (PDT)
-Date: Tue, 25 Aug 2026 15:09:14 -0600
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
-To: Kohei Enju <enju.kohei@fujitsu.com>
-Cc: berrange@redhat.com, kchamart@redhat.com,
- pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
- mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
- eblake@redhat.com, armbru@redhat.com, lorenzo.pieralisi@linaro.org,
- gshan@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- kvm@vger.kernel.org
-Subject: Re: [RFC v2 00/24] Add Realm support to QEMU-VMM
-Message-ID: <ao4Eetq7oAAsipo4@p14s>
-References: <20260728192630.240375-1-mathieu.poirier@linaro.org>
- <amrYWWyWlhnN2Fll@FCCLS0092175.localdomain>
+ d2e1a72fcca58-8535cdc038dsm241126b3a.38.2026.08.25.14.13.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Aug 2026 14:13:52 -0700 (PDT)
+Message-ID: <bd82544b-d4e6-41ac-b472-de8ee9364b50@linaro.org>
+Date: Tue, 25 Aug 2026 14:13:52 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <amrYWWyWlhnN2Fll@FCCLS0092175.localdomain>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pj1-x102a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tcg/aarch64: Use tgen_brcondi in tcg_out_qemu_ldst_i128
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: yujun <yujun@kylinos.cn>
+References: <20260724200156.88695-1-richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260724200156.88695-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,81 +104,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Kohei - apologies for the delayed reply.
+Ping.
 
-On Thu, Jul 30, 2026 at 02:11:57PM +0900, Kohei Enju wrote:
-> On 07/28 13:26, Mathieu Poirier wrote:
-> > This patchset provides minimal functionality to start a Realm VM
-> > from an Arm RME capable host using the following command line:
-> > 
-> > qemu-system-aarch64 \
-> >  -M confidential-guest-support=rme0 -object rme-guest,id=rme0 \
-> >  -cpu host -M virt -enable-kvm -M gic-version=3,its=on -nodefaults ..
-> > 
-> > It is a refactoring of Jean-Philippe Brucker's initial work dating from a while
-> > back.  It is compatible with Steven Price's v14 revision [1] of his work adding
-> > CCA support to KVM.
-> > 
-> > * We are currently working on rebasing the work to v15.
-> > 
-> > It was tested on the QEMU SBSA machine.  For convenience, a repository is hosted
-> > here [2], along with the TF-A [3], RMM [4] and Linux kernel [5] for the SBSA
-> > machine (compatible with Steven's v14 patchset).
-> > 
-> > Instructions to compile and run the entire stack can be found here [6].
-> > 
-> > Device Assignment is not included.
-> > 
-> > Thanks,
-> > Mathieu
-> 
-> Hi Mathieu, thank you for your work on upstreaming CCA support. I've
-> tested this series in QEMU-TCG(x-rme=on) environments and confirmed
-> that the basic functionality works well.
-> 
-> I have a question about a QMP command for querying CCA capabilities.
-> 
-> Jean's tree contains the following commit adding such a QMP command. Was
-> this functionality intentionally omitted from this series?
-> https://git.codelinaro.org/linaro/dcap/qemu/-/commit/41f7852cc8590a38c47299a35a7238da09ff9a12
+On 7/24/26 13:01, Richard Henderson wrote:
+> Allow tgen_brcondi to choose between TBNZ and TST+B.cond for
+> implementing a particular mask.
 >
-
-git.codelinaro.org is no longer accessible to me.  Please see if you can point
-me to the same patch in this repository:
-
-https://gitlab.com/Linaro/cca-public/qemu/-/commits/cca/2025-09-12?ref_type=heads
-
- 
-> We are interested in adding this functionality because we are also
-> planning to upstream CCA support for libvirt, which will need a QMP
-> interface to query the CCA capabilities exposed by QEMU.
-> 
-> Since the Linux kernel dropped some configuration parameters such as the
-> hash algorithm, I need to rework the implementation of that QMP command
-> a bit. If it's okay with you, I'd be happy to send out the reworked
-> patch based on this series.
-> 
-> Thanks,
-> Kohei
-> 
-> > 
-> > [1]. https://lore.kernel.org/kvm/20260513131757.116630-1-steven.price@arm.com/T/#m06dd14216aaf76acab65b0a76fb84653141ea64f
-> > [2]. https://gitlab.com/Linaro/cca-public/qemu/-/tree/upstream-v2?ref_type=heads
-> > [3]. https://gitlab.com/Linaro/cca-public/tf-a/trusted-firmware-a/-/tree/cca/v13?ref_type=heads
-> > [4]. https://gitlab.com/Linaro/cca-public/rmm/-/tree/cca/v14?ref_type=heads
-> > [5]. https://gitlab.com/Linaro/cca-public/linux/-/tree/upstream-v2?ref_type=heads 
-> > [6]. https://gitlab.com/Linaro/cca-public/build-instructions
-> > 
-> > RFC v1:
-> > https://lists.gnu.org/archive/html/qemu-devel/2026-07/msg02307.html
-> > 
-> > Changes for V2:
-> > - Fixed linux headers to include correct bit shift for Realm VM (Gavin).
-> > - Removed obsolete rme-guest options (Markus).
-> > - Set ConfidentialGuestSupportClass::kvm_init() to kvm_arm_rme_init() (Gavin).
-> > - Got rid of kvm_arm_rme_vm_type() (Gavin).
-> > - Used kvm_vm_check_extension() instead of kvm_check_extension() to avoid
-> >   error message when starting a Realm (Gavin).
-> > - Removed obsolete kvm_arm_rme_init_guest_ram() (Gavin).
-> > - Collected A-B and R-B.
+> Suggested-by: yujun <yujun@kylinos.cn>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+> Supercedes: 20260629111602.282742-1-yujun@kylinos.cn
+> ("[PATCH] tcg/aarch64: Use TBNZ for 16-byte alignment check on i128 ld/st")
+>
+> Let tgen_brcondi do the heavy lifting, rather than open-coding it all.
+>
+> r~
+> ---
+>   tcg/aarch64/tcg-target.c.inc | 25 ++++++++++---------------
+>   1 file changed, 10 insertions(+), 15 deletions(-)
+>
+> diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
+> index cc9c2a5158..1f9678438d 100644
+> --- a/tcg/aarch64/tcg-target.c.inc
+> +++ b/tcg/aarch64/tcg-target.c.inc
+> @@ -1889,23 +1889,18 @@ static void tcg_out_qemu_ldst_i128(TCGContext *s, TCGReg datalo, TCGReg datahi,
+>       use_pair = h.aa.atom < MO_128 || have_lse2;
+>   
+>       if (!use_pair) {
+> -        tcg_insn_unit *branch = NULL;
+> +        TCGLabel *label = NULL;
+>           TCGReg ll, lh, sl, sh;
+> -
+>           /*
+> -         * If we have already checked for 16-byte alignment, that's all
+> -         * we need. Otherwise we have determined that misaligned atomicity
+> -         * may be handled with two 8-byte loads.
+> +         * Check for 16-byte alignment, taking into consideration the
+> +         * alignment that has already been checked.
+>            */
+> -        if (h.aa.align < MO_128) {
+> -            /*
+> -             * TODO: align should be MO_64, so we only need test bit 3,
+> -             * which means we could use TBNZ instead of ANDS+B_C.
+> -             */
+> -            tcg_out_logicali(s, Ilogic_imm_ANDSI, 0, TCG_REG_XZR, addr_reg,
+> -                             15);
+> -            branch = s->code_ptr;
+> -            tcg_out_insn(s, bcond_imm, B_C, TCG_COND_NE, 0);
+> +        int a_mask = 16 - (1 << h.aa.align);
+> +
+> +        if (a_mask > 0) {
+> +            label = gen_new_label();
+> +            tgen_brcondi(s, TCG_TYPE_I32, TCG_COND_TSTNE,
+> +                         addr_reg, a_mask, label);
+>               use_pair = true;
+>           }
+>   
+> @@ -1944,7 +1939,7 @@ static void tcg_out_qemu_ldst_i128(TCGContext *s, TCGReg datalo, TCGReg datahi,
+>           if (use_pair) {
+>               /* "b .+8", branching across the one insn of use_pair. */
+>               tcg_out_insn(s, branch, B, 2);
+> -            reloc_pc19(branch, tcg_splitwx_to_rx(s->code_ptr));
+> +            tcg_out_label(s, label);
+>           }
+>       }
+>   
 
