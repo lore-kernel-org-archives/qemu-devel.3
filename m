@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E090AC61DB6
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:11:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AB73C5DF94
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:11:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylIG-0004bA-9n; Tue, 25 Aug 2026 03:10:00 -0400
+	id 1wylIg-0005oF-Iw; Tue, 25 Aug 2026 03:10:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylIE-0004Zb-Sy; Tue, 25 Aug 2026 03:09:58 -0400
+ id 1wylIe-0005hk-KW; Tue, 25 Aug 2026 03:10:24 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylID-0006Qc-DL; Tue, 25 Aug 2026 03:09:58 -0400
+ id 1wylIc-0006RX-VF; Tue, 25 Aug 2026 03:10:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641596; bh=N1ndPssLMLDtpfQemz4MsnxvHDWXqKKS4NetkAvmw58=;
+ t=1787641596; bh=gTbgj9WkXboTmhr3e+P2ribHWdlP47LwJeI+QYw/ubo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=jBduU/BVLUaSp+FYAPqhnnxyg9GT0PcfhPvrwQLpf5ewfYpxNQME+zvrbLduIgmeu
- B5kLT3JVON+ZSzuFZlpfQKQJQc8MaL2EcappBbnQgBUTqK4o2tU1TD+KAPUMX/v9TC
- QB/ZZBKpdSnYKINOS3suX9JZ53staTXb4qqtSZvmCc07Seyo6DHuWo2tCkO7cQ2EVL
- cXnLlr3YA98FNpPQd0yjxLH6qB0Fk/D9v7YhH3coHWdzJq8RANfGCyTVuk+qkhlYKo
- AuViyyWelrNWBZg3l77/vhocWor2vReSf0eswQ6s4WIJtPtMD5oXCOt+kGftKBYj3Z
- F9X9g3/sElQpQ==
+ b=QRlsPGrvQN5IEKrMYSpUbyLy3dR27cOPuaQGbEdC9JEAFi18RD4hNh8scN1spYJ7B
+ wYkOgLlZhIpfvCjI7RJRU9HwUwy1tOqaBWCANbETGv5vAw2lHoC3wmv3u5TZk6646A
+ 0Jp1bvyI1CyBLIabppBQaNzy1upaSsgmuVgP4GHSRHn8XqQzbxYv/4LHhpUGqmHVb7
+ xsvBKoPASMjWmwrMTQtjifGzcyeCmKa9OIAldPbe9EFv0M0rceKCzo9r5zDcOSvGqt
+ qyrd5kjNg6HQJbyiHP+6TQtqAaN91Oq6QyLUGUDLMmyMOaRJU0JN1+fqeo7jtuqo5H
+ dJFfO6XAyradA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 938FC1CE231;
+ by isrv.corpit.ru (Postfix) with ESMTP id A1FE41CE234;
  Tue, 25 Aug 2026 10:06:36 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 57FD9415FAC;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 66494415FAF;
  Tue, 25 Aug 2026 10:07:13 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C785D32442; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ id D0A1032448; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, TANG Tiancheng <lyndra@linux.alibaba.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+Cc: qemu-stable@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Nutty Liu <nutty.liu@hotmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 76/91] disas/riscv: Fix 6-bit immediate extraction
-Date: Tue, 25 Aug 2026 10:05:48 +0300
-Message-ID: <20260825070619.174584-34-mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 v2 79/91] hw/riscv/riscv-iommu: fix U-bit check to
+ apply only to leaf S/VS-stage PTEs
+Date: Tue, 25 Aug 2026 10:05:51 +0300
+Message-ID: <20260825070619.174584-37-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -75,40 +74,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: TANG Tiancheng <lyndra@linux.alibaba.com>
+From: Andrew Jones <andrew.jones@oss.qualcomm.com>
 
-rv_codec_r2_imm6 is used for XThead instructions whose 6-bit
-immediate field is encoded in bits 25:20. The old expression
-left-shifted by 38 and then right-shifted by 60, so it kept only
-bits 25:22.
+Commit b795ea0ba471 ("hw/riscv/riscv-iommu.c: fault when !PTE_U and
+no priv access") placed its check ahead of the leaf-vs-non-leaf
+branch in riscv_iommu_spa_fetch(), so it fires on every PTE walked,
+including non-leaf/table entries. Per the RISC-V privileged spec's
+address translation algorithm (Sv39/Sv48/etc., the "leaf PTE has
+been reached" step, followed separately by the U-bit permission
+check), the U bit is only defined and checked for the leaf PTE
+reached at the end of the walk -- non-leaf PTEs don't carry a
+meaningful U bit at all.
 
-Use extract32() to decode bits 25:20 directly. This fixes the
-immediate printed for th.srri and th.tst.
+Move the check after the leaf/non-leaf branch, alongside the other
+leaf-only checks, mirroring how the G_STAGE U-bit check (added in
+9158c900ab30) is already correctly placed.
 
-Fixes: 318df7238b9f ("disas/riscv: Add support for XThead* instructions")
-Suggested-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Fixes: b795ea0ba471 ("hw/riscv/riscv-iommu.c: fault when !PTE_U and no priv access")
+Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260703-b4-disas-xthead-fix-riscv-next-v4-2-84c566330bc7@linux.alibaba.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Message-ID: <20260717112340.1071148-1-andrew.jones@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 7a8454ef293085a45686929577b7d5a5daded242)
+(cherry picked from commit f16fd27b3fe3c305d95c61d3516e458c45c6e8c9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 7f1b2627737..fdf75a12ef0 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -4546,7 +4546,7 @@ static uint32_t operand_zcmp_rlist(rv_inst inst)
- 
- static uint32_t operand_imm6(rv_inst inst)
- {
--    return (inst << 38) >> 60;
-+    return extract32(inst, 20, 6);
- }
- 
- static uint32_t operand_imm2(rv_inst inst)
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index f6865d1e164..ed9fb09f8bc 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -476,13 +476,6 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+             break;                /* Invalid PTE */
+         } else if (pte & PTE_RESERVED(false)) {
+             break;                /* Reserved PTE bits set */
+-        } else if (!(pte & PTE_U) && !pv) {
+-            /*
+-             * All accesses are assumed to be User mode unless
+-             * process_id is valid (pv).  In case we have a
+-             * non-user mode PTE and !pv we need to fault.
+-             */
+-            break;
+         } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
+             base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
+         } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
+@@ -491,6 +484,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+             break;                /* Reserved leaf PTE flags: PTE_W + PTE_X */
+         } else if (ppn & ((1ULL << (va_skip - TARGET_PAGE_BITS)) - 1)) {
+             break;                /* Misaligned PPN */
++        } else if (!(pte & PTE_U) && !pv) {
++            /*
++             * All accesses are assumed to be User mode unless
++             * process_id is valid (pv).  In case we have a
++             * non-user mode leaf PTE and !pv we need to fault.
++             */
++            break;
+         } else if ((iotlb->perm & IOMMU_RO) && !(pte & PTE_R)) {
+             break;                /* Read access check failed */
+         } else if ((iotlb->perm & IOMMU_WO) && !(pte & PTE_W)) {
 -- 
 2.47.3
 
