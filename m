@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1776FC61DBC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:07:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 858E0C61DB6
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:07:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyn44-0005Bm-DT; Tue, 25 Aug 2026 05:03:29 -0400
+	id 1wyn66-0001Uo-MS; Tue, 25 Aug 2026 05:05:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn3y-0005As-Rk; Tue, 25 Aug 2026 05:03:24 -0400
+ id 1wyn64-0001PM-3G; Tue, 25 Aug 2026 05:05:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn3w-00035W-Dx; Tue, 25 Aug 2026 05:03:21 -0400
+ id 1wyn61-0003mt-VV; Tue, 25 Aug 2026 05:05:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787648560; bh=JSZXwK4+6k+78w6kfR4yQo2p73K16SeORqVZ/qOnfTQ=;
+ t=1787648560; bh=fLCjsFJBjwA9iDMYwgAseP2pmHC/8TFJHGhZW4M+fjQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=DqcjkPh+7/Hz11y1D03//KuiUCMpH2Accq51Lj43ORT/M9+N+j3rPDyrNI0dnh2I3
- kOyGMWhogsv9CGHzdJN66reNU/hc0/+bkgMNhv3ZwenXLlmO9fDso7j+gnUsoPSrVY
- qDj3RwWm1HVeUE3eEaJexPiubmmLe2KbnbEdM5YRAL7QYAR9FQbdrICuwUIVHCMyIP
- g0U31Jkof0BXinbqeLRLjwT4wz5AesC9J3io8ABZ4rM6R0Fw6xh7DQKxIv+sY3+1w0
- BUSKAX92X5cxtcpRqHdSDo4f2dxTDO+iQoA/OD5g5k4dcWOEJC7DU0527CvqmaUsCN
- SLo62SIG/vk3w==
+ b=M38L3SiXziYvYDukE7IKv4V2/D+bxem4+GwHof7ZFhw4mY+iDwvvw7zo2R4KS+SQq
+ uiBfql6ssyf4tekerT8zDQZZnFC8oNfpftaUpVNNsm4CLiIhA1MRcTnP2UKLIkqKUK
+ LDWkfcD9inUM+qNWGmZno75GnuxC8sX2stx49Xr1gXLAYuNNob1ynHrq9Flx723mmR
+ 9CIDuAV6WM+A14y+xuwazLVTg55TeZoswowIK0kiQWFDj32iJABBxru1CqhayfBDSZ
+ WfZGaLKV5vfNXSMZm2rp4JdvvJ6cUBK5gjJb3BTrabNNVR4VWuWbS9YGO+xCQr/Me+
+ MyuyhhZHRW6Ew==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 365BC1CE3AD;
+ by isrv.corpit.ru (Postfix) with ESMTP id B94871CE3C7;
  Tue, 25 Aug 2026 12:02:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2296E41616F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A57CE416189;
  Tue, 25 Aug 2026 12:03:17 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A8EE232543; Tue, 25 Aug 2026 12:02:39 +0300 (MSK)
+ id 0BA2132577; Tue, 25 Aug 2026 12:02:40 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Jacob Young <jacobly@ziglang.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v3 163/196] tcg/optimize: Fix s_mask computation for
- shifts
-Date: Tue, 25 Aug 2026 12:01:20 +0300
-Message-ID: <20260825090157.471948-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, A-Shehab <ahshehab24@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v3 189/196] target/riscv: allow menvcfg/henvcfg LPE
+ and SSE bits on RV32
+Date: Tue, 25 Aug 2026 12:01:46 +0300
+Message-ID: <20260825090157.471948-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
@@ -71,67 +73,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: A-Shehab <ahshehab24@gmail.com>
 
-Skip s_mask computation for logical right shift.
+The Zicfilp landing-pad enable (LPE, bit 2) and Zicfiss shadow-stack
+enable (SSE, bit 3) controls live in the low 32 bits of menvcfg and
+henvcfg, and the CFI specification defines them for both RV32 and RV64.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 93a967fbb57 ("tcg/optimize: Propagate sign info for shifting")
-Reported-by: Jacob Young <jacobly@ziglang.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 5fe51606146cbf04dac07bf27256febbe56881e7)
+QEMU only adds MENVCFG_LPE/MENVCFG_SSE (and the henvcfg equivalents) to
+the writable mask inside the "riscv_cpu_mxl(env) == MXL_RV64" block, so
+on RV32 these bits are silently dropped and the features cannot be
+enabled. This is inconsistent with write_senvcfg(), which already
+handles SENVCFG_LPE/SENVCFG_SSE regardless of MXLEN.
+
+Hoist the LPE/SSE mask handling out of the RV64-only block in
+write_menvcfg() and write_henvcfg() so the bits become writable on RV32
+as well. The upper-half writers (write_menvcfgh/write_henvcfgh) are
+unaffected because these bits reside in the low 32 bits.
+
+Reproducible on qemu-system-riscv32 -cpu rv32,zicfilp=true,zicfiss=true:
+an M-mode write of menvcfg.{LPE,SSE} reads back as zero, while the same
+program on rv64 keeps the bits set.
+
+Fixes: 4923f672e3d7 ("target/riscv: Introduce elp state and enabling controls for zicfilp")
+Fixes: 8205bc127a83 ("target/riscv: introduce ssp and enabling controls for zicfiss")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4045
+Signed-off-by: A-Shehab <ahshehab24@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260726080537.13913-1-ahshehab24@gmail.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit bd1ee9ab3c39f269d8bea8acf83ea833a69a6e10)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index acaf96d73c0..c266cfe99c9 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -2628,8 +2628,17 @@ static bool fold_shift(OptContext *ctx, TCGOp *op)
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 609093c903c..91f80b01b9a 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -3194,6 +3194,19 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+                     MENVCFG_CBZE | MENVCFG_CDE;
+     bool stce_changed = false;
  
-         z_mask = do_constant_folding(op->opc, ctx->type, z_mask, sh);
-         o_mask = do_constant_folding(op->opc, ctx->type, o_mask, sh);
--        s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
- 
-+        if (op->opc == INDEX_op_shr) {
-+            /*
-+             * Logical right shift will force the sign bit zero.
-+             * Don't bother computing s_mask and let fold_masks
-+             * recompute from z_mask.
-+             */
-+            return fold_masks_zo(ctx, op, z_mask, o_mask);
-+        }
++    /*
++     * menvcfg.LPE (Zicfilp) and menvcfg.SSE (Zicfiss) reside in the low
++     * 32 bits and are defined for both RV32 and RV64, so they must be
++     * writable regardless of MXLEN.
++     */
++    if (cfg->ext_zicfilp) {
++        mask |= MENVCFG_LPE;
++    }
 +
-+        s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
-         return fold_masks_zos(ctx, op, z_mask, o_mask, s_mask);
++    if (cfg->ext_zicfiss) {
++        mask |= MENVCFG_SSE;
++    }
++
+     if (riscv_cpu_mxl(env) == MXL_RV64) {
+         mask |= (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
+                 (cfg->ext_sstc ? MENVCFG_STCE : 0) |
+@@ -3201,14 +3214,6 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+                 (cfg->ext_svadu ? MENVCFG_ADUE : 0) |
+                 (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
+ 
+-        if (env_archcpu(env)->cfg.ext_zicfilp) {
+-            mask |= MENVCFG_LPE;
+-        }
+-
+-        if (env_archcpu(env)->cfg.ext_zicfiss) {
+-            mask |= MENVCFG_SSE;
+-        }
+-
+         /* Update PMM field only if the value is valid according to Zjpm v1.0 */
+         if (env_archcpu(env)->cfg.ext_smnpm &&
+             get_field(val, MENVCFG_PMM) != PMM_FIELD_RESERVED) {
+@@ -3356,20 +3361,24 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
+         return ret;
      }
  
-diff --git a/tests/tcg/i386/test-i386-opt-shr.c b/tests/tcg/i386/test-i386-opt-shr.c
-new file mode 100644
-index 00000000000..9fb8d420223
---- /dev/null
-+++ b/tests/tcg/i386/test-i386-opt-shr.c
-@@ -0,0 +1,21 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* Regression test for tcg optimize vs sign bit repetition counting. */
++    /*
++     * henvcfg.LPE (Zicfilp) and henvcfg.SSE (Zicfiss) reside in the low
++     * 32 bits and are defined for both RV32 and RV64, so they must be
++     * writable regardless of MXLEN.
++     */
++    if (cfg->ext_zicfilp) {
++        mask |= HENVCFG_LPE;
++    }
 +
-+#include <assert.h>
++    /* H can light up SSE for VS only if HS had it from menvcfg */
++    if (cfg->ext_zicfiss && get_field(env->menvcfg, MENVCFG_SSE)) {
++        mask |= HENVCFG_SSE;
++    }
 +
-+int main()
-+{
-+#ifndef __x86_64__
-+    char test;
-+
-+    asm("movw $0x4000, %%ax\n\t"
-+        "addw %%ax, %%ax\n\t"
-+        "cwtl\n\t"
-+        "shrl %%eax\n\t"
-+        "cmpw $-0x3fff, %%ax\n\t"
-+        "setnl %%al"
-+        : "=a"(test));
-+    assert(!test);
-+#endif
-+    return 0;
-+}
+     if (riscv_cpu_mxl(env) == MXL_RV64) {
+         mask |= env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE |
+                                 HENVCFG_DTE);
+ 
+-        if (env_archcpu(env)->cfg.ext_zicfilp) {
+-            mask |= HENVCFG_LPE;
+-        }
+-
+-        /* H can light up SSE for VS only if HS had it from menvcfg */
+-        if (env_archcpu(env)->cfg.ext_zicfiss &&
+-            get_field(env->menvcfg, MENVCFG_SSE)) {
+-            mask |= HENVCFG_SSE;
+-        }
+-
+         /* Update PMM field only if the value is valid according to Zjpm v1.0 */
+         if (env_archcpu(env)->cfg.ext_ssnpm &&
+             get_field(val, HENVCFG_PMM) != PMM_FIELD_RESERVED) {
 -- 
 2.47.3
 
