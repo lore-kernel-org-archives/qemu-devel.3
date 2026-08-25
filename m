@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5CCC61DB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4547EC61DC2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:40:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyyr3-0005qR-1s; Tue, 25 Aug 2026 17:38:49 -0400
+	id 1wyyrA-0005tX-Ec; Tue, 25 Aug 2026 17:38:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyr1-0005pK-17
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:47 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ id 1wyyr9-0005sz-1a
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:55 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyqz-00053K-FW
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:46 -0400
+ id 1wyyr7-00056u-GZ
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:54 -0400
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:39a2:0:640:ae2d:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 690A780DCD;
- Wed, 26 Aug 2026 00:38:43 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 3B91180BF2;
+ Wed, 26 Aug 2026 00:38:52 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:630::1:39])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id QckKa93ZVmI0-oyDaBLAm; Wed, 26 Aug 2026 00:38:42 +0300
+ id QckKa93ZVmI0-XOXT1fKe; Wed, 26 Aug 2026 00:38:51 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1787693922;
- bh=fm1O7sVTDL8aWS2MucI1ptgit5bHG785yNcUdbArR8g=;
+ s=default; t=1787693931;
+ bh=+otlI1t72S2/VcSgp6CUtT0cgNjKdGvfUOfN56FDp4A=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=ILyOEWhFgaK4e+9LJUI/XH7xSsEznkh2SHCtfEM9ILs9U6eKYsl+CbDJKwHOFzEh9
- plehWROqu5M0DK5Au7DJXJJSVrBr2Am2M4HABHjSnqTcUcIpjPuiHBhS0HHShq85uR
- 4vdqJkDMLKY154KvEh7CMxDS9YrJwyQDt8Th5+sM=
+ b=BZu3ex+WPcBDrE5E07a+AZTTK/Ubrj2L/Ca+vIKvblXIyHk9pbYMrp6nJ3YFhtzX4
+ etvMFxMnqPVtrUHtZQCg2GNOZSmRQDzD5u3PURDrBGdTL6Ln5gHbatOqaQZZfI/U/3
+ i88yBWNAR8ygccUGM7nvHrNdaCd1fptpaO2g9W8w=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: peterx@redhat.com
 Cc: farosas@suse.de, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 13/30] hw/pci/shpc.c: use new migration APIs
-Date: Wed, 26 Aug 2026 00:37:53 +0300
-Message-ID: <20260825213811.3725682-14-vsementsov@yandex-team.ru>
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: [PATCH 22/30] microblaze/machine: move to new migration APIs
+Date: Wed, 26 Aug 2026 00:38:02 +0300
+Message-ID: <20260825213811.3725682-23-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
 References: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -76,56 +76,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/pci/shpc.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ target/microblaze/machine.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/hw/pci/shpc.c b/hw/pci/shpc.c
-index 938602866d7..cdd2d0564ea 100644
---- a/hw/pci/shpc.c
-+++ b/hw/pci/shpc.c
-@@ -758,31 +758,33 @@ void shpc_cap_write_config(PCIDevice *d, uint32_t addr, uint32_t val, int l)
-     shpc_cap_update_dword(d);
- }
- 
--static int shpc_save(QEMUFile *f, void *pv, size_t size,
--                     const VMStateField *field, JSONWriter *vmdesc)
-+static bool shpc_save(QEMUFile *f, void *pv, size_t size,
-+                      const VMStateField *field, JSONWriter *vmdesc,
-+                      Error **errp)
- {
-     PCIDevice *d = container_of(pv, PCIDevice, shpc);
-     qemu_put_buffer(f, d->shpc->config, SHPC_SIZEOF(d));
- 
--    return 0;
-+    return true;
- }
- 
--static int shpc_load(QEMUFile *f, void *pv, size_t size,
--                     const VMStateField *field)
-+static bool shpc_load(QEMUFile *f, void *pv, size_t size,
-+                      const VMStateField *field, Error **errp)
- {
-     PCIDevice *d = container_of(pv, PCIDevice, shpc);
-     int ret = qemu_get_buffer(f, d->shpc->config, SHPC_SIZEOF(d));
-     if (ret != SHPC_SIZEOF(d)) {
--        return -EINVAL;
-+        error_setg(errp, "Failed to load SHPC config");
-+        return false;
-     }
-     /* Make sure we don't lose notifications. An extra interrupt is harmless. */
-     d->shpc->msi_requested = 0;
-     shpc_interrupt_update(d);
--    return 0;
-+    return true;
- }
- 
- const VMStateInfo shpc_vmstate_info = {
-     .name = "shpc",
--    .get  = shpc_load,
--    .put  = shpc_save,
-+    .load = shpc_load,
-+    .save = shpc_save,
+diff --git a/target/microblaze/machine.c b/target/microblaze/machine.c
+index f930ff86091..73e741b6df2 100644
+--- a/target/microblaze/machine.c
++++ b/target/microblaze/machine.c
+@@ -37,28 +37,29 @@ static const VMStateDescription vmstate_mmu = {
+     .fields = vmstate_mmu_fields,
  };
+ 
+-static int get_msr(QEMUFile *f, void *opaque, size_t size,
+-                   const VMStateField *field)
++static bool load_msr(QEMUFile *f, void *opaque, size_t size,
++                    const VMStateField *field, Error **errp)
+ {
+     CPUMBState *env = container_of(opaque, CPUMBState, msr);
+ 
+     mb_cpu_write_msr(env, qemu_get_be32(f));
+-    return 0;
++    return true;
+ }
+ 
+-static int put_msr(QEMUFile *f, void *opaque, size_t size,
+-                   const VMStateField *field, JSONWriter *vmdesc)
++static bool save_msr(QEMUFile *f, void *opaque, size_t size,
++                    const VMStateField *field, JSONWriter *vmdesc,
++                    Error **errp)
+ {
+     CPUMBState *env = container_of(opaque, CPUMBState, msr);
+ 
+     qemu_put_be32(f, mb_cpu_read_msr(env));
+-    return 0;
++    return true;
+ }
+ 
+ static const VMStateInfo vmstate_msr = {
+     .name = "msr",
+-    .get = get_msr,
+-    .put = put_msr,
++    .load = load_msr,
++    .save = save_msr,
+ };
+ 
+ static const VMStateField vmstate_env_fields[] = {
 -- 
 2.43.0
 
