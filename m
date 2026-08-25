@@ -4,168 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9815BC5B572
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 04:49:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF1EDC5DF81
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 04:59:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyj5X-00059h-KA; Tue, 25 Aug 2026 00:48:43 -0400
+	id 1wyjFs-0007k4-Dw; Tue, 25 Aug 2026 00:59:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=690dc056c=Alistair.Francis@wdc.com>)
- id 1wyj5V-00059H-HK; Tue, 25 Aug 2026 00:48:41 -0400
-Received: from esa3.hgst.iphmx.com ([216.71.153.141])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=690dc056c=Alistair.Francis@wdc.com>)
- id 1wyj5T-00085V-N2; Tue, 25 Aug 2026 00:48:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
- t=1787633319; x=1819169319;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=QqJWQTIcDNzijKQZGIBJzO6UkcL2EO8uRLNbvmGl+qk=;
- b=LvYASz4lPxkAGoE3V4W5J3DxOa2DLomKfu+qRUydCYiKagKQOHfAiHj9
- IaYqtjHlUtSPjO75dl0gBbXQiFf3Nh+3CZb8KD7r+QaV5MW+pZfHAyTkq
- tl3S0gblMrnliJhz9ttqhuPEmiWcSJ1bcFEU3LK2xDFF0DdMgdfdtYV/x
- ttYiFs7Q7SeYYKrAE4/HLpIbG04spzzu4xZ2b7H3EohYk7UOP26Q/6bA1
- B6NNn9f68Yzdhj9jNBvAYbMjqCFd9tYSd0Qmb3cdqevDom9slYvtdGol8
- w/7B5Nt4E+wsYL28HqzZtI0RVLusINN189/kHlr6RHBXKFzmfARpXmGJK g==;
-X-CSE-ConnectionGUID: sw0zkDs8RFSjMRt+gJmWrA==
-X-CSE-MsgGUID: uC7J/fPLTfiJimTz5fWtow==
-X-IronPort-AV: E=Sophos;i="6.25,242,1779120000"; d="scan'208";a="154204373"
-Received: from mail-eastusazon11012056.outbound.protection.outlook.com (HELO
- BL0PR03CU003.outbound.protection.outlook.com) ([52.101.53.56])
- by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
- 25 Aug 2026 12:48:36 +0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hrYoUjb9qfHLjK0izUJ/nQRAZrANtg+6SpG/7HQh9q9ekevEZBT22NH9RI/keziFDprFwYJa4x1LbIVvpVadL9+tnkbrTag5LYxkEAitkELnUsyVwPy5OMPYbQOJP0WciGz0peDFqhq+CdbOOW7AlEz9/Bkw3TkLipySihIdCAwJ6P1O7xpiaTfRKyYxS5AYykBlQIBZcrXJhCzqs3gw8jzDRab9Yt/yKX1YlQ+m29VfosbYLBXDU/7FNpBzaFhYufl+nRv2PeMqpQ8wbXpkhZA3qDnfXnd15zVrMPbhabr8KXA9Rh2mYnCyC3FiLAAJjbhGn+EWGh4BeHz1zTTfCw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QqJWQTIcDNzijKQZGIBJzO6UkcL2EO8uRLNbvmGl+qk=;
- b=qseB6FZEat97g6xzmDFXP7LnppccuS0jyq49+wDR7AaZGegSBlezsZOP8+TrV2epeViBe/Yy8879LtVvq+SzKreleLzidcBXI/ubbbGCw0oNKypd61ghxm2uz++yQhA0HwpKswS9jOu5YmHFVWK2dB7EQyO5XPkcdJ7Ipxfp3qP33s9xPp1NlKPszIyB/605Vh6pZVMxN1//h2tDnxt4o0eJdvfMpclWSCbz8bH5oUtDYo+8hv9/YlUJ/UxLCmCVBdb4nO6J3hOFqlbW7i7EbsYHBhfyylAhreU/ByENuRQ6xaYZrndzvswKF53m78DQOwK5TEVWL/w/CNGj0j1siA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
- header.d=wdc.com; arc=none
+ (Exim 4.90_1) (envelope-from <isyanfei.xu@gmail.com>)
+ id 1wyjFp-0007gm-0T
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 00:59:21 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <isyanfei.xu@gmail.com>)
+ id 1wyjFn-0001HN-DI
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 00:59:20 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2d58efc7356so47833975ad.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 21:59:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QqJWQTIcDNzijKQZGIBJzO6UkcL2EO8uRLNbvmGl+qk=;
- b=S1kCmPxHlCflFJEv7S2l6Vp56Gc7t/58ehzjWTu7xqhwXIP7NgS21NyB0C1mFqbx6rjCHwaUiaXimfH2QXlVOd9uFNLRu3O2JKEZbbU+t+c/aR9us0D/R400ZFItFXRhcvjyb2w1nHbtoh1EXWns/UBYO0/Y4VpBvmQUykwxMYg=
-Received: from BY1PR04MB9561.namprd04.prod.outlook.com (2603:10b6:a03:5b6::11)
- by CH5PR04MB9646.namprd04.prod.outlook.com (2603:10b6:610:211::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Tue, 25 Aug
- 2026 04:48:31 +0000
-Received: from BY1PR04MB9561.namprd04.prod.outlook.com
- ([fe80::3869:e494:2fa8:9888]) by BY1PR04MB9561.namprd04.prod.outlook.com
- ([fe80::3869:e494:2fa8:9888%5]) with mapi id 15.21.0360.005; Tue, 25 Aug 2026
- 04:48:31 +0000
-From: Alistair Francis <Alistair.Francis@wdc.com>
-To: "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "joel@jms.id.au" <joel@jms.id.au>
-CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>,
- "chao.liu@processmission.com" <chao.liu@processmission.com>
-Subject: Re: [PATCH 0/2] tests/tcg/riscv64: Add vector load and store tests
-Thread-Topic: [PATCH 0/2] tests/tcg/riscv64: Add vector load and store tests
-Thread-Index: AQHdMKRpv0fmGq0asEG04j0rJz8tcbauOKoA
-Date: Tue, 25 Aug 2026 04:48:31 +0000
-Message-ID: <11f41ecb30b97128f89eb5fbad1c34909ad61a25.camel@wdc.com>
-References: <20260820130223.2762-1-joel@jms.id.au>
-In-Reply-To: <20260820130223.2762-1-joel@jms.id.au>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Evolution 3.60.2 (by Flathub.org) 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=wdc.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BY1PR04MB9561:EE_|CH5PR04MB9646:EE_
-x-ms-office365-filtering-correlation-id: 20d570ba-48eb-46bb-98b8-08df02641cb7
-wdcipoutbound: EOP-TRUE
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|19092799006|10070799003|23010399003|376014|1800799024|10067099003|6133799003|38070700021|18002099003|22082099003|11063799006|56012099006;
-x-microsoft-antispam-message-info: XHIJ/sUs3wi1knGoSVmFMCPVGJmPhwmOqFL5quvzjzh+E1HpZRStsAtQt89fdjvH+kvmWKVmyZlqLUUGG9Gbu+bEbe5np4te87jzbICRQQCEfeRZIIpPLm3Ug1h0BlA5aQtl0NvmnfIjVsUukyl3H4JJBKHxyaQulRdQ1RgG3K0QCemxeLVJ834W6I8LRBxswkOA5tEsi/OTnnAuTveEIsjT3fasD/7DsOOhtVvNROGV3lSTeQPwNbhNH2/MtpGWF0QbsMT4HOCWAqigr4wFZGLt1VDG2I6SvUi4qFWbGI2AeGC3r/f4o7egaLXgevrPB2rbBpnJoyt9aCVrkhsT6G8yOrISZxpI6FTMcakr7Quy7quSFRgzqVbm4Ekm4Qs6RjcxSOMY4E1nl2mA07pZZFk117PVGd3hH0T+PinZhLbTIugbrzgsLiTVEJqu5WHItnezcITYEjF2Qumjc9IhdVDj7+QOPf1Xh+8L9f2D6o09lSsxOuGgwA+g5Vhq38ed8SakVOliqPoBraRORheHFybZrz1uH/22sfSYVQRsDEfM3BX9yzNwzA+g8yBdHyNciImcYz0Sdnh13iKxkYOoFdjSBMKwB6ra9lWyegahDBjOLogdrl2bmq0QaGeO0IcOm+laFCFOULMJwlt4TmXb/RZk2HOaxLINbKJCEpmBjJIsR9UOnc+5Z6LmvN7ITCyV9AnLyRK0CHy9KcrCoBTT5d6HUapZjxuiX4Lz/113tG0=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BY1PR04MB9561.namprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(19092799006)(10070799003)(23010399003)(376014)(1800799024)(10067099003)(6133799003)(38070700021)(18002099003)(22082099003)(11063799006)(56012099006);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 2
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?L0ptNk91Yy93U2E3QlZKV2NDWHM0d1ppbzZQMWJOd3JrWmtKSnlGVkowTUQ1?=
- =?utf-8?B?RFBRWkQxUWNtdU10Uk13eU8rU0hvUnIxTWw5NkJhN2doNFVDZG5oU1pRSUgw?=
- =?utf-8?B?bTF6UEs2Y0lMTUdqaWg2VDZqVlBiUDVsUVVIWFpuR1NPZkVsZVVtS3JjMTFx?=
- =?utf-8?B?YzJIcW9CSjRyT3U0NlgxZHhhK2dxWS80aG5ZREtERjJoa0FKdjQyaVljckZ2?=
- =?utf-8?B?eExvaE5RSzlNWFNLTitVdXlaRmR4ajBYYktocDgzamtMOW5nd0diM0VZemFn?=
- =?utf-8?B?MndoWDlPNHh6Q0tLUG5maE5SL2RXY3BIN2p0eXJyUTJWcU9TeXAxWVJuYkFa?=
- =?utf-8?B?enlaYUE5K09Ed3FSY0ZpZnR6RkZSR2o1azREeTM4ZEtyeHJ4UkkzU3RRWjZU?=
- =?utf-8?B?RytVN0RyM0FJcTFoVjVhcWlXbStlcXk1RU1POWJQZTVlbmFPTTV6V0tQMllM?=
- =?utf-8?B?UXBqcEdnazh0aVplRVcvNUZSaFVoLzc1K0lVaVgrV3RpZis3MVh0ZnRhVWdk?=
- =?utf-8?B?aUcvakcxNU5nV3JyUk5acGZObHlVRFNTS2NacE5DVXJiSnJWWlJqbWNiK3Jt?=
- =?utf-8?B?SVJMNVBQTHliL09rQzZuYzNaZ3RxSXhFakdHTk9xWHZBVVE0elZ5SlRTckJV?=
- =?utf-8?B?azR4WmZzbGhmZE1nUFlCaE5SRFRXSThseEppVVJ6VE5KM2NRbmY0RWZGWndz?=
- =?utf-8?B?SUQwbHJmZnBCcWtMbWt3R2JVUjZqZ1ROeGwrOTFxaFc1MDFueStTMjVtWG9k?=
- =?utf-8?B?Uy9SOUw1bkgxME5JQnpxOXdrTTBYUXl3V2xzNmg0M1hBMmVycG5NVjU0Y2dD?=
- =?utf-8?B?V1J1YWZsWjR2Snp6aFh0ZzFWb3FPaXlGNUJnM05xanFQRUFQSk55YU5vcUla?=
- =?utf-8?B?ZGpwdGZ5KzNCTkp6c0Q5Y1ZYQlR5MDRyY1BPanhtUkNYekduRlhYNWIxOFcy?=
- =?utf-8?B?aExEMGNmR1BKY2xPb2drQjVQQ04zZXI0enZacmFqTVhOb2lPcXN5ZnpjUkdp?=
- =?utf-8?B?YXJNZ0dmdHBVK2lCM0lidzVMNEE4SjJiWXh6UlZjWVI4NXpCYzlvKy83VW1h?=
- =?utf-8?B?dFlGc3lDYk5RWFJCS2J6UVI0eUtlRERiQUJyRytYdDdycXBPdHBGR0FIZHAz?=
- =?utf-8?B?aGczN01LN0IxcG5kbUliN1haMHYyKzJLS2FDemhyT0lVWU41NnNwMWtOTnpG?=
- =?utf-8?B?ZWlrYmpkTHdnbTNPbWozTjRlV3JobUNuSmlkY3IwcGR6VjdMZXFITFdsTzZF?=
- =?utf-8?B?VTErUjVVWkl1MnlsNkZmOUc0aFY3YmMxcEJoL3owbmYwVFJKWnBydWNPa3pW?=
- =?utf-8?B?NkNrMEJhWjUrTlpjZXQrOE1TWE5iRy90bnlyMnQvbDg2ZitUZHM2QkpzczNQ?=
- =?utf-8?B?VzhSOFF1NUZwZjljaHhHeVZhdU9DK0tHa0JnVk1aT3dESU4weC9PQTFoVzNQ?=
- =?utf-8?B?ZlB0N1RnV0xBamFLRmwrdDdGUkY4Mk43VjAyQ2hHWTAreDVCd0pJUS9QTXNI?=
- =?utf-8?B?NENPa3crT0VqSVBaYUNFb1RFNFhCc0JCRTRmTEdqcm1CTG1STi9DZGF5ajdO?=
- =?utf-8?B?ZnhUb0ZXVWhINmo2cHQxTkEvb3FQZEM0d3JoZXFzOCtkdkQ0UmcwaDEza3Fp?=
- =?utf-8?B?S1hqV2prVjJaNU5WTjZHWHQ0Zmd6UFNXcHlzM2RINUVqaFQycUxyZExxWkdQ?=
- =?utf-8?B?RXpKcDlOaEVScnl1OE13ckVkZi94Q09YeFFETDhQQzFFUGw4cEhCY3E4Vlhj?=
- =?utf-8?B?dEUzSjJYcnZiOGd6aldib25iOEtJRTl5Z0tFMThSRDhtanhRM3o2T1V1WXR2?=
- =?utf-8?B?U1lPTnVvcGo3czJpSG5nQS94ZEVoNjNaV2ZuUm9VcHFOM3hubzdwbXFGYmM3?=
- =?utf-8?B?L1RuSkNwTFNjNG9OdjRtZFcwdjNZWkdEQ3MwY1JZUER2UVZOYlh3bGxyZFo1?=
- =?utf-8?B?RGtuL0s4TmZ1L1N2WW15SmZtYnR1WTdsSlRnQ2R1Tlh2ekJ1Q1dpNGpGRXlT?=
- =?utf-8?B?b21LZTd3KzdvNnp6ZE5iaFFENjhzT2c2bHpRb3JWdlk2VVFmTzRhemZ0bkhp?=
- =?utf-8?B?c3hRWlVhRVlRdFNoUWZrZlJQNm5mV2lDNE11RlFUL1M5YkF4TTJocUZmVDZq?=
- =?utf-8?B?T1JQdzZ6bUY4MllrdTdkQTJnUUQ1ZS9sZjgyMytibjZBMnZJMnFFR29va3Fu?=
- =?utf-8?B?Rm9jV0EyRUZHanFYZU9nYXJQMFlkRXdjVUFOQ1NhOWpPa29nR3ppc092TFJv?=
- =?utf-8?B?QUNPS3RFQndpemhlUG40WFhxbDFGSW9EL1h4Z1loZTFHNTRTMjJjZHJjZzls?=
- =?utf-8?B?b2g3TkFZOFg3QlJOdnlhQjZqTEI0Vnh1MDFCRHZnYnZWcEdNNFk4UU9ITDRx?=
- =?utf-8?Q?S0FwVqm5+RfE0QNerbAMa1EZ2FixyCIBgOSW31Eabvg2A?=
-x-ms-exchange-antispam-messagedata-1: m7GD8EHr31iMXzmtrZO0AyCArd9fjTqhH7g=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <4A27CF500932A742A25B39FD57BBEDFD@namprd04.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ d=gmail.com; s=20251104; t=1787633957; x=1788238757; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=EIlsxZYNsiuRPICbPOBzoHSvFAjyTxKWba+y+70tYRE=;
+ b=QtCEDkfUKmJeaNeBacNnRetznDvr46uiBTldwmWyrneeab1Jnt98Q7yiL0r0K5ddtd
+ ydfnkfnbDg44l3++Th27ll6I4lnM0tiGxkz+586vPbMJccMK6pW6nFS7HAx8RL2yiqCr
+ XqS2JTo+iGL3K4u+PoXXKmkbKG1P6I5A3DFXZXAAMPVMSS15Sl6KfYuAL9LetBYnwQcY
+ sXWzlL/Ex7CSqUEiBkgfF0jjxfL7YAxNaESaaAwmvrFZomegFEiVg+qdYXeisn8GNkFb
+ /icoujWVPkrVB37jPSd7EUayOKjhQ2+o2TX+UMwx0nKeIrdr4z6MgKNK5Q4DJ4OPPOGT
+ X1CA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787633957; x=1788238757;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=EIlsxZYNsiuRPICbPOBzoHSvFAjyTxKWba+y+70tYRE=;
+ b=kBM/aqLyyp+6ftdvS7em/pG/Kud6REkYMPbAUQuI2vzBMF/4rsckWCJszpQEvOWVHK
+ 9YmLmdpdhucft+AraqKE8nopOH/3X/hpIIgLHLPo/kJG0kwPSSiDRZQq2wDeAFx/xYpD
+ kJWOfInsyDSaNJTwLO/McesVXbRDM83gWipHAB/sZUB3C22NgTBOw6gg5NG6rCgil7b+
+ xHRoA9seUClPmX4EkGKCeHo8W9hRF3WRipkHfzn9+aIHCUoAHi8OQ0xUeXG9zEySYiiz
+ ZSfTc/qADIqs6zf/6vdwGiyLoq8TtESa6OgtKdOEJOjCLW7yZaNiro8Hw0OOxGkQ1wed
+ /VfA==
+X-Gm-Message-State: AFuF++mZTKwZU0dxKH8fdiiVTswnFebxuNOHVYzGA/KPh5ePvfOrctFe
+ 4gLF8XEITtrnBcVFnDOTVYMF2V++PL3MoKYaVgaqPfQBiSsvIS59fYRp
+X-Gm-Gg: AR+sD11tzgnD/vuVXKflEiKB7CAiGvnU6JCYIcuJmFlIaRi9sUcU6ThXmTsrY5Y2nT2
+ RpYL7505CQNGcOd2fGZ2dKitGenyQHXZQZ6+3995HE/jCH08aTxIdiEV7vBd9CkEJKn2ZyXJU6N
+ O/5FqJIO4ggziVtG/ZeAoEuDlQ82mM9mMOPF8H8/pAleU0bJAMjEhm1S1CDPd1fOrvxqB6QF8ex
+ 9QOQkT3tCSLhf8N0DuCnkeCF0nNWlzcNrmKtKWCqK1yHiFZAPJa6PiQT6QN4pbZyPULlgqjsZfY
+ lDVJwEP3SKHb4ZjSx7s/3e3zLpePKSpEoGNQUbV+q8M/1TESr82i2TRsZLF7VWSl3kOJ993c7vA
+ OZ54JVAj6ViNm5E/2LaWb8r9u0WxxUaH8tZB4n29lxH6WtTgTbmTueY/j2i+MfhFcbc0ConD2Ti
+ gVJlKg9fAm+h2hn/g1K+JGWz7u5GcMrEa5vZZGdujUCHhl0B7b3W+5bCI4Bx69EonfGylZOQxd
+X-Received: by 2002:a17:90b:3a8d:b0:395:4de0:b78f with SMTP id
+ 98e67ed59e1d1-395dee528b7mr39440853a91.1.1787633956591; 
+ Mon, 24 Aug 2026 21:59:16 -0700 (PDT)
+Received: from [10.3.172.9] ([61.213.176.11]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3964581202fsm2232272a91.0.2026.08.24.21.59.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Aug 2026 21:59:15 -0700 (PDT)
+Message-ID: <7d31d96c-4d91-4f87-9728-85cb84b60c6e@gmail.com>
+Date: Tue, 25 Aug 2026 12:59:13 +0800
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: yhQCLGPPpiofzhAr+PA9wFDT/Rm0sbG4P/D6j4utai1bocEV2D95JcF6GOtoo/ZK4zViu+Q4rnohAIZW7ivaZtWJF/8851MJ667lMrsXTmZSfypWnKkOHNTl5tEbNebifkkiVaKuDUEsmYpR4YFn49Ac7odGHQQODTwl9xKUy7hn2HqE394e4YhwvioqW2WM0T2D8OJGIF0IWwv0yvTniHQwGD4R5/cikRjCOMeXrmZmJWVe9QTSaiAs06IKILy1d/XMvhS+MlKS8LGfse8S4GMx6vlYB+RgnMKfNvgQdSW/8EP6RnEMZTDo46HdjEnY4VamqYgFaGi0gklUlpwMtQ==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: HO0KAik1bXbanUMaukMGMnK77jmkZVzDJKpsYC2Pxfm9sOYsi95iCj7PtsxhhV7ZxcJ6inVEJ9bCmnukHMWYCgznT47B3aANmQ4fbRX2P6eY9FQRabbkZaTMRxgLFuMqGCy5hMeKWWX9QnCQHWpEUThN7aEBSHb1d4O4Qey246K9fuC4xPrB3PAUP/NToBGYn+e0XFMgPBDId9VCG2D9dwGwBOcD8dbwUqzbDMLDcy4gSahZjJCFDP0UwJFDQpDgldsrCCYwurzeiaSFG1YBVHGJszuKQGLvgNuOSMeSMg7z3/3bvlSrcXhC9yY+GtAPRsw0/NGqHEv61OgJV5wJHIfitRw2BiXvB/Lgzil9pbbbhTWFJ7x1z0Sp49GADAVA50PD2WwAbfkWNdBfT0cXusoT8F1bI6hupDnEBUvBmrT9ybLM9sCrz3cYplP39ikFk1rI8iI3xnQQ41acxAlbRJIIJVZ0PBJHsOa+xepoyIVK7frEKyDEWBdaojWpEbz77LHlBTth0jZ4YjupJuhzx/7Kh7Y9tLaPMn4nzVkm3u9IPDimNF09B80a5A6bNHChnH+4OH3CWID14fSnxWxWPW5bSBXEzBGDhr4I4TVjRuc8KBj7Z08xgzND6VGs6D8G
-X-OriginatorOrg: wdc.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BY1PR04MB9561.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 20d570ba-48eb-46bb-98b8-08df02641cb7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Aug 2026 04:48:31.1206 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 1jykYGkDXJ9KfvlTDTEpZPXwxy3zLB7eudrG10u3MLk4db5hT/PSGF9LkwXWWpJuv6jj5qEnjGYVn13UGmKhXGiRdd/I2cQDPhI5hCGm5zs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH5PR04MB9646
-Received-SPF: pass client-ip=216.71.153.141;
- envelope-from=prvs=690dc056c=Alistair.Francis@wdc.com;
- helo=esa3.hgst.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v1 0/2] migration/rdma: Allow multiple writes per chunk
+To: Peter Xu <peterx@redhat.com>, Yanfei Xu <yanfei.xu@bytedance.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, lizhijian@fujitsu.com,
+ jinpu.wang@cloud.ionos.com
+References: <20260820125833.1541756-1-yanfei.xu@bytedance.com>
+ <aodcq-LRjtFacLdc@x1.local>
+From: Yanfei Xu <isyanfei.xu@gmail.com>
+In-Reply-To: <aodcq-LRjtFacLdc@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=isyanfei.xu@gmail.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -182,37 +102,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gVGh1LCAyMDI2LTA4LTIwIGF0IDIyOjMyICswOTMwLCBKb2VsIFN0YW5sZXkgd3JvdGU6DQo+
-IEhpIFJpY2hhcmQsIEkgd2FzIHRlc3RpbmcgeW91ciByaXNjdiB2ZWN0b3IgbG9hZC9zdG9yZSBz
-ZXJpZXMgYW5kDQo+IG5vdGljZWQgdGhlcmUgd2VyZSBzb21lIHJlZ3Jlc3Npb25zIHdpdGggcGFn
-ZSBjcm9zc2luZyBsb2FkcyBhbmQNCj4gc3RvcmVzLg0KPiBXZSBkb24ndCBoYXZlIGFueSB0ZXN0
-cyBmb3IgdGhhdCBpbiB0aGUgdHJlZSwgc28gSSB3cm90ZSBzb21lLg0KPiANCj4gVGhlIHRlc3Rz
-IHRyaWdnZXIgYXNzZXJ0aW9ucyBpbiBsaW51eC11c2VyIGZvciBtZToNCj4gDQo+IMKgICQgbWFr
-ZSAtQyBidWlsZC90ZXN0cy90Y2cvcmlzY3Y2NC1saW51eC11c2VyIHJ1bi10ZXN0LXJ2di1sZHN0
-DQo+IMKgIG1ha2U6IEVudGVyaW5nIGRpcmVjdG9yeSAnYnVpbGQvdGVzdHMvdGNnL3Jpc2N2NjQt
-bGludXgtdXNlcicNCj4gwqDCoMKgIFRFU1TCoMKgwqAgdGVzdC1ydnYtbGRzdCBvbiByaXNjdjY0
-DQo+IMKgICoqDQo+IMKgIEVSUk9SOi4uL2FjY2VsL3RjZy91c2VyLWV4ZWMuYzo4MTA6cHJvYmVf
-YWNjZXNzOiBhc3NlcnRpb24gZmFpbGVkOg0KPiAoLShhZGRyIHwgVEFSR0VUX1BBR0VfTUFTSykg
-Pj0gc2l6ZSkNCj4gwqAgdGltZW91dDogdGhlIG1vbml0b3JlZCBjb21tYW5kIGR1bXBlZCBjb3Jl
-DQo+IMKgIEFib3J0ZWQNCj4gwqAgbWFrZTogKioqIFtNYWtlZmlsZToyMjM6IHJ1bi10ZXN0LXJ2
-di1sZHN0XSBFcnJvciAxMzQNCj4gwqAgbWFrZTogTGVhdmluZyBkaXJlY3RvcnkgJ2J1aWxkL3Rl
-c3RzL3RjZy9yaXNjdjY0LWxpbnV4LXVzZXInDQo+IA0KPiBJIHdyb3RlIHRoZSBhc3NlbWJseSBv
-bmUgZmlyc3QgYmVmb3JlIHJlYWxpc2luZyBhIEMgdmVyc2lvbiB3b3VsZCBiZQ0KPiBlYXN5IGVu
-b3VnaCB0byBkbyB0b28uIEknbSBub3Qgc3VyZSBhYm91dCB1c2luZyBtZW1jbXAgdG8gY2hlY2sg
-KGluDQo+IGNhc2UNCj4gaXQncyB2ZWN0b3Jpc2VkKSBzbyBwZXJoYXBzIHRoYXQncyB3aGVyZSB0
-aGUgYXNtIHdpbnMuIEkgY2FuIHRpZHkNCj4gdGhlbQ0KPiB1cCBhbmQgc2VuZCB0aGUgcHJlZmVy
-cmVkIHZlcnNpb24gaWYgd2UgZGVjaWRlIHRvIHB1dCBpdCBpbiB0aGUgdHJlZS4NCg0KV2h5IG5v
-dCBqdXN0IHVzZSB0aGUgQyBvbmUsIGJ1dCByZXBsYWNlIG1lbWNtcCgpIHdpdGggYSBzaW1wbGUg
-Zm9yDQpsb29wPyBUaGF0IHdheSB3ZSBhdm9pZCB0aGUgYXNzZW1ibHkgYW5kIGtub3cgbWVtY21w
-KCkgaXNuJ3QgdmVjdG9yaXNlZA0KYW5kIHdvbid0IGJlIGluIHRoZSBmdXR1cmUuDQoNCkFsaXN0
-YWlyDQoNCj4gDQo+IEpvZWwgU3RhbmxleSAoMik6DQo+IMKgIHRlc3RzL3RjZy9yaXNjdjY0OiBW
-ZWN0b3IgbG9hZCB0ZXN0DQo+IMKgIHRlc3RzL3RjZy9yaXNjdjY0OiBBZGQgaW50cmluc2ljcyB2
-ZXJzaW9uIG9mIHRlc3QtcnZ2LWxkc3QNCj4gDQo+IMKgdGVzdHMvdGNnL3Jpc2N2NjQvdGVzdC1y
-dnYtbGRzdC1pbnRyaW5zaWNzLmMgfMKgIDY2ICsrKysrKysrKysNCj4gwqB0ZXN0cy90Y2cvcmlz
-Y3Y2NC9NYWtlZmlsZS50YXJnZXTCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoCAxOSArKysNCj4g
-wqB0ZXN0cy90Y2cvcmlzY3Y2NC90ZXN0LXJ2di1sZHN0LlPCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-IHwgMTMxDQo+ICsrKysrKysrKysrKysrKysrKysNCj4gwqAzIGZpbGVzIGNoYW5nZWQsIDIxNiBp
-bnNlcnRpb25zKCspDQo+IMKgY3JlYXRlIG1vZGUgMTAwNjQ0IHRlc3RzL3RjZy9yaXNjdjY0L3Rl
-c3QtcnZ2LWxkc3QtaW50cmluc2ljcy5jDQo+IMKgY3JlYXRlIG1vZGUgMTAwNjQ0IHRlc3RzL3Rj
-Zy9yaXNjdjY0L3Rlc3QtcnZ2LWxkc3QuUw0K
+
+On 2026/8/21 03:59, Peter Xu wrote:
+> On Thu, Aug 20, 2026 at 08:58:31PM +0800, Yanfei Xu wrote:
+>> My understanding is that within each iteration round, the HVAs carried by
+>> different WRs never overlap, so serializing WRs within the same chunk isn't
+>> necessary. This patchset builds on that assumption — please correct me if
+>> I've missed or misunderstood anything.
+>>
+>> This series improves RDMA migration throughput during the iteration phase
+>> and iterable stop-copy phase by allowing multiple writes to the same
+>> registration chunk.
+>>
+>> RDMA tracks RAM in registration chunks.  During the final iterable
+>> transfer, workloads always leave many scattered 4 KiB dirty pages, with
+>> several pages falling into the same chunk.  The current code waits for
+>> an earlier write to a chunk to complete before posting the next one.
+>> These serial completion waits can leave send queue capacity unused and
+>> limit RDMA bandwidth, increasing downtime.
+>>
+>> The first patch replaces the per-chunk transit bitmap with reference
+>> counts.  The second patch removes the per-chunk wait.
+>>
+>> rdma_registration_start/stop functions called in each round synchronously
+>> drain all in-flight WRs with cq, which can serve as a barrier between
+>> rounds.
+>>
+>> The test configuration is:
+>>
+>>    RDMA chunk size:    32 MiB
+>>    Guest:              32 vCPUs, 128 GiB RAM
+>>    Test runs:          10
+>>    Max HCA bandwidth:  100 Gbs
+>>    Workload:           idle
+>>
+>> Average results:              Before       After
+>>    pin-all is true
+>>    Downtime                    396.7 ms     345.7 ms        ~12.9% improve
+>>    Final iterable bandwidth    9952.0 MiB/s 11639.10 MiB/s  ~17.0% improve
+>>
+>>
+>> Average results:              Before       After
+>>    pin-all is false
+>>    Downtime                    248.7 ms     191.1 ms        ~23.2% improve
+>>    Final iterable bandwidth    5605.1 MiB/s 9826.0 MiB/s    ~75.3% improve
+>>
+>> Note: Final iterable bandwidth actually means the bandwidth during
+>> qemu_savevm_state_complete_precopy_iterable(). non-iterable data doesn't
+>> use RDMA Write.
+> So I left some comment in patch 2, but maybe I should just comment directly
+> here.. please check that first.
+>
+> If you would agree with what I said there (and you should have noticed
+> another patch I sent days ago removing UNREGISTER path), I think what we
+> really need might be:
+Completely agree, very good suggestions. Will rework the patchset based on
+these points (I might get to it in a few days).
+
+Thanks for your detailed explanation!
+
+Regards,
+Yanfei
+
+>
+> - Move RDMA draining from ram_save_iterate()/complete() into each time we
+>    finish scanning a round
+>
+> - Remove transit_bitmap completely (if you see after applying your this
+>    series, the UNREGISTER should be the only user..), because with the
+>    correct draining IIUC we don't need this anymore
+>
+> Thanks,
+>
 
