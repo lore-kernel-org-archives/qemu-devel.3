@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EA7AC61DBC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9084BC5DF94
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:30:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylbv-0005Hc-MD; Tue, 25 Aug 2026 03:30:19 -0400
+	id 1wylbx-0005K1-Qc; Tue, 25 Aug 2026 03:30:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wylbt-0005G9-1E
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 03:30:17 -0400
+ id 1wylbu-0005HZ-Oc
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 03:30:18 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wylbq-00026q-Dh
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 03:30:16 -0400
+ id 1wylbq-00026s-Dh
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 03:30:18 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 67P7TsR4057787
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 67P7TsR8057787
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Tue, 25 Aug 2026 16:30:03 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=E4hfWxBm6wqd5SXrXy04REShDseQ3XN91pTMGVvRSV0=; 
+DKIM-Signature: a=rsa-sha256; bh=Ey//3aZEUk1CHNP0liGSL2vNkzrBp48N4daGv/uWJLU=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
  s=rs20250326; t=1787643003; v=1;
- b=vu+itbHBngqEP8DVtN471B0gCLwN9O1/D748va4GvOiPo07eEJXwEtiX2cmXPn0a
- dbW1okFS1uE1F070PcoS0tSlqf60iDrwZ7k53rQn9HKAnE3P1lrMGbSoRDembypC
- IG3t1tENoJdcXYURbs1P2kmo+B+l79dcKQZYYZZYQnfrZ8kLIXjvo5qFuaEsmyXO
- xnmCbvhI6G23Tcm4sOml0Ptj1X7825m2C7It9QA0ots1f4G+eGXNn0dDUjHb3SNX
- 2XvPNTuobHL+Ye3Zg+AHWoHzOe/4LfJEnZajq6nD9do5O8bolCCXlt7I0EO+8tLS
- RiE248scQHf1FSkD7O4lnA==
+ b=WeYW7aFE4frLezdR7eH7VJD0PW5wpkSwsmD8BDD22cimVRR7GfK/5dQfMvqf/ElF
+ yaOwM1vxlBNMIQL3z1HGTyOeick48citcHFoh01dL8yGrHcKl6J/Qso7hey1DcuI
+ JJU6xdfLGVOuf9ibCq3ZFphW0fiHjHzHwxFdew8WTL3+MEIQB+PPFlGXYNT7fXeR
+ XdkwIOGR+dK4VWUkCushwXY2rVCeE+jE9UWgJP8/eXeBtGG9/dVc9tiD4AG3slqJ
+ Z+kN7cvZFacjjPabzg7P+1cWtfNAJl54sLgoLuEpfv89IBJWNIDa0+hfX/y9eh8a
+ EQsfDmshN9zg52O4sZPotw==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 25 Aug 2026 16:28:47 +0900
-Subject: [PATCH v2 1/5] hw/display/virtio-gpu: Avoid creating empty udmabuf
+Date: Tue, 25 Aug 2026 16:28:51 +0900
+Subject: [PATCH v2 5/5] hw/display/virtio-gpu: Validate resource per
+ command
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260825-dmabuf-v2-1-b3d64d3b9a0e@rsg.ci.i.u-tokyo.ac.jp>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260825-dmabuf-v2-5-b3d64d3b9a0e@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260825-dmabuf-v2-0-b3d64d3b9a0e@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260825-dmabuf-v2-0-b3d64d3b9a0e@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -52,13 +53,13 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-925f5
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5355;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6562;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=mKLvuCDlxGKxhjP68r0N13Lt+Y4djUit3/oL3/Aua9o=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ1avS+mRL3MefziXPOv2nqSMjW3Trc78XnjojuzR9dcXl
- JR8t2ZM7yhlYRDjYpAVU2RJKdrNrRFd+6kwIb4FZg4rE8gQBi5OAZjITwmGf5p7r/+R0jqZt1XH
- 7sF0mYZNF7kzmKXKfhVuztbn+/HzcDMjw4KvDXai3u0ZdczPdiXG/tV+1OShGK/X7LdLaMrnS5v
- WMwIA
+ bh=XLOWap4IH1BFMIQ4K12ZuKog1w1EqIoUjH+qNTIahxA=;
+ b=kA0DAAoWKJ19aUZYEjEByyZiAGqNRHmh7T5CZ5kOxsqXSHKZ2EReQdA1i+i1VXGvZ54aPQcOD
+ oh1BAAWCgAdFiEEZHK7CyhbffJxYF+EKJ19aUZYEjEFAmqNRHkACgkQKJ19aUZYEjHs0AD/R2/T
+ IzvijtvV0J/62bKtteUlQJp1UdbsmMs+0aidN04A/RwgoJhO5lFHupYzTP3AHDyQRsATLdNJGWR
+ omDcl8qEM
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -84,153 +85,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The virtio specification allows creating a blob without backing storage
-attached. However, virtio-gpu attempts to create an empty udmabuf for
-such a blob. The ioctl fails with EINVAL and emits a spurious warning.
-Avoid the invalid ioctl.
+virtio_gpu_find_check_resource() checks if the resource has backing
+storage if require_backing is true, but the condition conflates backing
+storage attachment with host representation; it checks
+!res->iov || (!res->image && !res->blob), but !res->iov is sufficient.
 
+Furthermore, its callers passing true as require_backing have different
+requirements:
+
+- virtio_gpu_transfer_to_host_2d() requires a non-blob with
+  backing storage.
+- virtio_gpu_set_scanout() requires a non-blob but does not require
+  backing storage.
+- virtio_gpu_set_scanout_blob() requires a blob with backing storage.
+- virtio_gpu_resource_detach_backing() accepts any resource.
+
+Remove the require_backing parameter and open-code checks appropriate
+for each function instead.
+
+Fixes: 25c001a40346 ("virtio-gpu: Add virtio_gpu_find_check_resource")
 Fixes: e0933d91b1cd ("virtio-gpu: Add virtio_gpu_resource_create_blob")
-Fixes: f66767f75c9c ("virtio-gpu: add virtio-gpu/blob vmstate subsection")
+Fixes: 32db3c63ae11 ("virtio-gpu: Add virtio_gpu_set_scanout_blob")
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/display/virtio-gpu.c | 94 ++++++++++++++++++++++++++-----------------------
- 1 file changed, 49 insertions(+), 45 deletions(-)
+ hw/display/virtio-gpu.c | 66 +++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 45 insertions(+), 21 deletions(-)
 
 diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index fbb6fec7a0ad..ccfc1814d514 100644
+index 996b77829511..d9305fd5af5f 100644
 --- a/hw/display/virtio-gpu.c
 +++ b/hw/display/virtio-gpu.c
-@@ -363,27 +363,29 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
-     res->resource_id = cblob.resource_id;
-     res->blob_size = cblob.size;
+@@ -37,7 +37,6 @@
  
--    ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, sizeof(cblob),
--                                        cmd, &res->addrs, &res->iov,
--                                        &res->iov_cnt);
--    if (ret < 0) {
--        cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
--        g_free(res);
--        return;
+ static struct virtio_gpu_simple_resource *
+ virtio_gpu_find_check_resource(VirtIOGPU *g, uint32_t resource_id,
+-                               bool require_backing,
+                                const char *caller, uint32_t *error);
+ 
+ static void virtio_gpu_reset_bh(void *opaque);
+@@ -50,8 +49,7 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
+     uint32_t pixels;
+     void *data;
+ 
+-    res = virtio_gpu_find_check_resource(g, resource_id, false,
+-                                         __func__, NULL);
++    res = virtio_gpu_find_check_resource(g, resource_id, __func__, NULL);
+     if (!res) {
+         return;
+     }
+@@ -128,7 +126,6 @@ virtio_gpu_find_resource(VirtIOGPU *g, uint32_t resource_id)
+ 
+ static struct virtio_gpu_simple_resource *
+ virtio_gpu_find_check_resource(VirtIOGPU *g, uint32_t resource_id,
+-                               bool require_backing,
+                                const char *caller, uint32_t *error)
+ {
+     struct virtio_gpu_simple_resource *res;
+@@ -143,17 +140,6 @@ virtio_gpu_find_check_resource(VirtIOGPU *g, uint32_t resource_id,
+         return NULL;
+     }
+ 
+-    if (require_backing) {
+-        if (!res->iov || (!res->image && !res->blob)) {
+-            qemu_log_mask(LOG_GUEST_ERROR, "%s: no backing storage %d\n",
+-                          caller, resource_id);
+-            if (error) {
+-                *error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+-            }
+-            return NULL;
+-        }
 -    }
-+    if (cblob.nr_entries) {
-+        ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, sizeof(cblob),
-+                                            cmd, &res->addrs, &res->iov,
-+                                            &res->iov_cnt);
-+        if (ret < 0) {
-+            cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
-+            g_free(res);
-+            return;
-+        }
+-
+     return res;
+ }
  
--    if (res->iov_cnt > 0 &&
--        iov_size(res->iov, res->iov_cnt) < res->blob_size) {
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: backing storage smaller than blob size\n",
--                      __func__);
--        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
--        virtio_gpu_cleanup_mapping(g, res);
--        g_free(res);
--        return;
-+        if (iov_size(res->iov, res->iov_cnt) < res->blob_size) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: backing storage smaller than blob size\n",
-+                          __func__);
-+            cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+            virtio_gpu_cleanup_mapping(g, res);
-+            g_free(res);
-+            return;
-+        }
+@@ -474,9 +460,24 @@ static void virtio_gpu_transfer_to_host_2d(VirtIOGPU *g,
+     virtio_gpu_t2d_bswap(&t2d);
+     trace_virtio_gpu_cmd_res_xfer_toh_2d(t2d.resource_id);
+ 
+-    res = virtio_gpu_find_check_resource(g, t2d.resource_id, true,
++    res = virtio_gpu_find_check_resource(g, t2d.resource_id,
+                                          __func__, &cmd->error);
+-    if (!res || res->blob) {
++    if (!res) {
++        return;
++    }
 +
-+        virtio_gpu_init_udmabuf(res);
++    if (!res->image) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource %d is a blob\n",
++                      __func__, t2d.resource_id);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
++        return;
++    }
++
++    if (!res->iov) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: resource %d has no backing storage\n",
++                      __func__, t2d.resource_id);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
+         return;
      }
  
--    virtio_gpu_init_udmabuf(res);
-     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
- }
+@@ -533,7 +534,7 @@ static void virtio_gpu_resource_flush(VirtIOGPU *g,
+     trace_virtio_gpu_cmd_res_flush(rf.resource_id,
+                                    rf.r.width, rf.r.height, rf.r.x, rf.r.y);
  
-@@ -1369,8 +1371,6 @@ static bool virtio_gpu_load_restore_mapping(VirtIOGPU *g,
-         }
+-    res = virtio_gpu_find_check_resource(g, rf.resource_id, false,
++    res = virtio_gpu_find_check_resource(g, rf.resource_id,
+                                          __func__, &cmd->error);
+     if (!res) {
+         return;
+@@ -771,12 +772,19 @@ static void virtio_gpu_set_scanout(VirtIOGPU *g,
+         return;
      }
  
--    QTAILQ_INSERT_HEAD(&g->reslist, res, next);
--    g->hostmem += res->hostmem;
-     return true;
- }
- 
-@@ -1449,6 +1449,8 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-             return -EINVAL;
-         }
- 
-+        QTAILQ_INSERT_HEAD(&g->reslist, res, next);
-+        g->hostmem += hostmem;
-         resource_id = qemu_get_be32(f);
+-    res = virtio_gpu_find_check_resource(g, ss.resource_id, true,
++    res = virtio_gpu_find_check_resource(g, ss.resource_id,
+                                          __func__, &cmd->error);
+     if (!res) {
+         return;
      }
  
-@@ -1508,36 +1510,38 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
-         res->blob_size = qemu_get_be32(f);
-         res->iov_cnt = qemu_get_be32(f);
- 
--        res->addrs = g_try_new(uint64_t, res->iov_cnt);
--        res->iov = g_try_new(struct iovec, res->iov_cnt);
--        if (res->iov_cnt && (!res->addrs || !res->iov)) {
--            g_free(res->addrs);
--            g_free(res->iov);
--            g_free(res);
--            return -EINVAL;
--        }
-+        if (res->iov_cnt) {
-+            res->addrs = g_try_new(uint64_t, res->iov_cnt);
-+            res->iov = g_try_new(struct iovec, res->iov_cnt);
-+            if (!res->addrs || !res->iov) {
-+                g_free(res->addrs);
-+                g_free(res->iov);
-+                g_free(res);
-+                return -EINVAL;
-+            }
- 
--        /* read data */
--        for (i = 0; i < res->iov_cnt; i++) {
--            res->addrs[i] = qemu_get_be64(f);
--            res->iov[i].iov_len = qemu_get_be32(f);
--        }
-+            /* read data */
-+            for (i = 0; i < res->iov_cnt; i++) {
-+                res->addrs[i] = qemu_get_be64(f);
-+                res->iov[i].iov_len = qemu_get_be32(f);
-+            }
- 
--        if (res->iov_cnt > 0 &&
--            iov_size(res->iov, res->iov_cnt) < res->blob_size) {
--            g_free(res->addrs);
--            g_free(res->iov);
--            g_free(res);
--            return -EINVAL;
--        }
-+            if (iov_size(res->iov, res->iov_cnt) < res->blob_size) {
-+                g_free(res->addrs);
-+                g_free(res->iov);
-+                g_free(res);
-+                return -EINVAL;
-+            }
- 
--        if (!virtio_gpu_load_restore_mapping(g, res)) {
--            g_free(res);
--            return -EINVAL;
--        }
-+            if (!virtio_gpu_load_restore_mapping(g, res)) {
-+                g_free(res);
-+                return -EINVAL;
-+            }
- 
--        virtio_gpu_init_udmabuf(res);
-+            virtio_gpu_init_udmabuf(res);
-+        }
- 
-+        QTAILQ_INSERT_HEAD(&g->reslist, res, next);
-         resource_id = qemu_get_be32(f);
++    if (!res->image) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource %d is a blob\n",
++                      __func__, ss.resource_id);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
++        return;
++    }
++
+     fb.format = pixman_image_get_format(res->image);
+     bytes_pp = virtio_gpu_format_bytes_pp(fb.format);
+     fb.width  = pixman_image_get_width(res->image);
+@@ -866,12 +874,28 @@ static void virtio_gpu_set_scanout_blob(VirtIOGPU *g,
+         return;
      }
  
+-    res = virtio_gpu_find_check_resource(g, ss.resource_id, true,
++    res = virtio_gpu_find_check_resource(g, ss.resource_id,
+                                          __func__, &cmd->error);
+     if (!res) {
+         return;
+     }
+ 
++    if (res->image) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: resource %d is not a blob\n",
++                      __func__, ss.resource_id);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
++        return;
++    }
++
++    if (!res->iov) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: resource %d has no backing storage\n",
++                      __func__, ss.resource_id);
++        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
++        return;
++    }
++
+     if (!virtio_gpu_scanout_blob_to_fb(&fb, &ss, res->blob_size)) {
+         cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+         return;
+@@ -1047,7 +1071,7 @@ virtio_gpu_resource_detach_backing(VirtIOGPU *g,
+     virtio_gpu_bswap_32(&detach, sizeof(detach));
+     trace_virtio_gpu_cmd_res_back_detach(detach.resource_id);
+ 
+-    res = virtio_gpu_find_check_resource(g, detach.resource_id, true,
++    res = virtio_gpu_find_check_resource(g, detach.resource_id,
+                                          __func__, &cmd->error);
+     if (!res) {
+         return;
 
 -- 
 2.55.0
