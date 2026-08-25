@@ -4,107 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24273C61DB6
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:10:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9788BC61DB6
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:10:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wynAI-0003FG-9t; Tue, 25 Aug 2026 05:09:54 -0400
+	id 1wynAz-0004cb-5a; Tue, 25 Aug 2026 05:10:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wynAG-0003D2-9A; Tue, 25 Aug 2026 05:09:52 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wynAx-0004cF-Vk
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 05:10:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wynAE-0004k9-Gh; Tue, 25 Aug 2026 05:09:52 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67P8WARe2650217; Tue, 25 Aug 2026 09:09:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=uRhMhjfUdEp+T4uR/ALFaOjHZwUE1XWZbdYuM4of/
- ok=; b=rUqG+/HWCkPCT0/ol3kUbWgwspTT+qD+jqTq6cgepDjP6CiuU7009hUIR
- /Di00azLxFplTc6Rc3IdJm74CSO6yC+K/DaxL2mXgVieKzZOOqFQLvCxL+M/CUtk
- 2AKruoltrh9gnFw+cV0YIMRDtIAzX7+7Mfp58LRaHE009b1UQbdIsi/hGkhz3SRd
- kDF5jlWu3ywF3L607FJYOGQJpK4gOYQaOynybKNyuqpL3lqzIizR9QUwB68zlV4E
- nVGqSMc1A8Gx6a4hFpBQHhiFQ1SL0j27GC+yWTTi1ymz3vhYEXgHZHLnVmEIB0dP
- c33OK7bvppnWK3+luC/S6Y5LtZCzQ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eqq3x1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 25 Aug 2026 09:09:47 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67P8uHZk016508;
- Tue, 25 Aug 2026 09:09:46 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3jub8w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 25 Aug 2026 09:09:43 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67P99dob43844044
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 25 Aug 2026 09:09:39 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DB37A2004B;
- Tue, 25 Aug 2026 09:09:38 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF08720049;
- Tue, 25 Aug 2026 09:09:35 +0000 (GMT)
-Received: from shivang.com (unknown [9.39.21.24])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 25 Aug 2026 09:09:35 +0000 (GMT)
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: shivangu@linux.ibm.com, qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Cc: adityag@linux.ibm.com, anushree.mathur@linux.vnet.ibm.com,
- harshpb@linux.ibm.com, mahesh@linux.ibm.com, sourabhjain@linux.ibm.com,
- amachhiw@linux.ibm.com, hbathini@linux.ibm.com, npiggin@gmail.com
-Subject: [PATCH v3 0/1] hw/ppc/fadump: Fix CPU_STATE_DATA region reported size
-Date: Tue, 25 Aug 2026 14:39:31 +0530
-Message-ID: <20260825090932.1748581-1-shivangu@linux.ibm.com>
-X-Mailer: git-send-email 2.54.0
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wynAw-00055p-5F
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 05:10:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787649032;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JArLY+EmhIgvh5Ef/Uzcm9WESCObz7TaJXVm360uebE=;
+ b=Msj91aoYXl6Uo8VhTavkGPJ4bBu85NqESwqy3uBxOmfxT2ok8pdRdOVIFHcFQ63puUmocH
+ ON7dkXaUXgMDcbhmCV76Ml/oOvAwbphysE0MIDT0F/Y5gT+ZNjfRjHTudkFFxiB6vbexmR
+ YwK08G1zOjOtbNGC0YRfTElMAxAilCc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-456-yYAX_uXhOae7aK38TZpzxw-1; Tue,
+ 25 Aug 2026 05:10:29 -0400
+X-MC-Unique: yYAX_uXhOae7aK38TZpzxw-1
+X-Mimecast-MFC-AGG-ID: yYAX_uXhOae7aK38TZpzxw_1787649028
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 260E5186A6EE; Tue, 25 Aug 2026 09:10:28 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.12])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B5DDA1800348; Tue, 25 Aug 2026 09:10:27 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2B76121E6920; Tue, 25 Aug 2026 11:10:25 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: "Denis V. Lunev" <den@openvz.org>
+Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  Stefan Hajnoczi
+ <stefanha@redhat.com>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v6 19/25] parallels: report the stored dirty bitmaps in
+ qemu-img info
+In-Reply-To: <20260817185942.1065143-20-den@openvz.org> (Denis V. Lunev's
+ message of "Mon, 17 Aug 2026 20:59:36 +0200")
+References: <20260817185942.1065143-1-den@openvz.org>
+ <20260817185942.1065143-20-den@openvz.org>
+Date: Tue, 25 Aug 2026 11:10:25 +0200
+Message-ID: <878q5uo9a6.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: 7d5xjXoLviR3FXt12WmzNm_5qEsT3UVs
-X-Proofpoint-ORIG-GUID: uvjli2COGPSdou4XEpm7Wf8xjGJjhERq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDA3NiBTYWx0ZWRfXwUCGUd/UMmKM
- mAq7LhfRZONgfeSg4UlrROfPnrawXNQxz5tbWfFPahpjiUAxGUxxeXT2rP1MOLfM4n4jbwSr4Gl
- ZUxS6MXT3+oqdqsOBwL95IfLcVl/8XEIP3+GwkQqR6Fn9EfCLXN+VEc6CPcmD4HrZTdQCcMO4Th
- DRUDBsySEFstQSNPk2ibihF3zH1aw8C0B5Y9wnErQgzqz0aKrM1eJ77oQvHhyyUvwqzGZ0onUv1
- uvzsf8tVS2vb79isi3a/EXQKOnDKCuEHszR+rcIRnsNBDRd569HfqzbgMBD0Hzvww6RyPSiEgZ8
- BdcfSY9s2OsCPOQIgMarU/nXUkRK9sQ5M172OFc81iYp6lEW6FCX1HzP/z4dEtGEssjddrXZY4a
- ikiN6waZTVNltkw86NZogv9X8DtEuh+hFpE2AuPgNQ0Jtk3rWIUQRzHXylatvAaF4d1yVrmru1v
- t8XhAp+OY+tya1wILdg==
-X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8d5bdb cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=qWSFGm0LHDTrzJZ27iMA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDA3NiBTYWx0ZWRfX+3GqOus+tv5F
- XqIBjZt9r+5sb4dqPnTlwPX73Uxi6UV4kZwSMKIR5MJQgO/GLdC3CB9BJer1aHAh0pHKwkosRN1
- 2MA5q/IYlGavInYqlyC4m+FuJwsNRSo=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-25_02,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
- spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608250076
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,34 +86,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fadump is unable to collect dump, when qemu is started with maxcpus option.
-This bug was also disucssed on linux side here [1]. But We could not find a way
-to mitigate all the ambiguity around the fadump region error reporting. It is
-assumed that if allocated size and dumped size dont match, then data copy must
-have failed. So Replicating the Phyp's behaviour here.
+"Denis V. Lunev" <den@openvz.org> writes:
 
-The following behaviour is observed with Phyp.
+> From: Denis V. Lunev <den@openvz.org>
+>
+> Nothing tells which persistent bitmaps an image carries. qemu-img info
+> says nothing about them, and the only other way to see one is to export
+> the image over NBD and ask for a bitmap by name, which needs the name
+> beforehand.
+>
+> Add ImageInfoSpecificParallels with the bitmaps and their granularity,
+> as qcow2 reports the contents of its bitmap directory:
+>
+>     Format specific information:
+>         bitmaps:
+>             [0]:
+>                 name: b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45
+>                 granularity: 65536
+>
+> The list is built from the bitmaps loaded at open time rather than from
+> a second pass over the Format Extension, as every bitmap the extension
+> carries is loaded and marked persistent there. On a node which is open
+> that also covers a bitmap which was created but not stored yet, which is
+> what the field says: qemu-img info opens the image on its own, so there
+> the two are the same thing.
 
- 1. Registers entries are only filled for online CPUs.
- 2. regNum is set as number of currently online CPUs.
- 3. CPU_STATE_DATA's bytes_dumped always equals source_len.
+The last sentence confuses me.
 
-Qemu already have, same behaviour for 1 and 2. Fixing the 3rd behaviour in this patch.
+> An image with no bitmaps leaves the structure empty, and
+> bdrv_image_info_specific_dump() prints nothing for an empty one, so the
+> output for such an image does not change.
 
-[1] https://lore.kernel.org/all/20260714173010.615682-1-shivangu@linux.ibm.com/
---
-Changelog:
-v3: Removing the fake entries population. Kernel handles this case by default.
+Output of what?  I guess it's "info block" and "qemu-img info", because
+these call bdrv_image_info_specific_dump().
 
-v2: https://lore.kernel.org/qemu-devel/20260429065127.366813-1-shivangu@linux.ibm.com/
---
-Shivang Upadhyay (1):
-  hw/ppc/fadump: report CPU_STATE_DATA dumped_bytes as source_len
+> Cc: Stefan Hajnoczi <stefanha@redhat.com>
+> Cc: Eric Blake <eblake@redhat.com>
+> Cc: Markus Armbruster <armbru@redhat.com>
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
 
- hw/ppc/spapr_fadump.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+[...]
 
--- 
-2.54.0
+> diff --git a/qapi/block-core.json b/qapi/block-core.json
+> index 1f87b07850..4bc8b45efe 100644
+> --- a/qapi/block-core.json
+> +++ b/qapi/block-core.json
+> @@ -200,7 +200,7 @@
+>  # Since: 1.7
+>  ##
+>  { 'enum': 'ImageInfoSpecificKind',
+> -  'data': [ 'qcow2', 'vmdk', 'luks', 'rbd', 'file' ] }
+> +  'data': [ 'qcow2', 'vmdk', 'luks', 'rbd', 'file', 'parallels' ] }
+>  
+>  ##
+>  # @ImageInfoSpecificQCow2Wrapper:
+> @@ -255,6 +255,41 @@
+>  { 'struct': 'ImageInfoSpecificFileWrapper',
+>    'data': { 'data': 'ImageInfoSpecificFile' } }
+>  
+> +##
+> +# @ParallelsBitmapInfo:
+> +#
+> +# Parallels dirty bitmap information.
+> +#
+> +# @name: the name of the bitmap
+> +#
+> +# @granularity: granularity of the bitmap in bytes
+> +#
+> +# Since: 11.2
+> +##
+> +{ 'struct': 'ParallelsBitmapInfo',
+> +  'data': { 'name': 'str', 'granularity': 'uint32' } }
+> +
+> +##
+> +# @ImageInfoSpecificParallels:
+> +#
+> +# @bitmaps: A list of the persistent dirty bitmaps of the image,
+> +#     including the ones which are not written out yet
+
+Pardon my ignorance...  Is "not written out yet" relevant to a user /
+management application?
+
+ImageInfoSpecificQCow2 also has a @bitmaps member.  Its documentation is
+
+   # @bitmaps: A list of qcow2 bitmap details (since 4.0)
+
+Are these "persistent dirty bitmaps" as well, or something else?
+
+> +#
+> +# Since: 11.2
+> +##
+> +{ 'struct': 'ImageInfoSpecificParallels',
+> +  'data': { '*bitmaps': ['ParallelsBitmapInfo'] } }
+
+Please put these right after ImageInfoSpecificFile to preserve the
+existing order of things:
+
+    All the ImageInfoSpecificFOO in order of
+        ImageInfoSpecificKind members
+    ImageInfoSpecificKind
+    All the ImageInfoSpecificFOOWrapper in order of
+        ImageInfoSpecificKind members
+    ImageInfoSpecific
+
+> +
+> +##
+> +# @ImageInfoSpecificParallelsWrapper:
+> +#
+> +# @data: image information specific to Parallels
+> +#
+> +# Since: 11.2
+> +##
+> +{ 'struct': 'ImageInfoSpecificParallelsWrapper',
+> +  'data': { 'data': 'ImageInfoSpecificParallels' } }
+> +
+>  ##
+>  # @ImageInfoSpecific:
+>  #
+> @@ -273,7 +308,8 @@
+>        'vmdk': 'ImageInfoSpecificVmdkWrapper',
+>        'luks': 'ImageInfoSpecificLUKSWrapper',
+>        'rbd': 'ImageInfoSpecificRbdWrapper',
+> -      'file': 'ImageInfoSpecificFileWrapper'
+> +      'file': 'ImageInfoSpecificFileWrapper',
+> +      'parallels': 'ImageInfoSpecificParallelsWrapper'
+>    } }
+>  
+>  ##
+
+[...]
 
 
