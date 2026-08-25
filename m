@@ -4,114 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07212C61DC2
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 16:45:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 400E1C61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 16:56:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyuGC-0005R1-9M; Tue, 25 Aug 2026 12:44:28 -0400
+	id 1wyuR8-0007Y6-9x; Tue, 25 Aug 2026 12:55:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wyuGA-0005QI-Bu; Tue, 25 Aug 2026 12:44:26 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wyuG8-0005Fb-Pn; Tue, 25 Aug 2026 12:44:26 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67PEYlgX010278; Tue, 25 Aug 2026 16:44:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=eKOhvn
- hgKh685HtG5rtQD0vAexgCTvtBY3a52hbR3SM=; b=T3uc5571MZ0Mjh+oKSz/++
- UBj82xzLcXY2QSCcnzk9wTg9N3UJSUriCXS4ddnCbZLYsIS+rmrnoC1eHfpNemHb
- OjIg6oRkEcAtJ7nM4H/CPHReNsytJy9ZqgMzkmTwgnVWF6zlTDFxgV3wZZfGvQ/G
- x8dXdzjbcmIEH+vppMGXuLjmMdK373ws4P4OxXODPLHwj1BP6t5vsieYJBCu9Qdh
- eKBL3knFnDIBHmyA4SMv4BJh+7njT7e00+ZNpdQ545/GNbNp+LMXM+KHERYNxzOq
- FdFl6rfKkEaqTMCizQlNxMUfmjKgJE3xH7okIDgHlcizst3fYdPgmgXyvH4SzRGA
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726ehc4n-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 25 Aug 2026 16:44:20 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67PGfFo8003324;
- Tue, 25 Aug 2026 16:44:19 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7ragd2d7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 25 Aug 2026 16:44:19 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67PGiIQg59507044
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 25 Aug 2026 16:44:18 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6B85F58055;
- Tue, 25 Aug 2026 16:44:18 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D8A885804E;
- Tue, 25 Aug 2026 16:44:17 +0000 (GMT)
-Received: from [9.12.79.241] (unknown [9.12.79.241])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 25 Aug 2026 16:44:17 +0000 (GMT)
-Message-ID: <0ba0a7aa-623a-48e3-bde9-48ee82331d1a@linux.ibm.com>
-Date: Tue, 25 Aug 2026 12:44:17 -0400
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1wyuQw-0007Vd-VH
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 12:55:35 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
+ id 1wyuQs-00074q-Ji
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 12:55:33 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-855de2d0d4dso403627b3.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 09:55:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787676925; cv=none;
+ d=google.com; s=arc-20260327;
+ b=YP+6FaRAA7/VqnTFx5kmyPd4MzlPsgN9bMCE9YzR81dUP7l7Cp/jGier4gHCILgBu5
+ J4T3WFqjsuVqk/yrG3fmHmOEe/qyrfR3Bt56+c9hD6tpv2OhRi2J6LO0CgiuSzvORDzi
+ tMrTtyv89ZX8wMf9p6TAP9f/tyZ+ZTvph4rHpoJd29QxdgNaXG6MDxf65cGKtfCYcLZK
+ bvEOXjvnQm8YtX1KruWBDmML4vnWCizAJ7fMouSANrAPytDqjPL5FDn96unUaephg0FV
+ gjWGoQO11GiFHEzWViaEPeLhCqZ57zV2J6yOY2FBAq0mHRNRKEUvTEr+SsNOGKPM3AF6
+ E7wA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=0PGKUcpisL/PdVjbCIBj9taleCgb4geVsx0pZw5E3b0=;
+ fh=H+NDqK5G0NiN38mVV0dYIBigLFnDDn5Om11Gwu6V+aY=;
+ b=F2v5DNJT94OPXe8VlBdQvKdCvoVLeiubNekv7zQKqbrAsvQ5VJncQ/DxM0emkffCvY
+ T6rfoZcnjOhdYPGiQGB0hH0D8o98/GxIeRsl8CxsFFOZUe64QovdnsWCrqrOYYj8Ngut
+ CMZxLgSWasahdYrxkvvHEAZ+H2HegfY2kNjr7xtOKP1Pq7lh3mV7HGWn/kVM9KQExJIi
+ bc+hhBU5EH/fIud+ZDrD79SRafmfP5voym+nNAdeZiFP8t4clLH9c8rRsm5oFp9uf9+L
+ 9WCsVkWlK9zTTtjacl76jeGqLiRnFpqEmHjhsMMJRKeRp7D3y95zPCWB8L/phPtw1Njx
+ ep6w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1787676925; x=1788281725; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=0PGKUcpisL/PdVjbCIBj9taleCgb4geVsx0pZw5E3b0=;
+ b=aqXc2a5bbAivHOjMse/rWLaE8J+/HniBJpk+4Xft1aOae3fpCwHmYUBcMFXgkFTsoQ
+ Cy6N76XE95LzTe0gXjugPyDow+fjE6soUaHFXaOKqFBcY5qQf4ux7aUZ3YV86l528lJG
+ liHgeQcjsbxgb2bZ+cYrrlkWn7raDkevMP5U4EAM+zBqEvNBK479CYTOpg3Qwa7Q1JFd
+ gE/C/aEwC9Z1fp0nwpCQaQp/Yr6hGGeGRDgQF4Q9FIBD04P7MfHPv2nZ44KzhGcT4we2
+ VQSYAhhkNNHfKqrNN03uTzwOaQe0+QGckdZlU6WZ7+bOM2XDIibmeOp87dI5XAGNotBy
+ UaCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787676925; x=1788281725;
+ h=content-type:cc:to:subject:message-id:date:from:reply-to
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=0PGKUcpisL/PdVjbCIBj9taleCgb4geVsx0pZw5E3b0=;
+ b=sXsxNordNxaNVUicXfSgVXSOGUNfFVXETAxs9pfwwhNa/Kt7DMjsclQxRPRmN9jx1u
+ qu9wUsm0be4Ex9Bcpnu7W5/HW4R3nGp45iRrXn+c9WrDMbuZCPgs+MOzusOyBrjbkKz+
+ lGRY2N2HBQlrYN213fKc0NNjiSFxZsIn49fQgvrMb4Y/E/8VdQQSL0RioLXhGZNbzfsE
+ zvMk6h+G4KU1/IVe44dIEDaXuGe0VcWOqHAwwAk0PE7nndKUfIMmNzKdeynQwuqnYbFD
+ K0/CAsmos1vNwg4gFTPaGSGWqoHUyzgKXK1wnHzTEn8C+umMW12m6smIBpVc/yvlMcFc
+ 1F8w==
+X-Gm-Message-State: AFuF++nWG3XpRHm4//tumzMA36Z0MAqczvcyiy5ZtyUE/Mhd7rBl3rqM
+ pQbdxxue5u/KFwjlqCvj9eY+ugltGpuqVC7gj1c1QiY203ia9SAaRwtqnMaFtgTh2aJ1SGBMFFm
+ C9+OonsvSqokDZs2UWmDQ3mf8pE1a9/Y=
+X-Gm-Gg: AR+sD11xKYjM2+ICIEZuoX99SP4DGq72DphwWNzp34nWheiPgNNpWHOULPbioHSTzmF
+ 4kTHtkQCHNH3/SeClleCLmTJeuuarcpmff11yLcGB5GxnfUSBMY0q7rIoikpbwP5D0gUIfyDXqW
+ FzluCFhaZOlIEWbfVNnjqbF9ci+3FxXLMuWNVuHg9gRk2DZt/n6AgtUMeYjNdv0cbqHFPjL4ZWz
+ zlEaz+BPiQX6CU3JeCpb42lvJsa7/PHOxyAC8K+de3kjFqsE4dwbvw7OuOEeCXIeGiuAGvAg4ws
+ pUdJ5hk5J+e/aaUd8Jf6aq44GcbOk6CL+Qr0Kh4JtWRa
+X-Received: by 2002:a05:690c:30e:b0:81e:f337:494b with SMTP id
+ 00721157ae682-85470beb834mr39361027b3.8.1787676924940; Tue, 25 Aug 2026
+ 09:55:24 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/8] hw/s390x/ipl: Fix incorrect PCI IPL block length
- constant
-To: Eric Farman <farman@linux.ibm.com>, jrossi@linux.ibm.com,
- qemu-devel@nongnu.org, qemu-s390x@nongnu.org, cohuck@redhat.com,
- mjrosato@linux.ibm.com
-References: <20260811144629.866641-1-jrossi@linux.ibm.com>
- <20260811144629.866641-3-jrossi@linux.ibm.com>
- <51730ac3-ff1f-4eca-98f9-b31b47596185@linux.ibm.com>
- <1bf6e2a3-be53-47b3-8694-9b249770a655@linux.ibm.com>
-Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <1bf6e2a3-be53-47b3-8694-9b249770a655@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8dc664 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=i0Rv7IPlQtgOKCfQKW8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDE0MSBTYWx0ZWRfX1lQacFAP0cz+
- uAhkITPs+zwNtrM7W0LGOh0zZcznTf6p3vlgRxGEl6n9OQC8dWEs8zj7PehdVjYoi3nLymsoAYa
- 11w77bA8UlUyvn4LCBEsc1K3p1E1QhE=
-X-Proofpoint-GUID: 8yrk6n5bu4nhfWRNnIZ9eZ2jycMMdFv-
-X-Proofpoint-ORIG-GUID: 8yrk6n5bu4nhfWRNnIZ9eZ2jycMMdFv-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDE0MSBTYWx0ZWRfX571lnHgJalEs
- 9MAIYLZfiCYiEOwhLugbl/taycyzCL48rZb/DxzrioR/nq771N3G1BfIkte2MJw8IxTAw7Tui6q
- D8OMZ9hQ3RLPV/e+sqSoKwrYM1B+IG+DMqDdvsr7Q6VHPoHslhOc+jmZGlOD1AW9F+4qKitjBDg
- zFjDzQlHSRJM1MoFihDWBJK/zGZjIyGQjz8Eua50ek7MmThD8RDdzzupKVgxIVSdpGHIJlxAqKG
- qzWFwrC/oTURCN9ftusEddjMGnzwd3X2SErrkB/BvcPJW44S/X85IU39l4w+yADa/T+nZfb1M+N
- 2YI5J0WmS2nqGCARlOfg73KuP+y1rujIHMlFNtMQqAM21ZYZ3COeDqk9L5lt5wg0xeob0ZvEau+
- vYni7UNy7zBzfaCD6K72CZZXEJ7IGw4Eurj+Gk+xYxMACAqHa8H8r0l2+bFoPlw+e4LQspDvs+W
- 6QzLc/TUNlJ7RQTw8EQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-25_04,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608250141
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260823150731.896-1-luoyonggang@gmail.com>
+ <ao235Hm8Uovrk0ON@redhat.com>
+In-Reply-To: <ao235Hm8Uovrk0ON@redhat.com>
+From: Yonggang Luo <luoyonggang@gmail.com>
+Date: Wed, 26 Aug 2026 00:55:09 +0800
+X-Gm-Features: AcwNN1XxiiOybUdcnAMhBxhLRl0Ru7IaT7l5U8Ezqkmoe0-ZJG7jflEoexKYMDY
+Message-ID: <CAE2XoE-EJQH7c3TWvpioa7yokNR6cf6pGMjZ2e001yU4-F7rag@mail.gmail.com>
+Subject: Re: [PATCH 00/12] single-binary: link ARM and RISC-V into qemu-system
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Xianglai Li <lixianglai@loongson.cn>, 
+ Alistair Francis <alistair.francis@wdc.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org, 
+ Alexander Bulekov <alxndr@bu.edu>, Zhao Liu <zhao1.liu@intel.com>,
+ Eric Farman <farman@linux.ibm.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ Chao Liu <chao.liu@processmission.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <17746591750@163.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-s390x@nongnu.org, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ David Hildenbrand <david@kernel.org>, qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
+ Igor Mammedov <imammedo@redhat.com>, Aleksandar Rikalo <arikalo@gmail.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Cornelia Huck <cohuck@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, 
+ Fabiano Rosas <farosas@suse.de>, Aurelien Jarno <aurelien@aurel32.net>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ Bibo Mao <maobibo@loongson.cn>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Darren Kenny <darren.kenny@oracle.com>
+Content-Type: multipart/alternative; boundary="00000000000015957c0659e1f89d"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=luoyonggang@gmail.com; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FREEMAIL_REPLYTO=1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,76 +138,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/25/26 6:29 AM, Eric Farman wrote:
-> 
-> 
-> On 8/24/26 1:53 PM, Zhuoying Cai wrote:
->> On 8/11/26 10:46 AM, jrossi@linux.ibm.com wrote:
->>> From: Jared Rossi <jrossi@linux.ibm.com>
->>>
->>> The IplBlockPci struct is 336 bytes in length.
->>>
->>
->> The commit message is slightly misleading because IplBlockPci itself is
->> 312 bytes in length.
->>
->> Maybe reword it to something like:
->> "IplBlockPci is 312 bytes, so the minimum PCI IPLB length is 336 bytes."
->>
-> 
-> Given that, should the #define be sizeof(IplBlockPci) + 24?
-> 
+--00000000000015957c0659e1f89d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-If IplBlockPci is likely to expand in the future, it might make sense to
-derive this value from the structure layout. For example,
-offsetof(IplParameterBlock, pci) + sizeof(IplBlockPci) could be more
-accurate. Otherwise, keeping it as a constant like the other definitions
-seems reasonable as well.
+On Tue, Aug 25, 2026 at 11:42=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
+redhat.com>
+wrote:
+>
+> On Sun, Aug 23, 2026 at 11:07:18PM +0800, Yonggang Luo wrote:
+> > This series produces one qemu-system binary that can run ARM (32 and 64=
+)
+> > and RISC-V (32 and 64, little- and big-endian TargetInfo). It follows
+> > Pierrick Bouvier's merged series "single-binary: implement dynamic
+> > filtering for machine types":
+> >
+> >
+https://patchew.org/QEMU/20260724000948.234657-1-pierrick.bouvier@oss.qualc=
+omm.com/
+>
+> Do you have a public git branch somewhere with this series ? I'm
+> having trouble getting either this series or Pierrick's to cleanly
+> apply at any point to test it.
 
-> And does the patch itself need to be cc'd to stable?
-> 
->> Otherwise:
->> Reviewed-by: Zhuoying Cai <zycai@linux.ibm.com>
->>
->>> Fix the S390_IPLB_MIN_PCI_LEN to reflect this, and assign a valid blk0_len
->>> while we are at it.
->>>
->>> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
->>> ---
->>>   hw/s390x/ipl.c | 2 ++
->>>   hw/s390x/ipl.h | 2 +-
->>>   2 files changed, 3 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
->>> index d5fdc3ea0f..fd6e9100f9 100644
->>> --- a/hw/s390x/ipl.c
->>> +++ b/hw/s390x/ipl.c
->>> @@ -526,6 +526,8 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
->>>           switch (devtype) {
->>>           case PCI_DEVTYPE_VIRTIO:
->>>               iplb->len = cpu_to_be32(S390_IPLB_MIN_PCI_LEN);
->>> +            iplb->blk0_len =
->>> +                cpu_to_be32(S390_IPLB_MIN_PCI_LEN - S390_IPLB_HEADER_LEN);
->>>               iplb->pbt = S390_IPL_TYPE_PCI;
->>>               iplb->pci.fid = cpu_to_be32(pbdev->fid);
->>>               break;
->>> diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
->>> index fac30763df..b4d93054a7 100644
->>> --- a/hw/s390x/ipl.h
->>> +++ b/hw/s390x/ipl.h
->>> @@ -107,7 +107,7 @@ QEMU_BUILD_BUG_MSG(offsetof(S390IPLState, iplb) & 3, "alignment of iplb wrong");
->>>   #define S390_IPLB_MIN_PV_LEN 148
->>>   #define S390_IPLB_MIN_CCW_LEN 200
->>>   #define S390_IPLB_MIN_FCP_LEN 384
->>> -#define S390_IPLB_MIN_PCI_LEN 376
->>> +#define S390_IPLB_MIN_PCI_LEN 336
->>>   #define S390_IPLB_MIN_QEMU_SCSI_LEN 200
->>>   
->>>   static inline bool iplb_valid_len(IplParameterBlock *iplb)
->>
-> 
 
+https://patchew.org/QEMU/20260823150731.896-1-luoyonggang@gmail.com/
+
+you can use git patchew do it
+
+git fetch https://github.com/patchew-project/qemu tags/patchew/
+20260823150731.896-1-luoyonggang@gmail.com
+
+a>
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
+
+
+--
+         =E6=AD=A4=E8=87=B4
+=E7=A4=BC
+=E7=BD=97=E5=8B=87=E5=88=9A
+Yours
+    sincerely,
+Yonggang Luo
+
+--00000000000015957c0659e1f89d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><br><br>On Tue, Aug 25, 2026 at 11:42=E2=80=AFPM Daniel P.=
+ Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com">berrange@redhat.c=
+om</a>&gt; wrote:<br>&gt;<br>&gt; On Sun, Aug 23, 2026 at 11:07:18PM +0800,=
+ Yonggang Luo wrote:<br>&gt; &gt; This series produces one qemu-system bina=
+ry that can run ARM (32 and 64)<br>&gt; &gt; and RISC-V (32 and 64, little-=
+ and big-endian TargetInfo). It follows<br>&gt; &gt; Pierrick Bouvier&#39;s=
+ merged series &quot;single-binary: implement dynamic<br>&gt; &gt; filterin=
+g for machine types&quot;:<br>&gt; &gt;<br>&gt; &gt; =C2=A0 <a href=3D"http=
+s://patchew.org/QEMU/20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.=
+com/">https://patchew.org/QEMU/20260724000948.234657-1-pierrick.bouvier@oss=
+.qualcomm.com/</a><br>&gt;<br>&gt; Do you have a public git branch somewher=
+e with this series ? I&#39;m<br>&gt; having trouble getting either this ser=
+ies or Pierrick&#39;s to cleanly<br>&gt; apply at any point to test it.<br>=
+<br><br><a href=3D"https://patchew.org/QEMU/20260823150731.896-1-luoyonggan=
+g@gmail.com/">https://patchew.org/QEMU/20260823150731.896-1-luoyonggang@gma=
+il.com/</a><br><br>you can use git patchew do it <br><br><div>git fetch <a =
+href=3D"https://github.com/patchew-project/qemu">https://github.com/patchew=
+-project/qemu</a> tags/patchew/<a href=3D"mailto:20260823150731.896-1-luoyo=
+nggang@gmail.com">20260823150731.896-1-luoyonggang@gmail.com</a><br><br>a&g=
+t;<br>&gt;<br>&gt; With regards,<br>&gt; Daniel<br>&gt; --<br>&gt; |: <a hr=
+ef=3D"https://berrange.com">https://berrange.com</a> =C2=A0 =C2=A0 =C2=A0 ~=
+~ =C2=A0 =C2=A0 =C2=A0 =C2=A0<a href=3D"https://hachyderm.io/@berrange">htt=
+ps://hachyderm.io/@berrange</a> :|<br>&gt; |: <a href=3D"https://libvirt.or=
+g">https://libvirt.org</a> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0~~ =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0<a href=3D"https://entangle-photo.org">https://enta=
+ngle-photo.org</a> :|<br>&gt; |: <a href=3D"https://pixelfed.art/berrange">=
+https://pixelfed.art/berrange</a> =C2=A0 ~~ =C2=A0 =C2=A0<a href=3D"https:/=
+/fstop138.berrange.com">https://fstop138.berrange.com</a> :|<br>&gt;<br><br=
+><br>--<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=E6=AD=A4=E8=87=B4<br>=E7=A4=
+=BC<br>=E7=BD=97=E5=8B=87=E5=88=9A<br>Yours<br>=C2=A0 =C2=A0 sincerely,<br>=
+Yonggang Luo</div></div>
+
+--00000000000015957c0659e1f89d--
 
