@@ -4,103 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90BBAC61DB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 22:57:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AEB2C61DC4
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 23:10:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wz04T-0006Xl-IA; Tue, 25 Aug 2026 18:56:45 -0400
+	id 1wz0Gz-00011O-As; Tue, 25 Aug 2026 19:09:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wz04R-0006X2-UQ
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 18:56:43 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wz04P-0004wB-4f
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 18:56:43 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67PFtwvc3909932; Tue, 25 Aug 2026 22:56:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=144he
- AmGybhzbYjJ9e3+mUthBiOW81MxgO0hQrFffXA=; b=G6zG8KWx+U1wolT6kKe/D
- tEBgHadGrm95tS99kEFP5OXTS1huEuT+wgtPYCbt+FVlyASU6KGyS1GoFtpifvgx
- jQgdbYAI02pIdVPHrB5GY5O+rBkaxOBHCNkciSxadcw75PDkAYLCnqiELcAuZc8L
- rTPvkyZLoDNb7ifEhXAighkxOtnaHgrSuso1IgoBBJ5/5EUxNuCvRJubKuW7EL8W
- UoPoVZUiFn8jGC3aGB+F9VUPuDhktLgDpaT7eyTMvRpbSvqkC19jz9rVD1/e4PjP
- 7R6TN5T/YQesba2MmpF3ihC1H34jL7st+75Hxobe1cxUeXgQHS+FAQrfsE0uLoI6
- g==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4g74as53tp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 25 Aug 2026 22:56:37 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 67PMo7wJ016551; Tue, 25 Aug 2026 22:56:36 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4g850vdmdx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 25 Aug 2026 22:56:36 +0000 (GMT)
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 67PMuY4H034200;
- Tue, 25 Aug 2026 22:56:36 GMT
-Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 4g850vdmdc-3; Tue, 25 Aug 2026 22:56:36 +0000 (GMT)
-From: Dongli Zhang <dongli.zhang@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: alex@shazbot.org, clg@redhat.com, peterx@redhat.com, farosas@suse.de,
- maciej.szmigiero@oracle.com, mark.kanda@oracle.com, bchaney@akamai.com,
- joe.jin@oracle.com
-Subject: [PATCH 2/2] migration: Avoid inactive SaveVMHandlers in
- qemu_savevm_state_non_iterable()
-Date: Tue, 25 Aug 2026 15:49:41 -0700
-Message-ID: <20260825225054.807116-3-dongli.zhang@oracle.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20260825225054.807116-1-dongli.zhang@oracle.com>
-References: <20260825225054.807116-1-dongli.zhang@oracle.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wz0Gx-00010t-U9
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 19:09:39 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wz0Gw-0006w8-Dm
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 19:09:39 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-cc1c0b0ca99so30182a12.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 16:09:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787699377; x=1788304177; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=LGpGWkrr+UvtG5G4M7bpanyGIs0Vf6SsX0a7xDso4IQ=;
+ b=Gi0dEzRxVgCKC2LYTkHdyLmUi6QWxwZ8OipEnJZaVpEunMgXnWBkgmSDwDQfhiSIR7
+ eQ2gjUgewiymCN0/Isbi1EAxmCaUqpzyRiQB7L43Vqi6IvG9WrgxeXdGAZPCSEXqiKCE
+ AGnuRO40deOIXlsZB0yaW4c7fxvKBtTsiTjCZMg0AuXc0+7D0HVYHIVczqFzsvKngYbu
+ yItXC7QGTZDX1O+ULuj4Hf8W4Wik0JRa5U28vK4cGUrtkh7sHnHuSUfEzUmcskcyTYYV
+ ML5D94s3m2+hrvtbWT63WjB4T6HtK0F4b6bDJInG7NHdIIuTalhcPGRv/MFOGsFwO/m9
+ IUGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787699377; x=1788304177;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to:content-type;
+ bh=LGpGWkrr+UvtG5G4M7bpanyGIs0Vf6SsX0a7xDso4IQ=;
+ b=pjQ7wBBdkidi/rEpSanVcPgTar0DV9DQP2JmQ6SDw+9A9UOZl3e7Hlfzs7Rk6q5/Ig
+ RAbyDBv5J+WFUyc3dZ9BaWRb4ouGrwbQ7iakwP2QVQsIz5dQrvgfOQewuC+wH43lDsoR
+ al0uaV+ykVNxXDeM2UCrTR+Fb9iMvsl9fvOKsxoO8mJ8mZwZpBe0gOG8GYsDKAVmxUy1
+ C9necOjhJP9LkG/00mhHLBK/h3zrT5CdrtVKuz+3k6eScl4X87jwfTNIrngJqXp/9Gdx
+ 86FnMlWQVEE9VNzFpkXas2jDypkxedHzbTGeJVhTHKkh+qY5tCZldzSl+sMIZo+iBIEM
+ Ag+A==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rr0MeBQjfxC/nTRVRDrl36UQZW80datTN/SajbisCYZ/qCeR/zGHdK7gicEFzMwvKww2rL30lSYXmgk@nongnu.org
+X-Gm-Message-State: AFuF++nU8xbYwwevR4iNFuRgcLntcFuOikxDC6OwXkEW62JdYyGFbGSM
+ tLbEtq9+f4CML1KOdkp8ioVxmGknYZVstZtqZtvf+Vp70dwQ9CHJVEOJqpaC38n/A98=
+X-Gm-Gg: AR+sD10N6NXoXXBjGLKb5MUM85y8GVP5x3+B43yuvVTQEuLcY/jUtZ3iMxz5FwfLV7D
+ P6gtPc+JewMH3TwGFe2GnBS3zcBXRbMQIozNuhvIU/3dFP0HXHLFnjB0e5h2vpiI0T3mDZ70o7f
+ SGti3eMuR30yBtl6kyV1pH6I+kMDRC5pXJyddck1CKfFPlJiroE9BC8u6RYgDus0dzb1oJqo22L
+ o47t9LG24H0bCeIfHgCIiqM46rK3PWNUkcyGZIXGLQ0qzppnz7+TD/RnIcO93FJq96VjVhJL8/G
+ z9Aa0XbA2IMnrgYPncg5r5fxCoR35XrFy9piHHNEIjvEsOD5znDzu7EugK+MQiJ/FaOsCQtma42
+ IjFmsHGS12oWH4Cq1ofImNsxk8NBSKBSoeOV3MpadqfdicZ74/4akYagbE+n2e8qkqqAkhK8JFy
+ 5bbnfgwny8ohQV+IWq0Q0TP+mMJoTZP9s487jdz/nJAdR2pqeP6VK9Eqf7DSsulsfb6PNquAxlN
+ XZaCLwyd9XHn6L9P8+4N0jXbC0d
+X-Received: by 2002:a05:6a20:a127:b0:3c3:b57b:6291 with SMTP id
+ adf61e73a8af0-3cf85b7f957mr3191360637.18.1787699376693; 
+ Tue, 25 Aug 2026 16:09:36 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-cc1beb0f15dsm237931a12.9.2026.08.25.16.09.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Aug 2026 16:09:35 -0700 (PDT)
+Message-ID: <ac062e71-4d09-48fa-b42f-b7d40487a1b2@linaro.org>
+Date: Tue, 25 Aug 2026 16:09:35 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-25_06,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- mlxlogscore=999 malwarescore=0 mlxscore=0 adultscore=0 suspectscore=0
- spamscore=0 lowpriorityscore=0 bulkscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.19.0-2606160000 definitions=main-2608250195
-X-Authority-Analysis: v=2.4 cv=StygLvO0 c=1 sm=1 tr=0 ts=6a8e1da5 cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=7Gl3-_t3PgB9XO-mQDs3:22 a=yPCof4ZbAAAA:8 a=yh4iPBlkOydvZEHkctMA:9
-X-Proofpoint-ORIG-GUID: F9muvEx12CYSRGBoDAVdoD1nHkxOIdl3
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDE5NSBTYWx0ZWRfX7Xib0frnsTUA
- mBqqkouoZLbleQJS5fyVhtJ19GmdpYpJFb4h3KTz9nSAioGKly+3gFZ/9GWCeyfI6E8U/+fYAUY
- mGPuBnPY2PYier1ZNBZ2ZL9/WMupvJhDZ74DLoeF/7rLJttdgKoR+qFZRvPoTAko4TbO2l48T7x
- 747MWFOnwe+Y7eIqneW6lYPR85lXy/EJ2LBXoLBFr9/fcUaEB6dhcUk1qLeKo9k/a/p1c4ToWdM
- DFOspcjgaMexVERBDWcpgzZZpTCrxIH5FYptawJHS+0njKY+GUKD7Wfyjj3pF5SdDqziw8OBDXe
- odZElNyh+QYWXl3orxcbs2umav5GS5yOShNGb+TMFSASRHLUYzw8/iUeZ9Kvhpl0NdPVbO5s4wp
- q0goAqC2G8Av5szfHVKQpD6ZVOLqBsJD6+8Bt5DbtbBuPEE1Ts9f5zKR5n5kF8R6i81R5sZNX49
- OkXr7hUP/Cfj/7xFIxg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDE5NSBTYWx0ZWRfXzh5NrHZNGrz6
- Quc6r3MwWNyZ5w09nBoiRxHEIG/KJ4VN20Uh/n+YYkbLQYXW95nKH/YHUbvS4+UgxsVb5qYUvJo
- 5Hbi6wQuRReL74RcsyYwWCkn1GkBjokjwUh3jml6PnUbx03o/7Bg
-X-Proofpoint-GUID: F9muvEx12CYSRGBoDAVdoD1nHkxOIdl3
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/20] target/i386/tcg: do not reuse cc_srcT
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20260825122921.431739-1-pbonzini@redhat.com>
+ <20260825122921.431739-2-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260825122921.431739-2-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,52 +105,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_savevm_state_non_iterable() does not check qemu_savevm_state_active(),
-so inactive SaveVMHandlers can still be saved through the non-iterable path.
+On 8/25/26 05:29, Paolo Bonzini wrote:
 
-With mlx5_vfio_pci, this means savevm_vfio_handlers may still call into
-vfio_pci_save_config() during cpr-exec or cpr-transfer. The target QEMU
-then tries to load that VFIO migration config state and may fail with a PCI
-config error.
+> Use a different temporary for every instruction that uses it in the
+> translation block.
+>
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+> ---
+>   target/i386/tcg/translate.c |  6 ++++--
+>   target/i386/tcg/emit.c.inc  | 11 +++++++----
+>   2 files changed, 11 insertions(+), 6 deletions(-)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-qemu-system-x86_64: get_pci_config_device: Bad config data: i=0x68 read: 0 device: 40 cmask: ff wmask: 0 w1cmask:0
-qemu-system-x86_64: Failed to load element of type pci config for config
-qemu-system-x86_64: 0000:91:00.1: Failed to load device config space
-
-Call qemu_savevm_state_active() from qemu_savevm_state_non_iterable() so
-inactive SaveVMHandlers, including savevm_vfio_handlers, are skipped.
-Neither vfio_pci_save_config() nor vfio_pci_load_config() will be involved.
-
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
----
- migration/savevm.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 34dd06f9f7..463bffa15d 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1107,7 +1107,7 @@ void qemu_savevm_state_end(QEMUFile *f)
- static inline bool qemu_savevm_state_active(SaveStateEntry *se)
- {
-     /* When no is_active() hook, always treat it as ACTIVE */
--    if (!se->ops->is_active) {
-+    if (!se->ops || !se->ops->is_active) {
-         return true;
-     }
- 
-@@ -1753,6 +1753,10 @@ bool qemu_savevm_state_non_iterable(QEMUFile *f, Error **errp)
-             continue;
-         }
- 
-+        if (!qemu_savevm_state_active(se)) {
-+            continue;
-+        }
-+
-         start_ts_each = qemu_clock_get_us(QEMU_CLOCK_REALTIME);
- 
-         if (vmstate_save(f, se, vmdesc, errp) < 0) {
--- 
-2.43.5
-
+r~
 
