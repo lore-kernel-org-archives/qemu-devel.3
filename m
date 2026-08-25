@@ -4,53 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7961EC5DF94
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0997C61DBC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:08:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyn5d-0000Z6-11; Tue, 25 Aug 2026 05:05:05 -0400
+	id 1wyn5a-0000RE-GR; Tue, 25 Aug 2026 05:05:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn5a-0000RL-Dx; Tue, 25 Aug 2026 05:05:02 -0400
+ id 1wyn5Y-0000NH-HU; Tue, 25 Aug 2026 05:05:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn5Y-0003UH-RS; Tue, 25 Aug 2026 05:05:02 -0400
+ id 1wyn5W-0003N7-Hr; Tue, 25 Aug 2026 05:05:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787648560; bh=PrweyRAWg7grPh/HdPtgGqRf5sHvLYR80tQc7UhI1aI=;
+ t=1787648560; bh=DGgHuOLpM+2S6J0lMOn4pyinhKq03RNiD3E5qqUkehA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ptSdk7aYRerNXoFUi9hoUmj71R+hi+dz/wEgt37e00dGOI1AE0C1MNmNfbE50TNW8
- pN+IyK89NdEkZzfV2R8gcSoiGLl3vhjHv9CA9qyBQPQBNxlWKCIZXOfsKFn+ajxHqt
- 0GmjX4soCJX5KWSaT8ywPvy0hhFJIWsLgnfajA4C1z9p3LTQa7NKj2j0xY9LdC9RBx
- Vu3C8vVFqTPYWdNrN/wqX+lU3sNnSW/Hcb4AFc+8BgnECH+W89dxaTPm/A+eu2opTg
- zpf1ExsNnhWN+Pyao4EB9kwpWdm1w0cFFj2W753JsgU5HM/KVNQizjeTaGk8NxmPwv
- 9w+iokEVwCCHg==
+ b=gaotCRPp/KUPJ+pLa7CyMJoZE0ARCimxazq+bQAI2mKQSmjL97Kp5z5bAhAVYH2jd
+ ew8c2SIcgrONtNP6rUmaDWihbN2Rj6drMrNEKYxG6YhpS0Olli89ShTsibRe6H+nFy
+ WW7JA3rFpXBJwiV+cAoDIFGdl+A4NRcC18Y/XH5Z+Xu6UQTiWGCjl8hqGvlU/DxYYk
+ jYZgPKSOTAxxKPeDWy7MVzlMC0Jl8sGmLH/Y7IDCMo8nZ3qYlyQbuIIRc1iVbg5LpB
+ yDlsG8uFffY19NyhonQQo3pCvplOz+2qOpuCShN6kxw/D05aQvXDsX+WFTii0tvFwK
+ MdcGZQKWVHEwA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A0EA31CE3C2;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9C3BF1CE3C1;
  Tue, 25 Aug 2026 12:02:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8CEDF416184;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 880EE416183;
  Tue, 25 Aug 2026 12:03:17 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id EECF53256D; Tue, 25 Aug 2026 12:02:39 +0300 (MSK)
+ id EB5DF3256B; Tue, 25 Aug 2026 12:02:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, TANG Tiancheng <lyndra@linux.alibaba.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v3 184/196] disas/riscv: Fix 6-bit immediate extraction
-Date: Tue, 25 Aug 2026 12:01:41 +0300
-Message-ID: <20260825090157.471948-23-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v3 183/196] disas/riscv: Fix th.srri decoding
+Date: Tue, 25 Aug 2026 12:01:40 +0300
+Message-ID: <20260825090157.471948-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -77,38 +75,43 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: TANG Tiancheng <lyndra@linux.alibaba.com>
 
-rv_codec_r2_imm6 is used for XThead instructions whose 6-bit
-immediate field is encoded in bits 25:20. The old expression
-left-shifted by 38 and then right-shifted by 60, so it kept only
-bits 25:22.
+target/riscv/xthead.decode defines th.srri as funct6=000100 in
+bits 31:26, with the 6-bit immediate in bits 25:20.
 
-Use extract32() to decode bits 25:20 directly. This fixes the
-immediate printed for th.srri and th.tst.
+decode_xtheadbb() switches on bits 31:25, i.e. funct6 plus imm[5].
+Therefore valid th.srri encodings are 0001000 and 0001001. The
+current 0000100 and 0000101 cases use the wrong funct6 value and
+decode valid th.srri instructions as illegal.
+
+Fix the cases to match funct6=000100 with both imm[5] values.
 
 Fixes: 318df7238b9f ("disas/riscv: Add support for XThead* instructions")
-Suggested-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: TANG Tiancheng <lyndra@linux.alibaba.com>
 Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260703-b4-disas-xthead-fix-riscv-next-v4-2-84c566330bc7@linux.alibaba.com>
+Message-ID: <20260703-b4-disas-xthead-fix-riscv-next-v4-1-84c566330bc7@linux.alibaba.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 7a8454ef293085a45686929577b7d5a5daded242)
+(cherry picked from commit 6985cfc87512e96c0abfa7fffc836e7bd3889048)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 5a61d1bb808..2de092ed921 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -4538,7 +4538,7 @@ static uint32_t operand_zcmp_rlist(rv_inst inst)
- 
- static uint32_t operand_imm6(rv_inst inst)
- {
--    return (inst << 38) >> 60;
-+    return extract32(inst, 20, 6);
- }
- 
- static uint32_t operand_imm2(rv_inst inst)
+diff --git a/disas/riscv-xthead.c b/disas/riscv-xthead.c
+index fcca326d1c3..2f2ddb8dd9a 100644
+--- a/disas/riscv-xthead.c
++++ b/disas/riscv-xthead.c
+@@ -315,8 +315,10 @@ void decode_xtheadbb(rv_decode *dec, rv_isa isa)
+                         op = rv_op_th_revw;
+                     }
+                     break;
+-                case 0b0000100:
+-                case 0b0000101: op = rv_op_th_srri; break;
++                case 0b0001000:
++                case 0b0001001:
++                    op = rv_op_th_srri;
++                    break;
+                 }
+                 break;
+             case 2: op = rv_op_th_ext; break;
 -- 
 2.47.3
 
