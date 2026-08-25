@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7B1BC61DC6
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 633B4C61DB9
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:11:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wywXY-0004Na-6x; Tue, 25 Aug 2026 15:10:33 -0400
+	id 1wywYi-0005y9-Mz; Tue, 25 Aug 2026 15:11:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywXT-0004Fz-N6
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:10:27 -0400
+ id 1wywYT-0005kF-Uz
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:11:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywXS-0003tC-BD
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:10:27 -0400
+ id 1wywYQ-00046T-G6
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:11:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787685025;
+ s=mimecast20190719; t=1787685085;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Rr+vVFND/Cvbzh7dc8WpGZvEOcDRXY0Xin80A/b/SA0=;
- b=Cf/4JBhtnSXB8NTHU7oH6KHi6P+iIqUg+57WMsHahqJVsUsfwACuTlnWTk0tdxTH+g5IQg
- UKOQj/oZ2Nla5RBZmIHGuB7BQp9fBQYv1dh5xTQ/DOUurSHdaHHiOKGDKbK89tRG0AYvg/
- Sh/KjQ1lcKszrkE8Vqkm5YrmQbblnmA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=9CMMKu6kzTPjhr60fVp/ni4m6u7V9jPpiJw4QDuDdfg=;
+ b=MHA8UCJ2asxY03D5/DfJxCVf/xwSJ2AyBseVqkIIepO+4f8x43t8nNhB/bY1F8HXJGuy3f
+ nWX40szOCvCJwwkJusfZg4qQ6zJ6la0mx/xPv5LafJa2MSQXowgSAe1KU3DiojtZVXWWZ3
+ lzxocYElI3ZvOZdMZ506cmSBFdm+pg8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-151-OAv55jJUNHK08XqqWqWl_w-1; Tue,
- 25 Aug 2026 15:10:21 -0400
-X-MC-Unique: OAv55jJUNHK08XqqWqWl_w-1
-X-Mimecast-MFC-AGG-ID: OAv55jJUNHK08XqqWqWl_w_1787685020
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-529-Bc0JutDGP-2QYaKNJCGnrw-1; Tue,
+ 25 Aug 2026 15:11:23 -0400
+X-MC-Unique: Bc0JutDGP-2QYaKNJCGnrw-1
+X-Mimecast-MFC-AGG-ID: Bc0JutDGP-2QYaKNJCGnrw_1787685082
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CF4021977401; Tue, 25 Aug 2026 19:10:19 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3D57618512F0; Tue, 25 Aug 2026 19:11:22 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D17AF30002F7; Tue, 25 Aug 2026 19:10:18 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6BE521944B2A; Tue, 25 Aug 2026 19:11:21 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 25 Aug 2026 23:09:11 +0400
-Subject: [PATCH v4 04/49] hmp: fix snapshot_blkdev argument type
+Date: Tue, 25 Aug 2026 23:09:28 +0400
+Subject: [PATCH v4 21/49] block: add x-qemu-io QMP command
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260825-qemu-no-hmp-v4-4-af60857c2fbe@redhat.com>
+Message-Id: <20260825-qemu-no-hmp-v4-21-af60857c2fbe@redhat.com>
 References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 In-Reply-To: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 To: qemu-devel@nongnu.org
@@ -62,38 +62,37 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  dave@treblig.org, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>, 
  qemu-block@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2336;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8511;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=V/ypuJVU2ZRrXgnpXuFivZH47izZr2kXRQXZ5sUhcL8=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiG0yW9hwCDZ++e03v+sPWT+fQgv+GfGCOA2
- whztovgDEKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3ohgAKCRDa6OEJdZac
- 5f+gD/90dXzK8sg9/s7zCTx5iDnyn3s9bgYZ1bobObPyzif3WAPnBSysMVIQ8323OIFxnPyXac9
- x4lN1XlgoL2gREvjd+DQh3Je/IM/uY1lbezRnI5Ni8i/CpltuWVJM5SZMyDE7B8+RPRghihhDQx
- 20KHlx2gmaOPj2MJ0KJfd0mNE3hpEEwJKTfmDLxyt1E9xRPBtOTaHSYX87jOLAn9FDUoJx9VrpS
- 8wUFYsFknydFqF8shKjNTg4qsPxdcBIhI57LRKAOcju/EQnjMvPWs1PxR5rDH4vaeMdznnHgOYj
- XdJSR3bh8ZL0Q3AKTiPeyauFvWb9sOAUHJJv6KtMgaGGKrFmFtl7qVkq43GVEkIzl6KDsvnrk2x
- KPwdto1mVeWF7NStWX1BMpoGsOgrLpQhFyhEzcLcKyeQ7tU7O1/Nmfq5Us1tca/pSRC3fbdprqo
- BDE46zc6hFnGKWOHmgDWpuUUb2LWx6ZC4DTE/10jKGcx+94MbPH9Ev1SNqWQqNR4DR9PgxoufmZ
- pBF7WXukOiTwr6o6/njIZeQUy7mK1o4Sj0R7esO5/y62D+dpWu+MH8nbBc/GQB5c6WSxOihYOz0
- bxvBA7WjoFbM5lHi35PrBRpHeKw5GUxqfE1SYrVsyxJWjAzVcbuLcdD49YIgcdGA7T93neR1qbv
- 0ziBVv+5Oew/5lg==
+ bh=H7kf02DdiNn1nFNRkOMtk6kTSmAJa1hNXFx4tWwfEJg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiH9xvvaGeU7T+ENCrWffRKPe4Ds2pkdaPLB
+ x1ZvfkOzeWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3ohwAKCRDa6OEJdZac
+ 5QniD/9xpnzmaAxSfIVinlQpNAfAiV6/ungPj7IboHQHbpwHsVyr2nqeci/+dSlXgavqOe4iG2o
+ DZhH7h9QaNmZN91xY5hT2PqY3+vlAsWagFD175lyNiHuNExGSx1hS2vK9aLtslDjyUVriYn/E0P
+ sPC+zq4Jr5I+bE+zyRqkWP78QB35m0olCSMgQb4nC64bvweWgwSrnse3DcDr0wiSFRr8E1MZ0gC
+ aX0rIj3C/dG+PJmZ8Ld88zQe/C+/bDmVNvvpUJAh4aSq2ugkVpz9F6HdIwoV80iZ+OLuuRvzLq1
+ zbM9Gc8rvzDZSEtRFhsCJDfxEdE5GikLmu4kyRtwkcSFeyfmt0lk3dXwU5k2pWyMEfTrvow9Owq
+ p8JJUJsfM4ski4fSkGaimM0RP7XvxhzC7R3yFCn0rtRSeMpTa3uknEuiF7q38UP9TMzqtV4yAwo
+ xS6wO/Wgh/4ifzDaH1IQRitoJOk5C4GD80YA+FdmzT48t6dE3J7+2NO34FSsB7YBJsFV0r3xYZx
+ x2KIYxwPfQY7kX5HUWnSxkRqzVlHACxXA5eKHyLko9quDLP4qskPhFN8JnxoftVIVukJiTG1Ax/
+ mzklRAGTzZQroYSr8gfoDHlm8vVKLCSkxib151519VMMWCwhN78mfCu1gL7f8zSNiltywXmhg2c
+ RXOHATHYlgwHSwQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,61 +108,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The `snapshot-file` argument for `snapshot_blkdev` is mandatory. Correct
-the `args_type` definition to reflect this.
+Add an x-qemu-io QMP command that runs qemu-io commands on block
+devices. The command accepts a device name (block backend name,
+node-name, or qdev ID) and a qemu-io command string.
 
-Fixes: 6106e2492fe ("qapi: Convert blockdev_snapshot_sync")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Refactor hmp_qemu_io() to be a thin wrapper around the new QMP
+command, following the standard HMP-over-QMP pattern used by other
+block commands.
+
+This change is also required for the qtest qemu-io command in the
+following patch.
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- block/monitor/block-hmp-cmds.c | 12 +-----------
- hmp-commands.hx                |  2 +-
- 2 files changed, 2 insertions(+), 12 deletions(-)
+ block/monitor/block-hmp-cmds.c | 60 ++------------------------------
+ block/monitor/meson.build      |  1 +
+ block/monitor/qmp-cmds.c       | 79 ++++++++++++++++++++++++++++++++++++++++++
+ qapi/block.json                | 34 ++++++++++++++++++
+ 4 files changed, 117 insertions(+), 57 deletions(-)
 
 diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
-index 69ade0534f1c..39b82e8ef501 100644
+index 9930620a4a16..22fa03089ea3 100644
 --- a/block/monitor/block-hmp-cmds.c
 +++ b/block/monitor/block-hmp-cmds.c
-@@ -344,25 +344,15 @@ void hmp_block_job_complete(Monitor *mon, const QDict *qdict)
- void hmp_snapshot_blkdev(Monitor *mon, const QDict *qdict)
- {
-     const char *device = qdict_get_str(qdict, "device");
--    const char *filename = qdict_get_try_str(qdict, "snapshot-file");
-+    const char *filename = qdict_get_str(qdict, "snapshot-file");
-     const char *format = qdict_get_try_str(qdict, "format");
-     bool reuse = qdict_get_try_bool(qdict, "reuse", false);
-     enum NewImageMode mode;
-     Error *err = NULL;
+@@ -56,7 +56,6 @@
+ #include "block/qapi.h"
+ #include "block/block_int.h"
+ #include "block/block-hmp-cmds.h"
+-#include "qemu-io.h"
  
--    if (!filename) {
--        /*
--         * In the future, if 'snapshot-file' is not specified, the snapshot
--         * will be taken internally. Today it's actually required.
--         */
--        error_setg(&err, QERR_MISSING_PARAMETER, "snapshot-file");
--        goto end;
+ static void hmp_drive_add_node(Monitor *mon, const char *optstr)
+ {
+@@ -541,67 +540,14 @@ void hmp_eject(Monitor *mon, const QDict *qdict)
+ 
+ void hmp_qemu_io(Monitor *mon, const QDict *qdict)
+ {
+-    BlockBackend *blk = NULL;
+-    BlockDriverState *bs = NULL;
+-    BlockBackend *local_blk = NULL;
+     bool qdev = qdict_get_try_bool(qdict, "qdev", false);
+     const char *device = qdict_get_str(qdict, "device");
+     const char *command = qdict_get_str(qdict, "command");
+     Error *err = NULL;
+-    int ret;
+ 
+-    if (qdev) {
+-        blk = blk_by_qdev_id(device, &err);
+-        if (!blk) {
+-            goto fail;
+-        }
+-    } else {
+-        blk = blk_by_name(device);
+-        if (!blk) {
+-            bs = bdrv_lookup_bs(NULL, device, &err);
+-            if (!bs) {
+-                goto fail;
+-            }
+-        }
 -    }
 -
-     mode = reuse ? NEW_IMAGE_MODE_EXISTING : NEW_IMAGE_MODE_ABSOLUTE_PATHS;
-     qmp_blockdev_snapshot_sync(device, NULL, filename, NULL, format,
-                                true, mode, &err);
--end:
+-    if (bs) {
+-        blk = local_blk = blk_new(bdrv_get_aio_context(bs), 0, BLK_PERM_ALL);
+-        ret = blk_insert_bs(blk, bs, &err);
+-        if (ret < 0) {
+-            goto fail;
+-        }
+-    }
+-
+-    /*
+-     * Notably absent: Proper permission management. This is sad, but it seems
+-     * almost impossible to achieve without changing the semantics and thereby
+-     * limiting the use cases of the qemu-io HMP command.
+-     *
+-     * In an ideal world we would unconditionally create a new BlockBackend for
+-     * qemuio_command(), but we have commands like 'reopen' and want them to
+-     * take effect on the exact BlockBackend whose name the user passed instead
+-     * of just on a temporary copy of it.
+-     *
+-     * Another problem is that deleting the temporary BlockBackend involves
+-     * draining all requests on it first, but some qemu-iotests cases want to
+-     * issue multiple aio_read/write requests and expect them to complete in
+-     * the background while the monitor has already returned.
+-     *
+-     * This is also what prevents us from saving the original permissions and
+-     * restoring them later: We can't revoke permissions until all requests
+-     * have completed, and we don't know when that is nor can we really let
+-     * anything else run before we have revoken them to avoid race conditions.
+-     *
+-     * What happens now is that command() in qemu-io-cmds.c can extend the
+-     * permissions if necessary for the qemu-io command. And they simply stay
+-     * extended, possibly resulting in a read-only guest device keeping write
+-     * permissions. Ugly, but it appears to be the lesser evil.
+-     */
+-    qemuio_command(blk, command, &err);
+-
+-fail:
+-    blk_unref(local_blk);
++    qmp_x_qemu_io(qdev ? NULL : device,
++                  qdev ? device : NULL,
++                  command, &err);
      hmp_handle_error(mon, err);
  }
  
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index ea4a1db78f18..f0b8d8914c98 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -1173,7 +1173,7 @@ ERST
- 
-     {
-         .name       = "snapshot_blkdev",
--        .args_type  = "reuse:-n,device:B,snapshot-file:s?,format:s?",
-+        .args_type  = "reuse:-n,device:B,snapshot-file:s,format:s?",
-         .params     = "[-n] device [new-image-file] [format]",
-         .help       = "initiates a live snapshot\n\t\t\t"
-                       "of device. If a new image file is specified, the\n\t\t\t"
+diff --git a/block/monitor/meson.build b/block/monitor/meson.build
+index 1022516e93c5..74faced9e17f 100644
+--- a/block/monitor/meson.build
++++ b/block/monitor/meson.build
+@@ -1,2 +1,3 @@
+ system_ss.add(files('block-hmp-cmds.c'))
+ block_ss.add(files('bitmap-qmp-cmds.c'))
++system_ss.add(files('qmp-cmds.c'))
+diff --git a/block/monitor/qmp-cmds.c b/block/monitor/qmp-cmds.c
+new file mode 100644
+index 000000000000..e5759d824f13
+--- /dev/null
++++ b/block/monitor/qmp-cmds.c
+@@ -0,0 +1,79 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#include "qemu/osdep.h"
++
++#include "system/block-backend.h"
++#include "block/block_int.h"
++#include "qapi/qapi-commands-block.h"
++#include "qapi/error.h"
++#include "qemu-io.h"
++
++void qmp_x_qemu_io(const char *device, const char *qdev,
++                   const char *command, Error **errp)
++{
++    BlockBackend *blk = NULL;
++    BlockBackend *local_blk = NULL;
++    BlockDriverState *bs = NULL;
++    int ret;
++
++    if (!device && !qdev) {
++        error_setg(errp, "Must specify either device or qdev");
++        return;
++    }
++    if (qdev && device) {
++        error_setg(errp, "Cannot specify both qdev and device");
++        return;
++    }
++
++    if (qdev) {
++        blk = blk_by_qdev_id(qdev, errp);
++        if (!blk) {
++            return;
++        }
++    } else {
++        blk = blk_by_name(device);
++        if (!blk) {
++            bs = bdrv_lookup_bs(NULL, device, errp);
++            if (!bs) {
++                return;
++            }
++        }
++    }
++
++    if (bs) {
++        blk = local_blk = blk_new(bdrv_get_aio_context(bs), 0, BLK_PERM_ALL);
++        ret = blk_insert_bs(blk, bs, errp);
++        if (ret < 0) {
++            goto fail;
++        }
++    }
++
++    /*
++     * Notably absent: Proper permission management. This is sad, but it seems
++     * almost impossible to achieve without changing the semantics and thereby
++     * limiting the use cases of the qemu-io command.
++     *
++     * In an ideal world we would unconditionally create a new BlockBackend for
++     * qemuio_command(), but we have commands like 'reopen' and want them to
++     * take effect on the exact BlockBackend whose name the user passed instead
++     * of just on a temporary copy of it.
++     *
++     * Another problem is that deleting the temporary BlockBackend involves
++     * draining all requests on it first, but some qemu-iotests cases want to
++     * issue multiple aio_read/write requests and expect them to complete in
++     * the background while the monitor has already returned.
++     *
++     * This is also what prevents us from saving the original permissions and
++     * restoring them later: We can't revoke permissions until all requests
++     * have completed, and we don't know when that is nor can we really let
++     * anything else run before we have revoken them to avoid race conditions.
++     *
++     * What happens now is that command() in qemu-io-cmds.c can extend the
++     * permissions if necessary for the qemu-io command. And they simply stay
++     * extended, possibly resulting in a read-only guest device keeping write
++     * permissions. Ugly, but it appears to be the lesser evil.
++     */
++    qemuio_command(blk, command, errp);
++
++fail:
++    blk_unref(local_blk);
++}
+diff --git a/qapi/block.json b/qapi/block.json
+index 46955bbb3e34..012a9d73333b 100644
+--- a/qapi/block.json
++++ b/qapi/block.json
+@@ -603,3 +603,37 @@
+            '*boundaries-zap': ['uint64'],
+            '*boundaries-flush': ['uint64'] },
+   'allow-preconfig': true }
++
++##
++# @x-qemu-io:
++#
++# Run a qemu-io command on a block device.  Take either a block
++# backend name or a qdev ID to identify the device.
++#
++# @device: the block backend name, node-name to run the
++#     command on.
++#
++# @qdev: the qdev ID of the block device to run the
++#     command on.
++#
++# @command: the qemu-io command string to execute.
++#
++# Features:
++#
++# @unstable: This command is for testing only.
++#
++# Since: 11.2
++#
++# .. qmp-example::
++#
++#     -> { "execute": "x-qemu-io",
++#          "arguments": { "device": "virtio0",
++#                         "command": "read 0 512" } }
++#     <- { "return": {} }
++##
++{ 'command': 'x-qemu-io',
++  'data': { '*device': 'str',
++            '*qdev': 'str',
++            'command': 'str' },
++  'features': [ 'unstable' ],
++  'allow-preconfig': true }
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
