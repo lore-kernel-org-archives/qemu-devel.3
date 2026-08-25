@@ -4,108 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87057C61DB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 13:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C58FBC61DB9
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 14:09:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyrYk-0004TO-Vy; Tue, 25 Aug 2026 09:51:27 -0400
+	id 1wyrpL-0008Co-CM; Tue, 25 Aug 2026 10:08:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wyrYi-0004St-Pl
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 09:51:24 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wyrYg-00043z-Kc
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 09:51:24 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-c15ca7a7ca9so551520866b.0
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 06:51:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787665880; cv=none;
- d=google.com; s=arc-20260327;
- b=X0BbebVbPAv9WA2l4g94GmQXvBYTOJrsvIUZbwr8tY7MImspcC3szmieAfERF0/5U2
- 2Yz2rfPv4l4f+3XvmslZqL/41GX6H/7wZo4NBpzls3aJ7Uz9UCMjx05Feb8Yeg1EnJVX
- viy3r6TTuRtKP+eevUpPkeUfnMflEMOcmLwKGYeSoGGSNyAwDaSK8Dx0IL0SXjrTtlHb
- qOAorlYDZJsjxa0qA87fHKZVu3AOkHZWjoobMg/fiD7muIT2hOPol/OpNnIlTsFSgWHL
- DDZnuQhH4anf/tndrLbK9dubjQkOtTuH2TbkCy9Id3dmKww9n2S99U+QSaD6i4Axo1lN
- TViA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=8ZZcvA4m8VqBesYlWZnx+XK6nlh+DgyUi/+upvEXi10=;
- fh=wGZeUYt39FdrjiyDvngBMA/6KW8toEkLMWKs7FzaIuY=;
- b=Ah3AmMMk3ajBPnYKcpyMvlZjCnqaWaIoWD+RKdeORUY1pvELgA4iegopO8ghnKUpXJ
- Ev3HJLRxhQw9pYVu3iTiE/VP7+sLLiHoPlunmpVaeluDiGQVYqbW6joifj5fKO58zsUF
- rJOztinxX+1AOmr/ovJkjJa/LyK3pKMmouQ1V1UzYvR5GMabzbBlGtzAGYncdw3cbpp5
- ATrCP1USO6A0Jwh18Crq6tlao/lAeOoKEXJdmyo5cygO5CJ1efHhcoOkEDQ04k7QeTco
- YUV8VqzS6S4lP7/TKjaUlj011/C64XTyPnNWSkPPtG2WU0/GRyAxF2ybte+t5DlqxdzU
- fsPw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787665880; x=1788270680; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=8ZZcvA4m8VqBesYlWZnx+XK6nlh+DgyUi/+upvEXi10=;
- b=a8U5zpH6atohA2JoCT/Juqcm94g5689VxfFZ2isNd4jPuWwmHO7dsTMJAVkZcVzrjp
- inFWfOUwJGU7CDueUXtwLqLvVCBEW99Nh55/BDsCH5Ah2eOIv7GxLfuTf+j2vhQ4b5sW
- SRkFTEL+ycBfi46pHvLrof3GtYpSNSzkvFzp0nqL5gOMvv7kTm6ttpQVPOoxs7rB5765
- dE+QMVn4804XSv2COtN322V1iqWHo/WxZ3Pd5Xjs26aj8WDwXV5qvVeMIFESaOxT2VzO
- QLsF4gRcAyZ9qGuHxLOCfhqXPblNWoj8Yn6cNd+hBaamFwmv/z/jAjUHD5nnWmIKRKML
- Bwyw==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wyrpJ-0008CZ-Pp
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 10:08:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wyrpI-0000gQ-5i
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 10:08:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787666910;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RWZ36ssQuMggl10NX4pB67A6/gc4A8ViF4utTFslLtk=;
+ b=Eouqqe9jqLRRntTeMu3WP2o0mJ5evn5Qqo5cWUKUUYG3z7tQTlB26hCbj0weGV78ZXh8XE
+ F+lnodPwD2+pwuscodCpmVHgHl+gL0JJznbNCvDn0y+8ER17HtXoDdVeWdA3nieTj9queq
+ CvKAyhRpqJfz8GXHMOa1RD7SA7873Lc=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-661-wbX-c2vsMT26Eou5cFGe7w-1; Tue, 25 Aug 2026 10:08:28 -0400
+X-MC-Unique: wbX-c2vsMT26Eou5cFGe7w-1
+X-Mimecast-MFC-AGG-ID: wbX-c2vsMT26Eou5cFGe7w_1787666908
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-c20e5890680so240824166b.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 07:08:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787665880; x=1788270680;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=8ZZcvA4m8VqBesYlWZnx+XK6nlh+DgyUi/+upvEXi10=;
- b=hZs94AWXxla7fUJdWbd4adynt8UUqFKjFKpsMXtX7NFI9CzfjKnepYjTJ5YpbPxBGq
- b9RX5XHfCR2HRo/UBPTSKNTmAj2EQfe9AcCKS2sIThWryJQdy2nmmUst7DViue+Csxym
- XihOmp8sl9vGb4TgbxHW1vsGLTK3Sj4ObVKhMzhBwVg7hV1ufoVTCYPzemf2IQni7lH4
- svu0UICCjfIh5SRiBoXWt+uubFJnhkp5htVS92oMeVaTWUcNd505MQYfcPn+/pzIUki4
- nAzlWZgMfANXtlO7Gih9XUUofyJ942EQKMIV7aMJm+s1NX2DyAJ4UHlpVJWHLYpk6oCc
- ZIow==
-X-Gm-Message-State: AFuF++mbWyXeffP93cRgIoyZjO5Oc06XxAsBxqH9Dbtt8Vt0dI1t/opy
- ogGzh0MHmtzcXjIXC1xHI4NXQBo+KItNCl/BJbXNBNjfp5cNkeQJsP2VYaA5OjsLZkieYbJSAL8
- xD0pM2pKP+nze7v5nwGyvlmtZOp+b2q4=
-X-Gm-Gg: AR+sD10nWaEYmjS5ZJ9OD0YMzPj8gal6T2804CSxE1K6f6K4yzxtZ8pXBjnDin+yEkU
- ou/IPWM0f3/BqxQbBz8OCeoJ0seHQ6WtZ8YgdbuT85QjCpo6/AgwzTWnGywpgjFK7oP6JgduOBg
- DYxmWHqOSn0EOPD86RE/125my5kTjPAhplbx6GYcfvsEVsVQ5jVXfXmhQNz68qkgfatd90Wqq2A
- 961Y5hsI8/5CjkJ5q86/WJFl4ile+cjcZGnvtd6FTJoTLnkdPtzArm7tKFyTrqv50IkjoAawJE3
- wq1FKX3Nl7NhyctZZQRVxfGt93ODhcIaas675dVPsavc
-X-Received: by 2002:a17:907:1c07:b0:c15:f26a:3438 with SMTP id
- a640c23a62f3a-c24e5c1ffd3mr745203466b.24.1787665880065; Tue, 25 Aug 2026
- 06:51:20 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787666908; x=1788271708;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=RWZ36ssQuMggl10NX4pB67A6/gc4A8ViF4utTFslLtk=;
+ b=KWKZDdytv/SLa2XP1hCMLd0/ZG5GtzJCJWqWbMa/mQVTQ0FDh46JCA3AlbN9rqyiJI
+ iDbbsLmoPL5mojnWUQvx54JyBM2k48h8GPOCy+xYEKmXj0TXwNyo2ChAcy9/9tE4nkPr
+ Exxf/cIsDLRHsHVywcZccNz1QM271eqjfuxMsbnOj4Ms3zPAfvNd+RR37bKNZziTcOd5
+ JdyyGbmySOM+qGxdKSQoyNvgivQYzGW5m/Opv8WBH5jCQyAZSPoI5+B/2r/PctU3opWR
+ cWF1AZS3TSjWf3iM+IaD23kr1wo7njZGcj6Bs5bOPGw5Fy6OejCfFwdf/NLEpEywY6ZK
+ 8o7g==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rprqv8NpN3hsF6hZwPTXGugNmQEBtONiMxpV2Pmjzkhn9D32dPErl86WM7mwAIfNwykkEWuUuxsbJPG@nongnu.org
+X-Gm-Message-State: AFuF++mtAeVX2hyc+/Ph8gCQNF5N8OonspTX/NA6wweRr2ZPN+C3ZPOC
+ pyQgDTLcSlKb+kdVc5mJxpFPZTrC2TD7B5/g+E/3cu1xWGiQJmBl2kCVx/8faPCSqVpAX7unIbz
+ S4ost3oZc204sFY8rYcgX2AAeZvPtSNxfY4AJEvecaDzD/ugbAuobsITU
+X-Gm-Gg: AR+sD10R6mklwhC3+d5Xdc5b3zpnNidCPbwLvdFxcFdIdrz2pou01cDiKXEwQxJ9YRJ
+ VGNkn0yc4Il3n40KMvHPulDYnBs50fSuI3tTPV7USsUXEhOlqyrp8cd4K3He/cHWNDdaBFVE223
+ bUMZ4FDsfxFlLQxE/O1bqYckJXRZDZuEhMZf0MHcuXiVI0htOaJpL9Us52bTwW5sLUFIs+a7cxs
+ o3SErLBpo/M9O8ky2oKeJ396jmALW4Sacbktg0wqX8+DG68IEzZoNPW/5/oppkFt6nkS8dSbuhf
+ kYqcpRjfrwDMA5Fq+z/3S3TR6Ttke8xERsqgO3S716Jr1BmosiP5XjFu6uat4uTIirLHMu9coM9
+ o3cZ1Cc/Ibbnrt16U177EABK7doFtS9k9TORWKZ9GzVkaU0s7
+X-Received: by 2002:a17:907:8990:b0:c20:3679:a2e6 with SMTP id
+ a640c23a62f3a-c24925eb3ffmr3225005966b.10.1787666907613; 
+ Tue, 25 Aug 2026 07:08:27 -0700 (PDT)
+X-Received: by 2002:a17:907:8990:b0:c20:3679:a2e6 with SMTP id
+ a640c23a62f3a-c24925eb3ffmr3224991966b.10.1787666906874; 
+ Tue, 25 Aug 2026 07:08:26 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c249606b161sm1933953266b.11.2026.08.25.07.08.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Aug 2026 07:08:25 -0700 (PDT)
+Message-ID: <09b39de5-b0ae-40ec-9977-00fefa59561f@redhat.com>
+Date: Tue, 25 Aug 2026 16:08:23 +0200
 MIME-Version: 1.0
-References: <20260822213343.661939-1-zhangckid@gmail.com>
- <20260822213343.661939-3-zhangckid@gmail.com>
- <874igipqbu.fsf@pond.sub.org>
-In-Reply-To: <874igipqbu.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Tue, 25 Aug 2026 21:50:43 +0800
-X-Gm-Features: AcwNN1XcYyF9tMQqZ7rOOcPK_R_OupvbJmLPeBGV7RRkUYee7-CY3uhZCpHRh_g
-Message-ID: <CAK3tnv+YRY3F5kfWC_4qh5WY9TGxP7wPCPN6fbEq1_yoWsfpCw@mail.gmail.com>
-Subject: Re: [PATCH V13 02/15] iothread: introduce holder tracking
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eric Blake <eblake@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Jason Wang <jasowangio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x632.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v7 04/18] arm/cpu: Add infra to handle generated ID
+ register definitions
+Content-Language: en-US
+To: Khushit Shah <khushit.shah@nutanix.com>
+Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Shaju Abraham <shaju.abraham@nutanix.com>,
+ "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
+ "cohuck@redhat.com" <cohuck@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "sebott@redhat.com" <sebott@redhat.com>,
+ "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
+ "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
+ "maz@kernel.org" <maz@kernel.org>,
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "abologna@redhat.com" <abologna@redhat.com>,
+ "jdenemar@redhat.com" <jdenemar@redhat.com>
+References: <20260726153221.24773-1-eric.auger@redhat.com>
+ <20260726153221.24773-5-eric.auger@redhat.com>
+ <557850AC-880C-4A6D-AA7A-7A0F38B3C9CD@nutanix.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <557850AC-880C-4A6D-AA7A-7A0F38B3C9CD@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,116 +131,97 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 25, 2026 at 4:17=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> Zhang Chen <zhangckid@gmail.com> writes:
->
-> > IOThreads do not record the QOM objects and block exports that use
-> > them, making runtime introspection and hotplug debugging difficult.
-> >
-> > Add:
-> >
-> > - holders: a list describing what is holding an iothread
-> > - iothread_ref(): add a holder to the list
-> > - iothread_unref(): remove a holder from the list
-> >
-> > A holder can identify either a QOM object or a block export. A later
-> > patch will expose this information through query-iothreads.
-> >
-> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > Reviewed-by: Markus Armbruster <armbru@redhat.com>
->
-> I'm suspending my R-by, see below why.
->
-> [...]
->
-> > diff --git a/iothread.c b/iothread.c
-> > index 3558535b40..66dfde626e 100644
-> > --- a/iothread.c
-> > +++ b/iothread.c
-> > @@ -21,10 +21,71 @@
-> >  #include "system/iothread.h"
-> >  #include "qapi/error.h"
-> >  #include "qapi/qapi-commands-misc.h"
-> > +#include "qapi/clone-visitor.h"
-> > +#include "qapi/qapi-visit-misc.h"
-> >  #include "qemu/error-report.h"
-> >  #include "qemu/rcu.h"
-> >  #include "qemu/main-loop.h"
-> >
-> > +/* Add a deep copy of @holder to @iothread's list of holders. */
-> > +void iothread_ref(IOThread *iothread, const IOThreadHolder *holder)
-> > +{
-> > +    assert(holder);
-> > +
-> > +    QAPI_LIST_PREPEND(iothread->holders, QAPI_CLONE(IOThreadHolder, ho=
-lder));
-> > +}
-> > +
-> > +static int iothread_holder_compare(const IOThreadHolder *holder_a,
-> > +                                   const IOThreadHolder *holder_b)
-> > +{
-> > +    const char *name_a, *name_b;
-> > +
-> > +    if (holder_a->type !=3D holder_b->type) {
-> > +        return holder_a->type - holder_b->type;
->
-> Why did you swap the operands in v13?  Not mentioned in the cover
-> letter's change log.  I requested the other order in review of v8[*] and
-> v9, and you complied in v10.  Unless you have a compelling reason, swap
-> them right back, please.
->
-> In general, rocking the boat like this when you're at v13 is
-> inadvisable.  It risks delaying the series even more and annoying
-> reviewers.
+Hi Khushit,
 
-Please allow me to explain the details, I have always respected the
-opinions of the community.
-Yes, I remember your comments in V9 and I fixed it. This change wasn't
-something I made secretly or accidentally.
-However, Stefan gave the opposite opinion in the V12, and I see you
-didn't object,
-so it was changed according to his suggestion. This might be a misunderstan=
-ding.
+On 8/20/26 8:35 AM, Khushit Shah wrote:
+>
+>> On 26 Jul 2026, at 8:59 PM, Eric Auger <eric.auger@redhat.com> wrote:
+>>
+>> !-------------------------------------------------------------------|
+>>  CAUTION: External Email
+>>
+>> |-------------------------------------------------------------------!
+>>
+>> Introduce an infrastructure to store the definition of all ID regs:
+>> This include their name, index and array of named fields.
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+>> Co-authored-by: Khushit Shah <khushit.shah@nutanix.com>
+>>
+>> ---
+>>
+>> v5 -> v6:
+>> - add ArmIdRegArchVal
+>> ---
+>> target/arm/cpu-idregs.h | 41 +++++++++++++++++++++++++++++++++++++++++
+>> 1 file changed, 41 insertions(+)
+>> create mode 100644 target/arm/cpu-idregs.h
+>>
+>> diff --git a/target/arm/cpu-idregs.h b/target/arm/cpu-idregs.h
+>> new file mode 100644
+>> index 0000000000..245f1c8103
+>> --- /dev/null
+>> +++ b/target/arm/cpu-idregs.h
+>> @@ -0,0 +1,41 @@
+>> +/*
+>> + * handle ID registers and their fields
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +#ifndef TARGET_ARM_CPU_IDREGS_H
+>> +#define TARGET_ARM_CPU_IDREGS_H
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "qemu/error-report.h"
+>> +#include "cpu.h"
+>> +#include "cpu-sysregs.h"
+>> +
+>> +typedef struct ArmIdRegArchVal {
+>> +    uint64_t value;
+>> +    const char *name;
+> I guess the name is not required, right?
 
-https://lists.gnu.org/archive/html/qemu-devel/2026-08/msg05089.html
+indeed, this is not required. Removed and used uint64_t in place of 
 
-I look forward to your reply so we can discuss this issue clearly.
+typedef struct ArmIdRegArchVal in subsequent patches.
 
-Thanks
-Chen
+Thanks!
 
+Eric
 
 >
-> > +    }
-> > +
-> > +    switch (holder_a->type) {
-> > +    case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
-> > +        name_a =3D holder_a->u.qom_object.qom_path;
-> > +        name_b =3D holder_b->u.qom_object.qom_path;
-> > +        break;
-> > +    case IO_THREAD_HOLDER_KIND_BLOCK_EXPORT:
-> > +        name_a =3D holder_a->u.block_export.export_id;
-> > +        name_b =3D holder_b->u.block_export.export_id;
-> > +        break;
-> > +    default:
-> > +        g_assert_not_reached();
-> > +    }
-> > +
-> > +    return strcmp(name_a, name_b);
-> > +}
->
-> [...]
->
-> [*] Here's my review of v8:
->
->     Date: Tue, 02 Jun 2026 13:29:19 +0200
->     Message-ID: <87tsrl2nao.fsf@pond.sub.org>
->     https://lore.kernel.org/qemu-devel/87tsrl2nao.fsf@pond.sub.org
->
+>> +} ArmIdRegArchVal;
+>> +
+>> +typedef struct ARM64SysRegField {
+>> +    const char *name; /* name of the field, for instance CTR_EL0_IDC */
+>> +    ARMIDRegisterIdx index; /* parent register, e.g. CTR_EL0_IDX */
+>> +    int shift; /* lsb of the field in the register */
+>> +    int length; /* highest bit number */
+>> +    ArmIdRegArchVal *arch_vals;
+>> +    uint32_t arch_vals_count;
+>> +} ARM64SysRegField;
+>> +
+>> +typedef struct ARM64SysReg {
+>> +    const char *name;   /* name of the sysreg, for instance CTR_EL0 */
+>> +    ARMIDRegisterIdx index; /* register index, e.g. CTR_EL0_IDX */
+>> +    struct ARM64SysRegField *fields;
+>> +    uint32_t fields_count;
+>> +    uint64_t writable_mask;
+>> +} ARM64SysReg;
+>> +
+>> +/*
+>> + * List of exposed ID regs (automatically populated from AARCHMRS Registers.json)
+>> + */
+>> +extern ARM64SysReg arm64_id_regs[NUM_ID_IDX];
+>> +
+>> +#endif
+>> -- 
+>> 2.53.0
+>>
+
 
