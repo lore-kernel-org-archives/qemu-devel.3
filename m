@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 531FCC61DB6
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:12:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27821C61DBC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:12:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylJA-0006rc-G0; Tue, 25 Aug 2026 03:10:56 -0400
+	id 1wylGr-0000op-4S; Tue, 25 Aug 2026 03:08:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylJ8-0006qB-LJ; Tue, 25 Aug 2026 03:10:54 -0400
+ id 1wylGp-0000mc-KB; Tue, 25 Aug 2026 03:08:31 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylJ6-0006lB-Q3; Tue, 25 Aug 2026 03:10:54 -0400
+ id 1wylGn-00067n-S7; Tue, 25 Aug 2026 03:08:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641596; bh=Ymyy4atqpZfea7qW4mcc0wJTq5jFGb3uuoyzb3L62Fg=;
+ t=1787641596; bh=Rf3H+hMVv47NzCvcvTqYkKEdZwtNocl9XdKmol8uuVI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tgXgRNMeXgadbjRjBxiFebRyr+3pYRls7KM8a9amAetstKQyFXPBwtbcwbrrzbP5e
- /vzImKgOkci46MOYZQQzGggxgurI3O9FXGNjqxVVVx8S1AnNuEvV+/qrmf1iopT/93
- xQHQW2rEWm+SWyyLHU0Zv/vUiY0XOGFmIzHvGllOYtsRHfpmjOSpDYXYmEVg1fPere
- Sl4yapDKGBKAUpGVxqI+fGgpPPHKi1cwWowCuDKFwXIcjVp2jrDUX1QTok2dsHngo9
- 2kOhBNDCMLZO7og33+ee3eaRdhraJRVYajvja8oIc50eP6hrSu+g/3GLLe2m8Sv4vp
- PRruHIlKAgVbA==
+ b=DnzGp9NdK2lc7UDE+inbAVTZbwy9YN1QUh9R+1Ej/m6n3p0ZNaWabv1Z1rqpu3G4k
+ Z/DamA5sOU7LAkJn8EQWNyd+5yutsNZi7mfvcEWwFfUM7ed2GuN5+LXZG+PaMm9Cru
+ Gzdr92buhXOtpuv7E4hZf0KxpNbE7eUrAMjhtDrrMOQMHYKkVMn5nhKRt/2ImXgh6i
+ ZGcNg33JGsHYFZ/Kk8nPV6OwX+WaBAHf1Xqa9QuQYtMy+px1elt9ZbXDB/1q23/F/W
+ i6/YYEod6RZr96FlRlC95ldsHzy1JCKRL8kpy2mB2OmpkY/xI+0Y+HMIkKOIQQZKzQ
+ KN2hy+bvvr9wg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BD9F11CE23A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 40F711CE221;
  Tue, 25 Aug 2026 10:06:36 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8225A415FB5;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 04DAD415F9C;
  Tue, 25 Aug 2026 10:07:13 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E2B0232454; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ id 979EF32422; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, wangyang <wangyang25@otcaix.iscas.ac.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 85/91] target/riscv: honor zicbo* envcfg gating in
- linux-user mode
-Date: Tue, 25 Aug 2026 10:05:57 +0300
-Message-ID: <20260825070619.174584-43-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ YanjunYang <yang.yanjun1@sanechips.com.cn>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 v2 60/91] target/arm: Fix SVE2 WHILEWR/WHILERW zero
+ diff boundary case
+Date: Tue, 25 Aug 2026 10:05:32 +0300
+Message-ID: <20260825070619.174584-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
@@ -72,66 +72,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: wangyang <wangyang25@otcaix.iscas.ac.cn>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-In user-only builds check_zicbo_envcfg() skipped the envcfg check
-entirely (#if !defined(CONFIG_USER_ONLY)), so cbo.inval/cbo.flush/
-cbo.zero retired unconditionally in linux-user even though the
-machine-level envcfg fields are never initialized.  Give the
-user-mode build a senvcfg-based gate, and initialize SENVCFG_CBZE at
-reset when ext_zicboz is enabled so cbo.zero stays usable while
-cbo.inval/cbo.flush remain illegal, matching the user-mode view of a
-typical firmware/kernel setup.
+The trans_WHILE_ptr function incorrectly handles the case where the
+address difference divided by ESIZE results in zero. This happens when
+the address difference is less than ESIZE but greater than zero.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4107
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
-Message-ID: <9b2f22fc402b48b8ba81f72be8ed04bc@wangyang25.otcaix.iscas.ac.cn>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 12289f2f9a0f1ffa6a75c2b189a0273dc455dfb0)
+Fix by dropping direct comparisons of op0 vs op1, and instead
+testing the scaled diff vs 0.  Merge with the bounding to the
+maximum vector length via wrapping arithmetic.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 14f6dad168e ("target/arm: Implement SVE2 WHILERW, WHILEWR")
+Reported-by: YanjunYang <yang.yanjun1@sanechips.com.cn>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260811191540.79882-3-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit bab972a2b0e34b889fbe8deb1e41cbea47e797f2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 5a82e6563bf..45b7610aa4f 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1061,6 +1061,14 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
- #else
-     env->priv = PRV_U;
-     env->senvcfg = 0;
-+    /*
-+     * Match the user-mode view of a typical firmware/kernel setup where
-+     * cbo.zero is enabled for user mode; the CBCFE/CBIE bits stay zero,
-+     * so the cache-management operations remain illegal in user mode.
-+     */
-+    if (riscv_cpu_cfg(env)->ext_zicboz) {
-+        env->senvcfg |= SENVCFG_CBZE;
-+    }
-     env->menvcfg = 0;
- #endif /* !CONFIG_USER_ONLY */
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index fc4cc8c479f..0becef16a94 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -3697,7 +3697,7 @@ TRANS_FEAT(WHILE_gt_cnt4, aa64_sme2_or_sve2p1, do_WHILE,
  
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index acdccd1a97a..a7bd42d2c6e 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -152,7 +152,16 @@ target_ulong helper_csrrw_i128(CPURISCVState *env, int csr,
- static void check_zicbo_envcfg(CPURISCVState *env, target_ulong envbits,
-                                 uintptr_t ra)
+ static bool trans_WHILE_ptr(DisasContext *s, arg_WHILE_ptr *a)
  {
--#ifndef CONFIG_USER_ONLY
-+#if defined(CONFIG_USER_ONLY)
-+    /*
-+     * linux-user: the machine-level envcfg fields are not part of the
-+     * user-mode environment; only the user-mode view of the enabling
-+     * bits (senvcfg, as initialized for the guest) applies.
-+     */
-+    if (!get_field(env->senvcfg, envbits)) {
-+        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, ra);
-+    }
-+#else
-     if ((env->priv < PRV_M) && !get_field(env->menvcfg, envbits)) {
-         riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, ra);
+-    TCGv_i64 op0, op1, diff, t1, tmax;
++    TCGv_i64 op0, op1, diff, t1;
+     TCGv_i32 t2;
+     TCGv_ptr ptr;
+     unsigned vsz = vec_full_reg_size(s);
+@@ -3713,7 +3713,6 @@ static bool trans_WHILE_ptr(DisasContext *s, arg_WHILE_ptr *a)
+     op0 = read_cpu_reg(s, a->rn, 1);
+     op1 = read_cpu_reg(s, a->rm, 1);
+ 
+-    tmax = tcg_constant_i64(vsz >> a->esz);
+     diff = tcg_temp_new_i64();
+ 
+     if (a->rw) {
+@@ -3723,25 +3722,36 @@ static bool trans_WHILE_ptr(DisasContext *s, arg_WHILE_ptr *a)
+         tcg_gen_sub_i64(diff, op0, op1);
+         tcg_gen_sub_i64(t1, op1, op0);
+         tcg_gen_movcond_i64(TCG_COND_GEU, diff, op0, op1, diff, t1);
+-        /* Divide, rounding down, by ESIZE.  */
+-        tcg_gen_shri_i64(diff, diff, a->esz);
+-        /* If op1 == op0, diff == 0, and the condition is always true. */
+-        tcg_gen_movcond_i64(TCG_COND_EQ, diff, op0, op1, tmax, diff);
+     } else {
+         /* WHILEWR */
+-        tcg_gen_sub_i64(diff, op1, op0);
+-        /* Divide, rounding down, by ESIZE.  */
+-        tcg_gen_shri_i64(diff, diff, a->esz);
+-        /* If op0 >= op1, diff <= 0, the condition is always true. */
+-        tcg_gen_movcond_i64(TCG_COND_GEU, diff, op0, op1, tmax, diff);
++        /* Saturating subtraction maps diff <= 0 to diff == 0. */
++        tcg_gen_ussub_i64(diff, op1, op0);
      }
+ 
+-    /* Bound to the maximum.  */
+-    tcg_gen_umin_i64(diff, diff, tmax);
++    /* Divide, rounding down, by ESIZE.  */
++    tcg_gen_shri_i64(diff, diff, a->esz);
+ 
+-    /* Since we're bounded, pass as a 32-bit type.  */
++    /*
++     * If diff == 0, the condition is always true.  Also, bound to max.
++     * Simplify
++     *    diff = diff ? diff : max;
++     *    diff = umin(diff, max);
++     * via
++     *    diff -= 1;
++     *    diff = umin(diff, max - 1);
++     *    diff += 1;
++     * via 0 - 1 == UINT64_MAX.
++     */
++    tcg_gen_addi_i64(diff, diff, -1);
++    tcg_gen_umin_i64(diff, diff, tcg_constant_i64((vsz >> a->esz) - 1));
++
++    /*
++     * Since we're bounded, pass as a 32-bit type.
++     * Sink the diff += 1 from above into the 32-bit type.
++     */
+     t2 = tcg_temp_new_i32();
+     tcg_gen_extrl_i64_i32(t2, diff);
++    tcg_gen_addi_i32(t2, t2, 1);
+ 
+     desc = FIELD_DP32(desc, PREDDESC, OPRSZ, vsz / 8);
+     desc = FIELD_DP32(desc, PREDDESC, ESZ, a->esz);
 -- 
 2.47.3
 
