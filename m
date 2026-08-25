@@ -4,56 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD2F2C61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:40:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A4E4C61DBD
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:40:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyyr4-0005qu-6H; Tue, 25 Aug 2026 17:38:50 -0400
+	id 1wyyr4-0005r2-Ks; Tue, 25 Aug 2026 17:38:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyr2-0005px-4t
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:48 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ id 1wyyr3-0005qT-JJ
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:49 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyr0-00053y-04
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:47 -0400
+ id 1wyyr2-00054W-2Q
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:49 -0400
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:39a2:0:640:ae2d:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id B2B7180DEE;
- Wed, 26 Aug 2026 00:38:44 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id CCC3C80DEA;
+ Wed, 26 Aug 2026 00:38:46 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:630::1:39])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id QckKa93ZVmI0-ucqWFj1u; Wed, 26 Aug 2026 00:38:43 +0300
+ id QckKa93ZVmI0-eEPKqYsL; Wed, 26 Aug 2026 00:38:46 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1787693923;
- bh=/AXpb6OUWSDqBackO6RIHEDCxosPL8T5bL7ACTRrjKY=;
+ s=default; t=1787693926;
+ bh=776MHaLpzpLJ2Q79VM9JksJjKGqEEXxmSC5DyTv3s1k=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=hCE9R6WY8GWoh7iOM0pzuoaVNgKrLaf3+NJDMOsV88d6UleIuJ3JdnmXzGsd3M579
- gIeN+LWdRod34DMNN9paDdFNniOMXhZA2HO0jTZ76N2fzJOUScqqabhLAHnPTzTvlg
- W+mhB9yZBvqviq/WKdYCOrpPxGJsq8yNxuWxm5M8=
+ b=CWpaBuch9WzurdxvSTs5Dw4mnHADrSue5ptUUk6CBglDVjtmrT+pFFhkBH4arN9hA
+ KO+oEASarSq/SDfsBharVT1D3AmnyGTwRSrO6DHurMiTcSiE5LHw8ESJXB4qN0tKQf
+ zymA01CeXdzQdXHXh1bqgNab9PC7I/+Us0xEWoGc=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: peterx@redhat.com
 Cc: farosas@suse.de, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [PATCH 14/30] hw/display/virtio-gpu: move to new migration APIs
-Date: Wed, 26 Aug 2026 00:37:54 +0300
-Message-ID: <20260825213811.3725682-15-vsementsov@yandex-team.ru>
+ Stefan Weil <sw@weilnetz.de>
+Subject: [PATCH 16/30] hw/nvram/eeprom93xx.c: use new migration APIs
+Date: Wed, 26 Aug 2026 00:37:56 +0300
+Message-ID: <20260825213811.3725682-17-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
 References: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -78,282 +76,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/display/virtio-gpu.c | 99 ++++++++++++++++++++++-------------------
- 1 file changed, 52 insertions(+), 47 deletions(-)
+ hw/nvram/eeprom93xx.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index fbb6fec7a0a..1af640accdc 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1308,13 +1308,13 @@ static const VMStateDescription vmstate_virtio_gpu_scanouts = {
-     },
+diff --git a/hw/nvram/eeprom93xx.c b/hw/nvram/eeprom93xx.c
+index 73b3d248d44..de689322567 100644
+--- a/hw/nvram/eeprom93xx.c
++++ b/hw/nvram/eeprom93xx.c
+@@ -95,28 +95,29 @@ struct _eeprom_t {
+    This is a Big hack, but it is how the old state did it.
+  */
+ 
+-static int get_uint16_from_uint8(QEMUFile *f, void *pv, size_t size,
+-                                 const VMStateField *field)
++static bool get_uint16_from_uint8(QEMUFile *f, void *pv, size_t size,
++                                  const VMStateField *field, Error **errp)
+ {
+     uint16_t *v = pv;
+     *v = qemu_get_ubyte(f);
+-    return 0;
++    return true;
+ }
+ 
+-static int put_unused(QEMUFile *f, void *pv, size_t size,
+-                      const VMStateField *field, JSONWriter *vmdesc)
++static bool put_unused(QEMUFile *f, void *pv, size_t size,
++                       const VMStateField *field, JSONWriter *vmdesc,
++                       Error **errp)
+ {
+     fprintf(stderr, "uint16_from_uint8 is used only for backwards compatibility.\n");
+     fprintf(stderr, "Never should be used to write a new state.\n");
+     exit(0);
+ 
+-    return 0;
++    return true;
+ }
+ 
+ static const VMStateInfo vmstate_hack_uint16_from_uint8 = {
+     .name = "uint16_from_uint8",
+-    .get  = get_uint16_from_uint8,
+-    .put  = put_unused,
++    .load = get_uint16_from_uint8,
++    .save = put_unused,
  };
  
--static int virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
--                           const VMStateField *field, JSONWriter *vmdesc)
-+static bool virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
-+                            const VMStateField *field, JSONWriter *vmdesc,
-+                            Error **errp)
- {
-     VirtIOGPU *g = opaque;
-     struct virtio_gpu_simple_resource *res;
--    Error *err = NULL;
--    int i, ret;
-+    int i;
- 
-     /* in 2d mode we should never find unprocessed commands here */
-     assert(QTAILQ_EMPTY(&g->cmdq));
-@@ -1337,12 +1337,7 @@ static int virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
-     }
-     qemu_put_be32(f, 0); /* end of list */
- 
--    ret = vmstate_save_state(f, &vmstate_virtio_gpu_scanouts, g, NULL,
--                             &err);
--    if (ret < 0) {
--        error_report_err(err);
--    }
--    return ret;
-+    return vmstate_save_vmsd(f, &vmstate_virtio_gpu_scanouts, g, NULL, errp);
- }
- 
- static bool virtio_gpu_load_restore_mapping(VirtIOGPU *g,
-@@ -1374,14 +1369,13 @@ static bool virtio_gpu_load_restore_mapping(VirtIOGPU *g,
-     return true;
- }
- 
--static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
--                           const VMStateField *field)
-+static bool virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-+                            const VMStateField *field, Error **errp)
- {
-     VirtIOGPU *g = opaque;
--    Error *err = NULL;
-     struct virtio_gpu_simple_resource *res;
-     uint32_t resource_id, pformat, hostmem, rowstride_bytes;
--    int i, ret;
-+    int i;
- 
-     g->hostmem = 0;
- 
-@@ -1389,7 +1383,8 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-     while (resource_id != 0) {
-         res = virtio_gpu_find_resource(g, resource_id);
-         if (res) {
--            return -EINVAL;
-+            error_setg(errp, "Failed to find resource %" PRIu32, resource_id);
-+            return false;
-         }
- 
-         res = g_new0(struct virtio_gpu_simple_resource, 1);
-@@ -1402,14 +1397,16 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-         /* allocate */
-         pformat = virtio_gpu_get_pixman_format(res->format);
-         if (!pformat) {
-+            error_setg(errp, "Unknown pixman format %" PRIu32, res->format);
-             g_free(res);
--            return -EINVAL;
-+            return false;
-         }
- 
-         if (!calc_image_hostmem(pformat, res->width, res->height,
-                                 &hostmem, &rowstride_bytes)) {
-             g_free(res);
--            return -EINVAL;
-+            error_setg(errp, "Failed to calculate image hostmem");
-+            return false;
-         }
-         res->hostmem = hostmem;
-         if (!qemu_pixman_image_new_shareable(&res->image,
-@@ -1419,10 +1416,9 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-                                              res->width,
-                                              res->height,
-                                              rowstride_bytes,
--                                             &err)) {
--            warn_report_err(err);
-+                                             errp)) {
-             g_free(res);
--            return -EINVAL;
-+            return false;
-         }
- 
-         res->addrs = g_try_new(uint64_t, res->iov_cnt);
-@@ -1432,7 +1428,8 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-             g_free(res->addrs);
-             g_free(res->iov);
-             g_free(res);
--            return -EINVAL;
-+            error_setg(errp, "Failed to allocate iov arrays");
-+            return false;
-         }
- 
-         /* read data */
-@@ -1446,22 +1443,20 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
-         if (!virtio_gpu_load_restore_mapping(g, res)) {
-             pixman_image_unref(res->image);
-             g_free(res);
--            return -EINVAL;
-+            error_setg(errp, "Failed to load restore mapping");
-+            return false;
-         }
- 
-         resource_id = qemu_get_be32(f);
-     }
- 
-     /* load & apply scanout state */
--    ret = vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, 1, &err);
--    if (ret < 0) {
--        error_report_err(err);
--    }
--    return ret;
-+    return vmstate_load_vmsd(f, &vmstate_virtio_gpu_scanouts, g, 1, errp);
- }
- 
--static int virtio_gpu_blob_save(QEMUFile *f, void *opaque, size_t size,
--                                const VMStateField *field, JSONWriter *vmdesc)
-+static bool virtio_gpu_blob_save(QEMUFile *f, void *opaque, size_t size,
-+                                 const VMStateField *field, JSONWriter *vmdesc,
-+                                 Error **errp)
- {
-     VirtIOGPU *g = opaque;
-     struct virtio_gpu_simple_resource *res;
-@@ -1485,11 +1480,11 @@ static int virtio_gpu_blob_save(QEMUFile *f, void *opaque, size_t size,
-     }
-     qemu_put_be32(f, 0); /* end of list */
- 
--    return 0;
-+    return true;
- }
- 
--static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
--                                const VMStateField *field)
-+static bool virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
-+                                 const VMStateField *field, Error **errp)
- {
-     VirtIOGPU *g = opaque;
-     struct virtio_gpu_simple_resource *res;
-@@ -1500,7 +1495,8 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
-     while (resource_id != 0) {
-         res = virtio_gpu_find_resource(g, resource_id);
-         if (res) {
--            return -EINVAL;
-+            error_setg(errp, "Failed to find resource %" PRIu32, resource_id);
-+            return false;
-         }
- 
-         res = g_new0(struct virtio_gpu_simple_resource, 1);
-@@ -1514,7 +1510,8 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
-             g_free(res->addrs);
-             g_free(res->iov);
-             g_free(res);
--            return -EINVAL;
-+            error_setg(errp, "Failed to allocate iov arrays");
-+            return false;
-         }
- 
-         /* read data */
-@@ -1525,15 +1522,19 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
- 
-         if (res->iov_cnt > 0 &&
-             iov_size(res->iov, res->iov_cnt) < res->blob_size) {
-+            error_setg(errp, "iov size %" PRIu64 " < blob_size %" PRIu64,
-+                       (uint64_t)iov_size(res->iov, res->iov_cnt),
-+                       res->blob_size);
-             g_free(res->addrs);
-             g_free(res->iov);
-             g_free(res);
--            return -EINVAL;
-+            return false;
-         }
- 
-         if (!virtio_gpu_load_restore_mapping(g, res)) {
-             g_free(res);
--            return -EINVAL;
-+            error_setg(errp, "Failed to load restore mapping");
-+            return false;
-         }
- 
-         virtio_gpu_init_udmabuf(res);
-@@ -1541,10 +1542,10 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
-         resource_id = qemu_get_be32(f);
-     }
- 
--    return 0;
-+    return true;
- }
- 
--static int virtio_gpu_post_load(void *opaque, int version_id)
-+static bool virtio_gpu_post_load(void *opaque, int version_id, Error **errp)
- {
-     VirtIOGPU *g = opaque;
-     struct virtio_gpu_scanout *scanout;
-@@ -1559,7 +1560,9 @@ static int virtio_gpu_post_load(void *opaque, int version_id)
- 
-         res = virtio_gpu_find_resource(g, scanout->resource_id);
-         if (!res) {
--            return -EINVAL;
-+            error_setg(errp, "Failed to find resource %" PRIu32,
-+                       scanout->resource_id);
-+            return false;
-         }
- 
-         if (scanout->fb.format != 0) {
-@@ -1572,12 +1575,14 @@ static int virtio_gpu_post_load(void *opaque, int version_id)
-             };
- 
-             if (!virtio_gpu_do_set_scanout(g, i, &scanout->fb, res, &r, &error)) {
--                return -EINVAL;
-+                error_setg(errp, "Failed to set scanout");
-+                return false;
-             }
-         } else {
-             /* legacy v1 migration support */
-             if (!res->image) {
--                return -EINVAL;
-+                error_setg(errp, "No image");
-+                return false;
-             }
-             scanout->ds = qemu_create_displaysurface_pixman(res->image);
-             qemu_displaysurface_set_share_handle(scanout->ds, res->share_handle, 0);
-@@ -1591,7 +1596,7 @@ static int virtio_gpu_post_load(void *opaque, int version_id)
-         res->scanout_bitmask |= (1 << i);
-     }
- 
--    return 0;
-+    return true;
- }
- 
- void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
-@@ -1777,8 +1782,8 @@ const VMStateDescription vmstate_virtio_gpu_blob_state = {
-             .name = "virtio-gpu/blob",
-             .info = &(const VMStateInfo) {
-                 .name = "blob",
--                .get = virtio_gpu_blob_load,
--                .put = virtio_gpu_blob_save,
-+                .load = virtio_gpu_blob_load,
-+                .save = virtio_gpu_blob_save,
-             },
-             .flags = VMS_SINGLE,
-         } /* device */,
-@@ -1804,8 +1809,8 @@ static const VMStateDescription vmstate_virtio_gpu = {
-             .name = "virtio-gpu",
-             .info = &(const VMStateInfo) {
-                         .name = "virtio-gpu",
--                        .get = virtio_gpu_load,
--                        .put = virtio_gpu_save,
-+                        .load = virtio_gpu_load,
-+                        .save = virtio_gpu_save,
-             },
-             .flags = VMS_SINGLE,
-         } /* device */,
-@@ -1815,7 +1820,7 @@ static const VMStateDescription vmstate_virtio_gpu = {
-         &vmstate_virtio_gpu_blob_state,
-         NULL
-     },
--    .post_load = virtio_gpu_post_load,
-+    .post_load_errp = virtio_gpu_post_load,
- };
- 
- static const Property virtio_gpu_properties[] = {
+ #define VMSTATE_UINT16_HACK_TEST(_f, _s, _t)                           \
 -- 
 2.43.0
 
