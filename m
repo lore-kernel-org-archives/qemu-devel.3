@@ -4,144 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04370C61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:47:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76BAAC61DB9
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:47:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyyyq-0002kU-1U; Tue, 25 Aug 2026 17:46:52 -0400
+	id 1wyyzb-000365-Im; Tue, 25 Aug 2026 17:47:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wyyyo-0002k4-02
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:46:50 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wyyym-0006Pn-5U
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:46:49 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67PL9lpi3116428
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 21:46:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 394q3AlTZeoz9r9gng8WMoqvGQx5WdBWxvgbkoZ6BU4=; b=Aj0hMCKazmgqr7Si
- 0lyyShB/+vZ2jWrpJtDX9zKY2gKnR00aWMYVVGk/Gn8MkRJQFbM+WfJzD9ItwqUv
- TX4eLDEi6uVXTxcZcsjK2c9WIS51r3eJ//m2Yrn29G/NJ2IjVyWjyVyMl6bACJYv
- MOVVZaCci/EFbP6wSMnSiHztG8epRT5caleq8rm4GcNECVZTRod7Dkz2YeAieNJf
- CpHegQHYVMTzKHnQjXDJkFCDyMt4DcBCS2hKKCoc4x9tZnn8zdAzNkUwFDv+sDur
- W2AnMyYorGN9UtTfXPFNBsPQCwSW8nx3KHWUnFPXZCoWWdbApM5cZWG8u804pio2
- nV2WIA==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g9g4mrnc4-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 21:46:46 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-52d28f8737eso5365881cf.2
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 14:46:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wyyzZ-00035x-Rj
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:47:37 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wyyzY-0006Yw-BT
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:47:37 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-38e7109321dso274245a91.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 14:47:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787694405; x=1788299205; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
+ d=linaro.org; s=google; t=1787694455; x=1788299255; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=394q3AlTZeoz9r9gng8WMoqvGQx5WdBWxvgbkoZ6BU4=;
- b=AhWOQWzZERQn3z5N/Cr+x53R5Pl+SJD03g9Uo83I2ZJM5Mskh6szCqnUFwyY+p4s91
- 41pkUtz6mTMz1JnuHTVIvmkkphWzSSTS7oYiZhvdgB+eWyRd8kbQYx9gZXdNN+FghEIe
- pnWIVA5DkuvhD8ytrcZV92FJL3t6xDdGK+69+wFCmMjxoom4m9kHbMsDgZ/xiED774jq
- 5iS74ndAGkNrQimZlcwaqSGopgp5Pobc5ZJ+antF59EjIRDWNsh2vrLhgFvAx2ABSorF
- bDjkljtlahnoDduJVkKFFLB57r9VHIo4xa5/edMg+S/ne6U6gfDVUHumEEQJaOEKZT4w
- sfKA==
+ bh=sxtVCHWFpHnseObQwOJhKDNK6mUOFq/n3jc5JdIVc3U=;
+ b=M06pfLZD7ktbx+LJc7Yebd6gVUYy0ELoIIIZM5fHOdxkDLNURigsFc7uLeMyM0ck0k
+ xVhghESsdWr4NEEv0lLDZSu7V5DOmWsL1rltk+zIUgXBlYkFDSOz9F6x/X7n6mUcpTJc
+ dqrtu5cH3YdB3/sl6qKJz2BWu/ZIloVCXL4rVrusB0XeQVKMwCXTH24fjfCV5w/i20QX
+ pesWEAZ8BODZTPe1gPJCh2NU5gKgWzHK9v1TAiYpaIduomOgkNIt7PnaxKMocC6/OC5A
+ 3XPUeRXYzDfb8JCiYKrvYjQQQ2F9OdHSn5f4CxEMKPr32r4h+17wN23QJ/3hPSv5LktX
+ s4oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787694405; x=1788299205;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
+ d=1e100.net; s=20251104; t=1787694455; x=1788299255;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=394q3AlTZeoz9r9gng8WMoqvGQx5WdBWxvgbkoZ6BU4=;
- b=AEZ3C/mQUCctrZYIs1/+Cg2RFPsKFSxlmfghGESopRPM/mSUfIkB97hiIICt5SQu0m
- WTuqwGCzNVdiBMHfhXRK7s71OAvRVlhzKtnwa+x9Z4j99dkpAfMyxVM5eLLklTGbpPIr
- uwxqZagd77/pm9gBH84W/+l4AWfnu6lNNBZ8FIOlkrJVtfDfdThx+R/44JOuOkqKlPlL
- DBosXyFYB06XxJshOGnx4mvDDPFPL+RWA2eto3b+i7D07S/sI86QZTbPoOv1iGxrMBjS
- xobXN16SbRWLo93AUNHQik3f/TgRBVg0qqQ14aKH2O/tl5GJExznokAfbohhDVaaeKno
- Re0g==
+ bh=sxtVCHWFpHnseObQwOJhKDNK6mUOFq/n3jc5JdIVc3U=;
+ b=dBQFxDDmBloZNWRKR0ZiF05tGBVUubmfuLr+uHMraiXWHRx3hAO/A4/PZzKwbe5/OD
+ pXfmLF3ont3fgzigVaKqU2DzgesJLEadvEFfBl81Y/DYqXSXVfzpVTNLEzIQ368pZARW
+ k9hV7Y1B56op43pLLwC3nbX3PkhXnrxnLgwVsjWgp/Qxxt/OM/WONAxe/SQWmMwGAaLw
+ KkbnHA1uuMREiAvmcaiDF5mPjG5zWgsrwjXdMW0hEQhdDzNoGhfA4wr3mcnND3xpGIC8
+ z7x6I3Pimwe9yb9TV/NV2/RgEQYITlnb/8Tq3dsMjmxo1/nVSEqQdNSfqtb4vQ7pqiUv
+ SHtQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rrei3CDN8tCVhGBoN3hpBGsUcXmGJBn3EuOKviIVwxDg4T5igS0+bdTJO2gHBFVJ7CsLyeBcTV0W6mp@nongnu.org
-X-Gm-Message-State: AFuF++ny0GnHRr38djPB5w594IIucP0m8Nhwe4YTHk2lV09ep1rZ2pAT
- u/3hV6tCAntBBRumc2FpORFzb6AjrLVOcf0Q+5V+AON7o8kPS69e7MxoJ8UmG5htjGM7BuCpT7G
- 6yS5Kv+QV0a3SiNpkZ0FPRRTRzYfOczb8HL6UdyoarofjGYT9ZXsirV99ig==
-X-Gm-Gg: AR+sD13BbnyaOYPPBxaOrWMwmj3CtKbOJXMBfeSbpRbKhkUqB3+8M28aaneA0poX7YN
- 8vu5fXnMGQ5+qzt1nQMN09unsIPpAhoNK3qJm5QTcsogPxtJswImkXj6wOpg9cgPceyM20bznHf
- W8/XCsYVdyanClb4fQCiXZ9F39LYXTsWg/KZ0qp1L+2HQTsZBzsG44PMtwolr/nSGB3mg8GWKYt
- Q76OHRKeH/VKy+Adl5s09mXm1oMiIWtKfpDwTLEkyTdLTeDuKftksp7BDS+xwCL10cK4WYSCQQP
- zeY26hyN6/NfJY80DNqobt7eNILLjIzClyqwH7VnFB+RYtxeCdPotyLR3pwctwb0bEVt0Q+Aklc
- hWok4krKjC9VWFwVPBYo4vOoll407K8votZOZTvrsjflmzirmSzM=
-X-Received: by 2002:a05:622a:6182:b0:51a:8eca:78e3 with SMTP id
- d75a77b69052e-52e422daec2mr24487401cf.5.1787694405462; 
- Tue, 25 Aug 2026 14:46:45 -0700 (PDT)
-X-Received: by 2002:a05:622a:6182:b0:51a:8eca:78e3 with SMTP id
- d75a77b69052e-52e422daec2mr24486991cf.5.1787694404936; 
- Tue, 25 Aug 2026 14:46:44 -0700 (PDT)
-Received: from [192.168.20.232] (82-66-243-121.subs.proxad.net.
- [82.66.243.121]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-482e27ab6d0sm684413f8f.13.2026.08.25.14.46.42
+ AHgh+Rq2YVJuzclFwCqzaCq3LNk658TIoEd978xoLhbwHlbEIVPTLTrz2Sv0hOVPj2ahSNHMVqN6Rlyw+Dl0@nongnu.org
+X-Gm-Message-State: AFuF++msCcV6C/g10yLQ2y/9MXgCTuXBbtQ5v88Rn9AEGLKFP2wlXi+L
+ k8v6N4ryLFW0V7GtIycVzNxOFTU7Hu2pNDP6zBIuy9q/WQvpCGs7JnKKNzic++EGlYA=
+X-Gm-Gg: AR+sD13643wPKOoBneAkrNVliLb5trJdAtgUsuleO86MEu85dPteQLcbUFeROEuyf3n
+ /Onjk384GOY62rwxKRKo4XZ0nezJ1M26+nfBCHETpBpntZsm5vmhwjOkHo34pZGdv6yXGe94jYd
+ Hutif1FT02F60tCmWlxgZRBXSokGrg7TEZfpAyotEeWyXf/yOO547l0bBOi7FaO1IMgt4krasgy
+ 2ZLVAD/hwnsok1tEMLvLhxFbszRpqWXtqmWw9dpyBMip359Xoe+RmsRA3yQ79JyPNenMHPrYj8B
+ w+1ZMw1s4fX+2K+8p+bI72dsPVI3KZ0MN7AU1bJzbT3iQLkfU0/ywi42hpohQXEySqT+yMN/mHq
+ 9JT+QBvVd3N/11CN65b/QDWg0HyaRLyJCUa3ptuSCWgCI2ausy4s+VoyIZG/4ihfkvICF5+iIMS
+ zflYyUuoDfJt38FKHhBSMbLpjXOaM0V6nEGnBPu8CWGJDtflCcWweJyMmFSsHHr0zQmyyiDGdY+
+ oaIxrkdsulOlGUdD3i7cJZbFFzj9sI/mIIShIs=
+X-Received: by 2002:a17:90b:3f88:b0:395:f0e8:9e13 with SMTP id
+ 98e67ed59e1d1-3966d207838mr4456810a91.7.1787694454614; 
+ Tue, 25 Aug 2026 14:47:34 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-39668a5832bsm1252226a91.15.2026.08.25.14.47.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Aug 2026 14:46:43 -0700 (PDT)
-Message-ID: <3c1280fd-9906-4c98-833a-40ef6f0b267c@oss.qualcomm.com>
-Date: Tue, 25 Aug 2026 23:46:42 +0200
+ Tue, 25 Aug 2026 14:47:34 -0700 (PDT)
+Message-ID: <b847a616-5d7b-484c-8065-655d33c63c13@linaro.org>
+Date: Tue, 25 Aug 2026 14:47:33 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 34/49] error-report: switch to use monitor_cur_hmp()
+Subject: Re: [PATCH v3 1/7] accel/tcg: fold the dynamic cflags into
+ CPUState::tcg_cflags
+To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, philmd@oss.qualcomm.com, alex.bennee@linaro.org,
+ zhao1.liu@intel.com
+References: <20260822190818.1829249-1-mattst88@gmail.com>
+ <20260822190818.1829249-2-mattst88@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: dave@treblig.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
- <20260825-qemu-no-hmp-v4-34-af60857c2fbe@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260825-qemu-no-hmp-v4-34-af60857c2fbe@redhat.com>
+In-Reply-To: <20260822190818.1829249-2-mattst88@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDE4NiBTYWx0ZWRfX4xj/2jxJPDx1
- FMsgOMLlILxhwDH1cDE3oRQWykB0iMfoigGC5DL6ScZzr85e6zCxLaP3q34M68ze5A4l5SjFate
- V8Z5kcon5EPeNiLO+KJMrKQ0/5ZFYCs=
-X-Proofpoint-ORIG-GUID: lWlUeqHuwpsMKKkFcszoyhiaw3NN-WV0
-X-Authority-Analysis: v=2.4 cv=eYgNubEH c=1 sm=1 tr=0 ts=6a8e0d46 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=lbskcjEx90pOFJH4cTSgiA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=LfsA7Cq2GQzuzbZ-N0YA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDE4NiBTYWx0ZWRfX86EoQ4PVnBHU
- xIRt1cXXmSUScBJvF1n7TaUEengEjwfmhApHRJG9we26w5jfWBwZGnW8+rrAtyntuIDhszcN4kw
- 08WlsV8zc97sdJm+1Q+kXdR9x3CQmLQEuRNGv2Dp4cIRoo6DjcKEOGa17u5LRL56rH3h1PpjrWX
- aa8Fk3Hc6NgNQ0JxkWjSRLeXNGfVSekA5QSTekKy5VnM/ahHvv58foRNUDEQ7rXRtuLrox25tZy
- yownWl3ok/VdTK/6f3MkOcph/uvexbMgbUfCAPaSfpH7/harHew8O1Tbn9ajdn3fuygJ1mG+DRb
- MK/oePWb+IqkmmglacOmpQDQLo+p5e+3kBj1dVxIKJenz1ThYUDfiZIWteCVyz+vmSjh4AI1FiS
- OJdIWgIVaZqClZUj6k033q2qVVbGDpoWxPLiEszxOozs2AlxuhA6+i0risOR7a0OP1tF4M/noeJ
- 8m+4nQ+WpPRBlF1CHGw==
-X-Proofpoint-GUID: lWlUeqHuwpsMKKkFcszoyhiaw3NN-WV0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-25_06,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- clxscore=1015 lowpriorityscore=0 bulkscore=0 phishscore=0 spamscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608250186
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -158,33 +108,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/8/26 21:09, Marc-AndrÃ© Lureau wrote:
-> Thread through the current *hmp monitor, a non-NULL pointer is
-> guaranteed to be a valid HMP monitor. Adjust doc comments.
-> 
-> No behavioral change.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   util/error-report.c | 69 ++++++++++++++++++++++-------------------------------
->   1 file changed, 29 insertions(+), 40 deletions(-)
-> 
-> diff --git a/util/error-report.c b/util/error-report.c
-> index aaa15bc79827..aa278de6646a 100644
-> --- a/util/error-report.c
-> +++ b/util/error-report.c
-> @@ -30,34 +30,29 @@ bool error_with_guestname;
->   const char *error_guest_name;
+
+On 8/22/26 12:08, Matt Turner wrote:
+> diff --git ./accel/tcg/tcg-all.c ./accel/tcg/tcg-all.c
+> index 7186c10cf0..c9874a286a 100644
+> --- ./accel/tcg/tcg-all.c
+> +++ ./accel/tcg/tcg-all.c
+> @@ -254,6 +254,7 @@ static void tcg_set_one_insn_per_tb(Object *obj, bool value, Error **errp)
+>       s->one_insn_per_tb = value;
+>       /* Set the global also: this changes the behaviour */
+>       qatomic_set(&one_insn_per_tb, value);
+> +    tcg_update_all_cflags();
+>   }
+...
+> diff --git ./util/log.c ./util/log.c
+> index 7cffbc1bf8..3fa46a67fa 100644
+> --- ./util/log.c
+> +++ ./util/log.c
+> @@ -27,6 +27,7 @@
+>   #include "qemu/thread.h"
+>   #include "qemu/lockable.h"
+>   #include "qemu/rcu.h"
+> +#include "system/tcg.h"
+>   #ifdef CONFIG_LINUX
+>   #include <sys/syscall.h>
+>   #endif
+> @@ -301,6 +302,9 @@ static bool qemu_set_log_internal(const char *filename, bool changed_name,
+>   #endif
+>       qemu_loglevel = log_flags;
 >   
->   /*
-> - * Print to the current human monitor if we have one, else to stderr.
-> + * Print to the @hmp monitor, else to stderr.
->    */
->   static int G_GNUC_PRINTF(2, 0)
-> -error_vprintf_mon(Monitor *cur_mon, const char *fmt, va_list ap)
-> +error_vprintf_mon(MonitorHMP *hmp, const char *fmt, va_list ap)
+> +    /* CPU_LOG_TB_NOCHAIN feeds into the per-CPU cflags. */
+> +    tcg_update_all_cflags();
 
-If you ever respin, error_vprintf_hmp() would be a better name.
+I'm not keen on these placements.  I know they're needed for HMP, but 
+I'd rather have these calls in HMP, after updating state.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> +void tcg_update_cflags(CPUState *cpu)
+> +{
+> +}
+> +
+Where does this get used outside of tcg itself?  I think only 
+tcg_update_all_cflags() should be stubbed, and indeed the only one 
+visible outside of accel/tcg/.
+
+Phil, is the stub itself better placed in accel/stubs/ or accel/tcg/?  
+I'm unsure what organization you're working toward.
+
+
+r~
+
 
