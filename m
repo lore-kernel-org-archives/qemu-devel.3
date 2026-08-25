@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF97EC61DB6
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58D3FC5DF94
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:08:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylFw-0006r4-6B; Tue, 25 Aug 2026 03:07:36 -0400
+	id 1wylGU-00084x-TZ; Tue, 25 Aug 2026 03:08:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylFt-0006jL-TJ; Tue, 25 Aug 2026 03:07:33 -0400
+ id 1wylGR-0007tc-Pm; Tue, 25 Aug 2026 03:08:08 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylFr-0005zs-Qk; Tue, 25 Aug 2026 03:07:33 -0400
+ id 1wylGO-00066f-08; Tue, 25 Aug 2026 03:08:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641596; bh=Fa+LvK5q74YUlXE2c11mm+O2uVCpo2KXH4JztZyUEDc=;
+ t=1787641596; bh=+j5qWRPxTOVkvBGZ+bjlJU1tF0kNvURpihIJiCoBapw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=YqumLuFUJdCy92eyr/jiG8DU2PyyMZnZkF6vc3K4b/2Vs/8MzCLY/CGELn4HnBnYL
- UbXZ9fNMPj3oyttjbzN0lAj8DZQjiPQ2RiLYA3+7Unl2tPa6hzhgYl4u5c836zUg+4
- 26O3bomye5iskhYTmf0DS6aNdRBiH9dMgPZyxy7EP4tEWx1Fnjuw4HYopkIeNWF3Z/
- VBtqWkC+q4dtIAVUm5rwtqhbN6ua0ikqT6SdN9sz9N2SUWPmpDhsYe0ifq4Xr3Z1db
- LLg+qj9mUi7ik+Sorul5I7yDeIff9jnWlagQFq5iupnqQQnCNVVcxlvFKLH3rfvOJH
- q8sNbufj+TTFA==
+ b=O2VkeFJthXxTDlKJOuBe8lLzCqpEVx64utm9IdKTZui8c5LAvggMfOdenLCbktphp
+ KhS7KXaTMCl0dIIWDUWf0MGltMkSh77QuRrH3e9reMcTF/sfvyMaqsuw7kcPKyFOKl
+ su9zuaYBfcMrKu/29LnQGvj4Xpy8lyza8GirKafaNC2QhcM7SK3w/YIO/LHeP2GG9Z
+ DrdBg0BsqcqUZwA55eu9wMYqCi8hEyLW1OsJiveyogM4/Vr68om6polBQrNVibpEg4
+ /2RaeywU2As+aEhf43A2oS/Hjf1pKxKSUho9ZsNSZDtiLWlZ8vVmIYVgAHb3qegTHe
+ eL+5bX7r+el8A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1A5EF1CE21A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 363011CE21F;
  Tue, 25 Aug 2026 10:06:36 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D28B6415F95;
+ by tsrv.corpit.ru (Postfix) with ESMTP id EEFA8415F9A;
  Tue, 25 Aug 2026 10:07:12 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 81CF632414; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ id 9142C3241E; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jan Mercl <0xjnml@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Song Gao <17746591750@163.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 53/91] target/loongarch: check FPE before reading
- fcc in bceqz/bcnez
-Date: Tue, 25 Aug 2026 10:05:25 +0300
-Message-ID: <20260825070619.174584-11-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 v2 58/91] hw/intc/arm_gicv3: Have GIC kconfig select
+ GICv3 for HVF and WHPX
+Date: Tue, 25 Aug 2026 10:05:30 +0300
+Message-ID: <20260825070619.174584-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,53 +73,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jan Mercl <0xjnml@gmail.com>
+From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
-gen_cz_bc() loads env->cf[cj] without CHECK_FPE, unlike every other
-translator that touches an fcc register (trans_fcmp.c.inc and
-trans_fmov.c.inc, for movcf2gr/movgr2cf/movcf2fr/movfr2cf/fsel).
+While trying to fix the GICv3 dependency on KVM and WHPX in
+commit 39a8c3941eb, we missed the Kconfig ARM_GIC symbol only
+selects GICv3 for TCG, not HVF and WHPX. Fix that.
 
-A guest that manages the FPU lazily -- Linux clears CSR.EUEN.FPE in
-lose_fpu() on every context switch -- relies on the next fcc access
-raising a Floating-Point-Disabled exception so the kernel can restore
-that task's fcc.  Because bceqz and bcnez never raise it, they branch on
-the condition flag left behind by whichever task last owned the FPU.
-
-Real Loongson hardware does raise the exception, so this is TCG-only.
-It surfaces as Go binaries dying at startup in runtime.check() with
-"fatal error: float64nan1" -- roughly one process start in a thousand
-once the guest has more runnable tasks than vCPUs -- and in general as a
-conditional branch silently taking the wrong path.
-
-With four tasks each executing 5M bcnez on a 2-vCPU guest, master
-mispredicts 89 of 20000000.  With this patch, 0 of 100000000 over five
-runs; a Loongson-3C5000 is likewise 0 of 600000000.
-
-CHECK_FPE is defined in trans_farith.c.inc, which translate.c includes
-before trans_branch.c.inc, so it is already in scope.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4209
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Jan Mercl <0xjnml@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260819132422.5164-1-0xjnml@gmail.com>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-(cherry picked from commit 215a4fc08f2aafce54c168cf41c64c79187430c1)
+Fixes: 39a8c3941eb ("hw/intc/arm_gicv3: Fix ARM_GICV3 dependency for KVM / WHPX")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-id: 20260812220816.94034-1-philmd@oss.qualcomm.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit a0c093900d84f6668c27eaeab4ca74935b5857b2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/loongarch/tcg/insn_trans/trans_branch.c.inc b/target/loongarch/tcg/insn_trans/trans_branch.c.inc
-index f94c1f37ab1..da077786585 100644
---- a/target/loongarch/tcg/insn_trans/trans_branch.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_branch.c.inc
-@@ -66,6 +66,8 @@ static bool gen_cz_bc(DisasContext *ctx, arg_c_offs *a, TCGCond cond)
-     TCGv src1 = tcg_temp_new();
-     TCGv src2 = tcg_constant_tl(0);
+diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
+index 636d00b7e88..1fec78f3bf1 100644
+--- a/hw/intc/Kconfig
++++ b/hw/intc/Kconfig
+@@ -23,7 +23,7 @@ config APIC
  
-+    CHECK_FPE;
-+
-     tcg_gen_ld8u_tl(src1, tcg_env,
-                     offsetof(CPULoongArchState, cf[a->cj]));
-     gen_bc(ctx, src1, src2, a->offs, cond);
+ config ARM_GIC
+     bool
+-    select ARM_GICV3 if TCG
++    select ARM_GICV3 if TCG || HVF || WHPX
+     select ARM_GIC_KVM if KVM
+     select MSI_NONBROKEN
+ 
 -- 
 2.47.3
 
