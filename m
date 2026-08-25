@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AA0FC61DB6
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:13:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC917C61DBC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:13:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylJ8-0006pT-10; Tue, 25 Aug 2026 03:10:54 -0400
+	id 1wylKc-0004SI-84; Tue, 25 Aug 2026 03:12:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylJ6-0006ly-J2; Tue, 25 Aug 2026 03:10:52 -0400
+ id 1wylKa-0004JN-5J; Tue, 25 Aug 2026 03:12:24 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylJ4-0006kV-T4; Tue, 25 Aug 2026 03:10:52 -0400
+ id 1wylKY-00077U-DC; Tue, 25 Aug 2026 03:12:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641596; bh=DW/cil9IxDNlgOKbC6bXT0bjUdikN8CxO4edvgtDNR4=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Ckp0pQffRjpzXpRPe7RDyWbJpGkEUOoUih6mOQxdeDOAm+w5hVhtfBWv2f4WZE5l2
- rgRsrLbl3+Yshi3OY8D+8vcZhhzsaog2sgao1XdDb3ZOLkJTr34BLu4c1glIFMH0IK
- yWYM2kPPGCvvw2y5Ya2zU96wnmivuLtgfpDZWhgT80LqpP749mLrLogNxv3JtERQS5
- oAhtRsI46e2Cb9BlzIP5DZurmpHzJA6DcEiz03KLndjXY/TJi5POMff1NrgV/4BIBj
- 8dJpzo9g0ppI7bzqFYLbIKa5v68G564ykXeGjS8IRrt1KU72Fm0WmjD6C2eJNxLUg2
- AOW40az6FX4sA==
+ t=1787641903; bh=7xb9enhUKDyhCmqCLRelZQYgOujhFvjWLt6eabUybBQ=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=LTpp8kbd2V3lOyBfingE/cVKVZqukP6Sm62Ce7AuMKCkJ99/pIKuDWSDuaZZz4jLl
+ Cr9g0nf7xNZrHrUEnC9l0kzYZ6TNNUjxDkpRIDYcrqUZWEgDcB0JvHCUWQTgqadmun
+ fAJdnGcZSGzPsxfeh7+m2/jv4Ohvk4040+Kz2rgwNnFMo6gFSCAieQSgmF7llFqR/d
+ U0K6Y8ueawqNRXHtLpdFE26U/nwTDtRvNLtECgkJ1idVBf0D9Wfc8PyHzzzNFRT7m+
+ lBNc9wiRV4DHx6jAoe9sIOzcdHJUSoHFaqXVw3pnFkFt0xQU27mrCq+YTuMBw3SCy2
+ 7q0Qw/+Tv8+dA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B8D411CE239;
- Tue, 25 Aug 2026 10:06:36 +0300 (MSK)
-Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7D8CE415FB4;
- Tue, 25 Aug 2026 10:07:13 +0300 (MSK)
-Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id DFD7232452; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 84/91] disas/riscv: Fix typo in th.lbib format
-Date: Tue, 25 Aug 2026 10:05:56 +0300
-Message-ID: <20260825070619.174584-42-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
-References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
+ by isrv.corpit.ru (Postfix) with ESMTP id BD99C1CE258;
+ Tue, 25 Aug 2026 10:11:43 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6D2F4415FC3;
+ Tue, 25 Aug 2026 10:12:20 +0300 (MSK)
+Message-ID: <e350bfda-cd57-4b25-9c72-40585e30a488@tls.msk.ru>
+Date: Tue, 25 Aug 2026 10:11:43 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] target/riscv: Fix seed CSR sign extension
+To: Ivan Efremov <nendensu@ispras.ru>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, palmer@dabbelt.com,
+ farosas@suse.de, lvivier@redhat.com
+References: <20260802113130.7818-1-nendensu@ispras.ru>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+In-Reply-To: <20260802113130.7818-1-nendensu@ispras.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -71,35 +70,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+On 8/2/26 14:31, Ivan Efremov wrote:
+> The seed CSR value on RV64 was sign extended while converting to target_ulong.
+> 
+> The first patch makes SEED_OPST_* unsigned.
+> The second patch adds qtest to check that upper 32 bits are zero.
+> 
+> Tests ran:
+> - riscv-csr-test
+> - make check: 324 passed, 11 skipped
+> - RISC-V Zkr-00 architectural test
+> 
+> Ivan Efremov (2):
+>    target/riscv: Fix seed CSR sign extension
+>    tests/qtest: Add seed CSR zero extension test
 
-th.lbib should format the same as th.lbia, and the other
-increment insns, with the address register in parenthesis.
+I'm picking this patch set for the currently active qemu stable
+series (10.0 LTS, 11.0, 11.1).  However, it does not work on
+11.0.x already (it works ok on 11.1.x), the test fails:
 
-Cc: qemu-stable@nongnu.org
-Fixes: 318df7238b9 ("disas/riscv: Add support for XThead* instructions")
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260812223142.349142-41-richard.henderson@linaro.org>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit ecbd3a031f12669da98cdf929cbc7dbb88d3450f)
-(Mjt: fix-up across v11.1.0-496-g7de6afd53186 "disas/riscv: Drop explicit zero of rv_opcode_data fields")
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+TAP version 14
+# random seed: R02Sac6635c76a7dc335fadd70845da72f99
+1..2
+# Start of riscv64 tests
+# Start of cpu tests
+# starting QEMU: exec ./qemu-system-riscv64 -qtest unix:/tmp/qtest-182934.sock -qtest-log /dev/null -chardev 
+socket,path=/tmp/qtest-182934.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -run-with exit-with-parent=on -machine virt -cpu 
+veyron-v1 -accel qtest
+ok 1 /riscv64/cpu/csr
+# Start of csr tests
+# starting QEMU: exec ./qemu-system-riscv64 -qtest unix:/tmp/qtest-182934.sock -qtest-log /dev/null -chardev 
+socket,path=/tmp/qtest-182934.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -run-with exit-with-parent=on -machine virt -cpu 
+tt-ascalon -accel qtest
+**
+ERROR:../../build/qemu/11.0/hw/riscv/riscv_hart.c:78:csr_call: assertion failed: (ret == RISCV_EXCP_NONE)
+Bail out! ERROR:../../build/qemu/11.0/hw/riscv/riscv_hart.c:78:csr_call: assertion failed: (ret == RISCV_EXCP_NONE)
+Broken pipe
+../../build/qemu/11.0/tests/qtest/libqtest.c:210: kill_qemu() detected QEMU death from signal 6 (Aborted)
+Aborted
 
-diff --git a/disas/riscv-xthead.c b/disas/riscv-xthead.c
-index 2f2ddb8dd9a..1df92313669 100644
---- a/disas/riscv-xthead.c
-+++ b/disas/riscv-xthead.c
-@@ -189,7 +189,7 @@ const rv_opcode_data xthead_opcode_data[] = {
-     { "th.mulsh", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-     /* XTheadMemIdx */
-     { "th.lbia", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml_addr, NULL, 0, 0, 0 },
--    { "th.lbib", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml, NULL, 0, 0, 0 },
-+    { "th.lbib", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml_addr, NULL, 0, 0, 0 },
-     { "th.lbuia", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml_addr, NULL, 0, 0, 0 },
-     { "th.lbuib", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml_addr, NULL, 0, 0, 0 },
-     { "th.lhia", rv_codec_r2_imm2_imm5, rv_fmt_rd_rs1_immh_imml_addr, NULL, 0, 0, 0 },
--- 
-2.47.3
+Should I pick something else for 11.0 and 10.0 (on 10.0 it fails the same way),
+so the test succeeds, or should I drop this patch set from 11.1.x?
 
+Thanks,
+
+/mjt
 
