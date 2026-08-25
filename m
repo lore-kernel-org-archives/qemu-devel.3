@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C8DFC61DBC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:06:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69024C5DF94
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:06:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyn64-0001OC-0P; Tue, 25 Aug 2026 05:05:32 -0400
+	id 1wyn4E-0005Hy-D8; Tue, 25 Aug 2026 05:03:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn61-0001Hc-Vq; Tue, 25 Aug 2026 05:05:30 -0400
+ id 1wyn45-0005CV-Ps; Tue, 25 Aug 2026 05:03:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn5z-0003k5-Tv; Tue, 25 Aug 2026 05:05:29 -0400
+ id 1wyn44-00039q-1o; Tue, 25 Aug 2026 05:03:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787648560; bh=hmAIyB0KHz20VLuSmdqCxaV/47HRj+VJf9HNE9Ko0FA=;
+ t=1787648560; bh=rxmORxH6hIL0N9hHgtbC1av3nVoC7S/fF10GujTgeaY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=uNmSUesCJby0qJYkErroQVPtLqWGKuxLm4pGER75wM7AXddeA2Lgu+QS3cFYKSauO
- ZXRpY02TmrJ2SfVUkQlE4xsAwIMJ3yHjAKdk8Gq4k7cSHtkdNMe8eGci6YlaVDag7q
- ap5n4ljVK86jaZxULCPQZNnIePjUTOzPJwK4J5sK/0QVJe6G1me/7ze+Apvyjd465I
- S4KdyE0Ry8yoabzIG+he6lr1NptL/6AKnKsjSEPId5EPaQ986d061ExqPm1VRhSO6K
- dRchu3juOwNRoeoA9JOQK4t4ZzC8wfmLKPts0eo8Vx3Kr6UGmwt/MruxW44Mc5T5SM
- C+hpLjMu+uuxA==
+ b=Ue+uNCVx1JxHgAsB3TdY6TVQ8xeg0Pxd7E0Jh1d/3hdYLkM66mzEZo4493DEGCD35
+ 6iwSnl8MAz4NTroAO7kmJDXePyStVCSa2h7mAbyngKiH4ZsA+WOhyArUJhc8W6Hst0
+ B64t0aIugZV3Wk3Nop9QV99CDEUy6rS6J2aOB9loMvX0xfADQUMaT9EO+nx9I/9fMp
+ uhvreBd98IFzz0qlRjyfKwUxea2QKuZx/RKv21v1NAlpEjfombaOXxNlAgbPER6xAG
+ P2YXykwVQyNk7ojT7NHL75aS1LQD+6gVvy6uolUMfJcSbNUcDbNZO55YahHIsYfL/x
+ B6fFz+PXDScZg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B3DCF1CE3C6;
+ by isrv.corpit.ru (Postfix) with ESMTP id 45DAA1CE3B0;
  Tue, 25 Aug 2026 12:02:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9F8E4416188;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 31A72416172;
  Tue, 25 Aug 2026 12:03:17 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 0836532575; Tue, 25 Aug 2026 12:02:40 +0300 (MSK)
+ id B29D332549; Tue, 25 Aug 2026 12:02:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v3 188/196] hw/riscv/riscv-iommu: preserve requested
- perm in spa_fetch()
-Date: Tue, 25 Aug 2026 12:01:45 +0300
-Message-ID: <20260825090157.471948-27-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v3 166/196] target/i386: fix incorrect decoding of
+ EXTRQ_i
+Date: Tue, 25 Aug 2026 12:01:23 +0300
+Message-ID: <20260825090157.471948-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
@@ -73,165 +72,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Jones <andrew.jones@oss.qualcomm.com>
+From: Simon Scherer <scherer.simon89@gmail.com>
 
-b18e3f0e2d0f fixed spa_fetch() faults whose TTYP used the leaf PTE
-permission instead of the original request permission.  However, it kept
-that request-narrowed value in iotlb->perm after a successful walk, and
-riscv_iommu_translate() caches iotlb->perm for later accesses to the same
-IOVA.
+The decoding of the extrq instruction with an immediate operand (EXTRQ_i) is
+incorrect. Per the AMD manual the instruction encoding looks as follows:
 
-That means a write to an RW mapping can cache the entry as write-only.
-A later read then hits the cache and faults even though the mapping allows
-it, which showed up in NVMe testing as bogus completions and controller
-timeouts.
+EXTRQ xmm1, imm8, imm8   66 0F 78 /0 ib ib
 
-Keep the requested permission in a separate req_perm and use it for all
-permission checks and fault-type decisions.  Accumulate the leaf
-permissions separately and copy them to iotlb->perm only after the full
-walk succeeds, so cached entries describe the mapping rather than the
-current request.  Since faults leave iotlb->perm as the original request,
-the S-stage and G-stage TTYP fixes remain intact.
+The /0 indicates that the "Reg" field of the ModR/M byte must be equal
+to 0 and the XMM register operand is specified by the "R/M" field.
+However, qemu incorrectly uses the "Reg" field to extract the register operand.
 
-Fixes: b18e3f0e2d0f ("hw/riscv/riscv-iommu.c: fix fault type for spa_fetch() faults")
-Fixes: f6f4d1a18734 in 11.0.x
-Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260717144525.1154204-1-andrew.jones@oss.qualcomm.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit aa51eec004461f671f878145d3fc921c6cabee48)
+This patch instead extracts the XMM register operand from the "R/M"
+field.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3611
+Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/r/20260625155613.192643-1-scherer.simon89@gmail.com
+[Check for the reg field to be 0.  Make decoding of REPZ+66 consistent
+ between 0F 78 and 0F 79. - Paolo]
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit ce0ee66044be066cbbf076a7530fe4e8f638f847)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index ba77f4ce47e..fd11558072f 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -281,7 +281,7 @@ static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr, hwaddr *out)
- static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-     IOMMUTLBEntry *iotlb)
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index c8b5bd6ad26..918f71c8ac0 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -603,23 +603,33 @@ static void decode_0F77(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
+ 
+ static void decode_0F78(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
  {
--    IOMMUAccessFlags pte_perm;
-+    IOMMUAccessFlags trans_perm = IOMMU_NONE;
-     dma_addr_t addr, base;
-     uint64_t satp, gatp, pte;
-     bool en_s, en_g;
-@@ -298,6 +298,14 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-     } pass;
-     MemTxResult ret;
-     bool pv = !!ctx->process_id;
-+    /*
-+     * Keep the request permission separate from iotlb->perm.  G-stage
-+     * walks translate S-stage PTE addresses before the real leaf is
-+     * reached, but permission checks and fault types must still use the
-+     * original request.  A successful walk leaves iotlb->perm with the
-+     * effective leaf permission for the translation cache.
-+     */
-+    const IOMMUAccessFlags req_perm = iotlb->perm;
- 
-     satp = get_field(ctx->satp, RISCV_IOMMU_ATP_MODE_FIELD);
-     gatp = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
-@@ -316,7 +324,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-      * means we can't do an early MSI check unless we have
-      * strictly !en_s.
-      */
--    if (!en_s && (iotlb->perm & IOMMU_WO) &&
-+    if (!en_s && (req_perm & IOMMU_WO) &&
-         riscv_iommu_msi_check(s, ctx, iotlb->iova)) {
-         iotlb->target_as = &s->trap_as;
-         iotlb->translated_addr = iotlb->iova;
-@@ -434,13 +442,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-                 masked_msbs = (addr >> (va_len - 1)) & mask;
- 
-                 if (masked_msbs != 0 && masked_msbs != mask) {
--                    return (iotlb->perm & IOMMU_WO) ?
-+                    return (req_perm & IOMMU_WO) ?
-                                 RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S :
-                                 RISCV_IOMMU_FQ_CAUSE_RD_FAULT_S;
-                 }
-             } else {
-                 if ((addr & va_mask) != addr) {
--                    return (iotlb->perm & IOMMU_WO) ?
-+                    return (req_perm & IOMMU_WO) ?
-                                 RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
-                                 RISCV_IOMMU_FQ_CAUSE_RD_FAULT_VS;
-                 }
-@@ -465,8 +473,8 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-                              MEMTXATTRS_UNSPECIFIED);
-         }
-         if (ret != MEMTX_OK) {
--            return (iotlb->perm & IOMMU_WO) ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT
--                                            : RISCV_IOMMU_FQ_CAUSE_RD_FAULT;
-+            return (req_perm & IOMMU_WO) ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT
-+                                         : RISCV_IOMMU_FQ_CAUSE_RD_FAULT;
-         }
- 
-         sc[pass].step++;
-@@ -491,13 +499,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-              * non-user mode leaf PTE and !pv we need to fault.
-              */
-             break;
--        } else if ((iotlb->perm & IOMMU_RO) && !(pte & PTE_R)) {
-+        } else if ((req_perm & IOMMU_RO) && !(pte & PTE_R)) {
-             break;                /* Read access check failed */
--        } else if ((iotlb->perm & IOMMU_WO) && !(pte & PTE_W)) {
-+        } else if ((req_perm & IOMMU_WO) && !(pte & PTE_W)) {
-             break;                /* Write access check failed */
-         } else if (!ade && !(pte & PTE_A)) {
-             break;                /* Access bit not set */
--        } else if ((iotlb->perm & IOMMU_WO) && !ade && !(pte & PTE_D)) {
-+        } else if ((req_perm & IOMMU_WO) && !ade && !(pte & PTE_D)) {
-             break;                /* Dirty bit not set */
-         } else if (pass == G_STAGE && !(pte & PTE_U)) {
-             /*
-@@ -532,21 +540,20 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-                 addr = iotlb->iova;
-                 continue;
-             }
+-    static const X86OpEntry opcodes_0F78[4] = {
+-        {},
+-        X86_OP_ENTRY3(EXTRQ_i,       V,x, None,None, I,w,  cpuid(SSE4A)), /* AMD extension */
+-        {},
+-        X86_OP_ENTRY3(INSERTQ_i,     V,x, U,x, I,w,        cpuid(SSE4A)), /* AMD extension */
+-    };
+-    *entry = *decode_by_prefix(s, opcodes_0F78);
++    static const X86OpEntry opcodes_0F78_f2 =
++        X86_OP_ENTRY3(INSERTQ_i,     V,x, U,x, I,w,        cpuid(SSE4A)); /* AMD extension */
++    static const X86OpEntry opcodes_0F78_66 =
++        X86_OP_ENTRY3(EXTRQ_i,       U,x, None,None, I,w,  cpuid(SSE4A)); /* AMD extension */
 +
-+            /* Cache the effective permission, not this request's subset. */
-+            IOMMUAccessFlags leaf_perm = (pte & PTE_W) ?
-+                                         ((pte & PTE_R) ? IOMMU_RW : IOMMU_WO) :
-+                                         IOMMU_RO;
-+
-+            trans_perm = trans_perm == IOMMU_NONE ?
-+                         leaf_perm : trans_perm & leaf_perm;
-+
-             /* Translation phase completed (GPA or SPA) */
-             iotlb->translated_addr = base;
++    entry->gen = NULL;
++    if (s->prefix & PREFIX_REPNZ) {
++        *entry = opcodes_0F78_f2;
++    } else if (s->prefix & PREFIX_REPZ) {
++        /* undefined */
++    } else if (s->prefix & PREFIX_DATA) {
++        int op = (get_modrm(s, env) >> 3) & 7;
++        if (op == 0) {
++            *entry = opcodes_0F78_66;
++        }
++    }
+ }
  
--            /*
--             * Do a bit_and between the PTE bits and the original
--             * request flags to determine the exact permission we
--             * need, i.e. if the original request is RO and the
--             * PTE has RW flags the actual perm is RO.
--             */
--            pte_perm = (pte & PTE_W) ? ((pte & PTE_R) ? IOMMU_RW : IOMMU_WO)
--                                     : IOMMU_RO;
--            iotlb->perm &= pte_perm;
--
-             /* Check MSI GPA address match */
--            if (pass == S_STAGE && (iotlb->perm & IOMMU_WO) &&
-+            if (pass == S_STAGE && (req_perm & IOMMU_WO) &&
-                 riscv_iommu_msi_check(s, ctx, base)) {
-                 /* Trap MSI writes and return GPA address. */
-                 iotlb->target_as = &s->trap_as;
-@@ -563,6 +570,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-                 continue;
-             }
+ static void decode_0F79(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
+ {
++    entry->gen = NULL;
+     if (s->prefix & PREFIX_REPNZ) {
+         entry->gen = gen_INSERTQ_r; /* AMD extension */
++    } else if (s->prefix & PREFIX_REPZ) {
++        /* undefined */
+     } else if (s->prefix & PREFIX_DATA) {
+         entry->gen = gen_EXTRQ_r; /* AMD extension */
+-    } else {
+-        entry->gen = NULL;
+     };
+ }
  
-+            iotlb->perm = trans_perm;
-             return 0;
-         }
- 
-@@ -587,7 +595,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-      */
-     iotlb->translated_addr = addr;
- 
--    return (iotlb->perm & IOMMU_WO) ?
-+    return (req_perm & IOMMU_WO) ?
-                 (pass ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
-                         RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S) :
-                 (pass ? RISCV_IOMMU_FQ_CAUSE_RD_FAULT_VS :
 -- 
 2.47.3
 
