@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 633B4C61DB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:11:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B882C61DBD
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:12:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wywYi-0005y9-Mz; Tue, 25 Aug 2026 15:11:45 -0400
+	id 1wywXd-0004OW-Pl; Tue, 25 Aug 2026 15:10:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywYT-0005kF-Uz
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:11:33 -0400
+ id 1wywXW-0004N1-V9
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:10:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywYQ-00046T-G6
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:11:28 -0400
+ id 1wywXV-0003tV-30
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:10:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787685085;
+ s=mimecast20190719; t=1787685028;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9CMMKu6kzTPjhr60fVp/ni4m6u7V9jPpiJw4QDuDdfg=;
- b=MHA8UCJ2asxY03D5/DfJxCVf/xwSJ2AyBseVqkIIepO+4f8x43t8nNhB/bY1F8HXJGuy3f
- nWX40szOCvCJwwkJusfZg4qQ6zJ6la0mx/xPv5LafJa2MSQXowgSAe1KU3DiojtZVXWWZ3
- lzxocYElI3ZvOZdMZ506cmSBFdm+pg8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=8TUtIvfv2gg0aRDhrAhGSbFo8JLrTo92AiN7/f51Xts=;
+ b=WwLD/YYPuGJTxCjvqmzvwCsair/FIkEkd+ZGKA+TBfDi/L3ytaJktxHLUmJwDLEunGfhT7
+ zGGk1S6wM+8Oyp2khxvVXThSh/B3My9fJ7oFJ/P4MgUitiVlqdUR0Zf2RdTRkmVAS6ugvP
+ ezn56dUo/q1lFTe2HiE95X1rMWy+GR8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-529-Bc0JutDGP-2QYaKNJCGnrw-1; Tue,
- 25 Aug 2026 15:11:23 -0400
-X-MC-Unique: Bc0JutDGP-2QYaKNJCGnrw-1
-X-Mimecast-MFC-AGG-ID: Bc0JutDGP-2QYaKNJCGnrw_1787685082
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-403-OvU-n3L3NAu4ASG2Wf-Wcw-1; Tue,
+ 25 Aug 2026 15:10:24 -0400
+X-MC-Unique: OvU-n3L3NAu4ASG2Wf-Wcw-1
+X-Mimecast-MFC-AGG-ID: OvU-n3L3NAu4ASG2Wf-Wcw_1787685023
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3D57618512F0; Tue, 25 Aug 2026 19:11:22 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 797321921ED5; Tue, 25 Aug 2026 19:10:23 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6BE521944B2A; Tue, 25 Aug 2026 19:11:21 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 77E2718005B4; Tue, 25 Aug 2026 19:10:21 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 25 Aug 2026 23:09:28 +0400
-Subject: [PATCH v4 21/49] block: add x-qemu-io QMP command
+Date: Tue, 25 Aug 2026 23:09:12 +0400
+Subject: [PATCH v4 05/49] target/i386: decouple cpu_x86_inject_mce() from
+ Monitor
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260825-qemu-no-hmp-v4-21-af60857c2fbe@redhat.com>
+Message-Id: <20260825-qemu-no-hmp-v4-5-af60857c2fbe@redhat.com>
 References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 In-Reply-To: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 To: qemu-devel@nongnu.org
@@ -62,37 +63,38 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  dave@treblig.org, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>, 
- qemu-block@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8511;
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
+ kvm@vger.kernel.org, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7649;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=H7kf02DdiNn1nFNRkOMtk6kTSmAJa1hNXFx4tWwfEJg=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiH9xvvaGeU7T+ENCrWffRKPe4Ds2pkdaPLB
- x1ZvfkOzeWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3ohwAKCRDa6OEJdZac
- 5QniD/9xpnzmaAxSfIVinlQpNAfAiV6/ungPj7IboHQHbpwHsVyr2nqeci/+dSlXgavqOe4iG2o
- DZhH7h9QaNmZN91xY5hT2PqY3+vlAsWagFD175lyNiHuNExGSx1hS2vK9aLtslDjyUVriYn/E0P
- sPC+zq4Jr5I+bE+zyRqkWP78QB35m0olCSMgQb4nC64bvweWgwSrnse3DcDr0wiSFRr8E1MZ0gC
- aX0rIj3C/dG+PJmZ8Ld88zQe/C+/bDmVNvvpUJAh4aSq2ugkVpz9F6HdIwoV80iZ+OLuuRvzLq1
- zbM9Gc8rvzDZSEtRFhsCJDfxEdE5GikLmu4kyRtwkcSFeyfmt0lk3dXwU5k2pWyMEfTrvow9Owq
- p8JJUJsfM4ski4fSkGaimM0RP7XvxhzC7R3yFCn0rtRSeMpTa3uknEuiF7q38UP9TMzqtV4yAwo
- xS6wO/Wgh/4ifzDaH1IQRitoJOk5C4GD80YA+FdmzT48t6dE3J7+2NO34FSsB7YBJsFV0r3xYZx
- x2KIYxwPfQY7kX5HUWnSxkRqzVlHACxXA5eKHyLko9quDLP4qskPhFN8JnxoftVIVukJiTG1Ax/
- mzklRAGTzZQroYSr8gfoDHlm8vVKLCSkxib151519VMMWCwhN78mfCu1gL7f8zSNiltywXmhg2c
- RXOHATHYlgwHSwQ==
+ bh=GETmOiGo2L/g6lLcuBRxR9mY/ci64uyDlTFcOWNAjy0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiGpZoIq2GxbaAKdZbxvMWapR4YLDEC5N0ZX
+ xyDgWtpVamJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3ohgAKCRDa6OEJdZac
+ 5YHMD/9AnjS+wCbYmvbrrKYh04k+LlykQJYI7k2MtvZg8vFsUD7THMizAQWdOVKgJr9BwC0iTR0
+ +l5Bt8DK0HwWyfHiQ8+YYfCv0da5Hi3rKzPWNOgnDStNERawkDh3GxNuyBq+MhiQPIni8syT4VE
+ VSqqGIcx2q/eN/NSBqsnOlnXq/jz513Le7D2Pz2GC5hwDUFHQ9NshOBv4i2BMAFf2DOKtJsybAc
+ SmbW+eqf96ASq1AC9xgwpK2ME0yOsoty0HtfQxMqXlhpzVlNsJhWVLnrNIUNVkkehOXPD3qtEYM
+ BDmLRu8PE01ano6NeNYIpVi5Wa/emUbtKqcjLleP9Chw5j7HpoCPd5cbg+veyMs7fbCbtJ9djjW
+ oJYsPZ3Paj2ww9xCJteQMp/F1HJ91UIgPifRkqTIqVbG6pWZDJhHJpmdvSOHAlqU9ymF59CGTWf
+ yc/TkrJVUey6IESAeVoBYv+eZysQwkEfo59i3QtMXDdZ5Q4Zov6xGvnVi3oW1ReKWrcGQw737gD
+ ld076uFEv01fzpzEzPBS/fS8JAd76WWf9/la8tdcI8vLbzO/OdOWRLW+wntqp9Ti+S/XteSwGiE
+ ipzJTUFGBoRUXMvmDXKlsOPl5FUJnrk3Z8es+8m0uxN4R8jtvmtZ5e7H8GyX8BsMzbba/7pMmcR
+ sth3MiqXkjgeTbw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,244 +110,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an x-qemu-io QMP command that runs qemu-io commands on block
-devices. The command accepts a device name (block backend name,
-node-name, or qdev ID) and a qemu-io command string.
+Replace monitor_printf() error reporting with the standard **errp
+pattern. Drop the Monitor *mon parameter and return bool to indicate
+success, improving the function usage from non-HMP contexts. Update the
+KVM MCE injection path and hmp_mce() accordingly.
 
-Refactor hmp_qemu_io() to be a thin wrapper around the new QMP
-command, following the standard HMP-over-QMP pattern used by other
-block commands.
+Notes:
+ - we may want to print the error in KVM path too
 
-This change is also required for the qtest qemu-io command in the
-following patch.
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- block/monitor/block-hmp-cmds.c | 60 ++------------------------------
- block/monitor/meson.build      |  1 +
- block/monitor/qmp-cmds.c       | 79 ++++++++++++++++++++++++++++++++++++++++++
- qapi/block.json                | 34 ++++++++++++++++++
- 4 files changed, 117 insertions(+), 57 deletions(-)
+ target/i386/cpu.h     |  4 ++--
+ target/i386/helper.c  | 49 ++++++++++++++++++++++++++++---------------------
+ target/i386/kvm/kvm.c |  4 ++--
+ target/i386/monitor.c |  6 ++++--
+ 4 files changed, 36 insertions(+), 27 deletions(-)
 
-diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
-index 9930620a4a16..22fa03089ea3 100644
---- a/block/monitor/block-hmp-cmds.c
-+++ b/block/monitor/block-hmp-cmds.c
-@@ -56,7 +56,6 @@
- #include "block/qapi.h"
- #include "block/block_int.h"
- #include "block/block-hmp-cmds.h"
--#include "qemu-io.h"
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 641f3ee5c2fd..dc5047cfb25a 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2859,9 +2859,9 @@ void do_cpu_init(X86CPU *cpu);
+ #define MCE_INJECT_BROADCAST    1
+ #define MCE_INJECT_UNCOND_AO    2
  
- static void hmp_drive_add_node(Monitor *mon, const char *optstr)
- {
-@@ -541,67 +540,14 @@ void hmp_eject(Monitor *mon, const QDict *qdict)
+-void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
++bool cpu_x86_inject_mce(X86CPU *cpu, int bank,
+                         uint64_t status, uint64_t mcg_status, uint64_t addr,
+-                        uint64_t misc, int flags);
++                        uint64_t misc, int flags, Error **errp);
  
- void hmp_qemu_io(Monitor *mon, const QDict *qdict)
- {
--    BlockBackend *blk = NULL;
--    BlockDriverState *bs = NULL;
--    BlockBackend *local_blk = NULL;
-     bool qdev = qdict_get_try_bool(qdict, "qdev", false);
-     const char *device = qdict_get_str(qdict, "device");
-     const char *command = qdict_get_str(qdict, "command");
-     Error *err = NULL;
--    int ret;
+ uint32_t cpu_cc_compute_all(CPUX86State *env1);
  
--    if (qdev) {
--        blk = blk_by_qdev_id(device, &err);
--        if (!blk) {
--            goto fail;
--        }
--    } else {
--        blk = blk_by_name(device);
--        if (!blk) {
--            bs = bdrv_lookup_bs(NULL, device, &err);
--            if (!bs) {
--                goto fail;
--            }
--        }
--    }
--
--    if (bs) {
--        blk = local_blk = blk_new(bdrv_get_aio_context(bs), 0, BLK_PERM_ALL);
--        ret = blk_insert_bs(blk, bs, &err);
--        if (ret < 0) {
--            goto fail;
--        }
--    }
--
--    /*
--     * Notably absent: Proper permission management. This is sad, but it seems
--     * almost impossible to achieve without changing the semantics and thereby
--     * limiting the use cases of the qemu-io HMP command.
--     *
--     * In an ideal world we would unconditionally create a new BlockBackend for
--     * qemuio_command(), but we have commands like 'reopen' and want them to
--     * take effect on the exact BlockBackend whose name the user passed instead
--     * of just on a temporary copy of it.
--     *
--     * Another problem is that deleting the temporary BlockBackend involves
--     * draining all requests on it first, but some qemu-iotests cases want to
--     * issue multiple aio_read/write requests and expect them to complete in
--     * the background while the monitor has already returned.
--     *
--     * This is also what prevents us from saving the original permissions and
--     * restoring them later: We can't revoke permissions until all requests
--     * have completed, and we don't know when that is nor can we really let
--     * anything else run before we have revoken them to avoid race conditions.
--     *
--     * What happens now is that command() in qemu-io-cmds.c can extend the
--     * permissions if necessary for the qemu-io command. And they simply stay
--     * extended, possibly resulting in a read-only guest device keeping write
--     * permissions. Ugly, but it appears to be the lesser evil.
--     */
--    qemuio_command(blk, command, &err);
--
--fail:
--    blk_unref(local_blk);
-+    qmp_x_qemu_io(qdev ? NULL : device,
-+                  qdev ? device : NULL,
-+                  command, &err);
-     hmp_handle_error(mon, err);
+diff --git a/target/i386/helper.c b/target/i386/helper.c
+index 683621416213..4133b5f244c6 100644
+--- a/target/i386/helper.c
++++ b/target/i386/helper.c
+@@ -18,6 +18,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qapi/error.h"
+ #include "qapi/qapi-events-run-state.h"
+ #include "cpu.h"
+ #include "exec/cputlb.h"
+@@ -27,7 +28,6 @@
+ #ifndef CONFIG_USER_ONLY
+ #include "system/hw_accel.h"
+ #include "system/memory.h"
+-#include "monitor/monitor.h"
+ #include "kvm/kvm_i386.h"
+ #endif
+ #include "qemu/log.h"
+@@ -381,7 +381,7 @@ out:
  }
  
-diff --git a/block/monitor/meson.build b/block/monitor/meson.build
-index 1022516e93c5..74faced9e17f 100644
---- a/block/monitor/meson.build
-+++ b/block/monitor/meson.build
-@@ -1,2 +1,3 @@
- system_ss.add(files('block-hmp-cmds.c'))
- block_ss.add(files('bitmap-qmp-cmds.c'))
-+system_ss.add(files('qmp-cmds.c'))
-diff --git a/block/monitor/qmp-cmds.c b/block/monitor/qmp-cmds.c
-new file mode 100644
-index 000000000000..e5759d824f13
---- /dev/null
-+++ b/block/monitor/qmp-cmds.c
-@@ -0,0 +1,79 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#include "qemu/osdep.h"
-+
-+#include "system/block-backend.h"
-+#include "block/block_int.h"
-+#include "qapi/qapi-commands-block.h"
-+#include "qapi/error.h"
-+#include "qemu-io.h"
-+
-+void qmp_x_qemu_io(const char *device, const char *qdev,
-+                   const char *command, Error **errp)
-+{
-+    BlockBackend *blk = NULL;
-+    BlockBackend *local_blk = NULL;
-+    BlockDriverState *bs = NULL;
-+    int ret;
-+
-+    if (!device && !qdev) {
-+        error_setg(errp, "Must specify either device or qdev");
-+        return;
+ typedef struct MCEInjectionParams {
+-    Monitor *mon;
++    Error **errp;
+     int bank;
+     uint64_t status;
+     uint64_t mcg_status;
+@@ -428,9 +428,9 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
+          * reporting is disabled
+          */
+         if ((cenv->mcg_cap & MCG_CTL_P) && cenv->mcg_ctl != ~(uint64_t)0) {
+-            monitor_printf(params->mon,
+-                           "CPU %d: Uncorrected error reporting disabled\n",
+-                           cs->cpu_index);
++            error_setg(params->errp,
++                "CPU %d: Uncorrected error reporting disabled",
++                cs->cpu_index);
+             return;
+         }
+ 
+@@ -439,10 +439,9 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
+          * reporting is disabled for the bank
+          */
+         if (banks[0] != ~(uint64_t)0) {
+-            monitor_printf(params->mon,
+-                           "CPU %d: Uncorrected error reporting disabled for"
+-                           " bank %d\n",
+-                           cs->cpu_index, params->bank);
++            error_setg(params->errp,
++                "CPU %d: Uncorrected error reporting disabled for bank %d",
++                cs->cpu_index, params->bank);
+             return;
+         }
+ 
+@@ -459,7 +458,7 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
+         if (need_reset) {
+             emit_guest_memory_failure(MEMORY_FAILURE_ACTION_RESET, ar,
+                                       recursive);
+-            monitor_printf(params->mon, "%s", msg);
++            error_setg(params->errp, "%s", msg);
+             qemu_log_mask(CPU_LOG_RESET, "%s\n", msg);
+             qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+             return;
+@@ -488,14 +487,15 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
+     emit_guest_memory_failure(MEMORY_FAILURE_ACTION_INJECT, ar, recursive);
+ }
+ 
+-void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
++bool cpu_x86_inject_mce(X86CPU *cpu, int bank,
+                         uint64_t status, uint64_t mcg_status, uint64_t addr,
+-                        uint64_t misc, int flags)
++                        uint64_t misc, int flags, Error **errp)
+ {
++    ERRP_GUARD();
+     CPUState *cs = CPU(cpu);
+     CPUX86State *cenv = &cpu->env;
+     MCEInjectionParams params = {
+-        .mon = mon,
++        .errp = errp,
+         .bank = bank,
+         .status = status,
+         .mcg_status = mcg_status,
+@@ -506,24 +506,27 @@ void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
+     unsigned bank_num = cenv->mcg_cap & 0xff;
+ 
+     if (!cenv->mcg_cap) {
+-        monitor_printf(mon, "MCE injection not supported\n");
+-        return;
++        error_setg(errp, "MCE injection not supported");
++        return false;
+     }
+     if (bank >= bank_num) {
+-        monitor_printf(mon, "Invalid MCE bank number\n");
+-        return;
++        error_setg(errp, "Invalid MCE bank number");
++        return false;
+     }
+     if (!(status & MCI_STATUS_VAL)) {
+-        monitor_printf(mon, "Invalid MCE status code\n");
+-        return;
++        error_setg(errp, "Invalid MCE status code");
++        return false;
+     }
+     if ((flags & MCE_INJECT_BROADCAST)
+         && !cpu_x86_support_mca_broadcast(cenv)) {
+-        monitor_printf(mon, "Guest CPU does not support MCA broadcast\n");
+-        return;
++        error_setg(errp, "Guest CPU does not support MCA broadcast");
++        return false;
+     }
+ 
+     run_on_cpu(cs, do_inject_x86_mce, RUN_ON_CPU_HOST_PTR(&params));
++    if (*errp) {
++        return false;
 +    }
-+    if (qdev && device) {
-+        error_setg(errp, "Cannot specify both qdev and device");
-+        return;
-+    }
-+
-+    if (qdev) {
-+        blk = blk_by_qdev_id(qdev, errp);
-+        if (!blk) {
-+            return;
-+        }
-+    } else {
-+        blk = blk_by_name(device);
-+        if (!blk) {
-+            bs = bdrv_lookup_bs(NULL, device, errp);
-+            if (!bs) {
-+                return;
+     if (flags & MCE_INJECT_BROADCAST) {
+         CPUState *other_cs;
+ 
+@@ -537,8 +540,12 @@ void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
+                 continue;
+             }
+             run_on_cpu(other_cs, do_inject_x86_mce, RUN_ON_CPU_HOST_PTR(&params));
++            if (*errp) {
++                return false;
 +            }
-+        }
-+    }
-+
-+    if (bs) {
-+        blk = local_blk = blk_new(bdrv_get_aio_context(bs), 0, BLK_PERM_ALL);
-+        ret = blk_insert_bs(blk, bs, errp);
-+        if (ret < 0) {
-+            goto fail;
-+        }
-+    }
-+
-+    /*
-+     * Notably absent: Proper permission management. This is sad, but it seems
-+     * almost impossible to achieve without changing the semantics and thereby
-+     * limiting the use cases of the qemu-io command.
-+     *
-+     * In an ideal world we would unconditionally create a new BlockBackend for
-+     * qemuio_command(), but we have commands like 'reopen' and want them to
-+     * take effect on the exact BlockBackend whose name the user passed instead
-+     * of just on a temporary copy of it.
-+     *
-+     * Another problem is that deleting the temporary BlockBackend involves
-+     * draining all requests on it first, but some qemu-iotests cases want to
-+     * issue multiple aio_read/write requests and expect them to complete in
-+     * the background while the monitor has already returned.
-+     *
-+     * This is also what prevents us from saving the original permissions and
-+     * restoring them later: We can't revoke permissions until all requests
-+     * have completed, and we don't know when that is nor can we really let
-+     * anything else run before we have revoken them to avoid race conditions.
-+     *
-+     * What happens now is that command() in qemu-io-cmds.c can extend the
-+     * permissions if necessary for the qemu-io command. And they simply stay
-+     * extended, possibly resulting in a read-only guest device keeping write
-+     * permissions. Ugly, but it appears to be the lesser evil.
-+     */
-+    qemuio_command(blk, command, errp);
-+
-+fail:
-+    blk_unref(local_blk);
-+}
-diff --git a/qapi/block.json b/qapi/block.json
-index 46955bbb3e34..012a9d73333b 100644
---- a/qapi/block.json
-+++ b/qapi/block.json
-@@ -603,3 +603,37 @@
-            '*boundaries-zap': ['uint64'],
-            '*boundaries-flush': ['uint64'] },
-   'allow-preconfig': true }
-+
-+##
-+# @x-qemu-io:
-+#
-+# Run a qemu-io command on a block device.  Take either a block
-+# backend name or a qdev ID to identify the device.
-+#
-+# @device: the block backend name, node-name to run the
-+#     command on.
-+#
-+# @qdev: the qdev ID of the block device to run the
-+#     command on.
-+#
-+# @command: the qemu-io command string to execute.
-+#
-+# Features:
-+#
-+# @unstable: This command is for testing only.
-+#
-+# Since: 11.2
-+#
-+# .. qmp-example::
-+#
-+#     -> { "execute": "x-qemu-io",
-+#          "arguments": { "device": "virtio0",
-+#                         "command": "read 0 512" } }
-+#     <- { "return": {} }
-+##
-+{ 'command': 'x-qemu-io',
-+  'data': { '*device': 'str',
-+            '*qdev': 'str',
-+            'command': 'str' },
-+  'features': [ 'unstable' ],
-+  'allow-preconfig': true }
+         }
+     }
++    return true;
+ }
+ 
+ static inline target_ulong get_memio_eip(CPUX86State *env)
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 644c45fb0a02..1eeadb99adac 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -748,8 +748,8 @@ static void kvm_mce_inject(X86CPU *cpu, hwaddr paddr, int code)
+         flags = 0;
+     }
+ 
+-    cpu_x86_inject_mce(NULL, cpu, 9, status, mcg_status, paddr,
+-                       (MCM_ADDR_PHYS << 6) | 0xc, flags);
++    cpu_x86_inject_mce(cpu, 9, status, mcg_status, paddr,
++                       (MCM_ADDR_PHYS << 6) | 0xc, flags, NULL);
+ }
+ 
+ static void emit_hypervisor_memory_failure(MemoryFailureAction action, bool ar)
+diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+index a536712c755a..785a13dd7107 100644
+--- a/target/i386/monitor.c
++++ b/target/i386/monitor.c
+@@ -580,6 +580,7 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
+     uint64_t addr = qdict_get_int(qdict, "addr");
+     uint64_t misc = qdict_get_int(qdict, "misc");
+     int flags = MCE_INJECT_UNCOND_AO;
++    Error *err = NULL;
+ 
+     if (qdict_get_try_bool(qdict, "broadcast", false)) {
+         flags |= MCE_INJECT_BROADCAST;
+@@ -587,7 +588,8 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
+     cs = qemu_get_cpu(cpu_index);
+     if (cs != NULL) {
+         cpu = X86_CPU(cs);
+-        cpu_x86_inject_mce(mon, cpu, bank, status, mcg_status, addr, misc,
+-                           flags);
++        cpu_x86_inject_mce(cpu, bank, status, mcg_status, addr, misc,
++                           flags, &err);
++        hmp_handle_error(mon, err);
+     }
+ }
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
