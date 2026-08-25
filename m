@@ -4,79 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03C37C5DF9C
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 05:17:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 198E7C5DF9C
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 05:26:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyjVq-00034j-Ib; Tue, 25 Aug 2026 01:15:54 -0400
+	id 1wyjfo-0002dv-3w; Tue, 25 Aug 2026 01:26:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyjVn-0002vr-0Z
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 01:15:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
+ id 1wyjfl-0002dT-VT; Tue, 25 Aug 2026 01:26:09 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyjVl-000587-9w
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 01:15:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787634948;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=A16i+Q089qOF+B9+OwHpvzilqiyRJD+CauoNwEsH7SU=;
- b=eRio4Y4K2s7n6PdDOIY++111ZJlUJRuiF2PCIzZycv3Pi2K417JxfWydLEWqxSmssRbuI5
- mnnR77u0ugt0bQeQEeO4btzTgiP64zD1OPzy45yTYbbh/vxl5G1je6edsQ+iyqXMkULkQU
- MnLhboXMmElj2JK42nO4vmNvhMci6j4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-519-5mlAsEmBPtGJoF_pyfS_gw-1; Tue,
- 25 Aug 2026 01:15:43 -0400
-X-MC-Unique: 5mlAsEmBPtGJoF_pyfS_gw-1
-X-Mimecast-MFC-AGG-ID: 5mlAsEmBPtGJoF_pyfS_gw_1787634942
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F37A81955DC5; Tue, 25 Aug 2026 05:15:41 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.56])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 863251955F76; Tue, 25 Aug 2026 05:15:37 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Warner Losh <imp@bsdimp.com>, Kohei Tokunaga <ktokunaga.mail@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Reinoud Zandijk <reinoud@netbsd.org>, Kyle Evans <kevans@freebsd.org>,
- Michael Roth <michael.roth@amd.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH v2 12/16] python: remove distutils workarounds
-Date: Tue, 25 Aug 2026 01:14:37 -0400
-Message-ID: <20260825051441.1562454-13-jsnow@redhat.com>
-In-Reply-To: <20260825051441.1562454-1-jsnow@redhat.com>
-References: <20260825051441.1562454-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
+ id 1wyjfk-0003jC-7T; Tue, 25 Aug 2026 01:26:09 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67P2VeBc3730138; Tue, 25 Aug 2026 05:25:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=sG/5sQ
+ TtY/jslxxD32W1LKnRO8sCq7kWnY2kpZf0ilk=; b=mJdUyeZyuCwKtixzm28ow7
+ 6N9F/DD/D0wJIdK1QspijHBwsLQGFgIMUC/XBa7psj1YTMidhAViVNdp9XJt1PmC
+ Vx2zqzEYsO59t1uY5AAyfOhMVcSOciZYW+MFLD+KPY/tmCe8osmPZnH96Ar+/Zam
+ 0lZKqDQwb0lTQQWj5OO0pxiB5s2zJRm9V8W0Xc0LyCkbMvOiUtDkawibXNHCJ8c+
+ NhNyaaW9tfQyRpodaCAoYdX8plQygXjKql8SkaN+knbHIz+PeC6Kkt9tFnNtqXBw
+ /pQ0irzfsvbnJfid76qzzWvemxNorEF9ukRpxxlFNoNgeLIAxsYXC4BBc+tRRFOQ
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g7393x4ad-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 25 Aug 2026 05:25:56 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67P5BWIO025209;
+ Tue, 25 Aug 2026 05:25:55 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3jtbyg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 25 Aug 2026 05:25:55 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67P5Ppog48693688
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 25 Aug 2026 05:25:51 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0B06420043;
+ Tue, 25 Aug 2026 05:25:51 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9CA5B20040;
+ Tue, 25 Aug 2026 05:25:49 +0000 (GMT)
+Received: from [9.43.98.150] (unknown [9.43.98.150])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 25 Aug 2026 05:25:49 +0000 (GMT)
+Message-ID: <a45db1dd-fef3-4ca3-aa07-953cce6193ed@linux.ibm.com>
+Date: Tue, 25 Aug 2026 10:55:48 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ppc/xive: Trigger the pending interrupt for a guest after
+ migration
+To: Gautam Menghani <gautam@linux.ibm.com>, milesg@linux.ibm.com, clg@kaod.org,
+ harshpb@linux.ibm.com
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+References: <20260824070353.40016-1-gautam@linux.ibm.com>
+Content-Language: en-US
+From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+In-Reply-To: <20260824070353.40016-1-gautam@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: yx3rI1SiwV1CbcF7EkB-RXhcNxVqlBSV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDA0MCBTYWx0ZWRfXzP8cqEKE8OB8
+ QsXVfYkB851BO2uXR4m2deY3l+hWRlfyAdAbgSP0/7jxFaRjcT/XZOpMlBQgLFfiMnEdObJ8IlJ
+ SybWRVqIzu/snRNwXiGzBghAeYIsDsNMMBuCR+vvBf8ssUNSQT651VhZOWmLrOlRxJVqNJU7Irr
+ u7Nz/nK3GkzGaIXDC/0kNenk1Pb7Hu2a+TzBx1G5qQssEfOuNsHPg4LxRLD6HCpZI+jUkG4LKpg
+ ORQ5zteZqAI7ykCFpTH8QAP0vdgsyVaIrz+CHdNXu/cU0u3BPLkHSD6DwPbBYHiix3e7RRwKDo9
+ cHhdzUD26NZqnYv+MUpQmTQAFNOKb6Sfe0qaTXK+63+SLhL8sVNnor3vArVo+VNvuPGXK58+GOL
+ pTqleCHzhhtQR/76vEuhZhE+/DCDtOgbyaHLILpKx6i+Q2V9Pzxc1sg+bjBEkRTOXyZleqKVL4I
+ QgmOEUym3QaS//LSd6Q==
+X-Authority-Analysis: v=2.4 cv=Y/nIdBeN c=1 sm=1 tr=0 ts=6a8d2764 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=QvyuWRs2yhtwxm2qb2oA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDA0MCBTYWx0ZWRfX0aPO7UlaznVi
+ /8yxsDIt9tbga43k0ozlk1SMGVFiR4+xitNAw8nXz75g2Bh1Pbb+1CGaCkvUyQyQZPqhj/iJZrE
+ w3/xqpRV9i7TDDz3IqF6qKi3693bCs8=
+X-Proofpoint-ORIG-GUID: yx3rI1SiwV1CbcF7EkB-RXhcNxVqlBSV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-25_01,2026-08-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ suspectscore=0 malwarescore=0 clxscore=1011 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608250040
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=nikhilks@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,51 +124,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are no longer necessary now that we are using Python3.12+.
 
-Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- python/tests/linters.py | 11 -----------
- 1 file changed, 11 deletions(-)
 
-diff --git a/python/tests/linters.py b/python/tests/linters.py
-index 82b88aebb20..dd89fb00ba8 100644
---- a/python/tests/linters.py
-+++ b/python/tests/linters.py
-@@ -83,23 +83,13 @@ def test_mypy_iotests(self):
-             cwd="../tests/qemu-iotests/",
-         )
- 
--    # Setuptools v60 introduced the SETUPTOOLS_USE_DISTUTILS=stdlib
--    # workaround; stdlib distutils was fully removed in Python
--    # 3.12+. Once we are on >=3.12+ exclusively, this workaround can be
--    # dropped safely. Until then, it is needed for some versions on
--    # Fedora/Debian distributions which relied upon distro-patched
--    # setuptools present in CPython, but not within setuptools itself.
--
-     def test_pylint_pkg(self):
--        os.environ["SETUPTOOLS_USE_DISTUTILS"] = "stdlib"
-         check_call([sys.executable, "-m", "pylint", "qemu/"])
- 
-     def test_pylint_scripts(self):
--        os.environ["SETUPTOOLS_USE_DISTUTILS"] = "stdlib"
-         check_call([sys.executable, "-m", "pylint", "scripts/"])
- 
-     def test_pylint_qapi(self):
--        os.environ["SETUPTOOLS_USE_DISTUTILS"] = "stdlib"
-         check_call(
-             [
-                 sys.executable,
-@@ -113,7 +103,6 @@ def test_pylint_qapi(self):
-         )
- 
-     def test_pylint_iotests(self):
--        os.environ["SETUPTOOLS_USE_DISTUTILS"] = "stdlib"
-         check_call(
-             [sys.executable, "-m", "linters", "--pylint"],
-             cwd="../tests/qemu-iotests/",
--- 
-2.55.0
+On 24/08/26 12:33, Gautam Menghani wrote:
 
+
+Hi Gautam,
+
+I was going through the implementation and had a small doubt regarding 
+the scope of the fix for the TIMA rings. I can see that we are 
+explicitly reading and setting the PIPR for TM_QW1_OS:
+
+> +    } else {
+> +        uint8_t pipr = tctx->regs[TM_QW1_OS + TM_PIPR];
+> +        xive_tctx_pipr_set(tctx, TM_QW1_OS, pipr, 0);
+>       }
+
+I guess vmstate_xive_tctx_post_load is a shared device code, I was 
+wondering what happens in the case of the other rings? Should we also 
+force a re-evaluation for TM_QW3_HV_PHYS or TM_QW2_HV_POOL to avoid 
+similar lockups in those configurations? Or is this issue strictly 
+coming only in the OS ring in practical scenarios? Please let me know 
+your thoughts on this.
+
+Also, one minor suggestion. Since this logic is going inside the else 
+block of if (kvm_irqchip_in_kernel()), I feel it would be better if we 
+can add a line in the commit message mentioning that this specifically 
+fixes state restoration for environments relying on QEMU's emulated XIVE.
+
+Thanks
+~ Nikhil
 
