@@ -4,45 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 732BDC5DF94
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:04:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2978C61DB6
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:04:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyn5B-0007wq-5D; Tue, 25 Aug 2026 05:04:38 -0400
+	id 1wyn5B-0007wr-5C; Tue, 25 Aug 2026 05:04:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn56-0007mz-1T; Tue, 25 Aug 2026 05:04:32 -0400
+ id 1wyn58-0007qt-00; Tue, 25 Aug 2026 05:04:34 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn54-0003HJ-B8; Tue, 25 Aug 2026 05:04:31 -0400
+ id 1wyn56-0003Ho-8h; Tue, 25 Aug 2026 05:04:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787648560; bh=biAV56ve57YlxnGfu0OGzR9HG3B72Jrhk90Xe0aFt98=;
+ t=1787648560; bh=j6cbDxzaFstVh5z54P8+sUHoYnvvnaED/o6cjwnZ0dA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tV0VqtSLea4d2Mccnn2IVBSjEMRgcKEYfeWFm22nXBVzGg1//n6rvbnAqcRL8/vtn
- LZ4PnI3RTZJ4mFJKlDCvYey6TbXucrHpj8+AvA2PHdgBvV1nJcNGnQGPuHnHbWqkiA
- CS8KfTI02e+/W7+EUQTniBYr+ibqVZ2uKmUlK/wLUBNVDUdPUB2frX6WHM+eYKRCnV
- c/ORnKm28N0coMhsCHGcrvQfG8a98Opt/gWln5/1PTRIr+EVn4ryzCeDYbhWWr/0Ab
- s6UbFuMjV1YNU7vb1e8xTPzQJNvxGGMH3NG4fYBN+hgA7nEyWI9s70Otg8TrLrLK+b
- RUNQEEoUPIxJA==
+ b=m91OrL3vv0VJBqS9ZgMCQOZDhdgpDvcwxZ/szlTfmmuyCmBc6gsu0DBNDoMLne6gd
+ J9gN8USvnWjA9L7wkQgoq7A2/LAAWPC/pw1pDopgzdx5n2zB860TIkS7xTAPbBv9ho
+ QRPEHWF+j6XQlFrk47tkAIYUeIEwkri99ULN2kVI7IfG9CKk38M4/sMb5T2xL1/OiK
+ DWvQ4gFI942ZK2pmmvkzVPno8q7z7b8wI5w0PEIJgNhuk8+TIHvO8aZkZIzQ9U4+d5
+ k3c7v9vnqcoIKtbci96AcOksInzQIcg9X4+M0ymqHk7JmwyJENqdZjPyHbW+rEx8M6
+ kyrjp35Yvlemw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 833061CE3BC;
+ by isrv.corpit.ru (Postfix) with ESMTP id 889921CE3BD;
  Tue, 25 Aug 2026 12:02:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6F07D41617E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 74D8341617F;
  Tue, 25 Aug 2026 12:03:17 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id DA8D632561; Tue, 25 Aug 2026 12:02:39 +0300 (MSK)
+ id DDE7832563; Tue, 25 Aug 2026 12:02:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v3 178/196] tests/tcg/aarch64: Add regression test for
- whilewr/whilerw
-Date: Tue, 25 Aug 2026 12:01:35 +0300
-Message-ID: <20260825090157.471948-17-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Chinmay Rath <rathc@linux.ibm.com>,
+ Amit Machhiwal <amachhiw@linux.ibm.com>,
+ huntr bubble <bubblehuntr@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v3 179/196] hw/watchdog: Add lower bound check for
+ watchdogNumber
+Date: Tue, 25 Aug 2026 12:01:36 +0300
+Message-ID: <20260825090157.471948-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
@@ -71,65 +74,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Chinmay Rath <rathc@linux.ibm.com>
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260811191540.79882-4-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 32953700108cc3305f27b591d66b5fb73806266a)
+Add missing lower bound check for H_WATCHDOG H_CALL's watchdogNumber parameter
+as per PAPR documentation ver 12.10.00 section 14.15.5 'H_WATCHDOG'.
+
+Closes : https://gitlab.com/qemu-project/qemu/-/work_items/3600
+
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reported-by: huntr bubble <bubblehuntr@gmail.com>
+Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260818104551.76023-1-rathc@linux.ibm.com
+[harshpb: corrected title prefix to hw/watchdog]
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+(cherry picked from commit eea4de1bd8e8bdaa9a69b130a1a154f7c113979f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
-index 9fa86874534..23e5fad5255 100644
---- a/tests/tcg/aarch64/Makefile.target
-+++ b/tests/tcg/aarch64/Makefile.target
-@@ -191,8 +191,9 @@ endif
- endif
+diff --git a/hw/watchdog/spapr_watchdog.c b/hw/watchdog/spapr_watchdog.c
+index 5b3f50de3a1..5a72896066e 100644
+--- a/hw/watchdog/spapr_watchdog.c
++++ b/hw/watchdog/spapr_watchdog.c
+@@ -127,6 +127,12 @@ static void watchdog_expired(void *pw)
+     }
+ }
  
- ifneq ($(CROSS_CC_HAS_SVE2),)
--AARCH64_TESTS += test-826
--test-826: CFLAGS += $(CROSS_CC_HAS_SVE2)
-+SVE2_TESTS = test-826 sve-while-ptr
-+$(SVE2_TESTS): CFLAGS += $(CROSS_CC_HAS_SVE2)
-+AARCH64_TESTS += $(SVE2_TESTS)
- endif
- 
- TESTS += $(AARCH64_TESTS)
-diff --git a/tests/tcg/aarch64/sve-while-ptr.c b/tests/tcg/aarch64/sve-while-ptr.c
-new file mode 100644
-index 00000000000..7db3b9cc035
---- /dev/null
-+++ b/tests/tcg/aarch64/sve-while-ptr.c
-@@ -0,0 +1,28 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* WHILEWR / WHILERW regression test */
-+
-+#include <sys/prctl.h>
-+#include <assert.h>
-+
-+int main(int argc, char **argv)
++static inline bool watchdog_number_valid(target_ulong watchdogNumber,
++                                        SpaprMachineState *spapr)
 +{
-+    unsigned short p;
-+    int set_vl_ret;
-+
-+    set_vl_ret = prctl(PR_SVE_SET_VL, 16, 0, 0, 0, 0);
-+    assert(set_vl_ret == 16);
-+
-+    p = 0xdead;
-+    asm("whilewr p0.s, %0, %1\n\t"
-+        "str p0, [%2]"
-+        : : "r"(8), "r"(11), "r"(&p) : "memory", "p0");
-+    assert(p == 0x1111);
-+
-+    p = 0xdead;
-+    asm("whilerw p0.s, %0, %1\n\t"
-+        "str p0, [%2]"
-+        : : "r"(8), "r"(11), "r"(&p) : "memory", "p0");
-+    assert(p == 0x1111);
-+
-+    return 0;
++    return watchdogNumber >= 1 && watchdogNumber <= ARRAY_SIZE(spapr->wds);
 +}
++
+ static target_ulong h_watchdog(PowerPCCPU *cpu,
+                                SpaprMachineState *spapr,
+                                target_ulong opcode, target_ulong *args)
+@@ -145,7 +151,7 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
+ 
+     switch (operation) {
+     case PSERIES_WDTF_OP_START:
+-        if (watchdogNumber > ARRAY_SIZE(spapr->wds)) {
++        if (!watchdog_number_valid(watchdogNumber, spapr)) {
+             return H_P2;
+         }
+         if (timeoutInMs <= WDT_MIN_TIMEOUT) {
+@@ -170,11 +176,11 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
+     case PSERIES_WDTF_OP_STOP:
+         if (watchdogNumber == PSERIES_WDT_STOP_ALL) {
+             ret = watchdog_stop_all(spapr);
+-        } else if (watchdogNumber <= ARRAY_SIZE(spapr->wds)) {
++        } else if (!watchdog_number_valid(watchdogNumber, spapr)) {
++            return H_P2;
++        } else {
+             ret = watchdog_stop(watchdogNumber,
+                                 &spapr->wds[watchdogNumber - 1]);
+-        } else {
+-            return H_P2;
+         }
+         break;
+     case PSERIES_WDTF_OP_QUERY:
+@@ -184,7 +190,7 @@ static target_ulong h_watchdog(PowerPCCPU *cpu,
+         trace_spapr_watchdog_query(args[0]);
+         break;
+     case PSERIES_WDTF_OP_QUERY_LPM:
+-        if (watchdogNumber > ARRAY_SIZE(spapr->wds)) {
++        if (!watchdog_number_valid(watchdogNumber, spapr)) {
+             return H_P2;
+         }
+         args[0] = PSERIES_WDTQL_QUERY_NOT_STOPPED;
 -- 
 2.47.3
 
