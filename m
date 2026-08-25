@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA110C61DBE
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:29:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BE02C61DBD
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:29:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wypLR-0002i2-AM; Tue, 25 Aug 2026 07:29:33 -0400
+	id 1wypLc-0003aF-Nl; Tue, 25 Aug 2026 07:29:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wypLN-0002QJ-H9
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 07:29:29 -0400
+ id 1wypLa-0003O8-2x
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 07:29:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wypLK-0005uj-4L
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 07:29:29 -0400
+ id 1wypLY-0005z8-3F
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 07:29:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787657365;
+ s=mimecast20190719; t=1787657378;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Tu9OjoAkb2kL7TySR/SgHNC8iaedkUFQv6ynJ1J+Cdk=;
- b=JLPvvpEdf79i+hbPKHGKjAfk0f03nG+7bKCjVIfwOdWCQApHbafM0Uppv3rB1zVamI1YyY
- y2iJF7GOWuQJjoml06ejmt/J0FXmOAGE6X2ax+TE8p9KzY4aYfq/UlCfl6z2kl66JU1AAI
- DZHUh4+jYh+MbaolLjwhLj3PgXTN6hY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=oOk/KZYABzKCZ+HHiMbNwb6PBXiMxNyrwHUaJrOc6Kw=;
+ b=ZpMSRr1PEwbCjeoJX6n/EFEyLTAzVVQ/Q9ZXgP45ytzQ9shH+T17ZjuEv/t26qBBjowYw3
+ kLiEW2HlN7hC9Uc3hKrHFryq+jhviY2pnWeQ82RTvJicwVxDxs4UKU85g/mvhAM2V1v3yn
+ 7RxyMLJFX7C3wVZLKTrV1YoaOktYdRs=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-177-O43WpaxHNgGOqq8T7VKjQQ-1; Tue,
- 25 Aug 2026 07:29:22 -0400
-X-MC-Unique: O43WpaxHNgGOqq8T7VKjQQ-1
-X-Mimecast-MFC-AGG-ID: O43WpaxHNgGOqq8T7VKjQQ_1787657361
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-wo1DuEWxPnCBE7t8j11rJQ-1; Tue,
+ 25 Aug 2026 07:29:34 -0400
+X-MC-Unique: wo1DuEWxPnCBE7t8j11rJQ-1
+X-Mimecast-MFC-AGG-ID: wo1DuEWxPnCBE7t8j11rJQ_1787657372
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B9F5187E5E4; Tue, 25 Aug 2026 11:29:21 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 866FD19792DE; Tue, 25 Aug 2026 11:29:32 +0000 (UTC)
 Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DCE781800641; Tue, 25 Aug 2026 11:29:19 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E0C001955F08; Tue, 25 Aug 2026 11:29:23 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 25 Aug 2026 15:20:57 +0400
-Subject: [GIT PULL 07/19] tests: tag slow tests with 'slow' suite for easy
- filtering
+Date: Tue, 25 Aug 2026 15:20:58 +0400
+Subject: [GIT PULL 08/19] ui/egl: fix render node cleanup order
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260825-fixes-v1-7-c59e8a620836@redhat.com>
+Message-Id: <20260825-fixes-v1-8-c59e8a620836@redhat.com>
 References: <20260825-fixes-v1-0-c59e8a620836@redhat.com>
 In-Reply-To: <20260825-fixes-v1-0-c59e8a620836@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1888;
+Cc: richard.henderson@linaro.org, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1493;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=QITPpiOZP5Uk5r6XkgWAklMllT4ehRNGnPcCX1K6Y3c=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjXrUN/nnqX13yoFYWrmQ1nCuOdAHLmuhkO6tx
- DBdbOOuzHyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao161AAKCRDa6OEJdZac
- 5VQCEACrSMBzGAm7EQYa5+sG7oX2/lVVLRT7C95m/OMXxELyM+jzSC6qF5h2mFV8sli9D+I8Hw7
- Po60Kv1bRf9gFmwFZl8KGzi1pxaa30mJOy3HGLmvrbZsQVw/euN2CvMUGMv5JbFVFfZtrj9N6xL
- wLWelqMPL8/gR2NRseGQEdXPCeS6lsUcoYgh4E96jre5bfSOir/hqJfnMYbGFe/WeLw139wUxre
- C7PYoiOKUKexFxoMYWOiA2mhtM1N0C/uUY3pTb2UnAWwErA35UrLDKERJdgnbJcRxHY4T7rwAfN
- YwSRCd9qqZcxAk2solBclaT4Oj/NTg34fkP+VRvOHrudHUNhu0Z1If88zHV2jKic36iqHVGHcjK
- KyrVPawr25GEEltcs6pEP9M0PLVQ2fn6aJNvDBvzFGnb4usI9weoN4EeBFAmcs7IU3fXcBnKGNl
- ksMMs6fkujPmbLpIsworjnRiL2ijzr4fSnR6QAFaqycggRcDm4n22yzFbi9DD4RR2PXmNenyPRo
- 64h30O7XbNIjV9PRcnEn4bP3mPPDOQHyyylJTMEvGWZDaRwruFaypGh/OoosBmdP926J4T4gODH
- 3OsDEZIlEz+Id4TZYzS64GTDkln3qWFCqRhKg7Nh5zY02qhVP2frlh9oB3+z4vcPoIqQD0ATN+D
- bpBVJVuwfpcEMPQ==
+ bh=4w7SX6jkh0t+zhJZWxe2pm3jQpJmCi5mIca5QpNB5q8=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjXrUa51mp18IThW76t11PsgeHgNWyitu3geYR
+ 8Vcwvf/uoOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao161AAKCRDa6OEJdZac
+ 5RLkD/sElXLsaaVgi+8yq+QeU5IIHsnFo3A49aOBX/gTq7LjqRpyDyYFPtLA+mmcKmfyLX0KEWf
+ 91vtN5N9FR8O61aPN6iQIKJ+v1zEYV6iBYIptT6MgP28nvYNls99tMbwqjM7ppciTYYtutoKokw
+ UfGvYPMytG4vRu0SVPw1K6d6vWBhOzEejU3F59qE+xUTwNecB/YxX3WUai+jcB//jkczxEbCEpV
+ C1YCk7Uh5NHhZ8Q+A0hBySediQ6+uRQEUS1M+uzo55jOAMmNC1Vc292TuzAgS4plJMqq616z+5S
+ Es6DTOSBdi9VNBHnDbC8GMeDpjP9cUIK+CpfEl2mLUvyI+cdwlq2soDvCY4FupcxQc0AQkVrK+k
+ fB0LEN/IfEdld2NUpswiFybHypaDJZ0zKG7mh8lyT6683zqENsQlvTvs0e5bxOODv9tpSsUE+we
+ HKBafK+Brujkn2eK0Ms6T6iQI+KPgW0xVYI3uzN7OOi6uSFi7l5gS5mBP16kW681yDwWQR8gGv7
+ JVoJZnMa9dKH3Nbb/5CuQb434rrYYWy33JbTlhndNBz3IsErOkzS2TcRDYuYiIstn/cTz8DvElG
+ zIAGs1rVWRYjUjZwXthetTqD/mF+K9G/d5LbM+0jccw2ZVrn6U0+hYVc/Q4vjwX0VfI366fjiR2
+ wkpJ9ZxhMbYQHaQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,56 +103,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add several RCU and thread-pool unit tests to the slow_tests dict,
-and tag all slow tests (both qtest and unit) with a 'slow' suite so
-they can be excluded or selected via meson test --suite/--no-suite.
+ASAN detected some memory leaks when terminating. Release thread-bound
+EGL state first, destroy the context and terminate the display while the
+GBM device is still alive, then destroy GBM and close the render-node
+fd.
 
-Acked-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Fixes: a3cf9b55bbdc ("ui/egl: implement display and EGL cleanup")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260512065633.3542562-1-marcandre.lureau@redhat.com>
+Message-ID: <20260820132014.2729748-1-marcandre.lureau@redhat.com>
 ---
- tests/qtest/meson.build | 3 ++-
- tests/unit/meson.build  | 9 ++++++++-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ ui/egl-helpers.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 739df71d8d0b..cbdef5a54550 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -510,6 +510,7 @@ foreach dir : target_dirs
-          protocol: 'tap',
-          timeout: slow_qtests.get(test, 60),
-          priority: slow_qtests.get(test, 60),
--         suite: ['qtest', 'qtest-' + target_base])
-+         suite: ['qtest', 'qtest-' + target_base] +
-+                (slow_qtests.has_key(test) ? ['slow'] : []))
-   endforeach
- endforeach
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index dc3fb954c03a..3a9866c1f2be 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -184,6 +184,12 @@ slow_tests = {
-   'test-crypto-tlscredsx509': 90,
-   'test-crypto-tlssession': 90,
-   'test-replication': 60,
-+  'rcutorture': 30,
-+  'test-rcu-list': 30,
-+  'test-rcu-simpleq': 30,
-+  'test-rcu-tailq': 30,
-+  'test-rcu-slist': 30,
-+  'test-thread-pool': 30,
- }
+diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
+index d689f187c4e5..e89cc7c49af6 100644
+--- a/ui/egl-helpers.c
++++ b/ui/egl-helpers.c
+@@ -736,19 +736,22 @@ bool egl_init(const char *rendernode, DisplayGLMode mode, Error **errp)
  
- foreach test_name, extra: tests
-@@ -205,5 +211,6 @@ foreach test_name, extra: tests
-        protocol: 'tap',
-        timeout: slow_tests.get(test_name, 30),
-        priority: slow_tests.get(test_name, 30),
--       suite: ['unit'])
-+       suite: ['unit'] +
-+              (slow_tests.has_key(test_name) ? ['slow'] : []))
- endforeach
+ void egl_cleanup(void)
+ {
++    if (qemu_egl_display) {
++        eglReleaseThread();
++    }
++
+     if (qemu_egl_rn_ctx) {
+         eglDestroyContext(qemu_egl_display, qemu_egl_rn_ctx);
+         qemu_egl_rn_ctx = NULL;
+     }
+ 
++    if (qemu_egl_display) {
++        eglTerminate(qemu_egl_display);
++        qemu_egl_display = NULL;
++    }
++
+ #ifdef CONFIG_GBM
+     g_clear_pointer(&qemu_egl_rn_gbm_dev, gbm_device_destroy);
+     g_clear_fd(&qemu_egl_rn_fd, NULL);
+ #endif
+-
+-    if (qemu_egl_display) {
+-        eglReleaseThread();
+-        eglTerminate(qemu_egl_display);
+-        qemu_egl_display = NULL;
+-    }
+ }
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
