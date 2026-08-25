@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9828DC61DB9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63D85C61DBD
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:39:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyyqw-0005lo-C7; Tue, 25 Aug 2026 17:38:42 -0400
+	id 1wyyr9-0005tC-Ky; Tue, 25 Aug 2026 17:38:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyqt-0005k7-LF
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:39 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ id 1wyyr7-0005s6-6w
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:53 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyqq-0004za-VH
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:39 -0400
+ id 1wyyr5-00055Q-LQ
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:52 -0400
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:39a2:0:640:ae2d:0])
- by forwardcorp1a.mail.yandex.net (postfix) with ESMTPS id D7A20C0962;
- Wed, 26 Aug 2026 00:38:34 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id B872B80DC3;
+ Wed, 26 Aug 2026 00:38:49 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:630::1:39])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id QckKa93ZVmI0-m8ix9V4V; Wed, 26 Aug 2026 00:38:34 +0300
+ id QckKa93ZVmI0-9pKViNX4; Wed, 26 Aug 2026 00:38:49 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1787693914;
- bh=t0e2I1m920XciUnl8p+3NgqDLRnZSJTAzO03yTxRpb8=;
+ s=default; t=1787693929;
+ bh=eV9tuSWhOA7Hhsja1+94VnoCGQnJ4gnI785K//EcWfo=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=z7rWjslp+H/o4XiXuoaWZsz9AKYtPaeQ4Y9HNeZuQxGRT2C+V7UhSfcyj5S3+p9OA
- AYWFXu2cfY26wxlaMvvvq4kk+E+lmnJdWncS7Obz2MHnCRUC3TT0NKutWwAFsA7tnd
- Qnp4D5VEyweQmdVLJih2wSlX3sV9Nndxc60rQT/0=
+ b=l0ItoXpeF8YzsuIoQWXePS+Hj1n8iuFsZLgg1PZAQUvC1pyFxVxzyzW5B0X8KZoOB
+ WUia61VAiJGio+cJp+503Hl1nIJj+zAZtEF3lnbFWmJ5AwW3ofjUAABkhs34aQbWvq
+ NWsBD9G5JiEfAdohZ4jG8Dbn5/B9I1EgDj0lNNCM=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: peterx@redhat.com
 Cc: farosas@suse.de, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 05/30] hw/virtio: make virtio_save() and virtio_load() static
-Date: Wed, 26 Aug 2026 00:37:45 +0300
-Message-ID: <20260825213811.3725682-6-vsementsov@yandex-team.ru>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH 19/30] alpha/machine: move to new migration APIs
+Date: Wed, 26 Aug 2026 00:37:59 +0300
+Message-ID: <20260825213811.3725682-20-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
 References: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -73,69 +74,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These functions are used only in virtio.c, no reason to make
-them public.
-
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/virtio/virtio.c         | 7 +++++--
- include/hw/virtio/virtio.h | 4 ----
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ target/alpha/machine.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 0f7c8acead0..a9338af6d00 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -62,6 +62,9 @@
-  */
- #define VIRTIO_PCI_VRING_ALIGN         4096
+diff --git a/target/alpha/machine.c b/target/alpha/machine.c
+index dcba5d441be..a3f67dd7b81 100644
+--- a/target/alpha/machine.c
++++ b/target/alpha/machine.c
+@@ -3,26 +3,27 @@
+ #include "migration/qemu-file-types.h"
+ #include "migration/vmstate.h"
  
-+static int coroutine_mixed_fn
-+virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id);
-+
- typedef struct VRingDesc
+-static int get_fpcr(QEMUFile *f, void *opaque, size_t size,
+-                    const VMStateField *field)
++static bool load_fpcr(QEMUFile *f, void *opaque, size_t size,
++                     const VMStateField *field, Error **errp)
  {
-     uint64_t addr;
-@@ -3067,7 +3070,7 @@ static const VMStateDescription vmstate_virtio = {
-     }
- };
- 
--int virtio_save(VirtIODevice *vdev, QEMUFile *f)
-+static int virtio_save(VirtIODevice *vdev, QEMUFile *f)
- {
-     BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
-     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
-@@ -3510,7 +3513,7 @@ size_t virtio_get_config_size(const VirtIOConfigSizeParams *params,
-     return config_size;
+     CPUAlphaState *env = opaque;
+     cpu_alpha_store_fpcr(env, qemu_get_be64(f));
+-    return 0;
++    return true;
  }
  
--int coroutine_mixed_fn
-+static int coroutine_mixed_fn
- virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
+-static int put_fpcr(QEMUFile *f, void *opaque, size_t size,
+-                    const VMStateField *field, JSONWriter *vmdesc)
++static bool save_fpcr(QEMUFile *f, void *opaque, size_t size,
++                     const VMStateField *field, JSONWriter *vmdesc,
++                     Error **errp)
  {
-     int i, ret;
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index c99cb19d886..9628ae3bcb8 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -338,8 +338,6 @@ int virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
+     CPUAlphaState *env = opaque;
+     qemu_put_be64(f, cpu_alpha_load_fpcr(env));
+-    return 0;
++    return true;
+ }
  
- void virtio_notify(VirtIODevice *vdev, VirtQueue *vq);
+ static const VMStateInfo vmstate_fpcr = {
+     .name = "fpcr",
+-    .get = get_fpcr,
+-    .put = put_fpcr,
++    .load = load_fpcr,
++    .save = save_fpcr,
+ };
  
--int virtio_save(VirtIODevice *vdev, QEMUFile *f);
--
- /**
-  * virtio_new_shmem_region() - Create a new shared memory region
-  * @vdev: VirtIODevice
-@@ -443,8 +441,6 @@ extern const VMStateInfo virtio_vmstate_info;
-         .flags = VMS_SINGLE,                  \
-     }
- 
--int virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id);
--
- /**
-  * virtio_notify_config() - signal a change to device config
-  * @vdev: the virtio device
+ static const VMStateField vmstate_env_fields[] = {
 -- 
 2.43.0
 
