@@ -4,111 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 198E7C5DF9C
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 05:26:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A873C5DF94
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 05:54:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyjfo-0002dv-3w; Tue, 25 Aug 2026 01:26:12 -0400
+	id 1wyk5z-0006Mp-D8; Tue, 25 Aug 2026 01:53:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1wyjfl-0002dT-VT; Tue, 25 Aug 2026 01:26:09 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikhilks@linux.ibm.com>)
- id 1wyjfk-0003jC-7T; Tue, 25 Aug 2026 01:26:09 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67P2VeBc3730138; Tue, 25 Aug 2026 05:25:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=sG/5sQ
- TtY/jslxxD32W1LKnRO8sCq7kWnY2kpZf0ilk=; b=mJdUyeZyuCwKtixzm28ow7
- 6N9F/DD/D0wJIdK1QspijHBwsLQGFgIMUC/XBa7psj1YTMidhAViVNdp9XJt1PmC
- Vx2zqzEYsO59t1uY5AAyfOhMVcSOciZYW+MFLD+KPY/tmCe8osmPZnH96Ar+/Zam
- 0lZKqDQwb0lTQQWj5OO0pxiB5s2zJRm9V8W0Xc0LyCkbMvOiUtDkawibXNHCJ8c+
- NhNyaaW9tfQyRpodaCAoYdX8plQygXjKql8SkaN+knbHIz+PeC6Kkt9tFnNtqXBw
- /pQ0irzfsvbnJfid76qzzWvemxNorEF9ukRpxxlFNoNgeLIAxsYXC4BBc+tRRFOQ
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g7393x4ad-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 25 Aug 2026 05:25:56 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67P5BWIO025209;
- Tue, 25 Aug 2026 05:25:55 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3jtbyg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 25 Aug 2026 05:25:55 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67P5Ppog48693688
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 25 Aug 2026 05:25:51 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0B06420043;
- Tue, 25 Aug 2026 05:25:51 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9CA5B20040;
- Tue, 25 Aug 2026 05:25:49 +0000 (GMT)
-Received: from [9.43.98.150] (unknown [9.43.98.150])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 25 Aug 2026 05:25:49 +0000 (GMT)
-Message-ID: <a45db1dd-fef3-4ca3-aa07-953cce6193ed@linux.ibm.com>
-Date: Tue, 25 Aug 2026 10:55:48 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ppc/xive: Trigger the pending interrupt for a guest after
- migration
-To: Gautam Menghani <gautam@linux.ibm.com>, milesg@linux.ibm.com, clg@kaod.org,
- harshpb@linux.ibm.com
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-References: <20260824070353.40016-1-gautam@linux.ibm.com>
-Content-Language: en-US
-From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-In-Reply-To: <20260824070353.40016-1-gautam@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: yx3rI1SiwV1CbcF7EkB-RXhcNxVqlBSV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDA0MCBTYWx0ZWRfXzP8cqEKE8OB8
- QsXVfYkB851BO2uXR4m2deY3l+hWRlfyAdAbgSP0/7jxFaRjcT/XZOpMlBQgLFfiMnEdObJ8IlJ
- SybWRVqIzu/snRNwXiGzBghAeYIsDsNMMBuCR+vvBf8ssUNSQT651VhZOWmLrOlRxJVqNJU7Irr
- u7Nz/nK3GkzGaIXDC/0kNenk1Pb7Hu2a+TzBx1G5qQssEfOuNsHPg4LxRLD6HCpZI+jUkG4LKpg
- ORQ5zteZqAI7ykCFpTH8QAP0vdgsyVaIrz+CHdNXu/cU0u3BPLkHSD6DwPbBYHiix3e7RRwKDo9
- cHhdzUD26NZqnYv+MUpQmTQAFNOKb6Sfe0qaTXK+63+SLhL8sVNnor3vArVo+VNvuPGXK58+GOL
- pTqleCHzhhtQR/76vEuhZhE+/DCDtOgbyaHLILpKx6i+Q2V9Pzxc1sg+bjBEkRTOXyZleqKVL4I
- QgmOEUym3QaS//LSd6Q==
-X-Authority-Analysis: v=2.4 cv=Y/nIdBeN c=1 sm=1 tr=0 ts=6a8d2764 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=QvyuWRs2yhtwxm2qb2oA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDA0MCBTYWx0ZWRfX0aPO7UlaznVi
- /8yxsDIt9tbga43k0ozlk1SMGVFiR4+xitNAw8nXz75g2Bh1Pbb+1CGaCkvUyQyQZPqhj/iJZrE
- w3/xqpRV9i7TDDz3IqF6qKi3693bCs8=
-X-Proofpoint-ORIG-GUID: yx3rI1SiwV1CbcF7EkB-RXhcNxVqlBSV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-25_01,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- suspectscore=0 malwarescore=0 clxscore=1011 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608250040
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=nikhilks@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
+ id 1wyk5x-0006M3-5p
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 01:53:13 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
+ id 1wyk5v-0007sR-EM
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 01:53:12 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-38dfe910e9dso4967954a91.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Aug 2026 22:53:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1787637190; x=1788241990; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=XA7uT6LLB/NE/DOxlm4rlbbKclcgW0r6Edjk3dfnqzA=;
+ b=oPx6BhFYj7sZMT7ukzLlaCoVAY5MF5d9VeHFQUcN7rVsfuPED61yZHtdctdjsDu2Yq
+ NrGPiYuulweBCYeS0Je+CWbffrQmyGTfROdtfjOG5qKpe40DDrXFSZmM2ye+Oq6jWtX3
+ KPySZrrrzyWP8bm79YlqHdsbcEQRDQNYwegiLjhiSS0TuTJYFdBgFjDwgvHXKOJUJSZg
+ 1mUi5heTlqAWxmIDJSV4FJQx8Jgg8+dSh8+gKGExcMo+W3othTndUAxNatfSpaytyif6
+ vUQGw3NzSqknNEqhSdofCct8vaW2ZdxoU+2XKRih+6tD638jq8iI99Fg5+i2gAks/mpm
+ 8H7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787637190; x=1788241990;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:content-type:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=XA7uT6LLB/NE/DOxlm4rlbbKclcgW0r6Edjk3dfnqzA=;
+ b=tQvXuUk39sFLl5kxOc/n1yt7BE3WQThCtbxaJ3Dnxo5KnLQ7yVkjwclDNSt7RTlT95
+ 94D2nYfu//Ja0raW49juxyaINXe7gw1Qr4GvN0au2zIdnS+RHRUTFOmweKCYi6OC2mzq
+ lrMHsP4aZ2A/2h/8+xPOTh1x6GtLGtfzYgIt3sUN5lIPh0YjluitFdryn+3kNaPdQBGh
+ D/XNkYw/Lx4rk5Mq1VsnAT63Veg8MNr13OllV0spHSVgJ2u7MmNm2GWdtTLPXdIpeqAj
+ 4vNEdFNMDOuqUf72RaMzROu5e8KumkK3KwtGv/7vQ6qjMvRTulGYyiaFbrtMT46B+tj0
+ Y3Cg==
+X-Gm-Message-State: AFuF++m1UOaYcnWHtuZukXQG3c42ELfxBjUYlbcc5S3ApkW817rZ9pft
+ Sw4a5nHPmrRhuq4NzwYTXJ4qRNYROZqkf6NU7cSSPclyb4t0wvbm0cmx
+X-Gm-Gg: AR+sD10IUDMQU8Cpv2DqlNL1C4Du/VepCHi2o8/tylq461FQTSzjbcpwMaOUEvOmEce
+ c1DbTY/5V8x0NHDE+kgN+DEEwQ43WhvkAg0NxdygMSVCy536/1bo+sEoyCFKJbG059BvHOxNRJi
+ v7Rj7xy/DghAdVZAbQm0sPzFELBPAe44+vqj3e+YtIeNfjo7LhQ/+ww6OzWJwI3fJ3bdaZ/5fNL
+ 8z0T6ceEkO0ObOtthN/UxHt/+ERMTierhO8jUsCOKwSJdq51LVkUyqsBYYLoLMnM35CeHO/JKGs
+ 8Bm7VVBgUGCd4qU0V5vm5lhhx5oLSgp3C9gpPnjVfhVG0vMP1NQ2/IK2cGWcxZISnft4ak5A08L
+ d7UnseC7JTolSNQJxgNpSe6VuZc3BRKt3T0iihXwQZMPMAuCkYrk4kBi1kkZKAqa5mhCPDvt1wj
+ Ttw7HdpVRvt8vij5Eb1oWzijKDnrZY6Dl67KiWR+NsFxiKPfP2yU19TEQhbRbgL0dj+mrjuzt2h
+ IWWowc=
+X-Received: by 2002:a17:90b:1b43:b0:38e:9eb2:9d43 with SMTP id
+ 98e67ed59e1d1-395c357e8efmr54221579a91.16.1787637189675; 
+ Mon, 24 Aug 2026 22:53:09 -0700 (PDT)
+Received: from smtpclient.apple ([117.55.237.216])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-39645bbb87esm2453813a91.13.2026.08.24.22.53.07
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 24 Aug 2026 22:53:09 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
+Subject: Re: [PATCH v3 0/5] Add Axiado SoC AX3005 and EVB
+From: Jack Wang <163wangjack@gmail.com>
+In-Reply-To: <20260825021155.2475879-1-kchiu@axiado.com>
+Date: Tue, 25 Aug 2026 13:52:51 +0800
+Cc: qemu-devel@nongnu.org,
+ peter.maydell@linaro.org,
+ qemu-arm@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <812FA8DA-88ED-437E-B9A0-E3418F092DDF@gmail.com>
+References: <20260825021155.2475879-1-kchiu@axiado.com>
+To: kchiu@axiado.com
+X-Mailer: Apple Mail (2.3864.600.51.1.1)
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=163wangjack@gmail.com; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,33 +106,121 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+Hi Kuan-Jui,
 
-On 24/08/26 12:33, Gautam Menghani wrote:
+Cheers for the v3, that was a really quick update!
 
+The basic tests passed on my local machine, and I will look through each =
+patch carefully next. I'm not sure if I'm qualified enough to give =
+Reviewed-by or Tested-by tags yet. Anyway, if anything I do during the =
+review is inappropriate, please just let me know.
 
-Hi Gautam,
+I checked the https://axiado.com/products/ link you mentioned, but =
+didn't find the critical info I needed. I googled for the AX3005 =
+datasheet but not much useful infomation. AI tell me it's not =
+public.emmm.. If you could offer me some key hardware information for =
+the QEMU modeling, that would be much better.
 
-I was going through the implementation and had a small doubt regarding 
-the scope of the fix for the TIMA rings. I can see that we are 
-explicitly reading and setting the PIPR for TM_QW1_OS:
+Also, since you asked for my commands before, if I find any problems, I =
+will attach the exact commands I used in the email to help identify the =
+bug. I am testing on my Mac now, so please contact me if you have any =
+trouble reproducing the issues.
 
-> +    } else {
-> +        uint8_t pipr = tctx->regs[TM_QW1_OS + TM_PIPR];
-> +        xive_tctx_pipr_set(tctx, TM_QW1_OS, pipr, 0);
->       }
+Best regards, : )
 
-I guess vmstate_xive_tctx_post_load is a shared device code, I was 
-wondering what happens in the case of the other rings? Should we also 
-force a re-evaluation for TM_QW3_HV_PHYS or TM_QW2_HV_POOL to avoid 
-similar lockups in those configurations? Or is this issue strictly 
-coming only in the OS ring in practical scenarios? Please let me know 
-your thoughts on this.
+JW..
 
-Also, one minor suggestion. Since this logic is going inside the else 
-block of if (kvm_irqchip_in_kernel()), I feel it would be better if we 
-can add a line in the commit message mentioning that this specifically 
-fixes state restoration for environments relying on QEMU's emulated XIVE.
+> On Mon, 24 Aug 2026 19:11:50 -0700, Kuan-Jui Chiu <kchiu@axiado.com> =
+wrote:
+> This patchset introduces Axiado SoC AX3005 and evaluation board for =
+emulation
+> The model for Axiado SoC AX3005 supports
+>  4 Cortex-A53 CPUs
+>  Arm Generic Interrupt Controller v3
+>  9 Cadence UARTs
+>  1 SDHCI controller with PHY
+>  8 Cadence GPIOs
+>=20
+> Refer Axiado website for more product information
+> https://axiado.com/products/
+>=20
+> and minor changes for the compatibility with existing AX3000 SoC model
+>=20
+> Test plan:
+> 1. Verified the machine "ax3005-evb" with following command
+>=20
+> qemu-system-aarch64 \
+>    -m 2G \
+>    -machine ax3005-evb \
+>    -device loader,file=3Dbl31.bin,addr=3D0x88300000 \
+>    -device loader,file=3Dtee-raw.bin,addr=3D0x88400000 \
+>    -device loader,file=3Du-boot.bin,addr=3D0x80000000 \
+>    -device loader,file=3DfitImage,addr=3D0x80100000 \
+>    -device =
+loader,file=3Dobmc-phosphor-image-evk-ax3005-qemu.squashfs-xz,addr=3D0x80B=
+00000 \
+>    -device loader,cpu-num=3D0,addr=3D0x88300000 \
+>    -device loader,cpu-num=3D1,addr=3D0x88300000 \
+>    -device loader,cpu-num=3D2,addr=3D0x88300000 \
+>    -device loader,cpu-num=3D3,addr=3D0x88300000 \
+>    -nographic \
+>    -serial null \
+>    -serial null \
+>    -serial null \
+>    -serial mon:stdio \
+>    -drive =
+if=3Dsd,file=3Dobmc-phosphor-image-evk-ax3005-qemu.wic,format=3Draw
+>=20
+> 2. Run QEMU test suite
+> make check
+> Ok:                331
+> Fail:              0
+> Skipped:           17
+>=20
+> make check-functional
+> Ok:                28
+> Fail:              0
+> Skipped:           7
+>=20
+> Changes in v3:
+>  1. Remove patch "hw/arm/ax3000-soc: Add missing class_size to =
+TypeInfo"=20
+>     because it was fixed by commit 4f50d637e2
+>     ("hw/arm/ax3000-soc: fix heap overflow from missing class_size")
+>=20
+> Changes in v2:
+>  1. Add patch "hw/arm/ax3000-soc: Add missing class_size to TypeInfo"=20=
 
-Thanks
-~ Nikhil
+>     to fix incorrect class size
+>  2. Add missing class_size "Ax3005SoCClass" to ax3005_soc_types
+>=20
+> Kuan-Jui Chiu (5):
+>  hw/sd/axiado_sdhci: Add header guard
+>  hw/arm: Rename ax3000-boards as axiado-boards
+>  hw/arm/ax3000: Specify SoC name in header and variable
+>  hw/arm: Add Axiado SoC AX3005
+>  hw/arm: Add Axiado Ax3005 EVB
+>=20
+> MAINTAINERS                                   |   2 +
+> hw/arm/ax3000-boards.c                        |   4 +-
+> hw/arm/ax3000-evk.c                           |   4 +-
+> hw/arm/ax3000-soc.c                           |   4 +-
+> hw/arm/ax3005-evk.c                           |  55 +++++
+> hw/arm/ax3005-soc.c                           | 225 ++++++++++++++++++
+> hw/arm/meson.build                            |   6 +-
+> include/hw/arm/ax3005-soc.h                   | 102 ++++++++
+> .../arm/{ax3000-boards.h =3D> axiado-boards.h}  |  10 +
+> include/hw/sd/axiado_sdhci.h                  |   5 +
+> 10 files changed, 409 insertions(+), 8 deletions(-)
+> create mode 100644 hw/arm/ax3005-evk.c
+> create mode 100644 hw/arm/ax3005-soc.c
+> create mode 100644 include/hw/arm/ax3005-soc.h
+> rename include/hw/arm/{ax3000-boards.h =3D> axiado-boards.h} (69%)
+>=20
+> --=20
+> 2.34.1
+>=20
+>=20
+>=20
+>=20
 
