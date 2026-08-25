@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AEEAC5DF81
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 05:16:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B451C5DF94
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 05:16:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyjVK-0002XJ-Oz; Tue, 25 Aug 2026 01:15:22 -0400
+	id 1wyjW5-0004Hg-8y; Tue, 25 Aug 2026 01:16:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyjVJ-0002X9-Ux
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 01:15:21 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyjW4-0004Ed-6p
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 01:16:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyjVF-0004o7-Rt
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 01:15:21 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wyjW1-0005Aj-Ak
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 01:16:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787634917;
+ s=mimecast20190719; t=1787634964;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ivz++OmMM1nhNn0tp4M+8TZYaQWN0wgI9w3XyMs+w4E=;
- b=bm071jBapVoEWQa0SYQwdyxbKa/WnGkzHDqu3qzQsDfB5lty/BDoNRajqoSBTqezcbOZsG
- rU3UfD+qmSfeZhMTwmpeSqvMM6e9VB5g3iq7PgvUJAG4iUOxvjduXeSsq2y/d4j5JWtmxx
- lrmGh+xGzXntlfgMHn4HncNkHkc0xos=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=WthprBU32ZwGMxVB61Gj2oF+jlm5AvU51l/PZFOvhPc=;
+ b=WFYnenUNuH2jbDEgsk/9+E90KUtkg+kGPItg24mqPZ+1p4uPmf9hTNVkS66P4ss+gtN6GP
+ ZZCN+Wl/6eR/vSBAd1lEQERoArtyq0QyZEl1TRLYGBNNW2tqbrI6gO4mzznizc3j4RexJq
+ 1w2VSof1Ybp3H1woCFEJBAnE7YGQE8s=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-101-cCozYLLOOzK9-nEMoqBIMg-1; Tue,
- 25 Aug 2026 01:15:12 -0400
-X-MC-Unique: cCozYLLOOzK9-nEMoqBIMg-1
-X-Mimecast-MFC-AGG-ID: cCozYLLOOzK9-nEMoqBIMg_1787634911
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-621-A75E3ukpNF61zCJd001Zhw-1; Tue,
+ 25 Aug 2026 01:16:02 -0400
+X-MC-Unique: A75E3ukpNF61zCJd001Zhw-1
+X-Mimecast-MFC-AGG-ID: A75E3ukpNF61zCJd001Zhw_1787634959
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 42C96180AC7F; Tue, 25 Aug 2026 05:15:10 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 69D4918707BF; Tue, 25 Aug 2026 05:15:59 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.56])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A65921955F76; Tue, 25 Aug 2026 05:15:05 +0000 (UTC)
+ id 498FE1955F76; Tue, 25 Aug 2026 05:15:55 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>,
@@ -58,11 +58,11 @@ Cc: John Snow <jsnow@redhat.com>,
  Michael Roth <michael.roth@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 05/16] tests: re-add opencv2 and numpy dependencies
-Date: Tue, 25 Aug 2026 01:14:30 -0400
-Message-ID: <20260825051441.1562454-6-jsnow@redhat.com>
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH v2 16/16] sphinx: drop qapidoc back-compat overboiled
+ spaghetti dinner
+Date: Tue, 25 Aug 2026 01:14:41 -0400
+Message-ID: <20260825051441.1562454-17-jsnow@redhat.com>
 In-Reply-To: <20260825051441.1562454-1-jsnow@redhat.com>
 References: <20260825051441.1562454-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -93,346 +93,421 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fixes: 2a428c8541ec5e9be54aad5f0a446ec8172226c9
+Drop the disgusting amount of hacks required to keep qapidoc working
+on older Sphinx versions, enjoying the cutting edge technology of
+2023.
 
-Some of the dependencies identified as avocado dependencies were in
-fact still being used, and should be re-added to our lcitool
-configuration to ensure that these tests are being executed in the CI
-environment.
+This felt like an achievement to have written, and equally feels an
+achievement to have deleted.
+
+A note on the content_node parameter: Sphinx has been gradually
+implementing typing support and renaming parameters to be
+consistent. As a result of losing our intermediate compatibility shim,
+mypy and pylint now check directly against the Sphinx version. So,
+alongside removing compat gunk, we need to fix up some parameter
+naming for the Sphinx upgrade, too.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- tests/docker/dockerfiles/alpine.docker               |  1 +
- tests/docker/dockerfiles/centos9.docker              |  2 ++
- tests/docker/dockerfiles/debian-amd64-cross.docker   |  2 ++
- tests/docker/dockerfiles/debian-arm64-cross.docker   |  2 ++
- tests/docker/dockerfiles/debian-armhf-cross.docker   |  2 ++
- tests/docker/dockerfiles/debian-i686-cross.docker    |  2 ++
- tests/docker/dockerfiles/debian-ppc64el-cross.docker |  2 ++
- tests/docker/dockerfiles/debian-riscv64-cross.docker |  2 ++
- tests/docker/dockerfiles/debian-s390x-cross.docker   |  2 ++
- tests/docker/dockerfiles/debian.docker               |  2 ++
- tests/docker/dockerfiles/fedora-rust-nightly.docker  |  2 ++
- tests/docker/dockerfiles/fedora-win64-cross.docker   |  2 ++
- tests/docker/dockerfiles/fedora.docker               |  2 ++
- tests/docker/dockerfiles/opensuse-leap.docker        |  2 ++
- tests/docker/dockerfiles/ubuntu2404.docker           |  2 ++
- .gitlab-ci.d/macos-14.vars                           |  2 +-
- scripts/ci/setup/debian/debian-13-ppc64le.yaml       |  2 ++
- scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml     |  2 ++
- scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml       |  2 ++
- tests/lcitool/mappings.yml                           | 10 ++++++++++
- tests/lcitool/projects/qemu.yml                      |  2 ++
- tests/vm/generated/freebsd.json                      |  2 ++
- 22 files changed, 50 insertions(+), 1 deletion(-)
+ docs/sphinx/compat.py      | 230 -------------------------------------
+ docs/sphinx/qapi_domain.py |  53 +++++----
+ 2 files changed, 28 insertions(+), 255 deletions(-)
+ delete mode 100644 docs/sphinx/compat.py
 
-diff --git a/tests/docker/dockerfiles/alpine.docker b/tests/docker/dockerfiles/alpine.docker
-index 8a5a355e89a..7c342e801c5 100644
---- a/tests/docker/dockerfiles/alpine.docker
-+++ b/tests/docker/dockerfiles/alpine.docker
-@@ -83,6 +83,7 @@ RUN apk update && \
-         pixman-dev \
-         pkgconf \
-         pulseaudio-dev \
-+        py3-numpy \
-         py3-pip \
-         py3-setuptools \
-         py3-sphinx \
-diff --git a/tests/docker/dockerfiles/centos9.docker b/tests/docker/dockerfiles/centos9.docker
-index 8101370a2db..6f5c400c2db 100644
---- a/tests/docker/dockerfiles/centos9.docker
-+++ b/tests/docker/dockerfiles/centos9.docker
-@@ -130,6 +130,8 @@ RUN dnf --quiet distro-sync -y && \
-     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
+diff --git a/docs/sphinx/compat.py b/docs/sphinx/compat.py
+deleted file mode 100644
+index 9cf7fe006e4..00000000000
+--- a/docs/sphinx/compat.py
++++ /dev/null
+@@ -1,230 +0,0 @@
+-"""
+-Sphinx cross-version compatibility goop
+-"""
+-
+-import re
+-from typing import (
+-    TYPE_CHECKING,
+-    Any,
+-    Callable,
+-    Optional,
+-    Type,
+-)
+-
+-from docutils import nodes
+-from docutils.nodes import Element, Node, Text
+-from docutils.statemachine import StringList
+-
+-import sphinx
+-from sphinx import addnodes, util
+-from sphinx.directives import ObjectDescription
+-from sphinx.environment import BuildEnvironment
+-from sphinx.roles import XRefRole
+-from sphinx.util import docfields
+-from sphinx.util.docutils import (
+-    ReferenceRole,
+-    SphinxDirective,
+-    switch_source_input,
+-)
+-from sphinx.util.typing import TextlikeNode
+-
+-
+-MAKE_XREF_WORKAROUND = sphinx.version_info[:3] < (4, 1, 0)
+-
+-
+-SpaceNode: Callable[[str], Node]
+-KeywordNode: Callable[[str, str], Node]
+-
+-if sphinx.version_info[:3] >= (4, 0, 0):
+-    SpaceNode = addnodes.desc_sig_space
+-    KeywordNode = addnodes.desc_sig_keyword
+-else:
+-    SpaceNode = Text
+-    KeywordNode = addnodes.desc_annotation
+-
+-
+-def nested_parse_with_titles(
+-    directive: SphinxDirective, content_node: Element
+-) -> None:
+-    """
+-    This helper preserves error parsing context across sphinx versions.
+-    """
+-
+-    # necessary so that the child nodes get the right source/line set
+-    content_node.document = directive.state.document
+-
+-    try:
+-        # Modern sphinx (6.2.0+) supports proper offsetting for
+-        # nested parse error context management
+-        util.nodes.nested_parse_with_titles(
+-            directive.state,
+-            directive.content,
+-            content_node,
+-            content_offset=directive.content_offset,
+-        )
+-    except TypeError:
+-        # No content_offset argument. Fall back to SSI method.
+-        with switch_source_input(directive.state, directive.content):
+-            util.nodes.nested_parse_with_titles(
+-                directive.state, directive.content, content_node
+-            )
+-
+-
+-# ###########################################
+-# xref compatibility hacks for Sphinx < 4.1 #
+-# ###########################################
+-
+-# When we require >= Sphinx 4.1, the following function and the
+-# subsequent 3 compatibility classes can be removed. Anywhere in
+-# qapi_domain that uses one of these Compat* types can be switched to
+-# using the garden-variety lib-provided classes with no trickery.
+-
+-
+-def _compat_make_xref(  # pylint: disable=unused-argument
+-    self: sphinx.util.docfields.Field,
+-    rolename: str,
+-    domain: str,
+-    target: str,
+-    innernode: Type[TextlikeNode] = addnodes.literal_emphasis,
+-    contnode: Optional[Node] = None,
+-    env: Optional[BuildEnvironment] = None,
+-    inliner: Any = None,
+-    location: Any = None,
+-) -> Node:
+-    """
+-    Compatibility workaround for Sphinx versions prior to 4.1.0.
+-
+-    Older sphinx versions do not use the domain's XRefRole for parsing
+-    and formatting cross-references, so we need to perform this magick
+-    ourselves to avoid needing to write the parser/formatter in two
+-    separate places.
+-
+-    This workaround isn't brick-for-brick compatible with modern Sphinx
+-    versions, because we do not have access to the parent directive's
+-    state during this parsing like we do in more modern versions.
+-
+-    It's no worse than what pre-Sphinx 4.1.0 does, so... oh well!
+-    """
+-
+-    # Yes, this function is gross. Pre-4.1 support is a miracle.
+-    # pylint: disable=too-many-locals
+-
+-    assert env
+-    # Note: Sphinx's own code ignores the type warning here, too.
+-    if not rolename:
+-        return contnode or innernode(target, target)  # type: ignore[call-arg]
+-
+-    # Get the role instance, but don't *execute it* - we lack the
+-    # correct state to do so. Instead, we'll just use its public
+-    # methods to do our reference formatting, and emulate the rest.
+-    role = env.get_domain(domain).roles[rolename]
+-    assert isinstance(role, XRefRole)
+-
+-    # XRefRole features not supported by this compatibility shim;
+-    # these were not supported in Sphinx 3.x either, so nothing of
+-    # value is really lost.
+-    assert not target.startswith("!")
+-    assert not re.match(ReferenceRole.explicit_title_re, target)
+-    assert not role.lowercase
+-    assert not role.fix_parens
+-
+-    # Code below based mostly on sphinx.roles.XRefRole; run() and
+-    # create_xref_node()
+-    options = {
+-        "refdoc": env.docname,
+-        "refdomain": domain,
+-        "reftype": rolename,
+-        "refexplicit": False,
+-        "refwarn": role.warn_dangling,
+-    }
+-    refnode = role.nodeclass(target, **options)
+-    title, target = role.process_link(env, refnode, False, target, target)
+-    refnode["reftarget"] = target
+-    classes = ["xref", domain, f"{domain}-{rolename}"]
+-    refnode += role.innernodeclass(target, title, classes=classes)
+-
+-    # This is the very gross part of the hack. Normally,
+-    # result_nodes takes a document object to which we would pass
+-    # self.inliner.document. Prior to Sphinx 4.1, we don't *have* an
+-    # inliner to pass, so we have nothing to pass here. However, the
+-    # actual implementation of role.result_nodes in this case
+-    # doesn't actually use that argument, so this winds up being
+-    # ... fine. Rest easy at night knowing this code only runs under
+-    # old versions of Sphinx, so at least it won't change in the
+-    # future on us and lead to surprising new failures.
+-    # Gross, I know.
+-    result_nodes, _messages = role.result_nodes(
+-        None,  # type: ignore
+-        env,
+-        refnode,
+-        is_ref=True,
+-    )
+-    return nodes.inline(target, "", *result_nodes)
+-
+-
+-class CompatField(docfields.Field):
+-    if MAKE_XREF_WORKAROUND:
+-        make_xref = _compat_make_xref
+-
+-
+-class CompatGroupedField(docfields.GroupedField):
+-    if MAKE_XREF_WORKAROUND:
+-        make_xref = _compat_make_xref
+-
+-
+-class CompatTypedField(docfields.TypedField):
+-    if MAKE_XREF_WORKAROUND:
+-        make_xref = _compat_make_xref
+-
+-
+-# ################################################################
+-# Nested parsing error location fix for Sphinx 5.3.0 < x < 6.2.0 #
+-# ################################################################
+-
+-# When we require Sphinx 4.x, the TYPE_CHECKING hack where we avoid
+-# subscripting ObjectDescription at runtime can be removed in favor of
+-# just always subscripting the class.
+-
+-# When we require Sphinx > 6.2.0, the rest of this compatibility hack
+-# can be dropped and QAPIObject can just inherit directly from
+-# ObjectDescription[Signature].
+-
+-SOURCE_LOCATION_FIX = (5, 3, 0) <= sphinx.version_info[:3] < (6, 2, 0)
+-
+-Signature = str
+-
+-
+-if TYPE_CHECKING:
+-    _BaseClass = ObjectDescription[Signature]
+-else:
+-    _BaseClass = ObjectDescription
+-
+-
+-class ParserFix(_BaseClass):
+-
+-    _temp_content: StringList
+-    _temp_offset: int
+-    _temp_node: Optional[addnodes.desc_content]
+-
+-    def before_content(self) -> None:
+-        # Work around a sphinx bug and parse the content ourselves.
+-        self._temp_content = self.content
+-        self._temp_offset = self.content_offset
+-        self._temp_node = None
+-
+-        if SOURCE_LOCATION_FIX:
+-            self._temp_node = addnodes.desc_content()
+-            self.state.nested_parse(
+-                self.content, self.content_offset, self._temp_node
+-            )
+-            # Sphinx will try to parse the content block itself,
+-            # Give it nothingness to parse instead.
+-            self.content = StringList()
+-            self.content_offset = 0
+-
+-    def transform_content(self, content_node: addnodes.desc_content) -> None:
+-        # Sphinx workaround: Inject our parsed content and restore state.
+-        if self._temp_node:
+-            content_node += self._temp_node.children
+-            self.content = self._temp_content
+-            self.content_offset = self._temp_offset
+diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
+index f561dc465f8..159857113a4 100644
+--- a/docs/sphinx/qapi_domain.py
++++ b/docs/sphinx/qapi_domain.py
+@@ -30,20 +30,10 @@
+ )
+ from sphinx.locale import _, __
+ from sphinx.roles import XRefRole
+-from sphinx.util import logging
++from sphinx.util import docfields, logging
+ from sphinx.util.docutils import SphinxDirective
+ from sphinx.util.nodes import make_id, make_refnode
  
- RUN /usr/bin/pip3.11 install \
-+                     numpy \
-+                     opencv-python \
-                      sphinx \
-                      sphinx-rtd-theme
+-from compat import (
+-    CompatField,
+-    CompatGroupedField,
+-    CompatTypedField,
+-    KeywordNode,
+-    ParserFix,
+-    Signature,
+-    SpaceNode,
+-)
+-
  
-diff --git a/tests/docker/dockerfiles/debian-amd64-cross.docker b/tests/docker/dockerfiles/debian-amd64-cross.docker
-index 9e30457ca79..9b446a480b1 100644
---- a/tests/docker/dockerfiles/debian-amd64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-amd64-cross.docker
-@@ -41,6 +41,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/tests/docker/dockerfiles/debian-arm64-cross.docker b/tests/docker/dockerfiles/debian-arm64-cross.docker
-index b9b94e5e6fa..95c757edb7c 100644
---- a/tests/docker/dockerfiles/debian-arm64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-arm64-cross.docker
-@@ -41,6 +41,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/tests/docker/dockerfiles/debian-armhf-cross.docker b/tests/docker/dockerfiles/debian-armhf-cross.docker
-index aa412ff66f5..0c6287408ac 100644
---- a/tests/docker/dockerfiles/debian-armhf-cross.docker
-+++ b/tests/docker/dockerfiles/debian-armhf-cross.docker
-@@ -41,6 +41,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
-index d07eac84fe8..99447e2e79b 100644
---- a/tests/docker/dockerfiles/debian-i686-cross.docker
-+++ b/tests/docker/dockerfiles/debian-i686-cross.docker
-@@ -41,6 +41,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/tests/docker/dockerfiles/debian-ppc64el-cross.docker b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-index 7302c8236e4..534c9b55836 100644
---- a/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
-@@ -41,6 +41,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/tests/docker/dockerfiles/debian-riscv64-cross.docker b/tests/docker/dockerfiles/debian-riscv64-cross.docker
-index aa5a881cab2..0df92c80c05 100644
---- a/tests/docker/dockerfiles/debian-riscv64-cross.docker
-+++ b/tests/docker/dockerfiles/debian-riscv64-cross.docker
-@@ -41,6 +41,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/tests/docker/dockerfiles/debian-s390x-cross.docker b/tests/docker/dockerfiles/debian-s390x-cross.docker
-index 82eae4fc2c2..12c94a40ec7 100644
---- a/tests/docker/dockerfiles/debian-s390x-cross.docker
-+++ b/tests/docker/dockerfiles/debian-s390x-cross.docker
-@@ -41,6 +41,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/tests/docker/dockerfiles/debian.docker b/tests/docker/dockerfiles/debian.docker
-index 3a4f208ccf6..d808c945f46 100644
---- a/tests/docker/dockerfiles/debian.docker
-+++ b/tests/docker/dockerfiles/debian.docker
-@@ -113,6 +113,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/tests/docker/dockerfiles/fedora-rust-nightly.docker b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-index 0f3dc370a4f..0f7b4c13388 100644
---- a/tests/docker/dockerfiles/fedora-rust-nightly.docker
-+++ b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-@@ -104,6 +104,8 @@ exec "$@"\n' > /usr/bin/nosync && \
-                        pkgconfig \
-                        pulseaudio-libs-devel \
-                        python3 \
-+                       python3-numpy \
-+                       python3-opencv \
-                        python3-pip \
-                        python3-setuptools \
-                        python3-sphinx \
-diff --git a/tests/docker/dockerfiles/fedora-win64-cross.docker b/tests/docker/dockerfiles/fedora-win64-cross.docker
-index 6f972f61738..3ed3e15df33 100644
---- a/tests/docker/dockerfiles/fedora-win64-cross.docker
-+++ b/tests/docker/dockerfiles/fedora-win64-cross.docker
-@@ -44,6 +44,8 @@ exec "$@"\n' > /usr/bin/nosync && \
-                        ninja-build \
-                        openssh-clients \
-                        python3 \
-+                       python3-numpy \
-+                       python3-opencv \
-                        python3-pip \
-                        python3-setuptools \
-                        python3-sphinx \
-diff --git a/tests/docker/dockerfiles/fedora.docker b/tests/docker/dockerfiles/fedora.docker
-index 99bb38a3665..8fa8bea1abf 100644
---- a/tests/docker/dockerfiles/fedora.docker
-+++ b/tests/docker/dockerfiles/fedora.docker
-@@ -104,6 +104,8 @@ exec "$@"\n' > /usr/bin/nosync && \
-                        pkgconfig \
-                        pulseaudio-libs-devel \
-                        python3 \
-+                       python3-numpy \
-+                       python3-opencv \
-                        python3-pip \
-                        python3-setuptools \
-                        python3-sphinx \
-diff --git a/tests/docker/dockerfiles/opensuse-leap.docker b/tests/docker/dockerfiles/opensuse-leap.docker
-index 8d8631bbcf0..3174c2e3cc2 100644
---- a/tests/docker/dockerfiles/opensuse-leap.docker
-+++ b/tests/docker/dockerfiles/opensuse-leap.docker
-@@ -95,6 +95,8 @@ RUN zypper update -y && \
-            pkgconfig \
-            python3-Sphinx \
-            python3-base \
-+           python3-numpy \
-+           python3-opencv \
-            python3-pip \
-            python3-setuptools \
-            python3-sphinx_rtd_theme \
-diff --git a/tests/docker/dockerfiles/ubuntu2404.docker b/tests/docker/dockerfiles/ubuntu2404.docker
-index a5c22231f98..0918622e53d 100644
---- a/tests/docker/dockerfiles/ubuntu2404.docker
-+++ b/tests/docker/dockerfiles/ubuntu2404.docker
-@@ -113,6 +113,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       openssh-client \
-                       pkgconf \
-                       python3 \
-+                      python3-numpy \
-+                      python3-opencv \
-                       python3-pip \
-                       python3-setuptools \
-                       python3-sphinx \
-diff --git a/.gitlab-ci.d/macos-14.vars b/.gitlab-ci.d/macos-14.vars
-index 0c187624dd0..f96e173f663 100644
---- a/.gitlab-ci.d/macos-14.vars
-+++ b/.gitlab-ci.d/macos-14.vars
-@@ -12,5 +12,5 @@ NINJA='/opt/homebrew/bin/ninja'
- PACKAGING_COMMAND='brew'
- PIP3='/opt/homebrew/bin/pip3'
- PKGS='bash bc bindgen bison bzip2 capstone ccache cmocka coreutils ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libcbor libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python-setuptools python3 rpm2cpio rust sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 vulkan-tools xorriso zlib zstd'
--PYPI_PKGS='sphinx sphinx-rtd-theme tomli'
-+PYPI_PKGS='numpy sphinx sphinx-rtd-theme tomli'
- PYTHON='/opt/homebrew/bin/python3'
-diff --git a/scripts/ci/setup/debian/debian-13-ppc64le.yaml b/scripts/ci/setup/debian/debian-13-ppc64le.yaml
-index 9acd99a7433..918deeb6ad7 100644
---- a/scripts/ci/setup/debian/debian-13-ppc64le.yaml
-+++ b/scripts/ci/setup/debian/debian-13-ppc64le.yaml
-@@ -105,6 +105,8 @@ packages:
-   - openssh-client
-   - pkgconf
-   - python3
-+  - python3-numpy
-+  - python3-opencv
-   - python3-pip
-   - python3-setuptools
-   - python3-sphinx
-diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml b/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
-index 5c948109df8..38da57519d6 100644
---- a/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
-+++ b/scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml
-@@ -106,6 +106,8 @@ packages:
-   - openssh-client
-   - pkgconf
-   - python3
-+  - python3-numpy
-+  - python3-opencv
-   - python3-pip
-   - python3-setuptools
-   - python3-sphinx
-diff --git a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml b/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
-index 010b7f86aab..bae71c1cbc6 100644
---- a/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
-+++ b/scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml
-@@ -104,6 +104,8 @@ packages:
-   - openssh-client
-   - pkgconf
-   - python3
-+  - python3-numpy
-+  - python3-opencv
-   - python3-pip
-   - python3-setuptools
-   - python3-sphinx
-diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
-index b576ded3edc..9bc87b4879f 100644
---- a/tests/lcitool/mappings.yml
-+++ b/tests/lcitool/mappings.yml
-@@ -22,6 +22,9 @@ mappings:
-     CentOSStream9:
-     FreeBSD: py312-sphinx_rtd_theme
+ if TYPE_CHECKING:
+     from typing import (
+@@ -157,7 +147,10 @@ def result_nodes(
+         return results, []
  
-+  python3-opencv:
-+    CentOSStream9:
+ 
+-class QAPIDescription(ParserFix):
++Signature = str
 +
-   python3-venv:
-     CentOSStream9: python3.11
- 
-@@ -30,6 +33,7 @@ mappings:
-     FreeBSD: py312-wheel
- 
-   python3-numpy:
-+    CentOSStream9:
-     FreeBSD: py312-numpy
- 
-   meson:
-@@ -60,3 +64,9 @@ pypi_mappings:
-     apk:
-     Fedora:
-     Debian12:
 +
-+  python3-numpy:
-+    CentOSStream9: numpy
-+
-+  python3-opencv:
-+    CentOSStream9: opencv-python
-diff --git a/tests/lcitool/projects/qemu.yml b/tests/lcitool/projects/qemu.yml
-index b3c99936723..abbd3e3f0b8 100644
---- a/tests/lcitool/projects/qemu.yml
-+++ b/tests/lcitool/projects/qemu.yml
-@@ -91,6 +91,8 @@ packages:
-  - pkg-config
-  - pulseaudio
-  - python3
-+ - python3-numpy
-+ - python3-opencv
-  - python3-pip
-  - python3-setuptools
-  - python3-sphinx
-diff --git a/tests/vm/generated/freebsd.json b/tests/vm/generated/freebsd.json
-index ee3402f0d2b..c35591b39d6 100644
---- a/tests/vm/generated/freebsd.json
-+++ b/tests/vm/generated/freebsd.json
-@@ -49,9 +49,11 @@
-     "ncurses",
-     "nettle",
-     "ninja",
-+    "opencv",
-     "pixman",
-     "pkgconf",
-     "png",
-+    "py312-numpy",
-     "py312-pip",
-     "py312-setuptools",
-     "py312-sphinx",
++class QAPIDescription(ObjectDescription[Signature]):
+     """
+     Generic QAPI description.
+ 
+@@ -315,7 +308,7 @@ class QAPIObject(QAPIDescription):
+ 
+     doc_field_types = [
+         # :feat name: descr
+-        CompatGroupedField(
++        docfields.GroupedField(
+             "feature",
+             label=_("Features"),
+             names=("feat",),
+@@ -327,8 +320,8 @@ def get_signature_prefix(self) -> List[nodes.Node]:
+         """Return a prefix to put before the object name in the signature."""
+         assert self.objtype
+         return [
+-            KeywordNode("", self.objtype.title()),
+-            SpaceNode(" "),
++            addnodes.desc_sig_keyword("", self.objtype.title()),
++            addnodes.desc_sig_space(" "),
+         ]
+ 
+     def get_signature_suffix(self) -> List[nodes.Node]:
+@@ -337,7 +330,7 @@ def get_signature_suffix(self) -> List[nodes.Node]:
+ 
+         if "since" in self.options:
+             ret += [
+-                SpaceNode(" "),
++                addnodes.desc_sig_space(" "),
+                 addnodes.desc_sig_element(
+                     "", f"(Since: {self.options['since']})"
+                 ),
+@@ -376,7 +369,7 @@ def handle_signature(self, sig: str, signode: desc_signature) -> Signature:
+ 
+         return sig
+ 
+-    def _add_infopips(self, contentnode: addnodes.desc_content) -> None:
++    def _add_infopips(self, content_node: addnodes.desc_content) -> None:
+         # Add various eye-catches and things that go below the signature
+         # bar, but precede the user-defined content.
+         infopips = nodes.container()
+@@ -420,7 +413,7 @@ def _add_pip(
+             )
+ 
+         if infopips.children:
+-            contentnode.insert(0, infopips)
++            content_node.insert(0, infopips)
+ 
+     def _validate_field(self, field: nodes.field) -> None:
+         """Validate field lists in this QAPI Object Description."""
+@@ -470,7 +463,17 @@ def _validate_field(self, field: nodes.field) -> None:
+             )
+             logger.warning(msg, location=field)
+ 
+-    def transform_content(self, content_node: addnodes.desc_content) -> None:
++    def transform_content(
++        self,
++        # Sphinx changed the name of the content_node parameter
++        # sometime after Sphinx 7.2.6, so no matter which name we
++        # choose, either our minimum tests or our bleeding edge tests
++        # will complain about the parameter rename. Use the eventual
++        # name and silence the error for our minreq tests.
++        #
++        # pylint: disable=arguments-renamed
++        content_node: addnodes.desc_content
++    ) -> None:
+         # This hook runs after before_content and the nested parse, but
+         # before the DocFieldTransformer is executed.
+         super().transform_content(content_node)
+@@ -485,7 +488,7 @@ def transform_content(self, content_node: addnodes.desc_content) -> None:
+                     self._validate_field(field)
+ 
+ 
+-class SpecialTypedField(CompatTypedField):
++class SpecialTypedField(docfields.TypedField):
+     def make_field(self, *args: Any, **kwargs: Any) -> nodes.field:
+         ret = super().make_field(*args, **kwargs)
+ 
+@@ -518,14 +521,14 @@ class QAPICommand(QAPIObject):
+                 can_collapse=False,
+             ),
+             # :error: descr
+-            CompatField(
++            docfields.Field(
+                 "error",
+                 label=_("Errors"),
+                 names=("error", "errors"),
+                 has_arg=False,
+             ),
+             # :return TypeName: descr
+-            CompatGroupedField(
++            docfields.GroupedField(
+                 "returnvalue",
+                 label=_("Return"),
+                 rolename="type",
+@@ -533,7 +536,7 @@ class QAPICommand(QAPIObject):
+                 can_collapse=True,
+             ),
+             # :return-nodesc: TypeName
+-            CompatField(
++            docfields.Field(
+                 "returnvalue",
+                 label=_("Return"),
+                 names=("return-nodesc",),
+@@ -551,7 +554,7 @@ class QAPIEnum(QAPIObject):
+     doc_field_types.extend(
+         [
+             # :value name: descr
+-            CompatGroupedField(
++            docfields.GroupedField(
+                 "value",
+                 label=_("Values"),
+                 names=("value",),
+@@ -568,7 +571,7 @@ class QAPIAlternate(QAPIObject):
+     doc_field_types.extend(
+         [
+             # :alt type name: descr
+-            CompatTypedField(
++            docfields.TypedField(
+                 "alternative",
+                 label=_("Alternatives"),
+                 names=("alt",),
 -- 
 2.55.0
 
