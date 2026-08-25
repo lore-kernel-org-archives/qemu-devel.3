@@ -4,188 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A574C61DBE
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 15:33:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6848CC61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 15:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyt9E-0005kg-3i; Tue, 25 Aug 2026 11:33:12 -0400
+	id 1wytB8-0006Fu-Gr; Tue, 25 Aug 2026 11:35:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wyt9B-0005kQ-K6
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 11:33:09 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wytB6-0006Dj-SJ
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 11:35:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wyt98-0002JQ-KM
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 11:33:09 -0400
-Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67PEbQLI537895; Tue, 25 Aug 2026 08:33:01 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=QdvRzRQkmKmMT0lFQZVPVMaADzrYSIp5wXA+dKPx7
- 3A=; b=iEpbejtdIp/vm66LdwOexarxN55B4fpNckkixvLQFTGKZcUNFSm+ZQLfQ
- JGwW55dDObSGbxvZekSgGJYHUSg6RSM8TZG7jGAWm5KMYr41jNfElp4jbG9NEKlL
- xxJ0mfXnTWP6rJyT7zjPxa0vucAO2vgNhoFX8QM9UiVVEmFoT+1jihMCizIOhyfp
- VQLltQ4qpiyFaoCS+50nh6vSuGb93l7x4InpsPdmMLI/Y4NNaazgi+GQFcRm1Lty
- dbhLrM/LAZjV5j0OPAwVr928varajU4fuxajyrx9SINWTSBc6/f7+XMgEpGwDHyR
- nHgK7/AEh/P4HokHnk3bd+5SNJR6g==
-Received: from sn4pr2101cu001.outbound.protection.outlook.com
- (mail-southcentralusazon11022094.outbound.protection.outlook.com
- [40.93.195.94])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4g97as12yb-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 25 Aug 2026 08:33:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=biKWBXuJTK/3IXp6xEee6Tsnqa1KESRvefFsExTiOzPwfHiUl3BAulX8VI1ZVlY9krwb5tbXGn6hmlK5o2HjJWsENLV/JGDJVzBqzi+Lhi1U+1F5y5sqKgpcx6MnrHDobcg1d+aSOqGROF8rWjx/venw+Y5Q+Ivgc0t8nUYcUGO8N5nMrj/MN5wL+/2ekMyBy/+Tc0QXTyGcnxMHdqK3l47aF/D+emMxsXYcoOb4mPOb+llHgEa/8N7a9wZc+m6jxAzpy2MrgCDSmIQeMN58jyMPD1IsVpEVJcLZBadGIZEo8bIC8lwCC/x5ulQ+Lzuf9GyLkdo/PZFNhophQpdExA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QdvRzRQkmKmMT0lFQZVPVMaADzrYSIp5wXA+dKPx73A=;
- b=k4y37pP6hV4GnQuWXdurjEIj/QlWP4J0sG+o/RlR8hoXHk8u1eYvtKOkCWsxW4d+k3RIYVwGdAHxAt9kqY15wWo8uVilFqDS9ioJeqyJAN0MhphxPyuSLCC9Fq1uxvZM/bUUxlhy1m//mwXC2egRg1HF44hG9WvFuJQb2OH93flAyf9RoF0cLzwH0vDQQCMlO5OfCA4P4SrFm2dwwZPGx1RQGbVPt9uwOv/252GPPYD04zXw9JAzbHIx+lbnoQDnVKJVh4M0vNWPocUsmFffoHKFb7XHkf+MPo1491r9Td7zVmTgTSOYX1AyTzye+BGxKO3bQoZOT2tzmFhGMoJ5vA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QdvRzRQkmKmMT0lFQZVPVMaADzrYSIp5wXA+dKPx73A=;
- b=RlwcGAVeYFOxEGaVmit8FV/EfnxcYjTIqNQAaaMEiNWLHfvIWdq2m0PRQiFN6+J7J3gsc/NwkAg+Z2JVDv98zRgedRl0+r0mBgxjYUEWq08T9E+JTI8KJe0XKGNcb67X8lHdJeTWAv8zmfnHFQrGre4iv9X3QnHTM5tdPwXYRHpl/b3fZ486JmZz7L+1ktPVHNlXk9VfvAZ9wtg0jDujeBtjjCxWg+TfnKd90wClZAsgkfgzT67FM/Z2/i76YKNjC2KW7DZBT8Q8zjnzARl5hQhvwPt1iQeEZvopaz9hA3Il0MByp5fA1WsoDV0wpxBQcM8xwS3O0AuroSufDYXLlA==
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by MWHPR02MB11818.namprd02.prod.outlook.com (2603:10b6:303:2a4::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.6; Tue, 25 Aug
- 2026 15:32:55 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0360.005; Tue, 25 Aug 2026
- 15:32:55 +0000
-Message-ID: <ff0c0539-c24f-4c5f-91bb-38168d62a36b@nutanix.com>
-Date: Tue, 25 Aug 2026 16:32:50 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/74] qom/qdev: associate properties with QAPI schema
- types
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-In-Reply-To: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SA0PR11CA0095.namprd11.prod.outlook.com
- (2603:10b6:806:d1::10) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wytB3-0002kG-Gj
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 11:35:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787672104;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ppgXbPiE+3Uv8DDxwDgRxNERk1v/95srvtY0MygFPJY=;
+ b=eze8KP6QOyB9ZqWFdjKoFt/vBisND4Mqnrh++g1+xDyvV0wQX7uJ71TQgMqgG2yYVVIHrK
+ 4E/e6BZhsBCltWATLKDsmUqHssoaA9UnLbKxkcaDv07tcD0bGPPMsKiqZCJo/r4Ec8kgxV
+ AyUOwTnJuxnmkxQAYSbmlAunDArrNxc=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-9-u_zrZThiOPWDiD_Vx8m9fg-1; Tue, 25 Aug 2026 11:35:01 -0400
+X-MC-Unique: u_zrZThiOPWDiD_Vx8m9fg-1
+X-Mimecast-MFC-AGG-ID: u_zrZThiOPWDiD_Vx8m9fg_1787672101
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-6a3899d74c5so6485274a12.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 08:35:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787672100; x=1788276900;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ppgXbPiE+3Uv8DDxwDgRxNERk1v/95srvtY0MygFPJY=;
+ b=kjybySeWmtHTQgtNvTEGDFn4Vi9oTok+kIQxxNO+8sEtFFWyoWEhgwTKOrhV5/bqdM
+ +kcFcOj1jAdn6tCALx45jYQChgTS84ASQpAKeS5kJJyDTh2Sqb6hPcRwfX0wnLnem1ch
+ HZD3LKTv/LEK4XPJVX/pRPZX6CiBGAB7Spnn2s8uxxxiphy3J+ePo1c907YVHJDF66gn
+ i3Xq7sA5879DGYUBWww1c45wyKVDNOaS7jh4gTmP6xXeAbpJ2gr0p++71IuOwEvr3aMi
+ qeVJCQ5gghyfNy5835nYhR5Gl3R4cNrPP5hyFqqtsY1VLFMnjmFAJErnoWQ/++eRGB//
+ Srjg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqTClWBBGGfRzg406uvGSJfR1PdsKwwg2vNmtAGqujQmj5OFjvHpyPi1P1/TJzmbv+dbUcxXQ+F0bSc@nongnu.org
+X-Gm-Message-State: AFuF++nfa7W2w2M8gngzC1DLr0sbE9TWP38OoBMrgB/cC/1ZcmAi97NA
+ Ku9RUaVaVXYknkTQrVOoOFDu0P5P6lNH6crtLix4J/L8nTmZkmdGpoZTVrcv71zI505bY/4IqOm
+ UZC/lAxV8LGZ7BUMz/P4irjcWH9WZRqrWLZS36QjqEYz32cwgfF+vJO2F
+X-Gm-Gg: AR+sD12KfpNGghaAEpe2SIvhdur8LHk/j/UZdycrgDiwsm9Y0Lj4WJ5b3FbGUDRtvlW
+ gUlJSvk5oGJbueELpDW7cWBp0fEh0K8N57ng3cd7lLPtVogVqqttU1x7ppuH/RQ1eh6cDLDh1GL
+ O1MIYnOWSkL5+TOmW03AB7//YybssqBLSBsgWyJJ99FIvcL8IFMrYd3Sy7kCcsOAoIkNYxplE4V
+ mXM7v2+uS+pdQrTC0oxHpWmhnjg4XTXwec/aUWYxvY+4RkwUGnK2W+H58DXOhCe08aTbqZ9n5Ts
+ VYeL1A/80/Wb1/jhq5uiHCz6tnw/fhTadWa/G3w9Ai+iXIgEHkvHuZcOSjVG2z4QqoxXRKL4kH3
+ 2KQNNhPJwNkZ5ksXVqIUpmASU8N3BhBBlx84rXGSh2ogl79jw
+X-Received: by 2002:a05:6402:324d:b0:6a3:f47c:969 with SMTP id
+ 4fb4d7f45d1cf-6a5c40ccb42mr8830745a12.3.1787672100324; 
+ Tue, 25 Aug 2026 08:35:00 -0700 (PDT)
+X-Received: by 2002:a05:6402:324d:b0:6a3:f47c:969 with SMTP id
+ 4fb4d7f45d1cf-6a5c40ccb42mr8830691a12.3.1787672099808; 
+ Tue, 25 Aug 2026 08:34:59 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6a5dea83babsm201637a12.16.2026.08.25.08.34.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Aug 2026 08:34:59 -0700 (PDT)
+Message-ID: <71022115-11f5-41d7-96fe-14499952c10e@redhat.com>
+Date: Tue, 25 Aug 2026 17:34:56 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|MWHPR02MB11818:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7af214f3-68d7-48e9-c8b7-08df02be2268
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|7416014|376014|23010399003|18002099003|22082099003|3023799007|4133799003|10067099003|56012099006|6133799003;
-X-Microsoft-Antispam-Message-Info: cxqQFEBa3pZHOlCWwanv5gOwsZZ6nYvenHiIYJ02NBMDGYLqYgFoaszM0COCxC7TVRO9kLQFAYiCU268MeNwNniQCfmE0cvJzgYF2sy0uy/aPpSqtp3xuU5AIhvuxqh+1Mt9GX7wfEYvaq2EXf1OkGgogeP8mXEHtJboffQzoFmW4UuFLgOGtzZLaCPn6+epZAV7uhqlkOWytfvkRsAy6Fc57OhHSCKMSiaVD5x3+9S+fjVi2lGCevieY44XU7cwrpihfp9f2u5nV9ztwiWhsqtsCGFvW3+chJeQeofJ73L3QQVWr5MExC5vNaJm3K7l24qKDgkPnKfYocfxIXr3mTycq93qfsXdDAZecodmA2lP/khNYhg11l7g48SHbbGAWX93FCjwONZkBp6fVgnXgLaq8mwSra3Ljr4n6W95MUHK8K2Sgn2YNYSlVYaetwE02c4j3FZLMXDulHb/X36wpRwt9plLQnNCQqzgER8yMSSQmWN7BBlcwr78/bFsIqjOTvO9HsZWHHsMDoVu7OVsLcLsNqlcNnfrsF0csEtBfUTGzhrozNRC6WlCmYYYNTNW32Gz6ep/fJIBO/XtKSi1sNhKFmdjf2yQfuem21sA2jojmbtRWp+iRhgHobXVQ0FdlqwkpnzFTaK/tLmRkB8bWFskTYxsRzGsig/ABqIbXHU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014)(23010399003)(18002099003)(22082099003)(3023799007)(4133799003)(10067099003)(56012099006)(6133799003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a05LT0FvVzV4Z1pKMUpEeHJiYzRFWEVEckk3blRWMnh2ZWlEclZRSkhsbVpn?=
- =?utf-8?B?aWh4MkRKMlFSRnYrQVZBV0R5ZEg2MlY3c21BaHE2Y1ZxUHQ3bmd2SUx3cGZH?=
- =?utf-8?B?MEptN2ZFK0YzY2hPb0M5em10MWcwZWRCVzhiTjI2NSt5dld4SE5LRWNoRUVz?=
- =?utf-8?B?V0pvZnAwNkxrZmhZZHVidUlXdzRMTTVlVFJJeWdEVjNxMDUyUi9tbHlFcThx?=
- =?utf-8?B?OGJ6bmc4NGNtLytyNUFqcElmbkMvNkFDYjdrUkdNUnFWTGdIaFNSbm9ZUjAr?=
- =?utf-8?B?WWxaekFnWUFjeFBZdTdmUktUQ01sUWdGT2dFTEZNWjgvU29qQVRoUzBOd3Zt?=
- =?utf-8?B?NE5sUjB6Z2tDczFDMmdjL0EyamppamhYY0VVbWVYakplNGtjekNpcGgvSkxm?=
- =?utf-8?B?bndjNkl5c2ZkK05ONGh5VTZtRVJYUmNLSkwzSHBteHhXcWpGMFdVVXI3cndu?=
- =?utf-8?B?RDNUWWhjQlE2aUYvcTV6UFQ4M25WeVNBRVQ4ZEtWTmRJYzBrTUJHRkYvWjRO?=
- =?utf-8?B?RWFGOVBFVlcrQUF2U0FSRVp6UHhtdW95cTJXWEordWFySUlVTnJ6YzJ3WXZ2?=
- =?utf-8?B?MmYxY1VsU1JLbTlObTg2aDBWQ25CMG0zVnZOQUwxZXVqTDg3dlFTNWt6TmNu?=
- =?utf-8?B?RDFUT0J3Z1J5WWNDaURib0FEdEZ4Unh4UzJuQjMrckYxODZSSlVlNkRpZE9j?=
- =?utf-8?B?bDloSkFZbkVRcXMvSlIyMndHM0Y0dXVQSzhtVkVYM0FFTXpOU2pXUkwwSFFl?=
- =?utf-8?B?MFBtam9TQTdLbXhkYWsyWGNYUzJ4S0lIL1Jvd0MvbWg3RFdaMW1lcGdYWGpv?=
- =?utf-8?B?STBQY2FGL3cxaEhHQlFrV1RaSk4yd1FBNTRGMHliSE5rVGxFUWRyNHl3U3FN?=
- =?utf-8?B?TjVLRFBZSUlqQzNDV01HQzhtTXB3Q1VodmFnSDVVM0xQeW5oQnVTaUxJYXVF?=
- =?utf-8?B?dFRYa1BmRXhIbllwNEd1ZnZjSVlXS0pNMmxmcElVYlJkMmhRNFdOWUZyY3M4?=
- =?utf-8?B?OWcwRmxmdFIvOTJpemFtc0pBdmxuOVVkNDdmeVRabVFKd1pobXFnM2xNS1RZ?=
- =?utf-8?B?bDk2NmJmWkpaWVQ4MVZ3MEFGY1loQnZtT1Q4cFBHaXIveUJMZUFTTER4cVU0?=
- =?utf-8?B?aU5PZzJWYkdudkJGZzhYZndtdTdDT1ZtZzR4NjZzYTBBZXlpN1JOYmZ5SlBJ?=
- =?utf-8?B?b3JWc3gxUDBvMlBEcVpJQkV6cmJpc3FBcDV1b3pXaWNpeVZzWUdUVzJ6V2hn?=
- =?utf-8?B?ZDZCeWw3N0F1Wk15c2pZSzZiQjRLd3VMMTcrYnBmWkFUdGJKa0NuN0dnS3lX?=
- =?utf-8?B?bmY3UjhoVnhVRHhiRVF6Z1U5cFpvQzZQZld4ajd0MVFyUHZuMld2Mlg0bkFp?=
- =?utf-8?B?WWtKc3diQURFVDg5b0krcnNYc3RXNVF4c1NwYnNGeWwwQ2hQTEVSbU1vR0hq?=
- =?utf-8?B?S0xMYnZFZ0ZEbWd1VFVsRHhnVDJKK0hDQi81NkUwVkxxVkpiWGFMbVVFY0JJ?=
- =?utf-8?B?SUhOblVwdmI4OWM5Y3NYNGV2bWFDVXdEcThnQW9xNE9Dc0JTeGx4UTF1STNk?=
- =?utf-8?B?RjlHdTFVKzdDaldmaW1NWXNHVFRvam9VamF3OHQzdjlsa2ZjVWZqMGwrbFV2?=
- =?utf-8?B?SGJPUFZ1c00rWTdxUTEwSnVqbGM4eWM2Rk9IQVpaV2J5V1Jud1F1MlRlZENj?=
- =?utf-8?B?d1FmREcrL0dKUjc0eE1OU1hXQm43NDhWVFZJYktoS3NTNjg0VmFyTUd6WXIr?=
- =?utf-8?B?eFdiKzBQSEx2a1VDeDlaR3hWVi9WZVpyTC9JN3d1Wnp0VzB0UllwLzZGQThM?=
- =?utf-8?B?cFJNL1VvQmpFRCtmVG43V2JlanBlU3orMG9kTmtTdHJ0QVdPYlp5djMyOEFh?=
- =?utf-8?B?ZHNUaStLMjhnNTY3cTlYd0oxeWpiWVhYeHRlbnhrYjlUUE4rNkFyc0dOQVNx?=
- =?utf-8?B?UC9waG8vWUgyZUZDdXAyNkJnS1BRUVFKVUYrTGI3TGRHazhuTDJxd0FicFlp?=
- =?utf-8?B?NkdqU3ozdytIMVhQRVdqc2xCTFRxdUw3Z0VZcEJmcHozWnpqUU1VWHUrRnJO?=
- =?utf-8?B?UmZrUTdRTHMzTGg0SFQxOXZuR1F0RW1WNExpc3FJYXErOTdUaTB2a3l2SmxB?=
- =?utf-8?B?Z1Bsc3N6TzZ0TUlIcFRtbVRSZ2w2aDJKalFLanFBcUpOWWxDSmpzclY0amFB?=
- =?utf-8?B?c3pzdWpmMy96MWhOSEtqQXRpaktGdFJXd0pmSEw0MFpqK0VFd2p6am13Kzds?=
- =?utf-8?B?SFZJVnFKaUtOMkEzcW5GQ3c0NG9LVU84REVqOFVtOEg2aTJleU93bitobFpw?=
- =?utf-8?B?cXE0cGFOclEvRUU2cHVFTHlpSDJSMUVpQWwwdEhtQjdBTkJETVBWRDJpRHBG?=
- =?utf-8?Q?VMoV9lY8bOO5+1ho=3D?=
-X-Exchange-RoutingPolicyChecked: QjXdD2tNDsHfJGt3JblD9yuS6/VkBBkZEJPoVMZa98T2uWPTe9cTBQiv8+k17VER7t0TTVr+l27k/D9wSoj2knIwhbJxhTXLAtz2LnsFvvmfYl/kLA42gVGf4Si5Abwasq5vNu1pMDuCyYX4pvyIPSULvwk2g6Rll5Hy+wPQ6eI/hNJNPfebR40wTvmhyvwsQb6TGtm2/9l4wJuVj0qPijuaLzCeglZ62trgbM0GNsz7SHkUfjq+Udg9FfHvKzHmzSpuly+BJJSZbO7w5SnKuehFedGg1IJ0zE8wqDmxoANpYwLj018+FRGEBlWDn4bEdGgALVTFNR6IVH9AGvDFlQ==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7af214f3-68d7-48e9-c8b7-08df02be2268
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 15:32:55.5117 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: qjW00pM/xG+ckjn1ewr8ND1wj+irV35pXNjjLm8bs7ubd3TPrSjmxdFS27xdjm19Wv6x4JrBkdMZbfZvnyTQaQsKWXArD8sGb5KkhkhG+Oo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR02MB11818
-X-Authority-Analysis: v=2.4 cv=DJu/JSNb c=1 sm=1 tr=0 ts=6a8db5ac cx=c_pps
- a=rF5r1hn1HlY1CZmlW+R7dg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=VUi8bpU7OL1Oj2-RSIOF:22
- a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=69wJf7TsAAAA:8 a=zd2uoN0lAAAA:8
- a=EUspDBNiAAAA:8 a=S56xvJB5AAAA:8 a=ImJQ1LXA3nOkvlGg6vUA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22 a=MH9Ivq0PDQRhlrFuIVvX:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDEzMiBTYWx0ZWRfX8TQruuzGCxPu
- M5JWRKJCaayZGoWCn+nqk6Yf1kpInPQIi+1LT8e/BmB47hZHCSnHImLLYFz0znh6tp9K87LIlaP
- tgVpcKbRQ4lVlwCGqGOKLgzphaqtqYk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDEzMiBTYWx0ZWRfX0iscwMZRl07r
- z6lg+ABQkXx7NIwsCfnxqxqoX4r6rJZ+XEt2JkVfU8UUqrwOCV64f8R5eR5N9ChpNX/39Wx6UDC
- 3cM0WXrOZuGCqdiUG4gyhJrAcIVO9xI7PQ/duCWGCv/xCPpojYhNVOqQ/91hSCkQA9M3a6pgK53
- EDjgmkJvPQgvZ/uZDW8GDEQNTtBvxQhvTyhr7wGqNQw8KbouWHIbomrguTGeHeYfO1WHHrf4jwU
- eFwhsm9pzjbiO/yE3VYuRhU3U+cxYGlHb1RmNnZ3cF8y+wQWTrH1Z1ZDREP9UDqv+BEhMKXNG8M
- b2mvs5dARMQkhUXzaDxr+8ZMo/IkJPEwFRoh3TAMH4DBY2p03Zc1uX1/XFzpmSZ6dftEAFBj+8t
- gMSxnfUn0tWgznGBqw9agdI2rrpi/LMVDw1PinM+YwXqFoLhXE3+N2cf1uvI/kKo6LSYtjYwhe1
- /yXSPqcRn1UFH9PItMQ==
-X-Proofpoint-GUID: v_ABtH3DOxmzDyTP-BM3O2HSKggFqM8h
-X-Proofpoint-ORIG-GUID: v_ABtH3DOxmzDyTP-BM3O2HSKggFqM8h
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-25_04,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v7 14/18] target/arm/cpu-idregs.h.inc: Generate
+ reserved fields
+Content-Language: en-US
+To: Khushit Shah <khushit.shah@nutanix.com>
+Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Shaju Abraham <shaju.abraham@nutanix.com>,
+ "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
+ "cohuck@redhat.com" <cohuck@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "sebott@redhat.com" <sebott@redhat.com>,
+ "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
+ "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
+ "maz@kernel.org" <maz@kernel.org>,
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "abologna@redhat.com" <abologna@redhat.com>,
+ "jdenemar@redhat.com" <jdenemar@redhat.com>
+References: <20260726153221.24773-1-eric.auger@redhat.com>
+ <20260726153221.24773-15-eric.auger@redhat.com>
+ <F9333A1C-BBFF-4134-8FDB-5DC94CD31445@nutanix.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <F9333A1C-BBFF-4134-8FDB-5DC94CD31445@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -198,366 +131,667 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/08/2026 12:10, Marc-André Lureau wrote:
+Hi Khushit,
 
-> Hi,
-> 
-> This series connects QOM and qdev properties to the QAPI type system, so
-> that management tools can discover the QAPI schema type of each object
-> property.
-> 
-> Today, QOM properties carry a free-form "type" string ("bool", "uint32",
-> "OnOffAuto", ..) that has no formal link to the QAPI schema exposed by
-> query-qmp-schema. Management tools must maintain ad-hoc mappings or rely
-> on naming conventions to figure out how to interpret property values.
-> 
-> This series adds:
->    - A new QAPITypeInfo struct that pairs a property with its QAPI schema
->      type name, enum lookup table, and list-element type.
-> 
->    - A QAPI code generator (qapi-type-infos) that emits a QAPITypeInfo
->      instance for every schema-defined type, including the mapping
->      between internal C names and the schema name visible to clients.
-> 
->    - A "qapi-type" field in the ObjectPropertyInfo and
->      ObjectPropertyValue QMP structs, populated from the QAPITypeInfo
->      when present giving clients a cross-reference into query-qmp-schema
->      output.
-> 
->    - Conversion of all PropertyInfo definitions from the old
->      .type/.enum_table strings to the new .qapi_type pointer.
-> 
->    - Replacement of the generic qdev_prop_array with typed per-element
->      array PropertyInfos, removing the arrayinfo/arrayfieldsize
->      indirection from struct Property.
-> 
->    - Removal of the deprecated PropertyInfo.type and .enum_table fields,
->      and of the old object_property_add_enum/add_tm APIs.
-> 
-> Along the way, a few pre-existing type mismatches in property
-> definitions are fixed, the "struct tm" RTC property is replaced with a
-> proper QAPI StructTm type etc. Introducing more specific types or a
-> "typedef" to QAPI could help provide better associated type informations
-> than plain "str" in many cases, for example.
-> 
-> Comments welcome!
+On 8/24/26 8:55 AM, Khushit Shah wrote:
+>
+>> On 26 Jul 2026, at 8:59 PM, Eric Auger <eric.auger@redhat.com> wrote:
+>>
+>> !-------------------------------------------------------------------|
+>>  CAUTION: External Email
+>>
+>> |-------------------------------------------------------------------!
+>>
+>> Extract reserved fields: RES0, RES1, RAZ, ...
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> ---
+>> target/arm/cpu-idregs.h.inc                   | 69 ++++++++++++++-
+>> .../update-aarch64-cpu-sysreg-properties.py   | 83 +++++++++++++++----
+>> 2 files changed, 136 insertions(+), 16 deletions(-)
+>>
+>> diff --git a/target/arm/cpu-idregs.h.inc b/target/arm/cpu-idregs.h.inc
+>> index 1c8b26133b..5fdc84237c 100644
+>> --- a/target/arm/cpu-idregs.h.inc
+>> +++ b/target/arm/cpu-idregs.h.inc
+>> @@ -15,16 +15,20 @@ IDREG_START(AIDR_EL1)
+>> IDREG_END(AIDR_EL1)
+>>
+>> IDREG_START(CCSIDR2_EL1)
+>> +    IDREG_FIELD(CCSIDR2_EL1, RES0, 24, 40)
+>>     IDREG_FIELD(CCSIDR2_EL1, NumSets, 0, 24)
+>> IDREG_END(CCSIDR2_EL1)
+>>
+>> IDREG_START(CCSIDR_EL1)
+>> +    IDREG_FIELD(CCSIDR_EL1, RES0, 56, 8)
+>>     IDREG_FIELD(CCSIDR_EL1, NumSets, 32, 24)
+>> +    IDREG_FIELD(CCSIDR_EL1, RES0, 24, 8)
+>>     IDREG_FIELD(CCSIDR_EL1, Associativity, 3, 21)
+>>     IDREG_FIELD(CCSIDR_EL1, LineSize, 0, 3)
+>> IDREG_END(CCSIDR_EL1)
+>>
+>> IDREG_START(CLIDR_EL1)
+>> +    IDREG_FIELD(CLIDR_EL1, RES0, 47, 17)
+>>     IDREG_FIELD(CLIDR_EL1, Ttype7, 45, 2)
+>>     IDREG_FIELD(CLIDR_EL1, Ttype6, 43, 2)
+>>     IDREG_FIELD(CLIDR_EL1, Ttype5, 41, 2)
+>> @@ -55,7 +59,10 @@ IDREG_START(CLIDR_EL1)
+>> IDREG_END(CLIDR_EL1)
+>>
+>> IDREG_START(CTR_EL0)
+>> +    IDREG_FIELD(CTR_EL0, RES0, 38, 26)
+>>     IDREG_FIELD(CTR_EL0, TminLine, 32, 6)
+>> +    IDREG_FIELD(CTR_EL0, RES1, 31, 1)
+>> +    IDREG_FIELD(CTR_EL0, RES0, 30, 1)
+>>     IDREG_FIELD_START(CTR_EL0, DIC, 29, 1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -73,23 +80,28 @@ IDREG_START(CTR_EL0)
+>>         IDREG_FIELD_ARCH_VAL(2)
+>>         IDREG_FIELD_ARCH_VAL(3)
+>>     IDREG_FIELD_END(CTR_EL0, L1Ip)
+>> +    IDREG_FIELD(CTR_EL0, RES0, 4, 10)
+>>     IDREG_FIELD(CTR_EL0, IminLine, 0, 4)
+>> IDREG_END(CTR_EL0)
+>>
+>> IDREG_START(DCZID_EL0)
+>> +    IDREG_FIELD(DCZID_EL0, RES0, 9, 55)
+>>     IDREG_FIELD(DCZID_EL0, TBS, 5, 4)
+>>     IDREG_FIELD(DCZID_EL0, DZP, 4, 1)
+>>     IDREG_FIELD(DCZID_EL0, BS, 0, 4)
+>> IDREG_END(DCZID_EL0)
+>>
+>> IDREG_START(GMID_EL1)
+>> +    IDREG_FIELD(GMID_EL1, RES0, 4, 60)
+>>     IDREG_FIELD(GMID_EL1, BS, 0, 4)
+>> IDREG_END(GMID_EL1)
+>>
+>> IDREG_START(ID_AA64AFR0_EL1)
+>> +    IDREG_FIELD(ID_AA64AFR0_EL1, RES0, 32, 32)
+>> IDREG_END(ID_AA64AFR0_EL1)
+>>
+>> IDREG_START(ID_AA64AFR1_EL1)
+>> +    IDREG_FIELD(ID_AA64AFR1_EL1, RES0, 0, 64)
+>> IDREG_END(ID_AA64AFR1_EL1)
+>>
+>> IDREG_START(ID_AA64DFR0_EL1)
+>> @@ -136,6 +148,7 @@ IDREG_START(ID_AA64DFR0_EL1)
+>>     IDREG_FIELD_START(ID_AA64DFR0_EL1, CTX_CMPs, 28, 4)
+>>         IDREG_FIELD_ARCH_VAL(15)
+>>     IDREG_FIELD_END(ID_AA64DFR0_EL1, CTX_CMPs)
+>> +    IDREG_FIELD(ID_AA64DFR0_EL1, RES0, 24, 4)
+>>     IDREG_FIELD(ID_AA64DFR0_EL1, WRPs, 20, 4)
+>>     IDREG_FIELD_START(ID_AA64DFR0_EL1, PMSS, 16, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>> @@ -209,6 +222,7 @@ IDREG_START(ID_AA64DFR1_EL1)
+>> IDREG_END(ID_AA64DFR1_EL1)
+>>
+>> IDREG_START(ID_AA64DFR2_EL1)
+>> +    IDREG_FIELD(ID_AA64DFR2_EL1, RES0, 28, 36)
+>>     IDREG_FIELD_START(ID_AA64DFR2_EL1, TRBE_EXC, 24, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -221,6 +235,7 @@ IDREG_START(ID_AA64DFR2_EL1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>     IDREG_FIELD_END(ID_AA64DFR2_EL1, SPE_EXC)
+>> +    IDREG_FIELD(ID_AA64DFR2_EL1, RES0, 8, 8)
+>>     IDREG_FIELD_START(ID_AA64DFR2_EL1, BWE, 4, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -233,6 +248,7 @@ IDREG_START(ID_AA64DFR2_EL1)
+>> IDREG_END(ID_AA64DFR2_EL1)
+>>
+>> IDREG_START(ID_AA64FPFR0_EL1)
+>> +    IDREG_FIELD(ID_AA64FPFR0_EL1, RES0, 32, 32)
+>>     IDREG_FIELD_START(ID_AA64FPFR0_EL1, F8CVT, 31, 1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -257,10 +273,13 @@ IDREG_START(ID_AA64FPFR0_EL1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>     IDREG_FIELD_END(ID_AA64FPFR0_EL1, F8MM4)
+>> +    IDREG_FIELD(ID_AA64FPFR0_EL1, RES0, 16, 10)
+>>     IDREG_FIELD_START(ID_AA64FPFR0_EL1, F16MM2, 15, 1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>     IDREG_FIELD_END(ID_AA64FPFR0_EL1, F16MM2)
+>> +    IDREG_FIELD(ID_AA64FPFR0_EL1, RES0, 8, 7)
+>> +    IDREG_FIELD(ID_AA64FPFR0_EL1, RAZ, 2, 6)
+>>     IDREG_FIELD_START(ID_AA64FPFR0_EL1, F8E4M3, 1, 1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -312,6 +331,7 @@ IDREG_START(ID_AA64ISAR0_EL1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>     IDREG_FIELD_END(ID_AA64ISAR0_EL1, RDM)
+>> +    IDREG_FIELD(ID_AA64ISAR0_EL1, RES0, 24, 4)
+>>     IDREG_FIELD_START(ID_AA64ISAR0_EL1, Atomic, 20, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(2)
+>> @@ -335,6 +355,7 @@ IDREG_START(ID_AA64ISAR0_EL1)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>         IDREG_FIELD_ARCH_VAL(2)
+>>     IDREG_FIELD_END(ID_AA64ISAR0_EL1, AES)
+>> +    IDREG_FIELD(ID_AA64ISAR0_EL1, RES0, 0, 4)
+>> IDREG_END(ID_AA64ISAR0_EL1)
+>>
+>> IDREG_START(ID_AA64ISAR1_EL1)
+>> @@ -498,6 +519,7 @@ IDREG_START(ID_AA64ISAR2_EL1)
+>> IDREG_END(ID_AA64ISAR2_EL1)
+>>
+>> IDREG_START(ID_AA64ISAR3_EL1)
+>> +    IDREG_FIELD(ID_AA64ISAR3_EL1, RES0, 48, 16)
+>>     IDREG_FIELD_START(ID_AA64ISAR3_EL1, LSCP, 44, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -561,6 +583,7 @@ IDREG_START(ID_AA64MMFR0_EL1)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>         IDREG_FIELD_ARCH_VAL(2)
+>>     IDREG_FIELD_END(ID_AA64MMFR0_EL1, FGT)
+>> +    IDREG_FIELD(ID_AA64MMFR0_EL1, RES0, 48, 8)
+>>     IDREG_FIELD_START(ID_AA64MMFR0_EL1, ExS, 44, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -713,6 +736,7 @@ IDREG_START(ID_AA64MMFR2_EL1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>     IDREG_FIELD_END(ID_AA64MMFR2_EL1, TTL)
+>> +    IDREG_FIELD(ID_AA64MMFR2_EL1, RES0, 44, 4)
+>>     IDREG_FIELD_START(ID_AA64MMFR2_EL1, FWB, 40, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -778,6 +802,7 @@ IDREG_START(ID_AA64MMFR3_EL1)
+>>         IDREG_FIELD_ARCH_VAL(2)
+>>         IDREG_FIELD_ARCH_VAL(3)
+>>     IDREG_FIELD_END(ID_AA64MMFR3_EL1, SDERR)
+>> +    IDREG_FIELD(ID_AA64MMFR3_EL1, RES0, 48, 4)
+>>     IDREG_FIELD_START(ID_AA64MMFR3_EL1, ANERR, 44, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1031,6 +1056,7 @@ IDREG_START(ID_AA64PFR1_EL1)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>         IDREG_FIELD_ARCH_VAL(2)
+>>     IDREG_FIELD_END(ID_AA64PFR1_EL1, SME)
+>> +    IDREG_FIELD(ID_AA64PFR1_EL1, RES0, 20, 4)
+>>     IDREG_FIELD_START(ID_AA64PFR1_EL1, MPAM_frac, 16, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1058,6 +1084,7 @@ IDREG_START(ID_AA64PFR1_EL1)
+>> IDREG_END(ID_AA64PFR1_EL1)
+>>
+>> IDREG_START(ID_AA64PFR2_EL1)
+>> +    IDREG_FIELD(ID_AA64PFR2_EL1, RES0, 48, 16)
+>>     IDREG_FIELD_START(ID_AA64PFR2_EL1, VMTETCL, 44, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1117,6 +1144,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>     IDREG_FIELD_END(ID_AA64SMFR0_EL1, FA64)
+>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 62, 1)
+>>     IDREG_FIELD_START(ID_AA64SMFR0_EL1, LUT6, 61, 1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1136,6 +1164,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(15)
+>>     IDREG_FIELD_END(ID_AA64SMFR0_EL1, I16I64)
+>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 49, 3)
+>>     IDREG_FIELD_START(ID_AA64SMFR0_EL1, F64F64, 48, 1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1180,6 +1209,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>     IDREG_FIELD_END(ID_AA64SMFR0_EL1, F32F32)
+>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 31, 1)
+>>     IDREG_FIELD_START(ID_AA64SMFR0_EL1, SF8FMA, 30, 1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1192,6 +1222,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>     IDREG_FIELD_END(ID_AA64SMFR0_EL1, SF8DP2)
+>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 26, 2)
+>>     IDREG_FIELD_START(ID_AA64SMFR0_EL1, SBitPerm, 25, 1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1204,10 +1235,12 @@ IDREG_START(ID_AA64SMFR0_EL1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>     IDREG_FIELD_END(ID_AA64SMFR0_EL1, SFEXPA)
+>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 17, 6)
+>>     IDREG_FIELD_START(ID_AA64SMFR0_EL1, STMOP, 16, 1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>     IDREG_FIELD_END(ID_AA64SMFR0_EL1, STMOP)
+>> +    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 1, 15)
+>>     IDREG_FIELD_START(ID_AA64SMFR0_EL1, SMOP4, 0, 1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1215,6 +1248,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+>> IDREG_END(ID_AA64SMFR0_EL1)
+>>
+>> IDREG_START(ID_AA64ZFR0_EL1)
+>> +    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0, 60, 4)
+>>     IDREG_FIELD_START(ID_AA64ZFR0_EL1, F64MM, 56, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1235,10 +1269,12 @@ IDREG_START(ID_AA64ZFR0_EL1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>     IDREG_FIELD_END(ID_AA64ZFR0_EL1, SM4)
+>> +    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0, 36, 4)
+>>     IDREG_FIELD_START(ID_AA64ZFR0_EL1, SHA3, 32, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>     IDREG_FIELD_END(ID_AA64ZFR0_EL1, SHA3)
+>> +    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0, 28, 4)
+>>     IDREG_FIELD_START(ID_AA64ZFR0_EL1, B16B16, 24, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1258,6 +1294,7 @@ IDREG_START(ID_AA64ZFR0_EL1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>     IDREG_FIELD_END(ID_AA64ZFR0_EL1, EltPerm)
+>> +    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0, 8, 4)
+>>     IDREG_FIELD_START(ID_AA64ZFR0_EL1, AES, 4, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1274,9 +1311,11 @@ IDREG_START(ID_AA64ZFR0_EL1)
+>> IDREG_END(ID_AA64ZFR0_EL1)
+>>
+>> IDREG_START(ID_AFR0_EL1)
+>> +    IDREG_FIELD(ID_AFR0_EL1, RES0, 0, 64)
+>> IDREG_END(ID_AFR0_EL1)
+>>
+>> IDREG_START(ID_DFR0_EL1)
+>> +    IDREG_FIELD(ID_DFR0_EL1, RES0, 32, 32)
+>>     IDREG_FIELD_START(ID_DFR0_EL1, TraceFilt, 28, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1328,6 +1367,7 @@ IDREG_START(ID_DFR0_EL1)
+>> IDREG_END(ID_DFR0_EL1)
+>>
+>> IDREG_START(ID_DFR1_EL1)
+>> +    IDREG_FIELD(ID_DFR1_EL1, RES0, 8, 56)
+>>     IDREG_FIELD_START(ID_DFR1_EL1, HPMN0, 4, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1340,6 +1380,7 @@ IDREG_START(ID_DFR1_EL1)
+>> IDREG_END(ID_DFR1_EL1)
+>>
+>> IDREG_START(ID_ISAR0_EL1)
+>> +    IDREG_FIELD(ID_ISAR0_EL1, RES0, 28, 36)
+>>     IDREG_FIELD_START(ID_ISAR0_EL1, Divide, 24, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1375,6 +1416,7 @@ IDREG_START(ID_ISAR0_EL1)
+>> IDREG_END(ID_ISAR0_EL1)
+>>
+>> IDREG_START(ID_ISAR1_EL1)
+>> +    IDREG_FIELD(ID_ISAR1_EL1, RES0, 32, 32)
+>>     IDREG_FIELD_START(ID_ISAR1_EL1, Jazelle, 28, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1413,6 +1455,7 @@ IDREG_START(ID_ISAR1_EL1)
+>> IDREG_END(ID_ISAR1_EL1)
+>>
+>> IDREG_START(ID_ISAR2_EL1)
+>> +    IDREG_FIELD(ID_ISAR2_EL1, RES0, 32, 32)
+>>     IDREG_FIELD_START(ID_ISAR2_EL1, Reversal, 28, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1458,6 +1501,7 @@ IDREG_START(ID_ISAR2_EL1)
+>> IDREG_END(ID_ISAR2_EL1)
+>>
+>> IDREG_START(ID_ISAR3_EL1)
+>> +    IDREG_FIELD(ID_ISAR3_EL1, RES0, 32, 32)
+>>     IDREG_FIELD_START(ID_ISAR3_EL1, T32EE, 28, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1495,6 +1539,7 @@ IDREG_START(ID_ISAR3_EL1)
+>> IDREG_END(ID_ISAR3_EL1)
+>>
+>> IDREG_START(ID_ISAR4_EL1)
+>> +    IDREG_FIELD(ID_ISAR4_EL1, RES0, 32, 32)
+>>     IDREG_FIELD_START(ID_ISAR4_EL1, SWP_frac, 28, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1519,12 +1564,12 @@ IDREG_START(ID_ISAR4_EL1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>     IDREG_FIELD_END(ID_ISAR4_EL1, Writeback)
+>> -    IDREG_FIELD_START(ID_ISAR4_EL1, WithShifts, 4, 4)
+>> +    IDREG_FIELD_START(ID_ISAR4_EL1, WI, 4, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>         IDREG_FIELD_ARCH_VAL(3)
+>>         IDREG_FIELD_ARCH_VAL(4)
+>> -    IDREG_FIELD_END(ID_ISAR4_EL1, WithShifts)
+>> +    IDREG_FIELD_END(ID_ISAR4_EL1, WI)
+> unintended change?
 
-Thanks for quite a substantial piece work: there is quite a lot to pick 
-through in this series which makes review tricky. If you post a new 
-version, it might be worth showing an example of the before/after JSON 
-to help give some context around the changes: however it feels this is 
-going in the right direction, since it works towards the goal of 
-allowing a QMP client to introspect everything it needs to know about 
-the QAPI type underlying a property.
+Correct. This comes from an issue in the script
 
-I've started working through this with a few comments and reviews for 
-the patches fixing up types: I wonder if the type fixups could be merged 
-separately to help reduce the size of the series?
++                for r_type in ["RES0", "RES1", "RAZ", "RAO", "WI", "UNKNOWN"]:
++                    if r_type in name_upper:
 
-Question: is the eventual aim to deprecate the use of all the non-qapi 
-object functions? Are there many instances left after this series at all?
 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
-> Changes in v3:
-> - QAPI analysis redesign (replacing the old "expose name map" from
-> introspect)
-> - all non-implicit QAPI types are now introspectable, including QOM-only
-> types
-> - QAPITypeInfo.schema_name -> masked_name
-> - exposes integer signedness and width through query-qmp-schema
-> - various extra property fixes
-> - rebase, some patch split or merge
-> 
-> - Link to v2: https://urldefense.proofpoint.com/v2/url?u=https-3A__lore.kernel.org_qemu-2Ddevel_20260616-2Dqom-2Dqapi-2Dv2-2D0-2Dcc9396b9c18c-40redhat.com&d=DwIDaQ&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=LGtC1Otz03Nx6wZrdIv7LRRcAEAYfhyfKJ4dtNt7PCxy3ILcsWudQol0qR9l2c5a&s=Idir-fKu3uFkuRRHZW8ipF3e84xwMMhnVWVuat0zVXs&e=
-> 
-> Changes in v2:
-> 
-> - Added kernel-doc documentation for the QAPITypeInfo struct fields.
-> - Dropped "qom: drop free-form property typename registration", it's
->    still needed for array of links to provide useful type names.
-> - Added qdev_prop_link_list for array-of-links properties, with a
->    create function that generates "link<TYPE>List" type names matching the
->    existing "link<TYPE>" convention.
-> - qdev_prop_link now uses &str_type_info instead of "link" (the full
->    "link<TYPE>" type name is set at property-add time)
-> - Simplified DEFINE_PROP_LINK_ARRAY to use qdev_prop_link_list, dropping
->    the now-unnecessary _arraytype parameter.
-> - rebased
-> - Link to v1: https://urldefense.proofpoint.com/v2/url?u=https-3A__lore.kernel.org_qemu-2Ddevel_20260510-2Dqom-2Dqapi-2Dv1-2D0-2D48ba6a1a1fa5-40redhat.com&d=DwIDaQ&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=LGtC1Otz03Nx6wZrdIv7LRRcAEAYfhyfKJ4dtNt7PCxy3ILcsWudQol0qR9l2c5a&s=_KgQcnGFWRM8edu2HLa7HFwHHCkp2t6UyriBmPDNk8A&e=
-> 
-> To: qemu-devel@nongnu.org
-> Cc: Markus Armbruster <armbru@redhat.com>
-> Cc: Michael Roth <michael.roth@amd.com>
-> Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Cc: "Daniel P. Berrangé" <berrange@redhat.com>
-> Cc: Philippe Mathieu-Daudé <philmd@mailo.com>
-> 
-> ---
-> Marc-André Lureau (74):
->        qapi: add QAPITypeInfo struct definition
->        qapi/gen: fix _module_basename for multi-dash 'what' parameters
->        qapi: factor out QAPISchemaUsedTypes from introspect visitor
->        qapi: register all introspectable types, not just QMP-reachable ones
->        qapi: add type-infos generator
->        meson: add qapi-type-infos-*.c/h to build
->        qom: add qapi_type field to ObjectProperty
->        qapi/qom: add qapi-type field to ObjectPropertyInfo
->        qom/qmp: populate qapi-type in QMP handlers
->        qom: add object_property_set_default_enum()
->        qom: add object_{class_}property_add_qapi
->        qom: add object_{class_}property_add_qapi_enum
->        tests: update check-qom-proplist for QAPI-aware property registration
->        qom: convert enum properties to QAPI-aware registration
->        qom: remove old enum property registration API
->        qom: convert struct properties to QAPI-aware registration
->        x86: convert OnOffAuto properties to QAPI-aware registration
->        microvm: convert OnOffAuto properties to QAPI-aware registration
->        pc: convert OnOffAuto vmport property to QAPI-aware registration
->        arm/virt: convert OnOffAuto acpi property to QAPI-aware registration
->        riscv/virt: convert OnOffAuto properties to QAPI-aware registration
->        loongarch/virt: convert OnOffAuto properties to QAPI-aware registration
->        hostmem-file: convert OnOffAuto rom property to QAPI-aware registration
->        sev: convert OnOffAuto legacy-vm-type property to QAPI-aware registration
->        whpx: convert OnOffAuto hyperv property to QAPI-aware registration
->        whpx: convert OnOffAuto arch properties to QAPI-aware registration
->        accel/kvm: convert OnOffSplit property to QAPI-aware registration
->        whpx: convert OnOffSplit property to QAPI-aware registration
->        ppc/spapr-caps: convert to QAPI-aware property registration
->        system/memory: fix "priority" property typename
->        backends/hostmem: fix property typenames
->        backends/hostmem-file: fix "align" property typename
->        accel/tcg: fix "tb-size" property typename
->        block/throttle-groups: fix throttle properties typename
->        event-loop-base: fix property typenames
->        iothread: fix poll properties typename
->        util/thread-context: fix property typenames
->        target/i386: fix CPUID version properties typename
->        ppc/pnv: fix phb-id and chip-id properties typename
->        backends/hostmem-memfd: fix "hugetlbsize" property typename
->        hw/acpi: fix "node" properties typename
->        net/colo-compare: fix compare_timeout setter visitor type
->        net/colo-compare: fix max_queue_size setter visitor type
->        hw/misc/xlnx-versal-trng: add missing getter for fips-fault-events
->        qom: convert scalar properties to QAPI-aware registration
->        i386/cpu: convert strList property to QAPI-aware registration
->        accel/hvf: convert OnOffSplit property to QAPI-aware registration
->        i386/x86: convert SgxEPCList property to QAPI-aware registration
->        virtio-balloon: convert guest-stats property to QAPI type
->        qom: replace object_property_add_tm with StructTm QAPI type
->        hw/nvdimm: convert UUID property to QAPI-aware registration
->        hw/s390-virtio-ccw: convert loadparm property to QAPI-aware registration
->        hw/ppc/spapr_drc: convert fdt property to QAPI-aware registration
->        spdm-socket: convert SpdmTransportType to QAPI enum
->        hw/gpio/pca955x: use QAPI enums for led and pin properties
->        include: add QEMU_REPEAT helper macro
->        hw/gpio/pca955x: convert pin/led property to QAPI-aware enum
->        hw/pci: change the busnr type to uint8
->        qdev: add qapi_type field to PropertyInfo with fallback registration
->        qdev: convert core PropertyInfo definitions to use qapi_type
->        qdev: adjust PciDevfn declared type
->        qdev: convert system PropertyInfo definitions to use qapi_type
->        hw: convert device-local PropertyInfo definitions to use qapi_type
->        target/riscv: fix incorrect QAPI types and u8 casting
->        target/riscv: convert PropertyInfo definitions to use qapi_type
->        qdev: convert PropertyInfo definitions to use qapi_type
->        qdev: introduce typed array PropertyInfos
->        qdev: simplify DEFINE_PROP_ARRAY and remove generic array PropertyInfo
->        qdev: remove deprecated PropertyInfo.type and .enum_table fields
->        memory: use object_property_add_link for container property
->        hw/i386: convert PCSouthBridgeOption to QAPI enum
->        qom: use QAPITypeInfo in object_property_get_enum
->        qapi: expose integer signedness and width in introspection
->        tests/qmp-cmd-test: assert qapi-type resolves in query-qmp-schema
-> 
->   accel/hvf/hvf-all.c                      |  29 ++--
->   accel/kvm/kvm-all.c                      |  31 ++--
->   accel/nitro/nitro-accel.c                |   3 +-
->   accel/tcg/tcg-all.c                      |   3 +-
->   accel/whpx/whpx-common.c                 |  58 +++----
->   authz/list.c                             |  14 +-
->   backends/cryptodev.c                     |   7 +-
->   backends/hostmem-file.c                  |  33 ++--
->   backends/hostmem-memfd.c                 |   3 +-
->   backends/hostmem.c                       |  20 +--
->   backends/spdm-socket.c                   |  25 +--
->   backends/tpm/tpm_util.c                  |   3 +-
->   block/throttle-groups.c                  |  10 +-
->   chardev/char-socket.c                    |   3 +-
->   crypto/secret_common.c                   |  12 +-
->   crypto/secret_keyring.c                  |   9 +-
->   crypto/tlscreds.c                        |  12 +-
->   docs/devel/qapi-code-gen.rst             | 123 +++++++++++++--
->   docs/interop/virtio-balloon-stats.rst    |  22 +--
->   event-loop-base.c                        |   7 +-
->   hw/acpi/ich9.c                           |   3 +-
->   hw/acpi/pci.c                            |   7 +-
->   hw/arm/virt.c                            |  31 ++--
->   hw/block/xen-block.c                     |   3 +-
->   hw/core/clock.c                          |   3 +-
->   hw/core/machine-qmp-cmds.c               |   3 +-
->   hw/core/machine.c                        |  13 +-
->   hw/core/qdev-prop-internal.h             |  20 +++
->   hw/core/qdev-properties-system.c         |  97 ++++++------
->   hw/core/qdev-properties.c                | 180 ++++++++++++++-------
->   hw/cpu/core.c                            |  10 +-
->   hw/cxl/cxl-host.c                        |   6 +-
->   hw/display/apple-gfx-mmio.m              |   2 +-
->   hw/display/apple-gfx-pci.m               |   2 +-
->   hw/display/apple-gfx.h                   |   1 +
->   hw/display/apple-gfx.m                   |   7 +-
->   hw/gpio/aspeed_gpio.c                    |   5 +-
->   hw/gpio/aspeed_sgpio.c                   |   3 +-
->   hw/gpio/pca9552.c                        | 261 ++++++++++++-------------------
->   hw/gpio/pca9554.c                        | 157 +++++++------------
->   hw/gpio/stm32l4x5_gpio.c                 |   5 +-
->   hw/i386/microvm.c                        |  80 ++++------
->   hw/i386/pc.c                             |  32 ++--
->   hw/i386/pc_piix.c                        |  61 +++-----
->   hw/i386/sgx-epc.c                        |   3 +-
->   hw/i386/x86.c                            | 113 ++++++-------
->   hw/ide/ide-dev.c                         |   3 +-
->   hw/input/stellaris_gamepad.c             |   2 +-
->   hw/intc/apic_common.c                    |   3 +-
->   hw/intc/arm_gicv3_common.c               |   2 +-
->   hw/intc/arm_gicv5_common.c               |   4 +-
->   hw/intc/rx_icu.c                         |   4 +-
->   hw/loongarch/virt.c                      |  87 +++++------
->   hw/mem/nvdimm.c                          |  11 +-
->   hw/mem/pc-dimm.c                         |   3 +-
->   hw/microblaze/petalogix_s3adsp1800_mmu.c |  19 ++-
->   hw/misc/arm_sysctl.c                     |   4 +-
->   hw/misc/aspeed_lpc.c                     |  73 ++++++---
->   hw/misc/aspeed_sdmc.c                    |   3 +-
->   hw/misc/mps2-scc.c                       |   2 +-
->   hw/misc/npcm7xx_mft.c                    |   3 +-
->   hw/misc/tz-ppc.c                         |  19 +--
->   hw/misc/xlnx-versal-trng.c               |  15 +-
->   hw/net/ne2000-isa.c                      |   3 +-
->   hw/net/rocker/rocker.c                   |   2 +-
->   hw/net/virtio-net.c                      |   2 +-
->   hw/nvme/ctrl.c                           |  29 ++--
->   hw/nvme/nguid.c                          |   3 +-
->   hw/nvram/xlnx-bbram.c                    |   3 +-
->   hw/nvram/xlnx-efuse.c                    |   5 +-
->   hw/nvram/xlnx-versal-efuse-ctrl.c        |   2 +-
->   hw/pci-bridge/pci_expander_bridge.c      |   3 +-
->   hw/pci-host/i440fx.c                     |  29 ++--
->   hw/pci-host/pnv_phb3.c                   |   5 +-
->   hw/pci-host/pnv_phb4.c                   |   5 +-
->   hw/pci-host/q35.c                        |   9 +-
->   hw/pci/pci.c                             |   3 +-
->   hw/ppc/spapr_caps.c                      |  39 ++---
->   hw/ppc/spapr_drc.c                       |   5 +-
->   hw/ppc/spapr_rtc.c                       |  18 ++-
->   hw/remote/vfio-user-obj.c                |  22 +--
->   hw/riscv/microchip_pfsoc.c               |   3 +-
->   hw/riscv/riscv_hart.c                    |   6 +-
->   hw/riscv/virt.c                          |  52 +++---
->   hw/rtc/mc146818rtc.c                     |  16 +-
->   hw/s390x/ccw-device.c                    |   3 +-
->   hw/s390x/css.c                           |   5 +-
->   hw/s390x/s390-pci-bus.c                  |   3 +-
->   hw/s390x/s390-virtio-ccw.c               |   4 +-
->   hw/s390x/sclpcpi.c                       |   8 +-
->   hw/s390x/virtio-ccw-mem.c                |   3 +-
->   hw/sensor/adc128d818.c                   |  16 +-
->   hw/sensor/adm1266.c                      |   3 +-
->   hw/sensor/adm1272.c                      |   9 +-
->   hw/sensor/emc141x.c                      |   9 +-
->   hw/sensor/isl_pmbus_vr.c                 |  19 +--
->   hw/sensor/lsm303dlhc_mag.c               |   9 +-
->   hw/sensor/max34451.c                     |   5 +-
->   hw/sensor/tmp105.c                       |   3 +-
->   hw/sensor/tmp421.c                       |   9 +-
->   hw/usb/dev-storage-classic.c             |   3 +-
->   hw/vfio-user/pci.c                       |   5 +-
->   hw/vfio/pci-quirks.c                     |   3 +-
->   hw/virtio/virtio-balloon.c               |  87 ++++-------
->   hw/virtio/virtio-iommu-pci.c             |   2 +-
->   hw/virtio/virtio-mem-pci.c               |   3 +-
->   hw/virtio/virtio-mem.c                   |  18 ++-
->   hw/xen/xen-pvh-common.c                  |   9 +-
->   include/chardev/char.h                   |   8 -
->   include/hw/block/block.h                 |   2 +-
->   include/hw/core/qdev-properties-system.h |   2 +
->   include/hw/core/qdev-properties.h        |  40 +++--
->   include/hw/cxl/cxl_component.h           |   5 +-
->   include/hw/i386/pc.h                     |   4 +-
->   include/qapi/qapi-type-info.h            |  32 ++++
->   include/qemu/osdep.h                     |  33 ++++
->   include/qemu/uuid.h                      |   4 +
->   include/qom/object.h                     | 171 ++++++++++++--------
->   include/system/spdm-socket.h             |  28 ++--
->   iothread.c                               |   9 +-
->   meson.build                              |   2 +
->   migration/options.c                      |   4 +-
->   monitor/qmp.c                            |  12 +-
->   net/colo-compare.c                       |  15 +-
->   net/dump.c                               |   6 +-
->   net/filter-buffer.c                      |   3 +-
->   net/filter.c                             |  10 +-
->   qapi/common.json                         |  28 ++++
->   qapi/introspect.json                     |  20 ++-
->   qapi/machine.json                        | 152 ++++++++++++++++++
->   qapi/meson.build                         |   4 +
->   qapi/pragma.json                         |   1 +
->   qapi/qom.json                            |  10 ++
->   qapi/sockets.json                        |  20 +++
->   qga/meson.build                          |   2 +
->   qom/object.c                             | 236 +++++++++++++---------------
->   qom/qom-qmp-cmds.c                       |  32 ++--
->   scripts/qapi/backend.py                  |   9 +-
->   scripts/qapi/gen.py                      |   2 +-
->   scripts/qapi/introspect.py               | 107 ++++++-------
->   scripts/qapi/schema_analysis.py          | 149 ++++++++++++++++++
->   scripts/qapi/type_infos.py               | 178 +++++++++++++++++++++
->   system/bootdevice.c                      |   3 +-
->   system/memory.c                          |  40 +----
->   target/arm/cpu64.c                       |  11 +-
->   target/arm/kvm.c                         |   3 +-
->   target/arm/tcg/cpu64.c                   |   5 +-
->   target/i386/cpu.c                        |  26 +--
->   target/i386/kvm/kvm.c                    |  38 +++--
->   target/i386/kvm/tdx.c                    |   4 +-
->   target/i386/sev.c                        |  31 ++--
->   target/i386/whpx/whpx-all.c              | 101 ++++--------
->   target/ppc/compat.c                      |   3 +-
->   target/riscv/cpu.c                       |  50 +++---
->   target/riscv/kvm/kvm-cpu.c               |   7 +-
->   target/riscv/tcg/tcg-cpu.c               |  13 +-
->   target/s390x/cpu-system.c                |   4 +-
->   target/s390x/cpu_models.c                |   5 +-
->   target/sparc/cpu.c                       |   3 +-
->   tests/include/meson.build                |   2 +
->   tests/meson.build                        |   6 +
->   tests/qapi-schema/meson.build            |   1 +
->   tests/qtest/qmp-cmd-test.c               |  55 ++++++-
->   tests/unit/check-qom-proplist.c          |  99 +++++++++---
->   tests/unit/test-qdev-global-props.c      |  11 +-
->   tests/unit/test-qdev.c                   |   2 +-
->   ui/console-vc.c                          |   8 +-
->   ui/console.c                             |   3 +-
->   ui/dbus.c                                |  18 ++-
->   ui/input-linux.c                         |  11 +-
->   util/thread-context.c                    |   7 +-
->   util/uuid.c                              |   5 +
->   172 files changed, 2510 insertions(+), 1699 deletions(-)
-> ---
-> base-commit: fa19879df1658f96ac07365fca8835b7decd6995
-> change-id: 20260510-qom-qapi-fbe0f5060c3f
-> 
-> Best regards,
-> --
-> Marc-André Lureau <marcandre.lureau@redhat.com>
+r_type = "WI" in "WithShifts" evaluates to true
+fixed by 
 
-ATB,
+if r_type == name_upper:
 
-Mark.
+
+>
+> This is the problem with relying solely on AARCHMRS?
+> Imagine a named model/management stack using _WithShifts
+> prop, and suddenly it no longer exists.
+In the unlikely case a field name has changed (again it is not the case
+here), I guess we could rely on a property alias, update the model version.
+
+Thanks!
+
+Eric
+>
+>>     IDREG_FIELD_START(ID_ISAR4_EL1, Unpriv, 0, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1533,6 +1578,7 @@ IDREG_START(ID_ISAR4_EL1)
+>> IDREG_END(ID_ISAR4_EL1)
+>>
+>> IDREG_START(ID_ISAR5_EL1)
+>> +    IDREG_FIELD(ID_ISAR5_EL1, RES0, 32, 32)
+>>     IDREG_FIELD_START(ID_ISAR5_EL1, VCMA, 28, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1541,6 +1587,7 @@ IDREG_START(ID_ISAR5_EL1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>     IDREG_FIELD_END(ID_ISAR5_EL1, RDM)
+>> +    IDREG_FIELD(ID_ISAR5_EL1, RES0, 20, 4)
+>>     IDREG_FIELD_START(ID_ISAR5_EL1, CRC32, 16, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1565,6 +1612,7 @@ IDREG_START(ID_ISAR5_EL1)
+>> IDREG_END(ID_ISAR5_EL1)
+>>
+>> IDREG_START(ID_ISAR6_EL1)
+>> +    IDREG_FIELD(ID_ISAR6_EL1, RES0, 32, 32)
+>>     IDREG_FIELD_START(ID_ISAR6_EL1, CLRBHB, 28, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1601,6 +1649,7 @@ IDREG_START(ID_ISAR6_EL1)
+>> IDREG_END(ID_ISAR6_EL1)
+>>
+>> IDREG_START(ID_MMFR0_EL1)
+>> +    IDREG_FIELD(ID_MMFR0_EL1, RES0, 32, 32)
+>>     IDREG_FIELD_START(ID_MMFR0_EL1, InnerShr, 28, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1647,6 +1696,7 @@ IDREG_START(ID_MMFR0_EL1)
+>> IDREG_END(ID_MMFR0_EL1)
+>>
+>> IDREG_START(ID_MMFR1_EL1)
+>> +    IDREG_FIELD(ID_MMFR1_EL1, RES0, 32, 32)
+>>     IDREG_FIELD_START(ID_MMFR1_EL1, BPred, 28, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1695,6 +1745,7 @@ IDREG_START(ID_MMFR1_EL1)
+>> IDREG_END(ID_MMFR1_EL1)
+>>
+>> IDREG_START(ID_MMFR2_EL1)
+>> +    IDREG_FIELD(ID_MMFR2_EL1, RES0, 32, 32)
+>>     IDREG_FIELD_START(ID_MMFR2_EL1, HWAccFlg, 28, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1733,6 +1784,7 @@ IDREG_START(ID_MMFR2_EL1)
+>> IDREG_END(ID_MMFR2_EL1)
+>>
+>> IDREG_START(ID_MMFR3_EL1)
+>> +    IDREG_FIELD(ID_MMFR3_EL1, RES0, 32, 32)
+>>     IDREG_FIELD_START(ID_MMFR3_EL1, Supersec, 28, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(15)
+>> @@ -1772,6 +1824,7 @@ IDREG_START(ID_MMFR3_EL1)
+>> IDREG_END(ID_MMFR3_EL1)
+>>
+>> IDREG_START(ID_MMFR4_EL1)
+>> +    IDREG_FIELD(ID_MMFR4_EL1, RES0, 32, 32)
+>>     IDREG_FIELD_START(ID_MMFR4_EL1, EVT, 28, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1809,6 +1862,7 @@ IDREG_START(ID_MMFR4_EL1)
+>> IDREG_END(ID_MMFR4_EL1)
+>>
+>> IDREG_START(ID_MMFR5_EL1)
+>> +    IDREG_FIELD(ID_MMFR5_EL1, RES0, 8, 56)
+>>     IDREG_FIELD_START(ID_MMFR5_EL1, nTLBPA, 4, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1822,6 +1876,7 @@ IDREG_START(ID_MMFR5_EL1)
+>> IDREG_END(ID_MMFR5_EL1)
+>>
+>> IDREG_START(ID_PFR0_EL1)
+>> +    IDREG_FIELD(ID_PFR0_EL1, RES0, 32, 32)
+>>     IDREG_FIELD_START(ID_PFR0_EL1, RAS, 28, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1863,6 +1918,7 @@ IDREG_START(ID_PFR0_EL1)
+>> IDREG_END(ID_PFR0_EL1)
+>>
+>> IDREG_START(ID_PFR1_EL1)
+>> +    IDREG_FIELD(ID_PFR1_EL1, RES0, 32, 32)
+>>     IDREG_FIELD_START(ID_PFR1_EL1, GIC, 28, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1902,6 +1958,7 @@ IDREG_START(ID_PFR1_EL1)
+>> IDREG_END(ID_PFR1_EL1)
+>>
+>> IDREG_START(ID_PFR2_EL1)
+>> +    IDREG_FIELD(ID_PFR2_EL1, RES0, 12, 52)
+>>     IDREG_FIELD_START(ID_PFR2_EL1, RAS_frac, 8, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1949,11 +2006,14 @@ IDREG_START(MIDR_EL1)
+>> IDREG_END(MIDR_EL1)
+>>
+>> IDREG_START(MPIDR_EL1)
+>> +    IDREG_FIELD(MPIDR_EL1, RES0, 40, 24)
+>>     IDREG_FIELD(MPIDR_EL1, Aff3, 32, 8)
+>> +    IDREG_FIELD(MPIDR_EL1, RES1, 31, 1)
+>>     IDREG_FIELD_START(MPIDR_EL1, U, 30, 1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>>     IDREG_FIELD_END(MPIDR_EL1, U)
+>> +    IDREG_FIELD(MPIDR_EL1, RES0, 25, 5)
+>>     IDREG_FIELD_START(MPIDR_EL1, MT, 24, 1)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -1964,6 +2024,7 @@ IDREG_START(MPIDR_EL1)
+>> IDREG_END(MPIDR_EL1)
+>>
+>> IDREG_START(MVFR0_EL1)
+>> +    IDREG_FIELD(MVFR0_EL1, RES0, 32, 32)
+>>     IDREG_FIELD_START(MVFR0_EL1, FPRound, 28, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -2002,6 +2063,7 @@ IDREG_START(MVFR0_EL1)
+>> IDREG_END(MVFR0_EL1)
+>>
+>> IDREG_START(MVFR1_EL1)
+>> +    IDREG_FIELD(MVFR1_EL1, RES0, 32, 32)
+>>     IDREG_FIELD_START(MVFR1_EL1, SIMDFMAC, 28, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -2040,6 +2102,7 @@ IDREG_START(MVFR1_EL1)
+>> IDREG_END(MVFR1_EL1)
+>>
+>> IDREG_START(MVFR2_EL1)
+>> +    IDREG_FIELD(MVFR2_EL1, RES0, 8, 56)
+>>     IDREG_FIELD_START(MVFR2_EL1, FPMisc, 4, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(1)
+>> @@ -2059,6 +2122,7 @@ IDREG_START(REVIDR_EL1)
+>> IDREG_END(REVIDR_EL1)
+>>
+>> IDREG_START(SMIDR_EL1)
+>> +    IDREG_FIELD(SMIDR_EL1, RES0, 60, 4)
+>>     IDREG_FIELD_START(SMIDR_EL1, NSMC, 56, 4)
+>>         IDREG_FIELD_ARCH_VAL(0)
+>>         IDREG_FIELD_ARCH_VAL(15)
+>> @@ -2094,6 +2158,7 @@ IDREG_START(SMIDR_EL1)
+>>         IDREG_FIELD_ARCH_VAL(2)
+>>         IDREG_FIELD_ARCH_VAL(3)
+>>     IDREG_FIELD_END(SMIDR_EL1, SH)
+>> +    IDREG_FIELD(SMIDR_EL1, RES0, 12, 1)
+>>     IDREG_FIELD(SMIDR_EL1, Affinity, 0, 12)
+>> IDREG_END(SMIDR_EL1)
+>>
+>> diff --git a/scripts/update-aarch64-cpu-sysreg-properties.py b/scripts/update-aarch64-cpu-sysreg-properties.py
+>> index e1d6c4afef..9e829fda2e 100644
+>> --- a/scripts/update-aarch64-cpu-sysreg-properties.py
+>> +++ b/scripts/update-aarch64-cpu-sysreg-properties.py
+>> @@ -81,9 +81,13 @@ def collect_fields(item, bit_offset=0):
+>>
+>>     # Normal Field Types
+>>     leaf_types = ['Fields.Field', 'Fields.ConstantField',
+>> -                  'Fields.EnumeratedField', 'Fields.Bitfield']
+>> +                  'Fields.EnumeratedField', 'Fields.Bitfield', 'Fields.Reserved']
+>>     if _type in leaf_types:
+>>         field_copy = item.copy()
+>> +
+>> +        if _type == 'Fields.Reserved' and not field_copy.get('name'):
+>> +            field_copy['name'] = item.get('value', 'RES0')
+>> +
+>>         if field_copy.get('rangeset'):
+>>             new_ranges = []
+>>             for r in field_copy['rangeset']:
+>> @@ -96,7 +100,7 @@ def collect_fields(item, bit_offset=0):
+>>         return fields
+>>
+>>     # Traverse the hierarchy for other cases
+>> -    for key in ['fields', 'values', 'fieldsets']:
+>> +    for key in ['fields', 'values', 'fieldsets', 'constants']:
+>>         for nested in item.get(key, []):
+>>             fields.extend(collect_fields(nested, bit_offset))
+>>
+>> @@ -163,44 +167,95 @@ def generate_sysreg_properties_from_registers_json(id_reg_names, raw_json_path):
+>>
+>>         final_output += f"IDREG_START({reg_name})\n"
+>>
+>> -        unique_fields = {}
+>> +        fieldset_variants = []
+>> +
+>>         for fieldset in register.get('fieldsets', []):
+>> +            current_fieldset_fields = {}
+>>             candidates = collect_fields(fieldset)
+>> +
+>>             for val in candidates:
+>> -                name = (val.get('name') or val.get('label', '')).strip()
+>> -                if not name or "RESERVED" in name.upper():
+>> +                raw_name = val.get('name') or val.get('label') or val.get('value') or ''
+>> +                name = raw_name.strip()
+>> +                if not name:
+>>                     continue
+>> +
+>> +                name_upper = name.upper()
+>> +
+>> +                # Check for architectural target states, including UNKNOWN remapping
+>> +                base_reserved = None
+>> +                for r_type in ["RES0", "RES1", "RAZ", "RAO", "WI", "UNKNOWN"]:
+>> +                    if r_type in name_upper:
+>> +                        base_reserved = "RES0" if r_type == "UNKNOWN" else r_type
+>> +                        break
+>> +
+>> +                is_valid_reserved = base_reserved is not None
+>> +                if "RESERVED" in name_upper and not is_valid_reserved:
+>> +                    continue
+>> +
+>> +                # Force naming uniformity across padding blocks
+>> +                if is_valid_reserved:
+>> +                    name = base_reserved
+>> +
+>>                 for r in val.get('rangeset', []):
+>>                     lsb = int(r.get('start'))
+>>                     width = r.get('width')
+>>                     msb = lsb + int(width) - 1
+>>
+>> -                    # Only keep the fields with the highest MSB
+>> -                    # needed fir CCSIDR_EL1
+>> -                    if name not in unique_fields or msb > unique_fields[name]['msb']:
+>> -                        # extract enum values if any
+>> +                    if is_valid_reserved:
+>> +                        unique_key = f"{name}_{lsb}"
+>> +                    else:
+>> +                        unique_key = name
+>> +
+>> +                    if unique_key not in current_fieldset_fields or \
+>> +                       msb > current_fieldset_fields[unique_key]['msb']:
+>>                         enums = extract_field_enums(val)
+>> -                        unique_fields[name] = {'lsb': lsb, 'msb': msb, 'width': width, 'enums': enums}
+>> +                        current_fieldset_fields[unique_key] = {
+>> +                            'raw_name': name,
+>> +                            'lsb': lsb,
+>> +                            'msb': msb,
+>> +                            'width': width,
+>> +                            'enums': enums
+>> +                        }
+>> +
+>> +            if current_fieldset_fields:
+>> +                fieldset_variants.append(current_fieldset_fields)
+>> +
+>> +        best_fieldset = {}
+>> +        max_total_width = -1
+>> +
+>> +        for variant in fieldset_variants:
+>> +            total_width = sum(f['width'] for f in variant.values())
+>> +            # prioritize layout variants with the highest MSB coverage
+>> +            max_msb = max(f['msb'] for f in variant.values()) if variant else 0
+>> +
+>> +            # Combine width and max_msb into a fitness score tuple
+>> +            if (total_width, max_msb) > (max_total_width, max_total_width):
+>> +                max_total_width = total_width
+>> +                best_fieldset = variant
+>> +
+>> +        unique_fields = best_fieldset
+>>
+>>         # Sort decreasing lsbs
+>>         sorted_fields = sorted(unique_fields.items(),
+>>                                key=lambda x: x[1]['lsb'], reverse=True)
+>>
+>> -        for name, bits in sorted_fields:
+>> +        for unique_key, bits in sorted_fields:
+>>             enums_list = bits.get('enums', [])
+>>
+>> +            clean_name = bits.get('raw_name', unique_key)
+>> +
+>>             if enums_list:
+>>                line = (f"    IDREG_FIELD_START({reg_name}, "
+>> -                       f"{name}, {bits['lsb']}, {bits['width']})\n")
+>> +                       f"{clean_name}, {bits['lsb']}, {bits['width']})\n")
+>>             else:
+>>                line = (f"    IDREG_FIELD({reg_name}, "
+>> -                       f"{name}, {bits['lsb']}, {bits['width']})\n")
+>> +                       f"{clean_name}, {bits['lsb']}, {bits['width']})\n")
+>>             final_output += line
+>>             # add the enum value definition if any
+>>             for enum_item in enums_list:
+>>                 final_output += (f"        IDREG_FIELD_ARCH_VAL({enum_item['value']})\n")
+>>             if enums_list:
+>> -               line = (f"    IDREG_FIELD_END({reg_name}, {name})\n")
+>> +               line = (f"    IDREG_FIELD_END({reg_name}, {clean_name})\n")
+>>                final_output += line
+>>
+>>         final_output += f"IDREG_END({reg_name})\n"
+>> -- 
+>> 2.53.0
+>>
 
 
