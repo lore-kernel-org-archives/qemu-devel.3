@@ -4,141 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEA05C61DB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:40:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD2F2C61DBD
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:40:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyysF-00087l-64; Tue, 25 Aug 2026 17:40:03 -0400
+	id 1wyyr4-0005qu-6H; Tue, 25 Aug 2026 17:38:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wyysC-0007t8-QD
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:40:00 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wyyr2-0005px-4t
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:48 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wyysA-0005HE-Gn
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:40:00 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67PL9vPW1924612
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 21:39:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- sE6GUJhkl6GxUY02yU0z0SlZ8W1ZyKCg2wbCHeQI7z8=; b=Ks4qrzxZdtoNpeMC
- wLDzxYWAkanLR39Ou1lb17PJbK81FAMYrp2kpwhBMUL+PqT4gkoKxPRj15EKMroc
- +fi6n9GLQeIFZlqTW0uh42Zmh/fGhqAO7rgW/gDJYIG7a2mfOj86HOeAFs3W4KQr
- prkoAiWcTpGLe5qI5/nkfIa87HTd0lTTUlmVHQElgTPBzMYfnWHzIY0aDPqzcU3K
- JXPieDcisQAHezY0EtJWmNX6qnHTPAA5JV9u06cWzLPFq+6M2k1hCykKFb0ejOKE
- puaXpeoYc8NRsKW0JB3p5ZCM3P540i91zqdgSznaTmYyBdZj39xrOxa+RPmz49nm
- TiUa0Q==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g9f9urvqc-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 21:39:56 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-52d827597fbso3291941cf.0
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 14:39:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787693996; x=1788298796; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=sE6GUJhkl6GxUY02yU0z0SlZ8W1ZyKCg2wbCHeQI7z8=;
- b=T7r1zlhobn8YCSKmTrwx9slJLBZSkOj15dO8foP9NDBR6tv6X09fVmLD6w+Pp6Cw9H
- EjTFtjSE3tX84RU+JgAoy2w3RIrZ82uZ58OD6adxGAXl9z3T6AWhe7SFOlGxlG5X1WoI
- EIvflf/lxD6WFofF0zVuTmDo/Wxt3g9zcE8d7g/dCbXpDcng8fiwjIjMx5F61CU7/U/r
- hWi2BBI+rUWTEOT/SfMHM7sWJryzYUZzXLipIhF/nUbOwTRp9C6xZAXsw1gNUKAuzVvr
- 6ik8RkJpxJTWSwcftCvqnASwunO35spTzZdb5yTIlTsuUX1F3Pxf1sUAz2gXXXveJ+eh
- jrAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787693996; x=1788298796;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=sE6GUJhkl6GxUY02yU0z0SlZ8W1ZyKCg2wbCHeQI7z8=;
- b=VNez3/ZP9VEmFlIErtU0yiVgLZYEJWG/ZEQtWscZZ5HuS2ic/kAOK1d/qKkp+xw6sP
- xs3v4fREseBz0mbqm+p4bAeOGuqmu0GgWy+jmSW5mvuihAN7N76E3l7fmW8p45W2hO2l
- chvYmdn/Qv+C0R8652HT7SAw1rGbdpqu0K4sicGJwM1Anoa0fZGh2V4b9go8y7B37Ny6
- QKuI+tgg7OXKyYS4ssDEJAExmvFJdF/CGTUiqj20Sv0wZ5rPFtr4xLv4ZAmxsYPucWZ2
- KhHpoeBbP1/Q6Owi27K7urHCJpD7YrLBJvqIBzZMILsfG/t1EClwtiY7EajS6IlKHW8b
- aNzA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rp3fMNMDayDONeVyIjjA4normDA/HKrFBjS0EXXoYZ4iY+aAS6Wx07pkhc4xxHLLmtDl2alIDVmfbh+@nongnu.org
-X-Gm-Message-State: AFuF++ktYhPCx5F04vbol97LjJC5u/7h8Y+dCXXz2Ebj1EgALRHwllc6
- 3k5EIkPLfJ1k4ti77F9pVeo5AqSxBERpSVH3AQn3pOTFeuz5+lsbfURSDqug3704VoZ/F69h6wQ
- PpswbWEW76Uuu4UOLQoS4/4cuGFnDEEQBkMbIYLwpi80vqKCIuIi8oM/5uA==
-X-Gm-Gg: AR+sD13eVtTe25tTZ0+tj8AetK4CwA44UsKlKYNL4CWmaT8c1TSovg6JkPTUYpU/UJ7
- Etq2O28CzUQ5DJqpZGBMySu7VVsyq7AiHFaFqhAX9Fozki2ClYuahNGZZ3xAzF2w67sGHNYWrMd
- CGwSbvcaRpP8yTc6kR/8G2bE5UWKxMVZQJr7RSP7HVwQNGMXI4V3DCdpQj3nyglOsUUJtnlq+MV
- TyCN0xcKjpO4CdPze9zOnZuHqS7MkCUjJJhgrV17eL2zuZoqOX98cMRywPg4D8r/Iaa875g96w9
- O7CscAsLFYvsxUbuYTItNFKEyDuo+crJtD1uObZRFlWg49ZM6UJnJVHbPWQ3vxtXXaU+mrCgF56
- chcb1858FSs/FMBX6/zlP2F+43Rs5ZKwbTucFslKhoRy6xHVcI3s=
-X-Received: by 2002:a05:622a:110f:b0:519:8998:661b with SMTP id
- d75a77b69052e-52e423226edmr21722551cf.20.1787693996072; 
- Tue, 25 Aug 2026 14:39:56 -0700 (PDT)
-X-Received: by 2002:a05:622a:110f:b0:519:8998:661b with SMTP id
- d75a77b69052e-52e423226edmr21722141cf.20.1787693995624; 
- Tue, 25 Aug 2026 14:39:55 -0700 (PDT)
-Received: from [192.168.20.232] (82-66-243-121.subs.proxad.net.
- [82.66.243.121]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499dca8c75csm5661745e9.2.2026.08.25.14.39.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Aug 2026 14:39:54 -0700 (PDT)
-Message-ID: <e3243ebb-9089-43a3-aadc-29cde5e658de@oss.qualcomm.com>
-Date: Tue, 25 Aug 2026 23:39:53 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wyyr0-00053y-04
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:47 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:39a2:0:640:ae2d:0])
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id B2B7180DEE;
+ Wed, 26 Aug 2026 00:38:44 +0300 (MSK)
+Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:630::1:39])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id QckKa93ZVmI0-ucqWFj1u; Wed, 26 Aug 2026 00:38:43 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1787693923;
+ bh=/AXpb6OUWSDqBackO6RIHEDCxosPL8T5bL7ACTRrjKY=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=hCE9R6WY8GWoh7iOM0pzuoaVNgKrLaf3+NJDMOsV88d6UleIuJ3JdnmXzGsd3M579
+ gIeN+LWdRod34DMNN9paDdFNniOMXhZA2HO0jTZ76N2fzJOUScqqabhLAHnPTzTvlg
+ W+mhB9yZBvqviq/WKdYCOrpPxGJsq8yNxuWxm5M8=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: peterx@redhat.com
+Cc: farosas@suse.de, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH 14/30] hw/display/virtio-gpu: move to new migration APIs
+Date: Wed, 26 Aug 2026 00:37:54 +0300
+Message-ID: <20260825213811.3725682-15-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
+References: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] target/arm: Introduce cpu types max-v8 and max-v9
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20260825213000.221822-1-richard.henderson@linaro.org>
- <20260825213000.221822-3-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260825213000.221822-3-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: MrNpNxuLNtUwJPqXggShFPqiuvnvVREl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDE4NCBTYWx0ZWRfX/tL7U3ioF9hq
- oq1h0H61GsHRS/beyuBxdrNXGZ3RjbIz+HjFKd5lbeA+XfnF5af0BTmulKXeZB0lblTN0jDMZ3L
- lkOI24z2lJriAAbZdEOnLC+Eeh1Nz+IQgOFxErYxqeWn67Ui72Qky2U28ex0OnumWiaHMIepjTr
- i+1KMFe7YdU3i/kfZbQsafRHB33T0XDoeHVbYFgIZLz14PaWLvQgysluNqZOJpkwh/pV5AbxU9T
- bqy0pigGtL84jYeBirOmh1X5OnmSKutHiAndhNZNktjvA27pBZ8qYKxCpcI7k1zZtmqHtGackOz
- 3LvjsRNFUjVilNaxq5iITZG1zv7lWFZ/it1sEDyLVhhtDAtj1PSMMzznE6mNy/dqtXbKM5KDLBu
- MbNctPcm/vk6puuDnSfyBEGJ0urrefDMDJEYhxQ7a2aNwhs942HCvY/JKZA3QZfsNOiL6Vpssjw
- 1EupeZYIB4MuLiqnDlw==
-X-Authority-Analysis: v=2.4 cv=acNRWxot c=1 sm=1 tr=0 ts=6a8e0bac cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=lbskcjEx90pOFJH4cTSgiA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDE4NCBTYWx0ZWRfX2gX7jJh01Cyx
- W4eb04Hv2QUk79HBjTsOIgCrKp7gdMv+1quEV33MSDhwPGfAsbNeIGh59wAeUtaQmpg8TFtJD9g
- q0cdVxmbij8bpMqIip5L4L37/0kwiA8=
-X-Proofpoint-ORIG-GUID: MrNpNxuLNtUwJPqXggShFPqiuvnvVREl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-25_06,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 clxscore=1015 phishscore=0 impostorscore=0
- malwarescore=0 priorityscore=1501 spamscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608250184
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,17 +76,285 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/8/26 23:29, Richard Henderson wrote:
-> Introduce the names and allow them with the virt and sbsa-ref
-> machine types.  So far, the cpu types both exactly match "max".
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   hw/arm/sbsa-ref.c      | 2 ++
->   hw/arm/virt.c          | 2 ++
->   target/arm/tcg/cpu32.c | 4 ++++
->   target/arm/tcg/cpu64.c | 2 ++
->   4 files changed, 10 insertions(+)
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ hw/display/virtio-gpu.c | 99 ++++++++++++++++++++++-------------------
+ 1 file changed, 52 insertions(+), 47 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index fbb6fec7a0a..1af640accdc 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1308,13 +1308,13 @@ static const VMStateDescription vmstate_virtio_gpu_scanouts = {
+     },
+ };
+ 
+-static int virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
+-                           const VMStateField *field, JSONWriter *vmdesc)
++static bool virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
++                            const VMStateField *field, JSONWriter *vmdesc,
++                            Error **errp)
+ {
+     VirtIOGPU *g = opaque;
+     struct virtio_gpu_simple_resource *res;
+-    Error *err = NULL;
+-    int i, ret;
++    int i;
+ 
+     /* in 2d mode we should never find unprocessed commands here */
+     assert(QTAILQ_EMPTY(&g->cmdq));
+@@ -1337,12 +1337,7 @@ static int virtio_gpu_save(QEMUFile *f, void *opaque, size_t size,
+     }
+     qemu_put_be32(f, 0); /* end of list */
+ 
+-    ret = vmstate_save_state(f, &vmstate_virtio_gpu_scanouts, g, NULL,
+-                             &err);
+-    if (ret < 0) {
+-        error_report_err(err);
+-    }
+-    return ret;
++    return vmstate_save_vmsd(f, &vmstate_virtio_gpu_scanouts, g, NULL, errp);
+ }
+ 
+ static bool virtio_gpu_load_restore_mapping(VirtIOGPU *g,
+@@ -1374,14 +1369,13 @@ static bool virtio_gpu_load_restore_mapping(VirtIOGPU *g,
+     return true;
+ }
+ 
+-static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
+-                           const VMStateField *field)
++static bool virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
++                            const VMStateField *field, Error **errp)
+ {
+     VirtIOGPU *g = opaque;
+-    Error *err = NULL;
+     struct virtio_gpu_simple_resource *res;
+     uint32_t resource_id, pformat, hostmem, rowstride_bytes;
+-    int i, ret;
++    int i;
+ 
+     g->hostmem = 0;
+ 
+@@ -1389,7 +1383,8 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
+     while (resource_id != 0) {
+         res = virtio_gpu_find_resource(g, resource_id);
+         if (res) {
+-            return -EINVAL;
++            error_setg(errp, "Failed to find resource %" PRIu32, resource_id);
++            return false;
+         }
+ 
+         res = g_new0(struct virtio_gpu_simple_resource, 1);
+@@ -1402,14 +1397,16 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
+         /* allocate */
+         pformat = virtio_gpu_get_pixman_format(res->format);
+         if (!pformat) {
++            error_setg(errp, "Unknown pixman format %" PRIu32, res->format);
+             g_free(res);
+-            return -EINVAL;
++            return false;
+         }
+ 
+         if (!calc_image_hostmem(pformat, res->width, res->height,
+                                 &hostmem, &rowstride_bytes)) {
+             g_free(res);
+-            return -EINVAL;
++            error_setg(errp, "Failed to calculate image hostmem");
++            return false;
+         }
+         res->hostmem = hostmem;
+         if (!qemu_pixman_image_new_shareable(&res->image,
+@@ -1419,10 +1416,9 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
+                                              res->width,
+                                              res->height,
+                                              rowstride_bytes,
+-                                             &err)) {
+-            warn_report_err(err);
++                                             errp)) {
+             g_free(res);
+-            return -EINVAL;
++            return false;
+         }
+ 
+         res->addrs = g_try_new(uint64_t, res->iov_cnt);
+@@ -1432,7 +1428,8 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
+             g_free(res->addrs);
+             g_free(res->iov);
+             g_free(res);
+-            return -EINVAL;
++            error_setg(errp, "Failed to allocate iov arrays");
++            return false;
+         }
+ 
+         /* read data */
+@@ -1446,22 +1443,20 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
+         if (!virtio_gpu_load_restore_mapping(g, res)) {
+             pixman_image_unref(res->image);
+             g_free(res);
+-            return -EINVAL;
++            error_setg(errp, "Failed to load restore mapping");
++            return false;
+         }
+ 
+         resource_id = qemu_get_be32(f);
+     }
+ 
+     /* load & apply scanout state */
+-    ret = vmstate_load_state(f, &vmstate_virtio_gpu_scanouts, g, 1, &err);
+-    if (ret < 0) {
+-        error_report_err(err);
+-    }
+-    return ret;
++    return vmstate_load_vmsd(f, &vmstate_virtio_gpu_scanouts, g, 1, errp);
+ }
+ 
+-static int virtio_gpu_blob_save(QEMUFile *f, void *opaque, size_t size,
+-                                const VMStateField *field, JSONWriter *vmdesc)
++static bool virtio_gpu_blob_save(QEMUFile *f, void *opaque, size_t size,
++                                 const VMStateField *field, JSONWriter *vmdesc,
++                                 Error **errp)
+ {
+     VirtIOGPU *g = opaque;
+     struct virtio_gpu_simple_resource *res;
+@@ -1485,11 +1480,11 @@ static int virtio_gpu_blob_save(QEMUFile *f, void *opaque, size_t size,
+     }
+     qemu_put_be32(f, 0); /* end of list */
+ 
+-    return 0;
++    return true;
+ }
+ 
+-static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
+-                                const VMStateField *field)
++static bool virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
++                                 const VMStateField *field, Error **errp)
+ {
+     VirtIOGPU *g = opaque;
+     struct virtio_gpu_simple_resource *res;
+@@ -1500,7 +1495,8 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
+     while (resource_id != 0) {
+         res = virtio_gpu_find_resource(g, resource_id);
+         if (res) {
+-            return -EINVAL;
++            error_setg(errp, "Failed to find resource %" PRIu32, resource_id);
++            return false;
+         }
+ 
+         res = g_new0(struct virtio_gpu_simple_resource, 1);
+@@ -1514,7 +1510,8 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
+             g_free(res->addrs);
+             g_free(res->iov);
+             g_free(res);
+-            return -EINVAL;
++            error_setg(errp, "Failed to allocate iov arrays");
++            return false;
+         }
+ 
+         /* read data */
+@@ -1525,15 +1522,19 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
+ 
+         if (res->iov_cnt > 0 &&
+             iov_size(res->iov, res->iov_cnt) < res->blob_size) {
++            error_setg(errp, "iov size %" PRIu64 " < blob_size %" PRIu64,
++                       (uint64_t)iov_size(res->iov, res->iov_cnt),
++                       res->blob_size);
+             g_free(res->addrs);
+             g_free(res->iov);
+             g_free(res);
+-            return -EINVAL;
++            return false;
+         }
+ 
+         if (!virtio_gpu_load_restore_mapping(g, res)) {
+             g_free(res);
+-            return -EINVAL;
++            error_setg(errp, "Failed to load restore mapping");
++            return false;
+         }
+ 
+         virtio_gpu_init_udmabuf(res);
+@@ -1541,10 +1542,10 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
+         resource_id = qemu_get_be32(f);
+     }
+ 
+-    return 0;
++    return true;
+ }
+ 
+-static int virtio_gpu_post_load(void *opaque, int version_id)
++static bool virtio_gpu_post_load(void *opaque, int version_id, Error **errp)
+ {
+     VirtIOGPU *g = opaque;
+     struct virtio_gpu_scanout *scanout;
+@@ -1559,7 +1560,9 @@ static int virtio_gpu_post_load(void *opaque, int version_id)
+ 
+         res = virtio_gpu_find_resource(g, scanout->resource_id);
+         if (!res) {
+-            return -EINVAL;
++            error_setg(errp, "Failed to find resource %" PRIu32,
++                       scanout->resource_id);
++            return false;
+         }
+ 
+         if (scanout->fb.format != 0) {
+@@ -1572,12 +1575,14 @@ static int virtio_gpu_post_load(void *opaque, int version_id)
+             };
+ 
+             if (!virtio_gpu_do_set_scanout(g, i, &scanout->fb, res, &r, &error)) {
+-                return -EINVAL;
++                error_setg(errp, "Failed to set scanout");
++                return false;
+             }
+         } else {
+             /* legacy v1 migration support */
+             if (!res->image) {
+-                return -EINVAL;
++                error_setg(errp, "No image");
++                return false;
+             }
+             scanout->ds = qemu_create_displaysurface_pixman(res->image);
+             qemu_displaysurface_set_share_handle(scanout->ds, res->share_handle, 0);
+@@ -1591,7 +1596,7 @@ static int virtio_gpu_post_load(void *opaque, int version_id)
+         res->scanout_bitmask |= (1 << i);
+     }
+ 
+-    return 0;
++    return true;
+ }
+ 
+ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
+@@ -1777,8 +1782,8 @@ const VMStateDescription vmstate_virtio_gpu_blob_state = {
+             .name = "virtio-gpu/blob",
+             .info = &(const VMStateInfo) {
+                 .name = "blob",
+-                .get = virtio_gpu_blob_load,
+-                .put = virtio_gpu_blob_save,
++                .load = virtio_gpu_blob_load,
++                .save = virtio_gpu_blob_save,
+             },
+             .flags = VMS_SINGLE,
+         } /* device */,
+@@ -1804,8 +1809,8 @@ static const VMStateDescription vmstate_virtio_gpu = {
+             .name = "virtio-gpu",
+             .info = &(const VMStateInfo) {
+                         .name = "virtio-gpu",
+-                        .get = virtio_gpu_load,
+-                        .put = virtio_gpu_save,
++                        .load = virtio_gpu_load,
++                        .save = virtio_gpu_save,
+             },
+             .flags = VMS_SINGLE,
+         } /* device */,
+@@ -1815,7 +1820,7 @@ static const VMStateDescription vmstate_virtio_gpu = {
+         &vmstate_virtio_gpu_blob_state,
+         NULL
+     },
+-    .post_load = virtio_gpu_post_load,
++    .post_load_errp = virtio_gpu_post_load,
+ };
+ 
+ static const Property virtio_gpu_properties[] = {
+-- 
+2.43.0
+
 
