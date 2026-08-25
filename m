@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED180C61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:12:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB497C61DB9
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:12:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wywYr-0006n9-ER; Tue, 25 Aug 2026 15:11:53 -0400
+	id 1wywYC-0004zM-87; Tue, 25 Aug 2026 15:11:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywYp-0006it-PW
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:11:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wywY4-0004fP-DY
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:11:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywYo-0004Ie-5y
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:11:51 -0400
+ id 1wywY2-0003yh-7u
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:11:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787685109;
+ s=mimecast20190719; t=1787685061;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yzt3oQVtBjQ6TrWLxwLxcXzi8FaWAeSdiEMxpCf792k=;
- b=JLxi+Y6xIVHlWCDQ+Bnf/yf+uX93s/+ADk+RJdbyIQBwaQuyu3p+FIkeXBc0oXWwA0K67m
- aXwTSvmKtS3QTtwhS/4ibh1BD6ugqz7ioWW29bS3XA8cmKfdaS0DfUd4rSt5va3QTOiXlU
- HFeD3iB/nPQZYx3XQ/bRvMX+nxcoRas=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=WuTj5x+fSNUVNN2LMJ3vFG3XqkgK85waEsJYQTSVFbk=;
+ b=YCDW2LuZ/ovtyGv7qMTq181S+l5RQyMwnz75f7lA8+tUuENkT9lc3Hlle2ZFZ6svcgEVuB
+ su8ALFP/r2YlA4pAKVxgWFR+vgfrYRsGrCUHVxqjoPoqybUXGbcN0BucCcykQbW1FCr55V
+ Qtd3YVzM7w3EoVlrAOGexOOfwJUm3bk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-25-fBnZphbrNqyG1Tao6AdBqA-1; Tue,
- 25 Aug 2026 15:11:44 -0400
-X-MC-Unique: fBnZphbrNqyG1Tao6AdBqA-1
-X-Mimecast-MFC-AGG-ID: fBnZphbrNqyG1Tao6AdBqA_1787685103
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-570-yEhIdn6CPtari-MisAhohA-1; Tue,
+ 25 Aug 2026 15:10:57 -0400
+X-MC-Unique: yEhIdn6CPtari-MisAhohA-1
+X-Mimecast-MFC-AGG-ID: yEhIdn6CPtari-MisAhohA_1787685056
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9180D195FCDD; Tue, 25 Aug 2026 19:11:43 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 940EF188FECA; Tue, 25 Aug 2026 19:10:56 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AA80218005B4; Tue, 25 Aug 2026 19:11:42 +0000 (UTC)
+ id C04A118005BE; Tue, 25 Aug 2026 19:10:55 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 25 Aug 2026 23:09:34 +0400
-Subject: [PATCH v4 27/49] system: guard HMP initialization paths with
- CONFIG_HMP
+Date: Tue, 25 Aug 2026 23:09:21 +0400
+Subject: [PATCH v4 14/49] tests/qtest/numa-test: replace HMP "info numa"
+ with QMP query-cpus-fast
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260825-qemu-no-hmp-v4-27-af60857c2fbe@redhat.com>
+Message-Id: <20260825-qemu-no-hmp-v4-14-af60857c2fbe@redhat.com>
 References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 In-Reply-To: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 To: qemu-devel@nongnu.org
@@ -63,36 +63,36 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  dave@treblig.org, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3769;
+ Markus Armbruster <armbru@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4041;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=NucbtIkSZZwE1hWWqwuXD6cB2sdzfg9xAMRVv7YI8qM=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiHmPXkF3RVXsr4PZ/1i7esYGY507DN3TpM9
- 6qJ44NhXGqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3ohwAKCRDa6OEJdZac
- 5aOTD/4uoq/bC8vlV8lhYO8qHL8TGSuCRVT3DUglYBajMJGg3r9gGa8Ghe7/TTO2ReSiVS+4RTF
- nDR135Zl5cF0ExSxQintwYuGjEs6SWAaOD6ZFKxzaC6jiXnys1XTuyoIlnP7td2+15s9lOfaV48
- 8xj5LerhXbzwi/RfL4PlElrGV+4wsqa4KhHox4SRlB6DOlzuRUW8BSCCKFYweK0hIaxrCyQRROy
- 85OOsHHXYiP7FGjnSpS2KYiFRt3+7jBuUrL4ixnFe55lkcdL0RrtIi6youQsKu7f91NanszLO6S
- iWpiIOKyckEb/zLtrMbEnMucMS53xDN46OwYinmVclCws9WXXvhf4C6IpBmv5/Kqfo23S4t0VGT
- d1ZQSTwUQCyuCCWXSJ8BTOzXOADZXxQYFM94lcapYopO3oEo9JuZnaV0IKJuH9L9Xi0+sYJwlGi
- R0f17bIv44dZghvFt82VdO6jbi5yK4a+o8z3x+Hzqk+Nl477ilT0OYe6d4Eeg7pn/LKNz5gCOye
- 0YC40E9ILL/uFXFNyENkLkZweRKI4ZKbm1M9UB5jKoZwuBpFNtD0U1a9UvJXhh8ugzD+YMm/ucB
- mbeUJPnvDHqM9losBsWg/RcEo7Zg3kskbwX+7+YrKtHuJoHlgGRb3xyypjBZl8QrClUhYa84m2h
- orjZmgSIojMbksg==
+ bh=+FBAR2ZPq7hb97oLmYP2VfmJ5ZxlMcXNs2ksRVhW/zk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiHy5MYCOjiCt5u/tQW/JwoviNOE+jQJfUDX
+ e7pRSj7Kv+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3ohwAKCRDa6OEJdZac
+ 5b0qEACzgTH5Uh3dWORJxGtDpTlvVactUkvpNsbq73QQm6P8dmaA0UgI+DA51YUhReNS82JjdRa
+ IIU7SkQzkL/a7vEC44oiHVChntDp6J5yWJp9f6EPEkrQffxeKMN8UcxvBfNmwXYTgZyro/cvIvW
+ T2+jrYHyDRdNraj5mYTLByN1mbWLWbbLlJqPdI3aysYPdHn8sEt+UwAH9A04trg0Zp85ndzklUg
+ otuBKouhLMxOGBfLku8iQYsToVLx8MJA6m7b2xW+PMEMdt1lGVY+T4sWM3q/KLbaP9WTocdN2gK
+ 9tiiHZSTna8MwEgjAwIsygrFirFAzu2gd5zBvRXUhZPcnbIMC6TYxYl2rHCKW2ZaScT/xTWmrtN
+ 3X/BZV6LGLg7LhK5u+kDR90elYLE33Ojr1QyWkZb/B44drldPR7RIviyR6qhlj/hFP7cTcHT4kX
+ kvzsRGXMa41IDvWAR7/bfH/pIsVcifVcuTSL3gKReqzeSPzp3LG/q0YjkXiFy39UL/ngp7j0Hmp
+ IvgTmo0zQHYBqU3ASwXl+Voe65djrioK+8N45dfJqduqiGDMW90yOr7RlHX17XXH0aOivmv6bYC
+ QILnyz4kCMPiX0TWUAhCfE9gx3/86mxfwy0qBKCBB+/R1iMvniMhfCQDGHMx4HKlxiTUzuRYBjt
+ ZKj/TjC3z25XNqA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,116 +108,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- disable default monitor when HMP is not available
-- hide 'readline' from -mon help text
-- error out on mux chardev monitor when no HMP
-- skip HMP monitor terminal for gdb, return E01 for 'qRcmd' remote
-  commands
+Convert the three test functions that relied on HMP "info numa" to use
+QMP "query-cpus-fast" instead, verifying each CPU's node-id through the
+structured response. Add a check_cpu_node() helper for the per-CPU
+assertions.
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- chardev/char.c   | 9 ++++++++-
- gdbstub/system.c | 8 ++++++++
- qemu-options.hx  | 6 +++++-
- system/vl.c      | 4 ++++
- 4 files changed, 25 insertions(+), 2 deletions(-)
+ tests/qtest/numa-test.c | 63 +++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 51 insertions(+), 12 deletions(-)
 
-diff --git a/chardev/char.c b/chardev/char.c
-index 22e5bae388ad..c6c8133f5c1d 100644
---- a/chardev/char.c
-+++ b/chardev/char.c
-@@ -804,8 +804,9 @@ static Chardev *qemu_chr_new_from_name(const char *label, const char *filename,
-     }
- 
-     if (qemu_opt_get_bool(opts, "mux", 0)) {
--        const char *chardev_id = qemu_opts_id(opts);
-         assert(permit_mux_mon);
-+#ifdef CONFIG_HMP
-+        const char *chardev_id = qemu_opts_id(opts);
-         monitor_new_hmp(NULL, chardev_id, true, &err);
-         if (err) {
-             error_report_err(err);
-@@ -813,6 +814,12 @@ static Chardev *qemu_chr_new_from_name(const char *label, const char *filename,
-             chr = NULL;
-             goto out;
-         }
-+#else
-+        error_report("HMP monitor is disabled");
-+        object_unparent(OBJECT(chr));
-+        chr = NULL;
-+        goto out;
-+#endif
-     }
- 
- out:
-diff --git a/gdbstub/system.c b/gdbstub/system.c
-index c77d067ab458..070bc26f416c 100644
---- a/gdbstub/system.c
-+++ b/gdbstub/system.c
-@@ -387,10 +387,14 @@ bool gdbserver_start(const char *device, Error **errp)
- 
-         qemu_add_vm_change_state_handler(gdb_vm_state_change, NULL);
- 
-+#ifdef CONFIG_HMP
-         /* Initialize a monitor terminal for gdb */
-         mon_chr = qemu_chardev_new(NULL, TYPE_CHARDEV_GDB,
-                                    NULL, NULL, &error_abort);
-         monitor_new_hmp(NULL, mon_chr->label, false, &error_abort);
-+#else
-+        mon_chr = NULL;
-+#endif
-     } else {
-         qemu_chr_fe_deinit(&gdbserver_system_state.chr, true);
-         mon_chr = gdbserver_system_state.mon_chr;
-@@ -524,10 +528,14 @@ void gdb_handle_query_rcmd(GArray *params, void *ctx)
-     len = len / 2;
-     gdb_hextomem(gdbserver_state.mem_buf, gdb_get_cmd_param(params, 0)->data, len);
-     g_byte_array_append(gdbserver_state.mem_buf, &zero, 1);
-+#ifdef CONFIG_HMP
-     qemu_chr_be_write(gdbserver_system_state.mon_chr,
-                       gdbserver_state.mem_buf->data,
-                       gdbserver_state.mem_buf->len);
-     gdb_put_packet("OK");
-+#else
-+    gdb_put_packet("E01");
-+#endif
+diff --git a/tests/qtest/numa-test.c b/tests/qtest/numa-test.c
+index d657f3894743..8f563c079f62 100644
+--- a/tests/qtest/numa-test.c
++++ b/tests/qtest/numa-test.c
+@@ -19,19 +19,50 @@ static char *make_cli(const GString *generic_cli, const char *test_cli)
+     return g_strdup_printf("%s %s", generic_cli->str, test_cli);
  }
  
- /*
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 34970fffc94b..680344162efb 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4985,7 +4985,11 @@ SRST
- ERST
++static void check_cpu_node(QTestState *qts, int cpu_idx, int expected_node)
++{
++    QDict *resp;
++    QList *cpus;
++    QListEntry *e;
++    bool found = false;
++
++    resp = qtest_qmp(qts, "{ 'execute': 'query-cpus-fast' }");
++    g_assert(resp);
++    g_assert(qdict_haskey(resp, "return"));
++    cpus = qdict_get_qlist(resp, "return");
++    g_assert(cpus);
++
++    QLIST_FOREACH_ENTRY(cpus, e) {
++        QDict *cpu = qobject_to(QDict, qlist_entry_obj(e));
++        int64_t idx = qdict_get_int(cpu, "cpu-index");
++        if (idx == cpu_idx) {
++            QDict *props = qdict_get_qdict(cpu, "props");
++            g_assert(qdict_haskey(props, "node-id"));
++            g_assert_cmpint(qdict_get_int(props, "node-id"), ==, expected_node);
++            found = true;
++            break;
++        }
++    }
++    g_assert(found);
++    qobject_unref(resp);
++}
++
+ static void test_mon_explicit(const void *data)
+ {
+     QTestState *qts;
+-    g_autofree char *s = NULL;
+     g_autofree char *cli = NULL;
++    int i;
  
- DEF("mon", HAS_ARG, QEMU_OPTION_mon, \
--    "-mon [chardev=]name[,mode=readline|control][,pretty=on|off]\n", QEMU_ARCH_ALL)
-+    "-mon [chardev=]name[,mode="
-+#ifdef CONFIG_HMP
-+    "readline|"
-+#endif
-+    "control][,pretty=on|off]\n", QEMU_ARCH_ALL)
- SRST
- ``-mon [chardev=]name[,mode=readline|control][,pretty=on|off]``
-     Set up a monitor connected to the chardev ``name``.
-diff --git a/system/vl.c b/system/vl.c
-index 5ccc19282ba2..760cf6e7265a 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -199,7 +199,11 @@ static int has_defaults = 1;
- static int default_audio = 1;
- static int default_serial = 1;
- static int default_parallel = 1;
-+#ifdef CONFIG_HMP
- static int default_monitor = 1;
-+#else
-+static int default_monitor; /* false */
-+#endif
- static int default_floppy = 1;
- static int default_cdrom = 1;
- static bool auto_create_sdcard = true;
+     cli = make_cli(data, "-machine smp.cpus=8 -numa node,nodeid=0,memdev=ram,cpus=0-3 "
+                          "-numa node,nodeid=1,cpus=4-7");
+     qts = qtest_init(cli);
+ 
+-    s = qtest_hmp(qts, "info numa");
+-    g_assert(strstr(s, "node 0 cpus: 0 1 2 3"));
+-    g_assert(strstr(s, "node 1 cpus: 4 5 6 7"));
++    for (i = 0; i < 4; i++) {
++        check_cpu_node(qts, i, 0);
++    }
++    for (i = 4; i < 8; i++) {
++        check_cpu_node(qts, i, 1);
++    }
+ 
+     qtest_quit(qts);
+ }
+@@ -39,16 +70,19 @@ static void test_mon_explicit(const void *data)
+ static void test_def_cpu_split(const void *data)
+ {
+     QTestState *qts;
+-    g_autofree char *s = NULL;
+     g_autofree char *cli = NULL;
++    int even_cpus[] = {0, 2, 4, 6};
++    int odd_cpus[] = {1, 3, 5, 7};
++    int i;
+ 
+     cli = make_cli(data, "-machine smp.cpus=8,smp.sockets=8 "
+                          "-numa node,memdev=ram -numa node");
+     qts = qtest_init(cli);
+ 
+-    s = qtest_hmp(qts, "info numa");
+-    g_assert(strstr(s, "node 0 cpus: 0 2 4 6"));
+-    g_assert(strstr(s, "node 1 cpus: 1 3 5 7"));
++    for (i = 0; i < 4; i++) {
++        check_cpu_node(qts, even_cpus[i], 0);
++        check_cpu_node(qts, odd_cpus[i], 1);
++    }
+ 
+     qtest_quit(qts);
+ }
+@@ -56,17 +90,22 @@ static void test_def_cpu_split(const void *data)
+ static void test_mon_partial(const void *data)
+ {
+     QTestState *qts;
+-    g_autofree char *s = NULL;
+     g_autofree char *cli = NULL;
++    int node0_cpus[] = {0, 1, 2, 3, 6, 7};
++    int node1_cpus[] = {4, 5};
++    int i;
+ 
+     cli = make_cli(data, "-machine smp.cpus=8 "
+                    "-numa node,nodeid=0,memdev=ram,cpus=0-1 "
+                    "-numa node,nodeid=1,cpus=4-5 ");
+     qts = qtest_init(cli);
+ 
+-    s = qtest_hmp(qts, "info numa");
+-    g_assert(strstr(s, "node 0 cpus: 0 1 2 3 6 7"));
+-    g_assert(strstr(s, "node 1 cpus: 4 5"));
++    for (i = 0; i < 6; i++) {
++        check_cpu_node(qts, node0_cpus[i], 0);
++    }
++    for (i = 0; i < 2; i++) {
++        check_cpu_node(qts, node1_cpus[i], 1);
++    }
+ 
+     qtest_quit(qts);
+ }
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
