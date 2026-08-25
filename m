@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 471A0C61DBC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43CB8C5DF94
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:07:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylFp-0006RF-LZ; Tue, 25 Aug 2026 03:07:30 -0400
+	id 1wylFp-0006R4-9B; Tue, 25 Aug 2026 03:07:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylFh-0006KP-Cd; Tue, 25 Aug 2026 03:07:21 -0400
+ id 1wylFe-0006F1-1K; Tue, 25 Aug 2026 03:07:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylFf-0005vy-Ec; Tue, 25 Aug 2026 03:07:21 -0400
+ id 1wylFb-0005up-DG; Tue, 25 Aug 2026 03:07:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641595; bh=b58zw+kxP2cSglZ6+QcVnHQNn478if/MM5irLhS19AI=;
+ t=1787641595; bh=C1EEvuRdTypbAga7ViYl8xmZ4WYNsvFyRaUby8PES1Q=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=J5BNqPEz4tkfTVNrocIBgPFlbMSEWfZzM8aHdfWfnR7Hh1pxr0XmE8BRU0WKraop3
- q1nR/SG2WLzaTAAv3n3taK8iFHEbVcZ+AUpXyRDwMKlSRBzui5qW4j3qJQFdXhNpmt
- oj2Aq5dBDQz0+sVQegg3xs67gDctKkdZe5Z/jCkmADnAxnQHJUCK2S0dp5RNU0BARg
- bjGIedZK0w8Q8oywTsxjjTweXuNRtyhjjf70Y5/Z6tpAUPUSS/iDKn1HbwH3INywHa
- POXdM6Q22I83r12H05R5Btpg02jUlQ1bYzvAcqYL9ZsGVPXVTYyt9G7LBVuycArXuh
- Hz3zUiT6/bSWg==
+ b=cd4eJA0WLObdJHh0YSSQQvCIhTXSNzM3JCNpCZUezYZqTIyj0dQEcAINkmzQ/dnxA
+ 6t78T9OynVEOlUlF2a9ODGwgoNWRDzcOsBaeIhDNzsdULIo6EQziSwExN0qNVcpcvh
+ nhQJPJ0qDxmWQEO4IEL2bO2+X/SlFq4xWRxyCsf3YJaY7fcW0do0VXxS8DSI6fOdtk
+ SiDnGyoZvFn1L77aFbCS5A2SPjSTorL2IAEJwCC46TwSkYFq68Vx1BB8fNaVpnKPUS
+ JD7aYrhktskZ17gLr33iIT63jGexMGcKGwgbnJlEFk/1syIuKVoeNDhJC8P8aCawxH
+ qacY6X9zrTVaw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ECA261CE213;
+ by isrv.corpit.ru (Postfix) with ESMTP id E10821CE211;
  Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id B0027415F8E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A5B8C415F8C;
  Tue, 25 Aug 2026 10:07:12 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 6D1D132406; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ id 66EAB32402; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 46/91] target/i386: Clear OF, SF,
- and AF for fcomi/fucomi
-Date: Tue, 25 Aug 2026 10:05:18 +0300
-Message-ID: <20260825070619.174584-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Jacob Young <jacobly@ziglang.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 v2 44/91] tcg/optimize: Fix s_mask computation for
+ shifts
+Date: Tue, 25 Aug 2026 10:05:16 +0300
+Message-ID: <20260825070619.174584-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
@@ -71,66 +71,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Simon Scherer <scherer.simon89@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-helper_fcomi_ST0_FT0() and helper_fucomi_ST0_FT0() only cleared
-CC_Z, CC_P, and CC_C before merging in the comparison result,
-leaving CC_O, CC_S, and CC_A untouched from whatever they were
-set to beforehand.
+Skip s_mask computation for logical right shift.
 
-The Intel SDM documents FCOMI/FCOMIP/FUCOMI/FUCOMIP as setting OF,
-SF, and AF to 0 unconditionally. The AMD manual doesn't mention them
-at all. However, testing on multiple real Intel and AMD systems confirms
-all three are unconditionally cleared regardless of the comparison
-result or their prior value.
-
-Since fcomi_ccval[] only ever contains CC_C, CC_Z, 0, or CC_Z|CC_P|CC_C,
-and CC_O|CC_S|CC_Z|CC_A|CC_P|CC_C already covers every flag bit, CC_SRC
-can be assigned from fcomi_ccval[ret + 1] directly instead of ORing it
-into a masked cpu_cc_compute_all() result.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4133
-Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-Link: https://lore.kernel.org/r/20260807062831.19618-1-scherer.simon89@gmail.com
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 0924d9d3db3617f49ba9282acc6d85b349404ce6)
+Fixes: 93a967fbb57 ("tcg/optimize: Propagate sign info for shifting")
+Reported-by: Jacob Young <jacobly@ziglang.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 5fe51606146cbf04dac07bf27256febbe56881e7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index 978eb1411b4..b812125efa1 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -550,12 +550,11 @@ static const int fcomi_ccval[4] = {CC_C, CC_Z, 0, CC_Z | CC_P | CC_C};
- void helper_fcomi_ST0_FT0(CPUX86State *env)
- {
-     int old_flags = save_exception_flags(env);
--    int eflags;
-     FloatRelation ret;
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index ed2ff32ed2f..d12babad88f 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2656,8 +2656,17 @@ static bool fold_shift(OptContext *ctx, TCGOp *op)
  
-     ret = floatx80_compare(ST0, FT0, &env->fp_status);
--    eflags = cpu_cc_compute_all(env) & ~(CC_Z | CC_P | CC_C);
--    CC_SRC = eflags | fcomi_ccval[ret + 1];
-+    /* OF, SF, and AF are unconditionally cleared to 0 */
-+    CC_SRC = fcomi_ccval[ret + 1];
-     CC_OP = CC_OP_EFLAGS;
-     merge_exception_flags(env, old_flags);
- }
-@@ -563,12 +562,11 @@ void helper_fcomi_ST0_FT0(CPUX86State *env)
- void helper_fucomi_ST0_FT0(CPUX86State *env)
- {
-     int old_flags = save_exception_flags(env);
--    int eflags;
-     FloatRelation ret;
+         z_mask = do_constant_folding(op->opc, ctx->type, z_mask, sh);
+         o_mask = do_constant_folding(op->opc, ctx->type, o_mask, sh);
+-        s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
  
-     ret = floatx80_compare_quiet(ST0, FT0, &env->fp_status);
--    eflags = cpu_cc_compute_all(env) & ~(CC_Z | CC_P | CC_C);
--    CC_SRC = eflags | fcomi_ccval[ret + 1];
-+    /* OF, SF, and AF are unconditionally cleared to 0 */
-+    CC_SRC = fcomi_ccval[ret + 1];
-     CC_OP = CC_OP_EFLAGS;
-     merge_exception_flags(env, old_flags);
- }
++        if (op->opc == INDEX_op_shr) {
++            /*
++             * Logical right shift will force the sign bit zero.
++             * Don't bother computing s_mask and let fold_masks
++             * recompute from z_mask.
++             */
++            return fold_masks_zo(ctx, op, z_mask, o_mask);
++        }
++
++        s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
+         return fold_masks_zos(ctx, op, z_mask, o_mask, s_mask);
+     }
+ 
+diff --git a/tests/tcg/i386/test-i386-opt-shr.c b/tests/tcg/i386/test-i386-opt-shr.c
+new file mode 100644
+index 00000000000..9fb8d420223
+--- /dev/null
++++ b/tests/tcg/i386/test-i386-opt-shr.c
+@@ -0,0 +1,21 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* Regression test for tcg optimize vs sign bit repetition counting. */
++
++#include <assert.h>
++
++int main()
++{
++#ifndef __x86_64__
++    char test;
++
++    asm("movw $0x4000, %%ax\n\t"
++        "addw %%ax, %%ax\n\t"
++        "cwtl\n\t"
++        "shrl %%eax\n\t"
++        "cmpw $-0x3fff, %%ax\n\t"
++        "setnl %%al"
++        : "=a"(test));
++    assert(!test);
++#endif
++    return 0;
++}
 -- 
 2.47.3
 
