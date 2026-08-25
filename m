@@ -4,141 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9E52C61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:41:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99264C61DB9
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:41:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyyrP-00063B-LR; Tue, 25 Aug 2026 17:39:11 -0400
+	id 1wyyqt-0005k1-Iu; Tue, 25 Aug 2026 17:38:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wyyrO-00060W-KH
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:39:10 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wyyqs-0005j8-88
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:38 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wyyrN-0005Aq-7O
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:39:10 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67PL9fMj3675854
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 21:39:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- wvGvmK63YO3s3h6jtGvoLr52Ed8ksoOuomw/54SuxKc=; b=Miv5powvrt7qNaDj
- X2sBeSbYPJn+iMh+58QyzQ1vY233c7k6+V3Ms4sv0tm/c0X41EySkqespaxRxse5
- HmY4SanjWwaERwZAP6sWdFtZ72AcWYHJUxIlBGOuBFCSajZ28hFceKUBRDo1Ut+1
- C9TFeToxNmR0tBlDnZVmKr+fMhSG8ZeOHx4NxhP7WSQWumGh036+JLSyuQ3YYf7W
- 1qgpPYtfnJW2lY6ht7tdxrFGajeMmPWi5gGpb3LKDW4j+Vp0tWKPi/uoFt5nTqYV
- Ao+CZ+Zz/RrTbQsZYfDfIbRTWqt6spYBcwUHCsky5hJFHjvg+csWV0qPX9rorNBD
- zLGSJA==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g9fgxgv09-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 21:39:05 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-52cd0374265so5182091cf.1
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 14:39:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787693944; x=1788298744; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=wvGvmK63YO3s3h6jtGvoLr52Ed8ksoOuomw/54SuxKc=;
- b=V4ezKUZ4dJH4Nn/ZhbrulNMT8ieSF1rYOd1vNUGRM5auCG0xfainjHJKxyoL6MiV/D
- J91Qh8q/TvDfJNlQ1PBh/GvIQ4yfcSI9cDBTanNd+A5we/YY5cekaGfpsBLS1kNWeB7X
- rmZDZ1SIdfe7rIA3MTzm8e2CKI+K8dshQ3XE00D7FqlwQdhnvpsgcHLgigH8ifqYLI7M
- PAnEGUFc08h2YuMbMKCf29P74PNFaOeTlxKBvH0cMBksJhB68D2mh1s6O7DWB5tlccpb
- XfunB56i+aTRRtn2Y3zqFLUn+jH2nNepBOCrK8rskhwROpCinGJtH2bqzxgiFc4v8JKM
- aFsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787693944; x=1788298744;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=wvGvmK63YO3s3h6jtGvoLr52Ed8ksoOuomw/54SuxKc=;
- b=WbB1QXdgfmdN0dgxi4uy5cVKgd78NyeazpSGjqdAExg1nuWnitKuE5j7/6eyONxbb4
- tObqR2KzcphJlAYDFaVQY36pgtQqAqzHemMKD7RHZ07Gy0J3uzuKbuWAQR+a+1LkoewI
- ZLFfq/LeJ3BW77YoKrH8a6S4+JVRRJ20ZRiItkCJpR1FTd8UrA9avLeR7qPQkSx0q1kB
- 8HWAs/iz27BSIKQs4939xjAbuBUMmBPWQpSDIYtsI7cjXAjpwKTPU7mW4jLWLt2A6ULJ
- 8j4RmF8xq0XzBvXM1Rgr9N1esJSRRvqZq88eX2oxsY/KcRHan/XY53fNsuNeQG2GGtsA
- W6/Q==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqDEo6oRUJD7HJN2FExscsaLfi+whhDmtkQ0J1IZoFX8M7XBYJ57iWLnB3cqkO+PK5ZD5G39wCUkxMO@nongnu.org
-X-Gm-Message-State: AFuF++luPkUWIGuP61S1y6WC8XE1nWIb2Fbgd66dkbHeW6VoJqRrQ1lu
- Gc1Z8EAGkxkYna5HQS4mxNDISTZXZMnh6AlhId76P1LjiimjRR78s/SJwkuKBfPgoSCIzotiVjt
- tBUnJVsN7/jYw0/MVEIE/1I8x2OPjmi/59nI5dC7rbqiDHD62baBan5JrHA==
-X-Gm-Gg: AR+sD13trTJMo5dXXIMq5MTuMX3D/ICMlgipPE0eRx/8RpkFLkGvKzrPr4/24vTDCcR
- KwjmdgXXcnGW5pbb7seu6tKIiSbU7yflw7Mtxa44ewb6vO3Nb/bswaciVxBy+E7vT5cXotgmlhn
- p8QxTSMSW0cOn2qSIZruy8cx0psnRJF1p+id/T3qPT5vO6aHjBEYm5H5F7wuXwMmwzTpxWcvzHZ
- ShEuNk+7mDgwWUyMNNNGfA941eUWSv5X8y6QAOw5oN3Y6N1JqWYMNzVzFFAsCp0snBNG/7o7iYh
- 2hGDZBQauXYdrKRYohhWpKwt7p/+iD/BB5DoC6Jntmvvq592hzAUEuOExvAPPjmqrEGK7xQdPil
- WjFfCp8qaCzf+kzJ7xmUi9EMZk0VSch0pjQjnILz3ksC8LjARhsQ=
-X-Received: by 2002:ac8:6f08:0:b0:51c:16b3:351a with SMTP id
- d75a77b69052e-52e422d9df5mr23267981cf.1.1787693944475; 
- Tue, 25 Aug 2026 14:39:04 -0700 (PDT)
-X-Received: by 2002:ac8:6f08:0:b0:51c:16b3:351a with SMTP id
- d75a77b69052e-52e422d9df5mr23267501cf.1.1787693944076; 
- Tue, 25 Aug 2026 14:39:04 -0700 (PDT)
-Received: from [192.168.20.232] (82-66-243-121.subs.proxad.net.
- [82.66.243.121]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-499dca8b84esm5544555e9.1.2026.08.25.14.39.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Aug 2026 14:39:02 -0700 (PDT)
-Message-ID: <f035b8bf-72ec-405b-93ba-e8d94200e53e@oss.qualcomm.com>
-Date: Tue, 25 Aug 2026 23:39:00 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wyyqp-0004z8-Dj
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:37 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:39a2:0:640:ae2d:0])
+ by forwardcorp1b.mail.yandex.net (postfix) with ESMTPS id 0675A808EE;
+ Wed, 26 Aug 2026 00:38:28 +0300 (MSK)
+Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:630::1:39])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id QckKa93ZVmI0-FukKNoF3; Wed, 26 Aug 2026 00:38:27 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1787693907;
+ bh=w2DX/o2qHXYK6TsjjrK0VRSLPiDhegEqH+Zkd4JRfxg=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=knr78rG0OrSeCC+rh6TqJxS0M9CXSmQUE69s24LJrJoDPzDMYm2CmJpM46DxMywFb
+ ZKAQsKtsYWpTtd2kiZeNaBkKOg2QdfIn+MNzPOKLYV3pALjlq6LsN/cbIC0XIiTlHC
+ ZBjYxDk2UDtZWo1J7Y/8KIQrcBnrQtprEiy6vCo4=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: peterx@redhat.com
+Cc: farosas@suse.de,
+	qemu-devel@nongnu.org,
+	vsementsov@yandex-team.ru
+Subject: [PATCH 00/30] move to new migration APIs
+Date: Wed, 26 Aug 2026 00:37:40 +0300
+Message-ID: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/4] target/arm: Rename and adjust
- aarch32_max_v8_tcg_initfn
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20260825213000.221822-1-richard.henderson@linaro.org>
- <20260825213000.221822-2-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260825213000.221822-2-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=MqZiLWae c=1 sm=1 tr=0 ts=6a8e0b79 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=lbskcjEx90pOFJH4cTSgiA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=jDE5IcpPZucr9eBqKOQA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: JfFOidTabkNbXvmtZFQOpbc8YiSSY-Uw
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDE4NCBTYWx0ZWRfX/qjo0CsccpXS
- xpdSoptbXHWVtIrHJjQX2WkfN58HgRt20I2fMgLQhnqbOKfNuQU6SbftZ7AZh4HOLrkdVyroEJF
- Pafjv4BGQpFgVIDqoQKtg2rIGzpXrmGGgs5A0VAAw0H5VKgc1X6MSOpfxV0KbWWrekllJNjdcm7
- LUkPAOTeuY/j9cs1DZUCEleQtokFLsPVaduDS49/CGp2jTurQXEaAJX1xOrJeqxwOpF+ow9na09
- YX9vh8ntNF19lejAyglwJv0PHnzI3ZtoOSPFiOUYWuAf8LftFFGUFaAjiLCNR/w3337Da/vaFxN
- R4CNbSr8XngAr353kt0mRUQueLXZSXYJQLNxQ31jyTMnhNswj1zJ3dsd7SbfqA+CLZ2K/wn736K
- OEcQX+hpoDsSXIYhXJxmhr4X5UWZUqYzLQHT7aqpi6wodBdPRNFaoeryhkl+p6FmFzTh/bbslDR
- ZbsYVKV3aBdHJ9Kc45Q==
-X-Proofpoint-GUID: JfFOidTabkNbXvmtZFQOpbc8YiSSY-Uw
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDE4NCBTYWx0ZWRfX4Hzm/4QYy+PK
- 6aNp7zQoxrpHjQi1D5XtmUdPfpZ8guxjLaCa6J25n69YNHlrbcS8NAfnItCyLfiw6/HmxuxlHPq
- Rj037SlpXcnOCEVx/pGGBu85apIIU6o=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-25_06,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 suspectscore=0 malwarescore=0 bulkscore=0
- adultscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608250184
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,16 +73,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/8/26 23:29, Richard Henderson wrote:
-> Rename from aarch32_max_tcg_init and take an Object pointer,
-> in preparation from being used with TypeInit.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/arm/internals.h | 2 +-
->   target/arm/cpu-max.c   | 2 +-
->   target/arm/tcg/cpu32.c | 4 +++-
->   3 files changed, 5 insertions(+), 3 deletions(-)
+Hi all!
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+That's a new version for old
+
+[RFC 00/22] migration: convert vmstate_load/save_state
+
+after the core patches converting migration code
+are already merged into master.
+
+Let's now convert the whole code base.
+
+Vladimir Sementsov-Ogievskiy (30):
+  tests/unit/test-vmstate: move to new migration APIs
+  ui/vdagent: move to new migration APIs
+  hw/virtio: extra state: move to new migration APIs
+  hw/virtio: config save/load: move to new migration APIs
+  hw/virtio: make virtio_save() and virtio_load() static
+  hw/virtio: remaining: move to new migration APIs
+  hw/s390x/virtio-ccw.c: move to new migration APIs
+  hw/scsi/spapr_vscsi: move to new migration APIs
+  hw/scsi/scsi-bus.c: use new migration APIs
+  hw/vfio/pci: move to new migration APIs
+  hw/pci/pci: move to new migration APIs
+  hw/pci/msix.c: use new migration APIs
+  hw/pci/shpc.c: use new migration APIs
+  hw/display/virtio-gpu: move to new migration APIs
+  hw/net/virtio-net.c: use new migration APIs
+  hw/nvram/eeprom93xx.c: use new migration APIs
+  hw/nvram/fw_cfg.c: use new migration APIs
+  hw/usb/redirect.c: move to new migration APIs
+  alpha/machine: move to new migration APIs
+  avr/machine: move to new migration APIs
+  or1k/machine: move to new migration APIs
+  microblaze/machine: move to new migration APIs
+  hppa/machine: move to new migration APIs
+  sparc/machine: move to new migration APIs
+  ppc/machine: move to new migration APIs
+  mips/machine: move to new migration APIs
+  arm/machine: move to new migration APIs
+  migration/vmstate-types: convert vmstate_info_g_byte_array to new APIs
+  migration: VMStateInfo: remove old .get / .set handlers
+  migration: finally drop vmstate_save/load_state() functions
+
+ hw/display/virtio-gpu.c        |  99 +++++++++++----------
+ hw/net/virtio-net.c            | 133 ++++++++++++++--------------
+ hw/nvram/eeprom93xx.c          |  17 ++--
+ hw/nvram/fw_cfg.c              |  24 ++---
+ hw/pci/msix.c                  |  17 ++--
+ hw/pci/pci.c                   |  85 +++++++++---------
+ hw/pci/shpc.c                  |  20 +++--
+ hw/s390x/virtio-ccw.c          |  40 ++++-----
+ hw/scsi/scsi-bus.c             |  17 ++--
+ hw/scsi/spapr_vscsi.c          |   9 +-
+ hw/usb/redirect.c              |  59 +++++++------
+ hw/vfio/pci.c                  |  14 ++-
+ hw/virtio/vhost-user-fs.c      |  68 +++++++-------
+ hw/virtio/virtio-mmio.c        |  31 +++----
+ hw/virtio/virtio-pci.c         |  45 +++++-----
+ hw/virtio/virtio.c             | 157 +++++++++++++++++----------------
+ include/hw/pci/pci.h           |   4 +-
+ include/hw/virtio/virtio-bus.h |   8 +-
+ include/hw/virtio/virtio.h     |   4 -
+ include/migration/vmstate.h    |  17 ----
+ migration/vmstate-types.c      |  17 ++--
+ migration/vmstate.c            |  32 +------
+ target/alpha/machine.c         |  17 ++--
+ target/arm/machine.c           | 107 +++++++++++-----------
+ target/avr/machine.c           |  50 ++++++-----
+ target/hppa/machine.c          |  34 +++----
+ target/microblaze/machine.c    |  17 ++--
+ target/mips/system/machine.c   |  49 +++++-----
+ target/or1k/machine.c          |  17 ++--
+ target/ppc/machine.c           |  80 ++++++++---------
+ target/sparc/machine.c         |  68 +++++++-------
+ tests/unit/test-vmstate.c      | 118 +++++++------------------
+ ui/vdagent.c                   |  38 ++++----
+ 33 files changed, 710 insertions(+), 802 deletions(-)
+
+-- 
+2.43.0
+
 
