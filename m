@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12876C5DF94
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:52:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F30C61DB6
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:52:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylx8-0002LV-Az; Tue, 25 Aug 2026 03:52:14 -0400
+	id 1wylx8-0002On-Of; Tue, 25 Aug 2026 03:52:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <christian@quante.one>)
- id 1wylx4-0002Ii-A4
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 03:52:10 -0400
-Received: from nx234.node02.secure-mailgate.com ([192.162.87.234])
+ id 1wylx6-0002LB-9i
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 03:52:12 -0400
+Received: from nx206.node02.secure-mailgate.com ([192.162.87.206])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <christian@quante.one>)
- id 1wylx2-0000QR-3I
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 03:52:10 -0400
+ id 1wylx4-0000UA-H7
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 03:52:11 -0400
 Received: from web279.dogado.net ([31.47.255.59])
  by node02.secure-mailgate.com with esmtps (TLS1.2) tls
  TLS_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
  (envelope-from <christian@quante.one>)
- id 1wylww-00EH8X-M3; Tue, 25 Aug 2026 09:52:04 +0200
+ id 1wylx1-00EHW4-AL; Tue, 25 Aug 2026 09:52:08 +0200
 X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quante.one;
- s=cloudpit; t=1787644320;
- bh=B+CbepHtY4PBLxaldXnJJqk8tt0k0BsXukfdnTj55ZU=;
- h=From:To:Cc:Subject:Date:From;
- b=TohE/lgySRrEkntbsG8eEQeUSTA51ak8qc2YkLmPgmaHzjkFp6zgsLJ4nC8sAMH0f
- BFu90dfu886Gc4iJunH3b/wtfmwezlOGpgQFVm9/kyD4vCWSBY+rzBGLajkoWGVESt
- HD+TzN56yWKLW27CdLwOehsewTatjujOwnVD5uFQ=
+ s=cloudpit; t=1787644327;
+ bh=hScJBLf5JE1ad734WvKcrcUa1hRunhwYrFZJL6aJdy4=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=xM4H1UUhFzHxSmx3om0YjHhjslpjtO4jAJE7Q19/ICQaKAcVCEZ/VYnIYL84sHTpZ
+ MSsvlH7gLfafxV38DlEviD22l3DZU0+C9+vHDSoI4kvnjeI1qeZLRVV4ut+ppN7h7x
+ 6IcObNxWIoCCd42qN8d5nBVbrHQi4HouMYjcBjeE=
 Received: from Zeuss.fritz.box (p57b2f393.dip0.t-ipconnect.de [87.178.243.147])
  (Authenticated sender: christian@quante.one)
- by web279.dogado.net (Postfix) with ESMTPSA id BB77E28014F;
- Tue, 25 Aug 2026 09:51:59 +0200 (CEST)
+ by web279.dogado.net (Postfix) with ESMTPSA id 47FE2280CB6;
+ Tue, 25 Aug 2026 09:52:06 +0200 (CEST)
 X-SecureMailgate-Identity: christian@quante.one;web279.dogado.net
 From: Christian Quante <christian@quante.one>
 To: qemu-devel@nongnu.org
@@ -45,15 +45,16 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Christian Quante <christian@quante.one>
-Subject: [PATCH v2 0/2] hw/input/ps2: answer unknown mouse commands with a
+Subject: [PATCH v2 2/2] hw/input/ps2: say why unknown keyboard commands draw a
  resend
-Date: Tue, 25 Aug 2026 09:51:25 +0200
-Message-ID: <20260825075127.34876-1-christian@quante.one>
+Date: Tue, 25 Aug 2026 09:51:27 +0200
+Message-ID: <20260825075127.34876-3-christian@quante.one>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260825075127.34876-1-christian@quante.one>
+References: <20260825075127.34876-1-christian@quante.one>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-PPP-Message-ID: <178764432032.4155522.41300067474019760@web279.dogado.net>
+Content-Transfer-Encoding: 8bit
+X-PPP-Message-ID: <178764432706.4156473.14796010202711159407@web279.dogado.net>
 X-PPP-Vhost: quante.one
 X-Originating-IP: 31.47.255.59
 X-SecureMailgate-Domain: web279.dogado.net
@@ -61,30 +62,30 @@ X-SecureMailgate-Username: 31.47.255.59
 Authentication-Results: secure-mailgate.com;
  auth=pass smtp.auth=31.47.255.59@web279.dogado.net
 X-SecureMailgate-Outgoing-Class: ham
-X-SecureMailgate-Outgoing-Evidence: Combined (0.12)
+X-SecureMailgate-Outgoing-Evidence: SB/global_tokens (0.00992241105839)
 X-Recommended-Action: accept
-X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuXx0fQz8e/hao4MHYn0XPPQMosf8usnxVyt
- DyCuMmh6vyu2SmbhJN1U9FKs8X3+Nt1HOctZ5X+40a9IXddeG3M38JQYgcgjsac3uQcQdCX4ROfH
- zJ6mVE7ewsipSVIfs4blXQ8YH/VQTwPFu+aG+74YS5+h1uiHzk/Rfxfh461YLyu3RZI1CD15pCOE
+X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuXbhZKxo9bsEFD8Kj7cRWyJ3QBAKW1PETXt
+ sam3I5tZbiu2SmbhJN1U9FKs8X3+Nt1HOctZ5X+40a9IXddeG3M38JQYgcgjsac3uQcQdCX4ROfH
+ zJ6mVE7ewsipSVIfs4aLbDVr9n8nIXP/kMcR+6OpS5+h1uiHzk/Rfxfh461YLyu3RZI1CD15pCOE
  1vk99RMxqKIdDR6RVaf4xWSq5/wwdOtYechJ/ikE1WgRg4cS6A6B6pTstltS07kaQJ8I9sYal0h7
- 43VOpKNY+4MjijihZK0EMmf3P50Ajf/tIX00Fuu2beRqilmjgQ6jA3UwYgnsj5xBssn0tIIHA3aH
- QzCq60l8YRpcxCjc2gcMa3Btw+OTpzU5Yy8oe2B0dJEHaEkiihVil/4PKs38NtnG3PEGvDsoH6Px
- tvFZEJq1ao2KNy9exdvhLPuiw2USEENU6UB8GnZ/gfHrn7QVmGVHZvj/CQeAzNbFDwG/GCY70jyw
- jDnWVUDR+c6ihbT+Pmkgu8dKTnmZuN/XgpugWxfxnwJ/qtmELPnFuzvKMLz+iUfCtfJQrpttlz3e
- aTvSxT28zqN6ApSDP9fLIJcrwFeou+Cx+zcdijFnYDwIvvgDwGlGNltqz//gVodr2Bbrpa11KQ1X
- 60pfttRUJPEpY+dD8D1vIveD1kaqoOX9s49As8Lf9rIL5hu6PBBmQVXJOgy40oaNgxLGDo2IfSff
- yLpMY4GiERnEqbM7eXcjjx1NgqwoSQEiRQv+PVjjwa+Z5RFCOMQRxM2W6biFbzhekDa7/BtMWlcI
- SpJ6e8JC6wP/8HYDL6PjHkjTFe1Lh/zCABWv0LLHYZi/RQSVvjLZ9073r2ThsSxXvtcBnutXV2hR
- cyZeMt5qC3RC37WOfcNnA2gZY0tsDJ5OpGajzK+y6qnu2TRmCgWkeniwaIPiNK/dtWTwcPdjzQ6Y
- C7Heg3Xf7O1TOd4AR3bnyxZNhM1OcgqdW/wVtHH2Jl8eCsKWVs21EHNFpLijA2gxsviFSs9bxMoz
- pjYw21kW8Cuvmx7abSv/c61XxKrS24UQEiEcX0sIf20P9Z24W5FAMBlV4QRE+Zyl9in1H/aAwarQ
- pYDOYx/6JtUO0Mqlhs6pmFPCFjhhN7CA6xKgoHAnJs1I5c9E1S43mq3kM3Qwxv7D9C3QH5nA6BrC
- GpdIe+N1TqSjWPuDI4o4oSgbUYstBS2wVr+z782L/itpmtBVV8AcwDEGcp3bMIDG5wlpy6uLmsAa
- TUOwBUuWxQ==
+ 43VOpKNY+4MjijihZK0EMmf3P50Ajf/tIX00Fuu2beRqilmjgQ6jA3UwYgm3QTha208ypFqQwBFb
+ xm4JX7semJdl8Weuy8+tlMSTQwhoy9D5QZ6a84vJal7pM1XhlAOd290vPXa7Loma0jth+x0iJ0NX
+ 07iZIeUSWePdS+owFPr4kjXuZPwOU47Z9+s09nAWqoDs8zZa/KiCJd90Lk7053RUfwPXoECB9OvJ
+ bEB3ZiIyIjwOoMnQjl6CrKp8EdZ8SizDtPkcGuerFSnVOYtq+HE3WG85mIDi374DW/icy5el5aWU
+ /wf4ShFNzAzxuUotuUNGy5ExxW0GC5CkQjQ6zWGsvxsVC/m+yny0Rue4mmnjPFy3dPHP2FzOds3E
+ 46oSR4SMslNlGoPN/ReRDyx85JvPA3M+w5jBayuCMVamoWktV59525k34keYykbMQrAIKOj+9hX4
+ DXX27MdKse0EuSSr7btxBu5GkHP0MO/iDzcBQTphqKbEazY5fbVoh9VoIekQHpwUfpYnEThmBYJb
+ VMG52ZGVwnbZoccL6igIeMz3MSv4B3x/z73En6W2sqBJqpK1GG6vy7Bj1AGPtF7Ey5dhohH1DJe4
+ xKbBicPC1/Rnj77R/+sTEK1dN5vsJ9kuQgio2RjilK0QWzDS9OQPoavkwPMV2SuvcnEWOuw2MxX0
+ 5+DV5wYxLp/Q72cFKjFopoBzI+w6TKsrBBDgOPIh4HEPoN/NFnLJ6oXdnjOfbpfTHUB7Gt5iiSuf
+ 1AqE4RUbbmt6iPMBsUv9RZcAqvUAApbMLAQDq1Y3RVkolMgdqFY8KQ9Egxp4UGe16U/eGVjath4b
+ vkom8c4V/PtEw6nIoDr0sXUZ7YZoZ/GZ+g6r2+bdtWXb1z9s4uNhgHLX+AZlS2zN461BhwVoVaJE
+ tlw222OyNqTeU9tH1jYC/i8C7bWQrrnqtP27In+yOBOqEi1X3qoM14sIpnfztEwQP0Uw9n8VcNp0
+ 5ACBU/pi9Ze6aNYZYil6cObjel6n0jQ=
 X-Report-Abuse-To: spam@node04.secure-mailgate.com
 X-Complaints-To: abuse@node01.secure-mailgate.com
-Received-SPF: pass client-ip=192.162.87.234; envelope-from=christian@quante.one;
- helo=nx234.node02.secure-mailgate.com
+Received-SPF: pass client-ip=192.162.87.206; envelope-from=christian@quante.one;
+ helo=nx206.node02.secure-mailgate.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,31 +107,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-djE6IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvMjAyNjA4MjMwNzE1MjkuMTYz
-ODktMS1jaHJpc3RpYW5AcXVhbnRlLm9uZS8NCg0KUGF0Y2ggMSBpcyB0aGUgZml4IGZyb20gdjEg
-d2l0aCBpdHMgY29tbWl0IG1lc3NhZ2UgY29ycmVjdGVkLiBQYXRjaCAyIGlzDQphIGNvbW1lbnQt
-b25seSBmb2xsb3ctdXAgQWtpaGlrbyBzdWdnZXN0ZWQsIGtlcHQgc2VwYXJhdGUgc28gcGF0Y2gg
-MQ0Kc3RheXMgYSBwdXJlIGZpeCBmb3Igc3RhYmxlLg0KDQpDaGFuZ2VzIHNpbmNlIHYxOg0KLSBj
-b21taXQgbWVzc2FnZTogdGhlIHByb2JlIGRvZXMgbm90IGVuZCBpbiB0aGUgc2FtZSBlcnJvciBl
-aXRoZXIgd2F5Lg0KICBXaXRob3V0IGEgcmVwbHkgbGlicHMyIHJldHVybnMgLUVJTywgd2l0aCB0
-aGUgcmVzZW5kIC1FUFJPVE8gKEFraWhpa28NCiAgT2Rha2kpDQotIGNvbW1pdCBtZXNzYWdlOiBj
-aXRlIDA2YjM2MTFmYzJhMyBpbnN0ZWFkIG9mIGNhbGxpbmcgdGhlIGtleWJvYXJkDQogIGJlaGF2
-aW91ciB0d2VudHkgeWVhcnMgb2xkLCBpdCBpcyBmcm9tIDIwMTYgKEFraWhpa28gT2Rha2kpDQot
-IGNvbW1pdCBtZXNzYWdlOiBuYW1lIGJvdGggdW5rbm93biBjb21tYW5kcyBMaW51eCBydW5zIGlu
-dG8sIDB4RUMgZnJvbQ0KICB0aGUgQUxQUyBwcm9iZSBhbmQgMHhFMSBmcm9tIHRoZSBUcmFja1Bv
-aW50IHByb2JlLCBhdCBhIDIwMCBtcyByZXBseQ0KICB0aW1lb3V0IGVhY2gNCi0gc2hvcnRlbiB0
-aGUgbmV3IGNvbW1lbnQuIEl0cyBsYXN0IHNlbnRlbmNlIGlzIGdvbmUgYXMgc3VnZ2VzdGVkDQog
-IChBa2loaWtvIE9kYWtpKSwgYW5kIHRoZSBzZW50ZW5jZSBiZWZvcmUgaXQgd2VudCBhcyB3ZWxs
-OiBpdCBkZXNjcmliZWQNCiAgdGhlIHNpbGVuY2UgdGhpcyBwYXRjaCByZW1vdmVzLCB3aGljaCBi
-ZWxvbmdzIGluIHRoaXMgbWVzc2FnZSByYXRoZXINCiAgdGhhbiBuZXh0IHRvIHRoZSBjb2RlIHRo
-YXQgbm8gbG9uZ2VyIHByb2R1Y2VzIGl0DQotIG5ldyBwYXRjaCAyOiBnaXZlIHRoZSBrZXlib2Fy
-ZCBwYXRoIHRoZSBzYW1lIGNvbW1lbnQgKEFraWhpa28gT2Rha2kpDQotIENjOiBxZW11LXN0YWJs
-ZUBub25nbnUub3JnIChBa2loaWtvIE9kYWtpKQ0KLSBNYXJjLUFuZHLDqSBMdXJlYXUncyBSZXZp
-ZXdlZC1ieSBjYXJyaWVkIG92ZXI6IHRoZSBjb2RlIG9mIHBhdGNoIDEgaXMNCiAgdW5jaGFuZ2Vk
-IGFwYXJ0IGZyb20gdGhlIHNob3J0ZW5lZCBjb21tZW50DQoNCkNocmlzdGlhbiBRdWFudGUgKDIp
-Og0KICBody9pbnB1dC9wczI6IGFuc3dlciB1bmtub3duIG1vdXNlIGNvbW1hbmRzIHdpdGggYSBy
-ZXNlbmQNCiAgaHcvaW5wdXQvcHMyOiBzYXkgd2h5IHVua25vd24ga2V5Ym9hcmQgY29tbWFuZHMg
-ZHJhdyBhIHJlc2VuZA0KDQogaHcvaW5wdXQvcHMyLmMgfCAxMCArKysrKysrKysrDQogMSBmaWxl
-IGNoYW5nZWQsIDEwIGluc2VydGlvbnMoKykNCg0KDQpiYXNlLWNvbW1pdDogZWVhOGZlNjFiOGJl
-OGYzMDE2ZTUyMmU2YWYyNDkyNGEwMjY2Y2E5NQ0KLS0gDQoyLjUzLjANCg0K
+The keyboard path has answered unknown commands with KBD_REPLY_RESEND
+since commit 06b3611fc2a3 ("ps2: reject unknown commands, instead of
+blindly accepting them"), but never said why. Give it the comment the
+mouse path just gained, so the reasoning is written down in both
+places.
+
+Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Christian Quante <christian@quante.one>
+---
+ hw/input/ps2.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/hw/input/ps2.c b/hw/input/ps2.c
+index e8300d2d83..01af4350b3 100644
+--- a/hw/input/ps2.c
++++ b/hw/input/ps2.c
+@@ -647,6 +647,10 @@ void ps2_write_keyboard(PS2KbdState *s, int val)
+             ps2_cqueue_1(ps2, KBD_REPLY_ACK);
+             break;
+         default:
++            /*
++             * A PS/2 device answers every command it is given; an unknown
++             * one draws a resend.
++             */
+             ps2_cqueue_1(ps2, KBD_REPLY_RESEND);
+             break;
+         }
+-- 
+2.53.0
+
 
