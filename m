@@ -4,85 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E114C61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E073C61DBD
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:34:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wypMv-00061g-5T; Tue, 25 Aug 2026 07:31:05 -0400
+	id 1wypQH-0001Sn-4A; Tue, 25 Aug 2026 07:34:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wypMB-0005Xc-AS
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 07:30:27 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wypQF-0001S8-E5
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 07:34:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wypM9-0006P8-No
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 07:30:18 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wypQD-0007rm-Nw
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 07:34:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787657416;
+ s=mimecast20190719; t=1787657668;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mskKc6mSuvBAkzrTbpBf8DxVhn57z97dfknSFMXPne4=;
- b=R46ndBU/FwRWDX86sy4cerVrv0wxvypZNa76HtvKEjyf9o9pA5VVYU0Cd0TNmO6BOElPg4
- 9MwcfwAHmDzC1x6SUqWlkcnp3l8hGzVuM8RHGMWhyHwzYMGK+V/ealyzbc1Lzx1+3sgD6a
- EzRWor5Ph5jciK6AHAU2vLTIrDxgZ/8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Xt7svKkxBYzoSM6JneoVpTjWZ1O7QHW2QkqUyWVEvFk=;
+ b=fPY+Yl9tPogRtEpSeLKJZdvP7XU12now+lgGyQMFtU4vr5IET/8lK7WGoPgJBBdVeZ8J1V
+ BTVCYooWGHwmgvSkKlDC1mzR0RQPw1/6TtaOJQVIWjoNnbGF+AzBW0sSL07aZlP4/5YKHJ
+ BVfBrSisjQjCUyn5cINAx25/9ZcxILY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-CRUK3GXjMd-VgTWK5kRcqQ-1; Tue,
- 25 Aug 2026 07:30:15 -0400
-X-MC-Unique: CRUK3GXjMd-VgTWK5kRcqQ-1
-X-Mimecast-MFC-AGG-ID: CRUK3GXjMd-VgTWK5kRcqQ_1787657414
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-101-IU1hmIayMIy9AwiD-giJWQ-1; Tue,
+ 25 Aug 2026 07:34:27 -0400
+X-MC-Unique: IU1hmIayMIy9AwiD-giJWQ-1
+X-Mimecast-MFC-AGG-ID: IU1hmIayMIy9AwiD-giJWQ_1787657666
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 473591954237; Tue, 25 Aug 2026 11:30:14 +0000 (UTC)
-Received: from localhost (headnet04.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.116])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 44EA51801AEA; Tue, 25 Aug 2026 11:30:12 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 25 Aug 2026 15:21:06 +0400
-Subject: [GIT PULL 16/19] hw/display/virtio-gpu: Check cursor data presence
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D4D0419560AD; Tue, 25 Aug 2026 11:34:25 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.12])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 442E518005B3; Tue, 25 Aug 2026 11:34:25 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id BE83521E6920; Tue, 25 Aug 2026 13:34:22 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Michael Roth
+ <michael.roth@amd.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: Re: [PATCH v3 01/74] qapi: add QAPITypeInfo struct definition
+In-Reply-To: <CAMxuvaw+_7GD5x36g0zxR+zA1pVDcK1j9dT499qa=_D1=UgPMQ@mail.gmail.com>
+ (=?utf-8?Q?=22Marc-Andr=C3=A9?= Lureau"'s message of "Fri, 21 Aug 2026
+ 19:33:43 +0400")
+References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
+ <20260818-qom-qapi-v3-1-24b8bbbe3d86@redhat.com>
+ <87cxvbzj4n.fsf@pond.sub.org>
+ <CAMxuvaw+_7GD5x36g0zxR+zA1pVDcK1j9dT499qa=_D1=UgPMQ@mail.gmail.com>
+Date: Tue, 25 Aug 2026 13:34:22 +0200
+Message-ID: <87y0dul9hd.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260825-fixes-v1-16-c59e8a620836@redhat.com>
-References: <20260825-fixes-v1-0-c59e8a620836@redhat.com>
-In-Reply-To: <20260825-fixes-v1-0-c59e8a620836@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1123;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=RcZzO5KwMeF19XwWn0KZU91FWni8PQux3WPjJ2zqvkU=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjXrV22/QghIndSlQ0qWh+gWuhGwr4HJtzI5rc
- /zLxaKS0o+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao161QAKCRDa6OEJdZac
- 5WyED/9QiLkKmk7Vi1E2M8FEQsNOO9+edCu+8I3+REMtjfGvRXvQlNJqpUHiUSFa9J0Gp0+7llZ
- xdKZlWPrN2YdeOSTKK4e4xQUhNw9alHyJdB8tYz206U+GV/Zf4Ns23L+eR87S2PDSwbvARq+jWv
- TfTWfBlpyoiPBfkeDDG3+EF5tdDjFc3PqXbdnQRcz2uJvVCV+D82dD06RAoAyQDLRm7Cvk/9w8a
- xYJCaYU/K3Z3p+NLdlpuNpzGSc8cMYAVXaoVXqRinDAkkPtRcrMefhrMlZRy1Pu7m0FnvBGfg8y
- RHZSnuL2XmFm9G35S2Xa11IPH+uxY+9VX0mwIC7Q1uEyv06Wo/YIzt26AEYxXiT7c7i7ZqgbFZw
- FG2JEMJlx87TxD8vqhjiwigJqx3mDzkXmJKnlxsorTbj2ZRzUu3XXC/cf6vU/Neuc14bbICGWZd
- q7BjawA+U+i0jnRuWk5UuFVgtyKXhytAXHoT2jj1KHjxrw/wJu3zHAUp1FI5JZ9KiAHG+9NAXlQ
- i0Xffxd16oBdcZaO7vKun/k8KMfmZxaZkEOKC3ss3YW+0podjm9L4u2A4ALjUXDVvs369K8g0Lw
- JcpZ9kvchT/nqkkX1PCPB7To7IrTlErb2mFiTD3b+iguySRbyw1CEZ8HizfAchcklAc0RqKwaGA
- 99vAI5kusRKTepA==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
@@ -106,36 +93,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 
-Reject a blob that lacks the backing storage for
-VIRTIO_GPU_CMD_UPDATE_CURSOR.
+> Hi
+>
+> On Fri, Aug 21, 2026 at 5:41=E2=80=AFPM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>>
+>> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+>>
+>> > Introduce a minimal struct that pairs a QAPI type's internal name with
+>> > its "masked" introspection name. Generated constants of this type will
+>> > let QOM property registration carry a reliable reference to the QAPI
+>> > schema and possibly other associated data.
+>> >
+>> > The fields are populated in following commits.
+>> >
+>> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>> > ---
+>> >  include/qapi/qapi-type-info.h | 32 ++++++++++++++++++++++++++++++++
+>> >  1 file changed, 32 insertions(+)
+>> >
+>> > diff --git a/include/qapi/qapi-type-info.h b/include/qapi/qapi-type-in=
+fo.h
+>> > new file mode 100644
+>> > index 000000000000..97eb1d7bf490
+>> > --- /dev/null
+>> > +++ b/include/qapi/qapi-type-info.h
+>> > @@ -0,0 +1,32 @@
+>> > +/*
+>> > + * SPDX-License-Identifier: GPL-2.0-or-later
+>> > + */
+>> > +
+>> > +#ifndef QAPI_TYPE_INFO_H
+>> > +#define QAPI_TYPE_INFO_H
+>> > +
+>> > +#include "qapi/util.h"
+>> > +
+>> > +/**
+>> > + * QAPITypeInfo - QAPI type metadata
+>> > + *
+>> > + * @name: QAPI type name (e.g. "str", "OnOffAuto", "int32List").
+>> > + *        QOM uses this as the property type string.
+>> > + * @masked_name: Name of the type in the QAPI introspection schema, a=
+ssigned by
+>> > + *        scripts/qapi code generator (e.g. "368").
+>>
+>> Suggest 'Name of the type in output of query-qmp-schema (e.g. "368")'.
+>>
+>
+> ok
+>
+>> > + *        NULL for implicit types.
+>>
+>> Can this happen?  I can't see any QAPITypeInfo with null @masked_name at
+>> the end of the series.
+>
+> It's still optional, but it's true that at the end of the series it
+> should be set for all generated type infos. Let's just say "or NULL if
+> unavailable" ?
 
-Fixes: bdd53f739273 ("virtio-gpu: Update cursor data using blob")
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260825-dmabuf-v2-4-b3d64d3b9a0e@rsg.ci.i.u-tokyo.ac.jp>
----
- hw/display/virtio-gpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I can't find a QAPITypeInfo without @masked_name at any point in the
+series.
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 7f3301a9ac57..01549d29d8a2 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -63,8 +63,8 @@ void virtio_gpu_update_cursor_data(VirtIOGPU *g,
-         }
-         data = pixman_image_get_data(res->image);
-     } else {
--        if (res->blob_size < (s->current_cursor->width *
--                              s->current_cursor->height * 4)) {
-+        if (!res->iov || res->blob_size < (s->current_cursor->width *
-+                                           s->current_cursor->height * 4)) {
-             return;
-         }
-         data = res->blob;
+Either it cannot happen.  Then the comment shouldn't suggest it can.
 
--- 
-2.55.0.543.g5ebe2ebe4ea8
+Or it can happen, but doesn't with the current schema.  Then I'd like to
+have know how it could happen.  Any ideas?
+
+[...]
 
 
