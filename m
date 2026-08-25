@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32751C61DB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 22:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 116B4C61DB9
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 22:01:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyzCm-00036M-8R; Tue, 25 Aug 2026 18:01:17 -0400
+	id 1wyzCz-0003TZ-6p; Tue, 25 Aug 2026 18:01:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1wyzCg-0002r6-VQ
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 18:01:11 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1wyzCm-00037Y-3L
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 18:01:17 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mathieu.poirier@linaro.org>)
- id 1wyzCe-00018m-Fo
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 18:01:10 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-cc11a905ba5so171363a12.2
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 15:01:08 -0700 (PDT)
+ id 1wyzCk-0001FU-D9
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 18:01:15 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2d6f55a7089so4499865ad.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 15:01:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787695267; x=1788300067; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787695273; x=1788300073; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ndrOCsdwllHKG3R8sNfPufN5ST5eyC5FSUsoL8k0SoY=;
- b=jBOXoj8QEHYMTYq7aPhNTURfflySBF6RNsehMtGG/xItQv5XI/z/g2WQXTjZnc8jK2
- X6aDISAbzWjL8CXSh2mQqHEoeA6pjf88d3A2mIdsH+RvD9IMdRiyGFNah3KUvd59YU3x
- ABxOluajnASrbGkxXJrK/XRioaViNXsglPP12OA7ly+4zpL+3NbJsotfEdyrL0Am8Qc/
- 7MksxtgIiTw482sd9yjGnO4oJXQfSwrL8nMMV9h5+hubqsB6Nh+ivzmNEnGzr64PWmgS
- a8eQ+xPxTuJGgWh58nvlgpY6f97QrIyOyE+hApY7V6cEznBR6iAenfNYNKOauJqlIuk/
- CBAw==
+ bh=zhh1+5fS76RIWmolCJw0xzFIMsNDMIy/frSA7jNg4AM=;
+ b=CwlCpnTtL5Wvu88KrEDTyPDGQR5sI53OpKUxrKG4g0DDxxcgJwVZmARltf0y6kcGD7
+ dZ7JlvbUpExs+spAeQDzUfYXlMqiop1V4ikyV2niSwN8DpzTiMD/DnZxuDihoxE4xeEY
+ LduV9KTfRFi/bNDgFvgbHLNgaCARC09eubM6b0UbPo8/skbK6FhT0974qklgTQ/2HxEV
+ /MI01VyflOzxfDegiJJoRXTs7kUAOGkL5rfzca4IGh6ws1nu/PFnnn7mYlElozlpPe3x
+ XGveRVU4gVwY/oi95eOWdtNDBK3fi9BevARKVhmPUWCQ5fTIydR/aW1tUmx5n9LsaFvu
+ p8JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787695267; x=1788300067;
+ d=1e100.net; s=20251104; t=1787695273; x=1788300073;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=ndrOCsdwllHKG3R8sNfPufN5ST5eyC5FSUsoL8k0SoY=;
- b=g06rKbBG6wEr/K9dtjpIMaDomg4bDaJZxaYgLkPUtlDROrj2WFaub6YlrjGTL1q/bc
- 1fTM6cWBLtBYnMaB/S+TWA4Uc1kUHa2uwnnOTPAtgYBx8GK7JdPn3dpoTBetbIpIdnqu
- GNoIKPPlAwdaio15P/xgtjSR30spTNzEoh9PX06AffUE3ya/HCiUMwfvKk/WQqaffNjr
- RuNoIj+CwNxLEDCWuvMDUVuemTZ+gydjtxMkwJt8GatrSpIOvLwWeJfJ5hjiLH+jX0l8
- 0sJb2mpz+MMB7O81FrX4FZ9lm56hk8ckTcJWHst3QVn2U7LXUa/IQnov0mI7nvMj6uD6
- FXZA==
-X-Gm-Message-State: AFuF++kg8cwHdVdo0ZCZJREEGErCWSqKp330+5twyDGuxh5qMvwUh0sC
- XJP28LlT+2vp699FVFGDPyXAbDnKjs5SykfJI2BhjP43lpj4Dz+HNjBlsd80P8wq5MU=
-X-Gm-Gg: AR+sD12l4J5V1ksOePuerg9wm8KHGYY1D0Z2RndDRwkZ+gubvVeyJEQnptB5BcFp9Z7
- JStSOXZmn/Zm7lQxSuoTm4SGK2oCAKmx+synz0b2BsxTGdykc1GmZeCiyEkmO9qpsAgoLSBxoAe
- ANODplGvkt8fTcQC4xM6b4JvTOdflPDH51JrHv3qUSLd2SEq4NPNjXQGUoxTSmsBOimn46UmhcF
- ulISnPPsK/hArU+/09eH7bI7zH5p1iYVCyliUYE4crkRukpOqWyarGDvHKPywgSpx82lAT8KV5P
- I79WQYpcG2jD0+QAL5gQ/Yok0c43+yiXnwRu+sY+L88Ru7spnpDPp90MYffB0QcYi61pCU881M5
- YGyk51XL6LabT09ZRaBnRMmcOSUghSwmgG1a4J9FXRUEmIz5QOoN3n7VXU2zpjOXa2N2j12nr0p
- 2woaga3tuGtA43giEy6zqDG/3TQ4gYg8Yy6qhqVQc99yRVQhc3ktgKn6WH8/60Th1D2VmzduV0c
- ccpw9fLeTRgXNA=
-X-Received: by 2002:a17:90b:4a87:b0:38f:efed:5445 with SMTP id
- 98e67ed59e1d1-3966d18f5a4mr4066265a91.4.1787695266606; 
- Tue, 25 Aug 2026 15:01:06 -0700 (PDT)
+ bh=zhh1+5fS76RIWmolCJw0xzFIMsNDMIy/frSA7jNg4AM=;
+ b=YBilJiNmL2eG1/X/EpQkGn1WtAASgOYF2ThVwIsWRvlsL0gNW48UDfqcka9VDWt23m
+ to/fXBYp9i/GiPteh6IQss5wYOwcAUpHrrDy5B4X5LIqCIYEty3vaZHoMw7iMqFhRaAb
+ VQ5J3/A0umhSYgQwqtthYs47OP0/XwFvm7xj7VllqFTWLYzavIFJmqxBGFQOoeNfAwkw
+ IGM5NgINJc93e85pk0mztLtslVQdiWw5I+TMPXFabCM23nGJ4xlGeWns9tAPaz4XsJw/
+ Qsxv3kiSTsLiw77f0kZ/3xwmKm5VO2vi5CdJxQ1CLKGVMH1YC5TShIScczjUJJqXh+bx
+ iczw==
+X-Gm-Message-State: AFuF++kcMdxgySlCoRHXmO61WzeQhGCJob8GNayTgAIG+NefOIsH56yK
+ ah4Q9oJr1uBxVDIxWCIKr5OqshQgpQItiPJ8d1qoJeMAXkkbxe/Sv6AIIh+u1eHKZO/p1bBmdeV
+ zEt3A
+X-Gm-Gg: AR+sD13JOObwwRosU1WEJLPVl90obm/2WJjvQokYh5TAz5pcIG406JZ2BxuEwi7RD0f
+ 5EZM0B97t3qJsdzouvsqX6XI8iTCCbsliX4vpPYuMb0rWLyerny2hV+2j+0uijGpFmcj3Bx0F0z
+ FXjtZ+PlYZlJJDgZsowMMaRTnlrywAkgtPhh5mNrZjsEwG/iX4VX1o3rJX2m4ru/gwq4zSsFuru
+ vItUdfcjeQ9Jfm2TU8/os8cK+CDMj1rv1UFyFerEGvWbgD+eR0HFGEkP/m65Pr4FE30Sz9thwLW
+ zcy0lTmXOY+ZRJNsC4EKUMaEb6SLZf3kjJtec6cWQ9KtrX6aJ2AgtJLTgz4ipPpcFF04Olv5Sar
+ L/aDYgeUTBj1XbIyKgvr4CjffBf7AstDvRI/PkidlbLbMJtpwp6SBf1K3YULv3zbk1ncxLwq/VQ
+ PK+Iny0fYlFavJbRQ2wV0ZQUKNhTQ/v2k/7swFuMy/AgH1CWfSySdepzlLu5Ll6UKo7oH93UasC
+ 6iDFPda3jhtxSM=
+X-Received: by 2002:a17:90a:e7ca:b0:38f:de97:b06 with SMTP id
+ 98e67ed59e1d1-3966d3ba166mr4266274a91.5.1787695272551; 
+ Tue, 25 Aug 2026 15:01:12 -0700 (PDT)
 Received: from p14s.cg.shawcable.net
  ([2604:3d09:148c:c800:a37a:292f:1363:c0af])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3965d119724sm3090120a91.2.2026.08.25.15.01.05
+ 98e67ed59e1d1-3965d119724sm3090120a91.2.2026.08.25.15.01.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Aug 2026 15:01:06 -0700 (PDT)
+ Tue, 25 Aug 2026 15:01:11 -0700 (PDT)
 From: Mathieu Poirier <mathieu.poirier@linaro.org>
 To: berrange@redhat.com, kchamart@redhat.com,
  pierrick.bouvier@oss.qualcomm.com, peter.maydell@linaro.org,
@@ -74,16 +75,16 @@ To: berrange@redhat.com, kchamart@redhat.com,
  enju.kohei@fujitsu.com
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvm@vger.kernel.org,
  mathieu.poirier@linaro.org
-Subject: [RFC v3 01/24] linux-headers: Add RME related definitions
-Date: Tue, 25 Aug 2026 16:00:38 -0600
-Message-ID: <20260825220101.3443954-2-mathieu.poirier@linaro.org>
+Subject: [RFC v3 04/24] target/arm/kvm-rme: Add mechanic to initialize realms
+Date: Tue, 25 Aug 2026 16:00:41 -0600
+Message-ID: <20260825220101.3443954-5-mathieu.poirier@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260825220101.3443954-1-mathieu.poirier@linaro.org>
 References: <20260825220101.3443954-1-mathieu.poirier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=mathieu.poirier@linaro.org; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=mathieu.poirier@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,82 +107,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-
-This is a temporary patch intended for testing purposes only. It provides
-definitions related to supporting Realms by the QEMU-VMM.
+Initialise an @rme_guest object and install a handler to get notified
+when the Realm is ready to start.  That way we can finish reading the
+Realm once we know everything is in place.
 
 Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Signed-off-by: Lorenzo Pieralisi <lorenzo.pieralisi@linaro.org>
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 ---
- linux-headers/asm-arm64/kvm.h |  9 +++++++++
- linux-headers/linux/kvm.h     | 12 ++++++++++--
- 2 files changed, 19 insertions(+), 2 deletions(-)
+ target/arm/kvm-rme.c | 51 ++++++++++++++++++++++++++++++++++++++++++++
+ target/arm/kvm.c     | 15 +++++++++++--
+ 2 files changed, 64 insertions(+), 2 deletions(-)
 
-diff --git a/linux-headers/asm-arm64/kvm.h b/linux-headers/asm-arm64/kvm.h
-index 6aefe7973814..4c08631ec7d2 100644
---- a/linux-headers/asm-arm64/kvm.h
-+++ b/linux-headers/asm-arm64/kvm.h
-@@ -208,6 +208,15 @@ struct kvm_arm_counter_offset {
- 	__u64 reserved;
- };
+diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
+index 42e1d1e7b859..a4a5e195c196 100644
+--- a/target/arm/kvm-rme.c
++++ b/target/arm/kvm-rme.c
+@@ -13,6 +13,7 @@
+ #include "kvm_arm.h"
+ #include "migration/blocker.h"
+ #include "qapi/error.h"
++#include "qemu/error-report.h"
+ #include "qom/object_interfaces.h"
+ #include "system/confidential-guest-support.h"
+ #include "system/kvm.h"
+@@ -29,12 +30,62 @@ OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
+                                           CONFIDENTIAL_GUEST_SUPPORT,
+                                           { TYPE_USER_CREATABLE }, { })
  
-+#define KVM_ARM_RMI_POPULATE_FLAGS_MEASURE     (1 << 0)
-+struct kvm_arm_rmi_populate {
-+	__u64 base;
-+	__u64 size;
-+	__u64 source_uaddr;
-+	__u32 flags;
-+	__u32 reserved;
-+};
++static RmeGuest *rme_guest;
 +
- #define KVM_ARM_TAGS_TO_GUEST		0
- #define KVM_ARM_TAGS_FROM_GUEST		1
- 
-diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
-index c1baca430277..cd09c7a4a60f 100644
---- a/linux-headers/linux/kvm.h
-+++ b/linux-headers/linux/kvm.h
-@@ -689,14 +689,19 @@ struct kvm_enable_cap {
-  * address size for the VM. Bits[7-0] are reserved for the guest
-  * PA size shift (i.e, log2(PA_Size)). For backward compatibility,
-  * value 0 implies the default IPA size, 40bits.
-+ *
-+ * Bits[30-31] are reserved for the VM type
-  */
- #define KVM_VM_TYPE_ARM_IPA_SIZE_MASK	0xffULL
- #define KVM_VM_TYPE_ARM_IPA_SIZE(x)		\
- 	((x) & KVM_VM_TYPE_ARM_IPA_SIZE_MASK)
- 
-+#define KVM_VM_TYPE_ARM_NORMAL		0
-+#define KVM_VM_TYPE_ARM_REALM		(1UL << 30)
- #define KVM_VM_TYPE_ARM_PROTECTED	(1UL << 31)
- #define KVM_VM_TYPE_ARM_MASK		(KVM_VM_TYPE_ARM_IPA_SIZE_MASK | \
--					 KVM_VM_TYPE_ARM_PROTECTED)
-+					 KVM_VM_TYPE_ARM_PROTECTED | \
-+					 KVM_VM_TYPE_ARM_REALM)
- 
- /*
-  * ioctls for /dev/kvm fds:
-@@ -719,6 +724,8 @@ struct kvm_enable_cap {
- #define KVM_GET_EMULATED_CPUID	  _IOWR(KVMIO, 0x09, struct kvm_cpuid2)
- #define KVM_GET_MSR_FEATURE_INDEX_LIST    _IOWR(KVMIO, 0x0a, struct kvm_msr_list)
- 
-+#define KVM_ARM_RMI_POPULATE	  _IOWR(KVMIO, 0xd7, struct kvm_arm_rmi_populate)
++static void rme_vm_state_change(void *opaque, bool running, RunState state)
++{
++    if (!running) {
++        return;
++    }
 +
- /*
-  * Extension capability list.
-  */
-@@ -985,7 +992,8 @@ struct kvm_enable_cap {
- #define KVM_CAP_S390_USER_OPEREXEC 246
- #define KVM_CAP_S390_KEYOP 247
- #define KVM_CAP_S390_VSIE_ESAMODE 248
--#define KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES 249
-+#define KVM_CAP_GUEST_MEMFD_MEMORY_ATTRIBUTES 250
-+#define KVM_CAP_ARM_RMI 251
++    kvm_mark_guest_state_protected();
++}
++
++static int kvm_arm_rme_init(ConfidentialGuestSupport *cgs, Error **errp)
++{
++    KVMState *s = KVM_STATE(current_accel());
++    static Error *rme_mig_blocker;
++
++    if (!rme_guest) {
++        return 0;
++    }
++
++    if (!kvm_vm_check_extension(s, KVM_CAP_ARM_RMI)) {
++        error_setg(errp, "VM doesn't support Realms");
++        return -ENODEV;
++    }
++
++    error_setg(&rme_mig_blocker, "RME: migration is not implemented");
++    migrate_add_blocker(&rme_mig_blocker, &error_fatal);
++
++    /*
++     * The realm activation is done last, when the VM starts, after all images
++     * have been loaded and all vcpus finalized.
++     */
++    qemu_add_vm_change_state_handler(rme_vm_state_change, NULL);
++
++    cgs->require_guest_memfd = true;
++    cgs->ready = true;
++    return 0;
++}
++
+ static void rme_guest_class_init(ObjectClass *oc, const void *data)
+ {
++    ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
++
++    klass->kvm_init = kvm_arm_rme_init;
+ }
  
- struct kvm_irq_routing_irqchip {
- 	__u32 irqchip;
+ static void rme_guest_init(Object *obj)
+ {
++    ConfidentialGuestSupport *cgs = CONFIDENTIAL_GUEST_SUPPORT(obj);
++
++    if (rme_guest) {
++        error_report("a single instance of RmeGuest is supported");
++        exit(1);
++    }
++    rme_guest = RME_GUEST(obj);
++    cgs->allow_convert_in_place = true;
+ }
+ 
+ static void rme_guest_finalize(Object *obj)
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 20b39d10b766..0c853d17413e 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -33,6 +33,7 @@
+ #include "hw/pci/pci.h"
+ #include "exec/memattrs.h"
+ #include "system/address-spaces.h"
++#include "system/confidential-guest-support.h"
+ #include "gdbstub/enums.h"
+ #include "hw/core/boards.h"
+ #include "hw/core/irq.h"
+@@ -596,7 +597,8 @@ int kvm_arch_get_default_type(MachineState *ms)
+ 
+ int kvm_arch_init(MachineState *ms, KVMState *s)
+ {
+-    int ret;
++    Error *local_err = NULL;
++    int ret = 0;
+     /* For ARM interrupt delivery is always asynchronous,
+      * whether we are using an in-kernel VGIC or not.
+      */
+@@ -610,6 +612,15 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+ 
+     cap_has_mp_state = kvm_check_extension(s, KVM_CAP_MP_STATE);
+ 
++    /* Initialize confidential guest (Realm) if needed */
++    if (ms->cgs) {
++        ret = confidential_guest_kvm_init(ms->cgs, &local_err);
++            if (ret < 0) {
++                error_report_err(local_err);
++                return ret;
++        }
++    }
++
+     /* Check whether user space can specify guest syndrome value */
+     cap_has_inject_serror_esr =
+         kvm_check_extension(s, KVM_CAP_ARM_INJECT_SERROR_ESR);
+@@ -660,7 +671,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+     hw_breakpoints = g_array_sized_new(true, true,
+                                        sizeof(HWBreakpoint), max_hw_bps);
+ 
+-    return 0;
++    return ret;
+ }
+ 
+ unsigned long kvm_arch_vcpu_id(CPUState *cpu)
 -- 
 2.43.0
 
