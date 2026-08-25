@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27161C5DF94
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:12:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFC44C61DB6
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:12:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylIn-00061o-6H; Tue, 25 Aug 2026 03:10:33 -0400
+	id 1wylFr-0006SY-Jp; Tue, 25 Aug 2026 03:07:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylIi-0005uf-3u; Tue, 25 Aug 2026 03:10:28 -0400
+ id 1wylFg-0006Ix-4a; Tue, 25 Aug 2026 03:07:20 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylIg-0006hI-3o; Tue, 25 Aug 2026 03:10:27 -0400
+ id 1wylFe-0005vb-6h; Tue, 25 Aug 2026 03:07:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641596; bh=owNrZOTpggZl9aHqAr45qv64cOUTmC6oJHodaD5mOKc=;
+ t=1787641595; bh=W91hr39DiLCkKXeRWi42shvf0GocZLHI9szdtnc9+OU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=VUOsI8YB2yh4Q+4KKnoRfzZdK571iqKfrIuZZSs+pFAfreWEo5Yx3QSCOcTsVL4Qz
- r6xcR+heJIoSDzrAjjerUeU9WALdgoC3f6l4T68jHMY9VBrEF9VqXdWKh93KSNoalx
- MtP9zXuhAOZTIter9BchelsUuUW4ol05rBi8n9q4vJ9OZEBHslM4Ytqs7HKdWT9NaB
- rGNcznAT9b1PYdMTz6Jd3SgUoGX0jCXmukFzgwCSSrzSxqLbZ9YOel03fN9zm6hqWP
- 3QhUL3vZymQa/eGb8vUNjE3LJq0s7cTvliCtdN1ki5hhO+LyDrZL7BFMyzKtihs5iL
- Wy38pa/sZsogw==
+ b=t3GY/NjSwvlSonYT2+/0EJ5WpwbRmDcqDRXDgH8/IeQz9D+Ph3cmuDzQAwmT0Todm
+ aopZE85wBqCaHj+G40SV8/nJm+DUM10HsLMoEZBPzLg33O+iKcPsh+Gg2wL78uggdr
+ iB4mkPiYvbfY88hfg66b/yBwE52trHYhIv4iLhOPS6WOXhgt8RMGVOm0NV1aFHjeE8
+ IMgfrQll2Dk8Dt/3itS56ygmf3x8RPN/IeZMalViZtWaRQ7UQ30hCofoguCB3r/dtI
+ jOtvmfBr1Qkj5lec6q5QikZnRYvbpIMJ6CUYTLThYZrrQONFCcjYfXeDosq0ZjDjq5
+ AmQQTrmQGK3Bg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AB2A81CE236;
- Tue, 25 Aug 2026 10:06:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E63CE1CE212;
+ Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6F91F415FB1;
- Tue, 25 Aug 2026 10:07:13 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id AAD4F415F8D;
+ Tue, 25 Aug 2026 10:07:12 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D6C4F3244C; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ id 6A27332404; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, A-Shehab <ahshehab24@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Ilya Chichkov <ilya.chichkov.dev@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 81/91] target/riscv: allow menvcfg/henvcfg LPE and
- SSE bits on RV32
-Date: Tue, 25 Aug 2026 10:05:53 +0300
-Message-ID: <20260825070619.174584-39-mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 v2 45/91] accel/tcg: Allow overlapping reads in
+ record_save
+Date: Tue, 25 Aug 2026 10:05:17 +0300
+Message-ID: <20260825070619.174584-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
@@ -73,111 +72,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: A-Shehab <ahshehab24@gmail.com>
+From: Ilya Chichkov <ilya.chichkov.dev@gmail.com>
 
-The Zicfilp landing-pad enable (LPE, bit 2) and Zicfiss shadow-stack
-enable (SSE, bit 3) controls live in the low 32 bits of menvcfg and
-henvcfg, and the CFI specification defines them for both RV32 and RV64.
+record_save() assumed that a target reads the bytes of an insn as a
+strictly ascending sequence of adjacent chunks, and asserted that each
+read begins exactly where the previous one ended.
 
-QEMU only adds MENVCFG_LPE/MENVCFG_SSE (and the henvcfg equivalents) to
-the writable mask inside the "riscv_cpu_mxl(env) == MXL_RV64" block, so
-on RV32 these bits are silently dropped and the features cannot be
-enabled. This is inconsistent with write_senvcfg(), which already
-handles SENVCFG_LPE/SENVCFG_SSE regardless of MXLEN.
+That assumption no longer holds for riscv.  Since f9eaa1542b
+("target/riscv: support atomic instruction fetch (Ziccif)"),
+decode_opc() loads a full aligned word whenever pc is 4-byte aligned,
+even when the insn turns out to be a 2-byte compressed one, so the
+record may already hold bytes past the end of the insn being
+translated.  When such a compressed insn sits at page offset 0xffc,
+pc_next becomes 0xffe, which is within MAX_INSN_LEN of the end of the
+page, and riscv_tr_translate_insn() probes the next insn to decide
+whether it would cross the page boundary.  That probe reads at offset
+2 while the record already covers [0,4), and the assert fires:
 
-Hoist the LPE/SSE mask handling out of the RV64-only block in
-write_menvcfg() and write_henvcfg() so the bits become writable on RV32
-as well. The upper-half writers (write_menvcfgh/write_henvcfgh) are
-unaffected because these bits reside in the low 32 bits.
+  qemu-system-riscv32: accel/tcg/translator.c:395: record_save:
+  Assertion `offset == db->record_start + db->record_len' failed.
 
-Reproducible on qemu-system-riscv32 -cpu rv32,zicfilp=true,zicfiss=true:
-an M-mode write of menvcfg.{LPE,SSE} reads back as zero, while the same
-program on rv64 keeps the bits set.
+record_save() is only reached when the insn is fetched from MMIO, so
+this is visible on boards that execute code from a region created with
+memory_region_init_io(), such as an XIP flash window mapped over a
+serial flash controller.
 
-Fixes: 4923f672e3d7 ("target/riscv: Introduce elp state and enabling controls for zicfilp")
-Fixes: 8205bc127a83 ("target/riscv: introduce ssp and enabling controls for zicfiss")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4045
-Signed-off-by: A-Shehab <ahshehab24@gmail.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260726080537.13913-1-ahshehab24@gmail.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit bd1ee9ab3c39f269d8bea8acf83ea833a69a6e10)
+Both sides of the collision are correct: the wide fetch is required for
+Ziccif atomicity, and the probe is required for correct fault reporting
+at a page boundary, per 00c07344fa ("target/riscv: Make translator stop
+before the end of a page").  Unlike a86d3352ab ("target/riscv: do not
+use translator_ldl in opcode_at"), where a non-translation caller had
+no business using translator_ld*, the probe here is a genuine
+translation read whose bytes must be recorded.
+
+Relax the invariant instead.  Keep requiring that a read neither moves
+backwards nor leaves a gap, but let a read overlapping the recorded
+range extend it only by the bytes past its end.
+
+Cc: qemu-stable@nongnu.org
+Fixes: f9eaa1542b ("target/riscv: support atomic instruction fetch (Ziccif)")
+Signed-off-by: Ilya Chichkov <ilya.chichkov.dev@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260814142159.3800744-1-ilya.chichkov.dev@gmail.com>
+(cherry picked from commit 784b7f28e2761fbd3c753883be949eb3d1ffe228)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index a90449b87fb..ffd751caa51 100644
---- a/target/riscv/tcg/csr.c
-+++ b/target/riscv/tcg/csr.c
-@@ -3221,6 +3221,19 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
-                     MENVCFG_CBZE;
-     bool stce_changed = false;
- 
-+    /*
-+     * menvcfg.LPE (Zicfilp) and menvcfg.SSE (Zicfiss) reside in the low
-+     * 32 bits and are defined for both RV32 and RV64, so they must be
-+     * writable regardless of MXLEN.
-+     */
-+    if (cfg->ext_zicfilp) {
-+        mask |= MENVCFG_LPE;
-+    }
+diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
+index cd7d079fe05..57daded60ff 100644
+--- a/accel/tcg/translator.c
++++ b/accel/tcg/translator.c
+@@ -387,14 +387,22 @@ static void record_save(DisasContextBase *db, vaddr pc,
+      * Either the first or second page may be I/O.  If it is the second,
+      * then the first byte we need to record will be at a non-zero offset.
+      * In either case, we should not need to record but a single insn.
++     *
++     * A read may re-read bytes that are already recorded: a target may
++     * fetch a whole aligned word to decode an insn (e.g. riscv Ziccif),
++     * then probe the following insn, which lies within that same word.
++     * Such a read extends the record only by the bytes past its end.
+      */
+     if (db->record_len == 0) {
+         db->record_start = offset;
+         db->record_len = size;
+     } else {
+-        assert(offset == db->record_start + db->record_len);
+-        assert(db->record_len + size <= sizeof(db->record));
+-        db->record_len += size;
++        int end = offset - db->record_start + size;
 +
-+    if (cfg->ext_zicfiss) {
-+        mask |= MENVCFG_SSE;
-+    }
-+
-     if (riscv_cpu_mxl(env) == MXL_RV64) {
-         mask |= (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
-                 (cfg->ext_sstc ? MENVCFG_STCE : 0) |
-@@ -3228,14 +3241,6 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
-                 (cfg->ext_svadu ? MENVCFG_ADUE : 0) |
-                 (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
- 
--        if (env_archcpu(env)->cfg.ext_zicfilp) {
--            mask |= MENVCFG_LPE;
--        }
--
--        if (env_archcpu(env)->cfg.ext_zicfiss) {
--            mask |= MENVCFG_SSE;
--        }
--
-         /* Update PMM field only if the value is valid according to Zjpm v1.0 */
-         if (env_archcpu(env)->cfg.ext_smnpm &&
-             get_field(val, MENVCFG_PMM) != PMM_FIELD_RESERVED) {
-@@ -3383,20 +3388,24 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
-         return ret;
++        assert(offset >= db->record_start);
++        assert(offset <= db->record_start + db->record_len);
++        assert(end <= sizeof(db->record));
++        db->record_len = MAX(db->record_len, end);
      }
  
-+    /*
-+     * henvcfg.LPE (Zicfilp) and henvcfg.SSE (Zicfiss) reside in the low
-+     * 32 bits and are defined for both RV32 and RV64, so they must be
-+     * writable regardless of MXLEN.
-+     */
-+    if (cfg->ext_zicfilp) {
-+        mask |= HENVCFG_LPE;
-+    }
-+
-+    /* H can light up SSE for VS only if HS had it from menvcfg */
-+    if (cfg->ext_zicfiss && get_field(env->menvcfg, MENVCFG_SSE)) {
-+        mask |= HENVCFG_SSE;
-+    }
-+
-     if (riscv_cpu_mxl(env) == MXL_RV64) {
-         mask |= env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE |
-                                 HENVCFG_DTE);
- 
--        if (env_archcpu(env)->cfg.ext_zicfilp) {
--            mask |= HENVCFG_LPE;
--        }
--
--        /* H can light up SSE for VS only if HS had it from menvcfg */
--        if (env_archcpu(env)->cfg.ext_zicfiss &&
--            get_field(env->menvcfg, MENVCFG_SSE)) {
--            mask |= HENVCFG_SSE;
--        }
--
-         /* Update PMM field only if the value is valid according to Zjpm v1.0 */
-         if (env_archcpu(env)->cfg.ext_ssnpm &&
-             get_field(val, HENVCFG_PMM) != PMM_FIELD_RESERVED) {
+     memcpy(db->record + (offset - db->record_start), from, size);
 -- 
 2.47.3
 
