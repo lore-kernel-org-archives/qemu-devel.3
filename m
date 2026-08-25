@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27270C5DF94
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:06:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEB0AC61DB6
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:06:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyn5Z-0000OL-CP; Tue, 25 Aug 2026 05:05:01 -0400
+	id 1wyn4i-0006Qm-Jb; Tue, 25 Aug 2026 05:04:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn5X-0000LN-9d; Tue, 25 Aug 2026 05:04:59 -0400
+ id 1wyn4h-0006N4-DG; Tue, 25 Aug 2026 05:04:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn5U-0003Ml-QY; Tue, 25 Aug 2026 05:04:59 -0400
+ id 1wyn4f-0003G0-DB; Tue, 25 Aug 2026 05:04:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787648560; bh=ZaE8B0Wfpu7aGMlnP0potIFRqdoOEMNGz4Mb2XqOIQk=;
+ t=1787648560; bh=/o7/278/xcpcm05kArNsfWr64peOSCE1E0K+8wmfdH8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=IPtukSj9grSyYlLMBaIqZFgH2xNivLsdocJyw/f6/ez0W2JyGO/IznQvLBZzJiKDD
- PI545x56uiwjSSfoQKdzGFILxWFVjP/ZTxFqxdpoC1ReGaD02d3kTCnk+pLA/zb2ws
- YoId3bbEbRgM9udSatYdbVgaoeqC3/5tIag9KCBydnE676HljGhcwgrf6pQ4JvAIcv
- EjUGaitalsEQnSfWnPMu+JEAq2vdeRPaHo1tprM4puBMhoKIXYfjyQ6WC3RghTg4B9
- 0sAT5UlAhLJplAGHLutiBFfbwv9R9txkBb4X1delbtLosMOrKr13R0vnZs1HnoA/bk
- uTPSPliM6xEww==
+ b=AMudl6VXkPn224ZDK2XUXYyNW8VFlY25BJqGRJ6Pj9dn4pbU5KpqlmJwm+hVYmgxd
+ FZUB1ypSz2tcxSsRzgWyaxbEX8nYnKU4PXUCnKaArCu+iq5jRVITYGyRFfG1UDKlu5
+ vqrTl9xPk+39mIASktIRDoUSW7pYveqqkIP/S/OI7moixlEy8CTptZaBBctBf5FxUv
+ MEv05IfnI8D5EVAW7A8CVS6NKxePXu6TgTG4CHbiPMlhZSd6NU/Hiaag01KuQ8aWEH
+ CnF9v9blSAkw5U6WvClX4uh4MhFog/b0vRMhbegvW+mMKHiHLFEvc3OK2HFAtbSnuo
+ BBzFwHGTOkIrg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 977751CE3C0;
+ by isrv.corpit.ru (Postfix) with ESMTP id 738991CE3B9;
  Tue, 25 Aug 2026 12:02:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 835B6416182;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5F17E41617B;
  Tue, 25 Aug 2026 12:03:17 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id E811432569; Tue, 25 Aug 2026 12:02:39 +0300 (MSK)
+ id D042C3255B; Tue, 25 Aug 2026 12:02:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Zephyr Li <fritchleybohrer@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Yogesh Vyas <yvyas1991@gmail.com>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v3 182/196] target/riscv: do not count ECALL in
- minstret
-Date: Tue, 25 Aug 2026 12:01:39 +0300
-Message-ID: <20260825090157.471948-21-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v3 175/196] tcg: Defer tb_flush when initial thread
+ region alloc fails
+Date: Tue, 25 Aug 2026 12:01:32 +0300
+Message-ID: <20260825090157.471948-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
@@ -73,214 +73,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zephyr Li <fritchleybohrer@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-With icount enabled, helper_raise_exception() leaves ECALL in
-icount_get_raw() because it exits without restoring the current TB
-state. This makes minstret count an instruction that does not retire.
+A vCPU hotplug may happen at any time.  When the new thread is
+started, the region pool may be exhausted.  Do not abort.
 
-Adjust only the fixed minstret baseline so that mcycle accounting
-remains unchanged.
+Rename tcg_region_thread_initial_alloc to differentiate it
+from tcg_region_initial_alloc__locked.  The renamed function
+now uses tcg_region_alloc__locked and is prepared for failure.
 
-Add an RV64 softmmu regression test for the issue.
+In tcg_tb_alloc, allow code_gen_ptr to be NULL.  Treat that as
+any other region exhaustion.  Reorg with while instead of goto.
 
-Fixes: 4fe8ae09062d ("target/riscv: Combine mhpmcounter and mhpmcounterh")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4087
-Signed-off-by: Zephyr Li <fritchleybohrer@gmail.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260730032122.2564190-1-fritchleybohrer@gmail.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 5a9fa8b5820998a5aca02ecf3df12819f7ff2173)
-(Mjt: trivial context fixup in #include statement)
+Tested-by: Yogesh Vyas <yvyas1991@gmail.com>
+Reviewed-by: Yogesh Vyas <yvyas1991@gmail.com>
+Reported-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2984
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit f5d2d8532f3c3cefb644fe9c1866a21b75f76faf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index b5693663699..43251179efc 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -20,6 +20,9 @@
+diff --git a/tcg/region.c b/tcg/region.c
+index 57ca7423570..1145f35085c 100644
+--- a/tcg/region.c
++++ b/tcg/region.c
+@@ -396,11 +396,31 @@ static void tcg_region_initial_alloc__locked(TCGContext *s)
+     g_assert(ok);
+ }
  
- #include "qemu/osdep.h"
- #include "cpu.h"
-+#ifndef CONFIG_USER_ONLY
-+#include "pmu.h"
-+#endif
- #include "internals.h"
- #include "exec/cputlb.h"
- #include "accel/tcg/cpu-ldst.h"
-@@ -59,6 +62,9 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
- 
- void helper_raise_exception(CPURISCVState *env, uint32_t exception)
+-void tcg_region_initial_alloc(TCGContext *s)
++void tcg_region_thread_initial_alloc(TCGContext *s)
  {
-+#ifndef CONFIG_USER_ONLY
-+    riscv_pmu_decr_instret(env);
-+#endif
-     riscv_raise_exception(env, exception, 0);
- }
- 
-diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
-index 708f2ec7aaa..137fc5c39e2 100644
---- a/target/riscv/pmu.c
-+++ b/target/riscv/pmu.c
-@@ -101,6 +101,21 @@ static bool riscv_pmu_counter_enabled(RISCVCPU *cpu, uint32_t ctr_idx)
-     }
- }
- 
-+static bool riscv_pmu_counter_filtered(CPURISCVState *env, uint64_t cfg)
-+{
-+    bool virt_on = env->virt_enabled;
++    bool ok;
 +
-+    return (env->priv == PRV_M && (cfg & MHPMEVENT_BIT_MINH)) ||
-+           (env->priv == PRV_S && virt_on &&
-+            (cfg & MHPMEVENT_BIT_VSINH)) ||
-+           (env->priv == PRV_U && virt_on &&
-+            (cfg & MHPMEVENT_BIT_VUINH)) ||
-+           (env->priv == PRV_S && !virt_on &&
-+            (cfg & MHPMEVENT_BIT_SINH)) ||
-+           (env->priv == PRV_U && !virt_on &&
-+            (cfg & MHPMEVENT_BIT_UINH));
-+}
-+
- /*
-  * Information needed to update counters:
-  *  new_priv, new_virt: To correctly save starting snapshot for the newly
-@@ -196,12 +211,27 @@ void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, target_ulong newpriv,
-     riscv_pmu_icount_update_priv(env, newpriv, new_virt);
- }
- 
-+void riscv_pmu_decr_instret(CPURISCVState *env)
-+{
-+    if (!icount_enabled() ||
-+        (env->mcountinhibit & COUNTEREN_IR) ||
-+        riscv_pmu_counter_filtered(env, env->minstretcfg)) {
-+        return;
-+    }
+     qemu_mutex_lock(&region.lock);
+-    tcg_region_initial_alloc__locked(s);
++    ok = tcg_region_alloc__locked(s);
+     qemu_mutex_unlock(&region.lock);
 +
 +    /*
-+     * minstret is derived from icount, which includes the current
-+     * instruction.  Move the baseline forward to exclude an instruction
-+     * that raises an exception and therefore does not retire.
++     * A vCPU hotplug may happen at any time.  When the new thread is
++     * started, the region pool may be exhausted.  At this point in
++     * the new thread call stack, we are not in a position to fix this.
++     * Leave code_gen_ptr NULL, so that this thread's first call to
++     * tcg_tb_alloc() returns NULL, so that the translator performs
++     * a tb_flush() and retry.
++     *
++     * During the tb_flush(), tcg_region_reset_all() will assign a
++     * new region to all contexts, including this one.
 +     */
-+    env->pmu_ctrs[2].mhpmcounter_prev++;
-+}
-+
- int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
- {
-     uint32_t ctr_idx;
-     CPURISCVState *env = &cpu->env;
-     uint64_t max_val = UINT64_MAX;
--    bool virt_on = env->virt_enabled;
-     PMUCTRState *counter;
-     gpointer value;
++    if (!ok) {
++        s->code_gen_buffer = NULL;
++        s->code_gen_ptr = NULL;
++        s->code_gen_buffer_size = 0;
++        s->code_gen_highwater = NULL;
++    }
+ }
  
-@@ -219,17 +249,7 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
-         return -1;
+ /* Call from a safe-work context */
+diff --git a/tcg/tcg-internal.h b/tcg/tcg-internal.h
+index c0997ab2243..e35440dc8c0 100644
+--- a/tcg/tcg-internal.h
++++ b/tcg/tcg-internal.h
+@@ -42,7 +42,7 @@ extern unsigned int tcg_max_ctxs;
+ 
+ void tcg_region_init(size_t tb_size, int splitwx, unsigned max_threads);
+ bool tcg_region_alloc(TCGContext *s);
+-void tcg_region_initial_alloc(TCGContext *s);
++void tcg_region_thread_initial_alloc(TCGContext *s);
+ void tcg_region_prologue_set(TCGContext *s);
+ 
+ static inline void *tcg_call_func(TCGOp *op)
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 64e596c0d4c..855560747ec 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -1279,7 +1279,7 @@ void tcg_register_thread(void)
+     qatomic_set(&tcg_ctxs[n], s);
+ 
+     if (n > 0) {
+-        tcg_region_initial_alloc(s);
++        tcg_region_thread_initial_alloc(s);
      }
  
--    /* Privilege mode filtering */
--    if ((env->priv == PRV_M &&
--        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_MINH)) ||
--        (env->priv == PRV_S && virt_on &&
--        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_VSINH)) ||
--        (env->priv == PRV_U && virt_on &&
--        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_VUINH)) ||
--        (env->priv == PRV_S && !virt_on &&
--        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_SINH)) ||
--        (env->priv == PRV_U && !virt_on &&
--        (env->mhpmevent_val[ctr_idx] & MHPMEVENT_BIT_UINH))) {
-+    if (riscv_pmu_counter_filtered(env, env->mhpmevent_val[ctr_idx])) {
-         return 0;
+     tcg_ctx = s;
+@@ -1830,18 +1830,24 @@ TranslationBlock *tcg_tb_alloc(TCGContext *s)
+     TranslationBlock *tb;
+     void *next;
+ 
+- retry:
+-    tb = (void *)ROUND_UP((uintptr_t)s->code_gen_ptr, align);
+-    next = (void *)ROUND_UP((uintptr_t)(tb + 1), align);
++    while (1) {
++        tb = (void *)ROUND_UP((uintptr_t)s->code_gen_ptr, align);
+ 
+-    if (unlikely(next > s->code_gen_highwater)) {
++        /*
++         * Note that code_gen_ptr can be NULL after vCPU hotplug.
++         * See tcg_region_thread_initial_alloc.
++         */
++        if (tb) {
++            next = (void *)ROUND_UP((uintptr_t)(tb + 1), align);
++            if (next <= s->code_gen_highwater) {
++                qatomic_set(&s->code_gen_ptr, next);
++                return tb;
++            }
++        }
+         if (!tcg_region_alloc(s)) {
+             return NULL;
+         }
+-        goto retry;
      }
+-    qatomic_set(&s->code_gen_ptr, next);
+-    return tb;
+ }
  
-diff --git a/target/riscv/pmu.h b/target/riscv/pmu.h
-index 3853d0e2629..a9a67869e65 100644
---- a/target/riscv/pmu.h
-+++ b/target/riscv/pmu.h
-@@ -36,6 +36,7 @@ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
-                           uint32_t ctr_idx);
- void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, target_ulong newpriv,
-                                  bool new_virt);
-+void riscv_pmu_decr_instret(CPURISCVState *env);
- RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
-                                   bool upper_half, uint32_t ctr_idx);
- 
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index eb1ce6504a0..a50aa3236f6 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -24,6 +24,10 @@ EXTRA_RUNS += run-test-mepc-masking
- run-test-mepc-masking: test-mepc-masking
- 	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
- 
-+EXTRA_RUNS += run-test-minstret-ecall
-+run-test-minstret-ecall: test-minstret-ecall
-+	$(call run-test, $<, $(QEMU) -icount shift=1 $(QEMU_OPTS)$<)
-+
- EXTRA_RUNS += run-plugin-doubletrap
- run-plugin-doubletrap: doubletrap
- 	$(call run-test, $<, \
-diff --git a/tests/tcg/riscv64/test-minstret-ecall.S b/tests/tcg/riscv64/test-minstret-ecall.S
-new file mode 100644
-index 00000000000..ab268f7f229
---- /dev/null
-+++ b/tests/tcg/riscv64/test-minstret-ecall.S
-@@ -0,0 +1,55 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+	.option	norvc
-+
-+	.text
-+	.global	_start
-+_start:
-+	lla	t0, trap
-+	csrw	mtvec, t0
-+
-+	/*
-+	 * The first CSR read retires after obtaining s0.  The ecall does not
-+	 * retire, so the trap handler must observe a difference of one.
-+	 */
-+	csrr	s0, minstret
-+	ecall
-+	sub	t0, s1, s0
-+	li	t1, 1
-+	bne	t0, t1, fail
-+
-+	li	a0, 0
-+	j	_exit
-+
-+trap:
-+	csrr	s1, minstret
-+	csrr	t0, mcause
-+	li	t1, 11		/* Environment call from M-mode */
-+	bne	t0, t1, fail
-+
-+	csrr	t0, mepc
-+	addi	t0, t0, 4
-+	csrw	mepc, t0
-+	mret
-+
-+fail:
-+	li	a0, 1
-+
-+_exit:
-+	lla	a1, semiargs
-+	li	t0, 0x20026	/* ADP_Stopped_ApplicationExit */
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20	/* TARGET_SYS_EXIT_EXTENDED */
-+
-+	/* Semihosting call sequence */
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+	.data
-+	.balign	16
-+semiargs:
-+	.space	16
+ void tcg_prologue_init(void)
 -- 
 2.47.3
 
