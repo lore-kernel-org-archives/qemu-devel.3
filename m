@@ -4,135 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90A64C5DF94
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 08:37:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73C73C61DB6
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 08:38:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wymee-0000pD-1P; Tue, 25 Aug 2026 04:37:12 -0400
+	id 1wymfx-0001Fq-H6; Tue, 25 Aug 2026 04:38:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
- id 1wymec-0000oy-K7; Tue, 25 Aug 2026 04:37:10 -0400
-Received: from mail-southcentralusazlp170130001.outbound.protection.outlook.com
- ([2a01:111:f403:c10c::1] helo=SA9PR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wymfw-0001FY-Eu
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 04:38:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>)
- id 1wymea-0007g1-RJ; Tue, 25 Aug 2026 04:37:10 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hs2a6XhsmDKvudGLMcmEgHA/ZArTTRlnoJlXW2+Cygor22UB7o2hiR4AA4mV7jOFPCIZn/FDLeDBU75kV8jzBnaPd0tbzoWT2EZWTDTn9F/jiJStKyHo9/dqMoD7GFLkX8g0p4wXCW2T3hB92hzeu4ifURsKE/mDZ+76HptGlxmRFeikyvzAzS4+KIzkl9uO1U1hXMmXUi/sDBYwZw8ruaQOi4EVvqoh3cJRIbgaR0QDERXmgj9IRDNmV+K/aMWuZ6+oyQgD7rsqGLW4QpKc7RqDyfD3vo5r30oNuRyDq5TJG/dioiRMprAq27LNiDfd7fvssr2MCsO5SB+p+Ns9tg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qC8SZbFW/wsRH5hozNDBqEn4Vr+ZlPe/HSC+aIMwID8=;
- b=rm1nO6YRY6xUdkWT1vgcxgYROkYuPngL4VN5lKBfIDyHoOcVzVVww32UufqzUvHmjZO6W2853+N2c7rJbM+BVaNemTqsBJIZke95qNkxJQuF9T7zgUeFKtklMhpftueoB3lCnG4rA9ePCf1hqjjZSHOJY9tz9H4Z/IPIIBXHhvLxBxGa8KJ78HaI0a5qxXWA9lBLS9u9dxOVb/SQd85mTO5FhTIc6w733IG5t9Ao5WPeyPMadN4YDLah6pzagT+DUPURpYOg9Axmz4XnWir4E6kSR27xP/5BaIc3KVW4rWJ8Hu+FQxZqzdJdQ3jrV2F12zqnkW2ti2RrXB5ZBrAiiA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=axiado.com; dmarc=pass action=none header.from=axiado.com;
- dkim=pass header.d=axiado.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qC8SZbFW/wsRH5hozNDBqEn4Vr+ZlPe/HSC+aIMwID8=;
- b=vg6rWUY426IuZtHqHiN95spDs/f2PIwxmhHfFNxuusMdtgHLMe2xCh3bn/5NihgjHj1xKMWNQ6UQz5Gyw83/QthUAx9qFNqmav0c3bBGSkArVbLysgldlP21o0C+JXukboLzpzsPdCDCvI4x4q4XKa2zjOPmr1A5knJ28ZwD8uHRjVWhRIEAwo9YSUVMCZquJn4pFnmIa7I+vIiIG+qtU/h7jA+mKmGtsOfVJG5GOxqgZyvyULJ9q6Qo8YQ84iOTWDiyBc6S4IbCz6ucU8BWxvLTBebTpc+woOKfG8Xns4pTGpLKBOJFsGl60iVKjNDxlrCcOdAZ5TZifnxwZauRLQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axiado.com;
-Received: from SJ0PR18MB4479.namprd18.prod.outlook.com (2603:10b6:a03:37f::19)
- by LV3PR18MB5778.namprd18.prod.outlook.com (2603:10b6:408:1aa::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.6; Tue, 25 Aug
- 2026 08:37:00 +0000
-Received: from SJ0PR18MB4479.namprd18.prod.outlook.com
- ([fe80::eaf4:3aec:73e:d5ba]) by SJ0PR18MB4479.namprd18.prod.outlook.com
- ([fe80::eaf4:3aec:73e:d5ba%3]) with mapi id 15.21.0339.012; Tue, 25 Aug 2026
- 08:37:00 +0000
-Message-ID: <82aceb1d-bdfe-4d6b-af5c-b46f5fada470@axiado.com>
-Date: Tue, 25 Aug 2026 16:36:55 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/5] Add Axiado SoC AX3005 and EVB
-To: Jack Wang <163wangjack@gmail.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, qemu-arm@nongnu.org
-References: <9eb76bbd-be48-4095-85ab-7097a7a94a09@axiado.com>
- <5783F0B2-CF7F-450D-82DA-93A6BB0CFA38@gmail.com>
-Content-Language: en-US
-From: Kuan-Jui Chiu <kchiu@axiado.com>
-In-Reply-To: <5783F0B2-CF7F-450D-82DA-93A6BB0CFA38@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: TP0P295CA0050.TWNP295.PROD.OUTLOOK.COM (2603:1096:910:3::6)
- To SJ0PR18MB4479.namprd18.prod.outlook.com
- (2603:10b6:a03:37f::19)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wymfu-0007ju-8T
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 04:38:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787647108;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZmYe6ReltsW958CJHrYQJeGwQjVqTQhkicFnpiM0+p4=;
+ b=GJx7+XZjAZeGS22UBP6f3F2JHSVs+hpklNXRr/r15qPUZlaFVi+dhAjPUJOSqYyYX9C09J
+ twkRUO/thhK1CvxaNCn82cXA9BX2LeaZdl3DB1E2gyb5bJ1mbsrqNltO4uKm/bxmTO9v3m
+ eK0hW7Ds4Eq2W/MjF/qxzawvbe/9SGY=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-562-Lm5yjZb-MPyx0393TjVBug-1; Tue, 25 Aug 2026 04:38:26 -0400
+X-MC-Unique: Lm5yjZb-MPyx0393TjVBug-1
+X-Mimecast-MFC-AGG-ID: Lm5yjZb-MPyx0393TjVBug_1787647105
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-69abf97d53aso4492779a12.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 01:38:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787647105; x=1788251905;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:reply-to:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=ZmYe6ReltsW958CJHrYQJeGwQjVqTQhkicFnpiM0+p4=;
+ b=hGu4x2fUf48fDCOLyq/mCjxGkRjt6obgm3HlqfFhdSINQKeOexRsH/3hrJWd5OSpUj
+ JSXgaVbxUpzhDrUX8jRmE8jWVvCRz17awb22lD+I85KopVEZR9vsMOW8l7T6aH7QuW5T
+ 4vy9Z9XcWdIPuP/1MCNaX8zzGItoxiMY8gxZ3F63PjfZD8k6eI4cfwtMfSFZUL6pyA6j
+ tpBYn6byScV/dLy4I+teO93f+L8Nd8iqWPF/OKeWvKoxe+OYTkXdAcL1Ee9UjaMjLaJP
+ LVX+nVHUhsoVHKZrxKZRfVVVfpMRc4QTIKSTWpS4I1Q73bHDk96ROOtjbANtayTgsXO/
+ UXYA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqWjGvhQt0FIp6Ekwhrq9m8k1QEio8MYz3kLCCiPfkaDrVX76/8zPFfiU+KTn5H11vZFBeX1cFyU8t1@nongnu.org
+X-Gm-Message-State: AFuF++k2f0ZfumTX8WSV45wCyp5ObY1i//chgx0FlvyiMqf4HSjEmhyh
+ 0ZkSPrR2pM45/w2Lc9zeur62N64+rh7h9GzP3pAoydWy0+CV0rlOp2yNK9IrjFcLAvNL/LybEqg
+ GDlr9T+aPTFwe7/n+fD9ZdOZKfG1WDx521NIU24hbeRg7vP4zMuY/s3tn
+X-Gm-Gg: AR+sD12D5Az5RL1aRxocLf+koVh94SH5pM8UVHfklSOb5Z92TaAUndmzBpUWSm2TrGY
+ WkcJgzwV5LO/Zm6EKKZbaTFWdzea16YrC8dQLu62jyPKnJUQyCwPMEey3BX2ikLz9jVzk2D6var
+ EZ/cA2u+tlQvSrXuinGpjv8tE+H+tre3QfVHBkn2Rwkcq1bmbpinrfL0B5Xq68g5VnpXDPMZXG/
+ JKIXhZHKkT1bQAf09mIgTkghigllLLYSWay+Z4NLhveLBpnS+CGdBvyuDjSI4mfFmImmAPjy6Qh
+ Jyvt6h8pYG7F0nMOsDYfGEjY3Nng2QENzSNuY5Iq7BjeuJleZ4owccxBlhY098tZhrkpyQoIWNt
+ SvpZX8LcB6V3EWcLM4GpIcMdLvnfEVuIo8FhNW5NZpI9IGFSm
+X-Received: by 2002:a05:6402:20da:b0:6a3:ff14:ebc9 with SMTP id
+ 4fb4d7f45d1cf-6a42f1bcdd1mr30814531a12.11.1787647105061; 
+ Tue, 25 Aug 2026 01:38:25 -0700 (PDT)
+X-Received: by 2002:a05:6402:20da:b0:6a3:ff14:ebc9 with SMTP id
+ 4fb4d7f45d1cf-6a42f1bcdd1mr30814485a12.11.1787647104559; 
+ Tue, 25 Aug 2026 01:38:24 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6a59e2da49bsm14423841a12.29.2026.08.25.01.38.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Aug 2026 01:38:23 -0700 (PDT)
+Message-ID: <cae6f5c2-edb2-4811-a915-cbd93bbd903b@redhat.com>
+Date: Tue, 25 Aug 2026 10:38:22 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR18MB4479:EE_|LV3PR18MB5778:EE_
-X-MS-Office365-Filtering-Correlation-Id: 820ab8ab-776e-40e3-d162-08df028407d3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|23010399003|366016|1800799024|3023799007|10067099003|4143699003|56012099006|5023799004|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: j7y6fKr+fLbDfv0bjGKzEfSCl6V1wOHYeKCGAFt6XTFOpGPf2oR4+GoVwy4yC2AZlm571E9Tpry8HdxWm7byaisS/fk5VXWP0wYYctAeh71C4KxPEAJmBOXiYIT8y3Ihcpd8ozoA5en66K3zzHtwFkQumXNWjk+RaXYZILLFD6zKWrQSox+BxZ4RuEACMCsBbVnX2I/gctx/H2n+ODyxL8GH7+IA4DIH7tesv9p+o20D5vQiWkuTCkJtCqpSbOqCGX8/jwuxcr+nZyqjrXyfoMIIf+P+qwWrOji8TRQc+CHlmxwGhXGQw/nQHnmK8ePsGyUpvgNJACeF4uFU7ONpSpNHaVydvoyAd1v4OvwhtPDYbOvJUfOoGQV3Vx2eZgi/vitN9rLwKfYEfdZpeO6I+cI3xGyYWpG36Nf5oGtDd/HvgAJ9xRfZKOyqIvg3kfC2xayf9Smd5LXZnok2M/nNTfvJgj69vdPRg5OKWTKXSshcmOJfYPMMnLyaB1UxFr0zme8VmqQCi8OWciO8OojnepMikl7VZeqWBijUqBWJB5N1+m73ilSQ3yXBx4CH9vDxvvOoos1VKqu4cLxLD+c2kP7wuOT41OypxskduwNTtOvp3W/KcEHujn1LjvzFyjRO
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR18MB4479.namprd18.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(3023799007)(10067099003)(4143699003)(56012099006)(5023799004)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Y3NtZ1c2RmxNWS9mMjROQkxIZ0lzMFBJZStsOERmTTZDa1NUcjNQV1JteGNo?=
- =?utf-8?B?TUF1bWFtWEk2UEtoQUJIclNaVGdmeG51dkpuK2o2dEprZXhTbXorUEtHUFB1?=
- =?utf-8?B?VDgxci9lQzUzVXhSWjMrdlFSWFM1Mk9tcnB2RkZYOHhTeFRNdVhsSkpwcDRY?=
- =?utf-8?B?bVQ5VlFyNkhQUGpnUzdnTTAxY2sxZE50OURvQ0F5b1Zhc2dBTkJYVjhLRWht?=
- =?utf-8?B?by9WNDBkemJHSUJ5dEZZNm1IdzVnZm9lVUJETGx4NjRHSzl4Mm8ra2lMUlFI?=
- =?utf-8?B?SVo2dkhJaFdrUWNIMFE3Z095K3VDN0FJb2ltRlJveGkzVTZ5MjZJemhvQUNx?=
- =?utf-8?B?bzFRMTdlMVdMRzJ1MmgxM0piOEU3MzB6RnJEaXY3S3FKbXpBZ1B5bkJIZ1py?=
- =?utf-8?B?ZlBJckp4R3JjTTY1dUpLSVRzVG5mNzd4RUZzVi9NS0FSUnZvU0NITW0xM2Vi?=
- =?utf-8?B?WWlVeUtLN0g2MG1mRVpxS0pJUzJZZ21PTHp3a245Nk84SlJVWEwzSW44REhO?=
- =?utf-8?B?eEFlK3FzdkdsRjhwWDhjUWcvV0ozOCtMZUxXQ1NwUllwWm1oYkdtNzVNREJN?=
- =?utf-8?B?VUFRYmR5aTZjc0E1UUJ6NStBdDhqQ3EzdTEyVTRrNGVZK2NzbDI1RmpXWVg0?=
- =?utf-8?B?YVczZWxPeWliZ1hPWml6UFdjV1JPeFpoZGZtREVEQmVrNlVPbWx4VEtEcWR6?=
- =?utf-8?B?bm5BVlR2Lys3Rjc3djBGb0ltcDRuc295b0xDdkxPUXlPU2R6MUt6Q2xSV05G?=
- =?utf-8?B?RWVYTzc2YksrZjk1QWNacEVjeU1yN0xYU0pMVElvVGgwOHBKekkyVVRmN05J?=
- =?utf-8?B?WlNHb0FuaVFVeEVFcHBzc2RmRDBITzJNbkdTUVBUUVF3V1RpZjl4SHB1WGxR?=
- =?utf-8?B?ZUlCVGwwcUZMUEpXeWsyeG9rRkhkcDNWUmU4cDk2YlZtc3BoSEtRekpEYnhK?=
- =?utf-8?B?TEdiZDN6RGw1K3pRRjgrL3BHWWk2T0xDaElIL0tiNjdBaVlHNHNuQmZGdDNn?=
- =?utf-8?B?M0E3T3BYa0RmbE5BblArdnpscUVZNXk5aTBuMGM1UmlUWCtvd3NIekttbk5M?=
- =?utf-8?B?YnlLWGJCRnhMZThObVdSam9qbHBrb2JNRkRpOFhhbGNYaDY4SzdaaFYyeVZJ?=
- =?utf-8?B?UUJqRkMwWEdPNFYveEhFbU5BcFh3Y0gxK3Q2UW4yME5hSk01b1VjYWxyOTFk?=
- =?utf-8?B?TzBVNXZsWjdUbVJiWms3NjVKSHBiT2kyZy9JbnNzejhqRjN2NktrU3YzdU96?=
- =?utf-8?B?T0p6ZDFLdHN2bWhqS0piNFY2OVV6TEs5VTQrdnVkSmh6Z0V1ek5HNkJqNzJt?=
- =?utf-8?B?VkV5aHp1eERsRFM4cW5HakhXTDJ0Mng5T2xRblJVbStsY0UranZBelBmL2hO?=
- =?utf-8?B?REVKclYyZmtZQVVyTUxOS1hRajFHaW5EbExHRW5scTFjMlN2Ym5xRVNZa3Uy?=
- =?utf-8?B?eVZmMUtxNEtmODBiWSswaHZPWmFpRWIyekY1V2wwOFJwYUVjQWdDb3BTejBC?=
- =?utf-8?B?SC9lMnJWKzdhRUdrUmhpaGpmWGhHQ2h0Rk1sNER3WG8ySVB0QytnYUNqRFVM?=
- =?utf-8?B?WXkwM3pNZkpYTWJaUmZoaGhkL3JoMXovQnQwNlZ6cE4zdTc3UVVuMTNIRFp0?=
- =?utf-8?B?YUdhZnFSRHlTZTVoWEFLL01NMzhsdVlmVit2N0lJRDlZeUdYMjR3akQ4ZEVL?=
- =?utf-8?B?ODl6YkUrSkZJVkRIM21leTBRRHVhVWdqRFdvQmlqZUVPa1pGeWtMOUE4UUd5?=
- =?utf-8?B?cDJZNTk5b1RwTFhzb3F0dWttZG1BM1RLYzBYTnprVmQ4WUtLY2FDU1dTeVJ6?=
- =?utf-8?B?NWZEVlBJK013OVIzbHRsL2tHWFNIZEo0bFI4VlF4TFdieUZXRU42RG05VDgx?=
- =?utf-8?B?WnRlbElwTUZNeWFPRnBXdHhvdUJhQW5RVVlad2pPbU53ajM2U3o5d1NZUzRz?=
- =?utf-8?B?VmI0ME9PbWYwT0RDdSthRVc2MUQ3SXJzNkZVeVp1bWtpSUdBNTdWKzVLejVj?=
- =?utf-8?B?cVF4U3FTZnFwZitYMXZWZTdXcGlDWURyVmxNajQydlNlTjQzRmhwRXR5WS9W?=
- =?utf-8?B?Mjg3Szd4Sms1dmhMSDBRaVAxVnd5M2pwWkFRQ3djWFp4UXVJRUUyTDBDSkVu?=
- =?utf-8?B?eXB2eUNkeUpVWWZndURuanZ2Q053d0hXTFJGZzBKYytTTmpSOWwvRlcxTXUr?=
- =?utf-8?B?L3U3VndYNnUwZjhRb1hjNGZsbWNPajlnREJwMVBpYWY0d0JMZGphVmluWWxl?=
- =?utf-8?B?NzhHcG9QdG1BNW9iNTZ5ZE1FbDlWbW9EcVRsVmxHaXpyajIwSUZmNXZMcVB4?=
- =?utf-8?B?ZUcxK0VMWVJCODB2K1ZrRjNDbUM0WlpIZFpOUXpNR25wVU0vQVdXZz09?=
-X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 820ab8ab-776e-40e3-d162-08df028407d3
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR18MB4479.namprd18.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 08:37:00.3787 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: WVBAdKsDneWTtS7vw6MtvTgC097x/bgGKFRuOilhENyLpFvVS9QeJJUocVS3++NQvoCIBespglHeSWdwt97W5Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR18MB5778
-Received-SPF: pass client-ip=2a01:111:f403:c10c::1;
- envelope-from=kchiu@axiado.com;
- helo=SA9PR02CU001.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v7 18/18] arm-qmp-cmds: introspection for ID register
+ props
+Content-Language: en-US
+To: Markus Armbruster <armbru@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ kvmarm@lists.linux.dev, peter.maydell@linaro.org, shaju.abraham@nutanix.com,
+ khushit.shah@nutanix.com, yangjinqian1@huawei.com, cohuck@redhat.com,
+ richard.henderson@linaro.org, sebott@redhat.com, skolothumtho@nvidia.com,
+ philmd@oss.qualcomm.com, maz@kernel.org, oliver.upton@linux.dev,
+ pbonzini@redhat.com, berrange@redhat.com, abologna@redhat.com,
+ jdenemar@redhat.com
+References: <20260726153221.24773-1-eric.auger@redhat.com>
+ <20260726153221.24773-19-eric.auger@redhat.com> <878q613tae.fsf@pond.sub.org>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <878q613tae.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,73 +118,258 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jack
+Hi Markus,
 
-Jack Wang 於 2026/8/25 下午 04:00 寫道:
-> CAUTION: This email originated from outside of the organization. Do 
-> not click links or open attachments unless you recognize the sender 
-> and know the content is safe.
+On 8/20/26 1:50 PM, Markus Armbruster wrote:
+> Eric Auger <eric.auger@redhat.com> writes:
 >
-> Understand.
-> I still need some basic info for confirmation.What the is mmio window 
-> size for each uart? Is it designed to be overlapped.Do all UART 
-> instances use the same register layout and window size?
+>> From: Cornelia Huck <cohuck@redhat.com>
+>>
+>> Implement the capability to query available ID register values by
+>> adding SYSREG_* options and values to the cpu model expansion for the
+>> host model, if available.
+>>
+>> Excerpt:
+>> (QEMU) query-cpu-model-expansion type=full model={"name":"host"}
+> Is this qmp-shell?
+yes it is. Is that a problem?
 >
-Yes, each of UART on Ax3005 SoC is using the same window size with 256 bytes
+>> {"return": {"model": {"name": "host", "props": {"SYSREG_ID_AA64PFR0_EL1_EL3": 1,
+>> "SYSREG_ID_AA64ISAR2_EL1_CLRBHB": 0, "SYSREG_CTR_EL0_L1Ip": 3,
+>> "SYSREG_MIDR_EL1_PartNum": 3407, "SYSREG_CTR_EL0_DminLine": 4,
+>> "SYSREG_ID_AA64MMFR0_EL1_PARange": 5, "SYSREG_ID_AA64MMFR1_EL1_ECBHB": 0
+>> ../..
+>>
+>> This allows the upper stack to detect available writable ID regs and
+>> the "host passthrough model" values.
+>>
+>> It also allows to test some ID reg field values:
+>> (QEMU) query-cpu-model-expansion type=full model={"name":"host","props":{"SYSREG_ID_AA64ISAR0_EL1_DP":0x13}}
+>> {"error": {"class": "GenericError", "desc": "idreg SYSREG_ID_AA64ISAR0_EL1_DP set value (0x13) exceeds length of field (4)!"}}
+>>
+>> (QEMU) query-cpu-model-expansion type=full model={"name":"host","props":{"SYSREG_ID_AA64ISAR0_EL1_DP":0x2}}
+>> {"error": {"class": "GenericError", "desc": "idreg SYSREG_ID_AA64ISAR0_EL1_DP set value (0x2) does not match any arch valid enum value!"}}
+> The examples use CPU "host".  Inconvenient for me, because I run into
+> "The CPU type 'host' requires KVM" when I try to play with them myself.
+> If you don't actually need "host" here, consider using something that
+> works more widely, just to help reviewers.
+It only applies to the host model, that's the reason. Extending this to
+TCG models is theorerically feasible but would induce huge changes
+without much benefits I think. With TCG you already have named vcpu
+models you can migrate as is. The purpose of this series is to allow
+tweaking the host passthrough model to allow migration between
+differents hosts.
 
-I checked the Cadence UART model, it reserved the 4KB statically so that 
-is why it is overlapped in QEMU
-
-> Thanks
-> JW..
->> On Tue, 25 Aug 2026 14:07:07 +0800, Kuan-Jui Chiu <kchiu@axiado.com> 
->> wrote:
->> Hi Jack
->>
->> Sorry that I can't provide the datasheet due to the company policy
->>
->> I can only share about the SoC specification in cover letter and use the
->> existing QEMU models like Axiado SDHCI and Cadence GPIO
->>
->>
->> I never enabled QMP before but you are right on this missing class
->> problem. I am studying for how to use QMP right now.
->>
->>
->> B.R.
->>
->> Howard
->>
->> Jack Wang 於 2026/8/25 下午 01:52 寫道:
->>
->>
 >
->>> On Tue, 25 Aug 2026 13:52:51 +0800, Jack Wang 
->>> <163wangjack@gmail.com> wrote:
->>> Hi Kuan-Jui,
->>>
->>> Cheers for the v3, that was a really quick update!
->>>
->>> The basic tests passed on my local machine, and I will look through 
->>> each patch carefully next. I'm not sure if I'm qualified enough to 
->>> give Reviewed-by or Tested-by tags yet. Anyway, if anything I do 
->>> during the review is inappropriate, please just let me know.
->>>
->>> I checked thehttps://axiado.com/products/link you mentioned, but 
->>> didn't find the critical info I needed. I googled for the AX3005 
->>> datasheet but not much useful infomation. AI tell me it's not 
->>> public.emmm.. If you could offer me some key hardware information 
->>> for the QEMU modeling, that would be much better.
->>>
->>> Also, since you asked for my commands before, if I find any 
->>> problems, I will attach the exact commands I used in the email to 
->>> help identify the bug. I am testing on my Mac now, so please contact 
->>> me if you have any trouble reproducing the issues.
->>>
->>> Best regards, : )
->>>
->>> JW..
+>> The following checks are performed:
+>> - the value does not exceed the field size
+>> - if the field is associated to enum values, the set value must be one
+>>   of those enum values
+>> - the value is applied against a scratch vcpu making sure the setting is
+>>   not rejected for this host
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+>>
+>> ---
+>>
+>> v5 -> v6:
+>> - add the write capability
+>> ---
+>>  target/arm/arm-qmp-cmds.c | 98 +++++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 98 insertions(+)
+>>
+>> diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
+>> index 83ec95c290..41fefadcea 100644
+>> --- a/target/arm/arm-qmp-cmds.c
+>> +++ b/target/arm/arm-qmp-cmds.c
+>> @@ -21,6 +21,7 @@
+>>   */
+>>  
+>>  #include "qemu/osdep.h"
+>> +#include "qemu/error-report.h"
+>>  #include "qemu/target-info.h"
+>>  #include "hw/core/boards.h"
+>>  #include "kvm_arm.h"
+>> @@ -30,7 +31,10 @@
+>>  #include "qapi/qapi-commands-machine.h"
+>>  #include "qapi/qapi-commands-misc-arm.h"
+>>  #include "qobject/qdict.h"
+>> +#include "qobject/qnum.h"
+>>  #include "qom/qom-qobject.h"
+>> +#include <linux/kvm.h>
+>> +#include "system/kvm.h"
+>>  #include "cpu.h"
+>>  
+>>  static GICCapability *gic_cap_new(int version)
+>> @@ -84,11 +88,14 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>                                                       Error **errp)
+>>  {
+>>      CpuModelExpansionInfo *expansion_info;
+>> +    ObjectPropertyIterator iter;
+>>      const QDict *qdict_in;
+>> +    ObjectProperty *idregprop;
+>>      QDict *qdict_out;
+>>      ObjectClass *oc;
+>>      Object *obj;
+>>      const char *name;
+>> +    int fdarray[3];
+>>      int i;
+>>  
+>>      if (type != CPU_MODEL_EXPANSION_TYPE_FULL) {
+>> @@ -133,6 +140,38 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>  
+>>      obj = object_new(object_class_get_name(oc));
+>>  
+>> +    if (kvm_enabled()) {
+>> +        bool pmuv3_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_PMU_V3);
+>> +        bool sve_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_SVE);
+>> +        struct kvm_vcpu_init init = { .target = -1, };
+>> +        bool el2_supported = kvm_arm_el2_supported();
+>> +        bool pauth_supported;
+>> +        int ret;
+>> +
+>> +        pauth_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_PTRAUTH_ADDRESS) &&
+>> +                          kvm_check_extension(kvm_state, KVM_CAP_ARM_PTRAUTH_GENERIC);
+>> +
+>> +        if (sve_supported) {
+>> +            init.features[0] |= 1 << KVM_ARM_VCPU_SVE;
+>> +        }
+>> +        if (el2_supported) {
+>> +            init.features[0] |= 1 << KVM_ARM_VCPU_HAS_EL2;
+>> +        }
+>> +        if (pauth_supported) {
+>> +            init.features[0] |= (1 << KVM_ARM_VCPU_PTRAUTH_ADDRESS |
+>> +                             1 << KVM_ARM_VCPU_PTRAUTH_GENERIC);
+>> +        }
+>> +        if (pmuv3_supported) {
+>> +            init.features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
+>> +        }
+>> +
+>> +        ret = kvm_arm_create_scratch_host_vcpu(fdarray, &init);
+>> +        if (!ret) {
+>> +            error_setg(errp, "failing creating a scratch vcpu");
+> This error message feels off.  I'd use something like "can't create
+> FOO".  Still bad, because it provides no clue on why.  What are the
+> possible failure modes?
+OK. There are quite a lot of possible failures which are handled in
+kvm_arm_create_scratch_host_vcpu()
+opening of /dev/kvm, KVM_CREATE_VM, KVM_CREATE_VCPU,
+KVM_ARM_PREFERRED_TARGET, KVM_ARM_VCPU_INIT.
+In next version I will add an Error handle to
+kvm_arm_create_scratch_host_vcpu() so that precise error message gets
+returned.
+>
+>> +            return NULL;
+>> +        }
+>> +    }
+>> +
+>>      if (model->props) {
+>>          Visitor *visitor;
+>>          Error *err = NULL;
+>> @@ -145,6 +184,49 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>          }
+>>  
+>>          qdict_in = qobject_to(QDict, model->props);
+>> +
+>> +        for (const QDictEntry *entry = qdict_first(qdict_in);
+>> +                 entry != NULL; entry = qdict_next(qdict_in, entry)) {
+>> +            const char *key = qdict_entry_key(entry);
+>> +            QObject *val_obj = qdict_entry_value(entry);
+>> +            ObjectProperty *prop;
+>> +            Visitor *v;
+>> +            bool success;
+>> +            uint64_t val;
+>> +
+>> +            prop = object_property_find(obj, key);
+>> +            if (!prop) {
+>> +                error_setg(errp, "%s does not exist!", key);
+> Scratch the !
+>
+> From error_setg()'s contract:
+>
+>  * The resulting message should be a single phrase, with no newline or
+>  * trailing punctuation.
+>
+> Is this error reachable?  How?
+I removed this, also because it changes the default error returned when
+a propertu does not exist and regresses one qtest.
+>
+>> +                return NULL;
+>> +            }
+>> +
+>> +            if (!g_str_has_prefix(key, "SYSREG_")) {
+>> +                continue;
+>> +            }
+>> +
+>> +            /* consume the prop to avoid unexpected parameter */
+>> +            if (!visit_type_uint64(visitor, key, &val, errp)) {
+>> +                return NULL;
+>> +            }
+>> +
+>> +            v = qobject_input_visitor_new(val_obj);
+>> +
+>> +            if (!object_property_set(obj, key, v, &err)) {
+>> +                error_propagate(errp, err);
+> Pass @errp to object_property_set() and drop the error_propagate()?
+yes
+>
+>> +                visit_free(v);
+>> +                return NULL;
+>> +            }
+>> +
+>> +            success = kvm_idreg_write_scratch_vcpu(fdarray[2], v, key,
+>> +                                                   prop->opaque, &err);
+>> +            if (!success) {
+>> +                error_propagate(errp, err);
+> Likewise?
+yes
+>
+>> +                visit_free(v);
+>> +                return NULL;
+>> +            }
+>> +            visit_free(v);
+>> +        }
+>> +
+>>          i = 0;
+>>          while ((name = cpu_model_advertised_features[i++]) != NULL) {
+>>              if (qdict_get(qdict_in, name)) {
+>> @@ -160,6 +242,10 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>          if (!err) {
+>>              arm_cpu_finalize_features(ARM_CPU(obj), &err);
+>>          }
+>> +
+>> +        if (kvm_enabled()) {
+>> +            kvm_arm_destroy_scratch_host_vcpu(fdarray);
+>> +        }
+>>          visit_end_struct(visitor, NULL);
+>>          visit_free(visitor);
+>>          if (err) {
+>> @@ -190,6 +276,18 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>          }
+>>      }
+>>  
+>> +    object_property_iter_init(&iter, obj);
+>> +
+>> +    while ((idregprop = object_property_iter_next(&iter))) {
+>> +        QObject *value;
+>> +
+>> +        if (!g_str_has_prefix(idregprop->name, "SYSREG_")) {
+>> +            continue;
+>> +        }
+>> +        value = object_property_get_qobject(obj, idregprop->name, &error_abort);
+>> +        qdict_put_obj(qdict_out, idregprop->name, value);
+>> +    }
+>> +
+>>      if (!qdict_size(qdict_out)) {
+>>          qobject_unref(qdict_out);
+>>      } else {
+Thanks
+
+Eric
+
 
