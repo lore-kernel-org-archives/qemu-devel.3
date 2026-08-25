@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84AAAC61DC2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76FCEC61DB9
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 20:59:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyyDy-0001EV-L6; Tue, 25 Aug 2026 16:58:26 -0400
+	id 1wyyDt-0001BK-Fx; Tue, 25 Aug 2026 16:58:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1wyyDr-0001Ad-Vy; Tue, 25 Aug 2026 16:58:20 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ id 1wyyDp-00019X-19; Tue, 25 Aug 2026 16:58:17 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
- id 1wyyDp-0003EF-4l; Tue, 25 Aug 2026 16:58:19 -0400
+ id 1wyyDl-0003DO-Lm; Tue, 25 Aug 2026 16:58:16 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id E250041889;
- Tue, 25 Aug 2026 20:58:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D958D1F000E9;
- Tue, 25 Aug 2026 20:58:13 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id A26BB41998;
+ Tue, 25 Aug 2026 20:58:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999AD1F000E9;
+ Tue, 25 Aug 2026 20:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1787691495;
- bh=ALKx1sZjhdbOJdc+aaF6o0PlVsXA7hiwS+FdiSVtflM=;
+ s=k20260515; t=1787691490;
+ bh=kyDnXcRIvbvgWddM5UPAmFcXBgLEVAb4H2IEpb22gDE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=eDoWRj+4rjJZsllHQCHwlXrPx/n0uF+e1XuAetFC3Bmi/Z501/XY735NnNOmZgMCB
- SezqVV7YSyd1Dq3srEdR/0blW73eo9/L323/DGDmfGqYOuaIfyisG4zujlbwXnvXjq
- R4LTBRu2/d879FGIALAh2CYxK/YMKJeTRPMFgNAK5tirDXOxvRLh+PN3htXYgVAL26
- 4qVas04YB9EcvvlLGZrjUT3+6CBv7JdLiAXt3jDBOJhgLqp9PUC9NDk8G6drlTzYrc
- bi8dwVGvMXPFE0pQOPMN0O5CTkYyvl6rt4v5O89HJRfNe8xnGbELC9sAYAY0Ru8tpV
- ysxecSXe/ASzg==
+ b=fUDstn6UDGNxeW3xpslXABi5upFOVzIoJl+uShPW2YXBzBfXTL6Y06amvVp2PFDk6
+ Jcq04s6Ysr7VJGnAfLyEWQr+Is9+XfeJU6ElmbwaBLkW9cb8hgGreE3dZ349QIbJg7
+ Tum1Lm8s/qTbj0qSmlufobCltJiZacWIV2rlM8vtSYQ4kkvVcWSzRm5ptFD0kTsegY
+ hCFEZ8yrdD/KxPat61548oWI/fL7N2sSeBjkBreyYEMh2rkK3H89ygrav8V7bsWVlJ
+ +ov6KfEd4hmIuRB/oDC394fUTpZMfEZhdoLHng69ucmwn7pCQwgdxngQTOw3pYcSk1
+ CbvJDXZU0CS1w==
 From: Niklas Cassel <cassel@kernel.org>
-To: Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>
 Cc: Sam Li <faithilikerun@gmail.com>, Damien Le Moal <dlemoal@kernel.org>,
  Niklas Cassel <cassel@kernel.org>, qemu-block@nongnu.org,
  qemu-devel@nongnu.org
-Subject: [PATCH 07/12] block: reject zone appends that are not a multiple of
- the sector size
-Date: Tue, 25 Aug 2026 22:57:42 +0200
-Message-ID: <20260825205748.679968-8-cassel@kernel.org>
+Subject: [PATCH 05/12] virtio-blk: check the write granularity of writes to
+ sequential zones
+Date: Tue, 25 Aug 2026 22:57:40 +0200
+Message-ID: <20260825205748.679968-6-cassel@kernel.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260825205748.679968-1-cassel@kernel.org>
 References: <20260825205748.679968-1-cassel@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=cassel@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=cassel@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -71,58 +72,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zone write pointers are tracked and reported in units of
-BDRV_SECTOR_SIZE, so an append whose data size is not a multiple of it
-would leave a write pointer that cannot be represented, neither in a
-BlockZoneDescriptor nor in the virtio and NVMe zone reports derived from
-one.
+All VIRTIO_BLK_T_OUT requests issued to sequential zones and all
+VIRTIO_BLK_T_ZONE_APPEND requests must have an offset and a data size
+that are multiples of the write granularity reported by the device
+(virtio 1.4, 5.2.6.1), and a violation is reported as
+VIRTIO_BLK_S_ZONE_UNALIGNED_WP (virtio 1.4, 5.2.6).
 
-Nothing states that invariant. file-posix, the only driver that carries
-out an append itself, does enforce it, but only as a side effect of
-checking each iovec against BlockLimits.write_granularity, which is never
-smaller than the sector size. That conflates two constraints: the sector
-granularity holds for every driver, whereas write_granularity describes a
-coarser requirement of the medium below a driver, and only a driver that
-has such a medium should express it.
+Neither request type was fully checked. Zone appends validated only the
+offset, while writes were not checked at all.
 
-Check the invariant once in bdrv_co_zone_append(), so that it no longer
-rests on a driver that happens to have a granularity of its own to
-report.
-
-This is a lower bound, not the alignment that a guest has to observe. The
-block layer cannot know that one, because it also depends on the logical
-block size the device is configured with, which is a property of the
-frontend. The alignment that applies to a guest is the larger of the two,
-and it is the frontend that reports it, that validates requests against
-it, and that has to refuse a device whose write pointers do not satisfy
-it.
+Check the size of the appended data, and both the offset and the size of
+a write, against blkconf_zone_write_granularity(), so that every request the
+device accepts is one that the guest driver was told is valid. Writes to
+conventional zones keep no alignment constraint beyond the logical block
+size. The write path performs the check after virtio_blk_sect_range_ok()
+so that the zone index derived from the guest supplied sector is known to
+be in range.
 
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 ---
- block/io.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/block/virtio-blk.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/block/io.c b/block/io.c
-index a916b236c3..705dc73d76 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -3350,6 +3350,16 @@ int coroutine_fn bdrv_co_zone_append(BlockDriverState *bs, int64_t *offset,
-         return ret;
-     }
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index f8cda1baa7..7977f4abe5 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -522,7 +522,7 @@ static bool check_zoned_request(VirtIOBlock *s, int64_t offset, int64_t len,
+     if (append) {
+         uint32_t wg_mask = blkconf_zone_write_granularity(&s->conf.conf) - 1;
  
-+    /*
-+     * Zone write pointers are kept and reported in units of BDRV_SECTOR_SIZE,
-+     * so an append that would leave a write pointer at a finer granularity
-+     * cannot be represented. Drivers may impose a coarser granularity of their
-+     * own, see BlockLimits.write_granularity.
-+     */
-+    if (!QEMU_IS_ALIGNED(qiov->size, BDRV_SECTOR_SIZE)) {
-+        return -EINVAL;
-+    }
+-        if (offset & wg_mask) {
++        if (offset & wg_mask || len & wg_mask) {
+             *status = VIRTIO_BLK_S_ZONE_UNALIGNED_WP;
+             return false;
+         }
+@@ -911,6 +911,29 @@ static int virtio_blk_handle_request(VirtIOBlockReq *req, MultiReqBuffer *mrb)
+             return 0;
+         }
+ 
++        if (is_write) {
++            BlockDriverState *bs = blk_bs(s->blk);
++            int64_t offset = req->sector_num << BDRV_SECTOR_BITS;
++            uint32_t wg_mask =
++                blkconf_zone_write_granularity(&s->conf.conf) - 1;
 +
-     bdrv_inc_in_flight(bs);
-     if (!drv || !drv->bdrv_co_zone_append || bs->bl.zoned == BLK_Z_NONE) {
-         co.ret = -ENOTSUP;
++            /*
++             * Both the offset and the size of a write to a sequential zone
++             * must be a multiple of the write granularity reported by the
++             * device. Conventional zones are not constrained. The zone index
++             * is derived from a guest supplied sector, so this must come after
++             * virtio_blk_sect_range_ok() has bounded it.
++             */
++            if (bs->bl.zoned != BLK_Z_NONE &&
++                (offset & wg_mask || req->qiov.size & wg_mask) &&
++                !BDRV_ZT_IS_CONV(bs->wps->wp[offset / bs->bl.zone_size])) {
++                virtio_blk_req_complete(req, VIRTIO_BLK_S_ZONE_UNALIGNED_WP);
++                block_acct_invalid(blk_get_stats(s->blk), BLOCK_ACCT_WRITE);
++                g_free(req);
++                return 0;
++            }
++        }
++
+         block_acct_start(blk_get_stats(s->blk), &req->acct, req->qiov.size,
+                          is_write ? BLOCK_ACCT_WRITE : BLOCK_ACCT_READ);
+ 
 -- 
 2.55.0
 
