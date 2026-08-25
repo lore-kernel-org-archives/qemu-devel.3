@@ -4,52 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EEB7C61DBC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 732BDC5DF94
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:04:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyn4f-0006Bu-Bb; Tue, 25 Aug 2026 05:04:05 -0400
+	id 1wyn5B-0007wq-5D; Tue, 25 Aug 2026 05:04:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn4d-000642-Sv; Tue, 25 Aug 2026 05:04:03 -0400
+ id 1wyn56-0007mz-1T; Tue, 25 Aug 2026 05:04:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn4c-0003Bq-7U; Tue, 25 Aug 2026 05:04:03 -0400
+ id 1wyn54-0003HJ-B8; Tue, 25 Aug 2026 05:04:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787648560; bh=oAdFlTdHGmfLnIpJ/Q3sjwmZB5CCL70Rv0f6oSGohxk=;
+ t=1787648560; bh=biAV56ve57YlxnGfu0OGzR9HG3B72Jrhk90Xe0aFt98=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=chSGxsf1KqTr2rk5zr5M0KY+fsgCTEPVDev4omlv5yRVN8kLyJ8IYpUedtFQfq9D1
- YHPBOeuehH3th7u5lL8FWFwlS4gkUUSaecXZseMBl6nWdMCtvzDbItJ5pVHW+Ea6/B
- fuQYRAHA3FRdaGbBaEpVO2+DHHcybMGqRkj1yB3lE5A7T6F78XXo/j0/sHbOLkcP/U
- ssIS0GKQGwKZRsF823eIeasl0NLXP3XnkXSOWUJbG1BtPlWr5ZwmUVeBIK63h3K5Ne
- z0siergEdxC4hREfiDiABxvXBeI3uPgmSVUyN0omBuSS+nCLliVlhQObohllRn2b8O
- iHw6/UdbD3FmA==
+ b=tV0VqtSLea4d2Mccnn2IVBSjEMRgcKEYfeWFm22nXBVzGg1//n6rvbnAqcRL8/vtn
+ LZ4PnI3RTZJ4mFJKlDCvYey6TbXucrHpj8+AvA2PHdgBvV1nJcNGnQGPuHnHbWqkiA
+ CS8KfTI02e+/W7+EUQTniBYr+ibqVZ2uKmUlK/wLUBNVDUdPUB2frX6WHM+eYKRCnV
+ c/ORnKm28N0coMhsCHGcrvQfG8a98Opt/gWln5/1PTRIr+EVn4ryzCeDYbhWWr/0Ab
+ s6UbFuMjV1YNU7vb1e8xTPzQJNvxGGMH3NG4fYBN+hgA7nEyWI9s70Otg8TrLrLK+b
+ RUNQEEoUPIxJA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 69A071CE3B7;
+ by isrv.corpit.ru (Postfix) with ESMTP id 833061CE3BC;
  Tue, 25 Aug 2026 12:02:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 55185416179;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6F07D41617E;
  Tue, 25 Aug 2026 12:03:17 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id C996432557; Tue, 25 Aug 2026 12:02:39 +0300 (MSK)
+ id DA8D632561; Tue, 25 Aug 2026 12:02:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Yogesh Vyas <yvyas1991@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v3 173/196] tcg: Return success from
- tcg_region_alloc__locked
-Date: Tue, 25 Aug 2026 12:01:30 +0300
-Message-ID: <20260825090157.471948-12-mjt@tls.msk.ru>
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v3 178/196] tests/tcg/aarch64: Add regression test for
+ whilewr/whilerw
+Date: Tue, 25 Aug 2026 12:01:35 +0300
+Message-ID: <20260825090157.471948-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -76,66 +73,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Invert the sense of the boolean result from 'error' to 'success'.
-
-Tested-by: Yogesh Vyas <yvyas1991@gmail.com>
-Reviewed-by: Yogesh Vyas <yvyas1991@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit e131c28b6eb24c0b7f7f21591b2b2c7568267337)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260811191540.79882-4-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 32953700108cc3305f27b591d66b5fb73806266a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/region.c b/tcg/region.c
-index 5d4be1453b0..2161d961d98 100644
---- a/tcg/region.c
-+++ b/tcg/region.c
-@@ -360,11 +360,11 @@ static void tcg_region_assign(TCGContext *s, size_t curr_region)
- static bool tcg_region_alloc__locked(TCGContext *s)
- {
-     if (region.current == region.n) {
--        return true;
-+        return false;
-     }
-     tcg_region_assign(s, region.current);
-     region.current++;
--    return false;
-+    return true;
- }
+diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
+index 9fa86874534..23e5fad5255 100644
+--- a/tests/tcg/aarch64/Makefile.target
++++ b/tests/tcg/aarch64/Makefile.target
+@@ -191,8 +191,9 @@ endif
+ endif
  
- /*
-@@ -373,17 +373,17 @@ static bool tcg_region_alloc__locked(TCGContext *s)
-  */
- bool tcg_region_alloc(TCGContext *s)
- {
--    bool err;
-+    bool ok;
-     /* read the region size now; alloc__locked will overwrite it on success */
-     size_t size_full = s->code_gen_buffer_size;
+ ifneq ($(CROSS_CC_HAS_SVE2),)
+-AARCH64_TESTS += test-826
+-test-826: CFLAGS += $(CROSS_CC_HAS_SVE2)
++SVE2_TESTS = test-826 sve-while-ptr
++$(SVE2_TESTS): CFLAGS += $(CROSS_CC_HAS_SVE2)
++AARCH64_TESTS += $(SVE2_TESTS)
+ endif
  
-     qemu_mutex_lock(&region.lock);
--    err = tcg_region_alloc__locked(s);
--    if (!err) {
-+    ok = tcg_region_alloc__locked(s);
-+    if (ok) {
-         region.agg_size_full += size_full - TCG_HIGHWATER;
-     }
-     qemu_mutex_unlock(&region.lock);
--    return err;
-+    return !ok;
- }
- 
- /*
-@@ -392,8 +392,8 @@ bool tcg_region_alloc(TCGContext *s)
-  */
- static void tcg_region_initial_alloc__locked(TCGContext *s)
- {
--    bool err = tcg_region_alloc__locked(s);
--    g_assert(!err);
-+    bool ok = tcg_region_alloc__locked(s);
-+    g_assert(ok);
- }
- 
- void tcg_region_initial_alloc(TCGContext *s)
+ TESTS += $(AARCH64_TESTS)
+diff --git a/tests/tcg/aarch64/sve-while-ptr.c b/tests/tcg/aarch64/sve-while-ptr.c
+new file mode 100644
+index 00000000000..7db3b9cc035
+--- /dev/null
++++ b/tests/tcg/aarch64/sve-while-ptr.c
+@@ -0,0 +1,28 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* WHILEWR / WHILERW regression test */
++
++#include <sys/prctl.h>
++#include <assert.h>
++
++int main(int argc, char **argv)
++{
++    unsigned short p;
++    int set_vl_ret;
++
++    set_vl_ret = prctl(PR_SVE_SET_VL, 16, 0, 0, 0, 0);
++    assert(set_vl_ret == 16);
++
++    p = 0xdead;
++    asm("whilewr p0.s, %0, %1\n\t"
++        "str p0, [%2]"
++        : : "r"(8), "r"(11), "r"(&p) : "memory", "p0");
++    assert(p == 0x1111);
++
++    p = 0xdead;
++    asm("whilerw p0.s, %0, %1\n\t"
++        "str p0, [%2]"
++        : : "r"(8), "r"(11), "r"(&p) : "memory", "p0");
++    assert(p == 0x1111);
++
++    return 0;
++}
 -- 
 2.47.3
 
