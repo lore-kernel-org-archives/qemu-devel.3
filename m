@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BFC1C61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:40:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91D50C61DBD
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:40:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyyr6-0005s5-W2; Tue, 25 Aug 2026 17:38:53 -0400
+	id 1wyyrH-0005yM-Pp; Tue, 25 Aug 2026 17:39:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyr4-0005r4-QZ
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:50 -0400
+ id 1wyyrG-0005xD-AQ
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:39:02 -0400
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyr3-00054i-69
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:50 -0400
+ id 1wyyrE-00058a-M7
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:39:01 -0400
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:39a2:0:640:ae2d:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id DC5C380DEB;
- Wed, 26 Aug 2026 00:38:47 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 5C94980DCD;
+ Wed, 26 Aug 2026 00:38:59 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:630::1:39])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id QckKa93ZVmI0-dW0sjzhz; Wed, 26 Aug 2026 00:38:46 +0300
+ id QckKa93ZVmI0-V7JlZctG; Wed, 26 Aug 2026 00:38:58 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1787693926;
- bh=7QF5vpGv0kNB45S5zo/EW92SXsCJSbUYtMxNVMANnPY=;
+ s=default; t=1787693938;
+ bh=L4emkHPai025VaufLnGb/EFBYJ7znQppa2IZ825pCZM=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=JM7moSJO5u2t6w03bc4mWgoJTZPfYi19RFAdjFaiWctT5IChFZeO52xjKZpygtQz6
- C6/79nVjcs7lQ07Aw0z+5uyXA3mezrfzy8t/llZ/I6YIxcnTLRjq09KxhlIPGbQffU
- Slf1SVPEzbED2R4lLdzNekI6IOvUfZ9UId46r1vg=
+ b=ddd/bIEwFLey4ZRt6E2QXETodDyotI32WUmy/1k0emHgzar3uQNNXxfcDcElC6kL+
+ NeoyseoihWw3XxAL5/Nt3QvULPe+OdkRWBJ0pWikXglo9HK8DFBQ+YV4rkCIUT51hc
+ 8S8c+/6Q1QEGfEnT83S0t6D5uAcHA8L6kpgJCmBg=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: peterx@redhat.com
-Cc: farosas@suse.de, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH 17/30] hw/nvram/fw_cfg.c: use new migration APIs
-Date: Wed, 26 Aug 2026 00:37:57 +0300
-Message-ID: <20260825213811.3725682-18-vsementsov@yandex-team.ru>
+Cc: farosas@suse.de,
+	qemu-devel@nongnu.org,
+	vsementsov@yandex-team.ru
+Subject: [PATCH 30/30] migration: finally drop vmstate_save/load_state()
+ functions
+Date: Wed, 26 Aug 2026 00:38:10 +0300
+Message-ID: <20260825213811.3725682-31-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
 References: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
@@ -73,80 +75,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Now they are unused.
+
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/nvram/fw_cfg.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ include/migration/vmstate.h |  9 ---------
+ migration/vmstate.c         | 12 ------------
+ 2 files changed, 21 deletions(-)
 
-diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index b057d870c00..5f67f5ff618 100644
---- a/hw/nvram/fw_cfg.c
-+++ b/hw/nvram/fw_cfg.c
-@@ -565,27 +565,28 @@ static void fw_cfg_reset(DeviceState *d)
-    Or we broke compatibility in the state, or we can't use struct tm
-  */
- 
--static int get_uint32_as_uint16(QEMUFile *f, void *pv, size_t size,
--                                const VMStateField *field)
-+static bool get_uint32_as_uint16(QEMUFile *f, void *pv, size_t size,
-+                                 const VMStateField *field, Error **errp)
- {
-     uint32_t *v = pv;
-     *v = qemu_get_be16(f);
--    return 0;
-+    return true;
- }
- 
--static int put_unused(QEMUFile *f, void *pv, size_t size,
--                      const VMStateField *field, JSONWriter *vmdesc)
-+static bool put_unused(QEMUFile *f, void *pv, size_t size,
-+                       const VMStateField *field, JSONWriter *vmdesc,
-+                       Error **errp)
- {
-     fprintf(stderr, "uint32_as_uint16 is only used for backward compatibility.\n");
-     fprintf(stderr, "This functions shouldn't be called.\n");
- 
--    return 0;
-+    return true;
- }
- 
- static const VMStateInfo vmstate_hack_uint32_as_uint16 = {
-     .name = "int32_as_uint16",
--    .get  = get_uint32_as_uint16,
--    .put  = put_unused,
-+    .load = get_uint32_as_uint16,
-+    .save = put_unused,
- };
- 
- #define VMSTATE_UINT16_HACK(_f, _s, _t)                                    \
-@@ -631,7 +632,8 @@ static void fw_cfg_update_mr(FWCfgState *s, uint16_t key, size_t size)
-     memory_region_ram_resize(mr, size, &error_abort);
- }
- 
--static int fw_cfg_acpi_mr_restore_post_load(void *opaque, int version_id)
-+static bool fw_cfg_acpi_mr_restore_post_load(void *opaque, int version_id,
-+                                             Error **errp)
- {
-     FWCfgState *s = opaque;
-     int i, index;
-@@ -650,7 +652,7 @@ static int fw_cfg_acpi_mr_restore_post_load(void *opaque, int version_id)
-         }
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 5e53440115e..b86386f14a9 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -1307,15 +1307,6 @@ extern const VMStateInfo vmstate_info_g_byte_array;
+         .flags = VMS_END, \
      }
  
--    return 0;
-+    return true;
- }
+-/*
+- * vmstate_load_state() and vmstate_save_state() are
+- * depreacated, use vmstate_load_vmsd() and vmstate_save_vmsd()
+- * instead.
+- */
+-int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+-                       void *opaque, int version_id, Error **errp);
+-int vmstate_save_state(QEMUFile *f, const VMStateDescription *vmsd,
+-                       void *opaque, JSONWriter *vmdesc, Error **errp);
+ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+                        void *opaque, int version_id, Error **errp);
+ bool vmstate_save_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index a4cf9214d54..f8424234118 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -880,15 +880,3 @@ static bool vmstate_subsection_save(QEMUFile *f, const VMStateDescription *vmsd,
  
- static const VMStateDescription vmstate_fw_cfg_dma = {
-@@ -667,7 +669,7 @@ static const VMStateDescription vmstate_fw_cfg_acpi_mr = {
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .needed = fw_cfg_acpi_mr_restore,
--    .post_load = fw_cfg_acpi_mr_restore_post_load,
-+    .post_load_errp = fw_cfg_acpi_mr_restore_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT64(table_mr_size, FWCfgState),
-         VMSTATE_UINT64(linker_mr_size, FWCfgState),
+     return true;
+ }
+-
+-int vmstate_save_state(QEMUFile *f, const VMStateDescription *vmsd,
+-                       void *opaque, JSONWriter *vmdesc_id, Error **errp)
+-{
+-    return vmstate_save_vmsd(f, vmsd, opaque, vmdesc_id, errp) ? 0 : -EINVAL;
+-}
+-
+-int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+-                        void *opaque, int version_id, Error **errp)
+-{
+-    return vmstate_load_vmsd(f, vmsd, opaque, version_id, errp) ? 0 : -EINVAL;
+-}
 -- 
 2.43.0
 
