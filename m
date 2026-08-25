@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 968E4C5DF94
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:09:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED6C8C61DBC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:09:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylHG-0002Qg-T0; Tue, 25 Aug 2026 03:08:59 -0400
+	id 1wylGq-0000oS-Lt; Tue, 25 Aug 2026 03:08:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylHF-0002QF-QJ; Tue, 25 Aug 2026 03:08:57 -0400
+ id 1wylGp-0000km-3X; Tue, 25 Aug 2026 03:08:31 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylHE-0006D3-4M; Tue, 25 Aug 2026 03:08:57 -0400
+ id 1wylGn-0006AE-DO; Tue, 25 Aug 2026 03:08:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641596; bh=tyfp9u0TQ8Q5yYb517mQhYepguq1pPlz4ukGiaFhGxE=;
+ t=1787641596; bh=FUky0Z9TsiS5FZAo3nier7DOXzdfCbyLN24PGT3kvDE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=W2CQOWpIKCMopwHe4Z59XExu1tiUwkZA25WR8IGFLrH1WnA+aPpmyW5dakvoNRa+N
- B2hWYwClyITGux6b5hIPIFHTYzqo1kfBEEG+rUd5u766YTCWdo8Vw50JKeHNKR07yH
- iccccOlJGUgKeTQKXfc5cBSjbctolgXWj/QIEwflANDPwxFAFAyWBI99QYchPtBI3M
- RuYETr5z9nuymVEO9LkYmrNdVEEt+2U6daVKBNw9sJ6bxkwFp0Qr3r47oV9XQseM7o
- HSPFmfwhBYQI6t7zDeRz+JpPRHE8ADr3mWvPusVU3PzX0AB3MQGaiEqZqbh3/UAbGE
- 4mfieGYOEpVBA==
+ b=M0iC85DI2RlguPcCgOEWNcTnggXEqiLDs+0fKlifa5vYK+gqSja3XNJcvQG5Nx+qD
+ /eyc1Hz/F1fMhH4oAJak2TwQpQrgc30ryC1c5GME2WrfEQplDqXALlbbXEQNrbVlvn
+ TRxObfwT+SWscOOj/mswYM6Xp7gOKLmnFjPApa0F+Gtm3J1W7waRkAePHSE6rCN5V8
+ jjZzcJHceBSm49Toe3vN3C+PPyq0xTVnDFZVrchCMwovJR+5gHsSdYGVuUowoJVAkg
+ zEwPeCQmp7M+ZUaKs3V84z9X1kk43pi+aylo2zV1IMbzwEloUJvrwE4ntIpwSeYJbU
+ egtNT6eE/KPDw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5C7EC1CE226;
+ by isrv.corpit.ru (Postfix) with ESMTP id 477361CE222;
  Tue, 25 Aug 2026 10:06:36 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 210B2415FA1;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0B52D415F9D;
  Tue, 25 Aug 2026 10:07:13 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id A64B73242C; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ id 9A8DF32424; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 65/91] whpx: i386: enable fast hypercall output
-Date: Tue, 25 Aug 2026 10:05:37 +0300
-Message-ID: <20260825070619.174584-23-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 v2 61/91] tests/tcg/aarch64: Add regression test for
+ whilewr/whilerw
+Date: Tue, 25 Aug 2026 10:05:33 +0300
+Message-ID: <20260825070619.174584-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
@@ -70,28 +71,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Already enabled on Arm so extending it to x86.
-
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Link: https://lore.kernel.org/r/20260812082814.27217-4-mohamed@unpredictable.fr
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 3bfcd8ef6bd26cb80175f40f60e67bc6f42fa0a4)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260811191540.79882-4-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 32953700108cc3305f27b591d66b5fb73806266a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 634d5428219..1800ba8eb19 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -3247,6 +3247,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
+index 32f26892737..6cc81bf854f 100644
+--- a/tests/tcg/aarch64/Makefile.target
++++ b/tests/tcg/aarch64/Makefile.target
+@@ -203,8 +203,9 @@ endif
+ endif
  
-     synthetic_features.Bank0.HypervisorPresent = 1;
-     synthetic_features.Bank0.Hv1 = 1;
-+    synthetic_features.Bank0.FastHypercallOutput = 1;
-     synthetic_features.Bank0.AccessVpRunTimeReg = 1;
-     synthetic_features.Bank0.AccessPartitionReferenceCounter = 1;
-     synthetic_features.Bank0.AccessPartitionReferenceTsc = 1;
+ ifneq ($(CROSS_CC_HAS_SVE2),)
+-AARCH64_TESTS += test-826
+-test-826: CFLAGS += $(CROSS_CC_HAS_SVE2)
++SVE2_TESTS = test-826 sve-while-ptr
++$(SVE2_TESTS): CFLAGS += $(CROSS_CC_HAS_SVE2)
++AARCH64_TESTS += $(SVE2_TESTS)
+ endif
+ 
+ TESTS += $(AARCH64_TESTS)
+diff --git a/tests/tcg/aarch64/sve-while-ptr.c b/tests/tcg/aarch64/sve-while-ptr.c
+new file mode 100644
+index 00000000000..7db3b9cc035
+--- /dev/null
++++ b/tests/tcg/aarch64/sve-while-ptr.c
+@@ -0,0 +1,28 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* WHILEWR / WHILERW regression test */
++
++#include <sys/prctl.h>
++#include <assert.h>
++
++int main(int argc, char **argv)
++{
++    unsigned short p;
++    int set_vl_ret;
++
++    set_vl_ret = prctl(PR_SVE_SET_VL, 16, 0, 0, 0, 0);
++    assert(set_vl_ret == 16);
++
++    p = 0xdead;
++    asm("whilewr p0.s, %0, %1\n\t"
++        "str p0, [%2]"
++        : : "r"(8), "r"(11), "r"(&p) : "memory", "p0");
++    assert(p == 0x1111);
++
++    p = 0xdead;
++    asm("whilerw p0.s, %0, %1\n\t"
++        "str p0, [%2]"
++        : : "r"(8), "r"(11), "r"(&p) : "memory", "p0");
++    assert(p == 0x1111);
++
++    return 0;
++}
 -- 
 2.47.3
 
