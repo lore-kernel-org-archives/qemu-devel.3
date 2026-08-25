@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0D86C61DB6
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A210C61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:08:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyn6Y-0002lK-85; Tue, 25 Aug 2026 05:06:02 -0400
+	id 1wyn4g-0006Hq-EU; Tue, 25 Aug 2026 05:04:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn6W-0002hT-HP; Tue, 25 Aug 2026 05:06:00 -0400
+ id 1wyn4e-00069X-Uf; Tue, 25 Aug 2026 05:04:04 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn6U-0003s5-OL; Tue, 25 Aug 2026 05:06:00 -0400
+ id 1wyn4c-0003Bx-Gq; Tue, 25 Aug 2026 05:04:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787648560; bh=Veo52jMj1RvF+5WzMZ4WS3LqsXFTXKN7/ZJsUd1Nr6s=;
+ t=1787648560; bh=YL0w2okxBEGmQ/wcX2prxBgvYwdirwSZVU29JE6HqLo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bKumdfoVu9k3C0Vn20/juCacS5v57z2PGLTvo+8D4i7/DUKbLtjbERXHkptHHKAE/
- 2abv776Ctjwf2qCUkawlVFi2hnKExaLOPPGZmK4370hMP+Md4dNDKIFjlvmtVIu+kv
- IX9pkJma0IVZ7hDIogjWXxoUqhQVP+taLFLGK1T+fNzS9V29vmg1NOJ95BwWb5EmCz
- c/dXMcGCuqeZfii6behxDZwDwQtCX6e6BCBS0WzhoOEnOG+5PuYOk88wjS6qe8Qth/
- sgwPygeOyxkQYf9GVGzrTmjmdaSqZiNtEMUhQuy7y9Wj3ydJTrXmUuGYvomm7f8ksi
- NOStpkukJbKJw==
+ b=l5VeR6259RgUMS9nsa2LCaD/J2zI+vkNU/b8+jvl+gLKw+Xgsjs6SMlgW2WbXDvQS
+ 6PhiCxtkxUCJ6XU6cDwvxhjbmxnkc/DpgbXBKMNOoaYpwYTPRadxcqqoSKkyLxQ0qP
+ khBsWXbVA4kdEOiiKgUZnvhYol5NiQV90NQsutPsPGVJOhDYUdHhAqU2EfRbzvoZNT
+ 5uddtXvXUmsyNBcr/sop8EWynZlCifxJrHgjKixuDnd3dBfah4i1sv5MI8CjHri8r0
+ Xo1QsxWAD5VLYbLFEHTzqPmR/3ks2ieCvsBJCRKhsDTi27GvJmK0Ls+NEbDmIEEvuy
+ 6Bu8DUGbYJkMg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D54961CE3CC;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6E8BB1CE3B8;
  Tue, 25 Aug 2026 12:02:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BF40841618E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5AA8D41617A;
  Tue, 25 Aug 2026 12:03:17 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 1CED632581; Tue, 25 Aug 2026 12:02:40 +0300 (MSK)
+ id CCDFE32559; Tue, 25 Aug 2026 12:02:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, wangyang <wangyang25@otcaix.iscas.ac.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Yogesh Vyas <yvyas1991@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v3 194/196] target/riscv: reject FMV.X.W/FMV.W.X under
- Zfinx
-Date: Tue, 25 Aug 2026 12:01:51 +0300
-Message-ID: <20260825090157.471948-33-mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v3 174/196] tcg: Return success from tcg_region_alloc
+Date: Tue, 25 Aug 2026 12:01:31 +0300
+Message-ID: <20260825090157.471948-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,45 +73,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: wangyang <wangyang25@otcaix.iscas.ac.cn>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Zfinx explicitly excludes the FMV transfer instructions, but
-trans_fmv_x_w/trans_fmv_w_x used REQUIRE_ZFINX_OR_F so a Zfinx-only
-CPU accepted them.  Require RVF instead so the transfers trap with
-an illegal instruction when only Zfinx is present.
+Invert the sense of the boolean result from 'error' to 'success'.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4108
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
-Message-ID: <36c7cfebd27b4b6e8bcdd00e09e9dda0@wangyang25.otcaix.iscas.ac.cn>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit af1e669cef162e8d9b5f2f176e8b909d61c4b530)
+Tested-by: Yogesh Vyas <yvyas1991@gmail.com>
+Reviewed-by: Yogesh Vyas <yvyas1991@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit fcdbc78ad4dea4b6baac581be5f7350ce47dc218)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/insn_trans/trans_rvf.c.inc b/target/riscv/insn_trans/trans_rvf.c.inc
-index 89fb0f604ad..b20f19c233c 100644
---- a/target/riscv/insn_trans/trans_rvf.c.inc
-+++ b/target/riscv/insn_trans/trans_rvf.c.inc
-@@ -428,7 +428,8 @@ static bool trans_fmv_x_w(DisasContext *ctx, arg_fmv_x_w *a)
- {
-     /* NOTE: This was FMV.X.S in an earlier version of the ISA spec! */
-     REQUIRE_FPU;
--    REQUIRE_ZFINX_OR_F(ctx);
-+    /* Zfinx explicitly excludes the FMV transfer instructions. */
-+    REQUIRE_EXT(ctx, RVF);
+diff --git a/tcg/region.c b/tcg/region.c
+index 2161d961d98..57ca7423570 100644
+--- a/tcg/region.c
++++ b/tcg/region.c
+@@ -369,7 +369,7 @@ static bool tcg_region_alloc__locked(TCGContext *s)
  
-     TCGv dest = dest_gpr(ctx, a->rd);
-     TCGv_i64 src1 = get_fpr_hs(ctx, a->rs1);
-@@ -531,7 +532,8 @@ static bool trans_fmv_w_x(DisasContext *ctx, arg_fmv_w_x *a)
+ /*
+  * Request a new region once the one in use has filled up.
+- * Returns true on error.
++ * Returns true on success.
+  */
+ bool tcg_region_alloc(TCGContext *s)
  {
-     /* NOTE: This was FMV.S.X in an earlier version of the ISA spec! */
-     REQUIRE_FPU;
--    REQUIRE_ZFINX_OR_F(ctx);
-+    /* Zfinx explicitly excludes the FMV transfer instructions. */
-+    REQUIRE_EXT(ctx, RVF);
+@@ -383,7 +383,7 @@ bool tcg_region_alloc(TCGContext *s)
+         region.agg_size_full += size_full - TCG_HIGHWATER;
+     }
+     qemu_mutex_unlock(&region.lock);
+-    return !ok;
++    return ok;
+ }
  
-     TCGv_i64 dest = dest_fpr(ctx, a->rd);
-     TCGv src = get_gpr(ctx, a->rs1, EXT_ZERO);
+ /*
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 2ca44766f64..64e596c0d4c 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -1835,7 +1835,7 @@ TranslationBlock *tcg_tb_alloc(TCGContext *s)
+     next = (void *)ROUND_UP((uintptr_t)(tb + 1), align);
+ 
+     if (unlikely(next > s->code_gen_highwater)) {
+-        if (tcg_region_alloc(s)) {
++        if (!tcg_region_alloc(s)) {
+             return NULL;
+         }
+         goto retry;
 -- 
 2.47.3
 
