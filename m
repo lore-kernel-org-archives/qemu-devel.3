@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 121F7C61DBC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45319C61DB6
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:04:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyn48-0005D8-98; Tue, 25 Aug 2026 05:03:34 -0400
+	id 1wyn4H-0005MK-PQ; Tue, 25 Aug 2026 05:03:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn42-0005BZ-GA; Tue, 25 Aug 2026 05:03:26 -0400
+ id 1wyn49-0005Dy-FN; Tue, 25 Aug 2026 05:03:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn40-000393-N6; Tue, 25 Aug 2026 05:03:26 -0400
+ id 1wyn47-0003A5-AN; Tue, 25 Aug 2026 05:03:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787648560; bh=p//02/ZssSdUfb2DEihvFGwk9+6LgdXvJg1LDM4afN4=;
+ t=1787648560; bh=sEStakM/b1LSpMaZuQpLTd2+8lpTXq0OXwPMNXwamtM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ac8lGyNF6vhpr5MFYkSql8lOUri7bT5PsDP4h3rkGamoH0RoNxzSv/mpLdT+zdfnU
- g0XL8+ggIEx7xHwlwzlrp+oLOok8XfxMJSrzlBGQrt3n/Ih1O6URaDejameOBUaHqt
- DVNYRntRB7Cgy7cGojzabag/Qv6okjxNjOuyygw7olIOUgPUvbx6muAMXlj0FfIVOd
- ZriA/ji9vSQKj7NbweiAqZQR5XYMuwcuA+3cFUNr9EZMxtN6Id2bRlUr1fQ6+b2ZHD
- bv83nBXXfW8S34TUY17f33kXwRx/Wf6w8T7RFxIGcr9u3ydKNnxTPKH7PUAV8vHgA4
- es3t4UXs/zimA==
+ b=JnWOZcos+66DzzpYHqZPF7ZaJTXBzPsVA7KsW/qYG14TQOA5t6+p6a7EQC8fmGNUR
+ 3a7S5Yh3jI1yDHQ7f00b3qz/ymVXRvilUJddM5y6Hve0AjsOiEwjQ0FuTbO7A2rKM4
+ vLjdZf5vuVqKWVQhwnMdgJWXrHe/i+xqxyhCUwxdrO8owXO99hpviYKUGqJB46U+9Y
+ 5lbCSFOCyW0vna16F5LZXawHGOMiGVe8WN0hNSgWhT6E7EmY4lLLzfJ8i4Vru2Ivy/
+ mIBQaS0eMu5226PwJBhHnGoWk+HjJVCestlVyqC6m2HAnsK0JorrgpOUAwm2Ro0OPj
+ 7Rjd1YcpqMmXQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3B6CA1CE3AE;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4BDEF1CE3B1;
  Tue, 25 Aug 2026 12:02:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 27BDA416170;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 374F9416173;
  Tue, 25 Aug 2026 12:03:17 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id AC34E32545; Tue, 25 Aug 2026 12:02:39 +0300 (MSK)
+ id B5EE63254B; Tue, 25 Aug 2026 12:02:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Chichkov <ilya.chichkov.dev@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v3 164/196] accel/tcg: Allow overlapping reads in
- record_save
-Date: Tue, 25 Aug 2026 12:01:21 +0300
-Message-ID: <20260825090157.471948-3-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Craaijo, Jos" <jos.craaijo@ou.nl>,
+ Yudistira Putra <pyudistira519@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v3 167/196] target/i386: fix long mode segment
+ override prefix decoding
+Date: Tue, 25 Aug 2026 12:01:24 +0300
+Message-ID: <20260825090157.471948-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
@@ -72,82 +72,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Chichkov <ilya.chichkov.dev@gmail.com>
+From: "Craaijo, Jos" <jos.craaijo@ou.nl>
 
-record_save() assumed that a target reads the bytes of an insn as a
-strictly ascending sequence of adjacent chunks, and asserted that each
-read begins exactly where the previous one ended.
+On x86, the ES/CS/SS/DS segment override prefixes are null prefixes in
+long mode, and should be ignored. (AMD APM Volume 3, Section 1.2.4)
 
-That assumption no longer holds for riscv.  Since f9eaa1542b
-("target/riscv: support atomic instruction fetch (Ziccif)"),
-decode_opc() loads a full aligned word whenever pc is 4-byte aligned,
-even when the insn turns out to be a 2-byte compressed one, so the
-record may already hold bytes past the end of the insn being
-translated.  When such a compressed insn sits at page offset 0xffc,
-pc_next becomes 0xffe, which is within MAX_INSN_LEN of the end of the
-page, and riscv_tr_translate_insn() probes the next insn to decide
-whether it would cross the page boundary.  That probe reads at offset
-2 while the record already covers [0,4), and the assert fires:
+This patch fixes the prefix decoding to correctly ignore the prefixes in
+64-bit mode.
 
-  qemu-system-riscv32: accel/tcg/translator.c:395: record_save:
-  Assertion `offset == db->record_start + db->record_len' failed.
-
-record_save() is only reached when the insn is fetched from MMIO, so
-this is visible on boards that execute code from a region created with
-memory_region_init_io(), such as an XIP flash window mapped over a
-serial flash controller.
-
-Both sides of the collision are correct: the wide fetch is required for
-Ziccif atomicity, and the probe is required for correct fault reporting
-at a page boundary, per 00c07344fa ("target/riscv: Make translator stop
-before the end of a page").  Unlike a86d3352ab ("target/riscv: do not
-use translator_ldl in opcode_at"), where a non-translation caller had
-no business using translator_ld*, the probe here is a genuine
-translation read whose bytes must be recorded.
-
-Relax the invariant instead.  Keep requiring that a read neither moves
-backwards nor leaves a gap, but let a read overlapping the recorded
-range extend it only by the bytes past its end.
-
-Cc: qemu-stable@nongnu.org
-Fixes: f9eaa1542b ("target/riscv: support atomic instruction fetch (Ziccif)")
-Signed-off-by: Ilya Chichkov <ilya.chichkov.dev@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260814142159.3800744-1-ilya.chichkov.dev@gmail.com>
-(cherry picked from commit 784b7f28e2761fbd3c753883be949eb3d1ffe228)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3391
+Signed-off-by: Jos Craaijo <jos.craaijo@ou.nl>
+Tested-by: Yudistira Putra <pyudistira519@gmail.com>
+Link: https://lore.kernel.org/r/20260623-fix-x86-long-mode-segment-override-decoding-v1-1-26d9d4b5804e@ou.nl
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 3589cd995b4facf34071e944fd8ec2294524e25a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
-index f3eddcbb2e8..179d74f96de 100644
---- a/accel/tcg/translator.c
-+++ b/accel/tcg/translator.c
-@@ -385,14 +385,22 @@ static void record_save(DisasContextBase *db, vaddr pc,
-      * Either the first or second page may be I/O.  If it is the second,
-      * then the first byte we need to record will be at a non-zero offset.
-      * In either case, we should not need to record but a single insn.
-+     *
-+     * A read may re-read bytes that are already recorded: a target may
-+     * fetch a whole aligned word to decode an insn (e.g. riscv Ziccif),
-+     * then probe the following insn, which lies within that same word.
-+     * Such a read extends the record only by the bytes past its end.
-      */
-     if (db->record_len == 0) {
-         db->record_start = offset;
-         db->record_len = size;
-     } else {
--        assert(offset == db->record_start + db->record_len);
--        assert(db->record_len + size <= sizeof(db->record));
--        db->record_len += size;
-+        int end = offset - db->record_start + size;
+diff --git a/target/i386/emulate/x86_decode.c b/target/i386/emulate/x86_decode.c
+index bae1dd4d6f8..34dcac155aa 100644
+--- a/target/i386/emulate/x86_decode.c
++++ b/target/i386/emulate/x86_decode.c
+@@ -1851,6 +1851,12 @@ static void decode_prefix(CPUX86State *env, struct x86_decode *decode)
+         case PREFIX_SS_SEG_OVERRIDE:
+         case PREFIX_DS_SEG_OVERRIDE:
+         case PREFIX_ES_SEG_OVERRIDE:
++            if (x86_is_long_mode(env_cpu(env))) {
++                /* ES/CS/SS/DS segment overrides are ignored in long mode */
++                decode->rex.rex = 0;
++                break;
++            }
++            /* fall through when not in long mode */
+         case PREFIX_FS_SEG_OVERRIDE:
+         case PREFIX_GS_SEG_OVERRIDE:
+             decode->segment_override = byte;
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 918f71c8ac0..3d300dc9523 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -2831,16 +2831,24 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+         s->prefix |= PREFIX_LOCK;
+         goto next_byte;
+     case 0x2e:
+-        s->override = R_CS;
++        if (!CODE64(s)) {
++            s->override = R_CS;
++        }
+         goto next_byte;
+     case 0x36:
+-        s->override = R_SS;
++        if (!CODE64(s)) {
++            s->override = R_SS;
++        }
+         goto next_byte;
+     case 0x3e:
+-        s->override = R_DS;
++        if (!CODE64(s)) {
++            s->override = R_DS;
++        }
+         goto next_byte;
+     case 0x26:
+-        s->override = R_ES;
++        if (!CODE64(s)) {
++            s->override = R_ES;
++        }
+         goto next_byte;
+     case 0x64:
+         s->override = R_FS;
+diff --git a/tests/tcg/x86_64/Makefile.target b/tests/tcg/x86_64/Makefile.target
+index be20fc64e88..c48767fef85 100644
+--- a/tests/tcg/x86_64/Makefile.target
++++ b/tests/tcg/x86_64/Makefile.target
+@@ -15,6 +15,7 @@ X86_64_TESTS += vsyscall
+ X86_64_TESTS += noexec
+ X86_64_TESTS += cmpxchg
+ X86_64_TESTS += adox
++X86_64_TESTS += segment-prefixes
+ X86_64_TESTS += test-1648
+ X86_64_TESTS += test-2175
+ X86_64_TESTS += cross-modifying-code
+diff --git a/tests/tcg/x86_64/segment-prefixes.c b/tests/tcg/x86_64/segment-prefixes.c
+new file mode 100644
+index 00000000000..a7e6e285b2c
+--- /dev/null
++++ b/tests/tcg/x86_64/segment-prefixes.c
+@@ -0,0 +1,25 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* See https://gitlab.com/qemu-project/qemu/-/work_items/3391 */
 +
-+        assert(offset >= db->record_start);
-+        assert(offset <= db->record_start + db->record_len);
-+        assert(end <= sizeof(db->record));
-+        db->record_len = MAX(db->record_len, end);
-     }
- 
-     memcpy(db->record + (offset - db->record_start), from, size);
++int main()
++{
++    int data = 0;
++
++    /* Ensure that ignored segment override prefixes are actually ignored */
++    asm volatile (
++        "wrgsbase %0\n\t"
++        ".byte 0x65, 0x26\n\t" /* prefixes: GS + ES */
++        "movb $0, 0\n\t"
++        ".byte 0x65, 0x2E\n\t" /* prefixes: GS + CS */
++        "movb $0, 0\n\t"
++        ".byte 0x65, 0x36\n\t" /* prefixes: GS + SS */
++        "movb $0, 0\n\t"
++        ".byte 0x65, 0x3E\n\t" /* prefixes: GS + DS */
++        "movb $0, 0\n\t"
++        :
++        : "r" (&data)
++        : "memory"
++    );
++
++    return 0;
++}
 -- 
 2.47.3
 
