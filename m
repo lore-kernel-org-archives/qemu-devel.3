@@ -4,185 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06BACC61DBE
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 15:10:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B77D9C61DB9
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 15:12:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wysn9-0007Dp-TO; Tue, 25 Aug 2026 11:10:23 -0400
+	id 1wysoR-00082w-2n; Tue, 25 Aug 2026 11:11:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wysn8-0007DZ-8c
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 11:10:22 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wysoP-0007xi-Dp
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 11:11:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wysn6-0006DP-CU
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 11:10:22 -0400
-Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67PEcEMc2321403; Tue, 25 Aug 2026 08:10:13 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=4oM1xOjmz21t+yAutOxTE+487VwxsJHUxi5Hcc2Tr
- nQ=; b=a2FWk/Iu2RSACFVfW/YPqiKlVAkUY/7zxHgVShsfOJ44amUJt1m/m1Ltx
- BPLCBVRExMd6/p3oRIuWjp5RIcWX+A5ByNn6muKLkHvwCpKZmQ64jHEnUX/RYpwr
- /kJPOg5humVk09H9dSg/yhjjm735o5B8S/wd9J2I6+7XoIeEpTagt9rROVuaZ0QV
- TgPlt5zTQEb5C61pECk4GlFvYAdoQz5yNcJlaFxuqIWLesJTVh1uJ9XXSGpFL1So
- cg+wqDxgwQIkPVI734wfKps1QeiYj6I7dE8Zi69ZMMp4El2dyVmxP67wKQ1LTuG/
- Wnroel2otU7OHcAiFMViJCoMgfItQ==
-Received: from sn4pr0501cu005.outbound.protection.outlook.com
- (mail-southcentralusazon11021131.outbound.protection.outlook.com
- [40.93.194.131])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4g7baven92-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 25 Aug 2026 08:10:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bqhvIEff02syWF5AuLxFslOpPZMQZZr714UtwINt+/pPLm2lNE3Fmk9qZr0adK5zniN8RbLwuPnsp23+e2HiC6UtVjmk2evN26fpU9d81k2mrJsaYYsMNNGABNQGTi2x0ilpGw/WG1cXTi86HolXHKPNNHZAFnUMNzBlBGU/5pTdyF0hsqYdya75yQK+GxAnNvQfyq4mQs0LaA2wBQqoHRqf0gCqiW5/RSrSgqoa41GtuaTa0koZ6jIGgEbr1rbAlfz3tjWm95zSA1wYxti5A6gVeEpMLKQFt8rOvUn6m1Rv1Gb+BUm15gBWfBS1VHwlCebNXA9ONW3Tpr/N4bfBuA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4oM1xOjmz21t+yAutOxTE+487VwxsJHUxi5Hcc2TrnQ=;
- b=mnCwuIPcS8EU4oVB1mwUNv9rpdalQkgOpq9yASJ/iQtKyNq23T1BoSqfxag6gwxeozwBlgaA6VhIn2+zOxM/tF8BKsQOHNoJlFURILfkBwpB/ET9qVA1/Jhmh0qN2KujPHaBoPZD79Bh/GD0pCrB+2vVgONipJQ5b70jKtk8rwffLc2Uk2c8bArIQEJ7lxDUR0zNoKpuWt6GDurFFw851rTTNJhg0lV9CP+xALdDzp43t2uwzNNTSq089ojp9rm6LY8lfUuNnCT9zTG7Dsj7x0tuARj3SppwBzfQ1MdFUqQtXrmmRu3ooxAvNzvR8XDTVwq0DuSgCk8NDwii25KSSg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4oM1xOjmz21t+yAutOxTE+487VwxsJHUxi5Hcc2TrnQ=;
- b=OlwNB/1TODwqvRLFzmBAZ+KCU9YntA3/xU+Bd+uBZPr/+gdlX1/0SQFBF3QFRJFcvUBCbpGe6Rj6rmIf6ddncluCLt3nxTOMMYas19MZd1VnzcY6lDJkaUTwaKLIEEBFj5w+7yyGBFtNCSRPqDdioJbBKxLvQb+8otEtyXqRRAIRVhhJvsD63GgCp4NXbfFQOfqNPY8HqGlmAhc4CQSkH1Kd96NvChx7vwFyBnbSnu3Jxp3YRVD/3rldJZcI8yDo+GRoeUPQHJQYZOPCCC9CuB29p5ixF+UqRyfN39bc7I+usU+wMq6e6cAIlLUfrYpxr4ZmHw7HlrRJlCCwUpnGjA==
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by CO1PR02MB8855.namprd02.prod.outlook.com (2603:10b6:303:158::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.6; Tue, 25 Aug
- 2026 15:10:07 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0360.005; Tue, 25 Aug 2026
- 15:10:07 +0000
-Message-ID: <9be423c1-2e54-4783-8b4f-c1676508a058@nutanix.com>
-Date: Tue, 25 Aug 2026 16:10:03 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 35/74] event-loop-base: fix property typenames
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
- <20260818-qom-qapi-v3-35-24b8bbbe3d86@redhat.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-In-Reply-To: <20260818-qom-qapi-v3-35-24b8bbbe3d86@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SA0PR11CA0077.namprd11.prod.outlook.com
- (2603:10b6:806:d2::22) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wysoM-0006Mi-3p
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 11:11:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787670696;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=02a0V/83WElGosN9Y9QuqvubTtRcEy8zNS9xa2+kyb8=;
+ b=LC87HA00uMMEbrhzEfxJ4zJ8yFOPWyOkhaB5zCt/3V60ItKHliAY0hjT87iw+Ma21PylDq
+ wdxpkGlGy41TcNziUTufWoevgWzJSaUkhYbpyqz0sL/bRMFEgfmYtpDh8bN6ioRI0oHO3S
+ 8NR5tZJuEOTbxhzcPQ/enCFahBdW9BI=
+Received: from mail-yx1-f70.google.com (mail-yx1-f70.google.com
+ [74.125.224.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-463-qfQaq1DqM6awmNvU3iOKDw-1; Tue, 25 Aug 2026 11:11:32 -0400
+X-MC-Unique: qfQaq1DqM6awmNvU3iOKDw-1
+X-Mimecast-MFC-AGG-ID: qfQaq1DqM6awmNvU3iOKDw_1787670692
+Received: by mail-yx1-f70.google.com with SMTP id
+ 956f58d0204a3-66988049306so6298058d50.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 08:11:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787670692; cv=none;
+ d=google.com; s=arc-20260327;
+ b=MnrnF68UxUv+j120HCLl73U3/pyBVbyYzQg0TZr8dMuW5X/cp/lQ/baf7W7QsbCNU2
+ J5p84+r6alu1C2wkS/4hAgVvF0KCPS1nCKzDCAUZCUyqDBEYkew71PUc/qiYXHmzuV8C
+ 0KhgZetNUwNO39Hk1am6COvt1Rq4+yv00qCbzBWY3xzZ4ZB5HdjEg5UaYw4HD63IWJUo
+ U2ZmmIDbc0UBjTkwvpT9xpD8DY510xgVI77lNdinKCPMvzcZclfhUi8J0mN3siyVQa8q
+ 3sTsXF7cXVG+pePPLM0Pq192gVqZ1bHt7UWQUHkVVjiZ8fL/IoypY3fj58f/58K4/uSZ
+ cIRg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=02a0V/83WElGosN9Y9QuqvubTtRcEy8zNS9xa2+kyb8=;
+ fh=dNOU0ocCnvN5kDKQFHF16npSNEF2i+iSEogTzCN9ncU=;
+ b=Szzk+zUm0TjW9uU1diq7TPSquOos6wmUtdw91TPnIz0BCn7w2kI9jbOpyeKIsudtIz
+ 9yJsRhY7Wa9zmlVQYBSVW/AenG5m9qCNTbkSl/26ZyPeakGa4MHVwLX6KT6//XL4M/Bj
+ 1gAZXSBDNgt3+81CrCnwQU9lGLXTkRvCcweJBB3ynRlSx2aknhV3qtlE+5Dpsg8X9xkQ
+ Cd66YfT3deI++3r9aYaycWisAIGfJF3pG9P6Og6TtRpxTrtR4pAOBQgaTTYnLU63ntjF
+ yK6uonRkqZbdKrIlODAArkWrIwXy+NTGOOvRmGljBL1pcpkF17jqO9PkDoAVnY5IE9Kd
+ b5dg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1787670692; x=1788275492; darn=nongnu.org;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to
+ :content-type; bh=02a0V/83WElGosN9Y9QuqvubTtRcEy8zNS9xa2+kyb8=;
+ b=U7p6sgs063/V/RuPAUgZoDy9IpZ0OH1x3r56xd9EPFgWdw3rszaIVDJAEyXbukV/Uf
+ 3z43MmbsJRZMjwbKLAZyzM26OpyyNyE93O73/cv0eMYD2Rg6LHVY/9R7NnweQyieuwsL
+ DfeD/uxH6wNwhM/89HZvQvsz2sp6avQ5WbuBIjxc1H+6OIQlgxtJo0SQ9SxwMh2Dag9N
+ FhWXRCZWfa5AfxWmNNIBnUtValkZ8n8sV3FpzXDYGq4islH0tR4u93y0eWJ17njP0RNc
+ V4MX5KlDbRkA7Wnk3PjZ6bdsgJYrbnrWo81IBROnw96dTniDU9GNjiqqJHzLGLksOSFh
+ S5PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787670692; x=1788275492;
+ h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+ :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=02a0V/83WElGosN9Y9QuqvubTtRcEy8zNS9xa2+kyb8=;
+ b=PUwSVpgJzZc6C2wjzkF24BgdBPjI9YEcbhQ1m7d4JMW13QTZjkaW+Flnm+vMUikXWv
+ JU6L0rs2g/W2P0oV2ChKjVOaNfYqEwmtT3I2b0L/OntVpMdKkxy4kSrGgxhz96XoCFBc
+ Iu9M2dqTa5cm25neg7Ont8Egx682gc3W471W9k/fyI3cobxQt7yni5Bf5euk+tYGgpQG
+ 8vO2sRxQKOv0YTUudy/hXergLyuZi/MlDFgAsmlxUiX3T/WyRBUYpUl0hGtz98oxbQ4r
+ iEi2M+RFuqwCrDwB6kE7pvZQiH0XwiuAv1SZvqmp6RanIfKptc3qjH9GzoyxdLJ+wD77
+ Pr0w==
+X-Gm-Message-State: AFuF++k1wkBmGTwG6Vahua8W0rQ0yE0bWdFVMkf8GRrGBESqJliauO/Y
+ 3GtawBxGgaWA7irodthBKcTPk+0zJ0GwlxAGtfSpSQ7ZSTcI8A6OYLOq2PGP/9Cn/fr4eHUBrbQ
+ PhmEaZt9Lecz+HO4kJ73dFFyxA5rHEtkPGmnn/laRzXosMkaf4ft4dxqOYFarpISQHBfQegOA3q
+ 8ClP3lEKkH1WfOOyPGDUcVQE0nLKlvN1Y=
+X-Gm-Gg: AR+sD11ApRubPw+qEOF1/nozQtONB/Ja922NxN4zdWcFP80OTg7JWEmjRE9p/Cn1lJQ
+ t0nEHL4UbEWJrwn32VGjtVaQrgzxLV9rp+uSbzxCB2LaDEbCtdfyNj0uqyIFyGhWIg6nYjNcBPM
+ cE1Hyei4JPV9YkUZ2DQhug+0UvwDRNyyZebttJuAMIxopPTlX8vzS0uJgIQB6uEVtw9YCHuTVkH
+ z+9LSMNMfMvneiv
+X-Received: by 2002:a53:a5d1:0:b0:66c:76e6:2d01 with SMTP id
+ 956f58d0204a3-66d14a21801mr1907044d50.9.1787670692055; 
+ Tue, 25 Aug 2026 08:11:32 -0700 (PDT)
+X-Received: by 2002:a53:a5d1:0:b0:66c:76e6:2d01 with SMTP id
+ 956f58d0204a3-66d14a21801mr1907032d50.9.1787670691494; Tue, 25 Aug 2026
+ 08:11:31 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|CO1PR02MB8855:EE_
-X-MS-Office365-Filtering-Correlation-Id: 92034d9f-dc98-460f-70b2-08df02baf331
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|23010399003|1800799024|376014|10067099003|4143699003|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: O2/50WmoQzlnJJsxaK9gSLZGUc/ezqH3VSok/qmdKcRd9JH8pf+dbK5tRN+P/npI7ZAT7dJHJHVuuN6AvrozzvZwgGwQz+8gjWtNIvyFXNRafBjGlinlZTlNqBxgVVxhzysjVQYZ9ZuNKV1gmCRctU4IFUX/ZHhvkVgn5HWAbieVzZvop1C7dctufvYeCfpZ6EDEF3i8LGSqXCWc0FfC9Mqkg5bw62RJVIyPXfof0v8KA2fEB2VoWBRC+gdkDbR1CCpmnQC4i3vcL43yCIt2DVHVd+zwH6v3c+vILZ6JHod6VVDJmTSXVsOfjE2D2WHS9gGEzJpl/I4tFcQktsoJQAjsGvtydjPqVvUYfVLnchdInooSK6634xOBciZECcQPClc3KqRS/V+J4zqImrbLkPf9wk2t8XvPKRv/DB7YBewlNWrHPor+lODQ0t+UPZLHw682JRu8ka7Ql04qV7NUIQft8SK4G5LriUq/WKVLKvxg3oXc2TmJNLWgksiuc8uj2LzWHTSAIOcFB2kXHPTGa0rYksgI8NrXrrTjZw1nexysRZ0zPuqC6opImlkpR7kbYF6+x4p2fcnND/zwP88XurcwK45WhiDCNT4jLN0FCZtam5IZ0auSUXOEkSXEgp8dixAMtzS1if4LefwPW2YBW5hr9foAyHunjRkQ3DZpUuM=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(23010399003)(1800799024)(376014)(10067099003)(4143699003)(56012099006)(18002099003)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aGRhYWYrKzIyTDdiUjBZSXRUY2pMQm11VElaK0FqUjk5a1Vnb0cydWEzUlNi?=
- =?utf-8?B?WTJCaXlQUGJ5Smozd3lyQU00bWl2ZVdMU0IrYjU2Nnc3aGE4YnN2emVOV0FL?=
- =?utf-8?B?Mkt4YnNOZWQ4emI1Z2dTK2dybHVQc2dkSUpLeENKNjMza1puYlUwRFRmVmxC?=
- =?utf-8?B?UWRxcWlXT0ZaTFhoNE5Sa2s3SWV6YTJyNmVzYjI3VUVLalM3M056QkhXZXFN?=
- =?utf-8?B?MXpGYU13akhyTGlRcXVvdTB6MHVYeDRxNWZYdWxlWHVqOXQzZ0pXNCtiL3FM?=
- =?utf-8?B?Vm55ZEhodWU4Njh1ZmlhVnJ1aGd6MjZIUmVkK0FaU3gwRGdLT0o2d2R2WnFn?=
- =?utf-8?B?a09RMi9vQ1doMGhidDk1eDEwd3g1N203NVJwTkFWYnVYUW1NYVhSZ0o0QmVP?=
- =?utf-8?B?VHVDc2dlcE1tZ0UwWDBJMTNtcXdNWjVxN2xURmFlR1hMeElsdFRyUW9kZUt4?=
- =?utf-8?B?SmlnVnpadzh5dEszbVBYdXZPNWRZdHYwaTU4cHlka0V1dGJyOUtsekZSUGVE?=
- =?utf-8?B?ZEpuNkQvMjNsdWFxQk9wT25PNFFZNXRTaU14OFIzV0dqUzFPQXNDUzlLOS9B?=
- =?utf-8?B?alR3bVowTFdOTXhzL1duREplQjNxbk1uTEREM1NJQ1ZrY3hDS3NPamxBYmRS?=
- =?utf-8?B?M0RzV0xVZjFrWXRZSmRTTTd1R25hdTBCNUptSzRUTjlkZFJqOXFOdzkrVXJj?=
- =?utf-8?B?d3FTWE93N1Z0LzVTZWVPc1Z1alJETk9MQ1o2L01zUlF4TmJnQmhrVEV6MndJ?=
- =?utf-8?B?c0pXeVZjREhCaERzOE1ZbWxjR01xSFRRajY0MCtDb05mUTJHdTJiMHJGdE4w?=
- =?utf-8?B?THp0Qy9IelVWdnhJdnkwS3pQNlVxZEFxbTIvWUhUNmFQWllqVktqZlJITGdi?=
- =?utf-8?B?eGRoNTYrRTQzWklWM3FPTDZMbk1WRjYyREhzS0FVTXBtMjQzcEVleGFwS0hX?=
- =?utf-8?B?QlVLaHBIaTM0WnZyYjl2UDFZTnlwKzk3aC8xMC83SCtUMlZKcnZvckhVMVpT?=
- =?utf-8?B?NXM5NWxhODUrMVNab25rVTFwaTcrSlFsREU1UmN3amZwRjBCVkFEem1PektW?=
- =?utf-8?B?Q3Q0MlBuQWN2YmlPV1AvSE5yellBT0RzMWMvbFJJVmpKQWYzeUtHU1J4ajVu?=
- =?utf-8?B?MThNTm9JeGw2L2ZFNDRUK1o1Z2JnbndmRytWdTNOK2dVQTJpTUN3WlJtTmtv?=
- =?utf-8?B?ajBvaE91b3F1azVqNklSUmtUa1ZYd1NRRFlrQnluWlptVy90RVNlYUx2MTZV?=
- =?utf-8?B?MkQyL3YrWFVDblVmMFdWRjIrQWdsRURYcTN1N0s5TTU2eCtHMEJManJVUFo1?=
- =?utf-8?B?WWRwMi9oQTdvbXA5K3BvSWplUngzK1RNVFdIVkV3NmJrenNaa3VXQVUrTlFQ?=
- =?utf-8?B?THU5K3o1RU0xNlpKb0NIWjQvMTM4aVZzR1pKbG1QejgzTjZxMzUzRmJtNTRC?=
- =?utf-8?B?bzRKMmF6TDgwVkdyRUR4b0VWRUxWQ01mVjFkam5taW4zNW9velJMOEg2cXFl?=
- =?utf-8?B?NzRUenhVcmZsMjNpNnBwMW9MUktKTFY0SnhIcmdXczBZWEtzL3RhYURJRE1x?=
- =?utf-8?B?T1cra0VyeTJ2RHVYdVM2ejZRc2p4dlNkZDJMOHlHa3diZiszVWduN2JIQlJU?=
- =?utf-8?B?VUtCY2l6WHFTRFFZY2pZQ2wrOFp2MVMwd1krQytxK3hEZ3dCb2ZOdjZEbUg2?=
- =?utf-8?B?UXFyRlpOdm92anUzK2J6dzFIOVV4eFlaTnJialV4YSt4L2VyTXhSSmxLRmNp?=
- =?utf-8?B?TDZpY3FaWnNBMTlPZTB5SUN1UkJVWlVudzVGMzJuOWp5UjRjU2dHNVRzM0x3?=
- =?utf-8?B?d1ppejFlOTcwanc2bDJXRldxM21tTCtHeU5GQW90RjhxVkt3VVFuOHF6MXM2?=
- =?utf-8?B?SHQ3R1NpMUVIbVFxSGl5UzFQaTBBbW9kY1JDNHE2YWtGWVIybVk5UGs0emNi?=
- =?utf-8?B?bzd6YXJDSkhQMEhHOXNSa2tNN3paVmpaTjZsckpZeE9TUUN6Z2Vxb1ZaOFVi?=
- =?utf-8?B?L2VXNEg3MDJHVVppKzFoOG1HU1VhU2hvL3l3bWZOQ3YzN3pyakNSOUZOS0VT?=
- =?utf-8?B?UXhPWnl3L0NaYXR1bHBrd0FLOXgzUkQyMGRrNjQ1bXhxb1pxUkVjOHpjcmpU?=
- =?utf-8?B?YUFNWEVaL2ZkUnRPNVFDZTlJbE5Pd2RTS1phUzFveDNiYjVMWTJRRnZoYWVJ?=
- =?utf-8?B?aTdNdTBObUNtc2g4UVdoTkVCNGxWSzA3Q2RBUExKSkJ5eWNsVm4reE9RVU9C?=
- =?utf-8?B?dmd5SXdxOUgyUFdPekF3SFNaa2lTWFlTckU5bWxuVGg5TmxEY1NMbFpzb0NU?=
- =?utf-8?B?Yzk5TVNybVpnaGRBRWYySFBqK1ZteVFXQTlhMHJHZWU2YTVyRHkzOFVuNmRt?=
- =?utf-8?Q?cOJsqzLZiWz+HV+k=3D?=
-X-Exchange-RoutingPolicyChecked: W9fXs00OqXrqVcbGWzDacKGsyYv2lFZPtr9Up0MYr+iGBm9hY8simgpFpCANEYUqV1LtYoIcdo/UFLqsiI+LaPgCeDWKpkJsPU2/wzUIogfZglRQhAmogHwJCcHbyXEueeptlN7H0ZRbmZEXUVbLQO+MU2bvupCFsSh/8ItDodgCCEt8mq2pO+2FjGUISq6kKdhKtI/KKgF7kEnSjSvVU52ff5SA0YeR6k9v/J4RoL6FFwKnU6224iFV+1yb4BkRL8x4ACIbpX3UuOsgeS/uSamjJPRkbLf5EMLOC018+NMIjjcirWCC5Br2UMoSWMHwDAz7yY2SgZSaZGVtUvi5Fw==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 92034d9f-dc98-460f-70b2-08df02baf331
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 15:10:07.8572 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: JK23G6lkLjsIwPHJ1vb1+r7cPjTNxMzgRIvji/PC1vpJAxs1mKF39hIHxSLk1m2Cxj7bi5jWDaRdUYMyQbLNc4kTPd/MN1KOZYdCW8gjGJ4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR02MB8855
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDEyOSBTYWx0ZWRfX+zPDWFAWSavs
- FYFDxMuuBWR+8kW5g5zcrX3d5SgbYSudyJQketWhlQ6Y9PjSAEnVZsqvsX9fYWVm66kPH6jSkvw
- cjo90OzQrdrrQ6CVT8jEW2epVqV6rWo=
-X-Authority-Analysis: v=2.4 cv=aJvAb79m c=1 sm=1 tr=0 ts=6a8db054 cx=c_pps
- a=p09nrIMaU8oQorgrX9pGYA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=1L6crL_YRTbalZ11mEUO:22
- a=20KFwNOVAAAA:8 a=64Cc0HZtAAAA:8 a=_BW-VI6-JU7XRo9WEPIA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: XR2N6msHxBg3v-Jw9SIzj9oJNcmkpYqc
-X-Proofpoint-ORIG-GUID: XR2N6msHxBg3v-Jw9SIzj9oJNcmkpYqc
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDEyOSBTYWx0ZWRfX51cMbK8FpbFe
- BlCo4G1ECBwKbt5tHZ82DkoFrD97MLYyox5vStifVps77RYEqe9B3ZF2pRcOAPaJfCbLjNIeLph
- phSd5gRsQdJWkHVhVfT7WnntLCVFYGCHGWf8YB1BOJDuulMdWpauXvm7c80t8EVcvPDwTS8rWRK
- 1V+qn+S83m9Ocg3PwCc/8/GsoPPAOsUwzfo0sZO3MXNnomYb/u0h5TZT+MpCaKiYs9kwLCm3QKB
- DLybe+VrY6FPrpC6eWK+DRWtn8q04M3KNFAMyOIa19tWvAVJA1aPaEMef0NtisTtH2cf+RxPxlN
- hc2ywAWHrferhCS7VH2EDk49wzDWINB+2/bQJfplB+zYxSFtGnc58w0ytNlo/D7f4iHGMV2cCZ4
- vdmh9PqiC87yTOE3BVwnj2lNDRUVnU4jGlgjuqRYwSnruPsl5bsVJg/GAtk+Ovd0r5FKuSitDdM
- uU0rfC5tyxWG0BHOylQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-25_04,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260825051441.1562454-1-jsnow@redhat.com>
+ <20260825051441.1562454-4-jsnow@redhat.com>
+ <ao138LdpZIV1REPu@redhat.com>
+In-Reply-To: <ao138LdpZIV1REPu@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 25 Aug 2026 11:11:20 -0400
+X-Gm-Features: AcwNN1XSQBzQYx11lrrXuBgU8AiS52a8bLrioo9xE1GyP3eBdk35FnV4G5eRftg
+Message-ID: <CAFn=p-amk6iLSjTUobJzLVDp7wc6V3NTE=szydpta35HFQuBAA@mail.gmail.com>
+Subject: Re: [PATCH v2 03/16] tests: update netbsd dependencies
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Warner Losh <imp@bsdimp.com>, Kohei Tokunaga <ktokunaga.mail@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Cleber Rosa <crosa@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Reinoud Zandijk <reinoud@netbsd.org>, 
+ Kyle Evans <kevans@freebsd.org>, Michael Roth <michael.roth@amd.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Content-Type: multipart/alternative; boundary="0000000000008b2c250659e08471"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -198,45 +142,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/08/2026 12:11, Marc-André Lureau wrote:
+--0000000000008b2c250659e08471
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> The getter and setter use visit_type_int64, not visit_type_int.
-> 
-> Fixes: 7d5983e3c8c4 ("Introduce event-loop-base abstract class")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   event-loop-base.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/event-loop-base.c b/event-loop-base.c
-> index ee5987ddbf64..23f554d92ce8 100644
-> --- a/event-loop-base.c
-> +++ b/event-loop-base.c
-> @@ -104,15 +104,15 @@ static void event_loop_base_class_init(ObjectClass *klass,
->       ucc->complete = event_loop_base_complete;
->       ucc->prepare_delete = event_loop_base_prepare_delete;
->   
-> -    object_class_property_add(klass, "aio-max-batch", "int",
-> +    object_class_property_add(klass, "aio-max-batch", "int64",
->                                 event_loop_base_get_param,
->                                 event_loop_base_set_param,
->                                 NULL, &aio_max_batch_info);
-> -    object_class_property_add(klass, "thread-pool-min", "int",
-> +    object_class_property_add(klass, "thread-pool-min", "int64",
->                                 event_loop_base_get_param,
->                                 event_loop_base_set_param,
->                                 NULL, &thread_pool_min_info);
-> -    object_class_property_add(klass, "thread-pool-max", "int",
-> +    object_class_property_add(klass, "thread-pool-max", "int64",
->                                 event_loop_base_get_param,
->                                 event_loop_base_set_param,
->                                 NULL, &thread_pool_max_info);
+On Tue, Aug 25, 2026, 7:09=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@red=
+hat.com>
+wrote:
 
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> On Tue, Aug 25, 2026 at 01:14:28AM -0400, John Snow wrote:
+> > NetBSD appears to need 'bison' explicitly installed now.
+> >
+> > I am still seeing some intermittant failures in the tests for ide-test
+> > and qos-test, but those are mysteries for another day.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  tests/vm/netbsd | 1 +
+> >  1 file changed, 1 insertion(+)
+>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>
+>
+> and a reminder that we'd benefit from adding NetBSD to
+> libvirt-ci mappings too, so we can remove the manual
+> package listing.
+>
+
+I'll look into it. Is it possible to mock this up using the qemu local
+mappings.yml before I try to submit code to libvirt-ci?
+
+I guess I can just check out the submodule and hack up what I need to and
+go that route.
+
+IIRC there's a category called pkgs in libvirt-ci, and we'd just need a new
+one for "pkgsrc" and an os target named (checking canon capitalization...)
+"NetBSD" and that'll pretty much handle it.
 
 
-ATB,
+> >
+> > diff --git a/tests/vm/netbsd b/tests/vm/netbsd
+> > index b365045066c..45afe675e17 100755
+> > --- a/tests/vm/netbsd
+> > +++ b/tests/vm/netbsd
+> > @@ -39,6 +39,7 @@ class NetBSDVM(basevm.BaseVM):
+> >          "gmake",
+> >          "gsed",
+> >          "gettext-tools",
+> > +        "bison",
+> >
+> >          # libs: basic
+> >          "dtc",
+> > --
+> > 2.55.0
+> >
+> >
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
+>
 
-Mark.
+--0000000000008b2c250659e08471
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Aug 25, 2026, 7:09=E2=80=
+=AFAM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com">be=
+rrange@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
+ style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On=
+ Tue, Aug 25, 2026 at 01:14:28AM -0400, John Snow wrote:<br>
+&gt; NetBSD appears to need &#39;bison&#39; explicitly installed now.<br>
+&gt; <br>
+&gt; I am still seeing some intermittant failures in the tests for ide-test=
+<br>
+&gt; and qos-test, but those are mysteries for another day.<br>
+&gt; <br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 tests/vm/netbsd | 1 +<br>
+&gt;=C2=A0 1 file changed, 1 insertion(+)<br>
+<br>
+Reviewed-by: Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.=
+com" target=3D"_blank" rel=3D"noreferrer">berrange@redhat.com</a>&gt;<br>
+<br>
+<br>
+and a reminder that we&#39;d benefit from adding NetBSD to<br>
+libvirt-ci mappings too, so we can remove the manual<br>
+package listing.<br></blockquote></div></div><div dir=3D"auto"><br></div><d=
+iv dir=3D"auto">I&#39;ll look into it. Is it possible to mock this up using=
+ the qemu local mappings.yml before I try to submit code to libvirt-ci?</di=
+v><div dir=3D"auto"><br></div><div dir=3D"auto">I guess I can just check ou=
+t the submodule and hack up what I need to and go that route.</div><div dir=
+=3D"auto"></div><div dir=3D"auto"><br></div><div dir=3D"auto">IIRC there&#3=
+9;s a category called pkgs in libvirt-ci, and we&#39;d just need a new one =
+for &quot;pkgsrc&quot; and an os target named (checking canon capitalizatio=
+n...) &quot;NetBSD&quot; and that&#39;ll pretty much handle it.</div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quo=
+te_container"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;=
+border-left:1px #ccc solid;padding-left:1ex">
+<br>
+&gt; <br>
+&gt; diff --git a/tests/vm/netbsd b/tests/vm/netbsd<br>
+&gt; index b365045066c..45afe675e17 100755<br>
+&gt; --- a/tests/vm/netbsd<br>
+&gt; +++ b/tests/vm/netbsd<br>
+&gt; @@ -39,6 +39,7 @@ class NetBSDVM(basevm.BaseVM):<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;gmake&quot;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;gsed&quot;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;gettext-tools&quot;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;bison&quot;,<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # libs: basic<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;dtc&quot;,<br>
+&gt; -- <br>
+&gt; 2.55.0<br>
+&gt; <br>
+&gt; <br>
+<br>
+With regards,<br>
+Daniel<br>
+-- <br>
+|: <a href=3D"https://berrange.com" rel=3D"noreferrer noreferrer" target=3D=
+"_blank">https://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0~~=C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 <a href=3D"https://hachyderm.io/@berrange" rel=3D"noreferrer=
+ noreferrer" target=3D"_blank">https://hachyderm.io/@berrange</a> :|<br>
+|: <a href=3D"https://libvirt.org" rel=3D"noreferrer noreferrer" target=3D"=
+_blank">https://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ~~=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://entangle-photo.org" rel=3D"n=
+oreferrer noreferrer" target=3D"_blank">https://entangle-photo.org</a> :|<b=
+r>
+|: <a href=3D"https://pixelfed.art/berrange" rel=3D"noreferrer noreferrer" =
+target=3D"_blank">https://pixelfed.art/berrange</a>=C2=A0 =C2=A0~~=C2=A0 =
+=C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"noreferrer noreferr=
+er" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
+<br>
+</blockquote></div></div></div>
+
+--0000000000008b2c250659e08471--
 
 
