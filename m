@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8545FC61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:19:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B046C61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:19:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyp7R-00024z-8r; Tue, 25 Aug 2026 07:15:05 -0400
+	id 1wyp83-0003Wg-N9; Tue, 25 Aug 2026 07:15:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp7P-000248-W3; Tue, 25 Aug 2026 07:15:04 -0400
+ id 1wyp7y-00035n-Mf; Tue, 25 Aug 2026 07:15:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp7O-0000Gd-45; Tue, 25 Aug 2026 07:15:03 -0400
+ id 1wyp7w-0000fZ-C9; Tue, 25 Aug 2026 07:15:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787656396; bh=ki00NNJjWyNtohHPZCYG5y2QqeJ5IIkuYaEqXkqmKJo=;
+ t=1787656396; bh=kJGMYrsT+mbyBc171FYvuxdrVVe9paVL1PkDwkX2aaE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=I7YbZf23GwCFJ+jeGs8o0/eT7xPyVgliqPcBJOwBchsPPjgX93zK8px8BS4ByKrQ3
- Adjfac7IHVuw8ID+QHkgFTpDncXwdpW3K+GKhDPMZ0/ahH1b8+N4RhVea7IMhTbhrd
- UZUdMN//Xiw7P8O9L8WrtYkTQ1HCxG7ZLwFQ/uO0wUztBDhsFeMpfHXILn8ZmHuUZt
- BLWay2zDf8/A3eDgl23r4SYd5SyKNq8eo34jimWPZ0Biisa/Wa8hfqZ6X02/xeh1pG
- blvuSvjLolVbjZOK1kjT7f+rjg1LEZp5+MPxhuz2Nf8iKe9jUoIcDk/VikmaEuDtlC
- H34UJ8gKtgADA==
+ b=nS2n3neqKwFVS1lpis5ebSJ6sCnUjN1Jxyu6adTtK0lWUzuktN8s0flyamH/fqZxm
+ apetTSHPsZgDAQepD49KCqAF2uk5S+62mM2KswSqklTAnyh0xwADOHRDLfWIUPgyh+
+ z38qQNeG+dN8JIlhaCo6FeVWaH1M71aeooMUHBekg3Ea5Ed4VggA5fXYwjQP+rp3Zg
+ 3F7BJNKTJNvNFNBRSS0ZqIkjhlwLzaZG2yU2PRs8kZoe1F+W8q3UMvo5ddUD8JYEaa
+ b6R9/MTgT1C2Fmar7VMbM40ghMeLWUtL45Eb2S7JQ1D/FfEwsWeyyJJivJww2fksqa
+ iDZBo3ETZEKSQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4EE091CE4B3;
+ by isrv.corpit.ru (Postfix) with ESMTP id 7881C1CE4BB;
  Tue, 25 Aug 2026 14:13:16 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 677AA41627F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9155D416287;
  Tue, 25 Aug 2026 14:13:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 92044325A9; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
+ id AAAC5325B9; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
- A-Shehab <ahshehab24@gmail.com>,
+Cc: qemu-stable@nongnu.org, A-Shehab <ahshehab24@gmail.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v3 151/166] target/riscv: Fix PC sync in
- trans_sspopchk for CFI exception handling
-Date: Tue, 25 Aug 2026 14:11:47 +0300
-Message-ID: <20260825111206.482723-17-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v3 159/166] target/riscv: allow menvcfg/henvcfg LPE
+ and SSE bits on RV32
+Date: Tue, 25 Aug 2026 14:11:55 +0300
+Message-ID: <20260825111206.482723-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
@@ -74,56 +73,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: A-Shehab <ahshehab24@gmail.com>
 
-Move gen_update_pc call before conditional logic to ensure consistent
-PC state regardless of execution path.
+The Zicfilp landing-pad enable (LPE, bit 2) and Zicfiss shadow-stack
+enable (SSE, bit 3) controls live in the low 32 bits of menvcfg and
+henvcfg, and the CFI specification defines them for both RV32 and RV64.
 
-Previously, the host instructions generated to update the cpu_pc were
-only executed in the failure path when shadow stack validation failed.
-This created inconsistent PC synchronization.
+QEMU only adds MENVCFG_LPE/MENVCFG_SSE (and the henvcfg equivalents) to
+the writable mask inside the "riscv_cpu_mxl(env) == MXL_RV64" block, so
+on RV32 these bits are silently dropped and the features cannot be
+enabled. This is inconsistent with write_senvcfg(), which already
+handles SENVCFG_LPE/SENVCFG_SSE regardless of MXLEN.
 
-This inconsistency caused issues in CF_PCREL mode where subsequent
-instructions calculated wrong relative offsets from stale pc_save
-values, and could lead to incorrect exception return addresses.
+Hoist the LPE/SSE mask handling out of the RV64-only block in
+write_menvcfg() and write_henvcfg() so the bits become writable on RV32
+as well. The upper-half writers (write_menvcfgh/write_henvcfgh) are
+unaffected because these bits reside in the low 32 bits.
 
-This fix ensures PC is always synchronized before any helper that
-might raise an exception, maintaining consistent translator state
-across all execution paths.
+Reproducible on qemu-system-riscv32 -cpu rv32,zicfilp=true,zicfiss=true:
+an M-mode write of menvcfg.{LPE,SSE} reads back as zero, while the same
+program on rv64 keeps the bits set.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4118
-Signed-off-by: Max Chou <max.chou@sifive.com>
-[ahshehab: rebased on current master; file moved to
- target/riscv/tcg/insn_trans/ and the ssp load is now 64-bit wide]
-Tested-by: A-Shehab <ahshehab24@gmail.com>
+Fixes: 4923f672e3d7 ("target/riscv: Introduce elp state and enabling controls for zicfilp")
+Fixes: 8205bc127a83 ("target/riscv: introduce ssp and enabling controls for zicfiss")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4045
 Signed-off-by: A-Shehab <ahshehab24@gmail.com>
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260730181852.1622-1-ahshehab24@gmail.com>
+Message-ID: <20260726080537.13913-1-ahshehab24@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 4a884ba94b43f5b2a640f4ea882655503f9ae954)
-(Mjt: back-port the changes back to 11.0.x, to the original patch state)
+(cherry picked from commit bd1ee9ab3c39f269d8bea8acf83ea833a69a6e10)
+(Mjt: introduce `RISCVCPUConfig *cfg` variable in write_henvcfg()
+  from v10.0.0-1878-gdff5f515409f
+ "target/riscv: Enable/Disable S/VS-mode Timer when STCE bit is changed")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-index f4a1c12ca0b..4cf14d2a37a 100644
---- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
-@@ -32,6 +32,7 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-     TCGLabel *skip = gen_new_label();
-     uint32_t tmp = (get_xl(ctx) == MXL_RV64) ? 8 : 4;
-     TCGv data = tcg_temp_new();
-+    gen_update_pc(ctx, 0);
-     tcg_gen_ld_tl(addr, tcg_env, offsetof(CPURISCVState, ssp));
-     decode_save_opc(ctx, RISCV_UW2_ALWAYS_STORE_AMO);
-     tcg_gen_qemu_ld_tl(data, addr, SS_MMU_INDEX(ctx),
-@@ -40,7 +41,6 @@ static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
-     tcg_gen_brcond_tl(TCG_COND_EQ, data, rs1, skip);
-     tcg_gen_st_tl(tcg_constant_tl(RISCV_EXCP_SW_CHECK_BCFI_TVAL),
-                   tcg_env, offsetof(CPURISCVState, sw_check_code));
--    gen_update_pc(ctx, 0);
-     gen_helper_raise_exception(tcg_env,
-                   tcg_constant_i32(RISCV_EXCP_SW_CHECK));
-     gen_set_label(skip);
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 4015f023d10..9d43dbfab81 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -3196,6 +3196,19 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+     uint64_t mask = MENVCFG_FIOM | MENVCFG_CBIE | MENVCFG_CBCFE |
+                     MENVCFG_CBZE | MENVCFG_CDE;
+ 
++    /*
++     * menvcfg.LPE (Zicfilp) and menvcfg.SSE (Zicfiss) reside in the low
++     * 32 bits and are defined for both RV32 and RV64, so they must be
++     * writable regardless of MXLEN.
++     */
++    if (cfg->ext_zicfilp) {
++        mask |= MENVCFG_LPE;
++    }
++
++    if (cfg->ext_zicfiss) {
++        mask |= MENVCFG_SSE;
++    }
++
+     if (riscv_cpu_mxl(env) == MXL_RV64) {
+         mask |= (cfg->ext_svpbmt ? MENVCFG_PBMTE : 0) |
+                 (cfg->ext_sstc ? MENVCFG_STCE : 0) |
+@@ -3203,14 +3216,6 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+                 (cfg->ext_svadu ? MENVCFG_ADUE : 0) |
+                 (cfg->ext_ssdbltrp ? MENVCFG_DTE : 0);
+ 
+-        if (env_archcpu(env)->cfg.ext_zicfilp) {
+-            mask |= MENVCFG_LPE;
+-        }
+-
+-        if (env_archcpu(env)->cfg.ext_zicfiss) {
+-            mask |= MENVCFG_SSE;
+-        }
+-
+         /* Update PMM field only if the value is valid according to Zjpm v1.0 */
+         if (env_archcpu(env)->cfg.ext_smnpm &&
+             get_field(val, MENVCFG_PMM) != PMM_FIELD_RESERVED) {
+@@ -3331,6 +3336,7 @@ static RISCVException read_henvcfg(CPURISCVState *env, int csrno,
+ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
+                                     target_ulong val)
+ {
++    const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
+     uint64_t mask = HENVCFG_FIOM | HENVCFG_CBIE | HENVCFG_CBCFE | HENVCFG_CBZE;
+     RISCVException ret;
+ 
+@@ -3339,20 +3345,24 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
+         return ret;
+     }
+ 
++    /*
++     * henvcfg.LPE (Zicfilp) and henvcfg.SSE (Zicfiss) reside in the low
++     * 32 bits and are defined for both RV32 and RV64, so they must be
++     * writable regardless of MXLEN.
++     */
++    if (cfg->ext_zicfilp) {
++        mask |= HENVCFG_LPE;
++    }
++
++    /* H can light up SSE for VS only if HS had it from menvcfg */
++    if (cfg->ext_zicfiss && get_field(env->menvcfg, MENVCFG_SSE)) {
++        mask |= HENVCFG_SSE;
++    }
++
+     if (riscv_cpu_mxl(env) == MXL_RV64) {
+         mask |= env->menvcfg & (HENVCFG_PBMTE | HENVCFG_STCE | HENVCFG_ADUE |
+                                 HENVCFG_DTE);
+ 
+-        if (env_archcpu(env)->cfg.ext_zicfilp) {
+-            mask |= HENVCFG_LPE;
+-        }
+-
+-        /* H can light up SSE for VS only if HS had it from menvcfg */
+-        if (env_archcpu(env)->cfg.ext_zicfiss &&
+-            get_field(env->menvcfg, MENVCFG_SSE)) {
+-            mask |= HENVCFG_SSE;
+-        }
+-
+         /* Update PMM field only if the value is valid according to Zjpm v1.0 */
+         if (env_archcpu(env)->cfg.ext_ssnpm &&
+             get_field(val, HENVCFG_PMM) != PMM_FIELD_RESERVED) {
 -- 
 2.47.3
 
