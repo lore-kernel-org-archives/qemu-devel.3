@@ -4,54 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A4E4C61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:40:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42ACEC61DB9
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:40:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyyr4-0005r2-Ks; Tue, 25 Aug 2026 17:38:50 -0400
+	id 1wyyrA-0005tE-1D; Tue, 25 Aug 2026 17:38:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyr3-0005qT-JJ
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:49 -0400
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ id 1wyyr8-0005sr-JX
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:54 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyr2-00054W-2Q
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:49 -0400
+ id 1wyyr6-00056Y-WE
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:54 -0400
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:39a2:0:640:ae2d:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id CCC3C80DEA;
- Wed, 26 Aug 2026 00:38:46 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 5FCFC80E01;
+ Wed, 26 Aug 2026 00:38:51 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:630::1:39])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id QckKa93ZVmI0-eEPKqYsL; Wed, 26 Aug 2026 00:38:46 +0300
+ id QckKa93ZVmI0-ZJb4AV9O; Wed, 26 Aug 2026 00:38:50 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1787693926;
- bh=776MHaLpzpLJ2Q79VM9JksJjKGqEEXxmSC5DyTv3s1k=;
+ s=default; t=1787693930;
+ bh=+C74xckgz2/W3c3AsfiOhFihXBLX5vMOUtCgkhiVF4I=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=CWpaBuch9WzurdxvSTs5Dw4mnHADrSue5ptUUk6CBglDVjtmrT+pFFhkBH4arN9hA
- KO+oEASarSq/SDfsBharVT1D3AmnyGTwRSrO6DHurMiTcSiE5LHw8ESJXB4qN0tKQf
- zymA01CeXdzQdXHXh1bqgNab9PC7I/+Us0xEWoGc=
+ b=YAqk7pocGAKDxXOD7JON8NhDCI3NQvS3ftKtIEmAVlB1E+0UvI/UD8irYA3oPK7CE
+ sShyrdOWoX4DYjvdOBHpmAhOu4DTqldllgAD4AZZq9HPum0sMk8hlybh69b78q4tOw
+ JtK4fzehGIGBxmxD+itOFJfJSw2NdOU87FuLcVOo=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: peterx@redhat.com
 Cc: farosas@suse.de, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
- Stefan Weil <sw@weilnetz.de>
-Subject: [PATCH 16/30] hw/nvram/eeprom93xx.c: use new migration APIs
-Date: Wed, 26 Aug 2026 00:37:56 +0300
-Message-ID: <20260825213811.3725682-17-vsementsov@yandex-team.ru>
+ Stafford Horne <shorne@gmail.com>
+Subject: [PATCH 21/30] or1k/machine: move to new migration APIs
+Date: Wed, 26 Aug 2026 00:38:01 +0300
+Message-ID: <20260825213811.3725682-22-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
 References: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -76,51 +75,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/nvram/eeprom93xx.c | 17 +++++++++--------
+ target/or1k/machine.c | 17 +++++++++--------
  1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/hw/nvram/eeprom93xx.c b/hw/nvram/eeprom93xx.c
-index 73b3d248d44..de689322567 100644
---- a/hw/nvram/eeprom93xx.c
-+++ b/hw/nvram/eeprom93xx.c
-@@ -95,28 +95,29 @@ struct _eeprom_t {
-    This is a Big hack, but it is how the old state did it.
-  */
- 
--static int get_uint16_from_uint8(QEMUFile *f, void *pv, size_t size,
--                                 const VMStateField *field)
-+static bool get_uint16_from_uint8(QEMUFile *f, void *pv, size_t size,
-+                                  const VMStateField *field, Error **errp)
- {
-     uint16_t *v = pv;
-     *v = qemu_get_ubyte(f);
--    return 0;
-+    return true;
- }
- 
--static int put_unused(QEMUFile *f, void *pv, size_t size,
--                      const VMStateField *field, JSONWriter *vmdesc)
-+static bool put_unused(QEMUFile *f, void *pv, size_t size,
-+                       const VMStateField *field, JSONWriter *vmdesc,
-+                       Error **errp)
- {
-     fprintf(stderr, "uint16_from_uint8 is used only for backwards compatibility.\n");
-     fprintf(stderr, "Never should be used to write a new state.\n");
-     exit(0);
- 
--    return 0;
-+    return true;
- }
- 
- static const VMStateInfo vmstate_hack_uint16_from_uint8 = {
-     .name = "uint16_from_uint8",
--    .get  = get_uint16_from_uint8,
--    .put  = put_unused,
-+    .load = get_uint16_from_uint8,
-+    .save = put_unused,
+diff --git a/target/or1k/machine.c b/target/or1k/machine.c
+index 2d5ca16c511..800dc4c21cc 100644
+--- a/target/or1k/machine.c
++++ b/target/or1k/machine.c
+@@ -46,26 +46,27 @@ static const VMStateDescription vmstate_cpu_tlb = {
+     }
  };
  
- #define VMSTATE_UINT16_HACK_TEST(_f, _s, _t)                           \
+-static int get_sr(QEMUFile *f, void *opaque, size_t size,
+-                  const VMStateField *field)
++static bool load_sr(QEMUFile *f, void *opaque, size_t size,
++                   const VMStateField *field, Error **errp)
+ {
+     CPUOpenRISCState *env = opaque;
+     cpu_set_sr(env, qemu_get_be32(f));
+-    return 0;
++    return true;
+ }
+ 
+-static int put_sr(QEMUFile *f, void *opaque, size_t size,
+-                  const VMStateField *field, JSONWriter *vmdesc)
++static bool save_sr(QEMUFile *f, void *opaque, size_t size,
++                   const VMStateField *field, JSONWriter *vmdesc,
++                   Error **errp)
+ {
+     CPUOpenRISCState *env = opaque;
+     qemu_put_be32(f, cpu_get_sr(env));
+-    return 0;
++    return true;
+ }
+ 
+ static const VMStateInfo vmstate_sr = {
+     .name = "sr",
+-    .get = get_sr,
+-    .put = put_sr,
++    .load = load_sr,
++    .save = save_sr,
+ };
+ 
+ static const VMStateDescription vmstate_env = {
 -- 
 2.43.0
 
