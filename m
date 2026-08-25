@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A2AEC61DB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C82DC61DC2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 19:12:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wywZ5-0000KK-NX; Tue, 25 Aug 2026 15:12:07 -0400
+	id 1wywYk-00069e-1H; Tue, 25 Aug 2026 15:11:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywZ3-0008SD-6y
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:12:05 -0400
+ id 1wywYV-0005m3-Oh
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:11:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wywYy-0004JR-HP
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:12:04 -0400
+ id 1wywYQ-00046m-Vn
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 15:11:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787685117;
+ s=mimecast20190719; t=1787685086;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5sm50nC9j9AKkXq46KV+FOJM33zpmzdHl2b/Q1NzN08=;
- b=an5/NJ4PIYlK/VVeyGYA8wB0bJXzyITgEHaNktAprsB5x4YtPcWcmY1YOBIdy5h64sYX6s
- 6BHROZadsXP/cDvSJt3YAGiE2936vb9aqQTuw1pGSQ9h6BaEddAmEbqxEwtIs2YL0Yqvcy
- wVESK0SmfufPsTSRo/QaaMQP8Q85iWg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=n7cL9jkG1qTwA+bQqy6YVKpxCwpQSIY9VApSEqym9nA=;
+ b=L+ApE2tgiEGqo90sn59Ez3eMucGBrNq1bHBE++otf+Ykr2bIqZOEdsPgDKOd0pPDcGk32g
+ WOAVdUOYs+u5MraU23OgxpHdOSf4+2oYTehp4o/zpJErTRF8hY8H/f7VKQ7N84wvlX0pjd
+ LomfGIfLJWUuyIR08nRn14pv5gLTTuw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-4EJ-RhX-PsewWzyUBvvcQQ-1; Tue,
- 25 Aug 2026 15:11:49 -0400
-X-MC-Unique: 4EJ-RhX-PsewWzyUBvvcQQ-1
-X-Mimecast-MFC-AGG-ID: 4EJ-RhX-PsewWzyUBvvcQQ_1787685107
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-572-ZguA6lhrN2Cy2rMThsUDUA-1; Tue,
+ 25 Aug 2026 15:11:21 -0400
+X-MC-Unique: ZguA6lhrN2Cy2rMThsUDUA-1
+X-Mimecast-MFC-AGG-ID: ZguA6lhrN2Cy2rMThsUDUA_1787685079
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 987111954B3E; Tue, 25 Aug 2026 19:11:47 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0E6C7188FEF0; Tue, 25 Aug 2026 19:11:19 +0000 (UTC)
 Received: from localhost (headnet03.pony-001.prod.iad2.dc.redhat.com
  [10.2.32.114])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 490A9434; Tue, 25 Aug 2026 19:11:45 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2109A1944B2D; Tue, 25 Aug 2026 19:11:16 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 25 Aug 2026 23:09:35 +0400
-Subject: [PATCH v4 28/49] tests: skip HMP-dependent tests when HMP is disabled
+Date: Tue, 25 Aug 2026 23:09:27 +0400
+Subject: [PATCH v4 20/49] qemu-io: propagate errors through Error API
+ instead of printf
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260825-qemu-no-hmp-v4-28-af60857c2fbe@redhat.com>
+Message-Id: <20260825-qemu-no-hmp-v4-20-af60857c2fbe@redhat.com>
 References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 In-Reply-To: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
 To: qemu-devel@nongnu.org
@@ -63,38 +64,38 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, Hyman Huang <infra.ai.cloud@bitdeer.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=41066;
+ Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
+ qemu-block@nongnu.org, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=150642;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=pFWGNiIId3GKva578rPE7YzSY5rMwiLn5o+Ug7lD8qo=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiHjD1wa8Ops90DsxRD2hafVNTLd2DsKRHIv
- k6CR5vGoD6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3ohwAKCRDa6OEJdZac
- 5dPuD/9lgMTwxdD/I/GjKYVBINVgNaZumCXs8ywVCl5Hads85r7HKRUe3uIILSOrbAYt4QUrzFZ
- 8UVw15Ejt7jWVnblKTC2GlCzUbgxNDq3S99XO74o/9MlnPhR3kne3Z7njYbmDPDwMgz/lEL14nU
- jrvGK0nBqBWQ/OqKYEE2L1ewWfY5UE5nqnzaD+7fquz3DR4PJhwYKVlAyLsVxbgfcxfrPO6Q9b6
- KkVQ3IuVJiBgXI1zndyYRci8OAGxT0NdHC4ZxjPCOdqsSCdcOXn3ploeu0DMQBtG8Q30FT4IWGD
- zsiE2HAwBLldTGEiEg956Rn5ic1ZEkHgjB/FmyurC+YPq9hwjV6voRaj/kO6m591tx37f87ghZu
- gQk2+aeK5Kh3fc7cCcoNlgWCwlHkQcupqFzDkP0Cp6zH6Lv41oMQM9RAsFq6QkE0lboPItz6B5N
- aUQK3xhFnmdg/NjBfj7zsIQTA3lMgE5uwUNFNqI0bT/cYHFnM6Mk0m5wsxuJdjXVeUTdhD3Y2yH
- oiziuuuj0SEfQzUvFrFE5Ugm3i3M7oxjzX4Jl2fE6clh7UvgqNZflhbauckcq02hqwy4SD32H2E
- hEK60/fxC9ozK3YFSJ7sxixRqTm7MXxHLB2krGlJLD5BZtsOE852d6HJXNht2oaNgZ3q+ffg7Hj
- m6B0GyPa4JbeWPQ==
+ bh=zQHMNaYObNXnDZ8CiRgCLzH9MMH+iYmDHmRqyMJuIzc=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqjeiHZDdkvZGj/NGnGexIdv0jsv6xbB1voCtlD
+ kgbqYPE23SJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCao3ohwAKCRDa6OEJdZac
+ 5awaD/92PryAJzfStr5yHgTkwu8n9/Mee/LLIlOvqt08wMNR8NzqNSc0/JKWSpnJuWFxOR9JnFt
+ 5cDwQne66B0QGp9EZc0fnO6iha7R4EObdjqz4YK6drVUoDllBS3KrJvt/GpECc2UFh1Lt5B8Yto
+ MC4zyBvr7z/a2smhomonf1DaVTKvx3Swm+wDO22rP7SUbqwOM5MicFdgOhab8J3jheV3biFQDpO
+ IpyehYJwGCjOYDPpKDKWuJtasNMpcMrtI/dLLUV8nODYOTS2mleTAMZlDFPRBIT4amZj1IoRHLe
+ OyR9lFyLrVynDcM5fB0UtnDJUKwJT5ziouniNduLZmNbUrzKpAHmwiPVuIkPdN3RFVhByjEjhlU
+ kHmkMTomqWaHVKsGF6wSZvf26U+9z9qEpEwL81fUXraIvEPJZ3aTLMugGj9nTnAz4ESk4RBzg6z
+ OB7tRSdKyS9PJpb0Ec4FcTpDndyUjboAWwNHuXaRDse9sNHW9xgf5NATPaSCpGTjF3ds2XCgKZs
+ gB4qC9YzhYy9WzgKql+e0rofpQQHuuNaxAejpjA8ncCqwxAIoWSAGscveBsrQO0Pj5Q2qdfSq/D
+ JQPCHMfC+Ft9b3C/8BZmA0kicPUw80t+q67a1E39AtDa9lw2opR7hsw6uyYxVsh/f1cvzZ26CvY
+ Z2LTCVAzR8X/XcA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,1064 +111,3771 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add runtime detection of HMP availability so tests gracefully skip
-instead of failing when QEMU is built without HMP support.
+Convert the qemu-io command infrastructure to use QEMU's Error API
+(Error **errp) for error propagation instead of printing directly to
+stdout/stderr via printf/fprintf.
 
-For qtests (drive_del-test), use compile-time #ifndef CONFIG_HMP guards.
+The cfunc_t typedef, all ~35 command functions, the dispatcher chain
+(command/init_check_command/qemuio_command), and helper functions
+(parse_pattern, create_iovec, qemu_io_alloc_from_file) all gain an
+Error **errp parameter. Async completion callbacks (aio_read_done,
+aio_write_done, aio_discard_done) use error_report() since they have
+no Error path back to the caller.
 
-For bash iotests, add _require_hmp() to common.rc that probes QEMU.
+Update tests:
+- error_report_err() prepends qemu-io: prefix
+- copy-before-write: check the HMP return value, rather than stdio
+- other tests: update to check JSON {"return": "Error: error text"}
 
-For Python iotests, add _verify_hmp() and a require_hmp parameter
-threaded through execute_setup_common()/main()/script_initialize()/
-script_main().
-
-An earlier version of this series did an almost-complete conversion of
-the tests to QMP. However, this made the series even longer. I decided
-to post-pone it for now.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Marc-Andre Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/qemu-iotests/028                             |  1 +
- tests/qemu-iotests/045                             |  3 ++-
- tests/qemu-iotests/051                             |  1 +
- tests/qemu-iotests/056                             |  3 ++-
- tests/qemu-iotests/060                             |  1 +
- tests/qemu-iotests/068                             |  1 +
- tests/qemu-iotests/071                             |  1 +
- tests/qemu-iotests/081                             |  1 +
- tests/qemu-iotests/091                             |  1 +
- tests/qemu-iotests/093                             |  3 ++-
- tests/qemu-iotests/102                             |  1 +
- tests/qemu-iotests/117                             |  1 +
- tests/qemu-iotests/119                             |  1 +
- tests/qemu-iotests/120                             |  1 +
- tests/qemu-iotests/124                             |  3 ++-
- tests/qemu-iotests/130                             |  1 +
- tests/qemu-iotests/132                             |  3 ++-
- tests/qemu-iotests/136                             |  3 ++-
- tests/qemu-iotests/142                             |  1 +
- tests/qemu-iotests/145                             |  1 +
- tests/qemu-iotests/146                             |  1 +
- tests/qemu-iotests/148                             |  3 ++-
- tests/qemu-iotests/151                             |  3 ++-
- tests/qemu-iotests/152                             |  3 ++-
- tests/qemu-iotests/153                             |  1 +
- tests/qemu-iotests/156                             |  1 +
- tests/qemu-iotests/157                             |  1 +
- tests/qemu-iotests/161                             |  1 +
- tests/qemu-iotests/165                             |  3 ++-
- tests/qemu-iotests/172                             |  1 +
- tests/qemu-iotests/181                             |  1 +
- tests/qemu-iotests/185                             |  1 +
- tests/qemu-iotests/186                             |  1 +
- tests/qemu-iotests/192                             |  1 +
- tests/qemu-iotests/201                             |  1 +
- tests/qemu-iotests/216                             |  3 ++-
- tests/qemu-iotests/225                             |  1 +
- tests/qemu-iotests/232                             |  1 +
- tests/qemu-iotests/236                             |  3 ++-
- tests/qemu-iotests/245                             |  3 ++-
- tests/qemu-iotests/246                             |  3 ++-
- tests/qemu-iotests/249                             |  1 +
- tests/qemu-iotests/254                             |  3 ++-
- tests/qemu-iotests/255                             |  3 ++-
- tests/qemu-iotests/257                             |  3 ++-
- tests/qemu-iotests/260                             |  3 ++-
- tests/qemu-iotests/264                             |  3 ++-
- tests/qemu-iotests/267                             |  1 +
- tests/qemu-iotests/274                             |  3 ++-
- tests/qemu-iotests/280                             |  1 +
- tests/qemu-iotests/281                             |  3 ++-
- tests/qemu-iotests/283                             |  1 +
- tests/qemu-iotests/286                             |  1 +
- tests/qemu-iotests/298                             |  3 ++-
- tests/qemu-iotests/300                             |  3 ++-
- tests/qemu-iotests/304                             |  3 ++-
- tests/qemu-iotests/310                             |  3 ++-
- tests/qemu-iotests/common.rc                       |  8 +++++++
- tests/qemu-iotests/iotests.py                      | 14 +++++++++++-
- tests/qemu-iotests/tests/backup-discard-source     |  3 ++-
- tests/qemu-iotests/tests/copy-before-write         |  3 ++-
- tests/qemu-iotests/tests/image-fleecing            |  3 ++-
- tests/qemu-iotests/tests/iothreads-create          |  3 ++-
- tests/qemu-iotests/tests/luks-detached-header      |  3 ++-
- .../tests/migrate-bitmaps-postcopy-test            |  3 ++-
- tests/qemu-iotests/tests/migrate-bitmaps-test      |  3 ++-
- tests/qemu-iotests/tests/mirror-change-copy-mode   |  3 ++-
- tests/qemu-iotests/tests/mirror-ready-cancel-error |  3 ++-
- tests/qemu-iotests/tests/qcow2-internal-snapshots  |  1 +
- tests/qemu-iotests/tests/qsd-migrate               |  3 ++-
- tests/qemu-iotests/tests/reopen-file               |  3 ++-
- tests/qemu-iotests/tests/write-zeroes-unmap        |  1 +
- tests/qtest/drive_del-test.c                       | 25 ++++++++++++++++++++++
- 73 files changed, 152 insertions(+), 37 deletions(-)
+ block/monitor/block-hmp-cmds.c                 |   2 +-
+ include/qemu-io.h                              |   4 +-
+ qemu-io-cmds.c                                 | 414 +++++++++++++------------
+ qemu-io.c                                      |  17 +-
+ tests/qemu-iotests/004.out                     |  20 +-
+ tests/qemu-iotests/021.out                     |  60 ++--
+ tests/qemu-iotests/026.out                     | 228 +++++++-------
+ tests/qemu-iotests/060.out                     |  44 ++-
+ tests/qemu-iotests/071.out                     |  10 +-
+ tests/qemu-iotests/072.out                     |   2 +-
+ tests/qemu-iotests/080.out                     |   4 +-
+ tests/qemu-iotests/081.out                     |   2 +-
+ tests/qemu-iotests/083.out                     |  36 +--
+ tests/qemu-iotests/089.out                     |   4 +-
+ tests/qemu-iotests/114.out                     |   2 +-
+ tests/qemu-iotests/134.out                     |   2 +-
+ tests/qemu-iotests/137.out                     |   2 +-
+ tests/qemu-iotests/153.out                     |  12 +-
+ tests/qemu-iotests/171                         |   2 +-
+ tests/qemu-iotests/171.out                     |  68 ++--
+ tests/qemu-iotests/205                         |   2 +-
+ tests/qemu-iotests/214.out                     |   2 +-
+ tests/qemu-iotests/220.out                     |   2 +-
+ tests/qemu-iotests/225.out                     |   4 +-
+ tests/qemu-iotests/244.out                     |  12 +-
+ tests/qemu-iotests/249.out                     |   6 +-
+ tests/qemu-iotests/271.out                     |  14 +-
+ tests/qemu-iotests/289.out                     |   2 +-
+ tests/qemu-iotests/305.out                     |   2 +-
+ tests/qemu-iotests/307.out                     |   2 +-
+ tests/qemu-iotests/tests/backup-discard-source |   4 +-
+ tests/qemu-iotests/tests/copy-before-write     |  66 ++--
+ tests/qemu-iotests/tests/file-io-error.out     |   2 +-
+ tests/qemu-iotests/tests/image-fleecing.out    |  12 +-
+ tests/qemu-iotests/tests/inactive-node-nbd.out |   8 +-
+ 35 files changed, 552 insertions(+), 523 deletions(-)
 
-diff --git a/tests/qemu-iotests/028 b/tests/qemu-iotests/028
-index 2b232c461405..28f01439c525 100755
---- a/tests/qemu-iotests/028
-+++ b/tests/qemu-iotests/028
-@@ -49,6 +49,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- _supported_fmt qcow2 qed
- _supported_proto file fuse
- _supported_os Linux
-+_require_hmp
- 
- # Choose a size that is not necessarily a cluster size multiple for image
- # formats that use clusters.  This will ensure that the base image doesn't end
-diff --git a/tests/qemu-iotests/045 b/tests/qemu-iotests/045
-index a341f21cd70f..cd1b35edb17f 100755
---- a/tests/qemu-iotests/045
-+++ b/tests/qemu-iotests/045
-@@ -172,4 +172,5 @@ class TestSCMFd(iotests.QMPTestCase):
- 
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['raw'],
--                 supported_protocols=['file'])
-+                 supported_protocols=['file'],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/051 b/tests/qemu-iotests/051
-index 4c079b11e320..a722c0c1bc8f 100755
---- a/tests/qemu-iotests/051
-+++ b/tests/qemu-iotests/051
-@@ -45,6 +45,7 @@ _supported_proto file
- _unsupported_imgopts 'refcount_bits=\([^1]\|.\([^6]\|$\)\)' data_file \
-     compression_type
- _require_drivers nbd
-+_require_hmp
- 
- if [ "$QEMU_DEFAULT_MACHINE" = "pc" ]; then
-     _require_devices lsi53c895a
-diff --git a/tests/qemu-iotests/056 b/tests/qemu-iotests/056
-index 808ea6b48abe..7cc97486951c 100755
---- a/tests/qemu-iotests/056
-+++ b/tests/qemu-iotests/056
-@@ -332,4 +332,5 @@ class BackupTest(iotests.QMPTestCase):
- 
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['qcow2', 'qed'],
--                 supported_protocols=['file'])
-+                 supported_protocols=['file'],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/060 b/tests/qemu-iotests/060
-index 5cd21a6f686f..8d06f84df16b 100755
---- a/tests/qemu-iotests/060
-+++ b/tests/qemu-iotests/060
-@@ -56,6 +56,7 @@ _unsupported_imgopts 'compat=0.10' data_file \
- 
- # The repair process will create a large file - so check for availability first
- _require_large_file 64G
-+_require_hmp
- 
- rt_offset=65536  # 0x10000 (XXX: just an assumption)
- rb_offset=131072 # 0x20000 (XXX: just an assumption)
-diff --git a/tests/qemu-iotests/068 b/tests/qemu-iotests/068
-index 7ecd2474093e..11b660a8b7c4 100755
---- a/tests/qemu-iotests/068
-+++ b/tests/qemu-iotests/068
-@@ -43,6 +43,7 @@ _supported_proto generic
- # Internal snapshots are (currently) impossible with refcount_bits=1,
- # and generally impossible with external data files
- _unsupported_imgopts 'compat=0.10' 'refcount_bits=1[^0-9]' data_file
-+_require_hmp
- 
- IMG_SIZE=128K
- 
-diff --git a/tests/qemu-iotests/071 b/tests/qemu-iotests/071
-index 331f8cfddcf9..83c4ce6314c5 100755
---- a/tests/qemu-iotests/071
-+++ b/tests/qemu-iotests/071
-@@ -43,6 +43,7 @@ _require_drivers blkdebug blkverify
- # blkdebug can only inject errors on bs->file, not on the data_file,
- # so this test does not work with external data files
- _unsupported_imgopts data_file
-+_require_hmp
- 
- do_run_qemu()
- {
-diff --git a/tests/qemu-iotests/081 b/tests/qemu-iotests/081
-index 1ac66f197e46..d9e729f674c6 100755
---- a/tests/qemu-iotests/081
-+++ b/tests/qemu-iotests/081
-@@ -44,6 +44,7 @@ _supported_proto file
- _supported_os Linux
- _require_drivers quorum
- _require_devices virtio-scsi
-+_require_hmp
- 
- do_run_qemu()
- {
-diff --git a/tests/qemu-iotests/091 b/tests/qemu-iotests/091
-index e396748a9179..626203d6fc93 100755
---- a/tests/qemu-iotests/091
-+++ b/tests/qemu-iotests/091
-@@ -48,6 +48,7 @@ _supported_fmt qcow2
- _supported_proto file fuse
- _supported_os Linux
- _supported_cache_modes writethrough none writeback
-+_require_hmp
- _default_cache_mode none writeback
- 
- size=1G
-diff --git a/tests/qemu-iotests/093 b/tests/qemu-iotests/093
-index 4f9e224e8a8c..26ae6e2b2d56 100755
---- a/tests/qemu-iotests/093
-+++ b/tests/qemu-iotests/093
-@@ -419,4 +419,5 @@ class ThrottleTestRemovableMedia(iotests.QMPTestCase):
- if __name__ == '__main__':
-     if 'null-co' not in iotests.supported_formats():
-         iotests.notrun('null-co driver support missing')
--    iotests.main(supported_fmts=["raw"])
-+    iotests.main(supported_fmts=["raw"],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/102 b/tests/qemu-iotests/102
-index 141bfe1e9023..5db8180d3bb7 100755
---- a/tests/qemu-iotests/102
-+++ b/tests/qemu-iotests/102
-@@ -41,6 +41,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- 
- _supported_fmt qcow2
- _supported_proto file fuse
-+_require_hmp
- 
- IMG_SIZE=64K
- 
-diff --git a/tests/qemu-iotests/117 b/tests/qemu-iotests/117
-index 6081473584fe..5cc9433f4a67 100755
---- a/tests/qemu-iotests/117
-+++ b/tests/qemu-iotests/117
-@@ -41,6 +41,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- 
- _supported_fmt qcow2
- _supported_proto file fuse
-+_require_hmp
- 
- _make_test_img 64k
- 
-diff --git a/tests/qemu-iotests/119 b/tests/qemu-iotests/119
-index 6cac8793bac6..ce1b62521f59 100755
---- a/tests/qemu-iotests/119
-+++ b/tests/qemu-iotests/119
-@@ -41,6 +41,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- _supported_fmt raw
- _supported_proto nbd
- _supported_os Linux
-+_require_hmp
- 
- _make_test_img 64M
- # This should not crash
-diff --git a/tests/qemu-iotests/120 b/tests/qemu-iotests/120
-index ac7bd8c4e3cd..e4ed87e1a705 100755
---- a/tests/qemu-iotests/120
-+++ b/tests/qemu-iotests/120
-@@ -42,6 +42,7 @@ _supported_fmt generic
- _supported_proto file fuse
- _unsupported_fmt luks
- _require_drivers raw
-+_require_hmp
- 
- _make_test_img 64M
- 
-diff --git a/tests/qemu-iotests/124 b/tests/qemu-iotests/124
-index b2f4328e3456..ab9ea4d8b59d 100755
---- a/tests/qemu-iotests/124
-+++ b/tests/qemu-iotests/124
-@@ -750,4 +750,5 @@ class TestIncrementalBackupBlkdebug(TestIncrementalBackupBase):
- 
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['qcow2'],
--                 supported_protocols=['file'])
-+                 supported_protocols=['file'],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/130 b/tests/qemu-iotests/130
-index 7af85d20a892..3d10aba2594e 100755
---- a/tests/qemu-iotests/130
-+++ b/tests/qemu-iotests/130
-@@ -46,6 +46,7 @@ _supported_proto file
- _supported_os Linux
- # We are going to use lazy-refcounts
- _unsupported_imgopts 'compat=0.10'
-+_require_hmp
- 
- qemu_comm_method="monitor"
- 
-diff --git a/tests/qemu-iotests/132 b/tests/qemu-iotests/132
-index 12a64b3d95a3..3756573a57c0 100755
---- a/tests/qemu-iotests/132
-+++ b/tests/qemu-iotests/132
-@@ -57,4 +57,5 @@ class TestSingleDrive(iotests.QMPTestCase):
- 
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['raw', 'qcow2'],
--                 supported_protocols=['file'])
-+                 supported_protocols=['file'],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/136 b/tests/qemu-iotests/136
-index 58df876bafca..72fd638aa04d 100755
---- a/tests/qemu-iotests/136
-+++ b/tests/qemu-iotests/136
-@@ -410,4 +410,5 @@ class BlockDeviceStatsTestCoroutine(BlockDeviceStatsTestCase):
- if __name__ == '__main__':
-     if 'null-co' not in iotests.supported_formats():
-         iotests.notrun('null-co driver support missing')
--    iotests.main(supported_fmts=["raw"])
-+    iotests.main(supported_fmts=["raw"],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/142 b/tests/qemu-iotests/142
-index 86d65a2d1a1e..8538a727ac08 100755
---- a/tests/qemu-iotests/142
-+++ b/tests/qemu-iotests/142
-@@ -43,6 +43,7 @@ _supported_proto file
- # We test all cache modes anyway, but O_DIRECT needs to be supported
- _default_cache_mode none
- _supported_cache_modes none directsync
-+_require_hmp
- 
- do_run_qemu()
- {
-diff --git a/tests/qemu-iotests/145 b/tests/qemu-iotests/145
-index a2ce92516dc5..f61a50f63951 100755
---- a/tests/qemu-iotests/145
-+++ b/tests/qemu-iotests/145
-@@ -40,6 +40,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- 
- _supported_fmt generic
- _supported_proto generic
-+_require_hmp
- 
- _make_test_img 1M
- 
-diff --git a/tests/qemu-iotests/146 b/tests/qemu-iotests/146
-index 661a9d2625cc..f63291d0ffba 100755
---- a/tests/qemu-iotests/146
-+++ b/tests/qemu-iotests/146
-@@ -42,6 +42,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- _supported_fmt vpc
- _supported_proto file
- _supported_os Linux
-+_require_hmp
- 
- 
- qemu_comm_method="monitor"
-diff --git a/tests/qemu-iotests/148 b/tests/qemu-iotests/148
-index 7ccbde4633c2..4b092dccb7cc 100755
---- a/tests/qemu-iotests/148
-+++ b/tests/qemu-iotests/148
-@@ -140,4 +140,5 @@ class TestFifoQuorumEvents(TestQuorumEvents):
- if __name__ == '__main__':
-     iotests.verify_quorum()
-     iotests.main(supported_fmts=["raw"],
--                 supported_protocols=["file"])
-+                 supported_protocols=["file"],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/151 b/tests/qemu-iotests/151
-index 647194094a4c..204221a5738e 100755
---- a/tests/qemu-iotests/151
-+++ b/tests/qemu-iotests/151
-@@ -434,4 +434,5 @@ class TestHighThrottledWithNbdExport(TestThrottledWithNbdExportBase):
- 
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['qcow2', 'raw'],
--                 supported_protocols=['file'])
-+                 supported_protocols=['file'],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/152 b/tests/qemu-iotests/152
-index 197bea9e7785..d9170359213a 100755
---- a/tests/qemu-iotests/152
-+++ b/tests/qemu-iotests/152
-@@ -61,4 +61,5 @@ class TestUnaligned(iotests.QMPTestCase):
- 
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['raw', 'qcow2'],
--                 supported_protocols=['file'])
-+                 supported_protocols=['file'],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/153 b/tests/qemu-iotests/153
-index 1e02f6a6e344..def01d6f3ea4 100755
---- a/tests/qemu-iotests/153
-+++ b/tests/qemu-iotests/153
-@@ -59,6 +59,7 @@ _check_ofd || _notrun "OFD lock not available"
- 
- _supported_fmt qcow2
- _supported_proto file
-+_require_hmp
- 
- _run_cmd()
- {
-diff --git a/tests/qemu-iotests/156 b/tests/qemu-iotests/156
-index 97c2d86ce573..a0e4d1ffd42a 100755
---- a/tests/qemu-iotests/156
-+++ b/tests/qemu-iotests/156
-@@ -53,6 +53,7 @@ _supported_fmt qcow2 qed
- _supported_proto file
- # Copying files around with cp does not work with external data files
- _unsupported_imgopts data_file
-+_require_hmp
- 
- # Create source disk
- TEST_IMG="$TEST_IMG.backing" _make_test_img 1M
-diff --git a/tests/qemu-iotests/157 b/tests/qemu-iotests/157
-index aa2ebbfb4b43..531dbd3122b1 100755
---- a/tests/qemu-iotests/157
-+++ b/tests/qemu-iotests/157
-@@ -41,6 +41,7 @@ _supported_fmt generic
- _supported_proto file
- 
- _require_devices virtio-blk
-+_require_hmp
- 
- do_run_qemu()
- {
-diff --git a/tests/qemu-iotests/161 b/tests/qemu-iotests/161
-index f25effab9360..8ca139262975 100755
---- a/tests/qemu-iotests/161
-+++ b/tests/qemu-iotests/161
-@@ -45,6 +45,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- _supported_fmt qcow2 qed
- _supported_proto file fuse
- _supported_os Linux
-+_require_hmp
- 
- IMG_SIZE=1M
- 
-diff --git a/tests/qemu-iotests/165 b/tests/qemu-iotests/165
-index b3b1709d71fa..8fc79daae16d 100755
---- a/tests/qemu-iotests/165
-+++ b/tests/qemu-iotests/165
-@@ -154,4 +154,5 @@ class TestPersistentDirtyBitmap(iotests.QMPTestCase):
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['qcow2'],
-                  supported_protocols=['file'],
--                 unsupported_imgopts=['compat'])
-+                 unsupported_imgopts=['compat'],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/172 b/tests/qemu-iotests/172
-index 4da0e0f2e297..a78e42ff0adf 100755
---- a/tests/qemu-iotests/172
-+++ b/tests/qemu-iotests/172
-@@ -42,6 +42,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- _supported_fmt qcow2
- _supported_proto file
- _supported_os Linux
-+_require_hmp
- 
- if [ "$QEMU_DEFAULT_MACHINE" != "pc" ]; then
-     _notrun "Requires a PC machine"
-diff --git a/tests/qemu-iotests/181 b/tests/qemu-iotests/181
-index b904e8ce0124..458cb737f1cb 100755
---- a/tests/qemu-iotests/181
-+++ b/tests/qemu-iotests/181
-@@ -47,6 +47,7 @@ _supported_fmt generic
- _unsupported_fmt qcow vdi vhdx vmdk vpc vvfat parallels
- _supported_proto generic
- _supported_os Linux
-+_require_hmp
- 
- _flaky_test https://gitlab.com/qemu-project/qemu/-/work_items/3515
- 
-diff --git a/tests/qemu-iotests/185 b/tests/qemu-iotests/185
-index a62ae8d3293e..bb577a9cc999 100755
---- a/tests/qemu-iotests/185
-+++ b/tests/qemu-iotests/185
-@@ -50,6 +50,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- _supported_fmt qcow2
- _supported_proto file
- _supported_os Linux
-+_require_hmp
- _flaky_test https://gitlab.com/qemu-project/qemu/-/issues/3270
- 
- size=$((64 * 1048576))
-diff --git a/tests/qemu-iotests/186 b/tests/qemu-iotests/186
-index eaf13c7a3340..9a4215d28e92 100755
---- a/tests/qemu-iotests/186
-+++ b/tests/qemu-iotests/186
-@@ -41,6 +41,7 @@ _supported_fmt qcow2
- _supported_proto file fuse
- _require_drivers null-co
- _require_devices virtio-scsi-pci
-+_require_hmp
- 
- if [ "$QEMU_DEFAULT_MACHINE" != "pc" ]; then
-     _notrun "Requires a PC machine"
-diff --git a/tests/qemu-iotests/192 b/tests/qemu-iotests/192
-index e66e1a4f06af..6869bd171537 100755
---- a/tests/qemu-iotests/192
-+++ b/tests/qemu-iotests/192
-@@ -43,6 +43,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- 
- _supported_fmt generic
- _supported_proto file
-+_require_hmp
- 
- if [ "$QEMU_DEFAULT_MACHINE" != "pc" ]; then
-     _notrun "Requires a PC machine"
-diff --git a/tests/qemu-iotests/201 b/tests/qemu-iotests/201
-index 1b8eb51d8f38..a5c750c38a83 100755
---- a/tests/qemu-iotests/201
-+++ b/tests/qemu-iotests/201
-@@ -47,6 +47,7 @@ _supported_os Linux
- # Internal snapshots are (currently) impossible with refcount_bits=1,
- # and generally impossible with external data files
- _unsupported_imgopts 'refcount_bits=1[^0-9]' data_file
-+_require_hmp
- 
- size=64M
- _make_test_img $size
-diff --git a/tests/qemu-iotests/216 b/tests/qemu-iotests/216
-index 311e02af3a7b..4eabada9b35d 100755
---- a/tests/qemu-iotests/216
-+++ b/tests/qemu-iotests/216
-@@ -25,7 +25,8 @@ from iotests import log, qemu_img, qemu_io
- 
- # Need backing file support
- iotests.script_initialize(supported_fmts=['qcow2', 'qcow', 'qed', 'vmdk'],
--                          supported_platforms=['linux'])
-+                          supported_platforms=['linux'],
-+                          require_hmp=True)
- 
- log('')
- log('=== Copy-on-read across nodes ===')
-diff --git a/tests/qemu-iotests/225 b/tests/qemu-iotests/225
-index b5949fcb58e0..8128d583d609 100755
---- a/tests/qemu-iotests/225
-+++ b/tests/qemu-iotests/225
-@@ -46,6 +46,7 @@ _supported_os Linux
- _unsupported_imgopts "subformat=monolithicFlat" \
-                      "subformat=twoGbMaxExtentFlat" \
-                      "subformat=twoGbMaxExtentSparse"
-+_require_hmp
- 
- TEST_IMG="$TEST_IMG.base" _make_test_img 1M
- TEST_IMG="$TEST_IMG.not_base" _make_test_img 1M
-diff --git a/tests/qemu-iotests/232 b/tests/qemu-iotests/232
-index b30faaa21806..1ee0aae481d4 100755
---- a/tests/qemu-iotests/232
-+++ b/tests/qemu-iotests/232
-@@ -43,6 +43,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- _supported_fmt generic
- _supported_proto file
- _supported_os Linux
-+_require_hmp
- 
- do_run_qemu()
- {
-diff --git a/tests/qemu-iotests/236 b/tests/qemu-iotests/236
-index 20419bbb9e54..3cf0de4043f6 100755
---- a/tests/qemu-iotests/236
-+++ b/tests/qemu-iotests/236
-@@ -23,7 +23,8 @@
- import iotests
- from iotests import log
- 
--iotests.script_initialize(supported_fmts=['generic'])
-+iotests.script_initialize(supported_fmts=['generic'],
-+                          require_hmp=True)
- size = 64 * 1024 * 1024
- granularity = 64 * 1024
- 
-diff --git a/tests/qemu-iotests/245 b/tests/qemu-iotests/245
-index 03550b99715c..2f354d1d9205 100755
---- a/tests/qemu-iotests/245
-+++ b/tests/qemu-iotests/245
-@@ -1160,4 +1160,5 @@ class TestBlockdevReopen(iotests.QMPTestCase):
- if __name__ == '__main__':
-     iotests.activate_logging()
-     iotests.main(supported_fmts=["qcow2"],
--                 supported_protocols=["file"])
-+                 supported_protocols=["file"],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/246 b/tests/qemu-iotests/246
-index b009a7839775..cee5131c3ce4 100755
---- a/tests/qemu-iotests/246
-+++ b/tests/qemu-iotests/246
-@@ -24,7 +24,8 @@ import iotests
- from iotests import log
- 
- iotests.script_initialize(supported_fmts=['qcow2'],
--                          unsupported_imgopts=['compat'])
-+                          unsupported_imgopts=['compat'],
-+                          require_hmp=True)
- size = 64 * 1024 * 1024 * 1024
- gran_small = 32 * 1024
- gran_large = 128 * 1024
-diff --git a/tests/qemu-iotests/249 b/tests/qemu-iotests/249
-index 28bffd4d5712..1254bf942913 100755
---- a/tests/qemu-iotests/249
-+++ b/tests/qemu-iotests/249
-@@ -45,6 +45,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- _supported_fmt qcow2 qed
- _supported_proto file fuse
- _supported_os Linux
-+_require_hmp
- 
- IMG_SIZE=1M
- 
-diff --git a/tests/qemu-iotests/254 b/tests/qemu-iotests/254
-index 7ea098818cf0..d3d18a1bbf1f 100755
---- a/tests/qemu-iotests/254
-+++ b/tests/qemu-iotests/254
-@@ -23,7 +23,8 @@ import iotests
- from iotests import qemu_img_create, file_path, log
- 
- iotests.script_initialize(supported_fmts=['qcow2'],
--                          unsupported_imgopts=['compat'])
-+                          unsupported_imgopts=['compat'],
-+                          require_hmp=True)
- 
- disk, top = file_path('disk', 'top')
- size = 1024 * 1024
-diff --git a/tests/qemu-iotests/255 b/tests/qemu-iotests/255
-index 88b29d64b44e..8f88522f1e91 100755
---- a/tests/qemu-iotests/255
-+++ b/tests/qemu-iotests/255
-@@ -24,7 +24,8 @@
- import iotests
- from iotests import imgfmt
- 
--iotests.script_initialize(supported_fmts=['qcow2'])
-+iotests.script_initialize(supported_fmts=['qcow2'],
-+                          require_hmp=True)
- 
- iotests.log('Finishing a commit job with background reads')
- iotests.log('============================================')
-diff --git a/tests/qemu-iotests/257 b/tests/qemu-iotests/257
-index cd0468aaa162..5e4dba02e769 100755
---- a/tests/qemu-iotests/257
-+++ b/tests/qemu-iotests/257
-@@ -533,4 +533,5 @@ def main():
- 
- if __name__ == '__main__':
-     iotests.script_main(main, supported_fmts=['qcow2'],
--                        supported_protocols=['file'])
-+                        supported_protocols=['file'],
-+                        require_hmp=True)
-diff --git a/tests/qemu-iotests/260 b/tests/qemu-iotests/260
-index c2133f998010..65165446607c 100755
---- a/tests/qemu-iotests/260
-+++ b/tests/qemu-iotests/260
-@@ -24,7 +24,8 @@ from iotests import qemu_img_create, file_path, log, filter_qmp_event
- 
- iotests.script_initialize(
-     supported_fmts=['qcow2'],
--    unsupported_imgopts=['compat']
-+    unsupported_imgopts=['compat'],
-+    require_hmp=True,
- )
- 
- base, top = file_path('base', 'top')
-diff --git a/tests/qemu-iotests/264 b/tests/qemu-iotests/264
-index c6ba2754e279..b621f11ab427 100755
---- a/tests/qemu-iotests/264
-+++ b/tests/qemu-iotests/264
-@@ -114,4 +114,5 @@ class TestNbdReconnect(iotests.QMPTestCase):
- 
- 
- if __name__ == '__main__':
--    iotests.main(supported_fmts=['qcow2'])
-+    iotests.main(supported_fmts=['qcow2'],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/267 b/tests/qemu-iotests/267
-index 2e2afdad9c57..e14aeb1f18d0 100755
---- a/tests/qemu-iotests/267
-+++ b/tests/qemu-iotests/267
-@@ -48,6 +48,7 @@ _require_drivers copy-on-read
- _unsupported_imgopts 'refcount_bits=1[^0-9]' data_file
- 
- _require_devices virtio-blk
-+_require_hmp
- 
- do_run_qemu()
- {
-diff --git a/tests/qemu-iotests/274 b/tests/qemu-iotests/274
-index 2495e051a227..d91c11c70d2e 100755
---- a/tests/qemu-iotests/274
-+++ b/tests/qemu-iotests/274
-@@ -24,7 +24,8 @@ import iotests
- 
- iotests.script_initialize(supported_fmts=['qcow2'],
-                           supported_platforms=['linux'],
--                          unsupported_imgopts=['refcount_bits', 'compat'])
-+                          unsupported_imgopts=['refcount_bits', 'compat'],
-+                          require_hmp=True)
- 
- size_short = 1 * 1024 * 1024
- size_long = 2 * 1024 * 1024
-diff --git a/tests/qemu-iotests/280 b/tests/qemu-iotests/280
-index 5f50500fdb82..8f4750de074b 100755
---- a/tests/qemu-iotests/280
-+++ b/tests/qemu-iotests/280
-@@ -27,6 +27,7 @@ iotests.script_initialize(
-     supported_fmts=['qcow2'],
-     supported_protocols=['file'],
-     supported_platforms=['linux'],
-+    require_hmp=True,
- )
- 
- with iotests.FilePath('base') as base_path , \
-diff --git a/tests/qemu-iotests/281 b/tests/qemu-iotests/281
-index f6746a12e881..5f3050f50d0b 100755
---- a/tests/qemu-iotests/281
-+++ b/tests/qemu-iotests/281
-@@ -336,4 +336,5 @@ class TestYieldingAndTimers(iotests.QMPTestCase):
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['qcow2'],
-                  supported_protocols=['file'],
--                 unsupported_imgopts=['compat'])
-+                 unsupported_imgopts=['compat'],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/283 b/tests/qemu-iotests/283
-index 5defe48e97d5..6d341d3e9745 100755
---- a/tests/qemu-iotests/283
-+++ b/tests/qemu-iotests/283
-@@ -24,6 +24,7 @@ import iotests
- # The test is unrelated to formats, restrict it to qcow2 to avoid extra runs
- iotests.script_initialize(
-     supported_fmts=['qcow2'],
-+    require_hmp=True,
- )
- 
- size = 1024 * 1024
-diff --git a/tests/qemu-iotests/286 b/tests/qemu-iotests/286
-index cc6aacf02283..3b030ec58aa0 100755
---- a/tests/qemu-iotests/286
-+++ b/tests/qemu-iotests/286
-@@ -40,6 +40,7 @@ _supported_proto file fuse
- # Internal snapshots are (currently) impossible with refcount_bits=1,
- # and generally impossible with external data files
- _unsupported_imgopts 'refcount_bits=1[^0-9]' data_file
-+_require_hmp
- 
- _make_test_img 64M
- 
-diff --git a/tests/qemu-iotests/298 b/tests/qemu-iotests/298
-index 09c9290711a8..f2b94077f43a 100755
---- a/tests/qemu-iotests/298
-+++ b/tests/qemu-iotests/298
-@@ -177,4 +177,5 @@ class TestTruncate(iotests.QMPTestCase):
- 
- 
- if __name__ == '__main__':
--    iotests.main(supported_fmts=['qcow2'], required_fmts=['preallocate'])
-+    iotests.main(supported_fmts=['qcow2'], required_fmts=['preallocate'],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/300 b/tests/qemu-iotests/300
-index e46616d7b19a..df2ba326327d 100755
---- a/tests/qemu-iotests/300
-+++ b/tests/qemu-iotests/300
-@@ -683,4 +683,5 @@ class TestAliasTransformMigration(TestDirtyBitmapMigration):
-         self.verify_dest_error(None)
- 
- if __name__ == '__main__':
--    iotests.main(supported_protocols=['file'])
-+    iotests.main(supported_protocols=['file'],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/304 b/tests/qemu-iotests/304
-index 198f2820871e..d465a519a932 100755
---- a/tests/qemu-iotests/304
-+++ b/tests/qemu-iotests/304
-@@ -24,7 +24,8 @@ import iotests
- from iotests import qemu_img_create, qemu_img_log, file_path
- 
- iotests.script_initialize(supported_fmts=['qcow2'],
--                          supported_protocols=['file'])
-+                          supported_protocols=['file'],
-+                          require_hmp=True)
- 
- test_img = file_path('test.qcow2')
- target_img = file_path('target.qcow2')
-diff --git a/tests/qemu-iotests/310 b/tests/qemu-iotests/310
-index 650d2cb6fb3e..7f290898fea0 100755
---- a/tests/qemu-iotests/310
-+++ b/tests/qemu-iotests/310
-@@ -25,7 +25,8 @@ from iotests import log, qemu_img, qemu_io
- 
- # Need backing file support
- iotests.script_initialize(supported_fmts=['qcow2'],
--                          supported_platforms=['linux'])
-+                          supported_platforms=['linux'],
-+                          require_hmp=True)
- 
- log('')
- log('=== Copy-on-read across nodes ===')
-diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-index bcb1ec50a93d..262fe63da820 100644
---- a/tests/qemu-iotests/common.rc
-+++ b/tests/qemu-iotests/common.rc
-@@ -995,6 +995,14 @@ _notrun_on_fuse_error()
-     esac
+diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
+index 39b82e8ef501..9930620a4a16 100644
+--- a/block/monitor/block-hmp-cmds.c
++++ b/block/monitor/block-hmp-cmds.c
+@@ -598,7 +598,7 @@ void hmp_qemu_io(Monitor *mon, const QDict *qdict)
+      * extended, possibly resulting in a read-only guest device keeping write
+      * permissions. Ugly, but it appears to be the lesser evil.
+      */
+-    qemuio_command(blk, command);
++    qemuio_command(blk, command, &err);
+ 
+ fail:
+     blk_unref(local_blk);
+diff --git a/include/qemu-io.h b/include/qemu-io.h
+index 3af513004a68..240764bb35cd 100644
+--- a/include/qemu-io.h
++++ b/include/qemu-io.h
+@@ -25,7 +25,7 @@
+  * Operate on @blk using @argc/@argv as the command's arguments, and
+  * return 0 on success or negative errno on failure.
+  */
+-typedef int (*cfunc_t)(BlockBackend *blk, int argc, char **argv);
++typedef int (*cfunc_t)(BlockBackend *blk, int argc, char **argv, Error **errp);
+ 
+ typedef void (*helpfunc_t)(void);
+ 
+@@ -45,7 +45,7 @@ typedef struct cmdinfo {
+ 
+ extern bool qemuio_misalign;
+ 
+-int qemuio_command(BlockBackend *blk, const char *cmd);
++int qemuio_command(BlockBackend *blk, const char *cmd, Error **errp);
+ 
+ void qemuio_add_command(const cmdinfo_t *ci);
+ void qemuio_command_usage(const cmdinfo_t *ci);
+diff --git a/qemu-io-cmds.c b/qemu-io-cmds.c
+index de4c1966feae..aa795fd87a14 100644
+--- a/qemu-io-cmds.c
++++ b/qemu-io-cmds.c
+@@ -55,40 +55,43 @@ void qemuio_command_usage(const cmdinfo_t *ci)
+     printf("%s %s -- %s\n", ci->name, ci->args, ci->oneline);
  }
  
-+_require_hmp()
-+{
-+    if echo quit | $QEMU -M none -display none -monitor stdio 2>&1 |
-+            grep -q "HMP monitor is not available"; then
-+        _notrun "HMP monitor not available"
-+    fi
-+}
+-static int init_check_command(BlockBackend *blk, const cmdinfo_t *ct)
++static int init_check_command(BlockBackend *blk, const cmdinfo_t *ct,
++                              Error **errp)
+ {
+     if (ct->flags & CMD_FLAG_GLOBAL) {
+         return 1;
+     }
+     if (!(ct->flags & CMD_NOFILE_OK) && !blk) {
+-        fprintf(stderr, "no file open, try 'help open'\n");
++        error_setg(errp, "no file open, try 'help open'");
+         return 0;
+     }
+     return 1;
+ }
+ 
+ static int command(BlockBackend *blk, const cmdinfo_t *ct, int argc,
+-                   char **argv)
++                   char **argv, Error **errp)
+ {
+     char *cmd = argv[0];
+ 
+-    if (!init_check_command(blk, ct)) {
++    if (!init_check_command(blk, ct, errp)) {
+         return -EINVAL;
+     }
+ 
+     if (argc - 1 < ct->argmin || (ct->argmax != -1 && argc - 1 > ct->argmax)) {
+         if (ct->argmax == -1) {
+-            fprintf(stderr,
+-                    "bad argument count %d to %s, expected at least %d arguments\n",
+-                    argc-1, cmd, ct->argmin);
++            error_setg(errp,
++                       "bad argument count %d to %s,"
++                       " expected at least %d arguments",
++                       argc - 1, cmd, ct->argmin);
+         } else if (ct->argmin == ct->argmax) {
+-            fprintf(stderr,
+-                    "bad argument count %d to %s, expected %d arguments\n",
+-                    argc-1, cmd, ct->argmin);
++            error_setg(errp,
++                       "bad argument count %d to %s, expected %d arguments",
++                       argc - 1, cmd, ct->argmin);
+         } else {
+-            fprintf(stderr,
+-                    "bad argument count %d to %s, expected between %d and %d arguments\n",
+-                    argc-1, cmd, ct->argmin, ct->argmax);
++            error_setg(errp,
++                       "bad argument count %d to %s,"
++                       " expected between %d and %d arguments",
++                       argc - 1, cmd, ct->argmin, ct->argmax);
+         }
+         return -EINVAL;
+     }
+@@ -112,21 +115,19 @@ static int command(BlockBackend *blk, const cmdinfo_t *ct, int argc,
+ 
+         if (ct->perm & ~orig_perm) {
+             uint64_t new_perm;
+-            Error *local_err = NULL;
+             int ret;
+ 
+             new_perm = orig_perm | ct->perm;
+ 
+-            ret = blk_set_perm(blk, new_perm, orig_shared_perm, &local_err);
++            ret = blk_set_perm(blk, new_perm, orig_shared_perm, errp);
+             if (ret < 0) {
+-                error_report_err(local_err);
+                 return ret;
+             }
+         }
+     }
+ 
+     qemu_reset_optind();
+-    return ct->cfunc(blk, argc, argv);
++    return ct->cfunc(blk, argc, argv, errp);
+ }
+ 
+ static const cmdinfo_t *find_command(const char *cmd)
+@@ -192,18 +193,18 @@ static int64_t cvtnum(const char *s)
+     return value;
+ }
+ 
+-static void print_cvtnum_err(int64_t rc, const char *arg)
++static void set_cvtnum_err(int64_t rc, const char *arg, Error **errp)
+ {
+     switch (rc) {
+     case -EINVAL:
+-        printf("Parsing error: non-numeric argument,"
+-               " or extraneous/unrecognized suffix -- %s\n", arg);
++        error_setg(errp, "Parsing error: non-numeric argument,"
++                   " or extraneous/unrecognized suffix -- %s", arg);
+         break;
+     case -ERANGE:
+-        printf("Parsing error: argument too large -- %s\n", arg);
++        error_setg(errp, "Parsing error: argument too large -- %s", arg);
+         break;
+     default:
+-        printf("Parsing error: %s\n", arg);
++        error_setg(errp, "Parsing error: %s", arg);
+     }
+ }
+ 
+@@ -316,14 +317,14 @@ static void timestr(struct timespec *tv, char *ts, size_t size, int format)
+  * Because the pattern is used as an argument to memset it must evaluate
+  * to an unsigned integer that fits into a single byte.
+  */
+-static int parse_pattern(const char *arg)
++static int parse_pattern(const char *arg, Error **errp)
+ {
+     char *endptr = NULL;
+     long pattern;
+ 
+     pattern = strtol(arg, &endptr, 0);
+     if (pattern < 0 || pattern > UCHAR_MAX || *endptr != '\0') {
+-        printf("%s is not a valid pattern byte\n", arg);
++        error_setg(errp, "%s is not a valid pattern byte", arg);
+         return -1;
+     }
+ 
+@@ -386,7 +387,8 @@ static void qemu_io_free(BlockBackend *blk, void *p, size_t len,
+  *          NULL on error
+  */
+ static void *qemu_io_alloc_from_file(BlockBackend *blk, size_t len,
+-                                     const char *file_name, bool register_buf)
++                                     const char *file_name, bool register_buf,
++                                     Error **errp)
+ {
+     size_t alloc_len = len + (qemuio_misalign ? MISALIGN_OFFSET : 0);
+     char *alloc_buf, *buf, *end;
+@@ -394,7 +396,7 @@ static void *qemu_io_alloc_from_file(BlockBackend *blk, size_t len,
+     int pattern_len;
+ 
+     if (!f) {
+-        perror(file_name);
++        error_setg_errno(errp, errno, "%s", file_name);
+         return NULL;
+     }
+ 
+@@ -407,12 +409,12 @@ static void *qemu_io_alloc_from_file(BlockBackend *blk, size_t len,
+     pattern_len = fread(buf, 1, len, f);
+ 
+     if (ferror(f)) {
+-        perror(file_name);
++        error_setg_errno(errp, errno, "%s", file_name);
+         goto error;
+     }
+ 
+     if (pattern_len == 0) {
+-        fprintf(stderr, "%s: file is empty\n", file_name);
++        error_setg(errp, "%s: file is empty", file_name);
+         goto error;
+     }
+ 
+@@ -494,7 +496,7 @@ static void print_report(const char *op, struct timespec *t, int64_t offset,
+  */
+ static void *
+ create_iovec(BlockBackend *blk, QEMUIOVector *qiov, char **argv, int nr_iov,
+-             int pattern, bool register_buf)
++             int pattern, bool register_buf, Error **errp)
+ {
+     size_t *sizes = g_new0(size_t, nr_iov);
+     size_t count = 0;
+@@ -508,19 +510,20 @@ create_iovec(BlockBackend *blk, QEMUIOVector *qiov, char **argv, int nr_iov,
+ 
+         len = cvtnum(arg);
+         if (len < 0) {
+-            print_cvtnum_err(len, arg);
++            set_cvtnum_err(len, arg, errp);
+             goto fail;
+         }
+ 
+         if (len > BDRV_REQUEST_MAX_BYTES) {
+-            printf("Argument '%s' exceeds maximum size %" PRIu64 "\n", arg,
+-                   (uint64_t)BDRV_REQUEST_MAX_BYTES);
++            error_setg(errp, "Argument '%s' exceeds maximum size %" PRIu64,
++                       arg, (uint64_t)BDRV_REQUEST_MAX_BYTES);
+             goto fail;
+         }
+ 
+         if (count > BDRV_REQUEST_MAX_BYTES - len) {
+-            printf("The total number of bytes exceed the maximum size %" PRIu64
+-                   "\n", (uint64_t)BDRV_REQUEST_MAX_BYTES);
++            error_setg(errp,
++                       "The total number of bytes exceed the maximum size %"
++                       PRIu64, (uint64_t)BDRV_REQUEST_MAX_BYTES);
+             goto fail;
+         }
+ 
+@@ -692,7 +695,7 @@ static void read_help(void)
+ "\n");
+ }
+ 
+-static int read_f(BlockBackend *blk, int argc, char **argv);
++static int read_f(BlockBackend *blk, int argc, char **argv, Error **errp);
+ 
+ static const cmdinfo_t read_cmd = {
+     .name       = "read",
+@@ -705,7 +708,7 @@ static const cmdinfo_t read_cmd = {
+     .help       = read_help,
+ };
+ 
+-static int read_f(BlockBackend *blk, int argc, char **argv)
++static int read_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     struct timespec t1, t2;
+     bool Cflag = false, qflag = false, vflag = false;
+@@ -732,7 +735,7 @@ static int read_f(BlockBackend *blk, int argc, char **argv)
+             lflag = true;
+             pattern_count = cvtnum(optarg);
+             if (pattern_count < 0) {
+-                print_cvtnum_err(pattern_count, optarg);
++                set_cvtnum_err(pattern_count, optarg, errp);
+                 return pattern_count;
+             }
+             break;
+@@ -741,7 +744,7 @@ static int read_f(BlockBackend *blk, int argc, char **argv)
+             break;
+         case 'P':
+             Pflag = true;
+-            pattern = parse_pattern(optarg);
++            pattern = parse_pattern(optarg, errp);
+             if (pattern < 0) {
+                 return -EINVAL;
+             }
+@@ -756,7 +759,7 @@ static int read_f(BlockBackend *blk, int argc, char **argv)
+             sflag = true;
+             pattern_offset = cvtnum(optarg);
+             if (pattern_offset < 0) {
+-                print_cvtnum_err(pattern_offset, optarg);
++                set_cvtnum_err(pattern_offset, optarg, errp);
+                 return pattern_offset;
+             }
+             break;
+@@ -776,18 +779,18 @@ static int read_f(BlockBackend *blk, int argc, char **argv)
+ 
+     offset = cvtnum(argv[optind]);
+     if (offset < 0) {
+-        print_cvtnum_err(offset, argv[optind]);
++        set_cvtnum_err(offset, argv[optind], errp);
+         return offset;
+     }
+ 
+     optind++;
+     count = cvtnum(argv[optind]);
+     if (count < 0) {
+-        print_cvtnum_err(count, argv[optind]);
++        set_cvtnum_err(count, argv[optind], errp);
+         return count;
+     } else if (count > BDRV_REQUEST_MAX_BYTES) {
+-        printf("length cannot exceed %" PRIu64 ", given %s\n",
+-               (uint64_t)BDRV_REQUEST_MAX_BYTES, argv[optind]);
++        error_setg(errp, "length cannot exceed %" PRIu64 ", given %s",
++                   (uint64_t)BDRV_REQUEST_MAX_BYTES, argv[optind]);
+         return -EINVAL;
+     }
+ 
+@@ -801,24 +804,26 @@ static int read_f(BlockBackend *blk, int argc, char **argv)
+     }
+ 
+     if ((pattern_count < 0) || (pattern_count + pattern_offset > count))  {
+-        printf("pattern verification range exceeds end of read data\n");
++        error_setg(errp, "pattern verification range exceeds end of read data");
+         return -EINVAL;
+     }
+ 
+     if (bflag) {
+         if (!QEMU_IS_ALIGNED(offset, BDRV_SECTOR_SIZE)) {
+-            printf("%" PRId64 " is not a sector-aligned value for 'offset'\n",
+-                   offset);
++            error_setg(errp,
++                       "%" PRId64 " is not a sector-aligned value for 'offset'",
++                       offset);
+             return -EINVAL;
+         }
+         if (!QEMU_IS_ALIGNED(count, BDRV_SECTOR_SIZE)) {
+-            printf("%"PRId64" is not a sector-aligned value for 'count'\n",
+-                   count);
++            error_setg(errp,
++                       "%" PRId64 " is not a sector-aligned value for 'count'",
++                       count);
+             return -EINVAL;
+         }
+         if (flags & BDRV_REQ_REGISTERED_BUF) {
+-            printf("I/O buffer registration is not supported when reading "
+-                    "from vmstate\n");
++            error_setg(errp, "I/O buffer registration is not supported when"
++                       " reading from vmstate");
+             return -EINVAL;
+         }
+     }
+@@ -834,7 +839,7 @@ static int read_f(BlockBackend *blk, int argc, char **argv)
+     clock_gettime(CLOCK_MONOTONIC, &t2);
+ 
+     if (ret < 0) {
+-        printf("read failed: %s\n", strerror(-ret));
++        error_setg(errp, "read failed: %s", strerror(-ret));
+         goto out;
+     }
+     cnt = ret;
+@@ -845,9 +850,9 @@ static int read_f(BlockBackend *blk, int argc, char **argv)
+         void *cmp_buf = g_malloc(pattern_count);
+         memset(cmp_buf, pattern, pattern_count);
+         if (memcmp(buf + pattern_offset, cmp_buf, pattern_count)) {
+-            printf("Pattern verification failed at offset %"
+-                   PRId64 ", %"PRId64" bytes\n",
+-                   offset + pattern_offset, pattern_count);
++            error_setg(errp, "Pattern verification failed at offset %"
++                       PRId64 ", %" PRId64 " bytes",
++                       offset + pattern_offset, pattern_count);
+             ret = -EINVAL;
+         }
+         g_free(cmp_buf);
+@@ -890,7 +895,7 @@ static void readv_help(void)
+ "\n");
+ }
+ 
+-static int readv_f(BlockBackend *blk, int argc, char **argv);
++static int readv_f(BlockBackend *blk, int argc, char **argv, Error **errp);
+ 
+ static const cmdinfo_t readv_cmd = {
+     .name       = "readv",
+@@ -902,7 +907,7 @@ static const cmdinfo_t readv_cmd = {
+     .help       = readv_help,
+ };
+ 
+-static int readv_f(BlockBackend *blk, int argc, char **argv)
++static int readv_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     struct timespec t1, t2;
+     bool Cflag = false, qflag = false, vflag = false;
+@@ -924,7 +929,7 @@ static int readv_f(BlockBackend *blk, int argc, char **argv)
+             break;
+         case 'P':
+             Pflag = true;
+-            pattern = parse_pattern(optarg);
++            pattern = parse_pattern(optarg, errp);
+             if (pattern < 0) {
+                 return -EINVAL;
+             }
+@@ -952,14 +957,14 @@ static int readv_f(BlockBackend *blk, int argc, char **argv)
+ 
+     offset = cvtnum(argv[optind]);
+     if (offset < 0) {
+-        print_cvtnum_err(offset, argv[optind]);
++        set_cvtnum_err(offset, argv[optind], errp);
+         return offset;
+     }
+     optind++;
+ 
+     nr_iov = argc - optind;
+     buf = create_iovec(blk, &qiov, &argv[optind], nr_iov, 0xab,
+-                       flags & BDRV_REQ_REGISTERED_BUF);
++                       flags & BDRV_REQ_REGISTERED_BUF, errp);
+     if (buf == NULL) {
+         return -EINVAL;
+     }
+@@ -969,7 +974,7 @@ static int readv_f(BlockBackend *blk, int argc, char **argv)
+     clock_gettime(CLOCK_MONOTONIC, &t2);
+ 
+     if (ret < 0) {
+-        printf("readv failed: %s\n", strerror(-ret));
++        error_setg(errp, "readv failed: %s", strerror(-ret));
+         goto out;
+     }
+     cnt = ret;
+@@ -980,8 +985,8 @@ static int readv_f(BlockBackend *blk, int argc, char **argv)
+         void *cmp_buf = g_malloc(qiov.size);
+         memset(cmp_buf, pattern, qiov.size);
+         if (memcmp(buf, cmp_buf, qiov.size)) {
+-            printf("Pattern verification failed at offset %"
+-                   PRId64 ", %zu bytes\n", offset, qiov.size);
++            error_setg(errp, "Pattern verification failed at offset %"
++                       PRId64 ", %zu bytes", offset, qiov.size);
+             ret = -EINVAL;
+         }
+         g_free(cmp_buf);
+@@ -1031,7 +1036,7 @@ static void write_help(void)
+ "\n");
+ }
+ 
+-static int write_f(BlockBackend *blk, int argc, char **argv);
++static int write_f(BlockBackend *blk, int argc, char **argv, Error **errp);
+ 
+ static const cmdinfo_t write_cmd = {
+     .name       = "write",
+@@ -1045,7 +1050,7 @@ static const cmdinfo_t write_cmd = {
+     .help       = write_help,
+ };
+ 
+-static int write_f(BlockBackend *blk, int argc, char **argv)
++static int write_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     struct timespec t1, t2;
+     bool Cflag = false, qflag = false, bflag = false;
+@@ -1082,7 +1087,7 @@ static int write_f(BlockBackend *blk, int argc, char **argv)
+             break;
+         case 'P':
+             Pflag = true;
+-            pattern = parse_pattern(optarg);
++            pattern = parse_pattern(optarg, errp);
+             if (pattern < 0) {
+                 return -EINVAL;
+             }
+@@ -1115,72 +1120,78 @@ static int write_f(BlockBackend *blk, int argc, char **argv)
+     }
+ 
+     if (bflag && zflag) {
+-        printf("-b and -z cannot be specified at the same time\n");
++        error_setg(errp, "-b and -z cannot be specified at the same time");
+         return -EINVAL;
+     }
+ 
+     if ((flags & BDRV_REQ_FUA) && (bflag || cflag)) {
+-        printf("-f and -b or -c cannot be specified at the same time\n");
++        error_setg(errp,
++                   "-f and -b or -c cannot be specified at the same time");
+         return -EINVAL;
+     }
+ 
+     if ((flags & BDRV_REQ_NO_FALLBACK) && !zflag) {
+-        printf("-n requires -z to be specified\n");
++        error_setg(errp, "-n requires -z to be specified");
+         return -EINVAL;
+     }
+ 
+     if ((flags & BDRV_REQ_MAY_UNMAP) && !zflag) {
+-        printf("-u requires -z to be specified\n");
++        error_setg(errp, "-u requires -z to be specified");
+         return -EINVAL;
+     }
+ 
+     if (zflag + Pflag + sflag > 1) {
+-        printf("Only one of -z, -P, and -s "
+-               "can be specified at the same time\n");
++        error_setg(errp, "Only one of -z, -P, and -s "
++                   "can be specified at the same time");
+         return -EINVAL;
+     }
+ 
+     offset = cvtnum(argv[optind]);
+     if (offset < 0) {
+-        print_cvtnum_err(offset, argv[optind]);
++        set_cvtnum_err(offset, argv[optind], errp);
+         return offset;
+     }
+ 
+     optind++;
+     count = cvtnum(argv[optind]);
+     if (count < 0) {
+-        print_cvtnum_err(count, argv[optind]);
++        set_cvtnum_err(count, argv[optind], errp);
+         return count;
+     } else if (count > BDRV_REQUEST_MAX_BYTES &&
+                !(flags & BDRV_REQ_NO_FALLBACK)) {
+-        printf("length cannot exceed %" PRIu64 " without -n, given %s\n",
+-               (uint64_t)BDRV_REQUEST_MAX_BYTES, argv[optind]);
++        error_setg(errp,
++                   "length cannot exceed %" PRIu64 " without -n, given %s",
++                   (uint64_t)BDRV_REQUEST_MAX_BYTES, argv[optind]);
+         return -EINVAL;
+     }
+ 
+     if (bflag || cflag) {
+         if (!QEMU_IS_ALIGNED(offset, BDRV_SECTOR_SIZE)) {
+-            printf("%" PRId64 " is not a sector-aligned value for 'offset'\n",
+-                   offset);
++            error_setg(errp,
++                       "%" PRId64 " is not a sector-aligned value for 'offset'",
++                       offset);
+             return -EINVAL;
+         }
+ 
+         if (!QEMU_IS_ALIGNED(count, BDRV_SECTOR_SIZE)) {
+-            printf("%"PRId64" is not a sector-aligned value for 'count'\n",
+-                   count);
++            error_setg(errp,
++                       "%" PRId64 " is not a sector-aligned value for 'count'",
++                       count);
+             return -EINVAL;
+         }
+     }
+ 
+     if (zflag) {
+         if (flags & BDRV_REQ_REGISTERED_BUF) {
+-            printf("cannot combine zero write with registered I/O buffer\n");
++            error_setg(errp,
++                       "cannot combine zero write with registered I/O buffer");
+             return -EINVAL;
+         }
+     } else {
+         if (sflag) {
+             buf = qemu_io_alloc_from_file(blk, count, file_name,
+-                                          flags & BDRV_REQ_REGISTERED_BUF);
++                                          flags & BDRV_REQ_REGISTERED_BUF,
++                                          errp);
+             if (!buf) {
+                 return -EINVAL;
+             }
+@@ -1203,7 +1214,7 @@ static int write_f(BlockBackend *blk, int argc, char **argv)
+     clock_gettime(CLOCK_MONOTONIC, &t2);
+ 
+     if (ret < 0) {
+-        printf("write failed: %s\n", strerror(-ret));
++        error_setg(errp, "write failed: %s", strerror(-ret));
+         goto out;
+     }
+     cnt = ret;
+@@ -1245,7 +1256,7 @@ writev_help(void)
+ "\n");
+ }
+ 
+-static int writev_f(BlockBackend *blk, int argc, char **argv);
++static int writev_f(BlockBackend *blk, int argc, char **argv, Error **errp);
+ 
+ static const cmdinfo_t writev_cmd = {
+     .name       = "writev",
+@@ -1258,7 +1269,7 @@ static const cmdinfo_t writev_cmd = {
+     .help       = writev_help,
+ };
+ 
+-static int writev_f(BlockBackend *blk, int argc, char **argv)
++static int writev_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     struct timespec t1, t2;
+     bool Cflag = false, qflag = false;
+@@ -1287,7 +1298,7 @@ static int writev_f(BlockBackend *blk, int argc, char **argv)
+             flags |= BDRV_REQ_REGISTERED_BUF;
+             break;
+         case 'P':
+-            pattern = parse_pattern(optarg);
++            pattern = parse_pattern(optarg, errp);
+             if (pattern < 0) {
+                 return -EINVAL;
+             }
+@@ -1305,14 +1316,14 @@ static int writev_f(BlockBackend *blk, int argc, char **argv)
+ 
+     offset = cvtnum(argv[optind]);
+     if (offset < 0) {
+-        print_cvtnum_err(offset, argv[optind]);
++        set_cvtnum_err(offset, argv[optind], errp);
+         return offset;
+     }
+     optind++;
+ 
+     nr_iov = argc - optind;
+     buf = create_iovec(blk, &qiov, &argv[optind], nr_iov, pattern,
+-                       flags & BDRV_REQ_REGISTERED_BUF);
++                       flags & BDRV_REQ_REGISTERED_BUF, errp);
+     if (buf == NULL) {
+         return -EINVAL;
+     }
+@@ -1322,7 +1333,7 @@ static int writev_f(BlockBackend *blk, int argc, char **argv)
+     clock_gettime(CLOCK_MONOTONIC, &t2);
+ 
+     if (ret < 0) {
+-        printf("writev failed: %s\n", strerror(-ret));
++        error_setg(errp, "writev failed: %s", strerror(-ret));
+         goto out;
+     }
+     cnt = ret;
+@@ -1367,7 +1378,7 @@ static void aio_write_done(void *opaque, int ret)
+ 
+ 
+     if (ret < 0) {
+-        printf("aio_write failed: %s\n", strerror(-ret));
++        error_report("aio_write failed: %s", strerror(-ret));
+         block_acct_failed(blk_get_stats(ctx->blk), &ctx->acct);
+         goto out;
+     }
+@@ -1399,7 +1410,7 @@ static void aio_read_done(void *opaque, int ret)
+     clock_gettime(CLOCK_MONOTONIC, &t2);
+ 
+     if (ret < 0) {
+-        printf("readv failed: %s\n", strerror(-ret));
++        error_report("readv failed: %s", strerror(-ret));
+         block_acct_failed(blk_get_stats(ctx->blk), &ctx->acct);
+         goto out;
+     }
+@@ -1409,8 +1420,8 @@ static void aio_read_done(void *opaque, int ret)
+ 
+         memset(cmp_buf, ctx->pattern, ctx->qiov.size);
+         if (memcmp(ctx->buf, cmp_buf, ctx->qiov.size)) {
+-            printf("Pattern verification failed at offset %"
+-                   PRId64 ", %zu bytes\n", ctx->offset, ctx->qiov.size);
++            error_report("Pattern verification failed at offset %"
++                         PRId64 ", %zu bytes", ctx->offset, ctx->qiov.size);
+         }
+         g_free(cmp_buf);
+     }
+@@ -1461,7 +1472,7 @@ static void aio_read_help(void)
+ "\n");
+ }
+ 
+-static int aio_read_f(BlockBackend *blk, int argc, char **argv);
++static int aio_read_f(BlockBackend *blk, int argc, char **argv, Error **errp);
+ 
+ static const cmdinfo_t aio_read_cmd = {
+     .name       = "aio_read",
+@@ -1473,7 +1484,7 @@ static const cmdinfo_t aio_read_cmd = {
+     .help       = aio_read_help,
+ };
+ 
+-static int aio_read_f(BlockBackend *blk, int argc, char **argv)
++static int aio_read_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     int nr_iov, c;
+     struct aio_ctx *ctx = g_new0(struct aio_ctx, 1);
+@@ -1486,7 +1497,7 @@ static int aio_read_f(BlockBackend *blk, int argc, char **argv)
+             break;
+         case 'P':
+             ctx->Pflag = true;
+-            ctx->pattern = parse_pattern(optarg);
++            ctx->pattern = parse_pattern(optarg, errp);
+             if (ctx->pattern < 0) {
+                 g_free(ctx);
+                 return -EINVAL;
+@@ -1522,7 +1533,7 @@ static int aio_read_f(BlockBackend *blk, int argc, char **argv)
+     ctx->offset = cvtnum(argv[optind]);
+     if (ctx->offset < 0) {
+         int ret = ctx->offset;
+-        print_cvtnum_err(ret, argv[optind]);
++        set_cvtnum_err(ret, argv[optind], errp);
+         g_free(ctx);
+         return ret;
+     }
+@@ -1530,7 +1541,7 @@ static int aio_read_f(BlockBackend *blk, int argc, char **argv)
+ 
+     nr_iov = argc - optind;
+     ctx->buf = create_iovec(blk, &ctx->qiov, &argv[optind], nr_iov, 0xab,
+-                            ctx->flags & BDRV_REQ_REGISTERED_BUF);
++                            ctx->flags & BDRV_REQ_REGISTERED_BUF, errp);
+     if (ctx->buf == NULL) {
+         block_acct_invalid(blk_get_stats(blk), BLOCK_ACCT_READ);
+         g_free(ctx);
+@@ -1573,7 +1584,7 @@ static void aio_write_help(void)
+ "\n");
+ }
+ 
+-static int aio_write_f(BlockBackend *blk, int argc, char **argv);
++static int aio_write_f(BlockBackend *blk, int argc, char **argv, Error **errp);
+ 
+ static const cmdinfo_t aio_write_cmd = {
+     .name       = "aio_write",
+@@ -1586,7 +1597,7 @@ static const cmdinfo_t aio_write_cmd = {
+     .help       = aio_write_help,
+ };
+ 
+-static int aio_write_f(BlockBackend *blk, int argc, char **argv)
++static int aio_write_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     int nr_iov, c;
+     int pattern = 0xcd;
+@@ -1611,7 +1622,7 @@ static int aio_write_f(BlockBackend *blk, int argc, char **argv)
+             ctx->flags |= BDRV_REQ_MAY_UNMAP;
+             break;
+         case 'P':
+-            pattern = parse_pattern(optarg);
++            pattern = parse_pattern(optarg, errp);
+             if (pattern < 0) {
+                 g_free(ctx);
+                 return -EINVAL;
+@@ -1639,25 +1650,26 @@ static int aio_write_f(BlockBackend *blk, int argc, char **argv)
+     }
+ 
+     if (ctx->zflag && optind != argc - 2) {
+-        printf("-z supports only a single length parameter\n");
++        error_setg(errp, "-z supports only a single length parameter");
+         g_free(ctx);
+         return -EINVAL;
+     }
+ 
+     if ((ctx->flags & BDRV_REQ_MAY_UNMAP) && !ctx->zflag) {
+-        printf("-u requires -z to be specified\n");
++        error_setg(errp, "-u requires -z to be specified");
+         g_free(ctx);
+         return -EINVAL;
+     }
+ 
+     if (ctx->zflag && ctx->Pflag) {
+-        printf("-z and -P cannot be specified at the same time\n");
++        error_setg(errp, "-z and -P cannot be specified at the same time");
+         g_free(ctx);
+         return -EINVAL;
+     }
+ 
+     if (ctx->zflag && (ctx->flags & BDRV_REQ_REGISTERED_BUF)) {
+-        printf("cannot combine zero write with registered I/O buffer\n");
++        error_setg(errp,
++                   "cannot combine zero write with registered I/O buffer");
+         g_free(ctx);
+         return -EINVAL;
+     }
+@@ -1665,7 +1677,7 @@ static int aio_write_f(BlockBackend *blk, int argc, char **argv)
+     ctx->offset = cvtnum(argv[optind]);
+     if (ctx->offset < 0) {
+         int ret = ctx->offset;
+-        print_cvtnum_err(ret, argv[optind]);
++        set_cvtnum_err(ret, argv[optind], errp);
+         g_free(ctx);
+         return ret;
+     }
+@@ -1674,7 +1686,7 @@ static int aio_write_f(BlockBackend *blk, int argc, char **argv)
+     if (ctx->zflag) {
+         int64_t count = cvtnum(argv[optind]);
+         if (count < 0) {
+-            print_cvtnum_err(count, argv[optind]);
++            set_cvtnum_err(count, argv[optind], errp);
+             g_free(ctx);
+             return count;
+         }
+@@ -1685,7 +1697,8 @@ static int aio_write_f(BlockBackend *blk, int argc, char **argv)
+     } else {
+         nr_iov = argc - optind;
+         ctx->buf = create_iovec(blk, &ctx->qiov, &argv[optind], nr_iov,
+-                                pattern, ctx->flags & BDRV_REQ_REGISTERED_BUF);
++                                pattern,
++                                ctx->flags & BDRV_REQ_REGISTERED_BUF, errp);
+         if (ctx->buf == NULL) {
+             block_acct_invalid(blk_get_stats(blk), BLOCK_ACCT_WRITE);
+             g_free(ctx);
+@@ -1703,7 +1716,7 @@ static int aio_write_f(BlockBackend *blk, int argc, char **argv)
+     return 0;
+ }
+ 
+-static int aio_flush_f(BlockBackend *blk, int argc, char **argv)
++static int aio_flush_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     BlockAcctCookie cookie;
+     block_acct_start(blk_get_stats(blk), &cookie, 0, BLOCK_ACCT_FLUSH);
+@@ -1718,7 +1731,7 @@ static const cmdinfo_t aio_flush_cmd = {
+     .oneline    = "completes all outstanding aio requests"
+ };
+ 
+-static int flush_f(BlockBackend *blk, int argc, char **argv)
++static int flush_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     return blk_flush(blk);
+ }
+@@ -1735,7 +1748,7 @@ static inline int64_t tosector(int64_t bytes)
+     return bytes >> BDRV_SECTOR_BITS;
+ }
+ 
+-static int zone_report_f(BlockBackend *blk, int argc, char **argv)
++static int zone_report_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     int ret;
+     int64_t offset;
+@@ -1745,17 +1758,17 @@ static int zone_report_f(BlockBackend *blk, int argc, char **argv)
+     ++optind;
+     offset = cvtnum(argv[optind]);
+     if (offset < 0) {
+-        print_cvtnum_err(offset, argv[optind]);
++        set_cvtnum_err(offset, argv[optind], errp);
+         return offset;
+     }
+     ++optind;
+     val = cvtnum(argv[optind]);
+     if (val < 0) {
+-        print_cvtnum_err(val, argv[optind]);
++        set_cvtnum_err(val, argv[optind], errp);
+         return val;
+     }
+     if (val > UINT_MAX) {
+-        printf("Number of zones must be less than 2^32\n");
++        error_setg(errp, "Number of zones must be less than 2^32");
+         return -ERANGE;
+     }
+     nr_zones = val;
+@@ -1764,7 +1777,7 @@ static int zone_report_f(BlockBackend *blk, int argc, char **argv)
+     zones = g_new(BlockZoneDescriptor, nr_zones);
+     ret = blk_zone_report(blk, offset, &nr_zones, zones);
+     if (ret < 0) {
+-        printf("zone report failed: %s\n", strerror(-ret));
++        error_setg(errp, "zone report failed: %s", strerror(-ret));
+     } else {
+         for (int i = 0; i < nr_zones; ++i) {
+             printf("start: 0x%" PRIx64 ", len 0x%" PRIx64 ", "
+@@ -1788,25 +1801,25 @@ static const cmdinfo_t zone_report_cmd = {
+     .oneline = "report zone information",
+ };
+ 
+-static int zone_open_f(BlockBackend *blk, int argc, char **argv)
++static int zone_open_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     int ret;
+     int64_t offset, len;
+     ++optind;
+     offset = cvtnum(argv[optind]);
+     if (offset < 0) {
+-        print_cvtnum_err(offset, argv[optind]);
++        set_cvtnum_err(offset, argv[optind], errp);
+         return offset;
+     }
+     ++optind;
+     len = cvtnum(argv[optind]);
+     if (len < 0) {
+-        print_cvtnum_err(len, argv[optind]);
++        set_cvtnum_err(len, argv[optind], errp);
+         return len;
+     }
+     ret = blk_zone_mgmt(blk, BLK_ZO_OPEN, offset, len);
+     if (ret < 0) {
+-        printf("zone open failed: %s\n", strerror(-ret));
++        error_setg(errp, "zone open failed: %s", strerror(-ret));
+     }
+     return ret;
+ }
+@@ -1821,25 +1834,25 @@ static const cmdinfo_t zone_open_cmd = {
+     .oneline = "explicit open a range of zones in zone block device",
+ };
+ 
+-static int zone_close_f(BlockBackend *blk, int argc, char **argv)
++static int zone_close_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     int ret;
+     int64_t offset, len;
+     ++optind;
+     offset = cvtnum(argv[optind]);
+     if (offset < 0) {
+-        print_cvtnum_err(offset, argv[optind]);
++        set_cvtnum_err(offset, argv[optind], errp);
+         return offset;
+     }
+     ++optind;
+     len = cvtnum(argv[optind]);
+     if (len < 0) {
+-        print_cvtnum_err(len, argv[optind]);
++        set_cvtnum_err(len, argv[optind], errp);
+         return len;
+     }
+     ret = blk_zone_mgmt(blk, BLK_ZO_CLOSE, offset, len);
+     if (ret < 0) {
+-        printf("zone close failed: %s\n", strerror(-ret));
++        error_setg(errp, "zone close failed: %s", strerror(-ret));
+     }
+     return ret;
+ }
+@@ -1854,25 +1867,25 @@ static const cmdinfo_t zone_close_cmd = {
+     .oneline = "close a range of zones in zone block device",
+ };
+ 
+-static int zone_finish_f(BlockBackend *blk, int argc, char **argv)
++static int zone_finish_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     int ret;
+     int64_t offset, len;
+     ++optind;
+     offset = cvtnum(argv[optind]);
+     if (offset < 0) {
+-        print_cvtnum_err(offset, argv[optind]);
++        set_cvtnum_err(offset, argv[optind], errp);
+         return offset;
+     }
+     ++optind;
+     len = cvtnum(argv[optind]);
+     if (len < 0) {
+-        print_cvtnum_err(len, argv[optind]);
++        set_cvtnum_err(len, argv[optind], errp);
+         return len;
+     }
+     ret = blk_zone_mgmt(blk, BLK_ZO_FINISH, offset, len);
+     if (ret < 0) {
+-        printf("zone finish failed: %s\n", strerror(-ret));
++        error_setg(errp, "zone finish failed: %s", strerror(-ret));
+     }
+     return ret;
+ }
+@@ -1887,25 +1900,25 @@ static const cmdinfo_t zone_finish_cmd = {
+     .oneline = "finish a range of zones in zone block device",
+ };
+ 
+-static int zone_reset_f(BlockBackend *blk, int argc, char **argv)
++static int zone_reset_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     int ret;
+     int64_t offset, len;
+     ++optind;
+     offset = cvtnum(argv[optind]);
+     if (offset < 0) {
+-        print_cvtnum_err(offset, argv[optind]);
++        set_cvtnum_err(offset, argv[optind], errp);
+         return offset;
+     }
+     ++optind;
+     len = cvtnum(argv[optind]);
+     if (len < 0) {
+-        print_cvtnum_err(len, argv[optind]);
++        set_cvtnum_err(len, argv[optind], errp);
+         return len;
+     }
+     ret = blk_zone_mgmt(blk, BLK_ZO_RESET, offset, len);
+     if (ret < 0) {
+-        printf("zone reset failed: %s\n", strerror(-ret));
++        error_setg(errp, "zone reset failed: %s", strerror(-ret));
+     }
+     return ret;
+ }
+@@ -1934,7 +1947,7 @@ static int do_aio_zone_append(BlockBackend *blk, QEMUIOVector *qiov,
+     return async_ret < 0 ? async_ret : 1;
+ }
+ 
+-static int zone_append_f(BlockBackend *blk, int argc, char **argv)
++static int zone_append_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     int ret;
+     bool pflag = false;
+@@ -1956,19 +1969,19 @@ static int zone_append_f(BlockBackend *blk, int argc, char **argv)
+ 
+     offset = cvtnum(argv[optind]);
+     if (offset < 0) {
+-        print_cvtnum_err(offset, argv[optind]);
++        set_cvtnum_err(offset, argv[optind], errp);
+         return offset;
+     }
+     optind++;
+     nr_iov = argc - optind;
+     buf = create_iovec(blk, &qiov, &argv[optind], nr_iov, pattern,
+-                       flags & BDRV_REQ_REGISTERED_BUF);
++                       flags & BDRV_REQ_REGISTERED_BUF, errp);
+     if (buf == NULL) {
+         return -EINVAL;
+     }
+     ret = do_aio_zone_append(blk, &qiov, &offset, flags, &total);
+     if (ret < 0) {
+-        printf("zone append failed: %s\n", strerror(-ret));
++        error_setg(errp, "zone append failed: %s", strerror(-ret));
+         goto out;
+     }
+ 
+@@ -1994,7 +2007,7 @@ static const cmdinfo_t zone_append_cmd = {
+     .oneline = "append write a number of bytes at a specified offset",
+ };
+ 
+-static int truncate_f(BlockBackend *blk, int argc, char **argv);
++static int truncate_f(BlockBackend *blk, int argc, char **argv, Error **errp);
+ static const cmdinfo_t truncate_cmd = {
+     .name       = "truncate",
+     .altname    = "t",
+@@ -2006,9 +2019,8 @@ static const cmdinfo_t truncate_cmd = {
+     .oneline    = "truncates the current file at the given offset",
+ };
+ 
+-static int truncate_f(BlockBackend *blk, int argc, char **argv)
++static int truncate_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+-    Error *local_err = NULL;
+     int64_t offset;
+     int c, ret;
+     PreallocMode prealloc = PREALLOC_MODE_OFF;
+@@ -2019,7 +2031,7 @@ static int truncate_f(BlockBackend *blk, int argc, char **argv)
+             prealloc = qapi_enum_parse(&PreallocMode_lookup, optarg,
+                                        PREALLOC_MODE__MAX, NULL);
+             if (prealloc == PREALLOC_MODE__MAX) {
+-                error_report("Invalid preallocation mode '%s'", optarg);
++                error_setg(errp, "Invalid preallocation mode '%s'", optarg);
+                 return -EINVAL;
+             }
+             break;
+@@ -2031,7 +2043,7 @@ static int truncate_f(BlockBackend *blk, int argc, char **argv)
+ 
+     offset = cvtnum(argv[optind]);
+     if (offset < 0) {
+-        print_cvtnum_err(offset, argv[1]);
++        set_cvtnum_err(offset, argv[1], errp);
+         return offset;
+     }
+ 
+@@ -2040,23 +2052,22 @@ static int truncate_f(BlockBackend *blk, int argc, char **argv)
+      * exact=true.  It is better to err on the "emit more errors" side
+      * than to be overly permissive.
+      */
+-    ret = blk_truncate(blk, offset, false, prealloc, 0, &local_err);
++    ret = blk_truncate(blk, offset, false, prealloc, 0, errp);
+     if (ret < 0) {
+-        error_report_err(local_err);
+         return ret;
+     }
+ 
+     return 0;
+ }
+ 
+-static int length_f(BlockBackend *blk, int argc, char **argv)
++static int length_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     int64_t size;
+     char s1[64];
+ 
+     size = blk_getlength(blk);
+     if (size < 0) {
+-        printf("getlength: %s\n", strerror(-size));
++        error_setg(errp, "getlength: %s", strerror(-size));
+         return size;
+     }
+ 
+@@ -2074,12 +2085,12 @@ static const cmdinfo_t length_cmd = {
+ };
+ 
+ 
+-static int info_f(BlockBackend *blk, int argc, char **argv)
++static int info_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
++    ERRP_GUARD();
+     BlockDriverState *bs = blk_bs(blk);
+     BlockDriverInfo bdi;
+     ImageInfoSpecific *spec_info;
+-    Error *local_err = NULL;
+     char s1[64], s2[64];
+     int ret;
+ 
+@@ -2104,9 +2115,8 @@ static int info_f(BlockBackend *blk, int argc, char **argv)
+     printf("cluster size: %s\n", s1);
+     printf("vm state offset: %s\n", s2);
+ 
+-    spec_info = bdrv_get_specific_info(bs, &local_err);
+-    if (local_err) {
+-        error_report_err(local_err);
++    spec_info = bdrv_get_specific_info(bs, errp);
++    if (*errp) {
+         return -EIO;
+     }
+     if (spec_info) {
+@@ -2143,7 +2153,7 @@ static void discard_help(void)
+ "\n");
+ }
+ 
+-static int discard_f(BlockBackend *blk, int argc, char **argv);
++static int discard_f(BlockBackend *blk, int argc, char **argv, Error **errp);
+ 
+ static const cmdinfo_t discard_cmd = {
+     .name       = "discard",
+@@ -2157,7 +2167,7 @@ static const cmdinfo_t discard_cmd = {
+     .help       = discard_help,
+ };
+ 
+-static int discard_f(BlockBackend *blk, int argc, char **argv)
++static int discard_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     struct timespec t1, t2;
+     bool Cflag = false, qflag = false;
+@@ -2185,18 +2195,18 @@ static int discard_f(BlockBackend *blk, int argc, char **argv)
+ 
+     offset = cvtnum(argv[optind]);
+     if (offset < 0) {
+-        print_cvtnum_err(offset, argv[optind]);
++        set_cvtnum_err(offset, argv[optind], errp);
+         return offset;
+     }
+ 
+     optind++;
+     bytes = cvtnum(argv[optind]);
+     if (bytes < 0) {
+-        print_cvtnum_err(bytes, argv[optind]);
++        set_cvtnum_err(bytes, argv[optind], errp);
+         return bytes;
+     } else if (bytes > BDRV_REQUEST_MAX_BYTES) {
+-        printf("length cannot exceed %"PRIu64", given %s\n",
+-               (uint64_t)BDRV_REQUEST_MAX_BYTES, argv[optind]);
++        error_setg(errp, "length cannot exceed %" PRIu64 ", given %s",
++                   (uint64_t)BDRV_REQUEST_MAX_BYTES, argv[optind]);
+         return -EINVAL;
+     }
+ 
+@@ -2205,7 +2215,7 @@ static int discard_f(BlockBackend *blk, int argc, char **argv)
+     clock_gettime(CLOCK_MONOTONIC, &t2);
+ 
+     if (ret < 0) {
+-        printf("discard failed: %s\n", strerror(-ret));
++        error_setg(errp, "discard failed: %s", strerror(-ret));
+         return ret;
+     }
+ 
+@@ -2238,7 +2248,8 @@ static void aio_discard_help(void)
+ "\n");
+ }
+ 
+-static int aio_discard_f(BlockBackend *blk, int argc, char **argv);
++static int aio_discard_f(BlockBackend *blk, int argc, char **argv,
++                         Error **errp);
+ 
+ static const cmdinfo_t aio_discard_cmd = {
+     .name       = "aio_discard",
+@@ -2259,7 +2270,7 @@ static void aio_discard_done(void *opaque, int ret)
+     clock_gettime(CLOCK_MONOTONIC, &t2);
+ 
+     if (ret < 0) {
+-        printf("aio_discard failed: %s\n", strerror(-ret));
++        error_report("aio_discard failed: %s", strerror(-ret));
+         block_acct_failed(blk_get_stats(ctx->blk), &ctx->acct);
+         goto out;
+     }
+@@ -2278,7 +2289,7 @@ out:
+     g_free(ctx);
+ }
+ 
+-static int aio_discard_f(BlockBackend *blk, int argc, char **argv)
++static int aio_discard_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     int c, ret;
+     int64_t count;
+@@ -2310,7 +2321,7 @@ static int aio_discard_f(BlockBackend *blk, int argc, char **argv)
+     ctx->offset = cvtnum(argv[optind]);
+     if (ctx->offset < 0) {
+         ret = ctx->offset;
+-        print_cvtnum_err(ret, argv[optind]);
++        set_cvtnum_err(ret, argv[optind], errp);
+         g_free(ctx);
+         return ret;
+     }
+@@ -2318,7 +2329,7 @@ static int aio_discard_f(BlockBackend *blk, int argc, char **argv)
+ 
+     count = cvtnum(argv[optind]);
+     if (count < 0) {
+-        print_cvtnum_err(count, argv[optind]);
++        set_cvtnum_err(count, argv[optind], errp);
+         g_free(ctx);
+         return count;
+     }
+@@ -2332,7 +2343,7 @@ static int aio_discard_f(BlockBackend *blk, int argc, char **argv)
+     return 0;
+ }
+ 
+-static int alloc_f(BlockBackend *blk, int argc, char **argv)
++static int alloc_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     BlockDriverState *bs = blk_bs(blk);
+     int64_t offset, start, remaining, count;
+@@ -2342,14 +2353,14 @@ static int alloc_f(BlockBackend *blk, int argc, char **argv)
+ 
+     start = offset = cvtnum(argv[1]);
+     if (offset < 0) {
+-        print_cvtnum_err(offset, argv[1]);
++        set_cvtnum_err(offset, argv[1], errp);
+         return offset;
+     }
+ 
+     if (argc == 3) {
+         count = cvtnum(argv[2]);
+         if (count < 0) {
+-            print_cvtnum_err(count, argv[2]);
++            set_cvtnum_err(count, argv[2], errp);
+             return count;
+         }
+     } else {
+@@ -2361,7 +2372,7 @@ static int alloc_f(BlockBackend *blk, int argc, char **argv)
+     while (remaining) {
+         ret = bdrv_is_allocated(bs, offset, remaining, &num);
+         if (ret < 0) {
+-            printf("is_allocated failed: %s\n", strerror(-ret));
++            error_setg(errp, "is_allocated failed: %s", strerror(-ret));
+             return ret;
+         }
+         offset += num;
+@@ -2422,7 +2433,7 @@ static int map_is_allocated(BlockDriverState *bs, int64_t offset,
+     return firstret;
+ }
+ 
+-static int map_f(BlockBackend *blk, int argc, char **argv)
++static int map_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     int64_t offset, bytes;
+     char s1[64], s2[64];
+@@ -2433,17 +2444,18 @@ static int map_f(BlockBackend *blk, int argc, char **argv)
+     offset = 0;
+     bytes = blk_getlength(blk);
+     if (bytes < 0) {
+-        error_report("Failed to query image length: %s", strerror(-bytes));
++        error_setg(errp, "Failed to query image length: %s", strerror(-bytes));
+         return bytes;
+     }
+ 
+     while (bytes) {
+         ret = map_is_allocated(blk_bs(blk), offset, bytes, &num);
+         if (ret < 0) {
+-            error_report("Failed to get allocation status: %s", strerror(-ret));
++            error_setg(errp, "Failed to get allocation status: %s",
++                       strerror(-ret));
+             return ret;
+         } else if (!num) {
+-            error_report("Unexpected end of image");
++            error_setg(errp, "Unexpected end of image");
+             return -EIO;
+         }
+ 
+@@ -2485,7 +2497,7 @@ static void reopen_help(void)
+ "\n");
+ }
+ 
+-static int reopen_f(BlockBackend *blk, int argc, char **argv);
++static int reopen_f(BlockBackend *blk, int argc, char **argv, Error **errp);
+ 
+ static QemuOptsList reopen_opts = {
+     .name = "reopen",
+@@ -2507,7 +2519,7 @@ static const cmdinfo_t reopen_cmd = {
+        .help           = reopen_help,
+ };
+ 
+-static int reopen_f(BlockBackend *blk, int argc, char **argv)
++static int reopen_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     BlockDriverState *bs = blk_bs(blk);
+     QemuOpts *qopts;
+@@ -2517,13 +2529,12 @@ static int reopen_f(BlockBackend *blk, int argc, char **argv)
+     bool writethrough = !blk_enable_write_cache(blk);
+     bool has_rw_option = false;
+     bool has_cache_option = false;
+-    Error *local_err = NULL;
+ 
+     while ((c = getopt(argc, argv, "c:o:rw")) != -1) {
+         switch (c) {
+         case 'c':
+             if (bdrv_parse_cache_mode(optarg, &flags, &writethrough) < 0) {
+-                error_report("Invalid cache option: %s", optarg);
++                error_setg(errp, "Invalid cache option: %s", optarg);
+                 return -EINVAL;
+             }
+             has_cache_option = true;
+@@ -2536,7 +2547,7 @@ static int reopen_f(BlockBackend *blk, int argc, char **argv)
+             break;
+         case 'r':
+             if (has_rw_option) {
+-                error_report("Only one -r/-w option may be given");
++                error_setg(errp, "Only one -r/-w option may be given");
+                 return -EINVAL;
+             }
+             flags &= ~BDRV_O_RDWR;
+@@ -2544,7 +2555,7 @@ static int reopen_f(BlockBackend *blk, int argc, char **argv)
+             break;
+         case 'w':
+             if (has_rw_option) {
+-                error_report("Only one -r/-w option may be given");
++                error_setg(errp, "Only one -r/-w option may be given");
+                 return -EINVAL;
+             }
+             flags |= BDRV_O_RDWR;
+@@ -2566,7 +2577,7 @@ static int reopen_f(BlockBackend *blk, int argc, char **argv)
+     if (!writethrough != blk_enable_write_cache(blk) &&
+         blk_get_attached_dev(blk))
+     {
+-        error_report("Cannot change cache.writeback: Device attached");
++        error_setg(errp, "Cannot change cache.writeback: Device attached");
+         qemu_opts_reset(&reopen_opts);
+         return -EBUSY;
+     }
+@@ -2589,7 +2600,8 @@ static int reopen_f(BlockBackend *blk, int argc, char **argv)
+ 
+     if (qdict_haskey(opts, BDRV_OPT_READ_ONLY)) {
+         if (has_rw_option) {
+-            error_report("Cannot set both -r/-w and '" BDRV_OPT_READ_ONLY "'");
++            error_setg(errp,
++                       "Cannot set both -r/-w and '" BDRV_OPT_READ_ONLY "'");
+             qobject_unref(opts);
+             return -EINVAL;
+         }
+@@ -2600,7 +2612,7 @@ static int reopen_f(BlockBackend *blk, int argc, char **argv)
+     if (qdict_haskey(opts, BDRV_OPT_CACHE_DIRECT) ||
+         qdict_haskey(opts, BDRV_OPT_CACHE_NO_FLUSH)) {
+         if (has_cache_option) {
+-            error_report("Cannot set both -c and the cache options");
++            error_setg(errp, "Cannot set both -c and the cache options");
+             qobject_unref(opts);
+             return -EINVAL;
+         }
+@@ -2609,10 +2621,7 @@ static int reopen_f(BlockBackend *blk, int argc, char **argv)
+         qdict_put_bool(opts, BDRV_OPT_CACHE_NO_FLUSH, flags & BDRV_O_NO_FLUSH);
+     }
+ 
+-    bdrv_reopen(bs, opts, true, &local_err);
+-
+-    if (local_err) {
+-        error_report_err(local_err);
++    if (bdrv_reopen(bs, opts, true, errp) < 0) {
+         return -EINVAL;
+     }
+ 
+@@ -2620,26 +2629,28 @@ static int reopen_f(BlockBackend *blk, int argc, char **argv)
+     return 0;
+ }
+ 
+-static int break_f(BlockBackend *blk, int argc, char **argv)
++static int break_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     int ret;
+ 
+     ret = bdrv_debug_breakpoint(blk_bs(blk), argv[1], argv[2]);
+     if (ret < 0) {
+-        printf("Could not set breakpoint: %s\n", strerror(-ret));
++        error_setg(errp, "Could not set breakpoint: %s", strerror(-ret));
+         return ret;
+     }
+ 
+     return 0;
+ }
+ 
+-static int remove_break_f(BlockBackend *blk, int argc, char **argv)
++static int remove_break_f(BlockBackend *blk, int argc, char **argv,
++                           Error **errp)
+ {
+     int ret;
+ 
+     ret = bdrv_debug_remove_breakpoint(blk_bs(blk), argv[1]);
+     if (ret < 0) {
+-        printf("Could not remove breakpoint %s: %s\n", argv[1], strerror(-ret));
++        error_setg(errp, "Could not remove breakpoint %s: %s",
++                   argv[1], strerror(-ret));
+         return ret;
+     }
+ 
+@@ -2665,13 +2676,13 @@ static const cmdinfo_t remove_break_cmd = {
+        .oneline        = "remove a breakpoint by tag",
+ };
+ 
+-static int resume_f(BlockBackend *blk, int argc, char **argv)
++static int resume_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     int ret;
+ 
+     ret = bdrv_debug_resume(blk_bs(blk), argv[1]);
+     if (ret < 0) {
+-        printf("Could not resume request: %s\n", strerror(-ret));
++        error_setg(errp, "Could not resume request: %s", strerror(-ret));
+         return ret;
+     }
+ 
+@@ -2687,7 +2698,7 @@ static const cmdinfo_t resume_cmd = {
+        .oneline        = "resumes the request tagged as tag",
+ };
+ 
+-static int wait_break_f(BlockBackend *blk, int argc, char **argv)
++static int wait_break_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     while (!bdrv_debug_is_suspended(blk_bs(blk), argv[1])) {
+         aio_poll(blk_get_aio_context(blk), true);
+@@ -2704,7 +2715,7 @@ static const cmdinfo_t wait_break_cmd = {
+        .oneline        = "waits for the suspension of a request",
+ };
+ 
+-static int abort_f(BlockBackend *blk, int argc, char **argv)
++static int abort_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     abort();
+ }
+@@ -2730,7 +2741,7 @@ static void sigraise_help(void)
+ "\n", SIGTERM);
+ }
+ 
+-static int sigraise_f(BlockBackend *blk, int argc, char **argv);
++static int sigraise_f(BlockBackend *blk, int argc, char **argv, Error **errp);
+ 
+ static const cmdinfo_t sigraise_cmd = {
+     .name       = "sigraise",
+@@ -2743,15 +2754,16 @@ static const cmdinfo_t sigraise_cmd = {
+     .help       = sigraise_help,
+ };
+ 
+-static int sigraise_f(BlockBackend *blk, int argc, char **argv)
++static int sigraise_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     int64_t sig = cvtnum(argv[1]);
+     if (sig < 0) {
+-        print_cvtnum_err(sig, argv[1]);
++        set_cvtnum_err(sig, argv[1], errp);
+         return sig;
+     } else if (sig > NSIG) {
+-        printf("signal argument '%s' is too large to be a valid signal\n",
+-               argv[1]);
++        error_setg(errp,
++                   "signal argument '%s' is too large to be a valid signal",
++                   argv[1]);
+         return -EINVAL;
+     }
+ 
+@@ -2772,7 +2784,7 @@ static void sleep_cb(void *opaque)
+     *expired = true;
+ }
+ 
+-static int sleep_f(BlockBackend *blk, int argc, char **argv)
++static int sleep_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     char *endptr;
+     long ms;
+@@ -2781,7 +2793,7 @@ static int sleep_f(BlockBackend *blk, int argc, char **argv)
+ 
+     ms = strtol(argv[1], &endptr, 0);
+     if (ms < 0 || *endptr != '\0') {
+-        printf("%s is not a valid number\n", argv[1]);
++        error_setg(errp, "%s is not a valid number", argv[1]);
+         return -EINVAL;
+     }
+ 
+@@ -2833,7 +2845,7 @@ static void help_all(void)
+     printf("\nUse 'help commandname' for extended help.\n");
+ }
+ 
+-static int help_f(BlockBackend *blk, int argc, char **argv)
++static int help_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     const cmdinfo_t *ct;
+ 
+@@ -2844,7 +2856,7 @@ static int help_f(BlockBackend *blk, int argc, char **argv)
+ 
+     ct = find_command(argv[1]);
+     if (ct == NULL) {
+-        printf("command %s not found\n", argv[1]);
++        error_setg(errp, "command %s not found", argv[1]);
+         return -EINVAL;
+     }
+ 
+@@ -2867,7 +2879,7 @@ static const cmdinfo_t help_cmd = {
+  * Called with aio context of blk acquired. Or with qemu_get_aio_context()
+  * context acquired if blk is NULL.
+  */
+-int qemuio_command(BlockBackend *blk, const char *cmd)
++int qemuio_command(BlockBackend *blk, const char *cmd, Error **errp)
+ {
+     char *input;
+     const cmdinfo_t *ct;
+@@ -2880,9 +2892,9 @@ int qemuio_command(BlockBackend *blk, const char *cmd)
+     if (c) {
+         ct = find_command(v[0]);
+         if (ct) {
+-            ret = command(blk, ct, c, v);
++            ret = command(blk, ct, c, v, errp);
+         } else {
+-            fprintf(stderr, "command \"%s\" not found\n", v[0]);
++            error_setg(errp, "command \"%s\" not found", v[0]);
+             ret = -EINVAL;
+         }
+     }
+diff --git a/qemu-io.c b/qemu-io.c
+index 8f2de83f3c80..598d5b1c9ca9 100644
+--- a/qemu-io.c
++++ b/qemu-io.c
+@@ -68,7 +68,7 @@ static int get_eof_char(void)
+ #endif
+ }
+ 
+-static int close_f(BlockBackend *blk, int argc, char **argv)
++static int close_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     blk_unref(qemuio_blk);
+     qemuio_blk = NULL;
+@@ -140,7 +140,7 @@ static void open_help(void)
+ "\n");
+ }
+ 
+-static int open_f(BlockBackend *blk, int argc, char **argv);
++static int open_f(BlockBackend *blk, int argc, char **argv, Error **errp);
+ 
+ static const cmdinfo_t open_cmd = {
+     .name       = "open",
+@@ -164,7 +164,7 @@ static QemuOptsList empty_opts = {
+     },
+ };
+ 
+-static int open_f(BlockBackend *blk, int argc, char **argv)
++static int open_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     int flags = BDRV_O_UNMAP;
+     int readonly = 0;
+@@ -268,7 +268,7 @@ static int open_f(BlockBackend *blk, int argc, char **argv)
+     return 0;
+ }
+ 
+-static int quit_f(BlockBackend *blk, int argc, char **argv)
++static int quit_f(BlockBackend *blk, int argc, char **argv, Error **errp)
+ {
+     quit_qemu_io = true;
+     return 0;
+@@ -414,7 +414,14 @@ static void prep_fetchline(void *opaque)
+ 
+ static int do_qemuio_command(const char *cmd)
+ {
+-    return qemuio_command(qemuio_blk, cmd);
++    Error *local_err = NULL;
++    int ret;
 +
- # Check that we have a file system that allows huge (but very sparse) files
- #
- _require_large_file()
-diff --git a/tests/qemu-iotests/iotests.py b/tests/qemu-iotests/iotests.py
-index f36bcf316429..7d5a77a85e58 100644
---- a/tests/qemu-iotests/iotests.py
-+++ b/tests/qemu-iotests/iotests.py
-@@ -1456,6 +1456,15 @@ def _verify_formats(required_formats: Sequence[str] = ()) -> None:
-         notrun(f'formats {usf_list} are not whitelisted')
++    ret = qemuio_command(qemuio_blk, cmd, &local_err);
++    if (local_err) {
++        error_report_err(local_err);
++    }
++    return ret;
+ }
  
+ static int command_loop(void)
+diff --git a/tests/qemu-iotests/004.out b/tests/qemu-iotests/004.out
+index fb8593289f51..37da6024809f 100644
+--- a/tests/qemu-iotests/004.out
++++ b/tests/qemu-iotests/004.out
+@@ -6,36 +6,36 @@ wrote 1048576/1048576 bytes at offset 133169152
+ 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
  
-+def _verify_hmp() -> None:
-+    args = [qemu_prog] + qemu_opts + ['-M', 'none', '-monitor', 'stdio']
-+    with subprocess.Popen(args, stdin=subprocess.PIPE,
-+                          stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-+                          universal_newlines=True) as subp:
-+        out, _ = subp.communicate('quit\n')
-+    if 'HMP monitor is not available' in out:
-+        notrun('HMP monitor not available')
-+
- def _verify_virtio_blk() -> None:
-     out = qemu_pipe('-M', 'none', '-device', 'help')
-     if 'virtio-blk' not in out:
-@@ -1694,7 +1703,8 @@ def execute_setup_common(supported_fmts: Sequence[str] = (),
-                          supported_protocols: Sequence[str] = (),
-                          unsupported_protocols: Sequence[str] = (),
-                          required_fmts: Sequence[str] = (),
--                         unsupported_imgopts: Sequence[str] = ()) -> bool:
-+                         unsupported_imgopts: Sequence[str] = (),
-+                         require_hmp: bool = False) -> bool:
-     """
-     Perform necessary setup for either script-style or unittest-style tests.
+ write into image boundary
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
  
-@@ -1715,6 +1725,8 @@ def execute_setup_common(supported_fmts: Sequence[str] = (),
-     _verify_formats(required_fmts)
-     _verify_virtio_blk()
-     _verify_imgopts(unsupported_imgopts)
-+    if require_hmp:
-+        _verify_hmp()
+ write at image boundary
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
  
-     return debug
+ write past image boundary
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
  
+ pwrite past image boundary
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ writev past image boundary
+-writev failed: Input/output error
++qemu-io: writev failed: Input/output error
+ 
+ read before image boundary
+ read 1048576/1048576 bytes at offset 133169152
+ 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ read into image boundary
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ read at image boundary
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ read past image boundary
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ pread past image boundary
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ readv past image boundary
+-readv failed: Input/output error
++qemu-io: readv failed: Input/output error
+ *** done
+diff --git a/tests/qemu-iotests/021.out b/tests/qemu-iotests/021.out
+index 8533f8e58ae6..dfdfeb503780 100644
+--- a/tests/qemu-iotests/021.out
++++ b/tests/qemu-iotests/021.out
+@@ -2,92 +2,92 @@ QA output created by 021
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=134217728
+ 
+ == testing writev -P -1 ==
+--1 is not a valid pattern byte
++qemu-io: -1 is not a valid pattern byte
+ 
+ == testing read -P -1 ==
+--1 is not a valid pattern byte
++qemu-io: -1 is not a valid pattern byte
+ 
+ == testing write -P -1 ==
+--1 is not a valid pattern byte
++qemu-io: -1 is not a valid pattern byte
+ 
+ == testing readv -P -1 ==
+--1 is not a valid pattern byte
++qemu-io: -1 is not a valid pattern byte
+ 
+ == testing aio_read -P -1 ==
+--1 is not a valid pattern byte
++qemu-io: -1 is not a valid pattern byte
+ 
+ == testing aio_write -P -1 ==
+--1 is not a valid pattern byte
++qemu-io: -1 is not a valid pattern byte
+ 
+ == testing writev -P 300 ==
+-300 is not a valid pattern byte
++qemu-io: 300 is not a valid pattern byte
+ 
+ == testing read -P 300 ==
+-300 is not a valid pattern byte
++qemu-io: 300 is not a valid pattern byte
+ 
+ == testing write -P 300 ==
+-300 is not a valid pattern byte
++qemu-io: 300 is not a valid pattern byte
+ 
+ == testing readv -P 300 ==
+-300 is not a valid pattern byte
++qemu-io: 300 is not a valid pattern byte
+ 
+ == testing aio_read -P 300 ==
+-300 is not a valid pattern byte
++qemu-io: 300 is not a valid pattern byte
+ 
+ == testing aio_write -P 300 ==
+-300 is not a valid pattern byte
++qemu-io: 300 is not a valid pattern byte
+ 
+ == testing writev -P 12m ==
+-12m is not a valid pattern byte
++qemu-io: 12m is not a valid pattern byte
+ 
+ == testing read -P 12m ==
+-12m is not a valid pattern byte
++qemu-io: 12m is not a valid pattern byte
+ 
+ == testing write -P 12m ==
+-12m is not a valid pattern byte
++qemu-io: 12m is not a valid pattern byte
+ 
+ == testing readv -P 12m ==
+-12m is not a valid pattern byte
++qemu-io: 12m is not a valid pattern byte
+ 
+ == testing aio_read -P 12m ==
+-12m is not a valid pattern byte
++qemu-io: 12m is not a valid pattern byte
+ 
+ == testing aio_write -P 12m ==
+-12m is not a valid pattern byte
++qemu-io: 12m is not a valid pattern byte
+ 
+ == testing writev -P 4k ==
+-4k is not a valid pattern byte
++qemu-io: 4k is not a valid pattern byte
+ 
+ == testing read -P 4k ==
+-4k is not a valid pattern byte
++qemu-io: 4k is not a valid pattern byte
+ 
+ == testing write -P 4k ==
+-4k is not a valid pattern byte
++qemu-io: 4k is not a valid pattern byte
+ 
+ == testing readv -P 4k ==
+-4k is not a valid pattern byte
++qemu-io: 4k is not a valid pattern byte
+ 
+ == testing aio_read -P 4k ==
+-4k is not a valid pattern byte
++qemu-io: 4k is not a valid pattern byte
+ 
+ == testing aio_write -P 4k ==
+-4k is not a valid pattern byte
++qemu-io: 4k is not a valid pattern byte
+ 
+ == testing writev -P route66 ==
+-route66 is not a valid pattern byte
++qemu-io: route66 is not a valid pattern byte
+ 
+ == testing read -P route66 ==
+-route66 is not a valid pattern byte
++qemu-io: route66 is not a valid pattern byte
+ 
+ == testing write -P route66 ==
+-route66 is not a valid pattern byte
++qemu-io: route66 is not a valid pattern byte
+ 
+ == testing readv -P route66 ==
+-route66 is not a valid pattern byte
++qemu-io: route66 is not a valid pattern byte
+ 
+ == testing aio_read -P route66 ==
+-route66 is not a valid pattern byte
++qemu-io: route66 is not a valid pattern byte
+ 
+ == testing aio_write -P route66 ==
+-route66 is not a valid pattern byte
++qemu-io: route66 is not a valid pattern byte
+ *** done
+diff --git a/tests/qemu-iotests/026.out b/tests/qemu-iotests/026.out
+index 83989996ff62..b998a9ac83da 100644
+--- a/tests/qemu-iotests/026.out
++++ b/tests/qemu-iotests/026.out
+@@ -4,442 +4,442 @@ Errors while writing 128 kB
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_update; errno: 5; imm: off; once: on; write
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_update; errno: 5; imm: off; once: on; write -b
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_update; errno: 5; imm: off; once: off; write
++qemu-io: write failed: Input/output error
+ qemu-io: Failed to flush the L2 table cache: Input/output error
+ qemu-io: Failed to flush the refcount block cache: Input/output error
+-write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_update; errno: 5; imm: off; once: off; write -b
++qemu-io: write failed: Input/output error
+ qemu-io: Failed to flush the L2 table cache: Input/output error
+ qemu-io: Failed to flush the refcount block cache: Input/output error
+-write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_update; errno: 28; imm: off; once: on; write
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_update; errno: 28; imm: off; once: on; write -b
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_update; errno: 28; imm: off; once: off; write
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_update; errno: 28; imm: off; once: off; write -b
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_load; errno: 5; imm: off; once: on; write
+ wrote 131072/131072 bytes at offset 0
+ 128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-write failed: Input/output error
+-read failed: Input/output error
++qemu-io: write failed: Input/output error
++qemu-io: read failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_load; errno: 5; imm: off; once: on; write -b
+ wrote 131072/131072 bytes at offset 0
+ 128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-write failed: Input/output error
+-read failed: Input/output error
++qemu-io: write failed: Input/output error
++qemu-io: read failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_load; errno: 5; imm: off; once: off; write
+ wrote 131072/131072 bytes at offset 0
+ 128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-write failed: Input/output error
+-read failed: Input/output error
++qemu-io: write failed: Input/output error
++qemu-io: read failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_load; errno: 5; imm: off; once: off; write -b
+ wrote 131072/131072 bytes at offset 0
+ 128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-write failed: Input/output error
+-read failed: Input/output error
++qemu-io: write failed: Input/output error
++qemu-io: read failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_load; errno: 28; imm: off; once: on; write
+ wrote 131072/131072 bytes at offset 0
+ 128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-write failed: No space left on device
+-read failed: No space left on device
++qemu-io: write failed: No space left on device
++qemu-io: read failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_load; errno: 28; imm: off; once: on; write -b
+ wrote 131072/131072 bytes at offset 0
+ 128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-write failed: No space left on device
+-read failed: No space left on device
++qemu-io: write failed: No space left on device
++qemu-io: read failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_load; errno: 28; imm: off; once: off; write
+ wrote 131072/131072 bytes at offset 0
+ 128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-write failed: No space left on device
+-read failed: No space left on device
++qemu-io: write failed: No space left on device
++qemu-io: read failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_load; errno: 28; imm: off; once: off; write -b
+ wrote 131072/131072 bytes at offset 0
+ 128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-write failed: No space left on device
+-read failed: No space left on device
++qemu-io: write failed: No space left on device
++qemu-io: read failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_update; errno: 5; imm: off; once: on; write
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_update; errno: 5; imm: off; once: on; write -b
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_update; errno: 5; imm: off; once: off; write
++qemu-io: write failed: Input/output error
+ qemu-io: Failed to flush the L2 table cache: Input/output error
+ qemu-io: Failed to flush the refcount block cache: Input/output error
+-write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_update; errno: 5; imm: off; once: off; write -b
++qemu-io: write failed: Input/output error
+ qemu-io: Failed to flush the L2 table cache: Input/output error
+ qemu-io: Failed to flush the refcount block cache: Input/output error
+-write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_update; errno: 28; imm: off; once: on; write
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_update; errno: 28; imm: off; once: on; write -b
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_update; errno: 28; imm: off; once: off; write
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_update; errno: 28; imm: off; once: off; write -b
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_alloc_write; errno: 5; imm: off; once: on; write
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_alloc_write; errno: 5; imm: off; once: on; write -b
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_alloc_write; errno: 5; imm: off; once: off; write
++qemu-io: write failed: Input/output error
+ qemu-io: Failed to flush the L2 table cache: Input/output error
+ qemu-io: Failed to flush the refcount block cache: Input/output error
+-write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_alloc_write; errno: 5; imm: off; once: off; write -b
++qemu-io: write failed: Input/output error
+ qemu-io: Failed to flush the L2 table cache: Input/output error
+ qemu-io: Failed to flush the refcount block cache: Input/output error
+-write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_alloc_write; errno: 28; imm: off; once: on; write
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_alloc_write; errno: 28; imm: off; once: on; write -b
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_alloc_write; errno: 28; imm: off; once: off; write
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l2_alloc_write; errno: 28; imm: off; once: off; write -b
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: write_aio; errno: 5; imm: off; once: on; write
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: write_aio; errno: 5; imm: off; once: on; write -b
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: write_aio; errno: 5; imm: off; once: off; write
++qemu-io: write failed: Input/output error
+ qemu-io: Failed to flush the L2 table cache: Input/output error
+ qemu-io: Failed to flush the refcount block cache: Input/output error
+-write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: write_aio; errno: 5; imm: off; once: off; write -b
++qemu-io: write failed: Input/output error
+ qemu-io: Failed to flush the L2 table cache: Input/output error
+ qemu-io: Failed to flush the refcount block cache: Input/output error
+-write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: write_aio; errno: 28; imm: off; once: on; write
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: write_aio; errno: 28; imm: off; once: on; write -b
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: write_aio; errno: 28; imm: off; once: off; write
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: write_aio; errno: 28; imm: off; once: off; write -b
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_load; errno: 5; imm: off; once: on; write
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_load; errno: 5; imm: off; once: on; write -b
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_load; errno: 5; imm: off; once: off; write
++qemu-io: write failed: Input/output error
+ qemu-io: Failed to flush the L2 table cache: Input/output error
+ qemu-io: Failed to flush the refcount block cache: Input/output error
+-write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_load; errno: 5; imm: off; once: off; write -b
++qemu-io: write failed: Input/output error
+ qemu-io: Failed to flush the L2 table cache: Input/output error
+ qemu-io: Failed to flush the refcount block cache: Input/output error
+-write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_load; errno: 28; imm: off; once: on; write
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_load; errno: 28; imm: off; once: on; write -b
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_load; errno: 28; imm: off; once: off; write
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_load; errno: 28; imm: off; once: off; write -b
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_update_part; errno: 5; imm: off; once: on; write
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_update_part; errno: 5; imm: off; once: on; write -b
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_update_part; errno: 5; imm: off; once: off; write
++qemu-io: write failed: Input/output error
+ qemu-io: Failed to flush the L2 table cache: Input/output error
+ qemu-io: Failed to flush the refcount block cache: Input/output error
+-write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_update_part; errno: 5; imm: off; once: off; write -b
++qemu-io: write failed: Input/output error
+ qemu-io: Failed to flush the L2 table cache: Input/output error
+ qemu-io: Failed to flush the refcount block cache: Input/output error
+-write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_update_part; errno: 28; imm: off; once: on; write
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_update_part; errno: 28; imm: off; once: on; write -b
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_update_part; errno: 28; imm: off; once: off; write
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_update_part; errno: 28; imm: off; once: off; write -b
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc; errno: 5; imm: off; once: on; write
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc; errno: 5; imm: off; once: on; write -b
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc; errno: 5; imm: off; once: off; write
++qemu-io: write failed: Input/output error
+ qemu-io: Failed to flush the L2 table cache: Input/output error
+ qemu-io: Failed to flush the refcount block cache: Input/output error
+-write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc; errno: 5; imm: off; once: off; write -b
++qemu-io: write failed: Input/output error
+ qemu-io: Failed to flush the L2 table cache: Input/output error
+ qemu-io: Failed to flush the refcount block cache: Input/output error
+-write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc; errno: 28; imm: off; once: on; write
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc; errno: 28; imm: off; once: on; write -b
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc; errno: 28; imm: off; once: off; write
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc; errno: 28; imm: off; once: off; write -b
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: cluster_alloc; errno: 5; imm: off; once: on; write
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: cluster_alloc; errno: 5; imm: off; once: on; write -b
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: cluster_alloc; errno: 5; imm: off; once: off; write
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: cluster_alloc; errno: 5; imm: off; once: off; write -b
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: cluster_alloc; errno: 28; imm: off; once: on; write
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: cluster_alloc; errno: 28; imm: off; once: on; write -b
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: cluster_alloc; errno: 28; imm: off; once: off; write
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: cluster_alloc; errno: 28; imm: off; once: off; write -b
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ 
+ === Refcount table growth tests ===
+@@ -447,122 +447,122 @@ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_hookup; errno: 28; imm: off; once: on; write
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_hookup; errno: 28; imm: off; once: on; write -b
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_hookup; errno: 28; imm: off; once: off; write
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_hookup; errno: 28; imm: off; once: off; write -b
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_write; errno: 28; imm: off; once: on; write
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_write; errno: 28; imm: off; once: on; write -b
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_write; errno: 28; imm: off; once: off; write
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_write; errno: 28; imm: off; once: off; write -b
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_write_blocks; errno: 28; imm: off; once: on; write
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_write_blocks; errno: 28; imm: off; once: on; write -b
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_write_blocks; errno: 28; imm: off; once: off; write
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_write_blocks; errno: 28; imm: off; once: off; write -b
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_write_table; errno: 28; imm: off; once: on; write
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_write_table; errno: 28; imm: off; once: on; write -b
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_write_table; errno: 28; imm: off; once: off; write
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_write_table; errno: 28; imm: off; once: off; write -b
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_switch_table; errno: 28; imm: off; once: on; write
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_switch_table; errno: 28; imm: off; once: on; write -b
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_switch_table; errno: 28; imm: off; once: off; write
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: refblock_alloc_switch_table; errno: 28; imm: off; once: off; write -b
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ 
+ === L1 growth tests ===
+@@ -570,76 +570,76 @@ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_grow_alloc_table; errno: 5; imm: off; once: on
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_grow_alloc_table; errno: 5; imm: off; once: off
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_grow_alloc_table; errno: 28; imm: off; once: on
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_grow_alloc_table; errno: 28; imm: off; once: off
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_grow_write_table; errno: 5; imm: off; once: on
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_grow_write_table; errno: 5; imm: off; once: off
++qemu-io: write failed: Input/output error
+ qemu-io: Failed to flush the L2 table cache: Input/output error
+ qemu-io: Failed to flush the refcount block cache: Input/output error
+-write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_grow_write_table; errno: 28; imm: off; once: on
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_grow_write_table; errno: 28; imm: off; once: off
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_grow_activate_table; errno: 5; imm: off; once: on
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_grow_activate_table; errno: 5; imm: off; once: off
++qemu-io: write failed: Input/output error
+ qemu-io: Failed to flush the L2 table cache: Input/output error
+ qemu-io: Failed to flush the refcount block cache: Input/output error
+-write failed: Input/output error
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_grow_activate_table; errno: 28; imm: off; once: on
+-write failed: No space left on device
++qemu-io: write failed: No space left on device
+ No errors were found on the image.
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ Event: l1_grow_activate_table; errno: 28; imm: off; once: off
++qemu-io: write failed: No space left on device
+ qemu-io: Failed to flush the L2 table cache: No space left on device
+ qemu-io: Failed to flush the refcount block cache: No space left on device
+-write failed: No space left on device
+ No errors were found on the image.
+ 
+ === Avoid cluster leaks after temporary failure ===
+ 
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ wrote 1048576/1048576 bytes at offset 0
+ 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ No errors were found on the image.
+@@ -651,6 +651,6 @@ wrote 1024/1024 bytes at offset 0
+ 1 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ wrote 1024/1024 bytes at offset 0
+ 1 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ *** done
+diff --git a/tests/qemu-iotests/060.out b/tests/qemu-iotests/060.out
+index a37bf446e942..27275fd6b70e 100644
+--- a/tests/qemu-iotests/060.out
++++ b/tests/qemu-iotests/060.out
+@@ -9,7 +9,7 @@ ERROR cluster 3 refcount=1 reference=3
+ Data may be corrupted, or further writes to the image may corrupt it.
+ incompatible_features     []
+ qcow2: Marking image as corrupt: Preventing invalid write on metadata (overlaps with active L1 table); further corruption events will be suppressed
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ incompatible_features     [1]
+ image: TEST_DIR/t.IMGFMT
+ file format: IMGFMT
+@@ -23,7 +23,7 @@ Format specific information:
+     corrupt: true
+     extended l2: false
+ qemu-io: can't open device TEST_DIR/t.IMGFMT: IMGFMT: Image is corrupt; cannot be opened read/write
+-no file open, try 'help open'
++qemu-io: no file open, try 'help open'
+ read 512/512 bytes at offset 0
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+@@ -37,7 +37,7 @@ ERROR cluster 2 refcount=1 reference=2
+ Data may be corrupted, or further writes to the image may corrupt it.
+ incompatible_features     []
+ qcow2: Marking image as corrupt: Preventing invalid write on metadata (overlaps with refcount block); further corruption events will be suppressed
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ incompatible_features     [1]
+ ERROR refcount block 0 refcount=2
+ ERROR cluster 2 refcount=1 reference=2
+@@ -73,7 +73,7 @@ Data may be corrupted, or further writes to the image may corrupt it.
+ This means waste of disk space, but no harm to data.
+ incompatible_features     []
+ qcow2: Marking image as corrupt: Preventing invalid write on metadata (overlaps with inactive L2 table); further corruption events will be suppressed
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ incompatible_features     [1]
+ ERROR cluster 4 refcount=1 reference=2
+ Leaked cluster 9 refcount=1 reference=0
+@@ -108,10 +108,10 @@ wrote 65536/65536 bytes at offset 0
+ wrote 65536/65536 bytes at offset 536870912
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ qcow2: Marking image as corrupt: Preventing invalid write on metadata (overlaps with active L2 table); further corruption events will be suppressed
++qemu-io: write failed: Input/output error
++qemu-io: aio_write failed: No medium found
+ blkdebug: Suspended request '0'
+-write failed: Input/output error
+ blkdebug: Resuming request '0'
+-aio_write failed: No medium found
+ 
+ === Testing unallocated image header ===
+ 
+@@ -119,7 +119,7 @@ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ wrote 65536/65536 bytes at offset 0
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ qcow2: Marking image as corrupt: Preventing invalid write on metadata (overlaps with qcow2_header); further corruption events will be suppressed
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ === Testing unaligned L1 entry ===
+ 
+@@ -127,7 +127,7 @@ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ wrote 65536/65536 bytes at offset 0
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ qcow2: Marking image as corrupt: L2 table offset 0x42a00 unaligned (L1 index: 0); further corruption events will be suppressed
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ wrote 65536/65536 bytes at offset 0
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+@@ -140,7 +140,7 @@ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ wrote 65536/65536 bytes at offset 0
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ qcow2: Marking image as corrupt: Cluster allocation offset 0x52a00 unaligned (L2 offset: 0x40000, L2 index: 0); further corruption events will be suppressed
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Testing unaligned pre-allocated zero cluster ===
+ 
+@@ -154,7 +154,7 @@ qemu-img: Failed to turn zero into data clusters: Input/output error
+ 
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ qcow2: Marking image as corrupt: Refblock offset 0x22a00 unaligned (reftable index: 0); further corruption events will be suppressed
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ === Testing non-fatal corruption on freeing ===
+ 
+@@ -171,8 +171,8 @@ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ wrote 65536/65536 bytes at offset 0
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ qcow2: Image is corrupt: Cluster allocation offset 0x52a00 unaligned (L2 offset: 0x40000, L2 index: 0); further non-fatal corruption events will be suppressed
+-read failed: Input/output error
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Testing non-fatal and then fatal corruption report ===
+ 
+@@ -181,15 +181,15 @@ wrote 131072/131072 bytes at offset 0
+ 128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ qcow2: Image is corrupt: Cannot free unaligned cluster 0x52a00; further non-fatal corruption events will be suppressed
+ qcow2: Marking image as corrupt: Cluster allocation offset 0x62a00 unaligned (L2 offset: 0x40000, L2 index: 0x1); further corruption events will be suppressed
++qemu-io: read failed: Input/output error
+ discard 65536/65536 bytes at offset 0
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-read failed: Input/output error
+ 
+ === Testing empty refcount table ===
+ 
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ qcow2: Marking image as corrupt: Preventing invalid write on metadata (overlaps with refcount table); further corruption events will be suppressed
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ ERROR cluster 0 refcount=0 reference=1
+ ERROR cluster 1 refcount=0 reference=1
+ ERROR cluster 3 refcount=0 reference=1
+@@ -209,7 +209,7 @@ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ wrote 65536/65536 bytes at offset 0
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ qcow2: Marking image as corrupt: Preventing invalid allocation of refcount block at offset 0; further corruption events will be suppressed
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ ERROR cluster 0 refcount=0 reference=1
+ ERROR cluster 1 refcount=0 reference=1
+ ERROR cluster 3 refcount=0 reference=1
+@@ -229,7 +229,7 @@ No errors were found on the image.
+ 
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ qcow2: Marking image as corrupt: Preventing invalid allocation of L2 table at offset 0; further corruption events will be suppressed
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ ERROR cluster 0 refcount=0 reference=1
+ ERROR cluster 1 refcount=0 reference=1
+ ERROR cluster 2 refcount=0 reference=1
+@@ -251,7 +251,7 @@ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ wrote 65536/65536 bytes at offset 65536
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ qcow2: Marking image as corrupt: Preventing invalid allocation of compressed cluster at offset 0; further corruption events will be suppressed
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ ERROR cluster 0 refcount=0 reference=1
+ ERROR cluster 1 refcount=0 reference=1
+ ERROR cluster 2 refcount=0 reference=1
+@@ -286,7 +286,7 @@ No errors were found on the image.
+ 
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ qcow2: Marking image as corrupt: Preventing invalid allocation of L2 table at offset 0; further corruption events will be suppressed
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ === Testing dirty corrupt image ===
+ 
+@@ -319,7 +319,7 @@ wrote 65536/65536 bytes at offset 0
+ discard 65536/65536 bytes at offset 0
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ qcow2: Marking image as corrupt: Preallocated zero cluster offset 0x2a00 unaligned (guest offset: 0); further corruption events will be suppressed
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ --- Repairing ---
+ Repairing offset=2a00: Preallocated cluster is not properly aligned; L2 entry corrupted.
+ The following inconsistencies were found and repaired:
+@@ -337,7 +337,7 @@ wrote 131072/131072 bytes at offset 0
+ 128 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ qcow2: Marking image as corrupt: Refblock offset 0x2a00 unaligned (reftable index: 0); further corruption events will be suppressed
+ qcow2_free_clusters failed: Input/output error
+-discard failed: No medium found
++qemu-io: discard failed: No medium found
+ --- Repairing ---
+ ERROR refcount block 0 is not cluster aligned; refcount table entry corrupted
+ qcow2: Marking image as corrupt: Refblock offset 0x2a00 unaligned (reftable index: 0); further corruption events will be suppressed
+@@ -419,8 +419,7 @@ qcow2: Marking image as corrupt: Preventing invalid write on metadata (overlaps
+ QMP_VERSION
+ {"return": {}}
+ {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_IMAGE_CORRUPTED", "data": {"device": "none0", "msg": "Preventing invalid write on metadata (overlaps with refcount table)", "offset": 65536, "node-name": "drive", "fatal": true, "size": 65536}}
+-write failed: Input/output error
+-{"return": ""}
++{"return": "Error: write failed: Input/output error\r\n"}
+ {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
+ {"return": {}}
+ 
+@@ -431,7 +430,6 @@ QMP_VERSION
+ {"return": {}}
+ qcow2: Image is corrupt: L2 table offset 0x2a2a2a00 unaligned (L1 index: 0); further non-fatal corruption events will be suppressed
+ {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_IMAGE_CORRUPTED", "data": {"device": "", "msg": "L2 table offset 0x2a2a2a00 unaligned (L1 index: 0)", "node-name": "drive", "fatal": false}}
+-{"return": ""}
+ {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
+ {"return": {}}
+ 
+diff --git a/tests/qemu-iotests/071.out b/tests/qemu-iotests/071.out
+index a2923b05c297..f2d015d8ccae 100644
+--- a/tests/qemu-iotests/071.out
++++ b/tests/qemu-iotests/071.out
+@@ -30,11 +30,11 @@ blkverify: read offset=0 bytes=512 contents mismatch at offset 0
+ 
+ === Testing blkdebug through filename ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Testing blkdebug through file blockref ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Testing blkdebug on existing block device ===
+ 
+@@ -43,8 +43,7 @@ QMP_VERSION
+ {"return": {}}
+ {"return": {}}
+ {"return": {}}
+-read failed: Input/output error
+-{"return": ""}
++{"return": "Error: read failed: Input/output error\r\n"}
+ {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
+ {"return": {}}
+ 
+@@ -82,8 +81,7 @@ read 512/512 bytes at offset 0
+ wrote 512/512 bytes at offset 0
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ {"return": ""}
+-read failed: Input/output error
+-{"return": ""}
++{"return": "Error: read failed: Input/output error\r\n"}
+ {"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
+ QEMU_PROG: Failed to flush the L2 table cache: Input/output error
+ QEMU_PROG: Failed to flush the refcount block cache: Input/output error
+diff --git a/tests/qemu-iotests/072.out b/tests/qemu-iotests/072.out
+index fe949d47817a..d7ce24da1f7a 100644
+--- a/tests/qemu-iotests/072.out
++++ b/tests/qemu-iotests/072.out
+@@ -15,7 +15,7 @@ read 512/512 bytes at offset 512
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ read 512/512 bytes at offset 1024
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-Pattern verification failed at offset 0, 512 bytes
++qemu-io: Pattern verification failed at offset 0, 512 bytes
+ read 512/512 bytes at offset 0
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ *** done
+diff --git a/tests/qemu-iotests/080.out b/tests/qemu-iotests/080.out
+index d8acb3e72355..b20c21faf6a9 100644
+--- a/tests/qemu-iotests/080.out
++++ b/tests/qemu-iotests/080.out
+@@ -66,8 +66,8 @@ wrote 512/512 bytes at offset 0
+ qemu-img: Failed to load snapshot: Snapshot L1 table offset invalid
+ qemu-img: Snapshot L1 table offset invalid
+ qemu-img: Failed to turn zero into data clusters: Invalid argument
++qemu-io: write failed: Invalid argument
+ qemu-io: Failed to flush the refcount block cache: Invalid argument
+-write failed: Invalid argument
+ qemu-img: Snapshot L1 table offset invalid
+ qemu-img: Could not apply snapshot 'test': Failed to load snapshot: Invalid argument
+ qemu-img: Could not delete snapshot 'test': Snapshot L1 table offset invalid
+@@ -89,8 +89,8 @@ wrote 512/512 bytes at offset 0
+ qemu-img: Failed to load snapshot: Snapshot L1 table too large
+ qemu-img: Snapshot L1 table too large
+ qemu-img: Failed to turn zero into data clusters: File too large
++qemu-io: write failed: File too large
+ qemu-io: Failed to flush the refcount block cache: File too large
+-write failed: File too large
+ qemu-img: Snapshot L1 table too large
+ qemu-img: Could not apply snapshot 'test': Failed to load snapshot: File too large
+ qemu-img: Could not delete snapshot 'test': Snapshot L1 table too large
+diff --git a/tests/qemu-iotests/081.out b/tests/qemu-iotests/081.out
+index aba85ea56446..bc902bd81832 100644
+--- a/tests/qemu-iotests/081.out
++++ b/tests/qemu-iotests/081.out
+@@ -81,7 +81,7 @@ wrote 10485760/10485760 bytes at offset 0
+ 10 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ == checking that quorum is broken ==
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ == checking the blkverify mode with broken content ==
+ quorum: offset=0 bytes=10485760 contents mismatch at offset 0
+diff --git a/tests/qemu-iotests/083.out b/tests/qemu-iotests/083.out
+index 2090ee693c16..a1c446d5365e 100644
+--- a/tests/qemu-iotests/083.out
++++ b/tests/qemu-iotests/083.out
+@@ -41,7 +41,7 @@ qemu-io: can't open device nbd+tcp://127.0.0.1:PORT/foo
+ 
+ === Check disconnect after neg2 ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Check disconnect 8 neg2 ===
+ 
+@@ -53,31 +53,31 @@ qemu-io: can't open device nbd+tcp://127.0.0.1:PORT/foo
+ 
+ === Check disconnect before request ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Check disconnect after request ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Check disconnect before reply ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Check disconnect after reply ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Check disconnect 4 reply ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Check disconnect 8 reply ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Check disconnect before data ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Check disconnect after data ===
+ 
+@@ -106,7 +106,7 @@ qemu-io: can't open device nbd+tcp://127.0.0.1:PORT/
+ 
+ === Check disconnect after neg-classic ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Check disconnect before neg1 ===
+ 
+@@ -150,7 +150,7 @@ qemu-io: can't open device nbd+unix:///foo?socket=SOCK_DIR/nbd.sock
+ 
+ === Check disconnect after neg2 ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Check disconnect 8 neg2 ===
+ 
+@@ -162,31 +162,31 @@ qemu-io: can't open device nbd+unix:///foo?socket=SOCK_DIR/nbd.sock
+ 
+ === Check disconnect before request ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Check disconnect after request ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Check disconnect before reply ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Check disconnect after reply ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Check disconnect 4 reply ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Check disconnect 8 reply ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Check disconnect before data ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Check disconnect after data ===
+ 
+@@ -215,6 +215,6 @@ qemu-io: can't open device nbd+unix:///?socket=SOCK_DIR/nbd.sock
+ 
+ === Check disconnect after neg-classic ===
+ 
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ *** done
+diff --git a/tests/qemu-iotests/089.out b/tests/qemu-iotests/089.out
+index c53fc4823a16..a29e19b12d7e 100644
+--- a/tests/qemu-iotests/089.out
++++ b/tests/qemu-iotests/089.out
+@@ -16,7 +16,7 @@ read 512/512 bytes at offset 512
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ read 512/512 bytes at offset 1024
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-Pattern verification failed at offset 0, 512 bytes
++qemu-io: Pattern verification failed at offset 0, 512 bytes
+ read 512/512 bytes at offset 0
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+@@ -33,7 +33,7 @@ read 512/512 bytes at offset 0
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ wrote 512/512 bytes at offset 229376
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ === Testing qemu-img info output ===
+ 
+diff --git a/tests/qemu-iotests/114.out b/tests/qemu-iotests/114.out
+index f51dd9d20a10..80220e440eca 100644
+--- a/tests/qemu-iotests/114.out
++++ b/tests/qemu-iotests/114.out
+@@ -11,7 +11,7 @@ cluster_size: 65536
+ backing file: TEST_DIR/t.IMGFMT.base
+ backing file format: foo
+ qemu-io: can't open device TEST_DIR/t.qcow2: Could not open backing file: Unknown driver 'foo'
+-no file open, try 'help open'
++qemu-io: no file open, try 'help open'
+ read 4096/4096 bytes at offset 0
+ 4 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ qemu-img: Could not change the backing file to 'TEST_DIR/t.qcow2.base': backing format must be specified
+diff --git a/tests/qemu-iotests/134.out b/tests/qemu-iotests/134.out
+index 4abc5b5f7da6..ce2a0df166ee 100644
+--- a/tests/qemu-iotests/134.out
++++ b/tests/qemu-iotests/134.out
+@@ -24,7 +24,7 @@ read 134217728/134217728 bytes at offset 0
+ 128 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ == verify pattern failure with wrong password ==
+-Pattern verification failed at offset 0, 134217728 bytes
++qemu-io: Pattern verification failed at offset 0, 134217728 bytes
+ read 134217728/134217728 bytes at offset 0
+ 128 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ *** done
+diff --git a/tests/qemu-iotests/137.out b/tests/qemu-iotests/137.out
+index e19df5b6ba82..1947c1a1bd7c 100644
+--- a/tests/qemu-iotests/137.out
++++ b/tests/qemu-iotests/137.out
+@@ -40,5 +40,5 @@ OK: Dirty bit not set
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ qemu-io: Parameter 'lazy-refcounts' expects 'on' or 'off'
+ qcow2: Marking image as corrupt: Preventing invalid allocation of L2 table at offset 0; further corruption events will be suppressed
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ *** done
+diff --git a/tests/qemu-iotests/153.out b/tests/qemu-iotests/153.out
+index 28e1a22952b6..e235d9e59e35 100644
+--- a/tests/qemu-iotests/153.out
++++ b/tests/qemu-iotests/153.out
+@@ -33,12 +33,12 @@ Is another process using the image [TEST_DIR/t.qcow2]?
+ _qemu_io_wrapper -c open  TEST_DIR/t.qcow2 -c read 0 512
+ qemu-io: can't open device TEST_DIR/t.qcow2: Failed to get "write" lock
+ Is another process using the image [TEST_DIR/t.qcow2]?
+-no file open, try 'help open'
++qemu-io: no file open, try 'help open'
+ 
+ _qemu_io_wrapper -c open -r  TEST_DIR/t.qcow2 -c read 0 512
+ qemu-io: can't open device TEST_DIR/t.qcow2: Failed to get shared "write" lock
+ Is another process using the image [TEST_DIR/t.qcow2]?
+-no file open, try 'help open'
++qemu-io: no file open, try 'help open'
+ 
+ _qemu_img_wrapper info TEST_DIR/t.qcow2
+ qemu-img: Could not open 'TEST_DIR/t.qcow2': Failed to get shared "write" lock
+@@ -107,7 +107,7 @@ _qemu_io_wrapper -U -r -c read 0 512 TEST_DIR/t.qcow2
+ 
+ _qemu_io_wrapper -c open -U TEST_DIR/t.qcow2 -c read 0 512
+ qemu-io: can't open device TEST_DIR/t.qcow2: force-share=on can only be used with read-only images
+-no file open, try 'help open'
++qemu-io: no file open, try 'help open'
+ 
+ _qemu_io_wrapper -c open -r -U TEST_DIR/t.qcow2 -c read 0 512
+ 
+@@ -176,7 +176,7 @@ _qemu_io_wrapper -r -c read 0 512 TEST_DIR/t.qcow2
+ _qemu_io_wrapper -c open  TEST_DIR/t.qcow2 -c read 0 512
+ qemu-io: can't open device TEST_DIR/t.qcow2: Failed to get "write" lock
+ Is another process using the image [TEST_DIR/t.qcow2]?
+-no file open, try 'help open'
++qemu-io: no file open, try 'help open'
+ 
+ _qemu_io_wrapper -c open -r  TEST_DIR/t.qcow2 -c read 0 512
+ 
+@@ -231,7 +231,7 @@ _qemu_io_wrapper -U -r -c read 0 512 TEST_DIR/t.qcow2
+ 
+ _qemu_io_wrapper -c open -U TEST_DIR/t.qcow2 -c read 0 512
+ qemu-io: can't open device TEST_DIR/t.qcow2: force-share=on can only be used with read-only images
+-no file open, try 'help open'
++qemu-io: no file open, try 'help open'
+ 
+ _qemu_io_wrapper -c open -r -U TEST_DIR/t.qcow2 -c read 0 512
+ 
+@@ -336,7 +336,7 @@ _qemu_io_wrapper -U -r -c read 0 512 TEST_DIR/t.qcow2
+ 
+ _qemu_io_wrapper -c open -U TEST_DIR/t.qcow2 -c read 0 512
+ qemu-io: can't open device TEST_DIR/t.qcow2: force-share=on can only be used with read-only images
+-no file open, try 'help open'
++qemu-io: no file open, try 'help open'
+ 
+ _qemu_io_wrapper -c open -r -U TEST_DIR/t.qcow2 -c read 0 512
+ 
+diff --git a/tests/qemu-iotests/171 b/tests/qemu-iotests/171
+index d1d77f701304..87a8aa24d967 100755
+--- a/tests/qemu-iotests/171
++++ b/tests/qemu-iotests/171
+@@ -188,7 +188,7 @@ img_offset=512
+ img_size=512
+ _make_test_img $size
+ (
+-$QEMU_IO "$(img_json)"  <<EOT
++$QEMU_IO "$(img_json)" 2>&1 <<EOT
+ write -P 0x0a 0 512
+ write -P 0x0a 511 1
+ write -P 0x0a 512 1
+diff --git a/tests/qemu-iotests/171.out b/tests/qemu-iotests/171.out
+index ec3363b4f440..67ef9b884152 100644
+--- a/tests/qemu-iotests/171.out
++++ b/tests/qemu-iotests/171.out
+@@ -21,32 +21,32 @@ wrote 1/1 bytes at offset 3583
+ 1 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ write across image boundary
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ write at image boundary
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ write after image boundary
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ writev before/after image boundary
+-writev failed: Input/output error
++qemu-io: writev failed: Input/output error
+ 
+ read before image boundary
+ read 1/1 bytes at offset 3583
+ 1 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ read across image boundary
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ read at image boundary
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ read after image boundary
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ readv before/after image boundary
+-readv failed: Input/output error
++qemu-io: readv failed: Input/output error
+ 
+ fill image with pattern
+ wrote 4096/4096 bytes at offset 0
+@@ -60,7 +60,7 @@ read 4/4 bytes at offset 510
+ 4 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ write zeroes across image boundary
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ write zeroes at image boundary and check
+ wrote 2/2 bytes at offset 3582
+@@ -68,7 +68,7 @@ wrote 2/2 bytes at offset 3582
+ 00000ffe:  00 00  ..
+ read 2/2 bytes at offset 4094
+ 2 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ fill image with pattern
+ wrote 4096/4096 bytes at offset 0
+@@ -82,7 +82,7 @@ read 4/4 bytes at offset 510
+ 4 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ discard across image boundary
+-discard failed: Input/output error
++qemu-io: discard failed: Input/output error
+ 
+ discard at image boundary and check
+ discard 2/2 bytes at offset 3582
+@@ -90,7 +90,7 @@ discard 2/2 bytes at offset 3582
+ 00000ffe:  00 00  ..
+ read 2/2 bytes at offset 4094
+ 2 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ == test 'offset' and 'size' options ==
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=4096
+@@ -113,32 +113,32 @@ wrote 1/1 bytes at offset 2047
+ 1 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ write across image boundary
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ write at image boundary
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ write after image boundary
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ writev before/after image boundary
+-writev failed: Input/output error
++qemu-io: writev failed: Input/output error
+ 
+ read before image boundary
+ read 1/1 bytes at offset 2047
+ 1 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ read across image boundary
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ read at image boundary
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ read after image boundary
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ readv before/after image boundary
+-readv failed: Input/output error
++qemu-io: readv failed: Input/output error
+ 
+ fill image with pattern
+ wrote 4096/4096 bytes at offset 0
+@@ -152,7 +152,7 @@ read 4/4 bytes at offset 510
+ 4 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ write zeroes across image boundary
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ write zeroes at image boundary and check
+ wrote 2/2 bytes at offset 2046
+@@ -176,7 +176,7 @@ read 4/4 bytes at offset 510
+ 4 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ discard across image boundary
+-discard failed: Input/output error
++qemu-io: discard failed: Input/output error
+ 
+ discard at image boundary and check
+ discard 2/2 bytes at offset 2046
+@@ -209,32 +209,32 @@ wrote 1/1 bytes at offset 2047
+ 1 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ write across image boundary
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ write at image boundary
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ write after image boundary
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ writev before/after image boundary
+-writev failed: Input/output error
++qemu-io: writev failed: Input/output error
+ 
+ read before image boundary
+ read 1/1 bytes at offset 2047
+ 1 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ read across image boundary
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ read at image boundary
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ read after image boundary
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ readv before/after image boundary
+-readv failed: Input/output error
++qemu-io: readv failed: Input/output error
+ 
+ fill image with pattern
+ wrote 4096/4096 bytes at offset 0
+@@ -248,7 +248,7 @@ read 4/4 bytes at offset 8
+ 4 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ write zeroes across image boundary
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ write zeroes at image boundary and check
+ wrote 2/2 bytes at offset 2046
+@@ -272,7 +272,7 @@ read 4/4 bytes at offset 8
+ 4 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ discard across image boundary
+-discard failed: Input/output error
++qemu-io: discard failed: Input/output error
+ 
+ discard at image boundary and check
+ discard 2/2 bytes at offset 2046
+@@ -290,12 +290,12 @@ wrote 512/512 bytes at offset 0
+ 512 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ wrote 1/1 bytes at offset 511
+ 1 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ wrote 1024/1024 bytes at offset 0
+ 1 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ wrote 1/1 bytes at offset 1023
+ 1 bytes, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ checking boundaries
+ 000001fe:  00 00 0a 0a  ....
+ read 4/4 bytes at offset 510
+diff --git a/tests/qemu-iotests/205 b/tests/qemu-iotests/205
+index 78459065418c..3ed3ed233ac9 100755
+--- a/tests/qemu-iotests/205
++++ b/tests/qemu-iotests/205
+@@ -75,7 +75,7 @@ class TestNbdServerRemove(iotests.QMPTestCase):
+ 
+     def assertReadFailed(self, qemu_io_output):
+         self.assertEqual(filter_qemu_io(qemu_io_output).strip(),
+-                         'read failed: Input/output error')
++                         'qemu-io: read failed: Input/output error')
+ 
+     def assertConnectFailed(self, qemu_io_output):
+         self.assertEqual(filter_qemu_io(qemu_io_output).strip(),
+diff --git a/tests/qemu-iotests/214.out b/tests/qemu-iotests/214.out
+index 9fc67287f8e1..26056938ee9e 100644
+--- a/tests/qemu-iotests/214.out
++++ b/tests/qemu-iotests/214.out
+@@ -7,7 +7,7 @@ wrote 2097152/2097152 bytes at offset 0
+ 2 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ wrote 2097152/2097152 bytes at offset 2097152
+ 2 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ No errors were found on the image.
+ read 4194304/4194304 bytes at offset 0
+ 4 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+diff --git a/tests/qemu-iotests/220.out b/tests/qemu-iotests/220.out
+index 33b994b8a14b..6f200ec89479 100644
+--- a/tests/qemu-iotests/220.out
++++ b/tests/qemu-iotests/220.out
+@@ -38,7 +38,7 @@ wrote 2097152/2097152 bytes at offset 37748736
+ No errors were found on the image.
+ image size 39845888
+ == Trying to write compressed cluster ==
+-write failed: File too large
++qemu-io: write failed: File too large
+ image size 562949957615616
+ == Writing normal cluster ==
+ wrote 2097152/2097152 bytes at offset 0
+diff --git a/tests/qemu-iotests/225.out b/tests/qemu-iotests/225.out
+index 0998ae094c2b..beb8c23bd330 100644
+--- a/tests/qemu-iotests/225.out
++++ b/tests/qemu-iotests/225.out
+@@ -14,11 +14,11 @@ read 512/512 bytes at offset 0
+ 
+ QEMU X.Y.Z monitor - type 'help' for more information
+ (qemu) qemu-io overlay "read 0 512"
+-read failed: Invalid argument
++Error: read failed: Invalid argument
+ 
+ === Testing non-VMDK backing image ===
+ 
+ QEMU X.Y.Z monitor - type 'help' for more information
+ (qemu) qemu-io overlay "read 0 512"
+-read failed: Invalid argument
++Error: read failed: Invalid argument
+ *** done
+diff --git a/tests/qemu-iotests/244.out b/tests/qemu-iotests/244.out
+index c62f5aec25b9..c5e62146c930 100644
+--- a/tests/qemu-iotests/244.out
++++ b/tests/qemu-iotests/244.out
+@@ -10,22 +10,22 @@ read 65536/65536 bytes at offset 0
+ read 65536/65536 bytes at offset 0
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ qemu-io: can't open device TEST_DIR/t.qcow2: Could not open 'inexistent': No such file or directory
+-no file open, try 'help open'
++qemu-io: no file open, try 'help open'
+ 
+ Data file required, but without data file name in the image:
+ qemu-io: can't open device TEST_DIR/t.qcow2: 'data-file' is required for this image
+-no file open, try 'help open'
++qemu-io: no file open, try 'help open'
+ read 65536/65536 bytes at offset 0
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ qemu-io: can't open device TEST_DIR/t.qcow2: Could not open 'inexistent': No such file or directory
+-no file open, try 'help open'
++qemu-io: no file open, try 'help open'
+ 
+ Setting data-file for an image with internal data:
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=67108864
+ qemu-io: can't open device TEST_DIR/t.qcow2: 'data-file' can only be set for images with an external data file
+-no file open, try 'help open'
++qemu-io: no file open, try 'help open'
+ qemu-io: can't open device TEST_DIR/t.qcow2: Could not open 'inexistent': No such file or directory
+-no file open, try 'help open'
++qemu-io: no file open, try 'help open'
+ 
+ === Conflicting features ===
+ 
+@@ -37,7 +37,7 @@ qemu-img: error while writing at byte 0: Operation not supported
+ 
+ Convert uncompressed, then write compressed data manually:
+ Images are identical.
+-write failed: Operation not supported
++qemu-io: write failed: Operation not supported
+ No errors were found on the image.
+ 
+ Take an internal snapshot:
+diff --git a/tests/qemu-iotests/249.out b/tests/qemu-iotests/249.out
+index d2bf9be85ea2..3d37709a9ef8 100644
+--- a/tests/qemu-iotests/249.out
++++ b/tests/qemu-iotests/249.out
+@@ -9,7 +9,7 @@ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 backing_file=TEST_DIR/t.
+ 
+ { 'execute': 'human-monitor-command',
+        'arguments': {'command-line': 'qemu-io none0 "aio_write 0 2k"'}}
+-{"return": "Block node is read-onlyrn"}
++{"return": "Error: Block node is read-onlyrn"}
+ 
+ === Run block-commit on base using an invalid filter node name
+ 
+@@ -24,7 +24,7 @@ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 backing_file=TEST_DIR/t.
+ 
+ { 'execute': 'human-monitor-command',
+        'arguments': {'command-line': 'qemu-io none0 "aio_write 0 2k"'}}
+-{"return": "Block node is read-onlyrn"}
++{"return": "Error: Block node is read-onlyrn"}
+ 
+ === Run block-commit on base using the default filter node name
+ 
+@@ -43,5 +43,5 @@ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576 backing_file=TEST_DIR/t.
+ 
+ { 'execute': 'human-monitor-command',
+        'arguments': {'command-line': 'qemu-io none0 "aio_write 0 2k"'}}
+-{"return": "Block node is read-onlyrn"}
++{"return": "Error: Block node is read-onlyrn"}
+ *** done
+diff --git a/tests/qemu-iotests/271.out b/tests/qemu-iotests/271.out
+index 0b24d501595b..da92d4b5b1ab 100644
+--- a/tests/qemu-iotests/271.out
++++ b/tests/qemu-iotests/271.out
+@@ -456,7 +456,7 @@ L2 entry #0: 0x8000000000050001 0000000000000001
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576
+ L2 entry #1: 0x8000000000060000 00000001ffffffff
+ qcow2: Marking image as corrupt: Invalid cluster entry found  (L2 offset: 0x40000, L2 index: 0x1); further corruption events will be suppressed
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ ### Corrupted L2 entries - read test (unallocated) ###
+ 
+@@ -471,14 +471,14 @@ L2 entry #0: 0x0000000000000001 0000000000000000
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576
+ L2 entry #0: 0x0000000000000000 0000000000000001
+ qcow2: Marking image as corrupt: Invalid cluster entry found  (L2 offset: 0x40000, L2 index: 0); further corruption events will be suppressed
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ # Both 'subcluster is zero' and 'subcluster is allocated' bits set
+ 
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576
+ L2 entry #1: 0x0000000000000000 0000000100000001
+ qcow2: Marking image as corrupt: Invalid cluster entry found  (L2 offset: 0x40000, L2 index: 0x1); further corruption events will be suppressed
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ ### Compressed cluster with subcluster bitmap != 0 - read test ###
+ 
+@@ -501,7 +501,7 @@ L2 entry #0: 0x8000000000050001 0000000000000001
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576
+ L2 entry #1: 0x8000000000060000 00000001ffffffff
+ qcow2: Marking image as corrupt: Invalid cluster entry found (L2 offset: 0x40000, L2 index: 0x1); further corruption events will be suppressed
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ ### Corrupted L2 entries - write test (unallocated) ###
+ 
+@@ -516,14 +516,14 @@ L2 entry #0: 0x8000000000060000 0000000000000001
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576
+ L2 entry #0: 0x0000000000000000 0000000000000001
+ qcow2: Marking image as corrupt: Invalid cluster entry found (L2 offset: 0x40000, L2 index: 0); further corruption events will be suppressed
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ # Both 'subcluster is zero' and 'subcluster is allocated' bits set
+ 
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1048576
+ L2 entry #1: 0x0000000000000000 0000000100000001
+ qcow2: Marking image as corrupt: Invalid cluster entry found (L2 offset: 0x40000, L2 index: 0x1); further corruption events will be suppressed
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ 
+ ### Compressed cluster with subcluster bitmap != 0 - write test ###
+ 
+@@ -555,7 +555,7 @@ Double checking the fixed image now...
+ 1 errors were found on the image.
+ Data may be corrupted, or further writes to the image may corrupt it.
+ qcow2: Marking image as corrupt: Cluster allocation offset 0x50200 unaligned (L2 offset: 0x40000, L2 index: 0); further corruption events will be suppressed
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ # Corrupted L2 entry, no allocated subclusters #
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=131072 backing_file=TEST_DIR/t.IMGFMT.base backing_fmt=raw
+ Repairing offset=50200: Preallocated cluster is not properly aligned; L2 entry corrupted.
+diff --git a/tests/qemu-iotests/289.out b/tests/qemu-iotests/289.out
+index e54e2629d4dc..58e4f4942f0c 100644
+--- a/tests/qemu-iotests/289.out
++++ b/tests/qemu-iotests/289.out
+@@ -3,6 +3,6 @@ QA output created by 289
+ === Avoid freeing external data clusters on failure ===
+ 
+ Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=65536 data_file=TEST_DIR/t.IMGFMT.data_file
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ No errors were found on the image.
+ *** done
+diff --git a/tests/qemu-iotests/305.out b/tests/qemu-iotests/305.out
+index 538019e72601..af09d6a3ff48 100644
+--- a/tests/qemu-iotests/305.out
++++ b/tests/qemu-iotests/305.out
+@@ -12,5 +12,5 @@ discard 1024/1024 bytes at offset 125952
+ ### Corrupt the offset of the second refcount block
+ ### Try to allocate the discarded clusters again
+ qcow2: Marking image as corrupt: Refblock offset 0x20600 unaligned (reftable index: 0x1); further corruption events will be suppressed
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
+ *** done
+diff --git a/tests/qemu-iotests/307.out b/tests/qemu-iotests/307.out
+index a9b37d3ac119..608b407a6fc5 100644
+--- a/tests/qemu-iotests/307.out
++++ b/tests/qemu-iotests/307.out
+@@ -127,7 +127,7 @@ exports available: 1
+ {"error": {"class": "GenericError", "desc": "export 'export1' still in use"}}
+ {"execute": "block-export-del", "arguments": {"id": "export1", "mode": "hard"}}
+ {"return": {}}
+-read failed: Input/output error
++qemu-io: read failed: Input/output error
+ 
+ {"execute": "query-block-exports", "arguments": {}}
+ {"return": []}
 diff --git a/tests/qemu-iotests/tests/backup-discard-source b/tests/qemu-iotests/tests/backup-discard-source
-index 6c624bc8b0b0..80ea32c46e3f 100755
+index 17fef9c6d34d..6c624bc8b0b0 100755
 --- a/tests/qemu-iotests/tests/backup-discard-source
 +++ b/tests/qemu-iotests/tests/backup-discard-source
-@@ -160,4 +160,5 @@ class TestBackup(iotests.QMPTestCase):
+@@ -87,11 +87,11 @@ class TestBackup(iotests.QMPTestCase):
  
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['qcow2'],
--                 supported_protocols=['file'])
-+                 supported_protocols=['file'],
-+                 require_hmp=True)
+     def tearDown(self):
+         # That should fail, because region is discarded
+-        self.vm.hmp_qemu_io('access', 'read 0 1M')
++        result = self.vm.hmp_qemu_io('access', 'read 0 1M')
+ 
+         self.vm.shutdown()
+ 
+-        self.assertTrue('read failed: Permission denied' in self.vm.get_log())
++        self.assertIn('read failed: Permission denied', result['return'])
+ 
+         # Final check that temp image is empty
+         mapping = qemu_img_map(temp_img)
 diff --git a/tests/qemu-iotests/tests/copy-before-write b/tests/qemu-iotests/tests/copy-before-write
-index 3e43e7127f20..5531ad8a4c0d 100755
+index 236cb8ac3744..3e43e7127f20 100755
 --- a/tests/qemu-iotests/tests/copy-before-write
 +++ b/tests/qemu-iotests/tests/copy-before-write
-@@ -321,4 +321,5 @@ wrote 524288/524288 bytes at offset 524288
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['qcow2'],
-                  supported_protocols=['file'],
--                 required_fmts=['copy-before-write'])
-+                 required_fmts=['copy-before-write'],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/tests/image-fleecing b/tests/qemu-iotests/tests/image-fleecing
-index 5e3b2c7e46a9..b42aa6967f68 100755
---- a/tests/qemu-iotests/tests/image-fleecing
-+++ b/tests/qemu-iotests/tests/image-fleecing
-@@ -31,7 +31,8 @@ iotests.script_initialize(
-     supported_fmts=['qcow2'],
-     supported_platforms=['linux'],
-     required_fmts=['copy-before-write'],
--    unsupported_imgopts=['compat']
-+    unsupported_imgopts=['compat'],
-+    require_hmp=True,
- )
+@@ -87,17 +87,17 @@ class TestCbwError(iotests.QMPTestCase):
  
- patterns = [('0x5d', '0',         '64k'),
-diff --git a/tests/qemu-iotests/tests/iothreads-create b/tests/qemu-iotests/tests/iothreads-create
-index 0c862d73f20e..09fe57a09ac0 100755
---- a/tests/qemu-iotests/tests/iothreads-create
-+++ b/tests/qemu-iotests/tests/iothreads-create
-@@ -22,7 +22,8 @@ import asyncio
- import iotests
+         result = self.vm.qmp('human-monitor-command',
+                              command_line='qemu-io cbw "write 0 1M"')
+-        self.assert_qmp(result, 'return', '')
++        write_res = result['return']
  
- iotests.script_initialize(supported_fmts=['qcow2', 'qcow', 'qed', 'vdi',
--                                          'vmdk', 'parallels'])
-+                                          'vmdk', 'parallels'],
-+                          require_hmp=True)
- iotests.verify_virtio_scsi_pci_or_ccw()
+         result = self.vm.qmp('human-monitor-command',
+                              command_line='qemu-io access "read 0 1M"')
+-        self.assert_qmp(result, 'return', '')
++        read_res = result['return']
  
- with iotests.FilePath('disk.img') as img_path, \
-diff --git a/tests/qemu-iotests/tests/luks-detached-header b/tests/qemu-iotests/tests/luks-detached-header
-index 3455fd8de1ef..58eb3c2cc484 100755
---- a/tests/qemu-iotests/tests/luks-detached-header
-+++ b/tests/qemu-iotests/tests/luks-detached-header
-@@ -313,4 +313,5 @@ class TestDetachedLUKSHeader(QMPTestCase):
+         self.vm.shutdown()
+         log = self.vm.get_log()
+         log = iotests.filter_qtest(log)
+         log = iotests.filter_qemu_io(log)
+-        return log
++        return log, write_res, read_res
  
- if __name__ == "__main__":
-     # Test image creation and I/O
--    iotests.main(supported_fmts=["luks"], supported_protocols=["file"])
-+    iotests.main(supported_fmts=["luks"], supported_protocols=["file"],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
-index 33ff2b861f78..b2b37ada4b27 100755
---- a/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
-+++ b/tests/qemu-iotests/tests/migrate-bitmaps-postcopy-test
-@@ -279,4 +279,5 @@ class TestDirtyBitmapPostcopyMigration(iotests.QMPTestCase):
+     def do_cbw_error_via_blockdev_backup(self, on_cbw_error=None):
+         self.vm.cmd('blockdev-add', {
+@@ -150,28 +150,29 @@ class TestCbwError(iotests.QMPTestCase):
  
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['qcow2'],
--                 unsupported_imgopts=['compat'])
-+                 unsupported_imgopts=['compat'],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/tests/migrate-bitmaps-test b/tests/qemu-iotests/tests/migrate-bitmaps-test
-index cb9154ca8d7f..25439c9eb773 100755
---- a/tests/qemu-iotests/tests/migrate-bitmaps-test
-+++ b/tests/qemu-iotests/tests/migrate-bitmaps-test
-@@ -329,7 +329,8 @@ def main() -> None:
-     iotests.main(
-         supported_fmts=['qcow2'],
-         supported_protocols=['file'],
--        unsupported_imgopts=['compat']
-+        unsupported_imgopts=['compat'],
-+        require_hmp=True,
-     )
+         result = self.vm.qmp('human-monitor-command',
+                              command_line='qemu-io cbw "write 0 1M"')
+-        self.assert_qmp(result, 'return', '')
++        write_res = result['return']
+ 
+         result = self.vm.qmp('human-monitor-command',
+                              command_line='qemu-io access "read 0 1M"')
+-        self.assert_qmp(result, 'return', '')
++        read_res = result['return']
+ 
+         self.vm.shutdown()
+         log = self.vm.get_log()
+         log = iotests.filter_qemu_io(log)
+-        return log
++        return log, write_res, read_res
+ 
+     def test_break_snapshot_on_cbw_error(self):
+         """break-snapshot behavior:
+         Guest write succeed, but further snapshot-read fails, as snapshot is
+         broken.
+         """
+-        log = self.do_cbw_error('break-snapshot')
++        log, write_res, read_res = self.do_cbw_error('break-snapshot')
++        self.assertEqual(write_res, '')
++        self.assertIn('read failed: Permission denied', read_res)
+ 
+         self.assertEqual(log, """\
+ wrote 1048576/1048576 bytes at offset 0
+ 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-read failed: Permission denied
+ """)
+ 
+     def test_break_guest_write_on_cbw_error(self):
+@@ -179,10 +180,11 @@ read failed: Permission denied
+         Guest write fails, but snapshot-access continues working and further
+         snapshot-read succeeds.
+         """
+-        log = self.do_cbw_error('break-guest-write')
++        log, write_res, read_res = self.do_cbw_error('break-guest-write')
++        self.assertIn('write failed: Input/output error', write_res)
++        self.assertEqual(read_res, '')
+ 
+         self.assertEqual(log, """\
+-write failed: Input/output error
+ read 1048576/1048576 bytes at offset 0
+ 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ """)
+@@ -191,20 +193,24 @@ read 1048576/1048576 bytes at offset 0
+         """Ensure CBW filter accepts break-snapshot policy
+         specified in blockdev-backup QMP command.
+         """
+-        log = self.do_cbw_error_via_blockdev_backup('break-snapshot')
++        log, write_res, read_res = \
++            self.do_cbw_error_via_blockdev_backup('break-snapshot')
++        self.assertEqual(write_res, '')
++        self.assertIn('read failed: Permission denied', read_res)
+         self.assertEqual(log, """\
+ wrote 1048576/1048576 bytes at offset 0
+ 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-read failed: Permission denied
+ """)
+ 
+     def test_break_guest_write_policy_forwarding(self):
+         """Ensure CBW filter accepts break-guest-write policy
+         specified in blockdev-backup QMP command.
+         """
+-        log = self.do_cbw_error_via_blockdev_backup('break-guest-write')
++        log, write_res, read_res = \
++            self.do_cbw_error_via_blockdev_backup('break-guest-write')
++        self.assertIn('write failed: Input/output error', write_res)
++        self.assertEqual(read_res, '')
+         self.assertEqual(log, """\
+-write failed: Input/output error
+ read 1048576/1048576 bytes at offset 0
+ 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ """)
+@@ -213,9 +219,11 @@ read 1048576/1048576 bytes at offset 0
+         """Ensure break-guest-write policy is used by default when
+         on-cbw-error is not explicitly specified.
+         """
+-        log = self.do_cbw_error_via_blockdev_backup()
++        log, write_res, read_res = \
++            self.do_cbw_error_via_blockdev_backup()
++        self.assertIn('write failed: Input/output error', write_res)
++        self.assertEqual(read_res, '')
+         self.assertEqual(log, """\
+-write failed: Input/output error
+ read 1048576/1048576 bytes at offset 0
+ 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ """)
+@@ -260,47 +268,53 @@ read 1048576/1048576 bytes at offset 0
+ 
+         result = self.vm.qmp('human-monitor-command',
+                              command_line='qemu-io cbw "write 0 512K"')
+-        self.assert_qmp(result, 'return', '')
++        write1_res = result['return']
+ 
+         # We need second write to trigger throttling
+         result = self.vm.qmp('human-monitor-command',
+                              command_line='qemu-io cbw "write 512K 512K"')
+-        self.assert_qmp(result, 'return', '')
++        write2_res = result['return']
+ 
+         result = self.vm.qmp('human-monitor-command',
+                              command_line='qemu-io access "read 0 1M"')
+-        self.assert_qmp(result, 'return', '')
++        read_res = result['return']
+ 
+         self.vm.shutdown()
+         log = self.vm.get_log()
+         log = re.sub(r'^\[I \d+\.\d+\] OPENED\n', '', log)
+         log = re.sub(r'\[I \+\d+\.\d+\] CLOSED\n?$', '', log)
+         log = iotests.filter_qemu_io(log)
+-        return log
++        return log, write1_res, write2_res, read_res
+ 
+     def test_timeout_break_guest(self):
+-        log = self.do_cbw_timeout('break-guest-write')
++        log, write1_res, write2_res, read_res = \
++            self.do_cbw_timeout('break-guest-write')
++        self.assertEqual(write1_res, '')
+         # macOS and FreeBSD tend to represent ETIMEDOUT as
+         # "Operation timed out", when Linux prefer
+         # "Connection timed out"
+-        log = log.replace('Operation timed out',
+-                          'Connection timed out')
++        write2_res = write2_res.replace('Operation timed out',
++                                        'Connection timed out')
++        self.assertIn('write failed: Connection timed out', write2_res)
++        self.assertEqual(read_res, '')
+         self.assertEqual(log, """\
+ wrote 524288/524288 bytes at offset 0
+ 512 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-write failed: Connection timed out
+ read 1048576/1048576 bytes at offset 0
+ 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ """)
+ 
+     def test_timeout_break_snapshot(self):
+-        log = self.do_cbw_timeout('break-snapshot')
++        log, write1_res, write2_res, read_res = \
++            self.do_cbw_timeout('break-snapshot')
++        self.assertEqual(write1_res, '')
++        self.assertEqual(write2_res, '')
++        self.assertIn('read failed: Permission denied', read_res)
+         self.assertEqual(log, """\
+ wrote 524288/524288 bytes at offset 0
+ 512 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ wrote 524288/524288 bytes at offset 524288
+ 512 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+-read failed: Permission denied
+ """)
  
  
-diff --git a/tests/qemu-iotests/tests/mirror-change-copy-mode b/tests/qemu-iotests/tests/mirror-change-copy-mode
-index 51788b85c7ac..c9c345f1397c 100755
---- a/tests/qemu-iotests/tests/mirror-change-copy-mode
-+++ b/tests/qemu-iotests/tests/mirror-change-copy-mode
-@@ -190,4 +190,5 @@ class TestMirrorChangeCopyMode(iotests.QMPTestCase):
+diff --git a/tests/qemu-iotests/tests/file-io-error.out b/tests/qemu-iotests/tests/file-io-error.out
+index 0f46455a94a7..bf8c0018ba5a 100644
+--- a/tests/qemu-iotests/tests/file-io-error.out
++++ b/tests/qemu-iotests/tests/file-io-error.out
+@@ -21,7 +21,7 @@ QA output created by file-io-error
+       }}
+ {"return": {}}
  
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['qcow2', 'raw'],
--                 supported_protocols=['file'])
-+                 supported_protocols=['file'],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/tests/mirror-ready-cancel-error b/tests/qemu-iotests/tests/mirror-ready-cancel-error
-index ed2e46447e3e..ffa045af2191 100755
---- a/tests/qemu-iotests/tests/mirror-ready-cancel-error
-+++ b/tests/qemu-iotests/tests/mirror-ready-cancel-error
-@@ -139,4 +139,5 @@ if __name__ == '__main__':
-     # LUKS would require special key-secret handling in add_blockdevs()
-     iotests.main(supported_fmts=['generic'],
-                  unsupported_fmts=['luks'],
--                 supported_protocols=['file'])
-+                 supported_protocols=['file'],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/tests/qcow2-internal-snapshots b/tests/qemu-iotests/tests/qcow2-internal-snapshots
-index 9f83aa890391..d301f0941b5c 100755
---- a/tests/qemu-iotests/tests/qcow2-internal-snapshots
-+++ b/tests/qemu-iotests/tests/qcow2-internal-snapshots
-@@ -43,6 +43,7 @@ _supported_proto file
- # Internal snapshots are (currently) impossible with refcount_bits=1,
- # and generally impossible with external data files
- _unsupported_imgopts 'compat=0.10' 'refcount_bits=1[^0-9]' data_file
-+_require_hmp
+-write failed: Input/output error
++qemu-io: write failed: Input/output error
  
- IMG_SIZE=64M
+ {'execute': 'block-export-del',
+       'arguments': {'id': 'exp0'}}
+diff --git a/tests/qemu-iotests/tests/image-fleecing.out b/tests/qemu-iotests/tests/image-fleecing.out
+index acfc89ff0e99..dc788f1e20a4 100644
+--- a/tests/qemu-iotests/tests/image-fleecing.out
++++ b/tests/qemu-iotests/tests/image-fleecing.out
+@@ -238,13 +238,13 @@ read -P0xd5 1M 64k
+ read -P0xdc 32M 64k
+ read -P0xcd 0x3ff0000 64k
+ read -P0 0x00f8000 32k
+-read failed: Invalid argument
++qemu-io: read failed: Invalid argument
  
-diff --git a/tests/qemu-iotests/tests/qsd-migrate b/tests/qemu-iotests/tests/qsd-migrate
-index a4c6592420c4..d76278b576c2 100755
---- a/tests/qemu-iotests/tests/qsd-migrate
-+++ b/tests/qemu-iotests/tests/qsd-migrate
-@@ -24,7 +24,8 @@ from iotests import filter_qemu_io, filter_qtest
+ read -P0 0x2010000 32k
+-read failed: Invalid argument
++qemu-io: read failed: Invalid argument
  
- iotests.script_initialize(supported_fmts=['qcow2', 'qed', 'raw'],
-                           supported_protocols=['file'],
--                          supported_platforms=['linux'])
-+                          supported_platforms=['linux'],
-+                          require_hmp=True)
+ read -P0 0x3fe0000 64k
+-read failed: Invalid argument
++qemu-io: read failed: Invalid argument
  
- with iotests.FilePath('disk.img') as path, \
-      iotests.FilePath('nbd-src.sock', base_dir=iotests.sock_dir) as nbd_src, \
-diff --git a/tests/qemu-iotests/tests/reopen-file b/tests/qemu-iotests/tests/reopen-file
-index 5a50794ffc41..f8812320ea8f 100755
---- a/tests/qemu-iotests/tests/reopen-file
-+++ b/tests/qemu-iotests/tests/reopen-file
-@@ -85,4 +85,5 @@ if __name__ == '__main__':
-     # Must support creating images and reopen
-     iotests.main(supported_fmts=['qcow', 'qcow2', 'qed', 'raw', 'vdi', 'vhdx',
-                                  'vmdk', 'vpc'],
--                 supported_protocols=['file'])
-+                 supported_protocols=['file'],
-+                 require_hmp=True)
-diff --git a/tests/qemu-iotests/tests/write-zeroes-unmap b/tests/qemu-iotests/tests/write-zeroes-unmap
-index f90fb8e8d270..506ced647bc1 100755
---- a/tests/qemu-iotests/tests/write-zeroes-unmap
-+++ b/tests/qemu-iotests/tests/write-zeroes-unmap
-@@ -33,6 +33,7 @@ _supported_fmt raw
- _supported_proto file
- _supported_os Linux
- _require_disk_usage
-+_require_hmp
  
- create_test_image() {
-     _make_test_img -f $IMGFMT 1m
-diff --git a/tests/qtest/drive_del-test.c b/tests/qtest/drive_del-test.c
-index 4c32da594a4a..cc52c2d87936 100644
---- a/tests/qtest/drive_del-test.c
-+++ b/tests/qtest/drive_del-test.c
-@@ -167,6 +167,11 @@ static void test_drive_without_dev(void)
- {
-     QTestState *qts;
+ --- Testing COW ---
+@@ -265,13 +265,13 @@ read -P0xd5 1M 64k
+ read -P0xdc 32M 64k
+ read -P0xcd 0x3ff0000 64k
+ read -P0 0x00f8000 32k
+-read failed: Invalid argument
++qemu-io: read failed: Invalid argument
  
-+#ifndef CONFIG_HMP
-+    g_test_skip("HMP not enabled");
-+    return;
-+#endif
-+
-     /* Start with an empty drive */
-     qts = qtest_init("-drive if=none,id=drive0 -M none");
+ read -P0 0x2010000 32k
+-read failed: Invalid argument
++qemu-io: read failed: Invalid argument
  
-@@ -187,6 +192,11 @@ static void test_after_failed_device_add(void)
-     QDict *response;
-     QTestState *qts;
+ read -P0 0x3fe0000 64k
+-read failed: Invalid argument
++qemu-io: read failed: Invalid argument
  
-+#ifndef CONFIG_HMP
-+    g_test_skip("HMP not enabled");
-+    return;
-+#endif
-+
-     if (!has_device_builtin("virtio-blk")) {
-         g_test_skip("Device virtio-blk is not available");
-         return;
-@@ -223,6 +233,11 @@ static void test_drive_del_device_del(void)
- {
-     QTestState *qts;
  
-+#ifndef CONFIG_HMP
-+    g_test_skip("HMP not enabled");
-+    return;
-+#endif
-+
-     if (!has_device_builtin("virtio-scsi")) {
-         g_test_skip("Device virtio-scsi is not available");
-         return;
-@@ -405,6 +420,11 @@ static void test_drive_add_device_add_and_del(void)
-     const char *arch = qtest_get_arch();
-     const char *machine_addition = "";
+ --- Cleanup ---
+diff --git a/tests/qemu-iotests/tests/inactive-node-nbd.out b/tests/qemu-iotests/tests/inactive-node-nbd.out
+index a458b4fc0552..0fb8c18d8748 100644
+--- a/tests/qemu-iotests/tests/inactive-node-nbd.out
++++ b/tests/qemu-iotests/tests/inactive-node-nbd.out
+@@ -215,13 +215,13 @@ target-fmt active: True
+ read 65536/65536 bytes at offset 0
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
  
-+#ifndef CONFIG_HMP
-+    g_test_skip("HMP not enabled");
-+    return;
-+#endif
-+
-     if (!has_device_builtin("virtio-blk")) {
-         g_test_skip("Device virtio-blk is not available");
-         return;
-@@ -436,6 +456,11 @@ static void test_drive_add_device_add_and_del_q35(void)
- {
-     QTestState *qts;
+-write failed: Operation not permitted
++qemu-io: write failed: Operation not permitted
  
-+#ifndef CONFIG_HMP
-+    g_test_skip("HMP not enabled");
-+    return;
-+#endif
-+
-     if (!has_device_builtin("virtio-blk")) {
-         g_test_skip("Device virtio-blk is not available");
-         return;
+-write failed: Operation not permitted
++qemu-io: write failed: Operation not permitted
+ 
+-write failed: Operation not permitted
++qemu-io: write failed: Operation not permitted
+ 
+-discard failed: Operation not permitted
++qemu-io: discard failed: Operation not permitted
+ 
+ 
+ qemu-io: Failed to get allocation status: Operation not permitted
 
 -- 
 2.55.0.543.g5ebe2ebe4ea8
