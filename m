@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69024C5DF94
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:06:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1776FC61DBC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:07:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyn4E-0005Hy-D8; Tue, 25 Aug 2026 05:03:39 -0400
+	id 1wyn44-0005Bm-DT; Tue, 25 Aug 2026 05:03:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn45-0005CV-Ps; Tue, 25 Aug 2026 05:03:29 -0400
+ id 1wyn3y-0005As-Rk; Tue, 25 Aug 2026 05:03:24 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyn44-00039q-1o; Tue, 25 Aug 2026 05:03:29 -0400
+ id 1wyn3w-00035W-Dx; Tue, 25 Aug 2026 05:03:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787648560; bh=rxmORxH6hIL0N9hHgtbC1av3nVoC7S/fF10GujTgeaY=;
+ t=1787648560; bh=JSZXwK4+6k+78w6kfR4yQo2p73K16SeORqVZ/qOnfTQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Ue+uNCVx1JxHgAsB3TdY6TVQ8xeg0Pxd7E0Jh1d/3hdYLkM66mzEZo4493DEGCD35
- 6iwSnl8MAz4NTroAO7kmJDXePyStVCSa2h7mAbyngKiH4ZsA+WOhyArUJhc8W6Hst0
- B64t0aIugZV3Wk3Nop9QV99CDEUy6rS6J2aOB9loMvX0xfADQUMaT9EO+nx9I/9fMp
- uhvreBd98IFzz0qlRjyfKwUxea2QKuZx/RKv21v1NAlpEjfombaOXxNlAgbPER6xAG
- P2YXykwVQyNk7ojT7NHL75aS1LQD+6gVvy6uolUMfJcSbNUcDbNZO55YahHIsYfL/x
- B6fFz+PXDScZg==
+ b=DqcjkPh+7/Hz11y1D03//KuiUCMpH2Accq51Lj43ORT/M9+N+j3rPDyrNI0dnh2I3
+ kOyGMWhogsv9CGHzdJN66reNU/hc0/+bkgMNhv3ZwenXLlmO9fDso7j+gnUsoPSrVY
+ qDj3RwWm1HVeUE3eEaJexPiubmmLe2KbnbEdM5YRAL7QYAR9FQbdrICuwUIVHCMyIP
+ g0U31Jkof0BXinbqeLRLjwT4wz5AesC9J3io8ABZ4rM6R0Fw6xh7DQKxIv+sY3+1w0
+ BUSKAX92X5cxtcpRqHdSDo4f2dxTDO+iQoA/OD5g5k4dcWOEJC7DU0527CvqmaUsCN
+ SLo62SIG/vk3w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 45DAA1CE3B0;
+ by isrv.corpit.ru (Postfix) with ESMTP id 365BC1CE3AD;
  Tue, 25 Aug 2026 12:02:40 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 31A72416172;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2296E41616F;
  Tue, 25 Aug 2026 12:03:17 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B29D332549; Tue, 25 Aug 2026 12:02:39 +0300 (MSK)
+ id A8EE232543; Tue, 25 Aug 2026 12:02:39 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Simon Scherer <scherer.simon89@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.4 v3 166/196] target/i386: fix incorrect decoding of
- EXTRQ_i
-Date: Tue, 25 Aug 2026 12:01:23 +0300
-Message-ID: <20260825090157.471948-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Jacob Young <jacobly@ziglang.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.4 v3 163/196] tcg/optimize: Fix s_mask computation for
+ shifts
+Date: Tue, 25 Aug 2026 12:01:20 +0300
+Message-ID: <20260825090157.471948-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
 References: <qemu-stable-11.0.4-20260825115401@cover.tls.msk.ru>
@@ -72,77 +71,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Simon Scherer <scherer.simon89@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The decoding of the extrq instruction with an immediate operand (EXTRQ_i) is
-incorrect. Per the AMD manual the instruction encoding looks as follows:
+Skip s_mask computation for logical right shift.
 
-EXTRQ xmm1, imm8, imm8   66 0F 78 /0 ib ib
-
-The /0 indicates that the "Reg" field of the ModR/M byte must be equal
-to 0 and the XMM register operand is specified by the "R/M" field.
-However, qemu incorrectly uses the "Reg" field to extract the register operand.
-
-This patch instead extracts the XMM register operand from the "R/M"
-field.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3611
-Signed-off-by: Simon Scherer <scherer.simon89@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20260625155613.192643-1-scherer.simon89@gmail.com
-[Check for the reg field to be 0.  Make decoding of REPZ+66 consistent
- between 0F 78 and 0F 79. - Paolo]
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit ce0ee66044be066cbbf076a7530fe4e8f638f847)
+Cc: qemu-stable@nongnu.org
+Fixes: 93a967fbb57 ("tcg/optimize: Propagate sign info for shifting")
+Reported-by: Jacob Young <jacobly@ziglang.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 5fe51606146cbf04dac07bf27256febbe56881e7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index c8b5bd6ad26..918f71c8ac0 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -603,23 +603,33 @@ static void decode_0F77(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index acaf96d73c0..c266cfe99c9 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2628,8 +2628,17 @@ static bool fold_shift(OptContext *ctx, TCGOp *op)
  
- static void decode_0F78(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
- {
--    static const X86OpEntry opcodes_0F78[4] = {
--        {},
--        X86_OP_ENTRY3(EXTRQ_i,       V,x, None,None, I,w,  cpuid(SSE4A)), /* AMD extension */
--        {},
--        X86_OP_ENTRY3(INSERTQ_i,     V,x, U,x, I,w,        cpuid(SSE4A)), /* AMD extension */
--    };
--    *entry = *decode_by_prefix(s, opcodes_0F78);
-+    static const X86OpEntry opcodes_0F78_f2 =
-+        X86_OP_ENTRY3(INSERTQ_i,     V,x, U,x, I,w,        cpuid(SSE4A)); /* AMD extension */
-+    static const X86OpEntry opcodes_0F78_66 =
-+        X86_OP_ENTRY3(EXTRQ_i,       U,x, None,None, I,w,  cpuid(SSE4A)); /* AMD extension */
-+
-+    entry->gen = NULL;
-+    if (s->prefix & PREFIX_REPNZ) {
-+        *entry = opcodes_0F78_f2;
-+    } else if (s->prefix & PREFIX_REPZ) {
-+        /* undefined */
-+    } else if (s->prefix & PREFIX_DATA) {
-+        int op = (get_modrm(s, env) >> 3) & 7;
-+        if (op == 0) {
-+            *entry = opcodes_0F78_66;
+         z_mask = do_constant_folding(op->opc, ctx->type, z_mask, sh);
+         o_mask = do_constant_folding(op->opc, ctx->type, o_mask, sh);
+-        s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
+ 
++        if (op->opc == INDEX_op_shr) {
++            /*
++             * Logical right shift will force the sign bit zero.
++             * Don't bother computing s_mask and let fold_masks
++             * recompute from z_mask.
++             */
++            return fold_masks_zo(ctx, op, z_mask, o_mask);
 +        }
-+    }
- }
++
++        s_mask = do_constant_folding(op->opc, ctx->type, s_mask, sh);
+         return fold_masks_zos(ctx, op, z_mask, o_mask, s_mask);
+     }
  
- static void decode_0F79(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
- {
-+    entry->gen = NULL;
-     if (s->prefix & PREFIX_REPNZ) {
-         entry->gen = gen_INSERTQ_r; /* AMD extension */
-+    } else if (s->prefix & PREFIX_REPZ) {
-+        /* undefined */
-     } else if (s->prefix & PREFIX_DATA) {
-         entry->gen = gen_EXTRQ_r; /* AMD extension */
--    } else {
--        entry->gen = NULL;
-     };
- }
- 
+diff --git a/tests/tcg/i386/test-i386-opt-shr.c b/tests/tcg/i386/test-i386-opt-shr.c
+new file mode 100644
+index 00000000000..9fb8d420223
+--- /dev/null
++++ b/tests/tcg/i386/test-i386-opt-shr.c
+@@ -0,0 +1,21 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* Regression test for tcg optimize vs sign bit repetition counting. */
++
++#include <assert.h>
++
++int main()
++{
++#ifndef __x86_64__
++    char test;
++
++    asm("movw $0x4000, %%ax\n\t"
++        "addw %%ax, %%ax\n\t"
++        "cwtl\n\t"
++        "shrl %%eax\n\t"
++        "cmpw $-0x3fff, %%ax\n\t"
++        "setnl %%al"
++        : "=a"(test));
++    assert(!test);
++#endif
++    return 0;
++}
 -- 
 2.47.3
 
