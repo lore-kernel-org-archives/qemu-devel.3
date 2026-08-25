@@ -4,81 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F2FCC5DF94
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:21:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30A23C5DF94
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 09:23:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wynKc-0007bB-VR; Tue, 25 Aug 2026 05:20:35 -0400
+	id 1wynNA-0000aE-MQ; Tue, 25 Aug 2026 05:23:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wynKc-0007aC-D8
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 05:20:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wynN8-0000Zf-W8; Tue, 25 Aug 2026 05:23:11 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wynKa-0007dZ-F1
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 05:20:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787649631;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ssdJdZuf5yeXYvzWHL9J6SZ/LOSG0pjqAamgVaCMXsw=;
- b=HEHIriY755m4x+iKyrT/vYUgD5FIcxpbfvqPuu2PvxH8nlaQZP+B2KdywNgZV0Hki7gZh7
- cczZ9LicChHTigs+n7Taa/lh7adid7p2eK74HIlwsxFViSgq3JfCq3zQVnjf5pomSGB5jc
- MoT9zgJZCIvz/GA21K+rG037F4dEMsU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-320-crrxDkEwNdmi3lHvHGLQJg-1; Tue,
- 25 Aug 2026 05:20:27 -0400
-X-MC-Unique: crrxDkEwNdmi3lHvHGLQJg-1
-X-Mimecast-MFC-AGG-ID: crrxDkEwNdmi3lHvHGLQJg_1787649625
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8A844187DBBD; Tue, 25 Aug 2026 09:20:24 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.12])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6BD6918005B4; Tue, 25 Aug 2026 09:20:23 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DE8C721E6920; Tue, 25 Aug 2026 11:20:20 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>,  eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  kvmarm@lists.linux.dev,
- peter.maydell@linaro.org,  shaju.abraham@nutanix.com,
- khushit.shah@nutanix.com,  yangjinqian1@huawei.com,  cohuck@redhat.com,
- richard.henderson@linaro.org,  sebott@redhat.com,
- skolothumtho@nvidia.com,  philmd@oss.qualcomm.com,  maz@kernel.org,
- oliver.upton@linux.dev,  pbonzini@redhat.com,  berrange@redhat.com,
- abologna@redhat.com,  jdenemar@redhat.com
-Subject: Re: [RFC PATCH v7 18/18] arm-qmp-cmds: introspection for ID
- register props
-In-Reply-To: <cae6f5c2-edb2-4811-a915-cbd93bbd903b@redhat.com> (Eric Auger's
- message of "Tue, 25 Aug 2026 10:38:22 +0200")
-References: <20260726153221.24773-1-eric.auger@redhat.com>
- <20260726153221.24773-19-eric.auger@redhat.com>
- <878q613tae.fsf@pond.sub.org>
- <cae6f5c2-edb2-4811-a915-cbd93bbd903b@redhat.com>
-Date: Tue, 25 Aug 2026 11:20:20 +0200
-Message-ID: <87wltemu97.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wynN6-0008Kj-WB; Tue, 25 Aug 2026 05:23:10 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67P8W7ua2650158; Tue, 25 Aug 2026 09:23:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=3+vvPP
+ wAyzarRRmJSEEj0CofxWp1KiwpaZESb0QTorA=; b=NNp3DwSuqDelPlLkNBqX3k
+ 1OvIByenRUcJ91o9dXIp7jcNc6i1fuKBQ7w3vORIp9hQO4xV+7r4BcpKDRPfJeeo
+ j+5j6v+E4MVuiqLkKx/g9sxaoKlpyzNATNL4emIc/QznPRibZ6VsD9d3/4Tr5Gva
+ 32zq8JwoT1aT0NGEEspKfxSQZxoqtCQQ2Z48YHv5fy965DQxNPjMly8qiubhiAiX
+ VN4CfJe0CJsrky623ZMJb8K6ei94mJhs2uKOI7vMv2mAm92aEGxZiBGtSbDpiA6N
+ I7ZljDdbzPowSjbL2CIzGc0twWr5mRA9jKf5/N+mkb0Te7cLKSdFMpjXOUG4F63A
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eqq6g7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 25 Aug 2026 09:23:04 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67P9BIha020532;
+ Tue, 25 Aug 2026 09:23:04 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rsy35ay-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 25 Aug 2026 09:23:03 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67P9Mxeh35783098
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 25 Aug 2026 09:22:59 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1C2412004B;
+ Tue, 25 Aug 2026 09:22:59 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C3DBA20043;
+ Tue, 25 Aug 2026 09:22:56 +0000 (GMT)
+Received: from [9.123.10.203] (unknown [9.123.10.203])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 25 Aug 2026 09:22:56 +0000 (GMT)
+Message-ID: <c4782554-94e0-467f-861c-7105962c66b3@linux.ibm.com>
+Date: Tue, 25 Aug 2026 14:52:55 +0530
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/1] hw/ppc/fadump: report CPU_STATE_DATA dumped_bytes
+ as source_len
+To: Shivang Upadhyay <shivangu@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: anushree.mathur@linux.vnet.ibm.com, harshpb@linux.ibm.com,
+ mahesh@linux.ibm.com, sourabhjain@linux.ibm.com,
+ amachhiw@linux.ibm.com, hbathini@linux.ibm.com, npiggin@gmail.com
+References: <20260825090932.1748581-1-shivangu@linux.ibm.com>
+ <20260825090932.1748581-2-shivangu@linux.ibm.com>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <20260825090932.1748581-2-shivangu@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: dnBF2In3WAPPuULk0tFgyimDW6Lsl2zY
+X-Proofpoint-ORIG-GUID: -dz-pwEEcB_5zTzbDQLofnGBnpdrl0mI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDA3NiBTYWx0ZWRfX/mvrGeIyrQNM
+ oHVeU0fofw1EkQnkfZlGfc4HRoAu4cp8rPoIivW3ZKbIJAcZ5xZQMkT18x3+iMG87FNAIhOcXo8
+ Ydh5pf24d8yyyP3Kic603EFsDTeLakvAv9/3iV9ruQaVnakbIijimBnXNWXlBzAzYoWvDPXEg3j
+ cbsVMANZp71YbPPDyJ0mOV4/353C06XdbsFSa2SYyIgr4nNy9UegbpwfUzX12ycdDfRP9AAciZg
+ FXX8RyRuPdCVPpgavf5rZAqLVbjrI3PjRMS14kQOk3SzTpNMOnK1a3fUttWnHMvVnan+aVQTzcj
+ Cbg4YgLKW3Yu4J+xov6i/H1UKStrgMXN0TQzsp9EJCT0xrXuM48cGXLP4ObgX3z2vtNYzPeiZWp
+ nscUZzJtEWkTUoCg1iUeUOh7Lq63dAqqaZwZhYJmXCu4Mky3vCaZT73ODS6PZTBaIJ4btgyEas1
+ WCLJWc0gJjUv+IvjKoA==
+X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8d5ef9 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=9AdMxfjQAAAA:20
+ a=VnNF1IyMAAAA:8 a=E3e1_75F00jLdr1Alb4A:9 a=QEXdDO2ut3YA:10
+ a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDA3NiBTYWx0ZWRfX+SkHGNke+I4r
+ F0JTMVT6l/6/MFI72GnYO2QqmtCGkRqFW2NXrH+aQfBf8qtcOTz/7DF3sEG+DjxOaVZCdH+ojZe
+ T777auUv3/sIyAyPDqiM6zIw0m9i0og=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-25_02,2026-08-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608250076
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,166 +129,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Eric Auger <eric.auger@redhat.com> writes:
+On 25/08/26 14:39, Shivang Upadhyay wrote:
 
-> Hi Markus,
+> When system is restarted with fadump, cpu registers data is copied
+> to CPU_STATE_DATA region. The size of data depends on the number of
+> cpus that are currently present in the system. But when maxcpus config
+> option is provided in qemu command line, this causes the linux kernel to
+> allocate extra space for CPU_STATE_DATA region. If there are no hotplug
+> operations, this will lead to part of region being empty.
 >
-> On 8/20/26 1:50 PM, Markus Armbruster wrote:
->> Eric Auger <eric.auger@redhat.com> writes:
->>
->>> From: Cornelia Huck <cohuck@redhat.com>
->>>
->>> Implement the capability to query available ID register values by
->>> adding SYSREG_* options and values to the cpu model expansion for the
->>> host model, if available.
->>>
->>> Excerpt:
->>> (QEMU) query-cpu-model-expansion type=full model={"name":"host"}
->>
->> Is this qmp-shell?
-> yes it is. Is that a problem?
+> As per current Linux kernel, It expects the size of collected Fadump
+> region to be exactly equal to allocated size. Otherwise
+> kernel assumes that dump is incomplete [1].
+>
+> If maxcpus option is used, This causes qemu to send partially filled
+> region, and Kernel then rejects to collect to any dump. As a result of
+> this /proc/vmcore is not generated.
+>
+> To fix this, Changing fadump to always report CPU_STATE_DATA's
+> dumped_bytes as source_len. This behaviour is also noticed in Phyp.
+>
+> [1] https://github.com/torvalds/linux/blob/66498c75b4f8017f62d720d9b59675bdf3abce91/arch/powerpc/platforms/pseries/rtas-fadump.c#L472
+> Cc: Sourabh Jain <sourabhjain@linux.ibm.com>
+> Cc: Aditya Gupta <adityag@linux.ibm.com>
+> Reported-by: Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
+> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+> ---
+>   hw/ppc/spapr_fadump.c | 7 +++++--
+>   1 file changed, 5 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/ppc/spapr_fadump.c b/hw/ppc/spapr_fadump.c
+> index 13cab0cfe1..c0f6474ae9 100644
+> --- a/hw/ppc/spapr_fadump.c
+> +++ b/hw/ppc/spapr_fadump.c
+> @@ -575,8 +575,9 @@ static bool do_populate_cpu_state(FadumpSection *region)
+>   
+>       if (region->source_len != region->bytes_dumped) {
+>           /*
+> -         * Log the error, but don't fail the dump collection here, let
+> -         * kernel handle the mismatch
+> +         * Log the error, but don't fail the dump collection here.
+> +         * This is probably because of maxcpus config. Linux kernel would
+> +         * not collect any dump if dumped_bytes does not match source_len.
+>            */
 
-I wouldn't call use of qmp-shell a problem.  Except some reader may not
-recognize it from the example input, or may not even know it exists.
-Mentioning it takes care of all that.
+Understood the problem, can we mention something like "this is not 
+specifically
+suggested by spapr, matching phyp's behaviour here" or something like that ?
 
-I prefer to use QMP directly myself, like this:
+>           qemu_log_mask(LOG_GUEST_ERROR,
+>                   "FADump: Mismatch in CPU State region's length exported:"
+> @@ -584,6 +585,8 @@ static bool do_populate_cpu_state(FadumpSection *region)
+>                   " QEMU exported: 0x%" PRIx64 " bytes\n",
+>                   be64_to_cpu(region->source_len),
+>                   be64_to_cpu(region->bytes_dumped));
+> +
+> +        region->bytes_dumped = region->source_len;
+source_len = bytes_dumped makes more sense here, than increasing 
+bytes_dumped to
+source_len. what do you say ?
 
-    $ socat "READLINE,history=$HOME/.qmp_history,prompt=QMP> " UNIX-CONNECT:/path/to/socket
+otherwise okay with me, but good to have a clear comment about deviating 
+from
+spapr to match phyp here, so we can fix it if phyp or spapr were to 
+change to
+follow one thing.
 
-But that's just personal preference.
 
->>> {"return": {"model": {"name": "host", "props": {"SYSREG_ID_AA64PFR0_EL1_EL3": 1,
->>> "SYSREG_ID_AA64ISAR2_EL1_CLRBHB": 0, "SYSREG_CTR_EL0_L1Ip": 3,
->>> "SYSREG_MIDR_EL1_PartNum": 3407, "SYSREG_CTR_EL0_DminLine": 4,
->>> "SYSREG_ID_AA64MMFR0_EL1_PARange": 5, "SYSREG_ID_AA64MMFR1_EL1_ECBHB": 0
->>> ../..
->>>
->>> This allows the upper stack to detect available writable ID regs and
->>> the "host passthrough model" values.
->>>
->>> It also allows to test some ID reg field values:
->>> (QEMU) query-cpu-model-expansion type=full model={"name":"host","props":{"SYSREG_ID_AA64ISAR0_EL1_DP":0x13}}
->>> {"error": {"class": "GenericError", "desc": "idreg SYSREG_ID_AA64ISAR0_EL1_DP set value (0x13) exceeds length of field (4)!"}}
->>>
->>> (QEMU) query-cpu-model-expansion type=full model={"name":"host","props":{"SYSREG_ID_AA64ISAR0_EL1_DP":0x2}}
->>> {"error": {"class": "GenericError", "desc": "idreg SYSREG_ID_AA64ISAR0_EL1_DP set value (0x2) does not match any arch valid enum value!"}}
->>
->> The examples use CPU "host".  Inconvenient for me, because I run into
->> "The CPU type 'host' requires KVM" when I try to play with them myself.
->> If you don't actually need "host" here, consider using something that
->> works more widely, just to help reviewers.
-> It only applies to the host model, that's the reason. Extending this to
-> TCG models is theorerically feasible but would induce huge changes
-> without much benefits I think. With TCG you already have named vcpu
-> models you can migrate as is. The purpose of this series is to allow
-> tweaking the host passthrough model to allow migration between
-> differents hosts.
+thanks,
 
-Thanks!
-
->>> The following checks are performed:
->>> - the value does not exceed the field size
->>> - if the field is associated to enum values, the set value must be one
->>>   of those enum values
->>> - the value is applied against a scratch vcpu making sure the setting is
->>>   not rejected for this host
->>>
->>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->>>
->>> ---
->>>
->>> v5 -> v6:
->>> - add the write capability
->>> ---
->>>  target/arm/arm-qmp-cmds.c | 98 +++++++++++++++++++++++++++++++++++++++
->>>  1 file changed, 98 insertions(+)
->>>
->>> diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
->>> index 83ec95c290..41fefadcea 100644
->>> --- a/target/arm/arm-qmp-cmds.c
->>> +++ b/target/arm/arm-qmp-cmds.c
->>> @@ -21,6 +21,7 @@
->>>   */
->>>  
->>>  #include "qemu/osdep.h"
->>> +#include "qemu/error-report.h"
->>>  #include "qemu/target-info.h"
->>>  #include "hw/core/boards.h"
->>>  #include "kvm_arm.h"
->>> @@ -30,7 +31,10 @@
->>>  #include "qapi/qapi-commands-machine.h"
->>>  #include "qapi/qapi-commands-misc-arm.h"
->>>  #include "qobject/qdict.h"
->>> +#include "qobject/qnum.h"
->>>  #include "qom/qom-qobject.h"
->>> +#include <linux/kvm.h>
->>> +#include "system/kvm.h"
->>>  #include "cpu.h"
->>>  
->>>  static GICCapability *gic_cap_new(int version)
->>> @@ -84,11 +88,14 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->>>                                                       Error **errp)
->>>  {
->>>      CpuModelExpansionInfo *expansion_info;
->>> +    ObjectPropertyIterator iter;
->>>      const QDict *qdict_in;
->>> +    ObjectProperty *idregprop;
->>>      QDict *qdict_out;
->>>      ObjectClass *oc;
->>>      Object *obj;
->>>      const char *name;
->>> +    int fdarray[3];
->>>      int i;
->>>  
->>>      if (type != CPU_MODEL_EXPANSION_TYPE_FULL) {
->>> @@ -133,6 +140,38 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->>>  
->>>      obj = object_new(object_class_get_name(oc));
->>>  
->>> +    if (kvm_enabled()) {
->>> +        bool pmuv3_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_PMU_V3);
->>> +        bool sve_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_SVE);
->>> +        struct kvm_vcpu_init init = { .target = -1, };
->>> +        bool el2_supported = kvm_arm_el2_supported();
->>> +        bool pauth_supported;
->>> +        int ret;
->>> +
->>> +        pauth_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_PTRAUTH_ADDRESS) &&
->>> +                          kvm_check_extension(kvm_state, KVM_CAP_ARM_PTRAUTH_GENERIC);
->>> +
->>> +        if (sve_supported) {
->>> +            init.features[0] |= 1 << KVM_ARM_VCPU_SVE;
->>> +        }
->>> +        if (el2_supported) {
->>> +            init.features[0] |= 1 << KVM_ARM_VCPU_HAS_EL2;
->>> +        }
->>> +        if (pauth_supported) {
->>> +            init.features[0] |= (1 << KVM_ARM_VCPU_PTRAUTH_ADDRESS |
->>> +                             1 << KVM_ARM_VCPU_PTRAUTH_GENERIC);
->>> +        }
->>> +        if (pmuv3_supported) {
->>> +            init.features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
->>> +        }
->>> +
->>> +        ret = kvm_arm_create_scratch_host_vcpu(fdarray, &init);
->>> +        if (!ret) {
->>> +            error_setg(errp, "failing creating a scratch vcpu");
->>
->> This error message feels off.  I'd use something like "can't create
->> FOO".  Still bad, because it provides no clue on why.  What are the
->> possible failure modes?
-> OK. There are quite a lot of possible failures which are handled in
-> kvm_arm_create_scratch_host_vcpu()
-> opening of /dev/kvm, KVM_CREATE_VM, KVM_CREATE_VCPU,
-> KVM_ARM_PREFERRED_TARGET, KVM_ARM_VCPU_INIT.
-> In next version I will add an Error handle to
-> kvm_arm_create_scratch_host_vcpu() so that precise error message gets
-> returned.
-
-Makes sense.
-
-[...]
+- Aditya G
 
 
