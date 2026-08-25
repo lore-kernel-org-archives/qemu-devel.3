@@ -4,80 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E073C61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:34:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D57BBC61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:39:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wypQH-0001Sn-4A; Tue, 25 Aug 2026 07:34:33 -0400
+	id 1wypUK-00031b-3z; Tue, 25 Aug 2026 07:38:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wypQF-0001S8-E5
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 07:34:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wypQD-0007rm-Nw
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 07:34:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787657668;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Xt7svKkxBYzoSM6JneoVpTjWZ1O7QHW2QkqUyWVEvFk=;
- b=fPY+Yl9tPogRtEpSeLKJZdvP7XU12now+lgGyQMFtU4vr5IET/8lK7WGoPgJBBdVeZ8J1V
- BTVCYooWGHwmgvSkKlDC1mzR0RQPw1/6TtaOJQVIWjoNnbGF+AzBW0sSL07aZlP4/5YKHJ
- BVfBrSisjQjCUyn5cINAx25/9ZcxILY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-101-IU1hmIayMIy9AwiD-giJWQ-1; Tue,
- 25 Aug 2026 07:34:27 -0400
-X-MC-Unique: IU1hmIayMIy9AwiD-giJWQ-1
-X-Mimecast-MFC-AGG-ID: IU1hmIayMIy9AwiD-giJWQ_1787657666
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D4D0419560AD; Tue, 25 Aug 2026 11:34:25 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.12])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 442E518005B3; Tue, 25 Aug 2026 11:34:25 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BE83521E6920; Tue, 25 Aug 2026 13:34:22 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Michael Roth
- <michael.roth@amd.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: Re: [PATCH v3 01/74] qapi: add QAPITypeInfo struct definition
-In-Reply-To: <CAMxuvaw+_7GD5x36g0zxR+zA1pVDcK1j9dT499qa=_D1=UgPMQ@mail.gmail.com>
- (=?utf-8?Q?=22Marc-Andr=C3=A9?= Lureau"'s message of "Fri, 21 Aug 2026
- 19:33:43 +0400")
-References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
- <20260818-qom-qapi-v3-1-24b8bbbe3d86@redhat.com>
- <87cxvbzj4n.fsf@pond.sub.org>
- <CAMxuvaw+_7GD5x36g0zxR+zA1pVDcK1j9dT499qa=_D1=UgPMQ@mail.gmail.com>
-Date: Tue, 25 Aug 2026 13:34:22 +0200
-Message-ID: <87y0dul9hd.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wypUI-000315-Ag
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 07:38:42 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wypUG-0001VZ-5T
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 07:38:41 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2caea3f742bso69092035ad.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 04:38:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787657918; cv=none;
+ d=google.com; s=arc-20260327;
+ b=akSjs2IbtM+elqZfJsOy1LchbAdJ31DXAmi8fjZsYWDY9HVZ92yFWCYIQC0Cqv5/Dt
+ HXBoflvA75K7qah5kQ42olt8jGgCDv7by+bb5iHn72FL4sVSAvregiciisW4wEk9hDTB
+ va4R0taLTfmwXYw7gS6L3Xv5io+Ci9qM0umSlsElU4HwHLXfAq9eLXgQ94dXS/SO/wZ9
+ HqGC09b/DjzPScRyoks4vN3gHpQaMsNgd7spKKy9TyE7ohC0zthSzl99wrNhM8yeFrwa
+ CJrnF3kJxj0wVILGWy6sMK9TWg+kAhm3TSgRnA7OWoVlMka813LmG+DH4x0xLY6iBljC
+ q9Og==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=oMH5xem/I9s/I6053bGrSxFw/+rUaWndohkBfutKNGY=;
+ fh=sVEdLZrzZefL1Cm6F4P0QxX5+s/CLdF3xvWwQpUW++4=;
+ b=WXgJXrhboPt6vMk62wK0hS7SHs42AJNMS4bERsKWW/xIRdMOF//8y31GLEeA9tJLB5
+ S74+Q0sPXheR7NNojeomzDBzp7OxBBblfC4OMPIBD+JxaLYDjtI/0iYh7wm3jskHe4q5
+ 0kd9eOR6vKFPccbM7dj8IkhdD/euqfKrAV0X0wo8MsiZXBps1h6X0w+tJ0dyCejONrh7
+ WGlwAyWKN0iVbV3qv0cxetn3Uhdo0+qMwXOSjkBIybQp82WVeve6nJx0rh4pY+Jt3qKe
+ IVNatPAH4/nWEo+fNT6qTWNH/6jtZggBWf++gaJSFCGC2e984f3CDz+r+uB8izQFNYTm
+ batA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1787657918; x=1788262718; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=oMH5xem/I9s/I6053bGrSxFw/+rUaWndohkBfutKNGY=;
+ b=UWpcc81SzK6Kepl3FeJzoPqmidm0Ak4oI2Sb98BFVYmxOW6kZBY+xIGYc5ik1nas6O
+ 0r66iJ4se6H2mljZMirD5Y6B2KOvXiI4dGFSQQT9LKGHQk5V7LIrwKpePiDmNA5/fkJJ
+ eaq/Fsu4XzY884lgWYJWwNqT+bWIfX1nHlnzUL5ZgXYCbaXDqcPy8ni5RnDvSk9Rgi6F
+ S6RHKGH68lyhlScwAR0bCTnPyqcR8Y91eYYFRKO8MzwqJXGSklHUf15z73DT+tXTmvb0
+ vfcOyKwH9lEm/AYzdb1yjFvBSDCB34Ih55Di81a3pHfwTMHpJdsKVrFCyaaAOloy7FtB
+ KqVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787657918; x=1788262718;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=oMH5xem/I9s/I6053bGrSxFw/+rUaWndohkBfutKNGY=;
+ b=X80RowQBFeuvjVudHT107N6GPmMRuo6Mt7jMlawj4anisEtuwJuPe05t1m8a7qbNXc
+ gNaAak32n5Jh4BtjJVnz6FxXZN6J4HWWo570DWbky8jAiBxCjdTrBMgV6dgnkM3Awc4E
+ wIxsSO9MThS0ojafLCXw0hiR6R9CCvrrqAO/gtdTRRHUjQkmkWXdQhiC9h8MJow2Yr4t
+ eEOAcJaBB0VmiiyEia4uKAHD35/NNxp6YC4W9YoudT1COfc3xrMIOCqdzFdbw1Kb0i7T
+ 4Ng4RU+OgVKF4HL87VltFW0Lw3DC9c9fJqQdXQ/0jzNtcA1JiJZJkqK5kt+D60AsRKzT
+ bU9g==
+X-Gm-Message-State: AFuF++mtO5DjeE0f6OQbhJJTAvMLy4HEfy+Qy8vjBLtD2k4MHlTY8KMu
+ XhX2hoqPQNoQ4ytHkkRrH4bS/q42QS5bEJ8+eLcXF4mDwFgnw2KK7GZj0S+2u5TNTZwKHs6KKTa
+ 6g/tFDZDbhCPwdXnAA+k4ROA9QPOYfIs=
+X-Gm-Gg: AR+sD11jqor5KzzImY9RhENojDfi9KuOvA37KWdM+lzczB4t8vvBvSbD2VI2l4x+guD
+ hQUvQOv0Qq3KVsDR9KNOcehCFHfvsHP6eXgGdgEpXuuwbhTnnuaHXkY9OpOCHddz1HDUYr7U5gH
+ LTDNN8qj2LBOOHVaoJY2HRio3EfDPYwILlVPmTI68rfcz7g1/JW3u8V5GT94uORD6ngcXhhY9EL
+ LZc3nJEcVABA7zF8ffz/Ypj3BDwuXblljmwn8N83bW4AMYvBNxv2zWvl2G5VdwbNpbXjIlHb8tB
+ EWDi1bPTGfGwD0D5/fZ6s+YhtvH8ablkB2PzmXi3Sp1ZbjRulSHT6ASzEm/SPi2B3nSxvZ1c8uf
+ T
+X-Received: by 2002:a17:902:c410:b0:2c9:bf82:dd11 with SMTP id
+ d9443c01a7336-2d64afcc8d2mr562873205ad.7.1787657918034; Tue, 25 Aug 2026
+ 04:38:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260825074114.853069-1-marcandre.lureau@redhat.com>
+ <ao1guN9kDZVCje1Y@redhat.com> <ao18QirIhaY5elOY@redhat.com>
+In-Reply-To: <ao18QirIhaY5elOY@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 25 Aug 2026 15:38:23 +0400
+X-Gm-Features: AcwNN1V8Q26WkL_X6SBm2FqgYXF4cUEXLSGb6LkCJCBO0aqqdFCzAVzOVfTslYA
+Message-ID: <CAJ+F1C+JsUfS2G1jFbHtC-VVRx8dFwhKevGMLCb9E=bwfJmkZQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/misc: fix trace-events
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,74 +119,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+Hi
 
-> Hi
+On Tue, Aug 25, 2026 at 3:29=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
 >
-> On Fri, Aug 21, 2026 at 5:41=E2=80=AFPM Markus Armbruster <armbru@redhat.=
-com> wrote:
->>
->> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
->>
->> > Introduce a minimal struct that pairs a QAPI type's internal name with
->> > its "masked" introspection name. Generated constants of this type will
->> > let QOM property registration carry a reliable reference to the QAPI
->> > schema and possibly other associated data.
->> >
->> > The fields are populated in following commits.
->> >
->> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->> > ---
->> >  include/qapi/qapi-type-info.h | 32 ++++++++++++++++++++++++++++++++
->> >  1 file changed, 32 insertions(+)
->> >
->> > diff --git a/include/qapi/qapi-type-info.h b/include/qapi/qapi-type-in=
-fo.h
->> > new file mode 100644
->> > index 000000000000..97eb1d7bf490
->> > --- /dev/null
->> > +++ b/include/qapi/qapi-type-info.h
->> > @@ -0,0 +1,32 @@
->> > +/*
->> > + * SPDX-License-Identifier: GPL-2.0-or-later
->> > + */
->> > +
->> > +#ifndef QAPI_TYPE_INFO_H
->> > +#define QAPI_TYPE_INFO_H
->> > +
->> > +#include "qapi/util.h"
->> > +
->> > +/**
->> > + * QAPITypeInfo - QAPI type metadata
->> > + *
->> > + * @name: QAPI type name (e.g. "str", "OnOffAuto", "int32List").
->> > + *        QOM uses this as the property type string.
->> > + * @masked_name: Name of the type in the QAPI introspection schema, a=
-ssigned by
->> > + *        scripts/qapi code generator (e.g. "368").
->>
->> Suggest 'Name of the type in output of query-qmp-schema (e.g. "368")'.
->>
+> On Tue, Aug 25, 2026 at 10:30:32AM +0100, Daniel P. Berrang=C3=A9 wrote:
+> > On Tue, Aug 25, 2026 at 11:41:14AM +0400, marcandre.lureau@redhat.com w=
+rote:
+> > > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > >
+> > > The commit 8041d1730871 accidentally removed the vmlaunchupdate.c
+> > > trace events.
+> >
+> > More importantly CI failed to report that build failure. IIUC, this
+> > is likely due to missing libigvm library. We have this available in
+> > Fedora at least, not sure about other distros, but we can add igvm
+> > to libvirt-ci and then to QEMU's deps list for CI.
 >
-> ok
+> Proposed the mapping addition which will let us build-test it:
 >
->> > + *        NULL for implicit types.
->>
->> Can this happen?  I can't see any QAPITypeInfo with null @masked_name at
->> the end of the series.
->
-> It's still optional, but it's true that at the end of the series it
-> should be set for all generated type infos. Let's just say "or NULL if
-> unavailable" ?
+>   https://gitlab.com/libvirt/libvirt-ci/-/merge_requests/583
 
-I can't find a QAPITypeInfo without @masked_name at any point in the
-series.
-
-Either it cannot happen.  Then the comment shouldn't suggest it can.
-
-Or it can happen, but doesn't with the current schema.  Then I'd like to
-have know how it could happen.  Any ideas?
-
-[...]
-
+thanks!
 
