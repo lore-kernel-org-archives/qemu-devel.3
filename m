@@ -4,128 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58A55C61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 17:12:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6BB3C61DBD
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 17:22:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyugw-0003nG-Ln; Tue, 25 Aug 2026 13:12:06 -0400
+	id 1wyuq7-0005fy-A3; Tue, 25 Aug 2026 13:21:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1wyugv-0003mG-BM
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 13:12:05 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1wyugs-0001gL-62
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 13:12:05 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-836c8bdac50so68605537b3.0
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 10:12:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787677921; cv=none;
- d=google.com; s=arc-20260327;
- b=gimpUs49I5Gn56rVCS4UWKw3FHG3dAys21exfsPR+JzUsr9eN42ENCu9zHDUG6DuvC
- MjLidh1Y7IE0PgZkTmHMYpXumk39jXIHKx4aOjo1Pa/5/sSVdjBrd5roK3wcwDiIgWpj
- rTsJpnwHYXiaptIO/ifkf5JMNlkhx7sER7tnIvZAPM2w0QDT5PNLkZvwpVzOGR8cVTgO
- ABpRiHqvIvqMAk2nbzsfRqMYB48HxcyA/S+mQpJO94O4FT8d8W6ECbfNwWQxIaZuE+va
- IYBf/1bmfilGyOSpI7AP5U8jmTHOv7OlZoL1fMZs64uRRY7Bc5ok9Yjc6iXdSJuGJKwl
- gqlg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=cc:to:subject:message-id:date:from:reply-to:in-reply-to:references
- :mime-version:dkim-signature;
- bh=aLrwkN2hpeFMupH+bxDa1e3NGhRfPpCK+VUOuYRo6l4=;
- fh=H+NDqK5G0NiN38mVV0dYIBigLFnDDn5Om11Gwu6V+aY=;
- b=HdIgpiZyNRtFU+jvbIOw2OMVYNUcigUR5Ysf17IJrzMsIIREdJiYWMhP25SezKZ+oB
- MKXYlIScxdREkvZuA8j5sEHDiuhmSRbwdo8PyxbUr6Ll8pgpd0maN1w4jujuGa/0qwPc
- lje6VdfdMKAT2TA9tFmL1BgtlT9f9veGrHondLCj2hYzKIbZMBdPgrw7meGrFzCW3b/b
- 3rZBqggB/J5kTuaz6ydwjdz6RnN3/I3hB2dpBnEebv96lfdIzUIfSTczpVRX6WI9tsTL
- 9NmUoO+QMy5/GiZIrx8euhVWRn5Ck4duSRtLlD4ns6JkL/YTLF7nORJp/tkPS2mRlVXY
- 7Ong==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787677921; x=1788282721; darn=nongnu.org;
- h=content-type:cc:to:subject:message-id:date:from:reply-to
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=aLrwkN2hpeFMupH+bxDa1e3NGhRfPpCK+VUOuYRo6l4=;
- b=ZvzPECkQqnHgJmUBIIkiho69Nqg+7HV/pb1nfkaEDZEoU95VheTxMUucmx7J6C0gn7
- lBPFkSmcQEBG+3vzwShj8ry0FCLRQv7vWhN83aW7ugQOuePvnjAdavbaW449aH6GpuLZ
- DK6duT39/VFfyLBfoUrrBAEOdpEScDImlZ/Yzez4E9Ia4n3ovJTsQorbURXwR7gbWM84
- FrjAlCcdS5sBJnHTSAjgGJp0grLlQcAGBgKP8v4JCUbnUbUri62YgBsme8QB0b1+RLTP
- UEbFUp9rTbIWCgZIeNUNbxzqX5HLXk49mpVMC3CUnIrnimi5bu5qmlTic32mKe4oJpwn
- dfHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787677921; x=1788282721;
- h=content-type:cc:to:subject:message-id:date:from:reply-to
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=aLrwkN2hpeFMupH+bxDa1e3NGhRfPpCK+VUOuYRo6l4=;
- b=n4vlJ3iiZC56woTOJPUtkUYaKdaIbXU4+WFQ/GrL6q2oVhjqoceabs0ejqpKvDtKfG
- 1Vn6piR7gABhrl/RYoOcxc0Ssi+EJFdnsytHq1Lh0K/pzSvXpZNUuHdQM45GmmDr20tj
- nbbfnYZnc0/XpbkoWbhiz4eRRJR4h+Lyqw8xp7MZy0dxJG7K5q/9i0Shnw8nwpc27eZJ
- xbakzDnEzS+P+FeRJKzJbXMwgPYhwdFu7M7YG3mW71CedqzHqiwxDoWbG427SiMETgmD
- vMtQbxnrHO2vMiWHLscw04XMEfZjQbUAXjwVHWIgeMt//7IXkanR7CiM7gy0G/iP9L9C
- K23w==
-X-Gm-Message-State: AFuF++kmC9GBCc0JNst4uvowCYXvUR+tkCJXjt5R1Xu1mNS2GaHd/QYw
- cw8F3I+d4QUuKM8wEcFRjFKn/q3oXg08oKQPwuTgqnCSEXbuTR7g7dtWlxQr1qUuBSxfoe7eRJi
- TbFUrR+snSxiNWYfBlxVkpEVmA/hn4EQ=
-X-Gm-Gg: AR+sD12rnwyGFdep1iaRzICUxb5Eic8nuqVF9ee/KXAGKvzoP9W8umkzKl7gwqeaUtm
- APcgkyf+jzkq8cG3zsE7jr3JUek/tnaLvqaN8zZIsh0iNIr660nxZ+U2CrjZs8LA7Jx029DFZ58
- qSYVANhqPr/TeWAuakWhNEKxcAD5T0ozhY6Kx7l2vXphB7mJ5bn+zjwT80Lq/xQiE8AD5veWfFc
- sA+N+5W7bin0GSapRbXNlhOT9fkjidnuG5HBpZXpTQ9WoUtFZ/bW/gYQn4KoiHOloMEwb3wui42
- oz29aOByTJ5Tt9Z/ml7ofTGmrTZJjaXMB9z9wRQC84lV
-X-Received: by 2002:a05:690c:a701:b0:81e:c736:acce with SMTP id
- 00721157ae682-8574173375fmr1148707b3.32.1787677920679; Tue, 25 Aug 2026
- 10:12:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1wyuq6-0005fn-8P
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 13:21:34 -0400
+Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1wyuq3-00058O-V4
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 13:21:34 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=r2ef91pJHOj59CCKH86/xAGVJQTZyPpIe5xn4QJn4yH74Xy+Hc4BNLkfQu00okAg1Srxx5Sy/JhjvO5oLA7uU2oHXExF+wM1FmDs1Hrx7JCduUcTvEx+PRl+yo4rHx5k8rDH0H22J8905DbSeXs0VFLJelPhGO9aLNlSUQgFISdhkLw2H6EqkmU437whlHgz/EOR6W+XWdO9QQxImJbgF05C0pwLNmAkr+lw1TNlny/5JJ/eUdYiazb/7u5Z3QvagwGx3gELefY6ABfOe6ODCAHjcwcOlo9fPvZTqbTg3V9R1IkI5UZd8VZhFYvLPRAiRG1sePLWAP0eXwcmxR6fSA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sfZCM7F8lYhz4G9t1lD8TEL+j0jCRjihKHR0uEksOt8=;
+ b=CJ7VzHFLrr5yNbCHqhG8UasTTGWgXiEy2qxTJ8lVRDNlwFUW98Et86Tz+1pVlckLQ1PPdbNxYMy4jLd784mntfMgbQdkioFQeH6awnHKJ4nhPMSpl0ETMAa4jHZGZwPt1+mqnBRfLHoO+W9EZE2dRYDAofGn/yii2UFK3818GZshzScPD8NghZnWF+0eJH6SotdVe7YUq1Y7FZg7KOxvJEetzWh2gNAY6ZRwf/yZrgKEFyAyudwhLAMZ/5VOhsfYxoBfI1A0GCxNuBy5q5MS6fDZEVki5tZ+zoTy2WiDAzTGIbYWumL4W13WU46Cp2y+Jav13MujwfvDrM+G68Btyw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=sfZCM7F8lYhz4G9t1lD8TEL+j0jCRjihKHR0uEksOt8=;
+ b=ghs48qPpmTLwOWzy8t6uKUvvLvfz+xqnTgQnZKB8u/11ebNTTXlrvQRSNfMLgEXhatbpBeLyIdE3RlkchO+ioK2NUJaQitlWWD/+lg4MpCPT7aBJHQsrYw30cBvfIJXzLVRJujk41RzTWDDOJXL7ISgCvEG6mGrvpJFSkLJ+nltEhbKI2GtD5T407IBquoxK/yM3b6pfiLJsSxNxMHrXzyrZ60nYHEBRSF3psH9hPpNgGHpyr6jOpqcSBiYG6mSb4NlQa/8iuxFYoLdXF4yh1TmqYlUvuEP+ZBXtvh6rbw/kFtOIas901NGduxEgqn7aHN7+gAQqizWNjZFKBvt1BQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by PA4PR08MB5902.eurprd08.prod.outlook.com
+ (2603:10a6:102:e0::10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.6; Tue, 25 Aug
+ 2026 17:20:59 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0339.012; Tue, 25 Aug 2026
+ 17:20:59 +0000
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+To: qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, philmd@oss.qualcomm.com, den@openvz.org,
+ andrey.drobyshev@virtuozzo.com
+Subject: [PATCH 1/3] hw/display/qxl: factor out qxl_guest_phys2virt()
+Date: Tue, 25 Aug 2026 20:20:49 +0300
+Message-ID: <20260825172051.435372-2-andrey.drobyshev@virtuozzo.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20260825172051.435372-1-andrey.drobyshev@virtuozzo.com>
+References: <20260825172051.435372-1-andrey.drobyshev@virtuozzo.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: VIVP296CA0001.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:800:357::12) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
 MIME-Version: 1.0
-References: <20260823150731.896-1-luoyonggang@gmail.com>
- <ao235Hm8Uovrk0ON@redhat.com>
-In-Reply-To: <ao235Hm8Uovrk0ON@redhat.com>
-From: Yonggang Luo <luoyonggang@gmail.com>
-Date: Wed, 26 Aug 2026 01:11:46 +0800
-X-Gm-Features: AcwNN1W7IegOOQAdYSNJRFaa-idk915Db0vwA2saIsvqm3MO8VJAnZIhPjlE8MI
-Message-ID: <CAE2XoE-Y==KCjy8i9yUmivHs6J-zdVmpbCNRs66R-OsOEdhU=g@mail.gmail.com>
-Subject: Re: [PATCH 00/12] single-binary: link ARM and RISC-V into qemu-system
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Xianglai Li <lixianglai@loongson.cn>, 
- Alistair Francis <alistair.francis@wdc.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org, 
- Alexander Bulekov <alxndr@bu.edu>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Farman <farman@linux.ibm.com>, 
- Laurent Vivier <lvivier@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- Chao Liu <chao.liu@processmission.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <17746591750@163.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-s390x@nongnu.org, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- David Hildenbrand <david@kernel.org>, qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
- Igor Mammedov <imammedo@redhat.com>, Aleksandar Rikalo <arikalo@gmail.com>, 
- Nicholas Piggin <npiggin@gmail.com>, Cornelia Huck <cohuck@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, 
- Fabiano Rosas <farosas@suse.de>, Aurelien Jarno <aurelien@aurel32.net>, 
- Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
- Bibo Mao <maobibo@loongson.cn>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>, 
- Darren Kenny <darren.kenny@oracle.com>
-Content-Type: multipart/alternative; boundary="0000000000006f5cae0659e2333c"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=luoyonggang@gmail.com; helo=mail-yw1-x1133.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|PA4PR08MB5902:EE_
+X-MS-Office365-Filtering-Correlation-Id: 21e81b34-a6cf-4414-b31b-08df02cd3ae0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|366016|52116014|1800799024|23010399003|38350700014|10067099003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: a/hZ+V1KK7t/CQfFRdc2o3CPROmnP4siDVWcl0poUfwqA1/q0X6Ex4JIOd42/RAMHzvydlrSTtJ9Iwpe3lEFDuDPn8M2Dux61Vc71ApfQdlEUHXkjEGsriGytZEWDsFIuaL03Qq7LAFACXPsnIBmjyznkRPzPeizAixHN9eOZUUy12kfkd7ajY7h5vjf0JOiCek3f482CM8hJpZW/YZlrXvGVMKst6TPLG3PLfSDOTwt888DM+QmxgCgeeKQrAYy/psQESyTuVedUu3LHMuqJU4V6dWijbNVszJAtHLU0y/Yl6CnN/AXJM1sD1fuRiNYPanZy80uWEA4aQAbnNarrfhhpx9rHrSvlIR7/k3PfJAFCnyYpPGiU3h7GpGjxsQhYnwknduSQdIkN/hZK4oazVCfpJlvj99WrS33cLKNl0VjQsEE7oOTfoUsVPyzS5ZKoWoHrRXZarT0lRpvo8WozqZ0Qa6KS+5oTcQqWSImiGc7uWpCio9rt14Nwe0C7Vs8Lz2f++jbMXNiph0amaQLMaOSp7Ynd/6g3bI2OsZwcdPAJ5hvMgNYSDzLtiYlhHt39UsUJ8tE/sVqRqXT0D/o2wJzw0fYSsKm6qfvUzN8GCuTCEjXTvejpEaenhG6qY1TJbhfPEt2G3ZBLkmvo2d4zz9nphBBHy/9YfZPDf501Tuec7sHTUYlqEe7/HFPYtJ58Qy71qb31KjYoD6+U7wFnw==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(52116014)(1800799024)(23010399003)(38350700014)(10067099003)(56012099006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?AgbDiaijCdtP1VQyt9TUA1SUB8lftT2e+cQ4NzycShFuOAhzQmR5qQ2vb0BK?=
+ =?us-ascii?Q?+D94yG5IZYgP0ZtgRCux1MljB/67tkGrxzJvrlF63jiP1iLj4rxg6ds+r72N?=
+ =?us-ascii?Q?THB427nU1qK9mFIHL5hfAEMJ8ubTE+NQIkLpyOBIfuNd75bzWiyA2uxVGRf3?=
+ =?us-ascii?Q?X4jApYNyTePsM5q1JG1prYHlSpD0HTlWDlasW5wNKVZK6HU6W1kYKzVD1Wrd?=
+ =?us-ascii?Q?mZuDq4c1v2bcJrYYoXCIfLfDsSmDH0aVcZRjTWtG2dV9+k1ygnz3l7OhASI6?=
+ =?us-ascii?Q?0MzZwFp9euYTctdJf32/W/12mhXOB2u6ukxo5yPykPwHs5sfP0XFCMIvwFNq?=
+ =?us-ascii?Q?/1Bl/6M7WNaaGE3qkth04HKktT5V6w0e7Kno2O/LlLA5bBO7eIuZPoJTMMB/?=
+ =?us-ascii?Q?QMQCqcGqDm78IMW4nUSyS7o43mJtDm85bYFjPgrpTMaKZzAyoXH/jgD3Ib9z?=
+ =?us-ascii?Q?8LZ30vYQeRZKXbxMSJRpmdswfUaQUvsuI15vJ051imUPs0JvWrzK0UpNRrCI?=
+ =?us-ascii?Q?aQPWUGqE3nODyEzgK/vAnH3eS2c1eZMiOmreZXZQ5rEQP0qneYLtXdvZH39e?=
+ =?us-ascii?Q?f8RGOxVr37D3ykhEbdAChuxNNq9P/xHHT+MLLDv2zJ26jK2J/QPNrOiO2Lg+?=
+ =?us-ascii?Q?AA65iKNznOyezkOaG5r7mLB9+VRt0Y1YmRPmjC7e1bbBp489l7Vs/+VL/r8O?=
+ =?us-ascii?Q?vpWJYco6Y3W5oGwRiTte2g6QPyCa/mDfOSsrIOfNfdIAz+ywW7yPGxo0VEWy?=
+ =?us-ascii?Q?T2ARi0yWpfRWoa2WQpQCRp9IV/xwJ7aKLjkd+sLy0DuBbnyVH8gKkMPFNIr2?=
+ =?us-ascii?Q?xXCel9v7WirFSixr1xPasmtKxUR34mKYzUUvHFSzPIffkDhaqTxFbYfr5fYY?=
+ =?us-ascii?Q?EEXombJplA8I/aKYuWS0vtljIqd5W3ZqxX5snv8kXLKKhYztdh/BtasI7E8u?=
+ =?us-ascii?Q?h7NKem1j8Qdsr/FQctM05tvG/CotBRr+ImauoQ0dKMj4p6msZMjZl694ofqT?=
+ =?us-ascii?Q?tsqw16sizCFJCzEBugnWbi701dcifo7R3YQgogA/lRGxSeW+a1uWNCtR/Zq3?=
+ =?us-ascii?Q?7ochQPHgzt7z21F6xhDUMMnJ/HCQ+JSywC+t4j6+ws30+F6WHeOl4ixqJ6EE?=
+ =?us-ascii?Q?6patzlWJY3bSqrsjuMCFgyNu7gFE5iOJuc0N47Zfn60jAaDOXyXcBHT9tTkT?=
+ =?us-ascii?Q?1IuQPbK1ElZPdhQAz+VSfhISD9+O7/HA82fSSF8YhIcMKN+AYVN8mF0fIw6F?=
+ =?us-ascii?Q?lLlrfxuayXFH5V2JAoZc20nsICma9yIU18P0MedASx6K3Uz2KrAb2kcx6wHg?=
+ =?us-ascii?Q?JzLfLSz3ancTtsxc8+pZHPtFC1jgHFF76w3EXa9iLup2FluCaTzDWoNnpjON?=
+ =?us-ascii?Q?R84Dy43IQXM8V788hk8mtORlPPTFs1/hLBjQ6rpW1xrrlQJSyN6S7xCQAPwN?=
+ =?us-ascii?Q?Mud5aQ9MJ6yMyGpiO7hCzSY3QMWLzhfCk7mRiqgJ/l+ZVYSWYKpeF/K0KJff?=
+ =?us-ascii?Q?h35eWFMr8XnE3M6qRHPF2MIdbnxq2LR6lXMhr+sXX/FRXiQuiPS6qhmniEpK?=
+ =?us-ascii?Q?QEIPe+1J57lKLSzypZn2UUKdrB5TN0euxYaIa80IpsyYJw5M39i0uuRvRMPm?=
+ =?us-ascii?Q?t1bs7wXW9F7WhsPiAxlU+W0xqMbIUb4RH3CN1kwKOy8WrW3oOQWY+UChm3sp?=
+ =?us-ascii?Q?ieBtVDFuCrtnMLy/WKcNmdlzs7UqA9+T6JEdmYW5fwMGgLyP1F4DvuwsULrA?=
+ =?us-ascii?Q?QUx29PFLHX8xa5fzfTX4sGFyXHtW58M=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 21e81b34-a6cf-4414-b31b-08df02cd3ae0
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 17:20:59.0570 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: TczqnQpKd0gKP/F015CoL9bpUKMYSkU/omjtoxQ9D5Yhdwy57IiCpfcfnQR6wfgwTfa/NFtjmza29qpN457ginpSOK2v+li0TgIrnEEkcxQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR08MB5902
+Received-SPF: pass client-ip=2a01:111:f403:c20a::7;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=PA4PR04CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,86 +138,164 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: luoyonggang@gmail.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006f5cae0659e2333c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Split the GROUP_GUEST half of qxl_phys2virt() into the helper
+qxl_guest_phys2virt().  Also add a bool 'report_bug' param to the
+qxl_get_check_slot_offset() called from it: when it's false, a failing
+check just returns false without calling qxl_set_guest_bug().  All
+existing callers pass true, so there's no functional change.  This
+is in preparation for a quiet caller that validates guest addresses
+which might be legitimately stale, when flagging a guest bug would be
+wrong.
 
-The github branch I built locally
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+---
+ hw/display/qxl.c | 83 +++++++++++++++++++++++++++++-------------------
+ 1 file changed, 51 insertions(+), 32 deletions(-)
 
-https://github.com/lygstate/qemu/tree/s11.1-riscv-arm
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index b7d871b9ee3..be620b9c94d 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -1407,7 +1407,7 @@ static void qxl_reset_surfaces(PCIQXLDevice *d)
+ /* can be also called from spice server thread context */
+ static bool qxl_get_check_slot_offset(PCIQXLDevice *qxl, QXLPHYSICAL pqxl,
+                                       uint32_t *s, uint64_t *o,
+-                                      size_t size_requested)
++                                      size_t size_requested, bool report_bug)
+ {
+     uint64_t phys   = le64_to_cpu(pqxl);
+     uint32_t slot   = (phys >> (64 -  8)) & 0xff;
+@@ -1415,42 +1415,55 @@ static bool qxl_get_check_slot_offset(PCIQXLDevice *qxl, QXLPHYSICAL pqxl,
+     uint64_t size_available;
+ 
+     if (slot >= NUM_MEMSLOTS) {
+-        qxl_set_guest_bug(qxl, "slot too large %d >= %d", slot,
+-                          NUM_MEMSLOTS);
++        if (report_bug) {
++            qxl_set_guest_bug(qxl, "slot too large %d >= %d", slot,
++                              NUM_MEMSLOTS);
++        }
+         return false;
+     }
+     if (!qxl->guest_slots[slot].active) {
+-        qxl_set_guest_bug(qxl, "inactive slot %d\n", slot);
++        if (report_bug) {
++            qxl_set_guest_bug(qxl, "inactive slot %d\n", slot);
++        }
+         return false;
+     }
+     if (offset < qxl->guest_slots[slot].delta) {
+-        qxl_set_guest_bug(qxl,
+-                          "slot %d offset %"PRIu64" < delta %"PRIu64"\n",
+-                          slot, offset, qxl->guest_slots[slot].delta);
++        if (report_bug) {
++            qxl_set_guest_bug(qxl,
++                              "slot %d offset %"PRIu64" < delta %"PRIu64"\n",
++                              slot, offset, qxl->guest_slots[slot].delta);
++        }
+         return false;
+     }
+     offset -= qxl->guest_slots[slot].delta;
+     if (offset > qxl->guest_slots[slot].size) {
+-        qxl_set_guest_bug(qxl,
+-                          "slot %d offset %"PRIu64" > size %"PRIu64"\n",
+-                          slot, offset, qxl->guest_slots[slot].size);
++        if (report_bug) {
++            qxl_set_guest_bug(qxl,
++                              "slot %d offset %"PRIu64" > size %"PRIu64"\n",
++                              slot, offset, qxl->guest_slots[slot].size);
++        }
+         return false;
+     }
+     size_available = memory_region_size(qxl->guest_slots[slot].mr);
+     if (qxl->guest_slots[slot].offset + offset >= size_available) {
+-        qxl_set_guest_bug(qxl,
+-                          "slot %d offset %"PRIu64" > region size %"PRIu64"\n",
+-                          slot, qxl->guest_slots[slot].offset + offset,
+-                          size_available);
++        if (report_bug) {
++            qxl_set_guest_bug(qxl,
++                              "slot %d offset %"PRIu64" > region size %"PRIu64
++                              "\n", slot,
++                              qxl->guest_slots[slot].offset + offset,
++                              size_available);
++        }
+         return false;
+     }
+     size_available -= qxl->guest_slots[slot].offset + offset;
+     if (size_requested > size_available) {
+-        qxl_set_guest_bug(qxl,
+-                          "slot %d offset %"PRIu64" size %zu: "
+-                          "overrun by %"PRIu64" bytes\n",
+-                          slot, offset, size_requested,
+-                          size_requested - size_available);
++        if (report_bug) {
++            qxl_set_guest_bug(qxl,
++                              "slot %d offset %"PRIu64" size %zu: "
++                              "overrun by %"PRIu64" bytes\n",
++                              slot, offset, size_requested,
++                              size_requested - size_available);
++        }
+         return false;
+     }
+ 
+@@ -1460,25 +1473,31 @@ static bool qxl_get_check_slot_offset(PCIQXLDevice *qxl, QXLPHYSICAL pqxl,
+ }
+ 
+ /* can be also called from spice server thread context */
+-void *qxl_phys2virt(PCIQXLDevice *qxl, QXLPHYSICAL pqxl, int group_id,
+-                    size_t size)
++static void *qxl_guest_phys2virt(PCIQXLDevice *qxl, QXLPHYSICAL pqxl,
++                                 size_t size, bool report_bug)
+ {
+     uint64_t offset;
+     uint32_t slot;
+-    void *ptr;
++    uint8_t *ptr;
+ 
++    if (!qxl_get_check_slot_offset(qxl, pqxl, &slot, &offset, size,
++                                   report_bug)) {
++        return NULL;
++    }
++    ptr  = memory_region_get_ram_ptr(qxl->guest_slots[slot].mr);
++    ptr += qxl->guest_slots[slot].offset;
++    ptr += offset;
++    return ptr;
++}
++
++void *qxl_phys2virt(PCIQXLDevice *qxl, QXLPHYSICAL pqxl, int group_id,
++                    size_t size)
++{
+     switch (group_id) {
+     case MEMSLOT_GROUP_HOST:
+-        offset = le64_to_cpu(pqxl) & 0xffffffffffff;
+-        return (void *)(intptr_t)offset;
++        return (void *)(intptr_t)(le64_to_cpu(pqxl) & 0xffffffffffff);
+     case MEMSLOT_GROUP_GUEST:
+-        if (!qxl_get_check_slot_offset(qxl, pqxl, &slot, &offset, size)) {
+-            return NULL;
+-        }
+-        ptr = memory_region_get_ram_ptr(qxl->guest_slots[slot].mr);
+-        ptr += qxl->guest_slots[slot].offset;
+-        ptr += offset;
+-        return ptr;
++        return qxl_guest_phys2virt(qxl, pqxl, size, true);
+     }
+     return NULL;
+ }
+@@ -1942,7 +1961,7 @@ static void qxl_dirty_one_surface(PCIQXLDevice *qxl, QXLPHYSICAL pqxl,
+     bool rc;
+ 
+     size = (uint64_t)height * abs(stride);
+-    rc = qxl_get_check_slot_offset(qxl, pqxl, &slot, &offset, size);
++    rc = qxl_get_check_slot_offset(qxl, pqxl, &slot, &offset, size, true);
+     assert(rc == true);
+     trace_qxl_surfaces_dirty(qxl->id, offset, size);
+     qxl_set_dirty(qxl->guest_slots[slot].mr,
+-- 
+2.47.1
 
-On Tue, Aug 25, 2026 at 11:42=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com>
-wrote:
->
-> On Sun, Aug 23, 2026 at 11:07:18PM +0800, Yonggang Luo wrote:
-> > This series produces one qemu-system binary that can run ARM (32 and 64=
-)
-> > and RISC-V (32 and 64, little- and big-endian TargetInfo). It follows
-> > Pierrick Bouvier's merged series "single-binary: implement dynamic
-> > filtering for machine types":
-> >
-> >
-https://patchew.org/QEMU/20260724000948.234657-1-pierrick.bouvier@oss.qualc=
-omm.com/
->
-> Do you have a public git branch somewhere with this series ? I'm
-> having trouble getting either this series or Pierrick's to cleanly
-> apply at any point to test it.
->
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
->
-
-
---
-         =E6=AD=A4=E8=87=B4
-=E7=A4=BC
-=E7=BD=97=E5=8B=87=E5=88=9A
-Yours
-    sincerely,
-Yonggang Luo
-
---0000000000006f5cae0659e2333c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">The github branch I built locally=C2=A0<div><br></div><div=
-><a href=3D"https://github.com/lygstate/qemu/tree/s11.1-riscv-arm">https://=
-github.com/lygstate/qemu/tree/s11.1-riscv-arm</a><br><br>On Tue, Aug 25, 20=
-26 at 11:42=E2=80=AFPM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berran=
-ge@redhat.com">berrange@redhat.com</a>&gt; wrote:<br>&gt;<br>&gt; On Sun, A=
-ug 23, 2026 at 11:07:18PM +0800, Yonggang Luo wrote:<br>&gt; &gt; This seri=
-es produces one qemu-system binary that can run ARM (32 and 64)<br>&gt; &gt=
-; and RISC-V (32 and 64, little- and big-endian TargetInfo). It follows<br>=
-&gt; &gt; Pierrick Bouvier&#39;s merged series &quot;single-binary: impleme=
-nt dynamic<br>&gt; &gt; filtering for machine types&quot;:<br>&gt; &gt;<br>=
-&gt; &gt; =C2=A0 <a href=3D"https://patchew.org/QEMU/20260724000948.234657-=
-1-pierrick.bouvier@oss.qualcomm.com/">https://patchew.org/QEMU/202607240009=
-48.234657-1-pierrick.bouvier@oss.qualcomm.com/</a><br>&gt;<br>&gt; Do you h=
-ave a public git branch somewhere with this series ? I&#39;m<br>&gt; having=
- trouble getting either this series or Pierrick&#39;s to cleanly<br>&gt; ap=
-ply at any point to test it.<br>&gt;<br>&gt;<br>&gt; With regards,<br>&gt; =
-Daniel<br>&gt; --<br>&gt; |: <a href=3D"https://berrange.com">https://berra=
-nge.com</a> =C2=A0 =C2=A0 =C2=A0 ~~ =C2=A0 =C2=A0 =C2=A0 =C2=A0<a href=3D"h=
-ttps://hachyderm.io/@berrange">https://hachyderm.io/@berrange</a> :|<br>&gt=
-; |: <a href=3D"https://libvirt.org">https://libvirt.org</a> =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0~~ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0<a href=3D"https:/=
-/entangle-photo.org">https://entangle-photo.org</a> :|<br>&gt; |: <a href=
-=3D"https://pixelfed.art/berrange">https://pixelfed.art/berrange</a> =C2=A0=
- ~~ =C2=A0 =C2=A0<a href=3D"https://fstop138.berrange.com">https://fstop138=
-.berrange.com</a> :|<br>&gt;<br><br><br>--<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0=E6=AD=A4=E8=87=B4<br>=E7=A4=BC<br>=E7=BD=97=E5=8B=87=E5=88=9A<br>You=
-rs<br>=C2=A0 =C2=A0 sincerely,<br>Yonggang Luo</div></div>
-
---0000000000006f5cae0659e2333c--
 
