@@ -4,52 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71C85C61DBC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF97EC61DB6
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:08:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylGP-0007nd-Kf; Tue, 25 Aug 2026 03:08:05 -0400
+	id 1wylFw-0006r4-6B; Tue, 25 Aug 2026 03:07:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylGG-0007hl-5a; Tue, 25 Aug 2026 03:07:57 -0400
+ id 1wylFt-0006jL-TJ; Tue, 25 Aug 2026 03:07:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylGC-00060L-U2; Tue, 25 Aug 2026 03:07:54 -0400
+ id 1wylFr-0005zs-Qk; Tue, 25 Aug 2026 03:07:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641596; bh=oAdFlTdHGmfLnIpJ/Q3sjwmZB5CCL70Rv0f6oSGohxk=;
+ t=1787641596; bh=Fa+LvK5q74YUlXE2c11mm+O2uVCpo2KXH4JztZyUEDc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=m+fulfzmfpK1D7uE5oZBW/WLv9/9KeLXP9E2THG5shAmCwWL/h7O1FmwiTHjb3MTv
- fSse+2EzaNS+THlLbtuuY61eGzPkHN4wMAmjl61KW9+n5CPOWSKTQ+Oi1GQyAoBrbq
- 7QOsh5ULWwwBLCyC7OZd9vk/aE4aXE9UKlPniLY39xfdY8Y5LvDBWCzN0XwftP4r1t
- xF6eaGNO2jQN5rJJHNQ+1YV1z3E2Hv0U0gxu7p5LyPF4+tldPhcyRhfjYzlaEbLLdQ
- yFA9ysNQReI0t+BdTY/SEvEf8ekMtj8m6TcQZz+Ds1E6NZaML1wFMm+n9sN7TEoxIv
- pHuwi2AI7ihKQ==
+ b=YqumLuFUJdCy92eyr/jiG8DU2PyyMZnZkF6vc3K4b/2Vs/8MzCLY/CGELn4HnBnYL
+ UbXZ9fNMPj3oyttjbzN0lAj8DZQjiPQ2RiLYA3+7Unl2tPa6hzhgYl4u5c836zUg+4
+ 26O3bomye5iskhYTmf0DS6aNdRBiH9dMgPZyxy7EP4tEWx1Fnjuw4HYopkIeNWF3Z/
+ VBtqWkC+q4dtIAVUm5rwtqhbN6ua0ikqT6SdN9sz9N2SUWPmpDhsYe0ifq4Xr3Z1db
+ LLg+qj9mUi7ik+Sorul5I7yDeIff9jnWlagQFq5iupnqQQnCNVVcxlvFKLH3rfvOJH
+ q8sNbufj+TTFA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1F7971CE21B;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1A5EF1CE21A;
  Tue, 25 Aug 2026 10:06:36 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D7F87415F96;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D28B6415F95;
  Tue, 25 Aug 2026 10:07:12 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 84EBA32416; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ id 81CF632414; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Yogesh Vyas <yvyas1991@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 54/91] tcg: Return success from
- tcg_region_alloc__locked
-Date: Tue, 25 Aug 2026 10:05:26 +0300
-Message-ID: <20260825070619.174584-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jan Mercl <0xjnml@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Song Gao <17746591750@163.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 v2 53/91] target/loongarch: check FPE before reading
+ fcc in bceqz/bcnez
+Date: Tue, 25 Aug 2026 10:05:25 +0300
+Message-ID: <20260825070619.174584-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -74,68 +72,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Jan Mercl <0xjnml@gmail.com>
 
-Invert the sense of the boolean result from 'error' to 'success'.
+gen_cz_bc() loads env->cf[cj] without CHECK_FPE, unlike every other
+translator that touches an fcc register (trans_fcmp.c.inc and
+trans_fmov.c.inc, for movcf2gr/movgr2cf/movcf2fr/movfr2cf/fsel).
 
-Tested-by: Yogesh Vyas <yvyas1991@gmail.com>
-Reviewed-by: Yogesh Vyas <yvyas1991@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit e131c28b6eb24c0b7f7f21591b2b2c7568267337)
+A guest that manages the FPU lazily -- Linux clears CSR.EUEN.FPE in
+lose_fpu() on every context switch -- relies on the next fcc access
+raising a Floating-Point-Disabled exception so the kernel can restore
+that task's fcc.  Because bceqz and bcnez never raise it, they branch on
+the condition flag left behind by whichever task last owned the FPU.
+
+Real Loongson hardware does raise the exception, so this is TCG-only.
+It surfaces as Go binaries dying at startup in runtime.check() with
+"fatal error: float64nan1" -- roughly one process start in a thousand
+once the guest has more runnable tasks than vCPUs -- and in general as a
+conditional branch silently taking the wrong path.
+
+With four tasks each executing 5M bcnez on a 2-vCPU guest, master
+mispredicts 89 of 20000000.  With this patch, 0 of 100000000 over five
+runs; a Loongson-3C5000 is likewise 0 of 600000000.
+
+CHECK_FPE is defined in trans_farith.c.inc, which translate.c includes
+before trans_branch.c.inc, so it is already in scope.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/4209
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Jan Mercl <0xjnml@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260819132422.5164-1-0xjnml@gmail.com>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+(cherry picked from commit 215a4fc08f2aafce54c168cf41c64c79187430c1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/region.c b/tcg/region.c
-index 5d4be1453b0..2161d961d98 100644
---- a/tcg/region.c
-+++ b/tcg/region.c
-@@ -360,11 +360,11 @@ static void tcg_region_assign(TCGContext *s, size_t curr_region)
- static bool tcg_region_alloc__locked(TCGContext *s)
- {
-     if (region.current == region.n) {
--        return true;
-+        return false;
-     }
-     tcg_region_assign(s, region.current);
-     region.current++;
--    return false;
-+    return true;
- }
+diff --git a/target/loongarch/tcg/insn_trans/trans_branch.c.inc b/target/loongarch/tcg/insn_trans/trans_branch.c.inc
+index f94c1f37ab1..da077786585 100644
+--- a/target/loongarch/tcg/insn_trans/trans_branch.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_branch.c.inc
+@@ -66,6 +66,8 @@ static bool gen_cz_bc(DisasContext *ctx, arg_c_offs *a, TCGCond cond)
+     TCGv src1 = tcg_temp_new();
+     TCGv src2 = tcg_constant_tl(0);
  
- /*
-@@ -373,17 +373,17 @@ static bool tcg_region_alloc__locked(TCGContext *s)
-  */
- bool tcg_region_alloc(TCGContext *s)
- {
--    bool err;
-+    bool ok;
-     /* read the region size now; alloc__locked will overwrite it on success */
-     size_t size_full = s->code_gen_buffer_size;
- 
-     qemu_mutex_lock(&region.lock);
--    err = tcg_region_alloc__locked(s);
--    if (!err) {
-+    ok = tcg_region_alloc__locked(s);
-+    if (ok) {
-         region.agg_size_full += size_full - TCG_HIGHWATER;
-     }
-     qemu_mutex_unlock(&region.lock);
--    return err;
-+    return !ok;
- }
- 
- /*
-@@ -392,8 +392,8 @@ bool tcg_region_alloc(TCGContext *s)
-  */
- static void tcg_region_initial_alloc__locked(TCGContext *s)
- {
--    bool err = tcg_region_alloc__locked(s);
--    g_assert(!err);
-+    bool ok = tcg_region_alloc__locked(s);
-+    g_assert(ok);
- }
- 
- void tcg_region_initial_alloc(TCGContext *s)
++    CHECK_FPE;
++
+     tcg_gen_ld8u_tl(src1, tcg_env,
+                     offsetof(CPULoongArchState, cf[a->cj]));
+     gen_bc(ctx, src1, src2, a->offs, cond);
 -- 
 2.47.3
 
