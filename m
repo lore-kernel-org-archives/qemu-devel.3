@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECB43C61DBE
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:59:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F31D1C61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:59:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wypn4-000490-49; Tue, 25 Aug 2026 07:58:06 -0400
+	id 1wypn4-00048z-3W; Tue, 25 Aug 2026 07:58:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.wang@intel.com>)
- id 1wyn5I-0008GW-KV
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 05:04:44 -0400
-Received: from mgamail.intel.com ([198.175.65.17])
+ id 1wykvB-0001fD-6g
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 02:46:09 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.wang@intel.com>)
- id 1wyn5H-0003NQ-22
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 05:04:44 -0400
+ id 1wykv9-0002mn-51
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 02:46:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1787648684; x=1819184684;
+ t=1787640367; x=1819176367;
  h=from:to:cc:subject:date:message-id:mime-version:
  content-transfer-encoding;
- bh=IRospQUnhQ5VlCdPiqzdzA8GrVNZTBQfRJl7Pzsv5LY=;
- b=Xp0MS7fJa+tDzir6BpR/2aFU05PQN2iWrBVs8SCFfZVGW41eGSl+mSgh
- LnX9l5X7ALtYfnJJ/fZ5dnecSsetTVTP2++pxwzQ2hvNSIphQeQmNEodZ
- f65OxD55AYON6N4Q65wI95HyJJfGfNRiiu7UmWO0WYE2xw9cTsIUu9G8L
- wemiQouZxlVFLH0tBBx8GI2JOCSf1rz0g+jUL7ol18SQJkUm6YbkABgvj
- OwVCRD7tFSkM5vkFuhx6DXZKJJhIqcTai6JgGWMJXnxjU4+Owox1lCzs1
- mDydi9DhyChS/h9FW7Oi4P1yJ8Y8euf9Q8E0QtI+4q2fw6AZwuHOKsRsB Q==;
-X-CSE-ConnectionGUID: 078963zCTOOtQDcOoOAd3w==
-X-CSE-MsgGUID: NwfijpfgTw+j0H+XbGR1AA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11885"; a="88128061"
-X-IronPort-AV: E=Sophos;i="6.25,242,1779174000"; d="scan'208";a="88128061"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Aug 2026 02:04:40 -0700
-X-CSE-ConnectionGUID: 0MnKJLNIRWOogCb/kQC/dg==
-X-CSE-MsgGUID: CeNaN+1nSa+EtC/EycT3lw==
+ bh=kPEjrqGKp8iyJ+pi30jeL97fI58FWtdJNx9O0zq7lXE=;
+ b=Ar/xMlhkl32s6OvzyBF4DW3kTu2egKh8Vvo5RXzjoEOb+3KKI4x5pl9/
+ vmdP8ACtsiRyzypwM1Mfn6+yqo5w1tgd/iw6o22VNX969SsXmvMrDFFUo
+ yftY3TK26r+ZM3qyLkCQb9npnpus+UqJFgciOCZg3LE9i6NwM5SL+bv67
+ PFQLYPdeKgO/4I2SW4mZ1F2sUskEDrT0S98BKF5NrhnYA+ixo1BOPuP4Y
+ Gr706y4IxcqlvaCVG8DQ0MaypR+Bvg8W4pWiTb/5G6UoCTwyjhptGkie5
+ 05YZ2kaXntX1fsoZphXGBsbTdh+lLk0bZhLehGpHt2VitaxIvu0v+FNvy g==;
+X-CSE-ConnectionGUID: xu7lMOonSJm26HJMvoYiaw==
+X-CSE-MsgGUID: +5VcmDYQQkq2f5WZAGYypQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11885"; a="87974263"
+X-IronPort-AV: E=Sophos;i="6.25,242,1779174000"; d="scan'208";a="87974263"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Aug 2026 23:45:55 -0700
+X-CSE-ConnectionGUID: Hsf8e+rwTK+I2rpGzJXipw==
+X-CSE-MsgGUID: Rr8dPqTFQWGq3RpG8Gq0Rg==
 X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,242,1779174000"; d="scan'208";a="271412263"
 Received: from qat-wangyuan-17e.sh.intel.com ([10.239.92.81])
- by fmviesa003.fm.intel.com with ESMTP; 25 Aug 2026 02:04:38 -0700
+ by orviesa005.jf.intel.com with ESMTP; 24 Aug 2026 23:45:53 -0700
 From: Yuan Wang <yuan1.wang@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, tomitamoeko@gmail.com,
  Yuan Wang <yuan1.wang@intel.com>
-Subject: [PATCH v2] vfio/igd: Add device ID support for Meteor Lake and Arrow
- Lake
-Date: Tue, 25 Aug 2026 17:04:35 +0800
-Message-Id: <20260825090435.1492485-1-yuan1.wang@intel.com>
+Subject: [PATCH] vfio/igd: Add device ID support for Meteor Lake and Arrow Lake
+Date: Tue, 25 Aug 2026 07:30:52 +0000
+Message-Id: <20260825073052.1466186-1-yuan1.wang@intel.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=yuan1.wang@intel.com;
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=yuan1.wang@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -94,11 +94,6 @@ so that stolen memory is correctly determined, allowing OVMF to properly
 initialize the OpRegion and BDSM for the Intel GOP driver.
 
 Signed-off-by: Yuan Wang <yuan1.wang@intel.com>
----
-v2:
-- Resending because the v1 patch was sent with an incorrect future 
-  system timestamp due to an unsynchronized local clock. No code
-  changes.
 ---
  hw/vfio/igd.c | 2 ++
  1 file changed, 2 insertions(+)
