@@ -4,73 +4,157 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44B6FC61DB4
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 10:10:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D808BC61CE2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 10:16:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyo61-000323-U4; Tue, 25 Aug 2026 06:09:33 -0400
+	id 1wyoCI-0004qg-1u; Tue, 25 Aug 2026 06:16:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
- id 1wyo60-00031b-LK; Tue, 25 Aug 2026 06:09:32 -0400
-Received: from zm-mta-out-3.u-ga.fr ([152.77.200.56])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wyoCC-0004qS-Ef; Tue, 25 Aug 2026 06:15:56 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
- id 1wyo5y-0002g2-OU; Tue, 25 Aug 2026 06:09:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=univ-grenoble-alpes.fr; s=2020; t=1787652568;
- bh=V7xWE/MO0+j9X5KVbBLBbazluYuQy+pYibiRpxq9GZE=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=oBdKL2pFOV6sbAqragzXU7uE/ehxzTcb4fJtUcf8/+xV/lZgnPLEWmKIOWYRfHGul
- qjHMXBPjDfpC+JlN4r8NeI8QjKagRGmPXi3V6Q/M8HfX3Mq+VhQ4T9ISxMawHMmDKq
- Eq6aYJA8wJSMPdsyruZI8hirntYx4tPDiusnHbkVQbrbFctEgJCi2rnhA+B3ppcL50
- ti31jd/WwJpOWMn/fDw+9zjZw283I910RryUz15eP88Z+DTRSWzcCLfgIZIek8JJb7
- R7y0oSc5wAfdMEwHlr5zDWH8JuWiS3w4syc3ucG/BdmmGboDyrOR+xeKDgLNCawiNi
- JJvcz13ds97Kg==
-Received: from mailhub-1.u-ga.fr (mailhub-1.u-ga.fr [129.88.178.98])
- by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id 0A15A4026E;
- Tue, 25 Aug 2026 12:09:28 +0200 (CEST)
-Received: from smtps.univ-grenoble-alpes.fr (smtps2.u-ga.fr [152.77.18.2])
- by mailhub-1.u-ga.fr (Postfix) with ESMTP id 05BF1FF85D;
- Tue, 25 Aug 2026 12:09:28 +0200 (CEST)
-Received: from naga.. (pers-185-231.vpn-inp.grenoble-inp.fr [147.171.185.231])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- (Authenticated sender: petrotf@univ-grenoble-alpes.fr)
- by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id C617014004C;
- Tue, 25 Aug 2026 12:09:27 +0200 (CEST)
-From: frederic.petrot@univ-grenoble-alpes.fr
-To: daniel.barboza@oss.qualcomm.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu@processmission.com,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
- <frederic.petrot@univ-grenoble-alpes.fr>, 
- Julien Thillard <julien.thillard@univ-grenoble-alpes.fr>
-Subject: [PATCH v3] disas/riscv.c: Correct dasm for cbo and lq
-Date: Tue, 25 Aug 2026 12:09:22 +0200
-Message-ID: <20260825100922.387919-2-frederic.petrot@univ-grenoble-alpes.fr>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260825100922.387919-1-frederic.petrot@univ-grenoble-alpes.fr>
-References: <20260825100922.387919-1-frederic.petrot@univ-grenoble-alpes.fr>
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1wyoCA-0004SZ-Nh; Tue, 25 Aug 2026 06:15:56 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67P8VeAA3390556; Tue, 25 Aug 2026 10:15:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=bL7pKJ
+ ToSzONcUCVfWgloHCdzknQ/Bt1Z+kffOYYohQ=; b=pVdO5a+nNc5UVx1d6LgPM8
+ 7FLFGGScR3LWkjlaA2nXmeKlYKv9GPVb3c4QxVbXtr5I1veqaSezbtU2w7Z1BfYE
+ bDXFpC1pWso2ss7m7xJzDg/p3iEbkNTMTobAPLQupKWZhKKYiAiO2zoLwPErnuFw
+ kC+CYO9C4bg1Cg1CpJK8xjGXCZlRJ4/icXh8l+Lz7tpaZz9+ELPLWxergLynvs2v
+ UvUTwi/WL5a9afvKu6UVpcVIWLXgSlaOkmVJaZxu+/WuqPy2cBf1J3zVm0GfI8Se
+ TnSGhqd1OAKA9lDJ0NkbmQGT1Y8LLvaZpdtlj6J5/RF7WYFVP5zypqsqkNwkv2UQ
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726efe0j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 25 Aug 2026 10:15:44 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67PABPvq000844;
+ Tue, 25 Aug 2026 10:15:44 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rsy3cnx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 25 Aug 2026 10:15:43 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67PAFgjo24248956
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 25 Aug 2026 10:15:42 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6A9CC58059;
+ Tue, 25 Aug 2026 10:15:42 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1669B5805B;
+ Tue, 25 Aug 2026 10:15:41 +0000 (GMT)
+Received: from [9.61.78.161] (unknown [9.61.78.161])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 25 Aug 2026 10:15:40 +0000 (GMT)
+Message-ID: <09380eca-8da0-4342-9a49-f86842d1a0a0@linux.ibm.com>
+Date: Tue, 25 Aug 2026 06:15:40 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Greylist: Whitelist-UGA SMTP Authentifie (petrotf@univ-grenoble-alpes.fr)
- via submission-587 ACL (41)
-Received-SPF: pass client-ip=152.77.200.56;
- envelope-from=frederic.petrot@univ-grenoble-alpes.fr;
- helo=zm-mta-out-3.u-ga.fr
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v16 06/20] target/s390x: Adjust addressing mode checks for
+ sha512 and sha256
+To: Harald Freudenberger <freude@linux.ibm.com>, richard.henderson@linaro.org, 
+ iii@linux.ibm.com, david@kernel.org, thuth@redhat.com, berrange@redhat.com
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, linux-s390@vger.kernel.org, 
+ dengler@linux.ibm.com, borntraeger@linux.ibm.com,
+ fcallies@linux.ibm.com, cohuck@redhat.com
+References: <20260824083204.40877-1-freude@linux.ibm.com>
+ <20260824083204.40877-7-freude@linux.ibm.com>
+Content-Language: en-US
+From: Eric Farman <farman@linux.ibm.com>
+Autocrypt: addr=farman@linux.ibm.com; keydata=
+ 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
+ y8m0x6unNti2MZIUMy0m2gcE
+In-Reply-To: <20260824083204.40877-7-freude@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8d6b50 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=XS7WEkP-FYxO3f8Vb7EA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI1MDA4NSBTYWx0ZWRfX3PzTXbGohIvr
+ jV7I4Qn3OT/p0wHPvaipKZczMzmypuhF4ZY40EoAC7bNU1jnsME2Q50PnvpAoLNlEOSmqkBl8u6
+ ZYfx48ZTmZuxihVsuHuF1+4T02Cjh4Y=
+X-Proofpoint-GUID: eNPxap9JMdGDmLWk9LBYyioQ5gxOOgR9
+X-Proofpoint-ORIG-GUID: eNPxap9JMdGDmLWk9LBYyioQ5gxOOgR9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI1MDA4NSBTYWx0ZWRfX4tnwEgUhfiGF
+ aYO4ivssRCBTmjXFndF2vKb4ZM40ANYYoIB/KiQL/xvh66diEpQa7s6M1s+qA9t1XlU6rdyYQ0W
+ vOhMzxmAUK1CfOTdN2lOX9WAgPByiy9AwS6bQZMnOjQV1VZXCknT+HcYk+smxSU6rLJfpMRsgHv
+ igWL+F/kS7gvdbY7qgexga6nowZ8/pGgbqxj0mehvR3glbBaCKNiCsSuj3xngel/BzsvjALebQn
+ 3Rjl82Niyi2uvUDQmzTpPD8yj2KFIg8sKGp6JkuDCGWE8h44JmeQHpG5rSouIXknjHN1rzkRx17
+ so6Dhouxj3fuePBKSBmNB5X2KSQBZyGdyjSgCqg9T8dlGr6x0ckvXLp6j4U9rvAwJtt/PMW4rmu
+ NS7PxuECJoAr51FV+qwUx25LxVHse7s2YxmqQH1fbrfirj9nkzwbUWlxnQV25LHDvWiuHv0/RgY
+ lD441LdDr3nseuTUyAQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-25_02,2026-08-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608250085
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,74 +171,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 
-Lq shares the cmo opcode space, but the cbos must have rd = 0.
-Now ensure that they are matched only in that case.
-This implies that lq can be recognized as such only when rd != 0.
-Update the decoder file accordingly.
 
-Fixes: 9273cda722 ("disas/riscv.c: add 'cbo' insns to disassembler")
-Reported-by: Julien Thillard <julien.thillard@univ-grenoble-alpes.fr>
-Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
----
- disas/riscv.c              | 20 +++++++++++---------
- target/riscv/insn32.decode |  2 ++
- 2 files changed, 13 insertions(+), 9 deletions(-)
+On 8/24/26 4:31 AM, Harald Freudenberger wrote:
+> The handling for different addressing modes in the both sha
+> implementations cpacf sha256 and sha512 was incomplete. Rework this
+> addressing checking to clearly have support for s390 64 bit and 32 bit
+> addressing mode but raise an exception otherwise.
+> 
+> Also bail out early (for KIMD only) if length is 0.
+> 
+> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+> Suggested-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> ---
+>   target/s390x/tcg/cpacf_sha256.c | 16 +++++++++++++---
+>   target/s390x/tcg/cpacf_sha512.c | 16 +++++++++++++---
+>   2 files changed, 26 insertions(+), 6 deletions(-)
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index b8099cbdf8..e85dbac035 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -1281,22 +1281,24 @@ static const rv_opcode_data *decode_inst_opcode(rv_decode *dec, rv_isa isa)
-             case 2:
-                /*
-                 * 'lq' shares the "(...) 010 ..... 0001111" opcode space
--                * with 'cbo' insns.  Check the next 5 bits to select
--                * what we want:
-+                * with 'cbo' insns.
-                 *
-                 * cbo_inval  0000000 00000 ..... 010 00000 0001111
-                 * cbo_clean  0000000 00001 ..... 010 00000 0001111
-                 * cbo_flush  0000000 00010 ..... 010 00000 0001111
-                 * cbo_zero   0000000 00100 ..... 010 00000 0001111
-                 *
--                * Anything that doesn't match these will default to 'lq'.
-+                * lq matches when rd != 0
-                 */
--               switch ((inst >> 17) & 0b11111) {
--               case 0: return &op_cbo_inval;
--               case 1: return &op_cbo_clean;
--               case 2: return &op_cbo_flush;
--               case 4: return &op_cbo_zero;
--               default: return &op_lq;
-+               if ((inst >> 7) & 0b11111) {
-+                   return &op_lq;
-+               } else {
-+                   switch (inst >> 20) {
-+                   case 0: return &op_cbo_inval;
-+                   case 1: return &op_cbo_clean;
-+                   case 2: return &op_cbo_flush;
-+                   case 4: return &op_cbo_zero;
-+                   }
-                }
-             }
-             break;
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index 21272fdb50..aa02dae3c9 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -216,6 +216,8 @@ ldu      ............   ..... 111 ..... 0000011 @i
-   ]
- 
-   # *** RVI128 lq ***
-+  # *** Catches an lq with rd = 0, which we disallow
-+  illegal  ------------   ----- 010 00000 0001111
-   lq       ............   ..... 010 ..... 0001111 @i
- }
- sq       ............   ..... 100 ..... 0100011 @s
--- 
-2.43.0
+I was going to ask why this wasn't just included in the first place, but 
+I see that sha512 is pre-existing. So, makes sense this way...
+
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+
+> 
+> diff --git a/target/s390x/tcg/cpacf_sha256.c b/target/s390x/tcg/cpacf_sha256.c
+> index 67321b565c..de305b6838 100644
+> --- a/target/s390x/tcg/cpacf_sha256.c
+> +++ b/target/s390x/tcg/cpacf_sha256.c
+> @@ -111,14 +111,24 @@ int cpacf_sha256(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+>   {
+>       enum { MAX_BLOCKS_PER_RUN = 128 }; /* 128 * 64 = 8K */
+>       uint64_t len = *len_reg, processed = 0;
+> -    int message_reg_len = 64;
+> +    int message_reg_len;
+>       uint32_t a[8];
+>   
+>       g_assert(type == S390_FEAT_TYPE_KIMD || type == S390_FEAT_TYPE_KLMD);
+>   
+> -    if (!(env->psw.mask & PSW_MASK_64)) {
+> +    /* check addressing mode, raise exception if not supported here */
+> +    if (env->psw.mask & PSW_MASK_64) {
+> +        message_reg_len = 64;
+> +    } else if (env->psw.mask & PSW_MASK_32) {
+> +        message_reg_len = 32;
+>           len = (uint32_t)len;
+> -        message_reg_len = (env->psw.mask & PSW_MASK_32) ? 32 : 24;
+> +    } else {
+> +        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+> +    }
+> +
+> +    /* for KIMD only: early bail out if length is zero */
+> +    if (type == S390_FEAT_TYPE_KIMD && !len) {
+> +        return 0;
+>       }
+>   
+>       /* KIMD: length has to be properly aligned. */
+> diff --git a/target/s390x/tcg/cpacf_sha512.c b/target/s390x/tcg/cpacf_sha512.c
+> index edd8dae78f..cad8e0e1bd 100644
+> --- a/target/s390x/tcg/cpacf_sha512.c
+> +++ b/target/s390x/tcg/cpacf_sha512.c
+> @@ -126,13 +126,23 @@ int cpacf_sha512(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+>   {
+>       enum { MAX_BLOCKS_PER_RUN = 64 }; /* Arbitrary: keep interactivity. */
+>       uint64_t len = *len_reg, a[8], processed = 0;
+> -    int message_reg_len = 64;
+> +    int message_reg_len;
+>   
+>       g_assert(type == S390_FEAT_TYPE_KIMD || type == S390_FEAT_TYPE_KLMD);
+>   
+> -    if (!(env->psw.mask & PSW_MASK_64)) {
+> +    /* check addressing mode, raise exception if not supported here */
+> +    if (env->psw.mask & PSW_MASK_64) {
+> +        message_reg_len = 64;
+> +    } else if (env->psw.mask & PSW_MASK_32) {
+> +        message_reg_len = 32;
+>           len = (uint32_t)len;
+> -        message_reg_len = (env->psw.mask & PSW_MASK_32) ? 32 : 24;
+> +    } else {
+> +        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+> +    }
+> +
+> +    /* for KIMD only: early bail out if length is zero */
+> +    if (type == S390_FEAT_TYPE_KIMD && !len) {
+> +        return 0;
+>       }
+>   
+>       /* KIMD: length has to be properly aligned. */
 
 
