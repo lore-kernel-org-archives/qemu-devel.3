@@ -4,48 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AB73C5DF94
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 780EAC61DBC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:11:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylIg-0005oF-Iw; Tue, 25 Aug 2026 03:10:26 -0400
+	id 1wylHH-0002V1-VO; Tue, 25 Aug 2026 03:09:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylIe-0005hk-KW; Tue, 25 Aug 2026 03:10:24 -0400
+ id 1wylHF-0002Q5-JL; Tue, 25 Aug 2026 03:08:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylIc-0006RX-VF; Tue, 25 Aug 2026 03:10:24 -0400
+ id 1wylHD-0006Cw-SQ; Tue, 25 Aug 2026 03:08:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641596; bh=gTbgj9WkXboTmhr3e+P2ribHWdlP47LwJeI+QYw/ubo=;
+ t=1787641596; bh=LpkwcsbUxB2UQwBn83JTotHPX67MYqcRzzSRUZlAwi4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QRlsPGrvQN5IEKrMYSpUbyLy3dR27cOPuaQGbEdC9JEAFi18RD4hNh8scN1spYJ7B
- wYkOgLlZhIpfvCjI7RJRU9HwUwy1tOqaBWCANbETGv5vAw2lHoC3wmv3u5TZk6646A
- 0Jp1bvyI1CyBLIabppBQaNzy1upaSsgmuVgP4GHSRHn8XqQzbxYv/4LHhpUGqmHVb7
- xsvBKoPASMjWmwrMTQtjifGzcyeCmKa9OIAldPbe9EFv0M0rceKCzo9r5zDcOSvGqt
- qyrd5kjNg6HQJbyiHP+6TQtqAaN91Oq6QyLUGUDLMmyMOaRJU0JN1+fqeo7jtuqo5H
- dJFfO6XAyradA==
+ b=V9g6uFSSwPPmK/ZjDCKVrq3Xfraoem5os2JizYVRqNjg7CHIakUOvkmkTmsOhTAUf
+ AQeG6LPJBEaYdKvoDfjprxqxBB9yl3clocEo8NDevbSEzNFs8qrVXlJpWvTeRsdu4M
+ bQ49uN1znQmQI1EfCrLoQwmCFVLjvE+ZV8ASf0tZDZntMBre1zveFcAQLTWVyaULWE
+ FoHhDVig1TorgJlXfIaxw/joO/5rj0K0pyJwQ2C2c7H7kMEkZu/TsL8jnDBl4qO6V2
+ SIm8VsWACPOTbbIIhIa/Ou4oo0Q3NIgDVs1aE+0S4j0imqSb53rFAB5lV6OjJE0yJK
+ JRGhE9UbquilA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A1FE41CE234;
+ by isrv.corpit.ru (Postfix) with ESMTP id 56E1E1CE225;
  Tue, 25 Aug 2026 10:06:36 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 66494415FAF;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1BAD8415FA0;
  Tue, 25 Aug 2026 10:07:13 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id D0A1032448; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ id A36933242A; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Nutty Liu <nutty.liu@hotmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 79/91] hw/riscv/riscv-iommu: fix U-bit check to
- apply only to leaf S/VS-stage PTEs
-Date: Tue, 25 Aug 2026 10:05:51 +0300
-Message-ID: <20260825070619.174584-37-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 v2 64/91] hw/i386: fw_cfg: do not set VMX feature
+ control on WHPX
+Date: Tue, 25 Aug 2026 10:05:36 +0300
+Message-ID: <20260825070619.174584-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
@@ -74,63 +71,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Jones <andrew.jones@oss.qualcomm.com>
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Commit b795ea0ba471 ("hw/riscv/riscv-iommu.c: fault when !PTE_U and
-no priv access") placed its check ahead of the leaf-vs-non-leaf
-branch in riscv_iommu_spa_fetch(), so it fires on every PTE walked,
-including non-leaf/table entries. Per the RISC-V privileged spec's
-address translation algorithm (Sv39/Sv48/etc., the "leaf PTE has
-been reached" step, followed separately by the U-bit permission
-check), the U bit is only defined and checked for the leaf PTE
-reached at the end of the walk -- non-leaf PTEs don't carry a
-meaningful U bit at all.
+Hyper-V doesn't allow setting this bit on build 26100.
 
-Move the check after the leaf/non-leaf branch, alongside the other
-leaf-only checks, mirroring how the G_STAGE U-bit check (added in
-9158c900ab30) is already correctly placed.
-
-Fixes: b795ea0ba471 ("hw/riscv/riscv-iommu.c: fault when !PTE_U and no priv access")
-Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20260717112340.1071148-1-andrew.jones@oss.qualcomm.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit f16fd27b3fe3c305d95c61d3516e458c45c6e8c9)
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Link: https://lore.kernel.org/r/20260812082814.27217-3-mohamed@unpredictable.fr
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 32452bac6d991e9778dd7a9fb2b3eed3a2b23d71)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index f6865d1e164..ed9fb09f8bc 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -476,13 +476,6 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-             break;                /* Invalid PTE */
-         } else if (pte & PTE_RESERVED(false)) {
-             break;                /* Reserved PTE bits set */
--        } else if (!(pte & PTE_U) && !pv) {
--            /*
--             * All accesses are assumed to be User mode unless
--             * process_id is valid (pv).  In case we have a
--             * non-user mode PTE and !pv we need to fault.
--             */
--            break;
-         } else if (!(pte & (PTE_R | PTE_W | PTE_X))) {
-             base = PPN_PHYS(ppn); /* Inner PTE, continue walking */
-         } else if ((pte & (PTE_R | PTE_W | PTE_X)) == PTE_W) {
-@@ -491,6 +484,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-             break;                /* Reserved leaf PTE flags: PTE_W + PTE_X */
-         } else if (ppn & ((1ULL << (va_skip - TARGET_PAGE_BITS)) - 1)) {
-             break;                /* Misaligned PPN */
-+        } else if (!(pte & PTE_U) && !pv) {
-+            /*
-+             * All accesses are assumed to be User mode unless
-+             * process_id is valid (pv).  In case we have a
-+             * non-user mode leaf PTE and !pv we need to fault.
-+             */
-+            break;
-         } else if ((iotlb->perm & IOMMU_RO) && !(pte & PTE_R)) {
-             break;                /* Read access check failed */
-         } else if ((iotlb->perm & IOMMU_WO) && !(pte & PTE_W)) {
+diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+index d422302c1c9..5903994a7cb 100644
+--- a/hw/i386/fw_cfg.c
++++ b/hw/i386/fw_cfg.c
+@@ -13,6 +13,8 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "system/mshv.h"
++#include "system/whpx.h"
+ #include "system/numa.h"
+ #include "hw/acpi/acpi.h"
+ #include "hw/acpi/aml-build.h"
+@@ -182,8 +184,15 @@ void fw_cfg_build_feature_control(MachineState *ms, FWCfgState *fw_cfg)
+     uint64_t *val;
+ 
+     cpu_x86_cpuid(env, 1, 0, &unused, &unused, &ecx, &edx);
+-    if (ecx & CPUID_EXT_VMX) {
+-        feature_control_bits |= FEATURE_CONTROL_VMXON_ENABLED_OUTSIDE_SMX;
++
++    /*
++     * Hyper-V in 26100 disallows this bit to be set.
++     * Otherwise a #GP gets raised.
++     */
++    if (!(whpx_enabled())) {
++        if (ecx & CPUID_EXT_VMX) {
++            feature_control_bits |= FEATURE_CONTROL_VMXON_ENABLED_OUTSIDE_SMX;
++        }
+     }
+ 
+     if ((edx & (CPUID_EXT2_MCE | CPUID_EXT2_MCA)) ==
 -- 
 2.47.3
 
