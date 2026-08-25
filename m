@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B7F2C61DBE
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:18:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47292C61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:19:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyp8c-0004rN-3B; Tue, 25 Aug 2026 07:16:20 -0400
+	id 1wyp8p-0005Zr-DC; Tue, 25 Aug 2026 07:16:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp8R-0004cX-1G; Tue, 25 Aug 2026 07:16:07 -0400
+ id 1wyp8m-0005Hh-Tx; Tue, 25 Aug 2026 07:16:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp8O-0000nJ-VN; Tue, 25 Aug 2026 07:16:06 -0400
+ id 1wyp8l-0000o3-1r; Tue, 25 Aug 2026 07:16:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787656396; bh=mRiq3NPS0RE6h7wAtDUf657HfK0sPiM5nb2sjbo7Wkw=;
+ t=1787656396; bh=tTVXSanUOY/GEQxUNHhGb+AhToOppj5QqAWShyhLPVU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=N4gUy0VlxAkoohAdXWFp4vUNszQG4XrMmhlZnx2VR+OXsEzAJCh8P6sb+xcgNFI8A
- PMVLWxEIILyTX1cYiUsq8Xjh+0rJCOEmjL/GsLUVpT9G6qsVKISFsKuCu9bhrH4fe+
- qunBPLXDPWjAIimzj/ApU8DowDamA6KA0PQ5kvxphBTOgYQdW/Tsax4vAVjsTVWK/Y
- ufxAFf/kxpO916FStX6DMPiTXdHa68vy57Zfe6n4KpY3C8EwXM3bvazoTytK4lExJC
- Mu3fLjAJmFfvg4T8kgbWafcmrzmnoapqrJLaB4AHkbl8UiT95A1/7pavJeeXZ0Nx60
- nT7R0VsVDOKAA==
+ b=ueD5kxRWaRO39XNKFr9QMJz0sic5ZR0Ck0qadw5XwEzGO6y7r/+KaQYW5epumbZ1M
+ 9CP31FHRjL7+G7itPclNjDcJzgou/Z4UYKE6fj+o7rIFb0JZH4FuklvlKlSf86o6iA
+ vvNsoFJuKJRHSvHvTBtSG85RAsC82C2tt+rBF7Annspp2+2XlMCUtSOobCipzPG3ZG
+ 5uqUKV3iGkXGb6M3WaqdZ14hodXtfT+ySDaHZuVgvJZYj46ZsEeTKGA715l4v6uKdD
+ Fk+7YiK+zEtFeRbR9sFMjsJMoW0Lfr+ed3YHkrrld+UIMeMLwqDDjhpRpPikuWdofZ
+ JclfycRsL4jgQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 903161CE4C0;
+ by isrv.corpit.ru (Postfix) with ESMTP id 97BB71CE4C1;
  Tue, 25 Aug 2026 14:13:16 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id A8EFA41628C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id AD80441628D;
  Tue, 25 Aug 2026 14:13:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id B9C2F325C3; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
+ id BCCB3325C5; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, wangyang <wangyang25@otcaix.iscas.ac.cn>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v3 164/166] target/riscv: reject FMV.X.W/FMV.W.X
- under Zfinx
-Date: Tue, 25 Aug 2026 14:12:00 +0300
-Message-ID: <20260825111206.482723-30-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v3 165/166] target/riscv: enforce even register
+ constraints for Zdinx fcvt pairs
+Date: Tue, 25 Aug 2026 14:12:01 +0300
+Message-ID: <20260825111206.482723-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
@@ -74,43 +74,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: wangyang <wangyang25@otcaix.iscas.ac.cn>
 
-Zfinx explicitly excludes the FMV transfer instructions, but
-trans_fmv_x_w/trans_fmv_w_x used REQUIRE_ZFINX_OR_F so a Zfinx-only
-CPU accepted them.  Require RVF instead so the transfers trap with
-an illegal instruction when only Zfinx is present.
+fcvt.d.h and fcvt.h.d access a 64-bit double held in a register
+pair, so under Zdinx/Zhinxmin the odd-rd (fcvt.d.h) and odd-rs1
+(fcvt.h.d) encodings are reserved.  Add the missing REQUIRE_EVEN
+checks so those encodings raise an illegal-instruction exception
+instead of retiring.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4108
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4109
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Signed-off-by: wangyang <wangyang25@otcaix.iscas.ac.cn>
-Message-ID: <36c7cfebd27b4b6e8bcdd00e09e9dda0@wangyang25.otcaix.iscas.ac.cn>
+Message-ID: <ea287909fd6043e0bbcdbfdcb0cc8063@wangyang25.otcaix.iscas.ac.cn>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit af1e669cef162e8d9b5f2f176e8b909d61c4b530)
+(cherry picked from commit e68cc2e5cd28333ac76d757ed2db7d2f7635d09a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/insn_trans/trans_rvf.c.inc b/target/riscv/insn_trans/trans_rvf.c.inc
-index ed73afe0894..3977c513c56 100644
---- a/target/riscv/insn_trans/trans_rvf.c.inc
-+++ b/target/riscv/insn_trans/trans_rvf.c.inc
-@@ -426,7 +426,8 @@ static bool trans_fmv_x_w(DisasContext *ctx, arg_fmv_x_w *a)
- {
-     /* NOTE: This was FMV.X.S in an earlier version of the ISA spec! */
+diff --git a/target/riscv/insn_trans/trans_rvzfh.c.inc b/target/riscv/insn_trans/trans_rvzfh.c.inc
+index bece48e6009..e2b49b2b936 100644
+--- a/target/riscv/insn_trans/trans_rvzfh.c.inc
++++ b/target/riscv/insn_trans/trans_rvzfh.c.inc
+@@ -409,6 +409,7 @@ static bool trans_fcvt_d_h(DisasContext *ctx, arg_fcvt_d_h *a)
      REQUIRE_FPU;
--    REQUIRE_ZFINX_OR_F(ctx);
-+    /* Zfinx explicitly excludes the FMV transfer instructions. */
-+    REQUIRE_EXT(ctx, RVF);
- 
-     TCGv dest = dest_gpr(ctx, a->rd);
-     TCGv_i64 src1 = get_fpr_hs(ctx, a->rs1);
-@@ -529,7 +530,8 @@ static bool trans_fmv_w_x(DisasContext *ctx, arg_fmv_w_x *a)
- {
-     /* NOTE: This was FMV.S.X in an earlier version of the ISA spec! */
-     REQUIRE_FPU;
--    REQUIRE_ZFINX_OR_F(ctx);
-+    /* Zfinx explicitly excludes the FMV transfer instructions. */
-+    REQUIRE_EXT(ctx, RVF);
+     REQUIRE_ZFHMIN_OR_ZHINXMIN(ctx);
+     REQUIRE_ZDINX_OR_D(ctx);
++    REQUIRE_EVEN(ctx, a->rd);
  
      TCGv_i64 dest = dest_fpr(ctx, a->rd);
-     TCGv src = get_gpr(ctx, a->rs1, EXT_ZERO);
+     TCGv_i64 src1 = get_fpr_hs(ctx, a->rs1);
+@@ -443,6 +444,7 @@ static bool trans_fcvt_h_d(DisasContext *ctx, arg_fcvt_h_d *a)
+     REQUIRE_FPU;
+     REQUIRE_ZFHMIN_OR_ZHINXMIN(ctx);
+     REQUIRE_ZDINX_OR_D(ctx);
++    REQUIRE_EVEN(ctx, a->rs1);
+ 
+     TCGv_i64 dest = dest_fpr(ctx, a->rd);
+     TCGv_i64 src1 = get_fpr_d(ctx, a->rs1);
 -- 
 2.47.3
 
