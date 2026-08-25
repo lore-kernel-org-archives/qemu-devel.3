@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42ACEC61DB9
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:40:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C412C61DC2
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 21:40:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyyrA-0005tE-1D; Tue, 25 Aug 2026 17:38:56 -0400
+	id 1wyyqz-0005oM-HS; Tue, 25 Aug 2026 17:38:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyr8-0005sr-JX
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:54 -0400
+ id 1wyyqx-0005mA-1A
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:43 -0400
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1wyyr6-00056Y-WE
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:54 -0400
+ id 1wyyqv-00051b-F1
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 17:38:42 -0400
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:39a2:0:640:ae2d:0])
- by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 5FCFC80E01;
- Wed, 26 Aug 2026 00:38:51 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (postfix) with ESMTPS id 1976B80DC3;
+ Wed, 26 Aug 2026 00:38:40 +0300 (MSK)
 Received: from i115954770.yandex-team.ru (unknown [2a02:6bf:8080:630::1:39])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
- id QckKa93ZVmI0-ZJb4AV9O; Wed, 26 Aug 2026 00:38:50 +0300
+ id QckKa93ZVmI0-j8uGpPRU; Wed, 26 Aug 2026 00:38:39 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1787693930;
- bh=+C74xckgz2/W3c3AsfiOhFihXBLX5vMOUtCgkhiVF4I=;
+ s=default; t=1787693919;
+ bh=audUauMQ7mR1OoEWJhW5ZME203rf9Hd0Q7JXrwKu9EY=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=YAqk7pocGAKDxXOD7JON8NhDCI3NQvS3ftKtIEmAVlB1E+0UvI/UD8irYA3oPK7CE
- sShyrdOWoX4DYjvdOBHpmAhOu4DTqldllgAD4AZZq9HPum0sMk8hlybh69b78q4tOw
- JtK4fzehGIGBxmxD+itOFJfJSw2NdOU87FuLcVOo=
+ b=sBimIEo28IjzqOtf1k4pPNJPYuXGUu3bF+iGTQd8ssK482Kq5+/uMbAAcM4xwZcCC
+ xjgVNBDycqZYX5v93Qjcvhs2U3uM/NboUkpRg2DKZFV4xPoDNklx3ZeZ+9MSx9rC1h
+ cxBkLc+d/MtC8W36NjDqjNvBrbp1ToYRKRIJ2aNY=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: peterx@redhat.com
 Cc: farosas@suse.de, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
- Stafford Horne <shorne@gmail.com>
-Subject: [PATCH 21/30] or1k/machine: move to new migration APIs
-Date: Wed, 26 Aug 2026 00:38:01 +0300
-Message-ID: <20260825213811.3725682-22-vsementsov@yandex-team.ru>
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
+Subject: [PATCH 09/30] hw/scsi/scsi-bus.c: use new migration APIs
+Date: Wed, 26 Aug 2026 00:37:49 +0300
+Message-ID: <20260825213811.3725682-10-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
 References: <20260825213811.3725682-1-vsementsov@yandex-team.ru>
@@ -75,49 +75,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- target/or1k/machine.c | 17 +++++++++--------
+ hw/scsi/scsi-bus.c | 17 +++++++++--------
  1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/target/or1k/machine.c b/target/or1k/machine.c
-index 2d5ca16c511..800dc4c21cc 100644
---- a/target/or1k/machine.c
-+++ b/target/or1k/machine.c
-@@ -46,26 +46,27 @@ static const VMStateDescription vmstate_cpu_tlb = {
+diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
+index deb43d5560e..d455c0b46b5 100644
+--- a/hw/scsi/scsi-bus.c
++++ b/hw/scsi/scsi-bus.c
+@@ -1888,18 +1888,19 @@ static void put_scsi_req(SCSIRequest *req, void *opaque)
      }
- };
+ }
  
--static int get_sr(QEMUFile *f, void *opaque, size_t size,
--                  const VMStateField *field)
-+static bool load_sr(QEMUFile *f, void *opaque, size_t size,
-+                   const VMStateField *field, Error **errp)
+-static int put_scsi_requests(QEMUFile *f, void *pv, size_t size,
+-                             const VMStateField *field, JSONWriter *vmdesc)
++static bool put_scsi_requests(QEMUFile *f, void *pv, size_t size,
++                              const VMStateField *field, JSONWriter *vmdesc,
++                              Error **errp)
  {
-     CPUOpenRISCState *env = opaque;
-     cpu_set_sr(env, qemu_get_be32(f));
+     SCSIDevice *s = pv;
+ 
+     scsi_device_for_each_req_sync(s, put_scsi_req, f);
+     qemu_put_sbyte(f, 0);
 -    return 0;
 +    return true;
  }
  
--static int put_sr(QEMUFile *f, void *opaque, size_t size,
--                  const VMStateField *field, JSONWriter *vmdesc)
-+static bool save_sr(QEMUFile *f, void *opaque, size_t size,
-+                   const VMStateField *field, JSONWriter *vmdesc,
-+                   Error **errp)
+-static int get_scsi_requests(QEMUFile *f, void *pv, size_t size,
+-                             const VMStateField *field)
++static bool get_scsi_requests(QEMUFile *f, void *pv, size_t size,
++                              const VMStateField *field, Error **errp)
  {
-     CPUOpenRISCState *env = opaque;
-     qemu_put_be32(f, cpu_get_sr(env));
+     SCSIDevice *s = pv;
+     SCSIBus *bus = DO_UPCAST(SCSIBus, qbus, s->qdev.parent_bus);
+@@ -1938,13 +1939,13 @@ static int get_scsi_requests(QEMUFile *f, void *pv, size_t size,
+         scsi_req_unref(req);
+     }
+ 
 -    return 0;
 +    return true;
  }
  
- static const VMStateInfo vmstate_sr = {
-     .name = "sr",
--    .get = get_sr,
--    .put = put_sr,
-+    .load = load_sr,
-+    .save = save_sr,
+ static const VMStateInfo vmstate_info_scsi_requests = {
+     .name = "scsi-requests",
+-    .get  = get_scsi_requests,
+-    .put  = put_scsi_requests,
++    .load = get_scsi_requests,
++    .save = put_scsi_requests,
  };
  
- static const VMStateDescription vmstate_env = {
+ static bool scsi_sense_state_needed(void *opaque)
 -- 
 2.43.0
 
