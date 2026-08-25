@@ -4,105 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7251DC61DBD
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 17:23:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37153C61DBC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 17:26:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyurj-000774-U2; Tue, 25 Aug 2026 13:23:15 -0400
+	id 1wyuuW-00082T-1d; Tue, 25 Aug 2026 13:26:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wyurh-00075x-WE
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 13:23:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1wyuuU-00082D-Cj
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 13:26:06 -0400
+Received: from mail-westeuropeazon11023090.outbound.protection.outlook.com
+ ([52.101.72.90] helo=AM0PR02CU008.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wyurf-0006Ge-Us
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 13:23:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787678591;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XuZTlrHrZSZrZiDnPA8GLaqwaeOOU8nEvR6bMb/exdU=;
- b=KD5m8/murH+za17FEKUIZSnjfK35P4SZHZr6OiGCF7pMoCXwaB2hrJIdDwFLI77yALvEGv
- jpwdlj7ej50qVvzgJMlEa9/LCqKGkQ29E5MljUxYjHCJVgeF45whHcOpQDbAr4k7vKeVyd
- YllVgKfDvdb6aykpQlXDxRMZkAPUqIA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-z_mem7U-OROg9-5ffAcTGw-1; Tue,
- 25 Aug 2026 13:23:07 -0400
-X-MC-Unique: z_mem7U-OROg9-5ffAcTGw-1
-X-Mimecast-MFC-AGG-ID: z_mem7U-OROg9-5ffAcTGw_1787678581
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 00133195411C; Tue, 25 Aug 2026 17:23:00 +0000 (UTC)
-Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EFCCA422; Tue, 25 Aug 2026 17:22:47 +0000 (UTC)
-Date: Tue, 25 Aug 2026 18:22:45 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Yonggang Luo <luoyonggang@gmail.com>
-Cc: qemu-devel@nongnu.org, Xianglai Li <lixianglai@loongson.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chinmay Rath <rathc@linux.ibm.com>,
- Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org,
- Alexander Bulekov <alxndr@bu.edu>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Farman <farman@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Chao Liu <chao.liu@processmission.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <17746591750@163.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- David Hildenbrand <david@kernel.org>, qemu-ppc@nongnu.org,
- qemu-arm@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
- Cornelia Huck <cohuck@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Bibo Mao <maobibo@loongson.cn>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
- Darren Kenny <darren.kenny@oracle.com>
-Subject: Re: [PATCH 00/12] single-binary: link ARM and RISC-V into qemu-system
-Message-ID: <ao3PZSfHQZOgY58V@redhat.com>
-References: <20260823150731.896-1-luoyonggang@gmail.com>
- <ao235Hm8Uovrk0ON@redhat.com>
- <CAE2XoE-EJQH7c3TWvpioa7yokNR6cf6pGMjZ2e001yU4-F7rag@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1wyuuS-0006iW-31
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 13:26:06 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=swfp6CXfuibWG+iy7h0TbIKKsrXIU9uV93Fw/remwnsYiFFOlX/pbNwP/uvZFhLAQhpirUX8hxImMbK9bfZlYMDI09JCNnCkFAcQszcA3/ngNcJw5pfghC6LwIRfhGRPHd2Y+sem3OQBKLv3Owa+x46PzPatCkLJyn1Diq1V7qxcUdnGhIP52T1qMTmi7tybhLG/SZGApB+vcTOyEsXnOil7Jta90WS7LUJ7WnrFwsNITRhHDcIl02QE2KSXU+oBx9zwc05KPWEDPnZpcEDQ53YYUzNLyd/08rBcEqIu32lVeOzim07vY2KoPPBPYbkSXHk1ORbPPivIYfqMT/TZ7g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PidhcwH5qMR7hjKpjgUGd/h3wxJa6WxBEbeqdR+7ELQ=;
+ b=TiOigClmBd3jdtXpZcj66R2FMDxh6UXISUsvvwdARA6deWOypVAzsLBCmi1XuCj2ejcL+wB0WKR54J/oE8SgObX21SIN/akTW2V8RHrtPRpuIK6k/NltfZVzNN7MZw70b+3GIPziKfdHNn0YVhlonTyNquaQruOiye4b/F5qawMSoCli8zft+F4OhQu7wj00ZdzMpgNHUrrPTDUqPExjfB5M1qKa/TE1OG5E6R3iRgT4a8xk95iotqKxItFS3I+tNXcJLOa0eKCSdxYnGMuhdaK37RxuF6c353FQ5w/lOSeRhlOLFZl8c/B81A5qpFczvG7lTz4q/NYCrKHa7QixRg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PidhcwH5qMR7hjKpjgUGd/h3wxJa6WxBEbeqdR+7ELQ=;
+ b=MrESVQ9Zqlznk0Z+ad16X05luEFmCvMEP7mB9fhYvSo6bsqRaAl489t4HL/uJ1AnPEaARN66d0sDowe9v0QchLazTciAFlD4wALTMOq04HFEQbWtlKlINwLJdnYfa8nfUVb/upyla5mPI1mBY81QkeAouFc5P3fbF+55LXl+GX8OGQzrq+EjTdxIZQ9EEXKLGbeydw6TfXvHH4niZzOusrOsqz3rcRay/Jh1oG+2qw2VnKHODMRKiRsFaTh51bvGDgBGvHhbIFgjYpyTYKkdFP5VOaRIZDsYQWfsnjF9wBuik0Dy77+NyERZX0sOSY2YLzJBxR0gQk+ny91Ok60yvg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by PA4PR08MB5902.eurprd08.prod.outlook.com
+ (2603:10a6:102:e0::10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.6; Tue, 25 Aug
+ 2026 17:20:58 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%7]) with mapi id 15.21.0339.012; Tue, 25 Aug 2026
+ 17:20:58 +0000
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+To: qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, philmd@oss.qualcomm.com, den@openvz.org,
+ andrey.drobyshev@virtuozzo.com
+Subject: [PATCH 0/3] hw/display/qxl: Avoid crashing on stale guest addresses
+ in qxl_post_load
+Date: Tue, 25 Aug 2026 20:20:48 +0300
+Message-ID: <20260825172051.435372-1-andrey.drobyshev@virtuozzo.com>
+X-Mailer: git-send-email 2.47.1
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAE2XoE-EJQH7c3TWvpioa7yokNR6cf6pGMjZ2e001yU4-F7rag@mail.gmail.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-ClientProxiedBy: VIVP296CA0001.AUTP296.PROD.OUTLOOK.COM
+ (2603:10a6:800:357::12) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|PA4PR08MB5902:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9a32aeb5-d4d4-45aa-c40e-08df02cd3a97
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|366016|52116014|1800799024|23010399003|38350700014|3023799007|10067099003|56012099006|18002099003;
+X-Microsoft-Antispam-Message-Info: 9OxLFReCpEBM6J2a0YY1POKzaKhQs465pGiN6eqiHGfHkrQFTP5BnfiaVFUJcj5i/upaCaS4tgChQlVbbGx7pRVmOVKnUvAn47wyx0K0QTPAVMEtSPJrrgmjLlZ54pbW2TI4uGYi+UIWa147WOa+oviSgqzwfTHcdrctKZHPn3PLnUZf1RjW+s+gc7uzXe/ES/RynCbPrIOVQObOb+a4lYC7E66UfGJGqDLgEb6QCgeXmyh8VzgPA0fQkrzEHKX2267o2envbWWScTEaFB+84h0gIS9mYZyrtbkavFHPKPfwPfoQXaK470KREmfxX/bcnEQynK0kOFwPL3OzRYLIUi73V9GOSrP3gewFPPqgIONaM9CKyevCYXoRnhesjtbb0aMRhdZXlohEYLIv2CnPLx+mXELi0TnMv9ihEtxhLmyrzri567QfH8iXbdEEkgczPF2I7iRqLEd75Wjocj/NQpDDHl32K3WScuesUOli2nGunBqzAJcJ1NQk+7uL5uh8h+lJS19EG1oSnGH4//IqEzGduzOvjB9QHiGW7bLpKVIFLlUqosHATeb1GEyIh3hPviGnFL8giTdO4A6ou+MVlddfJNqxBlJcB47MHuVxKsgOZFs5NxDq27akURcTfzX1aQVigooFSYCjmnPMUVlSOMDdQWT2rBugNMHGzDGRVDLy72M8YLcd6Co7lDj0uWsw7Tge08iBK6XGIptPDCiYeXNEKUdShB+HP/U0oaW1QjA=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(52116014)(1800799024)(23010399003)(38350700014)(3023799007)(10067099003)(56012099006)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?zjAet59r/mwRSP9Z1ZF0BYfUFg2UW7TUB3+MlTTnY6EdDtupvVJ5e+VBKbCx?=
+ =?us-ascii?Q?gwf6cdDoumTQf6wv+nGB1J7E0OUjE11mBiCXVxweL6/0Apcb+GMtMSmTX170?=
+ =?us-ascii?Q?h/oGHGFb+oxB19NCJMuA3doHcqkXwJeIHEW8pWS5JXzRvApUQ63zSra3Ijio?=
+ =?us-ascii?Q?F0cUTnxcnVth+f5bZndsmyft4pkb+/rAwPLQg94xRxYljHEx4MzOdZkr5OFa?=
+ =?us-ascii?Q?Y8tFTRXh0ZcEgFpclOamgbc3gw/U0QGUNKmFTcW9TzZLZ34cRgOq0e3y8vCs?=
+ =?us-ascii?Q?jXWvBiI2vwDhvreY+XOO5mA6Rm10L+eVadZAsCp5iqAjieQQjvn7X3De59LB?=
+ =?us-ascii?Q?yqBgRkEvRFimEA6ABVkyBcKMUJo86s9d5gsmHHNpetMdqlc8nPYLO4trgyiK?=
+ =?us-ascii?Q?EUu3iPRfCmcErnOrCpk8qvM/EZYBf16hNjjCP3zV+K6MRCEmbWNa837uzvlv?=
+ =?us-ascii?Q?OSK7jykWks6FdEN9TqmNw+2IV3H1faC2H8kM1rjRMKqi+9hXrZifJuFkl0+x?=
+ =?us-ascii?Q?qZf8RwyGRWys2VvuVCb4NW+NFQsPTBktOgSixUKsjQN41oPV5JrxcHODDlVh?=
+ =?us-ascii?Q?w6L9LzEMmIT2abSodl1vCYk5SvagkLpPvzP2ainHV53/o7v/B4ll6D4DtqMY?=
+ =?us-ascii?Q?bkV1f8oYRZWbeThArLEs2CKmeWZSCyq9X6o9PZJVTgPrysJ1iIBcVpFADBC4?=
+ =?us-ascii?Q?DjRqsj3/valZ+4Uk35eFGdx5DpYgZ/siRmhLQEpFgCDs7O0q3SRgYJcbAJMH?=
+ =?us-ascii?Q?HiYRjSrhpF3ilHx/vQKQyDGST34NHNVsZdLSdyz4cKPoU94iedcJz7KIOQJz?=
+ =?us-ascii?Q?IGK24HjsqxRiKOZhhmFUEcXaeSIlMd+zxEmf+G8mj80Ng2H8b+T950Jguo2n?=
+ =?us-ascii?Q?+3VEVU/KDR7lxDeWYrr7dxExPeeRmi1H43g7GxXqAWMeuhYYVIm3ymSWVXLG?=
+ =?us-ascii?Q?lPNXZT/FqGYRaVXzfEwgNxpapILwrzCAW+8BSYZ1vLWwUh47UTCZ1zpwQ6Ly?=
+ =?us-ascii?Q?mrUI2PX93IsGl3oz7HpNk6nZZq7ePAvrlCcxEK3OJU3lsWlGZ/m8AqjzFBKn?=
+ =?us-ascii?Q?TnWkxcNnJSunVne4PNECL5kv2WWQmJFabsuO6Fhb8kZhfG9gZSy/pwQgnzvz?=
+ =?us-ascii?Q?Na/RkSg2io2UAHTSBfQylULgCXg59er2TPID+hTKcxgGkOE0m0D0o+kBWp9C?=
+ =?us-ascii?Q?LAtYn7kR2AnZPHmaJpXi9AFaOR9M0A/ts/3RTBMQg2ia90GlWGnnHRFFJlOM?=
+ =?us-ascii?Q?IMTm8trExAdKqRpZ7Edd8t60FETEIxvw0avEyaX5kOnzsYlcyCM8Sq47IKDL?=
+ =?us-ascii?Q?HBH6rvIp3VJMr0vdm0MxA/yLNgtAEWgmf6EMLplyeKAsBDQdMx7NWUCZ6MPQ?=
+ =?us-ascii?Q?1P0uc33H+We3Z5nFfGwXmywmg1UyGsPq/YCnz9Q4O9/K98lYhNlyOFPpuXJh?=
+ =?us-ascii?Q?kL1LX/BFN3VvD0tmPYEUKDn8NLrTy7ysmQQ1EZkqM88U0yiUl+TYPi2JfTUp?=
+ =?us-ascii?Q?/TbW2SB6f/y2FmK9QGTyC8pAXYqiyE9Mr/sjDzGTYR8a1JNLr8UEMT/es9lU?=
+ =?us-ascii?Q?GzSZhVSY08sUdcDvqN5l5fLFFi4t4xyhhigo9PDU7OYeaYnklw4p7ob84MUo?=
+ =?us-ascii?Q?ilIX4zQ3ZdSN6KZV0Y6FTnvo3GOEU/p7Y4E5SBICaZOwImn9y9wgJZWRqCr7?=
+ =?us-ascii?Q?bmg5U2hyj0V4wiGv3TqdChX5BGKHrHJt/LiIYybv8ZO7RaZfLpcghRiTfN/6?=
+ =?us-ascii?Q?DiHRB3/QHdUNuW/CmxF4vn9gooTHCKM=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9a32aeb5-d4d4-45aa-c40e-08df02cd3a97
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 17:20:58.6294 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Mi9gxX5ZgZ5RwaASYnbTMm0f+309+Pyv3EKQWT4GPy1MpEylS1TLCgFnGOa5DBpeluxRWQwavKu9W9cEGaFU2uYgFG9s+vHYRXdXsltDQGI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR08MB5902
+Received-SPF: pass client-ip=52.101.72.90;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=AM0PR02CU008.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,42 +137,24 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 26, 2026 at 12:55:09AM +0800, Yonggang Luo wrote:
-> On Tue, Aug 25, 2026 at 11:42 PM Daniel P. Berrangé <berrange@redhat.com>
-> wrote:
-> >
-> > On Sun, Aug 23, 2026 at 11:07:18PM +0800, Yonggang Luo wrote:
-> > > This series produces one qemu-system binary that can run ARM (32 and 64)
-> > > and RISC-V (32 and 64, little- and big-endian TargetInfo). It follows
-> > > Pierrick Bouvier's merged series "single-binary: implement dynamic
-> > > filtering for machine types":
-> > >
-> > >
-> https://patchew.org/QEMU/20260724000948.234657-1-pierrick.bouvier@oss.qualcomm.com/
-> >
-> > Do you have a public git branch somewhere with this series ? I'm
-> > having trouble getting either this series or Pierrick's to cleanly
-> > apply at any point to test it.
-> 
-> 
-> https://patchew.org/QEMU/20260823150731.896-1-luoyonggang@gmail.com/
-> 
-> you can use git patchew do it
-> 
-> git fetch https://github.com/patchew-project/qemu tags/patchew/
-> 20260823150731.896-1-luoyonggang@gmail.com
+We've experienced crashes when spice-server aborts on migration target
+when processing an invalid/stale guest address pointer.  While those are
+hard to reproduce, it seems they can be fairly easily avoided by simply
+skipping commands with invalid addresses in qxl_post_load.
 
-Oh yes, thanks for the reminder about patchew, that does the job.
+Andrey Drobyshev (3):
+  hw/display/qxl: factor out qxl_guest_phys2virt()
+  hw/display/qxl: validate replayed commands in qxl_post_load
+  hw/display/qxl: trace skipped stale loadvm commands
 
-With regards,
-Daniel
+ hw/display/qxl.c        | 132 +++++++++++++++++++++++++++++-----------
+ hw/display/trace-events |   1 +
+ 2 files changed, 97 insertions(+), 36 deletions(-)
+
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.47.1
 
 
