@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE2D1C5DF94
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:13:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A778C5DF94
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 07:13:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wylJz-0001nh-1w; Tue, 25 Aug 2026 03:11:47 -0400
+	id 1wylFv-0006os-86; Tue, 25 Aug 2026 03:07:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylJx-0001lT-LL; Tue, 25 Aug 2026 03:11:45 -0400
+ id 1wylFq-0006Sy-AS; Tue, 25 Aug 2026 03:07:31 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wylJv-0006pW-Ma; Tue, 25 Aug 2026 03:11:45 -0400
+ id 1wylFo-0005yp-Hm; Tue, 25 Aug 2026 03:07:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787641596; bh=QjjCGjMk2q2KoOIfZoYM3QNwYNuW3dtz0DFvkhF3Nh0=;
+ t=1787641596; bh=JxO4QvQ+sm8aJ+ZjTcaJ4hKfBefNwE4bT0uOJDOtetE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Xs81b6o3BTU4worsSCnVLPiTJNuMYHBDJFFS9pFp3+BotJJMtN2mCtQ6C6DXzGSr7
- YqO1dhqVIHelGy8SXki9eNF0uF5wWb5HmMutlxaxa+lRffb3vocgO1YZ3CykRPPSE+
- OR11tuP+rwkGe4nLghrDz1gFUUu/qMJEKZGgXewFwJfmAy/rPG9YVeQ5QvaI0Cc3Np
- WBqILR/sFZ5ogDjm5glaSECKh6x0XmZdw82VpvIleMgjSli9EXhIM31thEpuVG/tCN
- mdLTkYoLk5JOaIp/PvGAYhV3PhFPFrWJvwGwB6xuK3AyV/6Zdkn56M/3TN4g7CCTbE
- +aTLjzAvYF7nA==
+ b=v12ju3IEsuki3UJATYV5VBaf0fAqbBDTwaFsfiWN4ivnlEo5Zf/dQEEqFnuDrn3mG
+ 8FJtqbBKQulWJnGNnav7s2V3LnBidsTgU5mj4n4JaFkaV+fAVRgtttWEljdYhmMSMe
+ IxPgNscwisih/31AZ9Wu0otYDs5yCXLWrs9pqMJ2p7Wald0XmRB8dW+L8g1qKqWijn
+ SoLEgzBkyQ/eckcuIYQrw0JFhGLJumfsV0lUnY6Bz6v+fY1l+L6U9IQnufyCzZeb1D
+ XK/6NZOe1X3Hz+9KV0sh6S0g0YUViL9XIphynpY+X4jgFLXZ4ZuJ7PkZ/tMMZBkzee
+ ghhaPNwrTJlvQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DAC051CE240;
+ by isrv.corpit.ru (Postfix) with ESMTP id 0F7811CE218;
  Tue, 25 Aug 2026 10:06:36 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9F575415FBB;
- Tue, 25 Aug 2026 10:07:13 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C7F67415F93;
+ Tue, 25 Aug 2026 10:07:12 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 006C932460; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
+ id 7BE1932410; Tue, 25 Aug 2026 10:06:35 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Christian S. Lima" <christianslima@proton.me>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.1.1 v2 91/91] target/riscv/tcg: sret in virtual user mode
- raises virtual instruction exception
-Date: Tue, 25 Aug 2026 10:06:03 +0300
-Message-ID: <20260825070619.174584-49-mjt@tls.msk.ru>
+Subject: [Stable-11.1.1 v2 51/91] serial: clear transmit retry callback on
+ unrealize
+Date: Tue, 25 Aug 2026 10:05:23 +0300
+Message-ID: <20260825070619.174584-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 References: <qemu-stable-11.1.1-20260825100540@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,51 +73,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Christian S. Lima" <christianslima@proton.me>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Currently, when a `sret` is executed in virtual user mode, qemu
-raise an `illegal instruction exception`, but in this case the correct
-behavior is to raise a `virtual instruction exception` and the code
-already contains a check to it, but it's not enough to catch. This
-patch is useful to improve the correctness of the virtualization of
-the risc v architecture.
+The GSource is removed when resetting but remains active (and can
+cause use-after-free) on hot-unplug.  Remove it before the character
+device is disconnected.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3622
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4125
 
-Signed-off-by: Christian S. Lima <christianslima@proton.me>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260808031849.59726-1-christianslima@proton.me>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 85d38315fd19cda7fcfec5350f27cdfa15742600)
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit eb3f7fe382babbab44419603e81da56abb91d11a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index a7bd42d2c6e..3e94005d2bd 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -308,6 +308,11 @@ target_ulong helper_sret(CPURISCVState *env)
-     const privilege_mode_t src_priv = env->priv;
-     const bool src_virt = env->virt_enabled;
+diff --git a/hw/char/serial.c b/hw/char/serial.c
+index 0729cd2ce9d..4339562ab00 100644
+--- a/hw/char/serial.c
++++ b/hw/char/serial.c
+@@ -936,6 +936,7 @@ static void serial_unrealize(DeviceState *dev)
+ {
+     SerialState *s = SERIAL(dev);
  
-+    if ((env->virt_enabled && env->priv < PRV_S) ||
-+        (env->virt_enabled && get_field(env->hstatus, HSTATUS_VTSR))) {
-+        riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GETPC());
-+    }
-+
-     if (!(env->priv >= PRV_S)) {
-         riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
-     }
-@@ -323,10 +328,6 @@ target_ulong helper_sret(CPURISCVState *env)
-         riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
-     }
++    g_clear_handle_id(&s->watch_tag, g_source_remove);
+     qemu_chr_fe_deinit(&s->chr, false);
  
--    if (env->virt_enabled && get_field(env->hstatus, HSTATUS_VTSR)) {
--        riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GETPC());
--    }
--
-     mstatus = env->mstatus;
-     prev_priv = get_field(mstatus, MSTATUS_SPP);
-     mstatus = set_field(mstatus, MSTATUS_SIE,
+     timer_free(s->modem_status_poll);
 -- 
 2.47.3
 
