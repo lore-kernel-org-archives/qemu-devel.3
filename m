@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CD06C61DBC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 16:27:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 172CAC61DBE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 16:27:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wytyq-0002GD-5R; Tue, 25 Aug 2026 12:26:32 -0400
+	id 1wytyt-0002HE-Jj; Tue, 25 Aug 2026 12:26:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Benjamin.Cheatham@amd.com>)
- id 1wytyo-0002G3-7L
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 12:26:30 -0400
-Received: from mail-eastus2azlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c110::3] helo=BN8PR05CU002.outbound.protection.outlook.com)
+ id 1wytys-0002Gf-4P
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 12:26:34 -0400
+Received: from mail-westusazlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Benjamin.Cheatham@amd.com>)
- id 1wytym-0000sL-6c
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 12:26:29 -0400
+ id 1wytyq-00012q-GJ
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 12:26:33 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GgOtr9gnbaHkAcA/0eM+bzPYEbkiVfkiiPdoVNvHTX6+9LUB5l+X64GFb8U058/GmfkigMC/mpeTSGRSsjLOdEnjLBCxtcluO/qYVvd1EFogl/ersrwO5Fd4+rxcPvbyXc0x/ewLBMLnt8T/s28Wr88ozvy4NgbuhvGrV+/80COhfXHWEHTTnyeZ2QjIDPR4N6EkqhS9T0rxk7g89ZFqOLv81PaL5D2RG2G4a8WLNohzlz3yNfeQwwxA0UrO6ks1hkP4nEpPbQED5sqlljdR0Sk52JluM9UOv8BJ+hp/A0SOwWelsJI8viBlma28gz3hGla1NqTJdISt+fHtxuGdZQ==
+ b=kocI4NDBWA5167eOnbAxvcsaW6ZFbMWMaBZxRmVAd0YcMr9m3gsuy7wDzaTUndUtTt9O4jI/dLoGLpYgAuhYAHO7iFpTutf85mszDSkmvAqEtC7AA4ZqMUAUqec+HPVB5wbxMdmUoKbMphqwp6ndtQn2GkHWuGcDrU/BgEDTjONdHM+hCkZU4ZeOvB7u41RMrKG4n1nwjwoDO4uk5rM5tQfgIP6LQPHZ4KPHi/hbxc5FGn78qgMagorxCBxYbTQcGYybXTMlb6MPNc/9oR4VgGz5im4kmzkr7QhXWeWKURTFyjGG72tA0lQJxFowH6vMlN9ngDtH8tvC/RWn63EMeA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WNEyf+myGjSxr9LiSllR1ebT1osv+8kADJL7lKilb40=;
- b=Q5/lqvYDq5IGDPAWEfGbj/EqkzAhTYufzaMIKo+rWy12ub6yJ05hlQB5gElSNpfHC0IHxhb5S7MmXYGSGrucjyZEUIsEhwZhf4QqQ97bNZYgi+jFb6fYbn9p7u4azxbYuLzgu1snnoSWWL8qcP3HgSd0gX0OnyVHPW9FsI/Y7cM3j0M+tZj9mFvvX88YmUYuw2t71fSNRHI/8N7Cy1Uld27PUeU1hpF3HNtNn1DOLU7b6aZPD6KLd9DlcxOfjfj7o/CThBRy63RzeFf7tC5zlRk4K6tK+nkr4L4hrYhZ1SN/1x1vuaR2BTTu0bdXIHFGVc3UJlp62YEwVqWQ/D4Vng==
+ bh=a5xj0NVBhLxiTITZukf3KLn9tojtM7PK8pW0XZtqlTg=;
+ b=LbkIxAy5Prc2YYtELHyWXh8LRHQCXQgZ0+MLfrhcvws36JRMAASCu+zgK3OAVphv58S3BPUOG+9zLeE0jBgFLwsj48kUOq+CZDPixy0ngwC4z/AJ4Kga8ZFU3ybHoMzAT126HlVCUoUZjcahR8ECWTAp6tUqJGAKzAJgGIvPX337nJrIfixbCbvcQNt3YS050gzCHfj648HevdLNZ2EvZfPuYIVimhyuDl3bReSROfuRjD8ZypkpbAqa8004Bsx+B4Qy7fhluJUyWeAXUgEkjUTab6pDpu5r4x1jwMWOIUIMBMg96Jxz68d2zaZliSrXeSE8bfswKTVUbjawUOte1A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
  is 149.199.90.133) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com;
  dmarc=fail (p=quarantine sp=quarantine pct=100) action=quarantine
  header.from=amd.com; dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WNEyf+myGjSxr9LiSllR1ebT1osv+8kADJL7lKilb40=;
- b=49V4PUxgRAQ7TekiLtnZnag0nf6Zg4emOC+/7D/9iRL20TPhluvoc6PNePa9HEd+FJbBrmAWmSK1BYI173Ix2V6Wg43RJT1Jfx6HnMYbXZ4YZG7MyyQlf7HafypZsokwl1KkXgAHwOtmxgl6GGpmaZKzT5eCeHCkXeas0dTq1ZM=
-Received: from BY3PR05CA0023.namprd05.prod.outlook.com (2603:10b6:a03:254::28)
- by MW4PR12MB7166.namprd12.prod.outlook.com (2603:10b6:303:224::6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.7; Tue, 25 Aug
- 2026 16:26:15 +0000
+ bh=a5xj0NVBhLxiTITZukf3KLn9tojtM7PK8pW0XZtqlTg=;
+ b=BqtQ6cf99uMULVgnSAD3rI2v1/LfLyUqweNGK/DrybniuFdufBGTxxCR/tZJX1sot0Yx32sPXxn7wp1t4vJjM9UuB9JbqANG8FcDtfUtpPizLdIFFGYgR8skgd6SkebsLaPh2FhTYFYzX9Eg93npD4RtRlV76lzOTcEcTmiiHzk=
+Received: from BY3PR05CA0016.namprd05.prod.outlook.com (2603:10b6:a03:254::21)
+ by DM4PR12MB5793.namprd12.prod.outlook.com (2603:10b6:8:60::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.11; Tue, 25 Aug
+ 2026 16:26:23 +0000
 Received: from MWH0EPF000C6191.namprd02.prod.outlook.com
- (2603:10b6:a03:254:cafe::85) by BY3PR05CA0023.outlook.office365.com
- (2603:10b6:a03:254::28) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.360.7 via Frontend Transport; Tue, 25
- Aug 2026 16:26:14 +0000
+ (2603:10b6:a03:254:cafe::70) by BY3PR05CA0016.outlook.office365.com
+ (2603:10b6:a03:254::21) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.360.6 via Frontend Transport; Tue, 25
+ Aug 2026 16:26:20 +0000
 X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is
  149.199.90.133) smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=fail action=quarantine header.from=amd.com;
@@ -54,19 +54,22 @@ Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
 Received: from satlexmb07.amd.com (149.199.90.133) by
  MWH0EPF000C6191.mail.protection.outlook.com (10.167.249.106) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.360.3 via Frontend Transport; Tue, 25 Aug 2026 16:26:14 +0000
+ 15.21.360.3 via Frontend Transport; Tue, 25 Aug 2026 16:26:20 +0000
 Received: from ausbcheatha02.amd.com (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.45; Tue, 25 Aug
- 2026 11:26:13 -0500
+ 2026 11:26:19 -0500
 From: Ben Cheatham <Benjamin.Cheatham@amd.com>
 To: <qemu-devel@nongnu.org>
-CC: <pbonzini@redhat.com>, <zhao1.liu@intel.com>, <babu.moger@amd.com>, "Ben
- Cheatham" <Benjamin.Cheatham@amd.com>
-Subject: [PATCH v2 0/4] Add Support for AMD EPYC Zen 6 CPU Model
-Date: Tue, 25 Aug 2026 11:25:40 -0500
-Message-ID: <20260825162544.18633-1-Benjamin.Cheatham@amd.com>
+CC: <pbonzini@redhat.com>, <zhao1.liu@intel.com>, <babu.moger@amd.com>, "Amit
+ Shah" <amit.shah@amd.com>, Ben Cheatham <Benjamin.Cheatham@amd.com>
+Subject: [PATCH v2 3/4] target/i386: Add getting RAPSIZE for ERAPS enabled
+ guests
+Date: Tue, 25 Aug 2026 11:25:43 -0500
+Message-ID: <20260825162544.18633-4-Benjamin.Cheatham@amd.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260825162544.18633-1-Benjamin.Cheatham@amd.com>
+References: <20260825162544.18633-1-Benjamin.Cheatham@amd.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -75,39 +78,40 @@ X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000C6191:EE_|MW4PR12MB7166:EE_
-X-MS-Office365-Filtering-Correlation-Id: 533830d9-8545-44db-9b97-08df02c5950e
+X-MS-TrafficTypeDiagnostic: MWH0EPF000C6191:EE_|DM4PR12MB5793:EE_
+X-MS-Office365-Filtering-Correlation-Id: ced1f055-5030-45c6-bacd-08df02c598c8
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|36860700016|376014|1800799024|82310400026|10067099003|3023799007|18002099003|11063799006|56012099006;
-X-Microsoft-Antispam-Message-Info: 0BOjSdlUiHb6XdT/i3uNKQnUMIUjWkcyBqt+3wP6tP/aR7xqUFPLJOFFD+J8JBisckt8J3f9fzC0OtwsuhhxhaCWIBYPUrZ1AmA2Bd8SznLdet9LDSl/8wnNNU1SyQ5XU+2rKF3fLyT60Bucm3CJZyDaWH8oxhVYlCjm3UvY+JGrmBawUsVrE7mxBhi4jFMLcoOOvwxth9M6DTVnON+edw1zVLGl8pBSCV2ddbeCa5w/bi4tyqcjdtoyzp9KmuOlxcBGJSrQRub6S2oTe4reTcb2kQovuIou62hDm3NyK7j+grAGl+7oYF5+lxrC1+xyI8NY8WBVlLfG0uo+FJpLI2H4s/tQJh2ubqw/KHKHEj0TXyQu2BS220Q3E+b4PDdzNjWppqVym28uKjGR+DMKGzyYYnk7AZDucWaPPihmX1EIV8rKjiUiJwXYpqzRJhDdIowXRROUU0V2PNjNT31GsqvEWk3inyy4XZXdOAb/dtZEPllFwzve53KUtUv/ERZkfDypN2mZ5byfN9gwOuFJ+xIiPXzx1U+J42qcX3j4ha/r4gJRJ2SuB6frvWm7/TLc5EDBiDJ5kXIPZD45cboEWi2vNEnt5RnnyKJaljZbdWm77GKPNeqKyzUCkr+OWn5GjslX4KhNrCihviZaettwboHI3/Z8TI9QINOkFAODdz09/ycZXs+OzxKr0Zlm26g0myaPKSJrUKlaZVE5IgcfTA==
+ ARA:13230040|36860700016|376014|23010399003|82310400026|1800799024|10067099003|11063799006|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: 4ce2TWSrYOH9gXeSbo8oYk1C2OhXlp57H7Lf2qo3+2bfspL9ISCrdwFKcrL5H9nVemGgj0w2RKaIm4PZjonUX07cafJjU4WEIwrTljyb6iC6LBEPZkWUoyfw76F0qORwt60+dfbhvJuq2gGzx1kR9AW/9JlkGG3HFbDVupQfjrRMMcZylNqjuhg5zG0BoDz4F1Jje0wJjiM+tsedWXxRhB7szQL+R9z4xhWnxplyWr1ckVA79C0CPKe7kAL9APKWefPB3NicMkT6Vq1tqIksoB1QtH33fvwTt2Mp8F2931wDA7OASzTlTjvQdF3zahjBnUnHmgs9CvAiCrwsxS9YzdFW4UQb40P32kw2jfjA9X4meKhEyr9NESxiac4W7FFQV4eT1HbEk8SrIWoCYUb4jlo/TDVR3VOo+LCWq6Ngh3pPsK3KDTKFC1TPAGQ5YWN0Ny9NDw8zNLn8enGHbEjIj4A4wnn68cG/aM4dJV73VVwJOtOXolMIQzon9s8uegdUiAN1j7oUjzqaXykn6Reib0bYX1yNqCD3hK7ShIgZChBqoLI4KHz7k2/P71TLueii/q32PGRVjjLcZsXrKr1a2sdes7dcFqqasrOTG7Eo7j8JzqKyX1PnVyrmB98gncWmnO4YwLBByVkpaChFAcnjRmD+8FSsiQ3vyTLut9EyCqUIDhCpL5OAzOQgq9nnkUaD2ht4wxtfCmYHmTVQLhnX2A==
 X-Forefront-Antispam-Report: CIP:149.199.90.133; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:unknown-90-133.xilinx.com;
  CAT:NONE;
- SFS:(13230040)(23010399003)(36860700016)(376014)(1800799024)(82310400026)(10067099003)(3023799007)(18002099003)(11063799006)(56012099006);
+ SFS:(13230040)(36860700016)(376014)(23010399003)(82310400026)(1800799024)(10067099003)(11063799006)(56012099006)(18002099003)(22082099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: B8HfeLDOdQwE3oak56pHOMxq5sHYDZgCqQGGWoEaMtUSzUzj5a/iu9jcbZyJy0xDhGTu+xe+cyFgpUW7XIXjmxcIm7x0FK9c0rtwal0SpBkQoXMcHpRB3gFBYobRxOMzgjegS+/DBIcgEWJHK7yHWsEPlVtMcNNxnnWH0bHVM7084u7s27pAguL1TqCBnckcBX3X92THMlcqn2c+NGYw+I50KiKaE5XNCk1VYu6k24mZwEi1HW10N6ZTwTSZggZEHBHCtLC0dKPbMi4HasQhdQcEqpJ0NkwDJze1IZLaX6+2VDt4JZNxBchwzxX1i9IIl0WgUSOJpcwUZAAasps9OMeG3N8SWVpP1kKgvwsR1ikO0wbEPOKYO5Ey3jPWJ/GbylasjxpnQ6alfGG2VSlTo1vnNu6QQk37hGHRRXxzTumVkpBJ/7zn2nBISkrzXjZL
+X-MS-Exchange-AntiSpam-MessageData-0: w8XwPWQ2HkdFBJ2C7MXIM+uxIozPtHr1ryYGzLbHUYIcegDUETmtw9jFarZ85en3zd2afxiS99OhFpcJyO8c9xT8vNCz5Wa7BjgNPqyyj2faH+4umjHVUZbcy0ideNt+Gl9eZKgonkZiqp9xL6yUYklHtV/abqXu7w2a3wip3o9v56eDcT+d0GkxPfahy9nYF+uRmyUdKllsYliCjsj4lsuUjThIjuy+8Dy/WYMCV43ZR8l+KrV8g/rJiJfsLYNl7e/4SjyLoLHfXIj6mhelBkOzZBXSr0XJbF55E15+c/uCPXvXiCJg3XaDqhdgUwr9oAhOMv3rHXLjjd0IDxHEOivsckmq99IXdXMJ4uMkfha6FkhebM7E3+KRkRALLiRK61KWkKuD8p8e70YahjilEMkAghShEC7uzbpDKERYZgCm2xtu/Atw9xJPcfXSjDkF
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 16:26:14.1191 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 533830d9-8545-44db-9b97-08df02c5950e
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2026 16:26:20.4243 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ced1f055-5030-45c6-bacd-08df02c598c8
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[149.199.90.133];
  Helo=[satlexmb07.amd.com]
 X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000C6191.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7166
-Received-SPF: permerror client-ip=2a01:111:f403:c110::3;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5793
+Received-SPF: permerror client-ip=2a01:111:f403:c001::2;
  envelope-from=Benjamin.Cheatham@amd.com;
- helo=BN8PR05CU002.outbound.protection.outlook.com
+ helo=SJ2PR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,44 +127,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v2 Changes:
-- Remove SRSO_NO bit (not supported on release hardware)
-- Rebase on master (fd7ab698c921e2e97aa1b1d5b719d42103a2dd58)
+From: Amit Shah <amit.shah@amd.com>
 
-This series adds support for AMD's upcoming EPYC Zen 6 CPU models
-(EPYC-Venice). The first four patches add support for the EPYC-Venice
-model while the last patch adds the actual model.
+Newer AMD CPUs have the ERAPS (Enhanced Return Address Predictor
+Security) cpuid bit. When this bit is available, the size of the RSB is
+indicated in EBX bits 16:23 of the same function. Allow the guest to use
+these features when kvm is enabled and are available on the host.
 
-The EPYC-Venice model is based on the EPYC-Turin model feature set with
-the following feature additions:
+Signed-off-by: Amit Shah <amit.shah@amd.com>
+Co-developed-by: Ben Cheatham <Benjamin.Cheatham@amd.com>
+Signed-off-by: Ben Cheatham <Benjamin.Cheatham@amd.com>
+---
+ target/i386/cpu.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-	ERAPS, TSC Adjustment, and Shadow Stack
-
-and support for the following instructions:
-
-	AVX512 FP16, AVX512 IFMA, AVX NE-Convert, AVX VNNI Int8, and
-	AVX512 BMM instructions
-
-as well as new cache values.
-
-Some of these features (ERAPS) were only just recently merged into the
-Linux kernel. It's recommended to use a v7.0+ kernel to leverage the
-full support of the model.
-
-Amit Shah (1):
-  target/i386: Add getting RAPSIZE for ERAPS enabled guests
-
-Ben Cheatham (2):
-  target/i386: Update RAPSIZE definition
-  target/i386: Add EPYC-Venice CPU model
-
-Nikunj A Dadhania (1):
-  target/i386: Add AVX512 Bit Matrix Multiply (BMM) support
-
- target/i386/cpu.c | 151 +++++++++++++++++++++++++++++++++++++++++++++-
- target/i386/cpu.h |   9 ++-
- 2 files changed, 155 insertions(+), 5 deletions(-)
-
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 3ece2e8b279f..8805657f01de 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -9300,7 +9300,13 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+     case 0x80000021:
+         *eax = *ebx = *ecx = *edx = 0;
+         *eax = env->features[FEAT_8000_0021_EAX];
+-        *ebx = env->features[FEAT_8000_0021_EBX];
++
++        if (kvm_enabled() && (*eax & CPUID_8000_0021_EAX_ERAPS)) {
++            *ebx |=
++              kvm_arch_get_supported_cpuid(cs->kvm_state, index, count, R_EBX) &
++              CPUID_8000_0021_EBX_RAPSIZE;
++        }
++
+         *ecx = env->features[FEAT_8000_0021_ECX];
+         break;
+     case 0x80000022:
 -- 
 2.53.0
 
