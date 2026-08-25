@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1010FC61DBE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BD0FC61DC2
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Aug 2026 11:19:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wyp71-0001Fn-B1; Tue, 25 Aug 2026 07:14:39 -0400
+	id 1wyp80-0003Gq-RK; Tue, 25 Aug 2026 07:15:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp70-00018k-1P; Tue, 25 Aug 2026 07:14:38 -0400
+ id 1wyp7w-0002y9-Fq; Tue, 25 Aug 2026 07:15:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wyp6y-0000EY-2S; Tue, 25 Aug 2026 07:14:37 -0400
+ id 1wyp7u-0000ek-DV; Tue, 25 Aug 2026 07:15:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1787656396; bh=jTd1tboQr/fdi8I0968iGr9zsMIduk/XI5spAyAbhRw=;
+ t=1787656396; bh=N/ExKRInfzeAOKkR7Ewp1aPGREzUzH8K1NQMEMsBBhw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tuIwihZvzAHW8s+XL6uGfCSGD3vFypHS4jgE/SIyWcp6Y6gbTSt7z10gx6xQtWsvO
- Jc5eWs4NaJAjsG44rhA56PEW8LF9tk6f1oUvMw6Lp4TDfXQjBV0WpY1x4w8G4xh2qU
- FrFSEiY+hQgiczg7l4W1BRcSh2YCCoNUkOg0k+X1tixuc4CsHV/u9MO8wRxOZVzkoX
- y2NQ3sJ6EbfqxS0MI1GPL6a7QJjT3JeddOLLrbDrZJviOdgBqR2FMQDvouwB7NKfiA
- QjgeEIJkuc2SOgwIlmAhzRwtxLnMkSV6QGJ9VuYD8cgn/KtNAoir2H2PBnOtkySBB4
- rx1ds8k/PYKOw==
+ b=aRqosoCbzsVEO4gaKBpDxcK3TKkszIt3RJPHXESLqZpAeCvFN4W7rQSUSq2FDkj40
+ H2R9InQKVftDMIUfqmgZyEeVAQ6hs9TQ/Na3GmznGNpqk1V1lUltiEwDH0Zs9cKQb8
+ 5jJbPzAYMKK8Bw/cSrmxlpfofnL5BPJoXF7SSeDznLbIiNHaGG+P0jxVhhQ0dyfJSx
+ Io6OgZAOtujB3XNMkHnew8SCPxRYAjpjAm1lhK43huo+TZ3+nAMLWWnqSio/9snRvw
+ ATAFsyjOOiBYJIsp4xstSPbLBklgL7vJS/+ehGYUhb+/gokJlqdXmiiGJH4uuNo2b/
+ D/U2VAc7ulQOQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3F9661CE4B0;
+ by isrv.corpit.ru (Postfix) with ESMTP id 745D71CE4BA;
  Tue, 25 Aug 2026 14:13:16 +0300 (MSK)
 Received: from gandalf.tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5810741627C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8C58A416286;
  Tue, 25 Aug 2026 14:13:53 +0300 (MSK)
 Received: by gandalf.tls.msk.ru (Postfix, from userid 1000)
- id 88AB9325A3; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
+ id A78AF325B7; Tue, 25 Aug 2026 14:13:15 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Yogesh Vyas <yvyas1991@gmail.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
+Cc: qemu-stable@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.13 v3 148/166] tcg: Defer tb_flush when initial thread
- region alloc fails
-Date: Tue, 25 Aug 2026 14:11:44 +0300
-Message-ID: <20260825111206.482723-14-mjt@tls.msk.ru>
+Subject: [Stable-10.0.13 v3 158/166] hw/riscv/riscv-iommu: preserve requested
+ perm in spa_fetch()
+Date: Tue, 25 Aug 2026 14:11:54 +0300
+Message-ID: <20260825111206.482723-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
 References: <qemu-stable-10.0.13-20260825141147@cover.tls.msk.ru>
@@ -73,122 +73,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Andrew Jones <andrew.jones@oss.qualcomm.com>
 
-A vCPU hotplug may happen at any time.  When the new thread is
-started, the region pool may be exhausted.  Do not abort.
+b18e3f0e2d0f fixed spa_fetch() faults whose TTYP used the leaf PTE
+permission instead of the original request permission.  However, it kept
+that request-narrowed value in iotlb->perm after a successful walk, and
+riscv_iommu_translate() caches iotlb->perm for later accesses to the same
+IOVA.
 
-Rename tcg_region_thread_initial_alloc to differentiate it
-from tcg_region_initial_alloc__locked.  The renamed function
-now uses tcg_region_alloc__locked and is prepared for failure.
+That means a write to an RW mapping can cache the entry as write-only.
+A later read then hits the cache and faults even though the mapping allows
+it, which showed up in NVMe testing as bogus completions and controller
+timeouts.
 
-In tcg_tb_alloc, allow code_gen_ptr to be NULL.  Treat that as
-any other region exhaustion.  Reorg with while instead of goto.
+Keep the requested permission in a separate req_perm and use it for all
+permission checks and fault-type decisions.  Accumulate the leaf
+permissions separately and copy them to iotlb->perm only after the full
+walk succeeds, so cached entries describe the mapping rather than the
+current request.  Since faults leave iotlb->perm as the original request,
+the S-stage and G-stage TTYP fixes remain intact.
 
-Tested-by: Yogesh Vyas <yvyas1991@gmail.com>
-Reviewed-by: Yogesh Vyas <yvyas1991@gmail.com>
-Reported-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2984
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit f5d2d8532f3c3cefb644fe9c1866a21b75f76faf)
+Fixes: b18e3f0e2d0f ("hw/riscv/riscv-iommu.c: fix fault type for spa_fetch() faults")
+Fixes: 12422e1f4493 in 10.0.x
+Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260717144525.1154204-1-andrew.jones@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit aa51eec004461f671f878145d3fc921c6cabee48)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tcg/region.c b/tcg/region.c
-index 087e47f40d2..4bfe79b044b 100644
---- a/tcg/region.c
-+++ b/tcg/region.c
-@@ -396,11 +396,31 @@ static void tcg_region_initial_alloc__locked(TCGContext *s)
-     g_assert(ok);
- }
- 
--void tcg_region_initial_alloc(TCGContext *s)
-+void tcg_region_thread_initial_alloc(TCGContext *s)
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 97796a414ff..715e5d760b4 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -278,7 +278,7 @@ static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr, hwaddr *out)
+ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+     IOMMUTLBEntry *iotlb)
  {
-+    bool ok;
-+
-     qemu_mutex_lock(&region.lock);
--    tcg_region_initial_alloc__locked(s);
-+    ok = tcg_region_alloc__locked(s);
-     qemu_mutex_unlock(&region.lock);
-+
+-    IOMMUAccessFlags pte_perm;
++    IOMMUAccessFlags trans_perm = IOMMU_NONE;
+     dma_addr_t addr, base;
+     uint64_t satp, gatp, pte;
+     bool en_s, en_g;
+@@ -295,6 +295,14 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+     } pass;
+     MemTxResult ret;
+     bool pv = !!ctx->process_id;
 +    /*
-+     * A vCPU hotplug may happen at any time.  When the new thread is
-+     * started, the region pool may be exhausted.  At this point in
-+     * the new thread call stack, we are not in a position to fix this.
-+     * Leave code_gen_ptr NULL, so that this thread's first call to
-+     * tcg_tb_alloc() returns NULL, so that the translator performs
-+     * a tb_flush() and retry.
-+     *
-+     * During the tb_flush(), tcg_region_reset_all() will assign a
-+     * new region to all contexts, including this one.
++     * Keep the request permission separate from iotlb->perm.  G-stage
++     * walks translate S-stage PTE addresses before the real leaf is
++     * reached, but permission checks and fault types must still use the
++     * original request.  A successful walk leaves iotlb->perm with the
++     * effective leaf permission for the translation cache.
 +     */
-+    if (!ok) {
-+        s->code_gen_buffer = NULL;
-+        s->code_gen_ptr = NULL;
-+        s->code_gen_buffer_size = 0;
-+        s->code_gen_highwater = NULL;
-+    }
- }
++    const IOMMUAccessFlags req_perm = iotlb->perm;
  
- /* Call from a safe-work context */
-diff --git a/tcg/tcg-internal.h b/tcg/tcg-internal.h
-index a648ee7a0e2..e40af832ac0 100644
---- a/tcg/tcg-internal.h
-+++ b/tcg/tcg-internal.h
-@@ -36,7 +36,7 @@ extern unsigned int tcg_max_ctxs;
+     satp = get_field(ctx->satp, RISCV_IOMMU_ATP_MODE_FIELD);
+     gatp = get_field(ctx->gatp, RISCV_IOMMU_ATP_MODE_FIELD);
+@@ -313,7 +321,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+      * means we can't do an early MSI check unless we have
+      * strictly !en_s.
+      */
+-    if (!en_s && (iotlb->perm & IOMMU_WO) &&
++    if (!en_s && (req_perm & IOMMU_WO) &&
+         riscv_iommu_msi_check(s, ctx, iotlb->iova)) {
+         iotlb->target_as = &s->trap_as;
+         iotlb->translated_addr = iotlb->iova;
+@@ -431,13 +439,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+                 masked_msbs = (addr >> (va_len - 1)) & mask;
  
- void tcg_region_init(size_t tb_size, int splitwx, unsigned max_cpus);
- bool tcg_region_alloc(TCGContext *s);
--void tcg_region_initial_alloc(TCGContext *s);
-+void tcg_region_thread_initial_alloc(TCGContext *s);
- void tcg_region_prologue_set(TCGContext *s);
- 
- static inline void *tcg_call_func(TCGOp *op)
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index d2e5cfd9077..b1d6dcf0e0d 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -1007,7 +1007,7 @@ void tcg_register_thread(void)
-     qatomic_set(&tcg_ctxs[n], s);
- 
-     if (n > 0) {
--        tcg_region_initial_alloc(s);
-+        tcg_region_thread_initial_alloc(s);
-     }
- 
-     tcg_ctx = s;
-@@ -1570,18 +1570,24 @@ TranslationBlock *tcg_tb_alloc(TCGContext *s)
-     TranslationBlock *tb;
-     void *next;
- 
-- retry:
--    tb = (void *)ROUND_UP((uintptr_t)s->code_gen_ptr, align);
--    next = (void *)ROUND_UP((uintptr_t)(tb + 1), align);
-+    while (1) {
-+        tb = (void *)ROUND_UP((uintptr_t)s->code_gen_ptr, align);
- 
--    if (unlikely(next > s->code_gen_highwater)) {
-+        /*
-+         * Note that code_gen_ptr can be NULL after vCPU hotplug.
-+         * See tcg_region_thread_initial_alloc.
-+         */
-+        if (tb) {
-+            next = (void *)ROUND_UP((uintptr_t)(tb + 1), align);
-+            if (next <= s->code_gen_highwater) {
-+                qatomic_set(&s->code_gen_ptr, next);
-+                return tb;
-+            }
-+        }
-         if (!tcg_region_alloc(s)) {
-             return NULL;
+                 if (masked_msbs != 0 && masked_msbs != mask) {
+-                    return (iotlb->perm & IOMMU_WO) ?
++                    return (req_perm & IOMMU_WO) ?
+                                 RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S :
+                                 RISCV_IOMMU_FQ_CAUSE_RD_FAULT_S;
+                 }
+             } else {
+                 if ((addr & va_mask) != addr) {
+-                    return (iotlb->perm & IOMMU_WO) ?
++                    return (req_perm & IOMMU_WO) ?
+                                 RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
+                                 RISCV_IOMMU_FQ_CAUSE_RD_FAULT_VS;
+                 }
+@@ -462,8 +470,8 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+                              MEMTXATTRS_UNSPECIFIED);
          }
--        goto retry;
-     }
--    qatomic_set(&s->code_gen_ptr, next);
--    return tb;
- }
+         if (ret != MEMTX_OK) {
+-            return (iotlb->perm & IOMMU_WO) ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT
+-                                            : RISCV_IOMMU_FQ_CAUSE_RD_FAULT;
++            return (req_perm & IOMMU_WO) ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT
++                                         : RISCV_IOMMU_FQ_CAUSE_RD_FAULT;
+         }
  
- void tcg_prologue_init(void)
+         sc[pass].step++;
+@@ -488,13 +496,13 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+              * non-user mode leaf PTE and !pv we need to fault.
+              */
+             break;
+-        } else if ((iotlb->perm & IOMMU_RO) && !(pte & PTE_R)) {
++        } else if ((req_perm & IOMMU_RO) && !(pte & PTE_R)) {
+             break;                /* Read access check failed */
+-        } else if ((iotlb->perm & IOMMU_WO) && !(pte & PTE_W)) {
++        } else if ((req_perm & IOMMU_WO) && !(pte & PTE_W)) {
+             break;                /* Write access check failed */
+         } else if (!ade && !(pte & PTE_A)) {
+             break;                /* Access bit not set */
+-        } else if ((iotlb->perm & IOMMU_WO) && !ade && !(pte & PTE_D)) {
++        } else if ((req_perm & IOMMU_WO) && !ade && !(pte & PTE_D)) {
+             break;                /* Dirty bit not set */
+         } else if (pass == G_STAGE && !(pte & PTE_U)) {
+             /*
+@@ -529,21 +537,20 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+                 addr = iotlb->iova;
+                 continue;
+             }
++
++            /* Cache the effective permission, not this request's subset. */
++            IOMMUAccessFlags leaf_perm = (pte & PTE_W) ?
++                                         ((pte & PTE_R) ? IOMMU_RW : IOMMU_WO) :
++                                         IOMMU_RO;
++
++            trans_perm = trans_perm == IOMMU_NONE ?
++                         leaf_perm : trans_perm & leaf_perm;
++
+             /* Translation phase completed (GPA or SPA) */
+             iotlb->translated_addr = base;
+ 
+-            /*
+-             * Do a bit_and between the PTE bits and the original
+-             * request flags to determine the exact permission we
+-             * need, i.e. if the original request is RO and the
+-             * PTE has RW flags the actual perm is RO.
+-             */
+-            pte_perm = (pte & PTE_W) ? ((pte & PTE_R) ? IOMMU_RW : IOMMU_WO)
+-                                     : IOMMU_RO;
+-            iotlb->perm &= pte_perm;
+-
+             /* Check MSI GPA address match */
+-            if (pass == S_STAGE && (iotlb->perm & IOMMU_WO) &&
++            if (pass == S_STAGE && (req_perm & IOMMU_WO) &&
+                 riscv_iommu_msi_check(s, ctx, base)) {
+                 /* Trap MSI writes and return GPA address. */
+                 iotlb->target_as = &s->trap_as;
+@@ -560,6 +567,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+                 continue;
+             }
+ 
++            iotlb->perm = trans_perm;
+             return 0;
+         }
+ 
+@@ -584,7 +592,7 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+      */
+     iotlb->translated_addr = addr;
+ 
+-    return (iotlb->perm & IOMMU_WO) ?
++    return (req_perm & IOMMU_WO) ?
+                 (pass ? RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
+                         RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S) :
+                 (pass ? RISCV_IOMMU_FQ_CAUSE_RD_FAULT_VS :
 -- 
 2.47.3
 
