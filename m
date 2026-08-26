@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D8BC61DBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:41:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58BABC61DBE
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:42:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzJUk-0007Jd-AP; Wed, 26 Aug 2026 15:41:10 -0400
+	id 1wzJVG-0000Wx-T8; Wed, 26 Aug 2026 15:41:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJUi-0007Ca-RW
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:41:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJVF-0000Sq-B0
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:41:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJUh-0006En-6D
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:41:08 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJVD-0006Io-Sf
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:41:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787773266;
+ s=mimecast20190719; t=1787773299;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rLnw42K1+V+Fl4KQBW783G0VH8D6uwH+UAZ7SFG2AyA=;
- b=Bik/stsEvKwlVeSh8krIMrRtjo46QVS6YTiT2v+O/BY5wGPZyyem77i+OVyrEqELTsAajV
- MLy7WFoGG43s1kSD4fwAcM9oFI2G6PnqZ/TDj9u1p5HmrgAcFQB4dQ7p8dMumC8um4LKeK
- FRKts4Ib7qT4Nsd+12cm3LVpCeoehG4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=p3qZ7ObJ10fIjWrLoNcBYeRFcq0zjPyEFbJju96COWk=;
+ b=ZoogYv2OEnlKKh5XYvySTJ2uI2Ce7vF5ISPygmQpL3UaUPagkMA+Oj/OGPmqVAq3yvReiB
+ N6XIKUkWWBJRGboHCiKLmNhx32gqHbh2tlpyXw6zr66O/WlA7tP7jGnkb5mv0CRQRoW8uu
+ z1ipKrpfdRhR1CsnqldzSGgW2oS3teQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-539-WuyCK6o6NhyfNeFZLwOn-Q-1; Wed,
- 26 Aug 2026 15:40:59 -0400
-X-MC-Unique: WuyCK6o6NhyfNeFZLwOn-Q-1
-X-Mimecast-MFC-AGG-ID: WuyCK6o6NhyfNeFZLwOn-Q_1787773252
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-38-REnYno6lOka2pBggAa1h5Q-1; Wed,
+ 26 Aug 2026 15:41:32 -0400
+X-MC-Unique: REnYno6lOka2pBggAa1h5Q-1
+X-Mimecast-MFC-AGG-ID: REnYno6lOka2pBggAa1h5Q_1787773286
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 94CF5190FF98; Wed, 26 Aug 2026 19:40:52 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9B10D195609D; Wed, 26 Aug 2026 19:41:26 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.99])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2A90D1800577; Wed, 26 Aug 2026 19:40:46 +0000 (UTC)
+ id 355341800577; Wed, 26 Aug 2026 19:41:18 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>,
@@ -72,23 +72,24 @@ Cc: Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Lukas Straub <lukasstraub2@web.de>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 13/43] qapi: convert trivial intro sections for replay.json
-Date: Wed, 26 Aug 2026 15:38:10 -0400
-Message-ID: <20260826193840.2152000-14-jsnow@redhat.com>
+Subject: [PATCH v3 17/43] qapi: convert trivial intro sections for qdev.json
+Date: Wed, 26 Aug 2026 15:38:14 -0400
+Message-ID: <20260826193840.2152000-18-jsnow@redhat.com>
 In-Reply-To: <20260826193840.2152000-1-jsnow@redhat.com>
 References: <20260826193840.2152000-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,32 +107,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/replay.json | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ qapi/qdev.json | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/qapi/replay.json b/qapi/replay.json
-index ccf84da68ef..66dff797553 100644
---- a/qapi/replay.json
-+++ b/qapi/replay.json
-@@ -12,8 +12,7 @@
+diff --git a/qapi/qdev.json b/qapi/qdev.json
+index 974cf9c5830..2f951e5ef8d 100644
+--- a/qapi/qdev.json
++++ b/qapi/qdev.json
+@@ -14,8 +14,7 @@
  
  ##
- # @ReplayMode:
+ # @device-list-properties:
 -#
--# Mode of the replay subsystem.
-+#     Mode of the replay subsystem.
+-# List properties associated with a device.
++#     List properties associated with a device.
  #
- # @none: normal execution mode.  Replay or record are not enabled.
+ # @typename: the type name of a device
  #
-@@ -30,8 +29,7 @@
+@@ -33,8 +32,7 @@
  
  ##
- # @ReplayInfo:
+ # @device_add:
 -#
--# Record/replay information.
-+#     Record/replay information.
+-# Add a device.
++#     Add a device.
  #
- # @mode: current mode.
+ # @driver: the name of the new device's driver
+ #
+@@ -85,8 +83,7 @@
+ 
+ ##
+ # @device_del:
+-#
+-# Remove a device from a guest
++#     Remove a device from a guest
+ #
+ # @id: the device's ID or QOM path
+ #
+@@ -145,9 +142,8 @@
+ 
+ ##
+ # @DEVICE_UNPLUG_GUEST_ERROR:
+-#
+-# Emitted when a device hot unplug fails due to a guest reported
+-# error.
++#     Emitted when a device hot unplug fails due to a guest reported
++#     error.
+ #
+ # @device: the device's ID if it has one
  #
 -- 
 2.55.0
