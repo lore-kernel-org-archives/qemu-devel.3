@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA15C61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 03:36:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E4B8C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 03:36:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wz4QQ-0004wM-Oz; Tue, 25 Aug 2026 23:35:42 -0400
+	id 1wz4QS-0004zz-3h; Tue, 25 Aug 2026 23:35:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kishen.maloor@intel.com>)
- id 1wz4QP-0004rg-9H
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 23:35:41 -0400
+ id 1wz4QQ-0004vw-K7
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 23:35:42 -0400
 Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kishen.maloor@intel.com>)
- id 1wz4QN-00074B-3z
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 23:35:41 -0400
+ id 1wz4QP-00074u-6T
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 23:35:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1787715339; x=1819251339;
+ t=1787715341; x=1819251341;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=r8OGA1E4Kgzq5lM4GWV1Y2V9ktJQGlzkwRiX5qY63q4=;
- b=afIdmBBDrcjeBEO1lA4APcPT3x78slxBEu3p6Hw25vHHV413IRuHorSY
- 8WaFylgjNsfYitDYAORbuRK+BhNE32xdDywizSZzV+6DAH6WM8epAb1eM
- QqSov/34mZYX8dVDjw5QrEONHDxpI7BTGg/EpW0T7eVAVjI7Bq0vOeLqv
- uInN+oHhUauOatPg6znpT2o6fWX4+8UFYcaWSWw/4v6LdRhIy3rkeWe23
- g63DWugLv+UVP3vrMvvYKLi1crNb/q9yoKSfr3NC7Nm7vAaphemUDsDk6
- qbj52kEKtD3D6W7aVNBQsn6sUNAg6DceDdBGKEICN8ls2f24YI3t3iiUL g==;
-X-CSE-ConnectionGUID: ciAojpdYRParvy/BYZpLfw==
-X-CSE-MsgGUID: kiShrs1IQYOlJG3WbuGJdA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11886"; a="75728377"
-X-IronPort-AV: E=Sophos;i="6.25,244,1779174000"; d="scan'208";a="75728377"
+ bh=fIqB/q6xq21Itqsn2ztBWJFiSntXIZKCsqRrTY+RK/U=;
+ b=gwVDuhVJKGKi6xFbB9lLbKfzgR/0JnFy7MqZ5IRyn5ylp7Si5yTqFQfV
+ yARJijTMSRyh7bb3CM9JCxcccJ56XCu1VpTWlCWeSTNcmwe22otqx4H/A
+ cxColtA5xUI2sq0NRbvcPJSlLmkgAZ+xGI6MdUQXwEJdbgEGaOw2sFdiD
+ V3q7kUXKMyKyXKLRTUhJ0sjj7GH7UFlNDYbRyfP2OggXxfdcr+pyuvVj8
+ XRYfajs8Fhr+9AqaAnQkdq6OifB4mHIuuY/1h44VF5CK5ZUBj6Cl4YHfH
+ uhcLWI/dLyTHOgZCY8/oLB/AgucgQtmGfcGCJHzLbzFVU8HWfmm9rEyIK g==;
+X-CSE-ConnectionGUID: gVuMImHyT4CSBYz/fztoKQ==
+X-CSE-MsgGUID: gLH8UiG0RoCkDkbmTS765Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11886"; a="75728383"
+X-IronPort-AV: E=Sophos;i="6.25,244,1779174000"; d="scan'208";a="75728383"
 Received: from orviesa002.jf.intel.com ([10.64.159.142])
  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  25 Aug 2026 20:35:31 -0700
-X-CSE-ConnectionGUID: VecMJVsPRamcTwE1P4SDxA==
-X-CSE-MsgGUID: abejyrZwQ+WzXLKojnlnMg==
+X-CSE-ConnectionGUID: V0DeUYCfThqt7OfqTVKgCg==
+X-CSE-MsgGUID: t4X+5MgxRVuHTSLeJg+vSA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,244,1779174000"; d="scan'208";a="297364014"
+X-IronPort-AV: E=Sophos;i="6.25,244,1779174000"; d="scan'208";a="297364020"
 Received: from d404e69c8b80.jf.intel.com ([10.54.34.91])
- by orviesa002.jf.intel.com with ESMTP; 25 Aug 2026 20:35:31 -0700
+ by orviesa002.jf.intel.com with ESMTP; 25 Aug 2026 20:35:32 -0700
 From: Kishen Maloor <kishen.maloor@intel.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, zhao1.liu@intel.com, kvm@vger.kernel.org,
  sohil.mehta@intel.com, xiaoyao.li@intel.com, binbin.wu@linux.intel.com,
  farrah.chen@intel.com, kishen.maloor@intel.com
-Subject: [PATCH 2/5] target/i386: Add LASS support in CR4
-Date: Tue, 25 Aug 2026 20:57:31 -0700
-Message-ID: <20260826035734.114685-3-kishen.maloor@intel.com>
+Subject: [PATCH 4/5] target/i386: Introduce SierraForest-v7 to enable LASS
+Date: Tue, 25 Aug 2026 20:57:33 -0700
+Message-ID: <20260826035734.114685-5-kishen.maloor@intel.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20260826035734.114685-1-kishen.maloor@intel.com>
 References: <20260826035734.114685-1-kishen.maloor@intel.com>
@@ -82,76 +82,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Isaku Yamahata <isaku.yamahata@intel.com>
+Add SierraForest-v7 to expose Linear Address Space Separation (LASS)
+on the SierraForest CPU model.
 
-CR4.LASS[bit 27] enables Linear Address Space Separation, and may be set
-only when CPUID.(EAX=7,ECX=1):EAX[6] enumerates LASS.
-
-Recognize CR4.LASS as a valid bit by adding CR4_LASS_MASK to the known
-bits, i.e. clearing it from CR4_RESERVED_MASK. Mark it reserved in
-cr4_reserved_bits() and clear it in cpu_x86_update_cr4() when the guest
-CPUID does not enumerate LASS. This keeps CR4 handling consistent on
-paths that reach cpu_x86_update_cr4(), such as gdbstub register writes.
-
-LASS is not emulated by TCG, so it is not added to TCG_7_1_EAX_FEATURES
-and cannot be set under TCG (helper_write_crN() and helper_vmrun() both
-reject reserved bits via cr4_reserved_bits()).
-
-Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
-[kishen: rewrote commit message, rebased, fixed formatting]
 Signed-off-by: Kishen Maloor <kishen.maloor@intel.com>
 ---
- target/i386/cpu.h    | 7 ++++++-
- target/i386/helper.c | 4 ++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ target/i386/cpu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index e6a197602d..98c406db32 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -277,6 +277,7 @@ typedef enum X86Seg {
- #define CR4_PKE_MASK   (1U << 22)
- #define CR4_CET_MASK   (1U << 23)
- #define CR4_PKS_MASK   (1U << 24)
-+#define CR4_LASS_MASK  (1U << 27)
- #define CR4_LAM_SUP_MASK (1U << 28)
- 
- #ifdef TARGET_X86_64
-@@ -293,7 +294,8 @@ typedef enum X86Seg {
-                 | CR4_LA57_MASK \
-                 | CR4_FSGSBASE_MASK | CR4_PCIDE_MASK | CR4_OSXSAVE_MASK \
-                 | CR4_SMEP_MASK | CR4_SMAP_MASK | CR4_PKE_MASK | CR4_CET_MASK \
--                | CR4_PKS_MASK | CR4_LAM_SUP_MASK | CR4_FRED_MASK))
-+                | CR4_PKS_MASK | CR4_LASS_MASK | CR4_LAM_SUP_MASK \
-+                | CR4_FRED_MASK))
- 
- #define DR6_BD          (1 << 13)
- #define DR6_BS          (1 << 14)
-@@ -3064,6 +3066,9 @@ static inline uint64_t cr4_reserved_bits(CPUX86State *env)
-     if (!(env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_PKS)) {
-         reserved_bits |= CR4_PKS_MASK;
-     }
-+    if (!(env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_LASS)) {
-+        reserved_bits |= CR4_LASS_MASK;
-+    }
-     if (!(env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_LAM)) {
-         reserved_bits |= CR4_LAM_SUP_MASK;
-     }
-diff --git a/target/i386/helper.c b/target/i386/helper.c
-index 6836214162..43cfcfdafe 100644
---- a/target/i386/helper.c
-+++ b/target/i386/helper.c
-@@ -229,6 +229,10 @@ void cpu_x86_update_cr4(CPUX86State *env, uint32_t new_cr4)
-         new_cr4 &= ~CR4_PKS_MASK;
-     }
- 
-+    if (!(env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_LASS)) {
-+        new_cr4 &= ~CR4_LASS_MASK;
-+    }
-+
-     if (!(env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_LAM)) {
-         new_cr4 &= ~CR4_LAM_SUP_MASK;
-     }
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index fa6b76be27..167df0e6cb 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6018,6 +6018,14 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+                     { /* end of list */ },
+                 }
+             },
++            {
++                .version = 7,
++                .note = "with LASS",
++                .props = (PropValue[]) {
++                    { "lass", "on" },
++                    { /* end of list */ },
++                }
++            },
+             { /* end of list */ },
+         },
+     },
 -- 
 2.47.1
 
