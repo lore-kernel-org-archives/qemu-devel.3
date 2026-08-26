@@ -4,106 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA8A3C61DC2
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 15:37:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36A43C61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 15:42:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzFg2-0000kk-6v; Wed, 26 Aug 2026 11:36:34 -0400
+	id 1wzFkk-0001ch-Nk; Wed, 26 Aug 2026 11:41:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wzFg1-0000kZ-Fh
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 11:36:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzFki-0001cK-Bn; Wed, 26 Aug 2026 11:41:24 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wzFfx-0006Oq-KG
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 11:36:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787758585;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bz9JL44ic2wdq27So47YnE9BwkJfP5p86bmPHFuuuL0=;
- b=VHcGj9c7dNy1lysx5e331/QUutn5DgyUDVrQBGUVtUNAtcEnQY6ukBbxFfJGlWXR0mJiX5
- BtHa9bNn/JHRbqLMrYVhqExzJhTyAUwDsHt6imLg5JxFDZPsfC9ZsQ44VSoSr4NYnF5kmA
- kKAmy/h1WIg//vy1GEeeOywysQBUxvw=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-147-sJg-j6_sN3K_1EiutrtTGQ-1; Wed, 26 Aug 2026 11:36:24 -0400
-X-MC-Unique: sJg-j6_sN3K_1EiutrtTGQ-1
-X-Mimecast-MFC-AGG-ID: sJg-j6_sN3K_1EiutrtTGQ_1787758583
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-92e538afe65so127858985a.3
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 08:36:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787758583; x=1788363383; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=bz9JL44ic2wdq27So47YnE9BwkJfP5p86bmPHFuuuL0=;
- b=de+n/oI0ZVLpH8v9QhczKwdayc2jE4vpCpTlZav/8GGKI0y2cWojS4hczWk6GXaurO
- DMrRutGw6Ni5u0qqU4gxgbpf4mzhYwnwAVICd7fJosthFOnLxYvUVZbRzZGDYyOSqP7M
- VWf10eGDifGdxgglTuIpBRAgRxKTt2phQVM1dan1R1tULuiE4+eOVqjfs5NNyVyets75
- EX/sBTicphw445XfQK7+iCVV0BElN6M6nH8TgOTwu3OjP/PD6F5WaepBvkmXYITH8x3u
- h575qCMGKP7FsAk9NLWfYoePqeP9I5sp39utiOKgKek3Xf1lvjH02VpYa81Y9zeKPT8G
- 4OmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787758583; x=1788363383;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :content-type:mime-version:references:message-id:subject:cc:to:from
- :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=bz9JL44ic2wdq27So47YnE9BwkJfP5p86bmPHFuuuL0=;
- b=pQU/3PXtuYQG4FI0sYseh0dhn+4qGf9IBF1ZOun4uMUiCWwhHeYxGL71yfFMi2CwjZ
- vxRB6iSQ2FbVUk4wXXBRztLqfQuaNymq6gh7svRCysn0VwiqNM2FnwNLuoHBqMVjhl1x
- fbBAmofc3Y1RPG7xgtHNf5ZF+S4ehTVGfQMUT4Kee9zjQHVpBEegNf95G+tICzsBCceg
- KczzGIJHz6eaz2x8LZiDrq0TFXLd4KPwEsihkwEn0pV/Ac6zPVSjByp/obG5CKBIaiuj
- uDJTReOz9VyLm41laFXSLwOrmDomy/HIrNdm+RzOD9SPdn8c4g44oRWWx0IkBJCmWC9O
- z+1Q==
-X-Gm-Message-State: AFuF++nujoPsG/r8jNmiiK/ZvbVv4X93KpOMxyy8ckPKIeUKCT3s2UL0
- DffDKZY0aBFAIMQgiMbW22DIByzu39rWZvIpjtYlY4iI0RVXLDHHSwC9YQVLEgWsoMY+zn0jtyQ
- 9HIjXtIQ/vrF2uLMmW4soLtSSKI98NK7Oa5Wlha7qeO8IeMJW1DmoqpKvHp0qkn9z
-X-Gm-Gg: AR+sD13x8X/ii/Frjh72Z97G6+xfT96p8134GMTePx9vgFMHyrn3VCUeYHEBjCUD1mt
- mn+nlrFRXMoSGZPMIWNAac10b6EzUy/aYVfI2MpYDZANhtjUwGUsdOukD8CgDE3J5AvRIzs30us
- 1NXR8AMYpi3UJu57Z4Euzx84bOe9Tw+xPR3j2TMcXsX30d2TUjUJ4us6mrVcdQXl/V0QQpu2HOW
- IIZtZCYIDKHJ8P83f/+loLlWxueOaXsTcp2gmxP1raZ7eOmSVKScMBHWxTCAlT69QNhS68wsBCd
- VIsZdW9t889CatZmCUn88CcSNr02nS2IizaOEa3WAjmLFDA1j91KZ/E62xbHVSHiZ32C
-X-Received: by 2002:a05:620a:8ac9:b0:92e:76a1:96cd with SMTP id
- af79cd13be357-93780165715mr548764185a.13.1787758583384; 
- Wed, 26 Aug 2026 08:36:23 -0700 (PDT)
-X-Received: by 2002:a05:620a:8ac9:b0:92e:76a1:96cd with SMTP id
- af79cd13be357-93780165715mr548753885a.13.1787758582684; 
- Wed, 26 Aug 2026 08:36:22 -0700 (PDT)
-Received: from x1.local ([174.91.117.74]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9377e36955bsm240037885a.19.2026.08.26.08.36.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 08:36:21 -0700 (PDT)
-Date: Wed, 26 Aug 2026 11:36:10 -0400
-From: Peter Xu <peterx@redhat.com>
-To: hongmianquan <hongmianquan@bytedance.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, caixiangfeng@bytedance.com,
- yanfei.xu@bytedance.com
-Subject: Re: [RFC v1] migration/postcopy: fix page_requested leak for
- vhost-user shared pages
-Message-ID: <ao8H6njSMggANOxV@x1.local>
-References: <20260824122655.63646-2-hongmianquan@bytedance.com>
- <aoyYdZj2kEStUTOO@x1.local>
- <aa4c9982-9a9c-38d4-f6e1-481a086df8ad@bytedance.com>
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzFkg-0000Bl-48; Wed, 26 Aug 2026 11:41:24 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67QE1bVq070285; Wed, 26 Aug 2026 15:41:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=wwP/1m
+ 6F87EkgqWo5l+mismamtQQm1stNIcQiX7KBbk=; b=B4kUDR4rnsGDM59T/MRTNv
+ 2IveoLN97hR9hJWPPm3Uo3kkID/uFsaGXwgRtZjO0K0nLJzu3aAebcnB4TenJ/Uw
+ ksn5CDlvV2+uY0GM92ghMvGr74T2nFlbQDq+AsdvAODtE7+UjxeG6832RwUF5QU0
+ EYBZHGuhk8NpFj+sHw2NGGX2GVamxb3ILFc1OGGHAh9K/MGGum8+m8ErfN/rJqdb
+ 3canOcasYQDMhdc3kKb+ANm+d1g7+zKsbyZ07WYe9d6WAeCTPa/jBTEo/JLGBUuL
+ i7JX4xbeOmcWoFGFK3i7PKwCz6viJNFbhFe6GmW7IRiYGnhaaPKEjAiZSRoE+E0g
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dxfab4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 15:41:19 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QFfIbG010828;
+ Wed, 26 Aug 2026 15:41:18 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7p3qaxsg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 15:41:18 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QFfEO945482320
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 26 Aug 2026 15:41:14 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7F7AD2004B;
+ Wed, 26 Aug 2026 15:41:14 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5CD6A20043;
+ Wed, 26 Aug 2026 15:41:11 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 26 Aug 2026 15:41:11 +0000 (GMT)
+Date: Wed, 26 Aug 2026 21:11:14 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Chinmay Rath <rathc@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org,
+ vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
+ ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
+ shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
+ nikhilks@linux.ibm.com
+Subject: Re: [PATCH v2 25/37] target/ppc: Move rlwimi, rlwinm instructions to
+ decodetree
+Message-ID: <20260826210722.30d51e70-b7-amachhiw@linux.ibm.com>
+Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, 
+ npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com, 
+ tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com, 
+ aboorvad@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
+ uverma@linux.ibm.com, nikhilks@linux.ibm.com
+References: <20260826050923.74756-1-rathc@linux.ibm.com>
+ <20260826050923.74756-26-rathc@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aa4c9982-9a9c-38d4-f6e1-481a086df8ad@bytedance.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20260826050923.74756-26-rathc@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEyOSBTYWx0ZWRfXxbYiCkGxsVGV
+ Kcuc9omnxrxaaPSFGoRr8nFAh9FnxuYzunVHBM5DRTkTy08sy5p9HQmCiXjQo09xo+1059r2ySZ
+ UKnzvWY9pJxgLd1urOQl+RsUyVNWrAs=
+X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a8f091f cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=7vAcCnR_S9lBciEAXzEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: i_sYAJcs3Je7c1sbzmxwfOE_op-PlhA_
+X-Proofpoint-GUID: aDKHes1-UbEXu9w3T3u5xn2nD8QEMmVY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEyOSBTYWx0ZWRfX8/fAyDodW3V1
+ L8BFx1rZQH6EWY7gsXSHaUrBwEOExjTAxskTxSAzDVpfBX+3tLmmfzvdzkm1Q6GJGB8+2eFmevr
+ I5J4cO706Tbr3Uk1SH12n7+LxQxqBoo5tBCYi67ZlAfoYl/RryJJeiANd435ZBoYBpEB6GIOPDa
+ HO7Qjrlhls6ayG36ZeEYvV9Gf39grMBbo3zS3MxGFEeoJ26TH3bom47LG3hxFoiIMCdhU5EGvrT
+ wFlnkVRElC78ckQLJDkGB3YG/kjI7KyNUio9BD0Qq1yTzbGB5c9fxW2/DWq/Iv3jiV+5/3xyvMA
+ cc3tKUSMQ9KhIP//PJsiMAcAKEfWM9zOhNb21g6hzq6HIXPL2lw/ij7I55PjT3pnSm+3uJ6nCl5
+ 0ZkDFEco0EQizdBS/+2LykLMSKIlLZNlV/ZDD8IrSYUSn1TroIwCOW2+dq4FfwjCp3/ZaZjdlW+
+ 5nzRrf97fb4h80PnXPQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-26_04,2026-08-26_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 bulkscore=0
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608260129
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,117 +137,302 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 26, 2026 at 11:18:28PM +0800, hongmianquan wrote:
-> On 2026/8/25 03:16, Peter Xu wrote:
-> > On Mon, Aug 24, 2026 at 08:26:56PM +0800, hongmianquan wrote:
-> >> With postcopy-preempt enabled, a postcopy migration of a guest with a
-> >> vhost-user device can hang at the very end on the destination, after all
-> >> pages are transferred (query-migrate: status=postcopy-active, remaining=0).
-> >>
-> >> Root cause is an add/del key mismatch on mis->page_requested:
-> >>
-> >> - add: a backend fault goes through postcopy_request_shared_page() ->
-> >>    postcopy_request_page() -> migrate_send_rp_req_pages(), which inserts
-> >>    the request and bumps page_requested_count keyed by client_addr.
-> >> - del: qemu_ufd_copy_ioctl() removes the entry and drops the counter
-> >>    keyed by this QEMU process's host address for the page.
-> >>
-> >> client_addr is a VA in the external vhost-user backend's address space and
-> >> never equals QEMU's host address, so the removal misses and the counter
-> >> leaks. postcopy_ram_incoming_cleanup() then waits for it to reach zero
-> >> forever, which also stalls the source (it waits for the return path).
-> >>
-> >> Racing threads:
-> >>    dst: postcopy_ram_listen_thread -> postcopy_ram_incoming_cleanup ->
-> >>         qemu_cond_wait_impl              (waits for page_requested_count==0)
-> >>         (postcopy_preempt_thread already placed/woke the pages)
-> >>    src: migration_thread -> migration_completion ->
-> >>         await_return_path_close_on_source -> qemu_thread_join
-> >>         (source_return_path_thread blocked in recvmsg)
-> >>
-> >> The leak is only triggered when the vhost-user backend faults on a page
-> >> that has not been received yet: only then does the request take the
-> >> shared-fault slow path and register an entry in page_requested. If that
-> >> page is subsequently delivered while the request is still outstanding,
-> >> its entry is never removed. (Pages already present when the backend
-> >> faults just take the wake path and never register.) So a run may leak
-> >> only a few entries (9 of ~244k requests in our repro) yet still hang.
-> >>
-> >> Fix: key the request with the same host address the removal uses
-> >> (rb->host + aligned_rbo) instead of client_addr. The backend wake still
-> >> happens at placement time via postcopy_wake_shared().
-> >>
-> >> Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
-> >> ---
-> >>   migration/postcopy-ram.c | 15 ++++++++++++++-
-> >>   1 file changed, 14 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-> >> index a3314d3180..98268b3c55 100644
-> >> --- a/migration/postcopy-ram.c
-> >> +++ b/migration/postcopy-ram.c
-> >> @@ -992,7 +992,20 @@ int postcopy_request_shared_page(struct PostCopyFD *pcfd, RAMBlock *rb,
-> >>           return postcopy_wake_shared(pcfd, client_addr, rb);
-> >>       }
-> >>       /* TODO: support blocktime tracking */
-> >> -    postcopy_request_page(mis, rb, aligned_rbo, client_addr, 0);
-> >> +
-> >> +    /*
-> >> +     * The page will be placed by qemu_ufd_copy_ioctl(), which removes the
-> >> +     * matching entry from mis->page_requested (and drops
-> >> +     * page_requested_count) using this QEMU process's host address for the
-> >> +     * page. Register the request with the same key, rb->host + aligned_rbo,
-> >> +     * not client_addr: client_addr is a VA in the external vhost-user
-> >> +     * backend's address space and can never equal that host address, so the
-> >> +     * removal would miss forever, leaking page_requested_count and hanging
-> >> +     * postcopy teardown.
-> >> +     */
-> >> +    postcopy_request_page(mis, rb, aligned_rbo,
-> >> +                          (uint64_t)(uintptr_t)qemu_ram_get_host_addr(rb) +
-> >> +                          aligned_rbo, 0);
-> >>       return 0;
-> >>   }
-> > 
-> > True.. this should have been overlooked, thanks for fixing it.
-> > 
-> > Reviewed-by: Peter Xu <peterx@redhat.com>
-> > 
-> > I haven't been looking at vhost-user path for years, now looking at it
-> > again, I do have this feeling that this ->handler() API is a bit awkward
-> > and too heavy: what we need is a translation of an HVA -> (rb, rb_offset),
-> > then processing it the same as when the fault was generated from QEMU
-> > process.  The vhost-user / client code might be more straightforward with a
-> > ->translate_hva().
-> > 
-> > I'm not sure if you agree with that idea, or would like to work on such a
-> > cleanup, but if you're a serious vhost-user postcopy user (we don't have a
-> > lot on the list..), feel free to take this if this sounds beneficial.
-> > 
-> > Thanks,
-> > 
-> Thanks for the review.
+On 2026/08/26 10:38 AM, Chinmay Rath wrote:
+> From: Tanushree Shah <tshah@linux.ibm.com>
 > 
-> Just to make sure I got the cleanup right: replace the PostCopyFD
-> ->handler() callback with a lighter ->translate_hva() that only maps the
-> client fault address to (RAMBlock, rb_offset), and let the shared fault
-> thread call postcopy_request_shared_page() directly after the translation —
-> i.e. the same path a fault raised by the QEMU process takes. Is that 
-> what you have in mind?
-> We do run vhost-user postcopy, so I'm happy to take this and send the 
-> cleanup as a follow-up.
+> -Moving the following instructions to decodetree specification:
+>             rlwimi                           : M-form
+>             rlwimi.                          : M-form
+>             rlwinm                           : M-form
+>             rlwinm.                          : M-form
+>  The changes were verified by validating that the tcg ops generated by
+>  those instructions remain the same, which were captured with the
+>  "-d in_asm,op" flag.
+> 
+>  Additionally, validated using small assembly tests confirming the
+>  destination register is correctly updated based on rotated and masked
+>  source values and confirmed that the value was same before and after
+>  the change
+> 
+> Signed-off-by: Tanushree Shah <tshah@linux.ibm.com>
+> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> ---
+>  target/ppc/insn32.decode                   |   6 ++
+>  target/ppc/translate.c                     | 106 ---------------------
+>  target/ppc/translate/fixedpoint-impl.c.inc |  98 +++++++++++++++++++
+>  3 files changed, 104 insertions(+), 106 deletions(-)
+> 
+> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+> index eed963bd71..8f027e7ff5 100644
+> --- a/target/ppc/insn32.decode
+> +++ b/target/ppc/insn32.decode
+> @@ -312,6 +312,9 @@
+>  
+>  @Z23_te_tbp     ...... ....0 te:5 ....0 rmc:2 ........ rc:1     &Z23_te_tb frt=%z23_frtp frb=%z23_frbp
+>  
+> +&M              ra rs sh mb me rc:bool
+> +@M              ...... rs:5 ra:5 sh:5 mb:5 me:5 rc:1 &M
+> +
+>  ### Fixed-Point Load Instructions
+>  
+>  LBZ             100010 ..... ..... ................     @D
+> @@ -561,6 +564,9 @@ SRADI           011111 ..... ..... ..... 110011101 . .  @XS
+>  
+>  EXTSWSLI        011111 ..... ..... ..... 110111101 . .  @XS
+>  
+> +RLWIMI          010100 ..... ..... ..... ..... ......   @M
+> +RLWINM          010101 ..... ..... ..... ..... ......   @M
+> +
+>  ## BCD Assist
+>  
+>  ADDG6S          011111 ..... ..... ..... - 001001010 -  @X
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index 712990cf2d..d2c51b4d59 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -2012,110 +2012,6 @@ static void gen_pause(DisasContext *ctx)
+>  
+>  /***                             Integer rotate                            ***/
+>  
+> -/* rlwimi & rlwimi. */
+> -static void gen_rlwimi(DisasContext *ctx)
+> -{
+> -    TCGv t_ra = cpu_gpr[rA(ctx->opcode)];
+> -    TCGv t_rs = cpu_gpr[rS(ctx->opcode)];
+> -    uint32_t sh = SH(ctx->opcode);
+> -    uint32_t mb = MB(ctx->opcode);
+> -    uint32_t me = ME(ctx->opcode);
+> -
+> -    if (sh == (31 - me) && mb <= me) {
+> -        tcg_gen_deposit_tl(t_ra, t_ra, t_rs, sh, me - mb + 1);
+> -    } else {
+> -        target_ulong mask;
+> -        bool mask_in_32b = true;
+> -        TCGv t1;
+> -
+> -#if defined(TARGET_PPC64)
+> -        mb += 32;
+> -        me += 32;
+> -#endif
+> -        mask = MASK(mb, me);
+> -
+> -#if defined(TARGET_PPC64)
+> -        if (mask > 0xffffffffu) {
+> -            mask_in_32b = false;
+> -        }
+> -#endif
+> -        t1 = tcg_temp_new();
+> -        if (mask_in_32b) {
+> -            TCGv_i32 t0 = tcg_temp_new_i32();
+> -            tcg_gen_trunc_tl_i32(t0, t_rs);
+> -            tcg_gen_rotli_i32(t0, t0, sh);
+> -            tcg_gen_extu_i32_tl(t1, t0);
+> -        } else {
+> -#if defined(TARGET_PPC64)
+> -            tcg_gen_deposit_i64(t1, t_rs, t_rs, 32, 32);
+> -            tcg_gen_rotli_i64(t1, t1, sh);
+> -#else
+> -            g_assert_not_reached();
+> -#endif
+> -        }
+> -
+> -        tcg_gen_andi_tl(t1, t1, mask);
+> -        tcg_gen_andi_tl(t_ra, t_ra, ~mask);
+> -        tcg_gen_or_tl(t_ra, t_ra, t1);
+> -    }
+> -    if (unlikely(Rc(ctx->opcode) != 0)) {
+> -        gen_set_Rc0(ctx, t_ra);
+> -    }
+> -}
+> -
+> -/* rlwinm & rlwinm. */
+> -static void gen_rlwinm(DisasContext *ctx)
+> -{
+> -    TCGv t_ra = cpu_gpr[rA(ctx->opcode)];
+> -    TCGv t_rs = cpu_gpr[rS(ctx->opcode)];
+> -    int sh = SH(ctx->opcode);
+> -    int mb = MB(ctx->opcode);
+> -    int me = ME(ctx->opcode);
+> -    int len = me - mb + 1;
+> -    int rsh = (32 - sh) & 31;
+> -
+> -    if (sh != 0 && len > 0 && me == (31 - sh)) {
+> -        tcg_gen_deposit_z_tl(t_ra, t_rs, sh, len);
+> -    } else if (me == 31 && rsh + len <= 32) {
+> -        tcg_gen_extract_tl(t_ra, t_rs, rsh, len);
+> -    } else {
+> -        target_ulong mask;
+> -        bool mask_in_32b = true;
+> -#if defined(TARGET_PPC64)
+> -        mb += 32;
+> -        me += 32;
+> -#endif
+> -        mask = MASK(mb, me);
+> -#if defined(TARGET_PPC64)
+> -        if (mask > 0xffffffffu) {
+> -            mask_in_32b = false;
+> -        }
+> -#endif
+> -        if (mask_in_32b) {
+> -            if (sh == 0) {
+> -                tcg_gen_andi_tl(t_ra, t_rs, mask);
+> -            } else {
+> -                TCGv_i32 t0 = tcg_temp_new_i32();
+> -                tcg_gen_trunc_tl_i32(t0, t_rs);
+> -                tcg_gen_rotli_i32(t0, t0, sh);
+> -                tcg_gen_andi_i32(t0, t0, mask);
+> -                tcg_gen_extu_i32_tl(t_ra, t0);
+> -            }
+> -        } else {
+> -#if defined(TARGET_PPC64)
+> -            tcg_gen_deposit_i64(t_ra, t_rs, t_rs, 32, 32);
+> -            tcg_gen_rotli_i64(t_ra, t_ra, sh);
+> -            tcg_gen_andi_i64(t_ra, t_ra, mask);
+> -#else
+> -            g_assert_not_reached();
+> -#endif
+> -        }
+> -    }
+> -    if (unlikely(Rc(ctx->opcode) != 0)) {
+> -        gen_set_Rc0(ctx, t_ra);
+> -    }
+> -}
+> -
+>  /* rlwnm & rlwnm. */
+>  static void gen_rlwnm(DisasContext *ctx)
+>  {
+> @@ -4807,8 +4703,6 @@ GEN_HANDLER(invalid, 0x00, 0x00, 0x00, 0xFFFFFFFF, PPC_NONE),
+>  GEN_HANDLER_E(copy, 0x1F, 0x06, 0x18, 0x03C00001, PPC_NONE, PPC2_ISA300),
+>  GEN_HANDLER_E(cp_abort, 0x1F, 0x06, 0x1A, 0x03FFF801, PPC_NONE, PPC2_ISA300),
+>  GEN_HANDLER_E(paste, 0x1F, 0x06, 0x1C, 0x03C00000, PPC_NONE, PPC2_ISA300),
+> -GEN_HANDLER(rlwimi, 0x14, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+> -GEN_HANDLER(rlwinm, 0x15, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+>  GEN_HANDLER(rlwnm, 0x17, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
+>  /* handles lfdp, lxsd, lxssp */
+>  GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
+> diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
+> index 82fb645279..8fcee7a89d 100644
+> --- a/target/ppc/translate/fixedpoint-impl.c.inc
+> +++ b/target/ppc/translate/fixedpoint-impl.c.inc
+> @@ -1874,6 +1874,104 @@ static bool trans_SRAWI(DisasContext *ctx, arg_SRAWI *a)
+>      return true;
+>  }
+>  
+> +static bool trans_RLWIMI(DisasContext *ctx, arg_RLWIMI *a)
+> +{
+> +    TCGv t_ra = cpu_gpr[a->ra];
+> +    TCGv t_rs = cpu_gpr[a->rs];
+> +
+> +    if (a->sh == (31 - a->me) && a->mb <= a->me) {
+> +        tcg_gen_deposit_tl(t_ra, t_ra, t_rs, a->sh, a->me - a->mb + 1);
+> +    } else {
+> +        target_ulong mask;
+> +        bool mask_in_32b = true;
+> +        TCGv t1;
+> +
+> +#if defined(TARGET_PPC64)
+> +        a->mb += 32;
+> +        a->me += 32;
 
-I believe we can drop postcopy_request_shared_page() too. With the help of
-->translate_hva() for the vhost-user process address space, the fault
-thread, postcopy_ram_fault_thread(), should be the solo place to request a
-fault, and it should always be with the QEMU's HVA attached to the request.
+The old gen_rlwimi/gen_rlwinm used local int mb/int me for this
+adjustment, keeping the opcode struct immutable. Writing back into a->
+fields is contrary to normal decodetree style — the arg_* struct is an
+input, not a scratch pad. Please use local copies instead:
 
-That's one major reason that could be a good idea: what has been overlooked
-before and fixed by this patch should be unified together in the fault
-thread, then it's less error prone.
+> +#endif
+> +        mask = MASK((uint32_t)a->mb, (uint32_t)a->me);
 
-Thanks,
+MASK() takes uint64_t on PPC64 builds. Both translators in this patch
+should use the same form. If the local-variable suggestion above is
+adopted, the cast becomes unnecessary in both (the local int will
+promote cleanly), and both can just use MASK(mb, me).
 
--- 
-Peter Xu
-
+> +
+> +#if defined(TARGET_PPC64)
+> +        if (mask > 0xffffffffu) {
+> +            mask_in_32b = false;
+> +        }
+> +#endif
+> +        t1 = tcg_temp_new();
+> +        if (mask_in_32b) {
+> +            TCGv_i32 t0 = tcg_temp_new_i32();
+> +            tcg_gen_trunc_tl_i32(t0, t_rs);
+> +            tcg_gen_rotli_i32(t0, t0, a->sh);
+> +            tcg_gen_extu_i32_tl(t1, t0);
+> +        } else {
+> +#if defined(TARGET_PPC64)
+> +            tcg_gen_deposit_i64(t1, t_rs, t_rs, 32, 32);
+> +            tcg_gen_rotli_i64(t1, t1, a->sh);
+> +#else
+> +            g_assert_not_reached();
+> +#endif
+> +        }
+> +
+> +        tcg_gen_andi_tl(t1, t1, mask);
+> +        tcg_gen_andi_tl(t_ra, t_ra, ~mask);
+> +        tcg_gen_or_tl(t_ra, t_ra, t1);
+> +    }
+> +    if (unlikely(a->rc)) {
+> +        gen_set_Rc0(ctx, t_ra);
+> +    }
+> +    return true;
+> +}
+> +
+> +static bool trans_RLWINM(DisasContext *ctx, arg_RLWINM *a)
+> +{
+> +    TCGv t_ra = cpu_gpr[a->ra];
+> +    TCGv t_rs = cpu_gpr[a->rs];
+> +    int len = a->me - a->mb + 1;
+> +    int rsh = (32 - a->sh) & 31;
+> +
+> +    if (a->sh != 0 && len > 0 && a->me == (31 - a->sh)) {
+> +        tcg_gen_deposit_z_tl(t_ra, t_rs, a->sh, len);
+> +    } else if (a->me == 31 && rsh + len <= 32) {
+> +        tcg_gen_extract_tl(t_ra, t_rs, rsh, len);
+> +    } else {
+> +        target_ulong mask;
+> +        bool mask_in_32b = true;
+> +#if defined(TARGET_PPC64)
+> +        a->mb += 32;
+> +        a->me += 32;
+> +#endif
+> +        mask = MASK(a->mb, a->me);
+> +#if defined(TARGET_PPC64)
+> +        if (mask > 0xffffffffu) {
+> +            mask_in_32b = false;
+> +        }
+> +#endif
+> +        if (mask_in_32b) {
+> +            if (a->sh == 0) {
+> +                tcg_gen_andi_tl(t_ra, t_rs, mask);
+> +            } else {
+> +                TCGv_i32 t0 = tcg_temp_new_i32();
+> +                tcg_gen_trunc_tl_i32(t0, t_rs);
+> +                tcg_gen_rotli_i32(t0, t0, a->sh);
+> +                tcg_gen_andi_i32(t0, t0, mask);
+> +                tcg_gen_extu_i32_tl(t_ra, t0);
+> +            }
+> +        } else {
+> +#if defined(TARGET_PPC64)
+> +            tcg_gen_deposit_i64(t_ra, t_rs, t_rs, 32, 32);
+> +            tcg_gen_rotli_i64(t_ra, t_ra, a->sh);
+> +            tcg_gen_andi_i64(t_ra, t_ra, mask);
+> +#else
+> +            g_assert_not_reached();
+> +#endif
+> +        }
+> +    }
+> +    if (unlikely(a->rc)) {
+> +        gen_set_Rc0(ctx, t_ra);
+> +    }
+> +    return true;
+> +}
+> +
+>  static void do_fetch_inc_conditional(DisasContext *ctx, MemOp memop,
+>                                       TCGv EA, int rt,
+>                                       TCGCond cond, int addend)
+> -- 
+> 2.55.0
+> 
 
