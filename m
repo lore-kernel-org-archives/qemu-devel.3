@@ -4,118 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EE61C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:30:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C14C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:30:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzEdF-000191-7T; Wed, 26 Aug 2026 10:29:37 -0400
+	id 1wzEdz-0002HC-Ib; Wed, 26 Aug 2026 10:30:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdD-00018h-Tw
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:35 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdC-0001m1-2Z
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:35 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 8DD121F811;
- Wed, 26 Aug 2026 14:29:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787754568; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OH8PIWdsNXOXaCv296Cw5fvd6R8sSm1H9li+6Zmc81A=;
- b=sRDUzboQSqVZXdecJ/woiz74cIWGZ1wRofMAgHABwgJope/PM9BTAxtTrZ6hWwmoAtCZ52
- ucL4MnB7YsfcDpZJIpUt0uE0Sn5u70D/Pc+vXVocy5NWjpCcStXVLe7weaZX0Hmse/+vw5
- l3+sx9GMmqmhDVgwiEYoKqrVUHuR6IQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787754568;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OH8PIWdsNXOXaCv296Cw5fvd6R8sSm1H9li+6Zmc81A=;
- b=5iRuVbEkteLt+GSXvbvUSSaWMjsVFkBLIPvySVnAmVe7t1yoC1+Z5vw1wkDfzcMF6FF6ya
- RSbDgu5tdUNR5VAg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="j/ryIHZI";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="UNsEXp/n"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787754564; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OH8PIWdsNXOXaCv296Cw5fvd6R8sSm1H9li+6Zmc81A=;
- b=j/ryIHZIbJ/NE0K3pk7pslg2T4o1mysOmHXEwo6xhZWZevyzcS0VSehpMpIf6v1UBfKeQH
- Qrp32nQbk+6YeDtlKt/isYSJz75/zby6/0cgeSLwch/LaIx9VfYFBN1rchaVG0JlR6Mq2W
- e5X9rep6MoEpKjfgeWC4tKMIxBhXVVc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787754564;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OH8PIWdsNXOXaCv296Cw5fvd6R8sSm1H9li+6Zmc81A=;
- b=UNsEXp/nhqXekIfEt2T3dKCXjex3LTvjM9gSSxXeFacy3JEJ29ObvCpF5S6eAQ/TQ8RL1k
- 1E9zyOQ0dEpcRcBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9C5631364F;
- Wed, 26 Aug 2026 14:29:23 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id sAFMG0P4jmpTJAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 26 Aug 2026 14:29:23 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	Aadeshveer Singh <aadeshveer07@gmail.com>
-Subject: [PULL 11/30] docs/migration: Add documentation for fast snapshot load
- feature
-Date: Wed, 26 Aug 2026 11:28:46 -0300
-Message-ID: <20260826142905.2315503-12-farosas@suse.de>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260826142905.2315503-1-farosas@suse.de>
-References: <20260826142905.2315503-1-farosas@suse.de>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- URIBL_BLOCKED(0.00)[suse.de:email,suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_TLS_ALL(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_HAS_DN(0.00)[]; FREEMAIL_CC(0.00)[redhat.com,gmail.com];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_THREE(0.00)[3];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Rspamd-Queue-Id: 8DD121F811
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1wzEdx-00022x-DO; Wed, 26 Aug 2026 10:30:21 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1wzEdv-0002cG-26; Wed, 26 Aug 2026 10:30:21 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67QE1WlJ4184882; Wed, 26 Aug 2026 14:30:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=uNMnI+ixBzCpQX9zV/V3KpMMyeZwf0bos+r+embbRHQ=; b=BHbm4w9ZnzHg
+ hUaL+z4HKC9mc0Y5IzF0Ec4NZZzegVdlgMAGNfRRxR8yPagGNgk5agVxxdKCWoFM
+ /2GBaiRuZtMg15VN5b1ExRZLY9SPtAlffnzrQ9D0A0Zkbbsh4PkSlTUhV5jHE7en
+ QiC+LkZgGmFPnp4+owvHInHl+eZP7bebYgzini4JAFfYBvNCaPkhow0TFdVIIsMR
+ mVgkUYFLr65whF0Ix09PEwcmyUl3UzM/alL/po7YeNFysqkxvU5irYU1RK9FhxlL
+ jWyS6Fx/Rxtyu5PsJDcgGjDqm61/MFf3d5ipOHGiFdASrzYeVBCZdbX507fRYaRf
+ Ar8f24fYTw==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g739478b3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 14:30:15 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QEQMfL011284;
+ Wed, 26 Aug 2026 14:30:14 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3k2dmv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 14:30:14 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QEUC1L13435524
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 26 Aug 2026 14:30:13 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CDF9158052;
+ Wed, 26 Aug 2026 14:30:12 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 152915805D;
+ Wed, 26 Aug 2026 14:30:12 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 26 Aug 2026 14:30:12 +0000 (GMT)
+Message-ID: <bf64a05d5f3eba4accb82fd1fc23b722326a2c2b.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 19/37] target/ppc: Refactor sleep and its variants to
+ use a common helper
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, harshpb@linux.ibm.com
+Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
+ tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com,
+ aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, shivani@linux.ibm.com,
+ mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com
+Date: Wed, 26 Aug 2026 09:30:11 -0500
+In-Reply-To: <20260826050923.74756-20-rathc@linux.ibm.com>
+References: <20260826050923.74756-1-rathc@linux.ibm.com>
+ <20260826050923.74756-20-rathc@linux.ibm.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: yTLwbSy0yipreW8LSOCDogaHkXsX_P7X
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDExNiBTYWx0ZWRfXxnUF2EWSldjg
+ bJKgSvS51vcM/tcoeYpLj+66BfhD+10yjhXJJCGcc+Itzs63z8b9B/wGbQSK5b4ZYkmPRBgU/CX
+ DXRaEIHNlFzdmKbLv41V4lFkrEhlAedgPQpsjCt6EegSMmEZadjdQUgOECE0NQfBg0tc2UJAQb/
+ iCzHnuI099TIIQAdJVVO7X5zEQp3+jWWCAqUoTDt4c0Umv+TfiPJg6Mrl2NY0CO4kBsqgHPQMB1
+ iOXbMNMVJxumT8LkQQrsxYWQ3AQItAeqV9IrgGqH5rO7no26wJiq0m7DBK5VcRahfb9cR2vDMb2
+ LaBhWw5xdOjWN5IGDu+MbchURqR0YF2zNvCKdcvS3PN/4i5tBrB4QYrkL1Di6Wwi0/sLVVIExW4
+ lWFPDTL5oHTfS9FHKLsBrX+pgzJZ3H0hSu28fUBSZjhA1pA0sYWuu+vmaxk3VMcYKVJfO/DB6bu
+ kN4JBrWr26YSOpjbzvQ==
+X-Authority-Analysis: v=2.4 cv=Y/nIdBeN c=1 sm=1 tr=0 ts=6a8ef878 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=Sh8xzq_NNK_JfPLPuzwA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDExNiBTYWx0ZWRfX3AvO7EutHWKv
+ 00b/OCkVhR40LiG/27EcDn7a2/AtSgoWONlfaNGNoAIUsc2K89/JGfKkbCF9SQsiXpRKbrYW7Su
+ T0lP++hPs5wNbyZDHkrYCMFtGD2aRrM=
+X-Proofpoint-ORIG-GUID: pQaQ91oiaNvAV_Ab4i8ZN8x0FNbobbug
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-26_04,2026-08-26_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ suspectscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260116
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,125 +126,181 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aadeshveer Singh <aadeshveer07@gmail.com>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
-Add documenatation for fast snapshot load covering an overview, the
-architecture, usage and limitations.
+Thanks,
 
-Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- docs/devel/migration/fast-snapshot-load.rst | 82 +++++++++++++++++++++
- docs/devel/migration/features.rst           |  1 +
- 2 files changed, 83 insertions(+)
- create mode 100644 docs/devel/migration/fast-snapshot-load.rst
+Glenn
 
-diff --git a/docs/devel/migration/fast-snapshot-load.rst b/docs/devel/migration/fast-snapshot-load.rst
-new file mode 100644
-index 00000000000..fe2361d6fe1
---- /dev/null
-+++ b/docs/devel/migration/fast-snapshot-load.rst
-@@ -0,0 +1,82 @@
-+==================
-+Fast Snapshot Load
-+==================
-+
-+Overview
-+========
-+Fast snapshot load is an extension of the postcopy migration feature
-+to disk loads.
-+
-+Unlike a usual snapshot load, which requires all VM data (RAM as well
-+as device states) to be loaded into host RAM from the snapshot file
-+for the guest to run, fast snapshot load uses postcopy infrastructure
-+to load in only the required device states and allows RAM pages to
-+be loaded after the guest starts execution. The idea is to start the
-+guest and serve its page faults on the go, reducing the perceived
-+resume time for large snapshots.
-+
-+Architecture
-+============
-+This feature combines postcopy migration and mapped-ram capabilities
-+to load RAM pages on demand. It is done by catching guest faults using
-+Linux ``userfaultfd`` and loading the page by calculating the offset
-+of its location in the snapshot file using mapped-ram capabilities.
-+
-+Fault Thread
-+------------
-+The fault thread uses Linux ``userfaultfd`` to catch page faults caused
-+by guest and directly load the page from the snapshot file. It is
-+very similar to network postcopy fault thread, with primary difference
-+being it loads pages directly by reading from the snapshot file.
-+
-+Eager Thread
-+------------
-+Eager thread iterates over all pages in RAM and loads each page not
-+yet loaded by fault thread. It is required as unlike network postcopy
-+where majority of RAM has already been loaded via precopy, here entire
-+RAM is waiting to be loaded. If there is no eager loading thread each
-+page will only be loaded when it is required by guest. In case there
-+are some background pages that are never/rarely accessed by guest,
-+the system will be locked in migration state indefinitely.
-+
-+Synchronization
-+---------------
-+In order to make sure both of these threads do not load the same page
-+twice potentially overwriting and corrupting user RAM, a bitmap is
-+used (``RAMBlock->pending_bmap``) which tracks the pages claimed to
-+be loaded by threads. This prevents race condition when one thread
-+is loading the page and other one tries to do the same.
-+
-+Usage
-+=====
-+
-+Simply enable ``mapped-ram`` and ``postcopy-ram`` capabilities on
-+the destination:
-+
-+.. code-block:: text
-+
-+    migrate_set_capability mapped-ram on
-+    migrate_set_capability postcopy-ram on
-+
-+Use a ``file:`` URI for migration:
-+
-+.. code-block:: text
-+
-+    migrate_incoming file:/path/to/snapshot/file
-+
-+Limitations
-+===========
-+
-+ - Multifd
-+    Fast snapshot load is currently incompatible with ``multifd``
-+    capability. While ``mapped-ram`` allows for parallel disk I/O,
-+    coupling it with ``postcopy`` capability requires additional
-+    infrastructure.
-+
-+ - Host OS support
-+    Because this feautre essentially depends on ``userfaultfd``
-+    to trap page faults, it is supported only on Linux hosts.
-+
-+ - vhost-user
-+    Fast snapshot load does not currently support ``vhost-user``
-+    backends.
-diff --git a/docs/devel/migration/features.rst b/docs/devel/migration/features.rst
-index 9aef79e7fa4..23c2a93173c 100644
---- a/docs/devel/migration/features.rst
-+++ b/docs/devel/migration/features.rst
-@@ -11,6 +11,7 @@ Migration has plenty of features to support different use cases.
-    vfio
-    virtio
-    mapped-ram
-+   fast-snapshot-load
-    CPR
-    qpl-compression
-    uadk-compression
--- 
-2.53.0
+On Wed, 2026-08-26 at 10:38 +0530, Chinmay Rath wrote:
+> From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+> 
+> With sleep, doze, nap, rvwinkle and stop instructions moved to
+> decodetree, the helper these instructions used : gen_helper_pminsn,
+> should now be renamed to gen_helper_PMINSN, abiding by the decodetree
+> standards. Do the same.
+> Also refactor their translation routine to use a common do_sleep routine
+> since they share majority of the code.
+> 
+> Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> ---
+>  target/ppc/helper.h                           |  2 +-
+>  target/ppc/tcg-excp_helper.c                  |  2 +-
+>  .../ppc/translate/processor-ctrl-impl.c.inc   | 99 +++----------------
+>  3 files changed, 16 insertions(+), 87 deletions(-)
+> 
+> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+> index cd2a0948a3..7e15676122 100644
+> --- a/target/ppc/helper.h
+> +++ b/target/ppc/helper.h
+> @@ -18,7 +18,7 @@ DEF_HELPER_1(rfdi, void, env)
+>  DEF_HELPER_1(rfmci, void, env)
+>  #if defined(TARGET_PPC64)
+>  DEF_HELPER_2(scv, noreturn, env, i32)
+> -DEF_HELPER_2(pminsn, void, env, i32)
+> +DEF_HELPER_2(PMINSN, void, env, i32)
+>  DEF_HELPER_1(rfid, void, env)
+>  DEF_HELPER_1(rfscv, void, env)
+>  DEF_HELPER_1(hrfid, void, env)
+> diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
+> index b04f07a637..c4ffa2dfbb 100644
+> --- a/target/ppc/tcg-excp_helper.c
+> +++ b/target/ppc/tcg-excp_helper.c
+> @@ -459,7 +459,7 @@ void helper_scv(CPUPPCState *env, uint32_t lev)
+>      }
+>  }
+>  
+> -void helper_pminsn(CPUPPCState *env, uint32_t insn)
+> +void helper_PMINSN(CPUPPCState *env, uint32_t insn)
+>  {
+>      CPUState *cs = env_cpu(env);
+>  
+> diff --git a/target/ppc/translate/processor-ctrl-impl.c.inc b/target/ppc/translate/processor-ctrl-impl.c.inc
+> index bdbc195294..3b3ed3019a 100644
+> --- a/target/ppc/translate/processor-ctrl-impl.c.inc
+> +++ b/target/ppc/translate/processor-ctrl-impl.c.inc
+> @@ -104,103 +104,32 @@ static bool trans_MSGSYNC(DisasContext *ctx, arg_MSGSYNC *a)
+>      return true;
+>  }
+>  
+> -static bool do_doze(DisasContext *ctx, arg_DOZE *a)
+> -{
+> -    REQUIRE_64BIT(ctx);
+> -
+> -#if defined(CONFIG_USER_ONLY)
+> -    gen_priv_opc(ctx);
+> -#else
+> -    TCGv_i32 t;
+> -
+> -    REQUIRE_HV(ctx);
+> -    translator_io_start(&ctx->base);
+> -    t = tcg_constant_i32(PPC_PM_DOZE);
+> -    gen_helper_pminsn(tcg_env, t);
+> -    /* Stop translation, as the CPU is supposed to sleep from now */
+> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+> -#endif /* defined(CONFIG_USER_ONLY) */
+> -
+> -    return true;
+> -}
+> -TRANS_FLAGS2(PM_ISA206, DOZE, do_doze);
+> -
+> -static bool do_nap(DisasContext *ctx, arg_NAP *a)
+> -{
+> -    REQUIRE_64BIT(ctx);
+> -
+> -#if defined(CONFIG_USER_ONLY)
+> -    gen_priv_opc(ctx);
+> -#else
+> -    TCGv_i32 t;
+> -
+> -    REQUIRE_HV(ctx);
+> -    translator_io_start(&ctx->base);
+> -    t = tcg_constant_i32(PPC_PM_NAP);
+> -    gen_helper_pminsn(tcg_env, t);
+> -    /* Stop translation, as the CPU is supposed to sleep from now */
+> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+> -#endif /* defined(CONFIG_USER_ONLY) */
+> -    return true;
+> -}
+> -TRANS_FLAGS2(PM_ISA206, NAP, do_nap);
+> -
+> -static bool do_sleep(DisasContext *ctx, arg_SLEEP *a)
+> -{
+> -    REQUIRE_64BIT(ctx);
+> -
+> -#if defined(CONFIG_USER_ONLY)
+> -    gen_priv_opc(ctx);
+> -#else
+> -    TCGv_i32 t;
+> -
+> -    REQUIRE_HV(ctx);
+> -    translator_io_start(&ctx->base);
+> -    t = tcg_constant_i32(PPC_PM_SLEEP);
+> -    gen_helper_pminsn(tcg_env, t);
+> -    /* Stop translation, as the CPU is supposed to sleep from now */
+> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+> -#endif /* defined(CONFIG_USER_ONLY) */
+> -    return true;
+> -}
+> -TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep);
+> -
+> -static bool do_rvwinkle(DisasContext *ctx, arg_RVWINKLE *a)
+> +/*
+> + * Helper to handle DOZE, NAP, SLEEP, RVWINKLE & STOP. Since none of them use
+> + * any arguments just use a placeholder arg_SLEEP.
+> + */
+> +static bool do_sleep(DisasContext *ctx, arg_SLEEP *a, powerpc_pm_insn_t type)
+>  {
+>      REQUIRE_64BIT(ctx);
+>  
+>  #if defined(CONFIG_USER_ONLY)
+>      gen_priv_opc(ctx);
+> -#else
+> +#elif defined(TARGET_PPC64)
+>      TCGv_i32 t;
+>  
+>      REQUIRE_HV(ctx);
+>      translator_io_start(&ctx->base);
+> -    t = tcg_constant_i32(PPC_PM_RVWINKLE);
+> -    gen_helper_pminsn(tcg_env, t);
+> +    t = tcg_constant_i32(type);
+> +    gen_helper_PMINSN(tcg_env, t);
+>      /* Stop translation, as the CPU is supposed to sleep from now */
+>      gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+> -#endif /* defined(CONFIG_USER_ONLY) */
+> -    return true;
+> -}
+> -TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_rvwinkle);
+> -
+> -static bool do_stop(DisasContext *ctx, arg_STOP *a)
+> -{
+> -    REQUIRE_64BIT(ctx);
+> -
+> -#if defined(CONFIG_USER_ONLY)
+> -    gen_priv_opc(ctx);
+>  #else
+> -    TCGv_i32 t;
+> -
+> -    REQUIRE_HV(ctx);
+> -    translator_io_start(&ctx->base);
+> -    t = tcg_constant_i32(PPC_PM_STOP);
+> -    gen_helper_pminsn(tcg_env, t);
+> -    /* Stop translation, as the CPU is supposed to sleep from now */
+> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
+> +    qemu_build_not_reached();
+>  #endif
+>      return true;
+>  }
+> -TRANS_FLAGS2(ISA300, STOP, do_stop);
+> +TRANS_FLAGS2(PM_ISA206, DOZE, do_sleep, PPC_PM_DOZE);
+> +TRANS_FLAGS2(PM_ISA206, NAP, do_sleep, PPC_PM_NAP);
+> +TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep, PPC_PM_SLEEP);
+> +TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_sleep, PPC_PM_RVWINKLE);
+> +TRANS_FLAGS2(ISA300, STOP, do_sleep, PPC_PM_STOP);
 
 
