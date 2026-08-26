@@ -4,112 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5599C61DBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 10:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5070C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 10:23:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzAmR-0007so-31; Wed, 26 Aug 2026 06:22:51 -0400
+	id 1wzAmN-0007sV-Ip; Wed, 26 Aug 2026 06:22:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wzAmQ-0007sf-2g
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:22:50 -0400
+ id 1wzAmL-0007rv-L1
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:22:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wzAmO-00017b-CL
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:22:49 -0400
+ id 1wzAmK-00014S-1Z
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:22:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787739767;
+ s=mimecast20190719; t=1787739763;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+wJsDi3X9DBEqKZ+FhHD3UvMyqpseJ55yyJu0U9TaCA=;
- b=Un7883KB0Kk2a+60NX40O0nieOaGrD3wDsAguVBpQsHapia1nOTRVGy0kU4voIg5yntIUx
- tQHW219mWa0cHAhhc3JW7yetgF0/L/dbvIKt7sx/V5FGQvLpHmyZJr3i7nAagLTnaWEAbY
- WxbFgCViQg9XFCTBVFPd+IsISuHwIs8=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XaCyjDjL7gtM7gDEpKad364sbvCNHXOPg1aXffn38ME=;
+ b=dG1hPRnd7HUcCEA6PgyeQrpVHq6Cza7qMWqnV3v24Psd6iSgXexd894ldLeZFW/G0/1/k9
+ lmrMqbVmoCl+djX0pn0Lua2XVelUGi55Z2eQ5/VIZ3djOa211iW5LUb9HMQiGkxFfq1owh
+ m7OwY3TIg2S5M2O04L8iJhTl0gYWR68=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-uo0RMaJkNUigfWn6boy70w-1; Wed, 26 Aug 2026 06:22:45 -0400
-X-MC-Unique: uo0RMaJkNUigfWn6boy70w-1
-X-Mimecast-MFC-AGG-ID: uo0RMaJkNUigfWn6boy70w_1787739764
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-cc1c62f0d60so832017a12.1
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 03:22:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787739764; cv=none;
+ us-mta-494-pWyRlI18OEC8CW7qJ1z5Qg-1; Wed, 26 Aug 2026 06:22:39 -0400
+X-MC-Unique: pWyRlI18OEC8CW7qJ1z5Qg-1
+X-Mimecast-MFC-AGG-ID: pWyRlI18OEC8CW7qJ1z5Qg_1787739759
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-cc1c5810451so786119a12.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 03:22:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787739759; cv=none;
  d=google.com; s=arc-20260327;
- b=BrBbrVqXGRGNs8GDDtMPtCpjt7uoEmxDTjCIgSrEiUn0hXfrruuSqgMDXWeXns6Qba
- o0PvbPDqWcGjgEg02OpyZTrGzwe8TJkF8yzP9MnThRoVgvQyWK88azji6rG+UxKNRXhq
- 4enfEXyQ6e0IMNQbmOa14nMv8VNqCixiPDObKn3PkRmeEv6f2Y8/ZKGsKIm20wqZ2EzG
- ns5SDnGUmoX7BGxd0eECM/td4qtWf7J6CZRKzEGPvI/y6LxmYgl1zSrmB5tijS3v9ufZ
- 2pdViZBUvXA35ArhFbwG+Q4UA/PQBbknFQq11TiGZAphaKIr+ZPuu+4qgopE6c68JVqV
- jtBg==
+ b=Kv7CrrIYxubjdaKo++MTlbomZMCc+NFQGdksAWEzMQTicMqL1i3DHd6qwhOurHoVHj
+ tn3JdRnt8aZwGuXqU0Ah/mH3HAKGZQVSWEpHGvA9+WwDiWheibc7tNnqbkdtlX7BN++j
+ wjVgjXkJPmBN62SXQUSDVAuzH8dGjuc7DuFV6RF+//zBBS3NE5PZ5vSkMJVCbIMVHfLu
+ XqYfyY707tixf04Sqs8rGwEnif5bV7+7nbdN+Z/vqTeYfGbP/ti6ZGwet94rtKp/xWvF
+ alNU2hDE//qCharc8XFxxyo3NkPiHkoKvQ5DHQbvkh3RwwLq6TmYPq+0AQwqE1eV5LEW
+ Vkvw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20260327; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=+wJsDi3X9DBEqKZ+FhHD3UvMyqpseJ55yyJu0U9TaCA=;
+ bh=XaCyjDjL7gtM7gDEpKad364sbvCNHXOPg1aXffn38ME=;
  fh=J9nwq/f/jn3wpHLRy+MvJWjA3+qyBHrTLBVB329Nuq8=;
- b=L1WxClrn5iRyXYpHabEjucGx2jL/Ieb+PTOypWA0P65SH4TeFfYxj1Kdc87Tf0zppB
- pJ2XTFfHnvk1/OFdlvLQF0FR7ix9PcXHeuVDC5ldJMQhw86cCRjgSLUeVwEgajNs9HC5
- i6LIL7hqXt6aLVI4TMgu/BjLpGbSrqsUlhDgdb7YXiakrmXmbpJo5VNpKropjg3MJOfZ
- PEfsRX7YyX31tNIy4bLNF2qT8IqxXr3tcg4b0ZCsfKFGt1/nqU+1MOOyIaOY/BjOzh31
- Ccqw188vcLoKunvt14utL1cyk7hc7oZ74x1NXMrsR8FngYm7FK2Ul8J0qxf/q1Fkcfyb
- Lovg==; darn=nongnu.org
+ b=FWSFPH1RbnGRkH77kZAN8XtSP+ulhb0BO7vx3pVBH1s6xejlwQJRYxKQk6n0ovhOw2
+ r0wwpkMIArHs5j2yVJ9q6CKQ/ep1kWvXq/dp77dOYTJ9nfag08j+pHt8pulDZxPN0w/s
+ OnTlP9FZ5ZjJiPtfU/+9aS5o1tdZTHyNX3XWB8iu3jvUyF2KrpgfaJt2K6CNMXuHNrdm
+ kmHVl/9X+iYJ09I4vInlUe313s+wdIvKvVSwh7QzYlCqF+ePkqXtOWxXInoHCCEsTbkx
+ dCHBZJTaRgsYUplfj/E8agraWGUWwrHes2MJHT69EZfBCpJMWO86HCYLJjMc49CKvY17
+ uvBw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787739764; x=1788344564; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787739759; x=1788344559; darn=nongnu.org;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:from:to:cc:subject
  :date:message-id:reply-to:content-type;
- bh=+wJsDi3X9DBEqKZ+FhHD3UvMyqpseJ55yyJu0U9TaCA=;
- b=iWUGr0kQOEoCk6cQdmOb2ayyctfzHGjoj7M2kBk7aSqsJr/TSMBh8OBa5s8cvUh9Hc
- V6Z/5jpEmlzfq4DtvNCliuErsrrX7zIok/dVdTlz/gQKnkw69nXlIDBPwnEt+jETVfCE
- 8jQcGwsuZ3uBttoU6C+FvCSVDh8UQmPPXP6NQHe7I7DfLCGyZ7539PGSxbndVers2wIA
- ertOTetw+0zMFl956c6MgKlK71fHyF1p0qYozGpsY0T9w4tAWhhttj1BMc1mCyLrOUV0
- YgNPCfDMUveD+cIzFpAcAJIyhUtllfgoWTBySjfU4fKMIPUMMeGpalL+ljch1IbitMGD
- CWXg==
+ bh=XaCyjDjL7gtM7gDEpKad364sbvCNHXOPg1aXffn38ME=;
+ b=C9per7w7Ma5MF4+e1f+M0FL5EUcKQ7SnEeOptxjZ45Dfo70BZfWpSqOmmriQiN8UzG
+ AFSoIvsXHLtlbztonEkGS54dZc8y4iA6jI79NK6mtRg3DHeZV7lgQonG2Jip+eEDlcjZ
+ i3JjmRyfVCRzkFK23NRUTboDpUeArM5FUUlqtFdizr7yvNSr7RihZrKu1Oh0UfanMam3
+ 3BDb5v53u9lMzsPQaZWMTK3Yx7BMTOrPJQVF9b4nLKUhZS9FXvqpEvfGp7pNvYQLXPX4
+ ZfJiGYgprS8oV+0IXiHQqd9gmjdTB/+bNql0P/9QP5WLx8e1AkD5K7+Ph9pgq8QFkM2C
+ WLig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787739764; x=1788344564;
+ d=1e100.net; s=20251104; t=1787739759; x=1788344559;
  h=content-transfer-encoding:content-type:cc:to:subject:message-id
  :date:from:in-reply-to:references:mime-version:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=+wJsDi3X9DBEqKZ+FhHD3UvMyqpseJ55yyJu0U9TaCA=;
- b=U6Kf8dsg01rvk7EZfApoXLDGPJ1QneEJOmvv0Lb5Jp/pjvr65gjrY8MIA/J5KtheNQ
- QYHhJmUGvCP7aVryC9p5i/pZJuBdu2hghTZoIPLP+T1cPJaZuu/zfVsRKdS83PIWys15
- wyKRZ48BAaV9/Hr108HwOQDmPz4Fcf68LkVrsQz2A8JaRaUDc7cYNPuoHAaE+YgiB/RJ
- dzX1L0QA/2KvOos3DtAD5B1+nu8oapsa5ZULTJQyjS5Vw147JR42ijquGorhG55OVhFz
- ZFpwNtcU8oFGC1FUU93PxS7z2zfriwXMgnTjYaqizgqegbndXyS/23iE+y054iwbaMZV
- kY9Q==
-X-Gm-Message-State: AFuF++m6j7F69Aa2wb+bD8QSFu7gYHsI63+ufvBvnFx0X8zaPAJ0vxNu
- v691YECFyipwQnJ/p3Ki1OJNKbgE7depsWjnJkNPaFshluC5jEghrWWtbF0h8FVsG4ekXlFx4tR
- hg1Jp5k/k71KrKlmON9PpXMgd4Uy3N/wXZFfZtPZ2Dfqi9V9E0+XnKvQU6Xj5bxAxFHvrqvO+p5
- r9i9adWYf1PDUaZCPor9sCHEPYn/ZJtr8=
-X-Gm-Gg: AR+sD13z5/3Gful4WsOuZNFc8LVbeobnE2tSSzohrU4IIUYVseUcfbXbhYwKbZcj8nT
- ihMFpwNcs5W6tZGblT8lf0s/7XnJrX49yiONIkGTKp26taJcRqEbQ5lP5ny9IIvXkzZXMOh2spR
- PaVqrQ9s1zDteq5EZ3EIaWKei5YLjKwM8vzFnUDjGCHo07H4Y7riH8aiy3OQ6gB62+L5jyWm4tq
- kHBqpqfijdCQcE74gl+xZlcTOC6eXESF1Db9p7WcYz3SRJ9Pm+I2CxRjreYvFgEamdEx6zsSUeI
- ag==
-X-Received: by 2002:a05:6a21:7108:b0:3cc:ec12:a788 with SMTP id
- adf61e73a8af0-3cf7586e4c2mr11538327637.4.1787739764416; 
- Wed, 26 Aug 2026 03:22:44 -0700 (PDT)
-X-Received: by 2002:a05:6a21:7108:b0:3cc:ec12:a788 with SMTP id
- adf61e73a8af0-3cf7586e4c2mr11538204637.4.1787739763919; Wed, 26 Aug 2026
- 03:22:43 -0700 (PDT)
+ bh=XaCyjDjL7gtM7gDEpKad364sbvCNHXOPg1aXffn38ME=;
+ b=r9RaCeGzXQk4At1WBYQWNfpoS4JBheZFl2GlYAWXnswI1Nvqm+CTTF6Fw/14mXB64B
+ t1VWf/EfhsM0TYVfjgzR7psHDSRXEgU/Y8WPF+M1D+jYuevVaWysyR/IFWkQ/5LNT0TN
+ vlyarZPKo24FjBb1VQJlom7XX+Np2vbEGGxB0Ifqh/S0uAhyhXppr+4MIDdOGVPOyosX
+ aGJgRkrSyVcwPLfpRxL97PEX2bdlVZpdFhQ/5U7neiBuB6K/ueJemiz/DWks5+39oKQa
+ 9rFr23Ci7RH7Yp77cVSf/NiTtZZMOQzwonZlwigVK7ArkD6oTNC7c4cbn6ul5vv5Aof4
+ 188w==
+X-Gm-Message-State: AFuF++nl5aBrAFNYmoPIRSUj8nSto0l11ZjDgpurZmRPkSWVy3b0sqK1
+ rv4PuFFmbcXBKQ7rg/FEflcK1lb7+ErVCLphNe8kQcv6Z24z8GJrj0xWQnDtdJJh1+k8w60W8Qv
+ ak+8OxqreI65BTL3+qnrpM58wlnDpLkuhgFs0D1ZwrgRczmcj6pNkpeL5r9sL0NgBRQrFv1j15q
+ u39x8242KW+GhZAvhzSleI3ZFTAp9TiI0=
+X-Gm-Gg: AR+sD11R8urar24im6vaXAutMYyDcoMskiJWkguUgVejt7KGrbrfX+4RQvXt/PRduMs
+ gWIOl+Zv2i9/i6d6Kd0vH7mfeyhWeepCBP7GNLvW1lhe70lWvC+pLyksDgSt1QDBi+TXHVYtPWt
+ smBBshFYQli5fxhBGLC+OQiviNLiOKEHAyEyOKjFw2dKh8saInRoUiSS+52iqKeM0SLvp+SwUIL
+ YGWDpslQSoAexYpdIYo9LC1jKT4kqMKFCa2SqKi6pt3yGJF09+EHsKrnKeCHlG1iCeu/1v38a62
+ sg==
+X-Received: by 2002:a05:6a21:730e:b0:3cc:92d9:80cb with SMTP id
+ adf61e73a8af0-3cf83c17b2bmr11756702637.12.1787739758612; 
+ Wed, 26 Aug 2026 03:22:38 -0700 (PDT)
+X-Received: by 2002:a05:6a21:730e:b0:3cc:92d9:80cb with SMTP id
+ adf61e73a8af0-3cf83c17b2bmr11756615637.12.1787739758141; Wed, 26 Aug 2026
+ 03:22:38 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260818-qom-qapi-v3-0-24b8bbbe3d86@redhat.com>
- <20260818-qom-qapi-v3-9-24b8bbbe3d86@redhat.com>
- <19eda5fb-1cd6-48c3-bd7e-c121708d8cec@nutanix.com>
-In-Reply-To: <19eda5fb-1cd6-48c3-bd7e-c121708d8cec@nutanix.com>
+ <20260818-qom-qapi-v3-11-24b8bbbe3d86@redhat.com>
+ <4a10c40f-7949-46d5-9457-e38a0e18ae40@nutanix.com>
+In-Reply-To: <4a10c40f-7949-46d5-9457-e38a0e18ae40@nutanix.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 26 Aug 2026 14:22:31 +0400
-X-Gm-Features: AcwNN1VH5-4bKdg3za2y7ieRBwaNDyDP3x3KLomJ75jDN-_3uKIYUQhpRQqC5vA
-Message-ID: <CAMxuvaxMsz+toKCyarLLQzcsS5xvksmYwYumObTZqfz9_P03Ug@mail.gmail.com>
-Subject: Re: [PATCH v3 09/74] qom/qmp: populate qapi-type in QMP handlers
+Date: Wed, 26 Aug 2026 14:22:26 +0400
+X-Gm-Features: AcwNN1V8a7KMybrZZ0Ka3hhvX14d2rUV2Ro0lOBgdmGSORtMZuaFcxTfDhbE26A
+Message-ID: <CAMxuvax3RKHiE_vPvkyeM3z4zj2pkzrFJ50mPWB3zHDqsMQYqA@mail.gmail.com>
+Subject: Re: [PATCH v3 11/74] qom: add object_{class_}property_add_qapi
 To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>,
@@ -143,118 +143,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Tue, Aug 25, 2026 at 6:51=E2=80=AFPM Mark Cave-Ayland
+On Tue, Aug 25, 2026 at 6:56=E2=80=AFPM Mark Cave-Ayland
 <mark.caveayland@nutanix.com> wrote:
 >
 > On 18/08/2026 12:10, Marc-Andr=C3=A9 Lureau wrote:
 >
-> > Wire up the new qapi-type field in all four QMP handlers that return
-> > ObjectPropertyInfo or ObjectPropertyValue: qom-list, qom-list-get,
-> > device-list-properties, and qom-list-properties.
-> >
-> > When an ObjectProperty has a qapi_type set, the masked QAPI type name
-> > is copied into the response, allowing clients to cross-reference with
-> > query-qmp-schema.
-> >
-> > No property has it yet, the following changes will populate it.
-> >
-> > Reviewed-by: Markus Armbruster <armbru@redhat.com>
 > > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > > ---
-> >   qom/qom-qmp-cmds.c | 32 +++++++++++++++++++-------------
-> >   1 file changed, 19 insertions(+), 13 deletions(-)
+> >   include/qom/object.h | 36 ++++++++++++++++++++++++++++++++++++
+> >   qom/object.c         | 32 ++++++++++++++++++++++++++++++++
+> >   2 files changed, 68 insertions(+)
 > >
-> > diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
-> > index 330895361d47..f9e6d4371cc5 100644
-> > --- a/qom/qom-qmp-cmds.c
-> > +++ b/qom/qom-qmp-cmds.c
-> > @@ -25,9 +25,22 @@
-> >   #include "qapi/qobject-input-visitor.h"
-> >   #include "qapi/qobject-output-visitor.h"
-> >   #include "qemu/cutils.h"
-> > +#include "qapi/qapi-type-info.h"
-> >   #include "qom/object_interfaces.h"
-> >   #include "qom/qom-qobject.h"
+> > diff --git a/include/qom/object.h b/include/qom/object.h
+> > index 271d736956da..9684db935d23 100644
+> > --- a/include/qom/object.h
+> > +++ b/include/qom/object.h
+> > @@ -1990,6 +1990,42 @@ ObjectProperty *object_class_property_add_enum(O=
+bjectClass *klass,
+> >                                       int (*get)(Object *, Error **),
+> >                                       void (*set)(Object *, int, Error =
+**));
 > >
-> > +static ObjectPropertyInfo *qom_property_info(ObjectProperty *prop)
-> > +{
-> > +    ObjectPropertyInfo *info =3D g_new0(ObjectPropertyInfo, 1);
-> > +
-> > +    info->name =3D g_strdup(prop->name);
-> > +    info->type =3D g_strdup(prop->type);
-> > +    if (prop->qapi_type) {
-> > +        info->qapi_type =3D g_strdup(prop->qapi_type->masked_name);
-> > +    }
-> > +    return info;
-> > +}
+> > +/**
+> > + * object_property_add_qapi:
+> > + * @obj: the object to add a property to
+> > + * @name: the name of the property
+> > + * @qapi_type: QAPI type info descriptor
+> > + * @get: The getter to be called to read a property.  If this is NULL,=
+ then
+> > + *   the property cannot be read.
+> > + * @set: the setter to be called to write a property.  If this is NULL=
+,
+> > + *   then the property cannot be written.
+> > + * @release: called when the property is removed from the object.  Thi=
+s is
+> > + *   meant to allow a property to free its opaque upon object
+> > + *   destruction.  This may be NULL.
+> > + * @opaque: an opaque pointer to pass to the callbacks for the propert=
+y
+> > + *
+> > + * Add a property with a QAPI type association. The property type name
+> > + * is derived from @qapi_type->name.
+> > + *
+> > + * Returns: The newly added property on success, or %NULL on failure.
+> > + */
+> > +ObjectProperty *
+> > +object_property_add_qapi(Object *obj, const char *name,
+> > +                         const QAPITypeInfo *qapi_type,
+> > +                         ObjectPropertyAccessor *get,
+> > +                         ObjectPropertyAccessor *set,
+> > +                         ObjectPropertyRelease *release,
+> > +                         void *opaque);
 >
-> Any reason not to add info->description here? It seems to be set the
-> same way in both cases below.
+> Don't forget to duplicate the same doc comments for
+> object_class_property_add_qapi() below, otherwise
+> object_class_property_add_qapi() doesn't get included in our
+> auto-generated documentation (see commit 478542dd83 ("qom/object.h: add
+> missing documentation for object_class_* property functions").
 
-Indeed, we could factor this in the same function. The description &
-default_value are not used by qmp_qom_list(), but this is harmless.
-I'll add some patches.
+ok
 
 
 >
+> > +ObjectProperty *
+> > +object_class_property_add_qapi(ObjectClass *klass,
+> > +                               const char *name,
+> > +                               const QAPITypeInfo *qapi_type,
+> > +                               ObjectPropertyAccessor *get,
+> > +                               ObjectPropertyAccessor *set,
+> > +                               ObjectPropertyRelease *release,
+> > +                               void *opaque);
 > > +
-> >   static Object *qom_resolve_path(const char *path, Error **errp)
-> >   {
-> >       bool ambiguous =3D false;
-> > @@ -58,12 +71,7 @@ ObjectPropertyInfoList *qmp_qom_list(const char *pat=
-h, Error **errp)
-> >
-> >       object_property_iter_init(&iter, obj);
-> >       while ((prop =3D object_property_iter_next(&iter))) {
-> > -        ObjectPropertyInfo *value =3D g_new0(ObjectPropertyInfo, 1);
-> > -
-> > -        QAPI_LIST_PREPEND(props, value);
-> > -
-> > -        value->name =3D g_strdup(prop->name);
-> > -        value->type =3D g_strdup(prop->type);
-> > +        QAPI_LIST_PREPEND(props, qom_property_info(prop));
-> >       }
-> >
-> >       return props;
-> > @@ -78,6 +86,9 @@ static void qom_list_add_property_value(Object *obj, =
-ObjectProperty *prop,
-> >
-> >       item->name =3D g_strdup(prop->name);
-> >       item->type =3D g_strdup(prop->type);
-> > +    if (prop->qapi_type) {
-> > +        item->qapi_type =3D g_strdup(prop->qapi_type->masked_name);
-> > +    }
-> >       item->value =3D object_property_get_qobject(obj, prop->name, NULL=
-);
+> >   /**
+> >    * object_property_add_tm:
+> >    * @obj: the object to add a property to
+> > diff --git a/qom/object.c b/qom/object.c
+> > index 93d44a9444ca..1bfb6b933339 100644
+> > --- a/qom/object.c
+> > +++ b/qom/object.c
+> > @@ -2595,6 +2595,38 @@ object_class_property_add_enum(ObjectClass *klas=
+s, const char *name,
+> >                                        prop);
 > >   }
 > >
-> > @@ -218,9 +229,7 @@ ObjectPropertyInfoList *qmp_device_list_properties(=
-const char *typename,
-> >               continue;
-> >           }
+> > +ObjectProperty *
+> > +object_property_add_qapi(Object *obj, const char *name,
+> > +                         const QAPITypeInfo *qapi_type,
+> > +                         ObjectPropertyAccessor *get,
+> > +                         ObjectPropertyAccessor *set,
+> > +                         ObjectPropertyRelease *release,
+> > +                         void *opaque)
+> > +{
+> > +    ObjectProperty *prop;
+> > +
+> > +    prop =3D object_property_add(obj, name, qapi_type->name,
+> > +                               get, set, release, opaque);
+> > +    prop->qapi_type =3D qapi_type;
+> > +    return prop;
+> > +}
+> > +
+> > +ObjectProperty *
+> > +object_class_property_add_qapi(ObjectClass *klass, const char *name,
+> > +                               const QAPITypeInfo *qapi_type,
+> > +                               ObjectPropertyAccessor *get,
+> > +                               ObjectPropertyAccessor *set,
+> > +                               ObjectPropertyRelease *release,
+> > +                               void *opaque)
+> > +{
+> > +    ObjectProperty *prop;
+> > +
+> > +    prop =3D object_class_property_add(klass, name, qapi_type->name,
+> > +                                     get, set, release, opaque);
+> > +    prop->qapi_type =3D qapi_type;
+> > +    return prop;
+> > +}
+> > +
+> >   typedef struct TMProperty {
+> >       void (*get)(Object *, struct tm *, Error **);
+> >   } TMProperty;
 > >
-> > -        info =3D g_new0(ObjectPropertyInfo, 1);
-> > -        info->name =3D g_strdup(prop->name);
-> > -        info->type =3D g_strdup(prop->type);
-> > +        info =3D qom_property_info(prop);
-> >           info->description =3D g_strdup(prop->description);
-> >           info->default_value =3D qobject_ref(prop->defval);
-> >
-> > @@ -261,11 +270,8 @@ ObjectPropertyInfoList *qmp_qom_list_properties(co=
-nst char *typename,
-> >           object_property_iter_init(&iter, obj);
-> >       }
-> >       while ((prop =3D object_property_iter_next(&iter))) {
-> > -        ObjectPropertyInfo *info;
-> > +        ObjectPropertyInfo *info =3D qom_property_info(prop);
-> >
-> > -        info =3D g_malloc0(sizeof(*info));
-> > -        info->name =3D g_strdup(prop->name);
-> > -        info->type =3D g_strdup(prop->type);
-> >           info->description =3D g_strdup(prop->description);
-> >           info->default_value =3D qobject_ref(prop->defval);
+>
 >
 > ATB,
 >
