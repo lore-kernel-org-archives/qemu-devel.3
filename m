@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1078FC61DBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B161C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:41:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzJTW-0003u5-RO; Wed, 26 Aug 2026 15:39:54 -0400
+	id 1wzJUY-0006yn-Rs; Wed, 26 Aug 2026 15:40:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJTV-0003tN-Aq
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:39:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJUW-0006uZ-PO
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:40:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJTU-0005kN-1O
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:39:53 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJUV-0006Be-8K
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:40:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787773191;
+ s=mimecast20190719; t=1787773254;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RkA4MASdYdxnjll6G8qEyQzE9tH3DeriYyW/EanUJ/k=;
- b=L+oqKafGr0T4bZ5P1x55O8K/hJAsZgtldZThjackqrnsC4MUqGLKwq9MW9QHV4sJ94mwFT
- wz0ZVccS7iCs2bf0Xt3iuJtCJtrm6+T6qlmcAwV9RFjLZ1dD5dJ7c8QQqLgmdQrEYsUDja
- Xcz8Iulb4lt9B6mNdvVrWzBhXHq5Cd8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=zcTS1HQZTCGQkOmaZVLm63YpWlWjzjsxUTYZiN2QcLg=;
+ b=PScPHBElGaCGm0Gy8Zscmf5Ydp59Ub6Zkx2J8lzUrgb38qglnnejDFEYNpEnX6zk0i9JdO
+ SnMDhQ6GvCJYp6Rn2tG86Pyfh7eLQJxjXcOKZQkQLcj7sEezacmR0JFG5FHlQqqQrCLj67
+ ddqGmeGeB2nnj02d+iLRcUId1VEfuVA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-379-0IrVLKIlOQeex2yRcDjtTQ-1; Wed,
- 26 Aug 2026 15:39:46 -0400
-X-MC-Unique: 0IrVLKIlOQeex2yRcDjtTQ-1
-X-Mimecast-MFC-AGG-ID: 0IrVLKIlOQeex2yRcDjtTQ_1787773184
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-408-7fb03kEQNdGFuhF_xuRNMw-1; Wed,
+ 26 Aug 2026 15:40:50 -0400
+X-MC-Unique: 7fb03kEQNdGFuhF_xuRNMw-1
+X-Mimecast-MFC-AGG-ID: 7fb03kEQNdGFuhF_xuRNMw_1787773246
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B5D13184BA9F; Wed, 26 Aug 2026 19:39:43 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D24F8180123E; Wed, 26 Aug 2026 19:40:45 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.99])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D1BC618005AC; Wed, 26 Aug 2026 19:39:33 +0000 (UTC)
+ id 2CC4B1800577; Wed, 26 Aug 2026 19:40:37 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>,
@@ -72,23 +72,23 @@ Cc: Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Lukas Straub <lukasstraub2@web.de>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 05/43] qapi: convert trivial intro sections for vfio.json
-Date: Wed, 26 Aug 2026 15:38:02 -0400
-Message-ID: <20260826193840.2152000-6-jsnow@redhat.com>
+Subject: [PATCH v3 12/43] qapi: convert trivial intro sections for yank.json
+Date: Wed, 26 Aug 2026 15:38:09 -0400
+Message-ID: <20260826193840.2152000-13-jsnow@redhat.com>
 In-Reply-To: <20260826193840.2152000-1-jsnow@redhat.com>
 References: <20260826193840.2152000-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,23 +106,24 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/vfio.json | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ qapi/yank.json | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/qapi/vfio.json b/qapi/vfio.json
-index 17b60468712..3d61fc38ecd 100644
---- a/qapi/vfio.json
-+++ b/qapi/vfio.json
-@@ -49,8 +49,8 @@
+diff --git a/qapi/yank.json b/qapi/yank.json
+index f3cd5c15d60..bc8c52bda74 100644
+--- a/qapi/yank.json
++++ b/qapi/yank.json
+@@ -47,9 +47,8 @@
  
  ##
- # @VFIO_MIGRATION:
+ # @YankInstance:
 -#
--# This event is emitted when a VFIO device migration state is changed.
-+#     This event is emitted when a VFIO device migration state is
-+#     changed.
+-# A yank instance can be yanked with the `yank` qmp command to recover
+-# from a hanging QEMU.
++#     A yank instance can be yanked with the `yank` qmp command to
++#     recover from a hanging QEMU.
  #
- # @device-id: The device's id, if it has one.
+ # @type: yank instance type
  #
 -- 
 2.55.0
