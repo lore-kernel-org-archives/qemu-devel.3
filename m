@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E17EC61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 18:43:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E4F5C61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 18:44:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzIaP-0006yY-P9; Wed, 26 Aug 2026 14:42:57 -0400
+	id 1wzIaz-00005l-UL; Wed, 26 Aug 2026 14:43:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1wzIaN-0006rz-JJ
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:42:55 -0400
+ id 1wzIax-0008N8-PL
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:43:31 -0400
 Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1wzIaK-00029N-Fm
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:42:55 -0400
+ id 1wzIau-0002SB-M4
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:43:31 -0400
 Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2ceaf8a1265so18283735ad.2
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 11:42:52 -0700 (PDT)
+ d9443c01a7336-2d71a50caa9so7023345ad.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 11:43:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787769771; x=1788374571; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787769807; x=1788374607; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=IukQGcRHMsVbGXSG1mzI1R3dLtKOyYm2L7shctiJxkE=;
- b=joIL65oGCWHBM68YknwbarQ86NWE6PJIuU0usv3GZ34DvI+Lh3RO03h0F//fDJMmq+
- wIJeZTcRYV5n/2ofIyOL8f4/3ZkKE9jC+zkaZPajjUbW0BBjsw5xxB6IYCYwpCUGqpEG
- QZMIzmwduYHcHLwZrUvaurVCFhoTJp/1FyMWYNKEXAdrbk0ePIu8dyE9Mk4jPG5OWkmK
- OZW7SAq2d2APxke/IF9OWMKvyqpc1lLBRBJFHN5V6ZTjoDs45WkxIQFtREHBM1ZEb+7d
- t48/YBYKs1uhGmkwukbiy7Q9PivS+KfASN+k6hkOUyJ7BUQzT4Dyj5oT6nqDevhmF5YF
- Dh5w==
+ bh=nM1ebK5QgzPh85KBZgAbuAGl8pCvUeZGCYkdeDEjbf8=;
+ b=eF+BoHcXjZItayld7X5V+o3iEF1U5Qa75h7/huGtCdGHC1ZB5DJHqCdQsdJLFc3jrT
+ bU7CDZyjdir+KKU4nP0fqYNX3fNxS+bS/WRhmBGGYA3oyuNmcD3t+aHSiLjPSzsH0NIy
+ Zs5x+6n9+EmwqLPjnfVEqV+vey6AEAlxnemH4t4g3jOCTTcnc1X+/vOsTCoaiBwCo9vb
+ HYpIgHThju1qogyvuOASm9YmweFhMaWu65F9MMW8dyOY1wjjc1ehHjoJsnQQkDwSxu2p
+ 1irmJi3Lv0G9W8tq2jES/YAAInEC+OT5nOvFegZ792DUGosezodYzmgn1oEbjCKPHsPP
+ ekEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787769771; x=1788374571;
+ d=1e100.net; s=20251104; t=1787769807; x=1788374607;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=IukQGcRHMsVbGXSG1mzI1R3dLtKOyYm2L7shctiJxkE=;
- b=VQaKZ3g/dpgpj5VnDC4Wr/yOUSpkotZfaSvhdvvCp7feIpKEvKgwpaZ1Gy05lGSOhd
- lQXm/YxTF4VD0+YbREnkMsJ6O+1Bw5EP0fnxR47lgbp/ie4hZAKzONwOM5xN/tw9ptuG
- u6uHwr/SxRmVfycl8Rj8C+apzNyXu/TFXsxbSpI4lVJktHRvvpIvSH2BmUUzcBZ4MP5d
- 7uMbCwd0tvbn2nTD3ev9x5IYgU6JDZxua5tB8GOMDKiD4xnSpzo0KBMCPllYwJBzOuef
- GuSyG6tdArH8sSwdVfB0a8W3657a3+paX7C88P3XEbQzqM5kf2ha2D7Cl75wM0vaGFK4
- B9Hg==
-X-Gm-Message-State: AFuF++lGBDTjbn4gAclUudQ0hwT/9yOJLu2lP82D0H1YdxBIgh63H2W8
- yzyi1h9iMMO6gjqmz8ARR8GDae6kuNVnAlhEVXuNdQ6R/rfp9pvbQTVvox4X9NIcrDQ=
-X-Gm-Gg: AR+sD122GEtzbyjFjC3snFhY02I7LfgFxINmszTYttQe2w6+9pfwrTeIAKCRbiqoZZ+
- SZFLJrRcoGJk+LeV/8vU/IO4G2WcUn/N3SeX3BTTnPHTLis/cuaIDJpMIb2hwsaM60pst4LcEid
- e4sfNxU/FBZr8naaKIlG50orkbCa0iQrEPfNaTx7mPW6fDtERk1kHTA6bQknIk5B6yPjjSoV0hY
- Do2HVqL+OM9Qn9erL41AaETO5C01yaV1s4W/gkiAo72o5z+WrjhqzOq9WKkxfEPZj0TXzTY/YqO
- QAkRTRkvr3zx1wxgeoPQ+FjXG+8R4zytT4OY06OUTH61veHRILdeXWYGSOjQSaE9xVXIZnPC84b
- LqspmjpnjpuXlwRcjFPWM0HPdLxdOOio13iJ/zNQ9Mtchu4QhtuOkm08+JJGN0U5Zi/pNjMOfTc
- JLvwtio1McrplAK4BYg4uxKIxAFHQvHiU+6iUHeBsaXnBQKmih3icuY0j88q51flXjWjZy5gVEr
- RNziLeRKhAzDOSzxrA8ug==
-X-Received: by 2002:a05:6a21:a382:b0:3cc:22bb:8911 with SMTP id
- adf61e73a8af0-3cf833389c9mr19772223637.6.1787769770909; 
- Wed, 26 Aug 2026 11:42:50 -0700 (PDT)
+ bh=nM1ebK5QgzPh85KBZgAbuAGl8pCvUeZGCYkdeDEjbf8=;
+ b=cHF/Hyjj6/4Eq5000l+URxWKnYjQPJ1UppJgaI8AXfy60/s02BGBFFpBuRiTOsirS1
+ JXfHsFFmNJI8AOa4vaVP15gNoBxH+ca2C/25Jk9GvcqgpH2+uDte5USlcvGYtIfLnftE
+ xH4sGUQsuuYrU0NXmCWPHjpU3UefWSHzKMe7qf93G36Z+2vit+HPzNrjEy0qVXQLYFSt
+ EX7/L72Ct3rpTuAwbHfsOjkC2z8BdkuAuDhQeeUGbZjiXC37g51p7M1tzkReDOjO8Hiu
+ pAaqruygnW27z5ZWugr6w9vOWwqf2bTEqeEUztNV+Udww5fqF4oMz424zk5YGyZEWTcT
+ 1m5w==
+X-Gm-Message-State: AFuF++lEy6dwOCiaU8suGiGfpJJB1HF0WL95Hd8HWJVocgYOnQd9ctrO
+ 6nV8Hqf0HzW6DoJVCcTzp0q32fCNEY/lsJgn+8PH02YO0YV1CSZh2Cg52hhbEGWbg4o=
+X-Gm-Gg: AR+sD13LulubbhpwawKONPSZl16iuIxoPFre+69MaECbNbg5l53grHO30wSQU4kcV79
+ adavCZP//k3zAh0B1xih8JAgtC11sfUAWn4Zzy2njcsYa/775pf3MkXxCB3PDfswO0iBYE3gP0g
+ HgDKgeTZ/4d/OeObkfNjaFgtcOKwI/BJlfMScNCutjKFo+CuPgGwB/3sKy4SWOfN2tGVKGVbl30
+ UcSuB9BAahuCEpU0NX/8ozwGKzhO2AhmV2Y03I2uT1MSmgJyfOYKsGY3K0HQ4C7PmrzA82CJcHY
+ ym/3E4SiZmuRnqJTOanKafE20UIrUAkerRZm/HuiWThhWG6hkSBIud2aZkjOgJWMQfPWlgKN5Ko
+ NZmZh9yX+C87ir8bIrx8XovD7QxqTuZ207bjskwDSu86D25nHXlTyudOpQheQWFA74kFKMCXLqG
+ ym2m++DGCRg1tyCC3Vj3mVwgCmzB78lC2tUf8UGBHsdwt0kZYBxKR9aEEQqe2tdYRTnR6nNSC0x
+ hnFmtI6t3nGcr8ktADOdQ==
+X-Received: by 2002:a17:903:46cd:b0:2d7:1cee:3682 with SMTP id
+ d9443c01a7336-2d71cee3c89mr70518955ad.5.1787769807238; 
+ Wed, 26 Aug 2026 11:43:27 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-3283d60c291sm17681846eec.6.2026.08.26.11.42.42
+ 5a478bee46e88-3283d60c291sm17681846eec.6.2026.08.26.11.43.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 11:42:50 -0700 (PDT)
+ Wed, 26 Aug 2026 11:43:26 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
@@ -97,9 +97,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Igor Mammedov <imammedo@redhat.com>
-Subject: [PATCH v2 01/13] accel: use a shared TYPE_ACCEL_CPU parent
-Date: Thu, 27 Aug 2026 02:42:15 +0800
-Message-ID: <20260826184229.1145-2-luoyonggang@gmail.com>
+Subject: [PATCH v2 05/13] hw/riscv/virt: use unique QOM name
+Date: Thu, 27 Aug 2026 02:42:19 +0800
+Message-ID: <20260826184229.1145-6-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260826184229.1145-1-luoyonggang@gmail.com>
 References: <20260826184229.1145-1-luoyonggang@gmail.com>
@@ -129,92 +129,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- TYPE_ACCEL_CPU was "accel-" CPU_RESOLVING_TYPE, so each arch compiled
-  a different parent (accel-arm-cpu, accel-riscv-cpu, ...). Common code
-  registered only one of those names from target_cpu_type() at
-  MODULE_INIT_QOM.
-- A combined binary still registers every linked AccelCPU subclass.
-  RISC-V tcg-accel-riscv-cpu has parent accel-riscv-cpu even when the
-  selected target is ARM, so the old one-parent type_init does not
-  cover the other family. Creating the parent in the subclass
-  register path would hide that, but it keeps per-arch parents that
-  AccelCPUClass does not need.
-- AccelCPUClass is arch-independent. The parent only supplies
-  class_size and ACCEL_CPU_CLASS(). Make TYPE_ACCEL_CPU the fixed
-  abstract type accel-cpu and register it once next to TYPE_ACCEL.
-- Leaf names still encode the CPU type so accel_init_cpu_interfaces()
-  can look up "<accel>-accel-" CPU_RESOLVING_TYPE (for example
-  tcg-accel-arm-cpu). ACCEL_CPU_NAME() keeps that string; it is no
-  longer derived from the parent type name.
-- Drop register_accel_target_type(). Subclasses keep
-  type_register_static() with .parent = TYPE_ACCEL_CPU.
+Use TYPE_RISCV_VIRT_MACHINE so the RISC-V virt QOM type does not
+collide with ARM virt in a combined qemu-system binary. Keep the
+-M / help / migration name as virt via machine_class_set_name().
 
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
 ---
- accel/accel-common.c             | 21 ++++++---------------
- include/accel/accel-cpu-target.h |  3 +--
- include/accel/accel-cpu.h        |  2 ++
- 3 files changed, 9 insertions(+), 17 deletions(-)
+ hw/riscv/virt.c         | 3 ++-
+ include/hw/riscv/virt.h | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/accel/accel-common.c b/accel/accel-common.c
-index 00a400243f0..c4c365f38c7 100644
---- a/accel/accel-common.c
-+++ b/accel/accel-common.c
-@@ -126,21 +126,12 @@ static const TypeInfo accel_types[] = {
-         .instance_size  = sizeof(AccelState),
-         .abstract       = true,
-     },
-+    {
-+        .name           = TYPE_ACCEL_CPU,
-+        .parent         = TYPE_OBJECT,
-+        .abstract       = true,
-+        .class_size     = sizeof(AccelCPUClass),
-+    },
- };
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index b767c5434a0..9019a0a04d6 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -1721,6 +1721,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
  
- DEFINE_TYPES(accel_types)
--
--static void register_accel_target_type(void)
--{
--    g_autofree char *name = g_strconcat("accel-", target_cpu_type(), NULL);
--    const TypeInfo accel_cpu_type = {
--        .name = name,
--        .parent = TYPE_OBJECT,
--        .abstract = true,
--        .class_size = sizeof(AccelCPUClass),
--    };
--
--    type_register_static(&accel_cpu_type);
--}
--
--type_init(register_accel_target_type);
-diff --git a/include/accel/accel-cpu-target.h b/include/accel/accel-cpu-target.h
-index 6feb344e29b..cf33ebd79fc 100644
---- a/include/accel/accel-cpu-target.h
-+++ b/include/accel/accel-cpu-target.h
-@@ -24,8 +24,7 @@
- #include "accel/accel-cpu.h"
- #include "cpu.h"
+     TARGET_SPECIFIC_CLASS(oc)->is_available = target_base_riscv;
+     mc->desc = "RISC-V VirtIO board";
++    machine_class_set_name(mc, "virt");
+     mc->init = virt_machine_init;
+     mc->max_cpus = VIRT_CPUS_MAX;
+     mc->default_cpu_type = TYPE_RISCV_CPU_BASE;
+@@ -1784,7 +1785,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+ }
  
--#define TYPE_ACCEL_CPU "accel-" CPU_RESOLVING_TYPE
--#define ACCEL_CPU_NAME(name) (name "-" TYPE_ACCEL_CPU)
-+#define ACCEL_CPU_NAME(name) (name "-accel-" CPU_RESOLVING_TYPE)
- DECLARE_CLASS_CHECKERS(AccelCPUClass, ACCEL_CPU, TYPE_ACCEL_CPU)
+ static const TypeInfo virt_machine_typeinfo = {
+-    .name       = MACHINE_TYPE_NAME("virt"),
++    .name       = TYPE_RISCV_VIRT_MACHINE,
+     .parent     = TYPE_MACHINE,
+     .class_init = virt_machine_class_init,
+     .instance_init = virt_machine_instance_init,
+diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+index 36a2def4109..5559783aebb 100644
+--- a/include/hw/riscv/virt.h
++++ b/include/hw/riscv/virt.h
+@@ -30,7 +30,7 @@
+ #define VIRT_SOCKETS_MAX_BITS          2
+ #define VIRT_SOCKETS_MAX               (1 << VIRT_SOCKETS_MAX_BITS)
  
- #endif /* ACCEL_CPU_H */
-diff --git a/include/accel/accel-cpu.h b/include/accel/accel-cpu.h
-index 9e7eede7c3c..5cfc2b24223 100644
---- a/include/accel/accel-cpu.h
-+++ b/include/accel/accel-cpu.h
-@@ -12,6 +12,8 @@
- #include "qom/object.h"
- #include "hw/core/cpu.h"
- 
-+#define TYPE_ACCEL_CPU "accel-cpu"
-+
- typedef struct AccelCPUClass {
-     ObjectClass parent_class;
- 
+-#define TYPE_RISCV_VIRT_MACHINE MACHINE_TYPE_NAME("virt")
++#define TYPE_RISCV_VIRT_MACHINE MACHINE_TYPE_NAME("riscv-virt")
+ typedef struct RISCVVirtState RISCVVirtState;
+ DECLARE_INSTANCE_CHECKER(RISCVVirtState, RISCV_VIRT_MACHINE,
+                          TYPE_RISCV_VIRT_MACHINE)
 -- 
 2.52.0.windows.1
 
