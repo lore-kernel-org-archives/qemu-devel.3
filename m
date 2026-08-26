@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1BBCC61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C1BEC5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:56:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzD9G-0002aa-9g; Wed, 26 Aug 2026 08:54:34 -0400
+	id 1wzD8K-0000HG-Hk; Wed, 26 Aug 2026 08:53:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wzD8L-0000Jl-2w; Wed, 26 Aug 2026 08:53:37 -0400
+ id 1wzD88-0008SX-Ge; Wed, 26 Aug 2026 08:53:24 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wzD88-0002t1-4K; Wed, 26 Aug 2026 08:53:36 -0400
+ id 1wzD7x-0002nO-EJ; Wed, 26 Aug 2026 08:53:18 -0400
 Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QCVrAv2127698; Wed, 26 Aug 2026 12:52:59 GMT
+ 67QCVx162127759; Wed, 26 Aug 2026 12:52:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=x5cBv10XC4P42TJRy
- MkggvdKKheNVFGPmq45AZenU54=; b=sdAkRqlsEl39yiBW3R3idpVZvDRQAahwQ
- s31HJMgzR+2o205eL5Bdt/CAO0g12gV2qH+X+EEOUw/DieRX+zJzcwaoyBFgm1dy
- HN6UdseG6GPgFAAC3XRHepAd2V8uYLcJdNR39CETeviD2y5M2fy35zj78bpDzdcw
- 3EfNQKQ+FOn4JCIR1e9wt8ULh8YGeteWc8df9uqq6ma+atr9uS5OC4fOaGSLCcAS
- eJN2CblvtAfgtpCUdcfWGd3TpLC3HEZLhuFl6CsSDquBaSfVeb+a5whOxjRcR+43
- qszufPX+kNAwRqzg+Y7vyItW8c0LiiAvZUPXpGRFxigDhkKZMdbmQ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eqxmam-1
+ :mime-version:references:subject:to; s=pp1; bh=TCzoDCBigZnHnzhP7
+ O0NeyYg9pf+U7Zxai9zdUPXYgk=; b=Dkmtf3Qn9PaoC4tSUPAGXViX9zn2GBMMW
+ Bpq88xoLvytSBCVcqbq3fCnBPhV64T24N7PDaoMqHV6auZVy6om8es7PM7T57xfY
+ 3fI6dQQ5g2gPeGgg+tfYuFZcmprzaMHp1dCt5dOHN/m98xEk726SoHJUoTB6fTup
+ 8DjYI5zJErz3mfpLTDqFQago5TEYCWYFCO6lVB1ECEL6uVbmK316SsM5+M+6LIJv
+ 0ArTFTCr9fukMmEmTMike9+XCdnpA+rOQ/MtFGB5P0zKEQsWACiuUwsPJe0eQzs3
+ 1J6EF2KmrN8+OvdiSadkV2MdpwH9L94ZqqT2wsWvjioKse2mcs+fQ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eqxma0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 12:52:59 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QCfLn7018839;
- Wed, 26 Aug 2026 12:52:58 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7raght18-1
+ Wed, 26 Aug 2026 12:52:50 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QCfLbF003033;
+ Wed, 26 Aug 2026 12:52:49 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7p3qa5nk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 12:52:58 +0000 (GMT)
+ Wed, 26 Aug 2026 12:52:49 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
  [10.39.53.229])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QCqvFZ37093896
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QCqmwc65732900
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 12:52:57 GMT
+ Wed, 26 Aug 2026 12:52:49 GMT
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 11AB05805B;
- Wed, 26 Aug 2026 12:52:57 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B54125805B;
+ Wed, 26 Aug 2026 12:52:48 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4827358059;
- Wed, 26 Aug 2026 12:52:56 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B9D2B58059;
+ Wed, 26 Aug 2026 12:52:47 +0000 (GMT)
 Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com.com (unknown
  [9.61.78.161]) by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 12:52:56 +0000 (GMT)
+ Wed, 26 Aug 2026 12:52:47 +0000 (GMT)
 From: Eric Farman <farman@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
  Cornelia Huck <cohuck@redhat.com>, Zhuoying Cai <zycai@linux.ibm.com>,
+ Jared Rossi <jrossi@linux.ibm.com>, Collin Walling <walling@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 33/37] tests/functional/s390x: Add secure IPL functional test
-Date: Wed, 26 Aug 2026 08:52:08 -0400
-Message-ID: <20260826125213.1901252-34-farman@linux.ibm.com>
+Subject: [PULL 26/37] pc-bios/s390-ccw: Add signed component address overlap
+ checks
+Date: Wed, 26 Aug 2026 08:52:01 -0400
+Message-ID: <20260826125213.1901252-27-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260826125213.1901252-1-farman@linux.ibm.com>
 References: <20260826125213.1901252-1-farman@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 1wZWt6FXlAWMwn_zvv6SmQY-X8NRUvlK
-X-Proofpoint-ORIG-GUID: 1wZWt6FXlAWMwn_zvv6SmQY-X8NRUvlK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfX2Qgcf/nVB7/J
- ug12acNqk6D5mkyTUAECYFIikqq10Uh+Ugw7J+BWhAs6KCUjuTVwOaKWbo6kpEb/hKi7qTpZEG1
- cyJRgkk9h2Hxmlyy5bMpbUiHBBiF+5/+J64T1DnrPRXWn22czBh+C3Pncx1mLcjKCqjYbqwAZ6N
- rRHklaLUjceI4dk/Te2JpcRgAG0UPgjzomsSQ9iY6zuuVhswfQSlfmwnE2KkUcbK7B+Co0vt46R
- 3a6EkhmjVY5ihwHy4RVN/ReHM2wNfO+hQ5UJoDKX0BJrG3qrU3nN8OKKxeR5OBOBgfdmlkchKH8
- +KGj1i6bb2S0yKYMxZzglw5nTTrg2fFzYwZGfd2QjpdSp+pnMvVAIzSGXNJi/IrkQ+UzmsQAgPX
- 87qtEJh4YZis1yNWqzOaAvYJwQ8Wy2cKeZK5xZ/I3rIbHgdDl12sxK+fqBGb9XHUyYYpRBLdyxd
- qRr0McHXITwCx20uaGg==
-X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8ee1ab cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Proofpoint-GUID: MmMOKVJSQxFBGTU1LXjfIDUMSCA3c2w_
+X-Proofpoint-ORIG-GUID: MmMOKVJSQxFBGTU1LXjfIDUMSCA3c2w_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfXzT2iODYsxRZ2
+ z//zrB0BRGsqUwfNwOp2IvCG+axSSDT3PzK7wDPNB1wlD38c0lNyy4Gfsvd7oIv27yrdUdctpuE
+ 5aRn9T32iXwwMPZQin96IugyMnS6tn9EU1OsikbhmDDk6HZE2GPCQ1xVErspPFWJbr0J7IjMuB8
+ VRFDzx8FXWRLDfRPHXfriotrDcdbA5aVv7vvVPqrMRP1Xyp0m+3Vu15EPZmn1/EQpPkx7MewBXw
+ j8tksYX3iwGrvkFhZTZvZZj4Pn4BitUU00Xy6UhaVFuw+Du0EWynY7dL8b9bd/RSxjL3wqrQQ8W
+ Eb1UGfoJ7R7f0/lhNpwC7xwdpgm5yO0pld53xS2DtW2VUlq/e6OVq82aQ2uGQz7aamuYe3z8W0D
+ Ta6bA4RmoF4t3T9YRlxK1vFPuucRShBsgBJJ7P17VNY+ZcHANDP6q6wHARWIAzgIOriHcMT5wgX
+ aPnvL1CR4buoN/dQmBQ==
+X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8ee1a2 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=vTr9H3xdAAAA:8
- a=WP5zsaevAAAA:8 a=vvdW6g1Vg8v77fwKLDIA:9 a=t8Kx07QrZZTALmIZmm-o:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfXxeot00zt6NlN
- pHiPEAO2oPCRhyPfqnhEKCCgJofteu+KKKGzbQSYnOUYQLCDr7lE9xGIcXAP4gnU0tQxHRyWvAy
- +zwRcpNFWLgIx5ebKeTNlnKus0FPfWY=
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
+ a=NXXwFC7yLcffaugpo9UA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfX58eolyh/9btE
+ Xvd3/UHjLasG+JH4V7QETU2L1PmUn44rGsrdoWhze2ggTK4gkXGv+cTeVlPcEkLL/XjyYVcMBkm
+ vdfSKCmKPMw8JU5q3QIYzf1dwPIej5s=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-26_03,2026-08-26_02,2025-10-01_01
@@ -123,216 +125,76 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhuoying Cai <zycai@linux.ibm.com>
 
-Add functional test for secure IPL.
+Add address range tracking and overlap checks to ensure that no
+component overlaps with a signed component during secure IPL.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260730214624.2328883-32-zycai@linux.ibm.com
+Reviewed-by: Collin Walling <walling@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260730214624.2328883-25-zycai@linux.ibm.com
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 ---
- tests/functional/s390x/meson.build        |   2 +
- tests/functional/s390x/test_secure_ipl.py | 172 ++++++++++++++++++++++
- 2 files changed, 174 insertions(+)
- create mode 100755 tests/functional/s390x/test_secure_ipl.py
+ pc-bios/s390-ccw/secure-ipl.c | 19 +++++++++++++++++++
+ pc-bios/s390-ccw/secure-ipl.h | 10 ++++++++++
+ 2 files changed, 29 insertions(+)
 
-diff --git a/tests/functional/s390x/meson.build b/tests/functional/s390x/meson.build
-index b065b666bc..16da5f0054 100644
---- a/tests/functional/s390x/meson.build
-+++ b/tests/functional/s390x/meson.build
-@@ -2,6 +2,7 @@
- 
- test_s390x_timeouts = {
-   'ccw_virtio' : 420,
-+  'secure_ipl' : 360,
+diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
+index a03105cf5a..fd3455cf67 100644
+--- a/pc-bios/s390-ccw/secure-ipl.c
++++ b/pc-bios/s390-ccw/secure-ipl.c
+@@ -193,6 +193,23 @@ static void init_lists(IplDeviceComponentList *comp_list,
+     cert_list->ipl_info_header.len = sizeof(IplInfoBlockHeader);
  }
  
- tests_s390x_system_quick = [
-@@ -14,6 +15,7 @@ tests_s390x_system_thorough = [
-   'ccw_virtio',
-   'pxelinux',
-   'replay',
-+  'secure_ipl',
-   'topology',
-   'tuxrun',
- ]
-diff --git a/tests/functional/s390x/test_secure_ipl.py b/tests/functional/s390x/test_secure_ipl.py
-new file mode 100755
-index 0000000000..06fc93e404
---- /dev/null
-+++ b/tests/functional/s390x/test_secure_ipl.py
-@@ -0,0 +1,172 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+"""
-+s390x Secure IPL functional test.
++static void check_comp_overlap(IplDeviceComponentList *comp_list,
++                               IplDeviceComponentEntry comp_entry)
++{
++    IplDeviceComponentEntry *comp;
 +
-+Validates s390x secure boot by preparing a signed guest image, booting with
-+secure-boot enabled, and verifying cryptographic validation results.
-+"""
++    /*
++     * Check component's address range does not overlap with any
++     * signed component's address range.
++     */
++    for_each_rb_entry(comp, comp_list) {
++        if (comp->flags & S390_IPL_DEV_COMP_FLAG_SC &&
++            intersects(comp->addr, comp->len, comp_entry.addr, comp_entry.len)) {
++            zipl_secure_error("Component addresses overlap");
++        }
++    }
++}
 +
-+from subprocess import check_call, DEVNULL
+ static int zipl_load_signature(ComponentEntry *entry, uint64_t sig)
+ {
+     if (entry->compdat.sig_info.format != DER_SIGNATURE_FORMAT) {
+@@ -294,6 +311,8 @@ int zipl_run_secure(ComponentEntry **entry_ptr, const uint8_t *tmp_sec,
+             comp_entry.addr = comp_addr;
+             comp_entry.len = (uint64_t)comp_len;
+ 
++            check_comp_overlap(comp_list, comp_entry);
 +
-+from qemu_test import QemuSystemTest, Asset, get_qemu_img
-+from qemu_test import exec_command_and_wait_for_pattern, exec_command
-+from qemu_test import wait_for_console_pattern, skipBigDataTest
+             /* no signature present (unsigned component) */
+             if (!sig_entry.len) {
+                 comp_list_add(comp_list, comp_entry);
+diff --git a/pc-bios/s390-ccw/secure-ipl.h b/pc-bios/s390-ccw/secure-ipl.h
+index b5a871a799..d495dd5d04 100644
+--- a/pc-bios/s390-ccw/secure-ipl.h
++++ b/pc-bios/s390-ccw/secure-ipl.h
+@@ -116,4 +116,14 @@ static inline bool verify_signature(IplDeviceComponentEntry comp_entry,
+     return false;
+ }
+ 
++static inline bool intersects(uint64_t addr0, uint64_t size0,
++                              uint64_t addr1, uint64_t size1)
++{
++    if (addr1 > addr0) {
++        return addr1 - addr0 < size0;
++    }
 +
-+class S390xSecureIpl(QemuSystemTest):
-+    """Test s390x Secure IPL (secure boot) functionality."""
-+    ASSET_F40_QCOW2 = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/'
-+         'fedora-secondary/releases/40/Server/s390x/images/'
-+         'Fedora-Server-KVM-40-1.14.s390x.qcow2'),
-+        '091c232a7301be14e19c76ce9a0c1cbd2be2c4157884a731e1fc4f89e7455a5f')
++    return addr0 - addr1 < size1;
++}
 +
-+    def __init__(self, *args, **kwargs):
-+        super().__init__(*args, **kwargs)
-+        self.root_password = None
-+        self.qcow2_path = None
-+        self.cert_path = None
-+        self.prompt = None
-+
-+    def _create_certificate(self, vm):
-+        """Generate x509 certificate"""
-+        exec_command_and_wait_for_pattern(self,
-+                                          'openssl version', 'OpenSSL 3.2.1 30',
-+                                          vm=vm)
-+        exec_command_and_wait_for_pattern(self,
-+                            'openssl req -new -x509 -newkey rsa:2048 '
-+                            '-keyout mykey.pem -outform PEM -out mycert.pem '
-+                            '-days 36500 -subj "/CN=My Name/" -nodes -verbose',
-+                            'Writing private key to \'mykey.pem\'', vm=vm)
-+
-+    def _sign_binaries(self, vm):
-+        """Sign stage3 binary and kernel"""
-+        # Install kernel-devel (needed for sign-file)
-+        exec_command_and_wait_for_pattern(self,
-+                                'sudo dnf install kernel-devel-$(uname -r) -y',
-+                                'Complete!', vm=vm)
-+        wait_for_console_pattern(self, self.prompt, vm=vm)
-+        exec_command_and_wait_for_pattern(self,
-+                                    'ls /usr/src/kernels/$(uname -r)/scripts/',
-+                                    'sign-file', vm=vm)
-+
-+        # Sign stage3 binary and kernel
-+        exec_command(self, '/usr/src/kernels/$(uname -r)/scripts/sign-file '
-+                    'sha256 mykey.pem mycert.pem /lib/s390-tools/stage3.bin',
-+                    vm=vm)
-+        wait_for_console_pattern(self, self.prompt, vm=vm)
-+        exec_command(self, '/usr/src/kernels/$(uname -r)/scripts/sign-file '
-+                    'sha256 mykey.pem mycert.pem /boot/vmlinuz-$(uname -r)',
-+                    vm=vm)
-+        wait_for_console_pattern(self, self.prompt, vm=vm)
-+
-+    def _run_zipl_secure(self, vm):
-+        """Run zipl to prepare for secure boot"""
-+        exec_command_and_wait_for_pattern(self, 'zipl --secure 1 -VV', 'Done.',
-+                                          vm=vm)
-+
-+    def _extract_certificate(self, vm):
-+        """Extract certificate from VM to host filesystem"""
-+        out = exec_command_and_wait_for_pattern(self, 'cat mycert.pem',
-+                                                '-----END CERTIFICATE-----',
-+                                                vm=vm)
-+        # strip first line to avoid console echo artifacts
-+        cert = "\n".join(out.decode("utf-8").splitlines()[1:])
-+        self.log.info("%s", cert)
-+
-+        self.cert_path = self.scratch_file("mycert.pem")
-+
-+        with open(self.cert_path, 'w', encoding="utf-8") as file_object:
-+            file_object.write(cert)
-+
-+    def setup_s390x_secure_ipl(self):
-+        """
-+        Prepare a secure boot-enabled guest image.
-+
-+        Boots a temporary VM to generate a certificate, sign boot components
-+        (stage3 and kernel), run zipl, and extract the certificate to host.
-+        """
-+        self.require_netdev('user')
-+
-+        temp_vm = self.get_vm(name='sipl_setup')
-+        temp_vm.set_machine('s390-ccw-virtio')
-+
-+        asset_path = self.ASSET_F40_QCOW2.fetch()
-+        self.qcow2_path = self.scratch_file('f40.qcow2')
-+        qemu_img = get_qemu_img(self)
-+        check_call([qemu_img, 'create', '-f', 'qcow2', '-b', asset_path,
-+                    '-F', 'qcow2', self.qcow2_path], stdout=DEVNULL, stderr=DEVNULL)
-+
-+        temp_vm.set_console()
-+        temp_vm.add_args('-nographic',
-+                         '-accel', 'kvm',
-+                         '-m', '1024',
-+                         '-drive',
-+                         f'id=drive0,if=none,format=qcow2,file={self.qcow2_path}',
-+                         '-device', 'virtio-blk-ccw,drive=drive0,bootindex=1')
-+        temp_vm.launch()
-+
-+        # Initial root account setup (Fedora first boot screen)
-+        self.root_password = 'fedora40password'
-+        wait_for_console_pattern(self, 'Please make a selection from the above',
-+                                 vm=temp_vm)
-+        exec_command_and_wait_for_pattern(self, '4', 'Password:', vm=temp_vm)
-+        exec_command_and_wait_for_pattern(self, self.root_password,
-+                                          'Password (confirm):', vm=temp_vm)
-+        exec_command_and_wait_for_pattern(self, self.root_password,
-+                                    'Please make a selection from the above',
-+                                    vm=temp_vm)
-+
-+        # Login as root
-+        self.prompt = '[root@localhost ~]#'
-+        exec_command_and_wait_for_pattern(self, 'c', 'localhost login:', vm=temp_vm)
-+        exec_command_and_wait_for_pattern(self, 'root', 'Password:', vm=temp_vm)
-+        exec_command_and_wait_for_pattern(self, self.root_password, self.prompt,
-+                                          vm=temp_vm)
-+
-+        self._create_certificate(temp_vm)
-+        self._sign_binaries(temp_vm)
-+        self._run_zipl_secure(temp_vm)
-+        self._extract_certificate(temp_vm)
-+
-+        # Shutdown temp vm
-+        temp_vm.shutdown()
-+
-+    @skipBigDataTest()
-+    def test_s390x_secure_ipl(self):
-+        """
-+        Verify secure boot validation during s390x guest boot.
-+
-+        Expects two "Verified component" messages and confirms
-+        /sys/firmware/ipl/secure reports secure boot is active.
-+        """
-+        self.require_accelerator('kvm')
-+        self.setup_s390x_secure_ipl()
-+
-+        self.set_machine('s390-ccw-virtio')
-+
-+        self.vm.set_console()
-+        self.vm.add_args('-nographic',
-+                         '-machine', 's390-ccw-virtio,secure-boot=on,'
-+                         f'boot-certs.0.path={self.cert_path}',
-+                         '-accel', 'kvm',
-+                         '-m', '1024',
-+                         '-drive',
-+                         f'id=drive1,if=none,format=qcow2,file={self.qcow2_path}',
-+                         '-device', 'virtio-blk-ccw,drive=drive1,bootindex=1')
-+        self.vm.launch()
-+
-+        # Expect two verified components
-+        verified_output = "Verified component"
-+        wait_for_console_pattern(self, verified_output)
-+        wait_for_console_pattern(self, verified_output)
-+
-+        # Login and verify the vm is booted using secure boot
-+        wait_for_console_pattern(self, 'localhost login:')
-+        exec_command_and_wait_for_pattern(self, 'root', 'Password:')
-+        exec_command_and_wait_for_pattern(self, self.root_password, self.prompt)
-+        exec_command_and_wait_for_pattern(self, 'cat /sys/firmware/ipl/secure', '1')
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
+ #endif /* _PC_BIOS_S390_CCW_SECURE_IPL_H */
 -- 
 2.55.0
 
