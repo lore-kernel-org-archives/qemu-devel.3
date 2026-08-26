@@ -4,105 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AAA6C61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD08FC5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:41:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzEdX-0001F8-Md; Wed, 26 Aug 2026 10:29:55 -0400
+	id 1wzEo7-0006mK-Vm; Wed, 26 Aug 2026 10:40:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdV-0001E8-Ay
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:53 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdS-0002Aw-Ho
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:53 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 196E221262;
- Wed, 26 Aug 2026 14:29:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787754585; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wtkKWtu9DpZCeDi6PKkmcHjF6vdv1rPnAxh7VtMH5DQ=;
- b=w3BKJWqefnV1zPZWLmOQ/kqIKze9+zP38x6M1c3ICX/QBc0RzRoqQd4/YMjtb/rlYIDGvx
- PZmPhO/vA8XK//IX6GbsecCaFDDYzrkFN0MbdPty3QhkgtUw0TLbNnqwmqr2hzuRdrcptD
- SUilFxLXkjpWtpUUa8Eb2vR6m0l8It8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787754585;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wtkKWtu9DpZCeDi6PKkmcHjF6vdv1rPnAxh7VtMH5DQ=;
- b=KenLYyB7XSSqrOMSOBZNOdIOn/n2afq7wB3wFQtLdxXi4Vre4+FkjLGOiKuGHI/IfHX+6E
- HkzRCNS7GPOTrPCw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787754581; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wtkKWtu9DpZCeDi6PKkmcHjF6vdv1rPnAxh7VtMH5DQ=;
- b=u+TnL5qzNjEd1sJT2KVso+k6Juf9t5TiZ3G1q1MiiXtTHN91JcLonF6lcdZ1E3W98FXVg6
- nRmNxBXEMppQsOVWZXNKGBOj5sNUdT8Q+IN7xSs/6frT5vj0P+6q8svHRmTLQyQqf7vh4h
- b287Bee3eIYBDVobQKvdeIJcTy4tTk4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787754581;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wtkKWtu9DpZCeDi6PKkmcHjF6vdv1rPnAxh7VtMH5DQ=;
- b=4zPU1H080jWmgbvNk9tc97jo7EIyRkxXLA39eP+xgNQjpZwMCL0zqHUOBsI/OLpGfwKKLN
- Qbtyt6t5Ixa8TWAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 54F0D1361C;
- Wed, 26 Aug 2026 14:29:40 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id +IjeCVT4jmpTJAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 26 Aug 2026 14:29:40 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL 24/30] migration: Remove redundant flags
-Date: Wed, 26 Aug 2026 11:28:59 -0300
-Message-ID: <20260826142905.2315503-25-farosas@suse.de>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260826142905.2315503-1-farosas@suse.de>
-References: <20260826142905.2315503-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wzEo6-0006kx-9y; Wed, 26 Aug 2026 10:40:50 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wzEo4-0005pf-Bz; Wed, 26 Aug 2026 10:40:50 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67QE1WY8015904; Wed, 26 Aug 2026 14:40:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=G+dIBf
+ ygeYzSuz1SjFE7VEIiF2gnK4f1B/17344b36A=; b=AQrXxdX9XXFzb0Jo++mPAq
+ OhBzLGQxiGh5VmIdR3qUoPpYdK/JsV00gifnjtiLq5wHccQ7im46HT+erNIWWnd2
+ eiF3SNNfpOFT87T6PiYQNyT1uIlLuUXYJHaYoUnrgAhN5MX7pzezfz7AbucVIH85
+ Fv/GneB544gh7NgH2B9BvR2Ja/Yf9CPY2NCWyyUfKR7wz0AoIX2Q83I2hpbiXEdk
+ PWfJHgQQIyJrkQgx9JqsHetBig6INlsSDp9sSxsDTZiE0d6+Kl1a7CtJFlcPR9rt
+ qU/zKy+yLbTch6j4yWobRONZLuhzhCCq8YkGi8b0IIOZ4UeOBdVsdPYO5jeGw0yw
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73g4yabx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 14:40:45 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QEQNH9026463;
+ Wed, 26 Aug 2026 14:40:44 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7ragjajv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 14:40:44 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QEehWZ31523514
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 26 Aug 2026 14:40:43 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D1EFC5805E;
+ Wed, 26 Aug 2026 14:40:43 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4F28858056;
+ Wed, 26 Aug 2026 14:40:43 +0000 (GMT)
+Received: from [9.61.69.254] (unknown [9.61.69.254])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 26 Aug 2026 14:40:43 +0000 (GMT)
+Message-ID: <4e88884a-ce31-4d32-8941-5922fc3c596a@linux.ibm.com>
+Date: Wed, 26 Aug 2026 10:40:42 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/8] hw/s390x/ipl: Fix incorrect PCI IPL block length
+ constant
+To: Matthew Rosato <mjrosato@linux.ibm.com>,
+ Zhuoying Cai <zycai@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ qemu-devel@nongnu.org, qemu-s390x@nongnu.org, cohuck@redhat.com,
+ "Jason J . Herne" <jjherne@linux.ibm.com>
+References: <20260811144629.866641-1-jrossi@linux.ibm.com>
+ <20260811144629.866641-3-jrossi@linux.ibm.com>
+ <51730ac3-ff1f-4eca-98f9-b31b47596185@linux.ibm.com>
+ <1bf6e2a3-be53-47b3-8694-9b249770a655@linux.ibm.com>
+ <0ba0a7aa-623a-48e3-bde9-48ee82331d1a@linux.ibm.com>
+ <36b43f47-32d7-4ff0-ad76-2d1ab1df2c7f@linux.ibm.com>
+ <a4ffeab2-82d1-4100-ae25-c00c2d562c7e@linux.ibm.com>
+Content-Language: en-US
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <a4ffeab2-82d1-4100-ae25-c00c2d562c7e@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.78 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.18)[-0.912];
- MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_TWO(0.00)[2];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: xJq32oSWXMIEvjOX8JXevPtbBcR8fa4U
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEyMSBTYWx0ZWRfX6olsDsYxqyiy
+ htztFpON+/TbwDsIbM+iBQLdcGN2IDFOFa2puF9Z+mBwhqQYQXjl6Uf51AU5/Bdpo9yLIFCDXWA
+ B/pLZAOzYF/1vDLni+HEH7JK4gUP0aw=
+X-Proofpoint-GUID: xJq32oSWXMIEvjOX8JXevPtbBcR8fa4U
+X-Authority-Analysis: v=2.4 cv=JZyMa0KV c=1 sm=1 tr=0 ts=6a8efaed cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=clF9_pQHt9C7tqTUgR0A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEyMSBTYWx0ZWRfX130ubPhInr5P
+ 1aKfHEXFG6B4O5h+8V865bHUW3BuFhqg6MYgDkhsGUi8aZJyR0Huc+laDOFekTAycYufRFNkpGi
+ QpqECljfVp9dppxLfRcJ9wZIlJwq8UbPvHASkx4QYDlGmeEAQhxeerrs7Y10WnGTLJRXJFtnaP3
+ lzqTKygfRhLt1pvXlUWhEWmtoJyOj7+KkXI8lj415oZXqP2CAU0cR8nWSYbLPEuCugAFfSONqbd
+ iqx9KaD2zuSVYNUxvtSYmdh6yq/luul+j0puC1XeVq6RyxeYYDxuyC8y0Od0I8j5byZ/HBwGjDr
+ XT5JU3IS9TAPDa1S4EuAtr89kkcHrhneWguJdQSBgLCV3a5vUJoHjRDG5BBpp0aWkGtCQnt9ZLh
+ rEDrzK0myzWebBkXOUfEv8HrPPeZj3A1Dol8J1Mb53wL31rk5mSI29Ych+Yc5biPyJWF7dNHcvS
+ E+TRGUJq0iYxfxX9CXQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-26_04,2026-08-26_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260121
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,343 +131,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the VMS_VARRAY and VMS_VBUFFER flags that became redundant due
-to the previous commit which stores the size of the vmstate offset
-variables along with the offset itself.
 
-Acked-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- include/migration/vmstate.h        | 74 +++++++++++-------------------
- migration/savevm.c                 |  6 +--
- migration/vmstate.c                |  3 +-
- rust/bindings/migration-sys/lib.rs |  7 +--
- rust/migration/src/vmstate.rs      |  6 +--
- rust/tests/tests/vmstate_tests.rs  |  4 +-
- 6 files changed, 37 insertions(+), 63 deletions(-)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 12bfa64fb92..a168651a062 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -69,8 +69,9 @@ enum VMStateFlags {
-      * }). Dereference the pointer before using it as basis for
-      * further pointer arithmetic (see e.g. VMS_ARRAY). Does not
-      * affect the meaning of VMStateField.num_indirect or
--     * VMStateField.size_indirect; see VMS_VARRAY* and VMS_VBUFFER for
--     * those. */
-+     * VMStateField.size_indirect; see VMS_VARRAY and VMS_VBUFFER for
-+     * those.
-+     */
-     VMS_POINTER          = 0x002,
- 
-     /* The field is an array of fixed size. VMStateField.num contains
-@@ -80,12 +81,13 @@ enum VMStateFlags {
-      * VMS_MULTIPLY. Each array entry will be processed individually
-      * (VMStateField.info.get()/put() if VMS_STRUCT is not set,
-      * recursion into VMStateField.vmsd if VMS_STRUCT is set). May not
--     * be combined with VMS_VARRAY*. */
-+     * be combined with VMS_VARRAY.
-+     */
-     VMS_ARRAY            = 0x004,
- 
-     /* The field is itself a struct, containing one or more
-      * fields. Recurse into VMStateField.vmsd. Most useful in
--     * combination with VMS_ARRAY / VMS_VARRAY*, recursing into each
-+     * combination with VMS_ARRAY / VMS_VARRAY, recursing into each
-      * array entry. */
-     VMS_STRUCT           = 0x008,
- 
-@@ -93,9 +95,9 @@ enum VMStateFlags {
-      * The field is an array of variable size. The integer at opaque +
-      * VMStateField.num_indirect contains the number of entries in the
-      * array. See the VMS_ARRAY description regarding array handling
--     * in general. May not be combined with VMS_ARRAY or any other
--     * VMS_VARRAY*. */
--    VMS_VARRAY_INT32     = 0x010,
-+     * in general. May not be combined with VMS_ARRAY.
-+     */
-+    VMS_VARRAY     = 0x010,
- 
-     /* Ignored */
-     VMS_BUFFER           = 0x020,
-@@ -103,18 +105,12 @@ enum VMStateFlags {
-     /* The field is a (fixed-size or variable-size) array of pointers
-      * (e.g. struct a { uint8_t *b[]; }). Dereference each array entry
-      * before using it. Note: Does not imply any one of VMS_ARRAY /
--     * VMS_VARRAY*; these need to be set explicitly. */
-+     * VMS_VARRAY; these need to be set explicitly.
-+     */
-     VMS_ARRAY_OF_POINTER = 0x040,
- 
--    /* The field is an array of variable size. The uint16_t at opaque
--     * + VMStateField.num_indirect
--     * contains the number of entries in the array. See the VMS_ARRAY
--     * description regarding array handling in general. May not be
--     * combined with VMS_ARRAY or any other VMS_VARRAY*. */
--    VMS_VARRAY_UINT16    = 0x080,
--
-     /* The size of the individual entries (a single array entry if
--     * VMS_ARRAY or any of VMS_VARRAY* are set, or the field itself if
-+     * VMS_ARRAY or VMS_VARRAY are set, or the field itself if
-      * neither is set) is variable (i.e. not known at compile-time),
-      * but the same for all entries. Use the integer at opaque +
-      * VMStateField.size_indirect (subject to VMS_MULTIPLY) to determine
-@@ -128,20 +124,6 @@ enum VMStateFlags {
-      * allocated. Only valid in combination with VMS_VBUFFER. */
-     VMS_MULTIPLY         = 0x200,
- 
--    /* The field is an array of variable size. The uint8_t at opaque +
--     * VMStateField.num_indirect
--     * contains the number of entries in the array. See the VMS_ARRAY
--     * description regarding array handling in general. May not be
--     * combined with VMS_ARRAY or any other VMS_VARRAY*. */
--    VMS_VARRAY_UINT8     = 0x400,
--
--    /* The field is an array of variable size. The uint32_t at opaque
--     * + VMStateField.num_indirect
--     * contains the number of entries in the array. See the VMS_ARRAY
--     * description regarding array handling in general. May not be
--     * combined with VMS_ARRAY or any other VMS_VARRAY*. */
--    VMS_VARRAY_UINT32    = 0x800,
--
-     /* Fail loading the serialised VM state if this field is missing
-      * from the input. */
-     VMS_MUST_EXIST       = 0x1000,
-@@ -530,7 +512,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .info       = &(_info),                                          \
-     .size       = sizeof(_type),                                     \
--    .flags      = VMS_VARRAY_INT32|VMS_POINTER,                      \
-+    .flags      = VMS_VARRAY | VMS_POINTER,                          \
-     .offset     = vmstate_offset_pointer(_state, _field, _type),     \
- }
- 
-@@ -540,7 +522,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .info       = &(_info),                                          \
-     .size       = sizeof(_type),                                     \
--    .flags      = VMS_VARRAY_UINT32|VMS_POINTER,                     \
-+    .flags      = VMS_VARRAY | VMS_POINTER,                          \
-     .offset     = vmstate_offset_pointer(_state, _field, _type),     \
- }
- 
-@@ -550,7 +532,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .info       = &(_info),                                          \
-     .size       = sizeof(_type),                                     \
--    .flags      = VMS_VARRAY_INT32 | VMS_POINTER | VMS_ALLOC,        \
-+    .flags      = VMS_VARRAY | VMS_POINTER | VMS_ALLOC,              \
-     .offset     = vmstate_offset_pointer(_state, _field, _type),     \
- }
- 
-@@ -560,7 +542,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .info       = &(_info),                                          \
-     .size       = sizeof(_type),                                     \
--    .flags      = VMS_VARRAY_UINT32|VMS_POINTER|VMS_ALLOC,           \
-+    .flags      = VMS_VARRAY | VMS_POINTER | VMS_ALLOC,              \
-     .offset     = vmstate_offset_pointer(_state, _field, _type),     \
- }
- 
-@@ -570,7 +552,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .info       = &(_info),                                          \
-     .size       = sizeof(_type),                                     \
--    .flags      = VMS_VARRAY_UINT16 | VMS_POINTER | VMS_ALLOC,       \
-+    .flags      = VMS_VARRAY | VMS_POINTER | VMS_ALLOC,              \
-     .offset     = vmstate_offset_pointer(_state, _field, _type),     \
- }
- 
-@@ -580,7 +562,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .info       = &(_info),                                          \
-     .size       = sizeof(_type),                                     \
--    .flags      = VMS_VARRAY_UINT16,                                 \
-+    .flags      = VMS_VARRAY,                                        \
-     .offset     = vmstate_offset_varray(_state, _field, _type),      \
- }
- 
-@@ -659,7 +641,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .vmsd       = &(_vmsd),                                          \
-     .size       = sizeof(_type),                                     \
--    .flags      = VMS_POINTER | VMS_VARRAY_UINT8 |                   \
-+    .flags      = VMS_POINTER | VMS_VARRAY |                         \
-                   VMS_ARRAY_OF_POINTER | VMS_STRUCT |                \
-                   VMS_ARRAY_OF_POINTER_AUTO_ALLOC,                   \
-     .offset     = vmstate_offset_pointer(_state, _field, _type *),   \
-@@ -672,7 +654,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .num_indirect = vmstate_field_offset(_state, _field_num),         \
-     .vmsd       = &(_vmsd),                                           \
-     .size       = sizeof(_type),                                      \
--    .flags      = VMS_POINTER | VMS_VARRAY_UINT32 |                   \
-+    .flags      = VMS_POINTER | VMS_VARRAY |                          \
-                   VMS_ARRAY_OF_POINTER | VMS_STRUCT |                 \
-                   VMS_ARRAY_OF_POINTER_AUTO_ALLOC,                    \
-     .offset     = vmstate_offset_pointer(_state, _field, _type *),    \
-@@ -683,7 +665,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .version_id = (_version),                                             \
-     .num_indirect = vmstate_field_offset(_state, _field_num),             \
-     .info       = &(_info),                                               \
--    .flags      = VMS_VARRAY_UINT32 | VMS_ARRAY_OF_POINTER | VMS_POINTER, \
-+    .flags      = VMS_VARRAY | VMS_ARRAY_OF_POINTER | VMS_POINTER,        \
-     .offset     = vmstate_offset_pointer(_state, _field, _type *),          \
- }
- 
-@@ -727,7 +709,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .version_id = (_version),                                        \
-     .vmsd       = &(_vmsd),                                          \
-     .size       = sizeof(_type),                                     \
--    .flags      = VMS_STRUCT|VMS_VARRAY_UINT8,                       \
-+    .flags      = VMS_STRUCT | VMS_VARRAY,                           \
-     .offset     = vmstate_offset_varray(_state, _field, _type),      \
- }
- 
-@@ -750,7 +732,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .size       = sizeof(_type),                                     \
-     .vmsd       = &(_vmsd),                                          \
--    .flags      = VMS_POINTER | VMS_VARRAY_INT32 | VMS_STRUCT,       \
-+    .flags      = VMS_POINTER | VMS_VARRAY | VMS_STRUCT,             \
-     .offset     = vmstate_offset_pointer(_state, _field, _type),     \
- }
- 
-@@ -760,7 +742,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .size       = sizeof(_type),                                     \
-     .vmsd       = &(_vmsd),                                          \
--    .flags      = VMS_POINTER | VMS_VARRAY_INT32 | VMS_STRUCT,       \
-+    .flags      = VMS_POINTER | VMS_VARRAY | VMS_STRUCT,             \
-     .offset     = vmstate_offset_pointer(_state, _field, _type),     \
- }
- 
-@@ -770,7 +752,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .size       = sizeof(_type),                                     \
-     .vmsd       = &(_vmsd),                                          \
--    .flags      = VMS_POINTER | VMS_VARRAY_UINT16 | VMS_STRUCT,      \
-+    .flags      = VMS_POINTER | VMS_VARRAY | VMS_STRUCT,             \
-     .offset     = vmstate_offset_pointer(_state, _field, _type),     \
- }
- 
-@@ -780,7 +762,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .version_id = (_version),                                        \
-     .vmsd       = &(_vmsd),                                          \
-     .size       = sizeof(_type),                                     \
--    .flags      = VMS_STRUCT|VMS_VARRAY_UINT32,                      \
-+    .flags      = VMS_STRUCT | VMS_VARRAY,                           \
-     .offset     = vmstate_offset_varray(_state, _field, _type),      \
- }
- 
-@@ -790,7 +772,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .vmsd       = &(_vmsd),                                          \
-     .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .size       = sizeof(_type),                                     \
--    .flags      = VMS_STRUCT|VMS_VARRAY_INT32|VMS_ALLOC|VMS_POINTER, \
-+    .flags      = VMS_STRUCT | VMS_VARRAY | VMS_ALLOC | VMS_POINTER, \
-     .offset     = vmstate_offset_pointer(_state, _field, _type),     \
- }
- 
-@@ -915,7 +897,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .version_id   = (_version),                                      \
-     .size         = (_size),                                         \
-     .info         = &vmstate_info_unused_buffer,                     \
--    .flags        = VMS_VARRAY_UINT32 | VMS_BUFFER,                  \
-+    .flags        = VMS_VARRAY | VMS_BUFFER,                         \
- }
- 
- /* _field_size should be a int32_t field in the _state struct giving the
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 16b049c4539..ba705c941aa 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -884,11 +884,9 @@ static void vmstate_check(const VMStateDescription *vmsd)
-                 }
-                 /*
-                  * VMS_ARRAY_OF_POINTER must be used only together with one
--                 * of VMS_(V)ARRAY* flags.
-+                 * of VMS_(V)ARRAY flags.
-                  */
--                assert(field->flags & (VMS_ARRAY | VMS_VARRAY_INT32 |
--                                       VMS_VARRAY_UINT16 | VMS_VARRAY_UINT8 |
--                                       VMS_VARRAY_UINT32));
-+                assert(field->flags & (VMS_ARRAY | VMS_VARRAY));
-             }
- 
-             if (field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC) {
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 372aed258f1..bc5285bcea2 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -101,8 +101,7 @@ static uint64_t vmstate_n_elems(void *opaque, const VMStateField *field)
- 
-     if (field->flags & VMS_ARRAY) {
-         n_elems = field->num;
--    } else if (field->flags & (VMS_VARRAY_INT32 | VMS_VARRAY_UINT32
--                               | VMS_VARRAY_UINT16 | VMS_VARRAY_UINT8)) {
-+    } else if (field->flags & VMS_VARRAY) {
-         n_elems = vmstate_read_from_offset(&field->num_indirect, opaque);
-     }
- 
-diff --git a/rust/bindings/migration-sys/lib.rs b/rust/bindings/migration-sys/lib.rs
-index baa2730ca9d..c8397dc8974 100644
---- a/rust/bindings/migration-sys/lib.rs
-+++ b/rust/bindings/migration-sys/lib.rs
-@@ -57,12 +57,7 @@ pub trait VMStateFlagsExt {
- }
- 
- impl VMStateFlagsExt for VMStateFlags {
--    const VMS_VARRAY_FLAGS: VMStateFlags = VMStateFlags(
--        VMStateFlags::VMS_VARRAY_INT32.0
--            | VMStateFlags::VMS_VARRAY_UINT8.0
--            | VMStateFlags::VMS_VARRAY_UINT16.0
--            | VMStateFlags::VMS_VARRAY_UINT32.0,
--    );
-+    const VMS_VARRAY_FLAGS: VMStateFlags = VMStateFlags(VMStateFlags::VMS_VARRAY.0);
- }
- 
- // Add a couple builder-style methods to VMStateField, allowing
-diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
-index 48d0065139a..45c0b52738b 100644
---- a/rust/migration/src/vmstate.rs
-+++ b/rust/migration/src/vmstate.rs
-@@ -250,9 +250,9 @@ unsafe impl $crate::vmstate::VMState for $type {
- impl_vmstate_scalar!(vmstate_info_int16, i16);
- impl_vmstate_scalar!(vmstate_info_int32, i32);
- impl_vmstate_scalar!(vmstate_info_int64, i64);
--impl_vmstate_scalar!(vmstate_info_uint8, u8, VMS_VARRAY_UINT8);
--impl_vmstate_scalar!(vmstate_info_uint16, u16, VMS_VARRAY_UINT16);
--impl_vmstate_scalar!(vmstate_info_uint32, u32, VMS_VARRAY_UINT32);
-+impl_vmstate_scalar!(vmstate_info_uint8, u8, VMS_VARRAY);
-+impl_vmstate_scalar!(vmstate_info_uint16, u16, VMS_VARRAY);
-+impl_vmstate_scalar!(vmstate_info_uint32, u32, VMS_VARRAY);
- impl_vmstate_scalar!(vmstate_info_uint64, u64);
- impl_vmstate_scalar!(vmstate_info_timer, util::timer::Timer);
- 
-diff --git a/rust/tests/tests/vmstate_tests.rs b/rust/tests/tests/vmstate_tests.rs
-index c002ffb2bc4..5f6dd8ae7f1 100644
---- a/rust/tests/tests/vmstate_tests.rs
-+++ b/rust/tests/tests/vmstate_tests.rs
-@@ -113,7 +113,7 @@ fn test_vmstate_varray_uint16_unsafe() {
-     assert_eq!(foo_fields[2].version_id, 0);
-     assert_eq!(foo_fields[2].size, 1);
-     assert_eq!(foo_fields[2].num, 0);
--    assert_eq!(foo_fields[2].flags, VMStateFlags::VMS_VARRAY_UINT16);
-+    assert_eq!(foo_fields[2].flags, VMStateFlags::VMS_VARRAY);
-     assert!(foo_fields[2].vmsd.is_null());
-     assert!(foo_fields[2].field_exists.is_none());
- }
-@@ -222,7 +222,7 @@ fn test_vmstate_struct_varray_uint8() {
-     assert_eq!(foo_fields[2].num, 0);
-     assert_eq!(
-         foo_fields[2].flags.0,
--        VMStateFlags::VMS_STRUCT.0 | VMStateFlags::VMS_VARRAY_UINT8.0
-+        VMStateFlags::VMS_STRUCT.0 | VMStateFlags::VMS_VARRAY.0
-     );
-     assert_eq!(foo_fields[2].vmsd, VMSTATE_FOOA.as_ref());
-     assert!(foo_fields[2].field_exists.is_none());
--- 
-2.53.0
+On 8/25/26 3:26 PM, Matthew Rosato wrote:
+>>>> Given that, should the #define be sizeof(IplBlockPci) + 24?
+>>>>
+>>> If IplBlockPci is likely to expand in the future, it might make sense to
+>>> derive this value from the structure layout. For example,
+>>> offsetof(IplParameterBlock, pci) + sizeof(IplBlockPci) could be more
+>>> accurate. Otherwise, keeping it as a constant like the other definitions
+>>> seems reasonable as well.
+>> All of those suggestions would be valid, but I'm leaning toward keeping it
+>> defined without using sizeof() for the sake of consistency if nothing
+>> else.  The other IPLB types are already defined as fixed numbers and for
+>> the IplBlockQemuScsi being used later in this patch series, it actually has
+>> a minimum value that is less than the sizeof() itself due to the same
+>> struct
+>> servicing both PCI and CCW controllers, where the minimum size for CCW is
+>> less than PCI.
+>>
+>> I can envision several ways to improve the definitions and/or naming
+>> conventions, but I think it is outside the scope of this series because the
+>> changes should be uniformly applied to all definitions, not just PCI.
+> Ehh...  If you already think the other definitions should be fixed then
+> convention is not a good enough reason to propagate the bad practice to
+> new code.  Doing the new definition the right way now in this patch is
+> certainly within the scope of this series.
+>
+> If we have structures that define the entire 336 bytes, I personally
+> would much prefer to see that written out with sizeof()s vs a magic
+> number that coincidentally must line up with the size of one or more
+> well-defined structures.
+>
+> As for existing definitions, I agree that is out of scope: you could
+> follow-up later with one or more patches that cleanup the existing
+> definitions.
+>
+> Thanks,
+> Matt
 
+OK.  I will use offsetof(IplParameterBlock, pci) + sizeof(IplBlockPci) for
+the new definition, with the intention of cleanly splitting the IPLB header
+from Block0 and uniformly updating the definitions in a follow-up series
+later.
+
+Regards,
+Jared Rossi
 
