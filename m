@@ -4,100 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38378C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:32:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B215C61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:32:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzEdO-0001CT-Ht; Wed, 26 Aug 2026 10:29:46 -0400
+	id 1wzEd6-00015u-NW; Wed, 26 Aug 2026 10:29:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdM-0001Be-Md
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:44 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEd3-00014c-5A
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:25 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdL-0001z4-2s
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:44 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEd0-0001Qr-75
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:24 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 89E911F810;
- Wed, 26 Aug 2026 14:29:33 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 9AD0921202;
+ Wed, 26 Aug 2026 14:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787754577; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787754554; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=F9yJ3RLbH84d6XW+2lCMAgvOPxksUFhx40vXtd8SCNM=;
- b=iGUmXjz9kgXgQj1Bh/glWoOCvjNBCvPRyPr9/h6qCQSqvpOnKT6u4XZJqwG5wb72BKlPSe
- G4Q3EueCXo9s89UjnGJcs/LVdB29zrvPr8ulKGVXd6otyteMBDHKFaQURYgwEyt0B6BLBH
- bqkSPuJP6knRCS1McpZ0UxPJzgOhGzw=
+ bh=3RWZvgUuba1ly+5mbsdaLDsGlIp3+oJgpWbcXQM0UqA=;
+ b=fHJ86Cj7aEXqCKMnjaDdN1Y1JbOVgpYtw4LLhLJaTrxlgRFcHOpSU9qFl18T0Y8FRkafS3
+ DxdU4NiYQHRYoCDcWHcsOxxeYvFQlvVUGSDbKoXAx6RKOUkGY7rdjH6sHPu0BBc0jBEOKb
+ /LLUHcOGBf/Tpaf0iNpbiuNgysbw8DA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787754577;
+ s=susede2_ed25519; t=1787754554;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=F9yJ3RLbH84d6XW+2lCMAgvOPxksUFhx40vXtd8SCNM=;
- b=Yslpfypctyon7kIlVufEv7xMiQYaObP4d9fBRNsbnkDO8ZHu+ePPWtRGNe1QcdsSrhAwCI
- /UjhSgydt693+pDg==
-Authentication-Results: smtp-out2.suse.de;
-	none
+ bh=3RWZvgUuba1ly+5mbsdaLDsGlIp3+oJgpWbcXQM0UqA=;
+ b=IxBmaaw7lcYwei83P5dVahzMKjk1mJOdx4mBF3zmGIP0aLoSOxE2IwT84POSrO5r4Kpd8D
+ KGj7vl5EVOrYFvAg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=hq2pOURT;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=7+ffzkZ7
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787754573; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787754550; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=F9yJ3RLbH84d6XW+2lCMAgvOPxksUFhx40vXtd8SCNM=;
- b=HuKKE9bCDnhzIJSsXBcGgVZSg2mIX40Ad+uqP6MJrNX+eaTp2qjpVWhtuMI8s48+/IEZ1D
- AbDsBlAuLzX4c3mgqwVw6AxoTQngBXz3evpTD++osz9O8up01SdeL7Cvl+1ltDqYN1gIXS
- n1oVD7BYowi3qfYYgmTl8BaYZLdKN58=
+ bh=3RWZvgUuba1ly+5mbsdaLDsGlIp3+oJgpWbcXQM0UqA=;
+ b=hq2pOURT+okRaqwlh4wjwTTraboSnFO1EMpmb5fJrh3IdL54tTTdaoTkUzr1kHfjS9XsU9
+ fhHXkbmcnYx+gdDp7e4Bsnt7/vV0SZGk4kV6lk6oQN2bAsLqq8mk2LeQ945Ulxz6gMAC8U
+ NrmxS3/Qw3e9oEFdqbQmfo7vKJyB1kY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787754573;
+ s=susede2_ed25519; t=1787754550;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=F9yJ3RLbH84d6XW+2lCMAgvOPxksUFhx40vXtd8SCNM=;
- b=umQI/Iix50mLc0deMA7Rsi6BY9PPpV7aEfeozh9DDBlhgVKekOQ4mU0pofqlS2jFrxIevC
- X0I3Aa47dYiQ49AA==
+ bh=3RWZvgUuba1ly+5mbsdaLDsGlIp3+oJgpWbcXQM0UqA=;
+ b=7+ffzkZ7KpvEXWOEFTxIQ5X9BvPTliomlkWthKscHXiWayJJ+8EvgCxPpL5R3Hl/4Ag31o
+ Co2daDGp2Rxb36BA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9AA1E1364B;
- Wed, 26 Aug 2026 14:29:32 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7E6E41361C;
+ Wed, 26 Aug 2026 14:29:09 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id uO3fGkz4jmpTJAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 26 Aug 2026 14:29:32 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id EG/5EzX4jmpTJAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 26 Aug 2026 14:29:09 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	Jinpu Wang <jinpu.wang@cloud.ionos.com>
-Subject: [PULL 18/30] migration/rdma: Sanity check
- RDMA_CONTROL_REGISTER_REQUEST on buflen
-Date: Wed, 26 Aug 2026 11:28:53 -0300
-Message-ID: <20260826142905.2315503-19-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, Aadeshveer Singh <aadeshveer07@gmail.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: [PULL 01/30] migration: Propagate error in postcopy setup functions
+Date: Wed, 26 Aug 2026 11:28:36 -0300
+Message-ID: <20260826142905.2315503-2-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260826142905.2315503-1-farosas@suse.de>
 References: <20260826142905.2315503-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.77 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 9AD0921202
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.17)[-0.846];
- MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; MIME_TRACE(0.00)[0:+];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- URIBL_BLOCKED(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo,ionos.com:email,gitlab.com:url];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url,suse.de:mid,suse.de:email,ionos.com:email,imap1.dmz-prg2.suse.org:helo];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; ARC_NA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FREEMAIL_CC(0.00)[redhat.com,gmail.com];
+ DKIM_TRACE(0.00)[suse.de:+]; TO_DN_SOME(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:email,suse.de:dkim];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -120,53 +130,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Aadeshveer Singh <aadeshveer07@gmail.com>
 
-RDMA header supports head.repeat on RDMA_CONTROL_REGISTER_REQUEST, which
-can include >1 memory registrations.  The current code did check over
-head.repeat to guard against RDMA_CONTROL_MAX_COMMANDS_PER_MESSAGE, however
-it didn't further check the buffer size (head.len) to make sure the
-received data is large enough to include the repeated entries.  Check it.
+Modernize error handling in postcopy_ram_incoming_setup() and
+postcopy_temp_pages_setup() by replacing error_reports and local error
+handling with standard Error propagation.
 
-This is almost only to harden this piece of code, in reality on source side
-QEMU never uses repeat>1..  However since it's a protocol, still keep it.
-Check the buffer size instead.
+Replace use of strerror() on errno with error_setg_errno() for modular
+handling of errors and change return values to -1 on failure as no
+caller checks the actual return value.
 
-In case it's not obvious to new RDMA readers: head.len should be the size
-RDMA has last received, as qemu_rdma_exchange_get_response() checked on it
-against byte_len (which was further fetched from ibv_wc.byte_len in
-qemu_rdma_poll()).
-
-Reported-by: Tristan (@TristanInSec)
-Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4028
-Reviewed-by: Jinpu Wang <jinpu.wang@cloud.ionos.com>
+Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Jack Wang <jinpu.wang@cloud.ionos.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/rdma.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ migration/postcopy-ram.c | 43 +++++++++++++++++-----------------------
+ migration/postcopy-ram.h |  2 +-
+ 2 files changed, 19 insertions(+), 26 deletions(-)
 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index 683c24ba4dd..f7356e759fc 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -3360,6 +3360,14 @@ int rdma_registration_handle(QEMUFile *f)
-             reg_resp.repeat = head.repeat;
-             registers = (RDMARegister *) rdma->wr_data[idx].control_curr;
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index a3314d3180d..120828a2ead 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -1462,10 +1462,9 @@ retry:
+     return NULL;
+ }
  
-+            /* Making sure the register buffers to read are valid */
-+            if (head.len != head.repeat * sizeof(RDMARegister)) {
-+                error_report("%s: Invalid RDMA_CONTROL_REGISTER_REQUEST "
-+                             "(head.repeat=%"PRIu32", head.len=%"PRIu32")",
-+                             __func__, head.repeat, head.len);
-+                goto err;
-+            }
-+
-             for (int count = 0; count < head.repeat; count++) {
-                 uint64_t chunk;
-                 uint8_t *chunk_start, *chunk_end;
+-static int postcopy_temp_pages_setup(MigrationIncomingState *mis)
++static int postcopy_temp_pages_setup(MigrationIncomingState *mis, Error **errp)
+ {
+     PostcopyTmpPage *tmp_page;
+-    int err;
+     unsigned i, channels;
+     void *temp_page;
+ 
+@@ -1485,11 +1484,11 @@ static int postcopy_temp_pages_setup(MigrationIncomingState *mis)
+         temp_page = mmap(NULL, mis->largest_page_size, PROT_READ | PROT_WRITE,
+                          MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+         if (temp_page == MAP_FAILED) {
+-            err = errno;
+-            error_report("%s: Failed to map postcopy_tmp_pages[%d]: %s",
+-                         __func__, i, strerror(err));
++            error_setg_errno(errp, errno,
++                             "%s: Failed to map postcopy_tmp_pages[%d]",
++                             __func__, i);
+             /* Clean up will be done later */
+-            return -err;
++            return -1;
+         }
+         tmp_page->tmp_huge_page = temp_page;
+         /* Initialize default states for each tmp page */
+@@ -1503,11 +1502,10 @@ static int postcopy_temp_pages_setup(MigrationIncomingState *mis)
+                                        PROT_READ | PROT_WRITE,
+                                        MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+     if (mis->postcopy_tmp_zero_page == MAP_FAILED) {
+-        err = errno;
+         mis->postcopy_tmp_zero_page = NULL;
+-        error_report("%s: Failed to map large zero page %s",
+-                     __func__, strerror(err));
+-        return -err;
++        error_setg_errno(errp, errno, "%s: Failed to map large zero page",
++                         __func__);
++        return -1;
+     }
+ 
+     memset(mis->postcopy_tmp_zero_page, '\0', mis->largest_page_size);
+@@ -1515,15 +1513,13 @@ static int postcopy_temp_pages_setup(MigrationIncomingState *mis)
+     return 0;
+ }
+ 
+-int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
++int postcopy_ram_incoming_setup(MigrationIncomingState *mis, Error **errp)
+ {
+-    Error *local_err = NULL;
+-
+     /* Open the fd for the kernel to give us userfaults */
+     mis->userfault_fd = uffd_open(O_CLOEXEC | O_NONBLOCK);
+     if (mis->userfault_fd == -1) {
+-        error_report("%s: Failed to open userfault fd: %s", __func__,
+-                     strerror(errno));
++        error_setg_errno(errp, errno, "%s: Failed to open userfault fd",
++                         __func__);
+         return -1;
+     }
+ 
+@@ -1531,8 +1527,7 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
+      * Although the host check already tested the API, we need to
+      * do the check again as an ABI handshake on the new fd.
+      */
+-    if (!ufd_check_and_apply(mis->userfault_fd, mis, &local_err)) {
+-        error_report_err(local_err);
++    if (!ufd_check_and_apply(mis->userfault_fd, mis, errp)) {
+         return -1;
+     }
+ 
+@@ -1544,8 +1539,8 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
+     /* Now an eventfd we use to tell the fault-thread to quit */
+     mis->userfault_event_fd = eventfd(0, EFD_CLOEXEC);
+     if (mis->userfault_event_fd == -1) {
+-        error_report("%s: Opening userfault_event_fd: %s", __func__,
+-                     strerror(errno));
++        error_setg_errno(errp, errno, "%s: Opening userfault_event_fd",
++                         __func__);
+         close(mis->userfault_fd);
+         return -1;
+     }
+@@ -1557,12 +1552,11 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
+ 
+     /* Mark so that we get notified of accesses to unwritten areas */
+     if (foreach_not_ignored_block(ram_block_enable_notify, mis)) {
+-        error_report("ram_block_enable_notify failed");
++        error_setg(errp, "ram_block_enable_notify failed");
+         return -1;
+     }
+ 
+-    if (postcopy_temp_pages_setup(mis)) {
+-        /* Error dumped in the sub-function */
++    if (postcopy_temp_pages_setup(mis, errp)) {
+         return -1;
+     }
+ 
+@@ -1727,7 +1721,7 @@ int postcopy_request_shared_page(struct PostCopyFD *pcfd, RAMBlock *rb,
+     g_assert_not_reached();
+ }
+ 
+-int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
++int postcopy_ram_incoming_setup(MigrationIncomingState *mis, Error **errp)
+ {
+     g_assert_not_reached();
+ }
+@@ -2199,9 +2193,8 @@ int postcopy_incoming_setup(MigrationIncomingState *mis, Error **errp)
+      * shouldn't be doing anything yet so don't actually expect requests
+      */
+     if (migrate_postcopy_ram()) {
+-        if (postcopy_ram_incoming_setup(mis)) {
++        if (postcopy_ram_incoming_setup(mis, errp)) {
+             postcopy_ram_incoming_cleanup(mis);
+-            error_setg(errp, "Failed to setup incoming postcopy RAM blocks");
+             return -1;
+         }
+     }
+diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
+index a080dd65a77..98d918713f5 100644
+--- a/migration/postcopy-ram.h
++++ b/migration/postcopy-ram.h
+@@ -23,7 +23,7 @@ bool postcopy_ram_supported_by_host(MigrationIncomingState *mis,
+  * Make all of RAM sensitive to accesses to areas that haven't yet been written
+  * and wire up anything necessary to deal with it.
+  */
+-int postcopy_ram_incoming_setup(MigrationIncomingState *mis);
++int postcopy_ram_incoming_setup(MigrationIncomingState *mis, Error **errp);
+ 
+ /*
+  * Initialise postcopy-ram, setting the RAM to a state where we can go into
 -- 
 2.53.0
 
