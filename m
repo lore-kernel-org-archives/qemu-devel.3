@@ -4,122 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6EB4C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 17:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12DFDC61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 17:07:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzH0B-0001o8-8O; Wed, 26 Aug 2026 13:01:27 -0400
+	id 1wzH5G-0002yY-TB; Wed, 26 Aug 2026 13:06:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wzH09-0001nv-RK; Wed, 26 Aug 2026 13:01:25 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wzH5A-0002xl-Ah
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 13:06:36 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wzH08-0003fB-1C; Wed, 26 Aug 2026 13:01:25 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QE1fXK3084964; Wed, 26 Aug 2026 17:01:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=wM6YVU23RJDGbuE/xFgKA9N3HIra1Q
- EJUsO/R/YU+k4=; b=adSzuCg/kQi3wf+9qQHaO3BKdqEozKi0VGS+sXFjgEBOcD
- MDLkt+t1fS/PEVlrWWYx8QFEfpHNVp+M6woJ2xryVY4+Phv7PvdVck6wpg2MrXMg
- LdavpsasZpWj6WUsqaKHV9WprRmMLpT4vHrqhnzu1VlHhvLjHaosNei3GIEkcjCv
- PrJ13vYJrZgpoRm6k5Hx5ZpZVRcMnYUj/3QtIWTVrTAbOLhLdrbYhJSCHZupzK+U
- P2zUPqgL+PbNtcWgfH79DVwOR0Et91RVpgv14SV8htdOnqXlFl/IbDM7TMRGkMY4
- mKCkageqr096zxN5ZmQvbfkTTbKVym+N43mXBvYQ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726eqxkg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 17:01:20 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QGv8dJ010891;
- Wed, 26 Aug 2026 17:01:19 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7p3qb9v7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 17:01:18 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QH1DEk29754072
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 17:01:14 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D1BB320043;
- Wed, 26 Aug 2026 17:01:13 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D6E142004B;
- Wed, 26 Aug 2026 17:01:09 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 26 Aug 2026 17:01:09 +0000 (GMT)
-Date: Wed, 26 Aug 2026 22:31:13 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org,
- vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
- ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
- shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
- nikhilks@linux.ibm.com
-Subject: Re: [PATCH v2 32/37] target/ppc: Use PPC2_ISA207 instead of
- PPC2_LSQ_ISA207
-Message-ID: <20260826223022.b804a252-f4-amachhiw@linux.ibm.com>
-Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, 
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- milesg@linux.ibm.com, 
- npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com, 
- tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com, 
- aboorvad@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
- uverma@linux.ibm.com, nikhilks@linux.ibm.com
-References: <20260826050923.74756-1-rathc@linux.ibm.com>
- <20260826050923.74756-33-rathc@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wzH58-0004w9-LG
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 13:06:36 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67QGuuBe2103523
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 17:06:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ x+vHbcCOGg9r3Oj2tQqjK4YN3769UUMamEjDLlTTcGs=; b=dlz+86z082Ls6bQd
+ 0EfFtqX37KoOh0cwJPBjYphtLwJPbanOY+xObYsfqx2E7pPGRufkmWbymhePmQ4n
+ rYg5r39Ivx0nfOkHOMuD2DkWojJtQdOVjMDZwYiiOdcGBIP3AMG49vDB9VDFsOPZ
+ R6VC4H6j51JdG2PzCtlEmI0DqjuRyQgTSAKfak5o3V42EwpezS5u1B/GEkQXKEy9
+ woKbgv5RPSZnvFUuMuYSZ4NYoWmfnKoK1Vk5YAoQAeGB0XWsMRO4Sv/6Q//i2zJ5
+ NC5v6ILksrW6tv9ukGIZGiTwTKAc8EtVyaUyjh4a2ysHHEsvYSb4xmtDJ0+3cBf1
+ OtRmFg==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ga0wbrwpk-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 17:06:32 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-90cd16a0bc1so7542016d6.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 10:06:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1787763991; x=1788368791; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=x+vHbcCOGg9r3Oj2tQqjK4YN3769UUMamEjDLlTTcGs=;
+ b=Xfkihknx7IEzsI+gOicnDTCs43iqGVmyE32VgqGFPnQoyMkYDzdK/J3j9vPXl7MvPj
+ X6YbJS2TnIIN6TnTKKrLVorBQTZ+1lUKr0nCRQraYxoetrf2eUwc3V4t2sWgWpsuvF51
+ uBiHPCWvWEb3RRyJ4FkyC5LeqDh0+LkZ3/qbKc6yXvn0/waoBKQkbWdBgdPbwTPYTviv
+ czyIAqrQiGCIMHp2+Vc5Ll0GwX7N+VWyu7IrJdkxaGjx/2604tDjQ8JiphV3aoks9zf3
+ ni/FT4U8PUGyyKYGK423cOyHPDemFyX13SoJE88BkPxOK7TkfbcYavpWrAXMKG2w3+Mt
+ SY5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787763991; x=1788368791;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=x+vHbcCOGg9r3Oj2tQqjK4YN3769UUMamEjDLlTTcGs=;
+ b=cRUERMJwARFPxjYNa3fG5d8ypk6SNg7un11XV7DnC7uYd7lxvT/9Lpl82eZkPc/SFw
+ JOJh20t7/vtQPFRDlkl+x0FFikDIJuPF78Y9N+phD2lPvt4QBVn0UpyXpfdGOtsb+KyZ
+ 6/Pa+aG9khqFsXuxS1/2ATlKBq80ilv5dH3XtnY8vF0gnIqIzl17KV+gl42EbklrEiAW
+ HKzUWwdQoh93zQrLuUzOIcXfyq8YyEpWh+HLg8CVr1o/59WBQEkTBIAiOwBblbg03drj
+ GzjTNRr3FBa03P+KcJUQdVelQVPawTUTVP956ZRaSPcJv6eWbziVAxipyrSqhzMdWF1n
+ Bp5Q==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RooCSFUoArAT4SV7gHAAQaIi4jbpi+P5BNpq5HORPTwzMsBJMzO+UWEpV8NnUE5i3p0PgAZy6+VBo6t@nongnu.org
+X-Gm-Message-State: AFuF++lnbTsEf0MqT9N9yDZRNXTa7HNeocplZz68AwtsAiNymKC8R3P8
+ M+WSPj7n4IdHIZuEiqYcL4Gr3qsIeYyUmzWm52fV5ACvowzsCcBcmBRRiH19H6rF4xOTc4mQjxk
+ t22d0uMWxbctA37zCaj+LDnFKcf0vH27arDj4cSvld4Z8uYvNijRPtOi7RQ==
+X-Gm-Gg: AR+sD13LSVW+0BYzch+2hFkqufjdpyK5Q57H4p7wbddkRpbL/jFGyS0lNInxE/qqoF3
+ hLrWz2mWpV1rc/ztsyHBGqdT6ot8+XMrDN0ZFKToVTwD8h3mEZajBaSk0rb3rCkYU56mU+lijiq
+ dg39ba41Md8X9paSzK0EfYaw9qAscqqazO034LIlU+pW2w9A4XLRm/PbK4abBIUl+nAjCQVr+iH
+ KyDMlWPIacBgOEVlMGLs7uYtouX3wXCHTtJa1WnsWpnC8EUNf1oR+GTt94gzZMwxOPk+A+hXumo
+ zrhPO96vtRnxWvzEo4p+SFJwHWAHkj3H+tmMY5jVraLfKibKInDOkdTUXMqoFKTc6dFWovcoKPU
+ up51pEzC2IZOYqdVJCXRiY8koGyFaVxefQcH5RLCvpxI6
+X-Received: by 2002:ac8:5747:0:b0:51b:e92f:ec5 with SMTP id
+ d75a77b69052e-52e4222de12mr87735211cf.3.1787763991347; 
+ Wed, 26 Aug 2026 10:06:31 -0700 (PDT)
+X-Received: by 2002:ac8:5747:0:b0:51b:e92f:ec5 with SMTP id
+ d75a77b69052e-52e4222de12mr87734351cf.3.1787763990880; 
+ Wed, 26 Aug 2026 10:06:30 -0700 (PDT)
+Received: from [10.254.188.74] (134.171.88.92.rev.sfr.net. [92.88.171.134])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6a5de8b5fd6sm5281600a12.1.2026.08.26.10.06.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 26 Aug 2026 10:06:30 -0700 (PDT)
+Message-ID: <a434a0e7-f603-470a-973c-c1e3334ea200@oss.qualcomm.com>
+Date: Wed, 26 Aug 2026 19:06:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260826050923.74756-33-rathc@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8f1be0 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=KKAkSRfTAAAA:8 a=-gZqQ3hT50n4G0il6jYA:9 a=CjuIK1q_8ugA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEzOCBTYWx0ZWRfX7V7aANNw22Yy
- cEfiYXqj8motipdtTiPGWPl7tB3Tna0Xi1g7o7eMnUd8dsRbf5OGOZvk5394zl7diIXnDxSEn74
- wUZiYKYQth20DoEpuPqq8dzU3reHm4o=
-X-Proofpoint-GUID: xRgjXxhCSWZbimpUNXJoeEnhQNP7arXC
-X-Proofpoint-ORIG-GUID: 3o_imYXpev8xx0Sdp3c1zc3mr4Rjfquu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEzOCBTYWx0ZWRfX8teSoQVbKPRK
- NJSJxYdUGF/lzMX8ToBSDRYiTugEjrbFPFoDYCU3BbQy65ll7+Hik9ZDdGZR980dO87sK29Fo1M
- Mm/MqMpdhTB6AIW5bhVVByL+cCrfTYEsDCFf9jThl7e73893qNluT3w0kJvIMpQFjzl1EXLqxtw
- Sq8wcm5gPLdNWS2/thJZRcQgQnhoFAd3ke1lMkt1yTU59kV8AGrPare4XW3MK8cVNfqygfZO0Th
- C0lX3c9Qi1hBQGKDbSWAQXxfepSvzqUTZiBCBP69wlhomt6NGvQEbeY34MKQhy3BnOOsIwumc0S
- UlNpoNRCTvwS2VsUfSKaEirULOtcuUCV6fWszZwQhYHIM3uNbpjWl0n3x1+nR7dNX6uiXnbD/BI
- YwtkdTB1LbMLqC+zd592gQg51f+0ZtwEetjRbiX2tnQVTww2mY/tOEYXGCJ5B0ang9f1MDqzULp
- tOTwyLKmTE/kNPmNyVg==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/13] hw/riscv/fdt-common, virt.c: add
+ create_fdt_flash()
+Content-Language: en-US
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
+References: <20260826164814.44335-1-daniel.barboza@oss.qualcomm.com>
+ <20260826164814.44335-2-daniel.barboza@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260826164814.44335-2-daniel.barboza@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: CNXmOmx_X7mREaPoFD7EDpIykgha4mhX
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE0MyBTYWx0ZWRfXwTXmMw+b80qb
+ MDr8jXgYtPeRpYaS6RMjQ9lc2PAZQRypvkLg6n2eJNwpUG4K/R4ufeFyrV3AdQypxbICYo/4EYq
+ IRxVbWmkud49FYTvugon9Nz7Lc0l2o4=
+X-Proofpoint-GUID: CNXmOmx_X7mREaPoFD7EDpIykgha4mhX
+X-Authority-Analysis: v=2.4 cv=SoCgLvO0 c=1 sm=1 tr=0 ts=6a8f1d18 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=o1isufRNksZXpKP+aqnsag==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=0j8F8ELDiVD0ozaknXMA:9 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE0MyBTYWx0ZWRfX1P9LzeaXh/EI
+ ZAng4v4TVwjWwnLcMr3LD3xzyc106tVnDb6LEtBhq6BHLFv3cQ7YBz7ef8O441XiC43fXXT5akW
+ RIqgk4m0/2OILxdfNdNgYiAICK3+5Xed2L05aw/ce4inGRtVRakXK9GRTIlpeaIZln5h4u4aJtt
+ 0mN+XQaNGDDKLv/lyxwK2a9i4kyZ3B0ZM9Jg6BUY0bs1XpfgVhLG/pmTmmpjdbIpVboc6Y/HfqM
+ G2FFs6vkUCYGGcbu6147bfwfInlPHvWrHKY/+h9Qyhxo/u5+n2XrILWUKJiYU5mWYPnswRNzk8D
+ kyv4YYCT18wpY1B8ucDdGS0tQoX7xdK8DoGV7/5k6Y1k1KonN5JegaLjDy5wanaFTz55CF3y0BN
+ ssV8nqPyXIT2iC7jRqgmKfnuXJiqMAlKqeAVmrt3Ga6Fj3HrOGq6GXxDAEjffQb0z/hEwTwtUVU
+ fODZgMAj+VP+njM+uhA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_04,2026-08-26_02,2025-10-01_01
+ definitions=2026-08-26_05,2026-08-26_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260138
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ phishscore=0 impostorscore=0 malwarescore=0 bulkscore=0 spamscore=0
+ clxscore=1015 lowpriorityscore=0 priorityscore=1501 suspectscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608260143
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,110 +161,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/26 10:38 AM, Chinmay Rath wrote:
-> PPC2_LSQ_ISA207 is only ever set in the CPUPPCState's insns_flags2
-> alongside PPC2_ISA207. Checks made by PPC2_LSQ_ISA207 could be
-> replaced with PPC2_ISA207, hence rendering it useless and apt for
-> removal. This patch does the same.
+On 26/8/26 18:48, Daniel Henrique Barboza wrote:
+> Add a common helper to create a cfi-flash compatible flash subnode.
 > 
-> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> This change only affects the existing 'virt' board for now but it will
+> be used by the future 'riscv-server-ref' board in the future.
+> 
+> No FDT changes intended.
+> 
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 > ---
->  linux-user/ppc/elfload.c                   | 2 +-
->  target/ppc/cpu.h                           | 3 ---
->  target/ppc/cpu_init.c                      | 3 +--
->  target/ppc/cpu_init.h                      | 2 +-
->  target/ppc/translate/fixedpoint-impl.c.inc | 4 ++--
->  5 files changed, 5 insertions(+), 9 deletions(-)
+>   hw/riscv/fdt-common.c         | 12 ++++++++++++
+>   hw/riscv/virt.c               | 18 ++----------------
+>   include/hw/riscv/fdt-common.h |  1 +
+>   3 files changed, 15 insertions(+), 16 deletions(-)
 
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-> 
-> diff --git a/linux-user/ppc/elfload.c b/linux-user/ppc/elfload.c
-> index 5c6065e08a..76ab9f43de 100644
-> --- a/linux-user/ppc/elfload.c
-> +++ b/linux-user/ppc/elfload.c
-> @@ -116,7 +116,7 @@ abi_ulong get_elf_hwcap2(CPUState *cs)
->      do { if (cpu->env.insns_flags2 & flag) { features |= feature; } } while (0)
->  
->      GET_FEATURE(PPC_ISEL, QEMU_PPC_FEATURE2_HAS_ISEL);
-> -    GET_FEATURE2((PPC2_ISA207 | PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 |
-> +    GET_FEATURE2((PPC2_ISA207 | PPC2_ALTIVEC_207 |
->                    PPC2_ISA207S), (QEMU_PPC_FEATURE2_ARCH_2_07 |
->                    QEMU_PPC_FEATURE2_VEC_CRYPTO | QEMU_PPC_FEATURE2_HAS_TAR));
->      GET_FEATURE2(PPC2_ISA300, QEMU_PPC_FEATURE2_ARCH_3_00 |
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index df1e943d8d..b3cd8d85df 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -2577,8 +2577,6 @@ enum {
->      PPC2_FP_CVT_ISA206 = 0x0000000000000400ULL,
->      /* ISA 2.06B floating point test instructions                            */
->      PPC2_FP_TST_ISA206 = 0x0000000000000800ULL,
-> -    /* ISA 2.07 load/store quadword                                          */
-> -    PPC2_LSQ_ISA207    = 0x0000000000002000ULL,
->      /* ISA 2.07 Altivec                                                      */
->      PPC2_ALTIVEC_207   = 0x0000000000004000ULL,
->      /* PowerISA 2.07 Book3s specification                                    */
-> @@ -2608,7 +2606,6 @@ enum {
->                          PPC2_ISA205 | PPC2_ISA207 | PPC2_PERM_ISA206 | \
->                          PPC2_DIVE_ISA206 | PPC2_ATOMIC_ISA206 | \
->                          PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 | \
-> -                        PPC2_LSQ_ISA207 | \
->                          PPC2_ALTIVEC_207 | PPC2_ISA207S | PPC2_DFP | \
->                          PPC2_FP_CVT_S64 | PPC2_TM | PPC2_PM_ISA206 | \
->                          PPC2_ISA300 | PPC2_ISA310 | PPC2_MEM_LWSYNC | \
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index c250f805a7..4cc8b93dca 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -6349,8 +6349,7 @@ POWERPC_FAMILY(POWER8)(ObjectClass *oc, const void *data)
->      pcc->insns_flags2 = PPC2_VSX | PPC2_ISA207 | PPC2_DFP | PPC2_DBRX |
->                          PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 |
->                          PPC2_ATOMIC_ISA206 | PPC2_FP_CVT_ISA206 |
-> -                        PPC2_FP_TST_ISA206 |
-> -                        PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 |
-> +                        PPC2_FP_TST_ISA206 | PPC2_ALTIVEC_207 |
->                          PPC2_ISA205 | PPC2_ISA207S | PPC2_FP_CVT_S64 |
->                          PPC2_TM | PPC2_PM_ISA206 | PPC2_MEM_LWSYNC |
->                          PPC2_BCDA_ISA206;
-> diff --git a/target/ppc/cpu_init.h b/target/ppc/cpu_init.h
-> index 7dd587908e..6961007926 100644
-> --- a/target/ppc/cpu_init.h
-> +++ b/target/ppc/cpu_init.h
-> @@ -18,7 +18,7 @@
->      (PPC2_VSX | PPC2_ISA207 | PPC2_DFP | PPC2_DBRX |                 \
->       PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 | PPC2_ATOMIC_ISA206 |      \
->       PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 |                       \
-> -     PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 | PPC2_ISA205 |              \
-> +     PPC2_ALTIVEC_207 | PPC2_ISA205 |                                \
->       PPC2_ISA207S | PPC2_FP_CVT_S64 | PPC2_ISA300 | PPC2_PRCNTL |    \
->       PPC2_MEM_LWSYNC | PPC2_BCDA_ISA206)
->  
-> diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-> index cef67d6431..b9c20b66dc 100644
-> --- a/target/ppc/translate/fixedpoint-impl.c.inc
-> +++ b/target/ppc/translate/fixedpoint-impl.c.inc
-> @@ -116,7 +116,7 @@ static bool do_ldst_quad(DisasContext *ctx, arg_D *a, bool store, bool prefixed)
->  
->      REQUIRE_INSNS_FLAGS(ctx, 64BX);
->  
-> -    if (!prefixed && !(ctx->insns_flags2 & PPC2_LSQ_ISA207)) {
-> +    if (!prefixed && !(ctx->insns_flags2 & PPC2_ISA207)) {
->          /* lq and stq were privileged prior to V. 2.07 */
->          REQUIRE_SV(ctx);
->  
-> @@ -280,7 +280,7 @@ TRANS64(STDCX, do_store_cond, MO_UQ);
->  static bool trans_STQCX(DisasContext *ctx, arg_STQCX *a)
->  {
->      REQUIRE_64BIT(ctx);
-> -    REQUIRE_INSNS_FLAGS2(ctx, LSQ_ISA207);
-> +    REQUIRE_INSNS_FLAGS2(ctx, ISA207);
->  #if defined(TARGET_PPC64)
->      TCGLabel *lfail = gen_new_label();
->      TCGv ea = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-> -- 
-> 2.55.0
-> 
+> diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.h
+> index 1729a6abc6..6e438e0278 100644
+> --- a/include/hw/riscv/fdt-common.h
+> +++ b/include/hw/riscv/fdt-common.h
+> @@ -36,4 +36,5 @@ void create_fdt_plic(void *fdt, hwaddr addr, uint64_t size,
+>                        uint32_t cells_size, uint32_t ndev_sources,
+>                        bool numa_enabled, int socket);
+>   void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
+> +void create_fdt_flash(void *fdt, hwaddr flashbase, hwaddr flashsize);
+
+Generic comment for the whole series, if you make this API public then
+please prefix with 'riscv_' to avoid name clashes when linking with
+distinct targets in the future.
+
+>   #endif
+
 
