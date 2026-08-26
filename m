@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAE3DC5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 09:39:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BFBAC61DC2
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 09:39:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzA6q-0008JO-Au; Wed, 26 Aug 2026 05:39:52 -0400
+	id 1wzA6f-0006vZ-G9; Wed, 26 Aug 2026 05:39:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wzA6p-00088D-2v
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 05:39:51 -0400
+ id 1wzA6d-0006ga-4s
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 05:39:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wzA6m-0003Pf-SI
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 05:39:50 -0400
+ id 1wzA6a-0003OO-Fu
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 05:39:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787737188;
+ s=mimecast20190719; t=1787737175;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7t3/6OthMgSGaRs8vrnLHPfTMlQhBxcgyyk0T/BvuEc=;
- b=Qt1yr5hPq36zA+gf06MxWYFwV8sOBRQ/ckNjkXkddEw17tmYPibsHnS7X3RU/a+xtvsKI5
- MO3gr6MCvzQSktUGf3fyZVx2jgoWPKwsY4pRW1YTgZQf9QqUsPTQYf0FxXkomzq+iuDQhq
- sZ2BffwuITdVHxo3nBfiJxkLyjXiTF0=
+ bh=8lbJTdftQ32/6ElYZVmkeNO/8uGOKiFYhP6lbO4BtAo=;
+ b=cq/sU0QHyXWdoE2EdJOny+W21uf+7DYOXBpsVyYq+Pzyu89IEYLhYt8utgqDIKO/3wMiIF
+ 85Sc96q1quYUe2z9/zYsUttIsLzITJ4nOhZ6N5ecyPS+tO1iEOOW/kF7EcuOS/IG34tTPp
+ HqlElOz7UuFtl+myk/ztho/vJkoxD5Y=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-625-fHTHykNoM_y9GBVVYCw2jQ-1; Wed,
- 26 Aug 2026 05:39:44 -0400
-X-MC-Unique: fHTHykNoM_y9GBVVYCw2jQ-1
-X-Mimecast-MFC-AGG-ID: fHTHykNoM_y9GBVVYCw2jQ_1787737183
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-17-lmN34gD8N--TP5Qc9eJG_g-1; Wed,
+ 26 Aug 2026 05:39:31 -0400
+X-MC-Unique: lmN34gD8N--TP5Qc9eJG_g-1
+X-Mimecast-MFC-AGG-ID: lmN34gD8N--TP5Qc9eJG_g_1787737170
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E8BAC19539BB; Wed, 26 Aug 2026 09:39:42 +0000 (UTC)
+ id F296B19539A5; Wed, 26 Aug 2026 09:39:29 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.48.93])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2C9831955F05; Wed, 26 Aug 2026 09:39:36 +0000 (UTC)
+ id 98E2E1955F05; Wed, 26 Aug 2026 09:39:23 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -56,9 +56,10 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
  armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
  jdenemar@redhat.com
-Subject: [RFC PATCH v8 16/20] arm/cpu-features: document ID reg properties
-Date: Wed, 26 Aug 2026 11:36:21 +0200
-Message-ID: <20260826093747.1670077-17-eric.auger@redhat.com>
+Subject: [RFC PATCH v8 14/20] target/arm/cpu-idregs.h.inc: Generate reserved
+ fields
+Date: Wed, 26 Aug 2026 11:36:19 +0200
+Message-ID: <20260826093747.1670077-15-eric.auger@redhat.com>
 In-Reply-To: <20260826093747.1670077-1-eric.auger@redhat.com>
 References: <20260826093747.1670077-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -72,7 +73,8 @@ X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,160 +90,603 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cornelia Huck <cohuck@redhat.com>
-
-Add some documentation for how individual ID registers can be
-configured with the host cpu model.
+Extract reserved fields: RES0, RES1, RAZ, ...
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-Reviewed-by: Sebastian Ott <sebott@redhat.com>
----
- docs/system/arm/cpu-features.rst | 106 ++++++++++++++++++++++++++++---
- 1 file changed, 98 insertions(+), 8 deletions(-)
 
-diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
-index 10b0eff27e..3a07a87bc3 100644
---- a/docs/system/arm/cpu-features.rst
-+++ b/docs/system/arm/cpu-features.rst
-@@ -2,7 +2,10 @@ Arm CPU Features
- ================
+---
+
+v7 -> v8:
+- fix WithShifts issue
+---
+ target/arm/cpu-idregs.h.inc                   | 62 ++++++++++++++
+ .../update-aarch64-cpu-sysreg-properties.py   | 83 +++++++++++++++----
+ 2 files changed, 131 insertions(+), 14 deletions(-)
+
+diff --git a/target/arm/cpu-idregs.h.inc b/target/arm/cpu-idregs.h.inc
+index 10ddfdf43a..c7e93c48b7 100644
+--- a/target/arm/cpu-idregs.h.inc
++++ b/target/arm/cpu-idregs.h.inc
+@@ -15,6 +15,7 @@ IDREG_START(AIDR_EL1)
+ IDREG_END(AIDR_EL1)
  
- CPU features are optional features that a CPU of supporting type may
--choose to implement or not.  In QEMU, optional CPU features have
-+choose to implement or not.  QEMU provides two different mechanisms
-+to configure those features:
-+
-+1. For most CPU models, optional CPU features may have
- corresponding boolean CPU proprieties that, when enabled, indicate
- that the feature is implemented, and, conversely, when disabled,
- indicate that it is not implemented. An example of an Arm CPU feature
-@@ -31,6 +34,18 @@ running guests in AArch32.
- CPU features that are inherently specific to KVM are
- prefixed with "kvm-" and are described in "KVM VCPU Features".
+ IDREG_START(CLIDR_EL1)
++    IDREG_FIELD(CLIDR_EL1, RES0, 47, 17)
+     IDREG_FIELD(CLIDR_EL1, Ttype7, 45, 2)
+     IDREG_FIELD(CLIDR_EL1, Ttype6, 43, 2)
+     IDREG_FIELD(CLIDR_EL1, Ttype5, 41, 2)
+@@ -45,7 +46,10 @@ IDREG_START(CLIDR_EL1)
+ IDREG_END(CLIDR_EL1)
  
-+2. Additionally, the ``host`` CPU model on KVM allows to configure optional
-+CPU features via the corresponding ID registers. The host kernel allows
-+to write a subset of ID register fields. The host model exposes
-+properties for each writable ID register field. Those options are named
-+SYSREG_<IDREG>_<FIELD>. IDREG and FIELD names are those used in the
-+ARM Architecture Reference Manual. Their availability depend on the host
-+capability to let the userspace write those fields. Values set with those
-+properties override the initial values retrieved from the host. They are
-+written back to KVM and the eventual value applied by KVM depends on whether
-+the value is sanitized or not by the host kernel. Then those field values
-+are likely to be overriden again by legacy CPU options which apply at the end.
-+
- CPU Feature Probing
- ===================
+ IDREG_START(CTR_EL0)
++    IDREG_FIELD(CTR_EL0, RES0, 38, 26)
+     IDREG_FIELD(CTR_EL0, TminLine, 32, 6)
++    IDREG_FIELD(CTR_EL0, RES1, 31, 1)
++    IDREG_FIELD(CTR_EL0, RES0, 30, 1)
+     IDREG_FIELD_START(CTR_EL0, DIC, 29, 1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -63,23 +67,28 @@ IDREG_START(CTR_EL0)
+         IDREG_FIELD_ARCH_VAL(2)
+         IDREG_FIELD_ARCH_VAL(3)
+     IDREG_FIELD_END(CTR_EL0, L1Ip)
++    IDREG_FIELD(CTR_EL0, RES0, 4, 10)
+     IDREG_FIELD(CTR_EL0, IminLine, 0, 4)
+ IDREG_END(CTR_EL0)
  
-@@ -126,13 +141,20 @@ A note about CPU models and KVM
+ IDREG_START(DCZID_EL0)
++    IDREG_FIELD(DCZID_EL0, RES0, 9, 55)
+     IDREG_FIELD(DCZID_EL0, TBS, 5, 4)
+     IDREG_FIELD(DCZID_EL0, DZP, 4, 1)
+     IDREG_FIELD(DCZID_EL0, BS, 0, 4)
+ IDREG_END(DCZID_EL0)
  
- Named CPU models generally do not work with KVM.  There are a few cases
- that do work, e.g. using the named CPU model ``cortex-a57`` with KVM on a
--seattle host, but mostly if KVM is enabled the ``host`` CPU type must be
--used.  This means the guest is provided all the same CPU features as the
--host CPU type has.  And, for this reason, the ``host`` CPU type should
--enable all CPU features that the host has by default.  Indeed it's even
--a bit strange to allow disabling CPU features that the host has when using
--the ``host`` CPU type, but in the absence of CPU models it's the best we can
--do if we want to launch guests without all the host's CPU features enabled.
-+seattle host, but mostly if KVM is enabled, the ``host`` CPU model must be
-+used.
-+
-+Using the ``host`` type means the guest is provided all the same CPU
-+features as the host CPU type has.  And, for this reason, the ``host``
-+CPU type should enable all CPU features that the host has by default.
-+
-+In case some features need to be hidden from the guest, and the host kernel
-+supports it, the ``host`` model can be instructed to disable individual
-+ID register values. This is especially useful for migration purposes.
-+However, this interface will not allow configuring an arbitrary set of
-+features; the ID registers must describe a subset of the host's features,
-+and all differences to the host's configuration must actually be supported
-+by the kernel to be deconfigured.
+ IDREG_START(GMID_EL1)
++    IDREG_FIELD(GMID_EL1, RES0, 4, 60)
+     IDREG_FIELD(GMID_EL1, BS, 0, 4)
+ IDREG_END(GMID_EL1)
  
- Enabling KVM also affects the ``query-cpu-model-expansion`` QMP command.  The
- affect is not only limited to specific features, as pointed out in example
-@@ -169,6 +191,13 @@ disabling many SVE vector lengths would be quite verbose, the ``sve<N>`` CPU
- properties have special semantics (see "SVE CPU Property Parsing
- Semantics").
+ IDREG_START(ID_AA64AFR0_EL1)
++    IDREG_FIELD(ID_AA64AFR0_EL1, RES0, 32, 32)
+ IDREG_END(ID_AA64AFR0_EL1)
  
-+Additionally, if supported by KVM on the host kernel, the ``host`` CPU model
-+may be configured via individual ID register field properties, for example::
-+
-+  $ qemu-system-aarch64 -M virt -cpu host,SYSREG_ID_AA64ISAR0_EL1_DP=0x0
-+
-+This forces ID_AA64ISAR0_EL1 DP field to 0.
-+
- KVM VCPU Features
- =================
+ IDREG_START(ID_AA64AFR1_EL1)
++    IDREG_FIELD(ID_AA64AFR1_EL1, RES0, 0, 64)
+ IDREG_END(ID_AA64AFR1_EL1)
  
-@@ -495,3 +524,64 @@ Legal values for ``S`` are 30, 34, 36, and 39; the default is 30.
+ IDREG_START(ID_AA64DFR0_EL1)
+@@ -141,6 +150,7 @@ IDREG_START(ID_AA64DFR0_EL1)
+         IDREG_FIELD_ARCH_VAL(14)
+         IDREG_FIELD_ARCH_VAL(15)
+     IDREG_FIELD_END(ID_AA64DFR0_EL1, CTX_CMPs)
++    IDREG_FIELD(ID_AA64DFR0_EL1, RES0, 24, 4)
+     IDREG_FIELD_START(ID_AA64DFR0_EL1, WRPs, 20, 4)
+         IDREG_FIELD_ARCH_VAL(1)
+         IDREG_FIELD_ARCH_VAL(2)
+@@ -531,6 +541,7 @@ IDREG_START(ID_AA64DFR1_EL1)
+ IDREG_END(ID_AA64DFR1_EL1)
  
- As with ``x-rme``, the ``x-l0gptsz`` property may be renamed or
- removed in some future QEMU release.
+ IDREG_START(ID_AA64DFR2_EL1)
++    IDREG_FIELD(ID_AA64DFR2_EL1, RES0, 28, 36)
+     IDREG_FIELD_START(ID_AA64DFR2_EL1, TRBE_EXC, 24, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -543,6 +554,7 @@ IDREG_START(ID_AA64DFR2_EL1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+     IDREG_FIELD_END(ID_AA64DFR2_EL1, SPE_EXC)
++    IDREG_FIELD(ID_AA64DFR2_EL1, RES0, 8, 8)
+     IDREG_FIELD_START(ID_AA64DFR2_EL1, BWE, 4, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -555,6 +567,7 @@ IDREG_START(ID_AA64DFR2_EL1)
+ IDREG_END(ID_AA64DFR2_EL1)
+ 
+ IDREG_START(ID_AA64FPFR0_EL1)
++    IDREG_FIELD(ID_AA64FPFR0_EL1, RES0, 32, 32)
+     IDREG_FIELD_START(ID_AA64FPFR0_EL1, F8CVT, 31, 1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -579,10 +592,13 @@ IDREG_START(ID_AA64FPFR0_EL1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+     IDREG_FIELD_END(ID_AA64FPFR0_EL1, F8MM4)
++    IDREG_FIELD(ID_AA64FPFR0_EL1, RES0, 16, 10)
+     IDREG_FIELD_START(ID_AA64FPFR0_EL1, F16MM2, 15, 1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+     IDREG_FIELD_END(ID_AA64FPFR0_EL1, F16MM2)
++    IDREG_FIELD(ID_AA64FPFR0_EL1, RES0, 8, 7)
++    IDREG_FIELD(ID_AA64FPFR0_EL1, RAZ, 2, 6)
+     IDREG_FIELD_START(ID_AA64FPFR0_EL1, F8E4M3, 1, 1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -634,6 +650,7 @@ IDREG_START(ID_AA64ISAR0_EL1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+     IDREG_FIELD_END(ID_AA64ISAR0_EL1, RDM)
++    IDREG_FIELD(ID_AA64ISAR0_EL1, RES0, 24, 4)
+     IDREG_FIELD_START(ID_AA64ISAR0_EL1, Atomic, 20, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(2)
+@@ -657,6 +674,7 @@ IDREG_START(ID_AA64ISAR0_EL1)
+         IDREG_FIELD_ARCH_VAL(1)
+         IDREG_FIELD_ARCH_VAL(2)
+     IDREG_FIELD_END(ID_AA64ISAR0_EL1, AES)
++    IDREG_FIELD(ID_AA64ISAR0_EL1, RES0, 0, 4)
+ IDREG_END(ID_AA64ISAR0_EL1)
+ 
+ IDREG_START(ID_AA64ISAR1_EL1)
+@@ -820,6 +838,7 @@ IDREG_START(ID_AA64ISAR2_EL1)
+ IDREG_END(ID_AA64ISAR2_EL1)
+ 
+ IDREG_START(ID_AA64ISAR3_EL1)
++    IDREG_FIELD(ID_AA64ISAR3_EL1, RES0, 48, 16)
+     IDREG_FIELD_START(ID_AA64ISAR3_EL1, LSCP, 44, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -883,6 +902,7 @@ IDREG_START(ID_AA64MMFR0_EL1)
+         IDREG_FIELD_ARCH_VAL(1)
+         IDREG_FIELD_ARCH_VAL(2)
+     IDREG_FIELD_END(ID_AA64MMFR0_EL1, FGT)
++    IDREG_FIELD(ID_AA64MMFR0_EL1, RES0, 48, 8)
+     IDREG_FIELD_START(ID_AA64MMFR0_EL1, ExS, 44, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1035,6 +1055,7 @@ IDREG_START(ID_AA64MMFR2_EL1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+     IDREG_FIELD_END(ID_AA64MMFR2_EL1, TTL)
++    IDREG_FIELD(ID_AA64MMFR2_EL1, RES0, 44, 4)
+     IDREG_FIELD_START(ID_AA64MMFR2_EL1, FWB, 40, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1100,6 +1121,7 @@ IDREG_START(ID_AA64MMFR3_EL1)
+         IDREG_FIELD_ARCH_VAL(2)
+         IDREG_FIELD_ARCH_VAL(3)
+     IDREG_FIELD_END(ID_AA64MMFR3_EL1, SDERR)
++    IDREG_FIELD(ID_AA64MMFR3_EL1, RES0, 48, 4)
+     IDREG_FIELD_START(ID_AA64MMFR3_EL1, ANERR, 44, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1353,6 +1375,7 @@ IDREG_START(ID_AA64PFR1_EL1)
+         IDREG_FIELD_ARCH_VAL(1)
+         IDREG_FIELD_ARCH_VAL(2)
+     IDREG_FIELD_END(ID_AA64PFR1_EL1, SME)
++    IDREG_FIELD(ID_AA64PFR1_EL1, RES0, 20, 4)
+     IDREG_FIELD_START(ID_AA64PFR1_EL1, MPAM_frac, 16, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1380,6 +1403,7 @@ IDREG_START(ID_AA64PFR1_EL1)
+ IDREG_END(ID_AA64PFR1_EL1)
+ 
+ IDREG_START(ID_AA64PFR2_EL1)
++    IDREG_FIELD(ID_AA64PFR2_EL1, RES0, 48, 16)
+     IDREG_FIELD_START(ID_AA64PFR2_EL1, VMTETCL, 44, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1439,6 +1463,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+     IDREG_FIELD_END(ID_AA64SMFR0_EL1, FA64)
++    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 62, 1)
+     IDREG_FIELD_START(ID_AA64SMFR0_EL1, LUT6, 61, 1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1458,6 +1483,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(15)
+     IDREG_FIELD_END(ID_AA64SMFR0_EL1, I16I64)
++    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 49, 3)
+     IDREG_FIELD_START(ID_AA64SMFR0_EL1, F64F64, 48, 1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1502,6 +1528,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+     IDREG_FIELD_END(ID_AA64SMFR0_EL1, F32F32)
++    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 31, 1)
+     IDREG_FIELD_START(ID_AA64SMFR0_EL1, SF8FMA, 30, 1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1514,6 +1541,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+     IDREG_FIELD_END(ID_AA64SMFR0_EL1, SF8DP2)
++    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 26, 2)
+     IDREG_FIELD_START(ID_AA64SMFR0_EL1, SBitPerm, 25, 1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1526,10 +1554,12 @@ IDREG_START(ID_AA64SMFR0_EL1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+     IDREG_FIELD_END(ID_AA64SMFR0_EL1, SFEXPA)
++    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 17, 6)
+     IDREG_FIELD_START(ID_AA64SMFR0_EL1, STMOP, 16, 1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+     IDREG_FIELD_END(ID_AA64SMFR0_EL1, STMOP)
++    IDREG_FIELD(ID_AA64SMFR0_EL1, RES0, 1, 15)
+     IDREG_FIELD_START(ID_AA64SMFR0_EL1, SMOP4, 0, 1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1537,6 +1567,7 @@ IDREG_START(ID_AA64SMFR0_EL1)
+ IDREG_END(ID_AA64SMFR0_EL1)
+ 
+ IDREG_START(ID_AA64ZFR0_EL1)
++    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0, 60, 4)
+     IDREG_FIELD_START(ID_AA64ZFR0_EL1, F64MM, 56, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1557,10 +1588,12 @@ IDREG_START(ID_AA64ZFR0_EL1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+     IDREG_FIELD_END(ID_AA64ZFR0_EL1, SM4)
++    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0, 36, 4)
+     IDREG_FIELD_START(ID_AA64ZFR0_EL1, SHA3, 32, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+     IDREG_FIELD_END(ID_AA64ZFR0_EL1, SHA3)
++    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0, 28, 4)
+     IDREG_FIELD_START(ID_AA64ZFR0_EL1, B16B16, 24, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1580,6 +1613,7 @@ IDREG_START(ID_AA64ZFR0_EL1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+     IDREG_FIELD_END(ID_AA64ZFR0_EL1, EltPerm)
++    IDREG_FIELD(ID_AA64ZFR0_EL1, RES0, 8, 4)
+     IDREG_FIELD_START(ID_AA64ZFR0_EL1, AES, 4, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1596,9 +1630,11 @@ IDREG_START(ID_AA64ZFR0_EL1)
+ IDREG_END(ID_AA64ZFR0_EL1)
+ 
+ IDREG_START(ID_AFR0_EL1)
++    IDREG_FIELD(ID_AFR0_EL1, RES0, 0, 64)
+ IDREG_END(ID_AFR0_EL1)
+ 
+ IDREG_START(ID_DFR0_EL1)
++    IDREG_FIELD(ID_DFR0_EL1, RES0, 32, 32)
+     IDREG_FIELD_START(ID_DFR0_EL1, TraceFilt, 28, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1650,6 +1686,7 @@ IDREG_START(ID_DFR0_EL1)
+ IDREG_END(ID_DFR0_EL1)
+ 
+ IDREG_START(ID_DFR1_EL1)
++    IDREG_FIELD(ID_DFR1_EL1, RES0, 8, 56)
+     IDREG_FIELD_START(ID_DFR1_EL1, HPMN0, 4, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1662,6 +1699,7 @@ IDREG_START(ID_DFR1_EL1)
+ IDREG_END(ID_DFR1_EL1)
+ 
+ IDREG_START(ID_ISAR0_EL1)
++    IDREG_FIELD(ID_ISAR0_EL1, RES0, 28, 36)
+     IDREG_FIELD_START(ID_ISAR0_EL1, Divide, 24, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1697,6 +1735,7 @@ IDREG_START(ID_ISAR0_EL1)
+ IDREG_END(ID_ISAR0_EL1)
+ 
+ IDREG_START(ID_ISAR1_EL1)
++    IDREG_FIELD(ID_ISAR1_EL1, RES0, 32, 32)
+     IDREG_FIELD_START(ID_ISAR1_EL1, Jazelle, 28, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1735,6 +1774,7 @@ IDREG_START(ID_ISAR1_EL1)
+ IDREG_END(ID_ISAR1_EL1)
+ 
+ IDREG_START(ID_ISAR2_EL1)
++    IDREG_FIELD(ID_ISAR2_EL1, RES0, 32, 32)
+     IDREG_FIELD_START(ID_ISAR2_EL1, Reversal, 28, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1780,6 +1820,7 @@ IDREG_START(ID_ISAR2_EL1)
+ IDREG_END(ID_ISAR2_EL1)
+ 
+ IDREG_START(ID_ISAR3_EL1)
++    IDREG_FIELD(ID_ISAR3_EL1, RES0, 32, 32)
+     IDREG_FIELD_START(ID_ISAR3_EL1, T32EE, 28, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1817,6 +1858,7 @@ IDREG_START(ID_ISAR3_EL1)
+ IDREG_END(ID_ISAR3_EL1)
+ 
+ IDREG_START(ID_ISAR4_EL1)
++    IDREG_FIELD(ID_ISAR4_EL1, RES0, 32, 32)
+     IDREG_FIELD_START(ID_ISAR4_EL1, SWP_frac, 28, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1855,6 +1897,7 @@ IDREG_START(ID_ISAR4_EL1)
+ IDREG_END(ID_ISAR4_EL1)
+ 
+ IDREG_START(ID_ISAR5_EL1)
++    IDREG_FIELD(ID_ISAR5_EL1, RES0, 32, 32)
+     IDREG_FIELD_START(ID_ISAR5_EL1, VCMA, 28, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1863,6 +1906,7 @@ IDREG_START(ID_ISAR5_EL1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+     IDREG_FIELD_END(ID_ISAR5_EL1, RDM)
++    IDREG_FIELD(ID_ISAR5_EL1, RES0, 20, 4)
+     IDREG_FIELD_START(ID_ISAR5_EL1, CRC32, 16, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1887,6 +1931,7 @@ IDREG_START(ID_ISAR5_EL1)
+ IDREG_END(ID_ISAR5_EL1)
+ 
+ IDREG_START(ID_ISAR6_EL1)
++    IDREG_FIELD(ID_ISAR6_EL1, RES0, 32, 32)
+     IDREG_FIELD_START(ID_ISAR6_EL1, CLRBHB, 28, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1923,6 +1968,7 @@ IDREG_START(ID_ISAR6_EL1)
+ IDREG_END(ID_ISAR6_EL1)
+ 
+ IDREG_START(ID_MMFR0_EL1)
++    IDREG_FIELD(ID_MMFR0_EL1, RES0, 32, 32)
+     IDREG_FIELD_START(ID_MMFR0_EL1, InnerShr, 28, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -1969,6 +2015,7 @@ IDREG_START(ID_MMFR0_EL1)
+ IDREG_END(ID_MMFR0_EL1)
+ 
+ IDREG_START(ID_MMFR1_EL1)
++    IDREG_FIELD(ID_MMFR1_EL1, RES0, 32, 32)
+     IDREG_FIELD_START(ID_MMFR1_EL1, BPred, 28, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -2017,6 +2064,7 @@ IDREG_START(ID_MMFR1_EL1)
+ IDREG_END(ID_MMFR1_EL1)
+ 
+ IDREG_START(ID_MMFR2_EL1)
++    IDREG_FIELD(ID_MMFR2_EL1, RES0, 32, 32)
+     IDREG_FIELD_START(ID_MMFR2_EL1, HWAccFlg, 28, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -2055,6 +2103,7 @@ IDREG_START(ID_MMFR2_EL1)
+ IDREG_END(ID_MMFR2_EL1)
+ 
+ IDREG_START(ID_MMFR3_EL1)
++    IDREG_FIELD(ID_MMFR3_EL1, RES0, 32, 32)
+     IDREG_FIELD_START(ID_MMFR3_EL1, Supersec, 28, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(15)
+@@ -2094,6 +2143,7 @@ IDREG_START(ID_MMFR3_EL1)
+ IDREG_END(ID_MMFR3_EL1)
+ 
+ IDREG_START(ID_MMFR4_EL1)
++    IDREG_FIELD(ID_MMFR4_EL1, RES0, 32, 32)
+     IDREG_FIELD_START(ID_MMFR4_EL1, EVT, 28, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -2131,6 +2181,7 @@ IDREG_START(ID_MMFR4_EL1)
+ IDREG_END(ID_MMFR4_EL1)
+ 
+ IDREG_START(ID_MMFR5_EL1)
++    IDREG_FIELD(ID_MMFR5_EL1, RES0, 8, 56)
+     IDREG_FIELD_START(ID_MMFR5_EL1, nTLBPA, 4, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -2144,6 +2195,7 @@ IDREG_START(ID_MMFR5_EL1)
+ IDREG_END(ID_MMFR5_EL1)
+ 
+ IDREG_START(ID_PFR0_EL1)
++    IDREG_FIELD(ID_PFR0_EL1, RES0, 32, 32)
+     IDREG_FIELD_START(ID_PFR0_EL1, RAS, 28, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -2185,6 +2237,7 @@ IDREG_START(ID_PFR0_EL1)
+ IDREG_END(ID_PFR0_EL1)
+ 
+ IDREG_START(ID_PFR1_EL1)
++    IDREG_FIELD(ID_PFR1_EL1, RES0, 32, 32)
+     IDREG_FIELD_START(ID_PFR1_EL1, GIC, 28, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -2224,6 +2277,7 @@ IDREG_START(ID_PFR1_EL1)
+ IDREG_END(ID_PFR1_EL1)
+ 
+ IDREG_START(ID_PFR2_EL1)
++    IDREG_FIELD(ID_PFR2_EL1, RES0, 12, 52)
+     IDREG_FIELD_START(ID_PFR2_EL1, RAS_frac, 8, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -2271,11 +2325,14 @@ IDREG_START(MIDR_EL1)
+ IDREG_END(MIDR_EL1)
+ 
+ IDREG_START(MPIDR_EL1)
++    IDREG_FIELD(MPIDR_EL1, RES0, 40, 24)
+     IDREG_FIELD(MPIDR_EL1, Aff3, 32, 8)
++    IDREG_FIELD(MPIDR_EL1, RES1, 31, 1)
+     IDREG_FIELD_START(MPIDR_EL1, U, 30, 1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+     IDREG_FIELD_END(MPIDR_EL1, U)
++    IDREG_FIELD(MPIDR_EL1, RES0, 25, 5)
+     IDREG_FIELD_START(MPIDR_EL1, MT, 24, 1)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -2286,6 +2343,7 @@ IDREG_START(MPIDR_EL1)
+ IDREG_END(MPIDR_EL1)
+ 
+ IDREG_START(MVFR0_EL1)
++    IDREG_FIELD(MVFR0_EL1, RES0, 32, 32)
+     IDREG_FIELD_START(MVFR0_EL1, FPRound, 28, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -2324,6 +2382,7 @@ IDREG_START(MVFR0_EL1)
+ IDREG_END(MVFR0_EL1)
+ 
+ IDREG_START(MVFR1_EL1)
++    IDREG_FIELD(MVFR1_EL1, RES0, 32, 32)
+     IDREG_FIELD_START(MVFR1_EL1, SIMDFMAC, 28, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -2362,6 +2421,7 @@ IDREG_START(MVFR1_EL1)
+ IDREG_END(MVFR1_EL1)
+ 
+ IDREG_START(MVFR2_EL1)
++    IDREG_FIELD(MVFR2_EL1, RES0, 8, 56)
+     IDREG_FIELD_START(MVFR2_EL1, FPMisc, 4, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -2381,6 +2441,7 @@ IDREG_START(REVIDR_EL1)
+ IDREG_END(REVIDR_EL1)
+ 
+ IDREG_START(SMIDR_EL1)
++    IDREG_FIELD(SMIDR_EL1, RES0, 60, 4)
+     IDREG_FIELD_START(SMIDR_EL1, NSMC, 56, 4)
+         IDREG_FIELD_ARCH_VAL(0)
+         IDREG_FIELD_ARCH_VAL(1)
+@@ -2445,6 +2506,7 @@ IDREG_START(SMIDR_EL1)
+         IDREG_FIELD_ARCH_VAL(2)
+         IDREG_FIELD_ARCH_VAL(3)
+     IDREG_FIELD_END(SMIDR_EL1, SH)
++    IDREG_FIELD(SMIDR_EL1, RES0, 12, 1)
+     IDREG_FIELD(SMIDR_EL1, Affinity, 0, 12)
+ IDREG_END(SMIDR_EL1)
+ 
+diff --git a/scripts/update-aarch64-cpu-sysreg-properties.py b/scripts/update-aarch64-cpu-sysreg-properties.py
+index 96f8aa2d64..0b4e4d3e0c 100644
+--- a/scripts/update-aarch64-cpu-sysreg-properties.py
++++ b/scripts/update-aarch64-cpu-sysreg-properties.py
+@@ -81,9 +81,13 @@ def collect_fields(item, bit_offset=0):
+ 
+     # Normal Field Types
+     leaf_types = ['Fields.Field', 'Fields.ConstantField',
+-                  'Fields.EnumeratedField', 'Fields.Bitfield']
++                  'Fields.EnumeratedField', 'Fields.Bitfield', 'Fields.Reserved']
+     if _type in leaf_types:
+         field_copy = item.copy()
 +
-+Configuring CPU features via ID register fields
-+===============================================
++        if _type == 'Fields.Reserved' and not field_copy.get('name'):
++            field_copy['name'] = item.get('value', 'RES0')
 +
-+Note that this is currently only supported under KVM, and with the
-+``host`` CPU model.
+         if field_copy.get('rangeset'):
+             new_ranges = []
+             for r in field_copy['rangeset']:
+@@ -96,7 +100,7 @@ def collect_fields(item, bit_offset=0):
+         return fields
+ 
+     # Traverse the hierarchy for other cases
+-    for key in ['fields', 'values', 'fieldsets']:
++    for key in ['fields', 'values', 'fieldsets', 'constants']:
+         for nested in item.get(key, []):
+             fields.extend(collect_fields(nested, bit_offset))
+ 
+@@ -171,45 +175,96 @@ def generate_sysreg_properties_from_registers_json(id_reg_names, raw_json_path):
+ 
+         final_output += f"IDREG_START({reg_name})\n"
+ 
+-        unique_fields = {}
++        fieldset_variants = []
 +
-+Querying available ID register fields
-+-------------------------------------
+         for fieldset in register.get('fieldsets', []):
++            current_fieldset_fields = {}
+             candidates = collect_fields(fieldset)
 +
-+QEMU will create properties for all ID register fields that are
-+reported as being writable by the kernel, and that are known to the
-+QEMU instance. Therefore, the same QEMU binary may expose different
-+properties when run under a different kernel.
+             for val in candidates:
+-                name = (val.get('name') or val.get('label', '')).strip()
+-                if not name or "RESERVED" in name.upper():
++                raw_name = val.get('name') or val.get('label') or val.get('value') or ''
++                name = raw_name.strip()
++                if not name:
+                     continue
 +
-+To find out all available writable ID register fields, use the
-+``query-cpu-model-expansion`` QMP command::
++                name_upper = name.upper()
 +
-+  (QEMU) query-cpu-model-expansion type=full model={"name":"host"}
-+  {"return": {
-+   "model": {"name": "host", "props": {
-+   "SYSREG_ID_AA64PFR0_EL1_EL3": 1, "SYSREG_ID_AA64ISAR2_EL1_CLRBHB": 0,
-+   "SYSREG_CTR_EL0_L1Ip": 3, "SYSREG_CTR_EL0_DminLine": 4,
-+   "SYSREG_ID_AA64MMFR0_EL1_BIGEND": 1, "SYSREG_ID_AA64MMFR1_EL1_ECBHB": 0,
-+   "SYSREG_ID_AA64MMFR2_EL1_CnP": 1, "SYSREG_ID_DFR0_EL1_PerfMon": 4,
-+   "SYSREG_ID_AA64PFR0_EL1_DIT": 0, "SYSREG_ID_AA64MMFR1_EL1_HAFDBS": 2,
-+   "SYSREG_ID_AA64ISAR0_EL1_FHM": 0, "SYSREG_ID_AA64ISAR2_EL1_CSSC": 0,
-+   "SYSREG_ID_AA64ISAR0_EL1_DP": 1, (...)
-+   }}}}
++                # Check for architectural target states, including UNKNOWN remapping
++                base_reserved = None
++                for r_type in ["RES0", "RES1", "RAZ", "RAO", "WI", "UNKNOWN"]:
++                    if r_type == name_upper:
++                        base_reserved = "RES0" if r_type == "UNKNOWN" else r_type
++                        break
 +
-+If a certain field in an ID register does not show up in this list, it
-+is not writable with the specific host kernel.
++                is_valid_reserved = base_reserved is not None
++                if "RESERVED" in name_upper and not is_valid_reserved:
++                    continue
 +
-+A note on compatibility
-+-----------------------
++                # Force naming uniformity across padding blocks
++                if is_valid_reserved:
++                    name = base_reserved
 +
-+A common use case for providing a defined set of ID register values is
-+to be able to present a fixed set of features to a guest, often referred
-+to as "stable guest ABI". This may take the form of ironing out differences
-+between two similar CPUs with the intention of being able to migrate
-+between machines with those CPUs, or providing the same CPU across Linux
-+kernel updates on the host.
+                 for r in val.get('rangeset', []):
+                     lsb = int(r.get('start'))
+                     width = r.get('width')
+                     msb = lsb + int(width) - 1
+ 
+-                    # Only keep the fields with the highest MSB
+-                    # needed fir CCSIDR_EL1
+-                    if name not in unique_fields or msb > unique_fields[name]['msb']:
+-                        # extract enum values if any
++                    if is_valid_reserved:
++                        unique_key = f"{name}_{lsb}"
++                    else:
++                        unique_key = name
 +
-+Over the course of time, the Linux kernel is changing the set of ID register
-+fields that are writable by userspace. Newly introduced writable ID
-+registers should be initialized to 0 to ensure compatibility. However, ID
-+registers that have already been introduced that undergo a change as to
-+which fields are writable may introduce incompatibilities that need to be
-+addressed on a case-by-case basis for the systems that you wish to migrate
-+inbetween.
++                    if unique_key not in current_fieldset_fields or \
++                       msb > current_fieldset_fields[unique_key]['msb']:
+                         enums = extract_field_enums(val)
+-                        unique_fields[name] = {'lsb': lsb, 'msb': msb, 'width': width, 'enums': enums}
++                        current_fieldset_fields[unique_key] = {
++                            'raw_name': name,
++                            'lsb': lsb,
++                            'msb': msb,
++                            'width': width,
++                            'enums': enums
++                        }
 +
-+A note on Arm CPU features (FEAT_xxx)
-+-------------------------------------
++            if current_fieldset_fields:
++                fieldset_variants.append(current_fieldset_fields)
 +
-+Configuring CPUs is done on a feature level on other architectures, and this
-+would imply configuring FEAT_xxx values on Arm. However, differences between
-+CPUs may not map to FEAT_xxx, but to differences in other registers in the
-+ID register range; for example, differences in the cache architecture exposed
-+via ``CTR_EL0``. We therefore cannot rely on configuration via FEAT_xxx. A
-+feature-based interface more similar to other architectures may be implemented
-+on top of the ID register interface in the future.
++        best_fieldset = {}
++        max_total_width = -1
++
++        for variant in fieldset_variants:
++            total_width = sum(f['width'] for f in variant.values())
++            # prioritize layout variants with the highest MSB coverage
++            max_msb = max(f['msb'] for f in variant.values()) if variant else 0
++
++            # Combine width and max_msb into a fitness score tuple
++            if (total_width, max_msb) > (max_total_width, max_total_width):
++                max_total_width = total_width
++                best_fieldset = variant
++
++        unique_fields = best_fieldset
+ 
+         # Sort decreasing lsbs
+         sorted_fields = sorted(unique_fields.items(),
+                                key=lambda x: x[1]['lsb'], reverse=True)
+ 
+-        for name, bits in sorted_fields:
++        for unique_key, bits in sorted_fields:
+             enums_list = bits.get('enums', [])
+ 
++            clean_name = bits.get('raw_name', unique_key)
++
+             if enums_list:
+                line = (f"    IDREG_FIELD_START({reg_name}, "
+-                       f"{name}, {bits['lsb']}, {bits['width']})\n")
++                       f"{clean_name}, {bits['lsb']}, {bits['width']})\n")
+             else:
+                line = (f"    IDREG_FIELD({reg_name}, "
+-                       f"{name}, {bits['lsb']}, {bits['width']})\n")
++                       f"{clean_name}, {bits['lsb']}, {bits['width']})\n")
+             final_output += line
+             # generate enum value or range if any
+             for enum_item in enums_list:
+                     final_output += (f"        IDREG_FIELD_ARCH_VAL({enum_item['value']})\n")
+ 
+             if enums_list:
+-               line = (f"    IDREG_FIELD_END({reg_name}, {name})\n")
++               line = (f"    IDREG_FIELD_END({reg_name}, {clean_name})\n")
+                final_output += line
+      
+         final_output += f"IDREG_END({reg_name})\n"
 -- 
 2.53.0
 
