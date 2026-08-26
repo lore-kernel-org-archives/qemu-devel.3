@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB74C61DBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 10:32:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B64B2C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 10:32:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzAuo-000265-2G; Wed, 26 Aug 2026 06:31:30 -0400
+	id 1wzAus-00027m-BO; Wed, 26 Aug 2026 06:31:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1wzAuO-0001uh-K8
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:04 -0400
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1wzAua-00020x-80
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:18 -0400
 Received: from [2a14:640:1:12b5::1] (helo=krgm.moe)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1wzAuM-0003NM-Hp
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:04 -0400
+ (envelope-from <prcups@krgm.moe>) id 1wzAuY-0003OT-Jy
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:16 -0400
 Received: from yuno-loong (unknown [103.47.186.116])
- by krgm.moe (Postfix) with ESMTPSA id 0C58CDF9B;
- Wed, 26 Aug 2026 16:00:57 +0530 (IST)
+ by krgm.moe (Postfix) with ESMTPSA id 052AB7A17;
+ Wed, 26 Aug 2026 16:01:02 +0530 (IST)
 From: SignKirigami <prcups@krgm.moe>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, xianglai li <lixianglai@loongson.cn>,
  SignKirigami <prcups@krgm.moe>, Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v4 06/14] target/loongarch: Add LVZ guest timer support
-Date: Wed, 26 Aug 2026 18:30:10 +0800
-Message-ID: <0de498ed984527f0c4e86a18295c12354f81ebdf.1787739852.git.prcups@krgm.moe>
+Subject: [PATCH v4 13/14] target/loongarch: Translate LVZ guest traps and HVC
+Date: Wed, 26 Aug 2026 18:30:17 +0800
+Message-ID: <ac951e0b31cc1e90fbb0274becc0877f509f0370.1787739852.git.prcups@krgm.moe>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1787739852.git.prcups@krgm.moe>
 References: <cover.1787739852.git.prcups@krgm.moe>
@@ -56,217 +56,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a separate guest constant timer, preserve its remaining ticks across VM
-exits, and provide TVAL and TCFG helpers for accesses to the guest CSR bank.
+Raise GSPR when a guest accesses IOCSR, debug or idle resources, and
+decode HVC for guest PLV0.
+
+Use the common exception path so trapping instructions do not manufacture
+destination values or require a helper named after the exception cause.
 
 Signed-off-by: SignKirigami <prcups@krgm.moe>
 Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 ---
- target/loongarch/cpu.c                |  2 +
- target/loongarch/internals.h          |  6 ++-
- target/loongarch/tcg/constant_timer.c | 67 ++++++++++++++++++++++-----
- target/loongarch/tcg/csr_helper.c     | 22 ++++++++-
- target/loongarch/tcg/helper.h         |  2 +
- 5 files changed, 84 insertions(+), 15 deletions(-)
+ target/loongarch/disas.c                      |  1 +
+ target/loongarch/insns.decode                 |  1 +
+ .../tcg/insn_trans/trans_privileged.c.inc     | 32 +++++++++++++++++++
+ 3 files changed, 34 insertions(+)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index b12e8944de..ff36294aa5 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -795,6 +795,8 @@ static void loongarch_cpu_init(Object *obj)
- #ifdef CONFIG_TCG
-     timer_init_ns(&cpu->timer, QEMU_CLOCK_VIRTUAL,
-                   &loongarch_constant_timer_cb, cpu);
-+    timer_init_ns(&cpu->guest_timer, QEMU_CLOCK_VIRTUAL,
-+                  &loongarch_constant_timer_cb_guest, cpu);
- #endif
- #endif
- }
-diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
-index a23b0d3d58..8ae3507c71 100644
---- a/target/loongarch/internals.h
-+++ b/target/loongarch/internals.h
-@@ -36,10 +36,12 @@ void loongarch_cpu_set_irq_impl(void *opaque, int irq, int level,
-                                 bool guest);
+diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
+index 54c35b8d03..82b0bf868f 100644
+--- a/target/loongarch/disas.c
++++ b/target/loongarch/disas.c
+@@ -712,6 +712,7 @@ INSN(gtlbsrch,     empty)
+ INSN(gtlbrd,       empty)
+ INSN(gtlbwr,       empty)
+ INSN(gtlbfill,     empty)
++INSN(hvcl,         i)
+ INSN(cacop,        cop_r_i)
+ INSN(lddir,        rr_i)
+ INSN(ldpte,        j_i)
+diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.decode
+index cbcc30c31f..b40fabe9d7 100644
+--- a/target/loongarch/insns.decode
++++ b/target/loongarch/insns.decode
+@@ -505,6 +505,7 @@ gtlbsrch         0000 01100100 10000 01010 00000 00001    @empty
+ gtlbrd           0000 01100100 10000 01011 00000 00001    @empty
+ gtlbwr           0000 01100100 10000 01100 00000 00001    @empty
+ gtlbfill         0000 01100100 10000 01101 00000 00001    @empty
++hvcl             0000 0000 0010 1011 1 ...............    @i15
  
- void loongarch_constant_timer_cb(void *opaque);
-+void loongarch_constant_timer_cb_guest(void *opaque);
- uint64_t cpu_loongarch_get_constant_timer_counter(LoongArchCPU *cpu);
--uint64_t cpu_loongarch_get_constant_timer_ticks(LoongArchCPU *cpu);
-+uint64_t cpu_loongarch_get_constant_timer_ticks(LoongArchCPU *cpu, bool guest);
-+void cpu_loongarch_set_guest_timer(LoongArchCPU *cpu, bool on);
- void cpu_loongarch_store_constant_timer_config(LoongArchCPU *cpu,
--                                               uint64_t value);
-+                                               uint64_t value, bool guest);
- bool loongarch_cpu_has_work(CPUState *cs);
- bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env, bool guest);
- #endif /* !CONFIG_USER_ONLY */
-diff --git a/target/loongarch/tcg/constant_timer.c b/target/loongarch/tcg/constant_timer.c
-index f56e76d482..a341f48489 100644
---- a/target/loongarch/tcg/constant_timer.c
-+++ b/target/loongarch/tcg/constant_timer.c
-@@ -20,47 +20,92 @@ uint64_t cpu_loongarch_get_constant_timer_counter(LoongArchCPU *cpu)
-     return qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) / TIMER_PERIOD;
- }
+ iocsrrd_b        0000 01100100 10000 00000 ..... .....    @rr
+ iocsrrd_h        0000 01100100 10000 00001 ..... .....    @rr
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index fb6318b438..2dedcadfbb 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -48,6 +48,7 @@ GEN_FALSE_TRANS(gtlbsrch)
+ GEN_FALSE_TRANS(gtlbrd)
+ GEN_FALSE_TRANS(gtlbwr)
+ GEN_FALSE_TRANS(gtlbfill)
++GEN_FALSE_TRANS(hvcl)
  
--uint64_t cpu_loongarch_get_constant_timer_ticks(LoongArchCPU *cpu)
-+uint64_t cpu_loongarch_get_constant_timer_ticks(LoongArchCPU *cpu, bool guest)
- {
-+    CPULoongArchState *env = &cpu->env;
-     uint64_t now, expire;
-+    CPUSysState *sys = get_sys(env, guest);
-+
-+    if (guest && env_vm_level(env) != LOONGARCH_VM_LEVEL_GUEST) {
-+        return sys->CSR_TVAL;
-+    }
+ #else
  
-     now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--    expire = timer_expire_time_ns(&cpu->timer);
-+    expire = timer_expire_time_ns(guest ? &cpu->guest_timer : &cpu->timer);
- 
-     return (expire - now) / TIMER_PERIOD;
- }
- 
- void cpu_loongarch_store_constant_timer_config(LoongArchCPU *cpu,
--                                               uint64_t value)
-+                                               uint64_t value, bool guest)
- {
-     CPULoongArchState *env = &cpu->env;
--    CPUSysState *sys = env_sys(env);
-     uint64_t now, next;
-+    CPUSysState *sys = get_sys(env, guest);
-+    QEMUTimer *timer = guest ? &cpu->guest_timer : &cpu->timer;
- 
-     sys->CSR_TCFG = value;
-+    if (guest && env_vm_level(env) != LOONGARCH_VM_LEVEL_GUEST) {
-+        return;
-+    }
-+
-     if (value & CONSTANT_TIMER_ENABLE) {
-         now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-         next = now + (value & CONSTANT_TIMER_TICK_MASK) * TIMER_PERIOD;
--        timer_mod(&cpu->timer, next);
-+        timer_mod(timer, next);
-     } else {
--        timer_del(&cpu->timer);
-+        timer_del(timer);
+@@ -347,6 +348,10 @@ static bool gen_iocsrrd(DisasContext *ctx, arg_rr *a,
+     if (check_plv(ctx)) {
+         return false;
      }
++    if (ctx->guest_mode) {
++        generate_exception(ctx, EXCCODE_GSPR);
++        return true;
++    }
+     func(dest, tcg_env, src1);
+     return true;
  }
- 
--void loongarch_constant_timer_cb(void *opaque)
-+void cpu_loongarch_set_guest_timer(LoongArchCPU *cpu, bool on)
- {
--    LoongArchCPU *cpu  = opaque;
-     CPULoongArchState *env = &cpu->env;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *guest = get_sys(env, LOONGARCH_VM_LEVEL_GUEST);
-+    uint64_t now, next, ticks;
-+
-+    if (!(guest->CSR_TCFG & CONSTANT_TIMER_ENABLE)) {
-+        return;
+@@ -360,6 +365,10 @@ static bool gen_iocsrwr(DisasContext *ctx, arg_rr *a,
+     if (check_plv(ctx)) {
+         return false;
+     }
++    if (ctx->guest_mode) {
++        generate_exception(ctx, EXCCODE_GSPR);
++        return true;
 +    }
-+
-+    if (on) {
-+        now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+        ticks = guest->CSR_TVAL ? guest->CSR_TVAL :
-+                                  (guest->CSR_TCFG & CONSTANT_TIMER_TICK_MASK);
-+        guest->CSR_TVAL = 0;
-+        next = now + ticks * TIMER_PERIOD;
-+        timer_mod(&cpu->guest_timer, next);
-+    } else {
-+        guest->CSR_TVAL = cpu_loongarch_get_constant_timer_ticks(cpu, true);
-+        timer_del(&cpu->guest_timer);
+     func(tcg_env, addr, val);
+     return true;
+ }
+@@ -624,6 +633,10 @@ static bool trans_dbcl(DisasContext *ctx, arg_dbcl *a)
+     if (check_plv(ctx)) {
+         return false;
+     }
++    if (ctx->guest_mode) {
++        generate_exception(ctx, EXCCODE_GSPR);
++        return true;
 +    }
-+}
-+
-+static void loongarch_constant_timer_cb_impl(void *opaque, bool guest)
-+{
-+    LoongArchCPU *cpu = opaque;
-+    CPULoongArchState *env = &cpu->env;
-+    CPUSysState *sys = get_sys(env, guest);
-+    QEMUTimer *timer = guest ? &cpu->guest_timer : &cpu->timer;
-     uint64_t now, next;
- 
-     if (FIELD_EX64(sys->CSR_TCFG, CSR_TCFG, PERIODIC)) {
-         now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-         next = now + (sys->CSR_TCFG & CONSTANT_TIMER_TICK_MASK) * TIMER_PERIOD;
--        timer_mod(&cpu->timer, next);
-+        timer_mod(timer, next);
-     } else {
-         sys->CSR_TCFG = FIELD_DP64(sys->CSR_TCFG, CSR_TCFG, EN, 0);
+     generate_exception(ctx, EXCCODE_DBP);
+     return true;
+ }
+@@ -634,9 +647,28 @@ static bool trans_idle(DisasContext *ctx, arg_idle *a)
+         return false;
      }
  
--    loongarch_cpu_set_irq(opaque, IRQ_TIMER, 1);
-+    loongarch_cpu_set_irq_impl(opaque, IRQ_TIMER, 1, guest);
-+}
++    if (ctx->guest_mode) {
++        generate_exception(ctx, EXCCODE_GSPR);
++        return true;
++    }
 +
-+void loongarch_constant_timer_cb(void *opaque)
-+{
-+    loongarch_constant_timer_cb_impl(opaque, false);
-+}
-+
-+void loongarch_constant_timer_cb_guest(void *opaque)
-+{
-+    loongarch_constant_timer_cb_impl(opaque, true);
+     tcg_gen_movi_tl(cpu_pc, ctx->base.pc_next + 4);
+     gen_helper_idle(tcg_env);
+     ctx->base.is_jmp = DISAS_NORETURN;
+     return true;
  }
-diff --git a/target/loongarch/tcg/csr_helper.c b/target/loongarch/tcg/csr_helper.c
-index 7dc33bc180..fa75508244 100644
---- a/target/loongarch/tcg/csr_helper.c
-+++ b/target/loongarch/tcg/csr_helper.c
-@@ -74,7 +74,14 @@ target_ulong helper_csrrd_tval(CPULoongArchState *env)
- {
-     LoongArchCPU *cpu = env_archcpu(env);
- 
--    return cpu_loongarch_get_constant_timer_ticks(cpu);
-+    return cpu_loongarch_get_constant_timer_ticks(cpu, false);
-+}
 +
-+target_ulong helper_gcsrrd_tval(CPULoongArchState *env)
++static bool trans_hvcl(DisasContext *ctx, arg_hvcl *a)
 +{
-+    LoongArchCPU *cpu = env_archcpu(env);
++    if (!avail_LVZ(ctx) || !ctx->guest_mode) {
++        return false;
++    }
++    if (ctx->plv != MMU_PLV_KERNEL) {
++        generate_exception(ctx, EXCCODE_IPE);
++        return true;
++    }
 +
-+    return cpu_loongarch_get_constant_timer_ticks(cpu, true);
- }
- 
- target_ulong helper_csrrd_msgir(CPULoongArchState *env)
-@@ -129,7 +136,18 @@ target_ulong helper_csrwr_tcfg(CPULoongArchState *env, target_ulong val)
-     CPUSysState *sys = env_sys(env);
-     int64_t old_v = sys->CSR_TCFG;
- 
--    cpu_loongarch_store_constant_timer_config(cpu, val);
-+    cpu_loongarch_store_constant_timer_config(cpu, val, false);
-+
-+    return old_v;
++    generate_exception(ctx, EXCCODE_HVC);
++    return true;
 +}
-+
-+target_ulong helper_gcsrwr_tcfg(CPULoongArchState *env, target_ulong val)
-+{
-+    LoongArchCPU *cpu = env_archcpu(env);
-+    CPUSysState *guest = get_sys(env, LOONGARCH_VM_LEVEL_GUEST);
-+    int64_t old_v = guest->CSR_TCFG;
-+
-+    cpu_loongarch_store_constant_timer_config(cpu, val, true);
- 
-     return old_v;
- }
-diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
-index 8a6c62f116..a003266827 100644
---- a/target/loongarch/tcg/helper.h
-+++ b/target/loongarch/tcg/helper.h
-@@ -100,11 +100,13 @@ DEF_HELPER_1(rdtime_d, i64, env)
- DEF_HELPER_1(csrrd_pgd, i64, env)
- DEF_HELPER_1(csrrd_cpuid, i64, env)
- DEF_HELPER_1(csrrd_tval, i64, env)
-+DEF_HELPER_1(gcsrrd_tval, i64, env)
- DEF_HELPER_1(csrrd_msgir, i64, env)
- DEF_HELPER_2(csrwr_stlbps, i64, env, tl)
- DEF_HELPER_2(csrwr_estat, i64, env, tl)
- DEF_HELPER_2(csrwr_asid, i64, env, tl)
- DEF_HELPER_2(csrwr_tcfg, i64, env, tl)
-+DEF_HELPER_2(gcsrwr_tcfg, i64, env, tl)
- DEF_HELPER_2(csrwr_ticlr, i64, env, tl)
- DEF_HELPER_2(csrwr_pwcl, i64, env, tl)
- DEF_HELPER_2(csrwr_pwch, i64, env, tl)
+ #endif
 -- 
 2.55.0
 
