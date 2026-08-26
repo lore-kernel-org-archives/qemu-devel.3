@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7BEBC61DBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:44:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F137CC5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:44:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzJY2-0004Nq-3q; Wed, 26 Aug 2026 15:44:34 -0400
+	id 1wzJYK-0004xr-TE; Wed, 26 Aug 2026 15:44:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJXz-0004MW-WF
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:44:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJYJ-0004rK-Ey
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:44:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJXv-0006rW-Mk
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:44:31 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJYG-000725-Bi
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:44:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787773467;
+ s=mimecast20190719; t=1787773487;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=whyI5oC0NF+JVwl/7FlcO+qvyiVZzFrkdTzPuV3wTHU=;
- b=BOhIPkMLP0IZtwpWm2SyMp2js4JqceQFfB44FnqRDDwDZe0Bc4VFONiBIkCM9FfA2SwQqJ
- NwjeaGwiGMtaIZrEjNiok1/NqZy706BoG1K33tEqlzLXyQRKWYUeijZAQuCF6Wifh1MCWQ
- OYoKBSF+c75BBOsuMmIWMCcR25yC5xY=
+ bh=guCLIzVmZrZpBJXqrS2tsFbY+MWTzN+mPMblZhwoDNA=;
+ b=Tb0E5xep2Qk0Qzp9ramT13U5maIxsFnLBgOI574xVPixOEVjU5JUbuS55buXzO6oxXuGNj
+ u7GQNDUk8EyGhMJ1JU/cxxN+duifjHM7cph/ZLpoWay6WLyrfKHgFjmCUNBNHC6fSpyRFw
+ wDzurMZBsfu0XkkOFCpywkq0yrM9u5s=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-397-DQ6FDxxeNY6Anr5zLD0l5w-1; Wed,
- 26 Aug 2026 15:44:23 -0400
-X-MC-Unique: DQ6FDxxeNY6Anr5zLD0l5w-1
-X-Mimecast-MFC-AGG-ID: DQ6FDxxeNY6Anr5zLD0l5w_1787773458
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-478-XiwRdptbO9SsOC_88OLb0g-1; Wed,
+ 26 Aug 2026 15:44:42 -0400
+X-MC-Unique: XiwRdptbO9SsOC_88OLb0g-1
+X-Mimecast-MFC-AGG-ID: XiwRdptbO9SsOC_88OLb0g_1787773478
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B46EA1855134; Wed, 26 Aug 2026 19:44:18 +0000 (UTC)
+ id 29DBB1801317; Wed, 26 Aug 2026 19:44:38 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.99])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 79C8D1800577; Wed, 26 Aug 2026 19:44:09 +0000 (UTC)
+ id 4CB231800577; Wed, 26 Aug 2026 19:44:28 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>,
@@ -72,23 +72,24 @@ Cc: Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Lukas Straub <lukasstraub2@web.de>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 39/43] qapi: convert trivial intro sections for qom.json
-Date: Wed, 26 Aug 2026 15:38:36 -0400
-Message-ID: <20260826193840.2152000-40-jsnow@redhat.com>
+Subject: [PATCH v3 41/43] qapi: convert trivial intro sections for
+ migration.json
+Date: Wed, 26 Aug 2026 15:38:38 -0400
+Message-ID: <20260826193840.2152000-42-jsnow@redhat.com>
 In-Reply-To: <20260826193840.2152000-1-jsnow@redhat.com>
 References: <20260826193840.2152000-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,498 +107,423 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/qom.json | 150 +++++++++++++++++---------------------------------
- 1 file changed, 51 insertions(+), 99 deletions(-)
+ qapi/migration.json | 131 ++++++++++++++++----------------------------
+ 1 file changed, 48 insertions(+), 83 deletions(-)
 
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 4a9b7f90884..51af9485e6d 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -77,8 +77,7 @@
+diff --git a/qapi/migration.json b/qapi/migration.json
+index b1eaf7b0545..8b6abcee2ca 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -13,8 +13,7 @@
  
  ##
- # @qom-list:
+ # @MigrationRAMStats:
 -#
--# List properties of a object given a path in the object model.
-+#     List properties of a object given a path in the object model.
+-# Detailed migration status.
++#     Detailed migration status.
  #
- # @path: the path within the object model.  See `qom-get` for a
- #     description of this parameter.
-@@ -103,8 +102,7 @@
+ # @transferred: amount of bytes already transferred to the target VM
+ #
+@@ -78,8 +77,7 @@
  
  ##
- # @qom-get:
+ # @XBZRLECacheStats:
 -#
--# Get a property value.
-+#     Get a property value.
+-# Detailed XBZRLE migration cache statistics
++#     Detailed XBZRLE migration cache statistics
  #
- # @path: The path within the object model.  There are two forms of
- #     supported paths--absolute and partial paths.
-@@ -154,9 +152,8 @@
+ # @cache-size: XBZRLE cache size
+ #
+@@ -104,8 +102,7 @@
  
  ##
- # @qom-list-get:
+ # @CompressionStats:
 -#
--# List properties and their values for each object path in the input
--# list.
-+#     List properties and their values for each object path in the
-+#     input list.
+-# Detailed migration compression statistics
++#     Detailed migration compression statistics
  #
- # @paths: The absolute or partial path for each object, as described
- #     in `qom-get`.
-@@ -176,8 +173,7 @@
+ # @pages: amount of pages compressed and transferred to the target VM
+ #
+@@ -126,8 +123,7 @@
  
  ##
- # @qom-set:
+ # @MigrationStatus:
 -#
--# Set a property value.
-+#     Set a property value.
+-# An enumeration of migration status.
++#     An enumeration of migration status.
  #
- # @path: see `qom-get` for a description of this parameter
+ # @none: no migration has ever happened.
  #
-@@ -202,8 +198,7 @@
+@@ -189,8 +185,7 @@
  
  ##
- # @ObjectTypeInfo:
+ # @VfioStats:
 -#
--# This structure describes a search result from `qom-list-types`
-+#     This structure describes a search result from `qom-list-types`
+-# Detailed VFIO devices migration statistics
++#     Detailed VFIO devices migration statistics
  #
- # @name: the type name found in the search
- #
-@@ -219,8 +214,7 @@
+ # @transferred: amount of bytes transferred to the target VM by VFIO
+ #     devices
+@@ -202,8 +197,7 @@
  
  ##
- # @qom-list-types:
+ # @MigrationInfo:
 -#
--# Return a list of types given search parameters.
-+#     Return a list of types given search parameters.
+-# Information about current migration process.
++#     Information about current migration process.
  #
- # @implements: if specified, only return types that implement this
- #     type name
-@@ -238,8 +232,7 @@
+ # @status: `MigrationStatus` describing the current migration status.
+ #     If this field is not returned, no migration process has been
+@@ -435,8 +429,7 @@
  
  ##
- # @qom-list-properties:
+ # @MigrationCapability:
 -#
--# List properties associated with a QOM object.
-+#     List properties associated with a QOM object.
+-# Migration capabilities enumeration
++#     Migration capabilities enumeration
  #
- # @typename: the type name of an object
- #
-@@ -258,8 +251,7 @@
+ # @xbzrle: Migration supports xbzrle (Xor Based Zero Run Length
+ #     Encoding).  This feature allows us to minimize migration traffic
+@@ -545,8 +538,7 @@
  
  ##
- # @CanHostSocketcanProperties:
+ # @MigrationCapabilityStatus:
 -#
--# Properties for can-host-socketcan objects.
-+#     Properties for can-host-socketcan objects.
+-# Migration capability information
++#     Migration capability information
  #
- # @if: interface name of the host system CAN bus to connect to
+ # @capability: capability enum
  #
-@@ -275,8 +267,7 @@
+@@ -559,8 +551,8 @@
  
  ##
- # @ColoCompareProperties:
+ # @migrate-set-capabilities:
 -#
--# Properties for colo-compare objects.
-+#     Properties for colo-compare objects.
+-# Enable/Disable the following migration capabilities (like xbzrle)
++#     Enable/Disable the following migration capabilities (like
++#     xbzrle)
  #
- # @primary_in: name of the character device backend to use for the
- #     primary input (incoming packets are redirected to @outdev)
-@@ -323,9 +314,8 @@
+ # @capabilities: json array of capability modifications to make
+ #
+@@ -577,8 +569,8 @@
  
  ##
- # @CryptodevBackendProperties:
+ # @query-migrate-capabilities:
 -#
--# Properties for cryptodev-backend and cryptodev-backend-builtin
--# objects.
-+#     Properties for cryptodev-backend and cryptodev-backend-builtin
-+#     objects.
+-# Return information about the current migration capabilities status
++#     Return information about the current migration capabilities
++#     status
  #
- # @queues: the number of queues for the cryptodev backend.  Ignored
- #     for cryptodev-backend and must be 1 for
-@@ -344,8 +334,7 @@
+ # Since: 1.2
+ #
+@@ -598,8 +590,7 @@
  
  ##
- # @CryptodevVhostUserProperties:
+ # @MultiFDCompression:
 -#
--# Properties for cryptodev-vhost-user objects.
-+#     Properties for cryptodev-vhost-user objects.
+-# An enumeration of multifd compression methods.
++#     An enumeration of multifd compression methods.
  #
- # @chardev: the name of a Unix domain socket character device that
- #     connects to the vhost-user server
-@@ -359,8 +348,7 @@
+ # @none: no compression.
+ #
+@@ -776,9 +767,8 @@
  
  ##
- # @DBusVMStateProperties:
+ # @BitmapMigrationNodeAlias:
 -#
--# Properties for dbus-vmstate objects.
-+#     Properties for dbus-vmstate objects.
+-# Maps a block node name and the bitmaps it has to aliases for dirty
+-# bitmap migration.
++#     Maps a block node name and the bitmaps it has to aliases for
++#     dirty bitmap migration.
  #
- # @addr: the name of the DBus bus to connect to
+ # @node-name: A block node name.
  #
-@@ -375,9 +363,8 @@
+@@ -1098,8 +1088,7 @@
  
  ##
- # @NetfilterInsert:
+ # @MIGRATION:
 -#
--# Indicates where to insert a netfilter relative to a given other
--# filter.
-+#     Indicates where to insert a netfilter relative to a given other
-+#     filter.
+-# Emitted when a migration event happens
++#     Emitted when a migration event happens
  #
- # @before: insert before the specified filter
+ # @status: `MigrationStatus` describing the current migration status.
  #
-@@ -390,8 +377,7 @@
+@@ -1116,9 +1105,8 @@
  
  ##
- # @NetfilterProperties:
+ # @MIGRATION_PASS:
 -#
--# Properties for objects of classes derived from netfilter.
-+#     Properties for objects of classes derived from netfilter.
+-# Emitted from the source side of a migration at the start of each
+-# pass (when it syncs the dirty bitmap)
++#     Emitted from the source side of a migration at the start of each
++#     pass (when it syncs the dirty bitmap)
  #
- # @netdev: id of the network device backend to filter
+ # @pass: An incrementing count (starting at 1 on the first pass)
  #
-@@ -423,8 +409,7 @@
+@@ -1134,8 +1122,8 @@
  
  ##
- # @FilterBufferProperties:
+ # @COLOMessage:
 -#
--# Properties for filter-buffer objects.
-+#     Properties for filter-buffer objects.
+-# The message transmission between Primary side and Secondary side.
++#     The message transmission between Primary side and Secondary
++#     side.
  #
- # @interval: a non-zero interval in microseconds.  All packets
- #     arriving in the given interval are delayed until the end of the
-@@ -438,8 +423,7 @@
+ # @checkpoint-ready: Secondary VM (SVM) is ready for checkpointing
+ #
+@@ -1161,8 +1149,7 @@
  
  ##
- # @FilterDumpProperties:
+ # @COLOMode:
 -#
--# Properties for filter-dump objects.
-+#     Properties for filter-dump objects.
+-# The COLO current mode.
++#     The COLO current mode.
  #
- # @file: the filename where the dumped packets should be stored
+ # @none: COLO is disabled.
  #
-@@ -455,8 +439,7 @@
+@@ -1177,8 +1164,7 @@
  
  ##
- # @FilterMirrorProperties:
+ # @FailoverStatus:
 -#
--# Properties for filter-mirror objects.
-+#     Properties for filter-mirror objects.
+-# An enumeration of COLO failover status
++#     An enumeration of COLO failover status
  #
- # @outdev: the name of a character device backend to which all
- #     incoming packets are mirrored
-@@ -498,8 +481,7 @@
+ # @none: no failover has ever happened
+ #
+@@ -1198,9 +1184,8 @@
  
  ##
- # @FilterRewriterProperties:
+ # @COLO_EXIT:
 -#
--# Properties for filter-rewriter objects.
-+#     Properties for filter-rewriter objects.
+-# Emitted when VM finishes COLO mode due to some errors happening or
+-# at the request of users.
++#     Emitted when VM finishes COLO mode due to some errors happening
++#     or at the request of users.
  #
- # @vnet_hdr_support: if true, vnet header support is enabled
- #     (default: false)
-@@ -512,8 +494,7 @@
+ # @mode: report COLO mode when COLO exited.
+ #
+@@ -1218,8 +1203,7 @@
  
  ##
- # @InputBarrierProperties:
+ # @COLOExitReason:
 -#
--# Properties for input-barrier objects.
-+#     Properties for input-barrier objects.
+-# The reason for a COLO exit.
++#     The reason for a COLO exit.
  #
- # @name: the screen name as declared in the screens section of
- #     barrier.conf
-@@ -545,8 +526,7 @@
+ # @none: failover has never happened.  This state does not occur in
+ #     the `COLO_EXIT` event, and is only visible in the result of
+@@ -1281,8 +1265,7 @@
  
  ##
- # @InputLinuxProperties:
+ # @migrate-continue:
 -#
--# Properties for input-linux objects.
-+#     Properties for input-linux objects.
+-# Continue migration when it's in a paused state.
++#     Continue migration when it's in a paused state.
  #
- # @evdev: the path of the host evdev device to use
+ # @state: The state the migration is currently expected to be in
  #
-@@ -569,8 +549,7 @@
+@@ -1298,8 +1281,7 @@
  
  ##
- # @EventLoopBaseProperties:
+ # @MigrationAddressType:
 -#
--# Common properties for event loops
-+#     Common properties for event loops
+-# The migration stream transport mechanisms.
++#     The migration stream transport mechanisms.
  #
- # @aio-max-batch: maximum number of requests in a batch for the AIO
- #     engine, 0 means that the engine will use its default.
-@@ -591,8 +570,7 @@
+ # @socket: Migrate via socket.
+ #
+@@ -1339,8 +1321,7 @@
  
  ##
- # @IothreadProperties:
+ # @MigrationAddress:
 -#
--# Properties for iothread objects.
-+#     Properties for iothread objects.
+-# Migration endpoint configuration.
++#     Migration endpoint configuration.
  #
- # @poll-max-ns: the maximum number of nanoseconds to busy wait for
- #     events.  0 means polling is disabled (default: 32768 on POSIX
-@@ -626,8 +604,7 @@
+ # @transport: The migration stream transport mechanism
+ #
+@@ -1357,8 +1338,7 @@
  
  ##
- # @MainLoopProperties:
+ # @MigrationChannelType:
 -#
--# Properties for the main-loop object.
-+#     Properties for the main-loop object.
+-# The migration channel-type request options.
++#     The migration channel-type request options.
+ #
+ # @main: Main outbound migration channel.
+ #
+@@ -1371,8 +1351,7 @@
+ 
+ ##
+ # @MigrationChannel:
+-#
+-# Migration stream channel parameters.
++#     Migration stream channel parameters.
+ #
+ # @channel-type: Channel type for transferring packet information.
+ #
+@@ -1387,8 +1366,7 @@
+ 
+ ##
+ # @migrate:
+-#
+-# Migrates the current running guest to another Virtual Machine.
++#     Migrates the current running guest to another Virtual Machine.
+ #
+ # @uri: the Uniform Resource Identifier of the destination VM
+ #
+@@ -1560,8 +1538,7 @@
+ 
+ ##
+ # @xen-set-global-dirty-log:
+-#
+-# Enable or disable the global dirty log mode.
++#     Enable or disable the global dirty log mode.
+ #
+ # @enable: true to enable, false to disable.
+ #
+@@ -1597,8 +1574,7 @@
+ 
+ ##
+ # @xen-set-replication:
+-#
+-# Enable or disable replication.
++#     Enable or disable replication.
+ #
+ # @enable: true to enable, false to disable.
+ #
+@@ -1621,8 +1597,7 @@
+ 
+ ##
+ # @ReplicationStatus:
+-#
+-# The result format for `query-xen-replication-status`.
++#     The result format for `query-xen-replication-status`.
+ #
+ # @error: true if an error happened, false if replication is normal.
+ #
+@@ -1670,8 +1645,7 @@
+ 
+ ##
+ # @COLOStatus:
+-#
+-# The result format for `query-colo-status`.
++#     The result format for `query-colo-status`.
+ #
+ # @mode: COLO running mode.  If COLO is running, this field will
+ #     return 'primary' or 'secondary'.
+@@ -1709,8 +1683,7 @@
+ 
+ ##
+ # @migrate-recover:
+-#
+-# Provide a recovery migration stream URI.
++#     Provide a recovery migration stream URI.
+ #
+ # @uri: the URI to be used for the recovery of migration stream.
+ #
+@@ -1763,8 +1736,7 @@
+ 
+ ##
+ # @DirtyRateVcpu:
+-#
+-# Dirty rate of vcpu.
++#     Dirty rate of vcpu.
+ #
+ # @id: vcpu index.
+ #
+@@ -1777,8 +1749,7 @@
+ 
+ ##
+ # @DirtyRateStatus:
+-#
+-# Dirty page rate measurement status.
++#     Dirty page rate measurement status.
+ #
+ # @unstarted: measuring thread has not been started yet
+ #
+@@ -1810,8 +1781,7 @@
+ 
+ ##
+ # @TimeUnit:
+-#
+-# Specifies unit in which time-related value is specified.
++#     Specifies unit in which time-related value is specified.
+ #
+ # @second: value is in seconds
+ #
+@@ -1824,8 +1794,7 @@
+ 
+ ##
+ # @DirtyRateInfo:
+-#
+-# Information about measured dirty page rate.
++#     Information about measured dirty page rate.
+ #
+ # @dirty-rate: an estimate of the dirty page rate of the VM in units
+ #     of MiB/s.  Value is present only when @status is 'measured'.
+@@ -1935,8 +1904,8 @@
+ 
+ ##
+ # @query-dirty-rate:
+-#
+-# Query results of the most recent invocation of `calc-dirty-rate`.
++#     Query results of the most recent invocation of
++#     `calc-dirty-rate`.
+ #
+ # @calc-time-unit: time unit in which to report calculation time.
+ #     By default it is reported in seconds.  (Since 8.2)
+@@ -1962,8 +1931,7 @@
+ 
+ ##
+ # @DirtyLimitInfo:
+-#
+-# Dirty page rate limit information of a virtual CPU.
++#     Dirty page rate limit information of a virtual CPU.
+ #
+ # @cpu-index: index of a virtual CPU.
+ #
+@@ -2029,8 +1997,8 @@
+ 
+ ##
+ # @query-vcpu-dirty-limit:
+-#
+-# Return information about virtual CPU dirty page rate limits, if any.
++#     Return information about virtual CPU dirty page rate limits, if
++#     any.
  #
  # Since: 7.1
- ##
-@@ -637,8 +614,7 @@
+ #
+@@ -2046,8 +2014,7 @@
  
  ##
- # @MemoryBackendProperties:
+ # @snapshot-save:
 -#
--# Properties for objects of classes derived from memory-backend.
-+#     Properties for objects of classes derived from memory-backend.
+-# Save a VM snapshot
++#     Save a VM snapshot
  #
- # @merge: if true, mark the memory as mergeable (default depends on
- #     the machine type)
-@@ -696,8 +672,7 @@
+ # @job-id: identifier for the newly created job
+ #
+@@ -2118,8 +2085,7 @@
  
  ##
- # @MemoryBackendFileProperties:
+ # @snapshot-load:
 -#
--# Properties for memory-backend-file objects.
-+#     Properties for memory-backend-file objects.
+-# Load a VM snapshot
++#     Load a VM snapshot
  #
- # @align: the base address alignment when QEMU mmap(2)s @mem-path.
- #     Some backend stores specified by @mem-path require an alignment
-@@ -757,8 +732,7 @@
+ # @job-id: identifier for the newly created job
+ #
+@@ -2188,8 +2154,7 @@
  
  ##
- # @MemoryBackendMemfdProperties:
+ # @snapshot-delete:
 -#
--# Properties for memory-backend-memfd objects.
-+#     Properties for memory-backend-memfd objects.
+-# Delete a VM snapshot
++#     Delete a VM snapshot
  #
- # @hugetlb: if true, the file to be created resides in the hugetlbfs
- #     filesystem (default: false)
-@@ -813,8 +787,7 @@
- 
- ##
- # @PrManagerHelperProperties:
--#
--# Properties for pr-manager-helper objects.
-+#     Properties for pr-manager-helper objects.
- #
- # @path: the path to a Unix domain socket for connecting to the
- #     external helper
-@@ -827,8 +800,7 @@
- 
- ##
- # @QtestProperties:
--#
--# Properties for qtest objects.
-+#     Properties for qtest objects.
- #
- # @chardev: the chardev to be used to receive qtest commands on.
- #
-@@ -842,8 +814,7 @@
- 
- ##
- # @RemoteObjectProperties:
--#
--# Properties for x-remote-object objects.
-+#     Properties for x-remote-object objects.
- #
- # @fd: file descriptor name previously passed via `getfd` command
- #
-@@ -857,8 +828,7 @@
- 
- ##
- # @VfioUserServerProperties:
--#
--# Properties for x-vfio-user-server objects.
-+#     Properties for x-vfio-user-server objects.
- #
- # @socket: socket to be used by the libvfio-user library
- #
-@@ -871,8 +841,7 @@
- 
- ##
- # @IOMMUFDProperties:
--#
--# Properties for iommufd objects.
-+#     Properties for iommufd objects.
- #
- # @fd: file descriptor name previously passed via `getfd` command,
- #     which represents a pre-opened /dev/iommu.  This allows the
-@@ -887,8 +856,7 @@
- 
- ##
- # @AcpiGenericInitiatorProperties:
--#
--# Properties for acpi-generic-initiator objects.
-+#     Properties for acpi-generic-initiator objects.
- #
- # @pci-dev: PCI device ID to be associated with the node
- #
-@@ -902,8 +870,7 @@
- 
- ##
- # @AcpiGenericPortProperties:
--#
--# Properties for acpi-generic-port objects.
-+#     Properties for acpi-generic-port objects.
- #
- # @pci-bus: QOM path of the PCI bus of the hostbridge associated with
- #     this SRAT Generic Port Affinity Structure.  This is the same as
-@@ -941,8 +908,7 @@
- 
- ##
- # @RngProperties:
--#
--# Properties for objects of classes derived from rng.
-+#     Properties for objects of classes derived from rng.
- #
- # @opened: if true, the device is opened immediately when applying
- #     this option and will probably fail when processing the next
-@@ -961,8 +927,7 @@
- 
- ##
- # @RngEgdProperties:
--#
--# Properties for rng-egd objects.
-+#     Properties for rng-egd objects.
- #
- # @chardev: the name of a character device backend that provides the
- #     connection to the RNG daemon
-@@ -975,8 +940,7 @@
- 
- ##
- # @RngRandomProperties:
--#
--# Properties for rng-random objects.
-+#     Properties for rng-random objects.
- #
- # @filename: the filename of the device on the host to obtain entropy
- #     from (default: "/dev/urandom")
-@@ -990,8 +954,7 @@
- 
- ##
- # @IgvmCfgProperties:
--#
--# Properties common to objects that handle IGVM files.
-+#     Properties common to objects that handle IGVM files.
- #
- # @file: IGVM file to use to configure guest
- #
-@@ -1003,8 +966,7 @@
- 
- ##
- # @SevCommonProperties:
--#
--# Properties common to objects that are derivatives of sev-common.
-+#     Properties common to objects that are derivatives of sev-common.
- #
- # @sev-device: SEV device to use (default: "/dev/sev")
- #
-@@ -1038,8 +1000,7 @@
- 
- ##
- # @SevGuestProperties:
--#
--# Properties for sev-guest objects.
-+#     Properties for sev-guest objects.
- #
- # @dh-cert-file: guest owners DH certificate (encoded with base64)
- #
-@@ -1136,8 +1097,7 @@
- 
- ##
- # @TdxGuestProperties:
--#
--# Properties for tdx-guest objects.
-+#     Properties for tdx-guest objects.
- #
- # @attributes: The 'attributes' of a TD guest that is passed to
- #     KVM_TDX_INIT_VM
-@@ -1181,8 +1141,7 @@
- 
- ##
- # @ThreadContextProperties:
--#
--# Properties for thread context objects.
-+#     Properties for thread context objects.
- #
- # @cpu-affinity: the list of host CPU numbers used as CPU affinity for
- #     all threads created in the thread context (default: QEMU main
-@@ -1202,8 +1161,7 @@
- 
- ##
- # @MonitorProperties:
--#
--# Properties for all monitors
-+#     Properties for all monitors
- #
- # @chardev: ID of the character device providing the monitor transport
- #
-@@ -1214,8 +1172,7 @@
- 
- ##
- # @MonitorHMPProperties:
--#
--# Properties for the HMP monitor
-+#     Properties for the HMP monitor
- #
- # @readline: whether to enable readline for line editing
- #      (default: true)
-@@ -1229,8 +1186,7 @@
- 
- ##
- # @MonitorQMPCloseAction:
--#
--# Action to take when the character device backend is closed.
-+#     Action to take when the character device backend is closed.
- #
- # @none: take no action
- #
-@@ -1244,8 +1200,7 @@
- 
- ##
- # @MonitorQMPProperties:
--#
--# Properties for the QMP monitor
-+#     Properties for the QMP monitor
- #
- # @pretty: whether to pretty print JSON responses (default: false)
- #
-@@ -1338,8 +1293,7 @@
- 
- ##
- # @ObjectOptions:
--#
--# Describes the options of a user creatable QOM object.
-+#     Describes the options of a user creatable QOM object.
- #
- # @qom-type: the class name for the object to be created
- #
-@@ -1416,8 +1370,7 @@
- 
- ##
- # @object-add:
--#
--# Create a QOM object.
-+#     Create a QOM object.
- #
- # Errors:
- #     - If @qom-type is not a valid class name
-@@ -1436,8 +1389,7 @@
- 
- ##
- # @object-del:
--#
--# Remove a QOM object.
-+#     Remove a QOM object.
- #
- # @id: the name of the QOM object to remove
+ # @job-id: identifier for the newly created job
  #
 -- 
 2.55.0
