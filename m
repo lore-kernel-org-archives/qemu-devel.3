@@ -4,57 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 098CAC61DBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 21:42:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BA73C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 21:42:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzLNc-0001eS-Px; Wed, 26 Aug 2026 17:41:56 -0400
+	id 1wzLNd-0001ex-Ai; Wed, 26 Aug 2026 17:41:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounces-494710918-1902512630@hb.d.sender-sib.com>)
- id 1wzKMs-00033D-Qs
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 16:37:07 -0400
-Received: from hb.d.sender-sib.com ([77.32.148.28])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounces-494710918-1902512630@hb.d.sender-sib.com>)
- id 1wzKMr-0001FT-4n
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 16:37:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=11981705.brevosend.com;
- q=dns/txt; s=mail; bh=AZWMdcqUiK9+9SQJziXOCwz9QCLxqQ8mdDHLai8eO1c=;
- h=from:subject:date:to:cc:mime-version:content-transfer-encoding:list-unsubscribe:x-csa-complaints:list-unsubscribe-post:message-id:x-sib-id:feedback-id;
- b=ZXJp6iLbbJLIeCXG8pOihOGu+u80LFhaEJuf2Fl8tYFQ8Z3zDr/F19+sA5i+sUrWsF7gt360aCG8
- yU/YqhBsBpJrTouqwGKz8G7hfPIF8M1B7MRhLZTZwXS8KXL5Y+GcFpK1/OHnv7XE9m5LCWuaqwGg
- C+aZ9xjbIwTm2PKfDnU=
-X-Mailin-EID: NDk0NzEwOTE4fnFlbXUtZGV2ZWxAbm9uZ251Lm9yZ348MjAyNjA4MjYyMDM3MDAuMzkwNTctMS1kdWRlQGFuZ3J5Z29vc2UuZGV2Pn5oYi5kLnNlbmRlci1zaWIuY29t
-Date: Wed, 26 Aug 2026 16:37:00 -0400
-Subject: [PATCH] Update to a cleaner build path on macOS 27.
- ParavirtualizationGraphics.framework API has changed significantly.
-Cc: <pbonzini@redhat.com>, <marcandre.lureau@redhat.com>, <berrange@redhat.com>,
- <philmd@mailo.com>, <pierrick.bouvier@oss.qualcomm.com>, <dude@angrygoose.dev>
-Origin-messageId: <20260826203700.39057-1-dude@angrygoose.dev>
-From: "DB Holder" <dude@angrygoose.dev>
-X-CSA-Complaints: csa-complaints@eco.de
-To: <qemu-devel@nongnu.org>
-X-sib-id: XgJKQZA04SMv_fxwc3QnfYRA7RTnz6zf-bibwnFck3DfmgAFkFTf5mWxXeKANLMUq66zdNBhdopCQk7z7bFRG2H1IJQuMfYxwFVqSynEoAUJ-EO-qfr5lkt06Wz4LY6NrOvbYHgBzs7nFwVYpeIZ102T4tmqLRAUEqo96HrtXdBxMMzu
-Message-Id: <20260826203700.39057-1-dude@angrygoose.dev>
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
-Feedback-ID: 77.32.148.28:11981705_-1:11981705:Sendinblue
-X-Mailer: git-send-email 2.54.0
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0
-Received-SPF: pass client-ip=77.32.148.28;
- envelope-from=bounces-494710918-1902512630@hb.d.sender-sib.com;
- helo=hb.d.sender-sib.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <bp@kernel.org>) id 1wzKdk-0008TE-D1
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 16:54:32 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <bp@kernel.org>) id 1wzKdi-0005ds-PZ
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 16:54:32 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id 247A4412E1;
+ Wed, 26 Aug 2026 20:54:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD01A1F000E9;
+ Wed, 26 Aug 2026 20:54:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1787777659;
+ bh=VkKsmCZy/rnxubZH0/c+mkwbTtoGfB3dzDANhC1a1BE=;
+ h=From:To:Cc:Subject:Date;
+ b=D/hepNWOViViQeQTysoJuATuDfCzW7+2EYIkZojpagoK3SKnfgtWNf0wa7Ok0goA8
+ tcOcuslE8ePM94LITXUgYlcB3WiumbMsV4weDwM2KM8rsDQ41eOuw5+yCd6zuf+v8Q
+ hQL7fblp5D6ZE11qW3b7FwJZaX37NU+/JAX314je6XkV8lGMuy3H5BFDdoG/MuDk6e
+ wdqSHbqYomqTLYdUAnlgOCjIKnhGDLkzJ7sMaSMMwokXZmyzybPYrRfx9iYVOZGwTM
+ 9dtAAIxL+2XPLjDimFAtKytyQU8EqKX8NDOOLdTmc33epEF21vd/BWpoJr1fyAtIGy
+ syJcaKN2mJoGg==
+From: Borislav Petkov <bp@kernel.org>
+To: qemu-devel@nongnu.org
+Cc: "Borislav Petkov (AMD)" <bp@alien8.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH] docs/cpu-models-x86: Remove a Texinfo leftover
+Date: Wed, 26 Aug 2026 13:54:17 -0700
+Message-ID: <20260826205417.2062172-1-bp@kernel.org>
+X-Mailer: git-send-email 2.53.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=bp@kernel.org; helo=sea.source.kernel.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Wed, 26 Aug 2026 17:41:54 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,40 +69,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
- API marked obsolete in xcrun --show-sdk-path + /System/Library/Frameworks/=
-ParavirtualizedGraphics.framework/Headers/PGDevice.h
+Commit
 
-Signed-off-by: DB Holder <dude@angrygoose.dev>
+  1bf84a1e2e8f ("docs/system: Convert qemu-cpu-models.texi to rST")
+
+converted docs to rST but left an "@end table" which shows in normal
+text.
+
+Zap it.
+
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 ---
- meson.build | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ docs/system/cpu-models-x86.rst.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/meson.build b/meson.build
-index 6dcfdceb50..a6b11cb009 100644
---- a/meson.build
-+++ b/meson.build
-@@ -852,6 +852,14 @@ elif host_os =3D=3D 'darwin'
-   host_dsosuf =3D '.dylib'
-   pvg =3D dependency('appleframeworks', modules: ['ParavirtualizedGraphics=
-', 'Metal'],
-                    required: get_option('pvg'))
-+  if pvg.found() and not objc.has_type('PGTask_t',
-+                          prefix: '#import <ParavirtualizedGraphics/Paravi=
-rtualizedGraphics.h>',
-+                          dependencies: pvg)
-+    if get_option('pvg').enabled()
-+      error('ParavirtualizedGraphics framework found, but the API lacks PG=
-Task_t')
-+    endif
-+    pvg =3D not_found
-+  endif
- elif host_os =3D=3D 'sunos'
-   socket =3D [cc.find_library('socket'),
-             cc.find_library('nsl'),
---=20
-2.54.0 (Apple Git-157)
-
-
+diff --git a/docs/system/cpu-models-x86.rst.inc b/docs/system/cpu-models-x86.rst.inc
+index 126c5a1972b8..9d8f1400d59f 100644
+--- a/docs/system/cpu-models-x86.rst.inc
++++ b/docs/system/cpu-models-x86.rst.inc
+@@ -25,7 +25,7 @@ Two ways to configure CPU models with QEMU / KVM
+     typically refer to specific generations of hardware released by
+     Intel and AMD.  These allow the guest VMs to have a degree of
+     isolation from the host CPU, allowing greater flexibility in live
+-    migrating between hosts with differing hardware.  @end table
++    migrating between hosts with differing hardware.
+ 
+ In both cases, it is possible to optionally add or remove individual CPU
+ features, to alter what is presented to the guest by default.
+-- 
+2.53.0
 
 
