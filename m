@@ -4,118 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E258C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 16:48:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAE23C61DC6
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 16:48:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzGnd-00062k-Fs; Wed, 26 Aug 2026 12:48:29 -0400
+	id 1wzGnv-00068G-TK; Wed, 26 Aug 2026 12:48:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wzGnb-00060R-Dn
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 12:48:27 -0400
+ id 1wzGng-00064n-3H
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 12:48:32 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wzGnY-0000pX-0l
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 12:48:27 -0400
+ id 1wzGne-0000sG-8x
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 12:48:31 -0400
 Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QDuusg910365
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 16:48:21 GMT
+ 67QDumlX910277
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 16:48:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=qcppdkim1; bh=QmiRMdY/ifXw+3e8CX5UWI8VsAMyLIIebZl
- mht+P3F4=; b=Z+VUwV7jTC6p2OqSRd2pZ0atSSYeiholaoMZHKsZQdhrUDkJ1I/
- 69rnUYyM/g8BI/478vpldLuj+/aHCJ0C7NFbJLVpabVb6NYDTXIFWe0vDApIUb4m
- MSYffZ+yGpeUG+h2KXT433QGky2pF8g8O2+7jrHtmviWG8JFTfKZ/uJ73QL5Ho0B
- XDSspyOGUJlgQpdDbbsfdbcOFGbDMKFKeBM51jCm97dsPthHcMvnGi98G52Pxx2+
- LEcVa8erIG6TCQwpAH5gx8yC9qu3fTdOlBJSDrpCEGtsDlzRmYXM5WAd4poN8nqr
- qM0MCFmpErzMNCEm2TB+EteymOLAIpItsOg==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ga03a93cq-1
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=O9DGexoTufl
+ 6srH88MZz/5wXHHGKrgy2EfMWxzyd2nY=; b=Q4qhuXpVoMhUhsb5xoBHwnBRiLZ
+ IUB++enghUo4wlM7hwM6uv3y3mIVAMLpztJH7i8AaDG50z6L3li5unfLhqQXxRuZ
+ sdy325qG4PzQxHPc7t9iYu4G0tn3/pg2CK0W39Au3FTfjoITm8Z9lyBandbplpIA
+ ukuoOvpAo2OaV3AdAM0kDpzLqjpFfj7EdSnuuHP1aWfkfd1IMQGqozt/hzISduDP
+ UBm+eGoa/qp4eIuaxHop4e8D0pt4zWTNS/NJ/udkoFUHesloCtcKjsFr+bc3Fsvo
+ RdxteVnznfPy0U5AVAwWYulxSyAdozmUqjq+2CX8s2XZLI47VEzmCSWaurQ==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ga03a93d5-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 16:48:21 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-52ce64c41efso19726991cf.3
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 09:48:21 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 16:48:29 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51a8b0a08d2so7275261cf.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 09:48:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787762900; x=1788367700; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=QmiRMdY/ifXw+3e8CX5UWI8VsAMyLIIebZlmht+P3F4=;
- b=I6WnSgo5IgVm2BIJda7ROkKpqPE2SBUFrrmvOPhuoD/cABcNwhqn0G53S+tRKbiOnv
- O8gN7mKDSAIATDquv61ojCCnF9d1f6p1qhvaN1oPsju6JEdXSlRrd7ScLobq+ufqzOg2
- Dg4dMtERGV8aKLKHmNBd1tl2RKYc1GJL/dnFY9CQOy38SgxhZd6WH7jC3r2aqcnyzBUk
- Wz4La4Yh7JiLP/0iwz7NFnQSLeR0mwQG4hoclz20WGCye88b4tIwuRSFou8OzW/wvzA0
- GSnz0vkJI1SifswgfbN3lPg/3bxiHbMJi5luZmiR7S9/qHpEFiKVq3i6D40NC8DVysIT
- qGPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787762900; x=1788367700;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1787762908; x=1788367708; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=QmiRMdY/ifXw+3e8CX5UWI8VsAMyLIIebZlmht+P3F4=;
- b=g4gV5pa/3YYjJrzB6Jroi1dT6OIaesn1SDhY6sHyfBo7VglR5yyWqzv1+kWbUKr338
- XGF8ibQvkZhQpILqQnjrii2F1kud5mSrmHN+jQzt7ply5SUGBIouhj1hQp7h5Kv8il22
- 4jD2u7dEbE62V4JP9RBbgccvl9AFq8/l6e18vtjglN/EQz2PXcOp1BZf4MozHI/5knH4
- 869aa60wntJmjB6Lzosg0M3GROWAnpvK/lo/xMgoi2skH0jmGQBA3IUeqhmTh4Y8zbAi
- Zd43udXxyRBb7ZhCrSv/MOicqrSlSwjUY49+VDu6bsFQNiraRwqf6iWwL7zF9aT6gmiD
- Bqhw==
-X-Gm-Message-State: AFuF++n7PPYHx4GVSem6M/cOrReYsTyThT5FyX2h/ilewqdpHimzIlFV
- FiLrUERKFGQcS4SNvRAsm4kTOlLc85X+gOQRyXH0hG0uMAZ6SpQkOxkLeje/ufVL9GgJQr9KcEh
- bjGTRRgMHYur6cDg/sbMI0ewGnewd3ULSWBXjb5Wf6Lw+VFaqU05o4zuR3YAL4IEGLQ==
-X-Gm-Gg: AR+sD118GmtSxSK0uAg2tFy8rO2o6/bERo2X9UVwZZP3a8aFTr3iZbW59fkgIs5AjoV
- BGQdTd1Ft80zqCmUW90FJlEfjKDXsRRQ5ksKpwELiEhEMFGhgqqbRoLR9Pv9+/jaEOZoV4qqwXY
- zLW96nWIOf7+B7HAYBB9RNHccqO49l/870tzTTEI7n4H+rtR/nujVJP1ttR+AqC1EfsICMZCEAC
- W/0XEXd0zy5aMh58gFiCq475smK2MVkVuez5lvb6SWqrNZOAmwBrIWvX6lEepxWKxGlVIOiAUKw
- UPxZwbajwJm0BSyRl+voS8EUC+eL043c+ua/eNWoSBhkwN5EWP4Vdeml61J/Dq4CfrVUZDChOwM
- cq7nywi7SPU9P8S7MFSYWju+sfnsyY+JQm4WmoA==
-X-Received: by 2002:ac8:5f49:0:b0:51a:8bc9:2915 with SMTP id
- d75a77b69052e-52e4222dd6dmr85741381cf.8.1787762900318; 
- Wed, 26 Aug 2026 09:48:20 -0700 (PDT)
-X-Received: by 2002:ac8:5f49:0:b0:51a:8bc9:2915 with SMTP id
- d75a77b69052e-52e4222dd6dmr85740871cf.8.1787762899805; 
- Wed, 26 Aug 2026 09:48:19 -0700 (PDT)
+ bh=O9DGexoTufl6srH88MZz/5wXHHGKrgy2EfMWxzyd2nY=;
+ b=a1FyhPHAcg8d5j/fqMsEZZKjljuLd3B9kjJ2qgev4u9AHjybQZu39tV12yjP7pmYlR
+ FJ12symGdXUQ0dSRfoAIcJYWKGgYHUgVTy1mrMu7C6K00spQuMDu7e8GUF7Y1xpODOvm
+ 2Xpa+Df/b9MEIeTa9GTUStD0NkXfNBweZIs4aZGbQGP49uVqbFf9yPzqNh6Ukvtd7i5+
+ kVAKvHHJucgnfrVIeBHqzv+ixKeaBNrduDZ8QNmVIbwwmt+Wk3Y0j361xmB9sQ7UbD7b
+ QW3DAQuElXtqEq6y64auJdVAgMa2ZBQhXBl07S2CSh6RbRTZZu/1azWGPuPzis+z/cmJ
+ CXMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787762908; x=1788367708;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=O9DGexoTufl6srH88MZz/5wXHHGKrgy2EfMWxzyd2nY=;
+ b=BiR5uJ4AFcRds7AN7xs66OuyocekJKZq6aHtjTTT/dp1onmlxpznkuQHJPRh40iPGh
+ tjGDrl/aeL+IHixWMAuW7wYV5CzL4NZgRzPk212+AAqc8c5v/R1RPjhYWlN8Do+VoIV6
+ 43rsBvqsAFGG8Ng9Dzezvr5G3LxQmn85pGbW/VQeStyhuXzUELhBr+jdPmBMW5u/3dkc
+ EBW/C0GlHgzL3IkliGLRWJQrwhPhhNEiqEuoNA2uxRRwl9+9k7/korvNO0xXPzdP3Wc1
+ 7c0kf0O41Zhpw0A203KUlW3ge+QzRf/hZfQAfsAuzy53QJsmgP3Nkyt8Z/IpP41IcDvd
+ k7dA==
+X-Gm-Message-State: AFuF++nROAGqfzRFsF7SP9R/aStOCFwvUnxNSVD4zwMt3HYbtzkIeDEg
+ fLFOQ7FcF+TMOh3F7GXVGGM939paW00ipuKvTuqxzgnYNBy6WwV8uqeeJ0jpDM8Op+Dp5oymhgC
+ 27Co82K6/jefRTEYKTZ1BfESeBHbejgVfroTILXBQKFBgFyeiL6iYRcnCYhiDyvNQrg==
+X-Gm-Gg: AR+sD12CPsE3c41cvI08UItHdkGpYuPYYyZZ6jbW+PWa0bP90cciPKDLwwutyb6Rons
+ N33FlzkBpnku0ZCGYZYcvpEugKDwrazV8qzHUrMFAAai1KZ3TghM+/5+mUsNATWS96/ZUSpIiY5
+ jPZ01ZRlxGM4Sn0sbf1vJUD1lneqEKkvKSnKose2EITkR75NpSBrHrvLWoGeAUVZtsstrDK+8b3
+ 9qQIExGjtXJ9514iOJm5QvvoU3MBrLaoVCEZ00ftw4vniWG06UGZE6hxs0aBg1T0AXodmKuURBH
+ mn4nJV/JYZPc5n7rCoQ/YseZ83rHZoYRzDNgcNWJ1GDDsnU+yaIqnUcn1Vj18v0Yuw3vGZZXY/W
+ u7qj9My49hzVLQTmm+ENN0oZFuVmSZupI4zsVtA==
+X-Received: by 2002:a05:622a:1b17:b0:52d:41d0:89e0 with SMTP id
+ d75a77b69052e-52e423dbf48mr85767221cf.40.1787762908412; 
+ Wed, 26 Aug 2026 09:48:28 -0700 (PDT)
+X-Received: by 2002:a05:622a:1b17:b0:52d:41d0:89e0 with SMTP id
+ d75a77b69052e-52e423dbf48mr85766521cf.40.1787762907848; 
+ Wed, 26 Aug 2026 09:48:27 -0700 (PDT)
 Received: from QCOM-UWl2o8bcGT.qualcomm.com ([189.38.141.232])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-52e4275fc3esm20092651cf.25.2026.08.26.09.48.18
+ d75a77b69052e-52e4275fc3esm20092651cf.25.2026.08.26.09.48.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 09:48:19 -0700 (PDT)
+ Wed, 26 Aug 2026 09:48:27 -0700 (PDT)
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
- qemu-trivial@nongnu.org (open list:Trivial patches)
-Subject: [PATCH v2 00/13] hw/riscv: trivial code dup work (riscv-server-ref
- prep)
-Date: Wed, 26 Aug 2026 13:48:00 -0300
-Message-ID: <20260826164814.44335-1-daniel.barboza@oss.qualcomm.com>
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
+Subject: [PATCH v2 03/13] hw/riscv/fdt-common,
+ virt.c: add create_fdt_riscv_iommu_sys()
+Date: Wed, 26 Aug 2026 13:48:03 -0300
+Message-ID: <20260826164814.44335-4-daniel.barboza@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260826164814.44335-1-daniel.barboza@oss.qualcomm.com>
+References: <20260826164814.44335-1-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: mBCU9eRAXdQRb29QO7bbhH-1bftTnvLe
-X-Authority-Analysis: v=2.4 cv=VdLH+lp9 c=1 sm=1 tr=0 ts=6a8f18d5 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=MCIxunHWmQOg/5OnbzXZaw==:17
+X-Proofpoint-GUID: Ej9lQqz_2WqlN_XQpdWw3JLgNt2vWcO8
+X-Authority-Analysis: v=2.4 cv=VdLH+lp9 c=1 sm=1 tr=0 ts=6a8f18dd cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=MCIxunHWmQOg/5OnbzXZaw==:17
  a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=p0WdMEafAAAA:8
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=NV_7vAgSjKoQyGx3fFkA:9
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-ORIG-GUID: mBCU9eRAXdQRb29QO7bbhH-1bftTnvLe
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE0MCBTYWx0ZWRfXw0iH6blBuyIg
- H+sXPplVNNUDUpJ09p45Rxbn2hGKYJH7eAiTWdq6sRgwbiXtWCrhWzVAtlC/oeUyBKl5FXZ9/lV
- wU7rJ6ryyLg2nj5kFTNGU8n1AiyWibCxKTNrz0guK2c7HFf6K8LUL0e6lYvuRjFjOEUz7xioLHa
- uCt7blQuY29Jz7S6IHmF1mlOicR7aSdNcabtlOvP6dn0+9sr+fZ+bzeJ7X7yIn4eyiTnN95VOXR
- ZJwlDudkiDmgLj9hZJxYWJb8/iTZTLlAHdCOeiDTCkK1jgCkuM4xLAceLY1qt3+fbj3MOV6LXNd
- qvuAS85vaICgXw1n9PjvT65rsV0yWPdDEYYBjvNFehIQQTeCyWzNT5y61QwL4pbo7KpYwSkqmoC
- Wq0SKiAGKdqRkoW6QwFUBlnm/uzQXHeRHTArBiNhrAzu6rEcehpQwXuSIRiGuy6NuVRaiyevaRE
- RP47LEoDPWTXoFifWOA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE0MCBTYWx0ZWRfX10Yp1UpYjz1B
- Pn8ZgweUUxoItBirnusbamHhL9m++tbxOCZFIXQpk1t+XuvmkMW5GoBCHuPdoY54n9TfcnO2xcY
- hd7kR+4tBSMRZRb+4gdPpJPx9b70IKs=
+ a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=EUspDBNiAAAA:8
+ a=-lP9cGLPB0zaG0B-UEoA:9 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-ORIG-GUID: Ej9lQqz_2WqlN_XQpdWw3JLgNt2vWcO8
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE0MCBTYWx0ZWRfX68tR+oDe3+jB
+ p/2TezHyPuBSdBIJqmZ2Pz1zzxj6vJfAGD8/zIt/nqNHKl8lA9HyK5CahPS0LQSL/b8yrRvvPBN
+ wIztYZjPHwqo9Kbgwbtc7XHD0XaQuRDWGriIQLVp2L0x3RKx6xlKFyPYVGQmgMF9uwxzdqp/4t2
+ BcF/XN3jrETsvghj6VmIeGVx9al6vveYAEE7W7TNpFfPDJQBI6vAT4eJ3M4IE1yYTaY3poJbNH4
+ bIajlbASwFt6jy0anIUfsYiGtPSQUF/JvwdyYaFPbt9XT0sCkJA7vyh92VgJL8KNKyU6NcLDQ9Z
+ mWh7VQlvzkgI36clehQD1pEhZrFqMrfIjPQdujsgFuVG9P7MS5Q6VxoH67Agbkk53Xns+j5BD4/
+ 9RJrbsa6pRHJwE4qlbAyOWceSzvTSx7pnKyl9SHpj+aBT2zPzzpmqNtpo3s18KRkQT8UBdhHjF+
+ uiA28mWcklruJwrix0g==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE0MCBTYWx0ZWRfX9hSvHrdP8Urx
+ iStDZcDY7woxvJ35ZsZym+W3o+LIEqIVpX78+meiS2+F+AjoxOulQ4AdOa1vI8aqUZqwMn1mN1E
+ ui3Gr7bni1XssieqFHXa6Nf4QDOZX98=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-26_04,2026-08-26_02,2025-10-01_01
@@ -133,7 +138,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,64 +154,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Greetings,
+Both the 'virt' board and the future 'riscv-server-ref' boards uses an
+iommu-sys device that is declared in the DT.
 
-Here is a bunch of trivial and mostly boring stuff we want to do before
-pushing the RISC-V Server Plat Reference board upstream (currently on
-v9 [1], not yet sent for review).
+Create a helper to encapsulate the logic and avoid copy/pasting stuff
+between boards.
 
-Although these changes aim to ease the pain for the riscv-server-ref
-review, in the end virt.c was reduced from ~1800 to ~1200 lines, which
-is a nice benefit we can have right now.  For riscv-server-ref we went
-from ~1450 (v8) to ~770 lines (current v9).
+No FDT changes intended.
 
-We were able to also reduce tt-atlantis code in one of the patches too.
-In fact I think there are opportunities to shrink tt-atlantis board
-size, but that will need refactoring logic here and there and this would
-fall out of scope for this work.
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+---
+ hw/riscv/fdt-common.c         | 40 +++++++++++++++++++++++++++++
+ hw/riscv/virt.c               | 47 ++++-------------------------------
+ include/hw/riscv/fdt-common.h |  5 ++++
+ 3 files changed, 50 insertions(+), 42 deletions(-)
 
-Patches based on master. 
-
-[1] https://gitlab.com/danielhb/qemu/-/tree/riscv-server-ref_v9
-
-
-
-Changes from v1:
-- patch 8:
-  - renamed 'additional_reg_props' to 'uses_32_bit_spacing', as suggested
-    by Anirudh
-- v1 link: https://lore.kernel.org/qemu-devel/20260825212326.1907-1-daniel.barboza@oss.qualcomm.com/
-
-
-Daniel Henrique Barboza (13):
-  hw/riscv/fdt-common, virt.c: add create_fdt_flash()
-  hw/riscv/fdt-common, virt.c: add create_fdt_syscon()
-  hw/riscv/fdt-common, virt.c: add create_fdt_riscv_iommu_sys()
-  hw/riscv/fdt_common, virt.c: add create_fdt_pcie()
-  hw/riscv/fdt_common, virt.c: add create_fdt_imsic()
-  hw/riscv/fdt_common, virt.c: add create_fdt_socket_aplic()
-  hw/riscv/fdt-common, virt.c: add create_fdt_socket_aclint()
-  hw/riscv/fdt-common, virt.c, tt_atlantis.c: add create_fdt_uart()
-  hw/riscv/fdt-common, virt.c: add create_fdt_rtc()
-  hw/riscv/device-common, virt.c: add create_platform_bus()
-  hw/riscv/device-common, virt.c: add flash helpers
-  hw/riscv/device-common, virt.c: add gpex_pcie_init()
-  hw/riscv/riscv-iommu-sys.c, virt.c: add create_riscv_iommu_sys()
-
- hw/riscv/device-common.c         | 168 +++++++
- hw/riscv/fdt-common.c            | 571 ++++++++++++++++++++++
- hw/riscv/meson.build             |   1 +
- hw/riscv/riscv-iommu-sys.c       |  25 +
- hw/riscv/riscv-iommu.h           |   3 +
- hw/riscv/tt_atlantis.c           |  21 +-
- hw/riscv/virt.c                  | 811 ++++---------------------------
- include/hw/riscv/device-common.h |  32 ++
- include/hw/riscv/fdt-common.h    |  94 ++++
- include/hw/riscv/virt.h          |  15 -
- 10 files changed, 983 insertions(+), 758 deletions(-)
- create mode 100644 hw/riscv/device-common.c
- create mode 100644 include/hw/riscv/device-common.h
-
+diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
+index a2168c09ec..ddc56821d3 100644
+--- a/hw/riscv/fdt-common.c
++++ b/hw/riscv/fdt-common.c
+@@ -13,6 +13,8 @@
+ #include "hw/core/boards.h"
+ #include "hw/riscv/fdt-common.h"
+ #include "target/riscv/cpu_bits.h"
++#include "hw/riscv/riscv-iommu-bits.h"
++#include "hw/riscv/iommu.h"
+ 
+ void *create_board_device_tree(const char *model, const char *compatible,
+                                int *fdt_size)
+@@ -347,3 +349,41 @@ void create_fdt_syscon(void *fdt, uint32_t *phandle,
+     qemu_fdt_setprop_cell(fdt, name, "value", poweroff);
+     g_free(name);
+ }
++
++void create_fdt_riscv_iommu_sys(void *fdt, hwaddr addr, hwaddr size,
++                                uint32_t irq_chip,
++                                uint32_t msi_phandle,
++                                uint32_t *iommu_sys_phandle,
++                                uint32_t iommu_sys_irq)
++{
++    const char comp[] = "riscv,iommu";
++    uint32_t iommu_phandle;
++    g_autofree char *iommu_node = NULL;
++    uint32_t iommu_irq_map[RISCV_IOMMU_INTR_COUNT] = {
++        iommu_sys_irq + RISCV_IOMMU_INTR_CQ,
++        iommu_sys_irq + RISCV_IOMMU_INTR_FQ,
++        iommu_sys_irq + RISCV_IOMMU_INTR_PM,
++        iommu_sys_irq + RISCV_IOMMU_INTR_PQ,
++    };
++
++    iommu_node = g_strdup_printf("/soc/iommu@%"HWADDR_PRIx, addr);
++    iommu_phandle = qemu_fdt_alloc_phandle(fdt);
++    qemu_fdt_add_subnode(fdt, iommu_node);
++
++    qemu_fdt_setprop(fdt, iommu_node, "compatible", comp, sizeof(comp));
++    qemu_fdt_setprop_cell(fdt, iommu_node, "#iommu-cells", 1);
++    qemu_fdt_setprop_cell(fdt, iommu_node, "phandle", iommu_phandle);
++
++    qemu_fdt_setprop_sized_cells(fdt, iommu_node, "reg", 2, addr, 2, size);
++    qemu_fdt_setprop_cell(fdt, iommu_node, "interrupt-parent", irq_chip);
++
++    qemu_fdt_setprop_cells(fdt, iommu_node, "interrupts",
++        iommu_irq_map[0], FDT_IRQ_TYPE_EDGE_LOW,
++        iommu_irq_map[1], FDT_IRQ_TYPE_EDGE_LOW,
++        iommu_irq_map[2], FDT_IRQ_TYPE_EDGE_LOW,
++        iommu_irq_map[3], FDT_IRQ_TYPE_EDGE_LOW);
++
++    qemu_fdt_setprop_cell(fdt, iommu_node, "msi-parent", msi_phandle);
++
++    *iommu_sys_phandle = iommu_phandle;
++}
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index acbbe458fa..9417aa7a06 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -867,46 +867,6 @@ static void create_fdt_virtio_iommu(RISCVVirtState *s, uint16_t bdf)
+                            bdf + 1, iommu_phandle, bdf + 1, 0xffff - bdf);
+ }
+ 
+-static void create_fdt_iommu_sys(RISCVVirtState *s, uint32_t irq_chip,
+-                                 uint32_t msi_phandle,
+-                                 uint32_t *iommu_sys_phandle)
+-{
+-    const char comp[] = "riscv,iommu";
+-    void *fdt = MACHINE(s)->fdt;
+-    uint32_t iommu_phandle;
+-    g_autofree char *iommu_node = NULL;
+-    hwaddr addr = s->memmap[VIRT_IOMMU_SYS].base;
+-    hwaddr size = s->memmap[VIRT_IOMMU_SYS].size;
+-    uint32_t iommu_irq_map[RISCV_IOMMU_INTR_COUNT] = {
+-        IOMMU_SYS_IRQ + RISCV_IOMMU_INTR_CQ,
+-        IOMMU_SYS_IRQ + RISCV_IOMMU_INTR_FQ,
+-        IOMMU_SYS_IRQ + RISCV_IOMMU_INTR_PM,
+-        IOMMU_SYS_IRQ + RISCV_IOMMU_INTR_PQ,
+-    };
+-
+-    iommu_node = g_strdup_printf("/soc/iommu@%x",
+-                               (unsigned int) s->memmap[VIRT_IOMMU_SYS].base);
+-    iommu_phandle = qemu_fdt_alloc_phandle(fdt);
+-    qemu_fdt_add_subnode(fdt, iommu_node);
+-
+-    qemu_fdt_setprop(fdt, iommu_node, "compatible", comp, sizeof(comp));
+-    qemu_fdt_setprop_cell(fdt, iommu_node, "#iommu-cells", 1);
+-    qemu_fdt_setprop_cell(fdt, iommu_node, "phandle", iommu_phandle);
+-
+-    qemu_fdt_setprop_sized_cells(fdt, iommu_node, "reg", 2, addr, 2, size);
+-    qemu_fdt_setprop_cell(fdt, iommu_node, "interrupt-parent", irq_chip);
+-
+-    qemu_fdt_setprop_cells(fdt, iommu_node, "interrupts",
+-        iommu_irq_map[0], FDT_IRQ_TYPE_EDGE_LOW,
+-        iommu_irq_map[1], FDT_IRQ_TYPE_EDGE_LOW,
+-        iommu_irq_map[2], FDT_IRQ_TYPE_EDGE_LOW,
+-        iommu_irq_map[3], FDT_IRQ_TYPE_EDGE_LOW);
+-
+-    qemu_fdt_setprop_cell(fdt, iommu_node, "msi-parent", msi_phandle);
+-
+-    *iommu_sys_phandle = iommu_phandle;
+-}
+-
+ static void create_fdt_iommu(RISCVVirtState *s, uint16_t bdf)
+ {
+     const char comp[] = "riscv,pci-iommu";
+@@ -945,8 +905,11 @@ static void finalize_fdt(RISCVVirtState *s)
+     create_fdt_virtio(s, irq_virtio_phandle);
+ 
+     if (virt_is_iommu_sys_enabled(s)) {
+-        create_fdt_iommu_sys(s, irq_mmio_phandle, msi_pcie_phandle,
+-                             &iommu_sys_phandle);
++        create_fdt_riscv_iommu_sys(MACHINE(s)->fdt,
++                                   s->memmap[VIRT_IOMMU_SYS].base,
++                                   s->memmap[VIRT_IOMMU_SYS].size,
++                                   irq_mmio_phandle, msi_pcie_phandle,
++                                   &iommu_sys_phandle, IOMMU_SYS_IRQ);
+     }
+     create_fdt_pcie(s, irq_pcie_phandle, msi_pcie_phandle,
+                     iommu_sys_phandle);
+diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.h
+index 31203df517..37a1544706 100644
+--- a/include/hw/riscv/fdt-common.h
++++ b/include/hw/riscv/fdt-common.h
+@@ -41,4 +41,9 @@ void create_fdt_syscon(void *fdt, uint32_t *phandle,
+                        hwaddr addr, hwaddr size,
+                        uint32_t reboot, uint32_t poweroff,
+                        bool sifive_test_compat);
++void create_fdt_riscv_iommu_sys(void *fdt, hwaddr addr, hwaddr size,
++                                uint32_t irq_chip,
++                                uint32_t msi_phandle,
++                                uint32_t *iommu_sys_phandle,
++                                uint32_t iommu_sys_irq);
+ #endif
 -- 
 2.43.0
 
