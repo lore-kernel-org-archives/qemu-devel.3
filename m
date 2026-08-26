@@ -4,30 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CECAC61DBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 10:32:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB5C7C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 10:32:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzAuQ-0001va-Ac; Wed, 26 Aug 2026 06:31:06 -0400
+	id 1wzAus-00027H-0N; Wed, 26 Aug 2026 06:31:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1wzAuL-0001th-Nm
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:01 -0400
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1wzAua-000214-Mp
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:18 -0400
 Received: from [2a14:640:1:12b5::1] (helo=krgm.moe)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1wzAuJ-0003KW-8u
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:01 -0400
+ (envelope-from <prcups@krgm.moe>) id 1wzAuZ-0003Op-3O
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:16 -0400
 Received: from yuno-loong (unknown [103.47.186.116])
- by krgm.moe (Postfix) with ESMTPSA id 41F97D069;
- Wed, 26 Aug 2026 16:00:55 +0530 (IST)
+ by krgm.moe (Postfix) with ESMTPSA id AA5ABD0CE;
+ Wed, 26 Aug 2026 16:01:03 +0530 (IST)
 From: SignKirigami <prcups@krgm.moe>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, xianglai li <lixianglai@loongson.cn>,
- SignKirigami <prcups@krgm.moe>, Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v4 02/14] target/loongarch: Add LVZ CPU state definitions
-Date: Wed, 26 Aug 2026 18:30:06 +0800
-Message-ID: <17b4c21625c92521c49585de983babc0400b4836.1787739852.git.prcups@krgm.moe>
+ SignKirigami <prcups@krgm.moe>, numpy1314 <xzj13@mail.ustc.edu.cn>
+Subject: [PATCH v4 14/14] fix(tcg/loongarch): strip flag bits in lddir/ldpte
+ address calculation
+Date: Wed, 26 Aug 2026 18:30:18 +0800
+Message-ID: <372f72246c404586bc810e48862a650b39cc4866.1787739852.git.prcups@krgm.moe>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1787739852.git.prcups@krgm.moe>
 References: <cover.1787739852.git.prcups@krgm.moe>
@@ -56,238 +57,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add host and guest system-state banks, LVZ exception and MMU indices,
-CPU and translation state, and helpers for selecting a VM-level CSR bank.
+helper_lddir and helper_ldpte used TARGET_PHYS_MASK (bits 0-47) when
+extracting the base address from a directory entry.  This retained flag
+bits (V, D, PLV, MAT, etc.) at positions 0-11, which were then OR'd
+with the next-level index, producing a wrong physical address whenever
+the directory entry carried non-zero flags.
 
-Read host ERA and BADV explicitly when generating ELF core notes so the
-result does not depend on the currently selected guest state.
+Fix both helpers to extract only the PPN field (bits 12-47) before
+computing the address of the next-level page table entry.
 
-Signed-off-by: SignKirigami <prcups@krgm.moe>
-Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+Signed-off-by: numpy1314 <xzj13@mail.ustc.edu.cn>
 ---
- target/loongarch/arch_dump.c |  6 ++--
- target/loongarch/cpu.c       |  4 +--
- target/loongarch/cpu.h       | 64 ++++++++++++++++++++++++++++++++++--
- target/loongarch/translate.h |  2 ++
- 4 files changed, 68 insertions(+), 8 deletions(-)
+ target/loongarch/tcg/tlb_helper.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/target/loongarch/arch_dump.c b/target/loongarch/arch_dump.c
-index 9d84faef96..711b23257b 100644
---- a/target/loongarch/arch_dump.c
-+++ b/target/loongarch/arch_dump.c
-@@ -116,7 +116,7 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
- {
-     struct loongarch_note note;
-     CPULoongArchState *env = &LOONGARCH_CPU(cs)->env;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *host = get_sys(env, LOONGARCH_VM_LEVEL_HOST);
-     int ret, i;
- 
-     loongarch_note_init(&note, s, "CORE", 5, NT_PRSTATUS,
-@@ -127,8 +127,8 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
-     for (i = 0; i < 32; ++i) {
-         note.prstatus.pr_reg.gpr[i] = cpu_to_dump64(s, env->gpr[i]);
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 776626072d..d75e20baf0 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -887,7 +887,10 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
      }
--    note.prstatus.pr_reg.csr_era  = cpu_to_dump64(s, sys->CSR_ERA);
--    note.prstatus.pr_reg.csr_badv = cpu_to_dump64(s, sys->CSR_BADV);
-+    note.prstatus.pr_reg.csr_era  = cpu_to_dump64(s, host->CSR_ERA);
-+    note.prstatus.pr_reg.csr_badv = cpu_to_dump64(s, host->CSR_BADV);
-     ret = f(&note, LOONGARCH_PRSTATUS_NOTE_SIZE, s);
-     if (ret < 0) {
-         return -1;
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index fb03424ffa..2f7692dc93 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -282,7 +282,7 @@ static void loongarch_la464_initfn(Object *obj)
-     uint32_t data = 0, field;
-     int i;
  
--    set_sys_state(env, &env->sys_states[0]);
-+    set_sys(env, LOONGARCH_VM_LEVEL_HOST);
-     for (i = 0; i < 21; i++) {
-         env->cpucfg[i] = 0x0;
-     }
-@@ -412,7 +412,7 @@ static void loongarch_la132_initfn(Object *obj)
-     uint32_t data = 0;
-     int i;
+     badvaddr = sys->CSR_TLBRBADV;
+-    base = base & palen_mask;
++    /* Extract only the PPN field (bits 12-47) from the directory entry.
++     * Flag bits (V, D, PLV, MAT, etc.) at positions 0-11 must not
++     * participate in the next-level address calculation. */
++    base = (target_ulong)FIELD_EX64(base, TLBENTRY_64, PPN) << TARGET_PAGE_BITS;
+     get_dir_base_width(env, &dir_base, &dir_width, level,
+                        env_vm_level(env) == LOONGARCH_VM_LEVEL_GUEST);
+     index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
+@@ -912,11 +915,9 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+     uint64_t badv;
+     uint64_t ptbase = FIELD_EX64(sys->CSR_PWCL, CSR_PWCL, PTBASE);
+     uint64_t ptwidth = FIELD_EX64(sys->CSR_PWCL, CSR_PWCL, PTWIDTH);
+-    uint64_t palen_mask = loongarch_palen_mask(env);
+     uint64_t dir_base, dir_width;
+     uint8_t  ps;
  
--    set_sys_state(env, &env->sys_states[0]);
-+    set_sys(env, LOONGARCH_VM_LEVEL_HOST);
-     for (i = 0; i < 21; i++) {
-         env->cpucfg[i] = 0x0;
-     }
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index ad30c73167..be982b7695 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -20,6 +20,8 @@
- #include "cpu-csr.h"
- #include "cpu-qom.h"
- 
-+#define CPU_INTERRUPT_GUEST CPU_INTERRUPT_TGT_EXT_0
-+
- #define FCSR0_M1    0x1f         /* FCSR1 mask, Enables */
- #define FCSR0_M2    0x1f1f0000   /* FCSR2 mask, Cause and Flags */
- #define FCSR0_M3    0x300        /* FCSR3 mask, Round Mode */
-@@ -93,6 +95,10 @@ FIELD(FCSR0, CAUSE, 24, 5)
- #define  EXCCODE_WPEM                EXCODE(19, 1)
- #define  EXCCODE_BTD                 EXCODE(20, 0)
- #define  EXCCODE_BTE                 EXCODE(21, 0)
-+#define  EXCCODE_GSPR                EXCODE(22, 0)
-+#define  EXCCODE_HVC                 EXCODE(23, 0)
-+#define  EXCCODE_GCSC                EXCODE(24, 0)
-+#define  EXCCODE_GCHC                EXCODE(25, 0)
- #define  EXCCODE_DBP                 EXCODE(26, 0) /* Reserved subcode used for debug */
- 
- /* cpucfg[0] bits */
-@@ -255,6 +261,7 @@ FIELD(TLB_MISC, E, 0, 1)
- FIELD(TLB_MISC, ASID, 1, 10)
- FIELD(TLB_MISC, VPPN, 13, 35)
- FIELD(TLB_MISC, PS, 48, 6)
-+FIELD(TLB_MISC, GID, 54, 8)
- 
- /*Msg interrupt registers */
- #define N_MSGIS                4
-@@ -314,6 +321,10 @@ typedef struct  LoongArchBT {
-     uint32_t ftop;
- } lbt_t;
- 
-+#define LOONGARCH_VM_LEVEL_HOST      0
-+#define LOONGARCH_VM_LEVEL_GUEST     1
-+#define LOONGARCH_VM_LEVELS          2
-+
- #define CPU_VENDOR_LOONGSON   "Loongson"
- #define CPU_MODEL_3A5000      "3A5000"
- #define CPU_MODEL_1C101       "1C101"
-@@ -375,10 +386,18 @@ typedef struct CPUSysState {
-     uint64_t CSR_DBG;
-     uint64_t CSR_DERA;
-     uint64_t CSR_DSAVE;
-+    uint64_t CSR_GSTAT;
-+    uint64_t CSR_GCFG;
-+    uint64_t CSR_GINTC;
-+    uint64_t CSR_GCNTC;
-+    uint64_t CSR_GTLBC;
-     /* Msg interrupt registers */
-     uint64_t CSR_MSGIS[N_MSGIS];
-     uint64_t CSR_MSGIR;
-     uint64_t CSR_MSGIE;
-+#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-+    LoongArchTLB tlb[LOONGARCH_TLB_MAX];
-+#endif
- } CPUSysState;
- 
- typedef struct CPUArchState {
-@@ -394,7 +413,7 @@ typedef struct CPUArchState {
-     uint32_t pv_features;
-     uint64_t vendor_id;
-     uint64_t cpu_id;
--    CPUSysState sys_states[1];
-+    CPUSysState sys_states[LOONGARCH_VM_LEVELS];
- 
-     struct {
-         uint64_t guest_addr;
-@@ -419,6 +438,7 @@ typedef struct CPUArchState {
-     uint32_t mp_state;
- #endif
-     CPUSysState *sys_state;
-+    bool vm_exit;
- } CPULoongArchState;
- 
- typedef struct LoongArchCPUTopo {
-@@ -438,8 +458,10 @@ struct ArchCPU {
- 
-     CPULoongArchState env;
-     QEMUTimer timer;
-+    QEMUTimer guest_timer;
-     uint32_t  phy_id;
-     OnOffAuto lbt;
-+    OnOffAuto lvz;
-     OnOffAuto pmu;
-     OnOffAuto ptw;
-     OnOffAuto lsx;
-@@ -484,15 +506,44 @@ struct LoongArchCPUClass {
- #define MMU_KERNEL_IDX   MMU_PLV_KERNEL
- #define MMU_USER_IDX     MMU_PLV_USER
- #define MMU_DA_IDX       4
-+#define MMU_GUEST_IDX    5
-+#define MMU_GUEST_DA_IDX 9
-+
-+static inline bool is_guest_mmu_idx(int mmu_idx)
-+{
-+    return mmu_idx >= MMU_GUEST_IDX;
-+}
-+
-+static inline int mmu_idx_to_plv(int mmu_idx)
-+{
-+    if (mmu_idx == MMU_DA_IDX || mmu_idx == MMU_GUEST_DA_IDX) {
-+        return 0;
-+    }
-+    if (is_guest_mmu_idx(mmu_idx)) {
-+        return mmu_idx - MMU_GUEST_IDX;
-+    }
-+    return mmu_idx;
-+}
- 
- static inline CPUSysState *env_sys(CPULoongArchState *env)
- {
-     return env->sys_state;
- }
- 
--static inline void set_sys_state(CPULoongArchState *env, CPUSysState *sys)
-+static inline CPUSysState *get_sys(CPULoongArchState *env, int vm_level)
-+{
-+    return &env->sys_states[vm_level];
-+}
-+
-+static inline void set_sys(CPULoongArchState *env, int vm_level)
- {
--    env->sys_state = sys;
-+    env->sys_state = get_sys(env, vm_level);
-+}
-+
-+static inline int env_vm_level(CPULoongArchState *env)
-+{
-+    return env_sys(env) == get_sys(env, LOONGARCH_VM_LEVEL_GUEST) ?
-+           LOONGARCH_VM_LEVEL_GUEST : LOONGARCH_VM_LEVEL_HOST;
- }
- 
- static inline bool is_la64(CPULoongArchState *env)
-@@ -530,6 +581,13 @@ static inline void set_pc(CPULoongArchState *env, uint64_t value)
- #define HW_FLAGS_CRMD_PG    R_CSR_CRMD_PG_MASK   /* 0x10 */
- #define HW_FLAGS_VA32       0x20
- #define HW_FLAGS_EUEN_ASXE  0x40
-+#define HW_FLAGS_GUEST_MODE 0x80
-+
-+bool has_lvz_capability(CPULoongArchState *env);
-+bool will_return_to_guest(CPULoongArchState *env);
-+uint8_t get_gid(CPULoongArchState *env);
-+uint8_t get_tgid(CPULoongArchState *env);
-+void trigger_vm_exit(CPULoongArchState *env);
- 
- #define CPU_RESOLVING_TYPE TYPE_LOONGARCH_CPU
- 
-diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
-index 8aa8325dc6..257c3bbddd 100644
---- a/target/loongarch/translate.h
-+++ b/target/loongarch/translate.h
-@@ -24,6 +24,7 @@
- #define avail_FP(C)     (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP))
- #define avail_FP_SP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_SP))
- #define avail_FP_DP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_DP))
-+#define avail_LVZ(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LVZ))
- #define avail_LSPW(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSPW))
- #define avail_LAM(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM))
- #define avail_LAM_BH(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM_BH))
-@@ -66,6 +67,7 @@ typedef struct DisasContext {
-     TCGv zero;
-     bool la64; /* LoongArch64 mode */
-     bool va32; /* 32-bit virtual address */
-+    bool guest_mode;
-     uint32_t cpucfg1;
-     uint32_t cpucfg2;
-     uint32_t cpucfg3;
+-
+     /*
+      * The parameter "base" has only two types,
+      * one is the page table base address,
+@@ -959,9 +960,8 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+         }
+     } else {
+         badv = sys->CSR_TLBRBADV;
+-
+-        base = base & palen_mask;
+-
++        /* Strip flag bits (0-11) from base before address calculation. */
++        base = (target_ulong)FIELD_EX64(base, TLBENTRY_64, PPN) << TARGET_PAGE_BITS;
+         ptindex = (badv >> ptbase) & ((1 << ptwidth) - 1);
+         ptindex = ptindex & ~0x1;   /* clear bit 0 */
+         ptoffset0 = ptindex << 3;
 -- 
 2.55.0
 
