@@ -4,115 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E239AC61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 18:23:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F04D1C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 18:26:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzIH5-0007tH-L2; Wed, 26 Aug 2026 14:22:59 -0400
+	id 1wzIKL-0000Jg-SQ; Wed, 26 Aug 2026 14:26:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
- id 1wzIH4-0007t2-35; Wed, 26 Aug 2026 14:22:58 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jdaley@linux.ibm.com>)
- id 1wzIH2-0006No-Gb; Wed, 26 Aug 2026 14:22:57 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QH1f2c3492880; Wed, 26 Aug 2026 18:22:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=cj7QMJ
- DrOvUHrDn2U534Pk0p/r+66wfb7m33C8/6AYg=; b=Dpt+BBBeDjR/wq+zkZ2GIy
- txcCc/b4OAfs4rfL8dp//bkoOoaOWCVwU2CLycCutrfjfadQrUKRzGe/hsES0PCI
- FRgTl53k8davg9FuRMhtBk8A9dyaBMhhCB2vuKjhWcTU2tD+TLb1uUXygs2Uel/o
- Q0r+eAor3zzWZ/PNXQqTJmbByptCStrwSNivE3CzpoO5EWauRQ3OWeCyOJfZQnTd
- i0hg2gg6cw2H2f3VZ//nlz9TlTIp8hym5MRkP1iCJQ23CytX6/f6OIyUwVrVB6tH
- zs9ESV6DBYlN4Trg9e8y/sRMrTpAr0/fYar58L9n8R/jdWFLtwoq6Yh+Zi5jKhxQ
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726erbay-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 18:22:54 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QHuK0v019423;
- Wed, 26 Aug 2026 18:22:54 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkhbcgb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 18:22:54 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QIMpAh8847956
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 18:22:52 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BFEBA58059;
- Wed, 26 Aug 2026 18:22:51 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7D2775805B;
- Wed, 26 Aug 2026 18:22:50 +0000 (GMT)
-Received: from [9.57.45.223] (unknown [9.57.45.223])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 18:22:50 +0000 (GMT)
-Message-ID: <fc52bb9a-7d1b-4ebe-87cc-faf218fca94e@linux.ibm.com>
-Date: Wed, 26 Aug 2026 14:22:50 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wzIKJ-0000JP-Ol
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:26:20 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wzIKH-00074E-0o
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:26:19 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-3964e480f76so1742558a91.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 11:26:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787768775; x=1788373575; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Sfq5WGO/1TQRYfLBInKobA87taWcLCMeqOMCDl4pues=;
+ b=Ec0zYayJGQf1nC7qzYFjbS8bbcujDiAnf3IqFj2vgCHfv1/UeE5IT9wnfgWdEpgJvx
+ ZiD1xXBmRKqxZrWylveVmmqMpqzY+2O0NjkM6p6yu97qfjTd9mBa2h1YeZWgIuGIyIHq
+ wRPWGC4f9Wl/sS2yp+wWBacLJL6eglp8QhYCez7Inwh3ZIW7S3xllaLpuINEQahktrWM
+ JKb5OYWGZuk6SMXU2tGYUPhBD8NDTkWn4vnmCcHbMO8cb9Wcp826Jqgd/ZUO5YvUQBNM
+ erqxnqALnH9e4RFr+jQfYFQS8/ig9xd6nJbrGsjvROQk5vVytrfFKdBwqiZb3uys/daZ
+ 85Gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787768775; x=1788373575;
+ h=content-transfer-encoding:content-type:in-reply-to:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Sfq5WGO/1TQRYfLBInKobA87taWcLCMeqOMCDl4pues=;
+ b=LmIs9F2LiKbq35hKakfDmpqXxm2Cz0ey2gDVTsyS1vJtXbE5HVu9KQxgTY312Or/oC
+ 4SKib1Dd3p5Jgl2FM8fnihSvrw1ALHCCK84NdbLZh53yBd39o+78dyTw4WMsEolBCLsK
+ H3LQg/HR/oUCKTPgt0SPLAEKTyGrAKa2qCQZ1VlfrPYNE3dwutChyby7g2P+TTPZeVOA
+ pTepgcRqtnRXZJ4yx+iIOs5yROfpKv6KNlH1xLNbKsc1TcLztyqtrUqVpVVzHryJcYoR
+ KzI6quswwq8ZpmmNTqYOCdRvBnb1MosgvqbODRGGqBOvDwhj9mOcVqD2n6eCx0J9mOtk
+ ScWA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoatYQFGV3eqUCPqSXIGsz4r0OBOurkZ01Vg+ewukRFEvqgDdDmgID70tpqtw3/76XD38Ytk2kKlDwG@nongnu.org
+X-Gm-Message-State: AFuF++kJrIj4EwFXWQDQ5netcTxCeUepkRYjjlg0Y1JW01VpdRpeK1D1
+ Ql4XDFBb+GGrZXG7pWZ2D0o1SM4xKCKfmNTfNKVHe9bmXel7KVW9Wa5oNflxSHvogl4=
+X-Gm-Gg: AR+sD126AKMOlN4sMBP5lfP65B+U/iBwNcwa5MM902bdYkcOqJ2BnXgkXXr+chyO3jH
+ A+ezYlvOodasKgg2mv1RP+q9mHrPkECoptfxNT4GsXudskDGiZk3hKs+lpYDpji/VRkA/Yaf/Yk
+ 7vEGsHDeiqJxpMDa7OASHNipoWVRQvdkRT+sClNGR9nf8pZ+lUBWbpGa9sGY4bi9e9sGaZo3bi5
+ llDzsEjL/SWfY8ejyFRNPeZB3PL3Dcifj6W8GY/njF4wO1Dm8xoKlrpCOPEXNIUai5KAl//qiyG
+ Um3UfsOfWNVflYrIJtym1x8qgcz+chujsp4sKkuKde/GbHwFhLnW5eCpUtmGi0/OujJfyeD570D
+ QdZDFcGz1PygNJaQWDq4mmsp/wC9UvHeKlj7Z55Iu5owH1w77i00m2UbHljIMji+1vzeattadeT
+ A+24380bknYI2eB5p+IIx1KcKujMjagEVJLA5G5pfEtea3/9ETPLQHwHMfeVNZRPJfGCddazX/B
+ 4NNjpdKLbvr3c2SvAOEA3bxZN/Q
+X-Received: by 2002:a17:90b:4e88:b0:38e:6f90:eabd with SMTP id
+ 98e67ed59e1d1-3966d3ed64amr18677446a91.5.1787768775392; 
+ Wed, 26 Aug 2026 11:26:15 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-39645da08desm8913544a91.17.2026.08.26.11.26.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 26 Aug 2026 11:26:14 -0700 (PDT)
+Message-ID: <81990f5c-c6ef-499e-b30c-c370792b6dc0@linaro.org>
+Date: Wed, 26 Aug 2026 11:26:14 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 7/7] tests/functional/s390x: Add tests for virtio net
- PCI in test_pxelinux.py
-From: Joshua Daley <jdaley@linux.ibm.com>
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: mst@redhat.com, jrossi@linux.ibm.com, borntraeger@linux.ibm.com,
- jjherne@linux.ibm.com, cohuck@redhat.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, pasic@linux.ibm.com, farosas@suse.de,
- lvivier@redhat.com, pbonzini@redhat.com
-References: <20260818205324.580199-1-zycai@linux.ibm.com>
- <20260818205324.580199-8-zycai@linux.ibm.com>
- <7c7f089c-b01b-48da-b1ef-2f6aca096c44@linux.ibm.com>
+Subject: Re: [PULL 00/30] Migration patches for 2026-08-26
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>
+References: <20260826142905.2315503-1-farosas@suse.de>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <7c7f089c-b01b-48da-b1ef-2f6aca096c44@linux.ibm.com>
+In-Reply-To: <20260826142905.2315503-1-farosas@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8f2efe cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=L4DMIUeYWxJp4MNzNqsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE1MSBTYWx0ZWRfX9x40ubI4D34E
- D/iCSPwMIJM/IIFb1vDrcLZP3TH+Yznf8t++3YpecBixyADBzn/88VWlsAkLlmBc5swQwSNb1fr
- 2LS7X0BH4zKFo1rzSNif5S37YWy+pyc=
-X-Proofpoint-GUID: vWzl6N6Nsrm4-PicuA_WWOnP7D6zTOSZ
-X-Proofpoint-ORIG-GUID: vWzl6N6Nsrm4-PicuA_WWOnP7D6zTOSZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE1MSBTYWx0ZWRfX+ueRwf6TGsaV
- r/84wwqf9JST0Kh38nX+7bOqlv2uBQ52b1a8luBVOyU5ua0IGS2jVLHprjaM6nK4IaQhP9d4/A0
- wl9uYnHbas6o1Ntvp5hlCu5akvwYQcE7xyM0Mux3wniCMh1Y8ZkFsFz0no8F285DQzxHK0hy7Gd
- N7TKjZRAOxhI2YeLmRYS9Y/i6XWdP7dQMZiQGEdyoMz9SklU76tb6YHmvVbSNPI/QX3Z5qu0Pp1
- izl8VoJckBfSUGUBFUev/1ESrf0epTm9XKkugWs67DvN3DZisNV2pKO8ylADLjM6eUkMOeALxBT
- 031zvB1/4oH6zB1ri2XaoMAhgVxXwmgwLpXWkKUTWRoWNEv6N9MvG5x/GFxDsJ9nNVFwey10ibo
- UMO8QXKTpdLPLC7tZKUUDNCUWS7rJDhDjBZL90EqcuAKMcX4wPJFZ10KmNV+WfVlH9H70Hx9RwV
- AA1U0MXy7IZkJ/Y+DFA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_05,2026-08-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260151
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jdaley@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,36 +105,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/26/2026 2:17 PM, Joshua Daley wrote:
-> On 8/18/2026 4:53 PM, Zhuoying Cai wrote:
->> Add test coverage for virtio-net-pci network booting on s390x by
->> extending the pxelinux functional tests.
->>
->> This patch adds PCI variants of all existing pxelinux tests to verify
->> that virtio-net-pci devices work correctly for network booting.
->>
->> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
->> ---
->>   tests/functional/s390x/test_pxelinux.py | 71 ++++++++++++++++++++-----
->>   1 file changed, 59 insertions(+), 12 deletions(-)
->> Tested-by: Joshua Daley <jdaley@linux.ibm.com>
-> 
-> 
-> make check-functional-s390x MTESTARGS="func-s390x-pxelinux"
-> 
-> ...
-> ok 1 test_pxelinux.S390PxeLinux.test_default
-> ok 2 test_pxelinux.S390PxeLinux.test_default_pci
-> ok 3 test_pxelinux.S390PxeLinux.test_ip
-> ok 4 test_pxelinux.S390PxeLinux.test_ip_pci
-> ok 5 test_pxelinux.S390PxeLinux.test_mac
-> ok 6 test_pxelinux.S390PxeLinux.test_mac_pci
-> ok 7 test_pxelinux.S390PxeLinux.test_menu
-> ok 8 test_pxelinux.S390PxeLinux.test_menu_pci
-> ok 9 test_pxelinux.S390PxeLinux.test_uuid
-> ok 10 test_pxelinux.S390PxeLinux.test_uuid_pci
-> 
+On 8/26/26 07:28, Fabiano Rosas wrote:
+> The following changes since commit fe11f459f640cd08f35c21f9d403517951bfd671:
+>
+>    Merge tag 'fixes-pr-v1' ofhttps://gitlab.com/marcandre.lureau/qemu into staging (2026-08-25 06:48:55 -0700)
+>
+> are available in the Git repository at:
+>
+>    https://gitlab.com/farosas/qemu.git tags/migration-20260826-pull-request
+>
+> for you to fetch changes up to baa4631ec2731c1b03e9704c4b398d85e4e90f1f:
+>
+>    migration/postcopy: fix page_requested leak for vhost-user shared pages (2026-08-26 10:07:27 -0300)
+>
+> ----------------------------------------------------------------
+> Migration pull request
+>
+> - New feature: Fast Snapshot Load
+> - Cleanups and hardening of RDMA code
+> - Cleanups and hardening of vmstate code
+> - Fix for vhost-user postcopy hang
+> - Fix for CVE-2026-6426
 
-Sorry for the formatting error.
-Tested-by: Joshua Daley <jdaley@linux.ibm.com>
+This breaks s390x:
+
+https://gitlab.com/qemu-project/qemu/-/jobs/16126649576
+
+Summary of Failures:
+   98/1142 qtest+qtest-aarch64+slow - qemu:qtest-aarch64/migration-test  
+                ERROR 3.39s   killed by signal 6 SIGABRT
+   99/1142 qtest+qtest-i386+slow - qemu:qtest-i386/migration-test       
+                ERROR            4.13s   killed by signal 6 SIGABRT
+  100/1142 qtest+qtest-loongarch64+slow - 
+qemu:qtest-loongarch64/migration-test         ERROR 4.19s   killed by 
+signal 6 SIGABRT
+  101/1142 qtest+qtest-ppc64+slow - qemu:qtest-ppc64/migration-test      
+                ERROR   4.17s   killed by signal 6 SIGABRT
+  102/1142 qtest+qtest-s390x+slow - qemu:qtest-s390x/migration-test      
+                ERROR   4.13s   killed by signal 6 SIGABRT
+  104/1142 qtest+qtest-x86_64+slow - qemu:qtest-x86_64/migration-test    
+                ERROR   4.14s   killed by signal 6 SIGABRT
+  155/1142 qtest+qtest-i386+slow - qemu:qtest-i386/ahci-test             
+         ERROR           23.79s   killed by signal 6 SIGABRT
+  156/1142 qtest+qtest-x86_64+slow - qemu:qtest-x86_64/ahci-test         
+             ERROR           23.99s   killed by signal 6 SIGABRT
+  172/1142 qtest+qtest-aarch64+slow - qemu:qtest-aarch64/qos-test       
+                TIMEOUT        120.06s   killed by signal 15 SIGTERM
+  183/1142 qtest+qtest-i386+slow - qemu:qtest-i386/qos-test             
+          TIMEOUT        120.06s   killed by signal 15 SIGTERM
+  189/1142 qtest+qtest-loongarch64+slow - 
+qemu:qtest-loongarch64/qos-test               TIMEOUT 120.05s   killed 
+by signal 15 SIGTERM
+  194/1142 qtest+qtest-riscv32+slow - qemu:qtest-riscv32/qos-test       
+                ERROR           70.71s   killed by signal 6 SIGABRT
+  197/1142 qtest+qtest-riscv64+slow - qemu:qtest-riscv64/qos-test       
+                ERROR           72.57s   killed by signal 6 SIGABRT
+  201/1142 qtest+qtest-ppc64+slow - qemu:qtest-ppc64/qos-test           
+            TIMEOUT        120.17s   killed by signal 15 SIGTERM
+  221/1142 func-quick+func-aarch64 - qemu:func-aarch64-migration         
+             FAIL             2.18s   exit status 1
+  233/1142 func-quick+func-arm - qemu:func-arm-migration                 
+     FAIL             1.82s   exit status 1
+  237/1142 func-quick+func-alpha - qemu:func-alpha-migration             
+         FAIL            58.51s   exit status 1
+  274/1142 qtest+qtest-x86_64+slow - qemu:qtest-x86_64/qos-test         
+              TIMEOUT        120.48s   killed by signal 15 SIGTERM
+  260/1142 func-quick+func-i386 - qemu:func-i386-migration               
+       FAIL            46.18s   exit status 1
+  317/1142 func-quick+func-ppc - qemu:func-ppc-migration                 
+     FAIL             4.57s   exit status 1
+  331/1142 func-quick+func-ppc64 - qemu:func-ppc64-migration             
+         FAIL            46.56s   exit status 1
+  337/1142 func-quick+func-riscv32 - qemu:func-riscv32-migration         
+             FAIL            46.32s   exit status 1
+  341/1142 func-quick+func-riscv64 - qemu:func-riscv64-migration         
+             FAIL            39.93s   exit status 1
+  384/1142 func-quick+func-sparc - qemu:func-sparc-migration             
+         FAIL            41.98s   exit status 1
+  391/1142 func-quick+func-sparc64 - qemu:func-sparc64-migration         
+             FAIL            44.46s   exit status 1
+  401/1142 func-quick+func-x86_64 - qemu:func-x86_64-migration           
+           FAIL            50.76s   exit status 1
+
+r~
+
 
