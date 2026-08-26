@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4563BC61DBE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13D72C61DC2
 	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 10:31:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzAul-00021X-Lh; Wed, 26 Aug 2026 06:31:28 -0400
+	id 1wzAuX-0001wP-9h; Wed, 26 Aug 2026 06:31:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1wzAuO-0001ug-F6
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:04 -0400
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1wzAuM-0001tw-QK
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:02 -0400
 Received: from [2a14:640:1:12b5::1] (helo=krgm.moe)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1wzAuM-0003NH-FC
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:04 -0400
+ (envelope-from <prcups@krgm.moe>) id 1wzAuJ-0003K6-Vm
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:02 -0400
 Received: from yuno-loong (unknown [103.47.186.116])
- by krgm.moe (Postfix) with ESMTPSA id 59333DFA5;
- Wed, 26 Aug 2026 16:00:57 +0530 (IST)
+ by krgm.moe (Postfix) with ESMTPSA id 9018B7A17;
+ Wed, 26 Aug 2026 16:00:54 +0530 (IST)
 From: SignKirigami <prcups@krgm.moe>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, xianglai li <lixianglai@loongson.cn>,
  SignKirigami <prcups@krgm.moe>, Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v4 05/14] target/loongarch: Add LVZ guest interrupt state
-Date: Wed, 26 Aug 2026 18:30:09 +0800
-Message-ID: <32e816aa68489d4e6b0b2b24e99a6c8a4e3469bf.1787739852.git.prcups@krgm.moe>
+Subject: [PATCH v4 01/14] target/loongarch: Define LVZ CSR fields
+Date: Wed, 26 Aug 2026 18:30:05 +0800
+Message-ID: <4e393c8c6f5d7d42ede6fa65fc94753bd8b14c17.1787739852.git.prcups@krgm.moe>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1787739852.git.prcups@krgm.moe>
 References: <cover.1787739852.git.prcups@krgm.moe>
@@ -56,185 +56,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Route configured hardware interrupts into the guest CSR bank, track guest
-interrupt requests separately, and expose guest pending and enable checks
-to the TCG runtime.
+Add LVZ CSR number and bit-field definitions for guest status,
+configuration, interrupt, timer and guest TLB registers, preparing
+the architectural constants needed by later LVZ CPU state, CSR and TCG
+implementation patches.
 
 Signed-off-by: SignKirigami <prcups@krgm.moe>
 Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 ---
- target/loongarch/cpu.c         | 43 +++++++++++++++++++++++++---------
- target/loongarch/internals.h   |  4 +++-
- target/loongarch/tcg/tcg_cpu.c | 36 +++++++++++++++++++---------
- 3 files changed, 60 insertions(+), 23 deletions(-)
+ target/loongarch/cpu-csr.h | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index c5c7f3e0e3..b12e8944de 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -57,41 +57,57 @@ static vaddr loongarch_cpu_get_pc(CPUState *cs)
- #ifndef CONFIG_USER_ONLY
- #include "hw/loongarch/virt.h"
+diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
+index d860417af2..438da43a79 100644
+--- a/target/loongarch/cpu-csr.h
++++ b/target/loongarch/cpu-csr.h
+@@ -224,4 +224,42 @@ FIELD(CSR_DBG, ECODE, 16, 6)
+ #define LOONGARCH_CSR_DERA           0x501 /* Debug era */
+ #define LOONGARCH_CSR_DSAVE          0x502 /* Debug save */
  
--void loongarch_cpu_set_irq(void *opaque, int irq, int level)
-+void loongarch_cpu_set_irq_impl(void *opaque, int irq, int level,
-+                                bool guest)
- {
-     LoongArchCPU *cpu = opaque;
-     CPULoongArchState *env = &cpu->env;
-     CPUState *cs = CPU(cpu);
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, guest);
-+    int interrupt = guest ? CPU_INTERRUPT_GUEST : CPU_INTERRUPT_HARD;
- 
-     if (irq < 0 || irq >= N_IRQS) {
-         return;
-     }
- 
--    if (kvm_enabled()) {
-+    if (!guest && kvm_enabled()) {
-         kvm_loongarch_set_interrupt(cpu, irq, level);
-     } else if (tcg_enabled()) {
-+        if (!guest && irq >= 2 && irq < 10 &&
-+            (FIELD_EX64(sys->CSR_GINTC, CSR_GINTC, HWIP) &
-+             BIT(irq - 2))) {
-+            loongarch_cpu_set_irq_impl(opaque, irq, level, true);
-+            return;
-+        }
-         sys->CSR_ESTAT = deposit64(sys->CSR_ESTAT, irq, 1, level != 0);
--        if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
--            cpu_interrupt(cs, CPU_INTERRUPT_HARD);
--        } else {
--            cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
-+        if (!guest || env_vm_level(env) == LOONGARCH_VM_LEVEL_GUEST) {
-+            if (FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS)) {
-+                cpu_interrupt(cs, interrupt);
-+            } else {
-+                cpu_reset_interrupt(cs, interrupt);
-+            }
-         }
-     }
- }
- 
-+void loongarch_cpu_set_irq(void *opaque, int irq, int level)
-+{
-+    loongarch_cpu_set_irq_impl(opaque, irq, level, false);
-+}
++/* LVZ (LoongArch Virtualization) CSRs */
++#define LOONGARCH_CSR_GSTAT          0x50 /* Guest status */
++FIELD(CSR_GSTAT, VM, 0, 1)
++FIELD(CSR_GSTAT, PVM, 1, 1)
++FIELD(CSR_GSTAT, GIDBIT, 4, 6)
++FIELD(CSR_GSTAT, GID, 16, 8)
 +
- /* Check if there is pending and not masked out interrupt */
--bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env)
-+bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env, bool guest)
- {
-     uint32_t pending;
-     uint32_t status;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, guest);
- 
-     pending = FIELD_EX64(sys->CSR_ESTAT, CSR_ESTAT, IS);
--    status  = FIELD_EX64(sys->CSR_ECFG, CSR_ECFG, LIE);
-+    status = FIELD_EX64(sys->CSR_ECFG, CSR_ECFG, LIE);
- 
-     return (pending & status) != 0;
- }
++#define LOONGARCH_CSR_GCFG           0x51 /* Guest config */
++FIELD(CSR_GCFG, MATP, 0, 4)
++FIELD(CSR_GCFG, MATC, 4, 2)
++FIELD(CSR_GCFG, TOPIP, 6, 1)
++FIELD(CSR_GCFG, TOPI, 7, 1)
++FIELD(CSR_GCFG, TOTIP, 8, 1)
++FIELD(CSR_GCFG, TOTI, 9, 1)
++FIELD(CSR_GCFG, TOEP, 10, 1)
++FIELD(CSR_GCFG, TOE, 11, 1)
++FIELD(CSR_GCFG, TOPP, 12, 1)
++FIELD(CSR_GCFG, TOP, 13, 1)
++FIELD(CSR_GCFG, TOHUP, 14, 1)
++FIELD(CSR_GCFG, TOHU, 15, 1)
++FIELD(CSR_GCFG, TOCIP, 16, 4)
++FIELD(CSR_GCFG, TOCI, 20, 2)
++FIELD(CSR_GCFG, GPMP, 23, 1)
++FIELD(CSR_GCFG, GPMNUM, 24, 3)
 +
- #endif
- 
- #ifndef CONFIG_USER_ONLY
-@@ -100,7 +116,12 @@ bool loongarch_cpu_has_work(CPUState *cs)
-     bool has_work = false;
- 
-     if (cpu_test_interrupt(cs, CPU_INTERRUPT_HARD) &&
--        cpu_loongarch_hw_interrupts_pending(cpu_env(cs))) {
-+        cpu_loongarch_hw_interrupts_pending(cpu_env(cs), false)) {
-+        has_work = true;
-+    }
++#define LOONGARCH_CSR_GINTC          0x52 /* Guest interrupt config */
++FIELD(CSR_GINTC, HWIS, 0, 8)
++FIELD(CSR_GINTC, HWIP, 8, 8)
++FIELD(CSR_GINTC, HWIC, 16, 8)
 +
-+    if (cpu_test_interrupt(cs, CPU_INTERRUPT_GUEST) &&
-+        cpu_loongarch_hw_interrupts_pending(cpu_env(cs), true)) {
-         has_work = true;
-     }
- 
-diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
-index e01dbed40f..a23b0d3d58 100644
---- a/target/loongarch/internals.h
-+++ b/target/loongarch/internals.h
-@@ -32,6 +32,8 @@ void restore_fp_status(CPULoongArchState *env);
- extern const VMStateDescription vmstate_loongarch_cpu;
- 
- void loongarch_cpu_set_irq(void *opaque, int irq, int level);
-+void loongarch_cpu_set_irq_impl(void *opaque, int irq, int level,
-+                                bool guest);
- 
- void loongarch_constant_timer_cb(void *opaque);
- uint64_t cpu_loongarch_get_constant_timer_counter(LoongArchCPU *cpu);
-@@ -39,7 +41,7 @@ uint64_t cpu_loongarch_get_constant_timer_ticks(LoongArchCPU *cpu);
- void cpu_loongarch_store_constant_timer_config(LoongArchCPU *cpu,
-                                                uint64_t value);
- bool loongarch_cpu_has_work(CPUState *cs);
--bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env);
-+bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env, bool guest);
- #endif /* !CONFIG_USER_ONLY */
- 
- uint64_t read_fcc(CPULoongArchState *env);
-diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
-index 4b1d44a164..e84ef5f305 100644
---- a/target/loongarch/tcg/tcg_cpu.c
-+++ b/target/loongarch/tcg/tcg_cpu.c
-@@ -238,29 +238,43 @@ static void loongarch_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
-     }
- }
- 
--static inline bool cpu_loongarch_hw_interrupts_enabled(CPULoongArchState *env)
-+static inline bool cpu_loongarch_hw_interrupts_enabled(CPULoongArchState *env, bool guest)
- {
-     bool ret = 0;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *sys = get_sys(env, guest);
-+    CPUSysState *host = get_sys(env, LOONGARCH_VM_LEVEL_HOST);
- 
-     ret = (FIELD_EX64(sys->CSR_CRMD, CSR_CRMD, IE) &&
--          !(FIELD_EX64(sys->CSR_DBG, CSR_DBG, DST)));
-+          !(FIELD_EX64(host->CSR_DBG, CSR_DBG, DST)));
- 
-     return ret;
- }
- 
- static bool loongarch_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
- {
-+    CPULoongArchState *env = cpu_env(cs);
-+    bool has_interrupt = false;
++#define LOONGARCH_CSR_GCNTC          0x53 /* Guest counter compensation */
 +
-     if (interrupt_request & CPU_INTERRUPT_HARD) {
--        CPULoongArchState *env = cpu_env(cs);
--
--        if (cpu_loongarch_hw_interrupts_enabled(env) &&
--            cpu_loongarch_hw_interrupts_pending(env)) {
--            /* Raise it */
--            cs->exception_index = EXCCODE_INT;
--            loongarch_cpu_do_interrupt(cs);
--            return true;
-+        if (cpu_loongarch_hw_interrupts_enabled(env, false) &&
-+            cpu_loongarch_hw_interrupts_pending(env, false)) {
-+            if (env_vm_level(env) == LOONGARCH_VM_LEVEL_GUEST) {
-+                trigger_vm_exit(env);
-+            }
-+            has_interrupt = true;
-         }
-+    } else if (interrupt_request & CPU_INTERRUPT_GUEST) {
-+        if (cpu_loongarch_hw_interrupts_enabled(env, true) &&
-+            cpu_loongarch_hw_interrupts_pending(env, true) &&
-+            env_vm_level(env) == LOONGARCH_VM_LEVEL_GUEST) {
-+            has_interrupt = true;
-+        }
-+    }
-+    if (has_interrupt) {
-+        /* Raise it */
-+        cs->exception_index = EXCCODE_INT;
-+        loongarch_cpu_do_interrupt(cs);
-+        return true;
-     }
-     return false;
- }
++#define LOONGARCH_CSR_GTLBC          0x15 /* Guest TLB control */
++FIELD(CSR_GTLBC, GMTLBSZ, 0, 6)
++FIELD(CSR_GTLBC, USETGID, 12, 1)
++FIELD(CSR_GTLBC, TOTI, 13, 1)
++FIELD(CSR_GTLBC, TGID, 16, 8)
++
+ #endif /* LOONGARCH_CPU_CSR_H */
 -- 
 2.55.0
 
