@@ -4,112 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E86E3C61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:32:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7286C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:32:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzEd6-00015t-Cg; Wed, 26 Aug 2026 10:29:28 -0400
+	id 1wzEdb-0001IJ-PO; Wed, 26 Aug 2026 10:30:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEd4-00015C-Eq
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:26 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdY-0001FZ-VB
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:56 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEd2-0001Xp-Fd
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:26 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdX-0002JR-0Y
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:56 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 0DA3E1F833;
- Wed, 26 Aug 2026 14:29:15 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 7B74E21274;
+ Wed, 26 Aug 2026 14:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787754559; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787754589; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1OFQJUWDbKjObiV52ezMiOfXjlvswKMRphGWikfDBLk=;
- b=YZZCN/HpkCeiFb3uGRqJOwwoVDdhbZRMucuZcGdkeG62zqEnvayjrscGeeumW4zsZkuybT
- gJKrrcpS5uH3jByhfGyzJNkZ1fyhLRkiPWl18gSe1xrEJeE4LgnoyXqpipjlVnsqkTkelk
- JnMrssCtGJ9ij8Ehconzw46zTHtikag=
+ bh=KSGXmsk3W71ZigGaQDEGitHkLy0FifnfuzNRWcQJsFc=;
+ b=Oiac/dWhpWucfkvvHzOXkXZ+R9dNsvk0WMt+ZNbLsCtRuy/CBM3DmcU1xFrN3NPd+TnI87
+ gBio+8slOAj7mAGy1KiBPB1a0ad4Q+69qDe4SLVQ7jZKprQ7M2jcBCOcnA97kcq8LLXSUA
+ Q9hxzUEe2Qk2H3Rz70o8ILSzEQsZ9qc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787754559;
+ s=susede2_ed25519; t=1787754589;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1OFQJUWDbKjObiV52ezMiOfXjlvswKMRphGWikfDBLk=;
- b=7FUfDniE50Po857ZAYY5+ajY6Yqqbt6Rb7PO1b+3J57d0P6hfKt1O62K0BfN/FcrIl3D9x
- fwnjm8bwfDDiKfBg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ALP3wX+A;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=WdL21pHI
+ bh=KSGXmsk3W71ZigGaQDEGitHkLy0FifnfuzNRWcQJsFc=;
+ b=vu/9QH2Tw04+tLRB/X+UNOjiEzdVENVkCskydeUD4QICasBMlfcNn55O9pgzKUjcWEpyil
+ jGFYiccerfkC/VCw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=DWbffqD8;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="6auGHsc/"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787754555; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787754585; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1OFQJUWDbKjObiV52ezMiOfXjlvswKMRphGWikfDBLk=;
- b=ALP3wX+AdM7rbYsirwjq+PMATwk4fjy90sHZhxj+D8LnuhC115c0hbSMF7XZ+qxg0/Z4L7
- 1BuMkRGwifRUJscZPCXDHDGfg3v8bwtDTQG0e8ZL7/xOT3EUvlKLMz3ZAUGSJ/wkUiXmZ6
- Ruz0Iuy75h1pifZ31mz1TKbMDKd9jv4=
+ bh=KSGXmsk3W71ZigGaQDEGitHkLy0FifnfuzNRWcQJsFc=;
+ b=DWbffqD81eK8SwO0EoQfsHwV9cbHx+xTbfFhDksnf4kbwfvIw8Dd1Z56gSMiVxs42GDkYt
+ eze2U/kVNlyyameEEufxAPIy8Vtw1gbxJUKtQQnITI1lJVNVxhn3+3b7riaTNoEvI05TTq
+ ZaMJtfbI/fyQcV73nUg6anmFh0oZpTE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787754555;
+ s=susede2_ed25519; t=1787754585;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1OFQJUWDbKjObiV52ezMiOfXjlvswKMRphGWikfDBLk=;
- b=WdL21pHI8GVRt0dIfkjfQbhbTzVFl4qTgwTVO80SSslHJbgcU5DiDg43wLtwxUtw1NysPW
- D++VOacJdUtun/Cg==
+ bh=KSGXmsk3W71ZigGaQDEGitHkLy0FifnfuzNRWcQJsFc=;
+ b=6auGHsc/tDwdYx1qR9bkZA07kvTchS7VX0SCJ+VF2xb2tVyfqFR3mDRO3NHXd7YUUntltT
+ YWjzd8ir9oSxfLCg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DFEB01364F;
- Wed, 26 Aug 2026 14:29:13 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B7CE413676;
+ Wed, 26 Aug 2026 14:29:44 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id iCHGKzn4jmpTJAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 26 Aug 2026 14:29:13 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id aOv9IVj4jmpTJAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 26 Aug 2026 14:29:44 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Aadeshveer Singh <aadeshveer07@gmail.com>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: [PULL 04/30] migration: Use file_bmap for RAMBlock during incoming
- file load
-Date: Wed, 26 Aug 2026 11:28:39 -0300
-Message-ID: <20260826142905.2315503-5-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>
+Subject: [PULL 28/30] migration: Harden vmstate_handle_alloc
+Date: Wed, 26 Aug 2026 11:29:03 -0300
+Message-ID: <20260826142905.2315503-29-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260826142905.2315503-1-farosas@suse.de>
 References: <20260826142905.2315503-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 7B74E21274
 X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
  R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- URIBL_BLOCKED(0.00)[suse.de:email,suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
+ NEURAL_HAM_SHORT(-0.20)[-0.988]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCPT_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  RCVD_TLS_ALL(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_HAS_DN(0.00)[]; FREEMAIL_CC(0.00)[redhat.com,gmail.com];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid,suse.de:dkim];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_THREE(0.00)[4];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Rspamd-Queue-Id: 0DA3E1F833
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:email,suse.de:dkim];
+ RCVD_COUNT_TWO(0.00)[2]; DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -132,109 +127,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aadeshveer Singh <aadeshveer07@gmail.com>
+Harden the vmstate_handle_alloc function against overflow of the 64bit
+integers it consumes and failure to allocate due to an exceedingly
+large request.
 
-Replace the temporary bitmap with the existing file_bmap attribute of
-the RAMBlock. This acts as a preparatory change for the upcoming fast
-snapshot load feature.
-
-Reusing this bitmap allows the destination to track page types during
-a postcopy load, enabling faster, direct placement of zero pages.
-
-Since file_bmap is currently only utilized during the migration save
-phase, it can be safely repurposed during the load phase without
-introducing conflicts.
-
-Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
+Acked-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/ram.c | 33 +++++++++++++++++++++++++++------
- 1 file changed, 27 insertions(+), 6 deletions(-)
+ migration/vmstate.c | 30 ++++++++++++++++++++++--------
+ 1 file changed, 22 insertions(+), 8 deletions(-)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index b6eb842746a..7fa4774246a 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -252,6 +252,17 @@ int foreach_not_ignored_block(RAMBlockIterFunc func, void *opaque)
-     return ret;
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index 51d02b87e7e..1d028bfe009 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -135,16 +135,28 @@ static uint64_t vmstate_size(void *opaque, const VMStateField *field)
+     return size;
  }
  
-+static void ramblock_file_bmap_init(void)
-+{
-+    RAMBlock *rb;
-+
-+    RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
-+        assert(!rb->file_bmap);
-+        size_t size = rb->max_length >> qemu_target_page_bits();
-+        rb->file_bmap = bitmap_new(size);
-+    }
-+}
-+
- static void ramblock_recv_map_init(void)
+-static void vmstate_handle_alloc(void *ptr, const VMStateField *field,
+-                                 void *opaque)
++static bool vmstate_handle_alloc(void *ptr, const VMStateField *field,
++                                 uint64_t n, uint64_t size, Error **errp)
  {
-     RAMBlock *rb;
-@@ -3755,6 +3766,9 @@ static int ram_load_setup(QEMUFile *f, void *opaque, Error **errp)
- {
-     xbzrle_load_setup();
-     ramblock_recv_map_init();
-+    if (migrate_mapped_ram()) {
-+        ramblock_file_bmap_init();
-+    }
- 
-     return 0;
++    void *p;
++
+     if (field->flags & VMS_POINTER && field->flags & VMS_ALLOC) {
+-        uint64_t size = vmstate_size(opaque, field);
+-        size *= vmstate_n_elems(opaque, field);
+-        if (size) {
+-            *(void **)ptr = g_malloc(size);
+-        }
++        if (size && n) {
++            if (umul64_overflow(size, n, &size)) {
++                error_setg(errp, "%s: field '%s' multiply overflow",
++                           __func__, field->name);
++                return false;
++            }
++            p = g_try_malloc(size);
++            if (!p) {
++                error_setg(errp, "%s: Could not allocate memory for field '%s'",
++                           __func__, field->name);
++                return false;
++            }
++            *(void **)ptr = p;
++         }
+     }
++    return true;
  }
-@@ -3772,8 +3786,8 @@ static int ram_load_cleanup(void *opaque)
-     xbzrle_load_cleanup();
  
-     RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
--        g_free(rb->receivedmap);
--        rb->receivedmap = NULL;
-+        g_clear_pointer(&rb->receivedmap, g_free);
-+        g_clear_pointer(&rb->file_bmap, g_free);
-     }
+ static bool vmstate_ptr_marker_load(QEMUFile *f, bool *load_field,
+@@ -354,7 +366,9 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+             uint64_t n_elems = vmstate_n_elems(opaque, field);
+             uint64_t size = vmstate_size(opaque, field);
  
-     return 0;
-@@ -4148,11 +4162,18 @@ err:
- static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-                                       ram_addr_t length, Error **errp)
- {
--    g_autofree unsigned long *bitmap = NULL;
-     MappedRamHeader header;
-     size_t bitmap_size;
-     long num_pages;
- 
-+    if (length > block->max_length) {
-+        error_setg(errp,
-+                   "mapped-ram header length %" PRIu64 " exceeds "
-+                   "RAMBlock(\"%s\") max_length %" PRIu64,
-+                   (uint64_t)length, block->idstr, (uint64_t)block->max_length);
-+        return;
-+    }
-+
-     if (!mapped_ram_read_header(f, &header, errp)) {
-         return;
-     }
-@@ -4180,14 +4201,14 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-     num_pages = length / header.page_size;
-     bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
- 
--    bitmap = g_malloc0(bitmap_size);
--    if (qemu_get_buffer_at(f, (uint8_t *)bitmap, bitmap_size,
-+    if (qemu_get_buffer_at(f, (uint8_t *)block->file_bmap, bitmap_size,
-                            header.bitmap_offset) != bitmap_size) {
-         error_setg(errp, "Error reading dirty bitmap");
-         return;
-     }
- 
--    if (!read_ramblock_mapped_ram(f, block, num_pages, bitmap, errp)) {
-+    if (!read_ramblock_mapped_ram(f, block, num_pages, block->file_bmap,
-+                                  errp)) {
-         return;
-     }
- 
+-            vmstate_handle_alloc(first_elem, field, opaque);
++            if (!vmstate_handle_alloc(first_elem, field, n_elems, size, errp)) {
++                return false;
++            }
+             if (field->flags & VMS_POINTER) {
+                 first_elem = *(void **)first_elem;
+                 assert(first_elem || !n_elems || !size);
 -- 
 2.53.0
 
