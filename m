@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A58CC5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 20:25:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5947C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 20:30:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzKB9-00008m-Dd; Wed, 26 Aug 2026 16:24:59 -0400
+	id 1wzKFa-0001gR-Mk; Wed, 26 Aug 2026 16:29:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wzKB8-000086-0m; Wed, 26 Aug 2026 16:24:58 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wzKFZ-0001g7-Jv; Wed, 26 Aug 2026 16:29:33 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wzKB5-0007Cv-FN; Wed, 26 Aug 2026 16:24:56 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wzKFY-0008Dp-0R; Wed, 26 Aug 2026 16:29:33 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QH1ZQ9424713; Wed, 26 Aug 2026 20:24:54 GMT
+ 67QH1oFT3493092; Wed, 26 Aug 2026 20:29:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=3Y2kWY
- zuIyoOyzo7KjnOiqGb7boq5VlnXvEJJqLjXI4=; b=bOZ9d2gIVB1KYyHou+BK5h
- jX5mdV13/iNKabwBMYNB+taT+5RDZL6uS6XpKYrstjmo17WWHlUTGLUNZq+GkaF0
- lER6Okou6E0uP5ltfgIwn+IdmSlDdivTr004m5QopggdmLpJvhxSYs73WVEWOsyO
- SpRYj2peOIG7s80RIBSlqebQyAkPcV44QRShxi+3zJ6pmm3ouI4YYtaN00XdYbIe
- 7xaK7VBcE1zAfgjX4ErbqxoaKoYCPzyFx0u3JhUMnbn5y0u2ofq46s17bqPsAJ3S
- XFlgN96Jb4Hv5nd/gWl9VzlZzNQMVuUrd8urZWCrioa4h+xZl/clpdYFv/sP3onw
+ :message-id:mime-version:references:subject:to; s=pp1; bh=TnykYR
+ IHJhLpplayGU4UY+38YjNfKOcg+jk4O8JEvNc=; b=EnnWx3xeY8F0BQFovXeQOD
+ OqUiJ7mL9qs0OFfczZgIBF6Uu8mRsLbFQimKu8ag3ec7tRdcTB184DUXf5Gq9udz
+ X45nfnB7udROZA+pgY8PIQeJ4B7GbdIvUByC7//lqD4CVBpDrjkSpiXjQ2FvPggN
+ TQGIjwKFvecHojg6mcKDH2UPMjfrJW3apusZSjxKHTupaYZUE44RZJye8p9tua6d
+ pCizuvx2Hv/yOv1JafS8rzsnONp0nz4WqaDKTi8eRPl843GFc8PWYbIaSIymkCaY
+ FDoAeQOMW7NyOfpkJrw7Dqldn4H+Wtes6sXjUg0zk+hYGnV2Wa66MXgPsgUuJVCA
  ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73g512at-1
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726erye9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 20:24:53 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QKBI4Z008097;
- Wed, 26 Aug 2026 20:24:52 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7pfwc4fm-1
+ Wed, 26 Aug 2026 20:29:30 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QKQMBD008486;
+ Wed, 26 Aug 2026 20:29:29 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rsybrq8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 20:24:52 +0000 (GMT)
+ Wed, 26 Aug 2026 20:29:29 +0000 (GMT)
 Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
  [10.241.53.102])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QKOo0366388232
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QKTRHc4194818
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 20:24:51 GMT
+ Wed, 26 Aug 2026 20:29:27 GMT
 Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D29415803F;
- Wed, 26 Aug 2026 20:24:50 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7799E58060;
+ Wed, 26 Aug 2026 20:29:27 +0000 (GMT)
 Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 538FB58056;
- Wed, 26 Aug 2026 20:24:50 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E95A65803F;
+ Wed, 26 Aug 2026 20:29:26 +0000 (GMT)
 Received: from [9.61.145.136] (unknown [9.61.145.136])
  by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 20:24:50 +0000 (GMT)
-Message-ID: <8cc0e23b-6741-4fb8-9384-44ca95b07ba8@linux.ibm.com>
-Date: Wed, 26 Aug 2026 16:24:49 -0400
+ Wed, 26 Aug 2026 20:29:26 +0000 (GMT)
+Message-ID: <caf3ea7d-a242-45f1-ab95-d83065798042@linux.ibm.com>
+Date: Wed, 26 Aug 2026 16:29:26 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/8] pc-bios/s390-ccw: Use bus specific IPL_TYPE
- directly for scsi IPL
+Subject: Re: [PATCH v2 5/8] pc-bios/s390-ccw: Abstract virtio_run() for
+ generic use
 To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
  cohuck@redhat.com, mjrosato@linux.ibm.com
 Cc: zycai@linux.ibm.com
 References: <20260811144629.866641-1-jrossi@linux.ibm.com>
- <20260811144629.866641-5-jrossi@linux.ibm.com>
+ <20260811144629.866641-6-jrossi@linux.ibm.com>
 Content-Language: en-US
 From: Eric Farman <farman@linux.ibm.com>
 Autocrypt: addr=farman@linux.ibm.com; keydata=
@@ -115,44 +115,44 @@ Autocrypt: addr=farman@linux.ibm.com; keydata=
  4HX/6RAR4Dbzry6/epWTTji+7ApzePzmJzPcuzD31ICsgT2dJ6ydxyxxXikBFJqx6BPOF+u+
  1BtKcTz1ek3I2sWvBM1V5CKaFw7iNXxS6HgS2scuAT2awKq+BQlt778/GfBWpXonfqixMvit
  y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260811144629.866641-5-jrossi@linux.ibm.com>
+In-Reply-To: <20260811144629.866641-6-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 7CgsKG7lAPGorAjiF7yORdrGIcvJJ117
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE2OCBTYWx0ZWRfX+LenC9ZpkoFv
- pOcZLVp00EQy3ZQNo+9nzrI9e8gzLTOUsbhg15kWOXQnkSvaJP6v1kxy5vGxi3CN23bSfC6R+E3
- UCFBxLW0hEQUpEnA6vb/9PG8EjElmpk=
-X-Proofpoint-GUID: 7CgsKG7lAPGorAjiF7yORdrGIcvJJ117
-X-Authority-Analysis: v=2.4 cv=JZyMa0KV c=1 sm=1 tr=0 ts=6a8f4b95 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8f4caa cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=tULXT7rEgByDIO15at8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE2OCBTYWx0ZWRfX3mbgnV9LKvck
- zVm6cpnwHC5jL5wcyyG7GRh/vZEwTQhMsmVM9tRF4ut24ZNS0/0L/ZMDK5toK0JjC6eUDMiMblO
- lr94JfS21cgFUp0Ka1kd5e0EyB5BtWJKzO3uwFwT314QcifWkwRu2Xwpnrj2SwkHkTYVcioZhnO
- twrjJs7iYgUFfk5BvLmBl1W8NvqP3gxAh3rqdsll2b6RB3Ei3BJ3+DO7hMr2Y1wI9C1cKIopNJq
- /MI47z88yRVOdPoiYV6Xb/RD4kZEHF5ftMWsnTSmr9R2EORUH6Q+UTbt76e9kAPXv3znybedbs3
- mhixJYsnaQfJBCVBniG8m5csRPQ2Kcirgz85TFmXljQ/VlNzw75Kp0BjG7swFPmG/pRgnLCOSzt
- 3R70YaZOYFovm1WqJG7TV/Ne6K1oUx4yXJgHrNPKbfHqlApCAUAvUs29jaw6qKiZZfg/gujrvD6
- 2GeBWQewqbFe7+oSxEA==
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=W57OpD53vy_E0Vtn0xEA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE2OCBTYWx0ZWRfX/J2viTwJ/IkM
+ EZxtVWFZG/E/CUK2jaqzbnVkzR4ZXgFNOngqco26E4QnHF9JQ5hJsMwyPTK8weSUyt6Ah8SqiDO
+ IWazP/kJxuVA8Ij7Rmoh27eAej+jru4=
+X-Proofpoint-GUID: inVC6GlbCoaFc_Ia6j-6vD8Kzc8Cb6s8
+X-Proofpoint-ORIG-GUID: inVC6GlbCoaFc_Ia6j-6vD8Kzc8Cb6s8
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE2OCBTYWx0ZWRfX+24QIng1mo2T
+ smTYGU2eRFJuzPcWeEvKNWyrHbS0PSQ/AxJD8kuyqy2QD/bu/2LLyVHh6FMKgHBmCtZQ85stimd
+ eJg2USE5TghtsZBaUHlbBJzcrjbltlcHsGaDBnAjw76QHCQwMMgMhcZDx6qZTl0Xqsdw0oJ9sLw
+ VlZRV6vjslv8pZT66+Bx4649KaZ9CK7isq2oxo0/sb7sDLZQdYfqGwZhKxiMku69gkfTib0Y5sI
+ MKIQmaX8RheeNvfDycfQoXZWJj7EP4QJEk4VD0jbVISKSSgtU7rGXW9J2T8jITNgwH0l7litFq5
+ SmNUAUJWeJR7Yi6K8W47N5Vy0hc87HRoz9ojZLg6/CpXmdqwQFwJqexBOhVabU3OEiu2HaOq596
+ FhW0iG3oNVWwVtaoKoXqjnC0nKjuYG6NJp3x+ACzn0FaYWEQpGajUiGmpxUJIq2yT3NmI1YUuTF
+ PPIhyoDaupXdOVe9J/w==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-26_05,2026-08-26_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
+ suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260168
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -174,116 +174,92 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 8/11/26 10:46 AM, jrossi@linux.ibm.com wrote:
 > From: Jared Rossi <jrossi@linux.ibm.com>
 > 
-> All existing switch cases that handle S390_IPL_TYPE_QEMU_SCSI directly fall
-> through to S390_IPL_TYPE_CCW.  Rather than always fall through, reassign
-> vdev->ipl_type to the appropriate bus for the scsi controller and proceed
-> as usual, where the bus is designated by the "bus" field and set during
-> the IPLB build.
-> 
-> Because S390_IPL_TYPE_QEMU_SCSI should not appear as an ipl_type once the
-> device is found, remove that specific case from other existing switches
-> and allow it to land in the default case, which will generally result
-> in an immediate error.
+> The existing virtio_ccw_run() actually has no dependency on CCW.  Rather
+> than add a case for non-ccw devices, we can just put main logic right in
+> the virtio_run() call so that it can be used for other bus types directly.
 > 
 > Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 > ---
->   pc-bios/s390-ccw/main.c          | 13 ++++++++++---
->   pc-bios/s390-ccw/virtio-blkdev.c |  1 -
->   pc-bios/s390-ccw/virtio.c        |  5 -----
->   3 files changed, 10 insertions(+), 9 deletions(-)
+>   pc-bios/s390-ccw/virtio-ccw.c | 17 -----------------
+>   pc-bios/s390-ccw/virtio-ccw.h |  1 -
+>   pc-bios/s390-ccw/virtio.c     | 16 +++++++++++-----
+>   3 files changed, 11 insertions(+), 23 deletions(-)
 
-The expected followup described in patch 2 apply to 
-S390_IPLB_MIN_QEMU_SCSI_LEN, but this is good...
+I thought for sure I reviewed this in v1, and indeed I did. But you 
+abstracted it further and left my tag off (thanks!), and this is even 
+better.
 
 Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
 > 
-> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-> index 8bc6e8eaa3..63692260a4 100644
-> --- a/pc-bios/s390-ccw/main.c
-> +++ b/pc-bios/s390-ccw/main.c
-> @@ -257,8 +257,16 @@ static bool find_boot_device(void)
->           vdev->selected_scsi_device.channel = iplb.scsi.channel;
->           vdev->selected_scsi_device.target = iplb.scsi.target;
->           vdev->selected_scsi_device.lun = iplb.scsi.lun;
-> -        blk_schid.ssid = iplb.scsi.ssid & 0x3;
-> -        found = find_subch(iplb.scsi.devno);
-> +        vdev->ipl_type = iplb.scsi.bus;
-> +        switch (vdev->ipl_type) {
-> +        case S390_IPL_TYPE_CCW:
-> +            blk_schid.ssid = iplb.scsi.ssid & 0x3;
-> +            found = find_subch(iplb.scsi.devno);
-> +            break;
-> +        default:
-> +            puts("Unrecognized SCSI controller");
-> +            break;
-> +        }
->           break;
->        case S390_IPL_TYPE_PCI:
->           found = find_fid(iplb.pci.fid);
-> @@ -342,7 +350,6 @@ static void ipl_pci_device(void)
->   static void ipl_boot_device(void)
->   {
->       switch (virtio_get_device()->ipl_type) {
-> -    case S390_IPL_TYPE_QEMU_SCSI:
->       case S390_IPL_TYPE_CCW:
->           ipl_ccw_device();
->           break;
-> diff --git a/pc-bios/s390-ccw/virtio-blkdev.c b/pc-bios/s390-ccw/virtio-blkdev.c
-> index 98b6cec3a0..83a1185dd5 100644
-> --- a/pc-bios/s390-ccw/virtio-blkdev.c
-> +++ b/pc-bios/s390-ccw/virtio-blkdev.c
-> @@ -253,7 +253,6 @@ int virtio_blk_setup_device(VDev *vdev)
->       puts("Using virtio-blk.");
+> diff --git a/pc-bios/s390-ccw/virtio-ccw.c b/pc-bios/s390-ccw/virtio-ccw.c
+> index 5cb2158ed2..ea5dbc2857 100644
+> --- a/pc-bios/s390-ccw/virtio-ccw.c
+> +++ b/pc-bios/s390-ccw/virtio-ccw.c
+> @@ -107,23 +107,6 @@ long virtio_ccw_notify(SubChannelId schid, int vq_idx, long cookie)
+>                            vq_idx, cookie);
+>   }
 >   
->       switch (vdev->ipl_type) {
-> -    case S390_IPL_TYPE_QEMU_SCSI:
->       case S390_IPL_TYPE_CCW:
->           return virtio_ccw_setup(vdev);
->       case S390_IPL_TYPE_PCI:
+> -int virtio_ccw_run(VDev *vdev, int vqid, VirtioCmd *cmd)
+> -{
+> -    VRing *vr = &vdev->vrings[vqid];
+> -    int i = 0;
+> -
+> -    do {
+> -        vring_send_buf(vr, cmd[i].data, cmd[i].size,
+> -                       cmd[i].flags | (i ? VRING_HIDDEN_IS_CHAIN : 0));
+> -    } while (cmd[i++].flags & VRING_DESC_F_NEXT);
+> -
+> -    vring_wait_reply();
+> -    if (drain_irqs()) {
+> -        return -1;
+> -    }
+> -    return 0;
+> -}
+> -
+>   int virtio_ccw_reset(VDev *vdev)
+>   {
+>       return run_ccw(vdev, CCW_CMD_VDEV_RESET, NULL, 0, false);
+> diff --git a/pc-bios/s390-ccw/virtio-ccw.h b/pc-bios/s390-ccw/virtio-ccw.h
+> index a506767eaa..43d21906e5 100644
+> --- a/pc-bios/s390-ccw/virtio-ccw.h
+> +++ b/pc-bios/s390-ccw/virtio-ccw.h
+> @@ -16,7 +16,6 @@ extern SubChannelId blk_schid;
+>   /* virtio-ccw.c */
+>   int drain_irqs_ccw(SubChannelId schid);
+>   bool virtio_ccw_is_supported(VDev *vdev);
+> -int virtio_ccw_run(VDev *vdev, int vqid, VirtioCmd *cmd);
+>   long virtio_ccw_notify(SubChannelId schid, int vq_idx, long cookie);
+>   int virtio_ccw_setup(VDev *vdev);
+>   int virtio_ccw_reset(VDev *vdev);
 > diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
-> index a0d249db24..0b33544144 100644
+> index 0b33544144..34c5e6ee22 100644
 > --- a/pc-bios/s390-ccw/virtio.c
 > +++ b/pc-bios/s390-ccw/virtio.c
-> @@ -61,7 +61,6 @@ char *virtio_get_ring_area(int ring_num)
->   int drain_irqs(void)
+> @@ -70,13 +70,19 @@ int drain_irqs(void)
+>   
+>   int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd)
 >   {
->       switch (vdev.ipl_type) {
+> -    switch (vdev->ipl_type) {
 > -    case S390_IPL_TYPE_QEMU_SCSI:
->       case S390_IPL_TYPE_CCW:
->           return drain_irqs_ccw(vdev.schid);
->       default:
-> @@ -109,7 +108,6 @@ void vring_init(VRing *vr, VqInfo *info)
->   bool vring_notify(VRing *vr)
->   {
->       switch (vdev.ipl_type) {
-> -    case S390_IPL_TYPE_QEMU_SCSI:
->       case S390_IPL_TYPE_CCW:
->           vr->cookie = virtio_ccw_notify(vdev.schid, vr->id, vr->cookie);
->           break;
-> @@ -130,7 +128,6 @@ bool vring_notify(VRing *vr)
->   bool be_ipl(void)
->   {
->       switch (virtio_get_device()->ipl_type) {
-> -    case S390_IPL_TYPE_QEMU_SCSI:
->       case S390_IPL_TYPE_CCW:
->           return true;
->       case S390_IPL_TYPE_PCI:
-> @@ -231,7 +228,6 @@ int vring_wait_reply(void)
->   int virtio_reset(VDev *vdev)
->   {
->       switch (vdev->ipl_type) {
-> -    case S390_IPL_TYPE_QEMU_SCSI:
->       case S390_IPL_TYPE_CCW:
->           return virtio_ccw_reset(vdev);
->       case S390_IPL_TYPE_PCI:
-> @@ -244,7 +240,6 @@ int virtio_reset(VDev *vdev)
->   bool virtio_is_supported(VDev *vdev)
->   {
->       switch (vdev->ipl_type) {
-> -    case S390_IPL_TYPE_QEMU_SCSI:
->       case S390_IPL_TYPE_CCW:
->           return virtio_ccw_is_supported(vdev);
->       case S390_IPL_TYPE_PCI:
+> -    case S390_IPL_TYPE_CCW:
+> -        return virtio_ccw_run(vdev, vqid, cmd);
+> -    default:
+> +    VRing *vr = &vdev->vrings[vqid];
+> +    int i = 0;
+> +
+> +    do {
+> +        vring_send_buf(vr, cmd[i].data, cmd[i].size,
+> +                       cmd[i].flags | (i ? VRING_HIDDEN_IS_CHAIN : 0));
+> +    } while (cmd[i++].flags & VRING_DESC_F_NEXT);
+> +
+> +    vring_wait_reply();
+> +    if (drain_irqs()) {
+>           return -1;
+>       }
+> +    return 0;
+>   }
+>   
+>   void vring_init(VRing *vr, VqInfo *info)
 
 
