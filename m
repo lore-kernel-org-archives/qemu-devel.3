@@ -4,98 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C57AC61DC2
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:56:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1D4DC61DBE
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzD7f-0007vy-Kv; Wed, 26 Aug 2026 08:52:55 -0400
+	id 1wzD7U-0007jk-Gm; Wed, 26 Aug 2026 08:52:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wzD7c-0007tZ-QC; Wed, 26 Aug 2026 08:52:52 -0400
+ id 1wzD7Q-0007ei-3M; Wed, 26 Aug 2026 08:52:40 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wzD7Z-0002m5-EY; Wed, 26 Aug 2026 08:52:52 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wzD7N-0002WG-Ml; Wed, 26 Aug 2026 08:52:39 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QCVw9A4002747; Wed, 26 Aug 2026 12:52:47 GMT
+ 67QCW8Og3978118; Wed, 26 Aug 2026 12:52:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=e1sXAYyTQLQ/leqkz
- K9GWXtFnfkXNsBbgEXq2UaguPk=; b=HcJjYZqrY6GcP4HDodfDPhRShHYdED5qf
- ACmRBrqs7uGKS/M/oQOJAmOFu21nDodDf9Ma7TPnWWhysXljypMAMgEHjO/nTsCy
- 21fTbNgHwmjOI9OA+4i6TtbULkhHhwIAiWGaOSsRV2mrLL6uJBH0oes6wHHpsdAG
- vELc+N7tiSMQDM+S3hxzX0SxoPIiGgwgSgTn2Z6ih3K4Ozu+YfS9oZLTMEuyfr83
- 0z1FS28zV68uiI3n/FBG8k2/fNvG8oiRRgjNV9H9SZ87n4TROWWouJcoA+6AwlO1
- jskY6Q1uIPyAmZfCGqPaqzrlQdqNr2JAkdMvqVtlY8nyYu84bVNUA==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73g4xpeq-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=+gWEuu
+ I2p7v4vYtykPazXlelUs/4ptkPhub3oxlZ3p0=; b=ceoKGjmPsq2lh/f9fdkOp1
+ Kn47wOBGI4hukmSPhVZEXddGowgCf1tQQ9UCVZaDx4aTz7jSWLoQ3iEbfaC7Z5R+
+ 6jV2h3qV3DZAcUg9+9FkvheWs0Brl74ZM2nki1wVf7JaWNe6bEeCECi/U57UfY54
+ tjVSiA3IFDRNVsfAXA0QgHhfOIbjWB7RmvhByjlM0bJ7WZCQFXxVTqnCdPBEvPKJ
+ B3wZi+Ql2lB4OMt3Gny3lINmle7wtlTMpx3x7oKCq789RQJfcvM3doZluPLGqpj1
+ 0HGEHnufW2kCWWTwDlYRWCPAKsNrl53LY5DXiCAcNHYWu4ErEpqBE9j7I91W1MUg
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73946pbm-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 12:52:47 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QCfHm6006710;
- Wed, 26 Aug 2026 12:52:46 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7pfwa2tu-1
+ Wed, 26 Aug 2026 12:52:35 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QCfLmw018839;
+ Wed, 26 Aug 2026 12:52:35 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7raghsy0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 12:52:46 +0000 (GMT)
+ Wed, 26 Aug 2026 12:52:34 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
  [10.39.53.229])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QCqjGq54722940
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QCqX7h59375876
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 12:52:45 GMT
+ Wed, 26 Aug 2026 12:52:33 GMT
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 38EA25805E;
- Wed, 26 Aug 2026 12:52:45 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5312F5805C;
+ Wed, 26 Aug 2026 12:52:33 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 170E358059;
- Wed, 26 Aug 2026 12:52:44 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 02B2758059;
+ Wed, 26 Aug 2026 12:52:32 +0000 (GMT)
 Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com.com (unknown
  [9.61.78.161]) by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 12:52:43 +0000 (GMT)
+ Wed, 26 Aug 2026 12:52:31 +0000 (GMT)
 From: Eric Farman <farman@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
  Cornelia Huck <cohuck@redhat.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Collin Walling <walling@linux.ibm.com>,
- Jared Rossi <jrossi@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 23/37] pc-bios/s390-ccw: Rework zipl_load_segment function
-Date: Wed, 26 Aug 2026 08:51:58 -0400
-Message-ID: <20260826125213.1901252-24-farman@linux.ibm.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Farhan Ali <alifm@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>
+Subject: [PULL 14/37] crypto/x509-utils: Add helper functions for DIAG 508
+ subcode 1
+Date: Wed, 26 Aug 2026 08:51:49 -0400
+Message-ID: <20260826125213.1901252-15-farman@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260826125213.1901252-1-farman@linux.ibm.com>
 References: <20260826125213.1901252-1-farman@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: UJDugn4_1-4UfurLVai7EaYjNnGa5Z3O
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfX649NERo6TMGZ
- EZl3Eq2xPJFx9LjA0d9xcLSINzKUFjozmMCqg/qDalbFHGo6LNG5GN3jT5jZVDR4L1GiIlsWMxf
- hMaohaAMXlb2iv4x+7sfkZSVHhvhIOk=
-X-Proofpoint-GUID: UJDugn4_1-4UfurLVai7EaYjNnGa5Z3O
-X-Authority-Analysis: v=2.4 cv=JZyMa0KV c=1 sm=1 tr=0 ts=6a8ee19f cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=uL_FI9FW9AP7juJAwn4A:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfX2cdnERQK/0OL
- 1JZRHM5mW1uqZXGLdok9VZXuyG7tPh1/5/X0mlN9eiZai6wb25fsFjhci7uPqIcOhquunqnsx3w
- FlTOcBEsk6NDISIEYbVt7hVSGFgX1tuJ/uLkxCD/E9AOmDYx+/d+783+eFcYua6WdidPpSD7eGF
- IW/us0Y23V/4/jQAm46UvANgPzDYWBLEg54xHr1P5LmnF9ki4chQDF8fIC0bThe+d6arHjeUu9C
- y/+AocYC64YXOfR3r7wK3SFvnd8zEUgkWgMmxlryElAE/wuICPWxujMq5PXyGie2Zjmv8RHyhaY
- L+mGwe9JcdF2n0B9xe2OgvXUyVcK0N439pxFzT6tf0Q4tbFXrjKtgv82iiqoCX4CBlvJ70HvAuo
- x+BzByA51hNiuNikxeWc7cerHh3BVT9MhMoFowmRQYrdhRs6r09uj0GAM1Idthuy+K6s82Xy54M
- dpHIl1pZUswJSD7PSIA==
+X-Proofpoint-GUID: McbLN6ooVNIPTQG9YA9DY7uWL--oMZd8
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfXwaxrl67+qK1b
+ mP7uoCBDPjPUuidsC3kKEDTbpFGf2SIghVImyOsaY4PIcipYY16IvvERuUrxP+WBW0d35NZVSWO
+ mhEoDpX477hUFWNk0v4fLjdONi68r00hUZ9cP/Awz7gN7WA6LwII/d5AItKK11Mszwvni8DMKSq
+ 5qqeHJU5DaqEqnyhkGjsq8iAIEzfqHoPFoEv1cppDRKWZ2iyyOjRIEudMmI2iOl7TfEqMt9q+MM
+ 0yXDhJeP3+K0ENmQavCZzaq67Nc2HIwSRdlmSbgqkiL0nYyhhf8D8M7vUDvFGCHbbhPJssd5Yjc
+ dCYWgpJsGj4DEDznB4t9hUhd+k/E53ewWWWw8l4++DkRYpPuFilw3aTOMcM/Vyn7IdTPSGntXi2
+ 6nCthT+taR9pE91pubziUeKGqbsBmx7JgpM8cuq1rg4AZ5SW6FSoUtusVt3/G4SLSOb0UMG9LgM
+ HWX4jF8dS0EAzhRpnbg==
+X-Authority-Analysis: v=2.4 cv=Y/nIdBeN c=1 sm=1 tr=0 ts=6a8ee193 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=zt4pQtjzIfgCBjXpw2wA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfX6b++6uCA7XRt
+ BqINp8NDbvIa8mnmO+IfvnG+JAMhUDC+oBej6bE8FOv0LROn3XxQUYE0gtkwpUbNoGn9Ra47sfr
+ oEevNCBIrgBI/nMyHohzVAAu8yFqkN8=
+X-Proofpoint-ORIG-GUID: McbLN6ooVNIPTQG9YA9DY7uWL--oMZd8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-26_03,2026-08-26_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
+ spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ suspectscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260104
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
@@ -124,103 +129,207 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhuoying Cai <zycai@linux.ibm.com>
 
-Change zipl_load_segment() to accept explicit blockno and address
-parameters instead of ComponentEntry pointer and return segment length.
+Introduce helper functions to support signature verification required by
+DIAG 508 subcode 1:
 
-Modify this function to allow the caller to specify a memory address
-where segment data should be loaded into.
+qcrypto_pkcs7_convert_sig_pem() – converts a signature from DER to PEM format
+qcrypto_x509_verify_sig() – verifies the provided data against the given signature
 
-seg_len variable is necessary to store the calculated segment length and
-is used during signature verification. Return the length on success, or
-a negative return code on failure.
-
-Remove static qualifier and add function declaration to bootmap.h to
-make it accessible to other modules.
+These functions enable basic signature verification support.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Acked-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Collin Walling <walling@linux.ibm.com>
-Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260730214624.2328883-22-zycai@linux.ibm.com
+Link: https://lore.kernel.org/qemu-devel/20260730214624.2328883-13-zycai@linux.ibm.com
 Signed-off-by: Eric Farman <farman@linux.ibm.com>
 ---
- pc-bios/s390-ccw/bootmap.c | 14 ++++++--------
- pc-bios/s390-ccw/bootmap.h | 13 +++++++++++++
- 2 files changed, 19 insertions(+), 8 deletions(-)
+ crypto/x509-utils.c         | 108 ++++++++++++++++++++++++++++++++++++
+ include/crypto/x509-utils.h |  41 ++++++++++++++
+ 2 files changed, 149 insertions(+)
 
-diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-index 21c219ca94..38e98aab68 100644
---- a/pc-bios/s390-ccw/bootmap.c
-+++ b/pc-bios/s390-ccw/bootmap.c
-@@ -615,19 +615,15 @@ static int ipl_eckd(void)
-  * IPL a SCSI disk
-  */
+diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
+index 543fc3007d..e4767f9838 100644
+--- a/crypto/x509-utils.c
++++ b/crypto/x509-utils.c
+@@ -16,6 +16,7 @@
+ #include <gnutls/gnutls.h>
+ #include <gnutls/crypto.h>
+ #include <gnutls/x509.h>
++#include <gnutls/pkcs7.h>
  
--static int zipl_load_segment(ComponentEntry *entry)
-+int zipl_load_segment(block_number_t blockno, uint64_t address)
- {
-     const int max_entries = (MAX_SECTOR_SIZE / sizeof(ScsiBlockPtr));
-     ScsiBlockPtr *bprs = (void *)sec;
-     const int bprs_size = sizeof(sec);
--    block_number_t blockno;
--    uint64_t address;
-     int i;
-     char err_msg[] = "zIPL failed to read BPRS at 0xZZZZZZZZZZZZZZZZ";
-     char *blk_no = &err_msg[30]; /* where to print blockno in (those ZZs) */
--
--    blockno = entry->data.blockno;
--    address = entry->compdat.load_addr;
-+    int seg_len = 0;
- 
-     debug_print_int("loading segment at block", blockno);
-     debug_print_int("addr", address);
-@@ -670,10 +666,12 @@ static int zipl_load_segment(ComponentEntry *entry)
-                 puts("zIPL load segment failed");
-                 return -EIO;
-             }
-+
-+            seg_len += bprs->size * (bprs[i].blockct + 1);
-         }
-     } while (blockno);
- 
--    return 0;
-+    return seg_len;
+ static const int qcrypto_to_gnutls_hash_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
+     [QCRYPTO_HASH_ALGO_MD5] = GNUTLS_DIG_MD5,
+@@ -336,6 +337,96 @@ int qcrypto_x509_check_ecc_curve_p521(uint8_t *cert, size_t size, Error **errp)
+     return curve_id == GNUTLS_ECC_CURVE_SECP521R1;
  }
  
- static int zipl_run_normal(ComponentEntry **entry_ptr, const uint8_t *tmp_sec)
-@@ -689,7 +687,7 @@ static int zipl_run_normal(ComponentEntry **entry_ptr, const uint8_t *tmp_sec)
-             continue;
-         }
++int qcrypto_pkcs7_convert_sig_pem(uint8_t *sig, size_t sig_size,
++                                  uint8_t **result, size_t *resultlen,
++                                  Error **errp)
++{
++    int ret = -1;
++    int rc;
++    gnutls_pkcs7_t signature;
++    gnutls_datum_t sig_datum_der = {.data = sig, .size = sig_size};
++    gnutls_datum_t sig_datum_pem = {.data = NULL, .size = 0};
++
++    rc = gnutls_pkcs7_init(&signature);
++    if (rc < 0) {
++        error_setg(errp, "Failed to initialize pkcs7 data: %s", gnutls_strerror(rc));
++        return ret;
++    }
++
++    rc = gnutls_pkcs7_import(signature, &sig_datum_der, GNUTLS_X509_FMT_DER);
++    if (rc != 0) {
++        error_setg(errp, "Failed to import signature: %s", gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    rc = gnutls_pkcs7_export2(signature, GNUTLS_X509_FMT_PEM, &sig_datum_pem);
++    if (rc != 0) {
++        error_setg(errp, "Failed to convert signature to PEM format: %s",
++                   gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    *resultlen = sig_datum_pem.size;
++    *result = g_memdup2(sig_datum_pem.data, sig_datum_pem.size);
++
++    ret = 0;
++
++cleanup:
++    gnutls_pkcs7_deinit(signature);
++    g_free(sig_datum_pem.data);
++    return ret;
++}
++
++int qcrypto_x509_verify_sig(uint8_t *cert, size_t cert_size,
++                            uint8_t *comp, size_t comp_size,
++                            uint8_t *sig, size_t sig_size, Error **errp)
++{
++    int rc;
++    int ret = -1;
++    gnutls_x509_crt_t crt = NULL;
++    gnutls_pkcs7_t signature = NULL;
++    gnutls_datum_t cert_datum = {.data = cert, .size = cert_size};
++    gnutls_datum_t data_datum = {.data = comp, .size = comp_size};
++    gnutls_datum_t sig_datum = {.data = sig, .size = sig_size};
++
++    rc = gnutls_x509_crt_init(&crt);
++    if (rc < 0) {
++        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    rc = gnutls_x509_crt_import(crt, &cert_datum, GNUTLS_X509_FMT_PEM);
++    if (rc != 0) {
++        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    rc = gnutls_pkcs7_init(&signature);
++    if (rc < 0) {
++        error_setg(errp, "Failed to initialize pkcs7 data: %s", gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    rc = gnutls_pkcs7_import(signature, &sig_datum, GNUTLS_X509_FMT_PEM);
++    if (rc != 0) {
++        error_setg(errp, "Failed to import signature: %s", gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    rc = gnutls_pkcs7_verify_direct(signature, crt, 0, &data_datum, 0);
++    if (rc != 0) {
++        error_setg(errp, "Failed to verify signature: %s", gnutls_strerror(rc));
++        goto cleanup;
++    }
++
++    ret = 0;
++
++cleanup:
++    gnutls_x509_crt_deinit(crt);
++    gnutls_pkcs7_deinit(signature);
++    return ret;
++}
++
+ #else /* ! CONFIG_GNUTLS */
  
--        if (zipl_load_segment(entry)) {
-+        if (zipl_load_segment(entry->data.blockno, entry->compdat.load_addr) < 0) {
-             return -1;
-         }
+ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+@@ -379,4 +470,21 @@ int qcrypto_x509_check_ecc_curve_p521(uint8_t *cert, size_t size, Error **errp)
+     return -1;
+ }
  
-diff --git a/pc-bios/s390-ccw/bootmap.h b/pc-bios/s390-ccw/bootmap.h
-index 95943441d3..40580600b5 100644
---- a/pc-bios/s390-ccw/bootmap.h
-+++ b/pc-bios/s390-ccw/bootmap.h
-@@ -113,6 +113,19 @@ typedef struct ScsiMbr {
-     ScsiBlockPtr pt;   /* block pointer to program table */
- } __attribute__ ((packed)) ScsiMbr;
++int qcrypto_pkcs7_convert_sig_pem(uint8_t *sig, size_t sig_size,
++                                  uint8_t **result,
++                                  size_t *resultlen,
++                                  Error **errp)
++{
++    error_setg(errp, "GNUTLS is required to export pkcs7 signature");
++    return -1;
++}
++
++int qcrypto_x509_verify_sig(uint8_t *cert, size_t cert_size,
++                            uint8_t *comp, size_t comp_size,
++                            uint8_t *sig, size_t sig_size, Error **errp)
++{
++    error_setg(errp, "GNUTLS is required for signature-verification support");
++    return -1;
++}
++
+ #endif /* ! CONFIG_GNUTLS */
+diff --git a/include/crypto/x509-utils.h b/include/crypto/x509-utils.h
+index fcace73c49..c256d7bfad 100644
+--- a/include/crypto/x509-utils.h
++++ b/include/crypto/x509-utils.h
+@@ -91,4 +91,45 @@ int qcrypto_x509_get_cert_key_id(uint8_t *cert, size_t size,
+  */
+ int qcrypto_x509_check_ecc_curve_p521(uint8_t *cert, size_t size, Error **errp);
  
 +/**
-+ * zipl_load_segment
-+ * @blockno: block number of the first BPRS describing the segment.
-+ * @address: guest physical address at which to load the segment.
++ * qcrypto_pkcs7_convert_sig_pem
++ * @sig: pointer to the PKCS#7 signature in DER format
++ * @sig_size: size of the signature
++ * @result: output location for the allocated buffer for the signature in
++ *          PEM format
++ *          (the function allocates memory which must be freed by the caller)
++ * @resultlen: pointer to the size of the buffer
++ *              (will be updated with the actual size of the PEM-encoded
++ *               signature)
++ * @errp: error pointer
 + *
-+ * Walks the BPRS chain starting at @blockno, loading each data block
-+ * into guest memory at @address.
++ * Convert given PKCS#7 @sig from DER to PEM format.
 + *
-+ * Returns: length of the segment on success,
-+ *          negative value on error.
++ * Returns: 0 if PEM-encoded signature was successfully stored in @result,
++ *         -1 on error.
 + */
-+int zipl_load_segment(block_number_t blockno, uint64_t address);
++int qcrypto_pkcs7_convert_sig_pem(uint8_t *sig, size_t sig_size,
++                                  uint8_t **result,
++                                  size_t *resultlen,
++                                  Error **errp);
 +
- #define ZIPL_MAGIC              "zIPL"
- #define ZIPL_MAGIC_EBCDIC       "\xa9\xc9\xd7\xd3"
- #define IPL1_MAGIC "\xc9\xd7\xd3\xf1" /* == "IPL1" in EBCDIC */
++/**
++ * qcrypto_x509_verify_sig
++ * @cert: pointer to the raw certificate data
++ * @cert_size: size of the certificate
++ * @comp: pointer to the component to be verified
++ * @comp_size: size of the component
++ * @sig: pointer to the signature
++ * @sig_size: size of the signature
++ * @errp: error pointer
++ *
++ * Verify the provided @comp against the @sig and @cert.
++ *
++ * Returns: 0 on success,
++ *         -1 on error.
++ */
++int qcrypto_x509_verify_sig(uint8_t *cert, size_t cert_size,
++                            uint8_t *comp, size_t comp_size,
++                            uint8_t *sig, size_t sig_size, Error **errp);
++
+ #endif
 -- 
 2.55.0
 
