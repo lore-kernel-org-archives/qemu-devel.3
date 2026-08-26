@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21C28C61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 18:16:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D902FC61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 18:16:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzIAQ-0004RK-L6; Wed, 26 Aug 2026 14:16:06 -0400
+	id 1wzIAT-0004Rr-5X; Wed, 26 Aug 2026 14:16:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzIAN-0004Qu-Mw
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:16:04 -0400
+ id 1wzIAR-0004RU-2s
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:16:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzIAM-0005LA-34
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:16:03 -0400
+ id 1wzIAP-0005LV-A3
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:16:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787768161;
+ s=mimecast20190719; t=1787768163;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SjayTqoTQhg8go9dspt4rTOPn2fzR1zd1pP5i8DKHGg=;
- b=CExWfnDI5B1Xv1n2zAonox96PgNmOFxJ+J8Ov5zWuCP04bmuHBSBXphLedT634I3IicMh+
- eb5AI3P8YFnCwhtrObY757sWpprEjMYiI6Ug+5TZRIy4qgpWnnEmXmLiXbf2na55XbzglV
- Us46r+AaTxQPAxHG55rdT56DGj+e4BA=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=A0gAKwAh67FfmFuiMW0u/q7z7MRLvXTPWhdOZxVQY8I=;
+ b=KyS2liogwg6oHZXb1jyEMCiY+WVpPrSN+z4faMYXxLvrzPvW6kAA9fSmM4oXOTugiLDmJK
+ A/o0pcb5Q+A8i1gkov4PSpl0iNBnN7L0PbFtWfLqOQFHfpGZXJf6/C9D1xHXxGi2rVQjko
+ B0I+KkLkxbBCCpepbgRugHGiu1aWO80=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-237-cvfrQ6QVMsqssp1339BIcg-1; Wed, 26 Aug 2026 14:15:57 -0400
-X-MC-Unique: cvfrQ6QVMsqssp1339BIcg-1
-X-Mimecast-MFC-AGG-ID: cvfrQ6QVMsqssp1339BIcg_1787768156
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-69e984607e7so1314341a12.2
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 11:15:57 -0700 (PDT)
+ us-mta-223-HU2sLHOKPCG6II-iaNIiTA-1; Wed, 26 Aug 2026 14:16:01 -0400
+X-MC-Unique: HU2sLHOKPCG6II-iaNIiTA-1
+X-Mimecast-MFC-AGG-ID: HU2sLHOKPCG6II-iaNIiTA_1787768160
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-c160b9c0676so68151166b.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 11:16:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787768156; x=1788372956; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787768160; x=1788372960; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
  :reply-to:content-type;
- bh=SjayTqoTQhg8go9dspt4rTOPn2fzR1zd1pP5i8DKHGg=;
- b=H/2TEoYkrmJm+KgQbUQGEmpICP5fGhIxgAmr0oOGP4BGgrwOGvyLYmUI07KsGVqZa8
- BsbW5oU2MGZt0JcKhmch50mXe/7UinhcURch+U1sWWaw1/DxR/5js40cIclJqeTTSD7I
- Ny+8rrnP0Layifi1qH/ZFHRAfaaY2MBVxU+XGKpkGt6dCzXgZyz1me7fhykFmYUVSBhD
- X1aachOqjb7Ddp9EyOc0ws0x2IuFIsIwmMrkdCFyZfKBFimtc0PIx9sUd9o05B42UOFk
- rWOVWxcukXCAjV2o3Fd7OsFSSFCgDTrRYrXaoaMFA/9/UkerbdvkKFaDzgcp3oZe/zTg
- wjpg==
+ bh=A0gAKwAh67FfmFuiMW0u/q7z7MRLvXTPWhdOZxVQY8I=;
+ b=PwnwvH7ZpogJc2XcY3tqaIUSeUh9TkIMBnonqTwLfHSuCNMN/XhVC+j/u36HXHK3RP
+ B+19roBSzybxRWuaOy4TWABGi848dKqH96XqhZwu4QMot8y5k26+HFjShLiFQF36li0E
+ eCzC/Z8XCbAvo3o+xxn5k51ysI10F69wf/bcDuyAqjghZ7+7rbLu42yXs65RTlaezTAO
+ fU0HcHNbYFNTRLCaSa8g0i8g0VGhRprVNW39cUNCTN9sHIPl4mHy/4gISZhud/hkC7VI
+ PcHTvbetZoBXSJGxRn4t/HGyj6W7C/wsW0+cq7ja9lxLFaX6QTXmp65IHY9yNM7wens6
+ 7vJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787768156; x=1788372956;
+ d=1e100.net; s=20251104; t=1787768160; x=1788372960;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to:content-type;
- bh=SjayTqoTQhg8go9dspt4rTOPn2fzR1zd1pP5i8DKHGg=;
- b=B58mPYI1eg2IxqthRo0TADzBGuXfirJg1cSRBkzJxpAXfMchqNzCQRBmVdI4tlbrHa
- t3thZKSmJcdsDB4KRO62R5kIQax1LztvqXg3cLxKnUx7UDhhhXe3deS/NcnmvsatYrnT
- d9IwEuEdWTQuKxOCtv4k7mTjR96lQY1UstyVuDyfPJ79lF6qwTA6qRbRvlZic6QEA7x0
- Szt73XSd9xDGk1dh2lz0gKfgqfEIafrrWFco0KdAvcV9oa7U7KpvAfDzkicRRv7ShyCa
- jJzCI+4FfPqkwZQi6CTndQvR5n/yiFvm4xrL4I4BzrzKbwmqthh+1daGYjRBZaI6+Rwq
- QWbw==
-X-Gm-Message-State: AFuF++mB6TMJ4v8wxk9aY00nQ3VRoznOXJnfTt338/WSOWQu74Uv/t5w
- 2Jueu5mzMmdTqtcDhbmHklUi7pRimvlfBqWVsFnOa/hRwZyYcCtUyo31lu80X22bOZ9EXbljIYD
- VeZKRWlH19vcfGQkjlXJkJtr/9QrMr7fXbDDI4ulapDyFBU1/xze/ZzU1ZAhhwxKN8Z/cFxW3aM
- z1Axiivkrk/ZL1fQt38vv7meWxFRJh16sW3Lk8RvIw
-X-Gm-Gg: AR+sD13/CsW7ZAJSIfXJXyA9Jqk7fxpx89WdSzLtIOdcaIxQcffI+xI0AwS5/xJnq9M
- mnZBjxOvPdSIMDf95JufhauIxENWBmSyTcpJcNP+Lg83cfn+rdfrYyET1Wn66wFkuJm6WHkZtca
- +bkF0PNCPPhOmaFi5yQqeXm3VPylM/LWQgLAZ99jDIo5UL7M3ybKnSMgEQ/0f/9yZKhTL24xKl0
- phPnSpkEAps67/JiAIV7A8sP0WAdiGSdjGKAFGwblr9YWKLn6c1fZIj259LPfdJt71k7B9VtA26
- owRvXTLB+l87GSQnzzJVkaQMQLOyj4SLNkOgUGfdPhQsqrKG3ILkmmcI7hRZkUm8TZ+Ts/x+h8O
- fs35OmS73BFkka/xP0/hrMgrMIfhEz+9QFxadSq6dzD1OI6096cHiwKnMjqkfYNzvufcG/yrGvq
- ulwA==
-X-Received: by 2002:a05:6402:2350:b0:6a1:1bea:8ea0 with SMTP id
- 4fb4d7f45d1cf-6a5df5c6814mr11912812a12.3.1787768156437; 
- Wed, 26 Aug 2026 11:15:56 -0700 (PDT)
-X-Received: by 2002:a05:6402:2350:b0:6a1:1bea:8ea0 with SMTP id
- 4fb4d7f45d1cf-6a5df5c6814mr11912751a12.3.1787768156017; 
- Wed, 26 Aug 2026 11:15:56 -0700 (PDT)
+ bh=A0gAKwAh67FfmFuiMW0u/q7z7MRLvXTPWhdOZxVQY8I=;
+ b=X5T8n43TIAlMoyWKSgTfN8bzhyZEbZkb8XoptW2d+UnqRGfoPjSjOzRxR+mpIHuq0B
+ kWuY7wQ6dA0++SaPwSyXo7P+60qm4QK4fOk74DaFOZync1+u51o2SMTeODVGXEH1mou7
+ UbRVRAi8DIixt05F20rkqSC3CsE7JgrBAaa1O/ktsn68rBYhx8k/y2/QAhD+G5fAtoVM
+ 0mTe3yTojDjqDC1H+HkGeTEgHq/HLLbj3IM+UDvD3CJQWhHHakzF+OcYaeDVm78zqVt2
+ 0pJwH+7gnUq4CVnWvB8x6ysqn/2gT2c1lHGDeBjcgMvtzc70JpgHEYYbBwqByEX1R54u
+ dOHA==
+X-Gm-Message-State: AFuF++nTMUQABicvsKPH3ggn0lB0JaIzGHdgpJJZIK+OuV3tnrjWKQma
+ myiwNph5KbBfzkb9slMXkUvY/Mxud9PzzLNl3A3Y8bQAN3P1QqpGI5DYo1a8Z6XybP7jjgmyspF
+ Ur13eNd2/ElzdCUBVuuHt0ykU1jPD5YcqhqT6A9V67VxbwX6KXaVdObPY3kZn5PgM5p8WasVER4
+ LWstWlir0GAuxV+FSOfo5ACT7o2m0l5SuQsOyhKOK+
+X-Gm-Gg: AR+sD10VT5BvTjLbcMfdNL7/LZlAWaxyDyo8ZKtBea+eKgMIzVDcFjSwXS/+Eeq9S+B
+ YVOv7Di3dJXU3wk82MzYNxM5Jia05GYZfn/9lsZL1SQRfolbAfIqnFOMTEBxXKb1ET2UJmH0YRE
+ V1Tr69NfhI/qK/9zwM0CUb1pkdnevrAcdkeg81zkejInqIzEeXky0tSV+1S3t7rdqieJfqCHGTG
+ NU1KFVx0spN/mLuUblAyXFRD+YpOQOlYl0rWNLppUyak1XETV75q6vIW0nTlJ6cZgENO2mT87C2
+ N5GdrUS1pnjyIWV6CylKxOSNlaVetCSsuLMMxmXu6kA1pifXkXUoRmC4xmEUPgbKB2O59TPLyqz
+ KSfg0yl7xfrQ3NKzJ1dxjI+PsMPYd+VEkU3k6TpA9495cndKqhWtygcIjXJd+dAgBit6tX26hz+
+ F2fw==
+X-Received: by 2002:a17:906:f591:b0:c15:f4bb:e663 with SMTP id
+ a640c23a62f3a-c250bb792f9mr949566166b.10.1787768159976; 
+ Wed, 26 Aug 2026 11:15:59 -0700 (PDT)
+X-Received: by 2002:a17:906:f591:b0:c15:f4bb:e663 with SMTP id
+ a640c23a62f3a-c250bb792f9mr949558966b.10.1787768159465; 
+ Wed, 26 Aug 2026 11:15:59 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6a5deac24f1sm4968130a12.23.2026.08.26.11.15.55
+ a640c23a62f3a-c250a704e55sm579587666b.21.2026.08.26.11.15.58
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 11:15:55 -0700 (PDT)
+ Wed, 26 Aug 2026 11:15:58 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 1/2] i386/vapic: unref MemoryRegion if vapic_map_rom_writable
- fails
-Date: Wed, 26 Aug 2026 20:15:49 +0200
-Message-ID: <20260826181552.848617-2-pbonzini@redhat.com>
+Subject: [PATCH 2/2] vapic: confine the VAPIC region to 0xc0000..0xe0000
+Date: Wed, 26 Aug 2026 20:15:50 +0200
+Message-ID: <20260826181552.848617-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260826181552.848617-1-pbonzini@redhat.com>
 References: <20260826181552.848617-1-pbonzini@redhat.com>
@@ -121,33 +120,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-memory_region_find returns the memory region with an elevated
-reference count.  Drop the reference count also if the memory
-region cannot be mapped writable.
+The VAPIC region is mapped as writable RAM, at very high priority,
+above existing memory.  If the guest is allowed to map it everywhere,
+it can overlap PCI BARs or even SMRAM.  Ensure that the whole
+region first in the 128K of low memory that are reserved to
+option ROMs.
 
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4206
+Reported-by: Artem Dinaburg <https://gitlab.com/artem35>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/i386/vapic.c | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/i386/vapic.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
 diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
-index 8dd9188d96f..78dc2312bca 100644
+index 78dc2312bca..5c3911cf9c8 100644
 --- a/hw/i386/vapic.c
 +++ b/hw/i386/vapic.c
-@@ -602,11 +602,13 @@ static int vapic_map_rom_writable(VAPICROMState *s)
+@@ -34,6 +34,10 @@
+ #define ROM_BLOCK_SIZE          512
+ #define ROM_BLOCK_MASK          (~(ROM_BLOCK_SIZE - 1))
  
-     /* read ROM size from RAM region */
-     if (rom_paddr + 2 >= memory_region_size(section.mr)) {
-+        memory_region_unref(section.mr);
-         return -1;
++/* Option ROM window on PC/Q35 machines; the vapic ROM must live in here. */
++#define OPTION_ROM_START        0xc0000
++#define OPTION_ROM_END          0xe0000
++
+ typedef enum VAPICMode {
+     VAPIC_INACTIVE = 0,
+     VAPIC_ACTIVE   = 1,
+@@ -592,6 +596,14 @@ static int vapic_map_rom_writable(VAPICROMState *s)
+     size_t rom_size;
+     uint8_t *ram;
+ 
++    /*
++     * The VAPIC region should be mapped in place, refuse mapping it
++     * outside of the option ROM window.
++     */
++    if (rom_paddr < OPTION_ROM_START || rom_paddr >= OPTION_ROM_END) {
++        return -1;
++    }
++
+     if (s->rom_mapped_writable) {
+         memory_region_del_subregion(mr, &s->rom);
+         object_unparent(OBJECT(&s->rom));
+@@ -607,10 +619,11 @@ static int vapic_map_rom_writable(VAPICROMState *s)
      }
      ram = memory_region_get_ram_ptr(section.mr);
      rom_size = ram[rom_paddr + 2] * ROM_BLOCK_SIZE;
-     if (rom_size == 0) {
-+        memory_region_unref(section.mr);
+-    if (rom_size == 0) {
++    if (rom_size == 0 || rom_size > OPTION_ROM_END - rom_paddr) {
+         memory_region_unref(section.mr);
          return -1;
      }
++
      s->rom_size = rom_size;
+ 
+     /* We need to round to avoid creating subpages
+@@ -618,6 +631,7 @@ static int vapic_map_rom_writable(VAPICROMState *s)
+     rom_size += rom_paddr & ~TARGET_PAGE_MASK;
+     rom_paddr &= TARGET_PAGE_MASK;
+     rom_size = TARGET_PAGE_ALIGN(rom_size);
++    assert(rom_paddr >= OPTION_ROM_START && rom_paddr + rom_size <= OPTION_ROM_END);
+ 
+     memory_region_init_alias(&s->rom, OBJECT(s), "kvmvapic-rom", section.mr,
+                              rom_paddr, rom_size);
 -- 
 2.55.0
 
