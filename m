@@ -4,140 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68C34C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 16:46:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E258C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 16:48:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzGlP-0005PY-Fi; Wed, 26 Aug 2026 12:46:11 -0400
+	id 1wzGnd-00062k-Fs; Wed, 26 Aug 2026 12:48:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1wzGlN-0005P5-Jd; Wed, 26 Aug 2026 12:46:09 -0400
-Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wzGnb-00060R-Dn
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 12:48:27 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1wzGlI-0000Tx-HC; Wed, 26 Aug 2026 12:46:09 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=dPrKD0kUGt9n0JUuDetmuBhWdOZOJv2qcsVEr0lmSJOD7A08H4PAirdgfb71mPs/rjen46RwkJG4Y12UvfsNZeqzANYodQvmMIVipHBzxd7sJEiDaxwj6QbSrLrzfQzcfDKvoAMyUUjXKpk4MWJP29NmEEedYYp4Jkopa3NllUke9QNG0f2pVOHLRexmG8xpg2tgKw96Uxn2m3P3eCelsNmZLAgDt2XPDczfgfi6AzDQpznnGUV2zc1OOrrpEZ8J3tcFsjQA2afLuSGZsTPv+kfgzNx9JL1gz+AcU4wOfkKD4rNvtwMGF3FdlN2QFEb7QHB7t+fK3xwEjGKYDOE46Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LFkPrccrcp4MyK6/yzlhhdHoywPR/9yqmjAYshBT8BE=;
- b=dMqVIP6DOy+NoE40SyQHQmcFcwUIgmesKwQ8NXDV3zTLhEGAJA1wgo3WNHJf0kjAO5E/JFoGn6ECZfYRf7FJe1WsIoXZzXf4BP6KrUxSlZkVL6I7Sq/PGN3ii/uye9S/WAYKaf7ea8pXPa4w9lxCoZjeYB8LgfrI/owxGRnSHyXfY2gUb0BX6fEh8EgHToVVRZnl38YFbsiViC0lrdOod4hnE2ecGpVv/jj7fleFzdWkeSK5p8a3xMlTV+ZQ4N8PENsC/lLGwbuslYD9oEMEvSkyczNoC4UH33j/WvKpb2oNiVKgPqKNqexoq3+8qGdhEyUaagL8kQ6oBoURFhp31A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=LFkPrccrcp4MyK6/yzlhhdHoywPR/9yqmjAYshBT8BE=;
- b=roilazFYgZOQoQq63zrZJt/1rbCZGG/KRzkgrX2VWZOpxkMblhiVmNvN+S7ZM4cAG3xCPS/nM1jaHcURXUhfOQnk34/19Rn81RF0GAltVmJMCRgnkejmg4YWf8qKXlDpyjICxDWYA5LH+SmO0bhGCluoBn+sEt+44ufcMGyf4YkwBx5cO+aq1ZG5yPBspoA1zdTPJ3LWKj3u7Zg77fZ+FM2uH/0ggktBf11hHrzQFVHaAVqmajPHB4DGgQHd9PuDmp3YzBfEBXTttWNsyR2vbU3zlUXhCmmGuLgajJJAZr0WNVdD9OXiAhET+6NZjGt1TvEIeyBiVpK/c0v6Rizzpw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by PAWPR08MB9517.eurprd08.prod.outlook.com (2603:10a6:102:2eb::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.339.12; Wed, 26 Aug
- 2026 16:45:59 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0382.004; Wed, 26 Aug 2026
- 16:45:58 +0000
-Message-ID: <84b7646d-0567-4af5-be98-a62f49beb963@virtuozzo.com>
-Date: Wed, 26 Aug 2026 18:45:54 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 19/25] parallels: report the stored dirty bitmaps in
- qemu-img info
-To: Markus Armbruster <armbru@redhat.com>, "Denis V. Lunev" <den@openvz.org>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Eric Blake <eblake@redhat.com>
-References: <20260817185942.1065143-1-den@openvz.org>
- <20260817185942.1065143-20-den@openvz.org> <878q5uo9a6.fsf@pond.sub.org>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <878q5uo9a6.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VIUP296CA0124.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:350::9) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wzGnY-0000pX-0l
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 12:48:27 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67QDuusg910365
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 16:48:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=QmiRMdY/ifXw+3e8CX5UWI8VsAMyLIIebZl
+ mht+P3F4=; b=Z+VUwV7jTC6p2OqSRd2pZ0atSSYeiholaoMZHKsZQdhrUDkJ1I/
+ 69rnUYyM/g8BI/478vpldLuj+/aHCJ0C7NFbJLVpabVb6NYDTXIFWe0vDApIUb4m
+ MSYffZ+yGpeUG+h2KXT433QGky2pF8g8O2+7jrHtmviWG8JFTfKZ/uJ73QL5Ho0B
+ XDSspyOGUJlgQpdDbbsfdbcOFGbDMKFKeBM51jCm97dsPthHcMvnGi98G52Pxx2+
+ LEcVa8erIG6TCQwpAH5gx8yC9qu3fTdOlBJSDrpCEGtsDlzRmYXM5WAd4poN8nqr
+ qM0MCFmpErzMNCEm2TB+EteymOLAIpItsOg==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ga03a93cq-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 16:48:21 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-52ce64c41efso19726991cf.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 09:48:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1787762900; x=1788367700; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=QmiRMdY/ifXw+3e8CX5UWI8VsAMyLIIebZlmht+P3F4=;
+ b=I6WnSgo5IgVm2BIJda7ROkKpqPE2SBUFrrmvOPhuoD/cABcNwhqn0G53S+tRKbiOnv
+ O8gN7mKDSAIATDquv61ojCCnF9d1f6p1qhvaN1oPsju6JEdXSlRrd7ScLobq+ufqzOg2
+ Dg4dMtERGV8aKLKHmNBd1tl2RKYc1GJL/dnFY9CQOy38SgxhZd6WH7jC3r2aqcnyzBUk
+ Wz4La4Yh7JiLP/0iwz7NFnQSLeR0mwQG4hoclz20WGCye88b4tIwuRSFou8OzW/wvzA0
+ GSnz0vkJI1SifswgfbN3lPg/3bxiHbMJi5luZmiR7S9/qHpEFiKVq3i6D40NC8DVysIT
+ qGPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787762900; x=1788367700;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=QmiRMdY/ifXw+3e8CX5UWI8VsAMyLIIebZlmht+P3F4=;
+ b=g4gV5pa/3YYjJrzB6Jroi1dT6OIaesn1SDhY6sHyfBo7VglR5yyWqzv1+kWbUKr338
+ XGF8ibQvkZhQpILqQnjrii2F1kud5mSrmHN+jQzt7ply5SUGBIouhj1hQp7h5Kv8il22
+ 4jD2u7dEbE62V4JP9RBbgccvl9AFq8/l6e18vtjglN/EQz2PXcOp1BZf4MozHI/5knH4
+ 869aa60wntJmjB6Lzosg0M3GROWAnpvK/lo/xMgoi2skH0jmGQBA3IUeqhmTh4Y8zbAi
+ Zd43udXxyRBb7ZhCrSv/MOicqrSlSwjUY49+VDu6bsFQNiraRwqf6iWwL7zF9aT6gmiD
+ Bqhw==
+X-Gm-Message-State: AFuF++n7PPYHx4GVSem6M/cOrReYsTyThT5FyX2h/ilewqdpHimzIlFV
+ FiLrUERKFGQcS4SNvRAsm4kTOlLc85X+gOQRyXH0hG0uMAZ6SpQkOxkLeje/ufVL9GgJQr9KcEh
+ bjGTRRgMHYur6cDg/sbMI0ewGnewd3ULSWBXjb5Wf6Lw+VFaqU05o4zuR3YAL4IEGLQ==
+X-Gm-Gg: AR+sD118GmtSxSK0uAg2tFy8rO2o6/bERo2X9UVwZZP3a8aFTr3iZbW59fkgIs5AjoV
+ BGQdTd1Ft80zqCmUW90FJlEfjKDXsRRQ5ksKpwELiEhEMFGhgqqbRoLR9Pv9+/jaEOZoV4qqwXY
+ zLW96nWIOf7+B7HAYBB9RNHccqO49l/870tzTTEI7n4H+rtR/nujVJP1ttR+AqC1EfsICMZCEAC
+ W/0XEXd0zy5aMh58gFiCq475smK2MVkVuez5lvb6SWqrNZOAmwBrIWvX6lEepxWKxGlVIOiAUKw
+ UPxZwbajwJm0BSyRl+voS8EUC+eL043c+ua/eNWoSBhkwN5EWP4Vdeml61J/Dq4CfrVUZDChOwM
+ cq7nywi7SPU9P8S7MFSYWju+sfnsyY+JQm4WmoA==
+X-Received: by 2002:ac8:5f49:0:b0:51a:8bc9:2915 with SMTP id
+ d75a77b69052e-52e4222dd6dmr85741381cf.8.1787762900318; 
+ Wed, 26 Aug 2026 09:48:20 -0700 (PDT)
+X-Received: by 2002:ac8:5f49:0:b0:51a:8bc9:2915 with SMTP id
+ d75a77b69052e-52e4222dd6dmr85740871cf.8.1787762899805; 
+ Wed, 26 Aug 2026 09:48:19 -0700 (PDT)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com ([189.38.141.232])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-52e4275fc3esm20092651cf.25.2026.08.26.09.48.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 Aug 2026 09:48:19 -0700 (PDT)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
+ qemu-trivial@nongnu.org (open list:Trivial patches)
+Subject: [PATCH v2 00/13] hw/riscv: trivial code dup work (riscv-server-ref
+ prep)
+Date: Wed, 26 Aug 2026 13:48:00 -0300
+Message-ID: <20260826164814.44335-1-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|PAWPR08MB9517:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1949d317-035d-4ebc-ab3f-08df0391810a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|10070799003|23010399003|366016|1800799024|18002099003|22082099003|56012099006|3023799007|4143699003|5023799004|6133799003|10067099003;
-X-Microsoft-Antispam-Message-Info: KMJMuoW44Wxkaa2F7lkFsEMuVMPDG7fRXPTlbDW7Xtw/Nb3F42HHC28EK7sEENwrOpDO9HKy6TLJJ3KOVbzVtoIHuXU/oyN3rU6qGU4ZJQ4ouzwvgnOnRrtn5k9yavQWoW/UPRHxeQ51tDEfjMXJREAL9onCkfUjiDw/7UxGb1U/WZ4ExKOxLUT+/Vdo8G7iEqwkYNBl+Z72XXTw7KFuybINfoxr4favovTbtopVOgJilH2RAclP0KfBhKlP28zqXDEm0XBPhUYFWRFZmUpqzSc8FU/fYdwQtVpFfv62V6rc6mQ4ii2mjdb++WHoF8ydovPc3WgzVmWM1PcpRC4eFgBwZI7CEFrZ/H8Zpe1rlt/E1MImV2AqsE1h8A5JQQGHv4gNuz3CD+mY/r1xJDu6LmZ87dHOmwFJWzjw7zWx9JxHfNGheZsrOgvX0A64SmF2hJ3voaPA1F88eyX9fTefV5JnIni1FHrUFXjCN6bwnZQUn8puj33JmpaaiBiHZF0TYaUi+y5oLbndzTN6XIG4mCFmA/tPM9Xtw5YubfKRrzaTycyeIyPMVN8lQAlRVmWNXB2HnXXQF/aG4Ymzo9pWSBYXIQlaGkOHuLtWvydT/7Y0WMTunO0TV1L7b39Nd9chjuHZ8GY2qdbvkNVoXjtPqODCk0o3IK0tww91GF/Q/A8=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(10070799003)(23010399003)(366016)(1800799024)(18002099003)(22082099003)(56012099006)(3023799007)(4143699003)(5023799004)(6133799003)(10067099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZVk5QzNMbit2SXJtNjZoZTJlNkNBZXphQk15Rldabm5vUGVSYjhSMHZRaG0y?=
- =?utf-8?B?V294MkpYL2g0SGowZEQ2Z29vay9XK2VzbkE5QjRhOUJ6ei9pVDlodHJOTVI0?=
- =?utf-8?B?OTF4SThTcU9qZ1F4UkhORTFuZEJqazVabmxzYUovWGhkZ0lwUFBUNzdZSldt?=
- =?utf-8?B?dUZjc21wVXcrbUl1T3BkOUlONGZLYVVlL05iMWE5Y3FxZDl1Ym1saU9ZZjho?=
- =?utf-8?B?SFdDSVBYbEE2TW5EN1NuQlN4amp1YjRxVmVpVlhZYmd2NGdrZE16TGJ3SFd6?=
- =?utf-8?B?cHlCRnFabnNTalBZczdGVXdjMm9HRkY1dUR3UXNxSHJFcThJakhoOUtvYU1T?=
- =?utf-8?B?UzBOcXpwODBiUXhNZUNybmNqYThPeS9vN2pNVlJGQUk4Wm1ZRjY0cXJuSklO?=
- =?utf-8?B?VU5WbXJBZnMzc3Zhc3lMblE4bDdCa0NVUjY2aVlNWkJEY1I1VGJ4Ym1WOUxa?=
- =?utf-8?B?UlRSWmo1Y1lSOEFsZTUwNzZSY2tMdUIyNDZzUGZCaFEyVlE3R0ZOdC9qMkw4?=
- =?utf-8?B?NmhRUWtkelBUM05jdDY3ZlhBZVJlL1ZFTmp4Y3g3R01UMkNKUmRBcm9Fam1h?=
- =?utf-8?B?VnpsaHpCOUJ1dXJId1l1OUlkcWJFcVZ5VEtsQjBaVjV3aUpGV01GQ0lEcGh4?=
- =?utf-8?B?Y05SMVdVa2xCWWdLeWExSmUybzZoVUh1cWlPaDJDenJRZ1lvU2IxNjlsUkhr?=
- =?utf-8?B?eFRIajNuYWp6TmVRWUFPSndITmtCMG1FTVJSTjFCbzVlQmdVMWFpQXZUZXVC?=
- =?utf-8?B?dTEzdFdWYU5vTWJVaUFDRFZqODN6cHFhNWs1Tk1qUmR4aWFPRGFQM3NzZGF3?=
- =?utf-8?B?dndOeVlwQTc1cy8zNy9PVDlndEc2blRUQjkvMEpQZlBWM2tTRm9LazVROVBH?=
- =?utf-8?B?UTdQa0UyTVZzc3dEUzFla3l2eTJwOHNsREtMMDVBTFoxMk5talNnVGJrcFdp?=
- =?utf-8?B?Z1NYRmsyaFhVM1NtcU8ycGxyOXd6akowbndoR0xnUXBjUXAxaTFhRm4yRStO?=
- =?utf-8?B?ZUZQcVBCb2RUMUpJWU9kRkZsL3FUaDVFRkhnMGdLUzFLbU9Ia1FPaVIxTUVV?=
- =?utf-8?B?VjJ4UWJqc0s4MzJOZTAzV3g0ZjB5Tm5MTDFlV3FuNWw5OGRueXZFQUd6aWdR?=
- =?utf-8?B?cHJGb1FaeWFQRzY3ZmxCZnVFSWNSMHRYNnZnWTk2dVI2K01IeENydnYvTnFz?=
- =?utf-8?B?QXRhaERGVEJlRDEzU1IxR1RsZ01UVkVFZktYTHY5SW1KZkk3VWpuZGFST21R?=
- =?utf-8?B?YTEwZ2w4cktqMm5hU1lmS2JEK2pUTHE0aG5uV1VCS3VoNWdqY0E4TmxoaE96?=
- =?utf-8?B?TFNyTUlXVXJDS05uNTZnOG15RkxDb05uTWVGakRwaGp0b1p6Z05sN3oycURs?=
- =?utf-8?B?YVZFTlJFRXV5citRbkJJV3lRSU1nblZDSlA0eFEyMy8yUWdIeGVMb2UrWlFL?=
- =?utf-8?B?Ujd6aVpoWEZrTjdiVUhSUS9nYmVsbzZwK1ZYZGR1K0VaYTA2eFBkcWhDLytE?=
- =?utf-8?B?UWQ1VU1sUFJJU1U5eHo0N1pVUFNtMTByMXJ6UFh2RVhKL2lwSXNkaGVPanhR?=
- =?utf-8?B?S2ZZeFRoT1BBWlZ2NHpwcWc3a0xjMHZZVlVUMjJuWTJQY3RWOVVOVVJsdlRq?=
- =?utf-8?B?ckp1enljN0dTUlpNSTdiVEtKUyt0K1luQjU4eWhKekhObS82N3lXVzdsV0hW?=
- =?utf-8?B?N3lDbXk0QlUrdGU1dCtEdE1wa010b0lTZGlmRWxyWXNrTmViaGZSUThxaDBI?=
- =?utf-8?B?OUgvaXhCamJvMmlzRCthSTl0K204RmFRZnEwb21vLzYvZUJvdUxQV1orcHBw?=
- =?utf-8?B?N3RZZVdraFlYUVJCWEdNNGdvNG44SHFyUDdBRElvL0xWSWtrQ1AxVktWWUdt?=
- =?utf-8?B?eStiN0VoN2xaRlRtOXFFcXFrbGpBc3pFR1RSR09aWHphYWh5b2xWRlRUaURG?=
- =?utf-8?B?RUNsY2t5M0MzWEJNS2twalE5WDdjKytMRncydkdzNkFDVTlOallOWEd4eWZX?=
- =?utf-8?B?eWF1L1M3c1ZHOFZPY3V2WVNaMXpWSkFOcFAybVlXek1JdGU5b2ZsQ0FOK3lh?=
- =?utf-8?B?ZExoVC9kT0tuTXVFZWVTRVpHRmhTNnRDVHB5ck5sUzRPNitZL3NEQWQ2S1g5?=
- =?utf-8?B?VU4yaWtrb3lRYkZuU1JxSTBPR3F6eXhIcGtZQkhseDlmcTlxcTI4ek5BVFg4?=
- =?utf-8?B?UXB2VmxWRFlYWG9GenV3RDVrNkMyN0VLN0o0M09PMi9Pci9PNko3YzMzY3or?=
- =?utf-8?B?M29GQ2ZPM2ZoRWJZejZaYlgvbnlwaTZ0OStmSGJLWlR4SWdwcmplRTJtVXdt?=
- =?utf-8?B?b0d3eWhlV2RFOFoyQkIrV3ROMy93SUxwUGVEb0V5cDNFbTVFTlFLZ1RWWENm?=
- =?utf-8?Q?cJSrzUn7pM6FPIAjgozDYPZcZ9dToxtpe1VeXC7gb9AoM?=
-X-MS-Exchange-AntiSpam-MessageData-1: HZgchCjXUn1Pag==
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1949d317-035d-4ebc-ab3f-08df0391810a
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Aug 2026 16:45:58.1275 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: SyVuHg3sQzCFLbjlZm3pUmEHy3mPeCgkH08qBOtaeZWzUCr7I3E9IFWoRUZNTW+QKAK4W2OqTRAY4JnQTWAiFQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR08MB9517
-Received-SPF: pass client-ip=2a01:111:f403:c201::1;
- envelope-from=den@virtuozzo.com;
- helo=AM0PR83CU005.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: mBCU9eRAXdQRb29QO7bbhH-1bftTnvLe
+X-Authority-Analysis: v=2.4 cv=VdLH+lp9 c=1 sm=1 tr=0 ts=6a8f18d5 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=MCIxunHWmQOg/5OnbzXZaw==:17
+ a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=p0WdMEafAAAA:8
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=NV_7vAgSjKoQyGx3fFkA:9
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-ORIG-GUID: mBCU9eRAXdQRb29QO7bbhH-1bftTnvLe
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE0MCBTYWx0ZWRfXw0iH6blBuyIg
+ H+sXPplVNNUDUpJ09p45Rxbn2hGKYJH7eAiTWdq6sRgwbiXtWCrhWzVAtlC/oeUyBKl5FXZ9/lV
+ wU7rJ6ryyLg2nj5kFTNGU8n1AiyWibCxKTNrz0guK2c7HFf6K8LUL0e6lYvuRjFjOEUz7xioLHa
+ uCt7blQuY29Jz7S6IHmF1mlOicR7aSdNcabtlOvP6dn0+9sr+fZ+bzeJ7X7yIn4eyiTnN95VOXR
+ ZJwlDudkiDmgLj9hZJxYWJb8/iTZTLlAHdCOeiDTCkK1jgCkuM4xLAceLY1qt3+fbj3MOV6LXNd
+ qvuAS85vaICgXw1n9PjvT65rsV0yWPdDEYYBjvNFehIQQTeCyWzNT5y61QwL4pbo7KpYwSkqmoC
+ Wq0SKiAGKdqRkoW6QwFUBlnm/uzQXHeRHTArBiNhrAzu6rEcehpQwXuSIRiGuy6NuVRaiyevaRE
+ RP47LEoDPWTXoFifWOA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE0MCBTYWx0ZWRfX10Yp1UpYjz1B
+ Pn8ZgweUUxoItBirnusbamHhL9m++tbxOCZFIXQpk1t+XuvmkMW5GoBCHuPdoY54n9TfcnO2xcY
+ hd7kR+4tBSMRZRb+4gdPpJPx9b70IKs=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-26_04,2026-08-26_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 bulkscore=0
+ priorityscore=1501 suspectscore=0 malwarescore=0 spamscore=0 phishscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608260140
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,140 +149,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/25/26 11:10, Markus Armbruster wrote:
-> "Denis V. Lunev" <den@openvz.org> writes:
->
->> From: Denis V. Lunev <den@openvz.org>
->>
->> Nothing tells which persistent bitmaps an image carries. qemu-img info
->> says nothing about them, and the only other way to see one is to export
->> the image over NBD and ask for a bitmap by name, which needs the name
->> beforehand.
->>
->> Add ImageInfoSpecificParallels with the bitmaps and their granularity,
->> as qcow2 reports the contents of its bitmap directory:
->>
->>     Format specific information:
->>         bitmaps:
->>             [0]:
->>                 name: b2c9e1a4-5d3f-4e8b-9a7c-6f0d1e2b3a45
->>                 granularity: 65536
->>
->> The list is built from the bitmaps loaded at open time rather than from
->> a second pass over the Format Extension, as every bitmap the extension
->> carries is loaded and marked persistent there. On a node which is open
->> that also covers a bitmap which was created but not stored yet, which is
->> what the field says: qemu-img info opens the image on its own, so there
->> the two are the same thing.
-> The last sentence confuses me.
->
->> An image with no bitmaps leaves the structure empty, and
->> bdrv_image_info_specific_dump() prints nothing for an empty one, so the
->> output for such an image does not change.
-> Output of what?  I guess it's "info block" and "qemu-img info", because
-> these call bdrv_image_info_specific_dump().
-For the image (BDS) without dirty bitmaps the output
-of 'qemu-img info' would be the same as with and
-without a patch.
+Greetings,
 
->> Cc: Stefan Hajnoczi <stefanha@redhat.com>
->> Cc: Eric Blake <eblake@redhat.com>
->> Cc: Markus Armbruster <armbru@redhat.com>
->> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> [...]
->
->> diff --git a/qapi/block-core.json b/qapi/block-core.json
->> index 1f87b07850..4bc8b45efe 100644
->> --- a/qapi/block-core.json
->> +++ b/qapi/block-core.json
->> @@ -200,7 +200,7 @@
->>  # Since: 1.7
->>  ##
->>  { 'enum': 'ImageInfoSpecificKind',
->> -  'data': [ 'qcow2', 'vmdk', 'luks', 'rbd', 'file' ] }
->> +  'data': [ 'qcow2', 'vmdk', 'luks', 'rbd', 'file', 'parallels' ] }
->>  
->>  ##
->>  # @ImageInfoSpecificQCow2Wrapper:
->> @@ -255,6 +255,41 @@
->>  { 'struct': 'ImageInfoSpecificFileWrapper',
->>    'data': { 'data': 'ImageInfoSpecificFile' } }
->>  
->> +##
->> +# @ParallelsBitmapInfo:
->> +#
->> +# Parallels dirty bitmap information.
->> +#
->> +# @name: the name of the bitmap
->> +#
->> +# @granularity: granularity of the bitmap in bytes
->> +#
->> +# Since: 11.2
->> +##
->> +{ 'struct': 'ParallelsBitmapInfo',
->> +  'data': { 'name': 'str', 'granularity': 'uint32' } }
->> +
->> +##
->> +# @ImageInfoSpecificParallels:
->> +#
->> +# @bitmaps: A list of the persistent dirty bitmaps of the image,
->> +#     including the ones which are not written out yet
-> Pardon my ignorance...  Is "not written out yet" relevant to a user /
-> management application?
-This means that the image on disk could contains
-bitmaps A and B while backup software has added
-bitmap C to BDS. The query will return A, B, C.
-This is same as for QCOW2.
+Here is a bunch of trivial and mostly boring stuff we want to do before
+pushing the RISC-V Server Plat Reference board upstream (currently on
+v9 [1], not yet sent for review).
 
-> ImageInfoSpecificQCow2 also has a @bitmaps member.  Its documentation is
->
->    # @bitmaps: A list of qcow2 bitmap details (since 4.0)
->
-> Are these "persistent dirty bitmaps" as well, or something else?
-same, as above
+Although these changes aim to ease the pain for the riscv-server-ref
+review, in the end virt.c was reduced from ~1800 to ~1200 lines, which
+is a nice benefit we can have right now.  For riscv-server-ref we went
+from ~1450 (v8) to ~770 lines (current v9).
 
->> +#
->> +# Since: 11.2
->> +##
->> +{ 'struct': 'ImageInfoSpecificParallels',
->> +  'data': { '*bitmaps': ['ParallelsBitmapInfo'] } }
-> Please put these right after ImageInfoSpecificFile to preserve the
-> existing order of things:
->
->     All the ImageInfoSpecificFOO in order of
->         ImageInfoSpecificKind members
->     ImageInfoSpecificKind
->     All the ImageInfoSpecificFOOWrapper in order of
->         ImageInfoSpecificKind members
->     ImageInfoSpecific
-clear, will do
+We were able to also reduce tt-atlantis code in one of the patches too.
+In fact I think there are opportunities to shrink tt-atlantis board
+size, but that will need refactoring logic here and there and this would
+fall out of scope for this work.
 
->> +
->> +##
->> +# @ImageInfoSpecificParallelsWrapper:
->> +#
->> +# @data: image information specific to Parallels
->> +#
->> +# Since: 11.2
->> +##
->> +{ 'struct': 'ImageInfoSpecificParallelsWrapper',
->> +  'data': { 'data': 'ImageInfoSpecificParallels' } }
->> +
->>  ##
->>  # @ImageInfoSpecific:
->>  #
->> @@ -273,7 +308,8 @@
->>        'vmdk': 'ImageInfoSpecificVmdkWrapper',
->>        'luks': 'ImageInfoSpecificLUKSWrapper',
->>        'rbd': 'ImageInfoSpecificRbdWrapper',
->> -      'file': 'ImageInfoSpecificFileWrapper'
->> +      'file': 'ImageInfoSpecificFileWrapper',
->> +      'parallels': 'ImageInfoSpecificParallelsWrapper'
->>    } }
->>  
->>  ##
-> [...]
->
-Thank you,
-    Den
+Patches based on master. 
+
+[1] https://gitlab.com/danielhb/qemu/-/tree/riscv-server-ref_v9
+
+
+
+Changes from v1:
+- patch 8:
+  - renamed 'additional_reg_props' to 'uses_32_bit_spacing', as suggested
+    by Anirudh
+- v1 link: https://lore.kernel.org/qemu-devel/20260825212326.1907-1-daniel.barboza@oss.qualcomm.com/
+
+
+Daniel Henrique Barboza (13):
+  hw/riscv/fdt-common, virt.c: add create_fdt_flash()
+  hw/riscv/fdt-common, virt.c: add create_fdt_syscon()
+  hw/riscv/fdt-common, virt.c: add create_fdt_riscv_iommu_sys()
+  hw/riscv/fdt_common, virt.c: add create_fdt_pcie()
+  hw/riscv/fdt_common, virt.c: add create_fdt_imsic()
+  hw/riscv/fdt_common, virt.c: add create_fdt_socket_aplic()
+  hw/riscv/fdt-common, virt.c: add create_fdt_socket_aclint()
+  hw/riscv/fdt-common, virt.c, tt_atlantis.c: add create_fdt_uart()
+  hw/riscv/fdt-common, virt.c: add create_fdt_rtc()
+  hw/riscv/device-common, virt.c: add create_platform_bus()
+  hw/riscv/device-common, virt.c: add flash helpers
+  hw/riscv/device-common, virt.c: add gpex_pcie_init()
+  hw/riscv/riscv-iommu-sys.c, virt.c: add create_riscv_iommu_sys()
+
+ hw/riscv/device-common.c         | 168 +++++++
+ hw/riscv/fdt-common.c            | 571 ++++++++++++++++++++++
+ hw/riscv/meson.build             |   1 +
+ hw/riscv/riscv-iommu-sys.c       |  25 +
+ hw/riscv/riscv-iommu.h           |   3 +
+ hw/riscv/tt_atlantis.c           |  21 +-
+ hw/riscv/virt.c                  | 811 ++++---------------------------
+ include/hw/riscv/device-common.h |  32 ++
+ include/hw/riscv/fdt-common.h    |  94 ++++
+ include/hw/riscv/virt.h          |  15 -
+ 10 files changed, 983 insertions(+), 758 deletions(-)
+ create mode 100644 hw/riscv/device-common.c
+ create mode 100644 include/hw/riscv/device-common.h
+
+-- 
+2.43.0
+
 
