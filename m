@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA058C61DC2
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 09:38:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5037AC5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 09:38:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzA5L-0002qq-08; Wed, 26 Aug 2026 05:38:19 -0400
+	id 1wzA5T-00030F-Pq; Wed, 26 Aug 2026 05:38:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wzA5J-0002qB-Re
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 05:38:17 -0400
+ id 1wzA5R-0002yQ-MF
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 05:38:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wzA5I-0003Fp-84
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 05:38:17 -0400
+ id 1wzA5Q-0003Gf-52
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 05:38:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787737095;
+ s=mimecast20190719; t=1787737103;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PGwhGSRwbZ5oBDYs0gjQNDzMSLjGv9rxTmsKdTjHBlA=;
- b=BZa9EWAJIrYZjOK6+nWm7K5MclHwgTkSOrhVV4d/fxlmhPWvdbLou6triFmFEsXKHvozWG
- oLhDy4TUETnr/GjFhDrh9w8zrMi7A16CaPTe2UtvvDsN7JUvZaYMzO7LTcr6EfaqbXTP1b
- DPpe/JUFc7oF87/xOBFFjCtzI4V5TKs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=voHwf+YFtdVEzgBWVvYQX13hhjEDTySDg3UzKLNi7tE=;
+ b=Q6QiqPHfksOIbxYa7TqEcoU1KA+BydwqF536Jyek/iDuAGVQTvvVxTRhBBqGn4Zh1SkDNg
+ jTCTfYTK0JzONfGikaaW9broLlxfBkeY5iK8/CJQk/QYvUk6AydgfxqcUWeMnS4tDhbSGC
+ cmgO/x4pDFCAbCFTyML//pVUWG2IJmQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-465-xEHeRsUjPpam_RyajDUDYQ-1; Wed,
- 26 Aug 2026 05:38:12 -0400
-X-MC-Unique: xEHeRsUjPpam_RyajDUDYQ-1
-X-Mimecast-MFC-AGG-ID: xEHeRsUjPpam_RyajDUDYQ_1787737090
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-347-8yYWgmCUNd2QPisvDYomOw-1; Wed,
+ 26 Aug 2026 05:38:19 -0400
+X-MC-Unique: 8yYWgmCUNd2QPisvDYomOw-1
+X-Mimecast-MFC-AGG-ID: 8yYWgmCUNd2QPisvDYomOw_1787737097
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1651D1944EBC; Wed, 26 Aug 2026 09:38:10 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D47091828AB0; Wed, 26 Aug 2026 09:38:16 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.48.93])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E89E81955F05; Wed, 26 Aug 2026 09:38:03 +0000 (UTC)
+ id 8FC341955F05; Wed, 26 Aug 2026 09:38:10 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -56,10 +56,10 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
  armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
  jdenemar@redhat.com
-Subject: [RFC PATCH v8 02/20] target/arm/cpu-sysregs.h.inc: Sort by name
- alphabetical order
-Date: Wed, 26 Aug 2026 11:36:07 +0200
-Message-ID: <20260826093747.1670077-3-eric.auger@redhat.com>
+Subject: [RFC PATCH v8 03/20] target/arm/cpu-sysregs.h.inc: Update with
+ automatic generation
+Date: Wed, 26 Aug 2026 11:36:08 +0200
+Message-ID: <20260826093747.1670077-4-eric.auger@redhat.com>
 In-Reply-To: <20260826093747.1670077-1-eric.auger@redhat.com>
 References: <20260826093747.1670077-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -67,13 +67,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,97 +89,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sort by register name alphabetical order. This will allow to
-easily diff with the future content, automatically generated.
-
-No functional change intended.
+Generated definitions with scripts/update-aarch64-cpu-sysregs-header.py
+based on "AARCHMRS containing the JSON files for Arm A-profile
+architecture (2026-03)" Registers.json file.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Khushit Shah <khushit.shah@nutanix.com>
-
 ---
-v5 -> v6:
-- v5 version conflicted because ID_AA64FPFR0_EL1 has been
-  added
-
-v4 -> v5:
-- remove spurious CCSIDR definition
----
- target/arm/cpu-sysregs.h.inc | 44 ++++++++++++++++++------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ target/arm/cpu-sysregs.h.inc | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
-index 6e8b335b8f..ec5a12b0f4 100644
+index ec5a12b0f4..8b77c490d4 100644
 --- a/target/arm/cpu-sysregs.h.inc
 +++ b/target/arm/cpu-sysregs.h.inc
-@@ -1,13 +1,12 @@
+@@ -1,11 +1,18 @@
  /* SPDX-License-Identifier: GPL-2.0-or-later */
--DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
--DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
--DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
--DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
--DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
--DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
--DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
-+DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
-+DEF(CTR_EL0, 3, 3, 0, 0, 1)
-+DEF(DCZID_EL0, 3, 3, 0, 0, 7)
++
++/* This file is autogenerated by scripts/update-aarch64-cpu-sysregs-header.py */
++/* DEF(<name>, <op0>, <op1>, <crn>, <crm>, <op2>) */
++
++DEF(AIDR_EL1, 3, 1, 0, 0, 7)
+ DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
+ DEF(CTR_EL0, 3, 3, 0, 0, 1)
+ DEF(DCZID_EL0, 3, 3, 0, 0, 7)
++DEF(GMID_EL1, 3, 1, 0, 0, 4)
  DEF(ID_AA64AFR0_EL1, 3, 0, 0, 5, 4)
  DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
-+DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
-+DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
-+DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
+ DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
+ DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
++DEF(ID_AA64DFR2_EL1, 3, 0, 0, 5, 2)
+ DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
  DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
  DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
- DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
-@@ -17,29 +16,30 @@ DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
- DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
- DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
- DEF(ID_AA64MMFR4_EL1, 3, 0, 0, 7, 4)
--DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
--DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
--DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
-+DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
-+DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
-+DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
-+DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
-+DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
- DEF(ID_AFR0_EL1, 3, 0, 0, 1, 3)
--DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
--DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
--DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
--DEF(ID_MMFR3_EL1, 3, 0, 0, 1, 7)
-+DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
-+DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
- DEF(ID_ISAR0_EL1, 3, 0, 0, 2, 0)
- DEF(ID_ISAR1_EL1, 3, 0, 0, 2, 1)
- DEF(ID_ISAR2_EL1, 3, 0, 0, 2, 2)
- DEF(ID_ISAR3_EL1, 3, 0, 0, 2, 3)
- DEF(ID_ISAR4_EL1, 3, 0, 0, 2, 4)
- DEF(ID_ISAR5_EL1, 3, 0, 0, 2, 5)
--DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
- DEF(ID_ISAR6_EL1, 3, 0, 0, 2, 7)
-+DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
-+DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
-+DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
-+DEF(ID_MMFR3_EL1, 3, 0, 0, 1, 7)
-+DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
-+DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
-+DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
-+DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
-+DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
+@@ -40,6 +47,10 @@ DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
+ DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
+ DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
+ DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
++DEF(MIDR_EL1, 3, 0, 0, 0, 0)
++DEF(MPIDR_EL1, 3, 0, 0, 0, 5)
  DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
  DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
  DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
--DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
--DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
--DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
--DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
--DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
--DEF(CTR_EL0, 3, 3, 0, 0, 1)
--DEF(DCZID_EL0, 3, 3, 0, 0, 7)
++DEF(REVIDR_EL1, 3, 0, 0, 0, 6)
++DEF(SMIDR_EL1, 3, 1, 0, 0, 6)
 -- 
 2.53.0
 
