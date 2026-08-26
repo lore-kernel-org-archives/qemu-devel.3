@@ -4,124 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96274C61DC2
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 10:21:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02643C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 10:22:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzAkR-0006kF-KN; Wed, 26 Aug 2026 06:20:47 -0400
+	id 1wzAmF-0007r2-4x; Wed, 26 Aug 2026 06:22:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wzAkP-0006jp-U7; Wed, 26 Aug 2026 06:20:45 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1wzAmD-0007qV-95; Wed, 26 Aug 2026 06:22:37 -0400
+Received: from mail-westeuropeazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::1] helo=AM0PR83CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wzAkM-0000nJ-SY; Wed, 26 Aug 2026 06:20:45 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67Q9VYkW3661743; Wed, 26 Aug 2026 10:20:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=oWMA1C
- mbkqVmV1QJfFRuftcEvMeBtdlXH7Fh9i6ppEU=; b=Y4W6oCJjKcfPCUEdt8N7/2
- mbuiFJ2/TZgVvZxqmvRSndJm8SaPMS3mbQrGqABicNOk7MlHvJ6z5b+7WjblNpUN
- OhrxunQxVEJg/0Flz9Iw7O3Pmn3p0kFDncc5kgIuph14lbCWr6pgu7XFfIxJN10r
- /eWPpoeGmiCcDtuPsvRFUHJIXYX/GraLT3Vulzdx1DW00JrVIJPdbblN7tRMchfS
- jq+KiUh5KuYdtelKDBHZegKLdyFUmZnkUOi1ZlOPQgAiFQ7FpFuLeuZxkEG6xRKi
- sgX0NnffUaYFMzRjBKvebe2GJAn8D1KD9r4VdBibPmAuxMoqWxH5USsbO+iLm3Mw
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dxdpd8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 10:20:40 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QABIkZ010659;
- Wed, 26 Aug 2026 10:20:39 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkh9ar7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 10:20:39 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QAKZL810945010
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 10:20:35 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3740D20071;
- Wed, 26 Aug 2026 10:20:35 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C2EEE20070;
- Wed, 26 Aug 2026 10:20:31 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 26 Aug 2026 10:20:31 +0000 (GMT)
-Date: Wed, 26 Aug 2026 15:50:34 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org,
- vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
- ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
- shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
- nikhilks@linux.ibm.com, Tasmiya Nalatwad <tasmiya@linux.ibm.com>
-Subject: Re: [PATCH v2 03/37] target/ppc: Convert cache instructions to
- decodetree
-Message-ID: <20260826153132.6c0e83d2-05-amachhiw@linux.ibm.com>
-Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, 
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- milesg@linux.ibm.com, 
- npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com, 
- tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com, 
- aboorvad@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
- uverma@linux.ibm.com, 
- nikhilks@linux.ibm.com, Tasmiya Nalatwad <tasmiya@linux.ibm.com>
-References: <20260826050923.74756-1-rathc@linux.ibm.com>
- <20260826050923.74756-4-rathc@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
+ id 1wzAmB-00013F-En; Wed, 26 Aug 2026 06:22:36 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=zDYm3caD1PzvNSQQlrihhWnzLPszmYDj2Uqgx2D5Rt8YnSfuRYBedA8MRcGlQ1FoQ+nJZQxkZf/IDtgCIyP09glky01EDiFt1I0HiJzGI3dekt+EbEnOcZY2FT1XXtKumTqHwCxXBiIUJWyoluo0Rm614AllAEpeo43NO3+qEtYOrStzTnEmwzqzMthpmf8g5oPz8IntkNd+Kt+I/ONBlVaj9Te6kL3KmCjsK0DcQNCIRv5USUSs1vfgLXXY0AH5V2TfD4vFmBF2d/OgC9BhH8D4rPj3mZVoXz/VP7+A1WeAI14DHXGUtM0xUGAcUckYEpmV9ljp4GwkmQYHfeD9QA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4N7wi2DYpHpRuRweePXzavVV+B7CNBNfd9jkrS/r2yY=;
+ b=tljIWfN6aQ6MRRDOB8Hgggi2BYnDF6IYcBurMJZV574dx99k7I3wZh1k+CsVEMDjqgXZOf07Q+BNHW+z5A2lZiDXuNC+CbNZniSUKwFlw7yPdS4OHhxb2x85KVp9c7iH3KzlZ/HfeM6h6y1MwWbJJ34F+nWh5RZZGfQ+uZuZyVHR8xu8MjRTdPhhzDJGJYi6PHdsUQIESUDChuuUGJQ6752iuGKTK0PURaxywQ3y+yQtakHIumuCrnhmn8P4UQmoQu+5QD1KMiSExP5Ro8zRQmzIQImOTlykmjP6H5IEOnnWDaSgUUN5Cvo0G2dkzxniWop/ewSAOZH0uLYxDEFzeg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4N7wi2DYpHpRuRweePXzavVV+B7CNBNfd9jkrS/r2yY=;
+ b=zICBf3VHz/TesZcddHXz3DwHSfshDNumc8dQceH7gmNjAKE38oAn0u9id657lQhHLXS2NeHvavXm0GfqEP+rFGAwvIgKNfbw7z/tVBh0nbTEi7mzz4QGig+PJApqu3HPA690hrLvdBCKmv1J6yifeaJW/OXSNyD+rrv95K4eIxGeNQ9VLOsQJw0W0GmzawU7bWlcctNgsA+6w02vyNRxpYWZoTAOc0+Uqap9ZFdXfxgIdHUIErFgg2PlLsUvCS9nXaegPUNsc78QgGMKh8DGtVbSHR42+B5G8+nN7iZcRYLtC1OiWmL2mOppFGRMj547PWTRZKEUHItKP9OVFbj/8Q==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by PAWPR08MB9889.eurprd08.prod.outlook.com (2603:10a6:102:330::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.382.5; Wed, 26 Aug
+ 2026 10:22:30 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0382.004; Wed, 26 Aug 2026
+ 10:22:30 +0000
+Message-ID: <e38ac31f-0130-41d4-8e9a-9f8ae4dbfe77@virtuozzo.com>
+Date: Wed, 26 Aug 2026 12:22:28 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/4] block, scsi-disk: honour a size change on child
+ replacement
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>
+References: <20260812121500.1034178-1-den@openvz.org>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <20260812121500.1034178-1-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: VI1PR09CA0098.eurprd09.prod.outlook.com
+ (2603:10a6:803:78::21) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260826050923.74756-4-rathc@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDA4MyBTYWx0ZWRfXxoNuE7rlCB66
- CapTH3ZNUxFolEKaAHE6d1wxzp9/UJLD4+Zr+6xwupi3NaykzZqvhBvr2hXAZCdCAzTjufq52eA
- bk8cf9Qh4NRVzBHVQMD1AY3RcDbQaVw=
-X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a8ebdf8 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=g08qwaaoS5aA910C4iYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 8W_eUhfPwKd0KMlaw0nRT0WSNRK48dKd
-X-Proofpoint-GUID: uYQXjd6qnN1rz8EPnyTg7MNpl3B2gaUQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDA4MyBTYWx0ZWRfXyhqJOara7Ecl
- iUVk3Jd92pwTYNCoscmRiDONo1GVp5PATtErGSK4KelgIFAiNevJrIrkrNP9M73Qo5BZ0cyDVfH
- OM8u041PQOEKOEfM1txJso40OaYqw7glX1ZE+cnBS+BeFpj9ZM48hZ7F0WusLQnuxQjEs3gIZOp
- i1x0NQBM0XzsDgFpsy5gGGOArI2e7kqKzHybQCWCXy9mZNTrLX0Fxzb51mZWQ36A1N2nu3kLotp
- MR4ZJw/JNd+p8tK7H+tdki5DQmGRxNgP7AvuCelbx6o0NgHIpsVpWuF1SzyPS8Bpwx2nwLbU1ZJ
- X7SyJNn3G1t6hfoh3M0YmWSy5ufqj+qpY5c8Iy0KHkQmQPiNB9p1mnbEtzzR0Fu4aT/88BBR+Fc
- so7yNXmwOxB8ewZ7u+gs/otZaiVW/rUoL8OJDtDU0WrzMH2HWcnd0THkjEYy3DhstHa7NY1BD5P
- amIACX/Cbyz8f21BfqQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_02,2026-08-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 bulkscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608260083
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|PAWPR08MB9889:EE_
+X-MS-Office365-Filtering-Correlation-Id: 68e07fb5-3f50-4bfc-f62f-08df035bef4d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|366016|376014|10070799003|1800799024|10067099003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: Y8a1G1Bvbtmkcx4IBiy+TlNOLb6Hx8nEXkdPhLYcq/GZklnGkPx4eClswGe2bsmDDjsOMM8W9aLtTQbu0WBamXGRo6AdfRrgf78/ltrUyuUd61RNz7Zjn65eP8GQuSH3z2mS7ZT8YdHKZmfK4P3QgpgxFbGhNtnB3ZcvE+osZWkDhfOoEMBh4Q236DxagbCU0EKpVv0yJQyRpVtuGnn8uoTHVqGZghOHlyToBaakZYyz7WsfCoswH2KdPtEFpVUEejuun5MqRO2uOtE2OLeNDzqf2JgfPG6jxtu08QOkMajEcBxXiZY7W3BDv0rPmLSqflS7FE02NPMCCCqVq/L97r1XvpRtPilfFdzNU67SezkrcI1Dt8fC3PB3bkbmDaA0KUCah3HvlSS5uca8S7DrWJoQn7sYmxFwtADi9UAioV1721BskhWRzcd9dv1EEjWHUsPwXG2HMUP6tk6SMoRJY15y1oLQfmGD/sO9vIEuTfRUAACUwR7HGwE/iMBpp3BHB0cSAA7EJJI7LK+8Ss9TsEWi4jCrqQkVhDBMPsE/iyMCxUnnc1yNWh29k6aZmWEVvFsAAz/94WMLoY+V2XXmnx7P/b8CoH5GDHwhaqpF3eX+ok/iC2F+iATOGYXt0Z0B+Wa9Tz4yrt/OvDblKceP00xlyzlWdpPHU5ixbEB+fzU=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(366016)(376014)(10070799003)(1800799024)(10067099003)(56012099006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aSt6SXZRb2QvamVPRG9jTVdEb0tIdHdFd3NaUHh3WXFaMGttSDVQbXZOMDgz?=
+ =?utf-8?B?WUdPc3NtQzF1eFR5NmFTd2FsK3IwdTZFWlUwMnUrUE5saVZTSEFGaGppZFNO?=
+ =?utf-8?B?SGZva3BRL2toeHRBUk9rR3Z5VHhiTjRGSmhEem9JRnNPL2ErZXNYTWdRVW1S?=
+ =?utf-8?B?Y090RDBuYmdUbVV5YzN1STg5UlRvN2dML3owaUNDeDlIQmlBaytRU3huWWNK?=
+ =?utf-8?B?Q3hYV09MT0crQnhkdW9DK3pzcTN4V0NQYUNEaUpvQzhQYjhFTVFPWXdBMWVs?=
+ =?utf-8?B?ZzBMUHZSRC9LNVRsN2xFZzVUOHlNMGxreGxIYnVhU3lzREJiKzFDdjYxbE9u?=
+ =?utf-8?B?N1Y5cUN6L2NGN05Eb0k2WGNNbXJQUDR5T3ZTREtEdHpWWmlaWk1hZzZ0NWlZ?=
+ =?utf-8?B?SkZ5b1A1UXNoaHQ0SmNNRnFUL29VQUZGQ2hFVXF4Z2Y4azNsUlNVZTcvNWxJ?=
+ =?utf-8?B?NDB3ay9saEJsK3o5WEcyRGxVd1lkbEdUZ09aUW1YdnBmUVhETTNwQTkvc0kw?=
+ =?utf-8?B?RHFJZmFCWUxJSklLZHZ4cDBjWHRIYkNEYXdBbDFkSVBaazN2ZFh1SzhYcmJa?=
+ =?utf-8?B?dW9aejNBOVZ0TXB4UnhDVFV5dGNGMFUyUXdOejdPY0FuWWp3VTZUWTRPNkc2?=
+ =?utf-8?B?czM4ZEozdlduSWphZnJ6aWl2QjY2c29BUUpVNWk3cFZWTHdJNmVMM1ltNmdy?=
+ =?utf-8?B?Sjl6WGhWKzN0akdSNWgxLzB1QVRWYTg3TlozeCtsNklUcThyMTduaTZxWG52?=
+ =?utf-8?B?bHZSamIxeUpMcVl5azB0eDRjdlJkOWlENWNPWkJ3dGFHbi9FRkVuMHoxMjlQ?=
+ =?utf-8?B?aEJrZDJEM25WeS9DMlNoK1VWQUFSZ1pJUmNGNmZTWlNPUXlmOWdvTEZ3bkZ4?=
+ =?utf-8?B?WGVhc3gyeWttOVVpcEU0eThCOG1jL2VBd0lzVVJpT1A5T3VxVlA0Z3JKaVgy?=
+ =?utf-8?B?VkVLWUZtclloYmdsYldTdy9vNlFyd3FOUDJtaFdWVWFQUnB0Q1hkUHpCczhJ?=
+ =?utf-8?B?eWVyYkNmYzBuZ0RuMmg4NUFmMmlZek5mNG9mV2JCejlDMVdIeUI5dCswM0ZK?=
+ =?utf-8?B?aVZEZVhkQzZPRjhrU1QySnNJQkM1aUVHakpvYWFwK0l3OG5KZmxOSjI4RUtF?=
+ =?utf-8?B?WU9SdHpOVlpwcERrcVk0OGg2SGtGb1VON2FZd2t1RkgwaW1IVmswU0p4d3VN?=
+ =?utf-8?B?SllyeUhHRi9tT2xGeXFRdzVaWm15Uml2Q1RQa1RsL2dPRTNJZWg4c1gvQ01P?=
+ =?utf-8?B?ZUJHWjBHRzJVcFQ5SWgwM01CUllmSWRIWTYweXpXVzhUbkJuMkJzZDRGaWZK?=
+ =?utf-8?B?Sms1YzFneHZ3SlR6OXR5cTNWNzU4R2JoM1pxUEtZdGxoQjRWZUVudDQ4SFUx?=
+ =?utf-8?B?VmdtY1FYR0p1L2RtYVVETDAxTkovaDdtYkNSVGZvZ1hKTDJOaHBEMUh1aTFn?=
+ =?utf-8?B?UXFzbHpWK3FpQ1JnRjhQR3FmeStRR0UraDBxTlJjSE9RWE01T3lzeWpTdXIy?=
+ =?utf-8?B?R1I0MjMwSXdDcnMyUUVaTkdoQkpOZHdaV1F1NC81cHhhMjAwWUtVZGRHQWNV?=
+ =?utf-8?B?L2NlWVExMTVuV25YNkE3bWwxQlFHNVhWN3FQcVhPSzJYSEpySWpISW9EY3cz?=
+ =?utf-8?B?NzRTL2FFTUx3NFJCNzNMZ0p0V2ZNVUp3bG9vV3JHR0pPNVpORzI0d1J3bEsw?=
+ =?utf-8?B?K2VYdldMN0RIWW9oSm9hMzBoamptZUplM3o1UVY5djArZG11Um9RUmkzYVVa?=
+ =?utf-8?B?Ri9MR0p1Sy9lczZocGlFNzRrdWVKOUMvSXp0RG45NDJKMVcrNFpiTWR0Sm8x?=
+ =?utf-8?B?OHNmQ3pIUXhPU0k3N2FQdFhkOGZYYWo5dWxVZmxpajQvTGZsbWhJZEgwb24x?=
+ =?utf-8?B?a1JTR2hhSVJXb3B3YmwwajBLczJ6SEs5bWZoQUdpM1p6ZDh1c2U3QndKQXZO?=
+ =?utf-8?B?cGQ0TUFvNmszck03L2RuQWd5azJnQjRsUWQzSnI4RmpQaWZETEdUUE5tRHJn?=
+ =?utf-8?B?dkhVS2tVbzR0Mko3R294Z0Fnd1VOUmNTY1h1OGZvd1hNTjlCc1gwNkRGL1gz?=
+ =?utf-8?B?RjljTnpwTGh3U0Via0RXUnNpa0lwYUZ3TGhzSUNtdXBscEt2cFJhemtVbWQ3?=
+ =?utf-8?B?c3BqVEFMRXBBMGR4YUYwcWVCR1BVa2tBRkRtZURjYkdFNCttOVo5eFdDdTJm?=
+ =?utf-8?B?djdmMURPVC9UcGkvaDJkTTZ0ZFkwY0ZCRFBNazY2L2NsbUpQUWhPQzI4UjE2?=
+ =?utf-8?B?WGhGUWJrVjVWVGE5R1RKNDhBSVE1UW1sQ2F2YW1NbEZBYVZqZmNNQnhIUnRT?=
+ =?utf-8?B?K0cvN3VsRlIxNE9VT0FKUjlKTHZRL2JVbFoyU0IvT1gralFzeXZKMkd2OU1O?=
+ =?utf-8?Q?WJntrkvYwwrRL7prlfXlT5x2xhJ4yb0LiN9XJga0+MwtJ?=
+X-MS-Exchange-AntiSpam-MessageData-1: +DtEk5rP1J2TLg==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 68e07fb5-3f50-4bfc-f62f-08df035bef4d
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Aug 2026 10:22:30.2718 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: glSmcpVAR5/EnHuNGZmpR7nUuGbAsC93fAmt1YLlBICoZljknkGOS+A/xfnTcKY7FBHuG0bvG31LBPTTSBP6vw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR08MB9889
+Received-SPF: pass client-ip=2a01:111:f403:c201::1;
+ envelope-from=den@virtuozzo.com;
+ helo=AM0PR83CU005.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -138,713 +153,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/26 10:38 AM, Chinmay Rath wrote:
-> From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-> 
-> Convert cache management instructions to decodetree using custom
-> X-form layouts (@X_ea, @X_l, @X_th) and dedicated translation functions.
-> This ensures reserved bits are accurately represented and ignored by
-> the decoder (using '-' in the patterns), rather than being erroneously
-> parsed into instruction fields.
-> 
-> Legacy GEN_HANDLER-based implementations are removed.
-> 
-> The implementation preserves legacy semantics, including:
->   - MMU-visible accesses for instructions treated as loads
->     (e.g. dcbt, dcbtst, dcbtep, dcbtstep)
->   - Supervisor and BookE-specific constraints
->   - Effective address computation via do_ea_calc()
-> 
-> Instructions that were defined as no-ops in the legacy implementation
-> remain no-ops here.
-> 
-> Note on intentional behavior changes:
->   - dcbf now validates the L field against the Power ISA v3.1 set of
->     legal values (0, 1, 3, 4, 6).
->   - Reserved bits that were previously encoded as part of the opcode
->     mask (and trapped if set) are now properly decoded as "don't care"
->     ('-' in the pattern).
-> 
-> Testing:
->   - Verified TCG equivalence for all cache operations
-> 
-> Signed-off-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-> Tested-by: Tasmiya Nalatwad <tasmiya@linux.ibm.com>
-> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->  target/ppc/helper.h      |   8 +-
->  target/ppc/insn32.decode |  35 +++
->  target/ppc/mem_helper.c  |   8 +-
->  target/ppc/translate.c   | 478 ++++++++++++++++++++-------------------
->  4 files changed, 292 insertions(+), 237 deletions(-)
-> 
-> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-> index 6b2d19a3ad..46ad78d1d4 100644
-> --- a/target/ppc/helper.h
-> +++ b/target/ppc/helper.h
-> @@ -48,12 +48,12 @@ DEF_HELPER_FLAGS_3(stmw, TCG_CALL_NO_WG, void, env, tl, i32)
->  DEF_HELPER_4(lsw, void, env, tl, i32, i32)
->  DEF_HELPER_5(lswx, void, env, tl, i32, i32, i32)
->  DEF_HELPER_FLAGS_4(stsw, TCG_CALL_NO_WG, void, env, tl, i32, i32)
-> -DEF_HELPER_FLAGS_3(dcbz, TCG_CALL_NO_WG, void, env, tl, int)
-> +DEF_HELPER_FLAGS_3(DCBZ, TCG_CALL_NO_WG, void, env, tl, int)
->  #ifdef TARGET_PPC64
-> -DEF_HELPER_FLAGS_2(dcbzl, TCG_CALL_NO_WG, void, env, tl)
-> +DEF_HELPER_FLAGS_2(DCBZL, TCG_CALL_NO_WG, void, env, tl)
->  #endif
-> -DEF_HELPER_FLAGS_2(icbi, TCG_CALL_NO_WG, void, env, tl)
-> -DEF_HELPER_FLAGS_2(icbiep, TCG_CALL_NO_WG, void, env, tl)
-> +DEF_HELPER_FLAGS_2(ICBI, TCG_CALL_NO_WG, void, env, tl)
-> +DEF_HELPER_FLAGS_2(ICBIEP, TCG_CALL_NO_WG, void, env, tl)
->  
->  #if defined(TARGET_PPC64)
->  DEF_HELPER_4(DIVDEU, i64, env, i64, i64, i32)
-> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> index 26948e08a7..6b1cf9a0a9 100644
-> --- a/target/ppc/insn32.decode
-> +++ b/target/ppc/insn32.decode
-> @@ -1306,6 +1306,41 @@ XVF64GERPN      111011 ... -- .... 0 ..... 10111010 ..-  @XX3_at xa=%xx_xa_pair
->  XVF64GERNP      111011 ... -- .... 0 ..... 01111010 ..-  @XX3_at xa=%xx_xa_pair
->  XVF64GERNN      111011 ... -- .... 0 ..... 11111010 ..-  @XX3_at xa=%xx_xa_pair
->  
-> +## Cache Management Instructions
-> +
-> +&X_ea           ra rb
-> +@X_ea           ...... ..... ra:5 rb:5 .......... .     &X_ea
-> +
-> +&X_l            l ra rb
-> +@X_l            ...... .. l:3 ra:5 rb:5 .......... .    &X_l
-> +
-> +&X_th           th ra rb
-> +@X_th           ...... th:5 ra:5 rb:5 .......... .      &X_th
-> +
-> +DCBF            011111 -- ... ..... ..... 0001010110 -   @X_l
-> +DCBFEP          011111 ----- ..... ..... 0001111111 -   @X_ea
-> +DCBI            011111 ----- ..... ..... 0111010110 -   @X_ea
-> +DCBST           011111 ----- ..... ..... 0000110110 -   @X_ea
-> +DCBSTEP         011111 ----- ..... ..... 0000111111 -   @X_ea
-> +DCBA            011111 ----- ..... ..... 1011110110 -   @X_ea
-> +
-> +DCBT            011111 ..... ..... ..... 0100010110 -   @X_th
-> +DCBTEP          011111 ----- ..... ..... 0100111111 -   @X_ea
-> +DCBTST          011111 ..... ..... ..... 0011110110 -   @X_th
-> +DCBTSTEP        011111 ----- ..... ..... 0011111111 -   @X_ea
-> +
-> +DCBTLS          011111 ..... ..... ..... 0010100110 -   @X_th
-> +DCBLC           011111 ..... ..... ..... 0110000110 -   @X_th
-> +
-> +DCBZ            011111 ----- ..... ..... 1111110110 -   @X_ea
-> +DCBZEP          011111 ----- ..... ..... 1111111111 -   @X_ea
-> +ICBI            011111 ----- ..... ..... 1111010110 -   @X_ea
-> +ICBIEP          011111 ----- ..... ..... 1111011111 -   @X_ea
-> +
-> +DST             011111 ----- ..... ..... 0101010110 -   @X_ea
-> +DSTST           011111 ----- ..... ..... 0101110110 -   @X_ea
-
-Per **PowerISA v3.1 §4.3.2.1**, dst, dstst, and dss are obsolete and
-must be treated as no-ops independent of whether Vector instructions are
-available. The new REQUIRE_INSNS_FLAGS(ctx, ALTIVEC) guard in all three
-handlers is incorrect — it causes these opcodes to be treated as illegal
-instructions on non-Altivec CPUs, contradicting the ISA mandate. These
-handlers should unconditionally return true with no flag check, matching
-the ISA's "always a no-op" requirement. The ra == 0 INVAL check in
-trans_DST and trans_DSTST should also be dropped for the same reason —
-if the instruction is a no-op, the operand constraint has no effect.
-
-> +DSS             011111 ----- ..... ..... 1100110110 -   @X_ea
-> +
->  ##Extend Sign Word and Shift Left Immediate XS-form
->  EXTSWSLI         011111 ..... ..... ..... 110111101 . .         @XS
->  
-> diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
-> index 787ba2cdec..95a224e74c 100644
-> --- a/target/ppc/mem_helper.c
-> +++ b/target/ppc/mem_helper.c
-> @@ -319,13 +319,13 @@ static void dcbz_common(CPUPPCState *env, target_ulong addr,
->      clear_helper_retaddr();
->  }
->  
-> -void helper_dcbz(CPUPPCState *env, target_ulong addr, int mmu_idx)
-> +void helper_DCBZ(CPUPPCState *env, target_ulong addr, int mmu_idx)
->  {
->      dcbz_common(env, addr, mmu_idx, env->dcache_line_size, GETPC());
->  }
->  
->  #ifdef TARGET_PPC64
-> -void helper_dcbzl(CPUPPCState *env, target_ulong addr)
-> +void helper_DCBZL(CPUPPCState *env, target_ulong addr)
->  {
->      int dcbz_size = env->dcache_line_size;
->  
-> @@ -341,7 +341,7 @@ void helper_dcbzl(CPUPPCState *env, target_ulong addr)
->  }
->  #endif
->  
-> -void helper_icbi(CPUPPCState *env, target_ulong addr)
-> +void helper_ICBI(CPUPPCState *env, target_ulong addr)
->  {
->      unsigned mmu_idx = cpu_mmu_index(env_cpu(env), false);
->      MemOpIdx oi = make_memop_idx(MO_UL | MO_UNALN, mmu_idx);
-> @@ -357,7 +357,7 @@ void helper_icbi(CPUPPCState *env, target_ulong addr)
->      cpu_ldl_mmu(env, addr, oi, GETPC());
->  }
->  
-> -void helper_icbiep(CPUPPCState *env, target_ulong addr)
-> +void helper_ICBIEP(CPUPPCState *env, target_ulong addr)
->  {
->  #if !defined(CONFIG_USER_ONLY)
->      MemOpIdx oi = make_memop_idx(MO_UL | MO_UNALN, PPC_TLB_EPID_LOAD);
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index cc9287dcc5..60c88a6153 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -4296,216 +4296,6 @@ static void gen_setb(DisasContext *ctx)
->  }
->  #endif
->  
-> -/***                         Cache management                              ***/
-> -
-> -/* dcbf */
-> -static void gen_dcbf(DisasContext *ctx)
-> -{
-> -    /* XXX: specification says this is treated as a load by the MMU */
-> -    TCGv t0;
-> -    gen_set_access_type(ctx, ACCESS_CACHE);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_reg_index(ctx, t0);
-> -    gen_qemu_ld8u(ctx, t0, t0);
-> -}
-> -
-> -/* dcbfep (external PID dcbf) */
-> -static void gen_dcbfep(DisasContext *ctx)
-> -{
-> -    /* XXX: specification says this is treated as a load by the MMU */
-> -    TCGv t0;
-> -    CHK_SV(ctx);
-> -    gen_set_access_type(ctx, ACCESS_CACHE);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_reg_index(ctx, t0);
-> -    tcg_gen_qemu_ld_tl(t0, t0, PPC_TLB_EPID_LOAD, DEF_MEMOP(MO_UB));
-> -}
-> -
-> -/* dcbi (Supervisor only) */
-> -static void gen_dcbi(DisasContext *ctx)
-> -{
-> -#if defined(CONFIG_USER_ONLY)
-> -    GEN_PRIV(ctx);
-> -#else
-> -    TCGv EA, val;
-> -
-> -    CHK_SV(ctx);
-> -    EA = tcg_temp_new();
-> -    gen_set_access_type(ctx, ACCESS_CACHE);
-> -    gen_addr_reg_index(ctx, EA);
-> -    val = tcg_temp_new();
-> -    /* XXX: specification says this should be treated as a store by the MMU */
-> -    gen_qemu_ld8u(ctx, val, EA);
-> -    gen_qemu_st8(ctx, val, EA);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -}
-> -
-> -/* dcdst */
-> -static void gen_dcbst(DisasContext *ctx)
-> -{
-> -    /* XXX: specification say this is treated as a load by the MMU */
-> -    TCGv t0;
-> -    gen_set_access_type(ctx, ACCESS_CACHE);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_reg_index(ctx, t0);
-> -    gen_qemu_ld8u(ctx, t0, t0);
-> -}
-> -
-> -/* dcbstep (dcbstep External PID version) */
-> -static void gen_dcbstep(DisasContext *ctx)
-> -{
-> -    /* XXX: specification say this is treated as a load by the MMU */
-> -    TCGv t0;
-> -    gen_set_access_type(ctx, ACCESS_CACHE);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_reg_index(ctx, t0);
-> -    tcg_gen_qemu_ld_tl(t0, t0, PPC_TLB_EPID_LOAD, DEF_MEMOP(MO_UB));
-> -}
-> -
-> -/* dcbt */
-> -static void gen_dcbt(DisasContext *ctx)
-> -{
-> -    /*
-> -     * interpreted as no-op
-> -     * XXX: specification say this is treated as a load by the MMU but
-> -     *      does not generate any exception
-> -     */
-> -}
-> -
-> -/* dcbtep */
-> -static void gen_dcbtep(DisasContext *ctx)
-> -{
-> -    /*
-> -     * interpreted as no-op
-> -     * XXX: specification say this is treated as a load by the MMU but
-> -     *      does not generate any exception
-> -     */
-> -}
-> -
-> -/* dcbtst */
-> -static void gen_dcbtst(DisasContext *ctx)
-> -{
-> -    /*
-> -     * interpreted as no-op
-> -     * XXX: specification say this is treated as a load by the MMU but
-> -     *      does not generate any exception
-> -     */
-> -}
-> -
-> -/* dcbtstep */
-> -static void gen_dcbtstep(DisasContext *ctx)
-> -{
-> -    /*
-> -     * interpreted as no-op
-> -     * XXX: specification say this is treated as a load by the MMU but
-> -     *      does not generate any exception
-> -     */
-> -}
-> -
-> -/* dcbtls */
-> -static void gen_dcbtls(DisasContext *ctx)
-> -{
-> -    /* Always fails locking the cache */
-> -    TCGv t0 = tcg_temp_new();
-> -    gen_load_spr(t0, SPR_Exxx_L1CSR0);
-> -    tcg_gen_ori_tl(t0, t0, L1CSR0_CUL);
-> -    gen_store_spr(SPR_Exxx_L1CSR0, t0);
-> -}
-> -
-> -/* dcblc */
-> -static void gen_dcblc(DisasContext *ctx)
-> -{
-> -    /*
-> -     * interpreted as no-op
-> -     */
-> -}
-> -
-> -/* dcbz */
-> -static void gen_dcbz(DisasContext *ctx)
-> -{
-> -    TCGv tcgv_addr = tcg_temp_new();
-> -
-> -    gen_set_access_type(ctx, ACCESS_CACHE);
-> -    gen_addr_reg_index(ctx, tcgv_addr);
-> -
-> -#ifdef TARGET_PPC64
-> -    if (ctx->excp_model == POWERPC_EXCP_970 && !(ctx->opcode & 0x00200000)) {
-> -        gen_helper_dcbzl(tcg_env, tcgv_addr);
-> -        return;
-> -    }
-> -#endif
-> -
-> -    gen_helper_dcbz(tcg_env, tcgv_addr, tcg_constant_i32(ctx->mem_idx));
-> -}
-> -
-> -/* dcbzep */
-> -static void gen_dcbzep(DisasContext *ctx)
-> -{
-> -    TCGv tcgv_addr = tcg_temp_new();
-> -
-> -    gen_set_access_type(ctx, ACCESS_CACHE);
-> -    gen_addr_reg_index(ctx, tcgv_addr);
-> -    gen_helper_dcbz(tcg_env, tcgv_addr, tcg_constant_i32(PPC_TLB_EPID_STORE));
-> -}
-> -
-> -/* dst / dstt */
-> -static void gen_dst(DisasContext *ctx)
-> -{
-> -    if (rA(ctx->opcode) == 0) {
-> -        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-> -    } else {
-> -        /* interpreted as no-op */
-> -    }
-> -}
-> -
-> -/* dstst /dststt */
-> -static void gen_dstst(DisasContext *ctx)
-> -{
-> -    if (rA(ctx->opcode) == 0) {
-> -        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-> -    } else {
-> -        /* interpreted as no-op */
-> -    }
-> -
-> -}
-> -
-> -/* dss / dssall */
-> -static void gen_dss(DisasContext *ctx)
-> -{
-> -    /* interpreted as no-op */
-> -}
-> -
-> -/* icbi */
-> -static void gen_icbi(DisasContext *ctx)
-> -{
-> -    TCGv t0;
-> -    gen_set_access_type(ctx, ACCESS_CACHE);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_reg_index(ctx, t0);
-> -    gen_helper_icbi(tcg_env, t0);
-> -}
-> -
-> -/* icbiep */
-> -static void gen_icbiep(DisasContext *ctx)
-> -{
-> -    TCGv t0;
-> -    gen_set_access_type(ctx, ACCESS_CACHE);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_reg_index(ctx, t0);
-> -    gen_helper_icbiep(tcg_env, t0);
-> -}
-> -
-> -/* Optional: */
-> -/* dcba */
-> -static void gen_dcba(DisasContext *ctx)
-> -{
-> -    /*
-> -     * interpreted as no-op
-> -     * XXX: specification say this is treated as a store by the MMU
-> -     *      but does not generate any exception
-> -     */
-> -}
-> -
->  /***                    Segment register manipulation                      ***/
->  /* Supervisor only: */
->  
-> @@ -5746,6 +5536,255 @@ static bool trans_LQARX(DisasContext *ctx, arg_LQARX *a)
->      return true;
->  }
->  
-> +/*
-> + * Cache Management Instructions (decodetree)
-> + */
-> +
-> +static bool trans_DCBA(DisasContext *ctx, arg_X_ea *a)
-> +{
-> +    REQUIRE_INSNS_FLAGS(ctx, CACHE_DCBA);
-> +    return true;
-> +}
-> +
-> +static bool trans_DCBT(DisasContext *ctx, arg_X_th *a)
-> +{
-> +    REQUIRE_INSNS_FLAGS(ctx, CACHE);
-> +    return true;
-> +}
-> +
-> +static bool trans_DCBTEP(DisasContext *ctx, arg_X_ea *a)
-> +{
-> +    REQUIRE_INSNS_FLAGS2(ctx, BOOKE206);
-> +    return true;
-> +}
-> +
-> +static bool trans_DCBTST(DisasContext *ctx, arg_X_th *a)
-> +{
-> +    REQUIRE_INSNS_FLAGS(ctx, CACHE);
-> +    return true;
-> +}
-> +
-> +static bool trans_DCBTSTEP(DisasContext *ctx, arg_X_ea *a)
-> +{
-> +    REQUIRE_INSNS_FLAGS2(ctx, BOOKE206);
-> +    return true;
-> +}
-> +
-> +static bool trans_DCBLC(DisasContext *ctx, arg_X_th *a)
-> +{
-> +    /* Requires either PPC_BOOKE or PPC2_BOOKE206 */
-> +    if (!(ctx->insns_flags & PPC_BOOKE) &&
-> +        !(ctx->insns_flags2 & PPC2_BOOKE206)) {
-> +        return false;
-> +    }
-> +    return true;
-> +}
-> +
-> +static bool trans_DSS(DisasContext *ctx, arg_X_ea *a)
-> +{
-> +    REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
-> +    return true;
-> +}
-> +
-> +static bool trans_DCBTLS(DisasContext *ctx, arg_X_th *a)
-> +{
-> +    TCGv t0 = tcg_temp_new();
-> +
-> +    /* Requires either PPC_BOOKE or PPC2_BOOKE206 */
-> +    if (!(ctx->insns_flags & PPC_BOOKE) &&
-> +        !(ctx->insns_flags2 & PPC2_BOOKE206)) {
-> +        return false;
-> +    }
-> +
-> +    gen_load_spr(t0, SPR_Exxx_L1CSR0);
-> +    tcg_gen_ori_tl(t0, t0, L1CSR0_CUL);
-> +    gen_store_spr(SPR_Exxx_L1CSR0, t0);
-> +
-> +    return true;
-> +}
-> +
-> +static bool trans_DST(DisasContext *ctx, arg_X_ea *a)
-> +{
-> +    REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
-> +
-> +    if (a->ra == 0) {
-> +        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-> +    }
-> +
-> +    return true;
-> +}
-> +
-> +static bool trans_DSTST(DisasContext *ctx, arg_X_ea *a)
-> +{
-> +    REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
-> +
-> +    if (a->ra == 0) {
-> +        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-> +    }
-> +
-> +    return true;
-> +}
-> +
-> +static bool trans_DCBF(DisasContext *ctx, arg_X_l *a)
-> +{
-> +    TCGv EA;
-> +
-> +    REQUIRE_INSNS_FLAGS(ctx, CACHE);
-> +
-> +    /*
-> +     * As per PowerISA v3.1, the L field can have values 0, 1, 3, 4, or 6.
-> +     * Other values are Undefined Behavior (UB).
-> +     */
-> +    switch (a->l) {
-> +    case 0: /* dcbf */
-> +    case 1: /* dcbfl */
-> +    case 3: /* dcbflp */
-> +    case 4: /* dcbfps */
-> +    case 6: /* dcbstps */
-> +        break;
-> +    default:
-> +        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
-> +        return true;
-> +    }
-> +
-> +    gen_set_access_type(ctx, ACCESS_CACHE);
-> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-> +    gen_qemu_ld8u(ctx, EA, EA);
-> +
-> +    return true;
-> +}
-> +
-> +static bool trans_DCBST(DisasContext *ctx, arg_X_ea *a)
-> +{
-> +    TCGv EA;
-> +
-> +    REQUIRE_INSNS_FLAGS(ctx, CACHE);
-> +
-> +    gen_set_access_type(ctx, ACCESS_CACHE);
-> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-> +    gen_qemu_ld8u(ctx, EA, EA);
-> +
-> +    return true;
-> +}
-> +
-> +static bool trans_DCBFEP(DisasContext *ctx, arg_X_ea *a)
-> +{
-> +    TCGv EA;
-> +
-> +    REQUIRE_INSNS_FLAGS2(ctx, BOOKE206);
-> +
-> +    REQUIRE_SV(ctx);
-> +
-> +    gen_set_access_type(ctx, ACCESS_CACHE);
-> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-> +
-> +    tcg_gen_qemu_ld_tl(EA, EA, PPC_TLB_EPID_LOAD, DEF_MEMOP(MO_UB));
-> +
-> +    return true;
-> +}
-> +
-> +static bool trans_DCBSTEP(DisasContext *ctx, arg_X_ea *a)
-> +{
-> +    TCGv EA;
-> +
-> +    REQUIRE_INSNS_FLAGS2(ctx, BOOKE206);
-> +
-> +    gen_set_access_type(ctx, ACCESS_CACHE);
-> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-> +
-> +    tcg_gen_qemu_ld_tl(EA, EA, PPC_TLB_EPID_LOAD, DEF_MEMOP(MO_UB));
-> +
-> +    return true;
-> +}
-> +
-> +static bool trans_DCBI(DisasContext *ctx, arg_X_ea *a)
-> +{
-> +    REQUIRE_INSNS_FLAGS(ctx, CACHE);
-> +
-> +#if defined(CONFIG_USER_ONLY)
-> +    gen_priv_opc(ctx);
-> +    return true;
-
-The #if defined(CONFIG_USER_ONLY) block looks redundant to me.
-REQUIRE_SV is already defined for both build configurations — in
-user-only builds it unconditionally calls gen_priv_opc() and returns,
-and in system builds it checks ctx->pr. The manual #if split just
-duplicates what REQUIRE_SV already does. The function can be simplified
-to:
-
-  static bool trans_DCBI(DisasContext *ctx, arg_X_ea *a)
-  {
-      REQUIRE_INSNS_FLAGS(ctx, CACHE);
-      REQUIRE_SV(ctx);
-  
-      gen_set_access_type(ctx, ACCESS_CACHE);
-      TCGv EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-      TCGv val = tcg_temp_new();
-  
-      gen_qemu_ld8u(ctx, val, EA);
-      gen_qemu_st8(ctx, val, EA);
-  
-      return true;
-  }
-
-> +#else
-> +    TCGv EA, val;
-> +
-> +    REQUIRE_SV(ctx);
-> +
-> +    gen_set_access_type(ctx, ACCESS_CACHE);
-> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-> +    val = tcg_temp_new();
-> +
-> +    gen_qemu_ld8u(ctx, val, EA);
-> +    gen_qemu_st8(ctx, val, EA);
-> +
-> +    return true;
-> +#endif
-> +}
-> +
-> +static bool trans_ICBI(DisasContext *ctx, arg_X_ea *a)
-> +{
-> +    TCGv EA;
-> +
-> +    REQUIRE_INSNS_FLAGS(ctx, CACHE_ICBI);
-> +
-> +    gen_set_access_type(ctx, ACCESS_CACHE);
-> +
-> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-> +    gen_helper_ICBI(tcg_env, EA);
-> +
-> +    return true;
-> +}
-> +
-> +static bool trans_ICBIEP(DisasContext *ctx, arg_X_ea *a)
-> +{
-> +    TCGv EA;
-> +
-> +    REQUIRE_INSNS_FLAGS2(ctx, BOOKE206);
-> +    REQUIRE_SV(ctx);
-> +
-> +    gen_set_access_type(ctx, ACCESS_CACHE);
-> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-> +
-> +    gen_helper_ICBIEP(tcg_env, EA);
-> +    return true;
-> +}
-> +
-> +static bool trans_DCBZ(DisasContext *ctx, arg_X_ea *a)
-> +{
-> +    TCGv EA;
-> +
-> +    REQUIRE_INSNS_FLAGS(ctx, CACHE_DCBZ);
-> +
-> +    gen_set_access_type(ctx, ACCESS_CACHE);
-> +
-> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-> +
-> +#if defined(TARGET_PPC64)
-> +    if (ctx->excp_model == POWERPC_EXCP_970 &&
-> +        !(ctx->opcode & 0x00200000)) {
-
-trans_DCBZ reads ctx->opcode directly to distinguish dcbz from dcbzl on
-the 970.
-
-In a decodetree translator ctx->opcode is not reliable — the instruction
-fields are decoded into arg_* before the translator is called. Bit 21
-(0x00200000) is the LSB of the RT field: dcbz encodes RT=0 and the
-970-specific dcbzl encodes RT=1. Since the current decode pattern
-
-  011111----- ..... ..... 1111110110
-
-treats all of RT as don't-care, both variants land in trans_DCBZ with
-the distinguishing bit lost.
-
-I think a better way would to split the decode entry so the table itself
-separates the two:
-
-DCBZ   011111 00000 ..... ..... 1111110110 -   @X_ea
-DCBZL  011111 00001 ..... ..... 1111110110 -   @X_ea
-
-Then trans_DCBZ needs no ctx->opcode access, and trans_DCBZL handles the
-970 path cleanly with its own REQUIRE_64BIT + excp_model check.
-
-> +        gen_helper_DCBZL(tcg_env, EA);
-> +        return true;
-> +    }
-> +#endif
-> +
-> +    gen_helper_DCBZ(tcg_env, EA, tcg_constant_i32(ctx->mem_idx));
-> +    return true;
-> +}
-> +
-> +static bool trans_DCBZEP(DisasContext *ctx, arg_X_ea *a)
-> +{
-> +    TCGv EA;
-> +
-> +    REQUIRE_INSNS_FLAGS2(ctx, BOOKE206);
-> +
-> +    REQUIRE_SV(ctx);
-> +
-> +    gen_set_access_type(ctx, ACCESS_CACHE);
-> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-> +
-> +    gen_helper_DCBZ(tcg_env, EA, tcg_constant_i32(PPC_TLB_EPID_STORE));
-> +    return true;
-> +}
-> +
->  #include "translate/fixedpoint-impl.c.inc"
->  
->  #include "translate/fp-impl.c.inc"
-> @@ -5910,25 +5949,6 @@ GEN_HANDLER_E(mcrxrx, 0x1F, 0x00, 0x12, 0x007FF801, PPC_NONE, PPC2_ISA300),
->  #endif
->  GEN_HANDLER(mtmsr, 0x1F, 0x12, 0x04, 0x001EF801, PPC_MISC),
->  GEN_HANDLER(mtspr, 0x1F, 0x13, 0x0E, 0x00000000, PPC_MISC),
-> -GEN_HANDLER(dcbf, 0x1F, 0x16, 0x02, 0x03C00001, PPC_CACHE),
-> -GEN_HANDLER_E(dcbfep, 0x1F, 0x1F, 0x03, 0x03C00001, PPC_NONE, PPC2_BOOKE206),
-> -GEN_HANDLER(dcbi, 0x1F, 0x16, 0x0E, 0x03E00001, PPC_CACHE),
-> -GEN_HANDLER(dcbst, 0x1F, 0x16, 0x01, 0x03E00001, PPC_CACHE),
-> -GEN_HANDLER_E(dcbstep, 0x1F, 0x1F, 0x01, 0x03E00001, PPC_NONE, PPC2_BOOKE206),
-> -GEN_HANDLER(dcbt, 0x1F, 0x16, 0x08, 0x00000001, PPC_CACHE),
-> -GEN_HANDLER_E(dcbtep, 0x1F, 0x1F, 0x09, 0x00000001, PPC_NONE, PPC2_BOOKE206),
-> -GEN_HANDLER(dcbtst, 0x1F, 0x16, 0x07, 0x00000001, PPC_CACHE),
-> -GEN_HANDLER_E(dcbtstep, 0x1F, 0x1F, 0x07, 0x00000001, PPC_NONE, PPC2_BOOKE206),
-> -GEN_HANDLER_E(dcbtls, 0x1F, 0x06, 0x05, 0x02000001, PPC_BOOKE, PPC2_BOOKE206),
-> -GEN_HANDLER_E(dcblc, 0x1F, 0x06, 0x0c, 0x02000001, PPC_BOOKE, PPC2_BOOKE206),
-> -GEN_HANDLER(dcbz, 0x1F, 0x16, 0x1F, 0x03C00001, PPC_CACHE_DCBZ),
-> -GEN_HANDLER_E(dcbzep, 0x1F, 0x1F, 0x1F, 0x03C00001, PPC_NONE, PPC2_BOOKE206),
-> -GEN_HANDLER(dst, 0x1F, 0x16, 0x0A, 0x01800001, PPC_ALTIVEC),
-> -GEN_HANDLER(dstst, 0x1F, 0x16, 0x0B, 0x01800001, PPC_ALTIVEC),
-> -GEN_HANDLER(dss, 0x1F, 0x16, 0x19, 0x019FF801, PPC_ALTIVEC),
-> -GEN_HANDLER(icbi, 0x1F, 0x16, 0x1E, 0x03E00001, PPC_CACHE_ICBI),
-> -GEN_HANDLER_E(icbiep, 0x1F, 0x1F, 0x1E, 0x03E00001, PPC_NONE, PPC2_BOOKE206),
-> -GEN_HANDLER(dcba, 0x1F, 0x16, 0x17, 0x03E00001, PPC_CACHE_DCBA),
->  GEN_HANDLER(mfsr, 0x1F, 0x13, 0x12, 0x0010F801, PPC_SEGMENT),
->  GEN_HANDLER(mfsrin, 0x1F, 0x13, 0x14, 0x001F0001, PPC_SEGMENT),
->  GEN_HANDLER(mtsr, 0x1F, 0x12, 0x06, 0x0010F801, PPC_SEGMENT),
-> -- 
-> 2.55.0
-> 
+On 8/12/26 14:14, Denis V. Lunev wrote:
+> This email originated from an IP that might not be authorized by the domain it was sent from.
+> Do not click links or open attachments unless it is an email you expected to receive.
+> qom-set of the 'drive' property is allowed on a realized device and ends
+> up in bdrv_replace_child_bs(), which swaps the node a BdrvChild points to
+> without telling the parent anything about it. Every other way the size of
+> a node changes goes through bdrv_co_truncate(), which does notify, so a
+> device model caching the size of its child has no way to learn that it
+> changed.
+>
+> scsi-disk is the one really hurt by this. check_lba_range() validates
+> every guest request against SCSIDevice.max_lba, filled in by
+> scsi_disk_reset() and updated only by the READ CAPACITY(10) and (16)
+> handlers. Point a scsi-hd at a larger node and every request past the end
+> of the old one is refused with ILLEGAL REQUEST / LOGICAL BLOCK ADDRESS
+> OUT OF RANGE for the whole life of the device, which Linux turns into
+> EREMOTEIO for reads as well as writes. It is silent on the host:
+> out-of-range requests are answered by scsi_check_condition() and never
+> reach scsi_handle_rw_error(), so there is no BLOCK_IO_ERROR event and
+> io-status stays 'ok'. virtio-blk and ide call blk_get_geometry() for
+> every request, so they end up with a stale idea of the size but never
+> refuse I/O the node underneath can serve.
+>
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> Cc: Kevin Wolf <kwolf@redhat.com>
+> Cc: Hanna Reitz <hreitz@redhat.com>
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: Fam Zheng <fam@euphon.net>
+>
+> Denis V. Lunev (4):
+>   block: notify the parent when a replaced child has a different size
+>   scsi-disk: refresh the cached capacity from the resize callback
+>   tests/qtest/virtio-scsi: cover a replacement that changes the size
+>   tests/qemu-iotests/qom-set-drive: replace with a differently sized
+>     node
+>
+>  block.c                                    | 13 +++++
+>  hw/scsi/scsi-disk.c                        | 16 ++++--
+>  include/block/block_int-io.h               |  3 ++
+>  tests/qemu-iotests/tests/qom-set-drive     | 14 +++--
+>  tests/qemu-iotests/tests/qom-set-drive.out |  2 +
+>  tests/qtest/virtio-scsi-test.c             | 63 ++++++++++++++++++++++
+>  6 files changed, 104 insertions(+), 7 deletions(-)
+>
+>
+> base-commit: 3e3ccab106f879b1512f8e0d51a827dd4de30e22
+ping v2
 
