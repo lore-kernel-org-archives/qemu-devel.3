@@ -4,156 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61BDAC5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:36:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71EECC61DBE
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:39:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzJPW-0002BC-F5; Wed, 26 Aug 2026 15:35:46 -0400
+	id 1wzJSl-00036D-VA; Wed, 26 Aug 2026 15:39:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wzJPU-0002Ae-OD; Wed, 26 Aug 2026 15:35:44 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJSk-00035C-Mw
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:39:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wzJPT-0005Jk-4G; Wed, 26 Aug 2026 15:35:44 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QH1iJP314106; Wed, 26 Aug 2026 19:35:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=V4RCCv
- i/rU369afCgp3fB2yH0/ktZAvs6PImF6fQePs=; b=C0vbXrCUE1A/8vGZjI1Reu
- doXu0FnIkI9Bzsn2Bb08qlfNo9EWhWr9JdlqJxJdT2/CvPcOPpwDRnpOAjpSJQ1/
- wOCeSyuN1rbzhJb6uKI5U4UvQ5u3nBbHUJifCLQJPcM6aTBBtDYUEjaqzvCXdzPN
- UlD85r2YX3ebK33ckCkxe5OfAgmqYNli2SOYHkjrgWPw357QV6Btp860IDSHddnd
- 42dg1SpZk560+Uf7oMyLTElKgbJOF/OgfHCGt+lYro3lyGtoFVzAkFAMVsOSgIMF
- UDL7Pjnn3qMs8faR1h4LXpuJqWF9mZMCjDl2Hd7oc4COkVH/8yOgOpEH8oKgY17A
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g716j0vhm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 19:35:41 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QJQM14011565;
- Wed, 26 Aug 2026 19:35:40 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3k3scw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 19:35:40 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QJZdwI2884444
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 19:35:39 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3315F5803F;
- Wed, 26 Aug 2026 19:35:39 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF62A58061;
- Wed, 26 Aug 2026 19:35:38 +0000 (GMT)
-Received: from [9.61.145.136] (unknown [9.61.145.136])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 19:35:38 +0000 (GMT)
-Message-ID: <b7af395f-fb7b-466d-88c7-ac34c50fd750@linux.ibm.com>
-Date: Wed, 26 Aug 2026 15:35:38 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJSi-0005fj-FQ
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:39:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787773143;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=OV/Bn5FKjVN6jGBTdmcI0iglqykaTfW48iOybfBw34s=;
+ b=SxOSie9LU5un1SsA4hR7ivHOd3/hXbYippJadccQr8HzLHqXxPO6edDh8MB0uVJEtcwkg6
+ c+DPVy7f+KSZfyj4Jvsjmm73FJRK+4D4jKUrUZBt8ZZOxYcOIspKcXx82fFun2PRp2OuFs
+ RmLNsSpoJHAC7kWE92XJIdcl06HZ8do=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-146-9412ylJcNfqNWpF-vOfexA-1; Wed,
+ 26 Aug 2026 15:38:58 -0400
+X-MC-Unique: 9412ylJcNfqNWpF-vOfexA-1
+X-Mimecast-MFC-AGG-ID: 9412ylJcNfqNWpF-vOfexA_1787773135
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 71265180134D; Wed, 26 Aug 2026 19:38:54 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.99])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CE7BC1800577; Wed, 26 Aug 2026 19:38:41 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ John Snow <jsnow@redhat.com>, linux-cxl@vger.kernel.org,
+ Markus Armbruster <armbru@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Peter Xu <peterx@redhat.com>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>, qemu-trivial@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, Jiri Pirko <jiri@resnulli.us>,
+ qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, linux-edac@vger.kernel.org,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Jonathan Cameron <jic23@kernel.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Lukas Straub <lukasstraub2@web.de>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v3 00/43] qapi: convert (very) trivial intro sections
+Date: Wed, 26 Aug 2026 15:37:57 -0400
+Message-ID: <20260826193840.2152000-1-jsnow@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/8] s390x/ipl: Add PCI and bus fields to
- iplBlockQemuScsi
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- cohuck@redhat.com, mjrosato@linux.ibm.com
-Cc: zycai@linux.ibm.com
-References: <20260811144629.866641-1-jrossi@linux.ibm.com>
- <20260811144629.866641-4-jrossi@linux.ibm.com>
-Content-Language: en-US
-From: Eric Farman <farman@linux.ibm.com>
-Autocrypt: addr=farman@linux.ibm.com; keydata=
- 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
- y8m0x6unNti2MZIUMy0m2gcE
-In-Reply-To: <20260811144629.866641-4-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE2NCBTYWx0ZWRfXxJHQrMojQd4w
- I3xQVh4D0NMBxsUKmELiKT7HFs6MkUbwNig4I8ECngBllfJq8XY13bcPWTXZ12Ix0vMGMWqcruo
- Dj11n3L+PEr6RbSO0GM8XO9uu76tQsE=
-X-Proofpoint-GUID: 4ORS8-SBA4ku9fHZ4WrCX4XuHEvcACT4
-X-Proofpoint-ORIG-GUID: 4ORS8-SBA4ku9fHZ4WrCX4XuHEvcACT4
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE2NCBTYWx0ZWRfXw9ftExsZ27ot
- Exdah1vxNP4OTrJyiTB7IWRKq+HSfDhGCCb4YK8be68PipJ6+6YKb8F7JqUDFSJpebGJTXO1Yj3
- DTvY6hEphnzV60j6NR0RgQ5g+iDe7vme5MbHDHQlMIg6/Yc08gfoMprg7ROw73GnAMulBv3Tl6V
- 3qpCmfuMwIDO/8XlyI37znYjLd18Uke+n6xXNn7iKOeTWSXMJ2ZI8J8Zxa5SN31oVrv7wI8Nsmj
- O6Dvnt5+RRD2ES9Af9agBaivIcsmFsD7C10QY9iOGGRQEGR7rsxf8L063hQvNR5/cgv38aFkE8o
- xUGlbWe75MPHcO5irXiWA/BhlbXViu77aI8IzflcaxKIbBLapVK5/ZVK77Ju/g20aHSa91BjP5d
- oraVxsKIUSrUpG5slgDwMCZYzC6xYRuOnwHdH9WDKwTVHgG81IRL6vKZlSaEF6GaghYKGAaQnBr
- Dn/i+LHIe/S30zm1CSA==
-X-Authority-Analysis: v=2.4 cv=H7brBeYi c=1 sm=1 tr=0 ts=6a8f400d cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=2khOFLvXL5HV5xx8j2QA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_05,2026-08-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
- bulkscore=0 adultscore=0 priorityscore=1501 clxscore=1015 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260164
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,90 +102,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 8/11/26 10:46 AM, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
-> 
-> Rather than add a second non-architected IPLB type for scsi-pci devices,
-> let's add the relevant fields to the existing struct so that it can handle
-> both PCI and CCW scsi controllers.
-> 
-> The PCI and CCW fields of the IplBlockQemuScsi are aligned with same
-> offsets as the corresponding fields in IplBlockPci and IplBlockCcw for
-> potential union access.
-> 
-> Add comments for PCI/CCW specifics and also denote that the S390IplType
-> enum values must fit in uint8_t.
-> 
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->   hw/s390x/ipl.c              |  1 +
->   hw/s390x/ipl.h              |  2 ++
->   include/hw/s390x/ipl/qipl.h | 13 +++++++++----
->   3 files changed, 12 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-> index fd6e9100f9..7e68be4c20 100644
-> --- a/hw/s390x/ipl.c
-> +++ b/hw/s390x/ipl.c
-> @@ -482,6 +482,7 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
->               iplb->scsi.lun = cpu_to_be32(sd->lun);
->               iplb->scsi.target = cpu_to_be16(sd->id);
->               iplb->scsi.channel = cpu_to_be16(sd->channel);
-> +            iplb->scsi.bus = S390_IPL_TYPE_CCW;
-
-Ah, so you're just initializing this here. Patch 4 will actually rely on 
-this. That is fine.
-
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-
->               iplb->scsi.devno = cpu_to_be16(ccw_dev->sch->devno);
->               iplb->scsi.ssid = ccw_dev->sch->ssid & 3;
->               break;
-> diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-> index b4d93054a7..0734d72117 100644
-> --- a/hw/s390x/ipl.h
-> +++ b/hw/s390x/ipl.h
-> @@ -86,6 +86,8 @@ struct S390IPLState {
->       uint16_t devno;
->   };
->   QEMU_BUILD_BUG_MSG(offsetof(S390IPLState, iplb) & 3, "alignment of iplb wrong");
-> +QEMU_BUILD_BUG_MSG(offsetof(IplBlockQemuScsi, fid) != offsetof(IplBlockPci, fid),
-> +                   "iplb fields misaligned across bus types");
->   
->   #define DIAG_308_RC_OK              0x0001
->   #define DIAG_308_RC_NO_CONF         0x0102
-> diff --git a/include/hw/s390x/ipl/qipl.h b/include/hw/s390x/ipl/qipl.h
-> index 8d3c83a80b..8d3937376b 100644
-> --- a/include/hw/s390x/ipl/qipl.h
-> +++ b/include/hw/s390x/ipl/qipl.h
-> @@ -25,7 +25,7 @@ enum S390IplType {
->       S390_IPL_TYPE_CCW = 0x02,
->       S390_IPL_TYPE_PCI = 0x04,
->       S390_IPL_TYPE_PV = 0x05,
-> -    S390_IPL_TYPE_QEMU_SCSI = 0xff
-> +    S390_IPL_TYPE_QEMU_SCSI = 0xff /* Max value, must fit in uint8_t */
->   };
->   typedef enum S390IplType S390IplType;
->   
-> @@ -103,9 +103,14 @@ struct IplBlockQemuScsi {
->       uint32_t lun;
->       uint16_t target;
->       uint16_t channel;
-> -    uint8_t  reserved0[77];
-> -    uint8_t  ssid;
-> -    uint16_t devno;
-> +    uint8_t  bus;
-> +    uint8_t  reserved0[76];
-> +    uint8_t  ssid;              /* CCW only */
-> +    uint16_t devno;             /* CCW only */
-> +    uint8_t  reserved1[216];
-> +    uint8_t  opt;               /* PCI only */
-> +    uint8_t  reserved2[3];
-> +    uint32_t fid;               /* PCI only */
->   } QEMU_PACKED;
->   typedef struct IplBlockQemuScsi IplBlockQemuScsi;
->   
+v3:=0D
+   As per Markus' request, the intro section conversion has been split=0D
+   even further into the *very* trivial; leaving the semi-trivial and=0D
+   not-trivial conversions for later consideration.=0D
+=0D
+   If you are a non-qapi/non-docs maintainer being CC'd on this patch,=0D
+   there is **very likely** nothing for you to do here; we are only=0D
+   changing spacing and syntax, but not modifying content in any way=0D
+   in this series in particular. Please feel free to mark-as-read and=0D
+   move on with your day.=0D
+=0D
+-=0D
+=0D
+Hi, this patchset converts trivial "introductory" sections in the QAPI=0D
+documentation to use the new, explicit intro section syntax.=0D
+=0D
+This is being done primarily for the benefit of the forthcoming=0D
+"inliner", a feature for the rendered HTML QMP documentation that=0D
+seeks to "inline" QMP command argument documentation into the argument=0D
+list for each command.=0D
+=0D
+There are two main motives here:=0D
+=0D
+(1) We want the split between the "introduction" and "details"=0D
+    sections to be mechanically obvious, so that auto-generated or=0D
+    inlined documentation has a well-defined, obvious spot to go.=0D
+=0D
+(2) We do not want to inline irrelevant, introductory text describing=0D
+    structures to be copied into command documentation.=0D
+=0D
+This patchset tackles "very trivial" conversions: cases where the=0D
+existing leading plaintext is only a single sentence and is=0D
+immediately followed by a tagged section, the end of the documentation=0D
+block, or some other pre-existing syntactical delineation. (i.e.: not=0D
+more plaintext.)=0D
+=0D
+NOTE: This series *may* miss some conversions; future QAPI changes will=0D
+enforce the new syntax and any cases that have appeared since v1 will=0D
+be identified and corrected at that time; we are concerned with the=0D
+bulk and ease-of-review here, not completeness. This is precisely why=0D
+the new intro syntax and parser were carefully designed to allow=0D
+gradual conversion.=0D
+=0D
+NOTE2: Future patches that may require more scrutiny will handle the=0D
+remaining conversions - There are some very subtle concerns that are=0D
+not readily apparent in the very minor textual changes that will be=0D
+spelled out for reviewers in the cover letters for those series.=0D
+=0D
+This is enough for today, don't you think?=0D
+=0D
+John Snow (43):=0D
+  qapi: convert trivial intro sections for error.json=0D
+  qapi: convert trivial intro sections for acpi-hest.json=0D
+  qapi: convert trivial intro sections for ebpf.json=0D
+  qapi: convert trivial intro sections for compat.json=0D
+  qapi: convert trivial intro sections for vfio.json=0D
+  qapi: convert trivial intro sections for trace.json=0D
+  qapi: convert trivial intro sections for misc-arm.json=0D
+  qapi: convert trivial intro sections for cryptodev.json=0D
+  qapi: convert trivial intro sections for machine-common.json=0D
+  qapi: convert trivial intro sections for accelerator.json=0D
+  qapi: convert trivial intro sections for authz.json=0D
+  qapi: convert trivial intro sections for yank.json=0D
+  qapi: convert trivial intro sections for replay.json=0D
+  qapi: convert trivial intro sections for machine-s390x.json=0D
+  qapi: convert trivial intro sections for acpi.json=0D
+  qapi: convert trivial intro sections for tpm.json=0D
+  qapi: convert trivial intro sections for qdev.json=0D
+  qapi: convert trivial intro sections for control.json=0D
+  qapi: convert trivial intro sections for dump.json=0D
+  qapi: convert trivial intro sections for common.json=0D
+  qapi: convert trivial intro sections for sockets.json=0D
+  qapi: convert trivial intro sections for transaction.json=0D
+  qapi: convert trivial intro sections for stats.json=0D
+  qapi: convert trivial intro sections for job.json=0D
+  qapi: convert trivial intro sections for pci.json=0D
+  qapi: convert trivial intro sections for introspect.json=0D
+  qapi: convert trivial intro sections for rocker.json=0D
+  qapi: convert trivial intro sections for misc-i386.json=0D
+  qapi: convert trivial intro sections for block-export.json=0D
+  qapi: convert trivial intro sections for audio.json=0D
+  qapi: convert trivial intro sections for block.json=0D
+  qapi: convert trivial intro sections for misc.json=0D
+  qapi: convert trivial intro sections for crypto.json=0D
+  qapi: convert trivial intro sections for cxl.json=0D
+  qapi: convert trivial intro sections for run-state.json=0D
+  qapi: convert trivial intro sections for char.json=0D
+  qapi: convert trivial intro sections for virtio.json=0D
+  qapi: convert trivial intro sections for net.json=0D
+  qapi: convert trivial intro sections for qom.json=0D
+  qapi: convert trivial intro sections for ui.json=0D
+  qapi: convert trivial intro sections for migration.json=0D
+  qapi: convert trivial intro sections for machine.json=0D
+  qapi: convert trivial intro sections for block-core.json=0D
+=0D
+ qapi/accelerator.json    |  18 +-=0D
+ qapi/acpi-hest.json      |   4 +-=0D
+ qapi/acpi.json           |   8 +-=0D
+ qapi/audio.json          |  88 +++-----=0D
+ qapi/authz.json          |  21 +-=0D
+ qapi/block-core.json     | 448 ++++++++++++++-------------------------=0D
+ qapi/block-export.json   |  50 ++---=0D
+ qapi/block.json          |  41 ++--=0D
+ qapi/char.json           |  90 +++-----=0D
+ qapi/common.json         |  29 +--=0D
+ qapi/compat.json         |   6 +-=0D
+ qapi/control.json        |  30 +--=0D
+ qapi/crypto.json         | 100 ++++-----=0D
+ qapi/cryptodev.json      |  18 +-=0D
+ qapi/cxl.json            |   6 +-=0D
+ qapi/dump.json           |  19 +-=0D
+ qapi/ebpf.json           |   6 +-=0D
+ qapi/error.json          |   3 +-=0D
+ qapi/introspect.json     |  40 ++--=0D
+ qapi/job.json            |  18 +-=0D
+ qapi/machine-common.json |  14 +-=0D
+ qapi/machine-s390x.json  |  13 +-=0D
+ qapi/machine.json        | 208 +++++++-----------=0D
+ qapi/migration.json      | 131 +++++-------=0D
+ qapi/misc-arm.json       |   6 +-=0D
+ qapi/misc-i386.json      |  52 ++---=0D
+ qapi/misc.json           |  74 +++----=0D
+ qapi/net.json            |  92 +++-----=0D
+ qapi/pci.json            |  27 +--=0D
+ qapi/qdev.json           |  14 +-=0D
+ qapi/qom.json            | 150 +++++--------=0D
+ qapi/replay.json         |   6 +-=0D
+ qapi/rocker.json         |  39 ++--=0D
+ qapi/run-state.json      | 113 ++++------=0D
+ qapi/sockets.json        |  31 ++-=0D
+ qapi/stats.json          |  34 ++-=0D
+ qapi/tpm.json            |  29 +--=0D
+ qapi/trace.json          |  12 +-=0D
+ qapi/transaction.json    |  14 +-=0D
+ qapi/ui.json             | 199 ++++++-----------=0D
+ qapi/vfio.json           |   4 +-=0D
+ qapi/virtio.json         |  54 ++---=0D
+ qapi/yank.json           |   5 +-=0D
+ 43 files changed, 845 insertions(+), 1519 deletions(-)=0D
+=0D
+-- =0D
+2.55.0=0D
+=0D
 
 
