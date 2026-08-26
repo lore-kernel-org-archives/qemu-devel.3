@@ -4,130 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96200C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:17:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8063C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:23:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzJ7v-0006sb-IZ; Wed, 26 Aug 2026 15:17:35 -0400
+	id 1wzJD0-0007qy-PX; Wed, 26 Aug 2026 15:22:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wzJ7u-0006sN-IU
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:17:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wzJ7t-0002Wg-7S
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:17:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787771852;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TnPwYQQCLG5EwGMFMNfkHPtD213tl1kqbBEbCh/GXFI=;
- b=gafI07/j1VZHiHowFZx4zsc42s/I6M9v5ScgKQyZ5hTkG5zuBGPokvYcKz+Zre6fI26jxZ
- uBKSBkLS4O9G4TIU8PdjuFfUlWmXNs6qhnKa3AuztXL15MQ5B3Ie65f8Y1MUlL1Xz/zHnE
- 5ef8+1K79bWiu71s1f8PGmcyoOFfHuQ=
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-10-0SGFACNeOUixlG2ODqDZ3Q-1; Wed, 26 Aug 2026 15:17:30 -0400
-X-MC-Unique: 0SGFACNeOUixlG2ODqDZ3Q-1
-X-Mimecast-MFC-AGG-ID: 0SGFACNeOUixlG2ODqDZ3Q_1787771850
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-cc1b8088202so1260734a12.3
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 12:17:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1787771850; cv=none;
- d=google.com; s=arc-20260327;
- b=A3/tEnjnLF2nTNnNi78R5QD34nIC9oBsb0yhNOXbygTLRi6kxdf2KQ9xXW6dpKC3ln
- upNKpE/NniOGBY8NSnhe6Xi1lgdJ7GssEffGanirQxPnfP/7Y73PaavFzStSMHuTk4q9
- qM2WCxM2Jz9uoUO7ISgrQDXXTTBLrDVc+jc7YhmXNvM2A7U6T8zknUMpwLdVSf9r/z4P
- aKUWLSUCkAUX8dmvR0zCA9XT50c86ISSvZrdFwngvt3/EMF258NVI4kQd8Fp19ZnB9qs
- kgeHbwAo6vIBZLq22Q6otm0oX8yqExL7lTsUy4ZUNpKvt+IhZE27t16tPhpz1Ev0rZw/
- 5FXA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20260327; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=TnPwYQQCLG5EwGMFMNfkHPtD213tl1kqbBEbCh/GXFI=;
- fh=PcuXpK2bfC7EoNuuaJPQqLtQ9sEGkoQsnR4/5XYLgv8=;
- b=pQ/L0GtkhZaq7mEed3qQ4bw7R6Erqjo+AnmLYfq25KC3XIb4KAluE/8HwaHvKCTJ98
- nE3efXJ0DqYSQN/27kVbARVBmi/V4OGy3SQ3jXAy2W4Ic5nnmIPcnIDO/OwBnYFdH0FX
- BvNEFFGc2qdPEAfmEm9v+s2YrXd/5JFy2HM7i4hz981gLVzee+M74Asch/E5Ei1Y1oyi
- VBrfCtwVU70UeL5ATcHxLOsMQPLST3lT582lWxZ2PfPMQcNuLdvg/inCwlNSVYadPtWL
- aUuMvjGDusq5K5gP9b+3/M8GCyA5ahAZdmQLMjvgZzRLlCgfsn5VXmL+V80nTAVQngEx
- AcMA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <ralerrdirsardx@gmail.com>)
+ id 1wzHFL-0006Px-1o
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 13:17:07 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ralerrdirsardx@gmail.com>)
+ id 1wzHFI-0008LD-MR
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 13:17:06 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-5b14d1f9315so836412e87.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 10:17:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787771850; x=1788376650; darn=nongnu.org;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=TnPwYQQCLG5EwGMFMNfkHPtD213tl1kqbBEbCh/GXFI=;
- b=AxVe1F/r9vCrGeNZZ4t5eDDbi0ZNjuLpDfDbzaSktPks8AJ6ylThmDNjplsUqeEEkc
- VgX79r51sHGgNtnh25oB5zO/2gAubL2dCChc6yDwg7bQBouDra7npMBXRJR5wcO703gY
- Cys5989TRJme1LibcpVMHK4gbgIffWoTVH5kkIsfHAP1BZfBojxf6rDysUZG96r9M7VN
- Nk2YBFg0SvKGAzMjOPjF+eBYH2ks6EWzmph6pN3cjp7QAntPE0UpZ2u3yScNhWL9sGxS
- HYP87fism3LIib3H3Nc4iDNWckovRUEcSFIeqqCeUB3OsULn/S+6ewBuzYHEDzU3bk3K
- HzyA==
+ d=gmail.com; s=20251104; t=1787764621; x=1788369421; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Yg93GYCE6k1Y4/DR7+dQ9qAd3uQUgCnZ6ZWzQS0cH/8=;
+ b=nRxPKhvo3f7Q9PzOR8yui9xLFDjvpE4i9iuKz/8OkoC8NDLB1t8BQtbh8wQ+qHj+jH
+ PQrHVLzqQN4/8dKCnzcB9g1pgqhNqnTPnaQQQeioqKDZM/cDctxasVynJg2QnlUJV0uo
+ 6/HkDI7qhv3Kmsz0T9UWlVt8LeDdXLfxtgqvfQW6UEwTPE334LwTAsmAsWIaJF9QZRly
+ qcNyV0dvKeHJW5XZU75CVK5IgU2lOXrs94J7tbNFE5SfT6NOCBygjBaKe4cl6vtG7YzR
+ 29nYZMaMLWk13zvNMV5iiCQkQRwFEdoQAV11kg9E5mm0P39Pe8uYnbGvpS6BmcpLTSMR
+ naIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787771850; x=1788376650;
- h=content-transfer-encoding:content-type:cc:to:subject:message-id
- :date:from:in-reply-to:references:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=TnPwYQQCLG5EwGMFMNfkHPtD213tl1kqbBEbCh/GXFI=;
- b=YCF3R+Skv7tAeaZipB6Xed1lIfOJjFXL0OqUoze9no2iOycUFvhBZqwXNdE6zVU2b4
- u1xi+MJp2LichKYecufNlcPT1SeNhPl//e0qH/8Raw92xqmp25UU1EapeI3l1F3wxtCD
- eqyuYA1+FgmmQNrDG8ITjZIYaQyjAnMNy016jkHJBzj/wv22H7dmTT2+/IQQR34m/Oaj
- 5ou9MgCVsCmiLBJyDl4S9u8RR4wO1BXQSEfrjgc4ykZRw8ZDNLfTVGXRKMSj8CE64BWI
- Kgpr4byH0PX93gK5HCjgvSfPUX9J2MUtHj6kn1my7/5kfxW0rm6eRClxffneZl/K+DRA
- Pv/A==
-X-Gm-Message-State: AFuF++mdnkiGUDxqaayBWSJghWymdmsMfHUDqL9DDau6PV10Ucrr22kk
- GWfnwf2KC/oVMqNCz7WzKyL+DUDXG9TJ9aYppcS6cxIQa3rni9x8RhhAMuPrBTa/XX9t0YUf5w6
- tbrs+uvsIisF4SaVCrORlcGpGpQFh6/SlvngKbiHqe0VNuIuVIpQuDEDorbx9ZbVM/W/7QvFjnQ
- godzfAbKHjAchdYy+N1aFNWUMqPkxw6BA=
-X-Gm-Gg: AR+sD102xp6glGHyaKsZJ4ltjSy+RrSb/ydNB5K6Xvs1zo31fTeqHEiEjbinPAIKt4L
- ArwT8Kq30ZKi89AlFm6zd+CRKwzQ6Zb7cbq4s3KGl5gTq/7USvbN+8QQZ/yptqx238TNJ0adglj
- wv1di/HSFEI6wkUCwQRuefQlqtTEyx86NunFrRnaBFN/xnS50vzRPdPSRDYop44hlA/tqhlIXB/
- NqPjxyEFN9unX3yuT4Iw68O7ujAF6jT7MMI6Pof1+HlwSyuiUOVpXQPHZC50ZDD1cnVfpM4vd5l
- oQ==
-X-Received: by 2002:a05:6a20:7f88:b0:3cd:2e96:5929 with SMTP id
- adf61e73a8af0-3cf84e50685mr13454829637.14.1787771849741; 
- Wed, 26 Aug 2026 12:17:29 -0700 (PDT)
-X-Received: by 2002:a05:6a20:7f88:b0:3cd:2e96:5929 with SMTP id
- adf61e73a8af0-3cf84e50685mr13454746637.14.1787771849222; Wed, 26 Aug 2026
- 12:17:29 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787764621; x=1788369421;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Yg93GYCE6k1Y4/DR7+dQ9qAd3uQUgCnZ6ZWzQS0cH/8=;
+ b=c+8qZmwT8vFV0MXF4chOrHAs5E+LCquKijPwQTRtbv3anUlxn2yWMLwMv2zeffqpRy
+ IrFv/N0ru0YC3arjfpJ+JqnKbDpulnHx4mx13YUhEzU2SZ7VUH7M1A3CDyjpvHbh9JX6
+ KAhfDqWikaZQePVotgFrDt4cbddwYUaa7k9YDGSoERsZwWo9xpZuiwZsbr5dyn7tcCjk
+ xmWHjI60Zp2Vdd321gJDd8zoU9QWJZQ11koT+Osxth20AdbFFgT+ISYYyZeC4KUIEOeX
+ JeY0mH+F0JVCnHBT9n0nBMiJgHUdLsJlq9s8iIR46G+DAw8Ed3KH6fyE+i4NM+fwkGzx
+ 2/CA==
+X-Gm-Message-State: AFuF++kSqw44h+qijhISeFDMt50JLKi2/7MUdtzbNiJCOqbaGaANL6hA
+ n2C75i2PaVDvPXfL1tIQK5I2YeL8+3hvJsyQptDg3E7EJiPCorNdJOzobkRkKQ==
+X-Gm-Gg: AR+sD10MvZ6EhVxA6IFmJ51EpCziYwSL0ik9HMRhxJv/OIDcrfR0yPgr8AynN/0rM+L
+ 2D7RqMe6rubLaymfbTpLy3n+JFJuKaQB8rs/Sslz7y3fE1L7M8tlsQqcimv6Qy6d/2fbrLuOdP9
+ E/s/V8PaS6VVJj1WvxLZMOH/14Z02nCWePZmtuGYGaSEvGbpsvG02YcDPJ1LdljB3oOqsrtJq0n
+ bVGoEkgPtt/q9d1Ro1wh+zO4kTNqQWZFiU+yuHQ+AnUoa/b3G3OHX62lnf47g4Bcll2ro5l+67f
+ eszV8/1ikGvl4u8Tapu2k+olAgLXGw/rfF/bmITfzinDHy10T54Js9H9K3pU4LZRxIG0s0UT7dk
+ wUEAMqVYWwhxx/M1DAAr8dRQ4mVcbtTQXYdu0Vl9t7VXWUAQktoyvVJ1BMbiqwWwj7XylazmYah
+ EuLmWu5BRWAXl7CersOwtx62xwg7aw5v01QQ0HozuXINK7/5RM687c4pXupVBDdKp+AgfoMYX3y
+ O+hVw8z/7VJrMgoHPbL1Bf+7NU=
+X-Received: by 2002:a19:5206:0:b0:5b4:9d34:eb67 with SMTP id
+ 2adb3069b0e04-5b4a908dde8mr2382627e87.24.1787764621417; 
+ Wed, 26 Aug 2026 10:17:01 -0700 (PDT)
+Received: from qblck ([188.130.155.185]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-5b4a41b7f05sm725195e87.70.2026.08.26.10.16.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 Aug 2026 10:16:59 -0700 (PDT)
+From: Artemii Mashanov <ralerrdirsardx@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com,
+	richard.henderson@linaro.org
+Subject: [PATCH] target/i386/tcg: zero FXSAVE FOP and reserved slot bytes
+Date: Wed, 26 Aug 2026 20:16:55 +0300
+Message-ID: <20260826171655.117679-1-ralerrdirsardx@gmail.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
- <20260825-qemu-no-hmp-v4-46-af60857c2fbe@redhat.com>
- <0d110721-caa0-45de-a528-5103c4d89407@oss.qualcomm.com>
-In-Reply-To: <0d110721-caa0-45de-a528-5103c4d89407@oss.qualcomm.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 26 Aug 2026 23:17:17 +0400
-X-Gm-Features: AcwNN1WsYJvKBJLMq2D1BoFksxGgYiDf-mp1crxoUuyZk1urRr0q5F-nGioo6yY
-Message-ID: <CAMxuvayEYthyRYE1kV2zdSZR5wdxz2J3DMwaALhFGf2zkT=2hw@mail.gmail.com>
-Subject: Re: [PATCH v4 46/49] monitor: move monitor_hmp_print*() functions to
- hmp.c
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, dave@treblig.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=ralerrdirsardx@gmail.com; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 26 Aug 2026 15:22:47 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -142,49 +98,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+TCG's do_xsave_fpu() omitted writing the FOP field and the reserved
+bytes (10..15) of each x87 register slot. Those parts of
+the destination buffer retained their previous contents.
 
-On Wed, Aug 26, 2026 at 9:51=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@oss.qualcomm.com> wrote:
->
-> On 25/8/26 21:09, Marc-Andr=C3=83=C2=A9 Lureau wrote:
-> > Those functions are only used when CONFIG_HMP, compile them out, and ad=
-d
-> > conditions for the calling code.
-> >
-> > Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >   monitor/hmp.c       | 49 ++++++++++++++++++++++++++++++++++++++++++++=
-+++++
-> >   monitor/monitor.c   | 49 --------------------------------------------=
------
-> >   util/error-report.c |  3 ++-
-> >   util/qemu-print.c   |  6 ++++++
-> >   4 files changed, 57 insertions(+), 50 deletions(-)
->
->
-> > diff --git a/util/error-report.c b/util/error-report.c
-> > index 78ccb6ea608e..111bfe29020b 100644
-> > --- a/util/error-report.c
-> > +++ b/util/error-report.c
-> > @@ -35,10 +35,11 @@ const char *error_guest_name;
-> >   static int G_GNUC_PRINTF(2, 0)
-> >   error_vprintf_mon(MonitorHMP *hmp, const char *fmt, va_list ap)
-> >   {
-> > +#ifdef CONFIG_HMP
-> >       if (hmp) {
->
-> Would this work?
->
->          if (IS_ENABLED(CONFIG_HMP) && hmp) {
->
-> >           return monitor_hmp_vprintf(hmp, fmt, ap);
-> >       }
-> > -
+The reserved bytes of all eight slots are zeroed. TCG does not
+yet track the actual FOP value, this patch stores a fixed zero instead.
 
-No, unless we add a stub for it. I don't think it helps much.
+Add a regression test in tests/tcg/x86_64/fxsave.c. It fills the
+FXSAVE area with 0xcc, executes FNINIT and FXSAVE64, then verifies that
+FOP and all reserved slot bytes are zero.
 
-thanks
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3522
+
+Signed-off-by: Artemii Mashanov <ralerrdirsardx@gmail.com>
+---
+ target/i386/tcg/fpu_helper.c     |  3 ++
+ tests/tcg/x86_64/Makefile.target |  1 +
+ tests/tcg/x86_64/fxsave.c        | 66 ++++++++++++++++++++++++++++++++
+ 3 files changed, 70 insertions(+)
+ create mode 100644 tests/tcg/x86_64/fxsave.c
+
+diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
+index b812125efa..9a2be488ef 100644
+--- a/target/i386/tcg/fpu_helper.c
++++ b/target/i386/tcg/fpu_helper.c
+@@ -2601,6 +2601,7 @@ static void do_xsave_fpu(X86Access *ac, target_ulong ptr)
+     access_stw(ac, ptr + XO(legacy.fcw), env->fpuc);
+     access_stw(ac, ptr + XO(legacy.fsw), fpus);
+     access_stw(ac, ptr + XO(legacy.ftw), fptag ^ 0xff);
++    access_stw(ac, ptr + XO(legacy.fpop), 0);
+ 
+     /* In 32-bit mode this is eip, sel, dp, sel.
+        In 64-bit mode this is rip, rdp.
+@@ -2613,6 +2614,8 @@ static void do_xsave_fpu(X86Access *ac, target_ulong ptr)
+     for (i = 0; i < 8; i++) {
+         floatx80 tmp = ST(i);
+         do_fstt(ac, addr, tmp);
++        access_stw(ac, addr + 10, 0);
++        access_stl(ac, addr + 12, 0);
+         addr += 16;
+     }
+ }
+diff --git a/tests/tcg/x86_64/Makefile.target b/tests/tcg/x86_64/Makefile.target
+index c48767fef8..0f8f48b1a5 100644
+--- a/tests/tcg/x86_64/Makefile.target
++++ b/tests/tcg/x86_64/Makefile.target
+@@ -20,6 +20,7 @@ X86_64_TESTS += test-1648
+ X86_64_TESTS += test-2175
+ X86_64_TESTS += cross-modifying-code
+ X86_64_TESTS += fma
++X86_64_TESTS += fxsave
+ TESTS=$(MULTIARCH_TESTS) $(X86_64_TESTS) test-x86_64
+ else
+ TESTS=$(MULTIARCH_TESTS)
+diff --git a/tests/tcg/x86_64/fxsave.c b/tests/tcg/x86_64/fxsave.c
+new file mode 100644
+index 0000000000..d08a4e8a0e
+--- /dev/null
++++ b/tests/tcg/x86_64/fxsave.c
+@@ -0,0 +1,66 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ * See https://gitlab.com/qemu-project/qemu/-/issues/3522
++ */
++
++#include <stdint.h>
++#include <stdio.h>
++#include <string.h>
++
++#define FXSAVE_FOP_OFFSET      6
++#define FXSAVE_X87_OFFSET      32
++#define FXSAVE_SLOT_SIZE       16
++#define FXSAVE_RESERVED_START  10
++#define FXSAVE_NUM_SLOTS       8
++
++struct fxsave_area {
++    uint8_t raw[512];
++} __attribute__((aligned(16)));
++
++_Static_assert(sizeof(struct fxsave_area) == 512,
++                "FXSAVE area must be exactly 512 bytes");
++
++static uint16_t u16_le(const uint8_t *p)
++{
++    uint16_t v;
++    memcpy(&v, p, sizeof(v));
++    return v;
++}
++
++int main(void)
++{
++    struct fxsave_area area;
++    uint16_t fop;
++
++    memset(&area, 0xcc, sizeof(area));
++
++    __asm__ volatile(
++        "fninit\n\t"
++        "fxsave64 %0"
++        : "+m" (area)
++        :
++        : "memory"
++    );
++
++    fop = u16_le(&area.raw[FXSAVE_FOP_OFFSET]);
++    if (fop != 0) {
++        fprintf(stderr, "FOP: expected 0, got 0x%04x\n", (unsigned)fop);
++        return 1;
++    }
++
++    for (int slot = 0; slot < FXSAVE_NUM_SLOTS; slot++) {
++        int base = FXSAVE_X87_OFFSET + slot * FXSAVE_SLOT_SIZE;
++        for (int b = FXSAVE_RESERVED_START; b < FXSAVE_SLOT_SIZE; b++) {
++            uint8_t val = area.raw[base + b];
++            if (val != 0) {
++                fprintf(stderr,
++                        "Slot %d byte %d (offset %d): expected 0x00, "
++                        "got 0x%02x\n",
++                        slot, b, base + b, (unsigned)val);
++                return 1;
++            }
++        }
++    }
++
++    return 0;
++}
+-- 
+2.54.0
 
 
