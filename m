@@ -4,101 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 385F2C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:40:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 794BAC5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:42:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzCvQ-0001OV-VM; Wed, 26 Aug 2026 08:40:16 -0400
+	id 1wzCwx-00025N-IV; Wed, 26 Aug 2026 08:41:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wzCvP-0001OF-ET
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 08:40:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wzCvN-0006NE-Fn
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 08:40:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787748011;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=3IZbLtMK+eaeWJqSopYckXC2Rifx6mwRmusak3iCl3k=;
- b=Rh3uaNbgfJh+KVxBZnxul/EZZvuOQZDPZa8fiXrzBgbiU26vPCcwfWnN4Rxgy9Gq+Ztk15
- SkJDx7rWpKGprVJ3Ur7dZs8vJlEX7M4cOWoss16JS9fAZYwx195BZahpfBvas4PopFp4PN
- QzttLDNTXgZ9v8yY2fwlkXVj9gA+SUM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-279-oqGOJo7BOWuwHfujpyszow-1; Wed,
- 26 Aug 2026 08:33:20 -0400
-X-MC-Unique: oqGOJo7BOWuwHfujpyszow-1
-X-Mimecast-MFC-AGG-ID: oqGOJo7BOWuwHfujpyszow_1787747592
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9320119560A5; Wed, 26 Aug 2026 12:33:11 +0000 (UTC)
-Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AFFCB1955F05; Wed, 26 Aug 2026 12:32:59 +0000 (UTC)
-Date: Wed, 26 Aug 2026 13:32:56 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Yonggang Luo <luoyonggang@gmail.com>
-Cc: qemu-devel@nongnu.org, Xianglai Li <lixianglai@loongson.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chinmay Rath <rathc@linux.ibm.com>,
- Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org,
- Alexander Bulekov <alxndr@bu.edu>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Farman <farman@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Chao Liu <chao.liu@processmission.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <17746591750@163.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- David Hildenbrand <david@kernel.org>, qemu-ppc@nongnu.org,
- qemu-arm@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
- Cornelia Huck <cohuck@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Bibo Mao <maobibo@loongson.cn>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
- Darren Kenny <darren.kenny@oracle.com>
-Subject: Re: [PATCH 00/12] single-binary: link ARM and RISC-V into qemu-system
-Message-ID: <ao7c-FiawF9sMCGj@redhat.com>
-References: <20260823150731.896-1-luoyonggang@gmail.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wzCww-000250-0v
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 08:41:50 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wzCws-00070A-VG
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 08:41:49 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-c197e7e4e94so132957966b.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 05:41:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1787748104; x=1788352904; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
+ :subject:date:message-id:reply-to:content-type;
+ bh=gxttHIuMhHi9GXmIRh83s4TWOIJ8ZtJhZscX1EyRin4=;
+ b=zb06yhT8o45RCvCB2v8JakrONOY0CLf4A4fbStLJimjC081Y/plS+BpgzfWTt7ggea
+ ijOYhfeqOtvWOsaCw5h5/lm1875Tnqc6tFJ9OuU0UkQZBZDs2GLXsK9j2DqhrFeXgxXu
+ SsWGgrXoGlTm7vLpd7/ebO2nBSw/GuNa+Uvh+ubLYLNc1Dmnim6eKQDFaCvHFEzxXnqR
+ DqZppV7F2CnZXwB2V2f11IdOmt1vS9xZ3gjg7Em6KLlWsk/oOolCAjJCztEwxmRoTn3+
+ F7QnTmuqI7ATrf0YX7cClqI7W9wYvv71AMz2wcv6CQm0MywmqTBL8ONde1N8OLAGorIa
+ 6pYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787748104; x=1788352904;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date
+ :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=gxttHIuMhHi9GXmIRh83s4TWOIJ8ZtJhZscX1EyRin4=;
+ b=oOaAkcvhgm8NTK+cD5850KDcAebXONbyRg1VGOsGUuAlrp7t7O3Y3ukzfmllfa4cFF
+ 87SDuk71SCnsS6iUwXL2C6ntd2pFyUTeg4pckI5Kt81TfzVbVUY06Xd0RLMgMLbg/X+v
+ fdv1ppjfOfMrY0d/6H4OEwvG9T74jG2hen4evSB4i6uPCH3ZdNxti9nWRCi/Bz9H6EEk
+ ySE4gS3lXkwTBHOsjEENQH3baImX7SGCndwnGJcAWdcKs4BmWGLBKx9e3tNlY/DrBmrw
+ /ji7NyzVuOJOXr89hVawFTNOTAPX6D0graMBpzEVMcJ7EmfWNqSo/624ZNkOqyFaHvHg
+ lcng==
+X-Gm-Message-State: AFuF++mZKMPbDyE4qUMvwkUXfN9yGBNSdWxzZ3DbY8iusyPSmUUhTpih
+ CBXd298ZZm4K8fDY7W43sVAtdfPwd4/1nchPpz3Jjn7vGDyuX4CNKDMWC/a7M8sHao4=
+X-Gm-Gg: AR+sD13uPzQ8mRWuVZJ6F03jrqwLAY57UMwV7l21dkwnG52aAkFry6M04eXlkDkXiJ9
+ YcKnIFSQcMLcNwGs5b/K1Ud/wRndKEBV50cYkPIoMnjHDv5orRSlBvfZ0KJ8FrlB+bqnbKIAd2M
+ uvMGXZvzc+7Qf1JZUYa4BdBfBYkeElLvsP1bMFJGIWVwt51/VxLKEBny3bNWwCsrNn7B7edcp9I
+ v6mtOEKHSz0PjE1mmZjqy3R1eVHHVunj1RQfR1cPlLhdTzH5NAjOtBYvuL2nhJ4iyxQiPbYkqgf
+ TjKdannPwYlPR8jfO21iqoWl06XLZov8wLu7uDZqb9x55baj3ggUEFSYsD2dBAUCNJkQRc6NJ6d
+ xR/sxEpjUphlmNWsl8NXDZRMQdyeUn7yuoJI+5aPRQEMa5Z2xHbX9Vh9c6r6PrvY9jr1JB6Vikv
+ zZvCym4dW2FfbJPWdA+/nxfHXnnjhD0qWDagq2bMbRLRDRIOkSzmI7tI3XDuuB
+X-Received: by 2002:a17:907:6088:b0:c21:35d0:f435 with SMTP id
+ a640c23a62f3a-c250bc0f8f0mr819962466b.10.1787748104403; 
+ Wed, 26 Aug 2026 05:41:44 -0700 (PDT)
+Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c250a9b4e9csm509884366b.54.2026.08.26.05.41.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 Aug 2026 05:41:43 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 599245F877;
+ Wed, 26 Aug 2026 13:41:42 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Laurent Vivier
+ <laurent@vivier.eu>,  Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,  Helge
+ Deller <deller@gmx.de>,  Paolo Bonzini <pbonzini@redhat.com>,  Brian Cain
+ <brian.cain@oss.qualcomm.com>,  Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Ilya Leoshkevich <iii@linux.ibm.com>,  Aniket
+ Sahu <asahu1x@linux.ibm.com>
+Subject: Re: [PATCH v7 035/104] tests/tcg/multiarch/gdbstub/prot-none.py:
+ detect if /proc/self/mem can be used to access PROT_NONE pages
+In-Reply-To: <20260818192309.22169-36-pierrick.bouvier@oss.qualcomm.com>
+ (Pierrick Bouvier's message of "Tue, 18 Aug 2026 19:21:59 +0000")
+References: <20260818192309.22169-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260818192309.22169-36-pierrick.bouvier@oss.qualcomm.com>
+User-Agent: mu4e 1.14.3; emacs 30.1
+Date: Wed, 26 Aug 2026 13:41:42 +0100
+Message-ID: <87mru9oxyx.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260823150731.896-1-luoyonggang@gmail.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,155 +110,84 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Aug 23, 2026 at 11:07:18PM +0800, Yonggang Luo wrote:
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-snip,
+> Recently (July 2026), this issue became reproducible on debian stable
+> with kernel (7.1.3) from backports. I suspect it's a default hardening
+> of kernel related to recent CVEs.
+>
+> By tracking error reported, we can see that /proc/self/mem pread from
+> cpu_memory_rw_debug in accel/tcg/user-exec.c returns an error
+> (Input/Output error).
+>
+> Detect this situation directly from our gdb python script, by trying the
+> same thing from current process. If this operation fails, we can
+> gracefully skip the test.
+>
+> Fixes: https://gitlab.com/qemu-project/qemu/-/work_items/3329
+> Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>  tests/tcg/multiarch/gdbstub/prot-none.py | 35 ++++++++++++++++++++++--
+>  1 file changed, 32 insertions(+), 3 deletions(-)
+>
+> diff --git a/tests/tcg/multiarch/gdbstub/prot-none.py b/tests/tcg/multiar=
+ch/gdbstub/prot-none.py
+> index e653bc697f6..393626a9798 100644
+> --- a/tests/tcg/multiarch/gdbstub/prot-none.py
+> +++ b/tests/tcg/multiarch/gdbstub/prot-none.py
+> @@ -5,6 +5,8 @@
+>  SPDX-License-Identifier: GPL-2.0-or-later
+>  """
+>  import ctypes
+> +import ctypes.util
+> +import mmap
+>  import os
+>  from test_gdbstub import gdb_exit, main, report
+>=20=20
+> @@ -18,6 +20,34 @@ def probe_proc_self_mem():
+>      except OSError:
+>          return False
+>=20=20
+> +def probe_proc_self_mem_access_prot_none():
+> +    libc =3D ctypes.CDLL(ctypes.util.find_library("c"), use_errno=3DTrue)
+> +    libc.mmap.restype =3D ctypes.c_void_p
+> +    libc.mmap.argtypes =3D [ctypes.c_void_p, ctypes.c_size_t, ctypes.c_i=
+nt,
+> +                          ctypes.c_int, ctypes.c_int, ctypes.c_long]
+> +    size =3D os.sysconf("SC_PAGESIZE")
+> +    # mmap a PROT_NONE page
+> +    PROT_NONE =3D 0
+> +    addr =3D libc.mmap(None, size, PROT_NONE,
+> +                     mmap.MAP_PRIVATE | mmap.MAP_ANONYMOUS, -1, 0)
+> +    assert addr !=3D ctypes.c_void_p(-1).value
+> +    fd =3D os.open("/proc/self/mem", os.O_RDWR)
+> +    try:
+> +        # read it through /proc/self/mem
 
-..to comment just on the end result for now..
+It might be worth pointing to it here:
 
-> The last patch builds qemu-system (and qemu-systemw on Windows) from
-> aarch64 common/system objects plus RISC-V arch objects, and installs
-> qemu-system-{arm,aarch64,riscv32,riscv64} as symlinks so argv[0] still
-> selects TargetInfo.
-> 
-> Examples:
-> 
->   qemu-system -target aarch64 -M virt ...
->   qemu-system-riscv64 -M virt ...
-> 
-> A basename that matches no registered token falls through to the unique
-> default. A combined binary with no suffix requires -target when more
-> than one default TargetInfo is registered.
+modified   =EE=9C=BC tests/tcg/multiarch/gdbstub/prot-none.py
+@@ -34,6 +34,7 @@ def probe_proc_self_mem_access_prot_none():
+     fd =3D os.open("/proc/self/mem", os.O_RDWR)
+     try:
+         # read it through /proc/self/mem
++        # this is the fallback in cpu_memory_rw_debug
+         data =3D os.pread(fd, size, addr)
+     except Exception as e:
+         print("/proc/self/mem pread error: " + str(e))
 
-In testing and comparing  the new qemu-system-riscv64 symlink
-to qemu-system vs the current standalone qemu-system-riscv64
-binary there are some significant user visible changes.
+I think the comment in cpu_memory_rw_debug is wrong through, pread isn't
+using the ptrace interface.
 
-The simplest is 'qom-list-types' went from reporting approx
-770 classes, to reporting approx 1530 classes. IOW, the
-qemu-system-riscv64 binary is now reporting supporting for
-all the classes that were unique to arm.
+Otherwise:
 
-The '-device help' output similarly shows a great many more
-devices
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-TL;DR introspecting qemu-system-riscv64 is no longer accurate
-wrt riscv64 capabilities. 
-
-This is not suprising, since we register all TypeInfo meaning
-we get all QOM classes present. Some of Pierricks patches try
-to filter places which iterate over classes, but this does not
-have full coverage.
-
-
-I think this is probably also what leads to the increased RAM
-usage in qemu-system-riscv64. Starting
-
-  qemu-system-riscv64 -nodefaults -display none -M none
-
-shows an increase in RAM usage from  17.3 to 20.7 MB which
-is about 15% increase. NB this is dirty, private RAM per
-process. The shared RAM pages also increase but that's not
-a concern since they're common to all QEMU processes.
-
-qemu-system-aarch64 shows a much smaller RAM increase, since
-it only grew from 1430 classes to 1530 classes.
-
-We have many more target though, so if we assume the end
-point where every single target is unified, the the union
-of all classes for all targets comes to approx 3600.
-
-My guesstimate is that would mean a memory increase for
-qemu-system-riscv64 from 17.3 to 39.9 MB, which is a
-72% increase.
-
-In absolute terms this is still modest, but for deployments
-with large VM counts  and small RAM sizes, that gets to be
-significant.
-
-
-None of this means single binary is a bad idea.
-
-
-My main takeaway is that we're creating uneccessary work
-for ourselves by trying to make 'qemu-sytem' identical
-in behaviour to qemu-system-$TARGET.
-
-The complex filtering patches / QOM interfaces that I
-found uncomfortable in Pierrick's base series are largely
-around the filtering needed to simulate qemu-system-$TARGET,
-and they're still incomplete. I don't have high confidence
-in our ability to avoid regressions if we go route this
-route.
-
-
-IMHO we should make a clean break with the past. Leave
-the existing qemu-system-$TARGET binaries being built
-from the same pieces they are today, such that there
-is better confidence that we are not making behavioural
-changes to them.
-
-
-qemu-system should be built alongside qemu-system-$TARGET
-and offer new semantics where it is documented as exposing
-everything from all targets whenever introspected and does
-not apply target type or target Kconfig filtering to inputs/
-outputs. 
-
-We still get the benefit of only building most  .o files
-once, so keeping qemu-system-$TARGET is only a small
-overhead in the final step of linking everything together.
-
-
-qemu-system will still have the increased memory overhead
-but that's fine as qemu-system-$TARGET will be unaffected.
-We can tackle the memory overhead of qemu-system at our
-leisure through use of loadable modules, and thus not have
-that as a task to think about today.
-
-
-With the clean break with the past, we also have the
-ability to tackle various long standing design mistakes
-present in qemu-system-$TARGET instead of carrying them
-over into the new binary.
-
-Specifically
-
- * -nodefaults should become the default
- 
- * All CLI args should be processed in order from
-   the command line, so we eliminate the nonsense
-   where we process some -object, then -chardev,
-   then more -object through hand crafted deps
-
- * No default machine type
-
- * Drop all legacy syntax so we only have a single
-   QAPI based way of configuring.
-   eg drop -hda, -hdb, -cdrom, -drive, etc
-      only keeping -blockdev
-   eg drop -mon, -monitor, -qmp, etc only
-      keeping -object
-
-We don't have to do all that straightaway. If we declare
-qemu-system "experimental" initially we can iterate on
-that intentionally breaking compat in releases, without
-any impact on qemu-system-$TARGET.
-
-Avoiding the back compat task will give us more flexibility
-with the follow on work when people come to create new
-machine types with heterogenous CPU targets.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
