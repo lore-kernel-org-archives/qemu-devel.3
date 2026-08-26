@@ -4,122 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83516C61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 05:42:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E4CDC61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 06:01:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wz6OZ-0006eF-GO; Wed, 26 Aug 2026 01:41:55 -0400
+	id 1wz6gS-00007e-NS; Wed, 26 Aug 2026 02:00:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wz6OX-0006dm-Po; Wed, 26 Aug 2026 01:41:53 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wz6gQ-00007S-9o
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 02:00:22 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wz6OW-0003TX-CU; Wed, 26 Aug 2026 01:41:53 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67Q3W4712881413; Wed, 26 Aug 2026 05:41:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=dyekaHDIXvnO66Dz17aCbpXtBGv/Na
- El1mkhBFByIjg=; b=pHVEmtyk7zsoIQ6WSpryybEkelMCBiE7V1FRLlmwP5S47F
- C1/rcS8TwDABO+ZSsm29TcjQjiR9keRTAEAVgwokglwLtSFkDITn4/LaiIaxirK/
- qhfZFtJu1sYXkXW7UF44IZraElwOii2R5HU2PyZrn6YMDuE8cU5kG1+03V1tVmDd
- 2xqOzXAx7SLpOPIrdOpvMkywB068zxWft0JaDL+kF+vICxpsxwt5OzJ8M9aiLjmm
- NNwGR+Q/b1waZOPo7pZNAQul0ywgXoYXkjY7gkICPNec0WGeeiN/l2DpLDymnKoE
- 9T4ZfqbSKmbGBC8KNJB9wnjyUhN4OE4rQktNkqaQ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dxcfc5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 05:41:47 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67Q5fWpJ004687;
- Wed, 26 Aug 2026 05:41:47 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7pfw8ehx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 05:41:47 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67Q5fhoD30802440
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 05:41:43 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2E6B720040;
- Wed, 26 Aug 2026 05:41:43 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0626D20049;
- Wed, 26 Aug 2026 05:41:40 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 26 Aug 2026 05:41:39 +0000 (GMT)
-Date: Wed, 26 Aug 2026 11:11:41 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org,
- vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
- ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
- shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
- nikhilks@linux.ibm.com
-Subject: Re: [PATCH v2 37/37] target/ppc: Add self as maintainer for PowerPC
- TCG CPUs
-Message-ID: <20260826111046.0dcf27ef-5e-amachhiw@linux.ibm.com>
-Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, 
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- milesg@linux.ibm.com, 
- npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com, 
- tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com, 
- aboorvad@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
- uverma@linux.ibm.com, nikhilks@linux.ibm.com
-References: <20260826050923.74756-1-rathc@linux.ibm.com>
- <20260826050923.74756-38-rathc@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wz6gN-0006Do-6s
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 02:00:22 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 67Q601wH006539
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 26 Aug 2026 15:00:02 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=f9vplhf98mD7C+XXFGHQjjBCFYBEkefYmWgfmbURvh4=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1787724002; v=1;
+ b=VoXi7bYR3wP7Rt7eesGNjpPuoWPFLiDqWQs5l5UO1wsTzQA8qmlaIxprNQWDa+4s
+ 3cspafTt2o3OzjikeS7RWqKmd41qg8bDAp5zCYWm3JmjsFe8frL3J743jPylTiNT
+ Nf52WfIh35kvQdPBkDxpq994rffT+vW0qvFVRJbTxM9RF9qLoYgYal0gS7d6t0yY
+ k+aTcXcxf7w0bZWMumhplyeqWK4XYbf/QDL4ryTdE/UKdGGTpVIQUAZEs5OK7fvA
+ SLU6zRgO+Yax1t+uEzpsGxmteVGUOSpmyFAwlHHvlyf0UiSmVDAeapJTtrkqdJNY
+ yetQEnb7fKPTsLDhuKIGoA==
+Message-ID: <28d800c2-b6b8-435f-bdc3-79fe0ce1a3b8@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 26 Aug 2026 15:00:01 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260826050923.74756-38-rathc@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDA0NCBTYWx0ZWRfX6FcT8KLb0O2h
- 7EhNQrXcD95y0ploWFSsU+g8n2MB0iSlQQweumiNseA1qcqHz8aC9Z+8ltGLVQlEXH5Ct7t6SMb
- N6/5zNRAGgk5/BHXS2M8Xu1zEmdXaHI=
-X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a8e7c9c cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=pGLkceISAAAA:8 a=69wJf7TsAAAA:8 a=oHigSh02aUfPcg319hEA:9 a=CjuIK1q_8ugA:10
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-ORIG-GUID: fmZwHUfVvwTgiIYRSZ73JTAq5OMvPLqu
-X-Proofpoint-GUID: vNZwxWJlncVkJdgPbMBTigRrfd7X5Z3u
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDA0NCBTYWx0ZWRfX+sF2lfKTMwe7
- s0yaDKbmq7nnwTtH8IqMv0DP8gJfGTNJL5NXrSJwrCzMEQbvcaYTicnPB1dZ7A7FlrCRZnBFOy1
- n/zopGZfCtdh472Y3EiOPudMy+UpUGMSK+szZw6wTKo+HDZrXiHE2ljrrpRIVR+aNKWzTvKtE1W
- E7EJQXuwIHmAis/FrIth3mMLnR5TVE02TwZE3gRNYEaugcwi2pZF1Aae7PZVMdXboy5bAKJO4cE
- TlevanpbjKanoBEzKkK661TkBWt+uCTvnQ1XjaqDFufIrcq0hKgfHw0dTXM6GBNNfJMkrEorBL6
- /+Ss6rUy8FukDmXDo0gs7qJ37NqNBg1hEvwX2UifW1Ig/Nfx71HWLcpIif68YRe+ffvEZRv72C5
- Jjn4Hh/DCK6l+eqhMAAu/DC+iQyXmtu8dh9Hvn4H5PeWh40Ww3wg3v0vDMAKF7R4IPmSlkJ5j3T
- Mm9Vm73jsPCmOcX7yvg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_01,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 bulkscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608260044
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/18] ui/dbus: disable scanout iff dmabuf is current
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Alex Williamson
+ <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20260825-virtio-gpu-cleanup-v1-0-d3bb612b9975@redhat.com>
+ <20260825-virtio-gpu-cleanup-v1-2-d3bb612b9975@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260825-virtio-gpu-cleanup-v1-2-d3bb612b9975@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -136,40 +78,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/26 10:39 AM, Chinmay Rath wrote:
-> I have been contributing and reviewing code in the PowerPC TCG CPUs
-> module for a long time now. Stepping up as an active maintainer to
-> better reflect the current status.
+On 2026/08/25 19:20, Marc-André Lureau wrote:
+> Narrows release_dmabuf to the active scanout, as the device & console
+> may interleave new scanouts before releasing old ones.
 > 
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+
+My AI agent is so nitpicking about the lack of Fixes: tags and its 
+suggestions look reasonable, so I'm leaving them as comments. For this 
+patch:
+
+Fixes: 142ca628a733 ("ui: add a D-Bus display backend")
+
+Regards,
+Akihiko Odaki
+
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  MAINTAINERS | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>   ui/dbus-listener.c | 68 ++++++++++++++++++++++++++++++++++++++----------------
+>   1 file changed, 48 insertions(+), 20 deletions(-)
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 2a0ee348c4..f040083503 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -337,8 +337,8 @@ F: tests/functional/or1k/meson.build
->  F: tests/tcg/or1k/
->  
->  PowerPC TCG CPUs
-> +M: Chinmay Rath <rathc@linux.ibm.com>
->  M: Nicholas Piggin <npiggin@gmail.com>
-> -R: Chinmay Rath <rathc@linux.ibm.com>
-
-Thanks for your support, Chinmay!
-
-Acked-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-
-Thanks,
-Amit
-
->  R: Glenn Miles <milesg@linux.ibm.com>
->  R: Harsh Prateek Bora <harshpb@linux.ibm.com>
->  L: qemu-ppc@nongnu.org
-> -- 
-> 2.55.0
+> diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
+> index 2e2f6ba4183a..5a72c7eeae59 100644
+> --- a/ui/dbus-listener.c
+> +++ b/ui/dbus-listener.c
+> @@ -91,6 +91,8 @@ struct _DBusDisplayListener {
+>       guint dbus_filter;
+>       guint32 display_serial_to_discard;
+>       guint32 cursor_serial_to_discard;
+> +
+> +    QemuDmaBuf *scanout_dmabuf;
+>   };
+>   
+>   G_DEFINE_TYPE(DBusDisplayListener, dbus_display_listener, G_TYPE_OBJECT)
+> @@ -119,6 +121,7 @@ static void dbus_scanout_disable(DisplayChangeListener *dcl)
+>   {
+>       DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
+>   
+> +    ddl->scanout_dmabuf = NULL;
+>       ddl_discard_display_messages(ddl);
+>   
+>       qemu_dbus_display1_listener_call_disable(
+> @@ -298,9 +301,9 @@ static void dbus_call_update_gl(DisplayChangeListener *dcl,
+>   
+>   #ifdef CONFIG_GBM
+>   static void dbus_scanout_dmabuf_v1(DBusDisplayListener *ddl,
+> -                                   QemuDmaBuf *dmabuf)
+> +                                   QemuDmaBuf *dmabuf,
+> +                                   GError **err)
+>   {
+> -    g_autoptr(GError) err = NULL;
+>       g_autoptr(GUnixFDList) fd_list = NULL;
+>       int fd;
+>       uint32_t width, height, stride, fourcc;
+> @@ -309,8 +312,7 @@ static void dbus_scanout_dmabuf_v1(DBusDisplayListener *ddl,
+>   
+>       fd = qemu_dmabuf_get_fds(dmabuf, NULL)[0];
+>       fd_list = g_unix_fd_list_new();
+> -    if (g_unix_fd_list_append(fd_list, fd, &err) != 0) {
+> -        error_report("Failed to setup dmabuf fdlist: %s", err->message);
+> +    if (g_unix_fd_list_append(fd_list, fd, err) != 0) {
+>           return;
+>       }
+>   
+> @@ -332,9 +334,9 @@ static void dbus_scanout_dmabuf_v1(DBusDisplayListener *ddl,
+>   }
+>   
+>   static void dbus_scanout_dmabuf_v2(DBusDisplayListener *ddl,
+> -                                   QemuDmaBuf *dmabuf)
+> +                                   QemuDmaBuf *dmabuf,
+> +                                   GError **err)
+>   {
+> -    g_autoptr(GError) err = NULL;
+>       g_autoptr(GUnixFDList) fd_list = NULL;
+>       int i, fd_index[DMABUF_MAX_PLANES], num_fds;
+>       uint32_t x, y, width, height, fourcc, backing_width, backing_height;
+> @@ -360,9 +362,8 @@ static void dbus_scanout_dmabuf_v2(DBusDisplayListener *ddl,
+>               break;
+>           }
+>   
+> -        fd_index[num_fds] = g_unix_fd_list_append(fd_list, plane_fd, &err);
+> +        fd_index[num_fds] = g_unix_fd_list_append(fd_list, plane_fd, err);
+>           if (fd_index[num_fds] < 0) {
+> -            error_report("Failed to setup dmabuf fdlist: %s", err->message);
+>               return;
+>           }
+>       }
+> @@ -395,20 +396,36 @@ static void dbus_scanout_dmabuf_v2(DBusDisplayListener *ddl,
+>           G_DBUS_CALL_FLAGS_NONE, -1, fd_list, NULL, NULL, NULL);
+>   }
+>   
+> +static bool dbus_call_scanout_dmabuf(DBusDisplayListener *ddl,
+> +                                     QemuDmaBuf *dmabuf)
+> +{
+> +    g_autoptr(GError) err = NULL;
+> +
+> +    if (ddl->scanout_dmabuf_v2_proxy) {
+> +        dbus_scanout_dmabuf_v2(ddl, dmabuf, &err);
+> +    } else {
+> +        if (qemu_dmabuf_get_num_planes(dmabuf) > 1) {
+> +            error_report("Peer does not support multi plane dmabuf");
+> +            return false;
+> +        }
+> +        dbus_scanout_dmabuf_v1(ddl, dmabuf, &err);
+> +    }
+> +
+> +    if (err) {
+> +        error_report("Failed to scanout dmabuf: %s", err->message);
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+>   static void dbus_scanout_dmabuf(DisplayChangeListener *dcl,
+>                                   QemuDmaBuf *dmabuf)
+>   {
+>       DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
+>   
+> -    if (ddl->scanout_dmabuf_v2_proxy) {
+> -        dbus_scanout_dmabuf_v2(ddl, dmabuf);
+> -    } else {
+> -        if (qemu_dmabuf_get_num_planes(dmabuf) > 1) {
+> -            g_debug("org.qemu.Display1.Listener.ScanoutDMABUF "
+> -                    "does not support mutli plane");
+> -            return;
+> -        }
+> -        dbus_scanout_dmabuf_v1(ddl, dmabuf);
+> +    if (dbus_call_scanout_dmabuf(ddl, dmabuf)) {
+> +        ddl->scanout_dmabuf = dmabuf;
+>       }
+>   }
+>   #endif /* GBM */
+> @@ -589,6 +606,10 @@ static void dbus_scanout_texture(DisplayChangeListener *dcl,
+>                                    uint32_t w, uint32_t h,
+>                                    void *d3d_tex2d)
+>   {
+> +#if defined(CONFIG_GBM) || defined(WIN32)
+> +    DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
+> +#endif
+> +
+>       trace_dbus_scanout_texture(tex_id, backing_y_0_top,
+>                                  backing_width, backing_height, x, y, w, h);
+>   #ifdef CONFIG_GBM
+> @@ -607,13 +628,13 @@ static void dbus_scanout_texture(DisplayChangeListener *dcl,
+>                                backing_height, fourcc, modifier, fd, num_planes,
+>                                false, backing_y_0_top);
+>   
+> -    dbus_scanout_dmabuf(dcl, dmabuf);
+> +    if (dbus_call_scanout_dmabuf(ddl, dmabuf)) {
+> +        ddl->scanout_dmabuf = NULL;
+> +    }
+>       qemu_dmabuf_close(dmabuf);
+>   #endif
+>   
+>   #ifdef WIN32
+> -    DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
+> -
+>       /* there must be a matching gfx_switch before */
+>       assert(surface_width(ddl->ds) == w);
+>       assert(surface_height(ddl->ds) == h);
+> @@ -686,7 +707,14 @@ static void dbus_cursor_dmabuf(DisplayChangeListener *dcl,
+>   static void dbus_release_dmabuf(DisplayChangeListener *dcl,
+>                                   QemuDmaBuf *dmabuf)
+>   {
+> +    DBusDisplayListener *ddl = container_of(dcl, DBusDisplayListener, dcl);
+> +
+> +    if (ddl->scanout_dmabuf != dmabuf) {
+> +        return;
+> +    }
+> +
+>       dbus_scanout_disable(dcl);
+> +    ddl->scanout_dmabuf = NULL;
+>   }
+>   #endif /* GBM */
+>   
 > 
-> 
+
 
