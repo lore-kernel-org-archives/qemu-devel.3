@@ -4,116 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C846C61DBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:44:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA33CC61DBE
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:44:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzJUm-0007Wg-LL; Wed, 26 Aug 2026 15:41:12 -0400
+	id 1wzJXL-0000zn-LV; Wed, 26 Aug 2026 15:43:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wzJUk-0007Kw-H2; Wed, 26 Aug 2026 15:41:10 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJXK-0000qn-65
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:43:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wzJUi-0006Eg-Mm; Wed, 26 Aug 2026 15:41:10 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QH1qC32743328; Wed, 26 Aug 2026 19:41:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=mZOgRs
- TZFic1nRQURC9FAXxTJAz+8KIxtpBvFx9zoTk=; b=jM/RmQZQv7/BmZ2Cn7ymxb
- mkExcpMet48U8s6awzhGr8WDvSSOrIXP/mUkFbpGbKJSI0W/VEiRjNq0+kgzP8sN
- qhzBTCQQ+O4OzC94bf780CG42GUkxUcAApHGPIx1jKUDULNcHKc6JYt1GVtP9hV5
- C3MQUfJZucDeWclsCvJLgX7Tauu1h9RU7lYkmgIbjyraIN1CmMbaLY+lPHnVid7T
- 4vN+fbq6h34FfIpta9gwdbKxmEl9P4FDOMw60HBIGe/jLEWO0jMafFYB2ymG2GEY
- UEwubB+sNTnbRv32C032c5s6M4YM6pQATIIyYJnFiqRJSHT+pD/N317ucrQsvwOA
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73er0rd1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 19:41:05 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QJQHmJ025825;
- Wed, 26 Aug 2026 19:41:04 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7rsybhj1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 19:41:04 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QJf2dm30802442
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 19:41:02 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4E6D95805D;
- Wed, 26 Aug 2026 19:41:02 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6869158057;
- Wed, 26 Aug 2026 19:41:01 +0000 (GMT)
-Received: from [9.61.21.147] (unknown [9.61.21.147])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 19:41:01 +0000 (GMT)
-Message-ID: <91c8fb44-fcc0-4c94-8494-084d6eaa6504@linux.ibm.com>
-Date: Wed, 26 Aug 2026 15:41:00 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJXI-0006kR-6e
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:43:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787773427;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8Vg4hY+AvTm5XkhoeGCLunTOI5DLh2OMWY4FplanPG4=;
+ b=Stn0C+HklGa9uMWuJMzS+znPgjIdrKvs0z1oDxgKwxbOZc9xcHaSfD+yv8bZw+wUwHNNTd
+ BHicF0pEO7OLPvXvE7JlpJC/20TCvclxd28iFXbXXVz4h58pMh2O3r+u8VYqgse2aRH1m/
+ vGD4+WgQsch+h/pu6YwqBuSrif6rf8A=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-h3YwAm4sOdyvT6WM2XKTIA-1; Wed,
+ 26 Aug 2026 15:43:45 -0400
+X-MC-Unique: h3YwAm4sOdyvT6WM2XKTIA-1
+X-Mimecast-MFC-AGG-ID: h3YwAm4sOdyvT6WM2XKTIA_1787773421
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 40543191FCE0; Wed, 26 Aug 2026 19:43:41 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.99])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 306A21800598; Wed, 26 Aug 2026 19:43:33 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ John Snow <jsnow@redhat.com>, linux-cxl@vger.kernel.org,
+ Markus Armbruster <armbru@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Peter Xu <peterx@redhat.com>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ zhenwei pi <zhenwei.pi@linux.dev>, qemu-trivial@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Kevin Wolf <kwolf@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, Jiri Pirko <jiri@resnulli.us>,
+ qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, linux-edac@vger.kernel.org,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Jonathan Cameron <jic23@kernel.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Jason Wang <jasowangio@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Lukas Straub <lukasstraub2@web.de>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v3 35/43] qapi: convert trivial intro sections for
+ run-state.json
+Date: Wed, 26 Aug 2026 15:38:32 -0400
+Message-ID: <20260826193840.2152000-36-jsnow@redhat.com>
+In-Reply-To: <20260826193840.2152000-1-jsnow@redhat.com>
+References: <20260826193840.2152000-1-jsnow@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/7] pc-bios/s390-ccw: Split virtio-ccw and generic
- virtio net
-To: Jared Rossi <jrossi@linux.ibm.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-Cc: mst@redhat.com, borntraeger@linux.ibm.com, jjherne@linux.ibm.com,
- cohuck@redhat.com, farman@linux.ibm.com, pasic@linux.ibm.com,
- farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com
-References: <20260818205324.580199-1-zycai@linux.ibm.com>
- <20260818205324.580199-2-zycai@linux.ibm.com>
- <b9dafa7d-d3d0-46c7-8ef1-c800811181dc@linux.ibm.com>
- <3b52a781-ea4c-4fec-b059-bebecc27ad3f@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <3b52a781-ea4c-4fec-b059-bebecc27ad3f@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: a6Uit-bRpJo_oYiLiRLg9sIZQ0Li4pxp
-X-Proofpoint-ORIG-GUID: a6Uit-bRpJo_oYiLiRLg9sIZQ0Li4pxp
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE2NCBTYWx0ZWRfX7FwtOt7pfPDq
- muIalXlQXI7e/if8YoUqNe+IIA773K+yA6fEaqJFJawRIl3E7+1DBXsDU0y8G3TDcz7S+qi7mzt
- IGwAQFr2WpdqcdWmGNOF6TY/IHyI+61onzhS5u30nORtATStYqkQ9Iotmjh7OG3JVpsCnT5hnCW
- 2Zwg3IoRVhYsVLrYkArY6D/zg1CIj+yavng5MbejrosMwLY/kd1tLJ3/pBohY64XWYr9y45DO+g
- hoPUPYJGpIpYZTc5Bxt0bmzQncl9w8plFQE0HNJl3pGVio2C4w63IAZV6IFUxnkXnfHWB0VgJEn
- YjwumdcALYEI7VvYeei15mpZN+jDoxZOvqhi/F7Mhdn6oseN5XqWqNveWEA99epP8NucuYW3yhl
- JrIWZzqpBo8cpLNFy5JcSlPRTpVtuOIw2wDdsASPcBq7iHk+iEYct4vNKVQM7aFWF+b/NkaYPBB
- mZkBISTXsPIjrHGWVbg==
-X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8f4151 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=_hCw1mCnnE6vsVbhuAAA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE2NCBTYWx0ZWRfXzbUfiwM1jqC/
- 0/2TOR8bWAw5jV3cFe/LWdEnCBxcWgiMA3hDmHaokukJtg2J+olHZu2IMwLGn7Ec/A7Uu/lrfDw
- hcz7jhIm70dBhEkn6UNsWuXr+do77Q4=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_05,2026-08-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
- spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260164
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,60 +105,353 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/26/26 3:30 PM, Jared Rossi wrote:
-> 
-> 
-> On 8/26/26 1:33 PM, Matthew Rosato wrote:
->>> +bool virtio_net_setup(void)
->>> +{
->>> +    switch (virtio_get_device()->ipl_type) {
->>> +    case S390_IPL_TYPE_CCW:
->>> +        return virtio_ccw_net_setup();
->>> +    default:
->>> +        return false;
->>> +    }
->>> +}
->> This patch is largely renaming, but this does seem to have a subtle
->> functional change right here.
->>
->> AFAICT before this patch attempting to netboot with anything other than
->> a ccw device would hit
->> IPL_assert(iplb.pbt == S390_IPL_TYPE_CCW, "IPL_TYPE_CCW expected");
->>
->> Now, we will never call virtio_ccw_net_setup(), return false and instead
->> bail out with
->> "No virtio net device found."
->>
->> That is new behavior for !IPL_TYPE_CCW after this patch.  For
->> IPL_TYPE_PCI, patch 4 will change the behavior again.
->>
->> That's not a deal-breaker, but I do think it's worth a mention in the
->> commit message.  I then also wonder if the message
->> "No virtio net device found"
->> would be more accurate if it instead read something like:
->> "No supported virtio net device found"
->>
->> Thanks,
->> Matt
->>
-> 
-> I’m not sure this is a valid concern.  A non-ccw net device would be
-> rejected before getting to virtio_net_setup() earlier at the
-> find_boot_device() step either way.  In the case of virtio-net-pci
-> specifically, it would fail because VIRTIO_ID_NET is not a supported PCI
-> type yet.  For some sort of non-ccw non-pci netboot device, I believe there
-> wouldn't ever be an IPLB built for it, so it wouldn’t be recognized as
-> boot eligible at all.  I don’t think this patch affects any of that.
->
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ qapi/run-state.json | 113 ++++++++++++++++----------------------------
+ 1 file changed, 42 insertions(+), 71 deletions(-)
 
-
-Based on that description it sounds like we don't even ever to expect to
-reach the new default: case then, as prior checks should have already
-weeded out all but the supported IPL_TYPE_* values.
-
-Should the default: case have an IPL_assert with its own message then?
-
-Thanks,
-Matt
+diff --git a/qapi/run-state.json b/qapi/run-state.json
+index e4fdead1e0b..2a968a6bc0b 100644
+--- a/qapi/run-state.json
++++ b/qapi/run-state.json
+@@ -10,8 +10,7 @@
+ 
+ ##
+ # @RunState:
+-#
+-# An enumeration of VM run states.
++#     An enumeration of VM run states.
+ #
+ # @debug: QEMU is running on a debugger
+ #
+@@ -63,8 +62,7 @@
+ 
+ ##
+ # @ShutdownCause:
+-#
+-# An enumeration of reasons for a shutdown.
++#     An enumeration of reasons for a shutdown.
+ #
+ # @none: No shutdown request pending
+ #
+@@ -103,8 +101,7 @@
+ 
+ ##
+ # @StatusInfo:
+-#
+-# Information about VM run state
++#     Information about VM run state
+ #
+ # @running: true if all VCPUs are runnable, false if not runnable
+ #
+@@ -118,8 +115,7 @@
+ 
+ ##
+ # @query-status:
+-#
+-# Query the run status of the VM
++#     Query the run status of the VM
+ #
+ # Since: 0.14
+ #
+@@ -134,9 +130,8 @@
+ 
+ ##
+ # @SHUTDOWN:
+-#
+-# Emitted when the virtual machine has shut down, indicating that QEMU
+-# is about to exit.
++#     Emitted when the virtual machine has shut down, indicating that
++#     QEMU is about to exit.
+ #
+ # @guest: If true, the shutdown was triggered by a guest request (such
+ #     as a guest-initiated ACPI shutdown request or other
+@@ -162,9 +157,8 @@
+ 
+ ##
+ # @POWERDOWN:
+-#
+-# Emitted when the virtual machine is powered down through the power
+-# control system, such as via ACPI.
++#     Emitted when the virtual machine is powered down through the
++#     power control system, such as via ACPI.
+ #
+ # Since: 0.12
+ #
+@@ -177,8 +171,7 @@
+ 
+ ##
+ # @RESET:
+-#
+-# Emitted when the virtual machine is reset
++#     Emitted when the virtual machine is reset
+ #
+ # @guest: If true, the reset was triggered by a guest request (such as
+ #     a guest-initiated ACPI reboot request or other hardware-specific
+@@ -199,8 +192,7 @@
+ 
+ ##
+ # @STOP:
+-#
+-# Emitted when the virtual machine is stopped
++#     Emitted when the virtual machine is stopped
+ #
+ # Since: 0.12
+ #
+@@ -213,8 +205,7 @@
+ 
+ ##
+ # @RESUME:
+-#
+-# Emitted when the virtual machine resumes execution
++#     Emitted when the virtual machine resumes execution
+ #
+ # Since: 0.12
+ #
+@@ -227,9 +218,8 @@
+ 
+ ##
+ # @SUSPEND:
+-#
+-# Emitted when guest enters a hardware suspension state, for example,
+-# S3 state, which is sometimes called standby state
++#     Emitted when guest enters a hardware suspension state, for
++#     example, S3 state, which is sometimes called standby state
+ #
+ # Since: 1.1
+ #
+@@ -261,9 +251,8 @@
+ 
+ ##
+ # @WAKEUP:
+-#
+-# Emitted when the guest has woken up from suspend state and is
+-# running
++#     Emitted when the guest has woken up from suspend state and is
++#     running
+ #
+ # Since: 1.1
+ #
+@@ -276,8 +265,7 @@
+ 
+ ##
+ # @WATCHDOG:
+-#
+-# Emitted when the watchdog device's timer is expired
++#     Emitted when the watchdog device's timer is expired
+ #
+ # @action: action that has been taken
+ #
+@@ -300,9 +288,8 @@
+ 
+ ##
+ # @WatchdogAction:
+-#
+-# An enumeration of the actions taken when the watchdog device's timer
+-# is expired
++#     An enumeration of the actions taken when the watchdog device's
++#     timer is expired
+ #
+ # @reset: system resets
+ #
+@@ -330,8 +317,7 @@
+ 
+ ##
+ # @RebootAction:
+-#
+-# Possible QEMU actions upon guest reboot
++#     Possible QEMU actions upon guest reboot
+ #
+ # @reset: Reset the VM
+ #
+@@ -345,8 +331,7 @@
+ 
+ ##
+ # @ShutdownAction:
+-#
+-# Possible QEMU actions upon guest shutdown
++#     Possible QEMU actions upon guest shutdown
+ #
+ # @poweroff: Shutdown the VM and exit
+ #
+@@ -377,8 +362,7 @@
+ 
+ ##
+ # @watchdog-set-action:
+-#
+-# Set watchdog action.
++#     Set watchdog action.
+ #
+ # @action: `WatchdogAction` action taken when watchdog timer expires.
+ #
+@@ -394,9 +378,8 @@
+ 
+ ##
+ # @set-action:
+-#
+-# Set the actions that will be taken by the emulator in response to
+-# guest events.
++#     Set the actions that will be taken by the emulator in response
++#     to guest events.
+ #
+ # @reboot: `RebootAction` action taken on guest reboot.
+ #
+@@ -427,8 +410,7 @@
+ 
+ ##
+ # @GUEST_PANICKED:
+-#
+-# Emitted when guest OS panic is detected
++#     Emitted when guest OS panic is detected
+ #
+ # @action: action that has been taken, currently always "pause"
+ #
+@@ -447,8 +429,7 @@
+ 
+ ##
+ # @GUEST_CRASHLOADED:
+-#
+-# Emitted when guest OS crash loaded is detected
++#     Emitted when guest OS crash loaded is detected
+ #
+ # @action: action that has been taken, currently always "run"
+ #
+@@ -467,8 +448,8 @@
+ 
+ ##
+ # @GUEST_PVSHUTDOWN:
+-#
+-# Emitted when guest submits a shutdown request via pvpanic interface
++#     Emitted when guest submits a shutdown request via pvpanic
++#     interface
+ #
+ # Since: 9.1
+ #
+@@ -481,8 +462,8 @@
+ 
+ ##
+ # @GuestPanicAction:
+-#
+-# An enumeration of the actions taken when guest OS panic is detected
++#     An enumeration of the actions taken when guest OS panic is
++#     detected
+ #
+ # @pause: system pauses
+ #
+@@ -497,8 +478,7 @@
+ 
+ ##
+ # @GuestPanicInformationType:
+-#
+-# An enumeration of the guest panic information types
++#     An enumeration of the guest panic information types
+ #
+ # @hyper-v: hyper-v guest panic information type
+ #
+@@ -515,8 +495,7 @@
+ 
+ ##
+ # @GuestPanicInformation:
+-#
+-# Information about a guest panic
++#     Information about a guest panic
+ #
+ # @type: Crash type that defines the hypervisor specific information
+ #
+@@ -532,8 +511,7 @@
+ 
+ ##
+ # @GuestPanicInformationHyperV:
+-#
+-# Hyper-V specific guest panic information (HV crash MSRs)
++#     Hyper-V specific guest panic information (HV crash MSRs)
+ #
+ # @arg1: for Windows, `STOP` code for the guest crash.  For Linux,
+ #     an error code.
+@@ -562,8 +540,7 @@
+ 
+ ##
+ # @S390CrashReason:
+-#
+-# Reason why the CPU is in a crashed state.
++#     Reason why the CPU is in a crashed state.
+ #
+ # @unknown: no crash reason was set
+ #
+@@ -588,8 +565,7 @@
+ 
+ ##
+ # @GuestPanicInformationS390:
+-#
+-# S390 specific guest panic information (PSW)
++#     S390 specific guest panic information (PSW)
+ #
+ # @core: core id of the CPU that crashed
+ #
+@@ -632,9 +608,8 @@
+ 
+ ##
+ # @GuestPanicInformationSev:
+-#
+-# Information for AMD SEV-specific termination request (GHCB MSR
+-# contents)
++#     Information for AMD SEV-specific termination request (GHCB MSR
++#     contents)
+ #
+ # @set: The reason code set provided by the guest
+ #
+@@ -648,8 +623,7 @@
+ 
+ ##
+ # @MEMORY_FAILURE:
+-#
+-# Emitted when a memory failure occurs on host side.
++#     Emitted when a memory failure occurs on host side.
+ #
+ # @recipient: recipient is defined as `MemoryFailureRecipient`.
+ #
+@@ -675,8 +649,7 @@
+ 
+ ##
+ # @MemoryFailureRecipient:
+-#
+-# Hardware memory failure occurs, handled by recipient.
++#     Hardware memory failure occurs, handled by recipient.
+ #
+ # @hypervisor: memory failure at QEMU process address space.  (none
+ #     guest memory, but used by QEMU itself).
+@@ -691,8 +664,7 @@
+ 
+ ##
+ # @MemoryFailureAction:
+-#
+-# Actions taken by QEMU in response to a hardware memory failure.
++#     Actions taken by QEMU in response to a hardware memory failure.
+ #
+ # @ignore: the memory failure could be ignored.  This will only be the
+ #     case for action-optional failures.
+@@ -719,8 +691,7 @@
+ 
+ ##
+ # @MemoryFailureFlags:
+-#
+-# Additional information on memory failures.
++#     Additional information on memory failures.
+ #
+ # @action-required: whether a memory failure event is action-required
+ #     or action-optional (e.g. a failure during memory scrub).
+@@ -736,8 +707,8 @@
+ 
+ ##
+ # @NotifyVmexitOption:
+-#
+-# An enumeration of the options specified when enabling notify VM exit
++#     An enumeration of the options specified when enabling notify VM
++#     exit
+ #
+ # @run: enable the feature, do nothing and continue if the notify VM
+ #     exit happens.
+-- 
+2.55.0
 
 
