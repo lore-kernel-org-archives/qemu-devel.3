@@ -4,106 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8310BC61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 13:59:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75176C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:25:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzE9J-0003NG-Kr; Wed, 26 Aug 2026 09:58:41 -0400
+	id 1wzEZ2-0008SL-JU; Wed, 26 Aug 2026 10:25:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wzE9H-0003M9-HX
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 09:58:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzEYy-0008Rn-SN; Wed, 26 Aug 2026 10:25:12 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wzE9E-0008OJ-FW
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 09:58:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787752715;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pGSMqPirovRWgdQ0oFfKUiuJ+At6CWwjiH05iSoC2wU=;
- b=Bn1TkASI3+XfYspxQGqoaa+kLcm2o4VJwV8qjhYtbq18j1uCNMWgy2YD0JX+pgg9ev9ko7
- ozRZzt2U9acMyJeDja89ib8BH5hs8vc2AmDfqTl7sWMeqWA8TFGhTXK1QmxW7LVHs7h//4
- dsKF/p3CdYkRwFY/oia04y0/UJF7smI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-301-xpfV9gnrOqWuIUIfOY08Pg-1; Wed,
- 26 Aug 2026 09:58:32 -0400
-X-MC-Unique: xpfV9gnrOqWuIUIfOY08Pg-1
-X-Mimecast-MFC-AGG-ID: xpfV9gnrOqWuIUIfOY08Pg_1787752705
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7EA81193530A; Wed, 26 Aug 2026 13:58:23 +0000 (UTC)
-Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
- [10.2.32.114])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DD7A81955F43; Wed, 26 Aug 2026 13:58:11 +0000 (UTC)
-Date: Wed, 26 Aug 2026 14:58:08 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org,
- Xianglai Li <lixianglai@loongson.cn>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chinmay Rath <rathc@linux.ibm.com>,
- Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org,
- Alexander Bulekov <alxndr@bu.edu>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Farman <farman@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Chao Liu <chao.liu@processmission.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <17746591750@163.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- David Hildenbrand <david@kernel.org>, qemu-ppc@nongnu.org,
- qemu-arm@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
- Cornelia Huck <cohuck@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Bibo Mao <maobibo@loongson.cn>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
- Darren Kenny <darren.kenny@oracle.com>
-Subject: Re: [PATCH 00/12] single-binary: link ARM and RISC-V into qemu-system
-Message-ID: <ao7w8AC9SSlc9108@redhat.com>
-References: <20260823150731.896-1-luoyonggang@gmail.com>
- <ao7c-FiawF9sMCGj@redhat.com>
- <392d0652-2d06-4889-8b67-c199e59bd314@nutanix.com>
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzEYv-0005V4-8F; Wed, 26 Aug 2026 10:25:12 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67QE1cQP070323; Wed, 26 Aug 2026 14:25:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=Nx31FbRYCQqXSu1H3dkILpJQGxE8Fi
+ HwE8O+p070GSE=; b=XTVevcXNQu3UGwFEEbOOjMl1x8CzVKRA2yIqem54eLMeX1
+ fG2G8tP3nIDzrL4PAevxR3GNqfIFVpFGh6uPavqW7Ic1VMLToFm4RCuF79j/qN7N
+ VdlkZbvxN/FrHRhyz59VBknmPSruG2BmBDO2FM+3PdSCMBsL8In42/ptXwvsCTmZ
+ bvi/f7vzqcX6xjA0fS3Syq7jEr7RHxHLRyEqhZHyOz7IYCGoHWbGJa4uNeIbqgt9
+ uZDvewCk/zJ3GXYV/Kr6LIUiFfGfCwK5KU15pkXlM9ogj8CHWgn2vCufVPr6UdkY
+ 21WdAsVg0obooxn5tpiXMQPwzC81cinSFtlELuPw==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dxew8v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 14:25:04 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QEBcEh028103;
+ Wed, 26 Aug 2026 14:25:04 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7pfwah01-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 14:25:04 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QEP0aA29753900
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 26 Aug 2026 14:25:00 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0591A20040;
+ Wed, 26 Aug 2026 14:25:00 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D752F20043;
+ Wed, 26 Aug 2026 14:24:56 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 26 Aug 2026 14:24:56 +0000 (GMT)
+Date: Wed, 26 Aug 2026 19:54:59 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Chinmay Rath <rathc@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org,
+ vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
+ ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
+ shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
+ nikhilks@linux.ibm.com
+Subject: Re: [PATCH v2 20/37] target/ppc: Move Condition Register access
+ instructions to decodetree.
+Message-ID: <20260826190955.ee327c4f-3c-amachhiw@linux.ibm.com>
+Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, 
+ npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com, 
+ tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com, 
+ aboorvad@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
+ uverma@linux.ibm.com, nikhilks@linux.ibm.com
+References: <20260826050923.74756-1-rathc@linux.ibm.com>
+ <20260826050923.74756-21-rathc@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <392d0652-2d06-4889-8b67-c199e59bd314@nutanix.com>
-User-Agent: Mutt/2.4.0 (2026-06-19)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <20260826050923.74756-21-rathc@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDExNiBTYWx0ZWRfX74jr9Hp8kd8u
+ 0Sm5VOoLRXKGsZEvLobibLlxDUxtMtEmeGeTEhUGKPSlge2royaHJXOPNaO3D5Dd5PQs9u9gXRx
+ /rY9FRasyQuoyerNo0zTfgH7H2R2LKs=
+X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a8ef741 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=_AhxRZSWwkdppd6cuIwA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-ORIG-GUID: U81VZBuK08udGbuGL-qw9qZy5UPulKKP
+X-Proofpoint-GUID: g33ZJ6cU_w8SaalUHtrJL0QVihDQsl4N
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDExNiBTYWx0ZWRfX9ENnbg6kEf/L
+ sk3IsCUNwtaqxycQQBMw6qYSZuBHGQRRHnkYQ5yb/6Bqhtft4ygoCh3FUIgZjNYtqV2pqNSRDgP
+ EOuz9PMX7XywTKgiuee3At9gqaV8r9EsR53j/uHKsL2oVKC3CQPGNOzK3DOpf/feVuEIlVpFQCF
+ m6gTk/qYJS2iBjdSLBj6vpWi4qaA4oTXrQaQCyMDtwRZoJBwuP8ToJ14dhZDFSyp+0WzKmH7Alg
+ /zQfgbLqUrjH+pB0a+PyIbGGW09YAAl8eJowUxRle13D0+LtwmsK8esnL2ciLZmv+QBTcgUGev9
+ 7Rf1LMC/mbaONyGyDKzTY/c0UyPkqon2VmP5PVwmA3doVXYrnYl8EooNALm4LVikHOywxHa2bW0
+ rA8OhCYL0+L0bc/B4Xs+BhThJWMvum8lHgCybGHXi3CtHtI/GqEwX2huwvlRldZOoW1bieOdzVp
+ eYTMkUqzQia39e+ZkOw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-26_04,2026-08-26_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 bulkscore=0
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2608260116
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,76 +132,253 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 26, 2026 at 02:40:46PM +0100, Mark Cave-Ayland wrote:
-> On 26/08/2026 13:32, Daniel P. Berrangé wrote:
+On 2026/08/26 10:38 AM, Chinmay Rath wrote:
+> From: Shivang Upadhyay <shivangu@linux.ibm.com>
 > 
-> > On Sun, Aug 23, 2026 at 11:07:18PM +0800, Yonggang Luo wrote:
-> > 
-> > snip,
-> > 
-> > ..to comment just on the end result for now..
-> > 
-> > Specifically
-> > 
-> >   * -nodefaults should become the default
-> >   * All CLI args should be processed in order from
-> >     the command line, so we eliminate the nonsense
-> >     where we process some -object, then -chardev,
-> >     then more -object through hand crafted deps
-> > 
-> >   * No default machine type
+> Move below instructions to decodetree specification :
 > 
-> I would even go as far as to suggest that we should make modules mandatory
-> for qemu-system, so that devices can be loaded upon demand during machine
-> construction to help keep the size down.
-
-I think it is worth considering whether modules could be mandatory
-unconditionally for everything. We don't need to block on this
-decision though.
-
-> I'll leave whether that is through dependency tracking or via an explicit
-> load directive for someone else to decide :)
-> >   * Drop all legacy syntax so we only have a single
-> >     QAPI based way of configuring.
-> >     eg drop -hda, -hdb, -cdrom, -drive, etc
-> >        only keeping -blockdev
-> >     eg drop -mon, -monitor, -qmp, etc only
-> >        keeping -object
+>         mfcr, mfocr,
+>         mtcrf, mtocrf                    : XFX-form
 > 
-> The only problem with this is that I often get a lot of complaints that QEMU
-> command lines are complicated from retro folks who just want to run their
-> favourite old games. Why would they want to come up with a long-winded
-> -drive command line when they can just use -hda instead?
+> The changes were verified by validating that the tcg ops generated by
+> those instructions remain the same, which were captured with the '-d
+> in_asm,op' flag.
+> 
+> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> ---
+>  target/ppc/insn32.decode                   |  8 +++
+>  target/ppc/translate.c                     | 62 -----------------
+>  target/ppc/translate/fixedpoint-impl.c.inc | 79 ++++++++++++++++++++++
+>  3 files changed, 87 insertions(+), 62 deletions(-)
+> 
+> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+> index d23168a303..dc708b5442 100644
+> --- a/target/ppc/insn32.decode
+> +++ b/target/ppc/insn32.decode
+> @@ -70,6 +70,9 @@
+>  %dx_d           6:s10 16:5 0:1
+>  @DX             ...... rt:5  ..... .......... ..... .           &DX d=%dx_d
+>  
+> +&XFX            rt fxm
+> +@XFX            ...... rt:5  . fxm:8 ...... ..... .             &XFX
+> +
+>  %md_sh          1:1 11:5
+>  %md_mb          5:1 6:5
+>  &MD             rs ra sh mb rc
+> @@ -648,6 +651,11 @@ FSEL            111111 ..... ..... ..... ..... 10111 .  @A
+>  
+>  ### Move To/From System Register Instructions
+>  
+> +MFCR            011111 ..... 0.... ....- 0000010011 -   @XFX
+> +MFOCR           011111 ..... 1.... ....- 0000010011 -   @XFX
+> +MTCRF           011111 ..... 0.... ....- 0010010000 -   @XFX
+> +MTOCRF          011111 ..... 1.... ....- 0010010000 -   @XFX
+> +
+>  SETBC           011111 ..... ..... ----- 0110000000 -   @X_bi
+>  SETBCR          011111 ..... ..... ----- 0110100000 -   @X_bi
+>  SETNBC          011111 ..... ..... ----- 0111000000 -   @X_bi
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index f6f7bb4e6b..d01981de73 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -3131,40 +3131,6 @@ static void gen_mcrxrx(DisasContext *ctx)
+>  }
+>  #endif
+>  
+> -/* mfcr mfocrf */
+> -static void gen_mfcr(DisasContext *ctx)
+> -{
+> -    uint32_t crm, crn;
+> -
+> -    if (likely(ctx->opcode & 0x00100000)) {
+> -        crm = CRM(ctx->opcode);
+> -        if (likely(crm && ((crm & (crm - 1)) == 0))) {
+> -            crn = ctz32(crm);
+> -            tcg_gen_extu_i32_tl(cpu_gpr[rD(ctx->opcode)], cpu_crf[7 - crn]);
+> -            tcg_gen_shli_tl(cpu_gpr[rD(ctx->opcode)],
+> -                            cpu_gpr[rD(ctx->opcode)], crn * 4);
+> -        }
+> -    } else {
+> -        TCGv_i32 t0 = tcg_temp_new_i32();
+> -        tcg_gen_mov_i32(t0, cpu_crf[0]);
+> -        tcg_gen_shli_i32(t0, t0, 4);
+> -        tcg_gen_or_i32(t0, t0, cpu_crf[1]);
+> -        tcg_gen_shli_i32(t0, t0, 4);
+> -        tcg_gen_or_i32(t0, t0, cpu_crf[2]);
+> -        tcg_gen_shli_i32(t0, t0, 4);
+> -        tcg_gen_or_i32(t0, t0, cpu_crf[3]);
+> -        tcg_gen_shli_i32(t0, t0, 4);
+> -        tcg_gen_or_i32(t0, t0, cpu_crf[4]);
+> -        tcg_gen_shli_i32(t0, t0, 4);
+> -        tcg_gen_or_i32(t0, t0, cpu_crf[5]);
+> -        tcg_gen_shli_i32(t0, t0, 4);
+> -        tcg_gen_or_i32(t0, t0, cpu_crf[6]);
+> -        tcg_gen_shli_i32(t0, t0, 4);
+> -        tcg_gen_or_i32(t0, t0, cpu_crf[7]);
+> -        tcg_gen_extu_i32_tl(cpu_gpr[rD(ctx->opcode)], t0);
+> -    }
+> -}
+> -
+>  /* mfmsr */
+>  static void gen_mfmsr(DisasContext *ctx)
+>  {
+> @@ -3245,32 +3211,6 @@ static void gen_mftb(DisasContext *ctx)
+>      gen_op_mfspr(ctx);
+>  }
+>  
+> -/* mtcrf mtocrf*/
+> -static void gen_mtcrf(DisasContext *ctx)
+> -{
+> -    uint32_t crm, crn;
+> -
+> -    crm = CRM(ctx->opcode);
+> -    if (likely((ctx->opcode & 0x00100000))) {
+> -        if (crm && ((crm & (crm - 1)) == 0)) {
+> -            TCGv_i32 temp = tcg_temp_new_i32();
+> -            crn = ctz32(crm);
+> -            tcg_gen_trunc_tl_i32(temp, cpu_gpr[rS(ctx->opcode)]);
+> -            tcg_gen_shri_i32(temp, temp, crn * 4);
+> -            tcg_gen_andi_i32(cpu_crf[7 - crn], temp, 0xf);
+> -        }
+> -    } else {
+> -        TCGv_i32 temp = tcg_temp_new_i32();
+> -        tcg_gen_trunc_tl_i32(temp, cpu_gpr[rS(ctx->opcode)]);
+> -        for (crn = 0 ; crn < 8 ; crn++) {
+> -            if (crm & (1 << crn)) {
+> -                    tcg_gen_shri_i32(cpu_crf[7 - crn], temp, crn * 4);
+> -                    tcg_gen_andi_i32(cpu_crf[7 - crn], cpu_crf[7 - crn], 0xf);
+> -            }
+> -        }
+> -    }
+> -}
+> -
+>  /* mtmsr */
+>  #if defined(TARGET_PPC64)
+>  static void gen_mtmsrd(DisasContext *ctx)
+> @@ -5043,11 +4983,9 @@ GEN_HANDLER(hrfid, 0x13, 0x12, 0x08, 0x03FF8001, PPC_64H),
+>  GEN_HANDLER(sc, 0x11, 0x11, 0xFF, 0x03FFF01D, PPC_FLOW),
+>  GEN_HANDLER(sc, 0x11, 0x01, 0xFF, 0x03FFF01D, PPC_FLOW),
+>  GEN_HANDLER(mcrxr, 0x1F, 0x00, 0x10, 0x007FF801, PPC_MISC),
+> -GEN_HANDLER(mfcr, 0x1F, 0x13, 0x00, 0x00000801, PPC_MISC),
+>  GEN_HANDLER(mfmsr, 0x1F, 0x13, 0x02, 0x001FF801, PPC_MISC),
+>  GEN_HANDLER(mfspr, 0x1F, 0x13, 0x0A, 0x00000001, PPC_MISC),
+>  GEN_HANDLER(mftb, 0x1F, 0x13, 0x0B, 0x00000001, PPC_MFTB),
+> -GEN_HANDLER(mtcrf, 0x1F, 0x10, 0x04, 0x00000801, PPC_MISC),
+>  #if defined(TARGET_PPC64)
+>  GEN_HANDLER(mtmsrd, 0x1F, 0x12, 0x05, 0x001EF801, PPC_64B),
+>  GEN_HANDLER_E(setb, 0x1F, 0x00, 0x04, 0x0003F801, PPC_NONE, PPC2_ISA300),
+> diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
+> index 4d35133adc..d768a0454d 100644
+> --- a/target/ppc/translate/fixedpoint-impl.c.inc
+> +++ b/target/ppc/translate/fixedpoint-impl.c.inc
+> @@ -461,6 +461,85 @@ static bool trans_ADDEX(DisasContext *ctx, arg_X *a)
+>      return true;
+>  }
+>  
+> +static bool trans_MTCRF(DisasContext *ctx, arg_MTCRF *a)
+> +{
+> +    uint32_t crm, crn;
+> +
+> +    crm = a->fxm;
+> +
+> +    TCGv_i32 temp = tcg_temp_new_i32();
 
--blockdev isn't as hard as it appears - we make it harder than it ought
-to be by not documenting it well and carrying on using -hda/-drive in
-examples so users have little good guidance. Then when people go beyond
-the needs that -hda can service, they have an worse experiance as a
-result.
+Declarations should precede statements.
 
-Having many different ways to do the same thing and not getting rid of
-enough outdated/obsoleted stuff is what has always created confusion
-for QEMU.
+> +    tcg_gen_trunc_tl_i32(temp, cpu_gpr[a->rt]);
+> +
+> +    for (crn = 0 ; crn < 8 ; crn++) {
+> +        if (crm & (1 << crn)) {
+> +                tcg_gen_shri_i32(cpu_crf[7 - crn], temp, crn * 4);
+> +                tcg_gen_andi_i32(cpu_crf[7 - crn], cpu_crf[7 - crn], 0xf);
 
-Also why it is -hda when it is created a SCSI disk (sda), or a VirtIO
-disk (xda) or a SSD (mmcblk0), or the guest is calling it C:\ :-)
+These statements are indented by an extra tab.
 
-Yes, -hda is simple, but it is also nonsensical historical cruft.
+> +        }
+> +    }
+> +
+> +    return true;
+> +}
+> +
+> +static bool trans_MTOCRF(DisasContext *ctx, arg_MTOCRF *a)
+> +{
+> +
 
+Please remove this blank line.
 
-All the various "convenience" args are also something that could be
-provided by a higher level launcher script that translates to the
-canonical syntax, even if they're not in qemu-system itself.
+> +    uint32_t crm, crn;
+> +
+> +    crm = a->fxm;
+> +
+> +    /* Checking crm > 0 and set_bits(crm) == 1 */
+> +    if (crm && ((crm & (crm - 1)) == 0)) {
+> +        TCGv_i32 temp = tcg_temp_new_i32();
+> +        crn = ctz32(crm);
+> +        tcg_gen_trunc_tl_i32(temp, cpu_gpr[a->rt]);
+> +        tcg_gen_shri_i32(temp, temp, crn * 4);
+> +        tcg_gen_andi_i32(cpu_crf[7 - crn], temp, 0xf);
+> +    }
+> +
+> +    return true;
+> +}
+> +
+> +static bool trans_MFOCR(DisasContext *ctx, arg_MFOCR *a)
+> +{
+> +    uint32_t crm, crn;
+> +
+> +    crm = a->fxm;
+> +
+> +    /* Checking crm > 0 and set_bits(crm) == 1 */
+> +    if (likely(crm && ((crm & (crm - 1)) == 0))) {
+> +        crn = ctz32(crm);
+> +        tcg_gen_extu_i32_tl(cpu_gpr[a->rt], cpu_crf[7 - crn]);
+> +        tcg_gen_shli_tl(cpu_gpr[a->rt],
+> +                        cpu_gpr[a->rt], crn * 4);
+> +    }
+> +
+> +    return true;
+> +}
+> +
+> +static bool trans_MFCR(DisasContext *ctx, arg_MFCR *a)
+> +{
+> +
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Ditto.
 
+With above fixed:
+
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+
+> +    TCGv_i32 t0 = tcg_temp_new_i32();
+> +    tcg_gen_mov_i32(t0, cpu_crf[0]);
+> +    tcg_gen_shli_i32(t0, t0, 4);
+> +    tcg_gen_or_i32(t0, t0, cpu_crf[1]);
+> +    tcg_gen_shli_i32(t0, t0, 4);
+> +    tcg_gen_or_i32(t0, t0, cpu_crf[2]);
+> +    tcg_gen_shli_i32(t0, t0, 4);
+> +    tcg_gen_or_i32(t0, t0, cpu_crf[3]);
+> +    tcg_gen_shli_i32(t0, t0, 4);
+> +    tcg_gen_or_i32(t0, t0, cpu_crf[4]);
+> +    tcg_gen_shli_i32(t0, t0, 4);
+> +    tcg_gen_or_i32(t0, t0, cpu_crf[5]);
+> +    tcg_gen_shli_i32(t0, t0, 4);
+> +    tcg_gen_or_i32(t0, t0, cpu_crf[6]);
+> +    tcg_gen_shli_i32(t0, t0, 4);
+> +    tcg_gen_or_i32(t0, t0, cpu_crf[7]);
+> +    tcg_gen_extu_i32_tl(cpu_gpr[a->rt], t0);
+> +
+> +    return true;
+> +}
+> +
+>  static bool do_add_D(DisasContext *ctx, arg_D *a, bool add_ca, bool compute_ca,
+>                       bool compute_ov, bool compute_rc0)
+>  {
+> -- 
+> 2.55.0
+> 
 
