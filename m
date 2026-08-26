@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B48CEC61DBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:40:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 159A9C61DBE
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:40:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzJTC-0003HZ-Vy; Wed, 26 Aug 2026 15:39:35 -0400
+	id 1wzJTl-00042u-2q; Wed, 26 Aug 2026 15:40:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJTB-0003Gk-Ut
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:39:33 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJTi-00042R-V1
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:40:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJTA-0005iJ-KD
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:39:33 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJTg-0005mo-B2
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:40:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787773171;
+ s=mimecast20190719; t=1787773203;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mlhVSIuYfO98pyz9Sq3hbEesOQSLV/LUPwoZZKF//5o=;
- b=P3aT1SqEF6fyV7W7I6f4E+PzJyengtnvJVdwbZMpZHhX4dSjXjRiH1EH7wVyPEonrZA+vR
- rqQH7WYdcvKZxLbrnYbHG4+C2+38WTQ5E/cV/ZrvCzKcY6gem3otQp7PpgbL4t3/8RjDW2
- oKR7rhhGJq93t/8+IwJsbgEIrEVAOYs=
+ bh=9ndidgXfI+j62GEABZBVr0fCVINjLQ7F7fcSx52FMCI=;
+ b=geEn3rvFg4SgKeyAwQDkfOI2Rv2pQ6ns+TAqP67AZeB/exUCuVHpllSJz8m/OI1EkECnWT
+ MMwVWCo5U52OysvHKwtsUPWqRPCi6V3BMeXIrOJQEkosRMyuksHNyB8DtBnNuLuQstb++d
+ HZejt0w9MolB439A8K6Rrl5AoQOy3fw=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-287-fo56A73DOWaS7OEAE9kJ4w-1; Wed,
- 26 Aug 2026 15:39:28 -0400
-X-MC-Unique: fo56A73DOWaS7OEAE9kJ4w-1
-X-Mimecast-MFC-AGG-ID: fo56A73DOWaS7OEAE9kJ4w_1787773164
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-127-PxWjKT1QPcqzqXNSYBVZoQ-1; Wed,
+ 26 Aug 2026 15:39:59 -0400
+X-MC-Unique: PxWjKT1QPcqzqXNSYBVZoQ-1
+X-Mimecast-MFC-AGG-ID: PxWjKT1QPcqzqXNSYBVZoQ_1787773195
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E0BDA1801A0C; Wed, 26 Aug 2026 19:39:23 +0000 (UTC)
+ id A605A184BA96; Wed, 26 Aug 2026 19:39:54 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.99])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 84B9F18005AC; Wed, 26 Aug 2026 19:39:16 +0000 (UTC)
+ id 131E81800577; Wed, 26 Aug 2026 19:39:43 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>,
@@ -72,9 +72,9 @@ Cc: Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Lukas Straub <lukasstraub2@web.de>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 03/43] qapi: convert trivial intro sections for ebpf.json
-Date: Wed, 26 Aug 2026 15:38:00 -0400
-Message-ID: <20260826193840.2152000-4-jsnow@redhat.com>
+Subject: [PATCH v3 06/43] qapi: convert trivial intro sections for trace.json
+Date: Wed, 26 Aug 2026 15:38:03 -0400
+Message-ID: <20260826193840.2152000-7-jsnow@redhat.com>
 In-Reply-To: <20260826193840.2152000-1-jsnow@redhat.com>
 References: <20260826193840.2152000-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -106,33 +106,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/ebpf.json | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ qapi/trace.json | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/qapi/ebpf.json b/qapi/ebpf.json
-index f0257955fa2..951516b121f 100644
---- a/qapi/ebpf.json
-+++ b/qapi/ebpf.json
-@@ -20,8 +20,7 @@
+diff --git a/qapi/trace.json b/qapi/trace.json
+index de369dae6b5..29c76256055 100644
+--- a/qapi/trace.json
++++ b/qapi/trace.json
+@@ -14,8 +14,7 @@
  
  ##
- # @EbpfObject:
+ # @TraceEventState:
 -#
--# An eBPF ELF object.
-+#     An eBPF ELF object.
+-# State of a tracing event.
++#     State of a tracing event.
  #
- # @object: the eBPF object encoded in base64
+ # @unavailable: The event is statically disabled.
  #
-@@ -33,8 +32,7 @@
+@@ -30,8 +29,7 @@
  
  ##
- # @EbpfProgramID:
+ # @TraceEventInfo:
 -#
--# The eBPF programs that can be gotten with `request-ebpf`.
-+#     The eBPF programs that can be gotten with `request-ebpf`.
+-# Information of a tracing event.
++#     Information of a tracing event.
  #
- # @rss: Receive side scaling, technology that allows steering traffic
- #     between queues by calculation hash.  Users may set up
+ # @name: Event name.
+ #
+@@ -44,8 +42,7 @@
+ 
+ ##
+ # @trace-event-get-state:
+-#
+-# Query the state of events.
++#     Query the state of events.
+ #
+ # @name: Event name pattern (case-sensitive glob).
+ #
+@@ -65,8 +62,7 @@
+ 
+ ##
+ # @trace-event-set-state:
+-#
+-# Set the dynamic tracing state of events.
++#     Set the dynamic tracing state of events.
+ #
+ # @name: Event name pattern (case-sensitive glob).
+ #
 -- 
 2.55.0
 
