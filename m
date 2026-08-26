@@ -4,123 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BDC1C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:09:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D932FC5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:21:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzCRN-0000Vu-05; Wed, 26 Aug 2026 08:09:13 -0400
+	id 1wzCcq-0003j2-TD; Wed, 26 Aug 2026 08:21:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wzCRG-0000Uu-12
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 08:09:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzCco-0003ig-Up; Wed, 26 Aug 2026 08:21:02 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wzCRD-0003Ys-LK
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 08:09:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787746141;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=L5peZa147xJVXbKRW6hHPWf3rzav94fX9X576/tVQs8=;
- b=Aze0l2Uh2/BsN9HLZYbwvrbUckePceV2XWdTNSfaJT2kJOGLgDknBcsLiFlsVEgz8fB9zJ
- y1YWBdddotTSPj0F3QPD/wji9CpgWyUJDO+DYJ+CGD8CoDgp7ZMs6UZdH5VnS5hilUZE+u
- gBR8aKGb2NukAhX/vjZRrDHMrVfSh3s=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-626-x7o7Jl0RNJu0bJ-WYjCrjw-1; Wed, 26 Aug 2026 08:09:00 -0400
-X-MC-Unique: x7o7Jl0RNJu0bJ-WYjCrjw-1
-X-Mimecast-MFC-AGG-ID: x7o7Jl0RNJu0bJ-WYjCrjw_1787746139
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-c15e82278cbso57634966b.2
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 05:09:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787746139; x=1788350939;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:reply-to:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=L5peZa147xJVXbKRW6hHPWf3rzav94fX9X576/tVQs8=;
- b=LEyDClHVfEBmcejIhe79veiq0HUTwVRTDVw6MyOC4VoThYR22PpvFtxHhj1GUlgOv+
- T4OVLMw7CtOPhcwcX7ck3IIOhXWldDhbEzJNKUY1OHay+zOUQFH53kLaweISyxrCgrC+
- cvSXxgmxLzUVKrbES48FDmRNFQdo1NBATKpKUU3LD+uPVjOM4KNlMxcw9k21KaW5ZKxa
- TxtLyA2D9fcSIIBVVrVBptTpLFKSBFs5X6rL5ja4pZCImn0HHto3Yvf934g47zhinrHa
- +iG904eVeisMM1Tonx900PK/dUYOMa9tb5IQLz6xlKLK8zv0LeLkf3pFkFUjxMfw0e73
- YIDw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqfyE4i1iA7vg3FLKu9+o/3AKrA+3FpJEWVv+UNdi/NcwGDyhnUMzSukBxCGntXbNN6BSF+Tr4juy8l@nongnu.org
-X-Gm-Message-State: AFuF++l6O2bAxBSiP1VnTzqk0+92C7IMPzvTXJkIjM18EVVOZ8Mc74te
- 43+D/h2NFZTY7o//U31oCyeCfGePFCyHzqRUFIxhNuUN3W7hO7xOR58Pn7oJWAs4oaLUCgOA2S+
- ZiWvrfrrxLKAIqlGN45xmkFxcrLKNRmeO4sa7j3Z28YoQ61L6ruhMWpYU
-X-Gm-Gg: AR+sD12+mYoOHHEexU++BgjrrRBIkN0aYvlsb3Eg1wE8ZYQuiaD7jZ53rPodniuUB8j
- +XraQ9NODid8CC/OPg9P1ZW80QSu8PNaYTQ7tg+4pBytCMxxg1KuL5EwU2b9g/djJ94bHjVF1kW
- 6dlAL7huI+2omW11dd6qZMS0Ud+eDoRDsu5LUxS7ScPBDTrLzLxbannXp+GlWDxGprw1B5+4dlg
- /amNuxHcuv3cppYYa7c4n9LbOG7F023g05eR1668nSk7FA7wvoT2fQksBoQRJ+sGkosWzQyCarm
- Fre8fkK++2wo9hRYQVK1cRS7WySZxxjnb31s19yTXAGjtEzdXkLRbuiyo0jfX+8y3mW/D2gvtEZ
- 0DdWx1CQG8VB7Nglt8mSBDdxAbIi2A30ba17i9OdV+3i3Y6ni
-X-Received: by 2002:a17:907:6c0f:b0:c21:167b:47f0 with SMTP id
- a640c23a62f3a-c250bb371c9mr899279566b.2.1787746139013; 
- Wed, 26 Aug 2026 05:08:59 -0700 (PDT)
-X-Received: by 2002:a17:907:6c0f:b0:c21:167b:47f0 with SMTP id
- a640c23a62f3a-c250bb371c9mr899272566b.2.1787746138476; 
- Wed, 26 Aug 2026 05:08:58 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c250a73038asm407393566b.26.2026.08.26.05.08.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Aug 2026 05:08:57 -0700 (PDT)
-Message-ID: <7bc2c3ae-8192-4622-82b7-6d88f11a6d82@redhat.com>
-Date: Wed, 26 Aug 2026 14:08:55 +0200
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzCcm-0007RP-L5; Wed, 26 Aug 2026 08:21:02 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67QAVXFN3739511; Wed, 26 Aug 2026 12:20:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=2jsioRxwQWXVl7FESnVo+r/kO/zOE8
+ zlj2Tp0uXvNr8=; b=Ls5eTO8NUijUwHb07uZN7awyd+rSA/EXUJoTS3UNd4p+QO
+ dLuB5EyLM8v41URHF9T6alIOuwKhVDT+3LGmYHevMgah9nh6hy+Qu1WGHBCaEqHL
+ uDggfL3/kgGgj/aFsE5mKqEHfpYsLsjloposxIocjPgGZUzuLuNZZwsg0cBXTN9+
+ UOJKKP/YRDbO0Aa44rwT+EFlkDgIOIKtX9yOhS7Ov9pOH1sZwdHro/AgZb26hiXA
+ nQSYbs3dGKQWkuEjwS0bcvdtAlt5CprWg3sjaVXLfeFHj7+5HGPBakcDVeQisO5X
+ VWsN4ROy3RsXDMUg3Y4fwEpGeXnoIhdVHVePyJwQ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73g4xhme-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 12:20:56 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QCF5rd019408;
+ Wed, 26 Aug 2026 12:20:55 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7raghp93-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 12:20:55 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QCKqOr34079088
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 26 Aug 2026 12:20:52 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F2CC22004B;
+ Wed, 26 Aug 2026 12:20:51 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D219620040;
+ Wed, 26 Aug 2026 12:20:48 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 26 Aug 2026 12:20:48 +0000 (GMT)
+Date: Wed, 26 Aug 2026 17:50:51 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Chinmay Rath <rathc@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org,
+ vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
+ ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
+ shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
+ nikhilks@linux.ibm.com
+Subject: Re: [PATCH v2 13/37] target/ppc: Move isync instruction to decodetree.
+Message-ID: <20260826175014.a2a12c0d-39-amachhiw@linux.ibm.com>
+Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, 
+ npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com, 
+ tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com, 
+ aboorvad@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
+ uverma@linux.ibm.com, nikhilks@linux.ibm.com
+References: <20260826050923.74756-1-rathc@linux.ibm.com>
+ <20260826050923.74756-14-rathc@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v7 18/18] arm-qmp-cmds: introspection for ID register
- props
-Content-Language: en-US
-To: Khushit Shah <khushit.shah@nutanix.com>
-Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Shaju Abraham <shaju.abraham@nutanix.com>,
- "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
- "cohuck@redhat.com" <cohuck@redhat.com>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "sebott@redhat.com" <sebott@redhat.com>,
- "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
- "maz@kernel.org" <maz@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-References: <20260726153221.24773-1-eric.auger@redhat.com>
- <20260726153221.24773-19-eric.auger@redhat.com>
- <C950721B-25A3-477F-ABF0-56491A2C968F@nutanix.com>
- <07a65f67-0ac5-425a-af3f-e4e38a1a6500@redhat.com>
- <B9191525-673E-43D9-B7E1-04D05952EE8D@nutanix.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <B9191525-673E-43D9-B7E1-04D05952EE8D@nutanix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260826050923.74756-14-rathc@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: s4tSPpFB6xbQDl_JsrlwQrFf2yeEOL63
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEwMCBTYWx0ZWRfX+YSTyP0ZsmXJ
+ cL5mJUgAdT2eShhxQ72dSRdQ39jjhCvgbCMXY1Jsz9dUiCqrwhEXbyoE3Uh7pZ/oQxmdPd3UEEx
+ z6yTqE7qNpJ3eatD8Zpyal0a/ZkigFc=
+X-Proofpoint-GUID: PywaoRxUtfkb_bx2bC80cGydoA57Bq7R
+X-Authority-Analysis: v=2.4 cv=JZyMa0KV c=1 sm=1 tr=0 ts=6a8eda29 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=1VKqNc-gu6NC59ff_LEA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEwMCBTYWx0ZWRfX3+dtu8jQaXQa
+ wNTFspWo93bG3An3KuyfSxGblCPfzLDEbONzyZCp6cUWbcGRztBceWFcpUXh47KXYFEf7sBhUYd
+ mtAjnoBkAwRfDkbBqjvKy6sF5E4ENhFlkg/3R29PPYxMnYDuGuMKFNJH3aS6NraJ2nWPaT+GWIw
+ 0IVnoj+UXFhrWLyy01HlBT1KyWOFJcKktCSQqwizMFmXGw8OR+SetB3LZ6YEh3qFnqqwAFmo+AR
+ 9moFom87PCY3h7Kn34OfQ3iY6xbfx6qvwEMQzOpCOodEGIUfAFfle1EjveJOyeg8JxxwHQzBxxR
+ 0lT30+VzVeWzMyxcKjtcJZ+QWv6+gzd+QHdznpb3S9JPLEn4BIn+Ib3sL0B08uEp/ugbyxCAzV6
+ zpIf3ZBq93UVDqKzjY0Wb/kzRQg+8Rky+nulim11q6TYdu5FpShOaxUZEb+rTY3LjywXnqgJJqa
+ eWEox7Q9LXnKANCysjA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-26_03,2026-08-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260100
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,309 +130,108 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 2026/08/26 10:38 AM, Chinmay Rath wrote:
+> From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+> 
+> Moving the following instructions to decodetree specification :
+> isync
+> 
+> The changes were verified by validating that the tcg ops generated by
+> those instructions remain the same, which were captured with the '-d
+> in_asm,op' flag.
 
+Nit: Trailing period in subject line. Otherwise,
 
-On 8/26/26 1:27 PM, Khushit Shah wrote:
->
->> On 26 Aug 2026, at 12:20 PM, Eric Auger <eric.auger@redhat.com> wrote:
->>
->> !-------------------------------------------------------------------|
->>  CAUTION: External Email
->>
->> |-------------------------------------------------------------------!
->>
->> Hi Khushit,
->>
->> On 8/24/26 1:59 PM, Khushit Shah wrote:
->>>> On 26 Jul 2026, at 8:59 PM, Eric Auger <eric.auger@redhat.com> wrote:
->>>>
->>>> !-------------------------------------------------------------------|
->>>> CAUTION: External Email
->>>>
->>>> |-------------------------------------------------------------------!
->>>>
->>>> From: Cornelia Huck <cohuck@redhat.com>
->>>>
->>>> Implement the capability to query available ID register values by
->>>> adding SYSREG_* options and values to the cpu model expansion for the
->>>> host model, if available.
->>>>
->>>> Excerpt:
->>>> (QEMU) query-cpu-model-expansion type=full model={"name":"host"}
->>>> {"return": {"model": {"name": "host", "props": {"SYSREG_ID_AA64PFR0_EL1_EL3": 1,
->>>> "SYSREG_ID_AA64ISAR2_EL1_CLRBHB": 0, "SYSREG_CTR_EL0_L1Ip": 3,
->>>> "SYSREG_MIDR_EL1_PartNum": 3407, "SYSREG_CTR_EL0_DminLine": 4,
->>>> "SYSREG_ID_AA64MMFR0_EL1_PARange": 5, "SYSREG_ID_AA64MMFR1_EL1_ECBHB": 0
->>>> ../..
->>>>
->>>> This allows the upper stack to detect available writable ID regs and
->>>> the "host passthrough model" values.
->>>>
->>>> It also allows to test some ID reg field values:
->>>> (QEMU) query-cpu-model-expansion type=full model={"name":"host","props":{"SYSREG_ID_AA64ISAR0_EL1_DP":0x13}}
->>>> {"error": {"class": "GenericError", "desc": "idreg SYSREG_ID_AA64ISAR0_EL1_DP set value (0x13) exceeds length of field (4)!"}}
->>>>
->>>> (QEMU) query-cpu-model-expansion type=full model={"name":"host","props":{"SYSREG_ID_AA64ISAR0_EL1_DP":0x2}}
->>>> {"error": {"class": "GenericError", "desc": "idreg SYSREG_ID_AA64ISAR0_EL1_DP set value (0x2) does not match any arch valid enum value!”}}
->>> My reasoning here is: User never asked to run the CPU model/configuration. The QMP command is supposed to
->>> return the final prop values which QEMU will set/request from KVM.
->>>
->>> Like on x86, the query-cpu-model-expansion type=full model={“host”: “props”: {“amx-tile": true}} does not return
->>> with error even if host does not have AMX.
->>>
->>> But, maybe we can append CpuModelInfo or CpuModelExpansionInfo with optional ‘usable’ boolean. This even
->>> fills an existing gap, as, query-cpu-definitions cannot take property values.
->> Refering to docs/system/arm/cpu-features.rst it looks a normal case the
->> command fails in case settings cannot apply:
->>
->> See 
->>
->> (3) Let's try to disable ``aarch64``, which enables the AArch32 CPU
->> feature::
->>
->>       (QEMU) query-cpu-model-expansion type=full
->> model={"name":"max","props":{"aarch64":false}}
->>       {"error": {
->>        "class": "GenericError", "desc":
->>        "'aarch64' feature cannot be disabled unless KVM is enabled and
->> 32-bit EL1 is supported"
->>       }}
->>
->> So my understanding is query-cpu-model-expansion is well suited to
->> settings dry-run
-> I don't really like the current handling from the named models
-> perspective.
->
-> query-cpu-model-expansion should not be performing host-compatibility
-> checks. We should decouple applying the requested props from asking
-> whether this host can actually run them. x86 and s390x are designed
-> the same way.
->
-> While this patch only dry-runs SYSREG_* props if they are passed,
-> once named models exist:
->   query-cpu-model-expansion type=full model={"name":"ampere-1a"}
->
-> should not fail because it is not host-compatible. It should still
-> return the model's SYSREG prop values on a host that cannot
-> realise it.
-Looking at qapi/machine.json, 
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
 
-# Errors:
-#     - if expanding CPU models is not supported
-#     - if the model cannot be expanded
-#     - if the model contains an unknown CPU definition name, unknown
-#       properties or properties with a wrong type
-#     - if an expansion type is not supported
-
-Maybe we could use the "static" parameter which is not currently
-implement on ARM.
-
-# * machine options (including accelerator): in some architectures,
-#   CPU models may look different depending on machine and accelerator
-#   options.  (Except for CPU models reported as "static" in
-#   `query-cpu-definitions`.)
-
-in case you use static we don't expand against the accelerator, while
-with full we would do?
-
-Thanks
-
-Eric
-
-
-
-
->
-> Warm Regards,
-> Khushit
->
->> Thanks
->>
->> Eric
->>
->>> Warm Regards,
->>> Khushit
->>>> The following checks are performed:
->>>> - the value does not exceed the field size
->>>> - if the field is associated to enum values, the set value must be one
->>>> of those enum values
->>>> - the value is applied against a scratch vcpu making sure the setting is
->>>> not rejected for this host
->>>>
->>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>>> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->>>>
->>>> ---
->>>>
->>>> v5 -> v6:
->>>> - add the write capability
->>>> ---
->>>> target/arm/arm-qmp-cmds.c | 98 +++++++++++++++++++++++++++++++++++++++
->>>> 1 file changed, 98 insertions(+)
->>>>
->>>> diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
->>>> index 83ec95c290..41fefadcea 100644
->>>> --- a/target/arm/arm-qmp-cmds.c
->>>> +++ b/target/arm/arm-qmp-cmds.c
->>>> @@ -21,6 +21,7 @@
->>>> */
->>>>
->>>> #include "qemu/osdep.h"
->>>> +#include "qemu/error-report.h"
->>>> #include "qemu/target-info.h"
->>>> #include "hw/core/boards.h"
->>>> #include "kvm_arm.h"
->>>> @@ -30,7 +31,10 @@
->>>> #include "qapi/qapi-commands-machine.h"
->>>> #include "qapi/qapi-commands-misc-arm.h"
->>>> #include "qobject/qdict.h"
->>>> +#include "qobject/qnum.h"
->>>> #include "qom/qom-qobject.h"
->>>> +#include <linux/kvm.h>
->>>> +#include "system/kvm.h"
->>>> #include "cpu.h"
->>>>
->>>> static GICCapability *gic_cap_new(int version)
->>>> @@ -84,11 +88,14 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->>>>                                                     Error **errp)
->>>> {
->>>>    CpuModelExpansionInfo *expansion_info;
->>>> +    ObjectPropertyIterator iter;
->>>>    const QDict *qdict_in;
->>>> +    ObjectProperty *idregprop;
->>>>    QDict *qdict_out;
->>>>    ObjectClass *oc;
->>>>    Object *obj;
->>>>    const char *name;
->>>> +    int fdarray[3];
->>>>    int i;
->>>>
->>>>    if (type != CPU_MODEL_EXPANSION_TYPE_FULL) {
->>>> @@ -133,6 +140,38 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->>>>
->>>>    obj = object_new(object_class_get_name(oc));
->>>>
->>>> +    if (kvm_enabled()) {
->>>> +        bool pmuv3_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_PMU_V3);
->>>> +        bool sve_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_SVE);
->>>> +        struct kvm_vcpu_init init = { .target = -1, };
->>>> +        bool el2_supported = kvm_arm_el2_supported();
->>>> +        bool pauth_supported;
->>>> +        int ret;
->>>> +
->>>> +        pauth_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_PTRAUTH_ADDRESS) &&
->>>> +                          kvm_check_extension(kvm_state, KVM_CAP_ARM_PTRAUTH_GENERIC);
->>>> +
->>>> +        if (sve_supported) {
->>>> +            init.features[0] |= 1 << KVM_ARM_VCPU_SVE;
->>>> +        }
->>>> +        if (el2_supported) {
->>>> +            init.features[0] |= 1 << KVM_ARM_VCPU_HAS_EL2;
->>>> +        }
->>>> +        if (pauth_supported) {
->>>> +            init.features[0] |= (1 << KVM_ARM_VCPU_PTRAUTH_ADDRESS |
->>>> +                             1 << KVM_ARM_VCPU_PTRAUTH_GENERIC);
->>>> +        }
->>>> +        if (pmuv3_supported) {
->>>> +            init.features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
->>>> +        }
->>>> +
->>>> +        ret = kvm_arm_create_scratch_host_vcpu(fdarray, &init);
->>>> +        if (!ret) {
->>>> +            error_setg(errp, "failing creating a scratch vcpu");
->>>> +            return NULL;
->>>> +        }
->>>> +    }
->>>> +
->>>>    if (model->props) {
->>>>        Visitor *visitor;
->>>>        Error *err = NULL;
->>>> @@ -145,6 +184,49 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->>>>        }
->>>>
->>>>        qdict_in = qobject_to(QDict, model->props);
->>>> +
->>>> +        for (const QDictEntry *entry = qdict_first(qdict_in);
->>>> +                 entry != NULL; entry = qdict_next(qdict_in, entry)) {
->>>> +            const char *key = qdict_entry_key(entry);
->>>> +            QObject *val_obj = qdict_entry_value(entry);
->>>> +            ObjectProperty *prop;
->>>> +            Visitor *v;
->>>> +            bool success;
->>>> +            uint64_t val;
->>>> +
->>>> +            prop = object_property_find(obj, key);
->>>> +            if (!prop) {
->>>> +                error_setg(errp, "%s does not exist!", key);
->>>> +                return NULL;
->>>> +            }
->>>> +
->>>> +            if (!g_str_has_prefix(key, "SYSREG_")) {
->>>> +                continue;
->>>> +            }
->>>> +
->>>> +            /* consume the prop to avoid unexpected parameter */
->>>> +            if (!visit_type_uint64(visitor, key, &val, errp)) {
->>>> +                return NULL;
->>>> +            }
->>>> +
->>>> +            v = qobject_input_visitor_new(val_obj);
->>>> +
->>>> +            if (!object_property_set(obj, key, v, &err)) {
->>>> +                error_propagate(errp, err);
->>>> +                visit_free(v);
->>>> +                return NULL;
->>>> +            }
->>>> +
->>>> +            success = kvm_idreg_write_scratch_vcpu(fdarray[2], v, key,
->>>> +                                                   prop->opaque, &err);
->>>> +            if (!success) {
->>>> +                error_propagate(errp, err);
->>>> +                visit_free(v);
->>>> +                return NULL;
->>>> +            }
->>>> +            visit_free(v);
->>>> +        }
->>>> +
->>>>        i = 0;
->>>>        while ((name = cpu_model_advertised_features[i++]) != NULL) {
->>>>            if (qdict_get(qdict_in, name)) {
->>>> @@ -160,6 +242,10 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->>>>        if (!err) {
->>>>            arm_cpu_finalize_features(ARM_CPU(obj), &err);
->>>>        }
->>>> +
->>>> +        if (kvm_enabled()) {
->>>> +            kvm_arm_destroy_scratch_host_vcpu(fdarray);
->>>> +        }
->>>>        visit_end_struct(visitor, NULL);
->>>>        visit_free(visitor);
->>>>        if (err) {
->>>> @@ -190,6 +276,18 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
->>>>        }
->>>>    }
->>>>
->>>> +    object_property_iter_init(&iter, obj);
->>>> +
->>>> +    while ((idregprop = object_property_iter_next(&iter))) {
->>>> +        QObject *value;
->>>> +
->>>> +        if (!g_str_has_prefix(idregprop->name, "SYSREG_")) {
->>>> +            continue;
->>>> +        }
->>>> +        value = object_property_get_qobject(obj, idregprop->name, &error_abort);
->>>> +        qdict_put_obj(qdict_out, idregprop->name, value);
->>>> +    }
->>>> +
->>>>    if (!qdict_size(qdict_out)) {
->>>>        qobject_unref(qdict_out);
->>>>    } else {
->>>> -- 
->>>> 2.53.0
->
-
+> 
+> Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+> Reviewed-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> ---
+>  target/ppc/insn32.decode                     |  1 +
+>  target/ppc/translate.c                       | 15 ---------------
+>  target/ppc/translate/storage-ctrl-impl.c.inc | 17 +++++++++++++++++
+>  3 files changed, 18 insertions(+), 15 deletions(-)
+> 
+> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+> index a1c2f549bd..91ece88a70 100644
+> --- a/target/ppc/insn32.decode
+> +++ b/target/ppc/insn32.decode
+> @@ -1472,6 +1472,7 @@ MSGSYNC         011111 ----- ----- ----- 1101110110 -
+>  @X_sync         ...... .. l:3 ... sc:2 ..... .......... .           &X_sync
+>  SYNC            011111 -- ... --- ..   ----- 1001010110 -           @X_sync
+>  EIEIO           011111 ----- ----- ----- 1101010110 -
+> +ISYNC           010011 ----- ----- ----- 0010010110 -
+>  
+>  # Condition Register Field Instruction
+>  
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index 179cb69dc5..a31cda4490 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -2727,20 +2727,6 @@ static inline void gen_check_tlb_flush(DisasContext *ctx, bool global)
+>  static inline void gen_check_tlb_flush(DisasContext *ctx, bool global) { }
+>  #endif
+>  
+> -/* isync */
+> -static void gen_isync(DisasContext *ctx)
+> -{
+> -    /*
+> -     * We need to check for a pending TLB flush. This can only happen in
+> -     * kernel mode however so check MSR_PR
+> -     */
+> -    if (!ctx->pr) {
+> -        gen_check_tlb_flush(ctx, false);
+> -    }
+> -    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
+> -    ctx->base.is_jmp = DISAS_EXIT_UPDATE;
+> -}
+> -
+>  /* wait */
+>  static void gen_wait(DisasContext *ctx)
+>  {
+> @@ -5377,7 +5363,6 @@ GEN_HANDLER(lswi, 0x1F, 0x15, 0x12, 0x00000001, PPC_STRING),
+>  GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
+>  GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
+>  GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
+> -GEN_HANDLER(isync, 0x13, 0x16, 0x04, 0x03FFF801, PPC_MEM),
+>  /* ISA v3.0 changed the extended opcode from 62 to 30 */
+>  GEN_HANDLER(wait, 0x1F, 0x1E, 0x01, 0x039FF801, PPC_WAIT),
+>  GEN_HANDLER_E(wait, 0x1F, 0x1E, 0x00, 0x039CF801, PPC_NONE, PPC2_ISA300),
+> diff --git a/target/ppc/translate/storage-ctrl-impl.c.inc b/target/ppc/translate/storage-ctrl-impl.c.inc
+> index b8b4454663..943229c438 100644
+> --- a/target/ppc/translate/storage-ctrl-impl.c.inc
+> +++ b/target/ppc/translate/storage-ctrl-impl.c.inc
+> @@ -155,6 +155,23 @@ static bool trans_SLBFEE(DisasContext *ctx, arg_SLBFEE *a)
+>      return true;
+>  }
+>  
+> +static bool trans_ISYNC(DisasContext *ctx, arg_ISYNC *a)
+> +{
+> +    REQUIRE_INSNS_FLAGS(ctx, MEM);
+> +
+> +    /*
+> +     * We need to check for a pending TLB flush. This can only happen in
+> +     * kernel mode however so check MSR_PR
+> +     */
+> +    if (!ctx->pr) {
+> +        gen_check_tlb_flush(ctx, false);
+> +    }
+> +    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_SC);
+> +    ctx->base.is_jmp = DISAS_EXIT_UPDATE;
+> +
+> +    return true;
+> +}
+> +
+>  static bool trans_SLBSYNC(DisasContext *ctx, arg_SLBSYNC *a)
+>  {
+>      REQUIRE_64BIT(ctx);
+> -- 
+> 2.55.0
+> 
 
