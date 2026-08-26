@@ -4,134 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9601EC5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 18:58:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85765C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:00:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzIpM-0002R9-0W; Wed, 26 Aug 2026 14:58:24 -0400
+	id 1wzIqw-00033b-DR; Wed, 26 Aug 2026 15:00:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wzIpK-0002R0-PC
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:58:22 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wzIqt-000327-KU
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:59:59 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wzIpJ-0005Si-50
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:58:22 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1wzIqr-0005nD-Qw
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:59:59 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QGughh1408689
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 18:58:19 GMT
+ 67QHImUX1572039
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 18:59:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 7lmloSZLQG3/b881nQZqHW0KWPBFeIBNtuylNVkdMkM=; b=f1ijBeY2o9pWA6WC
- KMyC7GQ+anSgUepI/fiidAfXg40FPGYOWXTFf18KeDXLd/2phBlEJB2Xnv1/FHaI
- +D35od2500NTJbLjj7daxo9qFUnQXQ2ksSrFo6DdKUbNZ3LN862do4Mnvgm7zZor
- FTABmOS5KzWKcgn+qmHt4hN8m4pTRh64mRnm4MzwNzlq5qeP4A1hS9IctFRSYSJn
- ysGlLg/CYGyl0Ik7EkyhnoeBJ9WHKjbjLZpxtoJ5Lqvcbi4GEup671HMx46asSbA
- TVy4djTZ4YWYk4tusakjQZNTRLtP0ADc7Ftfxvy9a47Z83tJV86rR2MnCMHAVGLz
- SVnqgw==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g9x2n22up-1
+ +1uT54gO7bKESMas1ejXjS40+ii6n2HlqK+VEwIqdxM=; b=KmDV1NnER38zpDAO
+ g+0bvNnumHd/dR4dV7ntUqTg9AaNGNYyOehnMNFzEVByqzYEIrK+M5wUdSrXjOXq
+ XdawOh9z8LT7bDI1A6nsUcBzT3DG3ob4olO88DSXy1FTz2xwIthouH6aN/gXhWFK
+ CH2V2h323G0bmA2X/FSoEn2eH4NeTNHx0ihohuYIiwdIdrA0efTVFhLPneGY0wd/
+ gSxzJiT50fNHOrwCUKdROpKRRsqvVgQHjmyeIGpifYB2PnKLrqnSdJHYLaaX3aqL
+ QR17QxUsWA67WZAHNkpsqDu2Qcrczrl7Hx2h6YzxGqM3jPh1hzYAooBOBi5MD9dI
+ Wm/C/A==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ga4ec8chw-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 18:58:19 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51c1a9764f0so13557771cf.1
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 11:58:19 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 18:59:55 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-5174a236220so16160951cf.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 11:59:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787770699; x=1788375499; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787770794; x=1788375594; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=7lmloSZLQG3/b881nQZqHW0KWPBFeIBNtuylNVkdMkM=;
- b=i8PQBbq2tYVIsR5JGgoqwsrwn/CjvqCTCYBD9GczRwfobtoqgZRJ14OoTmd71hSj0b
- Xyvm+6Su5cAyygtj/nGureLCFfUZUqoEMS8qjp3tXKr1DlxfPuXKKMH5Va/RH7bt/XfX
- 6ueyL9abAH84IvN6UJTX9Ad0bV+7etdHhY1dvV6vbjWcCFpMmUmnItn8bDJ5lOD68Cir
- a1LpCDgcYbqJmY1T5qc7R8ruxb4DJL8+ph68cfT0WX+Dc+iEdnO6L+62wsWQuSwk2drg
- Y7Ir4kvrduSZMxK0icDntjP8pi7JHVS/oaw6Hb61XzRuTj34hU7Ewjb9w74kW3/y5G/n
- NMlQ==
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=+1uT54gO7bKESMas1ejXjS40+ii6n2HlqK+VEwIqdxM=;
+ b=GEB6Qd+th8tMmCHl4z1FI7ao8aFrL8nsMlIkVlROVxOLhtCe6wQ8XI8dVeSJVEGPPh
+ tgXDaP5Lo29Nq9aBUZUrc4RDWmWk6cIjSbb8RSomdd21u6+EVKAuKeoRJ/Lc+Q//aCle
+ 1HTEeAW5fY7M8VpgNfEwZz/W+rtAH8wHmiTjTuA9eF3QuJmEWqTeLed7ZKSkAwcXQw5a
+ 4K9vdkxvB8W3hFsXk+CrX6qqeu/jl6tX7Wmje0BJz/jbb2YkrL1g7mU7WT5MGbqHy4lS
+ GF2iTuAevI/KEUeoIpUwBKtZqojDqYll2kTmv9UKvG0SvtJ28ylrhuRKhF5MMN/kjmYK
+ EXrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787770699; x=1788375499;
+ d=1e100.net; s=20251104; t=1787770794; x=1788375594;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to:content-type;
- bh=7lmloSZLQG3/b881nQZqHW0KWPBFeIBNtuylNVkdMkM=;
- b=RpDeVJLHBwmIvFBudMiCNJsdUxsdob0h4ZTlM1k25KcLk9Xjk4FqBhW79Gi2ocbWmu
- YNV0px0ZPe2r2ghAA3TmvWRKPgawdoAcoU7EnfhuYyHOJgPhBikIg2On2wTcvSjCDv4y
- pQXvKJ3q42klY72UonH0ek2HdAJtMIQFiGDE1do0o2IowpJTX080HI0i3Ftr9qJ9/olk
- duapE9Cb1pIcPXCTEW5sXq9DYzwImoLQFaL3EuNx6S7K8yyLhWpde5BdcdpZrhq3kgOu
- 98kfDISaDMxzB/LkNxzuKl3dDuC1ej6d11HocUbUBhBF6Jxs3YWLZ2KsINuNcaQbLBJq
- ewNg==
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=+1uT54gO7bKESMas1ejXjS40+ii6n2HlqK+VEwIqdxM=;
+ b=rIVS7Jm6mo+F6X3NBFYHhXiVYN5/CJycU34EFMSiFYxOd8tbSeBffkomLBXB/nSPZY
+ TATj9Bxr7h02rFaZINlnj7gbj8UXjhw1EGgrFHuwA8S3UAqzS15LPHBJS5JPb9CeX7PN
+ Z8s6KlPrU/k8nq5lYRW6kFOOrVVzSvPTR3zZUle1JLO3d6d9VSq1vlmoMqqPxU5H2JRr
+ qX+a7R304iHaPw05ZxMmLZMK9z7VRk0vFh2FqC4SgoLIUK2Bq1ks/0/fielkClLRshc3
+ K7rzMTa/ztSsF5ASRkYBNU9IK4FBFlb09p1mxR0ftZkckhlqhCECEyPs7QR01uNxQcqo
+ UdTw==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rq1izXDZUG5WGVqBnHUiCneLPAg3i+4bz1mIwsgHU8unTAAAv6J+lsBsrNfTeH7p2QqofhUmpo+JcVd@nongnu.org
-X-Gm-Message-State: AFuF++mq2EuaXEIU8DgBmn4vjumE7YIRtljfnh2ED4Kx+E/IieS8bcpL
- lTJ4alhucJxXVNV18i1+TjxBC3ga4rLcsUE0c/Xxz33rX5Zk5FWpuxzsUh0cfCMO6VIX15jS1Ve
- LWCIlaZ0MIouB+2pw7Yl00uCEJ3X1lhX22J3k/PlWu7jr0ndUv2x2D5RS1g==
-X-Gm-Gg: AR+sD12qTwOJDJa8ZCMyeDVkd2UbyW9B5Jeo/7rv4/q7k2q+NmV9VlG2mh8X4iGM5Wu
- 9Y64bhI5GFNrOjCROkaDulzPXaPRfpE8gpcsEo0akRplHBTo78KJ1/E8y4O0KBLQkWAydR+3UJc
- sfeXn4FZRWLZUeXZUgFncTpszJRzy0NSXJ0aTjRQv2g1FsNmBQc0nMmX0/cXh8+DM9PqZ4JHqU5
- LBZApU6IuS1uf93jw6vTQkidTDsvJn8nAkuysLy9Q9EEUqZYtAuDlqDATYBfibLZlI8NuX8C3eG
- H4pTs7LvpZz8UrYDRrnHi9mujS33BwMB2Q3bNvP88/jEkij6W49Y9fWLonlEkeWyPk5L6O6fGgv
- Yrs+R8ov1XyECTQURGkbSjWGVqbysoquBUuWH0mhziB8=
-X-Received: by 2002:a05:622a:8c9:b0:51c:92a0:b2ca with SMTP id
- d75a77b69052e-52e423a560fmr111050721cf.34.1787770699100; 
- Wed, 26 Aug 2026 11:58:19 -0700 (PDT)
-X-Received: by 2002:a05:622a:8c9:b0:51c:92a0:b2ca with SMTP id
- d75a77b69052e-52e423a560fmr111050281cf.34.1787770698632; 
- Wed, 26 Aug 2026 11:58:18 -0700 (PDT)
+ AHgh+Rr0zRyyaSD7K0Z5ZWhwgP0JitDnpMLRAVN+8nhwFG8Cc/Summ/etTe/bN8CTZPHVxxdS0NeSrOT/egt@nongnu.org
+X-Gm-Message-State: AFuF++lgp6qr1J/NsWqdjWvg/bPfICkt9d+QUykbjrNcsZBdejYNp4/X
+ ez/TMnsL9cCYNkvdQdsDCkuphTTsKgh2z3CbH0Dm/IX+rNUlwwDmhkwTpMhBjaGjm1j/QZh5D1f
+ mzqIX/vhbUhwBt1QPRA+scthmOVVKfJ3qv+LhUpLYwEXK8F6eTJCznGsyNQ==
+X-Gm-Gg: AR+sD10FJnLt28TtsZnKHFu5KWox2u9RbEbV4Klel3yTYxs+SLbK3XuNbNrsAH/UWc2
+ hBWzIIYJ5LQLyl0+XM2GTdhDmOP8JtqNfxYpT8JqTghFiD2qqKp7S8ahxhE0S9FbUjhwUROehx1
+ Vlagfwm5L3sOA8YQ0wGxkJWIVu9wpvZZCPqZ2RmZA/MQ/eqWkD8CKJVPFfA+PM3OAa2IWbimbcC
+ I6bcxi5J5sT4bK/P6pq4S1l9fgUj9k04Rb0GwXcLsNx3Q0io+JmZxCStIRonNGU6mAVDAJiqWZO
+ nxpsS+d6ojfjRzYtI+c8CwlVdHEeXpQ6maDLmI88G1kwi44lrWvIZymJrH6mGsoJAax0j+FBsPG
+ SlqJW5vjOsx7km2bXxd/8acQs3hUvHcRUkhvbUkXv1Ell
+X-Received: by 2002:a05:622a:1914:b0:51c:22c5:daee with SMTP id
+ d75a77b69052e-52e4234e4c1mr98314451cf.29.1787770794536; 
+ Wed, 26 Aug 2026 11:59:54 -0700 (PDT)
+X-Received: by 2002:a05:622a:1914:b0:51c:22c5:daee with SMTP id
+ d75a77b69052e-52e4234e4c1mr98313751cf.29.1787770793972; 
+ Wed, 26 Aug 2026 11:59:53 -0700 (PDT)
 Received: from [10.254.188.74] (134.171.88.92.rev.sfr.net. [92.88.171.134])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c250a730307sm528181466b.27.2026.08.26.11.58.16
+ a640c23a62f3a-c250a6fd676sm648493366b.17.2026.08.26.11.59.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Aug 2026 11:58:17 -0700 (PDT)
-Message-ID: <b122a57e-7907-48f6-b00a-5eeff6961b27@oss.qualcomm.com>
-Date: Wed, 26 Aug 2026 20:58:15 +0200
+ Wed, 26 Aug 2026 11:59:53 -0700 (PDT)
+Message-ID: <edd6a530-2437-4301-9515-4e96b77ceba7@oss.qualcomm.com>
+Date: Wed, 26 Aug 2026 20:59:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] vapic: confine the VAPIC region to 0xc0000..0xe0000
+Subject: Re: [PATCH 1/2] scsi-disk: fix out-of-bound read in WRITE SAME
 Content-Language: en-US
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20260826181552.848617-1-pbonzini@redhat.com>
- <20260826181552.848617-3-pbonzini@redhat.com>
+Cc: qemu-stable@nongnu.org, Mark Cave-Ayland <mark.caveayland@nutanix.com>
+References: <20260826181725.849718-1-pbonzini@redhat.com>
+ <20260826181725.849718-2-pbonzini@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260826181552.848617-3-pbonzini@redhat.com>
+In-Reply-To: <20260826181725.849718-2-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 5qiZpBTYQrDbs3sOmr8aC_1YxNWN6Yno
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE1OSBTYWx0ZWRfX+zeYWx5QntEi
- uGYauLnPeJo3gPjbXH1ATEfU38/Ib7hHNW5B2Wo++uJkQ6yk41+rl3yC0Zi/r7fi6fufCNyqo81
- zuRavUjYOoYsXPLewUJV6+Y+0sCJ4qw=
-X-Proofpoint-GUID: 5qiZpBTYQrDbs3sOmr8aC_1YxNWN6Yno
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE1OSBTYWx0ZWRfX1GpOoCYhMcOF
- kRx14KhHgJ0kkqrQdiMQSJ4yHcJVkmMJxi1AOReDHCRQw6QD/s7AvVDWXRs0uQeyAGEKcaSJmeJ
- MwXRCcp2XqlxLlZK+W21ppPffy19jLI60gKhWXWyDgDQ45H2YLquTafEuxny0c6Bgf6/Yyk+iTh
- tOZrGi9PWaJ+gSXBIEHEPOZSLlavDhq6UdyBPLNUrqF1UCUlcBO8EPR7H7dNp0cu8gQnAdiq+hN
- S/rbjGsNVx+189cRY4dVeqr2WrwEKW7/+5y8tPXgZLG5a54Zod7sMmsm7JVp/4p67TpfF8h/r6o
- sKMIetsalhuuoyKsuLeI1UGtrLkkqVjYPV6SSCCwGYnj8JxsvMwX53+8X1sUex2T1vniaQg6t6L
- 16FJSInBO1+E75HKE+iNwsP/Wa5iXEC1G+EKE4XBih2YCkS09aQCx6Wsh+ceJiXiRKZf/8FCbr2
- 3WvbP/qZp2LcNbH55yA==
-X-Authority-Analysis: v=2.4 cv=PPQ/P/qC c=1 sm=1 tr=0 ts=6a8f374b cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=o1isufRNksZXpKP+aqnsag==:17
+X-Authority-Analysis: v=2.4 cv=KIBqylFo c=1 sm=1 tr=0 ts=6a8f37ab cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=o1isufRNksZXpKP+aqnsag==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=p0WdMEafAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=QwLhjXjHzO7ep9z6PgIA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-ORIG-GUID: Gj_z1WVzizvWg14UaziUEEcOhy7XuZhG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE1OSBTYWx0ZWRfXzcY1sw74HkyD
+ gqmEhXMWEvxAyyw9QL3pXJyVOMJA1TmxnWireNHti86YMP3GQP7iAN5iFFqjKWqx1hhZe1loTf6
+ 0nq0H1v1UYOgsfk3iReJqbL0aYQXlnRo6BAd4TdM02RBClsh1+3YkpJoERHR0OiqLurksoNi04m
+ oxXeoDKw3XVZU/DvLoZDIDFlwBytAk3T3Mq9fEyp32dp5VNdo3fblp0MuMrWJM+aTfYsvqS1BCn
+ ke8cjpaTbVTiy9tFh0UOtDIQWuzXdDD4G+qOK00W/2jT0ou01DlzP8iltWvJQo0KsPiw+iS8Zo1
+ hHkNVkXrCeREr/XWbeZEFmrZKX0T+iB5JMVvrNst9odG9WgDnp1Yp7XNG5yLbrBuWPlDzlVGaut
+ 2DsOUZQLsYC67UMaS8irjOlYxvV0ISsTAaN7zwwCVf+M5rinMwHW0rxMSw3QWUc73iFCLWiDNx/
+ O2aFzo47Xf6dOZ5nrqA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE1OSBTYWx0ZWRfXz5LUvWimJtcx
+ LTZb1PlKfjMw48fS6JusoGCvvPgcCpcf8vgikywHo3DamZzHXYYi/6/M23z7F2zWmFsLauNKKvs
+ d9TeEU6bqqp7VO8dWU3SVoHiwbTKTJ0=
+X-Proofpoint-GUID: Gj_z1WVzizvWg14UaziUEEcOhy7XuZhG
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-26_05,2026-08-26_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
- clxscore=1015 suspectscore=0 impostorscore=0 spamscore=0 adultscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608260159
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ malwarescore=0 clxscore=1015 impostorscore=0 spamscore=0 phishscore=0
+ adultscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260159
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -154,19 +154,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/8/26 20:15, Paolo Bonzini wrote:
-> The VAPIC region is mapped as writable RAM, at very high priority,
-> above existing memory.  If the guest is allowed to map it everywhere,
-> it can overlap PCI BARs or even SMRAM.  Ensure that the whole
-> region first in the 128K of low memory that are reserved to
-> option ROMs.
+On 26/8/26 20:17, Paolo Bonzini wrote:
+> A guest with an attached scsi-hd can force QEMU's SCSI disk emulation
+> to read roughly 60 KiB past the end of a heap buffer, copying that out
+> of bounds host memory into the guest's own disk image.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4206
-> Reported-by: Artem Dinaburg <https://gitlab.com/artem35>
+> WRITE SAME computes the request transfer length at dev->blocksize
+> when the request is prepared and sets cmd->xfer from dev->blocksize.
+> scsi_disk_emulate_command() then uses cmd->xfer as the size of the
+> request buffer.
+> 
+> However, MODE SELECT can race with the WRITE SAME command and guest raise
+> the logical block size to any value whose low bits fit 0xfe00, up to 65024.
+> In the presence of this race, scsi_disk_emulate_write_same() will read
+> from memory as many bytes as indicated by the *new* dev->blocksize,
+> and write it to disk.
+> 
+> The read length in WRITE SAME must be bounded by the buffer that was
+> actually allocated, not by the mutable s->qdev.blocksize, so clamp the
+> length used against inbuf to r->buflen.  Re-validating req->cmd.xfer
+> against the current block size would not work because the race is
+> intrinsic in the SCSI protocol.
+> 
+> I am not sure if this is exploitable with virtio-scsi and other SG-capable
+> HBAs, because it should process the WRITE SAME input immediately,
+> without letting the MODE SELECT command race with it; but probably
+> it is because s->qdev.blocksize is accessed without a lock.
+> 
+> Fixes: 356c4c441ec ("scsi-disk: allow MODE SELECT block descriptor to set the block size", 2022-07-13)
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4365
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   hw/i386/vapic.c | 16 +++++++++++++++-
->   1 file changed, 15 insertions(+), 1 deletion(-)
+>   hw/scsi/scsi-disk.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
