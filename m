@@ -4,111 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BECF4C61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DCCCC5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:33:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzEd8-00016k-Pl; Wed, 26 Aug 2026 10:29:30 -0400
+	id 1wzEdD-00018Q-0U; Wed, 26 Aug 2026 10:29:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEd7-000162-3f
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:29 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdB-00017o-G2
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:33 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEd5-0001bY-A4
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:28 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEd9-0001hR-B8
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:33 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id BEF681F837;
- Wed, 26 Aug 2026 14:29:17 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id D08D9211F7;
+ Wed, 26 Aug 2026 14:29:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787754562; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787754565; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NjkvZi9dCnM5PxlLXQzt4cvVIzMJFOAlxM7emsEzxpY=;
- b=ngCzvpyHih9zC67dEhnx4m5fkjJwbQsc3pNm/zUANUGUJpdRigaFSC4TdlXdCXW3ZY/3Xe
- ujB6jZOEgDhM+MUy9vIuDF280xO9okuML18+Ay+zSnXMI3eoVDmZxhPVShaYfRAaWP0VZ2
- mxe5f+OZKClqkE/ZpLNzf12B0ppkn+Y=
+ bh=cspG0Dh2mxk8vVsB+09O0NDaNl4Dzf0rDzwGrop/RnM=;
+ b=OH+YPpQKQEg0kVPWB2vtmAHlSMmhtOjkNOUbLxmpTA47ivCwSb6TlXA8Trpo6imP3GAKQZ
+ ISXUPfyQDSWlliU0aoEfvFBwnEa68CGUwEwXcbzu3/zHeWelZve8JZYY5o75G7OmUjm0zj
+ hwBH9MMEgyEEg3nZhSX0Ql6n6UpUktM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787754562;
+ s=susede2_ed25519; t=1787754565;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NjkvZi9dCnM5PxlLXQzt4cvVIzMJFOAlxM7emsEzxpY=;
- b=e2ZpQcitQNo7A/PEz5B/+DVKXoMa0tiDFYriU70n5eYqFW6L/PJ6yUQTNvF/3u98YKkVtV
- 4YFmMS3BIr/CScBw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Gz2PvYww;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=GSUQ5r62
+ bh=cspG0Dh2mxk8vVsB+09O0NDaNl4Dzf0rDzwGrop/RnM=;
+ b=kXgfFyOgz8FNF/80yO3fl8YhIq7hCFpU7EF7oa+UnYM/LTB0Rvs5vIDmEiP7PfkX8wfwJK
+ 8CFZ1ECNTexAViBA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=T+1VgmP1;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=WCTjJTDi
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787754557; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787754561; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NjkvZi9dCnM5PxlLXQzt4cvVIzMJFOAlxM7emsEzxpY=;
- b=Gz2PvYwwZGwSo58TsyMJhGc0bQM4Ep85Nj9xvH3ZOafE6H52eepN0oMPTUW36ADCW8NCfi
- KgTFYqZYdqGJSVG0yVgjSqjlIT+GjdlV7ydg8g1f6RHxeiYV5/F6wKhy8SlZypy1k2ndEj
- X4tEHdO5xcNjAgO+rFScQrnx66n1t3s=
+ bh=cspG0Dh2mxk8vVsB+09O0NDaNl4Dzf0rDzwGrop/RnM=;
+ b=T+1VgmP1FxjlLIPKRpUbkpume0tSEqr8B1OqJIKJVe4rPtDPWPpfhROfpxNSY/1DcnCOoQ
+ ly8l2yw6KcV1U1cJGzloraAxba3A+D4a2eQrWM3lnihFMzpWvIaZ4sfL/vEz0ndwLuJKdb
+ +wp4RrvUEq1UfKGFS+Y2j1jy9fpZSSo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787754557;
+ s=susede2_ed25519; t=1787754561;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NjkvZi9dCnM5PxlLXQzt4cvVIzMJFOAlxM7emsEzxpY=;
- b=GSUQ5r62oKVL5T/0OCtERU3YjBaPlNrXsrhzpIgYiU79EGXTV1QYxa356HE0Nu1iqORVxP
- Cpy/DY9pJcBPxAAw==
+ bh=cspG0Dh2mxk8vVsB+09O0NDaNl4Dzf0rDzwGrop/RnM=;
+ b=WCTjJTDiv8SVLH1wzShaIQw7abyxIeohePK9X59Zx/QXuQS62GgXm4bXd0QY+u5r959cNb
+ o6EbesuNDK0pEcDg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CFA0C13675;
- Wed, 26 Aug 2026 14:29:16 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D9C9F1364A;
+ Wed, 26 Aug 2026 14:29:20 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 6CTGJzz4jmpTJAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 26 Aug 2026 14:29:16 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id eBhKKkD4jmpTJAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 26 Aug 2026 14:29:20 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
 	Aadeshveer Singh <aadeshveer07@gmail.com>
-Subject: [PULL 06/30] migration: add RAMBlock field and helper for fast
- snapshot load
-Date: Wed, 26 Aug 2026 11:28:41 -0300
-Message-ID: <20260826142905.2315503-7-farosas@suse.de>
+Subject: [PULL 09/30] migration: update capability conflict test for
+ postcopy-ram+mapped-ram
+Date: Wed, 26 Aug 2026 11:28:44 -0300
+Message-ID: <20260826142905.2315503-10-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260826142905.2315503-1-farosas@suse.de>
 References: <20260826142905.2315503-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: BEF681F837
 X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; MIME_TRACE(0.00)[0:+];
+ MX_GOOD(-0.01)[];
+ URIBL_BLOCKED(0.00)[suse.de:email,suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; ARC_NA(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FREEMAIL_CC(0.00)[redhat.com,gmail.com];
- DKIM_TRACE(0.00)[suse.de:+]; TO_DN_SOME(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:email,suse.de:dkim];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_TLS_ALL(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_HAS_DN(0.00)[]; FREEMAIL_CC(0.00)[redhat.com,gmail.com];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
  DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_THREE(0.00)[3];
  FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+X-Rspamd-Queue-Id: D08D9211F7
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -133,161 +134,213 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Aadeshveer Singh <aadeshveer07@gmail.com>
 
-Add pending_bmap field per RAMBlock which is a Bitmap to store
-internal state of which pages have been read by some thread to ensure
-coordination between fault thread and eager load thread.
+Remove the test test_validate_caps_pair, which asserted postcopy-ram
+and mapped-ram capabilities cannot be active together. The new fast
+snapshot load feature is exactly this pair of capabilities active
+together, with the following patches in this series, this combination
+will now supported and be functional.
 
-Modify parse_ramblock_mapped_ram(), to not load the actual RAMBlocks
-data in postcopy case as that will be loaded by fault thread and eager
-thread after the VM starts running.
+Remove the capability check that rejected mapped-ram and postcopy-ram
+being set simultaneously, as this combination now corresponds to fast
+snapshot load.
 
-Change ram_load() to use new function ram_should_load_postcopy_pages()
-to decide how to load/read RAM.
+Add a capability check against setting multifd when configured for fast
+snapshot load as it is not supported yet. Also add capability check
+against setting postcopy-preempt as it is incompatible.
+
+Add infrastructure to check postcopy_notifier_list being empty in
+capaility checking to block vhost-user with fast snapshot load as it is
+not supported.
+
+Add a check to bail in migrate_prepare to prevent unexpected usage when
+fast snapshot load is enabled.
+
+A smoke test exercising this feature has been added further in this
+series.
 
 Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- include/system/ramblock.h |  6 ++++
- migration/ram.c           | 66 +++++++++++++++++++++++++++++++++++----
- 2 files changed, 66 insertions(+), 6 deletions(-)
+ include/qemu/notify.h              |  2 ++
+ migration/migration.c              |  6 ++++
+ migration/options.c                | 20 ++++++++++--
+ migration/postcopy-ram.c           |  5 +++
+ migration/postcopy-ram.h           |  1 +
+ tests/qtest/migration/misc-tests.c | 52 ------------------------------
+ util/notify.c                      |  5 +++
+ 7 files changed, 37 insertions(+), 54 deletions(-)
 
-diff --git a/include/system/ramblock.h b/include/system/ramblock.h
-index f0639287bf0..84624aca2c9 100644
---- a/include/system/ramblock.h
-+++ b/include/system/ramblock.h
-@@ -60,6 +60,12 @@ struct RAMBlock {
+diff --git a/include/qemu/notify.h b/include/qemu/notify.h
+index abf18dbf595..666d13f727e 100644
+--- a/include/qemu/notify.h
++++ b/include/qemu/notify.h
+@@ -75,4 +75,6 @@ void notifier_with_return_remove(NotifierWithReturn *notifier);
+ int notifier_with_return_list_notify(NotifierWithReturnList *list,
+                                      void *data, Error **errp);
  
-     /* Bitmap of already received pages.  Only used on destination side. */
-     unsigned long *receivedmap;
-+    /*
-+     * Bitmap for pages that are yet to be read from disk. It is required for
-+     * fault thread and eager thread to keep note of which pages are currently
-+     * being read. Used by fast snapshot load.
-+     */
-+    unsigned long *pending_bmap;
- 
-     /*
-      * bitmap to track already cleared dirty bitmap.  When the bit is
-diff --git a/migration/ram.c b/migration/ram.c
-index 60ad4352150..b7c406428e2 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -263,6 +263,25 @@ static void ramblock_file_bmap_init(void)
++bool notifier_with_return_list_empty(NotifierWithReturnList *list);
++
+ #endif
+diff --git a/migration/migration.c b/migration/migration.c
+index 59cdc1a169f..b413d28622a 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2048,6 +2048,12 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
+             error_setg(errp, "Cannot use compression with mapped-ram");
+             return false;
+         }
++
++        if (migrate_postcopy_ram()) {
++            error_setg(errp, "Cannot migrate with fast snapshot load "
++                             "enabled(mapped-ram + postcopy-ram)");
++            return false;
++        }
      }
+ 
+     if (migrate_mode_is_cpr()) {
+diff --git a/migration/options.c b/migration/options.c
+index dfce19405d4..d2575edb6cb 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -736,10 +736,26 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+                        "Mapped-ram migration is incompatible with xbzrle");
+             return false;
+         }
++    }
+ 
+-        if (new_caps[MIGRATION_CAPABILITY_POSTCOPY_RAM]) {
++    if (new_caps[MIGRATION_CAPABILITY_MAPPED_RAM] &&
++        new_caps[MIGRATION_CAPABILITY_POSTCOPY_RAM]) {
++        if (new_caps[MIGRATION_CAPABILITY_MULTIFD]) {
+             error_setg(errp,
+-                       "Mapped-ram migration is incompatible with postcopy");
++                       "Multifd is not supported with fast snapshot load");
++            return false;
++        }
++
++        if (new_caps[MIGRATION_CAPABILITY_POSTCOPY_PREEMPT]) {
++            error_setg(
++                errp,
++                "Postcopy Preempt is incompatible with fast snapshot load");
++            return false;
++        }
++
++        if (!postcopy_notifier_list_empty()) {
++            error_setg(errp,
++                       "vhost-user is not supported with fast snapshot load");
+             return false;
+         }
+     }
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index 3b66c1f6d42..885ab58fca5 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -84,6 +84,11 @@ int postcopy_notify(enum PostcopyNotifyReason reason, Error **errp)
+                                             &pnd, errp);
  }
  
-+static void ramblock_pending_bmap_init(void)
++bool postcopy_notifier_list_empty(void)
 +{
-+    RAMBlock *rb;
-+
-+    RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
-+        assert(!rb->pending_bmap);
-+        /*
-+         * The pending_bmap granularity must match the maximum of host and guest
-+         * page sizes. This ensures that every load operation checks for one
-+         * bit, allowing lockless thread coordination via a single-bit atomic
-+         * test-and-clear.
-+         */
-+        size_t size = rb->max_length /
-+                      MAX(qemu_ram_pagesize(rb), qemu_target_page_size());
-+        rb->pending_bmap = bitmap_new(size);
-+        bitmap_set(rb->pending_bmap, 0, size);
-+    }
++    return notifier_with_return_list_empty(&postcopy_notifier_list);
 +}
 +
- static void ramblock_recv_map_init(void)
- {
-     RAMBlock *rb;
-@@ -3768,6 +3787,10 @@ static int ram_load_setup(QEMUFile *f, void *opaque, Error **errp)
-     ramblock_recv_map_init();
-     if (migrate_mapped_ram()) {
-         ramblock_file_bmap_init();
-+        if (migrate_postcopy_ram()) {
-+            /* fast snapshot load */
-+            ramblock_pending_bmap_init();
-+        }
-     }
+ /*
+  * NOTE: this routine is not thread safe, we can't call it concurrently. But it
+  * should be good enough for migration's purposes.
+diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
+index c58a60bc8ae..edba7b02404 100644
+--- a/migration/postcopy-ram.h
++++ b/migration/postcopy-ram.h
+@@ -136,6 +136,7 @@ void postcopy_add_notifier(NotifierWithReturn *nn);
+ void postcopy_remove_notifier(NotifierWithReturn *n);
+ /* Call the notifier list set by postcopy_add_start_notifier */
+ int postcopy_notify(enum PostcopyNotifyReason reason, Error **errp);
++bool postcopy_notifier_list_empty(void);
  
-     return 0;
-@@ -3788,6 +3811,7 @@ static int ram_load_cleanup(void *opaque)
-     RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
-         g_clear_pointer(&rb->receivedmap, g_free);
-         g_clear_pointer(&rb->file_bmap, g_free);
-+        g_clear_pointer(&rb->pending_bmap, g_free);
-     }
+ void postcopy_thread_create(MigrationIncomingState *mis,
+                             QemuThread *thread, const char *name,
+diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
+index ec6d438cdcb..4e0deb7f188 100644
+--- a/tests/qtest/migration/misc-tests.c
++++ b/tests/qtest/migration/misc-tests.c
+@@ -201,55 +201,6 @@ static void do_test_validate_uri_channel(MigrateCommon *args)
+     migrate_end(from, to, false);
+ }
  
-     return 0;
-@@ -4207,9 +4231,12 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-         return;
-     }
- 
--    if (!read_ramblock_mapped_ram(f, block, num_pages, block->file_bmap,
--                                  errp)) {
+-static void validate_caps_pair(QTestState *from,
+-                               const char *first_capability,
+-                               const char *second_capability,
+-                               const char *expected_error)
+-{
+-    QDict *rsp;
+-    const char *error_desc;
+-
+-    migrate_set_capability(from, first_capability, true);
+-
+-    rsp = qtest_qmp_assert_failure_ref(
+-        from,
+-        "{ 'execute': 'migrate-set-capabilities',"
+-        "  'arguments': { 'capabilities': [ { "
+-        "      'capability': %s, 'state': true } ] } }",
+-        second_capability);
+-
+-    error_desc = qdict_get_str(rsp, "desc");
+-    g_assert_cmpstr(error_desc, ==, expected_error);
+-    qobject_unref(rsp);
+-
+-    migrate_set_capability(from, first_capability, false);
+-}
+-
+-static void test_validate_caps_pair(char *test_path, MigrateCommon *args)
+-{
+-    g_autofree char *serial_path = g_strconcat(tmpfs, "/src_serial", NULL);
+-    g_autofree char *cap_pair = g_path_get_basename(test_path);
+-    QTestState *from, *to;
+-
+-    args->start.hide_stderr = true;
+-    args->start.only_source = true;
+-
+-    if (migrate_start(&from, &to, &args->start)) {
 -        return;
-+    if (!migrate_postcopy_ram()) {
-+        /* Do not load RAM during setup for fast snapshot load */
-+        if (!read_ramblock_mapped_ram(f, block, num_pages, block->file_bmap,
-+                                      errp)) {
-+            return;
-+        }
+-    }
+-
+-    if (g_str_equal(cap_pair, "mapped_ram_postcopy")) {
+-        const char *error =
+-            "Mapped-ram migration is incompatible with postcopy";
+-
+-        validate_caps_pair(from, "mapped-ram", "postcopy-ram", error);
+-        validate_caps_pair(from, "postcopy-ram", "mapped-ram", error);
+-    }
+-
+-    qtest_quit(from);
+-    unlink(serial_path);
+-}
+-
+ static void test_validate_uri_channels_both_set(char *name, MigrateCommon *args)
+ {
+     args->uri = "tcp:127.0.0.1:0",
+@@ -309,7 +260,4 @@ void migration_test_add_misc(MigrationTestEnv *env)
+                        test_validate_uri_channels_both_set);
+     migration_test_add("/migration/validate_uri/channels/none_set",
+                        test_validate_uri_channels_none_set);
+-    migration_test_add_suffix("/migration/validate_caps/",
+-                              "mapped_ram_postcopy",
+-                              test_validate_caps_pair);
+ }
+diff --git a/util/notify.c b/util/notify.c
+index 24420a7288e..512ba6aa916 100644
+--- a/util/notify.c
++++ b/util/notify.c
+@@ -75,3 +75,8 @@ int notifier_with_return_list_notify(NotifierWithReturnList *list, void *data,
      }
- 
-     /* Skip pages array */
-@@ -4488,15 +4515,42 @@ static int ram_load_precopy(QEMUFile *f)
      return ret;
  }
- 
-+static bool ram_should_load_postcopy_pages(void)
++
++bool notifier_with_return_list_empty(NotifierWithReturnList *list)
 +{
-+    /* This is pure precopy, we don't need to load pages in postcopy way */
-+    if (!postcopy_is_running()) {
-+        return false;
-+    }
-+
-+    /*
-+     * This is postcopy, but when with mapped-ram, pages are not loaded in the
-+     * migration stream here, but done separately in a thread eagerly reading
-+     * pages from the snapshot.  Here, we only need to read the ram headers,
-+     * reusing the precopy code.
-+     * TODO: when we have separate function to parse RAM headers we should
-+     * switch to that.
-+     */
-+    if (migrate_mapped_ram()) {
-+        return false;
-+    }
-+
-+    /*
-+     * Genuine network postcopy, we will load pages in this current stream and
-+     * they need to be done in postcopy way.
-+     */
-+    return true;
++    return QLIST_EMPTY(&list->notifiers);
 +}
-+
- static int ram_load(QEMUFile *f, void *opaque, int version_id)
- {
-     int ret = 0;
-     static uint64_t seq_iter;
-     /*
-      * If system is running in postcopy mode, page inserts to host memory must
--     * be atomic
-+     * be atomic. However, fast snapshot load uses the mapped ram precopy like
-+     * path to read block headers and populating bitmaps.
-      */
--    bool postcopy_running = postcopy_is_running();
-+    bool load_postcopy_pages = ram_should_load_postcopy_pages();
- 
-     seq_iter++;
- 
-@@ -4512,7 +4566,7 @@ static int ram_load(QEMUFile *f, void *opaque, int version_id)
-      */
-     trace_ram_load_start();
-     WITH_RCU_READ_LOCK_GUARD() {
--        if (postcopy_running) {
-+        if (load_postcopy_pages) {
-             /*
-              * Note!  Here RAM_CHANNEL_PRECOPY is the precopy channel of
-              * postcopy migration, we have another RAM_CHANNEL_POSTCOPY to
 -- 
 2.53.0
 
