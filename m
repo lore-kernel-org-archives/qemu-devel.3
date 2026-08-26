@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B64B2C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 10:32:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62AB5C61DC2
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 10:32:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzAus-00027m-BO; Wed, 26 Aug 2026 06:31:34 -0400
+	id 1wzAua-0001xJ-Pp; Wed, 26 Aug 2026 06:31:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1wzAua-00020x-80
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:18 -0400
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1wzAuN-0001uU-Jf
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:03 -0400
 Received: from [2a14:640:1:12b5::1] (helo=krgm.moe)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1wzAuY-0003OT-Jy
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:16 -0400
+ (envelope-from <prcups@krgm.moe>) id 1wzAuK-0003MD-Dc
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:03 -0400
 Received: from yuno-loong (unknown [103.47.186.116])
- by krgm.moe (Postfix) with ESMTPSA id 052AB7A17;
- Wed, 26 Aug 2026 16:01:02 +0530 (IST)
+ by krgm.moe (Postfix) with ESMTPSA id A2AA7DF9A;
+ Wed, 26 Aug 2026 16:00:56 +0530 (IST)
 From: SignKirigami <prcups@krgm.moe>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, xianglai li <lixianglai@loongson.cn>,
  SignKirigami <prcups@krgm.moe>, Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v4 13/14] target/loongarch: Translate LVZ guest traps and HVC
-Date: Wed, 26 Aug 2026 18:30:17 +0800
-Message-ID: <ac951e0b31cc1e90fbb0274becc0877f509f0370.1787739852.git.prcups@krgm.moe>
+Subject: [PATCH v4 04/14] target/loongarch: Add LVZ CPU model support
+Date: Wed, 26 Aug 2026 18:30:08 +0800
+Message-ID: <bfcdf85a59d800eb40457871691b1dea111e0019.1787739852.git.prcups@krgm.moe>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1787739852.git.prcups@krgm.moe>
 References: <cover.1787739852.git.prcups@krgm.moe>
@@ -56,118 +56,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Raise GSPR when a guest accesses IOCSR, debug or idle resources, and
-decode HVC for guest PLV0.
-
-Use the common exception path so trapping instructions do not manufacture
-destination values or require a helper named after the exception cause.
+Add the LVZ CPU property and initialize the host and guest state banks
+for the LA464 model. Reset always returns to the host CSR and TLB bank
+and initializes the implemented guest ID width.
 
 Signed-off-by: SignKirigami <prcups@krgm.moe>
 Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 ---
- target/loongarch/disas.c                      |  1 +
- target/loongarch/insns.decode                 |  1 +
- .../tcg/insn_trans/trans_privileged.c.inc     | 32 +++++++++++++++++++
- 3 files changed, 34 insertions(+)
+ target/loongarch/cpu.c | 145 +++++++++++++++++++++++++----------------
+ 1 file changed, 90 insertions(+), 55 deletions(-)
 
-diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
-index 54c35b8d03..82b0bf868f 100644
---- a/target/loongarch/disas.c
-+++ b/target/loongarch/disas.c
-@@ -712,6 +712,7 @@ INSN(gtlbsrch,     empty)
- INSN(gtlbrd,       empty)
- INSN(gtlbwr,       empty)
- INSN(gtlbfill,     empty)
-+INSN(hvcl,         i)
- INSN(cacop,        cop_r_i)
- INSN(lddir,        rr_i)
- INSN(ldpte,        j_i)
-diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.decode
-index cbcc30c31f..b40fabe9d7 100644
---- a/target/loongarch/insns.decode
-+++ b/target/loongarch/insns.decode
-@@ -505,6 +505,7 @@ gtlbsrch         0000 01100100 10000 01010 00000 00001    @empty
- gtlbrd           0000 01100100 10000 01011 00000 00001    @empty
- gtlbwr           0000 01100100 10000 01100 00000 00001    @empty
- gtlbfill         0000 01100100 10000 01101 00000 00001    @empty
-+hvcl             0000 0000 0010 1011 1 ...............    @i15
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 0f6a211949..c5c7f3e0e3 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -114,12 +114,12 @@ static void loongarch_la464_init_csr(DeviceState *dev)
+     static bool initialized;
+     LoongArchCPU *cpu = LOONGARCH_CPU(dev);
+     CPULoongArchState *env = &cpu->env;
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *host = get_sys(env, LOONGARCH_VM_LEVEL_HOST);
+     int i, num;
  
- iocsrrd_b        0000 01100100 10000 00000 ..... .....    @rr
- iocsrrd_h        0000 01100100 10000 00001 ..... .....    @rr
-diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-index fb6318b438..2dedcadfbb 100644
---- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
-@@ -48,6 +48,7 @@ GEN_FALSE_TRANS(gtlbsrch)
- GEN_FALSE_TRANS(gtlbrd)
- GEN_FALSE_TRANS(gtlbwr)
- GEN_FALSE_TRANS(gtlbfill)
-+GEN_FALSE_TRANS(hvcl)
+     if (!initialized) {
+         initialized = true;
+-        num = FIELD_EX64(sys->CSR_PRCFG1, CSR_PRCFG1, SAVE_NUM);
++        num = FIELD_EX64(host->CSR_PRCFG1, CSR_PRCFG1, SAVE_NUM);
+         for (i = num; i < 16; i++) {
+             set_csr_flag(LOONGARCH_CSR_SAVE(i), CSRFL_UNUSED);
+         }
+@@ -251,11 +251,32 @@ static void loongarch_set_ptw(Object *obj, bool value, Error **errp)
+     cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, HPTW, value);
+ }
  
- #else
- 
-@@ -347,6 +348,10 @@ static bool gen_iocsrrd(DisasContext *ctx, arg_rr *a,
-     if (check_plv(ctx)) {
-         return false;
-     }
-+    if (ctx->guest_mode) {
-+        generate_exception(ctx, EXCCODE_GSPR);
-+        return true;
-+    }
-     func(dest, tcg_env, src1);
-     return true;
- }
-@@ -360,6 +365,10 @@ static bool gen_iocsrwr(DisasContext *ctx, arg_rr *a,
-     if (check_plv(ctx)) {
-         return false;
-     }
-+    if (ctx->guest_mode) {
-+        generate_exception(ctx, EXCCODE_GSPR);
-+        return true;
-+    }
-     func(tcg_env, addr, val);
-     return true;
- }
-@@ -624,6 +633,10 @@ static bool trans_dbcl(DisasContext *ctx, arg_dbcl *a)
-     if (check_plv(ctx)) {
-         return false;
-     }
-+    if (ctx->guest_mode) {
-+        generate_exception(ctx, EXCCODE_GSPR);
-+        return true;
-+    }
-     generate_exception(ctx, EXCCODE_DBP);
-     return true;
- }
-@@ -634,9 +647,28 @@ static bool trans_idle(DisasContext *ctx, arg_idle *a)
-         return false;
-     }
- 
-+    if (ctx->guest_mode) {
-+        generate_exception(ctx, EXCCODE_GSPR);
-+        return true;
-+    }
-+
-     tcg_gen_movi_tl(cpu_pc, ctx->base.pc_next + 4);
-     gen_helper_idle(tcg_env);
-     ctx->base.is_jmp = DISAS_NORETURN;
-     return true;
- }
-+
-+static bool trans_hvcl(DisasContext *ctx, arg_hvcl *a)
++static bool loongarch_get_lvz(Object *obj, Error **errp)
 +{
-+    if (!avail_LVZ(ctx) || !ctx->guest_mode) {
-+        return false;
-+    }
-+    if (ctx->plv != MMU_PLV_KERNEL) {
-+        generate_exception(ctx, EXCCODE_IPE);
-+        return true;
++    return LOONGARCH_CPU(obj)->lvz != ON_OFF_AUTO_OFF;
++}
++
++static void loongarch_set_lvz(Object *obj, bool value, Error **errp)
++{
++    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
++
++    cpu->lvz = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
++
++    if (kvm_enabled()) {
++        return;
 +    }
 +
-+    generate_exception(ctx, EXCCODE_HVC);
-+    return true;
++    cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, LVZ, value);
++    cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, LVZ_VER,
++                                    value ? 1 : 0);
 +}
++
+ static void loongarch_cpu_post_init(Object *obj)
+ {
+     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+ 
+     cpu->lbt = ON_OFF_AUTO_OFF;
++    cpu->lvz = ON_OFF_AUTO_AUTO;
+     cpu->pmu = ON_OFF_AUTO_OFF;
+     cpu->lsx = ON_OFF_AUTO_AUTO;
+     cpu->lasx = ON_OFF_AUTO_AUTO;
+@@ -267,6 +288,8 @@ static void loongarch_cpu_post_init(Object *obj)
+                              loongarch_set_msgint);
+     object_property_add_bool(obj, "ptw", loongarch_get_ptw,
+                              loongarch_set_ptw);
++    object_property_add_bool(obj, "lvz", loongarch_get_lvz,
++                             loongarch_set_lvz);
+     /* lbt is enabled only in kvm mode, not supported in tcg mode */
+ 
+     if (kvm_enabled()) {
+@@ -278,7 +301,8 @@ static void loongarch_la464_initfn(Object *obj)
+ {
+     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+     CPULoongArchState *env = &cpu->env;
+-    CPUSysState *sys;
++    CPUSysState *host = get_sys(env, LOONGARCH_VM_LEVEL_HOST);
++    CPUSysState *guest = get_sys(env, LOONGARCH_VM_LEVEL_GUEST);
+     uint32_t data = 0, field;
+     int i;
+ 
+@@ -322,6 +346,8 @@ static void loongarch_la464_initfn(Object *obj)
+     data = FIELD_DP32(data, CPUCFG2, FP_VER, 1);
+     data = FIELD_DP32(data, CPUCFG2, LSX, 1),
+     data = FIELD_DP32(data, CPUCFG2, LASX, 1),
++    data = FIELD_DP32(data, CPUCFG2, LVZ, 1);
++    data = FIELD_DP32(data, CPUCFG2, LVZ_VER, 1);
+     data = FIELD_DP32(data, CPUCFG2, LLFTP, 1);
+     data = FIELD_DP32(data, CPUCFG2, LLFTP_VER, 1);
+     data = FIELD_DP32(data, CPUCFG2, LSPW, 1);
+@@ -386,19 +412,19 @@ static void loongarch_la464_initfn(Object *obj)
+     data = FIELD_DP32(data, CPUCFG20, L3IU_SIZE, 6);
+     env->cpucfg[20] = data;
+ 
+-    sys = env_sys(env);
+-    sys->CSR_ASID = FIELD_DP64(0, CSR_ASID, ASIDBITS, 0xa);
++    host->CSR_ASID = FIELD_DP64(0, CSR_ASID, ASIDBITS, 0xa);
++    guest->CSR_ASID = host->CSR_ASID;
+ 
+-    sys->CSR_PRCFG1 = FIELD_DP64(sys->CSR_PRCFG1, CSR_PRCFG1, SAVE_NUM, 8);
+-    sys->CSR_PRCFG1 = FIELD_DP64(sys->CSR_PRCFG1, CSR_PRCFG1, TIMER_BITS, 0x2f);
+-    sys->CSR_PRCFG1 = FIELD_DP64(sys->CSR_PRCFG1, CSR_PRCFG1, VSMAX, 7);
++    host->CSR_PRCFG1 = FIELD_DP64(host->CSR_PRCFG1, CSR_PRCFG1, SAVE_NUM, 8);
++    host->CSR_PRCFG1 = FIELD_DP64(host->CSR_PRCFG1, CSR_PRCFG1, TIMER_BITS, 0x2f);
++    host->CSR_PRCFG1 = FIELD_DP64(host->CSR_PRCFG1, CSR_PRCFG1, VSMAX, 7);
+ 
+-    sys->CSR_PRCFG2 = 0x3ffff000;
++    host->CSR_PRCFG2 = 0x3ffff000;
+ 
+-    sys->CSR_PRCFG3 = FIELD_DP64(sys->CSR_PRCFG3, CSR_PRCFG3, TLB_TYPE, 2);
+-    sys->CSR_PRCFG3 = FIELD_DP64(sys->CSR_PRCFG3, CSR_PRCFG3, MTLB_ENTRY, 63);
+-    sys->CSR_PRCFG3 = FIELD_DP64(sys->CSR_PRCFG3, CSR_PRCFG3, STLB_WAYS, 7);
+-    sys->CSR_PRCFG3 = FIELD_DP64(sys->CSR_PRCFG3, CSR_PRCFG3, STLB_SETS, 8);
++    host->CSR_PRCFG3 = FIELD_DP64(host->CSR_PRCFG3, CSR_PRCFG3, TLB_TYPE, 2);
++    host->CSR_PRCFG3 = FIELD_DP64(host->CSR_PRCFG3, CSR_PRCFG3, MTLB_ENTRY, 63);
++    host->CSR_PRCFG3 = FIELD_DP64(host->CSR_PRCFG3, CSR_PRCFG3, STLB_WAYS, 7);
++    host->CSR_PRCFG3 = FIELD_DP64(host->CSR_PRCFG3, CSR_PRCFG3, STLB_SETS, 8);
+ 
+     cpu->msgint = ON_OFF_AUTO_OFF;
+     cpu->ptw = ON_OFF_AUTO_OFF;
+@@ -439,6 +465,7 @@ static void loongarch_la132_initfn(Object *obj)
+     data = FIELD_DP32(data, CPUCFG1, CRC, 1);
+     env->cpucfg[1] = data;
+     cpu->msgint = ON_OFF_AUTO_OFF;
++    cpu->lvz = ON_OFF_AUTO_OFF;
+     cpu->ptw = ON_OFF_AUTO_OFF;
+ }
+ 
+@@ -600,7 +627,7 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+     CPUState *cs = CPU(obj);
+     LoongArchCPUClass *lacc = LOONGARCH_CPU_GET_CLASS(obj);
+     CPULoongArchState *env = cpu_env(cs);
+-    CPUSysState *sys = env_sys(env);
++    CPUSysState *host = get_sys(env, LOONGARCH_VM_LEVEL_HOST);
+ 
+     if (lacc->parent_phases.hold) {
+         lacc->parent_phases.hold(obj, type);
+@@ -624,61 +651,69 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+ 
+     int n;
+     /* Set csr registers value after reset, see the manual 6.4. */
+-    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PLV, 0);
+-    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, IE, 0);
+-    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DA, 1);
+-    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PG, 0);
+-    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DATF, 0);
+-    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DATM, 0);
+-
+-    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, FPE, 0);
+-    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, SXE, 0);
+-    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, ASXE, 0);
+-    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, BTE, 0);
+-
+-    sys->CSR_MISC = 0;
+-
+-    sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, VS, 0);
+-    sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, LIE, 0);
+-
+-    sys->CSR_ESTAT = sys->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
+-    sys->CSR_RVACFG = FIELD_DP64(sys->CSR_RVACFG, CSR_RVACFG, RBITS, 0);
+-    sys->CSR_CPUID = cs->cpu_index;
+-    sys->CSR_TCFG = FIELD_DP64(sys->CSR_TCFG, CSR_TCFG, EN, 0);
+-    sys->CSR_LLBCTL = FIELD_DP64(sys->CSR_LLBCTL, CSR_LLBCTL, KLO, 0);
+-    sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
+-    sys->CSR_MERRCTL = FIELD_DP64(sys->CSR_MERRCTL, CSR_MERRCTL, ISMERR, 0);
+-    sys->CSR_TID = cs->cpu_index;
++    host->CSR_CRMD = FIELD_DP64(host->CSR_CRMD, CSR_CRMD, PLV, 0);
++    host->CSR_CRMD = FIELD_DP64(host->CSR_CRMD, CSR_CRMD, IE, 0);
++    host->CSR_CRMD = FIELD_DP64(host->CSR_CRMD, CSR_CRMD, DA, 1);
++    host->CSR_CRMD = FIELD_DP64(host->CSR_CRMD, CSR_CRMD, PG, 0);
++    host->CSR_CRMD = FIELD_DP64(host->CSR_CRMD, CSR_CRMD, DATF, 0);
++    host->CSR_CRMD = FIELD_DP64(host->CSR_CRMD, CSR_CRMD, DATM, 0);
++
++    host->CSR_EUEN = FIELD_DP64(host->CSR_EUEN, CSR_EUEN, FPE, 0);
++    host->CSR_EUEN = FIELD_DP64(host->CSR_EUEN, CSR_EUEN, SXE, 0);
++    host->CSR_EUEN = FIELD_DP64(host->CSR_EUEN, CSR_EUEN, ASXE, 0);
++    host->CSR_EUEN = FIELD_DP64(host->CSR_EUEN, CSR_EUEN, BTE, 0);
++
++    host->CSR_MISC = 0;
++
++    host->CSR_ECFG = FIELD_DP64(host->CSR_ECFG, CSR_ECFG, VS, 0);
++    host->CSR_ECFG = FIELD_DP64(host->CSR_ECFG, CSR_ECFG, LIE, 0);
++
++    host->CSR_ESTAT = host->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
++    host->CSR_RVACFG = FIELD_DP64(host->CSR_RVACFG, CSR_RVACFG, RBITS, 0);
++    host->CSR_CPUID = cs->cpu_index;
++    host->CSR_TCFG = FIELD_DP64(host->CSR_TCFG, CSR_TCFG, EN, 0);
++    host->CSR_LLBCTL = FIELD_DP64(host->CSR_LLBCTL, CSR_LLBCTL, KLO, 0);
++    host->CSR_TLBRERA = FIELD_DP64(host->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
++    host->CSR_MERRCTL = FIELD_DP64(host->CSR_MERRCTL, CSR_MERRCTL, ISMERR, 0);
++    host->CSR_TID = cs->cpu_index;
++    host->CSR_GSTAT = 0;
++    host->CSR_GCFG = 0;
++    host->CSR_GINTC = 0;
++    host->CSR_GCNTC = 0;
++    host->CSR_GTLBC = 0;
+     /*
+      * Workaround for edk2-stable202408, CSR PGD register is set only if
+      * its value is equal to zero for boot cpu, it causes reboot issue.
+      *
+      * Here clear CSR registers relative with TLB.
+      */
+-    sys->CSR_PGDH = 0;
+-    sys->CSR_PGDL = 0;
+-    sys->CSR_PWCH = 0;
+-    sys->CSR_EENTRY = 0;
+-    sys->CSR_TLBRENTRY = 0;
+-    sys->CSR_MERRENTRY = 0;
++    host->CSR_PGDH = 0;
++    host->CSR_PGDL = 0;
++    host->CSR_PWCH = 0;
++    host->CSR_EENTRY = 0;
++    host->CSR_TLBRENTRY = 0;
++    host->CSR_MERRENTRY = 0;
+     /* set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits from CSR_PRCFG2 */
+-    if (sys->CSR_PRCFG2 == 0) {
+-        sys->CSR_PRCFG2 = 0x3fffff000;
++    if (host->CSR_PRCFG2 == 0) {
++        host->CSR_PRCFG2 = 0x3fffff000;
+     }
+-    tlb_ps = ctz32(sys->CSR_PRCFG2);
+-    sys->CSR_STLBPS = FIELD_DP64(sys->CSR_STLBPS, CSR_STLBPS, PS, tlb_ps);
+-    sys->CSR_PWCL = FIELD_DP64(sys->CSR_PWCL, CSR_PWCL, PTBASE, tlb_ps);
++    tlb_ps = ctz32(host->CSR_PRCFG2);
++    host->CSR_STLBPS = FIELD_DP64(host->CSR_STLBPS, CSR_STLBPS, PS, tlb_ps);
++    host->CSR_PWCL = FIELD_DP64(host->CSR_PWCL, CSR_PWCL, PTBASE, tlb_ps);
+     for (n = 0; n < 4; n++) {
+-        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV0, 0);
+-        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV1, 0);
+-        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV2, 0);
+-        sys->CSR_DMW[n] = FIELD_DP64(sys->CSR_DMW[n], CSR_DMW, PLV3, 0);
++        host->CSR_DMW[n] = FIELD_DP64(host->CSR_DMW[n], CSR_DMW, PLV0, 0);
++        host->CSR_DMW[n] = FIELD_DP64(host->CSR_DMW[n], CSR_DMW, PLV1, 0);
++        host->CSR_DMW[n] = FIELD_DP64(host->CSR_DMW[n], CSR_DMW, PLV2, 0);
++        host->CSR_DMW[n] = FIELD_DP64(host->CSR_DMW[n], CSR_DMW, PLV3, 0);
++    }
++    if (FIELD_EX32(env->cpucfg[2], CPUCFG2, LVZ)) {
++         host->CSR_GSTAT = FIELD_DP64(host->CSR_GSTAT, CSR_GSTAT, GIDBIT, 8);
+     }
+ 
+ #ifndef CONFIG_USER_ONLY
+     env->pc = 0x1c000000;
+ #ifdef CONFIG_TCG
+-    memset(env->tlb, 0, sizeof(env->tlb));
++    memset(host->tlb, 0, sizeof(host->tlb));
  #endif
+     if (kvm_enabled()) {
+         kvm_arch_reset_vcpu(cs);
 -- 
 2.55.0
 
