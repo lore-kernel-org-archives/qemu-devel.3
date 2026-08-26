@@ -4,95 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD925C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 21:33:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 098CAC61DBE
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 21:42:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzLFJ-0008TO-VT; Wed, 26 Aug 2026 17:33:21 -0400
+	id 1wzLNc-0001eS-Px; Wed, 26 Aug 2026 17:41:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wzLFI-0008So-5P
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 17:33:20 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ (Exim 4.90_1)
+ (envelope-from <bounces-494710918-1902512630@hb.d.sender-sib.com>)
+ id 1wzKMs-00033D-Qs
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 16:37:07 -0400
+Received: from hb.d.sender-sib.com ([77.32.148.28])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wzLFG-00086W-59
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 17:33:19 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-3968e063f84so691705a91.0
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 14:33:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787779996; x=1788384796; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=zbDi9CWyyIgqYshN8Htrv/hOz0PiVueQikIoXKRX0uY=;
- b=wH+NDohvWVRg9LshrOJ4zSecVTyMjVe5tb+YLC6yGdvzrnH1FgOEG93TdccRBbTLv2
- zZyQPxUJ3x2Ds1/zG1wo1GQ7Cfg369w2BFkKq0Kr54S/OJmisxp8aMxDflfwITcZISVY
- Uj1d3R3MEP6H80hSXfjIThFepIQSc8AEKz+nDjtro4NAot2nB/LcTY28L9ln/BpWjCGy
- O+dvzmf5cNzryJcQl++Vga/e7Cxq9cs7JyHjgfanXZjyLxvMtFkVLgp0qsx+V66DFz6Z
- TK4RZmdRd9vSjeB0C/7j1zNrpb4NN31s6oE+yzzrl15uGkYy7bICpb/YXju7+8vNg1Ge
- HWow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787779996; x=1788384796;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=zbDi9CWyyIgqYshN8Htrv/hOz0PiVueQikIoXKRX0uY=;
- b=NiakIt5LWWQ+2cHxanSpAXPrRvFXNUTfSbC++eCS3+ORNrOwWsbGJjBNjpnULOwCP5
- 0sM91REqMsNcQXkQl/ELaossojPeFa/EnIQvv9GEmni6d0DbXLLap6M6MJrnk+MkCXWh
- TKHUBn5w77PsFyXD9SUNJMRjypPotRGuIAakXYgXUmo7raIABGaGqqlQCEEiBAVbqPFu
- rW7sMVWHQqa7yNB3nV4EsXeq4xLE615rcceF/L2LLABkVzZygtdj6f1bu+kxkM/elooE
- 5KzCYmFAjQOp1Z2anhPRF2njrpaLn+SmQo2EOPFuphOTlN6YQxRSNbcTmbTd2pk3ncf2
- M1SQ==
-X-Gm-Message-State: AFuF++klJ4B49YuR733QN79+U1u4X++s1VPrDIu5vvDJqL54ak8AaxVW
- wgkZvPYHlChYqnVWIuxnA1VVj1aCJzYlYXMoYgZCUSTVDVu5teHkVrWr0ihR7BSWy0E=
-X-Gm-Gg: AR+sD12iR54Qg4fgJcOKyRm7J9xFtATWQ3eLPOLEf4540f+pAdWlkxabJsU+OZaHXB7
- 3ekm7SrtpXBXKGMnOMBAX3PA3tvkpsEQysB6H4GzrvkIUHft0i5KEABDy94fPS23nsO842m2OZh
- /BOdkdy2k6rS/SDDOCCTp/powmBn/fq5zcBJ2WVoLoxx4idQLiezuYYUopuGTNkTfF4+Ektyf5l
- VF1v1GgudbLIF7IbUoqr6/unSR7sj5EjkqI4BfIhYzhEs6w4Fhn5WlzA26l2mhhrCPxcziqbG1a
- jP3rG1MZz2gMst4ri+44A4UR6JERPnXMOcYoWUMoiOisd+B5EmiHds2R+y9wmHwo8OTNrnIg1eo
- /eJ8JYMg5SvBoutk3NzrbDEaBGZzjambndAbUlSCpmuY5ZL0yQ5Xcjb3zDJFt50Azqh02lYkGEo
- JIeuFpgJNHkEzGz27jZ+u3/t5GNeeBcRzH1dNnTCdziEOClLJ8z0flNrWJGgZC7mweC6uAi6cFK
- KZDWoK4bEqQ2VO2s6QNbGsTFgP1
-X-Received: by 2002:a17:90a:d2c6:b0:38e:5c6:4db9 with SMTP id
- 98e67ed59e1d1-3966d3dafb9mr21562185a91.11.1787779996067; 
- Wed, 26 Aug 2026 14:33:16 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-93-59.tukw.qwest.net. [174.21.93.59])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39645d31f44sm9575039a91.10.2026.08.26.14.33.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Aug 2026 14:33:15 -0700 (PDT)
-Message-ID: <0dd6b0e8-be0e-423d-8e9f-733682514451@linaro.org>
-Date: Wed, 26 Aug 2026 14:33:15 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/23] target/riscv: Rewrite vext_ldff
-To: Max Chou <max.chou@sifive.com>
-Cc: qemu-devel@nongnu.org, frank.chang@sifive.com, qemu-riscv@nongnu.org
-References: <20260815194549.1377505-1-richard.henderson@linaro.org>
- <20260815194549.1377505-12-richard.henderson@linaro.org>
- <ao3JcPyrC7cZaCgp@sifive.com>
- <2db8ac0a-1b37-450d-8c11-2c5da46ca97a@linaro.org>
- <ao8wupCB3A-7-4-K@sifive.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <ao8wupCB3A-7-4-K@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1)
+ (envelope-from <bounces-494710918-1902512630@hb.d.sender-sib.com>)
+ id 1wzKMr-0001FT-4n
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 16:37:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=11981705.brevosend.com;
+ q=dns/txt; s=mail; bh=AZWMdcqUiK9+9SQJziXOCwz9QCLxqQ8mdDHLai8eO1c=;
+ h=from:subject:date:to:cc:mime-version:content-transfer-encoding:list-unsubscribe:x-csa-complaints:list-unsubscribe-post:message-id:x-sib-id:feedback-id;
+ b=ZXJp6iLbbJLIeCXG8pOihOGu+u80LFhaEJuf2Fl8tYFQ8Z3zDr/F19+sA5i+sUrWsF7gt360aCG8
+ yU/YqhBsBpJrTouqwGKz8G7hfPIF8M1B7MRhLZTZwXS8KXL5Y+GcFpK1/OHnv7XE9m5LCWuaqwGg
+ C+aZ9xjbIwTm2PKfDnU=
+X-Mailin-EID: NDk0NzEwOTE4fnFlbXUtZGV2ZWxAbm9uZ251Lm9yZ348MjAyNjA4MjYyMDM3MDAuMzkwNTctMS1kdWRlQGFuZ3J5Z29vc2UuZGV2Pn5oYi5kLnNlbmRlci1zaWIuY29t
+Date: Wed, 26 Aug 2026 16:37:00 -0400
+Subject: [PATCH] Update to a cleaner build path on macOS 27.
+ ParavirtualizationGraphics.framework API has changed significantly.
+Cc: <pbonzini@redhat.com>, <marcandre.lureau@redhat.com>, <berrange@redhat.com>,
+ <philmd@mailo.com>, <pierrick.bouvier@oss.qualcomm.com>, <dude@angrygoose.dev>
+Origin-messageId: <20260826203700.39057-1-dude@angrygoose.dev>
+From: "DB Holder" <dude@angrygoose.dev>
+X-CSA-Complaints: csa-complaints@eco.de
+To: <qemu-devel@nongnu.org>
+X-sib-id: XgJKQZA04SMv_fxwc3QnfYRA7RTnz6zf-bibwnFck3DfmgAFkFTf5mWxXeKANLMUq66zdNBhdopCQk7z7bFRG2H1IJQuMfYxwFVqSynEoAUJ-EO-qfr5lkt06Wz4LY6NrOvbYHgBzs7nFwVYpeIZ102T4tmqLRAUEqo96HrtXdBxMMzu
+Message-Id: <20260826203700.39057-1-dude@angrygoose.dev>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Feedback-ID: 77.32.148.28:11981705_-1:11981705:Sendinblue
+X-Mailer: git-send-email 2.54.0
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+Received-SPF: pass client-ip=77.32.148.28;
+ envelope-from=bounces-494710918-1902512630@hb.d.sender-sib.com;
+ helo=hb.d.sender-sib.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 26 Aug 2026 17:41:54 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,53 +71,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/26/26 11:40, Max Chou wrote:
-> Sorry, my previous example was unclear. It does not need a 1-byte PMP
-> region: RISC-V PMP definition allows the minimum 4-byte PMP region,
-> which exactly matches one e32 element.
->
-> For example, with vl=3, vstart=0, e32, and v0.mask = [1, 0, 1],
-> configure locked PMP entries as follows:
->
->    PMP0: NA4   [base + 4, base + 7], L, ---    # element 1, no read
->    PMP1: NAPOT target page,          L, R      # lower-priority page allow
->
->    bytes:       base       base + 4     base + 8
->                 +-----+    +-----+      +-----+
->    element:       0          1            2
->    mask:          1          0            1
->    access:     active      inactive      active
->    PMP:        PMP1 R      PMP0 ---      PMP1 R
->
-> The RISC-V spec defines that masked vector loads access memory and raise
-> exceptions only for active elements.
-> Therefore this situation has reads only for elements 0 and 2; PMP0 must
-> not create an access-fault condition for this instruction.
->
-> My concern is that the page probe may be unsafe in some situations
-> because PMP permissions can change at 4-byte granularity inside a
-> target page, while the probe includes bytes which are not part of
-> active vector memory operations.
->
-> Maybe we could use the page probe only when it returns flags == 0,
-> and otherwise fall back to checking only active elements or active
-> runs?
 
-Ok, thanks for the clear example.  flags == 0 does not help with this case.
+ API marked obsolete in xcrun --show-sdk-path + /System/Library/Frameworks/=
+ParavirtualizedGraphics.framework/Headers/PGDevice.h
 
-What we want is to probe the first active element, with 
-probe_access_full.  For this particular case, where a PMP rule matches 
-something smaller than the page, we will have set lg_page_size < 
-TARGET_PAGE_BITS.  So we get the fault (or not) for the first element 
-exactly, and can then tell via flags and lg_page_size whether the rest 
-of the page can use the fast or slow paths.
+Signed-off-by: DB Holder <dude@angrygoose.dev>
+---
+ meson.build | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-> I'm trying to create masked fauly-only-first + PMP test for this.
-
-Thanks, that would be helpful.  Similarly for masked not-first-fault, 
-please?
+diff --git a/meson.build b/meson.build
+index 6dcfdceb50..a6b11cb009 100644
+--- a/meson.build
++++ b/meson.build
+@@ -852,6 +852,14 @@ elif host_os =3D=3D 'darwin'
+   host_dsosuf =3D '.dylib'
+   pvg =3D dependency('appleframeworks', modules: ['ParavirtualizedGraphics=
+', 'Metal'],
+                    required: get_option('pvg'))
++  if pvg.found() and not objc.has_type('PGTask_t',
++                          prefix: '#import <ParavirtualizedGraphics/Paravi=
+rtualizedGraphics.h>',
++                          dependencies: pvg)
++    if get_option('pvg').enabled()
++      error('ParavirtualizedGraphics framework found, but the API lacks PG=
+Task_t')
++    endif
++    pvg =3D not_found
++  endif
+ elif host_os =3D=3D 'sunos'
+   socket =3D [cc.find_library('socket'),
+             cc.find_library('nsl'),
+--=20
+2.54.0 (Apple Git-157)
 
 
-r~
 
 
