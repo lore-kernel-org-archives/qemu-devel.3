@@ -4,109 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D6F9C61DC6
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:32:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BECF4C61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:32:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzEdI-00019m-5Y; Wed, 26 Aug 2026 10:29:40 -0400
+	id 1wzEd8-00016k-Pl; Wed, 26 Aug 2026 10:29:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdH-00019X-1G
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:39 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEd7-000162-3f
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:29 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdE-0001px-PK
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:38 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEd5-0001bY-A4
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:28 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 22BFB211C4;
- Wed, 26 Aug 2026 14:29:27 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id BEF681F837;
+ Wed, 26 Aug 2026 14:29:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787754571; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787754562; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=i5oqjmmi8+oxWLJMCwx89ZO5MoyymFjRNHN3YwHmaE8=;
- b=xFz/S35vhM3d8UFHgm2DPMOjLAUlCwy6xpW3YqJL4MUceMFzcQCADngi//L/9/r9Mp/mFg
- /YcM3UWb9ZcQ3ifa6BRVXm4bNIBjN2mLQjbvEVVJ/Shhvl42LBrhEOE63+M6Ckuwit9Nuo
- 1ZzZe+71Z0uTM2PJ3i5cUPe60u/8fLU=
+ bh=NjkvZi9dCnM5PxlLXQzt4cvVIzMJFOAlxM7emsEzxpY=;
+ b=ngCzvpyHih9zC67dEhnx4m5fkjJwbQsc3pNm/zUANUGUJpdRigaFSC4TdlXdCXW3ZY/3Xe
+ ujB6jZOEgDhM+MUy9vIuDF280xO9okuML18+Ay+zSnXMI3eoVDmZxhPVShaYfRAaWP0VZ2
+ mxe5f+OZKClqkE/ZpLNzf12B0ppkn+Y=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787754571;
+ s=susede2_ed25519; t=1787754562;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=i5oqjmmi8+oxWLJMCwx89ZO5MoyymFjRNHN3YwHmaE8=;
- b=hdtkxuIjbL9+RtspcTo+pTovRzEsVObbLmz2QEi/VupyRfjnvDPbhHW3n5JXcCjjBtXeik
- GnH26zZCIjMw39Dw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=MIMXgmaA;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=LfMiuARa
+ bh=NjkvZi9dCnM5PxlLXQzt4cvVIzMJFOAlxM7emsEzxpY=;
+ b=e2ZpQcitQNo7A/PEz5B/+DVKXoMa0tiDFYriU70n5eYqFW6L/PJ6yUQTNvF/3u98YKkVtV
+ 4YFmMS3BIr/CScBw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Gz2PvYww;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=GSUQ5r62
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787754567; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787754557; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=i5oqjmmi8+oxWLJMCwx89ZO5MoyymFjRNHN3YwHmaE8=;
- b=MIMXgmaAtjE4i1ZF5l6V6xVbMCWX0g/Jr4flLCSG2/yrCaxwHFrQInNxr7IPp8MPZ/Rq6L
- fkEv7Deu8NjNO4rZvKEu8mWp5mAAA9vyvPwOQeQ5O61yEG4hdbjy48TdYs5kN+v8b3qLRE
- 7LgHIyztp1mGSR/qTbDQuQMm0BuLvm8=
+ bh=NjkvZi9dCnM5PxlLXQzt4cvVIzMJFOAlxM7emsEzxpY=;
+ b=Gz2PvYwwZGwSo58TsyMJhGc0bQM4Ep85Nj9xvH3ZOafE6H52eepN0oMPTUW36ADCW8NCfi
+ KgTFYqZYdqGJSVG0yVgjSqjlIT+GjdlV7ydg8g1f6RHxeiYV5/F6wKhy8SlZypy1k2ndEj
+ X4tEHdO5xcNjAgO+rFScQrnx66n1t3s=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787754567;
+ s=susede2_ed25519; t=1787754557;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=i5oqjmmi8+oxWLJMCwx89ZO5MoyymFjRNHN3YwHmaE8=;
- b=LfMiuARaBbyH1b7EYsbeYnNGTAvJ/PNkMsAymbU51bOyrk08o9E0zBxJ+Sbiu9hz952yro
- 5SFaxR1bZmqzZZBg==
+ bh=NjkvZi9dCnM5PxlLXQzt4cvVIzMJFOAlxM7emsEzxpY=;
+ b=GSUQ5r62oKVL5T/0OCtERU3YjBaPlNrXsrhzpIgYiU79EGXTV1QYxa356HE0Nu1iqORVxP
+ Cpy/DY9pJcBPxAAw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 32FD913675;
- Wed, 26 Aug 2026 14:29:26 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CFA0C13675;
+ Wed, 26 Aug 2026 14:29:16 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id eA+GAUb4jmpTJAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 26 Aug 2026 14:29:26 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 6CTGJzz4jmpTJAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 26 Aug 2026 14:29:16 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
-	Jinpu Wang <jinpu.wang@cloud.ionos.com>
-Subject: [PULL 13/30] migration/rdma: Remove unregister code
-Date: Wed, 26 Aug 2026 11:28:48 -0300
-Message-ID: <20260826142905.2315503-14-farosas@suse.de>
+	Aadeshveer Singh <aadeshveer07@gmail.com>
+Subject: [PULL 06/30] migration: add RAMBlock field and helper for fast
+ snapshot load
+Date: Wed, 26 Aug 2026 11:28:41 -0300
+Message-ID: <20260826142905.2315503-7-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260826142905.2315503-1-farosas@suse.de>
 References: <20260826142905.2315503-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 22BFB211C4
+X-Rspamd-Queue-Id: BEF681F837
 X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-0.979]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:email,suse.de:dkim,gitlab.com:url];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_EQ_ENVFROM(0.00)[];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; MIME_TRACE(0.00)[0:+];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; ARC_NA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FREEMAIL_CC(0.00)[redhat.com,gmail.com];
+ DKIM_TRACE(0.00)[suse.de:+]; TO_DN_SOME(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:email,suse.de:dkim];
  RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; DKIM_TRACE(0.00)[suse.de:+]
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]
 X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -129,241 +131,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Aadeshveer Singh <aadeshveer07@gmail.com>
 
-The unregister code was there since the first commit RDMA migration was
-merged, but it was never functioning.  Remove the dead code.
+Add pending_bmap field per RAMBlock which is a Bitmap to store
+internal state of which pages have been read by some thread to ensure
+coordination between fault thread and eager load thread.
 
-Since the two control messages are the last ones, we don't even need to
-worry about compatibility of legacy RDMA control commands, we can directly
-remove the messages too.
+Modify parse_ramblock_mapped_ram(), to not load the actual RAMBlocks
+data in postcopy case as that will be loaded by fault thread and eager
+thread after the VM starts running.
 
-As a side effect, this patch closes a report by removing the code
-completely.
+Change ram_load() to use new function ram_should_load_postcopy_pages()
+to decide how to load/read RAM.
 
-Reported-by: Tristan (@TristanInSec)
-Closes: https://gitlab.com/qemu-project/qemu/-/work_items/4003
-Reviewed-by: Jinpu Wang <jinpu.wang@cloud.ionos.com>
+Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/rdma.c       | 133 -----------------------------------------
- migration/trace-events |   9 ---
- 2 files changed, 142 deletions(-)
+ include/system/ramblock.h |  6 ++++
+ migration/ram.c           | 66 +++++++++++++++++++++++++++++++++++----
+ 2 files changed, 66 insertions(+), 6 deletions(-)
 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index 62a509b2362..eae4afd6df0 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -142,8 +142,6 @@ enum {
-     RDMA_CONTROL_REGISTER_REQUEST,    /* dynamic page registration */
-     RDMA_CONTROL_REGISTER_RESULT,     /* key to use after registration */
-     RDMA_CONTROL_REGISTER_FINISHED,   /* current iteration finished */
--    RDMA_CONTROL_UNREGISTER_REQUEST,  /* dynamic UN-registration */
--    RDMA_CONTROL_UNREGISTER_FINISHED, /* unpinning finished */
-     RDMA_CONTROL_NUM,
- };
+diff --git a/include/system/ramblock.h b/include/system/ramblock.h
+index f0639287bf0..84624aca2c9 100644
+--- a/include/system/ramblock.h
++++ b/include/system/ramblock.h
+@@ -60,6 +60,12 @@ struct RAMBlock {
  
-@@ -232,8 +230,6 @@ static const char *control_desc(unsigned int rdma_control)
-         [RDMA_CONTROL_REGISTER_REQUEST] = "REGISTER REQUEST",
-         [RDMA_CONTROL_REGISTER_RESULT] = "REGISTER RESULT",
-         [RDMA_CONTROL_REGISTER_FINISHED] = "REGISTER FINISHED",
--        [RDMA_CONTROL_UNREGISTER_REQUEST] = "UNREGISTER REQUEST",
--        [RDMA_CONTROL_UNREGISTER_FINISHED] = "UNREGISTER FINISHED",
-     };
+     /* Bitmap of already received pages.  Only used on destination side. */
+     unsigned long *receivedmap;
++    /*
++     * Bitmap for pages that are yet to be read from disk. It is required for
++     * fault thread and eager thread to keep note of which pages are currently
++     * being read. Used by fast snapshot load.
++     */
++    unsigned long *pending_bmap;
  
-     if (rdma_control >= RDMA_CONTROL_NUM) {
-@@ -370,9 +366,6 @@ typedef struct RDMAContext {
-     int total_registrations;
-     int total_writes;
- 
--    int unregister_current, unregister_next;
--    uint64_t unregistrations[RDMA_SIGNALED_SEND_MAX];
--
-     GHashTable *blockmap;
- 
-     /* the RDMAContext for return path */
-@@ -1186,91 +1179,6 @@ static int qemu_rdma_reg_control(RDMAContext *rdma, int idx)
-     return -1;
+     /*
+      * bitmap to track already cleared dirty bitmap.  When the bit is
+diff --git a/migration/ram.c b/migration/ram.c
+index 60ad4352150..b7c406428e2 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -263,6 +263,25 @@ static void ramblock_file_bmap_init(void)
+     }
  }
  
--/*
-- * Perform a non-optimized memory unregistration after every transfer
-- * for demonstration purposes, only if pin-all is not requested.
-- *
-- * Potential optimizations:
-- * 1. Start a new thread to run this function continuously
--        - for bit clearing
--        - and for receipt of unregister messages
-- * 2. Use an LRU.
-- * 3. Use workload hints.
-- */
--static int qemu_rdma_unregister_waiting(RDMAContext *rdma)
--{
--    Error *err = NULL;
--
--    while (rdma->unregistrations[rdma->unregister_current]) {
--        int ret;
--        uint64_t wr_id = rdma->unregistrations[rdma->unregister_current];
--        uint64_t chunk =
--            (wr_id & RDMA_WRID_CHUNK_MASK) >> RDMA_WRID_CHUNK_SHIFT;
--        uint64_t index =
--            (wr_id & RDMA_WRID_BLOCK_MASK) >> RDMA_WRID_BLOCK_SHIFT;
--        RDMALocalBlock *block =
--            &(rdma->local_ram_blocks.block[index]);
--        RDMARegister reg = { .current_index = index };
--        RDMAControlHeader resp = { .type = RDMA_CONTROL_UNREGISTER_FINISHED,
--                                 };
--        RDMAControlHeader head = { .len = sizeof(RDMARegister),
--                                   .type = RDMA_CONTROL_UNREGISTER_REQUEST,
--                                   .repeat = 1,
--                                 };
--
--        trace_qemu_rdma_unregister_waiting_proc(chunk,
--                                                rdma->unregister_current);
--
--        rdma->unregistrations[rdma->unregister_current] = 0;
--        rdma->unregister_current++;
--
--        if (rdma->unregister_current == RDMA_SIGNALED_SEND_MAX) {
--            rdma->unregister_current = 0;
--        }
--
--
--        /*
--         * Unregistration is speculative (because migration is single-threaded
--         * and we cannot break the protocol's inifinband message ordering).
--         * Thus, if the memory is currently being used for transmission,
--         * then abort the attempt to unregister and try again
--         * later the next time a completion is received for this memory.
--         */
--        clear_bit(chunk, block->unregister_bitmap);
--
--        if (test_bit(chunk, block->transit_bitmap)) {
--            trace_qemu_rdma_unregister_waiting_inflight(chunk);
--            continue;
--        }
--
--        trace_qemu_rdma_unregister_waiting_send(chunk);
--
--        ret = ibv_dereg_mr(block->pmr[chunk]);
--        block->pmr[chunk] = NULL;
--        block->remote_keys[chunk] = 0;
--
--        if (ret != 0) {
--            error_report("unregistration chunk failed: %s",
--                         strerror(ret));
--            return -1;
--        }
--        rdma->total_registrations--;
--
--        reg.key.chunk = chunk;
--        register_to_network(rdma, &reg);
--        ret = qemu_rdma_exchange_send(rdma, &head, (uint8_t *) &reg,
--                                      &resp, NULL, NULL, &err);
--        if (ret < 0) {
--            error_report_err(err);
--            return -1;
--        }
--
--        trace_qemu_rdma_unregister_waiting_complete(chunk);
--    }
--
--    return 0;
--}
--
- static uint64_t qemu_rdma_make_wrid(uint64_t wr_id, uint64_t index,
-                                          uint64_t chunk)
++static void ramblock_pending_bmap_init(void)
++{
++    RAMBlock *rb;
++
++    RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
++        assert(!rb->pending_bmap);
++        /*
++         * The pending_bmap granularity must match the maximum of host and guest
++         * page sizes. This ensures that every load operation checks for one
++         * bit, allowing lockless thread coordination via a single-bit atomic
++         * test-and-clear.
++         */
++        size_t size = rb->max_length /
++                      MAX(qemu_ram_pagesize(rb), qemu_target_page_size());
++        rb->pending_bmap = bitmap_new(size);
++        bitmap_set(rb->pending_bmap, 0, size);
++    }
++}
++
+ static void ramblock_recv_map_init(void)
  {
-@@ -2757,8 +2665,6 @@ static int qemu_rdma_drain_cq(RDMAContext *rdma)
-         }
+     RAMBlock *rb;
+@@ -3768,6 +3787,10 @@ static int ram_load_setup(QEMUFile *f, void *opaque, Error **errp)
+     ramblock_recv_map_init();
+     if (migrate_mapped_ram()) {
+         ramblock_file_bmap_init();
++        if (migrate_postcopy_ram()) {
++            /* fast snapshot load */
++            ramblock_pending_bmap_init();
++        }
      }
  
--    qemu_rdma_unregister_waiting(rdma);
--
      return 0;
+@@ -3788,6 +3811,7 @@ static int ram_load_cleanup(void *opaque)
+     RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
+         g_clear_pointer(&rb->receivedmap, g_free);
+         g_clear_pointer(&rb->file_bmap, g_free);
++        g_clear_pointer(&rb->pending_bmap, g_free);
+     }
+ 
+     return 0;
+@@ -4207,9 +4231,12 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+         return;
+     }
+ 
+-    if (!read_ramblock_mapped_ram(f, block, num_pages, block->file_bmap,
+-                                  errp)) {
+-        return;
++    if (!migrate_postcopy_ram()) {
++        /* Do not load RAM during setup for fast snapshot load */
++        if (!read_ramblock_mapped_ram(f, block, num_pages, block->file_bmap,
++                                      errp)) {
++            return;
++        }
+     }
+ 
+     /* Skip pages array */
+@@ -4488,15 +4515,42 @@ static int ram_load_precopy(QEMUFile *f)
+     return ret;
  }
  
-@@ -3336,10 +3242,6 @@ int rdma_registration_handle(QEMUFile *f)
-                                .type = RDMA_CONTROL_REGISTER_RESULT,
-                                .repeat = 0,
-                              };
--    RDMAControlHeader unreg_resp = { .len = 0,
--                               .type = RDMA_CONTROL_UNREGISTER_FINISHED,
--                               .repeat = 0,
--                             };
-     RDMAControlHeader blocks = { .type = RDMA_CONTROL_RAM_BLOCKS_RESULT,
-                                  .repeat = 1 };
-     QIOChannelRDMA *rioc;
-@@ -3552,41 +3454,6 @@ int rdma_registration_handle(QEMUFile *f)
-             ret = qemu_rdma_post_send_control(rdma,
-                             (uint8_t *) results, &reg_resp, &err);
++static bool ram_should_load_postcopy_pages(void)
++{
++    /* This is pure precopy, we don't need to load pages in postcopy way */
++    if (!postcopy_is_running()) {
++        return false;
++    }
++
++    /*
++     * This is postcopy, but when with mapped-ram, pages are not loaded in the
++     * migration stream here, but done separately in a thread eagerly reading
++     * pages from the snapshot.  Here, we only need to read the ram headers,
++     * reusing the precopy code.
++     * TODO: when we have separate function to parse RAM headers we should
++     * switch to that.
++     */
++    if (migrate_mapped_ram()) {
++        return false;
++    }
++
++    /*
++     * Genuine network postcopy, we will load pages in this current stream and
++     * they need to be done in postcopy way.
++     */
++    return true;
++}
++
+ static int ram_load(QEMUFile *f, void *opaque, int version_id)
+ {
+     int ret = 0;
+     static uint64_t seq_iter;
+     /*
+      * If system is running in postcopy mode, page inserts to host memory must
+-     * be atomic
++     * be atomic. However, fast snapshot load uses the mapped ram precopy like
++     * path to read block headers and populating bitmaps.
+      */
+-    bool postcopy_running = postcopy_is_running();
++    bool load_postcopy_pages = ram_should_load_postcopy_pages();
  
--            if (ret < 0) {
--                error_report_err(err);
--                goto err;
--            }
--            break;
--        case RDMA_CONTROL_UNREGISTER_REQUEST:
--            trace_rdma_registration_handle_unregister(head.repeat);
--            unreg_resp.repeat = head.repeat;
--            registers = (RDMARegister *) rdma->wr_data[idx].control_curr;
--
--            for (int count = 0; count < head.repeat; count++) {
--                reg = &registers[count];
--                network_to_register(reg);
--
--                trace_rdma_registration_handle_unregister_loop(count,
--                           reg->current_index, reg->key.chunk);
--
--                block = &(rdma->local_ram_blocks.block[reg->current_index]);
--
--                ret = ibv_dereg_mr(block->pmr[reg->key.chunk]);
--                block->pmr[reg->key.chunk] = NULL;
--
--                if (ret != 0) {
--                    error_report("rdma unregistration chunk failed: %s",
--                                 strerror(errno));
--                    goto err;
--                }
--
--                rdma->total_registrations--;
--
--                trace_rdma_registration_handle_unregister_success(reg->key.chunk);
--            }
--
--            ret = qemu_rdma_post_send_control(rdma, NULL, &unreg_resp, &err);
--
-             if (ret < 0) {
-                 error_report_err(err);
-                 goto err;
-diff --git a/migration/trace-events b/migration/trace-events
-index 4ae1c226f90..6d70f8e8cad 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -242,12 +242,6 @@ qemu_rdma_register_and_get_keys(uint64_t len, void *start) "Registering %" PRIu6
- qemu_rdma_register_odp_mr(const char *name) "Try to register On-Demand Paging memory region: %s"
- qemu_rdma_advise_mr(const char *name, uint32_t len, uint64_t addr, const char *res) "Try to advise block %s prefetch at %" PRIu32 "@0x%" PRIx64 ": %s"
- qemu_rdma_resolve_host_trying(const char *host, const char *ip) "Trying %s => %s"
--qemu_rdma_signal_unregister_append(uint64_t chunk, int pos) "Appending unregister chunk %" PRIu64 " at position %d"
--qemu_rdma_signal_unregister_already(uint64_t chunk) "Unregister chunk %" PRIu64 " already in queue"
--qemu_rdma_unregister_waiting_inflight(uint64_t chunk) "Cannot unregister inflight chunk: %" PRIu64
--qemu_rdma_unregister_waiting_proc(uint64_t chunk, int pos) "Processing unregister for chunk: %" PRIu64 " at position %d"
--qemu_rdma_unregister_waiting_send(uint64_t chunk) "Sending unregister for chunk: %" PRIu64
--qemu_rdma_unregister_waiting_complete(uint64_t chunk) "Unregister for chunk: %" PRIu64 " complete."
- qemu_rdma_write_flush(int sent) "sent total: %d"
- qemu_rdma_write_one_block(int count, int block, uint64_t chunk, uint64_t current, uint64_t len, int nb_sent, int nb_chunks) "(%d) Not clobbering: block: %d chunk %" PRIu64 " current %" PRIu64 " len %" PRIu64 " %d %d"
- qemu_rdma_write_one_post(uint64_t chunk, long addr, long remote, uint32_t len) "Posting chunk: %" PRIu64 ", addr: 0x%lx remote: 0x%lx, bytes %" PRIu32
-@@ -266,9 +260,6 @@ rdma_registration_handle_ram_blocks_loop(const char *name, uint64_t offset, uint
- rdma_registration_handle_register(int requests) "%d requests"
- rdma_registration_handle_register_loop(int req, int index, uint64_t addr, uint64_t chunks) "Registration request (%d): index %d, current_addr %" PRIu64 " chunks: %" PRIu64
- rdma_registration_handle_register_rkey(int rkey) "0x%x"
--rdma_registration_handle_unregister(int requests) "%d requests"
--rdma_registration_handle_unregister_loop(int count, int index, uint64_t chunk) "Unregistration request (%d): index %d, chunk %" PRIu64
--rdma_registration_handle_unregister_success(uint64_t chunk) "%" PRIu64
- rdma_registration_handle_wait(void) ""
- rdma_registration_start(uint64_t flags) "%" PRIu64
- rdma_registration_stop(uint64_t flags) "%" PRIu64
+     seq_iter++;
+ 
+@@ -4512,7 +4566,7 @@ static int ram_load(QEMUFile *f, void *opaque, int version_id)
+      */
+     trace_ram_load_start();
+     WITH_RCU_READ_LOCK_GUARD() {
+-        if (postcopy_running) {
++        if (load_postcopy_pages) {
+             /*
+              * Note!  Here RAM_CHANNEL_PRECOPY is the precopy channel of
+              * postcopy migration, we have another RAM_CHANNEL_POSTCOPY to
 -- 
 2.53.0
 
