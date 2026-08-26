@@ -4,119 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2045DC5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 13:27:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12997C61DC2
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 13:27:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzDe3-0008Fj-Ln; Wed, 26 Aug 2026 09:26:23 -0400
+	id 1wzDeH-0008Ga-Cw; Wed, 26 Aug 2026 09:26:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wzDe1-0008Ew-42; Wed, 26 Aug 2026 09:26:21 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1wzDeF-0008GE-Dg
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 09:26:35 -0400
+Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wzDdy-0002yb-QY; Wed, 26 Aug 2026 09:26:20 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QCVwDm4002747; Wed, 26 Aug 2026 13:26:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=GhTaifreoV71Q7AfBmzHm+dFQlCZYV
- ljPuNr+rSy6bs=; b=HHZqG3RFFz2SfxIt3JVLhc5YKw57Z9RJnUbBBvUe01PHYT
- xs020mi9I/KQpH/X+RGJ+R1g2iK+uEESk9oiEl3VTrkYLUOszVJ2Pg12GUJ9t11u
- kwN0pbsbdsRMw8BWaR+35dcx/mJLY7haIjZt95h9CWDjvCzkHmmnsZbYAwNDxoeZ
- 1z67nDgALJqGU2Uhv24Q7UHXBoT2jKqwf/s1Ygb50Zti554grChSOxGesb3SIWSA
- NVw8D01iUEwoD0Drl9jimWNyeEtkrA0515QuJQjgl7ebrgCLpN3+CNp8iVMz/NhW
- lVFOTaJqxHpUCb37yI3R+zr6hFAmAZVp7qLt4iwQ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73g4xvt9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 13:26:14 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QDBSQp010621;
- Wed, 26 Aug 2026 13:26:14 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7p3qabaj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 13:26:13 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QDQAN948759154
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 13:26:10 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EEF3220043;
- Wed, 26 Aug 2026 13:26:09 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D441220040;
- Wed, 26 Aug 2026 13:26:06 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 26 Aug 2026 13:26:06 +0000 (GMT)
-Date: Wed, 26 Aug 2026 18:56:09 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org,
- vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
- ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
- shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
- nikhilks@linux.ibm.com
-Subject: Re: [PATCH v2 18/37] target/ppc: Move sleep & friends to decodetree
-Message-ID: <20260826185254.3db22911-a2-amachhiw@linux.ibm.com>
-Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, 
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- milesg@linux.ibm.com, 
- npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com, 
- tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com, 
- aboorvad@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
- uverma@linux.ibm.com, nikhilks@linux.ibm.com
-References: <20260826050923.74756-1-rathc@linux.ibm.com>
- <20260826050923.74756-19-rathc@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1wzDeD-00035G-LP
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 09:26:35 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=nYrTXSOyfJ5usM8CoCCCP9TwfCvPZn1a2wvuXWjqYqT5at5xIyEOMOtv0HELyd4zKx3fF+YFvdPS8QJ5GIIM6DoFGdzBZqYv77FoBco0tKvSRubYpcJkC1xxbhQ4CnBwAGlYbC2xk0JJQjJzsi+A4fFAGp4OXiLHze1dq0+2pLX2cWmp/GhZ6zGOfJgIBOQs33a72DsHh6vV4/gpXNr0Hd5r52TGABLW1dOqi+OrhXMiLm5vHZNub9LRBbA0xY9UHxuxXk3uO2st+vlwKgyABYYP3FEq/kzC4BN8ujbgdyvvS9yNvoyZfXKbPQ4mH0JAy5IywWzDA7ASwQyg/MCorA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ckc+6EPJ/+lO9eAbr+7DZhIwfItUKsl6wQUCP8AM20o=;
+ b=UtmqfTYZRvJBOA4yZD70+h4++rHHHUdqOIiSNGBXU5jPly+NQf0jK2DsOH5opbaPZ7y5BdwXb5FQ62kmB4HzIUKCobOPD1EpIZ0rtTOUt88HS74LJ04ulteg86Qall8ir2yQl+U2wq+821HEefV3HsAOdY6dhkv51fdcMXtM5OUrB+1W/JOhfo4UrYnbOtkE/MnkfNbWUl+Ow+GvGf+7A9V+9Q89RNhLDTZzCWqt1d8Nvrh0FI3oT7j2Iv70EsDeTrY6ipIVhrtFQQoPbWFwG1DdlRtmhJzkUPLGYEmYUY6dgC2KmQBBYN/3fW0hI5gEsjbtLqDhN0QH8h8JzAgSdw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ckc+6EPJ/+lO9eAbr+7DZhIwfItUKsl6wQUCP8AM20o=;
+ b=JZMPFp8eAeD0Zox1d9+vzYlxhn2EYPPBOxizAmsoBLQPeyGKl5NN0EaP8V5CdVbHEF/wZiZ6+ymvG/wKIefyg21PGBfS5Kr0Ptt/VqIDZTBkV0m5uY8khIRIpKTkZTx6P1RuleHHAnHHROmB39R/Ucztg2dlja1VUsQh8TvYe1g1w4K2YSV+U7L5C4ii9tEy/WzIdpa337khvndmrv16MYQcmj7kxGcRh+iFF+kWwxVm9oyyseEHsdIq3uVt7ert6/5XfPLzfU3hbZQJ9zzUvQDdBKGazbHVQpkcbynr5BiZgPWLb6B1n6wHq+vWOWwcx9lA2Fmfq9dynXS9n4K43A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
+ by DB9PR08MB9659.eurprd08.prod.outlook.com (2603:10a6:10:45e::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.8; Wed, 26 Aug
+ 2026 13:26:29 +0000
+Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
+ ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0382.004; Wed, 26 Aug 2026
+ 13:26:27 +0000
+Message-ID: <adf69f78-6fbb-4b77-a1cf-e652e906cdc8@virtuozzo.com>
+Date: Wed, 26 Aug 2026 15:26:25 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] hw/display/qxl: Avoid crashing on stale guest
+ addresses in qxl_post_load
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: qemu-devel@nongnu.org, philmd@oss.qualcomm.com, den@openvz.org
+References: <20260825172051.435372-1-andrey.drobyshev@virtuozzo.com>
+ <CAJ+F1CKwNr=6wVaO+tXa876EzoPjYfQC3qx=em3C4BSW7wRC8Q@mail.gmail.com>
+Content-Language: en-US
+From: "Denis V. Lunev" <den@virtuozzo.com>
+In-Reply-To: <CAJ+F1CKwNr=6wVaO+tXa876EzoPjYfQC3qx=em3C4BSW7wRC8Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: VE1PR08CA0027.eurprd08.prod.outlook.com
+ (2603:10a6:803:104::40) To AM9PR08MB5892.eurprd08.prod.outlook.com
+ (2603:10a6:20b:2dd::16)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260826050923.74756-19-rathc@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: c1BiNeRa-mgpgTLhEhuSyhuvBPU5OxWe
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEwOCBTYWx0ZWRfX0OKWsPQeJo08
- OxS39//It7vzPV2O/PBhmCCt6WQtKKg+QWR1ce0IstRI4yzND8TYZ4cqNYoDgNiaZ8Uj1UuTqpG
- pP6+TZL83e3MY1eHZQeOSJNa1sEh+Zs=
-X-Proofpoint-GUID: O9qQjSiL7oyRrEbiPyjlQ9Zo1yU-CDJL
-X-Authority-Analysis: v=2.4 cv=JZyMa0KV c=1 sm=1 tr=0 ts=6a8ee977 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=OkVzQGOoSQFxXCc2aQUA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEwOCBTYWx0ZWRfX5SXi2BplmPSh
- d1qRTA7GU7y7LMgjzqZD7Xi3EjGupUhKNKg4YaFUjJxvqS9BdUX0jAMgbtboUHjv2q/pl6dmyY2
- GOruI7xoMGMWCO7mWyNxs+5GgsuWUb/+cKe5T831ijWyzHSeO3DaPBSA/QhKvAMistlDtKcy8vv
- EzPEDWZJBIhvMpO3LNm4RZx1WNPVUI405MSRxDWuhfbrL9fA7rCu6WuvAHusdFgp1y5xKJAXC65
- gzUL7X3oZYXNoq3qylPCJzimPP5HO8CO7QMt0JAOr4DEE5Wlv5ctaMc4m7/9NM9oqi64q+CzT2A
- GVHA3zJ6oDqs0RwUtwMipnx2krZ41Q74KULGjrn2iRR548uc2gRh+oqjBbuZBwIyS3YtHEgdr1h
- Vq/E8xq5K1rw/VCEW+ACdylLkoDs8RsNpwo3NOS2rUZI/5mQA/bweslBQhPaMyM3MjWm3iDVeDZ
- NBK1dgh1SEf1WruLPQg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_03,2026-08-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260108
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|DB9PR08MB9659:EE_
+X-MS-Office365-Filtering-Correlation-Id: b8f0b326-65b0-4592-2a22-08df0375a18a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|10070799003|23010399003|376014|1800799024|366016|3023799007|10067099003|4143699003|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: bWXm4XQb4eXT4JFJANrEphmNbYeLrA0Va/Wo1wZ0QJsTWEyYP12VPnTlRFyUvyAMecYNWhwBpYO+3/e2kL5F7LnhI29cfAvVoz3tlcOMyRoxSLfVcviBRaoUylYg8wDW8yZ+oISNxJYYc2xk1ziUcauVDxToGKANdqNOXhwBsXUhqy98C0SpV85+YaBpFbUtwNC/QNFbrsJcayITu8hik0z4DuflQiVAvdbhdZ1PqRDRvNzn/hW4VKD5WUsfeDx9CCN0EjlQovbHk2Tpwlq2Fea/PWGnh5Q59ZdkiqBtVv4URFDuToRTVSERSMdw7+tlzRoWTdDpcEIMlrV2CjcWY7lAB3GlLH7H+S7pN+d1oIjIbkaqMQEG3SWNVWCGVcVIDQ00ZdX0JFJBhd7BYLiT5LEInmlUueyHdzXD/CnU6SqUsuvApqMztXcIFWqQxM5iAYKXx9XT9xg3Rn3OsDQftiBWNt7JxGMUBBxuCCLpqaCUHcvKgrhAb747eX1GvlRfPZbGa/TCR9crn27NjUIfsV+QalmW3Cw2M/grAHn+pyUpuVq1eD/flH3JjCOz/Lv13J1sIrvIteO/xtCKLWFJ0pCV34hfwpoQ6WLpPkXyyhiPuWIh2GhoxYAgG4ZYwXpkbSNUMQlvgDHx6FJcLTBaixFjUKGIbZLsv/b4LaHOwY4=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(10070799003)(23010399003)(376014)(1800799024)(366016)(3023799007)(10067099003)(4143699003)(56012099006)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aWxsUnFBTmJrRTJPL2l3cFdBdWUyS2JCL3dsRFhUc0QyUnVZNXN3TWFiVzd4?=
+ =?utf-8?B?TysrUE43NVJ6OXMyV1hPNHIwdURaNzdRNHlNMkNzSmpOUmFFZmU3RDVTKzlM?=
+ =?utf-8?B?RVJkRi9oSUs5VDU0YjBRMzZ6R0JJY1pVRjg4MHN3eDI3cStTN3hvOTV4RjRP?=
+ =?utf-8?B?Y3hJeXJYRld0eU5DUnV4bEN0RE9XZGF0N3I3bHY0K0pScHhSL01rdHMyOFB3?=
+ =?utf-8?B?TG1RanhweEl5SEpIVHp6Vzl4MEVFeE1UOUoyMDVZeC9FdUg5UVlPbFVrUXlR?=
+ =?utf-8?B?WDUwY2VhdDV2ZFVRL1hUKzRQZEYrRmhyQ3ZXRk1KOXh0SURGQzkySG56MlVy?=
+ =?utf-8?B?SnlEemM2N0JEWWRqRStZczhuNHJpRVVOaU9lSHNGWnUrdEZZVXR6M2ROaG04?=
+ =?utf-8?B?VXdhUkxKL1l3ZC9DYys2d1lKWWhwOEVQc1NGL1lMRmdwOVNWSTlndjdHbEpU?=
+ =?utf-8?B?RktQeElSM2doRmEwL1lqSk9UbVhoMnc3Zm93RGcvQTZDWFcycnVacWVKcFJz?=
+ =?utf-8?B?bHp2TXdJS1o2NHgvU3dsSHYza2VGOURiRzY1VWpFRWlwMzF2dVNleXdxN2kv?=
+ =?utf-8?B?NTBES1N1UER0SUVMaXMvb3Z2N00xWlkydlJmWnBMMEFyT2Nhbm1qcUJ2cEdp?=
+ =?utf-8?B?U3FjUXA2Y04xdVZYWUFmcCtOcnIyVXZxcHRIZUZCTmZtb2tEa1NMR2NkNmkw?=
+ =?utf-8?B?WlUvQW5JOE9ySVZXVXFyVGdXczI2eVVaTUNSZE8wWk1sZTdPMHM1Q3FQZjU0?=
+ =?utf-8?B?NDRmQmhzU2xsaG5UMnF3UGlubmNoNmh5QXljbFIyZkVVcW5qVXBLaUJVOEQr?=
+ =?utf-8?B?R2EydGNCUlc0RDVkVnFOZXYwZTFpT0pVZ1dHeDNmQ2pGUm1UbHVXOXV0U3BP?=
+ =?utf-8?B?bHZ4MnZYWGpZUURyUk1qNTdHTGhiZEYxV2ZrdThZODYwQmYvL2F1M1dwWjlj?=
+ =?utf-8?B?cUdYTExpR0FwM0VJbTd1eCtWc0RHaHlnMDRHVzRvYzdIajdxUWt5NmhQV0tl?=
+ =?utf-8?B?L2ZVYUxiWmhXNHNCaCtDT1Q5NFRmS0dRZkNFU2owbDZhaWlpYmRaNnFUYkxm?=
+ =?utf-8?B?OG8rYW5xcERKSVl0cFZiZnQ0bGp4cVQxRUdRZVdEeWhpSW5yTUNNbHRJZU1n?=
+ =?utf-8?B?MU11ZmVBNUxFTHJDVGpjdlhRVHNjZVcyVkh5Zy9abDNZS0tJazQyQXpKdkVG?=
+ =?utf-8?B?VUFEWVpLTFN1cmZTWlUyY1llQmt4VkIrK3ZmY2lZc3N5K2xROUZJMjB2TGl3?=
+ =?utf-8?B?OFQ4VEJicTJBSGhMNk9aalkraDU4TDRXM0pBQk1kRklwV0t5UDN0R0hjQnJ4?=
+ =?utf-8?B?NmkwWTlwcHNpQmdqZW9kdEVzZThGSkdKNGYrMVM3ZXhraWt3Z3JJdDBac3Rl?=
+ =?utf-8?B?cFJxYlM0S0cwMzBIYTllTW83SXg1c3MybFkxcnNVNEtXa1RTcDJzSitHQ0hV?=
+ =?utf-8?B?cUFnQllLSlpxQUwxQU56cVJ5T1FTT0lhZ29JSDUwR3JXL21JMW1waVN6Mnc5?=
+ =?utf-8?B?S2R1a0VjRHE5RFdwajlMVXlYcnJHaUxYaExGQU0yQ1BmVm9sYjc2Tyt2OXdF?=
+ =?utf-8?B?dUwrWERYNHZtNlh6VjR0cXF5VzJrNjkwYldzSnZWeGNPNG0yN1p4dlpKQTd5?=
+ =?utf-8?B?WFpKalUzMGNKOVZFWXVTOHpLYTFwcXRDSE1YKzFrMFR6RzBROWJLdXppSm9U?=
+ =?utf-8?B?R3Q2TnFKajdHSGU3bURpNmtkMnBPYzZtaVl6MzNTajZiZ21ucVJEejI1S2pS?=
+ =?utf-8?B?WTdHMStuajZHdTB6R2lUK0h0ZU9rWHpsSUhvd0Q0enJZWjZvVERjKzlqenpt?=
+ =?utf-8?B?WFgwYlk4ZmNKZVFZWHhhWlU0bjluaW4wSVNxMDB3bUhJWTBuSGltSWNObFJ0?=
+ =?utf-8?B?QXpXZHJHMnJMbHNJeHZadGZKaFhSYnhRcXM2WXQwMzlOWHhSYlJaVThqL3hU?=
+ =?utf-8?B?TUpJUmxyN0twa2ZPR1I3RG92TnFnMFROWlgzZGhQdHJQczdKcmg0WFY2eC9K?=
+ =?utf-8?B?UXlKWWYybFFpNXI5Z0tpdTIwTDdseEVKOWtCRXJLYVA1NHQzOFYzRDBGZ2VX?=
+ =?utf-8?B?ZWpLTW5MbzA4Nkc0U2VhUUplQWVNaDRFQ0xHM2pWZEI0dWFNRTNwQ1JqdFpk?=
+ =?utf-8?B?bzN1T3VaMkhvczZUMjF6ekJxYlZQMSttMnFNdXA1L1c2VjZkaDJIelBwVlNL?=
+ =?utf-8?B?THJKNGI3TDI2eWxLcnhHM1hxWU53NEM0WHFtTS9aZ0dNSzB5bGtMandBZE5t?=
+ =?utf-8?B?WkNISmJRQ09kdzJ1eVJDYXZnQWtoTFVVcytXTGlvVUFFTm1vSExNanBtWC9F?=
+ =?utf-8?B?ei9qNHRvSEJyNHNCSm9kdWV2NVp4T3BTY2hucjFKMEFkcXFDZjZsZzRIOXVX?=
+ =?utf-8?Q?6vBwAqHmzEstlS74m44n8/IGoKK5T2/sqrMPr6bwiFpyY?=
+X-MS-Exchange-AntiSpam-MessageData-1: QYHpyz19yz1MXg==
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b8f0b326-65b0-4592-2a22-08df0375a18a
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Aug 2026 13:26:27.9105 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ZRvm3uMeUtYLFAnSVD/KL/aHSzKMGTKlksyC8i1kmvS5c0FwDm28Yj6xS5WxiaF1dK82nlO+uwuBKD4+H1o2KA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR08MB9659
+Received-SPF: pass client-ip=2a01:111:f403:c20a::7;
+ envelope-from=den@virtuozzo.com;
+ helo=PA4PR04CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,275 +153,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/26 10:38 AM, Chinmay Rath wrote:
-> From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-> 
-> Convert the following instructions to decode tree specification:
-> 
-> doze
-> nap
-> sleep
-> rvwinkle
-> stop
-> 
-> The functionality was tested by comparing the qemu -D log -d op,in_asm
-> output as well as single stepping gdb to confirm behavior was not
-> changed for ISA3.x (stop) as well as ISA206 (doze, nap, sleep,
-> rvwinkle).
-> 
-> Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->  target/ppc/insn32.decode                      |   8 ++
->  target/ppc/translate.c                        |  85 ---------------
->  .../ppc/translate/processor-ctrl-impl.c.inc   | 101 ++++++++++++++++++
->  3 files changed, 109 insertions(+), 85 deletions(-)
-> 
-> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> index 3b8387b60c..d23168a303 100644
-> --- a/target/ppc/insn32.decode
-> +++ b/target/ppc/insn32.decode
-> @@ -913,6 +913,14 @@ VPERMR          000100 ..... ..... ..... ..... 111011   @VA
->  
->  VSEL            000100 ..... ..... ..... ..... 101010   @VA
->  
-> +## Power Management Instructions
-> +
-> +DOZE            010011 ----- ----- ----- 0110010010 -
-> +NAP             010011 ----- ----- ----- 0110110010 -
-> +SLEEP           010011 ----- ----- ----- 0111010010 -
-> +RVWINKLE        010011 ----- ----- ----- 0111110010 -
-> +STOP            010011 ----- ----- ----- 0101110010 -
-> +
->  ## Vector Integer Shift Instruction
->  
->  VSLB            000100 ..... ..... ..... 00100000100    @VX
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index 2d5157080c..f6f7bb4e6b 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -2728,86 +2728,6 @@ static inline void gen_check_tlb_flush(DisasContext *ctx, bool global) { }
->  #endif
->  
->  #if defined(TARGET_PPC64)
-> -static void gen_doze(DisasContext *ctx)
-> -{
-> -#if defined(CONFIG_USER_ONLY)
-> -    GEN_PRIV(ctx);
-> -#else
-> -    TCGv_i32 t;
-> -
-> -    CHK_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_DOZE);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -}
-> -
-> -static void gen_nap(DisasContext *ctx)
-> -{
-> -#if defined(CONFIG_USER_ONLY)
-> -    GEN_PRIV(ctx);
-> -#else
-> -    TCGv_i32 t;
-> -
-> -    CHK_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_NAP);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -}
-> -
-> -static void gen_stop(DisasContext *ctx)
-> -{
-> -#if defined(CONFIG_USER_ONLY)
-> -    GEN_PRIV(ctx);
-> -#else
-> -    TCGv_i32 t;
-> -
-> -    CHK_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_STOP);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -}
-> -
-> -static void gen_sleep(DisasContext *ctx)
-> -{
-> -#if defined(CONFIG_USER_ONLY)
-> -    GEN_PRIV(ctx);
-> -#else
-> -    TCGv_i32 t;
-> -
-> -    CHK_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_SLEEP);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -}
-> -
-> -static void gen_rvwinkle(DisasContext *ctx)
-> -{
-> -#if defined(CONFIG_USER_ONLY)
-> -    GEN_PRIV(ctx);
-> -#else
-> -    TCGv_i32 t;
-> -
-> -    CHK_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_RVWINKLE);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -}
-> -
->  static inline TCGv gen_write_bhrb(TCGv_ptr base, TCGv offset, TCGv mask, TCGv value)
->  {
->      TCGv_ptr tmp = tcg_temp_new_ptr();
-> @@ -5117,11 +5037,6 @@ GEN_HANDLER_E(scv, 0x11, 0x10, 0xFF, 0x03FFF01E, PPC_NONE, PPC2_ISA300),
->  GEN_HANDLER_E(scv, 0x11, 0x00, 0xFF, 0x03FFF01E, PPC_NONE, PPC2_ISA300),
->  GEN_HANDLER_E(rfscv, 0x13, 0x12, 0x02, 0x03FF8001, PPC_NONE, PPC2_ISA300),
->  #endif
-> -GEN_HANDLER_E(stop, 0x13, 0x12, 0x0b, 0x03FFF801, PPC_NONE, PPC2_ISA300),
-> -GEN_HANDLER_E(doze, 0x13, 0x12, 0x0c, 0x03FFF801, PPC_NONE, PPC2_PM_ISA206),
-> -GEN_HANDLER_E(nap, 0x13, 0x12, 0x0d, 0x03FFF801, PPC_NONE, PPC2_PM_ISA206),
-> -GEN_HANDLER_E(sleep, 0x13, 0x12, 0x0e, 0x03FFF801, PPC_NONE, PPC2_PM_ISA206),
-> -GEN_HANDLER_E(rvwinkle, 0x13, 0x12, 0x0f, 0x03FFF801, PPC_NONE, PPC2_PM_ISA206),
->  GEN_HANDLER(hrfid, 0x13, 0x12, 0x08, 0x03FF8001, PPC_64H),
->  #endif
->  /* Top bit of opc2 corresponds with low bit of LEV, so use two handlers */
-> diff --git a/target/ppc/translate/processor-ctrl-impl.c.inc b/target/ppc/translate/processor-ctrl-impl.c.inc
-> index 8abbb89630..bdbc195294 100644
-> --- a/target/ppc/translate/processor-ctrl-impl.c.inc
-> +++ b/target/ppc/translate/processor-ctrl-impl.c.inc
-> @@ -103,3 +103,104 @@ static bool trans_MSGSYNC(DisasContext *ctx, arg_MSGSYNC *a)
->      /* interpreted as no-op */
->      return true;
->  }
-> +
-> +static bool do_doze(DisasContext *ctx, arg_DOZE *a)
-> +{
-> +    REQUIRE_64BIT(ctx);
-> +
-> +#if defined(CONFIG_USER_ONLY)
-> +    gen_priv_opc(ctx);
-> +#else
-> +    TCGv_i32 t;
-> +
-> +    REQUIRE_HV(ctx);
-> +    translator_io_start(&ctx->base);
-> +    t = tcg_constant_i32(PPC_PM_DOZE);
-> +    gen_helper_pminsn(tcg_env, t);
-> +    /* Stop translation, as the CPU is supposed to sleep from now */
-> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> +#endif /* defined(CONFIG_USER_ONLY) */
-> +
+On 8/26/26 10:10, Marc-André Lureau wrote:
+> Hi Andrey
+>
+> On Tue, Aug 25, 2026 at 9:26 PM Andrey Drobyshev
+> <andrey.drobyshev@virtuozzo.com> wrote:
+>> We've experienced crashes when spice-server aborts on migration target
+>> when processing an invalid/stale guest address pointer.  While those are
+>> hard to reproduce, it seems they can be fairly easily avoided by simply
+>> skipping commands with invalid addresses in qxl_post_load.
+> I would rather try to find the root cause, rather than applying a
+> post-load workaround. It may be related to this issue
+> https://gitlab.com/qemu-project/qemu/-/work_items/3766 (confidential):
+> there is a lack of resource tracking, when a guest release
+> slot/cursors etc, the track commands may not be correctly updated - or
+> preventing resource release. Unfortunately, spice/qxl is no longer
+> maintained - we should clearly mark this device as unsecure imho.
 
-Nit: Inconsistent blank line
+Unfortunately we do not have access to this item in gitlab.
+Can you grant it at least to den@openvz.org?
 
-> +    return true;
-> +}
-> +TRANS_FLAGS2(PM_ISA206, DOZE, do_doze);
-> +
-> +static bool do_nap(DisasContext *ctx, arg_NAP *a)
-> +{
-> +    REQUIRE_64BIT(ctx);
-> +
-> +#if defined(CONFIG_USER_ONLY)
-> +    gen_priv_opc(ctx);
-> +#else
-> +    TCGv_i32 t;
-> +
-> +    REQUIRE_HV(ctx);
-> +    translator_io_start(&ctx->base);
-> +    t = tcg_constant_i32(PPC_PM_NAP);
-> +    gen_helper_pminsn(tcg_env, t);
-> +    /* Stop translation, as the CPU is supposed to sleep from now */
-> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> +#endif /* defined(CONFIG_USER_ONLY) */
-> +    return true;
-> +}
-> +TRANS_FLAGS2(PM_ISA206, NAP, do_nap);
-> +
-> +static bool do_sleep(DisasContext *ctx, arg_SLEEP *a)
-> +{
-> +    REQUIRE_64BIT(ctx);
-> +
-> +#if defined(CONFIG_USER_ONLY)
-> +    gen_priv_opc(ctx);
-> +#else
-> +    TCGv_i32 t;
-> +
-> +    REQUIRE_HV(ctx);
-> +    translator_io_start(&ctx->base);
-> +    t = tcg_constant_i32(PPC_PM_SLEEP);
-> +    gen_helper_pminsn(tcg_env, t);
-> +    /* Stop translation, as the CPU is supposed to sleep from now */
-> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> +#endif /* defined(CONFIG_USER_ONLY) */
-> +    return true;
-> +}
-> +TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep);
-> +
-> +static bool do_rvwinkle(DisasContext *ctx, arg_RVWINKLE *a)
-> +{
-> +    REQUIRE_64BIT(ctx);
-> +
-> +#if defined(CONFIG_USER_ONLY)
-> +    gen_priv_opc(ctx);
-> +#else
-> +    TCGv_i32 t;
-> +
-> +    REQUIRE_HV(ctx);
-> +    translator_io_start(&ctx->base);
-> +    t = tcg_constant_i32(PPC_PM_RVWINKLE);
-> +    gen_helper_pminsn(tcg_env, t);
-> +    /* Stop translation, as the CPU is supposed to sleep from now */
-> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> +#endif /* defined(CONFIG_USER_ONLY) */
-> +    return true;
-> +}
-> +TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_rvwinkle);
-> +
-> +static bool do_stop(DisasContext *ctx, arg_STOP *a)
-> +{
-> +    REQUIRE_64BIT(ctx);
-> +
-> +#if defined(CONFIG_USER_ONLY)
-> +    gen_priv_opc(ctx);
-> +#else
-> +    TCGv_i32 t;
-> +
-> +    REQUIRE_HV(ctx);
-> +    translator_io_start(&ctx->base);
-> +    t = tcg_constant_i32(PPC_PM_STOP);
-> +    gen_helper_pminsn(tcg_env, t);
-> +    /* Stop translation, as the CPU is supposed to sleep from now */
-> +    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> +#endif
-
-Nit: Can be replaced with:
-
- #endif /* defined(CONFIG_USER_ONLY) */ 
-
-..consistent with other 3 patches and for better readability. Rest LGTM.
-
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-
-> +    return true;
-> +}
-> +TRANS_FLAGS2(ISA300, STOP, do_stop);
-> -- 
-> 2.55.0
-> 
+Den
 
