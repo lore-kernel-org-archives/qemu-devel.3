@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4138FC61DC6
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 18:44:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E40AC61DC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 18:45:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzIbQ-0001sB-4q; Wed, 26 Aug 2026 14:44:00 -0400
+	id 1wzIc6-0004HR-47; Wed, 26 Aug 2026 14:44:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1wzIbP-0001jM-4g
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:43:59 -0400
+ id 1wzIc4-0004FL-Vu
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:44:41 -0400
 Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luoyonggang@gmail.com>)
- id 1wzIbL-0002Z8-1O
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:43:58 -0400
+ id 1wzIc2-0002mq-Rl
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:44:40 -0400
 Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-cc1c8d4a959so740797a12.3
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 11:43:54 -0700 (PDT)
+ 41be03b00d2f7-cc149372c14so1015463a12.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 11:44:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787769834; x=1788374634; darn=nongnu.org;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
- :date:message-id:reply-to:content-type;
- bh=MAgTvhPJuUZv8l3S0IaG46RWM0hrZ4KFv/YgJfLhx0k=;
- b=PHyEWXnTHY/UmOr13InFzmO4sun6gwFjjrr3JoHA4Jp8O1cGvkqiCjfqYlZtqcSjng
- DlLjWn2Tac04Yaf2QkYNG/1iwB/nCFfZQOzMXJGLIvtRmz44Z2l3ZVlX1PUqxRdTnP1o
- SRiebGRMYdkpIcuiyfO5AmJdCefE5ABiftaCUO4tBZIg+ONf++m6U9Jwz8eXJar4CzsZ
- PdtyczIRrMsJin7sJY6S5DWwy+cLSHeaHeR4Ks+5dts7TooWeyeU1nq0gOk8kmLYSMYw
- pL2FP1BVzNJwPIxezYU6XlxSN4K/PBaCFa4Eqe9cBbWkcJ9VDK0LbqWP168WYBR7o7Vq
- pnvg==
+ d=gmail.com; s=20251104; t=1787769877; x=1788374677; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=SlgR5G4e0qMheZ9Whg473zPM26cmao6BYvDobt8PbCE=;
+ b=f789p3dcP5eGN38Auwc/ut6b2IhYQ3N+Jog8exoFFsL3AfolTXtUZeiEZD/a82jcKi
+ ZJCVLFImhrBMYVMyQEBXIel1FksT2Dcg5JS5mjxxCTGqHnkZec54Mcfg4zvJ5nv4fY2L
+ tLPy36t8vQAb+RIpqYyak8lkxqF/oyHMLa08zfxHs87N1/WjgZXQU+zE13Zz6S9aoxuV
+ HJJYmIElgjDuOZRPKSfDH7rPScNyhdDfbhZ0/p+Xr0WRU6qmaVP12UEMVnlO0n0bBW1R
+ DPKGDenDwMbA/FTRh6t7LYDL9dyTN/mJwG6qLMvYCiLg0RlpcmD9geVbGRW8sNtZ1b0K
+ THbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787769834; x=1788374634;
- h=content-transfer-encoding:content-type:mime-version:references
- :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=MAgTvhPJuUZv8l3S0IaG46RWM0hrZ4KFv/YgJfLhx0k=;
- b=ZOUgJZrBdIcqKWuIQ/BYnokaixx8kYPQAdZTiWKrySXDkSuQcCb0C7q7B4uGmVICP4
- IXr4a+uWqRxb+U8T1nTyWWbdHtLQiSRUFeYWGnS8Ux9MYrZvizA4WaJ6UZGM17BvqiB6
- 5t0Eo6kokW+OAKidsrzF1VkEm3rFRr2kSZr4YTqgfdWR49VaFbZH9eYijQAw6Dh8+hRF
- F04ovaNSMdGowgIphvbs+93e6T3aNO1Ea6r2EN7Tx7foWWtZWXnxWvtD5uzU+Z3x76Vd
- 2FkhTxetlT1vkR9Dq3ZXs6f4dxL2zw79Qyyc6typ1x9Ps4EqEGCBupaad2niVz1k6Ehz
- Xa8g==
-X-Gm-Message-State: AFuF++njUUEldjDc/Mm5jYsNwGGXp+26BthAOtp9QJZJgpGtDb1RZJ71
- vGyQ/w7K82eogz5kn9gjx4HIa2t1A7rcJa9qRQ09ebxXW52cwviiNKSg1rvt+HSrers=
-X-Gm-Gg: AR+sD1098z2UxoV/9NEDlrEvw+w2cxTBHPVG2QGf/NP0mQH5Oqiub6wiSjMfC+5V08v
- vf45UrX5cNuQSQgQ8A9Uq3hvAADNWnLDYF8NhR7R0UT6YwG6dwhrZ2VDghUsDt/jtRNwOJXCQMp
- GbailneZRuGTWgXOZ8HwRoGVc2coOJWyjqGE5WPNtq78hhgBthGruzqZJSh34t5RQfVVdvdtxzG
- fe7XtCvMWolq36w3YWrq0/5wun6ieEfwp+qVaComt5IWN/rvInS7DlY10dg3dNkVgcqDcdKnLiL
- AqpD484FAYYZZ3N2sQVtclOxHORiS6pr2y/WTgBGYiOM13wE/KaUcxQscSnqCzwvss3Ioua2PwO
- oWGLjo0se2WpKOvAeliugdZqwugMXUs3ZomAQYsW2FZ2QqYQjlxriKt8LLF37c8d5/dFj0efOkX
- cG+jrouYrg3jGnF4WUYyaYXucKX8P0scf4dYSwFvUKy60puIanN4R5TV3FdixndDhaCWTyqsczz
- EJm4E7XysR9aAEtRLdc8rXJ3WgDsReU
-X-Received: by 2002:a05:6a21:3a83:b0:3cc:841d:bb26 with SMTP id
- adf61e73a8af0-3cf8485c070mr16100519637.15.1787769833619; 
- Wed, 26 Aug 2026 11:43:53 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1787769877; x=1788374677;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to:content-type;
+ bh=SlgR5G4e0qMheZ9Whg473zPM26cmao6BYvDobt8PbCE=;
+ b=oXiLS+YHQ9GYRYN/HBlCfl6DcNN9lDxjsbGa5CvX/FsQGu9i4N3Il+OEwfJ6nOHa6r
+ shzPcbZp3yffVLd5/vq8D1fPgNWAQBdoXE2t1937AtzuTILIO4HyzF+ObJtz/A2sh7Gf
+ PYExYy7jWqrjnNPdwhiJUUlp8O1piJDngYATM9DPGE0TTRvXTs1o11LZEH6xnWfLCHlV
+ 3TmFcyCO0ObC+qCezxygIdb2KZlNo8M+81k22JAnBq4h2MB2TBv3jiVe29xvAa6b9dam
+ oe/zv2fuoNWrVuK/8WtybNQqnHVYSOCLPu8ZNopafDW/Q6q/8+nCpCGcszq1DTZHyKwD
+ CVnw==
+X-Gm-Message-State: AFuF++mytMj9JhgeXqtzzIB416qaAssUUwZtgVl+K3dOH3jn1Calc0UN
+ wMW2Y/B5Zacqp/w3af2D3cPSekOOvdeUAPk2sp0kskIKzq2TtrlkjqOP4vs7WRJF2dg=
+X-Gm-Gg: AR+sD10lZctvu+YcnxalKt+IQapWwihwfbMaIkzWkHfmBc1b0odlervmIj9JenGhXqD
+ IqTS8dpwW2ml3fu0u1WK1HBaeJ9d4gFxxm+08egNnpiQte2lNRbKzwpSDl+ugmFPpqb3zv2Bl9l
+ RNPTyUG5Us6FcEfrDI0Zr+KcP2CjUHJScWlOBv6/y5SISEpmUVpVXjwy/b7+18jLOBvgBNLMWZM
+ 6mMSd4sPdJFEzRqlbl2iPisLyu1I2G+el88rp9PGkZAs9M0qN4ArSYEkkeCWlw3dqE54RSmDKZD
+ bb+Oe6h3MPRjjXxriB22Cb8q7ZZQQCsHVnq1v/kBZmd/SMwaq6ADiZfSW8j+nS011sF+sOA0u9Q
+ BJEbs+IPC7zgo0oIMfPtd7Z5GqssCjbDVG5TNCgTff70m8enfWjNZhpMRUjjTC1J7qngkCxQ3dJ
+ HFb+726GpSxUojCtICz2VSSBEC4D6S1r/6IDUlWtQ44xB9d1+zs5aTJsam+hEzkWw8By3DHutqh
+ 5JyhoUzLiBTQ4I6ilX79w==
+X-Received: by 2002:a05:6a21:390:b0:3cc:b26a:7686 with SMTP id
+ adf61e73a8af0-3cf7628564bmr19886931637.6.1787769877472; 
+ Wed, 26 Aug 2026 11:44:37 -0700 (PDT)
 Received: from WIN-BH9M8FJACR9 ([103.94.185.75])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-3283d60c291sm17681846eec.6.2026.08.26.11.43.45
+ 5a478bee46e88-3283d60c291sm17681846eec.6.2026.08.26.11.44.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 11:43:52 -0700 (PDT)
+ Wed, 26 Aug 2026 11:44:36 -0700 (PDT)
 From: Yonggang Luo <luoyonggang@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
@@ -98,14 +97,13 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Igor Mammedov <imammedo@redhat.com>
-Subject: [PATCH v2 08/13] hw/riscv/virt: prefix ACPI helpers with riscv_virt_
-Date: Thu, 27 Aug 2026 02:42:22 +0800
-Message-ID: <20260826184229.1145-9-luoyonggang@gmail.com>
+Subject: [PATCH v2 13/13] meson: build single binary
+Date: Thu, 27 Aug 2026 02:42:27 +0800
+Message-ID: <20260826184229.1145-14-luoyonggang@gmail.com>
 X-Mailer: git-send-email 2.52.0.windows.1
 In-Reply-To: <20260826184229.1145-1-luoyonggang@gmail.com>
 References: <20260826184229.1145-1-luoyonggang@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
  envelope-from=luoyonggang@gmail.com; helo=mail-pg1-x532.google.com
@@ -115,7 +113,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,73 +129,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- virt_acpi_setup and virt_is_acpi_enabled collide with ARM virt when
-  both architectures are linked into one qemu-system binary.
-- Rename the RISC-V helpers to riscv_virt_acpi_setup and
-  riscv_virt_is_acpi_enabled. Leave file-local virt_acpi_build* names
-  unchanged.
+- Add -Dsingle_binary / --enable-single-binary (default true) and
+  --disable-single-binary to gate the combined qemu-system binary.
+- Map each base arch to a primary softmmu target (arm ->
+  aarch64-softmmu, riscv -> riscv64-softmmu) that supplies arch_srcs.
+  Sibling targets contribute target-info-def.c only.
+- Apply common_ss and system_ss once against the union of those
+  base-arch configs so constructors and Kconfig stubs are not
+  duplicated.
+- Build qemu-system only, including on Windows. Do not add
+  qemu-systemw: a GUI twin would keep QEMU exporting data from the
+  .exe into DLLs, and those data exports cannot be delay-loaded
+  (qdev_prop_array and other qdev_prop_*). That would block enabling
+  modules globally on Windows.
 
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/riscv/virt-acpi-build.c | 2 +-
- hw/riscv/virt.c            | 6 +++---
- include/hw/riscv/virt.h    | 4 ++--
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ meson.build                   | 69 +++++++++++++++++++++++++++++++++--
+ meson_options.txt             |  2 +
+ scripts/meson-buildoptions.sh |  3 ++
+ 3 files changed, 71 insertions(+), 3 deletions(-)
 
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 59c454f4f94..832261391d5 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -1017,7 +1017,7 @@ static const VMStateDescription vmstate_virt_acpi_build = {
-     },
- };
+diff --git a/meson.build b/meson.build
+index 449d50f2983..eea54fd0ba3 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4249,6 +4249,18 @@ if host_os == 'darwin'
+ endif
  
--void virt_acpi_setup(RISCVVirtState *s)
-+void riscv_virt_acpi_setup(RISCVVirtState *s)
- {
-     AcpiBuildTables tables;
-     AcpiBuildState *build_state;
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 9019a0a04d6..c53370a35f5 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -1293,8 +1293,8 @@ static void virt_machine_done(Notifier *notifier, void *data)
+ traceable = []
++single_binary_arch_objects = []
++single_binary_bases_config = {}
++single_binary_deps = []
++single_binary_crates = []
++# base arch -> softmmu target that supplies arch_srcs
++single_binary_primary = {
++  'arm': 'aarch64-softmmu',
++  'riscv': 'riscv64-softmmu',
++}
++if not get_option('single_binary')
++  single_binary_primary = {}
++endif
+ emulators = {}
+ foreach target : target_dirs
+   config_target = config_target_mak[target]
+@@ -4321,8 +4333,6 @@ foreach target : target_dirs
+     endif
+   endif
  
-     virt_build_smbios(s);
+-  arch_srcs += files('target-info-def.c')
+-
+   if target_base_arch in target_arch
+     t = target_arch[target_base_arch].apply(config_target, strict: false)
+     arch_srcs += t.sources()
+@@ -4391,8 +4401,9 @@ foreach target : target_dirs
+     lib_deps += dep.partial_dependency(compile_args: true, includes: true)
+   endforeach
  
--    if (virt_is_acpi_enabled(s)) {
--        virt_acpi_setup(s);
-+    if (riscv_virt_is_acpi_enabled(s)) {
-+        riscv_virt_acpi_setup(s);
-     }
- }
++  target_info_src = files('target-info-def.c')
+   lib = static_library('qemu-' + target,
+-                 sources: arch_srcs + genh,
++                 sources: target_info_src + arch_srcs + genh,
+                  dependencies: lib_deps,
+                  objects: objects,
+                  include_directories: target_inc,
+@@ -4400,6 +4411,16 @@ foreach target : target_dirs
+                  build_by_default: false)
  
-@@ -1652,7 +1652,7 @@ static void virt_set_iommu_sys(Object *obj, Visitor *v, const char *name,
-     visit_type_OnOffAuto(v, name, &s->iommu_sys, errp);
- }
+   if target.endswith('-softmmu')
++    if target_base_arch in single_binary_primary
++      single_binary_bases_config += config_target
++      single_binary_arch_objects += lib.extract_objects(target_info_src)
++      if target == single_binary_primary[target_base_arch]
++        single_binary_arch_objects += lib.extract_objects(arch_srcs)
++        single_binary_deps += arch_deps
++        single_binary_deps += target_stubs
++        single_binary_crates += main_rs
++      endif
++    endif
+     execs = [{
+       'name': 'qemu-system-' + target_name,
+       'win_subsystem': 'console',
+@@ -4481,6 +4502,47 @@ foreach target : target_dirs
+   endforeach
+ endforeach
  
--bool virt_is_acpi_enabled(RISCVVirtState *s)
-+bool riscv_virt_is_acpi_enabled(RISCVVirtState *s)
- {
-     return s->acpi != ON_OFF_AUTO_OFF;
- }
-diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-index 5559783aebb..38ad8b0097e 100644
---- a/include/hw/riscv/virt.h
-+++ b/include/hw/riscv/virt.h
-@@ -133,9 +133,9 @@ enum {
- #define FDT_APLIC_INT_MAP_WIDTH (FDT_PCI_ADDR_CELLS + FDT_PCI_INT_CELLS + \
-                                  1 + FDT_APLIC_INT_CELLS)
++if single_binary_arch_objects.length() != 0
++  single_binary_objects = []
++  foreach spec: [[common_ss, common_all], [system_ss, libsystem]]
++    src = spec[0].apply(single_binary_bases_config, strict: false)
++    single_binary_objects += spec[1].extract_objects(src.sources())
++    single_binary_deps += src.dependencies()
++  endforeach
++  foreach base, tgt: single_binary_primary
++    if base in target_common_arch_libs
++      src = target_common_arch[base].apply(single_binary_bases_config,
++                                           strict: false)
++      single_binary_objects += target_common_arch_libs[base].extract_objects(
++        src.sources())
++      single_binary_deps += src.dependencies()
++    endif
++    if base in target_common_system_arch_libs
++      src = target_common_system_arch[base].apply(single_binary_bases_config,
++                                                  strict: false)
++      single_binary_objects += target_common_system_arch_libs[base].extract_objects(
++        src.sources())
++      single_binary_deps += src.dependencies()
++    endif
++  endforeach
++  single_binary_objects += single_binary_arch_objects
++
++  single_binary_link_args = emulator_link_args
++  single_binary_link_args += enable_modules ? ['@block.syms', '@qemu.syms'] : []
++  emulator = executable('qemu-system',
++             sources: [single_binary_crates, files('system/main.c')],
++             dependencies: single_binary_deps + [sdl],
++             objects: single_binary_objects,
++             link_depends: [block_syms, qemu_syms],
++             link_args: single_binary_link_args,
++             install: true)
++  emulators += {'qemu-system': emulator}
++  traceable += [{
++    'exe': 'qemu-system',
++    'probe-prefix': 'qemu.system.multi',
++  }]
++endif
++
+ # Other build targets
  
--bool virt_is_acpi_enabled(RISCVVirtState *s);
-+bool riscv_virt_is_acpi_enabled(RISCVVirtState *s);
- bool virt_is_iommu_sys_enabled(RISCVVirtState *s);
--void virt_acpi_setup(RISCVVirtState *vms);
-+void riscv_virt_acpi_setup(RISCVVirtState *vms);
- 
- /*
-  * The virt machine physical address space used by some of the devices
+ if get_option('plugins')
+@@ -4833,6 +4895,7 @@ if config_all_accel.has_key('CONFIG_TCG')
+   endif
+ endif
+ summary_info += {'target list':       ' '.join(target_dirs)}
++summary_info += {'single binary':     get_option('single_binary')}
+ if have_system
+   summary_info += {'default devices':   get_option('default_devices')}
+   summary_info += {'out of process emulation': multiprocess_allowed}
+diff --git a/meson_options.txt b/meson_options.txt
+index a07cb47d35e..9d86a46fba7 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -91,6 +91,8 @@ option('tcg', type: 'feature', value: 'enabled',
+        description: 'TCG support')
+ option('plugins', type: 'boolean', value: false,
+        description: 'TCG plugins via shared library loading')
++option('single_binary', type: 'boolean', value: true,
++       description: 'combined qemu-system binary')
+ option('debug_tcg', type: 'boolean', value: false,
+        description: 'TCG debugging')
+ option('debug_remap', type: 'boolean', value: false,
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index c003985047c..d8e49111ac7 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -19,6 +19,7 @@ meson_options_help() {
+   printf "%s\n" '  --disable-install-blobs  install provided firmware blobs'
+   printf "%s\n" '  --disable-qom-cast-debug cast debugging support'
+   printf "%s\n" '  --disable-relocatable    toggle relocatable install'
++  printf "%s\n" '  --disable-single-binary  combined qemu-system binary'
+   printf "%s\n" '  --docdir=VALUE           Base directory for documentation installation'
+   printf "%s\n" '                           (can be empty) [share/doc]'
+   printf "%s\n" '  --enable-asan            enable address sanitizer'
+@@ -486,6 +487,8 @@ _meson_option_parse() {
+     --disable-seccomp) printf "%s" -Dseccomp=disabled ;;
+     --enable-selinux) printf "%s" -Dselinux=enabled ;;
+     --disable-selinux) printf "%s" -Dselinux=disabled ;;
++    --enable-single-binary) printf "%s" -Dsingle_binary=true ;;
++    --disable-single-binary) printf "%s" -Dsingle_binary=false ;;
+     --enable-slirp) printf "%s" -Dslirp=enabled ;;
+     --disable-slirp) printf "%s" -Dslirp=disabled ;;
+     --enable-slirp-smbd) printf "%s" -Dslirp_smbd=enabled ;;
 -- 
 2.52.0.windows.1
 
