@@ -4,108 +4,169 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAFC0C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 06:02:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3785C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 06:06:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wz6if-00015V-Sz; Wed, 26 Aug 2026 02:02:41 -0400
+	id 1wz6lJ-0001si-88; Wed, 26 Aug 2026 02:05:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1wz6ie-000150-Mn; Wed, 26 Aug 2026 02:02:40 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1)
+ (envelope-from <prvs=6911f864d=Alistair.Francis@wdc.com>)
+ id 1wz6lH-0001sR-VL; Wed, 26 Aug 2026 02:05:24 -0400
+Received: from esa3.hgst.iphmx.com ([216.71.153.141])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1wz6ic-0006bv-Q8; Wed, 26 Aug 2026 02:02:40 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67Q3VlRD2830892; Wed, 26 Aug 2026 06:02:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=wlTFJ9+o+xKzxmsmfpHCJrVORnqBX99gZ/oG40efH
- d0=; b=ff3q50BhR594Yoid0jd8cDHQJtGDpCpwyf5ePQNDXtuxCc3/KnSwbccnR
- A10HgfQdGfMLa5ybG37Ny6OeXZxUDykx41XQTYrouglixg7JE6HJcF/6WX3gv2M8
- mVh432/HzkfA1waaPWCOyFeptd089DOH3Ez08jMY8KwRcB/7EM39OQrS6Ef/eU/Q
- It5ayfWP4fxjDj9RHzJuJs5QhzZtjE4+Ma80vWrg1snX9mr+A3eFlKGgCEZRRGw9
- ZhPt0igZznVJkT1FWrkVxCxqb5wauQim7R2OiMc6xpRyz55LsOk8emARCCZWIyPU
- Q4z6VmYP5dn8Qoo0HV//sUW/qfIew==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73g4vvce-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 06:02:34 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67Q5uQSR017473;
- Wed, 26 Aug 2026 06:02:32 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkh8aq4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 06:02:32 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67Q62SQb41222430
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 06:02:28 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C5A6D20043;
- Wed, 26 Aug 2026 06:02:28 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4A70620040;
- Wed, 26 Aug 2026 06:02:26 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.39.21.125])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 06:02:26 +0000 (GMT)
-From: Gautam Menghani <gautam@linux.ibm.com>
-To: milesg@linux.ibm.com, clg@kaod.org, harshpb@linux.ibm.com
-Cc: Gautam Menghani <gautam@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org, qemu-stable@nongnu.org,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Nikhil Kumar Singh <nikhilks@linux.ibm.com>,
- Michael Kowal <kowal@linux.ibm.com>
-Subject: [PATCH v2] ppc/xive: Trigger the pending interrupt for a guest after
- migration
-Date: Wed, 26 Aug 2026 11:32:15 +0530
-Message-ID: <20260826060217.24978-1-gautam@linux.ibm.com>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1)
+ (envelope-from <prvs=6911f864d=Alistair.Francis@wdc.com>)
+ id 1wz6lF-0007DU-NI; Wed, 26 Aug 2026 02:05:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
+ t=1787724325; x=1819260325;
+ h=from:to:subject:date:message-id:references:in-reply-to:
+ content-id:content-transfer-encoding:mime-version;
+ bh=hqvo70sqCQuNimSK+EG13IGy9eaxuxfxA+JUNuAzVpU=;
+ b=GPxOo855OqqBKemDv+6bvamydChraGac0XdY3qBwMjtvcAFhyDdGlJ00
+ X5SGjvBorw6x82wqUCgMZPBA5BnxIdRnEaFCNysBIGrY5Il/7taKlZAhk
+ +xUQX8mdkSXIv4hMV7ajNQox+Krb3cIDuNz8kIkFwVFkxVZAK2KqRjSa2
+ BRb3Q3WXg/S2w33cvL1fE8JjTtURkRnY9gQ416tvb7HZc8L33/YCViS6s
+ Puu339I+oJqvAwTpSSoOLuPNoGxmfzmgmGWbHk3i4e2qkwyu3c8C6Yghi
+ 93FRecv1WRpkhnyFVSwvcxZ/DeukWmTe4t3f+Yd5VPVkGv99NwCH9nKSy w==;
+X-CSE-ConnectionGUID: HYl32vCpQie0bUUANot9Fg==
+X-CSE-MsgGUID: Lx+4tv3CSr6go7G7Zl1lzA==
+X-IronPort-AV: E=Sophos;i="6.25,244,1779120000"; d="scan'208";a="154288024"
+Received: from mail-westus2azon11012040.outbound.protection.outlook.com (HELO
+ MW6PR02CU001.outbound.protection.outlook.com) ([52.101.48.40])
+ by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
+ 26 Aug 2026 14:05:21 +0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=FdCqGyxa90F7boDoEJo3LJKopcVOckRiq1L6ScRQJJA3z9UBVttbDVoEm/v+KfF57D/aQA4bn9DuozstD63JhRljSvrtcB9GmsUIlb/Q1PaiMY/IXqtgvjIl45JopWjxnu/zVxLILjdQuH9DjwsHz7+GNsWA7oc7BlKeGQzwMyFMpJH6s0ihmRGlQThTS6T1E6CvqUM8FXbETQTZYP8Itt78lJIrjSclf8u0IZZfE9nl8iqrBsm6FMsj/0yrJOwVYW4Cp7CfRjiT9bJMQ0Y8UN8A8my3UQLDGcX4BeH92akgvN/xdBDt67L48pWUaO/Cam1IJ91+UGnhRR8XIlFrnw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hqvo70sqCQuNimSK+EG13IGy9eaxuxfxA+JUNuAzVpU=;
+ b=aR3pHqQbzG/+GAFnWu07T9fTlT+ZUaczzNzbhHlo7rrTDF/j95Kj5vnhmODvZVESasWgNLscQXg3ETa/WnmCZs7nhnw53Hfr/Xj2/t+z9bMFNLabGbi4yHl3TpmNcXKdt3GBJh0bmRP7/HzP5D64s4NiinEKbFBG4lhplRWRSorgHEjASnAAIrkb1lw1D6NrsY5/jazVuWRxZnIvDcYqxsbm5h7DSyGKTc4K1c12UdzTChhCzRwFXhpqAHMKjWpaQj/b7XhnD2lcPGsIRiRauZpFRpQCZjW2dBsV8o9iSo/6dFNtVZ2tKoTPCasWzMiWIH6dAJ5XJrzG21oxDdNjtA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
+ header.d=wdc.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hqvo70sqCQuNimSK+EG13IGy9eaxuxfxA+JUNuAzVpU=;
+ b=nDYS6DW2BaovkpiAqGPI/ztpoCeYwDf7pyClHeNaiZQZHrEAfbSHRQUzXiqkLinOhnECneAhUz8LvRdCMk+Ul60p1anFR6MJQp4YR8tvGOx/Lvd0aVRpxg5/ULo2D3+51Eqj9tGJje1wZitcDPtYRPbcuYqzaWoZmddl6OX7QGw=
+Received: from CH5PR04MB9550.namprd04.prod.outlook.com (2603:10b6:610:20e::17)
+ by CH2PR04MB6490.namprd04.prod.outlook.com (2603:10b6:610:69::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.8; Wed, 26 Aug
+ 2026 06:05:15 +0000
+Received: from CH5PR04MB9550.namprd04.prod.outlook.com
+ ([fe80::2dd5:1dc8:e3e7:5d31]) by CH5PR04MB9550.namprd04.prod.outlook.com
+ ([fe80::2dd5:1dc8:e3e7:5d31%4]) with mapi id 15.21.0360.005; Wed, 26 Aug 2026
+ 06:05:15 +0000
+From: Alistair Francis <Alistair.Francis@wdc.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "daniel.barboza@oss.qualcomm.com" <daniel.barboza@oss.qualcomm.com>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "chao.liu@processmission.com" <chao.liu@processmission.com>,
+ "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>,
+ "palmer@dabbelt.com" <palmer@dabbelt.com>, "liwei1518@gmail.com"
+ <liwei1518@gmail.com>, "frederic.petrot@univ-grenoble-alpes.fr"
+ <frederic.petrot@univ-grenoble-alpes.fr>
+Subject: Re: [PATCH v3 0/1] target/riscv: correct cbo and lq disassembly
+Thread-Topic: [PATCH v3 0/1] target/riscv: correct cbo and lq disassembly
+Thread-Index: AQHdNHnU+OudLdqfx0CPbmeMpeG0KLav2MQA
+Date: Wed, 26 Aug 2026 06:05:15 +0000
+Message-ID: <f30f8dbd7da63cb1035de4232858809020d72af8.camel@wdc.com>
+References: <20260825100922.387919-1-frederic.petrot@univ-grenoble-alpes.fr>
+In-Reply-To: <20260825100922.387919-1-frederic.petrot@univ-grenoble-alpes.fr>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Evolution 3.60.2 (by Flathub.org) 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wdc.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH5PR04MB9550:EE_|CH2PR04MB6490:EE_
+x-ms-office365-filtering-correlation-id: 92665e8c-8b4a-4411-01b0-08df0337ff8b
+wdcipoutbound: EOP-TRUE
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|10070799003|23010399003|376014|366016|19092799006|22082099003|18002099003|11063799006|3023799007|38070700021|56012099006|10067099003;
+x-microsoft-antispam-message-info: bI7KuOsdGHfpa5skZB7+Ny5HcK6spyby27R8aFTWpkGkDWQDmYm6JyDoJY+7pwoAJFwRpQmlw9rkfQyq9Zr1pjI6T9rqouKZQEDcddZFWjiob84mt3N4C4kj4MovjQdMdPlW85DVD1BZPt8/pXzWCEdjMwOh8k2DxKG2RVNLMXg6TQwUcNC9EzwNYyX+x3vwZ4NOH2tGIDw/P3JohJEakkwSdcizxcGjMikZ/jTTTfuh3C5CWo0b3dBrayaLfN7sVygY6AH834DJSgMBD0YbjBPCdEz/WaobvP3PKMyWT22vYEC/JIEkZqdJ/dT9ui6bOGylYNHd+Bsq+TskWxBhRO2E6FXResVvzyLTPAebzavgXmhKERakfcZeSJBcVGeF3CcAOyn3HgE7O136Md/kyTB22M7/Fnz9nMF6VqFggXXDRHgFXnLftl5AO/FzOqfSBrrZIavxX/UHa3wX6mRnRgeFbS0gaNTDZxsosNIUU283Nd4srH5aa6tzn5LcN/eZyIY1QyyLjiyeykXLgwZtMcrU4idVTAtU6YfqtF3QUfvBrzXpBJ+MqZz1BE2TQSZZZTpqEvIOiv8Y93DRrKaW8+afsVPDpN9dcBh+5TLa4YNOjQdtInBmMG0OdS7ZpaTQ8BjTcFz1/pP41k0bhwnpkq4rWGYWHSOQlJXAB1lK+SUcLjpc2FCB/GeCQaNoByqOHgzsqjqt08MjrUtCLMwWSwhDa8CFPKb00s+R3a5GWI4=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH5PR04MB9550.namprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(10070799003)(23010399003)(376014)(366016)(19092799006)(22082099003)(18002099003)(11063799006)(3023799007)(38070700021)(56012099006)(10067099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 2
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?WEJHV3cxbUtOekpZaVFxenZFdTcwNXdIdFdmWTd4N3pzdVowWi9KZjBvcWVR?=
+ =?utf-8?B?MmFKZE9RZUkyMkUxUTVuT3JxSnhDZGxIcDBOSkJ0SWdoOVFjS0ZpUDNybTFE?=
+ =?utf-8?B?SUx0bk54TUJUWGFITDJUKzJnRVlPY25nYytTUlV3bVY1anZBUmFZVU9xSktj?=
+ =?utf-8?B?WFBINTF4Ni9BNWFSQUhtMlpyTzc2czZ4Y2NjbXNqMXpIL0RFTFVOLzZkZzV5?=
+ =?utf-8?B?b0NNNjNWS3c3L2tFWFM1SFZVakluNmZhRWJ4WWEvWDk4RUtJUHN6ckVsOW5t?=
+ =?utf-8?B?YVdlZ3d4T0ZnRm5hRW5VSmtDYUQyVCtmRmhBRzNBQkZqdERTMFZrM1ZvWDI3?=
+ =?utf-8?B?S2ZTQUwyNU93Q0c5b05HQlo3Qkt3RG51OGIxcU1pVkwwN1Yvb2hjWW5jejhH?=
+ =?utf-8?B?WWg2QkxMR3BiV3pOdENOT1lwclEweDFzeDBiT3NkT3ZCZU9JTXU4WG9DMlY2?=
+ =?utf-8?B?dWl4Yi85SCtPOTlsWjhCaDd4dnZPQ1hCbGxZaW1BaEgrS0dhMHZvV0lJT09N?=
+ =?utf-8?B?WDBWZldEVGZhK3dKVzVackdaT2swY3RtU3NHL2lINkhNRlpjREhvTTJySVlx?=
+ =?utf-8?B?YzBIQWNDU1Vkajhscm9jelY2U0xaOStVbFhBZ3FQVHlUdEl2d1BxRUduRk1V?=
+ =?utf-8?B?bEZ5TkNxOWJZdzE3eHQrOUpwZ2xjeDUyTXNDbkQ4ZU54L3ZjNldVOTE2K3BH?=
+ =?utf-8?B?M3NibFU5K1JRMWtDR09VdkFrZHlkWHpMd2I3OUZDcDFTeEk1eS9VdlF4UmNo?=
+ =?utf-8?B?cmRZNGhtVU9Zc2tNMDAxZXQ1Z0JrUnBEdG1mUTZUNDI3VnRPaUYrU2JOdnYx?=
+ =?utf-8?B?cW5SZVM0bHZ1KzBub1pqMDViS3RjYitVOVB6THpueXgvNXd0MlVnT29oS1hz?=
+ =?utf-8?B?ZldnQU85c1F2UXBDZytoUTV5cDkxVVlubllOVm1zRVl3MC9xZk9DbVpZb1B3?=
+ =?utf-8?B?d3RwYnlmaGNOSkFRcnpHeWlpcW1JNFhKZzdFWVVvcWFsVU9lNFVET0I5OXJj?=
+ =?utf-8?B?anNQUFJaVUZ2Qy9KL1Z4VnVONDM4dWtRWGd3U0U4U1VvdUkxMzRvMElZVVFQ?=
+ =?utf-8?B?U2FoOE5mZjVncG5Ld2VVRGJZQmY0Y3NHVkdFQkpwdGZsTmhRQjRjcmxPL2Js?=
+ =?utf-8?B?Y2tPWDVEaHFNdy9KNXRBNzF0MllLekxNMjFJTi9OcnFsLzZRbEZaaGNDcDU5?=
+ =?utf-8?B?MXhIV0pTTnJJaW5FaDVWSkxGK1U4MkFwb2VJbGlwaTZ4STNUa1BJTWE1QXNE?=
+ =?utf-8?B?SEluZk5CNnBkQUVFak13VUw1dzBjWEIrL3NyLzhLeG1qeXJVWlpxTm01OStz?=
+ =?utf-8?B?eHM2RHhzdU95b1JhSDM3Rk1ZbFJ4SkYyd2dURnY0a253bWZzVkc2NzZWc2FM?=
+ =?utf-8?B?cmpHK09mSWNIZ0psNmtVVTVhdlJ3eWNJSFlKWmJPUmZ3VzhVcnFMMEhjb1I5?=
+ =?utf-8?B?QVI2NVE2V3BVQzNsR1hWUkdLSVRsQkVJOU5yaUtYQ245WE9GNzJ1UjhSZHlU?=
+ =?utf-8?B?V0krZnFodzFKRERtc3BveFJnNm1oRldEaGpPMHRSWEVtdzVhTlhmckNDb2M1?=
+ =?utf-8?B?dWhKMElHZ3hKeVd1Nldua2hmVzJnRXRLOUs5QTBNYnBCcmdnYzE3SHFFTVhl?=
+ =?utf-8?B?dm9pOHdqTzB5UHlnTzFsKytxaFVGV0RWcUI0WHRLcEh6c1pyaFhQd01ZbW8w?=
+ =?utf-8?B?Z1JhVlh1NkN6M3psRENYSlBYVlkwZzluOU5oSk5zL3F0WGhlTFNiSmE2NUVq?=
+ =?utf-8?B?VUNlcGN2d3ovZWJCa2JEdzRvTGt0M1hvdTNSVFB5VjlpdWVHR0JDQTlWeFpk?=
+ =?utf-8?B?dFpQK0dIL0lkQnhIQ0RVem5WS1d2WG00Y1B5OTZwK0FtVGVuZVhKb0pkRGRQ?=
+ =?utf-8?B?NkNOdXNYalRub2I3WnVtM3BySEREUDdDc2I5by9UNW54N3B0enpBaDRzend5?=
+ =?utf-8?B?K0d2bmh2Nk5ZcXpSM2xnYWhrRmt3ckMyQWdoNVZCRVRya0NFNTFVaytTTndT?=
+ =?utf-8?B?ZXdJOTM5UnBjNVkra3pDK0dVdkV3Mit5QW9wZ052enhaNEJxZXd2d2NjcDFX?=
+ =?utf-8?B?TWxkYXVNU1VCWndKR092QkRJZ1ZBNHpXVm9sSng0VnE5emtMVnFSaUhldE9K?=
+ =?utf-8?B?QStYWTFDY3ZvdFhYWWNTa0s0RWkwTGlKVjdzV2NJeWMzN2RCMnZpb3U3SDM2?=
+ =?utf-8?B?OG9DaVQwcWhFUEQ0NVd4NnZLVHBvWDJhSzhYVU1FTGljZmxha0cyL0JBdW0z?=
+ =?utf-8?B?MWtrMFd5OGdmKzM2TlY4cnhqSTlaOWpJVnZmMExIazFGb043ampjUmJoSW1X?=
+ =?utf-8?B?WVZ0UWNyN0w1MmpteUYyd2RHdUhta1VETFZtTGRuWkJEaG56SlVDZWxvZ0R6?=
+ =?utf-8?Q?bM4pUIKv5EBwbAiwtqLU3QxsjzoWcNqhAM3H9aK7QvNGQ?=
+x-ms-exchange-antispam-messagedata-1: OL+x995rmExAr2gOnhJdFYmcp6t+HXwO78o=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <2F45423C7F8F654DA03BE94F7AA3D909@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: OKS36hUW9W2JhMfileSsy9gam279hZZ7
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDA0OCBTYWx0ZWRfX58neTq9eSbVB
- oBPOvyIBVDP2bgO+d+F+GWGjpOixOj11+LR8YQaildn/TcyMMyh9VMOshwRp4I/hzJSqOb60OZd
- 5KcBALnIlMKlK3Rpbj3jDIWeF9EeE9w=
-X-Proofpoint-GUID: OKS36hUW9W2JhMfileSsy9gam279hZZ7
-X-Authority-Analysis: v=2.4 cv=JZyMa0KV c=1 sm=1 tr=0 ts=6a8e817a cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=69wJf7TsAAAA:8 a=VnNF1IyMAAAA:8
- a=s8C7O4VJWu0c45J7ejMA:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDA0OCBTYWx0ZWRfX1aiewyzVm0vP
- TYDpyAVTDqz+FMxyuJAztFCcKXiVqYsh5ic2BKy5I5gIo/OssoEO8RbIumYTh3lAhUteupzyaqc
- eKrn5RfprSFn0OYIUaYgM8m4y+3ccwysgyfRzbS9dxmy0YWpF1eOPzP+cdcKM30PUUCfW6/M3xl
- fxl+hVaqxtdrwj767N/VqBg8sFMODLoOrLek6Y+9IAUQkbgD87imWPRbtieyM38us2VUwIyqzvF
- r8R/mdiGSfApFRU9mE7JmYi1g5tR1s7UcDv7X+XaEiQp2tPMlSJtbC/xAOwEUGmHRG0l440EcG9
- yT4gJ+1A5h6j36ZKJ4rQdHfWb9WQaGg5gxRNofY4PYKEVXwefkVMlU6YmkM690ECn58NwDb18G0
- Mm/HDuEnoofugNHzZF9lGOlPYHSW/gFtsHfFKo2Jrs++bTTIiQVmAGvB8a5qBQNgeypqg/H0pJE
- f3ZtUFCYQCrmbwRu9ow==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_01,2026-08-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1011 adultscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260048
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=gautam@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Exchange-RoutingPolicyChecked: YBrdYWL9sEv6BIygzn2EeuDOZ6YInerWw+b3npu+HPCbM7LhqPaqC4bs8XQbP+0bj0X/E5urJTMBSpAZgX7J6KaYvHJc5kaGHARjq3CEmtC84mIkvrSQ9yjaS2nzy7eKe1C02UblrlUxE8t5or2I2PfGNBp5uBe0oGXHr0z+9UZPjGZYSo2dux+rqtG80DDnn0Yu1z1+D82xf5L+jV1WKsasZKHZNdrfJ6/xxu9bPk34JgcYrh2hu/pVPOd4DYEZZ4wQG+7lUXpqAHB/hpzVBF95zqUeLqEadZDzI5X+GtOXnX7L/sgYII2KZ+GIJuyakZHxPwtdQJdMsIWJ2HrBNw==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: P0+MLDB5a7llMDAuBnp8xzq3dULeVHORzLeiKTkhJxFtckwvCs/BG4FGeCwK03/b608r/Gj5gif591Nk4znMiR2wnql7lHNBXNd9/PWIdXan32XGyJRL88zFYEKcoBz5Fn5wpToIAJtppseQE2hQzvY4fHkqYhnUcq2Wezy+SAQ55WZSeqsdbKs/ozjqqf6lp5/4dqZuF7Ic92D7SK1mPpjrBMGpNvy3tQmoMteB1K4ODo4E4NDB4RRemoVBNZJBzuEcIBUSxtbGxsSr6uKVtG+xsZmcXFmHGR2hVjOLt9ennPGskh8NRTijrN5UjAKgkFNAQwpBIiVIUfrOT91USZId0eQPSNeDHyEhqB0amSxnyNsPguMt3OBN0yMFDt19rbJ++qgvSb95ymTV7WQIIrhb+y9/8Tz0pu0mI15PgoxXJNxztml4p9LWIojfpftk3SrIalQ1DwRSCr/b79JNWkYvYM/4VBEsF6VYDNEkWYVOCefT3yPxY4aTDymu6Bba/dq74sKAZ0iOswyiovZznjyIuR5W9fp0gg7+0ApKEvB7fvtxf9SHInxr9epKXw+BuOYfYqiwI1qXogRxCfhnUR2b/ruWlA0QlBNjp36h5X+tcDPOeTYKnfMaF6e8bxA7
+X-OriginatorOrg: wdc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH5PR04MB9550.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 92665e8c-8b4a-4411-01b0-08df0337ff8b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Aug 2026 06:05:15.4746 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: b61c8803-16f3-4c35-9b17-6f65f441df86
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: X400n4Wj2VcEMcOYeTKB9H3XpvFjOoBWnz+OOv7zjWtsSR+7khnQKidMm6kidyFzdBelfEYGjm/k5HwUUohb9VIHwHcB2ZzbQ8zzhf5S1nY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR04MB6490
+Received-SPF: pass client-ip=216.71.153.141;
+ envelope-from=prvs=6911f864d=Alistair.Francis@wdc.com;
+ helo=esa3.hgst.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,66 +183,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a KVM guest is migrated to another LPAR while a stress-ng workload
-is running, lockups are seen when the guest resumes on the destination
-LPAR. This root cause is that if there was a pending interrupt for a cpu
-on the source machine but it was not presented yet when the migration
-started, the interrupt is not retriggered on the destination LPAR. This
-is evident when running 'info pic' on the destination LPAR:
-
-$ virsh qemu-monitor-command --hmp migrate 'info pic' | grep -e OS -e MSI
-CPU[0000]:   OS    00   ff  00    ff   ff  00  ff   ff  80000400
-CPU[0001]:   OS    00   ff  00    ff   ff  00  ff   ff  80000401
-CPU[0002]:   OS    00   ff  00    ff   ff  00  ff   ff  80000402
-CPU[0003]:   OS    00   ff  00    ff   ff  00  ff   ff  80000403
-CPU[0004]:   OS    00   ff  00    ff   ff  00  ff   ff  80000404
-CPU[0005]:   OS    00   ff  00    ff   ff  00  ff   ff  80000405
-CPU[0006]:   OS    80   ff  02    ff   ff  00  ff   06  80000406
-CPU[0007]:   OS    00   ff  00    ff   ff  00  ff   ff  80000407
-  00000000 MSI --    00000010   0/6   3071/16384 @3710000 ^1 [ 80000010 80000010 80000010 80000010 80000010 ^00000000 ]
-  00000001 MSI --    00000010   1/6   1852/16384 @3980000 ^1 [ 80000010 80000033 80000033 80000033 80000033 ^00000000 ]
-  00000002 MSI --    00000010   2/6   4424/16384 @40c0000 ^1 [ 80000020 80000020 80000020 80000010 80000010 ^00000000 ]
-  00000003 MSI --    00000010   3/6   1913/16384 @4220000 ^1 [ 80000010 80000032 80000010 80000010 80000010 ^00000000 ]
-  00000004 MSI --    00000010   4/6   2946/16384 @4360000 ^1 [ 80000010 80000010 80000010 80000010 80000010 ^00000000 ]
-  00000005 MSI --    00000010   5/6   2313/16384 @44a0000 ^1 [ 80000010 80000010 80000010 80000010 80000010 ^00000000 ]
-  00000006 MSI P-    00000010   6/6   5825/16384 @45f0000 ^1 [ 80000024 80000024 80000024 80000010 80000016 ^00000000 ]
-  00000007 MSI --    00000010   7/6   2346/16384 @4760000 ^1 [ 80000032 80000032 80000010 80000032 80000032 ^00000000 ]
-
-Fix this by calling xive_tctx_pipr_set() in
-vmstate_xive_tctx_post_load(), which ends up calling qemu_irq_raise() to
-present the interrupt. This fix is relevant only for setups where KVM
-guests rely on emulated XIVE provided by QEMU, since the native XIVE
-case is already handled.
-
-Cc: qemu-stable@nongnu.org
-Reported-by: Anushree Mathur <anushree.mathur@linux.ibm.com>
-Tested-by: Anushree Mathur<anushree.mathur@linux.ibm.com>
-Reviewed-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
-Reviewed-by: Michael Kowal <kowal@linux.ibm.com>
-Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
----
-v1 -> v2:
-1. Add a line in patch body for clarifying the setup where this fix
-is relevant (Nikhil)
-
- hw/intc/xive.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index f473e6ac77..712498d4af 100644
---- a/hw/intc/xive.c
-+++ b/hw/intc/xive.c
-@@ -1080,6 +1080,9 @@ static int vmstate_xive_tctx_post_load(void *opaque, int version_id)
-             error_report_err(local_err);
-             return ret;
-         }
-+    } else {
-+        uint8_t pipr = tctx->regs[TM_QW1_OS + TM_PIPR];
-+        xive_tctx_pipr_set(tctx, TM_QW1_OS, pipr, 0);
-     }
- 
-     return 0;
--- 
-2.53.0
-
+T24gVHVlLCAyMDI2LTA4LTI1IGF0IDEyOjA5ICswMjAwLA0KZnJlZGVyaWMucGV0cm90QHVuaXYt
+Z3Jlbm9ibGUtYWxwZXMuZnIgd3JvdGU6DQo+IEZyb206IEZyw6lkw6lyaWMgUMOpdHJvdCA8ZnJl
+ZGVyaWMucGV0cm90QHVuaXYtZ3Jlbm9ibGUtYWxwZXMuZnI+DQo+IA0KPiBUaGUgQ0JPIGluc3Ry
+dWN0aW9ucyB3ZXJlLCBBRkFJVSwgZGlzYXNzZW1ibGVkIGVycm9uZW91c2x5Lg0KPiBJbiBhZGRp
+dGlvbiwgbHEgKGxvYWQtcXVhZCwgYSBSVjEyOCBpbnN0cnVjdGlvbikgc2hhcmVzIHRoZSBzYW1l
+DQo+IG9wY29kZSBzcGFjZSBhcyB0aGUgQ0JPcywgd2hpY2ggYWxzbyBsZWQgdG8gaW5jb3JyZWN0
+IGRhc20gZm9yIHRoYXQNCj4gaW5zdHJ1Y3Rpb24gKHVuZGVyc3RhbmRhYmxlIHNpbmNlIFJWMTI4
+IGlzIGFuIGV4cGVyaW1lbnRhbCBmZWF0dXJlKS4NCj4gVG8gYXZvaWQgb3ZlcmxhcHMsIHdlIG5v
+dyByZXF1aXJlIHRoYXQgbHEgaXMgZGVjb2RlZCBvbmx5IGlmDQo+IHJkIGlzIG5vdCAwLCBhcyBD
+Qk8gcmVxdWlyZXMgdGhlIGZpZWxkIGNvcnJlc3BvbmRpbmcgdG8gcmQgdG8gYmUNCj4gemVybywN
+Cj4gYm90aCBpbiBkYXNtIGFuZCBkZWNvZGV0cmVlLg0KPiANCj4gQ2hhbmdlcyBpbiB2MzoNCj4g
+LSByZWJhc2Ugb24gbWFzdGVyDQo+IC0gc3F1YXNoIHRoZSAzIG9yaWdpbmFsIHBhdGNoZXMsIGF0
+IHRoZXkgZGlkIG5vdCBtYWtlIHNlbnNlDQo+IMKgIGFueW1vcmUgYWZ0ZXIgcmViYXNpbmcNCj4g
+DQo+IEZyw6lkw6lyaWMgUMOpdHJvdCAoMSk6DQo+IMKgIGRpc2FzL3Jpc2N2LmM6IENvcnJlY3Qg
+ZGFzbSBmb3IgY2JvIGFuZCBscQ0KDQpUaGFua3MhDQoNCkFwcGxpZWQgdG8gcmlzY3YtdG8tYXBw
+bHkubmV4dA0KDQpBbGlzdGFpcg0KDQo+IA0KPiDCoGRpc2FzL3Jpc2N2LmMgfCAxOCArKysrKysr
+KysrLS0tLS0tLS0NCj4gwqAxIGZpbGUgY2hhbmdlZCwgMTAgaW5zZXJ0aW9ucygrKSwgOCBkZWxl
+dGlvbnMoLSkNCg==
 
