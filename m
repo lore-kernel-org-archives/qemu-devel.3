@@ -4,68 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E786C61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:30:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EE61C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:30:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzEdu-0001iB-8G; Wed, 26 Aug 2026 10:30:18 -0400
+	id 1wzEdF-000191-7T; Wed, 26 Aug 2026 10:29:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wzEds-0001eP-4g
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:30:16 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1wzEdq-0002aw-6q
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:30:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1787754614; x=1819290614;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=/rbOGo0opVXre6UGFrrWYOWFNaGqlbi9zRLyrA3iEjw=;
- b=U30UwfawgSmiwxYUSmInvsaGUnT55m9uY2YstrUi2VGKRkML0JxGc+x+
- sD74RD+p0Ay8DfyrgKKugD1EUUbonsmUmtXQsy699kFR1xoOj9G0NpsDI
- RZywrpsVCt8pP4IAJ76lMz6yn965pbgJx23fh4NpzK/4rNm2v0Bq/aV9b
- Vh3jRaSw8rbkEC42nLjqhLO7a9TbD0PaANDLjpICEJWjL6RZ/b3mJo2Ow
- 67qYyIgjQJS6EfosAjDYIe1ypSjaDhMAAjAwrXZvLFnXlqunTgj/Rr/3j
- XqK6QWLekPha2pkcNDZ05CUdPCuU9MH2Lyjpjq+KzSbXsXmMHyNjO3QXf g==;
-X-CSE-ConnectionGUID: 98s2WDCqQDiuu8fL1mdV+Q==
-X-CSE-MsgGUID: kO4JQA/eQNKqs9CsPdOviQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11886"; a="99397490"
-X-IronPort-AV: E=Sophos;i="6.25,244,1779174000"; d="scan'208";a="99397490"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Aug 2026 07:30:11 -0700
-X-CSE-ConnectionGUID: hWA3AJIGSSe2xXQ1hJI0qQ==
-X-CSE-MsgGUID: KMb+pDijS4i8LfhpUSh4wA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.25,244,1779174000"; d="scan'208";a="291115005"
-Received: from zhaoliu1-desk.sh.intel.com (HELO localhost) ([10.238.208.118])
- by fmviesa002.fm.intel.com with ESMTP; 26 Aug 2026 07:30:09 -0700
-Date: Wed, 26 Aug 2026 22:30:08 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH 10/20] target/i386/tcg: implement JMPABS instruction
-Message-ID: <ao74cFO91SLv9WVB@intel.com>
-References: <20260825122921.431739-1-pbonzini@redhat.com>
- <20260825122921.431739-11-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdD-00018h-Tw
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:35 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdC-0001m1-2Z
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:35 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 8DD121F811;
+ Wed, 26 Aug 2026 14:29:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1787754568; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OH8PIWdsNXOXaCv296Cw5fvd6R8sSm1H9li+6Zmc81A=;
+ b=sRDUzboQSqVZXdecJ/woiz74cIWGZ1wRofMAgHABwgJope/PM9BTAxtTrZ6hWwmoAtCZ52
+ ucL4MnB7YsfcDpZJIpUt0uE0Sn5u70D/Pc+vXVocy5NWjpCcStXVLe7weaZX0Hmse/+vw5
+ l3+sx9GMmqmhDVgwiEYoKqrVUHuR6IQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1787754568;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OH8PIWdsNXOXaCv296Cw5fvd6R8sSm1H9li+6Zmc81A=;
+ b=5iRuVbEkteLt+GSXvbvUSSaWMjsVFkBLIPvySVnAmVe7t1yoC1+Z5vw1wkDfzcMF6FF6ya
+ RSbDgu5tdUNR5VAg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="j/ryIHZI";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="UNsEXp/n"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1787754564; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OH8PIWdsNXOXaCv296Cw5fvd6R8sSm1H9li+6Zmc81A=;
+ b=j/ryIHZIbJ/NE0K3pk7pslg2T4o1mysOmHXEwo6xhZWZevyzcS0VSehpMpIf6v1UBfKeQH
+ Qrp32nQbk+6YeDtlKt/isYSJz75/zby6/0cgeSLwch/LaIx9VfYFBN1rchaVG0JlR6Mq2W
+ e5X9rep6MoEpKjfgeWC4tKMIxBhXVVc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1787754564;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OH8PIWdsNXOXaCv296Cw5fvd6R8sSm1H9li+6Zmc81A=;
+ b=UNsEXp/nhqXekIfEt2T3dKCXjex3LTvjM9gSSxXeFacy3JEJ29ObvCpF5S6eAQ/TQ8RL1k
+ 1E9zyOQ0dEpcRcBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9C5631364F;
+ Wed, 26 Aug 2026 14:29:23 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id sAFMG0P4jmpTJAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 26 Aug 2026 14:29:23 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>,
+	Aadeshveer Singh <aadeshveer07@gmail.com>
+Subject: [PULL 11/30] docs/migration: Add documentation for fast snapshot load
+ feature
+Date: Wed, 26 Aug 2026 11:28:46 -0300
+Message-ID: <20260826142905.2315503-12-farosas@suse.de>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260826142905.2315503-1-farosas@suse.de>
+References: <20260826142905.2315503-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260825122921.431739-11-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ URIBL_BLOCKED(0.00)[suse.de:email,suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCVD_TLS_ALL(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_HAS_DN(0.00)[]; FREEMAIL_CC(0.00)[redhat.com,gmail.com];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_THREE(0.00)[3];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]
+X-Rspamd-Queue-Id: 8DD121F811
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
- WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,99 +132,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 25, 2026 at 02:29:11PM +0200, Paolo Bonzini wrote:
-> Date: Tue, 25 Aug 2026 14:29:11 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 10/20] target/i386/tcg: implement JMPABS instruction
-> X-Mailer: git-send-email 2.55.0
-> 
-> This is the same as an indirect jump, just with immediate operand.
-> The requirement of W=0 and 0x67 are already available in the decoder.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  target/i386/tcg/decode-new.h     | 3 +++
->  target/i386/tcg/decode-new.c.inc | 4 ++++
->  2 files changed, 7 insertions(+)
-> 
-> diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
-> index c974ca9d7c5..4998712e86d 100644
-> --- a/target/i386/tcg/decode-new.h
-> +++ b/target/i386/tcg/decode-new.h
-> @@ -184,6 +184,9 @@ typedef enum X86InsnCheck {
->  
->      /* No REX2 prefix allowed */
->      X86_CHECK_no_rex2 = 8192,
-> +
-> +    /* No 0x67 prefix allowed */
-> +    X86_CHECK_no_adr = 16384,
->  } X86InsnCheck;
->  
->  typedef enum X86InsnSpecial {
-> diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-> index 1f59fd665f7..d215d28cec5 100644
-> --- a/target/i386/tcg/decode-new.c.inc
-> +++ b/target/i386/tcg/decode-new.c.inc
-> @@ -1991,6 +1991,7 @@ static const X86OpEntry opcodes_root[256] = {
->  
->  #ifdef TARGET_X86_64
->  static const X86OpEntry opcodes_rex2_map0_A0toAF[16] = {
-> +    [1] = X86_OP_ENTRY1(JMP_m,   I,q, p_00 chk2(W0, no_adr)),
->  };
+From: Aadeshveer Singh <aadeshveer07@gmail.com>
 
-Maybe it should use X86_OP_ENTRYr? since JMPABS doesn't need to write
-back.
+Add documenatation for fast snapshot load covering an overview, the
+architecture, usage and limitations.
 
-Just a simple test:
+Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ docs/devel/migration/fast-snapshot-load.rst | 82 +++++++++++++++++++++
+ docs/devel/migration/features.rst           |  1 +
+ 2 files changed, 83 insertions(+)
+ create mode 100644 docs/devel/migration/fast-snapshot-load.rst
 
-#include <stdio.h>
-
-int main(void)
-{
-    __asm__ volatile (
-        /* JMPABS: REX2(M0=0,W=0) = D5 00, opcode A1, then imm64 target */
-        ".byte 0xd5, 0x00, 0xa1\n\t"
-        ".quad  1f\n\t"
-        "ud2\n\t"          /* this should be skipped */
-        "1:\n\t");
-    puts("JMPABS -- OK");
-    return 0;
-}
-
-And this hits an abort():
-
-$ ./build/qemu-x86_64 /tmp/jmpabs
-**
-ERROR:../target/i386/tcg/emit.c.inc:380:gen_writeback: code should not be reached
-Bail out! ERROR:../target/i386/tcg/emit.c.inc:380:gen_writeback: code should not be reached
-Aborted (core dumped)
-
-more GDB backtrace:
-
-Thread 1 "qemu-x86_64" received signal SIGABRT, Aborted.
-__pthread_kill_implementation (no_tid=0, signo=6, threadid=140737352460800) at ./nptl/pthread_kill.c:44
-44      ./nptl/pthread_kill.c: No such file or directory.
-#0  __pthread_kill_implementation (no_tid=0, signo=6, threadid=140737352460800) at ./nptl/pthread_kill.c:44
-#1  __pthread_kill_internal (signo=6, threadid=140737352460800) at ./nptl/pthread_kill.c:78
-#2  __GI___pthread_kill (threadid=140737352460800, signo=signo@entry=6) at ./nptl/pthread_kill.c:89
-#3  0x00007ffff7242476 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
-#4  0x00007ffff72287f3 in __GI_abort () at ./stdlib/abort.c:79
-#5  0x00007ffff76e3b57 in ?? () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
-#6  0x00007ffff773d70f in g_assertion_message_expr () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
-#7  0x0000555555664f37 in gen_writeback (s=s@entry=0x7fffffffd240, decode=decode@entry=0x7fffffffd0b0, opn=opn@entry=0, v=<optimized out>) at ../target/i386/tcg/emit.c.inc:380
-#8  0x0000555555677778 in disas_insn (cpu=0x55555593e780, s=0x7fffffffd240) at ../target/i386/tcg/decode-new.c.inc:3682
-#9  i386_tr_translate_insn (dcbase=0x7fffffffd240, cpu=0x55555593e780) at ../target/i386/tcg/translate.c:3608
-#10 0x00005555555d7962 in translator_loop (cpu=0x55555593e780, tb=0x7fffe80d0700 <code_gen_buffer+853715>, max_insns=0x7fffffffd4cc, pc=<optimized out>, host_pc=<optimized out>, ops=ops@entry=0x5555557dc5a0 <i386_tr_ops>, db=0x7fffffffd240, addr_type=TCG_TYPE_I64) at ../accel/tcg/translator.c:178
-#11 0x000055555567b212 in x86_translate_code (cpu=<optimized out>, tb=<optimized out>, max_insns=<optimized out>, pc=<optimized out>, host_pc=<optimized out>) at ../target/i386/tcg/translate.c:3699
-#12 0x00005555555d6644 in setjmp_gen_code (env=env@entry=0x5555559427f0, tb=tb@entry=0x7fffe80d0700 <code_gen_buffer+853715>, pc=pc@entry=4198710, host_pc=0x401136, max_insns=max_insns@entry=0x7fffffffd4cc, ti=<optimized out>) at ../accel/tcg/translate-all.c:251
-#13 0x00005555555d6b0e in tb_gen_code (cpu=cpu@entry=0x55555593e780, s=...) at ../accel/tcg/translate-all.c:324
-#14 0x00005555555cec1a in cpu_exec_loop (cpu=cpu@entry=0x55555593e780, sc=<optimized out>) at ../accel/tcg/cpu-exec.c:973
-#15 0x00005555555ced99 in cpu_exec_setjmp (cpu=cpu@entry=0x55555593e780, sc=<optimized out>) at ../accel/tcg/cpu-exec.c:1019
-#16 0x00005555555cf381 in cpu_exec (cpu=cpu@entry=0x55555593e780) at ../accel/tcg/cpu-exec.c:1045
-#17 0x0000555555622c80 in cpu_loop (env=env@entry=0x5555559427f0) at ../linux-user/x86_64/../i386/cpu_loop.c:217
-#18 0x00005555555a1d17 in main (argc=<optimized out>, argv=<optimized out>, envp=<optimized out>) at ../linux-user/main.c:1010
-
-Regards,
-Zhao
+diff --git a/docs/devel/migration/fast-snapshot-load.rst b/docs/devel/migration/fast-snapshot-load.rst
+new file mode 100644
+index 00000000000..fe2361d6fe1
+--- /dev/null
++++ b/docs/devel/migration/fast-snapshot-load.rst
+@@ -0,0 +1,82 @@
++==================
++Fast Snapshot Load
++==================
++
++Overview
++========
++Fast snapshot load is an extension of the postcopy migration feature
++to disk loads.
++
++Unlike a usual snapshot load, which requires all VM data (RAM as well
++as device states) to be loaded into host RAM from the snapshot file
++for the guest to run, fast snapshot load uses postcopy infrastructure
++to load in only the required device states and allows RAM pages to
++be loaded after the guest starts execution. The idea is to start the
++guest and serve its page faults on the go, reducing the perceived
++resume time for large snapshots.
++
++Architecture
++============
++This feature combines postcopy migration and mapped-ram capabilities
++to load RAM pages on demand. It is done by catching guest faults using
++Linux ``userfaultfd`` and loading the page by calculating the offset
++of its location in the snapshot file using mapped-ram capabilities.
++
++Fault Thread
++------------
++The fault thread uses Linux ``userfaultfd`` to catch page faults caused
++by guest and directly load the page from the snapshot file. It is
++very similar to network postcopy fault thread, with primary difference
++being it loads pages directly by reading from the snapshot file.
++
++Eager Thread
++------------
++Eager thread iterates over all pages in RAM and loads each page not
++yet loaded by fault thread. It is required as unlike network postcopy
++where majority of RAM has already been loaded via precopy, here entire
++RAM is waiting to be loaded. If there is no eager loading thread each
++page will only be loaded when it is required by guest. In case there
++are some background pages that are never/rarely accessed by guest,
++the system will be locked in migration state indefinitely.
++
++Synchronization
++---------------
++In order to make sure both of these threads do not load the same page
++twice potentially overwriting and corrupting user RAM, a bitmap is
++used (``RAMBlock->pending_bmap``) which tracks the pages claimed to
++be loaded by threads. This prevents race condition when one thread
++is loading the page and other one tries to do the same.
++
++Usage
++=====
++
++Simply enable ``mapped-ram`` and ``postcopy-ram`` capabilities on
++the destination:
++
++.. code-block:: text
++
++    migrate_set_capability mapped-ram on
++    migrate_set_capability postcopy-ram on
++
++Use a ``file:`` URI for migration:
++
++.. code-block:: text
++
++    migrate_incoming file:/path/to/snapshot/file
++
++Limitations
++===========
++
++ - Multifd
++    Fast snapshot load is currently incompatible with ``multifd``
++    capability. While ``mapped-ram`` allows for parallel disk I/O,
++    coupling it with ``postcopy`` capability requires additional
++    infrastructure.
++
++ - Host OS support
++    Because this feautre essentially depends on ``userfaultfd``
++    to trap page faults, it is supported only on Linux hosts.
++
++ - vhost-user
++    Fast snapshot load does not currently support ``vhost-user``
++    backends.
+diff --git a/docs/devel/migration/features.rst b/docs/devel/migration/features.rst
+index 9aef79e7fa4..23c2a93173c 100644
+--- a/docs/devel/migration/features.rst
++++ b/docs/devel/migration/features.rst
+@@ -11,6 +11,7 @@ Migration has plenty of features to support different use cases.
+    vfio
+    virtio
+    mapped-ram
++   fast-snapshot-load
+    CPR
+    qpl-compression
+    uadk-compression
+-- 
+2.53.0
 
 
