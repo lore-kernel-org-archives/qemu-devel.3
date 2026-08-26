@@ -4,68 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11C07C61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 01:20:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14176C61DC7
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 03:36:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wz2J7-0003OQ-F3; Tue, 25 Aug 2026 21:20:01 -0400
+	id 1wz4QS-00050J-D4; Tue, 25 Aug 2026 23:35:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wz2J4-0003O2-Lh
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 21:19:58 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wz2J2-0002WG-5U
- for qemu-devel@nongnu.org; Tue, 25 Aug 2026 21:19:58 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8CxPtMyP45q_w0FAA--.13943S3;
- Wed, 26 Aug 2026 09:19:46 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJCxPs8wP45q6YMSAA--.34992S2;
- Wed, 26 Aug 2026 09:19:46 +0800 (CST)
-Subject: Re: [PATCH 0/2] hw/loongarch: Harden boot param
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <17746591750@163.com>
-Cc: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-References: <20260807070029.1171348-1-maobibo@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <4f682433-918b-aab0-0e29-093a23cba00f@loongson.cn>
-Date: Wed, 26 Aug 2026 09:22:35 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <kishen.maloor@intel.com>)
+ id 1wz4QR-0004wt-3n
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 23:35:43 -0400
+Received: from mgamail.intel.com ([192.198.163.16])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kishen.maloor@intel.com>)
+ id 1wz4QP-00074B-Iy
+ for qemu-devel@nongnu.org; Tue, 25 Aug 2026 23:35:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1787715341; x=1819251341;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=TL0nsKy/oXqswhT7Lwv1p9BiWBw4zNH45YqxIkGZHLI=;
+ b=n8EllJ5208Q4D6SlL7tB7FEM4MMLUjEIhkupGya2LKrwNaFcfzKjKVus
+ DGnjZD6rBZEb1T9/UgtUtNsqrqLBgBtCV93OgzrvzCD8dpke0CXJkhx1v
+ j/f9phOq8zT+C9/ZiARI+3jBp5ZCd0h81sQHC3EfXO0R3gJ1q+SpHhhLT
+ YMCFyO/raXnvPNfVYIQnr7yRsSyzaIXKHhfhprsHvCljkSBjCN9U4dXnQ
+ deurW0rJ889p6YkzXPtK42WgHebFuz1PHXvv0ZWdKI9Tk3Erjocq12oda
+ bnTaW5hcOh3KpoMmHJknJ8Q59d7liPYYqIzB0I0bjgq3OX3jSff73ePKB Q==;
+X-CSE-ConnectionGUID: BQtF2ssZSmKW/ypV5SPVNQ==
+X-CSE-MsgGUID: dzZvjGy+QZe6qQsNdOOXJA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11886"; a="75728386"
+X-IronPort-AV: E=Sophos;i="6.25,244,1779174000"; d="scan'208";a="75728386"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Aug 2026 20:35:31 -0700
+X-CSE-ConnectionGUID: YLyEMtjBQXCxoqDPF67y4w==
+X-CSE-MsgGUID: IwedR1tATYm2ie0NB50pbQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.25,244,1779174000"; d="scan'208";a="297364024"
+Received: from d404e69c8b80.jf.intel.com ([10.54.34.91])
+ by orviesa002.jf.intel.com with ESMTP; 25 Aug 2026 20:35:32 -0700
+From: Kishen Maloor <kishen.maloor@intel.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, kvm@vger.kernel.org,
+ sohil.mehta@intel.com, xiaoyao.li@intel.com, binbin.wu@linux.intel.com,
+ farrah.chen@intel.com, kishen.maloor@intel.com
+Subject: [PATCH 5/5] target/i386: Introduce ClearwaterForest-v5 to enable LASS
+Date: Tue, 25 Aug 2026 20:57:34 -0700
+Message-ID: <20260826035734.114685-6-kishen.maloor@intel.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20260826035734.114685-1-kishen.maloor@intel.com>
+References: <20260826035734.114685-1-kishen.maloor@intel.com>
 MIME-Version: 1.0
-In-Reply-To: <20260807070029.1171348-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowJCxPs8wP45q6YMSAA--.34992S2
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoW7XFW7Xr1rWFy5Xry7AF47GFX_yoW3Grg_uF
- 4jy3y7Kw48W3W7tFyq9wn8Jry7JF40qFn8A3WDZr48Xa45Ar4rJr47X3W8ZFn0qrZrZan5
- Ar10vrn3Ary7KosvyTuYvTs0mTUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUbx8YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_JrI_Jryl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- WUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r1j6r4UM28EF7xvwVC2z280aVCY1x0267AKxVWU
- JVW8JwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc02F4
- 0EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_
- Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4CEbI
- xvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AK
- xVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrx
- kI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v2
- 6r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8Jw
- CI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j8yCJUUUUU
- =
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-1.496, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.16;
+ envelope-from=kishen.maloor@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,25 +82,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ÔÚ 2026/8/7 ÏÂÎç3:00, Bibo Mao Ð´µÀ:
-> When booting the Linux kernel without UEFI BIOS, QEMU needs to set the boot param for
-> kernel. This patch adds memory boundary checking when adding boot param.
->
-> Also this patch set adds bootargs and initrd in the FDT table.
->
-> Bibo Mao (2):
->    hw/loongarch/boot: Check memory boundary in init_boot_rom()
->    hw/loongarch/virt: Add bootargs and initrd to device-tree
->
->   hw/loongarch/boot.c           | 68 ++++++++++++++++++++++++++++-------
->   hw/loongarch/virt-fdt-build.c | 27 ++++++++++++++
->   2 files changed, 82 insertions(+), 13 deletions(-)
->
->
-> base-commit: b428fe036233cbd15d37e3c027ab6ca4d3661a80
-Reviewed-by: Song Gao <gaosong@loongson.cn>
+Add ClearwaterForest-v5 to expose Linear Address Space Separation (LASS)
+on the ClearwaterForest CPU model.
 
-Thanks.
-Song Gao
+Signed-off-by: Kishen Maloor <kishen.maloor@intel.com>
+---
+ target/i386/cpu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 167df0e6cb..1c333c2780 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6190,6 +6190,14 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+                     { /* end of list */ },
+                 }
+             },
++            {
++                .version = 5,
++                .note = "with LASS",
++                .props = (PropValue[]) {
++                    { "lass", "on" },
++                    { /* end of list */ },
++                }
++            },
+             { /* end of list */ },
+         },
+     },
+-- 
+2.47.1
 
 
