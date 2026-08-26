@@ -4,141 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2898FC61DC6
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 16:50:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88B59C61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 16:50:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzGo4-0006Hz-F5; Wed, 26 Aug 2026 12:48:56 -0400
+	id 1wzGo7-0006Lk-LC; Wed, 26 Aug 2026 12:48:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wzGo1-0006CK-Qq
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 12:48:55 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1wzGo4-0006Hp-6K
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 12:48:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wzGnz-0000uC-Gw
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 12:48:53 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QDut9B1461922
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 16:48:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=LoDaM/9hyCV
- yH/OGkL8dS2L29acFOpKSFw1j7Ys5DgA=; b=B2lUj/dpMWm1OwLNlAEQJQl9wky
- Ss/e9+PJiqp4FukRkvPzdtIAdC2+kQ+3Yl66Jt+f6t2Huvizv8zNkhoj82cztIeK
- fJIQKUcTmZnDCiTMOZUMW9nO2yE/zhKDNdCdnVP456aODFffTFgtr/u5NxygfiZl
- jVm+PmTj1U4EjnXKfWrIbLHi9x/trzCbrJc43r/HsZmwWQqN2XKDsj6Px5HsGAWj
- 2KIUhLlB3DXhZhbsCz9fBPLDEbUSnpFe6jhU++DQO9JGU2KmahpF8/y70kwMd2Tg
- HVb+vZZ9fPZieoXbQmQZtG+1NDNwBM6ayEdxq6cSmijdI5yb53MmQcMxz3g==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g9r1gk3jg-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 16:48:40 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-52ef04756caso5880551cf.1
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 09:48:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1wzGo1-0000vo-Qq
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 12:48:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787762931;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7rSCLIVmbyfHWNm1DOstZUjdu7YkoeihEQnQoOzIPaQ=;
+ b=i0vHDJFeNxsoDu1iWd1FaxVt6WVNP3y7JfzNGeCdKnV2oajDSc45+iqZ3BbaIU7MyBecjv
+ VvxjgyaeJlJuGlRGaCWzGB3f68wOIUgKZCRzPsLe/BINucJM3fEOqgJyx+zR4xajgnG7Oe
+ uKU1yckP6E+o2VTmahhO3FqigItL81A=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-310-yN5ECUDFP_WvJF1dPM62_Q-1; Wed, 26 Aug 2026 12:47:44 -0400
+X-MC-Unique: yN5ECUDFP_WvJF1dPM62_Q-1
+X-Mimecast-MFC-AGG-ID: yN5ECUDFP_WvJF1dPM62_Q_1787762863
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-c167e032f03so108769266b.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 09:47:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787762920; x=1788367720; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=LoDaM/9hyCVyH/OGkL8dS2L29acFOpKSFw1j7Ys5DgA=;
- b=ZPPGnEWpeTuX2eP7bU/9WvRBDIZXqluIwK9RYHVghp5zR8qtTJPUDX7BUsVG/eCzN1
- PVNwSLFC3vaNLPKf0FDi7Sjz/wO/DzaY4Ez9YxThtLbP0qy8L95/LTYQZATiFYNVuePK
- HKCDAi6cMkdKgdJvtM/AGbJb6zm3s/9gJK+e+unXU/O4+UpGzgnkQ/LlrUma64ddNIAk
- yJelDyPuMUvsYZqfKY5/UKRXfTtGZTKI4LUCi+XRge6Jzb0HOG1lcweNvbY3O8ozDYIq
- EPdgosRRsaR5LmNNwYFCNjYX6HaYDP7/wjOp+AO8lBchzfNqilIcmKkDbQmCFw1An9Zt
- T+6Q==
+ d=redhat.com; s=google; t=1787762863; x=1788367663; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=7rSCLIVmbyfHWNm1DOstZUjdu7YkoeihEQnQoOzIPaQ=;
+ b=KA+n++5U+fZqzIhDyQXs4DUgtI8wit5ssvdW9GwxDZ9hCZJdmK4YfGK45FgLLKPbnU
+ btSQF+cFXoixbtiwI8+qGMjB+zAefL/SJ5Ij8+H5FFcDAh7kPhqc0gzr/hvTni8ylf9k
+ a8brR9o9cZdM7FtXW2q5lFG0dRaxhC6YZ/9zjkYJrtz5GaQ3HtnrasIfhFPn/LWOQE9z
+ bBETa0Kp+/Oz3HQ30JWDfIU/4MpgPaWSLQCxRBGha85GR7lMT0z3UV4apIwdk3AIGYXR
+ nlo1Nw4SRRD9DE6O56NpZCxwl39X+PuEvsLkBGcl90m+S4S9WN6gYQs1TE0QSHEUPw/y
+ mcBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787762920; x=1788367720;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to:content-type;
- bh=LoDaM/9hyCVyH/OGkL8dS2L29acFOpKSFw1j7Ys5DgA=;
- b=ORG7efCqMGpZICCjgxhOLTM2ybUEfiPTubrYLqx46Qe6b8k0vnqVXwXVM0L3E7Ii2Z
- jJhOuAmYD+7kLPTEBL2sFr2jMj3+q26M6y+rAltsK54ET3LIOOC3kIPZtcN+4dCG7IOP
- 7TVWeCIDcGXnyR+vYIYQTju8e72p4TNVjmM/JQ7azmwUt5cDXfUaE9kr+6hLgWeZf89b
- AvMBg+GJmxDd8mdvyup9auHUREYMpn6x+60DtGEwsRTZ7VxCjRPFgrI8B9ut/jE9KCJw
- SDnPHt4I7zfpF62kg28nxahulCvNG7mEpI+k3l0fzgWgbdkMuTf8LAQci+MU48gNlXyS
- T2aA==
-X-Gm-Message-State: AFuF++nEdkY3PpXJgs7XA0S0Z5+VYwjRV/yHNAyBbmh3h0MFVeIZrFSl
- VL5NG8wiQRKCkK9Dhv8lP9RU1AVvx/8dMtDf4X4E2h5wv27MvbTHFbrG0JiDBanZfuywYUQ64wA
- vo3eMr5ir1LixLctQEtrKmSg8NqkwmKYvS1IEOZRXlQ7Cw0eqZUQ9FUoQncY7qC2p/A==
-X-Gm-Gg: AR+sD10as4NqL8FkPBp/C5YrWhekj1qA47UVIAjU93iLwu+cCzmzHuhUormfacLs036
- cglIoeE9g8IMq5ELR5B86aD3L/X2pGwyHqIosUYNJEiUDgGly0ZPkrgmdDDcE6Z+UGmMpRuhQ5D
- gST1uGGFpV5RLXr6dp3+neqpX9Mek+pbhWVkBJGxOEheGq6LnBxaHBdAk105NvwPb4332iRdce7
- uoSRT4gQVM6GYF2VhwleYa3JUJ5V/v8K7SYNtrLpOenK31TJhq1AQfrcZFtClx5YGvEsEnagxcN
- jJZf2RT57JPo3WQRWMfv0YSuvsL7pntCX/ntTct/powlAvgqGEGHpm00VLTp/MrrhmOAp/xSYfr
- jMOBv3w/jvDigxgFY14hSDRu9Q7ym92T8FSdeow==
-X-Received: by 2002:a05:622a:30c:b0:51c:14f5:8f9c with SMTP id
- d75a77b69052e-52e4231aba3mr75600651cf.27.1787762919494; 
- Wed, 26 Aug 2026 09:48:39 -0700 (PDT)
-X-Received: by 2002:a05:622a:30c:b0:51c:14f5:8f9c with SMTP id
- d75a77b69052e-52e4231aba3mr75599831cf.27.1787762918776; 
- Wed, 26 Aug 2026 09:48:38 -0700 (PDT)
-Received: from QCOM-UWl2o8bcGT.qualcomm.com ([189.38.141.232])
+ d=1e100.net; s=20251104; t=1787762863; x=1788367663;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=7rSCLIVmbyfHWNm1DOstZUjdu7YkoeihEQnQoOzIPaQ=;
+ b=krDRxhKmMJqV6ARjic/kKLl0dxTiQgBfbGhIjbUWKL1n+V+/d4owwkGdEbtAXBEN3C
+ JyEZHxbl3e0X+7mXHcwam9hZOw5kvTjOMuCoBWHg1KTb9a06n8nhJeTV+Z0M7foDY7tj
+ MOaBJEkkjyr0d1+Jl+jiot7VwgBTyr+xumhuS/m5ObIcbZn0ZC5kpGsjz213F+j5T3A1
+ UO73Msc86gLaqEAq2RJ+cm67Q1H1sx2Bl8m6uYh7uSVMF3X84j7r7M171p7gACEWp99R
+ f4jG44BY9csb36S0EjJNxYn+a5vdo+1+iskUkZlCjPxfowwUhxl+HbWbIGs6COnQmSI4
+ PEow==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rouuk/QZ5glYgm+V+NFRkI0yDitTKoCLXpP09hekClYaxwAGXfsPJPwwCasq9PLpe+Kma8EAR2ZPQLh@nongnu.org
+X-Gm-Message-State: AFuF++mzEq6BHag3Le/ytDyosfE3QUhVsW8fUIuIDDEUv7JaudivAv6+
+ HDgvmBSFzWkbDMAX43hfrWJItLgykYGEad6dmmqoKRmk0WfbUF5Ll6MRyfe5jEVaLvHGuFgiNfC
+ m9lLfhiMV6dP/7k3Fl/SvS+/VSejS8ol1YnONHgI6BoCmNwIRDKGbuaH5
+X-Gm-Gg: AR+sD13srmS3eSb6CLsN0OamAFPxDB0Av9rN+EbL5C9vlkvrWBujINggTD1hEgtQVdC
+ 0kSHjS7yQXq1UTeZdk6FYOco3rnDwYXH2qgCAIvGPZ41+C1zRbOAqUQVrVn2dnlOjQZV6q1X+Qv
+ LqHep095whMKHqWkDOIMEvaSBUsTVhkIz8QFgSkaXcO/QmZAhpsRehpOfkXzlb+B587eRGsuzaK
+ OXrhWUIry1v49a3nejch1/zRiD4dIDkB3WenjFz5oOqI9r9ITCu8z2Uhz2w0ndE2d7BWHJSqpNP
+ OESikS2p3fNJe01RuB+ulADJ+VpG/3UiZNxd2bP/26OvCYC+KMFBO8ussDKqF57ajNOoYkNNBwm
+ TsyXF3DwbM/zfXElmELXwW1//EkSIWI08w6nwxSGEwVg=
+X-Received: by 2002:a17:906:f58b:b0:c21:450d:cd88 with SMTP id
+ a640c23a62f3a-c250bbcc64amr809571066b.6.1787762862951; 
+ Wed, 26 Aug 2026 09:47:42 -0700 (PDT)
+X-Received: by 2002:a17:906:f58b:b0:c21:450d:cd88 with SMTP id
+ a640c23a62f3a-c250bbcc64amr809564066b.6.1787762862436; 
+ Wed, 26 Aug 2026 09:47:42 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-52e4275fc3esm20092651cf.25.2026.08.26.09.48.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 09:48:38 -0700 (PDT)
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu@processmission.com>,
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
-Subject: [PATCH v2 07/13] hw/riscv/fdt-common,
- virt.c: add create_fdt_socket_aclint()
-Date: Wed, 26 Aug 2026 13:48:07 -0300
-Message-ID: <20260826164814.44335-8-daniel.barboza@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260826164814.44335-1-daniel.barboza@oss.qualcomm.com>
-References: <20260826164814.44335-1-daniel.barboza@oss.qualcomm.com>
+ a640c23a62f3a-c250a88ac7fsm749256366b.30.2026.08.26.09.47.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 26 Aug 2026 09:47:41 -0700 (PDT)
+Message-ID: <ad46c6f6-3b24-4e4a-870c-6e4c3be06d9a@redhat.com>
+Date: Wed, 26 Aug 2026 18:47:39 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v7 18/18] arm-qmp-cmds: introspection for ID register
+ props
+Content-Language: en-US
+To: eric.auger@redhat.com, Khushit Shah <khushit.shah@nutanix.com>
+Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ Shaju Abraham <shaju.abraham@nutanix.com>,
+ "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
+ "cohuck@redhat.com" <cohuck@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "sebott@redhat.com" <sebott@redhat.com>,
+ "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
+ "philmd@oss.qualcomm.com" <philmd@oss.qualcomm.com>,
+ "maz@kernel.org" <maz@kernel.org>,
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "abologna@redhat.com" <abologna@redhat.com>,
+ "jdenemar@redhat.com" <jdenemar@redhat.com>
+References: <20260726153221.24773-1-eric.auger@redhat.com>
+ <20260726153221.24773-19-eric.auger@redhat.com>
+ <C950721B-25A3-477F-ABF0-56491A2C968F@nutanix.com>
+ <07a65f67-0ac5-425a-af3f-e4e38a1a6500@redhat.com>
+ <B9191525-673E-43D9-B7E1-04D05952EE8D@nutanix.com>
+ <7bc2c3ae-8192-4622-82b7-6d88f11a6d82@redhat.com>
+From: Eric Auger <eauger@redhat.com>
+In-Reply-To: <7bc2c3ae-8192-4622-82b7-6d88f11a6d82@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: F2nS8kQ6KTzVhIHKir8CdV_Ct5W99VcY
-X-Authority-Analysis: v=2.4 cv=FPMrAeos c=1 sm=1 tr=0 ts=6a8f18e8 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=MCIxunHWmQOg/5OnbzXZaw==:17
- a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=EUspDBNiAAAA:8
- a=7Bblaz4JstUzMt5rO2kA:9 a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE0MCBTYWx0ZWRfX3XOzpIc8F2iw
- sRMiomH0NNf8uShm4rFauwGT8BpW4omh7VB1j4dUMS6HEIHMFl9H2oramvuhEkaIihL0dM8/oal
- FCcWQ+Gtn+dRQkWj0Ce0N/plRvxczVg=
-X-Proofpoint-ORIG-GUID: F2nS8kQ6KTzVhIHKir8CdV_Ct5W99VcY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE0MCBTYWx0ZWRfX5h7bFnTuLbnV
- FD8Vfpc8hPeX27h4FoDv2UOPg9LkBkDz596bPr5gV+LK9YK9z+c7RxpYF08qCDD9HaKy779XTu3
- 8MkLBAacz6wwyBSQW92KskZ/c2uaBkk72Y9Bu4vodUWrI30PNvW+DR/FrHk3ftEs65Fv5vF4L8K
- fErYQNouMqytEFtoBOk2boQaPRbVt7rPBJi0drl2hAzkVE3v9j0MDNTGq4XuhYhQojBfdqsqBKz
- UlayhAt7P0ua4JZ2pOxP+ycMb9EGyA8/n/YJvIvHkcIQmXj7Pz9xm3HuQvP+XRifNljRvU/Z9+C
- 4/hGqEfHyxXdYoBN0MpG5xumm3gIsKpxHk7qC/CXg1642s08veYGv9F8iR7y6Lai6n5CPCKPPAv
- W+k5rdOJChzavnSFtuh4/El00l6AjoXPClVwRwGyL7iVVgf1RkWN/dAHxPxOa49h4VgccTgor6v
- C7+64uZdEF2YRR4B4xw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_04,2026-08-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 priorityscore=1501 clxscore=1015
- lowpriorityscore=0 suspectscore=0 adultscore=0 spamscore=0 phishscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608260140
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eauger@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,289 +146,320 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yet another FDT that we want to move to a helper to avoid copy/pasting
-code to other boards that will use a mtimer.  In particular the future
-'riscv-server-ref' board.
 
-No FDT changes made.
 
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
----
- hw/riscv/fdt-common.c         | 96 +++++++++++++++++++++++++++++++++
- hw/riscv/virt.c               | 99 ++++-------------------------------
- include/hw/riscv/fdt-common.h | 11 ++++
- 3 files changed, 118 insertions(+), 88 deletions(-)
+On 8/26/26 2:08 PM, Eric Auger wrote:
+> 
+> 
+> On 8/26/26 1:27 PM, Khushit Shah wrote:
+>>
+>>> On 26 Aug 2026, at 12:20 PM, Eric Auger <eric.auger@redhat.com> wrote:
+>>>
+>>> !-------------------------------------------------------------------|
+>>>  CAUTION: External Email
+>>>
+>>> |-------------------------------------------------------------------!
+>>>
+>>> Hi Khushit,
+>>>
+>>> On 8/24/26 1:59 PM, Khushit Shah wrote:
+>>>>> On 26 Jul 2026, at 8:59 PM, Eric Auger <eric.auger@redhat.com> wrote:
+>>>>>
+>>>>> !-------------------------------------------------------------------|
+>>>>> CAUTION: External Email
+>>>>>
+>>>>> |-------------------------------------------------------------------!
+>>>>>
+>>>>> From: Cornelia Huck <cohuck@redhat.com>
+>>>>>
+>>>>> Implement the capability to query available ID register values by
+>>>>> adding SYSREG_* options and values to the cpu model expansion for the
+>>>>> host model, if available.
+>>>>>
+>>>>> Excerpt:
+>>>>> (QEMU) query-cpu-model-expansion type=full model={"name":"host"}
+>>>>> {"return": {"model": {"name": "host", "props": {"SYSREG_ID_AA64PFR0_EL1_EL3": 1,
+>>>>> "SYSREG_ID_AA64ISAR2_EL1_CLRBHB": 0, "SYSREG_CTR_EL0_L1Ip": 3,
+>>>>> "SYSREG_MIDR_EL1_PartNum": 3407, "SYSREG_CTR_EL0_DminLine": 4,
+>>>>> "SYSREG_ID_AA64MMFR0_EL1_PARange": 5, "SYSREG_ID_AA64MMFR1_EL1_ECBHB": 0
+>>>>> ../..
+>>>>>
+>>>>> This allows the upper stack to detect available writable ID regs and
+>>>>> the "host passthrough model" values.
+>>>>>
+>>>>> It also allows to test some ID reg field values:
+>>>>> (QEMU) query-cpu-model-expansion type=full model={"name":"host","props":{"SYSREG_ID_AA64ISAR0_EL1_DP":0x13}}
+>>>>> {"error": {"class": "GenericError", "desc": "idreg SYSREG_ID_AA64ISAR0_EL1_DP set value (0x13) exceeds length of field (4)!"}}
+>>>>>
+>>>>> (QEMU) query-cpu-model-expansion type=full model={"name":"host","props":{"SYSREG_ID_AA64ISAR0_EL1_DP":0x2}}
+>>>>> {"error": {"class": "GenericError", "desc": "idreg SYSREG_ID_AA64ISAR0_EL1_DP set value (0x2) does not match any arch valid enum value!”}}
+>>>> My reasoning here is: User never asked to run the CPU model/configuration. The QMP command is supposed to
+>>>> return the final prop values which QEMU will set/request from KVM.
+>>>>
+>>>> Like on x86, the query-cpu-model-expansion type=full model={“host”: “props”: {“amx-tile": true}} does not return
+>>>> with error even if host does not have AMX.
+>>>>
+>>>> But, maybe we can append CpuModelInfo or CpuModelExpansionInfo with optional ‘usable’ boolean. This even
+>>>> fills an existing gap, as, query-cpu-definitions cannot take property values.
+>>> Refering to docs/system/arm/cpu-features.rst it looks a normal case the
+>>> command fails in case settings cannot apply:
+>>>
+>>> See 
+>>>
+>>> (3) Let's try to disable ``aarch64``, which enables the AArch32 CPU
+>>> feature::
+>>>
+>>>       (QEMU) query-cpu-model-expansion type=full
+>>> model={"name":"max","props":{"aarch64":false}}
+>>>       {"error": {
+>>>        "class": "GenericError", "desc":
+>>>        "'aarch64' feature cannot be disabled unless KVM is enabled and
+>>> 32-bit EL1 is supported"
+>>>       }}
+>>>
+>>> So my understanding is query-cpu-model-expansion is well suited to
+>>> settings dry-run
+>> I don't really like the current handling from the named models
+>> perspective.
+>>
+>> query-cpu-model-expansion should not be performing host-compatibility
+>> checks. We should decouple applying the requested props from asking
+>> whether this host can actually run them. x86 and s390x are designed
+>> the same way.
+>>
+>> While this patch only dry-runs SYSREG_* props if they are passed,
+>> once named models exist:
+>>   query-cpu-model-expansion type=full model={"name":"ampere-1a"}
+>>
+>> should not fail because it is not host-compatible. It should still
+>> return the model's SYSREG prop values on a host that cannot
+>> realise it.
+Isn't it the role of query-cpu-definitions:
 
-diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
-index 77168f5c4f..f31cc9d3cc 100644
---- a/hw/riscv/fdt-common.c
-+++ b/hw/riscv/fdt-common.c
-@@ -16,6 +16,7 @@
- #include "target/riscv/cpu_bits.h"
- #include "hw/riscv/riscv-iommu-bits.h"
- #include "hw/riscv/iommu.h"
-+#include "hw/intc/riscv_aclint.h"
- #include "hw/intc/riscv_imsic.h"
- #include "hw/pci/pci.h"
- #include "hw/pci/pcie_host.h"
-@@ -695,3 +696,98 @@ void create_fdt_socket_aplic(void *fdt, APLICFdtProps *props,
- 
-     aplic_phandles[props->socket] = aplic_s_phandle;
- }
-+
-+void create_fdt_socket_aclint(void *fdt, ACLINTFdtProps *props,
-+                              uint32_t *intc_phandles)
-+{
-+    uint32_t aclint_cells_size = props->num_harts * sizeof(uint32_t) * 2;
-+    g_autofree uint32_t *aclint_mswi_cells = NULL;
-+    g_autofree uint32_t *aclint_sswi_cells = NULL;
-+    g_autofree uint32_t *aclint_mtimer_cells = NULL;
-+    hwaddr addr, size;
-+    char *name;
-+    int cpu;
-+
-+    aclint_mswi_cells = g_new0(uint32_t, props->num_harts * 2);
-+    aclint_mtimer_cells = g_new0(uint32_t, props->num_harts * 2);
-+    aclint_sswi_cells = g_new0(uint32_t, props->num_harts * 2);
-+
-+    for (cpu = 0; cpu < props->num_harts; cpu++) {
-+        aclint_mswi_cells[cpu * 2 + 0] = cpu_to_be32(intc_phandles[cpu]);
-+        aclint_mswi_cells[cpu * 2 + 1] = cpu_to_be32(IRQ_M_SOFT);
-+        aclint_mtimer_cells[cpu * 2 + 0] = cpu_to_be32(intc_phandles[cpu]);
-+        aclint_mtimer_cells[cpu * 2 + 1] = cpu_to_be32(IRQ_M_TIMER);
-+        aclint_sswi_cells[cpu * 2 + 0] = cpu_to_be32(intc_phandles[cpu]);
-+        aclint_sswi_cells[cpu * 2 + 1] = cpu_to_be32(IRQ_S_SOFT);
-+    }
-+
-+    if (props->aia_type != AIA_TYPE_APLIC_IMSIC) {
-+        addr = props->clint->base + (props->clint->size * props->socket);
-+        name = g_strdup_printf("/soc/mswi@%"HWADDR_PRIx, addr);
-+
-+        qemu_fdt_add_subnode(fdt, name);
-+        qemu_fdt_setprop_string(fdt, name, "compatible", "riscv,aclint-mswi");
-+        qemu_fdt_setprop_sized_cells(fdt, name, "reg",
-+                                     2, addr, 2, RISCV_ACLINT_SWI_SIZE);
-+        qemu_fdt_setprop(fdt, name, "interrupts-extended",
-+                         aclint_mswi_cells, aclint_cells_size);
-+        qemu_fdt_setprop(fdt, name, "interrupt-controller", NULL, 0);
-+        qemu_fdt_setprop_cell(fdt, name, "#interrupt-cells", 0);
-+
-+        if (props->numa_enabled) {
-+            qemu_fdt_setprop_cell(fdt, name, "numa-node-id", props->socket);
-+        }
-+
-+        g_free(name);
-+    }
-+
-+    if (props->aia_type == AIA_TYPE_APLIC_IMSIC) {
-+        addr = props->clint->base +
-+               (RISCV_ACLINT_DEFAULT_MTIMER_SIZE * props->socket);
-+        size = RISCV_ACLINT_DEFAULT_MTIMER_SIZE;
-+    } else {
-+        addr = props->clint->base + RISCV_ACLINT_SWI_SIZE +
-+               (props->clint->size * props->socket);
-+        size = props->clint->size - RISCV_ACLINT_SWI_SIZE;
-+    }
-+
-+    name = g_strdup_printf("/soc/mtimer@%"HWADDR_PRIx, addr);
-+    qemu_fdt_add_subnode(fdt, name);
-+    qemu_fdt_setprop_string(fdt, name, "compatible",
-+                            "riscv,aclint-mtimer");
-+    qemu_fdt_setprop_sized_cells(fdt, name, "reg",
-+        2, addr,
-+        2, size - RISCV_ACLINT_DEFAULT_MTIME,
-+        2, addr + RISCV_ACLINT_DEFAULT_MTIMECMP,
-+        2, RISCV_ACLINT_DEFAULT_MTIME);
-+    qemu_fdt_setprop(fdt, name, "interrupts-extended",
-+                     aclint_mtimer_cells, aclint_cells_size);
-+
-+    if (props->numa_enabled) {
-+        qemu_fdt_setprop_cell(fdt, name, "numa-node-id", props->socket);
-+    }
-+
-+    g_free(name);
-+
-+    if (props->aia_type != AIA_TYPE_APLIC_IMSIC) {
-+        addr = props->aclint_sswi->base
-+               + (props->aclint_sswi->size * props->socket);
-+
-+        name = g_strdup_printf("/soc/sswi@%"HWADDR_PRIx, addr);
-+        qemu_fdt_add_subnode(fdt, name);
-+        qemu_fdt_setprop_string(fdt, name, "compatible",
-+            "riscv,aclint-sswi");
-+        qemu_fdt_setprop_sized_cells(fdt, name, "reg",
-+                                     2, addr, 2, props->aclint_sswi->size);
-+        qemu_fdt_setprop(fdt, name, "interrupts-extended",
-+                         aclint_sswi_cells, aclint_cells_size);
-+        qemu_fdt_setprop(fdt, name, "interrupt-controller", NULL, 0);
-+        qemu_fdt_setprop_cell(fdt, name, "#interrupt-cells", 0);
-+
-+        if (props->numa_enabled) {
-+            qemu_fdt_setprop_cell(fdt, name, "numa-node-id", props->socket);
-+        }
-+
-+        g_free(name);
-+    }
-+}
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index dd8f5d9d75..ef2670f20e 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -180,93 +180,6 @@ static void virt_flash_map(RISCVVirtState *s,
-                     sysmem);
- }
- 
--static void create_fdt_socket_aclint(RISCVVirtState *s,
--                                     int socket,
--                                     uint32_t *intc_phandles)
--{
--    int cpu;
--    char *name;
--    unsigned long addr, size;
--    uint32_t aclint_cells_size;
--    g_autofree uint32_t *aclint_mswi_cells = NULL;
--    g_autofree uint32_t *aclint_sswi_cells = NULL;
--    g_autofree uint32_t *aclint_mtimer_cells = NULL;
--    MachineState *ms = MACHINE(s);
--
--    aclint_mswi_cells = g_new0(uint32_t, s->soc[socket].num_harts * 2);
--    aclint_mtimer_cells = g_new0(uint32_t, s->soc[socket].num_harts * 2);
--    aclint_sswi_cells = g_new0(uint32_t, s->soc[socket].num_harts * 2);
--
--    for (cpu = 0; cpu < s->soc[socket].num_harts; cpu++) {
--        aclint_mswi_cells[cpu * 2 + 0] = cpu_to_be32(intc_phandles[cpu]);
--        aclint_mswi_cells[cpu * 2 + 1] = cpu_to_be32(IRQ_M_SOFT);
--        aclint_mtimer_cells[cpu * 2 + 0] = cpu_to_be32(intc_phandles[cpu]);
--        aclint_mtimer_cells[cpu * 2 + 1] = cpu_to_be32(IRQ_M_TIMER);
--        aclint_sswi_cells[cpu * 2 + 0] = cpu_to_be32(intc_phandles[cpu]);
--        aclint_sswi_cells[cpu * 2 + 1] = cpu_to_be32(IRQ_S_SOFT);
--    }
--    aclint_cells_size = s->soc[socket].num_harts * sizeof(uint32_t) * 2;
--
--    if (s->aia_type != VIRT_AIA_TYPE_APLIC_IMSIC) {
--        addr = s->memmap[VIRT_CLINT].base +
--               (s->memmap[VIRT_CLINT].size * socket);
--        name = g_strdup_printf("/soc/mswi@%lx", addr);
--
--        qemu_fdt_add_subnode(ms->fdt, name);
--        qemu_fdt_setprop_string(ms->fdt, name, "compatible",
--            "riscv,aclint-mswi");
--        qemu_fdt_setprop_sized_cells(ms->fdt, name, "reg",
--            2, addr, 2, RISCV_ACLINT_SWI_SIZE);
--        qemu_fdt_setprop(ms->fdt, name, "interrupts-extended",
--            aclint_mswi_cells, aclint_cells_size);
--        qemu_fdt_setprop(ms->fdt, name, "interrupt-controller", NULL, 0);
--        qemu_fdt_setprop_cell(ms->fdt, name, "#interrupt-cells", 0);
--        riscv_socket_fdt_write_id(ms, name, socket);
--        g_free(name);
--    }
--
--    if (s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC) {
--        addr = s->memmap[VIRT_CLINT].base +
--               (RISCV_ACLINT_DEFAULT_MTIMER_SIZE * socket);
--        size = RISCV_ACLINT_DEFAULT_MTIMER_SIZE;
--    } else {
--        addr = s->memmap[VIRT_CLINT].base + RISCV_ACLINT_SWI_SIZE +
--               (s->memmap[VIRT_CLINT].size * socket);
--        size = s->memmap[VIRT_CLINT].size - RISCV_ACLINT_SWI_SIZE;
--    }
--    name = g_strdup_printf("/soc/mtimer@%lx", addr);
--    qemu_fdt_add_subnode(ms->fdt, name);
--    qemu_fdt_setprop_string(ms->fdt, name, "compatible",
--        "riscv,aclint-mtimer");
--    qemu_fdt_setprop_sized_cells(ms->fdt, name, "reg",
--        2, addr + RISCV_ACLINT_DEFAULT_MTIME,
--        2, size - RISCV_ACLINT_DEFAULT_MTIME,
--        2, addr + RISCV_ACLINT_DEFAULT_MTIMECMP,
--        2, RISCV_ACLINT_DEFAULT_MTIME);
--    qemu_fdt_setprop(ms->fdt, name, "interrupts-extended",
--        aclint_mtimer_cells, aclint_cells_size);
--    riscv_socket_fdt_write_id(ms, name, socket);
--    g_free(name);
--
--    if (s->aia_type != VIRT_AIA_TYPE_APLIC_IMSIC) {
--        addr = s->memmap[VIRT_ACLINT_SSWI].base +
--               (s->memmap[VIRT_ACLINT_SSWI].size * socket);
--
--        name = g_strdup_printf("/soc/sswi@%lx", addr);
--        qemu_fdt_add_subnode(ms->fdt, name);
--        qemu_fdt_setprop_string(ms->fdt, name, "compatible",
--            "riscv,aclint-sswi");
--        qemu_fdt_setprop_sized_cells(ms->fdt, name, "reg",
--            2, addr, 2, s->memmap[VIRT_ACLINT_SSWI].size);
--        qemu_fdt_setprop(ms->fdt, name, "interrupts-extended",
--            aclint_sswi_cells, aclint_cells_size);
--        qemu_fdt_setprop(ms->fdt, name, "interrupt-controller", NULL, 0);
--        qemu_fdt_setprop_cell(ms->fdt, name, "#interrupt-cells", 0);
--        riscv_socket_fdt_write_id(ms, name, socket);
--        g_free(name);
--    }
--}
--
- static void create_fdt_socket_plic(RISCVVirtState *s,
-                                    int socket,
-                                    uint32_t *phandle, uint32_t *intc_phandles,
-@@ -347,6 +260,7 @@ static void create_fdt_sockets(RISCVVirtState *s,
-     bool numa_enabled = riscv_numa_enabled(ms);
-     bool is_32_bit = riscv_is_32bit(&s->soc[0]);
-     APLICFdtProps aplic_props;
-+    ACLINTFdtProps aclint_props;
- 
-     fdt_create_cpu_socket_subnode(ms->fdt,
-         kvm_enabled() ? kvm_riscv_get_timebase_frequency(&s->soc->harts[0]) :
-@@ -354,6 +268,13 @@ static void create_fdt_sockets(RISCVVirtState *s,
- 
-     intc_phandles = g_new0(uint32_t, ms->smp.cpus);
- 
-+    if (virt_aclint_allowed() && s->have_aclint) {
-+        aclint_props.clint = &s->memmap[VIRT_CLINT];
-+        aclint_props.aclint_sswi = &s->memmap[VIRT_ACLINT_SSWI];
-+        aclint_props.aia_type = s->aia_type;
-+        aclint_props.numa_enabled = numa_enabled;
-+    }
-+
-     phandle_pos = ms->smp.cpus;
-     for (socket = (socket_count - 1); socket >= 0; socket--) {
-         hwaddr memaddr = s->memmap[VIRT_DRAM].base +
-@@ -372,7 +293,9 @@ static void create_fdt_sockets(RISCVVirtState *s,
-                                  socket, riscv_numa_enabled(ms));
- 
-         if (virt_aclint_allowed() && s->have_aclint) {
--            create_fdt_socket_aclint(s, socket,
-+            aclint_props.socket = socket;
-+            aclint_props.num_harts = s->soc[socket].num_harts;
-+            create_fdt_socket_aclint(ms->fdt, &aclint_props,
-                                      &intc_phandles[phandle_pos]);
-         } else if (tcg_enabled()) {
-             hwaddr clintaddr = s->memmap[VIRT_CLINT].base +
-diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.h
-index 7a7e3ad7af..fbcf9aaffb 100644
---- a/include/hw/riscv/fdt-common.h
-+++ b/include/hw/riscv/fdt-common.h
-@@ -63,6 +63,15 @@ typedef struct APLICFdtProps {
-     int aia_type;
- } APLICFdtProps;
- 
-+typedef struct ACLINTFdtProps {
-+    const MemMapEntry *clint;
-+    const MemMapEntry *aclint_sswi;
-+    int socket;
-+    int num_harts;
-+    int aia_type;
-+    bool numa_enabled;
-+} ACLINTFdtProps;
-+
- void *create_board_device_tree(const char *model, const char *compatible,
-                                int *fdt_size);
- void create_fdt_socket_memory(void *fdt, hwaddr addr, uint64_t size,
-@@ -112,4 +121,6 @@ void create_fdt_socket_aplic(void *fdt, APLICFdtProps *props,
-                              uint32_t *phandle,
-                              uint32_t *intc_phandles,
-                              uint32_t *aplic_phandles);
-+void create_fdt_socket_aclint(void *fdt, ACLINTFdtProps *props,
-+                              uint32_t *intc_phandles);
- #endif
--- 
-2.43.0
+# @unavailable-features: List of properties that prevent the CPU model
+#     from running in the current host.  (since 2.8)
+
+in qapi/machine.json
+
+Thanks
+
+Eric
+
+> Looking at qapi/machine.json, 
+> 
+> # Errors:
+> #     - if expanding CPU models is not supported
+> #     - if the model cannot be expanded
+> #     - if the model contains an unknown CPU definition name, unknown
+> #       properties or properties with a wrong type
+> #     - if an expansion type is not supported
+> 
+> Maybe we could use the "static" parameter which is not currently
+> implement on ARM.
+> 
+> # * machine options (including accelerator): in some architectures,
+> #   CPU models may look different depending on machine and accelerator
+> #   options.  (Except for CPU models reported as "static" in
+> #   `query-cpu-definitions`.)
+> 
+> in case you use static we don't expand against the accelerator, while
+> with full we would do?
+> 
+> Thanks
+> 
+> Eric
+> 
+> 
+> 
+> 
+>>
+>> Warm Regards,
+>> Khushit
+>>
+>>> Thanks
+>>>
+>>> Eric
+>>>
+>>>> Warm Regards,
+>>>> Khushit
+>>>>> The following checks are performed:
+>>>>> - the value does not exceed the field size
+>>>>> - if the field is associated to enum values, the set value must be one
+>>>>> of those enum values
+>>>>> - the value is applied against a scratch vcpu making sure the setting is
+>>>>> not rejected for this host
+>>>>>
+>>>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>>>>> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+>>>>>
+>>>>> ---
+>>>>>
+>>>>> v5 -> v6:
+>>>>> - add the write capability
+>>>>> ---
+>>>>> target/arm/arm-qmp-cmds.c | 98 +++++++++++++++++++++++++++++++++++++++
+>>>>> 1 file changed, 98 insertions(+)
+>>>>>
+>>>>> diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
+>>>>> index 83ec95c290..41fefadcea 100644
+>>>>> --- a/target/arm/arm-qmp-cmds.c
+>>>>> +++ b/target/arm/arm-qmp-cmds.c
+>>>>> @@ -21,6 +21,7 @@
+>>>>> */
+>>>>>
+>>>>> #include "qemu/osdep.h"
+>>>>> +#include "qemu/error-report.h"
+>>>>> #include "qemu/target-info.h"
+>>>>> #include "hw/core/boards.h"
+>>>>> #include "kvm_arm.h"
+>>>>> @@ -30,7 +31,10 @@
+>>>>> #include "qapi/qapi-commands-machine.h"
+>>>>> #include "qapi/qapi-commands-misc-arm.h"
+>>>>> #include "qobject/qdict.h"
+>>>>> +#include "qobject/qnum.h"
+>>>>> #include "qom/qom-qobject.h"
+>>>>> +#include <linux/kvm.h>
+>>>>> +#include "system/kvm.h"
+>>>>> #include "cpu.h"
+>>>>>
+>>>>> static GICCapability *gic_cap_new(int version)
+>>>>> @@ -84,11 +88,14 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>>>>                                                     Error **errp)
+>>>>> {
+>>>>>    CpuModelExpansionInfo *expansion_info;
+>>>>> +    ObjectPropertyIterator iter;
+>>>>>    const QDict *qdict_in;
+>>>>> +    ObjectProperty *idregprop;
+>>>>>    QDict *qdict_out;
+>>>>>    ObjectClass *oc;
+>>>>>    Object *obj;
+>>>>>    const char *name;
+>>>>> +    int fdarray[3];
+>>>>>    int i;
+>>>>>
+>>>>>    if (type != CPU_MODEL_EXPANSION_TYPE_FULL) {
+>>>>> @@ -133,6 +140,38 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>>>>
+>>>>>    obj = object_new(object_class_get_name(oc));
+>>>>>
+>>>>> +    if (kvm_enabled()) {
+>>>>> +        bool pmuv3_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_PMU_V3);
+>>>>> +        bool sve_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_SVE);
+>>>>> +        struct kvm_vcpu_init init = { .target = -1, };
+>>>>> +        bool el2_supported = kvm_arm_el2_supported();
+>>>>> +        bool pauth_supported;
+>>>>> +        int ret;
+>>>>> +
+>>>>> +        pauth_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_PTRAUTH_ADDRESS) &&
+>>>>> +                          kvm_check_extension(kvm_state, KVM_CAP_ARM_PTRAUTH_GENERIC);
+>>>>> +
+>>>>> +        if (sve_supported) {
+>>>>> +            init.features[0] |= 1 << KVM_ARM_VCPU_SVE;
+>>>>> +        }
+>>>>> +        if (el2_supported) {
+>>>>> +            init.features[0] |= 1 << KVM_ARM_VCPU_HAS_EL2;
+>>>>> +        }
+>>>>> +        if (pauth_supported) {
+>>>>> +            init.features[0] |= (1 << KVM_ARM_VCPU_PTRAUTH_ADDRESS |
+>>>>> +                             1 << KVM_ARM_VCPU_PTRAUTH_GENERIC);
+>>>>> +        }
+>>>>> +        if (pmuv3_supported) {
+>>>>> +            init.features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
+>>>>> +        }
+>>>>> +
+>>>>> +        ret = kvm_arm_create_scratch_host_vcpu(fdarray, &init);
+>>>>> +        if (!ret) {
+>>>>> +            error_setg(errp, "failing creating a scratch vcpu");
+>>>>> +            return NULL;
+>>>>> +        }
+>>>>> +    }
+>>>>> +
+>>>>>    if (model->props) {
+>>>>>        Visitor *visitor;
+>>>>>        Error *err = NULL;
+>>>>> @@ -145,6 +184,49 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>>>>        }
+>>>>>
+>>>>>        qdict_in = qobject_to(QDict, model->props);
+>>>>> +
+>>>>> +        for (const QDictEntry *entry = qdict_first(qdict_in);
+>>>>> +                 entry != NULL; entry = qdict_next(qdict_in, entry)) {
+>>>>> +            const char *key = qdict_entry_key(entry);
+>>>>> +            QObject *val_obj = qdict_entry_value(entry);
+>>>>> +            ObjectProperty *prop;
+>>>>> +            Visitor *v;
+>>>>> +            bool success;
+>>>>> +            uint64_t val;
+>>>>> +
+>>>>> +            prop = object_property_find(obj, key);
+>>>>> +            if (!prop) {
+>>>>> +                error_setg(errp, "%s does not exist!", key);
+>>>>> +                return NULL;
+>>>>> +            }
+>>>>> +
+>>>>> +            if (!g_str_has_prefix(key, "SYSREG_")) {
+>>>>> +                continue;
+>>>>> +            }
+>>>>> +
+>>>>> +            /* consume the prop to avoid unexpected parameter */
+>>>>> +            if (!visit_type_uint64(visitor, key, &val, errp)) {
+>>>>> +                return NULL;
+>>>>> +            }
+>>>>> +
+>>>>> +            v = qobject_input_visitor_new(val_obj);
+>>>>> +
+>>>>> +            if (!object_property_set(obj, key, v, &err)) {
+>>>>> +                error_propagate(errp, err);
+>>>>> +                visit_free(v);
+>>>>> +                return NULL;
+>>>>> +            }
+>>>>> +
+>>>>> +            success = kvm_idreg_write_scratch_vcpu(fdarray[2], v, key,
+>>>>> +                                                   prop->opaque, &err);
+>>>>> +            if (!success) {
+>>>>> +                error_propagate(errp, err);
+>>>>> +                visit_free(v);
+>>>>> +                return NULL;
+>>>>> +            }
+>>>>> +            visit_free(v);
+>>>>> +        }
+>>>>> +
+>>>>>        i = 0;
+>>>>>        while ((name = cpu_model_advertised_features[i++]) != NULL) {
+>>>>>            if (qdict_get(qdict_in, name)) {
+>>>>> @@ -160,6 +242,10 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>>>>        if (!err) {
+>>>>>            arm_cpu_finalize_features(ARM_CPU(obj), &err);
+>>>>>        }
+>>>>> +
+>>>>> +        if (kvm_enabled()) {
+>>>>> +            kvm_arm_destroy_scratch_host_vcpu(fdarray);
+>>>>> +        }
+>>>>>        visit_end_struct(visitor, NULL);
+>>>>>        visit_free(visitor);
+>>>>>        if (err) {
+>>>>> @@ -190,6 +276,18 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>>>>        }
+>>>>>    }
+>>>>>
+>>>>> +    object_property_iter_init(&iter, obj);
+>>>>> +
+>>>>> +    while ((idregprop = object_property_iter_next(&iter))) {
+>>>>> +        QObject *value;
+>>>>> +
+>>>>> +        if (!g_str_has_prefix(idregprop->name, "SYSREG_")) {
+>>>>> +            continue;
+>>>>> +        }
+>>>>> +        value = object_property_get_qobject(obj, idregprop->name, &error_abort);
+>>>>> +        qdict_put_obj(qdict_out, idregprop->name, value);
+>>>>> +    }
+>>>>> +
+>>>>>    if (!qdict_size(qdict_out)) {
+>>>>>        qobject_unref(qdict_out);
+>>>>>    } else {
+>>>>> -- 
+>>>>> 2.53.0
+>>
+> 
 
 
