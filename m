@@ -4,123 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E7ACC5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 15:20:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A8F7C61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 15:25:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzFQN-00035k-MM; Wed, 26 Aug 2026 11:20:23 -0400
+	id 1wzFUs-0004nm-Gb; Wed, 26 Aug 2026 11:25:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wzFQL-000350-Mi; Wed, 26 Aug 2026 11:20:21 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wzFUp-0004iG-Ue
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 11:25:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wzFQ7-0008Tv-2P; Wed, 26 Aug 2026 11:20:21 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QE1fsH4099711; Wed, 26 Aug 2026 15:20:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=AHlRgO
- zV+vEOX93wYInBJ7h/hFuMoxHb3tYYBmfZ6nk=; b=XChIxgFHmUhKkjjwo4+CEW
- vwgWR1Yi632O5eLUaaFfNRHrtIB8TKfRty3R0xSmWmdhW91K90mi0q5oG18sOA/m
- 3Gb90WywzK+uDlg2S4FP470+IhtCcPfJd8OyBbMnKXgJy5kc9i/HrtnA9LUVysYN
- VKYuDIEBYSdBXwVeDdp8sjgmkkQdpyH8Y39MpwaBkK2/KwXvhS3IUNxHMEaU5Fxm
- XH/Uhgb2pLykbgbumADv11BevJkhbHNOmVUChPsd0vSO7sgyeM1SYaR07qbwjRrK
- CnTMBKgjTlPa1BWk3Dstij95JvqWnnIcmAR764A5Rt9d+YIr5qrg0WyOSlG21gzQ
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g716hym1y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 15:20:04 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QFBPtt006952;
- Wed, 26 Aug 2026 15:20:03 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3k2nb6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 15:20:03 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QFJxnw49152306
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 15:19:59 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4E94D20049;
- Wed, 26 Aug 2026 15:19:59 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1B65D20040;
- Wed, 26 Aug 2026 15:19:56 +0000 (GMT)
-Received: from fedora (unknown [9.5.7.39])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 26 Aug 2026 15:19:55 +0000 (GMT)
-Date: Wed, 26 Aug 2026 20:49:59 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org,
- vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
- ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
- shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
- nikhilks@linux.ibm.com
-Subject: Re: [PATCH v2 23/37] target/ppc: Move Fixed-Point Load/Store String
- instructions to decodetree.
-Message-ID: <20260826203141.9ef11e8b-12-amachhiw@linux.ibm.com>
-Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, 
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
- milesg@linux.ibm.com, 
- npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com, 
- tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com, 
- aboorvad@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
- uverma@linux.ibm.com, nikhilks@linux.ibm.com
-References: <20260826050923.74756-1-rathc@linux.ibm.com>
- <20260826050923.74756-24-rathc@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wzFUk-0001jp-QR
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 11:24:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787757892;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/iCEBqb1Q6lZ7HIRD7IoqIXVMCqF175NNgwLvBlKANw=;
+ b=fZTXY2xwKt0KJK8kyZD5ujaUV8cStRQIuFoWEiHIid1nkJKfup2aoCNUVX0zt47Yqi6JTm
+ ZgDd8gpsVndWXNnnKyRd5TyJBqUl74ul6Co3Pr8FfY9J7F6ubtSpJJbEeB6yH6Wq+EXV/V
+ nh01Vd/Y43ipLf82ni1ggLln8e736YU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-r43-PyzsMj6otcQ9QmLtfA-1; Wed,
+ 26 Aug 2026 11:24:44 -0400
+X-MC-Unique: r43-PyzsMj6otcQ9QmLtfA-1
+X-Mimecast-MFC-AGG-ID: r43-PyzsMj6otcQ9QmLtfA_1787757883
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0ECC6187CCC1; Wed, 26 Aug 2026 15:24:40 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 01AA618005B9; Wed, 26 Aug 2026 15:24:38 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 6D1DD21E6920; Wed, 26 Aug 2026 17:24:36 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: "Denis V. Lunev" <den@virtuozzo.com>
+Cc: "Denis V. Lunev" <den@openvz.org>,  qemu-devel@nongnu.org,
+ qemu-block@nongnu.org,  Andrey Drobyshev
+ <andrey.drobyshev@virtuozzo.com>,  Kevin Wolf <kwolf@redhat.com>,  Hanna
+ Reitz <hreitz@redhat.com>,  Eric Blake <eblake@redhat.com>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH v4 5/5] qcow2: repair a dirty image when it becomes
+ writable
+In-Reply-To: <f0b0023d-385c-4a47-8672-f06e01ea3211@virtuozzo.com> (Denis
+ V. Lunev's message of "Wed, 26 Aug 2026 15:49:56 +0200")
+References: <20260824133729.1141990-1-den@openvz.org>
+ <20260824133729.1141990-6-den@openvz.org>
+ <87ld9umth3.fsf@pond.sub.org>
+ <f0b0023d-385c-4a47-8672-f06e01ea3211@virtuozzo.com>
+Date: Wed, 26 Aug 2026 17:24:36 +0200
+Message-ID: <8733w0j45n.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260826050923.74756-24-rathc@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEyNSBTYWx0ZWRfXxuCJjhHULD9Y
- V5iQwZb22gNq1Z7rTqWHKzmMGo7B03ps+TKbjRizMPcoxDiB5kFJOD76V5KrfIoGw8FMnE3Uevl
- qjZLti9yE7R0VkOXe0bDAyCVILf+zOw=
-X-Proofpoint-GUID: cbFshVcrdwG4KNmcVVSbBA3Rb7xiUIRS
-X-Proofpoint-ORIG-GUID: PqEcLSnqr8OAHujHDcrSGNw2rTe8uRpL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEyNSBTYWx0ZWRfX1MmclOqJ8xKJ
- jqMiZIPx0GQvmJ2INX/AgSmy1DgEKrwVsXtmvhZVixUhTwC12sQxmus8xT+3zKuGDuZ+LWcJAhS
- HaU34VzebSkTnLtJSKts2wFT1vd2LaPfPvDCrUvdQ+6Po2lhUDMoOqI57JGqlAxEamV952gyBjy
- j7a3/Q9E+vv9ZLrrdotS1DthjMxMwBV2tCETbFaOf94hsxl9O4xSwygJLHImjXbSgQQTvdDQSCf
- Tqews/h+mLYQTJgDd0bz1PDjtPQEf61sDziDAinLcDgxlvunjenukPjOuYjRajDff5udQ8Xopbk
- Jx2vNHaUoUyM3jNI0jLQYej+2GLaTS8a4TrFUH3UbZMTOvgBOd+hBoTxTWgYyUIcrxGqPDE8Gd1
- Ddjnvmhpq3Y+x+HGOZ7We1QlXcbg48UBVg2o2tvKyd5DQStkOSI6BHIr6H9v1bpirdf0KEPcLws
- NTkW+qYyz1wGOyKnvNg==
-X-Authority-Analysis: v=2.4 cv=H7brBeYi c=1 sm=1 tr=0 ts=6a8f0424 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=tYh36PFVI03M1B_yqkwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_04,2026-08-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
- bulkscore=0 adultscore=0 priorityscore=1501 clxscore=1015 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260125
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,357 +93,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/26 10:38 AM, Chinmay Rath wrote:
-> From: Shivang Upadhyay <shivangu@linux.ibm.com>
-> 
-> Move below instructions to decodetree specification :
-> 
->         lsw{i, x},
->         stsw{i, x}                       : X-form
-> 
-> The changes were verified by validating that the tcg ops generated by
-> those instructions remain the same, which were captured with the '-d
-> in_asm,op' flag.
-> 
-> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->  target/ppc/helper.h                        |   6 +-
->  target/ppc/insn32.decode                   |   7 ++
->  target/ppc/mem_helper.c                    |   6 +-
->  target/ppc/translate.c                     | 102 --------------------
->  target/ppc/translate/fixedpoint-impl.c.inc | 103 +++++++++++++++++++++
->  5 files changed, 116 insertions(+), 108 deletions(-)
-> 
-> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-> index 7e15676122..0e8b96d0ec 100644
-> --- a/target/ppc/helper.h
-> +++ b/target/ppc/helper.h
-> @@ -45,9 +45,9 @@ DEF_HELPER_1(check_tlb_flush_global, void, env)
->  
->  DEF_HELPER_3(lmw, void, env, tl, i32)
->  DEF_HELPER_FLAGS_3(stmw, TCG_CALL_NO_WG, void, env, tl, i32)
-> -DEF_HELPER_4(lsw, void, env, tl, i32, i32)
-> -DEF_HELPER_5(lswx, void, env, tl, i32, i32, i32)
-> -DEF_HELPER_FLAGS_4(stsw, TCG_CALL_NO_WG, void, env, tl, i32, i32)
-> +DEF_HELPER_4(LSW, void, env, tl, i32, i32)
-> +DEF_HELPER_5(LSWX, void, env, tl, i32, i32, i32)
-> +DEF_HELPER_FLAGS_4(STSW, TCG_CALL_NO_WG, void, env, tl, i32, i32)
->  DEF_HELPER_FLAGS_3(DCBZ, TCG_CALL_NO_WG, void, env, tl, int)
->  #ifdef TARGET_PPC64
->  DEF_HELPER_FLAGS_2(DCBZL, TCG_CALL_NO_WG, void, env, tl)
-> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> index a3973e042d..e7b5d19cde 100644
-> --- a/target/ppc/insn32.decode
-> +++ b/target/ppc/insn32.decode
-> @@ -527,6 +527,13 @@ CREQV           010011 ..... ..... ..... 0100100001 -  @X
->  CRANDC          010011 ..... ..... ..... 0010000001 -  @X
->  CRORC           010011 ..... ..... ..... 0110100001 -  @X
->  
-> +# Fixed Point Move Assist Instructions
-> +
-> +LSWI            011111 ..... ..... ..... 1 001010101 -  @X
-> +LSWX            011111 ..... ..... ..... 1 000010101 -  @X
-> +STSWI           011111 ..... ..... ..... 1 011010101 -  @X
-> +STSWX           011111 ..... ..... ..... 1 010010101 -  @X
-> +
->  # Fixed-Point Hash Instructions
->  
->  HASHST          011111 ..... ..... ..... 1011010010 .   @X_DW
-> diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
-> index 95a224e74c..582180cf88 100644
-> --- a/target/ppc/mem_helper.c
-> +++ b/target/ppc/mem_helper.c
-> @@ -190,7 +190,7 @@ static void do_lsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
->      env->gpr[reg] = val;
->  }
->  
-> -void helper_lsw(CPUPPCState *env, target_ulong addr,
-> +void helper_LSW(CPUPPCState *env, target_ulong addr,
->                  uint32_t nb, uint32_t reg)
->  {
->      do_lsw(env, addr, nb, reg, GETPC());
-> @@ -202,7 +202,7 @@ void helper_lsw(CPUPPCState *env, target_ulong addr,
->   * this is valid, but rA won't be loaded.  For now, I'll follow the
->   * spec...
->   */
-> -void helper_lswx(CPUPPCState *env, target_ulong addr, uint32_t reg,
-> +void helper_LSWX(CPUPPCState *env, target_ulong addr, uint32_t reg,
->                   uint32_t ra, uint32_t rb)
->  {
->      if (likely(xer_bc != 0)) {
-> @@ -218,7 +218,7 @@ void helper_lswx(CPUPPCState *env, target_ulong addr, uint32_t reg,
->      }
->  }
->  
-> -void helper_stsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
-> +void helper_STSW(CPUPPCState *env, target_ulong addr, uint32_t nb,
->                   uint32_t reg)
->  {
->      uintptr_t raddr = GETPC();
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index e40841b68e..712990cf2d 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -2595,104 +2595,6 @@ static void gen_stmw(DisasContext *ctx)
->      gen_helper_stmw(tcg_env, t0, t1);
->  }
->  
-> -/***                    Integer load and store strings                     ***/
-> -
-> -/* lswi */
-> -/*
-> - * PowerPC32 specification says we must generate an exception if rA is
-> - * in the range of registers to be loaded.  In an other hand, IBM says
-> - * this is valid, but rA won't be loaded.  For now, I'll follow the
-> - * spec...
-> - */
-> -static void gen_lswi(DisasContext *ctx)
-> -{
-> -    TCGv t0;
-> -    TCGv_i32 t1, t2;
-> -    int nb = NB(ctx->opcode);
-> -    int start = rD(ctx->opcode);
-> -    int ra = rA(ctx->opcode);
-> -    int nr;
-> -
-> -    if (ctx->le_mode) {
-> -        gen_align_no_le(ctx);
-> -        return;
-> -    }
-> -    if (nb == 0) {
-> -        nb = 32;
-> -    }
-> -    nr = DIV_ROUND_UP(nb, 4);
-> -    if (unlikely(lsw_reg_in_range(start, nr, ra))) {
-> -        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_LSWX);
-> -        return;
-> -    }
-> -    gen_set_access_type(ctx, ACCESS_INT);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_register(ctx, t0);
-> -    t1 = tcg_constant_i32(nb);
-> -    t2 = tcg_constant_i32(start);
-> -    gen_helper_lsw(tcg_env, t0, t1, t2);
-> -}
-> -
-> -/* lswx */
-> -static void gen_lswx(DisasContext *ctx)
-> -{
-> -    TCGv t0;
-> -    TCGv_i32 t1, t2, t3;
-> -
-> -    if (ctx->le_mode) {
-> -        gen_align_no_le(ctx);
-> -        return;
-> -    }
-> -    gen_set_access_type(ctx, ACCESS_INT);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_reg_index(ctx, t0);
-> -    t1 = tcg_constant_i32(rD(ctx->opcode));
-> -    t2 = tcg_constant_i32(rA(ctx->opcode));
-> -    t3 = tcg_constant_i32(rB(ctx->opcode));
-> -    gen_helper_lswx(tcg_env, t0, t1, t2, t3);
-> -}
-> -
-> -/* stswi */
-> -static void gen_stswi(DisasContext *ctx)
-> -{
-> -    TCGv t0;
-> -    TCGv_i32 t1, t2;
-> -    int nb = NB(ctx->opcode);
-> -
-> -    if (ctx->le_mode) {
-> -        gen_align_no_le(ctx);
-> -        return;
-> -    }
-> -    gen_set_access_type(ctx, ACCESS_INT);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_register(ctx, t0);
-> -    if (nb == 0) {
-> -        nb = 32;
-> -    }
-> -    t1 = tcg_constant_i32(nb);
-> -    t2 = tcg_constant_i32(rS(ctx->opcode));
-> -    gen_helper_stsw(tcg_env, t0, t1, t2);
-> -}
-> -
-> -/* stswx */
-> -static void gen_stswx(DisasContext *ctx)
-> -{
-> -    TCGv t0;
-> -    TCGv_i32 t1, t2;
-> -
-> -    if (ctx->le_mode) {
-> -        gen_align_no_le(ctx);
-> -        return;
-> -    }
-> -    gen_set_access_type(ctx, ACCESS_INT);
-> -    t0 = tcg_temp_new();
-> -    gen_addr_reg_index(ctx, t0);
-> -    t1 = tcg_temp_new_i32();
-> -    tcg_gen_trunc_tl_i32(t1, cpu_xer);
-> -    tcg_gen_andi_i32(t1, t1, 0x7F);
-> -    t2 = tcg_constant_i32(rS(ctx->opcode));
-> -    gen_helper_stsw(tcg_env, t0, t1, t2);
-> -}
->  
->  #if !defined(CONFIG_USER_ONLY)
->  static inline void gen_check_tlb_flush(DisasContext *ctx, bool global)
-> @@ -4914,10 +4816,6 @@ GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
->  GEN_HANDLER_E(dform3D, 0x3D, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
->  GEN_HANDLER(lmw, 0x2E, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
->  GEN_HANDLER(stmw, 0x2F, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
-> -GEN_HANDLER(lswi, 0x1F, 0x15, 0x12, 0x00000001, PPC_STRING),
-> -GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
-> -GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
-> -GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
->  /* ISA v3.0 changed the extended opcode from 62 to 30 */
->  GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
->  #if defined(TARGET_PPC64)
-> diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-> index 26b308e435..82fb645279 100644
-> --- a/target/ppc/translate/fixedpoint-impl.c.inc
-> +++ b/target/ppc/translate/fixedpoint-impl.c.inc
-> @@ -585,6 +585,109 @@ TRANS(CRANDC, cr_logic_common, tcg_gen_andc_i32);
->  TRANS(CREQV, cr_logic_common, tcg_gen_eqv_i32);
->  TRANS(CRORC, cr_logic_common, tcg_gen_orc_i32);
->  
-> +
+"Denis V. Lunev" <den@virtuozzo.com> writes:
 
-This is extra blank line. Please remove.
+> On 8/25/26 11:37, Markus Armbruster wrote:
+>> "Denis V. Lunev" <den@openvz.org> writes:
+>>
+>>> From: Denis V. Lunev <den@openvz.org>
+>>>
+>>> A dirty image must be repaired before anything allocates a cluster in
+>>> it. qcow2_do_open() does that, but only for a node that is writable
+>>> from the start. A node opened read-only skips it, and nothing revisits
+>>> the question once that node becomes writable, which block-commit does
+>>> routinely: commit_active_start() and commit_start() reopen the base
+>>> read-write for the duration of the job.
+>>>
+>>> With lazy refcounts the on-disk refcount block then still accounts for
+>>> the metadata clusters only, so the allocator restarts at the front of
+>>> the image and hands out clusters that L2 entries point at. Two guest
+>>> offsets end up sharing one host cluster. Nothing fails, the corrupt bit
+>>> stays clear, and a clean close clears the dirty bit, so no later open
+>>> repairs the image either. The bit also stays set for the whole writable
+>>> session, so a node which is merely writable says nothing.
+>>>
+>>> Refusing the reopen instead is simpler and keeps it atomic, but it
+>>> leaves nowhere to go: the base belongs to a chain the VM has open, so
+>>> the qemu-img check -r such an error would ask for cannot take the write
+>>> lock it needs. The repair does the trick in most cases anyway.
+>>>
+>>> Do the repair in qcow2_reopen_commit_post(), the earliest point where
+>>> the node is writable. An inactive node is skipped: bdrv_activate() calls
+>>> qcow2_do_open() again through qcow2_co_invalidate_cache().
+>>>
+>>> commit_post cannot reject the reopen, so a failed repair takes the
+>>> driver away from the node instead, which is what stops writes from
+>>> aliasing live clusters. qcow2_signal_corruption() does that as well,
+>>> but it also sends BLOCK_IMAGE_CORRUPTED and sets the corrupt bit,
+>>> which qcow2_do_open() honours by refusing every later read-write open.
+>>> The image is dirty and unrepaired, not corrupt, and qemu-img check -r
+>>> still fixes it, so neither belongs here. Return the error and skip
+>>> the bitmaps.
+>>>
+>>> Signed-off-by: Denis V. Lunev <den@openvz.org>
+>>> Reviewed-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>>> CC: Kevin Wolf <kwolf@redhat.com>
+>>> CC: Hanna Reitz <hreitz@redhat.com>
+>>> CC: Eric Blake <eblake@redhat.com>
+>>> CC: Markus Armbruster <armbru@redhat.com>
+>>> CC: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>>> Cc: qemu-stable@nongnu.org
+>> [...]
+>>
+>>> diff --git a/qapi/block-core.json b/qapi/block-core.json
+>>> index 199efc1e00..940249a5e5 100644
+>>> --- a/qapi/block-core.json
+>>> +++ b/qapi/block-core.json
+>>> @@ -1852,6 +1852,9 @@
+>>   ##
+>>   # @change-backing-file:
+>>   #
+>>   # Change the backing file in the image file metadata.  This does not
+>>   # cause QEMU to reopen the image file to reparse the backing filename
+>>   # (it may, however, perform a reopen to change permissions from r/o ->
+>>>  # r/w -> r/o, if needed).  The new backing file string is written into
+>>>  # the image file metadata, and the QEMU internal strings are updated.
+>>>  #
+>>> +# A dirty qcow2 image is repaired during that reopen, which blocks
+>>> +# other requests and can fail the command.
+>>
+>> Pardon my ignorance: what makes a qcow2 image dirty?
+> usual obvious reasons are SIGKILL to qemu process (f.e. from OOM)
+> or node crash.
 
-> +/***                    Integer load and store strings                     ***/
+So, you have to do some cleaning work before you can use it again, just
+like a dirty filesystem.  Correct?
 
-This banner-comment might not needed. But don't have any strong feelings
-about it.
+Back to change-backing-file.  It operates on an open image.  Cleaning
+happens when that image is read-only and dirty.  Possible because you
+can open dirty images read-only, and that doesn't clean them.  Correct?
 
-> +
-> +/* lswi */
-> +static bool trans_LSWI(DisasContext *ctx, arg_LSWI *a)
-> +{
-> +    TCGv t0;
-> +    TCGv_i32 t1, t2;
-> +    int nb = a->rb;
-> +    int start = a->rt;
-> +    int ra = a->ra;
-> +    int nr;
-> +
-> +    REQUIRE_INSNS_FLAGS(ctx, STRING);
-> +    if (ctx->le_mode) {
-> +        gen_align_no_le(ctx);
-> +        return true;
-> +    }
-> +    if (nb == 0) {
-> +        nb = 32;
-> +    }
-> +    nr = DIV_ROUND_UP(nb, 4);
-> +    if (unlikely(lsw_reg_in_range(start, nr, ra))) {
-> +        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_LSWX);
-> +        return true;
-> +    }
-> +    gen_set_access_type(ctx, ACCESS_INT);
-> +    t0 = do_ea_calc_ra(ctx, ra);
-> +    t1 = tcg_constant_i32(nb);
-> +    t2 = tcg_constant_i32(start);
-> +    gen_helper_LSW(tcg_env, t0, t1, t2);
-> +
-> +    return true;
-> +}
-> +
-> +/* lswx */
-> +static bool trans_LSWX(DisasContext *ctx, arg_LSWX *a)
-> +{
-> +    TCGv t0;
-> +    TCGv_i32 t1, t2, t3;
-> +
-> +    REQUIRE_INSNS_FLAGS(ctx, STRING);
-> +    if (ctx->le_mode) {
-> +        gen_align_no_le(ctx);
-> +        return true;
-> +    }
-> +
-> +    gen_set_access_type(ctx, ACCESS_INT);
-> +    t0 = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-> +    t1 = tcg_constant_i32(a->rt);
-> +    t2 = tcg_constant_i32(a->ra);
-> +    t3 = tcg_constant_i32(a->rb);
-> +    gen_helper_LSWX(tcg_env, t0, t1, t2, t3);
-> +
-> +    return true;
-> +}
-> +
-> +/* stswi */
-> +static bool trans_STSWI(DisasContext *ctx, arg_STSWI *a)
-> +{
-> +    TCGv t0;
-> +    TCGv_i32 t1, t2;
-> +    int nb = a->rb;
-> +
-> +    REQUIRE_INSNS_FLAGS(ctx, STRING);
-> +    if (ctx->le_mode) {
-> +        gen_align_no_le(ctx);
-> +        return true;
-> +    }
-> +    gen_set_access_type(ctx, ACCESS_INT);
-> +    t0 = do_ea_calc_ra(ctx, a->ra);
-> +    if (nb == 0) {
-> +        nb = 32;
-> +    }
-> +    t1 = tcg_constant_i32(nb);
-> +    t2 = tcg_constant_i32(a->rt);
-> +    gen_helper_STSW(tcg_env, t0, t1, t2);
-> +
-> +    return true;
-> +}
-> +
-> +/* stswx */
-> +static bool trans_STSWX(DisasContext *ctx, arg_STSWX *a)
-> +{
-> +    TCGv t0;
-> +    TCGv_i32 t1, t2;
-> +
-> +    REQUIRE_INSNS_FLAGS(ctx, STRING);
-> +    if (ctx->le_mode) {
-> +        gen_align_no_le(ctx);
-> +        return true;
-> +    }
-> +    gen_set_access_type(ctx, ACCESS_INT);
-> +    t0 = do_ea_calc_ra(ctx, a->ra);
+>> Can you give me an idea of what other requests could be blocked?
+> Before the patch reopen was smooth - we have just opened the
+> file again. After this patch in a very unlikely corner case
+> potentially lengthy procedure has been added - full image
+> consistency check. Guest IO is stuck until the check will be
+> completed.
+>
+> The case is unfortunately real for production.
+>
+>> Double-checking: "that reopen" is the one to change permissions,
+>> i.e. the parenthesis above.  Correct?
+> yes
+>
+>>> +#
+>>>  # @image-node-name: The name of the block driver state node of the
+>>>  #     image to modify.  The "device" argument is used to verify
+>>>  #     "image-node-name" is in the chain described by "device".
+>>> @@ -1891,6 +1894,9 @@
+>>   ##
+>>   # @block-commit:
+>>   #
+>>   # Live commit of data from overlay image nodes into backing nodes -
+>>   # i.e., writes data between 'top' and 'base' into 'base'.
+>>   #
+>>   # If top =3D=3D base, that is an error.  If top has no overlays on top=
+ of
+>>   # it, or if it is in use by a writer, the job will not be completed by
+>>   # itself.  The user needs to complete the job with the `job-complete`
+>>   # command after getting the ready event.  (Since 2.0)
+>>   #
+>>   # If the base image is smaller than top, then the base image will be
+>>   # resized to be the same size as top.  If top is smaller than the base
+>>   # image, the base will not be truncated.  If you want the base image
+>>>  # size to match the size of the smaller top, you can safely truncate
+>>>  # it yourself once the commit operation successfully completes.
+>>>  #
+>>> +# The base is opened read-write.  A dirty qcow2 base is repaired
 
-STSWX is X-form indexed. As per Power ISA:
+Reopend, I presume?
 
-  EA ← (RA=0 ? 0 : (RA)) + (RB)
+>>> +# first, which blocks other requests and can fail the command.
+>>> +#
+>>>  # @job-id: identifier for the newly-created block job.  If omitted,
+>>>  #     the device name will be used.  (Since 2.7)
+>>>  #
 
-do_ea_calc_ra only computes (RA=0 ? 0 : GPR[RA]) — GPR[RB] is never
-added. Any stswx with a non-zero RB will store to the wrong address.
+Like change-backing-file, block-commit operates on open images.  It
+copies down into a base image.  If the base image is read-only, it is
+reopened, and cleaning happens when it's dirty.  Correct?
 
-The old gen_stswx correctly called gen_addr_reg_index() which includes
-the RB addition. trans_LSWX (three functions above) also gets this
-right. Fix:
+Can it happen in any other way?
 
--    t0 = do_ea_calc_ra(ctx, a->ra);
-+    t0 = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+>>> @@ -2902,6 +2908,9 @@
+>>   ##
+>>   # @block-stream:
+>>   #
+>>   # Copy data from a backing file into a block device.
+>>
+>> [...]
 
-Note: do_ea_calc_ra is correct for trans_LSWI and trans_STSWI because
-those are the immediate forms — their ISA EA is also (RA==0 ? 0 :
-GPR[RA]) with no RB term; the RB field carries NB, not a register EA
-operand.
+Whereas block-commit copies down into a base image, block-stream copies
+up from a base image.  If the image copied to is read-only, it is
+reopened, and cleaning happens when it's dirty.  Correct?
 
-> +    t1 = tcg_temp_new_i32();
-> +    tcg_gen_trunc_tl_i32(t1, cpu_xer);
-> +    tcg_gen_andi_i32(t1, t1, 0x7F);
-> +    t2 = tcg_constant_i32(a->rt);
-> +    gen_helper_STSW(tcg_env, t0, t1, t2);
-> +
-> +    return true;
-> +}
-> +
->  static bool do_add_D(DisasContext *ctx, arg_D *a, bool add_ca, bool compute_ca,
->                       bool compute_ov, bool compute_rc0)
->  {
-> -- 
-> 2.55.0
-> 
+Can it happen in any other way?
+
+>>>  # On successful completion the image file is updated to drop the
+>>>  # backing file and the `BLOCK_JOB_COMPLETED` event is emitted.
+>>>  #
+>>> +# The top image is opened read-write.  A dirty qcow2 image is repaired
+>>> +# first, which blocks other requests and can fail the command.
+>>> +#
+>>>  # In case @device is a filter node, `block-stream` modifies the first
+>>>  # non-filter overlay node below it to point to the new backing node
+>>>  # instead of modifying @device itself.
+>>> @@ -4989,6 +4998,16 @@
+>>   ##
+>>   # @blockdev-reopen:
+>>   #
+>>   # Reopens one or more block devices using the given set of options.
+>>   # Any option not specified will be reset to its default value
+>>   # regardless of its previous status.  If an option cannot be changed
+>>   # or a particular driver does not support reopening then the command
+>>   # will return an error.  All devices in the list are reopened in one
+>>>  # transaction, so if one of them fails then the whole transaction is
+>>>  # cancelled.
+
+blockdev-reopen also operates on open images.  Cleaning happens when
+reopening a dirty read-only image read/write.  Correct?
+
+Can it happen in any other way?
+
+>>>  #
+>>> +# An error is also returned when a device cannot be used once it has
+>>> +# been reopened.  Such a reopen is not undone, so an error does not
+>>> +# always mean that nothing has changed.
+>>
+>> Could that be a problem?
+> Error reply as itself is not a problem. The situation as a whole
+> is a real pain in the ass.
+>
+> The problem is that such images exists in production and there
+> is not way to handle this without downtime.
+>
+> Under this patch we are trying to fix things hard and this is
+> correct thing to do - on RW image we are doing exactly the
+> same thing. If automation is unable to fix - the guest denies
+> starting.
+>
+> Here we report an error and render guest as unusable. This
+> case is expected to be extremely rare but technically possible.
+>
+> This is a problem.
+
+I'll come back to this as soon as I understand when exactly cleaning may
+happen.
+
+>>> +#                                        A node the driver gave up on
+>>> +# serves nothing at all: it keeps its image open, makes
+>>> +# `query-named-block-nodes` fail for as long as it is in the graph,
+>>> +# and `blockdev-del` removes it only once nothing refers to it.
+>>> +#
+>>> +# Reopening a dirty qcow2 image read-write repairs it first, which
+>>> +# blocks other requests and can fail the command.
+>>> +#
+>>>  # The command receives a list of block devices to reopen.  For each
+>>>  # one of them, the top-level @node-name option (from
+>>>  # `BlockdevOptions`) must be specified and is used to select the block
+>>
+>> These documentation updates suggest the patch affects commands
+>> change-backing-file, block-commit, block-stream, and blockdev-reopen.
+>> Is that correct?
+>>
+>> Would it make sense to list them in the commit message?
+> That is simple thing. Will add :-)
+>
+> Thank you,
+> =C2=A0 =C2=A0 Den
+
+Thanks!
+
 
