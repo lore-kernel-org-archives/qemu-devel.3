@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8881DC61DBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:41:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D8BC61DBE
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:41:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzJUA-0005Lf-CA; Wed, 26 Aug 2026 15:40:34 -0400
+	id 1wzJUk-0007Jd-AP; Wed, 26 Aug 2026 15:41:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJU4-00057A-VT
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:40:29 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJUi-0007Ca-RW
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:41:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJU2-00065Z-Oe
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:40:28 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJUh-0006En-6D
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:41:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787773226;
+ s=mimecast20190719; t=1787773266;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yKAT3AByQqAPEWNoFggUat7b+8Hak/kL/bR6Gv1FXr8=;
- b=T5UPCC1QlrGBz075OmJu9xjsEZ6ZhCiFzuPJ/ODDJudVpBTbpooFXMj/Roy1yTLpg3YKTR
- 2R5ojChJcUEtieA+QQ6HIQkrAzAH6UpEao39Za4NrVObBE7rMlDImyGupyrOnbnW69CPo4
- 2PZcLV1u0r8M+lNe0ZhJFvEyjKYYWQ0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=rLnw42K1+V+Fl4KQBW783G0VH8D6uwH+UAZ7SFG2AyA=;
+ b=Bik/stsEvKwlVeSh8krIMrRtjo46QVS6YTiT2v+O/BY5wGPZyyem77i+OVyrEqELTsAajV
+ MLy7WFoGG43s1kSD4fwAcM9oFI2G6PnqZ/TDj9u1p5HmrgAcFQB4dQ7p8dMumC8um4LKeK
+ FRKts4Ib7qT4Nsd+12cm3LVpCeoehG4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-113-7EJ0nng3MHmnWgtVU44T1Q-1; Wed,
- 26 Aug 2026 15:40:21 -0400
-X-MC-Unique: 7EJ0nng3MHmnWgtVU44T1Q-1
-X-Mimecast-MFC-AGG-ID: 7EJ0nng3MHmnWgtVU44T1Q_1787773218
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-539-WuyCK6o6NhyfNeFZLwOn-Q-1; Wed,
+ 26 Aug 2026 15:40:59 -0400
+X-MC-Unique: WuyCK6o6NhyfNeFZLwOn-Q-1
+X-Mimecast-MFC-AGG-ID: WuyCK6o6NhyfNeFZLwOn-Q_1787773252
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5A51C195DBA0; Wed, 26 Aug 2026 19:40:18 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 94CF5190FF98; Wed, 26 Aug 2026 19:40:52 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.99])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7AD5718005AC; Wed, 26 Aug 2026 19:40:10 +0000 (UTC)
+ id 2A90D1800577; Wed, 26 Aug 2026 19:40:46 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>,
@@ -72,10 +72,9 @@ Cc: Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Lukas Straub <lukasstraub2@web.de>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 09/43] qapi: convert trivial intro sections for
- machine-common.json
-Date: Wed, 26 Aug 2026 15:38:06 -0400
-Message-ID: <20260826193840.2152000-10-jsnow@redhat.com>
+Subject: [PATCH v3 13/43] qapi: convert trivial intro sections for replay.json
+Date: Wed, 26 Aug 2026 15:38:10 -0400
+Message-ID: <20260826193840.2152000-14-jsnow@redhat.com>
 In-Reply-To: <20260826193840.2152000-1-jsnow@redhat.com>
 References: <20260826193840.2152000-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -107,54 +106,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/machine-common.json | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ qapi/replay.json | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/qapi/machine-common.json b/qapi/machine-common.json
-index aca98e994af..fdb0e68d9e6 100644
---- a/qapi/machine-common.json
-+++ b/qapi/machine-common.json
-@@ -12,9 +12,8 @@
+diff --git a/qapi/replay.json b/qapi/replay.json
+index ccf84da68ef..66dff797553 100644
+--- a/qapi/replay.json
++++ b/qapi/replay.json
+@@ -12,8 +12,7 @@
  
  ##
- # @S390CpuEntitlement:
+ # @ReplayMode:
 -#
--# An enumeration of CPU entitlements that can be assumed by a virtual
--# S390 CPU
-+#     An enumeration of CPU entitlements that can be assumed by a
-+#     virtual S390 CPU
+-# Mode of the replay subsystem.
++#     Mode of the replay subsystem.
  #
- # Since: 8.2
- ##
-@@ -23,8 +22,7 @@
+ # @none: normal execution mode.  Replay or record are not enabled.
+ #
+@@ -30,8 +29,7 @@
  
  ##
- # @CpuTopologyLevel:
+ # @ReplayInfo:
 -#
--# An enumeration of CPU topology levels.
-+#     An enumeration of CPU topology levels.
+-# Record/replay information.
++#     Record/replay information.
  #
- # @thread: thread level, which would also be called SMT level or
- #     logical processor level.  The @threads option in
-@@ -84,8 +82,7 @@
- 
- ##
- # @SmpCacheProperties:
--#
--# Cache information for SMP system.
-+#     Cache information for SMP system.
- #
- # @cache: Cache name, which is the combination of cache level and
- #     cache type.
-@@ -103,8 +100,7 @@
- 
- ##
- # @SmpCachePropertiesWrapper:
--#
--# List wrapper of `SmpCacheProperties`.
-+#     List wrapper of `SmpCacheProperties`.
- #
- # @caches: the list of `SmpCacheProperties`.
+ # @mode: current mode.
  #
 -- 
 2.55.0
