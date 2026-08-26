@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 494BEC5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 22:07:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C8C5C61DBE
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 22:07:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzLl2-000586-2X; Wed, 26 Aug 2026 18:06:08 -0400
+	id 1wzLlQ-0005IU-8m; Wed, 26 Aug 2026 18:06:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wzLkz-00057Z-TM
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 18:06:05 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1wzLlO-0005GY-R4
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 18:06:30 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wzLky-0004i0-8X
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 18:06:05 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-3969e82ff8fso310741a91.0
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 15:06:03 -0700 (PDT)
+ id 1wzLlN-0004qb-CS
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 18:06:30 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-3964e480f76so2003537a91.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 15:06:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787781963; x=1788386763; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787781988; x=1788386788; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=1EEiUbMbW/MI8AGgrTJhmMkX6IzYkEgELvPtrWZws5s=;
- b=CaTAQh/EPkE9wB/aaiQCg/DMDs02RB0OCAEVadhKyABd/Boyts9MZSzkqpez+Ny+6I
- CS7ySaRgMW0PtDZf5TthWK7l3ZtR+5t3+wl8jTRyYPQ1YlbwdIOj4PtCPIrYuYCbF5O5
- e08/pAFx0raO2JgCINopTVDmPYWYAj1+xADV5S46lB6HuDz9ZYXrwWv4AhMfigw3xbyY
- 5pCKPOGNBLtmWTK7gZVZafFfjC92gxt0InBd4E2idXr+6NfT9eqrU1M/F0KnkwQx+iK8
- VJPruoy5DXBh6sLVShzkZGhcbQuo+C7SJiRfQU3ejGsQSWrSTHq0y2q7+ofwhsg0MCci
- FD+Q==
+ bh=angXpW714AxLO7bEvAuoyzYf+yVTyNqRpHReJaAGMI8=;
+ b=cJdThBlVwPzw+v2bT93E8aN89bE98QiUbRo8lv5uGJa7FvizpoRWMkNhN+sZm0zFGL
+ WdPc+NBB3dmOAghv6bqLYP9YTnHHYEQHZ7TlhJjSXxLOujnp+sJsFS5NqzASaPbxBPzR
+ B4vIzH46VOeD4HhdQ42sZf+GneX/fMPPLnEGVPA4CqOV1/9vh7Styq1N/DKmYqUjoXJ3
+ OCTUpTzLPTiMXA7tEc0dLO7jjloBvk0k7fipBEnNkGet8k+xePNtpKNL0LJPYnZJSLnY
+ 1+JmJkeU27A4ZfrmK1Gb3/Hw+1lydRaV/YIQeba5bE920CaPiHta8fFn2s/ZxGK2H+9v
+ uZUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787781963; x=1788386763;
+ d=1e100.net; s=20251104; t=1787781988; x=1788386788;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=1EEiUbMbW/MI8AGgrTJhmMkX6IzYkEgELvPtrWZws5s=;
- b=YGLVsGf1Mu3fKXXtk74Mu2yti0er8xH2s5ViqlVvJCDLdT3EB6OqNkqxWPhJKL6fHY
- 7HyR3oRFpb87ermBnRuEKLimnO/xg1S0ai2PRgtf1I1qsLP4nzWEyA4qcyfxCOfRybGS
- wGiiYP8xYPipIloXG7axi/HO69E9w4h2SCuFxG1IxDcUyCmISwhBq+f3ctff0l/uJkuh
- H5QA/4+JnwnLnQMgfbBdVScztr4emIOoHgTMiuIcjRue+lMcGatXH28f4BwWxkYZEngc
- B9ih5nyNLsGTXqGy382SG7bgbYU1u/QTT0pbBoSJwrgfUxsImyTg5DDgumSU4bQbojqz
- jyPQ==
+ bh=angXpW714AxLO7bEvAuoyzYf+yVTyNqRpHReJaAGMI8=;
+ b=RBZMU5LYqqg7VO7HFoD+SvXo726ZKEE+cV2Lg7gUUvw7notF3AdDpzBe9pUvWNDOPl
+ cyMCYQjLg/l8/jTzVvJV2FsVKRvUJ/EmaAmaLhuAR3JMZTVcmGWIvgiFZDOFvOw6ctS+
+ Mor6qIE81iwaGaHqbxvs/xIKTsWfp6MwfaB8/u/d2hmYQ2eJCkcm6IOzZXmaZ5XQMdzJ
+ pK2MIqDfrkexatsG/aHn+mM5zu3JXSZNARJKq5FB38PXqZmOsR+IJIAukIcmBfh1xAXJ
+ gOXRATpfH74u5gu7KByNumq4hnuicauqy1ZJXtGsxn3LJYT7GheCNQOmmVlRwpsaxim6
+ zSIA==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrvbNFnjS/8iay93k/sW3ak/r2DkUwv6ZYB5nI+OiDcDmAuBw7LSR9G7yWpReh/dW55HPU5UaC36hiv@nongnu.org
-X-Gm-Message-State: AFuF++kXrf2l5+WaKqHDKoeEJhM8cS/jog+mxzaflJVNNIU2d8UOPXs8
- Mni9xFI2rcBCHNSPCtjdAiDnD6WL3iB0YBrRZonkmT0Eb5SVpX/+A1QL
-X-Gm-Gg: AR+sD10uB7+gakCvvxHat8WoKeFutHyypm/j1tpbxt1s20iZyjW1fQqCwsDPNZFIT/g
- 8ICk6K2/VjStT1TxHFPRFInavkmHpfdFuKiZloyyLQL8mMk2IBdrDAOBMAqpgEbpNFLX1ZZ2H7n
- 05dbUChFiu8NZbYeMLXRNCu22nglM/vdzXsJlAjEWCE0S/X8ja0PPqMDwt0Rs6A4zBGXKbaDdjo
- 82YFPgZtGzuenzLxovPNJ1/soHfowJwFV/dIbE7oqy4dsgr4SRaGpw3RCuV6m2jOkJVzlTIOAzr
- koO14882Lo12Rf6W/ZMvjWdM39Fvr8me0L5KDrY6IpoI0f+GWB8tcEC84OzBR++bo3Xj5wIJBdS
- 0fUqDXHNUaPGUQ5EplUVylzMN7/o3E2Kj1u2MZWS5Nb1iusHiz+BzzvAZR7/CN4A7eA5qF0TT8r
- EnnUsaZlHlqcZcMO602/gqlYyRgoBOyG/CF67VTq7U6Zk5DFhZ8f/XPdG3/XXxzssP909gGweth
- wdXE+/EhD0SXcF4v5yIobLtzkPHiJbl6o/5B3rTt6QF+63EBE5+n1knfyw3VAYiT79dh+/v/9Xv
- wYUdIJXMMQ/Q8g1nGdm0
-X-Received: by 2002:a17:90a:e7ca:b0:38f:de97:b06 with SMTP id
- 98e67ed59e1d1-3966d3ba166mr20146999a91.5.1787781962830; 
- Wed, 26 Aug 2026 15:06:02 -0700 (PDT)
+ AHgh+Rp8nc0ZV4tdlFB/bTBiFaBG9MKcb+GWyautKaQI0WWs3u64QmHr8lG4PjGCu9XUW8aTEwvQ29JEe902@nongnu.org
+X-Gm-Message-State: AFuF++nv+Lg9PWTNhjQoOvrUMi/DIqzyK5bAV0pNIA+2MoeEciVa8Dh6
+ QJzYxsCUYoTjqdS2qGy/SAM4hkr1Nujc/PTS3NlnN9Z0U4tDRZFswmsy
+X-Gm-Gg: AR+sD11AMYBEQy0/lTfG0724XRbti6ri8olamsQR19Vr1XjDbFBTOfZx2eow54EhXBy
+ rJSN1lVOliQY6/8hpnQsJgeEnF+bV1Wk7tNH9Th/KH2lLAKaF8OtC0QsrnTdNudWFCYTL7RT5Ed
+ j7T05LWlgYiLg0Bsea0yWjbGVytT+AntobsrqNfbuP1aIr18WU8JavxNb36U3PInjjr2c/WOSDs
+ YRT1ZuULGLJyeWaWh0PnjUnDsbAwWubOKqheghi1f72urAN2ygvR//p3IY8jg7qlY7d1YBjHt65
+ OpSgifTtKq9moMyrDRzHA36K+uv1w7d2mK6ViqyjCiXwuVhWxkmujfJ22lBCnboRU6xl13Ij62R
+ SHsXbRuVJJ2RSyQ2QYTNLM2GzPrLEF4IcSoXAgVOHZ3qiUG0tEF3gTDwYRzcTgvOpRLM+lNtwcO
+ yzMckhvQ+OkXnQXP7hJghI5DmKW8HKdRkiRjh4JEXb6kNub6Ym6E08ch2HKaBpbuNRMzH8Y8HqM
+ A6YZqfQQkSybxjvhghzL1X7CTpsDxUEX3hUTZAmNygxIS2cpv1/DJ3wEKkO7+tRJSmu1MmQhPUl
+ DRlRh88gq15xtziE9KYyNPGFy8uTNkc=
+X-Received: by 2002:a17:90b:4a50:b0:396:61f1:da5c with SMTP id
+ 98e67ed59e1d1-3966d3aabe3mr19251084a91.4.1787781988020; 
+ Wed, 26 Aug 2026 15:06:28 -0700 (PDT)
 Received: from donnager-debian.. ([180.150.112.50])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39668a573a1sm5789956a91.14.2026.08.26.15.05.58
+ 98e67ed59e1d1-39668a573a1sm5789956a91.14.2026.08.26.15.06.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 15:06:02 -0700 (PDT)
+ Wed, 26 Aug 2026 15:06:27 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
@@ -80,17 +80,16 @@ Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Portia Stephens <portias@oss.tenstorrent.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH 03/16] hw/intc/riscv_imsic: Take a MemoryRegion for the
- created device
-Date: Thu, 27 Aug 2026 07:35:13 +0930
-Message-ID: <20260826220528.54516-4-joel@jms.id.au>
+Subject: [PATCH 08/16] hw/riscv/atlantis: Remove unused fdt_size
+Date: Thu, 27 Aug 2026 07:35:18 +0930
+Message-ID: <20260826220528.54516-9-joel@jms.id.au>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260826220528.54516-1-joel@jms.id.au>
 References: <20260826220528.54516-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=joel.stan@gmail.com; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=joel.stan@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -114,106 +113,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-riscv_imsic_create() maps the device it creates into system_memory,
-which prevents its use by SoCs that map devices into their own memory
-container.
-
-Add a MemoryRegion parameter and map the device into it instead of
-calling sysbus_mmio_map(). All callers pass system_memory, so there is
-no change in behaviour.
+The machine state carries around the FDT size which isn't used by
+anything.
 
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- include/hw/intc/riscv_imsic.h | 3 ++-
- hw/intc/riscv_imsic.c         | 6 ++++--
- hw/riscv/aia.c                | 6 ++++--
- hw/riscv/xiangshan_kmh.c      | 5 +++--
- 4 files changed, 13 insertions(+), 7 deletions(-)
+ include/hw/riscv/tt_atlantis.h | 2 --
+ hw/riscv/tt_atlantis.c         | 6 ++++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/intc/riscv_imsic.h b/include/hw/intc/riscv_imsic.h
-index fae999731dff..8295b1f14452 100644
---- a/include/hw/intc/riscv_imsic.h
-+++ b/include/hw/intc/riscv_imsic.h
-@@ -62,7 +62,8 @@ struct RISCVIMSICState {
-     uint32_t num_irqs;
+diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
+index c9308aa57017..d0cca3b02424 100644
+--- a/include/hw/riscv/tt_atlantis.h
++++ b/include/hw/riscv/tt_atlantis.h
+@@ -33,8 +33,6 @@ struct TTAtlantisState {
+     DeviceState *irqchip;
+     DesignWareI2CState i2c[TT_ATL_NUM_I2C];
+     UnimplementedDeviceState uart1;
+-
+-    int fdt_size;
  };
  
--DeviceState *riscv_imsic_create(hwaddr addr, uint32_t hartid, bool mmode,
-+DeviceState *riscv_imsic_create(MemoryRegion *mr, hwaddr addr,
-+                                uint32_t hartid, bool mmode,
-                                 uint32_t num_pages, uint32_t num_ids);
- 
- #endif
-diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
-index d6b46cdca220..26dd10a0462c 100644
---- a/hw/intc/riscv_imsic.c
-+++ b/hw/intc/riscv_imsic.c
-@@ -495,7 +495,8 @@ type_init(riscv_imsic_register_types)
- /*
-  * Create IMSIC device.
-  */
--DeviceState *riscv_imsic_create(hwaddr addr, uint32_t hartid, bool mmode,
-+DeviceState *riscv_imsic_create(MemoryRegion *mr, hwaddr addr,
-+                                uint32_t hartid, bool mmode,
-                                 uint32_t num_pages, uint32_t num_ids)
+ enum {
+diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+index acfd0d31b368..127c89be4f60 100644
+--- a/hw/riscv/tt_atlantis.c
++++ b/hw/riscv/tt_atlantis.c
+@@ -366,9 +366,10 @@ static void finalize_fdt(TTAtlantisState *s)
+ static void create_fdt(TTAtlantisState *s)
  {
-     DeviceState *dev = qdev_new(TYPE_RISCV_IMSIC);
-@@ -518,7 +519,8 @@ DeviceState *riscv_imsic_create(hwaddr addr, uint32_t hartid, bool mmode,
-     qdev_prop_set_uint32(dev, "num-irqs", num_ids + 1);
+     MachineState *ms = MACHINE(s);
++    int fdt_size = 0;
  
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
--    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
-+    memory_region_add_subregion(mr, addr,
-+        sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
+     ms->fdt = create_board_device_tree("Tenstorrent Atlantis RISC-V Machine",
+-                                       "tenstorrent,atlantis", &s->fdt_size);
++                                       "tenstorrent,atlantis", &fdt_size);
  
-     if (!kvm_irqchip_in_kernel()) {
-         for (i = 0; i < num_pages; i++) {
-diff --git a/hw/riscv/aia.c b/hw/riscv/aia.c
-index 651552c8f970..49cb14349f00 100644
---- a/hw/riscv/aia.c
-+++ b/hw/riscv/aia.c
-@@ -52,7 +52,8 @@ DeviceState *riscv_create_aia(MemoryRegion *mr, bool msimode, int aia_guests,
-             /* Per-socket M-level IMSICs */
-             addr = imsic_m->base + socket * (1U << IMSIC_MMIO_GROUP_MIN_SHIFT);
-             for (i = 0; i < hart_count; i++) {
--                riscv_imsic_create(addr + i * m_imsic_stride,
-+                riscv_imsic_create(mr,
-+                                   addr + i * m_imsic_stride,
-                                    base_hartid + i, true, 1,
-                                    num_msis);
-             }
-@@ -61,7 +62,8 @@ DeviceState *riscv_create_aia(MemoryRegion *mr, bool msimode, int aia_guests,
-         /* Per-socket S-level IMSICs */
-         addr = imsic_s->base + socket * (1U << IMSIC_MMIO_GROUP_MIN_SHIFT);
-         for (i = 0; i < hart_count; i++) {
--            riscv_imsic_create(addr + i * s_imsic_stride,
-+            riscv_imsic_create(mr,
-+                               addr + i * s_imsic_stride,
-                                base_hartid + i, false, 1 + aia_guests,
-                                num_msis);
-         }
-diff --git a/hw/riscv/xiangshan_kmh.c b/hw/riscv/xiangshan_kmh.c
-index 94f9d02a00b9..9eb608f8c578 100644
---- a/hw/riscv/xiangshan_kmh.c
-+++ b/hw/riscv/xiangshan_kmh.c
-@@ -65,14 +65,15 @@ static DeviceState *xiangshan_kmh_create_aia(uint32_t num_harts)
-     /* M-level IMSICs */
-     addr = memmap[XIANGSHAN_KMH_IMSIC_M].base;
-     for (i = 0; i < num_harts; i++) {
--        riscv_imsic_create(addr + i * IMSIC_HART_SIZE(0), i, true,
-+        riscv_imsic_create(get_system_memory(),
-+                           addr + i * IMSIC_HART_SIZE(0), i, true,
-                            1, XIANGSHAN_KMH_IMSIC_NUM_IDS);
-     }
+     qemu_fdt_add_subnode(ms->fdt, "/chosen");
  
-     /* S-level IMSICs */
-     addr = memmap[XIANGSHAN_KMH_IMSIC_S].base;
-     for (i = 0; i < num_harts; i++) {
--        riscv_imsic_create(addr +
-+        riscv_imsic_create(get_system_memory(), addr +
-                            i * IMSIC_HART_SIZE(XIANGSHAN_KMH_IMSIC_GUEST_BITS),
-                            i, false, 1 + XIANGSHAN_KMH_IMSIC_GUEST_BITS,
-                            XIANGSHAN_KMH_IMSIC_NUM_IDS);
+@@ -384,8 +385,9 @@ static void load_fdt(TTAtlantisState *s)
+     MachineState *ms = MACHINE(s);
+     char **node_path;
+     Error *err = NULL;
++    int fdt_size = 0;
+ 
+-    ms->fdt = load_device_tree(ms->dtb, &s->fdt_size);
++    ms->fdt = load_device_tree(ms->dtb, &fdt_size);
+     if (!ms->fdt) {
+         error_report("load_device_tree() failed");
+         exit(1);
 -- 
 2.47.3
 
