@@ -4,129 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFDA3C61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 17:16:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79DACC5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 17:17:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzHEv-00067T-91; Wed, 26 Aug 2026 13:16:41 -0400
+	id 1wzHFL-0006Pr-Rv; Wed, 26 Aug 2026 13:17:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexandre.frey@nxp.com>)
- id 1wzGzF-0001aK-GQ
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 13:00:29 -0400
-Received: from mail-westeuropeazon11010067.outbound.protection.outlook.com
- ([52.101.69.67] helo=AM0PR83CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wzHFH-0006OY-CT
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 13:17:03 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexandre.frey@nxp.com>)
- id 1wzGzD-0003bz-TT
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 13:00:29 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Gz7qjjX82TjrvBfmZIVJA4LO/hzpozBE7JByzqjARkLDsGAT49kD7AS+O1203obsJsVdhFVBggiISfx33hTIRBBdvhJszraG9cQKPe2irFfhu/e8ghv7XmI5EKT/qClbUIEnYupysNYwZ4gcl8a6MgJMGwF2nYagY206KEsc27wiHFL6CT4QcOzf6SLckpPtf36zAgnoNn5P5+oeoYzzHczmNvCD8CeOlVs38CHVFvqaRXnVlhey3B5ZDU2vztudrXMjMmrc5pCYdeTbHdLB1w+o82wRTAEmcWTgGiq9+E9IEfo+c1SDgnpPsCUAFBb3pXHPlwpNX335/DItQxtWzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=MPO6nfln6Q19R1mzLqR8/pWChIL0Kq0HCIZlMcHDygU=;
- b=bs8YTnenLSa91iKrV2Fy6oD7DTJDcr5/bjK0xv68rdOFR4a4qeyIf5LDsMmyDCUVZ1vPIJ4CsgGIi/yLX6O8D78OH3iLhsZP0GYnq1aBUBUtiuteYX/c7LaDiSep2mEi7zel43gWMyzW1vMRGMSRDKYSaLzklhfdBg76wBPy9P5WeuyKNGsYuZr0A51iWQkBOJ7wspCONNMtAQx0LST2B4MQWr8v9QD1//COX8sSCfOfXejmLAbBANwwPO8y2NmKsNht3iwLSGuNWoNY6ytTkVnjoSjNZfBFOTydZNQwjlrQ6pcpS/fxOZ9GqlE+2ZdZFJ3UYeYjsXaKNU6Tu22M0Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MPO6nfln6Q19R1mzLqR8/pWChIL0Kq0HCIZlMcHDygU=;
- b=MMPgR04xdKdIzHL09F0nt+umLR+T02rXhsLnOvZR1C/w1L0he0/Hznh6NFyLSK5qajj8x1ovgB72wtiRR/ocqBIRH660YsiSQqESpvYQKWbMZaL9Zfx6AdIBM2+i5td4C6oTaN3rx/Yq7x3t04pjOZ5IaesyTrsjDhOkRBw6TtIPBnLVw0J7rvp0cML6caDxSbQY2J6LJwuh3yDizaYoQ+USUMYdrS3Ym1Wux8PkJkFX7jCYoicNw3xHus7KPLqNp6gRULEN8gLdcrU2lJLd456bGj5USY5TwQ7WN33xcSV8eY0fZx90+NYoRDi3Kayw94UTnwqyzlEfQRnAGGET8g==
-Received: from ZR6PR04MB442388.eurprd04.prod.outlook.com
- (2603:10a6:910:e0::14) by PA1PR04MB10913.eurprd04.prod.outlook.com
- (2603:10a6:102:484::22) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.8; Wed, 26 Aug
- 2026 16:55:22 +0000
-Received: from ZR6PR04MB442388.eurprd04.prod.outlook.com
- ([fe80::e57c:ad6f:f66f:6ef3]) by ZR6PR04MB442388.eurprd04.prod.outlook.com
- ([fe80::e57c:ad6f:f66f:6ef3%5]) with mapi id 15.21.0360.005; Wed, 26 Aug 2026
- 16:55:22 +0000
-From: Alexandre Frey <alexandre.frey@nxp.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "peter.maydell@linaro.org" <peter.maydell@linaro.org>
-Subject: [PATCH] target/arm: fix TTA instruction S bit for IDAU-exempt
- addresses
-Thread-Topic: [PATCH] target/arm: fix TTA instruction S bit for IDAU-exempt
- addresses
-Thread-Index: Ad01eSION6yidU7/RGey5oqH0pc/Lw==
-Date: Wed, 26 Aug 2026 16:55:22 +0000
-Message-ID: <ZR6PR04MB44238851A057F385D7EECEAD3599AE2@ZR6PR04MB442388.eurprd04.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: ZR6PR04MB442388:EE_|PA1PR04MB10913:EE_
-x-ms-office365-filtering-correlation-id: 299ee613-b897-45cd-4b4b-08df0392d16e
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|19092799006|376014|366016|23010399003|1800799024|10067099003|56012099006|6133799003|11063799006|3023799007|18002099003|38070700021;
-x-microsoft-antispam-message-info: GfSoZu6JIY2WUh18VtIAQMhMarfwjrJSDLYB9jDGxmx6mmu191QNTNDtS/Ah4IKxqAnCEmEK7lc/JkZkUg6in2PgWY8cannU+vKPiB4Epz7xaVqy9KICPqP+GKQgzCmgLjlB4wBpEi/9rNOtOkj42nP3C6Ip6N66KjowvTb+mipa0z+q0NLccZk+EaVX+n3ywbOMtvIByWEcjR6IXyMW+GIpeTJGzaIulFuGJ6QzQ0/nxYA3zENoO6UdI4frZqQnjQnCzJx1NNcjAkw58SpwvhcZra05y8hJuNTlDo1pX708Z6UwhhYI0DyOL9supQM6i13QBrcUtDAvqaWSqkIFTjfv4hwHJVPPsF6JpnLncyA2CNKNCvM126gfnsJoEIUbxuHi2Y4C4KPb0O4lfi7/IrKxZmMhsTBoQ2Wh8ZQQcOLd01amkiuhjmPlZEm3z2xYUbG8ZUfAwiVutWDIme6Ee/uMPtPD4iGJCp5iMf5XFmzaQ7LBE0GgJ3eQOzWCOl3lESH9IuOnzssxiVt0vK00cho2n7LQ818Svp5dxSYs8ZW4XUKvEZeNKLyhPH+Q0SIDmQUUpXP3FSdsYAdw0hijckmSwqpy1kEgVSTEtcfcbkhXaMGyhmxI5sNBsl5rEUgYaXHAqix8TuyRWLU29UNTLLwvDC95OgS0K8E5wbf+vQwu/5rr8aeVf72JPL1wvTLzH41jkAFKILB79MtACMBgJDLWibq9GgaFd7SG4uyC8V0=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:ZR6PR04MB442388.eurprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(19092799006)(376014)(366016)(23010399003)(1800799024)(10067099003)(56012099006)(6133799003)(11063799006)(3023799007)(18002099003)(38070700021);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?tI82dQFn6HOeTEECx1zD2ClRGQp2rejWtBF/R9UMRDWPDHSoa0WqufIdDQav?=
- =?us-ascii?Q?iFDRlhzAuc65UjWgOMdzv2B/lZV6ejygBxfvON4/P/oz7uK7J5KXZArrGf2T?=
- =?us-ascii?Q?+JihIpWiF99srwDkASKlkibv/j/rveteMDcWujyx40TytgUXDM7L8+f6Ywaq?=
- =?us-ascii?Q?yK8zAAKFeZP6QWEhGRwAZxz3gBo6PHE+CX7d0ZoWH6TxbXYaVB8bz+AMUkWy?=
- =?us-ascii?Q?pA3YXNkutpUjSwzIIkCv/zLf4iBtR+6lxf5Hn2atDypSIG3/DKZcIhvxinLF?=
- =?us-ascii?Q?DGAphUK2Vif5dd1rFKg+vEbNpouJGgm534l4GKVsfdQbSKea4/KP/BrXtbme?=
- =?us-ascii?Q?AJV+6kWhEC3NL6IS/f5LUH5eT5p9caMpz/XG1aAJ07qWaTQ17GTUnyq4vrdD?=
- =?us-ascii?Q?ym3ClEjEjUTDIjsCbMRChuO+OheMBBjO2wFyUi4Fo8TNIhtu1vIcUrR1SJmM?=
- =?us-ascii?Q?bnXBhWG2DMNsN6epe12chsHzZQcnpTk2ucQEJr3jIUJt5+Ehz3PtxW0fVEH+?=
- =?us-ascii?Q?b4fhZpOIAUjYCkyIhurioVFgI0+6QNTRoxTpE7KGeTJoZtnYM2CN2pti9lBJ?=
- =?us-ascii?Q?BeUjSlajL3zBk5NUSEVm1zL4FhFV/bzdfXCobzrzTEtuedEoN7fHO8oyAx3d?=
- =?us-ascii?Q?d+XAvjjBRBik/3TPw8eRV+Es6ZsPclamCheDZuPUCqYF8+Hx/F1LzuP8myXx?=
- =?us-ascii?Q?xDLTTcFstZ8bk7gclwQKlU1/24zZcmuW2fpihV6BSIxHUPNb1wRDYldfumFJ?=
- =?us-ascii?Q?YHDI+RKauIcREcZctwx96tATIp9h/eZpxPV1Qj8Dttt7k8SIUwDy5REl4svM?=
- =?us-ascii?Q?98GcsmZwIjwP63V/piXsE7eeCUazYYiBkuH30RhRHLJAmN9NH8pYYR8sDBnq?=
- =?us-ascii?Q?yDYXP9DONLA+fGL6ZJBMt6B/XDj5Gsv9dngwUmOtqTtV3QO0qqu5Rm0WYsAl?=
- =?us-ascii?Q?+w8D3R1DztKRGxfP8CVmNILO4AqLnsYxvbfczMYUwgNlLQl6Vc1xGGGYCapE?=
- =?us-ascii?Q?hOvbLFJxd5j04P++j4a5L7ivyQzqNs1yD3DxiSdD7LhJaLiiWzRC+Ql5+EHY?=
- =?us-ascii?Q?dMqzhk7N+Vzml6FW1Oq7z7nSAUHkrhsMdFD0wZEb6iHbMevV2Z3UqpZjfctf?=
- =?us-ascii?Q?afmdRR/HdGb3Y138fKpA2v377HKFvnYpwzCJAseqDQ4ROc83MkrnHY109CXm?=
- =?us-ascii?Q?Rk/rusZxgVjR/5yO13r2z+0WK2FtbZoFB98Cbv/OFpx4sHeAwTqoA7x84Ims?=
- =?us-ascii?Q?E8K+U6xs41FdKI81Hrc0U7eVGy1LHg5sF06hnkz10JbbssDntOsSiNIexcYg?=
- =?us-ascii?Q?nCCZLUuptv2bJKlkUPc+peKulQIHDneC/s8RETrods2IoMWI+ENCEebpCv4w?=
- =?us-ascii?Q?Ch5W4t/7jO2uFePvCpc1tv2OIgf8HwVa1yD/O3V02Ht5KgPnvsv4mOpA/i4w?=
- =?us-ascii?Q?1DrNfq+QlBHiSPmgCGgaNMn+OGMueINqV6gmJlfb8gxcv6VN89I9pbRCllhV?=
- =?us-ascii?Q?XqUZTZdxirsVtEtxT5RlwMgWrvqNjCJkXjrOA+JBgCH/DF99TZCyItVjpe35?=
- =?us-ascii?Q?Lt4HHlcaotyadkzrkcUXe3kLc7oocSFCdrrLqnI+/XAgcwUAOU/quGmtGkrb?=
- =?us-ascii?Q?NMnKNZXcYgLWO0zrjeoXfWpQd6+XyjJQfVZZ287Ru0WkEEqQ56b/U5/xi/o/?=
- =?us-ascii?Q?ARQ4o1zvo8eazrTZWraT7ptiNWpaMOACUJIFcm4iR8lfty+XqCWk3I3DYlgP?=
- =?us-ascii?Q?MlTDRanRBw=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wzHFE-0008K7-W1
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 13:17:03 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67QGuhrs2548605
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 17:16:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Tcgd9/KQi8HXXCH2Boxe4SOW3xZn848yrkNm1heB+ww=; b=LAavTr0KoGtoLUUa
+ yfzvN7MZu0Kx88aJQiuYMV5s8cQBpjvp3Qq7Dan9USQ1r+vbVf3wYmLUiGfPJ35o
+ JmbtTFR35GoVsY0jL5cBCT/ZmYn0jAHkYRMS1qqDISvb6qD7usgdtQ3WSOooKszy
+ 2Ciwo3Ll5gbDGPwGCh3f6zU8L/BZcV9ZBAyWs0pZwbu5ttjLID3mLvkkAAKYbMrN
+ o6YtQntqeqknrvidCG+IkoLjHi0rq2OCP3IoVp/AWQ5gspudkRXVD+QMhNmXXTkf
+ NdcZ6jBIF0tQdrAhogkWJ7ryfaKECARRlvkX+7x1c9GG5BFWaqLVNJZrLqZoO7nC
+ d9qZDw==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g9uq1tcbv-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 17:16:58 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-52cd0374265so21327881cf.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 10:16:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1787764618; x=1788369418; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
+ bh=Tcgd9/KQi8HXXCH2Boxe4SOW3xZn848yrkNm1heB+ww=;
+ b=CC8YvnWkb5Q4qNYGDWKfQKTxP7LxRm3jItxzPKJe5YEeOAlp4OLo029aX4uM/Bdt00
+ moOYQu9WYQjvSZyO11LsBSdvhwjnrEeVi9v51J+YmFeoERrMxuQAGh0Y/VxiKJc7Zb2z
+ 3w0Jn6g4omx57HQZ8R6ZKO6eAisTOvEpF/Czg5oqKgC8WlzLN+do2i/BhPNuqrpOCuYh
+ 566JJnQILKFXHYhDRSS1FjEqAOU3EA8ElayUkp7n8TZTcqzO7yhlRLFx1QXijj9f9kfl
+ DbhA6cYYtz5myK4D3R3jzjtVPB2p5jV2p6xr2JeNc+tjaDFgV05UbuIYWdOW1nWGPpcM
+ dSNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1787764618; x=1788369418;
+ h=content-transfer-encoding:content-type:in-reply-to:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to:content-type;
+ bh=Tcgd9/KQi8HXXCH2Boxe4SOW3xZn848yrkNm1heB+ww=;
+ b=UfHu6Gv4JQmfBd/HlGkUSg5hUi0nw+wAqZXnj2UR0WXLOG5edenc5ntItCNKSzg1AP
+ ueHRqUdFLZeroYC0WzNWwxTX9HHSPzz6ZVnhOfYI9SbRod4xTPSXgZ5SW7KDtL0gGRp9
+ X9XrNfp9rzWq640KfVKamLHCIsobIOvn8tCJpmtGW29SnICD1cFVQJa9MmCuBK0bDe+1
+ G/vQ2mVkQLo4f5nKeQpS1WCv/RDsNZLux6XRi4mAai8aM6r4aMSHUafIEClJMH4Vyl1W
+ 6dK2rCcY2WQ/6lMa5xu7BC/cT8iieXV4/R9ThHsfuwKLgGwRSft6aFKmnTlBoLLwAzlb
+ 7k2g==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoZUdRtj5CLO1hMoqaJAXwHARXGgL2kiwwR85cR4zKIDBgtImfFUayii1escQM82l7FooCrxg2i3Xn6@nongnu.org
+X-Gm-Message-State: AFuF++nAeOUAiE45jruNkezw/V07XICeTcuNrRdXTsAxDtlHNmItoCMt
+ Xnl3BayfhldnkNHlTMNylH4JvrbteE8B0o7WuluDsuMc3Pv3mNoc5nTKZvsmUMrl1UsqMpgdD2b
+ pEdnKCajux3haDZpP3itM4ZFrYjBvSN0+56nK2K1mnoUrtn2VT2bDnpM/NxgXbTtbhg==
+X-Gm-Gg: AR+sD13Geqq587+9sVl9v5+Hg7nEuL24LHDd2y8yStgEwT6X71VCNvrWFqdKwjiZN3p
+ Hotk4Bcw6qx9dPG9X0olRR+aC1grENLAIN3Bp8NIooi9khvo1EBzJxoAhdE1SvY5cu36omCb6GF
+ 4uZoTcmcLky8Zpxz9Ky/fV1RaxMliCmNV8MByOoLoPhYf+Ap/eu+BKPTuxB2g9+ypPQLBnPFJW6
+ ZeljJOgXrMaDNET37z7QZ7f1QBGDRAcfoLbre/3iV28dZXfgBrtBwGkbScEK0/3nOaaxVezciWd
+ Jot/7f567FuCiPiFolPboqGlPk9aHKUymvDspFwKTpt1STuAZX5D5uAW20hH8or9iX+LbGFrVw7
+ HnNfYs7TgjWkfwDkTgQARErTajc3A7mV2VeMuCtLRo/I=
+X-Received: by 2002:a05:622a:58cb:b0:51b:60f1:689a with SMTP id
+ d75a77b69052e-52e422db063mr99383801cf.7.1787764617780; 
+ Wed, 26 Aug 2026 10:16:57 -0700 (PDT)
+X-Received: by 2002:a05:622a:58cb:b0:51b:60f1:689a with SMTP id
+ d75a77b69052e-52e422db063mr99382561cf.7.1787764617087; 
+ Wed, 26 Aug 2026 10:16:57 -0700 (PDT)
+Received: from [10.254.188.74] (134.171.88.92.rev.sfr.net. [92.88.171.134])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-c250a9e96bdsm436939866b.55.2026.08.26.10.16.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 26 Aug 2026 10:16:56 -0700 (PDT)
+Message-ID: <524dfcb8-155d-4a29-a759-41e3891183f0@oss.qualcomm.com>
+Date: Wed, 26 Aug 2026 19:16:48 +0200
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: ZR6PR04MB442388.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 299ee613-b897-45cd-4b4b-08df0392d16e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Aug 2026 16:55:22.2969 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ppe3IFKmFaRmpsJmjIu9tlAKB3f12MXndbmmnCQXMbPztZMk5oGKtIli6y0322MLBodcSK+Rll7IfmGTK3iH3g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR04MB10913
-Received-SPF: pass client-ip=52.101.69.67; envelope-from=alexandre.frey@nxp.com;
- helo=AM0PR83CU005.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 12/13] hw/riscv/device-common, virt.c: add
+ gpex_pcie_init()
+Content-Language: en-US
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu@processmission.com>,
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
+References: <20260826164814.44335-1-daniel.barboza@oss.qualcomm.com>
+ <20260826164814.44335-13-daniel.barboza@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260826164814.44335-13-daniel.barboza@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: xxvw_xljy0rga-FOwbs_Ktg4JYJI-7gi
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE0NCBTYWx0ZWRfX3t/xh2/KbhQZ
+ flYwOElB2NZm9l7L46az/xRAs9nBn2t5EQVq85UWs5uSQ2/fbmTinCUiKFxfliN3eQWnyWJ0Kq6
+ gJdp/+9hxfTCYP6OG2BqGyrUmXTW8kABKkkZJ62q/OwEAqek66dzP2U7tx7JLq2J2SfRq8Eov0+
+ wgPQuhoAzQsfWuGK+nIuW9iFMsGN2mWiKAmpyDv08+mcpXvcQO8Nml2YXZrvUeAbGtOJh+n7kM8
+ kZBrH9d/QngXqJvkxZQ5coV9hHT9YVFoLnmPoqYM2aSmKFtBNJqxJwucFX0Xeypx6aj5a/KJ1ZZ
+ ZuXNOjLmTw1nFNR6ynw0is/CG53g2dRkF22hFDpsr2zY5HA8pZuwop333s47ZA0FCMDQy2Yhldk
+ h6H7BHqSI5Y8XVjWKtj1SGhMKgwmYJyZjblu3hkRu7NsK3UQGW+3QXFcKNB/IqqHU0WBGsTPnHX
+ VUfh/CxYwv5yKe6wo7g==
+X-Authority-Analysis: v=2.4 cv=Y77IdBeN c=1 sm=1 tr=0 ts=6a8f1f8a cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=o1isufRNksZXpKP+aqnsag==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=Md5pTmsaoyhSHvOzhqMA:9 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-ORIG-GUID: xxvw_xljy0rga-FOwbs_Ktg4JYJI-7gi
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE0NCBTYWx0ZWRfX9PnZIdLuXc+e
+ V0MdS2grM+FGm90sGiuExEjpXqOK4/JGOeKQkqEakVxTljaH5ssVGnebow648QA8AJnj3HgQcjn
+ 0kZFLDAtbk7fLVIPqdnIMAMaNwZmsnM=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-26_05,2026-08-26_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 bulkscore=0 priorityscore=1501 clxscore=1015
+ phishscore=0 spamscore=0 malwarescore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260144
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 26 Aug 2026 13:16:35 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -141,60 +160,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The TTA (Test Target Alternate Domain) instruction is specific to
-ARMv8-M processors with the Security Extension (TrustZone). It allows
-Secure code to query the security attributes and access permissions of
-a memory address as seen from the Non-secure domain, and is typically
-used by Secure code to validate pointers received from Non-secure
-callers before dereferencing them.
+On 26/8/26 18:48, Daniel Henrique Barboza wrote:
+> The GPEX_HOST initialization in 'virt' can be moved to device-common.c
+> and be re-used later for other boards, namely the future
+> 'riscv-server-ref' emulation.
+> 
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> ---
+>   hw/riscv/device-common.c         | 76 +++++++++++++++++++++++++++++++
+>   hw/riscv/virt.c                  | 77 ++------------------------------
+>   include/hw/riscv/device-common.h |  7 +++
+>   3 files changed, 87 insertions(+), 73 deletions(-)
 
-The TTA instruction incorrectly reports the S bit (bit 22) of the
-result register for IDAU-exempt addresses when executed from Secure
-state.
 
-According to the ARMv8-M Architecture Reference Manual (DDI0553B.z),
-the TTResp() pseudocode (E2.1.408) always calls SecurityCheck() with
-the current security state, regardless of the alt flag:
+> diff --git a/include/hw/riscv/device-common.h b/include/hw/riscv/device-common.h
+> index 1cdb8ab5cc..77760e082c 100644
+> --- a/include/hw/riscv/device-common.h
+> +++ b/include/hw/riscv/device-common.h
+> @@ -22,4 +22,11 @@ PFlashCFI01 *riscv_flash_create(Object *parent, const char *name,
+>                                   int flash_sector_size);
+>   void riscv_init_flash_map(PFlashCFI01 *flash, hwaddr base, hwaddr size,
+>                             MemoryRegion *sysmem, int flash_sector_size);
+> +DeviceState *gpex_pcie_init(MemoryRegion *sys_mem,
 
-  sAttributes =3D SecurityCheck(address, FALSE, IsSecure());
+'riscv_' prefix please.
 
-The alt flag only affects which MPU bank is queried for the R/RW/MREGION
-fields. It does not affect the SAU/IDAU security attribute lookup that
-determines the S bit.
+> +                            DeviceState *irqchip,
+> +                            const MemMapEntry *pcie_ecam_mem,
+> +                            const MemMapEntry *pcie_mmio_mem,
+> +                            const MemMapEntry *high_pcie_mmio_mem,
+> +                            const MemMapEntry *pcie_pio_mem,
+> +                            int pcie_irq);
+>   #endif
 
-For an IDAU-exempt address, SecurityCheck() (E2.1.366) sets:
-
-  result.ns =3D !isSecure;  // isSecure =3D current CPU security state
-
-So TTA executed from Secure state on an IDAU-exempt address should
-return S=3D1. This is confirmed by testing on real Cortex-M33 hardware.
-
-QEMU currently passes targetsec (which is flipped to !env->v7m.secure
-when alt=3Dtrue) to v8m_security_lookup(), causing the IDAU-exempt path
-to set sattrs->ns =3D TRUE and return S=3D0 instead.
-
-Fix this by always passing the current security state to
-v8m_security_lookup(), as the spec requires.
-
-Signed-off-by: Alexandre Frey <alexandre.frey@nxp.com>
----
- target/arm/tcg/m_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
-index f4ba93b..12ec191 100644
---- a/target/arm/tcg/m_helper.c
-+++ b/target/arm/tcg/m_helper.c
-@@ -2870,7 +2870,7 @@ uint32_t HELPER(v7m_tt)(CPUARMState *env, uint32_t ad=
-dr, uint32_t op)
-=20
-     if (env->v7m.secure) {
-         v8m_security_lookup(env, addr, MMU_DATA_LOAD, mmu_idx,
--                            targetsec, &sattrs);
-+                            env->v7m.secure, &sattrs);
-         nsr =3D sattrs.ns && r;
-         nsrw =3D sattrs.ns && rw;
-     } else {
---=20
-2.43.0
 
