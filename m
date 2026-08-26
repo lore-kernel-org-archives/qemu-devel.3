@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC3DEC5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 13:01:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ABE2C61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 13:02:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzDFe-0006Yw-9T; Wed, 26 Aug 2026 09:01:10 -0400
+	id 1wzDGY-0007dR-5s; Wed, 26 Aug 2026 09:02:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wzDFd-0006YE-2W
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 09:01:09 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ id 1wzDGK-0007cw-JS
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 09:01:52 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wzDFb-0008D5-KH
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 09:01:08 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-6a0a4a28cbdso1670071a12.3
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 06:01:07 -0700 (PDT)
+ id 1wzDGH-0008JV-TZ
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 09:01:51 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-69f7fa1c548so1712697a12.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 06:01:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1787749266; x=1788354066; darn=nongnu.org;
+ d=linaro.org; s=google; t=1787749308; x=1788354108; darn=nongnu.org;
  h=content-transfer-encoding:content-type:mime-version:message-id:date
  :user-agent:references:in-reply-to:subject:cc:to:from:from:to:cc
  :subject:date:message-id:reply-to:content-type;
- bh=xdIse+755ESEtXAf8FTGrtnACDo5SMWBhg0NlB1V6wU=;
- b=GDks4f0wQquwdMNzTqOWq0FBknL+Rjc6nfcjI8i3FLdX6ZHOtHeXn5TMw6eZW5vUA2
- Tt2pt6/OP8VEVKJQap6BSVN0xRzc1IhdUSqP5quJX9E9PjqJHWUGIw/C6y2AtXp5CCE2
- Mtx0uSxaDiDshlQWjEM8SxmDB0p1F9ein1xXV9cz/OLDyZEggufZRbwG1E+U3EfNFH3s
- ANVlxMZmVxdUDLNgkBCXpHwE/DOsLZvVoWpPyopJtkWbCnzrF+dh0hnfH56ra2uwYoTl
- sboHPpX+Xfr/hGUFsQu1Y4PNXQm11cVI+QgzVDflgquXTH3f5XwAvquBREDwz5dhBxU8
- 6hig==
+ bh=AFCQSnLOxzXDKYpHHmLjDQoJM8U1BdFSRI8z94i9XPw=;
+ b=zwK1HTiL+Udb9SDg+fPRGJ2QgXwCqywJUTMd8JBhR6z08FCXDpDMuMtOS5+NSLsFd8
+ 94auwUUTYHsCd3FlyoipO1+rZ7SuTW6gsyQgnXn7ijlmIUu8oty0EFn8R3NPum6DW93D
+ u/nevzQesSegivxWQp49U06Pv/f7v36+2+z950qO8f7x3D3p6cyjxY271Qj0vYLSUa1u
+ NtL5BPtuc5JfZsq/NEKmXH8fDRaRGkHCEbnHwCW5Po21mKSfMKEtg8/aBg8tDNv0/HMx
+ qDQUsZHB6cxjeyFbZ2zu4zJWmwFO+lnhZg/AexdgGfcvG6jMXBGU3UqSPiFOR4H8M52l
+ 1J5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787749266; x=1788354066;
+ d=1e100.net; s=20251104; t=1787749308; x=1788354108;
  h=content-transfer-encoding:content-type:mime-version:message-id:date
  :user-agent:references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=xdIse+755ESEtXAf8FTGrtnACDo5SMWBhg0NlB1V6wU=;
- b=eZdjbIdAhTXxdW2w33IKU+IsCtDoaRGKphPrUNjL/Qe+j59E1pBWYaMMfCXP+zjiWi
- yZSc4XYw/jVAN5/jzY709o9YT/YT4nKb6Dvq4fKV0EU67LeqPjCmM7+nYnF34HiaRXEa
- ta+ath9zuNNEOJV46kMZn5NQuSNTu+ufWHsIQz5FfSHPR8fWIBxpKcnjL2bODOk2zBzU
- diXQm5ojYwGeB4NzKl5PviYfJYiO/kCWt9DAnmYKjbyHQHLeSLOOwmsUavfJhxPp2mj3
- tOEilGZ2B8Ixy04KGWhMp+XxErDrtSCLKvET0zfnOhMUoMm0T8kmk+RDuJtKqE+wRAXb
- Q24g==
-X-Gm-Message-State: AFuF++nmjZRFlFq2U8Og1uMhChyhhuEMWaLgn/cPQY07mnEH9wpdfbc9
- UmARshcks+Px8voPBBUrMUfvQZnwZvwCXVq/bKZRh4kBFT3cYU4ynQWbGaacogvAHSM=
-X-Gm-Gg: AR+sD12J8/gOA/hnQvv1MfEvNFpFpck70Br5N9Rf/8MyImYElf4t0QD2LpjKzwOMDtV
- u7wL5/d0x/XvgNX2mfJeCTgGhpmCDZXX0SLMHv7WO2gm+DVgG4QDK5hV5zfA9XlmYJ/bF93qzLT
- L3/buAB19WIJrLwhViscUPCIh3nL4aJtxdqeFvruFKBeDl/lNgPzq8OjMDN4vZwh0LkZHfN6Xai
- Q+yoKzn6rE+o2ZwtocKiaknMLiQaMGCeTzBVDmZgk7w5GcPYH81mrs/QCyUPk2F6gaBkecq/cPf
- 0IfJWw3th8553GQ5mlV/4AvEoQQRhHOc8Gq1MtuFc0CemKrbqTbfvwogMGpxuQ4zVS8dZrqhAbZ
- QzjA5gzFbCL1cTG4p4L/wo/9Dw3n4i7xjwS7WQFZ+p5Jx00VumrbZQJlbChl2SaDWRfPAit/sp/
- iEVshVVlPzMd4zBpEwkANwjmCTG3+kfv18vq/w1MU74JCwJhhSdl+f/dMPaODbqw==
-X-Received: by 2002:a17:907:72d4:b0:c24:8a09:8195 with SMTP id
- a640c23a62f3a-c250bb7f3b1mr797939266b.3.1787749266026; 
- Wed, 26 Aug 2026 06:01:06 -0700 (PDT)
+ bh=AFCQSnLOxzXDKYpHHmLjDQoJM8U1BdFSRI8z94i9XPw=;
+ b=jgKCO4r9EPyEU1WZRwR0+yULQdeZiHFG2V6XiuKpAJDUC7P8+EyZvoVcT+t6Bv9L/L
+ 0vZE1Vq91nlIbKLRvLtTcRfYOPOe6K5Me8oww4wtm6TlOLzpanUdQestTL67y4rEuyvo
+ Qe4EnkVn7ryd6ugyKdDS6bIl2W7I6jrl8bINuNYXHDJxT+mUc+RkYU/rX7Zd6BGMOREu
+ m6tN0yeoxl6IQ4xUoitMwPpzEqX+XNRUiniLEtQAMuRhkgOAtvTxC4lKGDIEHSEGZNpm
+ VTrx+n6CK11YbNJ5YwqIEU3g248MF73urmWF6nE2ipjr5ryYVJ0DSrVSij3vTQ5pC6oo
+ Vf2g==
+X-Gm-Message-State: AFuF++k4REak4zHt7nNZzgaeiwyNmjfGbMDzMzmn9fsyz6QAOeUzcfqW
+ kb6rgpNU13e/vahuwbPkx19HIsK3fkQjwWr3rbwZmtnaIrZpOvteyyI6MKDZ7x8O4ns=
+X-Gm-Gg: AR+sD10VpDCu1jvIbmdHFDVx/zrlKHQ9SxE2GqTrILr7ukgfpRrgzujtCXmR2mfOjvc
+ 45Oxnm32yWyY37BotQ6k24N/JO8Idg0NndGasDwfPzLb/6xSC5w8sfAgLP0akHyQ/i6TvFUQMgq
+ gN9L2PGhyZfmRtaMGxAObkd+t7F3mUc5YTG/n3FRlZ31HIaaSMJ3ER3FfsNBi4hTSJGXCRwIzEZ
+ 0A4bxw+6Vh+2EmCMhycrw9hQtj4ler8LABNU30sWX7UJKUr7ixegrjgYGDmS3oLdK9PyOwj+ACM
+ WLU46T1qdXxppuv9kAhsxe+Ro81D0UN/4Pbaar9Tt5JxDQy1vht15UIImIVL3bZjlZcdLMgFC9F
+ oTJ6LZvTD2GZqFSL+5nxlSrXRP9xTjJUMxLzhoqa2/rcYtIMzMOZoTMn9Uu8iQNlWlVyqyFeBXA
+ X7l6J7LCNfqjxVpw1ZguJT4ljHYm/K4fhknQ7saE+VA5lkDNfncioHLmWEgbbB
+X-Received: by 2002:a17:907:97d5:b0:c20:d90b:2cb1 with SMTP id
+ a640c23a62f3a-c250bc14b44mr798719166b.0.1787749307657; 
+ Wed, 26 Aug 2026 06:01:47 -0700 (PDT)
 Received: from draig.lan ([185.124.0.156]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c250a5d69a7sm730398866b.8.2026.08.26.06.01.04
+ a640c23a62f3a-c250a5d6acasm551837866b.9.2026.08.26.06.01.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 06:01:05 -0700 (PDT)
+ Wed, 26 Aug 2026 06:01:46 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2E5FA5F81E;
- Wed, 26 Aug 2026 14:01:04 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id A38CD5F81E;
+ Wed, 26 Aug 2026 14:01:44 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Laurent Vivier
@@ -77,19 +77,19 @@ Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Laurent Vivier
  <manos.pitsidianakis@linaro.org>,  Peter Maydell
  <peter.maydell@linaro.org>,  Ilya Leoshkevich <iii@linux.ibm.com>,  Aniket
  Sahu <asahu1x@linux.ibm.com>
-Subject: Re: [PATCH v7 048/104] tests/tcg/arm: system tests
-In-Reply-To: <20260818192309.22169-49-pierrick.bouvier@oss.qualcomm.com>
- (Pierrick Bouvier's message of "Tue, 18 Aug 2026 19:22:12 +0000")
+Subject: Re: [PATCH v7 043/104] tests/tcg/aarch64_be: user tests
+In-Reply-To: <20260818192309.22169-44-pierrick.bouvier@oss.qualcomm.com>
+ (Pierrick Bouvier's message of "Tue, 18 Aug 2026 19:22:07 +0000")
 References: <20260818192309.22169-1-pierrick.bouvier@oss.qualcomm.com>
- <20260818192309.22169-49-pierrick.bouvier@oss.qualcomm.com>
+ <20260818192309.22169-44-pierrick.bouvier@oss.qualcomm.com>
 User-Agent: mu4e 1.14.4-pre1; emacs 30.1
-Date: Wed, 26 Aug 2026 14:01:04 +0100
-Message-ID: <875x0xox2n.fsf@draig.linaro.org>
+Date: Wed, 26 Aug 2026 14:01:44 +0100
+Message-ID: <87tsohnih3.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,6 +114,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
 > Tested-by: Aniket Sahu <asahu1x@linux.ibm.com>
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
