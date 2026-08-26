@@ -4,146 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1636FC5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:44:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33A5EC61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:45:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzCzF-00037N-ME; Wed, 26 Aug 2026 08:44:13 -0400
+	id 1wzD0R-0003nz-8T; Wed, 26 Aug 2026 08:45:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wzCzE-00036g-4K
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 08:44:12 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzD0L-0003mO-V3; Wed, 26 Aug 2026 08:45:22 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wzCzC-0007xF-Fs
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 08:44:11 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QCUFs0949259
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 12:44:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- s58jf6Nc2WMgJi0j/JyqhhLO9k4sPC4tHKSvMN4XBuo=; b=Vl/KsO23myk1qhD/
- dzHvsqH79Ae6rqQLRC5A6tEQpii7SAuBhcxa4GCM4GYcUWZEo83iz7/2STI3jJON
- ob0Q0Gll4hSZ4HPLC3fsvB0ufaX6XOWLOck0hAM4mzvKtQCxuaa/VdxO99Yq4N+j
- ZgtEdy0LFuzrnn4LCbVbzp1Aiyip2I66aOLXMLNg8ohDJxbPpdre0JPog7Yrpyb7
- XyX55F73oCTxF/0BDvGS6/axIa9ic6K+/dUrdvNHDdw+DoK6bolSVH+xPsQqN/Iw
- l25cl2Boh1sZJMoR1l8+p6v0QiTEmGaqTlzLBuw74vwqcSerZafbh7GQg4oy4Zxn
- ByXzrw==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ga07581mt-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 12:44:08 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-92ef13b61bcso127679585a.1
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 05:44:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787748248; x=1788353048; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=s58jf6Nc2WMgJi0j/JyqhhLO9k4sPC4tHKSvMN4XBuo=;
- b=PltAYyjkJ/XObupOlXwZqhpV9qWMA4F0isgIVpUexo7nMkjWE6knN/xX0IHkZFjarN
- Au1b5+R8UKo9BUf/XWjT0XS6tMUowq+Y1/zWEvmQIiCI/Qo5Xk9W0RZyPEBAuNm23BZ3
- S83RN45xlyjvMnTbtHECQqYT261/D6mGF7OlrxeMlSUhWa5oArnLPfRbw5oqVCRKFe7p
- Yf3h2g+bpz+04b07NuwiMKu2u/ESEDTcZUHoJfBncFXONbvyJ+R51uydE1f8Z06UfNi4
- JApqOj7jsTTHX+v8Q+lQP1VJnGqoUN0rsN1u0tdyaFCnUXV/vXi4Gd+OFYyl7W34XqtG
- NKXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787748248; x=1788353048;
- h=content-transfer-encoding:content-type:in-reply-to:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=s58jf6Nc2WMgJi0j/JyqhhLO9k4sPC4tHKSvMN4XBuo=;
- b=O8a6A36X94rGuqmoq/A/W8fFKQ4d/OZ+wQg+DFNHso/pTuvED44h+fZaomrDBDLyz4
- 8fsL7X0JUoBZXilEfF27ahArjAn0wCq7i3kjQbJo9H9tp8Qdwsdv+XH8gVBedrsrV4AR
- GtxOgHALtg1V/IAsU7fFMFvUb3lDZSWjpyjgt3fkCiEK48/dYNo202cTSV3tm4MBmxms
- oLXWaejkgj9dhgfcapGRRZ4xUnLSbqTznOzVBF1/UFGDAdJ/eexMyMahoLKOrxHaiNWs
- NozDYh2GumZh4aJ2cl5UT8E0lU+on3cx896HL4+88dTff8441SiUsUOeQ2IdtIQ2oTey
- 7VFg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RqHYBQxJS4sDXwk1vvwcEcEWVsv/qv2LwXWgGVc/GRrqB3EfrgBZBfUCEseraD8UYbA+jpO3v9V6DD/@nongnu.org
-X-Gm-Message-State: AFuF++n1o63WPqvycoAzCXo638YwnRHoIhMgqd4wUxAxRaplJV9jx8Si
- Oe9rkDIcQiqO11NnOrPgG84niLatvukdYAW7AkouPP2EvwbbAwLJe5DiFb/pIRi4L9Nfokp9oEa
- rLLT9ez3DzWyhAY7eUas9GT7Gskvr3kG8144IhakQj+TFCFZAc95SwXZ5YQ==
-X-Gm-Gg: AR+sD13hGf3Sy/y+fViTUZrfM3viiv6xaAuKiwYgMPw/20ZxgopbTh+i1WRyB7mp8l6
- PaCAk2gFCIE3opruFc4ZGKg/+mvzoy20oR2uLhR2sD14m1NizDpIWhuqLBbAm1BdjfDFqThkWMO
- 2UItM5acS3J6ncjb3PTLGFYCtGqM3WgEMfyx1F4ZJhEAmsJE9SPfl13a5xYOrvLs3p7gIoPLt4X
- L/elqj9Hmusa0i+Q5X8TwzGDfuaKqG8OVaZQdLljo5b2+CU9mLCWd/UkWn67Qcb8pavy6+8h5/Q
- 5scKxCLLA18Xtmw+ArLXel82WKi4OAho5gaKzk2WvK+/AGfk3Pbh2bemxJEvvQ/thGM99hsGCrF
- ueu+Rl19MydVY22uSZebL
-X-Received: by 2002:a05:622a:1c0c:b0:51c:d52:6049 with SMTP id
- d75a77b69052e-52e4240639emr68465201cf.28.1787748247644; 
- Wed, 26 Aug 2026 05:44:07 -0700 (PDT)
-X-Received: by 2002:a05:622a:1c0c:b0:51c:d52:6049 with SMTP id
- d75a77b69052e-52e4240639emr68464171cf.28.1787748247163; 
- Wed, 26 Aug 2026 05:44:07 -0700 (PDT)
-Received: from [10.254.188.74] ([185.104.138.96])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c250a88ac5csm490938066b.40.2026.08.26.05.44.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Aug 2026 05:44:06 -0700 (PDT)
-Message-ID: <ec58e02f-6ced-4910-94af-0aac76b010bb@oss.qualcomm.com>
-Date: Wed, 26 Aug 2026 14:43:59 +0200
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wzD0J-0008Mu-86; Wed, 26 Aug 2026 08:45:21 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67QCW5B63978093; Wed, 26 Aug 2026 12:45:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=sx53mCwu2NT+/8dX5uDapWv5Dd5S1Q
+ dXLqaRkMUvX2A=; b=pkTs3Wa5iuD8slwj1plXuo7gzgZhiBoq3NJYG2bhaD+7T2
+ MYCMwUYYIPafTWVe81U+OXinDN6IT3ONdy1Lhw+Feb82hFurDYz3TSBN29P+9Bfv
+ UWNUH8IOUvbIcYW9R1+AKtOncw9k1jjJRZBbTmFFmW0KTQUK66aK9pzG/lxtUfTb
+ GZnlFIeCBAYVvXw2YpW+3qdgv1wEyxgwFD/1QlWomP2tki5AOHwV8T4t0hDypn+p
+ mAuByQeu2v3losLx9hBMXC3yxJNJ2KQUJkgW9QoIUcxoGeNUdnKmZrZU2j3tUAJm
+ LO3k+4BB5hQsIgjjpMwQ5Hdx3FNPQX8WZZWaOEnQ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73946n9a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 12:45:15 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QCfHX6002984;
+ Wed, 26 Aug 2026 12:45:14 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7p3qa4ue-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 12:45:14 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QCjBm047579456
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 26 Aug 2026 12:45:11 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2929420040;
+ Wed, 26 Aug 2026 12:45:11 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E94C42004B;
+ Wed, 26 Aug 2026 12:45:07 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 26 Aug 2026 12:45:07 +0000 (GMT)
+Date: Wed, 26 Aug 2026 18:15:10 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Chinmay Rath <rathc@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org,
+ vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
+ ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
+ shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
+ nikhilks@linux.ibm.com
+Subject: Re: [PATCH v2 15/37] target/ppc: move various conditional branch
+ insns to decodetree
+Message-ID: <20260826181405.4fcdc5c4-06-amachhiw@linux.ibm.com>
+Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, 
+ npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com, 
+ tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com, 
+ aboorvad@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
+ uverma@linux.ibm.com, nikhilks@linux.ibm.com
+References: <20260826050923.74756-1-rathc@linux.ibm.com>
+ <20260826050923.74756-16-rathc@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 21/49] block: add x-qemu-io QMP command
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: dave@treblig.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>,
- qemu-block@nongnu.org
-References: <20260825-qemu-no-hmp-v4-0-af60857c2fbe@redhat.com>
- <20260825-qemu-no-hmp-v4-21-af60857c2fbe@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260825-qemu-no-hmp-v4-21-af60857c2fbe@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: H3hMfdelwCt2c5KklnR6DtRe-vaCOoWW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEwNSBTYWx0ZWRfX3RG6YVDLM7I5
- 0yVOK+/dDSWerTVZjuNcIN8qCKSpCABtUzX4XErFT2JqeotZcfmxbmW3WjKjGiDhjPlWv6rsELf
- 146lH1N271BAsqvr/Lxme9HUpjwDKe2fRyRD7BMGqd5bcSTka0IMR2bHpy9Snetg6zJh0Wdj8ua
- LgunuCO4z9SQSJFcOghK59sIeTr3RwO8OOKvFLqhtN3SHP8zE1HpUWxP0uUwSMU8tcWHPTslCY+
- Ejck23vgfSaWuQzaTdGMkTwd0Mw0XppL1e9YKHn7Yx4o9Bq7Mnougrxneh0Md1nzxNsQoMzqX28
- YqASBT5MOZ+UmxYPoNXtXhcnPARdq0yOWWYU0eHV+A8I8nq2iAoNzOAP/NWxK8rDWfBpcyHSizq
- paxFKbObjE3wHZoyrS2jeM/DF8EmeNHMORgMuHDiImyWgMJTFIQzExFuwk1Ele8gEtLAIYpIomD
- hbaJIdOHaUkr8U6+ssw==
-X-Proofpoint-GUID: H3hMfdelwCt2c5KklnR6DtRe-vaCOoWW
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEwNSBTYWx0ZWRfX1RcTkwIXWJ1K
- a3BQlxgLZ3q63EhOBvtq3t9sF7bT4bkt4ZSs120VZfm8h8vmrBVmkRFjx+CJGUTouL7/bpCy9/K
- 4k46L0lZDfGbXXkR55ka9Wd0GeJMKK4=
-X-Authority-Analysis: v=2.4 cv=RPiD2Yi+ c=1 sm=1 tr=0 ts=6a8edf98 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=KRlTYBX1Q8J3JuxqD7zILw==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=20KFwNOVAAAA:8 a=NcbwogP7gQwllQR3uYsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260826050923.74756-16-rathc@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: iijS-HuQGWYUAL-CGXxCGW90mU3tVD_n
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfXw8PBBphF6+Nz
+ z8TjZO8+Zu5BtLyryc/X7hNbA0Knh6oVm2AJiWGGnkKEXF5zMwdYgeid1nPRtxtz5+zpaCtGFwM
+ YlHmdnMo7MZYR8cGiKY1lXbBiCIOp9SqNhJeWYQKFiLvbbDSificiwkK0tm9zXqQH/LmpL45Bja
+ sXsPZiMRwuVQ3Dz6wQRPSNUZvmPi53ylySecPPSoFoArlS7vJtlSeCg93/WBMtVXeZ2VbnP6Jun
+ TuEKm4Hf1Lq6i7bXkzKPHG8+F3Q2NSQ7ZWZ7xJwytQV8SkAQrfl4DxSm7vofOPXfAAIik9Quh4B
+ Ayw0UrOvsvawgvW6qIRUh6hPTHb9nKxHW0L++/UcpbitP2yA0rTSma6VJVTqw3uPw6avMswLpHb
+ K7NAnxibtJ1DtzQ44LMtSg5ukTn6guxkIY/gLp/fbpZ8oM5YqHHJiA8jbsdYoNZRi7EAnLx5llI
+ 3japcnQOQcKaqBOgl4Q==
+X-Authority-Analysis: v=2.4 cv=Y/nIdBeN c=1 sm=1 tr=0 ts=6a8edfdc cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=7yB4Z2lTEQU35nsPSwcA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfX5/dd/xBJKdWS
+ 6dijmvoZ0TSoJZKcGbvP9gyymP68SS5V9FmgTMpTSjX5svyjIpzebTVgXXkkJhYu22kPUXBYd1t
+ keVgr6cHnvzDaeg58M1sWjYpp0h2Vfo=
+X-Proofpoint-ORIG-GUID: GdoG0W-R8OyIdFPQBkLNAhvfyDbiK-TL
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-26_03,2026-08-26_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015 priorityscore=1501 spamscore=0 lowpriorityscore=0
- malwarescore=0 phishscore=0 suspectscore=0 bulkscore=0 impostorscore=0
+ spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ suspectscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260105
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260104
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -160,74 +134,404 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/8/26 21:09, Marc-AndrÃ© Lureau wrote:
-> Add an x-qemu-io QMP command that runs qemu-io commands on block
-> devices. The command accepts a device name (block backend name,
-> node-name, or qdev ID) and a qemu-io command string.
+On 2026/08/26 10:38 AM, Chinmay Rath wrote:
+> From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 > 
-> Refactor hmp_qemu_io() to be a thin wrapper around the new QMP
-> command, following the standard HMP-over-QMP pattern used by other
-> block commands.
+> Convert the following instructions to decodetree specification:
 > 
-> This change is also required for the qtest qemu-io command in the
-> following patch.
+> bc
+> bca
+> bcl
+> bcla
 > 
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> bclr
+> bclrl
+> 
+> bcctr
+> bcctrl
+> 
+> bctar
+> bctarl
+> 
+> The branch was tested by comparing the qemu -D log -d op,in_asm output for
+> each instruction and also for the various combinations of branch option
+> (BO) bits for the conditional branch instructions. Additionally, gdb
+> was used to confirm the LR and other register's behavior is consistent
+> to legacy behavior.
+> 
+> Further, the changes also pass a boot test into Fedora distro.
+> 
+> Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 > ---
->   block/monitor/block-hmp-cmds.c | 60 ++------------------------------
->   block/monitor/meson.build      |  1 +
->   block/monitor/qmp-cmds.c       | 79 ++++++++++++++++++++++++++++++++++++++++++
->   qapi/block.json                | 34 ++++++++++++++++++
->   4 files changed, 117 insertions(+), 57 deletions(-)
-
-
-> diff --git a/qapi/block.json b/qapi/block.json
-> index 46955bbb3e34..012a9d73333b 100644
-> --- a/qapi/block.json
-> +++ b/qapi/block.json
-> @@ -603,3 +603,37 @@
->              '*boundaries-zap': ['uint64'],
->              '*boundaries-flush': ['uint64'] },
->     'allow-preconfig': true }
+>  target/ppc/insn32.decode               |  13 ++
+>  target/ppc/translate.c                 | 148 -----------------------
+>  target/ppc/translate/branch-impl.c.inc | 157 +++++++++++++++++++++++++
+>  3 files changed, 170 insertions(+), 148 deletions(-)
+> 
+> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+> index 6a3254aaf6..67fb181542 100644
+> --- a/target/ppc/insn32.decode
+> +++ b/target/ppc/insn32.decode
+> @@ -1495,6 +1495,19 @@ CLRBHRB         011111 ----- ----- ----- 0110101110 -
+>  
+>  B               010010 ........................ . .  @I_b
+>  
+> +%bd             2:14 !function=times_4
+> +&bcond          bo:uint32_t bi bd aa:bool lk:bool
+> +@B_bcond        ...... bo:5 bi:5 .............. aa:1 lk:1 &bcond bd=%bd
 > +
-> +##
-> +# @x-qemu-io:
-> +#
-> +# Run a qemu-io command on a block device.  Take either a block
-> +# backend name or a qdev ID to identify the device.
-> +#
-> +# @device: the block backend name, node-name to run the
-> +#     command on.
-> +#
-> +# @qdev: the qdev ID of the block device to run the
-> +#     command on.
-> +#
-> +# @command: the qemu-io command string to execute.
-> +#
-> +# Features:
-> +#
-> +# @unstable: This command is for testing only.
-> +#
-> +# Since: 11.2
-> +#
-> +# .. qmp-example::
-> +#
-> +#     -> { "execute": "x-qemu-io",
-> +#          "arguments": { "device": "virtio0",
-> +#                         "command": "read 0 512" } }
-> +#     <- { "return": {} }
-> +##
-> +{ 'command': 'x-qemu-io',
-> +  'data': { '*device': 'str',
-> +            '*qdev': 'str',
-> +            'command': 'str' },
-> +  'features': [ 'unstable' ],
-> +  'allow-preconfig': true }
+> +BC              010000 ..... ..... .............. . .  @B_bcond
+> +
+> +&bclr          bo bi bh lk:bool
+> +@XL_bclr       ...... bo:5 bi:5 --- bh:2 .......... lk:1 &bclr
+> +
+> +BCLR            010011 ..... ..... ---.. 0000010000 . @XL_bclr
+> +BCCTR           010011 ..... ..... ---.. 1000010000 . @XL_bclr
+> +BCTAR           010011 ..... ..... ---.. 1000110000 . @XL_bclr
+> +
+>  ## Misc POWER instructions
+>  
+>  ATTN            000000 00000 00000 00000 0100000000 0
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index b528cab17d..7100787a25 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -3089,150 +3089,6 @@ static inline void gen_setlr(DisasContext *ctx, target_ulong nip)
+>      tcg_gen_movi_tl(cpu_lr, nip);
+>  }
+>  
+> -#define BCOND_IM  0
+> -#define BCOND_LR  1
+> -#define BCOND_CTR 2
+> -#define BCOND_TAR 3
+> -
+> -static void gen_bcond(DisasContext *ctx, int type)
+> -{
+> -    uint32_t bo = BO(ctx->opcode);
+> -    TCGLabel *l1;
+> -    TCGv target;
+> -    target_long bhrb_type = BHRB_TYPE_OTHER;
+> -
+> -    if (type == BCOND_LR || type == BCOND_CTR || type == BCOND_TAR) {
+> -        target = tcg_temp_new();
+> -        if (type == BCOND_CTR) {
+> -            tcg_gen_mov_tl(target, cpu_ctr);
+> -        } else if (type == BCOND_TAR) {
+> -            gen_load_spr(target, SPR_TAR);
+> -        } else {
+> -            tcg_gen_mov_tl(target, cpu_lr);
+> -        }
+> -        if (!LK(ctx->opcode)) {
+> -            bhrb_type |= BHRB_TYPE_INDIRECT;
+> -        }
+> -        bhrb_type |= BHRB_TYPE_XL_FORM;
+> -    } else {
+> -        target = NULL;
+> -    }
+> -    if (LK(ctx->opcode)) {
+> -        gen_setlr(ctx, ctx->base.pc_next);
+> -        bhrb_type |= BHRB_TYPE_CALL;
+> -    }
+> -    l1 = gen_new_label();
+> -    if ((bo & 0x4) == 0) {
+> -        /* Decrement and test CTR */
+> -        TCGv temp = tcg_temp_new();
+> -
+> -        if (type == BCOND_CTR) {
+> -            /*
+> -             * All ISAs up to v3 describe this form of bcctr as invalid but
+> -             * some processors, ie. 64-bit server processors compliant with
+> -             * arch 2.x, do implement a "test and decrement" logic instead,
+> -             * as described in their respective UMs. This logic involves CTR
+> -             * to act as both the branch target and a counter, which makes
+> -             * it basically useless and thus never used in real code.
+> -             *
+> -             * This form was hence chosen to trigger extra micro-architectural
+> -             * side-effect on real HW needed for the Spectre v2 workaround.
+> -             * It is up to guests that implement such workaround, ie. linux, to
+> -             * use this form in a way it just triggers the side-effect without
+> -             * doing anything else harmful.
+> -             */
+> -            if (unlikely(!is_book3s_arch2x(ctx))) {
+> -                gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+> -                return;
+> -            }
+> -
+> -            if (NARROW_MODE(ctx)) {
+> -                tcg_gen_ext32u_tl(temp, cpu_ctr);
+> -            } else {
+> -                tcg_gen_mov_tl(temp, cpu_ctr);
+> -            }
+> -            if (bo & 0x2) {
+> -                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
+> -            } else {
+> -                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
+> -            }
+> -            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
+> -        } else {
+> -            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
+> -            if (NARROW_MODE(ctx)) {
+> -                tcg_gen_ext32u_tl(temp, cpu_ctr);
+> -            } else {
+> -                tcg_gen_mov_tl(temp, cpu_ctr);
+> -            }
+> -            if (bo & 0x2) {
+> -                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
+> -            } else {
+> -                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
+> -            }
+> -        }
+> -        bhrb_type |= BHRB_TYPE_COND;
+> -    }
+> -    if ((bo & 0x10) == 0) {
+> -        /* Test CR */
+> -        uint32_t bi = BI(ctx->opcode);
+> -        uint32_t mask = 0x08 >> (bi & 0x03);
+> -        TCGv_i32 temp = tcg_temp_new_i32();
+> -
+> -        if (bo & 0x8) {
+> -            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
+> -            tcg_gen_brcondi_i32(TCG_COND_EQ, temp, 0, l1);
+> -        } else {
+> -            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
+> -            tcg_gen_brcondi_i32(TCG_COND_NE, temp, 0, l1);
+> -        }
+> -        bhrb_type |= BHRB_TYPE_COND;
+> -    }
+> -
+> -    gen_update_branch_history(ctx, ctx->cia, target, bhrb_type);
+> -
+> -    if (type == BCOND_IM) {
+> -        target_ulong li = (target_long)((int16_t)(BD(ctx->opcode)));
+> -        if (likely(AA(ctx->opcode) == 0)) {
+> -            gen_goto_tb(ctx, 0, ctx->cia + li);
+> -        } else {
+> -            gen_goto_tb(ctx, 0, li);
+> -        }
+> -    } else {
+> -        if (NARROW_MODE(ctx)) {
+> -            tcg_gen_andi_tl(cpu_nip, target, (uint32_t)~3);
+> -        } else {
+> -            tcg_gen_andi_tl(cpu_nip, target, ~3);
+> -        }
+> -        gen_lookup_and_goto_ptr(ctx);
+> -    }
+> -    if ((bo & 0x14) != 0x14) {
+> -        /* fallthrough case */
+> -        gen_set_label(l1);
+> -        gen_goto_tb(ctx, 1, ctx->base.pc_next);
+> -    }
+> -    ctx->base.is_jmp = DISAS_NORETURN;
+> -}
+> -
+> -static void gen_bc(DisasContext *ctx)
+> -{
+> -    gen_bcond(ctx, BCOND_IM);
+> -}
+> -
+> -static void gen_bcctr(DisasContext *ctx)
+> -{
+> -    gen_bcond(ctx, BCOND_CTR);
+> -}
+> -
+> -static void gen_bclr(DisasContext *ctx)
+> -{
+> -    gen_bcond(ctx, BCOND_LR);
+> -}
+> -
+> -static void gen_bctar(DisasContext *ctx)
+> -{
+> -    gen_bcond(ctx, BCOND_TAR);
+> -}
+> -
+>  /***                      Condition register logical                       ***/
+>  #define GEN_CRLOGIC(name, tcg_op, opc)                                        \
+>  static void glue(gen_, name)(DisasContext *ctx)                               \
+> @@ -5343,10 +5199,6 @@ GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
+>  /* ISA v3.0 changed the extended opcode from 62 to 30 */
+>  GEN_HANDLER(wait, 0x1F, 0x1E, 0x01, 0x039FF801, PPC_WAIT),
+>  GEN_HANDLER_E(wait, 0x1F, 0x1E, 0x00, 0x039CF801, PPC_NONE, PPC2_ISA300),
+> -GEN_HANDLER(bc, 0x10, 0xFF, 0xFF, 0x00000000, PPC_FLOW),
+> -GEN_HANDLER(bcctr, 0x13, 0x10, 0x10, 0x00000000, PPC_FLOW),
+> -GEN_HANDLER(bclr, 0x13, 0x10, 0x00, 0x00000000, PPC_FLOW),
+> -GEN_HANDLER_E(bctar, 0x13, 0x10, 0x11, 0x0000E000, PPC_NONE, PPC2_BCTAR_ISA207),
+>  GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
+>  #if defined(TARGET_PPC64)
+>  GEN_HANDLER(rfid, 0x13, 0x12, 0x00, 0x03FF8001, PPC_64B),
+> diff --git a/target/ppc/translate/branch-impl.c.inc b/target/ppc/translate/branch-impl.c.inc
+> index 745f71afd1..c2889c1d12 100644
+> --- a/target/ppc/translate/branch-impl.c.inc
+> +++ b/target/ppc/translate/branch-impl.c.inc
+> @@ -55,3 +55,160 @@ static bool trans_B(DisasContext *ctx, arg_I_b *a)
+>  
+>      return true;
+>  }
+> +
+> +#define BCOND_IM  0
+> +#define BCOND_LR  1
+> +#define BCOND_CTR 2
+> +#define BCOND_TAR 3
+> +
+> +static bool bcond_helper(DisasContext *ctx, int type, uint32_t bo, int bi,
+> +                         int bd, int bh, bool aa, bool lk)
+> +{
+> +    TCGLabel *l1;
+> +    TCGv target;
+> +    target_long bhrb_type = BHRB_TYPE_OTHER;
+> +
+> +    if (type == BCOND_IM && bh != -1) {
+> +        /* BCOND_IM should never use bh */
+> +        return false;
+> +    } else if (type != BCOND_IM && (bd != -1 || aa != 0)) {
+> +        /* Other BCOND types should never use bd or aa */
+> +        return false;
+> +    }
+> +
+> +    if (type == BCOND_LR || type == BCOND_CTR || type == BCOND_TAR) {
+> +        target = tcg_temp_new();
+> +        if (type == BCOND_CTR) {
+> +            tcg_gen_mov_tl(target, cpu_ctr);
+> +        } else if (type == BCOND_TAR) {
+> +            gen_load_spr(target, SPR_TAR);
+> +        } else {
+> +            tcg_gen_mov_tl(target, cpu_lr);
+> +        }
+> +        if (!lk) {
+> +            bhrb_type |= BHRB_TYPE_INDIRECT;
+> +        }
+> +        bhrb_type |= BHRB_TYPE_XL_FORM;
+> +    } else {
+> +        target = NULL;
+> +    }
+> +    if (lk) {
+> +        gen_setlr(ctx, ctx->base.pc_next);
+> +        bhrb_type |= BHRB_TYPE_CALL;
+> +    }
+> +    l1 = gen_new_label();
+> +    if ((bo & 0x4) == 0) {
+> +        /* Decrement and test CTR */
+> +        TCGv temp = tcg_temp_new();
+> +
+> +        if (type == BCOND_CTR) {
+> +            /*
+> +             * All ISAs up to v3 describe this form of bcctr as invalid but
+> +             * some processors, ie. 64-bit server processors compliant with
+> +             * arch 2.x, do implement a "test and decrement" logic instead,
+> +             * as described in their respective UMs. This logic involves CTR
+> +             * to act as both the branch target and a counter, which makes
+> +             * it basically useless and thus never used in real code.
+> +             *
+> +             * This form was hence chosen to trigger extra micro-architectural
+> +             * side-effect on real HW needed for the Spectre v2 workaround.
+> +             * It is up to guests that implement such workaround, ie. linux, to
+> +             * use this form in a way it just triggers the side-effect without
+> +             * doing anything else harmful.
+> +             */
+> +            if (unlikely(!is_book3s_arch2x(ctx))) {
+> +                gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+> +                return true;
+> +            }
+> +
+> +            if (NARROW_MODE(ctx)) {
+> +                tcg_gen_ext32u_tl(temp, cpu_ctr);
+> +            } else {
+> +                tcg_gen_mov_tl(temp, cpu_ctr);
+> +            }
+> +            if (bo & 0x2) {
+> +                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
+> +            } else {
+> +                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
+> +            }
+> +            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
+> +        } else {
+> +            tcg_gen_subi_tl(cpu_ctr, cpu_ctr, 1);
+> +            if (NARROW_MODE(ctx)) {
+> +                tcg_gen_ext32u_tl(temp, cpu_ctr);
+> +            } else {
+> +                tcg_gen_mov_tl(temp, cpu_ctr);
+> +            }
+> +            if (bo & 0x2) {
+> +                tcg_gen_brcondi_tl(TCG_COND_NE, temp, 0, l1);
+> +            } else {
+> +                tcg_gen_brcondi_tl(TCG_COND_EQ, temp, 0, l1);
+> +            }
+> +        }
+> +        bhrb_type |= BHRB_TYPE_COND;
+> +    }
+> +    if ((bo & 0x10) == 0) {
+> +        /* Test CR */
+> +        uint32_t mask = 0x08 >> (bi & 0x03);
+> +        TCGv_i32 temp = tcg_temp_new_i32();
+> +
+> +        if (bo & 0x8) {
+> +            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
+> +            tcg_gen_brcondi_i32(TCG_COND_EQ, temp, 0, l1);
+> +        } else {
+> +            tcg_gen_andi_i32(temp, cpu_crf[bi >> 2], mask);
+> +            tcg_gen_brcondi_i32(TCG_COND_NE, temp, 0, l1);
+> +        }
+> +        bhrb_type |= BHRB_TYPE_COND;
+> +    }
+> +
+> +    gen_update_branch_history(ctx, ctx->cia, target, bhrb_type);
+> +
+> +    if (type == BCOND_IM) {
+> +        target_ulong li = (target_long)((int16_t)(bd));
+> +        if (likely(aa == 0)) {
+> +            gen_goto_tb(ctx, 0, ctx->cia + li);
+> +        } else {
+> +            gen_goto_tb(ctx, 0, li);
+> +        }
+> +    } else {
+> +        if (NARROW_MODE(ctx)) {
+> +            tcg_gen_andi_tl(cpu_nip, target, (uint32_t)~3);
+> +        } else {
+> +            tcg_gen_andi_tl(cpu_nip, target, ~3);
+> +        }
+> +        gen_lookup_and_goto_ptr(ctx);
+> +    }
+> +    if ((bo & 0x14) != 0x14) {
+> +        /* fallthrough case */
+> +        gen_set_label(l1);
+> +        gen_goto_tb(ctx, 1, ctx->base.pc_next);
+> +    }
+> +    ctx->base.is_jmp = DISAS_NORETURN;
+> +
+> +    return true;
+> +}
+> +
+> +static bool trans_BC(DisasContext *ctx, arg_bcond *a)
+> +{
+> +    /*
+> +     * bh is not used for bc variants hence we pass -1
+> +     */
+> +    return bcond_helper(ctx, BCOND_IM, a->bo, a->bi, a->bd, -1, a->aa, a->lk);
+> +}
+> +
+> +/*
+> + * This helper is shared by bclr, bcctr and bctar.
+> + */
+> +static bool bclr_helper(DisasContext *ctx, arg_bclr *a, int type)
+> +{
+> +    /*
+> +     * bd and aa is not used for bc variants hence we pass -1 and 0 respectively
+> +     */
+> +    return bcond_helper(ctx, type, a->bo, a->bi, -1, a->bh, 0, a->lk);
+> +}
+> +
+> +TRANS(BCLR, bclr_helper, BCOND_LR)
+> +TRANS(BCCTR, bclr_helper, BCOND_CTR)
+> +TRANS_FLAGS2(BCTAR_ISA207, BCTAR, bclr_helper, BCOND_TAR)
+> +
 
-'qemu-io' HMP command was a bad name decision. This is a good
-opportunity to clean it: can we add QMP 'x-block-io' or
-'x-block-cmd' / 'x-block-command' instead? Keeping the legacy
-HMP name (or adding an HMP alias)?
+This extra line causes the below warning on patch application. Please
+remove it.
 
+  warning: 1 line adds whitespace errors.
+
+> -- 
+> 2.55.0
+> 
 
