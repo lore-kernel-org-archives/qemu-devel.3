@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB59C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 17:09:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBCCDC61DC7
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 17:12:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzH7p-0003cY-T5; Wed, 26 Aug 2026 13:09:21 -0400
+	id 1wzHAL-0004OI-Ev; Wed, 26 Aug 2026 13:11:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wzH7m-0003cA-ID
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 13:09:18 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wzHAF-0004Nl-Dg
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 13:11:53 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wzH7k-0006gD-49
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 13:09:17 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1wzHAD-0007KR-O3
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 13:11:51 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QGupig343497
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 17:09:15 GMT
+ 67QGuotA424862
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 17:11:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- kh6MRvq+JUDptROKpj10YKRN3GCbaSRAo/cL83AXRH4=; b=U1Rd9I7QmrwXnWvh
- a82EbyW+KYgm4xmDaWjQoo0XPzdZM2CwBeAS7D1hRQLSTPyfyjxwHL9TjcRT8K56
- HyEyrlWxAiZ461XwOPmWxyADmEzcl/jSB+yTpb3gmiiEoL1JMS688z92L25ZiT12
- mzIF6QaaaOC34k6zlLqptm5CJP/DQ0jseRaY6FzDll8f6hizOjPiTSzImC7J5S+o
- BUf5q/dIDJVI79e65GqiKn5EiccovtUUHIPkvk4hHf5UKyDdPzWUnhNYR9yxi6CK
- bGXkMRxTSkXJ+mo/mB0EyY2/l1rT/1QL2xxPAmUIG5eY2L89eLM64A7otoNYEzAn
- Gxa48w==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g9utht80d-1
+ g/usUm+l9xZtNjzYYU/j6OeqVACmC1dJNC0YmYQ+5yM=; b=UWzFLGrW3uoizgYN
+ XJqlYxB7iWm1Uc/rV2lWshZg95h5SeeiseUYimu+6qNZemjO0ctq3ESit8rzbluo
+ duaCKWTYeOL5QFuG6T2hi1a5Egy8YZSD1pIcaMIrj7/SO50L7ctzLOToUJZXpMqw
+ ZBOyjWMAScCuM9zyef6QIi3Jwtb8lb7Gj22NvXrPbrXTmyWn5ZzBhzRluqMx6H4a
+ upLcki6bLXpgSCYyqH9ptyb1Mwi2AhQhGApJcpIqwSske9vkSBMXJ4cqm77bhqH1
+ SoCo6KL3LY2Ax9p4N6StMtIVPf8p8dp19k3t8slIS+zd/2QGrzRgJaA35HbOArk6
+ x59oiA==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g9wmqstha-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 17:09:14 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-52dcf1bb6e9so927071cf.1
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 10:09:14 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 17:11:47 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-51bfe3fa93bso9520791cf.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 10:11:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787764154; x=1788368954; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1787764306; x=1788369106; darn=nongnu.org;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=kh6MRvq+JUDptROKpj10YKRN3GCbaSRAo/cL83AXRH4=;
- b=cLz/uGNDLUyThPCT6pTV+PRM9r/gnWJ/D1NHobMiU3/FaVGm4ahwvpYGDBVggaCPFf
- JY8NW0b7brmUFliFNBLCnGNxtITHtZokuJ1r3kb1kLWv3e5no0W7uVDbFZtS8nqSjTZm
- uNufwnz/DHzR4h3lc9Elcv+OBUnJcxaCXdhy+KZIhL4BCl2IG8YosF8bpdisDUhqfdJz
- SrfT2ZTq355DqB953+9Qh1vL5n7zehMF/L+BCQ4ntfQ7UoZxmlc6LqkWk/tmXPtC1HfQ
- kv3pjucZl+GpORhMwunhPaBnO2OfBybDNJSpcJI3fBaX4HfFfMV7qG4ZLDn9bzVXtae5
- Ki5A==
+ bh=g/usUm+l9xZtNjzYYU/j6OeqVACmC1dJNC0YmYQ+5yM=;
+ b=bslTbfb/a6BUDxZ6ciapj0Ks3cvuwCGSSUyEOr++oWGUFiH4AmRG4tosT5/Jolzgg3
+ Sze8p1XiPtFpzsq86jnatwqw4Bwuy2qfYgwI30FFboJm0RbTUN8gj7IrzwzUYFpACSBw
+ +ed8zHwux/XDWFN/dVJ2EfhxqGp3xAh0SpgylMRjIB4DRiv1V8m6WnJXq8jP0in916M8
+ 0ZIhuH1IpTh2vu97O/YBo9gvdPjlno1cX8LuU8LEgd/0yhmtD00eZl07R4RsV0WVrbTz
+ 9gXPnw61aGfZhg+b+DOpFxfVGGiKBDYfIR+2i19MZcidIO+WOGP7bLJhqmxvzAZZECNt
+ BNCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787764154; x=1788368954;
+ d=1e100.net; s=20251104; t=1787764306; x=1788369106;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=kh6MRvq+JUDptROKpj10YKRN3GCbaSRAo/cL83AXRH4=;
- b=ixPW/q3yntk8X+JoTnRm11YzJDzQBw5r0UuiBKQSN5a+1IvwvW/MuafKGICG9smMaX
- GsYUmbxGrtd5k6JfEGTDkASoLaM6EbEBvcYrRt3Vb1ygiXrcejLob4SpT4I5SPEx5jiF
- vC+pHV8M5e7CKxyfYB2Py7oWRy/KDIY0/zcxNIHvjd/Dw+OKphMguzVcGr0o0H0GHDwB
- cY1KjouxR5D/voB24IP+LzHez2POwEQTVdamSs9uP/TgubUhCLVRyih09uESTeFB8v9G
- CLBe0c2lugwrUH6pYIVQeaVp6o5Elff68FUyqcSQkz5bokCeyMo8jcEJr6XGjMa7nZKD
- mvhQ==
+ bh=g/usUm+l9xZtNjzYYU/j6OeqVACmC1dJNC0YmYQ+5yM=;
+ b=Em1ePCZCPsGcvaoE+H8qnzPX+rl5bnEn60B2G6pnOjpZ1rUjlIUQ5yVR5rP4Tby4/i
+ /Fyr9nsX1sYwAvd5q3hDKoCQiqbtARHk6i7WeXw2e6gxamAqRyh1E7BeqN6y83Bb8tOC
+ TJn4JLax37IQkkzgRjEa9e+F4xN2k5KcmY5i3UtTK+CI4De7YLsB/HzApip0xuaNjqrn
+ pPOTVosTkGATfAD/sDEkCgz9IIFWiohtOpzQd7iikLBlfr8aoHdaS2AucwJgRZtiSslk
+ FS8mwoBKnJyAXWC6Ow+OHdvsCDcr0Y3FUQRRqpx6OAIRtJYNCHkkKAN0qNOcymHfoDBz
+ 5xhg==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rp6b7pvAq3q6V6Z45LEsU0N/uJ4deJ3nOOH/bQ7kA+SBb22I1usq8CDXLAUGJo7IWHuhGwVbKvaz0UM@nongnu.org
-X-Gm-Message-State: AFuF++kMF0ua8wwsgheup7cmXKS0nzBFn2dwsgRMRmVnjuMTfhTqMq/l
- usGxra8bbKjKb2eILmv7BmU430NugRpT+0Vo+utxk9MRY4WwQNmjjfJVvcSMPVdIU9iTod4DhVG
- pvC16c+jNo5c/KGS/WLUUS7kFeJewQoM5s56SDU6szA7naeuc3ZRtbCRv9Q==
-X-Gm-Gg: AR+sD13Ei0C8Zrt4Nvi6zJKyiM4gDqmPLAD/NO87jFNfIEfw5vwBTJ8cYMrDsBSbq+w
- qgI4VuU/1qnBXrOWW+NY0YeETAqZGjo3yIdiVAoTzLmdv+uPjJRLSc3GcwO1lC/VUz8g48Ik77+
- HewZlODqJ3FtDRUIq4WH/V80EG8yfQFYofNgUMj9UQ9vcCv7BnK0b5/mqRC7TooXfmu77Xamh0T
- UiTTLl6xRH6Co5Hs3Wk99nSaQuqS+uChVkAj40YW9spTQUx/IUD3iVEFNaXZX3GTjzY7Y2xiUDt
- IVzUe2mRQivEz7XVf4cMQ1SBICbuGBDDEK2REb/EvVVVuaxvR+FZ4aSQvdT5h4mddn+/Oc/aKPX
- YmXD7Ycz5dJSCqa0d8eYIueuUlSIaxuAPKQNzNc5A/pU=
-X-Received: by 2002:a05:622a:4d85:b0:528:ce0:e9f8 with SMTP id
- d75a77b69052e-52fa1a4aaa1mr8463551cf.3.1787764153710; 
- Wed, 26 Aug 2026 10:09:13 -0700 (PDT)
-X-Received: by 2002:a05:622a:4d85:b0:528:ce0:e9f8 with SMTP id
- d75a77b69052e-52fa1a4aaa1mr8462771cf.3.1787764153082; 
- Wed, 26 Aug 2026 10:09:13 -0700 (PDT)
+ AHgh+Rq93xlx4BQzVFnsVLpfM8swKTojg2vMm35zZZNKw2f1l6zV9o8HY4g0dRP8IDBc1n0qmvNqFOk2s+X/@nongnu.org
+X-Gm-Message-State: AFuF++nGfOmJcYlzvZht1buTXv05nQ0/T26Phbec863cnTRVIBIqcLnf
+ 5g6FyETvzgRPHyvynqgdNTSN4la7RBPYB81WiKamTjYlIgIIO3HzsFo5izInNKdoKlc7QfQvK9N
+ Eljoo/00U7rESHj8r6xHci6a4naXJuoBjBBb3xNHWHhZlBoloR/X9iUdZ0w==
+X-Gm-Gg: AR+sD11m9f6y+P33lmyiuEHPm+sl6cRc0OeVkKnLtDC3n2rRm3LHEkvrOSICpWVJx+X
+ cfnp5+DbRNezkdT0fcKcWWXfokOwfJb6B1zl1GJsZl2Mq2eYzQj3x/KbfAxMZVhhxMU6P8HzEMt
+ SLAO/Y0gyoGg/iOs1d/UVOiioOZxTNMHtxt07KTRWjnL/T2hakF3+j8fqksdvLQ2+Jqws487epK
+ dmuXblk7c/iI4I6G35mIlYVOzQIYClhlSU2kkx+ecEEAvVcuP1hbP/Hbb6UUHavcPX1SllnZNdB
+ s7RYK3sCD/pjw1xk0PFotzz+O6ZexBFLkFY/kaSdiOGgZWUxf/q2OI5xcRcluQvI846b0i3ft9X
+ QCgtVD4SIvfGHzjLJfSfiKxZbPLE5TSopUE9tYVftURHH
+X-Received: by 2002:a05:622a:c01:b0:528:38b1:b547 with SMTP id
+ d75a77b69052e-52e4221337amr84725151cf.8.1787764306110; 
+ Wed, 26 Aug 2026 10:11:46 -0700 (PDT)
+X-Received: by 2002:a05:622a:c01:b0:528:38b1:b547 with SMTP id
+ d75a77b69052e-52e4221337amr84724541cf.8.1787764305620; 
+ Wed, 26 Aug 2026 10:11:45 -0700 (PDT)
 Received: from [10.254.188.74] (134.171.88.92.rev.sfr.net. [92.88.171.134])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c250a9b106dsm675324466b.43.2026.08.26.10.09.11
+ a640c23a62f3a-c250a88af72sm688634566b.36.2026.08.26.10.11.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Aug 2026 10:09:12 -0700 (PDT)
-Message-ID: <07620a7d-592f-4fe7-8da3-aed6959bb1c4@oss.qualcomm.com>
-Date: Wed, 26 Aug 2026 19:09:10 +0200
+ Wed, 26 Aug 2026 10:11:44 -0700 (PDT)
+Message-ID: <14682410-06bb-42d4-8cc2-d7e86789bdd7@oss.qualcomm.com>
+Date: Wed, 26 Aug 2026 19:11:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/13] hw/riscv/fdt_common, virt.c: add
- create_fdt_pcie()
+Subject: Re: [PATCH v2 05/13] hw/riscv/fdt_common, virt.c: add
+ create_fdt_imsic()
 Content-Language: en-US
 To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  qemu-devel@nongnu.org
@@ -104,47 +104,47 @@ Cc: peter.maydell@linaro.org, Palmer Dabbelt <palmer@dabbelt.com>,
  Chao Liu <chao.liu@processmission.com>,
  "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
 References: <20260826164814.44335-1-daniel.barboza@oss.qualcomm.com>
- <20260826164814.44335-5-daniel.barboza@oss.qualcomm.com>
+ <20260826164814.44335-6-daniel.barboza@oss.qualcomm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260826164814.44335-5-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260826164814.44335-6-daniel.barboza@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=EMA2FVZC c=1 sm=1 tr=0 ts=6a8f1dba cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=o1isufRNksZXpKP+aqnsag==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE0NCBTYWx0ZWRfX0exk3twpvHNB
+ 90JiN2OtKV87G8MViL1RE91c08FHOraQevyuOsCnkOeUVgYczY0fWwzgtEbhJXs8nASKm7eDyYU
+ Fp4XyimqOY1MQm7of+G56Ui4OirLrfM=
+X-Proofpoint-ORIG-GUID: PDgzFuIDSity3_y8T1TJxe2-9GDVV_Cd
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE0NCBTYWx0ZWRfX1r7bwqeNBXc6
+ YEslAHWDck2/qyE4mOXSHhYdDo247O+CfC3WQ4xRiahijn09TldEQdo6S6wftEhGfOglkZWr9wI
+ g7s2oTVneO7IaT5fJTCBmI5oWsgNf3oAW7SL9JwuySN8hlLD5Fv7ubiLvYDtVz6tUzild+PXRNW
+ w9ecxAu0OAHgKbSHvmsLuAs2xm1FFCGBoERQ+O+ibbVW1+2xH8URYPhVVFN3X4BPN6D0+ilrHeY
+ vMwywmVBjGqjszQiVQAB+c5ht1Vtc7kYpfQY1KIMKj2rt7qzO87ZL9CkMJLNO11Wa8ICEQPtrJT
+ Lr2dtfL3GIG344jyOj0R/ZLXgbjItlafD2gOK2v02BLg89XeWuZTj/Wv6rW3sLyqk18JsUNpTbQ
+ f+s37J4CURDWrmc9lWKaAWf/jEGqDY1wXVT2I/sKCdQ8MQedaYhJ5vSXt1HIpbX6XNQ6B+NxQnr
+ LqKCnKdNj0AHWtSqE/A==
+X-Authority-Analysis: v=2.4 cv=T9S8ifKQ c=1 sm=1 tr=0 ts=6a8f1e53 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=o1isufRNksZXpKP+aqnsag==:17
  a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=aMASRZD-tIQv_IvYdFMA:9 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-ORIG-GUID: V9yfadZ2p5UC3ADZqrC_8931Jy-V-G5k
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDE0MyBTYWx0ZWRfX4zrdvlx/PEb1
- MqO0yZpcYKy9zta9gOHH4ZymK50tmnbOnVVuUB43bGqvoh825AdixsML+W6aSJPU31OTuRBUg3f
- or+OCBaqyCtLwcBDIutBlOwzNesHWRgoMmXXaN9hX4hGeWTbqWh2rcPCQkZM67RI9RLmS1IwsDW
- e9lvZ7O50aZFCe4s5TqfXqBsKAsy7xu/aKxK0QKz+bBX6ZYR9L079jz4k2OvXJVVcFcqKpxxAnh
- ChdJJ56QTzi5wBaYeueWV3Hq+B2Ah0CG/kd9vYd0fuxu6xvFpemcGY4OPFrPk/QuhDl+sIYyzc8
- Oszg0e+7rEV8lUVUfH/kN9O81XH2+eXlcNurfGDBEOvt3HQJDaq6DK/LXHvLIa7K8glSi/pWLJK
- 85kHcuiIKTMHJAR/N8xIdlQCDdy36iHh333CBPbQCFh/U408UxRCX7eBP6vaeR8CSf+AcM/3vLv
- JZI4EpYtrf/c2aKzbtg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDE0MyBTYWx0ZWRfX/KdLPsFnWEB6
- 00yyUlZJ5BhlhuOfod6wokvr7lzBjexFXSGNteMKmV9P3ESkoIg9qjb6N69gHYtYIEiC+xAAaye
- XyxjjyTROzOOt4Nfnyf60DtLGrzsozg=
-X-Proofpoint-GUID: V9yfadZ2p5UC3ADZqrC_8931Jy-V-G5k
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=KXNGmyrVeMmtdv23PNgA:9 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-GUID: PDgzFuIDSity3_y8T1TJxe2-9GDVV_Cd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-26_05,2026-08-26_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 spamscore=0 adultscore=0 malwarescore=0
- clxscore=1015 phishscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
+ adultscore=0 suspectscore=0 priorityscore=1501 malwarescore=0 phishscore=0
+ lowpriorityscore=0 clxscore=1015 spamscore=0 impostorscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260143
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260144
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,55 +161,54 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 26/8/26 18:48, Daniel Henrique Barboza wrote:
-> The pcie FDT is quite tedious but can be parametrized into a helper.
-> This is going to benefit only the 'virt' board for now but it will be
-> used by the 'riscv-server-ref' board in the near future too.
+> The FDT related to interrupt controllers should definitely be put into
+> helpers, even if only 'virt' benefits from it, due to the amount of code
+> that is relieved from the board alone.  We'll start with 'imsic'.
 > 
-> Some other changes made:
+> For this endeavor we're going to use a helper struct that will carry all
+> the extra FDT arguments in a human format.  The alternative would be to
+> add 8 more function arguments, on top of 4 phandle arguments that we're
+> passing around in all these controllers, and that's not only a poor
+> reading experience but it's quite error prone too.
 > 
-> - FDT related macros are moved to fdt-common.h.  Only a couple are being
->    used by the helper ATM but more will be added in the next patches;
-> - an RISCVAIAType enum is created.  There are several FDTs that depends
->    on the active AIA type being used, and we want a way to represent the
->    different AIA modes that doesn't re-use the 'virt' specific VIRT_AIA_*
->    macros.  The enum vals are equivalent by design - we want "s->aia_type"
->    to be used by 'virt' when calling the fdt helpers, and other boards
->    will use "AIA_*" macros in their code.
+> We do not want to crowd the fdt-helper with non-FDT logic, hence we're
+> handling the !kvm_enabled() cond in virt.c using the imsic_m_base
+> argument.  This is a pattern that we'll fall back on in the next
+> patches too.
 > 
 > No FDT changes made.
 > 
 > Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 > ---
->   hw/riscv/fdt-common.c         | 108 ++++++++++++++++++++++++++++++++++
->   hw/riscv/virt.c               | 108 ++--------------------------------
->   include/hw/riscv/fdt-common.h |  26 ++++++++
->   include/hw/riscv/virt.h       |  15 -----
->   4 files changed, 140 insertions(+), 117 deletions(-)
+>   hw/riscv/fdt-common.c         |  94 ++++++++++++++++++++++++++++++
+>   hw/riscv/virt.c               | 104 ++++------------------------------
+>   include/hw/riscv/fdt-common.h |  22 +++++++
+>   3 files changed, 128 insertions(+), 92 deletions(-)
 
 
-> diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.h
-> index 37a1544706..bee8b85597 100644
-> --- a/include/hw/riscv/fdt-common.h
-> +++ b/include/hw/riscv/fdt-common.h
-> @@ -11,6 +11,27 @@
+> @@ -583,8 +492,19 @@ static void create_fdt_sockets(RISCVVirtState *s,
+>       }
 >   
->   #include "target/riscv/cpu.h"
->   
-> +#define FDT_PCI_ADDR_CELLS    3
-> +#define FDT_PCI_INT_CELLS     1
-> +#define FDT_PLIC_ADDR_CELLS   0
-> +#define FDT_PLIC_INT_CELLS    1
-> +#define FDT_APLIC_INT_CELLS   2
-> +#define FDT_APLIC_ADDR_CELLS  0
-> +#define FDT_IMSIC_INT_CELLS   0
-> +#define FDT_MAX_INT_CELLS     2
-> +#define FDT_MAX_INT_MAP_WIDTH (FDT_PCI_ADDR_CELLS + FDT_PCI_INT_CELLS + \
-> +                                 1 + FDT_MAX_INT_CELLS)
-> +#define FDT_PLIC_INT_MAP_WIDTH  (FDT_PCI_ADDR_CELLS + FDT_PCI_INT_CELLS + \
-> +                                 1 + FDT_PLIC_INT_CELLS)
-> +#define FDT_APLIC_INT_MAP_WIDTH (FDT_PCI_ADDR_CELLS + FDT_PCI_INT_CELLS + \
-> +                                 1 + FDT_APLIC_INT_CELLS)
+>       if (s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC) {
+> -        create_fdt_imsic(s, phandle, intc_phandles,
+> +        IMSICFdtProps props = {
+> +            .soc = &s->soc,
 
-I'm a bit suspiscious these numbers will always match for
-any machine. No objection although.
+New line please.
+
+> .socket_count = riscv_socket_count(ms),
+> +            .smp_cpus = ms->smp.cpus,
+> +            .imsic_m_base = !kvm_enabled() ? s->memmap[VIRT_IMSIC_M].base : 0,
+> +            .imsic_s_base = s->memmap[VIRT_IMSIC_S].base,
+> +            .imsic_group_max_size = VIRT_IMSIC_GROUP_MAX_SIZE,
+> +            .irqchip_num_msis = VIRT_IRQCHIP_NUM_MSIS,
+> +            .aia_guests = s->aia_guests
+> +        };
+> +
+> +        create_fdt_imsic(ms->fdt, &props, phandle, intc_phandles,
+>                            &msi_m_phandle, &msi_s_phandle);
+> +
+>           *msi_pcie_phandle = msi_s_phandle;
+>       }
+
 
