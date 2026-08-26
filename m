@@ -4,30 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80E67C61DBE
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 10:32:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2ECAC5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 10:32:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzAun-00025B-Ft; Wed, 26 Aug 2026 06:31:29 -0400
+	id 1wzAun-00024Q-5I; Wed, 26 Aug 2026 06:31:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1wzAuP-0001vN-TM
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:06 -0400
+ (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1wzAuR-0001wM-H0
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:07 -0400
 Received: from [2a14:640:1:12b5::1] (helo=krgm.moe)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1wzAuN-0003OA-VO
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:05 -0400
+ (envelope-from <prcups@krgm.moe>) id 1wzAuO-0003OC-2l
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 06:31:07 -0400
 Received: from yuno-loong (unknown [103.47.186.116])
- by krgm.moe (Postfix) with ESMTPSA id 225D0DFBC;
- Wed, 26 Aug 2026 16:01:00 +0530 (IST)
+ by krgm.moe (Postfix) with ESMTPSA id 9CD02D069;
+ Wed, 26 Aug 2026 16:01:01 +0530 (IST)
 From: SignKirigami <prcups@krgm.moe>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>, xianglai li <lixianglai@loongson.cn>,
  SignKirigami <prcups@krgm.moe>, Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v4 09/14] target/loongarch: Add LVZ migration state
-Date: Wed, 26 Aug 2026 18:30:13 +0800
-Message-ID: <4d53d7db40dd8da468539c6c0c900e2722669381.1787739852.git.prcups@krgm.moe>
+Subject: [PATCH v4 11/14] target/loongarch: Translate LVZ guest CSR
+ instructions
+Date: Wed, 26 Aug 2026 18:30:15 +0800
+Message-ID: <e2be598b538ab467dda5603f59cd7aa6faa5d7fe.1787739852.git.prcups@krgm.moe>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <cover.1787739852.git.prcups@krgm.moe>
 References: <cover.1787739852.git.prcups@krgm.moe>
@@ -56,162 +57,460 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migrate the host LVZ controls, guest CSR and TLB banks, and restore the
-active VM level, guest timer and interrupt request after loading state.
+Decode and translate GCSRRD, GCSRWR and GCSRXCHG, and select the host or
+guest helper and CSR offset from one shared CSRInfo table.
+
+Guest execution of sensitive CSRs raises GSPR without writing an artificial
+value to the destination register. Host guest-CSR instructions reuse the
+ordinary CSR translation implementation.
 
 Signed-off-by: SignKirigami <prcups@krgm.moe>
 Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
 ---
- target/loongarch/machine.c | 111 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 110 insertions(+), 1 deletion(-)
+ target/loongarch/csr.c                        |   4 +-
+ target/loongarch/csr.h                        |   4 +-
+ target/loongarch/disas.c                      |   8 +
+ target/loongarch/insns.decode                 |   6 +
+ .../tcg/insn_trans/trans_privileged.c.inc     | 218 ++++++++++++++----
+ target/loongarch/tcg/translate.c              |   6 +-
+ 6 files changed, 193 insertions(+), 53 deletions(-)
 
-diff --git a/target/loongarch/machine.c b/target/loongarch/machine.c
-index 931a5ca5ba..2bf2475748 100644
---- a/target/loongarch/machine.c
-+++ b/target/loongarch/machine.c
-@@ -7,6 +7,7 @@
- 
- #include "qemu/osdep.h"
- #include "cpu.h"
-+#include "internals.h"
- #include "migration/vmstate.h"
- #include "system/tcg.h"
- #include "vec.h"
-@@ -200,18 +201,125 @@ static const VMStateDescription vmstate_tlb = {
-     .minimum_version_id = 0,
-     .needed = tlb_needed,
-     .fields = (const VMStateField[]) {
--        VMSTATE_STRUCT_ARRAY(env.tlb, LoongArchCPU, LOONGARCH_TLB_MAX,
-+        VMSTATE_STRUCT_ARRAY(env.sys_states[0].tlb, LoongArchCPU,
-+                             LOONGARCH_TLB_MAX,
-                              0, vmstate_tlb_entry, LoongArchTLB),
-         VMSTATE_END_OF_LIST()
+diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
+index fa018a4582..928ffeb193 100644
+--- a/target/loongarch/csr.c
++++ b/target/loongarch/csr.c
+@@ -10,7 +10,9 @@
+     [LOONGARCH_CSR_##NAME] = {                             \
+         .name   = (stringify(NAME)),                       \
+         .offset = CSR_OFFSET(CSR_##NAME),                  \
+-        .flags = FL, .readfn = RD, .writefn = WR           \
++        .flags = FL,                                       \
++        .readfn[LOONGARCH_VM_LEVEL_HOST] = RD,             \
++        .writefn[LOONGARCH_VM_LEVEL_HOST] = WR             \
      }
- };
-+
-+static const VMStateDescription vmstate_lvz_sys = {
-+    .name = "cpu/lvz-sys",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(CSR_CRMD, CPUSysState),
-+        VMSTATE_UINT64(CSR_PRMD, CPUSysState),
-+        VMSTATE_UINT64(CSR_EUEN, CPUSysState),
-+        VMSTATE_UINT64(CSR_MISC, CPUSysState),
-+        VMSTATE_UINT64(CSR_ECFG, CPUSysState),
-+        VMSTATE_UINT64(CSR_ESTAT, CPUSysState),
-+        VMSTATE_UINT64(CSR_ERA, CPUSysState),
-+        VMSTATE_UINT64(CSR_BADV, CPUSysState),
-+        VMSTATE_UINT64(CSR_BADI, CPUSysState),
-+        VMSTATE_UINT64(CSR_EENTRY, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBIDX, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBEHI, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBELO0, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBELO1, CPUSysState),
-+        VMSTATE_UINT64(CSR_ASID, CPUSysState),
-+        VMSTATE_UINT64(CSR_PGDL, CPUSysState),
-+        VMSTATE_UINT64(CSR_PGDH, CPUSysState),
-+        VMSTATE_UINT64(CSR_PGD, CPUSysState),
-+        VMSTATE_UINT64(CSR_PWCL, CPUSysState),
-+        VMSTATE_UINT64(CSR_PWCH, CPUSysState),
-+        VMSTATE_UINT64(CSR_STLBPS, CPUSysState),
-+        VMSTATE_UINT64(CSR_RVACFG, CPUSysState),
-+        VMSTATE_UINT64(CSR_CPUID, CPUSysState),
-+        VMSTATE_UINT64(CSR_PRCFG1, CPUSysState),
-+        VMSTATE_UINT64(CSR_PRCFG2, CPUSysState),
-+        VMSTATE_UINT64(CSR_PRCFG3, CPUSysState),
-+        VMSTATE_UINT64_ARRAY(CSR_SAVE, CPUSysState, 16),
-+        VMSTATE_UINT64(CSR_TID, CPUSysState),
-+        VMSTATE_UINT64(CSR_TCFG, CPUSysState),
-+        VMSTATE_UINT64(CSR_TVAL, CPUSysState),
-+        VMSTATE_UINT64(CSR_CNTC, CPUSysState),
-+        VMSTATE_UINT64(CSR_TICLR, CPUSysState),
-+        VMSTATE_UINT64(CSR_LLBCTL, CPUSysState),
-+        VMSTATE_UINT64(CSR_IMPCTL1, CPUSysState),
-+        VMSTATE_UINT64(CSR_IMPCTL2, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBRENTRY, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBRBADV, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBRERA, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBRSAVE, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBRELO0, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBRELO1, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBREHI, CPUSysState),
-+        VMSTATE_UINT64(CSR_TLBRPRMD, CPUSysState),
-+        VMSTATE_UINT64(CSR_MERRCTL, CPUSysState),
-+        VMSTATE_UINT64(CSR_MERRINFO1, CPUSysState),
-+        VMSTATE_UINT64(CSR_MERRINFO2, CPUSysState),
-+        VMSTATE_UINT64(CSR_MERRENTRY, CPUSysState),
-+        VMSTATE_UINT64(CSR_MERRERA, CPUSysState),
-+        VMSTATE_UINT64(CSR_MERRSAVE, CPUSysState),
-+        VMSTATE_UINT64(CSR_CTAG, CPUSysState),
-+        VMSTATE_UINT64_ARRAY(CSR_DMW, CPUSysState, 4),
-+        VMSTATE_UINT64(CSR_DBG, CPUSysState),
-+        VMSTATE_UINT64(CSR_DERA, CPUSysState),
-+        VMSTATE_UINT64(CSR_DSAVE, CPUSysState),
-+        VMSTATE_UINT64(CSR_GSTAT, CPUSysState),
-+        VMSTATE_UINT64(CSR_GCFG, CPUSysState),
-+        VMSTATE_UINT64(CSR_GINTC, CPUSysState),
-+        VMSTATE_UINT64(CSR_GCNTC, CPUSysState),
-+        VMSTATE_UINT64(CSR_GTLBC, CPUSysState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
-+static bool lvz_needed(void *opaque)
-+{
-+    LoongArchCPU *cpu = opaque;
-+
-+    return FIELD_EX64(cpu->env.cpucfg[2], CPUCFG2, LVZ);
-+}
-+
-+static const VMStateDescription vmstate_lvz = {
-+    .name = "cpu/lvz",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = lvz_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(env.sys_states[0].CSR_GSTAT, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_states[0].CSR_GCFG, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_states[0].CSR_GINTC, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_states[0].CSR_GCNTC, LoongArchCPU),
-+        VMSTATE_UINT64(env.sys_states[0].CSR_GTLBC, LoongArchCPU),
-+        VMSTATE_STRUCT(env.sys_states[1], LoongArchCPU, 0,
-+                       vmstate_lvz_sys, CPUSysState),
-+        VMSTATE_STRUCT_ARRAY(env.sys_states[1].tlb, LoongArchCPU,
-+                             LOONGARCH_TLB_MAX,
-+                             0, vmstate_tlb_entry, LoongArchTLB),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
- #endif
  
-+static int loongarch_cpu_post_load(void *opaque, int version_id)
+ #define CSR_OFF_ARRAY_FLAGS(NAME, N, FL)                      \
+diff --git a/target/loongarch/csr.h b/target/loongarch/csr.h
+index 647695e248..50f06a359f 100644
+--- a/target/loongarch/csr.h
++++ b/target/loongarch/csr.h
+@@ -28,8 +28,8 @@ typedef struct {
+     const char *name;
+     int offset;
+     int flags;
+-    GenCSRFunc readfn;
+-    GenCSRFunc writefn;
++    GenCSRFunc readfn[LOONGARCH_VM_LEVELS];
++    GenCSRFunc writefn[LOONGARCH_VM_LEVELS];
+ } CSRInfo;
+ 
+ CSRInfo *get_csr(unsigned int csr_num);
+diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
+index 3249ab7ac6..59d6a55c78 100644
+--- a/target/loongarch/disas.c
++++ b/target/loongarch/disas.c
+@@ -51,6 +51,7 @@ static const char * const csr_names[] = {
+     CSR_NAME(BADI),
+     CSR_NAME(EENTRY),
+     CSR_NAME(TLBIDX),
++    CSR_NAME(GTLBC),
+     CSR_NAME(TLBEHI),
+     CSR_NAME(TLBELO0),
+     CSR_NAME(TLBELO1),
+@@ -87,6 +88,10 @@ static const char * const csr_names[] = {
+     CSR_NAME(TVAL),
+     CSR_NAME(CNTC),
+     CSR_NAME(TICLR),
++    CSR_NAME(GSTAT),
++    CSR_NAME(GCFG),
++    CSR_NAME(GINTC),
++    CSR_NAME(GCNTC),
+     CSR_NAME(LLBCTL),
+     CSR_NAME(IMPCTL1),
+     CSR_NAME(IMPCTL2),
+@@ -698,6 +703,9 @@ INSN(tlbfill,      empty)
+ INSN(tlbclr,       empty)
+ INSN(tlbflush,     empty)
+ INSN(invtlb,       i_rr)
++INSN(gcsrrd,       r_csr)
++INSN(gcsrwr,       r_csr)
++INSN(gcsrxchg,     rr_csr)
+ INSN(cacop,        cop_r_i)
+ INSN(lddir,        rr_i)
+ INSN(ldpte,        j_i)
+diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.decode
+index 3089d42044..4612af9433 100644
+--- a/target/loongarch/insns.decode
++++ b/target/loongarch/insns.decode
+@@ -493,6 +493,12 @@ bgeu            0110 11 ................ ..... .....     @rr_offs16
+   csrxchg           0000 0100 .............. ..... .....     @rr_csr
+ }
+ 
 +{
-+    LoongArchCPU *cpu = opaque;
-+    CPULoongArchState *env = &cpu->env;
-+    CPUSysState *host = get_sys(env, LOONGARCH_VM_LEVEL_HOST);
-+    bool guest = FIELD_EX64(host->CSR_GSTAT, CSR_GSTAT, VM);
-+    set_sys(env, guest);
-+    return 0;
++  gcsrrd            0000 0101 .............. 00000 .....     @r_csr
++  gcsrwr            0000 0101 .............. 00001 .....     @r_csr
++  gcsrxchg          0000 0101 .............. ..... .....     @rr_csr
 +}
 +
- /* LoongArch CPU state */
- const VMStateDescription vmstate_loongarch_cpu = {
-     .name = "cpu",
-     .version_id = 4,
-     .minimum_version_id = 4,
-+    .post_load = loongarch_cpu_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT64_ARRAY(env.gpr, LoongArchCPU, 32),
-         VMSTATE_UINT64(env.pc, LoongArchCPU),
-@@ -285,6 +393,7 @@ const VMStateDescription vmstate_loongarch_cpu = {
-         &vmstate_lasx,
- #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-         &vmstate_tlb,
-+        &vmstate_lvz,
- #endif
-         &vmstate_lbt,
-         &vmstate_msgint,
+ iocsrrd_b        0000 01100100 10000 00000 ..... .....    @rr
+ iocsrrd_h        0000 01100100 10000 00001 ..... .....    @rr
+ iocsrrd_w        0000 01100100 10000 00010 ..... .....    @rr
+diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+index abedb132b9..117f2c888c 100644
+--- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+@@ -39,6 +39,9 @@ GEN_FALSE_TRANS(lddir)
+ GEN_FALSE_TRANS(ertn)
+ GEN_FALSE_TRANS(dbcl)
+ GEN_FALSE_TRANS(idle)
++GEN_FALSE_TRANS(gcsrrd)
++GEN_FALSE_TRANS(gcsrwr)
++GEN_FALSE_TRANS(gcsrxchg)
+ 
+ #else
+ 
+@@ -54,8 +57,8 @@ static bool check_plv(DisasContext *ctx)
+     return false;
+ }
+ 
+-static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
+-                               GenCSRWrite writefn)
++static bool set_csr_trans_func(unsigned int csr_num, int guest,
++                               GenCSRRead readfn, GenCSRWrite writefn)
+ {
+     CSRInfo *csr;
+ 
+@@ -64,13 +67,17 @@ static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
+         return false;
+     }
+ 
+-    csr->readfn = (GenCSRFunc)readfn;
+-    csr->writefn = (GenCSRFunc)writefn;
++    csr->readfn[guest] = (GenCSRFunc)readfn;
++    csr->writefn[guest] = (GenCSRFunc)writefn;
+     return true;
+ }
+ 
+ #define SET_CSR_FUNC(NAME, read, write)                 \
+-        set_csr_trans_func(LOONGARCH_CSR_##NAME, read, write)
++        set_csr_trans_func(LOONGARCH_CSR_##NAME,        \
++                           LOONGARCH_VM_LEVEL_HOST, read, write)
++#define SET_GCSR_FUNC(NAME, read, write)                \
++        set_csr_trans_func(LOONGARCH_CSR_##NAME,        \
++                           LOONGARCH_VM_LEVEL_GUEST, read, write)
+ 
+ void loongarch_csr_translate_init(void)
+ {
+@@ -85,12 +92,28 @@ void loongarch_csr_translate_init(void)
+     SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
+     SET_CSR_FUNC(TICLR, NULL, gen_helper_csrwr_ticlr);
+     SET_CSR_FUNC(MSGIR, gen_helper_csrrd_msgir, NULL);
++    SET_CSR_FUNC(GSTAT, NULL, gen_helper_csrwr_gstat);
++    SET_CSR_FUNC(GTLBC, NULL, gen_helper_csrwr_gtlbc);
++    SET_CSR_FUNC(GINTC, NULL, gen_helper_csrwr_gintc);
++
++    SET_GCSR_FUNC(STLBPS, NULL, gen_helper_gcsrwr_stlbps);
++    SET_GCSR_FUNC(ESTAT, NULL, gen_helper_gcsrwr_estat);
++    SET_GCSR_FUNC(ASID, NULL, gen_helper_gcsrwr_asid);
++    SET_GCSR_FUNC(PGD, gen_helper_gcsrrd_pgd, NULL);
++    SET_GCSR_FUNC(PWCL, NULL, gen_helper_gcsrwr_pwcl);
++    SET_GCSR_FUNC(PWCH, NULL, gen_helper_gcsrwr_pwch);
++    SET_GCSR_FUNC(TCFG, NULL, gen_helper_gcsrwr_tcfg);
++    SET_GCSR_FUNC(TVAL, gen_helper_gcsrrd_tval, NULL);
++    SET_GCSR_FUNC(TICLR, NULL, gen_helper_gcsrwr_ticlr);
+ }
+ #undef SET_CSR_FUNC
++#undef SET_GCSR_FUNC
+ 
+-static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr, bool write)
++static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr,
++                            int guest, bool write)
+ {
+-    if ((csr->flags & CSRFL_READONLY) && write) {
++    if ((guest == LOONGARCH_VM_LEVEL_HOST || ctx->guest_mode) &&
++        (csr->flags & CSRFL_READONLY) && write) {
+         return false;
+     }
+     if ((csr->flags & CSRFL_IO) && translator_io_start(&ctx->base)) {
+@@ -101,117 +124,214 @@ static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr, bool write)
+     return true;
+ }
+ 
+-static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
++static const CSRInfo *get_csr_for_level(unsigned int csr_num, int guest)
++{
++    const CSRInfo *csr = get_csr(csr_num);
++
++    if (csr && guest == LOONGARCH_VM_LEVEL_GUEST &&
++        (csr->flags & CSRFL_GUEST_INVALID)) {
++        return NULL;
++    }
++    return csr;
++}
++
++static bool trans_csrrd_impl(DisasContext *ctx, int rd, unsigned int csr_num,
++                             int guest)
+ {
+     TCGv dest;
+     const CSRInfo *csr;
+     GenCSRRead readfn;
+-    tcg_target_long offset;
+ 
+-    if (check_plv(ctx)) {
+-        return false;
+-    }
+-    csr = get_csr(a->csr);
++    csr = get_csr_for_level(csr_num, guest);
+     if (csr == NULL) {
+         /* CSR is undefined: read as 0. */
+         dest = tcg_constant_tl(0);
+     } else {
+-        check_csr_flags(ctx, csr, false);
+-        dest = gpr_dst(ctx, a->rd, EXT_NONE);
+-        readfn = (GenCSRRead)csr->readfn;
+-        if (readfn) {
+-            readfn(dest, tcg_env);
++        check_csr_flags(ctx, csr, guest, false);
++        if (guest == LOONGARCH_VM_LEVEL_GUEST &&
++            (csr->flags & CSRFL_GSPR)) {
++            if (ctx->guest_mode) {
++                generate_exception(ctx, EXCCODE_GSPR);
++                return true;
++            }
++            dest = tcg_constant_tl(0);
+         } else {
+-            offset = get_csr_offset(csr, LOONGARCH_VM_LEVEL_HOST);
+-            tcg_gen_ld_tl(dest, tcg_env, offset);
++            dest = gpr_dst(ctx, rd, EXT_NONE);
++            readfn = (GenCSRRead)csr->readfn[guest];
++            if (readfn) {
++                readfn(dest, tcg_env);
++            } else {
++                tcg_gen_ld_tl(dest, tcg_env,
++                              get_csr_offset(csr, guest));
++            }
+         }
+     }
+-    gen_set_gpr(a->rd, dest, EXT_NONE);
++    gen_set_gpr(rd, dest, EXT_NONE);
+     return true;
+ }
+ 
+-static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
++static bool trans_csrwr_impl(DisasContext *ctx, int rd, unsigned int csr_num,
++                             int guest)
+ {
+     TCGv dest, src1;
+     const CSRInfo *csr;
+     GenCSRWrite writefn;
+     tcg_target_long offset;
+ 
+-    if (check_plv(ctx)) {
+-        return false;
+-    }
+-    csr = get_csr(a->csr);
++    csr = get_csr_for_level(csr_num, guest);
+     if (csr == NULL) {
+         /* CSR is undefined: write ignored, read old_value as 0. */
+-        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
++        gen_set_gpr(rd, tcg_constant_tl(0), EXT_NONE);
++        return true;
++    }
++    if (guest == LOONGARCH_VM_LEVEL_GUEST &&
++        (csr->flags & CSRFL_GSPR)) {
++        if (ctx->guest_mode) {
++            generate_exception(ctx, EXCCODE_GSPR);
++        } else {
++            gen_set_gpr(rd, tcg_constant_tl(0), EXT_NONE);
++        }
+         return true;
+     }
+-    if (!check_csr_flags(ctx, csr, true)) {
++    if (!check_csr_flags(ctx, csr, guest, true)) {
+         /* CSR is readonly: trap. */
+         return false;
+     }
+-    src1 = gpr_src(ctx, a->rd, EXT_NONE);
+-    writefn = (GenCSRWrite)csr->writefn;
++    src1 = gpr_src(ctx, rd, EXT_NONE);
++    writefn = (GenCSRWrite)csr->writefn[guest];
+     if (writefn) {
+-        dest = gpr_dst(ctx, a->rd, EXT_NONE);
++        dest = gpr_dst(ctx, rd, EXT_NONE);
+         writefn(dest, tcg_env, src1);
+     } else {
+         dest = tcg_temp_new();
+-        offset = get_csr_offset(csr, LOONGARCH_VM_LEVEL_HOST);
++        offset = get_csr_offset(csr, guest);
+         tcg_gen_ld_tl(dest, tcg_env, offset);
+         tcg_gen_st_tl(src1, tcg_env, offset);
+     }
+-    gen_set_gpr(a->rd, dest, EXT_NONE);
++    gen_set_gpr(rd, dest, EXT_NONE);
+     return true;
+ }
+ 
+-static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
++static bool trans_csrxchg_impl(DisasContext *ctx, int rd, int rj,
++                               unsigned int csr_num, int guest)
+ {
+     TCGv src1, mask, oldv, newv, temp;
+     const CSRInfo *csr;
+     GenCSRWrite writefn;
+     tcg_target_long offset;
+ 
+-    if (check_plv(ctx)) {
+-        return false;
+-    }
+-    csr = get_csr(a->csr);
++    csr = get_csr_for_level(csr_num, guest);
+     if (csr == NULL) {
+         /* CSR is undefined: write ignored, read old_value as 0. */
+-        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
++        gen_set_gpr(rd, tcg_constant_tl(0), EXT_NONE);
++        return true;
++    }
++    if (guest == LOONGARCH_VM_LEVEL_GUEST &&
++        (csr->flags & CSRFL_GSPR)) {
++        if (ctx->guest_mode) {
++            generate_exception(ctx, EXCCODE_GSPR);
++        } else {
++            gen_set_gpr(rd, tcg_constant_tl(0), EXT_NONE);
++        }
+         return true;
+     }
+ 
+-    if (!check_csr_flags(ctx, csr, true)) {
++    if (!check_csr_flags(ctx, csr, guest, true)) {
+         /* CSR is readonly: trap. */
+         return false;
+     }
+ 
+-    /* So far only readonly csrs have readfn. */
+-    assert(csr->readfn == NULL);
+-
+-    src1 = gpr_src(ctx, a->rd, EXT_NONE);
+-    mask = gpr_src(ctx, a->rj, EXT_NONE);
++    src1 = gpr_src(ctx, rd, EXT_NONE);
++    mask = gpr_src(ctx, rj, EXT_NONE);
+     oldv = tcg_temp_new();
+     newv = tcg_temp_new();
+     temp = tcg_temp_new();
++    offset = get_csr_offset(csr, guest);
+ 
+-    offset = get_csr_offset(csr, LOONGARCH_VM_LEVEL_HOST);
+-    tcg_gen_ld_tl(oldv, tcg_env, offset);
++    if (csr->readfn[guest]) {
++        GenCSRRead readfn = (GenCSRRead)csr->readfn[guest];
++        readfn(oldv, tcg_env);
++    } else {
++        tcg_gen_ld_tl(oldv, tcg_env, offset);
++    }
+     tcg_gen_and_tl(newv, src1, mask);
+     tcg_gen_andc_tl(temp, oldv, mask);
+     tcg_gen_or_tl(newv, newv, temp);
+ 
+-    writefn = (GenCSRWrite)csr->writefn;
++    writefn = (GenCSRWrite)csr->writefn[guest];
+     if (writefn) {
+         writefn(oldv, tcg_env, newv);
+     } else {
+         tcg_gen_st_tl(newv, tcg_env, offset);
+     }
+-    gen_set_gpr(a->rd, oldv, EXT_NONE);
++    gen_set_gpr(rd, oldv, EXT_NONE);
+     return true;
+ }
+ 
++static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
++{
++    if (check_plv(ctx)) {
++        return false;
++    }
++    return trans_csrrd_impl(ctx, a->rd, a->csr, ctx->guest_mode);
++}
++
++static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
++{
++    if (check_plv(ctx)) {
++        return false;
++    }
++    return trans_csrwr_impl(ctx, a->rd, a->csr, ctx->guest_mode);
++}
++
++static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
++{
++    if (check_plv(ctx)) {
++        return false;
++    }
++    return trans_csrxchg_impl(ctx, a->rd, a->rj, a->csr,
++                              ctx->guest_mode);
++}
++
++static bool trans_gcsrrd(DisasContext *ctx, arg_gcsrrd *a)
++{
++    if (check_plv(ctx) || !avail_LVZ(ctx)) {
++        return false;
++    }
++    if (ctx->guest_mode) {
++        generate_exception(ctx, EXCCODE_GSPR);
++        return true;
++    }
++    return trans_csrrd_impl(ctx, a->rd, a->csr,
++                            LOONGARCH_VM_LEVEL_GUEST);
++}
++
++static bool trans_gcsrwr(DisasContext *ctx, arg_gcsrwr *a)
++{
++    if (check_plv(ctx) || !avail_LVZ(ctx)) {
++        return false;
++    }
++    if (ctx->guest_mode) {
++        generate_exception(ctx, EXCCODE_GSPR);
++        return true;
++    }
++    return trans_csrwr_impl(ctx, a->rd, a->csr,
++                            LOONGARCH_VM_LEVEL_GUEST);
++}
++
++static bool trans_gcsrxchg(DisasContext *ctx, arg_gcsrxchg *a)
++{
++    if (check_plv(ctx) || !avail_LVZ(ctx)) {
++        return false;
++    }
++    if (ctx->guest_mode) {
++        generate_exception(ctx, EXCCODE_GSPR);
++        return true;
++    }
++    return trans_csrxchg_impl(ctx, a->rd, a->rj, a->csr,
++                              LOONGARCH_VM_LEVEL_GUEST);
++}
++
+ static bool gen_iocsrrd(DisasContext *ctx, arg_rr *a,
+                         void (*func)(TCGv, TCGv_ptr, TCGv))
+ {
+diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
+index 124dce6269..15c83ef72d 100644
+--- a/target/loongarch/tcg/translate.c
++++ b/target/loongarch/tcg/translate.c
+@@ -122,12 +122,16 @@ static void loongarch_tr_init_disas_context(DisasContextBase *dcbase,
+     CPULoongArchState *env = cpu_env(cs);
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
+ 
++    ctx->guest_mode = (ctx->base.tb->flags & HW_FLAGS_GUEST_MODE) != 0;
+     ctx->page_start = ctx->base.pc_first & TARGET_PAGE_MASK;
+     ctx->plv = ctx->base.tb->flags & HW_FLAGS_PLV_MASK;
+     if (ctx->base.tb->flags & HW_FLAGS_CRMD_PG) {
+         ctx->mem_idx = ctx->plv;
++        if (ctx->guest_mode) {
++            ctx->mem_idx += MMU_GUEST_IDX;
++        }
+     } else {
+-        ctx->mem_idx = MMU_DA_IDX;
++        ctx->mem_idx = ctx->guest_mode ? MMU_GUEST_DA_IDX : MMU_DA_IDX;
+     }
+ 
+     /* Bound the number of insns to execute to those left on the page.  */
 -- 
 2.55.0
 
