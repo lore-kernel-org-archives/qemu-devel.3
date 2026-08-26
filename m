@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39D83C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:43:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2438C61DC4
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:43:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzJWq-0006hA-OJ; Wed, 26 Aug 2026 15:43:20 -0400
+	id 1wzJWs-0006sN-Gf; Wed, 26 Aug 2026 15:43:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJWp-0006WW-4m
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:43:19 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJWq-0006ei-B2
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:43:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJWn-0006dW-Co
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:43:18 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJWo-0006df-8k
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:43:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787773396;
+ s=mimecast20190719; t=1787773397;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BCn/Ycwrut66144uUrLT80zpCgg+RoqrOgG6fdXeCGY=;
- b=KuzqCJg+YER7zbBzbf3VgRv8VzVvOX7+DxXieevoqFw0ZXYOoIGeN66ZDhs4qHF7mwpZbV
- PEFTRdp6/IkU8gCljtj5tVcwgNO7raKJL8DfbIN4dfB0hufDQAQ8ecmUohJ6ccTK9v8nrS
- 5CA8TilyxZn6HKsF1E3X4LsBlIyv/KA=
+ bh=Z3E4l/9ZBojjapKTPoc2rkBnvoRHsP4FarABuj8M8OA=;
+ b=IYL6yjKqB8rMP9yWfQilLSpjWsgXF9KWcSkYoM0QhGQZOgpYXFpkNk4Otyv3kS8kga3Mps
+ w8gFhDCLbqvoX/vcZbd7XixBNgbmIlHVVXHwObvDgqNpAd0TVhhGpGdQ+oy7yThZqWLFao
+ HHYDQvRYp5HrCZ2LPcIs/AbGyVql85k=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-539-hR1ZzfIRMuCbw1ZE2Bpi6A-1; Wed,
- 26 Aug 2026 15:43:08 -0400
-X-MC-Unique: hR1ZzfIRMuCbw1ZE2Bpi6A-1
-X-Mimecast-MFC-AGG-ID: hR1ZzfIRMuCbw1ZE2Bpi6A_1787773384
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-645-JqlXIFKKNV-almMHhD17wQ-1; Wed,
+ 26 Aug 2026 15:43:15 -0400
+X-MC-Unique: JqlXIFKKNV-almMHhD17wQ-1
+X-Mimecast-MFC-AGG-ID: JqlXIFKKNV-almMHhD17wQ_1787773390
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BB5371862D6F; Wed, 26 Aug 2026 19:43:04 +0000 (UTC)
+ id 1A434184BAAB; Wed, 26 Aug 2026 19:43:10 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.99])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9619D1800577; Wed, 26 Aug 2026 19:42:57 +0000 (UTC)
+ id 14F1318005AC; Wed, 26 Aug 2026 19:43:04 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>,
@@ -72,10 +72,9 @@ Cc: Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Lukas Straub <lukasstraub2@web.de>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 29/43] qapi: convert trivial intro sections for
- block-export.json
-Date: Wed, 26 Aug 2026 15:38:26 -0400
-Message-ID: <20260826193840.2152000-30-jsnow@redhat.com>
+Subject: [PATCH v3 30/43] qapi: convert trivial intro sections for audio.json
+Date: Wed, 26 Aug 2026 15:38:27 -0400
+Message-ID: <20260826193840.2152000-31-jsnow@redhat.com>
 In-Reply-To: <20260826193840.2152000-1-jsnow@redhat.com>
 References: <20260826193840.2152000-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -89,7 +88,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,161 +106,269 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/block-export.json | 50 +++++++++++++++---------------------------
- 1 file changed, 18 insertions(+), 32 deletions(-)
+ qapi/audio.json | 88 ++++++++++++++++++-------------------------------
+ 1 file changed, 32 insertions(+), 56 deletions(-)
 
-diff --git a/qapi/block-export.json b/qapi/block-export.json
-index dd724acf1cb..154f07b0b95 100644
---- a/qapi/block-export.json
-+++ b/qapi/block-export.json
-@@ -80,9 +80,8 @@
+diff --git a/qapi/audio.json b/qapi/audio.json
+index 2df87b97101..72190f20993 100644
+--- a/qapi/audio.json
++++ b/qapi/audio.json
+@@ -14,9 +14,8 @@
  
  ##
- # @BlockExportOptionsNbdBase:
+ # @AudiodevPerDirectionOptions:
 -#
--# An NBD block export (common options shared between `nbd-server-add`
--# and the NBD branch of `block-export-add`).
-+#     An NBD block export (common options shared between
-+#     `nbd-server-add` and the NBD branch of `block-export-add`).
+-# General audio backend options that are used for both playback and
+-# recording.
++#     General audio backend options that are used for both playback
++#     and recording.
  #
- # @name: Export name.  If unspecified, the @device parameter is used
- #     as the export name.  (Since 2.12)
-@@ -97,9 +96,8 @@
+ # @mixing-engine: use QEMU's mixing engine to mix all streams inside
+ #     QEMU and convert audio formats when not supported by the
+@@ -53,8 +52,7 @@
  
  ##
- # @BlockExportOptionsNbd:
+ # @AudiodevGenericOptions:
 -#
--# An NBD block export (distinct options used in the NBD branch of
--# `block-export-add`).
-+#     An NBD block export (distinct options used in the NBD branch of
-+#     `block-export-add`).
+-# Generic driver-specific options.
++#     Generic driver-specific options.
  #
- # @bitmaps: Also export each of the named dirty bitmaps reachable from
- #     @device, so the NBD client can use NBD_OPT_SET_META_CONTEXT with
-@@ -121,8 +119,7 @@
+ # @in: options of the capture stream
+ #
+@@ -69,8 +67,7 @@
  
  ##
- # @BlockExportOptionsVhostUserBlk:
+ # @AudiodevDBusOptions:
 -#
--# A vhost-user-blk block export.
-+#     A vhost-user-blk block export.
+-# Options of the D-Bus audio backend.
++#     Options of the D-Bus audio backend.
  #
- # @addr: The vhost-user socket on which to listen.  Both 'unix' and
- #     'fd' `SocketAddress` types are supported.  Passed fds must be
-@@ -143,8 +140,7 @@
+ # @in: options of the capture stream
+ #
+@@ -89,9 +86,8 @@
  
  ##
- # @FuseExportAllowOther:
+ # @AudiodevAlsaPerDirectionOptions:
 -#
--# Possible allow_other modes for FUSE exports.
-+#     Possible allow_other modes for FUSE exports.
+-# Options of the ALSA backend that are used for both playback and
+-# recording.
++#     Options of the ALSA backend that are used for both playback and
++#     recording.
  #
- # @off: Do not pass allow_other as a mount option.
+ # @dev: the name of the ALSA device to use (default 'default')
  #
-@@ -195,8 +191,7 @@
+@@ -111,8 +107,7 @@
  
  ##
- # @BlockExportOptionsVduseBlk:
+ # @AudiodevAlsaOptions:
 -#
--# A vduse-blk block export.
-+#     A vduse-blk block export.
+-# Options of the ALSA audio backend.
++#     Options of the ALSA audio backend.
  #
- # @name: the name of VDUSE device (must be unique across the host).
+ # @in: options of the capture stream
  #
-@@ -221,8 +216,7 @@
+@@ -130,8 +125,7 @@
  
  ##
- # @NbdServerAddOptions:
+ # @AudiodevSndioOptions:
 -#
--# An NBD block export, per legacy `nbd-server-add` command.
-+#     An NBD block export, per legacy `nbd-server-add` command.
+-# Options of the sndio audio backend.
++#     Options of the sndio audio backend.
  #
- # @device: The device name or node name of the node to be exported
+ # @in: options of the capture stream
  #
-@@ -266,8 +260,7 @@
+@@ -152,9 +146,8 @@
  
  ##
- # @BlockExportRemoveMode:
+ # @AudiodevCoreaudioPerDirectionOptions:
 -#
--# Mode for removing a block export.
-+#     Mode for removing a block export.
+-# Options of the Core Audio backend that are used for both playback
+-# and recording.
++#     Options of the Core Audio backend that are used for both
++#     playback and recording.
  #
- # @safe: Remove export if there are no existing connections, fail
- #     otherwise.
-@@ -289,8 +282,7 @@
+ # @buffer-count: number of buffers
+ #
+@@ -167,8 +160,7 @@
  
  ##
- # @nbd-server-remove:
+ # @AudiodevCoreaudioOptions:
 -#
--# Remove NBD export by name.
-+#     Remove NBD export by name.
+-# Options of the coreaudio audio backend.
++#     Options of the coreaudio audio backend.
  #
- # @name: Block export id.
+ # @in: options of the capture stream
  #
-@@ -316,9 +308,8 @@
+@@ -183,8 +175,7 @@
  
  ##
- # @nbd-server-stop:
+ # @AudiodevDsoundOptions:
 -#
--# Stop QEMU's embedded NBD server, and unregister all devices
--# previously added via `nbd-server-add`.
-+#     Stop QEMU's embedded NBD server, and unregister all devices
-+#     previously added via `nbd-server-add`.
+-# Options of the DirectSound audio backend.
++#     Options of the DirectSound audio backend.
  #
- # Since: 1.3
- ##
-@@ -327,8 +318,7 @@
+ # @in: options of the capture stream
+ #
+@@ -203,9 +194,8 @@
  
  ##
- # @BlockExportType:
+ # @AudiodevJackPerDirectionOptions:
 -#
--# An enumeration of block export types
-+#     An enumeration of block export types
+-# Options of the JACK backend that are used for both playback and
+-# recording.
++#     Options of the JACK backend that are used for both playback and
++#     recording.
  #
- # @nbd: NBD export
- #
-@@ -412,9 +402,8 @@
+ # @server-name: select from among several possible concurrent server
+ #     instances (default: environment variable $JACK_DEFAULT_SERVER if
+@@ -237,8 +227,7 @@
  
  ##
- # @BlockExportIothreads:
+ # @AudiodevJackOptions:
 -#
--# Specify a single or multiple I/O threads in which to run a block
--# export's I/O.
-+#     Specify a single or multiple I/O threads in which to run a block
-+#     export's I/O.
+-# Options of the JACK audio backend.
++#     Options of the JACK audio backend.
  #
- # @single: Run the export's I/O in the given single I/O thread.
+ # @in: options of the capture stream
  #
-@@ -436,8 +425,7 @@
+@@ -253,9 +242,8 @@
  
  ##
- # @block-export-add:
+ # @AudiodevOssPerDirectionOptions:
 -#
--# Creates a new block export.
-+#     Creates a new block export.
+-# Options of the OSS backend that are used for both playback and
+-# recording.
++#     Options of the OSS backend that are used for both playback and
++#     recording.
  #
- # Since: 5.2
- ##
-@@ -470,8 +458,7 @@
+ # @dev: file name of the OSS device (default '/dev/dsp')
+ #
+@@ -275,8 +263,7 @@
  
  ##
- # @BLOCK_EXPORT_DELETED:
+ # @AudiodevOssOptions:
 -#
--# Emitted when a block export is removed and its id can be reused.
-+#     Emitted when a block export is removed and its id can be reused.
+-# Options of the OSS audio backend.
++#     Options of the OSS audio backend.
  #
- # @id: Block export id.
+ # @in: options of the capture stream
  #
-@@ -482,8 +469,7 @@
+@@ -305,9 +292,8 @@
  
  ##
- # @BlockExportInfo:
+ # @AudiodevPaPerDirectionOptions:
 -#
--# Information about a single block export.
-+#     Information about a single block export.
+-# Options of the Pulseaudio backend that are used for both playback
+-# and recording.
++#     Options of the Pulseaudio backend that are used for both
++#     playback and recording.
  #
- # @id: The unique identifier for the block export
+ # @name: name of the sink/source to use
  #
+@@ -330,8 +316,7 @@
+ 
+ ##
+ # @AudiodevPaOptions:
+-#
+-# Options of the PulseAudio audio backend.
++#     Options of the PulseAudio audio backend.
+ #
+ # @in: options of the capture stream
+ #
+@@ -349,9 +334,8 @@
+ 
+ ##
+ # @AudiodevPipewirePerDirectionOptions:
+-#
+-# Options of the PipeWire backend that are used for both playback and
+-# recording.
++#     Options of the PipeWire backend that are used for both playback
++#     and recording.
+ #
+ # @name: name of the sink/source to use
+ #
+@@ -374,8 +358,7 @@
+ 
+ ##
+ # @AudiodevPipewireOptions:
+-#
+-# Options of the PipeWire audio backend.
++#     Options of the PipeWire audio backend.
+ #
+ # @in: options of the capture stream
+ #
+@@ -390,9 +373,8 @@
+ 
+ ##
+ # @AudiodevSdlPerDirectionOptions:
+-#
+-# Options of the SDL audio backend that are used for both playback and
+-# recording.
++#     Options of the SDL audio backend that are used for both playback
++#     and recording.
+ #
+ # @buffer-count: number of buffers (default 4)
+ #
+@@ -405,8 +387,7 @@
+ 
+ ##
+ # @AudiodevSdlOptions:
+-#
+-# Options of the SDL audio backend.
++#     Options of the SDL audio backend.
+ #
+ # @in: options of the recording stream
+ #
+@@ -421,8 +402,7 @@
+ 
+ ##
+ # @AudiodevWavOptions:
+-#
+-# Options of the wav audio backend.
++#     Options of the wav audio backend.
+ #
+ # @in: options of the capture stream
+ #
+@@ -440,8 +420,7 @@
+ 
+ ##
+ # @AudioFormat:
+-#
+-# An enumeration of possible audio formats.
++#     An enumeration of possible audio formats.
+ #
+ # @u8: unsigned 8 bit integer
+ #
+@@ -464,8 +443,7 @@
+ 
+ ##
+ # @AudiodevDriver:
+-#
+-# An enumeration of possible audio backend drivers.
++#     An enumeration of possible audio backend drivers.
+ #
+ # @jack: JACK audio backend (since 5.1)
+ #
+@@ -488,8 +466,7 @@
+ 
+ ##
+ # @Audiodev:
+-#
+-# Options of an audio backend.
++#     Options of an audio backend.
+ #
+ # @id: identifier of the backend
+ #
+@@ -534,8 +511,7 @@
+ 
+ ##
+ # @query-audiodevs:
+-#
+-# Return information about audiodev configuration
++#     Return information about audiodev configuration
+ #
+ # Since: 8.0
+ ##
 -- 
 2.55.0
 
