@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E0D9C61DC2
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 05:12:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17084C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 05:12:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wz5vp-0004EN-5u; Wed, 26 Aug 2026 01:12:13 -0400
+	id 1wz5u2-0005oi-4S; Wed, 26 Aug 2026 01:10:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wz5vm-00043K-R5; Wed, 26 Aug 2026 01:12:11 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wz5u1-0005oW-0u; Wed, 26 Aug 2026 01:10:21 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1wz5vk-0005Tz-ME; Wed, 26 Aug 2026 01:12:10 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1wz5ty-00059s-QH; Wed, 26 Aug 2026 01:10:20 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67Q3Va9Z2880442; Wed, 26 Aug 2026 05:12:07 GMT
+ 67Q3VwXo956008; Wed, 26 Aug 2026 05:10:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=UP7A1bWGIAakz5dLV
- RGyAbSMWCwBVMv+ZL2xsuYXqAs=; b=EtiFjqWlpCBfovKi/R1u9CzKCCitb30Nc
- UvL/qUJyLmIB+1/ogAAX58UAbcDSyWhdAPlbCw6/bzEZMLCJFyD4zGrqyNZPRXX6
- scn/vCqU8v/ZR0nxEW9+8hcyNrFYWb8UGHnyvOaO08UOvIYRMRHYl6uA9zGZjIGZ
- 7vr4p4/u+grnJTrV7gqVs7130MN3VZh6V9/i4IrMcs8BArcGyXBc2F4e/hd1h4ms
- A27B4on/tlkECRZO/Z7Sjl/xZz8ZH2hhMRJOzdURbN6Ociy4DjUsFBiXW3BBZykM
- 5aQWvJ2AXWnygRPqiIf3I7TKTa6WGcDGJArzRhphWvxu8zEm86K0A==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73dxcbjy-1
+ :mime-version:references:subject:to; s=pp1; bh=97xrvvbHwFJ6jeJdk
+ qXC035zwACdyEvyyeR9IA4XJio=; b=giF8bWMMCKjpd3FZ91HgynSx0dES2DyG3
+ uvAyq8MtMLRHtRZiW9PpdmbRQiUnuKZoKzItp4ifTtuHHgAgxANjXQSSlr4nHvnd
+ rZRKL29Gg6m8X7SR7GeXirvvjccFi3JXBe/WSUM4mt3yPFN5cPSFPD9CVMGIF8kL
+ g7xU2h/n0f9gPohPFPGsJHetUJz5HvAP7ywI2AmW66KsdtFZG6ETsiqvprhKOeGa
+ N1U9WxucYPwB6nR5gBP+NKnrs3YFU5Q+b830ND5rTO4jhJrJLnrTIoTQ34YplbrB
+ +c/pvl6fUouO6RcTXlgwAk4RBYtw88i0eDQq/NVNtsk0F1Tnjx/SA==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eqvkpx-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 05:12:06 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67Q5BJ52029298;
- Wed, 26 Aug 2026 05:12:05 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7p3q8e20-1
+ Wed, 26 Aug 2026 05:10:15 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67Q4fIGU020050;
+ Wed, 26 Aug 2026 05:10:14 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3k06ys-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 05:12:05 +0000 (GMT)
+ Wed, 26 Aug 2026 05:10:14 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
  [10.20.54.103])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67Q5C25d46203188
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67Q5AAQU38928856
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 05:12:02 GMT
+ Wed, 26 Aug 2026 05:10:10 GMT
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1684620043;
- Wed, 26 Aug 2026 05:12:02 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id DD63120043;
+ Wed, 26 Aug 2026 05:10:09 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ADC3120040;
- Wed, 26 Aug 2026 05:11:56 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D447420040;
+ Wed, 26 Aug 2026 05:10:04 +0000 (GMT)
 Received: from li-18a0a34c-33fc-11b2-a85c-d9f1631c5692.ibm.com (unknown
  [9.124.215.63]) by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 05:11:56 +0000 (GMT)
+ Wed, 26 Aug 2026 05:10:04 +0000 (GMT)
 From: Chinmay Rath <rathc@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
  milesg@linux.ibm.com
@@ -65,10 +65,10 @@ Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
  aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, shivani@linux.ibm.com,
  mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com,
  Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH v2 23/37] target/ppc: Move Fixed-Point Load/Store String
- instructions to decodetree.
-Date: Wed, 26 Aug 2026 10:38:49 +0530
-Message-ID: <20260826050923.74756-24-rathc@linux.ibm.com>
+Subject: [PATCH v2 05/37] target/ppc: Move vector pack instructions to
+ decodetree
+Date: Wed, 26 Aug 2026 10:38:31 +0530
+Message-ID: <20260826050923.74756-6-rathc@linux.ibm.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260826050923.74756-1-rathc@linux.ibm.com>
 References: <20260826050923.74756-1-rathc@linux.ibm.com>
@@ -76,40 +76,39 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDA0MCBTYWx0ZWRfXx7e4cHdQSAQm
- 8YFThaBpZifmq5AsZy4P318DsmaqK1HHOkjCnJPTgxJLpIZGr1cCnsK+nbXoz3IuqIkVxPlozpn
- y9z75Jn7IHFU6hI4uHLpjr4HiBLz3/Q=
-X-Authority-Analysis: v=2.4 cv=AYuB2XXG c=1 sm=1 tr=0 ts=6a8e75a7 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+X-Proofpoint-GUID: zJ_rIvHteAc1fbTsQVh0I6XjmapA5Xtb
+X-Proofpoint-ORIG-GUID: 9JkI61n6ZEv2cum2qqDGlgIhaYKLOdDU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDA0MCBTYWx0ZWRfXyQB9WPyCY9xH
+ TqTujnaiDsEC+fRyKcfYFyTpCy1osq+i4NpDkptrVY/LdG7orfO+sRBO2pXVvFYSc6kDm2Pjpcf
+ k5WPFDyHu6f1ATuHW/KEOQ8kban0G6JvF78S+FWt0YH+2bJA3QqcJsqx5Qol4mILc19/KckwTEy
+ nIkq7ZRmIaRBuKlv13W7CkQHyd0fARfTUzA/N9p2xF/MCVbmQTqAq0Ul+uL7XQO9XOFCA9Y3L+g
+ vihi+R8BaioF2rRV071G74bq8nU3ZSPIMTASJAI0uRa8z77287NJHlHU5jjt5MQXHxNTWmpWH6R
+ J6SW+Fe17TWrbPOOklMNDw5Es3RA08W6avS9wvseWR9XerdmYF3nNhuEpvThgHNuLqS/mFy3FXJ
+ OnvvLk/zM0pBXmdFEbjq5g1iUnve4kKAfsBpRdfy5vf7Hb1gVnRSw3StIKBJjT4Pbiee2bqbA1q
+ x4Xlb2K71nyY2ZovsGQ==
+X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8e7537 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=6C3biiJAFINtBuO-NFUA:9
-X-Proofpoint-ORIG-GUID: 2i3L69KKFmzjPuvldzhzdnfVqghcx66-
-X-Proofpoint-GUID: Lh6t_ZciLorKbJ40LnNMK9OYulnU6SRo
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDA0MCBTYWx0ZWRfX16yYbqt0DZWJ
- CVEfOYr7t1q50RSbmmNKu6KtGczk8TGTIqoF31qFIIwJ4sQFzG+gIudqstOVb30UiJr1Ndzvski
- u/LTaj4NMki/Di2eBDKBPseTuu7wNfWC5ZrywMxP33wfzeovp6eScEJ3PR03BFJPvVNHC5Xi6gk
- CMsrblfjJBDQIkwtQ+9ZuLPwk/4TigpBtggoKXI7v6FoPulJIzPcOrHO7I8SMYp1p30M6lOuvhE
- RYa2B9WuLVc+13if4FRdrek5qob3NHxkal6qPorU7EiR9z2744QesPgs/RsngPHiKmXCNhifg9q
- OhwiDCN5YjA/SoXPmraloa09Ud1Tzo0tQFNK9acvyq8P38lAu+fiofEGtYr923LFjdFePKKziAn
- fC7tH64n8a59XH325B7vo5S5rvOnW0eeRo6GLdErwf9xdltCWV340JbsGFKFycN/UL/FnZY4ya6
- qJfSsECB0UEF+LYFAeg==
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=FELJdoV6w5lAa41aMJIA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDA0MCBTYWx0ZWRfX+eJ6qhlvYHaj
+ cHGbncWldVpxz7KmeP1oHkVB06i5BcbOn3pTMeTIpMeXVLDVKFIzOpHoPrnNVKDvm8sjNheqMZF
+ PiuCYJRMYG6GhpQAZt4FqGu96a4WyvQ=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-26_01,2026-08-24_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 bulkscore=0
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2608260040
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260040
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,328 +125,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
+From: Aboorva Devarajan <aboorvad@linux.ibm.com>
 
-Move below instructions to decodetree specification :
+Move below instructions to decodetree specification:
 
-        lsw{i, x},
-        stsw{i, x}                       : X-form
+        vpkuhum, vpkuwum, vpkuhus, vpkuwus  : VX-form (PPC_ALTIVEC)
+        vpkshus, vpkswus, vpkshss, vpkswss  : VX-form (PPC_ALTIVEC)
+        vpkpx                                : VX-form (PPC_ALTIVEC)
+        vpkudum, vpkudus, vpksdus, vpksdss  : VX-form (PPC2_ALTIVEC_207)
+
+The legacy GEN_VXFORM_ENV/GEN_VXFORM macros that generated gen_vpk*()
+functions reading register fields from ctx->opcode are replaced by new
+do_vpk_env()/do_vpk() helpers in vmx-impl.c.inc that use the
+pre-extracted decodetree argument fields (a->vrt, a->vra, a->vrb)
+directly.  The existing gen_helper_vpk*() implementations in
+int_helper.c are reused without changes.
 
 The changes were verified by validating that the tcg ops generated by
 those instructions remain the same, which were captured with the '-d
-in_asm,op' flag.
+in_asm,op' option before and after the patch.
 
-Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Reviewed-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
 Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 ---
- target/ppc/helper.h                        |   6 +-
- target/ppc/insn32.decode                   |   7 ++
- target/ppc/mem_helper.c                    |   6 +-
- target/ppc/translate.c                     | 102 --------------------
- target/ppc/translate/fixedpoint-impl.c.inc | 103 +++++++++++++++++++++
- 5 files changed, 116 insertions(+), 108 deletions(-)
+ target/ppc/helper.h                 | 26 +++++++--------
+ target/ppc/insn32.decode            | 16 +++++++++
+ target/ppc/int_helper.c             | 28 ++++++++--------
+ target/ppc/translate/vmx-impl.c.inc | 51 +++++++++++++++++++++--------
+ target/ppc/translate/vmx-ops.c.inc  | 13 --------
+ 5 files changed, 81 insertions(+), 53 deletions(-)
 
 diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-index 7e15676122..0e8b96d0ec 100644
+index 6db917935c..6df3de6516 100644
 --- a/target/ppc/helper.h
 +++ b/target/ppc/helper.h
-@@ -45,9 +45,9 @@ DEF_HELPER_1(check_tlb_flush_global, void, env)
- 
- DEF_HELPER_3(lmw, void, env, tl, i32)
- DEF_HELPER_FLAGS_3(stmw, TCG_CALL_NO_WG, void, env, tl, i32)
--DEF_HELPER_4(lsw, void, env, tl, i32, i32)
--DEF_HELPER_5(lswx, void, env, tl, i32, i32, i32)
--DEF_HELPER_FLAGS_4(stsw, TCG_CALL_NO_WG, void, env, tl, i32, i32)
-+DEF_HELPER_4(LSW, void, env, tl, i32, i32)
-+DEF_HELPER_5(LSWX, void, env, tl, i32, i32, i32)
-+DEF_HELPER_FLAGS_4(STSW, TCG_CALL_NO_WG, void, env, tl, i32, i32)
- DEF_HELPER_FLAGS_3(DCBZ, TCG_CALL_NO_WG, void, env, tl, int)
- #ifdef TARGET_PPC64
- DEF_HELPER_FLAGS_2(DCBZL, TCG_CALL_NO_WG, void, env, tl)
+@@ -249,19 +249,19 @@ DEF_HELPER_FLAGS_4(VMSUMUBM, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
+ DEF_HELPER_FLAGS_4(VMSUMMBM, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
+ DEF_HELPER_FLAGS_4(VPERM, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
+ DEF_HELPER_FLAGS_4(VPERMR, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
+-DEF_HELPER_4(vpkshss, void, env, avr, avr, avr)
+-DEF_HELPER_4(vpkshus, void, env, avr, avr, avr)
+-DEF_HELPER_4(vpkswss, void, env, avr, avr, avr)
+-DEF_HELPER_4(vpkswus, void, env, avr, avr, avr)
+-DEF_HELPER_4(vpksdss, void, env, avr, avr, avr)
+-DEF_HELPER_4(vpksdus, void, env, avr, avr, avr)
+-DEF_HELPER_4(vpkuhus, void, env, avr, avr, avr)
+-DEF_HELPER_4(vpkuwus, void, env, avr, avr, avr)
+-DEF_HELPER_4(vpkudus, void, env, avr, avr, avr)
+-DEF_HELPER_4(vpkuhum, void, env, avr, avr, avr)
+-DEF_HELPER_4(vpkuwum, void, env, avr, avr, avr)
+-DEF_HELPER_4(vpkudum, void, env, avr, avr, avr)
+-DEF_HELPER_FLAGS_3(vpkpx, TCG_CALL_NO_RWG, void, avr, avr, avr)
++DEF_HELPER_4(VPKSHSS, void, env, avr, avr, avr)
++DEF_HELPER_4(VPKSHUS, void, env, avr, avr, avr)
++DEF_HELPER_4(VPKSWSS, void, env, avr, avr, avr)
++DEF_HELPER_4(VPKSWUS, void, env, avr, avr, avr)
++DEF_HELPER_4(VPKSDSS, void, env, avr, avr, avr)
++DEF_HELPER_4(VPKSDUS, void, env, avr, avr, avr)
++DEF_HELPER_4(VPKUHUS, void, env, avr, avr, avr)
++DEF_HELPER_4(VPKUWUS, void, env, avr, avr, avr)
++DEF_HELPER_4(VPKUDUS, void, env, avr, avr, avr)
++DEF_HELPER_4(VPKUHUM, void, env, avr, avr, avr)
++DEF_HELPER_4(VPKUWUM, void, env, avr, avr, avr)
++DEF_HELPER_4(VPKUDUM, void, env, avr, avr, avr)
++DEF_HELPER_FLAGS_3(VPKPX, TCG_CALL_NO_RWG, void, avr, avr, avr)
+ DEF_HELPER_5(VMHADDSHS, void, env, avr, avr, avr, avr)
+ DEF_HELPER_5(VMHRADDSHS, void, env, avr, avr, avr, avr)
+ DEF_HELPER_FLAGS_4(VMSUMUHM, TCG_CALL_NO_RWG, void, avr, avr, avr, avr)
 diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index a3973e042d..e7b5d19cde 100644
+index 8aca8a00c0..c51efbfd33 100644
 --- a/target/ppc/insn32.decode
 +++ b/target/ppc/insn32.decode
-@@ -527,6 +527,13 @@ CREQV           010011 ..... ..... ..... 0100100001 -  @X
- CRANDC          010011 ..... ..... ..... 0010000001 -  @X
- CRORC           010011 ..... ..... ..... 0110100001 -  @X
+@@ -1054,6 +1054,22 @@ VSTRIHR         000100 ..... 00011 ..... . 0000001101   @VX_tb_rc
+ VCLRLB          000100 ..... ..... ..... 00110001101    @VX
+ VCLRRB          000100 ..... ..... ..... 00111001101    @VX
  
-+# Fixed Point Move Assist Instructions
++## Vector Pack Instructions
 +
-+LSWI            011111 ..... ..... ..... 1 001010101 -  @X
-+LSWX            011111 ..... ..... ..... 1 000010101 -  @X
-+STSWI           011111 ..... ..... ..... 1 011010101 -  @X
-+STSWX           011111 ..... ..... ..... 1 010010101 -  @X
++VPKUHUM         000100 ..... ..... ..... 0000000111 0    @VX
++VPKUWUM         000100 ..... ..... ..... 0000100111 0    @VX
++VPKUDUM         000100 ..... ..... ..... 1000100111 0    @VX
++VPKUHUS         000100 ..... ..... ..... 0001000111 0    @VX
++VPKUWUS         000100 ..... ..... ..... 0001100111 0    @VX
++VPKUDUS         000100 ..... ..... ..... 1001100111 0    @VX
++VPKSHUS         000100 ..... ..... ..... 0010000111 0    @VX
++VPKSWUS         000100 ..... ..... ..... 0010100111 0    @VX
++VPKSDUS         000100 ..... ..... ..... 1010100111 0    @VX
++VPKSHSS         000100 ..... ..... ..... 0011000111 0    @VX
++VPKSWSS         000100 ..... ..... ..... 0011100111 0    @VX
++VPKSDSS         000100 ..... ..... ..... 1011100111 0    @VX
++VPKPX           000100 ..... ..... ..... 0110000111 0    @VX
 +
- # Fixed-Point Hash Instructions
+ # VSX Load/Store Instructions
  
- HASHST          011111 ..... ..... ..... 1011010010 .   @X_DW
-diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
-index 95a224e74c..582180cf88 100644
---- a/target/ppc/mem_helper.c
-+++ b/target/ppc/mem_helper.c
-@@ -190,7 +190,7 @@ static void do_lsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
-     env->gpr[reg] = val;
+ LXSD            111001 ..... ..... .............. 10    @DS
+diff --git a/target/ppc/int_helper.c b/target/ppc/int_helper.c
+index a3adf746bd..dc55ccadf7 100644
+--- a/target/ppc/int_helper.c
++++ b/target/ppc/int_helper.c
+@@ -1465,7 +1465,7 @@ void helper_VPMSUMD(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
+ #else
+ #define PKBIG 0
+ #endif
+-void helper_vpkpx(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
++void helper_VPKPX(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
+ {
+     int i, j;
+     ppc_avr_t result;
+@@ -1488,7 +1488,7 @@ void helper_vpkpx(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
  }
  
--void helper_lsw(CPUPPCState *env, target_ulong addr,
-+void helper_LSW(CPUPPCState *env, target_ulong addr,
-                 uint32_t nb, uint32_t reg)
- {
-     do_lsw(env, addr, nb, reg, GETPC());
-@@ -202,7 +202,7 @@ void helper_lsw(CPUPPCState *env, target_ulong addr,
-  * this is valid, but rA won't be loaded.  For now, I'll follow the
-  * spec...
-  */
--void helper_lswx(CPUPPCState *env, target_ulong addr, uint32_t reg,
-+void helper_LSWX(CPUPPCState *env, target_ulong addr, uint32_t reg,
-                  uint32_t ra, uint32_t rb)
- {
-     if (likely(xer_bc != 0)) {
-@@ -218,7 +218,7 @@ void helper_lswx(CPUPPCState *env, target_ulong addr, uint32_t reg,
+ #define VPK(suffix, from, to, cvt, dosat)                               \
+-    void helper_vpk##suffix(CPUPPCState *env, ppc_avr_t *r,             \
++    void helper_VPK##suffix(CPUPPCState *env, ppc_avr_t *r,             \
+                             ppc_avr_t *a, ppc_avr_t *b)                 \
+     {                                                                   \
+         int i;                                                          \
+@@ -1507,18 +1507,18 @@ void helper_vpkpx(ppc_avr_t *r, ppc_avr_t *a, ppc_avr_t *b)
+         }                                                               \
      }
- }
+ #define I(x, y) (x)
+-VPK(shss, s16, s8, cvtshsb, 1)
+-VPK(shus, s16, u8, cvtshub, 1)
+-VPK(swss, s32, s16, cvtswsh, 1)
+-VPK(swus, s32, u16, cvtswuh, 1)
+-VPK(sdss, s64, s32, cvtsdsw, 1)
+-VPK(sdus, s64, u32, cvtsduw, 1)
+-VPK(uhus, u16, u8, cvtuhub, 1)
+-VPK(uwus, u32, u16, cvtuwuh, 1)
+-VPK(udus, u64, u32, cvtuduw, 1)
+-VPK(uhum, u16, u8, I, 0)
+-VPK(uwum, u32, u16, I, 0)
+-VPK(udum, u64, u32, I, 0)
++VPK(SHSS, s16, s8, cvtshsb, 1)
++VPK(SHUS, s16, u8, cvtshub, 1)
++VPK(SWSS, s32, s16, cvtswsh, 1)
++VPK(SWUS, s32, u16, cvtswuh, 1)
++VPK(SDSS, s64, s32, cvtsdsw, 1)
++VPK(SDUS, s64, u32, cvtsduw, 1)
++VPK(UHUS, u16, u8, cvtuhub, 1)
++VPK(UWUS, u32, u16, cvtuwuh, 1)
++VPK(UDUS, u64, u32, cvtuduw, 1)
++VPK(UHUM, u16, u8, I, 0)
++VPK(UWUM, u32, u16, I, 0)
++VPK(UDUM, u64, u32, I, 0)
+ #undef I
+ #undef VPK
+ #undef PKBIG
+diff --git a/target/ppc/translate/vmx-impl.c.inc b/target/ppc/translate/vmx-impl.c.inc
+index 00b359f031..65230f3461 100644
+--- a/target/ppc/translate/vmx-impl.c.inc
++++ b/target/ppc/translate/vmx-impl.c.inc
+@@ -1070,19 +1070,44 @@ TRANS(VRLQMI, do_vector_rotl_quad, false, true)
  
--void helper_stsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
-+void helper_STSW(CPUPPCState *env, target_ulong addr, uint32_t nb,
-                  uint32_t reg)
- {
-     uintptr_t raddr = GETPC();
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index e40841b68e..712990cf2d 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -2595,104 +2595,6 @@ static void gen_stmw(DisasContext *ctx)
-     gen_helper_stmw(tcg_env, t0, t1);
- }
- 
--/***                    Integer load and store strings                     ***/
--
--/* lswi */
--/*
-- * PowerPC32 specification says we must generate an exception if rA is
-- * in the range of registers to be loaded.  In an other hand, IBM says
-- * this is valid, but rA won't be loaded.  For now, I'll follow the
-- * spec...
-- */
--static void gen_lswi(DisasContext *ctx)
--{
--    TCGv t0;
--    TCGv_i32 t1, t2;
--    int nb = NB(ctx->opcode);
--    int start = rD(ctx->opcode);
--    int ra = rA(ctx->opcode);
--    int nr;
--
--    if (ctx->le_mode) {
--        gen_align_no_le(ctx);
--        return;
--    }
--    if (nb == 0) {
--        nb = 32;
--    }
--    nr = DIV_ROUND_UP(nb, 4);
--    if (unlikely(lsw_reg_in_range(start, nr, ra))) {
--        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_LSWX);
--        return;
--    }
--    gen_set_access_type(ctx, ACCESS_INT);
--    t0 = tcg_temp_new();
--    gen_addr_register(ctx, t0);
--    t1 = tcg_constant_i32(nb);
--    t2 = tcg_constant_i32(start);
--    gen_helper_lsw(tcg_env, t0, t1, t2);
--}
--
--/* lswx */
--static void gen_lswx(DisasContext *ctx)
--{
--    TCGv t0;
--    TCGv_i32 t1, t2, t3;
--
--    if (ctx->le_mode) {
--        gen_align_no_le(ctx);
--        return;
--    }
--    gen_set_access_type(ctx, ACCESS_INT);
--    t0 = tcg_temp_new();
--    gen_addr_reg_index(ctx, t0);
--    t1 = tcg_constant_i32(rD(ctx->opcode));
--    t2 = tcg_constant_i32(rA(ctx->opcode));
--    t3 = tcg_constant_i32(rB(ctx->opcode));
--    gen_helper_lswx(tcg_env, t0, t1, t2, t3);
--}
--
--/* stswi */
--static void gen_stswi(DisasContext *ctx)
--{
--    TCGv t0;
--    TCGv_i32 t1, t2;
--    int nb = NB(ctx->opcode);
--
--    if (ctx->le_mode) {
--        gen_align_no_le(ctx);
--        return;
--    }
--    gen_set_access_type(ctx, ACCESS_INT);
--    t0 = tcg_temp_new();
--    gen_addr_register(ctx, t0);
--    if (nb == 0) {
--        nb = 32;
--    }
--    t1 = tcg_constant_i32(nb);
--    t2 = tcg_constant_i32(rS(ctx->opcode));
--    gen_helper_stsw(tcg_env, t0, t1, t2);
--}
--
--/* stswx */
--static void gen_stswx(DisasContext *ctx)
--{
--    TCGv t0;
--    TCGv_i32 t1, t2;
--
--    if (ctx->le_mode) {
--        gen_align_no_le(ctx);
--        return;
--    }
--    gen_set_access_type(ctx, ACCESS_INT);
--    t0 = tcg_temp_new();
--    gen_addr_reg_index(ctx, t0);
--    t1 = tcg_temp_new_i32();
--    tcg_gen_trunc_tl_i32(t1, cpu_xer);
--    tcg_gen_andi_i32(t1, t1, 0x7F);
--    t2 = tcg_constant_i32(rS(ctx->opcode));
--    gen_helper_stsw(tcg_env, t0, t1, t2);
--}
- 
- #if !defined(CONFIG_USER_ONLY)
- static inline void gen_check_tlb_flush(DisasContext *ctx, bool global)
-@@ -4914,10 +4816,6 @@ GEN_HANDLER_E(dform39, 0x39, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
- GEN_HANDLER_E(dform3D, 0x3D, 0xFF, 0xFF, 0x00000000, PPC_NONE, PPC2_ISA205),
- GEN_HANDLER(lmw, 0x2E, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
- GEN_HANDLER(stmw, 0x2F, 0xFF, 0xFF, 0x00000000, PPC_INTEGER),
--GEN_HANDLER(lswi, 0x1F, 0x15, 0x12, 0x00000001, PPC_STRING),
--GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
--GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
--GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
- /* ISA v3.0 changed the extended opcode from 62 to 30 */
- GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
- #if defined(TARGET_PPC64)
-diff --git a/target/ppc/translate/fixedpoint-impl.c.inc b/target/ppc/translate/fixedpoint-impl.c.inc
-index 26b308e435..82fb645279 100644
---- a/target/ppc/translate/fixedpoint-impl.c.inc
-+++ b/target/ppc/translate/fixedpoint-impl.c.inc
-@@ -585,6 +585,109 @@ TRANS(CRANDC, cr_logic_common, tcg_gen_andc_i32);
- TRANS(CREQV, cr_logic_common, tcg_gen_eqv_i32);
- TRANS(CRORC, cr_logic_common, tcg_gen_orc_i32);
- 
-+
-+/***                    Integer load and store strings                     ***/
-+
-+/* lswi */
-+static bool trans_LSWI(DisasContext *ctx, arg_LSWI *a)
+ GEN_VXFORM_TRANS(vsl, 2, 7);
+ GEN_VXFORM_TRANS(vsr, 2, 11);
+-GEN_VXFORM_ENV(vpkuhum, 7, 0);
+-GEN_VXFORM_ENV(vpkuwum, 7, 1);
+-GEN_VXFORM_ENV(vpkudum, 7, 17);
+-GEN_VXFORM_ENV(vpkuhus, 7, 2);
+-GEN_VXFORM_ENV(vpkuwus, 7, 3);
+-GEN_VXFORM_ENV(vpkudus, 7, 19);
+-GEN_VXFORM_ENV(vpkshus, 7, 4);
+-GEN_VXFORM_ENV(vpkswus, 7, 5);
+-GEN_VXFORM_ENV(vpksdus, 7, 21);
+-GEN_VXFORM_ENV(vpkshss, 7, 6);
+-GEN_VXFORM_ENV(vpkswss, 7, 7);
+-GEN_VXFORM_ENV(vpksdss, 7, 23);
+-GEN_VXFORM(vpkpx, 7, 12);
++static bool do_vpk_env(DisasContext *ctx, arg_VX *a,
++                       void (*gen_helper)(TCGv_ptr, TCGv_ptr,
++                                          TCGv_ptr, TCGv_ptr))
 +{
-+    TCGv t0;
-+    TCGv_i32 t1, t2;
-+    int nb = a->rb;
-+    int start = a->rt;
-+    int ra = a->ra;
-+    int nr;
-+
-+    REQUIRE_INSNS_FLAGS(ctx, STRING);
-+    if (ctx->le_mode) {
-+        gen_align_no_le(ctx);
-+        return true;
-+    }
-+    if (nb == 0) {
-+        nb = 32;
-+    }
-+    nr = DIV_ROUND_UP(nb, 4);
-+    if (unlikely(lsw_reg_in_range(start, nr, ra))) {
-+        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_LSWX);
-+        return true;
-+    }
-+    gen_set_access_type(ctx, ACCESS_INT);
-+    t0 = do_ea_calc_ra(ctx, ra);
-+    t1 = tcg_constant_i32(nb);
-+    t2 = tcg_constant_i32(start);
-+    gen_helper_LSW(tcg_env, t0, t1, t2);
-+
++    TCGv_ptr ra, rb, rd;
++    REQUIRE_VECTOR(ctx);
++    ra = gen_avr_ptr(a->vra);
++    rb = gen_avr_ptr(a->vrb);
++    rd = gen_avr_ptr(a->vrt);
++    gen_helper(tcg_env, rd, ra, rb);
 +    return true;
 +}
 +
-+/* lswx */
-+static bool trans_LSWX(DisasContext *ctx, arg_LSWX *a)
++static bool do_vpk(DisasContext *ctx, arg_VX *a,
++                   void (*gen_helper)(TCGv_ptr, TCGv_ptr, TCGv_ptr))
 +{
-+    TCGv t0;
-+    TCGv_i32 t1, t2, t3;
-+
-+    REQUIRE_INSNS_FLAGS(ctx, STRING);
-+    if (ctx->le_mode) {
-+        gen_align_no_le(ctx);
-+        return true;
-+    }
-+
-+    gen_set_access_type(ctx, ACCESS_INT);
-+    t0 = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+    t1 = tcg_constant_i32(a->rt);
-+    t2 = tcg_constant_i32(a->ra);
-+    t3 = tcg_constant_i32(a->rb);
-+    gen_helper_LSWX(tcg_env, t0, t1, t2, t3);
-+
++    TCGv_ptr ra, rb, rd;
++    REQUIRE_VECTOR(ctx);
++    ra = gen_avr_ptr(a->vra);
++    rb = gen_avr_ptr(a->vrb);
++    rd = gen_avr_ptr(a->vrt);
++    gen_helper(rd, ra, rb);
 +    return true;
 +}
 +
-+/* stswi */
-+static bool trans_STSWI(DisasContext *ctx, arg_STSWI *a)
-+{
-+    TCGv t0;
-+    TCGv_i32 t1, t2;
-+    int nb = a->rb;
-+
-+    REQUIRE_INSNS_FLAGS(ctx, STRING);
-+    if (ctx->le_mode) {
-+        gen_align_no_le(ctx);
-+        return true;
-+    }
-+    gen_set_access_type(ctx, ACCESS_INT);
-+    t0 = do_ea_calc_ra(ctx, a->ra);
-+    if (nb == 0) {
-+        nb = 32;
-+    }
-+    t1 = tcg_constant_i32(nb);
-+    t2 = tcg_constant_i32(a->rt);
-+    gen_helper_STSW(tcg_env, t0, t1, t2);
-+
-+    return true;
-+}
-+
-+/* stswx */
-+static bool trans_STSWX(DisasContext *ctx, arg_STSWX *a)
-+{
-+    TCGv t0;
-+    TCGv_i32 t1, t2;
-+
-+    REQUIRE_INSNS_FLAGS(ctx, STRING);
-+    if (ctx->le_mode) {
-+        gen_align_no_le(ctx);
-+        return true;
-+    }
-+    gen_set_access_type(ctx, ACCESS_INT);
-+    t0 = do_ea_calc_ra(ctx, a->ra);
-+    t1 = tcg_temp_new_i32();
-+    tcg_gen_trunc_tl_i32(t1, cpu_xer);
-+    tcg_gen_andi_i32(t1, t1, 0x7F);
-+    t2 = tcg_constant_i32(a->rt);
-+    gen_helper_STSW(tcg_env, t0, t1, t2);
-+
-+    return true;
-+}
-+
- static bool do_add_D(DisasContext *ctx, arg_D *a, bool add_ca, bool compute_ca,
-                      bool compute_ov, bool compute_rc0)
- {
++TRANS_FLAGS(ALTIVEC, VPKUHUM, do_vpk_env, gen_helper_VPKUHUM)
++TRANS_FLAGS(ALTIVEC, VPKUWUM, do_vpk_env, gen_helper_VPKUWUM)
++TRANS_FLAGS2(ALTIVEC_207, VPKUDUM, do_vpk_env, gen_helper_VPKUDUM)
++TRANS_FLAGS(ALTIVEC, VPKUHUS, do_vpk_env, gen_helper_VPKUHUS)
++TRANS_FLAGS(ALTIVEC, VPKUWUS, do_vpk_env, gen_helper_VPKUWUS)
++TRANS_FLAGS2(ALTIVEC_207, VPKUDUS, do_vpk_env, gen_helper_VPKUDUS)
++TRANS_FLAGS(ALTIVEC, VPKSHUS, do_vpk_env, gen_helper_VPKSHUS)
++TRANS_FLAGS(ALTIVEC, VPKSWUS, do_vpk_env, gen_helper_VPKSWUS)
++TRANS_FLAGS2(ALTIVEC_207, VPKSDUS, do_vpk_env, gen_helper_VPKSDUS)
++TRANS_FLAGS(ALTIVEC, VPKSHSS, do_vpk_env, gen_helper_VPKSHSS)
++TRANS_FLAGS(ALTIVEC, VPKSWSS, do_vpk_env, gen_helper_VPKSWSS)
++TRANS_FLAGS2(ALTIVEC_207, VPKSDSS, do_vpk_env, gen_helper_VPKSDSS)
++TRANS_FLAGS(ALTIVEC, VPKPX, do_vpk, gen_helper_VPKPX)
+ GEN_VXFORM_ENV(vsum4ubs, 4, 24);
+ GEN_VXFORM_ENV(vsum4sbs, 4, 28);
+ GEN_VXFORM_ENV(vsum4shs, 4, 25);
+diff --git a/target/ppc/translate/vmx-ops.c.inc b/target/ppc/translate/vmx-ops.c.inc
+index b8f77d3d2c..2820976c0f 100644
+--- a/target/ppc/translate/vmx-ops.c.inc
++++ b/target/ppc/translate/vmx-ops.c.inc
+@@ -59,19 +59,6 @@ GEN_VXFORM_300(bcdtrunc, 0, 20),
+ GEN_VXFORM_300(bcdutrunc, 0, 21),
+ GEN_VXFORM(vsl, 2, 7),
+ GEN_VXFORM(vsr, 2, 11),
+-GEN_VXFORM(vpkuhum, 7, 0),
+-GEN_VXFORM(vpkuwum, 7, 1),
+-GEN_VXFORM_207(vpkudum, 7, 17),
+-GEN_VXFORM(vpkuhus, 7, 2),
+-GEN_VXFORM(vpkuwus, 7, 3),
+-GEN_VXFORM_207(vpkudus, 7, 19),
+-GEN_VXFORM(vpkshus, 7, 4),
+-GEN_VXFORM(vpkswus, 7, 5),
+-GEN_VXFORM_207(vpksdus, 7, 21),
+-GEN_VXFORM(vpkshss, 7, 6),
+-GEN_VXFORM(vpkswss, 7, 7),
+-GEN_VXFORM_207(vpksdss, 7, 23),
+-GEN_VXFORM(vpkpx, 7, 12),
+ GEN_VXFORM(vsum4ubs, 4, 24),
+ GEN_VXFORM(vsum4sbs, 4, 28),
+ GEN_VXFORM(vsum4shs, 4, 25),
 -- 
 2.55.0
 
