@@ -4,115 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C14C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:30:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BF64C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:31:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzEdz-0002HC-Ib; Wed, 26 Aug 2026 10:30:23 -0400
+	id 1wzEdZ-0001Ff-Av; Wed, 26 Aug 2026 10:29:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wzEdx-00022x-DO; Wed, 26 Aug 2026 10:30:21 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wzEdv-0002cG-26; Wed, 26 Aug 2026 10:30:21 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QE1WlJ4184882; Wed, 26 Aug 2026 14:30:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=uNMnI+ixBzCpQX9zV/V3KpMMyeZwf0bos+r+embbRHQ=; b=BHbm4w9ZnzHg
- hUaL+z4HKC9mc0Y5IzF0Ec4NZZzegVdlgMAGNfRRxR8yPagGNgk5agVxxdKCWoFM
- /2GBaiRuZtMg15VN5b1ExRZLY9SPtAlffnzrQ9D0A0Zkbbsh4PkSlTUhV5jHE7en
- QiC+LkZgGmFPnp4+owvHInHl+eZP7bebYgzini4JAFfYBvNCaPkhow0TFdVIIsMR
- mVgkUYFLr65whF0Ix09PEwcmyUl3UzM/alL/po7YeNFysqkxvU5irYU1RK9FhxlL
- jWyS6Fx/Rxtyu5PsJDcgGjDqm61/MFf3d5ipOHGiFdASrzYeVBCZdbX507fRYaRf
- Ar8f24fYTw==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g739478b3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 14:30:15 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QEQMfL011284;
- Wed, 26 Aug 2026 14:30:14 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3k2dmv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 14:30:14 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QEUC1L13435524
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 14:30:13 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CDF9158052;
- Wed, 26 Aug 2026 14:30:12 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 152915805D;
- Wed, 26 Aug 2026 14:30:12 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 14:30:12 +0000 (GMT)
-Message-ID: <bf64a05d5f3eba4accb82fd1fc23b722326a2c2b.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 19/37] target/ppc: Refactor sleep and its variants to
- use a common helper
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, harshpb@linux.ibm.com
-Cc: npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com,
- tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com,
- aboorvad@linux.ibm.com, amachhiw@linux.ibm.com, shivani@linux.ibm.com,
- mkchauras@gmail.com, uverma@linux.ibm.com, nikhilks@linux.ibm.com
-Date: Wed, 26 Aug 2026 09:30:11 -0500
-In-Reply-To: <20260826050923.74756-20-rathc@linux.ibm.com>
-References: <20260826050923.74756-1-rathc@linux.ibm.com>
- <20260826050923.74756-20-rathc@linux.ibm.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: yTLwbSy0yipreW8LSOCDogaHkXsX_P7X
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDExNiBTYWx0ZWRfXxnUF2EWSldjg
- bJKgSvS51vcM/tcoeYpLj+66BfhD+10yjhXJJCGcc+Itzs63z8b9B/wGbQSK5b4ZYkmPRBgU/CX
- DXRaEIHNlFzdmKbLv41V4lFkrEhlAedgPQpsjCt6EegSMmEZadjdQUgOECE0NQfBg0tc2UJAQb/
- iCzHnuI099TIIQAdJVVO7X5zEQp3+jWWCAqUoTDt4c0Umv+TfiPJg6Mrl2NY0CO4kBsqgHPQMB1
- iOXbMNMVJxumT8LkQQrsxYWQ3AQItAeqV9IrgGqH5rO7no26wJiq0m7DBK5VcRahfb9cR2vDMb2
- LaBhWw5xdOjWN5IGDu+MbchURqR0YF2zNvCKdcvS3PN/4i5tBrB4QYrkL1Di6Wwi0/sLVVIExW4
- lWFPDTL5oHTfS9FHKLsBrX+pgzJZ3H0hSu28fUBSZjhA1pA0sYWuu+vmaxk3VMcYKVJfO/DB6bu
- kN4JBrWr26YSOpjbzvQ==
-X-Authority-Analysis: v=2.4 cv=Y/nIdBeN c=1 sm=1 tr=0 ts=6a8ef878 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=Sh8xzq_NNK_JfPLPuzwA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDExNiBTYWx0ZWRfX3AvO7EutHWKv
- 00b/OCkVhR40LiG/27EcDn7a2/AtSgoWONlfaNGNoAIUsc2K89/JGfKkbCF9SQsiXpRKbrYW7Su
- T0lP++hPs5wNbyZDHkrYCMFtGD2aRrM=
-X-Proofpoint-ORIG-GUID: pQaQ91oiaNvAV_Ab4i8ZN8x0FNbobbug
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_04,2026-08-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- suspectscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260116
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdX-0001FD-On
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:55 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdV-0002HA-QR
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:55 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 6272321272;
+ Wed, 26 Aug 2026 14:29:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1787754588; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8tuHdlGGPQPD+UD6SrlaKWBfSOvo8qV7InxoVIfCWkY=;
+ b=AvRRWNPZu+PhjDmqbaCYabBDkUztYoiBORk8LEGThyFdep3sjBRZSI4MqqUuWqOrDF7ISn
+ dHZRzLMM1IHhLbdS2xt/89qH/x5iz3n1VZ9rvEIKVAA+H5Dfwt9hu4Rl79VkCLZuOFe8uR
+ 1zb681QrGMHDi8jBSMRJfNhCzqxNTho=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1787754588;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8tuHdlGGPQPD+UD6SrlaKWBfSOvo8qV7InxoVIfCWkY=;
+ b=psgtP/M6Wl+nkcfH2NOKrT7AlGpzFz8aVq8m1EhajI9TsMX9kn5vqflMJ5o4jEtTjsOFq3
+ mZDHDzBhPza+/hDg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=tTVdwqxW;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ulSdSxpG
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1787754584; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8tuHdlGGPQPD+UD6SrlaKWBfSOvo8qV7InxoVIfCWkY=;
+ b=tTVdwqxWMhKOt0IfsKOF2XGasdaIte+J+m5rU0i98qQJgs/RpMcd3NhFfZnR3imgehy42X
+ /ITJ00qC2T7GLj50S4fiQfVhvdada1RxS4Ne+QLyT6FMywbb/V+LzroRpSdtGfbpkR13Jd
+ vxkPZuqh11jM6CJtgBL2e+G8rqUUCuQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1787754584;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8tuHdlGGPQPD+UD6SrlaKWBfSOvo8qV7InxoVIfCWkY=;
+ b=ulSdSxpGWn9KOHOag9BdrPyNlkA+HY1vLg8i6he2j0kAGDKociGqMF+CZitjv8G8Vzg7L7
+ 5AfJp0Jm26BTKwAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9F5F11364F;
+ Wed, 26 Aug 2026 14:29:43 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id kNQBHFf4jmpTJAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 26 Aug 2026 14:29:43 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>
+Subject: [PULL 27/30] migration: Check more vmstate flags
+Date: Wed, 26 Aug 2026 11:29:02 -0300
+Message-ID: <20260826142905.2315503-28-farosas@suse.de>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260826142905.2315503-1-farosas@suse.de>
+References: <20260826142905.2315503-1-farosas@suse.de>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 6272321272
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-0.987]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCPT_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,suse.de:dkim,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ RCVD_COUNT_TWO(0.00)[2]; DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,181 +124,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Add more checks for vmstate flags constraints.
 
-Thanks,
+Acked-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/savevm.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-Glenn
-
-On Wed, 2026-08-26 at 10:38 +0530, Chinmay Rath wrote:
-> From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-> 
-> With sleep, doze, nap, rvwinkle and stop instructions moved to
-> decodetree, the helper these instructions used : gen_helper_pminsn,
-> should now be renamed to gen_helper_PMINSN, abiding by the decodetree
-> standards. Do the same.
-> Also refactor their translation routine to use a common do_sleep routine
-> since they share majority of the code.
-> 
-> Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->  target/ppc/helper.h                           |  2 +-
->  target/ppc/tcg-excp_helper.c                  |  2 +-
->  .../ppc/translate/processor-ctrl-impl.c.inc   | 99 +++----------------
->  3 files changed, 16 insertions(+), 87 deletions(-)
-> 
-> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
-> index cd2a0948a3..7e15676122 100644
-> --- a/target/ppc/helper.h
-> +++ b/target/ppc/helper.h
-> @@ -18,7 +18,7 @@ DEF_HELPER_1(rfdi, void, env)
->  DEF_HELPER_1(rfmci, void, env)
->  #if defined(TARGET_PPC64)
->  DEF_HELPER_2(scv, noreturn, env, i32)
-> -DEF_HELPER_2(pminsn, void, env, i32)
-> +DEF_HELPER_2(PMINSN, void, env, i32)
->  DEF_HELPER_1(rfid, void, env)
->  DEF_HELPER_1(rfscv, void, env)
->  DEF_HELPER_1(hrfid, void, env)
-> diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-> index b04f07a637..c4ffa2dfbb 100644
-> --- a/target/ppc/tcg-excp_helper.c
-> +++ b/target/ppc/tcg-excp_helper.c
-> @@ -459,7 +459,7 @@ void helper_scv(CPUPPCState *env, uint32_t lev)
->      }
->  }
->  
-> -void helper_pminsn(CPUPPCState *env, uint32_t insn)
-> +void helper_PMINSN(CPUPPCState *env, uint32_t insn)
->  {
->      CPUState *cs = env_cpu(env);
->  
-> diff --git a/target/ppc/translate/processor-ctrl-impl.c.inc b/target/ppc/translate/processor-ctrl-impl.c.inc
-> index bdbc195294..3b3ed3019a 100644
-> --- a/target/ppc/translate/processor-ctrl-impl.c.inc
-> +++ b/target/ppc/translate/processor-ctrl-impl.c.inc
-> @@ -104,103 +104,32 @@ static bool trans_MSGSYNC(DisasContext *ctx, arg_MSGSYNC *a)
->      return true;
->  }
->  
-> -static bool do_doze(DisasContext *ctx, arg_DOZE *a)
-> -{
-> -    REQUIRE_64BIT(ctx);
-> -
-> -#if defined(CONFIG_USER_ONLY)
-> -    gen_priv_opc(ctx);
-> -#else
-> -    TCGv_i32 t;
-> -
-> -    REQUIRE_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_DOZE);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -
-> -    return true;
-> -}
-> -TRANS_FLAGS2(PM_ISA206, DOZE, do_doze);
-> -
-> -static bool do_nap(DisasContext *ctx, arg_NAP *a)
-> -{
-> -    REQUIRE_64BIT(ctx);
-> -
-> -#if defined(CONFIG_USER_ONLY)
-> -    gen_priv_opc(ctx);
-> -#else
-> -    TCGv_i32 t;
-> -
-> -    REQUIRE_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_NAP);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -    return true;
-> -}
-> -TRANS_FLAGS2(PM_ISA206, NAP, do_nap);
-> -
-> -static bool do_sleep(DisasContext *ctx, arg_SLEEP *a)
-> -{
-> -    REQUIRE_64BIT(ctx);
-> -
-> -#if defined(CONFIG_USER_ONLY)
-> -    gen_priv_opc(ctx);
-> -#else
-> -    TCGv_i32 t;
-> -
-> -    REQUIRE_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_SLEEP);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -    return true;
-> -}
-> -TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep);
-> -
-> -static bool do_rvwinkle(DisasContext *ctx, arg_RVWINKLE *a)
-> +/*
-> + * Helper to handle DOZE, NAP, SLEEP, RVWINKLE & STOP. Since none of them use
-> + * any arguments just use a placeholder arg_SLEEP.
-> + */
-> +static bool do_sleep(DisasContext *ctx, arg_SLEEP *a, powerpc_pm_insn_t type)
->  {
->      REQUIRE_64BIT(ctx);
->  
->  #if defined(CONFIG_USER_ONLY)
->      gen_priv_opc(ctx);
-> -#else
-> +#elif defined(TARGET_PPC64)
->      TCGv_i32 t;
->  
->      REQUIRE_HV(ctx);
->      translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_RVWINKLE);
-> -    gen_helper_pminsn(tcg_env, t);
-> +    t = tcg_constant_i32(type);
-> +    gen_helper_PMINSN(tcg_env, t);
->      /* Stop translation, as the CPU is supposed to sleep from now */
->      gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -#endif /* defined(CONFIG_USER_ONLY) */
-> -    return true;
-> -}
-> -TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_rvwinkle);
-> -
-> -static bool do_stop(DisasContext *ctx, arg_STOP *a)
-> -{
-> -    REQUIRE_64BIT(ctx);
-> -
-> -#if defined(CONFIG_USER_ONLY)
-> -    gen_priv_opc(ctx);
->  #else
-> -    TCGv_i32 t;
-> -
-> -    REQUIRE_HV(ctx);
-> -    translator_io_start(&ctx->base);
-> -    t = tcg_constant_i32(PPC_PM_STOP);
-> -    gen_helper_pminsn(tcg_env, t);
-> -    /* Stop translation, as the CPU is supposed to sleep from now */
-> -    gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> +    qemu_build_not_reached();
->  #endif
->      return true;
->  }
-> -TRANS_FLAGS2(ISA300, STOP, do_stop);
-> +TRANS_FLAGS2(PM_ISA206, DOZE, do_sleep, PPC_PM_DOZE);
-> +TRANS_FLAGS2(PM_ISA206, NAP, do_sleep, PPC_PM_NAP);
-> +TRANS_FLAGS2(PM_ISA206, SLEEP, do_sleep, PPC_PM_SLEEP);
-> +TRANS_FLAGS2(PM_ISA206, RVWINKLE, do_sleep, PPC_PM_RVWINKLE);
-> +TRANS_FLAGS2(ISA300, STOP, do_sleep, PPC_PM_STOP);
+diff --git a/migration/savevm.c b/migration/savevm.c
+index ba705c941aa..5b0e89ca7c8 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -893,6 +893,25 @@ static void vmstate_check(const VMStateDescription *vmsd)
+                 assert(field->flags & VMS_ARRAY_OF_POINTER);
+             }
+ 
++            /*
++             * The VMS*ARRAY flags and VMS_VBUFFER affect allocation,
++             * they must have the proper fields set and no other
++             * vmstate types can set those fields, otherwise it won't
++             * be picked-up due to the missing flag.
++             */
++
++            if (field->flags & (VMS_ARRAY | VMS_VARRAY)) {
++                assert(field->num > 0 || field->num_indirect.size != 0);
++            } else {
++                assert(field->num == 0 && field->num_indirect.size == 0);
++            }
++
++            if (field->flags & VMS_VBUFFER) {
++                assert(field->size_indirect.size != 0);
++            } else {
++                assert(field->size_indirect.size == 0);
++            }
++
+             if (field->flags & (VMS_STRUCT | VMS_VSTRUCT)) {
+                 /* Recurse to sub structures */
+                 vmstate_check(field->vmsd);
+-- 
+2.53.0
 
 
