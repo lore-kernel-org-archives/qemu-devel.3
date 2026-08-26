@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D88E4C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 22:06:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E28A7C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 22:07:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzLlK-0005FL-LD; Wed, 26 Aug 2026 18:06:26 -0400
+	id 1wzLlG-0005D9-VH; Wed, 26 Aug 2026 18:06:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wzLlJ-0005F2-TX
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 18:06:25 -0400
+ id 1wzLlE-0005B0-Sc
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 18:06:20 -0400
 Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wzLlI-0004oA-Bu
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 18:06:25 -0400
+ id 1wzLlD-0004jU-D5
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 18:06:20 -0400
 Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-ca12086c06eso1080494a12.0
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 15:06:23 -0700 (PDT)
+ 41be03b00d2f7-cc1cc97b84bso58250a12.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 15:06:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787781983; x=1788386783; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1787781978; x=1788386778; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=ZgJzq+XsYOvtH3xWP7INoFWVb96qT7YPWqEHVflcXbM=;
- b=IXlhBAlKjYDFg+8NvJP0Nizz1/oKPIFk2UMzUz8fx48QXCLjNa9Snoqg2EDSB30hH9
- yKyhjVDagOMfsK200LdeGrODXgAcP12COyD2Zllv17HK/96CcoXUXkcdFQJsh6xLfjrw
- KvM2gWqLIUM91XQLBYuJrM2lEXeMa6nfTIH4BTDFpa3zKWMOjcyn+YqrKX0bPEPR68Q4
- e9Qp7YZOX2xh0nE7OesOjs5sQHmRzqzpRlSgt8uNQlt2RBZB6K4H4JZA4w4Ik51tAOfz
- 64NFUqmorPDgjZmI++khiUCsBcEmRuvB5L1VOjYEk8HELIuj5epaM02Q8NfIsS4lnj+Z
- yknw==
+ bh=5s/MHm9pZEMHdIBltCKmL5mdgHKUgYmEicbJN9o3MIY=;
+ b=kPnJWTtrSOWXHBUK3CcFj+Y477DBb+O39wVwTevmwj6zK5r6iU11X/9tzcqIAT53AF
+ pNYJqn5yEc/rE8ycUGRRV+g3eHK+PyPixbRgJ6VHCuT24A7/4rRnxgBXcnDuEtvfUK5E
+ 7gpaMzrSJjm9cwlXue98YOfe3S3qHhQv0QJzMH5REserP9csJGhrP03BYxuKS6g9yTcl
+ iPoNk5xpb0IO9qDRR+IHU/5h+L5LJiVy0ZJbrL/6cj6zaNvkMvVEvxfuCO5M9lsZEg5e
+ 9jQ/OzFaMlEvqDv3ho0IqsnEXxnBz1m7EBEliCIoVRHHNR2MViyVBcLYIz6ifQyQ+Ihb
+ Xz2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787781983; x=1788386783;
+ d=1e100.net; s=20251104; t=1787781978; x=1788386778;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
  :content-type;
- bh=ZgJzq+XsYOvtH3xWP7INoFWVb96qT7YPWqEHVflcXbM=;
- b=nBMZ4zd+h6uwRsUv6yf0sbIBiCSWJNSX7bhtIT16/ansKM6khpZB6hxPD9nkJPEN1B
- mqQlqOdQXyZrlYymGfaG2sQVi5ZT1i9+XtnxTMYnL5kH7NG0o3kCS5O84P6eLlvECeap
- hfvsgxdY7c2Q7BjvyBgdVXwlVVSPUL/+8/LyU/v8eB4HqfKoK4pzterLQbbab832/pGP
- 3309XPpCVqE38BaVszr/acPmRVW8wQ2Mk9h7GSlvM/XGVdyf5Snc2kdxcMxb1S7rNawJ
- wslDVbH3gPfHgePSBng6Ud3QBd5uA1oj+WtoYMfHdVmhXiyermh8mHhOJ6r7Cy17M3wC
- YJUw==
+ bh=5s/MHm9pZEMHdIBltCKmL5mdgHKUgYmEicbJN9o3MIY=;
+ b=qN9Bot8kVMEjWRtwj7/cwgQoMqwfba/YFS1kkl+wc9InfUhgu6I3+RgctG9pTbkspO
+ Vxxp3h5sMuSZViFbJW1KyCrs2phHcge4Q37rmAgatmcbAaZKLK8WLSqppgYG3XibcFmw
+ o3kdDtWAHn1YbD6PUlvFQs9nlb4Xoo07labhSAlTDUcGu95CbvbAovBMMcGYnyf+Wq19
+ YhL5/bRsfRp6eXAZBQxJUxX4hwJIdYzu2MG8UexDBQXjwwiq+pfVIvBfPRhllPQZfKrk
+ sfPGNChBj7EWZJt8owLs/lRH23m3Le6wqeZ0swtcwxbZiBbb7RjBW/goPGtAavF9L8Lh
+ 3Okw==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoELGnBBSMo1LMp/5K8XgrFaX8FCyeNP7wb+Ga+177LenWGiyzzF6IjuK32j1IKcLzxXMECaRRxgOkX@nongnu.org
-X-Gm-Message-State: AFuF++mcT9ONzzZgfIgx4079E3B6Hp3oWyU8KVsXIboW2RqPwMUmDYWM
- UtJH9+ZOvPmXy/j2WwziwkVnmkMxtN3CGyre5ttk/Gbs8hVC/QGD9OnF
-X-Gm-Gg: AR+sD1168/cvI9fAfsaj3AFOeLp2Zy5OwSUwMI67+Jr9/ZKiwSMI6eO0darm+ISfEeI
- SXl4f9lYnJTwgGIm8CD5Ce/HZnsluypdhhsnJ74y7OYA4c/dYs4dzLnvvDW99obAvjTa6QADvRc
- FfKmE8v/GZZ+a59Pz0tLu67vz0Mn8cSBrT7WQzos0smXCfILFiIZSmqQiVuojE3L+mIJw9DmsQj
- yUdrPUPInZ8d8e8ROVHoyM1c8i51yWBsHopkE8JU55aZWDLK/FgwAl9uCH261oWXrChWb1X0x8G
- QwMnEGw563TV/bjNeSle4utUpfrCy5LlN0RAv25OGgTKWGZEqVSV+UJcw0Ed6KZmU2zD0DspT5z
- NeprSxHFUUDln3V/dZIJ1S4sRsesSG24E0vn2QMfOqpPH1WsMbdCsxHf5DwNWWjNm2Wj0eG2jnj
- wP/o9frFuE8gQZanTTceVlaMl7gXTA/dd4gKcOhA+LOY6H/NfoDlkb+TFPwgKbvQ95NnK/KraOJ
- y0GXHbZCznW8dGpnz5R4874OkZsngVdS2zNtLg0Zs0AvGVjU9zwy4XG7rLfKZ2qDh9N6pVQ1gZV
- fpAuoiEy79kkj/uVw+W/
-X-Received: by 2002:a17:90b:530c:b0:38e:b400:a860 with SMTP id
- 98e67ed59e1d1-3966d443d6bmr19042432a91.13.1787781983027; 
- Wed, 26 Aug 2026 15:06:23 -0700 (PDT)
+ AHgh+RqGpmkOk0rTUJoT+fKozZgEcW3TPl8WvPM2NC6GbgaYMa0pGhihm2aT+KL/DTMHgAuglTP/232fKarY@nongnu.org
+X-Gm-Message-State: AFuF++mXlPaD4+G3ZYGiYGZtwFUPii6v6GEJJ8tLWWhkK7d6jQwLEnkS
+ GyoUeCvwXnKYPNAfA3/oFlDRSdygKkGE6o+0eBW+BN5F7MwhvWDdZrdv
+X-Gm-Gg: AR+sD13WpWUAGc3BtavpXj1Gu02ZQh4M3jLxzi5ARMuG9f0MSkhulsPrcn5QF0IbwNX
+ RVW6LrZ0h+lWM+lmev7+iWFX6QNoRqCE4dNYUwqSThn7zac9WeDkPCiUGUpDn7w3yx8HdXJ4Tg2
+ w2vKUAjKy/4tmXJZ++mCMVXaB396pamirER70JSuoY5cdQ756T1UGM5vZoIE9K/ja2lBGOnl2Uz
+ NyX0T/ztwiRdQ2Z8xdp9hwAW5wzJ+oKPhlMl5DA9gE2WmQ2SrRXDUmbXjb5zwv43jJrTHP3CF59
+ VbrKf2/+93y7vn+7vJD/JzDrGciyboNjNIebc5lU7EQv9aBv7T9HuZyX1ysDpozM4nQs+gOwZ/s
+ Bh6PTnCgNrlO9yhuHQjI2bUrOC+eNKlyUNEw4y3ApzGXs87dQuojm8PGHHOhPDPCPAHIQvcqTJy
+ 7sQUTfJYYqMoFBQSrSCbKe/EsGIB8DIhD8tk5oGvjvIX4BDYbWtfrrM9NqYzIxYWjZkJ6zaQliD
+ 4GnUijRXnSDhhtAPXXPDRTCZulcn4YMOOH1yOpIacFgktcnir6QzIXtoiivrkJVgc45cjce7V3t
+ RCXTREkSwY9htxBWwIF+
+X-Received: by 2002:a17:90b:4d0d:b0:396:5cdc:4bea with SMTP id
+ 98e67ed59e1d1-3966d457015mr16838564a91.5.1787781978020; 
+ Wed, 26 Aug 2026 15:06:18 -0700 (PDT)
 Received: from donnager-debian.. ([180.150.112.50])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39668a573a1sm5789956a91.14.2026.08.26.15.06.18
+ 98e67ed59e1d1-39668a573a1sm5789956a91.14.2026.08.26.15.06.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 15:06:22 -0700 (PDT)
+ Wed, 26 Aug 2026 15:06:17 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
@@ -80,9 +80,9 @@ Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Portia Stephens <portias@oss.tenstorrent.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH 07/16] hw/riscv/atlantis: Make UART unimp region a SoC device
-Date: Thu, 27 Aug 2026 07:35:17 +0930
-Message-ID: <20260826220528.54516-8-joel@jms.id.au>
+Subject: [PATCH 06/16] hw/riscv/cps: Map interrupt controllers in SoC container
+Date: Thu, 27 Aug 2026 07:35:16 +0930
+Message-ID: <20260826220528.54516-7-joel@jms.id.au>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260826220528.54516-1-joel@jms.id.au>
 References: <20260826220528.54516-1-joel@jms.id.au>
@@ -113,78 +113,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make the unimplemented region covering the remainder of the console
-UART's register space a SoC child device, mapped using a helper. This
-makes it easier to map it into the SoC's memory container along with
-the other devices in the future.
+The CPS device maps some devices into a container region, but the
+ACLINT and APLIC were mapped directly to system_memory.
 
-While here, rename the region from uart0 to uart1. The uart0 name was
-a leftover from an earlier revision that used a different device for
-the console.
+Pass the container memory region to the interrupt controller helpers so
+all CPS devices live in the container. The location of devices in memory
+for the boston-aia machine is unchanged.
 
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- include/hw/riscv/tt_atlantis.h |  2 ++
- hw/riscv/tt_atlantis.c         | 19 ++++++++++++++++---
- 2 files changed, 18 insertions(+), 3 deletions(-)
+ hw/riscv/cps.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/riscv/tt_atlantis.h b/include/hw/riscv/tt_atlantis.h
-index 7f7d4a5a5905..c9308aa57017 100644
---- a/include/hw/riscv/tt_atlantis.h
-+++ b/include/hw/riscv/tt_atlantis.h
-@@ -13,6 +13,7 @@
- #include "hw/core/sysbus.h"
- #include "hw/i2c/designware_i2c.h"
- #include "hw/intc/riscv_imsic.h"
-+#include "hw/misc/unimp.h"
- #include "hw/riscv/riscv_hart.h"
- 
- #define TYPE_TT_ATLANTIS_MACHINE MACHINE_TYPE_NAME("tt-atlantis")
-@@ -31,6 +32,7 @@ struct TTAtlantisState {
-     RISCVHartArrayState soc;
-     DeviceState *irqchip;
-     DesignWareI2CState i2c[TT_ATL_NUM_I2C];
-+    UnimplementedDeviceState uart1;
- 
-     int fdt_size;
- };
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index 3f183db5c302..acfd0d31b368 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -409,6 +409,17 @@ static void load_fdt(TTAtlantisState *s)
-     create_fdt_memory(s);
- }
- 
-+static void mmio_map_unimplemented(MemoryRegion *memory, SysBusDevice *dev,
-+                                   const char *name, hwaddr addr, uint64_t size)
-+{
-+    qdev_prop_set_string(DEVICE(dev), "name", name);
-+    qdev_prop_set_uint64(DEVICE(dev), "size", size);
-+    sysbus_realize(dev, &error_abort);
-+
-+    memory_region_add_subregion_overlap(memory, addr,
-+                                        sysbus_mmio_get_region(dev, 0), -1000);
-+}
-+
- static void tt_atlantis_machine_done(Notifier *notifier, void *data)
- {
-     TTAtlantisState *s = container_of(notifier, TTAtlantisState, machine_done);
-@@ -560,9 +571,11 @@ static void tt_atlantis_machine_init(MachineState *machine)
-      * Create an unimplemented device region so writes don't fault
-      * and reads return zero, which keeps Linux happy.
-      */
--    create_unimplemented_device("tt-atlantis.uart0",
--                                s->memmap[TT_ATL_UART1].base,
--                                s->memmap[TT_ATL_UART1].size);
-+    object_initialize_child(OBJECT(s), "uart1", &s->uart1,
-+                            TYPE_UNIMPLEMENTED_DEVICE);
-+    mmio_map_unimplemented(system_memory, SYS_BUS_DEVICE(&s->uart1),
-+                           "tt-atlantis.uart1", s->memmap[TT_ATL_UART1].base,
-+                           s->memmap[TT_ATL_UART1].size);
- 
-     /* I2C */
-     for (int i = 0; i < TT_ATL_NUM_I2C; i++) {
+diff --git a/hw/riscv/cps.c b/hw/riscv/cps.c
+index d2fd9638a08d..21daaf4943d8 100644
+--- a/hw/riscv/cps.c
++++ b/hw/riscv/cps.c
+@@ -135,7 +135,7 @@ static void riscv_cps_realize(DeviceState *dev, Error **errp)
+     for (i = 0; i < num_of_clusters; i++) {
+         uint64_t cm_base = GLOBAL_CM_BASE + (CM_SIZE * i);
+         uint32_t hartid_base = i << MHARTID_CLUSTER_SHIFT;
+-        s->aplic = riscv_aplic_create(get_system_memory(),
++        s->aplic = riscv_aplic_create(&s->container,
+                                       cm_base + AIA_PLIC_M_OFFSET,
+                                       AIA_PLIC_M_SIZE,
+                                       hartid_base, /* hartid_base */
+@@ -143,7 +143,7 @@ static void riscv_cps_realize(DeviceState *dev, Error **errp)
+                                       APLIC_NUM_SOURCES,
+                                       APLIC_NUM_PRIO_BITS,
+                                       false, true, NULL);
+-        riscv_aplic_create(get_system_memory(),
++        riscv_aplic_create(&s->container,
+                            cm_base + AIA_PLIC_S_OFFSET,
+                            AIA_PLIC_S_SIZE,
+                            hartid_base, /* hartid_base */
+@@ -153,10 +153,10 @@ static void riscv_cps_realize(DeviceState *dev, Error **errp)
+                            false, false, s->aplic);
+         /* PLIC changes msi_nonbroken to ture. We revert the change. */
+         msi_nonbroken = false;
+-        riscv_aclint_swi_create(get_system_memory(),
++        riscv_aclint_swi_create(&s->container,
+                                 cm_base + AIA_CLINT_OFFSET,
+                                 hartid_base, MAX_HARTS, false);
+-        riscv_aclint_mtimer_create(get_system_memory(),
++        riscv_aclint_mtimer_create(&s->container,
+                                    cm_base + AIA_CLINT_OFFSET +
+                                    RISCV_ACLINT_SWI_SIZE,
+                                    RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
 -- 
 2.47.3
 
