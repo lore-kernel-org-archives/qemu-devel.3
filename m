@@ -4,109 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9994CC5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 13:12:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1299CC5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 13:17:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzDQV-0004ko-4e; Wed, 26 Aug 2026 09:12:23 -0400
+	id 1wzDVO-00064k-HG; Wed, 26 Aug 2026 09:17:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wzDQT-0004hr-D2; Wed, 26 Aug 2026 09:12:21 -0400
+ id 1wzDVM-00064Q-HS; Wed, 26 Aug 2026 09:17:24 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wzDQQ-0001Ur-Tj; Wed, 26 Aug 2026 09:12:21 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1wzDVK-00024V-De; Wed, 26 Aug 2026 09:17:24 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QCW4Sn2127921; Wed, 26 Aug 2026 13:12:16 GMT
+ 67QCWE4r3978199; Wed, 26 Aug 2026 13:17:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=qNcc/wL6YL6Vw6IlnM1vmA2Qk91C8u
- 9HDofXJkft6Hs=; b=Uk3YTT/ol+7knCitEVpGDRi6i2vD4K69zumSTnFCvkY48b
- wDgmEen2iy3PlwIZ4tN5/8bdo443IPY05Sxl867b0SzVEogR7Ui8/4shNyZ/XUdq
- vfcmJB9peMpRLfas+HMjSOVDInYP3YYNFIs3y1NmjSMcYEWbXb9O5MFy6kgrbiyb
- idgIc2Z8vibIPBX2a6jpy41+1QdauPWtlroWGw2OMq+NDbFAxUUV49/x6vKMz7iu
- DmLr3XoiLmYugAOqmeJ/GWgC9XoPwr9A4L3Xj7PNUlaneflz74Ep6Jmi7KGoTB75
- YIpLvD6vfUMYLQJs6QtznMTkXDWYCtk6+RGw+0bw==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73eqxr03-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=F/nGq2
+ fkRpBII/TlbzOm15LI/rrjFpxpZcTOVF3EhMo=; b=e/1Z8LayEvDQ3aurRrQ/tq
+ uRHpXAs271EVbl9MMB+gTLMsbnCP12j13x+zIpn97Djb/9vi3dcZxB6pwvFbfbLF
+ 8Ju1fibwhXTJ/7qyXNxrc2GrW851c408NcqZNGKjgupVY+jWpT6jo2Zn/VEvSUEr
+ fJg7MTdpkDgQnma74VN8gl9FokjuRuI7wNr9kFNy8R3nWGoCOLc2Bne1bx7P15SD
+ awkFc0x8iuvD1RwoqcYwBKMrv6ts624xKW0ZzJwi418uorL5yh8EsIehUk0bBOBD
+ WUir8QkMrnvr3VwmrD1DxIFuPwihduYSPxcGPJKmo9jZWCu0TQ6mbO0MSjTnECzg
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73946u2f-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 13:12:15 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QDBT9W014870;
- Wed, 26 Aug 2026 13:12:14 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7pfwa6jb-1
+ Wed, 26 Aug 2026 13:17:18 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QDBGmO010032;
+ Wed, 26 Aug 2026 13:17:17 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7q3k23ej-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 13:12:14 +0000 (GMT)
+ Wed, 26 Aug 2026 13:17:17 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QDCAp746465520
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QDHDR646661910
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 13:12:10 GMT
+ Wed, 26 Aug 2026 13:17:13 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B4ADD20040;
- Wed, 26 Aug 2026 13:12:10 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5489520043;
+ Wed, 26 Aug 2026 13:17:13 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8138E20043;
- Wed, 26 Aug 2026 13:12:07 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 779D920040;
+ Wed, 26 Aug 2026 13:17:11 +0000 (GMT)
 Received: from fedora (unknown [9.5.7.39])
  by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 26 Aug 2026 13:12:07 +0000 (GMT)
-Date: Wed, 26 Aug 2026 18:42:10 +0530
+ Wed, 26 Aug 2026 13:17:11 +0000 (GMT)
+Date: Wed, 26 Aug 2026 18:47:14 +0530
 From: Amit Machhiwal <amachhiw@linux.ibm.com>
 To: Chinmay Rath <rathc@linux.ibm.com>
 Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
  milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org,
- vishalc@linux.ibm.com, tshah@linux.ibm.com, shivangu@linux.ibm.com,
- ojaswin@linux.ibm.com, aboorvad@linux.ibm.com, amachhiw@linux.ibm.com,
- shivani@linux.ibm.com, mkchauras@gmail.com, uverma@linux.ibm.com,
- nikhilks@linux.ibm.com
-Subject: Re: [PATCH v2 17/37] target/ppc: Move wait instruction to decodetree
-Message-ID: <20260826183934.043b61ca-d6-amachhiw@linux.ibm.com>
+ nikhilks@linux.ibm.com, Amit Machhiwal <amachhiw@linux.ibm.com>
+Subject: Re: [PATCH v2 03/37] target/ppc: Convert cache instructions to
+ decodetree
+Message-ID: <20260826184321.64dbc67f-23-amachhiw@linux.ibm.com>
 Mail-Followup-To: Chinmay Rath <rathc@linux.ibm.com>, 
  qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
  milesg@linux.ibm.com, 
- npiggin@gmail.com, richard.henderson@linaro.org, vishalc@linux.ibm.com, 
- tshah@linux.ibm.com, shivangu@linux.ibm.com, ojaswin@linux.ibm.com, 
- aboorvad@linux.ibm.com, shivani@linux.ibm.com, mkchauras@gmail.com,
- uverma@linux.ibm.com, nikhilks@linux.ibm.com
+ npiggin@gmail.com, richard.henderson@linaro.org, nikhilks@linux.ibm.com
 References: <20260826050923.74756-1-rathc@linux.ibm.com>
- <20260826050923.74756-18-rathc@linux.ibm.com>
+ <20260826050923.74756-4-rathc@linux.ibm.com>
+ <20260826153132.6c0e83d2-05-amachhiw@linux.ibm.com>
+ <b919f52c-f8ac-4a28-a9cd-f776bb498281@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260826050923.74756-18-rathc@linux.ibm.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b919f52c-f8ac-4a28-a9cd-f776bb498281@linux.ibm.com>
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: EZ9HFoGU1F8aslj90GJ3IzBL0cHM9rVm
-X-Proofpoint-ORIG-GUID: FTnbKlLbcr9Q8apFSoH5dxNnVv_p6RiD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEwOCBTYWx0ZWRfX+3FHRJhs2Suz
- sUGJU4fDTalVWiSN0sGXlEzfHyP5ax0NOOqO9LWPH9VpSy6ZrCoRbFwnkoZLZ6176g9PGtbdaiA
- dIu7dqx77wYPGYBTJedxhEMftuljVjqMs+qhp/AJ7QZFpqEAyjBJ9HLATrpDyE5mhYkk5hsQoFg
- Iig5fbrUNLMPGwQO61ChghLLskCnCeDGxqplvYKwcOcsdVTLd6wmMSAbrjSbSV64lGJyE8+ej5Z
- p7LuO5MkkEvH+OSRB0Uijmvwv22riHtiTabUDv0pXQiQ141IPGXqGrO9Tzg7bZl2vjSOTbltrAd
- nz026ZbEX5Jmim+jd1eU5WiEoMhv3CVS6PMuJPwzpreXAnYLpCzF/iDdS4cbdec/QmN6rApPmbQ
- +PuYTSQ1Q1U01YqOznpl9kz0IUpInjTmqARcVVsevR4T6A1z+Z4+O74LXvPaOCLydtr1F/haYOA
- hEs3Owb7tm0TOo6dKog==
-X-Authority-Analysis: v=2.4 cv=QsRuG1yd c=1 sm=1 tr=0 ts=6a8ee630 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=kj9zAlcOel0A:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=cZRAMAzoDBRNjgz5moMA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEwOCBTYWx0ZWRfXwDYSJcjUiWWW
- 4r7CHL8tCdZcKNAIwUSxd7Sob5kDBjHMVXZXjjFRMQT0EbuL+meBnJlnnrTWuf9gJ7SO4HYPRCU
- 0k0B79bNMJYUJZrCrVT8X7bMTA9cwEM=
+X-Proofpoint-GUID: e-vHfRKXJmpsOwmq0jlMrF8Ib2qMsoLB
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEwOCBTYWx0ZWRfX3QJBtQ+1Yy6s
+ TeRF+PX3bayD9tWmTH2ipdeeZaxeQMXu5Iy9p1xsh61CQCqSLEy1c/i34+b2HrerOkBkA+RrUx8
+ s9GDgR/K+KJL0/SgH9ZcYLL+qBWDw/QAEOWcfFEIBTMWekOoSKVjSs2kH8E+WDgjSJU9SNKr7Pz
+ rnMd/nPHuZc6v6KU8anqNC/mwoaH7iEckiJU+KVqbgKkJw3MMJevUW0VPnjyIjlJkSTcIm8Fze2
+ O/7jt/47L4fMBPiHLhyIw9Cd/physP+RDeI7nLdQ6InJG3hiawGiDFL4CBJmDdWM9y1WmuE0rq1
+ wS13t+wZmaQlCfX5K4Rb69aZpp/RFQm9/iYC+iirtN7ccBnSjbf7J5ti+lZQ7O6v18BooJw7uoS
+ UFm4Xy6uhElIHlGCNQd47LxeQ5/poybpgTxqmBGBMWZoodpNZJs1xoQDQrTia6vg/o9gISXeuDG
+ AXpUU+m9dcocQVTXsDA==
+X-Authority-Analysis: v=2.4 cv=Y/nIdBeN c=1 sm=1 tr=0 ts=6a8ee75f cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=hBl9zLAC4UxrTPpw9pcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEwOCBTYWx0ZWRfX1277H9Zd1wUo
+ OPzCaR21323Xm8ptzgQGw6QD8Uf0zpPIqOpqmy7HYzEeiTro+Upz3Z1ecRz0njxeUWC6LuvWoFl
+ r4RotUyT+noVSHkWntDlQbR+04Trn1s=
+X-Proofpoint-ORIG-GUID: 9WXTD8FNH4gA15L-U2hzGwlixCPWlU6O
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-08-26_03,2026-08-26_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 suspectscore=0 priorityscore=1501 impostorscore=0
- spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 phishscore=0
+ spamscore=0 impostorscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ suspectscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260108
 Received-SPF: pass client-ip=148.163.156.1;
@@ -133,290 +132,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/08/26 10:38 AM, Chinmay Rath wrote:
-> From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+On 2026/08/26 06:39 PM, Chinmay Rath wrote:
 > 
-> Implement wait instruction using decodetree with
-> proper handling of WC and PL fields across different ISA
-> versions. Since the opcode changed between ISA 2.x and 3.x
-> we have defined 2 different decodetree instructions that
-> are handled by the same helper.
-> 
-> The changes have been tested by comparing the tcg generated
-> before and after the change for wait instruction. The test
-> was repeated for 2 types of machines:
-> 
-> Power10 - which should use the newer wait implementation
-> e500mc - which should use older PPC_WAIT implementation
-> 
-> Both generated the same tcg ops with and without the change.
-> Further, with the changes we were able to boot into Fedora
-> distro as well.
-> 
-> Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->  target/ppc/insn32.decode                     |  15 +++
->  target/ppc/translate.c                       |  91 -----------------
->  target/ppc/translate/storage-ctrl-impl.c.inc | 100 +++++++++++++++++++
->  3 files changed, 115 insertions(+), 91 deletions(-)
-> 
-> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-> index 67fb181542..3b8387b60c 100644
-> --- a/target/ppc/insn32.decode
-> +++ b/target/ppc/insn32.decode
-> @@ -1480,6 +1480,21 @@ ISYNC           010011 ----- ----- ----- 0010010110 -
->  @XL_bfa         ...... bf:3 .. bfa:3 .. ..... ..... ..... .
->  MCRF            010011 ... -- ... -- ----- 00000 00000 -       @XL_bfa
->  
-> +# Wait Instructions
-> +
-> +# We can use the same X_wait argument set for both WAIT and older ISA2.x
-> +# compliant WAIT_2_x. Depending on the version, we may or may not use the
-> +# arguments. For more information, check do_wait() helper.
-> +
-> +&X_wait         wc pl
-> +@X_wait         ...... ..- wc:2 --- pl:2 ----- .......... -  &X_wait
-> +
-> +# According to ISA v3.1, bit 6 and 7 are implementation dependent and "unless
-> +# the intention is to use the implementation-dependent field, these bits must be
-> +# coded zero". Hence, we code them to 0.
-> +WAIT            011111 00-.. ---.. ----- 0000011110 -  @X_wait
-> +WAIT_ISA_2_X    011111 ---.. ---.. ----- 0000111110 -  @X_wait
-> +
->  # Branch History Rolling Buffer (BHRB) Instructions
->  
->  &XFX_bhrbe      rt bhrbe
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index f7c7f53d82..2d5157080c 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -2727,95 +2727,6 @@ static inline void gen_check_tlb_flush(DisasContext *ctx, bool global)
->  static inline void gen_check_tlb_flush(DisasContext *ctx, bool global) { }
->  #endif
->  
-> -/* wait */
-> -static void gen_wait(DisasContext *ctx)
-> -{
-> -    uint32_t wc;
-> -
-> -    if (ctx->insns_flags & PPC_WAIT) {
-> -        /* v2.03-v2.07 define an older incompatible 'wait' encoding. */
-> -
-> -        if (ctx->insns_flags2 & PPC2_PM_ISA206) {
-> -            /* v2.06 introduced the WC field. WC > 0 may be treated as no-op. */
-> -            wc = WC(ctx->opcode);
-> -        } else {
-> -            wc = 0;
-> -        }
-> -
-> -    } else if (ctx->insns_flags2 & PPC2_ISA300) {
-> -        /* v3.0 defines a new 'wait' encoding. */
-> -        wc = WC(ctx->opcode);
-> -        if (ctx->insns_flags2 & PPC2_ISA310) {
-> -            uint32_t pl = PL(ctx->opcode);
-> -
-> -            /* WC 1,2 may be treated as no-op. WC 3 is reserved. */
-> -            if (wc == 3) {
-> -                gen_invalid(ctx);
-> -                return;
-> -            }
-> -
-> -            /* PL 1-3 are reserved. If WC=2 then the insn is treated as noop. */
-> -            if (pl > 0 && wc != 2) {
-> -                gen_invalid(ctx);
-> -                return;
-> -            }
-> -
-> -        } else { /* ISA300 */
-> -            /* WC 1-3 are reserved */
-> -            if (wc > 0) {
-> -                gen_invalid(ctx);
-> -                return;
-> -            }
-> -        }
-> -
-> -    } else {
-> -        warn_report("wait instruction decoded with wrong ISA flags.");
-> -        gen_invalid(ctx);
-> -        return;
-> -    }
-> -
-> -    /*
-> -     * wait without WC field or with WC=0 waits for an exception / interrupt
-> -     * to occur.
-> -     */
-> -    if (wc == 0) {
-> -        TCGv_i32 t0 = tcg_constant_i32(1);
-> -        tcg_gen_st_i32(t0, tcg_env,
-> -                       -offsetof(PowerPCCPU, env) + offsetof(CPUState, halted));
-> -        /* Stop translation, as the CPU is supposed to sleep from now */
-> -        gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> -    }
-> -
-> -    /*
-> -     * Other wait types must not just wait until an exception occurs because
-> -     * ignoring their other wake-up conditions could cause a hang.
-> -     *
-> -     * For v2.06 and 2.07, wc=1,2,3 are architected but may be implemented as
-> -     * no-ops.
-> -     *
-> -     * wc=1 and wc=3 explicitly allow the instruction to be treated as a no-op.
-> -     *
-> -     * wc=2 waits for an implementation-specific condition, such could be
-> -     * always true, so it can be implemented as a no-op.
-> -     *
-> -     * For v3.1, wc=1,2 are architected but may be implemented as no-ops.
-> -     *
-> -     * wc=1 (waitrsv) waits for an exception or a reservation to be lost.
-> -     * Reservation-loss may have implementation-specific conditions, so it
-> -     * can be implemented as a no-op.
-> -     *
-> -     * wc=2 waits for an exception or an amount of time to pass. This
-> -     * amount is implementation-specific so it can be implemented as a
-> -     * no-op.
-> -     *
-> -     * ISA v3.1 allows for execution to resume "in the rare case of
-> -     * an implementation-dependent event", so in any case software must
-> -     * not depend on the architected resumption condition to become
-> -     * true, so no-op implementations should be architecturally correct
-> -     * (if suboptimal).
-> -     */
-> -}
-> -
->  #if defined(TARGET_PPC64)
->  static void gen_doze(DisasContext *ctx)
->  {
-> @@ -5197,8 +5108,6 @@ GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
->  GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
->  GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
->  /* ISA v3.0 changed the extended opcode from 62 to 30 */
-> -GEN_HANDLER(wait, 0x1F, 0x1E, 0x01, 0x039FF801, PPC_WAIT),
-> -GEN_HANDLER_E(wait, 0x1F, 0x1E, 0x00, 0x039CF801, PPC_NONE, PPC2_ISA300),
->  GEN_HANDLER(rfi, 0x13, 0x12, 0x01, 0x03FF8001, PPC_FLOW),
->  #if defined(TARGET_PPC64)
->  GEN_HANDLER(rfid, 0x13, 0x12, 0x00, 0x03FF8001, PPC_64B),
-> diff --git a/target/ppc/translate/storage-ctrl-impl.c.inc b/target/ppc/translate/storage-ctrl-impl.c.inc
-> index 943229c438..21c7999d5d 100644
-> --- a/target/ppc/translate/storage-ctrl-impl.c.inc
-> +++ b/target/ppc/translate/storage-ctrl-impl.c.inc
-> @@ -270,3 +270,103 @@ static bool do_tlbie(DisasContext *ctx, arg_X_tlbie *a, bool local)
->  
->  TRANS_FLAGS(MEM_TLBIE, TLBIE, do_tlbie, false)
->  TRANS_FLAGS(MEM_TLBIE, TLBIEL, do_tlbie, true)
-> +
-> +/*
-> + * Decodetree populates a->wc and a->pl based on ISA v3.1, however they may
-> + * or may not be used based on the ISA:
-> + *   For ISA < 2.06 - both wc and pl are ignored
-> + *   For ISA == 2.06, 2.07, 3.0 - wc is used and pl is ignored
-> + *   For ISA 3.1 - both wc and pl are used
-> + */
-> +static bool do_wait(DisasContext *ctx, arg_X_wait *a)
-> +{
-> +    uint32_t wc;
-> +
-> +    if (ctx->insns_flags & PPC_WAIT) {
-> +        /* v2.03-v2.07 define an older incompatible 'wait' encoding. */
-> +
-> +        if (ctx->insns_flags2 & PPC2_PM_ISA206) {
-> +            /* v2.06 introduced the WC field. WC > 0 may be treated as no-op. */
-> +            wc = a->wc;
-> +        } else {
-> +            wc = 0;
-> +        }
-> +
-> +    } else if (ctx->insns_flags2 & PPC2_ISA300) {
-> +        /* v3.0 defines a new 'wait' encoding. */
-> +        wc = a->wc;
-> +        if (ctx->insns_flags2 & PPC2_ISA310) {
-> +            uint32_t pl = a->pl;
-> +
-> +            /* WC 1,2 may be treated as no-op. WC 3 is reserved. */
-> +            if (wc == 3) {
-> +                gen_invalid(ctx);
-> +                return true;
-> +            }
-> +
-> +            /* PL 1-3 are reserved. If WC=2 then the insn is treated as noop. */
-> +            if (pl > 0 && wc != 2) {
-> +                gen_invalid(ctx);
-> +                return true;
-> +            }
-> +
-> +        } else { /* ISA300 */
-> +            /* WC 1-3 are reserved */
-> +            if (wc > 0) {
-> +                gen_invalid(ctx);
-> +                return true;
-> +            }
-> +        }
-> +
-> +    } else {
-> +        warn_report("wait instruction decoded with wrong ISA flags.");
-> +        gen_invalid(ctx);
-> +        return true;
-> +    }
-> +
-> +    /*
-> +     * wait without WC field or with WC=0 waits for an exception / interrupt
-> +     * to occur.
-> +     */
-> +    if (wc == 0) {
-> +        TCGv_i32 t0 = tcg_constant_i32(1);
-> +        tcg_gen_st_i32(t0, tcg_env,
-> +                       -offsetof(PowerPCCPU, env) + offsetof(CPUState, halted));
-> +        /* Stop translation, as the CPU is supposed to sleep from now */
-> +        gen_exception_nip(ctx, EXCP_HLT, ctx->base.pc_next);
-> +    }
-> +
-> +    /*
-> +     * Other wait types must not just wait until an exception occurs because
-> +     * ignoring their other wake-up conditions could cause a hang.
-> +     *
-> +     * For v2.06 and 2.07, wc=1,2,3 are architected but may be implemented as
-> +     * no-ops.
-> +     *
-> +     * wc=1 and wc=3 explicitly allow the instruction to be treated as a no-op.
-> +     *
-> +     * wc=2 waits for an implementation-specific condition, such could be
-> +     * always true, so it can be implemented as a no-op.
-> +     *
-> +     * For v3.1, wc=1,2 are architected but may be implemented as no-ops.
-> +     *
-> +     * wc=1 (waitrsv) waits for an exception or a reservation to be lost.
-> +     * Reservation-loss may have implementation-specific conditions, so it
-> +     * can be implemented as a no-op.
-> +     *
-> +     * wc=2 waits for an exception or an amount of time to pass. This
-> +     * amount is implementation-specific so it can be implemented as a
-> +     * no-op.
-> +     *
-> +     * ISA v3.1 allows for execution to resume "in the rare case of
-> +     * an implementation-dependent event", so in any case software must
-> +     * not depend on the architected resumption condition to become
-> +     * true, so no-op implementations should be architecturally correct
-> +     * (if suboptimal).
-> +     */
-> +     return true;
+> On 8/26/26 15:50, Amit Machhiwal wrote:
+> > On 2026/08/26 10:38 AM, Chinmay Rath wrote:
+> > > From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+> > > 
 
-The return true is aligned under the comment's */ instead of the
-function body indent level.
+<snip>
 
-> +}
-> +
-> +TRANS_FLAGS(WAIT, WAIT_ISA_2_X, do_wait)
-> +TRANS_FLAGS2(ISA300, WAIT, do_wait)
-> +
+> > > +
+> > > +DST             011111 ----- ..... ..... 0101010110 -   @X_ea
+> > > +DSTST           011111 ----- ..... ..... 0101110110 -   @X_ea
+> > Per **PowerISA v3.1 §4.3.2.1**, dst, dstst, and dss are obsolete and
+> > must be treated as no-ops independent of whether Vector instructions are
+> > available. The new REQUIRE_INSNS_FLAGS(ctx, ALTIVEC) guard in all three
+> > handlers is incorrect — it causes these opcodes to be treated as illegal
+> > instructions on non-Altivec CPUs, contradicting the ISA mandate. These
+> > handlers should unconditionally return true with no flag check, matching
+> > the ISA's "always a no-op" requirement. The ra == 0 INVAL check in
+> > trans_DST and trans_DSTST should also be dropped for the same reason —
+> > if the instruction is a no-op, the operand constraint has no effect.
+> Thanks Amit !
+> This is very informative. There are many such instances in QEMU code where
+> insns haven't been updated as per the newer ISA.
+> Though, I'd like to point out that the REQUIRE_INSNS_FLAGS(ctx, ALTIVEC)
+> guard in those insns is not new. This was already present as in the code, I
+> will mark it with [A] below for reference.
+> This patch simply intends to move the insn to decodetree keeping the
+> existing logic intact. The translation logic and flag checks remain same for
+> these 3 pointed out insns. I'd like to take up your suggestion here and post
+> a folllow-up patch to update those insns as per the new ISA. Would that be
+> okay ? Or would you prefer the insn's correction as per the ISA in this same
+> decodetree movement patch ?
 
-This extra new line needs to be dropped to avoid git warning.
+I did notice that this check already existed before this movement and I
+don't see it as a blocker for this series. It would make sense to fix
+such places in follow up patches.
 
-Rest looks good to me.
-
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-
-> -- 
-> 2.55.0
-> 
+~Amit
 
