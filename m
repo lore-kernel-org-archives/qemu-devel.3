@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFA9AC61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 06:46:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AAB9C61DC6
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 06:50:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wz7OI-0003MR-DO; Wed, 26 Aug 2026 02:45:42 -0400
+	id 1wz7Sz-0005eW-49; Wed, 26 Aug 2026 02:50:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wz7OG-0003M1-PA
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 02:45:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wz7Sx-0005dA-GY
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 02:50:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wz7OF-0007Cy-7d
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 02:45:40 -0400
+ id 1wz7Sv-000089-DI
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 02:50:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787726737;
+ s=mimecast20190719; t=1787727028;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dmD553i3R7mbHOfNOQTqDSWokZ9awtN325Ww0u7K5HM=;
- b=dRqS26qIyZLknPZc0rKe2ZJbePIXGw7UH5WWhyfI901bE925JBhUM1nwHypfL9GNkSmfRV
- Kl3cC2h3qT4LORW5jrsCdVj6RdUs6xX8MMEDDhsSNpC/tom2NFjrdfnlq9fC8f/xVgD/3G
- Ul7wFeB2BGMtE3Cxo0dOpVFD5tcPlRw=
+ bh=emv//XrvYholXANOqMWwHQIYAyRIppZnX63sxgczXdU=;
+ b=SWe87u/DqyQadF+FrVAay769CvfmpW3akTYVH+slj1bl9ha4pBT9AIAMixKh2rpAAUEOpl
+ /jEuOHkZbGNMd1/UHrT7Cx83rE5W8deowr0Lt39tcaX0FccTMRpFnxa8KrDOhIXPGnRWlJ
+ gIAjIEJfvO4b+BX5NCjzJ6WvkPj+s5M=
 Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
  [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-696-P9t3Xxk9OqeKwgxMBcN_9g-1; Wed, 26 Aug 2026 02:45:34 -0400
-X-MC-Unique: P9t3Xxk9OqeKwgxMBcN_9g-1
-X-Mimecast-MFC-AGG-ID: P9t3Xxk9OqeKwgxMBcN_9g_1787726733
+ us-mta-501-PYNlm3tpNCmABXa8FbpbzQ-1; Wed, 26 Aug 2026 02:50:26 -0400
+X-MC-Unique: PYNlm3tpNCmABXa8FbpbzQ-1
+X-Mimecast-MFC-AGG-ID: PYNlm3tpNCmABXa8FbpbzQ_1787727025
 Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-c252c2ffeb8so7468666b.2
- for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 23:45:34 -0700 (PDT)
+ a640c23a62f3a-c1f74261f67so62052966b.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Aug 2026 23:50:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787726733; x=1788331533;
+ d=1e100.net; s=20251104; t=1787727025; x=1788331825;
  h=content-transfer-encoding:content-type:in-reply-to:from:references
  :cc:to:content-language:subject:reply-to:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=dmD553i3R7mbHOfNOQTqDSWokZ9awtN325Ww0u7K5HM=;
- b=KzWLbQs9AVp+Qbs/GjcEcSavB5YYT0Q0GpAo9vzSO4N/260FzcQr4/fqQKtlKcCDc+
- PrmqS7NpOV36avfCyuiq92fLqwQI5dsC+Nzb6GcfJh9Pma1wz+3LwFdSmya15lrrm69d
- 1TJZxbO9cn0Uh+/UVM4nWaxKg89nm0y17r5WRz5Um7zu8Dd8BRtuiUyLKheTRYmHOB07
- /T/t+rzRtzm2YKdowiMHsgucZ3KS8Tc7ODnxwvEzszjXUtY7icYZCIYv2oCW5N0dPird
- oYOmyAGo7puEmKwGu+qiIL2PbGqeXiIPcDXq8knGXuxHevKTXK+krg7Rr43eOyaEPmmt
- 4KlA==
+ bh=emv//XrvYholXANOqMWwHQIYAyRIppZnX63sxgczXdU=;
+ b=RVt4mRxq8ARt1wGgv68RNu1agRykiaqOmpBdfkB5cQgrzUuYqu+lS/dHc+NsB2asMG
+ Sia8klB/cmcuCfBNeSOTxjnYG0Vh6z4mQ4OxZCUGA/IQrHSdukwPAKRZXjgofUEFg1ui
+ 8RKVpXal4Hc6qAJdZxPaAFzRmPgKlS3flbyMKpOsKbv8wSyEo0OFrRi8AmUNLGtTQOCI
+ jRe5I6zpGKZ+82a99TOHodut2sypGx2FSZte54bJmNiP1XmRX2HA8YiEikJhOzf6APRD
+ c+iYQkabu2l+M2/naXI3ATRFeZ8f/ZEuewYmf62ozRjcn4cbXnjnZIYNdwPuU30V9jRI
+ swLg==
 X-Forwarded-Encrypted: i=1;
- AHgh+RqxTeWU1xXRXBc01eWM1vN7Ay1dquCLKRd16HUEI1tJVo32iIzScZRmEOqWoT/O4Aifx3CZEP4xGxNM@nongnu.org
-X-Gm-Message-State: AFuF++mh4MSM7wMhj8pzi/ACXH0HjF+Ydw/hr+bfW0xHm57j7IVmaSTl
- ZdHLsFobrEZn0b2hq4rB1cia6wMaTsBbqlYSkod2yT2EyR+Rwe4kw5IvJ+Dklwb4LiBzGeI10vh
- wHE/zVr4eF4F47Cg9AKj7x3hwqiLeGAKSJ0lynyfLwNiNxloIY9bDLBYS
-X-Gm-Gg: AR+sD10VxG7fh2CsHo63wMOGsVMQyD4t+kmyrfLBhR8Sd4LCWFapfhaD1iE/3zkM1WL
- 8JVEqwaE664zf2dYNFyVuW8GyRZmJ6wiTccSL0sSZLdouJNVaKaAmiRFp6crnG9f1llaqjg+okf
- sl2Obd8vPG0zTK1NNei1B+v1rEtNNkqauAbwoD/tYxLusFOryzW09b/FgffSKju85KyMXexgXYt
- 1Cj5By2W26AFYjG2Us5a1JIG+HDGR01YF3dg9gHZjsoAQ7GPyZI+lUKJ/H0F9S0cLZNTmIlZlow
- J2UE8Pnv95MEDv1kw+m22EANppezyB1aLTJoFosGrdLCS9bmsyU2wN1dQDWALWofrI5ll95tq1o
- arGz9HzylhZ4IJvWWsS4VgrehqVwE4XRRF+y+Wys4VVe3GSCY
-X-Received: by 2002:a17:907:6d1a:b0:c19:45e3:2f57 with SMTP id
- a640c23a62f3a-c250c4b3348mr459044066b.9.1787726733300; 
- Tue, 25 Aug 2026 23:45:33 -0700 (PDT)
-X-Received: by 2002:a17:907:6d1a:b0:c19:45e3:2f57 with SMTP id
- a640c23a62f3a-c250c4b3348mr459040566b.9.1787726732930; 
- Tue, 25 Aug 2026 23:45:32 -0700 (PDT)
+ AHgh+RpP58cz42F4tXttKgTJIHGQ+9aMqbsVk9RUabv+TD9Bc5wNPlxocTYoyZMfAhM843GBFtUkEfrbnJBs@nongnu.org
+X-Gm-Message-State: AFuF++nLbIdtqTZYEYklG1qiElCe5ZImiaHA28MJc2QG5sBU7X0aZWl1
+ 4+theY51Q6/cvC+4B77Gt/vOCBodVv7Mw6dgEkoud9LxuFsemvlzrwgyhyQf1Y2lb+EqJqJ/RgO
+ /UzMNnlRbDCxNYqEsiQdC2rmEjK04ZyWvdsoaR+KlHja0vIFze4T5/PSU
+X-Gm-Gg: AR+sD13DmLw/bnUzfi5/6k8VLt3uzR6ClLxdgXMly3lo8laZuEQ1uAsxGnMIi74TiCc
+ ODOctah1oZwjjECeI7y8G94y8LanXe55mGntv+r/puzQ/3Vf9D0w5Mka0oqYlyBInU69NARZhdr
+ X1kLoJv3x7A3mvdBM60yeQepfADJoFkm+NNbz40oRv1VFCYDLjoMXE9CoZrnGHp3Bgm46N6QU8+
+ oSo8xXpJMfShxWUSkcDdKDjXcwcjZMIpLcY1FBiZC2P1kdKS0MHgMK2EWYVdcyJMwt0BunyhU8u
+ /LVBh/6n10YV8IFl0lI7Bggi6xAL9oo/PYudGIQqAqw9t5CcAbunkrGXMuFPMAKQCvGN9GU6kXf
+ auO97XZLItWabQP/JYY1Vas48MOgG1xGe9DCZIn1sQyf3ekam
+X-Received: by 2002:a17:907:94cd:b0:c20:d90b:2ccf with SMTP id
+ a640c23a62f3a-c250bb7d9ecmr522176666b.7.1787727024678; 
+ Tue, 25 Aug 2026 23:50:24 -0700 (PDT)
+X-Received: by 2002:a17:907:94cd:b0:c20:d90b:2ccf with SMTP id
+ a640c23a62f3a-c250bb7d9ecmr522172866b.7.1787727024169; 
+ Tue, 25 Aug 2026 23:50:24 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c250a7303casm437391466b.25.2026.08.25.23.45.30
+ a640c23a62f3a-c250a9e96bdsm249263366b.55.2026.08.25.23.50.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Aug 2026 23:45:31 -0700 (PDT)
-Message-ID: <7ce15b69-11bd-497e-9463-0745700fe6fd@redhat.com>
-Date: Wed, 26 Aug 2026 08:45:30 +0200
+ Tue, 25 Aug 2026 23:50:23 -0700 (PDT)
+Message-ID: <07a65f67-0ac5-425a-af3f-e4e38a1a6500@redhat.com>
+Date: Wed, 26 Aug 2026 08:50:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v7 03/18] target/arm/cpu-sysregs.h.inc: Update with
- automatic generation
+Subject: Re: [RFC PATCH v7 18/18] arm-qmp-cmds: introspection for ID register
+ props
 Content-Language: en-US
 To: Khushit Shah <khushit.shah@nutanix.com>
 Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
@@ -104,21 +104,21 @@ Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
  "abologna@redhat.com" <abologna@redhat.com>,
  "jdenemar@redhat.com" <jdenemar@redhat.com>
 References: <20260726153221.24773-1-eric.auger@redhat.com>
- <20260726153221.24773-4-eric.auger@redhat.com>
- <42EB7A4B-9C09-4E31-B435-556C6020E451@nutanix.com>
+ <20260726153221.24773-19-eric.auger@redhat.com>
+ <C950721B-25A3-477F-ABF0-56491A2C968F@nutanix.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <42EB7A4B-9C09-4E31-B435-556C6020E451@nutanix.com>
+In-Reply-To: <C950721B-25A3-477F-ABF0-56491A2C968F@nutanix.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,7 +136,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Khushit,
-On 8/20/26 8:55 AM, Khushit Shah wrote:
+
+On 8/24/26 1:59 PM, Khushit Shah wrote:
 >
 >> On 26 Jul 2026, at 8:59 PM, Eric Auger <eric.auger@redhat.com> wrote:
 >>
@@ -145,63 +146,238 @@ On 8/20/26 8:55 AM, Khushit Shah wrote:
 >>
 >> |-------------------------------------------------------------------!
 >>
->> Generated definitions with scripts/update-aarch64-cpu-sysregs-header.py
->> based on "AARCHMRS containing the JSON files for Arm A-profile
->> architecture (2026-03)" Registers.json file.
+>> From: Cornelia Huck <cohuck@redhat.com>
 >>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->> Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
->> ---
->> target/arm/cpu-sysregs.h.inc | 13 +++++++++++++
->> 1 file changed, 13 insertions(+)
+>> Implement the capability to query available ID register values by
+>> adding SYSREG_* options and values to the cpu model expansion for the
+>> host model, if available.
 >>
->> diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
->> index ec5a12b0f4..2188cd7be0 100644
->> --- a/target/arm/cpu-sysregs.h.inc
->> +++ b/target/arm/cpu-sysregs.h.inc
->> @@ -1,11 +1,20 @@
->> /* SPDX-License-Identifier: GPL-2.0-or-later */
->> +
->> +/* This file is autogenerated by scripts/update-aarch64-cpu-sysregs-header.py */
->> +/* DEF(<name>, <op0>, <op1>, <crn>, <crm>, <op2>) */
->> +
->> +DEF(AIDR_EL1, 3, 1, 0, 0, 7)
->> +DEF(CCSIDR2_EL1, 3, 1, 0, 0, 2)
->> +DEF(CCSIDR_EL1, 3, 1, 0, 0, 0)
-> As CCSIDR*_EL1 are demux registers, a single entry for them does
-> not make sense.
-OK I removed them
+>> Excerpt:
+>> (QEMU) query-cpu-model-expansion type=full model={"name":"host"}
+>> {"return": {"model": {"name": "host", "props": {"SYSREG_ID_AA64PFR0_EL1_EL3": 1,
+>> "SYSREG_ID_AA64ISAR2_EL1_CLRBHB": 0, "SYSREG_CTR_EL0_L1Ip": 3,
+>> "SYSREG_MIDR_EL1_PartNum": 3407, "SYSREG_CTR_EL0_DminLine": 4,
+>> "SYSREG_ID_AA64MMFR0_EL1_PARange": 5, "SYSREG_ID_AA64MMFR1_EL1_ECBHB": 0
+>> ../..
+>>
+>> This allows the upper stack to detect available writable ID regs and
+>> the "host passthrough model" values.
+>>
+>> It also allows to test some ID reg field values:
+>> (QEMU) query-cpu-model-expansion type=full model={"name":"host","props":{"SYSREG_ID_AA64ISAR0_EL1_DP":0x13}}
+>> {"error": {"class": "GenericError", "desc": "idreg SYSREG_ID_AA64ISAR0_EL1_DP set value (0x13) exceeds length of field (4)!"}}
+>>
+>> (QEMU) query-cpu-model-expansion type=full model={"name":"host","props":{"SYSREG_ID_AA64ISAR0_EL1_DP":0x2}}
+>> {"error": {"class": "GenericError", "desc": "idreg SYSREG_ID_AA64ISAR0_EL1_DP set value (0x2) does not match any arch valid enum value!”}}
+> My reasoning here is: User never asked to run the CPU model/configuration. The QMP command is supposed to
+> return the final prop values which QEMU will set/request from KVM.
+>
+> Like on x86, the query-cpu-model-expansion type=full model={“host”: “props”: {“amx-tile": true}} does not return
+> with error even if host does not have AMX.
+>
+> But, maybe we can append CpuModelInfo or CpuModelExpansionInfo with optional ‘usable’ boolean. This even
+> fills an existing gap, as, query-cpu-definitions cannot take property values.
+
+Refering to docs/system/arm/cpu-features.rst it looks a normal case the
+command fails in case settings cannot apply:
+
+See 
+
+(3) Let's try to disable ``aarch64``, which enables the AArch32 CPU
+feature::
+
+      (QEMU) query-cpu-model-expansion type=full
+model={"name":"max","props":{"aarch64":false}}
+      {"error": {
+       "class": "GenericError", "desc":
+       "'aarch64' feature cannot be disabled unless KVM is enabled and
+32-bit EL1 is supported"
+      }}
+
+So my understanding is query-cpu-model-expansion is well suited to
+settings dry-run
 
 Thanks
 
 Eric
->
+
 > Warm Regards,
 > Khushit
->> DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
->> DEF(CTR_EL0, 3, 3, 0, 0, 1)
->> DEF(DCZID_EL0, 3, 3, 0, 0, 7)
->> +DEF(GMID_EL1, 3, 1, 0, 0, 4)
->> DEF(ID_AA64AFR0_EL1, 3, 0, 0, 5, 4)
->> DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
->> DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
->> DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
->> +DEF(ID_AA64DFR2_EL1, 3, 0, 0, 5, 2)
->> DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
->> DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
->> DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
->> @@ -40,6 +49,10 @@ DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
->> DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
->> DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
->> DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
->> +DEF(MIDR_EL1, 3, 0, 0, 0, 0)
->> +DEF(MPIDR_EL1, 3, 0, 0, 0, 5)
->> DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
->> DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
->> DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
->> +DEF(REVIDR_EL1, 3, 0, 0, 0, 6)
->> +DEF(SMIDR_EL1, 3, 1, 0, 0, 6)
+>> The following checks are performed:
+>> - the value does not exceed the field size
+>> - if the field is associated to enum values, the set value must be one
+>>  of those enum values
+>> - the value is applied against a scratch vcpu making sure the setting is
+>>  not rejected for this host
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+>>
+>> ---
+>>
+>> v5 -> v6:
+>> - add the write capability
+>> ---
+>> target/arm/arm-qmp-cmds.c | 98 +++++++++++++++++++++++++++++++++++++++
+>> 1 file changed, 98 insertions(+)
+>>
+>> diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
+>> index 83ec95c290..41fefadcea 100644
+>> --- a/target/arm/arm-qmp-cmds.c
+>> +++ b/target/arm/arm-qmp-cmds.c
+>> @@ -21,6 +21,7 @@
+>>  */
+>>
+>> #include "qemu/osdep.h"
+>> +#include "qemu/error-report.h"
+>> #include "qemu/target-info.h"
+>> #include "hw/core/boards.h"
+>> #include "kvm_arm.h"
+>> @@ -30,7 +31,10 @@
+>> #include "qapi/qapi-commands-machine.h"
+>> #include "qapi/qapi-commands-misc-arm.h"
+>> #include "qobject/qdict.h"
+>> +#include "qobject/qnum.h"
+>> #include "qom/qom-qobject.h"
+>> +#include <linux/kvm.h>
+>> +#include "system/kvm.h"
+>> #include "cpu.h"
+>>
+>> static GICCapability *gic_cap_new(int version)
+>> @@ -84,11 +88,14 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>                                                      Error **errp)
+>> {
+>>     CpuModelExpansionInfo *expansion_info;
+>> +    ObjectPropertyIterator iter;
+>>     const QDict *qdict_in;
+>> +    ObjectProperty *idregprop;
+>>     QDict *qdict_out;
+>>     ObjectClass *oc;
+>>     Object *obj;
+>>     const char *name;
+>> +    int fdarray[3];
+>>     int i;
+>>
+>>     if (type != CPU_MODEL_EXPANSION_TYPE_FULL) {
+>> @@ -133,6 +140,38 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>
+>>     obj = object_new(object_class_get_name(oc));
+>>
+>> +    if (kvm_enabled()) {
+>> +        bool pmuv3_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_PMU_V3);
+>> +        bool sve_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_SVE);
+>> +        struct kvm_vcpu_init init = { .target = -1, };
+>> +        bool el2_supported = kvm_arm_el2_supported();
+>> +        bool pauth_supported;
+>> +        int ret;
+>> +
+>> +        pauth_supported = kvm_check_extension(kvm_state, KVM_CAP_ARM_PTRAUTH_ADDRESS) &&
+>> +                          kvm_check_extension(kvm_state, KVM_CAP_ARM_PTRAUTH_GENERIC);
+>> +
+>> +        if (sve_supported) {
+>> +            init.features[0] |= 1 << KVM_ARM_VCPU_SVE;
+>> +        }
+>> +        if (el2_supported) {
+>> +            init.features[0] |= 1 << KVM_ARM_VCPU_HAS_EL2;
+>> +        }
+>> +        if (pauth_supported) {
+>> +            init.features[0] |= (1 << KVM_ARM_VCPU_PTRAUTH_ADDRESS |
+>> +                             1 << KVM_ARM_VCPU_PTRAUTH_GENERIC);
+>> +        }
+>> +        if (pmuv3_supported) {
+>> +            init.features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
+>> +        }
+>> +
+>> +        ret = kvm_arm_create_scratch_host_vcpu(fdarray, &init);
+>> +        if (!ret) {
+>> +            error_setg(errp, "failing creating a scratch vcpu");
+>> +            return NULL;
+>> +        }
+>> +    }
+>> +
+>>     if (model->props) {
+>>         Visitor *visitor;
+>>         Error *err = NULL;
+>> @@ -145,6 +184,49 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>         }
+>>
+>>         qdict_in = qobject_to(QDict, model->props);
+>> +
+>> +        for (const QDictEntry *entry = qdict_first(qdict_in);
+>> +                 entry != NULL; entry = qdict_next(qdict_in, entry)) {
+>> +            const char *key = qdict_entry_key(entry);
+>> +            QObject *val_obj = qdict_entry_value(entry);
+>> +            ObjectProperty *prop;
+>> +            Visitor *v;
+>> +            bool success;
+>> +            uint64_t val;
+>> +
+>> +            prop = object_property_find(obj, key);
+>> +            if (!prop) {
+>> +                error_setg(errp, "%s does not exist!", key);
+>> +                return NULL;
+>> +            }
+>> +
+>> +            if (!g_str_has_prefix(key, "SYSREG_")) {
+>> +                continue;
+>> +            }
+>> +
+>> +            /* consume the prop to avoid unexpected parameter */
+>> +            if (!visit_type_uint64(visitor, key, &val, errp)) {
+>> +                return NULL;
+>> +            }
+>> +
+>> +            v = qobject_input_visitor_new(val_obj);
+>> +
+>> +            if (!object_property_set(obj, key, v, &err)) {
+>> +                error_propagate(errp, err);
+>> +                visit_free(v);
+>> +                return NULL;
+>> +            }
+>> +
+>> +            success = kvm_idreg_write_scratch_vcpu(fdarray[2], v, key,
+>> +                                                   prop->opaque, &err);
+>> +            if (!success) {
+>> +                error_propagate(errp, err);
+>> +                visit_free(v);
+>> +                return NULL;
+>> +            }
+>> +            visit_free(v);
+>> +        }
+>> +
+>>         i = 0;
+>>         while ((name = cpu_model_advertised_features[i++]) != NULL) {
+>>             if (qdict_get(qdict_in, name)) {
+>> @@ -160,6 +242,10 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>         if (!err) {
+>>             arm_cpu_finalize_features(ARM_CPU(obj), &err);
+>>         }
+>> +
+>> +        if (kvm_enabled()) {
+>> +            kvm_arm_destroy_scratch_host_vcpu(fdarray);
+>> +        }
+>>         visit_end_struct(visitor, NULL);
+>>         visit_free(visitor);
+>>         if (err) {
+>> @@ -190,6 +276,18 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>>         }
+>>     }
+>>
+>> +    object_property_iter_init(&iter, obj);
+>> +
+>> +    while ((idregprop = object_property_iter_next(&iter))) {
+>> +        QObject *value;
+>> +
+>> +        if (!g_str_has_prefix(idregprop->name, "SYSREG_")) {
+>> +            continue;
+>> +        }
+>> +        value = object_property_get_qobject(obj, idregprop->name, &error_abort);
+>> +        qdict_put_obj(qdict_out, idregprop->name, value);
+>> +    }
+>> +
+>>     if (!qdict_size(qdict_out)) {
+>>         qobject_unref(qdict_out);
+>>     } else {
 >> -- 
 >> 2.53.0
 >>
