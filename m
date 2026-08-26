@@ -4,94 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86CD2C61DC2
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:30:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26370C61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:30:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzEdW-0001ER-8D; Wed, 26 Aug 2026 10:29:54 -0400
+	id 1wzEdB-00017q-Kb; Wed, 26 Aug 2026 10:29:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdV-0001E9-Ds
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:53 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdA-000179-H0
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:32 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdR-00029N-CR
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:53 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEd7-0001fc-U5
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:32 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id F30FA21225;
- Wed, 26 Aug 2026 14:29:39 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 83DC11F82D;
+ Wed, 26 Aug 2026 14:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787754584; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787754564; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vr2C7oscjfX3B6sMUfuCbEokEqGfeU940jEvsFBifRQ=;
- b=ZOijkN9L5TjgbpSyf3uL7b8d1PL3eKv76bVA1g5lvO4Qe4qBPdppQ5ThOBzmckE7uO8Wy4
- xWN11DsrnvjIKWX/c2K1eBCl05YRYqVxOrctU90/9/syzIYEuez+LmHDeHn7Q8L/4BHzeZ
- KRvnJKY87XEOBa2CqTyJgX7ee7dXWKA=
+ bh=JBaiBj8RrIFlHoMR68yaE7kUmPAVZMY+pnjc1+jCVHI=;
+ b=Xtji2Hq+iMT5MHQyRV3BZaa1ErEGqZPcYaIvXzgPJUKorLbOKJlnUeM88xYxilgyhMkaPS
+ RjX4bU4Qu+iNeDZMsIYVGRAiEfcx+2BhPMRbVPewLGesh/BTcb2ByHnOme+7UVpN+YhLin
+ +YNKp6FpqyvuURkCcb1YsRNvMJfkyJg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787754584;
+ s=susede2_ed25519; t=1787754564;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vr2C7oscjfX3B6sMUfuCbEokEqGfeU940jEvsFBifRQ=;
- b=fcLvA977jbb/HlcID/lTZaefKjcvrHKRlJxjN5EVhajFwVdhdP6VXNXDfJBJKFWNMO1gsA
- S/Rh/OwSQrZmfRAw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=DMmYjkFV;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=EohcaE6r
+ bh=JBaiBj8RrIFlHoMR68yaE7kUmPAVZMY+pnjc1+jCVHI=;
+ b=lJNl5VTePWnYVrRFRWN6co8sw7VQ5Tkf1jDG5E+v16pxDJvqRj60tA4DQpfAVyNiJ5PhZu
+ OSYRePn+LhEEdjDw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=B6Bazs9V;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=U7UVZMoY
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787754580; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787754560; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vr2C7oscjfX3B6sMUfuCbEokEqGfeU940jEvsFBifRQ=;
- b=DMmYjkFVEnxhgaLSF53PLaUxX56cJOU02Aln/zqHeucd+c8O6ZeyJ3N6Syi8vp3wHzpvpy
- ksSEHIgKpzSKEzrdT5FEl3UzLOWjRyCK85AZY5eARUeLiSD94YpX8InM9g/vZUbVrL7Nir
- /CNHHBFKokJsMWJ3dC9TLow5OUgMHik=
+ bh=JBaiBj8RrIFlHoMR68yaE7kUmPAVZMY+pnjc1+jCVHI=;
+ b=B6Bazs9Vq3ACUwOJfYlGHeRLmI2hzvp+mRG1tzArgRLDkJeCjv3iSlpwaVjQlfJj+IhGwo
+ 1l5ga1sJYZAUMt8z3oDl4ZCmUEb86+7Vyt9/1jNJ86AncH99A0TGF1lDVSHkuqJjMH/e+C
+ Zt9780Rdha+aF7EnZ1PTXJwabvFPzSU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787754580;
+ s=susede2_ed25519; t=1787754560;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vr2C7oscjfX3B6sMUfuCbEokEqGfeU940jEvsFBifRQ=;
- b=EohcaE6rjE//oRvrG8NIxsaPG0mqJIyZuQfRE2zJ7KDA1hB/RUa/5Rwfj1u0WeDHludeyh
- fe5x4BXO3RjEpjCg==
+ bh=JBaiBj8RrIFlHoMR68yaE7kUmPAVZMY+pnjc1+jCVHI=;
+ b=U7UVZMoYzaCeaxisZPbsOu7y5f5jZEWp7CWJzRlRIhQuW9QVw88Gq/+z2gW3yZV65QxHxN
+ iSYQoeRnM8XhLfDA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D693B13674;
- Wed, 26 Aug 2026 14:29:38 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 678551361C;
+ Wed, 26 Aug 2026 14:29:19 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id GPaBKVL4jmpTJAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 26 Aug 2026 14:29:38 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id UAJeDj/4jmpTJAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 26 Aug 2026 14:29:19 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	Seungjung Kim <seungjung0711@gmail.com>
-Subject: [PULL 23/30] migration: Introduce VMStateStructMember
-Date: Wed, 26 Aug 2026 11:28:58 -0300
-Message-ID: <20260826142905.2315503-24-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, Aadeshveer Singh <aadeshveer07@gmail.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: [PULL 08/30] migration: add eager load thread and setup for fast
+ snapshot load
+Date: Wed, 26 Aug 2026 11:28:43 -0300
+Message-ID: <20260826142905.2315503-9-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260826142905.2315503-1-farosas@suse.de>
 References: <20260826142905.2315503-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: F30FA21225
+X-Rspamd-Queue-Id: 83DC11F82D
 X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-0.998]; MIME_GOOD(-0.10)[text/plain];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
  MX_GOOD(-0.01)[]; MIME_TRACE(0.00)[0:+];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  TO_MATCH_ENVRCPT_ALL(0.00)[]; ARC_NA(0.00)[];
@@ -100,14 +101,14 @@ X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  DKIM_TRACE(0.00)[suse.de:+]; TO_DN_SOME(0.00)[];
  RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
  FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,gitlab.com:url,suse.de:mid,suse.de:email,suse.de:dkim];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:email,suse.de:dkim];
  RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
  DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_VIA_SMTP_AUTH(0.00)[];
  FREEMAIL_ENVRCPT(0.00)[gmail.com]
 X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,793 +130,321 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When migrating a buffer or array, the vmstate code needs to know the
-size of the buffer and the number of elements of the array. Today a
-vmstate writer can choose from a number of macros that take as last
-input the name of a struct member from where the size/num will be
-read.
+From: Aadeshveer Singh <aadeshveer07@gmail.com>
 
-At load time, the code will access those values via an opaque pointer
-to the migrated data and therefore it needs to also know the size of
-the struct member at that offset.
+In fast snapshot load a thread is needed for actively loading in pages
+along with the fault path so that the guest is not dependent on fault
+thread indefinitely. Considering the difference from usual network
+postcopy where major chunk of RAM is already loaded here entire RAM
+needs to be loaded later. Existance of background pages which are not
+really accessed by the guest might never be loaded and system will be
+locked in migration for indefinite time. As there should be no
+assumption about how guest accesses memory, the load times can be
+indefinite.
 
-Currently that information is communicated by means of the
-VMS_VARRAY_* and VMS_VBUFFER_* flags, where each possible type is
-represented by a flag.
+Add postcopy_ram_eager_load_thread(), for the eager thread which
+iterates over all non ignored blocks calling ram_block_load_eager()
+on each. ram_block_load_eager then iterates to load in all pages using
+postcopy_mapped_ram_load_page(), with a different channel, which takes
+care of not loading in pages already loaded by fault thread. On
+completion the thread schedules postcopy_incoming_complete_bh() to
+destroy the incoming migration state.
 
-So far, that's all fine, but since the vmstate code makes heavy use of
-macros, handling several types individually (i.e. by name: int,
-int32_t, etc) requires several versions of a same macro, one for each
-type. E.g: VMSTATE_VBUFFER_ALLOC_UINT32
-                                 ^
+Add postcopy_ram_eager_load_setup() to create the thread. Added joining
+logic in postcopy_incoming_cleanup().
 
-This creates a pattern where the vmstate writer has to match the macro
-name to the data type and has resulted in the code having a tendency
-of having one macro version for each type, for each type of vmstate.
+Add tracepoints for entry and exit to eager load thread.
 
-There is also some cognitive load to deal with, e.g.
-VMSTATE_VARRAY_INT32 doesn't hold an array of int32, it holds an array
-of something else and the number of elements for the array is stored
-in a variable of type int32.
+When both mapped-ram and postcopy-ram are set, divert from
+qemu_loadvm_state to run fast snapshot load
 
-We're now dealing with the scenario where the code has been expecting
-int32_t at some places, but a uint64_t macro variant has been added
-without the code being updated.
+Initialize postcopy RAM state and register RAM Blocks with userfaultfd
+via ram_postcopy_incoming_init() and postcopy_ram_incoming_setup() in
+process_incoming_migration_co(). Fault thread needs to be launched
+before VM to serve faults for some hardwares emulation that need to read
+RAM (like vapic devices). Populate bitmaps and offset tables while
+reading file in qemu_loadvm_state_main.
 
-To address all these situations, introduce a new struct that will hold
-the offset of the struct members, but also their size, so the various
-extra macros can all be removed and the person writing the vmstate
-doesn't need to care about type-checking. Still, keep a minimum check
-that those fields are at least integers and fit into 64 bits.
+Add function qemu_loadvm_run_fast_snapshot_load() which starts the VM
+using loadvm_postcopy_handle_run_bh() and launches eager load thread.
 
-What changes:
+Skip scheduling process_incoming_migration_bh() in
+process_incoming_migration_co(), for fast snapshot load as the state
+cleanup is managed by eager load thread on completion.
 
-1) type checking changes from individual types to a single check for
-   all integers;
-
-2) there are new ways to access the offsets;
-
-num_offset -> num_indirect.offset
-size_offset -> size_indirect.offset
-[new] num_indirect.size
-[new] size_indirect.size
-
-2) reading the offsets goes from checking the VMS_VARRAY_* flags in an
-   if/elseif block to comparing offset.size against the hardcoded
-   sizes in bytes;
-
-3) the VMS_VARRAY_* and VMS_VBUFFER_* flags become obsolete. Removed
-   in the next patch;
-
-4) memory usage increases +1 byte per vmstate;
-
-Reported-by: Seungjung Kim <seungjung0711@gmail.com>
-Fixes: CVE-2026-6426
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3675
-Acked-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- include/migration/vmstate.h        | 163 +++++++++++++++++++++--------
- migration/savevm.c                 |   4 +-
- migration/vmstate.c                |  50 +++++----
- rust/bindings/migration-sys/lib.rs |  10 ++
- rust/migration/src/vmstate.rs      |  24 ++++-
- rust/tests/tests/vmstate_tests.rs  |  26 ++---
- 6 files changed, 197 insertions(+), 80 deletions(-)
+ migration/migration.c    | 36 +++++++++++++++++--
+ migration/migration.h    |  5 +++
+ migration/postcopy-ram.c | 76 ++++++++++++++++++++++++++++++++++++++++
+ migration/postcopy-ram.h |  2 ++
+ migration/savevm.c       | 16 +++++++++
+ migration/savevm.h       |  2 ++
+ migration/trace-events   |  2 ++
+ 7 files changed, 137 insertions(+), 2 deletions(-)
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 214a2131350..12bfa64fb92 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -31,6 +31,7 @@
- 
- typedef struct VMStateInfo VMStateInfo;
- typedef struct VMStateField VMStateField;
-+typedef struct VMStateStructMember VMStateStructMember;
- 
- /*
-  * VMStateInfo allows customized migration of objects that don't fit in
-@@ -67,15 +68,15 @@ enum VMStateFlags {
-      * to the actual field (e.g. struct a { uint8_t *b;
-      * }). Dereference the pointer before using it as basis for
-      * further pointer arithmetic (see e.g. VMS_ARRAY). Does not
--     * affect the meaning of VMStateField.num_offset or
--     * VMStateField.size_offset; see VMS_VARRAY* and VMS_VBUFFER for
-+     * affect the meaning of VMStateField.num_indirect or
-+     * VMStateField.size_indirect; see VMS_VARRAY* and VMS_VBUFFER for
-      * those. */
-     VMS_POINTER          = 0x002,
- 
-     /* The field is an array of fixed size. VMStateField.num contains
-      * the number of entries in the array. The size of each entry is
-      * given by VMStateField.size and / or opaque +
--     * VMStateField.size_offset; see VMS_VBUFFER and
-+     * VMStateField.size_indirect; see VMS_VBUFFER and
-      * VMS_MULTIPLY. Each array entry will be processed individually
-      * (VMStateField.info.get()/put() if VMS_STRUCT is not set,
-      * recursion into VMStateField.vmsd if VMS_STRUCT is set). May not
-@@ -88,8 +89,9 @@ enum VMStateFlags {
-      * array entry. */
-     VMS_STRUCT           = 0x008,
- 
--    /* The field is an array of variable size. The int32_t at opaque +
--     * VMStateField.num_offset contains the number of entries in the
-+    /*
-+     * The field is an array of variable size. The integer at opaque +
-+     * VMStateField.num_indirect contains the number of entries in the
-      * array. See the VMS_ARRAY description regarding array handling
-      * in general. May not be combined with VMS_ARRAY or any other
-      * VMS_VARRAY*. */
-@@ -105,7 +107,7 @@ enum VMStateFlags {
-     VMS_ARRAY_OF_POINTER = 0x040,
- 
-     /* The field is an array of variable size. The uint16_t at opaque
--     * + VMStateField.num_offset
-+     * + VMStateField.num_indirect
-      * contains the number of entries in the array. See the VMS_ARRAY
-      * description regarding array handling in general. May not be
-      * combined with VMS_ARRAY or any other VMS_VARRAY*. */
-@@ -114,26 +116,27 @@ enum VMStateFlags {
-     /* The size of the individual entries (a single array entry if
-      * VMS_ARRAY or any of VMS_VARRAY* are set, or the field itself if
-      * neither is set) is variable (i.e. not known at compile-time),
--     * but the same for all entries. Use the int32_t at opaque +
--     * VMStateField.size_offset (subject to VMS_MULTIPLY) to determine
-+     * but the same for all entries. Use the integer at opaque +
-+     * VMStateField.size_indirect (subject to VMS_MULTIPLY) to determine
-      * the size of each (and every) entry. */
-     VMS_VBUFFER          = 0x100,
- 
--    /* Multiply the entry size given by the int32_t at opaque +
--     * VMStateField.size_offset (see VMS_VBUFFER description) with
-+    /*
-+     * Multiply the entry size given by the integer at opaque +
-+     * VMStateField.size_indirect (see VMS_VBUFFER description) with
-      * VMStateField.size to determine the number of bytes to be
-      * allocated. Only valid in combination with VMS_VBUFFER. */
-     VMS_MULTIPLY         = 0x200,
- 
-     /* The field is an array of variable size. The uint8_t at opaque +
--     * VMStateField.num_offset
-+     * VMStateField.num_indirect
-      * contains the number of entries in the array. See the VMS_ARRAY
-      * description regarding array handling in general. May not be
-      * combined with VMS_ARRAY or any other VMS_VARRAY*. */
-     VMS_VARRAY_UINT8     = 0x400,
- 
-     /* The field is an array of variable size. The uint32_t at opaque
--     * + VMStateField.num_offset
-+     * + VMStateField.num_indirect
-      * contains the number of entries in the array. See the VMS_ARRAY
-      * description regarding array handling in general. May not be
-      * combined with VMS_ARRAY or any other VMS_VARRAY*. */
-@@ -187,29 +190,88 @@ typedef enum {
-     MIG_PRI_MAX,
- } MigrationPriority;
- 
-+
-+/*
-+ * VMStateStructMember: Metadata about a single member of the struct
-+ * being migrated by the vmstate. This is kept separate from
-+ * VMStateField because a single VMStateField can reference other
-+ * members of the struct aside from the main struct member that's
-+ * being migrated.
-+ *
-+ * One situation where extra fields are referenced is the common case
-+ * of a struct containing an array or buffer, the size of which is
-+ * stored in another member of the same struct.
-+ *
-+ * Example 1:
-+ * struct IDEState {
-+ *     ...
-+ *     uint8_t *io_buffer;
-+ *     int32_t io_buffer_total_len;
-+ *     ...
-+ * }
-+ * VMSTATE_VARRAY_INT32(io_buffer, IDEState, io_buffer_total_len, 1,
-+ *                      vmstate_info_uint8, uint8_t)
-+ *
-+ * In the above, io_buffer is the main field being migrated by the
-+ * VMSTATE_VARRAY while io_buffer_total_len is the meta field that
-+ * provides the size of the io_buffer. In this particular case,
-+ * io_buffer_total_len is never migrated.
-+ *
-+ * Example 2:
-+ * struct SpaprMachineState {
-+ *      ...
-+ *      uint32_t fdt_size;
-+ *      void *fdt_blob;
-+ *      ...
-+ * }
-+ * VMSTATE_UINT32(fdt_size, SpaprMachineState),
-+ * VMSTATE_VBUFFER_ALLOC_UINT32(fdt_blob, SpaprMachineState, 0, NULL, fdt_size),
-+ *
-+ * Here, fdt_blob is the field being migrated by VMSTATE_VBUFFER_ALLOC
-+ * and fdt_size is the meta field providing the size. In this case,
-+ * the extra field is also independently migrated by the
-+ * VMSTATE_UINT32 above.
-+ */
-+struct VMStateStructMember {
-+    /* offsetof the field inside the migrated struct */
-+    uint32_t offset;
-+    /* size of field itself */
-+    uint8_t size;
-+};
-+
- struct VMStateField {
-     const char *name;
-     size_t offset;
- 
-     /*
--     * @size or @size_offset specifies the size of the element embeded in
--     * the field.  Only one of them should be present never both.  When
--     * @size_offset is used together with VMS_VBUFFER, it means the size is
--     * dynamic calculated instead of a constant.
-+     * @size directly specifies the size of the element being
-+     * migrated.
-      *
--     * When the field is an array of any type, this stores the size of one
--     * element of the array.
-+     * @size_indirect specifies the offset inside a struct where the
-+     * size of the element is stored.
-      *
--     * NOTE: even if VMS_POINTER or VMS_ARRAY_OF_POINTER may be specified,
--     * this parameter always reflects the real size of the objects that a
--     * pointer point to.
-+     *   Only one of the above should be present (except for
-+     *   VMSTATE_MULTIPLY which uses .size as a multiplier). When
-+     *   @size_indirect is used together with VMS_VBUFFER, it means
-+     *   the size is dynamic calculated instead of a constant.
-+     *
-+     *   When the field is an array of any type, these refer to the size
-+     *   of one element of the array.
-+     *
-+     *   NOTE: even if VMS_POINTER or VMS_ARRAY_OF_POINTER may be
-+     *   specified, these parameters always reflect the real size of the
-+     *   objects that a pointer point to.
-+     *
-+     * @num_indirect specifies the offset inside a struct where the
-+     * number of elements of an array is stored.
-      */
-     size_t size;
--    size_t size_offset;
-+    VMStateStructMember size_indirect;
-+    VMStateStructMember num_indirect;
- 
-     size_t start;
-     int num;
--    size_t num_offset;
-+
-     const VMStateInfo *info;
-     enum VMStateFlags flags;
-     const VMStateDescription *vmsd;
-@@ -328,6 +390,17 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     (type_check(t1, typeof_elt_of_field(t2, f))                      \
-      + QEMU_BUILD_BUG_ON_ZERO(!QEMU_IS_ARRAY(((t2 *)0)->f)))
- 
-+#define type_check_int64(t)                                     \
-+    (~((t)0) * sizeof(struct {                                  \
-+            QEMU_BUILD_BUG_ON(sizeof(t) > sizeof(uint64_t));    \
-+    }))
-+
-+#define vmstate_field_offset(_state, _field) {                  \
-+    .offset = (offsetof(_state, _field) +                       \
-+            type_check_int64(typeof_field(_state, _field))),    \
-+    .size = sizeof(typeof_field(_state, _field)),               \
-+}
-+
- #define vmstate_offset_value(_state, _field, _type)                  \
-     (offsetof(_state, _field) +                                      \
-      type_check(_type, typeof_field(_state, _field)))
-@@ -454,7 +527,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- #define VMSTATE_VARRAY_INT32(_field, _state, _field_num, _version, _info, _type) {\
-     .name       = (stringify(_field)),                               \
-     .version_id = (_version),                                        \
--    .num_offset = vmstate_offset_value(_state, _field_num, int32_t), \
-+    .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .info       = &(_info),                                          \
-     .size       = sizeof(_type),                                     \
-     .flags      = VMS_VARRAY_INT32|VMS_POINTER,                      \
-@@ -464,7 +537,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- #define VMSTATE_VARRAY_UINT32(_field, _state, _field_num, _version, _info, _type) {\
-     .name       = (stringify(_field)),                               \
-     .version_id = (_version),                                        \
--    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t),\
-+    .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .info       = &(_info),                                          \
-     .size       = sizeof(_type),                                     \
-     .flags      = VMS_VARRAY_UINT32|VMS_POINTER,                     \
-@@ -474,7 +547,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- #define VMSTATE_VARRAY_INT32_ALLOC(_field, _state, _field_num, _version, _info, _type) {\
-     .name       = (stringify(_field)),                               \
-     .version_id = (_version),                                        \
--    .num_offset = vmstate_offset_value(_state, _field_num, int32_t), \
-+    .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .info       = &(_info),                                          \
-     .size       = sizeof(_type),                                     \
-     .flags      = VMS_VARRAY_INT32 | VMS_POINTER | VMS_ALLOC,        \
-@@ -484,7 +557,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- #define VMSTATE_VARRAY_UINT32_ALLOC(_field, _state, _field_num, _version, _info, _type) {\
-     .name       = (stringify(_field)),                               \
-     .version_id = (_version),                                        \
--    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t),\
-+    .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .info       = &(_info),                                          \
-     .size       = sizeof(_type),                                     \
-     .flags      = VMS_VARRAY_UINT32|VMS_POINTER|VMS_ALLOC,           \
-@@ -494,7 +567,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- #define VMSTATE_VARRAY_UINT16_ALLOC(_field, _state, _field_num, _version, _info, _type) {\
-     .name       = (stringify(_field)),                               \
-     .version_id = (_version),                                        \
--    .num_offset = vmstate_offset_value(_state, _field_num, uint16_t),\
-+    .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .info       = &(_info),                                          \
-     .size       = sizeof(_type),                                     \
-     .flags      = VMS_VARRAY_UINT16 | VMS_POINTER | VMS_ALLOC,       \
-@@ -504,7 +577,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- #define VMSTATE_VARRAY_UINT16_UNSAFE(_field, _state, _field_num, _version, _info, _type) {\
-     .name       = (stringify(_field)),                               \
-     .version_id = (_version),                                        \
--    .num_offset = vmstate_offset_value(_state, _field_num, uint16_t),\
-+    .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .info       = &(_info),                                          \
-     .size       = sizeof(_type),                                     \
-     .flags      = VMS_VARRAY_UINT16,                                 \
-@@ -583,7 +656,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     _field, _state, _field_num, _version, _vmsd, _type) {            \
-     .name       = (stringify(_field)),                               \
-     .version_id = (_version),                                        \
--    .num_offset = vmstate_offset_value(_state, _field_num, uint8_t), \
-+    .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .vmsd       = &(_vmsd),                                          \
-     .size       = sizeof(_type),                                     \
-     .flags      = VMS_POINTER | VMS_VARRAY_UINT8 |                   \
-@@ -596,7 +669,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     _field, _state, _field_num, _version, _vmsd, _type) {             \
-     .name       = (stringify(_field)),                                \
-     .version_id = (_version),                                         \
--    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t), \
-+    .num_indirect = vmstate_field_offset(_state, _field_num),         \
-     .vmsd       = &(_vmsd),                                           \
-     .size       = sizeof(_type),                                      \
-     .flags      = VMS_POINTER | VMS_VARRAY_UINT32 |                   \
-@@ -608,7 +681,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- #define VMSTATE_VARRAY_OF_POINTER_UINT32(_field, _state, _field_num, _version, _info, _type) { \
-     .name       = (stringify(_field)),                                    \
-     .version_id = (_version),                                             \
--    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t),     \
-+    .num_indirect = vmstate_field_offset(_state, _field_num),             \
-     .info       = &(_info),                                               \
-     .flags      = VMS_VARRAY_UINT32 | VMS_ARRAY_OF_POINTER | VMS_POINTER, \
-     .offset     = vmstate_offset_pointer(_state, _field, _type *),          \
-@@ -650,7 +723,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- 
- #define VMSTATE_STRUCT_VARRAY_UINT8(_field, _state, _field_num, _version, _vmsd, _type) { \
-     .name       = (stringify(_field)),                               \
--    .num_offset = vmstate_offset_value(_state, _field_num, uint8_t), \
-+    .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .version_id = (_version),                                        \
-     .vmsd       = &(_vmsd),                                          \
-     .size       = sizeof(_type),                                     \
-@@ -674,7 +747,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- #define VMSTATE_STRUCT_VARRAY_POINTER_INT32(_field, _state, _field_num, _vmsd, _type) { \
-     .name       = (stringify(_field)),                               \
-     .version_id = 0,                                                 \
--    .num_offset = vmstate_offset_value(_state, _field_num, int32_t), \
-+    .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .size       = sizeof(_type),                                     \
-     .vmsd       = &(_vmsd),                                          \
-     .flags      = VMS_POINTER | VMS_VARRAY_INT32 | VMS_STRUCT,       \
-@@ -684,7 +757,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- #define VMSTATE_STRUCT_VARRAY_POINTER_UINT32(_field, _state, _field_num, _vmsd, _type) { \
-     .name       = (stringify(_field)),                               \
-     .version_id = 0,                                                 \
--    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t),\
-+    .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .size       = sizeof(_type),                                     \
-     .vmsd       = &(_vmsd),                                          \
-     .flags      = VMS_POINTER | VMS_VARRAY_INT32 | VMS_STRUCT,       \
-@@ -694,7 +767,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- #define VMSTATE_STRUCT_VARRAY_POINTER_UINT16(_field, _state, _field_num, _vmsd, _type) { \
-     .name       = (stringify(_field)),                               \
-     .version_id = 0,                                                 \
--    .num_offset = vmstate_offset_value(_state, _field_num, uint16_t),\
-+    .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .size       = sizeof(_type),                                     \
-     .vmsd       = &(_vmsd),                                          \
-     .flags      = VMS_POINTER | VMS_VARRAY_UINT16 | VMS_STRUCT,      \
-@@ -703,7 +776,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- 
- #define VMSTATE_STRUCT_VARRAY_UINT32(_field, _state, _field_num, _version, _vmsd, _type) { \
-     .name       = (stringify(_field)),                               \
--    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t), \
-+    .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .version_id = (_version),                                        \
-     .vmsd       = &(_vmsd),                                          \
-     .size       = sizeof(_type),                                     \
-@@ -715,7 +788,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .name       = (stringify(_field)),                               \
-     .version_id = (_version),                                        \
-     .vmsd       = &(_vmsd),                                          \
--    .num_offset = vmstate_offset_value(_state, _field_num, int32_t), \
-+    .num_indirect = vmstate_field_offset(_state, _field_num),        \
-     .size       = sizeof(_type),                                     \
-     .flags      = VMS_STRUCT|VMS_VARRAY_INT32|VMS_ALLOC|VMS_POINTER, \
-     .offset     = vmstate_offset_pointer(_state, _field, _type),     \
-@@ -736,7 +809,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .name         = (stringify(_field)),                             \
-     .version_id   = (_version),                                      \
-     .field_exists = (_test),                                         \
--    .size_offset  = vmstate_offset_value(_state, _field_size, uint32_t),\
-+    .size_indirect  = vmstate_field_offset(_state, _field_size),     \
-     .size         = (_multiply),                                      \
-     .info         = &vmstate_info_buffer,                            \
-     .flags        = VMS_VBUFFER|VMS_POINTER|VMS_MULTIPLY,            \
-@@ -747,7 +820,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .name         = (stringify(_field)),                             \
-     .version_id   = (_version),                                      \
-     .field_exists = (_test),                                         \
--    .size_offset  = vmstate_offset_value(_state, _field_size, int32_t),\
-+    .size_indirect  = vmstate_field_offset(_state, _field_size),     \
-     .info         = &vmstate_info_buffer,                            \
-     .flags        = VMS_VBUFFER|VMS_POINTER,                         \
-     .offset       = offsetof(_state, _field),                        \
-@@ -757,7 +830,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .name         = (stringify(_field)),                             \
-     .version_id   = (_version),                                      \
-     .field_exists = (_test),                                         \
--    .size_offset  = vmstate_offset_value(_state, _field_size, uint32_t),\
-+    .size_indirect  = vmstate_field_offset(_state, _field_size),     \
-     .info         = &vmstate_info_buffer,                            \
-     .flags        = VMS_VBUFFER|VMS_POINTER,                         \
-     .offset       = offsetof(_state, _field),                        \
-@@ -767,7 +840,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .name         = (stringify(_field)),                             \
-     .version_id   = (_version),                                      \
-     .field_exists = (_test),                                         \
--    .size_offset  = vmstate_offset_value(_state, _field_size, uint64_t),\
-+    .size_indirect  = vmstate_field_offset(_state, _field_size),     \
-     .info         = &vmstate_info_buffer,                            \
-     .flags        = VMS_VBUFFER | VMS_POINTER,                       \
-     .offset       = offsetof(_state, _field),                        \
-@@ -778,7 +851,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .name         = (stringify(_field)),                             \
-     .version_id   = (_version),                                      \
-     .field_exists = (_test),                                         \
--    .size_offset  = vmstate_offset_value(_state, _field_size, uint32_t),\
-+    .size_indirect  = vmstate_field_offset(_state, _field_size),     \
-     .info         = &vmstate_info_buffer,                            \
-     .flags        = VMS_VBUFFER|VMS_POINTER|VMS_ALLOC,               \
-     .offset       = offsetof(_state, _field),                        \
-@@ -838,7 +911,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
- #define VMSTATE_UNUSED_VARRAY_UINT32(_state, _test, _version, _field_num, _size) {\
-     .name         = "unused",                                        \
-     .field_exists = (_test),                                         \
--    .num_offset   = vmstate_offset_value(_state, _field_num, uint32_t),\
-+    .num_indirect   = vmstate_field_offset(_state, _field_num),      \
-     .version_id   = (_version),                                      \
-     .size         = (_size),                                         \
-     .info         = &vmstate_info_unused_buffer,                     \
-@@ -852,7 +925,7 @@ extern const VMStateInfo vmstate_info_g_byte_array;
-     .name         = (stringify(_field)),                             \
-     .field_exists = (_test),                                         \
-     .version_id   = (_version),                                      \
--    .size_offset  = vmstate_offset_value(_state, _field_size, int32_t),\
-+    .size_indirect  = vmstate_field_offset(_state, _field_size),     \
-     .info         = &vmstate_info_bitmap,                            \
-     .flags        = VMS_VBUFFER|VMS_POINTER,                         \
-     .offset       = offsetof(_state, _field),                        \
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 161a9d090fa..16b049c4539 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -873,14 +873,14 @@ static void vmstate_check(const VMStateDescription *vmsd)
-                      * Size must be provided because dest QEMU needs that
-                      * info to know what to allocate
-                      */
--                    assert(field->size || field->size_offset);
-+                    assert(field->size != 0 || field->size_indirect.size != 0);
-                 } else {
-                     /*
-                      * Otherwise size info isn't useful (because it's
-                      * always the size of host pointer), detect accidental
-                      * setup of sizes in this case.
-                      */
--                    assert(field->size == 0 && field->size_offset == 0);
-+                    assert(field->size == 0 && field->size_indirect.size == 0);
-                 }
-                 /*
-                  * VMS_ARRAY_OF_POINTER must be used only together with one
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 50ebe378452..372aed258f1 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -78,32 +78,44 @@ vmsd_init_ptr_marker_field(VMStateField *fake, const VMStateField *field)
-     };
+diff --git a/migration/migration.c b/migration/migration.c
+index a30779f37c8..59cdc1a169f 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -710,6 +710,11 @@ static void process_incoming_migration_bh(void *opaque)
+     migration_incoming_state_destroy();
  }
  
--static int vmstate_n_elems(void *opaque, const VMStateField *field)
-+static uint64_t vmstate_read_from_offset(const VMStateStructMember *member,
-+                                         void *opaque)
- {
--    int n_elems = 1;
-+    uint8_t *ptr = (uint8_t *)opaque + member->offset;
-+    uint64_t v = 0;
-+
-+    switch (member->size) {
-+    case 1:
-+    case 2:
-+    case 4:
-+    case 8:
-+        memcpy(&v, ptr, member->size);
-+        return v;
-+    }
-+    g_assert_not_reached();
-+}
-+
-+static uint64_t vmstate_n_elems(void *opaque, const VMStateField *field)
++static bool migration_incoming_has_postcopy_thread(MigrationIncomingState *mis)
 +{
-+    uint64_t n_elems = 1;
- 
-     if (field->flags & VMS_ARRAY) {
-         n_elems = field->num;
--    } else if (field->flags & VMS_VARRAY_INT32) {
--        n_elems = *(int32_t *)(opaque + field->num_offset);
--    } else if (field->flags & VMS_VARRAY_UINT32) {
--        n_elems = *(uint32_t *)(opaque + field->num_offset);
--    } else if (field->flags & VMS_VARRAY_UINT16) {
--        n_elems = *(uint16_t *)(opaque + field->num_offset);
--    } else if (field->flags & VMS_VARRAY_UINT8) {
--        n_elems = *(uint8_t *)(opaque + field->num_offset);
-+    } else if (field->flags & (VMS_VARRAY_INT32 | VMS_VARRAY_UINT32
-+                               | VMS_VARRAY_UINT16 | VMS_VARRAY_UINT8)) {
-+        n_elems = vmstate_read_from_offset(&field->num_indirect, opaque);
-     }
- 
-     trace_vmstate_n_elems(field->name, n_elems);
-     return n_elems;
- }
- 
--static int vmstate_size(void *opaque, const VMStateField *field)
-+static uint64_t vmstate_size(void *opaque, const VMStateField *field)
- {
--    int size;
-+    uint64_t size;
- 
-     if (field->flags & VMS_VBUFFER) {
--        size = *(int32_t *)(opaque + field->size_offset);
-+        size = vmstate_read_from_offset(&field->size_indirect, opaque);
-         if (field->flags & VMS_MULTIPLY) {
-             size *= field->size;
-         }
-@@ -124,7 +136,7 @@ static void vmstate_handle_alloc(void *ptr, const VMStateField *field,
-                                  void *opaque)
- {
-     if (field->flags & VMS_POINTER && field->flags & VMS_ALLOC) {
--        gsize size = vmstate_size(opaque, field);
-+        uint64_t size = vmstate_size(opaque, field);
-         size *= vmstate_n_elems(opaque, field);
-         if (size) {
-             *(void **)ptr = g_malloc(size);
-@@ -335,8 +347,9 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
- 
-         if (exists) {
-             void *first_elem = opaque + field->offset;
--            int i, n_elems = vmstate_n_elems(opaque, field);
--            int size = vmstate_size(opaque, field);
-+            int i;
-+            uint64_t n_elems = vmstate_n_elems(opaque, field);
-+            uint64_t size = vmstate_size(opaque, field);
- 
-             vmstate_handle_alloc(first_elem, field, opaque);
-             if (field->flags & VMS_POINTER) {
-@@ -650,8 +663,9 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-     while (field->name) {
-         if (vmstate_field_exists(vmsd, field, opaque, version_id)) {
-             void *first_elem = opaque + field->offset;
--            int i, n_elems = vmstate_n_elems(opaque, field);
--            int size = vmstate_size(opaque, field);
-+            int i;
-+            uint64_t n_elems = vmstate_n_elems(opaque, field);
-+            uint64_t size = vmstate_size(opaque, field);
-             JSONWriter *vmdesc_loop = vmdesc;
-             bool is_prev_null = false;
-             /*
-diff --git a/rust/bindings/migration-sys/lib.rs b/rust/bindings/migration-sys/lib.rs
-index 9581481e421..baa2730ca9d 100644
---- a/rust/bindings/migration-sys/lib.rs
-+++ b/rust/bindings/migration-sys/lib.rs
-@@ -47,6 +47,7 @@ fn default() -> Self {
- unsafe impl Zeroable for VMStateFlags {}
- unsafe impl Zeroable for VMStateField {}
- unsafe impl Zeroable for VMStateDescription {}
-+unsafe impl Zeroable for VMStateStructMember {}
- 
- // The following higher-level helpers could be in "migration"
- // crate when Rust has const trait impl.
-@@ -115,3 +116,12 @@ pub const fn with_varray_flag(mut self, flag: VMStateFlags) -> Self {
-         self.with_varray_flag_unchecked(flag)
-     }
- }
++    return mis->have_listen_thread || mis->have_eager_load_thread;
++}
 +
-+impl VMStateStructMember {
-+    pub const fn new(off: usize, size: usize) -> Self {
-+        Self {
-+            offset: off as u32,
-+            size: size as u8,
+ static void coroutine_fn
+ process_incoming_migration_co(void *opaque)
+ {
+@@ -739,17 +744,44 @@ process_incoming_migration_co(void *opaque)
+     migrate_set_state(&mis->state, MIGRATION_STATUS_SETUP,
+                       MIGRATION_STATUS_ACTIVE);
+ 
++    /*
++     * When loading snapshot with postcopy enabled, setup the postcopy
++     * infrastructure before loading the major part of device states.
++     * It's required because qemu_loadvm_state() may access guest memory
++     * while loading device states, which can cause page faults already.
++     */
++    if (migrate_postcopy_ram() && migrate_mapped_ram()) {
++        migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
++                          MIGRATION_STATUS_POSTCOPY_DEVICE);
++
++        if (ram_postcopy_incoming_init(mis, &local_err)) {
++            goto fail;
++        }
++
++        postcopy_state_set(POSTCOPY_INCOMING_LISTENING);
++        if (postcopy_ram_incoming_setup(mis, &local_err)) {
++            goto fail;
 +        }
 +    }
-+}
-diff --git a/rust/migration/src/vmstate.rs b/rust/migration/src/vmstate.rs
-index 7409b592a2c..48d0065139a 100644
---- a/rust/migration/src/vmstate.rs
-+++ b/rust/migration/src/vmstate.rs
-@@ -41,7 +41,7 @@
- };
++
+     mis->loadvm_co = qemu_coroutine_self();
+     ret = qemu_loadvm_state(mis->from_src_file, &local_err);
+     mis->loadvm_co = NULL;
++    if (ret < 0) {
++        goto fail;
++    }
++
++    if (migrate_postcopy_ram() && migrate_mapped_ram()) {
++        qemu_loadvm_run_fast_snapshot_load(mis->from_src_file, mis);
++    }
  
- use crate::bindings::{self, VMStateFlags};
--pub use crate::bindings::{MigrationPriority, VMStateField};
-+pub use crate::bindings::{MigrationPriority, VMStateField, VMStateStructMember};
+     trace_vmstate_downtime_checkpoint("dst-precopy-loadvm-completed");
  
- /// This macro is used to call a function with a generic argument bound
- /// to the type of a field.  The function must take a
-@@ -119,6 +119,23 @@ pub const fn vmstate_varray_flag<T: VMState>(_: PhantomData<T>) -> VMStateFlags
-     T::VARRAY_FLAG
+     trace_process_incoming_migration_co_end(ret);
+-    if (mis->have_listen_thread) {
++    if (migration_incoming_has_postcopy_thread(mis)) {
+         /*
+          * Postcopy was started, cleanup should happen at the end of the
+-         * postcopy listen thread.
++         * postcopy listen thread or eager load thread.
+          */
+         trace_process_incoming_migration_co_postcopy_end_main();
+         goto out;
+diff --git a/migration/migration.h b/migration/migration.h
+index 631421c784b..e47ff4e3d11 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -42,6 +42,7 @@
+ #define  MIGRATION_THREAD_DST_FAULT         "mig/dst/fault"
+ #define  MIGRATION_THREAD_DST_LISTEN        "mig/dst/listen"
+ #define  MIGRATION_THREAD_DST_PREEMPT       "mig/dst/preempt"
++#define  MIGRATION_THREAD_DST_SNAPSHOT_LOAD "mig/dst/snapshot_load"
+ 
+ struct PostcopyBlocktimeContext;
+ typedef struct ThreadPool ThreadPool;
+@@ -120,6 +121,10 @@ struct MigrationIncomingState {
+     bool           have_listen_thread;
+     QemuThread     listen_thread;
+ 
++    /* Thread to load pages eagerly in fast snapshot load case */
++    bool have_eager_load_thread;
++    QemuThread eager_load_thread;
++
+     /* For the kernel to send us notifications */
+     int       userfault_fd;
+     /* To notify the fault_thread to wake, e.g., when need to quit */
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index 430b5f24e1a..3b66c1f6d42 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -39,6 +39,8 @@
+ #include "qemu/mmap-alloc.h"
+ #include "options.h"
+ 
++static void postcopy_incoming_complete_bh(void *opaque);
++
+ /* Arbitrary limit on size of each discard command,
+  * keeps them around ~200 bytes
+  */
+@@ -1867,6 +1869,70 @@ int postcopy_place_page_zero(MigrationIncomingState *mis, void *host,
+     }
  }
  
-+pub const OPAQUE: &[u8; 1048576] = &[0; 1048576];
++/*
++ * Called by postcopy_ram_eager_load_thread over all blocks to load in all the
++ * pending pages of given ram block
++ */
++static int ram_block_load_eager(RAMBlock *rb, void *opaque)
++{
++    MigrationIncomingState *mis = migration_incoming_get_current();
++    MigrationState *s = migrate_get_current();
++    Error *errp = NULL;
++    void *host = qemu_ram_get_host_addr(rb);
++    void *target;
 +
-+pub const fn size_of_ptr_type<T>(_: *const T) -> usize {
-+    ::core::mem::size_of::<T>()
++    for (ram_addr_t page_loc = 0; page_loc < rb->used_length;
++         page_loc += qemu_ram_pagesize(rb)) {
++        target = (uint8_t *)host + page_loc;
++        if (!postcopy_mapped_ram_load_page(mis, rb, page_loc, (uint64_t)target,
++                                           RAM_CHANNEL_PRECOPY, &errp)) {
++            migrate_error_propagate(s, errp);
++            return -1;
++        }
++    }
++    return 0;
 +}
 +
-+#[macro_export]
-+macro_rules! size_of_field_type {
-+    ($struct_name:ty, $($field_name:ident).+) => {
-+        $crate::vmstate::size_of_ptr_type(unsafe {
-+            ::core::ptr::addr_of!(
-+                (*$crate::vmstate::OPAQUE.as_ptr().cast::<$struct_name>()).$($field_name).+
-+            )
-+        })
-+    };
++/*
++ * Used by fast snapshot load to eagerly load in all pages of RAM and schedule
++ * cleanup after entire RAM is loaded
++ */
++static void *postcopy_ram_eager_load_thread(void *opaque)
++{
++    MigrationIncomingState *mis = opaque;
++    MigrationStatus next_state;
++
++    trace_postcopy_ram_eager_load_thread_entry();
++    rcu_register_thread();
++    qemu_event_set(&mis->thread_sync_event);
++
++    if (foreach_not_ignored_block(ram_block_load_eager, NULL)) {
++        next_state = MIGRATION_STATUS_FAILED;
++    } else {
++        next_state = MIGRATION_STATUS_COMPLETED;
++    }
++    migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
++                      next_state);
++
++    postcopy_state_set(POSTCOPY_INCOMING_END);
++    migration_bh_schedule(postcopy_incoming_complete_bh, mis);
++
++    rcu_unregister_thread();
++    trace_postcopy_ram_eager_load_thread_exit();
++    return NULL;
 +}
 +
- /// Return the `VMStateField` for a field of a struct.  The field must be
- /// visible in the current scope.
- ///
-@@ -146,7 +163,10 @@ macro_rules! vmstate_of {
-                 .as_bytes()
-                 .as_ptr().cast::<::std::os::raw::c_char>(),
-             offset: ::std::mem::offset_of!($struct_name, $($field_name).+),
--            $(num_offset: ::std::mem::offset_of!($struct_name, $($num).+),)?
-+	    $(num_indirect: $crate::vmstate::VMStateStructMember {
-+                offset: ::std::mem::offset_of!($struct_name, $($num).+) as u32,
-+		size: $crate::size_of_field_type!($struct_name, $($num).+) as u8,
-+            },)?
-             $(field_exists: $crate::vmstate_exist_fn!($struct_name, $test_fn),)?
-             // The calls to `call_func_with_field!` are the magic that
-             // computes most of the VMStateField from the type of the field.
-diff --git a/rust/tests/tests/vmstate_tests.rs b/rust/tests/tests/vmstate_tests.rs
-index c2c12cfab52..c002ffb2bc4 100644
---- a/rust/tests/tests/vmstate_tests.rs
-+++ b/rust/tests/tests/vmstate_tests.rs
-@@ -65,7 +65,7 @@ fn test_vmstate_uint16() {
-         b"elem\0"
-     );
-     assert_eq!(foo_fields[0].offset, 16);
--    assert_eq!(foo_fields[0].num_offset, 0);
-+    assert_eq!(foo_fields[0].num_indirect.size, 0);
-     assert_eq!(foo_fields[0].info, unsafe { &vmstate_info_int8 });
-     assert_eq!(foo_fields[0].version_id, 0);
-     assert_eq!(foo_fields[0].size, 1);
-@@ -86,7 +86,7 @@ fn test_vmstate_unused() {
-         b"unused\0"
-     );
-     assert_eq!(foo_fields[1].offset, 0);
--    assert_eq!(foo_fields[1].num_offset, 0);
-+    assert_eq!(foo_fields[1].num_indirect.size, 0);
-     assert_eq!(foo_fields[1].info, unsafe { &vmstate_info_unused_buffer });
-     assert_eq!(foo_fields[1].version_id, 0);
-     assert_eq!(foo_fields[1].size, 8);
-@@ -108,7 +108,7 @@ fn test_vmstate_varray_uint16_unsafe() {
-         b"arr\0"
-     );
-     assert_eq!(foo_fields[2].offset, 0);
--    assert_eq!(foo_fields[2].num_offset, 4);
-+    assert_eq!(foo_fields[2].num_indirect.offset, 4);
-     assert_eq!(foo_fields[2].info, unsafe { &vmstate_info_uint8 });
-     assert_eq!(foo_fields[2].version_id, 0);
-     assert_eq!(foo_fields[2].size, 1);
-@@ -172,7 +172,7 @@ fn test_vmstate_bool_v() {
-         b"val\0"
-     );
-     assert_eq!(foo_fields[0].offset, 136);
--    assert_eq!(foo_fields[0].num_offset, 0);
-+    assert_eq!(foo_fields[0].num_indirect.size, 0);
-     assert_eq!(foo_fields[0].info, unsafe { &vmstate_info_bool });
-     assert_eq!(foo_fields[0].version_id, 2);
-     assert_eq!(foo_fields[0].size, 1);
-@@ -193,7 +193,7 @@ fn test_vmstate_uint64() {
-         b"wrap\0"
-     );
-     assert_eq!(foo_fields[1].offset, 128);
--    assert_eq!(foo_fields[1].num_offset, 0);
-+    assert_eq!(foo_fields[1].num_indirect.size, 0);
-     assert_eq!(foo_fields[1].info, unsafe { &vmstate_info_uint64 });
-     assert_eq!(foo_fields[1].version_id, 0);
-     assert_eq!(foo_fields[1].size, 8);
-@@ -215,7 +215,7 @@ fn test_vmstate_struct_varray_uint8() {
-         b"arr_a\0"
-     );
-     assert_eq!(foo_fields[2].offset, 0);
--    assert_eq!(foo_fields[2].num_offset, 60);
-+    assert_eq!(foo_fields[2].num_indirect.offset, 60);
-     assert!(foo_fields[2].info.is_null()); // VMSTATE_STRUCT_VARRAY_UINT8 doesn't set info field.
-     assert_eq!(foo_fields[2].version_id, 1);
-     assert_eq!(foo_fields[2].size, 20);
-@@ -240,7 +240,7 @@ fn test_vmstate_macro_array() {
-         b"arr_i64\0"
-     );
-     assert_eq!(foo_fields[4].offset, 144);
--    assert_eq!(foo_fields[4].num_offset, 0);
-+    assert_eq!(foo_fields[4].num_indirect.size, 0);
-     assert_eq!(foo_fields[4].info, unsafe { &vmstate_info_int64 });
-     assert_eq!(foo_fields[4].version_id, 0);
-     assert_eq!(foo_fields[4].size, 8);
-@@ -264,7 +264,7 @@ fn test_vmstate_struct_varray_uint8_wrapper() {
-         unsafe { CStr::from_ptr(foo_fields[5].name) }.to_bytes_with_nul(),
-         b"arr_a_wrap\0"
-     );
--    assert_eq!(foo_fields[5].num_offset, 228);
-+    assert_eq!(foo_fields[5].num_indirect.offset, 228);
-     assert!(unsafe { foo_fields[5].field_exists.unwrap()(foo_b_p, 0) });
++/*
++ * Create thread for eager loading in fast snapshot load case
++ */
++void postcopy_ram_eager_load_setup(MigrationIncomingState *mis)
++{
++    postcopy_thread_create(
++        mis, &mis->eager_load_thread, MIGRATION_THREAD_DST_SNAPSHOT_LOAD,
++        postcopy_ram_eager_load_thread, QEMU_THREAD_JOINABLE);
++    mis->have_eager_load_thread = true;
++}
++
+ #else
+ /* No target OS support, stubs just fail */
+ void fill_destination_postcopy_migration_info(MigrationInfo *info)
+@@ -1937,6 +2003,11 @@ bool try_mark_postcopy_blocktime_begin(MigrationIncomingState *mis,
+     g_assert_not_reached();
+     return false;
+ }
++
++void postcopy_ram_eager_load_setup(MigrationIncomingState *mis)
++{
++    g_assert_not_reached();
++}
+ #endif
  
-     // The last VMStateField in VMSTATE_FOOB.
-@@ -316,7 +316,7 @@ fn test_vmstate_pointer() {
-         b"ptr\0"
-     );
-     assert_eq!(foo_fields[0].offset, 0);
--    assert_eq!(foo_fields[0].num_offset, 0);
-+    assert_eq!(foo_fields[0].num_indirect.size, 0);
-     assert_eq!(foo_fields[0].info, unsafe { &vmstate_info_int32 });
-     assert_eq!(foo_fields[0].version_id, 2);
-     assert_eq!(foo_fields[0].size, 4);
-@@ -341,7 +341,7 @@ fn test_vmstate_struct_pointer() {
-         b"ptr_a\0"
-     );
-     assert_eq!(foo_fields[1].offset, PTR_SIZE);
--    assert_eq!(foo_fields[1].num_offset, 0);
-+    assert_eq!(foo_fields[1].num_indirect.size, 0);
-     assert_eq!(foo_fields[1].vmsd, VMSTATE_FOOA.as_ref());
-     assert_eq!(foo_fields[1].version_id, 0);
-     assert_eq!(foo_fields[1].size, size_of::<FooA>());
-@@ -366,7 +366,7 @@ fn test_vmstate_macro_array_of_pointer() {
-         b"arr_ptr\0"
-     );
-     assert_eq!(foo_fields[2].offset, 2 * PTR_SIZE);
--    assert_eq!(foo_fields[2].num_offset, 0);
-+    assert_eq!(foo_fields[2].num_indirect.size, 0);
-     assert_eq!(foo_fields[2].info, unsafe { &vmstate_info_uint8 });
-     assert_eq!(foo_fields[2].version_id, 0);
-     assert_eq!(foo_fields[2].size, PTR_SIZE);
-@@ -391,7 +391,7 @@ fn test_vmstate_macro_array_of_pointer_wrapped() {
-         b"arr_ptr_wrap\0"
-     );
-     assert_eq!(foo_fields[3].offset, (FOO_ARRAY_MAX + 2) * PTR_SIZE);
--    assert_eq!(foo_fields[3].num_offset, 0);
-+    assert_eq!(foo_fields[3].num_indirect.size, 0);
-     assert_eq!(foo_fields[3].info, unsafe { &vmstate_info_uint8 });
-     assert_eq!(foo_fields[3].version_id, 0);
-     assert_eq!(foo_fields[3].size, PTR_SIZE);
-@@ -454,7 +454,7 @@ fn test_vmstate_validate() {
-         b"foo_d_0\0"
-     );
-     assert_eq!(foo_fields[0].offset, 0);
--    assert_eq!(foo_fields[0].num_offset, 0);
-+    assert_eq!(foo_fields[0].num_indirect.size, 0);
-     assert!(foo_fields[0].info.is_null());
-     assert_eq!(foo_fields[0].version_id, 0);
-     assert_eq!(foo_fields[0].size, 0);
+ /* ------------------------------------------------------------------------- */
+@@ -2410,6 +2481,11 @@ int postcopy_incoming_cleanup(MigrationIncomingState *mis)
+         mis->have_listen_thread = false;
+     }
+ 
++    if (mis->have_eager_load_thread) {
++        qemu_thread_join(&mis->eager_load_thread);
++        mis->have_eager_load_thread = false;
++    }
++
+     if (migrate_postcopy_ram()) {
+         rc = postcopy_ram_incoming_cleanup(mis);
+     }
+diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
+index ea879f0bc6f..c58a60bc8ae 100644
+--- a/migration/postcopy-ram.h
++++ b/migration/postcopy-ram.h
+@@ -205,4 +205,6 @@ void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
+ int postcopy_incoming_setup(MigrationIncomingState *mis, Error **errp);
+ int postcopy_incoming_cleanup(MigrationIncomingState *mis);
+ 
++void postcopy_ram_eager_load_setup(MigrationIncomingState *mis);
++
+ #endif
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 34dd06f9f73..161a9d090fa 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -3004,6 +3004,22 @@ static bool postcopy_pause_incoming(MigrationIncomingState *mis)
+     return true;
+ }
+ 
++/*
++ * Starts the VM and launches the eager thread for fast snapshot load
++ */
++void qemu_loadvm_run_fast_snapshot_load(QEMUFile *f,
++                                        MigrationIncomingState *mis)
++{
++    postcopy_state_set(POSTCOPY_INCOMING_RUNNING);
++
++    migration_bh_schedule(loadvm_postcopy_handle_run_bh, mis);
++
++    migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
++                      MIGRATION_STATUS_POSTCOPY_ACTIVE);
++
++    postcopy_ram_eager_load_setup(mis);
++}
++
+ int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis,
+                            Error **errp)
+ {
+diff --git a/migration/savevm.h b/migration/savevm.h
+index f7dcdd7d1b6..9988dd4b8a4 100644
+--- a/migration/savevm.h
++++ b/migration/savevm.h
+@@ -70,6 +70,8 @@ void qemu_savevm_send_postcopy_ram_discard(QEMUFile *f, const char *name,
+ int qemu_save_device_state(QEMUFile *f, Error **errp);
+ int qemu_loadvm_state(QEMUFile *f, Error **errp);
+ void qemu_loadvm_state_cleanup(MigrationIncomingState *mis);
++void qemu_loadvm_run_fast_snapshot_load(QEMUFile *f,
++                                        MigrationIncomingState *mis);
+ int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis,
+                            Error **errp);
+ int qemu_load_device_state(QEMUFile *f, Error **errp);
+diff --git a/migration/trace-events b/migration/trace-events
+index af0e7845354..4ae1c226f90 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -315,6 +315,8 @@ postcopy_blocktime_tid_cpu_map(int cpu, uint32_t tid) "cpu: %d, tid: %u"
+ postcopy_blocktime_begin(uint64_t addr, uint64_t time, int cpu, bool exists) "addr: 0x%" PRIx64 ", time: %" PRIu64 ", cpu: %d, exist: %d"
+ postcopy_blocktime_end(uint64_t addr, uint64_t time, int affected_cpu, int affected_non_cpus) "addr: 0x%" PRIx64 ", time: %" PRIu64 ", affected_cpus: %d, affected_non_cpus: %d"
+ postcopy_blocktime_end_one(int cpu, uint8_t left_faults) "cpu: %d, left_faults: %" PRIu8
++postcopy_ram_eager_load_thread_entry(void) ""
++postcopy_ram_eager_load_thread_exit(void) ""
+ 
+ # exec.c
+ migration_exec_outgoing(const char *cmd) "cmd=%s"
 -- 
 2.53.0
 
