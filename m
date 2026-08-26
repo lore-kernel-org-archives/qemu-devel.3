@@ -4,110 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 148DBC5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:56:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95C89C5DF97
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 13:00:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzD8H-0000AS-Nq; Wed, 26 Aug 2026 08:53:34 -0400
+	id 1wzDFE-0006RS-Cd; Wed, 26 Aug 2026 09:00:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wzD83-0008RW-7p; Wed, 26 Aug 2026 08:53:24 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wzDFC-0006RJ-UY
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 09:00:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wzD7u-0002mP-K4; Wed, 26 Aug 2026 08:53:16 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QCVwfe4002737; Wed, 26 Aug 2026 12:52:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=aBxMdLn/te7zVZwKA
- /DiJwCBedCtoL1kjbzaqHVsJvo=; b=GLWwl+6LnCxPfKigx0T5afa6EEHdqbVaK
- 0FCsC7rFXoq7BnoAERFlFakul5vu90C7yvCqjB/lmtqZrhWUTTwOovCmcDEIJ6sw
- tNZj9kN5uqjUTlwoCfZO+ozzue7GA7AUdxvU75xq777COa4BR1/r8yfoxzTmLebp
- s0txoS38ZgZNf3wxxi6tk9tFiEib7Hr9yvH4TSerqdBXGfBK1O4v0UXK8QVWKFDi
- +8la6XIeNyk7SDL3O/Kjyu2FVt+wd8t37gvIfIDWbu5Oa1nDDx874beKMXDXFBmo
- CAPIEpYSOUhqbksPRFf7384TQr0iuBpl3OG65QybhVbt89nFVSz1A==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g73g4xpet-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 12:52:48 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QCfGv9032639;
- Wed, 26 Aug 2026 12:52:47 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4g7qkh9vnn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Aug 2026 12:52:47 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 67QCqkG437749238
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Aug 2026 12:52:46 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6709358060;
- Wed, 26 Aug 2026 12:52:46 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 669CC58059;
- Wed, 26 Aug 2026 12:52:45 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com.com (unknown
- [9.61.78.161]) by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Aug 2026 12:52:45 +0000 (GMT)
-From: Eric Farman <farman@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Zhuoying Cai <zycai@linux.ibm.com>,
- Collin Walling <walling@linux.ibm.com>,
- Jared Rossi <jrossi@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 24/37] pc-bios/s390-ccw: Introduce ZiplBootMode enum for IPL
- mode selection
-Date: Wed, 26 Aug 2026 08:51:59 -0400
-Message-ID: <20260826125213.1901252-25-farman@linux.ibm.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260826125213.1901252-1-farman@linux.ibm.com>
-References: <20260826125213.1901252-1-farman@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wzDFA-00089H-NQ
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 09:00:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1787749238;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=AUHZYFdLPFwyPgYUi3NOCI9ekXAW2UkZfq/9uZy4N10=;
+ b=Kp1DdQ80Xyznnp+eprE0fNbfJfetRTnKJxoMwFHkHmzb0wcI5umOXdXvJupNA1bUqcqqzN
+ HAxaSjJM4sYVooMQyOsRCv+btuZRSisUAeZt2RF7iO+idatErCjx7G4EU4zR7YwubDT/SE
+ 1Ti+W1Xp1r7ksrxcbCx2/dlMr9SkByY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-624-iCq5OVxhP42KJLXq8UF4qA-1; Wed,
+ 26 Aug 2026 09:00:34 -0400
+X-MC-Unique: iCq5OVxhP42KJLXq8UF4qA-1
+X-Mimecast-MFC-AGG-ID: iCq5OVxhP42KJLXq8UF4qA_1787749226
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5F9E01953957; Wed, 26 Aug 2026 13:00:25 +0000 (UTC)
+Received: from redhat.com (headnet03.pony-001.prod.iad2.dc.redhat.com
+ [10.2.32.114])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 63B8B1955F06; Wed, 26 Aug 2026 13:00:14 +0000 (UTC)
+Date: Wed, 26 Aug 2026 14:00:11 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Yonggang Luo <luoyonggang@gmail.com>, qemu-devel@nongnu.org,
+ Xianglai Li <lixianglai@loongson.cn>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ Sunil V L <sunilvl@ventanamicro.com>, qemu-riscv@nongnu.org,
+ Alexander Bulekov <alxndr@bu.edu>, Zhao Liu <zhao1.liu@intel.com>,
+ Eric Farman <farman@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Chao Liu <chao.liu@processmission.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Song Gao <17746591750@163.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-s390x@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ David Hildenbrand <david@kernel.org>, qemu-ppc@nongnu.org,
+ qemu-arm@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Cornelia Huck <cohuck@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Bibo Mao <maobibo@loongson.cn>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Weiwei Li <liwei1518@gmail.com>,
+ Darren Kenny <darren.kenny@oracle.com>
+Subject: Re: [PATCH 12/12] meson: link ARM and RISC-V into qemu-system
+Message-ID: <ao7jWx-zfmB9AUEb@redhat.com>
+References: <20260823150731.896-1-luoyonggang@gmail.com>
+ <20260823150731.896-13-luoyonggang@gmail.com>
+ <b9f0853b-adda-457d-94e1-add9bb2a2548@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: DJn5qxcq99XHvmQJmjmZolC4zOIsx8xO
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfX0KZ9hJKY34HJ
- CadykpbDfMLQns+jQL80QcyggwdnuRNes2hMBixCT5QALoVCYTDHpF/jm/DGPzkRzwKrZ5UbMvu
- snJXmTvyxGC7NsJaqn+sYB76F3hEapo=
-X-Proofpoint-GUID: DJn5qxcq99XHvmQJmjmZolC4zOIsx8xO
-X-Authority-Analysis: v=2.4 cv=JZyMa0KV c=1 sm=1 tr=0 ts=6a8ee1a0 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=d8dTZFwbv_yry3V4My0A:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEwNCBTYWx0ZWRfX3jxVlB6udtJ9
- XeWm2JddztMs5a59oX77ZnfifyEmp0szNAhtr2SheM2XGAZnT6giE4+4d2uEUXEfETs4vc0X5/a
- SEpsDtthIeh52U5gEXT4Rg43+K+WJu2gAujxHSog75bXBbV9A0mxTDoCLlkYSYVeISfiBgLWGOD
- f+h5aUtYISB/OOjuSsnsNrMKcRNxqEROv5ey6NIC3at4EcHS7bew4HEVRrOxveF71s/qR7hpd8B
- 4mEtkoLvuHrw0/8eQzbCssSEOd59wBUmA1c1gUi/fvanHveCxgLxxG7j1An2vK/LbQbGxB1xDQY
- ZkieFmi+NjuupDv5hDnECibzEHP8UzuFUNQEuvMH7sIGw6ihoDiKRkkeYSv2n8vjqhTbMvS7iWa
- kVPM8XRlF4GZnDncpzSdma+uPPsXhqOOmpBO/2JABkFtCj+/AxsIULC7xi9HBmZHQAnnjyvMT2A
- WSaF4MjyCMnr15ev3Kg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_03,2026-08-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
- malwarescore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260104
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b9f0853b-adda-457d-94e1-add9bb2a2548@oss.qualcomm.com>
+User-Agent: Mutt/2.4.0 (2026-06-19)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,158 +113,177 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhuoying Cai <zycai@linux.ibm.com>
+On Mon, Aug 24, 2026 at 09:20:38AM -0700, Pierrick Bouvier wrote:
+> On 8/23/2026 8:07 AM, Yonggang Luo wrote:
+> > - Build qemu-system (and qemu-systemw on Windows) from aarch64
+> >   common/system objects plus RISC-V arch objects taken from the
+> >   existing riscv64 lib.
+> > - Pull 32-bit TargetInfo and 32-only boards from the arm/riscv32
+> >   libs so hw/arm and target/riscv are not compiled twice.
+> > - Skip linking qemu-system-{arm,aarch64,riscv32,riscv64} and the
+> >   Windows *w variants; symlink those names to qemu-system so
+> >   argv[0] still selects TargetInfo.
+> > 
+> > Signed-off-by: Yonggang Luo <luoyonggang@gmail.com>
+> > ---
+> >  meson.build | 156 +++++++++++++++++++++++++++++++++++++++++++++++++---
+> >  1 file changed, 147 insertions(+), 9 deletions(-)
 
-Add ZiplBootMode enumeration to support multiple IPL boot configurations.
-Boot modes differentiate between normal boot and secure IPL operations,
-enabled based on boot certificates specified via the boot-certs option.
+I think this approach of taking common/system from aarch64
+and adding in riscv specific objects only works by luck.
 
-Normal Mode: IPL when no certificates are provided. No signature
-verification is performed.
+That's not obvious from your patch, but Pierrick's counterproposal
+below will expose it with a little  tweak....
 
-This prepares for future secure IPL modes requiring signature
-verification.
 
-Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-Reviewed-by: Collin Walling <walling@linux.ibm.com>
-Reviewed-by: Jared Rossi <jrossi@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260730214624.2328883-23-zycai@linux.ibm.com
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
----
- docs/system/s390x/secure-ipl.rst | 21 +++++++++++++++++++++
- pc-bios/s390-ccw/bootmap.c       | 16 +++++++++++++++-
- pc-bios/s390-ccw/main.c          |  6 ++++++
- pc-bios/s390-ccw/s390-ccw.h      |  6 ++++++
- 4 files changed, 48 insertions(+), 1 deletion(-)
+> From 6261b0c255e1a8f0df2b41928b8dfb365d0fa488 Mon Sep 17 00:00:00 2001
+> From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Date: Tue, 14 Apr 2026 10:56:15 -0700
+> Subject: [PATCH] meson: build single binary
+> 
+> This is not built by default.
+> Build with: ninja -C build qemu-system
+> 
+> All available *-softmmu targets are aggregated, ./configure
+> --target-list can be used to restrict which targets are included.
+> 
+> In case user has targets that are not supported, we emit an error
+> message when build qemu-system target. This way, it's not necessary to
+> have a custom configure flag, and qemu-system can live next to existing
+> binaries without complexifying the workflow more than it is already.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>  meson.build | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 48 insertions(+)
+> 
+> diff --git a/meson.build b/meson.build
+> index 553df3e7f053..4a31a520d9eb 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -4264,6 +4264,9 @@ if host_os == 'darwin'
+>  endif
+>  
+>  traceable = []
+> +single_binary_libs = []
+> +single_binary_deps = []
+> +single_binary_crates = []
+>  emulators = {}
+>  foreach target : target_dirs
+>    config_target = config_target_mak[target]
+> @@ -4419,6 +4422,10 @@ foreach target : target_dirs
+>                   build_by_default: false)
+>  
+>    if target.endswith('-softmmu')
+> +    single_binary_libs += lib
+> +    single_binary_deps += arch_deps
+> +    single_binary_deps += target_stubs
+> +    single_binary_crates += main_rs
+>      execs = [{
+>        'name': 'qemu-system-' + target_name,
+>        'win_subsystem': 'console',
+> @@ -4500,6 +4507,47 @@ foreach target : target_dirs
+>    endforeach
+>  endforeach
+>  
+> +single_binary_objects = []
+> +foreach lib: single_binary_libs
+> +  single_binary_objects += lib.extract_all_objects(recursive: true)
+> +endforeach
+> +
+> +single_binary_link_args = emulator_link_args
+> +single_binary_link_args += enable_modules ? ['@block.syms', '@qemu.syms'] : []
+> +
+> +supported_targets = [
+> +  'aarch64-softmmu',
+> +  'arm-softmmu',
+> +]
 
-diff --git a/docs/system/s390x/secure-ipl.rst b/docs/system/s390x/secure-ipl.rst
-index 88df52ce2f..9d7d33f5ed 100644
---- a/docs/system/s390x/secure-ipl.rst
-+++ b/docs/system/s390x/secure-ipl.rst
-@@ -18,3 +18,24 @@ Note: certificate files must have a .pem extension.
- .. code-block:: shell
- 
-     qemu-system-s390x -machine s390-ccw-virtio,boot-certs.0.path=/.../qemu/certs,boot-certs.1.path=/another/path/cert.pem ...
-+
-+
-+IPL Modes
-+---------
-+
-+Multiple IPL modes are available to differentiate between the various IPL
-+configurations. These modes are mutually exclusive and enabled based on the
-+``boot-certs`` option on the QEMU command line.
-+
-+Normal Mode
-+^^^^^^^^^^^
-+
-+The absence of certificates will attempt to IPL a guest without secure IPL
-+operations. No checks are performed, and no warnings/errors are reported.
-+This is the default mode.
-+
-+Configuration:
-+
-+.. code-block:: shell
-+
-+    qemu-system-s390x -machine s390-ccw-virtio ...
-diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-index 38e98aab68..b6bd1a379d 100644
---- a/pc-bios/s390-ccw/bootmap.c
-+++ b/pc-bios/s390-ccw/bootmap.c
-@@ -332,6 +332,9 @@ static int run_eckd_boot_script(block_number_t bmt_block_nr,
-     /* The S1B block number is NULL_BLOCK_NR if and only if it's an LD-IPL */
-     bool ldipl = (s1b_block_nr == NULL_BLOCK_NR);
- 
-+    IPL_assert((boot_mode == ZIPL_BOOT_MODE_NORMAL),
-+                "Secure boot with the ECKD scheme is not supported!");
-+
-     if (menu_is_enabled_zipl() && !ldipl) {
-         loadparm = eckd_get_boot_menu_index(s1b_block_nr);
-     }
-@@ -731,7 +734,14 @@ static int zipl_run(ScsiBlockPtr *pte)
-     /* Load image(s) into RAM */
-     entry = (ComponentEntry *)(&header[1]);
- 
--    rc = zipl_run_normal(&entry, tmp_sec);
-+    switch (boot_mode) {
-+    case ZIPL_BOOT_MODE_NORMAL:
-+        rc = zipl_run_normal(&entry, tmp_sec);
-+        break;
-+    default:
-+        panic("Unknown boot mode");
-+    }
-+
-     if (rc) {
-         return rc;
-     }
-@@ -1102,12 +1112,16 @@ void zipl_load(void)
-     VDev *vdev = virtio_get_device();
- 
-     if (vdev->is_cdrom) {
-+        IPL_assert((boot_mode == ZIPL_BOOT_MODE_NORMAL),
-+                   "Secure boot from ISO image is not supported!");
-         ipl_iso_el_torito();
-         puts("Failed to IPL this ISO image!");
-         return;
-     }
- 
-     if (virtio_get_device_type() == VIRTIO_ID_NET) {
-+        IPL_assert((boot_mode == ZIPL_BOOT_MODE_NORMAL),
-+                    "Virtio net boot device does not support secure boot!");
-         netmain();
-         puts("Failed to IPL from this network!");
-         return;
-diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-index 44888e0c5c..40e568fc71 100644
---- a/pc-bios/s390-ccw/main.c
-+++ b/pc-bios/s390-ccw/main.c
-@@ -30,6 +30,7 @@ IplParameterBlock *iplb;
- bool have_iplb;
- static uint16_t cutype;
- LowCore *lowcore; /* Yes, this *is* a pointer to address 0 */
-+ZiplBootMode boot_mode;
- 
- #define LOADPARM_PROMPT "PROMPT  "
- #define LOADPARM_EMPTY  "        "
-@@ -306,6 +307,9 @@ static void ipl_ccw_device(void)
-     switch (cutype) {
-     case CU_TYPE_DASD_3990:
-     case CU_TYPE_DASD_2107:
-+        IPL_assert((boot_mode == ZIPL_BOOT_MODE_NORMAL),
-+                    "Passthrough (vfio) CCW device does not support secure boot!");
-+
-         dasd_ipl(blk_schid, cutype);
-         break;
-     case CU_TYPE_VIRTIO:
-@@ -393,6 +397,8 @@ void main(void)
-         probe_boot_device();
-     }
- 
-+    boot_mode = ZIPL_BOOT_MODE_NORMAL;
-+
-     while (have_iplb) {
-         boot_setup();
-         if (have_iplb && find_boot_device()) {
-diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-index 25aac91d45..4004e9accc 100644
---- a/pc-bios/s390-ccw/s390-ccw.h
-+++ b/pc-bios/s390-ccw/s390-ccw.h
-@@ -69,6 +69,12 @@ int sclp_read(char *str, size_t count);
- /* bootmap.c */
- void zipl_load(void);
- 
-+typedef enum ZiplBootMode {
-+    ZIPL_BOOT_MODE_NORMAL = 0,
-+} ZiplBootMode;
-+
-+extern ZiplBootMode boot_mode;
-+
- /* jump2ipl.c */
- void write_reset_psw(uint64_t psw);
- int jump_to_IPL_code(uint64_t address);
+Adding in riscv64-softmmu to this list and building with
+configure --target-list=aarch64-softmmu,riscv64-softmmu
+will fail with this meson approach.
+
+Specifically we'll hit duplicate symbols to to taking
+different KConfig branches, resulting in building in
+both the real impl and the stubs:
+
+  /usr/bin/ld.bfd: libsystem.a.p/hw_pci-bridge_pci_expander_bridge_stubs.c.o: in function `pxb_cxl_hook_up_registers':
+/home/berrange/src/virt/qemu/build-alt/../hw/pci-bridge/pci_expander_bridge_stubs.c:14: multiple definition of `pxb_cxl_hook_up_registers'; libsystem.a.p/hw_pci-bridge_pci_expander_bridge.c.o:/home/berrange/src/virt/qemu/build-alt/../hw/pci-bridge/pci_expander_bridge.c:214: first defined here
+
+The problem is that aarch64 enables CONFIG_PXB and
+riscv64 does not.
+
+Yonggang's patch only worked by luck since it preferred
+to the common system objects from aarch64 and thus kept
+the real PXB impl. If Yonggang had instead used common
+system objects from riscv64, the qemu-system would have
+lost the PXB impl and got a stub.
+
+This is unfixable if both targets have some Kconfigs
+that the other target does not.
+
+So to be able to build qemu-system, we can't simply
+pull in the union of objects from each architecture
+qemu-system-$TARGET binary. 
+
+Instead we need to setup a new Kconfig specifically
+for qemu-system, which is the combination of all
+Kconfigs from each target. Then derive a new list
+of objects from that.  This shouldn't involve building
+any more .o files, just means we build an accurate
+list of what .o files we need.
+
+> +unsupported_targets = []
+> +foreach target : target_dirs
+> +  if target.endswith('-softmmu') and target not in supported_targets
+> +    unsupported_targets += target
+> +  endif
+> +endforeach
+> +
+> +if unsupported_targets.length() == 0
+> +  executable('qemu-system',
+> +             sources: [single_binary_crates, files('system/main.c')],
+> +             dependencies: single_binary_deps,
+> +             objects: single_binary_objects,
+> +             link_depends: [block_syms, qemu_syms],
+> +             link_args: single_binary_link_args,
+> +             build_by_default: false)
+> +else
+> +  error_str = f'''qemu-system only support targets:
+> +@supported_targets@
+
+With the Kconfig union problem solved, IMHO we should unconditionally
+always build the 'qemu-system' binary. If there are targets that
+do not yet support the single bniary concept that's fine, just ignore
+them. qemu-system-$TARGET will still be built for everything, and
+qemu-system only needs to include what's currently possible.
+
+
+> +
+> +unsupported targets:
+> +@unsupported_targets@
+> +
+> +use ./configure --target-list= to choose list of targets'''
+> +  t = custom_target(command: ['sh', '-c', 'echo "' + error_str + '" && exit 1'],
+> +                    output: 'none',
+> +                    build_by_default: false)
+> +  alias_target('qemu-system', t)
+> +endif
+> +
+>  # Other build targets
+>  
+>  if get_option('plugins')
+
+
+With regards,
+Daniel
 -- 
-2.55.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
