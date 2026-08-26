@@ -4,115 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49342C5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:32:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E86E3C61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 14:32:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzEdL-0001BG-Lv; Wed, 26 Aug 2026 10:29:43 -0400
+	id 1wzEd6-00015t-Cg; Wed, 26 Aug 2026 10:29:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdK-0001An-BM
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:42 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEd4-00015C-Eq
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:26 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEdI-0001v6-Hm
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:41 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wzEd2-0001Xp-Fd
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 10:29:26 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 0007B1F7F8;
- Wed, 26 Aug 2026 14:29:30 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 0DA3E1F833;
+ Wed, 26 Aug 2026 14:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787754575; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787754559; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aFc6hA/abHmRVaNgSz5gbCQGFsz9FdGFyIKHi0KIXlQ=;
- b=W7iPl918/iK3Vxlrg2tFPtzbLj9NcEM7tlwPmS0E+FsH8eobu1e6ojSalpCE/D5IrlYqmz
- Af2asn/1soV+9AUoQ7DAlz1IHj1f5A6ZtNB1mJTt6VekR4m/+7Wd0hxq6mOSjqA4LRRqsH
- VLkfiH0lHqEKg355n8Vk3uDVTRB1PUA=
+ bh=1OFQJUWDbKjObiV52ezMiOfXjlvswKMRphGWikfDBLk=;
+ b=YZZCN/HpkCeiFb3uGRqJOwwoVDdhbZRMucuZcGdkeG62zqEnvayjrscGeeumW4zsZkuybT
+ gJKrrcpS5uH3jByhfGyzJNkZ1fyhLRkiPWl18gSe1xrEJeE4LgnoyXqpipjlVnsqkTkelk
+ JnMrssCtGJ9ij8Ehconzw46zTHtikag=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787754575;
+ s=susede2_ed25519; t=1787754559;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aFc6hA/abHmRVaNgSz5gbCQGFsz9FdGFyIKHi0KIXlQ=;
- b=i8usxq50KAzDAMYt4KhNbqsS2hI8T8zJbFrl/S9FPXII7jeS2dZqrkwwLQgWZsI+UqEhVi
- CrjBublyKwhqAOAQ==
+ bh=1OFQJUWDbKjObiV52ezMiOfXjlvswKMRphGWikfDBLk=;
+ b=7FUfDniE50Po857ZAYY5+ajY6Yqqbt6Rb7PO1b+3J57d0P6hfKt1O62K0BfN/FcrIl3D9x
+ fwnjm8bwfDDiKfBg==
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=CNqepotz;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=0E8y9jB5
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ALP3wX+A;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=WdL21pHI
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1787754571; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1787754555; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aFc6hA/abHmRVaNgSz5gbCQGFsz9FdGFyIKHi0KIXlQ=;
- b=CNqepotzv7wQGxQN9Dkc0gFIc4X4F9Eef4neDhtNVrWCJueeVZqCYL39hNDyl/fKtNUnh+
- 1HZwmHG6BqcqG92/ZI7EoHjMBlJCOq00GbEa5lbqr8VaFQwHltwlaYxdkkKb37HkVya6LE
- z1tV6na2vKoxo53fyG9tmrQvcu6Bk2s=
+ bh=1OFQJUWDbKjObiV52ezMiOfXjlvswKMRphGWikfDBLk=;
+ b=ALP3wX+AdM7rbYsirwjq+PMATwk4fjy90sHZhxj+D8LnuhC115c0hbSMF7XZ+qxg0/Z4L7
+ 1BuMkRGwifRUJscZPCXDHDGfg3v8bwtDTQG0e8ZL7/xOT3EUvlKLMz3ZAUGSJ/wkUiXmZ6
+ Ruz0Iuy75h1pifZ31mz1TKbMDKd9jv4=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1787754571;
+ s=susede2_ed25519; t=1787754555;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aFc6hA/abHmRVaNgSz5gbCQGFsz9FdGFyIKHi0KIXlQ=;
- b=0E8y9jB5wiLLWDAGg5ylkIXk6FnUetMFV38+JqmM+qHfQop9O5oDil1VgCjrt+HjmMy/u1
- 6/+P8r0zo8SzlsBQ==
+ bh=1OFQJUWDbKjObiV52ezMiOfXjlvswKMRphGWikfDBLk=;
+ b=WdL21pHI8GVRt0dIfkjfQbhbTzVFl4qTgwTVO80SSslHJbgcU5DiDg43wLtwxUtw1NysPW
+ D++VOacJdUtun/Cg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 103FD1361C;
- Wed, 26 Aug 2026 14:29:29 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DFEB01364F;
+ Wed, 26 Aug 2026 14:29:13 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id MHanNEn4jmpTJAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 26 Aug 2026 14:29:29 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id iCHGKzn4jmpTJAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 26 Aug 2026 14:29:13 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	Jinpu Wang <jinpu.wang@cloud.ionos.com>
-Subject: [PULL 16/30] migration/rdma: Drop RDMALocalBlock.unregister_bitmap
-Date: Wed, 26 Aug 2026 11:28:51 -0300
-Message-ID: <20260826142905.2315503-17-farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, Aadeshveer Singh <aadeshveer07@gmail.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: [PULL 04/30] migration: Use file_bmap for RAMBlock during incoming
+ file load
+Date: Wed, 26 Aug 2026 11:28:39 -0300
+Message-ID: <20260826142905.2315503-5-farosas@suse.de>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260826142905.2315503-1-farosas@suse.de>
 References: <20260826142905.2315503-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-0.990]; MIME_GOOD(-0.10)[text/plain];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
  MX_GOOD(-0.01)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,ionos.com:email];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_TLS_ALL(0.00)[];
- URIBL_BLOCKED(0.00)[ionos.com:email,suse.de:email,suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- RCPT_COUNT_THREE(0.00)[3];
+ URIBL_BLOCKED(0.00)[suse.de:email,suse.de:mid,suse.de:dkim,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 0007B1F7F8
+ RCVD_TLS_ALL(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_HAS_DN(0.00)[]; FREEMAIL_CC(0.00)[redhat.com,gmail.com];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:mid,suse.de:dkim];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_THREE(0.00)[4];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]
+X-Rspamd-Queue-Id: 0DA3E1F833
 X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
 X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,48 +132,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Aadeshveer Singh <aadeshveer07@gmail.com>
 
-Not used anymore.
+Replace the temporary bitmap with the existing file_bmap attribute of
+the RAMBlock. This acts as a preparatory change for the upcoming fast
+snapshot load feature.
 
-Reviewed-by: Jinpu Wang <jinpu.wang@cloud.ionos.com>
+Reusing this bitmap allows the destination to track page types during
+a postcopy load, enabling faster, direct placement of zero pages.
+
+Since file_bmap is currently only utilized during the migration save
+phase, it can be safely repurposed during the load phase without
+introducing conflicts.
+
+Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Jack Wang <jinpu.wang@cloud.ionos.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/rdma.c | 6 ------
- 1 file changed, 6 deletions(-)
+ migration/ram.c | 33 +++++++++++++++++++++++++++------
+ 1 file changed, 27 insertions(+), 6 deletions(-)
 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index 63a8370be22..f9f39402568 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -198,7 +198,6 @@ typedef struct RDMALocalBlock {
-     unsigned int   src_index;       /* (Only used on dest) */
-     int            nb_chunks;
-     unsigned long *transit_bitmap;
--    unsigned long *unregister_bitmap;
- } RDMALocalBlock;
+diff --git a/migration/ram.c b/migration/ram.c
+index b6eb842746a..7fa4774246a 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -252,6 +252,17 @@ int foreach_not_ignored_block(RAMBlockIterFunc func, void *opaque)
+     return ret;
+ }
  
- /*
-@@ -577,8 +576,6 @@ static void rdma_add_block(RDMAContext *rdma, const char *block_name,
-     block->nb_chunks = ram_chunk_index(host_addr, host_addr + length) + 1UL;
-     block->transit_bitmap = bitmap_new(block->nb_chunks);
-     bitmap_clear(block->transit_bitmap, 0, block->nb_chunks);
--    block->unregister_bitmap = bitmap_new(block->nb_chunks);
--    bitmap_clear(block->unregister_bitmap, 0, block->nb_chunks);
-     block->remote_keys = g_new0(uint32_t, block->nb_chunks);
++static void ramblock_file_bmap_init(void)
++{
++    RAMBlock *rb;
++
++    RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
++        assert(!rb->file_bmap);
++        size_t size = rb->max_length >> qemu_target_page_bits();
++        rb->file_bmap = bitmap_new(size);
++    }
++}
++
+ static void ramblock_recv_map_init(void)
+ {
+     RAMBlock *rb;
+@@ -3755,6 +3766,9 @@ static int ram_load_setup(QEMUFile *f, void *opaque, Error **errp)
+ {
+     xbzrle_load_setup();
+     ramblock_recv_map_init();
++    if (migrate_mapped_ram()) {
++        ramblock_file_bmap_init();
++    }
  
-     if (rdma->blockmap) {
-@@ -663,9 +660,6 @@ static void rdma_delete_block(RDMAContext *rdma, RDMALocalBlock *block)
-     g_free(block->transit_bitmap);
-     block->transit_bitmap = NULL;
+     return 0;
+ }
+@@ -3772,8 +3786,8 @@ static int ram_load_cleanup(void *opaque)
+     xbzrle_load_cleanup();
  
--    g_free(block->unregister_bitmap);
--    block->unregister_bitmap = NULL;
--
-     g_free(block->remote_keys);
-     block->remote_keys = NULL;
+     RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
+-        g_free(rb->receivedmap);
+-        rb->receivedmap = NULL;
++        g_clear_pointer(&rb->receivedmap, g_free);
++        g_clear_pointer(&rb->file_bmap, g_free);
+     }
+ 
+     return 0;
+@@ -4148,11 +4162,18 @@ err:
+ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+                                       ram_addr_t length, Error **errp)
+ {
+-    g_autofree unsigned long *bitmap = NULL;
+     MappedRamHeader header;
+     size_t bitmap_size;
+     long num_pages;
+ 
++    if (length > block->max_length) {
++        error_setg(errp,
++                   "mapped-ram header length %" PRIu64 " exceeds "
++                   "RAMBlock(\"%s\") max_length %" PRIu64,
++                   (uint64_t)length, block->idstr, (uint64_t)block->max_length);
++        return;
++    }
++
+     if (!mapped_ram_read_header(f, &header, errp)) {
+         return;
+     }
+@@ -4180,14 +4201,14 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+     num_pages = length / header.page_size;
+     bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
+ 
+-    bitmap = g_malloc0(bitmap_size);
+-    if (qemu_get_buffer_at(f, (uint8_t *)bitmap, bitmap_size,
++    if (qemu_get_buffer_at(f, (uint8_t *)block->file_bmap, bitmap_size,
+                            header.bitmap_offset) != bitmap_size) {
+         error_setg(errp, "Error reading dirty bitmap");
+         return;
+     }
+ 
+-    if (!read_ramblock_mapped_ram(f, block, num_pages, bitmap, errp)) {
++    if (!read_ramblock_mapped_ram(f, block, num_pages, block->file_bmap,
++                                  errp)) {
+         return;
+     }
  
 -- 
 2.53.0
