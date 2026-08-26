@@ -4,91 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51254C61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:27:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2810DC61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 12:29:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzCiv-0005dd-5U; Wed, 26 Aug 2026 08:27:21 -0400
+	id 1wzCkM-0006CX-3y; Wed, 26 Aug 2026 08:28:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <olegendo1024@gmail.com>)
- id 1wzCis-0005dS-VQ
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 08:27:18 -0400
-Received: from mail-pj2-x05.google.com ([2607:f8b0:4864:39::5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <olegendo1024@gmail.com>)
- id 1wzCir-0001hv-1T
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 08:27:18 -0400
-Received: by mail-pj2-x05.google.com with SMTP id
- 98e67ed59e1d1-39662b5cde7so649202a91.1
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 05:27:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1787747235; x=1788352035; darn=nongnu.org;
- h=mime-version:user-agent:content-transfer-encoding:content-type
- :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
- :cc:subject:date:message-id:reply-to:content-type;
- bh=ZTMBg5gBklmc9TiQZ3xYi9Z0DMSWwaXoKqLDAXnBI0s=;
- b=DL8KmvyeNwV1jbPYjHHhSsk70Bs9aDBxbhMna9wugqYqMF54YWjekp5pNOEbWEsKD+
- VyHZkAjoDJQxsiOps2k9KqBSTyPhWS9dHTFTq/yVIgYjgIzSGeNqlk2a3+tZ//vBwfjn
- AeWRUDMb82wmsFxmV/mUX0wRryc0WSOBEONdM9W92auLF91a1chDcVGjJH60qkr4OxSd
- IqbtV8QCMR5vEI8SF7ObYzSZjYdj2r7C1Yixvma3ghnC8VGVhE3ftJ6sVnPhwD/FMoRI
- FlySN1rDPJ8NjWUZf2TNG9mTkseQCaF1d9I1uQNJ824REta0LiAVekNunkgRJXzHs2sk
- aHsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787747235; x=1788352035;
- h=mime-version:user-agent:content-transfer-encoding:content-type
- :references:in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
- :content-type;
- bh=ZTMBg5gBklmc9TiQZ3xYi9Z0DMSWwaXoKqLDAXnBI0s=;
- b=aRiqtdkWEtAYMemZQWAV9jtPRfHKKLGJp1YaJz3TtBEcxrwLC8oXiGJGN1uW06zebE
- uSPHya8c0M3bwe/7HmU9X1yuqjnloYuyJRJ+e1LM0+urfBVg/wXOyWxl0UaMvNMFS/iF
- tF0E5jh0BGEtj0j9kenFwGuK6eB6TsraT+kchZ+K+3VBiWDCGmYArxiztWgH9eVZZa7E
- NpZ+mdRTBhPP9lhDA7esSFdVLFc6lS0v6qDp++YKqmvr5iXiMlf3wPNpQCAM0+ltLS+4
- cZwdOIg958gKzA30JJBqLLFJgg0dZrecveUXi/UAo/HsY5iz40cc4no5WBczorzBc7/E
- ZNcw==
-X-Gm-Message-State: AFuF++l7MPS5COp040UHDO7fj5Zoq2zrIEyX1B9TTcKD6RWVKjmLGIk8
- k8ZK1K1EiKE7N0t0ovGOBZnGEBoVJRrcaCSL/XECP5CZMtBImu/b1zHW
-X-Gm-Gg: AR+sD13KWbuSTQ7NIeGiVX3+k5XavkIP6ebF34vS8lN5ppdPLASNObt080vB5hkhmLm
- mrEkZHNKm5zOfoXAoFHDfQDyCjM4zKmzOho335dB5l6yNvHxrCRsZYk5s0ENRhN8Z3xgOom4gmA
- n7mb4ivJZQqdxRSDnNj0EnK92H3w8+KC+yFzzrlvFz6QmasPrGOSzo2xkRAZi/j0GUcPbBxr8IP
- 2Lm/wFGaJ5ISCLWxVxyWyRhunGWUXIVRlXZFjUvuDVmVMLw5WcLGB2PeFoxQE2nDsQ+IAsY1gSW
- sfLAxv81WyMTul1dT1JSYpX18x0HaGqhtCExi0MW9GV69KEfxv/+CAiJNwDkts/Znuh50xqZmS3
- v/HiAM1GPDOZprTJy3phwvhyqX/T0P/3Mj8zPO1SnESSWl1KLJ+bl5t+kSr2neExA6HmTjURqFe
- UHWTqY31NKUbKZH2A+E9Vw4AN5EObOaRocvfJW8uDOpi9igT9uy3w/tEDi48IBd3EbcZ39LdAhZ
- QbvmjbZzzcnHuhyueTx
-X-Received: by 2002:a17:90a:d2cb:b0:36a:5d1f:7b6 with SMTP id
- 98e67ed59e1d1-3966d36df78mr14443248a91.2.1787747235314; 
- Wed, 26 Aug 2026 05:27:15 -0700 (PDT)
-Received: from localhost.localdomain ([2407:c800:3620:e800:7910:9280:8105:5a2])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-39645d69065sm8498464a91.13.2026.08.26.05.27.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 05:27:14 -0700 (PDT)
-Message-ID: <1b76d526ad21616241b433a254653977e009a2e3.camel@gmail.com>
-Subject: Re: [PATCH][SH] Fix mac.w / mac.l insn
-From: Oleg Endo <olegendo1024@gmail.com>
-To: yoshinori.sato@nifty.com
-Cc: qemu-devel@nongnu.org, John Paul Adrian Glaubitz
- <glaubitz@physik.fu-berlin.de>
-Date: Wed, 26 Aug 2026 21:27:12 +0900
-In-Reply-To: <87jypdqf6f.wl-yoshinori.sato@nifty.com>
-References: <4a86e81ffa5e392efa069463cd21457374915b93.camel@gmail.com>
- <87jypdqf6f.wl-yoshinori.sato@nifty.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.3 (3.54.3-2.fc41) 
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wzCkK-0006C5-NE; Wed, 26 Aug 2026 08:28:48 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1wzCkI-00025a-Hp; Wed, 26 Aug 2026 08:28:48 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 67QAWBaS2615471; Wed, 26 Aug 2026 12:28:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=sjuKTI
+ BCZVbEV93CcZJf4bhGtw472WXq/7GutbwA/wA=; b=rGvtq4BUYcSFCxlGwWH7XT
+ EbtlGI4A9StEGQ8zpt2U4DzgeUtg6anrF8DMwFROmPmJCV68pSMu3LavVoWCPord
+ TSPJCF3wIGBxwv00MNJxjKd4xrWB38C+E67KIpo4JfLdcwNTrcRhJt5iZzlLb0Vp
+ rWMgnoyI/v1aBgRXf2P++gtO/mxN4sDSLqLAmVx8qbpR9tBXqgDUHQZbz0G1k8c3
+ Rcp8nDclzTOheROC4JE2wVXxgVeoi2P5vAUh/2lPEC0yqvtJCbc079uTfKC0/irJ
+ BSR/vvC/dCIslO+87NiJ/koecZ9QHCsvwH93JpBvU40S4RW4N9UZlrnX+YUYv2/Q
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4g726epfu8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 12:28:42 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 67QCQGlT016727;
+ Wed, 26 Aug 2026 12:28:41 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4g7p3qa2r9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 26 Aug 2026 12:28:41 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 67QCSeKC2556550
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 26 Aug 2026 12:28:40 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C916E58058;
+ Wed, 26 Aug 2026 12:28:40 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8053258057;
+ Wed, 26 Aug 2026 12:28:37 +0000 (GMT)
+Received: from [9.111.28.250] (unknown [9.111.28.250])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 26 Aug 2026 12:28:36 +0000 (GMT)
+Message-ID: <2bdd4d82-49ec-4de6-8868-31a6e0c377da@linux.ibm.com>
+Date: Wed, 26 Aug 2026 17:58:34 +0530
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2607:f8b0:4864:39::5;
- envelope-from=olegendo1024@gmail.com; helo=mail-pj2-x05.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/37] target/ppc: Migrate atomic loads to decodetree
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, harshpb@linux.ibm.com,
+ milesg@linux.ibm.com, npiggin@gmail.com, richard.henderson@linaro.org
+References: <20260826050923.74756-1-rathc@linux.ibm.com>
+ <20260826050923.74756-3-rathc@linux.ibm.com>
+ <20260826140945.286298f2-fa-amachhiw@linux.ibm.com>
+Content-Language: en-US
+From: Chinmay Rath <rathc@linux.ibm.com>
+In-Reply-To: <20260826140945.286298f2-fa-amachhiw@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=TfimcxQh c=1 sm=1 tr=0 ts=6a8edbfa cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=AzRaCOm2d27KreSwJzIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEwMCBTYWx0ZWRfX+MTijZxFJFN3
+ V8sUXgktS+KQ8KJMfNtP26QJzEsm7YJBu5E5TgXIJN0c0hvbESV6yV5EBj5iqLfGDpwKNW18Rw4
+ 8pxjV95muodVH/aJzLSWY4mqjNBwL/Q=
+X-Proofpoint-GUID: 9UJpxMeZQDOqg3MFyzUCGLcbOqqONuGS
+X-Proofpoint-ORIG-GUID: fQz7TRaTZT7T8rEuaFe2mFzumwBwc_P2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEwMCBTYWx0ZWRfX4qDmxb28XArf
+ oS4DFfaTFk0TpB1bZ3p4rkxOpu27SOuvFEPxaqvMmhMngwiRuKJSeh9w8g3eqhLOdoXwgS6aAs+
+ eOVh0ksXgQc8EU1p7kItHA6Nj6DCvw61V8YBs6f/C7086QeQXxdtzfPT1fAS5EzrrUe+pCCEC2H
+ kvTIBwHEoHGF7b2foZbytTFm0QaM5qWizXpx0U/4GEYMLS0J6szCZYzpTenUWjhctRAukZrJ4r+
+ TGOeVv7DtC7UNwCv4HMvd9ElC6SJq73ad1VHnNyWXE4r/Ge0Cp8igNgue9yecztlXZW8SVddJdg
+ 4M1jk+yLT0h2gX+3Sh40QkS6lKU5nSSSGql30Mv9mtMAp4LrB5Kta3l1lBPDHwfdh2foDslquqO
+ idhSpCXdtPX30Qp6S5xYYpMVveefb76/ivYLBzkT2vL0LMNgUU7x2TgH0HCXNw8XhOufkFcGI/q
+ vqmXyRZIYVuDPHCH/PQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-08-26_03,2026-08-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260100
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,58 +125,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2026-08-26 at 20:44 +0900, yoshinori.sato@nifty.com wrote:
->=20
-> It is true that the current behavior differs from the pseudocode in the m=
-anual.
-> Wouldn't it be simpler to just generate a TCG that matches the pseudocode=
-?
-> I'm sorry, I haven't actually tested this change yet.
->=20
-> diff --git a/target/sh4/translate.c b/target/sh4/translate.c
-> index e503a97b22..64fe2cd31d 100644
-> --- a/target/sh4/translate.c
-> +++ b/target/sh4/translate.c
-> @@ -801,13 +801,13 @@ static void _decode_opc(DisasContext * ctx)
->          {
->              TCGv arg0, arg1;
->              arg0 =3D tcg_temp_new();
-> -            tcg_gen_qemu_ld_i32(arg0, REG(B7_4), ctx->memidx,
-> -                                MO_TESL | MO_ALIGN);
-> -            tcg_gen_addi_i32(REG(B7_4), REG(B7_4), 4);
->              arg1 =3D tcg_temp_new();
->              tcg_gen_qemu_ld_i32(arg1, REG(B11_8), ctx->memidx,
->                                  MO_TESL | MO_ALIGN);
->              tcg_gen_addi_i32(REG(B11_8), REG(B11_8), 4);
-> +            tcg_gen_qemu_ld_i32(arg0, REG(B7_4), ctx->memidx,
-> +                                MO_TESL | MO_ALIGN);
-> +            tcg_gen_addi_i32(REG(B7_4), REG(B7_4), 4);
->              gen_helper_macl(tcg_env, arg0, arg1);
->          }
->          return;
-> @@ -815,13 +815,13 @@ static void _decode_opc(DisasContext * ctx)
->          {
->              TCGv arg0, arg1;
->              arg0 =3D tcg_temp_new();
-> -            tcg_gen_qemu_ld_i32(arg0, REG(B7_4), ctx->memidx,
-> -                                MO_TESW | MO_ALIGN);
-> -            tcg_gen_addi_i32(REG(B7_4), REG(B7_4), 2);
->              arg1 =3D tcg_temp_new();
->              tcg_gen_qemu_ld_i32(arg1, REG(B11_8), ctx->memidx,
->                                  MO_TESW | MO_ALIGN);
->              tcg_gen_addi_i32(REG(B11_8), REG(B11_8), 2);
-> +            tcg_gen_qemu_ld_i32(arg0, REG(B7_4), ctx->memidx,
-> +                                MO_TESW | MO_ALIGN);
-> +            tcg_gen_addi_i32(REG(B7_4), REG(B7_4), 2);
->              gen_helper_macw(tcg_env, arg0, arg1);
->          }
->          return;
->=20
->=20
 
-Thanks, I think you're right.  I'll have another look and report back in a
-few days.
+On 8/26/26 14:50, Amit Machhiwal wrote:
+> On 2026/08/26 10:38 AM, Chinmay Rath wrote:
+>> From: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+>>
+>> Migrate load-and-reserve instructions (lbarx, lharx, lwarx, ldarx,
+>> lqarx) to decodetree using the X-form layout.
+>>
+>> A shared helper (do_load_locked) is introduced for standard-width
+>> variants, while LQARX is handled separately due to its 128-bit
+>> semantics and register pairing constraints.
+>>
+>> The implementation preserves legacy behavior, including:
+>>    - Reservation granularity and overwrite semantics
+>>    - Alignment requirements
+>>    - Invalid instruction cases for LQARX
+>>
+>> Testing:
+>>    - Verified TCG equivalence with legacy implementation
+>>
+>> Signed-off-by: Nikhil Kumar Singh <nikhilks@linux.ibm.com>
+>> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+>> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+>> ---
+>>   target/ppc/insn32.decode |   7 +++
+>>   target/ppc/translate.c   | 124 +++++++++++++++++++--------------------
+>>   2 files changed, 69 insertions(+), 62 deletions(-)
+>>
+>> diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+>> index 342e65dadf..26948e08a7 100644
+>> --- a/target/ppc/insn32.decode
+>> +++ b/target/ppc/insn32.decode
+>> @@ -1309,6 +1309,13 @@ XVF64GERNN      111011 ... -- .... 0 ..... 11111010 ..-  @XX3_at xa=%xx_xa_pair
+>>   ##Extend Sign Word and Shift Left Immediate XS-form
+>>   EXTSWSLI         011111 ..... ..... ..... 110111101 . .         @XS
+>>   
+>> +## Load and Reserve Instructions
+>> +LBARX           011111 ..... ..... ..... 0000110100 .   @X_rc
+>> +LHARX           011111 ..... ..... ..... 0001110100 .   @X_rc
+>> +LWARX           011111 ..... ..... ..... 0000010100 .   @X_rc
+>> +LDARX           011111 ..... ..... ..... 0001010100 .   @X_rc
+>> +LQARX           011111 ..... ..... ..... 0100010100 .   @X_rc
+>> +
+>>   ## Vector Division Instructions
+>>   
+>>   VDIVSW          000100 ..... ..... ..... 00110001011    @VX
+>> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+>> index e627f48f9e..cc9287dcc5 100644
+>> --- a/target/ppc/translate.c
+>> +++ b/target/ppc/translate.c
+>> @@ -2947,30 +2947,6 @@ static void gen_isync(DisasContext *ctx)
+>>       ctx->base.is_jmp = DISAS_EXIT_UPDATE;
+>>   }
+>>   
+>> -static void gen_load_locked(DisasContext *ctx, MemOp memop)
+>> -{
+>> -    TCGv gpr = cpu_gpr[rD(ctx->opcode)];
+>> -    TCGv t0 = tcg_temp_new();
+>> -
+>> -    gen_set_access_type(ctx, ACCESS_RES);
+>> -    gen_addr_reg_index(ctx, t0);
+>> -    tcg_gen_qemu_ld_tl(gpr, t0, ctx->mem_idx, DEF_MEMOP(memop) | MO_ALIGN);
+>> -    tcg_gen_mov_tl(cpu_reserve, t0);
+>> -    tcg_gen_movi_tl(cpu_reserve_length, memop_size(memop));
+>> -    tcg_gen_mov_tl(cpu_reserve_val, gpr);
+>> -}
+>> -
+>> -#define LARX(name, memop)                  \
+>> -static void gen_##name(DisasContext *ctx)  \
+>> -{                                          \
+>> -    gen_load_locked(ctx, memop);           \
+>> -}
+>> -
+>> -/* lwarx */
+>> -LARX(lbarx, MO_UB)
+>> -LARX(lharx, MO_UW)
+>> -LARX(lwarx, MO_UL)
+>> -
+>>   static void gen_fetch_inc_conditional(DisasContext *ctx, MemOp memop,
+>>                                         TCGv EA, TCGCond cond, int addend)
+>>   {
+>> @@ -3219,42 +3195,9 @@ STCX(sthcx_, MO_UW)
+>>   STCX(stwcx_, MO_UL)
+>>   
+>>   #if defined(TARGET_PPC64)
+>> -/* ldarx */
+>> -LARX(ldarx, MO_UQ)
+>>   /* stdcx. */
+>>   STCX(stdcx_, MO_UQ)
+>>   
+>> -/* lqarx */
+>> -static void gen_lqarx(DisasContext *ctx)
+>> -{
+>> -    int rd = rD(ctx->opcode);
+>> -    TCGv EA, hi, lo;
+>> -    TCGv_i128 t16;
+>> -
+>> -    if (unlikely((rd & 1) || (rd == rA(ctx->opcode)) ||
+>> -                 (rd == rB(ctx->opcode)))) {
+>> -        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+>> -        return;
+>> -    }
+>> -
+>> -    gen_set_access_type(ctx, ACCESS_RES);
+>> -    EA = tcg_temp_new();
+>> -    gen_addr_reg_index(ctx, EA);
+>> -
+>> -    /* Note that the low part is always in RD+1, even in LE mode.  */
+>> -    lo = cpu_gpr[rd + 1];
+>> -    hi = cpu_gpr[rd];
+>> -
+>> -    t16 = tcg_temp_new_i128();
+>> -    tcg_gen_qemu_ld_i128(t16, EA, ctx->mem_idx, DEF_MEMOP(MO_128 | MO_ALIGN));
+>> -    tcg_gen_extr_i128_i64(lo, hi, t16);
+>> -
+>> -    tcg_gen_mov_tl(cpu_reserve, EA);
+>> -    tcg_gen_movi_tl(cpu_reserve_length, 16);
+>> -    tcg_gen_st_tl(hi, tcg_env, offsetof(CPUPPCState, reserve_val));
+>> -    tcg_gen_st_tl(lo, tcg_env, offsetof(CPUPPCState, reserve_val2));
+>> -}
+>> -
+>>   /* stqcx. */
+>>   static void gen_stqcx_(DisasContext *ctx)
+>>   {
+>> @@ -5741,6 +5684,68 @@ static bool trans_EXTSWSLI(DisasContext *ctx, arg_XS *a)
+>>       return true;
+>>   }
+>>   
+>> +/*
+>> + * Load-and-reserve core
+>> + */
+>> +static bool do_load_locked(DisasContext *ctx, arg_X_rc *a, MemOp memop)
+>> +{
+>> +    TCGv EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+>> +    TCGv gpr = cpu_gpr[a->rt];
+>> +
+>> +    gen_set_access_type(ctx, ACCESS_RES);
+>> +
+>> +    tcg_gen_qemu_ld_tl(gpr, EA, ctx->mem_idx, memop | MO_ALIGN);
+>> +
+>> +    tcg_gen_mov_tl(cpu_reserve, EA);
+>> +    tcg_gen_movi_tl(cpu_reserve_length, memop_size(memop));
+>> +
+>> +    tcg_gen_mov_tl(cpu_reserve_val, gpr);
+>> +
+>> +    return true;
+>> +}
+>> +
+>> +TRANS_FLAGS2(ATOMIC_ISA206, LBARX, do_load_locked, DEF_MEMOP(MO_UB))
+>> +TRANS_FLAGS2(ATOMIC_ISA206, LHARX, do_load_locked, DEF_MEMOP(MO_UW))
+>> +TRANS(LWARX, do_load_locked, DEF_MEMOP(MO_UL))
+>> +TRANS64(LDARX, do_load_locked, DEF_MEMOP(MO_UQ))
+>> +
+>> +static bool trans_LQARX(DisasContext *ctx, arg_LQARX *a)
+>> +{
+>> +    REQUIRE_64BIT(ctx);
+>> +    REQUIRE_INSNS_FLAGS2(ctx, ISA207S);
+> The old GEN_HANDLER_E used PPC2_LSQ_ISA207, but the new code uses
+> PPC2_ISA207S . In the current QEMU CPU model set this makes no practical
+> difference — every CPU that sets PPC2_ISA207S also sets PPC2_LSQ_ISA207.
+> However, PPC2_LSQ_ISA207 is the precise flag for this feature and keeps
+> lqarx symmetric with its companion stqcx_ (line 5870) which correctly
+> continues to use PPC2_LSQ_ISA207. Please use REQUIRE_INSNS_FLAGS2(ctx,
+> LSQ_ISA207) for consistency and to guard against future CPU models that
+> may set these flags independently
 
-Best regards,
-Oleg Endo
+Hi Amit,
+
+Nice catch ! Thanks !
+In the later patches 32 and 34 in this series, I have consolidated all 
+ISA 2.07 flags into a single flag. Hence both PPC2_LSQ_ISA207 and 
+PPC2_ISA207S are replaced by PPC2_ISA207, hence this is automatically 
+taken care of.
+
+Regards,
+Chinmay
+
+>
+>> +#if defined(TARGET_PPC64)
+>> +    TCGv EA;
+>> +    TCGv_i128 t16;
+>> +    /* Must use even register and avoid overlap */
+>> +    if (unlikely((a->rt & 1) || (a->rt == a->ra) || (a->rt == a->rb))) {
+>> +        gen_inval_exception(ctx, POWERPC_EXCP_INVAL_INVAL);
+>> +        return true;
+>> +    }
+>> +
+>> +    gen_set_access_type(ctx, ACCESS_RES);
+>> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+>> +    t16 = tcg_temp_new_i128();
+>> +
+>> +    tcg_gen_qemu_ld_i128(t16, EA, ctx->mem_idx,
+>> +                         DEF_MEMOP(MO_128 | MO_ALIGN));
+>> +
+>> +    tcg_gen_extr_i128_i64(cpu_gpr[a->rt + 1],
+>> +                         cpu_gpr[a->rt],
+>> +                         t16);
+>> +
+>> +    tcg_gen_mov_tl(cpu_reserve, EA);
+>> +    tcg_gen_movi_tl(cpu_reserve_length, 16);
+>> +
+>> +    tcg_gen_st_i64(cpu_gpr[a->rt],
+>> +                   tcg_env, offsetof(CPUPPCState, reserve_val));
+> All these multi-line calls can be collapsed to single lines — they are
+> within 80 characters respectively and fit within the 80-column limit.
+> The only exception is tcg_gen_st_i64(..., reserve_val2) at 85 chars,
+> which legitimately needs wrapping. The unnecessary line splits add
+> visual noise without any readability benefit.
+>
+>> +    tcg_gen_st_i64(cpu_gpr[a->rt + 1],
+>> +                   tcg_env, offsetof(CPUPPCState, reserve_val2));
+>> +#else
+>> +    qemu_build_not_reached();
+>> +#endif
+>> +    return true;
+>> +}
+>> +
+>>   #include "translate/fixedpoint-impl.c.inc"
+>>   
+>>   #include "translate/fp-impl.c.inc"
+>> @@ -5853,9 +5858,6 @@ GEN_HANDLER(lswx, 0x1F, 0x15, 0x10, 0x00000001, PPC_STRING),
+>>   GEN_HANDLER(stswi, 0x1F, 0x15, 0x16, 0x00000001, PPC_STRING),
+>>   GEN_HANDLER(stswx, 0x1F, 0x15, 0x14, 0x00000001, PPC_STRING),
+>>   GEN_HANDLER(isync, 0x13, 0x16, 0x04, 0x03FFF801, PPC_MEM),
+>> -GEN_HANDLER_E(lbarx, 0x1F, 0x14, 0x01, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+>> -GEN_HANDLER_E(lharx, 0x1F, 0x14, 0x03, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+>> -GEN_HANDLER(lwarx, 0x1F, 0x14, 0x00, 0x00000000, PPC_RES),
+>>   GEN_HANDLER_E(lwat, 0x1F, 0x06, 0x12, 0x00000001, PPC_NONE, PPC2_ISA300),
+>>   GEN_HANDLER_E(stwat, 0x1F, 0x06, 0x16, 0x00000001, PPC_NONE, PPC2_ISA300),
+>>   GEN_HANDLER_E(stbcx_, 0x1F, 0x16, 0x15, 0, PPC_NONE, PPC2_ATOMIC_ISA206),
+>> @@ -5864,8 +5866,6 @@ GEN_HANDLER2(stwcx_, "stwcx.", 0x1F, 0x16, 0x04, 0x00000000, PPC_RES),
+>>   #if defined(TARGET_PPC64)
+>>   GEN_HANDLER_E(ldat, 0x1F, 0x06, 0x13, 0x00000001, PPC_NONE, PPC2_ISA300),
+>>   GEN_HANDLER_E(stdat, 0x1F, 0x06, 0x17, 0x00000001, PPC_NONE, PPC2_ISA300),
+>> -GEN_HANDLER(ldarx, 0x1F, 0x14, 0x02, 0x00000000, PPC_64B),
+>> -GEN_HANDLER_E(lqarx, 0x1F, 0x14, 0x08, 0, PPC_NONE, PPC2_LSQ_ISA207),
+>>   GEN_HANDLER2(stdcx_, "stdcx.", 0x1F, 0x16, 0x06, 0x00000000, PPC_64B),
+>>   GEN_HANDLER_E(stqcx_, 0x1F, 0x16, 0x05, 0, PPC_NONE, PPC2_LSQ_ISA207),
+>>   #endif
+>> -- 
+>> 2.55.0
+>>
 
