@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B980AC5DF97
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:45:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9783DC61DBE
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 19:52:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzJZE-0006Dz-51; Wed, 26 Aug 2026 15:45:48 -0400
+	id 1wzJef-0007R1-Jo; Wed, 26 Aug 2026 15:51:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJZB-0006BI-SG
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:45:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJee-0007Qt-7V
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:51:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJZ9-0007NV-EI
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:45:45 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wzJea-0008Sy-Gz
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 15:51:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787773542;
+ s=mimecast20190719; t=1787773879;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GT4vbniYPu2T0an15X/kc4fJpS4Ogad+KYFFAMad4RM=;
- b=I50zZTGp9rZtkyWg1grPzMtMIw71/sCbCl25pqCQyNDC3NfzrR9AKjyADLZICvhL2ymLGO
- GnB6o57ZvTdwgiFF0I0nH/6+lQDEoB9fi8e87hYOkw1QuUB8PdkDanYRsGnSaUl5x3JFXL
- 5b/O53lSi0KjR2Cmk6VXuzXkoGIss+0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=9lCohsPs1HSV28k3Pcj4uAb50E8K4ym/oCn2bGq9UGE=;
+ b=Dd5+TqEEKDSgjPSwFEJCEyiyc+HRWaEKABU9uFf6pLAcwLVxGz0Hej7riHtxRIJRye/Lyd
+ ULHzeqMgQxw5eadaF9jkSnc8hBFFSX9ZjAvlrCKLAmLI/DQ5443o7OZnuUj3R+7b7DMH8M
+ WD2vu7Xh+Qx05Xhc3WTR1iOVsWq8mGY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-602-AuyODw-rNaOByQ2n1VZbww-1; Wed,
- 26 Aug 2026 15:44:31 -0400
-X-MC-Unique: AuyODw-rNaOByQ2n1VZbww-1
-X-Mimecast-MFC-AGG-ID: AuyODw-rNaOByQ2n1VZbww_1787773468
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-93-6DbN6EcBPiSZCYX69rhwyw-1; Wed,
+ 26 Aug 2026 15:44:58 -0400
+X-MC-Unique: 6DbN6EcBPiSZCYX69rhwyw-1
+X-Mimecast-MFC-AGG-ID: 6DbN6EcBPiSZCYX69rhwyw_1787773496
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 153A31862D51; Wed, 26 Aug 2026 19:44:28 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DB48A1933B54; Wed, 26 Aug 2026 19:44:55 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.99])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4FA7B1800598; Wed, 26 Aug 2026 19:44:18 +0000 (UTC)
+ id EF39F1800577; Wed, 26 Aug 2026 19:44:46 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>,
@@ -72,23 +72,25 @@ Cc: Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Lukas Straub <lukasstraub2@web.de>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 40/43] qapi: convert trivial intro sections for ui.json
-Date: Wed, 26 Aug 2026 15:38:37 -0400
-Message-ID: <20260826193840.2152000-41-jsnow@redhat.com>
+Subject: [PATCH v3 43/43] qapi: convert trivial intro sections for
+ block-core.json
+Date: Wed, 26 Aug 2026 15:38:40 -0400
+Message-ID: <20260826193840.2152000-44-jsnow@redhat.com>
 In-Reply-To: <20260826193840.2152000-1-jsnow@redhat.com>
 References: <20260826193840.2152000-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,660 +108,1364 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/ui.json | 199 ++++++++++++++++++---------------------------------
- 1 file changed, 68 insertions(+), 131 deletions(-)
+ qapi/block-core.json | 448 ++++++++++++++++---------------------------
+ 1 file changed, 164 insertions(+), 284 deletions(-)
 
-diff --git a/qapi/ui.json b/qapi/ui.json
-index b2c42a7f578..960d02d1429 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -13,8 +13,7 @@
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 199efc1e008..bed736d86f9 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -132,8 +132,7 @@
  
  ##
- # @DisplayProtocol:
+ # @VmdkExtentInfo:
 -#
--# Display protocols which support changing password options.
-+#     Display protocols which support changing password options.
+-# Information about a VMDK extent file
++#     Information about a VMDK extent file
  #
- # Since: 7.0
- ##
-@@ -23,9 +22,8 @@
+ # @filename: Name of the extent file
+ #
+@@ -257,9 +256,8 @@
  
  ##
- # @SetPasswordAction:
+ # @ImageInfoSpecific:
 -#
--# An action to take on changing a password on a connection with active
--# clients.
-+#     An action to take on changing a password on a connection with
-+#     active clients.
+-# A discriminated record of image format specific information
+-# structures.
++#     A discriminated record of image format specific information
++#     structures.
  #
- # @keep: maintain existing clients
+ # @type: block driver name
  #
-@@ -40,8 +38,7 @@
+@@ -341,8 +339,7 @@
  
  ##
- # @SetPasswordOptions:
+ # @BlockNodeInfo:
 -#
--# Options for `set_password`.
-+#     Options for `set_password`.
+-# Information about a QEMU image file
++#     Information about a QEMU image file
  #
- # @protocol:
- #     - 'vnc' to modify the VNC server password
-@@ -64,8 +61,7 @@
+ # @filename: name of the image file
+ #
+@@ -386,9 +383,8 @@
  
  ##
- # @SetPasswordOptionsVnc:
+ # @ImageInfo:
 -#
--# Options for `set_password` specific to the VNC protocol.
-+#     Options for `set_password` specific to the VNC protocol.
+-# Information about a QEMU image file, and potentially its backing
+-# image
++#     Information about a QEMU image file, and potentially its backing
++#     image
  #
- # @display: The id of the display where the password should be
- #     changed.  Defaults to the first.
-@@ -77,8 +73,7 @@
+ # @backing-image: info of the backing image
+ #
+@@ -402,10 +398,9 @@
  
  ##
- # @set_password:
+ # @BlockChildInfo:
 -#
--# Set the password of a remote display server.
-+#     Set the password of a remote display server.
+-# Information about all nodes in the block graph starting at some
+-# node, annotated with information about that node in relation to its
+-# parent.
++#     Information about all nodes in the block graph starting at some
++#     node, annotated with information about that node in relation to
++#     its parent.
+ #
+ # @name: Child name of the root node in the `BlockGraphInfo` struct,
+ #     in its role as the child of some undescribed parent node
+@@ -437,8 +432,7 @@
+ 
+ ##
+ # @ImageCheck:
+-#
+-# Information about a QEMU image file check
++#     Information about a QEMU image file check
+ #
+ # @filename: name of the image file checked
+ #
+@@ -481,8 +475,8 @@
+ 
+ ##
+ # @MapEntry:
+-#
+-# Mapping information from a virtual block range to a host file range
++#     Mapping information from a virtual block range to a host file
++#     range
+ #
+ # @start: virtual (guest) offset of the first byte described by this
+ #     entry
+@@ -520,8 +514,7 @@
+ 
+ ##
+ # @BlockdevCacheInfo:
+-#
+-# Cache mode information for a block device
++#     Cache mode information for a block device
+ #
+ # @writeback: true if writeback mode is enabled
+ #
+@@ -551,8 +544,7 @@
+ 
+ ##
+ # @BlockDeviceInfo:
+-#
+-# Information about the backing device for a block device.
++#     Information about the backing device for a block device.
+ #
+ # @file: the filename of the backing device
+ #
+@@ -668,8 +660,7 @@
+ 
+ ##
+ # @BlockDeviceIoStatus:
+-#
+-# An enumeration of block device I/O status.
++#     An enumeration of block device I/O status.
+ #
+ # @ok: The last I/O operation has succeeded
+ #
+@@ -684,8 +675,7 @@
+ 
+ ##
+ # @BlockDirtyInfo:
+-#
+-# Block dirty bitmap information.
++#     Block dirty bitmap information.
+ #
+ # @name: the name of the dirty bitmap (Since 2.4)
+ #
+@@ -717,8 +707,7 @@
+ 
+ ##
+ # @Qcow2BitmapInfoFlags:
+-#
+-# An enumeration of flags that a bitmap can report to the user.
++#     An enumeration of flags that a bitmap can report to the user.
+ #
+ # @in-use: This flag is set by any process actively modifying the
+ #     qcow2 file, and cleared when the updated bitmap is flushed to
+@@ -736,8 +725,7 @@
+ 
+ ##
+ # @Qcow2BitmapInfo:
+-#
+-# Qcow2 bitmap information.
++#     Qcow2 bitmap information.
+ #
+ # @name: the name of the bitmap
+ #
+@@ -753,8 +741,7 @@
+ 
+ ##
+ # @BlockLatencyHistogramInfo:
+-#
+-# Block latency histogram.
++#     Block latency histogram.
+ #
+ # @boundaries: list of interval boundary values in nanoseconds, all
+ #     greater than zero and in ascending order.  For example, the list
+@@ -852,8 +839,7 @@
+ 
+ ##
+ # @query-block:
+-#
+-# Get a list of `BlockInfo` for all virtual block devices.
++#     Get a list of `BlockInfo` for all virtual block devices.
+ #
+ # @flat: Omit nested data about the backing image, i.e. `BlockInfo`
+ #     member 'inserted.image.backing-image' will be absent.
+@@ -954,8 +940,7 @@
+ 
+ ##
+ # @BlockDeviceTimedStats:
+-#
+-# Statistics of a block device during a given interval of time.
++#     Statistics of a block device during a given interval of time.
+ #
+ # @interval_length: Interval used for calculating the statistics, in
+ #     seconds.
+@@ -1021,8 +1006,7 @@
+ 
+ ##
+ # @BlockDeviceStats:
+-#
+-# Statistics of a virtual block device or a block backing device.
++#     Statistics of a virtual block device or a block backing device.
+ #
+ # @rd_bytes: The number of bytes read by the device.
+ #
+@@ -1160,8 +1144,7 @@
+ 
+ ##
+ # @BlockStatsSpecificFile:
+-#
+-# File driver statistics
++#     File driver statistics
+ #
+ # @discard-nb-ok: The number of successful discard operations
+ #     performed by the driver.
+@@ -1181,8 +1164,7 @@
+ 
+ ##
+ # @BlockStatsSpecificNvme:
+-#
+-# NVMe driver statistics
++#     NVMe driver statistics
+ #
+ # @completion-errors: The number of completion errors.
+ #
+@@ -1202,8 +1184,7 @@
+ 
+ ##
+ # @BlockStatsSpecific:
+-#
+-# Block driver specific statistics
++#     Block driver specific statistics
+ #
+ # @driver: block driver name
+ #
+@@ -1220,8 +1201,7 @@
+ 
+ ##
+ # @BlockStats:
+-#
+-# Statistics of a virtual block device or a block backing device.
++#     Statistics of a virtual block device or a block backing device.
+ #
+ # @device: If the stats are for a virtual block device, the name
+ #     corresponding to the virtual block device.
+@@ -1254,8 +1234,7 @@
+ 
+ ##
+ # @query-blockstats:
+-#
+-# Query the `BlockStats` for all virtual block devices.
++#     Query the `BlockStats` for all virtual block devices.
+ #
+ # @query-nodes: If true, the command will query all the block nodes
+ #     that have a node name, in a list which will include "parent"
+@@ -1378,10 +1357,9 @@
+ 
+ ##
+ # @BlockdevOnError:
+-#
+-# An enumeration of possible behaviors for errors on I/O operations.
+-# The exact meaning depends on whether the I/O was initiated by a
+-# guest or by a block job
++#     An enumeration of possible behaviors for errors on I/O
++#     operations.  The exact meaning depends on whether the I/O was
++#     initiated by a guest or by a block job
+ #
+ # @report: for guest operations, report the error to the guest; for
+ #     jobs, cancel the job
+@@ -1406,9 +1384,8 @@
+ 
+ ##
+ # @MirrorSyncMode:
+-#
+-# An enumeration of possible behaviors for the initial synchronization
+-# phase of storage mirroring.
++#     An enumeration of possible behaviors for the initial
++#     synchronization phase of storage mirroring.
+ #
+ # @top: copies data in the topmost image to the destination
+ #
+@@ -1429,9 +1406,8 @@
+ 
+ ##
+ # @BitmapSyncMode:
+-#
+-# An enumeration of possible behaviors for the synchronization of a
+-# bitmap when used for data copy operations.
++#     An enumeration of possible behaviors for the synchronization of
++#     a bitmap when used for data copy operations.
+ #
+ # @on-success: The bitmap is only synced when the operation is
+ #     successful.  This is the behavior always used for incremental
+@@ -1450,9 +1426,8 @@
+ 
+ ##
+ # @MirrorCopyMode:
+-#
+-# An enumeration whose values tell the mirror block job when to
+-# trigger writes to the target.
++#     An enumeration whose values tell the mirror block job when to
++#     trigger writes to the target.
+ #
+ # @background: copy data in background only.
+ #
+@@ -1467,8 +1442,7 @@
+ 
+ ##
+ # @BlockJobInfoMirror:
+-#
+-# Information specific to mirror block jobs.
++#     Information specific to mirror block jobs.
+ #
+ # @actively-synced: Whether the source is actively synced to the
+ #     target, i.e. same data and new writes are done synchronously to
+@@ -1481,8 +1455,7 @@
+ 
+ ##
+ # @BlockJobInfo:
+-#
+-# Information about a long-running block device operation.
++#     Information about a long-running block device operation.
+ #
+ # @type: the job type ('stream' for image streaming)
+ #
+@@ -1534,8 +1507,7 @@
+ 
+ ##
+ # @query-block-jobs:
+-#
+-# Return information about long-running block device operations.
++#     Return information about long-running block device operations.
+ #
+ # Returns: a list of job info for each active block job
+ #
+@@ -1577,9 +1549,8 @@
+ 
+ ##
+ # @NewImageMode:
+-#
+-# An enumeration that tells QEMU how to set the backing file path in a
+-# new image file.
++#     An enumeration that tells QEMU how to set the backing file path
++#     in a new image file.
+ #
+ # @existing: QEMU should look for an existing image file.
+ #
+@@ -1782,8 +1753,7 @@
+ 
+ ##
+ # @blockdev-snapshot-sync:
+-#
+-# Takes a synchronous snapshot of a block device.
++#     Takes a synchronous snapshot of a block device.
  #
  # Errors:
- #     - If Spice is not enabled, DeviceNotFound
-@@ -95,8 +90,7 @@
+ #     - If @device is not a valid block device, DeviceNotFound
+@@ -2043,8 +2013,7 @@
  
  ##
- # @ExpirePasswordOptions:
+ # @query-named-block-nodes:
 -#
--# General options for `expire_password`.
-+#     General options for `expire_password`.
+-# Get the named block driver list
++#     Get the named block driver list
  #
- # @protocol:
- #     - 'vnc' to modify the VNC server expiration
-@@ -125,8 +119,7 @@
+ # @flat: Omit the nested data about backing image ("backing-image"
+ #     key) if true.  Default is false (Since 5.0)
+@@ -2140,8 +2109,7 @@
  
  ##
- # @ExpirePasswordOptionsVnc:
+ # @BlockPermission:
 -#
--# Options for `expire_password` specific to the VNC protocol.
-+#     Options for `expire_password` specific to the VNC protocol.
+-# Enum of base block permissions.
++#     Enum of base block permissions.
  #
- # @display: The id of the display where the expiration should be
- #     changed.  Defaults to the first.
-@@ -138,8 +131,7 @@
+ # @consistent-read: A user that has the "permission" of consistent
+ #     reads is guaranteed that their view of the contents of the block
+@@ -2171,8 +2139,7 @@
  
  ##
- # @expire_password:
+ # @XDbgBlockGraphEdge:
 -#
--# Expire the password of a remote display server.
-+#     Expire the password of a remote display server.
+-# Block Graph edge description for `x-debug-query-block-graph`.
++#     Block Graph edge description for `x-debug-query-block-graph`.
+ #
+ # @parent: parent id
+ #
+@@ -2194,8 +2161,7 @@
+ 
+ ##
+ # @XDbgBlockGraph:
+-#
+-# Block Graph - list of nodes and list of edges.
++#     Block Graph - list of nodes and list of edges.
+ #
+ # Since: 4.0
+ ##
+@@ -2204,8 +2170,7 @@
+ 
+ ##
+ # @x-debug-query-block-graph:
+-#
+-# Get the block graph.
++#     Get the block graph.
+ #
+ # Features:
+ #
+@@ -2247,8 +2212,7 @@
+ 
+ ##
+ # @DriveMirror:
+-#
+-# A set of parameters describing drive mirror setup.
++#     A set of parameters describing drive mirror setup.
+ #
+ # @job-id: identifier for the newly-created block job.  If omitted,
+ #     the device name will be used.  (Since 2.7)
+@@ -2401,9 +2365,8 @@
+ 
+ ##
+ # @block-dirty-bitmap-add:
+-#
+-# Create a dirty bitmap with a name on the node, and start tracking
+-# the writes.
++#     Create a dirty bitmap with a name on the node, and start
++#     tracking the writes.
  #
  # Errors:
- #     - If @protocol is 'spice' and Spice is not active,
-@@ -157,8 +149,7 @@
+ #     - If @node is not a valid block device or node, DeviceNotFound
+@@ -2447,10 +2410,9 @@
  
  ##
- # @ImageFormat:
+ # @block-dirty-bitmap-clear:
 -#
--# Supported image format types.
-+#     Supported image format types.
+-# Clear (reset) a dirty bitmap on the device, so that an incremental
+-# backup from this point in time forward will only backup clusters
+-# modified after this clear operation.
++#     Clear (reset) a dirty bitmap on the device, so that an
++#     incremental backup from this point in time forward will only
++#     backup clusters modified after this clear operation.
  #
- # @png: PNG format
- #
-@@ -171,8 +162,7 @@
+ # Errors:
+ #     - If @node is not a valid block device, DeviceNotFound
+@@ -2470,8 +2432,8 @@
  
  ##
- # @screendump:
+ # @block-dirty-bitmap-enable:
 -#
--# Capture the contents of a screen and write it to a file.
-+#     Capture the contents of a screen and write it to a file.
+-# Enables a dirty bitmap so that it will begin tracking disk changes.
++#     Enables a dirty bitmap so that it will begin tracking disk
++#     changes.
  #
- # @filename: the path of a new file to store the image
- #
-@@ -208,8 +198,7 @@
+ # Errors:
+ #     - If @node is not a valid block device, DeviceNotFound
+@@ -2491,8 +2453,8 @@
  
  ##
- # @SpiceBasicInfo:
+ # @block-dirty-bitmap-disable:
 -#
--# The basic information for SPICE network connection
-+#     The basic information for SPICE network connection
+-# Disables a dirty bitmap so that it will stop tracking disk changes.
++#     Disables a dirty bitmap so that it will stop tracking disk
++#     changes.
  #
- # @host: IP address
- #
-@@ -227,8 +216,7 @@
+ # Errors:
+ #     - If @node is not a valid block device, DeviceNotFound
+@@ -2545,8 +2507,7 @@
  
  ##
- # @SpiceServerInfo:
+ # @BlockDirtyBitmapSha256:
 -#
--# Information about a SPICE server
-+#     Information about a SPICE server
+-# SHA256 hash of dirty bitmap data
++#     SHA256 hash of dirty bitmap data
  #
- # @auth: authentication method
+ # @sha256: ASCII representation of SHA256 bitmap hash
  #
-@@ -241,8 +229,7 @@
+@@ -2557,8 +2518,7 @@
  
  ##
- # @SpiceChannel:
+ # @x-debug-block-dirty-bitmap-sha256:
 -#
--# Information about a SPICE client channel.
-+#     Information about a SPICE client channel.
+-# Get bitmap SHA256.
++#     Get bitmap SHA256.
  #
- # @connection-id: SPICE connection id number.  All channels with the
- #     same id belong to the same SPICE session.
-@@ -267,8 +254,7 @@
+ # Features:
+ #
+@@ -2577,8 +2537,7 @@
  
  ##
- # @SpiceQueryMouseMode:
+ # @blockdev-mirror:
 -#
--# An enumeration of Spice mouse states.
-+#     An enumeration of Spice mouse states.
+-# Start mirroring a block device's writes to a new destination.
++#     Start mirroring a block device's writes to a new destination.
  #
- # @client: Mouse cursor position is determined by the client.
- #
-@@ -285,8 +271,7 @@
+ # @job-id: identifier for the newly-created block job.  If omitted,
+ #     the device name will be used.  (Since 2.7)
+@@ -2664,8 +2623,7 @@
  
  ##
- # @SpiceInfo:
+ # @BlockIOThrottle:
 -#
--# Information about the SPICE session.
-+#     Information about the SPICE session.
+-# A set of parameters describing block throttling.
++#     A set of parameters describing block throttling.
  #
- # @enabled: true if the SPICE server is enabled, false otherwise
+ # @device: Block device name
  #
-@@ -325,8 +310,7 @@
+@@ -2816,8 +2774,7 @@
  
  ##
- # @query-spice:
+ # @ThrottleGroupProperties:
 -#
--# Return information about the current SPICE server
-+#     Return information about the current SPICE server
+-# Properties for throttle-group objects.
++#     Properties for throttle-group objects.
  #
- # Since: 0.14
+ # @limits: limits to apply for this throttle group
  #
-@@ -370,8 +354,7 @@
+@@ -3224,8 +3181,7 @@
  
  ##
- # @SPICE_CONNECTED:
+ # @BlockJobChangeOptions:
 -#
--# Emitted when a SPICE client establishes a connection
-+#     Emitted when a SPICE client establishes a connection
+-# Block job options that can be changed after job creation.
++#     Block job options that can be changed after job creation.
  #
- # @server: server information
+ # @id: The job identifier
  #
-@@ -395,9 +378,8 @@
+@@ -3240,8 +3196,7 @@
  
  ##
- # @SPICE_INITIALIZED:
+ # @block-job-change:
 -#
--# Emitted after initial handshake and authentication takes place (if
--# any) and the SPICE channel is up and running
-+#     Emitted after initial handshake and authentication takes place
-+#     (if any) and the SPICE channel is up and running
+-# Change the block job's options.
++#     Change the block job's options.
  #
- # @server: server information
- #
-@@ -423,8 +405,7 @@
+ # Since: 8.2
+ ##
+@@ -3250,8 +3205,7 @@
  
  ##
- # @SPICE_DISCONNECTED:
+ # @BlockdevDiscardOptions:
 -#
--# Emitted when the SPICE connection is closed
-+#     Emitted when the SPICE connection is closed
+-# Determines how to handle discard requests.
++#     Determines how to handle discard requests.
  #
- # @server: server information
+ # @ignore: Ignore the request
  #
-@@ -448,8 +429,7 @@
+@@ -3264,10 +3218,9 @@
  
  ##
- # @SPICE_MIGRATE_COMPLETED:
+ # @BlockdevDetectZeroesOptions:
 -#
--# Emitted when SPICE migration has completed
-+#     Emitted when SPICE migration has completed
+-# Describes the operation mode for the automatic conversion of plain
+-# zero writes by the OS to driver specific optimized zero write
+-# commands.
++#     Describes the operation mode for the automatic conversion of
++#     plain zero writes by the OS to driver specific optimized zero
++#     write commands.
  #
- # Since: 1.3
+ # @off: Disabled (default)
  #
-@@ -468,8 +448,7 @@
+@@ -3284,8 +3237,7 @@
  
  ##
- # @VncBasicInfo:
+ # @BlockdevAioOptions:
 -#
--# The basic information for vnc network connection
-+#     The basic information for vnc network connection
+-# Selects the AIO backend to handle I/O requests
++#     Selects the AIO backend to handle I/O requests
  #
- # @host: IP address
+ # @threads: Use QEMU's thread pool
  #
-@@ -492,8 +471,7 @@
+@@ -3301,8 +3253,7 @@
  
  ##
- # @VncServerInfo:
+ # @BlockdevCacheOptions:
 -#
--# The network connection information for server
-+#     The network connection information for server
+-# Includes cache-related options for block devices
++#     Includes cache-related options for block devices
  #
- # @auth: authentication method used for the plain (non-websocket) VNC
- #     server
-@@ -507,8 +485,7 @@
+ # @direct: enables use of O_DIRECT (bypass the host page cache;
+ #     default: false)
+@@ -3317,8 +3268,7 @@
  
  ##
- # @VncClientInfo:
+ # @BlockdevDriver:
 -#
--# Information about a connected VNC client.
-+#     Information about a connected VNC client.
+-# Drivers that are supported in block device operations.
++#     Drivers that are supported in block device operations.
  #
- # @x509_dname: If x509 authentication is in use, the Distinguished
- #     Name of the client.
-@@ -525,8 +502,7 @@
+ # @throttle: Since 2.11
+ #
+@@ -3360,8 +3310,7 @@
  
  ##
- # @VncInfo:
+ # @BlockdevOptionsFile:
 -#
--# Information about the VNC session.
-+#     Information about the VNC session.
+-# Driver specific block device options for the file backend.
++#     Driver specific block device options for the file backend.
  #
- # @enabled: true if the VNC server is enabled, false otherwise
+ # @filename: path to the image file
  #
-@@ -576,8 +552,7 @@
+@@ -3420,8 +3369,7 @@
  
  ##
- # @VncPrimaryAuth:
+ # @BlockdevOptionsNull:
 -#
--# vnc primary authentication method.
-+#     vnc primary authentication method.
+-# Driver specific block device options for the null backend.
++#     Driver specific block device options for the null backend.
  #
- # Since: 2.3
- ##
-@@ -588,8 +563,7 @@
+ # @size: size of the device in bytes.
+ #
+@@ -3440,8 +3388,7 @@
  
  ##
- # @VncVencryptSubAuth:
+ # @BlockdevOptionsNVMe:
 -#
--# vnc sub authentication method with vencrypt.
-+#     vnc sub authentication method with vencrypt.
+-# Driver specific block device options for the NVMe backend.
++#     Driver specific block device options for the NVMe backend.
  #
- # Since: 2.3
- ##
-@@ -603,8 +577,7 @@
+ # @device: PCI controller address of the NVMe device in format
+ #     hhhh:bb:ss.f (host:bus:slot.function)
+@@ -3458,8 +3405,7 @@
  
  ##
- # @VncServerInfo2:
+ # @BlockdevOptionsVVFAT:
 -#
--# The network connection information for server
-+#     The network connection information for server
+-# Driver specific block device options for the vvfat protocol.
++#     Driver specific block device options for the vvfat protocol.
  #
- # @auth: The current authentication type used by the servers
+ # @dir: directory to be exported as FAT image
  #
-@@ -621,8 +594,7 @@
+@@ -3483,9 +3429,8 @@
  
  ##
- # @VncInfo2:
+ # @BlockdevOptionsGenericFormat:
 -#
--# Information about a vnc server
-+#     Information about a vnc server
+-# Driver specific block device options for image format that have no
+-# option besides their data source.
++#     Driver specific block device options for image format that have
++#     no option besides their data source.
  #
- # @id: vnc server name.
+ # @file: reference to or definition of the data source block device
  #
-@@ -655,8 +627,7 @@
+@@ -3496,8 +3441,7 @@
  
  ##
- # @query-vnc:
+ # @BlockdevOptionsLUKS:
 -#
--# Return information about the current VNC server
-+#     Return information about the current VNC server
+-# Driver specific block device options for LUKS.
++#     Driver specific block device options for LUKS.
  #
- # Since: 0.14
- #
-@@ -695,8 +666,7 @@
+ # @key-secret: the ID of a QCryptoSecret object providing the
+ #     decryption key.  Mandatory except when doing a metadata-only
+@@ -3514,9 +3458,9 @@
  
  ##
- # @change-vnc-password:
+ # @BlockdevOptionsGenericCOWFormat:
 -#
--# Change the VNC server password.
-+#     Change the VNC server password.
+-# Driver specific block device options for image format that have no
+-# option besides their data source and an optional backing file.
++#     Driver specific block device options for image format that have
++#     no option besides their data source and an optional backing
++#     file.
  #
- # @password: the new password to use with VNC authentication
- #
-@@ -712,8 +682,7 @@
+ # @backing: reference to or definition of the backing file block
+ #     device, null disables the backing file entirely.  Defaults to
+@@ -3530,8 +3474,7 @@
  
  ##
- # @VNC_CONNECTED:
+ # @Qcow2OverlapCheckMode:
 -#
--# Emitted when a VNC client establishes a connection
-+#     Emitted when a VNC client establishes a connection
+-# General overlap check modes.
++#     General overlap check modes.
  #
- # @server: server information
+ # @none: Do not perform any checks
  #
-@@ -741,9 +710,8 @@
+@@ -3594,9 +3537,8 @@
  
  ##
- # @VNC_INITIALIZED:
+ # @Qcow2OverlapChecks:
 -#
--# Emitted after authentication takes place (if any) and the VNC
--# session is made active
-+#     Emitted after authentication takes place (if any) and the VNC
-+#     session is made active
+-# Specifies which metadata structures should be guarded against
+-# unintended overwriting.
++#     Specifies which metadata structures should be guarded against
++#     unintended overwriting.
  #
- # @server: server information
- #
-@@ -768,8 +736,7 @@
+ # @flags: set of flags for separate specification of each metadata
+ #     structure type
+@@ -3633,8 +3575,7 @@
  
  ##
- # @VNC_DISCONNECTED:
+ # @BlockdevOptionsQcow:
 -#
--# Emitted when the connection is closed
-+#     Emitted when the connection is closed
+-# Driver specific block device options for qcow.
++#     Driver specific block device options for qcow.
  #
- # @server: server information
- #
-@@ -800,8 +767,7 @@
+ # @encrypt: Image decryption options.  Mandatory for encrypted images,
+ #     except when doing a metadata-only probe of the image.
+@@ -3670,9 +3611,8 @@
  
  ##
- # @MouseInfo:
+ # @BlockdevOptionsPreallocate:
 -#
--# Information about a mouse device.
-+#     Information about a mouse device.
+-# Filter driver intended to be inserted between format and protocol
+-# node and do preallocation in protocol node on write.
++#     Filter driver intended to be inserted between format and
++#     protocol node and do preallocation in protocol node on write.
  #
- # @name: the name of the mouse device
- #
-@@ -820,8 +786,7 @@
+ # @prealloc-align: on preallocation, align file length to this number,
+ #     default 1048576 (1M)
+@@ -3687,8 +3627,7 @@
  
  ##
- # @query-mice:
+ # @BlockdevOptionsQcow2:
 -#
--# Return information about each active mouse device
-+#     Return information about each active mouse device
+-# Driver specific block device options for qcow2.
++#     Driver specific block device options for qcow2.
  #
- # Returns: a list of info for each device
- #
-@@ -1005,8 +970,7 @@
+ # @lazy-refcounts: whether to enable the lazy refcounts feature
+ #     (default is taken from the image file)
+@@ -3841,8 +3780,7 @@
  
  ##
- # @KeyValue:
+ # @BlkdebugEvent:
 -#
--# Represents a keyboard key.
-+#     Represents a keyboard key.
+-# Trigger events supported by blkdebug.
++#     Trigger events supported by blkdebug.
  #
- # @type: key encoding
- #
-@@ -1021,8 +985,7 @@
+ # @l1_shrink_write_table: write zeros to the l1 table to shrink image.
+ #     (since 2.11)
+@@ -3878,8 +3816,7 @@
  
  ##
- # @send-key:
+ # @BlkdebugIOType:
 -#
--# Send keys to guest.
-+#     Send keys to guest.
+-# Kinds of I/O that blkdebug can inject errors in.
++#     Kinds of I/O that blkdebug can inject errors in.
  #
- # @keys: An array of `KeyValue` elements.  All @KeyValues in this
- #     array are simultaneously sent to the guest.  A `KeyValue`.number
-@@ -1050,8 +1013,7 @@
+ # @read: .bdrv_co_preadv()
+ #
+@@ -3901,8 +3838,7 @@
  
  ##
- # @InputButton:
+ # @BlkdebugInjectErrorOptions:
 -#
--# Button of a pointer input device (mouse, tablet).
-+#     Button of a pointer input device (mouse, tablet).
+-# Describes a single error injection for blkdebug.
++#     Describes a single error injection for blkdebug.
  #
- # @side: front side button of a 5-button mouse (since 2.9)
+ # @event: trigger event
  #
-@@ -1067,8 +1029,7 @@
+@@ -3940,8 +3876,7 @@
  
  ##
- # @InputAxis:
+ # @BlkdebugSetStateOptions:
 -#
--# Position axis of a pointer input device (mouse, tablet).
-+#     Position axis of a pointer input device (mouse, tablet).
+-# Describes a single state-change event for blkdebug.
++#     Describes a single state-change event for blkdebug.
  #
- # Since: 2.0
- ##
-@@ -1077,8 +1038,7 @@
+ # @event: trigger event
+ #
+@@ -3960,8 +3895,7 @@
  
  ##
- # @InputMultiTouchType:
+ # @BlockdevOptionsBlkdebug:
 -#
--# Type of a multi-touch event.
-+#     Type of a multi-touch event.
+-# Driver specific block device options for blkdebug.
++#     Driver specific block device options for blkdebug.
  #
- # @begin: A new touch event sequence has just started.
+ # @image: underlying raw block device (or image file)
  #
-@@ -1097,8 +1057,7 @@
+@@ -4022,8 +3956,7 @@
  
  ##
- # @InputKeyEvent:
+ # @BlockdevOptionsBlklogwrites:
 -#
--# Keyboard input event.
-+#     Keyboard input event.
+-# Driver specific block device options for blklogwrites.
++#     Driver specific block device options for blklogwrites.
  #
- # @key: Which key this event is for.
+ # @file: block device
  #
-@@ -1112,8 +1071,7 @@
+@@ -4049,8 +3982,7 @@
  
  ##
- # @InputBtnEvent:
+ # @BlockdevOptionsBlkverify:
 -#
--# Pointer button input event.
-+#     Pointer button input event.
+-# Driver specific block device options for blkverify.
++#     Driver specific block device options for blkverify.
  #
- # @button: Which button this event is for.
+ # @test: block device to be tested
  #
-@@ -1127,8 +1085,7 @@
+@@ -4064,8 +3996,7 @@
  
  ##
- # @InputMoveEvent:
+ # @BlockdevOptionsBlkreplay:
 -#
--# Pointer motion input event.
-+#     Pointer motion input event.
+-# Driver specific block device options for blkreplay.
++#     Driver specific block device options for blkreplay.
  #
- # @axis: Which axis is referenced by @value.
+ # @image: disk image which should be controlled with blkreplay
  #
-@@ -1143,8 +1100,7 @@
+@@ -4076,8 +4007,7 @@
  
  ##
- # @InputMultiTouchEvent:
+ # @QuorumReadPattern:
 -#
--# MultiTouch input event.
-+#     MultiTouch input event.
+-# An enumeration of quorum read patterns.
++#     An enumeration of quorum read patterns.
  #
- # @type: The type of multi-touch event.
+ # @quorum: read all the children and do a quorum vote on reads
  #
-@@ -1226,8 +1182,7 @@
+@@ -4089,8 +4019,7 @@
  
  ##
- # @InputEvent:
+ # @BlockdevOptionsQuorum:
 -#
--# Input event union.
-+#     Input event union.
+-# Driver specific block device options for Quorum
++#     Driver specific block device options for Quorum
  #
- # @type: the type of input event
- #
-@@ -1316,8 +1271,7 @@
+ # @blkverify: true if the driver must print content mismatch set to
+ #     false by default
+@@ -4116,8 +4045,7 @@
  
  ##
- # @DisplayGTK:
+ # @BlockdevOptionsIoUring:
 -#
--# GTK display options.
-+#     GTK display options.
+-# Driver specific block device options for the io_uring backend.
++#     Driver specific block device options for the io_uring backend.
  #
- # @clipboard: Enable host-guest clipboard sharing.  Defaults to "off".
- #     (Since 11.1)
-@@ -1357,8 +1311,7 @@
+ # @filename: path to the image file
+ #
+@@ -4129,8 +4057,8 @@
  
  ##
- # @DisplayEGLHeadless:
+ # @BlockdevOptionsNvmeIoUring:
 -#
--# EGL headless display options.
-+#     EGL headless display options.
+-# Driver specific block device options for the nvme-io_uring backend.
++#     Driver specific block device options for the nvme-io_uring
++#     backend.
  #
- # @rendernode: Which DRM render node should be used.  Default is the
- #     first available node on the host.
-@@ -1370,8 +1323,7 @@
+ # @path: path to the NVMe namespace's character device (e.g.
+ #     /dev/ng0n1).
+@@ -4143,9 +4071,8 @@
  
  ##
- # @DisplayDBus:
+ # @BlockdevOptionsVirtioBlkVfioPci:
 -#
--# DBus display options.
-+#     DBus display options.
+-# Driver specific block device options for the virtio-blk-vfio-pci
+-# backend.
++#     Driver specific block device options for the virtio-blk-vfio-pci
++#     backend.
  #
- # @addr: The D-Bus bus address (default to the session bus).
- #
-@@ -1393,8 +1345,7 @@
+ # @path: path to the PCI device's sysfs directory (e.g.
+ #     /sys/bus/pci/devices/0000:00:01.0).
+@@ -4158,9 +4085,8 @@
  
  ##
- # @DisplayGLMode:
+ # @BlockdevOptionsVirtioBlkVhostUser:
 -#
--# Display OpenGL mode.
-+#     Display OpenGL mode.
+-# Driver specific block device options for the virtio-blk-vhost-user
+-# backend.
++#     Driver specific block device options for the
++#     virtio-blk-vhost-user backend.
  #
- # @off: Disable OpenGL (default).
+ # @path: path to the vhost-user UNIX domain socket.
  #
-@@ -1413,8 +1364,7 @@
+@@ -4172,9 +4098,8 @@
  
  ##
- # @DisplayCurses:
+ # @BlockdevOptionsVirtioBlkVhostVdpa:
 -#
--# Curses display options.
-+#     Curses display options.
+-# Driver specific block device options for the virtio-blk-vhost-vdpa
+-# backend.
++#     Driver specific block device options for the
++#     virtio-blk-vhost-vdpa backend.
  #
- # @charset: Font charset used by guest (default: CP437).
+ # @path: path to the vhost-vdpa character device.
  #
-@@ -1425,8 +1375,7 @@
+@@ -4193,8 +4118,7 @@
  
  ##
- # @DisplayCocoa:
+ # @IscsiTransport:
 -#
--# Cocoa display options.
-+#     Cocoa display options.
+-# An enumeration of libiscsi transport types
++#     An enumeration of libiscsi transport types
  #
- # @left-command-key: Enable/disable forwarding of left command key to
- #     guest.  Allows command-tab window switching on the host without
-@@ -1461,8 +1410,8 @@
+ # Since: 2.9
+ ##
+@@ -4203,8 +4127,7 @@
  
  ##
- # @HotKeyMod:
+ # @IscsiHeaderDigest:
 -#
--# Set of modifier keys that need to be held for shortcut key actions.
-+#    Set of modifier keys that need to be held for shortcut key
-+#    actions.
+-# An enumeration of header digests supported by libiscsi
++#     An enumeration of header digests supported by libiscsi
  #
- # Since: 7.1
+ # Since: 2.9
  ##
-@@ -1471,8 +1420,7 @@
+@@ -4214,8 +4137,7 @@
  
  ##
- # @DisplaySDL:
+ # @BlockdevOptionsIscsi:
 -#
--# SDL2 display options.
-+#     SDL2 display options.
+-# Driver specific block device options for iscsi
++#     Driver specific block device options for iscsi
  #
- # @grab-mod: Modifier keys that should be pressed together with the
- #     "G" key to release the mouse grab.
-@@ -1484,8 +1432,7 @@
+ # @transport: The iscsi transport type
+ #
+@@ -4417,8 +4339,7 @@
  
  ##
- # @DisplayType:
+ # @ReplicationMode:
 -#
--# Display (user interface) type.
-+#     Display (user interface) type.
+-# An enumeration of replication modes.
++#     An enumeration of replication modes.
  #
- # @default: The default user interface, selecting from the first
- #     available of gtk, sdl, cocoa, and vnc.
-@@ -1535,8 +1482,7 @@
+ # @primary: Primary mode, the vm's state will be sent to secondary
+ #     QEMU.
+@@ -4433,8 +4354,7 @@
  
  ##
- # @DisplayOptions:
+ # @BlockdevOptionsReplication:
 -#
--# Display (user interface) options.
-+#     Display (user interface) options.
+-# Driver specific block device options for replication
++#     Driver specific block device options for replication
  #
- # @type: Which `DisplayType` QEMU should use.
+ # @mode: the replication mode
  #
-@@ -1573,8 +1519,7 @@
+@@ -4452,8 +4372,7 @@
  
  ##
- # @query-display-options:
+ # @NFSTransport:
 -#
--# Return information about display configuration
-+#     Return information about display configuration
+-# An enumeration of NFS transport types
++#     An enumeration of NFS transport types
  #
- # Since: 3.1
- ##
-@@ -1583,8 +1528,7 @@
+ # @inet: TCP transport
+ #
+@@ -4464,8 +4383,7 @@
  
  ##
- # @DisplayReloadType:
+ # @NFSServer:
 -#
--# Available DisplayReload types.
-+#     Available DisplayReload types.
+-# Captures the address of the socket
++#     Captures the address of the socket
  #
- # @vnc: VNC display
+ # @type: transport type used for NFS (only TCP supported)
  #
-@@ -1595,8 +1539,7 @@
+@@ -4479,8 +4397,7 @@
  
  ##
- # @DisplayReloadOptionsVNC:
+ # @BlockdevOptionsNfs:
 -#
--# Specify the VNC reload options.
-+#     Specify the VNC reload options.
+-# Driver specific block device option for NFS
++#     Driver specific block device option for NFS
  #
- # @tls-certs: reload tls certs or not.
+ # @server: host address
  #
-@@ -1607,8 +1550,7 @@
+@@ -4517,9 +4434,8 @@
  
  ##
- # @DisplayReloadOptions:
+ # @BlockdevOptionsCurlBase:
 -#
--# Options of the display configuration reload.
-+#     Options of the display configuration reload.
+-# Driver specific block device options shared by all protocols
+-# supported by the curl backend.
++#     Driver specific block device options shared by all protocols
++#     supported by the curl backend.
  #
- # @type: Specify the display type.
+ # @url: URL of the image file
  #
-@@ -1621,8 +1563,7 @@
+@@ -4620,8 +4536,7 @@
  
  ##
- # @display-reload:
+ # @BlockdevOptionsNbd:
 -#
--# Reload display configuration.
-+#     Reload display configuration.
+-# Driver specific block device options for NBD.
++#     Driver specific block device options for NBD.
  #
- # Since: 6.0
+ # @server: NBD server address
  #
-@@ -1638,8 +1579,7 @@
+@@ -4669,8 +4584,7 @@
  
  ##
- # @DisplayUpdateType:
+ # @BlockdevOptionsRaw:
 -#
--# Available DisplayUpdate types.
-+#     Available DisplayUpdate types.
+-# Driver specific block device options for the raw driver.
++#     Driver specific block device options for the raw driver.
  #
- # @vnc: VNC display
+ # @offset: position where the block device starts
  #
-@@ -1650,8 +1590,7 @@
+@@ -4684,8 +4598,7 @@
  
  ##
- # @DisplayUpdateOptionsVNC:
+ # @BlockdevOptionsThrottle:
 -#
--# Specify the VNC reload options.
-+#     Specify the VNC reload options.
+-# Driver specific block device options for the throttle driver
++#     Driver specific block device options for the throttle driver
  #
- # @addresses: If specified, change set of addresses to listen for
- #     connections.  Addresses configured for websockets are not
-@@ -1664,8 +1603,7 @@
+ # @throttle-group: the name of the throttle-group object to use.  It
+ #     must already exist.
+@@ -4701,8 +4614,8 @@
  
  ##
- # @DisplayUpdateOptions:
+ # @BlockdevOptionsCor:
 -#
--# Options of the display configuration reload.
-+#     Options of the display configuration reload.
+-# Driver specific block device options for the copy-on-read driver.
++#     Driver specific block device options for the copy-on-read
++#     driver.
  #
- # @type: Specify the display type.
- #
-@@ -1678,8 +1616,7 @@
+ # @bottom: The name of a non-filter node (allocation-bearing layer)
+ #     that limits the COR operations in the backing chain (inclusive),
+@@ -4718,9 +4631,8 @@
  
  ##
- # @display-update:
+ # @OnCbwError:
 -#
--# Update display configuration.
-+#     Update display configuration.
+-# An enumeration of possible behaviors for copy-before-write operation
+-# failures.
++#     An enumeration of possible behaviors for copy-before-write
++#     operation failures.
  #
- # Since: 7.1
+ # @break-guest-write: report the error to the guest.  This way, the
+ #     guest will not be able to overwrite areas that cannot be backed
+@@ -4780,9 +4692,8 @@
+ 
+ ##
+ # @BlockdevOptions:
+-#
+-# Options for creating a block device.  Many options are available for
+-# all block devices, independent of the block driver:
++#     Options for creating a block device.  Many options are available
++#     for all block devices, independent of the block driver:
  #
+ # @driver: block driver name
+ #
+@@ -4895,8 +4806,7 @@
+ 
+ ##
+ # @BlockdevRef:
+-#
+-# Reference to a block device.
++#     Reference to a block device.
+ #
+ # @definition: defines a new block device inline
+ #
+@@ -4910,8 +4820,7 @@
+ 
+ ##
+ # @BlockdevRefOrNull:
+-#
+-# Reference to a block device.
++#     Reference to a block device.
+ #
+ # @definition: defines a new block device inline
+ #
+@@ -4930,8 +4839,7 @@
+ 
+ ##
+ # @blockdev-add:
+-#
+-# Creates a new block device.
++#     Creates a new block device.
+ #
+ # Since: 2.9
+ #
+@@ -5092,8 +5000,7 @@
+ 
+ ##
+ # @BlockdevCreateOptionsFile:
+-#
+-# Driver specific image creation options for file.
++#     Driver specific image creation options for file.
+ #
+ # @filename: Filename for the new image file
+ #
+@@ -5119,8 +5026,7 @@
+ 
+ ##
+ # @BlockdevCreateOptionsLUKS:
+-#
+-# Driver specific image creation options for LUKS.
++#     Driver specific image creation options for LUKS.
+ #
+ # @file: Node to create the image format on, mandatory except when
+ #     'preallocation' is not requested
+@@ -5143,8 +5049,7 @@
+ 
+ ##
+ # @BlockdevCreateOptionsNfs:
+-#
+-# Driver specific image creation options for NFS.
++#     Driver specific image creation options for NFS.
+ #
+ # @location: Where to store the new image file
+ #
+@@ -5158,8 +5063,7 @@
+ 
+ ##
+ # @BlockdevCreateOptionsParallels:
+-#
+-# Driver specific image creation options for parallels.
++#     Driver specific image creation options for parallels.
+ #
+ # @file: Node to create the image format on
+ #
+@@ -5176,8 +5080,7 @@
+ 
+ ##
+ # @BlockdevCreateOptionsQcow:
+-#
+-# Driver specific image creation options for qcow.
++#     Driver specific image creation options for qcow.
+ #
+ # @file: Node to create the image format on
+ #
+@@ -5211,8 +5114,7 @@
+ 
+ ##
+ # @Qcow2CompressionType:
+-#
+-# Compression type used in qcow2 image file
++#     Compression type used in qcow2 image file
+ #
+ # @zlib: zlib compression, see <http://zlib.net/>
+ #
+@@ -5225,8 +5127,7 @@
+ 
+ ##
+ # @BlockdevCreateOptionsQcow2:
+-#
+-# Driver specific image creation options for qcow2.
++#     Driver specific image creation options for qcow2.
+ #
+ # @file: Node to create the image format on
+ #
+@@ -5285,8 +5186,7 @@
+ 
+ ##
+ # @BlockdevCreateOptionsQed:
+-#
+-# Driver specific image creation options for qed.
++#     Driver specific image creation options for qed.
+ #
+ # @file: Node to create the image format on
+ #
+@@ -5313,8 +5213,7 @@
+ 
+ ##
+ # @BlockdevCreateOptionsRbd:
+-#
+-# Driver specific image creation options for rbd/Ceph.
++#     Driver specific image creation options for rbd/Ceph.
+ #
+ # @location: Where to store the new image file.  This location cannot
+ #     point to a snapshot.
+@@ -5335,8 +5234,7 @@
+ 
+ ##
+ # @BlockdevVmdkSubformat:
+-#
+-# Subformat options for VMDK images
++#     Subformat options for VMDK images
+ #
+ # @monolithicSparse: Single file image with sparse cluster allocation
+ #
+@@ -5359,8 +5257,7 @@
+ 
+ ##
+ # @BlockdevVmdkAdapterType:
+-#
+-# Adapter type info for VMDK images
++#     Adapter type info for VMDK images
+ #
+ # Since: 4.0
+ ##
+@@ -5369,8 +5266,7 @@
+ 
+ ##
+ # @BlockdevCreateOptionsVmdk:
+-#
+-# Driver specific image creation options for VMDK.
++#     Driver specific image creation options for VMDK.
+ #
+ # @file: Where to store the new image file.  This refers to the image
+ #     file for monolithcSparse and streamOptimized format, or the
+@@ -5418,8 +5314,7 @@
+ 
+ ##
+ # @BlockdevCreateOptionsSsh:
+-#
+-# Driver specific image creation options for SSH.
++#     Driver specific image creation options for SSH.
+ #
+ # @location: Where to store the new image file
+ #
+@@ -5433,8 +5328,7 @@
+ 
+ ##
+ # @BlockdevCreateOptionsVdi:
+-#
+-# Driver specific image creation options for VDI.
++#     Driver specific image creation options for VDI.
+ #
+ # @file: Node to create the image format on
+ #
+@@ -5464,8 +5358,7 @@
+ 
+ ##
+ # @BlockdevCreateOptionsVhdx:
+-#
+-# Driver specific image creation options for vhdx.
++#     Driver specific image creation options for vhdx.
+ #
+ # @file: Node to create the image format on
+ #
+@@ -5508,8 +5401,7 @@
+ 
+ ##
+ # @BlockdevCreateOptionsVpc:
+-#
+-# Driver specific image creation options for vpc (VHD).
++#     Driver specific image creation options for vpc (VHD).
+ #
+ # @file: Node to create the image format on
+ #
+@@ -5531,8 +5423,7 @@
+ 
+ ##
+ # @BlockdevCreateOptions:
+-#
+-# Options for creating an image format on a given node.
++#     Options for creating an image format on a given node.
+ #
+ # @driver: block driver to create the image format
+ #
+@@ -5577,8 +5468,7 @@
+ 
+ ##
+ # @BlockdevAmendOptionsLUKS:
+-#
+-# Driver specific image amend options for LUKS.
++#     Driver specific image amend options for LUKS.
+ #
+ # Since: 5.1
+ ##
+@@ -5589,9 +5479,8 @@
+ 
+ ##
+ # @BlockdevAmendOptionsQcow2:
+-#
+-# Driver specific image amend options for qcow2.  For now, only
+-# encryption options can be amended
++#     Driver specific image amend options for qcow2.  For now, only
++#     encryption options can be amended
+ #
+ # @encrypt: Encryption options to be amended
+ #
+@@ -5602,8 +5491,7 @@
+ 
+ ##
+ # @BlockdevAmendOptions:
+-#
+-# Options for amending an image format
++#     Options for amending an image format
+ #
+ # @driver: Block driver of the node to amend.
+ #
+@@ -5651,8 +5539,8 @@
+ 
+ ##
+ # @BlockErrorAction:
+-#
+-# An enumeration of action that has been taken when a DISK I/O occurs
++#     An enumeration of action that has been taken when a DISK I/O
++#     occurs
+ #
+ # @ignore: error has been ignored
+ #
+@@ -5715,8 +5603,7 @@
+ 
+ ##
+ # @BLOCK_IO_ERROR:
+-#
+-# Emitted when a disk I/O error occurs
++#     Emitted when a disk I/O error occurs
+ #
+ # @qom-path: path to the device object in the QOM tree (since 9.2)
+ #
+@@ -5768,8 +5655,7 @@
+ 
+ ##
+ # @BLOCK_JOB_COMPLETED:
+-#
+-# Emitted when a block job has completed
++#     Emitted when a block job has completed
+ #
+ # @type: job type
+ #
+@@ -5808,8 +5694,7 @@
+ 
+ ##
+ # @BLOCK_JOB_CANCELLED:
+-#
+-# Emitted when a block job has been cancelled
++#     Emitted when a block job has been cancelled
+ #
+ # @type: job type
+ #
+@@ -5842,8 +5727,7 @@
+ 
+ ##
+ # @BLOCK_JOB_ERROR:
+-#
+-# Emitted when a block job encounters an error
++#     Emitted when a block job encounters an error
+ #
+ # @device: The job identifier.  Originally the device name but other
+ #     values are allowed since QEMU 2.7
+@@ -5869,8 +5753,7 @@
+ 
+ ##
+ # @BLOCK_JOB_READY:
+-#
+-# Emitted when a block job is ready to complete
++#     Emitted when a block job is ready to complete
+ #
+ # @type: job type
+ #
+@@ -5929,8 +5812,7 @@
+ 
+ ##
+ # @PreallocMode:
+-#
+-# Preallocation mode of QEMU image file
++#     Preallocation mode of QEMU image file
+ #
+ # @off: no preallocation
+ #
+@@ -6109,8 +5991,7 @@
+ 
+ ##
+ # @QuorumOpType:
+-#
+-# An enumeration of the quorum operation types
++#     An enumeration of the quorum operation types
+ #
+ # @read: read operation
+ #
+@@ -6125,8 +6006,8 @@
+ 
+ ##
+ # @QUORUM_FAILURE:
+-#
+-# Emitted by the Quorum block driver if it fails to establish a quorum
++#     Emitted by the Quorum block driver if it fails to establish a
++#     quorum
+ #
+ # @reference: device name if defined else node name
+ #
+@@ -6149,8 +6030,7 @@
+ 
+ ##
+ # @QUORUM_REPORT_BAD:
+-#
+-# Emitted to report a corruption of a Quorum file
++#     Emitted to report a corruption of a Quorum file
+ #
+ # @type: quorum operation type (Since 2.6)
+ #
+@@ -6283,8 +6163,8 @@
+ 
+ ##
+ # @DummyBlockCoreForceArrays:
+-#
+-# Not used by QMP; hack to let us use BlockGraphInfoList internally
++#     Not used by QMP; hack to let us use BlockGraphInfoList
++#     internally
+ #
+ # Since: 8.0
+ ##
 -- 
 2.55.0
 
