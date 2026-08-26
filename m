@@ -4,145 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07445C61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 15:05:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40DD7C61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 15:20:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzFBk-0008IM-8N; Wed, 26 Aug 2026 11:05:16 -0400
+	id 1wzFP8-0002ba-Li; Wed, 26 Aug 2026 11:19:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wzFBj-0008I5-6A
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 11:05:15 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wzFBh-0002It-Ez
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 11:05:14 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 67QDv0tH1120384
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 15:05:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ivHQtH7J1gihc5fUm7h5lY7upQT/cUC9c8mXJEgbi7I=; b=eNW0uXqF2pRUnnrO
- V/6P9/LD05Wr5e8fEYPdZ4FPfbnAdlyVlicQi8zHAv/c4eLGfuk4v2Yu6xvm4o6Y
- qqFP0DjyH0J9h3XOYZs58r/HhFE+OzQqI6F2ads9y0PXgpFZCCSC7t2IhR/4oWaj
- pW4TLAwOTdfJIwya0bFGpofW9BQsOZoWLSqzSM7oikPnwMJXk+DM3pwWfovVM13X
- PfUN/xEWRxcQRFiEChGbVMFal4jEttxpvQpFn0MfU4Fi9JAYRksmxZeP3BbeY7g4
- akjpH0VsAcExpYxgn6tOQKilMORYQx85fVwZKaI7mS5pS6TmpD+ZuZbUtRhRS0pZ
- WLRZKw==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4g9r0k2qug-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 15:05:11 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-92e4f946461so89819285a.2
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 08:05:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1787756710; x=1788361510; darn=nongnu.org;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to:content-type;
- bh=ivHQtH7J1gihc5fUm7h5lY7upQT/cUC9c8mXJEgbi7I=;
- b=f9aSNMs/1Vn4/yd84Q/obcRrhUDZFS+vVgV3GJL8E97amgLM5yg+RrmGVOsJXdC0n/
- 5X4BhmHvDZjamSEYivp1vsE8jWMZ4vpklNqWOvEY3+Fbser2nAgjoj/pP9t6nNVXbelD
- y+rR46gZfICysa0TTYAIxEbvy/j5ZhrnWqIA/w6ViMPpJ8JJMKZIc+cO80gxp3ViwE/X
- u8RG4fTcwcfjdxNHeqvglWd6EKfebF1i8QdovJjqOx1yst2Ox8T3ccuICirwz97Vym23
- IN148UG6nDQiYxkJy5XTyBswmx1EQNsuXH62rItuOHyAR1a1Oy5o483MDK//0KeB7UyN
- YCTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787756710; x=1788361510;
- h=content-transfer-encoding:content-type:in-reply-to:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to:content-type;
- bh=ivHQtH7J1gihc5fUm7h5lY7upQT/cUC9c8mXJEgbi7I=;
- b=hzr8PzBIAkNxxnRQJSbDXMpJohmoJgepYF6jK9+J/Quz0fJcJB1Ak8ivIQnO7BaAip
- jRo3dAsW8Vea4BSb1BVzYCZ+/gc7OW3EuAoFGtyU5D2L5/NzfxNvkSApdQPzhbvam9xB
- jSOAJCTKEjGzm5CUQrLpdRSZXhtIrqXePw9nfqKBfk0xxdKGYxkju6zCe/30TprTU++B
- +X+ctlB4r/yKCNyeSB97JMFfLBwL/M0W28xT3HS7XBw3FSCVV1xFZfctOzD1N0fNOzeh
- T9xFFqHFkkGu6kb5AS9QOWayaFLbdZG7Zjy4hLRN7Eb47WUS+c6jxmizcCaP9cifi4BE
- NoMA==
-X-Gm-Message-State: AFuF++lQWZjPOasTDrk/90QV7Bzqgbi9WbPUmCxmLpK+CFXxeU/PkD95
- X1yI1TXvI3R2B4yElM9OsNqW1+UfMsrXDvupWpBBWjqDDDP/PX5vBooEyOwgC4lR5gUtGFKUG0o
- 5r3qlwadbyn+wfQldLxA7M1UQOaAlAsY65phKosR5rWVZDaMZ6bXSOL1+5Q==
-X-Gm-Gg: AR+sD11RfWeKF8dhZOvP44wnllq4gEOzWaOIWgkGjM1bHop3HcVqKBZdK/BvxTpgVc+
- 1Pjto/4y3PVFlxI3tRD81r4UMGXZlR09CjpER8boZTcGi4SAXTtgqJIxPRaAusEIxKsYKXAwPRY
- emYGpm5EwLPWlV1T42vc20RI3gXONxJU4V1xipFVtDQV9pMjcuvt/FLBXg16RJZ6t6R+GBkTiDj
- +3+ongHJLK+EWqiKZ52vUc7lxUJjS5JomzX2MY6ZcADVJCW57qx4kSM9nauxjkZIEh4RxDAI3TE
- gVv2gImdvZRGn2hrA5SVMxQVnj3F5F0sMJTdNtdBFsHVAiyjwQcJJaGdhkN/r2PKc7m/CCzQZrl
- zBiWrOQsL4vFkK55WFFWvqJEfFzmrpcP2XbS7
-X-Received: by 2002:a05:620a:269b:b0:938:fc91:8072 with SMTP id
- af79cd13be357-938fc918a1fmr173728985a.18.1787756709957; 
- Wed, 26 Aug 2026 08:05:09 -0700 (PDT)
-X-Received: by 2002:a05:620a:269b:b0:938:fc91:8072 with SMTP id
- af79cd13be357-938fc918a1fmr173689785a.18.1787756708083; 
- Wed, 26 Aug 2026 08:05:08 -0700 (PDT)
-Received: from [192.168.68.100] ([189.38.141.232])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9377e688b35sm225104785a.41.2026.08.26.08.05.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Aug 2026 08:05:07 -0700 (PDT)
-Message-ID: <f972ec37-676c-42d9-89f0-05879713f75c@oss.qualcomm.com>
-Date: Wed, 26 Aug 2026 12:05:03 -0300
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
+ id 1wzFP6-0002bC-Ux
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 11:19:04 -0400
+Received: from va-1-113.ptr.blmpb.com ([209.127.230.113])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
+ id 1wzFP2-00072h-Ub
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 11:19:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=2212171451; d=bytedance.com; t=1787757522; h=from:subject:
+ mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
+ mime-version:in-reply-to:message-id;
+ bh=L7fxuY9j6ndFHjqtPR9Iu6C6z7PAAL6eA4SFmoC+ZTI=;
+ b=f2OU7knvU+mDHaxSTftH8lE/QZeSN2mD/vc85bbOsPTNSSPGDVhl1n/m5QWkxB0Q5spHZ8
+ I7huHGSSmHKinrVavXk1TjcQrojZHsHssAJcDAom+dZTHMcaQoCnzVAOrfZpfDU67+ERK5
+ 5/Y1BECOpSt2Y4mAt/wwCxs3LX5hc6dN6HKlUzKmDgGNpSozGyTH4cJnnvZbH2dMkCnNqD
+ d/pkNQOUKor7nMCi5VywSlSBNJ4cYrk3OGk2AkmwZfr/mTRcuIEcfCx3HCX+mNE2joxd5U
+ QYeh0wRLKIAT/hsKRyyOvyu7WufThTrFp/7D9W1+95vKSpJNC79b909NgHxnkQ==
+Cc: <qemu-devel@nongnu.org>, <farosas@suse.de>, <caixiangfeng@bytedance.com>, 
+ <yanfei.xu@bytedance.com>
+References: <20260824122655.63646-2-hongmianquan@bytedance.com>
+ <aoyYdZj2kEStUTOO@x1.local>
+X-Lms-Return-Path: <lba+26a8f03d0+ae1aaf+nongnu.org+hongmianquan@bytedance.com>
+To: "Peter Xu" <peterx@redhat.com>
+From: "hongmianquan" <hongmianquan@bytedance.com>
+Mime-Version: 1.0
+In-Reply-To: <aoyYdZj2kEStUTOO@x1.local>
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 26 Aug 2026 23:18:28 +0800
+Message-Id: <aa4c9982-9a9c-38d4-f6e1-481a086df8ad@bytedance.com>
+Content-Transfer-Encoding: quoted-printable
+X-Original-From: hongmianquan <hongmianquan@bytedance.com>
+Subject: Re: [RFC v1] migration/postcopy: fix page_requested leak for
+ vhost-user shared pages
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/13] hw/riscv/fdt-common, virt.c, tt_atlantis.c: add
- create_fdt_uart()
-To: Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- chao.liu@processmission.com, Palmer Dabbelt <palmer@dabbelt.com>,
- Joel Stanley <joel@jms.id.au>, Nicholas Piggin <npiggin@gmail.com>,
- Michael Ellerman <mpe@kernel.org>,
- Portia Stephens <portias@oss.tenstorrent.com>
-References: <20260825212326.1907-1-daniel.barboza@oss.qualcomm.com>
- <20260825212326.1907-9-daniel.barboza@oss.qualcomm.com>
- <CAEev2e8fbPt04kcKh5a+ohXYtWPzC5-cD58gcMFS-NV3QQKwSw@mail.gmail.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <CAEev2e8fbPt04kcKh5a+ohXYtWPzC5-cD58gcMFS-NV3QQKwSw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=fPEJG5ae c=1 sm=1 tr=0 ts=6a8f00a7 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=MCIxunHWmQOg/5OnbzXZaw==:17
- a=IkcTkHD0fZMA:10 a=Sv0fKeRqtYgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=KDr9JptfNnerHhvE1wIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwODI2MDEyNSBTYWx0ZWRfX1hrerXPnrksg
- J1U2oxjw7ae6B2dqbDmuB8kIM3aawYciuVWd9dKltTq8VCXK+qEHo+U42ckoPrIxXl/zYvB6IgR
- xMWywQj+GROzbEnH7GwKp2NqnMblHNw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwODI2MDEyNSBTYWx0ZWRfX4oR23A0PAQWb
- XA/aMfPu9lNv8mH9bEKOR5SW/RchUhxNfqeDo/W1hXQFJheUUJoLIxcRwXcPWerTJmokWmFZNQd
- ADHxr6zur5YR7r4ntF6RehHeMeHEHibHUbJumK/g6/05HolSpDLoPHNdxuxvhpxkhxx6Ei/mGH8
- Ju4ff8Zybpe1K6PgEDFzAqnWabjMUUl+eYaFhmcENdG0MUY7/JtAsYiYBQViaotpzlmy6BubL6X
- OjQ1RiSeYnjd2LuMdfRbYysfrQYfSAWS9ZwMy0w6DL/WhMzKqTLG4HiHzeiZw4+v7/+0kEjJn3e
- AOjVtlL/wjpfuOnXUWSrHinQo0xuo/HaoWpwlCPZ4HlBP+5he7m1YcAST0yoi0k7OWdFhRdPXtj
- 1OfhOOxBoCVDcupRqGLsfgV6ARbCiBi71H6SlMZDdlqQ41wEb339Wlzq6Oz1DOGfHm8T7wJz1Hr
- FTZE2oWxlclY0jwpsAw==
-X-Proofpoint-ORIG-GUID: 2vBXsXxXhUE-vLi6WpChaVXsusLwrAIW
-X-Proofpoint-GUID: 2vBXsXxXhUE-vLi6WpChaVXsusLwrAIW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-08-26_04,2026-08-26_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 suspectscore=0 impostorscore=0 malwarescore=0
- clxscore=1015 adultscore=0 phishscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2608260125
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=209.127.230.113;
+ envelope-from=hongmianquan@bytedance.com; helo=va-1-113.ptr.blmpb.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,81 +71,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 8/26/2026 11:53 AM, Anirudh Srinivasan wrote:
-> Hi Daniel,
-> 
-> On Tue, Aug 25, 2026 at 4:24 PM Daniel Henrique Barboza
-> <daniel.barboza@oss.qualcomm.com> wrote:
+On 2026/8/25 03:16, Peter Xu wrote:
+> On Mon, Aug 24, 2026 at 08:26:56PM +0800, hongmianquan wrote:
+>> With postcopy-preempt enabled, a postcopy migration of a guest with a
+>> vhost-user device can hang at the very end on the destination, after all
+>> pages are transferred (query-migrate: status=3Dpostcopy-active, remainin=
+g=3D0).
 >>
->> Add a common uart FDT helper to be used by 'virt' and 'tt-atlantis'.
+>> Root cause is an add/del key mismatch on mis->page_requested:
 >>
->> To accomodate both boards the helper is doing the following:
->> - an 'additional_reg_props' flag is used to control whether we want
->>    'reg-shift' and 'reg-io-width' elements added.  OpenSBI won't boot
->>    with the tt-atlantis board without them, but 'virt' can't deal with
->>    them being added unconditionally either.
->> - an 'is_serial0' flag is added to control whether we need to set
->>    additional properties related to the first serial.  This is required
->>    because the 'virt' board adds two uarts in the FDT.
+>> - add: a backend fault goes through postcopy_request_shared_page() ->
+>>    postcopy_request_page() -> migrate_send_rp_req_pages(), which inserts
+>>    the request and bumps page_requested_count keyed by client_addr.
+>> - del: qemu_ufd_copy_ioctl() removes the entry and drops the counter
+>>    keyed by this QEMU process's host address for the page.
 >>
->> No FDT changes intended.
+>> client_addr is a VA in the external vhost-user backend's address space a=
+nd
+>> never equals QEMU's host address, so the removal misses and the counter
+>> leaks. postcopy_ram_incoming_cleanup() then waits for it to reach zero
+>> forever, which also stalls the source (it waits for the return path).
 >>
->> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+>> Racing threads:
+>>    dst: postcopy_ram_listen_thread -> postcopy_ram_incoming_cleanup ->
+>>         qemu_cond_wait_impl              (waits for page_requested_count=
+=3D=3D0)
+>>         (postcopy_preempt_thread already placed/woke the pages)
+>>    src: migration_thread -> migration_completion ->
+>>         await_return_path_close_on_source -> qemu_thread_join
+>>         (source_return_path_thread blocked in recvmsg)
+>>
+>> The leak is only triggered when the vhost-user backend faults on a page
+>> that has not been received yet: only then does the request take the
+>> shared-fault slow path and register an entry in page_requested. If that
+>> page is subsequently delivered while the request is still outstanding,
+>> its entry is never removed. (Pages already present when the backend
+>> faults just take the wake path and never register.) So a run may leak
+>> only a few entries (9 of ~244k requests in our repro) yet still hang.
+>>
+>> Fix: key the request with the same host address the removal uses
+>> (rb->host + aligned_rbo) instead of client_addr. The backend wake still
+>> happens at placement time via postcopy_wake_shared().
+>>
+>> Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
 >> ---
->>   hw/riscv/fdt-common.c         | 39 +++++++++++++++++++++++++++++++
->>   hw/riscv/tt_atlantis.c        | 21 +----------------
->>   hw/riscv/virt.c               | 44 +++++++----------------------------
->>   include/hw/riscv/fdt-common.h |  4 ++++
->>   4 files changed, 52 insertions(+), 56 deletions(-)
+>>   migration/postcopy-ram.c | 15 ++++++++++++++-
+>>   1 file changed, 14 insertions(+), 1 deletion(-)
 >>
->> diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
->> index f31cc9d3cc..b3f3af3762 100644
->> --- a/hw/riscv/fdt-common.c
->> +++ b/hw/riscv/fdt-common.c
->> @@ -791,3 +791,42 @@ void create_fdt_socket_aclint(void *fdt, ACLINTFdtProps *props,
->>           g_free(name);
+>> diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+>> index a3314d3180..98268b3c55 100644
+>> --- a/migration/postcopy-ram.c
+>> +++ b/migration/postcopy-ram.c
+>> @@ -992,7 +992,20 @@ int postcopy_request_shared_page(struct PostCopyFD =
+*pcfd, RAMBlock *rb,
+>>           return postcopy_wake_shared(pcfd, client_addr, rb);
 >>       }
->>   }
->> +
->> +void create_fdt_uart(void *fdt, const MemMapEntry *uart_mem,
->> +                     int uart_irq, int aia_type,
->> +                     bool additional_reg_props, bool is_serial0,
->> +                     uint32_t irq_mmio_phandle)
->> +{
->> +    g_autofree char *name = NULL;
->> +
->> +    name = g_strdup_printf("/soc/serial@%"HWADDR_PRIx, uart_mem->base);
->> +    qemu_fdt_add_subnode(fdt, name);
->> +    qemu_fdt_setprop_string(fdt, name, "compatible", "ns16550a");
->> +    qemu_fdt_setprop_sized_cells(fdt, name, "reg",
->> +                                 2, uart_mem->base,
->> +                                 2, uart_mem->size);
+>>       /* TODO: support blocktime tracking */
+>> -    postcopy_request_page(mis, rb, aligned_rbo, client_addr, 0);
 >> +
 >> +    /*
->> +     * The tt-atlantis board requires these extra props in the
->> +     * DT, but adding them unconditionally will break OpenSBI
->> +     * for 'virt'.
+>> +     * The page will be placed by qemu_ufd_copy_ioctl(), which removes =
+the
+>> +     * matching entry from mis->page_requested (and drops
+>> +     * page_requested_count) using this QEMU process's host address for=
+ the
+>> +     * page. Register the request with the same key, rb->host + aligned=
+_rbo,
+>> +     * not client_addr: client_addr is a VA in the external vhost-user
+>> +     * backend's address space and can never equal that host address, s=
+o the
+>> +     * removal would miss forever, leaking page_requested_count and han=
+ging
+>> +     * postcopy teardown.
 >> +     */
->> +    if (additional_reg_props) {
->> +        qemu_fdt_setprop_cell(fdt, name, "reg-shift", 2);
->> +        qemu_fdt_setprop_cell(fdt, name, "reg-io-width", 4);
->> +    }
-> 
-> I think the issue is that atlantis uses a uart that has 32 bit
-> register spacing (0x0, 0x4, 0x8, 0xc....) rather than 8 bit spacing
-> (0x0, 0x1, 0x2...). So rather than "additional_reg_props", would a
-> name like "word_addressing" or "32_bit_spacing" make sense?
+>> +    postcopy_request_page(mis, rb, aligned_rbo,
+>> +                          (uint64_t)(uintptr_t)qemu_ram_get_host_addr(r=
+b) +
+>> +                          aligned_rbo, 0);
+>>       return 0;
+>>   }
+>=20
+> True.. this should have been overlooked, thanks for fixing it.
+>=20
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+>=20
+> I haven't been looking at vhost-user path for years, now looking at it
+> again, I do have this feeling that this ->handler() API is a bit awkward
+> and too heavy: what we need is a translation of an HVA -> (rb, rb_offset)=
+,
+> then processing it the same as when the fault was generated from QEMU
+> process.  The vhost-user / client code might be more straightforward with=
+ a
+> ->translate_hva().
+>=20
+> I'm not sure if you agree with that idea, or would like to work on such a
+> cleanup, but if you're a serious vhost-user postcopy user (we don't have =
+a
+> lot on the list..), feel free to take this if this sounds beneficial.
+>=20
+> Thanks,
+>=20
+Thanks for the review.
 
-Works for me.  I'll rename it in v2.
+Just to make sure I got the cleanup right: replace the PostCopyFD
+->handler() callback with a lighter ->translate_hva() that only maps the
+client fault address to (RAMBlock, rb_offset), and let the shared fault
+thread call postcopy_request_shared_page() directly after the translation =
+=E2=80=94
+i.e. the same path a fault raised by the QEMU process takes. Is that=20
+what you have in mind?
+We do run vhost-user postcopy, so I'm happy to take this and send the=20
+cleanup as a follow-up.
 
 Thanks,
-Daniel
-
-
-> 
-> Regards
-> Anirudh Srinivasan
-
 
