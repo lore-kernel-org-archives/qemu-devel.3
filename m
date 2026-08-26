@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F4CEC61DBD
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 18:18:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C749C61DBD
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Aug 2026 18:18:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wzIC3-0005bX-QA; Wed, 26 Aug 2026 14:17:47 -0400
+	id 1wzIBz-0005az-SQ; Wed, 26 Aug 2026 14:17:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzIBv-0005a8-VJ
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:17:40 -0400
+ id 1wzIBs-0005ZE-0n
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:17:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wzIBu-0005WW-EP
- for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:17:39 -0400
+ id 1wzIBp-0005To-SB
+ for qemu-devel@nongnu.org; Wed, 26 Aug 2026 14:17:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1787768257;
+ s=mimecast20190719; t=1787768253;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cmA01+NJFdfF+QUZyWfl2umk/yb4CaXDHsGFoM/5q/U=;
- b=ilEG7FSLq0hbcI1kWXn3lHtZ+Gxk5LsYEWZT3VoixZ4CKetDYnNQaf29ujlfMcyQ7AAeyY
- eeItAB49Rwb3Sq0lYWAoVQCAb+/mxvVJT8OOFOFvyAJmNW38XYJKu6aQ6CfHxHU1nT59hp
- 8Y4cFV8lO1Buo1/+DPzgI4FE10SodlQ=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TjEvkvdez1Qq59qc6RfCewem7U8ROFB6pSspVDrwXqM=;
+ b=CMLwsp2I3Xbf6BXL5W5arbig7SVHBnrYaOQnukhAVfiaXqepG5LGR89+oYxRvkrRwu620Y
+ MTJkBkwsuzst+BJ6Bhod/INmGh969IBOTGhb2N2tsTFrrAZD+cRtAG5gHjhuF0PiLKgmg3
+ M64VtHfMYueJxNC6Qw6uTWYFbPxWJXA=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-619-ULSGYlbePX-TyML1kKEWnA-1; Wed, 26 Aug 2026 14:17:36 -0400
-X-MC-Unique: ULSGYlbePX-TyML1kKEWnA-1
-X-Mimecast-MFC-AGG-ID: ULSGYlbePX-TyML1kKEWnA_1787768254
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-c160b9c0676so68220266b.0
- for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 11:17:35 -0700 (PDT)
+ us-mta-609-OXKHjrJDNDys4ddfTYjX4Q-1; Wed, 26 Aug 2026 14:17:31 -0400
+X-MC-Unique: OXKHjrJDNDys4ddfTYjX4Q-1
+X-Mimecast-MFC-AGG-ID: OXKHjrJDNDys4ddfTYjX4Q_1787768250
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-c15fff01a30so88187866b.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Aug 2026 11:17:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1787768254; x=1788373054; darn=nongnu.org;
+ d=redhat.com; s=google; t=1787768250; x=1788373050; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to:content-type;
- bh=cmA01+NJFdfF+QUZyWfl2umk/yb4CaXDHsGFoM/5q/U=;
- b=VgfkoP8O4Mq8vJ1JeAKxcERkvtEL2CeHuAJapn+iwEDmlnk3/R+giTQ5ksjkOiLWWe
- 2BcqGufJBYE3BqqLnKnTIRgvc2K7zSBRQE4LP5c7VeH5IFS1vViRigtCfyEZFPVicwE+
- lHf2BPjjYCz8IacpnqjTY3dWW+IlvSUkcJMQYbShsN8FwS1EFh2pd6412eySgg4lQcIb
- pSuFGPy9KDzrMr+1Q8c7ELPgp7CGMeMX0gDyuWrfIEyu720joLuEdw2uVoA+SfWGqBao
- tp6bdNpxftajzS0tVZ8w7k3nswlBfTzmK/Ien7B6Y+FkExIrm+lSI15VokJHShUfkqz5
- 28wg==
+ bh=TjEvkvdez1Qq59qc6RfCewem7U8ROFB6pSspVDrwXqM=;
+ b=BzbPz4MH6ZawASPIOonpKkyD8/AAeIJAwlHob/SgFvHiN8T2bVy4GFwC0KrkM9/XRt
+ lVu4PkytsOq+DrwnKFhcxvMiYHPIBMvcMHdh4hUqzv6h6WD//U9bj1CwXjg0Lk8mRxq9
+ TB+0SIMPuI4lXFLW/k876MCF+2yRD8rf2z5x6b2Lht7ePBiO5Mu/33++6itOdNuMF+zr
+ JFesRnLiDrPyr5mslJw8ocKLKFvXb/8AXz+009w063phS5HV1yGc6pSMkg3Vpfa2Hkvf
+ 7wNau8ptOaau425KBkrad1gbsBYqcRcWQ0FEuPXKrdfSlxXW8qhDTUGMhuJWG9n4ZZS8
+ Y/3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1787768254; x=1788373054;
+ d=1e100.net; s=20251104; t=1787768250; x=1788373050;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to:content-type;
- bh=cmA01+NJFdfF+QUZyWfl2umk/yb4CaXDHsGFoM/5q/U=;
- b=fydb1pDwinl+/3m5sqPrQL2ODyw1GXx+pFf8g9QHSCA9TDWH34Q7+WSNzI4KPaSA+W
- rOXcXWRdcfOVvP0nZjONu9qeCIl48OTDPmYFZ2l60J/A1167H33pD0prGjoCEN2wk179
- HSzrGHPvZjEmAT5H21FJRsj2YkvFP/UeZbh5sMYGZXa9iTlXNQ7vtPcNUTntjLpnFN2R
- CHqAHqoaBT8wEIlGT2a/0NntxDR8xsLfGtvGSMJnQdEr4mhaWQVIoyuR+h4ZXdf61+jM
- N6wHhSMGuF0+vTywKEuInmpylzlgOzZSSOQJjzdRspodf/nWAIRFDIRm+nAOnyDvdQxc
- 6WHw==
-X-Gm-Message-State: AFuF++mYHXKuKKWZLSIlqQYcKQMyYYRTjoWJ3sdONU0THVwhwoYlmPn4
- zw0olGX/4waiRCVoNUa5/bYSLZXauxWVZuG9dB1ld9VTxs/RyH7bGmh4tgGGFKoAqajVamANO0f
- hZDWb9Jcv7z+K0/sarvhEWAvrAaLO7vP/QEdeYAw29Dt7bY7le0+7OAmgRQno0fiD3ze0TdDfS5
- 9KwaxeStClnFzVDPSTUh0darlmiO5wKagXFLcerx0z
-X-Gm-Gg: AR+sD13XQqeY1BSbZHYfQCP59eauz0FLPsUIYJ2zoeD1LHEadJLJ7u+3PxjVaGPmht/
- 96iMBNNyVZR75yUwL36g8GWDQ39IMe3qDlH37uK6duVkWkUy6zkE7o2D0QG9tmW55auJj83rf0O
- E4NW+piW58lFC+teTTCLfajjesDWnB/od+335bM9yeSic/BQWdDdb2aHsxn3QX0LlbnCow3sf5b
- EbcGoa68vfakMkqC48h+nSNpvs4VcO9+mxaQab/g1eSKsY3j3/kpml7gwma/mvgDlHgjeDqdETk
- 9be0AdS/n7IzzNaXjSgcU6E7biffjyJTiZ5cnfW3Z/wDYvolK5V/RCHwRtmY3jVIQJq+Mv4+YGa
- PsLHxJusxi2Xs1Xvte9GVfhsTv57NlI2KVNHee96ynbWg/bGizSBRhE/3UpWquMlQ8zwUBS6mwE
- xcIw==
-X-Received: by 2002:a17:907:ea8e:b0:c24:d914:6d64 with SMTP id
- a640c23a62f3a-c250c32cb23mr1112104866b.23.1787768253926; 
- Wed, 26 Aug 2026 11:17:33 -0700 (PDT)
-X-Received: by 2002:a17:907:ea8e:b0:c24:d914:6d64 with SMTP id
- a640c23a62f3a-c250c32cb23mr1112099866b.23.1787768253470; 
- Wed, 26 Aug 2026 11:17:33 -0700 (PDT)
+ bh=TjEvkvdez1Qq59qc6RfCewem7U8ROFB6pSspVDrwXqM=;
+ b=M6fQ9BPHI044+tn7fUEhj0765upTHhque4FA/MBLX/wbZU13YldLAFcoKmwjRK4aKa
+ 99Gr/ysPY6FyHqKv7pBOuk+u5yc9Q2JLs1krXLfFNiQovIHr4nVVYOBpCGdsoXmjc67y
+ fyw00oezJuZdIM3+HbqIv8Ge2JBuOkYOmaNnH5omrKPJdbBk4Yy/jvb1YdUrHbU/QvXQ
+ SRzlhIAclOFUkKLRRUcOoO6UNXM4bdr5QzingvmULhZta7y64au4DgZiqVWm2rP6SzUI
+ 6/7wIdTn961Wc9PGDmwUQTkc8k8kpj7toU7MDCAV54TQc1T4oFY5gnPmjdZiQoh3pmyD
+ yj6w==
+X-Gm-Message-State: AFuF++lTQLI8Rpfc4eEqN7uM9KZM/Hjupx2lS0cJEaqHPKiw1hsOXwl9
+ cx1kf0/dsM/au3BA+t7MVJMl70ogleK8JFEQ3gowCHvIVxA4YCEwRGwLGC6EmthkERDjuShVvv6
+ y1UbYTWu9eSPN2QleeH+VGlL++KeFWDkdZcktoXutCpjfFHd/qQluD3YNk9UXfesLaK6Rts18rs
+ sk/7C+Iw2OsJmZdJ1zuT5w9cj8djJcm70NkwGnqOMQ
+X-Gm-Gg: AR+sD11/8sIXZbxDQR85gzoEp0a3yCNJNK5LDQhP6QCuvTD5+5iEMnnWCswS1JN0+RM
+ Nu76O/WWyvPKd0xaQUj5x/dx19bbXkn3iKQNDz0KlpU1q1LLQuSuh0oAr9t3bEvVfjn6tEjRbNq
+ Wvqv80T5xU0UF2F3kr+CmlgbLsEgc7HBNda4no4OJtC+dARLmg9oLCz/mT7dL1/h23rnJEqiz05
+ LcYrR2gUA80BCDI4hnJPXScz70l2Kz5DzUfZ/97ZcMh1fvr2CYuzBNTQCO8AXC0NqOr+zIaiarh
+ PkQLycRv6xmIJ7oFO1S8Kjz/36WzRcCXZwfR/gn3Ui/Ck+o1+Cijdqfo/EK0TAO035pGyMlBvwg
+ wgGs3m2MBUcnb3/REmC5qTXZJA1Nod80zgnMC83JLi/MYECS1+QbClkn9a0MZU+5KtfhKN3ezJ0
+ +ubg==
+X-Received: by 2002:a17:906:478c:b0:c24:6505:8f67 with SMTP id
+ a640c23a62f3a-c250bb556c2mr1032807866b.10.1787768250242; 
+ Wed, 26 Aug 2026 11:17:30 -0700 (PDT)
+X-Received: by 2002:a17:906:478c:b0:c24:6505:8f67 with SMTP id
+ a640c23a62f3a-c250bb556c2mr1032800866b.10.1787768249568; 
+ Wed, 26 Aug 2026 11:17:29 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.34.92])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c250a9b4e9csm637572066b.54.2026.08.26.11.17.31
+ a640c23a62f3a-c250a88ab59sm551117366b.41.2026.08.26.11.17.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Aug 2026 11:17:31 -0700 (PDT)
+ Wed, 26 Aug 2026 11:17:29 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
 	Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: [PATCH 2/2] scsi: hide MODE SELECT block size change behind a quirk
-Date: Wed, 26 Aug 2026 20:17:25 +0200
-Message-ID: <20260826181725.849718-3-pbonzini@redhat.com>
+Subject: [PATCH 1/2] scsi-disk: fix out-of-bound read in WRITE SAME
+Date: Wed, 26 Aug 2026 20:17:24 +0200
+Message-ID: <20260826181725.849718-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260826181725.849718-1-pbonzini@redhat.com>
 References: <20260826181725.849718-1-pbonzini@redhat.com>
@@ -105,7 +105,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,87 +121,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a dangerous operation in that the block size is not
-protected by a lock, but it can be written concurrently if
-you have a multi-queue virtio-scsi HBA.  Put it behind a quirk
-that is only enabled by the Q800 machine, since the MODE
-SELECT feature was added for A/UX.
+A guest with an attached scsi-hd can force QEMU's SCSI disk emulation
+to read roughly 60 KiB past the end of a heap buffer, copying that out
+of bounds host memory into the guest's own disk image.
+
+WRITE SAME computes the request transfer length at dev->blocksize
+when the request is prepared and sets cmd->xfer from dev->blocksize.
+scsi_disk_emulate_command() then uses cmd->xfer as the size of the
+request buffer.
+
+However, MODE SELECT can race with the WRITE SAME command and guest raise
+the logical block size to any value whose low bits fit 0xfe00, up to 65024.
+In the presence of this race, scsi_disk_emulate_write_same() will read
+from memory as many bytes as indicated by the *new* dev->blocksize,
+and write it to disk.
+
+The read length in WRITE SAME must be bounded by the buffer that was
+actually allocated, not by the mutable s->qdev.blocksize, so clamp the
+length used against inbuf to r->buflen.  Re-validating req->cmd.xfer
+against the current block size would not work because the race is
+intrinsic in the SCSI protocol.
+
+I am not sure if this is exploitable with virtio-scsi and other SG-capable
+HBAs, because it should process the WRITE SAME input immediately,
+without letting the MODE SELECT command race with it; but probably
+it is because s->qdev.blocksize is accessed without a lock.
 
 Fixes: 356c4c441ec ("scsi-disk: allow MODE SELECT block descriptor to set the block size", 2022-07-13)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/4365
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/scsi/scsi.h |  1 +
- hw/m68k/q800.c         |  2 ++
- hw/scsi/scsi-disk.c    | 12 ++++++++++--
- 3 files changed, 13 insertions(+), 2 deletions(-)
+ hw/scsi/scsi-disk.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
-index c60c6e8810e..3eab339b0d2 100644
---- a/include/hw/scsi/scsi.h
-+++ b/include/hw/scsi/scsi.h
-@@ -262,5 +262,6 @@ bool scsi_generic_pr_state_preempt(SCSIDevice *s, Error **errp);
- #define SCSI_DISK_QUIRK_MODE_SENSE_ROM_USE_DBD             1
- #define SCSI_DISK_QUIRK_MODE_PAGE_VENDOR_SPECIFIC_APPLE    2
- #define SCSI_DISK_QUIRK_MODE_PAGE_TRUNCATED                3
-+#define SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE           4
- 
- #endif
-diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-index ab64250c47c..1ad3f93b294 100644
---- a/hw/m68k/q800.c
-+++ b/hw/m68k/q800.c
-@@ -710,12 +710,14 @@ static void q800_init(Object *obj)
- 
- static GlobalProperty hw_compat_q800[] = {
-     { "scsi-hd", "quirk_mode_page_vendor_specific_apple", "on" },
-+    { "scsi-hd", "quirk_mode_page_set_block_size", "on" },
-     { "scsi-hd", "vendor", " SEAGATE" },
-     { "scsi-hd", "product", "          ST225N" },
-     { "scsi-hd", "ver", "1.0 " },
-     { "scsi-cd", "quirk_mode_page_apple_vendor", "on" },
-     { "scsi-cd", "quirk_mode_sense_rom_use_dbd", "on" },
-     { "scsi-cd", "quirk_mode_page_vendor_specific_apple", "on" },
-+    { "scsi-cd", "quirk_mode_page_set_block_size", "on" },
-     { "scsi-cd", "quirk_mode_page_truncated", "on" },
-     { "scsi-cd", "vendor", "MATSHITA" },
-     { "scsi-cd", "product", "CD-ROM CR-8005" },
 diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 5bb7a974d69..a42f7d8e77d 100644
+index 1b0cce128c5..5bb7a974d69 100644
 --- a/hw/scsi/scsi-disk.c
 +++ b/hw/scsi/scsi-disk.c
-@@ -1673,8 +1673,12 @@ static void scsi_disk_emulate_mode_select(SCSIDiskReq *r, uint8_t *inbuf)
-         goto invalid_param;
+@@ -1911,6 +1911,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
+     SCSIRequest *req = &r->req;
+     SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, req->dev);
+     uint32_t nb_sectors = scsi_data_cdb_xfer(r->req.cmd.buf);
++    uint32_t buflen = MIN(s->qdev.blocksize, r->buflen);
+     WriteSameCBData *data;
+     uint8_t *buf;
+     int i, l;
+@@ -1930,7 +1931,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
+         return;
      }
  
--    /* Allow changing the block size */
--    if (bd_len) {
-+    /*
-+     * Allow changing the block size only if the quirk is enabled for it.
-+     * Writing s->qdev.blocksize is not thread safe!
-+     */
-+    if (bd_len && (s->quirks &
-+                   (1 << SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE))) {
-         bs = p[5] << 16 | p[6] << 8 | p[7];
+-    if ((req->cmd.buf[1] & 0x1) || buffer_is_zero(inbuf, s->qdev.blocksize)) {
++    if ((req->cmd.buf[1] & 0x1) || buffer_is_zero(inbuf, buflen)) {
+         int flags = (req->cmd.buf[1] & 0x8) ? BDRV_REQ_MAY_UNMAP : 0;
  
-         /*
-@@ -3247,6 +3251,8 @@ static const Property scsi_hd_properties[] = {
-     DEFINE_PROP_BIT("quirk_mode_page_vendor_specific_apple", SCSIDiskState,
-                     quirks, SCSI_DISK_QUIRK_MODE_PAGE_VENDOR_SPECIFIC_APPLE,
-                     0),
-+    DEFINE_PROP_BIT("quirk_mode_page_set_block_size", SCSIDiskState,
-+                    quirks, SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE, 0),
-     DEFINE_BLOCK_CHS_PROPERTIES(SCSIDiskState, qdev.conf),
- };
+         /* The request is used as the AIO opaque value, so add a ref.  */
+@@ -1956,7 +1957,7 @@ static void scsi_disk_emulate_write_same(SCSIDiskReq *r, uint8_t *inbuf)
+     qemu_iovec_init_external(&data->qiov, &data->iov, 1);
  
-@@ -3352,6 +3358,8 @@ static const Property scsi_cd_properties[] = {
-                     0),
-     DEFINE_PROP_BIT("quirk_mode_page_truncated", SCSIDiskState, quirks,
-                     SCSI_DISK_QUIRK_MODE_PAGE_TRUNCATED, 0),
-+    DEFINE_PROP_BIT("quirk_mode_page_set_block_size", SCSIDiskState,
-+                    quirks, SCSI_DISK_QUIRK_MODE_PAGE_SET_BLOCK_SIZE, 0),
- };
+     for (i = 0; i < data->iov.iov_len; i += l) {
+-        l = MIN(s->qdev.blocksize, data->iov.iov_len - i);
++        l = MIN(buflen, data->iov.iov_len - i);
+         memcpy(&buf[i], inbuf, l);
+     }
  
- static void scsi_cd_class_initfn(ObjectClass *klass, const void *data)
 -- 
 2.55.0
 
